@@ -1,0 +1,1508 @@
+
+::group::❌ /home/runner/work/streetlift-apk/streetlift-apk/avant/test/visual_capture_test.dart: rendus bordeaux et anthracite : écrans, thèmes et largeur compacte (failed)
+
+Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#f40bf]], state: ScrollableState#52e6a(position: ScrollPositionWithSingleContext#140e9(offset: 300.0, range: 0.0..768.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#24060, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+]" derived an Offset (Offset(195.0, 909.0)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+Indeed, Offset(195.0, 909.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
+The finder corresponds to this RenderBox: RenderClipRect#162cd relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#920ea(_ReusableRenderView#c465f), HitTestEntry<HitTestTarget>#3ee81(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
+#3      WidgetController.dragUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2483:17)
+<asynchronous suspension>
+#4      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#5      WidgetController.scrollUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2439:7)
+<asynchronous suspension>
+#6      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#7      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/avant/test/visual_capture_test.dart:171:13)
+<asynchronous suspension>
+#8      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#9      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#10     StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "drag()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+
+Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#f40bf]], state: ScrollableState#52e6a(position: ScrollPositionWithSingleContext#140e9(offset: 300.0, range: 0.0..768.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#24060, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+]" derived an Offset (Offset(195.0, 909.0)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+Indeed, Offset(195.0, 909.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
+The finder corresponds to this RenderBox: RenderClipRect#162cd relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#7bc18(_ReusableRenderView#c465f), HitTestEntry<HitTestTarget>#e6be6(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
+#3      WidgetController.dragUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2483:17)
+<asynchronous suspension>
+#4      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#5      WidgetController.scrollUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2439:7)
+<asynchronous suspension>
+#6      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#7      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/avant/test/visual_capture_test.dart:171:13)
+<asynchronous suspension>
+#8      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#9      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#10     StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "drag()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+
+Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#f40bf]], state: ScrollableState#52e6a(position: ScrollPositionWithSingleContext#140e9(offset: 300.0, range: 0.0..768.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#24060, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+]" derived an Offset (Offset(195.0, 909.0)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+Indeed, Offset(195.0, 909.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
+The finder corresponds to this RenderBox: RenderClipRect#162cd relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#a658c(_ReusableRenderView#c465f), HitTestEntry<HitTestTarget>#c16d6(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
+#3      WidgetController.dragUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2483:17)
+<asynchronous suspension>
+#4      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#5      WidgetController.scrollUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2439:7)
+<asynchronous suspension>
+#6      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#7      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/avant/test/visual_capture_test.dart:171:13)
+<asynchronous suspension>
+#8      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#9      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#10     StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "drag()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+
+Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#f40bf]], state: ScrollableState#52e6a(position: ScrollPositionWithSingleContext#140e9(offset: 300.0, range: 0.0..768.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#24060, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+]" derived an Offset (Offset(195.0, 909.0)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+Indeed, Offset(195.0, 909.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
+The finder corresponds to this RenderBox: RenderClipRect#162cd relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#b2836(_ReusableRenderView#c465f), HitTestEntry<HitTestTarget>#e2eff(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
+#3      WidgetController.dragUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2483:17)
+<asynchronous suspension>
+#4      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#5      WidgetController.scrollUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2439:7)
+<asynchronous suspension>
+#6      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#7      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/avant/test/visual_capture_test.dart:171:13)
+<asynchronous suspension>
+#8      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#9      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#10     StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "drag()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+
+Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#f40bf]], state: ScrollableState#52e6a(position: ScrollPositionWithSingleContext#140e9(offset: 300.0, range: 0.0..768.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#24060, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+]" derived an Offset (Offset(195.0, 909.0)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+Indeed, Offset(195.0, 909.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
+The finder corresponds to this RenderBox: RenderClipRect#162cd relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#0fcdd(_ReusableRenderView#c465f), HitTestEntry<HitTestTarget>#518fe(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
+#3      WidgetController.dragUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2483:17)
+<asynchronous suspension>
+#4      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#5      WidgetController.scrollUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2439:7)
+<asynchronous suspension>
+#6      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#7      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/avant/test/visual_capture_test.dart:171:13)
+<asynchronous suspension>
+#8      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#9      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#10     StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "drag()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+
+Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#f40bf]], state: ScrollableState#52e6a(position: ScrollPositionWithSingleContext#140e9(offset: 300.0, range: 0.0..768.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#24060, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+]" derived an Offset (Offset(195.0, 909.0)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+Indeed, Offset(195.0, 909.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
+The finder corresponds to this RenderBox: RenderClipRect#162cd relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#99d09(_ReusableRenderView#c465f), HitTestEntry<HitTestTarget>#a2319(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
+#3      WidgetController.dragUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2483:17)
+<asynchronous suspension>
+#4      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#5      WidgetController.scrollUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2439:7)
+<asynchronous suspension>
+#6      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#7      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/avant/test/visual_capture_test.dart:171:13)
+<asynchronous suspension>
+#8      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#9      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#10     StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "drag()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+
+Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#f40bf]], state: ScrollableState#52e6a(position: ScrollPositionWithSingleContext#140e9(offset: 300.0, range: 0.0..768.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#24060, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+]" derived an Offset (Offset(195.0, 909.0)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+Indeed, Offset(195.0, 909.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
+The finder corresponds to this RenderBox: RenderClipRect#162cd relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#b1c13(_ReusableRenderView#c465f), HitTestEntry<HitTestTarget>#4eb8a(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
+#3      WidgetController.dragUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2483:17)
+<asynchronous suspension>
+#4      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#5      WidgetController.scrollUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2439:7)
+<asynchronous suspension>
+#6      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#7      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/avant/test/visual_capture_test.dart:171:13)
+<asynchronous suspension>
+#8      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#9      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#10     StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "drag()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+
+Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#f40bf]], state: ScrollableState#52e6a(position: ScrollPositionWithSingleContext#140e9(offset: 300.0, range: 0.0..768.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#24060, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+]" derived an Offset (Offset(195.0, 909.0)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+Indeed, Offset(195.0, 909.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
+The finder corresponds to this RenderBox: RenderClipRect#162cd relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#1d311(_ReusableRenderView#c465f), HitTestEntry<HitTestTarget>#14acf(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
+#3      WidgetController.dragUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2483:17)
+<asynchronous suspension>
+#4      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#5      WidgetController.scrollUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2439:7)
+<asynchronous suspension>
+#6      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#7      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/avant/test/visual_capture_test.dart:171:13)
+<asynchronous suspension>
+#8      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#9      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#10     StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "drag()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+
+Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#f40bf]], state: ScrollableState#52e6a(position: ScrollPositionWithSingleContext#140e9(offset: 300.0, range: 0.0..768.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#24060, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+]" derived an Offset (Offset(195.0, 909.0)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+Indeed, Offset(195.0, 909.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
+The finder corresponds to this RenderBox: RenderClipRect#162cd relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#46d69(_ReusableRenderView#c465f), HitTestEntry<HitTestTarget>#1068d(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
+#3      WidgetController.dragUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2483:17)
+<asynchronous suspension>
+#4      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#5      WidgetController.scrollUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2439:7)
+<asynchronous suspension>
+#6      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#7      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/avant/test/visual_capture_test.dart:171:13)
+<asynchronous suspension>
+#8      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#9      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#10     StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "drag()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+
+Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#f40bf]], state: ScrollableState#52e6a(position: ScrollPositionWithSingleContext#140e9(offset: 300.0, range: 0.0..768.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#24060, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+]" derived an Offset (Offset(195.0, 909.0)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+Indeed, Offset(195.0, 909.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
+The finder corresponds to this RenderBox: RenderClipRect#162cd relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#ee2ca(_ReusableRenderView#c465f), HitTestEntry<HitTestTarget>#ae52d(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
+#3      WidgetController.dragUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2483:17)
+<asynchronous suspension>
+#4      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#5      WidgetController.scrollUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2439:7)
+<asynchronous suspension>
+#6      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#7      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/avant/test/visual_capture_test.dart:171:13)
+<asynchronous suspension>
+#8      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#9      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#10     StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "drag()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+
+Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#f40bf]], state: ScrollableState#52e6a(position: ScrollPositionWithSingleContext#140e9(offset: 300.0, range: 0.0..768.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#24060, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+]" derived an Offset (Offset(195.0, 909.0)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+Indeed, Offset(195.0, 909.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
+The finder corresponds to this RenderBox: RenderClipRect#162cd relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#aeb9a(_ReusableRenderView#c465f), HitTestEntry<HitTestTarget>#52e33(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
+#3      WidgetController.dragUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2483:17)
+<asynchronous suspension>
+#4      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#5      WidgetController.scrollUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2439:7)
+<asynchronous suspension>
+#6      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#7      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/avant/test/visual_capture_test.dart:171:13)
+<asynchronous suspension>
+#8      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#9      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#10     StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "drag()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+
+Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#f40bf]], state: ScrollableState#52e6a(position: ScrollPositionWithSingleContext#140e9(offset: 300.0, range: 0.0..768.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#24060, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+]" derived an Offset (Offset(195.0, 909.0)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+Indeed, Offset(195.0, 909.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
+The finder corresponds to this RenderBox: RenderClipRect#162cd relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#5b792(_ReusableRenderView#c465f), HitTestEntry<HitTestTarget>#00f63(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
+#3      WidgetController.dragUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2483:17)
+<asynchronous suspension>
+#4      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#5      WidgetController.scrollUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2439:7)
+<asynchronous suspension>
+#6      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#7      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/avant/test/visual_capture_test.dart:171:13)
+<asynchronous suspension>
+#8      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#9      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#10     StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "drag()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+
+Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#f40bf]], state: ScrollableState#52e6a(position: ScrollPositionWithSingleContext#140e9(offset: 300.0, range: 0.0..768.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#24060, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+]" derived an Offset (Offset(195.0, 909.0)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+Indeed, Offset(195.0, 909.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
+The finder corresponds to this RenderBox: RenderClipRect#162cd relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#2b5b9(_ReusableRenderView#c465f), HitTestEntry<HitTestTarget>#d5b36(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
+#3      WidgetController.dragUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2483:17)
+<asynchronous suspension>
+#4      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#5      WidgetController.scrollUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2439:7)
+<asynchronous suspension>
+#6      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#7      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/avant/test/visual_capture_test.dart:171:13)
+<asynchronous suspension>
+#8      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#9      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#10     StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "drag()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+
+Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#f40bf]], state: ScrollableState#52e6a(position: ScrollPositionWithSingleContext#140e9(offset: 300.0, range: 0.0..768.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#24060, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+]" derived an Offset (Offset(195.0, 909.0)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+Indeed, Offset(195.0, 909.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
+The finder corresponds to this RenderBox: RenderClipRect#162cd relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#83c51(_ReusableRenderView#c465f), HitTestEntry<HitTestTarget>#82d15(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
+#3      WidgetController.dragUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2483:17)
+<asynchronous suspension>
+#4      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#5      WidgetController.scrollUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2439:7)
+<asynchronous suspension>
+#6      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#7      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/avant/test/visual_capture_test.dart:171:13)
+<asynchronous suspension>
+#8      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#9      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#10     StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "drag()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+
+Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#f40bf]], state: ScrollableState#52e6a(position: ScrollPositionWithSingleContext#140e9(offset: 300.0, range: 0.0..768.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#24060, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+]" derived an Offset (Offset(195.0, 909.0)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+Indeed, Offset(195.0, 909.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
+The finder corresponds to this RenderBox: RenderClipRect#162cd relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#01a52(_ReusableRenderView#c465f), HitTestEntry<HitTestTarget>#9e06c(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
+#3      WidgetController.dragUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2483:17)
+<asynchronous suspension>
+#4      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#5      WidgetController.scrollUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2439:7)
+<asynchronous suspension>
+#6      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#7      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/avant/test/visual_capture_test.dart:171:13)
+<asynchronous suspension>
+#8      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#9      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#10     StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "drag()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+
+Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#f40bf]], state: ScrollableState#52e6a(position: ScrollPositionWithSingleContext#140e9(offset: 300.0, range: 0.0..768.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#24060, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+]" derived an Offset (Offset(195.0, 909.0)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+Indeed, Offset(195.0, 909.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
+The finder corresponds to this RenderBox: RenderClipRect#162cd relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#e0b7b(_ReusableRenderView#c465f), HitTestEntry<HitTestTarget>#7d9af(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
+#3      WidgetController.dragUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2483:17)
+<asynchronous suspension>
+#4      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#5      WidgetController.scrollUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2439:7)
+<asynchronous suspension>
+#6      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#7      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/avant/test/visual_capture_test.dart:171:13)
+<asynchronous suspension>
+#8      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#9      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#10     StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "drag()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+
+Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#f40bf]], state: ScrollableState#52e6a(position: ScrollPositionWithSingleContext#140e9(offset: 300.0, range: 0.0..768.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#24060, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+]" derived an Offset (Offset(195.0, 909.0)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+Indeed, Offset(195.0, 909.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
+The finder corresponds to this RenderBox: RenderClipRect#162cd relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#7779c(_ReusableRenderView#c465f), HitTestEntry<HitTestTarget>#adfea(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
+#3      WidgetController.dragUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2483:17)
+<asynchronous suspension>
+#4      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#5      WidgetController.scrollUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2439:7)
+<asynchronous suspension>
+#6      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#7      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/avant/test/visual_capture_test.dart:171:13)
+<asynchronous suspension>
+#8      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#9      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#10     StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "drag()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+
+Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#f40bf]], state: ScrollableState#52e6a(position: ScrollPositionWithSingleContext#140e9(offset: 300.0, range: 0.0..768.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#24060, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+]" derived an Offset (Offset(195.0, 909.0)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+Indeed, Offset(195.0, 909.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
+The finder corresponds to this RenderBox: RenderClipRect#162cd relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#98d44(_ReusableRenderView#c465f), HitTestEntry<HitTestTarget>#14b23(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
+#3      WidgetController.dragUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2483:17)
+<asynchronous suspension>
+#4      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#5      WidgetController.scrollUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2439:7)
+<asynchronous suspension>
+#6      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#7      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/avant/test/visual_capture_test.dart:171:13)
+<asynchronous suspension>
+#8      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#9      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#10     StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "drag()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+
+Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#f40bf]], state: ScrollableState#52e6a(position: ScrollPositionWithSingleContext#140e9(offset: 300.0, range: 0.0..768.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#24060, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+]" derived an Offset (Offset(195.0, 909.0)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+Indeed, Offset(195.0, 909.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
+The finder corresponds to this RenderBox: RenderClipRect#162cd relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#fc816(_ReusableRenderView#c465f), HitTestEntry<HitTestTarget>#8cc38(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
+#3      WidgetController.dragUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2483:17)
+<asynchronous suspension>
+#4      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#5      WidgetController.scrollUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2439:7)
+<asynchronous suspension>
+#6      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#7      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/avant/test/visual_capture_test.dart:171:13)
+<asynchronous suspension>
+#8      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#9      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#10     StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "drag()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+
+Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#f40bf]], state: ScrollableState#52e6a(position: ScrollPositionWithSingleContext#140e9(offset: 300.0, range: 0.0..768.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#24060, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+]" derived an Offset (Offset(195.0, 909.0)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+Indeed, Offset(195.0, 909.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
+The finder corresponds to this RenderBox: RenderClipRect#162cd relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#4bd20(_ReusableRenderView#c465f), HitTestEntry<HitTestTarget>#1a30b(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
+#3      WidgetController.dragUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2483:17)
+<asynchronous suspension>
+#4      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#5      WidgetController.scrollUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2439:7)
+<asynchronous suspension>
+#6      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#7      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/avant/test/visual_capture_test.dart:171:13)
+<asynchronous suspension>
+#8      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#9      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#10     StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "drag()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+
+Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#f40bf]], state: ScrollableState#52e6a(position: ScrollPositionWithSingleContext#140e9(offset: 300.0, range: 0.0..768.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#24060, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+]" derived an Offset (Offset(195.0, 909.0)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+Indeed, Offset(195.0, 909.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
+The finder corresponds to this RenderBox: RenderClipRect#162cd relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#fca98(_ReusableRenderView#c465f), HitTestEntry<HitTestTarget>#ac804(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
+#3      WidgetController.dragUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2483:17)
+<asynchronous suspension>
+#4      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#5      WidgetController.scrollUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2439:7)
+<asynchronous suspension>
+#6      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#7      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/avant/test/visual_capture_test.dart:171:13)
+<asynchronous suspension>
+#8      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#9      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#10     StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "drag()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+
+Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#f40bf]], state: ScrollableState#52e6a(position: ScrollPositionWithSingleContext#140e9(offset: 300.0, range: 0.0..768.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#24060, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+]" derived an Offset (Offset(195.0, 909.0)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+Indeed, Offset(195.0, 909.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
+The finder corresponds to this RenderBox: RenderClipRect#162cd relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#4f8b4(_ReusableRenderView#c465f), HitTestEntry<HitTestTarget>#24933(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
+#3      WidgetController.dragUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2483:17)
+<asynchronous suspension>
+#4      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#5      WidgetController.scrollUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2439:7)
+<asynchronous suspension>
+#6      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#7      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/avant/test/visual_capture_test.dart:171:13)
+<asynchronous suspension>
+#8      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#9      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#10     StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "drag()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+
+Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#f40bf]], state: ScrollableState#52e6a(position: ScrollPositionWithSingleContext#140e9(offset: 300.0, range: 0.0..768.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#24060, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+]" derived an Offset (Offset(195.0, 909.0)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+Indeed, Offset(195.0, 909.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
+The finder corresponds to this RenderBox: RenderClipRect#162cd relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#518ba(_ReusableRenderView#c465f), HitTestEntry<HitTestTarget>#4f80c(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
+#3      WidgetController.dragUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2483:17)
+<asynchronous suspension>
+#4      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#5      WidgetController.scrollUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2439:7)
+<asynchronous suspension>
+#6      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#7      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/avant/test/visual_capture_test.dart:171:13)
+<asynchronous suspension>
+#8      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#9      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#10     StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "drag()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+
+Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#f40bf]], state: ScrollableState#52e6a(position: ScrollPositionWithSingleContext#140e9(offset: 300.0, range: 0.0..768.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#24060, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+]" derived an Offset (Offset(195.0, 909.0)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+Indeed, Offset(195.0, 909.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
+The finder corresponds to this RenderBox: RenderClipRect#162cd relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#546dc(_ReusableRenderView#c465f), HitTestEntry<HitTestTarget>#0149e(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
+#3      WidgetController.dragUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2483:17)
+<asynchronous suspension>
+#4      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#5      WidgetController.scrollUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2439:7)
+<asynchronous suspension>
+#6      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#7      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/avant/test/visual_capture_test.dart:171:13)
+<asynchronous suspension>
+#8      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#9      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#10     StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "drag()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+
+Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#f40bf]], state: ScrollableState#52e6a(position: ScrollPositionWithSingleContext#140e9(offset: 300.0, range: 0.0..768.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#24060, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+]" derived an Offset (Offset(195.0, 909.0)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+Indeed, Offset(195.0, 909.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
+The finder corresponds to this RenderBox: RenderClipRect#162cd relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#d936c(_ReusableRenderView#c465f), HitTestEntry<HitTestTarget>#2d674(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
+#3      WidgetController.dragUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2483:17)
+<asynchronous suspension>
+#4      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#5      WidgetController.scrollUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2439:7)
+<asynchronous suspension>
+#6      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#7      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/avant/test/visual_capture_test.dart:171:13)
+<asynchronous suspension>
+#8      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#9      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#10     StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "drag()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+
+Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#f40bf]], state: ScrollableState#52e6a(position: ScrollPositionWithSingleContext#140e9(offset: 300.0, range: 0.0..768.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#24060, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+]" derived an Offset (Offset(195.0, 909.0)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+Indeed, Offset(195.0, 909.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
+The finder corresponds to this RenderBox: RenderClipRect#162cd relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#b84f4(_ReusableRenderView#c465f), HitTestEntry<HitTestTarget>#3e545(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
+#3      WidgetController.dragUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2483:17)
+<asynchronous suspension>
+#4      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#5      WidgetController.scrollUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2439:7)
+<asynchronous suspension>
+#6      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#7      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/avant/test/visual_capture_test.dart:171:13)
+<asynchronous suspension>
+#8      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#9      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#10     StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "drag()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+
+Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#f40bf]], state: ScrollableState#52e6a(position: ScrollPositionWithSingleContext#140e9(offset: 300.0, range: 0.0..768.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#24060, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+]" derived an Offset (Offset(195.0, 909.0)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+Indeed, Offset(195.0, 909.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
+The finder corresponds to this RenderBox: RenderClipRect#162cd relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#d0bab(_ReusableRenderView#c465f), HitTestEntry<HitTestTarget>#9e5d2(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
+#3      WidgetController.dragUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2483:17)
+<asynchronous suspension>
+#4      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#5      WidgetController.scrollUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2439:7)
+<asynchronous suspension>
+#6      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#7      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/avant/test/visual_capture_test.dart:171:13)
+<asynchronous suspension>
+#8      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#9      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#10     StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "drag()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+
+Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#f40bf]], state: ScrollableState#52e6a(position: ScrollPositionWithSingleContext#140e9(offset: 300.0, range: 0.0..768.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#24060, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+]" derived an Offset (Offset(195.0, 909.0)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+Indeed, Offset(195.0, 909.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
+The finder corresponds to this RenderBox: RenderClipRect#162cd relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#fd9c2(_ReusableRenderView#c465f), HitTestEntry<HitTestTarget>#87d24(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
+#3      WidgetController.dragUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2483:17)
+<asynchronous suspension>
+#4      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#5      WidgetController.scrollUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2439:7)
+<asynchronous suspension>
+#6      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#7      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/avant/test/visual_capture_test.dart:171:13)
+<asynchronous suspension>
+#8      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#9      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#10     StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "drag()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+
+Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#f40bf]], state: ScrollableState#52e6a(position: ScrollPositionWithSingleContext#140e9(offset: 300.0, range: 0.0..768.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#24060, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+]" derived an Offset (Offset(195.0, 909.0)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+Indeed, Offset(195.0, 909.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
+The finder corresponds to this RenderBox: RenderClipRect#162cd relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#3d8b5(_ReusableRenderView#c465f), HitTestEntry<HitTestTarget>#2a43b(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
+#3      WidgetController.dragUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2483:17)
+<asynchronous suspension>
+#4      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#5      WidgetController.scrollUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2439:7)
+<asynchronous suspension>
+#6      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#7      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/avant/test/visual_capture_test.dart:171:13)
+<asynchronous suspension>
+#8      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#9      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#10     StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "drag()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+
+Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#f40bf]], state: ScrollableState#52e6a(position: ScrollPositionWithSingleContext#140e9(offset: 300.0, range: 0.0..768.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#24060, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+]" derived an Offset (Offset(195.0, 909.0)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+Indeed, Offset(195.0, 909.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
+The finder corresponds to this RenderBox: RenderClipRect#162cd relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#32d24(_ReusableRenderView#c465f), HitTestEntry<HitTestTarget>#364e1(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
+#3      WidgetController.dragUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2483:17)
+<asynchronous suspension>
+#4      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#5      WidgetController.scrollUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2439:7)
+<asynchronous suspension>
+#6      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#7      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/avant/test/visual_capture_test.dart:171:13)
+<asynchronous suspension>
+#8      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#9      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#10     StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "drag()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+
+Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#f40bf]], state: ScrollableState#52e6a(position: ScrollPositionWithSingleContext#140e9(offset: 300.0, range: 0.0..768.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#24060, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+]" derived an Offset (Offset(195.0, 909.0)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+Indeed, Offset(195.0, 909.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
+The finder corresponds to this RenderBox: RenderClipRect#162cd relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#2f3f4(_ReusableRenderView#c465f), HitTestEntry<HitTestTarget>#b7a6e(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
+#3      WidgetController.dragUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2483:17)
+<asynchronous suspension>
+#4      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#5      WidgetController.scrollUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2439:7)
+<asynchronous suspension>
+#6      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#7      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/avant/test/visual_capture_test.dart:171:13)
+<asynchronous suspension>
+#8      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#9      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#10     StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "drag()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+
+Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#f40bf]], state: ScrollableState#52e6a(position: ScrollPositionWithSingleContext#140e9(offset: 300.0, range: 0.0..768.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#24060, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+]" derived an Offset (Offset(195.0, 909.0)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+Indeed, Offset(195.0, 909.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
+The finder corresponds to this RenderBox: RenderClipRect#162cd relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#fff47(_ReusableRenderView#c465f), HitTestEntry<HitTestTarget>#686e1(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
+#3      WidgetController.dragUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2483:17)
+<asynchronous suspension>
+#4      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#5      WidgetController.scrollUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2439:7)
+<asynchronous suspension>
+#6      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#7      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/avant/test/visual_capture_test.dart:171:13)
+<asynchronous suspension>
+#8      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#9      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#10     StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "drag()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+
+Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#f40bf]], state: ScrollableState#52e6a(position: ScrollPositionWithSingleContext#140e9(offset: 300.0, range: 0.0..768.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#24060, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+]" derived an Offset (Offset(195.0, 909.0)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+Indeed, Offset(195.0, 909.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
+The finder corresponds to this RenderBox: RenderClipRect#162cd relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#39a86(_ReusableRenderView#c465f), HitTestEntry<HitTestTarget>#42f4f(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
+#3      WidgetController.dragUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2483:17)
+<asynchronous suspension>
+#4      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#5      WidgetController.scrollUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2439:7)
+<asynchronous suspension>
+#6      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#7      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/avant/test/visual_capture_test.dart:171:13)
+<asynchronous suspension>
+#8      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#9      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#10     StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "drag()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+
+Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#f40bf]], state: ScrollableState#52e6a(position: ScrollPositionWithSingleContext#140e9(offset: 300.0, range: 0.0..768.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#24060, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+]" derived an Offset (Offset(195.0, 909.0)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+Indeed, Offset(195.0, 909.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
+The finder corresponds to this RenderBox: RenderClipRect#162cd relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#3b1dd(_ReusableRenderView#c465f), HitTestEntry<HitTestTarget>#3c190(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
+#3      WidgetController.dragUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2483:17)
+<asynchronous suspension>
+#4      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#5      WidgetController.scrollUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2439:7)
+<asynchronous suspension>
+#6      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#7      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/avant/test/visual_capture_test.dart:171:13)
+<asynchronous suspension>
+#8      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#9      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#10     StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "drag()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+
+Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#f40bf]], state: ScrollableState#52e6a(position: ScrollPositionWithSingleContext#140e9(offset: 300.0, range: 0.0..768.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#24060, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+]" derived an Offset (Offset(195.0, 909.0)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+Indeed, Offset(195.0, 909.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
+The finder corresponds to this RenderBox: RenderClipRect#162cd relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#49007(_ReusableRenderView#c465f), HitTestEntry<HitTestTarget>#d4368(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
+#3      WidgetController.dragUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2483:17)
+<asynchronous suspension>
+#4      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#5      WidgetController.scrollUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2439:7)
+<asynchronous suspension>
+#6      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#7      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/avant/test/visual_capture_test.dart:171:13)
+<asynchronous suspension>
+#8      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#9      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#10     StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "drag()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+
+Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#f40bf]], state: ScrollableState#52e6a(position: ScrollPositionWithSingleContext#140e9(offset: 300.0, range: 0.0..768.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#24060, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+]" derived an Offset (Offset(195.0, 909.0)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+Indeed, Offset(195.0, 909.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
+The finder corresponds to this RenderBox: RenderClipRect#162cd relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#98c7a(_ReusableRenderView#c465f), HitTestEntry<HitTestTarget>#1413b(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
+#3      WidgetController.dragUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2483:17)
+<asynchronous suspension>
+#4      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#5      WidgetController.scrollUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2439:7)
+<asynchronous suspension>
+#6      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#7      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/avant/test/visual_capture_test.dart:171:13)
+<asynchronous suspension>
+#8      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#9      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#10     StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "drag()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+
+Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#f40bf]], state: ScrollableState#52e6a(position: ScrollPositionWithSingleContext#140e9(offset: 300.0, range: 0.0..768.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#24060, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+]" derived an Offset (Offset(195.0, 909.0)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+Indeed, Offset(195.0, 909.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
+The finder corresponds to this RenderBox: RenderClipRect#162cd relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#465b9(_ReusableRenderView#c465f), HitTestEntry<HitTestTarget>#24662(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
+#3      WidgetController.dragUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2483:17)
+<asynchronous suspension>
+#4      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#5      WidgetController.scrollUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2439:7)
+<asynchronous suspension>
+#6      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#7      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/avant/test/visual_capture_test.dart:171:13)
+<asynchronous suspension>
+#8      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#9      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#10     StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "drag()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+
+Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#f40bf]], state: ScrollableState#52e6a(position: ScrollPositionWithSingleContext#140e9(offset: 300.0, range: 0.0..768.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#24060, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+]" derived an Offset (Offset(195.0, 909.0)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+Indeed, Offset(195.0, 909.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
+The finder corresponds to this RenderBox: RenderClipRect#162cd relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#e6b7e(_ReusableRenderView#c465f), HitTestEntry<HitTestTarget>#42f7e(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
+#3      WidgetController.dragUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2483:17)
+<asynchronous suspension>
+#4      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#5      WidgetController.scrollUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2439:7)
+<asynchronous suspension>
+#6      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#7      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/avant/test/visual_capture_test.dart:171:13)
+<asynchronous suspension>
+#8      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#9      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#10     StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "drag()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+
+Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#f40bf]], state: ScrollableState#52e6a(position: ScrollPositionWithSingleContext#140e9(offset: 300.0, range: 0.0..768.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#24060, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+]" derived an Offset (Offset(195.0, 909.0)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+Indeed, Offset(195.0, 909.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
+The finder corresponds to this RenderBox: RenderClipRect#162cd relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#7911c(_ReusableRenderView#c465f), HitTestEntry<HitTestTarget>#7ddd2(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
+#3      WidgetController.dragUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2483:17)
+<asynchronous suspension>
+#4      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#5      WidgetController.scrollUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2439:7)
+<asynchronous suspension>
+#6      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#7      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/avant/test/visual_capture_test.dart:171:13)
+<asynchronous suspension>
+#8      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#9      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#10     StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "drag()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+
+Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#f40bf]], state: ScrollableState#52e6a(position: ScrollPositionWithSingleContext#140e9(offset: 300.0, range: 0.0..768.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#24060, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+]" derived an Offset (Offset(195.0, 909.0)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+Indeed, Offset(195.0, 909.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
+The finder corresponds to this RenderBox: RenderClipRect#162cd relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#563be(_ReusableRenderView#c465f), HitTestEntry<HitTestTarget>#451dc(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
+#3      WidgetController.dragUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2483:17)
+<asynchronous suspension>
+#4      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#5      WidgetController.scrollUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2439:7)
+<asynchronous suspension>
+#6      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#7      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/avant/test/visual_capture_test.dart:171:13)
+<asynchronous suspension>
+#8      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#9      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#10     StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "drag()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+
+Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#f40bf]], state: ScrollableState#52e6a(position: ScrollPositionWithSingleContext#140e9(offset: 300.0, range: 0.0..768.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#24060, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+]" derived an Offset (Offset(195.0, 909.0)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+Indeed, Offset(195.0, 909.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
+The finder corresponds to this RenderBox: RenderClipRect#162cd relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#1af3f(_ReusableRenderView#c465f), HitTestEntry<HitTestTarget>#44d21(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
+#3      WidgetController.dragUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2483:17)
+<asynchronous suspension>
+#4      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#5      WidgetController.scrollUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2439:7)
+<asynchronous suspension>
+#6      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#7      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/avant/test/visual_capture_test.dart:171:13)
+<asynchronous suspension>
+#8      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#9      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#10     StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "drag()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+
+Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#f40bf]], state: ScrollableState#52e6a(position: ScrollPositionWithSingleContext#140e9(offset: 300.0, range: 0.0..768.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#24060, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+]" derived an Offset (Offset(195.0, 909.0)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+Indeed, Offset(195.0, 909.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
+The finder corresponds to this RenderBox: RenderClipRect#162cd relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#fe8e5(_ReusableRenderView#c465f), HitTestEntry<HitTestTarget>#98427(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
+#3      WidgetController.dragUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2483:17)
+<asynchronous suspension>
+#4      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#5      WidgetController.scrollUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2439:7)
+<asynchronous suspension>
+#6      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#7      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/avant/test/visual_capture_test.dart:171:13)
+<asynchronous suspension>
+#8      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#9      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#10     StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "drag()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+
+Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#f40bf]], state: ScrollableState#52e6a(position: ScrollPositionWithSingleContext#140e9(offset: 300.0, range: 0.0..768.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#24060, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+]" derived an Offset (Offset(195.0, 909.0)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+Indeed, Offset(195.0, 909.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
+The finder corresponds to this RenderBox: RenderClipRect#162cd relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#d2625(_ReusableRenderView#c465f), HitTestEntry<HitTestTarget>#b6c55(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
+#3      WidgetController.dragUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2483:17)
+<asynchronous suspension>
+#4      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#5      WidgetController.scrollUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2439:7)
+<asynchronous suspension>
+#6      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#7      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/avant/test/visual_capture_test.dart:171:13)
+<asynchronous suspension>
+#8      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#9      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#10     StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "drag()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+
+Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#f40bf]], state: ScrollableState#52e6a(position: ScrollPositionWithSingleContext#140e9(offset: 300.0, range: 0.0..768.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#24060, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+]" derived an Offset (Offset(195.0, 909.0)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+Indeed, Offset(195.0, 909.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
+The finder corresponds to this RenderBox: RenderClipRect#162cd relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#c7569(_ReusableRenderView#c465f), HitTestEntry<HitTestTarget>#64bc6(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
+#3      WidgetController.dragUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2483:17)
+<asynchronous suspension>
+#4      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#5      WidgetController.scrollUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2439:7)
+<asynchronous suspension>
+#6      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#7      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/avant/test/visual_capture_test.dart:171:13)
+<asynchronous suspension>
+#8      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#9      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#10     StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "drag()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+
+Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#f40bf]], state: ScrollableState#52e6a(position: ScrollPositionWithSingleContext#140e9(offset: 300.0, range: 0.0..768.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#24060, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+]" derived an Offset (Offset(195.0, 909.0)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+Indeed, Offset(195.0, 909.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
+The finder corresponds to this RenderBox: RenderClipRect#162cd relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#fb6dd(_ReusableRenderView#c465f), HitTestEntry<HitTestTarget>#5a43f(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
+#3      WidgetController.dragUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2483:17)
+<asynchronous suspension>
+#4      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#5      WidgetController.scrollUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2439:7)
+<asynchronous suspension>
+#6      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#7      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/avant/test/visual_capture_test.dart:171:13)
+<asynchronous suspension>
+#8      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#9      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#10     StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "drag()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+
+Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#f40bf]], state: ScrollableState#52e6a(position: ScrollPositionWithSingleContext#140e9(offset: 300.0, range: 0.0..768.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#24060, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+]" derived an Offset (Offset(195.0, 909.0)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+Indeed, Offset(195.0, 909.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
+The finder corresponds to this RenderBox: RenderClipRect#162cd relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#17a7e(_ReusableRenderView#c465f), HitTestEntry<HitTestTarget>#656ae(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
+#3      WidgetController.dragUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2483:17)
+<asynchronous suspension>
+#4      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#5      WidgetController.scrollUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2439:7)
+<asynchronous suspension>
+#6      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#7      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/avant/test/visual_capture_test.dart:171:13)
+<asynchronous suspension>
+#8      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#9      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#10     StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "drag()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+
+Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#f40bf]], state: ScrollableState#52e6a(position: ScrollPositionWithSingleContext#140e9(offset: 300.0, range: 0.0..768.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#24060, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+]" derived an Offset (Offset(195.0, 909.0)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+Indeed, Offset(195.0, 909.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
+The finder corresponds to this RenderBox: RenderClipRect#162cd relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#a6b9a(_ReusableRenderView#c465f), HitTestEntry<HitTestTarget>#03f4d(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
+#3      WidgetController.dragUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2483:17)
+<asynchronous suspension>
+#4      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#5      WidgetController.scrollUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2439:7)
+<asynchronous suspension>
+#6      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#7      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/avant/test/visual_capture_test.dart:171:13)
+<asynchronous suspension>
+#8      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#9      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#10     StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "drag()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+
+Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#f40bf]], state: ScrollableState#52e6a(position: ScrollPositionWithSingleContext#140e9(offset: 300.0, range: 0.0..768.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#24060, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+]" derived an Offset (Offset(195.0, 909.0)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+Indeed, Offset(195.0, 909.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
+The finder corresponds to this RenderBox: RenderClipRect#162cd relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#cdb21(_ReusableRenderView#c465f), HitTestEntry<HitTestTarget>#84e5f(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
+#3      WidgetController.dragUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2483:17)
+<asynchronous suspension>
+#4      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#5      WidgetController.scrollUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2439:7)
+<asynchronous suspension>
+#6      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#7      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/avant/test/visual_capture_test.dart:171:13)
+<asynchronous suspension>
+#8      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#9      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#10     StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "drag()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+
+Warning: A call to drag() with finder "Found 1 widget with type "Scrollable" descending from widget with type "StatsScreen" (ignoring all but last): [
+  Scrollable(axisDirection: right, physics: null, restorationId: null, dependencies: [InheritedCupertinoTheme, MediaQuery, ScrollConfiguration, UnmanagedRestorationScope, _InheritedTheme, _LocalizationsScope-[GlobalKey#f40bf]], state: ScrollableState#52e6a(position: ScrollPositionWithSingleContext#140e9(offset: 300.0, range: 0.0..768.0, viewport: 350.0, ScrollableState, ClampingScrollPhysics -> RangeMaintainingScrollPhysics, IdleScrollActivity#24060, ScrollDirection.idle), effective physics: ClampingScrollPhysics -> RangeMaintainingScrollPhysics)),
+]" derived an Offset (Offset(195.0, 909.0)) that would not hit test on the specified widget.
+Maybe the widget is actually off-screen, or another widget is obscuring it, or the widget cannot receive pointer events.
+Indeed, Offset(195.0, 909.0) is outside the bounds of the root of the render tree, Size(390.0, 844.0).
+The finder corresponds to this RenderBox: RenderClipRect#162cd relayoutBoundary=up5
+The hit test result at that offset is: HitTestResult(HitTestEntry<HitTestTarget>#05975(_ReusableRenderView#c465f), HitTestEntry<HitTestTarget>#2d50e(<AutomatedTestWidgetsFlutterBinding>))
+#0      WidgetController._getElementPoint (package:flutter_test/src/controller.dart:2165:25)
+#1      WidgetController.getCenter (package:flutter_test/src/controller.dart:1947:12)
+#2      WidgetController.drag (package:flutter_test/src/controller.dart:1604:7)
+#3      WidgetController.dragUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2483:17)
+<asynchronous suspension>
+#4      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#5      WidgetController.scrollUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2439:7)
+<asynchronous suspension>
+#6      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#7      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/avant/test/visual_capture_test.dart:171:13)
+<asynchronous suspension>
+#8      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#9      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#10     StackZoneSpecification._registerCallback.<anonymous closure> (package:stack_trace/src/stack_zone_specification.dart:114:42)
+<asynchronous suspension>
+To silence this warning, pass "warnIfMissed: false" to "drag()".
+To make this warning fatal, set WidgetController.hitTestWarningShouldBeFatal to true.
+
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following StateError was thrown running a test:
+Bad state: No element
+
+When the exception was thrown, this was the stack:
+#0      Iterable.single (dart:core/iterable.dart:694:25)
+#1      WidgetController.element (package:flutter_test/src/controller.dart:888:30)
+#2      WidgetController.dragUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2489:38)
+<asynchronous suspension>
+#3      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#4      WidgetController.scrollUntilVisible.<anonymous closure> (package:flutter_test/src/controller.dart:2439:7)
+<asynchronous suspension>
+#5      TestAsyncUtils.guard.<anonymous closure> (package:flutter_test/src/test_async_utils.dart:130:27)
+<asynchronous suspension>
+#6      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/avant/test/visual_capture_test.dart:171:13)
+<asynchronous suspension>
+#7      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#8      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+The test description was:
+  rendus bordeaux et anthracite : écrans, thèmes et largeur compacte
+════════════════════════════════════════════════════════════════════════════════════════════════════
+Test failed. See exception logs above.
+The test description was: rendus bordeaux et anthracite : écrans, thèmes et largeur compacte
+
+::endgroup::
+::group::✅ Passing tests
+✅ /home/runner/work/streetlift-apk/streetlift-apk/avant/test/l5c_ecrans_capture_test.dart: principaux écrans : rendus comparables avant / après L5
+::endgroup::
+
+::error::1 test passed, 1 failed.
