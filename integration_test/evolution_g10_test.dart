@@ -327,7 +327,7 @@ void main() {
       if (mode == kc.GuidanceMode.free && accept.evaluate().isNotEmpty) {
         await tapF(tester, accept, ms: 1500);
         releve['accepte'] = store.planEvolution.entries
-            .where((e) => e.status.name == 'accepted')
+            .where((e) => e.status == 'accepted')
             .length;
       }
     }
