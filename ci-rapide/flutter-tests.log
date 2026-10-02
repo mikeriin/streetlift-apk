@@ -1,0 +1,26 @@
+00:00 +0: loading /home/runner/work/streetlift-apk/streetlift-apk/test/g10_evolution_test.dart
+00:00 +0: modèle section planEvolution : relue à l’identique, contrôlée ; suites données au format du moteur ; bloc retiré d’une proposition refusée
+00:00 +1: modèle déblocage : textes de Koach (D5.7)
+00:00 +2: magasin mode assisté : volume appliqué d’office, annoncé, programme affiché et bloc du moteur à jour à partir de la semaine visée ; semaines d’avant intactes ; annulation jusqu’à la séance concernée
+00:00 +3: magasin annulation refusée une fois la séance concernée commencée, et seulement pour le dernier changement du bloc
+00:00 +4: magasin mode libre : rien n’est appliqué sans accord ; Accepter, Refuser (transmis au moteur), Plus tard (le lendemain)
+00:00 +5: magasin proposition en attente que le moteur ne fait plus : retirée ; passage au mode assisté : appliquée
+00:01 +6: magasin exercise_swap (assisted) : restructuration de kalis_plan appliquée d’office à partir de la semaine visée, semaines d’avant intactes, annulable
+00:01 +7: magasin pain_sparing (assisted) : restructuration de kalis_plan appliquée d’office à partir de la semaine visée, semaines d’avant intactes, annulable
+00:01 +8: magasin session_restructure (assisted) : restructuration de kalis_plan appliquée d’office à partir de la semaine visée, semaines d’avant intactes, annulable
+00:01 +9: magasin block_restructure (assisted) : restructuration de kalis_plan appliquée d’office à partir de la semaine visée, semaines d’avant intactes, annulable
+00:01 +10: magasin exercise_swap (free) : restructuration de kalis_plan appliquée une fois acceptée à partir de la semaine visée, semaines d’avant intactes, annulable
+00:01 +11: magasin pain_sparing (free) : restructuration de kalis_plan appliquée une fois acceptée à partir de la semaine visée, semaines d’avant intactes, annulable
+00:02 +12: magasin session_restructure (free) : restructuration de kalis_plan appliquée une fois acceptée à partir de la semaine visée, semaines d’avant intactes, annulable
+00:02 +13: magasin block_restructure (free) : restructuration de kalis_plan appliquée une fois acceptée à partir de la semaine visée, semaines d’avant intactes, annulable
+00:02 +14: magasin sauvegarde : section planEvolution exportée, relue au démarrage et à l’import ; section invalide refusée à l’import, gardée telle quelle au démarrage
+00:02 +15: magasin démarrage sur une section planEvolution illisible : gardée telle quelle, aucune proposition écrite par-dessus
+00:02 +16: magasin fin de bloc : bloc suivant passé en revue (nouveaux exercices seulement) puis validé ; propositions en place reprises
+00:02 +17: magasin simulateur : même graine, même session ; séances faites, notées en flammes, revue du moteur
+00:03 +18: magasin déblocage visible (D5.7) : charges dès la première séance, volume dans 2 semaines
+00:03 +19: écrans (setUpAll)
+00:03 +19: écrans carte de l’accueil (sombre) : proposition en attente, Accepter / Refuser / Plus tard, Pourquoi ?, ce qui change ; 320 px et texte à 200 %
+00:04 +20: écrans carte de l’accueil (clair) : proposition en attente, Accepter / Refuser / Plus tard, Pourquoi ?, ce qui change ; 320 px et texte à 200 %
+00:04 +21: écrans écran Évolution : mode modifiable, déblocage, historique avec raisons ; annulation
+00:04 +22: écrans (tearDownAll)
+00:04 +22: All tests passed!
