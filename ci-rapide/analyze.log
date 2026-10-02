@@ -1,0 +1,5 @@
+Analyzing streetlift-apk...                                     
+
+  error • The property 'readiness' can't be unconditionally accessed because the receiver can be 'null'. Try making the access conditional (using '?.') or adding a null check to the target ('!') • test/g10_diag_test.dart:50:36 • unchecked_use_of_nullable_value
+
+1 issue found. (ran in 14.2s)
