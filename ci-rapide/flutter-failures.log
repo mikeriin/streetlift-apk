@@ -1,0 +1,86 @@
+DIAG avance_street ms=973 done=36 missed=0 sets=650 blocks=2 unlock=block_restructure weeksObs=13 pending=0 entries=[] err=null
+00:05 +21: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_evolution_test.dart: écrans carte de l’accueil (sombre) : proposition en attente, Accepter / Refuser / Plus tard, Pourquoi ?, ce qui change ; 320 px et texte à 200 %
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: at least one matching candidate
+  Actual: _TextContainingWidgetFinder:<Found 0 widgets with text containing →: []>
+   Which: means none were found but some were expected
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure>.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/test/g10_evolution_test.dart:726:9)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///home/runner/work/streetlift-apk/streetlift-apk/test/g10_evolution_test.dart line 726
+The test description was:
+  carte de l’accueil (sombre) : proposition en attente, Accepter / Refuser / Plus tard, Pourquoi ?,
+  ce qui change ; 320 px et texte à 200 %
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:06 +21 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_diag_test.dart: diag notes_paresseuses
+00:06 +21 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_evolution_test.dart: écrans carte de l’accueil (sombre) : proposition en attente, Accepter / Refuser / Plus tard, Pourquoi ?, ce qui change ; 320 px et texte à 200 % [E]
+  Test failed. See exception logs above.
+  The test description was: carte de l’accueil (sombre) : proposition en attente, Accepter / Refuser / Plus tard, Pourquoi ?, ce qui change ; 320 px et texte à 200 %
+  
+00:06 +21 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_diag_test.dart: diag notes_paresseuses
+DIAG notes_paresseuses ms=962 done=36 missed=0 sets=649 blocks=2 unlock=block_restructure weeksObs=13 pending=0 entries=[] err=null
+00:06 +22 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_evolution_test.dart: écrans carte de l’accueil (clair) : proposition en attente, Accepter / Refuser / Plus tard, Pourquoi ?, ce qui change ; 320 px et texte à 200 %
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: at least one matching candidate
+  Actual: _TextContainingWidgetFinder:<Found 0 widgets with text containing →: []>
+   Which: means none were found but some were expected
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure>.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/test/g10_evolution_test.dart:726:9)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///home/runner/work/streetlift-apk/streetlift-apk/test/g10_evolution_test.dart line 726
+The test description was:
+  carte de l’accueil (clair) : proposition en attente, Accepter / Refuser / Plus tard, Pourquoi ?,
+  ce qui change ; 320 px et texte à 200 %
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:07 +22 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_diag_test.dart: diag irregulier
+00:07 +22 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_evolution_test.dart: écrans carte de l’accueil (clair) : proposition en attente, Accepter / Refuser / Plus tard, Pourquoi ?, ce qui change ; 320 px et texte à 200 % [E]
+  Test failed. See exception logs above.
+  The test description was: carte de l’accueil (clair) : proposition en attente, Accepter / Refuser / Plus tard, Pourquoi ?, ce qui change ; 320 px et texte à 200 %
+  
+00:07 +23 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_diag_test.dart: diag irregulier
+DIAG irregulier ms=761 done=24 missed=12 sets=429 blocks=2 unlock=block_restructure weeksObs=12 pending=0 entries=[] err=null
+DIAG irregulier   proposal_withheld {id: block:kp-b2-2026-12-10@2, kind: block_restructure, utility: 0.5, progress: 0.3, risk: 0.0, fatigue: 0.0, adherence: -0.2, threshold: 0.85, withheld: no_change}
+00:07 +24 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_diag_test.dart: diag maison_halteres
+DIAG maison_halteres ms=1084 done=36 missed=0 sets=642 blocks=2 unlock=block_restructure weeksObs=13 pending=0 entries=[] err=null
+00:08 +25 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_seance_sans_moteur_test.dart: (setUpAll)
+00:09 +25 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_diag_test.dart: diag calisthenie_parc
+DIAG calisthenie_parc ms=944 done=36 missed=0 sets=649 blocks=2 unlock=block_restructure weeksObs=13 pending=0 entries=[] err=null
+00:09 +26 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_seance_sans_moteur_test.dart: coche : série validée avec la flamme visée ; correction sur la ligne ; aucune suggestion de l’ancien Koach
+00:10 +27 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_diag_test.dart: diag douleur_et_lieu
+DIAG douleur_et_lieu ms=1177 done=36 missed=0 sets=643 blocks=2 unlock=block_restructure weeksObs=13 pending=0 entries=[] err=null
+00:11 +28 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_seance_sans_moteur_test.dart: série écartée depuis le menu de la ligne des flammes
+00:11 +29 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_seance_sans_moteur_test.dart: menu de séance sans moteur : ni « J’ai seulement… », ni « Échanger un exercice », ni « Je m’entraîne ailleurs »
+00:12 +30 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_charges_consigne_test.dart: instantané de référence : 5 jeux × 1 812 exercices
+00:12 +31 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_charges_consigne_test.dart: sans données de l’ancien Koach : identique à 2.x
+00:12 +32 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_charges_consigne_test.dart: données de l’ancien Koach (L7) présentes : sans effet, identique à 2.x ; aucune difficulté exigée, aucune prescription écrite
+00:13 +33 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: magasin sans profil v2 : séance hors moteur (L7 inchangé)
+00:14 +34 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: magasin programme du propriétaire (D5.10) : porté tel quel dans un bloc importé, séance servie par kalis_adapt, structure intacte
+00:14 +35 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/g7_plan_test.dart: (setUpAll)
+00:14 +35 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: magasin journal présenté au moteur : séances passées placées dans le bloc (rang du jour), emplacements, flammes (C9), séance en cours écartée
+00:14 +36 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/g7_plan_test.dart: contrat (INTEGRATION.md § 4) requêtes et réponses de kalis_plan : sérialisées, relues, égales, valides
+00:14 +37 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/g7_plan_test.dart: contrat (INTEGRATION.md § 4) requêtes et réponses de kalis_plan : sérialisées, relues, égales, valides
+00:15 +38 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/g7_plan_test.dart: contrat (INTEGRATION.md § 4) requêtes et réponses de kalis_plan : sérialisées, relues, égales, valides
+00:15 +39 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/g7_plan_test.dart: contrat (INTEGRATION.md § 4) requêtes et réponses de kalis_plan : sérialisées, relues, égales, valides
+00:15 +40 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/g7_plan_test.dart: contrat (INTEGRATION.md § 4) requêtes et réponses de kalis_plan : sérialisées, relues, égales, valides
+00:15 +41 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/g7_plan_test.dart: contrat (INTEGRATION.md § 4) requêtes et réponses de kalis_plan : sérialisées, relues, égales, valides
+00:15 +42 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: magasin douleur : zone épargnée ; règle L13 (> 3/10 plus de 2 séances de suite) → renvoi vers un professionnel
