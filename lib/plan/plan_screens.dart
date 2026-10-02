@@ -616,12 +616,16 @@ class PlanCreationScreenState extends State<PlanCreationScreen> {
             'Ton bloc se termine. Voici le suivant : ${plan.weeks} semaines, '
             '${plan.days.length} séance${plan.days.length > 1 ? 's' : ''} par '
             'semaine.$done '
-            '${fresh == 0 ? 'Aucun nouvel exercice à passer en revue.' : '$fresh nouvel${fresh > 1 ? 's' : ''} exercice${fresh > 1 ? 's' : ''} à passer en revue.'}',
+            '${fresh == 0
+                ? 'Aucun nouvel exercice à passer en revue.'
+                : fresh == 1
+                ? 'Un nouvel exercice à passer en revue.'
+                : '$fresh nouveaux exercices à passer en revue.'}',
         why:
             'Je garde tes mouvements principaux, je fais tourner une partie '
-            'des exercices de complément et je fais progresser ce que tu '
-            'maîtrises, d’après ce que tes séances ont montré. Les exercices '
-            'que tu connais déjà restent validés.',
+            'des exercices de complément et je passe à une variante plus '
+            'difficile quand tes séances montrent que tu es prêt. Les '
+            'exercices que tu connais déjà restent validés.',
       ),
       if (changes.isNotEmpty)
         KCard(

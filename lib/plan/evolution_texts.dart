@@ -204,7 +204,7 @@ String evolutionAction(
       }
       return 'ajuster ton volume';
     case kc.ProposalKind.deload:
-      return 'alléger ta semaine prochaine (moins de séries, plus de marge)';
+      return 'alléger une semaine (moins de séries, plus de marge)';
     case kc.ProposalKind.exerciseSwap || kc.ProposalKind.painSparing:
       final c = first(kc.ChangeKind.exerciseReplaced);
       if (c?.fromExerciseId != null && c?.toExerciseId != null) {
@@ -236,6 +236,25 @@ String evolutionAction(
   }
 }
 
+/// « de ajouter » → « d’ajouter » (élision devant une voyelle ou un h).
+String de(String s) =>
+    RegExp(r'^[aeiouyhàâéèêëîïôûü]', caseSensitive: false).hasMatch(s)
+    ? 'd’$s'
+    : 'de $s';
+
+/// Quand le changement s'applique, d'après la semaine du bloc où il
+/// commence ([fromWeek]) et celle d'aujourd'hui ([currentWeek], null :
+/// inconnue ou autre bloc).
+String evolutionWhen(int fromWeek, int? currentWeek) {
+  if (currentWeek == null) return ' (semaine ${fromWeek + 1} du bloc)';
+  if (fromWeek == currentWeek + 1) return ' à partir de la semaine prochaine';
+  if (fromWeek == currentWeek) return ' dès cette semaine';
+  if (fromWeek > currentWeek) {
+    return ' à partir de la semaine ${fromWeek + 1} du bloc';
+  }
+  return '';
+}
+
 /// Phrase avec une majuscule initiale (« Ajouter 1 série à… »).
 String capitalized(String s) =>
     s.isEmpty ? s : '${s[0].toUpperCase()}${s.substring(1)}';
@@ -246,6 +265,7 @@ String evolutionHeadline(
   EvolutionEntry e, {
   required String Function(String id) exerciseName,
   required String Function(int dayIndex) dayName,
+  int? currentWeek,
 }) {
   final action = evolutionAction(
     e,
@@ -254,13 +274,10 @@ String evolutionHeadline(
   );
   final reasons = evolutionReasons(e.proposal, exerciseName: exerciseName);
   final why = reasons.isEmpty ? '' : ' ${reasons.first}';
-  // La décharge dit déjà « ta semaine prochaine ».
-  final when = e.proposal.kind == kc.ProposalKind.deload
-      ? ''
-      : ' à partir de la semaine prochaine';
+  final when = evolutionWhen(e.fromWeek, currentWeek);
   return switch (e.status) {
-    EvoStatus.pending => 'Je te propose de $action$when.$why',
-    EvoStatus.applied => 'J’ai prévu de $action$when.$why',
+    EvoStatus.pending => 'Je te propose ${de(action)}$when.$why',
+    EvoStatus.applied => 'J’ai prévu ${de(action)}$when.$why',
     EvoStatus.accepted => 'C’est noté : je vais $action$when.',
     EvoStatus.refused => 'Refusé : je ne vais pas $action.',
     EvoStatus.undone => 'Annulé : je ne vais plus $action.',

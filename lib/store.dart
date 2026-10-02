@@ -1907,6 +1907,15 @@ class AppStore extends ChangeNotifier {
     if (values[ref] == v && refStatus[ref] == 'set') return;
     values[ref] = v;
     refStatus[ref] = 'set';
+    // Poids du corps saisi : pesée du jour (le profil et les charges lisent
+    // la pesée la plus récente ; L7 le faisait, G10 le garde).
+    if (ref == 'B4' && koach.weighIns.isNotEmpty && v >= 20 && v <= 400) {
+      final day = civilDateString(storeClock());
+      koach.weighIns
+        ..removeWhere((w) => w.date == day)
+        ..add(WeighIn(day, v))
+        ..sort((a, b) => a.date.compareTo(b.date));
+    }
     _persist();
     notifyListeners();
   }

@@ -257,7 +257,7 @@ class PlanEvolution {
       throw const FormatException('Évolution : version non prise en charge.');
     }
     final list = raw['entries'];
-    if (list is! List || list.length > kEvolutionMaxEntries * 2) {
+    if (list is! List || list.length > kEvolutionMaxEntries * 25) {
       throw const FormatException('Évolution : propositions invalides.');
     }
     final entries = [for (final e in list) EvolutionEntry.fromJson(e)];
