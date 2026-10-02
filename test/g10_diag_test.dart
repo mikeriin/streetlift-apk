@@ -9,7 +9,7 @@ import 'package:streetlift_tracker/store.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   for (final key in kSimAthleteLabels.keys) {
-   for (final seed in [1, 2, 3, 4, 5, 6]) {
+   for (final seed in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) {
     test('diag $key $seed', () async {
       SharedPreferences.setMockInitialValues({});
       final s = AppStore()..storeClock = () => DateTime(2026, 10, 1, 9);
@@ -18,7 +18,7 @@ void main() {
         ProfileDraft.of(
           sampleAthleteProfile(
             on: kc.CivilDate(2026, 10, 1),
-            guidance: kc.GuidanceMode.assisted,
+            guidance: kc.GuidanceMode.free,
           ),
         )..consent = 'refused',
       );
