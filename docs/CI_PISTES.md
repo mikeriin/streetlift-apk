@@ -47,3 +47,20 @@ session si nécessaire, résultats commités dans `docs/` du paquet).
 Mise en place contrôlée par la conversation de pilotage le 01/10/2026 : run 36826528447 vert (« aucun paquet », « aucun outil »), résultats recommités sans relancer le workflow.
 
 Piège constaté : un push qui **crée** la branche de contrôle sur un commit déjà présent dans le dépôt ne déclenche aucun run. La méthode `git commit-tree` crée toujours un commit nouveau, donc elle n'est pas concernée ; ne pousse jamais une branche existante telle quelle sur la branche de contrôle.
+
+## Pipeline de calibrage (CP, 02/10/2026)
+
+Le pipeline « Calibrage des programmes » (`pipeline/cp/PIPELINE_CP.md`) fait
+travailler **deux voies en parallèle** sur la branche `moteurs`. Chaque voie a
+sa branche de contrôle et donc son groupe de concurrence :
+
+| Voie | Branche de contrôle | Groupe de concurrence |
+| --- | --- | --- |
+| A | `claude/ci-cp-a` | `ci-paquets-refs/heads/claude/ci-cp-a` |
+| B | `claude/ci-cp-b` | `ci-paquets-refs/heads/claude/ci-cp-b` |
+
+Même méthode que ci-dessus (`git commit-tree <arbre> -p origin/claude/ci-cp-<voie>`,
+push en avance rapide, résultats dans `ci-out/`). Si la branche n'existe pas
+encore, crée-la depuis un **commit neuf** (jamais depuis un commit déjà présent
+dans le dépôt : aucun run ne partirait). Rappel : un commit qui ne change que
+`ci-out/` ne déclenche aucun run (`paths-ignore`).

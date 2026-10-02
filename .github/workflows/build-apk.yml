@@ -8,7 +8,7 @@ on:
     # Branches de piste du pipeline GP (01/10/2026) : jamais de build signé
     # (elles ne contiennent que des paquets ; l'application en récupère les
     # dossiers packages/<paquet> par étiquette). Sur main : branches: ["**"].
-    branches-ignore: ["moteurs", "koach", "claude/ci-gp-moteurs", "claude/ci-gp-koach"]
+    branches-ignore: ["moteurs", "koach", "claude/ci-gp-moteurs", "claude/ci-gp-koach", "claude/ci-cp-a", "claude/ci-cp-b"]
     paths:
       - lib/**
       - assets/**
