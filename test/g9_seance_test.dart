@@ -553,6 +553,11 @@ void main() {
       expect(flameValueText(10), contains('échec'));
       expect(flameValueText(7), '7 flammes · RIR 2');
       expect(flameValueText(1), contains('5 et plus'));
+      // Correction 3 : un mot par flamme.
+      expect(kFlameWords.length, 10);
+      expect(kFlameWords.toSet().length, 10);
+      expect(flameTrackText(7), 'Dur · RIR 2');
+      expect(flameTrackText(10), 'Échec · RIR 0');
       expect(kFeelLabels.length, 5);
       expect(feelIsLow(2), isTrue);
       expect(feelIsLow(3), isFalse);
@@ -719,7 +724,7 @@ void main() {
           ),
         );
         await tester.pumpAndSettle();
-        expect(find.text('7 flammes · RIR 2'), findsOneWidget);
+        expect(find.text('Dur · RIR 2'), findsOneWidget);
         expect(find.byKey(const ValueKey('flame-thumb-7')), findsOneWidget);
         // G9 correction 2 : la flamme est posée par le centre de sa base.
         expect(
@@ -755,7 +760,7 @@ void main() {
         );
         await tester.pumpAndSettle();
         expect(v, 9);
-        expect(find.text(flameValueText(9)), findsOneWidget);
+        expect(find.text(flameTrackText(9)), findsOneWidget);
         await tester.tap(find.byKey(const ValueKey('flame-unknown')));
         await tester.pumpAndSettle();
         expect(v, isNull);
@@ -816,7 +821,7 @@ void main() {
         final text = tester.getCenter(
           find.byKey(const ValueKey('set-summary-flames-2')),
         );
-        expect(find.text('$f'), findsWidgets);
+        expect(find.text(flameWord(f)), findsOneWidget);
         final done = tester.getCenter(find.text('16,25 kg × 8'));
         expect(flame.dy, moreOrLessEquals(text.dy, epsilon: 1));
         expect(flame.dy, moreOrLessEquals(done.dy, epsilon: 1));

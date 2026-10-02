@@ -1,4 +1,8 @@
-# Kalis Track dev6.6.2 — Recentrage sur le programme (pipeline « Génération et progression »)
+# Kalis Track dev6.6.3 — Recentrage sur le programme (pipeline « Génération et progression »)
+
+## dev6.6.3 — Un mot par flamme (G9, correction 3)
+
+- Chaque flamme a son mot : 1 Léger, 2 Facile, 3 Tranquille, 4 Modéré, 5 Soutenu, 6 Appuyé, 7 Dur, 8 Intense, 9 Limite, 10 Échec. La ligne des flammes affiche « Dur · RIR 2 » ; les séries résumées affichent le mot au lieu du chiffre. Version « dev6.6.3 ».
 
 ## dev6.6.2 — Flamme du curseur posée sur sa base (G9, correction 2)
 
