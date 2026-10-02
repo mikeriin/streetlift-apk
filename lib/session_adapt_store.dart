@@ -21,6 +21,10 @@ part of 'store.dart';
 /// moins de calcul quand le journal et le bloc sont les mêmes objets).
 final ka.KalisAdapt kalisAdaptEngine = ka.KalisAdapt();
 
+/// Lecture de `SessionLog.adapt`, attachée à l'objet JSON lui-même (chaque
+/// écriture en crée un nouveau).
+final Expando<(SessionAdapt?,)> _g9Parsed = Expando('g9');
+
 /// Place d'une journée dans un bloc du moteur.
 class AdaptPlace {
   final kc.ProgramBlock block;
@@ -94,7 +98,7 @@ extension SessionAdaptStore on AppStore {
   /// Le moteur peut servir les séances : profil v2 et base chargée.
   bool get adaptAvailable =>
       content.catalog != null &&
-      AthleteProfileStore(this).athleteProfileForEngines != null;
+      adaptProfile != null;
 
   /// Mode du profil (D3.7, D5.6).
   String get adaptMode {
@@ -104,7 +108,7 @@ extension SessionAdaptStore on AppStore {
 
   ka.ExerciseBook? _adaptBook() {
     final catalog = content.catalog;
-    final profile = AthleteProfileStore(this).athleteProfileForEngines;
+    final profile = adaptProfile;
     if (catalog == null || profile == null) return null;
     return _g9Memo(
       'book|${identityHashCode(catalog)}|${identityHashCode(athlete)}',
@@ -113,11 +117,37 @@ extension SessionAdaptStore on AppStore {
   }
 
   T _g9Memo<T>(String key, T Function() build) {
-    if (_g9Cache.containsKey(key)) return _g9Cache[key] as T;
-    if (_g9Cache.length > 64) _g9Cache.clear();
+    if (_g9Cache.containsKey(key)) {
+      // Plus récent en dernier (éviction des plus anciens).
+      final v = _g9Cache.remove(key);
+      _g9Cache[key] = v;
+      return v as T;
+    }
+    if (_g9Cache.length >= 256) {
+      for (final k in _g9Cache.keys.take(64).toList()) {
+        _g9Cache.remove(k);
+      }
+    }
     final v = build();
     _g9Cache[key] = v;
     return v;
+  }
+
+  /// Profil v2 pour les moteurs, le même objet tant que le profil et la
+  /// référence santé ne changent pas (le moteur garde alors son rejeu).
+  kc.AthleteProfile? get adaptProfile {
+    final a = athlete;
+    if (a == null) return null;
+    final ref = jsonEncode(AthleteProfileStore(this).athleteHealthRef.toJson());
+    final hit = _g9Cache['profile'];
+    if (hit is (AthleteRecord, String, kc.AthleteProfile) &&
+        identical(hit.$1, a) &&
+        hit.$2 == ref) {
+      return hit.$3;
+    }
+    final p = AthleteProfileStore(this).athleteProfileForEngines;
+    if (p != null) _g9Cache['profile'] = (a, ref, p);
+    return p;
   }
 
   // ------------------------------------------------------------ blocs
@@ -470,19 +500,15 @@ extension SessionAdaptStore on AppStore {
     if (raw == null) return null;
     // Lecture gardée tant que le JSON est le même objet (chaque écriture
     // en crée un nouveau).
-    final hit = _g9Cache['sa|$key'];
-    if (hit is (Map<String, dynamic>, SessionAdapt?) &&
-        identical(hit.$1, raw)) {
-      return hit.$2;
-    }
+    final hit = _g9Parsed[raw];
+    if (hit != null) return hit.$1;
     SessionAdapt? parsed;
     try {
       parsed = SessionAdapt.fromJson(raw);
     } on FormatException {
       parsed = null;
     }
-    if (_g9Cache.length > 64) _g9Cache.clear();
-    _g9Cache['sa|$key'] = (raw, parsed);
+    _g9Parsed[raw] = (parsed,);
     return parsed;
   }
 
@@ -514,8 +540,17 @@ extension SessionAdaptStore on AppStore {
       for (final x in e.value.ex.values) {
         for (final s in x.sets) {
           if (s.done) {
-            n = (n * 31 +
-                    Object.hash(s.kg, s.reps, s.flames, s.excluded, s.effort)) &
+            n =
+                (n * 31 +
+                    Object.hash(
+                      s.kg,
+                      s.reps,
+                      s.rir,
+                      s.flames,
+                      s.flamesUnknown,
+                      s.excluded,
+                      s.effort,
+                    )) &
                 0x3fffffff;
           }
         }
@@ -547,6 +582,12 @@ extension SessionAdaptStore on AppStore {
       legacyDate: program.legacyDateFor,
       skip: (k) => k == excludeKey,
       slotOf: adaptSlotOf,
+      testOf: (w, j, key) {
+        final a = sessionAdaptOf(sessionKey(w, j));
+        if (a == null) return false;
+        return _adaptItem(a, adaptSlotOf(w, j, key))?.kind ==
+            kc.SetKind.test;
+      },
       session: (w, j, key) {
         final a = sessionAdaptOf(key);
         if (a != null) {
@@ -592,7 +633,7 @@ extension SessionAdaptStore on AppStore {
   // ------------------------------------------------------- prescription
 
   kc.AdaptInput? _adaptInput(AdaptPlace place, String excludeKey) {
-    final profile = AthleteProfileStore(this).athleteProfileForEngines;
+    final profile = adaptProfile;
     if (profile == null) return null;
     return kc.AdaptInput(
       profile: profile,
@@ -622,6 +663,18 @@ extension SessionAdaptStore on AppStore {
   static bool _answered(kc.HealthCheck? c) =>
       c != null && c.toJson().isNotEmpty;
 
+  /// Faits du bilan, gardés même sans l'ajustement : temps disponible et
+  /// douleurs (null : aucun).
+  static kc.HealthCheck? factsOf(kc.HealthCheck c) {
+    final j = c.toJson();
+    final out = <String, Object?>{
+      if (j.containsKey('minutesAvailable'))
+        'minutesAvailable': j['minutesAvailable'],
+      if (j.containsKey('pains')) 'pains': j['pains'],
+    };
+    return out.isEmpty ? null : kc.HealthCheck.fromJson(out);
+  }
+
   /// Séance du moteur pour la journée [base] de la semaine [week] : celle
   /// du journal, sinon une nouvelle prescription sans bilan (avant toute
   /// série). Null : séance hors moteur (profil v2 absent, journée hors
@@ -629,19 +682,26 @@ extension SessionAdaptStore on AppStore {
   SessionAdapt? adaptOpen(int week, DayPlan base) {
     if (week < 1 || base.exercises.isEmpty) return null;
     final key = sessionKey(week, base.j);
-    final existing = logs[key]?.adapt;
-    if (existing != null) return sessionAdaptOf(key);
-    if (!adaptAvailable) return null;
     final log = logs[key];
-    if (log != null &&
-        (log.done || log.ex.values.any((x) => x.sets.any((s) => s.done)))) {
-      return null;
+    final started =
+        log != null &&
+        (log.done || log.ex.values.any((x) => x.sets.any((s) => s.done)));
+    SessionAdapt? stale;
+    if (log?.adapt != null) {
+      final a = sessionAdaptOf(key);
+      // Prescription du jour, ou séance commencée : gardée telle quelle.
+      if (a == null || started || a.date == _adaptToday.iso) return a;
+      // Prescrite un autre jour et pas commencée : nouvelle prescription
+      // (journal et forme du jour ont changé), sans l'ancien bilan.
+      stale = a;
     }
+    if (!adaptAvailable) return stale;
+    if (started) return null;
     final place = adaptPlaceOf(week, base.j);
     if (place == null) return null;
     try {
       final input = _adaptInput(place, key);
-      if (input == null) return null;
+      if (input == null) return stale;
       final plan = _adaptPrescribe(place, input, null, null);
       final a = SessionAdapt(
         blockId: place.blockId,
@@ -651,7 +711,17 @@ extension SessionAdaptStore on AppStore {
         mode: adaptMode,
         plan: plan,
       );
-      sessionLog(week, base.j).adapt = a.toJson().cast<String, dynamic>();
+      final target = sessionLog(week, base.j);
+      target.adapt = a.toJson().cast<String, dynamic>();
+      // Séries déjà préparées (non validées) : nombre et cibles du moteur.
+      for (final x in target.ex.values) {
+        for (final s in x.sets) {
+          if (s.done) continue;
+          s.kg = '';
+          s.reps = '';
+        }
+      }
+      _adaptResync(week, base, a, a, target, key);
       // Appelé pendant la construction de l'écran de séance : écriture
       // différée, sans prévenir les écouteurs.
       _dataRevision++;
@@ -659,7 +729,7 @@ extension SessionAdaptStore on AppStore {
       _saveT = Timer(const Duration(milliseconds: 600), _flushLogs);
       return a;
     } catch (_) {
-      return null;
+      return stale;
     }
   }
 
@@ -696,7 +766,10 @@ extension SessionAdaptStore on AppStore {
       final plan = _adaptPrescribe(place, input, useCheck, where);
       kc.SessionPlan? without;
       if (useCheck != null) {
-        final b = _adaptPrescribe(place, input, null, where);
+        // « Garder ma séance » / « Annuler » retire l'effet de la forme du
+        // jour, pas les faits donnés : temps disponible et douleurs restent.
+        final facts = factsOf(useCheck);
+        final b = _adaptPrescribe(place, input, facts, where);
         if (!jsonDeepEquals(b.toJson(), plan.toJson())) without = b;
       }
       final mode = adaptMode;
@@ -714,7 +787,8 @@ extension SessionAdaptStore on AppStore {
         choice: without == null
             ? null
             : (mode == 'assisted' ? 'applied' : 'pending'),
-        advice: a.advice,
+        // Conseils calculés pour l'ancienne prescription : retirés.
+        advice: const {},
       );
       _adaptStore(week, base, a, next);
       return next;
@@ -739,11 +813,13 @@ extension SessionAdaptStore on AppStore {
         _adaptStore(week, base, a, next);
         return next;
       }
+      // Bilan passé : la forme du jour n'est plus prise en compte ; le
+      // temps disponible et les douleurs déjà dits restent.
       return _adaptReprescribe(
         week,
         base,
         a,
-        check: null,
+        check: factsOf(a.check!),
         where: a.place,
         asked: true,
       );
@@ -991,7 +1067,9 @@ extension SessionAdaptStore on AppStore {
             exerciseId: id,
             exerciseOrder: order,
             setIndex: setIndex++,
-            kind: kc.SetKind.work,
+            kind: it?.kind == kc.SetKind.test
+                ? kc.SetKind.test
+                : kc.SetKind.work,
             externalLoadKg: parseLoadKg(s.kg),
             reps: seconds ? null : v,
             seconds: seconds ? v : null,
@@ -1116,7 +1194,7 @@ extension SessionAdaptStore on AppStore {
   AdaptSessionSummary? adaptSummary(int week, DayPlan base) {
     final a = sessionAdapt(week, base.j);
     final place = adaptPlaceOf(week, base.j);
-    final profile = AthleteProfileStore(this).athleteProfileForEngines;
+    final profile = adaptProfile;
     final catalog = content.catalog;
     if (a == null || place == null || profile == null || catalog == null) {
       return null;
@@ -1191,7 +1269,7 @@ extension SessionAdaptStore on AppStore {
     kc.TrainingLog log,
     Map<String, kc.SessionPlan?> cache,
   ) {
-    final profile = AthleteProfileStore(this).athleteProfileForEngines;
+    final profile = adaptProfile;
     if (profile == null) return null;
     for (var n = week; n <= math.min(week + 6, program.weeks.length); n++) {
       for (final d in program.week(n).days) {
@@ -1202,6 +1280,13 @@ extension SessionAdaptStore on AppStore {
         final dayItems = place.day?.items ?? const <kc.ExercisePrescription>[];
         if (!dayItems.any((it) => it.exerciseId == id)) continue;
         final k = '${place.blockId}|${place.weekIndex}|${place.dayIndex}';
+        // Prescrite au jour prévu de cette séance (la fatigue du jour
+        // retombe d'ici là), jamais avant aujourd'hui.
+        var day = _adaptToday;
+        if (program.start != null) {
+          final planned = civilOf(program.dateFor(n, d.j));
+          if (planned.compareTo(day) > 0) day = planned;
+        }
         final plan = cache.putIfAbsent(k, () {
           try {
             return kalisAdaptEngine.prescribeSession(
@@ -1211,7 +1296,7 @@ extension SessionAdaptStore on AppStore {
                   profile: profile,
                   block: place.block,
                   log: log,
-                  today: _adaptToday,
+                  today: day,
                 ),
                 weekIndex: place.weekIndex,
                 dayIndex: place.dayIndex,

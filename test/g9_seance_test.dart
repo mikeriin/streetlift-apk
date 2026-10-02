@@ -295,6 +295,44 @@ void main() {
       expect(empty.base, isNull);
     });
 
+    test('prescription d’un autre jour, séance pas commencée : nouvelle '
+        'prescription, bilan reposé ; temps et douleurs gardés quand '
+        'l’ajustement est annulé', () async {
+      await _ownerState(app);
+      _saveProfile(app, kc.GuidanceMode.assisted);
+      final day = app.program.week(12).day(1)!;
+      app.adaptOpen(12, day);
+      final a = app.adaptAnswer(
+        12,
+        day,
+        const kc.HealthCheck(overall: 1, minutesAvailable: 20),
+      )!;
+      expect(a.check!.toJson(), {'overall': 1, 'minutesAvailable': 20});
+      expect(
+        SessionAdaptStore.factsOf(a.check!)!.toJson(),
+        {'minutesAvailable': 20},
+      );
+      expect(
+        SessionAdaptStore.factsOf(const kc.HealthCheck(overall: 2)),
+        isNull,
+      );
+      // Le lendemain, rien de validé : nouvelle prescription, sans bilan.
+      clock = DateTime(2026, 9, 29, 9);
+      final b = app.adaptOpen(12, day)!;
+      expect(b.date, '2026-09-29');
+      expect(b.asked, isFalse);
+      expect(b.check, isNull);
+      // Une séance commencée garde sa prescription.
+      final e = app.adaptDay(12, day, b).exercises.firstWhere((x) => x.engine);
+      final log = app.exLog(12, 1, e);
+      app.adaptPrefill(12, 1, e, log);
+      if (log.sets[0].reps.isEmpty) log.sets[0].reps = '3';
+      log.sets[0].flames = 7;
+      expect(app.toggleSet(log, 0, app.logSpec(e)).ok, isTrue);
+      clock = DateTime(2026, 9, 30, 9);
+      expect(app.adaptOpen(12, day)!.date, '2026-09-29');
+    });
+
     test('mode libre : l’ajustement est proposé, rien n’est appliqué sans '
         'accord', () async {
       await _ownerState(app);

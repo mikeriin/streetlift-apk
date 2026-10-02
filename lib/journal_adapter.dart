@@ -71,7 +71,8 @@ String _civil(DateTime d) =>
 /// - [slotOf] : emplacement du bloc d'un exercice du journal ;
 /// - [targetOf] : cible affichée de la série de rang [index] (rang dans le
 ///   journal, séries non validées comprises). Avec une cible, une série
-///   réussie atteint au moins le bas de sa plage (C10).
+///   réussie atteint au moins le bas de sa plage (C10) ;
+/// - [testOf] : les séries de l'exercice sont celles d'un test.
 /// La note `flames` (G9, flammes de 1 à 10) passe avant `effort` et `rir`.
 ({TrainingLog log, JournalConversionReport report}) convertLegacyJournal(
   Map<String, dynamic> doc, {
@@ -82,6 +83,7 @@ String _civil(DateTime d) =>
   bool Function(String key)? skip,
   Map<String, Object?>? Function(int week, int day, String key)? session,
   String? Function(int week, int day, String exerciseKey)? slotOf,
+  bool Function(int week, int day, String exerciseKey)? testOf,
   Map<String, Object?>? Function(
     int week,
     int day,
@@ -148,6 +150,7 @@ String _civil(DateTime d) =>
           if (x['done'] == true) x,
       ];
       final slot = slotOf?.call(w, j, k);
+      final test = testOf?.call(w, j, k) ?? false;
       report.setsNotDone += all.length - done.length;
       final id = name.isEmpty ? null : exerciseId(name);
       if (id == null) {
@@ -174,7 +177,7 @@ String _civil(DateTime d) =>
           'exerciseId': id,
           'exerciseOrder': exerciseOrder,
           'setIndex': setIndex++,
-          'kind': 'work',
+          'kind': test ? 'test' : 'work',
         };
         final kg = _number(x['kg']);
         if (kg != null) rec['externalLoadKg'] = kg; // C7

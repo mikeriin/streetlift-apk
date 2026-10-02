@@ -72,10 +72,25 @@ class _HealthCheckPageState extends State<HealthCheckPage> {
 
   Future<void> _answer(int overall) async {
     if (_busy) return;
-    var check = kc.HealthCheck(overall: overall);
-    if (feelIsLow(overall)) {
+    // Réponse donnée ; le temps disponible et les douleurs déjà dits
+    // restent (faits) ; une réponse basse rouvre le détail avec les
+    // réponses précédentes.
+    final before = store.sessionAdapt(_w, widget.base.j)?.check;
+    final low = feelIsLow(overall);
+    final j = <String, Object?>{
+      if (before != null)
+        ...(low
+            ? before.toJson()
+            : (SessionAdaptStore.factsOf(before)?.toJson() ?? const {})),
+      'overall': overall,
+    };
+    var check = kc.HealthCheck.fromJson(j);
+    if (low) {
+      final initial = check;
       final detail = await Navigator.of(context).push<kc.HealthCheck>(
-        MaterialPageRoute(builder: (_) => HealthDetailScreen(initial: check)),
+        MaterialPageRoute(
+          builder: (_) => HealthDetailScreen(initial: initial),
+        ),
       );
       if (!mounted) return;
       if (detail != null) check = detail;
@@ -714,7 +729,10 @@ class _HealthDetailScreenState extends State<HealthDetailScreen> {
                       onPressed: () => setState(() {
                         final next = [...?_pains]
                           ..removeWhere((x) => x.zone == p.zone);
-                        _pains = next.isEmpty ? null : next;
+                        // Douleur déjà dite puis retirée : « aucune ».
+                        _pains = next.isEmpty && widget.initial.pains == null
+                            ? null
+                            : next;
                       }),
                     ),
                   ),
