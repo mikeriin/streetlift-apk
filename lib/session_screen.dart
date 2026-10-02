@@ -900,7 +900,6 @@ class SessionExercisePageState extends State<SessionExercisePage> {
     // G9 correction 1 : saisie valide d'abord ; la coche valide la série
     // avec la flamme visée déjà placée sur la ligne ouverte sous la série,
     // où elle se corrige.
-    var noted = false;
     if (!s.done) {
       final pre = checkSet(sp, s, rpe: store.settings.rpe);
       if (!pre.ok) {
@@ -909,7 +908,6 @@ class SessionExercisePageState extends State<SessionExercisePage> {
         return;
       }
       if (_needsFlames(ex, sp)) {
-        noted = true;
         _introAt = null;
         if (!store.flamesIntroSeen) {
           _introAt = (k, i);
@@ -934,7 +932,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
     setState(() {
       if (check.ok) {
         _issues.remove((k, i));
-        if (s.done && noted) _openSet[k] = i;
+        if (s.done) _openSet[k] = i;
         if (!s.done && _openSet[k] == i) _openSet.remove(k);
       } else {
         _issues[(k, i)] = check;
@@ -1840,11 +1838,10 @@ class SessionExercisePageState extends State<SessionExercisePage> {
           // ----- Logger : en-tête de colonnes + lignes -----
           // G9 correction 1 : sans ligne de saisie visible (toutes les
           // séries résumées), pas d'en-tête de colonnes.
-          if (!flameSets ||
-              [
-                for (var i = 0; i < log.sets.length; i++)
-                  !log.sets[i].done || (!readOnly && i == _openOf(k)),
-              ].any((x) => x))
+          if ([
+            for (var i = 0; i < log.sets.length; i++)
+              !log.sets[i].done || (!readOnly && i == _openOf(k)),
+          ].any((x) => x))
             _HeaderRow(
               spec: sp,
               showKg: showKg,
@@ -1857,8 +1854,9 @@ class SessionExercisePageState extends State<SessionExercisePage> {
           for (var i = 0; i < log.sets.length; i++)
             // G9 correction 1 : séries validées résumées en une ligne, sauf
             // la série ouverte (la dernière validée) ; toutes résumées en
-            // lecture (fin de séance, historique).
-            if (flameSets && log.sets[i].done && (readOnly || i != _openOf(k)))
+            // lecture (fin de séance, historique). Correction 2 : aussi
+            // pour les exercices sans flammes.
+            if (log.sets[i].done && (readOnly || i != _openOf(k)))
               SetSummaryLine(
                 setLabel: store.setLabel(sp, i),
                 done: setDoneText(log.sets[i], sp),
@@ -1880,7 +1878,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                 issue: _issues[(k, i)],
                 onEdited: readOnly ? null : () => _edited(k, i),
                 onCheck: readOnly ? null : () => _checkSet(k, i),
-                onLongPressLabel: !readOnly && flameSets && log.sets[i].done
+                onLongPressLabel: !readOnly && log.sets[i].done
                     ? () => setState(() => _openSet[k] = i)
                     : null,
                 onTimer: readOnly

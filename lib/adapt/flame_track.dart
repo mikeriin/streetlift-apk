@@ -46,6 +46,8 @@ String setDoneText(SetEntry s, LogSpec sp) {
       ? ''
       : seconds
       ? '${dec(reps)} s'
+      : sp.kind == 'duration'
+      ? '${dec(reps)} min'
       : '${dec(reps)} rep${reps == '1' ? '' : 's'}';
   final load = [
     if (kg.isNotEmpty && kg != '0') '${dec(kg)} kg',

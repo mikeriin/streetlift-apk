@@ -2,7 +2,8 @@
 
 ## dev6.6.2 — Flamme du curseur posée sur sa base (G9, correction 2)
 
-- Sur la ligne des flammes, la flamme choisie est posée par le centre de sa base arrondie (et non par le centre du dessin) : elle s'élève au-dessus de sa position. Version « dev6.6.2 ».
+- Sur la ligne des flammes, la flamme choisie est posée par le centre de sa base arrondie (et non par le centre du dessin) : elle s'élève au-dessus de sa position.
+- Les exercices sans flammes (échauffement, mobilité, durées…) sont résumés comme les autres : dernière série validée ouverte, les précédentes en une ligne (« 12 min », « 30 s », « 8 reps »), toutes en relecture. Version « dev6.6.2 ».
 
 ## dev6.6.1 — Flammes sous la série, séries résumées (G9, correction 1)
 

@@ -9,7 +9,8 @@
 Correction du propriétaire (02/10/2026) : sur la ligne des flammes, la flamme doit être un peu plus haute ; son point d'ancrage est le centre de la base de la flamme, pas le centre du dessin.
 
 - `FlameIcon(onBase: true)` : le centre de la base arrondie (demi-largeur au-dessus du bas du dessin) est posé au centre de la boîte ; utilisé pour la flamme de la ligne (`flame-thumb`), l'agrandissement de la transition part de ce point. Lignes résumées inchangées (flamme centrée sur le texte).
-- Test : `test/g9_seance_test.dart` (flamme de la ligne posée sur sa base).
+- Exercices sans flammes résumés comme les autres (seconde demande du propriétaire, même passage) : même règle de série ouverte ; « 12 min » pour une durée.
+- Test : `test/g9_seance_test.dart` (flamme de la ligne posée sur sa base, texte des lignes résumées pour chaque type de saisie).
 
 ## G9 correction 1 — Flammes sous la série, séries résumées (version dev6.6.1)
 

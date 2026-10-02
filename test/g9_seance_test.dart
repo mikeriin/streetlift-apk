@@ -770,6 +770,22 @@ void main() {
       }
     });
 
+    test('ligne résumée : tous les types de saisie (correction 2 : aussi '
+        'sans flammes)', () {
+      SetEntry e(String kg, String reps) => SetEntry()
+        ..kg = kg
+        ..reps = reps
+        ..done = true;
+      expect(setDoneText(e('16.25', '8'), const LogSpec('reps')), '16,25 kg × 8 reps');
+      expect(setDoneText(e('', '1'), const LogSpec('reps')), '1 rep');
+      expect(setDoneText(e('', '30'), const LogSpec('hold')), '30 s');
+      expect(
+        setDoneText(e('', '12'), const LogSpec('duration', seconds: 720)),
+        '12 min',
+      );
+      expect(setDoneText(e('0', ''), const LogSpec('reps')), '');
+    });
+
     testWidgets('ligne résumée : flamme alignée avec le texte', (tester) async {
       phone(tester);
       final semantics = tester.ensureSemantics();
