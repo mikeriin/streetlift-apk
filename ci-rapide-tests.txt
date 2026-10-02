@@ -1,1 +1,3 @@
-test/g10_diag_test.dart
+test/g10_evolution_test.dart
+test/g10_seance_sans_moteur_test.dart
+dev:test/g10_mode_dev_test.dart

@@ -26,7 +26,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:streetlift_tracker/athlete_profile.dart';
 import 'package:streetlift_tracker/dev/dev_session.dart';
 import 'package:streetlift_tracker/dev/dev_simulator.dart';
-import 'package:streetlift_tracker/dev/dev_widgets.dart' show DevActions;
 import 'package:streetlift_tracker/dev/engine_inspector.dart';
 import 'package:streetlift_tracker/kalis_clock.dart';
 import 'package:streetlift_tracker/main.dart';
@@ -40,11 +39,27 @@ final _root = GlobalKey();
 const _part = String.fromEnvironment('M6B_PART', defaultValue: 'a');
 const _limit = Timeout(Duration(minutes: 8));
 
-/// Athlètes simulés essayés : le moteur ne fait des propositions que quand
-/// les données le justifient (quelques-unes en 8 semaines, selon l'athlète,
-/// la graine et le calendrier) ; la session de test est recréée et la graine
-/// suivante essayée jusqu'à ce qu'une simulation en produise.
-const _athletes = ['intermediaire_salle', 'avance_street', 'calisthenie_parc'];
+/// Calendrier fixe de la session de test : le programme commence le jeudi
+/// 1er octobre 2026 (l'horloge de la session de test y est ramenée), pour
+/// que la simulation soit la même à chaque passage, quel que soit le jour
+/// réel. Athlète simulé `calisthenie_parc`, graine 3 : le moteur fait ses
+/// propositions de volume dans le 2e bloc (semaines 7 et 8). Partie a
+/// (mode assisté) : 8 semaines, changements appliqués et annoncés ;
+/// partie b (mode libre) : 7 semaines, proposition en attente sur
+/// l'accueil, acceptée depuis la carte.
+final _day0 = DateTime(2026, 10, 1);
+const _athlete = 'calisthenie_parc';
+const _seedN = 3;
+
+/// Décalage (jours) de l'horloge de la session de test pour être le [d].
+int _offsetTo(DateTime d) {
+  final real = KalisClock.realNow();
+  return DateTime.utc(
+    d.year,
+    d.month,
+    d.day,
+  ).difference(DateTime.utc(real.year, real.month, real.day)).inDays;
+}
 
 void main() {
   final binding = IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -238,6 +253,12 @@ void main() {
     }
     await opened(tester);
     releve['dev_actif'] = DevSession.active.value;
+    await SessionHost.restart(
+      () => DevSession.setOffsetDays(_offsetTo(_day0)),
+      message: 'Voyage dans le temps',
+    );
+    await opened(tester);
+    releve['dev_jour0'] = civilOf(KalisClock.now()).iso;
     store.settings
       ..theme = dark ? 'dark' : 'light'
       ..accent = accent;
@@ -252,43 +273,22 @@ void main() {
     await top(tester);
     await shot('03_simulateur');
     await home(tester);
-    // Simulation de 8 semaines (même fonction que le bouton « Simuler »),
-    // graines essayées une à une.
+    // Simulation (même fonction que le bouton « Simuler ») : 8 semaines
+    // en mode assisté, 7 en mode libre (proposition encore en attente).
     final t0 = DateTime.now();
-    DevSimResult? sim;
-    final tries = <String>[];
-    for (var k = 0; k < 12; k++) {
-      final athlete = _athletes[k % _athletes.length];
-      final seedN = k ~/ _athletes.length + 1;
-      sim = await runDevSimulation(
-        store,
-        athleteKey: athlete,
-        weeks: 8,
-        seed: seedN,
-      );
-      tries.add(
-        '$athlete/$seedN : ${sim.sessionsDone} séances, '
-        '${store.planEvolution.entries.length} propositions',
-      );
-      if (store.planEvolution.entries.isNotEmpty) break;
-      // Rien à proposer : nouvelle session de test, graine suivante.
-      await DevActions.delete();
-      await opened(tester);
-      await DevActions.start();
-      await opened(tester);
-      seedProgram(store);
-      await store.flush();
-    }
-    releve['sim_essais'] = tries;
-    final end = sim!.end;
-    final real = KalisClock.realNow();
-    final days = DateTime.utc(
-      end.year,
-      end.month,
-      end.day,
-    ).difference(DateTime.utc(real.year, real.month, real.day)).inDays;
+    final weeks = mode == kc.GuidanceMode.assisted ? 8 : 7;
+    final sim = await runDevSimulation(
+      store,
+      athleteKey: _athlete,
+      weeks: weeks,
+      seed: _seedN,
+    );
+    releve['sim'] =
+        '$_athlete/$_seedN, $weeks semaines : ${sim.sessionsDone} séances, '
+        '${sim.sessionsMissed} manquées, ${sim.blocksAdded} bloc ajouté, '
+        'erreur : ${sim.error}';
     await SessionHost.restart(
-      () => DevSession.setOffsetDays(days),
+      () => DevSession.setOffsetDays(_offsetTo(sim.end)),
       message: 'Simulation terminée',
     );
     await opened(tester);
@@ -322,6 +322,16 @@ void main() {
           tester.element(find.byKey(const ValueKey('evo-sheet'))),
         ).pop();
         await wait(tester, 800);
+      }
+      final accept = find.descendant(
+        of: card,
+        matching: find.text('Accepter'),
+      );
+      if (mode == kc.GuidanceMode.free && accept.evaluate().isNotEmpty) {
+        await tapF(tester, accept, ms: 1500);
+        releve['accepte'] = store.planEvolution.entries
+            .where((e) => e.status.name == 'accepted')
+            .length;
       }
     }
     // Historique des changements (Mon programme › Évolution).
@@ -425,6 +435,8 @@ void main() {
     expect(releve['dev_programme'], isTrue);
     expect(releve['sim_seances'], greaterThan(10));
     expect(releve['propositions'], isNotEmpty);
+    expect(releve['carte_accueil'], isTrue);
+    if (mode == kc.GuidanceMode.free) expect(releve['accepte'], 1);
     expect(releve['evolution'], isTrue);
     expect(releve['historique'], greaterThan(0));
     expect(releve['diff'], isTrue);
