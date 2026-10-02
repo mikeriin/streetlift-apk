@@ -29,6 +29,44 @@ import 'plan_program.dart';
 import 'plan_sheets.dart';
 import 'plan_texts.dart';
 
+/// G10 (D4.8) : fin de bloc — le bloc suivant proposé par le moteur, passé
+/// en revue (nouveaux exercices) puis validé ; vrai s'il a été validé.
+Future<bool> openNextBlock(BuildContext context) async {
+  final c = PlanStore(store).newNextBlockCreation();
+  final ok = await Navigator.of(context).push<bool>(
+    MaterialPageRoute<bool>(
+      builder: (_) => c == null
+          ? const NextBlockUnavailable()
+          : PlanCreationScreen(creation: c),
+    ),
+  );
+  return ok == true;
+}
+
+/// Bloc suivant impossible à préparer (profil ou base absents, erreur du
+/// moteur).
+class NextBlockUnavailable extends StatelessWidget {
+  const NextBlockUnavailable({super.key});
+
+  @override
+  Widget build(BuildContext context) => KScreen(
+    appBar: AppBar(title: const Text('BLOC SUIVANT')),
+    body: KList(
+      children: [
+        KoachSurface(
+          color: SL.bg,
+          child: const KoachBubble(
+            key: ValueKey('next-block-unavailable'),
+            pose: KoachPose.oops,
+            koachHeight: 100,
+            text: 'Je n’arrive pas à préparer le bloc suivant pour l’instant.',
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
 /// Ouvre la création du programme ; vrai si un programme a été validé.
 Future<bool> openPlanCreation(BuildContext context) async {
   final ok = await Navigator.of(context).push<bool>(
@@ -78,6 +116,9 @@ class PlanCreationScreenState extends State<PlanCreationScreen> {
   PlanMetrics? _metrics;
 
   bool get _dev => kDevBuild && SessionSpace.isDev;
+
+  /// G10 : bloc suivant (revue des nouveaux exercices seulement).
+  bool get _isNext => c?.isNext ?? false;
 
   @override
   void initState() {
@@ -141,9 +182,11 @@ class PlanCreationScreenState extends State<PlanCreationScreen> {
     final leave = await showKoachSheet<bool>(
       context,
       pose: KoachPose.please,
-      text:
-          'Tu quittes la création ? Ton programme n’est pas encore créé : '
-          'rien n’est enregistré.',
+      text: _isNext
+          ? 'Tu quittes ? Ton bloc suivant n’est pas encore validé : rien '
+                'n’est enregistré, je te le reproposerai.'
+          : 'Tu quittes la création ? Ton programme n’est pas encore créé : '
+                'rien n’est enregistré.',
       actions: [
         KoachBubbleAction(
           'Continuer la création',
@@ -165,8 +208,19 @@ class PlanCreationScreenState extends State<PlanCreationScreen> {
 
   List<({kc.PlanDay day, kc.PlanSlot slot})> get _slots => [
     for (final d in c!.plan.days)
-      for (final s in d.slots) (day: d, slot: s),
+      for (final s in d.slots)
+        if (!_isNext || c!.newSlotIds.contains(s.slotId) || !_wasKnown(s))
+          (day: d, slot: s),
   ];
+
+  /// Bloc suivant : exercice déjà fait au bloc précédent.
+  bool _wasKnown(kc.PlanSlot s) {
+    final prev = c?.previous;
+    if (prev == null) return false;
+    return prev.pass1.days.any(
+      (d) => d.slots.any((x) => x.exerciseId == s.exerciseId),
+    );
+  }
 
   Future<void> _afterStep(PlanStep? step) async {
     if (step == null || !mounted) return;
@@ -271,6 +325,19 @@ class PlanCreationScreenState extends State<PlanCreationScreen> {
     final nav = Navigator.of(context);
     final colors = KoachToastColors.of(context);
     final messenger = ScaffoldMessenger.of(context);
+    if (_isNext) {
+      PlanStore(store).applyNextBlockCreation(c!);
+      messenger.showSnackBar(
+        koachSnackBar(
+          colors,
+          'Ton bloc suivant est prêt : il commence le '
+          '${planDayName(c!.startDate)} ${_date(c!.startDate)}.',
+          pose: KoachPose.victory,
+        ),
+      );
+      nav.pop(true);
+      return;
+    }
     final start = PlanStore(store).planStartFor();
     if (start.replacing) {
       final when = start.firstWeek > 1
@@ -348,7 +415,7 @@ class PlanCreationScreenState extends State<PlanCreationScreen> {
           appBar: AppBar(
             leading: BackButton(onPressed: _back),
             title: Text(switch (_stage) {
-              _Stage.pass1 => 'TES EXERCICES',
+              _Stage.pass1 => _isNext ? 'BLOC SUIVANT' : 'TES EXERCICES',
               _Stage.review => 'REVUE',
               _Stage.recap => 'RÉCAPITULATIF',
               _Stage.pass2 => 'SÉRIES ET CHARGES',
@@ -527,9 +594,101 @@ class PlanCreationScreenState extends State<PlanCreationScreen> {
     );
   }
 
+  /// G10 : présentation du bloc suivant par Koach (résumé d'adaptation et
+  /// ce qui change).
+  List<Widget> _nextIntro(BuildContext context, PlanCreation creation) {
+    final plan = creation.plan;
+    final a = creation.adaptation;
+    final changes = creation.blockDiff?.changes ?? const <kc.PlanChange>[];
+    final fresh = _slots.length;
+    final before = creation.previous!.pass1;
+    final done = a == null
+        ? ''
+        : ' Tu as fait ${a.sessionsCompleted} séance'
+              '${a.sessionsCompleted > 1 ? 's' : ''} sur '
+              '${a.sessionsPlanned} prévue${a.sessionsPlanned > 1 ? 's' : ''}.';
+    return [
+      KoachBubble(
+        key: const ValueKey('next-block-koach'),
+        pose: KoachPose.progressChart,
+        koachHeight: 110,
+        text:
+            'Ton bloc se termine. Voici le suivant : ${plan.weeks} semaines, '
+            '${plan.days.length} séance${plan.days.length > 1 ? 's' : ''} par '
+            'semaine.$done '
+            '${fresh == 0
+                ? 'Aucun nouvel exercice à passer en revue.'
+                : fresh == 1
+                ? 'Un nouvel exercice à passer en revue.'
+                : '$fresh nouveaux exercices à passer en revue.'}',
+        why:
+            'Je garde tes mouvements principaux, je fais tourner une partie '
+            'des exercices de complément et je passe à une variante plus '
+            'difficile quand tes séances montrent que tu es prêt. Les '
+            'exercices que tu connais déjà restent validés.',
+      ),
+      if (changes.isNotEmpty)
+        KCard(
+          key: const ValueKey('next-block-changes'),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text(
+                'Ce qui change (${changes.length})',
+                style: Theme.of(context).textTheme.titleSmall,
+              ),
+              for (final c in changes)
+                ExpansionTile(
+                  tilePadding: EdgeInsets.zero,
+                  title: Text(changeLine(c, before, plan)),
+                  subtitle: Text(
+                    'Pourquoi ?',
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                  children: [
+                    for (final r in c.reasons)
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Padding(
+                          padding: const EdgeInsets.only(bottom: 6),
+                          child: Text(planReason(r)),
+                        ),
+                      ),
+                  ],
+                ),
+            ],
+          ),
+        ),
+    ];
+  }
+
   Widget _pass1(BuildContext context, PlanCreation creation) {
     final plan = creation.plan;
     final n = creation.proposals.length;
+    if (_isNext) {
+      final fresh = _slots.length;
+      return KList(
+        key: const ValueKey('plan-pass1'),
+        children: [
+          ..._nextIntro(context, creation),
+          if (_error != null) _errorBubble(),
+          for (final d in plan.days) _dayCard(context, d),
+          _weekOverview(context, creation),
+          FilledButton.icon(
+            key: const ValueKey('plan-review'),
+            icon: const Icon(Icons.fact_check_outlined),
+            label: Text(
+              fresh == 0
+                  ? 'Voir le récapitulatif'
+                  : 'Passer les nouveaux exercices en revue ($fresh)',
+            ),
+            onPressed: () => setState(
+              () => _stage = fresh == 0 ? _Stage.recap : _Stage.review,
+            ),
+          ),
+        ],
+      );
+    }
     return KList(
       key: const ValueKey('plan-pass1'),
       children: [

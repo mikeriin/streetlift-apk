@@ -7,7 +7,7 @@ import 'dart:math' show max;
 import 'dart:math' as math;
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter/services.dart' show AssetBundle, rootBundle;
+import 'package:flutter/services.dart' show rootBundle;
 import 'package:kalis_core/kalis_core.dart' show TrainingLog;
 import 'package:kalis_adapt/kalis_adapt.dart' as ka;
 import 'package:kalis_core/kalis_core.dart' as kc;
@@ -22,18 +22,17 @@ import 'kalis_clock.dart';
 import 'session_prefs.dart';
 import 'game.dart';
 import 'journal_adapter.dart';
-import 'koach_adapt.dart';
 import 'koach_data.dart';
-import 'koach_engine.dart' as ke;
-import 'koach_program.dart';
+import 'legacy_adapt_data.dart';
+import 'legacy_week_kinds.dart';
 import 'mannequin_clip.dart' show ClipRegistry;
 import 'models.dart';
 import 'persistence.dart';
 import 'plan/plan_creation.dart';
+import 'plan/plan_evolution.dart';
 import 'plan/plan_program.dart';
 import 'plan/plan_texts.dart' as pt;
 import 'profile.dart';
-import 'legacy_pack.dart';
 import 'program_instance.dart';
 import 'training_estimate.dart';
 import 'progression.dart';
@@ -43,21 +42,34 @@ import 'set_validation.dart';
 import 'wellbeing.dart';
 
 export 'adapt/session_adapt.dart';
+export 'plan/plan_evolution.dart';
 export 'koach_data.dart';
-export 'koach_program.dart';
+export 'legacy_adapt_data.dart';
+export 'legacy_week_kinds.dart';
 export 'persistence.dart';
 export 'profile.dart';
 export 'set_validation.dart' show SetCheck, SetField;
 export 'wellbeing.dart';
 
-part 'adapt_store.dart';
 part 'athlete_profile_store.dart';
-part 'koach_store.dart';
+part 'evolution_store.dart';
 part 'plan_store.dart';
 part 'profile_store.dart';
 part 'program_store.dart';
 part 'safety_store.dart';
 part 'session_adapt_store.dart';
+
+/// Charge à la grille du matériel : deux décimales au plus (« 2,5 » ;
+/// « 35 » ; « 36,25 »). Charges du moteur dynamique (et, avant G10, de
+/// Koach L7).
+String koachKg(double kg) {
+  if (kg == kg.roundToDouble()) return kg.toInt().toString();
+  var t = kg.toStringAsFixed(2);
+  while (t.endsWith('0')) {
+    t = t.substring(0, t.length - 1);
+  }
+  return t.replaceAll('.', ',');
+}
 
 class SetEntry {
   String kg;
@@ -345,7 +357,7 @@ class AppStore extends ChangeNotifier {
   Map<String, dynamic> _baseProgramJson = const {};
   late Program _baseProgram;
   Map<String, dynamic> _baseKoachJson = const {};
-  KoachProgram _baseKoach = const KoachProgram.empty();
+  bool _baseKoachAvailable = false;
 
   /// L10 : instance de programme (null = modèle Expert streetlifting
   /// implicite : programme embarqué inchangé). Contrat : docs/CONTRAT_L10.md.
@@ -366,6 +378,20 @@ class AppStore extends ChangeNotifier {
   /// G7 (D4.9) : « Où j'en suis » (section `programResume`).
   ProgramResume? programResume;
 
+  /// G10 : propositions du moteur dynamique et suites données (section
+  /// `planEvolution`) ; illisible au démarrage : gardée telle quelle
+  /// ([_evoRaw]) et réécrite à l'identique.
+  PlanEvolution planEvolution = PlanEvolution.empty;
+  Map<String, dynamic>? _evoRaw;
+  int evolutionLoadIssues = 0;
+
+  /// Révision de l'évolution (clés des calculs gardés).
+  int _evoRevision = 0;
+  String _evoRefreshKey = '';
+
+  /// Dernière revue du moteur dynamique (jamais sauvegardée).
+  EvolutionReview? lastEvolutionReview;
+
   /// G9 : calculs du moteur dynamique gardés (bloc importé, journal
   /// présenté au moteur), clés de signature ; jamais sauvegardés.
   final Map<String, Object?> _g9Cache = {};
@@ -381,6 +407,7 @@ class AppStore extends ChangeNotifier {
           plan,
           startWeekday: weekday,
           labels: PlanStore(this).planLabels,
+          view: EvolutionStore(this)._evoWeekEntry,
         );
         program = Program.fromJson({
           'meta': {
@@ -391,9 +418,11 @@ class AppStore extends ChangeNotifier {
           'pilotage': _baseProgramJson['pilotage'],
           'weeks': weeks,
         });
-        koachProgram = _baseKoach.available || plan.prefixKoach.isNotEmpty
-            ? KoachProgram.fromJson(planKoachJson(plan, weeks, _baseKoachJson))
-            : const KoachProgram.empty();
+        weekKinds = _baseKoachAvailable || plan.prefixKoach.isNotEmpty
+            ? LegacyWeekKinds.fromJson(
+                planKoachJson(plan, weeks, _baseKoachJson),
+              )
+            : const LegacyWeekKinds.empty();
         program.start = start;
         return;
       } catch (_) {
@@ -406,18 +435,18 @@ class AppStore extends ChangeNotifier {
     if (inst != null && inst.generated) {
       try {
         program = Program.fromJson(inst.programJson(_baseProgramJson));
-        koachProgram = _baseKoach.available
-            ? KoachProgram.fromJson(inst.koachJson(_baseKoachJson))
-            : const KoachProgram.empty();
+        weekKinds = _baseKoachAvailable
+            ? LegacyWeekKinds.fromJson(inst.koachJson(_baseKoachJson))
+            : const LegacyWeekKinds.empty();
       } catch (_) {
         programLoadIssues++;
         programInstance = null;
         program = _baseProgram;
-        koachProgram = _baseKoach;
+        weekKinds = _baseWeekKinds;
       }
     } else {
       program = _baseProgram;
-      koachProgram = _baseKoach;
+      weekKinds = _baseWeekKinds;
     }
     program.start = start;
   }
@@ -475,9 +504,9 @@ class AppStore extends ChangeNotifier {
   final List<Map<String, dynamic>> userExercises =
       []; // ajoutés par l'utilisateur
 
-  /// Koach (L7) : options, pesées, décisions et saisies de l'utilisateur,
-  /// persistées ; estimations et propositions recalculées depuis le
-  /// journal, jamais sauvegardées (D31). Contrat : docs/CONTRAT_L7.md.
+  /// Koach L7 (retiré en G10, D1.4) : options, pesées, décisions et
+  /// saisies de l'époque, gardées en lecture seule (section `koach` relue
+  /// et réécrite à l'identique). Contrat d'origine : docs/CONTRAT_L7.md.
   KoachData koach = KoachData();
 
   /// Profil (L8, KT-038) : null tant qu'il n'a été ni créé au démarrage
@@ -496,14 +525,13 @@ class AppStore extends ChangeNotifier {
   Map<String, dynamic>? _athleteRaw;
   int athleteLoadIssues = 0;
 
-  /// L11 : adaptations au jour le jour (section `adapt`, écrite seulement
-  /// si elle sert). Contrat : docs/CONTRAT_L11.md.
+  /// L11 (retiré en G10, D1.4) : adaptations au jour le jour de l'époque,
+  /// gardées en lecture seule (section `adapt` relue et réécrite à
+  /// l'identique). Contrat d'origine : docs/CONTRAT_L11.md.
   AdaptData adapt = AdaptData();
 
   /// Entrées d'adaptation illisibles ignorées au dernier démarrage.
   int adaptLoadIssues = 0;
-  final Map<String, Object?> _adaptCache = {};
-  String _adaptCacheRev = '';
 
   /// G2 (D1.1, D1.2) : données retirées (WOD, séances manuelles, crédits,
   /// L12) lues au démarrage et pas encore copiées. Tant qu'elles sont là,
@@ -516,29 +544,14 @@ class AppStore extends ChangeNotifier {
   /// lancement suivant.
   bool retiredCopyFailed = false;
 
-  /// Annotations du programme pour Koach (asset généré, lecture seule).
-  /// Vide si l'asset est illisible : Koach reste alors indisponible.
-  KoachProgram koachProgram = const KoachProgram.empty();
+  /// Nature des semaines d'un programme existant (annotations du
+  /// programme, section `weeks`) : décharges et tests du bloc importé
+  /// (G9). Vide si l'asset est illisible.
+  LegacyWeekKinds weekKinds = const LegacyWeekKinds.empty();
+  LegacyWeekKinds _baseWeekKinds = const LegacyWeekKinds.empty();
 
   /// Entrées Koach illisibles ignorées au dernier démarrage (§3.4).
   int koachLoadIssues = 0;
-
-  /// Questionnaires passés pendant cette ouverture (non persisté).
-  final Set<String> koachSkipped = {};
-
-  /// Rappel de pesée reporté pendant cette ouverture (non persisté).
-  bool koachWeighInLater = false;
-
-  ke.KoachState? _koachCache;
-  int _koachCacheRevision = -1;
-  String _koachCacheDay = '';
-
-  /// Révision des données hors journal (références, réglages, Koach).
-  int _koachAuxRevision = 0;
-
-  /// Données Koach d'une séance supprimée, gardées pour l'annulation.
-  final Map<String, ({SessionAnswers? answers, List<KoachDecision> decisions})>
-  _koachStash = {};
 
   static const _kState = 'kalis_state_v3';
   static const _kRecovery = 'kalis_recovery_v1';
@@ -632,11 +645,14 @@ class AppStore extends ChangeNotifier {
       _baseKoachJson =
           jsonDecode(await _loadGz('assets/koach_program.json.gz'))
               as Map<String, dynamic>;
-      koachProgram = _baseKoach = KoachProgram.fromJson(_baseKoachJson);
+      _baseKoachAvailable =
+          (_baseKoachJson['exercises'] as Map?)?.isNotEmpty ?? false;
+      weekKinds = _baseWeekKinds = LegacyWeekKinds.fromJson(_baseKoachJson);
     } catch (_) {
-      // Annotations absentes ou illisibles : Koach indisponible (2.x).
+      // Annotations absentes ou illisibles : natures de semaine inconnues.
       _baseKoachJson = const {};
-      koachProgram = _baseKoach = const KoachProgram.empty();
+      _baseKoachAvailable = false;
+      weekKinds = _baseWeekKinds = const LegacyWeekKinds.empty();
     }
     _prefs = await KalisPrefs.active();
 
@@ -941,6 +957,8 @@ class AppStore extends ChangeNotifier {
     planProgram: planProgram,
     planRaw: _planRaw,
     programResume: programResume,
+    planEvolution: planEvolution,
+    evolutionRaw: _evoRaw,
     adapt: adapt,
   );
 
@@ -993,6 +1011,13 @@ class AppStore extends ChangeNotifier {
         'planProgram': data.planRaw,
       if (data.programResume != null)
         'programResume': data.programResume!.toJson(),
+      // G10 : propositions du moteur dynamique et suites données, écrites
+      // seulement s'il y en a ; ignorées par les versions antérieures
+      // (section versionnée, facultative).
+      if (!data.planEvolution.isEmpty)
+        'planEvolution': data.planEvolution.toJson()
+      else if (data.evolutionRaw != null)
+        'planEvolution': data.evolutionRaw,
       // L11 : adaptations écrites seulement si elles servent (export
       // identique à 4.0.0 sinon) ; ignorées par les versions antérieures.
       if (!data.adapt.pristine) 'adapt': data.adapt.toJson(),
@@ -1377,6 +1402,25 @@ class AppStore extends ChangeNotifier {
         }
       }
     }
+    // G10 : évolution du programme. Import strict ; démarrage tolérant
+    // (section illisible gardée telle quelle, jamais perdue).
+    var nextEvolution = PlanEvolution.empty;
+    Map<String, dynamic>? evolutionRaw;
+    var evolutionIssues = 0;
+    final rawEvolution = m['planEvolution'];
+    if (rawEvolution != null) {
+      try {
+        nextEvolution = PlanEvolution.fromJson(rawEvolution);
+      } catch (_) {
+        if (limits != null) {
+          throw const FormatException('Évolution du programme illisible.');
+        }
+        evolutionIssues = 1;
+        if (rawEvolution is Map) {
+          evolutionRaw = Map<String, dynamic>.from(rawEvolution);
+        }
+      }
+    }
     // L11 : adaptations. Import strict ; démarrage tolérant.
     final adaptIssues = <String>[];
     final nextAdapt = AdaptData.fromJson(
@@ -1406,6 +1450,9 @@ class AppStore extends ChangeNotifier {
       planRaw: planRaw,
       planIssues: planIssues,
       programResume: nextResume,
+      planEvolution: nextEvolution,
+      evolutionRaw: evolutionRaw,
+      evolutionIssues: evolutionIssues,
       adapt: nextAdapt,
       adaptIssues: adaptIssues.length,
       retired: RetiredData.of(m).summary,
@@ -1478,6 +1525,12 @@ class AppStore extends ChangeNotifier {
     _planRaw = data.planRaw;
     planLoadIssues = data.planIssues;
     programResume = data.programResume;
+    planEvolution = data.planEvolution;
+    _evoRaw = data.evolutionRaw;
+    evolutionLoadIssues = data.evolutionIssues;
+    _evoRevision++;
+    _evoRefreshKey = '';
+    lastEvolutionReview = null;
     // Libellés des objectifs du programme : profil de la sauvegarde.
     athlete = data.athlete;
     _materializeProgram(data.start);
@@ -1498,12 +1551,6 @@ class AppStore extends ChangeNotifier {
     athleteLoadIssues = data.athleteIssues;
     adapt = data.adapt;
     adaptLoadIssues = data.adaptIssues;
-    _adaptCache.clear();
-    _adaptCacheRev = '';
-    koachSkipped.clear();
-    _koachStash.clear();
-    _koachCache = null;
-    _koachCacheRevision = -1;
     _allEx = null;
     _muscleIndex = null;
     pilotageEpoch++;
@@ -1759,7 +1806,6 @@ class AppStore extends ChangeNotifier {
 
   void _persist() {
     _dataRevision++;
-    _koachAuxRevision++;
     if (_initialized) unawaited(_writeSnapshot());
   }
 
@@ -1861,9 +1907,15 @@ class AppStore extends ChangeNotifier {
     if (values[ref] == v && refStatus[ref] == 'set') return;
     values[ref] = v;
     refStatus[ref] = 'set';
-    // L7 (D12, D33) : Koach actif, une saisie est une mesure datée
-    // (poids du corps = pesée du jour).
-    if (koach.enabled) KoachStore(this)._koachRecordManual(ref, v);
+    // Poids du corps saisi : pesée du jour (le profil et les charges lisent
+    // la pesée la plus récente ; L7 le faisait, G10 le garde).
+    if (ref == 'B4' && koach.weighIns.isNotEmpty && v >= 20 && v <= 400) {
+      final day = civilDateString(storeClock());
+      koach.weighIns
+        ..removeWhere((w) => w.date == day)
+        ..add(WeighIn(day, v))
+        ..sort((a, b) => a.date.compareTo(b.date));
+    }
     _persist();
     notifyListeners();
   }
@@ -1998,17 +2050,7 @@ class AppStore extends ChangeNotifier {
     _changeSeq++;
     notifyListeners();
     final ok = _initialized && await _serialize(_commitState);
-    if (ok) {
-      // L7 : Koach actif, les références saisies sont des mesures datées,
-      // ajoutées seulement après l'écriture acceptée du départ.
-      if (koach.enabled) {
-        references.forEach((ref, v) {
-          if (v != null) KoachStore(this)._koachRecordManual(ref, v);
-        });
-        _persist();
-      }
-      return StartSave.saved;
-    }
+    if (ok) return StartSave.saved;
     // Écriture refusée : pas de départ annoncé, l'état précédent revient.
     program.start = previous.start;
     startOrigin = previous.origin;
@@ -2026,20 +2068,15 @@ class AppStore extends ChangeNotifier {
   // ---------- Calculs (répliques des formules Excel) ----------
   double _round(double x, double step) => (x / step).round() * step;
 
-  /// Charge suggérée en kg, ou null si non applicable.
-  ///
-  /// [koach] faux (G9) : la consigne du programme seule, sans Koach L7
-  /// (charge de départ d'un bloc importé pour `kalis_adapt`).
-  double? loadFor(Exercise e, {bool koach = true}) {
+  /// Charge suggérée en kg, ou null si non applicable : la consigne du
+  /// programme (G10 : Koach L7 retiré ; une séance servie par kalis_adapt
+  /// porte la charge du moteur).
+  double? loadFor(Exercise e) {
     final s = e.load;
     // G9 : exercice servi par kalis_adapt, charge du moteur.
     if (e.engine) return s.kg;
     // Référence non renseignée : aucune charge inventée (KT-007).
     if (loadNeedsReference(e)) return null;
-    // L7 : Koach actif, grille du matériel (D23) et allègement (D26).
-    if (koach && KoachStore(this).koachOn) {
-      return KoachStore(this).koachLoadFor(e);
-    }
     switch (s.type) {
       case 'fixed':
         return s.kg;
@@ -2064,36 +2101,14 @@ class AppStore extends ChangeNotifier {
     }
   }
 
-  /// Charge prescrite pour la semaine [week] du programme : [loadFor],
-  /// plus, Koach actif, les adaptations acceptées de la semaine (D28).
-  ///
-  /// [koach] faux (G9, séance servie par kalis_adapt) : la consigne du
-  /// programme seule, sans Koach L7 ni adaptation L11.
-  double? sessionLoad(int week, Exercise e, {int? day, bool koach = true}) {
-    if (e.engine) return e.load.kg; // G9 : charge du moteur
-    if (loadNeedsReference(e)) return null;
-    if (!koach) return loadFor(e, koach: false);
-    final kg = KoachStore(this).koachOn && week >= 1
-        ? KoachStore(this).koachLoadFor(e, week: week)
-        : loadFor(e);
-    // L11 (KT-060, KT-062) : reprise après un arrêt, décharge.
-    if (kg == null || day == null || kg <= 0) return kg;
-    final f = AdaptStore(this).adaptLoadFactor(week, day, e);
-    if (f >= 1) return kg;
-    final step = switch (e.load.type) {
-      'acc' => e.load.step ?? 1.0,
-      'fixed' => 1.0,
-      _ => 2.5,
-    };
-    final v = (kg * f / step).floor() * step;
-    return v < 0 ? 0.0 : v;
-  }
+  /// Charge prescrite pour la semaine [week] du programme. G10 : celle de
+  /// [loadFor] (Koach L7 et les adaptations L11 sont retirés ; le moteur
+  /// dynamique sert ses propres charges).
+  double? sessionLoad(int week, Exercise e, {int? day}) => loadFor(e);
 
   /// [week] : charge de la séance de cette semaine ([sessionLoad]).
-  String loadLabel(Exercise e, {int? week, int? day, bool koach = true}) {
-    final kg = week == null
-        ? loadFor(e, koach: koach)
-        : sessionLoad(week, e, day: day, koach: koach);
+  String loadLabel(Exercise e, {int? week, int? day}) {
+    final kg = week == null ? loadFor(e) : sessionLoad(week, e, day: day);
     if (kg == null && loadNeedsReference(e)) return 'à renseigner';
     if (kg == null) return '—';
     if (kg <= 0) return 'PdC';
@@ -2101,8 +2116,9 @@ class AppStore extends ChangeNotifier {
       final lb = kg * 2.20462;
       return '${lb.toStringAsFixed(lb == lb.roundToDouble() ? 0 : 1)}\u00A0lb';
     }
-    // Koach : grille du matériel (1,25 kg…), jusqu'à deux décimales.
-    final t = KoachStore(this).koachOn
+    // Charge du moteur (grille du matériel, 1,25 kg…) : deux décimales au
+    // plus ; sinon une.
+    final t = e.engine
         ? koachKg(kg)
         : kg == kg.roundToDouble()
         ? kg.toInt().toString()
@@ -2110,10 +2126,8 @@ class AppStore extends ChangeNotifier {
     return '$t\u00A0kg';
   }
 
-  /// Texte pré-rempli de la colonne kg (2.x : une décimale au plus ;
-  /// Koach : grille du matériel, deux décimales au plus).
+  /// Texte pré-rempli de la colonne kg (une décimale au plus).
   String kgFieldText(double kg) {
-    if (KoachStore(this).koachOn) return _kgText(kg);
     return kg == kg.roundToDouble()
         ? kg.toInt().toString()
         : kg.toStringAsFixed(1);
@@ -2143,13 +2157,9 @@ class AppStore extends ChangeNotifier {
     );
   }
 
-  /// [week] : séance du programme adaptée (L11 : paires de la
-  /// compression).
-  TrainingEstimate dayEstimate(DayPlan day, {int? week}) {
+  TrainingEstimate dayEstimate(DayPlan day) {
     final out = TrainingEstimate();
-    final blocks = week == null
-        ? groups(day)
-        : AdaptStore(this).sessionGroups(week, day);
+    final blocks = groups(day);
     for (var i = 0; i < blocks.length; i++) {
       final block = blocks[i];
       final estimates = block.map(exerciseEstimate).toList();
@@ -2686,11 +2696,8 @@ class AppStore extends ChangeNotifier {
     final s = sessionLog(week, j);
     s.exerciseNames[e.id] = e.name;
     return s.ex.putIfAbsent(e.id, () {
-      // L7 (D28) : adaptations de structure acceptées pour la semaine.
       // G9 : un exercice servi par kalis_adapt garde les séries du moteur.
-      final n = !e.engine && KoachStore(this).koachOn && week >= 1
-          ? KoachStore(this).koachSetCount(week, e)
-          : setCount(e);
+      final n = setCount(e);
       return ExerciseLog(sets: List.generate(n, (_) => SetEntry()));
     });
   }
@@ -2729,11 +2736,46 @@ class AppStore extends ChangeNotifier {
     return _writeSnapshot();
   }
 
+  /// Réponses et décisions de l'ancien Koach (L7, lecture seule) d'une
+  /// séance supprimée, gardées pour l'annulation.
+  final Map<String, ({SessionAnswers? answers, List<KoachDecision> decisions})>
+  _legacyStash = {};
+
+  /// Une séance supprimée emporte ses réponses et décisions de l'ancien
+  /// Koach (L7) ; [stash] : gardées pour l'annulation.
+  void _forgetLegacySession(String key, {bool stash = false}) {
+    final answers = koach.answers.remove(key);
+    final decisions = [
+      for (final d in koach.decisions)
+        if (d.id.startsWith('$key|')) d,
+    ];
+    koach.decisions.removeWhere((d) => d.id.startsWith('$key|'));
+    if (stash) _legacyStash[key] = (answers: answers, decisions: decisions);
+    if (answers != null || decisions.isNotEmpty) _persist();
+  }
+
+  void _restoreLegacySession(String key) {
+    final kept = _legacyStash.remove(key);
+    if (kept == null) return;
+    if (kept.answers != null) koach.answers[key] = kept.answers!;
+    koach.decisions.addAll(kept.decisions);
+    _persist();
+  }
+
+  /// KT-036 : suppression des seules réponses aux anciens questionnaires
+  /// de Koach L7 (sommeil, forme, douleur).
+  void clearKoachAnswers() {
+    if (koach.answers.isEmpty) return;
+    koach.answers.clear();
+    _persist();
+    notifyListeners();
+  }
+
   /// Efface tout l'historique d'une séance : séries, notes, statut « fait »
-  /// (et, L7, ses réponses et décisions Koach).
+  /// (et ses réponses et décisions de l'ancien Koach L7).
   void clearSession(int week, int j) {
     logs.remove(sessionKey(week, j));
-    KoachStore(this)._koachForgetSession(sessionKey(week, j));
+    _forgetLegacySession(sessionKey(week, j));
     saveLogs(immediate: true);
   }
 
@@ -2742,17 +2784,7 @@ class AppStore extends ChangeNotifier {
   /// valide pour le mode (voir `set_validation.dart`) : un pré-remplissage
   /// devient une performance seulement ici. Refus : rien ne change, le
   /// texte saisi est gardé.
-  ///
-  /// [exercise], [week] : Koach actif (L7), difficulté exigée sur les séries
-  /// de travail des mouvements principaux (D8) et prescription datée
-  /// conservée au journal (KT-029).
-  SetCheck toggleSet(
-    ExerciseLog log,
-    int index,
-    LogSpec spec, {
-    Exercise? exercise,
-    int? week,
-  }) {
+  SetCheck toggleSet(ExerciseLog log, int index, LogSpec spec) {
     final s = log.sets[index];
     if (s.done) {
       s.done = false;
@@ -2762,17 +2794,26 @@ class AppStore extends ChangeNotifier {
     }
     final check = checkSet(spec, s, rpe: settings.rpe);
     if (!check.ok) return check;
-    if (exercise != null && KoachStore(this).koachOn) {
-      final effort = KoachStore(this)._koachBeforeCheck(exercise, log, index);
-      if (!effort.ok) return effort;
-      if (week != null && week >= 1) {
-        log.prescribed ??= KoachStore(this).koachPrescription(exercise, week);
-      }
-    }
     s.done = true;
     s.completedAt = storeClock().toIso8601String();
     saveLogs();
     return check;
+  }
+
+  /// Difficulté (RIR) d'une série, écrite avec ses flammes (G9 ; champ
+  /// `effort` de L7, lu par les anciennes versions et le journal des
+  /// moteurs).
+  void setEffort(ExerciseLog log, int index, double? rir) {
+    log.sets[index].effort = rir;
+    saveLogs(affectsProgression: false);
+  }
+
+  /// Série écartée (incident, D11 de L7 gardée en G9) : gardée au journal,
+  /// hors des estimations des moteurs.
+  void toggleExcluded(ExerciseLog log, int index) {
+    final s = log.sets[index];
+    s.excluded = !s.excluded;
+    saveLogs(affectsProgression: false);
   }
 
   /// Après la modification d'une série déjà validée : si sa saisie n'est
@@ -2966,7 +3007,7 @@ class AppStore extends ChangeNotifier {
   SessionLog? deleteLog(String key) {
     final removed = logs.remove(key);
     if (removed != null) {
-      KoachStore(this)._koachForgetSession(key, stash: true);
+      _forgetLegacySession(key, stash: true);
       saveLogs(immediate: true);
     }
     return removed;
@@ -2977,7 +3018,7 @@ class AppStore extends ChangeNotifier {
   bool restoreLog(String key, SessionLog log) {
     if (logs.containsKey(key)) return false;
     logs[key] = log;
-    KoachStore(this)._koachRestoreSession(key);
+    _restoreLegacySession(key);
     saveLogs(immediate: true);
     return true;
   }
@@ -3106,6 +3147,12 @@ class _BackupData {
   final int planIssues;
   final ProgramResume? programResume;
 
+  /// G10 : évolution du programme (vide si absente ; illisible :
+  /// [evolutionRaw]).
+  final PlanEvolution planEvolution;
+  final Map<String, dynamic>? evolutionRaw;
+  final int evolutionIssues;
+
   /// L11 : adaptations (neuves si la section est absente).
   final AdaptData adapt;
   final int adaptIssues;
@@ -3134,6 +3181,9 @@ class _BackupData {
     this.planRaw,
     this.planIssues = 0,
     this.programResume,
+    this.planEvolution = PlanEvolution.empty,
+    this.evolutionRaw,
+    this.evolutionIssues = 0,
     AdaptData? adapt,
     this.adaptIssues = 0,
     this.retired = const RetiredSummary(),

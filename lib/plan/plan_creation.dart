@@ -48,7 +48,76 @@ class PlanCreation extends ChangeNotifier {
     this.journalOn = false,
     KalisPlan? engine,
   }) : _profile = profile,
-       engine = engine ?? KalisPlan();
+       engine = engine ?? KalisPlan(),
+       previous = null,
+       adaptation = null,
+       blockDiff = null,
+       _fixedSeed = null,
+       _initialPass2 = null;
+
+  /// G10 (D4.8) : bloc suivant proposé par le moteur ([proposal], construit
+  /// sur [previous] et le résumé d'adaptation), passé en revue comme à la
+  /// création (G7) pour ses nouveaux exercices seulement : les exercices
+  /// déjà faits au bloc précédent sont verrouillés et considérés comme vus.
+  PlanCreation.next({
+    required this.catalog,
+    required kc.AthleteProfile profile,
+    required this.startDate,
+    required kc.ProgramBlock this.previous,
+    required kc.AdaptationSummary this.adaptation,
+    required kc.BlockProposal proposal,
+    required int seed,
+    this.journalOn = false,
+    KalisPlan? engine,
+  }) : _profile = profile,
+       engine = engine ?? KalisPlan(),
+       blockDiff = proposal.diff,
+       _fixedSeed = seed,
+       _initialPass2 = proposal.block.pass2 {
+    proposals.add(proposal.block.pass1);
+    final known = {
+      for (final d in previous!.pass1.days)
+        for (final s in d.slots) s.exerciseId,
+    };
+    locks = [
+      for (final d in proposal.block.pass1.days)
+        for (final s in d.slots)
+          if (known.contains(s.exerciseId))
+            kc.PlanLock(
+              kind: kc.LockKind.keepSlot,
+              slotId: s.slotId,
+              exerciseId: s.exerciseId,
+            ),
+    ];
+    for (final d in proposal.block.pass1.days) {
+      for (final s in d.slots) {
+        if (known.contains(s.exerciseId)) decided.add(s.slotId);
+      }
+    }
+    newSlotIds = {
+      for (final d in proposal.block.pass1.days)
+        for (final s in d.slots)
+          if (!known.contains(s.exerciseId)) s.slotId,
+    };
+  }
+
+  /// Bloc qui se termine (bloc suivant, G10) ; null à la création.
+  final kc.ProgramBlock? previous;
+
+  /// Résumé d'adaptation du bloc qui se termine (bloc suivant).
+  final kc.AdaptationSummary? adaptation;
+
+  /// Ce qui change par rapport au bloc précédent (bloc suivant).
+  final kc.PlanDiff? blockDiff;
+  final int? _fixedSeed;
+  final kc.Pass2Plan? _initialPass2;
+
+  /// Emplacements des nouveaux exercices (bloc suivant) : seuls passés en
+  /// revue.
+  Set<String> newSlotIds = const {};
+
+  /// Bloc suivant (G10) plutôt qu'une création.
+  bool get isNext => previous != null;
 
   final kc.Catalog catalog;
   final KalisPlan engine;
@@ -78,7 +147,7 @@ class PlanCreation extends ChangeNotifier {
   /// Temps du dernier appel au moteur (ms).
   int lastMs = 0;
 
-  int get seed => index;
+  int get seed => _fixedSeed ?? index;
   bool get started => proposals.isNotEmpty;
   kc.Pass1Plan get plan => _reviewed ?? proposals[index];
   bool get reviewed => steps.isNotEmpty || decided.isNotEmpty;
@@ -88,6 +157,8 @@ class PlanCreation extends ChangeNotifier {
     seed: seed,
     startDate: startDate,
     locks: locks,
+    previousBlock: previous,
+    adaptation: adaptation,
   );
 
   T _timed<T>(
@@ -130,7 +201,7 @@ class PlanCreation extends ChangeNotifier {
   /// « Autre proposition » (D4.3) : graine suivante ; les propositions déjà
   /// vues restent accessibles. Seulement avant tout changement de revue.
   void otherProposal() {
-    if (reviewed) return;
+    if (reviewed || isNext) return;
     if (index + 1 < proposals.length) {
       index++;
     } else {
@@ -260,8 +331,17 @@ class PlanCreation extends ChangeNotifier {
     return s;
   }
 
-  /// Passe 2 (D4.7) sur la passe 1 validée.
+  /// Passe 2 (D4.7) sur la passe 1 validée. Bloc suivant sans changement
+  /// de revue : celle que le moteur a construite avec le résumé
+  /// d'adaptation.
   kc.Pass2Plan createPass2() {
+    final initial = _initialPass2;
+    if (initial != null && steps.isEmpty) {
+      pass2 = initial;
+      adjust.clear();
+      notifyListeners();
+      return initial;
+    }
     final req = kc.Pass2Request(request: request(), pass1: plan);
     final p2 = _timed(
       'createPass2',

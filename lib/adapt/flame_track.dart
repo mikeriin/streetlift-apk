@@ -345,7 +345,7 @@ class _FlameTrackState extends State<FlameTrack> {
               children: [
                 Expanded(
                   child: Text(
-                    '1 · facile',
+                    '1 · ${flameWord(1).toLowerCase()}',
                     style: TextStyle(color: SL.dim, fontSize: 11.5),
                   ),
                 ),
@@ -379,7 +379,7 @@ class _FlameTrackState extends State<FlameTrack> {
                 ),
                 Expanded(
                   child: Text(
-                    'échec · 10',
+                    '${flameWord(10).toLowerCase()} · 10',
                     textAlign: TextAlign.end,
                     style: TextStyle(color: SL.dim, fontSize: 11.5),
                   ),

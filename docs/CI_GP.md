@@ -150,6 +150,34 @@ vide ou absent.
   ligne, `set-summary-<n>`), fin de séance et capture `12_fin_series`
   (« Tes séries »).
 
+### G10 (dev6.7.0)
+
+- Cible émulateur par défaut : `integration_test/evolution_g10_test.dart`,
+  build de développement, parties `a` (sombre, rouge Kalis, mode assisté)
+  et `b` (clair, violet, mode libre) : session personnelle (profil v2 et
+  programme créé ; Réglages › Mon programme, carte « Évolution », écran
+  Évolution : mode modifiable, déblocage) ; session de test (5 appuis) →
+  profil et programme semés, écran du simulateur, simulation de 8 semaines
+  (`runDevSimulation`, même fonction que le bouton « Simuler » ; si le
+  moteur ne propose rien, session de test recréée et graine suivante),
+  horloge de la session de test au dernier jour simulé (redémarrage
+  logique) ; carte de Koach sur l'accueil (proposition en attente ou
+  annoncée), feuille du diff, historique des changements, inspecteur du
+  moteur dynamique ; suppression de la session de test, session
+  personnelle identique clé par clé. Relevés `emulateur/g10_releve_<partie>.json`,
+  captures `emulateur/g10_*_<thème>.png`. G9 passe sous `CI3D_TOUT=1`. APK
+  de test précompilé sur la cible G10.
+- Tests Dart du mode dev : `test/g10_mode_dev_test.dart` ajouté à la commande
+  (ci-3d.yml et build-apk.yml). Tests Dart du lot :
+  `test/g10_evolution_test.dart` (modèle, propositions dans les deux modes,
+  annulation, refus, sauvegarde, bloc suivant, simulateur déterministe,
+  écrans), `test/g10_seance_sans_moteur_test.dart` et
+  `test/g10_charges_consigne_test.dart` (repris des tests de L7, retirés).
+- Branche de mise au point du lot : `claude/ci-g10-rapide` (workflow
+  `rapide.yml` posé seulement sur cette branche : formatage, analyse, tests
+  choisis, résultats dans `ci-rapide/`) ; le contrôle complet reste
+  `claude/ci-3d`.
+
 ### Mode dev dans les tests d'intégration
 
 - Données de la session personnelle semées par un `AppStore()` séparé avant

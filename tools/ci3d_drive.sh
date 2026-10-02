@@ -52,13 +52,46 @@ cible() {
     ${4:+--keep-app-running} \
     -d emulator-5554 > "$out/drive-$1${2:+-$2}.log" 2>&1
 }
-# G9 (dev6.6.0) : séance servie par kalis_adapt, cible du lot, build de
+# G10 (dev6.7.0) : évolution du programme, cible du lot, build de
+# développement, en deux parties : a = sombre, rouge Kalis, mode assisté ;
+# b = clair, violet, mode libre (session personnelle : Mon programme,
+# écran Évolution ; session de test : simulateur de séances 8 semaines,
+# propositions de Koach, diff, historique, inspecteur du moteur ;
+# suppression de la session de test, session personnelle intacte).
+code_g10=0
+for part in a b; do
+  cible evolution_g10_test "$part" dev
+  c=$?
+  if [ "$c" -ne 0 ] && [ ! -f "$out/g10_releve_$part.json" ]; then
+    echo "G10 $part sans relevé (code $c) : adb relancé, second essai."
+    cp "$out/drive-evolution_g10_test-$part.log" "$out/drive-g10-$part-essai1.log"
+    adb kill-server || true
+    adb start-server || true
+    timeout 60 adb wait-for-device || true
+    cible evolution_g10_test "$part" dev
+    c=$?
+  fi
+  [ "$c" -ne 0 ] && code_g10=$c
+  tail -n 30 "$out/drive-evolution_g10_test-$part.log"
+done
+# Cibles des lots précédents (G9, G7, G6, G5, G3, G2, G1, M8, M7) :
+# CI3D_TOUT=1.
+code_g9=0
+code_g7=0
+code_g6=0
+code_g5=0
+code_g3=0
+code_g2=0
+code_g1=0
+code_m8=0
+code_m7=0
+if [ "${CI3D_TOUT:-0}" = "1" ]; then
+# G9 (dev6.6.0) : séance servie par kalis_adapt, build de
 # développement, en deux parties : a = sombre et rouge Kalis, b = clair et
 # violet (session personnelle : copie du programme du propriétaire, bilan
 # santé et détail, flammes, ajustement de Koach, fin de séance ; session de
 # test : programme généré, séance complète ; suppression de la session de
 # test, session personnelle intacte).
-code_g9=0
 for part in a b; do
   cible seance_g9_test "$part" dev
   c=$?
@@ -74,16 +107,6 @@ for part in a b; do
   [ "$c" -ne 0 ] && code_g9=$c
   tail -n 30 "$out/drive-seance_g9_test-$part.log"
 done
-# Cibles des lots précédents (G7, G6, G5, G3, G2, G1, M8, M7) : CI3D_TOUT=1.
-code_g7=0
-code_g6=0
-code_g5=0
-code_g3=0
-code_g2=0
-code_g1=0
-code_m8=0
-code_m7=0
-if [ "${CI3D_TOUT:-0}" = "1" ]; then
 # G7 (dev6.5.0) : création du programme avec kalis_plan, cible du lot,
 # build de développement, en deux parties : a = sombre et rouge Kalis, b =
 # clair et violet (session personnelle : Mon programme, Où j'en suis ;
@@ -237,7 +260,7 @@ kill "$logcat_pid" 2>/dev/null || true
 grep -o 'Impeller rendering backend ([^)]*)' "$out/logcat-complet.txt" | sort | uniq -c > "$out/impeller.txt" || true
 grep -iE 'flutter|impeller|vulkan|gles|AndroidRuntime|FATAL|swiftshader|angle|lowmemorykiller|DEBUG|libc|tombstone|ActivityManager' "$out/logcat-complet.txt" | tail -n 3000 > "$out/logcat.txt" || true
 rm -f "$out/logcat-complet.txt"
-echo "code_g9=$code_g9 code_g7=$code_g7 code_g6=$code_g6 code_g5=$code_g5 code_g3=$code_g3 code_g2=$code_g2 code_g1=$code_g1 code_m8=$code_m8 code_m7=$code_m7" > "$out/drive-code.txt"
+echo "code_g10=$code_g10 code_g9=$code_g9 code_g7=$code_g7 code_g6=$code_g6 code_g5=$code_g5 code_g3=$code_g3 code_g2=$code_g2 code_g1=$code_g1 code_m8=$code_m8 code_m7=$code_m7" > "$out/drive-code.txt"
 echo "code=$code" >> "$out/drive-code.txt"
 echo "code_mesure=$code_mesure" >> "$out/drive-code.txt"
-[ "$code_g9" -eq 0 ] && [ "$code_g7" -eq 0 ] && [ "$code_g6" -eq 0 ] && [ "$code_g5" -eq 0 ] && [ "$code_g3" -eq 0 ] && [ "$code_g2" -eq 0 ] && [ "$code_g1" -eq 0 ] && [ "$code_m8" -eq 0 ] && [ "$code_m7" -eq 0 ] && [ "$code" -eq 0 ] && [ "$code_mesure" -eq 0 ]
+[ "$code_g10" -eq 0 ] && [ "$code_g9" -eq 0 ] && [ "$code_g7" -eq 0 ] && [ "$code_g6" -eq 0 ] && [ "$code_g5" -eq 0 ] && [ "$code_g3" -eq 0 ] && [ "$code_g2" -eq 0 ] && [ "$code_g1" -eq 0 ] && [ "$code_m8" -eq 0 ] && [ "$code_m7" -eq 0 ] && [ "$code" -eq 0 ] && [ "$code_mesure" -eq 0 ]

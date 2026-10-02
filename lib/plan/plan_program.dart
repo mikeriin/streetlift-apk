@@ -412,6 +412,17 @@ List<kc.DayPrescription> adjustedDays(PlanBlockEntry e, int weekIndex) {
   ];
 }
 
+/// Bloc de [e] avec les ajustements de la passe 2 sur toutes ses semaines
+/// (ce que le moteur dynamique reçoit, G9).
+kc.ProgramBlock adjustedBlock(PlanBlockEntry e) {
+  if (e.adjust.values.every((a) => a.isEmpty)) return e.block;
+  final weeks = [
+    for (var w = 0; w < e.block.pass2.weeks.length; w++)
+      e.block.pass2.weeks[w].copyWith(days: adjustedDays(e, w)),
+  ];
+  return e.block.copyWith(pass2: e.block.pass2.copyWith(weeks: weeks));
+}
+
 /// Une semaine au schéma programme_v33.
 Map<String, dynamic> planWeekJson({
   required PlanBlockEntry entry,
@@ -519,11 +530,14 @@ String _rir(int flames) {
   return flames == kc.Flames.min ? '$t et plus' : t;
 }
 
-/// Toutes les semaines du programme (précédentes puis blocs).
+/// Toutes les semaines du programme (précédentes puis blocs). [view] (G10)
+/// donne le bloc tel qu'il est une semaine donnée (propositions du moteur
+/// dynamique en place) ; sans lui, le bloc enregistré.
 List<Map<String, dynamic>> planWeeks(
   PlanProgram p, {
   required int startWeekday,
   required PlanLabels labels,
+  PlanBlockEntry Function(PlanBlockEntry entry, int weekIndex)? view,
 }) {
   final out = <Map<String, dynamic>>[...p.prefix];
   var n = p.firstWeek;
@@ -532,7 +546,7 @@ List<Map<String, dynamic>> planWeeks(
     for (var w = 0; w < e.weeks; w++) {
       out.add(
         planWeekJson(
-          entry: e,
+          entry: view == null ? e : view(e, w),
           blockIndex: b,
           weekIndex: w,
           weekNumber: n,

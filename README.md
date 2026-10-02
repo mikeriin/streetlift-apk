@@ -1,4 +1,13 @@
-# Kalis Track dev6.6.3 — Recentrage sur le programme (pipeline « Génération et progression »)
+# Kalis Track dev6.7.0 — Recentrage sur le programme (pipeline « Génération et progression »)
+
+## dev6.7.0 — Ton programme évolue avec Koach (lot G10)
+
+- **Propositions de Koach** : le moteur dynamique `kalis_adapt` relit tes séances et propose, quand ses données le justifient, un changement à partir de la semaine suivante — une série de plus ou de moins, une semaine allégée, un exercice qui stagne échangé, une zone douloureuse épargnée, une séance ou un bloc réorganisés (par `kalis_plan`). Koach le dit sur l'accueil et au début de la séance concernée, avec « Pourquoi ? » (raisons et confiance en mots simples) et « Voir le changement » (ce qui bouge, comme à la création du programme).
+- **Mode assisté** : appliqué d'office, Koach explique, « Annuler » jusqu'à la séance concernée. **Mode libre** : « Accepter », « Refuser » (Koach ne le repropose pas avant quelques semaines) ou « Plus tard » (le lendemain).
+- **Réglages › Mon programme › Évolution** : mode assisté / libre modifiable, ce que Koach sait déjà ajuster et ce qu'il débloquera (« Dans 2 semaines de séances, je pourrai ajuster ton volume… »), historique des changements (appliqués, acceptés, refusés, annulés) avec leurs raisons.
+- **Fin de bloc** : Koach présente le bloc suivant (ce que tes séances ont montré, ce qui change) ; seuls les nouveaux exercices passent par la revue « Je sais faire / Je ne sais pas faire / Je n'aime pas ».
+- **Outils de test** (session de test) : simulateur de séances (un athlète simulé fait 1 à 12 semaines de séances notées en flammes, l'horloge avance, les propositions arrivent comme en vrai), inspecteur du moteur dynamique (capacité estimée ± incertitude, fatigue, forme du jour, règles, confiance, déblocage, propositions retenues ou écartées), export du journal du moteur (JSON).
+- **Retraits** (D1.4) : Koach L7 (autorégulation RIR, questionnaires, écran Koach, pesées) et l'adaptation au quotidien L11 (pause, compression, échange à la volée, plan qui glisse…) ; leurs données restent dans la sauvegarde en lecture seule. Repères sous la ligne des flammes harmonisés avec les mots des flammes (« 1 · léger », « échec · 10 »). Version « dev6.7.0 ».
 
 ## dev6.6.3 — Un mot par flamme (G9, correction 3)
 

@@ -6,8 +6,8 @@
 // série, ni records, ni données pour les moteurs). Fonctionne pour tout
 // programme, celui du propriétaire compris.
 //
-// Fin de bloc (écran minimal, enrichi en G10) : le moteur propose le bloc
-// suivant ; Koach montre ce qui change ; l'utilisateur le valide.
+// Fin de bloc : G10 passe par la création du programme (plan_screens.dart,
+// mode « bloc suivant »).
 import 'package:flutter/material.dart';
 import 'package:kalis_core/kalis_core.dart' as kc;
 import 'package:kalis_koach/kalis_koach.dart' show KoachPose;
@@ -18,7 +18,6 @@ import '../koach/koach_view.dart' show KoachSurface;
 import '../models.dart' show WeekPlan;
 import '../store.dart';
 import '../ui.dart';
-import 'plan_sheets.dart';
 import 'plan_texts.dart';
 
 class ProgramPositionScreen extends StatefulWidget {
@@ -200,100 +199,6 @@ class _ProgramPositionScreenState extends State<ProgramPositionScreen> {
             key: const ValueKey('position-confirm'),
             onPressed: _day == null ? null : _confirm,
             child: const Text('C’est là que j’en suis'),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-/// Fin de bloc : bloc suivant proposé par le moteur.
-class NextBlockScreen extends StatefulWidget {
-  const NextBlockScreen({super.key});
-
-  @override
-  State<NextBlockScreen> createState() => _NextBlockScreenState();
-}
-
-class _NextBlockScreenState extends State<NextBlockScreen> {
-  late final _proposal = PlanStore(store).proposeNextBlock();
-
-  @override
-  Widget build(BuildContext context) {
-    final p = _proposal;
-    if (p == null) {
-      return KScreen(
-        appBar: AppBar(title: const Text('BLOC SUIVANT')),
-        body: KList(
-          children: [
-            KoachSurface(
-              color: SL.bg,
-              child: const KoachBubble(
-                pose: KoachPose.oops,
-                koachHeight: 100,
-                text:
-                    'Je n’arrive pas à préparer le bloc suivant pour '
-                    'l’instant.',
-              ),
-            ),
-          ],
-        ),
-      );
-    }
-    final block = p.proposal.block;
-    final before = store.planProgram!.blocks.last.block.pass1;
-    final changes = p.proposal.diff.changes;
-    return KScreen(
-      appBar: AppBar(title: const Text('BLOC SUIVANT')),
-      body: KList(
-        key: const ValueKey('next-block-list'),
-        children: [
-          KoachSurface(
-            color: SL.bg,
-            child: KoachBubble(
-              key: const ValueKey('next-block-koach'),
-              pose: KoachPose.progressChart,
-              koachHeight: 110,
-              text:
-                  'Ton bloc se termine. Je te propose le suivant : '
-                  '${block.pass1.weeks} semaines, '
-                  '${changes.isEmpty ? 'mêmes exercices' : '${changes.length} changement${changes.length > 1 ? 's' : ''}'}.',
-              why:
-                  'Je garde tes mouvements principaux, je fais tourner une '
-                  'partie des exercices de complément et je fais progresser '
-                  'ce que tu maîtrises.',
-            ),
-          ),
-          for (final c in changes)
-            KCard(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(changeLine(c, before, block.pass1)),
-                  for (final r in c.reasons)
-                    Text(
-                      planReason(r),
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
-                ],
-              ),
-            ),
-          Wrap(
-            spacing: 8,
-            children: [
-              for (final w in block.pass2.weeks)
-                Chip(
-                  label: Text('S${w.weekIndex + 1} ${kWeekKindLabels[w.kind]}'),
-                ),
-            ],
-          ),
-          FilledButton(
-            key: const ValueKey('next-block-validate'),
-            onPressed: () {
-              PlanStore(store).applyNextBlock(p.proposal, p.request.seed);
-              Navigator.of(context).pop(true);
-            },
-            child: const Text('Valider le bloc suivant'),
           ),
         ],
       ),

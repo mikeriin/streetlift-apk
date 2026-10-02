@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'app_theme.dart';
-import 'koach_screens.dart';
 import 'muscle_body.dart';
 import 'pilotage_screen.dart';
 import 'store.dart';
@@ -35,18 +34,6 @@ class StatsPerformance extends StatelessWidget {
             MaterialPageRoute(builder: (_) => const PilotageScreen()),
           ),
         ),
-        // Koach (L7, D30) : visible seulement Koach actif.
-        if (store.koachOn)
-          KMenuTile(
-            key: const ValueKey('stats-koach'),
-            icon: Icons.insights_rounded,
-            title: 'Koach',
-            subtitle: 'Estimations, objectifs, propositions et historique',
-            onTap: () => Navigator.push(
-              context,
-              MaterialPageRoute(builder: (_) => const KoachScreen()),
-            ),
-          ),
         KCard(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

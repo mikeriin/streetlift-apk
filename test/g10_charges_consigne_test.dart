@@ -1,4 +1,6 @@
-// L7 — D6 : Koach désactivé = comportement 2.x à l'identique.
+// G10 (D1.4) : Koach L7 retiré — charges, séries et saisies du programme
+// identiques à 2.x, même avec des données de l'ancien Koach dans la
+// sauvegarde (repris de L7, D6 : « Koach désactivé = comportement 2.x »).
 //
 // Instantané de référence `test/fixtures/l7_2x_snapshot.json.gz`, capturé en
 // CI sur l'arbre L4b 2.5.9 inchangé (même calcul, 5 jeux de références et
@@ -152,64 +154,37 @@ void main() {
     }
   });
 
-  test('Koach jamais activé : charges, séries et saisies identiques à 2.x', () {
-    expect(app.koach.enabled, isFalse);
-    compareAll('jamais activé');
+  test('sans données de l’ancien Koach : identique à 2.x', () {
+    expect(app.koach.pristine, isTrue);
+    compareAll('sans Koach');
   });
 
-  test('Koach utilisé puis désactivé : identique à 2.x', () {
+  test('données de l’ancien Koach (L7) présentes : sans effet, identique à '
+      '2.x ; aucune difficulté exigée, aucune prescription écrite', () {
     app.program.start = DateTime(2026, 7, 13);
     app.startOrigin = 'user';
     app.values.addAll(_defaults(app));
-    app.enableKoach();
-    // Tout ce qui modifie les charges ou les séries quand Koach est actif.
-    app.setKoachEquipment('plate', {'step': 2.5});
-    app.setKoachEquipment('dumbbell', {
-      'small': 2,
-      'threshold': 12,
-      'large': 4,
-    });
-    app.setKoachEquipment('pulley', {'step': 5, 'unit': 'lb'});
-    app.toggleKoachLock('B8');
+    // Tout ce qui modifiait les charges ou les séries quand Koach L7 était
+    // actif, tel qu'une sauvegarde de 6.x peut le contenir.
+    app.koach
+      ..enabled = true
+      ..structure = true
+      ..introSeen = true;
+    app.koach.equipment['plate'] = {'step': 2.5};
+    app.koach.equipment['pulley'] = {'step': 5, 'unit': 'lb'};
+    app.koach.locks.add('B8');
     app.koach.painRelief['pull'] = '2026-09-20T18:00:00';
-    app.setKoachStructure(true);
+    compareAll('données L7 présentes');
     final pull = app.program
         .week(5)
         .day(1)!
         .exercises
         .firstWhere((e) => e.id == 'B1-73');
-    app.acceptKoachStructure({
-      'id': 'W5|sets|pull',
-      'week': 5,
-      'kind': 'sets',
-      'movement': 'pull',
-      'exercise': pull.id,
-      'delta': 1,
-    });
-    app.acceptKoachStructure({
-      'id': 'W6|deload',
-      'week': 6,
-      'kind': 'deload',
-      'movement': 'pull',
-      'sets': 0.6,
-      'load': 0.1,
-    });
-    expect(app.koachSetCount(5, pull), app.setCount(pull) + 1);
-    app.disableKoach();
-    expect(app.koachOn, isFalse);
-    compareAll('après désactivation');
-    // Journal : un exercice ouvert reçoit les séries du programme, aucune
-    // difficulté n'est exigée, aucune prescription n'est écrite.
     final log = app.exLog(5, 1, pull);
     expect(log.sets.length, app.setCount(pull));
     log.sets[0].reps = '8';
-    expect(
-      app.toggleSet(log, 0, app.logSpec(pull), exercise: pull, week: 5).ok,
-      isTrue,
-    );
+    expect(app.toggleSet(log, 0, app.logSpec(pull)).ok, isTrue);
     expect(log.prescribed, isNull);
     expect(log.sets[0].effort, isNull);
-    expect(app.koachSuggestion(5, 1, pull, log), isNull);
-    expect(app.koachWeighInDue, isFalse);
   });
 }

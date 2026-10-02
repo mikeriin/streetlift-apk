@@ -24,7 +24,6 @@ import 'package:streetlift_tracker/koach/koach_bubble.dart';
 import 'package:streetlift_tracker/koach/koach_gallery_screen.dart';
 import 'package:streetlift_tracker/koach/koach_home_card.dart';
 import 'package:streetlift_tracker/koach/koach_view.dart';
-import 'package:streetlift_tracker/koach_widgets.dart';
 import 'package:streetlift_tracker/mannequin_3d.dart' show MannequinMap;
 import 'package:streetlift_tracker/models.dart' show DayPlan;
 import 'package:streetlift_tracker/store.dart';
@@ -530,29 +529,6 @@ void main() {
       );
       expect(koach.pose, KoachPose.wave);
       expect(koach.colors, KoachColors.onDark(const Color(0xFF202020)));
-    });
-
-    testWidgets('en-têtes « Koach · … » des cartes de séance', (tester) async {
-      await tester.pumpWidget(
-        _page(
-          ListView(
-            children: [
-              KoachFatigueCard(
-                level: .2,
-                sets: 2,
-                onAccept: () {},
-                onRefuse: () {},
-              ),
-              const KoachCalibrationNote(),
-              const KoachWeighInBanner(),
-            ],
-          ),
-          dark: false,
-        ),
-      );
-      await tester.pumpAndSettle();
-      expect(find.byType(KoachView), findsNWidgets(3));
-      expect(find.byIcon(Icons.battery_3_bar_rounded), findsNothing);
     });
   });
 

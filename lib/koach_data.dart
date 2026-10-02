@@ -5,8 +5,44 @@
 // historique daté des valeurs de pilotage, acceptations et refus, verrous,
 // réponses aux questionnaires, matériel, objectifs, adaptations, allègements.
 // Format et bornes : docs/CONTRAT_L7.md §3.4.
+//
+// G10 (D1.4) : le moteur Koach L7 est retiré. La section `koach` reste
+// lue (import strict, démarrage tolérant) et réécrite à l'identique : les
+// décisions passées restent dans la sauvegarde, en lecture seule. Seuls
+// les réponses aux anciens questionnaires (journal des moteurs, règles C de
+// kalis_core) et les pesées (profil v2) servent encore.
 
-import 'koach_engine.dart' show defaultEquipment, parseDt;
+/// Incréments du matériel par défaut de L7 (D23) : bornes de lecture de la
+/// section `koach.equipment`.
+const Map<String, Map<String, Object>> defaultEquipment = {
+  'dumbbell': {'small': 1.0, 'threshold': 10.0, 'large': 2.0},
+  'plate': {'step': 1.25},
+  'barbell': {'step': 2.5},
+  'pulley': {'step': 2.5, 'unit': 'lb'},
+  'machine': {'step': 2.5, 'unit': 'kg'},
+};
+
+final RegExp _isoRe = RegExp(
+  r'^(\d{4})-(\d{2})-(\d{2})(?:[T ](\d{2}):(\d{2})(?::(\d{2})(?:\.(\d{1,6}))?)?)?',
+);
+
+/// Horodatage (secondes depuis l'époque, jour civil UTC), null s'il est
+/// invalide (lecture de L7, conservée).
+double? parseDt(String? s) {
+  if (s == null) return null;
+  final m = _isoRe.firstMatch(s.trim());
+  if (m == null) return null;
+  final y = int.parse(m.group(1)!), mo = int.parse(m.group(2)!);
+  final d = int.parse(m.group(3)!);
+  final h = int.parse(m.group(4) ?? '0'), mi = int.parse(m.group(5) ?? '0');
+  final se = int.parse(m.group(6) ?? '0');
+  final frac = m.group(7);
+  final us = frac == null ? 0 : int.parse('${frac}000000'.substring(0, 6));
+  final date = DateTime.utc(y, mo, d);
+  if (date.year != y || date.month != mo || date.day != d) return null;
+  final days = date.millisecondsSinceEpoch ~/ 86400000;
+  return days * 86400.0 + h * 3600.0 + mi * 60.0 + se + us / 1e6;
+}
 
 final RegExp _dayRe = RegExp(r'^\d{4}-\d{2}-\d{2}$');
 
