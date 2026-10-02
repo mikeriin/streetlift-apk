@@ -1,0 +1,77 @@
+diff --git a/lib/legacy_pack.dart b/lib/legacy_pack.dart
+index d7a8f12..98a41d0 100644
+--- a/lib/legacy_pack.dart
++++ b/lib/legacy_pack.dart
+@@ -8,7 +8,6 @@
+ // est retiré par G7 : `kalis_plan` le remplace.
+ import 'dart:convert';
+ 
+-
+ // ------------------------------------------------------------------ outils
+ 
+ /// Hachage FNV-1a 32 bits : départage déterministe, indépendant de l'ordre
+diff --git a/test/g10_seance_sans_moteur_test.dart b/test/g10_seance_sans_moteur_test.dart
+index e04edce..136db09 100644
+--- a/test/g10_seance_sans_moteur_test.dart
++++ b/test/g10_seance_sans_moteur_test.dart
+@@ -170,7 +170,9 @@ void main() {
+   });
+ 
+   testWidgets('menu de séance sans moteur : ni « J’ai seulement… », ni '
+-      '« Échanger un exercice », ni « Je m’entraîne ailleurs »', (tester) async {
++      '« Échanger un exercice », ni « Je m’entraîne ailleurs »', (
++    tester,
++  ) async {
+     phone(tester, const Size(390, 844));
+     await tester.pumpWidget(page(SessionScreen(week: w3, day: d1)));
+     await tester.pumpAndSettle();
+diff --git a/test/g5_koach_test.dart b/test/g5_koach_test.dart
+index e32a2d7..b20ee58 100644
+--- a/test/g5_koach_test.dart
++++ b/test/g5_koach_test.dart
+@@ -530,7 +530,6 @@ void main() {
+       expect(koach.pose, KoachPose.wave);
+       expect(koach.colors, KoachColors.onDark(const Color(0xFF202020)));
+     });
+-
+   });
+ 
+   group('écrans', () {
+diff --git a/test/l13_safety_test.dart b/test/l13_safety_test.dart
+index caa0676..937b9aa 100644
+--- a/test/l13_safety_test.dart
++++ b/test/l13_safety_test.dart
+@@ -41,13 +41,11 @@ UserProfile _profile({
+ 
+ Map<String, bool> _allNo() => {for (final q in kHealthQuestions) q.id: false};
+ 
+-
+ /// Réponses des anciens questionnaires de Koach L7 (lecture seule depuis
+ /// G10) : semées directement dans les données, comme une sauvegarde de
+ /// 6.x les contient.
+ void _legacyPain(AppStore app, String key, String movement, int value) {
+-  app.koach.answers.putIfAbsent(key, SessionAnswers.new).pain[movement] =
+-      value;
++  app.koach.answers.putIfAbsent(key, SessionAnswers.new).pain[movement] = value;
+ }
+ 
+ void main() {
+diff --git a/test/l13_screens_test.dart b/test/l13_screens_test.dart
+index b11db9a..c8636c7 100644
+--- a/test/l13_screens_test.dart
++++ b/test/l13_screens_test.dart
+@@ -74,13 +74,11 @@ UserProfile _profile({int birthYear = 1990}) {
+   return p;
+ }
+ 
+-
+ /// Réponses des anciens questionnaires de Koach L7 (lecture seule depuis
+ /// G10) : semées directement dans les données, comme une sauvegarde de
+ /// 6.x les contient.
+ void _legacyPain(AppStore app, String key, String movement, int value) {
+-  app.koach.answers.putIfAbsent(key, SessionAnswers.new).pain[movement] =
+-      value;
++  app.koach.answers.putIfAbsent(key, SessionAnswers.new).pain[movement] = value;
+ }
+ 
+ void main() {

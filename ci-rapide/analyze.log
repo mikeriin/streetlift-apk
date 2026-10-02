@@ -1,0 +1,6 @@
+Analyzing streetlift-apk...                                     
+
+warning • The value of the local variable 'key' isn't used. Try removing the variable or using it • lib/session_screen.dart:2366:11 • unused_local_variable
+warning • Unused import: 'legacy_pack.dart'. Try removing the import directive • lib/store.dart:35:8 • unused_import
+
+2 issues found. (ran in 21.0s)
