@@ -40,7 +40,7 @@ Chaque lot ne modifie que sa ligne (PIPELINE_CP.md §1).
 
 | Lot | Voie | Prérequis | Livré | Panel (min) | Date | Statut |
 | --- | --- | --- | --- | --- | --- | --- |
-| CR | A | références reçues | — | — | — | à faire (reprise) — sessions du 02/10 20:26 UTC et du 03/10 05:52 UTC arrêtées (limites d'utilisation, puis arrêt demandé au propriétaire) ; relance seule le 03/10 10:0x UTC avec les règles §9 |
+| CR | A | références reçues | — | — | — | en cours depuis 2026-10-03 11:15 UTC (reprise depuis `claude/ci-cp-a` f0195e34) |
 | CQ | B | — | `kalis_core` 0.4.0 (`etiquettes/kalis_core-v0.4.0`, commit ef4c57ae, run 37106401044) ; profil v3 : 16 questions débutant, 29 élite | — (lot sans panel) | 2026-10-03 | livré |
 | CP1 | A | CR, CQ | — | — | — | en attente de CR, CQ |
 | CA1 | B | CR, CQ | — | — | — | en attente de CR, CQ |
