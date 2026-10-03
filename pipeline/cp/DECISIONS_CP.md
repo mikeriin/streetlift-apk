@@ -49,6 +49,19 @@ Chaque lot ajoute ici ses décisions techniques numérotées (`CR.1`, `CR.2`…)
 
 ### CQ
 
+Lot livré le 03/10/2026 (`kalis_core` 0.4.0, `etiquettes/kalis_core-v0.4.0`). Détail : `pipeline/cp/livraisons/LIVRAISON_CQ.md`, `packages/kalis_core/docs/PROFIL_V3.md`, `PARCOURS_V3.md`, `RELECTURES_CQ.md`.
+
+- **CQ.1 Règle de pose d'une question** (C1.6) : effet démontré ou solidement admis par l'usage **et** décision du programme changée **et** non déductible d'une autre réponse ou du journal ; posée seulement à ceux pour qui elle compte ; toujours passable (sauf champs obligatoires du schéma 2). 17 facteurs posés, 14 questions nouvelles ; le reste est déduit ou écarté, raison dite.
+- **CQ.2 Aucun chiffre d'ajustement inventé** : quand la littérature donne une direction sans grandeur (sommeil court, stress, déficit énergétique, antécédent, reprise), le profil porte la réponse et le document dit « choix raisonné » ; les règles chiffrées relèvent du référentiel (CR) et des moteurs calibrés (CP1, CA1), à mesurer au banc.
+- **CQ.3 Débutant** : aucune question de récupération à la création (sommeil, stress, charge hors programme, évolution du poids : reportées après la première semaine) ; du schéma 3, seulement ce sans quoi le premier programme ne s'écrit pas (figure visée, orientation en musculation, course préparée et volume de course) : 16 à 18 questions selon la discipline. Aucun test guidé pour un débutant.
+- **CQ.4 Énumérations** : celles d'avant 0.4.0 sont fermées (un `switch` exhaustif des moteurs 0.1 doit continuer de compiler) ; celles de 0.4.0 sont ouvertes (lecteurs avec cas par défaut). Un vocabulaire nouveau sur un type ancien passe par un champ optionnel nouveau.
+- **CQ.5 Journal** : une série reste une ligne (`SetRecord`) ; mini-séries et paliers sont ses `parts` — les comptes de `kalis_quest` 0.1.0 et `kalis_adapt` 0.1.0 restent justes.
+- **CQ.6 Compétition de répétitions** : aucun règlement unifié n'existe ; l'échéance est décrite par des données (postes, tours, temps, séries indivisibles), sans format figé ; les compétitions françaises « Sets and Reps » n'ont pas pu être documentées, leur format se saisit.
+- **CQ.7 Priorités entre sources** (pour CP1, CA1) : journal et bilans de séance priment sur les déclarations du profil ; le plan de saison prime sur la spécialisation ; près d'une échéance principale, la phase prime sur le dosage des disciplines secondaires ; un exercice aimé ne déplace jamais un mouvement de compétition.
+- **Écart — reprise de session** : la première session s'est arrêtée avant la livraison (C3) ; la seconde, lancée sans la ligne « Lot : … », a repris CQ (seul lot de la voie B qui pouvait tourner, « en cours » depuis plus de 6 h) depuis `claude/ci-cp-b`, en revérifiant les références (9 corrections) et les suites données aux relectures (audit indépendant). Les quatre sous-agents de vérification de la reprise ont été lancés avant que la règle C3.1 (sous-agents sur Opus) soit poussée : ils ont hérité de Fable.
+- **Limite** : pas de SDK Dart dans les sessions ; un contrôle de `claude/ci-cp-b` dure environ 45 minutes (les simulateurs des trois moteurs tournent à chaque passe).
+- **Recommandations au propriétaire** (aucune n'est bloquante) : (1) autoriser zéro discipline secondaire (D3.2 en impose 1 à 2 ; c'est l'écran où le relecteur « débutant » dit qu'il quitte) ; (2) rendre la taille facultative à la prochaine évolution non additive (aucun effet sur le programme) ; (3) reporter après la première séance, pour un débutant, le choix assisté / libre (D3.7) et les niveaux par mouvement (D3.5) ; (4) ajouter « bras » et « avant-bras » aux zones du corps à la prochaine rupture.
+
 ### CP1
 
 ### CA1
