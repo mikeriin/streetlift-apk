@@ -229,10 +229,23 @@ String effortText(ItemView i) {
   if (flames >= Flames.failure) {
     return 'effort maximal';
   }
+  final hold =
+      i.p.repsHigh == null &&
+      i.p.repsLow == null &&
+      (i.p.secondsHigh ?? i.p.secondsLow) != null;
   if (Flames.isOpenEnded(flames)) {
-    return '5 rép. en réserve ou plus';
+    return hold
+        ? 'sous-maximal : arrêt bien avant la perte de position'
+        : '5 rép. en réserve ou plus';
   }
   final rir = Flames.toRir(flames);
+  if (hold) {
+    // Une tenue ne se compte pas en répétitions : la marge se lit sur la
+    // qualité de la position.
+    return rir >= 3
+        ? 'position parfaite, quelques secondes de marge'
+        : 'tenue dure, arrêt avant de perdre la position';
+  }
   final text = rir == rir.roundToDouble() ? rir.toStringAsFixed(0) : _num(rir);
   return '$text rép. en réserve';
 }

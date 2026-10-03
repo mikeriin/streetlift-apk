@@ -151,6 +151,7 @@ List<String> coachAudit(
   final arms = <List<double>>[];
   final light = <bool>[];
   final hard = <double>[];
+  final who = <List<(List<int>, String)>>[];
   final lastLoad = <String, (int, double, int)>{};
   var global = 0;
   int? eventWeek;
@@ -170,6 +171,7 @@ List<String> coachAudit(
       final g = List<double>.filled(MuscleGroup.values.length, 0);
       final s = <double>[0, 0, 0];
       final armDays = <Set<int>>[<int>{}, <int>{}, <int>{}];
+      final names = <(List<int>, String)>[];
       var hardSets = 0.0;
       for (final day in week.days) {
         final d = day.dayIndex;
@@ -245,6 +247,12 @@ List<String> coachAudit(
               (rir == null || rir <= coachHardSetMaxRir);
           if (isHard) {
             hardSets += p.sets;
+            names.add((
+              <int>[for (final group in MuscleGroup.values) t.creditOf(group)],
+              '${e.id}×${p.sets}'
+                  '${p.kind == SetKind.test ? ' (test)' : ''} j$d '
+                  '${week.kind.code}',
+            ));
             for (final group in MuscleGroup.values) {
               g[group.index] += p.sets * t.creditOf(group) / 2;
             }
@@ -290,6 +298,7 @@ List<String> coachAudit(
         }
       }
       groups.add(g);
+      who.add(names);
       arms.add(s);
       light.add(_light(week.kind));
       hard.add(hardSets);
@@ -312,7 +321,10 @@ List<String> coachAudit(
       }
       final limit = _limit(series, light, w, coachVolumeRise, 2);
       if (series[w] > limit + 1e-9) {
-        out.add('s$w : ${group.code} ${series[w]} séries pour $limit');
+        out.add(
+          's$w : ${group.code} ${series[w]} séries pour $limit — '
+          '${<String>[for (final (c, n) in who[w]) if (c[group.index] > 0) n].join(', ')}',
+        );
       } else if (w > 1 &&
           !light[w] &&
           !light[w - 1] &&
