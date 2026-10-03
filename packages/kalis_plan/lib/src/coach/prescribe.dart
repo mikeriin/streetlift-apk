@@ -128,6 +128,13 @@ abstract final class CoachNotes {
   /// externe visée, en kg).
   static const String attemptsGoal = 'attempts_goal';
 
+  /// Charge visée sous le poids du corps : série au poids du corps
+  /// (`value` : part réelle du 1RM).
+  static const String bodyweightFloor = 'bodyweight_floor';
+
+  /// Amplitude partielle surchargée (`value` : part du 1RM complet).
+  static const String overload = 'overload';
+
   /// Essai de traction stricte après le test de descente (`value` :
   /// répétitions de l'objectif).
   static const String strictAttempt = 'strict_attempt';
@@ -173,6 +180,8 @@ abstract final class CoachNotes {
   /// Tous les codes.
   static const List<String> all = <String>[
     attemptsGoal,
+    bodyweightFloor,
+    overload,
     strictAttempt,
     painGeneral,
     redFlags,
@@ -769,7 +778,12 @@ final class Prescriber {
 
   /// Charge, part du 1RM et intensité d'un item à [pct] du 1RM de
   /// référence ; sans 1RM connu, charge à régler à la première séance.
-  void _loadAt(_Draft x, double pct, String? referenceId) {
+  void _loadAt(
+    _Draft x,
+    double pct,
+    String? referenceId, {
+    bool over = false,
+  }) {
     final e = x.e;
     final total = _totalFor(e, referenceId);
     if (_basisOf(e) == LoadBasis.unloaded ||
@@ -784,7 +798,31 @@ final class Prescriber {
       return;
     }
     final regained = pct * _regain;
-    final p = regained > 1 ? 1.0 : regained;
+    var p = regained > 1 && !over ? 1.0 : regained;
+    // Mouvement lesté dont la charge visée tombe sous le poids du corps :
+    // la série se fait au poids du corps, à sa vraie part du 1RM, avec
+    // moins de répétitions (formule d'Epley) pour garder la réserve.
+    final floor = (e.bodyweightFraction?.value ?? 0) * a.bodyWeight / total;
+    if (floor > 0 && p < floor - 1e-9) {
+      p = floor;
+      final possible = (30 * (1 / p - 1)).floor();
+      final high = x.repsHigh;
+      final reserve = (x.rir ?? 3).ceil();
+      if (high != null) {
+        final reps = _clampInt(possible - reserve, 1, high);
+        x
+          ..repsLow = reps
+          ..repsHigh = reps;
+      }
+      x.reasons.add(_note(CoachNotes.bodyweightFloor, p));
+    }
+    if (p > 1) {
+      // Amplitude partielle surchargée : au-dessus du 1RM complet.
+      x
+        ..load = _external(e, total, p)
+        ..reasons.add(_note(CoachNotes.overload, p));
+      return;
+    }
     x
       ..load = _external(e, total, p)
       ..reasons.add(
@@ -829,12 +867,23 @@ final class Prescriber {
       ..ramped = true;
     _loadAt(x, pct, x.slot?.referenceId);
     if (sets >= 2) {
+      // Les séries allégées ne descendent pas sous le poids du corps.
+      var lighter = drop;
+      final total = _totalFor(x.e, x.slot?.referenceId);
+      final load = x.load;
+      if (total != null && load != null && total > 0) {
+        final room = load / (load + (x.e.bodyweightFraction?.value ?? 0) *
+            a.bodyWeight);
+        if (lighter > room) {
+          lighter = (room * 20).floorToDouble() / 20;
+        }
+      }
       x
         ..backoff = true
         ..backoffRepsLow = reps
         ..backoffRepsHigh = reps
-        ..backoffDrop = drop
-        ..reasons.add(_note(CoachNotes.topSetBackoff, drop * 100));
+        ..backoffDrop = lighter
+        ..reasons.add(_note(CoachNotes.topSetBackoff, lighter * 100));
     }
     x.reasons.add(_note(CoachNotes.rampWarmup, 3));
   }
@@ -1118,12 +1167,17 @@ final class Prescriber {
         ws.intent == WeekIntent.intensification ||
         ws.intent == WeekIntent.realization;
     final partial = e.id.contains('partiel');
-    var pct = (intense ? 0.74 : 0.70) + 0.01 * stage + (partial ? 0.15 : 0);
-    if (pct > (partial ? 0.95 : 0.80)) {
-      pct = partial ? 0.95 : 0.80;
+    // Amplitude partielle (verrouillage) : surcharge au-dessus du 1RM
+    // complet — 100 à 110 % (pratique de terrain, CALIBRAGE_CP1 C) ; les
+    // autres variantes restent sous le mouvement de compétition.
+    var pct = partial
+        ? 1.0 + 0.02 * stage
+        : (intense ? 0.74 : 0.70) + 0.01 * stage;
+    if (pct > (partial ? 1.10 : 0.80)) {
+      pct = partial ? 1.10 : 0.80;
     }
     if (ws.light) {
-      pct -= 0.05;
+      pct -= partial ? 0.10 : 0.05;
     }
     final reps = intense ? 3 : 4;
     x
@@ -1135,7 +1189,7 @@ final class Prescriber {
       ..repsHigh = reps
       ..rir = _rirOf(e, 3, ws, week)
       ..rest = 150;
-    _loadAt(x, pct, referenceId);
+    _loadAt(x, pct, referenceId, over: partial);
     return x;
   }
 
@@ -2274,10 +2328,10 @@ final class Prescriber {
     final target = _shape.target;
     final out = <String>[];
     void add(String? given) {
-      var id = given;
-      if (id == null) {
+      if (given == null) {
         return;
       }
+      var id = given;
       // Figure : le test porte sur l'étape réellement travaillée, pas sur
       // une figure jamais entraînée.
       for (final d in skeleton.days) {

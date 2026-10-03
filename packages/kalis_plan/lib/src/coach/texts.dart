@@ -126,6 +126,13 @@ String? coachReasonText(Reason r, Catalog catalog) {
               'sans élan — une seule série, autant de répétitions propres '
               "que possible (objectif : ${_int(v)}). Si elle passe, "
               "déclare-la dans l'application.",
+        CoachNotes.bodyweightFloor =>
+          'La charge visée tombe sous ton poids de corps : série sans '
+              'lest, à ${_pct(v)} de ton 1RM (poids du corps compris), '
+              'avec moins de répétitions pour garder la réserve.',
+        CoachNotes.overload =>
+          'Amplitude partielle surchargée : ${_pct(v)} de ton 1RM complet, '
+              'sur la seule fin du mouvement, en butée ou avec parade.',
         CoachNotes.restBeforeEvent =>
           "Repos avant l'échéance : mobilité et préparation articulaire "
               'seulement, rien de fatigant dans les 2 à 4 derniers jours.',

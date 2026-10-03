@@ -91,7 +91,12 @@ SkillTrack plannedTrack(Athlete a, SkillTrack t) {
   if (elapsed <= 0) {
     return t;
   }
-  var steps = (t.weeksAtStep + elapsed) ~/ coachStepWeeks(a.level);
+  // Premier cran au premier bloc qui commence après le délai minimal ;
+  // les suivants, un délai (plus la longueur d'un bloc) plus tard, pour
+  // que chaque étape garde son délai entier.
+  final weeks = coachStepWeeks(a.level);
+  final first = weeks - t.weeksAtStep < 0 ? 0 : weeks - t.weeksAtStep;
+  var steps = elapsed < first ? 0 : 1 + (elapsed - first) ~/ (weeks + 6);
   if (steps > 2) {
     steps = 2;
   }
@@ -1380,7 +1385,10 @@ void _buildLifting(_Builder b, Set<int> runDays) {
   final pullHeavy = dayAt(0);
   final dipVolume = dayAt(0);
   final squatHeavy = h >= 2 ? dayAt(1) : dayAt(0);
-  final muDay = h >= 2 ? dayAt(1) : dayAt(0);
+  // (R4-F10 : 48 h entre deux tirages lourds — traction lourde, puis
+  // muscle-up lourd en fin de semaine quand il y a quatre séances
+  // lourdes ; le tirage de volume tombe entre les deux.)
+  final muDay = h >= 4 ? dayAt(3) : (h >= 2 ? dayAt(1) : dayAt(0));
   final dipHeavy = h >= 3 ? dayAt(2) : (h >= 2 ? dayAt(1) : dayAt(0));
   final pullVolume = h >= 3 ? dayAt(2) : (h >= 2 ? dayAt(1) : -1);
   final squatVolume = h >= 4 ? dayAt(3) : (h >= 3 ? dayAt(0) : -1);
@@ -1434,7 +1442,9 @@ void _buildLifting(_Builder b, Set<int> runDays) {
       sets: 5,
     );
     variant(muDay, Ids.weightedMuscleUp);
-    if (light >= 0 && !maintained(Ids.weightedMuscleUp)) {
+    if (light >= 0 &&
+        !maintained(Ids.weightedMuscleUp) &&
+        !b.dayBefore(light, muDay)) {
       lift(
         light,
         Ids.weightedMuscleUp,
