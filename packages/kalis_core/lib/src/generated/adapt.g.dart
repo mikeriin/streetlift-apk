@@ -341,6 +341,9 @@ final class AdaptationSummary {
     required this.pains,
     required this.avoidedExerciseIds,
     required this.reasons,
+    this.benchmarks,
+    this.skills,
+    this.volumeTolerance,
   });
 
   /// Lit un objet JSON ; [FormatException] si un champ manque ou a un type inattendu.
@@ -374,6 +377,21 @@ final class AdaptationSummary {
         json,
         'reasons',
         (v) => Reason.fromJson(jsonAsObject(v, 'reasons')),
+      ),
+      benchmarks: jsonListOrNull(
+        json,
+        'benchmarks',
+        (v) => Benchmark.fromJson(jsonAsObject(v, 'benchmarks')),
+      ),
+      skills: jsonListOrNull(
+        json,
+        'skills',
+        (v) => SkillProgress.fromJson(jsonAsObject(v, 'skills')),
+      ),
+      volumeTolerance: jsonListOrNull(
+        json,
+        'volumeTolerance',
+        (v) => VolumeTolerance.fromJson(jsonAsObject(v, 'volumeTolerance')),
       ),
     );
   }
@@ -417,6 +435,16 @@ final class AdaptationSummary {
   /// Faits marquants.
   final List<Reason> reasons;
 
+  /// Tests réalisés et maxima retenus sur la période (0.4.0) ; leur incertitude
+  /// est dans `estimates`.
+  final List<Benchmark>? benchmarks;
+
+  /// Suivi des figures (0.4.0).
+  final List<SkillProgress>? skills;
+
+  /// Volume hebdomadaire toléré par groupe musculaire (0.4.0).
+  final List<VolumeTolerance>? volumeTolerance;
+
   /// Objet JSON canonique : clés dans l'ordre du contrat, champs absents omis.
   Map<String, Object?> toJson() {
     return <String, Object?>{
@@ -432,6 +460,11 @@ final class AdaptationSummary {
       'pains': [for (final e in pains) e.toJson()],
       'avoidedExerciseIds': [for (final e in avoidedExerciseIds) e],
       'reasons': [for (final e in reasons) e.toJson()],
+      if (benchmarks case final v?)
+        'benchmarks': [for (final e in v) e.toJson()],
+      if (skills case final v?) 'skills': [for (final e in v) e.toJson()],
+      if (volumeTolerance case final v?)
+        'volumeTolerance': [for (final e in v) e.toJson()],
     };
   }
 
@@ -449,6 +482,9 @@ final class AdaptationSummary {
     List<PainTrend>? pains,
     List<String>? avoidedExerciseIds,
     List<Reason>? reasons,
+    Object? benchmarks = unset,
+    Object? skills = unset,
+    Object? volumeTolerance = unset,
   }) {
     return AdaptationSummary(
       schemaVersion: schemaVersion ?? this.schemaVersion,
@@ -465,6 +501,15 @@ final class AdaptationSummary {
       pains: pains ?? this.pains,
       avoidedExerciseIds: avoidedExerciseIds ?? this.avoidedExerciseIds,
       reasons: reasons ?? this.reasons,
+      benchmarks: identical(benchmarks, unset)
+          ? this.benchmarks
+          : benchmarks as List<Benchmark>?,
+      skills: identical(skills, unset)
+          ? this.skills
+          : skills as List<SkillProgress>?,
+      volumeTolerance: identical(volumeTolerance, unset)
+          ? this.volumeTolerance
+          : volumeTolerance as List<VolumeTolerance>?,
     );
   }
 
@@ -509,6 +554,24 @@ final class AdaptationSummary {
     for (var i = 0; i < reasons.length; i++) {
       reasons[i].collectViolations('$path.reasons[$i]', out);
     }
+    if (benchmarks case final v?) {
+      checkLength(out, '$path.benchmarks', v.length, null, 200);
+      for (var i = 0; i < v.length; i++) {
+        v[i].collectViolations('$path.benchmarks[$i]', out);
+      }
+    }
+    if (skills case final v?) {
+      checkLength(out, '$path.skills', v.length, null, 30);
+      for (var i = 0; i < v.length; i++) {
+        v[i].collectViolations('$path.skills[$i]', out);
+      }
+    }
+    if (volumeTolerance case final v?) {
+      checkLength(out, '$path.volumeTolerance', v.length, null, 40);
+      for (var i = 0; i < v.length; i++) {
+        v[i].collectViolations('$path.volumeTolerance[$i]', out);
+      }
+    }
   }
 
   /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
@@ -522,6 +585,15 @@ final class AdaptationSummary {
     }
     out.addAll(avoidedExerciseIds);
     for (final e in reasons) {
+      e.collectExerciseIds(out);
+    }
+    for (final e in benchmarks ?? const <Benchmark>[]) {
+      e.collectExerciseIds(out);
+    }
+    for (final e in skills ?? const <SkillProgress>[]) {
+      e.collectExerciseIds(out);
+    }
+    for (final e in volumeTolerance ?? const <VolumeTolerance>[]) {
       e.collectExerciseIds(out);
     }
   }
@@ -541,7 +613,10 @@ final class AdaptationSummary {
             fatigue == other.fatigue &&
             jsonListEquals(pains, other.pains) &&
             jsonListEquals(avoidedExerciseIds, other.avoidedExerciseIds) &&
-            jsonListEquals(reasons, other.reasons);
+            jsonListEquals(reasons, other.reasons) &&
+            jsonDeepEquals(benchmarks, other.benchmarks) &&
+            jsonDeepEquals(skills, other.skills) &&
+            jsonDeepEquals(volumeTolerance, other.volumeTolerance);
   }
 
   @override
@@ -558,6 +633,9 @@ final class AdaptationSummary {
     Object.hashAll(pains),
     Object.hashAll(avoidedExerciseIds),
     Object.hashAll(reasons),
+    jsonDeepHash(benchmarks),
+    jsonDeepHash(skills),
+    jsonDeepHash(volumeTolerance),
   ]);
 
   @override
@@ -574,6 +652,7 @@ final class AdaptInput {
     required this.today,
     this.state,
     this.decisions,
+    this.season,
   });
 
   /// Lit un objet JSON ; [FormatException] si un champ manque ou a un type inattendu.
@@ -591,6 +670,7 @@ final class AdaptInput {
         'decisions',
         (v) => ProposalDecision.fromJson(jsonAsObject(v, 'decisions')),
       ),
+      season: jsonObjOrNull(json, 'season', SeasonPlan.fromJson),
     );
   }
 
@@ -618,6 +698,9 @@ final class AdaptInput {
   /// Suites données aux propositions passées (D5.6, D9.2).
   final List<ProposalDecision>? decisions;
 
+  /// Plan de saison en cours (0.4.0).
+  final SeasonPlan? season;
+
   /// Objet JSON canonique : clés dans l'ordre du contrat, champs absents omis.
   Map<String, Object?> toJson() {
     return <String, Object?>{
@@ -628,6 +711,7 @@ final class AdaptInput {
       'today': today.iso,
       if (state case final v?) 'state': jsonCanonical(v),
       if (decisions case final v?) 'decisions': [for (final e in v) e.toJson()],
+      if (season case final v?) 'season': v.toJson(),
     };
   }
 
@@ -640,6 +724,7 @@ final class AdaptInput {
     CivilDate? today,
     Object? state = unset,
     Object? decisions = unset,
+    Object? season = unset,
   }) {
     return AdaptInput(
       schemaVersion: schemaVersion ?? this.schemaVersion,
@@ -653,6 +738,7 @@ final class AdaptInput {
       decisions: identical(decisions, unset)
           ? this.decisions
           : decisions as List<ProposalDecision>?,
+      season: identical(season, unset) ? this.season : season as SeasonPlan?,
     );
   }
 
@@ -683,6 +769,9 @@ final class AdaptInput {
         v[i].collectViolations('$path.decisions[$i]', out);
       }
     }
+    if (season case final v?) {
+      v.collectViolations('$path.season', out);
+    }
   }
 
   /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
@@ -693,6 +782,7 @@ final class AdaptInput {
     for (final e in decisions ?? const <ProposalDecision>[]) {
       e.collectExerciseIds(out);
     }
+    season?.collectExerciseIds(out);
   }
 
   @override
@@ -705,7 +795,8 @@ final class AdaptInput {
             log == other.log &&
             today == other.today &&
             jsonDeepEquals(state, other.state) &&
-            jsonDeepEquals(decisions, other.decisions);
+            jsonDeepEquals(decisions, other.decisions) &&
+            season == other.season;
   }
 
   @override
@@ -717,6 +808,7 @@ final class AdaptInput {
     today,
     jsonDeepHash(state),
     jsonDeepHash(decisions),
+    season,
   ]);
 
   @override
@@ -1358,6 +1450,9 @@ final class SessionAdjustment {
 }
 
 /// Prescription de la séance du jour, ajustée.
+///
+/// Invariant : (0.4.0) `groups` : `groupId` distincts ; chaque groupe a au
+/// moins un membre parmi `items`.
 final class SessionPlan {
   const SessionPlan({
     this.schemaVersion = currentSchemaVersion,
@@ -1369,6 +1464,10 @@ final class SessionPlan {
     required this.adjustments,
     required this.confidence,
     required this.reasons,
+    this.phase,
+    this.weekIntent,
+    this.eventId,
+    this.groups,
   });
 
   /// Lit un objet JSON ; [FormatException] si un champ manque ou a un type inattendu.
@@ -1395,6 +1494,14 @@ final class SessionPlan {
         json,
         'reasons',
         (v) => Reason.fromJson(jsonAsObject(v, 'reasons')),
+      ),
+      phase: jsonEnumOrNull(json, 'phase', SeasonPhaseKind.fromCode),
+      weekIntent: jsonEnumOrNull(json, 'weekIntent', WeekIntent.fromCode),
+      eventId: jsonStringOrNull(json, 'eventId'),
+      groups: jsonListOrNull(
+        json,
+        'groups',
+        (v) => GroupSpec.fromJson(jsonAsObject(v, 'groups')),
       ),
     );
   }
@@ -1429,6 +1536,18 @@ final class SessionPlan {
   /// Pourquoi.
   final List<Reason> reasons;
 
+  /// Phase en cours (0.4.0).
+  final SeasonPhaseKind? phase;
+
+  /// Intention de la semaine (0.4.0).
+  final WeekIntent? weekIntent;
+
+  /// Échéance dont c'est le jour (0.4.0).
+  final String? eventId;
+
+  /// Groupes d'exercices enchaînés de la séance (0.4.0).
+  final List<GroupSpec>? groups;
+
   /// Objet JSON canonique : clés dans l'ordre du contrat, champs absents omis.
   Map<String, Object?> toJson() {
     return <String, Object?>{
@@ -1441,6 +1560,10 @@ final class SessionPlan {
       'adjustments': [for (final e in adjustments) e.toJson()],
       'confidence': confidence,
       'reasons': [for (final e in reasons) e.toJson()],
+      if (phase case final v?) 'phase': v.code,
+      if (weekIntent case final v?) 'weekIntent': v.code,
+      if (eventId case final v?) 'eventId': v,
+      if (groups case final v?) 'groups': [for (final e in v) e.toJson()],
     };
   }
 
@@ -1455,6 +1578,10 @@ final class SessionPlan {
     List<SessionAdjustment>? adjustments,
     double? confidence,
     List<Reason>? reasons,
+    Object? phase = unset,
+    Object? weekIntent = unset,
+    Object? eventId = unset,
+    Object? groups = unset,
   }) {
     return SessionPlan(
       schemaVersion: schemaVersion ?? this.schemaVersion,
@@ -1466,6 +1593,14 @@ final class SessionPlan {
       adjustments: adjustments ?? this.adjustments,
       confidence: confidence ?? this.confidence,
       reasons: reasons ?? this.reasons,
+      phase: identical(phase, unset) ? this.phase : phase as SeasonPhaseKind?,
+      weekIntent: identical(weekIntent, unset)
+          ? this.weekIntent
+          : weekIntent as WeekIntent?,
+      eventId: identical(eventId, unset) ? this.eventId : eventId as String?,
+      groups: identical(groups, unset)
+          ? this.groups
+          : groups as List<GroupSpec>?,
     );
   }
 
@@ -1498,6 +1633,16 @@ final class SessionPlan {
     for (var i = 0; i < reasons.length; i++) {
       reasons[i].collectViolations('$path.reasons[$i]', out);
     }
+    if (eventId case final v?) {
+      checkLength(out, '$path.eventId', v.length, 1, null);
+    }
+    if (groups case final v?) {
+      checkLength(out, '$path.groups', v.length, null, 20);
+      for (var i = 0; i < v.length; i++) {
+        v[i].collectViolations('$path.groups[$i]', out);
+      }
+    }
+    _validateSessionPlan(this, path, out);
   }
 
   /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
@@ -1509,6 +1654,9 @@ final class SessionPlan {
       e.collectExerciseIds(out);
     }
     for (final e in reasons) {
+      e.collectExerciseIds(out);
+    }
+    for (final e in groups ?? const <GroupSpec>[]) {
       e.collectExerciseIds(out);
     }
   }
@@ -1525,7 +1673,11 @@ final class SessionPlan {
             jsonListEquals(items, other.items) &&
             jsonListEquals(adjustments, other.adjustments) &&
             confidence == other.confidence &&
-            jsonListEquals(reasons, other.reasons);
+            jsonListEquals(reasons, other.reasons) &&
+            phase == other.phase &&
+            weekIntent == other.weekIntent &&
+            eventId == other.eventId &&
+            jsonDeepEquals(groups, other.groups);
   }
 
   @override
@@ -1539,6 +1691,10 @@ final class SessionPlan {
     Object.hashAll(adjustments),
     confidence,
     Object.hashAll(reasons),
+    phase,
+    weekIntent,
+    eventId,
+    jsonDeepHash(groups),
   ]);
 
   @override
@@ -1558,6 +1714,8 @@ final class IntraSessionAdvice {
     this.restSeconds,
     required this.confidence,
     required this.reasons,
+    this.miniSetsLeft,
+    this.stepExerciseId,
   });
 
   /// Lit un objet JSON ; [FormatException] si un champ manque ou a un type inattendu.
@@ -1578,6 +1736,8 @@ final class IntraSessionAdvice {
         'reasons',
         (v) => Reason.fromJson(jsonAsObject(v, 'reasons')),
       ),
+      miniSetsLeft: jsonIntOrNull(json, 'miniSetsLeft'),
+      stepExerciseId: jsonStringOrNull(json, 'stepExerciseId'),
     );
   }
 
@@ -1611,6 +1771,13 @@ final class IntraSessionAdvice {
   /// Pourquoi.
   final List<Reason> reasons;
 
+  /// Mini-séries conseillées encore à faire dans la série en cours (0.4.0).
+  final int? miniSetsLeft;
+
+  /// Étape de progression conseillée pour la suite (figure : étape plus facile
+  /// un mauvais jour) (0.4.0).
+  final String? stepExerciseId;
+
   /// Objet JSON canonique : clés dans l'ordre du contrat, champs absents omis.
   Map<String, Object?> toJson() {
     return <String, Object?>{
@@ -1624,6 +1791,8 @@ final class IntraSessionAdvice {
       if (restSeconds case final v?) 'restSeconds': v,
       'confidence': confidence,
       'reasons': [for (final e in reasons) e.toJson()],
+      if (miniSetsLeft case final v?) 'miniSetsLeft': v,
+      if (stepExerciseId case final v?) 'stepExerciseId': v,
     };
   }
 
@@ -1639,6 +1808,8 @@ final class IntraSessionAdvice {
     Object? restSeconds = unset,
     double? confidence,
     List<Reason>? reasons,
+    Object? miniSetsLeft = unset,
+    Object? stepExerciseId = unset,
   }) {
     return IntraSessionAdvice(
       exerciseId: exerciseId ?? this.exerciseId,
@@ -1661,6 +1832,12 @@ final class IntraSessionAdvice {
           : restSeconds as int?,
       confidence: confidence ?? this.confidence,
       reasons: reasons ?? this.reasons,
+      miniSetsLeft: identical(miniSetsLeft, unset)
+          ? this.miniSetsLeft
+          : miniSetsLeft as int?,
+      stepExerciseId: identical(stepExerciseId, unset)
+          ? this.stepExerciseId
+          : stepExerciseId as String?,
     );
   }
 
@@ -1693,6 +1870,12 @@ final class IntraSessionAdvice {
     for (var i = 0; i < reasons.length; i++) {
       reasons[i].collectViolations('$path.reasons[$i]', out);
     }
+    if (miniSetsLeft case final v?) {
+      checkRange(out, '$path.miniSetsLeft', v, 0, 50);
+    }
+    if (stepExerciseId case final v?) {
+      checkLength(out, '$path.stepExerciseId', v.length, 1, null);
+    }
   }
 
   /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
@@ -1700,6 +1883,9 @@ final class IntraSessionAdvice {
     out.add(exerciseId);
     for (final e in reasons) {
       e.collectExerciseIds(out);
+    }
+    if (stepExerciseId case final v?) {
+      out.add(v);
     }
   }
 
@@ -1716,7 +1902,9 @@ final class IntraSessionAdvice {
             slotId == other.slotId &&
             restSeconds == other.restSeconds &&
             confidence == other.confidence &&
-            jsonListEquals(reasons, other.reasons);
+            jsonListEquals(reasons, other.reasons) &&
+            miniSetsLeft == other.miniSetsLeft &&
+            stepExerciseId == other.stepExerciseId;
   }
 
   @override
@@ -1731,6 +1919,8 @@ final class IntraSessionAdvice {
     restSeconds,
     confidence,
     Object.hashAll(reasons),
+    miniSetsLeft,
+    stepExerciseId,
   ]);
 
   @override
@@ -1751,6 +1941,8 @@ final class Proposal {
     this.diff,
     this.block,
     required this.reasons,
+    this.detail,
+    this.season,
   });
 
   /// Lit un objet JSON ; [FormatException] si un champ manque ou a un type inattendu.
@@ -1772,6 +1964,8 @@ final class Proposal {
         'reasons',
         (v) => Reason.fromJson(jsonAsObject(v, 'reasons')),
       ),
+      detail: jsonEnumOrNull(json, 'detail', ProposalDetail.fromCode),
+      season: jsonObjOrNull(json, 'season', SeasonPlan.fromJson),
     );
   }
 
@@ -1808,6 +2002,12 @@ final class Proposal {
   /// Pourquoi.
   final List<Reason> reasons;
 
+  /// Précision de la proposition (0.4.0).
+  final ProposalDetail? detail;
+
+  /// Plan de saison résultant, pour une révision de la saison (0.4.0).
+  final SeasonPlan? season;
+
   /// Objet JSON canonique : clés dans l'ordre du contrat, champs absents omis.
   Map<String, Object?> toJson() {
     return <String, Object?>{
@@ -1822,6 +2022,8 @@ final class Proposal {
       if (diff case final v?) 'diff': v.toJson(),
       if (block case final v?) 'block': v.toJson(),
       'reasons': [for (final e in reasons) e.toJson()],
+      if (detail case final v?) 'detail': v.code,
+      if (season case final v?) 'season': v.toJson(),
     };
   }
 
@@ -1838,6 +2040,8 @@ final class Proposal {
     Object? diff = unset,
     Object? block = unset,
     List<Reason>? reasons,
+    Object? detail = unset,
+    Object? season = unset,
   }) {
     return Proposal(
       id: id ?? this.id,
@@ -1853,6 +2057,10 @@ final class Proposal {
       diff: identical(diff, unset) ? this.diff : diff as PlanDiff?,
       block: identical(block, unset) ? this.block : block as ProgramBlock?,
       reasons: reasons ?? this.reasons,
+      detail: identical(detail, unset)
+          ? this.detail
+          : detail as ProposalDetail?,
+      season: identical(season, unset) ? this.season : season as SeasonPlan?,
     );
   }
 
@@ -1879,6 +2087,9 @@ final class Proposal {
     for (var i = 0; i < reasons.length; i++) {
       reasons[i].collectViolations('$path.reasons[$i]', out);
     }
+    if (season case final v?) {
+      v.collectViolations('$path.season', out);
+    }
   }
 
   /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
@@ -1891,6 +2102,7 @@ final class Proposal {
     for (final e in reasons) {
       e.collectExerciseIds(out);
     }
+    season?.collectExerciseIds(out);
   }
 
   @override
@@ -1907,7 +2119,9 @@ final class Proposal {
             exerciseId == other.exerciseId &&
             diff == other.diff &&
             block == other.block &&
-            jsonListEquals(reasons, other.reasons);
+            jsonListEquals(reasons, other.reasons) &&
+            detail == other.detail &&
+            season == other.season;
   }
 
   @override
@@ -1923,6 +2137,8 @@ final class Proposal {
     diff,
     block,
     Object.hashAll(reasons),
+    detail,
+    season,
   ]);
 
   @override
@@ -2080,6 +2296,8 @@ final class AdaptReview {
     required this.state,
     required this.log,
     this.records,
+    this.testResults,
+    this.skillStates,
   });
 
   /// Lit un objet JSON ; [FormatException] si un champ manque ou a un type inattendu.
@@ -2103,6 +2321,16 @@ final class AdaptReview {
         'records',
         (v) => PersonalRecord.fromJson(jsonAsObject(v, 'records')),
       ),
+      testResults: jsonListOrNull(
+        json,
+        'testResults',
+        (v) => Benchmark.fromJson(jsonAsObject(v, 'testResults')),
+      ),
+      skillStates: jsonListOrNull(
+        json,
+        'skillStates',
+        (v) => SkillState.fromJson(jsonAsObject(v, 'skillStates')),
+      ),
     );
   }
 
@@ -2121,6 +2349,14 @@ final class AdaptReview {
   /// Records personnels établis d'après le journal.
   final List<PersonalRecord>? records;
 
+  /// Résultats de tests à reporter dans `AthleteProfile.benchmarks` par
+  /// l'application (0.4.0).
+  final List<Benchmark>? testResults;
+
+  /// États des figures à reporter dans `AthleteProfile.skills` par
+  /// l'application (0.4.0).
+  final List<SkillState>? skillStates;
+
   /// Objet JSON canonique : clés dans l'ordre du contrat, champs absents omis.
   Map<String, Object?> toJson() {
     return <String, Object?>{
@@ -2129,6 +2365,10 @@ final class AdaptReview {
       'state': jsonCanonical(state),
       'log': [for (final e in log) e.toJson()],
       if (records case final v?) 'records': [for (final e in v) e.toJson()],
+      if (testResults case final v?)
+        'testResults': [for (final e in v) e.toJson()],
+      if (skillStates case final v?)
+        'skillStates': [for (final e in v) e.toJson()],
     };
   }
 
@@ -2139,6 +2379,8 @@ final class AdaptReview {
     Map<String, Object?>? state,
     List<EngineLogEntry>? log,
     Object? records = unset,
+    Object? testResults = unset,
+    Object? skillStates = unset,
   }) {
     return AdaptReview(
       summary: summary ?? this.summary,
@@ -2148,6 +2390,12 @@ final class AdaptReview {
       records: identical(records, unset)
           ? this.records
           : records as List<PersonalRecord>?,
+      testResults: identical(testResults, unset)
+          ? this.testResults
+          : testResults as List<Benchmark>?,
+      skillStates: identical(skillStates, unset)
+          ? this.skillStates
+          : skillStates as List<SkillState>?,
     );
   }
 
@@ -2173,6 +2421,18 @@ final class AdaptReview {
         v[i].collectViolations('$path.records[$i]', out);
       }
     }
+    if (testResults case final v?) {
+      checkLength(out, '$path.testResults', v.length, null, 200);
+      for (var i = 0; i < v.length; i++) {
+        v[i].collectViolations('$path.testResults[$i]', out);
+      }
+    }
+    if (skillStates case final v?) {
+      checkLength(out, '$path.skillStates', v.length, null, 30);
+      for (var i = 0; i < v.length; i++) {
+        v[i].collectViolations('$path.skillStates[$i]', out);
+      }
+    }
   }
 
   /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
@@ -2187,6 +2447,12 @@ final class AdaptReview {
     for (final e in records ?? const <PersonalRecord>[]) {
       e.collectExerciseIds(out);
     }
+    for (final e in testResults ?? const <Benchmark>[]) {
+      e.collectExerciseIds(out);
+    }
+    for (final e in skillStates ?? const <SkillState>[]) {
+      e.collectExerciseIds(out);
+    }
   }
 
   @override
@@ -2197,7 +2463,9 @@ final class AdaptReview {
             jsonListEquals(proposals, other.proposals) &&
             jsonDeepEquals(state, other.state) &&
             jsonListEquals(log, other.log) &&
-            jsonDeepEquals(records, other.records);
+            jsonDeepEquals(records, other.records) &&
+            jsonDeepEquals(testResults, other.testResults) &&
+            jsonDeepEquals(skillStates, other.skillStates);
   }
 
   @override
@@ -2207,6 +2475,8 @@ final class AdaptReview {
     jsonDeepHash(state),
     Object.hashAll(log),
     jsonDeepHash(records),
+    jsonDeepHash(testResults),
+    jsonDeepHash(skillStates),
   ]);
 
   @override

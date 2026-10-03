@@ -18,17 +18,20 @@ import 'package:kalis_koach/kalis_koach.dart' show KoachPose;
 import 'app_theme.dart';
 import 'athlete_profile.dart';
 import 'athlete_profile_screen.dart';
-import 'content_pack.dart' show ContentIndex;
+import 'content_pack.dart' show ContentIndex, ExerciseEntry;
 import 'exercise_screens.dart' show searchExercises, ExerciseFilters;
 import 'goal_suggestions_g6.dart';
 import 'koach/koach_bubble.dart';
 import 'koach/koach_view.dart';
 import 'muscle_map_2d.dart';
 import 'plan/plan_screens.dart' show openPlanCreation;
+import 'profile_v3.dart';
 import 'program_explainer.dart';
 import 'store.dart';
 import 'ui.dart';
 import 'wellbeing_screens.dart' show DisclaimerCard, MinorGate;
+
+part 'athlete_profile_flow_v3.dart';
 
 /// Premier écran de l'application : création du profil (installation
 /// neuve), proposition de refaire son profil (session avec des données,
@@ -139,9 +142,10 @@ class ProfileRedoProposal extends StatelessWidget {
   }
 }
 
-/// Création (installation neuve), refaire son profil (D1.6) ou modifier
-/// une rubrique (Réglages › Profil).
-enum AthleteFlowMode { create, redo, edit }
+/// Création (installation neuve), refaire son profil (D1.6), modifier
+/// une rubrique (Réglages › Profil) ou, CU, compléter son profil (questions
+/// du schéma 3 seulement : utilisateurs existants, questions reportées).
+enum AthleteFlowMode { create, redo, edit, complete }
 
 class AthleteProfileFlow extends StatefulWidget {
   final AthleteFlowMode mode;
@@ -149,12 +153,17 @@ class AthleteProfileFlow extends StatefulWidget {
   /// Rubrique modifiée (mode [AthleteFlowMode.edit]).
   final String? editStep;
   final VoidCallback? onDone, onCancel;
+
+  /// Mode [AthleteFlowMode.complete] : seulement les questions reportées
+  /// après la première semaine (sinon toutes celles du schéma 3).
+  final bool deferredOnly;
   const AthleteProfileFlow({
     super.key,
     this.mode = AthleteFlowMode.create,
     this.editStep,
     this.onDone,
     this.onCancel,
+    this.deferredOnly = false,
   });
 
   @override
@@ -183,7 +192,23 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
   /// Résultats affichés de la recherche d'exercices (« Afficher plus »).
   int _shown = 20;
 
+  // CU : état d'écran des questions du schéma 3.
+  bool _unknownBenchmarks = false;
+  final List<String> _extraRecentRows = [];
+  final List<String> _extraWeakRows = [];
+  String? _runVolume, _runSessions;
+  bool _otherSportOpen = false;
+  final _targetWeight = TextEditingController();
+
+  /// Questions montrées (identifiants), recalculées à chaque construction.
+  Set<String> _visible = const {};
+
+  /// Compléter son profil sans niveau déclaré : la question du niveau est
+  /// ajoutée (elle ouvre les autres).
+  bool _askExperience = false;
+
   bool get _edit => widget.mode == AthleteFlowMode.edit;
+  bool get _complete => widget.mode == AthleteFlowMode.complete;
   String get _modeCode =>
       widget.mode == AthleteFlowMode.redo ? 'redo' : 'create';
 
@@ -193,6 +218,14 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
   /// Brouillon (tests).
   ProfileDraft get draft => _d;
 
+  /// CU : étapes montrées et questions visibles (tests).
+  List<String> get visibleSteps => _steps;
+  Set<String> get visibleQuestionIds => _visible;
+
+  /// CU : aller à une étape (tests).
+  @visibleForTesting
+  void debugGo(String step) => _go(step);
+
   DateTime get _now => store.storeClock();
 
   @override
@@ -201,6 +234,12 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
     if (_edit) {
       _d = store.athleteEditDraft();
       _step = widget.editStep ?? 'identity';
+    } else if (_complete) {
+      _d = store.athleteEditDraft();
+      _askExperience = _d.experience == null && !widget.deferredOnly;
+      _visible = _computeVisible();
+      final steps = _steps;
+      _step = steps.isEmpty ? 'recap' : steps.first;
     } else {
       final saved = store.athleteDraft;
       if (saved != null && saved.mode == _modeCode) {
@@ -217,7 +256,75 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
     _height.text = _d.height;
     _weight.text = _d.weight;
     _nameCtl.text = _d.displayName;
+    final tw = _d.targetBodyWeightKg;
+    if (tw != null) _targetWeight.text = numText(tw);
+    _visible = _computeVisible();
+    if (!_edit && !_steps.contains(_step)) _step = _nearestStep(_step);
     WidgetsBinding.instance.addObserver(this);
+  }
+
+  /// Change l'état de l'écran (questions du schéma 3, part
+  /// athlete_profile_flow_v3.dart).
+  void _update(VoidCallback f) => setState(f);
+
+  /// Questions du parcours montrées pour le brouillon (identifiants) :
+  /// `ProfileQuestionnaire` décide, l'écran ne code aucune condition.
+  Set<String> _computeVisible() {
+    final p = store.content.questionnaire;
+    if (p == null) return kV2QuestionIds;
+    final json = _d.conditionJson();
+    final year = _now.year;
+    final List<ProfileQuestion> qs = switch (widget.mode) {
+      AthleteFlowMode.create ||
+      AthleteFlowMode.redo => p.visibleQuestions(json, todayYear: year),
+      AthleteFlowMode.edit => p.visibleQuestions(
+        json,
+        todayYear: year,
+        includeDeferred: true,
+      ),
+      AthleteFlowMode.complete =>
+        widget.deferredOnly
+            ? p.deferredQuestions(json, todayYear: year)
+            : p.visibleQuestions(
+                json,
+                todayYear: year,
+                since: 3,
+                includeDeferred: true,
+              ),
+    };
+    return {for (final q in qs) q.id, if (_askExperience) 'experience_level'};
+  }
+
+  /// Question montrée.
+  bool _show(String id) => _visible.contains(id);
+
+  /// Étapes montrées pour le brouillon (une étape sans question visible ne
+  /// l'est pas) ; accueil et récapitulatif hors du mode « compléter ».
+  List<String> get _steps {
+    final p = store.content.questionnaire;
+    final screens = <String>{
+      for (final id in _visible)
+        if (p?.question(id)?.screen case final s?) s,
+    };
+    return [
+      for (final s in kAthleteSteps)
+        if (s == 'welcome' || s == 'recap'
+            ? !_complete
+            : p == null
+            ? s != 'experience' && s != 'recovery'
+            : screens.contains(kStepScreens[s]))
+          s,
+    ];
+  }
+
+  /// Étape montrée la plus proche après [step] (reprise d'un brouillon).
+  String _nearestStep(String step) {
+    final steps = _steps;
+    final i = kAthleteSteps.indexOf(step);
+    for (final s in steps) {
+      if (kAthleteSteps.indexOf(s) >= i) return s;
+    }
+    return steps.isEmpty ? 'recap' : steps.last;
   }
 
   @override
@@ -232,14 +339,21 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
-    for (final c in [_year, _height, _weight, _nameCtl, _search]) {
+    for (final c in [
+      _year,
+      _height,
+      _weight,
+      _nameCtl,
+      _search,
+      _targetWeight,
+    ]) {
       c.dispose();
     }
     super.dispose();
   }
 
   void _saveDraft() {
-    if (_edit || _saved != null) return;
+    if (_edit || _complete || _saved != null) return;
     if (_minor || _d.isMinorIn(_now.year)) {
       unawaited(store.saveAthleteDraft(null));
       return;
@@ -247,12 +361,15 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
     unawaited(store.saveAthleteDraft(_d, step: _step, mode: _modeCode));
   }
 
-  int get _index => kAthleteSteps.indexOf(_step);
+  int get _index => _steps.indexOf(_step);
 
   void _go(String step) {
     setState(() => _step = step);
     _saveDraft();
   }
+
+  /// Dernière étape du mode « compléter » (son bouton enregistre).
+  bool get _lastComplete => _complete && _index >= _steps.length - 1;
 
   void _toast(String text, {KoachPose pose = KoachPose.oops}) {
     final messenger = ScaffoldMessenger.maybeOf(context);
@@ -262,7 +379,11 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
 
   void _next() {
     FocusScope.of(context).unfocus();
-    final err = _d.stepError(_step, _now);
+    final err = _d.stepError(
+      _step,
+      _now,
+      parcours: store.content.questionnaire,
+    );
     if (err != null) {
       _toast(err);
       return;
@@ -273,7 +394,7 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
       setState(() => _minor = true);
       return;
     }
-    if (_edit) {
+    if (_edit || _lastComplete) {
       _save();
       return;
     }
@@ -286,7 +407,9 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
       _go('recap');
       return;
     }
-    _go(kAthleteSteps[_index + 1]);
+    final steps = _steps;
+    final i = steps.indexOf(_step);
+    _go(i < 0 ? _nearestStep(_step) : steps[i + 1]);
   }
 
   void _back() {
@@ -305,22 +428,48 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
       return;
     }
     if (_index > 0) {
-      _go(kAthleteSteps[_index - 1]);
+      _go(_steps[_index - 1]);
+    } else if (_complete) {
+      Navigator.of(context).maybePop();
     } else {
       widget.onCancel?.call();
     }
   }
 
   void _save() {
-    final res = store.saveAthleteProfile(_d);
+    // CU : questions du schéma 3 montrées et laissées sans réponse =
+    // passées (retenues hors du profil, jamais reproposées d'office).
+    final passed = <String>[
+      if (!_edit)
+        for (final id in _visible)
+          if (store.content.questionnaire?.question(id) case final q?
+              when q.since >= 3 && !_d.answered(q))
+            id,
+    ];
+    final res = store.saveAthleteProfile(
+      _d,
+      createdByV3:
+          widget.mode == AthleteFlowMode.create ||
+          widget.mode == AthleteFlowMode.redo,
+    );
     if (res == null) {
-      final first = _d.firstIncomplete(_now);
+      final first = _d.firstIncomplete(
+        _now,
+        parcours: store.content.questionnaire,
+      );
       _toast(
         first == null
             ? 'Profil incomplet.'
             : 'Il manque une réponse : ${kRubricTitles[first] ?? first}.',
       );
-      if (first != null && !_edit) _go(first);
+      if (first != null && !_edit && !_complete) _go(first);
+      return;
+    }
+    unawaited(store.addSkippedProfileQuestions(passed));
+    if (_complete) {
+      // Fermeture directe : le retour arrière du système (PopScope) ramène
+      // à l'étape précédente tant que le profil n'est pas enregistré.
+      Navigator.of(context).pop(res);
       return;
     }
     if (_edit) {
@@ -335,24 +484,29 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
   @override
   Widget build(BuildContext context) {
     if (_saved != null) return _doneScreen();
+    _visible = _computeVisible();
     final title = _minor
         ? 'RÉSERVÉE AUX ADULTES'
         : _edit
         ? (kRubricTitles[_step] ?? 'PROFIL').toUpperCase()
+        : _complete
+        ? 'COMPLÉTER MON PROFIL'
         : switch (_step) {
             'welcome' =>
               widget.mode == AthleteFlowMode.redo ? 'TON PROFIL' : 'BIENVENUE',
             'recap' => 'RÉCAPITULATIF',
             _ => (kRubricTitles[_step] ?? '').toUpperCase(),
           };
-    final steps = kAthleteSteps.length - 1;
+    final steps = _complete ? _steps.length : _steps.length - 1;
+    final position = _complete ? _index + 1 : _index;
     final canBack =
         _minor ||
         _edit ||
+        _complete ||
         _index > 0 ||
         (widget.onCancel != null && _step == 'welcome');
     return PopScope(
-      canPop: _edit && !_minor,
+      canPop: (_edit || (_complete && _index <= 0)) && !_minor,
       onPopInvokedWithResult: (didPop, _) {
         if (!didPop) _back();
       },
@@ -372,21 +526,21 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
         body: KList(
           key: ValueKey('flow-${_minor ? 'minor' : _step}'),
           children: [
-            if (!_minor && !_edit && _index > 0)
+            if (!_minor && !_edit && position > 0 && steps > 0)
               Semantics(
-                label: 'Étape $_index sur $steps',
+                label: 'Étape $position sur $steps',
                 child: ExcludeSemantics(
                   child: Row(
                     children: [
                       Expanded(
                         child: LinearProgressIndicator(
                           key: const ValueKey('flow-progress'),
-                          value: _index / steps,
+                          value: position / steps,
                         ),
                       ),
                       const SizedBox(width: 10),
                       Text(
-                        '$_index / $steps',
+                        '$position / $steps',
                         style: Theme.of(context).textTheme.bodySmall,
                       ),
                     ],
@@ -403,7 +557,7 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
   }
 
   Widget _actions() {
-    final label = _edit
+    final label = _edit || _lastComplete
         ? 'Enregistrer'
         : _step == 'welcome'
         ? (widget.mode == AthleteFlowMode.redo ? 'C’est parti' : 'Commencer')
@@ -416,7 +570,7 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
         : 'Continuer';
     return FilledButton(
       key: ValueKey(
-        _edit
+        _edit || _lastComplete
             ? 'flow-save'
             : (_fromRecap ? 'flow-to-recap' : 'flow-next-$_step'),
       ),
@@ -463,7 +617,7 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
       text: text,
       why: why,
       koachHeight: 76,
-      seed: _index,
+      seed: kAthleteSteps.indexOf(_step),
     ),
   );
 
@@ -516,10 +670,12 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
     'identity' => _identity(),
     'discipline' => _discipline(),
     'secondary' => _secondary(),
+    'experience' => _experienceStep(),
     'levels' => _levels(),
     'goals' => _goals(),
     'availability' => _availability(),
     'places' => _places(),
+    'recovery' => _recoveryStep(),
     'health' => _health(),
     'preferences' => _preferences(),
     'mode' => _mode(),
@@ -578,7 +734,13 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
           children: [
             _title('Sexe'),
             const SizedBox(height: 4),
-            _hint('Sert seulement aux repères de niveau par mouvement.'),
+            _hint(
+              _koachText(
+                'sex',
+                'Ça ne change pas ton programme : ça sert aux repères de '
+                    'classement et aux catégories de compétition.',
+              ),
+            ),
             const SizedBox(height: 8),
             _chips<Sex>(
               keyPrefix: 'flow-sex',
@@ -644,27 +806,56 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
               onChanged: (v) => _d.height = v,
             ),
             const SizedBox(height: 12),
-            _title('Poids (facultatif)'),
-            const SizedBox(height: 4),
-            _hint(
-              'Sert aux rangs par mouvement et aux exercices au poids du '
-              'corps (tractions, dips…) : on y ajoute ton lest. Modifiable à '
-              'tout moment dans les pesées.',
-            ),
-            const SizedBox(height: 8),
-            TextField(
-              key: const ValueKey('flow-weight'),
-              controller: _weight,
-              keyboardType: const TextInputType.numberWithOptions(
-                decimal: true,
-              ),
-              decoration: const InputDecoration(labelText: 'Poids (kg)'),
-              onChanged: (v) => _d.weight = v,
-            ),
+            ..._weightField(),
           ],
         ),
       ),
     ];
+  }
+
+  /// Poids : obligatoire en street et au poids du corps (`requiredWhen`),
+  /// facultatif ailleurs (« Passer » : champ laissé vide).
+  List<Widget> _weightField() {
+    final required = _d.weightRequired(store.content.questionnaire, _now.year);
+    return [
+      _title(required ? 'Poids' : 'Poids (facultatif)'),
+      const SizedBox(height: 4),
+      _hint(
+        _koachText(
+          'body_weight',
+          'Aux pompes ou aux tractions, c’est ton propre poids que tu '
+              'soulèves. Si je le connais, je dose mieux. Personne d’autre '
+              'ne le voit.',
+        ),
+      ),
+      const SizedBox(height: 8),
+      TextField(
+        key: const ValueKey('flow-weight'),
+        controller: _weight,
+        keyboardType: const TextInputType.numberWithOptions(decimal: true),
+        decoration: const InputDecoration(labelText: 'Poids (kg)'),
+        onChanged: (v) => setState(() => _d.weight = v),
+      ),
+    ];
+  }
+
+  /// Carte du poids sur l'écran de la discipline : montrée dès que la
+  /// discipline rend le poids obligatoire et qu'il manque, puis gardée
+  /// pendant la saisie.
+  bool _weightAsked = false;
+  bool _needWeightCard() {
+    if (!_d.weightRequired(store.content.questionnaire, _now.year)) {
+      return false;
+    }
+    final w = _d.weightValue;
+    if (w == null || w.isNaN) _weightAsked = true;
+    return _weightAsked;
+  }
+
+  /// Texte de Koach d'une question du parcours (repli : [fallback]).
+  String _koachText(String id, String fallback) {
+    final q = store.content.questionnaire?.question(id);
+    return (q == null ? null : koachOf(q)) ?? fallback;
   }
 
   // ------------------------------------------------------- 3. discipline
@@ -764,6 +955,32 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
             _d.secondaries.remove(d);
           },
         ),
+    // CU : dernier choix, la forme générale (une réponse est écrite,
+    // modifiable ensuite).
+    if (!_d.street)
+      _option(
+        key: const ValueKey('flow-discipline-unsure'),
+        pose: KoachPose.shrug,
+        title: 'Je ne sais pas, choisis pour moi',
+        hint:
+            'Je te mets en forme générale : un peu de tout, modifiable '
+            'ensuite.',
+        selected: false,
+        onTap: () {
+          _d.primary = TrainingDiscipline.generalFitness;
+          _d.secondaries.remove(TrainingDiscipline.generalFitness);
+        },
+      ),
+    // CU : poids obligatoire pour les disciplines au poids du corps.
+    if (_needWeightCard())
+      KCard(
+        key: const ValueKey('flow-weight-card'),
+        accent: SL.accent,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: _weightField(),
+        ),
+      ),
   ];
 
   // -------------------------------------------------------- 4. secondaires
@@ -907,59 +1124,22 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
   List<Widget> _levels() => [
     _koach(
       KoachPose.analyze,
-      'Dis-moi où tu en es, mouvement par mouvement. Une fourchette suffit, '
-      'et « Je ne sais pas » est une bonne réponse.',
+      _screenKoach(
+        'levels',
+        'Donne-moi une idée, même vague. Si tu ne sais pas, pas d’examen : '
+            'on verra tranquillement pendant tes premières séances.',
+      ),
       why:
           'Je pars de la valeur basse de ta fourchette, pour être prudent. '
           'Tes 2 ou 3 premières séances me serviront ensuite à caler tes '
           'charges.',
     ),
-    KCard(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _title('Ton expérience'),
-          const SizedBox(height: 8),
-          _chips<ExperienceLevel>(
-            keyPrefix: 'flow-experience',
-            options: [
-              for (final e in ExperienceLevel.values)
-                (e, kExperienceLabels[e]!),
-            ],
-            selected: (e) => _d.experience == e,
-            onSelected: (e, v) => _d.experience = v ? e : null,
-          ),
-        ],
-      ),
-    ),
-    for (final m in _d.movements)
-      KCard(
-        key: ValueKey('flow-level-${m.key}'),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _title(m.label),
-            const SizedBox(height: 2),
-            _hint(m.question),
-            const SizedBox(height: 8),
-            _chips<int>(
-              keyPrefix: 'level-${m.key}',
-              options: [
-                for (var i = 0; i < m.bands.length; i++) (i, m.bands[i].label),
-                (-1, 'Je ne sais pas'),
-              ],
-              selected: (i) => _d.levels[m.key] == i,
-              onSelected: (i, v) {
-                if (v) {
-                  _d.levels[m.key] = i;
-                } else {
-                  _d.levels.remove(m.key);
-                }
-              },
-            ),
-          ],
-        ),
-      ),
+    // CU : les records d'abord ; les fourchettes ensuite, seulement pour
+    // les mouvements sans record (PARCOURS_V3.md § 1).
+    if (_show('benchmarks')) _benchmarksCard(),
+    if (_show('movement_levels')) ..._movementLevelCards(),
+    if (_show('skills')) _skillsCard(),
+    if (_show('recent_training')) _recentTrainingCard(),
   ];
 
   // --------------------------------------------------------- 6. objectifs
@@ -977,6 +1157,19 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
           'Tu peux avoir plusieurs objectifs ; le premier est le principal. '
           'L’étoile change l’objectif principal ; le crayon (ou un appui '
           'sur l’objectif) le modifie.',
+    ),
+    if (_show('goals')) ..._goalList(),
+    // CU : orientation, échéances, priorité, points faibles, course.
+    ..._goalsV3(),
+  ];
+
+  List<Widget> _goalList() => [
+    // CU : « Laisse Koach proposer » en premier (PARCOURS_V3.md, `goals`).
+    OutlinedButton.icon(
+      key: const ValueKey('goal-suggest'),
+      icon: const Icon(Icons.lightbulb_outline),
+      label: const Text('Laisse Koach proposer'),
+      onPressed: _suggest,
     ),
     for (var i = 0; i < _d.goals.length; i++)
       KCard(
@@ -1037,12 +1230,6 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
       icon: const Icon(Icons.event_repeat),
       label: const Text('Objectif d’habitude'),
       onPressed: _addHabit,
-    ),
-    OutlinedButton.icon(
-      key: const ValueKey('goal-suggest'),
-      icon: const Icon(Icons.lightbulb_outline),
-      label: const Text('Laisse Koach proposer'),
-      onPressed: _suggest,
     ),
   ];
 
@@ -1598,6 +1785,23 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
               _title('Blessures et gênes (facultatif)'),
               const SizedBox(height: 4),
               _hint(
+                _koachText(
+                  'limitations',
+                  'Une ancienne blessure, une articulation sensible : '
+                      'dis-moi ce qui la réveille, je la protège. Je ne pose '
+                      'aucun diagnostic.',
+                ),
+              ),
+              if (_d.limitations.isEmpty && !_edit) ...[
+                const SizedBox(height: 8),
+                FilledButton.tonal(
+                  key: const ValueKey('limitations-none'),
+                  onPressed: _next,
+                  child: const Text('Non, rien'),
+                ),
+              ],
+              const SizedBox(height: 8),
+              _hint(
                 'Touche la zone sur la carte, ou choisis-la dans la liste '
                 '(articulations comprises).',
               ),
@@ -1633,7 +1837,7 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
                   title: Text(
                     '${kZoneLabels[l.zone]} · ${kSideLabels[l.side]!.toLowerCase()}',
                   ),
-                  subtitle: Text('Gêne actuelle : ${l.discomfort}/10'),
+                  subtitle: Text(limitationText(l)),
                   onTap: () => _editLimitation(l.zone, side: l.side),
                   trailing: IconButton(
                     tooltip: 'Retirer',
@@ -1655,6 +1859,39 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
     }
     var s = existing?.side ?? side ?? BodySide.both;
     var level = (existing?.discomfort ?? 3).toDouble();
+    // CU : détails du schéma 3 (contraintes d'entraînement, jamais un
+    // diagnostic) : depuis quand, gêne à l'effort, ce qui la réveille.
+    var since = existing?.since;
+    var resolved = since == ConstraintSince.pastResolved;
+    double? effort = existing?.effortDiscomfort?.toDouble();
+    final aggravated = <AggravatingMovement>{...?existing?.aggravatedBy};
+    final q = store.content.questionnaire?.question('limitations');
+    final beginner =
+        _d.experience == null || _d.experience == ExperienceLevel.beginner;
+    final allAggravating = q == null
+        ? const <(String, String)>[]
+        : itemOptions(q, 'aggravatedBy');
+    // Un débutant ne voit que les six premières réponses et « Courir ou
+    // sauter » (PARCOURS_V3.md, `limitations`).
+    final aggravating = [
+      for (var i = 0; i < allAggravating.length; i++)
+        if (!beginner ||
+            i < 6 ||
+            allAggravating[i].$1 == AggravatingMovement.runningJumping.code)
+          allAggravating[i],
+    ];
+    final sinceOpts = [
+      for (final o
+          in q == null ? const <(String, String)>[] : itemOptions(q, 'since'))
+        if (o.$1 != ConstraintSince.pastResolved.code) o,
+    ];
+    const central = {
+      BodyZone.neck,
+      BodyZone.upperBack,
+      BodyZone.lowerBack,
+      BodyZone.chest,
+      BodyZone.abdomen,
+    };
     final ok = await showModalBottomSheet<bool>(
       context: context,
       isScrollControlled: true,
@@ -1686,28 +1923,120 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
                   for (final b in BodySide.values)
                     ChoiceChip(
                       key: ValueKey('limitation-side-${b.code}'),
-                      label: Text(kSideLabels[b]!),
+                      label: Text(
+                        b == BodySide.both && central.contains(zone)
+                            ? 'Au milieu, ou des deux côtés'
+                            : kSideLabels[b]!,
+                      ),
                       selected: s == b,
                       onSelected: (_) => set(() => s = b),
                     ),
                 ],
               ),
-              const SizedBox(height: 12),
-              Text('Gêne actuelle : ${level.round()}/10'),
-              Slider(
-                key: const ValueKey('limitation-level'),
-                value: level,
-                max: 10,
-                divisions: 10,
-                label: '${level.round()}/10',
-                onChanged: (v) => set(() => level = v),
+              const SizedBox(height: 8),
+              CheckboxListTile(
+                key: const ValueKey('limitation-resolved'),
+                contentPadding: EdgeInsets.zero,
+                value: resolved,
+                title: const Text('C’est ancien, je ne sens plus rien'),
+                onChanged: (v) => set(() {
+                  resolved = v ?? false;
+                  if (resolved) {
+                    level = 0;
+                    since = ConstraintSince.pastResolved;
+                  } else if (since == ConstraintSince.pastResolved) {
+                    since = null;
+                  }
+                }),
               ),
+              if (!resolved) ...[
+                Text('Gêne actuelle : ${level.round()}/10'),
+                Slider(
+                  key: const ValueKey('limitation-level'),
+                  value: level,
+                  max: 10,
+                  divisions: 10,
+                  label: '${level.round()}/10',
+                  onChanged: (v) => set(() => level = v),
+                ),
+              ],
               Text(
                 '0 : aucune gêne aujourd’hui · 10 : la pire imaginable. Une '
                 'douleur forte ou qui dure mérite l’avis d’un professionnel de '
                 'santé.',
                 style: Theme.of(ctx).textTheme.bodySmall,
               ),
+              if (q != null) ...[
+                const SizedBox(height: 12),
+                SwitchListTile(
+                  key: const ValueKey('limitation-effort-known'),
+                  contentPadding: EdgeInsets.zero,
+                  value: effort != null,
+                  title: Text(
+                    itemText(
+                      q,
+                      'effortDiscomfort',
+                      'Quand elle se réveille pendant l’effort, elle monte à '
+                          'combien ?',
+                    ),
+                  ),
+                  onChanged: (v) => set(() => effort = v ? level : null),
+                ),
+                if (effort != null) ...[
+                  Text('Pendant l’effort : ${effort!.round()}/10'),
+                  Slider(
+                    key: const ValueKey('limitation-effort'),
+                    value: effort!,
+                    max: 10,
+                    divisions: 10,
+                    label: '${effort!.round()}/10',
+                    onChanged: (v) => set(() => effort = v),
+                  ),
+                ],
+                if (!resolved) ...[
+                  const SizedBox(height: 8),
+                  _title(itemText(q, 'since', 'Depuis quand ?')),
+                  const SizedBox(height: 6),
+                  Wrap(
+                    spacing: 8,
+                    runSpacing: 8,
+                    children: [
+                      for (final o in sinceOpts)
+                        ChoiceChip(
+                          key: ValueKey('limitation-since-${o.$1}'),
+                          label: Text(o.$2),
+                          selected: since?.code == o.$1,
+                          onSelected: (_) => set(
+                            () => since = since?.code == o.$1
+                                ? null
+                                : ConstraintSince.fromCode(o.$1),
+                          ),
+                        ),
+                    ],
+                  ),
+                ],
+                const SizedBox(height: 12),
+                _title(
+                  itemText(q, 'aggravatedBy', 'Qu’est-ce qui la réveille ?'),
+                ),
+                const SizedBox(height: 6),
+                Wrap(
+                  spacing: 6,
+                  runSpacing: 6,
+                  children: [
+                    for (final o in aggravating)
+                      FilterChip(
+                        key: ValueKey('limitation-aggravated-${o.$1}'),
+                        label: Text(o.$2),
+                        selected: aggravated.any((a) => a.code == o.$1),
+                        onSelected: (_) => set(() {
+                          final a = AggravatingMovement.fromCode(o.$1);
+                          if (!aggravated.remove(a)) aggravated.add(a);
+                        }),
+                      ),
+                  ],
+                ),
+              ],
               const SizedBox(height: 12),
               FilledButton(
                 key: const ValueKey('limitation-save'),
@@ -1722,7 +2051,18 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
     if (ok != true || !mounted) return;
     setState(() {
       if (existing != null) _d.limitations.remove(existing);
-      _d.putLimitation(limitationOf(zone, s, level.round()));
+      _d.putLimitation(
+        limitationOf(zone, s, resolved ? 0 : level.round()).copyWith(
+          since: since,
+          effortDiscomfort: effort?.round(),
+          aggravatedBy: aggravated.isEmpty
+              ? null
+              : [
+                  for (final a in AggravatingMovement.values)
+                    if (aggravated.contains(a)) a,
+                ],
+        ),
+      );
     });
   }
 
@@ -1884,36 +2224,37 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
         'Voilà ton profil. Touche une rubrique pour la modifier.',
       ),
       for (final r in kRubricTitles.keys)
-        KCard(
-          key: ValueKey('recap-$r'),
-          onTap: () {
-            _fromRecap = true;
-            _go(r);
-          },
-          child: Row(
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _hint(kRubricTitles[r]!),
-                    const SizedBox(height: 2),
-                    Text(rubricSummary(r, _d, _name)),
-                  ],
+        if (_steps.contains(r))
+          KCard(
+            key: ValueKey('recap-$r'),
+            onTap: () {
+              _fromRecap = true;
+              _go(r);
+            },
+            child: Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _hint(kRubricTitles[r]!),
+                      const SizedBox(height: 2),
+                      Text(rubricSummary(r, _d, _name)),
+                    ],
+                  ),
                 ),
-              ),
-              IconButton(
-                key: ValueKey('recap-edit-$r'),
-                tooltip: 'Modifier : ${kRubricTitles[r]}',
-                icon: const Icon(Icons.edit_outlined),
-                onPressed: () {
-                  _fromRecap = true;
-                  _go(r);
-                },
-              ),
-            ],
+                IconButton(
+                  key: ValueKey('recap-edit-$r'),
+                  tooltip: 'Modifier : ${kRubricTitles[r]}',
+                  icon: const Icon(Icons.edit_outlined),
+                  onPressed: () {
+                    _fromRecap = true;
+                    _go(r);
+                  },
+                ),
+              ],
+            ),
           ),
-        ),
       CautionCard(status: caution),
       const ProgramExplainerButton(),
     ];
@@ -2061,17 +2402,69 @@ String rubricSummary(
         for (final e in d.secondaries.entries)
           '${kDisciplineLabels[e.key]} ${e.value} %',
       ].join(' · ');
-    case 'levels':
+    case 'experience':
+      final q = store.content.questionnaire;
+      String? opt(String id, String? code) {
+        final question = q?.question(id);
+        if (code == null) return null;
+        return question == null ? code : optionLabel(question, code);
+      }
+
       final lines = <String>[
         if (d.experience != null) kExperienceLabels[d.experience]!,
+        ?opt('training_age', d.trainingAge?.code),
+        ?opt('training_gap', d.trainingGap?.code),
+      ];
+      return lines.isEmpty ? 'Rien de déclaré' : lines.join(' · ');
+    case 'levels':
+      final q = store.content.questionnaire;
+      final lines = <String>[
+        for (final b in d.benchmarks ?? const <Benchmark>[])
+          '${name(b.exerciseId)} : ${benchmarkText(b, q?.question('benchmarks'))}',
         for (final m in d.movements)
           if (d.levels[m.key] case final int i)
             '${m.label} : ${i < 0 ? 'je ne sais pas' : m.bands[i].label}',
+        for (final sk in d.skills ?? const <SkillState>[])
+          '${name(sk.targetExerciseId)} : ${name(sk.currentExerciseId)}',
+        if (d.recentTraining case final r? when r.isNotEmpty)
+          'En ce moment : ${r.map((x) => '${name(x.exerciseId)} ${x.sessionsPerWeek}×/sem.').join(', ')}',
       ];
       return lines.isEmpty ? 'Rien de déclaré' : lines.join('\n');
     case 'goals':
-      if (d.goals.isEmpty) return 'Aucun objectif';
-      return [for (final g in d.goals) goalText(g, name)].join('\n');
+      final q = store.content.questionnaire;
+      final lines = <String>[
+        for (final g in d.goals) goalText(g, name),
+        if (d.emphasis case final e?)
+          'Musculation : ${q?.question('emphasis') == null ? e.code : optionLabel(q!.question('emphasis')!, e.code).toLowerCase()}',
+        for (final e in d.events ?? const <SeasonEvent>[])
+          'Échéance : ${e.name ?? kEventKindShort[e.kind] ?? e.kind.code}, '
+              '${e.dateApproximate == true ? 'vers ${monthText(e.date)}' : longDateText(e.date)}',
+        if (d.events case final e? when e.isEmpty) 'Aucune échéance',
+        if (d.specialization case final sp?)
+          'Priorité : ${specializationText(sp, q?.question('specialization'))}',
+        if (d.weakPoints case final w? when w.isNotEmpty)
+          'Points faibles : ${w.length}',
+        if (d.enduranceBase case final b?)
+          'Course : ${q?.question('running_base') == null ? b.weeklyVolume.code : itemOptionLabel(q!.question('running_base')!, 'weeklyVolume', b.weeklyVolume.code).toLowerCase()}',
+      ];
+      return lines.isEmpty ? 'Aucun objectif' : lines.join('\n');
+    case 'recovery':
+      final q = store.content.questionnaire;
+      String? opt(String id, String? code) {
+        final question = q?.question(id);
+        if (code == null) return null;
+        return question == null ? code : optionLabel(question, code);
+      }
+
+      final lines = <String>[
+        ?opt('sleep', d.sleep?.code),
+        ?opt('stress', d.stress?.code),
+        ?opt('outside_load', d.occupationalLoad?.code),
+        if (d.otherSports case final o? when o.isNotEmpty)
+          '${o.length} autre${o.length > 1 ? 's' : ''} sport${o.length > 1 ? 's' : ''}',
+        ?opt('body_weight_goal', d.bodyWeightGoal?.code),
+      ];
+      return lines.isEmpty ? 'Rien de déclaré' : lines.join(' · ');
     case 'availability':
       final days = d.days.keys.toList()..sort();
       if (days.isEmpty) return '—';
@@ -2102,7 +2495,8 @@ String rubricSummary(
           'aucune gêne'
         else
           for (final l in d.limitations)
-            '${kZoneLabels[l.zone]} ${l.discomfort}/10',
+            '${kZoneLabels[l.zone]} ${l.discomfort}/10'
+                '${l.since == ConstraintSince.pastResolved ? ' (ancien)' : ''}',
       ].join(' · ');
     case 'preferences':
       if (d.liked.isEmpty && d.disliked.isEmpty) return 'Rien de précisé';
@@ -2115,6 +2509,22 @@ String rubricSummary(
       return d.guidance == null ? '—' : kGuidanceLabels[d.guidance]!;
   }
   return '';
+}
+
+/// Gêne : niveau actuel, à l'effort, depuis quand (CU).
+String limitationText(Limitation l) {
+  if (l.since == ConstraintSince.pastResolved) {
+    return 'Ancienne, plus rien aujourd’hui';
+  }
+  final q = store.content.questionnaire?.question('limitations');
+  return [
+    'Gêne actuelle : ${l.discomfort}/10',
+    if (l.effortDiscomfort != null) 'à l’effort : ${l.effortDiscomfort}/10',
+    if (l.since != null && q != null)
+      itemOptionLabel(q, 'since', l.since!.code).toLowerCase(),
+    if (l.aggravatedBy case final a? when a.isNotEmpty)
+      '${a.length} mouvement${a.length > 1 ? 's' : ''} qui la réveille${a.length > 1 ? 'nt' : ''}',
+  ].join(' · ');
 }
 
 /// Objectif de performance : exercice, grandeur, valeur, échéance.
@@ -2417,9 +2827,18 @@ class _PerformanceGoalSheetState extends State<_PerformanceGoalSheet> {
   }
 }
 
-/// Choix d'un exercice du catalogue (objectif « autre exercice »).
+/// Choix d'un exercice du catalogue (objectif « autre exercice »). CU :
+/// exercices proposés d'abord ([suggested]) ou choix restreint ([only]).
 class ExercisePickerPage extends StatefulWidget {
-  const ExercisePickerPage({super.key});
+  final List<String> suggested;
+  final List<String>? only;
+  final String title;
+  const ExercisePickerPage({
+    super.key,
+    this.suggested = const [],
+    this.only,
+    this.title = 'CHOISIR UN EXERCICE',
+  });
 
   @override
   State<ExercisePickerPage> createState() => _ExercisePickerPageState();
@@ -2438,10 +2857,23 @@ class _ExercisePickerPageState extends State<ExercisePickerPage> {
 
   @override
   Widget build(BuildContext context) {
-    final all = searchExercises(store.content, _q, const ExerciseFilters());
+    final only = widget.only?.toSet();
+    final found = searchExercises(store.content, _q, const ExerciseFilters());
+    final all = [
+      for (final e in found)
+        if (only == null || only.contains(e.id)) e,
+    ];
     final list = all.take(_shown).toList();
+    final suggested = _q.trim().isEmpty
+        ? [
+            for (final id in widget.suggested)
+              if (store.content.byId[id] case final e?
+                  when only == null || only.contains(id))
+                e,
+          ]
+        : const <ExerciseEntry>[];
     return KScreen(
-      appBar: AppBar(title: const Text('CHOISIR UN EXERCICE')),
+      appBar: AppBar(title: Text(widget.title)),
       body: KList(
         key: const ValueKey('exercise-picker'),
         children: [
@@ -2453,6 +2885,22 @@ class _ExercisePickerPageState extends State<ExercisePickerPage> {
               _shown = 40;
             }),
           ),
+          if (suggested.isNotEmpty) ...[
+            Text('Proposés', style: Theme.of(context).textTheme.titleSmall),
+            for (final e in suggested)
+              ListTile(
+                key: ValueKey('picker-suggested-${e.id}'),
+                contentPadding: EdgeInsets.zero,
+                leading: Icon(Icons.star_outline, color: SL.accent),
+                title: Text(e.nom),
+                subtitle: Text(e.discipline),
+                onTap: () => Navigator.pop(context, e.id),
+              ),
+            Text(
+              'Toute la base',
+              style: Theme.of(context).textTheme.titleSmall,
+            ),
+          ],
           for (final e in list)
             ListTile(
               key: ValueKey('picker-${e.id}'),

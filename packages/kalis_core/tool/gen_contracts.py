@@ -6,7 +6,9 @@
 
 Sorties : lib/src/generated/*.g.dart (types, enums, registre des codes de
 raison), lib/src/testing/arbitrary.g.dart (valeurs aléatoires seedées pour
-les tests de propriétés), docs/TYPES.md (tableaux de référence).
+les tests de propriétés), docs/TYPES.md (tableaux de référence),
+test/fixtures/variants.json (types à variantes : objets minimaux et règles,
+pour le test Dart des variantes).
 
 Le code livré est celui-ci passé par `dart format` (CI) ; `--check` compare
 donc sans tenir compte des blancs ni des virgules finales.
@@ -195,6 +197,27 @@ def collect_ids(f: spec.Field) -> str | None:
     return None
 
 
+def variant_controlled(ty: spec.Type) -> list[str]:
+    """Champs contrôlés d'un type à variantes, dans l'ordre du contrat."""
+    _, rules = ty.variants
+    cited = {n for req, allowed in rules.values() for n in req + allowed}
+    return [f.name for f in ty.fields if f.name in cited]
+
+
+def variant_check(ty: spec.Type) -> str:
+    disc, rules = ty.variants
+    names = variant_controlled(ty)
+
+    def table(index: int) -> str:
+        rows = "".join(
+            f"{q(code)}: <String>[{', '.join(q(n) for n in rule[index])}], " for code, rule in rules.items())
+        return f"const <String, List<String>>{{{rows}}}"
+
+    fields = "".join(f"{q(n)}: {n}, " for n in names)
+    return (f"    checkVariant(out, path, {disc}.code, <String, Object?>{{{fields}}}, "
+            f"{table(0)}, {table(1)});\n")
+
+
 def gen_type(ty: spec.Type) -> str:
     o = ["\n" + doc_lines(ty.doc)]
     if ty.invariants:
@@ -257,6 +280,8 @@ def gen_type(ty: spec.Type) -> str:
     for f in ty.fields:
         for line in validation(ty, f):
             o.append(f"    {line}\n")
+    if ty.variants:
+        o.append(variant_check(ty))
     if ty.custom:
         o.append(f"    _validate{ty.name}(this, path, out);\n")
     o.append("  }\n\n")
@@ -356,6 +381,9 @@ def gen_arbitrary() -> str:
             if t.is_list:
                 lo = f.min_len or 0
                 hi = f.max_len if f.max_len is not None else max(lo, 3)
+                if hi > 8:
+                    # Longues listes (0.4.0) : quelques éléments suffisent aux allers-retours.
+                    hi = max(lo, 4)
                 expr = f"arbList(r, {lo}, {hi}, () => {base})"
                 if t.optional:
                     expr = f"r.nextBool() ? null : {expr}"
@@ -404,9 +432,11 @@ def constraints(f: spec.Field) -> str:
 
 
 def gen_types_md() -> str:
-    titres = {"common": "Commun", "profile": "Profil d'athlète v2", "journal": "Journal",
-              "plan": "Interface `plan` (kalis_plan, G4)", "adapt": "Interface `adapt` (kalis_adapt, G8)",
-              "quest": "Interface `quest` (kalis_quest, G11)"}
+    titres = {"common": "Commun", "profile": "Profil d'athlète (schémas 2 et 3)", "journal": "Journal",
+              "plan": "Interface `plan` (kalis_plan) et prescriptions",
+              "adapt": "Interface `adapt` (kalis_adapt)",
+              "quest": "Interface `quest` (kalis_quest)",
+              "season": "Saison, compétition, figures, spécialisation (0.4.0)"}
     o = ["# Types des contrats de kalis_core\n\n",
          "Fichier généré par `tool/gen_contracts.py` depuis `tool/contracts_spec.py` — ne pas modifier à la main.\n\n",
          "Clé JSON = nom du champ. « Optionnel » : la clé est absente du JSON quand la valeur est nulle ",
@@ -424,6 +454,13 @@ def gen_types_md() -> str:
                 o.append(f"| `{f.name}` | {type_label(f.type)} | {'oui' if f.type.endswith('?') else 'non'} | {constraints(f)} | {f.doc} |\n")
             for inv in ty.invariants:
                 o.append(f"\nInvariant : {inv}\n")
+            if ty.variants:
+                disc, rules = ty.variants
+                o.append(f"\nVariantes selon `{disc}` (un champ contrôlé n'est permis que pour les variantes qui le citent) :\n\n"
+                         "| Variante | Champs obligatoires | Champs permis |\n| --- | --- | --- |\n")
+                for code, (req, allowed) in rules.items():
+                    o.append(f"| `{code}` | {', '.join('`' + n + '`' for n in req) or '—'} | "
+                             f"{', '.join('`' + n + '`' for n in allowed) or '—'} |\n")
     o.append("\n## Énumérations\n\nLe JSON porte le **code** ; l'ordre des valeurs est celui du contrat.\n\n| Enum | Codes | Sens |\n| --- | --- | --- |\n")
     for e in spec.ENUMS:
         o.append(f"| `{e.name}` | {', '.join('`' + c + '`' for _, c in e.values)} | {e.doc} |\n")
@@ -434,10 +471,85 @@ def gen_types_md() -> str:
     return "".join(o)
 
 
+# ------------------------------------------- variantes : jeu de test ----
+
+_TYPES = {t.name: t for t in spec.TYPES}
+_ENUM_CODES = {e.name: [c for _, c in e.values] for e in spec.ENUMS}
+
+
+def sample_value(f: spec.Field):
+    """Plus petite valeur valide d'un champ (jeu de test des variantes)."""
+    t = T(f.type)
+
+    def one():
+        if t.kind == "int":
+            if f.name == "schemaVersion":
+                return 1
+            lo = int(f.min) if f.min is not None else 0
+            return lo if t.is_list or f.min is not None else 0
+        if t.kind == "double":
+            lo = f.min if f.min is not None else 0
+            hi = f.max if f.max is not None else lo
+            return 0 if lo <= 0 <= hi else lo
+        if t.kind == "bool":
+            return False
+        if t.kind == "string":
+            return "x" * max(1, 0 if t.is_list else (f.min_len or 1))
+        if t.kind == "date":
+            return "2026-10-01"
+        if t.kind == "json":
+            return {}
+        if t.kind == "enum":
+            return _ENUM_CODES[t.name][0]
+        return sample_object(_TYPES[t.name])
+
+    if t.is_list:
+        n = max(f.min_len or 0, 1)
+        v = one()
+        # Répétitions (listes d'entiers) : 1 est toujours dans les bornes.
+        return [1 if t.kind == "int" else v for _ in range(n)]
+    return one()
+
+
+def sample_object(ty: spec.Type) -> dict:
+    """Objet minimal : champs obligatoires seulement (première variante)."""
+    out = {}
+    controlled = set(variant_controlled(ty)) if ty.variants else set()
+    for f in ty.fields:
+        if f.type.endswith("?") or f.name in controlled:
+            continue
+        out[f.name] = sample_value(f)
+    if ty.variants:
+        disc, rules = ty.variants
+        first = next(iter(rules))
+        out[disc] = first
+        for n in rules[first][0]:
+            out[n] = sample_value(next(f for f in ty.fields if f.name == n))
+    return out
+
+
+def gen_variants_fixture() -> str:
+    import json
+    items = []
+    for ty in spec.TYPES:
+        if not ty.variants:
+            continue
+        disc, rules = ty.variants
+        names = variant_controlled(ty)
+        base = {k: v for k, v in sample_object(ty).items() if k not in names and k != disc}
+        items.append({
+            "type": ty.name, "discriminator": disc, "base": base,
+            "samples": {n: sample_value(next(f for f in ty.fields if f.name == n)) for n in names},
+            "rules": {code: {"required": req, "allowed": allowed} for code, (req, allowed) in rules.items()},
+        })
+    return json.dumps({"schema": 1, "types": items}, ensure_ascii=False, indent=1) + "\n"
+
+
 def outputs() -> dict[Path, str]:
     out = {GEN / "enums.g.dart": gen_enums(), GEN / "reason_codes.g.dart": gen_reasons(),
            PKG / "lib/src/testing/arbitrary.g.dart": gen_arbitrary(),
-           PKG / "docs/TYPES.md": gen_types_md()}
+           PKG / "docs/TYPES.md": gen_types_md(),
+           PKG / "test/fixtures/variants.json": gen_variants_fixture()}
     for m in spec.MODULES:
         out[GEN / f"{m}.g.dart"] = gen_module(m)
     return out
@@ -456,7 +568,7 @@ def main() -> int:
     ok = True
     for path, text in outputs().items():
         if args.check:
-            exact = path.suffix == ".md"
+            exact = path.suffix in (".md", ".json")
             actuel = path.read_text(encoding="utf-8") if path.exists() else ""
             if (actuel != text) if exact else (squeeze(actuel) != squeeze(text)):
                 print(f"pas à jour : {path.relative_to(PKG)}")

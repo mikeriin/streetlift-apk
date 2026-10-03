@@ -139,6 +139,50 @@ void main(List<String> args) {
     }
   }
 
+  // 3 bis. Profil v3 (0.4.0) : profils types, migration, parcours de
+  // questions (nombre de questions vues par profil type).
+  final parcours = ProfileQuestionnaire.fromJson(
+    _readJson('$root/data/parcours_v3.json'),
+  );
+  final v3Json = _readJson('$root/test/fixtures/profiles_v3.json');
+  final v3Profiles = readProfileFixtures(v3Json);
+  final todayYear = v3Json['todayYear']! as int;
+  final questionCounts = <String, Object?>{};
+  for (final p in v3Profiles) {
+    final v = <Violation>[
+      ...p.profile.validate(),
+      ...catalog.checkProfile(p.profile),
+    ];
+    for (final violation in v) {
+      failures.add('profil v3 ${p.key} : $violation');
+    }
+    final json = p.profile.toJson();
+    final all = parcours.visibleQuestions(json, todayYear: todayYear);
+    final added = parcours.visibleQuestions(
+      json,
+      todayYear: todayYear,
+      since: 3,
+    );
+    questionCounts[p.key] = <String, Object?>{
+      'questions': all.length,
+      'nouvelles': added.length,
+      'tests_permis': <String>[
+        for (final t in parcours.eligibleTests(json, todayYear: todayYear))
+          t.id,
+      ],
+    };
+  }
+  var migrationFailures = 0;
+  for (final p in profiles) {
+    final migrated = p.profile.toSchema3();
+    if (migrated.copyWith(schemaVersion: 2) != p.profile ||
+        migrated.schema3FieldsPresent.isNotEmpty ||
+        migrated.validate().isNotEmpty) {
+      migrationFailures++;
+      failures.add('migration du profil ${p.key} vers le schéma 3');
+    }
+  }
+
   // 4. Contrats : inventaire et conversion des flammes.
   final flameTable = <String, Object?>{
     for (var f = Flames.max; f >= Flames.min; f--) '$f': Flames.toRir(f),
@@ -179,6 +223,8 @@ void main(List<String> args) {
         'ProgramBlock': ProgramBlock.currentSchemaVersion,
         'AdaptationSummary': AdaptationSummary.currentSchemaVersion,
         'QuestState': QuestState.currentSchemaVersion,
+        'SeasonPlan': SeasonPlan.currentSchemaVersion,
+        'EventDayPlan': EventDayPlan.currentSchemaVersion,
       },
       'flammes_vers_rir': flameTable,
     },
@@ -194,6 +240,18 @@ void main(List<String> args) {
       'flammes': Map<String, int>.fromEntries(
         flames.entries.toList()..sort((a, b) => a.key.compareTo(b.key)),
       ),
+    },
+    'profil_v3': <String, Object?>{
+      'parcours_version': parcours.version,
+      'questions': parcours.questions.length,
+      'questions_schema_3': parcours.questions
+          .where((q) => q.since >= 3)
+          .length,
+      'tests_guides': parcours.tests.length,
+      'profils_types': v3Profiles.length,
+      'questions_vues': questionCounts,
+      'profils_schema_2_migres': profiles.length,
+      'echecs_de_migration': migrationFailures,
     },
     'echecs': failures,
   };
@@ -229,7 +287,20 @@ void main(List<String> args) {
       '« reprise », $sets séries dont $unrated sans note '
       '($journalViolations violation(s))',
     )
-    ..writeln();
+    ..writeln(
+      'Profil v3 : parcours ${parcours.version}, '
+      '${parcours.questions.length} questions, '
+      '${parcours.tests.length} tests guidés ; ${profiles.length} profils du '
+      'schéma 2 migrés ($migrationFailures échec(s))',
+    );
+  for (final entry in questionCounts.entries) {
+    final counts = entry.value! as Map<String, Object?>;
+    text.writeln(
+      '  ${entry.key.padRight(38)} ${counts['questions']} questions vues, '
+      'dont ${counts['nouvelles']} nouvelles',
+    );
+  }
+  text.writeln();
   for (final entry in distributions.entries) {
     text.writeln('${entry.key} :');
     for (final item in (entry.value! as Map<String, int>).entries) {

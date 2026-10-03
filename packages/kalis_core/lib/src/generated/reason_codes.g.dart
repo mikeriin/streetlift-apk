@@ -295,6 +295,130 @@ abstract final class ReasonCodes {
 
   /// Bonus de départ plafonné (désactivé par défaut).
   static const String questStartBonus = 'quest.start_bonus';
+
+  /// Le bloc réalise une phase du plan de saison, à tant de semaines de
+  /// l'échéance.
+  static const String planSeasonPhase = 'plan.season_phase';
+
+  /// Affûtage : volume réduit, intensité gardée, avant une échéance.
+  static const String planTaper = 'plan.taper';
+
+  /// La saison est construite pour arriver en forme à cette échéance.
+  static const String planPeakEvent = 'plan.peak_event';
+
+  /// Ondulation : jour lourd, moyen ou léger.
+  static const String planUndulation = 'plan.undulation';
+
+  /// Technique de série choisie pour cet exercice.
+  static const String planTechnique = 'plan.technique';
+
+  /// Technique avancée non servie : un prérequis manque (ancienneté, niveau,
+  /// test, récupération, gêne).
+  static const String planTechniqueWithheld = 'plan.technique_withheld';
+
+  /// Spécialisation : priorité donnée à une cible pendant tant de semaines.
+  static const String planSpecialization = 'plan.specialization';
+
+  /// Volume d'entretien du reste pendant une spécialisation ou un affûtage.
+  static const String planMaintenanceVolume = 'plan.maintenance_volume';
+
+  /// Étape de la progression d'une figure.
+  static const String planSkillStep = 'plan.skill_step';
+
+  /// Figure bloquée à la même étape depuis longtemps : la méthode change (autre
+  /// variante, autre dosage).
+  static const String planSkillPlateau = 'plan.skill_plateau';
+
+  /// Premier bloc calé sur la charge d'entraînement actuelle déclarée.
+  static const String planRecentLoad = 'plan.recent_load';
+
+  /// Test programmé (série d'estimation, maximum, maintien, course).
+  static const String planTestScheduled = 'plan.test_scheduled';
+
+  /// Charge ou durée calculée d'après un test ou un record du profil.
+  static const String planBenchmarkUsed = 'plan.benchmark_used';
+
+  /// Charge donnée en part du maximum.
+  static const String planPercentBased = 'plan.percent_based';
+
+  /// Tient compte d'une réponse de récupération et de vie (sommeil, stress,
+  /// métier physique, déficit énergétique).
+  static const String planRecoveryProfile = 'plan.recovery_profile';
+
+  /// Zone à antécédent : progression plus prudente des mouvements qui la
+  /// chargent.
+  static const String planConstraintHistory = 'plan.constraint_history';
+
+  /// Tient compte d'un autre sport : séances lourdes placées à distance.
+  static const String planConcurrentSport = 'plan.concurrent_sport';
+
+  /// Volume, intensité ou techniques réglés sur l'ancienneté d'entraînement.
+  static const String planTrainingAge = 'plan.training_age';
+
+  /// Reprise après une interruption : redémarrage progressif.
+  static const String planReturnFromGap = 'plan.return_from_gap';
+
+  /// Exercice d'assistance choisi pour un point faible déclaré.
+  static const String planWeakPoint = 'plan.weak_point';
+
+  /// Travail spécifique d'une épreuve (mouvements, enchaînements, durées de la
+  /// compétition).
+  static const String planEventSpecific = 'plan.event_specific';
+
+  /// Séries allégées calculées sur la série de tête réalisée.
+  static const String adaptBackoffFromTopSet = 'adapt.backoff_from_top_set';
+
+  /// Plafond d'effort atteint : charge abaissée pour garder la réserve prévue.
+  static const String adaptRirCap = 'adapt.rir_cap';
+
+  /// Résultat d'un test et son incertitude.
+  static const String adaptTestResult = 'adapt.test_result';
+
+  /// Critère de passage tenu : étape suivante de la figure.
+  static const String adaptSkillStepUp = 'adapt.skill_step_up';
+
+  /// Mauvais jour ou critère perdu : étape plus facile.
+  static const String adaptSkillStepDown = 'adapt.skill_step_down';
+
+  /// Étape gardée : critère non tenu, ou durée minimale à l'étape non atteinte
+  /// (tendons).
+  static const String adaptSkillHold = 'adapt.skill_hold';
+
+  /// Ajustement limité par l'intention de la phase.
+  static const String adaptPhaseRespected = 'adapt.phase_respected';
+
+  /// Affûtage : aucun volume ajouté, intensité gardée.
+  static const String adaptTaperNoVolume = 'adapt.taper_no_volume';
+
+  /// Échéance proche : décisions prudentes.
+  static const String adaptEventNear = 'adapt.event_near';
+
+  /// Ouverture choisie comme une part du maximum estimé : une barre sûre.
+  static const String adaptAttemptOpener = 'adapt.attempt_opener';
+
+  /// Tentative suivante choisie d'après la précédente et l'incertitude du
+  /// maximum.
+  static const String adaptAttemptNext = 'adapt.attempt_next';
+
+  /// Tentative prudente (incertitude élevée, échec précédent, bilan bas,
+  /// pesée).
+  static const String adaptAttemptConservative = 'adapt.attempt_conservative';
+
+  /// Stratégie de rythme d'une épreuve de répétitions.
+  static const String adaptPacing = 'adapt.pacing';
+
+  /// Tolérance réglée sur une réponse de récupération et de vie du profil.
+  static const String adaptRecoveryProfile = 'adapt.recovery_profile';
+
+  /// Charge des tendons surveillée : progression en bras tendus ou en appui
+  /// ralentie.
+  static const String adaptTendonLoad = 'adapt.tendon_load';
+
+  /// Technique de série exécutée telle que prescrite.
+  static const String adaptTechniqueExecuted = 'adapt.technique_executed';
+
+  /// Mini-séries arrêtées (répétitions manquées, plafond atteint, qualité).
+  static const String adaptMiniSetStop = 'adapt.mini_set_stop';
 }
 
 /// Registre des codes de raison et de leurs paramètres typés.
@@ -583,5 +707,135 @@ const List<ReasonSpec> reasonRegistry = <ReasonSpec>[
   }),
   ReasonSpec(ReasonCodes.questStartBonus, <String, ReasonParamType>{
     'sessions': ReasonParamType.integer,
+  }),
+  ReasonSpec(ReasonCodes.planSeasonPhase, <String, ReasonParamType>{
+    'phase': ReasonParamType.text,
+    'weeksToEvent': ReasonParamType.integer,
+  }),
+  ReasonSpec(ReasonCodes.planTaper, <String, ReasonParamType>{
+    'volumeFactor': ReasonParamType.number,
+    'daysToEvent': ReasonParamType.integer,
+  }),
+  ReasonSpec(ReasonCodes.planPeakEvent, <String, ReasonParamType>{
+    'eventId': ReasonParamType.text,
+  }),
+  ReasonSpec(ReasonCodes.planUndulation, <String, ReasonParamType>{
+    'stress': ReasonParamType.text,
+  }),
+  ReasonSpec(ReasonCodes.planTechnique, <String, ReasonParamType>{
+    'technique': ReasonParamType.text,
+  }),
+  ReasonSpec(ReasonCodes.planTechniqueWithheld, <String, ReasonParamType>{
+    'technique': ReasonParamType.text,
+    'cause': ReasonParamType.text,
+  }),
+  ReasonSpec(ReasonCodes.planSpecialization, <String, ReasonParamType>{
+    'target': ReasonParamType.text,
+    'weeks': ReasonParamType.integer,
+  }),
+  ReasonSpec(ReasonCodes.planMaintenanceVolume, <String, ReasonParamType>{
+    'muscle': ReasonParamType.text,
+    'weeklySets': ReasonParamType.number,
+  }),
+  ReasonSpec(ReasonCodes.planSkillStep, <String, ReasonParamType>{
+    'exerciseId': ReasonParamType.exerciseId,
+    'stepIndex': ReasonParamType.integer,
+  }),
+  ReasonSpec(ReasonCodes.planSkillPlateau, <String, ReasonParamType>{
+    'exerciseId': ReasonParamType.exerciseId,
+  }),
+  ReasonSpec(ReasonCodes.planRecentLoad, <String, ReasonParamType>{
+    'exerciseId': ReasonParamType.exerciseId,
+    'sessions': ReasonParamType.integer,
+  }),
+  ReasonSpec(ReasonCodes.planTestScheduled, <String, ReasonParamType>{
+    'testKind': ReasonParamType.text,
+  }),
+  ReasonSpec(ReasonCodes.planBenchmarkUsed, <String, ReasonParamType>{
+    'exerciseId': ReasonParamType.exerciseId,
+    'source': ReasonParamType.text,
+  }),
+  ReasonSpec(ReasonCodes.planPercentBased, <String, ReasonParamType>{
+    'pct': ReasonParamType.number,
+  }),
+  ReasonSpec(ReasonCodes.planRecoveryProfile, <String, ReasonParamType>{
+    'factor': ReasonParamType.text,
+    'level': ReasonParamType.text,
+  }),
+  ReasonSpec(ReasonCodes.planConstraintHistory, <String, ReasonParamType>{
+    'zone': ReasonParamType.text,
+    'since': ReasonParamType.text,
+  }),
+  ReasonSpec(ReasonCodes.planConcurrentSport, <String, ReasonParamType>{
+    'sport': ReasonParamType.text,
+    'sessions': ReasonParamType.integer,
+  }),
+  ReasonSpec(ReasonCodes.planTrainingAge, <String, ReasonParamType>{
+    'band': ReasonParamType.text,
+  }),
+  ReasonSpec(ReasonCodes.planReturnFromGap, <String, ReasonParamType>{
+    'gap': ReasonParamType.text,
+  }),
+  ReasonSpec(ReasonCodes.planWeakPoint, <String, ReasonParamType>{
+    'exerciseId': ReasonParamType.exerciseId,
+    'kind': ReasonParamType.text,
+  }),
+  ReasonSpec(ReasonCodes.planEventSpecific, <String, ReasonParamType>{
+    'eventId': ReasonParamType.text,
+  }),
+  ReasonSpec(ReasonCodes.adaptBackoffFromTopSet, <String, ReasonParamType>{
+    'topLoadKg': ReasonParamType.number,
+    'pct': ReasonParamType.number,
+  }),
+  ReasonSpec(ReasonCodes.adaptRirCap, <String, ReasonParamType>{
+    'rir': ReasonParamType.number,
+  }),
+  ReasonSpec(ReasonCodes.adaptTestResult, <String, ReasonParamType>{
+    'exerciseId': ReasonParamType.exerciseId,
+    'value': ReasonParamType.number,
+    'standardError': ReasonParamType.number,
+  }),
+  ReasonSpec(ReasonCodes.adaptSkillStepUp, <String, ReasonParamType>{
+    'exerciseId': ReasonParamType.exerciseId,
+  }),
+  ReasonSpec(ReasonCodes.adaptSkillStepDown, <String, ReasonParamType>{
+    'exerciseId': ReasonParamType.exerciseId,
+  }),
+  ReasonSpec(ReasonCodes.adaptSkillHold, <String, ReasonParamType>{
+    'exerciseId': ReasonParamType.exerciseId,
+    'weeksAtStep': ReasonParamType.integer,
+  }),
+  ReasonSpec(ReasonCodes.adaptPhaseRespected, <String, ReasonParamType>{
+    'phase': ReasonParamType.text,
+  }),
+  ReasonSpec(ReasonCodes.adaptTaperNoVolume, <String, ReasonParamType>{}),
+  ReasonSpec(ReasonCodes.adaptEventNear, <String, ReasonParamType>{
+    'days': ReasonParamType.integer,
+  }),
+  ReasonSpec(ReasonCodes.adaptAttemptOpener, <String, ReasonParamType>{
+    'pct': ReasonParamType.number,
+  }),
+  ReasonSpec(ReasonCodes.adaptAttemptNext, <String, ReasonParamType>{
+    'successProbability': ReasonParamType.number,
+  }),
+  ReasonSpec(ReasonCodes.adaptAttemptConservative, <String, ReasonParamType>{
+    'cause': ReasonParamType.text,
+  }),
+  ReasonSpec(ReasonCodes.adaptPacing, <String, ReasonParamType>{
+    'targetReps': ReasonParamType.integer,
+  }),
+  ReasonSpec(ReasonCodes.adaptRecoveryProfile, <String, ReasonParamType>{
+    'factor': ReasonParamType.text,
+    'level': ReasonParamType.text,
+  }),
+  ReasonSpec(ReasonCodes.adaptTendonLoad, <String, ReasonParamType>{
+    'zone': ReasonParamType.text,
+    'weeks': ReasonParamType.integer,
+  }),
+  ReasonSpec(ReasonCodes.adaptTechniqueExecuted, <String, ReasonParamType>{
+    'technique': ReasonParamType.text,
+  }),
+  ReasonSpec(ReasonCodes.adaptMiniSetStop, <String, ReasonParamType>{
+    'cause': ReasonParamType.text,
   }),
 ];

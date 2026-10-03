@@ -10,6 +10,7 @@ import 'package:kalis_plan/kalis_plan.dart' show DisciplineClass;
 
 import '../athlete_profile.dart'
     show kDisciplineLabels, kZoneLabels, weekdayName;
+import 'reason_texts_0_4.dart';
 
 /// Jour de la semaine avec majuscule (ISO : 1 = lundi).
 String weekdayLabel(int isoWeekday) {
@@ -263,7 +264,8 @@ String reasonText(
     case 'plan.restructure_scope':
       return 'Changement limité à une partie du programme.';
   }
-  return 'Choix du moteur.';
+  // CU : codes ajoutés par kalis_core 0.4.0.
+  return reasonText04(r.code, p, exerciseName) ?? 'Choix du moteur.';
 }
 
 /// Raison la plus parlante d'un emplacement (hors raisons générales).

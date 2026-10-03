@@ -128,6 +128,26 @@ def json_strings(value, path=''):
             yield from json_strings(v, f'{path}[{i}]')
 
 
+# CU : parcours du profil v3 (`assets/catalog/parcours_v3.json`, copie octet
+# pour octet de `kalis_core` 0.4.0). Seuls ses champs affichés par
+# l'application sont des textes affichés ; notes, effets et justifications
+# (`note`, `effect`, `factor`, `refs`, `conversion`…) sont la documentation
+# des moteurs et de l'intégration, jamais montrée à l'utilisateur.
+DISPLAYED_ONLY = {
+    'assets/catalog/parcours_v3.json': {
+        'text', 'koach', 'label', 'hint', 'title', 'forWhom', 'requires',
+        'safety', 'steps', 'stop', 'uncertainty',
+    },
+}
+
+
+def _displayed(path_in_json, keys):
+    # Dernière clé nommée du chemin (`.questions[3].options[1].label` →
+    # `label` ; `.tests[1].safety[0]` → `safety`).
+    names = re.findall(r'\.([A-Za-z_]+)', path_in_json)
+    return bool(names) and names[-1] in keys
+
+
 def texts(root=ROOT):
     for path in sorted((root / 'lib').rglob('*.dart')):
         for n, s in dart_strings(path.read_text(encoding='utf-8')):
@@ -144,7 +164,10 @@ def texts(root=ROOT):
             continue
         else:
             continue
+        only = DISPLAYED_ONLY.get(rel.as_posix())
         for p, s in json_strings(data):
+            if only is not None and not _displayed(p, only):
+                continue
             yield f'{rel}{p}', s
 
 

@@ -373,7 +373,8 @@ void main() {
         expect(app.koach.structure, isFalse);
         final json = backupOf(app);
         expect(json['athleteProfile']['v'], 1);
-        expect(json['athleteProfile']['profile']['schemaVersion'], 2);
+        // CU : profil au schéma 3 (kalis_core 0.4.0).
+        expect(json['athleteProfile']['profile']['schemaVersion'], 3);
         final next = await relaunch();
         expect(
           jsonEncode(next.athlete!.toJson()),
@@ -505,10 +506,11 @@ void main() {
           containsAll(['barre fixe', 'barres parallèles', 'ceinture de lest']),
         );
         // Réponses complétées, puis enregistrement.
+        // CU : en street, le poids est obligatoire (`requiredWhen`).
         d
           ..sex = Sex.male
           ..height = '178'
-          ..weight = ''
+          ..weight = '72'
           ..setStreet(true)
           ..setStreetPrimary(StreetStyle.streetlifting)
           ..guidance = GuidanceMode.assisted
@@ -532,6 +534,13 @@ void main() {
         // Koach L7 n'est plus activé à l'enregistrement du profil).
         after.remove('koach');
         before.remove('koach');
+        // CU : en street, le poids est demandé : sa pesée devient la
+        // référence B4 (valeur et statut).
+        expect((after.remove('pilotage') as Map)['B4'], 72);
+        expect((after.remove('referenceStatus') as Map)['B4'], 'set');
+        before
+          ..remove('pilotage')
+          ..remove('referenceStatus');
         expect(app.koach.enabled, isFalse);
         expect(app.koach.structure, isFalse);
         expect(
@@ -608,13 +617,31 @@ void main() {
     AthleteProfileFlowState flow(WidgetTester tester) =>
         tester.state<AthleteProfileFlowState>(find.byType(AthleteProfileFlow));
 
+    /// CU : écrans d'un débutant en forme générale (ni récupération,
+    /// reportée après la première semaine, ni préférences, demandées
+    /// pendant la revue du programme).
+    const beginnerSteps = [
+      'welcome',
+      'identity',
+      'discipline',
+      'secondary',
+      'experience',
+      'levels',
+      'goals',
+      'availability',
+      'places',
+      'health',
+      'mode',
+      'recap',
+    ];
+
     /// Parcours complet, réponses les plus courtes ; renvoie les écrans vus.
     Future<Set<String>> runFlow(WidgetTester tester) async {
       final seen = <String>{flow(tester).step};
       Future<void> next(String step) async {
         await tap(tester, 'flow-next-$step');
-        final i = kAthleteSteps.indexOf(step);
-        expect(flow(tester).step, kAthleteSteps[i + 1], reason: 'après $step');
+        final i = beginnerSteps.indexOf(step);
+        expect(flow(tester).step, beginnerSteps[i + 1], reason: 'après $step');
         seen.add(flow(tester).step);
       }
 
@@ -628,6 +655,7 @@ void main() {
       await next('discipline');
       await tap(tester, 'flow-secondary-mobility');
       await next('secondary');
+      await next('experience');
       await tap(tester, 'level-pushups-2');
       await next('levels');
       await tap(tester, 'goal-suggest');
@@ -641,7 +669,6 @@ void main() {
       await next('places');
       await tap(tester, 'flow-consent-refused');
       await next('health');
-      await next('preferences');
       await tap(tester, 'flow-mode-assisted');
       await next('mode');
       expect(flow(tester).step, 'recap');
@@ -649,15 +676,15 @@ void main() {
       return seen;
     }
 
-    testWidgets('installation neuve : 12 écrans, profil valide, attente du '
-        'programme', (tester) async {
+    testWidgets('installation neuve : 12 écrans (CU : ceux d’un débutant), '
+        'profil valide, attente du programme', (tester) async {
       phone(tester);
       await tester.pumpWidget(page(const ProfileGate(child: Text('ACCUEIL'))));
       await tester.pumpAndSettle();
       expect(find.byKey(const ValueKey('flow-welcome')), findsOneWidget);
       expect(find.byKey(const ValueKey('flow-koach-welcome')), findsOneWidget);
       final seen = await runFlow(tester);
-      expect(seen, kAthleteSteps.toSet());
+      expect(seen, beginnerSteps.toSet());
       expect(find.byKey(const ValueKey('flow-done')), findsOneWidget);
       expect(find.textContaining('Ton profil est prêt'), findsOneWidget);
       final p = store.athleteProfile!;
@@ -739,6 +766,8 @@ void main() {
           await tap(tester, 'flow-sex-undisclosed');
           await type(tester, 'flow-year', '1985');
           await type(tester, 'flow-height', '175');
+          // CU : poids obligatoire en mode street.
+          await type(tester, 'flow-weight', '70');
           await tester.pumpAndSettle();
           await tap(tester, 'flow-next-identity');
           expect(tester.takeException(), isNull, reason: 'discipline');
