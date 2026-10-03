@@ -669,14 +669,56 @@ final class Catalog {
   }
 
   /// Violations d'un profil au regard du catalogue : exercices et matériel
-  /// inconnus (en plus de `profile.validate()`).
+  /// inconnus (en plus de `profile.validate()`). Schéma 3 (0.4.0) : le
+  /// groupe musculaire d'une spécialisation est dans le vocabulaire
+  /// `muscles`. L'étape actuelle d'une figure n'est pas contrôlée : une
+  /// échelle (`SkillLadder`) peut passer par un exercice d'une autre famille.
   List<Violation> checkProfile(AthleteProfile profile) {
     final ids = <String>{};
     profile.collectExerciseIds(ids);
+    final muscle = profile.specialization?.muscle;
     return <Violation>[
       ...checkExerciseIds(ids),
       ...checkEquipment(profile.equipment),
+      if (muscle != null && !muscles.contains(muscle))
+        Violation(r'$.specialization.muscle', 'unknown_muscle', muscle),
     ];
+  }
+
+  /// Vrai si [stepId] est la figure [targetId] elle-même ou l'une de ses
+  /// variantes (un exercice dont la chaîne `variante_de` remonte à
+  /// [targetId]). Faux si l'un des deux identifiants est inconnu.
+  bool isProgressionStep(String stepId, String targetId) {
+    if (!contains(stepId) || !contains(targetId)) {
+      return false;
+    }
+    if (stepId == targetId) {
+      return true;
+    }
+    for (final ancestor in ancestorsOf(stepId)) {
+      if (ancestor.id == targetId) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  /// Étapes candidates de la progression vers la figure [targetId] (0.4.0) :
+  /// ses variantes (les exercices dont la chaîne `variante_de` remonte à
+  /// [targetId]) dans l'ordre de la base, puis la figure elle-même.
+  ///
+  /// Sert à la question « Où en es-tu ? » du profil. Ce n'est pas une
+  /// échelle ordonnée et validée : la liste contient aussi des variantes
+  /// plus dures (autre support, un bras) ; l'échelle avec ses critères de
+  /// passage est un `SkillLadder`, construit par `kalis_plan`.
+  /// [ArgumentError] si [targetId] est inconnu.
+  List<CatalogExercise> progressionCandidates(String targetId) {
+    final target = exercise(targetId);
+    return List<CatalogExercise>.unmodifiable(<CatalogExercise>[
+      for (final e in familyOf(targetId))
+        if (e.id != targetId && isProgressionStep(e.id, targetId)) e,
+      target,
+    ]);
   }
 
   /// Forme de comparaison d'un nom : minuscules, sans accents, espaces

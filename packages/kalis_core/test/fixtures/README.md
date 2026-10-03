@@ -1,15 +1,31 @@
 # Jeux de données communs (kalis_core)
 
-Fichiers générés par `tool/gen_fixtures.py` (déterministe, graines fixes) — ne pas modifier à la main.
+Fichiers générés par `tool/gen_fixtures.py`, `tool/gen_parcours.py` et `tool/gen_contracts.py` (déterministes, graines fixes) — ne pas modifier à la main.
 Les autres paquets les lisent par chemin relatif (`../kalis_core/test/fixtures/…`) depuis leurs tests et
 leurs simulateurs, avec les lecteurs de `package:kalis_core/testing.dart`.
 
 | Fichier | Contenu | Lecture |
 | --- | --- | --- |
 | `profiles.json` | 40 profils types (`AthleteProfile` v2) : `key`, `description`, `profile` | `readProfileFixtures` |
+| `profiles_v3.json` | 5 profils types au schéma 3 (`v3_debutant_forme_generale`, `v3_intermediaire_musculation`, `v3_competiteur_elite_streetlifting`, `v3_coureuse_10km`, `v3_sets_reps_avance`) : `key`, `description`, `profile`, et `expected` — `questionIds` (questions vues à la création, dans l'ordre), `questions` (leur nombre), `newQuestions` (dont questions du schéma 3), `deferredIds` (questions reportées après la première semaine), `testIds` (tests guidés permis) ; `todayYear` (2026) est l'année passée au parcours ; généré par `tool/gen_parcours.py` | `readProfileFixtures` (`expected` : JSON brut) |
+| `variants.json` | Les 7 types à variantes (`Benchmark`, `SeasonEvent`, `Specialization`, `SetTechnique`, `IntensityTarget`, `AutoregulationRule`, `GroupSpec`) : pour chacun `type`, `discriminator` (champ qui choisit la variante), `base` (objet minimal), `samples` (valeurs d'essai des champs contrôlés) et `rules` (par variante : champs `required` et `allowed`) ; généré par `tool/gen_contracts.py` | JSON brut (`test/advanced_test.dart`) |
 | `journals.json.gz` | 12 journaux synthétiques de 4 à 24 semaines (`TrainingLog`) : `key`, `profileKey`, `weeks`, `description`, `truth`, `log` | `readJournalFixtures` (après `gzip.decode`) |
 | `owner_program_v33.json.gz` | Programme personnel du propriétaire, normalisé, **lecture seule** | JSON brut |
 | `legacy_journal.json` | Journal au format actuel de l'application (`before`), sa conversion (`after`, `TrainingLog`) et le rapport de conversion (`report`) | JSON brut ; règles dans `docs/CONVERSION_JOURNAL.md` |
+
+## Profils types au schéma 3
+
+Questions du parcours vues à la création (`expected.questions`) ; entre parenthèses, celles du schéma 3.
+
+| Clé | Profil | Questions | Reportées | Tests guidés permis |
+| --- | --- | ---: | --- | ---: |
+| `v3_debutant_forme_generale` | débutant complet, forme générale | 16 (0) | `sleep`, `stress`, `outside_load` | 1 (`t8_sans_test`) |
+| `v3_intermediaire_musculation` | musculation en salle depuis 3 ans | 27 (10) | — | 7 |
+| `v3_competiteur_elite_streetlifting` | compétiteur élite de streetlifting | 29 (12) | — | 9 |
+| `v3_coureuse_10km` | coureuse régulière, 10 km visé | 28 (11) | — | 7 |
+| `v3_sets_reps_avance` | sets & reps avancé, compétition de répétitions | 29 (12) | — | 9 |
+
+Détail et textes : `docs/PARCOURS_V3.md` § 2 et § 5.
 
 ## Journaux synthétiques
 

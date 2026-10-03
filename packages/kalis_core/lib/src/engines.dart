@@ -81,3 +81,38 @@ abstract interface class QuestEngine {
   /// en retirer ni en modifier une écriture (D7.3).
   QuestOutcome evaluate(Catalog catalog, QuestInput input);
 }
+
+/// Plan de saison (0.4.0) : squelette de phases (accumulation,
+/// intensification, réalisation, affûtage, compétition, transition, test,
+/// décharge, entretien, reprise) au-dessus des blocs de 4 à 6 semaines. Les blocs restent
+/// générés au fil de l'eau par [PlanEngine] (D4.8) ; le plan de saison leur
+/// est passé dans `PlanRequest.season` et `NextBlockRequest.season`.
+///
+/// Nouvelle interface plutôt qu'une méthode ajoutée à [PlanEngine] : une
+/// implémentation écrite pour 0.3.0 reste valable sans changement.
+abstract interface class SeasonPlanner {
+  /// Version sémantique du moteur.
+  String get engineVersion;
+
+  /// Plan de saison construit, ou révisé à partir de `request.previous`,
+  /// d'après les échéances du profil (`AthleteProfile.events`). Les phases
+  /// déjà commencées avant `request.today` ne sont pas réécrites.
+  SeasonPlan planSeason(Catalog catalog, SeasonRequest request);
+}
+
+/// Jour d'une échéance (0.4.0) : tentatives d'une compétition de force
+/// (ouverture, deuxième, troisième barre), objectif et rythme d'une épreuve
+/// de répétitions.
+///
+/// Nouvelle interface plutôt qu'une méthode ajoutée à [AdaptEngine] : une
+/// implémentation écrite pour 0.3.0 reste valable sans changement.
+abstract interface class EventDayAdvisor {
+  /// Version sémantique du moteur.
+  String get engineVersion;
+
+  /// Plan du jour : rappelé après chaque tentative avec
+  /// `request.done` à jour, il ne propose que les tentatives restantes. Une
+  /// charge proposée n'est jamais inférieure à une charge déjà tentée, ni
+  /// plus fine que le plus petit saut de charge de la compétition.
+  EventDayPlan planEventDay(Catalog catalog, EventDayRequest request);
+}
