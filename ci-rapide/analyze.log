@@ -1,0 +1,13 @@
+Analyzing streetlift-apk...                                     
+
+   info • Unnecessary 'this.' qualifier. Try removing 'this.' • lib/athlete_profile.dart:1279:23 • unnecessary_this
+   info • Unnecessary 'this.' qualifier. Try removing 'this.' • lib/athlete_profile.dart:1335:26 • unnecessary_this
+   info • Unnecessary 'this.' qualifier. Try removing 'this.' • lib/athlete_profile.dart:1349:26 • unnecessary_this
+   info • Unnecessary 'this.' qualifier. Try removing 'this.' • lib/athlete_profile.dart:1462:27 • unnecessary_this
+   info • Unnecessary 'this.' qualifier. Try removing 'this.' • lib/athlete_profile.dart:1530:18 • unnecessary_this
+   info • Use 'const' with the constructor to improve performance. Try adding the 'const' keyword to the constructor invocation • lib/athlete_profile_flow_v3.dart:301:9 • prefer_const_constructors
+   info • Use 'const' with the constructor to improve performance. Try adding the 'const' keyword to the constructor invocation • lib/athlete_profile_flow_v3.dart:303:18 • prefer_const_constructors
+   info • Unnecessary constructor invocation. Try using a collection literal • lib/athlete_profile_flow_v3.dart:813:23 • prefer_collection_literals
+  error • The getter 'days' isn't defined for the type 'Pass2Plan'. Try importing the library that defines 'days', correcting the name to the name of an existing getter, or defining a getter or field named 'days' • test/cu_profil_v3_test.dart:648:22 • undefined_getter
+
+9 issues found. (ran in 14.9s)

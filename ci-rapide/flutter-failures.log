@@ -1,0 +1,67 @@
+        expect(pass2.days, isNotEmpty, reason: f['key'] as String);
+                     ^^^^
+00:00 +0 -1: loading /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart [E]
+  Failed to load "/home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart":
+  Compilation failed for testPath=/home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: test/cu_profil_v3_test.dart:648:22: Error: The getter 'days' isn't defined for the type 'Pass2Plan'.
+   - 'Pass2Plan' is from 'package:kalis_core/src/contracts.dart' ('packages/kalis_core/lib/src/contracts.dart').
+  Try correcting the name to the name of an existing getter, or defining a getter or field named 'days'.
+          expect(pass2.days, isNotEmpty, reason: f['key'] as String);
+                       ^^^^
+  .
+  Error: The Dart compiler exited unexpectedly.
+  package:flutter_tools/src/base/common.dart 34:3  throwToolExit
+  package:flutter_tools/src/compile.dart 1024:11   DefaultResidentCompiler._compile.<fn>
+  dart:async/zone_root.dart 48:47                  _rootRunUnary
+  dart:async/zone.dart 816:35                      _CustomZone.runUnary
+  dart:async/future_impl.dart 948:45               Future._propagateToListeners.handleValueCallback
+  dart:async/future_impl.dart 977:13               Future._propagateToListeners
+  dart:async/future_impl.dart 862:9                Future._propagateToListeners
+  dart:async/future_impl.dart 720:5                Future._completeWithValue
+  dart:async/future_impl.dart 804:7                Future._asyncCompleteWithValue.<fn>
+  dart:async/zone_root.dart 35:13                  _rootRun
+  dart:async/zone.dart 810:35                      _CustomZone.run
+  dart:async/zone.dart 702:7                       _CustomZone.runGuarded
+  dart:async/zone.dart 743:23                      _CustomZone.bindCallbackGuarded.<fn>
+  dart:async/schedule_microtask.dart 40:35         _microtaskLoop
+  dart:async/schedule_microtask.dart 49:5          _startMicrotaskLoop
+  dart:isolate-patch/isolate_patch.dart 127:13     _runPendingImmediateCallback
+  dart:isolate-patch/isolate_patch.dart 193:5      _RawReceivePort._handleMessage
+  
+00:00 +0 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/g6_profil_test.dart: (setUpAll)
+00:00 +1 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/g6_profil_test.dart: (setUpAll)
+00:00 +2 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/g6_profil_test.dart: (setUpAll)
+00:00 +3 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/g6_profil_test.dart: (setUpAll)
+--
+00:01 +24 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/g6_profil_test.dart: magasin refaire son profil (session personnelle) : rien d’autre ne change
+00:01 +24 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/g2_retrait_test.dart: Écran d’annonce contenu, partage, « Compris » (sombre)
+00:01 +24 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/g6_profil_test.dart: magasin refaire son profil (session personnelle) : rien d’autre ne change [E]
+  Expected: {
+              'kalisTrack': 1,
+              'format': 3,
+              'referenceStatus': {},
+              'programStart': {'status': 'pending'},
+              'logs': {
+                'S1-J1': {
+                  'done': true,
+                  'finishedAt': '2026-07-13T18:00:00.000',
+                  'title': 'S1 · J1',
+                  'exerciseNames': {
+                    'P0-6': 'TEST 1RM MUSCLE-UP LESTÉ — seul lift lourd du jour',
+                    'P0-7': 'Négatifs de muscle-up',
+                    'P0-8': 'Rowing barre penché',
+                    'P0-9': 'Face pulls',
+                    'P0-10': 'Rotations externes (par haltère)',
+                    'P0-11': 'Mobilité épaules + poignets'
+                  },
+                  'ex': {
+                    'P0-6': {
+                      'sets': [
+                        {
+                          'kg': '62,5',
+                          'reps': '8',
+                          'rir': '2',
+                          'v': '',
+                          'done': true,
+                          'completedAt': '2026-07-13T18:00:00.000'
+                        },
+                        {
