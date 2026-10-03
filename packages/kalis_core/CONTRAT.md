@@ -1,6 +1,6 @@
 # kalis_core — contrat
 
-Version 0.4.0 (lot GC, 01/10/2026 ; évolutions additives des lots G8, G11 et CQ : `CHANGELOG.md`). Ce paquet fixe **tout ce que les moteurs et l'application
+Version 0.4.1 (lot GC, 01/10/2026 ; évolutions additives des lots G8, G11, CQ et CP1 : `CHANGELOG.md`). Ce paquet fixe **tout ce que les moteurs et l'application
 échangent**. Référence exhaustive des types, champ par champ : [`docs/TYPES.md`](docs/TYPES.md)
 (généré depuis `tool/contracts_spec.py`, source unique des types).
 
@@ -219,7 +219,7 @@ leveling depuis tout le journal ≤ 200 ms — mesurés par chaque moteur ; le c
 
 ## 7. Codes de raison
 
-Registre `reasonRegistry` (130 codes : `plan.*`, `adapt.*`, `quest.*` ; les 38 codes de 0.4.0 — 21 `plan.*`, dont
+Registre `reasonRegistry` (133 codes : `plan.*`, `adapt.*`, `quest.*` ; depuis 0.4.1, trois codes de notes de coach en fin de registre — `plan.coach_note`, `plan.progression_rule`, `plan.pain_rule`, lot CP1 ; les 38 codes de 0.4.0 — 21 `plan.*`, dont
 `plan.skill_plateau` et `plan.recent_load`, et 17 `adapt.*` — suivent les 92 premiers, dont le rang ne change pas), constantes `ReasonCodes`, table dans `docs/TYPES.md`. Textes
 courts de Koach proposés pour les 38 codes de 0.4.0 : `docs/RAISONS_0_4.md` (`data/reason_texts_fr_0_4.json`). Un `Reason` valide a un code du registre et exactement les paramètres déclarés,
 du bon type (entier, nombre, texte court, booléen, identifiant d'exercice). Un moteur qui a besoin d'un

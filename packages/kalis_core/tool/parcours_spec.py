@@ -28,7 +28,7 @@ pas posée à la création mais proposée après la première semaine) et
 """
 from __future__ import annotations
 
-VERSION = "0.4.0"
+VERSION = "0.4.1"
 
 SCALES = {
     "experience": ["beginner", "intermediate", "advanced", "elite"],

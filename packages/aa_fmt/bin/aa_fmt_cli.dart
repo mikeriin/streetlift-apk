@@ -17,6 +17,9 @@ void main(List<String> args) {
           File('${d.path}/pubspec.yaml').existsSync())
         d.path,
   ]..sort();
+  for (final p in packages) {
+    Process.runSync('dart', <String>['pub', 'get'], workingDirectory: p);
+  }
   final result = Process.runSync('dart', <String>['format', ...packages]);
   File('$out/format.txt')
     ..createSync(recursive: true)
@@ -26,8 +29,7 @@ void main(List<String> args) {
     for (final f in Directory(p).listSync(recursive: true)) {
       if (f is! File ||
           !f.path.endsWith('.dart') ||
-          f.path.contains('/.dart_tool/') ||
-          f.path.endsWith('.g.dart')) {
+          f.path.contains('/.dart_tool/')) {
         continue;
       }
       final rel = f.path.substring(p.length + 1);
