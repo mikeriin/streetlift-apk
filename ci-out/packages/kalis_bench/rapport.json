@@ -528,11 +528,20 @@
     "proposalsApplied": {
      "exercise_swap": 1
     },
+    "unlockViolations": 0,
     "proposalsWithheld": {
      "exercise_swap:unlock": 3
     },
     "painAggravations": 0,
-    "blocks": 3
+    "blocks": 3,
+    "verdicts": {
+     "echecs_non_voulus": true,
+     "ecart_rir": false,
+     "pics_de_charge": true,
+     "performance_echeance": null,
+     "deblocages": true,
+     "douleur": true
+    }
    }
   },
   {
@@ -576,11 +585,30 @@
     63,
     94
    ],
-   "safetyViolations": 1,
+   "safetyViolations": 3,
    "safetyByCode": {
+    "charge_trop_vite": 2,
     "plafond_volume": 1
    },
    "safety": [
+    {
+     "code": "charge_trop_vite",
+     "message": "Back squat barre haute : charge totale +5.3 % en une semaine (seuil 5.0 %).",
+     "week": 5,
+     "dayIndex": 2,
+     "exerciseId": "mu-back-squat-barre-haute",
+     "value": 0.053,
+     "limit": 0.05
+    },
+    {
+     "code": "charge_trop_vite",
+     "message": "Back squat barre haute : charge totale +5.3 % en une semaine (seuil 5.0 %).",
+     "week": 10,
+     "dayIndex": 2,
+     "exerciseId": "mu-back-squat-barre-haute",
+     "value": 0.053,
+     "limit": 0.05
+    },
     {
      "code": "plafond_volume",
      "message": "fessiers : 7 semaine(s) au-dessus du plafond du niveau intermédiaire (20 séries dures), jusqu'à 21.5.",
@@ -1124,92 +1152,102 @@
      "sw-traction-pronation|3x6-12"
     ]
    ],
-   "realizedSafetyViolations": 11,
+   "realizedSafetyViolations": 13,
    "realizedSafetyByCode": {
-    "charge_trop_vite": 9,
-    "plafond_volume": 2
+    "charge_trop_vite": 10,
+    "plafond_volume": 2,
+    "volume_trop_vite": 1
    },
    "realizedSafety": [
     {
      "code": "charge_trop_vite",
-     "message": "Développé couché barre : charge totale +11.1 % en une semaine (seuil 7.5 %).",
+     "message": "Développé couché barre : charge totale +11.1 % en une semaine (seuil 5.0 %).",
      "week": 5,
      "dayIndex": 0,
      "exerciseId": "mu-developpe-couche-barre",
      "value": 0.111,
-     "limit": 0.075
+     "limit": 0.05
     },
     {
      "code": "charge_trop_vite",
-     "message": "Rowing poulie basse assis au triangle : charge totale +16.7 % en une semaine (seuil 7.5 %).",
+     "message": "Rowing poulie basse assis au triangle : charge totale +16.7 % en une semaine (seuil 5.0 %).",
      "week": 5,
      "dayIndex": 3,
      "exerciseId": "mu-rowing-poulie-assis-triangle",
      "value": 0.167,
-     "limit": 0.075
+     "limit": 0.05
     },
     {
      "code": "charge_trop_vite",
-     "message": "Rowing assis à la machine poitrine appuyée : charge totale +33.3 % en une semaine (seuil 7.5 %).",
+     "message": "Rowing assis à la machine poitrine appuyée : charge totale +33.3 % en une semaine (seuil 5.0 %).",
      "week": 5,
      "dayIndex": 3,
      "exerciseId": "mu-rowing-machine-poitrine-appuyee",
      "value": 0.333,
-     "limit": 0.075
+     "limit": 0.05
     },
     {
      "code": "charge_trop_vite",
-     "message": "Belt squat : charge totale +8.3 % en une semaine (seuil 7.5 %).",
+     "message": "Belt squat : charge totale +8.3 % en une semaine (seuil 5.0 %).",
      "week": 7,
      "dayIndex": 2,
      "exerciseId": "mu-belt-squat",
      "value": 0.083,
-     "limit": 0.075
+     "limit": 0.05
     },
     {
      "code": "charge_trop_vite",
-     "message": "Développé couché barre : charge totale +11.1 % en une semaine (seuil 7.5 %).",
+     "message": "Développé couché barre : charge totale +11.1 % en une semaine (seuil 5.0 %).",
      "week": 8,
      "dayIndex": 0,
      "exerciseId": "mu-developpe-couche-barre",
      "value": 0.111,
-     "limit": 0.075
+     "limit": 0.05
     },
     {
      "code": "charge_trop_vite",
-     "message": "Squat barre talons surélevés : charge totale +7.7 % en une semaine (seuil 7.5 %).",
+     "message": "Squat barre talons surélevés : charge totale +7.7 % en une semaine (seuil 5.0 %).",
      "week": 8,
      "dayIndex": 1,
      "exerciseId": "mu-squat-talons-sureleves",
      "value": 0.077,
-     "limit": 0.075
+     "limit": 0.05
     },
     {
      "code": "charge_trop_vite",
-     "message": "Rowing poulie basse assis unilatéral : charge totale +16.7 % en une semaine (seuil 7.5 %).",
+     "message": "Rowing poulie basse assis unilatéral : charge totale +16.7 % en une semaine (seuil 5.0 %).",
      "week": 8,
      "dayIndex": 1,
      "exerciseId": "mu-rowing-poulie-assis-unilateral",
      "value": 0.167,
-     "limit": 0.075
+     "limit": 0.05
     },
     {
      "code": "charge_trop_vite",
-     "message": "Rowing poulie basse assis au triangle : charge totale +16.7 % en une semaine (seuil 7.5 %).",
+     "message": "Rowing poulie basse assis au triangle : charge totale +16.7 % en une semaine (seuil 5.0 %).",
      "week": 8,
      "dayIndex": 3,
      "exerciseId": "mu-rowing-poulie-assis-triangle",
      "value": 0.167,
-     "limit": 0.075
+     "limit": 0.05
     },
     {
      "code": "charge_trop_vite",
-     "message": "Rowing assis à la machine poitrine appuyée : charge totale +33.3 % en une semaine (seuil 7.5 %).",
+     "message": "Back squat barre haute : charge totale +6.3 % en une semaine (seuil 5.0 %).",
+     "week": 10,
+     "dayIndex": 2,
+     "exerciseId": "mu-back-squat-barre-haute",
+     "value": 0.063,
+     "limit": 0.05
+    },
+    {
+     "code": "charge_trop_vite",
+     "message": "Rowing assis à la machine poitrine appuyée : charge totale +33.3 % en une semaine (seuil 5.0 %).",
      "week": 10,
      "dayIndex": 3,
      "exerciseId": "mu-rowing-machine-poitrine-appuyee",
      "value": 0.333,
-     "limit": 0.075
+     "limit": 0.05
     },
     {
      "code": "plafond_volume",
@@ -1224,6 +1262,13 @@
      "week": 11,
      "value": 21.0,
      "limit": 20.0
+    },
+    {
+     "code": "volume_trop_vite",
+     "message": "ischio-jambiers : 15.0 séries dures en semaine 7, pour 14.4 admises au vu des trois semaines précédentes.",
+     "week": 6,
+     "value": 15.0,
+     "limit": 14.4
     }
    ],
    "trajectory": {
@@ -1262,12 +1307,21 @@
     "proposalsApplied": {
      "exercise_swap": 2
     },
+    "unlockViolations": 0,
     "proposalsWithheld": {
      "exercise_swap:unlock": 3,
      "exercise_swap:recent_swap": 1
     },
     "painAggravations": 0,
-    "blocks": 3
+    "blocks": 3,
+    "verdicts": {
+     "echecs_non_voulus": true,
+     "ecart_rir": false,
+     "pics_de_charge": true,
+     "performance_echeance": null,
+     "deblocages": true,
+     "douleur": true
+    }
    }
   },
   {
@@ -1337,10 +1391,10 @@
     },
     {
      "code": "affutage_absent",
-     "message": "Semaine de l'échéance : volume 0 % sous le pic des six semaines précédentes (au moins 30 % attendus).",
+     "message": "Semaine de l'échéance : volume 0 % sous le pic des six semaines précédentes (au moins 40 % attendus).",
      "week": 9,
      "value": 0.0,
-     "limit": 0.3
+     "limit": 0.4
     }
    ],
    "quality": [
@@ -1862,10 +1916,10 @@
     },
     {
      "code": "affutage_absent",
-     "message": "Semaine de l'échéance : volume 3 % sous le pic des six semaines précédentes (au moins 30 % attendus).",
+     "message": "Semaine de l'échéance : volume 3 % sous le pic des six semaines précédentes (au moins 40 % attendus).",
      "week": 9,
      "value": 0.034,
-     "limit": 0.3
+     "limit": 0.4
     }
    ],
    "trajectory": {
@@ -1905,9 +1959,18 @@
     "proposalsApplied": {
      "volume": 1
     },
+    "unlockViolations": 0,
     "proposalsWithheld": {},
     "painAggravations": 0,
-    "blocks": 2
+    "blocks": 2,
+    "verdicts": {
+     "echecs_non_voulus": true,
+     "ecart_rir": false,
+     "pics_de_charge": true,
+     "performance_echeance": false,
+     "deblocages": true,
+     "douleur": true
+    }
    }
   },
   {
@@ -1962,9 +2025,39 @@
     32,
     44
    ],
-   "safetyViolations": 0,
-   "safetyByCode": {},
-   "safety": [],
+   "safetyViolations": 3,
+   "safetyByCode": {
+    "charge_trop_vite": 3
+   },
+   "safety": [
+    {
+     "code": "charge_trop_vite",
+     "message": "Développé couché barre : charge totale +5.3 % en une semaine (seuil 5.0 %).",
+     "week": 5,
+     "dayIndex": 2,
+     "exerciseId": "mu-developpe-couche-barre",
+     "value": 0.053,
+     "limit": 0.05
+    },
+    {
+     "code": "charge_trop_vite",
+     "message": "Développé couché barre : charge totale +5.3 % en une semaine (seuil 5.0 %).",
+     "week": 10,
+     "dayIndex": 2,
+     "exerciseId": "mu-developpe-couche-barre",
+     "value": 0.053,
+     "limit": 0.05
+    },
+    {
+     "code": "charge_trop_vite",
+     "message": "Développé couché barre : charge totale +5.3 % en une semaine (seuil 5.0 %).",
+     "week": 15,
+     "dayIndex": 2,
+     "exerciseId": "mu-developpe-couche-barre",
+     "value": 0.053,
+     "limit": 0.05
+    }
+   ],
    "quality": [
     {
      "code": "volume_bande",
@@ -2444,29 +2537,110 @@
      "sw-pompe-t|2x3-8"
     ]
    ],
-   "realizedSafetyViolations": 3,
+   "realizedSafetyViolations": 12,
    "realizedSafetyByCode": {
-    "charge_trop_vite": 2,
+    "charge_trop_vite": 11,
     "plafond_volume": 1
    },
    "realizedSafety": [
     {
      "code": "charge_trop_vite",
-     "message": "Back squat barre basse : charge totale +11.5 % en une semaine (seuil 7.5 %).",
+     "message": "Tirage vertical poulie prise serrée supination : charge totale +5.9 % en une semaine (seuil 5.0 %).",
+     "week": 7,
+     "dayIndex": 0,
+     "exerciseId": "mu-tirage-vertical-prise-serree-supination",
+     "value": 0.059,
+     "limit": 0.05
+    },
+    {
+     "code": "charge_trop_vite",
+     "message": "Back squat barre basse : charge totale +11.5 % en une semaine (seuil 5.0 %).",
      "week": 10,
      "dayIndex": 0,
      "exerciseId": "mu-back-squat-barre-basse",
      "value": 0.115,
-     "limit": 0.075
+     "limit": 0.05
     },
     {
      "code": "charge_trop_vite",
-     "message": "Développé épaules à la machine : charge totale +20.0 % en une semaine (seuil 7.5 %).",
+     "message": "Tirage vertical poulie prise serrée supination : charge totale +5.9 % en une semaine (seuil 5.0 %).",
+     "week": 10,
+     "dayIndex": 0,
+     "exerciseId": "mu-tirage-vertical-prise-serree-supination",
+     "value": 0.059,
+     "limit": 0.05
+    },
+    {
+     "code": "charge_trop_vite",
+     "message": "Développé épaules à la machine : charge totale +20.0 % en une semaine (seuil 5.0 %).",
      "week": 10,
      "dayIndex": 1,
      "exerciseId": "mu-developpe-epaules-machine",
      "value": 0.2,
-     "limit": 0.075
+     "limit": 0.05
+    },
+    {
+     "code": "charge_trop_vite",
+     "message": "Rowing poulie basse assis au triangle : charge totale +7.1 % en une semaine (seuil 5.0 %).",
+     "week": 12,
+     "dayIndex": 1,
+     "exerciseId": "mu-rowing-poulie-assis-triangle",
+     "value": 0.071,
+     "limit": 0.05
+    },
+    {
+     "code": "charge_trop_vite",
+     "message": "Développé couché barre : charge totale +5.9 % en une semaine (seuil 5.0 %).",
+     "week": 12,
+     "dayIndex": 2,
+     "exerciseId": "mu-developpe-couche-barre",
+     "value": 0.059,
+     "limit": 0.05
+    },
+    {
+     "code": "charge_trop_vite",
+     "message": "Rowing poulie basse assis au triangle : charge totale +7.1 % en une semaine (seuil 5.0 %).",
+     "week": 12,
+     "dayIndex": 2,
+     "exerciseId": "mu-rowing-poulie-assis-triangle",
+     "value": 0.071,
+     "limit": 0.05
+    },
+    {
+     "code": "charge_trop_vite",
+     "message": "Tirage vertical poulie prise serrée supination : charge totale +5.6 % en une semaine (seuil 5.0 %).",
+     "week": 13,
+     "dayIndex": 0,
+     "exerciseId": "mu-tirage-vertical-prise-serree-supination",
+     "value": 0.056,
+     "limit": 0.05
+    },
+    {
+     "code": "charge_trop_vite",
+     "message": "Tirage vertical poulie prise serrée supination : charge totale +5.6 % en une semaine (seuil 5.0 %).",
+     "week": 15,
+     "dayIndex": 0,
+     "exerciseId": "mu-tirage-vertical-prise-serree-supination",
+     "value": 0.056,
+     "limit": 0.05
+    },
+    {
+     "code": "charge_trop_vite",
+     "message": "Rowing poulie basse assis au triangle : charge totale +7.1 % en une semaine (seuil 5.0 %).",
+     "week": 15,
+     "dayIndex": 1,
+     "exerciseId": "mu-rowing-poulie-assis-triangle",
+     "value": 0.071,
+     "limit": 0.05
+    },
+    {
+     "code": "charge_trop_vite",
+     "message": "Rowing poulie basse assis au triangle : charge totale +7.1 % en une semaine (seuil 5.0 %).",
+     "week": 15,
+     "dayIndex": 2,
+     "exerciseId": "mu-rowing-poulie-assis-triangle",
+     "value": 0.071,
+     "limit": 0.05
     },
     {
      "code": "plafond_volume",
@@ -2508,9 +2682,18 @@
      "block_restructure": 11
     },
     "proposalsApplied": {},
+    "unlockViolations": 0,
     "proposalsWithheld": {},
     "painAggravations": 0,
-    "blocks": 4
+    "blocks": 4,
+    "verdicts": {
+     "echecs_non_voulus": true,
+     "ecart_rir": false,
+     "pics_de_charge": true,
+     "performance_echeance": null,
+     "deblocages": true,
+     "douleur": true
+    }
    }
   },
   {
@@ -2586,10 +2769,10 @@
     },
     {
      "code": "affutage_absent",
-     "message": "Semaine de l'échéance : volume 0 % sous le pic des six semaines précédentes (au moins 20 % attendus).",
+     "message": "Semaine de l'échéance : volume 0 % sous le pic des six semaines précédentes (au moins 30 % attendus).",
      "week": 11,
-     "value": 0.0,
-     "limit": 0.2
+     "value": 0.004,
+     "limit": 0.3
     }
    ],
    "quality": [
@@ -2750,10 +2933,10 @@
     },
     {
      "code": "affutage_absent",
-     "message": "Semaine de l'échéance : volume 0 % sous le pic des six semaines précédentes (au moins 20 % attendus).",
+     "message": "Semaine de l'échéance : volume 0 % sous le pic des six semaines précédentes (au moins 30 % attendus).",
      "week": 11,
-     "value": 0.0,
-     "limit": 0.2
+     "value": 0.004,
+     "limit": 0.3
     }
    ],
    "trajectory": {
@@ -2782,9 +2965,18 @@
      "loads_reps": 1
     },
     "proposalsApplied": {},
+    "unlockViolations": 0,
     "proposalsWithheld": {},
     "painAggravations": 0,
-    "blocks": 3
+    "blocks": 3,
+    "verdicts": {
+     "echecs_non_voulus": true,
+     "ecart_rir": true,
+     "pics_de_charge": true,
+     "performance_echeance": null,
+     "deblocages": true,
+     "douleur": true
+    }
    }
   },
   {
@@ -2835,10 +3027,10 @@
    "safety": [
     {
      "code": "affutage_absent",
-     "message": "Semaine de l'échéance : volume -6 % sous le pic des six semaines précédentes (au moins 20 % attendus).",
+     "message": "Semaine de l'échéance : volume -6 % sous le pic des six semaines précédentes (au moins 30 % attendus).",
      "week": 11,
      "value": -0.059,
-     "limit": 0.2
+     "limit": 0.3
     }
    ],
    "quality": [
@@ -2915,7 +3107,7 @@
     },
     {
      "code": "equilibre_poussee_tirage",
-     "score": 1.0,
+     "score": 0.857,
      "detail": "Séries dures de tirage / de poussée sur les semaines de montée : 12 / 14 (rapport 0.86).",
      "values": {
       "pull": 12.0,
@@ -2960,7 +3152,7 @@
      }
     }
    ],
-   "qualityMean": 0.604,
+   "qualityMean": 0.586,
    "checksOk": 5,
    "checksTotal": 5,
    "checks": [
@@ -3129,10 +3321,10 @@
    "realizedSafety": [
     {
      "code": "affutage_absent",
-     "message": "Semaine de l'échéance : volume -6 % sous le pic des six semaines précédentes (au moins 20 % attendus).",
+     "message": "Semaine de l'échéance : volume -6 % sous le pic des six semaines précédentes (au moins 30 % attendus).",
      "week": 11,
      "value": -0.059,
-     "limit": 0.2
+     "limit": 0.3
     }
    ],
    "trajectory": {
@@ -3168,9 +3360,18 @@
      "block_restructure": 11
     },
     "proposalsApplied": {},
+    "unlockViolations": 0,
     "proposalsWithheld": {},
     "painAggravations": 0,
-    "blocks": 3
+    "blocks": 3,
+    "verdicts": {
+     "echecs_non_voulus": true,
+     "ecart_rir": false,
+     "pics_de_charge": true,
+     "performance_echeance": null,
+     "deblocages": true,
+     "douleur": true
+    }
    }
   },
   {
@@ -3465,9 +3666,18 @@
      "block_restructure": 9
     },
     "proposalsApplied": {},
+    "unlockViolations": 0,
     "proposalsWithheld": {},
     "painAggravations": 0,
-    "blocks": 3
+    "blocks": 3,
+    "verdicts": {
+     "echecs_non_voulus": true,
+     "ecart_rir": false,
+     "pics_de_charge": true,
+     "performance_echeance": null,
+     "deblocages": true,
+     "douleur": true
+    }
    }
   },
   {
@@ -3518,9 +3728,10 @@
     8,
     46
    ],
-   "safetyViolations": 4,
+   "safetyViolations": 7,
    "safetyByCode": {
-    "plafond_volume": 4
+    "plafond_volume": 4,
+    "volume_trop_vite": 3
    },
    "safety": [
     {
@@ -3538,6 +3749,13 @@
      "limit": 20.0
     },
     {
+     "code": "volume_trop_vite",
+     "message": "lombaires : 16.0 séries dures en semaine 12, pour 15.6 admises au vu des trois semaines précédentes.",
+     "week": 11,
+     "value": 16.0,
+     "limit": 15.6
+    },
+    {
      "code": "plafond_volume",
      "message": "fessiers : 6 semaine(s) au-dessus du plafond du niveau intermédiaire (20 séries dures), jusqu'à 21.0.",
      "week": 6,
@@ -3545,11 +3763,25 @@
      "limit": 20.0
     },
     {
+     "code": "volume_trop_vite",
+     "message": "quadriceps : 19.5 séries dures en semaine 7, pour 19.2 admises au vu des trois semaines précédentes.",
+     "week": 6,
+     "value": 19.5,
+     "limit": 19.2
+    },
+    {
      "code": "plafond_volume",
      "message": "quadriceps : 3 semaine(s) au-dessus du plafond du niveau intermédiaire (20 séries dures), jusqu'à 20.5.",
      "week": 11,
      "value": 20.5,
      "limit": 20.0
+    },
+    {
+     "code": "volume_trop_vite",
+     "message": "mollets : 9.0 séries dures en semaine 7, pour 8.5 admises au vu des trois semaines précédentes.",
+     "week": 6,
+     "value": 9.0,
+     "limit": 8.5
     }
    ],
    "quality": [
@@ -3993,29 +4225,57 @@
      "sw-windshield-wiper-tuck|2x10-15"
     ]
    ],
-   "realizedSafetyViolations": 6,
+   "realizedSafetyViolations": 12,
    "realizedSafetyByCode": {
-    "charge_trop_vite": 2,
-    "plafond_volume": 4
+    "charge_trop_vite": 5,
+    "plafond_volume": 4,
+    "volume_trop_vite": 3
    },
    "realizedSafety": [
     {
      "code": "charge_trop_vite",
-     "message": "Rowing haltères deux bras buste penché : charge totale +10.0 % en une semaine (seuil 7.5 %).",
+     "message": "Tirage d'arraché : charge totale +5.6 % en une semaine (seuil 5.0 %).",
+     "week": 10,
+     "dayIndex": 4,
+     "exerciseId": "mu-tirage-arrache",
+     "value": 0.056,
+     "limit": 0.05
+    },
+    {
+     "code": "charge_trop_vite",
+     "message": "Rowing haltères deux bras buste penché : charge totale +10.0 % en une semaine (seuil 5.0 %).",
      "week": 13,
      "dayIndex": 3,
      "exerciseId": "mu-rowing-halteres-buste-penche",
      "value": 0.1,
-     "limit": 0.075
+     "limit": 0.05
     },
     {
      "code": "charge_trop_vite",
-     "message": "Rowing haltères deux bras buste penché : charge totale +10.0 % en une semaine (seuil 7.5 %).",
+     "message": "Tirage d'arraché : charge totale +5.3 % en une semaine (seuil 5.0 %).",
+     "week": 13,
+     "dayIndex": 4,
+     "exerciseId": "mu-tirage-arrache",
+     "value": 0.053,
+     "limit": 0.05
+    },
+    {
+     "code": "charge_trop_vite",
+     "message": "Rowing haltères deux bras buste penché : charge totale +10.0 % en une semaine (seuil 5.0 %).",
      "week": 15,
      "dayIndex": 3,
      "exerciseId": "mu-rowing-halteres-buste-penche",
      "value": 0.1,
-     "limit": 0.075
+     "limit": 0.05
+    },
+    {
+     "code": "charge_trop_vite",
+     "message": "Tirage d'arraché : charge totale +5.6 % en une semaine (seuil 5.0 %).",
+     "week": 15,
+     "dayIndex": 4,
+     "exerciseId": "mu-tirage-arrache",
+     "value": 0.056,
+     "limit": 0.05
     },
     {
      "code": "plafond_volume",
@@ -4039,11 +4299,32 @@
      "limit": 20.0
     },
     {
+     "code": "volume_trop_vite",
+     "message": "quadriceps : 20.5 séries dures en semaine 7, pour 19.2 admises au vu des trois semaines précédentes.",
+     "week": 6,
+     "value": 20.5,
+     "limit": 19.2
+    },
+    {
      "code": "plafond_volume",
      "message": "quadriceps : 3 semaine(s) au-dessus du plafond du niveau intermédiaire (20 séries dures), jusqu'à 20.5.",
      "week": 6,
      "value": 20.5,
      "limit": 20.0
+    },
+    {
+     "code": "volume_trop_vite",
+     "message": "ischio-jambiers : 16.0 séries dures en semaine 7, pour 15.6 admises au vu des trois semaines précédentes.",
+     "week": 6,
+     "value": 16.0,
+     "limit": 15.6
+    },
+    {
+     "code": "volume_trop_vite",
+     "message": "mollets : 9.5 séries dures en semaine 7, pour 9.0 admises au vu des trois semaines précédentes.",
+     "week": 6,
+     "value": 9.5,
+     "limit": 9.0
     }
    ],
    "trajectory": {
@@ -4083,9 +4364,18 @@
      "exercise_swap": 1,
      "volume": 2
     },
+    "unlockViolations": 0,
     "proposalsWithheld": {},
     "painAggravations": 0,
-    "blocks": 4
+    "blocks": 4,
+    "verdicts": {
+     "echecs_non_voulus": true,
+     "ecart_rir": false,
+     "pics_de_charge": true,
+     "performance_echeance": null,
+     "deblocages": true,
+     "douleur": true
+    }
    }
   },
   {
@@ -4470,9 +4760,18 @@
      "block_restructure": 9
     },
     "proposalsApplied": {},
+    "unlockViolations": 0,
     "proposalsWithheld": {},
     "painAggravations": 0,
-    "blocks": 3
+    "blocks": 3,
+    "verdicts": {
+     "echecs_non_voulus": true,
+     "ecart_rir": false,
+     "pics_de_charge": true,
+     "performance_echeance": null,
+     "deblocages": true,
+     "douleur": true
+    }
    }
   },
   {
@@ -4847,9 +5146,18 @@
      "block_restructure": 9
     },
     "proposalsApplied": {},
+    "unlockViolations": 0,
     "proposalsWithheld": {},
     "painAggravations": 0,
-    "blocks": 3
+    "blocks": 3,
+    "verdicts": {
+     "echecs_non_voulus": true,
+     "ecart_rir": false,
+     "pics_de_charge": true,
+     "performance_echeance": null,
+     "deblocages": true,
+     "douleur": true
+    }
    }
   },
   {
@@ -5241,12 +5549,19 @@
      "sw-traction-sautee|2x6-12"
     ]
    ],
-   "realizedSafetyViolations": 4,
+   "realizedSafetyViolations": 6,
    "realizedSafetyByCode": {
-    "plafond_volume": 3,
-    "volume_trop_vite": 1
+    "volume_trop_vite": 3,
+    "plafond_volume": 3
    },
    "realizedSafety": [
+    {
+     "code": "volume_trop_vite",
+     "message": "abdominaux : 14.0 séries dures en semaine 6, pour 12.0 admises au vu des trois semaines précédentes.",
+     "week": 5,
+     "value": 14.0,
+     "limit": 12.0
+    },
     {
      "code": "plafond_volume",
      "message": "abdominaux : 4 semaine(s) au-dessus du plafond du niveau débutant (12 séries dures), jusqu'à 15.0.",
@@ -5256,10 +5571,17 @@
     },
     {
      "code": "volume_trop_vite",
-     "message": "fessiers : 19.0 séries dures en semaine 6, pour 18.8 admises au vu des trois semaines précédentes.",
+     "message": "lombaires : 10.0 séries dures en semaine 6, pour 9.0 admises au vu des trois semaines précédentes.",
+     "week": 5,
+     "value": 10.0,
+     "limit": 9.0
+    },
+    {
+     "code": "volume_trop_vite",
+     "message": "fessiers : 19.0 séries dures en semaine 6, pour 16.8 admises au vu des trois semaines précédentes.",
      "week": 5,
      "value": 19.0,
-     "limit": 18.8
+     "limit": 16.8
     },
     {
      "code": "plafond_volume",
@@ -5307,9 +5629,18 @@
      "block_restructure": 9
     },
     "proposalsApplied": {},
+    "unlockViolations": 0,
     "proposalsWithheld": {},
     "painAggravations": 0,
-    "blocks": 3
+    "blocks": 3,
+    "verdicts": {
+     "echecs_non_voulus": true,
+     "ecart_rir": false,
+     "pics_de_charge": true,
+     "performance_echeance": null,
+     "deblocages": true,
+     "douleur": true
+    }
    }
   },
   {
@@ -5712,17 +6043,32 @@
      "sw-traction-assistee-pieds-au-sol|3x6-12"
     ]
    ],
-   "realizedSafetyViolations": 5,
+   "realizedSafetyViolations": 10,
    "realizedSafetyByCode": {
+    "volume_trop_vite": 5,
     "plafond_volume": 5
    },
    "realizedSafety": [
+    {
+     "code": "volume_trop_vite",
+     "message": "grand dorsal : 12.5 séries dures en semaine 10, pour 11.0 admises au vu des trois semaines précédentes.",
+     "week": 9,
+     "value": 12.5,
+     "limit": 11.0
+    },
     {
      "code": "plafond_volume",
      "message": "grand dorsal : 3 semaine(s) au-dessus du plafond du niveau débutant (12 séries dures), jusqu'à 12.5.",
      "week": 9,
      "value": 12.5,
      "limit": 12.0
+    },
+    {
+     "code": "volume_trop_vite",
+     "message": "haut du dos : 14.5 séries dures en semaine 10, pour 14.4 admises au vu des trois semaines précédentes.",
+     "week": 9,
+     "value": 14.5,
+     "limit": 14.4
     },
     {
      "code": "plafond_volume",
@@ -5732,11 +6078,32 @@
      "limit": 12.0
     },
     {
+     "code": "volume_trop_vite",
+     "message": "triceps : 10.5 séries dures en semaine 10, pour 10.0 admises au vu des trois semaines précédentes.",
+     "week": 9,
+     "value": 10.5,
+     "limit": 10.0
+    },
+    {
      "code": "plafond_volume",
      "message": "abdominaux : 6 semaine(s) au-dessus du plafond du niveau débutant (12 séries dures), jusqu'à 13.0.",
      "week": 5,
      "value": 13.0,
      "limit": 12.0
+    },
+    {
+     "code": "volume_trop_vite",
+     "message": "fessiers : 10.5 séries dures en semaine 5, pour 10.0 admises au vu des trois semaines précédentes.",
+     "week": 4,
+     "value": 10.5,
+     "limit": 10.0
+    },
+    {
+     "code": "volume_trop_vite",
+     "message": "fessiers : 14.0 séries dures en semaine 6, pour 12.6 admises au vu des trois semaines précédentes.",
+     "week": 5,
+     "value": 14.0,
+     "limit": 12.6
     },
     {
      "code": "plafond_volume",
@@ -5785,9 +6152,18 @@
      "block_restructure": 9
     },
     "proposalsApplied": {},
+    "unlockViolations": 0,
     "proposalsWithheld": {},
     "painAggravations": 0,
-    "blocks": 3
+    "blocks": 3,
+    "verdicts": {
+     "echecs_non_voulus": true,
+     "ecart_rir": false,
+     "pics_de_charge": true,
+     "performance_echeance": null,
+     "deblocages": true,
+     "douleur": true
+    }
    }
   },
   {
@@ -6184,9 +6560,10 @@
      "sw-traction-sautee|2x6-12"
     ]
    ],
-   "realizedSafetyViolations": 3,
+   "realizedSafetyViolations": 5,
    "realizedSafetyByCode": {
-    "plafond_volume": 3
+    "plafond_volume": 3,
+    "volume_trop_vite": 2
    },
    "realizedSafety": [
     {
@@ -6195,6 +6572,20 @@
      "week": 0,
      "value": 19.0,
      "limit": 12.0
+    },
+    {
+     "code": "volume_trop_vite",
+     "message": "lombaires : 9.0 séries dures en semaine 6, pour 8.0 admises au vu des trois semaines précédentes.",
+     "week": 5,
+     "value": 9.0,
+     "limit": 8.0
+    },
+    {
+     "code": "volume_trop_vite",
+     "message": "fessiers : 17.5 séries dures en semaine 6, pour 17.4 admises au vu des trois semaines précédentes.",
+     "week": 5,
+     "value": 17.5,
+     "limit": 17.4
     },
     {
      "code": "plafond_volume",
@@ -6242,9 +6633,18 @@
      "block_restructure": 9
     },
     "proposalsApplied": {},
+    "unlockViolations": 0,
     "proposalsWithheld": {},
     "painAggravations": 0,
-    "blocks": 3
+    "blocks": 3,
+    "verdicts": {
+     "echecs_non_voulus": true,
+     "ecart_rir": false,
+     "pics_de_charge": true,
+     "performance_echeance": null,
+     "deblocages": true,
+     "douleur": true
+    }
    }
   },
   {
@@ -6289,11 +6689,19 @@
     63,
     82
    ],
-   "safetyViolations": 3,
+   "safetyViolations": 5,
    "safetyByCode": {
+    "volume_trop_vite": 2,
     "plafond_volume": 3
    },
    "safety": [
+    {
+     "code": "volume_trop_vite",
+     "message": "grand dorsal : 28.5 séries dures en semaine 12, pour 28.2 admises au vu des trois semaines précédentes.",
+     "week": 11,
+     "value": 28.5,
+     "limit": 28.2
+    },
     {
      "code": "plafond_volume",
      "message": "grand dorsal : 8 semaine(s) au-dessus du plafond du niveau intermédiaire (20 séries dures), jusqu'à 28.5.",
@@ -6314,6 +6722,13 @@
      "week": 1,
      "value": 25.0,
      "limit": 20.0
+    },
+    {
+     "code": "volume_trop_vite",
+     "message": "quadriceps : 19.0 séries dures en semaine 12, pour 18.6 admises au vu des trois semaines précédentes.",
+     "week": 11,
+     "value": 19.0,
+     "limit": 18.6
     }
    ],
    "quality": [
@@ -6691,19 +7106,19 @@
      "sw-traction-serree|3x10-15"
     ]
    ],
-   "realizedSafetyViolations": 6,
+   "realizedSafetyViolations": 9,
    "realizedSafetyByCode": {
-    "volume_trop_vite": 1,
+    "volume_trop_vite": 4,
     "plafond_volume": 3,
     "tendon_figures": 2
    },
    "realizedSafety": [
     {
      "code": "volume_trop_vite",
-     "message": "grand dorsal : 33.5 séries dures en semaine 12, pour 33.2 admises au vu des trois semaines précédentes.",
+     "message": "grand dorsal : 33.5 séries dures en semaine 12, pour 31.2 admises au vu des trois semaines précédentes.",
      "week": 11,
      "value": 33.5,
-     "limit": 33.2
+     "limit": 31.2
     },
     {
      "code": "plafond_volume",
@@ -6727,18 +7142,39 @@
      "limit": 20.0
     },
     {
-     "code": "tendon_figures",
-     "message": "Tenues bras tendus (tirage, type front lever) : 165 s en semaine 11, pour 140 s admises au vu des trois semaines précédentes.",
-     "week": 10,
-     "value": 165.0,
-     "limit": 139.6
+     "code": "volume_trop_vite",
+     "message": "fessiers : 11.5 séries dures en semaine 6, pour 11.0 admises au vu des trois semaines précédentes.",
+     "week": 5,
+     "value": 11.5,
+     "limit": 11.0
+    },
+    {
+     "code": "volume_trop_vite",
+     "message": "fessiers : 14.5 séries dures en semaine 7, pour 13.8 admises au vu des trois semaines précédentes.",
+     "week": 6,
+     "value": 14.5,
+     "limit": 13.8
+    },
+    {
+     "code": "volume_trop_vite",
+     "message": "quadriceps : 17.0 séries dures en semaine 7, pour 16.2 admises au vu des trois semaines précédentes.",
+     "week": 6,
+     "value": 17.0,
+     "limit": 16.2
     },
     {
      "code": "tendon_figures",
-     "message": "Tenues bras tendus (tirage, type front lever) : 210 s en semaine 12, pour 208 s admises au vu des trois semaines précédentes.",
+     "message": "Tenues bras tendus (tirage, type front lever) : 165 s en semaine 11, pour 124 s admises au vu des trois semaines précédentes.",
+     "week": 10,
+     "value": 165.0,
+     "limit": 124.2
+    },
+    {
+     "code": "tendon_figures",
+     "message": "Tenues bras tendus (tirage, type front lever) : 210 s en semaine 12, pour 190 s admises au vu des trois semaines précédentes.",
      "week": 11,
      "value": 210.0,
-     "limit": 208.0
+     "limit": 189.75
     }
    ],
    "trajectory": {
@@ -6774,9 +7210,18 @@
      "block_restructure": 11
     },
     "proposalsApplied": {},
+    "unlockViolations": 0,
     "proposalsWithheld": {},
     "painAggravations": 0,
-    "blocks": 3
+    "blocks": 3,
+    "verdicts": {
+     "echecs_non_voulus": true,
+     "ecart_rir": false,
+     "pics_de_charge": true,
+     "performance_echeance": null,
+     "deblocages": true,
+     "douleur": true
+    }
    }
   },
   {
@@ -7403,9 +7848,10 @@
      "sw-traction-pronation|3x6-9"
     ]
    ],
-   "realizedSafetyViolations": 8,
+   "realizedSafetyViolations": 9,
    "realizedSafetyByCode": {
-    "plafond_volume": 8
+    "plafond_volume": 8,
+    "volume_trop_vite": 1
    },
    "realizedSafety": [
     {
@@ -7463,6 +7909,13 @@
      "week": 1,
      "value": 27.5,
      "limit": 20.0
+    },
+    {
+     "code": "volume_trop_vite",
+     "message": "ischio-jambiers : 11.5 séries dures en semaine 7, pour 11.0 admises au vu des trois semaines précédentes.",
+     "week": 6,
+     "value": 11.5,
+     "limit": 11.0
     }
    ],
    "trajectory": {
@@ -7497,9 +7950,18 @@
      "block_restructure": 11
     },
     "proposalsApplied": {},
+    "unlockViolations": 0,
     "proposalsWithheld": {},
     "painAggravations": 0,
-    "blocks": 4
+    "blocks": 4,
+    "verdicts": {
+     "echecs_non_voulus": true,
+     "ecart_rir": false,
+     "pics_de_charge": true,
+     "performance_echeance": null,
+     "deblocages": true,
+     "douleur": true
+    }
    }
   },
   {
@@ -8028,9 +8490,18 @@
      "block_restructure": 11
     },
     "proposalsApplied": {},
+    "unlockViolations": 0,
     "proposalsWithheld": {},
     "painAggravations": 0,
-    "blocks": 3
+    "blocks": 3,
+    "verdicts": {
+     "echecs_non_voulus": true,
+     "ecart_rir": false,
+     "pics_de_charge": true,
+     "performance_echeance": null,
+     "deblocages": true,
+     "douleur": true
+    }
    }
   },
   {
@@ -8776,10 +9247,10 @@
     },
     {
      "code": "tendon_figures",
-     "message": "Tenues bras tendus (poussée, type planche) : 38 s en semaine 7, pour 34 s admises au vu des trois semaines précédentes.",
+     "message": "Tenues bras tendus (poussée, type planche et back lever) : 38 s en semaine 7, pour 25 s admises au vu des trois semaines précédentes.",
      "week": 6,
      "value": 38.0,
-     "limit": 34.0
+     "limit": 25.0
     }
    ],
    "trajectory": {
@@ -8822,9 +9293,18 @@
      "volume": 3,
      "deload": 1
     },
+    "unlockViolations": 0,
     "proposalsWithheld": {},
     "painAggravations": 0,
-    "blocks": 2
+    "blocks": 2,
+    "verdicts": {
+     "echecs_non_voulus": true,
+     "ecart_rir": false,
+     "pics_de_charge": true,
+     "performance_echeance": false,
+     "deblocages": true,
+     "douleur": true
+    }
    }
   },
   {
@@ -8860,9 +9340,10 @@
     89,
     117
    ],
-   "safetyViolations": 5,
+   "safetyViolations": 7,
    "safetyByCode": {
     "plafond_volume": 4,
+    "volume_trop_vite": 2,
     "affutage_absent": 1
    },
    "safety": [
@@ -8872,6 +9353,13 @@
      "week": 1,
      "value": 29.5,
      "limit": 25.0
+    },
+    {
+     "code": "volume_trop_vite",
+     "message": "grand dorsal : 32.5 séries dures en semaine 8, pour 32.4 admises au vu des trois semaines précédentes.",
+     "week": 7,
+     "value": 32.5,
+     "limit": 32.4
     },
     {
      "code": "plafond_volume",
@@ -8888,6 +9376,13 @@
      "limit": 25.0
     },
     {
+     "code": "volume_trop_vite",
+     "message": "fessiers : 29.5 séries dures en semaine 8, pour 28.8 admises au vu des trois semaines précédentes.",
+     "week": 7,
+     "value": 29.5,
+     "limit": 28.8
+    },
+    {
      "code": "plafond_volume",
      "message": "fessiers : 1 semaine(s) au-dessus du plafond du niveau avancé (25 séries dures), jusqu'à 29.5.",
      "week": 7,
@@ -8896,10 +9391,10 @@
     },
     {
      "code": "affutage_absent",
-     "message": "Semaine de l'échéance : volume 0 % sous le pic des six semaines précédentes (au moins 30 % attendus).",
+     "message": "Semaine de l'échéance : volume 0 % sous le pic des six semaines précédentes (au moins 40 % attendus).",
      "week": 7,
      "value": 0.0,
-     "limit": 0.3
+     "limit": 0.4
     }
    ],
    "quality": [
@@ -9377,9 +9872,10 @@
      "sw-traction-pronation|4x14-21"
     ]
    ],
-   "realizedSafetyViolations": 6,
+   "realizedSafetyViolations": 7,
    "realizedSafetyByCode": {
     "plafond_volume": 5,
+    "volume_trop_vite": 1,
     "affutage_absent": 1
    },
    "realizedSafety": [
@@ -9389,6 +9885,13 @@
      "week": 1,
      "value": 27.5,
      "limit": 25.0
+    },
+    {
+     "code": "volume_trop_vite",
+     "message": "grand dorsal : 33.5 séries dures en semaine 8, pour 32.4 admises au vu des trois semaines précédentes.",
+     "week": 7,
+     "value": 33.5,
+     "limit": 32.4
     },
     {
      "code": "plafond_volume",
@@ -9420,10 +9923,10 @@
     },
     {
      "code": "affutage_absent",
-     "message": "Semaine de l'échéance : volume -1 % sous le pic des six semaines précédentes (au moins 30 % attendus).",
+     "message": "Semaine de l'échéance : volume -1 % sous le pic des six semaines précédentes (au moins 40 % attendus).",
      "week": 7,
      "value": -0.009,
-     "limit": 0.3
+     "limit": 0.4
     }
    ],
    "trajectory": {
@@ -9464,9 +9967,18 @@
      "session_restructure": 7
     },
     "proposalsApplied": {},
+    "unlockViolations": 0,
     "proposalsWithheld": {},
     "painAggravations": 0,
-    "blocks": 2
+    "blocks": 2,
+    "verdicts": {
+     "echecs_non_voulus": true,
+     "ecart_rir": false,
+     "pics_de_charge": true,
+     "performance_echeance": false,
+     "deblocages": true,
+     "douleur": true
+    }
    }
   },
   {
@@ -10267,9 +10779,18 @@
      "deload": 1,
      "volume": 3
     },
+    "unlockViolations": 0,
     "proposalsWithheld": {},
     "painAggravations": 0,
-    "blocks": 2
+    "blocks": 2,
+    "verdicts": {
+     "echecs_non_voulus": true,
+     "ecart_rir": false,
+     "pics_de_charge": true,
+     "performance_echeance": false,
+     "deblocages": true,
+     "douleur": true
+    }
    }
   },
   {
@@ -10321,9 +10842,11 @@
     120,
     120
    ],
-   "safetyViolations": 19,
+   "safetyViolations": 25,
    "safetyByCode": {
-    "plafond_volume": 19
+    "plafond_volume": 19,
+    "volume_trop_vite": 4,
+    "tendon_figures": 2
    },
    "safety": [
     {
@@ -10339,6 +10862,27 @@
      "week": 0,
      "value": 43.5,
      "limit": 30.0
+    },
+    {
+     "code": "volume_trop_vite",
+     "message": "deltoïde moyen : 17.0 séries dures en semaine 3, pour 16.8 admises au vu des trois semaines précédentes.",
+     "week": 2,
+     "value": 17.0,
+     "limit": 16.8
+    },
+    {
+     "code": "volume_trop_vite",
+     "message": "deltoïde moyen : 17.0 séries dures en semaine 9, pour 16.8 admises au vu des trois semaines précédentes.",
+     "week": 8,
+     "value": 17.0,
+     "limit": 16.8
+    },
+    {
+     "code": "volume_trop_vite",
+     "message": "deltoïde moyen : 17.0 séries dures en semaine 15, pour 16.8 admises au vu des trois semaines précédentes.",
+     "week": 14,
+     "value": 17.0,
+     "limit": 16.8
     },
     {
      "code": "plafond_volume",
@@ -10360,6 +10904,13 @@
      "week": 8,
      "value": 32.5,
      "limit": 30.0
+    },
+    {
+     "code": "volume_trop_vite",
+     "message": "fessiers : 24.5 séries dures en semaine 8, pour 24.0 admises au vu des trois semaines précédentes.",
+     "week": 7,
+     "value": 24.5,
+     "limit": 24.0
     },
     {
      "code": "plafond_volume",
@@ -10458,6 +11009,20 @@
      "week": 15,
      "value": 7.0,
      "limit": 2.0
+    },
+    {
+     "code": "tendon_figures",
+     "message": "Tenues bras tendus (tirage, type front lever) : 96 s en semaine 9, pour 92 s admises au vu des trois semaines précédentes.",
+     "week": 8,
+     "value": 96.0,
+     "limit": 92.4
+    },
+    {
+     "code": "tendon_figures",
+     "message": "Tenues bras tendus (tirage, type front lever) : 96 s en semaine 15, pour 92 s admises au vu des trois semaines précédentes.",
+     "week": 14,
+     "value": 96.0,
+     "limit": 92.4
     }
    ],
    "quality": [
@@ -11056,10 +11621,12 @@
      "sw-traction-pronation|2x11-16"
     ]
    ],
-   "realizedSafetyViolations": 20,
+   "realizedSafetyViolations": 23,
    "realizedSafetyByCode": {
     "charge_trop_vite": 1,
-    "plafond_volume": 19
+    "plafond_volume": 19,
+    "volume_trop_vite": 2,
+    "tendon_figures": 1
    },
    "realizedSafety": [
     {
@@ -11084,6 +11651,20 @@
      "week": 0,
      "value": 44.5,
      "limit": 30.0
+    },
+    {
+     "code": "volume_trop_vite",
+     "message": "deltoïde moyen : 17.0 séries dures en semaine 3, pour 16.8 admises au vu des trois semaines précédentes.",
+     "week": 2,
+     "value": 17.0,
+     "limit": 16.8
+    },
+    {
+     "code": "volume_trop_vite",
+     "message": "deltoïde moyen : 17.0 séries dures en semaine 9, pour 16.8 admises au vu des trois semaines précédentes.",
+     "week": 8,
+     "value": 17.0,
+     "limit": 16.8
     },
     {
      "code": "plafond_volume",
@@ -11203,6 +11784,13 @@
      "week": 15,
      "value": 7.0,
      "limit": 2.0
+    },
+    {
+     "code": "tendon_figures",
+     "message": "Tenues bras tendus (poussée, type planche et back lever) : 45 s en semaine 9, pour 44 s admises au vu des trois semaines précédentes.",
+     "week": 8,
+     "value": 45.0,
+     "limit": 44.0
     }
    ],
    "trajectory": {
@@ -11240,9 +11828,18 @@
      "block_restructure": 13
     },
     "proposalsApplied": {},
+    "unlockViolations": 0,
     "proposalsWithheld": {},
     "painAggravations": 0,
-    "blocks": 3
+    "blocks": 3,
+    "verdicts": {
+     "echecs_non_voulus": true,
+     "ecart_rir": false,
+     "pics_de_charge": true,
+     "performance_echeance": null,
+     "deblocages": true,
+     "douleur": true
+    }
    }
   },
   {
@@ -11295,10 +11892,12 @@
     19,
     50
    ],
-   "safetyViolations": 3,
+   "safetyViolations": 7,
    "safetyByCode": {
     "plafond_volume": 2,
-    "technique_sans_prerequis": 1
+    "volume_trop_vite": 1,
+    "technique_sans_prerequis": 1,
+    "tendon_figures": 3
    },
    "safety": [
     {
@@ -11316,11 +11915,39 @@
      "limit": 20.0
     },
     {
+     "code": "volume_trop_vite",
+     "message": "quadriceps : 13.5 séries dures en semaine 7, pour 13.2 admises au vu des trois semaines précédentes.",
+     "week": 6,
+     "value": 13.5,
+     "limit": 13.2
+    },
+    {
      "code": "technique_sans_prerequis",
      "message": "Dips lesté partiel haut surchargé : technique réservée au niveau avancé et au-delà.",
      "week": 0,
      "dayIndex": 0,
      "exerciseId": "sl-dips-leste-partiel-haut"
+    },
+    {
+     "code": "tendon_figures",
+     "message": "Tenues bras tendus (tirage, type front lever) : 60 s en semaine 3, pour 57 s admises au vu des trois semaines précédentes.",
+     "week": 2,
+     "value": 60.0,
+     "limit": 57.5
+    },
+    {
+     "code": "tendon_figures",
+     "message": "Tenues bras tendus (tirage, type front lever) : 60 s en semaine 8, pour 57 s admises au vu des trois semaines précédentes.",
+     "week": 7,
+     "value": 60.0,
+     "limit": 57.5
+    },
+    {
+     "code": "tendon_figures",
+     "message": "Tenues bras tendus (tirage, type front lever) : 60 s en semaine 13, pour 57 s admises au vu des trois semaines précédentes.",
+     "week": 12,
+     "value": 60.0,
+     "limit": 57.5
     }
    ],
    "quality": [
@@ -11386,7 +12013,7 @@
     },
     {
      "code": "equilibre_poussee_tirage",
-     "score": 1.0,
+     "score": 0.982,
      "detail": "Séries dures de tirage / de poussée sur les semaines de montée : 168 / 171 (rapport 0.98).",
      "values": {
       "pull": 168.0,
@@ -11425,7 +12052,7 @@
      }
     }
    ],
-   "qualityMean": 0.867,
+   "qualityMean": 0.865,
    "checksOk": 4,
    "checksTotal": 5,
    "checks": [
@@ -11793,10 +12420,12 @@
      "sw-traction-pronation|3x5-7"
     ]
    ],
-   "realizedSafetyViolations": 3,
+   "realizedSafetyViolations": 5,
    "realizedSafetyByCode": {
     "plafond_volume": 2,
-    "technique_sans_prerequis": 1
+    "volume_trop_vite": 1,
+    "technique_sans_prerequis": 1,
+    "tendon_figures": 1
    },
    "realizedSafety": [
     {
@@ -11814,11 +12443,25 @@
      "limit": 20.0
     },
     {
+     "code": "volume_trop_vite",
+     "message": "quadriceps : 13.5 séries dures en semaine 7, pour 13.2 admises au vu des trois semaines précédentes.",
+     "week": 6,
+     "value": 13.5,
+     "limit": 13.2
+    },
+    {
      "code": "technique_sans_prerequis",
      "message": "Dips lesté partiel haut surchargé : technique réservée au niveau avancé et au-delà.",
      "week": 0,
      "dayIndex": 0,
      "exerciseId": "sl-dips-leste-partiel-haut"
+    },
+    {
+     "code": "tendon_figures",
+     "message": "Tenues bras tendus (tirage, type front lever) : 60 s en semaine 3, pour 57 s admises au vu des trois semaines précédentes.",
+     "week": 2,
+     "value": 60.0,
+     "limit": 57.5
     }
    ],
    "trajectory": {
@@ -11856,9 +12499,18 @@
     "proposalsApplied": {
      "exercise_swap": 1
     },
+    "unlockViolations": 0,
     "proposalsWithheld": {},
     "painAggravations": 0,
-    "blocks": 4
+    "blocks": 4,
+    "verdicts": {
+     "echecs_non_voulus": true,
+     "ecart_rir": false,
+     "pics_de_charge": true,
+     "performance_echeance": null,
+     "deblocages": true,
+     "douleur": true
+    }
    }
   },
   {
@@ -12428,9 +13080,10 @@
      "sw-windshield-wiper-tuck|4x10-15"
     ]
    ],
-   "realizedSafetyViolations": 8,
+   "realizedSafetyViolations": 9,
    "realizedSafetyByCode": {
     "plafond_volume": 6,
+    "volume_trop_vite": 1,
     "technique_sans_prerequis": 2
    },
    "realizedSafety": [
@@ -12440,6 +13093,13 @@
      "week": 6,
      "value": 21.0,
      "limit": 20.0
+    },
+    {
+     "code": "volume_trop_vite",
+     "message": "deltoïde antérieur : 20.0 séries dures en semaine 7, pour 19.8 admises au vu des trois semaines précédentes.",
+     "week": 6,
+     "value": 20.0,
+     "limit": 19.8
     },
     {
      "code": "plafond_volume",
@@ -12524,9 +13184,18 @@
      "block_restructure": 11
     },
     "proposalsApplied": {},
+    "unlockViolations": 0,
     "proposalsWithheld": {},
     "painAggravations": 0,
-    "blocks": 3
+    "blocks": 3,
+    "verdicts": {
+     "echecs_non_voulus": true,
+     "ecart_rir": false,
+     "pics_de_charge": true,
+     "performance_echeance": null,
+     "deblocages": true,
+     "douleur": true
+    }
    }
   },
   {
@@ -12904,9 +13573,19 @@
      "sw-traction-supination|3x6-12"
     ]
    ],
-   "realizedSafetyViolations": 0,
-   "realizedSafetyByCode": {},
-   "realizedSafety": [],
+   "realizedSafetyViolations": 1,
+   "realizedSafetyByCode": {
+    "tendon_figures": 1
+   },
+   "realizedSafety": [
+    {
+     "code": "tendon_figures",
+     "message": "Tenues bras tendus (tirage, type front lever) : 162 s en semaine 12, pour 155 s admises au vu des trois semaines précédentes.",
+     "week": 11,
+     "value": 162.0,
+     "limit": 155.25
+    }
+   ],
    "trajectory": {
     "weeks": 12,
     "sessionsPlanned": 36,
@@ -12938,9 +13617,18 @@
      "block_restructure": 11
     },
     "proposalsApplied": {},
+    "unlockViolations": 0,
     "proposalsWithheld": {},
     "painAggravations": 0,
-    "blocks": 3
+    "blocks": 3,
+    "verdicts": {
+     "echecs_non_voulus": true,
+     "ecart_rir": false,
+     "pics_de_charge": true,
+     "performance_echeance": null,
+     "deblocages": true,
+     "douleur": true
+    }
    }
   },
   {
@@ -12983,9 +13671,10 @@
     59,
     79
    ],
-   "safetyViolations": 5,
+   "safetyViolations": 8,
    "safetyByCode": {
-    "plafond_volume": 5
+    "plafond_volume": 5,
+    "volume_trop_vite": 3
    },
    "safety": [
     {
@@ -13017,11 +13706,32 @@
      "limit": 20.0
     },
     {
+     "code": "volume_trop_vite",
+     "message": "lombaires : 16.0 séries dures en semaine 7, pour 15.0 admises au vu des trois semaines précédentes.",
+     "week": 6,
+     "value": 16.0,
+     "limit": 15.0
+    },
+    {
+     "code": "volume_trop_vite",
+     "message": "fessiers : 20.0 séries dures en semaine 7, pour 18.0 admises au vu des trois semaines précédentes.",
+     "week": 6,
+     "value": 20.0,
+     "limit": 18.0
+    },
+    {
      "code": "plafond_volume",
      "message": "fessiers : 1 semaine(s) au-dessus du plafond du niveau intermédiaire (20 séries dures), jusqu'à 21.0.",
      "week": 11,
      "value": 21.0,
      "limit": 20.0
+    },
+    {
+     "code": "volume_trop_vite",
+     "message": "quadriceps : 17.5 séries dures en semaine 12, pour 16.8 admises au vu des trois semaines précédentes.",
+     "week": 11,
+     "value": 17.5,
+     "limit": 16.8
     }
    ],
    "quality": [
@@ -13423,9 +14133,10 @@
      "sw-traction-pronation|5x9-13"
     ]
    ],
-   "realizedSafetyViolations": 4,
+   "realizedSafetyViolations": 6,
    "realizedSafetyByCode": {
-    "plafond_volume": 4
+    "plafond_volume": 4,
+    "volume_trop_vite": 2
    },
    "realizedSafety": [
     {
@@ -13455,6 +14166,20 @@
      "week": 1,
      "value": 24.5,
      "limit": 20.0
+    },
+    {
+     "code": "volume_trop_vite",
+     "message": "fessiers : 19.0 séries dures en semaine 7, pour 18.0 admises au vu des trois semaines précédentes.",
+     "week": 6,
+     "value": 19.0,
+     "limit": 18.0
+    },
+    {
+     "code": "volume_trop_vite",
+     "message": "quadriceps : 19.0 séries dures en semaine 12, pour 18.0 admises au vu des trois semaines précédentes.",
+     "week": 11,
+     "value": 19.0,
+     "limit": 18.0
     }
    ],
    "trajectory": {
@@ -13488,9 +14213,18 @@
      "block_restructure": 11
     },
     "proposalsApplied": {},
+    "unlockViolations": 0,
     "proposalsWithheld": {},
     "painAggravations": 0,
-    "blocks": 3
+    "blocks": 3,
+    "verdicts": {
+     "echecs_non_voulus": true,
+     "ecart_rir": false,
+     "pics_de_charge": true,
+     "performance_echeance": null,
+     "deblocages": true,
+     "douleur": true
+    }
    }
   },
   {
@@ -13905,17 +14639,32 @@
      "sw-traction-supination|3x6-12"
     ]
    ],
-   "realizedSafetyViolations": 1,
+   "realizedSafetyViolations": 3,
    "realizedSafetyByCode": {
+    "volume_trop_vite": 2,
     "plafond_volume": 1
    },
    "realizedSafety": [
+    {
+     "code": "volume_trop_vite",
+     "message": "grand dorsal : 24.5 séries dures en semaine 7, pour 24.0 admises au vu des trois semaines précédentes.",
+     "week": 6,
+     "value": 24.5,
+     "limit": 24.0
+    },
     {
      "code": "plafond_volume",
      "message": "grand dorsal : 4 semaine(s) au-dessus du plafond du niveau intermédiaire (20 séries dures), jusqu'à 24.5.",
      "week": 6,
      "value": 24.5,
      "limit": 20.0
+    },
+    {
+     "code": "volume_trop_vite",
+     "message": "biceps : 15.0 séries dures en semaine 7, pour 14.4 admises au vu des trois semaines précédentes.",
+     "week": 6,
+     "value": 15.0,
+     "limit": 14.4
     }
    ],
    "trajectory": {
@@ -13949,9 +14698,18 @@
      "block_restructure": 11
     },
     "proposalsApplied": {},
+    "unlockViolations": 0,
     "proposalsWithheld": {},
     "painAggravations": 0,
-    "blocks": 3
+    "blocks": 3,
+    "verdicts": {
+     "echecs_non_voulus": true,
+     "ecart_rir": false,
+     "pics_de_charge": true,
+     "performance_echeance": null,
+     "deblocages": true,
+     "douleur": true
+    }
    }
   },
   {
@@ -13993,9 +14751,10 @@
     111,
     111
    ],
-   "safetyViolations": 5,
+   "safetyViolations": 6,
    "safetyByCode": {
     "plafond_volume": 4,
+    "tendon_figures": 1,
     "affutage_absent": 1
    },
    "safety": [
@@ -14028,11 +14787,18 @@
      "limit": 25.0
     },
     {
+     "code": "tendon_figures",
+     "message": "Tenues bras tendus (poussée, type planche et back lever) : 50 s en semaine 3, pour 45 s admises au vu des trois semaines précédentes.",
+     "week": 2,
+     "value": 50.0,
+     "limit": 45.0
+    },
+    {
      "code": "affutage_absent",
-     "message": "Semaine de l'échéance : volume 0 % sous le pic des six semaines précédentes (au moins 30 % attendus).",
+     "message": "Semaine de l'échéance : volume 0 % sous le pic des six semaines précédentes (au moins 40 % attendus).",
      "week": 9,
      "value": 0.0,
-     "limit": 0.3
+     "limit": 0.4
     }
    ],
    "quality": [
@@ -14499,9 +15265,10 @@
      "sw-windshield-wiper-tuck|4x10-15"
     ]
    ],
-   "realizedSafetyViolations": 5,
+   "realizedSafetyViolations": 6,
    "realizedSafetyByCode": {
     "plafond_volume": 4,
+    "tendon_figures": 1,
     "affutage_absent": 1
    },
    "realizedSafety": [
@@ -14534,11 +15301,18 @@
      "limit": 25.0
     },
     {
+     "code": "tendon_figures",
+     "message": "Tenues bras tendus (poussée, type planche et back lever) : 50 s en semaine 3, pour 45 s admises au vu des trois semaines précédentes.",
+     "week": 2,
+     "value": 50.0,
+     "limit": 45.0
+    },
+    {
      "code": "affutage_absent",
-     "message": "Semaine de l'échéance : volume 0 % sous le pic des six semaines précédentes (au moins 30 % attendus).",
+     "message": "Semaine de l'échéance : volume 0 % sous le pic des six semaines précédentes (au moins 40 % attendus).",
      "week": 9,
      "value": 0.0,
-     "limit": 0.3
+     "limit": 0.4
     }
    ],
    "trajectory": {
@@ -14577,9 +15351,18 @@
     "proposalsApplied": {
      "volume": 1
     },
+    "unlockViolations": 0,
     "proposalsWithheld": {},
     "painAggravations": 0,
-    "blocks": 2
+    "blocks": 2,
+    "verdicts": {
+     "echecs_non_voulus": true,
+     "ecart_rir": false,
+     "pics_de_charge": true,
+     "performance_echeance": true,
+     "deblocages": true,
+     "douleur": true
+    }
    }
   },
   {
@@ -14622,11 +15405,19 @@
     46,
     67
    ],
-   "safetyViolations": 2,
+   "safetyViolations": 3,
    "safetyByCode": {
+    "volume_trop_vite": 1,
     "seance_trop_longue": 2
    },
    "safety": [
+    {
+     "code": "volume_trop_vite",
+     "message": "quadriceps : 15.0 séries dures en semaine 7, pour 14.4 admises au vu des trois semaines précédentes.",
+     "week": 6,
+     "value": 15.0,
+     "limit": 14.4
+    },
     {
      "code": "seance_trop_longue",
      "message": "Semaine 5, jour 1 : 78 min estimées pour 60 min disponibles.",
@@ -15049,11 +15840,19 @@
      "sw-traction-supination|3x6-12"
     ]
    ],
-   "realizedSafetyViolations": 2,
+   "realizedSafetyViolations": 3,
    "realizedSafetyByCode": {
+    "volume_trop_vite": 1,
     "seance_trop_longue": 2
    },
    "realizedSafety": [
+    {
+     "code": "volume_trop_vite",
+     "message": "quadriceps : 17.0 séries dures en semaine 7, pour 15.0 admises au vu des trois semaines précédentes.",
+     "week": 6,
+     "value": 17.0,
+     "limit": 15.0
+    },
     {
      "code": "seance_trop_longue",
      "message": "Semaine 5, jour 1 : 78 min estimées pour 60 min disponibles.",
@@ -15103,122 +15902,131 @@
      "block_restructure": 11
     },
     "proposalsApplied": {},
+    "unlockViolations": 0,
     "proposalsWithheld": {
      "exercise_swap:scope": 1
     },
     "painAggravations": 0,
-    "blocks": 3
+    "blocks": 3,
+    "verdicts": {
+     "echecs_non_voulus": true,
+     "ecart_rir": false,
+     "pics_de_charge": true,
+     "performance_echeance": null,
+     "deblocages": true,
+     "douleur": true
+    }
    }
   }
  ],
  "timingsMs": {
   "autres_01_debutant_musculation": {
-   "createBlockMs": 333.2,
-   "benchMs": 822.9
+   "createBlockMs": 293.5,
+   "benchMs": 655.6
   },
   "autres_02_hypertrophie_intermediaire": {
-   "createBlockMs": 633.7,
-   "benchMs": 610.9
+   "createBlockMs": 604.0,
+   "benchMs": 432.8
   },
   "autres_03_powerlifter_competition": {
-   "createBlockMs": 359.0,
-   "benchMs": 328.5
+   "createBlockMs": 261.0,
+   "benchMs": 317.1
   },
   "autres_04_force_generale_46_ans": {
-   "createBlockMs": 170.0,
-   "benchMs": 359.4
+   "createBlockMs": 151.2,
+   "benchMs": 322.0
   },
   "autres_05_course_10_km_debutante": {
-   "createBlockMs": 33.0,
-   "benchMs": 45.6
+   "createBlockMs": 25.4,
+   "benchMs": 70.8
   },
   "autres_06_semi_marathon_intermediaire": {
-   "createBlockMs": 70.0,
-   "benchMs": 131.5
+   "createBlockMs": 52.1,
+   "benchMs": 136.9
   },
   "autres_07_mobilite_sante_senior": {
-   "createBlockMs": 48.1,
-   "benchMs": 112.6
+   "createBlockMs": 50.5,
+   "benchMs": 129.4
   },
   "autres_08_crossfit_intermediaire": {
-   "createBlockMs": 128.3,
-   "benchMs": 464.6
+   "createBlockMs": 144.6,
+   "benchMs": 505.8
   },
   "autres_09_perte_de_poids_debutante": {
-   "createBlockMs": 68.8,
-   "benchMs": 128.9
+   "createBlockMs": 49.7,
+   "benchMs": 109.8
   },
   "autres_10_contraintes_multiples": {
-   "createBlockMs": 139.0,
-   "benchMs": 87.9
+   "createBlockMs": 109.5,
+   "benchMs": 82.3
   },
   "street_01_debutant_complet": {
-   "createBlockMs": 43.4,
-   "benchMs": 197.9
+   "createBlockMs": 30.3,
+   "benchMs": 195.2
   },
   "street_02_debutant_surpoids": {
-   "createBlockMs": 27.1,
-   "benchMs": 87.3
+   "createBlockMs": 29.5,
+   "benchMs": 76.6
   },
   "street_03_debutante": {
-   "createBlockMs": 39.3,
-   "benchMs": 93.8
+   "createBlockMs": 31.9,
+   "benchMs": 95.9
   },
   "street_04_reprise_longue_pause": {
-   "createBlockMs": 167.8,
-   "benchMs": 247.3
+   "createBlockMs": 128.9,
+   "benchMs": 235.6
   },
   "street_05_inter_calisthenie_front_lever": {
-   "createBlockMs": 146.6,
-   "benchMs": 274.7
+   "createBlockMs": 133.0,
+   "benchMs": 221.7
   },
   "street_06_inter_sets_reps": {
-   "createBlockMs": 48.3,
-   "benchMs": 133.0
+   "createBlockMs": 54.1,
+   "benchMs": 120.4
   },
   "street_07_avance_streetlifting_competition": {
-   "createBlockMs": 89.0,
-   "benchMs": 226.4
+   "createBlockMs": 99.2,
+   "benchMs": 224.8
   },
   "street_08_avance_sets_reps_competition": {
-   "createBlockMs": 99.0,
-   "benchMs": 225.7
+   "createBlockMs": 99.8,
+   "benchMs": 213.1
   },
   "street_09_elite_streetlifting": {
-   "createBlockMs": 112.1,
-   "benchMs": 214.4
+   "createBlockMs": 85.6,
+   "benchMs": 213.6
   },
   "street_10_elite_figures": {
-   "createBlockMs": 68.0,
-   "benchMs": 231.1
+   "createBlockMs": 66.3,
+   "benchMs": 221.4
   },
   "street_11_master_51_ans": {
-   "createBlockMs": 71.8,
-   "benchMs": 196.9
+   "createBlockMs": 63.3,
+   "benchMs": 180.2
   },
   "street_12_antecedent_coude": {
-   "createBlockMs": 83.8,
-   "benchMs": 223.0
+   "createBlockMs": 81.9,
+   "benchMs": 210.8
   },
   "street_13_peu_de_temps": {
-   "createBlockMs": 34.5,
-   "benchMs": 108.1
+   "createBlockMs": 32.3,
+   "benchMs": 112.8
   },
   "street_14_parc_sans_lest": {
-   "createBlockMs": 40.0,
-   "benchMs": 117.4
+   "createBlockMs": 38.9,
+   "benchMs": 116.5
   },
   "street_15_travail_physique_sommeil_court": {
-   "createBlockMs": 40.3,
-   "benchMs": 97.6
+   "createBlockMs": 38.1,
+   "benchMs": 89.9
   },
   "street_16_specialisation_traction_lestee": {
-   "createBlockMs": 77.8,
-   "benchMs": 171.9
+   "createBlockMs": 73.5,
+   "benchMs": 161.9
   },
   "street_17_hybride_street_course": {
-   "createBlockMs": 57.8,
-   "benchMs": 157.6
+   "createBlockMs": 54.4,
+   "benchMs": 136.7
   }
  }
 }

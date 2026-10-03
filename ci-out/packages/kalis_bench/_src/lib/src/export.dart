@@ -667,7 +667,7 @@ String trajectoryMarkdown(Trajectory t, Catalog catalog) {
           '${r.week + 1}',
           weekKindLabel(r.weekKind),
           '${r.sets}',
-          '${r.topAmount}${load == null ? '' : ' à ${load >= 0 ? '+' : ''}${_num(load)} kg'}',
+          '${r.topAmount}${load == null ? '' : ' à ${_num(load)} kg'}',
           '${_num(r.meanWantRir)} → ${_num(r.meanTrueRir)}',
           '${r.failures}',
           r.truth == null ? '—' : _num(r.truth!),

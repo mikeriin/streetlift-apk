@@ -79,17 +79,26 @@ const Map<String, String> safetyCriteria = <String, String>{
 /// Seuils de sécurité par niveau (indice : [BenchLevel.index]).
 abstract final class SafetyLimits {
   /// Hausse maximale de la charge totale d'un exercice d'une semaine à
-  /// l'autre (R5-P3, R5-P22 : 2 à 10 % chez le débutant, moins ensuite).
-  static const List<double> loadRise = <double>[0.10, 0.075, 0.05, 0.05];
+  /// l'autre, à schéma de répétitions égal (R5-P3 : +2 à 10 % chez le
+  /// débutant, +2 à 5 % par semaine chez l'intermédiaire ; R5-P22 : +5 à
+  /// 10 % au plus chez l'avancé et l'élite — la borne basse est retenue).
+  static const List<double> loadRise = <double>[0.10, 0.05, 0.05, 0.05];
 
   /// Hausse relative maximale des séries dures d'un groupe musculaire par
   /// rapport au plus haut des trois semaines précédentes (R5-P22 : +10 à
   /// +20 % par semaine)…
   static const double volumeRise = 0.20;
 
-  /// … à laquelle s'ajoutent deux séries de tolérance (R5-P22 : « ou +1 à
-  /// +2 séries »).
+  /// … ou deux séries, si c'est plus (R5-P22 : « ou +1 à +2 séries »).
   static const double volumeRiseSets = 2;
+
+  /// Hausse relative maximale sur deux semaines de charge consécutives
+  /// (R5-P22 : +30 % au plus sur deux semaines)…
+  static const double volumeRiseTwoWeeks = 0.30;
+
+  /// … ou quatre séries, si c'est plus (deux fois la tolérance d'une
+  /// semaine).
+  static const double volumeRiseTwoWeeksSets = 4;
 
   /// Part de la pleine charge à laquelle démarre une semaine allégée ou
   /// de reprise (R5-P7, R5-P22 : 50 à 60 % ; la borne large est retenue).
@@ -108,11 +117,12 @@ abstract final class SafetyLimits {
 
   /// Hausse relative maximale des secondes de tenue bras tendus d'une
   /// famille par rapport au plus haut des trois semaines précédentes
-  /// (R5-P22 : +5 à +10 % par semaine, jamais +30 % en deux semaines)…
-  static const double straightArmRise = 0.20;
+  /// (R5-P22 : garde-fou commun de +10 à +20 % chez le débutant et
+  /// l'intermédiaire, +5 à +10 % par semaine chez l'avancé et l'élite)…
+  static const List<double> straightArmRise = <double>[0.20, 0.15, 0.10, 0.10];
 
-  /// … plus dix secondes de tolérance (une série courte).
-  static const double straightArmRiseSeconds = 10;
+  /// … ou cinq secondes, si c'est plus (une demi-série courte).
+  static const double straightArmRiseSeconds = 5;
 
   /// Semaines minimales sur un levier avant le suivant (R4-F9 : 12, 8, 8,
   /// 6).
@@ -128,18 +138,18 @@ abstract final class SafetyLimits {
   /// comme allégée (R3-P9 : séries −40 à −50 % ; 70 % est le seuil large).
   static const double reliefShare = 0.70;
 
-  /// Baisse minimale du volume la dernière semaine avant l'échéance
-  /// (R3-P12 : −30 % débutant et intermédiaire, −40 % au moins ensuite ;
-  /// seuil large).
-  static const List<double> taperDrop = <double>[0.20, 0.20, 0.30, 0.30];
+  /// Baisse minimale du volume la semaine de l'échéance, par rapport au
+  /// pic des six semaines précédentes (R3-P12, R3-P21 : −30 % débutant et
+  /// intermédiaire, −40 % au moins ensuite).
+  static const List<double> taperDrop = <double>[0.30, 0.30, 0.40, 0.40];
 
   /// Tolérance sur la durée d'une séance : 15 % plus 3 minutes (les
   /// durées sont des estimations).
   static const double sessionTolerance = 0.15;
 
   /// Semaines de coupure à partir desquelles la reprise est progressive
-  /// (R5-P7).
-  static const int breakWeeks = 4;
+  /// (R5-P7 : le barème commence à deux semaines d'arrêt).
+  static const int breakWeeks = 2;
 
   /// RIR minimal de la première semaine après une coupure (R5-P7 : ≥ 3).
   static const double resumeMinRir = 3;
@@ -148,8 +158,12 @@ abstract final class SafetyLimits {
   /// (R5-P23 : plafond de travail 3 à 4 sur 10).
   static const int discomfortHigh = 4;
 
-  /// Gêne à partir de laquelle une contrainte modérée l'est aussi.
-  static const int discomfortModerate = 7;
+  /// Gêne à partir de laquelle une contrainte modérée l'est aussi
+  /// (R5-P23 : « ≥ 6 arrêter » ; R4-F11 : au-delà de 5 sur 10).
+  static const int discomfortModerate = 6;
+
+  /// RIR minimal sur un mouvement à risque élevé, à tout niveau (R5-P27).
+  static const double highRiskMinRir = 2;
 
   /// Indice de masse corporelle à partir duquel sauts et pliométrie sont
   /// écartés chez le débutant (R5-P9).
@@ -159,9 +173,13 @@ abstract final class SafetyLimits {
   static const int impactAge = 65;
 }
 
-/// Niveau minimal (indice de [BenchLevel]) de chaque format de technique
-/// d'intensification (R2-P22, matrice d'accès). Un format absent de la
-/// table est libre.
+/// Niveau minimal (indice de [BenchLevel]) de chaque technique
+/// d'intensification (R2-P22, matrice d'accès), par code de
+/// `SetTechniqueKind` (`kalis_core` 0.4.0) ou de format libre des moteurs
+/// 0.1. Un code absent de la table est libre. Le référentiel ouvre
+/// clusters et rest-pause au second palier de l'intermédiaire (N2), que le
+/// banc ne distingue pas : ils sont comptés au niveau avancé (choix
+/// prudent, `docs/CRITERES.md`).
 const Map<String, int> techniqueMinLevel = <String, int>{
   'top_set_backoff': 1,
   'drop_set': 1,
@@ -169,10 +187,9 @@ const Map<String, int> techniqueMinLevel = <String, int>{
   'cluster': 2,
   'rest_pause': 2,
   'myo_reps': 2,
-  'lengthened_partials': 2,
-  'eccentric_overload': 2,
+  'accentuated_eccentric': 2,
   'contrast': 2,
-  'waves': 2,
+  'wave': 2,
 };
 
 /// Fragments d'identifiant des exercices qui sont par nature une technique
@@ -243,7 +260,8 @@ const Set<MovementPattern> heavyImpactPatterns = <MovementPattern>{
 ///
 /// Règle de montée : la référence est le plus haut des trois semaines
 /// précédentes parmi les semaines de charge (ni introduction, ni décharge,
-/// ni test) ; la limite est `référence × (1 + rise) + tolerance`. Quand les
+/// ni test) ; la limite est la plus large de `référence × (1 + rise)` et de
+/// `référence + tolerance`. Quand les
 /// trois semaines précédentes sont toutes allégées, on admet en plus le
 /// retour à la pleine charge : jusqu'à `référence allégée ÷ rampShare`
 /// (R5-P7, R5-P22 : une charge nouvelle ou reprise démarre à 50 à 60 % de
@@ -277,11 +295,20 @@ double rampLimit(
     // Une semaine allégée plus haute qu'une semaine de charge sert aussi
     // de référence (elle a été tolérée).
     final reference = loaded > light ? loaded : light;
-    return reference * (1 + rise) + tolerance;
+    return _stepLimit(reference, rise, tolerance);
   }
-  final stepped = light * (1 + rise) + tolerance;
+  final stepped = _stepLimit(light, rise, tolerance);
   final resumed = light / SafetyLimits.rampShare;
   return stepped > resumed ? stepped : resumed;
+}
+
+/// Limite d'un pas : la plus large de `référence × (1 + rise)` et de
+/// `référence + tolerance` (R5-P22 : « +10 à +20 % **ou** +1 à +2
+/// séries »).
+double _stepLimit(double reference, double rise, double tolerance) {
+  final relative = reference * (1 + rise);
+  final absolute = reference + tolerance;
+  return relative > absolute ? relative : absolute;
 }
 
 /// Constats de sécurité du programme lu [view] pour le profil [profile].
@@ -292,7 +319,7 @@ List<Finding> safetyFindings(ProgramView view, BenchProfile profile) {
   final catalog = view.catalog;
 
   // --- Hausse de charge d'une semaine à l'autre.
-  final lastLoad = <String, (int, double)>{};
+  final lastLoad = <String, (int, double, int)>{};
   for (final w in weeks) {
     for (final i in w.items) {
       final total = i.totalLoadKg;
@@ -301,7 +328,12 @@ List<Finding> safetyFindings(ProgramView view, BenchProfile profile) {
       }
       final key = '${i.dayIndex}|${i.p.slotId}|${i.exercise.id}';
       final before = lastLoad[key];
-      if (before != null && before.$1 == w.index - 1) {
+      // À schéma de répétitions égal seulement : une charge qui monte
+      // parce que les répétitions baissent n'est pas une hausse de charge
+      // relative.
+      if (before != null &&
+          before.$1 == w.index - 1 &&
+          before.$3 == i.repsHigh) {
         final rise = total / before.$2 - 1;
         final limit = SafetyLimits.loadRise[level];
         if (rise > limit + 1e-9) {
@@ -321,7 +353,7 @@ List<Finding> safetyFindings(ProgramView view, BenchProfile profile) {
           );
         }
       }
-      lastLoad[key] = (w.index, total);
+      lastLoad[key] = (w.index, total, i.repsHigh);
     }
   }
 
@@ -359,6 +391,31 @@ List<Finding> safetyFindings(ProgramView view, BenchProfile profile) {
               limit: limit,
             ),
           );
+        } else if (w.index > 1 &&
+            !w.isLight &&
+            !weeks[w.index - 1].isLight &&
+            !weeks[w.index - 2].isLight) {
+          // R5-P22 : +30 % au plus sur deux semaines de charge de suite.
+          final twoWeeks = _stepLimit(
+            series[w.index - 2],
+            SafetyLimits.volumeRiseTwoWeeks,
+            SafetyLimits.volumeRiseTwoWeeksSets,
+          );
+          if (series[w.index - 2] > 0 && sets > twoWeeks + 1e-9) {
+            out.add(
+              Finding(
+                code: 'volume_trop_vite',
+                message:
+                    '${muscleLabel(g)} : ${sets.toStringAsFixed(1)} séries dures '
+                    'en semaine ${w.index + 1}, pour '
+                    '${twoWeeks.toStringAsFixed(1)} admises au vu de la '
+                    'semaine ${w.index - 1} (hausse sur deux semaines).',
+                week: w.index,
+                value: sets,
+                limit: twoWeeks,
+              ),
+            );
+          }
         }
       }
       if (sets > ceiling + 1e-9) {
@@ -428,15 +485,14 @@ List<Finding> safetyFindings(ProgramView view, BenchProfile profile) {
   for (final w in weeks) {
     for (final i in w.items) {
       final e = i.exercise;
-      final format = i.p.format;
-      if (format != null) {
-        final need = techniqueMinLevel[format];
+      for (final code in i.techniqueCodes) {
+        final need = techniqueMinLevel[code];
         if (need != null && level < need) {
           out.add(
             Finding(
               code: 'technique_sans_prerequis',
               message:
-                  '${e.name} : format « $format » réservé au niveau '
+                  '${e.name} : technique « $code » réservée au niveau '
                   '${BenchLevel.values[need].label} et au-delà.',
               week: w.index,
               dayIndex: i.dayIndex,
@@ -587,7 +643,7 @@ List<Finding> safetyFindings(ProgramView view, BenchProfile profile) {
         weeks,
         held,
         w.index,
-        rise: SafetyLimits.straightArmRise,
+        rise: SafetyLimits.straightArmRise[level],
         tolerance: SafetyLimits.straightArmRiseSeconds,
       );
       if (reference > 0 && seconds > limit + 1e-9) {
@@ -660,16 +716,34 @@ List<Finding> safetyFindings(ProgramView view, BenchProfile profile) {
       if (r == null) {
         continue;
       }
-      if (r <= 0 && isHighRisk(i.exercise)) {
+      if (r < SafetyLimits.highRiskMinRir - 1e-9 && isHighRisk(i.exercise)) {
         out.add(
           Finding(
             code: 'echec_risque',
             message:
-                "${i.exercise.name} : série prescrite à l'échec sur un "
-                'mouvement à risque élevé.',
+                '${i.exercise.name} : ${r.toStringAsFixed(1)} répétition(s) '
+                'en réserve sur un mouvement à risque élevé (au moins 2 '
+                'attendues).',
             week: w.index,
             dayIndex: i.dayIndex,
             exerciseId: i.exercise.id,
+            value: r,
+            limit: SafetyLimits.highRiskMinRir,
+          ),
+        );
+      } else if (profile.level == BenchLevel.beginner && r <= 0) {
+        // R5-P4, R5-P27 : jamais d'échec chez le débutant.
+        out.add(
+          Finding(
+            code: 'echec_risque',
+            message:
+                "${i.exercise.name} : série prescrite à l'échec pour un "
+                'débutant.',
+            week: w.index,
+            dayIndex: i.dayIndex,
+            exerciseId: i.exercise.id,
+            value: r,
+            limit: 1,
           ),
         );
       }
@@ -728,10 +802,14 @@ List<Finding> safetyFindings(ProgramView view, BenchProfile profile) {
         reference = weeks[k].hardSets;
       }
     }
-    final relieved =
-        w.isLight ||
-        (reference > 0 &&
-            w.hardSets <= reference * SafetyLimits.reliefShare + 1e-9);
+    // Une semaine n'est allégée que si son volume l'est vraiment : sous
+    // [SafetyLimits.reliefShare] du plus haut des trois semaines
+    // précédentes. L'étiquette du moteur (introduction, décharge, test) ne
+    // suffit pas ; elle ne vaut qu'en tout début de programme, faute de
+    // référence.
+    final relieved = reference > 0
+        ? w.hardSets <= reference * SafetyLimits.reliefShare + 1e-9
+        : w.isLight;
     if (relieved) {
       run = 0;
       reported = false;
@@ -770,13 +848,24 @@ List<Finding> safetyFindings(ProgramView view, BenchProfile profile) {
         ),
       );
     } else if (at >= 2) {
-      var peak = 0.0;
+      // Volume : séries dures de renforcement ; sans renforcement dans
+      // les six semaines précédentes (course, cardio), minutes d'effort
+      // des exercices qui n'en sont pas.
+      double volumeOf(WeekView w, {required bool cardio}) =>
+          cardio ? w.conditioningMinutes : w.hardSets;
+      var cardio = true;
       for (var k = at - 6; k < at; k++) {
-        if (k >= 0 && weeks[k].hardSets > peak) {
-          peak = weeks[k].hardSets;
+        if (k >= 0 && weeks[k].hardSets > 0) {
+          cardio = false;
         }
       }
-      final last = weeks[at].hardSets;
+      var peak = 0.0;
+      for (var k = at - 6; k < at; k++) {
+        if (k >= 0 && volumeOf(weeks[k], cardio: cardio) > peak) {
+          peak = volumeOf(weeks[k], cardio: cardio);
+        }
+      }
+      final last = volumeOf(weeks[at], cardio: cardio);
       final drop = peak <= 0 ? 0.0 : 1 - last / peak;
       final need = SafetyLimits.taperDrop[level];
       if (drop < need - 1e-9) {
@@ -801,7 +890,7 @@ List<Finding> safetyFindings(ProgramView view, BenchProfile profile) {
   if (profile.breakWeeks >= SafetyLimits.breakWeeks && weeks.isNotEmpty) {
     final flagged = <String>{};
     for (final i in weeks.first.items) {
-      if (!i.isResistance) {
+      if (!i.isResistance || i.isWarmup || i.isTest) {
         continue;
       }
       final r = i.rir;

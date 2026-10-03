@@ -4,37 +4,37 @@ Moteurs : kalis_plan 0.1.0, kalis_adapt 0.1.0, kalis_core 0.4.0 (catalogue 1.1.0
 
 ## 1. Programmes créés
 
-Violations de sécurité : **90** au total (Pas d'allègement avant l'échéance : 5 ; Volume hebdomadaire au-dessus du plafond du niveau : 77 ; Séance plus longue que le temps donné : 5 ; Technique avancée sans ses prérequis : 3).
+Violations de sécurité : **117** au total (Pas d'allègement avant l'échéance : 5 ; Hausse de charge trop rapide : 5 ; Volume hebdomadaire au-dessus du plafond du niveau : 77 ; Séance plus longue que le temps donné : 5 ; Technique avancée sans ses prérequis : 3 ; Montée trop rapide de la charge bras tendus : 6 ; Hausse de volume trop rapide : 16).
 
 | Profil | Niveau | Semaines | Violations de sécurité | Qualité (moyenne) | Attentes tenues |
 | --- | --- | --- | --- | --- | --- |
 | `autres_01_debutant_musculation` | débutant | 12 | 1 | 0.97 | 5/6 |
-| `autres_02_hypertrophie_intermediaire` | intermédiaire | 12 | 1 | 0.89 | 5/5 |
+| `autres_02_hypertrophie_intermediaire` | intermédiaire | 12 | 3 | 0.89 | 5/5 |
 | `autres_03_powerlifter_competition` | avancé | 10 | 4 | 0.79 | 3/7 |
-| `autres_04_force_generale_46_ans` | intermédiaire | 16 | 0 | 0.98 | 5/5 |
+| `autres_04_force_generale_46_ans` | intermédiaire | 16 | 3 | 0.98 | 5/5 |
 | `autres_05_course_10_km_debutante` | débutant | 12 | 4 | 0.67 | 4/5 |
-| `autres_06_semi_marathon_intermediaire` | intermédiaire | 12 | 1 | 0.60 | 5/5 |
+| `autres_06_semi_marathon_intermediaire` | intermédiaire | 12 | 1 | 0.59 | 5/5 |
 | `autres_07_mobilite_sante_senior` | débutant | 12 | 0 | 1.00 | 5/5 |
-| `autres_08_crossfit_intermediaire` | intermédiaire | 16 | 4 | 0.94 | 5/5 |
+| `autres_08_crossfit_intermediaire` | intermédiaire | 16 | 7 | 0.94 | 5/5 |
 | `autres_09_perte_de_poids_debutante` | débutant | 12 | 0 | 0.83 | 4/6 |
 | `autres_10_contraintes_multiples` | débutant | 12 | 0 | 0.82 | 6/6 |
 | `street_01_debutant_complet` | débutant | 12 | 2 | 0.87 | 5/7 |
 | `street_02_debutant_surpoids` | débutant | 12 | 1 | 0.86 | 6/6 |
 | `street_03_debutante` | débutant | 12 | 3 | 0.85 | 3/5 |
-| `street_04_reprise_longue_pause` | intermédiaire | 12 | 3 | 0.83 | 3/4 |
+| `street_04_reprise_longue_pause` | intermédiaire | 12 | 5 | 0.83 | 3/4 |
 | `street_05_inter_calisthenie_front_lever` | intermédiaire | 16 | 6 | 0.71 | 4/6 |
 | `street_06_inter_sets_reps` | intermédiaire | 12 | 1 | 0.87 | 4/6 |
 | `street_07_avance_streetlifting_competition` | avancé | 12 | 4 | 0.88 | 5/10 |
-| `street_08_avance_sets_reps_competition` | avancé | 8 | 5 | 0.72 | 2/8 |
+| `street_08_avance_sets_reps_competition` | avancé | 8 | 7 | 0.72 | 2/8 |
 | `street_09_elite_streetlifting` | élite | 12 | 8 | 0.94 | 5/10 |
-| `street_10_elite_figures` | élite | 16 | 19 | 0.84 | 6/7 |
-| `street_11_master_51_ans` | intermédiaire | 16 | 3 | 0.87 | 4/5 |
+| `street_10_elite_figures` | élite | 16 | 25 | 0.84 | 6/7 |
+| `street_11_master_51_ans` | intermédiaire | 16 | 7 | 0.86 | 4/5 |
 | `street_12_antecedent_coude` | intermédiaire | 12 | 7 | 0.90 | 2/6 |
 | `street_13_peu_de_temps` | intermédiaire | 12 | 0 | 0.85 | 5/6 |
-| `street_14_parc_sans_lest` | intermédiaire | 12 | 5 | 0.86 | 3/5 |
+| `street_14_parc_sans_lest` | intermédiaire | 12 | 8 | 0.86 | 3/5 |
 | `street_15_travail_physique_sommeil_court` | intermédiaire | 12 | 1 | 0.86 | 4/6 |
-| `street_16_specialisation_traction_lestee` | avancé | 10 | 5 | 0.68 | 1/8 |
-| `street_17_hybride_street_course` | intermédiaire | 12 | 2 | 0.90 | 4/6 |
+| `street_16_specialisation_traction_lestee` | avancé | 10 | 6 | 0.68 | 1/8 |
+| `street_17_hybride_street_course` | intermédiaire | 12 | 3 | 0.90 | 4/6 |
 
 ### Qualité par critère
 
@@ -45,7 +45,7 @@ Violations de sécurité : **90** au total (Pas d'allègement avant l'échéance
 | `autres_03_powerlifter_competition` | 0.71 | 0.83 | 0.41 | 1.00 | 1.00 | — | 0.33 | 1.00 | 1.00 |
 | `autres_04_force_generale_46_ans` | 0.93 | 1.00 | — | 0.95 | 1.00 | — | — | 1.00 | 1.00 |
 | `autres_05_course_10_km_debutante` | — | 1.00 | 0.00 | — | — | — | 0.67 | — | 1.00 |
-| `autres_06_semi_marathon_intermediaire` | 0.00 | 1.00 | 0.00 | 0.50 | 1.00 | — | 0.33 | 1.00 | 1.00 |
+| `autres_06_semi_marathon_intermediaire` | 0.00 | 1.00 | 0.00 | 0.50 | 0.86 | — | 0.33 | 1.00 | 1.00 |
 | `autres_07_mobilite_sante_senior` | — | — | — | — | — | — | — | 1.00 | 1.00 |
 | `autres_08_crossfit_intermediaire` | 0.86 | 1.00 | — | 0.77 | 1.00 | — | — | 1.00 | 1.00 |
 | `autres_09_perte_de_poids_debutante` | 0.57 | — | — | 0.60 | 1.00 | — | — | 1.00 | 1.00 |
@@ -60,7 +60,7 @@ Violations de sécurité : **90** au total (Pas d'allègement avant l'échéance
 | `street_08_avance_sets_reps_competition` | 0.64 | 0.83 | 0.26 | 0.72 | 1.00 | — | 0.33 | 1.00 | 1.00 |
 | `street_09_elite_streetlifting` | 0.86 | 0.88 | 0.76 | 0.93 | 1.00 | 1.00 | 1.00 | 1.00 | 1.00 |
 | `street_10_elite_figures` | 0.50 | 1.00 | — | 0.57 | 1.00 | — | — | 1.00 | 1.00 |
-| `street_11_master_51_ans` | 0.57 | 1.00 | — | 0.63 | 1.00 | — | — | 1.00 | 1.00 |
+| `street_11_master_51_ans` | 0.57 | 1.00 | — | 0.63 | 0.98 | — | — | 1.00 | 1.00 |
 | `street_12_antecedent_coude` | 0.57 | 1.00 | — | 0.81 | 1.00 | — | — | 1.00 | 1.00 |
 | `street_13_peu_de_temps` | 0.57 | 1.00 | — | 0.50 | 1.00 | — | — | 1.00 | 1.00 |
 | `street_14_parc_sans_lest` | 0.64 | 1.00 | — | 0.50 | 1.00 | — | — | 1.00 | 1.00 |
@@ -70,35 +70,35 @@ Violations de sécurité : **90** au total (Pas d'allègement avant l'échéance
 
 ## 2. Trajectoires simulées
 
-| Profil | Séances faites | Échecs non voulus | Écart au RIR visé (cibles atteignables) | Cibles atteignables | Plus forte hausse (principal) | Gain réel (%/sem) | Performance à l'échéance | Violations (programme évolué) |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| `autres_01_debutant_musculation` | 36/36 | 0.002 | 1.772 | 0.914 | 0.333 | 0.649 | — | 2 |
-| `autres_02_hypertrophie_intermediaire` | 60/60 | 0.003 | 2.481 | 0.933 | 0.063 | 0.096 | — | 11 |
-| `autres_03_powerlifter_competition` | 40/40 | 0.0 | 1.201 | 0.995 | 0.027 | 0.037 | 0.972 | 4 |
-| `autres_04_force_generale_46_ans` | 48/48 | 0.004 | 1.458 | 1.0 | 0.03 | 0.148 | — | 3 |
-| `autres_05_course_10_km_debutante` | 34/36 | 0.0 | 0.0 | 0.0 | 0.0 | — | — | 4 |
-| `autres_06_semi_marathon_intermediaire` | 46/48 | 0.0 | 2.452 | 0.735 | 0.0 | 0.284 | — | 1 |
-| `autres_07_mobilite_sante_senior` | 46/48 | 0.0 | 3.585 | 0.903 | 0.0 | 0.739 | — | 0 |
-| `autres_08_crossfit_intermediaire` | 79/80 | 0.0 | 1.656 | 0.824 | 0.125 | 0.167 | — | 6 |
-| `autres_09_perte_de_poids_debutante` | 36/36 | 0.005 | 2.255 | 0.828 | 0.143 | 0.823 | — | 0 |
-| `autres_10_contraintes_multiples` | 36/36 | 0.0 | 2.888 | 0.978 | 0.0 | 0.774 | — | 0 |
-| `street_01_debutant_complet` | 36/36 | 0.0 | 2.12 | 0.686 | 0.0 | 1.298 | — | 4 |
-| `street_02_debutant_surpoids` | 36/36 | 0.027 | 2.799 | 0.692 | 0.0 | 1.073 | — | 5 |
-| `street_03_debutante` | 36/36 | 0.0 | 2.216 | 0.559 | 0.0 | 1.418 | — | 3 |
-| `street_04_reprise_longue_pause` | 48/48 | 0.002 | 2.247 | 0.79 | 0.0 | 0.38 | — | 6 |
-| `street_05_inter_calisthenie_front_lever` | 63/64 | 0.0 | 2.035 | 0.762 | 0.0 | 0.266 | — | 8 |
-| `street_06_inter_sets_reps` | 48/48 | 0.002 | 2.223 | 0.83 | 0.0 | 0.366 | — | 4 |
-| `street_07_avance_streetlifting_competition` | 60/60 | 0.004 | 1.503 | 0.935 | 0.047 | 0.031 | 0.94 | 6 |
-| `street_08_avance_sets_reps_competition` | 40/40 | 0.0 | 1.983 | 0.773 | 0.014 | 0.048 | 0.856 | 6 |
-| `street_09_elite_streetlifting` | 60/60 | 0.0 | 1.51 | 0.79 | 0.06 | 0.017 | 0.937 | 7 |
-| `street_10_elite_figures` | 91/96 | 0.0 | 1.443 | 0.62 | 0.023 | 0.028 | — | 20 |
-| `street_11_master_51_ans` | 48/48 | 0.0 | 1.759 | 0.747 | 0.016 | 0.235 | — | 3 |
-| `street_12_antecedent_coude` | 48/48 | 0.002 | 1.537 | 0.912 | 0.044 | 0.089 | — | 8 |
-| `street_13_peu_de_temps` | 34/36 | 0.0 | 2.245 | 0.836 | 0.0 | 0.448 | — | 0 |
-| `street_14_parc_sans_lest` | 46/48 | 0.0 | 2.252 | 0.754 | 0.0 | 0.416 | — | 4 |
-| `street_15_travail_physique_sommeil_court` | 36/36 | 0.0 | 2.121 | 0.92 | 0.0 | 0.421 | — | 1 |
-| `street_16_specialisation_traction_lestee` | 40/40 | 0.0 | 1.623 | 0.97 | 0.042 | 0.031 | 1.0 | 5 |
-| `street_17_hybride_street_course` | 58/60 | 0.003 | 2.052 | 0.914 | 0.0 | 0.416 | — | 2 |
+| Profil | Séances faites | Échecs non voulus | Écart au RIR visé (cibles atteignables) | Cibles atteignables | Plus forte hausse (principal) | Gain réel (%/sem) | Performance à l'échéance | Déblocages non respectés | Repères non tenus | Violations (programme évolué) |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| `autres_01_debutant_musculation` | 36/36 | 0.002 | 1.772 | 0.914 | 0.333 | 0.649 | — | 0 | ecart_rir | 2 |
+| `autres_02_hypertrophie_intermediaire` | 60/60 | 0.003 | 2.481 | 0.933 | 0.063 | 0.096 | — | 0 | ecart_rir | 13 |
+| `autres_03_powerlifter_competition` | 40/40 | 0.0 | 1.201 | 0.995 | 0.027 | 0.037 | 0.972 | 0 | ecart_rir, performance_echeance | 4 |
+| `autres_04_force_generale_46_ans` | 48/48 | 0.004 | 1.458 | 1.0 | 0.03 | 0.148 | — | 0 | ecart_rir | 12 |
+| `autres_05_course_10_km_debutante` | 34/36 | 0.0 | 0.0 | 0.0 | 0.0 | — | — | 0 | aucun | 4 |
+| `autres_06_semi_marathon_intermediaire` | 46/48 | 0.0 | 2.452 | 0.735 | 0.0 | 0.284 | — | 0 | ecart_rir | 1 |
+| `autres_07_mobilite_sante_senior` | 46/48 | 0.0 | 3.585 | 0.903 | 0.0 | 0.739 | — | 0 | ecart_rir | 0 |
+| `autres_08_crossfit_intermediaire` | 79/80 | 0.0 | 1.656 | 0.824 | 0.125 | 0.167 | — | 0 | ecart_rir | 12 |
+| `autres_09_perte_de_poids_debutante` | 36/36 | 0.005 | 2.255 | 0.828 | 0.143 | 0.823 | — | 0 | ecart_rir | 0 |
+| `autres_10_contraintes_multiples` | 36/36 | 0.0 | 2.888 | 0.978 | 0.0 | 0.774 | — | 0 | ecart_rir | 0 |
+| `street_01_debutant_complet` | 36/36 | 0.0 | 2.12 | 0.686 | 0.0 | 1.298 | — | 0 | ecart_rir | 6 |
+| `street_02_debutant_surpoids` | 36/36 | 0.027 | 2.799 | 0.692 | 0.0 | 1.073 | — | 0 | ecart_rir | 10 |
+| `street_03_debutante` | 36/36 | 0.0 | 2.216 | 0.559 | 0.0 | 1.418 | — | 0 | ecart_rir | 5 |
+| `street_04_reprise_longue_pause` | 48/48 | 0.002 | 2.247 | 0.79 | 0.0 | 0.38 | — | 0 | ecart_rir | 9 |
+| `street_05_inter_calisthenie_front_lever` | 63/64 | 0.0 | 2.035 | 0.762 | 0.0 | 0.266 | — | 0 | ecart_rir | 9 |
+| `street_06_inter_sets_reps` | 48/48 | 0.002 | 2.223 | 0.83 | 0.0 | 0.366 | — | 0 | ecart_rir | 4 |
+| `street_07_avance_streetlifting_competition` | 60/60 | 0.004 | 1.503 | 0.935 | 0.047 | 0.031 | 0.94 | 0 | ecart_rir, performance_echeance | 6 |
+| `street_08_avance_sets_reps_competition` | 40/40 | 0.0 | 1.983 | 0.773 | 0.014 | 0.048 | 0.856 | 0 | ecart_rir, performance_echeance | 7 |
+| `street_09_elite_streetlifting` | 60/60 | 0.0 | 1.51 | 0.79 | 0.06 | 0.017 | 0.937 | 0 | ecart_rir, performance_echeance | 7 |
+| `street_10_elite_figures` | 91/96 | 0.0 | 1.443 | 0.62 | 0.023 | 0.028 | — | 0 | ecart_rir | 23 |
+| `street_11_master_51_ans` | 48/48 | 0.0 | 1.759 | 0.747 | 0.016 | 0.235 | — | 0 | ecart_rir | 5 |
+| `street_12_antecedent_coude` | 48/48 | 0.002 | 1.537 | 0.912 | 0.044 | 0.089 | — | 0 | ecart_rir | 9 |
+| `street_13_peu_de_temps` | 34/36 | 0.0 | 2.245 | 0.836 | 0.0 | 0.448 | — | 0 | ecart_rir | 1 |
+| `street_14_parc_sans_lest` | 46/48 | 0.0 | 2.252 | 0.754 | 0.0 | 0.416 | — | 0 | ecart_rir | 6 |
+| `street_15_travail_physique_sommeil_court` | 36/36 | 0.0 | 2.121 | 0.92 | 0.0 | 0.421 | — | 0 | ecart_rir | 3 |
+| `street_16_specialisation_traction_lestee` | 40/40 | 0.0 | 1.623 | 0.97 | 0.042 | 0.031 | 1.0 | 0 | ecart_rir | 6 |
+| `street_17_hybride_street_course` | 58/60 | 0.003 | 2.052 | 0.914 | 0.0 | 0.416 | — | 0 | ecart_rir | 3 |
 
 ## 3. Détail par profil
 
@@ -134,7 +134,9 @@ Programme tel qu'il a évolué sous le moteur d'évolution : 2 violation(s) de s
 
 Non transmis au moteur par le profil actuel : valeur exacte des records (le profil v2 lit une fourchette : la valeur est donnée comme bas et haut) ; ancienneté d'entraînement en mois ; points faibles.
 
-Sécurité : 1 violation(s).
+Sécurité : 3 violation(s).
+- **Hausse de charge trop rapide** — Back squat barre haute : charge totale +5.3 % en une semaine (seuil 5.0 %).
+- **Hausse de charge trop rapide** — Back squat barre haute : charge totale +5.3 % en une semaine (seuil 5.0 %).
 - **Volume hebdomadaire au-dessus du plafond du niveau** — fessiers : 7 semaine(s) au-dessus du plafond du niveau intermédiaire (20 séries dures), jusqu'à 21.5.
 
 Qualité :
@@ -155,7 +157,7 @@ Attentes de coach (5/5) :
 - tenue — Pas plus de 7 semaines de charge sans allègement (mesuré : 3 semaines de charge de suite au plus)
 - tenue — Isolation des épaules au moins deux fois par semaine (mesuré : 3.0 séance(s) par semaine en montée)
 
-Programme tel qu'il a évolué sous le moteur d'évolution : 11 violation(s) de sécurité (Hausse de charge trop rapide : 9 ; Volume hebdomadaire au-dessus du plafond du niveau : 2).
+Programme tel qu'il a évolué sous le moteur d'évolution : 13 violation(s) de sécurité (Hausse de charge trop rapide : 10 ; Volume hebdomadaire au-dessus du plafond du niveau : 2 ; Hausse de volume trop rapide : 1).
 
 ### `autres_03_powerlifter_competition` — Powerlifter, compétition dans 10 semaines
 
@@ -165,7 +167,7 @@ Sécurité : 4 violation(s).
 - **Volume hebdomadaire au-dessus du plafond du niveau** — triceps : 3 semaine(s) au-dessus du plafond du niveau avancé (25 séries dures), jusqu'à 26.0.
 - **Volume hebdomadaire au-dessus du plafond du niveau** — fessiers : 9 semaine(s) au-dessus du plafond du niveau avancé (25 séries dures), jusqu'à 33.0.
 - **Volume hebdomadaire au-dessus du plafond du niveau** — quadriceps : 7 semaine(s) au-dessus du plafond du niveau avancé (25 séries dures), jusqu'à 30.5.
-- **Pas d'allègement avant l'échéance** — Semaine de l'échéance : volume 0 % sous le pic des six semaines précédentes (au moins 30 % attendus).
+- **Pas d'allègement avant l'échéance** — Semaine de l'échéance : volume 0 % sous le pic des six semaines précédentes (au moins 40 % attendus).
 
 Qualité :
 - Volume par muscle dans la bande du référentiel : 0.71 — 10 groupes majeurs sur 14 entre 10 et 25 séries dures par semaine (semaines de montée) ; sous le plancher : mollets ; au-dessus du plafond : triceps, fessiers, quadriceps.
@@ -193,7 +195,10 @@ Programme tel qu'il a évolué sous le moteur d'évolution : 4 violation(s) de s
 
 Non transmis au moteur par le profil actuel : valeur exacte des records (le profil v2 lit une fourchette : la valeur est donnée comme bas et haut) ; antécédents de blessure sans gêne actuelle ; description de la blessure ; ancienneté d'entraînement en mois ; sommeil habituel ; stress de vie.
 
-Sécurité : aucune violation.
+Sécurité : 3 violation(s).
+- **Hausse de charge trop rapide** — Développé couché barre : charge totale +5.3 % en une semaine (seuil 5.0 %).
+- **Hausse de charge trop rapide** — Développé couché barre : charge totale +5.3 % en une semaine (seuil 5.0 %).
+- **Hausse de charge trop rapide** — Développé couché barre : charge totale +5.3 % en une semaine (seuil 5.0 %).
 
 Qualité :
 - Volume par muscle dans la bande du référentiel : 0.93 — 13 groupes majeurs sur 14 entre 8 et 20 séries dures par semaine (semaines de montée) ; sous le plancher : mollets.
@@ -213,7 +218,7 @@ Attentes de coach (5/5) :
 - tenue — Jamais moins d'une répétition en réserve (mesuré : RIR le plus bas des 16 premières semaines : 2.0)
 - tenue — Au moins 20 minutes de mobilité par semaine (mesuré : 34 min par semaine en montée)
 
-Programme tel qu'il a évolué sous le moteur d'évolution : 3 violation(s) de sécurité (Hausse de charge trop rapide : 2 ; Volume hebdomadaire au-dessus du plafond du niveau : 1).
+Programme tel qu'il a évolué sous le moteur d'évolution : 12 violation(s) de sécurité (Hausse de charge trop rapide : 11 ; Volume hebdomadaire au-dessus du plafond du niveau : 1).
 
 ### `autres_05_course_10_km_debutante` — Course : premier 10 km
 
@@ -223,7 +228,7 @@ Sécurité : 4 violation(s).
 - **Séance plus longue que le temps donné** — Semaine 4, jour 1 : 80 min estimées pour 45 min disponibles.
 - **Séance plus longue que le temps donné** — Semaine 8, jour 1 : 80 min estimées pour 45 min disponibles.
 - **Séance plus longue que le temps donné** — Semaine 12, jour 1 : 80 min estimées pour 45 min disponibles.
-- **Pas d'allègement avant l'échéance** — Semaine de l'échéance : volume 0 % sous le pic des six semaines précédentes (au moins 20 % attendus).
+- **Pas d'allègement avant l'échéance** — Semaine de l'échéance : volume 0 % sous le pic des six semaines précédentes (au moins 30 % attendus).
 
 Qualité :
 - Volume par muscle dans la bande du référentiel : sans objet — Sans objet : programme sans renforcement dominant.
@@ -250,14 +255,14 @@ Programme tel qu'il a évolué sous le moteur d'évolution : 4 violation(s) de s
 Non transmis au moteur par le profil actuel : valeur exacte des records (le profil v2 lit une fourchette : la valeur est donnée comme bas et haut) ; nature de l'échéance (compétition ou test), priorité et format de l'épreuve : seul un objectif daté par mouvement est transmis ; ancienneté d'entraînement en mois.
 
 Sécurité : 1 violation(s).
-- **Pas d'allègement avant l'échéance** — Semaine de l'échéance : volume -6 % sous le pic des six semaines précédentes (au moins 20 % attendus).
+- **Pas d'allègement avant l'échéance** — Semaine de l'échéance : volume -6 % sous le pic des six semaines précédentes (au moins 30 % attendus).
 
 Qualité :
 - Volume par muscle dans la bande du référentiel : 0.00 — 0 groupes majeurs sur 14 entre 8 et 20 séries dures par semaine (semaines de montée) ; sous le plancher : pectoraux, deltoïde antérieur, deltoïde moyen, deltoïde postérieur, grand dorsal, haut du dos, biceps, triceps, abdominaux, lombaires, fessiers, quadriceps, ischio-jambiers, mollets.
 - Fréquence des mouvements prioritaires : 1.00 — Séances par semaine où chaque mouvement prioritaire (ou un palier de sa chaîne) est travaillé ; attendu : au moins 2.
 - Spécificité à l'approche de l'échéance : 0.00 — Part des séries dures sur les mouvements de l'échéance : 0 % avant les quatre dernières semaines, 0 % pendant.
 - Progression planifiée : 0.50 — Sur 1 mouvements principaux, secondaires ou figures du premier bloc — en charge, en répétitions ou en durée entre la première et la dernière semaine de montée : 0 ; seulement en séries ou en effort : 1.
-- Équilibre poussée / tirage : 1.00 — Séries dures de tirage / de poussée sur les semaines de montée : 12 / 14 (rapport 0.86).
+- Équilibre poussée / tirage : 0.86 — Séries dures de tirage / de poussée sur les semaines de montée : 12 / 14 (rapport 0.86).
 - Couverture des points faibles : sans objet — Sans objet : aucun point faible déclaré.
 - Affûtage aligné sur la date de l'échéance : 0.33 — Semaine de l'échéance (semaine 12) : nature montée, volume -6 % sous le pic des six semaines précédentes ; épreuve la plus proche : semaine 10.
 - Variété utile : 1.00 — 8 exercices de renforcement distincts en première semaine pour 8 emplacements ; 0 doublons de chaîne dans une même séance ; 14 exercices distincts sur tout le programme.
@@ -302,11 +307,14 @@ Programme tel qu'il a évolué sous le moteur d'évolution : 0 violation(s) de s
 
 Non transmis au moteur par le profil actuel : valeur exacte des records (le profil v2 lit une fourchette : la valeur est donnée comme bas et haut) ; ancienneté d'entraînement en mois.
 
-Sécurité : 4 violation(s).
+Sécurité : 7 violation(s).
 - **Volume hebdomadaire au-dessus du plafond du niveau** — grand dorsal : 3 semaine(s) au-dessus du plafond du niveau intermédiaire (20 séries dures), jusqu'à 21.0.
 - **Volume hebdomadaire au-dessus du plafond du niveau** — triceps : 9 semaine(s) au-dessus du plafond du niveau intermédiaire (20 séries dures), jusqu'à 21.0.
+- **Hausse de volume trop rapide** — lombaires : 16.0 séries dures en semaine 12, pour 15.6 admises au vu des trois semaines précédentes.
 - **Volume hebdomadaire au-dessus du plafond du niveau** — fessiers : 6 semaine(s) au-dessus du plafond du niveau intermédiaire (20 séries dures), jusqu'à 21.0.
+- **Hausse de volume trop rapide** — quadriceps : 19.5 séries dures en semaine 7, pour 19.2 admises au vu des trois semaines précédentes.
 - **Volume hebdomadaire au-dessus du plafond du niveau** — quadriceps : 3 semaine(s) au-dessus du plafond du niveau intermédiaire (20 séries dures), jusqu'à 20.5.
+- **Hausse de volume trop rapide** — mollets : 9.0 séries dures en semaine 7, pour 8.5 admises au vu des trois semaines précédentes.
 
 Qualité :
 - Volume par muscle dans la bande du référentiel : 0.86 — 12 groupes majeurs sur 14 entre 8 et 20 séries dures par semaine (semaines de montée) ; au-dessus du plafond : triceps, fessiers.
@@ -326,7 +334,7 @@ Attentes de coach (5/5) :
 - tenue — Pas plus de 7 semaines de charge sans allègement (mesuré : 3 semaines de charge de suite au plus)
 - tenue — Travail vers le muscle-up au moins deux fois par semaine (mesuré : 2.0 séance(s) par semaine en montée)
 
-Programme tel qu'il a évolué sous le moteur d'évolution : 6 violation(s) de sécurité (Hausse de charge trop rapide : 2 ; Volume hebdomadaire au-dessus du plafond du niveau : 4).
+Programme tel qu'il a évolué sous le moteur d'évolution : 12 violation(s) de sécurité (Hausse de charge trop rapide : 5 ; Volume hebdomadaire au-dessus du plafond du niveau : 4 ; Hausse de volume trop rapide : 3).
 
 ### `autres_09_perte_de_poids_debutante` — Perte de poids, débutante
 
@@ -410,7 +418,7 @@ Attentes de coach (5/7) :
 - tenue — Séances de 50 minutes au plus (mesuré : séance la plus longue : 32 min estimées)
 - tenue — Aucun exercice de niveau avancé ou élite (mesuré : aucun au-dessus)
 
-Programme tel qu'il a évolué sous le moteur d'évolution : 4 violation(s) de sécurité (Volume hebdomadaire au-dessus du plafond du niveau : 3 ; Hausse de volume trop rapide : 1).
+Programme tel qu'il a évolué sous le moteur d'évolution : 6 violation(s) de sécurité (Hausse de volume trop rapide : 3 ; Volume hebdomadaire au-dessus du plafond du niveau : 3).
 
 ### `street_02_debutant_surpoids` — Débutant sédentaire en surpoids
 
@@ -438,7 +446,7 @@ Attentes de coach (6/6) :
 - tenue — Séances de 45 minutes au plus (mesuré : séance la plus longue : 30 min estimées)
 - tenue — Pectoraux : pas plus de 10 séries dures par semaine (mesuré : 6.0 séries dures par semaine en montée)
 
-Programme tel qu'il a évolué sous le moteur d'évolution : 5 violation(s) de sécurité (Volume hebdomadaire au-dessus du plafond du niveau : 5).
+Programme tel qu'il a évolué sous le moteur d'évolution : 10 violation(s) de sécurité (Hausse de volume trop rapide : 5 ; Volume hebdomadaire au-dessus du plafond du niveau : 5).
 
 ### `street_03_debutante` — Débutante, objectif première traction
 
@@ -467,16 +475,18 @@ Attentes de coach (3/5) :
 - **non tenue** — Jambes au moins deux fois par semaine (mesuré : 1.0 séance(s) par semaine en montée)
 - tenue — Aucun exercice de niveau avancé ou élite (mesuré : aucun au-dessus)
 
-Programme tel qu'il a évolué sous le moteur d'évolution : 3 violation(s) de sécurité (Volume hebdomadaire au-dessus du plafond du niveau : 3).
+Programme tel qu'il a évolué sous le moteur d'évolution : 5 violation(s) de sécurité (Volume hebdomadaire au-dessus du plafond du niveau : 3 ; Hausse de volume trop rapide : 2).
 
 ### `street_04_reprise_longue_pause` — Reprise après neuf mois d'arrêt
 
 Non transmis au moteur par le profil actuel : ancienneté des tests ; valeur exacte des records (le profil v2 lit une fourchette : la valeur est donnée comme bas et haut) ; ancienneté d'entraînement en mois ; durée de la coupure avant le programme.
 
-Sécurité : 3 violation(s).
+Sécurité : 5 violation(s).
+- **Hausse de volume trop rapide** — grand dorsal : 28.5 séries dures en semaine 12, pour 28.2 admises au vu des trois semaines précédentes.
 - **Volume hebdomadaire au-dessus du plafond du niveau** — grand dorsal : 8 semaine(s) au-dessus du plafond du niveau intermédiaire (20 séries dures), jusqu'à 28.5.
 - **Volume hebdomadaire au-dessus du plafond du niveau** — haut du dos : 7 semaine(s) au-dessus du plafond du niveau intermédiaire (20 séries dures), jusqu'à 23.5.
 - **Volume hebdomadaire au-dessus du plafond du niveau** — triceps : 7 semaine(s) au-dessus du plafond du niveau intermédiaire (20 séries dures), jusqu'à 25.0.
+- **Hausse de volume trop rapide** — quadriceps : 19.0 séries dures en semaine 12, pour 18.6 admises au vu des trois semaines précédentes.
 
 Qualité :
 - Volume par muscle dans la bande du référentiel : 0.64 — 9 groupes majeurs sur 14 entre 8 et 20 séries dures par semaine (semaines de montée) ; sous le plancher : lombaires, mollets ; au-dessus du plafond : grand dorsal, haut du dos, triceps.
@@ -495,7 +505,7 @@ Attentes de coach (3/4) :
 - tenue — Pas de négatives ni d'excentriques accentués (mesuré : aucun)
 - tenue — Tractions (ou un palier) au moins deux fois par semaine (mesuré : 2.0 séance(s) par semaine en montée)
 
-Programme tel qu'il a évolué sous le moteur d'évolution : 6 violation(s) de sécurité (Hausse de volume trop rapide : 1 ; Volume hebdomadaire au-dessus du plafond du niveau : 3 ; Montée trop rapide de la charge bras tendus : 2).
+Programme tel qu'il a évolué sous le moteur d'évolution : 9 violation(s) de sécurité (Hausse de volume trop rapide : 4 ; Volume hebdomadaire au-dessus du plafond du niveau : 3 ; Montée trop rapide de la charge bras tendus : 2).
 
 ### `street_05_inter_calisthenie_front_lever` — Intermédiaire calisthénie, premiers muscle-ups, objectif front lever
 
@@ -528,7 +538,7 @@ Attentes de coach (4/6) :
 - **non tenue** — Tirage dynamique (vertical ou horizontal) au moins trois fois par semaine (mesuré : 2.0 séance(s) par semaine en montée)
 - tenue — Jambes au moins une fois par semaine (mesuré : 2.0 séance(s) par semaine en montée)
 
-Programme tel qu'il a évolué sous le moteur d'évolution : 8 violation(s) de sécurité (Volume hebdomadaire au-dessus du plafond du niveau : 8).
+Programme tel qu'il a évolué sous le moteur d'évolution : 9 violation(s) de sécurité (Volume hebdomadaire au-dessus du plafond du niveau : 8 ; Hausse de volume trop rapide : 1).
 
 ### `street_06_inter_sets_reps` — Intermédiaire sets & reps
 
@@ -597,12 +607,14 @@ Programme tel qu'il a évolué sous le moteur d'évolution : 6 violation(s) de s
 
 Non transmis au moteur par le profil actuel : valeur exacte des records (le profil v2 lit une fourchette : la valeur est donnée comme bas et haut) ; nature de l'échéance (compétition ou test), priorité et format de l'épreuve : seul un objectif daté par mouvement est transmis ; ancienneté d'entraînement en mois.
 
-Sécurité : 5 violation(s).
+Sécurité : 7 violation(s).
 - **Volume hebdomadaire au-dessus du plafond du niveau** — pectoraux : 5 semaine(s) au-dessus du plafond du niveau avancé (25 séries dures), jusqu'à 29.5.
+- **Hausse de volume trop rapide** — grand dorsal : 32.5 séries dures en semaine 8, pour 32.4 admises au vu des trois semaines précédentes.
 - **Volume hebdomadaire au-dessus du plafond du niveau** — grand dorsal : 6 semaine(s) au-dessus du plafond du niveau avancé (25 séries dures), jusqu'à 32.5.
 - **Volume hebdomadaire au-dessus du plafond du niveau** — triceps : 5 semaine(s) au-dessus du plafond du niveau avancé (25 séries dures), jusqu'à 29.0.
+- **Hausse de volume trop rapide** — fessiers : 29.5 séries dures en semaine 8, pour 28.8 admises au vu des trois semaines précédentes.
 - **Volume hebdomadaire au-dessus du plafond du niveau** — fessiers : 1 semaine(s) au-dessus du plafond du niveau avancé (25 séries dures), jusqu'à 29.5.
-- **Pas d'allègement avant l'échéance** — Semaine de l'échéance : volume 0 % sous le pic des six semaines précédentes (au moins 30 % attendus).
+- **Pas d'allègement avant l'échéance** — Semaine de l'échéance : volume 0 % sous le pic des six semaines précédentes (au moins 40 % attendus).
 
 Qualité :
 - Volume par muscle dans la bande du référentiel : 0.64 — 9 groupes majeurs sur 14 entre 10 et 25 séries dures par semaine (semaines de montée) ; sous le plancher : mollets ; au-dessus du plafond : pectoraux, grand dorsal, triceps, fessiers.
@@ -625,7 +637,7 @@ Attentes de coach (2/8) :
 - tenue — Une séance lestée lourde par semaine en traction (mesuré : 1.0 séance(s) par semaine en montée)
 - **non tenue** — Épreuve sur les mouvements visés la semaine de la compétition (mesuré : 0 épreuve(s) sur les mouvements visés la semaine de l'échéance (nature : montée))
 
-Programme tel qu'il a évolué sous le moteur d'évolution : 6 violation(s) de sécurité (Volume hebdomadaire au-dessus du plafond du niveau : 5 ; Pas d'allègement avant l'échéance : 1).
+Programme tel qu'il a évolué sous le moteur d'évolution : 7 violation(s) de sécurité (Volume hebdomadaire au-dessus du plafond du niveau : 5 ; Hausse de volume trop rapide : 1 ; Pas d'allègement avant l'échéance : 1).
 
 ### `street_09_elite_streetlifting` — Élite streetlifting, niveau national
 
@@ -670,12 +682,16 @@ Programme tel qu'il a évolué sous le moteur d'évolution : 7 violation(s) de s
 
 Non transmis au moteur par le profil actuel : valeur exacte des records (le profil v2 lit une fourchette : la valeur est donnée comme bas et haut) ; description de la blessure ; ancienneté d'entraînement en mois.
 
-Sécurité : 19 violation(s).
+Sécurité : 25 violation(s).
 - **Volume hebdomadaire au-dessus du plafond du niveau** — pectoraux : 14 semaine(s) au-dessus du plafond du niveau élite (30 séries dures), jusqu'à 42.0.
 - **Volume hebdomadaire au-dessus du plafond du niveau** — deltoïde antérieur : 14 semaine(s) au-dessus du plafond du niveau élite (30 séries dures), jusqu'à 43.5.
+- **Hausse de volume trop rapide** — deltoïde moyen : 17.0 séries dures en semaine 3, pour 16.8 admises au vu des trois semaines précédentes.
+- **Hausse de volume trop rapide** — deltoïde moyen : 17.0 séries dures en semaine 9, pour 16.8 admises au vu des trois semaines précédentes.
+- **Hausse de volume trop rapide** — deltoïde moyen : 17.0 séries dures en semaine 15, pour 16.8 admises au vu des trois semaines précédentes.
 - **Volume hebdomadaire au-dessus du plafond du niveau** — grand dorsal : 14 semaine(s) au-dessus du plafond du niveau élite (30 séries dures), jusqu'à 44.5.
 - **Volume hebdomadaire au-dessus du plafond du niveau** — haut du dos : 11 semaine(s) au-dessus du plafond du niveau élite (30 séries dures), jusqu'à 34.5.
 - **Volume hebdomadaire au-dessus du plafond du niveau** — triceps : 3 semaine(s) au-dessus du plafond du niveau élite (30 séries dures), jusqu'à 32.5.
+- **Hausse de volume trop rapide** — fessiers : 24.5 séries dures en semaine 8, pour 24.0 admises au vu des trois semaines précédentes.
 - **Volume hebdomadaire au-dessus du plafond du niveau** — 4 groupes au-dessus de 25 séries dures en semaine 1 (au plus 2 en élite).
 - **Volume hebdomadaire au-dessus du plafond du niveau** — 7 groupes au-dessus de 25 séries dures en semaine 2 (au plus 2 en élite).
 - **Volume hebdomadaire au-dessus du plafond du niveau** — 8 groupes au-dessus de 25 séries dures en semaine 3 (au plus 2 en élite).
@@ -690,6 +706,8 @@ Sécurité : 19 violation(s).
 - **Volume hebdomadaire au-dessus du plafond du niveau** — 6 groupes au-dessus de 25 séries dures en semaine 14 (au plus 2 en élite).
 - **Volume hebdomadaire au-dessus du plafond du niveau** — 7 groupes au-dessus de 25 séries dures en semaine 15 (au plus 2 en élite).
 - **Volume hebdomadaire au-dessus du plafond du niveau** — 7 groupes au-dessus de 25 séries dures en semaine 16 (au plus 2 en élite).
+- **Montée trop rapide de la charge bras tendus** — Tenues bras tendus (tirage, type front lever) : 96 s en semaine 9, pour 92 s admises au vu des trois semaines précédentes.
+- **Montée trop rapide de la charge bras tendus** — Tenues bras tendus (tirage, type front lever) : 96 s en semaine 15, pour 92 s admises au vu des trois semaines précédentes.
 
 Qualité :
 - Volume par muscle dans la bande du référentiel : 0.50 — 7 groupes majeurs sur 14 entre 12 et 30 séries dures par semaine (semaines de montée) ; sous le plancher : lombaires, ischio-jambiers, mollets ; au-dessus du plafond : pectoraux, deltoïde antérieur, grand dorsal, haut du dos.
@@ -711,23 +729,27 @@ Attentes de coach (6/7) :
 - tenue — Dynamique dans le schéma des figures au moins trois fois par semaine (mesuré : 3.0 séance(s) par semaine en montée)
 - tenue — Jambes en entretien au moins une fois par semaine (mesuré : 2.0 séance(s) par semaine en montée)
 
-Programme tel qu'il a évolué sous le moteur d'évolution : 20 violation(s) de sécurité (Hausse de charge trop rapide : 1 ; Volume hebdomadaire au-dessus du plafond du niveau : 19).
+Programme tel qu'il a évolué sous le moteur d'évolution : 23 violation(s) de sécurité (Hausse de charge trop rapide : 1 ; Volume hebdomadaire au-dessus du plafond du niveau : 19 ; Hausse de volume trop rapide : 2 ; Montée trop rapide de la charge bras tendus : 1).
 
 ### `street_11_master_51_ans` — Athlète de 51 ans, intermédiaire
 
 Non transmis au moteur par le profil actuel : valeur exacte des records (le profil v2 lit une fourchette : la valeur est donnée comme bas et haut) ; ancienneté d'entraînement en mois ; sommeil habituel ; stress de vie.
 
-Sécurité : 3 violation(s).
+Sécurité : 7 violation(s).
 - **Volume hebdomadaire au-dessus du plafond du niveau** — grand dorsal : 3 semaine(s) au-dessus du plafond du niveau intermédiaire (20 séries dures), jusqu'à 22.0.
 - **Volume hebdomadaire au-dessus du plafond du niveau** — haut du dos : 6 semaine(s) au-dessus du plafond du niveau intermédiaire (20 séries dures), jusqu'à 20.5.
+- **Hausse de volume trop rapide** — quadriceps : 13.5 séries dures en semaine 7, pour 13.2 admises au vu des trois semaines précédentes.
 - **Technique avancée sans ses prérequis** — Dips lesté partiel haut surchargé : technique réservée au niveau avancé et au-delà.
+- **Montée trop rapide de la charge bras tendus** — Tenues bras tendus (tirage, type front lever) : 60 s en semaine 3, pour 57 s admises au vu des trois semaines précédentes.
+- **Montée trop rapide de la charge bras tendus** — Tenues bras tendus (tirage, type front lever) : 60 s en semaine 8, pour 57 s admises au vu des trois semaines précédentes.
+- **Montée trop rapide de la charge bras tendus** — Tenues bras tendus (tirage, type front lever) : 60 s en semaine 13, pour 57 s admises au vu des trois semaines précédentes.
 
 Qualité :
 - Volume par muscle dans la bande du référentiel : 0.57 — 8 groupes majeurs sur 14 entre 8 et 20 séries dures par semaine (semaines de montée) ; sous le plancher : biceps, lombaires, ischio-jambiers, mollets ; au-dessus du plafond : grand dorsal, haut du dos.
 - Fréquence des mouvements prioritaires : 1.00 — Séances par semaine où chaque mouvement prioritaire (ou un palier de sa chaîne) est travaillé ; attendu : au moins 2.
 - Spécificité à l'approche de l'échéance : sans objet — Sans objet : pas d'échéance prioritaire à six semaines ou plus.
 - Progression planifiée : 0.63 — Sur 15 mouvements principaux, secondaires ou figures du premier bloc — en charge, en répétitions ou en durée entre la première et la dernière semaine de montée : 4 ; seulement en séries ou en effort : 11.
-- Équilibre poussée / tirage : 1.00 — Séries dures de tirage / de poussée sur les semaines de montée : 168 / 171 (rapport 0.98).
+- Équilibre poussée / tirage : 0.98 — Séries dures de tirage / de poussée sur les semaines de montée : 168 / 171 (rapport 0.98).
 - Couverture des points faibles : sans objet — Sans objet : aucun point faible déclaré.
 - Affûtage aligné sur la date de l'échéance : sans objet — Sans objet : pas d'échéance prioritaire dans le programme.
 - Variété utile : 1.00 — 17 exercices de renforcement distincts en première semaine pour 20 emplacements ; 0 doublons de chaîne dans une même séance ; 20 exercices distincts sur tout le programme.
@@ -740,7 +762,7 @@ Attentes de coach (4/5) :
 - tenue — Jambes au moins deux fois par semaine (mesuré : 2.0 séance(s) par semaine en montée)
 - **non tenue** — Grand dorsal : pas plus de 18 séries dures par semaine (mesuré : 20.3 séries dures par semaine en montée)
 
-Programme tel qu'il a évolué sous le moteur d'évolution : 3 violation(s) de sécurité (Volume hebdomadaire au-dessus du plafond du niveau : 2 ; Technique avancée sans ses prérequis : 1).
+Programme tel qu'il a évolué sous le moteur d'évolution : 5 violation(s) de sécurité (Volume hebdomadaire au-dessus du plafond du niveau : 2 ; Hausse de volume trop rapide : 1 ; Technique avancée sans ses prérequis : 1 ; Montée trop rapide de la charge bras tendus : 1).
 
 ### `street_12_antecedent_coude` — Antécédent de tendinopathie du coude
 
@@ -774,7 +796,7 @@ Attentes de coach (2/6) :
 - **non tenue** — Tirage horizontal au moins deux fois par semaine (mesuré : 1.0 séance(s) par semaine en montée)
 - **non tenue** — Jamais moins de 2 répétitions en réserve sur les 12 semaines (mesuré : RIR le plus bas des 12 premières semaines : 1.5)
 
-Programme tel qu'il a évolué sous le moteur d'évolution : 8 violation(s) de sécurité (Volume hebdomadaire au-dessus du plafond du niveau : 6 ; Technique avancée sans ses prérequis : 2).
+Programme tel qu'il a évolué sous le moteur d'évolution : 9 violation(s) de sécurité (Volume hebdomadaire au-dessus du plafond du niveau : 6 ; Hausse de volume trop rapide : 1 ; Technique avancée sans ses prérequis : 2).
 
 ### `street_13_peu_de_temps` — Peu de temps : trois séances de 45 minutes
 
@@ -801,18 +823,21 @@ Attentes de coach (5/6) :
 - tenue — Pectoraux : au moins 4 séries dures par semaine (mesuré : 16.5 séries dures par semaine en montée)
 - **non tenue** — Supersets pour gagner du temps (mesuré : aucun de ces formats)
 
-Programme tel qu'il a évolué sous le moteur d'évolution : 0 violation(s) de sécurité.
+Programme tel qu'il a évolué sous le moteur d'évolution : 1 violation(s) de sécurité (Montée trop rapide de la charge bras tendus : 1).
 
 ### `street_14_parc_sans_lest` — Parc seulement, sans lest ni élastique
 
 Non transmis au moteur par le profil actuel : valeur exacte des records (le profil v2 lit une fourchette : la valeur est donnée comme bas et haut) ; ancienneté d'entraînement en mois.
 
-Sécurité : 5 violation(s).
+Sécurité : 8 violation(s).
 - **Volume hebdomadaire au-dessus du plafond du niveau** — deltoïde antérieur : 6 semaine(s) au-dessus du plafond du niveau intermédiaire (20 séries dures), jusqu'à 22.0.
 - **Volume hebdomadaire au-dessus du plafond du niveau** — grand dorsal : 7 semaine(s) au-dessus du plafond du niveau intermédiaire (20 séries dures), jusqu'à 26.0.
 - **Volume hebdomadaire au-dessus du plafond du niveau** — haut du dos : 6 semaine(s) au-dessus du plafond du niveau intermédiaire (20 séries dures), jusqu'à 21.5.
 - **Volume hebdomadaire au-dessus du plafond du niveau** — triceps : 7 semaine(s) au-dessus du plafond du niveau intermédiaire (20 séries dures), jusqu'à 24.5.
+- **Hausse de volume trop rapide** — lombaires : 16.0 séries dures en semaine 7, pour 15.0 admises au vu des trois semaines précédentes.
+- **Hausse de volume trop rapide** — fessiers : 20.0 séries dures en semaine 7, pour 18.0 admises au vu des trois semaines précédentes.
 - **Volume hebdomadaire au-dessus du plafond du niveau** — fessiers : 1 semaine(s) au-dessus du plafond du niveau intermédiaire (20 séries dures), jusqu'à 21.0.
+- **Hausse de volume trop rapide** — quadriceps : 17.5 séries dures en semaine 12, pour 16.8 admises au vu des trois semaines précédentes.
 
 Qualité :
 - Volume par muscle dans la bande du référentiel : 0.64 — 9 groupes majeurs sur 14 entre 8 et 20 séries dures par semaine (semaines de montée) ; sous le plancher : mollets ; au-dessus du plafond : deltoïde antérieur, grand dorsal, haut du dos, triceps.
@@ -832,7 +857,7 @@ Attentes de coach (3/5) :
 - tenue — Pas plus de 6 semaines de charge sans allègement (mesuré : 3 semaines de charge de suite au plus)
 - **non tenue** — Une variante dure de traction (archer, typewriter, poitrine à la barre) au moins une fois par semaine (mesuré : 0.0 séance(s) par semaine en montée)
 
-Programme tel qu'il a évolué sous le moteur d'évolution : 4 violation(s) de sécurité (Volume hebdomadaire au-dessus du plafond du niveau : 4).
+Programme tel qu'il a évolué sous le moteur d'évolution : 6 violation(s) de sécurité (Volume hebdomadaire au-dessus du plafond du niveau : 4 ; Hausse de volume trop rapide : 2).
 
 ### `street_15_travail_physique_sommeil_court` — Travail physique et sommeil court
 
@@ -860,18 +885,19 @@ Attentes de coach (4/6) :
 - tenue — Séances de 62 minutes au plus (mesuré : séance la plus longue : 42 min estimées)
 - tenue — Grand dorsal : au moins 6 séries dures par semaine (mesuré : 20.1 séries dures par semaine en montée)
 
-Programme tel qu'il a évolué sous le moteur d'évolution : 1 violation(s) de sécurité (Volume hebdomadaire au-dessus du plafond du niveau : 1).
+Programme tel qu'il a évolué sous le moteur d'évolution : 3 violation(s) de sécurité (Hausse de volume trop rapide : 2 ; Volume hebdomadaire au-dessus du plafond du niveau : 1).
 
 ### `street_16_specialisation_traction_lestee` — Spécialisation : priorité à la traction lestée
 
 Non transmis au moteur par le profil actuel : ancienneté des tests ; valeur exacte des records (le profil v2 lit une fourchette : la valeur est donnée comme bas et haut) ; nature de l'échéance (compétition ou test), priorité et format de l'épreuve : seul un objectif daté par mouvement est transmis ; ancienneté d'entraînement en mois ; mouvements prioritaires et mouvements à entretenir.
 
-Sécurité : 5 violation(s).
+Sécurité : 6 violation(s).
 - **Volume hebdomadaire au-dessus du plafond du niveau** — pectoraux : 9 semaine(s) au-dessus du plafond du niveau avancé (25 séries dures), jusqu'à 35.0.
 - **Volume hebdomadaire au-dessus du plafond du niveau** — deltoïde antérieur : 9 semaine(s) au-dessus du plafond du niveau avancé (25 séries dures), jusqu'à 34.0.
 - **Volume hebdomadaire au-dessus du plafond du niveau** — grand dorsal : 7 semaine(s) au-dessus du plafond du niveau avancé (25 séries dures), jusqu'à 28.5.
 - **Volume hebdomadaire au-dessus du plafond du niveau** — triceps : 5 semaine(s) au-dessus du plafond du niveau avancé (25 séries dures), jusqu'à 28.5.
-- **Pas d'allègement avant l'échéance** — Semaine de l'échéance : volume 0 % sous le pic des six semaines précédentes (au moins 30 % attendus).
+- **Montée trop rapide de la charge bras tendus** — Tenues bras tendus (poussée, type planche et back lever) : 50 s en semaine 3, pour 45 s admises au vu des trois semaines précédentes.
+- **Pas d'allègement avant l'échéance** — Semaine de l'échéance : volume 0 % sous le pic des six semaines précédentes (au moins 40 % attendus).
 
 Qualité :
 - Volume par muscle dans la bande du référentiel : 0.64 — 9 groupes majeurs sur 14 entre 10 et 25 séries dures par semaine (semaines de montée) ; sous le plancher : mollets ; au-dessus du plafond : pectoraux, deltoïde antérieur, grand dorsal, triceps.
@@ -894,13 +920,14 @@ Attentes de coach (1/8) :
 - **non tenue** — Une exposition lourde par semaine au moins en traction lestée (mesuré : 0.1 exposition(s) lourde(s) par semaine en montée)
 - tenue — Pas plus de 5 semaines de charge sans allègement (mesuré : 4 semaines de charge de suite au plus)
 
-Programme tel qu'il a évolué sous le moteur d'évolution : 5 violation(s) de sécurité (Volume hebdomadaire au-dessus du plafond du niveau : 4 ; Pas d'allègement avant l'échéance : 1).
+Programme tel qu'il a évolué sous le moteur d'évolution : 6 violation(s) de sécurité (Volume hebdomadaire au-dessus du plafond du niveau : 4 ; Montée trop rapide de la charge bras tendus : 1 ; Pas d'allègement avant l'échéance : 1).
 
 ### `street_17_hybride_street_course` — Hybride street et course
 
 Non transmis au moteur par le profil actuel : valeur exacte des records (le profil v2 lit une fourchette : la valeur est donnée comme bas et haut) ; ancienneté d'entraînement en mois.
 
-Sécurité : 2 violation(s).
+Sécurité : 3 violation(s).
+- **Hausse de volume trop rapide** — quadriceps : 15.0 séries dures en semaine 7, pour 14.4 admises au vu des trois semaines précédentes.
 - **Séance plus longue que le temps donné** — Semaine 5, jour 1 : 78 min estimées pour 60 min disponibles.
 - **Séance plus longue que le temps donné** — Semaine 10, jour 1 : 78 min estimées pour 60 min disponibles.
 
@@ -923,5 +950,5 @@ Attentes de coach (4/6) :
 - **non tenue** — Quadriceps : pas plus de 12 séries dures par semaine (mesuré : 13.3 séries dures par semaine en montée)
 - tenue — Pas plus de 6 semaines de charge sans allègement (mesuré : 3 semaines de charge de suite au plus)
 
-Programme tel qu'il a évolué sous le moteur d'évolution : 2 violation(s) de sécurité (Séance plus longue que le temps donné : 2).
+Programme tel qu'il a évolué sous le moteur d'évolution : 3 violation(s) de sécurité (Hausse de volume trop rapide : 1 ; Séance plus longue que le temps donné : 2).
 
