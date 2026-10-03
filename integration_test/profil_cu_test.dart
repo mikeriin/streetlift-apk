@@ -190,11 +190,12 @@ void main() {
         .map((q) => q.id)
         .toList();
     final logsBefore = jsonEncode(jsonDecode(store.exportAll())['logs']);
-    releve['perso_invitation'] = await until(
-      tester,
-      find.byKey(const ValueKey('profile-invite')),
-    );
+    await until(tester, find.byKey(const ValueKey('header-logo')));
     await scrollTo(tester, find.byKey(const ValueKey('profile-invite')));
+    releve['perso_invitation'] = find
+        .byKey(const ValueKey('profile-invite'))
+        .evaluate()
+        .isNotEmpty;
     await wait(tester, 800);
     await shot('01_perso_invitation');
     await tap(tester, 'profile-invite-open', ms: 1500);
@@ -225,10 +226,7 @@ void main() {
     releve['completer_journal_inchange'] =
         jsonEncode(jsonDecode(store.exportAll())['logs']) == logsBefore;
     await wait(tester, 1200);
-    releve['perso_invitation_apres'] = find
-        .byKey(const ValueKey('profile-invite'))
-        .evaluate()
-        .isNotEmpty;
+    releve['perso_invitation_apres'] = store.profileInviteVisible;
     await store.flush();
     final persoBefore = jsonEncode(KalisPrefs(raw, dev: false).snapshot());
 
