@@ -381,7 +381,7 @@ final class CoachEngine {
     final sk = _skeleton(
       a,
       blockIndex,
-      request.seed + blockIndex,
+      request.seed,
       blockWeeks: request.blockWeeks,
     );
     final locked = _applyLocks(a, sk, request.locks);
@@ -425,7 +425,7 @@ final class CoachEngine {
     final canonical = _skeleton(
       a,
       pass1.blockIndex,
-      pass1.seed + pass1.blockIndex,
+      pass1.seed,
       blockWeeks: pass1.weeks,
     );
     final sk = reconcileSkeleton(a, canonical, pass1);

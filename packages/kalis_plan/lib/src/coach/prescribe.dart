@@ -128,6 +128,25 @@ abstract final class CoachNotes {
   /// externe visée, en kg).
   static const String attemptsGoal = 'attempts_goal';
 
+  /// Activation à J−2 d'une épreuve de répétitions (`value` : part du
+  /// maximum).
+  static const String activation = 'activation';
+
+  /// Reprise : la première semaine sert de test d'entrée (`value` :
+  /// répétitions en réserve à garder).
+  static const String reentryTest = 'reentry_test';
+
+  /// Charge visée sous le poids du corps : série au poids du corps
+  /// (`value` : part réelle du 1RM).
+  static const String bodyweightFloor = 'bodyweight_floor';
+
+  /// Amplitude partielle surchargée (`value` : part du 1RM complet).
+  static const String overload = 'overload';
+
+  /// Essai de traction stricte après le test de descente (`value` :
+  /// répétitions de l'objectif).
+  static const String strictAttempt = 'strict_attempt';
+
   /// Règle de douleur générale, sans zone déclarée (`value` : seuil
   /// d'arrêt sur 10).
   static const String painGeneral = 'pain_general';
@@ -169,6 +188,11 @@ abstract final class CoachNotes {
   /// Tous les codes.
   static const List<String> all = <String>[
     attemptsGoal,
+    activation,
+    reentryTest,
+    bodyweightFloor,
+    overload,
+    strictAttempt,
     painGeneral,
     redFlags,
     shortVersion,
@@ -519,6 +543,10 @@ final class Prescriber {
 
   final List<_WeekTrace> _history = <_WeekTrace>[];
 
+  /// Jours d'activation (J−2 d'une épreuve de répétitions) de la semaine
+  /// en cours.
+  final Set<int> _activation = <int>{};
+
   /// Premier jour de la semaine en cours de prescription.
   late CivilDate _today = a.start;
 
@@ -692,6 +720,7 @@ final class Prescriber {
 
   /// Rôle de chaque séance de la semaine [week].
   List<_DayRole> _roles(int week, WeekSpec ws) {
+    _activation.clear();
     final roles = List<_DayRole>.filled(a.dayCount, _DayRole.normal);
     final target = _shape.target;
     if (!ws.eventWeek || target == null) {
@@ -729,10 +758,14 @@ final class Prescriber {
         // R3-P14 : dernière séance à J−3 ou J−4 avant une épreuve de force
         // (arrêt de 2 à 4 jours) ; R3-P21 : repos complet d'un à deux
         // jours avant une épreuve de répétitions.
-        final rest = _shape.model == SeasonModel.repsPeak ? 1 : 2;
-        roles[d] = best - offset > rest
+        // (Épreuve de répétitions : à J−2, une activation courte et
+        // facile ; repos complet la veille.)
+        roles[d] = best - offset > 2
             ? _DayRole.primerFar
             : _DayRole.primerNear;
+        if (best - offset == 2 && _shape.model == SeasonModel.repsPeak) {
+          _activation.add(d);
+        }
       } else {
         // Test daté sans pic de forme : semaine allégée ordinaire, repos
         // la veille du test.
@@ -764,7 +797,12 @@ final class Prescriber {
 
   /// Charge, part du 1RM et intensité d'un item à [pct] du 1RM de
   /// référence ; sans 1RM connu, charge à régler à la première séance.
-  void _loadAt(_Draft x, double pct, String? referenceId) {
+  void _loadAt(
+    _Draft x,
+    double pct,
+    String? referenceId, {
+    bool over = false,
+  }) {
     final e = x.e;
     final total = _totalFor(e, referenceId);
     if (_basisOf(e) == LoadBasis.unloaded ||
@@ -779,7 +817,31 @@ final class Prescriber {
       return;
     }
     final regained = pct * _regain;
-    final p = regained > 1 ? 1.0 : regained;
+    var p = regained > 1 && !over ? 1.0 : regained;
+    // Mouvement lesté dont la charge visée tombe sous le poids du corps :
+    // la série se fait au poids du corps, à sa vraie part du 1RM, avec
+    // moins de répétitions (formule d'Epley) pour garder la réserve.
+    final floor = (e.bodyweightFraction?.value ?? 0) * a.bodyWeight / total;
+    if (floor > 0 && p < floor - 1e-9) {
+      p = floor;
+      final possible = (30 * (1 / p - 1)).floor();
+      final high = x.repsHigh;
+      final reserve = (x.rir ?? 3).ceil();
+      if (high != null) {
+        final reps = _clampInt(possible - reserve, 1, high);
+        x
+          ..repsLow = reps
+          ..repsHigh = reps;
+      }
+      x.reasons.add(_note(CoachNotes.bodyweightFloor, p));
+    }
+    if (p > 1) {
+      // Amplitude partielle surchargée : au-dessus du 1RM complet.
+      x
+        ..load = _external(e, total, p)
+        ..reasons.add(_note(CoachNotes.overload, p));
+      return;
+    }
     x
       ..load = _external(e, total, p)
       ..reasons.add(
@@ -824,12 +886,23 @@ final class Prescriber {
       ..ramped = true;
     _loadAt(x, pct, x.slot?.referenceId);
     if (sets >= 2) {
+      // Les séries allégées ne descendent pas sous le poids du corps.
+      var lighter = drop;
+      final total = _totalFor(x.e, x.slot?.referenceId);
+      final load = x.load;
+      if (total != null && load != null && total > 0) {
+        final room = load / (load + (x.e.bodyweightFraction?.value ?? 0) *
+            a.bodyWeight);
+        if (lighter > room) {
+          lighter = (room * 20).floorToDouble() / 20;
+        }
+      }
       x
         ..backoff = true
         ..backoffRepsLow = reps
         ..backoffRepsHigh = reps
-        ..backoffDrop = drop
-        ..reasons.add(_note(CoachNotes.topSetBackoff, drop * 100));
+        ..backoffDrop = lighter
+        ..reasons.add(_note(CoachNotes.topSetBackoff, lighter * 100));
     }
     x.reasons.add(_note(CoachNotes.rampWarmup, 3));
   }
@@ -839,7 +912,21 @@ final class Prescriber {
     final stage = _stage(ws);
     final maintain = s.method == Method.liftMaintain;
     final base = s.sets;
-    if (role == _DayRole.primerFar) {
+    // R5-P24 : zone à ménager — la charge repart plus bas et rejoint le
+    // plan en trois semaines (retour par paliers de 10 à 20 %).
+    var spared = false;
+    for (final l in a.limits) {
+      final joint = l.joint;
+      if (joint != null &&
+          x.e.stressOn(joint) != JointStress.low &&
+          (l.recent || l.discomfort >= 2)) {
+        spared = true;
+      }
+    }
+    final ease = !spared || blockIndex > 0
+        ? 0.0
+        : (week <= 1 ? 0.06 : (week == 2 ? 0.03 : 0.0));
+    if (role == _DayRole.primerFar && !maintain) {
       // R3-P13 : dernier rappel lourd et court, 3 à 5 jours avant.
       _topSet(
         x,
@@ -872,6 +959,20 @@ final class Prescriber {
     if (maintain) {
       // R4-H3 : entretien au tiers du volume, intensité gardée.
       final heavy = s.stress == DayStress.heavy;
+      if (role != _DayRole.normal || ws.eventWeek) {
+        // Semaine de l'échéance : le mouvement en entretien ne prend rien
+        // à l'épreuve — deux séries légères.
+        x
+          ..sets = 2
+          ..minSets = 1
+          ..repsLow = 3
+          ..repsHigh = 3
+          ..rir = 5
+          ..rest = 120
+          ..reasons.add(_note(CoachNotes.maintenance, 2));
+        _loadAt(x, 0.72, s.referenceId);
+        return x;
+      }
       x
         ..sets = ws.light ? 2 : base
         ..minSets = 2
@@ -902,6 +1003,7 @@ final class Prescriber {
         if (pct > 0.845) {
           pct = 0.845;
         }
+        pct -= ease;
         _topSet(
           x,
           sets: _scaled(base, ws, min: 2),
@@ -918,12 +1020,13 @@ final class Prescriber {
         if (pct > 0.90) {
           pct = 0.90;
         }
+        pct -= ease;
         _topSet(
           x,
           sets: _scaled(base, ws, min: 2),
           reps: 3,
           pct: pct,
-          rir: 2,
+          rir: ease > 0 ? 3 : 2,
           drop: 0.10,
           ws: ws,
           week: week,
@@ -931,12 +1034,19 @@ final class Prescriber {
       case WeekIntent.realization:
         // R3-P4 : réalisation à 91 à 94 %, doubles puis simples.
         // R2-P1 : l'intermédiaire plafonne à 90 % en fin de bloc.
+        // La charge monte d'un cran par semaine dans la phase (doubles de
+        // 87 à 90 % chez l'intermédiaire ; 91 %, puis simples de 93 à 95 %
+        // ensuite).
         final single = ws.stage >= 1 && _level >= 2;
+        final step = ws.stage > 3 ? 3 : ws.stage;
+        final heavy = single
+            ? 0.93 + 0.01 * (step - 1)
+            : (_level >= 2 ? 0.91 : 0.87 + 0.01 * step);
         _topSet(
           x,
           sets: _scaled(base, ws, min: 2),
           reps: single ? 1 : 2,
-          pct: single ? 0.93 : (_level >= 2 ? 0.91 : 0.89),
+          pct: heavy - ease,
           rir: single ? 1 : 2,
           drop: 0.15,
           ws: ws,
@@ -1113,12 +1223,17 @@ final class Prescriber {
         ws.intent == WeekIntent.intensification ||
         ws.intent == WeekIntent.realization;
     final partial = e.id.contains('partiel');
-    var pct = (intense ? 0.74 : 0.70) + 0.01 * stage + (partial ? 0.15 : 0);
-    if (pct > (partial ? 0.95 : 0.80)) {
-      pct = partial ? 0.95 : 0.80;
+    // Amplitude partielle (verrouillage) : surcharge au-dessus du 1RM
+    // complet — 100 à 110 % (pratique de terrain, CALIBRAGE_CP1 C) ; les
+    // autres variantes restent sous le mouvement de compétition.
+    var pct = partial
+        ? 1.0 + 0.02 * stage
+        : (intense ? 0.74 : 0.70) + 0.01 * stage;
+    if (pct > (partial ? 1.10 : 0.80)) {
+      pct = partial ? 1.10 : 0.80;
     }
     if (ws.light) {
-      pct -= 0.05;
+      pct -= partial ? 0.10 : 0.05;
     }
     final reps = intense ? 3 : 4;
     x
@@ -1130,7 +1245,7 @@ final class Prescriber {
       ..repsHigh = reps
       ..rir = _rirOf(e, 3, ws, week)
       ..rest = 150;
-    _loadAt(x, pct, referenceId);
+    _loadAt(x, pct, referenceId, over: partial);
     return x;
   }
 
@@ -1428,14 +1543,15 @@ final class Prescriber {
     final max = _maxOf(s);
     // R4-F1, R5-P27 : technique à l'état frais, séries très courtes, 2
     // répétitions en réserve au moins, arrêt dès que la qualité baisse.
-    final reps = max <= 2 ? 1 : (max <= 4 ? 2 : _round(max * 0.5));
-    final sets = _scaled(s.sets + (max <= 2 ? 1 : 0), ws, min: 2);
+    final reps = max <= 3 ? 1 : (max <= 5 ? 2 : _round(max * 0.5));
+    final sets = _scaled(s.sets + (max <= 3 ? 1 : 0), ws, min: 2);
     x
       ..sets = sets
       ..minSets = 3
       ..repsLow = reps
       ..repsHigh = reps
-      ..rir = _rirOf(e, max <= 2 ? 3 : (max - reps).toDouble(), ws, week)
+      // La réserve écrite est la vraie : maximum moins répétitions.
+      ..rir = _rirOf(e, max <= 0 ? 3 : (max - reps).toDouble(), ws, week)
       ..rest = 150
       ..practice = true
       ..reasons.add(_note(CoachNotes.qualityFirst, 4));
@@ -1473,8 +1589,8 @@ final class Prescriber {
       // répétition sous le maximum (spécificité du geste complet).
       x
         ..sets = sets + 1
-        ..repsLow = max - 1 < 1 ? 1 : max - 1
-        ..repsHigh = max - 1 < 1 ? 1 : max - 1
+        ..repsLow = max - 2 < 1 ? 1 : max - 2
+        ..repsHigh = max - 2 < 1 ? 1 : max - 2
         ..rir = _rirOf(e, 2, ws, week)
         ..reasons.add(_rule(CoachRules.repStep, 1, 'reps'));
       return x;
@@ -1793,11 +1909,22 @@ final class Prescriber {
           ..rir = _rirOf(e, 3, ws, week)
           ..rest = 60;
       case Method.accessoryLegs:
-        x
-          ..repsLow = 6 + _shift(ws)
-          ..repsHigh = 8 + _shift(ws)
-          ..rir = _rirOf(e, 3, ws, week)
-          ..rest = 90;
+        final best = a.reps[e.id] ?? 0;
+        if (best >= 3) {
+          // Mouvement à record (pistol, shrimp) : 50 à 65 % du maximum.
+          final high = _clampInt(_round(best * 0.65) + _shift(ws), 1, best - 2);
+          x
+            ..repsLow = high - 1 < 1 ? 1 : high - 1
+            ..repsHigh = high
+            ..rir = _rirOf(e, (best - high).toDouble(), ws, week)
+            ..rest = 90;
+        } else {
+          x
+            ..repsLow = 6 + _shift(ws)
+            ..repsHigh = 8 + _shift(ws)
+            ..rir = _rirOf(e, 3, ws, week)
+            ..rest = 90;
+        }
       default:
         x
           ..repsLow = 8 + _shift(ws)
@@ -2018,9 +2145,12 @@ final class Prescriber {
     // R6-P14 : endurance fondamentale, allure de conversation ; durée +10 %
     // par semaine au plus (R6-P20).
     final long = s.method == Method.runLong;
-    final warm = s.note == 'run_warmup' || s.note == 'walk';
+    final warm =
+        s.note == 'run_warmup' || s.note == 'walk' || s.note == 'run_extra';
     var minutes = s.note == 'walk'
         ? 10.0
+        : s.note == 'run_extra'
+        ? 20.0
         : warm
         ? 12.0
         : (long ? 45.0 : 30.0) * (1 + 0.08 * (stage > 4 ? 4 : stage));
@@ -2116,7 +2246,7 @@ final class Prescriber {
         if (wanted != null) {
           final fraction = e.bodyweightFraction?.value ?? 0;
           final ratio = (wanted + fraction * a.bodyWeight) / total;
-          if (ratio > 1.0 && ratio <= 1.06) {
+          if (ratio > 1.0 && ratio <= 1.07) {
             x.reasons.add(_note(CoachNotes.attemptsGoal, wanted));
           }
         }
@@ -2265,8 +2395,21 @@ final class Prescriber {
   List<String> _eventExercises() {
     final target = _shape.target;
     final out = <String>[];
-    void add(String? id) {
-      if (id != null && a.catalog.contains(id) && !out.contains(id)) {
+    void add(String? given) {
+      if (given == null) {
+        return;
+      }
+      var id = given;
+      // Figure : le test porte sur l'étape réellement travaillée, pas sur
+      // une figure jamais entraînée.
+      for (final d in skeleton.days) {
+        for (final s in d.slots) {
+          if (s.skillTargetId == id && s.method == Method.skillHold) {
+            id = s.exerciseId;
+          }
+        }
+      }
+      if (a.catalog.contains(id) && !out.contains(id)) {
         out.add(id);
       }
     }
@@ -2395,6 +2538,27 @@ final class Prescriber {
           ..rir = 5
           ..reasons.add(_note(CoachNotes.restBeforeEvent, 2));
         return x;
+      }
+      if (_activation.contains(day) &&
+          (s.method == Method.repsTop ||
+              s.method == Method.repsVolume ||
+              s.method == Method.repsDensity) &&
+          _eventExercises().contains(s.exerciseId)) {
+        // R3-P21 : deux séries faciles par atelier, pour garder le geste.
+        final max = _maxOf(s);
+        if (max >= 5) {
+          final reps = _clampInt(_round(max * 0.4), 1, max);
+          return _new(s)
+            ..sets = 2
+            ..minSets = 1
+            ..repsLow = reps
+            ..repsHigh = reps
+            ..rir = 5
+            ..rest = 120
+            ..fixed = true
+            ..intensity = _shareOf(s.exerciseId, reps, max)
+            ..reasons.add(_note(CoachNotes.activation, 0.4));
+        }
       }
       return s.method == Method.mobility ? _mobility(s, ws, role) : null;
     }
@@ -2665,15 +2829,12 @@ final class Prescriber {
           );
           out.add(gate);
           gated = true;
-          // Objectif de traction : en semaine de test, un essai strict
-          // suit la descente (une série, arrêt dès que la forme casse).
+          // Objectif de traction : en semaine de test, l'essai strict suit
+          // la descente dans la même épreuve (le geste non acquis n'est pas
+          // prescrit comme un exercice : c'est un essai, écrit en note).
           if (a.aimsAt(Ids.pull) && ws.intent == WeekIntent.test) {
-            final pull = a.catalog.exercise(Ids.pull);
-            out.add(
-              _testOf(slotIdFor(day, 95), null, pull, ws, event: false)
-                ..method = Method.beginnerMain
-                ..group = null,
-            );
+            final goal = a.goalOn(Ids.pull, GoalMetric.maxReps)?.targetValue;
+            gate.reasons.add(_note(CoachNotes.strictAttempt, goal ?? 1));
           }
           continue;
         }
@@ -2774,7 +2935,7 @@ final class Prescriber {
               : Method.cutRank(x.method));
     // 0. La marche de fin de séance prend le temps qui reste, rien de plus.
     for (final x in <_Draft>[...items]) {
-      if (x.slot?.note != 'walk') {
+      if (x.slot?.note != 'walk' && x.slot?.note != 'run_extra') {
         continue;
       }
       final over = _daySeconds(items, minutes) - budget;
@@ -3267,9 +3428,10 @@ final class Prescriber {
     var guard = 0;
     // R3-P12, R3-P21 : l'affûtage garde l'intensité et 40 à 60 % du volume ;
     // une semaine d'échéance trop vide désentraîne. Sous 42 % du pic, les
-    // rappels des jours éloignés de l'épreuve reprennent une série, le
-    // travail le plus spécifique d'abord, dans le temps de la séance.
-    final floor = peak * 0.42;
+    // une semaine d'échéance trop vide désentraîne. Sous 36 % du pic, les
+    // rappels des jours éloignés de l'épreuve reprennent une série (trois
+    // au plus), le travail le plus spécifique d'abord.
+    final floor = peak * 0.36;
     final closed = <_Draft>{};
     while (guard < 60) {
       guard++;
@@ -3291,7 +3453,7 @@ final class Prescriber {
           if (!x.hard ||
               x.fixed ||
               x.kind != SetKind.work ||
-              x.sets >= 4 ||
+              x.sets >= 3 ||
               closed.contains(x) ||
               !Method.essential(x.method, support: x.support, keep: x.keep)) {
             continue;
@@ -3500,6 +3662,10 @@ final class Prescriber {
           ..backoff = false
           ..everyMinute = false;
         groupOf[x] = id;
+      }
+      // Une seule consigne de repos : celle de l'enchaînement.
+      for (final x in list) {
+        x.rest = 90;
       }
       list.first.reasons.add(_note(CoachNotes.superset, 90));
       groups.add(
@@ -3729,6 +3895,9 @@ List<Reason> blockReasonsOf(Athlete a, Skeleton skeleton) {
     out.add(
       reason(ReasonCodes.planReturnFromGap, <String, Object?>{'gap': gap.code}),
     );
+    if (a.gapWeeks >= 4) {
+      out.add(note(CoachNotes.reentryTest, 3));
+    }
   }
   final sleep = profile.sleep;
   if (sleep == SleepBand.under6Hours) {

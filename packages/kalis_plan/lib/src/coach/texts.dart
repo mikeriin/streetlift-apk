@@ -120,6 +120,29 @@ String? coachReasonText(Reason r, Catalog catalog) {
               'stricte au début de la séance suivante ; si elle passe, '
               "déclare-la dans l'application : le programme passera aux "
               'tractions.',
+        CoachNotes.strictAttempt =>
+          'Puis ton test : après 3 min de repos, essaie la traction '
+              'stricte — départ bras tendus, menton au-dessus de la barre, '
+              'sans élan — une seule série, autant de répétitions propres '
+              "que possible (objectif : ${_int(v)}). Si elle passe, "
+              "déclare-la dans l'application.",
+        CoachNotes.bodyweightFloor =>
+          'La charge visée tombe sous ton poids de corps : série sans '
+              'lest, à ${_pct(v)} de ton 1RM (poids du corps compris), '
+              'avec moins de répétitions pour garder la réserve.',
+        CoachNotes.overload =>
+          'Amplitude partielle surchargée : ${_pct(v)} de ton 1RM complet, '
+              'sur la seule fin du mouvement, en butée ou avec parade.',
+        CoachNotes.activation =>
+          "Activation à l'avant-veille : deux séries faciles à ${_pct(v)} "
+              'du maximum par atelier, pour garder le geste sans fatigue.',
+        CoachNotes.reentryTest =>
+          "Test d'entrée de reprise : en semaine 1, sur chaque mouvement "
+              'principal, fais une première série arrêtée à ${_int(v)} '
+              "répétitions de l'échec et note le total. Déclare ces "
+              "nouveaux repères dans l'application : tout le programme se "
+              'recale dessus. Tes anciens records ne sont pas des charges '
+              'de travail.',
         CoachNotes.restBeforeEvent =>
           "Repos avant l'échéance : mobilité et préparation articulaire "
               'seulement, rien de fatigant dans les 2 à 4 derniers jours.',
