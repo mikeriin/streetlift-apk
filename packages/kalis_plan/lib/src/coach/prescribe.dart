@@ -351,6 +351,7 @@ final class _WeekTrace {
   final bool light;
   final List<double> groups = List<double>.filled(MuscleGroup.values.length, 0);
   final List<double> straightArm = <double>[0, 0, 0];
+  double hard = 0;
   final Map<String, (double, int)> loads = <String, (double, int)>{};
 }
 
@@ -457,7 +458,13 @@ final class Prescriber {
     return floor;
   }
 
-  double _rirOf(CatalogExercise e, double base, WeekSpec ws, int week) {
+  double _rirOf(
+    CatalogExercise e,
+    double base,
+    WeekSpec ws,
+    int week, {
+    double cap = coachHardSetMaxRir,
+  }) {
     var rir = base + a.rirBonus;
     if (ws.kind == WeekKind.intro) {
       rir += 1;
@@ -472,8 +479,9 @@ final class Prescriber {
     if (rir < floor) {
       rir = floor;
     }
-    // Une série de travail reste une série dure : 4 en réserve au plus.
-    return rir > coachHardSetMaxRir ? coachHardSetMaxRir : rir;
+    // Une série de travail reste une série dure (4 en réserve au plus) ;
+    // le volume sous-maximal et la densité vont jusqu'à 5 et plus.
+    return rir > cap ? cap : rir;
   }
 
   int _scaled(int sets, WeekSpec ws, {int min = 1}) {
@@ -1066,7 +1074,15 @@ final class Prescriber {
     x
       ..repsLow = reps
       ..repsHigh = reps
-      ..rir = _rirOf(e, ws.light ? 4 : 3, ws, week)
+      // Réserve réelle : ce qui reste jusqu'au maximum, moins une
+      // répétition pour la fatigue des séries qui s'enchaînent.
+      ..rir = _rirOf(
+        e,
+        (max - reps - 1) < 3 ? 3 : (max - reps - 1).toDouble(),
+        ws,
+        week,
+        cap: 5,
+      )
       ..intensity = _shareOf(e.id, reps, max);
     if (ws.kind == WeekKind.build) {
       x.reasons.add(_rule(CoachRules.repStep, 1, 'reps'));
@@ -1085,9 +1101,10 @@ final class Prescriber {
     final x = _new(s);
     final e = x.e;
     // R4-G5 : densité — une série courte par minute, à 30 à 45 % du
-    // maximum ; on ajoute des minutes avant d'ajouter des répétitions.
+    // maximum (les programmes de référence restent entre 20 et 32 %) ;
+    // on ajoute des minutes avant d'ajouter des répétitions.
     final stage = _stage(ws);
-    var share = _level >= 2 ? 0.45 : 0.40;
+    var share = _level >= 2 ? 0.40 : 0.33;
     if (coachHighRisk(e)) {
       share = 0.30;
     }
@@ -1107,7 +1124,7 @@ final class Prescriber {
       ..minSets = 4
       ..repsLow = reps
       ..repsHigh = reps
-      ..rir = _rirOf(e, 4, ws, week)
+      ..rir = 5
       ..rest = work >= 50 ? 10 : 60 - work
       ..everyMinute = true
       ..intensity = _shareOf(e.id, reps, max)
@@ -2204,7 +2221,8 @@ final class Prescriber {
         }
         final removable =
             Method.cutRank(x.method) <= Method.cutRank(Method.liftVariant);
-        if (x.sets <= 1 && !(removable && items.length > 1)) {
+        final floor = removable ? 1 : 2;
+        if (x.sets <= floor && !(removable && items.length > 1)) {
           continue;
         }
         // D'abord là où il reste le plus de séries (au-dessus de deux),
@@ -2234,7 +2252,9 @@ final class Prescriber {
     if (pick == null || home == null) {
       return false;
     }
-    if (pick.sets > 1) {
+    final removable =
+        Method.cutRank(pick.method) <= Method.cutRank(Method.liftVariant);
+    if (pick.sets > (removable ? 1 : 2)) {
       pick.sets--;
     } else {
       home.remove(pick);
@@ -2306,9 +2326,101 @@ final class Prescriber {
           seconds,
         ];
         final limit = _limit(series, light, index, armRise, 5);
-        if (seconds <= limit + 1e-9 || !_trim(days, family: family)) {
+        if (seconds <= limit + 1e-9) {
           break;
         }
+        if (_trim(days, family: family)) {
+          continue;
+        }
+        // Plus de série à retirer : les tenues raccourcissent d'une seconde.
+        _Draft? longest;
+        for (final items in days) {
+          for (final x in items) {
+            final hold = x.secondsHigh;
+            if (straightArmFamilyOf(x.e) == family &&
+                x.kind != SetKind.test &&
+                hold != null &&
+                hold > 3 &&
+                (longest == null || hold > longest.secondsHigh!)) {
+              longest = x;
+            }
+          }
+        }
+        if (longest == null) {
+          break;
+        }
+        final hold = longest.secondsHigh! - 1;
+        final low = longest.secondsLow;
+        longest
+          ..secondsHigh = hold
+          ..secondsLow = low != null && low > hold ? hold : low;
+      }
+    }
+  }
+
+  /// Semaines allégées : les séries dures restent sous 55 % du pic des six
+  /// semaines précédentes la semaine de l'échéance (R3-P12, R3-P21 : volume
+  /// −40 à −60 %), sous 65 % du pic des trois semaines précédentes en
+  /// allègement, affûtage ou transition (R3-P9 : séries −40 à −50 %).
+  void _fitTaper(List<List<_Draft>> days, WeekSpec ws) {
+    final relief =
+        ws.intent == WeekIntent.deload ||
+        ws.intent == WeekIntent.taper ||
+        ws.intent == WeekIntent.transition;
+    if (!ws.eventWeek && !relief) {
+      return;
+    }
+    final window = ws.eventWeek ? 6 : 3;
+    var peak = 0.0;
+    for (var k = _history.length - window; k < _history.length; k++) {
+      if (k >= 0 && _history[k].hard > peak) {
+        peak = _history[k].hard;
+      }
+    }
+    if (peak <= 0) {
+      return;
+    }
+    final limit = peak * (ws.eventWeek ? 0.55 : 0.65);
+    var guard = 0;
+    while (guard < 80) {
+      guard++;
+      var total = 0.0;
+      for (final items in days) {
+        for (final x in items) {
+          if (x.hard) {
+            total += x.sets;
+          }
+        }
+      }
+      if (total <= limit + 1e-9) {
+        break;
+      }
+      _Draft? pick;
+      List<_Draft>? home;
+      for (final items in days) {
+        for (final x in items) {
+          if (!x.hard || x.kind == SetKind.test) {
+            continue;
+          }
+          if (x.sets <= 1 && items.length <= 1) {
+            continue;
+          }
+          if (pick == null ||
+              Method.cutRank(x.method) < Method.cutRank(pick.method) ||
+              (Method.cutRank(x.method) == Method.cutRank(pick.method) &&
+                  x.sets > pick.sets)) {
+            pick = x;
+            home = items;
+          }
+        }
+      }
+      if (pick == null || home == null) {
+        break;
+      }
+      if (pick.sets > 1) {
+        pick.sets--;
+      } else {
+        home.remove(pick);
       }
     }
   }
@@ -2551,6 +2663,7 @@ final class Prescriber {
                   !Flames.isValid(flames) ||
                   Flames.toRir(flames) <= coachHardSetMaxRir);
           if (hard) {
+            trace.hard += p.sets;
             for (final g in MuscleGroup.values) {
               trace.groups[g.index] += p.sets * t.creditOf(g) / 2;
             }
@@ -2591,6 +2704,7 @@ final class Prescriber {
         _fitTime(days[d], a.days[d].minutes);
       }
       _fitVolume(days, ws);
+      _fitTaper(days, ws);
       days.forEach(_equalize);
       final trace = _WeekTrace(ws.light);
       _fitLoads(days, trace);
@@ -2598,6 +2712,9 @@ final class Prescriber {
         for (final x in items) {
           for (final g in MuscleGroup.values) {
             trace.groups[g.index] += x.creditOf(g);
+          }
+          if (x.hard) {
+            trace.hard += x.sets;
           }
           final family = straightArmFamilyOf(x.e);
           if (family >= 0) {

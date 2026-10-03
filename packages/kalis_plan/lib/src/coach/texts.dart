@@ -100,8 +100,7 @@ String _sport(String code) => switch (code) {
 /// Texte français de la raison [r] du chemin street, ou `null`.
 String? coachReasonText(Reason r, Catalog catalog) {
   final p = r.params;
-  String name(Object? id) =>
-      id is String ? (catalog.find(id)?.name ?? id) : '';
+  String name(Object? id) => id is String ? (catalog.find(id)?.name ?? id) : '';
   switch (r.code) {
     case ReasonCodes.planCoachNote:
       final v = p['value'];

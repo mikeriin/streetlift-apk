@@ -123,7 +123,8 @@ String volumeText(ItemView i) {
   final test = p.test;
   if (test != null && i.isReps) {
     return switch (test.kind) {
-      TestKind.oneRm => '${p.sets} tentatives × ${_range(i.repsLow, i.repsHigh)}',
+      TestKind.oneRm =>
+        '${p.sets} tentatives × ${_range(i.repsLow, i.repsHigh)}',
       TestKind.maxReps =>
         '1 série maximale (repère : ${_range(i.repsLow, i.repsHigh)})',
       _ => '${p.sets} × ${_range(i.repsLow, i.repsHigh)}',
@@ -442,12 +443,14 @@ List<String> ladderLines(ProgramView view) {
   final catalog = view.catalog;
   final current = <String>{
     for (final r in blocks.first.pass1.reasons)
-      if (r.code == ReasonCodes.planSkillStep && r.params['exerciseId'] is String)
+      if (r.code == ReasonCodes.planSkillStep &&
+          r.params['exerciseId'] is String)
         r.params['exerciseId']! as String,
   };
-  for (final ladder in blocks.first.pass1.skillLadders ?? const <SkillLadder>[]) {
-    final target = catalog.find(ladder.targetExerciseId)?.name ??
-        ladder.targetExerciseId;
+  for (final ladder
+      in blocks.first.pass1.skillLadders ?? const <SkillLadder>[]) {
+    final target =
+        catalog.find(ladder.targetExerciseId)?.name ?? ladder.targetExerciseId;
     final steps = <String>[
       for (final s in ladder.steps)
         '${catalog.find(s.exerciseId)?.name ?? s.exerciseId}'

@@ -383,16 +383,16 @@ void _buildBeginner(_Builder b) {
     }
     // Tirage horizontal (autant que de tirage vertical : R5-P8, R5-P27).
     if (rowDays.contains(d) || pullMax >= 5) {
-    b.add(
-      d,
-      rowMax != null && rowMax >= 10
-          ? <String>[Ids.row, ...Picks.easyRow]
-          : Picks.easyRow,
-      SlotRole.secondary,
-      Method.beginnerMain,
-      sets: sets,
-      referenceId: Ids.row,
-    );
+      b.add(
+        d,
+        rowMax != null && rowMax >= 10
+            ? <String>[Ids.row, ...Picks.easyRow]
+            : Picks.easyRow,
+        SlotRole.secondary,
+        Method.beginnerMain,
+        sets: sets,
+        referenceId: Ids.row,
+      );
     }
     // Jambes : squat et fente en alternance, hanche si le temps le permet.
     final squatFirst = d.isEven;
@@ -1535,7 +1535,12 @@ const Set<String> _easyMethods = <String>{
 void _fitBudget(_Builder b) {
   final a = b.a;
   double credit(SlotSpec s, MuscleGroup g) {
-    if (_easyMethods.contains(s.method)) {
+    if (_easyMethods.contains(s.method) || s.method == Method.repsDensity) {
+      return 0;
+    }
+    // Volume sous-maximal d'un mouvement dont le maximum dépasse douze
+    // répétitions : séries à plus de 4 en réserve, hors du compte.
+    if (s.method == Method.repsVolume && (a.reps[s.exerciseId] ?? 0) >= 12) {
       return 0;
     }
     final t = a.traits.find(s.exerciseId);
@@ -1571,8 +1576,7 @@ void _fitBudget(_Builder b) {
           }
           final floor = s.method == Method.repsDensity
               ? 4
-              : (Method.cutRank(s.method) >
-                        Method.cutRank(Method.liftVariant)
+              : (Method.cutRank(s.method) > Method.cutRank(Method.liftVariant)
                     ? 2
                     : 1);
           if (s.sets <= floor) {
@@ -1582,8 +1586,7 @@ void _fitBudget(_Builder b) {
           if (current == null ||
               s.sets > current.sets ||
               (s.sets == current.sets &&
-                  Method.cutRank(s.method) <
-                      Method.cutRank(current.method))) {
+                  Method.cutRank(s.method) < Method.cutRank(current.method))) {
             pick = s;
             home = day;
           }

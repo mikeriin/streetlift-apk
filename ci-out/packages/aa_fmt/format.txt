@@ -1,6 +1,0 @@
-Formatted ../kalis_bench/lib/src/export.dart
-Formatted ../kalis_plan/lib/src/coach/prescribe.dart
-Formatted ../kalis_plan/lib/src/coach/skeleton.dart
-Formatted ../kalis_plan/lib/src/coach/texts.dart
-Formatted 117 files (4 changed) in 0.57 seconds.
-

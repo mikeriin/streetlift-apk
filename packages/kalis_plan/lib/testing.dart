@@ -464,3 +464,379 @@ PlanRequest randomRequest(Catalog catalog, int seed, {int planSeed = 0}) {
     locks: const <PlanLock>[],
   );
 }
+
+/// Profil aléatoire du chemin street pour la graine [seed] : le profil de
+/// [randomProfile] (lieux, matériel, disponibilités, goûts, limitations),
+/// ramené à une discipline principale street et complété par les champs du
+/// schéma 3 que lit le coach — expérience, ancienneté, coupure, sommeil,
+/// stress, travail, autres sports, tests datés des mouvements piliers,
+/// échéances, figures, points faibles, spécialisation, antécédents.
+AthleteProfile randomCoachProfile(Catalog catalog, int seed) {
+  final base = randomProfile(catalog, seed);
+  final r = SeededRandom(fnvMix(0x434F4143, seed));
+  T pick<T>(List<T> values) => values[r.nextInt(values.length)];
+  bool chance(int pct) => r.nextInt(100) < pct;
+  int between(int low, int high) => low + r.nextInt(high - low + 1);
+  final created = base.createdOn;
+
+  // Disciplines : principale street ; secondaires street, cardio, mobilité.
+  const street = <TrainingDiscipline>[
+    TrainingDiscipline.streetWorkout,
+    TrainingDiscipline.streetlifting,
+    TrainingDiscipline.calisthenics,
+  ];
+  final primary = pick(street);
+  final others = <TrainingDiscipline>[
+    for (final d in street)
+      if (d != primary) d,
+    TrainingDiscipline.cardio,
+    TrainingDiscipline.mobility,
+  ];
+  DisciplineMix mix;
+  final count = r.nextInt(3);
+  if (count == 0) {
+    mix = DisciplineMix(
+      primary: primary,
+      primaryPct: 100,
+      secondaries: const <DisciplineShare>[],
+    );
+  } else if (count == 1) {
+    final p = 50 + 5 * r.nextInt(10);
+    mix = DisciplineMix(
+      primary: primary,
+      primaryPct: p,
+      secondaries: <DisciplineShare>[
+        DisciplineShare(discipline: pick(others), pct: 100 - p),
+      ],
+    );
+  } else {
+    final first = pick(others);
+    final second = pick(<TrainingDiscipline>[
+      for (final d in others)
+        if (d != first) d,
+    ]);
+    final p = 40 + 10 * r.nextInt(4);
+    final rest = 100 - p;
+    var a = 10 * between(1, rest ~/ 10 - 1);
+    if (a > p) {
+      a = p;
+    }
+    var b = rest - a;
+    if (b > p) {
+      b = p;
+      a = rest - b;
+    }
+    mix = DisciplineMix(
+      primary: primary,
+      primaryPct: p,
+      secondaries: <DisciplineShare>[
+        DisciplineShare(discipline: first, pct: a),
+        DisciplineShare(discipline: second, pct: b),
+      ],
+    );
+  }
+
+  // Matériel : le plus souvent des barres, parfois un lest et un rack.
+  final equipment = <String>[...base.equipment];
+  final added = <String>[];
+  void own(String item) {
+    if (catalog.equipmentVocabulary.contains(item) &&
+        !equipment.contains(item)) {
+      equipment.add(item);
+      added.add(item);
+    }
+  }
+
+  if (chance(85)) {
+    own('barre fixe');
+    own('barres parallèles');
+    own('barre basse');
+  }
+  if (chance(50)) {
+    own('élastique');
+  }
+  if (chance(45)) {
+    own('ceinture de lest');
+    own('disques');
+  }
+  if (chance(25)) {
+    own('barre olympique');
+    own('disques');
+    own('cage / rack');
+  }
+  if (chance(30)) {
+    own('anneaux');
+  }
+  if (chance(30)) {
+    own('parallettes');
+  }
+  final byPlace = base.equipmentByPlace == null
+      ? null
+      : <PlaceEquipment>[
+          for (final p in base.equipmentByPlace!)
+            PlaceEquipment(
+              place: p.place,
+              equipment: <String>[
+                ...p.equipment,
+                // Le matériel ajouté va au premier lieu, parfois à tous.
+                if (p.place == base.equipmentByPlace!.first.place ||
+                    seed.isEven)
+                  ...added,
+              ],
+            ),
+        ];
+
+  final experience = pick(ExperienceLevel.values);
+  final level = experience.index;
+
+  // Tests datés des mouvements piliers, à l'échelle du niveau.
+  final benchmarks = <Benchmark>[];
+  final zero = <MovementLevel>[];
+  final taken = <String>{};
+  void reps(String id, int low, int high, {int pct = 80}) {
+    if (!catalog.contains(id) || !chance(pct) || !taken.add(id)) {
+      return;
+    }
+    final n = between(low, high);
+    if (n <= 0) {
+      zero.add(
+        MovementLevel(
+          exerciseId: id,
+          measure: LevelMeasure.maxReps,
+          known: true,
+          low: 0,
+          high: 0,
+        ),
+      );
+      return;
+    }
+    benchmarks.add(
+      Benchmark(
+        exerciseId: id,
+        kind: BenchmarkKind.maxReps,
+        source: pick(BenchmarkSource.values),
+        date: created.addDays(-between(0, 200)),
+        reps: n,
+      ),
+    );
+  }
+
+  void load(String id, double low, double high, {int pct = 50}) {
+    if (!catalog.contains(id) || !chance(pct) || !taken.add(id)) {
+      return;
+    }
+    final n = between(1, 5);
+    benchmarks.add(
+      Benchmark(
+        exerciseId: id,
+        kind: BenchmarkKind.loadReps,
+        source: pick(BenchmarkSource.values),
+        date: created.addDays(-between(0, 200)),
+        externalLoadKg: 2.5 * between((low / 2.5).round(), (high / 2.5).round()),
+        reps: n,
+        rir: chance(50) ? null : between(0, 3).toDouble(),
+        bodyWeightKg: chance(50) ? null : base.bodyWeightKg,
+      ),
+    );
+  }
+
+  void hold(String id, int low, int high, {int pct = 40}) {
+    if (!catalog.contains(id) || !chance(pct) || !taken.add(id)) {
+      return;
+    }
+    benchmarks.add(
+      Benchmark(
+        exerciseId: id,
+        kind: BenchmarkKind.maxHold,
+        source: pick(BenchmarkSource.values),
+        date: created.addDays(-between(0, 200)),
+        seconds: between(low, high),
+      ),
+    );
+  }
+
+  reps('sw-traction-pronation', level == 0 ? 0 : 3 * level, 6 + 10 * level);
+  reps('sw-dips-barres-paralleles', level == 0 ? 0 : 4, 8 + 18 * level);
+  reps('sw-pompe', level == 0 ? 0 : 8, 12 + 20 * level);
+  reps('sw-row-australien', 0, 10 + 8 * level, pct: 40);
+  if (level >= 1) {
+    reps('cd-muscle-up-barre-strict', 0, 4 * level, pct: 50);
+    load('sl-traction-lestee', 5, 25.0 + 22 * level);
+    load('sl-dips-leste', 10, 40.0 + 30 * level);
+    load('sl-squat-competition', 40, 90.0 + 35 * level, pct: 35);
+    load('sl-muscle-up-leste', 0, 10.0 * level, pct: 20);
+  }
+  hold('cs-handstand', 3, 70, pct: 25);
+  hold('cs-l-sit', 3, 30, pct: 25);
+
+  // Figures.
+  final skills = <SkillState>[];
+  if (chance(primary == TrainingDiscipline.calisthenics ? 75 : 15)) {
+    const targets = <String, List<String>>{
+      'cs-front-lever': <String>[
+        'cs-front-lever-tuck',
+        'cs-front-lever-tuck-avance',
+        'cs-front-lever-une-jambe',
+        'cs-front-lever-straddle',
+        'cs-front-lever',
+      ],
+      'cs-planche': <String>[
+        'cs-planche-lean',
+        'cs-planche-tuck',
+        'cs-planche-tuck-avancee',
+        'cs-planche-straddle',
+        'cs-planche',
+      ],
+      'cs-back-lever': <String>[
+        'cs-back-lever-tuck',
+        'cs-back-lever-tuck-avance',
+        'cs-back-lever-straddle',
+        'cs-back-lever',
+      ],
+      'cs-handstand': <String>['cs-handstand-dos-au-mur', 'cs-handstand'],
+    };
+    final keys = targets.keys.toList();
+    final n = between(1, 2);
+    final seen = <String>{};
+    for (var i = 0; i < n; i++) {
+      final target = pick(keys);
+      final ladder = targets[target]!;
+      final current = pick(ladder);
+      if (!catalog.contains(target) ||
+          !catalog.contains(current) ||
+          !seen.add(target)) {
+        continue;
+      }
+      skills.add(
+        SkillState(
+          targetExerciseId: target,
+          currentExerciseId: current,
+          bestHoldSeconds: chance(80) ? between(1, 30) : null,
+          atStepSince: chance(60) ? pick(StepTenure.values) : null,
+        ),
+      );
+    }
+  }
+
+  // Échéances.
+  final events = <SeasonEvent>[];
+  if (chance(35)) {
+    final date = created.addDays(between(40, 150));
+    final kind = pick(<EventKind>[
+      EventKind.strengthCompetition,
+      EventKind.repsCompetition,
+      EventKind.personalTest,
+    ]);
+    events.add(
+      SeasonEvent(
+        id: 'e1',
+        kind: kind,
+        priority: pick(EventPriority.values),
+        date: date,
+        lifts: kind == EventKind.repsCompetition
+            ? null
+            : <CompetitionLift>[
+                for (final id in const <String>[
+                  'sl-traction-lestee',
+                  'sl-dips-leste',
+                  'sl-squat-competition',
+                ])
+                  if (catalog.contains(id) && chance(70))
+                    CompetitionLift(exerciseId: id, attempts: 3),
+              ],
+        mode: kind == EventKind.repsCompetition ? RepsEventMode.maxReps : null,
+        stations: kind == EventKind.repsCompetition
+            ? <EventStation>[
+                for (final id in const <String>[
+                  'cd-muscle-up-barre-strict',
+                  'sw-traction-pronation',
+                  'sw-dips-barres-paralleles',
+                ])
+                  if (catalog.contains(id) && chance(75))
+                    EventStation(exerciseId: id),
+              ]
+            : null,
+      ),
+    );
+  }
+
+  final weak = <WeakPoint>[
+    if (chance(25))
+      WeakPoint(
+        exerciseId: pick(const <String>[
+          'sl-traction-lestee',
+          'sl-dips-leste',
+          'sl-squat-competition',
+          'cd-muscle-up-barre-strict',
+        ]),
+        kind: pick(WeakPointKind.values),
+      ),
+  ];
+  final special = chance(10)
+      ? Specialization(
+          kind: SpecializationKind.exercise,
+          exerciseId: pick(const <String>['sl-traction-lestee', 'sl-dips-leste']),
+          weeks: between(6, 12),
+          maintenance: pick(MaintenancePolicy.values),
+        )
+      : null;
+
+  // Les niveaux de base gardés, sauf ceux des mouvements piliers testés.
+  final levels = <MovementLevel>[
+    for (final l in base.movementLevels)
+      if (!taken.contains(l.exerciseId)) l,
+    ...zero,
+  ];
+  final cannot = <String>[
+    for (final id in base.cannotDoExerciseIds ?? const <String>[])
+      if (!taken.contains(id)) id,
+  ];
+
+  return base.copyWith(
+    schemaVersion: 3,
+    disciplines: mix,
+    streetMode: null,
+    equipment: equipment,
+    equipmentByPlace: byPlace,
+    movementLevels: levels,
+    cannotDoExerciseIds: base.cannotDoExerciseIds == null ? null : cannot,
+    experience: experience,
+    trainingAge: pick(TrainingAge.values),
+    trainingGap: chance(70) ? TrainingGap.none : pick(TrainingGap.values),
+    sleep: chance(30) ? null : pick(SleepBand.values),
+    stress: chance(30) ? null : pick(StressBand.values),
+    occupationalLoad: chance(40) ? null : pick(OccupationalLoad.values),
+    bodyWeightGoal: chance(50) ? null : pick(BodyWeightGoal.values),
+    otherSports: chance(80)
+        ? null
+        : <OtherSport>[
+            OtherSport(
+              kind: pick(OtherSportKind.values),
+              sessionsPerWeek: between(1, 4),
+              minutesPerSession: 15 * between(2, 6),
+            ),
+          ],
+    benchmarks: benchmarks.isEmpty ? null : benchmarks,
+    events: events.isEmpty ? null : events,
+    skills: skills.isEmpty ? null : skills,
+    weakPoints: weak.isEmpty ? null : weak,
+    specialization: special,
+    limitations: <Limitation>[
+      for (final l in base.limitations)
+        chance(50) ? l.copyWith(since: pick(ConstraintSince.values)) : l,
+    ],
+  );
+}
+
+/// Requête de création pour le profil street aléatoire de graine [seed] ;
+/// le premier jour du bloc varie avec la graine (tous les jours de la
+/// semaine sont couverts).
+PlanRequest randomCoachRequest(Catalog catalog, int seed, {int planSeed = 0}) {
+  final profile = randomCoachProfile(catalog, seed);
+  return PlanRequest(
+    profile: profile,
+    seed: planSeed,
+    startDate: CivilDate(2026, 10, 5).addDays(seed % 5 == 0 ? seed % 7 : 0),
+    locks: const <PlanLock>[],
+  );
+}
