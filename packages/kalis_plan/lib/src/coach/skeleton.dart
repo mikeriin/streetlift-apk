@@ -1514,9 +1514,10 @@ void _buildFigures(_Builder b, Set<int> runDays) {
         weakPointVariants[Ids.muscleUp]![WeakPointKind.transition]!,
         SlotRole.skill,
         Method.skillDynamic,
-        sets: 3,
+        sets: 2,
         referenceId: Ids.muscleUp,
         weak: WeakPointKind.transition,
+        support: true,
       );
     }
     if (first != null && firstDays.contains(d)) {
@@ -1552,7 +1553,6 @@ void _buildFigures(_Builder b, Set<int> runDays) {
         pullMax < 8 ? Method.repsStrength : Method.repsVolume,
         sets: skillLoad == 0 ? 4 : 3,
         stress: DayStress.medium,
-        support: true,
       );
     }
     if (balanceDays.contains(d) && a.level >= 2) {
@@ -1592,7 +1592,6 @@ void _buildFigures(_Builder b, Set<int> runDays) {
           Method.repsVolume,
           sets: 3,
           stress: DayStress.medium,
-          support: true,
         );
       }
     }
