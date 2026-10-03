@@ -322,7 +322,9 @@ List<String> coachAudit(
     for (var w = 1; w < series.length; w++) {
       final limit = _limit(series, light, w, coachStraightArmRise[level], 5);
       if (series[w] > limit + 1e-9) {
-        out.add('s$w : bras tendus (famille $family) ${series[w]} s pour $limit');
+        out.add(
+          's$w : bras tendus (famille $family) ${series[w]} s pour $limit',
+        );
       }
     }
   }
@@ -339,7 +341,9 @@ List<String> coachAudit(
     }
     final drop = level >= 2 ? 0.40 : 0.30;
     if (peak >= 10 && hard[at] > peak * (1 - drop) + 1e-9) {
-      out.add('s$at : échéance à ${hard[at]} séries dures pour un pic de $peak');
+      out.add(
+        's$at : échéance à ${hard[at]} séries dures pour un pic de $peak',
+      );
     }
   }
   return out;

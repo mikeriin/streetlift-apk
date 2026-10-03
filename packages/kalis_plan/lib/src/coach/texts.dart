@@ -105,6 +105,41 @@ String? coachReasonText(Reason r, Catalog catalog) {
     case ReasonCodes.planCoachNote:
       final v = p['value'];
       return switch (p['note']) {
+        CoachNotes.rampBodyweight =>
+          'Avant la série de tête : ${_int(v)} séries faciles (un tiers, '
+              'puis la moitié des répétitions prévues).',
+        CoachNotes.loadAdjust =>
+          'Ajustement des charges : si la série de tête laisse moins de '
+              'réserve que prévu, baisse les séries suivantes de 2,5 à 5 % ; '
+              'si elle en laisse au moins deux de plus, ajoute le plus petit '
+              'pas la semaine suivante.',
+        CoachNotes.repsAdjust =>
+          'Ajustement des répétitions : si les répétitions prévues ne '
+              'passent pas avec la réserve demandée, garde les mêmes chiffres '
+              'la semaine suivante ; ${_int(v)} séances de suite en dessous, '
+              'retire une série.',
+        CoachNotes.testUse =>
+          'Les tests de fin de bloc (ou de la semaine de test) recalent '
+              'les charges et les répétitions du bloc suivant.',
+        CoachNotes.eventRehearsal =>
+          "Répétition de l'épreuve : une série longue par atelier, dans "
+              "l'ordre de l'épreuve, ${_int(v)} s de repos entre les "
+              'ateliers.',
+        CoachNotes.rolePrehab =>
+          'Prévention : coiffe et fixateurs des omoplates, pour encaisser '
+              'le volume de tirage et de poussée.',
+        CoachNotes.roleRow =>
+          'Tirage horizontal : équilibre des épaules face à la poussée et '
+              'au tirage vertical.',
+        CoachNotes.rolePosterior =>
+          'Chaîne postérieure : ischio-jambiers et fessiers, entretien du '
+              'bas du corps.',
+        CoachNotes.roleLegs => 'Jambes : force utile, sans fatigue excessive.',
+        CoachNotes.roleCore =>
+          'Tronc : le gainage qui tient la position à la barre.',
+        CoachNotes.roleElbow =>
+          'Fléchisseurs du coude en charge légère : tolérance du coude au '
+              'tirage lourd.',
         CoachNotes.rampWarmup =>
           'Montée en charge : ${_int(v)} séries progressives (environ 40 %, '
               '60 % puis 75 à 80 % de la charge du jour) avant la série de '
@@ -125,8 +160,8 @@ String? coachReasonText(Reason r, Catalog catalog) {
           'En entretien pendant la spécialisation : volume réduit, charge '
               'gardée.',
         CoachNotes.everyMinute =>
-          'Une série au début de chaque minute pendant ${_int(v)} min ; si '
-              'les répétitions ne passent plus, arrête là.',
+          'Départs au chrono : une série toutes les ${_int(v)} s ; si les '
+              'répétitions ne passent plus, arrête là.',
         CoachNotes.qualityFirst =>
           'À faire frais, en début de séance ; arrête dès que la qualité '
               'passe sous ${_int(v)} sur 5.',

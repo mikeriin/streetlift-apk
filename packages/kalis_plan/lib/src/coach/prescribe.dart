@@ -37,7 +37,7 @@ abstract final class CoachNotes {
   /// Entretien pendant une spécialisation (`value` : séries par semaine).
   static const String maintenance = 'maintenance';
 
-  /// Une série au début de chaque minute (`value` : minutes).
+  /// Départs au chrono (`value` : secondes entre deux départs).
   static const String everyMinute = 'every_minute';
 
   /// Technique à l'état frais, arrêt dès que la qualité baisse (`value` :
@@ -71,8 +71,52 @@ abstract final class CoachNotes {
   /// Volume réduit par la tolérance du profil (`value` : facteur).
   static const String toleranceVolume = 'tolerance_volume';
 
+  /// Montée avant la série de tête au poids du corps (`value` : séries).
+  static const String rampBodyweight = 'ramp_bodyweight';
+
+  /// Règle d'ajustement de la charge (`value` : pas en %).
+  static const String loadAdjust = 'load_adjust';
+
+  /// Règle d'ajustement des répétitions (`value` : séances).
+  static const String repsAdjust = 'reps_adjust';
+
+  /// Usage des tests de fin de bloc (`value` : 0).
+  static const String testUse = 'test_use';
+
+  /// Simulation de l'épreuve (`value` : repos entre les ateliers, en s).
+  static const String eventRehearsal = 'event_rehearsal';
+
+  /// Rôle d'un exercice d'assistance : prévention (`value` : 0).
+  static const String rolePrehab = 'role_prehab';
+
+  /// Rôle : tirage horizontal.
+  static const String roleRow = 'role_row';
+
+  /// Rôle : chaîne postérieure.
+  static const String rolePosterior = 'role_posterior';
+
+  /// Rôle : jambes.
+  static const String roleLegs = 'role_legs';
+
+  /// Rôle : tronc.
+  static const String roleCore = 'role_core';
+
+  /// Rôle : fléchisseurs du coude.
+  static const String roleElbow = 'role_elbow';
+
   /// Tous les codes.
   static const List<String> all = <String>[
+    rampBodyweight,
+    loadAdjust,
+    repsAdjust,
+    testUse,
+    eventRehearsal,
+    rolePrehab,
+    roleRow,
+    rolePosterior,
+    roleLegs,
+    roleCore,
+    roleElbow,
     rampWarmup,
     topSetBackoff,
     speedWork,
@@ -295,6 +339,7 @@ final class _Draft {
   int backoffRepsHigh = 0;
   double backoffDrop = 0;
   bool everyMinute = false;
+  int interval = 60;
   bool practice = false;
   bool isometric = false;
   Tempo? tempo;
@@ -1036,6 +1081,7 @@ final class Prescriber {
       ..backoffRepsLow = back
       ..backoffRepsHigh = back
       ..intensity = _shareOf(e.id, top, max)
+      ..reasons.add(_note(CoachNotes.rampBodyweight, 2))
       ..reasons.add(_rule(CoachRules.repStep, 1, 'reps'));
     return x;
   }
@@ -1074,15 +1120,17 @@ final class Prescriber {
     x
       ..repsLow = reps
       ..repsHigh = reps
-      // Réserve réelle : ce qui reste jusqu'au maximum, moins une
-      // répétition pour la fatigue des séries qui s'enchaînent.
-      ..rir = _rirOf(
-        e,
-        (max - reps - 1) < 3 ? 3 : (max - reps - 1).toDouble(),
-        ws,
-        week,
-        cap: 5,
-      )
+      // Sous douze répétitions de maximum, ces séries sont des séries
+      // dures (3 à 4 en réserve) ; au-delà, du volume sous-maximal à 5
+      // en réserve ou plus (R4-G4), le même régime pendant tout le bloc.
+      ..rir = max >= 12
+          ? 5
+          : _rirOf(
+              e,
+              (max - reps - 1) < 3 ? 3 : (max - reps - 1).toDouble(),
+              ws,
+              week,
+            )
       ..intensity = _shareOf(e.id, reps, max);
     if (ws.kind == WeekKind.build) {
       x.reasons.add(_rule(CoachRules.repStep, 1, 'reps'));
@@ -1118,17 +1166,26 @@ final class Prescriber {
     if (minutes > 14) {
       minutes = 14;
     }
+    // Départs au chrono : l'effort tient dans la moitié de l'intervalle.
     final work = (reps * coachSecondsPerRep).round();
+    var interval = ((work * 2 + 29) ~/ 30) * 30;
+    if (interval < 60) {
+      interval = 60;
+    }
+    if (interval > 180) {
+      interval = 180;
+    }
     x
       ..sets = minutes
       ..minSets = 4
       ..repsLow = reps
       ..repsHigh = reps
       ..rir = 5
-      ..rest = work >= 50 ? 10 : 60 - work
+      ..rest = interval - work < 15 ? 15 : interval - work
       ..everyMinute = true
+      ..interval = interval
       ..intensity = _shareOf(e.id, reps, max)
-      ..reasons.add(_note(CoachNotes.everyMinute, minutes))
+      ..reasons.add(_note(CoachNotes.everyMinute, interval))
       ..reasons.add(_rule(CoachRules.densityStep, 1, 'min'));
     return x;
   }
@@ -1465,6 +1522,7 @@ final class Prescriber {
         ..rir = _rirOf(e, 3, ws, week)
         ..rest = 60
         ..reasons.add(_rule(CoachRules.holdStep, straight ? 1 : 5, 's'));
+      _roleNote(x);
       return x;
     }
     switch (method) {
@@ -1514,7 +1572,32 @@ final class Prescriber {
       }
     }
     x.reasons.add(_rule(CoachRules.doubleProgression, 1, 'reps'));
+    _roleNote(x);
     return x;
+  }
+
+  /// Note de rôle d'un exercice d'assistance (pourquoi il est là).
+  void _roleNote(_Draft x) {
+    final e = x.e;
+    String? note;
+    if (x.method == Method.accessoryPrehab) {
+      note = CoachNotes.rolePrehab;
+    } else if (e.pattern == MovementPattern.tirageHorizontal) {
+      note = CoachNotes.roleRow;
+    } else if (e.pattern == MovementPattern.charniereHanche ||
+        e.pattern == MovementPattern.flexionGenou ||
+        e.pattern == MovementPattern.extensionHanche) {
+      note = CoachNotes.rolePosterior;
+    } else if (e.pattern == MovementPattern.isolationBiceps) {
+      note = CoachNotes.roleElbow;
+    } else if (x.method == Method.accessoryCore) {
+      note = CoachNotes.roleCore;
+    } else if (x.method == Method.accessoryLegs) {
+      note = CoachNotes.roleLegs;
+    }
+    if (note != null) {
+      x.reasons.add(_note(note, 0));
+    }
   }
 
   _Draft? _warmup(SlotSpec s, WeekSpec ws, _DayRole role) {
@@ -1864,6 +1947,27 @@ final class Prescriber {
     if (unit == MeasureUnit.distance || unit == MeasureUnit.calories) {
       return _run(s, day, ws, role);
     }
+    // Épreuve de répétitions, phase de réalisation : la première séance de
+    // la semaine répète l'épreuve — une série longue par atelier, dans
+    // l'ordre, repos complets (R4-G1, R3-P20).
+    if (_shape.model == SeasonModel.repsPeak &&
+        ws.intent == WeekIntent.realization &&
+        role == _DayRole.normal &&
+        (s.method == Method.repsDensity || s.method == Method.repsVolume) &&
+        day == _rehearsalDay &&
+        _eventExercises().contains(s.exerciseId)) {
+      final top = SlotSpec(
+        exerciseId: s.exerciseId,
+        role: s.role,
+        method: Method.repsTop,
+        sets: 3,
+        stress: DayStress.heavy,
+      )..slotId = s.slotId;
+      final x = _repsTop(top, ws, week, role);
+      x?.reasons.add(_note(CoachNotes.eventRehearsal, 300));
+      x?.rest = 300;
+      return x;
+    }
     switch (s.method) {
       case Method.liftHeavy || Method.liftMaintain:
         return _liftHeavy(s, ws, week, role);
@@ -1941,6 +2045,16 @@ final class Prescriber {
       default:
         return _accessory(s, ws, week, role);
     }
+  }
+
+  /// Séance qui répète l'épreuve : la première qui porte une série longue.
+  int get _rehearsalDay {
+    for (final d in skeleton.days) {
+      if (d.slots.any((s) => s.method == Method.repsTop)) {
+        return d.dayIndex;
+      }
+    }
+    return -1;
   }
 
   /// Vrai si la semaine [ws] porte des tests hors échéance (fin de bloc).
@@ -2221,7 +2335,7 @@ final class Prescriber {
         }
         final removable =
             Method.cutRank(x.method) <= Method.cutRank(Method.liftVariant);
-        final floor = removable ? 1 : 2;
+        final floor = removable || _level == 0 ? 1 : 2;
         if (x.sets <= floor && !(removable && items.length > 1)) {
           continue;
         }
@@ -2238,8 +2352,7 @@ final class Prescriber {
                           (x.sets == pick.sets &&
                               Method.cutRank(x.method) <
                                   Method.cutRank(pick.method)))
-                    : (Method.cutRank(x.method) <
-                              Method.cutRank(pick.method) ||
+                    : (Method.cutRank(x.method) < Method.cutRank(pick.method) ||
                           (Method.cutRank(x.method) ==
                                   Method.cutRank(pick.method) &&
                               x.sets > pick.sets))));
@@ -2254,7 +2367,7 @@ final class Prescriber {
     }
     final removable =
         Method.cutRank(pick.method) <= Method.cutRank(Method.liftVariant);
-    if (pick.sets > (removable ? 1 : 2)) {
+    if (pick.sets > (removable || _level == 0 ? 1 : 2)) {
       pick.sets--;
     } else {
       home.remove(pick);
@@ -2478,7 +2591,7 @@ final class Prescriber {
       technique = SetTechnique(
         kind: SetTechniqueKind.topSetBackoff,
         backoffSets: x.sets - 1,
-        backoffDropPct: x.load != null || x.calibrate ? x.backoffDrop : null,
+        backoffDropPct: x.load != null || x.calibrate ? x.backoffDrop : 0,
         backoffRepsLow: x.backoffRepsLow,
         backoffRepsHigh: x.backoffRepsHigh,
       );
@@ -2493,7 +2606,7 @@ final class Prescriber {
     } else if (x.everyMinute) {
       technique = SetTechnique(
         kind: SetTechniqueKind.emom,
-        intervalSeconds: 60,
+        intervalSeconds: x.interval,
         intervals: x.sets,
       );
       rules.add(
@@ -2572,6 +2685,7 @@ final class Prescriber {
       if (g != null && x.kind == SetKind.work && (count[g] ?? 0) >= 2) {
         x
           ..sets = rounds[g]!
+          ..rest = x.rest > 75 ? 75 : x.rest
           ..backoff = false
           ..everyMinute = false;
       }
@@ -2782,6 +2896,24 @@ List<Reason> blockReasonsOf(Athlete a, Skeleton skeleton) {
       'value': 5.0,
     }),
   ];
+  Reason note(String code, double value) => reason(
+    ReasonCodes.planCoachNote,
+    <String, Object?>{'note': code, 'value': value},
+  );
+  final loaded = skeleton.days.any(
+    (d) => d.slots.any(
+      (s) =>
+          s.method == Method.liftHeavy ||
+          s.method == Method.liftVolume ||
+          s.method == Method.liftMaintain,
+    ),
+  );
+  if (loaded) {
+    out.add(note(CoachNotes.loadAdjust, 2.5));
+  }
+  out
+    ..add(note(CoachNotes.repsAdjust, 2))
+    ..add(note(CoachNotes.testUse, 0));
   final age = profile.trainingAge;
   if (age != null) {
     out.add(

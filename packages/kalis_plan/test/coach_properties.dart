@@ -382,13 +382,9 @@ List<String> checkCoachSeed(Catalog catalog, int seed) {
       for (final l in result.locks)
         if (l.kind == LockKind.keepSlot && l.slotId != null) l.slotId!,
     };
-    for (final v in coachAudit(
-      catalog,
-      trace.profile,
-      request.startDate,
-      [ProgramBlock(pass1: result.plan, pass2: reviewed)],
-      imposedSlotIds: imposed,
-    )) {
+    for (final v in coachAudit(catalog, trace.profile, request.startDate, [
+      ProgramBlock(pass1: result.plan, pass2: reviewed),
+    ], imposedSlotIds: imposed)) {
       // Ce que l'utilisateur impose peut dépasser le volume ou la montée
       // d'un groupe : seuls l'admission et le temps sont relus ici.
       if (v.contains('inadmissible') || v.contains('vide')) {

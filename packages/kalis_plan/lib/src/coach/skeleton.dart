@@ -344,7 +344,7 @@ void _buildBeginner(_Builder b) {
           <String>['sw-traction-negative'],
           SlotRole.secondary,
           Method.beginnerNegative,
-          sets: 2,
+          sets: 1,
           referenceId: Ids.pull,
           fromWeek: later ? 0 : 2,
         );
@@ -369,13 +369,13 @@ void _buildBeginner(_Builder b) {
         sets: sets,
         referenceId: Ids.pushUp,
       );
-      if (pushMax >= 1 && !heavy) {
+      if (pushMax >= 1 && !heavy && negativeDays.contains(d)) {
         b.add(
           d,
           <String>['sw-pompe-negative'],
           SlotRole.secondary,
           Method.beginnerNegative,
-          sets: 2,
+          sets: 1,
           referenceId: Ids.pushUp,
           fromWeek: later ? 0 : 2,
         );
@@ -774,7 +774,9 @@ void _buildReps(_Builder b, Set<int> runDays) {
   // jours et par la tolérance du profil.
   var frequency = a.level >= 3 ? 5 : (a.level == 2 ? 4 : 3);
   if (competition && a.level >= 2) {
-    frequency = a.level >= 3 ? 5 : 4;
+    // Préparation d'une épreuve : le geste se travaille presque chaque
+    // jour, en alternant les méthodes (R4-G8, R1-P9).
+    frequency = 5;
   }
   if (spared && frequency > 2) {
     frequency--;
@@ -792,15 +794,25 @@ void _buildReps(_Builder b, Set<int> runDays) {
     for (final d in days)
       if (!runDays.any((r) => b.dayBefore(d, r))) d,
   ];
-  final legDays = spreadDays(
-    a,
-    legCandidates.isEmpty ? days : legCandidates,
-    competition ? 1 : legCount,
-  );
+  // Les jambes vont d'abord aux jours sans traction.
+  final wanted = competition ? 1 : legCount;
+  final free = <int>[
+    for (final d in legCandidates)
+      if (!pullDays.contains(d)) d,
+  ];
+  final short = days.every((d) => a.days[d].minutes <= 50);
+  final legDays = short
+      ? days
+      : spreadDays(
+          a,
+          free.length >= wanted
+              ? free
+              : (legCandidates.isEmpty ? days : legCandidates),
+          wanted,
+        );
 
   final pullMethods = _repsMethods(pullMax);
   final dipMethods = _repsMethods(dipMax);
-  final short = days.every((d) => a.days[d].minutes <= 50);
   var pullAt = 0;
   var dipAt = 1;
   var pushAt = 0;
@@ -938,6 +950,41 @@ void _buildReps(_Builder b, Set<int> runDays) {
     }
     // Tirage horizontal et arrière d'épaule (R5-P27 : tirage au moins égal
     // à la poussée).
+    if (group != null) {
+      // Séances courtes : second enchaînement, tirage horizontal et
+      // pompes, puis un mouvement de jambes et le tronc.
+      b.add(
+        d,
+        Picks.bodyweightRow,
+        SlotRole.accessory,
+        Method.accessoryCompound,
+        sets: 3,
+        group: 'B',
+        rotate: true,
+      );
+      if (pushMax >= 1 && !b.days[d].hasExercise(Ids.pushUp)) {
+        b.add(
+          d,
+          <String>[Ids.pushUp],
+          SlotRole.accessory,
+          Method.repsVolume,
+          sets: 3,
+          stress: DayStress.medium,
+          group: 'B',
+        );
+      }
+      b.add(
+        d,
+        days.indexOf(d).isEven
+            ? Picks.bodyweightLegs
+            : Picks.bodyweightLegsSecond,
+        SlotRole.secondary,
+        Method.accessoryLegs,
+        sets: 2,
+      );
+      _addCore(b, d);
+      continue;
+    }
     if (minutes >= 40) {
       b.add(
         d,
@@ -1576,7 +1623,9 @@ void _fitBudget(_Builder b) {
           }
           final floor = s.method == Method.repsDensity
               ? 4
-              : (Method.cutRank(s.method) > Method.cutRank(Method.liftVariant)
+              : (a.level > 0 &&
+                        Method.cutRank(s.method) >
+                            Method.cutRank(Method.liftVariant)
                     ? 2
                     : 1);
           if (s.sets <= floor) {

@@ -111,11 +111,15 @@ String volumeText(ItemView i) {
         final drop = technique.backoffDropPct;
         return '1 × ${_range(i.repsLow, i.repsHigh)} (série de tête), puis '
             '$back × ${_range(low, high)}'
-            '${drop == null ? '' : ' à −${_num(drop * 100)} %'}';
+            '${drop == null || drop == 0 ? '' : ' à −${_num(drop * 100)} %'}';
       case SetTechniqueKind.emom:
-        final minutes = technique.intervals ?? p.sets;
-        return '$minutes min : ${_range(i.repsLow, i.repsHigh)} rép. au '
-            'début de chaque minute';
+        final count = technique.intervals ?? p.sets;
+        final every = technique.intervalSeconds ?? 60;
+        return every == 60
+            ? '$count min : ${_range(i.repsLow, i.repsHigh)} rép. au début '
+                  'de chaque minute'
+            : '$count × ${_range(i.repsLow, i.repsHigh)}, un départ toutes '
+                  'les ${_duration(every)}';
       default:
         break;
     }
@@ -320,6 +324,10 @@ bool _isBlockNote(Reason r) {
   }
   final note = r.params['note'];
   return note == CoachNotes.rampWarmup ||
+      note == CoachNotes.rampBodyweight ||
+      note == CoachNotes.loadAdjust ||
+      note == CoachNotes.repsAdjust ||
+      note == CoachNotes.testUse ||
       note == CoachNotes.topSetBackoff ||
       note == CoachNotes.submaximalHold ||
       note == CoachNotes.qualityFirst ||
@@ -363,8 +371,9 @@ List<String> programRules(ProgramView view) {
       for (final r in i.p.reasons) {
         if (_isBlockNote(r) && r.params['note'] == CoachNotes.everyMinute) {
           add(
-            'Séries « chaque minute » : une série courte au début de chaque '
-            'minute ; si les répétitions ne passent plus, arrête là.',
+            'Départs au chrono : chaque série part à heure fixe (le repos '
+            'est ce qui reste) ; si les répétitions ne passent plus, arrête '
+            'là.',
           );
         } else if (_ruleCodes.contains(r.code) || _isBlockNote(r)) {
           add(coachReasonText(r, catalog));

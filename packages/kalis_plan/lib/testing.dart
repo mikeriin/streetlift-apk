@@ -632,7 +632,8 @@ AthleteProfile randomCoachProfile(Catalog catalog, int seed) {
         kind: BenchmarkKind.loadReps,
         source: pick(BenchmarkSource.values),
         date: created.addDays(-between(0, 200)),
-        externalLoadKg: 2.5 * between((low / 2.5).round(), (high / 2.5).round()),
+        externalLoadKg:
+            2.5 * between((low / 2.5).round(), (high / 2.5).round()),
         reps: n,
         rir: chance(50) ? null : between(0, 3).toDouble(),
         bodyWeightKg: chance(50) ? null : base.bodyWeightKg,
@@ -727,34 +728,38 @@ AthleteProfile randomCoachProfile(Catalog catalog, int seed) {
       EventKind.repsCompetition,
       EventKind.personalTest,
     ]);
+    final lifts = <CompetitionLift>[
+      for (final id in const <String>[
+        'sl-traction-lestee',
+        'sl-dips-leste',
+        'sl-squat-competition',
+      ])
+        if (catalog.contains(id) && chance(70))
+          CompetitionLift(exerciseId: id, attempts: 3),
+    ];
+    if (lifts.isEmpty) {
+      lifts.add(
+        const CompetitionLift(exerciseId: 'sl-traction-lestee', attempts: 3),
+      );
+    }
+    final stations = <EventStation>[
+      for (final id in const <String>[
+        'cd-muscle-up-barre-strict',
+        'sw-traction-pronation',
+        'sw-dips-barres-paralleles',
+      ])
+        if (catalog.contains(id) && chance(75)) EventStation(exerciseId: id),
+    ];
     events.add(
       SeasonEvent(
         id: 'e1',
         kind: kind,
         priority: pick(EventPriority.values),
         date: date,
-        lifts: kind == EventKind.repsCompetition
-            ? null
-            : <CompetitionLift>[
-                for (final id in const <String>[
-                  'sl-traction-lestee',
-                  'sl-dips-leste',
-                  'sl-squat-competition',
-                ])
-                  if (catalog.contains(id) && chance(70))
-                    CompetitionLift(exerciseId: id, attempts: 3),
-              ],
+        lifts: kind == EventKind.repsCompetition ? null : lifts,
         mode: kind == EventKind.repsCompetition ? RepsEventMode.maxReps : null,
-        stations: kind == EventKind.repsCompetition
-            ? <EventStation>[
-                for (final id in const <String>[
-                  'cd-muscle-up-barre-strict',
-                  'sw-traction-pronation',
-                  'sw-dips-barres-paralleles',
-                ])
-                  if (catalog.contains(id) && chance(75))
-                    EventStation(exerciseId: id),
-              ]
+        stations: kind == EventKind.repsCompetition && stations.isNotEmpty
+            ? stations
             : null,
       ),
     );
@@ -775,7 +780,10 @@ AthleteProfile randomCoachProfile(Catalog catalog, int seed) {
   final special = chance(10)
       ? Specialization(
           kind: SpecializationKind.exercise,
-          exerciseId: pick(const <String>['sl-traction-lestee', 'sl-dips-leste']),
+          exerciseId: pick(const <String>[
+            'sl-traction-lestee',
+            'sl-dips-leste',
+          ]),
           weeks: between(6, 12),
           maintenance: pick(MaintenancePolicy.values),
         )
