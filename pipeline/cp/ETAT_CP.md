@@ -34,6 +34,7 @@ Tous les lots sont lancés par la conversation de pilotage d'après ce fichier (
 | Paquet | Étiquette (branche fixe) | Lot | Commit | Date |
 | --- | --- | --- | --- | --- |
 | `kalis_core` 0.4.0 | `etiquettes/kalis_core-v0.4.0` | CQ | ef4c57ae | 03/10/2026 |
+| `kalis_bench` 0.1.0 | `etiquettes/kalis_bench-v0.1.0` | CR | 0d219144 | 03/10/2026 |
 
 ## Lots
 
@@ -41,7 +42,7 @@ Chaque lot ne modifie que sa ligne (PIPELINE_CP.md §1).
 
 | Lot | Voie | Prérequis | Livré | Panel (min) | Date | Statut |
 | --- | --- | --- | --- | --- | --- | --- |
-| CR | A | références reçues | — | — | — | en cours depuis 2026-10-03 19:22 UTC (reprise, fin de lot sur Opus 5.5, C5.1) |
+| CR | A | références reçues | `kalis_bench` 0.1.0 (`etiquettes/kalis_bench-v0.1.0`, commit 0d219144, run 37126581234) ; référentiel 145 principes, 27 profils, panel étalonné et gelé, page de relecture (manche 0) | moteurs 0.1 : 3/10 (moyenne 4,9) ; 117 violations de sécurité | 2026-10-03 | livré |
 | CQ | B | — | `kalis_core` 0.4.0 (`etiquettes/kalis_core-v0.4.0`, commit ef4c57ae, run 37106401044) ; profil v3 : 16 questions débutant, 29 élite | — (lot sans panel) | 2026-10-03 | livré |
 | CP1 | A | CR, CQ | — | — | — | en attente de CR, CQ |
 | CA1 | B | CR, CQ | — | — | — | en attente de CR, CQ |
