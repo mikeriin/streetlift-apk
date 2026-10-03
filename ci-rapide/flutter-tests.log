@@ -1,0 +1,277 @@
+00:00 +0: loading /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart
+00:00 +0: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: (setUpAll)
+00:00 +0: /home/runner/work/streetlift-apk/streetlift-apk/test/g6_profil_test.dart: (setUpAll)
+00:00 +1: /home/runner/work/streetlift-apk/streetlift-apk/test/g6_profil_test.dart: (setUpAll)
+00:00 +2: /home/runner/work/streetlift-apk/streetlift-apk/test/g6_profil_test.dart: (setUpAll)
+00:00 +3: /home/runner/work/streetlift-apk/streetlift-apk/test/g6_profil_test.dart: (setUpAll)
+00:00 +4: /home/runner/work/streetlift-apk/streetlift-apk/test/g6_profil_test.dart: (setUpAll)
+00:00 +5: /home/runner/work/streetlift-apk/streetlift-apk/test/g6_profil_test.dart: (setUpAll)
+00:00 +6: /home/runner/work/streetlift-apk/streetlift-apk/test/g6_profil_test.dart: (setUpAll)
+00:00 +7: /home/runner/work/streetlift-apk/streetlift-apk/test/g6_profil_test.dart: (setUpAll)
+00:00 +8: /home/runner/work/streetlift-apk/streetlift-apk/test/g6_profil_test.dart: (setUpAll)
+00:00 +8: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: magasin utilisateur existant : profil v2 relu au schéma 3, sans perte ; programme inchangé ; invitation une seule fois
+00:00 +9: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: magasin utilisateur existant : profil v2 relu au schéma 3, sans perte ; programme inchangé ; invitation une seule fois
+00:00 +10: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: magasin utilisateur existant : profil v2 relu au schéma 3, sans perte ; programme inchangé ; invitation une seule fois
+00:00 +11: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: magasin utilisateur existant : profil v2 relu au schéma 3, sans perte ; programme inchangé ; invitation une seule fois
+00:00 +12: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: magasin utilisateur existant : profil v2 relu au schéma 3, sans perte ; programme inchangé ; invitation une seule fois
+00:00 +13: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: magasin utilisateur existant : profil v2 relu au schéma 3, sans perte ; programme inchangé ; invitation une seule fois
+00:00 +14: /home/runner/work/streetlift-apk/streetlift-apk/test/g6_profil_test.dart: modèle brouillon et section : aller-retour JSON identique
+00:00 +15: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: magasin profil créé avec le parcours v3 : questions reportées proposées après la première semaine
+00:00 +16: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: magasin profil créé avec le parcours v3 : questions reportées proposées après la première semaine
+00:00 +17: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: magasin profil créé avec le parcours v3 : questions reportées proposées après la première semaine
+00:00 +18: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: magasin profil créé avec le parcours v3 : questions reportées proposées après la première semaine
+00:00 +19: /home/runner/work/streetlift-apk/streetlift-apk/test/g6_profil_test.dart: magasin installation neuve : profil v2 enregistré, relu, sauvegardé
+00:00 +20: /home/runner/work/streetlift-apk/streetlift-apk/test/g6_profil_test.dart: magasin installation neuve : profil v2 enregistré, relu, sauvegardé
+00:00 +21: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: magasin moteurs actuels : un programme pour chaque profil type
+00:00 +22: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: magasin moteurs actuels : un programme pour chaque profil type
+00:01 +23: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: magasin moteurs actuels : un programme pour chaque profil type
+00:01 +24: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: magasin moteurs actuels : un programme pour chaque profil type
+00:01 +25: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: magasin moteurs actuels : un programme pour chaque profil type
+00:01 +26: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: magasin moteurs actuels : un programme pour chaque profil type
+00:02 +27: /home/runner/work/streetlift-apk/streetlift-apk/test/g6_profil_test.dart: écrans installation neuve : 12 écrans (CU : ceux d’un débutant), profil valide, attente du programme
+00:02 +28: /home/runner/work/streetlift-apk/streetlift-apk/test/g6_profil_test.dart: écrans installation neuve : 12 écrans (CU : ceux d’un débutant), profil valide, attente du programme
+00:05 +29: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: écrans profils types : le flux montre exactement les questions du parcours, écran par écran (sombre)
+00:06 +30: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: écrans profils types : le flux montre exactement les questions du parcours, écran par écran (sombre)
+00:06 +31: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: écrans profils types : le flux montre exactement les questions du parcours, écran par écran (sombre)
+00:07 +32: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: écrans profils types : le flux montre exactement les questions du parcours, écran par écran (sombre)
+00:07 +33: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: écrans profils types : le flux montre exactement les questions du parcours, écran par écran (sombre)
+00:08 +34: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: écrans profils types : le flux montre exactement les questions du parcours, écran par écran (sombre)
+00:08 +35: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: écrans profils types : le flux montre exactement les questions du parcours, écran par écran (sombre)
+00:10 +36: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: écrans profils types : le flux montre exactement les questions du parcours, écran par écran (sombre)
+00:10 +37: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: écrans profils types : le flux montre exactement les questions du parcours, écran par écran (sombre)
+00:10 +38: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: écrans profils types : le flux montre exactement les questions du parcours, écran par écran (sombre)
+00:11 +39: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: écrans profils types : le flux montre exactement les questions du parcours, écran par écran (sombre)
+00:11 +40: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: écrans profils types : le flux montre exactement les questions du parcours, écran par écran (sombre)
+00:11 +41: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: écrans profils types : le flux montre exactement les questions du parcours, écran par écran (sombre)
+00:11 +42: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: écrans profils types : le flux montre exactement les questions du parcours, écran par écran (sombre)
+00:11 +43: /home/runner/work/streetlift-apk/streetlift-apk/test/g2_retrait_test.dart: Premier lancement de dev6.1.0 copie complète vérifiée, puis seulement suppression
+00:11 +44: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: écrans profils types : le flux montre exactement les questions du parcours, écran par écran (clair)
+00:12 +45: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: écrans profils types : le flux montre exactement les questions du parcours, écran par écran (clair)
+00:12 +46: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: écrans profils types : le flux montre exactement les questions du parcours, écran par écran (clair)
+00:12 +47: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: écrans profils types : le flux montre exactement les questions du parcours, écran par écran (clair)
+00:12 +48: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: écrans profils types : le flux montre exactement les questions du parcours, écran par écran (clair)
+00:12 +49: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: écrans profils types : le flux montre exactement les questions du parcours, écran par écran (clair)
+00:12 +50: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: écrans profils types : le flux montre exactement les questions du parcours, écran par écran (clair)
+00:13 +51: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: écrans profils types : le flux montre exactement les questions du parcours, écran par écran (clair)
+00:13 +52: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: écrans profils types : le flux montre exactement les questions du parcours, écran par écran (clair)
+00:14 +53: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: écrans profils types : le flux montre exactement les questions du parcours, écran par écran (clair)
+00:14 +54: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: écrans profils types : le flux montre exactement les questions du parcours, écran par écran (clair)
+00:16 +55: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: écrans profils types : le flux montre exactement les questions du parcours, écran par écran (clair)
+00:16 +56: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: écrans profils types : le flux montre exactement les questions du parcours, écran par écran (clair)
+00:17 +57: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: écrans profils types : le flux montre exactement les questions du parcours, écran par écran (clair)
+00:17 +58: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: écrans profils types : le flux montre exactement les questions du parcours, écran par écran (clair)
+00:17 +59: /home/runner/work/streetlift-apk/streetlift-apk/test/g7_plan_test.dart: magasin installation neuve : le programme validé devient l’instance active (accueil, calendrier, séances), sauvegardé, relu à l’identique
+00:17 +60: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: écrans débutant : record inconnu impossible, aucune question de récupération ; un pas de plus pour le poids en street
+00:18 +61: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: écrans débutant : record inconnu impossible, aucune question de récupération ; un pas de plus pour le poids en street
+00:18 +62: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: écrans débutant : record inconnu impossible, aucune question de récupération ; un pas de plus pour le poids en street
+00:18 +62 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: écrans débutant : record inconnu impossible, aucune question de récupération ; un pas de plus pour le poids en street
+00:18 +62 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/g7_plan_test.dart: magasin textes : tous les codes de raison du plan ont une phrase [E]
+  Expected: not 'Choix du moteur.'
+    Actual: 'Choix du moteur.'
+  plan.season_phase
+  
+  package:matcher                                     expect
+  package:flutter_test/src/widget_tester.dart 473:18  expect
+  test/g7_plan_test.dart 559:9                        main.<fn>.<fn>
+  
+00:18 +62 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: écrans débutant : record inconnu impossible, aucune question de récupération ; un pas de plus pour le poids en street
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: exactly one matching candidate
+  Actual: _KeyWidgetFinder:<Found 0 widgets with key [<'q-training_gap'>]: []>
+   Which: means none were found but one was expected
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure>.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart:852:7)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart line 852
+The test description was:
+  débutant : record inconnu impossible, aucune question de récupération ; un pas de plus pour le
+  poids en street
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:18 +62 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/g7_plan_test.dart: écrans création complète : passe 1, autre proposition, revue (sais, sais pas + variante, diff, annulation), récapitulatif, passe 2, ajustement refusé, validation
+00:18 +62 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: écrans débutant : record inconnu impossible, aucune question de récupération ; un pas de plus pour le poids en street [E]
+  Test failed. See exception logs above.
+  The test description was: débutant : record inconnu impossible, aucune question de récupération ; un pas de plus pour le poids en street
+  
+00:19 +63 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/g7_plan_test.dart: écrans création complète : passe 1, autre proposition, revue (sais, sais pas + variante, diff, annulation), récapitulatif, passe 2, ajustement refusé, validation
+00:20 +63 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: écrans échéance : compétition de force avec un règlement pré-rempli
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: exactly one matching candidate
+  Actual: _TextWidgetFinder:<Found 0 widgets with text "Lequel de tes mouvements de compétition est
+le plus en retard ?": []>
+   Which: means none were found but one was expected
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure>.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart:936:7)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart line 936
+The test description was:
+  échéance : compétition de force avec un règlement pré-rempli
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:20 +63 -3: /home/runner/work/streetlift-apk/streetlift-apk/test/g7_plan_test.dart: écrans création complète : passe 1, autre proposition, revue (sais, sais pas + variante, diff, annulation), récapitulatif, passe 2, ajustement refusé, validation
+00:20 +63 -3: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: écrans échéance : compétition de force avec un règlement pré-rempli [E]
+  Test failed. See exception logs above.
+  The test description was: échéance : compétition de force avec un règlement pré-rempli
+  
+00:21 +63 -3: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: écrans Compléter mon profil : questions du schéma 3 seulement, programme inchangé
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: no matching candidates
+  Actual: _TypeWidgetFinder:<Found 1 widget with type "AthleteProfileFlow": [
+            AthleteProfileFlow(dependencies: [InheritedCupertinoTheme, _FocusInheritedScope,
+_InheritedTheme, _LocalizationsScope-[GlobalKey#f5606]], state: AthleteProfileFlowState#8464a),
+          ]>
+   Which: means one was found but none were expected
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure>.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart:971:7)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart line 971
+The test description was:
+  Compléter mon profil : questions du schéma 3 seulement, programme inchangé
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:21 +63 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/g7_plan_test.dart: écrans création complète : passe 1, autre proposition, revue (sais, sais pas + variante, diff, annulation), récapitulatif, passe 2, ajustement refusé, validation
+00:21 +63 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: écrans Compléter mon profil : questions du schéma 3 seulement, programme inchangé [E]
+  Test failed. See exception logs above.
+  The test description was: Compléter mon profil : questions du schéma 3 seulement, programme inchangé
+  
+00:21 +64 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: écrans texte à 200 % : récupération et records sans débordement (sombre)
+00:21 +65 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: écrans texte à 200 % : récupération et records sans débordement (sombre)
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: exactly one matching candidate
+  Actual: _HitTestableWidgetFinder:<Found 0 widgets with key [<'flow-next-levels'>] (considering
+only hit-testable widgets with a RenderBox): []>
+   Which: means none were found but one was expected
+Action atteinte par défilement sur une fenêtre de téléphone
+
+When the exception was thrown, this was the stack:
+#4      scrollToAction (file:///home/runner/work/streetlift-apk/streetlift-apk/test/phone_test_support.dart:28:3)
+<asynchronous suspension>
+#5      main.<anonymous closure>.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart:1002:11)
+<asynchronous suspension>
+#6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///home/runner/work/streetlift-apk/streetlift-apk/test/phone_test_support.dart line 28
+The test description was:
+  texte à 200 % : récupération et records sans débordement (sombre)
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:22 +65 -5: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: écrans texte à 200 % : récupération et records sans débordement (sombre) [E]
+  Test failed. See exception logs above.
+  The test description was: texte à 200 % : récupération et records sans débordement (sombre)
+  
+00:22 +65 -5: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: écrans texte à 200 % : récupération et records sans débordement (clair)
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: exactly one matching candidate
+  Actual: _HitTestableWidgetFinder:<Found 0 widgets with key [<'flow-next-levels'>] (considering
+only hit-testable widgets with a RenderBox): []>
+   Which: means none were found but one was expected
+Action atteinte par défilement sur une fenêtre de téléphone
+
+When the exception was thrown, this was the stack:
+#4      scrollToAction (file:///home/runner/work/streetlift-apk/streetlift-apk/test/phone_test_support.dart:28:3)
+<asynchronous suspension>
+#5      main.<anonymous closure>.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart:1002:11)
+<asynchronous suspension>
+#6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///home/runner/work/streetlift-apk/streetlift-apk/test/phone_test_support.dart line 28
+The test description was:
+  texte à 200 % : récupération et records sans débordement (clair)
+════════════════════════════════════════════════════════════════════════════════════════════════════
+00:23 +65 -6: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: magasin sans profil v2 : séance hors moteur (L7 inchangé)
+00:23 +65 -6: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: écrans texte à 200 % : récupération et records sans débordement (clair) [E]
+  Test failed. See exception logs above.
+  The test description was: texte à 200 % : récupération et records sans débordement (clair)
+  
+00:23 +65 -6: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: magasin sans profil v2 : séance hors moteur (L7 inchangé)
+00:23 +66 -6: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: magasin programme du propriétaire (D5.10) : porté tel quel dans un bloc importé, séance servie par kalis_adapt, structure intacte
+00:23 +67 -6: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: magasin programme du propriétaire (D5.10) : porté tel quel dans un bloc importé, séance servie par kalis_adapt, structure intacte
+00:23 +68 -6: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: magasin programme du propriétaire (D5.10) : porté tel quel dans un bloc importé, séance servie par kalis_adapt, structure intacte
+00:24 +69 -6: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_evolution_test.dart: magasin mode assisté : volume appliqué d’office, annoncé, programme affiché et bloc du moteur à jour à partir de la semaine visée ; semaines d’avant intactes ; annulation jusqu’à la séance concernée
+00:24 +70 -6: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_evolution_test.dart: magasin mode assisté : volume appliqué d’office, annoncé, programme affiché et bloc du moteur à jour à partir de la semaine visée ; semaines d’avant intactes ; annulation jusqu’à la séance concernée
+00:24 +71 -6: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_evolution_test.dart: magasin mode assisté : volume appliqué d’office, annoncé, programme affiché et bloc du moteur à jour à partir de la semaine visée ; semaines d’avant intactes ; annulation jusqu’à la séance concernée
+00:24 +72 -6: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_evolution_test.dart: magasin mode assisté : volume appliqué d’office, annoncé, programme affiché et bloc du moteur à jour à partir de la semaine visée ; semaines d’avant intactes ; annulation jusqu’à la séance concernée
+00:24 +73 -6: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_evolution_test.dart: magasin mode assisté : volume appliqué d’office, annoncé, programme affiché et bloc du moteur à jour à partir de la semaine visée ; semaines d’avant intactes ; annulation jusqu’à la séance concernée
+00:24 +74 -6: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: magasin prescription d’un autre jour, séance pas commencée : nouvelle prescription, bilan reposé ; temps et douleurs gardés quand l’ajustement est annulé
+00:25 +75 -6: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_evolution_test.dart: magasin annulation refusée une fois la séance concernée commencée, et seulement pour le dernier changement du bloc
+00:25 +76 -6: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: magasin mode libre : l’ajustement est proposé, rien n’est appliqué sans accord
+00:25 +77 -6: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_evolution_test.dart: magasin mode libre : rien n’est appliqué sans accord ; Accepter, Refuser (transmis au moteur), Plus tard (le lendemain)
+00:25 +78 -6: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: magasin douleur : zone épargnée ; règle L13 (> 3/10 plus de 2 séances de suite) → renvoi vers un professionnel
+00:25 +79 -6: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_evolution_test.dart: magasin proposition en attente que le moteur ne fait plus : retirée ; passage au mode assisté : appliquée
+00:25 +80 -6: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: magasin conseil après chaque série, mode assisté : appliqué aux séries suivantes non modifiées, annulable
+00:25 +81 -6: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_evolution_test.dart: magasin exercise_swap (assisted) : restructuration de kalis_plan appliquée d’office à partir de la semaine visée, semaines d’avant intactes, annulable
+00:25 +82 -6: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: magasin conseil en mode libre : proposé, appliqué seulement après accord
+00:25 +83 -6: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_evolution_test.dart: magasin pain_sparing (assisted) : restructuration de kalis_plan appliquée d’office à partir de la semaine visée, semaines d’avant intactes, annulable
+00:26 +84 -6: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_evolution_test.dart: magasin pain_sparing (assisted) : restructuration de kalis_plan appliquée d’office à partir de la semaine visée, semaines d’avant intactes, annulable
+00:26 +85 -6: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: magasin résumé de fin : calibrage, capacité avant / après, prochaine fois
+00:26 +86 -6: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_evolution_test.dart: magasin session_restructure (assisted) : restructuration de kalis_plan appliquée d’office à partir de la semaine visée, semaines d’avant intactes, annulable
+00:26 +87 -6: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: magasin budgets : prescription et conseil sous 1 s en test (VM)
+00:26 +88 -6: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_evolution_test.dart: magasin block_restructure (assisted) : restructuration de kalis_plan appliquée d’office à partir de la semaine visée, semaines d’avant intactes, annulable
+00:26 +89 -6: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_evolution_test.dart: magasin block_restructure (assisted) : restructuration de kalis_plan appliquée d’office à partir de la semaine visée, semaines d’avant intactes, annulable
+00:26 +90 -6: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: écrans (setUpAll)
+00:26 +90 -6: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_evolution_test.dart: magasin exercise_swap (free) : restructuration de kalis_plan appliquée une fois acceptée à partir de la semaine visée, semaines d’avant intactes, annulable
+00:26 +91 -6: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: écrans bilan : « Comment tu te sens ? », réponse basse → détail sur un seul écran, « Passer » partout ; flammes obligatoires ; fin de séance
+00:26 +92 -6: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: écrans bilan : « Comment tu te sens ? », réponse basse → détail sur un seul écran, « Passer » partout ; flammes obligatoires ; fin de séance
+00:26 +93 -6: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: écrans bilan : « Comment tu te sens ? », réponse basse → détail sur un seul écran, « Passer » partout ; flammes obligatoires ; fin de séance
+00:26 +94 -6: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: écrans bilan : « Comment tu te sens ? », réponse basse → détail sur un seul écran, « Passer » partout ; flammes obligatoires ; fin de séance
+00:27 +95 -6: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: écrans bilan : « Comment tu te sens ? », réponse basse → détail sur un seul écran, « Passer » partout ; flammes obligatoires ; fin de séance
+00:27 +96 -6: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: écrans bilan : « Comment tu te sens ? », réponse basse → détail sur un seul écran, « Passer » partout ; flammes obligatoires ; fin de séance
+00:27 +97 -6: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: écrans bilan : « Comment tu te sens ? », réponse basse → détail sur un seul écran, « Passer » partout ; flammes obligatoires ; fin de séance
+00:28 +98 -6: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: écrans bilan : « Comment tu te sens ? », réponse basse → détail sur un seul écran, « Passer » partout ; flammes obligatoires ; fin de séance
+00:28 +99 -6: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: écrans bilan : « Comment tu te sens ? », réponse basse → détail sur un seul écran, « Passer » partout ; flammes obligatoires ; fin de séance
+00:29 +100 -6: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_evolution_test.dart: écrans carte de l’accueil (sombre) : proposition en attente, Accepter / Refuser / Plus tard, Pourquoi ?, ce qui change ; 320 px et texte à 200 %
+00:29 +101 -6: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: écrans ligne des flammes : 9 points et la flamme, toucher, glisser, « Je ne sais pas », écarter, clair et sombre
+00:30 +102 -6: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: écrans ligne des flammes : 9 points et la flamme, toucher, glisser, « Je ne sais pas », écarter, clair et sombre
+00:30 +103 -6: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_evolution_test.dart: écrans écran Évolution : mode modifiable, déblocage, historique avec raisons ; annulation
+00:30 +104 -6: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_evolution_test.dart: écrans écran Évolution : mode modifiable, déblocage, historique avec raisons ; annulation
+00:30 +105 -6: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_evolution_test.dart: écrans écran Évolution : mode modifiable, déblocage, historique avec raisons ; annulation
+00:30 +106 -6: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_evolution_test.dart: écrans écran Évolution : mode modifiable, déblocage, historique avec raisons ; annulation
+00:30 +107 -6: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_evolution_test.dart: écrans (tearDownAll)
+00:30 +107 -6: Some tests failed.
+
+Failing tests:
+  /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: écrans Compléter mon profil : questions du schéma 3 seulement, programme inchangé
+  /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: écrans débutant : record inconnu impossible, aucune question de récupération ; un pas de plus pour le poids en street
+  /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: écrans texte à 200 % : récupération et records sans débordement (clair)
+  /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: écrans texte à 200 % : récupération et records sans débordement (sombre)
+  ... and 2 more
