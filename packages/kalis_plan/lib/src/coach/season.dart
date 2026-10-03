@@ -322,7 +322,9 @@ BlockShape shapeBlock(
       var stage = 0;
       for (var i = 0; i < length; i++) {
         if (i == 0 && first) {
-          add(WeekKind.intro, WeekIntent.intro, phase, 0.8, 0);
+          // R5-P22 : la marche vers la première semaine de charge reste sous
+          // +20 %.
+          add(WeekKind.intro, WeekIntent.intro, phase, 0.9, 0);
         } else if ((i == length - 1 && length >= 4) || isEvent(i)) {
           add(
             WeekKind.test,
@@ -357,7 +359,10 @@ BlockShape shapeBlock(
         SeasonPhaseKind.intensification => WeekIntent.intensification,
         _ => WeekIntent.accumulation,
       };
-      final loaded = length - 1 - (first ? 1 : 0);
+      // R3-P21, R4-G7 : avant un test daté, la dernière semaine de charge
+      // devient une semaine d'affûtage (volume −35 %, intensité gardée).
+      final tapered = toEvent != null && toEvent >= 5 && toEvent <= length;
+      final loaded = length - 1 - (first ? 1 : 0) - (tapered ? 1 : 0);
       var stage = 0;
       for (var i = 0; i < length; i++) {
         if (i == 0 && first) {
@@ -365,8 +370,16 @@ BlockShape shapeBlock(
             WeekKind.intro,
             WeekIntent.intro,
             phase,
-            reintroduction ? 0.5 : 0.8,
+            reintroduction ? 0.5 : 0.9,
             0,
+          );
+        } else if (tapered && left(i) == 2) {
+          add(
+            WeekKind.deload,
+            WeekIntent.taper,
+            SeasonPhaseKind.taper,
+            0.65,
+            stage,
           );
         } else if (isEvent(i)) {
           add(
@@ -388,7 +401,15 @@ BlockShape shapeBlock(
           );
         } else {
           final ramp = loaded <= 1 ? 1.0 : stage / (loaded - 1);
-          final volume = reintroduction ? 0.65 + 0.3 * ramp : 0.9 + 0.1 * ramp;
+          // R5-P7, R5-P22 : en reprise, le volume repart de la moitié et
+          // remonte de 15 % par semaine.
+          var back = 0.5;
+          for (var k = 0; k <= stage; k++) {
+            back *= 1.15;
+          }
+          final volume = reintroduction
+              ? (back > 0.95 ? 0.95 : back)
+              : 0.9 + 0.1 * ramp;
           add(WeekKind.build, intent, phase, volume, stage);
           stage++;
         }
@@ -491,14 +512,14 @@ BlockShape shapeBlock(
               loaded,
             );
           } else if (i == 0 && first) {
-            add(WeekKind.intro, WeekIntent.intro, phase, 0.85, 0);
+            add(WeekKind.intro, WeekIntent.intro, phase, 0.9, 0);
           } else {
             final ramp = loaded <= 1 ? 1.0 : i / (loaded - 1);
             add(
               WeekKind.build,
               intent,
               phase,
-              phase == SeasonPhaseKind.accumulation ? 0.9 + 0.1 * ramp : 1.0,
+              phase == SeasonPhaseKind.accumulation ? 0.92 + 0.08 * ramp : 1.0,
               i,
             );
           }
@@ -564,10 +585,10 @@ BlockShape shapeBlock(
               test: true,
             );
           } else if (i == 0 && first) {
-            add(WeekKind.intro, WeekIntent.intro, phase, 0.85, 0);
+            add(WeekKind.intro, WeekIntent.intro, phase, 0.9, 0);
           } else {
             final ramp = loaded <= 1 ? 1.0 : i / (loaded - 1);
-            add(WeekKind.build, intent, phase, 0.9 + 0.1 * ramp, i);
+            add(WeekKind.build, intent, phase, 0.92 + 0.08 * ramp, i);
           }
         }
       }

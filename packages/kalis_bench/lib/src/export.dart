@@ -226,6 +226,13 @@ String effortText(ItemView i) {
   if (flames == null) {
     return '—';
   }
+  if (!i.traits.kind.isResistance) {
+    // Course et cardio : l'effort se lit dans l'allure donnée en note, pas
+    // en répétitions en réserve.
+    return i.p.test != null
+        ? 'chrono'
+        : (Flames.isOpenEnded(flames) ? 'allure facile' : 'allure soutenue');
+  }
   if (flames >= Flames.failure) {
     return 'effort maximal';
   }

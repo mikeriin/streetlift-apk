@@ -28,3 +28,12 @@ Clé des références : lue dans le projet claude.ai (`claude/CLE_REFERENCES_CP.
 
 ## Reste à faire
 - Finir la mise au point (CI verte en mode réduit puis complet), CONTRAT § 12, NOTES_COACH.md, CALIBRAGE_CP1.md, README ; kalis_bench 0.1.1 (version, CHANGELOG, docs/PROFILS.md) ; panel (ancres, passe initiale, boucles) et relecture documentée ; Jaccard références ; relecture indépendante ; fin de lot (§7).
+
+## Boucle 0 (passe complète initiale, 03/10/2026 ≈ 23:20 UTC)
+Ancres : (a) = 1 partout ; (c) = 8 (force), 9, 9, 9. Grilles : empreintes conformes.
+Notes d'ensemble [force, calisthénie, hypertrophie, santé | relecture documentée] :
+01 [7,7,8,7|6] 02 [7,7,7,7|6] 03 [6.5,7,7,8|5] 04 [5,7,6.5,4.5|6] 05 [6,5.5,5,5|5] 06 [7,7,6.5,7|6]
+07 [7.5,7,9,9|7] 08 [7,7,8,7|5] 09 [8,8,9,8|7] 10 [4,6.5,7.5,5.5|4] 11 [7,8,7,7|6] 12 [5,8,9,7|6]
+13 [6,6,7,6|5] 14 [7,5.5,6,6.5|6] 15 [6.5,6.5,7,6.5|6] 16 [8,8,8,8|7] 17 [7,7,6.5,6|5]
+Panel : min 4, moyenne ≈ 6,9 ; relecture documentée : min 4, moyenne ≈ 5,8. Quota de recherches web de la session épuisé (200/200) pendant la relecture documentée.
+Notes complètes : /home/claude/cp1/panel/p0 (all.json, corrections.txt).

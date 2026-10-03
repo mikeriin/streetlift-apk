@@ -204,7 +204,11 @@ List<String> coachAudit(
           }
           final e = t.exercise;
           final imposed = imposedSlotIds.contains(p.slotId);
-          if (!imposed) {
+          // Le test d'un mouvement visé par un objectif est admis même si
+          // le mouvement n'est pas encore acquis (essai de première
+          // traction).
+          if (!imposed &&
+              !(p.kind == SetKind.test && athlete.aimsAt(e.id))) {
             final why = athlete.rejection(e.id, d);
             if (why != null) {
               out.add('$where : ${e.id} inadmissible ($why)');

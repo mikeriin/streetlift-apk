@@ -4,6 +4,8 @@
 /// du profil (CONTRAT.md, § 12).
 library;
 
+import 'dart:math' as math;
+
 import 'package:kalis_core/kalis_core.dart';
 
 import '../traits.dart';
@@ -98,6 +100,17 @@ bool coachEligible(AthleteProfile profile) {
   return profile.availability.isNotEmpty;
 }
 
+double _pow(double x, double y) => math.pow(x, y).toDouble();
+
+/// Rythme le plus rapide que le plan s'autorise pour un maximum de
+/// répétitions, en fraction du record par semaine et par niveau (choix
+/// raisonné : R5-P13, les gains ralentissent avec l'ancienneté ; le plan
+/// ne promet jamais plus, même si l'objectif déclaré le demande).
+const List<double> coachPlannedRepsRate = <double>[0.08, 0.03, 0.02, 0.012];
+
+/// Même borne pour un maintien maximal (choix raisonné).
+const List<double> coachPlannedHoldRate = <double>[0.05, 0.04, 0.03, 0.02];
+
 /// Profil lu par le coach.
 final class Athlete {
   Athlete._({
@@ -112,6 +125,8 @@ final class Athlete {
     required this.oneRm,
     required this.reps,
     required this.holds,
+    required this.recordDay,
+    required this.runTenKSeconds,
     required this.notAcquired,
     required this.known,
     required this.excluded,
@@ -169,6 +184,8 @@ final class Athlete {
     final oneRm = <String, double>{};
     final reps = <String, int>{};
     final holds = <String, int>{};
+    final recordDay = <String, CivilDate>{};
+    double? runTenK;
     final zero = <String>{};
     for (final l in profile.movementLevels) {
       final low = l.low;
@@ -221,6 +238,10 @@ final class Athlete {
             final before = reps[b.exerciseId];
             if (before == null || n > before) {
               reps[b.exerciseId] = n;
+              final day = b.date;
+              if (day != null) {
+                recordDay[b.exerciseId] = day;
+              }
             }
             zero.remove(b.exerciseId);
           }
@@ -230,6 +251,21 @@ final class Athlete {
             final before = holds[b.exerciseId];
             if (before == null || s > before) {
               holds[b.exerciseId] = s;
+              final day = b.date;
+              if (day != null) {
+                recordDay[b.exerciseId] = day;
+              }
+            }
+          }
+        case BenchmarkKind.timeTrial:
+          final t = b.seconds;
+          final meters = b.distanceMeters;
+          if (t != null && meters != null && meters >= 1000 && t > 0) {
+            // Allure ramenée à 10 km par la formule de Riegel (exposant
+            // 1,06).
+            final ten = t * _pow(10000 / meters, 1.06);
+            if (runTenK == null || ten < runTenK) {
+              runTenK = ten;
             }
           }
         default:
@@ -425,6 +461,8 @@ final class Athlete {
       oneRm: oneRm,
       reps: reps,
       holds: holds,
+      recordDay: recordDay,
+      runTenKSeconds: runTenK,
       notAcquired: notAcquired,
       known: known,
       excluded: excluded,
@@ -474,6 +512,38 @@ final class Athlete {
 
   /// Maintien maximal par exercice, en secondes.
   final Map<String, int> holds;
+
+  /// Jour du record (répétitions ou maintien) par exercice, quand il est
+  /// connu.
+  final Map<String, CivilDate> recordDay;
+
+  /// Temps actuel sur 10 km, en secondes (meilleur chrono déclaré, ramené
+  /// à 10 km), ou `null`.
+  final double? runTenKSeconds;
+
+  /// Objectif de course chronométré (distance en mètres, temps visé en
+  /// secondes), ou `null`.
+  (double, double)? get runGoal {
+    for (final g in profile.goals) {
+      final meters = g.distanceMeters;
+      final target = g.targetValue;
+      if (g.metric == GoalMetric.timeSeconds &&
+          meters != null &&
+          target != null &&
+          meters >= 1000 &&
+          target > 0) {
+        return (meters, target);
+      }
+    }
+    return null;
+  }
+
+  /// Temps prévu sur [meters] d'après le chrono actuel (formule de Riegel,
+  /// exposant 1,06), en secondes, ou `null` sans chrono.
+  double? runTimeOn(double meters) {
+    final ten = runTenKSeconds;
+    return ten == null ? null : ten * _pow(meters / 10000, 1.06);
+  }
 
   /// Exercices déclarés non acquis (zéro répétition, « je ne sais pas
   /// faire »).
@@ -538,6 +608,86 @@ final class Athlete {
       }
     }
     return worst;
+  }
+
+  /// Objectif chiffré de [metric] sur l'exercice [id], ou `null`.
+  Goal? goalOn(String id, GoalMetric metric) {
+    for (final g in profile.goals) {
+      if (g.exerciseId == id && g.metric == metric && g.targetValue != null) {
+        return g;
+      }
+    }
+    return null;
+  }
+
+  /// Vrai si un objectif (ou une épreuve de l'échéance) porte sur
+  /// l'exercice [id] ou sur une variante de sa chaîne.
+  bool aimsAt(String id) {
+    final root = catalog.find(id)?.rootId ?? id;
+    for (final g in profile.goals) {
+      final other = g.exerciseId;
+      if (other != null &&
+          (other == id || (catalog.find(other)?.rootId ?? other) == root)) {
+        return true;
+      }
+    }
+    for (final e in profile.events ?? const <SeasonEvent>[]) {
+      for (final l in e.lifts ?? const <CompetitionLift>[]) {
+        if (l.exerciseId == id ||
+            (catalog.find(l.exerciseId)?.rootId ?? l.exerciseId) == root) {
+          return true;
+        }
+      }
+      for (final st in e.stations ?? const <EventStation>[]) {
+        if (st.exerciseId == id) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  /// Gain prévu du record [record] de l'exercice [id] le [day], en
+  /// fraction du record : la trajectoire qui mène à l'objectif déclaré,
+  /// bornée par le rythme plausible du niveau, ou la moitié de ce rythme
+  /// sans objectif. C'est un plan, pas une mesure : chaque test le recale
+  /// (le record et sa date changent, la trajectoire repart de là).
+  double plannedGain(String id, GoalMetric metric, num record, CivilDate day) {
+    if (record <= 0) {
+      return 0;
+    }
+    final goal = goalOn(id, metric);
+    final anchor = recordDay[id] ?? goal?.createdOn;
+    if (anchor == null) {
+      return 0;
+    }
+    final weeks = anchor.daysUntil(day) / 7;
+    if (weeks <= 0) {
+      return 0;
+    }
+    var cap = (metric == GoalMetric.maxHoldSeconds
+        ? coachPlannedHoldRate
+        : coachPlannedRepsRate)[level];
+    // Petits records : une répétition (ou une seconde) de plus toutes les
+    // trois semaines reste plausible à tout niveau.
+    if (cap < 1 / (3 * record)) {
+      cap = 1 / (3 * record);
+    }
+    var rate = cap / 2;
+    var ceiling = double.infinity;
+    final target = goal?.targetValue;
+    final deadline = goal?.targetDate;
+    if (target != null && target > record) {
+      ceiling = target / record - 1;
+      if (deadline != null && anchor.daysUntil(deadline) >= 7) {
+        final wanted = ceiling / (anchor.daysUntil(deadline) / 7);
+        rate = wanted > cap ? cap : wanted;
+      } else {
+        rate = cap;
+      }
+    }
+    final gain = rate * weeks;
+    return gain > ceiling ? ceiling : gain;
   }
 
   /// 1RM de charge totale (charge externe + part du poids de corps) de
