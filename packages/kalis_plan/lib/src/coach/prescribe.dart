@@ -1723,6 +1723,11 @@ final class Prescriber {
         final wanted = cumulative[_level] * part * ws.volume * volumeScale;
         sets = _clampInt(_round(wanted / hold), 2, 6);
       }
+      // Séance légère de la figure (pratique distribuée, R4-F1) : trois
+      // tenues au plus.
+      if (s.stress == DayStress.light && sets > 3) {
+        sets = 3;
+      }
     }
     x
       ..sets = sets < 2 ? 2 : sets
@@ -3410,6 +3415,24 @@ final class Prescriber {
     }
   }
 
+  /// Retire les miettes : un travail d'assistance réduit à une seule série
+  /// par les garde-fous ne sert plus à rien et encombre la séance.
+  void _tidy(List<List<_Draft>> days) {
+    for (final items in days) {
+      items.removeWhere(
+        (x) =>
+            x.sets <= 1 &&
+            x.kind == SetKind.work &&
+            x.isResistance &&
+            !x.fixed &&
+            !x.keep &&
+            x.minSets <= 1 &&
+            items.length > 2 &&
+            !Method.essential(x.method, support: x.support),
+      );
+    }
+  }
+
   /// Plancher de la semaine de l'échéance, avant les garde-fous de volume
   /// (qui gardent le dernier mot).
   void _floorEvent(List<List<_Draft>> days, WeekSpec ws) {
@@ -3766,6 +3789,7 @@ final class Prescriber {
       _floorEvent(days, ws);
       _fitVolume(days, ws);
       _fitTaper(days, ws);
+      _tidy(days);
       days.forEach(_equalize);
       final trace = _WeekTrace(ws.light);
       _fitLoads(days, trace);

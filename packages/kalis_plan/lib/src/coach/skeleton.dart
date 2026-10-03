@@ -1770,7 +1770,15 @@ void _buildFigures(_Builder b, Set<int> runDays) {
   // Force de base : deux séances regroupées par semaine (à volume égal, la
   // dispersion n'apporte rien), hors des jours de maintien lourd quand
   // c'est possible.
-  final strengthDays = spreadDays(a, rest.length >= 2 ? rest : days, 2);
+  final strengthPool = <int>[
+    ...rest,
+    if (firstDays.length >= 3) firstDays[1],
+  ];
+  final strengthDays = spreadDays(
+    a,
+    strengthPool.length >= 2 ? strengthPool : days,
+    2,
+  );
 
   void ladderOf(SkillTrack t) {
     final holdTarget = a.level <= 1 ? 12 : (a.level == 2 ? 10 : 8);
@@ -1824,9 +1832,9 @@ void _buildFigures(_Builder b, Set<int> runDays) {
         <String>[t.currentId, if (easier != null) easier],
         SlotRole.skill,
         Method.skillHold,
-        sets: a.level >= 2 ? 5 : 4,
+        sets: heavy ? (a.level >= 2 ? 5 : 4) : 3,
         skillTargetId: t.targetId,
-        stress: DayStress.heavy,
+        stress: heavy ? DayStress.heavy : DayStress.light,
       );
       if (hold < 8 && easier != null && a.level >= 1) {
         // R4-F7 : deux à trois semaines de chevauchement avec l'étape
@@ -1941,13 +1949,13 @@ void _buildFigures(_Builder b, Set<int> runDays) {
           stress: DayStress.medium,
         );
       }
-    } else if (pullMax >= 1 && a.can(Ids.pull, d) && skillLoad < 2) {
+    } else if (pullMax >= 1 && a.can(Ids.pull, d) && strengthDays.contains(d)) {
       b.add(
         d,
         <String>[Ids.pull],
         SlotRole.secondary,
         pullMax < 8 ? Method.repsStrength : Method.repsVolume,
-        sets: skillLoad == 0 ? 4 : 3,
+        sets: 4,
         stress: DayStress.medium,
       );
     }
@@ -1970,7 +1978,7 @@ void _buildFigures(_Builder b, Set<int> runDays) {
         a.level >= 2 && strengthDays.every((o) => a.can(Ids.weightedDip, o));
     if (weightedDip && !strengthDays.contains(d)) {
       // Dips lestés regroupés sur les deux séances de force.
-    } else if (dipMax >= 1 && a.can(Ids.dip, d) && skillLoad < 2) {
+    } else if (dipMax >= 1 && a.can(Ids.dip, d) && strengthDays.contains(d)) {
       if (weightedDip) {
         b.add(
           d,
