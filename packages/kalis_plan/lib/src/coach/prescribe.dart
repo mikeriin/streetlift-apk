@@ -128,6 +128,14 @@ abstract final class CoachNotes {
   /// externe visée, en kg).
   static const String attemptsGoal = 'attempts_goal';
 
+  /// Activation à J−2 d'une épreuve de répétitions (`value` : part du
+  /// maximum).
+  static const String activation = 'activation';
+
+  /// Reprise : la première semaine sert de test d'entrée (`value` :
+  /// répétitions en réserve à garder).
+  static const String reentryTest = 'reentry_test';
+
   /// Charge visée sous le poids du corps : série au poids du corps
   /// (`value` : part réelle du 1RM).
   static const String bodyweightFloor = 'bodyweight_floor';
@@ -180,6 +188,8 @@ abstract final class CoachNotes {
   /// Tous les codes.
   static const List<String> all = <String>[
     attemptsGoal,
+    activation,
+    reentryTest,
     bodyweightFloor,
     overload,
     strictAttempt,
@@ -533,6 +543,10 @@ final class Prescriber {
 
   final List<_WeekTrace> _history = <_WeekTrace>[];
 
+  /// Jours d'activation (J−2 d'une épreuve de répétitions) de la semaine
+  /// en cours.
+  final Set<int> _activation = <int>{};
+
   /// Premier jour de la semaine en cours de prescription.
   late CivilDate _today = a.start;
 
@@ -706,6 +720,7 @@ final class Prescriber {
 
   /// Rôle de chaque séance de la semaine [week].
   List<_DayRole> _roles(int week, WeekSpec ws) {
+    _activation.clear();
     final roles = List<_DayRole>.filled(a.dayCount, _DayRole.normal);
     final target = _shape.target;
     if (!ws.eventWeek || target == null) {
@@ -743,10 +758,14 @@ final class Prescriber {
         // R3-P14 : dernière séance à J−3 ou J−4 avant une épreuve de force
         // (arrêt de 2 à 4 jours) ; R3-P21 : repos complet d'un à deux
         // jours avant une épreuve de répétitions.
-        final rest = _shape.model == SeasonModel.repsPeak ? 1 : 2;
-        roles[d] = best - offset > rest
+        // (Épreuve de répétitions : à J−2, une activation courte et
+        // facile ; repos complet la veille.)
+        roles[d] = best - offset > 2
             ? _DayRole.primerFar
             : _DayRole.primerNear;
+        if (best - offset == 2 && _shape.model == SeasonModel.repsPeak) {
+          _activation.add(d);
+        }
       } else {
         // Test daté sans pic de forme : semaine allégée ordinaire, repos
         // la veille du test.
@@ -893,7 +912,21 @@ final class Prescriber {
     final stage = _stage(ws);
     final maintain = s.method == Method.liftMaintain;
     final base = s.sets;
-    if (role == _DayRole.primerFar) {
+    // R5-P24 : zone à ménager — la charge repart plus bas et rejoint le
+    // plan en trois semaines (retour par paliers de 10 à 20 %).
+    var spared = false;
+    for (final l in a.limits) {
+      final joint = l.joint;
+      if (joint != null &&
+          x.e.stressOn(joint) != JointStress.low &&
+          (l.recent || l.discomfort >= 2)) {
+        spared = true;
+      }
+    }
+    final ease = !spared || blockIndex > 0
+        ? 0.0
+        : (week <= 1 ? 0.06 : (week == 2 ? 0.03 : 0.0));
+    if (role == _DayRole.primerFar && !maintain) {
       // R3-P13 : dernier rappel lourd et court, 3 à 5 jours avant.
       _topSet(
         x,
@@ -926,6 +959,20 @@ final class Prescriber {
     if (maintain) {
       // R4-H3 : entretien au tiers du volume, intensité gardée.
       final heavy = s.stress == DayStress.heavy;
+      if (role != _DayRole.normal || ws.eventWeek) {
+        // Semaine de l'échéance : le mouvement en entretien ne prend rien
+        // à l'épreuve — deux séries légères.
+        x
+          ..sets = 2
+          ..minSets = 1
+          ..repsLow = 3
+          ..repsHigh = 3
+          ..rir = 5
+          ..rest = 120
+          ..reasons.add(_note(CoachNotes.maintenance, 2));
+        _loadAt(x, 0.72, s.referenceId);
+        return x;
+      }
       x
         ..sets = ws.light ? 2 : base
         ..minSets = 2
@@ -956,6 +1003,7 @@ final class Prescriber {
         if (pct > 0.845) {
           pct = 0.845;
         }
+        pct -= ease;
         _topSet(
           x,
           sets: _scaled(base, ws, min: 2),
@@ -972,12 +1020,13 @@ final class Prescriber {
         if (pct > 0.90) {
           pct = 0.90;
         }
+        pct -= ease;
         _topSet(
           x,
           sets: _scaled(base, ws, min: 2),
           reps: 3,
           pct: pct,
-          rir: 2,
+          rir: ease > 0 ? 3 : 2,
           drop: 0.10,
           ws: ws,
           week: week,
@@ -985,12 +1034,19 @@ final class Prescriber {
       case WeekIntent.realization:
         // R3-P4 : réalisation à 91 à 94 %, doubles puis simples.
         // R2-P1 : l'intermédiaire plafonne à 90 % en fin de bloc.
+        // La charge monte d'un cran par semaine dans la phase (doubles de
+        // 87 à 90 % chez l'intermédiaire ; 91 %, puis simples de 93 à 95 %
+        // ensuite).
         final single = ws.stage >= 1 && _level >= 2;
+        final step = ws.stage > 3 ? 3 : ws.stage;
+        final heavy = single
+            ? 0.93 + 0.01 * (step - 1)
+            : (_level >= 2 ? 0.91 : 0.87 + 0.01 * step);
         _topSet(
           x,
           sets: _scaled(base, ws, min: 2),
           reps: single ? 1 : 2,
-          pct: single ? 0.93 : (_level >= 2 ? 0.91 : 0.89),
+          pct: heavy - ease,
           rir: single ? 1 : 2,
           drop: 0.15,
           ws: ws,
@@ -1487,14 +1543,15 @@ final class Prescriber {
     final max = _maxOf(s);
     // R4-F1, R5-P27 : technique à l'état frais, séries très courtes, 2
     // répétitions en réserve au moins, arrêt dès que la qualité baisse.
-    final reps = max <= 2 ? 1 : (max <= 4 ? 2 : _round(max * 0.5));
-    final sets = _scaled(s.sets + (max <= 2 ? 1 : 0), ws, min: 2);
+    final reps = max <= 3 ? 1 : (max <= 5 ? 2 : _round(max * 0.5));
+    final sets = _scaled(s.sets + (max <= 3 ? 1 : 0), ws, min: 2);
     x
       ..sets = sets
       ..minSets = 3
       ..repsLow = reps
       ..repsHigh = reps
-      ..rir = _rirOf(e, max <= 2 ? 3 : (max - reps).toDouble(), ws, week)
+      // La réserve écrite est la vraie : maximum moins répétitions.
+      ..rir = _rirOf(e, max <= 0 ? 3 : (max - reps).toDouble(), ws, week)
       ..rest = 150
       ..practice = true
       ..reasons.add(_note(CoachNotes.qualityFirst, 4));
@@ -1852,11 +1909,22 @@ final class Prescriber {
           ..rir = _rirOf(e, 3, ws, week)
           ..rest = 60;
       case Method.accessoryLegs:
-        x
-          ..repsLow = 6 + _shift(ws)
-          ..repsHigh = 8 + _shift(ws)
-          ..rir = _rirOf(e, 3, ws, week)
-          ..rest = 90;
+        final best = a.reps[e.id] ?? 0;
+        if (best >= 3) {
+          // Mouvement à record (pistol, shrimp) : 50 à 65 % du maximum.
+          final high = _clampInt(_round(best * 0.65) + _shift(ws), 1, best - 2);
+          x
+            ..repsLow = high - 1 < 1 ? 1 : high - 1
+            ..repsHigh = high
+            ..rir = _rirOf(e, (best - high).toDouble(), ws, week)
+            ..rest = 90;
+        } else {
+          x
+            ..repsLow = 6 + _shift(ws)
+            ..repsHigh = 8 + _shift(ws)
+            ..rir = _rirOf(e, 3, ws, week)
+            ..rest = 90;
+        }
       default:
         x
           ..repsLow = 8 + _shift(ws)
@@ -2178,7 +2246,7 @@ final class Prescriber {
         if (wanted != null) {
           final fraction = e.bodyweightFraction?.value ?? 0;
           final ratio = (wanted + fraction * a.bodyWeight) / total;
-          if (ratio > 1.0 && ratio <= 1.06) {
+          if (ratio > 1.0 && ratio <= 1.07) {
             x.reasons.add(_note(CoachNotes.attemptsGoal, wanted));
           }
         }
@@ -2470,6 +2538,27 @@ final class Prescriber {
           ..rir = 5
           ..reasons.add(_note(CoachNotes.restBeforeEvent, 2));
         return x;
+      }
+      if (_activation.contains(day) &&
+          (s.method == Method.repsTop ||
+              s.method == Method.repsVolume ||
+              s.method == Method.repsDensity) &&
+          _eventExercises().contains(s.exerciseId)) {
+        // R3-P21 : deux séries faciles par atelier, pour garder le geste.
+        final max = _maxOf(s);
+        if (max >= 5) {
+          final reps = _clampInt(_round(max * 0.4), 1, max);
+          return _new(s)
+            ..sets = 2
+            ..minSets = 1
+            ..repsLow = reps
+            ..repsHigh = reps
+            ..rir = 5
+            ..rest = 120
+            ..fixed = true
+            ..intensity = _shareOf(s.exerciseId, reps, max)
+            ..reasons.add(_note(CoachNotes.activation, 0.4));
+        }
       }
       return s.method == Method.mobility ? _mobility(s, ws, role) : null;
     }
@@ -3339,9 +3428,10 @@ final class Prescriber {
     var guard = 0;
     // R3-P12, R3-P21 : l'affûtage garde l'intensité et 40 à 60 % du volume ;
     // une semaine d'échéance trop vide désentraîne. Sous 42 % du pic, les
-    // rappels des jours éloignés de l'épreuve reprennent une série, le
-    // travail le plus spécifique d'abord, dans le temps de la séance.
-    final floor = peak * 0.42;
+    // une semaine d'échéance trop vide désentraîne. Sous 36 % du pic, les
+    // rappels des jours éloignés de l'épreuve reprennent une série (trois
+    // au plus), le travail le plus spécifique d'abord.
+    final floor = peak * 0.36;
     final closed = <_Draft>{};
     while (guard < 60) {
       guard++;
@@ -3363,7 +3453,7 @@ final class Prescriber {
           if (!x.hard ||
               x.fixed ||
               x.kind != SetKind.work ||
-              x.sets >= 4 ||
+              x.sets >= 3 ||
               closed.contains(x) ||
               !Method.essential(x.method, support: x.support, keep: x.keep)) {
             continue;
@@ -3572,6 +3662,10 @@ final class Prescriber {
           ..backoff = false
           ..everyMinute = false;
         groupOf[x] = id;
+      }
+      // Une seule consigne de repos : celle de l'enchaînement.
+      for (final x in list) {
+        x.rest = 90;
       }
       list.first.reasons.add(_note(CoachNotes.superset, 90));
       groups.add(
@@ -3801,6 +3895,9 @@ List<Reason> blockReasonsOf(Athlete a, Skeleton skeleton) {
     out.add(
       reason(ReasonCodes.planReturnFromGap, <String, Object?>{'gap': gap.code}),
     );
+    if (a.gapWeeks >= 4) {
+      out.add(note(CoachNotes.reentryTest, 3));
+    }
   }
   final sleep = profile.sleep;
   if (sleep == SleepBand.under6Hours) {

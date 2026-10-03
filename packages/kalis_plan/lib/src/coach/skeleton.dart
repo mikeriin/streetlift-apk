@@ -923,6 +923,64 @@ void _addRepsPillar(
   );
 }
 
+/// Pratique du muscle-up d'un athlète qui en fait moins de six. Avec trois
+/// répétitions ou plus : des simples propres, loin de l'échec (R4-F1,
+/// R5-P27). En dessous, un simple serait déjà à une répétition de l'échec
+/// sur un mouvement à risque : le travail passe par le muscle-up assisté
+/// ou la descente freinée, et par le tirage explosif qui prépare la
+/// transition.
+void _addMuscleUpPractice(_Builder b, int d, int muMax) {
+  final a = b.a;
+  final weak = (a.profile.weakPoints ?? const <WeakPoint>[]).any(
+    (w) => w.exerciseId == Ids.muscleUp,
+  );
+  if (muMax >= 3) {
+    b.add(
+      d,
+      <String>[Ids.muscleUp],
+      SlotRole.skill,
+      Method.repsTechnique,
+      sets: 4,
+    );
+    if (weak) {
+      b.add(
+        d,
+        weakPointVariants[Ids.muscleUp]![WeakPointKind.transition]!,
+        SlotRole.skill,
+        Method.skillDynamic,
+        sets: 2,
+        referenceId: Ids.muscleUp,
+        weak: WeakPointKind.transition,
+        support: true,
+      );
+    }
+    return;
+  }
+  b.add(
+    d,
+    const <String>[
+      'cd-muscle-up-barre-assiste-elastique',
+      'cd-muscle-up-barre-negatif',
+      'cd-muscle-up-barre-basse-pieds-au-sol',
+    ],
+    SlotRole.skill,
+    Method.skillDynamic,
+    sets: 4,
+    referenceId: Ids.muscleUp,
+    skillTargetId: Ids.muscleUp,
+    weak: weak ? WeakPointKind.transition : null,
+  );
+  b.add(
+    d,
+    const <String>['cd-traction-explosive-poitrine-barre', 'sw-traction-chest-to-bar'],
+    SlotRole.skill,
+    Method.skillDynamic,
+    sets: 3,
+    referenceId: Ids.pull,
+    support: true,
+  );
+}
+
 /// Jambes au poids du corps au niveau de l'athlète : le pistol et le
 /// shrimp squat demandent un record (ils ne se prescrivent pas à
 /// l'aveugle) ; sans record, la chaîne part du pistol sur box.
@@ -1147,28 +1205,7 @@ void _buildReps(_Builder b, Set<int> runDays) {
           stress: d == muDays.first ? DayStress.heavy : DayStress.light,
         );
       } else {
-        b.add(
-          d,
-          <String>[Ids.muscleUp],
-          SlotRole.skill,
-          Method.repsTechnique,
-          sets: 4,
-        );
-        final weak = (a.profile.weakPoints ?? const <WeakPoint>[]).any(
-          (w) => w.exerciseId == Ids.muscleUp,
-        );
-        if (weak || muMax <= 3) {
-          b.add(
-            d,
-            weakPointVariants[Ids.muscleUp]![WeakPointKind.transition]!,
-            SlotRole.skill,
-            Method.skillDynamic,
-            sets: 2,
-            referenceId: Ids.muscleUp,
-            weak: weak ? WeakPointKind.transition : null,
-            support: true,
-          );
-        }
+        _addMuscleUpPractice(b, d, muMax);
       }
     }
     final pulls = pullDays.contains(d);
@@ -1391,7 +1428,15 @@ void _buildLifting(_Builder b, Set<int> runDays) {
   final muDay = h >= 4 ? dayAt(3) : (h >= 2 ? dayAt(1) : dayAt(0));
   final dipHeavy = h >= 3 ? dayAt(2) : (h >= 2 ? dayAt(1) : dayAt(0));
   final pullVolume = h >= 3 ? dayAt(2) : (h >= 2 ? dayAt(1) : -1);
-  final squatVolume = h >= 4 ? dayAt(3) : (h >= 3 ? dayAt(0) : -1);
+  // Objectif déclaré ailleurs et pas de compétition : le squat garde une
+  // seule séance lourde (R4-H4 : le volume va à l'objectif).
+  final squatAimed =
+      a.profile.goals.isEmpty ||
+      a.aimsAt(Ids.squat) ||
+      (a.profile.events ?? const <SeasonEvent>[]).isNotEmpty;
+  final squatVolume = !squatAimed
+      ? -1
+      : (h >= 4 ? dayAt(3) : (h >= 3 ? dayAt(0) : -1));
   final extraDay = h >= 4 ? dayAt(3) : -1;
 
   for (final d in days) {
@@ -1497,6 +1542,28 @@ void _buildLifting(_Builder b, Set<int> runDays) {
         stress: DayStress.medium,
         referenceId: Ids.pull,
       );
+      // R5-P24 : charge graduée des fléchisseurs du poignet, légère et
+      // loin de l'échec (aucun programme de soin : à coordonner avec le
+      // professionnel qui suit le coude).
+      for (final id in const <String>[
+        'mu-wrist-curl-barre',
+        'mu-reverse-wrist-curl-haltere',
+      ]) {
+        final e = a.catalog.find(id);
+        if (e != null &&
+            e.stressOn(Joint.elbow) != JointStress.high &&
+            a.can(id, d)) {
+          b.add(
+            d,
+            <String>[id],
+            SlotRole.accessory,
+            Method.accessoryPrehab,
+            sets: 2,
+            note: 'tendon',
+          );
+          break;
+        }
+      }
     }
   }
   if (squat) {
@@ -1529,6 +1596,11 @@ void _buildLifting(_Builder b, Set<int> runDays) {
 
   // Assistance (R2-P9, R5-P27) : tirage horizontal, chaîne postérieure,
   // prévention, tronc ; jour léger : jambes en unilatéral et mobilité.
+  // Coude à ménager : tirage horizontal en prise neutre (R5-P24 : changer
+  // la prise avant de supprimer).
+  final rowPick = spareElbow
+      ? const <String>['mu-rowing-haltere-unilateral-banc', ...Picks.row]
+      : Picks.row;
   for (final d in days) {
     final slots = b.days[d].slots;
     final hasSquat = slots.any((s) => s.exerciseId == Ids.squat);
@@ -1556,11 +1628,10 @@ void _buildLifting(_Builder b, Set<int> runDays) {
         }
         b.add(
           d,
-          Picks.row,
+          rowPick,
           SlotRole.accessory,
           Method.accessoryCompound,
           sets: 3,
-          rotate: true,
         );
         _addCore(b, d);
       }
@@ -1595,20 +1666,18 @@ void _buildLifting(_Builder b, Set<int> runDays) {
     if (hasPull || !pull) {
       b.add(
         d,
-        Picks.row,
+        rowPick,
         SlotRole.accessory,
         Method.accessoryCompound,
         sets: lean ? 2 : (hasPull ? 3 : 4),
-        rotate: true,
       );
     } else if (!hasSquat) {
       b.add(
         d,
-        Picks.row,
+        rowPick,
         SlotRole.accessory,
         Method.accessoryCompound,
         sets: 3,
-        rotate: true,
       );
     }
     if (hasPull && !spareElbow && a.level >= 2 && !lean) {
@@ -1843,23 +1912,7 @@ void _buildFigures(_Builder b, Set<int> runDays) {
       );
     }
     if (muDays.contains(d)) {
-      b.add(
-        d,
-        <String>[Ids.muscleUp],
-        SlotRole.skill,
-        Method.repsTechnique,
-        sets: 4,
-      );
-      b.add(
-        d,
-        weakPointVariants[Ids.muscleUp]![WeakPointKind.transition]!,
-        SlotRole.skill,
-        Method.skillDynamic,
-        sets: 2,
-        referenceId: Ids.muscleUp,
-        weak: WeakPointKind.transition,
-        support: true,
-      );
+      _addMuscleUpPractice(b, d, muMax);
     }
     if (first != null && firstDays.contains(d)) {
       skillDay(d, first, heavy: firstDays.length < 3 || d != firstDays[1]);

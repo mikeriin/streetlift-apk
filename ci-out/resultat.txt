@@ -1,4 +1,0 @@
-run=37162785355
-commit=be3f5f1c2ef75c643d73e03a1d8b9afc09b7d919
-branche=claude/ci-cp-a
-packages=failure

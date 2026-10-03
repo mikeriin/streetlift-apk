@@ -133,6 +133,16 @@ String? coachReasonText(Reason r, Catalog catalog) {
         CoachNotes.overload =>
           'Amplitude partielle surchargée : ${_pct(v)} de ton 1RM complet, '
               'sur la seule fin du mouvement, en butée ou avec parade.',
+        CoachNotes.activation =>
+          "Activation à l'avant-veille : deux séries faciles à ${_pct(v)} "
+              'du maximum par atelier, pour garder le geste sans fatigue.',
+        CoachNotes.reentryTest =>
+          "Test d'entrée de reprise : en semaine 1, sur chaque mouvement "
+              'principal, fais une première série arrêtée à ${_int(v)} '
+              "répétitions de l'échec et note le total. Déclare ces "
+              "nouveaux repères dans l'application : tout le programme se "
+              'recale dessus. Tes anciens records ne sont pas des charges '
+              'de travail.',
         CoachNotes.restBeforeEvent =>
           "Repos avant l'échéance : mobilité et préparation articulaire "
               'seulement, rien de fatigant dans les 2 à 4 derniers jours.',
