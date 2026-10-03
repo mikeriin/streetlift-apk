@@ -250,6 +250,8 @@ void main() {
 
     // 5. Niveau par mouvement.
     await tap(tester, 'flow-experience-intermediate');
+    // CU : l'expérience a son écran (profil v3).
+    await tap(tester, 'flow-next-experience');
     await tap(tester, 'level-squat-3');
     await tap(tester, 'level-deadlift--1');
     await tap(tester, 'level-pullups-2');
@@ -287,6 +289,8 @@ void main() {
     await top(tester);
     await shot('10_lieux_materiel');
     await tap(tester, 'flow-next-places');
+    // CU : écran Récupération (intermédiaire), questions passées.
+    await tap(tester, 'flow-next-recovery');
 
     // 9. Santé : accord, questionnaire, une gêne au genou.
     await tap(tester, 'flow-consent-given');

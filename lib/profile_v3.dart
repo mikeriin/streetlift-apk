@@ -52,6 +52,28 @@ const kStepScreens = <String, String>{
   'mode': 'mode',
 };
 
+/// Questions du schéma 2 (parcours G6), montrées quand le parcours v3
+/// n'est pas chargé.
+const kV2QuestionIds = {
+  'display_name',
+  'sex',
+  'birth_year',
+  'height',
+  'body_weight',
+  'discipline',
+  'secondaries',
+  'experience_level',
+  'movement_levels',
+  'goals',
+  'availability',
+  'places',
+  'equipment',
+  'health_screening',
+  'limitations',
+  'preferences',
+  'guidance_mode',
+};
+
 /// Étape du flux qui porte un écran du parcours.
 String? stepOfScreen(String screen) {
   for (final e in kStepScreens.entries) {

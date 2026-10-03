@@ -13,6 +13,17 @@ extension AthleteProfileStore on AppStore {
   /// « Plus tard » de la proposition de refaire son profil : jour civil.
   static const _kRedoLater = 'athlete_profile_redo_later_v1';
 
+  /// CU : questions du schéma 3 passées (identifiants, hors du profil :
+  /// jamais reproposées d'office, PARCOURS_V3.md § 6).
+  static const _kV3Skipped = 'athlete_profile_v3_skipped_v1';
+
+  /// CU : profil créé avec le parcours v3 (jour civil de création) : ses
+  /// questions reportées sont proposées après la première semaine.
+  static const _kV3Created = 'athlete_profile_v3_created_v1';
+
+  /// CU : invitation « Compléter mon profil » montrée (une seule fois).
+  static const _kV3Invite = 'athlete_profile_v3_invite_v1';
+
   /// Profil v2 (null tant qu'il n'a pas été créé).
   kc.AthleteProfile? get athleteProfile => athlete?.profile;
 
@@ -191,11 +202,24 @@ extension AthleteProfileStore on AppStore {
   /// (profil L8, créé au besoin), puis le poids (pesée), puis le profil v2.
   /// Renvoie les rubriques changées et si le programme est concerné (null :
   /// brouillon incomplet, rien n'est écrit).
-  ({Set<String> rubrics, bool program})? saveAthleteProfile(ProfileDraft d) {
+  ///
+  /// CU : profil au schéma 3 (parcours v3) ; [createdByV3] : création ou
+  /// profil refait avec le parcours v3 (les questions reportées seront
+  /// proposées après la première semaine).
+  ({Set<String> rubrics, bool program})? saveAthleteProfile(
+    ProfileDraft d, {
+    bool createdByV3 = false,
+  }) {
     final now = storeClock();
     final at = athleteAt(now);
+    final parcours = content.questionnaire;
     // Vérifie d'abord que le profil se construit (aucune écriture sinon).
-    if (d.build(now, vocabulary: content.equipmentVocabulary) == null) {
+    if (d.build(
+          now,
+          vocabulary: content.equipmentVocabulary,
+          parcours: parcours,
+        ) ==
+        null) {
       return null;
     }
     // 1. Santé : consentement, réponses (bloc L8, règles L8/L13).
@@ -242,7 +266,11 @@ extension AthleteProfileStore on AppStore {
     }
     // 2. Profil v2, gênes et année datées pour le mode prudent.
     final old = athlete;
-    final built = d.build(now, vocabulary: content.equipmentVocabulary)!;
+    final built = d.build(
+      now,
+      vocabulary: content.equipmentVocabulary,
+      parcours: parcours,
+    )!;
     final la = <String, String>{};
     for (final l in built.limitations) {
       final key = limitationKey(l);
@@ -291,10 +319,148 @@ extension AthleteProfileStore on AppStore {
     // correction 1) est retirée avec L7 ; Koach (mascotte) parle partout et
     // le moteur dynamique sert les séances.
     unawaited(saveAthleteDraft(null));
+    if (createdByV3) {
+      try {
+        unawaited(_prefs.setString(_kV3Created, next.createdOn.iso));
+      } catch (_) {}
+    }
     pilotageEpoch++;
     _persist();
     notifyListeners();
     return (rubrics: rubrics, program: affects && old != null);
+  }
+
+  // ------------------------------------------- CU : compléter son profil
+
+  /// Questions du schéma 3 passées (hors du profil).
+  Set<String> get skippedProfileQuestions {
+    try {
+      return {...?_prefs.getStringList(_kV3Skipped)};
+    } catch (_) {
+      return const {};
+    }
+  }
+
+  /// Retient des questions passées (« Passer », ou laissées sans réponse).
+  Future<void> addSkippedProfileQuestions(Iterable<String> ids) async {
+    final next = {...skippedProfileQuestions, ...ids};
+    if (next.length == skippedProfileQuestions.length) return;
+    try {
+      await _prefs.setStringList(_kV3Skipped, next.toList()..sort());
+    } catch (_) {}
+  }
+
+  /// Questions du schéma 3 encore sans réponse pour le profil
+  /// (« Compléter mon profil »), passées exclues.
+  List<kc.ProfileQuestion> get profilePendingQuestions {
+    final p = athlete?.profile, parcours = content.questionnaire;
+    if (p == null || parcours == null) return const [];
+    return pendingQuestions(
+      parcours,
+      p,
+      storeClock().year,
+      skipped: skippedProfileQuestions,
+    );
+  }
+
+  /// Le profil a été créé avec le parcours v3.
+  bool get profileCreatedByV3 {
+    try {
+      return _prefs.getString(_kV3Created) != null;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  /// Questions reportées encore sans réponse (profil créé avec le parcours
+  /// v3).
+  List<kc.ProfileQuestion> get profileDeferredPending {
+    final p = athlete?.profile, parcours = content.questionnaire;
+    if (p == null || parcours == null) return const [];
+    final pending = {for (final q in profilePendingQuestions) q.id};
+    return [
+      for (final q in parcours.deferredQuestions(
+        p.toJson(),
+        todayYear: storeClock().year,
+      ))
+        if (pending.contains(q.id)) q,
+    ];
+  }
+
+  /// Invitation discrète de Koach, une seule fois (PARCOURS_V3.md § 6) :
+  /// profil d'avant le parcours v3 avec des questions nouvelles à poser,
+  /// ou profil créé avec le parcours v3 après sa première semaine, quand
+  /// des questions reportées restent sans réponse.
+  bool get profileInviteVisible {
+    final a = athlete;
+    if (a == null || content.questionnaire == null) return false;
+    try {
+      if (_prefs.getString(_kV3Invite) != null) return false;
+    } catch (_) {
+      return false;
+    }
+    if (!profileCreatedByV3) return profilePendingQuestions.isNotEmpty;
+    final weekLater = a.profile.createdOn.addDays(7);
+    if (civilOf(storeClock()) < weekLater) return false;
+    return profileDeferredPending.isNotEmpty;
+  }
+
+  // ------------------------------------------------- CU : tests guidés
+
+  static const _kTestsSeen = 'athlete_profile_tests_seen_v1';
+
+  /// Propositions de tests déjà montrées sur l'accueil (clés).
+  Set<String> get seenTestProposals {
+    try {
+      return {...?_prefs.getStringList(_kTestsSeen)};
+    } catch (_) {
+      return const {};
+    }
+  }
+
+  void markTestProposalsSeen(Iterable<String> keys) {
+    final next = {...seenTestProposals, ...keys};
+    try {
+      unawaited(_prefs.setStringList(_kTestsSeen, next.toList()..sort()));
+    } catch (_) {}
+    notifyListeners();
+  }
+
+  /// Résultat d'un test guidé ajouté aux records du profil
+  /// (`source: guided_test`). Faux s'il est hors contrat (rien d'écrit).
+  bool addGuidedTestResult(kc.Benchmark b) {
+    final a = athlete;
+    if (a == null || b.validate().isNotEmpty) return false;
+    final today = civilOf(storeClock());
+    final p = a.profile.copyWith(
+      benchmarks: [...?a.profile.benchmarks, b],
+      updatedOn: _laterDay(a.profile.createdOn, today),
+    );
+    if (p.validate().isNotEmpty ||
+        (content.catalog?.checkProfile(p).isNotEmpty ?? false)) {
+      return false;
+    }
+    final at = _nowAt;
+    athlete = AthleteRecord(
+      profile: p,
+      savedAt: at,
+      birthYearAt: a.birthYearAt,
+      limitationsAt: a.limitationsAt,
+      changes: _withChange(a.changes, ProfileChange(at, ['levels'], false)),
+    );
+    _athleteRaw = null;
+    _persist();
+    notifyListeners();
+    return true;
+  }
+
+  /// L'invitation a été vue (ouverte ou « Plus tard ») : elle ne revient
+  /// pas ; « Compléter mon profil » reste dans Réglages › Profil.
+  Future<void> dismissProfileInvite() async {
+    try {
+      await _prefs.setString(_kV3Invite, _todayKey);
+    } catch (_) {}
+    notifyListeners();
   }
 
   /// Profil d'exemple enregistré, sans accord santé (tests, sessions
