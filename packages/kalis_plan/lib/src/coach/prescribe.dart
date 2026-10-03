@@ -128,6 +128,10 @@ abstract final class CoachNotes {
   /// externe visée, en kg).
   static const String attemptsGoal = 'attempts_goal';
 
+  /// Essai de traction stricte après le test de descente (`value` :
+  /// répétitions de l'objectif).
+  static const String strictAttempt = 'strict_attempt';
+
   /// Règle de douleur générale, sans zone déclarée (`value` : seuil
   /// d'arrêt sur 10).
   static const String painGeneral = 'pain_general';
@@ -169,6 +173,7 @@ abstract final class CoachNotes {
   /// Tous les codes.
   static const List<String> all = <String>[
     attemptsGoal,
+    strictAttempt,
     painGeneral,
     redFlags,
     shortVersion,
@@ -1473,8 +1478,8 @@ final class Prescriber {
       // répétition sous le maximum (spécificité du geste complet).
       x
         ..sets = sets + 1
-        ..repsLow = max - 1 < 1 ? 1 : max - 1
-        ..repsHigh = max - 1 < 1 ? 1 : max - 1
+        ..repsLow = max - 2 < 1 ? 1 : max - 2
+        ..repsHigh = max - 2 < 1 ? 1 : max - 2
         ..rir = _rirOf(e, 2, ws, week)
         ..reasons.add(_rule(CoachRules.repStep, 1, 'reps'));
       return x;
@@ -2018,9 +2023,12 @@ final class Prescriber {
     // R6-P14 : endurance fondamentale, allure de conversation ; durée +10 %
     // par semaine au plus (R6-P20).
     final long = s.method == Method.runLong;
-    final warm = s.note == 'run_warmup' || s.note == 'walk';
+    final warm =
+        s.note == 'run_warmup' || s.note == 'walk' || s.note == 'run_extra';
     var minutes = s.note == 'walk'
         ? 10.0
+        : s.note == 'run_extra'
+        ? 20.0
         : warm
         ? 12.0
         : (long ? 45.0 : 30.0) * (1 + 0.08 * (stage > 4 ? 4 : stage));
@@ -2265,8 +2273,21 @@ final class Prescriber {
   List<String> _eventExercises() {
     final target = _shape.target;
     final out = <String>[];
-    void add(String? id) {
-      if (id != null && a.catalog.contains(id) && !out.contains(id)) {
+    void add(String? given) {
+      var id = given;
+      if (id == null) {
+        return;
+      }
+      // Figure : le test porte sur l'étape réellement travaillée, pas sur
+      // une figure jamais entraînée.
+      for (final d in skeleton.days) {
+        for (final s in d.slots) {
+          if (s.skillTargetId == id && s.method == Method.skillHold) {
+            id = s.exerciseId;
+          }
+        }
+      }
+      if (a.catalog.contains(id) && !out.contains(id)) {
         out.add(id);
       }
     }
@@ -2665,15 +2686,12 @@ final class Prescriber {
           );
           out.add(gate);
           gated = true;
-          // Objectif de traction : en semaine de test, un essai strict
-          // suit la descente (une série, arrêt dès que la forme casse).
+          // Objectif de traction : en semaine de test, l'essai strict suit
+          // la descente dans la même épreuve (le geste non acquis n'est pas
+          // prescrit comme un exercice : c'est un essai, écrit en note).
           if (a.aimsAt(Ids.pull) && ws.intent == WeekIntent.test) {
-            final pull = a.catalog.exercise(Ids.pull);
-            out.add(
-              _testOf(slotIdFor(day, 95), null, pull, ws, event: false)
-                ..method = Method.beginnerMain
-                ..group = null,
-            );
+            final goal = a.goalOn(Ids.pull, GoalMetric.maxReps)?.targetValue;
+            gate.reasons.add(_note(CoachNotes.strictAttempt, goal ?? 1));
           }
           continue;
         }
@@ -2774,7 +2792,7 @@ final class Prescriber {
               : Method.cutRank(x.method));
     // 0. La marche de fin de séance prend le temps qui reste, rien de plus.
     for (final x in <_Draft>[...items]) {
-      if (x.slot?.note != 'walk') {
+      if (x.slot?.note != 'walk' && x.slot?.note != 'run_extra') {
         continue;
       }
       final over = _daySeconds(items, minutes) - budget;

@@ -120,6 +120,12 @@ String? coachReasonText(Reason r, Catalog catalog) {
               'stricte au début de la séance suivante ; si elle passe, '
               "déclare-la dans l'application : le programme passera aux "
               'tractions.',
+        CoachNotes.strictAttempt =>
+          'Puis ton test : après 3 min de repos, essaie la traction '
+              'stricte — départ bras tendus, menton au-dessus de la barre, '
+              'sans élan — une seule série, autant de répétitions propres '
+              "que possible (objectif : ${_int(v)}). Si elle passe, "
+              "déclare-la dans l'application.",
         CoachNotes.restBeforeEvent =>
           "Repos avant l'échéance : mobilité et préparation articulaire "
               'seulement, rien de fatigant dans les 2 à 4 derniers jours.',

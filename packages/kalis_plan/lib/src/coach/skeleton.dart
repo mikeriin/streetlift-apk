@@ -9,7 +9,8 @@ import '../assemble.dart';
 import '../traits.dart';
 import 'athlete.dart';
 import 'model.dart';
-import 'prescribe.dart' show coachGroupCap, straightArmFamilyOf;
+import 'prescribe.dart'
+    show CoachNotes, coachGroupCap, straightArmFamilyOf;
 import 'season.dart';
 import 'tables.dart';
 
@@ -70,6 +71,43 @@ final class SkillTrack {
 
   /// Étape précédente, ou `null` à la première.
   String? get easierId => stepIndex > 0 ? ladder[stepIndex - 1] : null;
+}
+
+/// Délai minimal par étape d'une figure bras tendus, en semaines (R4-F9 :
+/// 12 chez le débutant, 8 à 12 chez l'intermédiaire, 8 chez l'avancé, 6 à
+/// 8 en élite).
+int coachStepWeeks(int level) => level <= 0 ? 12 : (level >= 3 ? 6 : 8);
+
+/// Étape de travail prévue pour la figure [t] au début du bloc : l'étape
+/// du profil, avancée d'un cran par délai minimal écoulé depuis le record
+/// de cette étape (le plan suppose le critère de passage validé ; le test
+/// de fin de bloc le confirme ou garde l'étape).
+SkillTrack plannedTrack(Athlete a, SkillTrack t) {
+  final anchor = a.recordDay[t.currentId];
+  if (anchor == null) {
+    return t;
+  }
+  final elapsed = anchor.daysUntil(a.start) ~/ 7;
+  if (elapsed <= 0) {
+    return t;
+  }
+  var steps = (t.weeksAtStep + elapsed) ~/ coachStepWeeks(a.level);
+  if (steps > 2) {
+    steps = 2;
+  }
+  var at = t.stepIndex + steps;
+  if (at > t.ladder.length - 1) {
+    at = t.ladder.length - 1;
+  }
+  if (at == t.stepIndex) {
+    return t;
+  }
+  return SkillTrack(
+    targetId: t.targetId,
+    ladder: t.ladder,
+    stepIndex: at,
+    weeksAtStep: 0,
+  );
 }
 
 /// Figures visées par l'athlète [a], par ordre de priorité : celles du
@@ -222,6 +260,9 @@ final class _Builder {
   final int rotation;
   final List<DaySpec> days;
   final List<SkillLadder> ladders = <SkillLadder>[];
+
+  /// Jour de renforcement qui finit par un footing court, ou −1.
+  int extraRunDay = -1;
   final List<Reason> reasons = <Reason>[];
 
   /// Ajoute au jour [day] le premier exercice admissible de [candidates]
@@ -303,6 +344,21 @@ void _buildBeginner(_Builder b) {
   final pushMax = a.reps[Ids.pushUp] ?? 0;
   final dipMax = a.reps[Ids.dip] ?? 0;
   final rowMax = a.reps[Ids.row];
+  // Maximum de pompes prévu au début du bloc (trajectoire vers
+  // l'objectif) : à partir de quatre, le geste complet devient le
+  // mouvement principal.
+  final pushPlanned = pushMax <= 0
+      ? 0
+      : (pushMax *
+                    (1 +
+                        a.plannedGain(
+                          Ids.pushUp,
+                          GoalMetric.maxReps,
+                          pushMax,
+                          a.start,
+                        )) +
+                1e-9)
+            .floor();
   final heavy = a.heavyImpactBanned;
   final later = b.blockIndex > 0;
   // R5-P1 : 4 à 6 séries par groupe et par semaine au départ ; les séries
@@ -388,7 +444,7 @@ void _buildBeginner(_Builder b) {
         Method.beginnerMain,
         sets: sets,
       );
-    } else if (pushMax >= 2 && !heavy && a.can(Ids.pushUp, d)) {
+    } else if (pushPlanned >= 4 && !heavy && a.can(Ids.pushUp, d)) {
       // Quelques pompes acquises : des séries courtes du geste complet
       // d'abord (spécificité), puis la variante facile pour le volume.
       b.add(
@@ -627,6 +683,31 @@ Set<int> _buildRuns(_Builder b) {
       }
     } else {
       b.add(d, <String>[Ids.easyRun], SlotRole.main, Method.runEasy, sets: 1);
+    }
+  }
+  // Objectif chronométré : un footing court de plus, en fin d'une séance de
+  // renforcement éloignée des deux courses (volume aérobie, R6-P14).
+  if (a.runGoal != null && taken.length < 3) {
+    var best = -1;
+    var bestGap = -1;
+    for (final d in runnable) {
+      if (taken.contains(d) || a.days[d].minutes < 55) {
+        continue;
+      }
+      var gap = 99;
+      for (final t in taken) {
+        final g = distance(d, t);
+        if (g < gap) {
+          gap = g;
+        }
+      }
+      if (gap > bestGap) {
+        bestGap = gap;
+        best = d;
+      }
+    }
+    if (best >= 0) {
+      b.extraRunDay = best;
     }
   }
   return taken;
@@ -1545,14 +1626,18 @@ void _buildFigures(_Builder b, Set<int> runDays) {
   if (n == 0) {
     return;
   }
-  final tracks = skillTargetsOf(a);
+  final tracks = <SkillTrack>[
+    for (final t in skillTargetsOf(a)) plannedTrack(a, t),
+  ];
   final statics = <SkillTrack>[
     for (final t in tracks)
       if (t.targetId != 'cs-handstand' && t.targetId != 'cs-l-sit') t,
   ].take(2).toList();
   // R4-F10 : jours lourds par zone tendineuse (2 chez le débutant, 2 à 3
   // chez l'intermédiaire, 3 en avancé, 3 à 4 en élite), 48 h d'écart.
-  final heavyCount = a.level >= 3 ? 3 : (a.level == 2 ? 3 : 2);
+  // (Chez l'intermédiaire qui s'entraîne quatre jours : deux séances
+  // lourdes et une légère, R4-F1 — pratique distribuée.)
+  final heavyCount = a.level >= 2 ? 3 : (a.level == 1 && n >= 4 ? 3 : 2);
   final first = statics.isEmpty ? null : statics.first;
   final second = statics.length > 1 ? statics[1] : null;
   final firstDays = first == null
@@ -1587,9 +1672,26 @@ void _buildFigures(_Builder b, Set<int> runDays) {
     rest.isEmpty ? days : rest,
     n >= 5 || a.level < 2 ? 2 : 1,
   );
+  // Budget du poignet (R4-F12) : quand une figure d'appui est au
+  // programme, l'équilibre se travaille les mêmes jours qu'elle (à l'état
+  // frais, en début de séance) ; les autres jours restent sans appui en
+  // extension.
+  bool supportTrack(SkillTrack? t) =>
+      t != null &&
+      a.catalog.find(t.currentId)?.pattern ==
+          MovementPattern.figureStatiquePoussee;
+  final supportDays = supportTrack(first)
+      ? firstDays
+      : (supportTrack(second) ? secondDays : <int>[]);
   final balanceDays = handstand >= 20
-      ? spreadDays(a, rest.isEmpty ? days : rest, n >= 5 ? 3 : 2)
+      ? (supportDays.isNotEmpty
+            ? supportDays.take(n >= 5 ? 3 : 2).toList()
+            : spreadDays(a, rest.isEmpty ? days : rest, n >= 5 ? 3 : 2))
       : <int>[];
+  // Force de base : deux séances regroupées par semaine (à volume égal, la
+  // dispersion n'apporte rien), hors des jours de maintien lourd quand
+  // c'est possible.
+  final strengthDays = spreadDays(a, rest.length >= 2 ? rest : days, 2);
 
   void ladderOf(SkillTrack t) {
     final holdTarget = a.level <= 1 ? 12 : (a.level == 2 ? 10 : 8);
@@ -1647,13 +1749,15 @@ void _buildFigures(_Builder b, Set<int> runDays) {
         skillTargetId: t.targetId,
         stress: DayStress.heavy,
       );
-      if (hold > 0 && hold < 8 && easier != null) {
+      if (hold < 8 && easier != null && a.level >= 1) {
+        // R4-F7 : deux à trois semaines de chevauchement avec l'étape
+        // précédente quand l'étape est neuve ou courte.
         b.add(
           d,
           <String>[easier],
           SlotRole.skill,
           Method.skillEasyHold,
-          sets: 2,
+          sets: hold <= 0 ? 3 : 2,
           skillTargetId: t.targetId,
           stress: DayStress.medium,
         );
@@ -1672,12 +1776,16 @@ void _buildFigures(_Builder b, Set<int> runDays) {
     final dynamics = skillDynamics[t.targetId];
     if (dynamics != null) {
       // R4-F5 : compléter le statique par du dynamique dans le même schéma.
-      final from = t.stepIndex >= 2 ? 2 : 0;
+      // Du travail dynamique au niveau de l'étape : la variante de même
+      // rang, sinon la plus proche en dessous.
+      final top = t.stepIndex >= dynamics.length
+          ? dynamics.length - 1
+          : t.stepIndex;
       b.add(
         d,
         <String>[
-          ...dynamics.skip(from),
-          ...dynamics.take(from).toList().reversed,
+          for (var i = top; i >= 0; i--) dynamics[i],
+          ...dynamics.skip(top + 1),
         ],
         SlotRole.skill,
         Method.skillDynamic,
@@ -1693,6 +1801,18 @@ void _buildFigures(_Builder b, Set<int> runDays) {
   }
   if (second != null) {
     ladderOf(second);
+  }
+  // Figure complète hors de portée du programme : le dire (R4-F9).
+  for (final t in <SkillTrack?>[first, second]) {
+    if (t != null && t.ladder.length - 1 - t.stepIndex >= 1) {
+      b.reasons.add(
+        reason(ReasonCodes.planCoachNote, <String, Object?>{
+          'note': CoachNotes.skillHorizon,
+          'value': coachStepWeeks(a.level).toDouble(),
+        }),
+      );
+      break;
+    }
   }
   final pullMax = a.reps[Ids.pull] ?? 0;
   final dipMax = a.reps[Ids.dip] ?? 0;
@@ -1743,19 +1863,21 @@ void _buildFigures(_Builder b, Set<int> runDays) {
     final skillLoad = b.days[d].slots
         .where((s) => s.method == Method.skillHold)
         .length;
-    if (a.can(Ids.weightedPull, d) &&
+    final weightedPull =
         a.oneRm[Ids.weightedPull] != null &&
-        skillLoad == 0 &&
-        a.level >= 2) {
-      b.add(
-        d,
-        <String>[Ids.weightedPull],
-        SlotRole.secondary,
-        Method.liftVolume,
-        sets: 4,
-        stress: DayStress.medium,
-        support: true,
-      );
+        a.level >= 2 &&
+        strengthDays.every((o) => a.can(Ids.weightedPull, o));
+    if (weightedPull) {
+      if (strengthDays.contains(d)) {
+        b.add(
+          d,
+          <String>[Ids.weightedPull],
+          SlotRole.secondary,
+          Method.liftVolume,
+          sets: 4,
+          stress: DayStress.medium,
+        );
+      }
     } else if (pullMax >= 1 && a.can(Ids.pull, d) && skillLoad < 2) {
       b.add(
         d,
@@ -1781,8 +1903,12 @@ void _buildFigures(_Builder b, Set<int> runDays) {
         support: true,
       );
     }
-    if (dipMax >= 1 && a.can(Ids.dip, d) && skillLoad < 2) {
-      if (skillLoad == 0 && a.level >= 2 && a.can(Ids.weightedDip, d)) {
+    final weightedDip =
+        a.level >= 2 && strengthDays.every((o) => a.can(Ids.weightedDip, o));
+    if (weightedDip && !strengthDays.contains(d)) {
+      // Dips lestés regroupés sur les deux séances de force.
+    } else if (dipMax >= 1 && a.can(Ids.dip, d) && skillLoad < 2) {
+      if (weightedDip) {
         b.add(
           d,
           <String>[Ids.weightedDip],
@@ -1792,7 +1918,6 @@ void _buildFigures(_Builder b, Set<int> runDays) {
               : Method.repsStrength,
           sets: 3,
           stress: DayStress.medium,
-          support: true,
           referenceId: Ids.dip,
         );
       } else {
@@ -1809,11 +1934,15 @@ void _buildFigures(_Builder b, Set<int> runDays) {
     if (skillLoad == 0 || minutes >= 75) {
       b.add(
         d,
-        Picks.bodyweightRow,
+        a.level >= 2
+            ? const <String>[
+                'sw-row-australien-pieds-sureleves',
+                ...Picks.bodyweightRow,
+              ]
+            : Picks.bodyweightRow,
         SlotRole.accessory,
         Method.accessoryCompound,
         sets: 3,
-        rotate: true,
       );
     }
     if (legDays.contains(d)) {
@@ -1825,14 +1954,7 @@ void _buildFigures(_Builder b, Set<int> runDays) {
     }
     // Mobilité des épaules et des poignets en fin de séance (R4-F12).
     if (minutes >= 60) {
-      b.add(
-        d,
-        Picks.mobility,
-        SlotRole.mobility,
-        Method.mobility,
-        sets: 1,
-        rotate: true,
-      );
+      b.add(d, Picks.mobility, SlotRole.mobility, Method.mobility, sets: 1);
     }
   }
 }
@@ -1935,22 +2057,27 @@ double _slotSeconds(Athlete a, SlotSpec s) {
 const List<(List<String>, SlotRole, String, int)> _fillers =
     <(List<String>, SlotRole, String, int)>[
       (
-        <String>['mu-gainage-lateral-coude', 'mu-gainage-lateral-genoux'],
+        <String>[
+          'mu-gainage-lateral-coude',
+          'mu-gainage-lateral-releves-hanche',
+        ],
         SlotRole.core,
         Method.accessoryCore,
         2,
       ),
       (
-        <String>['mu-superman', 'mu-bird-dog', 'mu-arch-hold'],
+        <String>['mu-bird-dog', 'mu-superman', 'mu-arch-hold'],
         SlotRole.core,
         Method.accessoryCore,
         2,
       ),
       (
         <String>[
-          'mu-pont-fessier-unilateral',
           'mu-pont-fessier-sol',
+          'mu-pont-fessier-unilateral',
           'mu-hip-thrust-unilateral',
+          'mu-souleve-de-terre-roumain-halteres',
+          'mu-hip-thrust-barre',
         ],
         SlotRole.accessory,
         Method.accessoryCompound,
@@ -1970,8 +2097,10 @@ const List<(List<String>, SlotRole, String, int)> _fillers =
       (
         <String>[
           'mu-dead-bug',
-          'mu-hollow-body-groupe',
           'mu-gainage-ventral-coudes',
+          'mu-hollow-body-hold',
+          'mu-hollow-rocks',
+          'sw-dragon-flag-tuck',
         ],
         SlotRole.core,
         Method.accessoryCore,
@@ -2025,10 +2154,13 @@ void _fillTime(_Builder b, Set<int> runDays) {
     // priorité, R4-H2).
     final lean = a.profile.specialization != null;
     var added = 0;
-    for (final (candidates, role, method, sets) in _fillers) {
+    for (final (base, role, method, sets) in _fillers) {
       if (total() >= target || added >= 3) {
         break;
       }
+      // Du plus dur au plus facile à partir du niveau avancé ; l'ordre de
+      // la liste (du plus simple) sinon.
+      final candidates = a.level >= 2 ? base.reversed.toList() : base;
       if (lean &&
           method != Method.accessoryPrehab &&
           method != Method.mobility) {
@@ -2046,7 +2178,6 @@ void _fillTime(_Builder b, Set<int> runDays) {
         method,
         sets: sets,
         support: true,
-        rotate: true,
       );
     }
     // La mobilité reste en fin de séance.
@@ -2277,6 +2408,16 @@ Skeleton buildSkeleton(
       _buildLifting(b, runDays);
     case CoachStyle.figures:
       _buildFigures(b, runDays);
+  }
+  if (b.extraRunDay >= 0) {
+    b.add(
+      b.extraRunDay,
+      <String>[Ids.easyRun],
+      SlotRole.accessory,
+      Method.runEasy,
+      sets: 1,
+      note: 'run_extra',
+    );
   }
   _limitStraightArmDays(b);
   _fillTime(b, runDays);

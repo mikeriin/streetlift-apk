@@ -445,7 +445,7 @@ void main() {
         }
       }
       final hard = hardSetsByWeek(catalog, weeks);
-      expect(hard.first, lessThan(hard[2]));
+      expect(hard.first, lessThan(hard[3]));
       expect(coachAudit(catalog, profile, _start, blocks), isEmpty);
     });
   });
