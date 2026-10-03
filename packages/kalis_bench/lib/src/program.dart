@@ -108,7 +108,7 @@ BenchProgram generateProgram(
   BenchProfile bench, {
   int seed = 0,
 }) {
-  final adapted = adaptProfile(bench);
+  final adapted = adaptProfile(bench, catalog: catalog);
   final problems = catalog.checkProfile(adapted.profile);
   if (problems.isNotEmpty) {
     throw ArgumentError.value(

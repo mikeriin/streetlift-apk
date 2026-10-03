@@ -74,10 +74,14 @@ const Set<TrainingDiscipline> coachStreetDisciplines = <TrainingDiscipline>{
 };
 
 /// Vrai si [profile] relève du chemin street de `kalis_plan` 0.2 : profil
-/// au schéma 3, discipline principale street (streetlifting, sets & reps,
+/// au schéma 3 rempli par le questionnaire 0.4 (expérience et ancienneté
+/// renseignées — sans elles le niveau n'est pas lisible et le chemin 0.1
+/// s'applique), discipline principale street (streetlifting, sets & reps,
 /// calisthénie), disciplines secondaires street, cardio ou mobilité.
 bool coachEligible(AthleteProfile profile) {
-  if (!profile.isSchema3) {
+  if (!profile.isSchema3 ||
+      profile.experience == null ||
+      profile.trainingAge == null) {
     return false;
   }
   final mix = profile.disciplines;

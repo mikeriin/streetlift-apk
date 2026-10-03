@@ -8,6 +8,8 @@ import 'dart:typed_data';
 import 'package:kalis_core/kalis_core.dart';
 
 import 'assemble.dart';
+import 'coach/athlete.dart';
+import 'coach/coach.dart';
 import 'context.dart';
 import 'params.dart';
 import 'pass2.dart';
@@ -311,13 +313,15 @@ final class PlanInspector {
   /// n'est pas contrôlé, et un jour qui porte un emplacement verrouillé
   /// peut dépasser son temps.
   List<String> hardViolations(PlanRequest request, Pass1Plan plan) =>
-      _violations(
-        contextFor(request, plan),
-        request.profile,
-        request.locks,
-        plan,
-        null,
-      );
+      coachEligible(request.profile) && isCoachPlan(plan)
+      ? CoachEngine(params).violations(catalog, request, plan)
+      : _violations(
+          contextFor(request, plan),
+          request.profile,
+          request.locks,
+          plan,
+          null,
+        );
 
   /// Contraintes dures violées par la semaine type [plan] rendue par une
   /// restructuration de [request], relues dans le contexte de cette

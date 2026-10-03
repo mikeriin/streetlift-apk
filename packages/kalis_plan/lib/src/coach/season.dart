@@ -154,7 +154,9 @@ final class WeekSpec {
 
   /// Vrai pour une semaine allégée par nature.
   bool get light =>
-      kind == WeekKind.intro || kind == WeekKind.deload || kind == WeekKind.test;
+      kind == WeekKind.intro ||
+      kind == WeekKind.deload ||
+      kind == WeekKind.test;
 }
 
 /// Forme d'un bloc.
@@ -386,9 +388,7 @@ BlockShape shapeBlock(
           );
         } else {
           final ramp = loaded <= 1 ? 1.0 : stage / (loaded - 1);
-          final volume = reintroduction
-              ? 0.65 + 0.3 * ramp
-              : 0.9 + 0.1 * ramp;
+          final volume = reintroduction ? 0.65 + 0.3 * ramp : 0.9 + 0.1 * ramp;
           add(WeekKind.build, intent, phase, volume, stage);
           stage++;
         }
@@ -399,7 +399,7 @@ BlockShape shapeBlock(
         final competition = target?.peak ?? false;
         final taperWeeks = competition && a.level >= 2 ? 2 : 1;
         // Semaines avant l'affûtage.
-        final before = (toEvent ?? length) - taperWeeks;
+        final before = toEvent - taperWeeks;
         final plan = <SeasonPhaseKind>[];
         if (before >= 5) {
           for (var i = 0; i < before - 2; i++) {
@@ -451,13 +451,7 @@ BlockShape shapeBlock(
           }
         }
         if (taperWeeks == 2) {
-          add(
-            WeekKind.deload,
-            WeekIntent.taper,
-            SeasonPhaseKind.taper,
-            0.6,
-            0,
-          );
+          add(WeekKind.deload, WeekIntent.taper, SeasonPhaseKind.taper, 0.6, 0);
         }
         add(
           WeekKind.test,
@@ -514,7 +508,7 @@ BlockShape shapeBlock(
       if (finalBlock) {
         phase = SeasonPhaseKind.realization;
         final taperWeeks = a.level >= 2 ? 2 : 1;
-        final before = (toEvent ?? length) - taperWeeks;
+        final before = toEvent - taperWeeks;
         for (var i = 0; i < before; i++) {
           add(
             WeekKind.build,
@@ -658,9 +652,7 @@ SeasonPlan seasonPlanOf(Athlete a, CivilDate start, CivilDate createdOn) {
   return SeasonPlan(
     createdOn: createdOn,
     engineVersion: kalisPlanVersion,
-    eventIds: <String>[
-      if (target?.eventId != null) target!.eventId!,
-    ],
+    eventIds: <String>[if (target?.eventId != null) target!.eventId!],
     phases: phases,
     reasons: <Reason>[
       if (target?.eventId != null)
