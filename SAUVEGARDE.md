@@ -9,7 +9,7 @@ Session de reprise du 03/10/2026 (05:51 UTC). L'arbre de cette branche = `moteur
 - Générateurs relancés ; `pytest tools/catalog/tests` : 86 verts.
 
 ## En cours
-- Contrôle CI sur `claude/ci-cp-b` : 1) passe avec `test/zz_dev_test.dart` (export des sources formatées dans `ci-out/packages/kalis_core/formatted`), 2) copie des sources formatées (lib, test, bin), retrait de `zz_dev_test.dart`, passe finale.
+- Contrôle CI sur `claude/ci-cp-b` (run 37103369029 lancé à 06:32 UTC, environ 45 min) : 1) passe avec `test/zz_dev_test.dart` (export des sources formatées dans `ci-out/packages/kalis_core/formatted`), 2) copie des sources formatées (lib, test, bin), retrait de `zz_dev_test.dart`, passe finale.
 
 ## Reste à faire
 - Commit « Kalis Track moteurs (CQ) : kalis_core 0.4.0 » sur `moteurs` (rebase), branche `etiquettes/kalis_core-v0.4.0`.
@@ -18,3 +18,4 @@ Session de reprise du 03/10/2026 (05:51 UTC). L'arbre de cette branche = `moteur
 ## Décisions prises
 - Débutant : aucune question de récupération à la création (4 questions reportées) ; du schéma 3, seulement skills / emphasis / events / running_base selon la discipline (16 à 18 questions).
 - Pas de SDK Dart dans la session : le formatage passe par la CI.
+- Brouillon de LIVRAISON_CQ.md prêt (dans la session ; contenu repris de CHANGELOG, PROFIL_V3, PARCOURS_V3, RELECTURES_CQ).
