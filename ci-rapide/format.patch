@@ -1,0 +1,111 @@
+diff --git a/lib/guided_tests.dart b/lib/guided_tests.dart
+index 99308ca..9f6e0f2 100644
+--- a/lib/guided_tests.dart
++++ b/lib/guided_tests.dart
+@@ -132,8 +132,7 @@ String? _protocolFor(AthleteProfile p, Catalog c, CatalogExercise e) {
+       e.family == MovementFamily.recuperation) {
+     return null;
+   }
+-  if (e.family == MovementFamily.cardio ||
+-      e.unit == MeasureUnit.distance) {
++  if (e.family == MovementFamily.cardio || e.unit == MeasureUnit.distance) {
+     // Les protocoles d'endurance sont des tests de course.
+     if (!name.contains('course') && !name.contains('footing')) return null;
+     final longRun = p.enduranceBase?.longRun;
+diff --git a/lib/plan/reason_texts_0_4.dart b/lib/plan/reason_texts_0_4.dart
+index d32190c..5009f13 100644
+--- a/lib/plan/reason_texts_0_4.dart
++++ b/lib/plan/reason_texts_0_4.dart
+@@ -15,28 +15,22 @@ const kReasonTexts04 = <String, String>{
+       'Toute ta saison est construite pour être en forme ce jour-là.',
+   'plan.undulation':
+       "Aujourd'hui, c'est un jour {stress} : on alterne lourd, moyen et léger dans la semaine.",
+-  'plan.technique':
+-      'Technique du jour : {technique}.',
++  'plan.technique': 'Technique du jour : {technique}.',
+   'plan.technique_withheld':
+       'Je garde la technique « {technique} » pour plus tard : pas encore le bon moment ({cause}).',
+   'plan.specialization':
+       'Priorité à ta cible pendant {weeks} semaines ; le reste est entretenu.',
+   'plan.maintenance_volume':
+       "Volume d'entretien pour ce groupe : juste ce qu'il faut pour ne rien perdre.",
+-  'plan.skill_step':
+-      "C'est ton étape actuelle sur cette figure.",
++  'plan.skill_step': "C'est ton étape actuelle sur cette figure.",
+   'plan.skill_plateau':
+       "Tu es à cette étape depuis longtemps : je change d'approche sur cette figure.",
+   'plan.recent_load':
+       'Premier bloc calé sur ce que tu fais en ce moment : ni trop facile, ni marche trop haute.',
+-  'plan.test_scheduled':
+-      'Un test est prévu : il me dira où tu en es vraiment.',
+-  'plan.benchmark_used':
+-      "Charge calculée d'après ton test ou ton record.",
+-  'plan.percent_based':
+-      'Charge réglée sur une part de ton maximum.',
+-  'plan.recovery_profile':
+-      'Je tiens compte de ta récupération ({factor}).',
++  'plan.test_scheduled': 'Un test est prévu : il me dira où tu en es vraiment.',
++  'plan.benchmark_used': "Charge calculée d'après ton test ou ton record.",
++  'plan.percent_based': 'Charge réglée sur une part de ton maximum.',
++  'plan.recovery_profile': 'Je tiens compte de ta récupération ({factor}).',
+   'plan.constraint_history':
+       "Zone à ménager : j'avance plus doucement sur les mouvements qui la chargent.",
+   'plan.concurrent_sport':
+@@ -45,44 +39,31 @@ const kReasonTexts04 = <String, String>{
+       "Volume et rythme réglés sur ton ancienneté d'entraînement.",
+   'plan.return_from_gap':
+       'Tu reprends après une coupure : on repart progressivement.',
+-  'plan.weak_point':
+-      'Exercice choisi pour travailler là où tu bloques.',
+-  'plan.event_specific':
+-      'Travail spécifique de ton épreuve.',
++  'plan.weak_point': 'Exercice choisi pour travailler là où tu bloques.',
++  'plan.event_specific': 'Travail spécifique de ton épreuve.',
+   'adapt.backoff_from_top_set':
+       "Séries allégées calculées sur ta série de tête d'aujourd'hui.",
+   'adapt.rir_cap':
+       'Je baisse un peu la charge pour que tu gardes de la réserve.',
+-  'adapt.test_result':
+-      'Test enregistré : ton estimation est à jour.',
+-  'adapt.skill_step_up':
+-      "Critère tenu : tu passes à l'étape suivante.",
++  'adapt.test_result': 'Test enregistré : ton estimation est à jour.',
++  'adapt.skill_step_up': "Critère tenu : tu passes à l'étape suivante.",
+   'adapt.skill_step_down':
+       "Aujourd'hui, on revient une étape en dessous pour rester propre.",
+   'adapt.skill_hold':
+       'On reste à cette étape : tes tendons ont besoin de temps.',
+-  'adapt.phase_respected':
+-      "Je respecte l'intention de la phase en cours.",
+-  'adapt.taper_no_volume':
+-      "Affûtage : je n'ajoute rien, on garde les charges.",
+-  'adapt.event_near':
+-      'Ton échéance est dans {days} jours : je reste prudent.',
++  'adapt.phase_respected': "Je respecte l'intention de la phase en cours.",
++  'adapt.taper_no_volume': "Affûtage : je n'ajoute rien, on garde les charges.",
++  'adapt.event_near': 'Ton échéance est dans {days} jours : je reste prudent.',
+   'adapt.attempt_opener':
+       'Ouverture : une barre sûre, pour entrer dans la compétition.',
+-  'adapt.attempt_next':
+-      "Tentative suivante choisie d'après la précédente.",
+-  'adapt.attempt_conservative':
+-      'Je propose une barre prudente ({cause}).',
+-  'adapt.pacing':
+-      'Rythme conseillé pour viser {targetReps} répétitions.',
+-  'adapt.recovery_profile':
+-      'Je tiens compte de ta récupération ({factor}).',
++  'adapt.attempt_next': "Tentative suivante choisie d'après la précédente.",
++  'adapt.attempt_conservative': 'Je propose une barre prudente ({cause}).',
++  'adapt.pacing': 'Rythme conseillé pour viser {targetReps} répétitions.',
++  'adapt.recovery_profile': 'Je tiens compte de ta récupération ({factor}).',
+   'adapt.tendon_load':
+       'Je surveille la charge de tes tendons : progression ralentie sur ces appuis.',
+-  'adapt.technique_executed':
+-      'Technique « {technique} » faite comme prévu.',
+-  'adapt.mini_set_stop':
+-      'On arrête les mini-séries ici ({cause}).',
++  'adapt.technique_executed': 'Technique « {technique} » faite comme prévu.',
++  'adapt.mini_set_stop': 'On arrête les mini-séries ici ({cause}).',
+ };
+ 
+ /// Phrase d'un code de 0.4.0 ([params] : paramètres de la raison ;
