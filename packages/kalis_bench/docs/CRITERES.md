@@ -40,7 +40,7 @@ Le rapport compte les violations par profil et au total. La CLI sort toujours à
 | `variete_utile` | Diversité des exercices sans dispersion (indice de Jaccard entre semaines et entre séances) | — | R6-P4 ; repères de `kalis_plan` |
 | `non_ressemblance_proprietaire` | Plus fort indice de Jaccard « exercice × schéma » entre une semaine générée et une semaine du programme personnel du propriétaire | < 0,30 | PIPELINE GP (G4), PIPELINE_CP §2 |
 
-**Non-ressemblance aux programmes de référence privés.** Elle ne peut pas être calculée dans le paquet (les références sont chiffrées hors dépôt). Chaque lot qui a la clé la calcule dans sa session avec `tool/reference_jaccard.py` (couples « exercice × schéma » par semaine, même définition que ci-dessus) et ne publie que le résultat par profil. Exigé : < 0,30.
+**Non-ressemblance aux programmes de référence privés.** Elle ne peut pas être calculée dans le paquet (les références sont chiffrées hors dépôt). Chaque lot qui a la clé la calcule dans sa session avec `tool/reference_jaccard.py` (couples « exercice × schéma » par semaine, exercices ramenés à leur famille ; lecture exacte, et lecture tolérante où les répétitions de la référence tombent dans la plage générée) et ne publie que le résultat par profil. Exigé : < 0,30 pour les deux lectures.
 
 ## 3. Attentes de coach (`lib/src/expectations.dart`)
 

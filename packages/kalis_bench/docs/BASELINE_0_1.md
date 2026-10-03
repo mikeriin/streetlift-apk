@@ -16,7 +16,7 @@ Limites de la mesure : §6.
 - **Panel.** Moyenne 4,9/10 ; note la plus basse 3,0/10 ; note la plus haute 7,0/10 ; street 4,9, autres disciplines 5,1. Aucun des 27 programmes n'atteint 9/10 pour une seule école ; 29 notes sur 108 sont à 6 ou plus. Le seuil du calibrage est 9/10 pour chaque école et chaque profil : l'écart à combler est de 2 à 6 points selon les profils.
 - **Sécurité.** 117 violations sur les programmes créés (167 sur les programmes après adaptation simulée). 4 profils sur 27 sans violation : `street_13_peu_de_temps`, `autres_07_mobilite_sante_senior`, `autres_09_perte_de_poids_debutante`, `autres_10_contraintes_multiples`.
 - **Attentes de coach.** 113 attentes tenues sur 166 (68 %).
-- **Trajectoires.** Écart moyen au RIR visé : 2,05 répétition (de 1,20 à 3,58, hors course) ; 26 trajectoires sur 27 hors du repère d'écart au RIR. Avec une échéance, la performance simulée le jour J reste sous le meilleur niveau antérieur pour quatre profils sur cinq testés.
+- **Trajectoires.** Écart moyen au RIR visé : 2,05 répétitions (de 1,20 à 3,58, hors course) ; 26 trajectoires sur 27 hors du repère d'écart au RIR. Avec une échéance, la performance simulée le jour J reste sous le meilleur niveau antérieur pour quatre profils sur cinq testés.
 
 Les moteurs 0.1 produisent des programmes structurés, équilibrés entre poussée et tirage, faisables dans le temps donné pour la plupart, et prudents sur l'effort. Ils ne tiennent pas compte de l'échéance, sous-dosent l'intensité des pratiquants avancés, travaillent trop peu les mouvements visés, ne savent pas faire progresser un débutant vers sa première traction ni un pratiquant vers une figure, et ne modélisent presque pas la course.
 
@@ -216,6 +216,41 @@ Lecture :
 - **Performance à l'échéance** : 86 à 97 % du meilleur niveau antérieur pour quatre des cinq profils testés ; la préparation n'amène pas l'athlète à son pic.
 - **Course, mobilité, conditionnement** : `kalis_adapt` 0.1.0 ne modélise pas ces séances (aucune cible atteignable pour le 10 km, aucun gain mesurable).
 - Aucun déblocage de niveau d'adaptation non respecté, aucune aggravation de douleur simulée, très peu d'échecs non voulus.
+
+### 4.4 Non-ressemblance
+
+- **Programme personnel du propriétaire** : critère `non_ressemblance_proprietaire` à 1,00 pour les 27 profils (indice de Jaccard « exercice × schéma » sous 0,30 partout).
+- **Programmes de référence privés** : calculée dans la session du lot, avec la clé, par `tool/reference_jaccard.py`, sur les références relues dans cette session (cinq documents sur six, dont un en partie ; voir `pipeline/cp/DECISIONS_CP.md`, CR). Plus fort indice entre une semaine générée et une semaine de référence : **0,014** en lecture exacte, **0,222** en lecture tolérante (même famille d'exercice, même nombre de séries, répétitions de la référence dans la plage générée). Les deux sont sous le seuil de 0,30 pour chaque profil.
+
+| Profil | Jaccard exact | Jaccard tolérant | Sous 0,30 |
+| --- | --- | --- | --- |
+| `autres_01_debutant_musculation` | 0,000 | 0,018 | oui |
+| `autres_02_hypertrophie_intermediaire` | 0,000 | 0,059 | oui |
+| `autres_03_powerlifter_competition` | 0,000 | 0,012 | oui |
+| `autres_04_force_generale_46_ans` | 0,000 | 0,030 | oui |
+| `autres_05_course_10_km_debutante` | 0,000 | 0,000 | oui |
+| `autres_06_semi_marathon_intermediaire` | 0,000 | 0,023 | oui |
+| `autres_07_mobilite_sante_senior` | 0,000 | 0,018 | oui |
+| `autres_08_crossfit_intermediaire` | 0,000 | 0,083 | oui |
+| `autres_09_perte_de_poids_debutante` | 0,000 | 0,050 | oui |
+| `autres_10_contraintes_multiples` | 0,000 | 0,000 | oui |
+| `street_01_debutant_complet` | 0,000 | 0,118 | oui |
+| `street_02_debutant_surpoids` | 0,000 | 0,054 | oui |
+| `street_03_debutante` | 0,000 | 0,118 | oui |
+| `street_04_reprise_longue_pause` | 0,000 | 0,127 | oui |
+| `street_05_inter_calisthenie_front_lever` | 0,000 | 0,071 | oui |
+| `street_06_inter_sets_reps` | 0,000 | 0,185 | oui |
+| `street_07_avance_streetlifting_competition` | 0,000 | 0,120 | oui |
+| `street_08_avance_sets_reps_competition` | 0,014 | 0,156 | oui |
+| `street_09_elite_streetlifting` | 0,000 | 0,057 | oui |
+| `street_10_elite_figures` | 0,000 | 0,129 | oui |
+| `street_11_master_51_ans` | 0,000 | 0,222 | oui |
+| `street_12_antecedent_coude` | 0,000 | 0,094 | oui |
+| `street_13_peu_de_temps` | 0,000 | 0,143 | oui |
+| `street_14_parc_sans_lest` | 0,000 | 0,088 | oui |
+| `street_15_travail_physique_sommeil_court` | 0,000 | 0,222 | oui |
+| `street_16_specialisation_traction_lestee` | 0,000 | 0,100 | oui |
+| `street_17_hybride_street_course` | 0,000 | 0,133 | oui |
 
 ## 5. Défauts, par ordre de priorité
 

@@ -31,3 +31,9 @@ Session de reprise du 03/10/2026 (lancée 11:14 UTC).
 ## Décisions
 - Pas de SDK Dart dans la session : contrôles par `claude/ci-cp-a` uniquement ; `test/dev_format_test.dart` sert à récupérer les sources formatées par la CI (`ci-out/packages/kalis_bench/_src`) et doit être supprimé avant livraison.
 - Export concis du panel en Python (`tool/panel_export.py`) à partir des JSON du rapport.
+
+## Point de 13:35 UTC
+- dev_format_test supprimé ; BASELINE_0_1.md + docs/baseline/CORRECTIONS_PANEL_0_1.md écrits (générés par cp-travail/gen_baseline.py + baseline_prose.md à partir de rapport.json du contrôle et de /tmp/panel/base/agg.json = cp-travail/panel_base).
+- Non-ressemblance aux références calculée (exact 0,014 ; tolérant 0,222) ; archive chiffrée repoussée (cp-references 74dc4f41).
+- Page de relecture publiée : https://claude.ai/artifact/48CYFBy75Xykohm674vLNq (capacité db, manche 0, 10 programmes ; source dans tool/relecture et cp-travail/relecture). Lien écrit dans docs/PANEL.md.
+- Contrôle final lancé sur l'arbre complet (voir heure ci-dessous). Reste : section CR de DECISIONS_CP, commit moteurs, étiquette, LIVRAISON_CR, ETAT_CP, page de suivi, notification.
