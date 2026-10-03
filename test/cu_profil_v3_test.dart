@@ -193,7 +193,10 @@ void main() {
       // Expérience, ancienneté, interruption.
       expect(shows(level(null), 'training_age'), isFalse);
       expect(shows(level(ExperienceLevel.beginner), 'training_age'), isFalse);
-      expect(shows(level(ExperienceLevel.intermediate), 'training_age'), isTrue);
+      expect(
+        shows(level(ExperienceLevel.intermediate), 'training_age'),
+        isTrue,
+      );
       final inter = level(ExperienceLevel.intermediate);
       expect(shows(inter, 'training_gap'), isFalse);
       inter.trainingAge = TrainingAge.under6Months;
@@ -288,13 +291,19 @@ void main() {
       );
       expect(
         shows(
-          discipline(TrainingDiscipline.streetlifting, ExperienceLevel.advanced),
+          discipline(
+            TrainingDiscipline.streetlifting,
+            ExperienceLevel.advanced,
+          ),
           'weak_points',
         ),
         isTrue,
       );
       // Course : cardio, ou course en échéance.
-      expect(shows(level(ExperienceLevel.intermediate), 'running_base'), isFalse);
+      expect(
+        shows(level(ExperienceLevel.intermediate), 'running_base'),
+        isFalse,
+      );
       expect(
         shows(discipline(TrainingDiscipline.cardio), 'running_base'),
         isTrue,
@@ -325,7 +334,11 @@ void main() {
         );
       }
       expect(
-        shows(level(ExperienceLevel.beginner), 'body_weight_goal', deferred: true),
+        shows(
+          level(ExperienceLevel.beginner),
+          'body_weight_goal',
+          deferred: true,
+        ),
         isFalse,
       );
       expect(
@@ -350,10 +363,9 @@ void main() {
       // Poids obligatoire au poids du corps.
       expect(level(null).weightRequired(parcours, 2026), isFalse);
       expect(
-        discipline(TrainingDiscipline.calisthenics).weightRequired(
-          parcours,
-          2026,
-        ),
+        discipline(
+          TrainingDiscipline.calisthenics,
+        ).weightRequired(parcours, 2026),
         isTrue,
       );
       expect(street.weightRequired(parcours, 2026), isTrue);
@@ -426,10 +438,7 @@ void main() {
       )!;
       expect(again.lifestyleUpdatedOn, CivilDate(2026, 10, 1));
       expect(
-        jsonEncode(
-          again.toJson()
-            ..remove('updatedOn'),
-        ),
+        jsonEncode(again.toJson()..remove('updatedOn')),
         jsonEncode(p.toJson()..remove('updatedOn')),
       );
       final changed =
@@ -536,8 +545,7 @@ void main() {
       expect(next.athleteLoadIssues, 0);
       expect(next.athleteProfile!.schemaVersion, 3);
       final after = backupOf(next);
-      final profileAfter =
-          (after['athleteProfile'] as Map)['profile'] as Map;
+      final profileAfter = (after['athleteProfile'] as Map)['profile'] as Map;
       final profileBefore = (state['athleteProfile'] as Map)['profile'] as Map;
       expect(profileAfter.remove('schemaVersion'), 3);
       profileBefore.remove('schemaVersion');
@@ -645,7 +653,7 @@ void main() {
         expect(c.plan.validate(), isEmpty, reason: f['key'] as String);
         final pass2 = c.createPass2();
         expect(pass2.validate(), isEmpty, reason: f['key'] as String);
-        expect(pass2.days, isNotEmpty, reason: f['key'] as String);
+        expect(pass2.weeks, isNotEmpty, reason: f['key'] as String);
       }
     });
 
@@ -773,9 +781,7 @@ void main() {
             mode: 'create',
           );
           await tester.pumpWidget(const SizedBox());
-          await tester.pumpWidget(
-            page(const AthleteProfileFlow(), dark: dark),
-          );
+          await tester.pumpWidget(page(const AthleteProfileFlow(), dark: dark));
           await tester.pumpAndSettle();
           final st = flow(tester);
           expect(st.visibleQuestionIds, exp.toSet(), reason: key);
@@ -867,7 +873,10 @@ void main() {
       await tap(tester, 'benchmark-add');
       await tap(tester, 'benchmark-exercise');
       await tap(tester, 'picker-suggested-sl-traction-lestee');
-      expect(find.byKey(const ValueKey('benchmark-kind-load_reps')), findsOneWidget);
+      expect(
+        find.byKey(const ValueKey('benchmark-kind-load_reps')),
+        findsOneWidget,
+      );
       await tester.enterText(
         find.byKey(const ValueKey('benchmark-load')),
         '32,5',
@@ -925,8 +934,10 @@ void main() {
       // Avec une échéance principale, la priorité est un mouvement de
       // compétition.
       expect(
-        find.text('Lequel de tes mouvements de compétition est le plus en '
-            'retard ?'),
+        find.text(
+          'Lequel de tes mouvements de compétition est le plus en '
+          'retard ?',
+        ),
         findsOneWidget,
       );
       await store.saveAthleteDraft(null);
@@ -955,10 +966,7 @@ void main() {
       for (final s in steps) {
         expect(flow(tester).step, s);
         if (s == 'recovery') await tap(tester, 'q-sleep-hours_7_plus');
-        await tap(
-          tester,
-          s == steps.last ? 'flow-save' : 'flow-next-$s',
-        );
+        await tap(tester, s == steps.last ? 'flow-save' : 'flow-next-$s');
       }
       expect(find.byType(AthleteProfileFlow), findsNothing);
       expect(store.athleteProfile!.sleep, SleepBand.hours7Plus);
@@ -973,35 +981,29 @@ void main() {
     });
 
     for (final dark in [true, false]) {
-      testWidgets(
-        'texte à 200 % : récupération et records sans débordement '
-        '(${dark ? 'sombre' : 'clair'})',
-        (tester) async {
-          phone(tester, size: const Size(320, 720));
-          final d = beginnerDraft()
-            ..experience = ExperienceLevel.advanced
-            ..weight = '75'
-            ..primary = TrainingDiscipline.streetlifting
-            ..secondaries.clear();
-          d.addSecondary(TrainingDiscipline.cardio);
-          for (final step in ['experience', 'levels', 'goals', 'recovery']) {
-            await store.saveAthleteDraft(d, step: step, mode: 'create');
-            await tester.pumpWidget(const SizedBox());
-            await tester.pumpWidget(
-              page(const AthleteProfileFlow(), scale: 2, dark: dark),
-            );
-            await tester.pumpAndSettle();
-            expect(flow(tester).step, step);
-            expect(tester.takeException(), isNull, reason: step);
-            await scrollToAction(
-              tester,
-              find.byKey(ValueKey('flow-next-$step')),
-            );
-            expect(tester.takeException(), isNull, reason: step);
-          }
-          await store.saveAthleteDraft(null);
-        },
-      );
+      testWidgets('texte à 200 % : récupération et records sans débordement '
+          '(${dark ? 'sombre' : 'clair'})', (tester) async {
+        phone(tester, size: const Size(320, 720));
+        final d = beginnerDraft()
+          ..experience = ExperienceLevel.advanced
+          ..weight = '75'
+          ..primary = TrainingDiscipline.streetlifting
+          ..secondaries.clear();
+        d.addSecondary(TrainingDiscipline.cardio);
+        for (final step in ['experience', 'levels', 'goals', 'recovery']) {
+          await store.saveAthleteDraft(d, step: step, mode: 'create');
+          await tester.pumpWidget(const SizedBox());
+          await tester.pumpWidget(
+            page(const AthleteProfileFlow(), scale: 2, dark: dark),
+          );
+          await tester.pumpAndSettle();
+          expect(flow(tester).step, step);
+          expect(tester.takeException(), isNull, reason: step);
+          await scrollToAction(tester, find.byKey(ValueKey('flow-next-$step')));
+          expect(tester.takeException(), isNull, reason: step);
+        }
+        await store.saveAthleteDraft(null);
+      });
     }
   });
 }

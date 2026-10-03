@@ -154,7 +154,8 @@ extension _FlowV3 on AthleteProfileFlowState {
   String _screenKoach(String step, String fallback) {
     final screen = kStepScreens[step];
     for (final s in _pq?.screens ?? const <Map<String, Object?>>[]) {
-      if (s['id'] == screen && s['koach'] is String) return s['koach']! as String;
+      if (s['id'] == screen && s['koach'] is String)
+        return s['koach']! as String;
     }
     return fallback;
   }
@@ -171,10 +172,7 @@ extension _FlowV3 on AthleteProfileFlowState {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         _title(title ?? q.text),
-        if (koachOf(q) case final k?) ...[
-          const SizedBox(height: 4),
-          _hint(k),
-        ],
+        if (koachOf(q) case final k?) ...[const SizedBox(height: 4), _hint(k)],
         const SizedBox(height: 8),
         ...body,
         if (q.skip && onSkip != null)
@@ -254,9 +252,8 @@ extension _FlowV3 on AthleteProfileFlowState {
           _choiceQuestion(
             'experience_level',
             _d.experience?.code,
-            (c) => _d.experience = c == null
-                ? null
-                : ExperienceLevel.fromCode(c),
+            (c) =>
+                _d.experience = c == null ? null : ExperienceLevel.fromCode(c),
             keyPrefix: 'flow-experience',
           ),
       if (_show('training_age'))
@@ -298,12 +295,12 @@ extension _FlowV3 on AthleteProfileFlowState {
           ),
         ),
       if (_unknownBenchmarks && list.isEmpty)
-        Padding(
-          padding: const EdgeInsets.only(bottom: 8),
+        const Padding(
+          padding: EdgeInsets.only(bottom: 8),
           child: KoachSays(
-            key: const ValueKey('benchmarks-unknown-koach'),
+            key: ValueKey('benchmarks-unknown-koach'),
             pose: KoachPose.thumbsUp,
-            child: const Text(
+            child: Text(
               'Pas de souci : aucun examen aujourd’hui. On calera tes '
               'charges pendant tes premières séances, et je te proposerai un '
               'test guidé si ça vaut le coup.',
@@ -532,7 +529,12 @@ extension _FlowV3 on AthleteProfileFlowState {
       return null;
     }
 
-    void put(String id, {int? sessions, HardSetsBand? hard, bool clearHard = false}) {
+    void put(
+      String id, {
+      int? sessions,
+      HardSetsBand? hard,
+      bool clearHard = false,
+    }) {
       final list = [...?_d.recentTraining];
       final i = list.indexWhere((r) => r.exerciseId == id);
       final old = i < 0 ? null : list[i];
@@ -554,64 +556,73 @@ extension _FlowV3 on AthleteProfileFlowState {
     final sessionsOpts = itemOptions(q, 'sessionsPerWeek');
     final hardOpts = itemOptions(q, 'hardSets');
     final phaseOpts = itemOptions(q, 'currentPhase');
-    return _questionCard(q, [
-      for (final id in rows) ...[
-        Padding(
-          padding: const EdgeInsets.only(top: 8),
-          child: Text(
-            _exerciseName(id),
-            style: Theme.of(context).textTheme.titleSmall,
-          ),
-        ),
-        _hint(itemText(q, 'sessionsPerWeek', 'Combien de fois par semaine ?')),
-        const SizedBox(height: 4),
-        _sheetChips<String>(
-          keyPrefix: 'recent-$id-sessions',
-          options: sessionsOpts,
-          selected: (c) => rowOf(id)?.sessionsPerWeek.toString() == c,
-          onTap: (c) => _update(() => put(id, sessions: int.parse(c))),
-        ),
-        if (rowOf(id) != null && rowOf(id)!.sessionsPerWeek > 0) ...[
-          const SizedBox(height: 6),
-          _hint(itemText(q, 'hardSets', 'Combien de séries dures par semaine ?')),
-          const SizedBox(height: 4),
-          _sheetChips<String>(
-            keyPrefix: 'recent-$id-hard',
-            options: hardOpts,
-            selected: (c) => rowOf(id)?.hardSets?.code == c,
-            onTap: (c) => _update(
-              () => rowOf(id)?.hardSets?.code == c
-                  ? put(id, clearHard: true)
-                  : put(id, hard: HardSetsBand.fromCode(c)),
+    return _questionCard(
+      q,
+      [
+        for (final id in rows) ...[
+          Padding(
+            padding: const EdgeInsets.only(top: 8),
+            child: Text(
+              _exerciseName(id),
+              style: Theme.of(context).textTheme.titleSmall,
             ),
           ),
+          _hint(
+            itemText(q, 'sessionsPerWeek', 'Combien de fois par semaine ?'),
+          ),
+          const SizedBox(height: 4),
+          _sheetChips<String>(
+            keyPrefix: 'recent-$id-sessions',
+            options: sessionsOpts,
+            selected: (c) => rowOf(id)?.sessionsPerWeek.toString() == c,
+            onTap: (c) => _update(() => put(id, sessions: int.parse(c))),
+          ),
+          if (rowOf(id) != null && rowOf(id)!.sessionsPerWeek > 0) ...[
+            const SizedBox(height: 6),
+            _hint(
+              itemText(q, 'hardSets', 'Combien de séries dures par semaine ?'),
+            ),
+            const SizedBox(height: 4),
+            _sheetChips<String>(
+              keyPrefix: 'recent-$id-hard',
+              options: hardOpts,
+              selected: (c) => rowOf(id)?.hardSets?.code == c,
+              onTap: (c) => _update(
+                () => rowOf(id)?.hardSets?.code == c
+                    ? put(id, clearHard: true)
+                    : put(id, hard: HardSetsBand.fromCode(c)),
+              ),
+            ),
+          ],
         ],
-      ],
-      const SizedBox(height: 8),
-      TextButton.icon(
-        key: const ValueKey('recent-add'),
-        icon: const Icon(Icons.add),
-        label: const Text('Un autre mouvement'),
-        onPressed: () async {
-          final id = await _pickExerciseFor(context);
-          if (id == null || !mounted) return;
-          _update(() => _extraRecentRows.add(id));
-        },
-      ),
-      const SizedBox(height: 8),
-      _title(itemText(q, 'currentPhase', 'En ce moment, tu es plutôt…')),
-      const SizedBox(height: 4),
-      for (final o in phaseOpts)
-        _ChoiceRow(
-          key: ValueKey('q-current_phase-${o.$1}'),
-          label: o.$2,
-          selected: _d.currentPhase?.code == o.$1,
-          onTap: () => _update(() => _d.currentPhase = CurrentPhase.fromCode(o.$1)),
+        const SizedBox(height: 8),
+        TextButton.icon(
+          key: const ValueKey('recent-add'),
+          icon: const Icon(Icons.add),
+          label: const Text('Un autre mouvement'),
+          onPressed: () async {
+            final id = await _pickExerciseFor(context);
+            if (id == null || !mounted) return;
+            _update(() => _extraRecentRows.add(id));
+          },
         ),
-    ], onSkip: () {
-      _d.recentTraining = null;
-      _d.currentPhase = null;
-    });
+        const SizedBox(height: 8),
+        _title(itemText(q, 'currentPhase', 'En ce moment, tu es plutôt…')),
+        const SizedBox(height: 4),
+        for (final o in phaseOpts)
+          _ChoiceRow(
+            key: ValueKey('q-current_phase-${o.$1}'),
+            label: o.$2,
+            selected: _d.currentPhase?.code == o.$1,
+            onTap: () =>
+                _update(() => _d.currentPhase = CurrentPhase.fromCode(o.$1)),
+          ),
+      ],
+      onSkip: () {
+        _d.recentTraining = null;
+        _d.currentPhase = null;
+      },
+    );
   }
 
   // ------------------------------------------------------------ objectifs
@@ -810,11 +821,11 @@ extension _FlowV3 on AthleteProfileFlowState {
     final q = _q('weak_points')!;
     final catalog = _catalog;
     final list = _d.weakPoints ?? const <WeakPoint>[];
-    final exercises = [
+    final exercises = <String>{
       ...weakPointExercises(_d),
       for (final w in list) w.exerciseId,
       ..._extraWeakRows,
-    ].toSet().toList();
+    }.toList();
     bool has(String id, WeakPointKind k) =>
         list.any((w) => w.exerciseId == id && w.kind == k);
     return _questionCard(q, [
@@ -886,68 +897,74 @@ extension _FlowV3 on AthleteProfileFlowState {
       );
     }
 
-    return _questionCard(q, [
-      _hint(itemText(q, 'weeklyVolume', 'Par semaine, en tout')),
-      for (final o in itemOptions(q, 'weeklyVolume'))
-        _ChoiceRow(
-          key: ValueKey('run-volume-${o.$1}'),
-          label: o.$2,
-          selected: volume == o.$1,
-          onTap: () => _update(() {
-            _runVolume = o.$1;
-            final s = sessions;
-            if (s != null) {
+    return _questionCard(
+      q,
+      [
+        _hint(itemText(q, 'weeklyVolume', 'Par semaine, en tout')),
+        for (final o in itemOptions(q, 'weeklyVolume'))
+          _ChoiceRow(
+            key: ValueKey('run-volume-${o.$1}'),
+            label: o.$2,
+            selected: volume == o.$1,
+            onTap: () => _update(() {
+              _runVolume = o.$1;
+              final s = sessions;
+              if (s != null) {
+                _d.enduranceBase = EnduranceBase(
+                  weeklyVolume: RunVolumeBand.fromCode(o.$1),
+                  sessionsPerWeek: int.parse(s),
+                  longRun: base?.longRun,
+                );
+              }
+            }),
+          ),
+        const SizedBox(height: 8),
+        _hint(
+          itemText(q, 'sessionsPerWeek', 'Combien de sorties par semaine ?'),
+        ),
+        const SizedBox(height: 4),
+        _sheetChips<String>(
+          keyPrefix: 'run-sessions',
+          options: itemOptions(q, 'sessionsPerWeek'),
+          selected: (c) => sessions == c,
+          onTap: (c) => _update(() {
+            _runSessions = c;
+            final v = volume;
+            if (v != null) {
               _d.enduranceBase = EnduranceBase(
-                weeklyVolume: RunVolumeBand.fromCode(o.$1),
-                sessionsPerWeek: int.parse(s),
+                weeklyVolume: RunVolumeBand.fromCode(v),
+                sessionsPerWeek: int.parse(c),
                 longRun: base?.longRun,
               );
             }
           }),
         ),
-      const SizedBox(height: 8),
-      _hint(itemText(q, 'sessionsPerWeek', 'Combien de sorties par semaine ?')),
-      const SizedBox(height: 4),
-      _sheetChips<String>(
-        keyPrefix: 'run-sessions',
-        options: itemOptions(q, 'sessionsPerWeek'),
-        selected: (c) => sessions == c,
-        onTap: (c) => _update(() {
-          _runSessions = c;
-          final v = volume;
-          if (v != null) {
-            _d.enduranceBase = EnduranceBase(
-              weeklyVolume: RunVolumeBand.fromCode(v),
-              sessionsPerWeek: int.parse(c),
-              longRun: base?.longRun,
-            );
-          }
-        }),
-      ),
-      if (base != null) ...[
-        const SizedBox(height: 8),
-        _hint(itemText(q, 'longRun', 'Ta plus longue sortie récente ?')),
-        const SizedBox(height: 4),
-        _sheetChips<String>(
-          keyPrefix: 'run-long',
-          options: itemOptions(q, 'longRun'),
-          selected: (c) => base.longRun?.code == c,
-          onTap: (c) => _update(() {
-            commit();
-            final b = _d.enduranceBase!;
-            _d.enduranceBase = EnduranceBase(
-              weeklyVolume: b.weeklyVolume,
-              sessionsPerWeek: b.sessionsPerWeek,
-              longRun: b.longRun?.code == c ? null : LongRunBand.fromCode(c),
-            );
-          }),
-        ),
+        if (base != null) ...[
+          const SizedBox(height: 8),
+          _hint(itemText(q, 'longRun', 'Ta plus longue sortie récente ?')),
+          const SizedBox(height: 4),
+          _sheetChips<String>(
+            keyPrefix: 'run-long',
+            options: itemOptions(q, 'longRun'),
+            selected: (c) => base.longRun?.code == c,
+            onTap: (c) => _update(() {
+              commit();
+              final b = _d.enduranceBase!;
+              _d.enduranceBase = EnduranceBase(
+                weeklyVolume: b.weeklyVolume,
+                sessionsPerWeek: b.sessionsPerWeek,
+                longRun: b.longRun?.code == c ? null : LongRunBand.fromCode(c),
+              );
+            }),
+          ),
+        ],
       ],
-    ], onSkip: () {
-      _d.enduranceBase = null;
-      _runVolume = null;
-      _runSessions = null;
-    });
+      onSkip: () {
+        _d.enduranceBase = null;
+        _runVolume = null;
+        _runSessions = null;
+      },
+    );
   }
 
   // --------------------------------------------------------- récupération
@@ -958,7 +975,7 @@ extension _FlowV3 on AthleteProfileFlowState {
       _screenKoach(
         'recovery',
         'Ton corps récupère aussi en dehors des séances. Quelques questions '
-        'rapides.',
+            'rapides.',
       ),
       why:
           'Ce sont tes habitudes : la nuit dernière et le stress du jour se '
@@ -990,69 +1007,73 @@ extension _FlowV3 on AthleteProfileFlowState {
       _d.otherSports ??= const <OtherSport>[];
     }
 
-    return _questionCard(q, [
-      for (final o in q.options)
-        if (o.code != 'other_sport')
-          _ChoiceRow(
-            key: ValueKey('q-outside_load-${o.code}'),
-            label: o.label,
-            hint: o.hint,
-            selected: occ?.code == o.code,
-            onTap: () => _update(() {
-              _d.occupationalLoad = OccupationalLoad.fromCode(o.code);
-              ensureSports();
-            }),
-          )
-        else
-          _ChoiceRow(
-            key: const ValueKey('q-outside_load-other_sport'),
-            label: o.label,
-            hint: o.hint,
-            multi: true,
-            selected: other,
-            onTap: () => _update(() {
-              if (other) {
-                _otherSportOpen = false;
-                _d.otherSports = const <OtherSport>[];
-              } else {
-                _otherSportOpen = true;
+    return _questionCard(
+      q,
+      [
+        for (final o in q.options)
+          if (o.code != 'other_sport')
+            _ChoiceRow(
+              key: ValueKey('q-outside_load-${o.code}'),
+              label: o.label,
+              hint: o.hint,
+              selected: occ?.code == o.code,
+              onTap: () => _update(() {
+                _d.occupationalLoad = OccupationalLoad.fromCode(o.code);
                 ensureSports();
-              }
-            }),
-          ),
-      if (other) ...[
-        for (var i = 0; i < sportList.length; i++)
-          ListTile(
-            key: ValueKey('sport-$i'),
-            contentPadding: EdgeInsets.zero,
-            title: Text(itemOptionLabel(q, 'kind', sportList[i].kind.code)),
-            subtitle: Text(
-              '${sportList[i].sessionsPerWeek} × ${sportList[i].minutesPerSession} min par semaine'
-              '${sportList[i].hard == true ? ' · intense' : ''}'
-              '${sportList[i].mainSport == true ? ' · sport principal' : ''}',
-            ),
-            onTap: () => _editOtherSport(i),
-            trailing: IconButton(
-              key: ValueKey('sport-remove-$i'),
-              tooltip: 'Retirer ce sport',
-              icon: const Icon(Icons.close),
-              onPressed: () => _update(() {
-                _d.otherSports = [...sportList]..removeAt(i);
+              }),
+            )
+          else
+            _ChoiceRow(
+              key: const ValueKey('q-outside_load-other_sport'),
+              label: o.label,
+              hint: o.hint,
+              multi: true,
+              selected: other,
+              onTap: () => _update(() {
+                if (other) {
+                  _otherSportOpen = false;
+                  _d.otherSports = const <OtherSport>[];
+                } else {
+                  _otherSportOpen = true;
+                  ensureSports();
+                }
               }),
             ),
+        if (other) ...[
+          for (var i = 0; i < sportList.length; i++)
+            ListTile(
+              key: ValueKey('sport-$i'),
+              contentPadding: EdgeInsets.zero,
+              title: Text(itemOptionLabel(q, 'kind', sportList[i].kind.code)),
+              subtitle: Text(
+                '${sportList[i].sessionsPerWeek} × ${sportList[i].minutesPerSession} min par semaine'
+                '${sportList[i].hard == true ? ' · intense' : ''}'
+                '${sportList[i].mainSport == true ? ' · sport principal' : ''}',
+              ),
+              onTap: () => _editOtherSport(i),
+              trailing: IconButton(
+                key: ValueKey('sport-remove-$i'),
+                tooltip: 'Retirer ce sport',
+                icon: const Icon(Icons.close),
+                onPressed: () => _update(() {
+                  _d.otherSports = [...sportList]..removeAt(i);
+                }),
+              ),
+            ),
+          FilledButton.tonalIcon(
+            key: const ValueKey('sport-add'),
+            icon: const Icon(Icons.add),
+            label: const Text('Ajouter un sport'),
+            onPressed: () => _editOtherSport(null),
           ),
-        FilledButton.tonalIcon(
-          key: const ValueKey('sport-add'),
-          icon: const Icon(Icons.add),
-          label: const Text('Ajouter un sport'),
-          onPressed: () => _editOtherSport(null),
-        ),
+        ],
       ],
-    ], onSkip: () {
-      _d.occupationalLoad = null;
-      _d.otherSports = null;
-      _otherSportOpen = false;
-    });
+      onSkip: () {
+        _d.occupationalLoad = null;
+        _d.otherSports = null;
+        _otherSportOpen = false;
+      },
+    );
   }
 
   Future<void> _editOtherSport(int? index) async {
@@ -1384,7 +1405,9 @@ class _BenchmarkSheetState extends State<_BenchmarkSheet> {
             key: const ValueKey('benchmark-exercise'),
             onPressed: _pick,
             child: Text(
-              _exercise == null ? 'Choisir le mouvement' : _exerciseName(_exercise!),
+              _exercise == null
+                  ? 'Choisir le mouvement'
+                  : _exerciseName(_exercise!),
             ),
           ),
           if (_exercise != null) ...[
@@ -1498,7 +1521,10 @@ class _BenchmarkSheetState extends State<_BenchmarkSheet> {
               padding: const EdgeInsets.only(top: 4),
               child: _sheetHint(context, longDateText(_date!)),
             ),
-          _sheetLabel(context, itemText(q, 'source', 'D’où vient ce chiffre ?')),
+          _sheetLabel(
+            context,
+            itemText(q, 'source', 'D’où vient ce chiffre ?'),
+          ),
           for (final o in itemOptions(q, 'source'))
             _ChoiceRow(
               key: ValueKey('benchmark-source-${o.$1}'),
@@ -1813,9 +1839,7 @@ class _SpecializationSheetState extends State<_SpecializationSheet> {
       muscle: _kind == SpecializationKind.muscle ? _muscle : null,
       pattern: _kind == SpecializationKind.pattern ? _pattern : null,
       weeks: _weeks,
-      maintenance: widget.mainEvent
-          ? MaintenancePolicy.maintain
-          : _maintenance,
+      maintenance: widget.mainEvent ? MaintenancePolicy.maintain : _maintenance,
     );
     final err = _firstViolation(s.validate());
     if (err != null) {
@@ -1828,7 +1852,10 @@ class _SpecializationSheetState extends State<_SpecializationSheet> {
   static const _patterns = [
     (MovementPattern.tirageVertical, 'Tirage vertical (tractions)'),
     (MovementPattern.tirageHorizontal, 'Tirage horizontal (rowing)'),
-    (MovementPattern.pousseeHorizontale, 'Poussée horizontale (pompes, développé)'),
+    (
+      MovementPattern.pousseeHorizontale,
+      'Poussée horizontale (pompes, développé)',
+    ),
     (MovementPattern.pousseeVerticaleHaute, 'Poussée au-dessus de la tête'),
     (MovementPattern.pousseeVerticaleBasse, 'Poussée vers le bas (dips)'),
     (MovementPattern.squat, 'Squat'),
@@ -1892,14 +1919,16 @@ class _SpecializationSheetState extends State<_SpecializationSheet> {
                 selected: _pattern == p.$1,
                 onTap: () => setState(() => _pattern = p.$1),
               ),
-          _sheetLabel(context, itemText(q, 'weeks', 'Pendant combien de temps ?')),
+          _sheetLabel(
+            context,
+            itemText(q, 'weeks', 'Pendant combien de temps ?'),
+          ),
           _sheetChips<String>(
             keyPrefix: 'spec-weeks',
             options: itemOptions(q, 'weeks'),
             selected: (c) => '$_weeks' == c,
-            onTap: (c) => setState(
-              () => _weeks = '$_weeks' == c ? null : int.parse(c),
-            ),
+            onTap: (c) =>
+                setState(() => _weeks = '$_weeks' == c ? null : int.parse(c)),
           ),
           if (!widget.mainEvent) ...[
             _sheetLabel(context, itemText(q, 'maintenance', 'Et le reste ?')),
@@ -2033,7 +2062,11 @@ class _OtherSportSheetState extends State<_OtherSportSheet> {
           ),
           _sheetLabel(
             context,
-            itemText(q, 'minutesPerSession', 'Combien de temps à chaque fois ?'),
+            itemText(
+              q,
+              'minutesPerSession',
+              'Combien de temps à chaque fois ?',
+            ),
           ),
           _sheetChips<int>(
             keyPrefix: 'sport-minutes',
@@ -2044,18 +2077,26 @@ class _OtherSportSheetState extends State<_OtherSportSheet> {
             selected: (m) => _minutes == m,
             onTap: (m) => setState(() => _minutes = m),
           ),
-          _sheetLabel(context, itemText(q, 'weekdays', 'Toujours les mêmes jours ?')),
+          _sheetLabel(
+            context,
+            itemText(q, 'weekdays', 'Toujours les mêmes jours ?'),
+          ),
           _sheetChips<int>(
             keyPrefix: 'sport-day',
             multi: true,
             options: [for (var d = 1; d <= 7; d++) (d, weekdayTitle(d))],
             selected: _days.contains,
-            onTap: (d) =>
-                setState(() => _days.contains(d) ? _days.remove(d) : _days.add(d)),
+            onTap: (d) => setState(
+              () => _days.contains(d) ? _days.remove(d) : _days.add(d),
+            ),
           ),
           _sheetLabel(
             context,
-            itemText(q, 'hard', 'C’est intense (matchs, combats, fractionné) ?'),
+            itemText(
+              q,
+              'hard',
+              'C’est intense (matchs, combats, fractionné) ?',
+            ),
           ),
           _sheetChips<String>(
             keyPrefix: 'sport-hard',
@@ -2063,7 +2104,10 @@ class _OtherSportSheetState extends State<_OtherSportSheet> {
             selected: (c) => '$_hard' == c,
             onTap: (c) => setState(() => _hard = c == 'true'),
           ),
-          _sheetLabel(context, itemText(q, 'mainSport', 'C’est ton sport principal ?')),
+          _sheetLabel(
+            context,
+            itemText(q, 'mainSport', 'C’est ton sport principal ?'),
+          ),
           _sheetChips<String>(
             keyPrefix: 'sport-main',
             options: const [('true', 'Oui'), ('false', 'Non')],
@@ -2222,8 +2266,7 @@ class _EventSheetState extends State<_EventSheet> {
     if (e.bestTotalReps != null) _bestReps.text = '${e.bestTotalReps}';
     if (e.bestSeconds != null) _bestTime.text = _durationField(e.bestSeconds!);
     _distance = e.distanceMeters;
-    if (_distance != null &&
-        !_raceDistances.any((r) => r.$1 == _distance)) {
+    if (_distance != null && !_raceDistances.any((r) => r.$1 == _distance)) {
       _otherDistance.text = numText(_distance! / 1000);
     }
     if (e.targetSeconds != null) {
@@ -2459,7 +2502,10 @@ class _EventSheetState extends State<_EventSheet> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text('Une date en vue', style: Theme.of(context).textTheme.titleLarge),
+          Text(
+            'Une date en vue',
+            style: Theme.of(context).textTheme.titleLarge,
+          ),
           _sheetLabel(context, itemText(q, 'kind', 'C’est quoi ?')),
           for (final o in itemOptions(q, 'kind'))
             _ChoiceRow(
@@ -2512,7 +2558,10 @@ class _EventSheetState extends State<_EventSheet> {
               }),
             ),
           ],
-          _sheetLabel(context, itemText(q, 'priority', 'Elle compte comment ?')),
+          _sheetLabel(
+            context,
+            itemText(q, 'priority', 'Elle compte comment ?'),
+          ),
           for (final o in itemOptions(q, 'priority'))
             _ChoiceRow(
               key: ValueKey('event-priority-${o.$1}'),
@@ -2589,7 +2638,10 @@ class _EventSheetState extends State<_EventSheet> {
     final q = widget.question;
     final classes = _classes;
     return [
-      _sheetLabel(context, itemText(q, 'lifts', 'Les mouvements, dans l’ordre')),
+      _sheetLabel(
+        context,
+        itemText(q, 'lifts', 'Les mouvements, dans l’ordre'),
+      ),
       for (var i = 0; i < _lifts.length; i++)
         KCard(
           key: ValueKey('event-lift-$i'),
@@ -2653,7 +2705,8 @@ class _EventSheetState extends State<_EventSheet> {
           ],
           selected: (c) => c == 'open'
               ? _openClass
-              : !_openClass && _weightClass != null &&
+              : !_openClass &&
+                    _weightClass != null &&
                     numText(_weightClass!) == c,
           onTap: (c) => setState(() {
             if (c == 'open') {
@@ -2832,7 +2885,8 @@ class _EventSheetState extends State<_EventSheet> {
           controller: _targetTime,
           keyboardType: TextInputType.datetime,
           decoration: InputDecoration(
-            labelText: '${itemText(q, 'targetSeconds', 'Ton temps visé ?')} '
+            labelText:
+                '${itemText(q, 'targetSeconds', 'Ton temps visé ?')} '
                 '(facultatif)',
             helperText: 'h:min:s ou min:s',
           ),

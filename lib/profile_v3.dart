@@ -218,8 +218,7 @@ extension DraftV3 on ProfileDraft {
 
   Specialization? get specialization =>
       _objOf(v3['specialization'], Specialization.fromJson);
-  set specialization(Specialization? v) =>
-      _put('specialization', v?.toJson());
+  set specialization(Specialization? v) => _put('specialization', v?.toJson());
 
   List<RecentTraining>? get recentTraining =>
       _listOf(v3['recentTraining'], RecentTraining.fromJson);
@@ -427,7 +426,8 @@ List<(WeakPointKind, String)> weakPointChoices(
       ];
     case WeakFamily.other:
       final out = <(WeakPointKind, String)>[];
-      for (final o in q == null ? const <(String, String)>[] : itemOptions(q, 'kind')) {
+      for (final o
+          in q == null ? const <(String, String)>[] : itemOptions(q, 'kind')) {
         final k = _enumOf(o.$1, WeakPointKind.fromCode);
         if (k != null) out.add((k, o.$2));
       }
@@ -437,11 +437,7 @@ List<(WeakPointKind, String)> weakPointChoices(
 }
 
 /// Libellé d'un point faible pour un mouvement.
-String weakPointLabel(
-  WeakPointKind k,
-  CatalogExercise? e,
-  ProfileQuestion? q,
-) {
+String weakPointLabel(WeakPointKind k, CatalogExercise? e, ProfileQuestion? q) {
   final f = e == null ? WeakFamily.other : weakFamilyOf(e);
   for (final c in weakPointChoices(f, q)) {
     if (c.$1 == k) return c.$2;

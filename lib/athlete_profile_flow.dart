@@ -275,10 +275,8 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
     final json = _d.conditionJson();
     final year = _now.year;
     final List<ProfileQuestion> qs = switch (widget.mode) {
-      AthleteFlowMode.create || AthleteFlowMode.redo => p.visibleQuestions(
-        json,
-        todayYear: year,
-      ),
+      AthleteFlowMode.create ||
+      AthleteFlowMode.redo => p.visibleQuestions(json, todayYear: year),
       AthleteFlowMode.edit => p.visibleQuestions(
         json,
         todayYear: year,
@@ -294,10 +292,7 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
                 includeDeferred: true,
               ),
     };
-    return {
-      for (final q in qs) q.id,
-      if (_askExperience) 'experience_level',
-    };
+    return {for (final q in qs) q.id, if (_askExperience) 'experience_level'};
   }
 
   /// Question montrée.
@@ -344,7 +339,14 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
-    for (final c in [_year, _height, _weight, _nameCtl, _search, _targetWeight]) {
+    for (final c in [
+      _year,
+      _height,
+      _weight,
+      _nameCtl,
+      _search,
+      _targetWeight,
+    ]) {
       c.dispose();
     }
     super.dispose();
@@ -377,7 +379,11 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
 
   void _next() {
     FocusScope.of(context).unfocus();
-    final err = _d.stepError(_step, _now, parcours: store.content.questionnaire);
+    final err = _d.stepError(
+      _step,
+      _now,
+      parcours: store.content.questionnaire,
+    );
     if (err != null) {
       _toast(err);
       return;
@@ -442,7 +448,8 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
     ];
     final res = store.saveAthleteProfile(
       _d,
-      createdByV3: widget.mode == AthleteFlowMode.create ||
+      createdByV3:
+          widget.mode == AthleteFlowMode.create ||
           widget.mode == AthleteFlowMode.redo,
     );
     if (res == null) {
@@ -803,10 +810,7 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
   /// Poids : obligatoire en street et au poids du corps (`requiredWhen`),
   /// facultatif ailleurs (« Passer » : champ laissé vide).
   List<Widget> _weightField() {
-    final required = _d.weightRequired(
-      store.content.questionnaire,
-      _now.year,
-    );
+    final required = _d.weightRequired(store.content.questionnaire, _now.year);
     return [
       _title(required ? 'Poids' : 'Poids (facultatif)'),
       const SizedBox(height: 4),
@@ -952,7 +956,8 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
         key: const ValueKey('flow-discipline-unsure'),
         pose: KoachPose.shrug,
         title: 'Je ne sais pas, choisis pour moi',
-        hint: 'Je te mets en forme générale : un peu de tout, modifiable '
+        hint:
+            'Je te mets en forme générale : un peu de tout, modifiable '
             'ensuite.',
         selected: false,
         onTap: () {
@@ -2005,7 +2010,9 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
                   ),
                 ],
                 const SizedBox(height: 12),
-                _title(itemText(q, 'aggravatedBy', 'Qu’est-ce qui la réveille ?')),
+                _title(
+                  itemText(q, 'aggravatedBy', 'Qu’est-ce qui la réveille ?'),
+                ),
                 const SizedBox(height: 6),
                 Wrap(
                   spacing: 6,
@@ -2212,36 +2219,36 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
       ),
       for (final r in kRubricTitles.keys)
         if (_steps.contains(r))
-        KCard(
-          key: ValueKey('recap-$r'),
-          onTap: () {
-            _fromRecap = true;
-            _go(r);
-          },
-          child: Row(
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _hint(kRubricTitles[r]!),
-                    const SizedBox(height: 2),
-                    Text(rubricSummary(r, _d, _name)),
-                  ],
+          KCard(
+            key: ValueKey('recap-$r'),
+            onTap: () {
+              _fromRecap = true;
+              _go(r);
+            },
+            child: Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _hint(kRubricTitles[r]!),
+                      const SizedBox(height: 2),
+                      Text(rubricSummary(r, _d, _name)),
+                    ],
+                  ),
                 ),
-              ),
-              IconButton(
-                key: ValueKey('recap-edit-$r'),
-                tooltip: 'Modifier : ${kRubricTitles[r]}',
-                icon: const Icon(Icons.edit_outlined),
-                onPressed: () {
-                  _fromRecap = true;
-                  _go(r);
-                },
-              ),
-            ],
+                IconButton(
+                  key: ValueKey('recap-edit-$r'),
+                  tooltip: 'Modifier : ${kRubricTitles[r]}',
+                  icon: const Icon(Icons.edit_outlined),
+                  onPressed: () {
+                    _fromRecap = true;
+                    _go(r);
+                  },
+                ),
+              ],
+            ),
           ),
-        ),
       CautionCard(status: caution),
       const ProgramExplainerButton(),
     ];
