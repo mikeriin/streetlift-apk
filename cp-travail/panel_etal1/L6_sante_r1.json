@@ -1,0 +1,67 @@
+{
+  "ecole": "sante",
+  "programmes": [
+    {
+      "programme": "programme_1.md",
+      "criteres": {"S1": 8.5, "S2": 8.5, "S3": 7.5, "S4": 8, "S5": 7.5, "S6": 9.5, "S7": 8.5, "S8": 8, "S9": 7.5},
+      "sans_objet": [],
+      "ensemble": 8,
+      "points_perdus": [
+        {"critere": "S1", "perte": 1.5, "raison": "Questionnaire vierge et poids normal : rien de contre-indiqué, négatives plafonnées à 15 (R5-P8). Mais le seuil unique « 4/10 ou plus » ne distingue pas 3–4 (maintenir sans progresser), 5 (régresser) et ≥ 6 (arrêter) de R5-P23 ; « en parler » ne dit pas à qui (pas d'orientation vers un professionnel)."},
+        {"critere": "S2", "perte": 1.5, "raison": "Départ à 4–6 séries par groupe et RIR 3–4 conforme à R5-P1, double progression écrite (R5-P3), retour à 3 × 5 au changement d'élastique. Rien n'est prévu après une semaine manquée (R5-P7) ; les semaines 2–4 peuvent cumuler +reps et 3e série de traction assistée en semaine 3 sans garde-fou en séries (R5-P22, débutant limité en séries)."},
+        {"critere": "S3", "perte": 2.5, "raison": "Décharge seulement réactive (fatigue ou deux séances en régression), sans critère simple de baisse du jour ; sommeil, stress et travail du profil ne sont ni demandés ni pris en compte (R5-P14 à P18). Séances lundi/mercredi/vendredi bien espacées de 48 h (R5-P2)."},
+        {"critere": "S4", "perte": 2, "raison": "Objectif de force relative (max < 8, R4-G2 : priorité force), méthode adaptée (row, assistance, excentriques). Pas de cardio ni de travail de densité ; l'essai de traction complète n'apparaît qu'en semaine 9, et aucun travail sous-maximal fréquent n'est proposé une fois la première répétition obtenue (R4-G5)."},
+        {"critere": "S5", "perte": 2.5, "raison": "Échauffement écrit et tirages scapulaires, tirage horizontal équilibré avec le vertical. Pas de travail de coiffe (rotation externe) ni de variation de prise ; les négatives et le dips assisté chargent coude et épaule chez un débutant sans préparation spécifique (R4-F10, R4-F12, pratique de coach)."},
+        {"critere": "S6", "perte": 0.5, "raison": "Marges 3–4 puis 2–3 RIR, aucun échec, essais arrêtés si la répétition n'est pas propre (R4-G3, R5-P4, R5-P27). Seule réserve : la notion de RIR n'est pas calibrée pour un débutant qui ne sait pas encore l'estimer."},
+        {"critere": "S7", "perte": 1.5, "raison": "Séances de ≈ 40 min pour 45 disponibles, mouvements constants, exercices où la personne réussit. Pas de version courte prévue pour une séance tronquée (pratique de coach)."},
+        {"critere": "S8", "perte": 2, "raison": "Tests en semaines 4, 8 et 12, essais réguliers dès la semaine 9, lundi et mercredi de la semaine 12 réduits à deux séries. Mais pas d'allègement des négatives ni de séance légère placée avant le test du vendredi semaine 12 (R3-P17) ; aucune consigne de jour de test (échauffement spécifique, repos entre essais pour le décompte de 3 répétitions consécutives)."},
+        {"critere": "S9", "perte": 2.5, "raison": "Intensités en « RIR » sans explication pour un débutant ; vue d'ensemble et détail se contredisent (négatives « une séance sur deux » contre « lundi seulement » en semaines 5–8) ; « pompes au sol sur les genoux relevés » est ambigu ; la colonne « séries dures par semaine » ne correspond pas clairement aux séances détaillées."},
+        {"critere": "ensemble", "perte": 2, "raison": "Programme sûr, progressif et bien centré sur la première traction, avec la séquence row → assistance → excentriques plafonnées (R5-P8). Deux corrections sont à faire avant que je le signe : des seuils de douleur gradués avec une orientation, et la conduite à tenir après une semaine manquée ou une fatigue de vie. Il faut aussi rendre les consignes plus claires."}
+      ],
+      "corrections": [
+        "Remplacer le seuil unique 4/10 par l'échelle R5-P23 : 0–2 continuer, 3–4 ne pas progresser, 5 reculer d'un élastique et retirer les négatives, ≥ 6 ou douleur nocturne : arrêt et kinésithérapeute ou médecin.",
+        "Ajouter une règle de reprise : une semaine manquée, refaire la dernière semaine réussie ; deux semaines ou plus, élastique plus fort et une série de moins par exercice (R5-P7).",
+        "Expliquer le RIR en langage simple (« arrête quand il t'en reste encore 3 bonnes ») et harmoniser vue d'ensemble et détail sur la fréquence des négatives.",
+        "Ajouter 2 × 12 rotations externes à l'élastique et une variation de prise (neutre) sur le row, pour protéger épaules et coudes.",
+        "Semaine 12 : retirer les négatives du lundi et placer le test après 48 h de repos, avec un protocole écrit (échauffement, 1 essai assisté, puis série de 3 tractions strictes).",
+        "Prévoir une version de 25 min (traction assistée, row, pompes) et 2–3 questions du jour (sommeil, fatigue) qui déclenchent −1 série."
+      ],
+      "points_forts": [
+        "Séquence vers la première traction conforme à la pratique de terrain : suspension active, row, assistance dégressive, excentriques plafonnées à 15 par séance (R5-P8).",
+        "Dose de départ modeste (≈ 6 séries de tirage par semaine) et RIR 3–4 sans échec, adaptés à un débutant (R5-P1, R5-P4).",
+        "Double progression simple et lisible, mouvements constants pour apprendre le geste.",
+        "Séances tenues dans les 45 minutes, trois fois par semaine en corps entier avec 48 h d'écart (R5-P2).",
+        "Points d'étape toutes les 4 semaines et essais arrêtés dès qu'une répétition n'est plus propre."
+      ]
+    },
+    {
+      "programme": "programme_2.md",
+      "criteres": {"S1": 0.5, "S2": 0, "S3": 0, "S5": 0.5, "S6": 0, "S7": 1, "S8": 0, "S9": 2},
+      "sans_objet": ["S4"],
+      "ensemble": 0.5,
+      "points_perdus": [
+        {"critere": "S1", "perte": 9.5, "raison": "Antécédent de coudes sensibles en fin de gros cycle de traction : le programme prévoit pourtant traction lestée lourde cinq jours de suite et négatives supramaximales en supination à +105 kg, plus curl lourd à l'échec. Il ne protège pas la zone (R5-P20, R5-P24) et ne prévoit ni seuil de douleur (R5-P23) ni bilan kiné avant un bloc lourd. Squat à l'échec sans pareur, sur un mouvement à risque élevé (R5-P27)."},
+        {"critere": "S2", "perte": 10, "raison": "Test du 1RM à chaque séance, +2,5 kg par test chaque semaine et +1 série par exercice pendant 11 semaines, puis +2 séries en semaine 12 : la charge et le volume progressent à chaque séance, sans bloc (R5-P3 élite : blocs de 3–6 sem., ≤ 2,5 %), et dépassent les garde-fous de R5-P22. La progression de +30 kg sur la traction n'a aucun rapport avec l'objectif de +5 kg."},
+        {"critere": "S3", "perte": 10, "raison": "Aucune décharge en 12 semaines, cinq séances maximales par semaine dont trois jours consécutifs (jeudi-vendredi-samedi) ; l'échec ralentit la récupération de 24–48 h (R4-G3) alors que l'écart entre séances est de 24 h. Charge de vie non abordée (R5-P14 à P19)."},
+        {"critere": "S5", "perte": 9.5, "raison": "Six exercices de tirage ou de flexion du coude sur six, aucun antagoniste, aucun travail scapulaire ou de coiffe, aucun échauffement écrit ; budget tendineux du coude dépassé chaque jour (R4-F10 élite : 3–4 séances lourdes par zone, pas 5 maximales), répétitivité sans contrepartie sur la zone de l'antécédent."},
+        {"critere": "S6", "perte": 10, "raison": "Échec à chaque série sur les quatre mouvements, y compris le muscle-up lesté et le squat sans pareur (mouvements à risque élevé : RIR ≥ 2 obligatoire, R5-P27). Séances à l'échec tous les jours, sans les 48 h requises (R4-G3)."},
+        {"critere": "S7", "perte": 9, "raison": "Séance de ≈ 150 min pour 90 à 120 min disponibles, et elle s'allonge chaque semaine (+1 série par exercice) : le programme n'est pas faisable dans l'emploi du temps déclaré."},
+        {"critere": "S8", "perte": 10, "raison": "Pas d'affûtage pour une compétition de priorité A ; la semaine du championnat est la plus lourde ; 1RM testé la veille sur les quatre mouvements ; ouverture à 105 % du meilleur test, alors qu'il faut ouvrir à un poids sûr. C'est l'inverse de R3-P21 et R4-G7 (affûtage −40 à −60 %, dernier test lourd à J−7/J−10)."},
+        {"critere": "S9", "perte": 8, "raison": "La consigne « 6 × maximum à 95 % » après un test du 1RM est incohérente avec un repos de 60 s pour du lourd (R4-G4 : 2,5–4 min). Aucune consigne en cas de douleur ou de fatigue, la note sur les coudes constate le risque sans rien prescrire, et l'échauffement est absent."},
+        {"critere": "ensemble", "perte": 9.5, "raison": "Le programme est dangereux : échec quotidien sur des mouvements lestés à risque, coudes antécédents surchargés, squat sans pareur, aucun affûtage avant l'échéance A. Le plafond santé (5) et le plafond échéance (6) s'appliquent tous les deux. À ce niveau de risque, la probabilité de blessure avant le championnat est forte, et l'objectif ne sera pas atteint."}
+      ],
+      "corrections": [
+        "Réécrire entièrement : bloc de force (sem. 1–4), bloc d'intensification (sem. 5–8), bloc de pic (sem. 9–10), affûtage de 8–10 jours avec volume −40 à −60 % et intensité gardée (R3-P21, R4-G7).",
+        "Supprimer l'échec : RIR 1–3 sur les mouvements de compétition, jamais d'échec sur muscle-up lesté et squat (R5-P27) ; squat dans une cage avec barres de sécurité ou un pareur.",
+        "Protéger les coudes : bilan kiné avant le bloc lourd, 2–3 expositions lourdes en traction par semaine au plus, retrait des négatives supramaximales en supination et du curl lourd, seuils de douleur R5-P23 / R4-F11 écrits.",
+        "Remplacer les tests quotidiens par des 1RM de référence en semaines 1 et 8 et une simulation à J−10 au plus tard ; ouverture en compétition à ≈ 90–92 % du meilleur 1RM, avec plan de barres.",
+        "Repos de 3 à 5 min sur les séries lourdes ; séances ramenées dans 90–120 min, avec un échauffement écrit.",
+        "Ajouter le travail des points faibles (verrouillage du dips : dips partiels ou chaînes ; transition du muscle-up : travail technique léger) et du tirage antagoniste ou de la coiffe.",
+        "Planifier des décharges : une semaine allégée toutes les 3–4 semaines, et au moins 48 h entre deux séances lourdes du même mouvement."
+      ],
+      "points_forts": [
+        "Le programme cible les quatre mouvements de compétition et nomme explicitement l'antécédent de coudes."
+      ]
+    }
+  ]
+}

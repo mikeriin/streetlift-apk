@@ -1,0 +1,66 @@
+{
+  "ecole": "hypertrophie",
+  "programmes": [
+    {
+      "programme": "programme_1.md",
+      "criteres": {"H1": 6.5, "H2": 7.5, "H3": 6.5, "H4": 8.5, "H5": 8, "H6": 8.5, "H7": 7, "H8": 7.5, "H9": 8},
+      "sans_objet": [],
+      "ensemble": 7.5,
+      "points_perdus": [
+        {"critere": "H1", "perte": 3.5, "raison": "Le tableau annonce 6/9 séries de tirage par semaine, mais le détail en donne bien plus : semaine 1 = 4 (lundi) + 3 (mercredi) + 4 (vendredi) = 11 ; semaines 9–12, le vendredi empile 3 essais + 3 négatives + 3 tractions élastique fin + 3 rows = 12 séries de tirage en une séance, et environ 24 sur la semaine. C'est au-dessus du plafond hebdomadaire d'un débutant (12, R1-P1 / R1-P3) et très au-dessus du maximum par séance (6, R1-P4). Les jambes sont elles aussi mal comptées (8 séries réelles en semaine 1 contre 5 annoncées)."},
+        {"critere": "H2", "perte": 2.5, "raison": "Le tirage vertical (élastique, négatives, essais) est concentré sur lundi et vendredi, alors que le mercredi n'a que du row : le volume de tirage est donc mal réparti (R1-P8). Il faudrait déplacer une partie des négatives ou des tractions assistées du vendredi vers le mercredi au lieu de tout cumuler sur la séance d'essais."},
+        {"critere": "H3", "perte": 3.5, "raison": "Les marges annoncées ne collent pas aux records : un row australien en 2 × 5 pour un maximum de 6 donne 1 répétition en réserve, pas 3, et des pompes surélevées en 2 × 8 à 4 RIR sont non vérifiables. Les marges sont uniformes (3–4 RIR partout) et aucune série de calibration n'est prévue. Pour un débutant, 2–4 RIR reste acceptable (R1-P13)."},
+        {"critere": "H4", "perte": 1.5, "raison": "Les exercices sont pertinents et adaptés au matériel du parc (suspension active, élastique dégressif, négatives, row, dips assistés). En revanche, rien ne cible les biceps ni le grip, alors que ce sont des limiteurs fréquents de la première traction ; et la progression du row « pieds plus avancés » n'est pas chiffrée."},
+        {"critere": "H5", "perte": 2, "raison": "La double progression est bien écrite (R5-P3), mais elle est ambiguë (« passer à la variante suivante ou ajouter une répétition ») et contredite par des sauts de volume par bloc : en semaines 5 et 9, les séries augmentent sur plusieurs exercices d'un coup (squat 3 × 15, fentes 3 × 10, négatives), au lieu d'une hausse conditionnelle (R1-P18 : débutant, aucune hausse tant que la progression continue)."},
+        {"critere": "H6", "perte": 1.5, "raison": "Le tirage domine la poussée, ce qui est bien, et le pont fessier couvre la chaîne postérieure. Il manque cependant un travail des fléchisseurs du coude et de la prise, qui sont des points faibles probables pour cet objectif."},
+        {"critere": "H7", "perte": 3, "raison": "Les repos sont adaptés (90–120 s sur les exercices principaux, R1-P15), mais le vendredi des semaines 9–12 (échauffement 5 min, 3 essais espacés de 2 min, 3 × 3 négatives, 3 tractions élastique, 3 rows, pompes, squat et gainage) ne tient pas dans 45 min avec ces repos. Aucun superset d'antagonistes n'est prévu pour gagner du temps (R2-P15)."},
+        {"critere": "H8", "perte": 2.5, "raison": "L'allègement n'est prévu que sur signal (fatigue ou deux séances en régression), ce qui est acceptable pour un débutant (R1-P18). La semaine 12 est allégée avant le test, ce qui est bien. Mais le cumul de négatives (contraintes excentriques) et d'essais en semaines 9–12 sur des coudes non habitués aurait mérité une limite de volume excentrique hebdomadaire, et pas seulement par séance."},
+        {"critere": "H9", "perte": 2, "raison": "Le programme est bien individualisé (records à 0, matériel du parc, 3 × 45 min, consigne douleur coude/épaule à 4/10). Mais le volume réel des semaines 9–12 dépasse la récupération et le temps d'un débutant complet, et aucune option de repli n'est prévue si l'objectif de 3 tractions n'est pas atteint au point d'étape de la semaine 8."},
+        {"critere": "ensemble", "perte": 2.5, "raison": "Programme sûr, bien orienté vers l'objectif et individualisé, mais le volume de tirage réellement prescrit ne correspond pas au tableau et dépasse les plafonds d'un débutant en semaines 9–12 (R1-P1, R1-P4). Les marges de répétitions ne collent pas aux records et la séance d'essais du vendredi déborde du temps disponible. Plusieurs corrections sont nécessaires."}
+      ],
+      "corrections": [
+        "Recompter les séries dures réellement prescrites et ramener le tirage à 10–12 séries par semaine au maximum et 6 par séance : en semaines 9–12, le vendredi garde les 3 essais, puis soit les négatives soit l'élastique, et le row passe au mercredi.",
+        "Mettre une exposition au tirage vertical le mercredi (tractions assistées ou négatives) pour répartir le volume sur trois séances.",
+        "Aligner les marges sur les records : row australien en 3 × 3–4 au départ (maximum 6) ou version surélevée en 2 × 6–8 ; tester le maximum de pompes surélevées pour fixer la plage.",
+        "Clarifier la règle de progression (haut de plage atteint deux séances de suite → variante suivante) et faire dépendre les hausses de séries des semaines 5 et 9 de la stagnation, pas du calendrier.",
+        "Ajouter 2 séries hebdomadaires de curl à l'élastique ou de suspension lestée de prise, et chronométrer le vendredi des semaines 9–12 pour qu'il tienne en 45 min (supersets row / pompes)."
+      ],
+      "points_forts": [
+        "Chaîne de progression vers la traction logique et prudente : suspension active, élastique dégressif, négatives plafonnées à 15 descentes par séance, essais arrêtés à la première répétition sale.",
+        "Tirage supérieur à la poussée et bas du corps présent sans excès.",
+        "Repos adaptés à un débutant, aucun échec, consigne de douleur chiffrée avec un plan B.",
+        "Points d'étape toutes les 4 semaines et semaine de test allégée."
+      ]
+    },
+    {
+      "programme": "programme_2.md",
+      "criteres": {"H1": 0.5, "H2": 1, "H3": 0, "H4": 2, "H5": 0.5, "H6": 1, "H7": 0, "H8": 0, "H9": 0},
+      "sans_objet": [],
+      "ensemble": 0.5,
+      "points_perdus": [
+        {"critere": "H1", "perte": 9.5, "raison": "En semaine 1, cinq séances identiques donnent environ 35 séries à l'échec et 5 tests de 1RM par jour, soit environ 90 séries de tirage lourd (traction, muscle-up, négatives supramaximales, curl) et 30 de dips par semaine. Avec +1 série par exercice chaque semaine, cela fait près de 17 séries par exercice et par séance en semaine 12. C'est bien au-delà de 11 séries par muscle et par séance (R1-P4) et de 25–30 par semaine pour un élite (R1-P1, R1-P3)."},
+        {"critere": "H2", "perte": 9, "raison": "Chaque séance reprend les mêmes mouvements à intensité maximale, cinq jours sur six, dont trois jours de suite (jeudi, vendredi, samedi). Il n'y a aucune alternance lourde/légère (R1-P9 : élite, lourdes et légères alternées)."},
+        {"critere": "H3", "perte": 10, "raison": "Échec à chaque série sur des polyarticulaires lestés très lourds, et même sur le squat à 95 % sans pareur. L'échec est interdit là où la chute est dangereuse (R1-P13), et il est interdit hors test pour la force (R1-P14). Les séries « 6 × maximum à 95 % » sont incohérentes : un seul single possible, puis l'échec."},
+        {"critere": "H4", "perte": 8, "raison": "Négatives supramaximales en traction supination à +105 kg (plus que le 1RM) et curl lourd à l'échec chez un athlète aux coudes sensibles. Rien ne cible le verrouillage du dips ni la transition du muscle-up, et il n'y a aucune chaîne postérieure."},
+        {"critere": "H5", "perte": 9.5, "raison": "La règle « +2,5 kg sur chaque test chaque semaine » fait +27,5 kg sur 11 semaines, alors qu'un élite vise +5 kg à la traction en 12 semaines. Ajouter des séries chaque semaine à l'échec n'est pas une surcharge progressive (R5-P3, R1-P18) : c'est une progression brutale."},
+        {"critere": "H6", "perte": 9, "raison": "Les deux points faibles déclarés (verrouillage du dips lourd, transition du muscle-up) sont ignorés. Il n'y a pas de travail des ischios, de la chaîne postérieure ni de l'arrière d'épaule, et un curl s'empile sur un volume de tirage déjà démesuré."},
+        {"critere": "H7", "perte": 10, "raison": "60 s de repos après des séries à 95 % et des tests de 1RM, contre 180–300 s ou plus pour un élite (R1-P16, R1-P15). Les séances sont estimées à environ 150 min pour 90 à 120 min disponibles."},
+        {"critere": "H8", "perte": 10, "raison": "Aucune décharge en 12 semaines (R3-P9), aucun affûtage avant une compétition de priorité A, test du 1RM la veille du championnat. Ouvrir à 105 % du meilleur test revient à ouvrir au-dessus de son record."},
+        {"critere": "H9", "perte": 10, "raison": "Le programme ignore l'antécédent des coudes (traction lourde cinq jours de suite, écrit en toutes lettres), le temps disponible, la récupération d'un athlète de 30 ans et l'échéance. Il mène au surmenage ou à la blessure avant le championnat."},
+        {"critere": "ensemble", "perte": 9.5, "raison": "Programme dangereux : plafond à 5 pour risque réel pour la santé, ici dépassé de loin. Échec au squat sans pareur, 1RM quotidiens, négatives supramaximales sur des coudes à antécédent, aucune décharge ni affûtage, ouverture au-dessus du record. Il ne sert ni l'échéance ni la santé de l'athlète."}
+      ],
+      "corrections": [
+        "Supprimer les tests de 1RM quotidiens et l'échec sur les mouvements lestés et le squat, et imposer un pareur et les sécurités du rack au squat.",
+        "Construire une périodisation vers le championnat : blocs de 4 semaines, singles à RPE 8–9 et séries à 1–3 RIR, décharge toutes les 4–5 semaines, affûtage de 1 à 2 semaines avec baisse du volume de 40 à 60 %, pas de test dans les 10 jours précédant la compétition.",
+        "Répartir les quatre mouvements sur les cinq séances avec une alternance lourde/légère, au maximum 2–3 expositions lourdes par semaine pour la traction, et des repos de 3 à 5 min.",
+        "Retirer les négatives supramaximales et le curl à l'échec, et surveiller les coudes (seuil de douleur et réduction du tirage si la gêne monte).",
+        "Ajouter le travail des points faibles (dips partiels ou isométries en haut du mouvement, transitions de muscle-up lesté léger) et de la chaîne postérieure.",
+        "Choisir des ouvertures à environ 90–95 % du record actuel, pas à 105 %."
+      ],
+      "points_forts": [
+        "Les quatre mouvements de compétition sont présents chaque semaine.",
+        "Le matériel de la salle est bien exploité (lest, rack, poulie)."
+      ]
+    }
+  ]
+}

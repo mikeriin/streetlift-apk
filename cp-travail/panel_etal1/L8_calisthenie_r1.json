@@ -1,0 +1,125 @@
+{
+  "ecole": "calisthenie",
+  "programmes": [
+    {
+      "programme": "programme_1.md",
+      "criteres": {"C1": 9, "C2": 8.5, "C3": 8.5, "C4": 7, "C5": 8.5, "C6": 8, "C7": 7, "C8": 8.5, "C9": 7.5},
+      "sans_objet": [],
+      "ensemble": 8,
+      "points_perdus": [
+        {"critere": "C1", "perte": 1, "raison": "Paliers bien calés sur les maximums (séries d'ouverture à 80–90 %, tractions 23/19/15 = 82 % de 28, lests en % de la charge totale), mais aucun palier intermédiaire de muscle-up lesté entre +2,5 kg et +10 kg servi dès la semaine 1, sans test de départ du muscle-up lesté (R4-F7)."},
+        {"critere": "C2", "perte": 1.5, "raison": "Muscle-up bien placé en tête le lundi et le vendredi, mais le mardi S1 il est servi dans des circuits lestés qui suivent 130 dips de la veille ; aucune consigne technique par série (transition, fausse prise) hors la règle générale sur les prises (R4-F3, F4)."},
+        {"critere": "C3", "perte": 1.5, "raison": "Répétitions en réserve explicites et pas d'échec hors simulation (R4-F2), mais les circuits « pauses libres » (lundi et jeudi S1) n'ont aucun repère d'effort ; la seule isométrie (finition du jeudi) n'est pas reliée à un maximum."},
+        {"critere": "C4", "perte": 3, "raison": "Dose hebdomadaire de muscle-ups de 90 à 130 (≈ 44 le lundi S1, ≈ 34 le vendredi S1 dont 15 lestés jusqu'à +10 kg dès la première semaine, sans bloc d'introduction) et dips 280–380 répétitions sur cinq jours, avec trois jours consécutifs jeudi–vendredi–samedi chargés en poussée et tirage : budget coudes élevé (R4-F8 à F10, R5-P22). La règle « la pyramide du lundi perd son palier si les circuits de la veille ont été durs » vise un dimanche sans séance : règle inopérante. Passage S5 → S6 de ≈ 1 050 à ≈ 1 250 répétitions (+19 %)."},
+        {"critere": "C5", "perte": 1.5, "raison": "Bases lestées présentes (tractions +20 kg, dips +40 kg, couplage squat), mais gainage spécifique absent (aucun hollow ni travail de ligne pour les tractions en série longue) (R1-P17)."},
+        {"critere": "C6", "perte": 2, "raison": "Maximums vérifiés en S4, règle de montée du lest (+2,5 kg si escalier rapide deux semaines de suite) et repli si stagnation : bien. Mais les volumes S2→S3 montent sans critère de passage écrit, et le recalage S5–S8 après le test de S4 n'est pas chiffré (R4-F7, F9)."},
+        {"critere": "C7", "perte": 3, "raison": "Échauffement générique de 10 min (épaules, poignets, scapulas) et 5 min de rotations externes en fin de séance, mais rien de ciblé pour les coudes (fléchisseurs, extenseurs du poignet) malgré le volume de muscle-ups et de dips ; ratio poussée/tirage déséquilibré (dips + pompes ≈ 530–780 répétitions contre tractions + rows ≈ 230–310) (R4-F12, R5-P24)."},
+        {"critere": "C8", "perte": 1.5, "raison": "Bonne structure (charge 3 semaines, allégée, bloc spécifique, simulation J−14, double affûtage), mais l'allègement de S4 sert aussi à tester les maximums, ce qui réduit sa fonction de récupération en pleine préparation (R4-H2)."},
+        {"critere": "C9", "perte": 2.5, "raison": "Durées tenues, matériel disponible, mais exécution très peu décrite (position du muscle-up strict, critère de répétition valide en compétition, ligne du corps) ; deux règles de douleur contradictoires (vue d'ensemble : 4/10 → variante à l'élastique ; règles de conduite : 3–4/10 → finir la séance, 5/10 → reculer) ; test de squat de 5 répétitions évoqué dans le circuit du vendredi S1 alors que la charge du squat en dépend déjà."},
+        {"critere": "ensemble", "perte": 2, "raison": "Préparation réellement individualisée et bien construite vers l'échéance (simulation, affûtage, plan de fractionnement), mais la charge sur les coudes (muscle-ups lestés dès S1, volume de dips sur cinq jours) et les règles contradictoires demandent deux corrections avant signature."}
+      ],
+      "corrections": [
+        "Introduire le muscle-up lesté progressivement : S1 escalier plafonné à +5 kg, +10 kg seulement à partir de S2–S3 si le critère de vitesse est tenu ; plafonner les muscle-ups du lundi S1 à ≈ 30.",
+        "Ne jamais enchaîner trois jours chargés en dips : réduire les dips du vendredi ou du samedi (−30 %) et corriger la règle « circuits de la veille » (viser le samedi précédent ou le mardi).",
+        "Unifier les règles de douleur (une seule échelle) et ajouter 5 min de préparation des coudes et des poignets (extenseurs, fléchisseurs, pronation-supination) avant les séances à forte dose de muscle-ups.",
+        "Décrire la répétition valide de compétition (muscle-up strict, verrouillage, extension en bas) et la consigne technique de chaque format.",
+        "Écrire le recalage chiffré des répétitions S5–S8 à partir des maximums de S4."
+      ],
+      "points_forts": [
+        "Répétitions et lests calés sur les records du profil, effort exprimé en réserve, échec réservé à la simulation.",
+        "Périodisation orientée échéance : allégée, bloc spécifique, simulation filmée J−14, demi-simulation J−9, affûtage en deux temps avec intensité conservée.",
+        "Règles d'autorégulation détaillées (baisse du jour, séance manquée, stagnation, montée du lest)."
+      ]
+    },
+    {
+      "programme": "programme_2.md",
+      "criteres": {"C1": 8, "C2": 6.5, "C3": 6, "C4": 6, "C5": 8.5, "C6": 8.5, "C7": 7.5, "C8": 7.5, "C9": 6.5},
+      "sans_objet": [],
+      "ensemble": 6.5,
+      "points_perdus": [
+        {"critere": "C1", "perte": 2, "raison": "Séries en pourcentage du maximum et variantes cohérentes (traction poitrine tempo, dips tempo avec arrêt, pompes pseudo-planche, négatives de muscle-up pour un maximum de 3), mais les EMOM de dips 10 × 10 pour un maximum de 25 ne correspondent pas au niveau (voir C3) (R4-F7)."},
+        {"critere": "C2", "perte": 3.5, "raison": "Le mercredi, le muscle-up est annoncé « en tête de séance » mais placé en sixième position, après 20 min d'EMOM de tractions et de dips, la fente bulgare et les squats sautés : pratique fatiguée (R4-F3, F4). Pas de consigne technique par série sur le muscle-up."},
+        {"critere": "C3", "perte": 4, "raison": "EMOM de dips 10 × 10 (100 dips en 10 min, 12 × 10 en S4) pour un maximum de 25 avec ≈ 40 s de repos par minute : la fatigue cumulée mène près de l'échec en fin d'EMOM, contraire à l'effort « facile » annoncé et à la règle de 2–3 RIR (R4-F2, R1-P14, R1-P16). Même remarque, atténuée, pour 12 × 6 tractions sur un maximum de 15."},
+        {"critere": "C4", "perte": 4, "raison": "Le plafond écrit de 180 dips par semaine en bloc 1 est dépassé par le programme lui-même : lundi 45 + mercredi 100 + vendredi 24 + samedi 104 (échelles 80 + circuit 24) ≈ 273 dès S1, ≈ 293 en S4. Dips le vendredi puis le samedi (deux jours consécutifs de volume en poussée sur les coudes) (R4-F8 à F10, R5-P22)."},
+        {"critere": "C5", "perte": 1.5, "raison": "Force sans lest bien pensée (tempo, arrêt, traction poitrine), tirage horizontal et gainage présents ; gainage limité au hollow et au relevé de genoux, sans progression de levier."},
+        {"critere": "C6", "perte": 1.5, "raison": "Un seul changement par semaine, test en S6 avec repères 17–18 / 29–30 et plan B : bien. Critère de passage pour le muscle-up (4 acquis) mais pas pour les variantes de force (traction poitrine, dips tempo) (R4-F9)."},
+        {"critere": "C7", "perte": 2.5, "raison": "Échauffement scapulaire et tirage visage présents, mais aucune préparation des coudes ni des poignets malgré 270 dips par semaine et les pompes pseudo-planche ; pas de mobilité d'épaule en extension pour les dips profonds (R4-F12, R5-P24)."},
+        {"critere": "C8", "perte": 2.5, "raison": "Blocs et allégées corrects (S6, S11), mais ordre incohérent le mercredi (technique après le volume et les jambes) et densité concentrée sur une séance qui sature les coudes (R4-H1)."},
+        {"critere": "C9", "perte": 3.5, "raison": "Règles internes contradictoires (plafond de dips violé, muscle-up « en tête » placé en fin, douleur 4/10 → élastique dans la vue d'ensemble contre 3–4/10 → finir la séance dans les règles) ; exécution peu décrite (amplitude des dips, ligne du hollow)."},
+        {"critere": "ensemble", "perte": 3.5, "raison": "Bonne ossature (pourcentages, RIR, tests, un changement à la fois, repères réalistes), mais le dosage des dips contredit les propres règles du programme et sature les coudes, et la pratique du muscle-up du mercredi est faite fatiguée : plusieurs corrections nécessaires."}
+      ],
+      "corrections": [
+        "Ramener les dips sous le plafond écrit : EMOM de dips à 6 × 10 ou 10 × 6 (≈ 25 %), une seule échelle de dips le samedi ; recompter le total hebdomadaire semaine par semaine.",
+        "Placer réellement le muscle-up du mercredi en tête de séance, avant l'EMOM.",
+        "Ajuster l'EMOM de tractions (10 × 5 au départ) et vérifier qu'il reste à 3 RIR en fin d'EMOM, sinon retirer des minutes.",
+        "Ajouter une préparation des poignets et des coudes (3 min) et une mobilité d'épaule pour les dips profonds.",
+        "Unifier la règle de douleur et décrire l'exécution des dips (profondeur, épaules) et du hollow."
+      ],
+      "points_forts": [
+        "Séries exprimées en pourcentage du maximum et en RIR, échec limité à une série par mouvement et par semaine, jamais sur le muscle-up.",
+        "Progression par un seul changement à la fois, tests à mi-parcours avec repères réalistes et repli prévu.",
+        "Force sans lest adaptée au matériel du parc (tempo, arrêt, traction poitrine), jambes et tirage horizontal entretenus."
+      ]
+    },
+    {
+      "programme": "programme_3.md",
+      "criteres": {"C1": 8.5, "C2": 8, "C3": 7, "C4": 7, "C5": 8.5, "C6": 7, "C7": 8, "C8": 8.5, "C9": 7},
+      "sans_objet": [],
+      "ensemble": 7.5,
+      "points_perdus": [
+        {"critere": "C1", "perte": 1.5, "raison": "Séries fractionnées et arrêts marqués calés sur le maximum de 18, pistol 4 × 4 déduit d'un maximum de 6, shrimp en complément : bien. Mais les tests à « arrêt 1 s » (S4, S8) ne mesurent pas le même mouvement que le maximum continu du profil et de l'objectif : les tailles de bloc (6 si 20, 7 si 22) sont indexées sur un test de standard différent (R4-F7)."},
+        {"critere": "C2", "perte": 2, "raison": "Tractions à deux séances spécifiques espacées de 72 h, fraîches en tête de séance ; muscle-up en tête le mercredi. Pas de consigne technique par série sur le muscle-up ni sur la cadence des tractions avant S12 (R4-F3)."},
+        {"critere": "C3", "perte": 3, "raison": "Le lundi cumule fractionné et EMOM : ≈ 95 tractions en S1, ≈ 117 en S7, ≈ 133 en S10 (30 + 23 + 16 + 8 × 8) pour un maximum de 20–22 ; l'EMOM qui suit trois séries fractionnées dont la première dépasse le maximum n'est plus « facile » (R4-F2, R1-P14). La règle « une seule série par semaine dépasse le maximum continu » est contredite par le tableau (S3 : 20 et 23 contre 18 ; S7 : 24 et 27 contre 20)."},
+        {"critere": "C4", "perte": 3, "raison": "Hausse du fractionné plafonnée à 15–20 % : bien. Mais la séance du lundi concentre une très forte dose de tirage sur les coudes, suivie du muscle-up le mercredi (48 h) puis de la séance à arrêt marqué et d'isométries le vendredi : trois expositions de tirage par semaine dont deux lourdes, sans repère de volume hebdomadaire total (R4-F8 à F10, R5-P22)."},
+        {"critere": "C5", "perte": 1.5, "raison": "Bases présentes et adaptées au parc (row pieds surélevés en descente lente, dips, pompes piquées, dips sur barre droite, hollow, dead hang) ; pas de variante de tirage plus dure que le poids du corps (traction archer, traction poitrine) pour porter la force sans lest."},
+        {"critere": "C6", "perte": 3, "raison": "Tests toutes les 4 semaines et règle de taille de bloc si le test n'atteint pas le repère : bien. Mais standard de test incohérent entre S4/S8 (arrêt 1 s) et S12 (continu), contradiction sur le nombre de séries au-dessus du maximum, et pas de critère de passage pour la séance à arrêt marqué (R4-F7, F9)."},
+        {"critere": "C7", "perte": 2, "raison": "Échauffement coudes/poignets/scapulas, rotation externe et tirage visage, équilibre poussée/tirage correct ; pas de travail ciblé des fléchisseurs du coude ou des avant-bras malgré le volume de tractions (R4-F12)."},
+        {"critere": "C8", "perte": 1.5, "raison": "Cycles de 3 semaines + test-allègement, affûtage S11, test final avec plan de cadence : bien. Les semaines de test ne sont pas de vraies décharges (test maximal le vendredi) (R4-H2)."},
+        {"critere": "C9", "perte": 3, "raison": "Règles qui supposent un matériel absent (« reculer d'une variante (élastique) » alors que le profil n'a pas d'élastique ; prise neutre « une séance sur trois » sur des barres de parc qui ne la permettent pas forcément) ; double règle de douleur au coude (4/10 → arrêt, contre 3–4/10 → finir la séance) ; exécution des tractions peu décrite (amplitude valide)."},
+        {"critere": "ensemble", "perte": 2.5, "raison": "Programme ciblé et intelligent pour l'objectif (fractionné + arrêt marqué, repères réalistes, test final préparé), mais le volume du lundi en fin de cycle et l'incohérence du standard de test exigent plusieurs corrections."}
+      ],
+      "corrections": [
+        "Tester le maximum continu (même standard qu'en S12) en S4 et S8, ou indexer les tailles de bloc sur le test avec arrêt de façon explicite.",
+        "Limiter le lundi : EMOM plafonné à ≈ 40 tractions, ou supprimé quand le fractionné dépasse 60 répétitions (S7, S10) ; fixer un plafond de tractions hebdomadaire.",
+        "Mettre le tableau et la règle d'accord : une seule série au-dessus du maximum continu, les deux autres en dessous.",
+        "Remplacer l'élastique par une régression disponible au parc (traction australienne, négative, amplitude réduite) et vérifier la prise neutre.",
+        "Ajouter 5 min de préparation des avant-bras et des fléchisseurs du coude après la séance du lundi."
+      ],
+      "points_forts": [
+        "Deux stimuli de tractions complémentaires (fractionné au-dessus du maximum sans échec, endurance de force à arrêt marqué) espacés de 72 h.",
+        "Hausse de volume plafonnée à 15–20 %, recalage après chaque test, repère réaliste 22–23 annoncé honnêtement.",
+        "Jambes au poids du corps calées sur le record de pistol ; 48 h sans tirage vertical avant la séance fractionnée."
+      ]
+    },
+    {
+      "programme": "programme_4.md",
+      "criteres": {"C1": 8.5, "C2": 8.5, "C3": 8.5, "C4": 8.5, "C5": 8, "C6": 8.5, "C7": 7.5, "C8": 8.5, "C9": 7.5},
+      "sans_objet": [],
+      "ensemble": 8,
+      "points_perdus": [
+        {"critere": "C1", "perte": 1.5, "raison": "Séries à ≈ 60 % du maximum de 8, négatives lentes, fractionnée 5+2+2 à partir de S6 : cohérent. La traction supination à l'élastique en 1–2 RIR et la note « prise sur une série de pompes » sont confuses ; pas de variante intermédiaire (traction poitrine, australienne pieds surélevés) pour les séances où les séries ne sont pas tenues."},
+        {"critere": "C2", "perte": 1.5, "raison": "Deux expositions de tractions par semaine, en tête de séance, à l'état frais ; fréquence faible pour un objectif de répétitions (la troisième exposition de tirage est un row) ; pas de consigne technique par série (R4-F1, F3)."},
+        {"critere": "C3", "perte": 1.5, "raison": "RIR explicites (3 RIR sur 4 × 5 pour un maximum de 8), EMOM à ≈ 38 % ; la série supination à 1–2 RIR après les dips est plus dure que le travail principal ; hollow 20 s sans lien avec un maximum (R4-F2)."},
+        {"critere": "C4", "perte": 1.5, "raison": "Charge de tirage modérée, 72 h entre lundi et jeudi, deux jours sans tirage avant les tests ; pas de règle de hausse chiffrée pour le passage EMOM → série fractionnée en S6 (deux paramètres changent en même temps que la course monte) (R4-F10)."},
+        {"critere": "C5", "perte": 2, "raison": "Tirage vertical et horizontal, dips, pompes, gainage présents ; poussée peu progressée (dips 4 × 8 et pompes 2 × 15 sans évolution écrite) et gainage non progressif (R1-P17)."},
+        {"critere": "C6", "perte": 1.5, "raison": "Critère écrit (toutes les séries à 3 RIR deux séances de suite → +1 répétition), tests standardisés en S4, S8, S12 avec repères : très bien. Mais S9–S10 « comme la semaine 7 » sans nouvelle étape pour les tractions (R4-F9)."},
+        {"critere": "C7", "perte": 2.5, "raison": "Échauffement scapulaire, suspension active, tirage visage, mollets : bien ; rien pour les poignets au-delà de l'échauffement, pas de mobilité d'épaule ni de hanche régulière pour une coureuse, mobilité seulement en S12 (R5-P24, R5-P27)."},
+        {"critere": "C8", "perte": 1.5, "raison": "Trois blocs de 3 + 1, interférence course/force gérée (jambes le lundi loin du samedi), affûtage commun ; la règle « force et course ne partagent pas une demi-journée, sauf le mardi » ne correspond à aucune séance mixte écrite."},
+        {"critere": "C9", "perte": 2.5, "raison": "Faisable dans les créneaux (dimanche ≤ 75 min), matériel présent ; consignes d'exécution courtes, règle de douleur contradictoire (vue d'ensemble 4/10 → marche ou vélo ; règles 3–4/10 → ne pas progresser), test « lundi ou jeudi » alors que tous les tests sont le jeudi, note de l'élastique incompréhensible."},
+        {"critere": "ensemble", "perte": 2, "raison": "Programme hybride individualisé et sûr, objectif de tractions servi par un critère de progression clair et des tests réguliers ; corrections nécessaires sur la troisième exposition de tirage, la progression des S9–S10 et la clarté des consignes."}
+      ],
+      "corrections": [
+        "Ajouter une courte exposition de tractions (ex. 3 × 3 faciles ou négatives) le samedi ou le dimanche avant la course, pour porter la fréquence à trois.",
+        "Écrire l'étape des tractions en S9–S10 (ex. fractionnée 6+2+2 ou 4 × 6 à 60 % du nouveau maximum).",
+        "Clarifier la traction supination à l'élastique (1 élastique fixé, 3 RIR, placée avant les dips) et prévoir une régression si 4 × 5 n'est pas tenu.",
+        "Unifier la règle de douleur et ajouter 5 min de mobilité épaules-hanches le jeudi.",
+        "Prévoir une progression écrite des dips et des pompes (entretien chiffré)."
+      ],
+      "points_forts": [
+        "Séries de tractions calées sur le maximum (60 %, 3 RIR), négatives lentes et série fractionnée progressive.",
+        "Critère de progression explicite et tests standardisés (échauffement, critère de répétition valide).",
+        "Interférence course/force bien pensée, allégées toutes les 4 semaines, affûtage commun aux deux objectifs."
+      ]
+    }
+  ]
+}

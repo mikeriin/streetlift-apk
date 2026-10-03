@@ -300,8 +300,8 @@ CheckResult evaluateCheck(
       final formats = benchStrings(p, 'formats').toSet();
       final found = <String>{
         for (final w in weeks)
-          for (final i in w.items)
-            if (i.p.format != null && formats.contains(i.p.format)) i.p.format!,
+          for (final code in w.techniqueCodes)
+            if (formats.contains(code)) code,
       };
       return result(
         found.isNotEmpty,

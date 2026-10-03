@@ -1,0 +1,125 @@
+{
+  "ecole": "force",
+  "programmes": [
+    {
+      "programme": "programme_1.md",
+      "criteres": {"F1": 9, "F2": 9, "F3": 8.5, "F4": 9, "F5": 9, "F6": 8.5, "F7": 8, "F8": 8, "F9": 8},
+      "sans_objet": [],
+      "ensemble": 8.5,
+      "points_perdus": [
+        {"critere": "F1", "perte": 1, "raison": "Tirage et poussée sollicités 5 jours sur 5 (lundi sets d'épreuve + 3x17 et 3x30, jeudi 90 tractions + 150 dips + 30 muscle-ups) : la fréquence n'est pas plafonnée par la tolérance des coudes, conviction de l'école (R2-P7)."},
+        {"critere": "F2", "perte": 1, "raison": "Squat à « 70 % du 1RM estimé, à calibrer en semaine 1 » sans méthode de calibrage ; back-off traction à +20 kg = 77 % de 117 kg et non 80 % annoncés (R2-P4)."},
+        {"critere": "F3", "perte": 1.5, "raison": "Volume de 1 000 à 1 300 répétitions/semaine dont la répartition n'est pas modulée selon la récupération ; semaine 6 cumule 4x(15+2+15), séries fractionnées sur les trois mouvements jeudi et simulation à l'échec samedi (R1-P5, R2-P8)."},
+        {"critere": "F4", "perte": 1, "raison": "Phases nommées et chiffrées, décharge S4 placée, mais aucun critère de passage écrit hormis le recalcul après tests ; pas de règle si les tests S4 stagnent (R3-P9)."},
+        {"critere": "F5", "perte": 1, "raison": "Affûtage de deux semaines (−40 % puis −60 %) cohérent, dernier lourd J−11 et plan de fractionnement écrits, mais la demi-simulation S7 « mercredi-jeudi » et l'activation S8 mercredi tombent un jour non disponible (R3-P12 à P14)."},
+        {"critere": "F6", "perte": 1.5, "raison": "Séries fractionnées, EMOM, échelles et simulations ont un rôle, mais leur empilement en S6 (fractionnées jeudi + simulation à l'échec samedi) dépasse un budget raisonnable ; pas de critère de retrait propre à chaque technique (R2-P12 à P22)."},
+        {"critere": "F7", "perte": 2, "raison": "Assistance d'épaule (face pull, rotations, row aux anneaux) et jambes présentes, mais un seul bloc de tirage horizontal pour un volume de poussée (dips + pompes) très supérieur ; aucun accessoire ciblé sur un point faible chiffré (R5-P27)."},
+        {"critere": "F8", "perte": 2, "raison": "Règle de douleur coude/épaule à 4/10 exemplaire, mais densité très élevée de dips/tractions sans garde-fou sur la charge tendineuse cumulée hebdomadaire ; échec en simulation à J−14 acceptable mais unique séance sans plan de récupération (R5-P20 à P27)."},
+        {"critere": "F9", "perte": 2, "raison": "Séances placées un mercredi (S7, S8) alors que le profil n'est disponible que lundi, mardi, jeudi, vendredi, samedi ; lundi S3 (fractionnées + 5 sets d'épreuve) proche des 75 min ; prescriptions « comme la semaine X, sauf » à reconstituer."},
+        {"critere": "ensemble", "perte": 1.5, "raison": "Programme individualisé et signable, mais le calendrier d'affûtage doit être replacé sur les jours disponibles et la charge de coude du jeudi bornée."}
+      ],
+      "corrections": [
+        "Replacer la demi-simulation S7 sur jeudi seul et l'activation S8 sur mardi ou jeudi (jours disponibles), en gardant le dernier jour de repos J−1.",
+        "Plafonner le jeudi de densité (ex. dips EMOM 10x12 au lieu de 10x15) ou alterner les jours lourds de dips/tractions pour limiter la charge de coude sur 5 jours.",
+        "Ne pas cumuler en S6 séries fractionnées sur les trois mouvements jeudi et simulation à l'échec samedi : garder les fractionnées sur un seul mouvement.",
+        "Écrire la méthode de calibrage du squat (ex. 5RM à 2 RIR en S1) et corriger le back-off traction à +22,5 kg pour 80 %.",
+        "Ajouter une série de tirage horizontal lourd (row aux anneaux pieds surélevés) pour équilibrer le volume de poussée."
+      ],
+      "points_forts": [
+        "Toutes les charges calculables depuis les records (charge totale 117 et 142 kg), RIR précisé partout, règle d'ajustement si une série n'est pas tenue.",
+        "Périodisation lisible : capacité, décharge + tests, spécifique, deux semaines d'affûtage avec dernier lourd et dernière simulation datés.",
+        "Plan de compétition écrit d'après la simulation filmée (première série à 60–70 %, pauses décidées, plan B).",
+        "Échauffement spécifique écrit, conduite à tenir en cas de douleur, échec réservé aux tests et à la simulation.",
+        "Force lestée entretenue une fois par semaine en top set + back-off, cohérent avec les 20 % de streetlifting."
+      ]
+    },
+    {
+      "programme": "programme_2.md",
+      "criteres": {"F1": 7, "F2": 7.5, "F3": 7, "F4": 8, "F5": 7.5, "F6": 7.5, "F7": 7.5, "F8": 7.5, "F9": 6.5},
+      "sans_objet": [],
+      "ensemble": 7,
+      "points_perdus": [
+        {"critere": "F1", "perte": 3, "raison": "Les dips en séries longues n'apparaissent qu'une fois par semaine (vendredi) alors que le gain visé est le plus fort (+10 répétitions) ; le lundi ne propose que 3 dips tempo ; tractions à 2 expositions seulement (R2-P7, R1-P9)."},
+        {"critere": "F2", "perte": 2.5, "raison": "Marge précisée sur les blocs de volume, mais la « force » est prescrite « très loin de l'échec » sans RIR ; la série haute monte jusqu'à 85 % du max sans marge écrite ; table EMOM ambiguë à 15 répétitions (4 ou 5 par minute) (R1-P11, R2-P1)."},
+        {"critere": "F3", "perte": 3, "raison": "Le passage des blocs de volume de 3 à 6 séries n'est pas relié aux exercices de la séance type (dégressif pompes à 4 séries fixes, pyramide de tractions à 4 séries) ; en S6 « deux séries seulement après la série haute » contredit les 6 séries du tableau (R1-P5, R2-P6)."},
+        {"critere": "F4", "perte": 2, "raison": "Phases et décharges placées, progression chiffrée, mais saut de difficulté annoncée de 6 à 8/10 entre S4 et S5 et trois semaines de tests sur douze (S1, S8, S12) qui amputent le temps de charge (R3-P9, R1-P18)."},
+        {"critere": "F5", "perte": 2.5, "raison": "Tests finaux prévus après deux séances allégées, mais aucune indication d'intensité pendant cette décharge ni d'échauffement de test spécifique en S12 ; pas de stratégie de série de test (allure, prise) (R3-P12, R2-P10)."},
+        {"critere": "F6", "perte": 2.5, "raison": "Tempo, pause, dégressif, pyramide et EMOM ont un rôle annoncé, mais aucun critère de retrait spécifique hormis le retrait de la série ajoutée ; isométries de décharge sans justification (R2-P22)."},
+        {"critere": "F7", "perte": 2.5, "raison": "Row inversé, tirage visage, hollow et jambes présents, mais le row n'apparaît qu'une fois (3x10) face à trois séances de poussée ; aucun travail ciblé sur la partie basse des dips ou la prise pour les séries longues (R5-P27)."},
+        {"critere": "F8", "perte": 2.5, "raison": "Progression dans des garde-fous et règle de retrait de série, mais aucune conduite en cas de douleur de coude/épaule alors que les volumes de dips montent à 6 séries ; rien d'adapté au profil (R5-P20)."},
+        {"critere": "F9", "perte": 3.5, "raison": "Tableau et séance type incohérents (où se place la « série haute » chaque jour ?), consignes S6 contradictoires, séances S3–S6 à reconstituer ; échauffement générique et non spécifique au test."},
+        {"critere": "ensemble", "perte": 3, "raison": "Programme sûr et structuré, mais l'objectif dips est sous-servi et la prescription semaine à semaine est ambiguë : plusieurs corrections avant signature."}
+      ],
+      "corrections": [
+        "Ajouter une seconde exposition de dips en séries longues (ex. lundi : série haute de dips à la place du dégressif pompes une semaine sur deux).",
+        "Écrire explicitement, pour chaque séance, quel exercice porte la série haute et combien de séries de volume suivent, en levant la contradiction de S6.",
+        "Préciser la marge (RIR) des E2MOM de force et de la série haute à 80–85 %.",
+        "Remplacer le test de S1 par une semaine de charge si les maximums sont récents, ou réduire à un test en début et un en fin de cycle 1.",
+        "Ajouter un second bloc de tirage horizontal et une conduite à tenir en cas de douleur de coude."
+      ],
+      "points_forts": [
+        "Toutes les séries de volume calculées en % du maximum testé, avec règle de retrait si la marge tombe sous 1 répétition.",
+        "Deux leviers d'endurance séparés (série haute et blocs de volume), décharges placées en S7 et S12.",
+        "Travail de force sans lest pensé pour le matériel du parc (tempo, pause, variantes plus dures).",
+        "Muscle-up travaillé à faible dose technique, adapté à un maximum de 3."
+      ]
+    },
+    {
+      "programme": "programme_3.md",
+      "criteres": {"F1": 2, "F2": 0.5, "F3": 0.5, "F4": 0.5, "F5": 0.5, "F6": 0, "F7": 1, "F8": 0, "F9": 0.5},
+      "sans_objet": [],
+      "ensemble": 1,
+      "points_perdus": [
+        {"critere": "F1", "perte": 8, "raison": "Fréquence de tractions absurde (séries au maximum toutes les heures, tous les jours) et mouvement visé noyé dans traction à un bras, front lever, muscle-up en élan (R2-P7)."},
+        {"critere": "F2", "perte": 9.5, "raison": "Tout à l'échec, y compris la traction lestée 8 x maximum avec 25 kg ; aucune zone, aucune marge (R1-P11, R1-P14, R2-P1)."},
+        {"critere": "F3", "perte": 9.5, "raison": "≈ 12 séries au maximum par jour en plus des séances, puis +60 % en S2 et +1 série par exercice chaque semaine : volume sans rapport avec un intermédiaire (R1-P5)."},
+        {"critere": "F4", "perte": 9.5, "raison": "Progression arbitraire par ajout de séries sur 12 semaines, aucune décharge (R3-P9, R5-P3)."},
+        {"critere": "F5", "perte": 9.5, "raison": "« Aucun test » alors que l'objectif est 25 tractions à 12 semaines ; aucun allègement final (R3-P12)."},
+        {"critere": "F6", "perte": 10, "raison": "Traction à un bras, front lever complet et lest de 25 kg servis sans prérequis à un athlète à 18 tractions, grease the groove dévoyé à l'échec (R2-P12 à P22)."},
+        {"critere": "F7", "perte": 9, "raison": "Aucune poussée, aucun tirage horizontal, pas de jambes alors que le pistol est acquis ; déséquilibre total (R5-P27)."},
+        {"critere": "F8", "perte": 10, "raison": "« Si le coude tire, continuer » ; échec répété sur traction lestée et muscle-up en élan ; hausse brutale de volume chaque semaine (R5-P3, R5-P7, R5-P20 à P27)."},
+        {"critere": "F9", "perte": 9.5, "raison": "Séances de ≈ 100 min pour 60 min disponibles ; lest de 25 kg obligatoire alors que le profil n'a aucun lest ni élastique."},
+        {"critere": "ensemble", "perte": 9, "raison": "Programme dangereux : échec systématique, absence de décharge, consigne d'ignorer la douleur de coude ; plafond santé largement atteint."}
+      ],
+      "corrections": [
+        "Supprimer les séries au maximum toutes les heures et tout échec : un grease the groove se fait à 40–50 % du max, quelques séries par jour.",
+        "Retirer traction à un bras, front lever complet, muscle-up en élan et lest imposé ; travailler la force sans lest (tempo, pause, archer assisté sur barre basse).",
+        "Écrire une progression en % du maximum avec marge (2–3 RIR), décharges toutes les 4–5 semaines et tests à mi-parcours et en fin de cycle.",
+        "Remplacer « si le coude tire, continuer » par une règle d'arrêt et de substitution.",
+        "Ajouter poussée, tirage horizontal, jambes et tronc ; ramener les séances à 60 min."
+      ],
+      "points_forts": [
+        "Le mouvement visé (traction pronation) est présent."
+      ]
+    },
+    {
+      "programme": "programme_4.md",
+      "criteres": {"F1": 6, "F2": 5, "F3": 6, "F4": 4, "F5": 3, "F7": 6, "F8": 6, "F9": 4},
+      "sans_objet": ["F6"],
+      "ensemble": 5,
+      "points_perdus": [
+        {"critere": "F1", "perte": 4, "raison": "Tractions deux fois par semaine sur le mouvement exact, mais aucune alternance lourd/léger ni variante (négatives, élastique) pour une athlète à 8 répétitions ; les deux séances sont identiques (R2-P7, R2-P9)."},
+        {"critere": "F2", "perte": 5, "raison": "2 RIR uniforme sur tout le programme, aucun % du maximum, aucune exposition plus dure planifiée ; squats sautés « 2 RIR » sans sens (R2-P1, R1-P14)."},
+        {"critere": "F3", "perte": 4, "raison": "6 séries directes de tractions par semaine (30 répétitions), dans la fourchette basse ; répartition banale, aucune distinction séries de qualité/volume (R1-P5, R2-P6)."},
+        {"critere": "F4", "perte": 6, "raison": "« +1 répétition par série ou +5 minutes » : choix non réglé ; appliqué sur 11 semaines, 3 x 5 tractions devient 3 x 16 pour une athlète à 8 max, progression arbitraire ; seules les décharges S4, S8, S12 sont écrites (R3-P1 à P9)."},
+        {"critere": "F5", "perte": 7, "raison": "Deux objectifs à 12 semaines mais « pas de test » ; S12 n'est qu'une semaine allégée, aucun test de tractions ni de 10 km (R3-P12, R2-P10)."},
+        {"critere": "F7", "perte": 4, "raison": "Row inversé et jambes présents, mais pas de travail d'omoplates ni de prise, poussée (dips + pompes) supérieure au tirage ; aucun accessoire relié au point faible tractions (R5-P27)."},
+        {"critere": "F8", "perte": 4, "raison": "Pas de faute aiguë, mais rien d'adapté : squats sautés et fentes la veille de rien puis course, hausse de course de 5 min par semaine sans plafond (45 à ≈ 100 min le dimanche), aucune conduite en cas de douleur (R5-P3, R5-P7)."},
+        {"critere": "F9", "perte": 6, "raison": "La règle de +5 min par semaine fait dépasser les 45 min du mardi dès S4 et les 75 min du dimanche dès S7 ; aucune allure de course, aucun échauffement écrit."},
+        {"critere": "ensemble", "perte": 5, "raison": "Programme sûr mais générique, dont la progression devient infaisable et qui ignore la vérification des deux échéances : choix importants absents (plafond 6 pour échéance ignorée)."}
+      ],
+      "corrections": [
+        "Écrire une progression des tractions en % du maximum (ex. 5 x 4 à 60 % puis séries longues), avec une séance plus lourde (lestée légère ou négatives) et une plus légère.",
+        "Prévoir un test de tractions et un 10 km chronométré à mi-parcours et en S12, avec deux à trois séances allégées avant.",
+        "Remplacer « +5 min par semaine » par une progression bornée aux durées disponibles, avec allures et une séance de seuil ou de fractionné.",
+        "Ajouter un travail d'omoplates (tirages scapulaires, dead hang) et une conduite à tenir en cas de douleur.",
+        "Écrire un échauffement spécifique pour les séances de renforcement."
+      ],
+      "points_forts": [
+        "Répartition des cinq séances cohérente avec les disponibilités et les deux disciplines.",
+        "Marge de 2 RIR sur les tractions : aucun échec sur le mouvement visé.",
+        "Décharges régulières toutes les quatre semaines."
+      ]
+    }
+  ]
+}

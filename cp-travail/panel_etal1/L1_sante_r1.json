@@ -1,0 +1,108 @@
+{
+  "ecole": "sante",
+  "programmes": [
+    {
+      "programme": "programme_1.md",
+      "criteres": {"S1": 1, "S2": 0.5, "S3": 0.5, "S4": 1, "S5": 1, "S6": 0, "S7": 1, "S8": 0.5, "S9": 3},
+      "sans_objet": [],
+      "ensemble": 1,
+      "points_perdus": [
+        {"critere": "S1", "perte": 9, "raison": "Négatives de dips supramaximales à +85 kg (au-dessus du 1RM +70 kg), 1RM testé chaque lundi et chaque mardi à l'échec, muscle-ups lestés +15 kg à l'échec, essais de planche et front lever à l'échec : charge maximale répétée sur coudes et épaules sans aucune marge ni seuil de douleur (R5-P23, R5-P27 : risque élevé = échec interdit)."},
+        {"critere": "S2", "perte": 9.5, "raison": "+60 % de séries en semaine 2 puis +2 séries par exercice et +5 kg partout chaque semaine jusqu'en semaine 8 : saut très au-delà des garde-fous (+10-20 %/sem., +30 % sur 2 sem. au plus, R5-P22) ; +5 kg/sem. sur un 1RM de traction est irréaliste."},
+        {"critere": "S3", "perte": 9.5, "raison": "Aucun allègement en 8 semaines, la semaine 8 est la plus chargée ; 5 séances à l'échec par semaine sans 48 h entre séances à l'échec (R4-G3, R3-P9) ; séances de 90 à 110 min pour 75 min disponibles."},
+        {"critere": "S4", "perte": 9, "raison": "Épreuve de répétitions maximales (MU 14, tractions 32, dips 56) entraînée par du 1RM, des séries de 1 à 8 et du curl ; aucune traction, dip ou muscle-up au poids du corps dans la zone de l'épreuve (R4-G1 : ≥ 50 % du bloc spécifique dans la zone), aucune densité, aucune simulation hors veille d'épreuve (R4-G7)."},
+        {"critere": "S5", "perte": 9, "raison": "Volume de flexion de coude énorme (curl barre, marteau, pupitre, incliné, tractions lestées, MU lestés) sans antagoniste ni coiffe, aucun échauffement écrit (R4-F10 à F12)."},
+        {"critere": "S6", "perte": 10, "raison": "Toutes les séries à l'échec, y compris muscle-ups lestés et dips supramaximaux, chez un avancé dont la marge devrait être 1-3 répétitions sur 1-2 séries (R4-G3, R5-P27)."},
+        {"critere": "S7", "perte": 9, "raison": "Séances de 90 à 110 min pour 75 min disponibles dès la semaine 1, et elles doublent ensuite : infaisable."},
+        {"critere": "S8", "perte": 9.5, "raison": "Semaine 8 la plus chargée, test de tous les maximums jeudi et deux simulations complètes à l'échec vendredi, veille de la compétition : contraire à l'affûtage de 8-14 jours à −40/−60 % et au dernier circuit à J−7/J−10 (R3-P21, R3-P17)."},
+        {"critere": "S9", "perte": 7, "raison": "Tableaux lisibles, mais aucune consigne de douleur ou de fatigue ; repos de 45 s « pour le cardio » appliqué à des 1RM, incohérent."},
+        {"critere": "ensemble", "perte": 9, "raison": "Programme dangereux (échec maximal permanent, supramaximal, progression brutale, aucune décharge) et sans rapport avec une épreuve de répétitions maximales : plafond santé à 5 largement franchi vers le bas."}
+      ],
+      "corrections": [
+        "Supprimer échec systématique, négatives supramaximales et tests de 1RM hebdomadaires ; RIR 1-3, échec réservé à 1-2 séries par semaine sur mouvements à risque faible.",
+        "Recentrer sur l'épreuve : séries longues, densité (EMOM 40-50 %, rest-pause, clusters) en tractions, dips et muscle-ups au poids du corps, 1 séance lourde par semaine au plus.",
+        "Progression de 10-20 %/sem. au plus, semaine allégée ; respecter 75 min par séance.",
+        "Affûtage sur les 8-10 derniers jours (−40 à −60 % de volume, allure gardée), dernière simulation à J−7/J−10, aucun test la semaine de compétition.",
+        "Ajouter échauffement écrit, antagonistes et coiffe, seuils de douleur (0-2 continuer, 3-4 sans progresser, ≥ 5 régresser)."
+      ],
+      "points_forts": ["Tableaux par séance avec séries, charges et repos explicites."]
+    },
+    {
+      "programme": "programme_2.md",
+      "criteres": {"S1": 6, "S2": 5, "S3": 5.5, "S4": 4.5, "S5": 5.5, "S6": 7, "S7": 7.5, "S8": 3, "S9": 6},
+      "sans_objet": [],
+      "ensemble": 5,
+      "points_perdus": [
+        {"critere": "S1", "perte": 4, "raison": "Rien de dangereux, mais aucune consigne de douleur écrite (R5-P23) ni prise en compte des coudes malgré 3 séances de tirage/poussée par semaine."},
+        {"critere": "S2", "perte": 5, "raison": "« +1 répétition par série chaque semaine » sur 12 semaines mène les tractions de 4 × 8-10 à 4 × 18-20 au-delà du maximum de 15, et les dips à ~25 = max : règle impossible à tenir à 2 RIR, sans double progression ni plafond (R5-P3, R5-P22)."},
+        {"critere": "S3", "perte": 4.5, "raison": "Décharges réduites à une série de moins (≈ −25 %), pas de critère de baisse du jour ; charge de vie non abordée (profil muet, mais rien n'est demandé)."},
+        {"critere": "S4", "perte": 5.5, "raison": "Objectif d'endurance (20 tractions, 35 dips) travaillé en séries moyennes à 2 min de repos, sans densité, EMOM, échelles ni séries longues spécifiques (R4-G4 : intermédiaire 45-90 s ; R4-G6 ; R3-P20 : pas de phase spécifique)."},
+        {"critere": "S5", "perte": 4.5, "raison": "Row inversé présent, mais aucun échauffement écrit, aucun travail scapulaire ou de coiffe (R4-F10 à F12)."},
+        {"critere": "S6", "perte": 3, "raison": "2 RIR uniforme, prudent mais appliqué sans distinction (même au squat sauté et à la planche) ; aucune série proche du max pour préparer un test de répétitions."},
+        {"critere": "S7", "perte": 2.5, "raison": "Faisable dans 60 min ; une séance entière de jambes au poids du corps sur 4 pèse lourd pour un profil 70 % sets & reps, et aucune version courte."},
+        {"critere": "S8", "perte": 7, "raison": "Objectifs datés à 12 semaines mais « pas de test prévu », semaine 12 = simple décharge, aucun test intermédiaire pour recaler (R3-P17 : max toutes les 4-6 semaines ; R3-P21)."},
+        {"critere": "S9", "perte": 4, "raison": "Lisible, mais rien sur la conduite à tenir en cas de douleur ou de fatigue ; RIR sur squat sauté/planche peu compréhensible."},
+        {"critere": "ensemble", "perte": 5, "raison": "Sûr mais générique (conviendrait à n'importe quel intermédiaire), progression intenable, méthodes d'endurance absentes et échéance non testée : l'objectif de +10 dips est peu servi."}
+      ],
+      "corrections": [
+        "Planifier des tests de maximum en semaines 4, 8 et 12 avec un affûtage de ~7 jours (−40 %) avant le test final.",
+        "Remplacer « +1 répétition/série/semaine » par une double progression plafonnée, recalée après chaque test.",
+        "Ajouter des méthodes d'endurance spécifiques : EMOM à 40 %, échelles, séries longues à 60-75 % du max, repos réduits progressivement (45-90 s).",
+        "Écrire un échauffement, du travail scapulaire/coiffe et des seuils de douleur.",
+        "Réduire la séance jambes au profit d'un travail jambes intégré et d'une 3e exposition spécifique dips/tractions."
+      ],
+      "points_forts": ["Effort prudent (2 RIR) et séances dans le temps disponible.", "Décharges planifiées toutes les 4 semaines.", "Équilibre tirage/poussée avec row inversé."]
+    },
+    {
+      "programme": "programme_3.md",
+      "criteres": {"S1": 8.5, "S2": 8.5, "S3": 7.5, "S4": 9.5, "S5": 8.5, "S6": 9, "S7": 8.5, "S8": 9, "S9": 9},
+      "sans_objet": [],
+      "ensemble": 8.5,
+      "points_perdus": [
+        {"critere": "S1", "perte": 1.5, "raison": "Seuil de douleur du coude écrit (≥ 4/10, remplacement, −30 %), mais limité au coude (épaule, poignet absents) et sans orientation vers un professionnel si la douleur persiste ≥ 2 semaines (R5-P23)."},
+        {"critere": "S2", "perte": 1.5, "raison": "Volumes progressifs (≈ +10 %/sem.) mais rien sur la reprise après une semaine manquée (R5-P7) ; volume hebdomadaire de tractions porté à ~210 (≈ 11 × le max) sans garde-fou explicite."},
+        {"critere": "S3", "perte": 2.5, "raison": "La règle « 48 h entre deux séances de tirage dur » est violée par le programme lui-même : dimanche (tractions 3 RIR, isométries, circuit) puis lundi (archer, poitrine à la barre) ; test du dimanche en semaine 4/8 suivi d'un lundi de force ; pas de critère de baisse du jour ni de mention de la charge de vie (R5-P14 à P19)."},
+        {"critere": "S4", "perte": 0.5, "raison": "Excellent (zone de l'épreuve, densité par paliers de 15 s, fractionnée, plan de test) ; seule retouche : repos des séries de volume réduits en même temps que les séries changent (R4-G4 : une variable à la fois) en semaines 9-10."},
+        {"critere": "S5", "perte": 1.5, "raison": "Échauffement écrit, scapulaires et tirage visage présents, mais aucun travail de coiffe en rotation externe et peu de variété de prise pour ~200 tractions/semaine (R4-F10 à F12)."},
+        {"critere": "S6", "perte": 1, "raison": "Une seule série proche de l'échec par semaine, marges 2-4 RIR : très bien ; la fractionnée « au-delà du max » des semaines 9-10 n'a pas de consigne d'arrêt technique."},
+        {"critere": "S7", "perte": 1.5, "raison": "Séances dans l'heure, mais aucune version courte en cas d'imprévu."},
+        {"critere": "S8", "perte": 1, "raison": "Affûtage semaine 11 (−40 %) + semaine 12 ≈ 12 jours, allure gardée, plan de test écrit : conforme R3-P21 ; le circuit du dimanche semaine 11 reste à préciser (2 séries ?) pour ne pas tomber à J−5."},
+        {"critere": "S9", "perte": 1, "raison": "Consignes claires ; les pourcentages (72 %, 75 %…) doivent être convertis en répétitions dans chaque semaine recalculée."},
+        {"critere": "ensemble", "perte": 1.5, "raison": "Programme individualisé, sûr et spécifique ; deux corrections nécessaires : tenir les 48 h entre tirages durs (dimanche → lundi) et prévoir la conduite après séance manquée et la baisse du jour."}
+      ],
+      "corrections": [
+        "Rendre la séance du dimanche réellement légère en tirage (ou déplacer la force du lundi) pour respecter les 48 h ; après un test du dimanche, alléger le lundi suivant.",
+        "Écrire la règle de reprise après une semaine manquée et un critère de baisse du jour (sommeil, courbatures, douleur).",
+        "Étendre les seuils de douleur à l'épaule et au poignet, avec consultation si ≥ 2 semaines.",
+        "Ajouter rotation externe/coiffe et varier les prises (neutre, supination) pour répartir le volume de tirage."
+      ],
+      "points_forts": ["Toutes les charges calées sur le maximum, densité progressive par paliers.", "Échec réservé à une série par semaine.", "Affûtage et plan de série écrits pour le test final.", "Échauffement et règle de douleur du coude explicites.", "Force entretenue sans lest par variantes dures, adapté au matériel."]
+    },
+    {
+      "programme": "programme_4.md",
+      "criteres": {"S1": 8.5, "S2": 8.5, "S3": 7.5, "S4": 8, "S5": 8, "S6": 9, "S7": 8.5, "S8": 6, "S9": 8},
+      "sans_objet": [],
+      "ensemble": 7.5,
+      "points_perdus": [
+        {"critere": "S1", "perte": 1.5, "raison": "Seuil ≥ 4/10 avec version douce (élastique, vélo, marche) pour coude, épaule, tibia, Achille : bien ; mais pas d'orientation vers un professionnel si la douleur persiste (R5-P23 : consulter si ≥ 2 semaines)."},
+        {"critere": "S2", "perte": 1.5, "raison": "Un seul paramètre par semaine, course longue +5 min/sem. : bien ; mais rien sur la reprise après une semaine manquée (R5-P7)."},
+        {"critere": "S3", "perte": 2.5, "raison": "Fente bulgare le lundi veille de l'intermittent ; aucune prise en compte de la charge de vie ni critère de baisse du jour ; 6 h entre barre et course intense prévues mais jamais nécessaires vu le planning."},
+        {"critere": "S4", "perte": 2, "raison": "L'allure d'intermittent est rattachée aux « 400 m rapides du profil » qui n'existent pas dans le profil (≈ 4:30/km inventé) ; pas de test 10 km en semaine 6 pour recaler l'allure ; fractions à allure cible seulement un mardi sur deux en semaines 9-11 (R6, course)."},
+        {"critere": "S5", "perte": 2, "raison": "Échauffement écrit, scapulas et tirage visage présents ; pas de travail de coiffe ni de mollets/tendon d'Achille malgré l'augmentation de course (R4-F10 à F12)."},
+        {"critere": "S6", "perte": 1, "raison": "Aucune série à l'échec hors tests, marges 2-3 en réserve : adapté ; clusters de tractions à 7 répétitions pour un max de 8 sans consigne d'arrêt technique."},
+        {"critere": "S7", "perte": 1.5, "raison": "Séances dans le temps, variées ; pas de version courte, 5 séances avec contenus assez techniques (enchaînements, EMOM, clusters)."},
+        {"critere": "S8", "perte": 4, "raison": "Test de tractions le lundi de semaine 12, juste après la semaine 11 à pleine charge (aucun affûtage pour cet objectif, R3-P21) ; pour le 10 km, semaine 11 pleine charge puis seulement 20 min faciles mardi : affûtage de ~7 jours sans allure gardée et sans stratégie de course écrite (R3-P21 : allure de compétition sur fractions courtes)."},
+        {"critere": "S9", "perte": 2, "raison": "Consignes claires (zone 2 par le test de la parole), mais référence d'allure à un record inexistant et intensités de l'intermittent à préciser en ressenti."},
+        {"critere": "ensemble", "perte": 2.5, "raison": "Bon programme hybride, sûr et dosé, mais la gestion des deux échéances finales est à corriger (test de tractions sans affûtage, 10 km sans allure gardée) et l'allure d'entraînement repose sur une donnée absente."}
+      ],
+      "corrections": [
+        "Alléger la semaine 11 côté barre et placer le test de tractions plus tard (jeudi semaine 12) ou prévoir 7 jours à −40 % avant.",
+        "Semaine 12 course : garder quelques fractions courtes à 5:00/km (ex. mardi 4 × 1 km), écrire une stratégie d'allure pour le 10 km.",
+        "Calculer l'allure de l'intermittent à partir d'une donnée réelle (test 10 km ou 5 km en semaine 1 et 6) ou en effort perçu.",
+        "Ajouter la règle de reprise après semaine manquée, un critère de baisse du jour et une consultation si douleur ≥ 2 semaines.",
+        "Déplacer la fente bulgare loin de l'intermittent ; ajouter coiffe et renforcement mollets/Achille."
+      ],
+      "points_forts": ["Course polarisée (trois quarts faciles), intermittent progressif sur un seul paramètre.", "Tractions calées sur le max de 8 avec clusters, isométries et élastique.", "Aucun échec hors tests, seuils de douleur avec alternatives.", "Cycles avec semaine allégée et tests de recalage."]
+    }
+  ]
+}

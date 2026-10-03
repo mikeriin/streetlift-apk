@@ -1,0 +1,116 @@
+{
+  "ecole": "hypertrophie",
+  "programmes": [
+    {
+      "programme": "programme_1.md",
+      "criteres": {"H1": 1, "H2": 2, "H3": 0, "H4": 2, "H5": 1, "H6": 1.5, "H7": 0, "H8": 0, "H9": 1},
+      "sans_objet": [],
+      "ensemble": 1,
+      "points_perdus": [
+        {"critere": "H1", "perte": 9, "raison": "Bras martelés (curl 6x8 + 6x10 + 5x12 lundi et vendredi, jeudi 8+6+8+6 séries), puis +60 % de séries en semaine 2 et +2 séries par exercice chaque semaine jusqu'en semaine 7 : volume très au-dessus de tout plafond (R1-P3, R1-P18). Jambes et poussée au poids du corps absentes."},
+        {"critere": "H2", "perte": 8, "raison": "Biceps sollicités lundi, jeudi, vendredi avec 17 à 22 séries par séance ; poussée concentrée sur une seule séance ; séances de 90 à 110 min pour 75 min disponibles : répartition incohérente avec les jours donnés (R1-P8)."},
+        {"critere": "H3", "perte": 10, "raison": "« Toutes les séries à l'échec, y compris les muscle-ups », tests de 1RM chaque lundi et mardi, négatives supramaximales de dips à +85 kg : échec systématique sur des mouvements à risque (R1-P13)."},
+        {"critere": "H4", "perte": 8, "raison": "Doublons de curls sans logique, front lever et planche complète « à l'échec » sans prérequis indiqués, muscle-up lesté +15 kg à l'échec ; aucun travail spécifique des séries longues au poids du corps alors que l'épreuve est en répétitions maximales (« inutile, trop facile »)."},
+        {"critere": "H5", "perte": 9, "raison": "+60 % de séries en une semaine puis +2 séries et +5 kg partout chaque semaine : progression brutale sans critère, à l'opposé d'une montée par paliers (R5-P3, R1-P18)."},
+        {"critere": "H6", "perte": 8.5, "raison": "Aucun bas du corps, aucun arrière d'épaule, bras sur-représentés, poussée réduite ; le volume ne va pas vers la priorité (muscle-up, tractions, dips au poids du corps)."},
+        {"critere": "H7", "perte": 10, "raison": "45 s de repos partout, y compris sur traction lestée maximale et dips à +70 kg ; séances de 90 à 110 min pour 75 min disponibles (R1-P15, R1-P16)."},
+        {"critere": "H8", "perte": 10, "raison": "Aucun allègement sur 8 semaines, semaine 8 la plus chargée, tests de tous les maximums jeudi, deux simulations à l'échec vendredi, compétition samedi : aucun affûtage (R3-P9) ; négatives supramaximales empilées (R2-P13)."},
+        {"critere": "H9", "perte": 9, "raison": "Ignore l'échéance de priorité A (pas d'affûtage, épreuve au poids du corps non travaillée) et dépasse le temps disponible ; risque de blessure élevé."},
+        {"critere": "ensemble", "perte": 9, "raison": "Programme dangereux (échec partout, tests maximaux hebdomadaires lestés, repos de 45 s, progression brutale, aucune décharge avant la compétition) qui ne sert pas l'épreuve : plafonds santé (5) et échéance (6) dépassés largement vers le bas."}
+      ],
+      "corrections": [
+        "Supprimer l'échec systématique, les tests de 1RM hebdomadaires et les négatives supramaximales ; travailler à 1–3 répétitions en réserve sur les polyarticulaires.",
+        "Construire les semaines 6 à 8 en affûtage : volume −40 à −50 %, intensité gardée, dernier test au plus tard 7 à 10 jours avant, rien à l'échec la semaine de la compétition.",
+        "Placer au centre les trois mouvements de l'épreuve au poids du corps (séries longues, fractionnées, densité) au lieu des curls.",
+        "Repos de 2 à 4 min sur le lourd, séances tenues dans 75 min, volume par muscle ramené à 10–20 séries par semaine et monté par paliers.",
+        "Ajouter jambes, arrière d'épaule et une semaine d'allègement ; retirer planche et front lever à l'échec."
+      ],
+      "points_forts": ["Utilise le matériel disponible (lest, salle) et les cinq jours."]
+    },
+    {
+      "programme": "programme_2.md",
+      "criteres": {"H1": 7, "H2": 7.5, "H3": 6, "H4": 6.5, "H5": 5.5, "H6": 6, "H7": 8, "H8": 7, "H9": 6},
+      "sans_objet": [],
+      "ensemble": 6,
+      "points_perdus": [
+        {"critere": "H1", "perte": 3, "raison": "Tirage ≈ 17 séries et dips/pompes ≈ 19 séries par semaine : dans la fourchette, mais volume fixe sans départ bas ni hausse conditionnelle ; jambes au poids du corps (squat 4x20) trop faciles pour compter comme séries dures (R1-P1, R1-P18)."},
+        {"critere": "H2", "perte": 2.5, "raison": "Trois expositions haut du corps, répartition standard ; pas d'alternance lourde/légère, samedi enchaîné le lendemain du vendredi avec les mêmes mouvements."},
+        {"critere": "H3", "perte": 4, "raison": "2 RIR uniformes partout, y compris planche et squat sauté ; aucune série proche du maximum ni série longue spécifique alors que l'objectif est un maximum de répétitions (R1-P13, R6-P2)."},
+        {"critere": "H4", "perte": 3.5, "raison": "Choix corrects mais génériques ; aucun outil spécifique à l'endurance de tractions/dips (séries fractionnées, EMOM, séries longues) ; élastique et barre basse peu exploités ; bas du corps sans exercice difficile (pistol, shrimp)."},
+        {"critere": "H5", "perte": 4.5, "raison": "« +1 répétition par série chaque semaine » sans plage plafond ni étape suivante : sur 12 semaines les dips 12–15 dépassent 20 par série sans règle de recalcul ; aucun test, donc aucune recalibration (R5-P3)."},
+        {"critere": "H6", "perte": 4, "raison": "Tirage ≈ poussée en séries mais pas d'arrière d'épaule ni chaîne postérieure sérieuse (pont fessier au poids du corps seulement) ; jambes sous-dosées pour un intermédiaire."},
+        {"critere": "H7", "perte": 2, "raison": "Repos par type d'exercice adaptés ; séances sous le temps disponible, mais aucun travail de densité alors que l'épreuve en dépend."},
+        {"critere": "H8", "perte": 3, "raison": "Trois décharges (semaines 4, 8, 12) à une série de moins : peu dosées ; la semaine 12 est une décharge sans test final de l'objectif."},
+        {"critere": "H9", "perte": 4, "raison": "Adapté au niveau, pas à l'objectif : « pas de test prévu, l'athlète essaie son maximum quand il le souhaite » ; aucun échauffement, aucune consigne de gêne."},
+        {"critere": "ensemble", "perte": 4, "raison": "Sûr et utilisable, mais générique : l'objectif 20 tractions / 35 dips n'est servi que indirectement (pas de travail spécifique, pas de test, progression mal bornée)."}
+      ],
+      "corrections": [
+        "Planifier des tests (semaines 4, 8, 12) et recalculer les séries en pourcentage du maximum.",
+        "Ajouter un travail spécifique de répétitions maximales : une série longue proche du maximum par semaine, séries fractionnées ou EMOM pour tractions et dips.",
+        "Borner la progression : plage de répétitions avec plafond, puis variante plus dure ou repos réduit.",
+        "Durcir le bas du corps (pistol assisté, shrimp, fente bulgare) et ajouter arrière d'épaule.",
+        "Écrire un échauffement et une règle de gêne (coudes, épaules)."
+      ],
+      "points_forts": ["Volume et repos raisonnables, séances tenues dans l'heure.", "Fréquence de trois expositions pour tractions et dips.", "Allègements présents et effort maîtrisé."]
+    },
+    {
+      "programme": "programme_3.md",
+      "criteres": {"H1": 8.5, "H2": 8.5, "H3": 9, "H4": 9, "H5": 9.5, "H6": 8.5, "H7": 9, "H8": 9, "H9": 9.5},
+      "sans_objet": [],
+      "ensemble": 8.5,
+      "points_perdus": [
+        {"critere": "H1", "perte": 1.5, "raison": "Dos/grand dorsal très sollicité (≈ 14 séries lundi dont 4 muscle-ups, EMOM mercredi, 8 vendredi, 9 dimanche) : élevé mais cohérent avec l'objectif ; biceps non comptés et poussée en entretien sans palier explicite."},
+        {"critere": "H2", "perte": 1.5, "raison": "Tirage les quatre jours ; l'EMOM de 60 à 84 tractions du mercredi entre deux séances de tirage dur contredit la règle « 48 h entre deux séances de tirage dur » si elle n'est pas réellement facile."},
+        {"critere": "H3", "perte": 1, "raison": "Marges bien graduées (une seule série proche de l'échec par semaine), mais pas de série de calibration de la marge ; « 4 RIR » sur le circuit peu vérifiable."},
+        {"critere": "H4", "perte": 1, "raison": "Exercices complémentaires et adaptés au parc (archer, tempo, arrêt bras tendus, isométries par position) ; « tirage visage » remplacé par un row prise large faute d'anneaux, substitut faible pour l'arrière d'épaule."},
+        {"critere": "H5", "perte": 0.5, "raison": "Règles écrites et recalculées après chaque test, leviers successifs (répétitions, puis repos −15 s, puis fractionnée) ; seul le critère de retrait de séries hors douleur manque."},
+        {"critere": "H6", "perte": 1.5, "raison": "Jambes et chaîne postérieure traitées (pistol, shrimp, extension de hanche) ; tirage ≥ poussée ; arrière d'épaule réduit à 3 séries « faciles »."},
+        {"critere": "H7", "perte": 1, "raison": "Repos par type d'exercice, réduction des repos justifiée par l'objectif ; repos de 1 min des séries de volume en semaines 9–10 risque d'entamer la qualité (R1-P15)."},
+        {"critere": "H8", "perte": 1, "raison": "Allègements toutes les 4 semaines et affûtage −40 % en semaine 11 bien placés ; semaine 12 avec un lundi à 3x8 tractions rapides quatre jours avant le test : acceptable."},
+        {"critere": "H9", "perte": 0.5, "raison": "Temps, matériel (sans lest ni élastique), échauffement et règle de douleur au coude écrits ; repères de test donnés ; manque seulement une conduite si les repères des semaines 4 et 8 ne sont pas atteints."},
+        {"critere": "ensemble", "perte": 1.5, "raison": "Programme individualisé et spécifique, que je signerais après deux corrections : clarifier l'intensité de l'EMOM du mercredi vis-à-vis de la règle des 48 h, et prévoir l'ajustement si les repères de test ne sont pas atteints."}
+      ],
+      "corrections": [
+        "Préciser que l'EMOM du mercredi reste à 4 RIR ou plus (ou le placer en début de séance avec un plafond), pour respecter les 48 h entre tirages durs.",
+        "Écrire la conduite si le test de semaine 4 ou 8 est sous le repère (garder les pourcentages, ne pas réduire les repos).",
+        "Renforcer l'arrière d'épaule (row inversé coudes hauts à 2 RIR, 3–4 séries) et garder les repos de volume à 1 min 15 au minimum en semaines 9–10."
+      ],
+      "points_forts": [
+        "Progression par blocs avec tests et recalcul, leviers successifs explicites.",
+        "Effort maîtrisé : une seule série proche de l'échec par semaine.",
+        "Exploite intelligemment l'absence de lest (variantes dures, isométries par position faible, fractionnées).",
+        "Affûtage et plan de test écrits ; règle de douleur au coude chiffrée.",
+        "Bas du corps et chaîne postérieure entretenus avec des exercices adaptés au niveau."
+      ]
+    },
+    {
+      "programme": "programme_4.md",
+      "criteres": {"H1": 7.5, "H2": 8.5, "H3": 9, "H4": 8.5, "H5": 8.5, "H6": 7, "H7": 8.5, "H8": 9, "H9": 8},
+      "sans_objet": [],
+      "ensemble": 8,
+      "points_perdus": [
+        {"critere": "H1", "perte": 2.5, "raison": "Tirage bien dosé (lundi, jeudi, samedi), mais poussée légère (3 séries de dips, 2 dégressifs de pompes) et jambes réduites à 3x8 de fente bulgare par semaine : en dessous d'un volume d'entretien utile pour une coureuse (R1-P1)."},
+        {"critere": "H2", "perte": 1.5, "raison": "Trois expositions de tirage réparties sur des jours séparés de la course intense ; jambes une seule fois par semaine."},
+        {"critere": "H3", "perte": 1, "raison": "Aucune série à l'échec hors tests, marges graduées par bloc ; pas de série de calibration."},
+        {"critere": "H4", "perte": 1.5, "raison": "Outils variés et pertinents (clusters, isométries, élastique) ; pas d'exercice de chaîne postérieure ni de mollets/tibias alors que la course charge Achille et tibia."},
+        {"critere": "H5", "perte": 1.5, "raison": "Un seul paramètre par semaine, recalage après test ; en semaines 7–11, « +1 répétition par semaine » sur le protocole de tractions est rapide pour une base de 9–10, sans critère de maintien si les répétitions ne passent pas."},
+        {"critere": "H6", "perte": 3, "raison": "Tirage ≥ poussée et tirage visage présents ; bas du corps et chaîne postérieure quasi absents côté renforcement (une fente bulgare), point faible probable d'une coureuse non traité."},
+        {"critere": "H7", "perte": 1.5, "raison": "Repos par bloc adaptés et séances dans le temps ; le dimanche long n'utilise que 45 des 75 min au départ, sans renforcement ajouté."},
+        {"critere": "H8", "perte": 1, "raison": "Allègements en semaines 6 et 12 bien placés ; techniques (clusters, dégressifs) comptées et modérées."},
+        {"critere": "H9", "perte": 2, "raison": "L'allure d'intermittent s'appuie sur « les 400 m rapides du profil » qui n'existent pas dans le profil ; temps, matériel et règle de douleur bien pris en compte."},
+        {"critere": "ensemble", "perte": 2, "raison": "Programme hybride individualisé et sûr ; deux corrections nécessaires : renforcement du bas du corps et de la chaîne postérieure, et allure d'intermittent fondée sur une donnée réelle (test à prévoir)."}
+      ],
+      "corrections": [
+        "Ajouter 2 exercices de bas du corps et chaîne postérieure (pont fessier une jambe, mollets une jambe, extension de hanche) à 2–3 séries, par exemple le dimanche ou le samedi.",
+        "Remplacer la référence aux « 400 m rapides du profil » par un test en semaine 1 (ou une allure dérivée du 10 km actuel).",
+        "Borner la progression des semaines 7–11 : +1 répétition seulement si la semaine précédente a été réussie à la marge visée."
+      ],
+      "points_forts": [
+        "Tirage traité par plusieurs outils complémentaires (protocole à répétitions fixes, clusters, isométries).",
+        "Interférence course/barre gérée (6 h ou jours différents, trois quarts du temps facile).",
+        "Cycles avec allègement et tests, recalage des maximums, double échéance testée en semaine 12.",
+        "Échauffement et règle de douleur écrits."
+      ]
+    }
+  ]
+}

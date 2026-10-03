@@ -1,0 +1,129 @@
+{
+  "ecole": "sante",
+  "programmes": [
+    {
+      "programme": "programme_1.md",
+      "criteres": {"S1": 8.5, "S2": 7.5, "S3": 8, "S4": 9, "S5": 7, "S6": 8.5, "S7": 7.5, "S8": 9.5, "S9": 8},
+      "sans_objet": [],
+      "ensemble": 8,
+      "points_perdus": [
+        {"critere": "S1", "perte": 1.5, "raison": "Seuils de douleur écrits et orientation kiné (R5-P23), mais la règle « tractions au plus quatre jours par semaine » est contredite par le plan lui-même : il y a des tractions lundi, mardi (lestées), jeudi, vendredi et samedi (circuits), soit cinq jours, avec du muscle-up quatre jours sur cinq (lundi, jeudi, vendredi, samedi). C'est le coude qui encaisse (R5-P24, R5-P27)."},
+        {"critere": "S2", "perte": 2.5, "raison": "Les hausses de +10 % par semaine sont raisonnables (R5-P3, R5-P7), mais on passe de ≈ 700 en S4 à ≈ 1 200 en S5 (+70 %), puis à 1 300 en S6, sans palier. En S3, le lundi cumule la série fractionnée à 107 % du max, 5 sets d'épreuve et 2 × 18 tractions. Le plafond annoncé de 10 séries dures de tirage par séance est dépassé (environ 14 en comptant MU 5 + sets 5 + fractionnées 2 + tractions 2). Le volume habituel de l'athlète avant le cycle n'est pas relevé, donc ≈ 1 000 répétitions dès S1 n'est pas justifié (R5-P22)."},
+        {"critere": "S3", "perte": 2, "raison": "Il y a une baisse du jour (sommeil < 6 h, stress) et des allègements planifiés en S4, S7 et S8, mais rien n'est dit de la charge de vie : travail, sommeil habituel, jambes (R5-P14 à P19). Cinq séances denses sans 48 h réelles entre le jeudi, le vendredi et le samedi pour le tirage."},
+        {"critere": "S4", "perte": 1, "raison": "Format, densité et fractionnement sont bien construits (R4-G1 à G8). En revanche, les sets d'épreuve utilisent des « dips sur barre » alors que l'objectif chiffré porte sur les dips aux barres parallèles (56) : la spécificité du mouvement n'est pas tranchée tant que le format n'est pas connu."},
+        {"critere": "S5", "perte": 3, "raison": "La prévention est réelle (rotations externes, face pull, excentriques des poignets, rows), mais la répétitivité du tirage vertical sur 5 jours et l'absence de variété des prises (toujours pronation) ne sont pas compensées. La règle des coudes ne se déclenche qu'à partir de 3/10 de gêne au lieu d'être construite dans le plan (R4-F10 à F12)."},
+        {"critere": "S6", "perte": 1.5, "raison": "Les marges en RIR sont différenciées par mouvement et l'échec est réservé à la simulation de S6, en excluant le muscle-up. Mais la série fractionnée à 107 % du max en S3 et S6 approche l'échec sur le tirage, au cœur d'une semaine déjà chargée, sans 48 h protégées après (R4-G3)."},
+        {"critere": "S7", "perte": 2.5, "raison": "Les séances de 75 min sont pleines, et le lundi de S3 et S5 déborde probablement. La programmation est très complexe (pourcentages recalculés, EMOM, échelles, fractionnées, deux circuits) et il n'y a pas de version courte (R5-P1)."},
+        {"critere": "S8", "perte": 0.5, "raison": "Affûtage de 14 jours (−40 puis −60 %), simulation à J−14, demi-simulation à J−9, tests en S4 et plan de fractionnement : c'est conforme à R3-P17, P20 et P21. Seul manque un dernier contrôle de l'allure de l'épreuve sur les dips parallèles."},
+        {"critere": "S9", "perte": 2, "raison": "Des incohérences gênent la lecture : vendredi « 48 h avant les circuits du samedi », alors qu'il y a 24 h ; plafond de 4 jours de tractions et de 10 séries de tirage non respecté ; « dips sur barre » contre « dips parallèles »."},
+        {"critere": "ensemble", "perte": 2, "raison": "Bon programme de compétition, individualisé, avec un affûtage exemplaire. Mais la fréquence de tirage et de muscle-up et la remontée de S4 à S5 doivent être corrigées avant que je le signe."}
+      ],
+      "corrections": [
+        "Ramener les tractions à quatre jours au plus, comme la règle l'annonce : enlever les tractions du circuit B du samedi, ou la séance du vendredi, et sortir le muscle-up d'au moins un des quatre jours.",
+        "Remonter de S4 à S5 par paliers (≈ 1 000 puis 1 200) et faire respecter le plafond de 10 séries dures de tirage par séance le lundi de S3 et S5.",
+        "Corriger la note du vendredi (24 h, pas 48 h) et trancher le type de dips (parallèles comme dans l'objectif) dans les sets d'épreuve par défaut.",
+        "Varier les prises (neutre, supination) sur une partie du volume d'EMOM pour répartir la contrainte du coude.",
+        "Prévoir une version courte de 45 min pour chaque séance."
+      ],
+      "points_forts": [
+        "Affûtage de 14 jours chiffré, simulation à J−14, demi-simulation à J−9 et stratégie de fractionnement écrite pour le jour J.",
+        "Seuils de douleur gradués, renvoi vers un kinésithérapeute, règles en cas de semaine manquée et de baisse du jour.",
+        "Échauffement écrit et prévention scapulaire, de la coiffe et des poignets intégrée.",
+        "Échec réservé à une seule simulation et interdit sur le muscle-up."
+      ]
+    },
+    {
+      "programme": "programme_2.md",
+      "criteres": {"S1": 8.5, "S2": 8, "S3": 7.5, "S4": 8, "S5": 7.5, "S6": 8, "S7": 8.5, "S8": 8, "S9": 7},
+      "sans_objet": [],
+      "ensemble": 7.5,
+      "points_perdus": [
+        {"critere": "S1", "perte": 1.5, "raison": "Seuils de douleur et renvoi vers un kiné sont présents (R5-P23). Mais aucun standard de répétition valide n'est défini pour les tests, et rien ne protège le coude de l'excentrique sur dips trois fois par semaine (tempo de 3 s le lundi et le vendredi, volume le vendredi)."},
+        {"critere": "S2", "perte": 2, "raison": "La règle écrite « jamais les deux leviers sur le même mouvement la même semaine » est violée par le tableau : en S3, la série haute passe de 60 à 65 % et les blocs de volume de 3 à 4 séries ; en S5, de 70 à 75 % et de 4 à 5 séries. En S9, l'athlète reprend directement à 70 % après le test, sans semaine de remise en route (R5-P3, R5-P7)."},
+        {"critere": "S3", "perte": 2.5, "raison": "Il y a deux décharges planifiées et une baisse du jour, mais la charge de vie n'est pas prise en compte (R5-P14 à P19). La règle de baisse du jour est recopiée : elle cite une « série fractionnée » qui n'existe pas dans ce programme."},
+        {"critere": "S4", "perte": 2, "raison": "Les leviers (série haute, volume, densité EMOM) sont adaptés, mais les effort annoncés sont incohérents : « série haute à 60 % (9 tractions), 3 en réserve », alors que 9 sur 15 laisse environ 6 répétitions en réserve. Le volume de dips est modeste pour +10 répétitions (+40 %), et il n'y a ni série fractionnée ni travail au format du test (R4-G1 à G8)."},
+        {"critere": "S5", "perte": 2.5, "raison": "Le row inversé figure dans trois séances et le face pull dans une seule. Aucun travail de coiffe en rotation externe, prise toujours en pronation, échauffement de 8 min succinct pour du tempo excentrique (R4-F10 à F12)."},
+        {"critere": "S6", "perte": 2, "raison": "Les marges en réserve sont prudentes, avec une règle qui retire une série si la dernière tombe sous 1 RIR. Mais elles sont uniformes et l'étiquetage RIR des séries hautes est faux, donc l'effort réel est mal guidé (R4-G3)."},
+        {"critere": "S7", "perte": 1.5, "raison": "Les séances d'une heure sont faisables au parc et la semaine de tests ne coûte pas une semaine d'entraînement. Il n'y a pas de version courte (R5-P1)."},
+        {"critere": "S8", "perte": 2, "raison": "Tests en S1, S8 et S12 avec des repères et un plan B chiffré, mais la décharge finale se réduit à deux séances. Les tests de tractions (vendredi) et de dips (samedi) se suivent, sans stratégie de série (cadence, pause bras tendus) pour atteindre 20 et 35 (R3-P17, P21)."},
+        {"critere": "S9", "perte": 3, "raison": "Les contradictions internes (leviers simultanés, RIR des séries hautes, série fractionnée fantôme) rendent les consignes d'effort difficiles à appliquer."},
+        {"critere": "ensemble", "perte": 2.5, "raison": "Le programme est correct et sûr, avec un calibrage par pourcentage et un plan B. Mais plusieurs corrections sont nécessaires (leviers, RIR, spécificité du test, prévention de l'épaule), et l'objectif de +10 dips est peu servi par le volume prévu."}
+      ],
+      "corrections": [
+        "Appliquer la règle d'un seul levier par semaine : décaler l'ajout de série en S4 et S6, ou garder la série haute fixe en S3 et S5.",
+        "Corriger l'étiquette d'effort des séries hautes : 60 % ≈ 5–6 RIR en S2, en ne visant 2–3 RIR qu'à 75–80 %.",
+        "Ajouter pour les dips une série au format du test (fractionnée ou série haute au-delà de 80 %) en fin de cycle, et une stratégie de cadence pour les deux tests finaux.",
+        "Ajouter des rotations externes à l'élastique deux fois par semaine et varier les prises de traction.",
+        "Retirer la mention de série fractionnée de la baisse du jour et définir le standard de répétition valide."
+      ],
+      "points_forts": [
+        "Toutes les séries sont calibrées sur les maximums testés, avec un exemple chiffré.",
+        "Repères aux tests intermédiaires et plan B qui ramène l'objectif à 18–19 tractions et 31–32 dips.",
+        "Fréquence de trois expositions par mouvement avec 48 h entre les séries hautes.",
+        "Règles de douleur, de semaine manquée et de décharge claires."
+      ]
+    },
+    {
+      "programme": "programme_3.md",
+      "criteres": {"S1": 8, "S2": 8, "S3": 7.5, "S4": 8.5, "S5": 7.5, "S6": 8.5, "S7": 8.5, "S8": 9, "S9": 7.5},
+      "sans_objet": [],
+      "ensemble": 8,
+      "points_perdus": [
+        {"critere": "S1", "perte": 2, "raison": "Seuils de douleur et renvoi vers un kiné sont présents (R5-P23), mais la règle de douleur à 5/10 renvoie à une « variante à l'élastique » alors que le profil n'a pas d'élastique : l'alternative concrète manque (négatives, amplitude partielle, row). Le tuck front lever du dimanche sollicite le biceps et le coude en bras tendus, contrairement à la note « sans charge sur le coude »."},
+        {"critere": "S2", "perte": 2, "raison": "Le volume monte de 150 à 165 puis 180 (+10 % par semaine), avec un seul levier par semaine (R5-P3, R5-P7). Mais S5 est décrite « comme la semaine 3 recalculée » (≈ 180 ou plus sur le nouveau max) alors que le tableau annonce 165 : la reprise après l'allègement est ambiguë."},
+        {"critere": "S3", "perte": 2.5, "raison": "Il y a des allègements planifiés, une baisse du jour et un dimanche léger, mais la charge de vie n'est pas abordée (R5-P14 à P19). Le dimanche (isométries, circuit avec rows, front lever) précède la séance de force du lundi à moins de 24 h."},
+        {"critere": "S4", "perte": 1.5, "raison": "Les paliers de repos de 15 s, les séries hautes de 72 à 80 % et les séries fractionnées au-delà du max sont adaptés (R4-G1 à G8), mais il n'y a pas de simulation de test intermédiaire au standard de S12 (arrêt bras tendus à partir de la 18e)."},
+        {"critere": "S5", "perte": 2.5, "raison": "Le tirage horizontal, le substitut de face pull et les tirages scapulaires sont là, mais il n'y a pas de travail de coiffe en rotation externe. Le tirage vertical a lieu quatre jours sur quatre, archer compris (contrainte asymétrique sur le coude), avec peu de variation de prise (R4-F10 à F12)."},
+        {"critere": "S6", "perte": 1.5, "raison": "Il y a une seule série proche de l'échec par semaine et une règle si elle est manquée. Mais la fractionnée à environ 105 % du max équivaut à un échec, sans 48 h garanties ensuite si le dimanche comporte des isométries de tirage (R4-G3)."},
+        {"critere": "S7", "perte": 1.5, "raison": "Les séances sont faisables, avec le matériel du parc uniquement. Il n'y a pas de version courte."},
+        {"critere": "S8", "perte": 1, "raison": "Tests en S4, S8 et S12 avec repères, plan B et 12 jours d'affûtage (−40 %, intensité gardée), plus une stratégie de test écrite (R3-P17, P21). Mais le test final a lieu le vendredi alors que les tests précédents tombaient le dimanche : la standardisation n'est pas tenue."},
+        {"critere": "S9", "perte": 2.5, "raison": "Les incohérences gênent l'application : élastique absent, volume de S5, journée de test qui change. Les règles, elles, sont lisibles."},
+        {"critere": "ensemble", "perte": 2, "raison": "Bon programme, ciblé sur l'objectif de 25 tractions et adapté au parc sans matériel, avec un plan B réaliste. Une ou deux corrections sont nécessaires : alternative sans élastique, prévention de la coiffe et du coude, reprise de S5."}
+      ],
+      "corrections": [
+        "Remplacer « variante à l'élastique » par des alternatives disponibles au parc : négatives lentes, tractions australiennes, amplitude partielle.",
+        "Préciser le volume de reprise en S5 (≈ 165 comme le tableau) et le dire explicitement.",
+        "Ajouter un travail de coiffe sans matériel (rotations externes allongé, Y-T-W au sol) et varier les prises sur l'EMOM du mercredi.",
+        "Placer les tests de S4, S8 et S12 le même jour de la semaine avec le même échauffement.",
+        "Retirer le tuck front lever du dimanche, ou le compter comme tirage, quand le coude est sensible."
+      ],
+      "points_forts": [
+        "Un levier de progression par semaine, des repères de test et un plan B qui ramène l'objectif à 23–24.",
+        "Affûtage de 12 jours et plan de test (cadence, arrêt bras tendus à partir de la 18e).",
+        "Une seule série dure par semaine, espacement du tirage pensé, lundi allégé après un test.",
+        "Le bas du corps et la part « figures » du profil sont respectés sans matériel."
+      ]
+    },
+    {
+      "programme": "programme_4.md",
+      "criteres": {"S1": 8.5, "S2": 8, "S3": 8, "S4": 7.5, "S5": 7, "S6": 8.5, "S7": 8.5, "S8": 8, "S9": 6.5},
+      "sans_objet": [],
+      "ensemble": 7.5,
+      "points_perdus": [
+        {"critere": "S1", "perte": 1.5, "raison": "Les seuils de douleur couvrent le haut et le bas du corps (tibia, Achille), avec renvoi vers un kiné (R5-P23). Mais rien ne prépare les tissus à la course (mollets, pieds), alors que le zone 2 passe de 45 à 70 min et que l'intermittent se durcit (R5-P24)."},
+        {"critere": "S2", "perte": 2, "raison": "Le zone 2 gagne +5 min par semaine et l'intermittent progresse d'un cran à la fois (R5-P3, R5-P7). Mais le passage de 30/30 à 30/20 en S4, puis à 30/15 en S7–10, durcit l'effort sans repère d'allure. Les semaines 9 et 10 alternent un mardi sur deux deux formats non précisés, et le texte « comme les semaines 1 à 4 » contredit le tableau des semaines 7 à 10."},
+        {"critere": "S3", "perte": 2, "raison": "Il y a des allègements en S6 et S11, et la baisse du jour transforme la qualité en footing facile. La charge de vie n'est pas renseignée (R5-P14 à P19), et le lundi de barre suit la sortie longue sans critère de récupération."},
+        {"critere": "S4", "perte": 2.5, "raison": "Deux courses par semaine seulement pour gagner 2 minutes sur 10 km, sans séance au seuil avant S9. Le lundi (fentes bulgares, pont fessier) précède l'intermittent du mardi : les jambes lourdes ne sont pas séparées de la qualité (R6, interférence ; R5-P19). L'allure de l'intermittent est bien définie."},
+        {"critere": "S5", "perte": 3, "raison": "Le row inversé et le face pull sont présents, mais il n'y a ni coiffe, ni mollets ou pieds pour la course. L'échauffement de 8 min pour la barre est minimal, et l'historique de course n'est pas exploité (R4-F10 à F12, R5-P27)."},
+        {"critere": "S6", "perte": 1.5, "raison": "Pas d'échec hors tests, et une règle du jour sur le protocole du jeudi. Mais les marges sont mal étiquetées : 5 tractions sur 8 = 3 RIR, pas 2 (R4-G3)."},
+        {"critere": "S7", "perte": 1.5, "raison": "Les séances tiennent dans le temps disponible, mais trois méthodes de traction différentes compliquent le suivi pour un niveau intermédiaire. Il n'y a pas de version courte."},
+        {"critere": "S8", "perte": 2, "raison": "Allègement en S11, tests en S12 et plan d'allure au 10 km (R3-P17, P21). Mais le 5 km chronométré de S6, censé recaler les allures, n'apparaît pas dans le détail de la semaine 6, et aucun test de course intermédiaire n'est écrit."},
+        {"critere": "S9", "perte": 3.5, "raison": "Contradictions : tests de tractions annoncés « lundi ou jeudi » mais placés le samedi en S6 ; « semaines 7 à 10 comme 1 à 4 » contre le tableau ; fractions de S9–10 « un mardi sur deux » sans dire lesquelles ; 5 km de S6 absent du détail."},
+        {"critere": "ensemble", "perte": 2.5, "raison": "Le programme hybride est correct et sûr, avec des intensités de course définies. Plusieurs corrections sont nécessaires : séparer les jambes de l'intermittent, ajouter une prévention spécifique à la course, et rendre cohérents le calendrier des tests et les semaines 7 à 10."}
+      ],
+      "corrections": [
+        "Déplacer les fentes bulgares et le pont fessier au jeudi ou au samedi pour garder des jambes fraîches avant l'intermittent du mardi.",
+        "Écrire le 5 km chronométré dans la semaine 6 et préciser le contenu exact des mardis des semaines 7 à 10.",
+        "Ajouter des mollets excentriques et du travail de pied deux fois par semaine, plus des rotations externes pour l'épaule.",
+        "Harmoniser le jour et l'échauffement des tests de tractions entre S6 et S12, et corriger l'étiquette RIR du protocole.",
+        "Introduire une séance au seuil (2 × 10 min) dès le premier cycle si le temps le permet, par exemple 15 min de footing facile en fin de séance de barre du samedi."
+      ],
+      "points_forts": [
+        "Allures de course chiffrées à partir du record, 75 % du temps de course en facile, 6 h entre la barre et la course intense.",
+        "Seuils de douleur qui couvrent le haut et le bas du corps, avec une version douce prévue (vélo, marche, élastique).",
+        "Fréquence des tractions bien espacée (lundi, jeudi, samedi) et règle de progression conditionnée à la réserve.",
+        "Affûtage de course et plan d'allure pour le 10 km final."
+      ]
+    }
+  ]
+}

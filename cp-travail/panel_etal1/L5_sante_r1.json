@@ -1,0 +1,67 @@
+{
+  "ecole": "sante",
+  "programmes": [
+    {
+      "programme": "programme_1.md",
+      "criteres": {"S1": 1, "S2": 0.5, "S3": 1, "S4": 2, "S5": 1, "S6": 0, "S7": 1, "S8": 1, "S9": 1.5},
+      "sans_objet": [],
+      "ensemble": 1,
+      "points_perdus": [
+        {"critere": "S1", "perte": 9, "raison": "Débutant à 0 traction / 0 dips : négatives de traction lestées +10 kg (48 excentriques par séance dès S1), dips complets et muscle-up en élan sans aucun prérequis, sauts sur box haute 5 × 20 en impact sans préparation ; douleurs de coude déclarées « normales, continuer » : zone douloureuse chargée sans seuil (R5-P23, R4-F11, R5-P27). Plafond santé à 5 largement atteint."},
+        {"critere": "S2", "perte": 9.5, "raison": "Départ à plein régime pour un sédentaire puis +2 séries par exercice chaque semaine (6 → 28 séries par exercice en S12) et +2,5 kg par semaine sur les négatives (≈ +37,5 kg en S12) : saut de volume et de charge brutal, contraire à R5-P3, R5-P7, R5-P22."},
+        {"critere": "S3", "perte": 9, "raison": "Aucun allègement sur 12 semaines (écrit « aucun allègement »), trois séances à l'échec par semaine, courbatures et douleurs ignorées ; aucun critère de baisse du jour (R5-P10 à P19, R3-P9)."},
+        {"critere": "S4", "perte": 8, "raison": "Objectif de répétitions (3 tractions) traité par séries « maximum » à l'échec avec 45 s de repos sur des mouvements que le profil ne sait pas faire (0 répétition) : aucune progression d'assistance (élastique disponible mais exclu), aucune densité progressive, pas de travail dans la zone de l'épreuve (R4-G1 à G8)."},
+        {"critere": "S5", "perte": 9, "raison": "Volume massif de tirage vertical et d'excentriques lestés, aucun tirage horizontal (row australien à 6 répétitions ignoré), aucune suspension active, aucun travail scapulaire ou de coiffe, aucun échauffement écrit ; douleur de coude non prise en charge (R4-F10 à F12, R5-P24)."},
+        {"critere": "S6", "perte": 10, "raison": "Échec sur tous les exercices, toutes les séances, chez un débutant complet, y compris sur muscle-up en élan et excentriques lestés (mouvements à risque) ; pas de 48 h garanties entre les échecs du même mouvement (R4-G3, R5-P4, R5-P27)."},
+        {"critere": "S7", "perte": 9, "raison": "Séances estimées à ≈ 90 min pour 45 min disponibles ; exercices où le pratiquant échoue systématiquement (0 traction, 0 dips, muscle-up) : adhésion compromise dès la première semaine (R5-P1, R5-P2)."},
+        {"critere": "S8", "perte": 9, "raison": "Objectif de 3 tractions à 12 semaines : aucun test intermédiaire ni final planifié, aucun allègement avant le test (R3-P17, P20, P21)."},
+        {"critere": "S9", "perte": 8.5, "raison": "« 6 × maximum » de tractions et de dips pour quelqu'un à 0 répétition est incompréhensible ; consigne de douleur dangereuse (« continuer ») ; aucune consigne de sécurité."},
+        {"critere": "ensemble", "perte": 9, "raison": "Programme d'athlète confirmé plaqué sur un débutant : risque réel pour les coudes et les épaules, progression brutale, échec permanent, aucun prérequis ; l'objectif ne sera pas servi et le risque de blessure est élevé (plafond santé)."}
+      ],
+      "corrections": [
+        "Supprimer l'échec, les négatives lestées, les dips complets, le muscle-up et les sauts sur box haute ; travailler à 2–3 répétitions en réserve.",
+        "Construire la traction par prérequis : suspension active et rétractions scapulaires, row australien (pieds avancés progressivement), tractions à l'élastique (élastique décroissant), négatives au poids du corps de 3–5 s en petit volume (2–3 × 3), dips en appui / dips à l'élastique, pompes à 2–3 RIR.",
+        "Respecter les 45 min : 4–5 exercices, 3 séries, repos de 90 s à 2 min sur les exercices de tirage.",
+        "Progression lente et écrite (une répétition ou une série de plus quand toutes les séries sont faites avec la marge prévue ; élastique plus faible ensuite), allègement en semaines 4 et 8.",
+        "Seuils de douleur au coude (≤ 3/10 toléré si stable le lendemain ; au-delà, réduire le tirage ; persistance → kiné) et échauffement écrit (articulaire + séries de montée).",
+        "Planifier des tests de traction stricte (S4, S8) et un test final en S12 après quelques jours allégés."
+      ],
+      "points_forts": [
+        "Fréquence de 3 séances par semaine cohérente avec les disponibilités.",
+        "Présence de pompes et d'un travail de tirage vertical, en lien avec l'objectif (mais mal dosés)."
+      ]
+    },
+    {
+      "programme": "programme_2.md",
+      "criteres": {"S1": 9.5, "S2": 9, "S3": 8, "S5": 8.5, "S6": 9.5, "S7": 9, "S8": 9.5, "S9": 8.5},
+      "sans_objet": ["S4"],
+      "ensemble": 9,
+      "points_perdus": [
+        {"critere": "S1", "perte": 0.5, "raison": "Antécédent de coude bien suivi (seuils 3/10 et 5/10, avis du kiné, plafond de fréquence), mais excentrique accentué de traction à +85 kg (≈ 100 % de la charge totale) en semaines 1 à 3 sur un coude qui a déjà réagi en fin de gros cycle de traction : je le limiterais à ≈ 90 % ou le conditionnerais à une gêne à 0–1/10 (R5-P20, R5-P24)."},
+        {"critere": "S2", "perte": 1, "raison": "Progression globalement prudente (reprise à 77–80 %, décharges en S4 et S8, surcharge S9 conditionnelle), mais la semaine 9 monte à 13 séries de traction à 90–93 % juste après une décharge, la plus grosse dose lourde du cycle sur le mouvement à antécédent ; et rien n'est prévu en cas de séance ou de semaine manquée (R5-P7, R5-P22)."},
+        {"critere": "S3", "perte": 2, "raison": "Allègements planifiés et règle du jour (top set manqué d'un point de RPE → retirer un back-off) présents, mais sommeil, travail, stress ne sont ni demandés ni pris en compte dans un plan de 10 h hebdomadaires ; mardi (squat lourd + RDL) suivi de jeudi sans critère de récupération lombaire/jambes (R5-P14 à P19)."},
+        {"critere": "S5", "perte": 1.5, "raison": "Échauffement écrit, rotations externes, tirage visage, tirage horizontal, curl marteau léger : bon équilibre ; mais traction 3 fois par semaine plus un bloc de tractions au poids du corps le samedi (4 expositions de tirage vertical) et aucune variation de prise pour soulager les coudes écrite hors seuil de douleur (R4-F10 à F12)."},
+        {"critere": "S6", "perte": 0.5, "raison": "Marges différenciées et aucun échec hors compétition ; muscle-up 5 × 2 à 85–88 % puis 2 simples à 90 % (S5–S7) laisse une marge de 2 RIR discutable sur un mouvement technique à point faible (R5-P27)."},
+        {"critere": "S7", "perte": 1, "raison": "Séances dans le temps disponible (≈ 70 à 105 min), mais aucune version courte prévue en cas de séance écourtée (R5-P1)."},
+        {"critere": "S8", "perte": 0.5, "raison": "Affûtage de deux semaines, dernier lourd à J−9 en conditions de compétition, ouvertures et stratégie de barres écrites ; il manque un critère de choix de la troisième barre et l'ordre d'échauffement le jour J (R3-P20, P21)."},
+        {"critere": "S9", "perte": 1.5, "raison": "Consignes claires et seuils de douleur écrits, mais incohérences de pourcentages : tableau S1 « 77–80 % » alors que la séance sert des back-offs à ≈ 74 % et le muscle-up à ≈ 85 % (annoncé 82 %) ; S9 « +15 % de séries sur la semaine 7 » donne 13–14 séries, sans répartition par séance écrite pour les semaines 9 et 10."},
+        {"critere": "ensemble", "perte": 1, "raison": "Programme individualisé, périodisé vers l'échéance et attentif au coude ; je le signerais, avec retouches sur l'excentrique supramaximal en traction, la dose de la semaine 9 et la prise en compte de la charge de vie."}
+      ],
+      "corrections": [
+        "Ramener l'excentrique accentué de traction à ≈ 90 % de la charge totale ou le conditionner à une gêne de coude à 0–1/10 la veille.",
+        "Semaine 9 : plafonner la surcharge de traction (rester au volume de la semaine 7) même en l'absence de signal, vu l'antécédent.",
+        "Ajouter une règle de semaine manquée (reprendre la semaine précédente, pas de rattrapage) et une version courte de chaque séance (mouvement principal + un accessoire).",
+        "Demander et prendre en compte sommeil, travail et stress ; écrire un critère de baisse du jour (sommeil < 6 h, gêne de coude au réveil ≥ 2/10 → séance de volume allégée).",
+        "Varier les prises de traction (neutre, anneaux) sur la séance légère et le samedi pour répartir la contrainte sur les coudes.",
+        "Corriger les pourcentages de la semaine 1 et détailler la répartition des séries des semaines 9 et 10."
+      ],
+      "points_forts": [
+        "Seuils de douleur de coude chiffrés avec actions graduées et orientation vers le kiné.",
+        "Périodisation lisible : accumulation, transmutation, réalisation, décharges aux jonctions, surcharge conditionnelle.",
+        "Affûtage de deux semaines avec dernier lourd à J−9 en conditions de compétition et ouvertures calées sur ce test.",
+        "Points faibles traités (dips avec pause en verrouillage, clusters, transition du muscle-up à l'élastique).",
+        "Pas d'échec hors compétition, marges différenciées par mouvement, échauffement écrit avec montée en charge."
+      ]
+    }
+  ]
+}

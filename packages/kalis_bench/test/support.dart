@@ -140,7 +140,11 @@ final class L {
     this.kind,
     this.format,
     this.percent,
+    this.technique,
   });
+
+  /// Technique structurée (`kalis_core` 0.4.0).
+  final SetTechniqueKind? technique;
 
   /// Exercice.
   final String exerciseId;
@@ -195,6 +199,7 @@ ExercisePrescription _item(Catalog catalog, int day, int n, L l) {
               ? LoadBasis.external
               : LoadBasis.bodyweight),
     format: l.format,
+    technique: l.technique == null ? null : SetTechnique(kind: l.technique!),
     kind: l.kind,
     reasons: const <Reason>[],
   );

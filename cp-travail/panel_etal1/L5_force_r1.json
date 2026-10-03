@@ -1,0 +1,65 @@
+{
+  "ecole": "force",
+  "programmes": [
+    {
+      "programme": "programme_1.md",
+      "criteres": {"F1": 2, "F2": 0.5, "F3": 1, "F4": 1, "F5": 1, "F6": 0, "F7": 1, "F8": 0, "F9": 1},
+      "sans_objet": [],
+      "ensemble": 1,
+      "points_perdus": [
+        {"critere": "F1", "perte": 8, "raison": "La traction est bien présente, mais en 6 × tentatives maximales à 0 répétition : le profil n'a aucune exposition réussie. Il n'y a ni progression vers la traction (suspension, tirage scapulaire, row australien, traction assistée à l'élastique pourtant disponible), ni rien de spécifique. La séance est noyée dans le dips, le muscle-up, le front lever et la box (R1-P9, R2-P9)."},
+        {"critere": "F2", "perte": 9.5, "raison": "Tout est à l'échec, sur chaque série et chaque exercice, alors que le profil est débutant (contraire à R1-P11, R1-P14, R2-P1). Les négatives sont lestées à +10 kg pour quelqu'un qui ne fait pas une traction. Aucune marge, aucune charge réglée sur le profil."},
+        {"critere": "F3", "perte": 9, "raison": "Environ 40 séries par séance, trois fois par semaine. Il y a 48 descentes excentriques lestées dès la semaine 1, puis +2 séries par exercice et par semaine, soit environ 22 séries d'un même exercice en semaine 12. C'est très loin des fourchettes du débutant (R1-P5, R2-P6)."},
+        {"critere": "F4", "perte": 9, "raison": "La progression est arbitraire : +2 séries par semaine et +2,5 kg sur les négatives, sans critère. Il n'y a aucune décharge sur 12 semaines (« aucun allègement »), ce qui contredit R3-P9 et R5-P3."},
+        {"critere": "F5", "perte": 9, "raison": "L'objectif est daté (3 tractions à 12 semaines), mais aucun test intermédiaire ni final n'est prévu. Aucune semaine n'est allégée avant le test : le volume monte jusqu'à la semaine 12 (R2-P10, R3-P12)."},
+        {"critere": "F6", "perte": 10, "raison": "Plusieurs techniques sont servies sans prérequis : des négatives lestées de 10 s à l'échec, des tentatives de muscle-up en élan (0 traction, 0 dips) et du front lever à l'échec. Elles sont empilées et aucune ne répond à un problème nommé (R2-P12 à P22)."},
+        {"critere": "F7", "perte": 9, "raison": "Le programme n'a ni tirage horizontal (row australien à 6 répétitions, prérequis évident), ni suspension, ni travail scapulaire. Le bas du corps se limite à 5 × 20 sauts sur box haute. Le volume de poussée (dips, pompes) n'est pas compensé (R5-P27)."},
+        {"critere": "F8", "perte": 10, "raison": "Débutant complet : échec systématique, excentriques lestés en volume massif, muscle-up en élan sans prérequis et hausse brutale du volume. Les douleurs de coude sont déclarées « normales, continuer » : risque tendineux et de rhabdomyolyse (R5-P3, R5-P7, R5-P20 à P27)."},
+        {"critere": "F9", "perte": 9, "raison": "Environ 90 min de séance pour 45 min disponibles, avec 30 à 45 s de repos sur des séries à l'échec (R1-P16). Une box haute est demandée alors que le parc n'en a pas. Aucun échauffement."},
+        {"critere": "ensemble", "perte": 9, "raison": "Dangereux pour ce profil : plafond à 5 pour le risque réel pour la santé, et l'objectif n'est pas servi (aucune progression accessible vers une première traction). Ce programme est un document dangereux, pas une base à corriger."}
+      ],
+      "corrections": [
+        "Supprimer tout échec, tout lest, le muscle-up et le front lever. Arrêter tout exercice qui fait mal au coude au lieu de « continuer ».",
+        "Construire la progression vers la traction : suspension active et tirage scapulaire, row australien (3-4 × 6-10, 2 RIR), traction assistée à l'élastique (3-4 × 3-6) et négatives au poids du corps (3 × 3 descentes de 3 à 5 s, pas plus), 3 fois par semaine.",
+        "Ramener la séance à 45 min, avec 10 à 14 séries au total, un repos de 2 à 3 min sur les exercices de tirage et un échauffement écrit.",
+        "Progression chiffrée (réduire l'élastique, allonger les négatives, ajouter des répétitions au row) et décharge vers la semaine 6. Tests de traction stricte en semaines 4, 8 et 12, la semaine 12 allégée.",
+        "Poussée équilibrée (pompes inclinées puis classiques, dips assistés plus tard) et bas du corps simple (squat, fente) à la place de la box haute."
+      ],
+      "points_forts": [
+        "La traction pronation figure dans chaque séance, trois fois par semaine (bonne fréquence sur le principe)."
+      ]
+    },
+    {
+      "programme": "programme_2.md",
+      "criteres": {"F1": 8, "F2": 9, "F3": 7.5, "F4": 9, "F5": 9, "F6": 8.5, "F7": 9, "F8": 7.5, "F9": 8},
+      "sans_objet": [],
+      "ensemble": 8,
+      "points_perdus": [
+        {"critere": "F1", "perte": 2, "raison": "La règle « traction 3 fois par semaine » est contredite par la séance du samedi : 3 × 12 tractions au poids du corps, soit 4 expositions au tirage vertical. Le muscle-up lesté du mardi suit la traction lourde du lundi, et la traction légère du vendredi suit la séance du jeudi : deux jours consécutifs de tirage chargé sur un coude à antécédent (R2-P7)."},
+        {"critere": "F2", "perte": 1, "raison": "Le muscle-up lesté du mardi à +17,5 kg vaut 95,5 / 113 = 84,5 % et non ≈ 82 % comme écrit. Les autres charges sont justes et calculables depuis la charge totale (R2-P4), la marge est précisée et la règle d'ajustement sur le top set est présente."},
+        {"critere": "F3", "perte": 2.5, "raison": "Les séries directes du tableau ne correspondent pas aux séances de la semaine 1. Traction : 4 + 5 + 3 = 12 séries (plus 3 au poids du corps le samedi) pour 10 annoncées. Dips : 7 + 4 + 3 = 14 pour 10. Muscle-up : 5 + 3 = 8 pour 5. Squat : 10 pour 9. Le volume réel n'est pas maîtrisé, même si la séparation top set et back-off est bonne (R1-P5, R2-P6)."},
+        {"critere": "F4", "perte": 1, "raison": "Les blocs ont un rôle, la progression est chiffrée et les décharges sont placées. La décharge de la semaine 4 est floue : le tableau indique 80 % × 3, le texte « charge maintenue » de la semaine 3. Les critères de passage se limitent à la condition « aucun signal de fatigue » de la semaine 9 (R3-P9)."},
+        {"critere": "F5", "perte": 1, "raison": "Les ouvertures de la semaine 12 sont annoncées à 88-90 % dans le tableau, mais le texte prévoit 85 % le lundi et 82 % le mardi. Le dernier lourd à J−9 et le plan des barres (ouverture, deuxième, troisième) sont bien posés. Rien n'est prévu pour le poids de corps à la pesée, alors qu'il entre dans la charge totale (R3-P12 à P14)."},
+        {"critere": "F6", "perte": 1.5, "raison": "Les clusters sur dips répondent au point faible déclaré (bien). En revanche, les tractions excentriques accentuées à +85 kg (100 % du 1RM) sont prescrites sans dose de RIR ni critère de retrait, sur un coude à antécédent (R2-P22, R5-P20)."},
+        {"critere": "F7", "perte": 1, "raison": "Les accessoires sont pertinents (pause en haut, couché prise serrée, transition à l'élastique, row, tirage visage). Le volume de dips au poids du corps du samedi (3 × 20) n'est pas justifié et s'ajoute à la charge des coudes."},
+        {"critere": "F8", "perte": 2.5, "raison": "La conduite à tenir en cas de douleur au coude est excellente, mais l'exposition réelle du coude dépasse le plafond annoncé : 4 tirages par semaine, excentriques supramaximaux relatifs et volume de tirage à 12 séries en semaine 3. Or l'antécédent est apparu précisément en fin de gros cycle de traction (R5-P3, R5-P21)."},
+        {"critere": "F9", "perte": 2, "raison": "Les séances tiennent dans le temps, les repos sont précisés et l'échauffement est écrit. En revanche, « comme la semaine 3, sauf… » laisse des séances à reconstruire, notamment le volume des semaines 5 à 7 et les charges des semaines 9 et 10 en pourcentage seulement. Le tableau et le texte se contredisent sur les séries et les ouvertures."},
+        {"critere": "ensemble", "perte": 2, "raison": "Un programme d'élite solide et individualisé : charge totale, ondulation, points faibles, affûtage, plan des barres et règles pour le coude. Deux corrections sont nécessaires avant de signer : aligner la fréquence réelle de tirage sur le plafond du coude, et rendre le décompte des séries cohérent avec les séances."}
+      ],
+      "corrections": [
+        "Supprimer les tractions au poids du corps du samedi (ou les compter) pour tenir le plafond de 3 tirages par semaine. Éviter d'enchaîner le lundi (traction lourde) et le mardi (muscle-up lesté), par exemple en plaçant le muscle-up le vendredi en lourd et le mardi en technique légère.",
+        "Doser les tractions excentriques accentuées des semaines 1 à 3 (90 % plutôt que 100 %, 1 à 2 séries) avec un critère de retrait sur le coude, ou les retirer.",
+        "Recompter les séries directes du tableau d'après les séances réelles (ou l'inverse) et corriger le muscle-up à +17,5 kg (≈ 85 %, pas 82 %).",
+        "Écrire en clair la décharge de la semaine 4 et les ouvertures de la semaine 12 (tableau et texte identiques).",
+        "Ajouter une consigne de poids de corps pour la pesée et le calcul du lest le jour de la compétition."
+      ],
+      "points_forts": [
+        "Pourcentages calculés sur la charge totale, charges prêtes à l'emploi et cohérentes avec les 1RM.",
+        "Ondulation lourd / volume / léger par mouvement, décharges à chaque jonction, surcharge de S−3 conditionnelle.",
+        "Affûtage sur deux semaines : dernier lourd à J−9 dans l'ordre de la compétition, dernière séance à J−4, plan des tentatives.",
+        "Points faibles traités : verrouillage en dips (pause, clusters, couché prise serrée) et transition du muscle-up (décomposé à l'élastique, muscle-up lesté à l'état frais).",
+        "Aucun échec, marges explicites, règle d'ajustement du top set, conduite à tenir chiffrée en cas de douleur au coude."
+      ]
+    }
+  ]
+}

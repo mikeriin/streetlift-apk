@@ -664,7 +664,7 @@ add(
               "allègement", weeks=5),
         check("c8", "format_present", "Série haute puis séries allégées, "
               "clusters ou vagues",
-              formats=["top_set_backoff", "cluster", "waves"]),
+              formats=["top_set_backoff", "cluster", "wave"]),
         check("c9", "weekly_sets_between", "8 à 18 séries dures par semaine en "
               "traction lestée et ses variantes", exerciseIds=[T_LEST],
               min=8, max=18),

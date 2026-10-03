@@ -372,6 +372,8 @@ Map<String, String> renderReport(
             'Plus forte hausse (principal)',
             'Gain réel (%/sem)',
             'Performance à l\'échéance',
+            'Déblocages non respectés',
+            'Repères non tenus',
             'Violations (programme évolué)',
           ],
           <List<Object?>>[
@@ -387,6 +389,8 @@ Map<String, String> renderReport(
                   r.trajectory!.metrics['maxMainLoadRise'],
                   r.trajectory!.metrics['meanWeeklyGainPercent'] ?? '—',
                   r.trajectory!.metrics['meanEventPerformance'] ?? '—',
+                  r.trajectory!.metrics['unlockViolations'],
+                  _failedVerdicts(r.trajectory!.metrics),
                   r.realizedSafety?.length ?? '—',
                 ],
           ],
@@ -469,4 +473,17 @@ Map<String, String> renderReport(
     }
   }
   return files;
+}
+
+/// Repères de trajectoire non tenus, en clair (« aucun » sinon).
+String _failedVerdicts(Map<String, Object?> metrics) {
+  final verdicts = metrics['verdicts'];
+  if (verdicts is! Map<String, bool?>) {
+    return '—';
+  }
+  final failed = <String>[
+    for (final e in verdicts.entries)
+      if (e.value == false) e.key,
+  ];
+  return failed.isEmpty ? 'aucun' : failed.join(', ');
 }

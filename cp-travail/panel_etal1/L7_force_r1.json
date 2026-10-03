@@ -1,0 +1,125 @@
+{
+  "ecole": "force",
+  "programmes": [
+    {
+      "programme": "programme_1.md",
+      "criteres": {"F1": 8.5, "F2": 9, "F3": 8.5, "F4": 9, "F5": 9.5, "F6": 8, "F7": 9, "F8": 7.5, "F9": 9},
+      "sans_objet": [],
+      "ensemble": 8.5,
+      "points_perdus": [
+        {"critere": "F1", "perte": 1.5, "raison": "Tractions présentes lundi, mardi (lestées), jeudi, vendredi et samedi, plus 2 × 5 tractions et 2 × 2 muscle-ups dans l'échauffement de chaque séance : 5 jours de tirage vertical, alors que la règle « Coudes » du programme limite les tractions à 4 jours. La fréquence n'est pas plafonnée par la tolérance tendineuse qu'il annonce lui-même (R2-P7)."},
+        {"critere": "F2", "perte": 1, "raison": "Charges lestées calculables depuis la charge totale (117 et 142 kg), RIR précisé et règle d'écart présente. En revanche, le squat est à « 70 % du 1RM estimé (à calibrer en semaine 1) » sans méthode, et la marge des sets d'épreuve (« 3 RIR sur la partie limitante ») reste vague."},
+        {"critere": "F3", "perte": 1.5, "raison": "Dose par muscle chiffrée et top set + back-off sur le lesté. Mais le volume d'environ 1 000 à 1 300 répétitions par semaine n'est pas détaillé par mouvement : rien ne permet de vérifier la cohérence des totaux du tableau avec les séances (pratique de coach). La reconduction « comme la semaine 3 » en semaine 5 brouille le réglage par mouvement."},
+        {"critere": "F4", "perte": 1, "raison": "Phases nommées, progression chiffrée, test en semaine 4 avec recalcul et règle en cas de stagnation : c'est solide. Les semaines 2 et 3 changent pourtant plusieurs paramètres à la fois (sets d'épreuve, séries fractionnées, EMOM de 12 min, échelle à 5 barreaux), à l'encontre de « ne changer qu'un seul paramètre » (R5-P21)."},
+        {"critere": "F5", "perte": 0.5, "raison": "Affûtage de 2 semaines à −40 % puis −60 %, simulation complète à J−14, demi-simulation à J−9, repos à J−1 et plan de fractionnement écrit, conformes à R3-P21. Il manque le plan B chiffré : le texte mentionne « plan B si un mouvement casse » sans le détailler."},
+        {"critere": "F6", "perte": 2, "raison": "Semaine 6, jeudi : séries fractionnées sur les trois mouvements (muscle-ups, tractions, dips) 48 h avant la simulation complète du samedi. L'empilement est placé là où il compromet le test principal du cycle (R2-P22, budget). Le seul critère de retrait est la règle « baisse du jour »."},
+        {"critere": "F7", "perte": 1, "raison": "Tirage horizontal, rotateurs externes, poignets et prise bien couverts, jambes en entretien. Le tronc se limite à un hollow hold de 3 × 30 s le jeudi, et les curls et extensions de triceps du mardi ne sont pas justifiés par un point faible déclaré."},
+        {"critere": "F8", "perte": 2.5, "raison": "Contradiction interne sur la charge des coudes : 5 jours de tractions et des muscle-ups quotidiens dans l'échauffement, malgré la règle des 4 jours. Ajoutés aux séries fractionnées du jeudi de la semaine 6 et à la simulation menée au bout le samedi, cela fait le pic de stress tendineux du cycle (R5-P22, R5-P24). Les règles de douleur et de baisse du jour restent bonnes."},
+        {"critere": "F9", "perte": 1, "raison": "Séances dans les 75 min, repos précisés, échauffement écrit. La semaine 4 (« chaque exercice perd une à deux séries ») et les semaines 5 et 6 (« comme la semaine 3, sauf ») obligent l'athlète à reconstruire lui-même ses séances."},
+        {"critere": "ensemble", "perte": 1.5, "raison": "Programme de compétition individualisé, bien périodisé et bien affûté. Deux corrections sont nécessaires avant de signer : respecter le plafond de fréquence de traction qu'il fixe lui-même, et déplacer ou alléger les séries fractionnées du jeudi de la semaine 6."}
+      ],
+      "corrections": [
+        "Ramener les tractions à 4 jours au plus : sortir les tractions et les muscle-ups de l'échauffement des jours sans tirage, ou supprimer les tractions du vendredi, comme le prévoit la règle « Coudes ».",
+        "Semaine 6 : déplacer les séries fractionnées du jeudi au lundi, ou n'en garder qu'une seule (tractions), pour arriver frais à la simulation du samedi.",
+        "Donner une méthode pour calibrer le squat (série de 5 à RIR 2, puis estimation) et détailler le plan B de fractionnement le jour de la compétition.",
+        "Écrire la semaine 4 exercice par exercice, au lieu de « une à deux séries de moins »."
+      ],
+      "points_forts": [
+        "Échéance structurée : capacité, test, spécifique, simulation à J−14, demi-simulation à J−9, affûtage sur 2 semaines.",
+        "Charges lestées calculées en charge totale, une exposition lourde hebdomadaire bien dosée (85 % à 2 RIR), dernier lourd à J−11.",
+        "Règles de conduite complètes : douleur graduée, baisse du jour, séance manquée, stagnation au test.",
+        "Échauffement spécifique écrit et prévention de l'épaule et du coude intégrée chaque semaine."
+      ]
+    },
+    {
+      "programme": "programme_2.md",
+      "criteres": {"F1": 8, "F2": 7, "F3": 7.5, "F4": 7.5, "F5": 7, "F6": 8, "F7": 7.5, "F8": 8.5, "F9": 8},
+      "sans_objet": [],
+      "ensemble": 7.5,
+      "points_perdus": [
+        {"critere": "F1", "perte": 2, "raison": "Tractions et dips 3 fois par semaine : c'est correct. Mais le travail au plus près du test reste rare : une seule série haute par mouvement et par semaine, plafonnée à 80 % en semaine 6. Rien n'alterne vraiment des expositions lourdes et légères."},
+        {"critere": "F2", "perte": 3, "raison": "La « force » se résume à 8 départs de 3 répétitions en tempo (3 tractions sur un maximum de 15, 3 dips sur 25), « très loin de l'échec » : aucune exposition réellement lourde, alors que des variantes plus dures (archer, pause basse) existent sans lest (R1-P11, R2-P1). Autre incohérence : la « série haute à 60 % avec 3 en réserve » correspond en fait à 6 en réserve (9 sur 15)."},
+        {"critere": "F3", "perte": 2.5, "raison": "Le volume par mouvement n'est jamais totalisé, et la règle « Tirage horizontal » annonce le row sur trois séances alors qu'il n'apparaît que le mercredi et le samedi (le lundi, c'est un tirage visage). Séries de qualité et volume de construction sont séparés, mais sans bilan hebdomadaire."},
+        {"critere": "F4", "perte": 2.5, "raison": "Le programme pose « jamais les deux leviers sur le même mouvement la même semaine » et se contredit dans son propre tableau : en semaine 3, la série haute passe de 60 à 65 % et les blocs de volume de 3 à 4 séries ; en semaine 5, 75 % et 5 séries. La décharge et le critère de repli après le test de la semaine 8 sont bien faits."},
+        {"critere": "F5", "perte": 3, "raison": "Les tests finaux ne sont pas standardisés : en semaines 1 et 8, tractions et dips le lundi avec 10 min entre les deux ; en semaine 12, tractions le vendredi et dips le samedi (R3-P17, conditions standardisées). Aucun plan de cadence ou de fractionnement n'est prévu pour le test final."},
+        {"critere": "F6", "perte": 2, "raison": "Le tempo, la pause et l'exécution normale ont un rôle et une place. En revanche, « dégressif » et « pyramide » sont de simples schémas de séries présentés comme des méthodes, et aucun critère de retrait n'est donné pour le tempo (R2-P18, R2-P22)."},
+        {"critere": "F7", "perte": 2.5, "raison": "Row et pont fessier sont présents, mais aucun point faible n'est identifié pour une progression de +5 tractions et +10 dips (prise, verrouillage, partie haute). Le muscle-up (1 séance de 4 × 1) n'est pas relié à l'objectif."},
+        {"critere": "F8", "perte": 1.5, "raison": "Bonnes règles de douleur et de baisse du jour, 48 h entre deux séries hautes. Le seul ajustement en cas d'écart de répétitions porte sur les blocs de volume."},
+        {"critere": "F9", "perte": 2, "raison": "Séances tenues dans l'heure et repos précisés. Mais les semaines 3 à 6 et 9 à 11 sont à reconstruire à partir du tableau, l'échauffement est minimal (8 min, sans montée spécifique aux dips) et les variantes « plus dures » de la semaine 6 ne sont pas données pour la jambe."},
+        {"critere": "ensemble", "perte": 2.5, "raison": "Programme sûr et lisible, mais il se contredit sur sa règle de progression centrale, ne contient aucun travail de force réellement lourd pour un objectif de +33 % et +40 % de répétitions, et ses tests finaux ne sont pas standardisés."}
+      ],
+      "corrections": [
+        "Mettre le tableau en accord avec la règle des leviers : en semaines 3 et 5, faire monter soit la série haute, soit le nombre de séries, pas les deux.",
+        "Remplacer les 8 × 3 en tempo (12 à 20 % du maximum) par une vraie exposition dure sans lest : traction archer, poitrine à la barre, dips avec pause basse, entre 3 et 5 répétitions à 2 RIR.",
+        "Standardiser le test final : même jour, même ordre et même repos qu'en semaines 1 et 8, avec un plan de cadence.",
+        "Totaliser le volume hebdomadaire par mouvement et corriger le décompte du row (2 séances, pas 3)."
+      ],
+      "points_forts": [
+        "Calibrage relatif au maximum, avec un barème d'EMOM selon le niveau de l'athlète.",
+        "Test intermédiaire en semaine 8, avec des repères chiffrés et un repli explicite (pourcentages et objectif revus).",
+        "Décharge placée après 5 semaines de charge, conforme à R3-P9 pour un intermédiaire.",
+        "Semaine de tests qui ne fait pas perdre une semaine d'entraînement."
+      ]
+    },
+    {
+      "programme": "programme_3.md",
+      "criteres": {"F1": 9, "F2": 8.5, "F3": 8.5, "F4": 8.5, "F5": 8.5, "F6": 8.5, "F7": 8.5, "F8": 7.5, "F9": 8.5},
+      "sans_objet": [],
+      "ensemble": 8.5,
+      "points_perdus": [
+        {"critere": "F1", "perte": 1, "raison": "Tractions quatre jours par semaine avec alternance dur / facile (lundi force, mercredi EMOM facile, vendredi endurance, dimanche isométrie). La part réellement proche du test se limite à une seule série haute par semaine : c'est voulu, mais peu pour passer de 18 à 25."},
+        {"critere": "F2", "perte": 1.5, "raison": "Pourcentages du maximum et RIR précisés, règle d'écart sur la série haute. L'intensité des variantes de force (archer 4 × 4, poitrine à la barre 3 × 6) ne progresse que par répétitions, sans repère de difficulté pour passer à une variante plus dure."},
+        {"critere": "F3", "perte": 1.5, "raison": "Volume de tractions chiffré par semaine (environ 150 à 190) et plafonné à +10 à 15 % par bloc. En revanche, rien n'indique si les répétitions d'archer, de poitrine à la barre et d'isométrie sont comptées dans ces totaux."},
+        {"critere": "F4", "perte": 1.5, "raison": "Trois blocs, critères de passage au test, repli chiffré. Mais la règle « un seul levier nouveau par semaine » est violée : semaine 2 (série haute 14 et volume 3 × 10), semaine 3 (série haute 15 et EMOM de 12 min), semaine 9 (série haute à 80 % et repos de 1 min 30) (R5-P21)."},
+        {"critere": "F5", "perte": 1.5, "raison": "Affûtage à −40 % avec intensité gardée, activation à J−2 et plan de cadence écrit, conformes à R3-P21 pour un intermédiaire. Le test final se fait le vendredi, alors que les tests des semaines 4 et 8 se font le dimanche : conditions non standardisées (R3-P17)."},
+        {"critere": "F6", "perte": 1.5, "raison": "Séries fractionnées avec un rôle (dépasser le maximum continu), une place (semaines 7 et 10) et une dose. Pas de critère de retrait propre en dehors de la règle « baisse du jour »."},
+        {"critere": "F7", "perte": 1.5, "raison": "Row, arrière d'épaule, jambes sur deux jours, tronc présents. Le lien entre accessoires et point faible (prise ou partie haute) n'est pas expliqué ; l'arrêt bras tendus est en revanche bien justifié."},
+        {"critere": "F8", "perte": 2.5, "raison": "La règle de douleur à 5/10 renvoie à « l'élastique », que le profil n'a pas (matériel : barres seulement) : règle générique non adaptée. Le tuck front lever du dimanche sollicite le grand dorsal et le biceps la veille de la séance de force du lundi, ce qui contredit le « sans charge supplémentaire sur le coude » annoncé."},
+        {"critere": "F9", "perte": 1.5, "raison": "Séances dans l'heure, repos et échauffement écrits. Les semaines 5 à 10 sont décrites par différence (« comme la semaine 3 recalculée ») et les dimanches de test ne précisent pas ce qui reste de la séance légère."},
+        {"critere": "ensemble", "perte": 1.5, "raison": "Programme bien ciblé et prudent, avec des tests et des replis : je le signerais après une ou deux corrections, à savoir le respect de sa propre règle « un levier à la fois » et une règle de douleur adaptée à un athlète sans élastique."}
+      ],
+      "corrections": [
+        "Adapter la régression de la règle de douleur au matériel : traction australienne à la barre basse ou traction pieds au sol au lieu de l'élastique.",
+        "Respecter « un seul levier par semaine » en semaines 2, 3 et 9 (décaler la hausse de la série haute ou celle du volume d'une semaine).",
+        "Tester les trois fois dans les mêmes conditions (même jour et même échauffement), ou expliquer le changement de jour en semaine 12.",
+        "Déplacer le tuck front lever du dimanche au mercredi, ou le remplacer par le L-sit, pour protéger la séance de force du lundi."
+      ],
+      "points_forts": [
+        "Vraie force sans lest (archer, poitrine à la barre en excentrique lent) adaptée au matériel du parc.",
+        "Une seule série proche de l'échec par semaine, avec une règle d'ajustement si elle est manquée.",
+        "Repères de test (20, puis 22 à 23) et repli de l'objectif chiffré.",
+        "Affûtage et plan de test final écrits (cadence, arrêt bras tendus à partir de la 18e répétition)."
+      ]
+    },
+    {
+      "programme": "programme_4.md",
+      "criteres": {"F1": 8.5, "F2": 7.5, "F3": 7.5, "F4": 7, "F5": 7, "F6": 7, "F7": 8, "F8": 8, "F9": 7},
+      "sans_objet": [],
+      "ensemble": 7,
+      "points_perdus": [
+        {"critere": "F1", "perte": 1.5, "raison": "Tractions 3 fois par semaine, avec des schémas variés. Mais la traction exacte, menée sur des séries longues proches du maximum, n'apparaît jamais : clusters, maintiens, enchaînements et protocole dégressif dispersent le mouvement visé (R2-P7)."},
+        {"critere": "F2", "perte": 2.5, "raison": "RIR précisé et règle du jour sur le protocole du jeudi. En revanche, aucune exposition dure planifiée par phase, et le 5-4-3-2 avec « 2 en réserve sur la première » donne en réalité 3 en réserve sur un maximum de 8 : la marge annoncée ne correspond pas au chiffre."},
+        {"critere": "F3", "perte": 2.5, "raison": "Environ 55 tractions par semaine réparties sur 5 schémas différents (enchaînement, maintien, activation « bonus », protocole, cluster). L'« activation » de 5 tractions avant le protocole s'ajoute sans être comptée."},
+        {"critere": "F4", "perte": 3, "raison": "Deux systèmes de progression se contredisent : le tableau ajoute une répétition chaque semaine, la règle « toutes les séries à 3 en réserve deux séances de suite » conditionne l'ajout. Les semaines 7 à 10 sont « comme 1 à 4 » d'après le texte, mais le tableau indique une autre progression."},
+        {"critere": "F5", "perte": 3, "raison": "Le recalage d'allure sur un 5 km chronométré en semaine 6 n'est programmé nulle part dans cette semaine. La règle des tests annonce « lundi ou jeudi » alors que le test de la semaine 6 a lieu le samedi, et l'échauffement de test « de la semaine 6 » n'est pas décrit (R3-P17)."},
+        {"critere": "F6", "perte": 3, "raison": "Pour une athlète à 8 tractions : clusters, finition isométrique, enchaînement dégressif et protocole. Seul le cluster a un rôle nommé. La complexité dépasse le besoin, et les clusters à 5 s de pause au poids du corps sortent du cadre de R2-P12 (intermédiaire : 85 à 88 %, 20 à 30 s)."},
+        {"critere": "F7", "perte": 2, "raison": "Row, tirage visage, fentes, pont fessier et gainage présents. Mais la séance de jambes du lundi précède l'intermittent du mardi, et aucun point faible du tirage n'est relié à un accessoire."},
+        {"critere": "F8", "perte": 2, "raison": "Règles de douleur haut et bas du corps et délai entre barre et course : bien. Les fentes bulgares du lundi, la veille de l'intermittent, font courir avec des jambes fatiguées, et rien ne fait évoluer le volume de course de façon chiffrée (R5-P22)."},
+        {"critere": "F9", "perte": 3, "raison": "Plusieurs incohérences rendent le programme difficile à suivre : 5 km de la semaine 6 absent, jours de test contradictoires, semaines 7 à 10 ambiguës, échauffement de test introuvable."},
+        {"critere": "ensemble", "perte": 3, "raison": "Programme sûr et bien pensé pour l'hybride, mais trop de méthodes pour une athlète à 8 tractions, deux systèmes de progression concurrents et plusieurs incohérences (test de 5 km manquant, jours de test) : plusieurs corrections sont nécessaires."}
+      ],
+      "corrections": [
+        "Choisir un seul système de progression des tractions (règle des 3 en réserve, ou progression du tableau) et aligner le texte des semaines 7 à 10 sur le tableau.",
+        "Programmer explicitement le 5 km chronométré de la semaine 6 (mardi) et écrire l'échauffement de test.",
+        "Réduire les méthodes de traction à deux : des séries sous-maximales au protocole et le cluster, en lui donnant 20 à 30 s de pause ; supprimer l'activation « bonus » ou la compter.",
+        "Corriger la règle des tests (samedi en semaine 6, jeudi en semaine 12) et déplacer les fentes bulgares loin de l'intermittent."
+      ],
+      "points_forts": [
+        "Gestion de l'interférence barre et course (6 h ou jours différents, trois quarts du temps de course faciles).",
+        "Allures de course chiffrées à partir du record, puis recalées.",
+        "Fin de cycle bien placée : test de tractions après deux jours sans tirage, 10 km le dimanche avec un plan d'allure.",
+        "Règles de douleur qui couvrent aussi le bas du corps (tibia, tendon d'Achille)."
+      ]
+    }
+  ]
+}

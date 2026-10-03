@@ -22,6 +22,68 @@ const List<double> defaultWeeklyGain = <double>[0.012, 0.004, 0.0015, 0.0008];
 /// utilisée seulement pour comparer deux séries d'un même exercice.
 const double epleyDivisor = 30;
 
+/// Niveau de déblocage qu'exige chaque nature de proposition appliquée
+/// d'office (décision D5.7 du pipeline GP). Les natures absentes de la
+/// table (décharge, épargne d'une zone douloureuse, calendrier) ne
+/// dépendent pas du déblocage.
+const Map<ProposalKind, UnlockLevel> requiredUnlock =
+    <ProposalKind, UnlockLevel>{
+      ProposalKind.load: UnlockLevel.loadsReps,
+      ProposalKind.reps: UnlockLevel.loadsReps,
+      ProposalKind.volume: UnlockLevel.volume,
+      ProposalKind.exerciseSwap: UnlockLevel.exerciseSwap,
+      ProposalKind.sessionRestructure: UnlockLevel.sessionRestructure,
+      ProposalKind.blockRestructure: UnlockLevel.blockRestructure,
+    };
+
+/// Repères de verdict d'une trajectoire (choix raisonnés, voir
+/// `docs/CRITERES.md`).
+abstract final class TrajectoryLimits {
+  /// Part maximale d'échecs non voulus parmi les séries de travail.
+  static const double unwantedFailureRate = 0.05;
+
+  /// Écart absolu moyen maximal au RIR visé, cibles atteignables (cible de
+  /// la validation de `kalis_adapt` : 1 répétition).
+  static const double rirGap = 1;
+
+  /// Hausses de plus de 10 % d'un mouvement principal admises.
+  static const int mainRisesOverTenPercent = 0;
+
+  /// Performance minimale à l'échéance, rapportée à la meilleure série des
+  /// semaines précédentes.
+  static const double eventPerformance = 1;
+}
+
+/// Verdicts d'une trajectoire d'après ses mesures [metrics] : code →
+/// `true` (tenu), `false` (non tenu) ou `null` (sans objet).
+Map<String, bool?> trajectoryVerdicts(Map<String, Object?> metrics) {
+  double? number(String key) {
+    final v = metrics[key];
+    return v is num ? v.toDouble() : null;
+  }
+
+  final failures = number('unwantedFailureRate');
+  final gap = number('rirGapReachable');
+  final rises = number('mainRisesOverTenPercent');
+  final event = number('meanEventPerformance');
+  final unlock = number('unlockViolations');
+  final pain = number('painAggravations');
+  return <String, bool?>{
+    'echecs_non_voulus': failures == null
+        ? null
+        : failures <= TrajectoryLimits.unwantedFailureRate + 1e-9,
+    'ecart_rir': gap == null ? null : gap <= TrajectoryLimits.rirGap + 1e-9,
+    'pics_de_charge': rises == null
+        ? null
+        : rises <= TrajectoryLimits.mainRisesOverTenPercent,
+    'performance_echeance': event == null
+        ? null
+        : event >= TrajectoryLimits.eventPerformance - 1e-9,
+    'deblocages': unlock == null ? null : unlock <= 0,
+    'douleur': pain == null ? null : pain <= 0,
+  };
+}
+
 /// Athlète simulé du profil [p] : niveau et gain par défaut, puis les
 /// réglages de `simulation` (champs de `AthleteSpec`).
 AthleteSpec athleteSpecOf(BenchProfile p) {
@@ -299,8 +361,18 @@ Trajectory simulateTrajectory(
     }
   }
   final proposals = <String, int>{};
+  var unlockViolations = 0;
   for (final p in run.proposals) {
     proposals[p.kind.code] = (proposals[p.kind.code] ?? 0) + 1;
+    // Respect des déblocages : une proposition appliquée d'office avant
+    // que son niveau soit débloqué est une violation.
+    final need = requiredUnlock[p.kind];
+    if (need != null) {
+      final unlockedAt = run.unlockWeek[need];
+      if (unlockedAt == null || p.week < unlockedAt) {
+        unlockViolations++;
+      }
+    }
   }
   final metrics = <String, Object?>{
     'weeks': horizon,
@@ -328,10 +400,12 @@ Trajectory simulateTrajectory(
       for (final e in run.unlockWeek.entries) e.key.code: e.value + 1,
     },
     'proposalsApplied': proposals,
+    'unlockViolations': unlockViolations,
     'proposalsWithheld': Map<String, Object?>.of(run.withheld),
     'painAggravations': run.painAggravations,
     'blocks': run.blocks.length,
   };
+  metrics['verdicts'] = trajectoryVerdicts(metrics);
   return Trajectory(
     profile: bench,
     run: run,

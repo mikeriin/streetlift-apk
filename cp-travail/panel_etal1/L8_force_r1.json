@@ -1,0 +1,128 @@
+{
+  "ecole": "force",
+  "programmes": [
+    {
+      "programme": "programme_1.md",
+      "criteres": {"F1": 8.5, "F2": 8, "F3": 7, "F4": 8.5, "F5": 8.5, "F6": 7, "F7": 7.5, "F8": 7.5, "F9": 7.5},
+      "sans_objet": [],
+      "ensemble": 8,
+      "points_perdus": [
+        {"critere": "F1", "perte": 1.5, "raison": "La plus longue série continue de tractions plafonne à 25 (S3 et S5 samedi), alors que la cible est de 32. Hors test de S4 et simulation de S6, aucune série au-delà de 90 % du maximum n'est prévue sur le mouvement exact (R2-P7, R2-P9). Le format de l'épreuve n'est jamais écrit (« format annoncé »)."},
+        {"critere": "F2", "perte": 2, "raison": "Les lests des circuits sont fixés en kg sans lien avec le 1RM de charge totale. Les charges de squat sont arbitraires (80 kg en S3, 70 kg en S5, 60 kg en S7) alors qu'un test de 5 répétitions est prévu en S1 (R2-P4). Pas de règle pour ajuster les lests de traction et de dips selon la série du jour : seul le muscle-up lesté en a une."},
+        {"critere": "F3", "perte": 3, "raison": "Dose hebdomadaire très haute : dips de 280 à 380, muscle-ups de 90 à 130, tractions de 200 à 280, et environ 1 250 répétitions en S3 et S6. Le volume est dispersé dans des circuits où les séries de qualité ne sont pas séparées du volume de construction (R1-P5, R2-P6). Le +10 % annoncé en S2 ne se retrouve pas dans les modifications écrites."},
+        {"critere": "F4", "perte": 1.5, "raison": "Les phases sont nommées et les décharges placées (S4, S7, S8). En revanche, le passage du bloc 1 aux sets d'épreuve ne repose que sur la stagnation des maximums de S4. Aucune progression chiffrée sur les lests de traction et de dips (R3-P1)."},
+        {"critere": "F5", "perte": 1.5, "raison": "L'affûtage de 14 jours (−40 % puis −60 %, demi-simulation à J−9, repos vendredi) suit R3-P21. Mais il n'y a pas de plan de fractionnement écrit pour chaque mouvement : il est seulement « tiré de la simulation »."},
+        {"critere": "F6", "perte": 3, "raison": "« La variété vient des formats » : pyramides, dégressifs lestés, EMOM en escalier, séries fractionnées, isométries et circuits sont empilés. Plusieurs séances dépassent le budget de R2-P22 (S5 jeudi, S7 mardi : deux dégressifs plus un EMOM), et aucun format ne répond à un problème nommé. Pas de critère de retrait, sauf pour le muscle-up lesté."},
+        {"critere": "F7", "perte": 2.5, "raison": "Aucun travail de tronc écrit. Le tirage horizontal se limite à 3 × 10 rowing deux fois par semaine face à environ 600 répétitions de poussée. Aucun point faible déclaré n'est identifié pour orienter les variantes."},
+        {"critere": "F8", "perte": 2.5, "raison": "Les coudes supportent environ 400 répétitions de tirage par semaine, muscle-up lesté compris, plus 280 à 380 dips, sur 5 jours dont 2 consécutifs (lundi et mardi). Ces doses dépassent ce que la fréquence permet aux tendons (R5-P24). Les règles de douleur et de muscle-up lesté (RIR ≥ 2, R5-P27) sont bonnes."},
+        {"critere": "F9", "perte": 2.5, "raison": "La S4 allégée est floue (« une seule fois chaque circuit ») et la demi-simulation de S7 n'est pas définie, faute de format d'épreuve écrit. Les lundis de S6 frôlent les 75 minutes. Les repos des circuits sont libres."},
+        {"critere": "ensemble", "perte": 2, "raison": "Bonne structure de préparation et bon affûtage, mais le volume est trop haut et dispersé, la série longue de tractions reste loin de la cible et le format de l'épreuve n'est pas écrit. Ce sont des corrections nécessaires avant de signer."}
+      ],
+      "corrections": [
+        "Écrire le format exact de l'épreuve et un plan de fractionnement par mouvement (tractions 32, muscle-ups 14, dips 56).",
+        "Ajouter, de S5 à S6, une série de tractions continue ou fractionnée qui approche 30 répétitions, au lieu de séries plafonnées à 25.",
+        "Baisser les dips à environ 250 répétitions par semaine au plus et retirer un format par séance pour respecter le budget de techniques.",
+        "Calculer les lests en % de la charge totale (72 + 45 / 72 + 70 kg) et les charges de squat depuis le test de 5 répétitions.",
+        "Ajouter du tronc et augmenter le tirage horizontal."
+      ],
+      "points_forts": [
+        "Affûtage de 14 jours conforme à R3-P21, avec simulation à J−14 et demi-simulation à J−9.",
+        "Muscle-up lesté encadré : 2 séances par semaine au plus, 72 h d'écart, RIR ≥ 2, palier retiré si une répétition ralentit.",
+        "Répétitions calées sur les maximums et recalées en S4, avec une règle si les maximums stagnent.",
+        "Règles de douleur, de baisse du jour et de séance manquée précises."
+      ]
+    },
+    {
+      "programme": "programme_2.md",
+      "criteres": {"F1": 8, "F2": 8, "F3": 6, "F4": 8.5, "F5": 8, "F6": 8, "F7": 8.5, "F8": 7, "F9": 6.5},
+      "sans_objet": [],
+      "ensemble": 7.5,
+      "points_perdus": [
+        {"critere": "F1", "perte": 2, "raison": "Les tractions reviennent 4 fois par semaine mais le samedi est volontairement trivial (échelle 2-4-6). La règle parle de trois expositions dures (lundi, mercredi, vendredi), alors que l'EMOM du mercredi est marqué « facile » : la répartition dure/légère est incohérente (R2-P7)."},
+        {"critere": "F2", "perte": 2, "raison": "Les % du maximum et le RIR sont bien donnés. Mais l'exposition proche de l'échec se limite à une série par semaine, et aucune règle n'ajuste les pourcentages quand ils tombent entre deux nombres de répétitions (R2-P1)."},
+        {"critere": "F3", "perte": 4, "raison": "Le programme viole son propre plafond de dips (180 répétitions par semaine en bloc 1, 220 en bloc 2). En S4, l'EMOM du mercredi fait à lui seul 120 dips, soit environ 300 au total. En S9, avec un maximum de 30, l'EMOM à 45 % donne 12 × 13 à 14, soit environ 160 dips en une séance, et environ 400 sur la semaine (R1-P5, R2-P6)."},
+        {"critere": "F4", "perte": 1.5, "raison": "Blocs, décharges en S6 et S11, un seul changement par semaine : c'est lisible. Le passage au bloc 2 dépend du test mais n'a pas de critère, sauf pour le muscle-up."},
+        {"critere": "F5", "perte": 2, "raison": "La S11 à −40 % et les 48 h sans tirage dur avant les tests suivent R3-P13. Pas de plan de cadence pour le test de 20 tractions ou de 35 dips."},
+        {"critere": "F6", "perte": 2, "raison": "Les séries fractionnées du bloc 2 conviennent à un intermédiaire et ont un rôle (dépasser le maximum continu). Il n'y a pas de critère de retrait, et le dips fractionné du lundi s'ajoute à un volume déjà au-delà du plafond (R2-P22)."},
+        {"critere": "F7", "perte": 1.5, "raison": "Row, tirage visage, tronc et jambes sont présents. Le muscle-up (objectif secondaire) arrive le mercredi après 160 répétitions d'EMOM et le travail de jambes : technique servie fatiguée."},
+        {"critere": "F8", "perte": 3, "raison": "Le volume de dips réel (300 à 400 par semaine) est presque le double du plafond annoncé pour un intermédiaire dont le maximum est de 25. Cette hausse vient sans garde-fou pour l'épaule et le sternum (R5-P22, R5-P24)."},
+        {"critere": "F9", "perte": 3.5, "raison": "Plusieurs contradictions : le muscle-up du mercredi est dit « placé en tête de séance après l'EMOM » mais apparaît en 6e position, et le plafond de dips est incompatible avec les séances écrites. Les S7 à S10 sont décrites en cascade (« comme S4/5 sauf… », « comme S8… »), ce qui rend les doses difficiles à reconstituer."},
+        {"critere": "ensemble", "perte": 2.5, "raison": "Programme sûr dans l'esprit et individualisé (parc, pas de lest, cibles réalistes), mais le dosage des dips contredit les règles du programme lui-même, et plusieurs incohérences d'écriture doivent être corrigées."}
+      ],
+      "corrections": [
+        "Recalculer le volume de dips pour respecter 180 et 220 répétitions par semaine : EMOM de dips à 8 ou 10 min et à 30–35 %, une seule échelle le samedi.",
+        "Placer le muscle-up en tête de la séance du mercredi, avant l'EMOM, et corriger le tableau.",
+        "Aligner la règle des « trois expositions dures de tirage » sur les séances réelles, ou rendre l'EMOM du mercredi réellement exigeant.",
+        "Écrire les séances des S7 à S10 en clair, avec les nombres de répétitions calculés.",
+        "Ajouter un plan de cadence pour les tests finaux."
+      ],
+      "points_forts": [
+        "Pourcentages du maximum et RIR partout, recalés au test de S6.",
+        "Proximité de l'échec maîtrisée : une série à RIR 1 par mouvement et par semaine, jamais d'échec sur le muscle-up.",
+        "Règle qui ramène l'objectif si le repère n'est pas atteint, sans durcir le bloc 2.",
+        "Équilibre tirage horizontal, tronc et jambes adapté au matériel du parc."
+      ]
+    },
+    {
+      "programme": "programme_3.md",
+      "criteres": {"F1": 8.5, "F2": 7.5, "F3": 8, "F4": 8.5, "F5": 7.5, "F6": 8, "F7": 7.5, "F8": 8, "F9": 7},
+      "sans_objet": [],
+      "ensemble": 8,
+      "points_perdus": [
+        {"critere": "F1", "perte": 1.5, "raison": "Seulement deux séances de traction spécifiques par semaine pour un objectif de +7 répétitions. Les tests des S4 et S8 se font « avec arrêt 1 s », un standard différent du maximum continu visé (R2-P9)."},
+        {"critere": "F2", "perte": 2.5, "raison": "Sans lest, l'intensité passe par la densité et les pauses, ce qui est cohérent. Mais l'EMOM est seulement « facile », sans RIR, et il n'y a pas d'exposition au-delà de 85 % du maximum hors série fractionnée. Les dips et les pompes du mercredi ne sont plus recalés après le test."},
+        {"critere": "F3", "perte": 2, "raison": "Le volume de tractions est réglé et chiffré (de 45 à 69 répétitions fractionnées), avec une hausse plafonnée à 15–20 %. Le volume de poussée des S5 à S10 n'est pas défini au-delà de « +2 par semaine »."},
+        {"critere": "F4", "perte": 1.5, "raison": "Trois cycles de 3+1 semaines, avec la taille des blocs conditionnée au test : c'est bien. La décharge est confondue avec la semaine de test, et aucune décharge distincte n'est prévue pour la poussée (R3-P9)."},
+        {"critere": "F5", "perte": 2.5, "raison": "La règle « deux jours sans traction avant le test » contredit l'activation de 3 × 5 du mercredi en S12, qui ne laisse qu'un jour. Le test de S4 et S8 avec arrêt de 1 s n'est pas le même que le test final, donc le recalage est biaisé (R2-P10)."},
+        {"critere": "F6", "perte": 2, "raison": "La série fractionnée en suspension a un rôle clair et convient au niveau (R2-P12, R2-P13). Mais elle est servie chaque semaine pendant 10 semaines sans critère de retrait (R2-P22)."},
+        {"critere": "F7", "perte": 2.5, "raison": "Tronc limité à 3 × 30 s de hollow le lundi. La poussée et le muscle-up sont en simple entretien, sans progression écrite. Le tirage horizontal et les jambes (pistol, shrimp) sont bien choisis."},
+        {"critere": "F8", "perte": 2, "raison": "Bonnes règles pour le coude, plafond de hausse de 15–20 % et variation des prises. La règle de douleur générale prescrit l'élastique, matériel que le profil n'a pas."},
+        {"critere": "F9", "perte": 3, "raison": "Plusieurs incohérences : « espacées de 72 h » alors que lundi et vendredi sont à 96 h ; élastique cité alors que le programme est « sans élastique » ; règle des deux jours contredite en S12. Les séances du mercredi et du dimanche des cycles 2 et 3 ne sont pas réécrites."},
+        {"critere": "ensemble", "perte": 2, "raison": "Programme ciblé, adapté au matériel et à l'objectif, avec une progression conditionnée aux tests. Le standard de test et plusieurs incohérences doivent être corrigés avant de signer."}
+      ],
+      "corrections": [
+        "Tester en S4 et S8 le même maximum continu que le test final (sans arrêt imposé), ou convertir explicitement les deux standards.",
+        "Supprimer l'activation du mercredi en S12, ou la déplacer au mardi, pour tenir les deux jours sans traction.",
+        "Remplacer l'élastique de la règle de douleur par une variante disponible : row inversé, négatives, amplitude réduite.",
+        "Ajouter un critère de retrait des séries fractionnées, par exemple si la dernière série ralentit deux semaines de suite.",
+        "Écrire la progression de poussée et un peu plus de tronc."
+      ],
+      "points_forts": [
+        "Protocole centré sur l'objectif, avec un volume chiffré semaine par semaine et une hausse plafonnée.",
+        "Taille des blocs conditionnée aux tests, avec une solution de repli si le repère n'est pas atteint.",
+        "Matériel du profil respecté (barres seules) et pistol acquis exploité.",
+        "Objectif réaliste annoncé (22–23) et plan de cadence pour le test final."
+      ]
+    },
+    {
+      "programme": "programme_4.md",
+      "criteres": {"F1": 7.5, "F2": 8, "F3": 7.5, "F4": 8.5, "F5": 8.5, "F6": 8, "F7": 8.5, "F8": 8.5, "F9": 8.5},
+      "sans_objet": [],
+      "ensemble": 8,
+      "points_perdus": [
+        {"critere": "F1", "perte": 2.5, "raison": "Deux expositions de traction par semaine, dont une très légère (EMOM à 38 %, 24 répétitions) : une seule séance de traction réellement travaillée pour gagner 3 répétitions (R2-P7). La fréquence est contrainte par la course, mais un rappel de quelques séries le samedi ou le dimanche était possible."},
+        {"critere": "F2", "perte": 2, "raison": "Pourcentages et RIR bien posés. Aucune exposition au-delà de 75 % du maximum en continu avant la S6 (série fractionnée). Pas de pourcentage de la dernière série donné pour les S9 et S10."},
+        {"critere": "F3", "perte": 2.5, "raison": "Volume de tirage modeste (10 à 12 séries dures) et réglé par phase. En revanche, les S9 et S10 sont « comme la semaine 7 », sans précision, et les dips et pompes n'ont aucune progression écrite."},
+        {"critere": "F4", "perte": 1.5, "raison": "Trois cycles de 3+1 semaines, avec décharges et tests de tractions aux S4, S8 et S12, et une règle de progression des répétitions claire. Pas de critère de passage d'une phase à l'autre côté street."},
+        {"critere": "F5", "perte": 1.5, "raison": "Affûtage −40 % puis −60 %, intensité gardée, deux jours sans tirage avant le test, plan de départ du 10 km écrit. Le test de tractions n'a pas de plan de cadence."},
+        {"critere": "F6", "perte": 2, "raison": "Négatives et série fractionnée ont un rôle et sont retirées à l'affûtage (R2-P22). La série fractionnée n'a pas de critère de retrait si elle tombe sous la prescription."},
+        {"critere": "F7", "perte": 1.5, "raison": "Row, tirage visage, tronc, mollets et jambes modérées sont adaptés à la course. Aucun point faible des tractions n'est identifié (départ, haut de l'amplitude)."},
+        {"critere": "F8", "perte": 1.5, "raison": "Bonne gestion de l'interférence et règles de douleur haut et bas du corps. Rien de spécifique à la course n'est prévu au-delà de la sortie longue plafonnée."},
+        {"critere": "F9", "perte": 1.5, "raison": "Séances dans les créneaux, repos et allures précisés, échauffements écrits. Les semaines 9 et 10 côté street sont trop sommaires."},
+        {"critere": "ensemble", "perte": 2, "raison": "Programme hybride sûr et individualisé, avec un objectif de traction réaliste et des tests standardisés. Une seule vraie exposition de traction par semaine et une street sans progression en fin de cycle demandent une correction."}
+      ],
+      "corrections": [
+        "Ajouter une troisième exposition courte de tractions (2–3 séries à 3 RIR) le samedi ou le dimanche, ou rendre l'EMOM du jeudi plus exigeant (environ 50 %).",
+        "Écrire les séances street des S9 et S10 avec leur progression : séries, pourcentage du nouveau maximum.",
+        "Donner une progression aux dips et aux pompes.",
+        "Ajouter un plan de cadence pour le test de 11 tractions."
+      ],
+      "points_forts": [
+        "Interférence force et course bien gérée : jambes loin de la séance de qualité, une seule séance de qualité par semaine.",
+        "Tests de tractions standardisés et répétés toutes les 4 semaines, avec une règle de progression claire entre les tests.",
+        "Affûtage commun aux deux objectifs, intensité gardée, plan de course écrit.",
+        "Charges et volumes adaptés au niveau (8 tractions), négatives et élastique bien utilisés."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,226 @@
+{
+ "L1_force_r1": {
+  "programme_1.md": "p08_a",
+  "programme_2.md": "p06_b",
+  "programme_3.md": "p14_c",
+  "programme_4.md": "p17_d"
+ },
+ "L1_force_r2": {
+  "programme_1.md": "p08_a",
+  "programme_2.md": "p06_b",
+  "programme_3.md": "p14_c",
+  "programme_4.md": "p17_d"
+ },
+ "L1_calisthenie_r1": {
+  "programme_1.md": "p08_a",
+  "programme_2.md": "p06_b",
+  "programme_3.md": "p14_c",
+  "programme_4.md": "p17_d"
+ },
+ "L1_calisthenie_r2": {
+  "programme_1.md": "p08_a",
+  "programme_2.md": "p06_b",
+  "programme_3.md": "p14_c",
+  "programme_4.md": "p17_d"
+ },
+ "L1_hypertrophie_r1": {
+  "programme_1.md": "p08_a",
+  "programme_2.md": "p06_b",
+  "programme_3.md": "p14_c",
+  "programme_4.md": "p17_d"
+ },
+ "L1_hypertrophie_r2": {
+  "programme_1.md": "p08_a",
+  "programme_2.md": "p06_b",
+  "programme_3.md": "p14_c",
+  "programme_4.md": "p17_d"
+ },
+ "L1_sante_r1": {
+  "programme_1.md": "p08_a",
+  "programme_2.md": "p06_b",
+  "programme_3.md": "p14_c",
+  "programme_4.md": "p17_d"
+ },
+ "L1_sante_r2": {
+  "programme_1.md": "p08_a",
+  "programme_2.md": "p06_b",
+  "programme_3.md": "p14_c",
+  "programme_4.md": "p17_d"
+ },
+ "L2_force_r1": {
+  "programme_1.md": "p08_b",
+  "programme_2.md": "p06_c",
+  "programme_3.md": "p14_d",
+  "programme_4.md": "p17_a"
+ },
+ "L2_calisthenie_r1": {
+  "programme_1.md": "p08_b",
+  "programme_2.md": "p06_c",
+  "programme_3.md": "p14_d",
+  "programme_4.md": "p17_a"
+ },
+ "L2_hypertrophie_r1": {
+  "programme_1.md": "p08_b",
+  "programme_2.md": "p06_c",
+  "programme_3.md": "p14_d",
+  "programme_4.md": "p17_a"
+ },
+ "L2_sante_r1": {
+  "programme_1.md": "p08_b",
+  "programme_2.md": "p06_c",
+  "programme_3.md": "p14_d",
+  "programme_4.md": "p17_a"
+ },
+ "L3_force_r1": {
+  "programme_1.md": "p08_c",
+  "programme_2.md": "p06_d",
+  "programme_3.md": "p14_a",
+  "programme_4.md": "p17_b"
+ },
+ "L3_force_r2": {
+  "programme_1.md": "p08_c",
+  "programme_2.md": "p06_d",
+  "programme_3.md": "p14_a",
+  "programme_4.md": "p17_b"
+ },
+ "L3_calisthenie_r1": {
+  "programme_1.md": "p08_c",
+  "programme_2.md": "p06_d",
+  "programme_3.md": "p14_a",
+  "programme_4.md": "p17_b"
+ },
+ "L3_calisthenie_r2": {
+  "programme_1.md": "p08_c",
+  "programme_2.md": "p06_d",
+  "programme_3.md": "p14_a",
+  "programme_4.md": "p17_b"
+ },
+ "L3_hypertrophie_r1": {
+  "programme_1.md": "p08_c",
+  "programme_2.md": "p06_d",
+  "programme_3.md": "p14_a",
+  "programme_4.md": "p17_b"
+ },
+ "L3_hypertrophie_r2": {
+  "programme_1.md": "p08_c",
+  "programme_2.md": "p06_d",
+  "programme_3.md": "p14_a",
+  "programme_4.md": "p17_b"
+ },
+ "L3_sante_r1": {
+  "programme_1.md": "p08_c",
+  "programme_2.md": "p06_d",
+  "programme_3.md": "p14_a",
+  "programme_4.md": "p17_b"
+ },
+ "L3_sante_r2": {
+  "programme_1.md": "p08_c",
+  "programme_2.md": "p06_d",
+  "programme_3.md": "p14_a",
+  "programme_4.md": "p17_b"
+ },
+ "L4_force_r1": {
+  "programme_1.md": "p08_d",
+  "programme_2.md": "p06_a",
+  "programme_3.md": "p14_b",
+  "programme_4.md": "p17_c"
+ },
+ "L4_calisthenie_r1": {
+  "programme_1.md": "p08_d",
+  "programme_2.md": "p06_a",
+  "programme_3.md": "p14_b",
+  "programme_4.md": "p17_c"
+ },
+ "L4_hypertrophie_r1": {
+  "programme_1.md": "p08_d",
+  "programme_2.md": "p06_a",
+  "programme_3.md": "p14_b",
+  "programme_4.md": "p17_c"
+ },
+ "L4_sante_r1": {
+  "programme_1.md": "p08_d",
+  "programme_2.md": "p06_a",
+  "programme_3.md": "p14_b",
+  "programme_4.md": "p17_c"
+ },
+ "L5_force_r1": {
+  "programme_1.md": "p01_a",
+  "programme_2.md": "p09_c"
+ },
+ "L5_calisthenie_r1": {
+  "programme_1.md": "p01_a",
+  "programme_2.md": "p09_c"
+ },
+ "L5_hypertrophie_r1": {
+  "programme_1.md": "p01_a",
+  "programme_2.md": "p09_c"
+ },
+ "L5_sante_r1": {
+  "programme_1.md": "p01_a",
+  "programme_2.md": "p09_c"
+ },
+ "L6_force_r1": {
+  "programme_1.md": "p01_c",
+  "programme_2.md": "p09_a"
+ },
+ "L6_calisthenie_r1": {
+  "programme_1.md": "p01_c",
+  "programme_2.md": "p09_a"
+ },
+ "L6_hypertrophie_r1": {
+  "programme_1.md": "p01_c",
+  "programme_2.md": "p09_a"
+ },
+ "L6_sante_r1": {
+  "programme_1.md": "p01_c",
+  "programme_2.md": "p09_a"
+ },
+ "L7_force_r1": {
+  "programme_1.md": "p08_c2",
+  "programme_2.md": "p06_d2",
+  "programme_3.md": "p14_c2",
+  "programme_4.md": "p17_d2"
+ },
+ "L7_calisthenie_r1": {
+  "programme_1.md": "p08_c2",
+  "programme_2.md": "p06_d2",
+  "programme_3.md": "p14_c2",
+  "programme_4.md": "p17_d2"
+ },
+ "L7_hypertrophie_r1": {
+  "programme_1.md": "p08_c2",
+  "programme_2.md": "p06_d2",
+  "programme_3.md": "p14_c2",
+  "programme_4.md": "p17_d2"
+ },
+ "L7_sante_r1": {
+  "programme_1.md": "p08_c2",
+  "programme_2.md": "p06_d2",
+  "programme_3.md": "p14_c2",
+  "programme_4.md": "p17_d2"
+ },
+ "L8_force_r1": {
+  "programme_1.md": "p08_d2",
+  "programme_2.md": "p06_c2",
+  "programme_3.md": "p14_d2",
+  "programme_4.md": "p17_c2"
+ },
+ "L8_calisthenie_r1": {
+  "programme_1.md": "p08_d2",
+  "programme_2.md": "p06_c2",
+  "programme_3.md": "p14_d2",
+  "programme_4.md": "p17_c2"
+ },
+ "L8_hypertrophie_r1": {
+  "programme_1.md": "p08_d2",
+  "programme_2.md": "p06_c2",
+  "programme_3.md": "p14_d2",
+  "programme_4.md": "p17_c2"
+ },
+ "L8_sante_r1": {
+  "programme_1.md": "p08_d2",
+  "programme_2.md": "p06_c2",
+  "programme_3.md": "p14_d2",
+  "programme_4.md": "p17_c2"
+ }
+}

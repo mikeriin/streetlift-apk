@@ -1,0 +1,127 @@
+{
+  "ecole": "sante",
+  "programmes": [
+    {
+      "programme": "programme_1.md",
+      "criteres": {"S1": 7.5, "S2": 8, "S3": 8, "S4": 8, "S5": 7, "S6": 8.5, "S7": 8, "S8": 9, "S9": 8},
+      "sans_objet": [],
+      "ensemble": 7.5,
+      "points_perdus": [
+        {"critere": "S1", "perte": 2.5, "raison": "Muscle-up lesté (mouvement à risque élevé, R5-P27) servi dès le vendredi de la semaine 1 jusqu'à +10 kg en EMOM (30 muscle-ups dont 20 lestés) sans aucun test ni record de muscle-up lesté dans le profil : aucune rampe d'entrée. Dose hebdomadaire de 90 à 130 muscle-ups et 280 à 380 dips : charge de coude/épaule très élevée, même pour un avancé (R4-F12, tendinopathie en tête en street workout)."},
+        {"critere": "S2", "perte": 2, "raison": "Volumes globaux dans les garde-fous (+10 %/sem., R5-P22) et règles de semaine manquée présentes, mais pas de départ prudent sur le lest du muscle-up (vendredi S1) ni de recalage du lest après le test de la semaine 4 ; avancé en bras fléchis lestés : +5–10 %/sem. attendu pour le lest, ici le palier +10 kg est posé d'emblée."},
+        {"critere": "S3", "perte": 2, "raison": "Allègements planifiés (S4, S7-S8) et critères de baisse du jour écrits, mais trois jours consécutifs jeudi-vendredi-samedi tous chargés en tirage (circuits, muscle-up lesté, séries longues de 23/19/15 tractions le lendemain du muscle-up lesté) ; lundi-mardi enchaînés aussi. Charge de vie (travail, sommeil habituel) non questionnée."},
+        {"critere": "S4", "perte": 2, "raison": "Les « sets d'épreuve » (S5-S8) utilisent des dips sur barre droite alors que l'épreuve du profil est en barres parallèles (R4-G7, spécificité) ; le « format annoncé » de la simulation n'est jamais décrit. Une seule simulation complète en 8 semaines alors qu'un avancé en demande une toutes les 2 semaines (R4-G7). Repos de 1 à 3 min dans les pyramides de dips, au-dessus de la plage endurance de l'avancé (R4-G4)."},
+        {"critere": "S5", "perte": 3, "raison": "Échauffement écrit, rotations externes, tirage horizontal et variation des prises : bien ; mais tirage vertical dur 5 jours sur 5 (le budget d'un avancé est de 3 séances lourdes par zone, R4-F10) et muscle-ups quotidiens (pyramides, circuits, EMOM) : geste répétitif à fort volume sans jour sans tirage."},
+        {"critere": "S6", "perte": 1.5, "raison": "RIR écrits et échec réservé à la simulation (R4-G3) ; mais l'EMOM lesté du vendredi pousse des singles à +10 kg avec pour seul garde-fou « aucune série lente », sans RIR chiffré sur ce bloc alors que la règle générale exige RIR ≥ 2 sur ce mouvement (R5-P27)."},
+        {"critere": "S7", "perte": 2, "raison": "Séances très denses pour 75 min (lundi S1 : pyramide + 3 séries longues avec 3-5 min de repos + pyramide de dips de 130 répétitions avec 1-3 min + circuit) : le timing de 70 min est irréaliste ; aucune version courte prévue ; formats nombreux et notation compacte (semaines 2-3 en « sauf »)."},
+        {"critere": "S8", "perte": 1, "raison": "Affûtage de 14 jours à −40 puis −60 %, lest gardé, demi-simulation à J−9, maximums vérifiés en S4 et plan de fractionnement tiré de la simulation : conforme à R3-P21 ; mais la simulation complète tombe à J−14 et non J−7/J−10, et aucun plan B écrit (R4-G7)."},
+        {"critere": "S9", "perte": 2, "raison": "Seuil de douleur incohérent : « 4/10 ou plus : arrêter le mouvement » dans les règles générales contre « 3–4/10 finir la séance sans progresser, 5/10 reculer » dans les règles de conduite ; format de compétition non décrit ; nombreuses semaines écrites par différence (« comme la semaine 2, sauf »)."},
+        {"critere": "ensemble", "perte": 2.5, "raison": "Programme individualisé et bien encadré (douleur, semaine manquée, affûtage), mais plusieurs corrections sont nécessaires avant de le signer : entrée du muscle-up lesté sans test, spécificité des dips, charge de tirage quotidienne et une seule simulation."}
+      ],
+      "corrections": [
+        "Tester le muscle-up lesté (3 répétitions propres) en semaine 1 et commencer l'escalier à 70 % de ce lest, palier maximal en S1 à +5 kg ; RIR ≥ 2 écrit sur chaque palier.",
+        "Faire les sets d'épreuve et la simulation sur barres parallèles pour les dips, et décrire le format exact de la compétition (ordre, temps entre mouvements, standards).",
+        "Ajouter une seconde simulation (fin de semaine 3 ou 4, à la place de la vérification des maximums isolés) et un plan B écrit pour le jour J.",
+        "Garantir au moins un jour par semaine sans tirage vertical dur (par exemple jeudi en poussée et pompes seulement) pour rester à 3–4 expositions lourdes de tirage.",
+        "Unifier le seuil de douleur (une seule échelle) et prévoir une version courte de 45 min des séances du lundi et du mardi."
+      ],
+      "points_forts": [
+        "Répétitions calées sur les maximums réels et marges en réserve écrites partout, échec réservé à la simulation.",
+        "Affûtage de 14 jours conforme (−40 puis −60 %, lest et allure gardés, demi-simulation à J−9).",
+        "Règles de conduite complètes : seuils de douleur avec orientation kiné, baisse du jour, semaine manquée, stagnation au test.",
+        "Échauffement écrit, coiffe et tirage horizontal en fin de séance, alternance des prises."
+      ]
+    },
+    {
+      "programme": "programme_2.md",
+      "criteres": {"S1": 8.5, "S2": 7.5, "S3": 8, "S4": 8, "S5": 8, "S6": 9, "S7": 8, "S8": 8.5, "S9": 6.5},
+      "sans_objet": [],
+      "ensemble": 7.5,
+      "points_perdus": [
+        {"critere": "S1", "perte": 1.5, "raison": "Rien de contre-indiqué, seuils de douleur et orientation kiné écrits ; mais volume de dips très au-dessus du plafond que le programme se fixe lui-même (voir S2), soit une charge d'épaule antérieure sous-estimée ; squat sauté sans consigne de réception."},
+        {"critere": "S2", "perte": 2.5, "raison": "Règle « au plus 180 dips/semaine en bloc 1 et 220 en bloc 2 » contredite par les séances : semaine 1 = 45 (lundi) + 100 (EMOM mercredi) + 24 (vendredi) + 80 (échelles) + 24 (circuit) ≈ 273 ; semaine 4 avec EMOM 12 × 10 ≈ 290 ; semaine 9 avec EMOM à 45 % d'un max ≈ 30 ≈ 160 dips dans le seul EMOM. Le garde-fou écrit n'est donc pas appliqué (R5-P22)."},
+        {"critere": "S3", "perte": 2, "raison": "Allègements planifiés (S6, S11) et critères de baisse du jour présents ; charge de vie (travail, sommeil) non questionnée ; samedi enchaîné au vendredi en poussée (dips tempo puis 2 échelles de dips)."},
+        {"critere": "S4", "perte": 2, "raison": "Équilibre 50/50 force/endurance conforme à l'intermédiaire (R4-G1), EMOM à 40 % (R4-G6), séries fractionnées en bloc 2 ; mais aucune séance dans le format du test (série maximale continue avec pauses planifiées) avant la semaine 12 hormis le test de S6, et les repos des séries longues (90 s) ne sont pas raccourcis de façon progressive avant la semaine 10."},
+        {"critere": "S5", "perte": 2, "raison": "Échauffement écrit avec scapulas, tirage visage, rows, supination : bien ; mais aucune variation de prise en traction pronation sur 12 semaines et volume de poussée sur barres très élevé sans travail de rotation externe."},
+        {"critere": "S6", "perte": 1, "raison": "Une série à 1 RIR par mouvement et par semaine à partir de S3, jamais d'échec au muscle-up : conforme à l'intermédiaire (R4-G3, R5-P27) ; marge identique sur toutes les variantes (tempo, pseudo-planche) sans distinction."},
+        {"critere": "S7", "perte": 2, "raison": "Séance du mercredi à 7 blocs dont deux EMOM de 10-12 min dans 60 min : tenable mais juste ; aucune version courte."},
+        {"critere": "S8", "perte": 1.5, "raison": "Test intermédiaire en S6, semaine allégée de 7 jours à −40 % avec intensité gardée, 48 h sans tirage dur avant chaque test (R3-P21 intermédiaire) ; mais aucune stratégie de série (cadence, pauses bras tendus) écrite pour les tests finaux."},
+        {"critere": "S9", "perte": 3.5, "raison": "Plusieurs contradictions : plafond de dips écrit puis dépassé ; muscle-up du mercredi « placé en tête de séance après l'EMOM » (il vient après 160 répétitions) ; douleur « 4/10 ou plus : élastique » dans les règles générales contre l'échelle 3–4 / 5 / 6 des règles de conduite."},
+        {"critere": "ensemble", "perte": 2.5, "raison": "Bonne architecture (blocs, tests, cibles réalistes avec repli), mais le dosage des dips contredit ses propres garde-fous et plusieurs consignes se contredisent : plusieurs corrections avant signature."}
+      ],
+      "corrections": [
+        "Ramener le volume de dips sous le plafond écrit : EMOM de dips à 10 × 7 en bloc 1, une seule échelle le samedi, et recalculer l'EMOM à 45 % en bloc 2 pour rester sous 220 répétitions/semaine.",
+        "Placer réellement le muscle-up en début de séance le mercredi (avant les EMOM).",
+        "Unifier l'échelle de douleur entre les règles générales et les règles de conduite.",
+        "Ajouter en S10 une série maximale avec pauses planifiées (format de test) et écrire une cadence pour les tests de S12.",
+        "Varier la largeur de prise en traction d'une séance à l'autre et ajouter des rotations externes à l'élastique."
+      ],
+      "points_forts": [
+        "Pourcentages calés sur le maximum du dernier test et recalculés après S6.",
+        "Échec très limité et jamais sur le muscle-up ; règle de retrait de série si la performance chute.",
+        "Cibles jugées hautes avec repères intermédiaires et objectif de repli explicite (R4-G8).",
+        "Règles de semaine manquée, de baisse du jour et 48 h sans tirage avant test."
+      ]
+    },
+    {
+      "programme": "programme_3.md",
+      "criteres": {"S1": 8.5, "S2": 8.5, "S3": 8, "S4": 8.5, "S5": 7.5, "S6": 8.5, "S7": 8.5, "S8": 8, "S9": 6.5},
+      "sans_objet": [],
+      "ensemble": 8,
+      "points_perdus": [
+        {"critere": "S1", "perte": 1.5, "raison": "Seuils de douleur, orientation kiné, row inversé de repli : bien ; mais la régression prévue à 5/10 passe par l'élastique, absent du matériel du profil, et le lundi concentre 95 à 133 tractions (fractionnées + EMOM) dans une seule séance, charge de coude élevée."},
+        {"critere": "S2", "perte": 1.5, "raison": "Garde-fou de +15–20 % sur le volume fractionné respecté et recalage aux tests ; mais le volume total du lundi passe de 95 à 133 tractions sur le programme sans plafond écrit pour l'EMOM, et l'ajout de l'EMOM au fractionné n'est pas compté dans la règle."},
+        {"critere": "S3", "perte": 2, "raison": "Semaines de tests servant d'allègement et critères de baisse du jour présents ; charge de vie non questionnée."},
+        {"critere": "S4", "perte": 1.5, "raison": "Méthodes adaptées (cluster par micro-pauses, EMOM, arrêt marqué à repos courts, R4-G6) et plan de cadence pour le test ; fréquence de tirage spécifique de 2 séances/sem. alors que R4-G8 recommande 3 pour un intermédiaire (le muscle-up du mercredi compense en partie)."},
+        {"critere": "S5", "perte": 2.5, "raison": "Échauffement écrit, tirage visage et rotation externe, prises variées une séance sur trois ; mais concentration d'un volume de tirage très élevé sur un seul jour et isométries menton au-dessus/bras tendus en plus le vendredi : risque de surcharge du coude (R4-F12) sans répartition sur la semaine."},
+        {"critere": "S6", "perte": 1.5, "raison": "Une seule série par semaine au-delà du maximum continu, dernier bloc à 1–2 RIR, retrait d'un bloc si la répétition se dégrade : bien ; mais aller chaque semaine au-delà du maximum continu reste proche de l'échec sur 9 semaines de charge."},
+        {"critere": "S7", "perte": 1.5, "raison": "Séances tenables en 50-55 min, peu d'exercices ; aucune version courte."},
+        {"critere": "S8", "perte": 2, "raison": "Affûtage de 7 jours à −40 % intensité gardée, deux jours sans traction, plan de cadence écrit (R3-P21 intermédiaire) ; mais les tests intermédiaires sont faits « avec arrêt 1 s » alors que le test final est un maximum continu : repères 20 et 22 non comparables à l'objectif."},
+        {"critere": "S9", "perte": 3.5, "raison": "Élastique cité dans la règle de douleur alors que le profil n'en a pas ; standard de test changeant (arrêt 1 s en S4/S8, continu en S12) ; seuil « 4/10 : arrêter la séance » dans les règles générales contre l'échelle 3–4 / 5 / 6 des règles de conduite."},
+        {"critere": "ensemble", "perte": 2, "raison": "Programme ciblé et bien progressif pour l'objectif tractions, mais deux corrections nécessaires : standard de test unique et régression sans élastique, plus une répartition du volume de tirage."}
+      ],
+      "corrections": [
+        "Utiliser le même standard (répétition valide définie, sans arrêt imposé) pour les tests de S4, S8 et S12.",
+        "Remplacer l'élastique de la règle de douleur par une régression disponible au parc (traction pieds au sol à la barre basse, négatives, amplitude réduite).",
+        "Déplacer l'EMOM du lundi vers le mercredi ou le dimanche (prise neutre/supination) pour répartir le tirage sur 3 jours (R4-G8) et plafonner le volume du lundi.",
+        "Unifier l'échelle de douleur et prévoir une version courte des séances."
+      ],
+      "points_forts": [
+        "Protocole centré sur l'objectif avec méthodes de densité adaptées et nombres calés sur le maximum.",
+        "Garde-fou de progression explicite et recalage par tests toutes les 4 semaines.",
+        "Objectif jugé ambitieux avec repère réaliste (R4-G8) et plan de cadence pour le test final.",
+        "Prévention de l'épaule (tirage visage, rotation externe) et variation des prises."
+      ]
+    },
+    {
+      "programme": "programme_4.md",
+      "criteres": {"S1": 8.5, "S2": 8.5, "S3": 8, "S4": 9, "S5": 8, "S6": 9, "S7": 8.5, "S8": 9, "S9": 8},
+      "sans_objet": [],
+      "ensemble": 8,
+      "points_perdus": [
+        {"critere": "S1", "perte": 1.5, "raison": "Impact dosé, seuils de douleur pour tibia/genou/Achille et orientation kiné : bien ; mais le kilométrage de départ (22 km/sem.) est posé sans connaître le volume actuel de course de la personne, non renseigné dans le profil."},
+        {"critere": "S2", "perte": 1.5, "raison": "Hausses de 8–10 %/sem., sortie longue ≤ 110 % des 30 derniers jours, double progression des tractions (R5-P3) ; mais le passage de 4 km de qualité en S3 à 5 km en S7 puis 6 km continus à allure en S10 n'est pas conditionné à la réussite des séances précédentes."},
+        {"critere": "S3", "perte": 2, "raison": "Interférence bien gérée (jambes lundi loin de la qualité du samedi), allègements toutes les 4 semaines, baisse du jour ; mais charge de vie non questionnée et qualité du samedi suivie de la sortie longue du dimanche sans consigne d'adaptation."},
+        {"critere": "S4", "perte": 1, "raison": "Allures dérivées du record (facile 6:05–6:30, allure 10 km 5:00), 75–85 % en facile, une qualité/sem., spécifique en S9-S10 (R6) ; force de tirage à 60 % adaptée à un max de 8 (R4-G2) ; seulement 2 expositions de traction par semaine (R4-G8 : 3 pour l'intermédiaire), justifiable par le volume de course."},
+        {"critere": "S5", "perte": 2, "raison": "Échauffement écrit, tirage visage, suspension active, mollets une jambe : bien ; peu de prévention du pied et de la hanche du coureur au-delà des mollets, pas de variation de prise en traction pronation."},
+        {"critere": "S6", "perte": 1, "raison": "3 RIR sur la traction, aucun échec ; série fractionnée au-delà du max en S6-S7 sans marge chiffrée."},
+        {"critere": "S7", "perte": 1.5, "raison": "Séances dans les créneaux (mardi 40 min pour 45) ; aucune version courte prévue pour 5 séances par semaine."},
+        {"critere": "S8", "perte": 1, "raison": "Affûtage de 12 jours (−40 puis −60 %), allure gardée sur fractions courtes à J−5, plan de course écrit, tests de tractions standardisés : conforme à R3-P21 ; pas de plan B (départ trop lent ou trop rapide)."},
+        {"critere": "S9", "perte": 2, "raison": "Quelques consignes obscures : « force et course ne partagent pas une demi-journée, sauf le mardi » (le mardi n'a pas de force), « prise sur une série de pompes » pour la traction à l'élastique."},
+        {"critere": "ensemble", "perte": 2, "raison": "Programme hybride individualisé et sûr, bien dosé en course et en interférence ; corrections nécessaires : vérifier le volume de course actuel avant de fixer le départ, et clarifier deux consignes."}
+      ],
+      "corrections": [
+        "Demander le kilométrage hebdomadaire et la plus longue sortie des 4 dernières semaines, et fixer le départ à ce niveau si plus bas que 22 km.",
+        "Conditionner les hausses de volume de qualité à la réussite de la séance précédente (allures tenues, effort perçu).",
+        "Ajouter une troisième exposition courte de traction (par exemple 5 × 2 en sous-maximal le samedi après la course facile ou le mardi) si la récupération le permet.",
+        "Clarifier les deux consignes ambiguës et ajouter un plan B au plan de course."
+      ],
+      "points_forts": [
+        "Allures de course tirées du record et intensités clairement définies.",
+        "Gestion de l'interférence : jambes lourdes loin de la qualité, une seule séance de qualité.",
+        "Affûtage et jour J bien construits (allure gardée, plan de départ écrit).",
+        "Seuils de douleur couvrant haut et bas du corps, avec alternatives sans impact."
+      ]
+    }
+  ]
+}
