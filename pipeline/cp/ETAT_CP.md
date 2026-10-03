@@ -45,7 +45,7 @@ Chaque lot ne modifie que sa ligne (PIPELINE_CP.md §1).
 | --- | --- | --- | --- | --- | --- | --- |
 | CR | A | références reçues | `kalis_bench` 0.1.0 (`etiquettes/kalis_bench-v0.1.0`, commit 0d219144, run 37126581234) ; référentiel 145 principes, 27 profils, panel étalonné et gelé, page de relecture (manche 0) | moteurs 0.1 : 3/10 (moyenne 4,9) ; 117 violations de sécurité | 2026-10-03 | livré |
 | CQ | B | — | `kalis_core` 0.4.0 (`etiquettes/kalis_core-v0.4.0`, commit ef4c57ae, run 37106401044) ; profil v3 : 16 questions débutant, 29 élite | — (lot sans panel) | 2026-10-03 | livré |
-| CP1 | A | CR, CQ | — | — | — | à faire (Fable, C5.1) |
+| CP1 | A | CR, CQ | — | — | — | en cours depuis 2026-10-03 20:25 UTC (Fable, C5.1) |
 | CA1 | B | CR, CQ | — | — | — | en attente de CP1 (un lot moteur à la fois, C3.2 ; Fable, C5.1) |
 | CU | App | CQ | dev6.8.0 (main 6467bc2, build signé run 37126824436, contrôle ci-3d run 37125421224) | — (lot d'application) | 2026-10-03 | validé (03/10/2026, 17:09) |
 | CX | A | CP1, CA1 | — | — | — | en attente de CP1, CA1 |
