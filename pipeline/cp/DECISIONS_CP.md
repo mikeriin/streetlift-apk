@@ -62,6 +62,15 @@ Constat : la relance de fin de lot de CR (Fable, 17:20 UTC) a échoué en 6 s ; 
 - **C6.3** La relecture documentée d'une manche est faite par la conversation de pilotage après la publication de cette manche (jamais par le lot qui l'a produite), puis lue par le lot suivant. Manche 0 (moteurs 0.1) : faite le 03/10/2026 au soir, pendant les premières boucles de CP1.
 - **C6.4** Les validations de CX et CY restent au propriétaire ; la conversation de pilotage lui présente pour décider la synthèse de la relecture documentée et du panel.
 
+## C7. Cible : des notes proches de 10 (03/10/2026, 22:21)
+
+> « On voit que c'est très mauvais comme note, ce que je veux c'est quelque chose proche de 10. Fais en sorte d'avoir ce résultat avec plusieurs passes de modification et d'essais du générateur de programme à l'aide de recherches approfondies sur le sujet. »
+
+- **C7.1 Cible** (remplace C1.10 « 9/10 partout » pour la livraison) : pour chaque profil du périmètre, panel **et** relecture documentée : note d'ensemble ≥ 9 pour chaque relecteur, moyenne ≥ 9,5 par jury, 0 violation de sécurité.
+- **C7.2 Passes** : jusqu'à 10 boucles de calibrage par passe (au lieu de 6), chacune guidée par une recherche approfondie ciblée sur les défauts relevés ; arrêt anticipé après deux boucles sans gain, avec décision demandée ; passes de correction successives (« <LOT> correction n ») tant que la relecture documentée indépendante de la conversation de pilotage reste sous la cible.
+- **C7.3 Deux jurys dans la boucle** : panel (référentiel de CR) et relecture documentée (sources web seulement, indépendante du référentiel) ; PIPELINE_CP.md §2.
+- **C7.4** S'applique à CP1, CA1 (trajectoires), CX, CP2, CA2, CY. Le budget d'utilisation (C3, C5) reste en vigueur : quand la part Fable est épuisée, le lot finit sur la tâche Opus moteurs (reprise depuis `cp-sauvegardes/<LOT>`).
+
 ## Sections des lots
 
 Chaque lot ajoute ici ses décisions techniques numérotées (`CR.1`, `CR.2`…), ses écarts, ses recommandations et, le cas échéant, la question posée au propriétaire.
