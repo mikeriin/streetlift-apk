@@ -71,6 +71,8 @@ supériorité sur le nombre maximal de répétitions) ; ordre de deux gains
 inversé (R1-P17) ; l'état de la littérature sur le streetlifting (R2, note :
 trois études trouvées par la seconde passe).
 
+**Troisième passe (03/10/2026), sur R5 seulement** : rapprochement avec la revue du profil v3 du lot CQ (`packages/kalis_core/docs/PROFIL_V3.md`) par un relecteur indépendant. Une erreur de signe corrigée (Huiberts 2024 : SMD +0,08 chez les femmes, R5-P11 et P19), une réserve levée (Hägglund 2006), quinze références ajoutées après vérification sur résumé, sept divergences de traduction en règle consignées (R5, « Compléments du 03/10/2026 »).
+
 **Limites, dites sans détour.**
 
 - La vérification porte sur l'existence et les métadonnées des articles, et
