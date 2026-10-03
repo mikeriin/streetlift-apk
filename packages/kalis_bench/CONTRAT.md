@@ -13,7 +13,9 @@ Banc d'essai du calibrage des programmes (pipeline CP). Dart pur : ni Flutter, n
 | Exports lisibles | `lib/src/export.dart`, `tool/panel_export.py` | programme et trajectoire en français ; export concis pour le panel |
 | Rapports | `lib/src/report.dart`, `bin/` | `RAPPORT.md`, `rapport.json`, `programmes/`, `trajectoires/` |
 | Panel de coachs virtuels | `docs/PANEL.md`, `docs/grilles/`, `docs/ETALONNAGE_PANEL.md` | protocole, quatre grilles gelées, étalonnage |
-| Mesure de départ | `docs/BASELINE_0_1.md` | moteurs 0.1 sur tout le banc, défauts priorisés |
+| Mesure de départ | `docs/BASELINE_0_1.md`, `docs/baseline/CORRECTIONS_PANEL_0_1.md` | moteurs 0.1 sur tout le banc, défauts priorisés, corrections demandées par le panel |
+| Non-ressemblance aux références | `tool/reference_jaccard.py` | à lancer dans une session qui a la clé ; seul le résultat est publié |
+| Page de relecture du propriétaire | `tool/relecture/` | source de la page et préparation d'une manche (`docs/PANEL.md`) |
 
 ## Entrées et sorties
 
