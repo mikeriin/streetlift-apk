@@ -1,0 +1,7 @@
+name: aa_fmt
+description: Outil de mise au point du lot CP1 (jamais sur moteurs) - formate les paquets en CI et recopie les sources formatees dans le rapport.
+version: 0.0.1
+publish_to: none
+
+environment:
+  sdk: '>=3.10.0 <4.0.0'
