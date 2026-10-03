@@ -1,0 +1,387 @@
+== kalis_plan
+Resolving dependencies...
+Downloading packages...
+  lints 4.0.0 (6.1.0 available)
+Got dependencies!
+1 package has newer versions incompatible with dependency constraints.
+Try `dart pub outdated` for more information.
+Formatted 44 files (0 changed) in 0.29 seconds.
+Analyzing kalis_plan...
+No issues found!
+00:00 +0: loading test/units_test.dart
+00:00 +0: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:00 +1: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:00 +2: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:00 +3: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:00 +4: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:00 +5: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:00 +6: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:00 +7: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:00 +8: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:00 +9: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:00 +10: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:00 +11: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:00 +12: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:00 +13: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:00 +14: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:00 +15: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:00 +16: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:00 +17: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:00 +18: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:04 +19: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:05 +20: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:05 +21: test/coach_test.dart: choix du chemin schéma 2, ancienneté absente ou discipline non street : 0.1
+00:05 +22: test/docs_test.dart: docs/COMPARAISON_L10.md est à jour
+00:06 +23: test/docs_test.dart: docs/COMPARAISON_L10.md est à jour
+00:06 +24: test/docs_test.dart: docs/COMPARAISON_L10.md est à jour
+00:06 +25: test/docs_test.dart: docs/COMPARAISON_L10.md est à jour
+00:06 +26: test/docs_test.dart: docs/COMPARAISON_L10.md est à jour
+00:06 +27: test/docs_test.dart: docs/COMPARAISON_L10.md est à jour
+00:06 +28: test/docs_test.dart: docs/COMPARAISON_L10.md est à jour
+00:06 +29: test/docs_test.dart: docs/COMPARAISON_L10.md est à jour
+00:06 +30: test/docs_test.dart: docs/COMPARAISON_L10.md est à jour
+00:06 +31: test/docs_test.dart: docs/COMPARAISON_L10.md est à jour
+00:06 +32: test/docs_test.dart: docs/COMPARAISON_L10.md est à jour
+00:06 +33: test/docs_test.dart: docs/COMPARAISON_L10.md est à jour
+00:06 +34: test/docs_test.dart: docs/COMPARAISON_L10.md est à jour
+00:06 +35: test/docs_test.dart: docs/COMPARAISON_L10.md est à jour
+00:06 +36: test/docs_test.dart: docs/COMPARAISON_L10.md est à jour
+00:07 +37: test/docs_test.dart: docs/COMPARAISON_L10.md est à jour
+00:08 +38: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 0 à 159
+00:08 +39: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 0 à 159
+00:14 +40: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 0 à 159
+00:19 +40 -1: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 0 à 159
+00:19 +40 -1: test/coach_properties_0_test.dart: chemin street, profils 0 à 1279 profils 0 à 159 [E]
+  Expected: empty
+    Actual: [
+              'profil 15 — relecture : s0 : chest 13.0 séries (plafond 12.0)',
+              'profil 15 — relecture : s1 : chest 13.0 séries (plafond 12.0)',
+              'profil 15 — relecture : s2 : chest 13.0 séries (plafond 12.0)',
+              'profil 15 — relecture : s3 : chest 13.0 séries (plafond 12.0)',
+              'profil 15 — relecture : s4 : chest 13.0 séries (plafond 12.0)',
+              'profil 15 — relecture : s5 : chest 13.0 séries (plafond 12.0)',
+              'profil 15 — relecture : s0 : delt_anterior 13.0 séries (plafond 12.0)',
+              'profil 15 — relecture : s1 : delt_anterior 13.0 séries (plafond 12.0)',
+              'profil 15 — relecture : s2 : delt_anterior 13.0 séries (plafond 12.0)',
+              'profil 15 — relecture : s3 : delt_anterior 13.0 séries (plafond 12.0)',
+              'profil 15 — relecture : s4 : delt_anterior 13.0 séries (plafond 12.0)',
+              'profil 15 — relecture : s5 : delt_anterior 13.0 séries (plafond 12.0)',
+              'profil 15 — relecture : s0 : triceps 13.0 séries (plafond 12.0)',
+              'profil 15 — relecture : s1 : triceps 13.0 séries (plafond 12.0)',
+              'profil 15 — relecture : s2 : triceps 13.0 séries (plafond 12.0)',
+              'profil 15 — relecture : s3 : triceps 13.0 séries (plafond 12.0)',
+              'profil 15 — relecture : s4 : triceps 13.0 séries (plafond 12.0)',
+              'profil 15 — relecture : s5 : triceps 13.0 séries (plafond 12.0)',
+              'profil 33 — relecture : s4 : bras tendus (famille 0) 59.0 s pour 55.199999999999996',
+              'profil 79 — revue cannot_do : contrainte dure — day 0: sw-pompe-negative inadmissible (prerequisite)',
+              'profil 79 — revue cannot_do : contrainte dure — day 3: sw-pompe-negative inadmissible (prerequisite)',
+              'profil 79 — revue cannot_do, relecture : bloc 0 s0 j0 : sw-pompe-negative inadmissible (prerequisite)',
+              'profil 79 — revue cannot_do, relecture : bloc 0 s1 j0 : sw-pompe-negative inadmissible (prerequisite)',
+              'profil 79 — revue cannot_do, relecture : bloc 0 s2 j0 : sw-pompe-negative inadmissible (prerequisite)',
+              ...
+            ]
+  106 manquement(s)
+  
+  package:matcher                   expect
+  test/coach_properties.dart 500:9  coachPropertyShard.<fn>.<fn>
+  
+00:21 +40 -2: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 0 à 159
+00:21 +40 -2: test/coach_properties_0_test.dart: chemin street, profils 0 à 1279 profils 160 à 319 [E]
+  Expected: empty
+    Actual: [
+              'profil 177 — relecture : s4 : bras tendus (famille 0) 21.0 s pour 17.0',
+              'profil 186 — relecture : s2 : lats 14.0 séries (plafond 12.0)',
+              'profil 186 — relecture : s3 : lats 14.0 séries (plafond 12.0)',
+              'profil 186 — relecture : s4 : lats 14.0 séries (plafond 12.0)',
+              'profil 186 — relecture : s5 : lats 14.0 séries (plafond 12.0)',
+              'profil 186 — relecture (deux blocs) : s2 : lats 14.0 séries (plafond 12.0)',
+              'profil 186 — relecture (deux blocs) : s3 : lats 14.0 séries (plafond 12.0)',
+              'profil 186 — relecture (deux blocs) : s4 : lats 14.0 séries (plafond 12.0)',
+              'profil 186 — relecture (deux blocs) : s5 : lats 14.0 séries (plafond 12.0)',
+              'profil 190 — relecture (deux blocs) : s10 : chest 2.5 séries pour 2.0',
+              'profil 223 — relecture : s2 : lats 13.0 séries (plafond 12.0)',
+              'profil 223 — relecture : s3 : lats 13.0 séries (plafond 12.0)',
+              'profil 223 — relecture : s4 : lats 13.0 séries (plafond 12.0)',
+              'profil 223 — relecture : s5 : lats 13.0 séries (plafond 12.0)',
+              'profil 258 — relecture : s0 : chest 22.0 séries (plafond 20.0)',
+              'profil 258 — relecture : s1 : chest 22.0 séries (plafond 20.0)',
+              'profil 258 — relecture : s2 : chest 22.0 séries (plafond 20.0)',
+              'profil 258 — relecture : s3 : chest 22.0 séries (plafond 20.0)',
+              'profil 258 — relecture : s4 : chest 22.0 séries (plafond 20.0)',
+              'profil 258 — relecture : s5 : chest 21.0 séries (plafond 20.0)',
+              'profil 258 — relecture (deux blocs) : s0 : chest 22.0 séries (plafond 20.0)',
+              'profil 258 — relecture (deux blocs) : s1 : chest 22.0 séries (plafond 20.0)',
+              'profil 258 — relecture (deux blocs) : s2 : chest 22.0 séries (plafond 20.0)',
+              'profil 258 — relecture (deux blocs) : s3 : chest 22.0 séries (plafond 20.0)',
+              ...
+            ]
+  50 manquement(s)
+  
+  package:matcher                   expect
+  test/coach_properties.dart 500:9  coachPropertyShard.<fn>.<fn>
+  
+00:23 +40 -3: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 0 à 159
+00:23 +40 -3: test/coach_properties_0_test.dart: chemin street, profils 0 à 1279 profils 320 à 479 [E]
+  Expected: empty
+    Actual: [
+              'profil 327 — revue cannot_do : contrainte dure — day 1: mu-fente-arriere-halteres inadmissible (prerequisite)',
+              'profil 327 — revue cannot_do, relecture : bloc 0 s0 j1 : mu-fente-arriere-halteres inadmissible (prerequisite)',
+              'profil 327 — revue cannot_do, relecture : bloc 0 s1 j1 : mu-fente-arriere-halteres inadmissible (prerequisite)',
+              'profil 327 — revue cannot_do, relecture : bloc 0 s2 j1 : mu-fente-arriere-halteres inadmissible (prerequisite)',
+              'profil 327 — revue cannot_do, relecture : bloc 0 s3 j1 : mu-fente-arriere-halteres inadmissible (prerequisite)',
+              'profil 327 — revue cannot_do, relecture : bloc 0 s4 j1 : mu-fente-arriere-halteres inadmissible (prerequisite)',
+              'profil 354 — relecture : s0 : chest 12.5 séries (plafond 12.0)',
+              'profil 354 — relecture : s1 : chest 12.5 séries (plafond 12.0)',
+              'profil 354 — relecture : s2 : chest 12.5 séries (plafond 12.0)',
+              'profil 354 — relecture : s3 : chest 12.5 séries (plafond 12.0)',
+              'profil 354 — relecture : s4 : chest 12.5 séries (plafond 12.0)',
+              'profil 354 — relecture : s5 : chest 12.5 séries (plafond 12.0)',
+              'profil 354 — relecture (deux blocs) : s0 : chest 12.5 séries (plafond 12.0)',
+              'profil 354 — relecture (deux blocs) : s1 : chest 12.5 séries (plafond 12.0)',
+              'profil 354 — relecture (deux blocs) : s2 : chest 12.5 séries (plafond 12.0)',
+              'profil 354 — relecture (deux blocs) : s3 : chest 12.5 séries (plafond 12.0)',
+              'profil 354 — relecture (deux blocs) : s4 : chest 12.5 séries (plafond 12.0)',
+              'profil 354 — relecture (deux blocs) : s5 : chest 12.5 séries (plafond 12.0)',
+              'profil 354 — relecture (deux blocs) : s6 : chest 12.5 séries (plafond 12.0)',
+              'profil 354 — relecture (deux blocs) : s7 : chest 12.5 séries (plafond 12.0)',
+              'profil 354 — relecture (deux blocs) : s8 : chest 12.5 séries (plafond 12.0)',
+              'profil 354 — relecture (deux blocs) : s9 : chest 12.5 séries (plafond 12.0)',
+              'profil 354 — relecture (deux blocs) : s10 : chest 12.5 séries (plafond 12.0)',
+              'profil 354 — relecture (deux blocs) : s11 : chest 12.5 séries (plafond 12.0)',
+              ...
+            ]
+  220 manquement(s)
+  
+  package:matcher                   expect
+  test/coach_properties.dart 500:9  coachPropertyShard.<fn>.<fn>
+  
+00:25 +40 -4: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 0 à 159
+00:25 +40 -4: test/coach_properties_0_test.dart: chemin street, profils 0 à 1279 profils 480 à 639 [E]
+  Expected: empty
+    Actual: [
+              'profil 483 — revue cannot_do : contrainte dure — day 1: sl-dips-leste inadmissible (prerequisite)',
+              'profil 483 — revue cannot_do, relecture : bloc 0 s0 j1 : sl-dips-leste inadmissible (prerequisite)',
+              'profil 483 — revue cannot_do, relecture : bloc 0 s1 j1 : sl-dips-leste inadmissible (prerequisite)',
+              'profil 483 — revue cannot_do, relecture : bloc 0 s2 j1 : sl-dips-leste inadmissible (prerequisite)',
+              'profil 483 — revue cannot_do, relecture : bloc 0 s3 j1 : sl-dips-leste inadmissible (prerequisite)',
+              'profil 511 — revue cannot_do : contrainte dure — day 0: sw-pompe-negative inadmissible (prerequisite)',
+              'profil 511 — revue cannot_do : contrainte dure — day 3: sw-pompe-negative inadmissible (prerequisite)',
+              'profil 511 — revue cannot_do, relecture : bloc 0 s0 j0 : sw-pompe-negative inadmissible (prerequisite)',
+              'profil 511 — revue cannot_do, relecture : bloc 0 s0 j3 : sw-pompe-negative inadmissible (prerequisite)',
+              'profil 511 — revue cannot_do, relecture : bloc 0 s1 j0 : sw-pompe-negative inadmissible (prerequisite)',
+              'profil 511 — revue cannot_do, relecture : bloc 0 s1 j3 : sw-pompe-negative inadmissible (prerequisite)',
+              'profil 511 — revue cannot_do, relecture : bloc 0 s2 j3 : sw-pompe-negative inadmissible (prerequisite)',
+              'profil 511 — revue cannot_do, relecture : bloc 0 s3 j3 : sw-pompe-negative inadmissible (prerequisite)',
+              'profil 511 — revue cannot_do, relecture : bloc 0 s4 j3 : sw-pompe-negative inadmissible (prerequisite)',
+              'profil 511 — revue cannot_do, relecture : bloc 0 s5 j3 : sw-pompe-negative inadmissible (prerequisite)',
+              'profil 513 — relecture : s0 : chest 24.0 séries (plafond 20.0)',
+              'profil 513 — relecture : s1 : chest 24.0 séries (plafond 20.0)',
+              'profil 513 — relecture : s2 : chest 24.0 séries (plafond 20.0)',
+              'profil 513 — relecture : s3 : chest 24.0 séries (plafond 20.0)',
+              'profil 513 — relecture : s4 : chest 22.0 séries (plafond 20.0)',
+              'profil 519 — relecture : bloc 0 s0 j3 : 17 min pour 10',
+              'profil 519 — relecture : bloc 0 s1 j3 : 17 min pour 10',
+              'profil 519 — relecture : bloc 0 s2 j3 : 17 min pour 10',
+              'profil 519 — relecture : bloc 0 s3 j3 : 17 min pour 10',
+              ...
+            ]
+  118 manquement(s)
+  
+  package:matcher                   expect
+  test/coach_properties.dart 500:9  coachPropertyShard.<fn>.<fn>
+  
+00:26 +41 -4: test/coach_properties_0_test.dart: chemin street, profils 0 à 1279 profils 640 à 799
+00:27 +41 -5: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 160 à 319
+00:27 +41 -5: test/coach_properties_0_test.dart: chemin street, profils 0 à 1279 profils 640 à 799 [E]
+  Expected: empty
+    Actual: [
+              'profil 651 — relecture : bloc 0 s3 j1 : 22 min pour 15',
+              'profil 661 — relecture : s2 : chest 4.5 séries pour 2.0',
+              'profil 661 — relecture : s2 : delt_anterior 3.0 séries pour 2.0',
+              'profil 661 — relecture : s2 : triceps 3.0 séries pour 2.0',
+              'profil 666 — relecture : bloc 0 s3 j2 : 22 min pour 15',
+              'profil 666 — relecture (deux blocs) : bloc 0 s3 j2 : 22 min pour 15',
+              'profil 666 — relecture (deux blocs) : bloc 1 s3 j2 : 22 min pour 15',
+              'profil 692 — relecture : s1 : chest 2.5 séries pour 2.0',
+              'profil 709 — relecture : s2 : lats 14.0 séries (plafond 12.0)',
+              'profil 709 — relecture : s3 : lats 14.0 séries (plafond 12.0)',
+              'profil 709 — relecture : s4 : lats 14.0 séries (plafond 12.0)',
+              'profil 709 — relecture : s5 : lats 14.0 séries (plafond 12.0)',
+              'profil 714 — relecture : s2 : chest 13.5 séries (plafond 12.0)',
+              'profil 714 — relecture : s3 : chest 13.5 séries (plafond 12.0)',
+              'profil 714 — relecture : s0 : lats 16.0 séries (plafond 12.0)',
+              'profil 714 — relecture : s1 : lats 16.0 séries (plafond 12.0)',
+              'profil 714 — relecture : s2 : lats 16.0 séries (plafond 12.0)',
+              'profil 714 — relecture : s3 : lats 16.0 séries (plafond 12.0)',
+              'profil 714 — relecture : s0 : upper_back 12.5 séries (plafond 12.0)',
+              'profil 714 — relecture : s1 : upper_back 12.5 séries (plafond 12.0)',
+              'profil 714 — relecture : s2 : upper_back 12.5 séries (plafond 12.0)',
+              'profil 714 — relecture : s3 : upper_back 12.5 séries (plafond 12.0)',
+              'profil 714 — relecture (deux blocs) : s2 : chest 13.5 séries (plafond 12.0)',
+              'profil 714 — relecture (deux blocs) : s3 : chest 13.5 séries (plafond 12.0)',
+              ...
+            ]
+  115 manquement(s)
+  
+  package:matcher                   expect
+  test/coach_properties.dart 500:9  coachPropertyShard.<fn>.<fn>
+  
+00:28 +41 -6: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 160 à 319
+00:28 +41 -6: test/coach_properties_0_test.dart: chemin street, profils 0 à 1279 profils 800 à 959 [E]
+  Expected: empty
+    Actual: [
+              'profil 804 — relecture : s0 : chest 15.0 séries (plafond 12.0)',
+              'profil 804 — relecture : s1 : chest 15.0 séries (plafond 12.0)',
+              'profil 804 — relecture : s2 : chest 15.0 séries (plafond 12.0)',
+              'profil 804 — relecture : s3 : chest 15.0 séries (plafond 12.0)',
+              'profil 804 — relecture : s4 : chest 15.0 séries (plafond 12.0)',
+              'profil 804 — relecture : s5 : chest 15.0 séries (plafond 12.0)',
+              'profil 811 — relecture : s0 : lats 21.0 séries (plafond 20.0)',
+              'profil 811 — relecture : s1 : lats 21.0 séries (plafond 20.0)',
+              'profil 811 — relecture : s2 : lats 21.0 séries (plafond 20.0)',
+              'profil 811 — relecture : s3 : lats 21.0 séries (plafond 20.0)',
+              'profil 827 — revue cannot_do : contrainte dure — day 4: mu-face-pull-elastique inadmissible (prerequisite)',
+              'profil 827 — revue cannot_do, relecture : bloc 0 s0 j4 : mu-face-pull-elastique inadmissible (prerequisite)',
+              'profil 827 — revue cannot_do, relecture : bloc 0 s1 j4 : mu-face-pull-elastique inadmissible (prerequisite)',
+              'profil 827 — revue cannot_do, relecture : bloc 0 s2 j4 : mu-face-pull-elastique inadmissible (prerequisite)',
+              'profil 827 — revue cannot_do, relecture : bloc 0 s3 j4 : mu-face-pull-elastique inadmissible (prerequisite)',
+              'profil 827 — revue cannot_do, relecture : bloc 0 s4 j4 : mu-face-pull-elastique inadmissible (prerequisite)',
+              'profil 839 — relecture : s0 : chest 13.0 séries (plafond 12.0)',
+              'profil 839 — relecture : s1 : chest 13.0 séries (plafond 12.0)',
+              'profil 839 — relecture : s2 : chest 13.0 séries (plafond 12.0)',
+              'profil 839 — relecture : s3 : chest 13.0 séries (plafond 12.0)',
+              'profil 839 — relecture : s4 : chest 13.0 séries (plafond 12.0)',
+              'profil 839 — relecture : s5 : chest 13.0 séries (plafond 12.0)',
+              'profil 839 — relecture : s0 : delt_anterior 13.0 séries (plafond 12.0)',
+              'profil 839 — relecture : s1 : delt_anterior 13.0 séries (plafond 12.0)',
+              ...
+            ]
+  124 manquement(s)
+  
+  package:matcher                   expect
+  test/coach_properties.dart 500:9  coachPropertyShard.<fn>.<fn>
+  
+00:30 +41 -7: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 160 à 319
+00:30 +41 -7: test/coach_properties_0_test.dart: chemin street, profils 0 à 1279 profils 960 à 1119 [E]
+  Expected: empty
+    Actual: [
+              'profil 983 — relecture : s1 : chest 3.0 séries pour 2.0',
+              'profil 983 — relecture : s1 : delt_anterior 3.0 séries pour 2.0',
+              'profil 983 — relecture : s1 : lats 3.0 séries pour 2.0',
+              'profil 983 — relecture : s1 : triceps 3.0 séries pour 2.0',
+              'profil 983 — relecture : s1 : glutes 3.0 séries pour 2.0',
+              'profil 983 — relecture : s1 : quads 3.0 séries pour 2.0',
+              'profil 986 — relecture : s1 : lats 4.0 séries pour 2.0',
+              'profil 986 — relecture : s1 : upper_back 4.0 séries pour 3.0',
+              'profil 986 — relecture (deux blocs) : s1 : lats 4.0 séries pour 2.0',
+              'profil 986 — relecture (deux blocs) : s1 : upper_back 4.0 séries pour 3.0',
+              'profil 994 — relecture : s0 : lats 16.0 séries (plafond 12.0)',
+              'profil 994 — relecture : s1 : lats 16.0 séries (plafond 12.0)',
+              'profil 994 — relecture : s2 : lats 16.0 séries (plafond 12.0)',
+              'profil 994 — relecture : s3 : lats 16.0 séries (plafond 12.0)',
+              'profil 994 — relecture : s4 : lats 16.0 séries (plafond 12.0)',
+              'profil 994 — relecture : s5 : lats 16.0 séries (plafond 12.0)',
+              'profil 994 — relecture : s0 : upper_back 12.5 séries (plafond 12.0)',
+              'profil 994 — relecture : s1 : upper_back 12.5 séries (plafond 12.0)',
+              'profil 994 — relecture : s2 : upper_back 12.5 séries (plafond 12.0)',
+              'profil 994 — relecture : s3 : upper_back 12.5 séries (plafond 12.0)',
+              'profil 994 — relecture : s4 : upper_back 12.5 séries (plafond 12.0)',
+              'profil 994 — relecture : s5 : upper_back 12.5 séries (plafond 12.0)',
+              'profil 994 — relecture (deux blocs) : s0 : lats 16.0 séries (plafond 12.0)',
+              'profil 994 — relecture (deux blocs) : s1 : lats 16.0 séries (plafond 12.0)',
+              ...
+            ]
+  102 manquement(s)
+  
+  package:matcher                   expect
+  test/coach_properties.dart 500:9  coachPropertyShard.<fn>.<fn>
+  
+00:31 +41 -8: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 160 à 319
+00:31 +41 -8: test/coach_properties_0_test.dart: chemin street, profils 0 à 1279 profils 1120 à 1279 [E]
+  Expected: empty
+    Actual: [
+              'profil 1130 — relecture : bloc 0 s3 j2 : 18 min pour 10',
+              'profil 1130 — relecture (deux blocs) : bloc 0 s3 j2 : 18 min pour 10',
+              'profil 1131 — revue cannot_do : contrainte dure — day 2: cs-back-lever-half-lay inadmissible (prerequisite)',
+              'profil 1131 — revue cannot_do, relecture : bloc 0 s0 j2 : cs-back-lever-half-lay inadmissible (prerequisite)',
+              'profil 1131 — revue cannot_do, relecture : bloc 0 s1 j2 : cs-back-lever-half-lay inadmissible (prerequisite)',
+              'profil 1131 — revue cannot_do, relecture : bloc 0 s2 j2 : cs-back-lever-half-lay inadmissible (prerequisite)',
+              'profil 1131 — revue cannot_do, relecture : bloc 0 s3 j2 : cs-back-lever-half-lay inadmissible (prerequisite)',
+              'profil 1134 — relecture : s0 : chest 22.0 séries (plafond 20.0)',
+              'profil 1134 — relecture : s1 : chest 22.0 séries (plafond 20.0)',
+              'profil 1134 — relecture : s2 : chest 22.0 séries (plafond 20.0)',
+              'profil 1134 — relecture : s3 : chest 22.0 séries (plafond 20.0)',
+              'profil 1134 — relecture (deux blocs) : s0 : chest 22.0 séries (plafond 20.0)',
+              'profil 1134 — relecture (deux blocs) : s1 : chest 22.0 séries (plafond 20.0)',
+              'profil 1134 — relecture (deux blocs) : s2 : chest 22.0 séries (plafond 20.0)',
+              'profil 1134 — relecture (deux blocs) : s3 : chest 22.0 séries (plafond 20.0)',
+              'profil 1134 — relecture (deux blocs) : s5 : chest 22.0 séries (plafond 20.0)',
+              'profil 1134 — relecture (deux blocs) : s6 : chest 22.0 séries (plafond 20.0)',
+              'profil 1134 — relecture (deux blocs) : s7 : chest 22.0 séries (plafond 20.0)',
+              'profil 1134 — relecture (deux blocs) : s8 : chest 22.0 séries (plafond 20.0)',
+              'profil 1139 — relecture : s1 : chest 3.0 séries pour 2.0',
+              'profil 1144 — relecture : s0 : chest 17.5 séries (plafond 12.0)',
+              'profil 1144 — relecture : s1 : chest 17.5 séries (plafond 12.0)',
+              'profil 1144 — relecture : s2 : chest 19.5 séries (plafond 12.0)',
+              'profil 1144 — relecture : s3 : chest 19.5 séries (plafond 12.0)',
+              ...
+            ]
+  90 manquement(s)
+  
+  package:matcher                   expect
+  test/coach_properties.dart 500:9  coachPropertyShard.<fn>.<fn>
+  
+00:40 +42 -8: test/engine_test.dart: déterminisme même requête, même JSON, quelle que soit l'instance
+00:48 +43 -8: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 320 à 479
+00:49 +44 -8: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 320 à 479
+00:49 +45 -8: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 320 à 479
+00:54 +46 -8: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+00:54 +47 -8: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 480 à 639
+00:55 +48 -8: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 480 à 639
+00:55 +49 -8: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 480 à 639
+00:56 +50 -8: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 480 à 639
+00:56 +51 -8: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 480 à 639
+00:56 +52 -8: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 480 à 639
+00:56 +53 -8: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 480 à 639
+00:56 +54 -8: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 480 à 639
+00:59 +55 -8: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 480 à 639
+01:05 +56 -8: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 480 à 639
+01:09 +57 -8: test/admission_test.dart: 600 profils aléatoires : mode prudent et exercices réservés relus sans le vivier
+01:22 +58 -8: test/admission_test.dart: 600 profils aléatoires : mode prudent et exercices réservés relus sans le vivier
+01:35 +59 -8: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 800 à 959
+01:35 +60 -8: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 800 à 959
+01:35 +61 -8: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 800 à 959
+01:35 +62 -8: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 800 à 959
+01:35 +63 -8: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 800 à 959
+01:35 +64 -8: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 800 à 959
+01:35 +65 -8: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 800 à 959
+01:35 +66 -8: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 800 à 959
+01:35 +67 -8: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 800 à 959
+01:35 +68 -8: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 800 à 959
+01:35 +69 -8: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 800 à 959
+01:35 +70 -8: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 800 à 959
+01:35 +71 -8: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 800 à 959
+01:35 +72 -8: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 800 à 959
+01:35 +73 -8: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 800 à 959
+01:35 +74 -8: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 800 à 959
+01:35 +75 -8: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 800 à 959
+01:35 +76 -8: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 800 à 959
+01:35 +77 -8: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 800 à 959
+01:36 +78 -8: test/resemblance_test.dart: profils types, graines 0 à 3 : ressemblance sous le seuil
+01:42 +79 -8: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 960 à 1119
+01:50 +80 -8: test/resemblance_test.dart: 600 profils aléatoires : ressemblance sous le seuil, aucun accessoire propre au propriétaire sur-représenté sans discipline street
+02:03 +81 -8: test/resemblance_test.dart: 600 profils aléatoires : ressemblance sous le seuil, aucun accessoire propre au propriétaire sur-représenté sans discipline street
+02:12 +82 -8: Some tests failed.
+
+Failing tests:
+  test/coach_properties_0_test.dart: chemin street, profils 0 à 1279 profils 0 à 159
+  test/coach_properties_0_test.dart: chemin street, profils 0 à 1279 profils 1120 à 1279
+  test/coach_properties_0_test.dart: chemin street, profils 0 à 1279 profils 160 à 319
+  test/coach_properties_0_test.dart: chemin street, profils 0 à 1279 profils 320 à 479
+  ... and 4 more
+
+Consider enabling the flag chain-stack-traces to receive more detailed exceptions.
+For example, 'dart test --chain-stack-traces'.
+tests : échec
+kalis_plan 0.2.0 : rapport écrit dans /home/runner/work/streetlift-apk/streetlift-apk/out-packages/kalis_plan (164 s).
+durée : 308 s
