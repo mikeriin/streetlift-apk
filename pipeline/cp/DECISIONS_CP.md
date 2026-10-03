@@ -30,6 +30,17 @@ Ces décisions **font foi** pour tous les lots CP. Les décisions du pipeline GP
 - **C2.2** Usage : extraire des principes chiffrés et comparer ; **jamais** recopiés, publiés ou nommés dans l'application, la page de suivi, la page de relecture ou le dépôt (PIPELINE_CP.md §2).
 - **C2.3** Le dépôt `mikeriin/streetlift-apk` est **public** et ces programmes sont payants et protégés (mentions de copyright) : la conversation de pilotage les a stockés **chiffrés** (GnuPG symétrique AES-256) sur la branche orpheline `cp-references` (commit e9d1818f, `references.tar.gpg`, SHA-256 b27b0105…e8bacbc0). Les deux plus gros documents (images seules, 35 et 60 Mo) y sont rendus en pages JPEG lisibles, avec le texte extrait quand il existe. La clé n'est donnée que dans le message de lancement des lots (CR, puis les lots moteurs qui comparent aux références) ; elle n'est écrite nulle part dans le dépôt.
 
+## C3. Budget d'utilisation (03/10/2026, 07:54-08:00)
+
+> « Tous les lots se sont arrêtés parce que j'ai utilisé tous les crédits d'utilisation. Il faudrait faire en sorte que ça n'arrive plus, sachant quand même que j'ai le plan max. »
+
+Constat : la nuit du 02 au 03/10, les sessions CQ et CR (Fable, effort maximal, en parallèle, sous-agents du panel et des relectures héritant de Fable) et les points de pilotage toutes les 30 min ont épuisé les limites du plan Max ; les deux sessions se sont arrêtées vers 22:15-22:31 UTC en perdant leur travail non poussé (CQ : code conservé sur `claude/ci-cp-b` ; CR : `kalis_bench` conservé sur `claude/ci-cp-a`, analyse des références perdue). Rappel des règles du plan : limite par fenêtre de 5 h et limite hebdomadaire tous modèles ; Fable plafonné à 50 % de la limite hebdomadaire et plus coûteux que les autres modèles.
+
+- **C3.1 Modèles** : choix du propriétaire « Panel sur Opus, lots sur Fable » — tous les sous-agents (panel, relectures, vérifications) sur Opus 5.5 ; les lots moteurs restent sur Fable, effort maximal.
+- **C3.2 Parallélisme** : choix du propriétaire « Un lot à la fois » — un seul lot moteur (voie A ou B) tourne à la fois ; la voie App (Opus) peut tourner en même temps.
+- **C3.3 Points de pilotage** : choix du propriétaire « Toutes les 2 heures » (au lieu de 30 min) ; les lots notifient eux-mêmes livraison et blocage.
+- **C3.4** Mesures de la conversation de pilotage (PIPELINE_CP.md §9) : panel qui ne renote que les couples sous 9/10 entre une passe complète au départ et une à la fin ; sauvegardes toutes les 30 min sur `cp-sauvegardes/<LOT>` (sans workflow) ; reprise depuis la dernière sauvegarde ; relance d'une session arrêtée par les limites après leur remise à zéro.
+
 ## Sections des lots
 
 Chaque lot ajoute ici ses décisions techniques numérotées (`CR.1`, `CR.2`…), ses écarts, ses recommandations et, le cas échéant, la question posée au propriétaire.
