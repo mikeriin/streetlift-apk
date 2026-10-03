@@ -2840,16 +2840,30 @@ final class Prescriber {
         home.remove(pick);
       }
     }
+  }
+
+  /// Plancher de la semaine de l'échéance, avant les garde-fous de volume
+  /// (qui gardent le dernier mot).
+  void _floorEvent(List<List<_Draft>> days, WeekSpec ws) {
     if (!ws.eventWeek) {
       return;
     }
+    var peak = 0.0;
+    for (var k = _history.length - 6; k < _history.length; k++) {
+      if (k >= 0 && _history[k].hard > peak) {
+        peak = _history[k].hard;
+      }
+    }
+    if (peak <= 0) {
+      return;
+    }
+    var guard = 0;
     // R3-P12, R3-P21 : l'affûtage garde l'intensité et 40 à 60 % du volume ;
     // une semaine d'échéance trop vide désentraîne. Sous 42 % du pic, les
     // rappels des jours éloignés de l'épreuve reprennent une série, le
     // travail le plus spécifique d'abord, dans le temps de la séance.
     final floor = peak * 0.42;
     final closed = <_Draft>{};
-    guard = 0;
     while (guard < 60) {
       guard++;
       var total = 0.0;
@@ -3175,6 +3189,7 @@ final class Prescriber {
         _equalize(days[d]);
         _fitTime(days[d], a.days[d].minutes);
       }
+      _floorEvent(days, ws);
       _fitVolume(days, ws);
       _fitTaper(days, ws);
       days.forEach(_equalize);
