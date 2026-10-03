@@ -365,10 +365,25 @@ List<String> checkCoachSeed(Catalog catalog, int seed) {
       for (final d in p1.days)
         for (final s in d.slots) s.slotId: s.exerciseId,
     };
+    // (Un exercice que l'action rend inadmissible — variante plus dure
+    // d'un mouvement déclaré non su — change aussi.)
+    final reread = Athlete.read(
+      catalog,
+      trace.profile,
+      request.startDate,
+      extraExcluded: <String>{
+        for (final l in result.locks)
+          if (l.kind == LockKind.excludeExercise && l.exerciseId != null)
+            l.exerciseId!,
+      },
+    );
     for (final e in before.entries) {
+      final d = dayOfSlotId(e.key);
       if (e.value != slot.exerciseId &&
           e.value != other &&
-          after[e.key] != e.value) {
+          after[e.key] != e.value &&
+          d != null &&
+          reread.rejection(e.value, d) == null) {
         fail('$label : ${e.key} a changé sans raison');
       }
     }

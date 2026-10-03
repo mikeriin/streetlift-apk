@@ -11,6 +11,15 @@ String _pct(Object? v) => v is num ? '${(v * 100).round()} %' : '';
 
 String _int(Object? v) => v is num ? '${v.round()}' : '';
 
+String _plain(Object? v) {
+  if (v is! num) {
+    return '';
+  }
+  return v == v.roundToDouble()
+      ? '${v.round()}'
+      : v.toString().replaceAll('.', ',');
+}
+
 /// Nom français d'une zone du corps.
 String coachZoneLabel(String code) => switch (code) {
   'neck' => 'cou',
@@ -105,6 +114,25 @@ String? coachReasonText(Reason r, Catalog catalog) {
     case ReasonCodes.planCoachNote:
       final v = p['value'];
       return switch (p['note']) {
+        CoachNotes.restBeforeEvent =>
+          "Repos avant l'échéance : mobilité et préparation articulaire "
+              'seulement, rien de fatigant dans les 2 à 4 derniers jours.',
+        CoachNotes.badDay =>
+          'Baisse du jour (nuit de moins de 6 h, courbatures marquées sur '
+              'la zone, journée très stressante) : ${_int(v)} série de moins '
+              'par exercice, aucune série à moins de 3 répétitions en '
+              'réserve, pas de test.',
+        CoachNotes.missed =>
+          'Séance manquée : elle ne se rattrape pas. Semaine manquée : '
+              'refais la dernière semaine terminée. Deux semaines ou plus : '
+              'reprends deux semaines en arrière avec ${_int(v)} % de volume '
+              'en moins.',
+        CoachNotes.checkpoint =>
+          "Repère sur le chemin de l'objectif : ${_plain(v)}. "
+              "S'il n'est pas atteint, garde les volumes du bloc au lieu de "
+              'les durcir.',
+        CoachNotes.testRest =>
+          '${_int(v)} h sans travail dur du mouvement avant un test.',
         CoachNotes.rampBodyweight =>
           'Avant la série de tête : ${_int(v)} séries faciles (un tiers, '
               'puis la moitié des répétitions prévues).',
@@ -189,9 +217,10 @@ String? coachReasonText(Reason r, Catalog catalog) {
           'Allure de conversation (tu peux parler en phrases), '
               '${_int(v)} min.',
         CoachNotes.generalWarmup =>
-          "Chaque séance commence par ${_int(v)} min d'échauffement "
-              'général (cardio léger, mobilité des épaules, des poignets et '
-              'des hanches).',
+          "Chaque séance commence par ${_int(v)} min d'échauffement : "
+              'épaules, poignets et hanches en mobilité, 2 × 8 tirages '
+              'scapulaires, 2 × 8 pompes scapulaires, puis quelques '
+              'répétitions faciles du premier mouvement.',
         CoachNotes.toleranceVolume =>
           'Volume réglé à ${_pct(v)} du volume type de ton niveau, au vu de '
               'ta récupération.',
@@ -226,10 +255,13 @@ String? coachReasonText(Reason r, Catalog catalog) {
     case ReasonCodes.planPainRule:
       final zone = p['zone'];
       return 'Douleur (${zone is String ? coachZoneLabel(zone) : ''}) : '
-          "jusqu'à ${_int(p['continueBelow'])} sur 10 tu continues ; à "
-          '${_int(p['regressAt'])} ou 5, allège ou prends la variante plus '
-          "facile ; à ${_int(p['stopAt'])} ou plus, arrête l'exercice. Si "
-          'la douleur dure ou augmente, consulte un professionnel de santé.';
+          "de 0 à 2 sur 10, continue ; à ${_int(p['continueBelow'])} ou "
+          "${_int(p['regressAt'])}, finis la séance sans progresser et "
+          "n'ajoute rien la semaine suivante ; à 5, prends la variante plus "
+          'facile et retire 30 à 50 % du volume de la zone ; à '
+          "${_int(p['stopAt'])} ou plus, douleur la nuit, perte de force ou "
+          'gêne qui dure deux semaines : arrête le mouvement et consulte un '
+          'professionnel de santé. Le programme ne pose aucun diagnostic.';
     case ReasonCodes.planWeakPoint:
       final kind = p['kind'];
       return 'Cible ton point faible '

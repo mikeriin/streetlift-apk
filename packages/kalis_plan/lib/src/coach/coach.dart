@@ -748,6 +748,54 @@ final class CoachEngine {
         );
     }
 
+    if (action.kind == ReviewKind.cannotDo ||
+        action.kind == ReviewKind.dislike) {
+      // Ce que l'action rend inadmissible suit : une variante plus dure
+      // d'un mouvement déclaré non su, un exercice dont il est le
+      // prérequis.
+      final before = Athlete.read(
+        catalog,
+        base.profile,
+        current.startDate,
+        extraExcluded: _excludedBy(base.locks),
+      );
+      final after = Athlete.read(
+        catalog,
+        applyDelta(base.profile, delta),
+        current.startDate,
+        extraExcluded: _excludedBy(locks),
+      );
+      for (var d = 0; d < days.length && d < after.dayCount; d++) {
+        for (var i = 0; i < days[d].length; i++) {
+          final s = days[d][i];
+          if (s.locked ||
+              before.rejection(s.exerciseId, d) != null ||
+              after.rejection(s.exerciseId, d) == null) {
+            continue;
+          }
+          final present = <String>{for (final x in days[d]) x.exerciseId};
+          final other = _replacement(
+            after,
+            s.exerciseId,
+            d,
+            present,
+            easier: true,
+          );
+          touched.add(s.slotId);
+          if (other == null) {
+            if (days[d].length > 1) {
+              days[d].removeAt(i);
+              i--;
+            }
+          } else {
+            days[d][i] = s.copyWith(
+              exerciseId: other,
+              reasons: <Reason>[...acted],
+            );
+          }
+        }
+      }
+    }
     final profile = applyDelta(base.profile, delta);
     final alive = <String>{
       for (final day in days)

@@ -80,8 +80,13 @@ double _limit(
 
 /// Durée estimée de la séance [day], en secondes (mêmes conventions que le
 /// banc : 3 s par répétition, 45 s de transition, repos entre les séries,
-/// 5 min d'échauffement général dès qu'il y a du renforcement).
-double coachSessionSeconds(Catalog catalog, DayPrescription day) {
+/// l'échauffement général de `coachWarmupFor` dès qu'il y a du
+/// renforcement).
+double coachSessionSeconds(
+  Catalog catalog,
+  DayPrescription day, {
+  int minutes = 60,
+}) {
   final traits = CatalogTraits.of(catalog);
   var total = 0.0;
   var resistance = false;
@@ -115,7 +120,7 @@ double coachSessionSeconds(Catalog catalog, DayPrescription day) {
         (p.sets - 1) * (p.restSeconds ?? 60);
     resistance = resistance || isResistance;
   }
-  return total + (resistance ? coachWarmupSeconds : 0);
+  return total + (resistance ? coachWarmupFor(minutes) : 0);
 }
 
 /// Manquements du programme [blocks] (blocs enchaînés du profil [profile],
@@ -176,7 +181,11 @@ List<String> coachAudit(
         if (day.items.isEmpty) {
           out.add('$where : séance vide');
         }
-        final seconds = coachSessionSeconds(catalog, day);
+        final seconds = coachSessionSeconds(
+          catalog,
+          day,
+          minutes: athlete.days[d].minutes,
+        );
         final budget = athlete.days[d].minutes * 60.0;
         if (seconds > budget * 1.15 + 180 &&
             !day.items.any((p) => imposedSlotIds.contains(p.slotId))) {
