@@ -6,8 +6,9 @@ Créé le 02/10/2026 par la conversation de pilotage (demande et questionnaire d
 
 | Voie | Tâche | Identifiant | Lots |
 | --- | --- | --- | --- |
-| A (moteurs) | Fable 5.1, effort maximal, voie A | `trig_01AdGsb14RjjmaqFdrSXsMZX` | CR, CP1 (C5.1) |
-| B (moteurs) | Fable 5.1, effort maximal, voie B | `trig_01GKJ1jmozMRy6cJYUdyNtMV` | CQ, CA1 (C5.1) |
+| A et B (moteurs) | **Fable 5.1, effort maximal, moteurs** (créée le 03/10 22:23 : l'ancienne tâche voie A n'obtenait plus l'accès en écriture au dépôt) | `trig_013zUt5zYSPd9AgCz58HdLYB` | CP1, CA1 (C5.1) |
+| A (moteurs) | Fable 5.1, effort maximal, voie A — **désactivée** le 03/10 (accès en écriture refusé à ses sessions) | `trig_01AdGsb14RjjmaqFdrSXsMZX` | CR (historique) |
+| B (moteurs) | Fable 5.1, effort maximal, voie B | `trig_01GKJ1jmozMRy6cJYUdyNtMV` | CQ (historique) ; de secours pour CA1 |
 | App | Opus 5.5, effort élevé, application | `trig_01ETa7PRUGvnrwMrEchoKcc9` | CU, CI |
 | A et B (moteurs) | **Opus 5.5, effort maximal, moteurs** (C5.1) | `trig_01M9KpjaVMDC897vjadunwZP` | CX, CP2, CA2, CY et fins de lot (CR) |
 
