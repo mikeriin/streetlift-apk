@@ -420,15 +420,15 @@ void main() {
       ),
     );
     await wait(tester, 1800);
-    releve['reglages_rubrique_recuperation'] = find
-        .byKey(const ValueKey('profile-rubric-recovery'))
-        .evaluate()
-        .isNotEmpty;
     await shot('23_reglages_profil');
     await scrollTo(
       tester,
       find.byKey(const ValueKey('profile-rubric-recovery')),
     );
+    releve['reglages_rubrique_recuperation'] = find
+        .byKey(const ValueKey('profile-rubric-recovery'))
+        .evaluate()
+        .isNotEmpty;
     await shot('24_reglages_profil_suite');
     unawaited(
       appNavigator.currentState!.push(
