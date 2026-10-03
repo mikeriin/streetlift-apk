@@ -2112,7 +2112,7 @@ final class PacingSegment {
   /// Ajoute à [out] les violations de cette valeur, située à [path].
   void collectViolations(String path, List<Violation> out) {
     checkLength(out, '$path.exerciseId', exerciseId.length, 1, null);
-    checkLength(out, '$path.setReps', setReps.length, null, 60);
+    checkLength(out, '$path.setReps', setReps.length, 1, 60);
     if (restSeconds case final v?) { checkRange(out, '$path.restSeconds', v, 0, 900); }
     if (targetSeconds case final v?) { checkRange(out, '$path.targetSeconds', v, 1, 14400); }
     if (stationIndex case final v?) { checkRange(out, '$path.stationIndex', v, 0, 39); }

@@ -109,7 +109,9 @@ Récupère le paquet : `git fetch origin 'refs/heads/etiquettes/*:refs/remotes/o
 
 - **Questions reportées** : une question dont la condition `deferWhen` est vraie n'est pas posée à la
   création ; propose-la après la première semaine (carte discrète de Koach, une fois). Un débutant ne
-  voit ainsi aucune question du schéma 3 à la création.
+  voit ainsi aucune question de récupération à la création (ni sommeil, ni stress, ni charge hors
+  programme, ni évolution du poids) ; selon sa discipline, il peut voir `skills`, `emphasis`, `events` ou
+  `running_base` (16 à 18 questions, `docs/PARCOURS_V3.md` § 2).
 
   ```dart
   final Map<String, Object?> profilJson = profile.toJson();

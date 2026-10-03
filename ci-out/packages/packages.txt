@@ -1,4 +1,0 @@
-kalis_adapt=success
-kalis_core=failure
-kalis_plan=success
-kalis_quest=success

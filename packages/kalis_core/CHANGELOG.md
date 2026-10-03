@@ -29,7 +29,7 @@ parcours et contrat vus par un « coach d'élite ») ; chaque remarque est chang
   questions reportées après la première semaine (`deferWhen`) et obligatoires sous condition (`requiredWhen`) ;
   10 protocoles de tests guidés ; conversions `estimateOneRm`, `totalFromExternal`, `externalFromTotal`,
   `riegelSeconds`, `trialSpeed`. Écrit pour le lot CU : `docs/PARCOURS_V3.md`. Questions vues à la création, par
-  profil type : débutant 16 (aucune nouvelle, 3 reportées) ; intermédiaire musculation 27 (10 nouvelles) ;
+  profil type : débutant en forme générale 16 (aucune nouvelle, 3 reportées ; 16 à 18 selon la discipline) ; intermédiaire musculation 27 (10 nouvelles) ;
   compétiteur élite de streetlifting 29 (12) ; coureuse 28 (11) ; sets & reps avancé 29 (12).
 - **Prescriptions avancées** : `ExercisePrescription.technique` (`SetTechnique`, 17 techniques à variantes, dont
   `for_time` ; `lastSetOnly`, `totalSecondsTarget`), `tempo` (`Tempo`), `intensity` (`IntensityTarget` : part du 1RM,

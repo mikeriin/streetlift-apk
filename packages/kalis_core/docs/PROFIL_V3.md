@@ -17,6 +17,14 @@ conseil médical ou nutritionnel). Le parcours qui en découle est dans [`PARCOU
 - **Statut de chaque référence** (§ 7) : **V** = notice consultée (titre, auteurs, année, revue, DOI concordants) et
   résultat cité lu dans le résumé ; **P** = notice confirmée, mais le chiffre cité vient d'une source secondaire ou
   n'a pas été relu ; les références qui n'ont pas pu être vérifiées **ne sont pas citées**.
+- **Seconde vérification, le 03/10/2026** : les 84 notices et chaque chiffre qui leur est attribué ont été
+  recontrôlés par trois vérificateurs indépendants (pages des éditeurs, dépôts universitaires, PEDro, PubMed quand il
+  répondait ; Crossref et doi.org inaccessibles : un DOI « confirmé » figure sur l'une de ces pages, il n'a pas été
+  résolu). Neuf corrections en sont sorties et sont faites ici (`latella2020`, `steele2023`, `travis2020`,
+  `huiberts2024`, `cooper1968`, `riegel1981`, `kardor2023`, `pollock1991`, `reynolds2006`). Restent non reconfirmés,
+  sans erreur trouvée : le chiffre « endurance −5,6 % » de `craven2022`, la mention des intervalles à 80 % de
+  `ivarsson2017`, l'expression du 1RM en charge totale dans `ortega2021` (confirmée dans `coyne2015`), `low2016` et
+  `nsca2016` (ouvrages).
 - **Limite à connaître** : PubMed et plusieurs éditeurs étaient inaccessibles depuis la session ; les pages ont été
   lues à travers un outil qui restitue le contenu. **Aucun texte intégral n'a été relu ligne à ligne.** Les chiffres
   sont ceux des résumés ; ils sont à recontrôler avant toute citation publique. Aucun contenu n'a été relu par un
@@ -39,10 +47,13 @@ conseil médical ou nutritionnel). Le parcours qui en découle est dans [`PARCOU
    nuit dernière, le stress et les douleurs du jour. L'habitude déclarée est une **valeur de départ** : dès que les
    bilans de séance existent, ce sont eux qui renseignent le moteur dynamique ; la réponse du profil ne sert alors
    plus qu'au premier bloc et aux semaines sans bilan.
-4. **Rien de nouveau n'est demandé à un débutant à la création.** Les questions de récupération (sommeil, stress,
-   charge hors programme) lui sont proposées après la première semaine ; les autres questions du schéma 3 ne le
-   concernent pas. Son programme de départ est prudent par construction (D4.7) : ces réponses n'y changeraient rien
-   la première semaine.
+4. **Un débutant ne se voit demander à la création que ce sans quoi son premier programme ne peut pas être écrit.**
+   Les questions de récupération (sommeil, stress, charge hors programme, évolution voulue du poids) lui sont
+   proposées après la première semaine : son programme de départ est prudent par construction (D4.7), ces réponses
+   n'y changeraient rien la première semaine. Des questions du schéma 3, il ne voit que celles que sa discipline rend
+   nécessaires : la figure visée (calisthénie, streetlifting, CrossFit), l'orientation (musculation), la course
+   préparée et le volume de course actuel (cardio) — 16 à 18 questions en tout selon la discipline
+   (`PARCOURS_V3.md` § 2).
 5. **Santé** : la règle L13 tient. Aucune réponse du questionnaire santé n'est copiée dans le profil. Les antécédents
    utiles à la programmation sont des **contraintes d'entraînement** (zone, côté, gêne perçue, depuis quand,
    mouvements qui la réveillent), jamais un diagnostic. Aucun score de risque de blessure n'est calculé : les tests
@@ -96,8 +107,10 @@ conseil médical ou nutritionnel). Le parcours qui en découle est dans [`PARCOU
   pour la force que pour l'hypertrophie (`pelland2026`). Chez l'homme entraîné, 12 à 20 séries par muscle et par
   semaine (`bazvalle2022`). À volume égal, un programme périodisé fait mieux qu'un programme non périodisé sur le 1RM
   (ES 0,31) et l'ondulation ne fait mieux que le linéaire **que chez les sujets entraînés** (ES 0,61 contre 0,06 chez
-  les débutants) (`moesgaard2022`). La progression est logarithmique : environ deux fois plus lente dans le quartile
-  des compétiteurs les plus forts (`latella2020`) ; plateau pratique vers 1 à 2 ans à dose minimale (`steele2023`).
+  les débutants) (`moesgaard2022`). La progression ralentit avec le niveau : chez les hommes, elle est environ deux
+  fois plus lente dans le quartile des compétiteurs les plus forts que dans le plus faible (0,10 contre 0,21 kg par
+  jour ; aucune différence entre quartiles chez les femmes ; `latella2020`) ; plateau pratique vers 1 à 2 ans à dose
+  minimale (`steele2023`).
 - **Ce que ça change.** Volume et intensité de départ ; vitesse de progression attendue ; besoin de périodisation
   (blocs, ondulation) ; prérequis des techniques avancées et des figures en bras tendus (le tendon s'adapte en mois,
   voir `figures`).
@@ -109,7 +122,7 @@ conseil médical ou nutritionnel). Le parcours qui en découle est dans [`PARCOU
   (`SkillState.atStepSince`, voir `figures`). Ensuite **déduite** des performances
   rapportées au poids de corps et de la vitesse de progression (moteur dynamique). Les tranches sont un choix
   raisonné : la littérature ne donne pas de seuil en mois ; « 6 mois » sépare le pratiquant qui ne sait pas encore
-  estimer sa réserve (`steele2017`) et « 2 ans » la fin du plateau à dose minimale (`steele2023`).
+  estimer sa réserve (`steele2017`) et « 2 ans » l'entrée en plateau à dose minimale (`steele2023`).
 
 ### `interruption` — Interruption récente
 
@@ -194,8 +207,9 @@ conseil médical ou nutritionnel). Le parcours qui en découle est dans [`PARCOU
 ### `competition` — Compétition et échéances
 
 - **Effet démontré.** Affûtage : optimum à 2 semaines, volume réduit de 41 à 60 %, intensité et fréquence gardées
-  (`bosquet2007`, méta-analyse, surtout sports d'endurance). En force athlétique : volume réduit de 30 à 70 % sur 7 à
-  28 jours, intensité gardée à au moins 85 % du 1RM, arrêt complet de 2 à 7 jours sans perte (`travis2020`) ;
+  (`bosquet2007`, méta-analyse, surtout sports d'endurance). En force athlétique : volume réduit de 30 à 70 % sur 1 à
+  2 semaines (études de 7 à 28 jours), intensité gardée à au moins 85 % du 1RM, puis arrêt complet de 2 à 7 jours
+  sans perte (`travis2020`) ;
   pratiques de champions : volume −50 à −59 %, dernière séance 3 à 4 jours avant (`pritchard2016`, `grgic2017`).
   Tentatives d'élite en force athlétique : ouverture à environ 91 % de la troisième barre visée, puis +5 % et +3 %
   (`travis2021`). **Aucune donnée propre au streetlifting** : la transposition est une hypothèse. **Épreuves de
@@ -240,7 +254,9 @@ conseil médical ou nutritionnel). Le parcours qui en découle est dans [`PARCOU
 ### `sommeil` — Sommeil habituel
 
 - **Effet démontré, en aigu.** Perte de sommeil (6 h ou moins) : performance −7,6 % en moyenne ; force maximale
-  −2,9 % seulement ; endurance de force −9,9 % ; endurance −5,6 % (`craven2022`, 69 études). Neuf nuits à 5 h : le
+  −2,9 % seulement ; endurance de force −9,9 % ; endurance −5,6 % (`craven2022`, 69 études ; le résumé ne donne que
+  la moyenne d'ensemble, les chiffres par qualité viennent d'une source secondaire, et celui de l'endurance n'a pas
+  été reconfirmé). Neuf nuits à 5 h : le
   volume réalisé ne baisse presque pas (moins de 1 %), mais l'effort perçu de la séance monte de 11 % et la vitesse
   de barre baisse jusqu'à 15 % sur le bas du corps (`knowles2022`).
 - **Effet non démontré, en habituel.** Aucune méta-analyse ne montre qu'un sommeil habituel court réduit les gains à
@@ -280,7 +296,8 @@ conseil médical ou nutritionnel). Le parcours qui en découle est dans [`PARCOU
   l'hypertrophie (SMD −0,01), mais réduit la force explosive (SMD −0,28), surtout quand les deux sont dans la même
   séance (`schumann2022`, 43 études). Chez les sujets entraînés, la force du bas du corps souffre quand force et
   endurance sont dans la même séance (ES −0,66) et pas en séances séparées (ES −0,10) (`petre2021`). L'interférence
-  est locale (bas du corps) (`huiberts2024`). Elle croît avec la fréquence et la durée de l'endurance, et y est
+  est locale (force du bas du corps) et n'apparaît que chez les hommes (SMD −0,43), pas chez les femmes (SMD 0,08)
+  (`huiberts2024`, 59 études). Elle croît avec la fréquence et la durée de l'endurance, et y est
   significative avec la course, pas avec le vélo (`wilson2012`) — différence qui n'est pas retrouvée d'une
   méta-analyse à l'autre : la nature du sport sert au **placement** (quelles régions sont fatiguées), pas à un
   coefficient différent.
@@ -380,7 +397,8 @@ conseil médical ou nutritionnel). Le parcours qui en découle est dans [`PARCOU
 - **Travail de nuit, horaires décalés** : aucune étude directe sur l'entraînement de force ; l'effet plausible passe
   par le sommeil, déjà demandé. Déduit.
 - **Cycle menstruel** : effet trivial (ES −0,06 ; `mcnulty2020`) ; « prématuré » de conclure à une influence
-  (`colenso2023`). **Contraception** : aucun effet sur l'hypertrophie, la puissance ou la force (`nolan2024`).
+  (`colenso2023`). **Contraception** : aucun effet de la pilule sur l'hypertrophie, la puissance ou la force (8 études, toutes sur la
+  contraception orale ; `nolan2024`).
   Écartés ; l'autorégulation (flammes) absorbe les variations individuelles.
 - **Fatigabilité selon le sexe** : dépend de la tâche (`hunter2016`) ; déduite des séries réalisées.
 - **Asymétrie** : preuve faible et limitée au membre inférieur (`helme2021`) ; déduite des séries unilatérales.
@@ -417,7 +435,8 @@ conseil médical ou nutritionnel). Le parcours qui en découle est dans [`PARCOU
 - **Maximum direct.** Fiable (ICC médian 0,97, coefficient de variation médian 4,2 %, très peu d'incidents ;
   `grgic2020`, `seo2012`) ; protocole de montée de la NSCA (`nsca2016`) ; déconseillé au senior non entraîné
   (`pollock1991`).
-- **Répétitions max.** Pompes : changement minimal détectable de 4,7 répétitions (`kardor2023`) ; les répétitions
+- **Répétitions max.** Pompes : changement minimal détectable de 4,7 répétitions (pompes modifiées, 29 sportives ;
+  `kardor2023`) ; les répétitions
   max bougent bien plus vite que la force maximale (+15 % contre +3,4 % en 12 semaines ; `sanchezmoreno2017`) ;
   fiabilité du nombre de répétitions : ICC 0,86 à 70 % du 1RM, 0,65 à 90 % (`mitter2022`).
 - **Maintiens.** Gainage : ICC supérieur à 0,98, coefficient de variation de 5 à 6 % (`rodriguezperea2025`) ; test
@@ -425,8 +444,11 @@ conseil médical ou nutritionnel). Le parcours qui en découle est dans [`PARCOU
   suspension, le L-sit, la planche ou le front lever. Séries à 60-70 % du maintien max : usage d'entraîneur
   (`low2016`).
 - **Course.** Tests en durée ou en distance fixe : validité de 0,78 à 0,79 pour estimer le VO2max
-  (`mayorgavega2016`, `cooper1968`) — on utilise directement la vitesse mesurée. Contre-la-montre de 5 km : erreur
-  typique de 2,0 % (`laursen2007`). Prédiction entre distances : `T2 = T1 × (D2 / D1)^1,06` (`riegel1981`), bien
+  (`mayorgavega2016`, méta-analyse ; l'étude d'origine du test de 12 minutes rapportait r = 0,90, `cooper1968`) — on
+  utilise directement la vitesse mesurée. Contre-la-montre de 5 km : erreur
+  typique de 2,0 % (`laursen2007`). Prédiction entre distances : `T2 = T1 × (D2 / D1)^1,06`, formule dite de Riegel
+  (`riegel1981` donne la forme `t = a × D^b`, avec b = 1,08 pour les records de course et 1,05 à 1,06 pour les
+  coureurs de 40 à 70 ans, valable pour des efforts de 3,5 à 230 minutes ; 1,06 est l'exposant d'usage), bien
   calibrée jusqu'au semi-marathon, trop optimiste au marathon (`vickers2016`). Elle suppose un volume de course
   suffisant pour la distance visée : à faible volume hebdomadaire (`base_endurance`), la prédiction d'une distance
   plus longue est « provisoire », avec une incertitude élargie (au moins ±4 % : estimation de ce lot, aucune grandeur
@@ -486,7 +508,7 @@ secondaire ou non relu (précisé). Voir les limites du § 0.
 | `coyne2015` | Coyne J. O. C., Tran T. T., Secomb J. L. et al. (2015). Reliability of pull up and dip maximal strength tests. *J Aust Strength Cond* 23(4):21-27. | — | V |
 | `craven2022` | Craven J., McCartney D., Desbrow B. et al. (2022). Effects of acute sleep loss on physical performance: a systematic and meta-analytical review. *Sports Med* 52:2669-2690. | 10.1007/s40279-022-01706-y | V |
 | `dobrosielski2021` | Dobrosielski D. A., Sweeney L., Lisman P. J. (2021). The association between poor sleep and the incidence of sport and physical training-related injuries in adult athletic populations: a systematic review. *Sports Med* 51(4):777-793. | 10.1007/s40279-020-01416-3 | V |
-| `fernandes2025` | Fernandes J. F. T., Wilson L. J., Dingley A. F. et al. (2025). Advancing age is not associated with greater exercise-induced muscle damage: a systematic review, meta-analysis, and meta-regression. *J Aging Phys Act* 33:606-624. | 10.1123/japa.2024-0165 | V |
+| `fernandes2025` | Fernandes J. F. T., Wilson L. J., Dingley A. F. et al. (2025). Advancing age is not associated with greater exercise-induced muscle damage: a systematic review, meta-analysis, and meta-regression. *J Aging Phys Act* 33(6):606-624. | 10.1123/japa.2024-0165 | V |
 | `garthe2011` | Garthe I., Raastad T., Refsnes P. E. et al. (2011). Effect of two different weight-loss rates on body composition and strength and power-related performance in elite athletes. *Int J Sport Nutr Exerc Metab* 21(2):97-104. | 10.1123/ijsnem.21.2.97 | V |
 | `grgic2017` | Grgic J., Mikulic P. (2017). Tapering practices of Croatian open-class powerlifting champions. *J Strength Cond Res* 31(9):2371-2378. | 10.1519/JSC.0000000000001699 | V |
 | `grgic2019` | Grgic J., Lazinica B., Garofolini A. et al. (2019). The effects of time of day-specific resistance training on adaptations in skeletal muscle hypertrophy and muscle strength: a systematic review and meta-analysis. *Chronobiol Int* 36(4):449-460. | 10.1080/07420528.2019.1567524 | V |
@@ -501,10 +523,10 @@ secondaire ou non relu (précisé). Voir les limites du § 0.
 | `impellizzeri2020` | Impellizzeri F. M., Tenan M. S., Kempton T. et al. (2020). Acute:chronic workload ratio: conceptual issues and fundamental pitfalls. *Int J Sports Physiol Perform* 15(6):907-913. | 10.1123/ijspp.2019-0864 | V |
 | `ivarsson2017` | Ivarsson A., Johnson U., Andersen M. B. et al. (2017). Psychosocial factors and sport injuries: meta-analyses for prediction and prevention. *Sports Med* 47(2):353-365. | 10.1007/s40279-016-0578-x | V |
 | `kaiser2018` | Kaiser S., Engeroff T., Niederer D. et al. (2018). The epidemiological profile of calisthenics athletes. *Dtsch Z Sportmed* 69(9):299-304. | 10.5960/dzsm.2018.342 | V |
-| `kardor2023` | Kardor M. et al. (2023). Upper extremity physical performance tests in female overhead athletes: a test-retest reliability study. *J Orthop Surg Res*. | 10.1186/s13018-023-03974-4 | V |
+| `kardor2023` | Kardor S., Gorji Z., Ghotbi N. et al. (2023). Upper extremity physical performance tests in female overhead athletes: a test–retest reliability study. *J Orthop Surg Res* 18:489. | 10.1186/s13018-023-03974-4 | V |
 | `knowles2022` | Knowles O. E., Drinkwater E. J., Roberts S. S. H. et al. (2022). Sustained sleep restriction reduces resistance exercise quality and quantity in females. *Med Sci Sports Exerc* 54(12):2167-2177. | 10.1249/MSS.0000000000003000 | V |
 | `kompf2017` | Kompf J., Arandjelović O. (2017). The sticking point in the bench press, the squat, and the deadlift: similarities and differences, and their significance for research and practice. *Sports Med* 47(4):631-640. | 10.1007/s40279-016-0615-9 | V |
-| `kubo2012` | Kubo K., Ikebukuro T., Maki A. et al. (2012). Time course of changes in the human Achilles tendon properties and metabolism during training and detraining in vivo. *Eur J Appl Physiol* 112:2679-2691. | 10.1007/s00421-011-2248-x | V |
+| `kubo2012` | Kubo K., Ikebukuro T., Maki A. et al. (2012). Time course of changes in the human Achilles tendon properties and metabolism during training and detraining in vivo. *Eur J Appl Physiol* 112(7):2679-2691. | 10.1007/s00421-011-2248-x | V |
 | `latella2020` | Latella C., Teo W.-P., Spathis J., van den Hoek D. (2020). Long-term strength adaptation: a 15-year analysis of powerlifting athletes. *J Strength Cond Res* 34(9):2412-2418. | 10.1519/JSC.0000000000003657 | V |
 | `lauersen2018` | Lauersen J. B., Andersen T. E., Andersen L. B. (2018). Strength training as superior, dose-dependent and safe prevention of acute and overuse sports injuries: a systematic review, qualitative analysis and meta-analysis. *Br J Sports Med* 52(24):1557-1563. | 10.1136/bjsports-2018-099078 | V |
 | `laursen2007` | Laursen P. B., Francis G. T., Abbiss C. R. et al. (2007). Reliability of time-to-exhaustion versus time-trial running tests in runners. *Med Sci Sports Exerc* 39(8):1374-1379. | 10.1249/mss.0b013e31806010f5 | V |
@@ -529,16 +551,16 @@ secondaire ou non relu (précisé). Voir les limites du § 0.
 | `peterson2011` | Peterson M. D., Sen A., Gordon P. M. (2011). Influence of resistance exercise on lean body mass in aging adults: a meta-analysis. *Med Sci Sports Exerc* 43(2):249-258. | 10.1249/MSS.0b013e3181eb6265 | V |
 | `petre2021` | Petré H., Hemmingsson E., Rosdahl H., Psilander N. (2021). Development of maximal dynamic strength during concurrent resistance and endurance training in untrained, moderately trained, and trained individuals: a systematic review and meta-analysis. *Sports Med* 51(5):991-1010. | 10.1007/s40279-021-01426-9 | V |
 | `ploutzsnyder2001` | Ploutz-Snyder L. L., Giamis E. L. (2001). Orientation and familiarization to 1RM strength testing in old and young women. *J Strength Cond Res* 15(4):519-523. | 10.1519/00124278-200111000-00020 | P (notice ; chiffres lus sur un résumé secondaire) |
-| `pollock1991` | Pollock M. L. et al. (1991). Injuries and adherence to walk/jog and resistance training programs in the elderly. *Med Sci Sports Exerc*. | — | V (résumé PEDro ; volume et pages non relevés) |
+| `pollock1991` | Pollock M. L., Carroll J. F., Graves J. E. et al. (1991). Injuries and adherence to walk/jog and resistance training programs in the elderly. *Med Sci Sports Exerc* 23(10):1194-1200. | — | V (résumé PEDro) |
 | `pritchard2016` | Pritchard H. J. et al. (2016). Tapering practices of New Zealand's elite raw powerlifters. *J Strength Cond Res* 30(7):1796-1804. | 10.1519/JSC.0000000000001292 | V |
 | `refalo2025` | Refalo M. C., Nuckols G., Galpin A. J. et al. (2025). Sex differences in absolute and relative changes in muscle size following resistance training in healthy adults: a systematic review with Bayesian meta-analysis. *PeerJ* 13:e19042. | 10.7717/peerj.19042 | V |
-| `reynolds2006` | Reynolds J. M., Gordon T. J., Robergs R. A. (2006). Prediction of one repetition maximum strength from multiple repetition maximum testing and anthropometry. *J Strength Cond Res* 20(3):584-592. | — (non relu) | V (texte lu ; DOI non relevé) |
+| `reynolds2006` | Reynolds J. M., Gordon T. J., Robergs R. A. (2006). Prediction of one repetition maximum strength from multiple repetition maximum testing and anthropometry. *J Strength Cond Res* 20(3):584-592. | 10.1519/R-15304.1 (relevé sur une source secondaire, non résolu) | V (texte lu) |
 | `rhea2003` | Rhea M. R., Alvar B. A., Burkett L. N., Ball S. D. (2003). A meta-analysis to determine the dose response for strength development. *Med Sci Sports Exerc* 35(3):456-464. | 10.1249/01.MSS.0000053727.63505.D4 | V |
 | `riebe2015` | Riebe D., Franklin B. A., Thompson P. D. et al. (2015). Updating ACSM's recommendations for exercise preparticipation health screening. *Med Sci Sports Exerc* 47(11):2473-2479. | 10.1249/MSS.0000000000000664 | V |
-| `riegel1981` | Riegel P. S. (1981). Athletic records and human endurance. *Am Sci* 69(3):285-290. | — | P (formule et domaine de validité lus sur une source secondaire) |
+| `riegel1981` | Riegel P. S. (1981). Athletic records and human endurance. *Am Sci* 69(3):285-290. | — | V (article lu : forme `t = a × D^b`, exposants par population, domaine de 3,5 à 230 min ; l'exposant unique 1,06 est celui de l'usage) |
 | `roberts2020` | Roberts B. M., Nuckols G., Krieger J. W. (2020). Sex differences in resistance training: a systematic review and meta-analysis. *J Strength Cond Res* 34(5):1448-1460. | 10.1519/JSC.0000000000003521 | V |
 | `rodriguezperea2025` | Rodríguez-Perea Á. et al. (2025). Criterion-related validity and reliability of the front plank test in adults: the ADULT-FIT project. *Appl Sci* 15:2722. | 10.3390/app15052722 | V |
-| `roth2022` | Roth C., Schoenfeld B. J., Behringer M. (2022). Lean mass sparing in resistance-trained athletes during caloric restriction: the role of resistance training volume. *Eur J Appl Physiol* 122(5):1129-1151. | 10.1007/s00421-022-04896-5 | P (résumé lu ; auteurs non affichés sur la notice consultée) |
+| `roth2022` | Roth C., Schoenfeld B. J., Behringer M. (2022). Lean mass sparing in resistance-trained athletes during caloric restriction: the role of resistance training volume. *Eur J Appl Physiol* 122(5):1129-1151. | 10.1007/s00421-022-04896-5 | V |
 | `ruuska2012` | Ruuska P. S., Hautala A. J., Kiviniemi A. M. et al. (2012). Self-rated mental stress and exercise training response in healthy subjects. *Front Physiol* 3:51. | 10.3389/fphys.2012.00051 | V |
 | `sanchezmoreno2017` | Sánchez-Moreno M., Rodríguez-Rosell D., Pareja-Blanco F. et al. (2017). Movement velocity as indicator of relative intensity and level of effort attained during the set in pull-up exercise. *Int J Sports Physiol Perform* 12(10):1378-1384. | 10.1123/ijspp.2016-0791 | V |
 | `schumann2022` | Schumann M., Feuerbacher J. F., Sünkeler M. et al. (2022). Compatibility of concurrent aerobic and strength training for skeletal muscle size and function: an updated systematic review and meta-analysis. *Sports Med* 52(3):601-612. | 10.1007/s40279-021-01587-7 | V |

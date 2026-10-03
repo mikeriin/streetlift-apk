@@ -1281,7 +1281,7 @@ TYPES += [
     ], custom=True, invariants=["Charges proposées croissantes au sens large (une charge ne baisse jamais) ; rangs strictement croissants."]),
     Type("PacingSegment", "season", "Stratégie de rythme sur un poste d'une épreuve de répétitions (0.4.0).", [
         F("exerciseId", "string", "Exercice.", **EXID),
-        F("setReps", "list:int", "Répétitions prévues par série, dans l'ordre.", max_len=60),
+        F("setReps", "list:int", "Répétitions prévues par série, dans l'ordre.", min_len=1, max_len=60),
         F("restSeconds", "int?", "Repos prévu entre les séries, en secondes.", min=0, max=900),
         F("targetSeconds", "int?", "Temps visé sur ce poste, en secondes.", min=1, max=14400),
         F("stationIndex", "int?", "Rang du poste dans l'épreuve (0 = premier), quand un exercice y revient plusieurs fois.", min=0, max=39),

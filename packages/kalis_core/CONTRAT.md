@@ -30,7 +30,8 @@ Version 0.4.0 (lot GC, 01/10/2026 ; évolutions additives des lots G8, G11 et CQ
 ### Évolution (PIPELINE_GP.md §0)
 
 Après 0.1.0, `kalis_core` n'évolue que de façon **additive** : nouveaux types, nouvelles valeurs
-d'enum **en fin de liste**, nouveaux champs **optionnels**, nouveaux codes de raison. Rien n'est
+d'enum **en fin de liste** (jusqu'à 0.3.0 ; règle des énumérations depuis 0.4.0 ci-dessous), nouveaux champs
+**optionnels**, nouveaux codes de raison. Rien n'est
 retiré ni renommé ; le sens et l'unité d'un champ ne changent pas. Une rupture demande une décision
 du propriétaire et une montée de `schemaVersion`. Une évolution se fait dans
 `tool/contracts_spec.py`, puis `python3 tool/gen_contracts.py` (version x.(y+1).0).
@@ -268,9 +269,10 @@ fichiers et valeurs aléatoires seedées de chaque type (`contractCodecs`, `arbi
   contrôle, pour le schéma 3, que le groupe musculaire d'une spécialisation (`unknown_muscle`).
 - (0.4.0) Plusieurs tests ou records (`Benchmark`) peuvent porter sur le même exercice : aucune unicité
   n'est imposée ; c'est au lecteur de choisir (date, origine, `competitionStandard`).
-- (0.4.0) Le détail d'une série (`SetRecord.parts`) n'est pas recoupé avec son total (`reps`, `seconds`),
-  et les identifiants de groupe (`GroupSpec.groupId`, `GroupResult.groupId`) ne sont pas recoupés avec
-  les `groupId` des prescriptions : `validate()` ne contrôle que chaque valeur prise seule.
+- (0.4.0) Quand toutes les `parts` d'une série ont des répétitions, leur somme vaut `reps`
+  (`parts_mismatch`) ; les durées ne sont pas recoupées. Chaque `GroupSpec` a au moins un membre parmi les
+  prescriptions de la séance (`unknown_group`) ; `GroupResult.groupId` (journal) n'est pas recoupé avec
+  le programme.
 - (0.4.0) Aucune intensité ne s'exprime à la fréquence cardiaque : ni fréquence maximale au profil, ni
   fréquence au journal (laissé au lot CP2). Deux séances par jour, terrain de course, heure de passage en
   compétition et vitesse de barre ne sont pas décrits non plus (`docs/RELECTURES_CQ.md`).
@@ -293,14 +295,14 @@ fichiers et valeurs aléatoires seedées de chaque type (`contractCodecs`, `arbi
 | Valeurs publiées (Suprak 2011, Ebben 2011, Winter 2009) | reprises des résumés et tables publiés | **non revérifiées sur le texte intégral dans ce lot** |
 | Contenu sportif (schémas, contraintes, fatigue, prérequis) | — | **non relu par un professionnel diplômé** |
 | (0.4.0) Évolution additive depuis 0.3.0 : types, champs, bornes, enums, rang des codes de raison | `tools/catalog/tests/test_contracts.py` (surface 0.3.0) | testé |
-| (0.4.0) Rétrocompatibilité : `kalis_plan` 0.1.0, `kalis_adapt` 0.1.0, `kalis_quest` 0.1.0 compilés et testés sans modification avec `kalis_core` 0.4.0 | contrôle `claude/ci-cp-b` (tous les paquets) | contrôlé par les tests des paquets — **à confirmer après le contrôle de la seconde passe** |
+| (0.4.0) Rétrocompatibilité : `kalis_plan` 0.1.0, `kalis_adapt` 0.1.0, `kalis_quest` 0.1.0 compilés et testés sans modification avec `kalis_core` 0.4.0 | contrôle `claude/ci-cp-b` (tous les paquets) | contrôlé en CI le 03/10/2026 (tests des trois moteurs verts, sources inchangées) |
 | (0.4.0) JSON du schéma 2 relu et réécrit à l'identique ; migration vers le schéma 3 sans perte ni invention | `test/profile_v3_test.dart` (40 profils types, 10 000 profils et 10 000 séances aléatoires) | testé |
 | (0.4.0) Types à variantes (7) : chaque variante porte exactement ses paramètres | `test/advanced_test.dart` (jeu généré `test/fixtures/variants.json`), `tools/catalog/tests/test_contracts.py` | testé |
-| (0.4.0) Prescriptions avancées : nombre de séries par technique, plages, cohérence des intensités (§ 12) | invariants de `lib/src/custom_validation.dart` ; `test/advanced_test.dart` | contrôlé par les tests du paquet — **à confirmer après le contrôle de la seconde passe** |
+| (0.4.0) Prescriptions avancées : nombre de séries par technique, plages, cohérence des intensités (§ 12) | invariants de `lib/src/custom_validation.dart` ; `test/advanced_test.dart` | testé |
 | (0.4.0) Parcours de questions : nombre de questions vues par profil type (5 profils), questions reportées, chaque condition, 10 000 profils aléatoires | `test/questionnaire_test.dart`, `tools/catalog/tests` | testé |
 | (0.4.0) Conversions des tests guidés (Brzycki, Riegel) | `test/estimation_test.dart` (valeurs de référence, 10 000 tirages) | testé |
-| (0.4.0) Revue des facteurs du profil : références | `docs/PROFIL_V3.md` § 7 (statut de chaque référence) | notices et résumés vérifiés le 02/10/2026 ; **aucun texte intégral relu** |
-| (0.4.0) Trois relectures indépendantes : contrat et code, parcours vu par un « débutant pressé », parcours et contrat vus par un « coach d'élite » | chaque constat changé ou expliqué : `docs/RELECTURES_CQ.md` | fait le 02/10/2026 ; seconde passe intégrée |
+| (0.4.0) Revue des facteurs du profil : références | `docs/PROFIL_V3.md` § 7 (statut de chaque référence) | notices et résumés vérifiés le 02/10/2026, recontrôlés par trois vérificateurs indépendants le 03/10/2026 (9 corrections) ; **textes intégraux non relus, sauf exception dite** |
+| (0.4.0) Trois relectures indépendantes : contrat et code, parcours vu par un « débutant pressé », parcours et contrat vus par un « coach d'élite » | chaque constat changé ou expliqué : `docs/RELECTURES_CQ.md` | fait le 02/10/2026 ; seconde passe intégrée ; audit indépendant des suites données le 03/10/2026 |
 | (0.4.0) Contenu sportif (questions, protocoles de test, techniques, périodisation) | — | **non relu par un professionnel diplômé** |
 
 ## 11. Profil d'athlète v3 (schéma 3, 0.4.0)
@@ -416,7 +418,9 @@ Règles de `SetTechnique` seul : un paramètre d'une autre technique est une vio
 `waveReps` et de `pyramidReps` de 1 à 100. `lastSetOnly: true` (permis à toute technique) : la technique
 ne s'applique qu'à la **dernière** série, les autres sont normales ; `sets` compte alors toutes les
 séries et les contrôles `set_count` et `reps_mismatch` du tableau ne s'appliquent pas. Les contrôles de
-plage ne jouent que si la prescription porte une plage de répétitions.
+plage ne jouent que si la prescription porte une plage de répétitions. `sets` est borné à 20 : un EMOM de
+plus de 20 intervalles, une vague ou une échelle de plus de 20 paliers ne s'écrivent pas comme une technique
+de série mais comme un **groupe** (`GroupSpec`, formats `emom`, `circuit`…), qui n'a pas cette borne.
 
 Autres rôles d'une ligne (`SetRole`) : `warmup` (montée d'échauffement), `test`, `attempt` (tentative de
 compétition). `lastSetOnly` ne se met jamais sur `standard`.
@@ -521,7 +525,10 @@ incertitude restent dans `AdaptationSummary.estimates` (`ExerciseEstimate.standa
   (`PlanRequest.season`, `NextBlockRequest.season`, `RestructureRequest.season`, `AdaptInput.season`),
   et révisable (`BlockProposal.season`, `Proposal.season` avec `detail: season_update`).
 - **Intention du bloc** (`Pass1Plan.intent`, `BlockIntent`) : phase réalisée (`SeasonPhaseKind`), rang dans le plan de
-  saison, échéance et semaines restantes, modèle d'ondulation, spécialisation servie.
+  saison, échéance et semaines restantes, modèle d'ondulation, spécialisation servie. Près d'une échéance
+  principale (phases `realization` et `taper`), la phase prime sur le dosage des disciplines secondaires
+  (`DisciplineMix`, D3.2) : le moteur peut servir un bloc entièrement spécifique sans que le profil change
+  (`docs/PROFIL_V3.md` § 6).
 - **Intention de la semaine** (`WeekPrescription.intent`, `WeekIntent`) à côté de `kind`, qui reste
   renseigné : une semaine d'affûtage s'écrit `kind: deload` + `intent: taper` ; une semaine de
   compétition, `kind: test` + `intent: competition`. Le moteur dynamique lit l'intention pour ne pas la

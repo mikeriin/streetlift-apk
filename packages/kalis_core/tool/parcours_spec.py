@@ -100,7 +100,7 @@ SCREENS = [
     {"id": "lieux", "title": "Lieux et matériel", "since": 2, "koach": "Où t'entraînes-tu, et avec quoi ?"},
     {"id": "recuperation", "title": "Ta récupération", "since": 3,
      "koach": "Ton corps récupère aussi en dehors des séances. Quelques questions rapides.",
-     "note": "Nouvel écran (schéma 3). Les trois premières questions tiennent sur un écran ; chacune a « Passer ». Pour un débutant, cet écran n'est pas montré à la création : ses questions sont proposées après la première semaine (`deferWhen`)."},
+     "note": "Nouvel écran (schéma 3). Les trois premières questions tiennent sur un écran ; chacune a « Passer ». Pour un débutant, cet écran n'est pas montré à la création : ses questions (les quatre portent `deferWhen`) sont proposées après la première semaine."},
     {"id": "sante", "title": "Ta santé", "since": 2, "koach": "Parlons de ta santé : ce que tu me dis ici me sert à te protéger.",
      "note": "Questionnaire santé L13 inchangé ; les gênes sont des contraintes d'entraînement, jamais un diagnostic."},
     {"id": "preferences", "title": "Tes préférences", "since": 2, "koach": "Des exercices que tu adores, ou pas du tout ?"},
@@ -194,26 +194,6 @@ QUESTIONS = [
       factor="interruption",
       effect="Reprise progressive après un arrêt de plus de 3 semaines, d'autant plus longue que l'arrêt l'a été ; figures à forte contrainte tendineuse reprises une étape en dessous après un mois d'arrêt.",
       note="Posée une fois, à la création ; ensuite les coupures se lisent dans le journal (`TrainingLog.breaks`, dates des séances)."),
-    q("recent_training", "experience", 3, "group", "En ce moment, tu fais quoi ?", ["recentTraining", "currentPhase"],
-      skip=True, when=ADVANCED,
-      koach="Je cale ton premier bloc sur ce que tu fais vraiment aujourd'hui : ni semaine trop facile, ni marche trop haute.",
-      factor="charge_actuelle",
-      effect="Volume et fréquence du premier bloc par mouvement (ni décharge involontaire, ni saut de charge) ; exposition actuelle des coudes et des épaules aux bras tendus.",
-      items=[
-          item("exerciseId", "Mouvement ou figure", "exercise",
-               note="3 à 4 lignes pré-remplies : mouvements de compétition ou principaux de la discipline, figures de `skills`."),
-          item("sessionsPerWeek", "Combien de fois par semaine tu le travailles ?", "choice", options=[
-              opt("0", "Pas en ce moment"), opt("1", "1"), opt("2", "2"), opt("3", "3"), opt("4", "4 ou plus")]),
-          item("hardSets", "Combien de séries dures par semaine (à 3 répétitions ou moins de l'échec) ?", "choice",
-               required=False, options=[
-                   opt("under_5", "Moins de 5"), opt("sets_5_to_9", "5 à 9"), opt("sets_10_to_14", "10 à 14"),
-                   opt("sets_15_to_20", "15 à 20"), opt("over_20", "Plus de 20")]),
-          item("currentPhase", "En ce moment, tu es plutôt…", "choice", required=False, options=[
-              opt("volume", "En volume"), opt("heavy", "En lourd"),
-              opt("post_peak", "Je sors d'un pic ou d'une compétition"), opt("unstructured", "Sans structure")],
-               note="Une seule fois pour tout l'écran : écrit `currentPhase`."),
-      ],
-      note="« 4 ou plus » écrit 4. Ces réponses datent : elles portent `lifestyleUpdatedOn`, et le journal les remplace dès les premières semaines."),
     # --------------------------------------------------------- niveaux ----
     q("benchmarks", "niveaux", 3, "group", "Tes meilleures performances récentes", ["benchmarks"], skip=True, unknown=True,
       when=INTERMEDIATE,
@@ -222,7 +202,7 @@ QUESTIONS = [
       effect="Charges en part du maximum dès le premier bloc, choix des tentatives, séries de test seulement là où il manque une valeur.",
       items=[
           item("exerciseId", "Quel mouvement ?", "exercise",
-               note="Proposés d'abord : mouvements de compétition de la discipline, puis ceux de `movementLevels`."),
+               note="Proposés d'abord : mouvements de compétition de la discipline, puis ses mouvements principaux ; quand le cardio est la discipline principale, la course d'abord (record en `time_trial`)."),
           item("kind", "Quel genre de record ?", "choice", options=[
               opt("load_reps", "Une charge soulevée (1 répétition ou plus)"), opt("max_reps", "Un maximum de répétitions"),
               opt("max_hold", "Un maintien le plus long possible"), opt("time_trial", "Un temps sur une distance"),
@@ -265,6 +245,26 @@ QUESTIONS = [
                note="Évite de te faire repartir de zéro sur une étape que tu tiens depuis longtemps ; plus de 6 mois : la méthode change."),
       ],
       note="L'ordre de la liste est l'ordre de priorité (« fais glisser la plus importante en haut »). Étapes proposées : `Catalog.progressionCandidates` (variantes de la figure dans l'ordre de la base, puis la figure). Posée aussi en streetlifting et en CrossFit (muscle-up, équilibre, L-sit proposés d'abord)."),
+    q("recent_training", "niveaux", 3, "group", "En ce moment, tu fais quoi ?", ["recentTraining", "currentPhase"],
+      skip=True, when=ADVANCED,
+      koach="Je cale ton premier bloc sur ce que tu fais vraiment aujourd'hui : ni semaine trop facile, ni marche trop haute.",
+      factor="charge_actuelle",
+      effect="Volume et fréquence du premier bloc par mouvement (ni décharge involontaire, ni saut de charge) ; exposition actuelle des coudes et des épaules aux bras tendus.",
+      items=[
+          item("exerciseId", "Mouvement ou figure", "exercise",
+               note="3 à 4 lignes pré-remplies : mouvements des records saisis (`benchmarks`), mouvements de compétition ou principaux de la discipline, figures saisies juste avant (`skills`)."),
+          item("sessionsPerWeek", "Combien de fois par semaine tu le travailles ?", "choice", options=[
+              opt("0", "Pas en ce moment"), opt("1", "1"), opt("2", "2"), opt("3", "3"), opt("4", "4 ou plus")]),
+          item("hardSets", "Combien de séries dures par semaine (à 3 répétitions ou moins de l'échec) ?", "choice",
+               required=False, options=[
+                   opt("under_5", "Moins de 5"), opt("sets_5_to_9", "5 à 9"), opt("sets_10_to_14", "10 à 14"),
+                   opt("sets_15_to_20", "15 à 20"), opt("over_20", "Plus de 20")]),
+          item("currentPhase", "En ce moment, tu es plutôt…", "choice", required=False, options=[
+              opt("volume", "En volume"), opt("heavy", "En lourd"),
+              opt("post_peak", "Je sors d'un pic ou d'une compétition"), opt("unstructured", "Sans structure")],
+               note="Une seule fois pour tout l'écran : écrit `currentPhase`."),
+      ],
+      note="« 4 ou plus » écrit 4. Ces réponses datent : elles portent `lifestyleUpdatedOn`, et le journal les remplace dès les premières semaines. Dernière question de l'écran, après les records et les figures, pour que ses lignes soient pré-remplies avec eux."),
     # ------------------------------------------------------- objectifs ----
     q("goals", "objectifs", 2, "group", "Tes objectifs", ["goals"],
       note="« Laisse Koach proposer » (D3.8) en premier, présélectionné pour un débutant : l'écran se valide en un appui. Puis « M'entraîner régulièrement » (habitude) et « J'ai un chiffre en tête (ex. 10 pompes) » (performance chiffrée datée). Le premier objectif est le principal."),
@@ -409,12 +409,12 @@ QUESTIONS = [
       ],
       note="Une seule question : l'une des trois premières réponses (exclusives entre elles) écrit `occupationalLoad` ; la quatrième s'y ajoute et ouvre sur place l'éditeur d'`otherSports` ; sans elle, `otherSports` est écrit vide (aucun). Les codes des réponses ne sont pas des codes du contrat, sauf les trois premiers. Passée : les deux champs restent absents. « Autre sport » n'est pas une discipline du programme : c'est ce que tu fais déjà ailleurs."),
     q("body_weight_goal", "recuperation", 3, "choice", "Ton poids, en ce moment, tu veux…", ["bodyWeightGoal", "targetBodyWeightKg"], skip=True,
-      when=any_of(INTERMEDIATE, BODYWEIGHT_DISCIPLINES),
+      when=any_of(INTERMEDIATE, BODYWEIGHT_DISCIPLINES), defer_when=BEGINNER_PATH,
       options=[opt("lose", "Le faire baisser"), opt("maintain", "Le garder"), opt("gain", "Le faire monter"),
                opt("no_goal", "Je n'y pense pas")],
       factor="bilan_energetique",
       effect="En perte de poids : attentes réglées (la force peut monter, pas le muscle), volume gardé, tests moins fréquents ; lest et charge totale recalculés quand le poids change.",
-      note="« Baisser » ou « monter » propose « Jusqu'à combien ? » (`targetBodyWeightKg`, facultatif). Aucun conseil alimentaire n'est donné. Le rythme réel se lit dans les pesées."),
+      note="« Baisser » ou « monter » propose « Jusqu'à combien ? » (`targetBodyWeightKg`, facultatif). Aucun conseil alimentaire n'est donné. Le rythme réel se lit dans les pesées. Pour un débutant d'une discipline au poids du corps, la question est reportée après la première semaine, avec les trois autres de l'écran (`deferWhen`) : son premier bloc, prudent par construction, n'en dépend pas."),
     # ----------------------------------------------------------- santé ----
     q("health_screening", "sante", 2, "group", "Questionnaire santé", ["healthScreening"], required=True,
       note="Questionnaire L13 inchangé ; seule sa référence est dans le profil (aucune réponse copiée). Koach annonce sa taille avant de commencer (le nombre de questions oui / non du questionnaire du lot G6) : c'est un questionnaire entier, compté ici pour une question."),

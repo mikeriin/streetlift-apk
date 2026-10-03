@@ -91,7 +91,9 @@ double externalFromTotal({
 }
 
 /// Temps prédit sur [targetMeters] à partir d'un temps [seconds] réalisé
-/// sur [meters] : formule de Riegel (1981), `T2 = T1 × (D2 / D1)^1,06`.
+/// sur [meters] : formule dite de Riegel, `T2 = T1 × (D2 / D1)^1,06`
+/// (Riegel 1981 donne la forme `t = a × D^b`, avec b de 1,05 à 1,08 selon
+/// la population ; 1,06 est l'exposant d'usage).
 ///
 /// Rend `null` hors du domaine où la formule est calibrée : effort de
 /// départ ou effort prédit de moins de 3,5 minutes ou de plus de

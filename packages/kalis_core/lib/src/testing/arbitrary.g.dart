@@ -1264,7 +1264,7 @@ LiftAttempts arbitraryLiftAttempts(Random r) {
 PacingSegment arbitraryPacingSegment(Random r) {
   return PacingSegment(
     exerciseId: arbId(r),
-    setReps: arbList(r, 0, 4, () => arbInt(r, 0, 1000)),
+    setReps: arbList(r, 1, 4, () => arbInt(r, 0, 1000)),
     restSeconds: r.nextBool() ? null : arbInt(r, 0, 900),
     targetSeconds: r.nextBool() ? null : arbInt(r, 1, 14400),
     stationIndex: r.nextBool() ? null : arbInt(r, 0, 39),

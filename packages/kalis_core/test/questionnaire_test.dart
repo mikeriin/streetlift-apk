@@ -18,6 +18,16 @@ const int samples = 10000;
 /// Questions de récupération, reportées pour un débutant.
 const List<String> recovery = <String>['sleep', 'stress', 'outside_load'];
 
+/// Questions qui portent une condition de report (`deferWhen`) : les trois
+/// de récupération et l'évolution voulue du poids, que seul un débutant
+/// d'une discipline au poids du corps peut se voir reporter.
+const List<String> deferrable = <String>[
+  'sleep',
+  'stress',
+  'outside_load',
+  'body_weight_goal',
+];
+
 /// Identifiants des dix tests guidés, dans l'ordre du fichier.
 const List<String> testIds = <String>[
   't1_serie_lourde',
@@ -197,7 +207,7 @@ void main() {
     expect(<String>[
       for (final q in parcours.questions)
         if (q.deferWhen != null) q.id,
-    ], recovery);
+    ], deferrable);
     expect(<String>[
       for (final q in parcours.questions)
         if (q.requiredWhen != null) q.id,
@@ -441,7 +451,7 @@ void main() {
     for (final q in parcours.questions) {
       expect(
         parcours.isDeferred(q, empty, todayYear: todayYear),
-        recovery.contains(q.id),
+        deferrable.contains(q.id),
         reason: q.id,
       );
     }
@@ -753,9 +763,11 @@ void main() {
     );
 
     // Poids visé : niveau intermédiaire, ou discipline au poids du corps.
+    // Sans niveau (parcours du débutant), la question est reportée après
+    // la première semaine : absente de la création, rendue à part.
     expect(shortest, isNot(contains('body_weight_goal')));
     expect(
-      seen(having(mix('musculation'))),
+      seen(having(mix('musculation')), includeDeferred: true),
       isNot(contains('body_weight_goal')),
     );
     for (final code in <String>[
@@ -763,21 +775,28 @@ void main() {
       'street_workout',
       'calisthenics',
     ]) {
-      expect(
-        seen(having(mix(code))),
-        contains('body_weight_goal'),
-        reason: code,
-      );
-      expect(
-        seen(having(mix('cardio', <String>[code]))),
-        contains('body_weight_goal'),
-        reason: code,
-      );
+      for (final profile in <Map<String, Object?>>[
+        having(mix(code)),
+        having(mix('cardio', <String>[code])),
+        having(street(StreetStyle.setsReps, 0, 100, 0)),
+      ]) {
+        expect(seen(profile), isNot(contains('body_weight_goal')), reason: code);
+        expect(deferred(profile), contains('body_weight_goal'), reason: code);
+        expect(
+          seen(profile, includeDeferred: true),
+          contains('body_weight_goal'),
+          reason: code,
+        );
+        // Dès le niveau intermédiaire, elle est posée à la création.
+        final trained = <String, Object?>{...profile, ...level('intermediate')};
+        expect(seen(trained), contains('body_weight_goal'), reason: code);
+        expect(
+          deferred(trained),
+          isNot(contains('body_weight_goal')),
+          reason: code,
+        );
+      }
     }
-    expect(
-      seen(having(street(StreetStyle.setsReps, 0, 100, 0))),
-      contains('body_weight_goal'),
-    );
   });
 
   test('chaque opérateur de condition, sur un cas vrai et un cas faux', () {

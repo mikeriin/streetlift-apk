@@ -409,6 +409,11 @@ def _par(c: dict) -> str:
     return "(" + qui(c) + ")" if c["op"] in ("all", "any") else qui(c)
 
 
+# Disciplines principales du tableau « débutant, selon sa discipline » (§ 2).
+DEBUTANTS = [("Forme générale", "general_fitness"), ("Mobilité", "mobility"), ("Musculation", "musculation"),
+             ("Street workout (sets & reps)", "street_workout"), ("CrossFit", "crossfit"),
+             ("Streetlifting", "streetlifting"), ("Calisthénie", "calisthenics"), ("Cardio", "cardio")]
+
 FORME = {"choice": "un choix", "multi": "plusieurs choix", "number": "nombre", "text": "texte", "group": "éditeur de liste",
          "composite": "plusieurs choix + éditeur", "date": "date"}
 
@@ -433,7 +438,8 @@ def doc(fx: dict) -> str:
       "création** ; l'application la propose après la première semaine (carte discrète de Koach, une fois). "
       "`visibleQuestions` ne la rend pas ; `deferredQuestions(profilJson, todayYear: …)` la rend ; "
       "`visibleQuestions(…, includeDeferred: true)` rend tout (Réglages › Profil). Un débutant ne voit ainsi à la création "
-      "**aucune question du schéma 3**.\n"
+      "**aucune question de récupération** ; des questions du schéma 3, il ne voit que celles que sa discipline rend "
+      "nécessaires pour écrire son premier programme (§ 2).\n"
       "- **Obligatoire sous condition** (`requiredWhen`) : `isRequired(question, profilJson, todayYear: …)` dit si la "
       "réponse est exigée pour ce profil (le poids de corps pour les disciplines au poids du corps).\n"
       "- **« Passer »** (`skip`) : le champ reste absent du profil — jamais de valeur par défaut (D5.8). "
@@ -473,12 +479,27 @@ def doc(fx: dict) -> str:
     vide = visible({})
     w(f"\nRepère : le parcours compte {len(ps.QUESTIONS)} questions en tout — les {total_v2} du schéma 2 (parcours G6, "
       f"posées alors à tout le monde) et {total_v3} du schéma 3, toutes conditionnelles ou passables. Un profil encore "
-      f"vide voit {len(vide)} questions (le parcours le plus court). **Un débutant voit {len(vide)} questions à la création, "
-      "une de moins qu'avec le parcours G6** (les exercices aimés ou détestés lui sont demandés pendant la revue du "
-      "programme, D4.5), **et aucune question nouvelle** : ses trois questions de récupération, à un seul appui chacune, "
-      "sont reportées après la première semaine. Parcours le plus court possible à information égale : chaque question "
+      f"vide voit {len(vide)} questions (le parcours le plus court). **Un débutant voit {len(vide)} à 18 questions à la "
+      "création selon sa discipline (tableau ci-dessous) — en forme générale, une de moins qu'avec le parcours G6** (les exercices aimés ou détestés lui sont demandés pendant la revue du "
+      "programme, D4.5), **sans aucune question de récupération** : celles-ci, à un seul appui chacune, sont reportées "
+      "après la première semaine. Parcours le plus court possible à information égale : chaque question "
       "du schéma 3 retenue change une décision du moteur (ligne « Ce que ça change ») ; celles qui n'en changent aucune "
       "sont écartées dans `PROFIL_V3.md`.\n\n")
+    w("**Débutant, selon sa discipline principale** (calculé par ce générateur sur un profil « débutant » dont seule la "
+      "discipline change) : les seules questions du schéma 3 posées à la création sont celles sans lesquelles le premier "
+      "programme ne peut pas être écrit — la figure visée, l'orientation en musculation, la course préparée et le volume "
+      "de course actuel. Toutes sont passables.\n\n"
+      "| Discipline principale du débutant | Questions à la création | Questions du schéma 3 vues | Reportées |\n"
+      "| --- | ---: | --- | --- |\n")
+    for nom, code in DEBUTANTS:
+        prof = {"experience": "beginner", "disciplines": {
+            "primary": code, "primaryPct": 80,
+            "secondaries": [{"discipline": "general_fitness" if code == "mobility" else "mobility", "pct": 20}]}}
+        vus = visible(prof)
+        w(f"| {nom} | {len(vus)} | "
+          f"{', '.join('`' + q['id'] + '`' for q in vus if q['since'] >= 3) or '—'} | "
+          f"{', '.join('`' + q['id'] + '`' for q in deferred_questions(prof))} |\n")
+    w("\n")
 
     w("## 3. Écrans et questions, dans l'ordre\n\n")
     for s in ps.SCREENS:

@@ -1713,7 +1713,7 @@ Stratégie de rythme sur un poste d'une épreuve de répétitions (0.4.0).
 | Champ | Type | Optionnel | Contraintes | Sens |
 | --- | --- | --- | --- | --- |
 | `exerciseId` | texte | non | id du catalogue | Exercice. |
-| `setReps` | liste de entier | non | longueur ≤ 60 | Répétitions prévues par série, dans l'ordre. |
+| `setReps` | liste de entier | non | longueur 1 à 60 | Répétitions prévues par série, dans l'ordre. |
 | `restSeconds` | entier | oui | 0 à 900 | Repos prévu entre les séries, en secondes. |
 | `targetSeconds` | entier | oui | 1 à 14400 | Temps visé sur ce poste, en secondes. |
 | `stationIndex` | entier | oui | 0 à 39 | Rang du poste dans l'épreuve (0 = premier), quand un exercice y revient plusieurs fois. |

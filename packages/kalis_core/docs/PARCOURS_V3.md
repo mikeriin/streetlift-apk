@@ -6,7 +6,7 @@ Fichier généré par `tool/gen_parcours.py` depuis `tool/parcours_spec.py` — 
 
 - Le parcours v3 **reprend l'écran de création du profil du lot G6** (mêmes écrans, mêmes composants, même ton) et y ajoute les questions du schéma 3, **posées seulement à ceux pour qui elles comptent**. Une question = un écran ou un bloc d'écran clair ; Koach présente chaque écran (texte `koach`).
 - **Arbre adaptatif** : chaque question porte une condition d'apparition (`when`) évaluée sur le profil en cours de saisie. L'application ne code aucune condition : elle appelle `ProfileQuestionnaire.visibleQuestions(profilJson, todayYear: …)` après chaque réponse. Une réponse absente rend la condition fausse : **sans réponse, on montre le parcours le plus court**.
-- **Questions reportées** (`deferWhen`) : une question dont la condition de report est vraie n'est **pas posée à la création** ; l'application la propose après la première semaine (carte discrète de Koach, une fois). `visibleQuestions` ne la rend pas ; `deferredQuestions(profilJson, todayYear: …)` la rend ; `visibleQuestions(…, includeDeferred: true)` rend tout (Réglages › Profil). Un débutant ne voit ainsi à la création **aucune question du schéma 3**.
+- **Questions reportées** (`deferWhen`) : une question dont la condition de report est vraie n'est **pas posée à la création** ; l'application la propose après la première semaine (carte discrète de Koach, une fois). `visibleQuestions` ne la rend pas ; `deferredQuestions(profilJson, todayYear: …)` la rend ; `visibleQuestions(…, includeDeferred: true)` rend tout (Réglages › Profil). Un débutant ne voit ainsi à la création **aucune question de récupération** ; des questions du schéma 3, il ne voit que celles que sa discipline rend nécessaires pour écrire son premier programme (§ 2).
 - **Obligatoire sous condition** (`requiredWhen`) : `isRequired(question, profilJson, todayYear: …)` dit si la réponse est exigée pour ce profil (le poids de corps pour les disciplines au poids du corps).
 - **« Passer »** (`skip`) : le champ reste absent du profil — jamais de valeur par défaut (D5.8). **« Je ne sais pas »** (`unknown`) : même effet, et un test guidé sera proposé (§ 5).
 - **Liste vide ≠ champ absent** : `otherSports: []` = « aucun autre sport » ; `events: []` = « aucune échéance » ; champ absent = question non posée ou passée.
@@ -23,11 +23,24 @@ Convention : une question = une entrée de `questions` visible **à la création
 | --- | ---: | ---: | --- | --- |
 | `v3_debutant_forme_generale` — Débutant complet, forme générale, 2 × 30 min à la maison sans matériel ; questions de récupération répondues après la première semaine. | 16 | 0 | — | `sleep`, `stress`, `outside_load` |
 | `v3_intermediaire_musculation` — Femme de 34 ans, musculation en salle depuis 3 ans, 4 × 60 min, un footing par semaine. | 27 | 10 | `training_age`, `training_gap`, `benchmarks`, `emphasis`, `events`, `specialization`, `sleep`, `stress`, `outside_load`, `body_weight_goal` | — |
-| `v3_competiteur_elite_streetlifting` — Compétiteur élite de streetlifting (catégorie −73 kg), mode street 70/15/15, 5 séances, compétition principale dans 28 semaines. | 29 | 12 | `training_age`, `training_gap`, `recent_training`, `benchmarks`, `skills`, `events`, `specialization`, `weak_points`, `sleep`, `stress`, `outside_load`, `body_weight_goal` | — |
+| `v3_competiteur_elite_streetlifting` — Compétiteur élite de streetlifting (catégorie −73 kg), mode street 70/15/15, 5 séances, compétition principale dans 28 semaines. | 29 | 12 | `training_age`, `training_gap`, `benchmarks`, `skills`, `recent_training`, `events`, `specialization`, `weak_points`, `sleep`, `stress`, `outside_load`, `body_weight_goal` | — |
 | `v3_coureuse_10km` — Autre discipline : coureuse régulière (cardio 70 %, musculation 20 %, mobilité 10 %), 10 km visé en mars, reprise après deux semaines d'arrêt. | 28 | 11 | `training_age`, `training_gap`, `benchmarks`, `emphasis`, `events`, `specialization`, `running_base`, `sleep`, `stress`, `outside_load`, `body_weight_goal` | — |
-| `v3_sets_reps_avance` — Mode street, principale sets & reps (20/60/20), avancé, compétition de répétitions contre la montre, sport de combat deux fois par semaine. | 29 | 12 | `training_age`, `training_gap`, `recent_training`, `benchmarks`, `skills`, `events`, `specialization`, `weak_points`, `sleep`, `stress`, `outside_load`, `body_weight_goal` | — |
+| `v3_sets_reps_avance` — Mode street, principale sets & reps (20/60/20), avancé, compétition de répétitions contre la montre, sport de combat deux fois par semaine. | 29 | 12 | `training_age`, `training_gap`, `benchmarks`, `skills`, `recent_training`, `events`, `specialization`, `weak_points`, `sleep`, `stress`, `outside_load`, `body_weight_goal` | — |
 
-Repère : le parcours compte 31 questions en tout — les 17 du schéma 2 (parcours G6, posées alors à tout le monde) et 14 du schéma 3, toutes conditionnelles ou passables. Un profil encore vide voit 16 questions (le parcours le plus court). **Un débutant voit 16 questions à la création, une de moins qu'avec le parcours G6** (les exercices aimés ou détestés lui sont demandés pendant la revue du programme, D4.5), **et aucune question nouvelle** : ses trois questions de récupération, à un seul appui chacune, sont reportées après la première semaine. Parcours le plus court possible à information égale : chaque question du schéma 3 retenue change une décision du moteur (ligne « Ce que ça change ») ; celles qui n'en changent aucune sont écartées dans `PROFIL_V3.md`.
+Repère : le parcours compte 31 questions en tout — les 17 du schéma 2 (parcours G6, posées alors à tout le monde) et 14 du schéma 3, toutes conditionnelles ou passables. Un profil encore vide voit 16 questions (le parcours le plus court). **Un débutant voit 16 à 18 questions à la création selon sa discipline (tableau ci-dessous) — en forme générale, une de moins qu'avec le parcours G6** (les exercices aimés ou détestés lui sont demandés pendant la revue du programme, D4.5), **sans aucune question de récupération** : celles-ci, à un seul appui chacune, sont reportées après la première semaine. Parcours le plus court possible à information égale : chaque question du schéma 3 retenue change une décision du moteur (ligne « Ce que ça change ») ; celles qui n'en changent aucune sont écartées dans `PROFIL_V3.md`.
+
+**Débutant, selon sa discipline principale** (calculé par ce générateur sur un profil « débutant » dont seule la discipline change) : les seules questions du schéma 3 posées à la création sont celles sans lesquelles le premier programme ne peut pas être écrit — la figure visée, l'orientation en musculation, la course préparée et le volume de course actuel. Toutes sont passables.
+
+| Discipline principale du débutant | Questions à la création | Questions du schéma 3 vues | Reportées |
+| --- | ---: | --- | --- |
+| Forme générale | 16 | — | `sleep`, `stress`, `outside_load` |
+| Mobilité | 16 | — | `sleep`, `stress`, `outside_load` |
+| Musculation | 17 | `emphasis` | `sleep`, `stress`, `outside_load` |
+| Street workout (sets & reps) | 16 | — | `sleep`, `stress`, `outside_load`, `body_weight_goal` |
+| CrossFit | 17 | `skills` | `sleep`, `stress`, `outside_load` |
+| Streetlifting | 17 | `skills` | `sleep`, `stress`, `outside_load`, `body_weight_goal` |
+| Calisthénie | 17 | `skills` | `sleep`, `stress`, `outside_load`, `body_weight_goal` |
+| Cardio | 18 | `events`, `running_base` | `sleep`, `stress`, `outside_load` |
 
 ## 3. Écrans et questions, dans l'ordre
 
@@ -114,7 +127,6 @@ Koach : « Dis-moi d'où tu pars : je règle la difficulté dessus. »
 | `experience_level` | Globalement, tu te situes où ? | un choix ; « Passer » | `experience` | tous | non | 2 |
 | `training_age` | Depuis combien de temps tu pratiques régulièrement ta discipline principale ? | un choix ; « Passer » | `trainingAge` | `experience` ≥ intermediate | non | 3 |
 | `training_gap` | En ce moment, tu t'entraînes ? | un choix ; « Passer » | `trainingGap` | `trainingAge` ≥ months_6_to_24 | non | 3 |
-| `recent_training` | En ce moment, tu fais quoi ? | éditeur de liste ; « Passer » | `recentTraining`, `currentPhase` | `experience` ≥ advanced | non | 3 |
 
 **`experience_level`**
 
@@ -138,21 +150,6 @@ Koach : « Dis-moi d'où tu pars : je règle la difficulté dessus. »
 - Note : Posée une fois, à la création ; ensuite les coupures se lisent dans le journal (`TrainingLog.breaks`, dates des séances).
 - Justification : `PROFIL_V3.md`, facteur `interruption`.
 
-**`recent_training`**
-
-- Koach : « Je cale ton premier bloc sur ce que tu fais vraiment aujourd'hui : ni semaine trop facile, ni marche trop haute. »
-- Ce que ça change : Volume et fréquence du premier bloc par mouvement (ni décharge involontaire, ni saut de charge) ; exposition actuelle des coudes et des épaules aux bras tendus.
-- Note : « 4 ou plus » écrit 4. Ces réponses datent : elles portent `lifestyleUpdatedOn`, et le journal les remplace dès les premières semaines.
-- Justification : `PROFIL_V3.md`, facteur `charge_actuelle`.
-- Champs d'un élément :
-
-  | Champ | Texte | Forme | Obligatoire | Réponses / note |
-  | --- | --- | --- | --- | --- |
-  | `exerciseId` | Mouvement ou figure | exercise | oui | 3 à 4 lignes pré-remplies : mouvements de compétition ou principaux de la discipline, figures de `skills`. |
-  | `sessionsPerWeek` | Combien de fois par semaine tu le travailles ? | choice | oui | Pas en ce moment → `0` · 1 → `1` · 2 → `2` · 3 → `3` · 4 ou plus → `4` |
-  | `hardSets` | Combien de séries dures par semaine (à 3 répétitions ou moins de l'échec) ? | choice | non | Moins de 5 → `under_5` · 5 à 9 → `sets_5_to_9` · 10 à 14 → `sets_10_to_14` · 15 à 20 → `sets_15_to_20` · Plus de 20 → `over_20` |
-  | `currentPhase` | En ce moment, tu es plutôt… | choice | non | En volume → `volume` · En lourd → `heavy` · Je sors d'un pic ou d'une compétition → `post_peak` · Sans structure → `unstructured` — Une seule fois pour tout l'écran : écrit `currentPhase`. |
-
 ### Écran `niveaux` — Ce que tu sais faire
 
 Koach : « Donne-moi une idée, même vague. Si tu ne sais pas, pas d'examen : on verra tranquillement pendant tes premières séances. »
@@ -162,6 +159,7 @@ Koach : « Donne-moi une idée, même vague. Si tu ne sais pas, pas d'examen : o
 | `benchmarks` | Tes meilleures performances récentes | éditeur de liste ; « Passer », « Je ne sais pas » | `benchmarks` | `experience` ≥ intermediate | non | 3 |
 | `movement_levels` | Ce que tu fais aujourd'hui sur quelques mouvements | éditeur de liste ; « Je ne sais pas » | `movementLevels` | tous | non | 2 |
 | `skills` | Les figures que tu travailles | éditeur de liste ; « Passer » | `skills` | (`disciplines.primary` ∈ {calisthenics, streetlifting, crossfit} OU `disciplines.secondaries[*].discipline` ∈ {calisthenics, streetlifting, crossfit}) OU `streetMode.calisthenicsPct` ≥ 1 | non | 3 |
+| `recent_training` | En ce moment, tu fais quoi ? | éditeur de liste ; « Passer » | `recentTraining`, `currentPhase` | `experience` ≥ advanced | non | 3 |
 
 **`benchmarks`**
 
@@ -173,7 +171,7 @@ Koach : « Donne-moi une idée, même vague. Si tu ne sais pas, pas d'examen : o
 
   | Champ | Texte | Forme | Obligatoire | Réponses / note |
   | --- | --- | --- | --- | --- |
-  | `exerciseId` | Quel mouvement ? | exercise | oui | Proposés d'abord : mouvements de compétition de la discipline, puis ceux de `movementLevels`. |
+  | `exerciseId` | Quel mouvement ? | exercise | oui | Proposés d'abord : mouvements de compétition de la discipline, puis ses mouvements principaux ; quand le cardio est la discipline principale, la course d'abord (record en `time_trial`). |
   | `kind` | Quel genre de record ? | choice | oui | Une charge soulevée (1 répétition ou plus) → `load_reps` · Un maximum de répétitions → `max_reps` · Un maintien le plus long possible → `max_hold` · Un temps sur une distance → `time_trial` · Une distance en un temps donné → `distance_trial` · Un volume imposé, le plus vite possible → `reps_for_time` |
   | `externalLoadKg` | Quelle charge ? (le lest seul pour un exercice lesté) | number | oui | — |
   | `reps` | Combien de répétitions ? | number | oui | — |
@@ -204,6 +202,21 @@ Koach : « Donne-moi une idée, même vague. Si tu ne sais pas, pas d'examen : o
   | `bestHoldSeconds` | Ton meilleur maintien propre sur cette étape ? | duration | non | — |
   | `bestReps` | Ou ton meilleur nombre de répétitions propres ? | number | non | — |
   | `atStepSince` | Depuis quand tu en es là ? | choice | non | Moins d'un mois → `under_1_month` · 1 à 3 mois → `months_1_to_3` · 3 à 6 mois → `months_3_to_6` · Plus de 6 mois → `over_6_months` — Évite de te faire repartir de zéro sur une étape que tu tiens depuis longtemps ; plus de 6 mois : la méthode change. |
+
+**`recent_training`**
+
+- Koach : « Je cale ton premier bloc sur ce que tu fais vraiment aujourd'hui : ni semaine trop facile, ni marche trop haute. »
+- Ce que ça change : Volume et fréquence du premier bloc par mouvement (ni décharge involontaire, ni saut de charge) ; exposition actuelle des coudes et des épaules aux bras tendus.
+- Note : « 4 ou plus » écrit 4. Ces réponses datent : elles portent `lifestyleUpdatedOn`, et le journal les remplace dès les premières semaines. Dernière question de l'écran, après les records et les figures, pour que ses lignes soient pré-remplies avec eux.
+- Justification : `PROFIL_V3.md`, facteur `charge_actuelle`.
+- Champs d'un élément :
+
+  | Champ | Texte | Forme | Obligatoire | Réponses / note |
+  | --- | --- | --- | --- | --- |
+  | `exerciseId` | Mouvement ou figure | exercise | oui | 3 à 4 lignes pré-remplies : mouvements des records saisis (`benchmarks`), mouvements de compétition ou principaux de la discipline, figures saisies juste avant (`skills`). |
+  | `sessionsPerWeek` | Combien de fois par semaine tu le travailles ? | choice | oui | Pas en ce moment → `0` · 1 → `1` · 2 → `2` · 3 → `3` · 4 ou plus → `4` |
+  | `hardSets` | Combien de séries dures par semaine (à 3 répétitions ou moins de l'échec) ? | choice | non | Moins de 5 → `under_5` · 5 à 9 → `sets_5_to_9` · 10 à 14 → `sets_10_to_14` · 15 à 20 → `sets_15_to_20` · Plus de 20 → `over_20` |
+  | `currentPhase` | En ce moment, tu es plutôt… | choice | non | En volume → `volume` · En lourd → `heavy` · Je sors d'un pic ou d'une compétition → `post_peak` · Sans structure → `unstructured` — Une seule fois pour tout l'écran : écrit `currentPhase`. |
 
 ### Écran `objectifs` — Tes objectifs
 
@@ -328,7 +341,7 @@ Koach : « Où t'entraînes-tu, et avec quoi ? »
 
 Koach : « Ton corps récupère aussi en dehors des séances. Quelques questions rapides. »
 
-Nouvel écran (schéma 3). Les trois premières questions tiennent sur un écran ; chacune a « Passer ». Pour un débutant, cet écran n'est pas montré à la création : ses questions sont proposées après la première semaine (`deferWhen`).
+Nouvel écran (schéma 3). Les trois premières questions tiennent sur un écran ; chacune a « Passer ». Pour un débutant, cet écran n'est pas montré à la création : ses questions (les quatre portent `deferWhen`) sont proposées après la première semaine.
 
 | Question (`id`) | Texte | Forme | Champ(s) | Posée à | Obligatoire | Schéma |
 | --- | --- | --- | --- | --- | --- | ---: |
@@ -377,8 +390,9 @@ Nouvel écran (schéma 3). Les trois premières questions tiennent sur un écran
 **`body_weight_goal`**
 
 - Réponses : Le faire baisser → `lose` · Le garder → `maintain` · Le faire monter → `gain` · Je n'y pense pas → `no_goal`
+- Reportée après la première semaine si : pas (`experience` ≥ intermediate).
 - Ce que ça change : En perte de poids : attentes réglées (la force peut monter, pas le muscle), volume gardé, tests moins fréquents ; lest et charge totale recalculés quand le poids change.
-- Note : « Baisser » ou « monter » propose « Jusqu'à combien ? » (`targetBodyWeightKg`, facultatif). Aucun conseil alimentaire n'est donné. Le rythme réel se lit dans les pesées.
+- Note : « Baisser » ou « monter » propose « Jusqu'à combien ? » (`targetBodyWeightKg`, facultatif). Aucun conseil alimentaire n'est donné. Le rythme réel se lit dans les pesées. Pour un débutant d'une discipline au poids du corps, la question est reportée après la première semaine, avec les trois autres de l'écran (`deferWhen`) : son premier bloc, prudent par construction, n'en dépend pas.
 - Justification : `PROFIL_V3.md`, facteur `bilan_energetique`.
 
 ### Écran `sante` — Ta santé
