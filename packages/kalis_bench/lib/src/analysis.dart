@@ -89,10 +89,10 @@ String weekKindName(WeekKind kind) => switch (kind) {
 
 /// Famille de tenue bras tendus (même maillon tendineux).
 enum StraightArmFamily {
-  /// Poussée bras tendus : planche et ses paliers.
+  /// Poussée bras tendus : planche, back lever et leurs paliers.
   push,
 
-  /// Tirage bras tendus : front lever, back lever et leurs paliers.
+  /// Tirage bras tendus : front lever et ses paliers.
   pull,
 
   /// Figures mixtes : drapeau.
@@ -100,7 +100,7 @@ enum StraightArmFamily {
 
   /// Nom français.
   String get label => switch (this) {
-    StraightArmFamily.push => 'poussée, type planche',
+    StraightArmFamily.push => 'poussée, type planche et back lever',
     StraightArmFamily.pull => 'tirage, type front lever',
     StraightArmFamily.mixed => 'mixtes, type drapeau',
   };
@@ -176,6 +176,18 @@ final class ItemView {
   /// Vrai pour du renforcement (figures comprises).
   bool get isResistance => traits.kind.isResistance;
 
+  /// Codes des techniques de l'exercice : le format libre des moteurs 0.1
+  /// et la technique structurée de `kalis_core` 0.4.0 (hors `standard`).
+  Set<String> get techniqueCodes {
+    final format = p.format;
+    final technique = p.technique;
+    return <String>{
+      if (format != null) format,
+      if (technique != null && technique.kind != SetTechniqueKind.standard)
+        technique.kind.code,
+    };
+  }
+
   /// Vrai pour une épreuve.
   bool get isTest => p.kind == SetKind.test;
 
@@ -215,6 +227,12 @@ final class ItemView {
 
   /// Famille bras tendus de l'exercice, ou `null`.
   StraightArmFamily? get straightArm {
+    // R4-F10 : planche et back lever partagent le même budget tendineux
+    // (coude en extension, biceps), quel que soit le schéma du catalogue.
+    if (exercise.rootId.startsWith('cs-back-lever') ||
+        exercise.id.startsWith('cs-back-lever')) {
+      return StraightArmFamily.push;
+    }
     switch (exercise.pattern) {
       case MovementPattern.figureStatiquePoussee:
         return StraightArmFamily.push;
@@ -277,7 +295,12 @@ final class DayView {
     required this.minutesBudget,
     required this.focus,
     required this.items,
+    this.groupFormats = const <String>[],
   });
+
+  /// Formats des enchaînements du jour (`GroupFormat` de `kalis_core`
+  /// 0.4.0 : superset, circuit, emom…), vide pour les moteurs 0.1.
+  final List<String> groupFormats;
 
   /// Jour d'entraînement.
   final int dayIndex;
@@ -357,6 +380,25 @@ final class WeekView {
     }
     return total;
   }
+
+  /// Minutes d'effort estimées des exercices qui ne sont pas du
+  /// renforcement (course, cardio, conditionnement), repos compris.
+  double get conditioningMinutes {
+    var seconds = 0.0;
+    for (final i in items) {
+      if (!i.isResistance) {
+        seconds += i.estimatedSeconds;
+      }
+    }
+    return seconds / 60;
+  }
+
+  /// Formats et techniques présents dans la semaine (exercices et
+  /// enchaînements).
+  Set<String> get techniqueCodes => <String>{
+    for (final d in days) ...d.groupFormats,
+    for (final i in items) ...i.techniqueCodes,
+  };
 
   /// Secondes de tenue bras tendus de la famille [family].
   double straightArmSeconds(StraightArmFamily family) {
@@ -480,6 +522,10 @@ final class ProgramView {
                     bodyWeightKg: bodyWeight,
                     runMetersPerSecond: runSpeed,
                   ),
+              ],
+              groupFormats: <String>[
+                for (final g in day.groups ?? const <GroupSpec>[])
+                  g.format.code,
               ],
             ),
           );

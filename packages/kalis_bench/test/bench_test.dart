@@ -109,6 +109,9 @@ void main() {
     expect(t.rows, isNotEmpty);
     final rate = t.metrics['unwantedFailureRate']! as num;
     expect(rate, inInclusiveRange(0, 1));
+    expect(t.metrics['unlockViolations'], isA<int>());
+    final verdicts = t.metrics['verdicts']! as Map<String, bool?>;
+    expect(verdicts.keys, containsAll(<String>['deblocages', 'ecart_rir']));
     final text = trajectoryMarkdown(t, catalog);
     expect(text, contains('# Trajectoire simulée'));
     expect(text, contains('## Semaine par semaine'));
@@ -118,6 +121,34 @@ void main() {
       isFalse,
     );
   }, timeout: const Timeout(Duration(minutes: 10)));
+
+  test('verdicts de trajectoire : repères tenus, non tenus, sans objet', () {
+    final good = trajectoryVerdicts(<String, Object?>{
+      'unwantedFailureRate': 0.02,
+      'rirGapReachable': 0.8,
+      'mainRisesOverTenPercent': 0,
+      'meanEventPerformance': 1.03,
+      'unlockViolations': 0,
+      'painAggravations': 0,
+    });
+    expect(good.values.every((v) => v == true), isTrue);
+    final bad = trajectoryVerdicts(<String, Object?>{
+      'unwantedFailureRate': 0.2,
+      'rirGapReachable': 1.6,
+      'mainRisesOverTenPercent': 2,
+      'meanEventPerformance': null,
+      'unlockViolations': 1,
+      'painAggravations': 1,
+    });
+    expect(bad['echecs_non_voulus'], isFalse);
+    expect(bad['ecart_rir'], isFalse);
+    expect(bad['pics_de_charge'], isFalse);
+    expect(bad['performance_echeance'], isNull);
+    expect(bad['deblocages'], isFalse);
+    expect(bad['douleur'], isFalse);
+    expect(requiredUnlock[ProposalKind.volume], UnlockLevel.volume);
+    expect(requiredUnlock.containsKey(ProposalKind.deload), isFalse);
+  });
 
   test('athlète simulé : niveau, gain par défaut, réglages du profil', () {
     final spec = athleteSpecOf(benchProfileOf('street_09_elite_streetlifting'));

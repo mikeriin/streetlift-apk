@@ -288,7 +288,7 @@
     "formats": [
      "top_set_backoff",
      "cluster",
-     "waves"
+     "wave"
     ]
    },
    {

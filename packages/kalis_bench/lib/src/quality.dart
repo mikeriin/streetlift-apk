@@ -407,11 +407,11 @@ List<QualityMeasure> qualityMeasures(
     var ratio = 0.0;
     if (push > 0 && pull > 0) {
       ratio = pull / push;
-      // R5-P27 : tirage / poussée d'au moins 1 ; bande tolérée 0,8 à 2.
-      if (ratio >= 0.8 && ratio <= 2.0) {
+      // R5-P27 : tirage / poussée d'au moins 1 ; bande 1 à 2.
+      if (ratio >= 1.0 - 1e-9 && ratio <= 2.0) {
         score = 1;
-      } else if (ratio < 0.8) {
-        score = _clamp01(ratio / 0.8);
+      } else if (ratio < 1.0) {
+        score = _clamp01(ratio);
       } else {
         score = _clamp01(2.0 / ratio);
       }
