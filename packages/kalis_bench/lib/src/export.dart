@@ -328,6 +328,9 @@ bool _isBlockNote(Reason r) {
       note == CoachNotes.loadAdjust ||
       note == CoachNotes.repsAdjust ||
       note == CoachNotes.testUse ||
+      note == CoachNotes.badDay ||
+      note == CoachNotes.missed ||
+      note == CoachNotes.testRest ||
       note == CoachNotes.topSetBackoff ||
       note == CoachNotes.submaximalHold ||
       note == CoachNotes.qualityFirst ||

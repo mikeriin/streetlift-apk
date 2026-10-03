@@ -657,6 +657,17 @@ List<String> _repsMethods(int max) {
   ];
 }
 
+/// Méthodes d'un pilier en préparation d'une épreuve de répétitions :
+/// série longue, densité, volume — la force passe par la séance lestée de
+/// la semaine (R4-G1, R4-G2).
+const List<String> _competitionMethods = <String>[
+  Method.repsTop,
+  Method.repsDensity,
+  Method.repsVolume,
+  Method.repsDensity,
+  Method.repsVolume,
+];
+
 DayStress _stressOf(String method) => switch (method) {
   Method.repsTop || Method.repsStrength || Method.liftHeavy => DayStress.heavy,
   Method.repsDensity || Method.liftLight => DayStress.light,
@@ -773,11 +784,9 @@ void _buildReps(_Builder b, Set<int> runDays) {
   // l'intermédiaire, 3 à 4 chez l'avancé, 4 à 5 en élite), bornée par les
   // jours et par la tolérance du profil.
   var frequency = a.level >= 3 ? 5 : (a.level == 2 ? 4 : 3);
-  if (competition && a.level >= 2) {
-    // Préparation d'une épreuve : le geste se travaille presque chaque
-    // jour, en alternant les méthodes (R4-G8, R1-P9).
-    frequency = 5;
-  }
+  // (R4-G8 vaut aussi en préparation d'une épreuve : 3 à 4 séances chez
+  // l'avancé, 4 à 5 en élite ; la séance lestée de la semaine s'ajoute à
+  // une séance au poids du corps, elle ne la remplace pas.)
   if (spared && frequency > 2) {
     frequency--;
   }
@@ -811,8 +820,10 @@ void _buildReps(_Builder b, Set<int> runDays) {
           wanted,
         );
 
-  final pullMethods = _repsMethods(pullMax);
-  final dipMethods = _repsMethods(dipMax);
+  final pullMethods = competition
+      ? _competitionMethods
+      : _repsMethods(pullMax);
+  final dipMethods = competition ? _competitionMethods : _repsMethods(dipMax);
   var pullAt = 0;
   var dipAt = 1;
   var pushAt = 0;
@@ -1354,10 +1365,10 @@ void _buildFigures(_Builder b, Set<int> runDays) {
   final legDays = spreadDays(
     a,
     rest.isEmpty ? days : rest,
-    a.level >= 2 ? 1 : 2,
+    n >= 5 || a.level < 2 ? 2 : 1,
   );
   final balanceDays = handstand >= 20
-      ? spreadDays(a, rest.isEmpty ? days : rest, 2)
+      ? spreadDays(a, rest.isEmpty ? days : rest, n >= 5 ? 3 : 2)
       : <int>[];
 
   void ladderOf(SkillTrack t) {
@@ -1505,7 +1516,9 @@ void _buildFigures(_Builder b, Set<int> runDays) {
     if (second != null && secondDays.contains(d)) {
       skillDay(d, second, heavy: true);
     }
-    // Force de base au service des figures (R1-P17, R4-F5).
+    // Force de base au service des figures (R1-P17, R4-F5) : lestée quand
+    // le matériel et le niveau le permettent, sinon au poids du corps ;
+    // plus de séries les jours sans maintien lourd.
     final skillLoad = b.days[d].slots
         .where((s) => s.method == Method.skillHold)
         .length;
@@ -1518,7 +1531,7 @@ void _buildFigures(_Builder b, Set<int> runDays) {
         <String>[Ids.weightedPull],
         SlotRole.secondary,
         Method.liftVolume,
-        sets: 3,
+        sets: 4,
         stress: DayStress.medium,
       );
     } else if (pullMax >= 1 && a.can(Ids.pull, d) && skillLoad < 2) {
@@ -1531,15 +1544,43 @@ void _buildFigures(_Builder b, Set<int> runDays) {
         stress: DayStress.medium,
       );
     }
-    if (dipMax >= 1 && a.can(Ids.dip, d) && skillLoad < 2) {
+    if (balanceDays.contains(d) && a.level >= 2) {
+      // Poussée verticale tête en bas : la force qui porte l'équilibre et
+      // la planche (R4-F5).
+      final dynamics = skillDynamics['cs-handstand']!;
       b.add(
         d,
-        <String>[Ids.dip],
-        SlotRole.secondary,
-        Method.repsVolume,
+        dynamics.reversed.toList(),
+        SlotRole.skill,
+        Method.skillDynamic,
         sets: 3,
+        skillTargetId: 'cs-handstand',
         stress: DayStress.medium,
       );
+    }
+    if (dipMax >= 1 && a.can(Ids.dip, d) && skillLoad < 2) {
+      if (skillLoad == 0 && a.level >= 2 && a.can(Ids.weightedDip, d)) {
+        b.add(
+          d,
+          <String>[Ids.weightedDip],
+          SlotRole.secondary,
+          a.oneRm[Ids.weightedDip] != null
+              ? Method.liftVolume
+              : Method.repsStrength,
+          sets: 3,
+          stress: DayStress.medium,
+          referenceId: Ids.dip,
+        );
+      } else {
+        b.add(
+          d,
+          <String>[Ids.dip],
+          SlotRole.secondary,
+          Method.repsVolume,
+          sets: 3,
+          stress: DayStress.medium,
+        );
+      }
     }
     if (skillLoad == 0 || minutes >= 75) {
       b.add(
@@ -1554,9 +1595,20 @@ void _buildFigures(_Builder b, Set<int> runDays) {
     if (legDays.contains(d)) {
       _addLegs(b, d, main: true, sets: a.level >= 2 ? 2 : 3);
     }
-    _addCore(b, d, skill: true);
-    if (minutes >= 75 && a.hasAny('élastique')) {
+    _addCore(b, d, skill: true, sets: minutes >= 75 ? 3 : 2);
+    if (minutes >= 60 && a.hasAny('élastique')) {
       _addPrehab(b, d);
+    }
+    // Mobilité des épaules et des poignets en fin de séance (R4-F12).
+    if (minutes >= 60) {
+      b.add(
+        d,
+        Picks.mobility,
+        SlotRole.mobility,
+        Method.mobility,
+        sets: 1,
+        rotate: true,
+      );
     }
   }
 }
@@ -1616,52 +1668,36 @@ void _fitBudget(_Builder b) {
       }
       SlotSpec? pick;
       DaySpec? home;
+      final beginner = a.level == 0;
       for (final day in b.days) {
         for (final s in day.slots) {
           if (credit(s, g) <= 0) {
             continue;
           }
-          final floor = s.method == Method.repsDensity
-              ? 4
-              : (a.level > 0 &&
-                        Method.cutRank(s.method) >
-                            Method.cutRank(Method.liftVariant)
-                    ? 2
-                    : 1);
-          if (s.sets <= floor) {
+          final pass = Method.trimPass(s.method, s.sets, beginner: beginner);
+          if ((pass == 4 || pass == 7) && day.slots.length <= 2) {
             continue;
           }
           final current = pick;
           if (current == null ||
-              s.sets > current.sets ||
-              (s.sets == current.sets &&
-                  Method.cutRank(s.method) < Method.cutRank(current.method))) {
+              Method.trimBefore(
+                s.method,
+                s.sets,
+                current.method,
+                current.sets,
+                beginner: beginner,
+              )) {
             pick = s;
             home = day;
           }
         }
       }
       if (pick == null || home == null) {
-        // Plus rien à réduire : un emplacement d'assistance en moins.
-        SlotSpec? drop;
-        DaySpec? from;
-        for (final day in b.days) {
-          for (final s in day.slots) {
-            if (credit(s, g) > 0 &&
-                Method.cutRank(s.method) <=
-                    Method.cutRank(Method.liftVariant) &&
-                day.slots.length > 2 &&
-                (drop == null ||
-                    Method.cutRank(s.method) < Method.cutRank(drop.method))) {
-              drop = s;
-              from = day;
-            }
-          }
-        }
-        if (drop == null || from == null) {
-          break;
-        }
-        from.slots.remove(drop);
+        break;
+      }
+      final pass = Method.trimPass(pick.method, pick.sets, beginner: beginner);
+      if (pass == 4 || pass == 7) {
+        home.slots.remove(pick);
         continue;
       }
       final at = home.slots.indexOf(pick);
@@ -1800,7 +1836,9 @@ Skeleton buildSkeleton(
   }
   // Aucune séance vide : repli sur ce que le matériel du jour permet.
   for (var d = 0; d < a.dayCount; d++) {
-    if (mobility >= 10 && !runDays.contains(d)) {
+    if (mobility >= 10 &&
+        !runDays.contains(d) &&
+        !b.days[d].slots.any((s) => s.method == Method.mobility)) {
       b.add(
         d,
         Picks.mobility,
