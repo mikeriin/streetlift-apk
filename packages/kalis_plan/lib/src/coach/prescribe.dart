@@ -1465,7 +1465,7 @@ final class Prescriber {
       } else {
         final part = paired ? 0.75 : 1.0;
         final wanted = cumulative[_level] * part * ws.volume * volumeScale;
-        sets = _clampInt(_round(wanted / hold), 2, 5);
+        sets = _clampInt(_round(wanted / hold), 2, 6);
       }
     }
     x
@@ -1474,7 +1474,10 @@ final class Prescriber {
       ..secondsLow = hold
       ..secondsHigh = hold
       ..isometric = true
-      ..rir = _rirOf(e, 3, ws, week)
+      // R4-F2 : maintiens sous-maximaux (50 à 70 % du maintien maximal),
+      // jamais jusqu'à l'échec — ce ne sont pas des séries dures ; leur
+      // dose se compte en secondes cumulées (budget bras tendus).
+      ..rir = 5
       // R1-P16 : 2 à 5 min de repos complet sur les isométries dures.
       ..rest = _level >= 2 ? 180 : 150
       ..calibrate = known <= 0
@@ -1509,7 +1512,7 @@ final class Prescriber {
       ..secondsLow = hold
       ..secondsHigh = hold
       ..practice = true
-      ..rir = _rirOf(e, 3, ws, week)
+      ..rir = 5
       ..rest = 90
       ..reasons.add(_note(CoachNotes.qualityFirst, 4));
     return x;

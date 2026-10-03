@@ -234,7 +234,9 @@ String effortText(ItemView i) {
       i.p.repsLow == null &&
       (i.p.secondsHigh ?? i.p.secondsLow) != null;
   if (Flames.isOpenEnded(flames)) {
-    return hold ? 'tenue facile, loin de la limite' : '5 rép. en réserve ou plus';
+    return hold
+        ? 'sous-maximal : arrêt bien avant la perte de position'
+        : '5 rép. en réserve ou plus';
   }
   final rir = Flames.toRir(flames);
   if (hold) {

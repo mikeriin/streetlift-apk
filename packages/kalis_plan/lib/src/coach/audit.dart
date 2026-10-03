@@ -151,7 +151,7 @@ List<String> coachAudit(
   final arms = <List<double>>[];
   final light = <bool>[];
   final hard = <double>[];
-  final who = <List<(List<double>, String)>>[];
+  final who = <List<(List<int>, String)>>[];
   final lastLoad = <String, (int, double, int)>{};
   var global = 0;
   int? eventWeek;
@@ -171,7 +171,7 @@ List<String> coachAudit(
       final g = List<double>.filled(MuscleGroup.values.length, 0);
       final s = <double>[0, 0, 0];
       final armDays = <Set<int>>[<int>{}, <int>{}, <int>{}];
-      final names = <(List<double>, String)>[];
+      final names = <(List<int>, String)>[];
       var hardSets = 0.0;
       for (final day in week.days) {
         final d = day.dayIndex;
@@ -248,7 +248,7 @@ List<String> coachAudit(
           if (isHard) {
             hardSets += p.sets;
             names.add((
-              <double>[for (final group in MuscleGroup.values) t.creditOf(group)],
+              <int>[for (final group in MuscleGroup.values) t.creditOf(group)],
               '${e.id}×${p.sets}'
                   '${p.kind == SetKind.test ? ' (test)' : ''} j$d '
                   '${week.kind.code}',

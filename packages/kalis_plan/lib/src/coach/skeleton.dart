@@ -1878,6 +1878,14 @@ void _fitBudget(_Builder b) {
     if (t == null || !t.kind.isResistance) {
       return 0;
     }
+    // Maintiens sous-maximaux des figures : comptés en secondes, pas en
+    // séries dures (R4-F2).
+    if (t.exercise.unit == MeasureUnit.seconds &&
+        (s.method == Method.skillHold ||
+            s.method == Method.skillEasyHold ||
+            s.method == Method.skillBalance)) {
+      return 0;
+    }
     return s.sets * t.creditOf(g) / 2;
   }
 
