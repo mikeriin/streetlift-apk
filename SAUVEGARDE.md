@@ -20,9 +20,10 @@ Base : main 9f6b80b (dev6.7.0). Arbre de travail = cette branche (sans .github).
 - Docs : README, SUIVI_PROJET, docs/CI_GP.md (section CU) ; ci3d_drive.sh (cible profil_cu_test, G10 sous CI3D_TOUT) ; ci-3d.yml (APK de test précompilé sur la cible CU).
 - claude/ci-3d : essai 1 poussé 12:03 UTC (89d64ae).
 
-## En cours
+## Terminé
 - Lecture des résultats ci-3d (captures émulateur à regarder), corrections.
 
 ## Reste
 - main (dev6.8.0) + build signé ; LIVRAISON_CU.md ; DECISIONS_CP section CU ; ETAT_CP (à valider) ; page de suivi (partie Calibrage) ; notification.
 
+- LIVRÉ : main 6467bc2 (dev6.8.0), build 37126824436, pipeline d96272b (ETAT à valider), page de suivi v23.
