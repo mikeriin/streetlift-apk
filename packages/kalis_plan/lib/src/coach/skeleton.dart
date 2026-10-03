@@ -437,7 +437,7 @@ void _buildBeginner(_Builder b) {
           <String>['cs-support-barres-paralleles'],
           SlotRole.accessory,
           Method.beginnerHold,
-          sets: 2,
+          sets: 3,
           referenceId: Ids.dip,
         );
       }
@@ -1855,6 +1855,7 @@ void _fillTime(_Builder b, Set<int> runDays) {
 /// l'échec par construction).
 const Set<String> _easyMethods = <String>{
   Method.warmupPrep,
+  Method.beginnerHold,
   Method.accessoryPrehab,
   Method.liftLight,
   Method.mobility,
@@ -1871,11 +1872,6 @@ void _fitBudget(_Builder b) {
   final a = b.a;
   double credit(SlotSpec s, MuscleGroup g) {
     if (_easyMethods.contains(s.method) || s.method == Method.repsDensity) {
-      return 0;
-    }
-    // Volume sous-maximal d'un mouvement dont le maximum dépasse douze
-    // répétitions : séries à plus de 4 en réserve, hors du compte.
-    if (s.method == Method.repsVolume && (a.reps[s.exerciseId] ?? 0) >= 12) {
       return 0;
     }
     final t = a.traits.find(s.exerciseId);

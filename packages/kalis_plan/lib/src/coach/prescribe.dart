@@ -1174,7 +1174,7 @@ final class Prescriber {
     }
     // R4-G4 : volume sous-maximal à 50 à 70 % du maximum, 3 répétitions en
     // réserve au moins.
-    var share = 0.55 + 0.03 * stage;
+    var share = (max >= 12 ? 0.60 : 0.55) + 0.03 * stage;
     if (share > 0.70) {
       share = 0.70;
     }
@@ -1185,17 +1185,18 @@ final class Prescriber {
     x
       ..repsLow = reps
       ..repsHigh = reps
-      // Sous douze répétitions de maximum, ces séries sont des séries
-      // dures (3 à 4 en réserve) ; au-delà, du volume sous-maximal à 5
-      // en réserve ou plus (R4-G4), le même régime pendant tout le bloc.
-      ..rir = max >= 12
-          ? 5
-          : _rirOf(
-              e,
-              (max - reps - 1) < 3 ? 3 : (max - reps - 1).toDouble(),
-              ws,
-              week,
-            )
+      // R4-G3, R4-G4 : 3 répétitions en réserve au moins. Sous douze
+      // répétitions de maximum, la réserve se lit dès la première série ;
+      // au-delà, les séries longues à repos court se cumulent et c'est sur
+      // les dernières séries que la réserve tombe à 3 ou 4.
+      ..rir = _rirOf(
+        e,
+        max >= 12
+            ? 3
+            : ((max - reps - 1) < 3 ? 3 : (max - reps - 1).toDouble()),
+        ws,
+        week,
+      )
       ..intensity = _shareOf(e.id, reps, max);
     if (ws.kind == WeekKind.build) {
       x.reasons.add(_rule(CoachRules.repStep, 1, 'reps'));
@@ -2170,6 +2171,9 @@ final class Prescriber {
             ? _beginnerNegative(s, ws, week, role)
             : null;
       case Method.beginnerHold:
+        // Appui bras tendus du débutant : tenues courtes et faciles (4 à 6
+        // fois 10 s dans la pratique de terrain, CALIBRAGE_CP1 A-18), loin
+        // de la limite — elles ne comptent pas comme séries dures.
         return _hold(
           s,
           ws,
@@ -2179,7 +2183,7 @@ final class Prescriber {
           low: 8,
           high: 30,
           fallback: 10,
-        );
+        )?..rir = 5;
       case Method.skillHold:
         // R4-F6 : maintiens à 50 à 70 % du maintien maximal.
         return _hold(
