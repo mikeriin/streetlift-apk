@@ -1,0 +1,76 @@
+== kalis_bench
+Resolving dependencies...
+Downloading packages...
+  lints 4.0.0 (6.1.0 available)
+Got dependencies!
+1 package has newer versions incompatible with dependency constraints.
+Try `dart pub outdated` for more information.
+Formatted 22 files (0 changed) in 0.12 seconds.
+Analyzing kalis_bench...
+No issues found!
+00:00 +0: loading test/quality_test.dart
+00:00 +0: test/quality_test.dart: chaque critère de qualité est rendu une fois, note entre 0 et 1
+00:00 +1: test/safety_test.dart: un programme sobre ne déclenche aucun critère
+00:00 +2: test/quality_test.dart: equilibre_poussee_tirage : tirage seul, puis équilibré
+00:00 +3: test/safety_test.dart: charge_trop_vite : +15 % de charge totale en une semaine
+00:00 +4: test/quality_test.dart: frequence_prioritaires : une puis deux séances par semaine
+00:00 +5: test/quality_test.dart: frequence_prioritaires : une puis deux séances par semaine
+00:00 +6: test/quality_test.dart: frequence_prioritaires : une puis deux séances par semaine
+00:00 +7: test/quality_test.dart: frequence_prioritaires : une puis deux séances par semaine
+00:00 +8: test/safety_test.dart: exercice_non_acquis et exercice_trop_avance
+00:00 +9: test/quality_test.dart: affutage_aligne : test et allègement la semaine de l'échéance
+00:00 +10: test/safety_test.dart: contre_indication : contrainte forte sur une articulation gênée
+00:00 +11: test/quality_test.dart: couples exercice × schéma et indice de Jaccard
+00:00 +12: test/safety_test.dart: tendon_figures : fréquence et hausse des tenues bras tendus
+00:00 +13: test/quality_test.dart: programme du propriétaire : couples lus, ressemblance mesurée
+00:00 +14: test/quality_test.dart: programme du propriétaire : couples lus, ressemblance mesurée
+00:00 +15: test/quality_test.dart: programme du propriétaire : couples lus, ressemblance mesurée
+00:00 +16: test/quality_test.dart: programme du propriétaire : couples lus, ressemblance mesurée
+00:00 +17: test/quality_test.dart: programme du propriétaire : couples lus, ressemblance mesurée
+00:00 +18: test/quality_test.dart: programme du propriétaire : couples lus, ressemblance mesurée
+00:00 +19: test/quality_test.dart: programme du propriétaire : couples lus, ressemblance mesurée
+00:00 +20: test/quality_test.dart: programme du propriétaire : couples lus, ressemblance mesurée
+00:00 +21: test/quality_test.dart: programme du propriétaire : couples lus, ressemblance mesurée
+00:00 +22: test/quality_test.dart: programme du propriétaire : couples lus, ressemblance mesurée
+00:00 +23: test/quality_test.dart: programme du propriétaire : couples lus, ressemblance mesurée
+00:00 +24: test/quality_test.dart: programme du propriétaire : couples lus, ressemblance mesurée
+00:00 +25: test/quality_test.dart: programme du propriétaire : couples lus, ressemblance mesurée
+00:00 +26: test/quality_test.dart: programme du propriétaire : couples lus, ressemblance mesurée
+00:00 +27: test/quality_test.dart: attentes de coach : tenue et non tenue
+00:00 +28: test/quality_test.dart: type d'attente inconnu : erreur de format
+00:00 +29: test/purity_test.dart: lib/ contient des sources
+00:00 +30: test/purity_test.dart: lib/ sans dart:io (« import 'dart:io' »)
+00:00 +31: test/purity_test.dart: lib/ sans dart:ui (« import 'dart:ui' »)
+00:00 +32: test/purity_test.dart: lib/ sans dart:html (« import 'dart:html' »)
+00:00 +33: test/purity_test.dart: lib/ sans dart:isolate (« import 'dart:isolate' »)
+00:00 +34: test/purity_test.dart: lib/ sans Flutter (« package:flutter »)
+00:00 +35: test/purity_test.dart: lib/ sans horloge implicite (« DateTime.now »)
+00:00 +36: test/purity_test.dart: lib/ sans horloge implicite (« Stopwatch »)
+00:00 +37: test/purity_test.dart: lib/ sans hasard non seedé (« Random() »)
+00:00 +38: test/purity_test.dart: lib/ sans hasard non seedé (« Random.secure »)
+00:00 +39: test/purity_test.dart: lib/ sans plateforme (« Platform. »)
+00:00 +40: test/purity_test.dart: dépendances : kalis_adapt, kalis_core, kalis_plan par chemin
+00:00 +41: test/purity_test.dart: le banc ne modifie aucun moteur : aucun fichier hors du paquet
+00:00 +42: test/purity_test.dart: aucun nom ni extrait des programmes de référence dans le paquet
+00:00 +43: test/profiles_test.dart: au moins 16 profils street et 10 des autres disciplines
+00:00 +44: test/profiles_test.dart: chaque profil a des attentes de coach, écrites et vérifiables
+00:00 +45: test/profiles_test.dart: adaptateur : profil valide du contrat et connu du catalogue
+00:00 +46: test/profiles_test.dart: adaptateur : records, échéances, gênes
+00:00 +47: test/profiles_test.dart: adaptateur : record nul et niveau inconnu
+00:00 +48: test/profiles_test.dart: horizon : échéance, objectif daté, défaut
+00:00 +49: test/profiles_test.dart: profil mal formé : erreur de format
+00:00 +50: test/profiles_test.dart: le profil élite de streetlifting diffère de celui du propriétaire
+00:01 +51: test/bench_test.dart: tous les profils : programme créé, critères et attentes rendus
+00:03 +52: test/bench_test.dart: tous les profils : programme créé, critères et attentes rendus
+00:05 +53: test/bench_test.dart: tous les profils : programme créé, critères et attentes rendus
+00:05 +54: test/properties_test.dart: propriétés des critères, graines 5000 à 7499
+00:07 +55: test/bench_test.dart: déterminisme : deux exécutions, mêmes fichiers à l'octet près
+00:07 +56: test/properties_test.dart: propriétés des critères, graines 7500 à 9999
+00:07 +57: test/properties_test.dart: propriétés des critères, graines 7500 à 9999
+00:07 +58: test/properties_test.dart: propriétés des critères, graines 7500 à 9999
+00:07 +59: test/properties_test.dart: propriétés des critères, graines 7500 à 9999
+00:07 +60: test/properties_test.dart: propriétés des critères, graines 7500 à 9999
+00:07 +61: test/properties_test.dart: propriétés des critères, graines 7500 à 9999
+00:08 +62: All tests passed!
+kalis_bench 0.1.0 : 27 profils, mode croisement, 39 violation(s) de sécurité, rapport écrit dans /home/runner/work/streetlift-apk/streetlift-apk/out-packages/kalis_bench (7 s).
+durée : 27 s
