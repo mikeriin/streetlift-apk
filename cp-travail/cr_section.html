@@ -1,0 +1,60 @@
+  <section class="lot" id="cr">
+    <div class="lot-head">
+      <h2><b>CR</b> · Banc d'essai et mesure de départ</h2>
+      <span class="pill ok">Livré</span>
+      <span class="pill wait">Relecture à faire</span>
+    </div>
+    <dl class="facts">
+      <div><dt>Paquet</dt><dd>kalis_bench 0.1.0</dd></div>
+      <div><dt>Étiquette</dt><dd>etiquettes/kalis_bench-v0.1.0</dd></div>
+      <div><dt>Commit moteurs</dt><dd>@COMMIT@</dd></div>
+      <div><dt>Livré le</dt><dd>03/10/2026</dd></div>
+    </dl>
+    <p class="lede">Le calibrage a maintenant sa règle de mesure : un référentiel de 145 principes d'entraînement vérifiés, 27 profils types du débutant complet à l'élite, des critères calculés (sécurité, qualité, trajectoires) et un panel de quatre coachs virtuels étalonné. Les moteurs actuels (0.1) ont été mesurés avec : ils sont loin du niveau visé, et la liste des défauts à corriger est écrite, par ordre de priorité.</p>
+    <div class="callout">
+      <p><b>À toi : la relecture.</b> Dix programmes créés par les moteurs actuels t'attendent sur la page <a href="https://claude.ai/artifact/48CYFBy75Xykohm674vLNq" style="color:var(--kalis);font-weight:700">Relecture Kalis Track</a> (manche 0). Pour chacun : une note d'ensemble, cinq critères, un commentaire, et un commentaire par séance si tu veux. Tes notes recalent le panel avant le lot suivant ; rien n'est bloqué en attendant.</p>
+    </div>
+    <div class="two">
+      <div>
+        <h3>Moteurs 0.1 au banc</h3>
+        <div class="scroll"><table class="checks"><thead><tr><th>Mesure</th><th>Résultat</th></tr></thead><tbody>
+          <tr><td>Note du panel, moyenne sur 108 notes (seuil visé : 9)</td><td class="note num">4,9 / 10</td></tr>
+          <tr><td>Note la plus basse (spécialisation traction lestée, powerlifting, semi-marathon)</td><td class="note num">3 / 10</td></tr>
+          <tr><td>Note la plus haute</td><td class="num">7 / 10</td></tr>
+          <tr><td>Violations de sécurité sur 27 programmes (cible : 0)</td><td class="note num">117</td></tr>
+          <tr><td>Attentes de coach tenues</td><td class="num">113 / 166</td></tr>
+          <tr><td>Écart moyen à l'effort visé, en répétitions (trajectoires simulées)</td><td class="note num">2,05</td></tr>
+        </tbody></table></div>
+      </div>
+      <div>
+        <h3>Premiers défauts à corriger</h3>
+        <ul class="plain">
+          <li>L'échéance est ignorée : pas d'affûtage, pas de pic, pas d'épreuve le jour J.</li>
+          <li>Avancés : intensité trop basse, charges mal calculées, mouvements visés trop peu travaillés.</li>
+          <li>Débutants : aucun chemin vers la première traction.</li>
+          <li>Figures : pas de progression par paliers ni de critères de passage.</li>
+          <li>Sets &amp; reps : aucune méthode d'endurance de force.</li>
+          <li>Course : pas d'allures, pas de progression construite.</li>
+        </ul>
+      </div>
+    </div>
+    <div>
+      <h3>Contrôles</h3>
+      <div class="scroll"><table class="checks">
+        <thead><tr><th>Contrôle</th><th>Résultat</th></tr></thead>
+        <tbody>
+          <tr><td>kalis_bench : formatage, analyse, tests ; moteurs 0.1 inchangés</td><td class="good">vert</td></tr>
+          <tr><td>Étalonnage du panel : mauvais programmes 0 à 1, génériques 4 à 7, experts 8 à 9, ancres hautes 9</td><td class="good">conforme</td></tr>
+          <tr><td>Répétabilité du panel (deux passes indépendantes)</td><td class="good">≤ 1 point</td></tr>
+          <tr><td>Ressemblance aux programmes de référence (seuil 0,30)</td><td class="good">0,22 au plus</td></tr>
+          <tr><td>Relecture indépendante du code, rapprochement avec le profil v3</td><td class="good">constats traités</td></tr>
+        </tbody>
+      </table></div>
+      <p style="margin:10px 0 0;color:var(--muted);font-size:14.5px">Run @RUN@ sur <span class="path">claude/ci-cp-a</span>. Détail : <span class="path">packages/kalis_bench/docs/BASELINE_0_1.md</span>.</p>
+    </div>
+    <div class="callout">
+      <p><b>À toi de voir, rien de bloquant.</b> À la reprise du lot, un programme de référence et la moitié d'un autre n'ont pas été relus : la lecture de leurs pages en images a été refusée par le contrôle d'autorisations de la session, et le lot n'a pas contourné ce refus. Leurs mesures viennent de la première session. Dis si tu veux qu'un lot suivant les relise.</p>
+      <p><b>Limites.</b> Une seule passe du panel, incertitude d'environ un point ; panel étalonné sur des profils street ; l'athlète des trajectoires est simulé.</p>
+    </div>
+  </section>
+
