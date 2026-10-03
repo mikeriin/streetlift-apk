@@ -665,7 +665,11 @@ extension _FlowV3 on AthleteProfileFlowState {
         ListTile(
           key: ValueKey('event-$i'),
           contentPadding: EdgeInsets.zero,
-          title: Text(events[i].name ?? label(kinds, events[i].kind.code)),
+          title: Text(
+            events[i].name ??
+                kEventKindShort[events[i].kind] ??
+                label(kinds, events[i].kind.code),
+          ),
           subtitle: Text(
             '${events[i].dateApproximate == true ? 'Vers ${monthText(events[i].date)}' : longDateText(events[i].date)}'
             ' · ${label(prios, events[i].priority.code)}',
@@ -2151,6 +2155,36 @@ class _OtherSportSheetState extends State<_OtherSportSheet> {
   }
 }
 
+/// Cadre d'un élément dans une feuille du bas : un contour (une carte
+/// pleine aurait la couleur des champs en thème sombre).
+class _SheetBox extends StatelessWidget {
+  final EdgeInsetsGeometry padding;
+  final Widget child;
+  const _SheetBox({super.key, required this.padding, required this.child});
+
+  @override
+  Widget build(BuildContext context) => Padding(
+    padding: const EdgeInsets.only(bottom: 8),
+    child: DecoratedBox(
+      decoration: BoxDecoration(
+        border: Border.all(color: Theme.of(context).dividerColor),
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Padding(padding: padding, child: child),
+    ),
+  );
+}
+
+/// Nom court d'une nature d'échéance (titres, récapitulatif).
+const kEventKindShort = <EventKind, String>{
+  EventKind.strengthCompetition: 'Compétition de force',
+  EventKind.repsCompetition: 'Compétition de répétitions',
+  EventKind.freestyleCompetition: 'Compétition de freestyle',
+  EventKind.race: 'Course',
+  EventKind.otherCompetition: 'Autre compétition',
+  EventKind.personalTest: 'Test perso',
+};
+
 /// Ligne éditable d'une épreuve (mouvement de compétition ou poste).
 class _LiftDraft {
   String exerciseId;
@@ -2648,7 +2682,7 @@ class _EventSheetState extends State<_EventSheet> {
         itemText(q, 'lifts', 'Les mouvements, dans l’ordre'),
       ),
       for (var i = 0; i < _lifts.length; i++)
-        KCard(
+        _SheetBox(
           key: ValueKey('event-lift-$i'),
           padding: const EdgeInsets.all(12),
           child: Column(
@@ -2766,7 +2800,7 @@ class _EventSheetState extends State<_EventSheet> {
           itemText(q, 'stations', 'Les exercices, dans l’ordre'),
         ),
         for (var i = 0; i < _stations.length; i++)
-          KCard(
+          _SheetBox(
             key: ValueKey('event-station-$i'),
             padding: const EdgeInsets.all(12),
             child: Column(

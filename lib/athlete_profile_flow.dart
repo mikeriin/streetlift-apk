@@ -2437,7 +2437,7 @@ String rubricSummary(
         if (d.emphasis case final e?)
           'Musculation : ${q?.question('emphasis') == null ? e.code : optionLabel(q!.question('emphasis')!, e.code).toLowerCase()}',
         for (final e in d.events ?? const <SeasonEvent>[])
-          'Échéance : ${e.name ?? (q?.question('events') == null ? e.kind.code : itemOptionLabel(q!.question('events')!, 'kind', e.kind.code))}, '
+          'Échéance : ${e.name ?? kEventKindShort[e.kind] ?? e.kind.code}, '
               '${e.dateApproximate == true ? 'vers ${monthText(e.date)}' : longDateText(e.date)}',
         if (d.events case final e? when e.isEmpty) 'Aucune échéance',
         if (d.specialization case final sp?)
