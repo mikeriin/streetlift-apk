@@ -1,0 +1,353 @@
+{
+  "paquet": "kalis_core",
+  "version": "0.4.0",
+  "catalogue": {
+    "schema": 1,
+    "regles_version": "1.1.0",
+    "source_version": "1.1.0",
+    "source_sha256": "1a44c2b059389143f682b5e6b050d6382f795b446bb8ce3dae915d10c59b01f6",
+    "exercices": 1039,
+    "octets_compresses": 375367,
+    "chargement_ms_meilleur": 40.976,
+    "chargement_ms_mediane": 43.334,
+    "chargement_budget_ms": 150,
+    "familles_variante_de": 414,
+    "profondeur_max": 3,
+    "avec_prerequis": 482,
+    "avec_fraction": 204,
+    "distributions": {
+      "discipline": {
+        "Calisthénie dynamique": 110,
+        "Calisthénie statique": 100,
+        "Cardio": 47,
+        "CrossFit / WOD": 54,
+        "Mobilité": 110,
+        "Musculation": 448,
+        "Street workout": 109,
+        "Streetlifting": 61
+      },
+      "niveau": {
+        "Avancé": 205,
+        "Débutant": 413,
+        "Intermédiaire": 345,
+        "Élite": 76
+      },
+      "schema": {
+        "adducteurs_abducteurs": 11,
+        "auto_massage": 11,
+        "balistique": 6,
+        "cardio_continu": 10,
+        "cardio_fractionne": 13,
+        "charniere_hanche": 17,
+        "compression": 15,
+        "conditionnement": 29,
+        "corde_a_sauter": 7,
+        "cou": 8,
+        "equilibre_mains": 25,
+        "etirement_dynamique": 9,
+        "etirement_statique": 41,
+        "extension_genou": 6,
+        "extension_hanche": 13,
+        "extension_rachis": 7,
+        "fente": 25,
+        "figure_dynamique_poussee": 23,
+        "figure_dynamique_tirage": 20,
+        "figure_statique_mixte": 7,
+        "figure_statique_poussee": 22,
+        "figure_statique_tirage": 37,
+        "flexion_genou": 10,
+        "flexion_hanche": 10,
+        "flexion_tronc": 16,
+        "freestyle": 14,
+        "gainage_anti_extension": 23,
+        "gainage_anti_flexion_laterale": 6,
+        "gainage_anti_rotation": 8,
+        "gymnastique_crossfit": 11,
+        "halterophilie": 25,
+        "isolation_biceps": 22,
+        "isolation_dos": 8,
+        "isolation_epaules": 29,
+        "isolation_pectoraux": 11,
+        "isolation_trapezes": 6,
+        "isolation_triceps": 22,
+        "marche": 5,
+        "mobilite_articulaire": 28,
+        "mollets": 8,
+        "pliometrie": 23,
+        "porte": 12,
+        "poussee_horizontale": 60,
+        "poussee_inclinee": 10,
+        "poussee_verticale_basse": 29,
+        "poussee_verticale_haute": 29,
+        "prehension": 20,
+        "preparation_scapulaire": 11,
+        "respiration": 4,
+        "rotation_tronc": 16,
+        "souplesse": 17,
+        "sprint": 12,
+        "squat": 46,
+        "tirage_horizontal": 40,
+        "tirage_vertical": 57,
+        "transition_muscle_up": 29
+      },
+      "famille": {
+        "cardio": 47,
+        "conditionnement": 40,
+        "cou": 8,
+        "explosif": 54,
+        "figure_dynamique": 86,
+        "figure_statique": 91,
+        "gainage": 37,
+        "isolation_bras": 64,
+        "isolation_haut": 65,
+        "isolation_jambes": 35,
+        "jambes_genou": 71,
+        "jambes_hanche": 30,
+        "mobilite": 95,
+        "porte": 12,
+        "poussee": 128,
+        "recuperation": 15,
+        "tirage": 97,
+        "tronc": 64
+      },
+      "plan": {
+        "frontal": 115,
+        "multiple": 175,
+        "sagittal": 623,
+        "transversal": 126
+      },
+      "articularite": {
+        "monoarticulaire": 203,
+        "non_applicable": 288,
+        "polyarticulaire": 548
+      },
+      "regime": {
+        "cyclique": 39,
+        "dynamique": 688,
+        "excentrique": 22,
+        "explosif": 88,
+        "isometrique": 136,
+        "passif": 66
+      },
+      "difficulte": {
+        "01": 139,
+        "02": 231,
+        "03": 54,
+        "04": 269,
+        "05": 64,
+        "06": 5,
+        "07": 114,
+        "08": 87,
+        "09": 21,
+        "10": 55
+      },
+      "lieu": {
+        "exterieur": 646,
+        "maison": 674,
+        "salle": 1018
+      },
+      "type_charge": {
+        "aucune": 155,
+        "autre": 25,
+        "barre": 116,
+        "elastique": 18,
+        "halteres": 88,
+        "kettlebell": 19,
+        "lest": 58,
+        "machine": 53,
+        "poids_du_corps": 446,
+        "poulie": 61
+      },
+      "unite": {
+        "calories": 1,
+        "distance": 31,
+        "repetitions": 764,
+        "secondes": 243
+      },
+      "lateralite": {
+        "alterne": 74,
+        "bilateral": 775,
+        "unilateral": 190
+      },
+      "fatigue_systemique": {
+        "1": 320,
+        "2": 205,
+        "3": 326,
+        "4": 145,
+        "5": 43
+      },
+      "fatigue_locale": {
+        "1": 103,
+        "2": 170,
+        "3": 599,
+        "4": 164,
+        "5": 3
+      },
+      "fraction_source": {
+        "aucune": 835,
+        "derivee": 152,
+        "estimee": 21,
+        "publiee": 31
+      },
+      "contrainte_epaule": {
+        "faible": 433,
+        "forte": 292,
+        "moyenne": 314
+      },
+      "contrainte_coude": {
+        "faible": 535,
+        "forte": 195,
+        "moyenne": 309
+      },
+      "contrainte_poignet": {
+        "faible": 668,
+        "forte": 159,
+        "moyenne": 212
+      },
+      "contrainte_lombaires": {
+        "faible": 538,
+        "forte": 59,
+        "moyenne": 442
+      },
+      "contrainte_genou": {
+        "faible": 841,
+        "forte": 45,
+        "moyenne": 153
+      },
+      "contrainte_hanche": {
+        "faible": 766,
+        "forte": 8,
+        "moyenne": 265
+      },
+      "contrainte_cheville": {
+        "faible": 863,
+        "forte": 34,
+        "moyenne": 142
+      }
+    }
+  },
+  "contrats": {
+    "types": 109,
+    "codes_de_raison": 130,
+    "schemas": {
+      "AthleteProfile": 3,
+      "TrainingLog": 1,
+      "Pass1Plan": 1,
+      "Pass2Plan": 1,
+      "ProgramBlock": 1,
+      "AdaptationSummary": 1,
+      "QuestState": 1,
+      "SeasonPlan": 1,
+      "EventDayPlan": 1
+    },
+    "flammes_vers_rir": {
+      "10": 0.0,
+      "9": 1.0,
+      "8": 1.5,
+      "7": 2.0,
+      "6": 2.5,
+      "5": 3.0,
+      "4": 3.5,
+      "3": 4.0,
+      "2": 4.5,
+      "1": 5.0
+    }
+  },
+  "jeux_de_donnees": {
+    "profils": 40,
+    "violations_profils": 0,
+    "journaux": 12,
+    "violations_journaux": 0,
+    "seances": 468,
+    "seances_reprise": 12,
+    "series": 5480,
+    "series_sans_note": 319,
+    "flammes": {
+      "01": 488,
+      "02": 126,
+      "03": 136,
+      "04": 241,
+      "05": 434,
+      "06": 894,
+      "07": 1102,
+      "08": 890,
+      "09": 601,
+      "10": 249
+    }
+  },
+  "profil_v3": {
+    "parcours_version": "0.4.0",
+    "questions": 31,
+    "questions_schema_3": 14,
+    "tests_guides": 10,
+    "profils_types": 5,
+    "questions_vues": {
+      "v3_debutant_forme_generale": {
+        "questions": 16,
+        "nouvelles": 0,
+        "tests_permis": [
+          "t8_sans_test"
+        ]
+      },
+      "v3_intermediaire_musculation": {
+        "questions": 27,
+        "nouvelles": 10,
+        "tests_permis": [
+          "t1_serie_lourde",
+          "t2_leste",
+          "t3_max_direct",
+          "t4_reps_max",
+          "t5_maintien_max",
+          "t6_course_6min",
+          "t7_course_chrono"
+        ]
+      },
+      "v3_competiteur_elite_streetlifting": {
+        "questions": 29,
+        "nouvelles": 12,
+        "tests_permis": [
+          "t1_serie_lourde",
+          "t2_leste",
+          "t3_max_direct",
+          "t4_reps_max",
+          "t5_maintien_max",
+          "t6_course_6min",
+          "t7_course_chrono",
+          "t9_reps_temps",
+          "t10_series_repetees"
+        ]
+      },
+      "v3_coureuse_10km": {
+        "questions": 28,
+        "nouvelles": 11,
+        "tests_permis": [
+          "t1_serie_lourde",
+          "t2_leste",
+          "t3_max_direct",
+          "t4_reps_max",
+          "t5_maintien_max",
+          "t6_course_6min",
+          "t7_course_chrono"
+        ]
+      },
+      "v3_sets_reps_avance": {
+        "questions": 29,
+        "nouvelles": 12,
+        "tests_permis": [
+          "t1_serie_lourde",
+          "t2_leste",
+          "t3_max_direct",
+          "t4_reps_max",
+          "t5_maintien_max",
+          "t6_course_6min",
+          "t7_course_chrono",
+          "t9_reps_temps",
+          "t10_series_repetees"
+        ]
+      }
+    },
+    "profils_schema_2_migres": 40,
+    "echecs_de_migration": 0
+  },
+  "echecs": []
+}

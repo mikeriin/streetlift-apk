@@ -1,0 +1,265 @@
+== kalis_core
+Resolving dependencies...
+Downloading packages...
++ _fe_analyzer_shared 108.0.0
++ analyzer 14.4.0
++ args 2.7.0
++ async 2.13.1
++ boolean_selector 2.1.2
++ cli_config 0.2.0
++ collection 1.19.1
++ convert 3.1.2
++ coverage 1.15.1
++ crypto 3.0.7
++ file 7.0.1
++ frontend_server_client 4.1.0
++ glob 2.2.0
++ http_multi_server 3.2.2
++ http_parser 4.1.2
++ io 1.1.0
++ lints 4.0.0 (6.1.0 available)
++ logging 1.3.0
++ matcher 0.12.20
++ meta 1.19.0
++ mime 2.1.0
++ node_preamble 2.0.2
++ package_config 3.0.0
++ path 1.9.1
++ pool 1.5.3
++ pub_semver 2.2.1
++ shelf 1.4.2
++ shelf_packages_handler 3.0.2
++ shelf_static 1.1.3
++ shelf_web_socket 3.0.0
++ source_map_stack_trace 2.1.2
++ source_maps 0.10.14
++ source_span 1.10.2
++ stack_trace 1.12.2
++ stream_channel 2.1.4
++ string_scanner 1.4.1
++ term_glyph 1.2.2
++ test 1.32.0
++ test_api 0.7.14
++ test_core 0.6.20
++ typed_data 1.4.0
++ vm_service 15.3.0
++ watcher 1.2.1
++ web 1.1.1
++ web_socket 1.0.1
++ web_socket_channel 3.0.3
++ webkit_inspection_protocol 1.2.1
++ yaml 3.1.4
+Changed 48 dependencies!
+1 package has newer versions incompatible with dependency constraints.
+Try `dart pub outdated` for more information.
+Changed bin/kalis_core_cli.dart
+Formatted 28 files (1 changed) in 0.27 seconds.
+formatage : échec
+Analyzing kalis_core...
+No issues found!
+No tests ran.
+No tests were found.
+tests : échec
+kalis_core 0.4.0 — rapport de contrôle
+
+Catalogue : 1039 exercices, base v1.1.0, règles 1.1.0, schéma 1
+Chargement (décompression comprise) : meilleur 41.0 ms, médiane 43.3 ms (budget 150 ms)
+Contrats : 109 types, 130 codes de raison
+Profils types : 40 (0 violation(s))
+Journaux : 12, 468 séances dont 12 « reprise », 5480 séries dont 319 sans note (0 violation(s))
+Profil v3 : parcours 0.4.0, 31 questions, 10 tests guidés ; 40 profils du schéma 2 migrés (0 échec(s))
+  v3_debutant_forme_generale             16 questions vues, dont 0 nouvelles
+  v3_intermediaire_musculation           27 questions vues, dont 10 nouvelles
+  v3_competiteur_elite_streetlifting     29 questions vues, dont 12 nouvelles
+  v3_coureuse_10km                       28 questions vues, dont 11 nouvelles
+  v3_sets_reps_avance                    29 questions vues, dont 12 nouvelles
+
+discipline :
+  Calisthénie dynamique              110
+  Calisthénie statique               100
+  Cardio                             47
+  CrossFit / WOD                     54
+  Mobilité                           110
+  Musculation                        448
+  Street workout                     109
+  Streetlifting                      61
+niveau :
+  Avancé                             205
+  Débutant                           413
+  Intermédiaire                      345
+  Élite                              76
+schema :
+  adducteurs_abducteurs              11
+  auto_massage                       11
+  balistique                         6
+  cardio_continu                     10
+  cardio_fractionne                  13
+  charniere_hanche                   17
+  compression                        15
+  conditionnement                    29
+  corde_a_sauter                     7
+  cou                                8
+  equilibre_mains                    25
+  etirement_dynamique                9
+  etirement_statique                 41
+  extension_genou                    6
+  extension_hanche                   13
+  extension_rachis                   7
+  fente                              25
+  figure_dynamique_poussee           23
+  figure_dynamique_tirage            20
+  figure_statique_mixte              7
+  figure_statique_poussee            22
+  figure_statique_tirage             37
+  flexion_genou                      10
+  flexion_hanche                     10
+  flexion_tronc                      16
+  freestyle                          14
+  gainage_anti_extension             23
+  gainage_anti_flexion_laterale      6
+  gainage_anti_rotation              8
+  gymnastique_crossfit               11
+  halterophilie                      25
+  isolation_biceps                   22
+  isolation_dos                      8
+  isolation_epaules                  29
+  isolation_pectoraux                11
+  isolation_trapezes                 6
+  isolation_triceps                  22
+  marche                             5
+  mobilite_articulaire               28
+  mollets                            8
+  pliometrie                         23
+  porte                              12
+  poussee_horizontale                60
+  poussee_inclinee                   10
+  poussee_verticale_basse            29
+  poussee_verticale_haute            29
+  prehension                         20
+  preparation_scapulaire             11
+  respiration                        4
+  rotation_tronc                     16
+  souplesse                          17
+  sprint                             12
+  squat                              46
+  tirage_horizontal                  40
+  tirage_vertical                    57
+  transition_muscle_up               29
+famille :
+  cardio                             47
+  conditionnement                    40
+  cou                                8
+  explosif                           54
+  figure_dynamique                   86
+  figure_statique                    91
+  gainage                            37
+  isolation_bras                     64
+  isolation_haut                     65
+  isolation_jambes                   35
+  jambes_genou                       71
+  jambes_hanche                      30
+  mobilite                           95
+  porte                              12
+  poussee                            128
+  recuperation                       15
+  tirage                             97
+  tronc                              64
+plan :
+  frontal                            115
+  multiple                           175
+  sagittal                           623
+  transversal                        126
+articularite :
+  monoarticulaire                    203
+  non_applicable                     288
+  polyarticulaire                    548
+regime :
+  cyclique                           39
+  dynamique                          688
+  excentrique                        22
+  explosif                           88
+  isometrique                        136
+  passif                             66
+difficulte :
+  01                                 139
+  02                                 231
+  03                                 54
+  04                                 269
+  05                                 64
+  06                                 5
+  07                                 114
+  08                                 87
+  09                                 21
+  10                                 55
+lieu :
+  exterieur                          646
+  maison                             674
+  salle                              1018
+type_charge :
+  aucune                             155
+  autre                              25
+  barre                              116
+  elastique                          18
+  halteres                           88
+  kettlebell                         19
+  lest                               58
+  machine                            53
+  poids_du_corps                     446
+  poulie                             61
+unite :
+  calories                           1
+  distance                           31
+  repetitions                        764
+  secondes                           243
+lateralite :
+  alterne                            74
+  bilateral                          775
+  unilateral                         190
+fatigue_systemique :
+  1                                  320
+  2                                  205
+  3                                  326
+  4                                  145
+  5                                  43
+fatigue_locale :
+  1                                  103
+  2                                  170
+  3                                  599
+  4                                  164
+  5                                  3
+fraction_source :
+  aucune                             835
+  derivee                            152
+  estimee                            21
+  publiee                            31
+contrainte_epaule :
+  faible                             433
+  forte                              292
+  moyenne                            314
+contrainte_coude :
+  faible                             535
+  forte                              195
+  moyenne                            309
+contrainte_poignet :
+  faible                             668
+  forte                              159
+  moyenne                            212
+contrainte_lombaires :
+  faible                             538
+  forte                              59
+  moyenne                            442
+contrainte_genou :
+  faible                             841
+  forte                              45
+  moyenne                            153
+contrainte_hanche :
+  faible                             766
+  forte                              8
+  moyenne                            265
+contrainte_cheville :
+  faible                             863
+  forte                              34
+  moyenne                            142
+
+Tous les contrôles passent.
+durée : 8 s
