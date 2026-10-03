@@ -877,11 +877,7 @@ void _validateSeasonPhase(SeasonPhase v, String path, List<Violation> out) {
   }
 }
 
-void _validatePacingSegment(
-  PacingSegment v,
-  String path,
-  List<Violation> out,
-) {
+void _validatePacingSegment(PacingSegment v, String path, List<Violation> out) {
   for (var i = 0; i < v.setReps.length; i++) {
     checkRange(out, '$path.setReps[$i]', v.setReps[i], 1, 1000);
   }

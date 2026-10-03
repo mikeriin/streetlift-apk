@@ -1,6 +1,6 @@
 # Journal des versions de kalis_core
 
-## 0.4.0 — 02/10/2026 (lot CQ du pipeline « Calibrage des programmes », évolution additive)
+## 0.4.0 — 03/10/2026 (lot CQ du pipeline « Calibrage des programmes », évolution additive)
 
 Par rapport à 0.3.0, rien n'est retiré, renommé ni déplacé ; aucune borne ne change ; aucune valeur n'est ajoutée à
 une énumération d'avant 0.4.0 (un `switch` exhaustif des moteurs 0.1 ou de l'application continue de compiler). Les
@@ -12,7 +12,9 @@ paquet.
 
 Le lot a été relu trois fois de façon indépendante (contrat et code ; parcours vu par un « débutant pressé » ;
 parcours et contrat vus par un « coach d'élite ») ; chaque remarque est changée ou expliquée dans
-`docs/RELECTURES_CQ.md`. Ce qui suit décrit le contrat après ces relectures.
+`docs/RELECTURES_CQ.md`. Le 03/10/2026, un quatrième relecteur a audité ces suites contre les sources, et trois
+vérificateurs ont recontrôlé les 84 références de `docs/PROFIL_V3.md` (9 corrections). Ce qui suit décrit le contrat
+après ces relectures.
 
 - **Profil d'athlète v3 (schéma 3)** : `AthleteProfile.currentSchemaVersion` vaut 3, le schéma 2 reste lu et valide.
   Champs optionnels : `trainingAge`, `trainingGap` (7 tranches), `sleep`, `stress`, `occupationalLoad`, `otherSports`

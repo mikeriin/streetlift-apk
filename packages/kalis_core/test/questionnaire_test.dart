@@ -208,10 +208,13 @@ void main() {
       for (final q in parcours.questions)
         if (q.deferWhen != null) q.id,
     ], deferrable);
-    expect(<String>[
-      for (final q in parcours.questions)
-        if (q.requiredWhen != null) q.id,
-    ], <String>['body_weight']);
+    expect(
+      <String>[
+        for (final q in parcours.questions)
+          if (q.requiredWhen != null) q.id,
+      ],
+      <String>['body_weight'],
+    );
   });
 
   test('les questions suivent l\'ordre des écrans', () {
@@ -241,10 +244,7 @@ void main() {
       order.indexOf('benchmarks'),
       lessThan(order.indexOf('movement_levels')),
     );
-    expect(
-      order.indexOf('benchmarks'),
-      lessThan(order.indexOf('weak_points')),
-    );
+    expect(order.indexOf('benchmarks'), lessThan(order.indexOf('weak_points')));
     // Quel que soit le profil, les questions rendues gardent cet ordre.
     for (final key in v3.keys) {
       final profile = profileOf(key);
@@ -275,9 +275,7 @@ void main() {
     same('training_gap', <String>[for (final v in TrainingGap.values) v.code]);
     same('sleep', <String>[for (final v in SleepBand.values) v.code]);
     same('stress', <String>[for (final v in StressBand.values) v.code]);
-    same('emphasis', <String>[
-      for (final v in TrainingEmphasis.values) v.code,
-    ]);
+    same('emphasis', <String>[for (final v in TrainingEmphasis.values) v.code]);
     same('body_weight_goal', <String>[
       for (final v in BodyWeightGoal.values) v.code,
     ]);
@@ -629,24 +627,24 @@ void main() {
     );
     expect(seen(having(mix('crossfit'))), isNot(contains('emphasis')));
     expect(
-      seen(having(<String, Object?>{
-        ...mix('musculation'),
-        ...level('intermediate'),
-      })),
+      seen(
+        having(<String, Object?>{
+          ...mix('musculation'),
+          ...level('intermediate'),
+        }),
+      ),
       contains('specialization'),
     );
     expect(
-      seen(having(<String, Object?>{
-        ...mix('musculation'),
-        ...level('beginner'),
-      })),
+      seen(
+        having(<String, Object?>{...mix('musculation'), ...level('beginner')}),
+      ),
       isNot(contains('specialization')),
     );
     expect(
-      seen(having(<String, Object?>{
-        ...mix('cardio'),
-        ...level('intermediate'),
-      })),
+      seen(
+        having(<String, Object?>{...mix('cardio'), ...level('intermediate')}),
+      ),
       isNot(contains('specialization')),
     );
 
@@ -674,9 +672,7 @@ void main() {
         reason: code,
       );
       expect(
-        seen(
-          having(<String, Object?>{...mix(code), ...level('intermediate')}),
-        ),
+        seen(having(<String, Object?>{...mix(code), ...level('intermediate')})),
         isNot(contains('weak_points')),
         reason: code,
       );
@@ -780,7 +776,11 @@ void main() {
         having(mix('cardio', <String>[code])),
         having(street(StreetStyle.setsReps, 0, 100, 0)),
       ]) {
-        expect(seen(profile), isNot(contains('body_weight_goal')), reason: code);
+        expect(
+          seen(profile),
+          isNot(contains('body_weight_goal')),
+          reason: code,
+        );
         expect(deferred(profile), contains('body_weight_goal'), reason: code);
         expect(
           seen(profile, includeDeferred: true),
@@ -916,34 +916,16 @@ void main() {
       return <String, Object?>{'birthYear': year};
     }
 
-    expect(
-      parcours.evaluate(opAge(65), born(1961), todayYear: 2026),
-      isTrue,
-    );
-    expect(
-      parcours.evaluate(opAge(65), born(1930), todayYear: 2026),
-      isTrue,
-    );
-    expect(
-      parcours.evaluate(opAge(65), born(1962), todayYear: 2026),
-      isFalse,
-    );
-    expect(
-      parcours.evaluate(opAge(65), born(1962), todayYear: 2027),
-      isTrue,
-    );
-    expect(
-      parcours.evaluate(opAge(65), empty, todayYear: 2026),
-      isFalse,
-    );
+    expect(parcours.evaluate(opAge(65), born(1961), todayYear: 2026), isTrue);
+    expect(parcours.evaluate(opAge(65), born(1930), todayYear: 2026), isTrue);
+    expect(parcours.evaluate(opAge(65), born(1962), todayYear: 2026), isFalse);
+    expect(parcours.evaluate(opAge(65), born(1962), todayYear: 2027), isTrue);
+    expect(parcours.evaluate(opAge(65), empty, todayYear: 2026), isFalse);
     expect(
       parcours.evaluate(opAge(65), born('1950'), todayYear: 2026),
       isFalse,
     );
-    expect(
-      parcours.evaluate(opAge(65), born(null), todayYear: 2026),
-      isFalse,
-    );
+    expect(parcours.evaluate(opAge(65), born(null), todayYear: 2026), isFalse);
   });
 
   test('chemins avec `[*]` : une liste est parcourue', () {
@@ -987,10 +969,7 @@ void main() {
     expect(holds(opIn('tags[*]', <Object?>['y', 'z']), profile), isTrue);
     expect(holds(opIn('tags[*]', <Object?>['z']), profile), isFalse);
     expect(holds(opIn('none[*]', <Object?>['x']), profile), isFalse);
-    expect(
-      holds(opIn('group.list[*].k', <Object?>['deep']), profile),
-      isTrue,
-    );
+    expect(holds(opIn('group.list[*].k', <Object?>['deep']), profile), isTrue);
     // min_number
     expect(holds(opMinNumber('items[*].pct', 30), profile), isTrue);
     expect(holds(opMinNumber('items[*].pct', 31), profile), isFalse);
@@ -1061,7 +1040,8 @@ void main() {
           experience != null && experience != ExperienceLevel.beginner;
       expect(added.contains('training_age'), confirmed, reason: p.key);
       expect(all.contains('preferences'), confirmed, reason: p.key);
-      expect(later, confirmed ? isEmpty : recovery, reason: p.key);
+      final expectedLater = deferrable.where(all.contains).toList();
+      expect(later, confirmed ? isEmpty : expectedLater, reason: p.key);
     }
     // `since: 2` rend tout le parcours.
     for (final key in v3.keys) {
@@ -1355,8 +1335,9 @@ void main() {
       final later = deferred(json);
       final confirmed =
           experience != null && experience != ExperienceLevel.beginner;
-      expect(later, confirmed ? isEmpty : recovery);
       final all = seen(json, includeDeferred: true);
+      final expectedLater = deferrable.where(all.contains).toList();
+      expect(later, confirmed ? isEmpty : expectedLater);
       expect(all, <String>[
         for (final id in order)
           if (ids.contains(id) || later.contains(id)) id,
@@ -1550,10 +1531,7 @@ void main() {
       throwsFormatException,
     );
     expect(
-      () => holds(
-        opNot(<String, Object?>{'op': 'inconnue'}),
-        profile,
-      ),
+      () => holds(opNot(<String, Object?>{'op': 'inconnue'}), profile),
       throwsFormatException,
     );
     expect(

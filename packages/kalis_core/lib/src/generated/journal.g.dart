@@ -70,7 +70,9 @@ final class PainReport {
       joint: identical(joint, unset) ? this.joint : joint as Joint?,
       intensity: intensity ?? this.intensity,
       phase: phase ?? this.phase,
-      exerciseId: identical(exerciseId, unset) ? this.exerciseId : exerciseId as String?,
+      exerciseId: identical(exerciseId, unset)
+          ? this.exerciseId
+          : exerciseId as String?,
     );
   }
 
@@ -84,21 +86,39 @@ final class PainReport {
   /// Ajoute à [out] les violations de cette valeur, située à [path].
   void collectViolations(String path, List<Violation> out) {
     checkRange(out, '$path.intensity', intensity, 0, 10);
-    if (exerciseId case final v?) { checkLength(out, '$path.exerciseId', v.length, 1, null); }
+    if (exerciseId case final v?) {
+      checkLength(out, '$path.exerciseId', v.length, 1, null);
+    }
   }
 
   /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
   void collectExerciseIds(Set<String> out) {
-    if (exerciseId case final v?) { out.add(v); }
+    if (exerciseId case final v?) {
+      out.add(v);
+    }
   }
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || other is PainReport && zone == other.zone && side == other.side && joint == other.joint && intensity == other.intensity && phase == other.phase && exerciseId == other.exerciseId;
+    return identical(this, other) ||
+        other is PainReport &&
+            zone == other.zone &&
+            side == other.side &&
+            joint == other.joint &&
+            intensity == other.intensity &&
+            phase == other.phase &&
+            exerciseId == other.exerciseId;
   }
 
   @override
-  int get hashCode => Object.hashAll(<Object?>[zone, side, joint, intensity, phase, exerciseId]);
+  int get hashCode => Object.hashAll(<Object?>[
+    zone,
+    side,
+    joint,
+    intensity,
+    phase,
+    exerciseId,
+  ]);
 
   @override
   String toString() => 'PainReport(${toJson()})';
@@ -138,7 +158,11 @@ final class HealthCheck {
       nutrition: jsonIntOrNull(json, 'nutrition'),
       hydration: jsonIntOrNull(json, 'hydration'),
       minutesAvailable: jsonIntOrNull(json, 'minutesAvailable'),
-      pains: jsonListOrNull(json, 'pains', (v) => PainReport.fromJson(jsonAsObject(v, 'pains'))),
+      pains: jsonListOrNull(
+        json,
+        'pains',
+        (v) => PainReport.fromJson(jsonAsObject(v, 'pains')),
+      ),
     );
   }
 
@@ -214,16 +238,28 @@ final class HealthCheck {
   }) {
     return HealthCheck(
       overall: identical(overall, unset) ? this.overall : overall as int?,
-      sleepQuality: identical(sleepQuality, unset) ? this.sleepQuality : sleepQuality as int?,
-      sleepHours: identical(sleepHours, unset) ? this.sleepHours : sleepHours as double?,
+      sleepQuality: identical(sleepQuality, unset)
+          ? this.sleepQuality
+          : sleepQuality as int?,
+      sleepHours: identical(sleepHours, unset)
+          ? this.sleepHours
+          : sleepHours as double?,
       energy: identical(energy, unset) ? this.energy : energy as int?,
       mood: identical(mood, unset) ? this.mood : mood as int?,
       soreness: identical(soreness, unset) ? this.soreness : soreness as int?,
       stress: identical(stress, unset) ? this.stress : stress as int?,
-      motivation: identical(motivation, unset) ? this.motivation : motivation as int?,
-      nutrition: identical(nutrition, unset) ? this.nutrition : nutrition as int?,
-      hydration: identical(hydration, unset) ? this.hydration : hydration as int?,
-      minutesAvailable: identical(minutesAvailable, unset) ? this.minutesAvailable : minutesAvailable as int?,
+      motivation: identical(motivation, unset)
+          ? this.motivation
+          : motivation as int?,
+      nutrition: identical(nutrition, unset)
+          ? this.nutrition
+          : nutrition as int?,
+      hydration: identical(hydration, unset)
+          ? this.hydration
+          : hydration as int?,
+      minutesAvailable: identical(minutesAvailable, unset)
+          ? this.minutesAvailable
+          : minutesAvailable as int?,
       pains: identical(pains, unset) ? this.pains : pains as List<PainReport>?,
     );
   }
@@ -237,32 +273,86 @@ final class HealthCheck {
 
   /// Ajoute à [out] les violations de cette valeur, située à [path].
   void collectViolations(String path, List<Violation> out) {
-    if (overall case final v?) { checkRange(out, '$path.overall', v, 1, 5); }
-    if (sleepQuality case final v?) { checkRange(out, '$path.sleepQuality', v, 1, 5); }
-    if (sleepHours case final v?) { checkRange(out, '$path.sleepHours', v, 0, 24); }
-    if (energy case final v?) { checkRange(out, '$path.energy', v, 1, 5); }
-    if (mood case final v?) { checkRange(out, '$path.mood', v, 1, 5); }
-    if (soreness case final v?) { checkRange(out, '$path.soreness', v, 1, 5); }
-    if (stress case final v?) { checkRange(out, '$path.stress', v, 1, 5); }
-    if (motivation case final v?) { checkRange(out, '$path.motivation', v, 1, 5); }
-    if (nutrition case final v?) { checkRange(out, '$path.nutrition', v, 1, 5); }
-    if (hydration case final v?) { checkRange(out, '$path.hydration', v, 1, 5); }
-    if (minutesAvailable case final v?) { checkRange(out, '$path.minutesAvailable', v, 0, 600); }
-    if (pains case final v?) { for (var i = 0; i < v.length; i++) { v[i].collectViolations('$path.pains[$i]', out); } }
+    if (overall case final v?) {
+      checkRange(out, '$path.overall', v, 1, 5);
+    }
+    if (sleepQuality case final v?) {
+      checkRange(out, '$path.sleepQuality', v, 1, 5);
+    }
+    if (sleepHours case final v?) {
+      checkRange(out, '$path.sleepHours', v, 0, 24);
+    }
+    if (energy case final v?) {
+      checkRange(out, '$path.energy', v, 1, 5);
+    }
+    if (mood case final v?) {
+      checkRange(out, '$path.mood', v, 1, 5);
+    }
+    if (soreness case final v?) {
+      checkRange(out, '$path.soreness', v, 1, 5);
+    }
+    if (stress case final v?) {
+      checkRange(out, '$path.stress', v, 1, 5);
+    }
+    if (motivation case final v?) {
+      checkRange(out, '$path.motivation', v, 1, 5);
+    }
+    if (nutrition case final v?) {
+      checkRange(out, '$path.nutrition', v, 1, 5);
+    }
+    if (hydration case final v?) {
+      checkRange(out, '$path.hydration', v, 1, 5);
+    }
+    if (minutesAvailable case final v?) {
+      checkRange(out, '$path.minutesAvailable', v, 0, 600);
+    }
+    if (pains case final v?) {
+      for (var i = 0; i < v.length; i++) {
+        v[i].collectViolations('$path.pains[$i]', out);
+      }
+    }
   }
 
   /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
   void collectExerciseIds(Set<String> out) {
-    for (final e in pains ?? const <PainReport>[]) { e.collectExerciseIds(out); }
+    for (final e in pains ?? const <PainReport>[]) {
+      e.collectExerciseIds(out);
+    }
   }
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || other is HealthCheck && overall == other.overall && sleepQuality == other.sleepQuality && sleepHours == other.sleepHours && energy == other.energy && mood == other.mood && soreness == other.soreness && stress == other.stress && motivation == other.motivation && nutrition == other.nutrition && hydration == other.hydration && minutesAvailable == other.minutesAvailable && jsonDeepEquals(pains, other.pains);
+    return identical(this, other) ||
+        other is HealthCheck &&
+            overall == other.overall &&
+            sleepQuality == other.sleepQuality &&
+            sleepHours == other.sleepHours &&
+            energy == other.energy &&
+            mood == other.mood &&
+            soreness == other.soreness &&
+            stress == other.stress &&
+            motivation == other.motivation &&
+            nutrition == other.nutrition &&
+            hydration == other.hydration &&
+            minutesAvailable == other.minutesAvailable &&
+            jsonDeepEquals(pains, other.pains);
   }
 
   @override
-  int get hashCode => Object.hashAll(<Object?>[overall, sleepQuality, sleepHours, energy, mood, soreness, stress, motivation, nutrition, hydration, minutesAvailable, jsonDeepHash(pains)]);
+  int get hashCode => Object.hashAll(<Object?>[
+    overall,
+    sleepQuality,
+    sleepHours,
+    energy,
+    mood,
+    soreness,
+    stress,
+    motivation,
+    nutrition,
+    hydration,
+    minutesAvailable,
+    jsonDeepHash(pains),
+  ]);
 
   @override
   String toString() => 'HealthCheck(${toJson()})';
@@ -372,15 +462,27 @@ final class SetTarget {
     return SetTarget(
       repsLow: identical(repsLow, unset) ? this.repsLow : repsLow as int?,
       repsHigh: identical(repsHigh, unset) ? this.repsHigh : repsHigh as int?,
-      secondsLow: identical(secondsLow, unset) ? this.secondsLow : secondsLow as int?,
-      secondsHigh: identical(secondsHigh, unset) ? this.secondsHigh : secondsHigh as int?,
-      distanceMeters: identical(distanceMeters, unset) ? this.distanceMeters : distanceMeters as double?,
-      calories: identical(calories, unset) ? this.calories : calories as double?,
+      secondsLow: identical(secondsLow, unset)
+          ? this.secondsLow
+          : secondsLow as int?,
+      secondsHigh: identical(secondsHigh, unset)
+          ? this.secondsHigh
+          : secondsHigh as int?,
+      distanceMeters: identical(distanceMeters, unset)
+          ? this.distanceMeters
+          : distanceMeters as double?,
+      calories: identical(calories, unset)
+          ? this.calories
+          : calories as double?,
       loadKg: identical(loadKg, unset) ? this.loadKg : loadKg as double?,
       flames: identical(flames, unset) ? this.flames : flames as int?,
       role: identical(role, unset) ? this.role : role as SetRole?,
-      percentOfOneRm: identical(percentOfOneRm, unset) ? this.percentOfOneRm : percentOfOneRm as double?,
-      restSeconds: identical(restSeconds, unset) ? this.restSeconds : restSeconds as int?,
+      percentOfOneRm: identical(percentOfOneRm, unset)
+          ? this.percentOfOneRm
+          : percentOfOneRm as double?,
+      restSeconds: identical(restSeconds, unset)
+          ? this.restSeconds
+          : restSeconds as int?,
     );
   }
 
@@ -393,30 +495,73 @@ final class SetTarget {
 
   /// Ajoute à [out] les violations de cette valeur, située à [path].
   void collectViolations(String path, List<Violation> out) {
-    if (repsLow case final v?) { checkRange(out, '$path.repsLow', v, 0, 1000); }
-    if (repsHigh case final v?) { checkRange(out, '$path.repsHigh', v, 0, 1000); }
-    if (secondsLow case final v?) { checkRange(out, '$path.secondsLow', v, 0, 86400); }
-    if (secondsHigh case final v?) { checkRange(out, '$path.secondsHigh', v, 0, 86400); }
-    if (distanceMeters case final v?) { checkRange(out, '$path.distanceMeters', v, 0, null); }
-    if (calories case final v?) { checkRange(out, '$path.calories', v, 0, null); }
-    if (loadKg case final v?) { checkRange(out, '$path.loadKg', v, -300, 1000); }
-    if (flames case final v?) { checkRange(out, '$path.flames', v, 1, 10); }
-    if (percentOfOneRm case final v?) { checkRange(out, '$path.percentOfOneRm', v, 0, 1.5); }
-    if (restSeconds case final v?) { checkRange(out, '$path.restSeconds', v, 0, 900); }
+    if (repsLow case final v?) {
+      checkRange(out, '$path.repsLow', v, 0, 1000);
+    }
+    if (repsHigh case final v?) {
+      checkRange(out, '$path.repsHigh', v, 0, 1000);
+    }
+    if (secondsLow case final v?) {
+      checkRange(out, '$path.secondsLow', v, 0, 86400);
+    }
+    if (secondsHigh case final v?) {
+      checkRange(out, '$path.secondsHigh', v, 0, 86400);
+    }
+    if (distanceMeters case final v?) {
+      checkRange(out, '$path.distanceMeters', v, 0, null);
+    }
+    if (calories case final v?) {
+      checkRange(out, '$path.calories', v, 0, null);
+    }
+    if (loadKg case final v?) {
+      checkRange(out, '$path.loadKg', v, -300, 1000);
+    }
+    if (flames case final v?) {
+      checkRange(out, '$path.flames', v, 1, 10);
+    }
+    if (percentOfOneRm case final v?) {
+      checkRange(out, '$path.percentOfOneRm', v, 0, 1.5);
+    }
+    if (restSeconds case final v?) {
+      checkRange(out, '$path.restSeconds', v, 0, 900);
+    }
     _validateSetTarget(this, path, out);
   }
 
   /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
-  void collectExerciseIds(Set<String> out) {
-  }
+  void collectExerciseIds(Set<String> out) {}
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || other is SetTarget && repsLow == other.repsLow && repsHigh == other.repsHigh && secondsLow == other.secondsLow && secondsHigh == other.secondsHigh && distanceMeters == other.distanceMeters && calories == other.calories && loadKg == other.loadKg && flames == other.flames && role == other.role && percentOfOneRm == other.percentOfOneRm && restSeconds == other.restSeconds;
+    return identical(this, other) ||
+        other is SetTarget &&
+            repsLow == other.repsLow &&
+            repsHigh == other.repsHigh &&
+            secondsLow == other.secondsLow &&
+            secondsHigh == other.secondsHigh &&
+            distanceMeters == other.distanceMeters &&
+            calories == other.calories &&
+            loadKg == other.loadKg &&
+            flames == other.flames &&
+            role == other.role &&
+            percentOfOneRm == other.percentOfOneRm &&
+            restSeconds == other.restSeconds;
   }
 
   @override
-  int get hashCode => Object.hashAll(<Object?>[repsLow, repsHigh, secondsLow, secondsHigh, distanceMeters, calories, loadKg, flames, role, percentOfOneRm, restSeconds]);
+  int get hashCode => Object.hashAll(<Object?>[
+    repsLow,
+    repsHigh,
+    secondsLow,
+    secondsHigh,
+    distanceMeters,
+    calories,
+    loadKg,
+    flames,
+    role,
+    percentOfOneRm,
+    restSeconds,
+  ]);
 
   @override
   String toString() => 'SetTarget(${toJson()})';
@@ -476,7 +621,11 @@ final class SetRecord {
       target: jsonObjOrNull(json, 'target', SetTarget.fromJson),
       technique: jsonEnumOrNull(json, 'technique', SetTechniqueKind.fromCode),
       role: jsonEnumOrNull(json, 'role', SetRole.fromCode),
-      parts: jsonListOrNull(json, 'parts', (v) => SetPart.fromJson(jsonAsObject(v, 'parts'))),
+      parts: jsonListOrNull(
+        json,
+        'parts',
+        (v) => SetPart.fromJson(jsonAsObject(v, 'parts')),
+      ),
       restBeforeSeconds: jsonIntOrNull(json, 'restBeforeSeconds'),
       elapsedSeconds: jsonIntOrNull(json, 'elapsedSeconds'),
       rounds: jsonIntOrNull(json, 'rounds'),
@@ -622,25 +771,39 @@ final class SetRecord {
       exerciseOrder: exerciseOrder ?? this.exerciseOrder,
       setIndex: setIndex ?? this.setIndex,
       kind: kind ?? this.kind,
-      externalLoadKg: identical(externalLoadKg, unset) ? this.externalLoadKg : externalLoadKg as double?,
+      externalLoadKg: identical(externalLoadKg, unset)
+          ? this.externalLoadKg
+          : externalLoadKg as double?,
       reps: identical(reps, unset) ? this.reps : reps as int?,
       seconds: identical(seconds, unset) ? this.seconds : seconds as int?,
-      distanceMeters: identical(distanceMeters, unset) ? this.distanceMeters : distanceMeters as double?,
-      calories: identical(calories, unset) ? this.calories : calories as double?,
+      distanceMeters: identical(distanceMeters, unset)
+          ? this.distanceMeters
+          : distanceMeters as double?,
+      calories: identical(calories, unset)
+          ? this.calories
+          : calories as double?,
       flames: identical(flames, unset) ? this.flames : flames as int?,
       success: success ?? this.success,
       excluded: excluded ?? this.excluded,
       slotId: identical(slotId, unset) ? this.slotId : slotId as String?,
       side: identical(side, unset) ? this.side : side as BodySide?,
       target: identical(target, unset) ? this.target : target as SetTarget?,
-      technique: identical(technique, unset) ? this.technique : technique as SetTechniqueKind?,
+      technique: identical(technique, unset)
+          ? this.technique
+          : technique as SetTechniqueKind?,
       role: identical(role, unset) ? this.role : role as SetRole?,
       parts: identical(parts, unset) ? this.parts : parts as List<SetPart>?,
-      restBeforeSeconds: identical(restBeforeSeconds, unset) ? this.restBeforeSeconds : restBeforeSeconds as int?,
-      elapsedSeconds: identical(elapsedSeconds, unset) ? this.elapsedSeconds : elapsedSeconds as int?,
+      restBeforeSeconds: identical(restBeforeSeconds, unset)
+          ? this.restBeforeSeconds
+          : restBeforeSeconds as int?,
+      elapsedSeconds: identical(elapsedSeconds, unset)
+          ? this.elapsedSeconds
+          : elapsedSeconds as int?,
       rounds: identical(rounds, unset) ? this.rounds : rounds as int?,
       quality: identical(quality, unset) ? this.quality : quality as int?,
-      attemptIndex: identical(attemptIndex, unset) ? this.attemptIndex : attemptIndex as int?,
+      attemptIndex: identical(attemptIndex, unset)
+          ? this.attemptIndex
+          : attemptIndex as int?,
     );
   }
 
@@ -656,19 +819,48 @@ final class SetRecord {
     checkLength(out, '$path.exerciseId', exerciseId.length, 1, null);
     checkRange(out, '$path.exerciseOrder', exerciseOrder, 0, null);
     checkRange(out, '$path.setIndex', setIndex, 0, null);
-    if (externalLoadKg case final v?) { checkRange(out, '$path.externalLoadKg', v, -300, 1000); }
-    if (reps case final v?) { checkRange(out, '$path.reps', v, 0, 1000); }
-    if (seconds case final v?) { checkRange(out, '$path.seconds', v, 0, 86400); }
-    if (distanceMeters case final v?) { checkRange(out, '$path.distanceMeters', v, 0, null); }
-    if (calories case final v?) { checkRange(out, '$path.calories', v, 0, null); }
-    if (flames case final v?) { checkRange(out, '$path.flames', v, 1, 10); }
-    if (target case final v?) { v.collectViolations('$path.target', out); }
-    if (parts case final v?) { checkLength(out, '$path.parts', v.length, 1, 120); for (var i = 0; i < v.length; i++) { v[i].collectViolations('$path.parts[$i]', out); } }
-    if (restBeforeSeconds case final v?) { checkRange(out, '$path.restBeforeSeconds', v, 0, 3600); }
-    if (elapsedSeconds case final v?) { checkRange(out, '$path.elapsedSeconds', v, 0, 86400); }
-    if (rounds case final v?) { checkRange(out, '$path.rounds', v, 0, 1000); }
-    if (quality case final v?) { checkRange(out, '$path.quality', v, 1, 5); }
-    if (attemptIndex case final v?) { checkRange(out, '$path.attemptIndex', v, 0, 3); }
+    if (externalLoadKg case final v?) {
+      checkRange(out, '$path.externalLoadKg', v, -300, 1000);
+    }
+    if (reps case final v?) {
+      checkRange(out, '$path.reps', v, 0, 1000);
+    }
+    if (seconds case final v?) {
+      checkRange(out, '$path.seconds', v, 0, 86400);
+    }
+    if (distanceMeters case final v?) {
+      checkRange(out, '$path.distanceMeters', v, 0, null);
+    }
+    if (calories case final v?) {
+      checkRange(out, '$path.calories', v, 0, null);
+    }
+    if (flames case final v?) {
+      checkRange(out, '$path.flames', v, 1, 10);
+    }
+    if (target case final v?) {
+      v.collectViolations('$path.target', out);
+    }
+    if (parts case final v?) {
+      checkLength(out, '$path.parts', v.length, 1, 120);
+      for (var i = 0; i < v.length; i++) {
+        v[i].collectViolations('$path.parts[$i]', out);
+      }
+    }
+    if (restBeforeSeconds case final v?) {
+      checkRange(out, '$path.restBeforeSeconds', v, 0, 3600);
+    }
+    if (elapsedSeconds case final v?) {
+      checkRange(out, '$path.elapsedSeconds', v, 0, 86400);
+    }
+    if (rounds case final v?) {
+      checkRange(out, '$path.rounds', v, 0, 1000);
+    }
+    if (quality case final v?) {
+      checkRange(out, '$path.quality', v, 1, 5);
+    }
+    if (attemptIndex case final v?) {
+      checkRange(out, '$path.attemptIndex', v, 0, 3);
+    }
     _validateSetRecord(this, path, out);
   }
 
@@ -676,16 +868,66 @@ final class SetRecord {
   void collectExerciseIds(Set<String> out) {
     out.add(exerciseId);
     target?.collectExerciseIds(out);
-    for (final e in parts ?? const <SetPart>[]) { e.collectExerciseIds(out); }
+    for (final e in parts ?? const <SetPart>[]) {
+      e.collectExerciseIds(out);
+    }
   }
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || other is SetRecord && exerciseId == other.exerciseId && exerciseOrder == other.exerciseOrder && setIndex == other.setIndex && kind == other.kind && externalLoadKg == other.externalLoadKg && reps == other.reps && seconds == other.seconds && distanceMeters == other.distanceMeters && calories == other.calories && flames == other.flames && success == other.success && excluded == other.excluded && slotId == other.slotId && side == other.side && target == other.target && technique == other.technique && role == other.role && jsonDeepEquals(parts, other.parts) && restBeforeSeconds == other.restBeforeSeconds && elapsedSeconds == other.elapsedSeconds && rounds == other.rounds && quality == other.quality && attemptIndex == other.attemptIndex;
+    return identical(this, other) ||
+        other is SetRecord &&
+            exerciseId == other.exerciseId &&
+            exerciseOrder == other.exerciseOrder &&
+            setIndex == other.setIndex &&
+            kind == other.kind &&
+            externalLoadKg == other.externalLoadKg &&
+            reps == other.reps &&
+            seconds == other.seconds &&
+            distanceMeters == other.distanceMeters &&
+            calories == other.calories &&
+            flames == other.flames &&
+            success == other.success &&
+            excluded == other.excluded &&
+            slotId == other.slotId &&
+            side == other.side &&
+            target == other.target &&
+            technique == other.technique &&
+            role == other.role &&
+            jsonDeepEquals(parts, other.parts) &&
+            restBeforeSeconds == other.restBeforeSeconds &&
+            elapsedSeconds == other.elapsedSeconds &&
+            rounds == other.rounds &&
+            quality == other.quality &&
+            attemptIndex == other.attemptIndex;
   }
 
   @override
-  int get hashCode => Object.hashAll(<Object?>[exerciseId, exerciseOrder, setIndex, kind, externalLoadKg, reps, seconds, distanceMeters, calories, flames, success, excluded, slotId, side, target, technique, role, jsonDeepHash(parts), restBeforeSeconds, elapsedSeconds, rounds, quality, attemptIndex]);
+  int get hashCode => Object.hashAll(<Object?>[
+    exerciseId,
+    exerciseOrder,
+    setIndex,
+    kind,
+    externalLoadKg,
+    reps,
+    seconds,
+    distanceMeters,
+    calories,
+    flames,
+    success,
+    excluded,
+    slotId,
+    side,
+    target,
+    technique,
+    role,
+    jsonDeepHash(parts),
+    restBeforeSeconds,
+    elapsedSeconds,
+    rounds,
+    quality,
+    attemptIndex,
+  ]);
 
   @override
   String toString() => 'SetRecord(${toJson()})';
@@ -755,12 +997,15 @@ final class TrainingBreak {
   }
 
   /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
-  void collectExerciseIds(Set<String> out) {
-  }
+  void collectExerciseIds(Set<String> out) {}
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || other is TrainingBreak && startDate == other.startDate && endDate == other.endDate && reason == other.reason;
+    return identical(this, other) ||
+        other is TrainingBreak &&
+            startDate == other.startDate &&
+            endDate == other.endDate &&
+            reason == other.reason;
   }
 
   @override
@@ -808,11 +1053,7 @@ final class ProgramRef {
   }
 
   /// Copie modifiée ; un champ optionnel peut être remis à `null`.
-  ProgramRef copyWith({
-    String? blockId,
-    int? weekIndex,
-    int? dayIndex,
-  }) {
+  ProgramRef copyWith({String? blockId, int? weekIndex, int? dayIndex}) {
     return ProgramRef(
       blockId: blockId ?? this.blockId,
       weekIndex: weekIndex ?? this.weekIndex,
@@ -835,12 +1076,15 @@ final class ProgramRef {
   }
 
   /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
-  void collectExerciseIds(Set<String> out) {
-  }
+  void collectExerciseIds(Set<String> out) {}
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || other is ProgramRef && blockId == other.blockId && weekIndex == other.weekIndex && dayIndex == other.dayIndex;
+    return identical(this, other) ||
+        other is ProgramRef &&
+            blockId == other.blockId &&
+            weekIndex == other.weekIndex &&
+            dayIndex == other.dayIndex;
   }
 
   @override
@@ -887,11 +1131,23 @@ final class SessionRecord {
       bodyWeightKg: jsonDoubleOrNull(json, 'bodyWeightKg'),
       place: jsonEnumOrNull(json, 'place', Place.fromCode),
       healthCheck: jsonObjOrNull(json, 'healthCheck', HealthCheck.fromJson),
-      sets: jsonList(json, 'sets', (v) => SetRecord.fromJson(jsonAsObject(v, 'sets'))),
-      pains: jsonList(json, 'pains', (v) => PainReport.fromJson(jsonAsObject(v, 'pains'))),
+      sets: jsonList(
+        json,
+        'sets',
+        (v) => SetRecord.fromJson(jsonAsObject(v, 'sets')),
+      ),
+      pains: jsonList(
+        json,
+        'pains',
+        (v) => PainReport.fromJson(jsonAsObject(v, 'pains')),
+      ),
       plannedWorkSets: jsonIntOrNull(json, 'plannedWorkSets'),
       eventId: jsonStringOrNull(json, 'eventId'),
-      groupResults: jsonListOrNull(json, 'groupResults', (v) => GroupResult.fromJson(jsonAsObject(v, 'groupResults'))),
+      groupResults: jsonListOrNull(
+        json,
+        'groupResults',
+        (v) => GroupResult.fromJson(jsonAsObject(v, 'groupResults')),
+      ),
     );
   }
 
@@ -962,7 +1218,8 @@ final class SessionRecord {
       'pains': [for (final e in pains) e.toJson()],
       if (plannedWorkSets case final v?) 'plannedWorkSets': v,
       if (eventId case final v?) 'eventId': v,
-      if (groupResults case final v?) 'groupResults': [for (final e in v) e.toJson()],
+      if (groupResults case final v?)
+        'groupResults': [for (final e in v) e.toJson()],
     };
   }
 
@@ -988,18 +1245,30 @@ final class SessionRecord {
       id: id ?? this.id,
       date: date ?? this.date,
       origin: origin ?? this.origin,
-      programRef: identical(programRef, unset) ? this.programRef : programRef as ProgramRef?,
+      programRef: identical(programRef, unset)
+          ? this.programRef
+          : programRef as ProgramRef?,
       resume: resume ?? this.resume,
       completed: completed ?? this.completed,
-      durationMinutes: identical(durationMinutes, unset) ? this.durationMinutes : durationMinutes as int?,
-      bodyWeightKg: identical(bodyWeightKg, unset) ? this.bodyWeightKg : bodyWeightKg as double?,
+      durationMinutes: identical(durationMinutes, unset)
+          ? this.durationMinutes
+          : durationMinutes as int?,
+      bodyWeightKg: identical(bodyWeightKg, unset)
+          ? this.bodyWeightKg
+          : bodyWeightKg as double?,
       place: identical(place, unset) ? this.place : place as Place?,
-      healthCheck: identical(healthCheck, unset) ? this.healthCheck : healthCheck as HealthCheck?,
+      healthCheck: identical(healthCheck, unset)
+          ? this.healthCheck
+          : healthCheck as HealthCheck?,
       sets: sets ?? this.sets,
       pains: pains ?? this.pains,
-      plannedWorkSets: identical(plannedWorkSets, unset) ? this.plannedWorkSets : plannedWorkSets as int?,
+      plannedWorkSets: identical(plannedWorkSets, unset)
+          ? this.plannedWorkSets
+          : plannedWorkSets as int?,
       eventId: identical(eventId, unset) ? this.eventId : eventId as String?,
-      groupResults: identical(groupResults, unset) ? this.groupResults : groupResults as List<GroupResult>?,
+      groupResults: identical(groupResults, unset)
+          ? this.groupResults
+          : groupResults as List<GroupResult>?,
     );
   }
 
@@ -1013,15 +1282,36 @@ final class SessionRecord {
   /// Ajoute à [out] les violations de cette valeur, située à [path].
   void collectViolations(String path, List<Violation> out) {
     checkLength(out, '$path.id', id.length, 1, null);
-    if (programRef case final v?) { v.collectViolations('$path.programRef', out); }
-    if (durationMinutes case final v?) { checkRange(out, '$path.durationMinutes', v, 0, 600); }
-    if (bodyWeightKg case final v?) { checkRange(out, '$path.bodyWeightKg', v, 25, 300); }
-    if (healthCheck case final v?) { v.collectViolations('$path.healthCheck', out); }
-    for (var i = 0; i < sets.length; i++) { sets[i].collectViolations('$path.sets[$i]', out); }
-    for (var i = 0; i < pains.length; i++) { pains[i].collectViolations('$path.pains[$i]', out); }
-    if (plannedWorkSets case final v?) { checkRange(out, '$path.plannedWorkSets', v, 0, 500); }
-    if (eventId case final v?) { checkLength(out, '$path.eventId', v.length, 1, null); }
-    if (groupResults case final v?) { checkLength(out, '$path.groupResults', v.length, null, 20); for (var i = 0; i < v.length; i++) { v[i].collectViolations('$path.groupResults[$i]', out); } }
+    if (programRef case final v?) {
+      v.collectViolations('$path.programRef', out);
+    }
+    if (durationMinutes case final v?) {
+      checkRange(out, '$path.durationMinutes', v, 0, 600);
+    }
+    if (bodyWeightKg case final v?) {
+      checkRange(out, '$path.bodyWeightKg', v, 25, 300);
+    }
+    if (healthCheck case final v?) {
+      v.collectViolations('$path.healthCheck', out);
+    }
+    for (var i = 0; i < sets.length; i++) {
+      sets[i].collectViolations('$path.sets[$i]', out);
+    }
+    for (var i = 0; i < pains.length; i++) {
+      pains[i].collectViolations('$path.pains[$i]', out);
+    }
+    if (plannedWorkSets case final v?) {
+      checkRange(out, '$path.plannedWorkSets', v, 0, 500);
+    }
+    if (eventId case final v?) {
+      checkLength(out, '$path.eventId', v.length, 1, null);
+    }
+    if (groupResults case final v?) {
+      checkLength(out, '$path.groupResults', v.length, null, 20);
+      for (var i = 0; i < v.length; i++) {
+        v[i].collectViolations('$path.groupResults[$i]', out);
+      }
+    }
     _validateSessionRecord(this, path, out);
   }
 
@@ -1029,18 +1319,56 @@ final class SessionRecord {
   void collectExerciseIds(Set<String> out) {
     programRef?.collectExerciseIds(out);
     healthCheck?.collectExerciseIds(out);
-    for (final e in sets) { e.collectExerciseIds(out); }
-    for (final e in pains) { e.collectExerciseIds(out); }
-    for (final e in groupResults ?? const <GroupResult>[]) { e.collectExerciseIds(out); }
+    for (final e in sets) {
+      e.collectExerciseIds(out);
+    }
+    for (final e in pains) {
+      e.collectExerciseIds(out);
+    }
+    for (final e in groupResults ?? const <GroupResult>[]) {
+      e.collectExerciseIds(out);
+    }
   }
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || other is SessionRecord && id == other.id && date == other.date && origin == other.origin && programRef == other.programRef && resume == other.resume && completed == other.completed && durationMinutes == other.durationMinutes && bodyWeightKg == other.bodyWeightKg && place == other.place && healthCheck == other.healthCheck && jsonListEquals(sets, other.sets) && jsonListEquals(pains, other.pains) && plannedWorkSets == other.plannedWorkSets && eventId == other.eventId && jsonDeepEquals(groupResults, other.groupResults);
+    return identical(this, other) ||
+        other is SessionRecord &&
+            id == other.id &&
+            date == other.date &&
+            origin == other.origin &&
+            programRef == other.programRef &&
+            resume == other.resume &&
+            completed == other.completed &&
+            durationMinutes == other.durationMinutes &&
+            bodyWeightKg == other.bodyWeightKg &&
+            place == other.place &&
+            healthCheck == other.healthCheck &&
+            jsonListEquals(sets, other.sets) &&
+            jsonListEquals(pains, other.pains) &&
+            plannedWorkSets == other.plannedWorkSets &&
+            eventId == other.eventId &&
+            jsonDeepEquals(groupResults, other.groupResults);
   }
 
   @override
-  int get hashCode => Object.hashAll(<Object?>[id, date, origin, programRef, resume, completed, durationMinutes, bodyWeightKg, place, healthCheck, Object.hashAll(sets), Object.hashAll(pains), plannedWorkSets, eventId, jsonDeepHash(groupResults)]);
+  int get hashCode => Object.hashAll(<Object?>[
+    id,
+    date,
+    origin,
+    programRef,
+    resume,
+    completed,
+    durationMinutes,
+    bodyWeightKg,
+    place,
+    healthCheck,
+    Object.hashAll(sets),
+    Object.hashAll(pains),
+    plannedWorkSets,
+    eventId,
+    jsonDeepHash(groupResults),
+  ]);
 
   @override
   String toString() => 'SessionRecord(${toJson()})';
@@ -1062,8 +1390,16 @@ final class TrainingLog {
   factory TrainingLog.fromJson(Map<String, Object?> json) {
     return TrainingLog(
       schemaVersion: jsonInt(json, 'schemaVersion'),
-      sessions: jsonList(json, 'sessions', (v) => SessionRecord.fromJson(jsonAsObject(v, 'sessions'))),
-      breaks: jsonListOrNull(json, 'breaks', (v) => TrainingBreak.fromJson(jsonAsObject(v, 'breaks'))),
+      sessions: jsonList(
+        json,
+        'sessions',
+        (v) => SessionRecord.fromJson(jsonAsObject(v, 'sessions')),
+      ),
+      breaks: jsonListOrNull(
+        json,
+        'breaks',
+        (v) => TrainingBreak.fromJson(jsonAsObject(v, 'breaks')),
+      ),
     );
   }
 
@@ -1097,7 +1433,9 @@ final class TrainingLog {
     return TrainingLog(
       schemaVersion: schemaVersion ?? this.schemaVersion,
       sessions: sessions ?? this.sessions,
-      breaks: identical(breaks, unset) ? this.breaks : breaks as List<TrainingBreak>?,
+      breaks: identical(breaks, unset)
+          ? this.breaks
+          : breaks as List<TrainingBreak>?,
     );
   }
 
@@ -1110,25 +1448,49 @@ final class TrainingLog {
 
   /// Ajoute à [out] les violations de cette valeur, située à [path].
   void collectViolations(String path, List<Violation> out) {
-    checkRange(out, '$path.schemaVersion', schemaVersion, 1, currentSchemaVersion);
-    for (var i = 0; i < sessions.length; i++) { sessions[i].collectViolations('$path.sessions[$i]', out); }
-    if (breaks case final v?) { for (var i = 0; i < v.length; i++) { v[i].collectViolations('$path.breaks[$i]', out); } }
+    checkRange(
+      out,
+      '$path.schemaVersion',
+      schemaVersion,
+      1,
+      currentSchemaVersion,
+    );
+    for (var i = 0; i < sessions.length; i++) {
+      sessions[i].collectViolations('$path.sessions[$i]', out);
+    }
+    if (breaks case final v?) {
+      for (var i = 0; i < v.length; i++) {
+        v[i].collectViolations('$path.breaks[$i]', out);
+      }
+    }
     _validateTrainingLog(this, path, out);
   }
 
   /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
   void collectExerciseIds(Set<String> out) {
-    for (final e in sessions) { e.collectExerciseIds(out); }
-    for (final e in breaks ?? const <TrainingBreak>[]) { e.collectExerciseIds(out); }
+    for (final e in sessions) {
+      e.collectExerciseIds(out);
+    }
+    for (final e in breaks ?? const <TrainingBreak>[]) {
+      e.collectExerciseIds(out);
+    }
   }
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || other is TrainingLog && schemaVersion == other.schemaVersion && jsonListEquals(sessions, other.sessions) && jsonDeepEquals(breaks, other.breaks);
+    return identical(this, other) ||
+        other is TrainingLog &&
+            schemaVersion == other.schemaVersion &&
+            jsonListEquals(sessions, other.sessions) &&
+            jsonDeepEquals(breaks, other.breaks);
   }
 
   @override
-  int get hashCode => Object.hashAll(<Object?>[schemaVersion, Object.hashAll(sessions), jsonDeepHash(breaks)]);
+  int get hashCode => Object.hashAll(<Object?>[
+    schemaVersion,
+    Object.hashAll(sessions),
+    jsonDeepHash(breaks),
+  ]);
 
   @override
   String toString() => 'TrainingLog(${toJson()})';
@@ -1194,9 +1556,13 @@ final class GroupResult {
     return GroupResult(
       groupId: groupId ?? this.groupId,
       completed: completed ?? this.completed,
-      elapsedSeconds: identical(elapsedSeconds, unset) ? this.elapsedSeconds : elapsedSeconds as int?,
+      elapsedSeconds: identical(elapsedSeconds, unset)
+          ? this.elapsedSeconds
+          : elapsedSeconds as int?,
       rounds: identical(rounds, unset) ? this.rounds : rounds as int?,
-      extraReps: identical(extraReps, unset) ? this.extraReps : extraReps as int?,
+      extraReps: identical(extraReps, unset)
+          ? this.extraReps
+          : extraReps as int?,
     );
   }
 
@@ -1210,22 +1576,39 @@ final class GroupResult {
   /// Ajoute à [out] les violations de cette valeur, située à [path].
   void collectViolations(String path, List<Violation> out) {
     checkLength(out, '$path.groupId', groupId.length, 1, null);
-    if (elapsedSeconds case final v?) { checkRange(out, '$path.elapsedSeconds', v, 0, 86400); }
-    if (rounds case final v?) { checkRange(out, '$path.rounds', v, 0, 1000); }
-    if (extraReps case final v?) { checkRange(out, '$path.extraReps', v, 0, 10000); }
+    if (elapsedSeconds case final v?) {
+      checkRange(out, '$path.elapsedSeconds', v, 0, 86400);
+    }
+    if (rounds case final v?) {
+      checkRange(out, '$path.rounds', v, 0, 1000);
+    }
+    if (extraReps case final v?) {
+      checkRange(out, '$path.extraReps', v, 0, 10000);
+    }
   }
 
   /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
-  void collectExerciseIds(Set<String> out) {
-  }
+  void collectExerciseIds(Set<String> out) {}
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || other is GroupResult && groupId == other.groupId && completed == other.completed && elapsedSeconds == other.elapsedSeconds && rounds == other.rounds && extraReps == other.extraReps;
+    return identical(this, other) ||
+        other is GroupResult &&
+            groupId == other.groupId &&
+            completed == other.completed &&
+            elapsedSeconds == other.elapsedSeconds &&
+            rounds == other.rounds &&
+            extraReps == other.extraReps;
   }
 
   @override
-  int get hashCode => Object.hashAll(<Object?>[groupId, completed, elapsedSeconds, rounds, extraReps]);
+  int get hashCode => Object.hashAll(<Object?>[
+    groupId,
+    completed,
+    elapsedSeconds,
+    rounds,
+    extraReps,
+  ]);
 
   @override
   String toString() => 'GroupResult(${toJson()})';
@@ -1290,8 +1673,12 @@ final class SetPart {
     return SetPart(
       reps: identical(reps, unset) ? this.reps : reps as int?,
       seconds: identical(seconds, unset) ? this.seconds : seconds as int?,
-      externalLoadKg: identical(externalLoadKg, unset) ? this.externalLoadKg : externalLoadKg as double?,
-      restBeforeSeconds: identical(restBeforeSeconds, unset) ? this.restBeforeSeconds : restBeforeSeconds as int?,
+      externalLoadKg: identical(externalLoadKg, unset)
+          ? this.externalLoadKg
+          : externalLoadKg as double?,
+      restBeforeSeconds: identical(restBeforeSeconds, unset)
+          ? this.restBeforeSeconds
+          : restBeforeSeconds as int?,
     );
   }
 
@@ -1304,24 +1691,41 @@ final class SetPart {
 
   /// Ajoute à [out] les violations de cette valeur, située à [path].
   void collectViolations(String path, List<Violation> out) {
-    if (reps case final v?) { checkRange(out, '$path.reps', v, 0, 1000); }
-    if (seconds case final v?) { checkRange(out, '$path.seconds', v, 0, 86400); }
-    if (externalLoadKg case final v?) { checkRange(out, '$path.externalLoadKg', v, -300, 1000); }
-    if (restBeforeSeconds case final v?) { checkRange(out, '$path.restBeforeSeconds', v, 0, 3600); }
+    if (reps case final v?) {
+      checkRange(out, '$path.reps', v, 0, 1000);
+    }
+    if (seconds case final v?) {
+      checkRange(out, '$path.seconds', v, 0, 86400);
+    }
+    if (externalLoadKg case final v?) {
+      checkRange(out, '$path.externalLoadKg', v, -300, 1000);
+    }
+    if (restBeforeSeconds case final v?) {
+      checkRange(out, '$path.restBeforeSeconds', v, 0, 3600);
+    }
     _validateSetPart(this, path, out);
   }
 
   /// Ajoute à [out] les identifiants d'exercices cités par cette valeur.
-  void collectExerciseIds(Set<String> out) {
-  }
+  void collectExerciseIds(Set<String> out) {}
 
   @override
   bool operator ==(Object other) {
-    return identical(this, other) || other is SetPart && reps == other.reps && seconds == other.seconds && externalLoadKg == other.externalLoadKg && restBeforeSeconds == other.restBeforeSeconds;
+    return identical(this, other) ||
+        other is SetPart &&
+            reps == other.reps &&
+            seconds == other.seconds &&
+            externalLoadKg == other.externalLoadKg &&
+            restBeforeSeconds == other.restBeforeSeconds;
   }
 
   @override
-  int get hashCode => Object.hashAll(<Object?>[reps, seconds, externalLoadKg, restBeforeSeconds]);
+  int get hashCode => Object.hashAll(<Object?>[
+    reps,
+    seconds,
+    externalLoadKg,
+    restBeforeSeconds,
+  ]);
 
   @override
   String toString() => 'SetPart(${toJson()})';

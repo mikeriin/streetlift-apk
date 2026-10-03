@@ -244,7 +244,9 @@ void main(List<String> args) {
     'profil_v3': <String, Object?>{
       'parcours_version': parcours.version,
       'questions': parcours.questions.length,
-      'questions_schema_3': parcours.questions.where((q) => q.since >= 3).length,
+      'questions_schema_3': parcours.questions
+          .where((q) => q.since >= 3)
+          .length,
       'tests_guides': parcours.tests.length,
       'profils_types': v3Profiles.length,
       'questions_vues': questionCounts,

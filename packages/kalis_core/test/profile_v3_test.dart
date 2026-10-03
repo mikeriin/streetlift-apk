@@ -109,10 +109,7 @@ void main() {
         expect(back.schemaVersion, 2);
         expect(back.schema3FieldsPresent, isEmpty);
         expect(jsonEncode(back.toJson()), text);
-        expect(
-          codesOf(back.validate()),
-          isNot(contains('schema3_field')),
-        );
+        expect(codesOf(back.validate()), isNot(contains('schema3_field')));
       }
     });
 
@@ -177,11 +174,7 @@ void main() {
         expect(migrated.schema3FieldsPresent, isEmpty, reason: p.key);
         expect(migrated.validate(), isEmpty, reason: p.key);
         expect(catalog.checkProfile(migrated), isEmpty, reason: p.key);
-        expect(
-          migrated.copyWith(schemaVersion: 2),
-          p.profile,
-          reason: p.key,
-        );
+        expect(migrated.copyWith(schemaVersion: 2), p.profile, reason: p.key);
         final before = p.profile.toJson();
         final after = migrated.toJson();
         expect(after.keys.toList(), before.keys.toList(), reason: p.key);
@@ -378,10 +371,14 @@ void main() {
         final profile = entry.value;
         expect(profile.schema3FieldsPresent, <String>[key], reason: key);
         expect(profile.validate(), isEmpty, reason: key);
-        expect(<String>[
-          for (final name in profile.toJson().keys)
-            if (schema3Keys.contains(name)) name,
-        ], <String>[key], reason: key);
+        expect(
+          <String>[
+            for (final name in profile.toJson().keys)
+              if (schema3Keys.contains(name)) name,
+          ],
+          <String>[key],
+          reason: key,
+        );
         final old = profile.copyWith(schemaVersion: 2);
         expect(old.isSchema3, isFalse, reason: key);
         expect(old.schema3FieldsPresent, <String>[key], reason: key);
@@ -432,16 +429,12 @@ void main() {
           limitations: <Limitation>[knee, limitation],
         );
         expect(profile.validate(), isEmpty, reason: reason);
-        expect(
-          profile.schema3FieldsPresent,
-          <String>['limitations'],
-          reason: reason,
-        );
-        expect(
-          located(profile.copyWith(schemaVersion: 2).validate()),
-          <String>[r'$.limitations schema3_field'],
-          reason: reason,
-        );
+        expect(profile.schema3FieldsPresent, <String>[
+          'limitations',
+        ], reason: reason);
+        expect(located(profile.copyWith(schemaVersion: 2).validate()), <String>[
+          r'$.limitations schema3_field',
+        ], reason: reason);
       }
       // Tous les champs à la fois : la liste entière, dans l'ordre.
       final full = base.copyWith(
@@ -497,9 +490,8 @@ void main() {
           for (final key in schema3Keys)
             if (json.containsKey(key)) key,
           if (limitations.any(
-            (l) => (l! as Map<String, Object?>).keys.any(
-              limitation3Keys.contains,
-            ),
+            (l) =>
+                (l! as Map<String, Object?>).keys.any(limitation3Keys.contains),
           ))
             'limitations',
         ];
@@ -509,10 +501,13 @@ void main() {
         expect(codesOf(violations), isNot(contains('schema3_field')));
         final old = profile.copyWith(schemaVersion: 2);
         final oldViolations = old.validate();
-        expect(<String>[
-          for (final v in oldViolations)
-            if (v.code == 'schema3_field') v.path,
-        ], <String>[for (final name in expected) '\$.$name']);
+        expect(
+          <String>[
+            for (final v in oldViolations)
+              if (v.code == 'schema3_field') v.path,
+          ],
+          <String>[for (final name in expected) '\$.$name'],
+        );
         // Les autres violations ne dépendent pas du numéro de schéma.
         expect(
           located(oldViolations.where((v) => v.code != 'schema3_field')),
@@ -676,10 +671,13 @@ void main() {
       expect(elite.recentTraining!.first.hardSets, HardSetsBand.sets10To14);
       expect(elite.recentTraining!.last.hardSets, isNull);
       expect(elite.currentPhase, CurrentPhase.volume);
-      expect(
-        elite.benchmarks!.map((b) => b.competitionStandard),
-        <bool?>[true, true, true, true, null],
-      );
+      expect(elite.benchmarks!.map((b) => b.competitionStandard), <bool?>[
+        true,
+        true,
+        true,
+        true,
+        null,
+      ]);
 
       final runner = of('v3_coureuse_10km');
       expect(runner.events!.single.kind, EventKind.race);
@@ -877,9 +875,7 @@ void main() {
       );
       expect(
         codesOf(
-          base
-              .copyWith(lifestyleUpdatedOn: CivilDate(2026, 9, 30))
-              .validate(),
+          base.copyWith(lifestyleUpdatedOn: CivilDate(2026, 9, 30)).validate(),
         ),
         <String>['date_before_creation'],
       );
@@ -1061,16 +1057,12 @@ void main() {
           bodyWeightGoal: goal,
           targetBodyWeightKg: 60.0,
         );
-        expect(
-          codesOf(wrong.validate()),
-          <String>['unexpected_field'],
-          reason: reason,
-        );
-        expect(
-          located(wrong.validate()),
-          <String>[r'$.targetBodyWeightKg unexpected_field'],
-          reason: reason,
-        );
+        expect(codesOf(wrong.validate()), <String>[
+          'unexpected_field',
+        ], reason: reason);
+        expect(located(wrong.validate()), <String>[
+          r'$.targetBodyWeightKg unexpected_field',
+        ], reason: reason);
         // Sans poids visé : tout but est accepté.
         expect(
           wrong.copyWith(targetBodyWeightKg: null).validate(),
@@ -1100,26 +1092,31 @@ void main() {
         weekdays: <int>[2, 6],
       );
       expect(ok.validate(), isEmpty);
-      expect(codesOf(ok.copyWith(weekdays: const <int>[2, 2]).validate()), <
-        String
-      >['duplicate']);
-      expect(codesOf(ok.copyWith(weekdays: const <int>[0]).validate()), <
-        String
-      >['below_min']);
-      expect(codesOf(ok.copyWith(weekdays: const <int>[8]).validate()), <
-        String
-      >['above_max']);
+      expect(
+        codesOf(ok.copyWith(weekdays: const <int>[2, 2]).validate()),
+        <String>['duplicate'],
+      );
+      expect(
+        codesOf(ok.copyWith(weekdays: const <int>[0]).validate()),
+        <String>['below_min'],
+      );
+      expect(
+        codesOf(ok.copyWith(weekdays: const <int>[8]).validate()),
+        <String>['above_max'],
+      );
       expect(codesOf(ok.copyWith(sessionsPerWeek: 0).validate()), <String>[
         'below_min',
       ]);
       expect(
         codesOf(
-          ok.copyWith(
-            regions: const <BodyRegion>[
-              BodyRegion.lowerBody,
-              BodyRegion.lowerBody,
-            ],
-          ).validate(),
+          ok
+              .copyWith(
+                regions: const <BodyRegion>[
+                  BodyRegion.lowerBody,
+                  BodyRegion.lowerBody,
+                ],
+              )
+              .validate(),
         ),
         <String>['duplicate'],
       );
@@ -1134,12 +1131,14 @@ void main() {
       );
       expect(
         located(
-          ok.copyWith(
-            regions: const <BodyRegion>[
-              BodyRegion.lowerBody,
-              BodyRegion.lowerBody,
-            ],
-          ).validate(),
+          ok
+              .copyWith(
+                regions: const <BodyRegion>[
+                  BodyRegion.lowerBody,
+                  BodyRegion.lowerBody,
+                ],
+              )
+              .validate(),
         ),
         <String>[r'$.regions duplicate'],
       );
@@ -1189,23 +1188,27 @@ void main() {
       expect(l.validate(), isEmpty);
       expect(
         codesOf(
-          l.copyWith(
-            aggravatedBy: const <AggravatingMovement>[
-              AggravatingMovement.rings,
-              AggravatingMovement.rings,
-            ],
-          ).validate(),
+          l
+              .copyWith(
+                aggravatedBy: const <AggravatingMovement>[
+                  AggravatingMovement.rings,
+                  AggravatingMovement.rings,
+                ],
+              )
+              .validate(),
         ),
         <String>['duplicate'],
       );
       expect(
         located(
-          l.copyWith(
-            aggravatedBy: const <AggravatingMovement>[
-              AggravatingMovement.rings,
-              AggravatingMovement.rings,
-            ],
-          ).validate(),
+          l
+              .copyWith(
+                aggravatedBy: const <AggravatingMovement>[
+                  AggravatingMovement.rings,
+                  AggravatingMovement.rings,
+                ],
+              )
+              .validate(),
         ),
         <String>[r'$.aggravatedBy duplicate'],
       );
