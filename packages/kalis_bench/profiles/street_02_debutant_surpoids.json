@@ -1,0 +1,148 @@
+{
+ "schemaVersion": 1,
+ "key": "street_02_debutant_surpoids",
+ "group": "street",
+ "title": "Débutant sédentaire en surpoids",
+ "summary": "Homme de 38 ans, sédentaire, 104 kg pour 1,76 m. Veut reprendre une activité et perdre du poids. Trois séances de 40 minutes, à la maison et au parc.",
+ "level": "beginner",
+ "trainingAgeMonths": 0,
+ "core": {
+  "sex": "male",
+  "birthYear": 1988,
+  "heightCm": 176,
+  "bodyWeightKg": 104.0,
+  "streetMode": {
+   "primary": "sets_reps",
+   "streetliftingPct": 0,
+   "setsRepsPct": 80,
+   "calisthenicsPct": 20
+  },
+  "disciplines": {
+   "primary": "street_workout",
+   "primaryPct": 80,
+   "secondaries": [
+    {
+     "discipline": "calisthenics",
+     "pct": 20
+    }
+   ]
+  },
+  "availability": [
+   {
+    "weekday": 2,
+    "minutes": 40
+   },
+   {
+    "weekday": 4,
+    "minutes": 40
+   },
+   {
+    "weekday": 6,
+    "minutes": 40
+   }
+  ],
+  "places": [
+   "maison",
+   "exterieur"
+  ],
+  "equipment": [
+   "barre fixe",
+   "barres parallèles",
+   "barre basse",
+   "élastique",
+   "tapis"
+  ],
+  "loadIncrements": [],
+  "likedExerciseIds": [],
+  "dislikedExerciseIds": [],
+  "experience": "beginner",
+  "guidanceMode": "assisted",
+  "healthScreening": {
+   "questionnaireId": "kalis-sante-l13-v1",
+   "answeredOn": "2026-10-01",
+   "outcome": "standard"
+  }
+ },
+ "records": [
+  {
+   "exerciseId": "sw-traction-pronation",
+   "measure": "max_reps",
+   "value": 0
+  },
+  {
+   "exerciseId": "sw-pompe",
+   "measure": "max_reps",
+   "value": 2
+  },
+  {
+   "exerciseId": "sw-dips-barres-paralleles",
+   "measure": "max_reps",
+   "value": 0
+  }
+ ],
+ "habitGoal": {
+  "sessionsPerWeek": 3,
+  "weeks": 12
+ },
+ "recovery": {
+  "sleepHours": 6.5,
+  "stress": 3,
+  "energyDeficit": true
+ },
+ "expectations": {
+  "text": [
+   "Au poids du corps, la charge est la masse corporelle : chaque variante doit permettre 6 à 8 répétitions avec 3 en réserve (pompes surélevées, row australien peu incliné, squat sur box) (R5-P9).",
+   "Ni sauts ni pliométrie ni course au début ; suspensions et appuis sur les poignets à volume réduit (R5-P9, R6-P32).",
+   "La force progresse normalement en déficit énergétique : progression simple, volume non réduit par défaut mais bas (4 à 6 séries par groupe) (R5-P16, R5-P1).",
+   "L'adhésion d'abord : séances courtes, réussies, répétées (R5-P1)."
+  ],
+  "checks": [
+   {
+    "id": "c1",
+    "type": "forbid_patterns",
+    "label": "Ni pliométrie, ni sprint, ni corde à sauter, ni balistique",
+    "patterns": [
+     "pliometrie",
+     "sprint",
+     "corde_a_sauter",
+     "balistique"
+    ]
+   },
+   {
+    "id": "c2",
+    "type": "min_rir_first_weeks",
+    "label": "Au moins 3 répétitions en réserve les quatre premières semaines",
+    "weeks": 4,
+    "rir": 3
+   },
+   {
+    "id": "c3",
+    "type": "max_exercise_level",
+    "label": "Exercices de niveau débutant seulement",
+    "level": "Débutant"
+   },
+   {
+    "id": "c4",
+    "type": "pattern_present",
+    "label": "Tirage horizontal au moins deux fois par semaine",
+    "patterns": [
+     "tirage_horizontal"
+    ],
+    "perWeek": 2
+   },
+   {
+    "id": "c5",
+    "type": "max_session_minutes",
+    "label": "Séances de 45 minutes au plus",
+    "minutes": 45
+   },
+   {
+    "id": "c6",
+    "type": "max_group_sets",
+    "label": "Pectoraux : pas plus de 10 séries dures par semaine",
+    "group": "chest",
+    "sets": 10
+   }
+  ]
+ }
+}

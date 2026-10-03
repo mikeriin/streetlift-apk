@@ -1,0 +1,220 @@
+{
+ "schemaVersion": 1,
+ "key": "street_12_antecedent_coude",
+ "group": "street",
+ "title": "Antécédent de tendinopathie du coude",
+ "summary": "Homme de 33 ans, 82 kg, quatre ans de streetlifting. Traction +30 kg, dips +50 kg. Douleur à la face interne du coude droit il y a cinq mois (suivie par un kinésithérapeute), gêne résiduelle de 3 sur 10 sur les tractions lourdes. Quatre séances de 75 minutes.",
+ "level": "intermediate",
+ "trainingAgeMonths": 48,
+ "core": {
+  "sex": "male",
+  "birthYear": 1993,
+  "heightCm": 181,
+  "bodyWeightKg": 82.0,
+  "streetMode": {
+   "primary": "streetlifting",
+   "streetliftingPct": 60,
+   "setsRepsPct": 30,
+   "calisthenicsPct": 10
+  },
+  "disciplines": {
+   "primary": "streetlifting",
+   "primaryPct": 60,
+   "secondaries": [
+    {
+     "discipline": "street_workout",
+     "pct": 30
+    },
+    {
+     "discipline": "calisthenics",
+     "pct": 10
+    }
+   ]
+  },
+  "availability": [
+   {
+    "weekday": 1,
+    "minutes": 75
+   },
+   {
+    "weekday": 2,
+    "minutes": 75
+   },
+   {
+    "weekday": 4,
+    "minutes": 75
+   },
+   {
+    "weekday": 6,
+    "minutes": 75
+   }
+  ],
+  "places": [
+   "salle"
+  ],
+  "equipment": [
+   "barre fixe",
+   "barres parallèles",
+   "barre basse",
+   "élastique",
+   "ceinture de lest",
+   "disques",
+   "barre olympique",
+   "cage / rack",
+   "magnésie",
+   "banc plat",
+   "haltères",
+   "poulie",
+   "anneaux",
+   "tapis",
+   "box / plinth"
+  ],
+  "loadIncrements": [
+   {
+    "loadType": "barre",
+    "stepKg": 2.5,
+    "minKg": 20.0
+   },
+   {
+    "loadType": "halteres",
+    "stepKg": 2.0,
+    "minKg": 2.0
+   },
+   {
+    "loadType": "machine",
+    "stepKg": 5.0,
+    "minKg": 5.0
+   },
+   {
+    "loadType": "poulie",
+    "stepKg": 2.5,
+    "minKg": 2.5
+   },
+   {
+    "loadType": "kettlebell",
+    "stepKg": 4.0,
+    "minKg": 4.0
+   },
+   {
+    "loadType": "lest",
+    "stepKg": 1.25
+   }
+  ],
+  "likedExerciseIds": [],
+  "dislikedExerciseIds": [],
+  "experience": "intermediate",
+  "guidanceMode": "assisted",
+  "healthScreening": {
+   "questionnaireId": "kalis-sante-l13-v1",
+   "answeredOn": "2026-10-01",
+   "outcome": "standard"
+  }
+ },
+ "records": [
+  {
+   "exerciseId": "sl-traction-lestee",
+   "measure": "one_rm_kg",
+   "value": 30
+  },
+  {
+   "exerciseId": "sl-dips-leste",
+   "measure": "one_rm_kg",
+   "value": 50
+  },
+  {
+   "exerciseId": "sw-traction-pronation",
+   "measure": "max_reps",
+   "value": 14
+  },
+  {
+   "exerciseId": "sw-dips-barres-paralleles",
+   "measure": "max_reps",
+   "value": 22
+  },
+  {
+   "exerciseId": "sl-squat-competition",
+   "measure": "one_rm_kg",
+   "value": 110
+  }
+ ],
+ "goals": [
+  {
+   "id": "g1",
+   "exerciseId": "sl-dips-leste",
+   "metric": "one_rm_kg",
+   "targetValue": 57.5,
+   "weeksOut": 12
+  }
+ ],
+ "injuries": [
+  {
+   "zone": "elbow",
+   "side": "right",
+   "discomfort": 3,
+   "status": "current",
+   "monthsAgo": 5,
+   "label": "douleur à la face interne du coude droit, suivie par un kinésithérapeute"
+  }
+ ],
+ "expectations": {
+  "text": [
+   "Antécédent de moins de 12 mois avec gêne résiduelle : volume de tirage et de préhension réduit de 30 à 50 % au départ, progression à demi-vitesse, aucun échec, aucun excentrique accentué (R5-P20, R5-P24).",
+   "Retirer d'abord fausses prises, tractions lestées lourdes, excentriques lents de traction, bras tendus ; prises neutres ou anneaux ; plafond de douleur à 3 sur 10 (R5-P24).",
+   "Jamais d'exclusion de la zone : charge graduée, réintroduction d'un exercice à la fois (R5-P20, R5-P24).",
+   "Le reste (dips, squat) progresse normalement ; tirage horizontal au moins égal au vertical.",
+   "Le programme ne pose aucun diagnostic et renvoie au professionnel si la douleur dure ou augmente (R5-P23, R5-P25)."
+  ],
+  "checks": [
+   {
+    "id": "c1",
+    "type": "forbid_joint_stress",
+    "label": "Aucun exercice à contrainte forte sur le coude",
+    "joint": "coude",
+    "stress": "forte"
+   },
+   {
+    "id": "c2",
+    "type": "forbid_exercises",
+    "label": "Ni négatives, ni excentriques lents, ni surcharges en traction",
+    "exerciseIds": [
+     "sw-traction-negative",
+     "sw-traction-tempo-excentrique",
+     "sl-traction-negative-lestee-supramaximale",
+     "sl-traction-lestee-partielle-haute"
+    ]
+   },
+   {
+    "id": "c3",
+    "type": "max_group_sets",
+    "label": "Biceps : pas plus de 10 séries dures par semaine",
+    "group": "biceps",
+    "sets": 10
+   },
+   {
+    "id": "c4",
+    "type": "min_frequency",
+    "label": "Dips lesté au moins deux fois par semaine",
+    "exerciseIds": [
+     "sl-dips-leste"
+    ],
+    "perWeek": 2
+   },
+   {
+    "id": "c5",
+    "type": "pattern_present",
+    "label": "Tirage horizontal au moins deux fois par semaine",
+    "patterns": [
+     "tirage_horizontal"
+    ],
+    "perWeek": 2
+   },
+   {
+    "id": "c6",
+    "type": "min_rir_first_weeks",
+    "label": "Jamais moins de 2 répétitions en réserve sur les 12 semaines",
+    "weeks": 12,
+    "rir": 2
+   }
+  ]
+ }
+}

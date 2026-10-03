@@ -1,0 +1,121 @@
+{
+ "schemaVersion": 1,
+ "key": "autres_07_mobilite_sante_senior",
+ "group": "autres",
+ "title": "Mobilité et santé, senior",
+ "summary": "Femme de 68 ans, 63 kg, marche régulièrement, jamais de musculation. Veut rester autonome, gagner en souplesse et en équilibre. Quatre séances de 30 minutes à la maison. Questionnaire santé : mode prudent.",
+ "level": "beginner",
+ "trainingAgeMonths": 0,
+ "core": {
+  "sex": "female",
+  "birthYear": 1958,
+  "heightCm": 160,
+  "bodyWeightKg": 63.0,
+  "disciplines": {
+   "primary": "mobility",
+   "primaryPct": 50,
+   "secondaries": [
+    {
+     "discipline": "general_fitness",
+     "pct": 50
+    }
+   ]
+  },
+  "availability": [
+   {
+    "weekday": 1,
+    "minutes": 30
+   },
+   {
+    "weekday": 3,
+    "minutes": 30
+   },
+   {
+    "weekday": 5,
+    "minutes": 30
+   },
+   {
+    "weekday": 7,
+    "minutes": 30
+   }
+  ],
+  "places": [
+   "maison",
+   "exterieur"
+  ],
+  "equipment": [
+   "tapis",
+   "élastique",
+   "bâton",
+   "piste ou terrain extérieur"
+  ],
+  "loadIncrements": [],
+  "likedExerciseIds": [],
+  "dislikedExerciseIds": [],
+  "experience": "beginner",
+  "guidanceMode": "assisted",
+  "healthScreening": {
+   "questionnaireId": "kalis-sante-l13-v1",
+   "answeredOn": "2026-10-01",
+   "outcome": "cautious"
+  }
+ },
+ "records": [],
+ "habitGoal": {
+  "sessionsPerWeek": 4,
+  "weeks": 12
+ },
+ "expectations": {
+  "text": [
+   "Programme multicomposant : équilibre au moins trois jours par semaine, renforcement deux à trois jours, marche pour viser 150 minutes par semaine (R6-P26, R6-P21).",
+   "Senior débutant : assis-debout, appui disponible, 1 à 2 séries de 10 à 15 répétitions à effort modéré ; la difficulté d'équilibre progresse avant la charge (R6-P26).",
+   "Aucun impact ni saut ; étirements de 30 à 60 s, cinq jours par semaine pour progresser (R6-P23).",
+   "L'intensité relative n'est pas bridée par l'âge quand la personne progresse (R5-P10)."
+  ],
+  "checks": [
+   {
+    "id": "c1",
+    "type": "forbid_patterns",
+    "label": "Ni saut, ni sprint, ni corde",
+    "patterns": [
+     "pliometrie",
+     "sprint",
+     "corde_a_sauter",
+     "balistique",
+     "halterophilie"
+    ]
+   },
+   {
+    "id": "c2",
+    "type": "min_weekly_minutes",
+    "label": "Au moins 30 minutes de mobilité par semaine",
+    "kind": "mobility",
+    "minutes": 30
+   },
+   {
+    "id": "c3",
+    "type": "max_session_minutes",
+    "label": "Séances de 33 minutes au plus",
+    "minutes": 33
+   },
+   {
+    "id": "c4",
+    "type": "min_rir_first_weeks",
+    "label": "Au moins 3 répétitions en réserve",
+    "weeks": 12,
+    "rir": 3
+   },
+   {
+    "id": "c5",
+    "type": "pattern_present",
+    "label": "Renforcement des jambes (squat, fente, assis-debout) au moins deux fois par semaine",
+    "patterns": [
+     "squat",
+     "fente",
+     "extension_hanche"
+    ],
+    "perWeek": 2
+   }
+  ]
+ }
+}

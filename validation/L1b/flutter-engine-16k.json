@@ -1,0 +1,40 @@
+{
+  "arm64-v8a": {
+    "bits": 64,
+    "load_alignments": [
+      65536,
+      65536,
+      65536,
+      65536
+    ],
+    "relro_checks": [
+      {
+        "start": 10765952,
+        "end": 11182080,
+        "whole_load_sections": true,
+        "prefix_or_aligned": true,
+        "suffix_or_aligned": true
+      }
+    ],
+    "page_16k_check": "r\u00e9ussi"
+  },
+  "x86_64": {
+    "bits": 64,
+    "load_alignments": [
+      65536,
+      65536,
+      65536,
+      65536
+    ],
+    "relro_checks": [
+      {
+        "start": 11842672,
+        "end": 12255232,
+        "whole_load_sections": true,
+        "prefix_or_aligned": true,
+        "suffix_or_aligned": true
+      }
+    ],
+    "page_16k_check": "r\u00e9ussi"
+  }
+}

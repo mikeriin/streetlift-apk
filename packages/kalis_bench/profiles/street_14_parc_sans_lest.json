@@ -1,0 +1,165 @@
+{
+ "schemaVersion": 1,
+ "key": "street_14_parc_sans_lest",
+ "group": "street",
+ "title": "Parc seulement, sans lest ni élastique",
+ "summary": "Homme de 22 ans, 66 kg, trois ans de pratique. 18 tractions, 30 dips, 50 pompes, 5 muscle-ups, pistol squat acquis. Aucun matériel : barres du parc seulement. Veut 25 tractions. Quatre séances d'une heure.",
+ "level": "intermediate",
+ "trainingAgeMonths": 36,
+ "core": {
+  "sex": "male",
+  "birthYear": 2004,
+  "heightCm": 172,
+  "bodyWeightKg": 66.0,
+  "streetMode": {
+   "primary": "sets_reps",
+   "streetliftingPct": 0,
+   "setsRepsPct": 70,
+   "calisthenicsPct": 30
+  },
+  "disciplines": {
+   "primary": "street_workout",
+   "primaryPct": 70,
+   "secondaries": [
+    {
+     "discipline": "calisthenics",
+     "pct": 30
+    }
+   ]
+  },
+  "availability": [
+   {
+    "weekday": 1,
+    "minutes": 60
+   },
+   {
+    "weekday": 3,
+    "minutes": 60
+   },
+   {
+    "weekday": 5,
+    "minutes": 60
+   },
+   {
+    "weekday": 7,
+    "minutes": 60
+   }
+  ],
+  "places": [
+   "exterieur"
+  ],
+  "equipment": [
+   "barre fixe",
+   "barres parallèles",
+   "barre basse"
+  ],
+  "loadIncrements": [],
+  "likedExerciseIds": [],
+  "dislikedExerciseIds": [],
+  "experience": "intermediate",
+  "guidanceMode": "assisted",
+  "healthScreening": {
+   "questionnaireId": "kalis-sante-l13-v1",
+   "answeredOn": "2026-10-01",
+   "outcome": "standard"
+  },
+  "knownExerciseIds": [
+   "cd-muscle-up-barre-strict",
+   "sw-pistol-squat"
+  ]
+ },
+ "records": [
+  {
+   "exerciseId": "sw-traction-pronation",
+   "measure": "max_reps",
+   "value": 18
+  },
+  {
+   "exerciseId": "sw-dips-barres-paralleles",
+   "measure": "max_reps",
+   "value": 30
+  },
+  {
+   "exerciseId": "sw-pompe",
+   "measure": "max_reps",
+   "value": 50
+  },
+  {
+   "exerciseId": "cd-muscle-up-barre-strict",
+   "measure": "max_reps",
+   "value": 5
+  },
+  {
+   "exerciseId": "sw-pistol-squat",
+   "measure": "max_reps",
+   "value": 6
+  }
+ ],
+ "goals": [
+  {
+   "id": "g1",
+   "exerciseId": "sw-traction-pronation",
+   "metric": "max_reps",
+   "targetValue": 25,
+   "weeksOut": 12
+  }
+ ],
+ "expectations": {
+  "text": [
+   "Plus de 15 tractions : priorité à l'endurance spécifique, la force en entretien (R4-G2) ; sans lest, la force passe par les variantes dures (archer, typewriter, poitrine à la barre, tempo) (R1-P17).",
+   "Tractions trois fois par semaine, densité progressive : d'abord plus de répétitions à repos fixe, puis repos réduit par paliers de 10 à 15 s (R4-G4, R4-G8).",
+   "Jambes au poids du corps en unilatéral (pistol, shrimp), avec une vraie progression.",
+   "Volume hebdomadaire en hausse de 10 à 20 % par bloc, une semaine allégée ensuite (R4-G8)."
+  ],
+  "checks": [
+   {
+    "id": "c1",
+    "type": "min_frequency",
+    "label": "Tractions au moins trois fois par semaine",
+    "exerciseIds": [
+     "sw-traction-pronation"
+    ],
+    "perWeek": 3
+   },
+   {
+    "id": "c2",
+    "type": "short_rest_share",
+    "label": "Au moins un tiers des séries de tractions en densité",
+    "exerciseIds": [
+     "sw-traction-pronation"
+    ],
+    "maxRestSeconds": 90,
+    "minShare": 0.33
+   },
+   {
+    "id": "c3",
+    "type": "pattern_present",
+    "label": "Jambes au moins deux fois par semaine",
+    "patterns": [
+     "squat",
+     "fente"
+    ],
+    "perWeek": 2
+   },
+   {
+    "id": "c4",
+    "type": "relief_every",
+    "label": "Pas plus de 6 semaines de charge sans allègement",
+    "weeks": 6
+   },
+   {
+    "id": "c5",
+    "type": "min_frequency",
+    "label": "Une variante dure de traction (archer, typewriter, poitrine à la barre) au moins une fois par semaine",
+    "exerciseIds": [
+     "sw-traction-archer",
+     "sw-traction-typewriter",
+     "sw-traction-chest-to-bar",
+     "sw-traction-l-sit"
+    ],
+    "exact": true,
+    "perWeek": 1
+   }
+  ]
+ }
+}

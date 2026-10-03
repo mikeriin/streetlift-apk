@@ -1,0 +1,192 @@
+{
+ "schemaVersion": 1,
+ "key": "autres_08_crossfit_intermediaire",
+ "group": "autres",
+ "title": "CrossFit, intermédiaire",
+ "summary": "Homme de 29 ans, 80 kg, deux ans de CrossFit. Squat 120 kg, épaulé-jeté 80 kg, 10 tractions strictes. Cinq séances d'une heure en box.",
+ "level": "intermediate",
+ "trainingAgeMonths": 24,
+ "core": {
+  "sex": "male",
+  "birthYear": 1997,
+  "heightCm": 178,
+  "bodyWeightKg": 80.0,
+  "disciplines": {
+   "primary": "crossfit",
+   "primaryPct": 80,
+   "secondaries": [
+    {
+     "discipline": "mobility",
+     "pct": 20
+    }
+   ]
+  },
+  "availability": [
+   {
+    "weekday": 1,
+    "minutes": 60
+   },
+   {
+    "weekday": 2,
+    "minutes": 60
+   },
+   {
+    "weekday": 3,
+    "minutes": 60
+   },
+   {
+    "weekday": 5,
+    "minutes": 60
+   },
+   {
+    "weekday": 6,
+    "minutes": 60
+   }
+  ],
+  "places": [
+   "salle"
+  ],
+  "equipment": [
+   "barre fixe",
+   "barre olympique",
+   "disques",
+   "haltères",
+   "kettlebell",
+   "box / plinth",
+   "corde à sauter",
+   "rameur",
+   "air bike (assault / echo)",
+   "médecine-ball",
+   "cible murale (wall ball)",
+   "anneaux",
+   "corde",
+   "tapis",
+   "mur",
+   "cage / rack",
+   "GHD"
+  ],
+  "loadIncrements": [
+   {
+    "loadType": "barre",
+    "stepKg": 2.5,
+    "minKg": 20.0
+   },
+   {
+    "loadType": "halteres",
+    "stepKg": 2.0,
+    "minKg": 2.0
+   },
+   {
+    "loadType": "machine",
+    "stepKg": 5.0,
+    "minKg": 5.0
+   },
+   {
+    "loadType": "poulie",
+    "stepKg": 2.5,
+    "minKg": 2.5
+   },
+   {
+    "loadType": "kettlebell",
+    "stepKg": 4.0,
+    "minKg": 4.0
+   },
+   {
+    "loadType": "lest",
+    "stepKg": 1.25
+   }
+  ],
+  "likedExerciseIds": [],
+  "dislikedExerciseIds": [],
+  "experience": "intermediate",
+  "guidanceMode": "assisted",
+  "healthScreening": {
+   "questionnaireId": "kalis-sante-l13-v1",
+   "answeredOn": "2026-10-01",
+   "outcome": "standard"
+  }
+ },
+ "records": [
+  {
+   "exerciseId": "mu-back-squat-barre-haute",
+   "measure": "one_rm_kg",
+   "value": 120
+  },
+  {
+   "exerciseId": "mu-epaule-jete",
+   "measure": "one_rm_kg",
+   "value": 80
+  },
+  {
+   "exerciseId": "sw-traction-pronation",
+   "measure": "max_reps",
+   "value": 10
+  },
+  {
+   "exerciseId": "cf-burpee",
+   "measure": "max_reps",
+   "value": 25
+  }
+ ],
+ "goals": [
+  {
+   "id": "g1",
+   "exerciseId": "cd-muscle-up-barre-strict",
+   "metric": "skill_unlocked",
+   "weeksOut": 16
+  }
+ ],
+ "expectations": {
+  "text": [
+   "Séance type : échauffement, bloc de force ou de technique de 15 à 20 minutes, conditionnement de 8 à 20 minutes ; durées mélangées sur la semaine (court, moyen, long) (R6-P27).",
+   "Formats codifiés attendus : AMRAP, EMOM, tours chronométrés (R6-P27).",
+   "Pas d'haltérophilie lourde ni de gymnastique technique sous fatigue pour qui ne les maîtrise pas frais ; strict avant kipping (R6-P28).",
+   "Trois à cinq séances ; pas deux jours longs et lourds de suite sur les mêmes schémas (R6-P27)."
+  ],
+  "checks": [
+   {
+    "id": "c1",
+    "type": "format_present",
+    "label": "Formats codifiés (AMRAP, EMOM, tours)",
+    "formats": [
+     "amrap",
+     "emom",
+     "rounds"
+    ]
+   },
+   {
+    "id": "c2",
+    "type": "pattern_present",
+    "label": "Haltérophilie ou force à la barre au moins trois fois par semaine",
+    "patterns": [
+     "halterophilie",
+     "squat",
+     "charniere_hanche"
+    ],
+    "perWeek": 3
+   },
+   {
+    "id": "c3",
+    "type": "min_weekly_minutes",
+    "label": "Au moins 30 minutes de conditionnement par semaine",
+    "kind": "conditioning",
+    "minutes": 30
+   },
+   {
+    "id": "c4",
+    "type": "relief_every",
+    "label": "Pas plus de 7 semaines de charge sans allègement",
+    "weeks": 7
+   },
+   {
+    "id": "c5",
+    "type": "min_frequency",
+    "label": "Travail vers le muscle-up au moins deux fois par semaine",
+    "exerciseIds": [
+     "cd-muscle-up-barre-strict"
+    ],
+    "perWeek": 2
+   }
+  ]
+ }
+}
