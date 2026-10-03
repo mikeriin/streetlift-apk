@@ -86,8 +86,9 @@ def validate(type_name: str, obj, path: str = "$", err: list[str] | None = None)
         if v is None:
             err.append(f"{p} : nul (un champ optionnel absent est omis)")
             continue
-        if f.name == "schemaVersion" and v != ty.schema_version:
-            err.append(f"{p} : version {v} ≠ {ty.schema_version}")
+        if f.name == "schemaVersion" and isinstance(v, int) and not (
+                (f.min if f.min is not None else ty.schema_version) <= v <= ty.schema_version):
+            err.append(f"{p} : version {v} hors de {f.min}..{ty.schema_version}")
         if is_list:
             if not isinstance(v, list):
                 err.append(f"{p} : liste attendue")
@@ -101,6 +102,17 @@ def validate(type_name: str, obj, path: str = "$", err: list[str] | None = None)
                 _scalar(kind, name, item, item_field, f"{p}[{i}]", err)
         else:
             _scalar(kind, name, v, f, p, err)
+    if ty.variants:
+        disc, rules = ty.variants
+        variante = obj.get(disc)
+        if variante in rules:
+            requis, permis = rules[variante]
+            controles = {n for r, a in rules.values() for n in r + a}
+            for n in sorted(controles):
+                if n in obj and n not in requis and n not in permis:
+                    err.append(f"{path}.{n} : champ inattendu pour {variante}")
+                elif n not in obj and n in requis:
+                    err.append(f"{path}.{n} : champ obligatoire pour {variante}")
     return err
 
 

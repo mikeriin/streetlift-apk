@@ -178,6 +178,28 @@ vide ou absent.
   choisis, résultats dans `ci-rapide/`) ; le contrôle complet reste
   `claude/ci-3d`.
 
+### CU (dev6.8.0, pipeline CP, voie App)
+
+- Cible émulateur par défaut : `integration_test/profil_cu_test.dart`, build
+  de développement, parties `a` (sombre, rouge Kalis) et `b` (clair,
+  violet) : session personnelle de dev6.7.0 (profil au schéma 2, programme
+  commencé) → profil relu au schéma 3, invitation de Koach, « Compléter mon
+  profil » (questions du schéma 3, programme et journal inchangés) ; session
+  de test (5 appuis) → parcours d'un débutant (écrans montrés, pas de
+  récupération, 4 fourchettes), puis le même profil passé en compétiteur
+  élite de streetlifting depuis le récapitulatif (poids obligatoire,
+  expérience, record, échéance avec règlement, récupération), deux écrans à
+  200 % de texte ; Réglages › Profil, tests guidés ; suppression de la
+  session de test, session personnelle intacte. Relevés
+  `emulateur/cu_releve_<partie>.json`, captures `emulateur/cu_*_<thème>.png`.
+  G10 passe sous `CI3D_TOUT=1`. APK de test précompilé sur la cible CU.
+- Tests Dart du lot : `test/cu_profil_v3_test.dart` (parcours, profils types,
+  conditions, brouillon, migration, sauvegarde, moteurs actuels, compléter
+  son profil, tests guidés, écrans).
+- Branche de mise au point du lot : `claude/ci-cu-rapide` (workflow
+  `rapide.yml` posé seulement sur cette branche, comme G10) ; le contrôle
+  complet reste `claude/ci-3d`.
+
 ### Mode dev dans les tests d'intégration
 
 - Données de la session personnelle semées par un `AppStore()` séparé avant

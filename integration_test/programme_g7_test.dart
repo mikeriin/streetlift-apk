@@ -238,6 +238,8 @@ void main() {
     await tap(tester, 'flow-secondary-mobility');
     await tap(tester, 'flow-next-secondary');
     await tap(tester, 'flow-experience-intermediate');
+    // CU : l'expérience a son écran (profil v3).
+    await tap(tester, 'flow-next-experience');
     await tap(tester, 'level-squat-3');
     await tap(tester, 'level-pullups-2');
     await tap(tester, 'flow-next-levels');
@@ -252,6 +254,8 @@ void main() {
     await tap(tester, 'flow-next-availability');
     await tap(tester, 'flow-place-salle');
     await tap(tester, 'flow-next-places');
+    // CU : écran Récupération (intermédiaire), questions passées.
+    await tap(tester, 'flow-next-recovery');
     await tap(tester, 'flow-consent-given');
     for (final q in kHealthQuestions) {
       await tap(tester, 'flow-q-${q.id}-false', ms: 300);

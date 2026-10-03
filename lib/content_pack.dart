@@ -19,7 +19,8 @@ import 'dart:convert';
 import 'dart:io' show gzip;
 
 import 'package:flutter/services.dart';
-import 'package:kalis_core/kalis_core.dart' show Catalog, CatalogExercise;
+import 'package:kalis_core/kalis_core.dart'
+    show Catalog, CatalogExercise, ProfileQuestionnaire;
 
 import 'atlas_data.dart';
 import 'search.dart';
@@ -317,6 +318,11 @@ class ExerciseDetail {
 /// Base v1.1 chargée, index et correspondances.
 class ContentIndex {
   final Catalog? catalog;
+
+  /// CU : parcours de création du profil v3 (`kalis_core` 0.4.0,
+  /// `data/parcours_v3.json`, copié dans `assets/catalog/`) ; null avant le
+  /// chargement.
+  final ProfileQuestionnaire? questionnaire;
   final List<ExerciseEntry> entries;
   final Map<String, ExerciseEntry> byId = {};
 
@@ -328,11 +334,15 @@ class ContentIndex {
   final Map<String, String> legacyNames;
   final Map<String, String> _byNormalizedName = {};
 
-  ContentIndex._(this.catalog, this.legacyIds, this.legacyNames)
-    : entries = [
-        for (final e in catalog?.exercises ?? const <CatalogExercise>[])
-          ExerciseEntry(e),
-      ] {
+  ContentIndex._(
+    this.catalog,
+    this.legacyIds,
+    this.legacyNames, {
+    this.questionnaire,
+  }) : entries = [
+         for (final e in catalog?.exercises ?? const <CatalogExercise>[])
+           ExerciseEntry(e),
+       ] {
     for (final e in entries) {
       byId[e.id] = e;
     }
@@ -351,20 +361,27 @@ class ContentIndex {
   factory ContentIndex.empty() => ContentIndex._(null, const {}, const {});
 
   /// Catalogue chargé et table `correspondance.json` décodée.
-  factory ContentIndex.from(Catalog catalog, Map<String, dynamic> table) =>
-      ContentIndex._(
-        catalog,
-        {
-          for (final e in (table['ids'] as Map<String, dynamic>).entries)
-            e.key: e.value as String?,
-        },
-        {
-          for (final e in (table['noms'] as Map<String, dynamic>).entries)
-            e.key: e.value as String,
-        },
-      );
+  factory ContentIndex.from(
+    Catalog catalog,
+    Map<String, dynamic> table, {
+    ProfileQuestionnaire? questionnaire,
+  }) => ContentIndex._(
+    catalog,
+    {
+      for (final e in (table['ids'] as Map<String, dynamic>).entries)
+        e.key: e.value as String?,
+    },
+    {
+      for (final e in (table['noms'] as Map<String, dynamic>).entries)
+        e.key: e.value as String,
+    },
+    questionnaire: questionnaire,
+  );
 
   static const catalogAsset = 'assets/catalog/catalog_v1.json.gz';
+
+  /// CU : copie octet pour octet de `packages/kalis_core/data/parcours_v3.json`.
+  static const questionnaireAsset = 'assets/catalog/parcours_v3.json';
   static const correspondenceAsset = 'assets/catalog/correspondance.json';
 
   static ContentIndex? _shared;
@@ -395,7 +412,21 @@ class ContentIndex {
               ),
             )
             as Map<String, dynamic>;
-    return ContentIndex.from(catalog, table);
+    // CU : parcours v3 (octets décodés ici, même raison que ci-dessus).
+    final parcours = await b.load(questionnaireAsset);
+    final questionnaire = ProfileQuestionnaire.fromJson(
+      (jsonDecode(
+                utf8.decode(
+                  parcours.buffer.asUint8List(
+                    parcours.offsetInBytes,
+                    parcours.lengthInBytes,
+                  ),
+                ),
+              )
+              as Map)
+          .cast<String, Object?>(),
+    );
+    return ContentIndex.from(catalog, table, questionnaire: questionnaire);
   }
 
   /// Version de la base (« 1.1.0 »), vide avant le chargement.

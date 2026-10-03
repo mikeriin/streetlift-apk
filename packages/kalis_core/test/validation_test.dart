@@ -47,15 +47,16 @@ void main() {
       );
     });
 
-    test('version de schéma : seule la version 2 est admise', () {
+    test('version de schéma : les versions 2 et 3 sont admises (0.4.0)', () {
       final p = baseProfile();
-      expect(p.schemaVersion, 2);
+      expect(p.schemaVersion, 3);
+      expect(p.copyWith(schemaVersion: 2).validate(), isEmpty);
       expect(
         codesOf(p.copyWith(schemaVersion: 1).validate()),
         contains('below_min'),
       );
       expect(
-        codesOf(p.copyWith(schemaVersion: 3).validate()),
+        codesOf(p.copyWith(schemaVersion: 4).validate()),
         contains('above_max'),
       );
     });
