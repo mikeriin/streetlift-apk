@@ -428,10 +428,7 @@ void main() {
     List<List<L>> week(int seconds) => <List<L>>[
       <L>[L(running.id, 1, seconds: seconds, flames: null)],
     ];
-    expect(
-      run(p, sameWeeks(4, week(1800))),
-      contains('affutage_absent'),
-    );
+    expect(run(p, sameWeeks(4, week(1800))), contains('affutage_absent'));
     expect(
       run(p, <(WeekKind, List<List<L>>)>[
         ...sameWeeks(3, week(1800)),
