@@ -133,8 +133,8 @@ abstract final class Method {
   /// Vrai pour le travail essentiel de la séance (mouvements principaux,
   /// figures, volume des piliers) : il garde ses séries plus longtemps que
   /// l'assistance.
-  static bool essential(String method) =>
-      cutRank(method) > cutRank(liftVariant);
+  static bool essential(String method, {bool support = false}) =>
+      !support && cutRank(method) > cutRank(liftVariant);
 
   /// Passe de réduction d'un emplacement de [sets] séries quand un plafond
   /// impose de retirer du volume : 1, l'assistance au-dessus de deux
@@ -143,8 +143,13 @@ abstract final class Method {
   /// de deux (d'une chez le débutant) ; 6, l'essentiel au-dessus d'une ;
   /// 7, l'essentiel retiré (le plafond est un invariant de sécurité : il
   /// passe avant tout emplacement).
-  static int trimPass(String method, int sets, {required bool beginner}) {
-    if (!essential(method)) {
+  static int trimPass(
+    String method,
+    int sets, {
+    required bool beginner,
+    bool support = false,
+  }) {
+    if (!essential(method, support: support)) {
       return sets > 2 ? 1 : (sets > 1 ? 3 : 4);
     }
     if (sets > 3) {
@@ -166,13 +171,20 @@ abstract final class Method {
     String otherMethod,
     int otherSets, {
     required bool beginner,
+    bool support = false,
+    bool otherSupport = false,
   }) {
-    final pass = trimPass(method, sets, beginner: beginner);
-    final other = trimPass(otherMethod, otherSets, beginner: beginner);
+    final pass = trimPass(method, sets, beginner: beginner, support: support);
+    final other = trimPass(
+      otherMethod,
+      otherSets,
+      beginner: beginner,
+      support: otherSupport,
+    );
     if (pass != other) {
       return pass < other;
     }
-    if (essential(method)) {
+    if (essential(method, support: support)) {
       return sets > otherSets ||
           (sets == otherSets && cutRank(method) < cutRank(otherMethod));
     }
@@ -204,7 +216,25 @@ final class SlotSpec {
     this.fromWeek = 0,
     this.untilWeek = 99,
     this.note,
+    this.support = false,
   });
+
+  /// Copie de l'emplacement avec [sets] séries.
+  SlotSpec withSets(int sets) => SlotSpec(
+    exerciseId: exerciseId,
+    role: role,
+    method: method,
+    sets: sets,
+    stress: stress,
+    referenceId: referenceId,
+    skillTargetId: skillTargetId,
+    group: group,
+    weak: weak,
+    fromWeek: fromWeek,
+    untilWeek: untilWeek,
+    note: note,
+    support: support,
+  )..slotId = slotId;
 
   /// Exercice.
   final String exerciseId;
@@ -242,6 +272,11 @@ final class SlotSpec {
 
   /// Code de note de coach propre à l'emplacement.
   final String? note;
+
+  /// Vrai pour un travail d'appoint dans ce programme (force de base d'un
+  /// programme de figures, complément de fin de séance) : il cède ses
+  /// séries avant le travail visé quand un plafond l'impose.
+  final bool support;
 
   /// Identifiant de l'emplacement (donné à l'assemblage).
   String slotId = '';

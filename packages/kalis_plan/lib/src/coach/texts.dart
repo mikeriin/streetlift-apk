@@ -114,6 +114,12 @@ String? coachReasonText(Reason r, Catalog catalog) {
     case ReasonCodes.planCoachNote:
       final v = p['value'];
       return switch (p['note']) {
+        CoachNotes.negativeGate =>
+          'Test : la descente la plus lente possible, deux essais. Si elle '
+              'dure ${_int(v)} s ou plus sans à-coup, tente une traction '
+              'stricte au début de la séance suivante ; si elle passe, '
+              "déclare-la dans l'application : le programme passera aux "
+              'tractions.',
         CoachNotes.restBeforeEvent =>
           "Repos avant l'échéance : mobilité et préparation articulaire "
               'seulement, rien de fatigant dans les 2 à 4 derniers jours.',
@@ -229,6 +235,10 @@ String? coachReasonText(Reason r, Catalog catalog) {
     case ReasonCodes.planProgressionRule:
       final step = p['step'];
       return switch (p['rule']) {
+        CoachRules.assistanceStep =>
+          "Assistance : dès que le haut de la plage est tenu avec la "
+              "réserve prévue, passe à un élastique plus fin (ou allège "
+              "l'appui des pieds) et repars du bas de la plage.",
         CoachRules.doubleProgression =>
           'Progression : quand toutes les séries atteignent le haut de la '
               'plage avec la réserve prévue, passe à la variante ou à la '

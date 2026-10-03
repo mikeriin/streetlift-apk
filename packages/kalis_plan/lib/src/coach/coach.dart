@@ -155,6 +155,7 @@ Skeleton reconcileSkeleton(Athlete a, Skeleton canonical, Pass1Plan pass1) {
           weak: kept?.weak,
           fromWeek: kept?.fromWeek ?? 0,
           untilWeek: kept?.untilWeek ?? 99,
+          support: kept?.support ?? false,
         )..slotId = slot.slotId;
       }
       out.slots.add(spec);

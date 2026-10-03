@@ -241,6 +241,7 @@ final class _Builder {
     int untilWeek = 99,
     String? note,
     bool rotate = false,
+    bool support = false,
   }) {
     final n = candidates.length;
     for (var k = 0; k < n; k++) {
@@ -261,6 +262,7 @@ final class _Builder {
         fromWeek: fromWeek,
         untilWeek: untilWeek,
         note: note,
+        support: support,
       );
       days[day].slots.add(slot);
       return slot;
@@ -303,7 +305,13 @@ void _buildBeginner(_Builder b) {
   final later = b.blockIndex > 0;
   // R5-P1 : 4 à 6 séries par groupe et par semaine au départ ; les séries
   // par exercice se règlent sur le nombre de séances.
-  final sets = a.dayCount >= 3 ? 2 : 3;
+  var shortest = 300;
+  for (final d in a.days) {
+    if (d.minutes < shortest) {
+      shortest = d.minutes;
+    }
+  }
+  final sets = a.dayCount >= 3 && shortest < 55 ? 2 : 3;
   // Tirage horizontal : deux séances par semaine suffisent quand le tirage
   // vertical est travaillé à chaque séance (plafond du débutant, R1-P1).
   final rowDays = a.dayCount <= 2
@@ -783,7 +791,10 @@ void _buildReps(_Builder b, Set<int> runDays) {
   // Fréquence par pilier (R4-G8 : 2 à 3 séances chez le débutant, 3 chez
   // l'intermédiaire, 3 à 4 chez l'avancé, 4 à 5 en élite), bornée par les
   // jours et par la tolérance du profil.
-  var frequency = a.level >= 3 ? 5 : (a.level == 2 ? 4 : 3);
+  // (L'intermédiaire qui s'entraîne quatre jours ou plus garde trois
+  // séances sur le geste exact et en ajoute une sur une variante de
+  // force : R4-G5, sous-maximal fréquent.)
+  var frequency = a.level >= 3 ? 5 : (a.level == 2 || n >= 4 ? 4 : 3);
   // (R4-G8 vaut aussi en préparation d'une épreuve : 3 à 4 séances chez
   // l'avancé, 4 à 5 en élite ; la séance lestée de la semaine s'ajoute à
   // une séance au poids du corps, elle ne la remplace pas.)
@@ -820,9 +831,7 @@ void _buildReps(_Builder b, Set<int> runDays) {
           wanted,
         );
 
-  final pullMethods = competition
-      ? _competitionMethods
-      : _repsMethods(pullMax);
+  final pullMethods = competition ? _competitionMethods : _repsMethods(pullMax);
   final dipMethods = competition ? _competitionMethods : _repsMethods(dipMax);
   var pullAt = 0;
   var dipAt = 1;
@@ -1533,6 +1542,7 @@ void _buildFigures(_Builder b, Set<int> runDays) {
         Method.liftVolume,
         sets: 4,
         stress: DayStress.medium,
+        support: true,
       );
     } else if (pullMax >= 1 && a.can(Ids.pull, d) && skillLoad < 2) {
       b.add(
@@ -1542,6 +1552,7 @@ void _buildFigures(_Builder b, Set<int> runDays) {
         pullMax < 8 ? Method.repsStrength : Method.repsVolume,
         sets: skillLoad == 0 ? 4 : 3,
         stress: DayStress.medium,
+        support: true,
       );
     }
     if (balanceDays.contains(d) && a.level >= 2) {
@@ -1556,6 +1567,7 @@ void _buildFigures(_Builder b, Set<int> runDays) {
         sets: 3,
         skillTargetId: 'cs-handstand',
         stress: DayStress.medium,
+        support: true,
       );
     }
     if (dipMax >= 1 && a.can(Ids.dip, d) && skillLoad < 2) {
@@ -1569,6 +1581,7 @@ void _buildFigures(_Builder b, Set<int> runDays) {
               : Method.repsStrength,
           sets: 3,
           stress: DayStress.medium,
+          support: true,
           referenceId: Ids.dip,
         );
       } else {
@@ -1579,6 +1592,7 @@ void _buildFigures(_Builder b, Set<int> runDays) {
           Method.repsVolume,
           sets: 3,
           stress: DayStress.medium,
+          support: true,
         );
       }
     }
@@ -1614,6 +1628,228 @@ void _buildFigures(_Builder b, Set<int> runDays) {
 }
 
 // ---------------------------------------------------------------- squelette
+
+/// Durée approchée d'un emplacement, en secondes (séries × effort + repos
+/// + transition) : sert à compléter une séance trop courte, la passe 2
+/// fait le compte exact.
+double _slotSeconds(Athlete a, SlotSpec s) {
+  final e = a.catalog.find(s.exerciseId);
+  final sides = e == null || e.laterality == Laterality.bilateral ? 1 : 2;
+  final max = (a.reps[s.exerciseId] ?? 12).toDouble();
+  final long = a.level >= 2 ? 240.0 : 180.0;
+  double effort;
+  double rest;
+  var extra = 0.0;
+  switch (s.method) {
+    case Method.liftHeavy || Method.liftMaintain:
+      effort = 15;
+      rest = long;
+      extra = 180;
+    case Method.liftVolume:
+      effort = 18;
+      rest = 180;
+      extra = 180;
+    case Method.liftLight:
+      effort = 9;
+      rest = 120;
+    case Method.liftVariant:
+      effort = 12;
+      rest = 150;
+    case Method.repsTop || Method.repsEvent:
+      effort = max * 0.8 * 3;
+      rest = 180;
+    case Method.repsVolume:
+      effort = max * 0.6 * 3;
+      rest = s.group != null
+          ? 60
+          : (a.level <= 0 ? 120 : (a.level == 1 ? 90 : 60));
+    case Method.repsDensity:
+      return 45 + s.sets * 90;
+    case Method.repsStrength:
+      effort = 15;
+      rest = s.group != null ? 75 : 180;
+    case Method.repsTechnique:
+      effort = 6;
+      rest = 150;
+    case Method.beginnerMain:
+      effort = 27.0 * sides;
+      rest = 120;
+    case Method.beginnerNegative:
+      effort = 9;
+      rest = 120;
+    case Method.beginnerHold:
+      effort = 15;
+      rest = 60;
+    case Method.skillHold || Method.skillEasyHold:
+      effort = 10;
+      rest = a.level >= 2 ? 180 : 150;
+    case Method.skillDynamic || Method.skillAttempt:
+      effort = 12;
+      rest = 120;
+    case Method.skillBalance:
+      effort = 30;
+      rest = 90;
+    case Method.accessoryCompound:
+      effort = 30.0 * sides;
+      rest = 105;
+    case Method.accessoryLegs:
+      effort = 24.0 * sides;
+      rest = 90;
+    case Method.accessoryIsolation:
+      effort = 39;
+      rest = 75;
+    case Method.accessoryPrehab:
+      effort = 42;
+      rest = 45;
+    case Method.accessoryCore:
+      effort = 30.0 * sides;
+      rest = 60;
+    case Method.warmupPrep:
+      effort = 20;
+      rest = 30;
+    case Method.mobility:
+      effort = 45;
+      rest = 20;
+    default:
+      return 1800;
+  }
+  return 45 + s.sets * effort + (s.sets - 1) * rest + extra;
+}
+
+/// Compléments de fin de séance, dans l'ordre où ils sont ajoutés quand
+/// la séance laisse plus d'un cinquième de son temps libre : gainage
+/// latéral, bas du dos, chaîne postérieure, prévention de l'épaule, prise,
+/// mobilité. Ils chargent les groupes que les mouvements de barre
+/// laissent sous leur plancher (R1-P1) et ne prennent rien aux piliers
+/// (emplacements d'appoint).
+const List<(List<String>, SlotRole, String, int)> _fillers =
+    <(List<String>, SlotRole, String, int)>[
+      (
+        <String>['mu-gainage-lateral-coude', 'mu-gainage-lateral-genoux'],
+        SlotRole.core,
+        Method.accessoryCore,
+        2,
+      ),
+      (
+        <String>['mu-superman', 'mu-bird-dog', 'mu-arch-hold'],
+        SlotRole.core,
+        Method.accessoryCore,
+        2,
+      ),
+      (
+        <String>[
+          'mu-pont-fessier-unilateral',
+          'mu-pont-fessier-sol',
+          'mu-hip-thrust-unilateral',
+        ],
+        SlotRole.accessory,
+        Method.accessoryCompound,
+        2,
+      ),
+      (
+        <String>[
+          'mu-face-pull-elastique',
+          'mu-band-pull-apart',
+          'mu-rotation-externe-elastique',
+          'sw-row-scapulaire',
+        ],
+        SlotRole.accessory,
+        Method.accessoryPrehab,
+        2,
+      ),
+      (
+        <String>[
+          'mu-dead-bug',
+          'mu-hollow-body-groupe',
+          'mu-gainage-ventral-coudes',
+        ],
+        SlotRole.core,
+        Method.accessoryCore,
+        2,
+      ),
+      (
+        <String>[
+          'mo-cars-epaule',
+          'mo-etirement-grand-dorsal-barre',
+          'mo-cat-cow',
+        ],
+        SlotRole.mobility,
+        Method.mobility,
+        1,
+      ),
+      (
+        <String>[
+          'mo-squat-profond-tenu',
+          'mo-cars-hanche',
+          'mo-etirement-flechisseurs-poignet-bras-tendu',
+        ],
+        SlotRole.mobility,
+        Method.mobility,
+        1,
+      ),
+    ];
+
+/// Complète les séances qui laissent plus d'un cinquième de leur temps
+/// libre (hors jours de course).
+void _fillTime(_Builder b, Set<int> runDays) {
+  final a = b.a;
+  for (var d = 0; d < a.dayCount; d++) {
+    if (runDays.contains(d) || b.days[d].slots.isEmpty) {
+      continue;
+    }
+    final minutes = a.days[d].minutes;
+    if (minutes < 30) {
+      continue;
+    }
+    final target = minutes * 60 * 0.8;
+    double total() {
+      var t = minutes * 9.0 > 480 ? 480.0 : minutes * 9.0;
+      for (final s in b.days[d].slots) {
+        t += _slotSeconds(a, s);
+      }
+      return t;
+    }
+
+    // Trois compléments au plus par séance ; en spécialisation, seuls la
+    // prévention et la mobilité complètent (le volume dur reste à la
+    // priorité, R4-H2).
+    final lean = a.profile.specialization != null;
+    var added = 0;
+    for (final (candidates, role, method, sets) in _fillers) {
+      if (total() >= target || added >= 3) {
+        break;
+      }
+      if (lean &&
+          method != Method.accessoryPrehab &&
+          method != Method.mobility) {
+        continue;
+      }
+      added++;
+      if (b.days[d].slots.any((s) => candidates.contains(s.exerciseId))) {
+        added--;
+        continue;
+      }
+      b.add(
+        d,
+        candidates,
+        role,
+        method,
+        sets: sets,
+        support: true,
+        rotate: true,
+      );
+    }
+    // La mobilité reste en fin de séance.
+    final slots = b.days[d].slots;
+    final mobility = <SlotSpec>[
+      for (final s in slots)
+        if (s.method == Method.mobility) s,
+    ];
+    slots
+      ..removeWhere((s) => s.method == Method.mobility)
+      ..addAll(mobility);
+  }
+}
 
 /// Méthodes dont les séries ne comptent pas comme séries dures (loin de
 /// l'échec par construction).
@@ -1674,7 +1910,12 @@ void _fitBudget(_Builder b) {
           if (credit(s, g) <= 0) {
             continue;
           }
-          final pass = Method.trimPass(s.method, s.sets, beginner: beginner);
+          final pass = Method.trimPass(
+            s.method,
+            s.sets,
+            beginner: beginner,
+            support: s.support,
+          );
           if ((pass == 4 || pass == 7) && day.slots.length <= 2) {
             continue;
           }
@@ -1686,6 +1927,8 @@ void _fitBudget(_Builder b) {
                 current.method,
                 current.sets,
                 beginner: beginner,
+                support: s.support,
+                otherSupport: current.support,
               )) {
             pick = s;
             home = day;
@@ -1695,26 +1938,18 @@ void _fitBudget(_Builder b) {
       if (pick == null || home == null) {
         break;
       }
-      final pass = Method.trimPass(pick.method, pick.sets, beginner: beginner);
+      final pass = Method.trimPass(
+        pick.method,
+        pick.sets,
+        beginner: beginner,
+        support: pick.support,
+      );
       if (pass == 4 || pass == 7) {
         home.slots.remove(pick);
         continue;
       }
       final at = home.slots.indexOf(pick);
-      home.slots[at] = SlotSpec(
-        exerciseId: pick.exerciseId,
-        role: pick.role,
-        method: pick.method,
-        sets: pick.sets - 1,
-        stress: pick.stress,
-        referenceId: pick.referenceId,
-        skillTargetId: pick.skillTargetId,
-        group: pick.group,
-        weak: pick.weak,
-        fromWeek: pick.fromWeek,
-        untilWeek: pick.untilWeek,
-        note: pick.note,
-      );
+      home.slots[at] = pick.withSets(pick.sets - 1);
     }
   }
 }
@@ -1826,6 +2061,7 @@ Skeleton buildSkeleton(
       _buildFigures(b, runDays);
   }
   _limitStraightArmDays(b);
+  _fillTime(b, runDays);
   _fitBudget(b);
   // Mobilité en fin de séance quand le profil la demande.
   var mobility = 0;

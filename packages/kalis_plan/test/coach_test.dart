@@ -108,7 +108,11 @@ PlanRequest _request(AthleteProfile profile, {CivilDate? start}) => PlanRequest(
 );
 
 /// Blocs enchaînés jusqu'à couvrir [weeks] semaines.
-List<ProgramBlock> _program(Catalog catalog, AthleteProfile profile, int weeks) {
+List<ProgramBlock> _program(
+  Catalog catalog,
+  AthleteProfile profile,
+  int weeks,
+) {
   final engine = KalisPlan();
   final request = _request(profile);
   final pass1 = engine.createPass1(catalog, request);
@@ -242,9 +246,7 @@ void main() {
   group('saison et échéance', () {
     final profile = _lifter();
     final blocks = _program(catalog, profile, 12);
-    final weeks = <WeekPrescription>[
-      for (final b in blocks) ...b.pass2.weeks,
-    ];
+    final weeks = <WeekPrescription>[for (final b in blocks) ...b.pass2.weeks];
 
     test('les blocs finissent sur l\'échéance', () {
       expect(weeks.length, 12);
@@ -509,7 +511,11 @@ void main() {
         final text = coachReasonText(
           Reason(
             code: ReasonCodes.planProgressionRule,
-            params: <String, Object?>{'rule': rule, 'step': 1.0, 'unit': 'reps'},
+            params: <String, Object?>{
+              'rule': rule,
+              'step': 1.0,
+              'unit': 'reps',
+            },
           ),
           catalog,
         );

@@ -218,18 +218,23 @@ String loadText(ItemView i) {
   return parts.isEmpty ? '—' : parts.join(', ');
 }
 
-/// Effort visé d'une prescription.
+/// Effort visé d'une prescription : les répétitions en réserve (la note en
+/// flammes de l'application n'est pas affichée : elle se lisait comme une
+/// difficulté sur 10).
 String effortText(ItemView i) {
   final flames = i.p.targetFlames;
   if (flames == null) {
     return '—';
   }
-  final rir = Flames.toRir(flames);
   if (flames >= Flames.failure) {
-    return 'effort maximal (10/10)';
+    return 'effort maximal';
   }
+  if (Flames.isOpenEnded(flames)) {
+    return '5 rép. en réserve ou plus';
+  }
+  final rir = Flames.toRir(flames);
   final text = rir == rir.roundToDouble() ? rir.toStringAsFixed(0) : _num(rir);
-  return '$text rép. en réserve ($flames/10)';
+  return '$text rép. en réserve';
 }
 
 /// Notes de coach d'une prescription : rôle, épreuve, format, détail des

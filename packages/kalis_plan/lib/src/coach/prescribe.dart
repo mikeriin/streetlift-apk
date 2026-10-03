@@ -117,11 +117,16 @@ abstract final class CoachNotes {
   /// Repos avant un test (`value` : heures sans travail dur).
   static const String testRest = 'test_rest';
 
+  /// Test de la descente la plus lente (`value` : secondes qui ouvrent
+  /// l'essai d'une traction stricte).
+  static const String negativeGate = 'negative_gate';
+
   /// Repos avant l'échéance (`value` : jours avant l'échéance).
   static const String restBeforeEvent = 'rest_before_event';
 
   /// Tous les codes.
   static const List<String> all = <String>[
+    negativeGate,
     restBeforeEvent,
     badDay,
     missed,
@@ -180,8 +185,13 @@ abstract final class CoachRules {
   /// Course : durée +10 % par semaine au plus.
   static const String durationStep = 'duration_step';
 
+  /// Assistance : élastique plus fin (ou appui plus léger) quand le haut
+  /// de la plage est tenu.
+  static const String assistanceStep = 'assistance_step';
+
   /// Tous les codes.
   static const List<String> all = <String>[
+    assistanceStep,
     doubleProgression,
     loadStep,
     repStep,
@@ -192,10 +202,11 @@ abstract final class CoachRules {
 }
 
 /// Plafond de séries dures par groupe et par semaine que le moteur se
-/// donne, par niveau : le haut de la fourchette cible du référentiel
-/// (R1-P1 : 6–10, 10–16, 12–20, 15–25 ; R5-P13), sous son plafond (12, 20,
-/// 25, 30).
-const List<double> coachWeeklyCeiling = <double>[10, 16, 20, 25];
+/// donne, par niveau : une série sous le plafond du débutant (R1-P1 : 12),
+/// puis le haut des bornes d'ancienneté (R5-P13 : 16 chez l'intermédiaire,
+/// 20 chez l'avancé) et, en élite, le plafond du niveau avancé (R1-P1 : 25 ;
+/// 30 n'est admis que sur un ou deux muscles).
+const List<double> coachWeeklyCeiling = <double>[11, 16, 20, 25];
 
 /// Hausse relative maximale du volume d'un groupe d'une semaine à l'autre
 /// (R5-P22 : +10 à +20 %).
@@ -382,6 +393,8 @@ final class _Draft {
   RestMode? restMode;
   bool fixed = false;
   bool ramped = false;
+
+  bool get support => slot?.support ?? false;
   final List<Reason> reasons = <Reason>[];
 
   bool get isResistance => traits.kind.isResistance;
@@ -651,11 +664,19 @@ final class Prescriber {
       if (d == eventDay) {
         roles[d] = _DayRole.event;
       } else if (offset > best) {
-        roles[d] = _DayRole.after;
-      } else {
-        roles[d] = best - offset >= 3
+        roles[d] = target.peak ? _DayRole.after : _DayRole.normal;
+      } else if (target.peak) {
+        // R3-P14 : dernière séance à J−3 ou J−4 avant une épreuve de force
+        // (arrêt de 2 à 4 jours) ; R3-P21 : repos complet d'un à deux
+        // jours avant une épreuve de répétitions.
+        final rest = _shape.model == SeasonModel.repsPeak ? 1 : 2;
+        roles[d] = best - offset > rest
             ? _DayRole.primerFar
             : _DayRole.primerNear;
+      } else {
+        // Test daté sans pic de forme : semaine allégée ordinaire, repos
+        // la veille du test.
+        roles[d] = best - offset >= 2 ? _DayRole.normal : _DayRole.primerNear;
       }
     }
     return roles;
@@ -1083,22 +1104,6 @@ final class Prescriber {
     }
     final risk = coachHighRisk(e);
     final stage = _stage(ws);
-    if (role == _DayRole.primerFar || role == _DayRole.primerNear) {
-      final reps = _clampInt(
-        _round(max * (role == _DayRole.primerFar ? 0.5 : 0.35)),
-        1,
-        max,
-      );
-      x
-        ..sets = 2
-        ..repsLow = reps
-        ..repsHigh = reps
-        ..rir = 5
-        ..rest = 120
-        ..fixed = true
-        ..intensity = _shareOf(e.id, reps, max);
-      return x;
-    }
     if (ws.light && ws.intent != WeekIntent.intro) {
       final reps = _clampInt(_round(max * 0.6), 1, max);
       x
@@ -1199,7 +1204,8 @@ final class Prescriber {
   }
 
   _Draft? _repsDensity(SlotSpec s, WeekSpec ws, int week, _DayRole role) {
-    if (role != _DayRole.normal || ws.intent == WeekIntent.transition) {
+    if ((role != _DayRole.normal && role != _DayRole.primerFar) ||
+        ws.intent == WeekIntent.transition) {
       return null;
     }
     final max = _maxOf(s);
@@ -1347,9 +1353,12 @@ final class Prescriber {
     final max = a.reps[e.id] ?? 0;
     if (max >= 4) {
       // R5-P2, R5-P4 : 50 à 70 % du maximum, 3 répétitions en réserve.
+      // 50 à 70 % du maximum, sans jamais dépasser le maximum moins trois
+      // (la réserve demandée doit exister).
       final shift = _shift(ws);
-      final low = _clampInt(_round(max * 0.5) + shift, 2, max);
-      final high = _clampInt(_round(max * 0.7) + shift, low, max);
+      final top = max - 3 < 1 ? 1 : max - 3;
+      final high = _clampInt(_round(max * 0.7) + shift, 1, top);
+      final low = _clampInt(_round(max * 0.5) + shift, 1, high);
       x
         ..repsLow = low
         ..repsHigh = high
@@ -1358,6 +1367,9 @@ final class Prescriber {
       return x;
     }
     // R5-P9 : une variante qui permet 6 à 10 répétitions avec 3 en réserve.
+    if (e.assisted) {
+      x.reasons.add(_rule(CoachRules.assistanceStep, 1, 'cran'));
+    }
     final lower =
         e.family == MovementFamily.jambesGenou ||
         e.family == MovementFamily.jambesHanche;
@@ -1431,8 +1443,10 @@ final class Prescriber {
         (s.method == Method.skillHold || s.method == Method.skillEasyHold)) {
       // R4-F2 : secondes propres cumulées par séance et par figure — 20 à
       // 40 chez le débutant, 30 à 60 chez l'intermédiaire, 40 à 60 chez
-      // l'avancé, 40 à 75 en élite ; partagées entre l'étape actuelle
-      // (40 %) et l'étape plus facile (60 %) quand les deux sont au menu.
+      // l'avancé, 40 à 75 en élite. R4-F6 : un levier est utile quand son
+      // maintien maximal vaut 8 à 25 s ; en dessous, l'étape actuelle se
+      // limite à trois essais courts et le temps se fait sur l'étape plus
+      // facile.
       const cumulative = <int>[30, 45, 50, 60];
       final paired = skeleton.days.any(
         (d) =>
@@ -1445,11 +1459,13 @@ final class Prescriber {
                       o.method == Method.skillEasyHold),
             ),
       );
-      final part = paired
-          ? (s.method == Method.skillHold ? 0.4 : 0.6)
-          : 1.0;
-      final wanted = cumulative[_level] * part * ws.volume * volumeScale;
-      sets = _clampInt(_round(wanted / hold), 2, 6);
+      if (s.method == Method.skillHold && paired) {
+        sets = ws.light ? 2 : 3;
+      } else {
+        final part = paired ? 0.75 : 1.0;
+        final wanted = cumulative[_level] * part * ws.volume * volumeScale;
+        sets = _clampInt(_round(wanted / hold), 2, 5);
+      }
     }
     x
       ..sets = sets < 2 ? 2 : sets
@@ -1567,16 +1583,18 @@ final class Prescriber {
             method != Method.accessoryCore)) {
       return null;
     }
-    if ((ws.intent == WeekIntent.taper ||
-            ws.intent == WeekIntent.competition) &&
-        method == Method.accessoryIsolation) {
+    final sharpening =
+        ws.intent == WeekIntent.taper || ws.intent == WeekIntent.competition;
+    if (sharpening && (method == Method.accessoryIsolation || s.support)) {
+      // R3-P13 : à l'affûtage, on coupe d'abord les accessoires.
       return null;
     }
     final x = _new(s);
     final e = x.e;
     final easy = ws.light && ws.intent != WeekIntent.intro;
     var sets = _scaled(s.sets, ws);
-    if (easy && method == Method.accessoryIsolation) {
+    if (easy && (method == Method.accessoryIsolation || s.support)) {
+      // Semaine allégée : la séance raccourcit, les compléments sautent.
       return null;
     }
     if (ws.intent == WeekIntent.taper || ws.intent == WeekIntent.competition) {
@@ -1642,6 +1660,17 @@ final class Prescriber {
           ..repsHigh = 10 + _shift(ws)
           ..rir = _rirOf(e, _level == 0 ? 3 : 2.5, ws, week)
           ..rest = 105;
+    }
+    if (e.id.contains('nordic')) {
+      // Excentrique des ischio-jambiers : entrée très progressive, 2 × 5
+      // la première semaine, une répétition de plus toutes les deux
+      // semaines (protocole de prévention usuel ; R5-P22 : exercice
+      // nouveau à 50 à 60 % de la dose cible).
+      x
+        ..sets = x.sets > 2 ? 2 : x.sets
+        ..repsLow = 5 + _shift(ws)
+        ..repsHigh = 5 + _shift(ws)
+        ..rir = _rirOf(e, 3, ws, week);
     }
     final basis = _basisOf(e);
     if (basis == LoadBasis.external ||
@@ -1975,8 +2004,7 @@ final class Prescriber {
       }
       final total = a.profile.createdOn.daysUntil(date);
       final index = _shape.weeks.indexOf(ws);
-      final elapsed =
-          a.profile.createdOn.daysUntil(a.start) + 7 * (index + 1);
+      final elapsed = a.profile.createdOn.daysUntil(a.start) + 7 * (index + 1);
       if (current == null || total <= 0 || target <= current) {
         continue;
       }
@@ -2215,6 +2243,7 @@ final class Prescriber {
   ) {
     final spec = skeleton.days[day];
     final out = <_Draft>[];
+    var gated = false;
     for (final s in spec.slots) {
       final main =
           s.method == Method.liftHeavy ||
@@ -2240,6 +2269,34 @@ final class Prescriber {
           out.add(_testOf(s.slotId, s, e, ws, event: false)..group = null);
           continue;
         }
+        // Chemin vers la première traction : le test est la descente la
+        // plus lente possible ; dix secondes tenues ouvrent l'essai strict
+        // (R5-P8).
+        const negative = 'sw-traction-negative';
+        if (s.referenceId == Ids.pull && a.rejection(negative, day) == null) {
+          final n = a.catalog.exercise(negative);
+          final gate = _Draft(s, s.slotId, n, a.traits.of(negative))
+            ..method = s.method
+            ..kind = SetKind.test
+            ..fixed = true
+            ..sets = 2
+            ..secondsLow = 5
+            ..secondsHigh = 10
+            ..rest = 180
+            ..stress = DayStress.heavy
+            ..reasons.add(_note(CoachNotes.negativeGate, 10));
+          gate.test = const TestSpec(
+            kind: TestKind.maxHold,
+            targetRir: 1,
+            attempts: 2,
+          );
+          out.add(gate);
+          gated = true;
+          continue;
+        }
+      }
+      if (gated && s.exerciseId == 'sw-traction-negative') {
+        continue;
       }
       final x = _draft(s, day, week, ws, role);
       if (x != null) {
@@ -2326,6 +2383,9 @@ final class Prescriber {
   /// (`Method.cutOrder`).
   void _fitTime(List<_Draft> items, int minutes) {
     final budget = minutes * 60.0;
+    int rank(_Draft x) => x.support
+        ? Method.cutRank(Method.accessoryCompound)
+        : Method.cutRank(x.method);
     var guard = 0;
     while (_daySeconds(items, minutes) > budget && guard < 200) {
       guard++;
@@ -2337,9 +2397,8 @@ final class Prescriber {
           continue;
         }
         if (pick == null ||
-            Method.cutRank(x.method) < Method.cutRank(pick.method) ||
-            (Method.cutRank(x.method) == Method.cutRank(pick.method) &&
-                x.sets > pick.sets)) {
+            rank(x) < rank(pick) ||
+            (rank(x) == rank(pick) && x.sets > pick.sets)) {
           pick = x;
         }
       }
@@ -2352,11 +2411,10 @@ final class Prescriber {
         if (x.fixed || x.kind == SetKind.test) {
           continue;
         }
-        if (Method.cutRank(x.method) > Method.cutRank(Method.liftVariant)) {
+        if (rank(x) > Method.cutRank(Method.liftVariant)) {
           continue;
         }
-        if (pick == null ||
-            Method.cutRank(x.method) < Method.cutRank(pick.method)) {
+        if (pick == null || rank(x) < rank(pick)) {
           pick = x;
         }
       }
@@ -2370,8 +2428,7 @@ final class Prescriber {
         if (x.fixed || x.sets <= 1 || x.sets <= x.minSets) {
           continue;
         }
-        if (pick == null ||
-            Method.cutRank(x.method) < Method.cutRank(pick.method)) {
+        if (pick == null || rank(x) < rank(pick)) {
           pick = x;
         }
       }
@@ -2421,14 +2478,61 @@ final class Prescriber {
               prep = x;
             }
           }
-          if (prep == null) {
+          if (prep != null) {
+            items.remove(prep);
+            continue;
+          }
+          // 7. Créneau trop court pour toutes les épreuves : la dernière
+          // attend la séance suivante.
+          _Draft? last;
+          var tests = 0;
+          for (final x in items) {
+            if (x.kind == SetKind.test) {
+              tests++;
+              last = x;
+            }
+          }
+          if (last == null || tests <= 1) {
+            if (last != null && last.sets > 1) {
+              last.sets--;
+              continue;
+            }
             break;
           }
-          items.remove(prep);
+          items.remove(last);
         }
         continue;
       }
       items.remove(pick);
+    }
+    // Dernier recours (créneaux de 10 à 15 minutes) : on ne garde que le
+    // début de la séance, puis on raccourcit ce qui reste.
+    while (_daySeconds(items, minutes) > budget && items.length > 1) {
+      _Draft? last;
+      for (final x in items) {
+        if (x.kind != SetKind.test) {
+          last = x;
+        }
+      }
+      items.remove(last ?? items.last);
+    }
+    if (items.length == 1 && _daySeconds(items, minutes) > budget) {
+      final x = items.first;
+      while (x.sets > 1 && _daySeconds(items, minutes) > budget) {
+        x.sets--;
+      }
+      final over = _daySeconds(items, minutes) - budget;
+      final hold = x.secondsHigh;
+      final meters = x.distance;
+      if (over > 0 && !x.isResistance && hold != null && hold > 300) {
+        final kept = hold - over.ceil() < 300 ? 300 : hold - over.ceil();
+        x
+          ..secondsLow = kept
+          ..secondsHigh = kept;
+      } else if (over > 0 && !x.isResistance && meters != null) {
+        final kept = meters - over * coachRunMetersPerSecond;
+        x.distance = kept < 800 ? 800 : (kept / 100).floorToDouble() * 100;
+      }
     }
   }
 
@@ -2489,7 +2593,12 @@ final class Prescriber {
         if (!counts) {
           continue;
         }
-        final pass = Method.trimPass(x.method, x.sets, beginner: beginner);
+        final pass = Method.trimPass(
+          x.method,
+          x.sets,
+          beginner: beginner,
+          support: x.support,
+        );
         if ((pass == 4 || pass == 7) && items.length <= 1) {
           continue;
         }
@@ -2501,6 +2610,8 @@ final class Prescriber {
               current.method,
               current.sets,
               beginner: beginner,
+              support: x.support,
+              otherSupport: current.support,
             )) {
           pick = x;
           home = items;
@@ -2510,7 +2621,12 @@ final class Prescriber {
     if (pick == null || home == null) {
       return false;
     }
-    final pass = Method.trimPass(pick.method, pick.sets, beginner: beginner);
+    final pass = Method.trimPass(
+      pick.method,
+      pick.sets,
+      beginner: beginner,
+      support: pick.support,
+    );
     if (pass == 4 || pass == 7) {
       home.remove(pick);
     } else {
@@ -2559,9 +2675,29 @@ final class Prescriber {
             }
           }
         }
-        if (sets <= limit + 1e-9 || !_trim(days, g: g)) {
+        if (sets <= limit + 1e-9) {
           break;
         }
+        if (_trim(days, g: g)) {
+          continue;
+        }
+        // Plus rien à retirer (séances d'un seul exercice) : l'exercice
+        // reste facile cette semaine-là, à 5 répétitions en réserve.
+        _Draft? ease;
+        for (final items in days) {
+          for (final x in items) {
+            if (x.kind != SetKind.test &&
+                x.creditOf(g) > 0 &&
+                (ease == null ||
+                    Method.cutRank(x.method) < Method.cutRank(ease.method))) {
+              ease = x;
+            }
+          }
+        }
+        if (ease == null) {
+          break;
+        }
+        ease.rir = 5;
       }
     }
     // Tenues bras tendus (R4-F10, R5-P22).
