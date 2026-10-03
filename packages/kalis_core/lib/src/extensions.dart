@@ -131,3 +131,73 @@ extension SetRecordView on SetRecord {
   /// Vrai si les moteurs peuvent utiliser cette série.
   bool get isUsable => !excluded;
 }
+
+/// Schéma du profil d'athlète (0.4.0) : le schéma 3 ajoute au schéma 2 des
+/// champs tous optionnels. Passer de 2 à 3 ne change que le numéro de
+/// schéma : rien n'est perdu, rien n'est inventé (une réponse absente reste
+/// absente, D5.8).
+extension AthleteProfileSchema on AthleteProfile {
+  /// Vrai si le profil est au schéma 3 ou plus.
+  bool get isSchema3 => schemaVersion >= 3;
+
+  /// Noms des champs du schéma 3 renseignés (liste vide pour un profil qui
+  /// ne porte que des réponses du schéma 2).
+  List<String> get schema3FieldsPresent {
+    return <String>[
+      if (trainingAge != null) 'trainingAge',
+      if (trainingGap != null) 'trainingGap',
+      if (sleep != null) 'sleep',
+      if (stress != null) 'stress',
+      if (occupationalLoad != null) 'occupationalLoad',
+      if (otherSports != null) 'otherSports',
+      if (bodyWeightGoal != null) 'bodyWeightGoal',
+      if (benchmarks != null) 'benchmarks',
+      if (events != null) 'events',
+      if (skills != null) 'skills',
+      if (weakPoints != null) 'weakPoints',
+      if (specialization != null) 'specialization',
+      if (recentTraining != null) 'recentTraining',
+      if (currentPhase != null) 'currentPhase',
+      if (emphasis != null) 'emphasis',
+      if (enduranceBase != null) 'enduranceBase',
+      if (targetBodyWeightKg != null) 'targetBodyWeightKg',
+      if (lifestyleUpdatedOn != null) 'lifestyleUpdatedOn',
+      if (limitations.any(
+        (l) =>
+            l.since != null ||
+            l.aggravatedBy != null ||
+            l.effortDiscomfort != null,
+      ))
+        'limitations',
+    ];
+  }
+
+  /// Le même profil au schéma 3. Un profil déjà au schéma 3 est rendu tel
+  /// quel ; un profil au schéma 2 garde tous ses champs à l'identique et
+  /// tous les champs du schéma 3 absents.
+  AthleteProfile toSchema3() {
+    return isSchema3 ? this : copyWith(schemaVersion: 3);
+  }
+}
+
+/// Migration du JSON d'un profil d'athlète vers le schéma 3 (0.4.0), sans
+/// passer par les types : seule la clé `schemaVersion` change ; toutes les
+/// autres clés, connues ou non, sont recopiées telles quelles et dans le
+/// même ordre. [FormatException] si `schemaVersion` manque, n'est pas un
+/// entier, ou désigne un schéma antérieur au schéma 2 ou postérieur au
+/// schéma 3.
+Map<String, Object?> migrateAthleteProfileJsonToSchema3(
+  Map<String, Object?> json,
+) {
+  final version = json['schemaVersion'];
+  if (version is! int || version < 2 || version > 3) {
+    throw FormatException(
+      'Profil : schéma 2 ou 3 attendu',
+      version?.toString(),
+    );
+  }
+  return <String, Object?>{
+    for (final entry in json.entries)
+      entry.key: entry.key == 'schemaVersion' ? 3 : entry.value,
+  };
+}

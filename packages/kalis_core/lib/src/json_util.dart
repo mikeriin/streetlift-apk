@@ -349,3 +349,28 @@ void checkDistinct<T>(List<Violation> out, String path, Iterable<T> values) {
     }
   }
 }
+
+/// Contrôle d'un type à variantes (0.4.0) : parmi les champs contrôlés
+/// [fields] (nom → valeur, `null` = absent), ceux de [required] pour la
+/// variante [variant] doivent être présents, et aucun autre que ceux de
+/// [required] ou de [allowed] ne doit l'être.
+void checkVariant(
+  List<Violation> out,
+  String path,
+  String variant,
+  Map<String, Object?> fields,
+  Map<String, List<String>> required,
+  Map<String, List<String>> allowed,
+) {
+  final needed = required[variant] ?? const <String>[];
+  final permitted = allowed[variant] ?? const <String>[];
+  for (final entry in fields.entries) {
+    if (entry.value == null) {
+      if (needed.contains(entry.key)) {
+        out.add(Violation('$path.${entry.key}', 'missing_field', variant));
+      }
+    } else if (!needed.contains(entry.key) && !permitted.contains(entry.key)) {
+      out.add(Violation('$path.${entry.key}', 'unexpected_field', variant));
+    }
+  }
+}
