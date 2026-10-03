@@ -37,3 +37,9 @@ Session de reprise du 03/10/2026 (lancée 11:14 UTC).
 - Non-ressemblance aux références calculée (exact 0,014 ; tolérant 0,222) ; archive chiffrée repoussée (cp-references 74dc4f41).
 - Page de relecture publiée : https://claude.ai/artifact/48CYFBy75Xykohm674vLNq (capacité db, manche 0, 10 programmes ; source dans tool/relecture et cp-travail/relecture). Lien écrit dans docs/PANEL.md.
 - Contrôle final lancé sur l'arbre complet (voir heure ci-dessous). Reste : section CR de DECISIONS_CP, commit moteurs, étiquette, LIVRAISON_CR, ETAT_CP, page de suivi, notification.
+
+## Fin de lot (session Opus 5.5, 03/10/2026 19:20-19:40 UTC, C5.1)
+- Contrôle final revérifié : run 37126581234 (bb4c8ad7) vert, `packages/` identique à moteurs 0d219144 ; étiquette etiquettes/kalis_bench-v0.1.0 = 0d219144 ; SHA-256 des grilles conformes.
+- Collection `notes` de la page de relecture : vide.
+- Section CR de DECISIONS_CP, LIVRAISON_CR (pipeline et projet), ETAT_CP (CR livré, étiquette) poussés sur pipeline (5a65955) ; page de suivi republiée (version 24, section CR en tête de « Calibrage », ligne CR dans le tableau) ; notification envoyée.
+- Lot CR terminé. Rien ne reste.
