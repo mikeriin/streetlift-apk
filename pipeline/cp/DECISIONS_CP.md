@@ -53,6 +53,15 @@ Constat : la relance de fin de lot de CR (Fable, 17:20 UTC) a échoué en 6 s ; 
 - **C5.2 Références non lues en détail** (A3 en entier, F3 pages 1-19 : délégation refusée par le contrôle d'autorisations de la session CR) : choix du propriétaire « Oui, transcris-les » — la conversation de pilotage les transcrit et les ajoute **chiffrées** sur `cp-references` (`transcriptions_pilotage.tar.gpg`), pour CP1 et les lots suivants.
 - **C5.3 Points de pilotage** : choix du propriétaire « Pause quand rien ne tourne » — pas de point quand aucun lot ne tourne ; reprise dès qu'un lot repart (C3.3 inchangé sinon : toutes les 2 h).
 
+## C6. Relecture documentée à la place des notes du propriétaire (03/10/2026, 21:59)
+
+> « Je suis pas coach, je te demande de noter avec ce que tu peux trouver comme ressource sur internet. »
+
+- **C6.1** Les notes de la page de relecture ne viennent plus du propriétaire mais d'une **relecture documentée** : la conversation de pilotage fait noter chaque nouvelle manche par des relecteurs Opus qui s'appuient sur des **sources du web indépendantes du référentiel de CR** (prises de position et recommandations d'organismes, méta-analyses, ressources reconnues d'entraîneurs et de fédérations), avec les mêmes critères que la page (note d'ensemble, adapté au profil, progression, volume et intensité, choix des exercices, faisable et sûr) et un commentaire sourcé. Chaque note porte `auteur: "relecture-documentee"`.
+- **C6.2** Ces notes ont le rôle qu'avaient les notes du propriétaire (PIPELINE_CP.md §2) : elles **priment sur le panel** ; chaque lot moteur les lit (ArtifactData) et traite chaque commentaire (corrigé, ou expliqué dans sa livraison). Le propriétaire peut toujours ajouter les siennes ; elles priment alors sur tout.
+- **C6.3** La relecture documentée d'une manche est faite par la conversation de pilotage après la publication de cette manche (jamais par le lot qui l'a produite), puis lue par le lot suivant. Manche 0 (moteurs 0.1) : faite le 03/10/2026 au soir, pendant les premières boucles de CP1.
+- **C6.4** Les validations de CX et CY restent au propriétaire ; la conversation de pilotage lui présente pour décider la synthèse de la relecture documentée et du panel.
+
 ## Sections des lots
 
 Chaque lot ajoute ici ses décisions techniques numérotées (`CR.1`, `CR.2`…), ses écarts, ses recommandations et, le cas échéant, la question posée au propriétaire.
