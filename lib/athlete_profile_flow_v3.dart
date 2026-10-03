@@ -154,8 +154,9 @@ extension _FlowV3 on AthleteProfileFlowState {
   String _screenKoach(String step, String fallback) {
     final screen = kStepScreens[step];
     for (final s in _pq?.screens ?? const <Map<String, Object?>>[]) {
-      if (s['id'] == screen && s['koach'] is String)
+      if (s['id'] == screen && s['koach'] is String) {
         return s['koach']! as String;
+      }
     }
     return fallback;
   }
@@ -276,56 +277,60 @@ extension _FlowV3 on AthleteProfileFlowState {
   Widget _benchmarksCard() {
     final q = _q('benchmarks')!;
     final list = _d.benchmarks ?? const <Benchmark>[];
-    return _questionCard(q, [
-      for (var i = 0; i < list.length; i++)
-        ListTile(
-          key: ValueKey('benchmark-$i'),
-          contentPadding: EdgeInsets.zero,
-          title: Text(_exerciseName(list[i].exerciseId)),
-          subtitle: Text(benchmarkText(list[i], q)),
-          onTap: () => _editBenchmark(i),
-          trailing: IconButton(
-            key: ValueKey('benchmark-remove-$i'),
-            tooltip: 'Retirer ce record',
-            icon: const Icon(Icons.close),
-            onPressed: () => _update(() {
-              final next = [...list]..removeAt(i);
-              _d.benchmarks = next;
-            }),
-          ),
-        ),
-      if (_unknownBenchmarks && list.isEmpty)
-        const Padding(
-          padding: EdgeInsets.only(bottom: 8),
-          child: KoachSays(
-            key: ValueKey('benchmarks-unknown-koach'),
-            pose: KoachPose.thumbsUp,
-            child: Text(
-              'Pas de souci : aucun examen aujourd’hui. On calera tes '
-              'charges pendant tes premières séances, et je te proposerai un '
-              'test guidé si ça vaut le coup.',
+    return _questionCard(
+      q,
+      [
+        for (var i = 0; i < list.length; i++)
+          ListTile(
+            key: ValueKey('benchmark-$i'),
+            contentPadding: EdgeInsets.zero,
+            title: Text(_exerciseName(list[i].exerciseId)),
+            subtitle: Text(benchmarkText(list[i], q)),
+            onTap: () => _editBenchmark(i),
+            trailing: IconButton(
+              key: ValueKey('benchmark-remove-$i'),
+              tooltip: 'Retirer ce record',
+              icon: const Icon(Icons.close),
+              onPressed: () => _update(() {
+                final next = [...list]..removeAt(i);
+                _d.benchmarks = next;
+              }),
             ),
           ),
+        if (_unknownBenchmarks && list.isEmpty)
+          const Padding(
+            padding: EdgeInsets.only(bottom: 8),
+            child: KoachSays(
+              key: ValueKey('benchmarks-unknown-koach'),
+              pose: KoachPose.thumbsUp,
+              child: Text(
+                'Pas de souci : aucun examen aujourd’hui. On calera tes '
+                'charges pendant tes premières séances, et je te proposerai un '
+                'test guidé si ça vaut le coup.',
+              ),
+            ),
+          ),
+        FilledButton.tonalIcon(
+          key: const ValueKey('benchmark-add'),
+          icon: const Icon(Icons.add),
+          label: const Text('Ajouter un record'),
+          onPressed: () => _editBenchmark(null),
         ),
-      FilledButton.tonalIcon(
-        key: const ValueKey('benchmark-add'),
-        icon: const Icon(Icons.add),
-        label: const Text('Ajouter un record'),
-        onPressed: () => _editBenchmark(null),
-      ),
-      const SizedBox(height: 6),
-      OutlinedButton(
-        key: const ValueKey('benchmarks-unknown'),
-        onPressed: () => _update(() {
-          _d.benchmarks = null;
-          _unknownBenchmarks = true;
-        }),
-        child: const Text('Je ne sais pas'),
-      ),
-    ], onSkip: () {
-      _d.benchmarks = null;
-      _unknownBenchmarks = false;
-    });
+        const SizedBox(height: 6),
+        OutlinedButton(
+          key: const ValueKey('benchmarks-unknown'),
+          onPressed: () => _update(() {
+            _d.benchmarks = null;
+            _unknownBenchmarks = true;
+          }),
+          child: const Text('Je ne sais pas'),
+        ),
+      ],
+      onSkip: () {
+        _d.benchmarks = null;
+        _unknownBenchmarks = false;
+      },
+    );
   }
 
   Future<void> _editBenchmark(int? index) async {

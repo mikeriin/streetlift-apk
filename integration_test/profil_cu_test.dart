@@ -348,7 +348,11 @@ void main() {
     await tap(tester, 'event-priority-main', ms: 300);
     await tap(tester, 'event-preset-final_rep_all4', ms: 600);
     await tap(tester, 'event-class-73', ms: 300);
-    await scrollTo(tester, find.byKey(const ValueKey('event-lift-0')), up: true);
+    await scrollTo(
+      tester,
+      find.byKey(const ValueKey('event-lift-0')),
+      up: true,
+    );
     await shot('18_echeance_feuille');
     await tap(tester, 'event-save', ms: 1000);
     await scrollTo(tester, find.byKey(const ValueKey('q-events')));
@@ -403,7 +407,10 @@ void main() {
         .evaluate()
         .isNotEmpty;
     await shot('23_reglages_profil');
-    await scrollTo(tester, find.byKey(const ValueKey('profile-rubric-recovery')));
+    await scrollTo(
+      tester,
+      find.byKey(const ValueKey('profile-rubric-recovery')),
+    );
     await shot('24_reglages_profil_suite');
     unawaited(
       appNavigator.currentState!.push(

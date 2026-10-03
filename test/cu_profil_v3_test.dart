@@ -20,6 +20,7 @@ import 'package:streetlift_tracker/athlete_profile_flow.dart';
 import 'package:streetlift_tracker/athlete_profile_screen.dart';
 import 'package:streetlift_tracker/guided_tests.dart';
 import 'package:streetlift_tracker/plan/plan_creation.dart';
+import 'package:streetlift_tracker/plan/reason_texts_0_4.dart';
 import 'package:streetlift_tracker/profile_v3.dart';
 import 'package:streetlift_tracker/store.dart';
 
@@ -61,6 +62,18 @@ ProfileDraft beginnerDraft() {
     ..[5] = 30;
   d.addPlace(Place.home);
   return d;
+}
+
+/// Comme `scrollToAction`, pour les écrans très longs (200 % de texte).
+Future<void> _scrollFar(WidgetTester tester, Finder target) async {
+  final vertical = find.byWidgetPredicate(
+    (w) => w is Scrollable && w.axisDirection == AxisDirection.down,
+  );
+  for (var i = 0; i < 120 && target.hitTestable().evaluate().isEmpty; i++) {
+    await tester.drag(vertical.last, const Offset(0, -300));
+    await tester.pumpAndSettle();
+  }
+  expect(target.hitTestable(), findsOneWidget);
 }
 
 void main() {
@@ -379,6 +392,16 @@ void main() {
       noWeight.weight = '72,5';
       expect(noWeight.stepError('discipline', now, parcours: parcours), isNull);
     });
+  });
+
+  test('textes de Koach des codes de raison de 0.4.0 : un par code', () {
+    final codes = {for (final s in reasonRegistry) s.code};
+    for (final code in kReasonTexts04.keys) {
+      expect(codes, contains(code));
+      final t = reasonText04(code, const {}, (id) => id)!;
+      expect(t, isNot(contains('{')), reason: code);
+    }
+    expect(reasonText04('plan.unknown', const {}, (id) => id), isNull);
   });
 
   group('brouillon et profil v3', () {
@@ -849,7 +872,10 @@ void main() {
         reason: 'intermédiaire : ancienneté demandée',
       );
       await tap(tester, 'q-training_age-months_6_to_24');
-      expect(find.byKey(const ValueKey('q-training_gap')), findsOneWidget);
+      await scrollToAction(
+        tester,
+        find.byKey(const ValueKey('q-training_gap')),
+      );
       expect(flow(tester).visibleSteps, contains('recovery'));
       // Retour au débutant : questions masquées.
       await tap(tester, 'flow-experience-beginner');
@@ -933,12 +959,11 @@ void main() {
       expect(e.validate(), isEmpty);
       // Avec une échéance principale, la priorité est un mouvement de
       // compétition.
-      expect(
+      await scrollToAction(
+        tester,
         find.text(
-          'Lequel de tes mouvements de compétition est le plus en '
-          'retard ?',
+          'Lequel de tes mouvements de compétition est le plus en retard ?',
         ),
-        findsOneWidget,
       );
       await store.saveAthleteDraft(null);
     });
@@ -999,7 +1024,7 @@ void main() {
           await tester.pumpAndSettle();
           expect(flow(tester).step, step);
           expect(tester.takeException(), isNull, reason: step);
-          await scrollToAction(tester, find.byKey(ValueKey('flow-next-$step')));
+          await _scrollFar(tester, find.byKey(ValueKey('flow-next-$step')));
           expect(tester.takeException(), isNull, reason: step);
         }
         await store.saveAthleteDraft(null);

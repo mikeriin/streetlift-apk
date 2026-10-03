@@ -466,7 +466,13 @@ class AthleteProfileFlowState extends State<AthleteProfileFlow>
       return;
     }
     unawaited(store.addSkippedProfileQuestions(passed));
-    if (_edit || _complete) {
+    if (_complete) {
+      // Fermeture directe : le retour arrière du système (PopScope) ramène
+      // à l'étape précédente tant que le profil n'est pas enregistré.
+      Navigator.of(context).pop(res);
+      return;
+    }
+    if (_edit) {
       Navigator.of(context).maybePop(res);
       return;
     }

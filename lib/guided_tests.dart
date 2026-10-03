@@ -126,7 +126,16 @@ bool _painBlocks(AthleteProfile p, CatalogExercise e) {
 
 /// Protocole adapté à un mouvement (null : aucun).
 String? _protocolFor(AthleteProfile p, Catalog c, CatalogExercise e) {
-  if (e.unit == MeasureUnit.distance) {
+  final name = Catalog.normalizeLabel(e.name);
+  // Mobilité et récupération : pas de test d'effort maximal.
+  if (e.family == MovementFamily.mobilite ||
+      e.family == MovementFamily.recuperation) {
+    return null;
+  }
+  if (e.family == MovementFamily.cardio ||
+      e.unit == MeasureUnit.distance) {
+    // Les protocoles d'endurance sont des tests de course.
+    if (!name.contains('course') && !name.contains('footing')) return null;
     final longRun = p.enduranceBase?.longRun;
     final regular =
         longRun == LongRunBand.min30To60 ||
@@ -135,9 +144,12 @@ String? _protocolFor(AthleteProfile p, Catalog c, CatalogExercise e) {
     return regular ? 't7_course_chrono' : 't6_course_6min';
   }
   if (e.unit == MeasureUnit.seconds) return 't5_maintien_max';
-  final name = Catalog.normalizeLabel(e.name);
   if (e.loadType == LoadType.addedWeight) {
-    if (name.contains('muscle')) return 't3_max_direct';
+    // Muscle-up lesté : maximum direct seulement, après au moins 5
+    // muscle-ups stricts au poids du corps (PARCOURS_V3.md, t3).
+    if (name.contains('muscle')) {
+      return _bestRepsOnPattern(p, c, e.pattern) >= 5 ? 't3_max_direct' : null;
+    }
     if (e.bodyweightFraction == null) return null;
     if (p.bodyWeightKg == null) return null;
     if (_bestRepsOnPattern(p, c, e.pattern) < 8) return null;
