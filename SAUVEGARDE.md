@@ -15,8 +15,14 @@ Base : main 9f6b80b (dev6.7.0). Arbre de travail = cette branche (sans .github).
 - test/cu_profil_v3_test.dart ; g6_profil_test adapté ; integration g6/g7 adaptés (écran experience, recovery).
 - Branche claude/ci-cu-rapide (rapide.yml) : essai 1 poussé (d0b7f23).
 
+## Fait (suite 2)
+- CI rapide essais 1 à 4 (analyse verte depuis l'essai 3) ; textes 0.4 des codes de raison (lib/plan/reason_texts_0_4.dart) ; check_claims : champs affichés du parcours seulement.
+- Docs : README, SUIVI_PROJET, docs/CI_GP.md (section CU) ; ci3d_drive.sh (cible profil_cu_test, G10 sous CI3D_TOUT) ; ci-3d.yml (APK de test précompilé sur la cible CU).
+- claude/ci-3d : essai 1 poussé 12:03 UTC (89d64ae).
+
 ## En cours
-- Corrections d'après la CI rapide.
+- Lecture des résultats ci-3d (captures émulateur à regarder), corrections.
 
 ## Reste
-- Tests guidés (modèle + écran + carte accueil), Compléter mon profil (store, carte, Réglages), tests Dart, test d'intégration CU, docs CI_GP, README, SUIVI, CI rapide puis ci-3d, main, build signé, livraison.
+- main (dev6.8.0) + build signé ; LIVRAISON_CU.md ; DECISIONS_CP section CU ; ETAT_CP (à valider) ; page de suivi (partie Calibrage) ; notification.
+

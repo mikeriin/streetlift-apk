@@ -57,7 +57,10 @@ List<String> _interesting(AthleteProfile p) {
   for (final l in p.movementLevels) {
     add(l.exerciseId);
   }
-  for (final d in [p.disciplines.primary, ...p.disciplines.secondaries.map((s) => s.discipline)]) {
+  for (final d in [
+    p.disciplines.primary,
+    ...p.disciplines.secondaries.map((s) => s.discipline),
+  ]) {
     for (final id in kDisciplineMainExercises[d] ?? const <String>[]) {
       add(id);
     }
@@ -106,7 +109,8 @@ double _bestRepsOnPattern(AthleteProfile p, Catalog c, MovementPattern pat) {
 /// mouvement charge (contrainte moyenne ou forte du catalogue).
 bool _painBlocks(AthleteProfile p, CatalogExercise e) {
   for (final l in p.limitations) {
-    final level = l.effortDiscomfort != null && l.effortDiscomfort! > l.discomfort
+    final level =
+        l.effortDiscomfort != null && l.effortDiscomfort! > l.discomfort
         ? l.effortDiscomfort!
         : l.discomfort;
     if (level < kTestDiscomfortLimit) continue;
@@ -121,12 +125,16 @@ bool _painBlocks(AthleteProfile p, CatalogExercise e) {
 }
 
 /// Protocole adapté à un mouvement (null : aucun).
-String? _protocolFor(
-  AthleteProfile p,
-  Catalog c,
-  CatalogExercise e,
-) {
-  if (e.unit == MeasureUnit.distance) {
+String? _protocolFor(AthleteProfile p, Catalog c, CatalogExercise e) {
+  final name = Catalog.normalizeLabel(e.name);
+  // Mobilité et récupération : pas de test d'effort maximal.
+  if (e.family == MovementFamily.mobilite ||
+      e.family == MovementFamily.recuperation) {
+    return null;
+  }
+  if (e.family == MovementFamily.cardio || e.unit == MeasureUnit.distance) {
+    // Les protocoles d'endurance sont des tests de course.
+    if (!name.contains('course') && !name.contains('footing')) return null;
     final longRun = p.enduranceBase?.longRun;
     final regular =
         longRun == LongRunBand.min30To60 ||
@@ -135,9 +143,12 @@ String? _protocolFor(
     return regular ? 't7_course_chrono' : 't6_course_6min';
   }
   if (e.unit == MeasureUnit.seconds) return 't5_maintien_max';
-  final name = Catalog.normalizeLabel(e.name);
   if (e.loadType == LoadType.addedWeight) {
-    if (name.contains('muscle')) return 't3_max_direct';
+    // Muscle-up lesté : maximum direct seulement, après au moins 5
+    // muscle-ups stricts au poids du corps (PARCOURS_V3.md, t3).
+    if (name.contains('muscle')) {
+      return _bestRepsOnPattern(p, c, e.pattern) >= 5 ? 't3_max_direct' : null;
+    }
     if (e.bodyweightFraction == null) return null;
     if (p.bodyWeightKg == null) return null;
     if (_bestRepsOnPattern(p, c, e.pattern) < 8) return null;
@@ -181,8 +192,7 @@ List<TestProposal> proposeTests({
     if (program.isNotEmpty &&
         !program.contains(id) &&
         !program.any(
-          (x) =>
-              catalog.find(x) != null && catalog.rootOf(x).id == e.rootId,
+          (x) => catalog.find(x) != null && catalog.rootOf(x).id == e.rootId,
         )) {
       continue;
     }
@@ -340,12 +350,11 @@ String? estimateText(
         novice: novice,
       );
       if (est == null) return null;
-      double lest(double total) =>
-          externalFromTotal(
-            totalKg: total,
-            bodyWeightKg: bw,
-            bodyweightFraction: f,
-          );
+      double lest(double total) => externalFromTotal(
+        totalKg: total,
+        bodyWeightKg: bw,
+        bodyweightFraction: f,
+      );
       return 'Lest maximal estimé : ${kg(lest(est.lowKg))} à '
           '${kg(lest(est.highKg))} (estimation, ne sert pas au choix des '
           'tentatives).';
@@ -559,12 +568,7 @@ class _GuidedTestPageState extends State<GuidedTestPage> {
 
   void _save() {
     final today = civilOf(store.storeClock());
-    final b = benchmarkOfTest(
-      _t,
-      widget.proposal.exerciseId,
-      _entry,
-      today,
-    );
+    final b = benchmarkOfTest(_t, widget.proposal.exerciseId, _entry, today);
     if (b == null) {
       setState(() => _error = 'Remplis chaque valeur demandée.');
       return;
@@ -638,7 +642,8 @@ class _GuidedTestPageState extends State<GuidedTestPage> {
                 const SizedBox(height: 2),
                 Text(t.title, style: dim),
                 const SizedBox(height: 8),
-                if (t.json['forWhom'] is String) Text(t.json['forWhom']! as String),
+                if (t.json['forWhom'] is String)
+                  Text(t.json['forWhom']! as String),
               ],
             ),
           ),
@@ -715,9 +720,8 @@ class _GuidedTestPageState extends State<GuidedTestPage> {
                           key: ValueKey('test-rir-${r.round()}'),
                           label: Text(r == 0 ? 'Aucune' : '${r.round()}'),
                           selected: _rir == r,
-                          onSelected: (_) => setState(
-                            () => _rir = _rir == r ? null : r,
-                          ),
+                          onSelected: (_) =>
+                              setState(() => _rir = _rir == r ? null : r),
                         ),
                     ],
                   ),
@@ -753,10 +757,7 @@ class _GuidedTestPageState extends State<GuidedTestPage> {
                 ],
                 if (t.json['uncertainty'] is String) ...[
                   const SizedBox(height: 6),
-                  Text(
-                    'Précision : ${t.json['uncertainty']}',
-                    style: dim,
-                  ),
+                  Text('Précision : ${t.json['uncertainty']}', style: dim),
                 ],
                 if (_error != null) ...[
                   const SizedBox(height: 8),

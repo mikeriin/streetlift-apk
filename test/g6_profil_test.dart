@@ -534,9 +534,13 @@ void main() {
         // Koach L7 n'est plus activé à l'enregistrement du profil).
         after.remove('koach');
         before.remove('koach');
-        // CU : la pesée du poids déclaré devient la référence B4.
+        // CU : en street, le poids est demandé : sa pesée devient la
+        // référence B4 (valeur et statut).
         expect((after.remove('pilotage') as Map)['B4'], 72);
-        before.remove('pilotage');
+        expect((after.remove('referenceStatus') as Map)['B4'], 'set');
+        before
+          ..remove('pilotage')
+          ..remove('referenceStatus');
         expect(app.koach.enabled, isFalse);
         expect(app.koach.structure, isFalse);
         expect(

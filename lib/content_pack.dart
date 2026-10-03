@@ -340,9 +340,9 @@ class ContentIndex {
     this.legacyNames, {
     this.questionnaire,
   }) : entries = [
-        for (final e in catalog?.exercises ?? const <CatalogExercise>[])
-          ExerciseEntry(e),
-      ] {
+         for (final e in catalog?.exercises ?? const <CatalogExercise>[])
+           ExerciseEntry(e),
+       ] {
     for (final e in entries) {
       byId[e.id] = e;
     }
@@ -366,17 +366,17 @@ class ContentIndex {
     Map<String, dynamic> table, {
     ProfileQuestionnaire? questionnaire,
   }) => ContentIndex._(
-        catalog,
-        {
-          for (final e in (table['ids'] as Map<String, dynamic>).entries)
-            e.key: e.value as String?,
-        },
-        {
-          for (final e in (table['noms'] as Map<String, dynamic>).entries)
-            e.key: e.value as String,
-        },
-        questionnaire: questionnaire,
-      );
+    catalog,
+    {
+      for (final e in (table['ids'] as Map<String, dynamic>).entries)
+        e.key: e.value as String?,
+    },
+    {
+      for (final e in (table['noms'] as Map<String, dynamic>).entries)
+        e.key: e.value as String,
+    },
+    questionnaire: questionnaire,
+  );
 
   static const catalogAsset = 'assets/catalog/catalog_v1.json.gz';
 

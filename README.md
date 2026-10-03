@@ -1,4 +1,14 @@
-# Kalis Track dev6.7.0 — Recentrage sur le programme (pipeline « Génération et progression »)
+# Kalis Track dev6.8.0 — Calibrage des programmes (pipeline « Calibrage des programmes », voie App)
+
+## dev6.8.0 — Un profil qui pose les bonnes questions (lot CU)
+
+- **Création du profil v3** (`kalis_core` 0.4.0) : les questions dépendent de toi. Un débutant répond à 16 à 18 questions selon sa discipline (aucune sur la récupération à la création) ; un pratiquant régulier voit en plus son ancienneté, ses records, ses échéances ; un compétiteur élite de streetlifting voit 29 questions (records au standard de compétition, compétition avec règlement pré-rempli, tentatives, catégorie, points faibles, charge actuelle). « Passer » et « Je ne sais pas » laissent la réponse vide : rien n'est inventé.
+- **Nouveaux écrans** : « Ton expérience » (niveau, ancienneté, arrêt récent) et « Ta récupération » (sommeil et stress habituels, journées, autres sports, poids voulu) ; records et figures avant les fourchettes ; gênes précisées (depuis quand, à l'effort, ce qui les réveille — des contraintes d'entraînement, jamais un diagnostic). Poids demandé en street et au poids du corps.
+- **Compléter mon profil** (Réglages › Profil, et une invitation de Koach, une seule fois) : les nouvelles questions pour les profils existants ; après la première semaine, les questions reportées d'un débutant. Le profil passe au schéma 3 sans rien perdre ; le programme en cours ne change pas.
+- **Tests guidés** (Réglages › Profil, et Koach à la première séance) : quand une capacité est inconnue, un test court avec ses consignes de sécurité ; le résultat (fourchette) rejoint les records du profil. Jamais pour un débutant ni sans questionnaire santé. Version « dev6.8.0 ».
+
+## Pipeline « Génération et progression »
+
 
 ## dev6.7.0 — Ton programme évolue avec Koach (lot G10)
 

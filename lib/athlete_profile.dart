@@ -1276,7 +1276,7 @@ class ProfileDraft {
   /// les autres restent dans le profil (rien n'est perdu).
   List<LevelMovement> get shownMovements {
     final withRecord = {
-      for (final b in this.benchmarks ?? const <Benchmark>[]) b.exerciseId,
+      for (final b in benchmarks ?? const <Benchmark>[]) b.exerciseId,
     };
     final beginner =
         experience == null || experience == ExperienceLevel.beginner;
@@ -1332,7 +1332,7 @@ class ProfileDraft {
         }
         final w = weightValue;
         if (w != null && w.isNaN) return 'Poids entre 25 et 300 kg.';
-        if (w == null && this.weightRequired(parcours, now.year)) {
+        if (w == null && weightRequired(parcours, now.year)) {
           return kWeightRequiredError;
         }
         return null;
@@ -1346,7 +1346,7 @@ class ProfileDraft {
         }
         final w = weightValue;
         if (w != null && w.isNaN) return 'Poids entre 25 et 300 kg.';
-        if (w == null && this.weightRequired(parcours, now.year)) {
+        if (w == null && weightRequired(parcours, now.year)) {
           return kWeightRequiredError;
         }
         return null;
@@ -1459,7 +1459,7 @@ class ProfileDraft {
     final m = mix;
     if (m == null) return null;
     final today = civilOf(now);
-    if (parcours != null) this.pruneHidden(parcours, now.year);
+    if (parcours != null) pruneHidden(parcours, now.year);
     final placeList = [
       for (final p in Place.values)
         if (places.containsKey(p)) p,
@@ -1527,7 +1527,7 @@ class ProfileDraft {
   /// Profil [p] (schéma 3) complété des réponses du schéma 3 du brouillon.
   AthleteProfile _withV3(AthleteProfile p) {
     final answers = <String, Object?>{...v3}..remove('lifestyleUpdatedOn');
-    final life = this.lifestyleJson;
+    final life = lifestyleJson;
     if (life.isNotEmpty) {
       final changed = !jsonDeepEquals(life, jsonDecodeMap(lifestyleAtOpen));
       final stored = v3['lifestyleUpdatedOn'];

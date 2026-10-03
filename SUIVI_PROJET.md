@@ -1,8 +1,16 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : G10, version dev6.7.0 ; précédent : dev6.6.3 (G9 correction 3)**  
-**Date : 2 octobre 2026, Europe/Paris — version : 6.7.0+106, affichée « dev6.7.0 » dans l'APK (versionCode réel fixé par la CI de build)**  
+**Passe actuelle : CU (pipeline CP), version dev6.8.0 ; précédent : dev6.7.0 (G10)**  
+**Date : 3 octobre 2026, Europe/Paris — version : 6.8.0+107, affichée « dev6.8.0 » dans l'APK (versionCode réel fixé par la CI de build)**  
 **Statut : contrôlé en CI (branche `claude/ci-3d`, rendu réel sur émulateur Android) ; à valider par le propriétaire.**
+
+## CU — Parcours de création du profil v3 (version dev6.8.0, pipeline CP)
+
+- **Paquet** : `kalis_core` 0.4.0 récupéré par la branche fixe `etiquettes/kalis_core-v0.4.0` ; `kalis_plan` 0.1.0, `kalis_adapt` 0.1.0 et `kalis_koach` inchangés. Parcours (`data/parcours_v3.json`) copié octet pour octet dans `assets/catalog/parcours_v3.json`, chargé avec le catalogue (`ContentIndex.questionnaire`).
+- **Parcours adaptatif** (`docs/PARCOURS_V3.md` du paquet) : l'application ne code aucune condition ; `ProfileQuestionnaire.visibleQuestions` décide après chaque réponse (création : reportées exclues ; Réglages : reportées comprises ; « Compléter mon profil » : schéma 3 seulement). Étapes `experience` et `recovery` ajoutées ; une étape sans question visible n'est pas montrée. Réponses du schéma 3 du brouillon en JSON du contrat (`ProfileDraft.v3`, accesseurs `DraftV3` de `lib/profile_v3.dart`), écrans et éditeurs dans `lib/athlete_profile_flow_v3.dart` (records, figures, charge actuelle, échéances avec préréglages de règlement, spécialisation, points faibles libellés par mouvement, course, autres sports, gênes précisées).
+- **Profil au schéma 3** : construit par `ProfileDraft.build` (réponses devenues sans objet retirées, `lifestyleUpdatedOn` daté quand les réponses datées changent) ; section `athleteProfile` v1 inchangée ; un profil au schéma 2 est relu au schéma 3 (`toSchema3`, seul `schemaVersion` change). Rubriques « Ton expérience » et « Ta récupération » ; seules les réponses du schéma 2 signalent le programme à refaire (les moteurs actuels ignorent le schéma 3).
+- **Compléter mon profil** (`lib/profile_completion.dart`) et **tests guidés** (`lib/guided_tests.dart`) ; questions passées et propositions vues retenues hors du profil (clés de session).
+- Tests : `test/cu_profil_v3_test.dart` ; `test/g6_profil_test.dart` adapté (écrans d'un débutant, schéma 3, poids en street) ; émulateur `integration_test/profil_cu_test.dart` (G6 et G7 adaptés à l'écran Expérience). Allégations (L13) : seuls les champs affichés du parcours sont contrôlés (`tools/check_claims.py`).
 
 ## G10 — Évolution du programme : propositions, modes, restructurations, outils dev (version dev6.7.0)
 
