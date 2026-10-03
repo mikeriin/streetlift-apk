@@ -16,6 +16,7 @@ Fichiers de référence (branche `pipeline`) : ce fichier, `pipeline/cp/DECISION
 | **B** (moteurs) | Fable 5.1 max, voie B | CQ, CA1, CA2 | `moteurs` | `claude/ci-cp-b` | automatique (contrôles verts + seuils §3) |
 | **App** | Opus 5.5 élevé, application | CU, CI | `main` | `claude/ci-3d` | **propriétaire** |
 
+- **Modèles** (DECISIONS_CP.md C5.1) : CP1 et CA1 sur Fable 5.1 ; CX, CP2, CA2, CY et les fins de lot sur Opus 5.5 effort maximal (tâche « … (Opus 5.5, effort maximal, moteurs) », mêmes voies, mêmes branches de contrôle que dans le tableau).
 - **Un seul lot moteur à la fois** (DECISIONS_CP.md C3.2) : la conversation de pilotage ne lance jamais un lot de la voie A pendant qu'un lot de la voie B tourne, ni l'inverse ; un lot de la voie App (Opus) peut tourner en même temps qu'un lot moteur. Les deux voies gardent leurs tâches et leurs branches de contrôle. Par prudence, avant chaque push sur `moteurs` : `git fetch origin moteurs`, `git rebase origin/moteurs`, relance des tests des paquets touchés si le rebase a apporté des changements, push en avance rapide ; jusqu'à 5 essais. Jamais de réécriture de l'historique de `moteurs`.
 - **`kalis_core`** : seul CQ le fait évoluer (0.4.0, additif). Un lot qui a absolument besoin d'un ajout le fait dans un commit séparé « kalis_core x.y.z (<LOT>) : … », additif, versionné, étiqueté, consigné dans sa section de `DECISIONS_CP.md` ; en cas de conflit, garder les deux ajouts.
 - Livraison des paquets : branches fixes `etiquettes/<paquet>-vX.Y.Z` (PIPELINE_GP.md §0) ; récupération par l'application comme en GP.

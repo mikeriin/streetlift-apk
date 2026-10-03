@@ -45,6 +45,14 @@ Constat : la nuit du 02 au 03/10, les sessions CQ et CR (Fable, effort maximal, 
 
 - **C4.1** CU (parcours de création v3, dev6.8.0, main 6467bc2) : « Cu validé » (03/10/2026, 17:09).
 
+## C5. Part Fable épuisée (03/10/2026, 21:15-21:20)
+
+Constat : la relance de fin de lot de CR (Fable, 17:20 UTC) a échoué en 6 s ; la session CR précédente s'était arrêtée net à 14:32 UTC ; Opus fonctionne (CU livré, conversation de pilotage active). Cause la plus probable : la part Fable de la limite hebdomadaire (50 %) est épuisée (environ 11 h de sessions Fable en effort maximal depuis le 02/10 au soir — estimation).
+
+- **C5.1 Modèles des lots moteurs** : choix du propriétaire « Fable pour CP1 et CA1, Opus ailleurs » — CP1 et CA1 sur Fable 5.1 (après remise à zéro de la part Fable) ; CX, CP2, CA2, CY et les fins de lot (rédaction, publication) sur **Opus 5.5, effort maximal** (tâche « Kalis Track — calibrage CP (Opus 5.5, effort maximal, moteurs) »). Tous les sous-agents restent sur Opus (C3.1).
+- **C5.2 Références non lues en détail** (A3 en entier, F3 pages 1-19 : délégation refusée par le contrôle d'autorisations de la session CR) : choix du propriétaire « Oui, transcris-les » — la conversation de pilotage les transcrit et les ajoute **chiffrées** sur `cp-references` (`transcriptions_pilotage.tar.gpg`), pour CP1 et les lots suivants.
+- **C5.3 Points de pilotage** : choix du propriétaire « Pause quand rien ne tourne » — pas de point quand aucun lot ne tourne ; reprise dès qu'un lot repart (C3.3 inchangé sinon : toutes les 2 h).
+
 ## Sections des lots
 
 Chaque lot ajoute ici ses décisions techniques numérotées (`CR.1`, `CR.2`…), ses écarts, ses recommandations et, le cas échéant, la question posée au propriétaire.
