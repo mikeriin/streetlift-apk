@@ -1,0 +1,6 @@
+Formatted ../kalis_plan/lib/src/coach/audit.dart
+Formatted ../kalis_plan/lib/src/coach/prescribe.dart
+Formatted ../kalis_plan/lib/testing.dart
+Formatted ../kalis_plan/test/coach_properties.dart
+Formatted 120 files (4 changed) in 0.81 seconds.
+
