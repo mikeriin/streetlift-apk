@@ -1,6 +1,6 @@
 # Relecture documentée — manche 0 (moteurs 0.1)
 
-Faite par la conversation de pilotage le 03/10/2026 au soir (DECISIONS_CP.md C6) : trois relecteurs Opus indépendants, appuyés sur des sources du web (organismes, méta-analyses, fédérations, ressources d'entraîneurs), sans accès au référentiel de CR. Notes de 1 à 10 (9 = ce qu'un entraîneur qualifié signerait selon les sources). Les mêmes notes et commentaires sont dans la base de la page de relecture (collection , auteur ).
+Faite par la conversation de pilotage le 03/10/2026 au soir (DECISIONS_CP.md C6) : trois relecteurs Opus indépendants, appuyés sur des sources du web (organismes, méta-analyses, fédérations, ressources d'entraîneurs), sans accès au référentiel de CR. Notes de 1 à 10 (9 = ce qu'un entraîneur qualifié signerait selon les sources). Les mêmes notes et commentaires sont dans la base de la page de relecture (collection `notes`, auteur `relecture-documentee`).
 
 | Profil | Ensemble | Adapté au profil | Progression | Volume et intensité | Choix des exercices | Faisable et sûr |
 | --- | --- | --- | --- | --- | --- | --- |
