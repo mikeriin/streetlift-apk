@@ -1,0 +1,7 @@
+Formatted ../kalis_plan/lib/kalis_plan.dart
+Formatted ../kalis_plan/lib/src/coach/coach.dart
+Formatted ../kalis_plan/lib/src/coach/prescribe.dart
+Formatted ../kalis_plan/lib/src/coach/season.dart
+Formatted ../kalis_plan/lib/src/coach/skeleton.dart
+Formatted 116 files (5 changed) in 0.86 seconds.
+
