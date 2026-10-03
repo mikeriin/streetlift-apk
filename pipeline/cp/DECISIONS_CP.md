@@ -41,6 +41,10 @@ Constat : la nuit du 02 au 03/10, les sessions CQ et CR (Fable, effort maximal, 
 - **C3.3 Points de pilotage** : choix du propriétaire « Toutes les 2 heures » (au lieu de 30 min) ; les lots notifient eux-mêmes livraison et blocage.
 - **C3.4** Mesures de la conversation de pilotage (PIPELINE_CP.md §9) : panel qui ne renote que les couples sous 9/10 entre une passe complète au départ et une à la fin ; sauvegardes toutes les 30 min sur `cp-sauvegardes/<LOT>` (sans workflow) ; reprise depuis la dernière sauvegarde ; relance d'une session arrêtée par les limites après leur remise à zéro.
 
+## C4. Validations du propriétaire
+
+- **C4.1** CU (parcours de création v3, dev6.8.0, main 6467bc2) : « Cu validé » (03/10/2026, 17:09).
+
 ## Sections des lots
 
 Chaque lot ajoute ici ses décisions techniques numérotées (`CR.1`, `CR.2`…), ses écarts, ses recommandations et, le cas échéant, la question posée au propriétaire.
