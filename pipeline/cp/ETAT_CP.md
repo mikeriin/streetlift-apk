@@ -38,7 +38,7 @@ Chaque lot ne modifie que sa ligne (PIPELINE_CP.md §1).
 
 | Lot | Voie | Prérequis | Livré | Panel (min) | Date | Statut |
 | --- | --- | --- | --- | --- | --- | --- |
-| CR | A | références reçues | — | — | — | en cours depuis 2026-10-02 20:26 UTC |
+| CR | A | références reçues | — | — | — | en cours depuis 2026-10-03 05:52 UTC (reprise) |
 | CQ | B | — | — | — | — | en cours depuis 2026-10-03 05:51 UTC (reprise ; premier passage du 2026-10-02 20:03 UTC interrompu) |
 | CP1 | A | CR, CQ | — | — | — | en attente de CR, CQ |
 | CA1 | B | CR, CQ | — | — | — | en attente de CR, CQ |
