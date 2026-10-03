@@ -44,7 +44,7 @@ Chaque lot ne modifie que sa ligne (PIPELINE_CP.md §1).
 | CQ | B | — | `kalis_core` 0.4.0 (`etiquettes/kalis_core-v0.4.0`, commit ef4c57ae, run 37106401044) ; profil v3 : 16 questions débutant, 29 élite | — (lot sans panel) | 2026-10-03 | livré |
 | CP1 | A | CR, CQ | — | — | — | en attente de CR, CQ |
 | CA1 | B | CR, CQ | — | — | — | en attente de CR, CQ |
-| CU | App | CQ | — | — | — | en attente de CQ |
+| CU | App | CQ | — | — | — | en cours depuis 2026-10-03 11:15 UTC |
 | CX | A | CP1, CA1 | — | — | — | en attente de CP1, CA1 |
 | CP2 | A | CX | — | — | — | en attente de CX |
 | CA2 | B | CX | — | — | — | en attente de CX |
