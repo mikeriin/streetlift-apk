@@ -15,6 +15,8 @@ import 'plan/evolution_widgets.dart' show EvolutionHomeCard;
 import 'program_screens.dart' show ProgramHomeCard;
 import 'resume_banner.dart';
 import 'stats_mannequin.dart';
+import 'guided_tests.dart';
+import 'profile_completion.dart';
 import 'store.dart';
 import 'store_widget.dart';
 import 'ui.dart';
@@ -387,6 +389,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       // G10 : propositions de Koach (évolution du
                       // programme), après les journées.
                       if (EvolutionHomeCard.visible) const EvolutionHomeCard(),
+                      // CU : compléter son profil (une fois) ; test guidé
+                      // proposé à la première séance.
+                      if (ProfileCompletionCard.visible)
+                        const ProfileCompletionCard(),
+                      if (GuidedTestHomeCard.visible)
+                        const GuidedTestHomeCard(),
                       // G7 : Où j'en suis, fin de bloc, retour à l'ancien
                       // programme ; après les journées (la semaine entière
                       // reste visible, L5).

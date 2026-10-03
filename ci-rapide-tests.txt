@@ -1,0 +1,5 @@
+test/cu_profil_v3_test.dart
+test/g6_profil_test.dart
+test/g2_retrait_test.dart
+dev:test/g2_mode_dev_test.dart
+dev:test/g3_mode_dev_test.dart

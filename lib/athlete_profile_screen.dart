@@ -9,9 +9,11 @@ import 'package:kalis_koach/kalis_koach.dart' show KoachPose;
 import 'app_theme.dart';
 import 'athlete_profile.dart';
 import 'athlete_profile_flow.dart';
+import 'guided_tests.dart';
 import 'koach/koach_bubble.dart';
 import 'koach/koach_view.dart';
 import 'plan/plan_screens.dart' show openPlanCreation;
+import 'profile_completion.dart';
 import 'program_explainer.dart';
 import 'program_start.dart' show longCivilDate;
 import 'store.dart';
@@ -157,6 +159,59 @@ class ProfileScreen extends StatelessWidget {
                 ),
               ),
               const ProgramExplainerButton(),
+              // CU : questions du profil v3 encore sans réponse.
+              if (store.profilePendingQuestions.isNotEmpty)
+                KCard(
+                  key: const ValueKey('profile-complete'),
+                  accent: SL.accent,
+                  onTap: () => openProfileCompletion(context),
+                  child: Row(
+                    children: [
+                      Icon(Icons.playlist_add_check, color: SL.accent),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Compléter mon profil',
+                              style: Theme.of(context).textTheme.titleMedium,
+                            ),
+                            Text(
+                              '${store.profilePendingQuestions.length} '
+                              'question${store.profilePendingQuestions.length > 1 ? 's' : ''} '
+                              'facultative${store.profilePendingQuestions.length > 1 ? 's' : ''}',
+                              style: dim,
+                            ),
+                          ],
+                        ),
+                      ),
+                      const Icon(Icons.chevron_right),
+                    ],
+                  ),
+                ),
+              KCard(
+                key: const ValueKey('profile-tests'),
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute<void>(
+                    builder: (_) => const GuidedTestsScreen(),
+                  ),
+                ),
+                child: Row(
+                  children: [
+                    Icon(Icons.timer_outlined, color: SL.accent),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Text(
+                        'Tests guidés',
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                    ),
+                    const Icon(Icons.chevron_right),
+                  ],
+                ),
+              ),
               for (final r in kRubricTitles.keys)
                 KCard(
                   key: ValueKey('profile-rubric-$r'),

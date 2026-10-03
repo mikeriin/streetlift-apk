@@ -14,6 +14,7 @@
 import 'package:kalis_core/kalis_core.dart';
 
 import 'profile.dart';
+import 'profile_v3.dart';
 
 /// Version de la section `athleteProfile` de la sauvegarde.
 const int kAthleteSectionVersion = 1;
@@ -974,16 +975,21 @@ String nextGoalId(Iterable<Goal> goals) {
 
 // ============================================================ étapes du flux
 
-/// Étapes de la création du profil (un écran = une question, D3.4).
+/// Étapes de la création du profil (un écran = une question, D3.4). CU :
+/// écrans du parcours v3 (`PARCOURS_V3.md` § 3) ; l'expérience a son écran,
+/// la récupération est nouvelle. Une étape sans question visible pour le
+/// profil en cours de saisie n'est pas montrée (flux).
 const kAthleteSteps = [
   'welcome',
   'identity',
   'discipline',
   'secondary',
+  'experience',
   'levels',
   'goals',
   'availability',
   'places',
+  'recovery',
   'health',
   'preferences',
   'mode',
@@ -995,10 +1001,12 @@ const kRubricTitles = <String, String>{
   'identity': 'Toi',
   'discipline': 'Discipline principale',
   'secondary': 'Disciplines secondaires',
-  'levels': 'Niveau par mouvement',
+  'experience': 'Ton expérience',
+  'levels': 'Ce que tu sais faire',
   'goals': 'Objectifs',
   'availability': 'Disponibilités',
   'places': 'Lieux et matériel',
+  'recovery': 'Ta récupération',
   'health': 'Santé, blessures et gênes',
   'preferences': 'Exercices aimés et détestés',
   'mode': 'Mode assisté ou libre',
@@ -1080,6 +1088,15 @@ class ProfileDraft {
 
   /// Fourchettes de mouvements hors de la liste proposée (profil existant).
   List<MovementLevel> extraLevels = const [];
+
+  /// CU : réponses du schéma 3 (`kalis_core` 0.4.0), en JSON du contrat
+  /// (clés de [kSchema3Keys]) ; accesseurs typés : `DraftV3`
+  /// (profile_v3.dart). Une réponse absente reste absente.
+  final Map<String, Object?> v3 = {};
+
+  /// Réponses datées telles qu'à l'ouverture du brouillon : une
+  /// différence date les réponses du jour (`lifestyleUpdatedOn`).
+  String lifestyleAtOpen = '{}';
 
   ProfileDraft();
 
@@ -1253,6 +1270,22 @@ class ProfileDraft {
   /// Mouvements proposés pour les disciplines choisies.
   List<LevelMovement> get movements => movementsFor(disciplines);
 
+  /// CU : mouvements montrés pour les fourchettes (PARCOURS_V3.md,
+  /// `movement_levels`) : sans ceux qui ont un record ; 4 au plus pour un
+  /// débutant (ou sans niveau), 9 sinon. Les fourchettes déjà déclarées sur
+  /// les autres restent dans le profil (rien n'est perdu).
+  List<LevelMovement> get shownMovements {
+    final withRecord = {
+      for (final b in this.benchmarks ?? const <Benchmark>[]) b.exerciseId,
+    };
+    final beginner =
+        experience == null || experience == ExperienceLevel.beginner;
+    return [
+      for (final m in movements)
+        if (!withRecord.contains(m.exerciseId)) m,
+    ].take(beginner ? 4 : kMaxLevelMovements).toList();
+  }
+
   /// Ajoute un lieu avec son matériel par défaut.
   void addPlace(Place p) {
     places.putIfAbsent(p, () => {...defaultEquipmentFor(p)});
@@ -1271,8 +1304,13 @@ class ProfileDraft {
 
   // ------------------------------------------------------------ validation
 
-  /// Erreur de l'étape [step] (null : l'étape est complète).
-  String? stepError(String step, DateTime now) {
+  /// Erreur de l'étape [step] (null : l'étape est complète). [parcours] :
+  /// parcours v3 (poids obligatoire selon la discipline, `requiredWhen`).
+  String? stepError(
+    String step,
+    DateTime now, {
+    ProfileQuestionnaire? parcours,
+  }) {
     switch (step) {
       case 'identity':
         if (displayName.trim().length > 40) {
@@ -1294,14 +1332,24 @@ class ProfileDraft {
         }
         final w = weightValue;
         if (w != null && w.isNaN) return 'Poids entre 25 et 300 kg.';
+        if (w == null && this.weightRequired(parcours, now.year)) {
+          return kWeightRequiredError;
+        }
         return null;
       case 'discipline':
         if (street) {
-          return streetPrimary == null
-              ? 'Choisis ta principale parmi les trois styles street.'
-              : null;
+          if (streetPrimary == null) {
+            return 'Choisis ta principale parmi les trois styles street.';
+          }
+        } else if (primary == null) {
+          return 'Choisis ta discipline principale.';
         }
-        return primary == null ? 'Choisis ta discipline principale.' : null;
+        final w = weightValue;
+        if (w != null && w.isNaN) return 'Poids entre 25 et 300 kg.';
+        if (w == null && this.weightRequired(parcours, now.year)) {
+          return kWeightRequiredError;
+        }
+        return null;
       case 'secondary':
         if (street) {
           final m = streetMode;
@@ -1347,9 +1395,9 @@ class ProfileDraft {
   }
 
   /// Première étape incomplète (null : tout est rempli).
-  String? firstIncomplete(DateTime now) {
+  String? firstIncomplete(DateTime now, {ProfileQuestionnaire? parcours}) {
     for (final s in kAthleteSteps) {
-      if (stepError(s, now) != null) return s;
+      if (stepError(s, now, parcours: parcours) != null) return s;
     }
     return null;
   }
@@ -1397,15 +1445,21 @@ class ProfileDraft {
   /// Profil v2 construit (null si une étape est incomplète).
   /// [vocabulary] : ordre du matériel de la base ; [health] : référence au
   /// questionnaire santé, calculée par le magasin.
+  ///
+  /// CU : profil au schéma 3 ; avec [parcours], les réponses du schéma 3
+  /// devenues sans objet sont retirées et les réponses datées du jour
+  /// portent `lifestyleUpdatedOn`.
   AthleteProfile? build(
     DateTime now, {
     List<String> vocabulary = const [],
     HealthScreeningRef? health,
+    ProfileQuestionnaire? parcours,
   }) {
-    if (firstIncomplete(now) != null) return null;
+    if (firstIncomplete(now, parcours: parcours) != null) return null;
     final m = mix;
     if (m == null) return null;
     final today = civilOf(now);
+    if (parcours != null) this.pruneHidden(parcours, now.year);
     final placeList = [
       for (final p in Place.values)
         if (places.containsKey(p)) p,
@@ -1431,7 +1485,7 @@ class ProfileDraft {
     }
     final w = weightValue;
     final dislikedSet = disliked.toSet();
-    return AthleteProfile(
+    final built = AthleteProfile(
       displayName: displayName.trim().isEmpty ? null : displayName.trim(),
       sex: sex!,
       birthYear: birthYearValue!,
@@ -1467,6 +1521,22 @@ class ProfileDraft {
       createdOn: createdOn ?? today,
       updatedOn: (createdOn != null && createdOn! > today) ? createdOn! : today,
     );
+    return _withV3(built);
+  }
+
+  /// Profil [p] (schéma 3) complété des réponses du schéma 3 du brouillon.
+  AthleteProfile _withV3(AthleteProfile p) {
+    final answers = <String, Object?>{...v3}..remove('lifestyleUpdatedOn');
+    final life = this.lifestyleJson;
+    if (life.isNotEmpty) {
+      final changed = !jsonDeepEquals(life, jsonDecodeMap(lifestyleAtOpen));
+      final stored = v3['lifestyleUpdatedOn'];
+      answers['lifestyleUpdatedOn'] = changed || stored is! String
+          ? p.updatedOn.iso
+          : stored;
+    }
+    if (answers.isEmpty) return p;
+    return AthleteProfile.fromJson({...p.toJson(), ...answers});
   }
 
   /// Brouillon d'un profil existant (modification, rubrique par rubrique).
@@ -1530,6 +1600,11 @@ class ProfileDraft {
       d.places[pl] = {...(byPlace[pl] ?? p.equipment)};
     }
     d.limitations.addAll(p.limitations);
+    final json = p.toJson();
+    for (final k in kSchema3Keys) {
+      if (json[k] != null) d.v3[k] = json[k];
+    }
+    d.lifestyleAtOpen = jsonEncodeMap(d.lifestyleJson);
     d.liked.addAll(p.likedExerciseIds);
     d.disliked.addAll(p.dislikedExerciseIds);
     if (health != null) {
@@ -1574,6 +1649,8 @@ class ProfileDraft {
     if (knownExerciseIds != null) 'known': knownExerciseIds,
     if (cannotDoExerciseIds != null) 'cannotDo': cannotDoExerciseIds,
     'extraLevels': [for (final l in extraLevels) l.toJson()],
+    if (v3.isNotEmpty) 'v3': v3,
+    'lifestyleAtOpen': lifestyleAtOpen,
   };
 
   /// Lecture d'un brouillon ; null s'il est illisible.
@@ -1637,6 +1714,13 @@ class ProfileDraft {
         for (final l in raw['extraLevels'] as List? ?? const [])
           MovementLevel.fromJson((l as Map).cast<String, Object?>()),
       ];
+      final v3 = raw['v3'];
+      if (v3 is Map) {
+        v3.forEach((k, v) {
+          if (kSchema3Keys.contains(k)) d.v3['$k'] = v;
+        });
+      }
+      d.lifestyleAtOpen = raw['lifestyleAtOpen'] as String? ?? '{}';
       return d;
     } catch (_) {
       return null;
@@ -1804,7 +1888,11 @@ class AthleteRecord {
     }
     final p = raw['profile'];
     if (p is! Map) throw const FormatException('Profil v2 absent.');
-    final profile = AthleteProfile.fromJson(p.cast<String, Object?>());
+    // CU : un profil au schéma 2 passe au schéma 3 sans perte ni invention
+    // (seul `schemaVersion` change, `kalis_core` 0.4.0).
+    final profile = AthleteProfile.fromJson(
+      p.cast<String, Object?>(),
+    ).toSchema3();
     final violations = profile.validate();
     if (violations.isNotEmpty) {
       throw FormatException('Profil v2 hors contrat : ${violations.first}');
@@ -1874,18 +1962,46 @@ Set<String> changedRubrics(AthleteProfile? a, AthleteProfile b) {
       diff(a.streetMode?.toJson(), b.streetMode?.toJson())) {
     out.add('secondary');
   }
+  final ja = a.toJson(), jb = b.toJson();
+  bool diffKeys(List<String> keys) => keys.any((k) => diff(ja[k], jb[k]));
   if (a.experience != b.experience ||
-      diff(
+      diffKeys(const ['trainingAge', 'trainingGap'])) {
+    out.add('experience');
+  }
+  if (diff(
         [for (final l in a.movementLevels) l.toJson()],
         [for (final l in b.movementLevels) l.toJson()],
-      )) {
+      ) ||
+      diffKeys(const [
+        'benchmarks',
+        'skills',
+        'recentTraining',
+        'currentPhase',
+      ])) {
     out.add('levels');
   }
   if (diff(
-    [for (final g in a.goals) g.toJson()],
-    [for (final g in b.goals) g.toJson()],
-  )) {
+        [for (final g in a.goals) g.toJson()],
+        [for (final g in b.goals) g.toJson()],
+      ) ||
+      diffKeys(const [
+        'emphasis',
+        'events',
+        'specialization',
+        'weakPoints',
+        'enduranceBase',
+      ])) {
     out.add('goals');
+  }
+  if (diffKeys(const [
+    'sleep',
+    'stress',
+    'occupationalLoad',
+    'otherSports',
+    'bodyWeightGoal',
+    'targetBodyWeightKg',
+  ])) {
+    out.add('recovery');
   }
   if (diff(
     [for (final s in a.availability) s.toJson()],
@@ -1921,11 +2037,20 @@ Set<String> changedRubrics(AthleteProfile? a, AthleteProfile b) {
 
 /// Un changement de ces rubriques touche le programme (régénération en
 /// G7) ; le nom, la taille et le mode n'en changent pas la construction.
+///
+/// CU : seules les réponses du schéma 2 comptent tant que les moteurs
+/// actuels (`kalis_plan` 0.1, `kalis_adapt` 0.1) ignorent celles du schéma 3
+/// (les moteurs calibrés les liront au lot CI) : compléter son profil ne
+/// propose pas de refaire le programme.
 bool rubricsAffectProgram(
   Set<String> rubrics,
   AthleteProfile? a,
   AthleteProfile b,
 ) {
+  if (a != null) {
+    final v2 = changedRubrics(schema2Part(a), schema2Part(b));
+    rubrics = rubrics.intersection(v2);
+  }
   for (final r in rubrics) {
     switch (r) {
       case 'identity':
@@ -1942,6 +2067,24 @@ bool rubricsAffectProgram(
     }
   }
   return false;
+}
+
+/// Le profil [p] sans ses réponses du schéma 3 (détails des gênes compris).
+AthleteProfile schema2Part(AthleteProfile p) {
+  final json = p.toJson();
+  for (final k in kSchema3Keys) {
+    json.remove(k);
+  }
+  json['limitations'] = [
+    for (final l in p.limitations)
+      Limitation(
+        zone: l.zone,
+        side: l.side,
+        joint: l.joint,
+        discomfort: l.discomfort,
+      ).toJson(),
+  ];
+  return AthleteProfile.fromJson(json);
 }
 
 /// Référence au questionnaire santé (aucune réponse copiée) : sans accord

@@ -18,6 +18,7 @@ import 'adapt/session_adapt.dart';
 
 import 'athlete_profile.dart';
 import 'content_pack.dart';
+import 'profile_v3.dart';
 import 'kalis_clock.dart';
 import 'session_prefs.dart';
 import 'game.dart';
