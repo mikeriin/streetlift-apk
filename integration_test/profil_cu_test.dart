@@ -122,8 +122,25 @@ void main() {
   Future<void> tap(WidgetTester tester, String key, {int ms = 600}) async {
     final f = find.byKey(ValueKey(key));
     await scrollTo(tester, f);
+    final nav =
+        key.startsWith('flow-next-') ||
+        key.startsWith('recap-edit-') ||
+        key == 'flow-to-recap';
+    final flows = find.byType(AthleteProfileFlow);
+    final before = nav && flows.evaluate().isNotEmpty
+        ? tester.state<AthleteProfileFlowState>(flows.first).step
+        : null;
     await tester.tap(f.hitTestable().first);
     await wait(tester, ms);
+    // Émulateur lent : attendre le changement d'écran (10 s au plus).
+    for (var i = 0; before != null && i < 100; i++) {
+      final now = find.byType(AthleteProfileFlow);
+      if (now.evaluate().isEmpty ||
+          tester.state<AthleteProfileFlowState>(now.first).step != before) {
+        break;
+      }
+      await tester.pump(const Duration(milliseconds: 100));
+    }
   }
 
   Future<void> top(WidgetTester tester) async {
@@ -146,6 +163,9 @@ void main() {
     await scrollTo(tester, f);
     await tester.enterText(f, text);
     await wait(tester, 300);
+    // Clavier fermé : il cache le bas de l'écran (bouton « Continuer »).
+    FocusManager.instance.primaryFocus?.unfocus();
+    await wait(tester, 700);
   }
 
   AthleteProfileFlowState? flow(WidgetTester tester) {
