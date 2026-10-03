@@ -122,8 +122,25 @@ void main() {
   Future<void> tap(WidgetTester tester, String key, {int ms = 600}) async {
     final f = find.byKey(ValueKey(key));
     await scrollTo(tester, f);
+    final nav =
+        key.startsWith('flow-next-') ||
+        key.startsWith('recap-edit-') ||
+        key == 'flow-to-recap';
+    final flows = find.byType(AthleteProfileFlow);
+    final before = nav && flows.evaluate().isNotEmpty
+        ? tester.state<AthleteProfileFlowState>(flows.first).step
+        : null;
     await tester.tap(f.hitTestable().first);
     await wait(tester, ms);
+    // Émulateur lent : attendre le changement d'écran (10 s au plus).
+    for (var i = 0; before != null && i < 100; i++) {
+      final now = find.byType(AthleteProfileFlow);
+      if (now.evaluate().isEmpty ||
+          tester.state<AthleteProfileFlowState>(now.first).step != before) {
+        break;
+      }
+      await tester.pump(const Duration(milliseconds: 100));
+    }
   }
 
   Future<void> top(WidgetTester tester) async {
@@ -146,6 +163,9 @@ void main() {
     await scrollTo(tester, f);
     await tester.enterText(f, text);
     await wait(tester, 300);
+    // Clavier fermé : il cache le bas de l'écran (bouton « Continuer »).
+    FocusManager.instance.primaryFocus?.unfocus();
+    await wait(tester, 700);
   }
 
   AthleteProfileFlowState? flow(WidgetTester tester) {
@@ -190,11 +210,12 @@ void main() {
         .map((q) => q.id)
         .toList();
     final logsBefore = jsonEncode(jsonDecode(store.exportAll())['logs']);
-    releve['perso_invitation'] = await until(
-      tester,
-      find.byKey(const ValueKey('profile-invite')),
-    );
+    await until(tester, find.byKey(const ValueKey('header-logo')));
     await scrollTo(tester, find.byKey(const ValueKey('profile-invite')));
+    releve['perso_invitation'] = find
+        .byKey(const ValueKey('profile-invite'))
+        .evaluate()
+        .isNotEmpty;
     await wait(tester, 800);
     await shot('01_perso_invitation');
     await tap(tester, 'profile-invite-open', ms: 1500);
@@ -225,10 +246,7 @@ void main() {
     releve['completer_journal_inchange'] =
         jsonEncode(jsonDecode(store.exportAll())['logs']) == logsBefore;
     await wait(tester, 1200);
-    releve['perso_invitation_apres'] = find
-        .byKey(const ValueKey('profile-invite'))
-        .evaluate()
-        .isNotEmpty;
+    releve['perso_invitation_apres'] = store.profileInviteVisible;
     await store.flush();
     final persoBefore = jsonEncode(KalisPrefs(raw, dev: false).snapshot());
 
@@ -402,15 +420,15 @@ void main() {
       ),
     );
     await wait(tester, 1800);
-    releve['reglages_rubrique_recuperation'] = find
-        .byKey(const ValueKey('profile-rubric-recovery'))
-        .evaluate()
-        .isNotEmpty;
     await shot('23_reglages_profil');
     await scrollTo(
       tester,
       find.byKey(const ValueKey('profile-rubric-recovery')),
     );
+    releve['reglages_rubrique_recuperation'] = find
+        .byKey(const ValueKey('profile-rubric-recovery'))
+        .evaluate()
+        .isNotEmpty;
     await shot('24_reglages_profil_suite');
     unawaited(
       appNavigator.currentState!.push(
