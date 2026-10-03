@@ -15,7 +15,7 @@ import json
 import sys
 
 FIELDS = (("volume", "séries × rép."), ("load", "charge"),
-          ("effort", "effort"), ("rest", "repos"))
+          ("effort", "effort"), ("rest", "repos"), ("notes", "notes"))
 
 
 def rest_text(seconds):
@@ -49,7 +49,7 @@ def day_table(day):
 
 def day_key(day):
     return json.dumps([[i["id"], i["volume"], i["load"], i["effort"],
-                        i.get("rest")] for i in day["items"]],
+                        i.get("rest"), i.get("notes")] for i in day["items"]],
                       ensure_ascii=False)
 
 
@@ -116,6 +116,13 @@ def render(program):
         kind = w["kind"] + (" — ÉCHÉANCE" if event == w["week"] else "")
         out.append(f"| {w['week']} | {w['block']} | {kind} | "
                    f"{len(w['days'])} | {w['hardSets']} |")
+    for title, key in (("Saison", "season"),
+                       ("Échelles des figures", "ladders")):
+        if program.get(key):
+            out += ["", f"## {title}", ""] + list(program[key])
+    if program.get("rules"):
+        out += ["", "## Règles du programme", ""]
+        out += [f"- {r}" for r in program["rules"]]
     for index, w in enumerate(weeks):
         kind = w["kind"] + (" — ÉCHÉANCE" if event == w["week"] else "")
         out += ["", f"## Semaine {w['week']} — {kind} (bloc {w['block']})", ""]

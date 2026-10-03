@@ -168,6 +168,26 @@ double _round3(double v) => (v * 1000).roundToDouble() / 1000;
 int _clampInt(int v, int low, int high) =>
     v < low ? low : (v > high ? high : v);
 
+/// Plafond de séries dures du groupe [g] pour l'athlète [a] : le plafond du
+/// niveau, réduit par la tolérance du profil (R5-P21) — tirage et
+/// préhension pour le travail physique ou une gêne du membre supérieur,
+/// jambes pour le travail physique, l'endurance ou une gêne du membre
+/// inférieur.
+double coachGroupCap(Athlete a, MuscleGroup g) {
+  var cap = coachWeeklyCeiling[a.level] * a.volumeFactor;
+  if (g == MuscleGroup.lats ||
+      g == MuscleGroup.upperBack ||
+      g == MuscleGroup.biceps) {
+    cap *= a.pullFactor;
+  } else if (g == MuscleGroup.glutes ||
+      g == MuscleGroup.quads ||
+      g == MuscleGroup.hamstrings ||
+      g == MuscleGroup.calves) {
+    cap *= a.legsFactor;
+  }
+  return cap;
+}
+
 /// Famille bras tendus de l'exercice [e] : 0 appui (planche, back lever,
 /// appuis tendus), 1 suspension (front lever), 2 mixte, ou −1.
 int straightArmFamilyOf(CatalogExercise e) {
@@ -422,8 +442,17 @@ final class Prescriber {
         floor = 2;
       }
     }
-    if (blockIndex == 0 && week == 0 && a.gapWeeks >= 2 && floor < 3) {
-      floor = 3;
+    // R5-P7 : reprise — 3 répétitions en réserve au moins la première
+    // semaine (les deux premières après dix semaines d'arrêt, et 4 la
+    // toute première après seize).
+    if (blockIndex == 0 && a.gapWeeks >= 2) {
+      final weeks = a.gapWeeks >= 10 ? 2 : 1;
+      if (week < weeks && floor < 3) {
+        floor = 3;
+      }
+      if (week == 0 && a.gapWeeks >= 16 && floor < 4) {
+        floor = 4;
+      }
     }
     return floor;
   }
@@ -443,7 +472,8 @@ final class Prescriber {
     if (rir < floor) {
       rir = floor;
     }
-    return rir > 5 ? 5 : rir;
+    // Une série de travail reste une série dure : 4 en réserve au plus.
+    return rir > coachHardSetMaxRir ? coachHardSetMaxRir : rir;
   }
 
   int _scaled(int sets, WeekSpec ws, {int min = 1}) {
@@ -462,6 +492,17 @@ final class Prescriber {
         ? (blockIndex > 3 ? 3 : blockIndex)
         : 0;
     return ws.stage + carry;
+  }
+
+  /// Décalage planifié d'une plage de répétitions en double progression :
+  /// une répétition de plus toutes les deux semaines de charge (deux au
+  /// plus dans le bloc), tant que la réserve prévue est tenue.
+  int _shift(WeekSpec ws) {
+    if (ws.kind != WeekKind.build) {
+      return 0;
+    }
+    final half = _stage(ws) ~/ 2;
+    return half > 2 ? 2 : half;
   }
 
   int _dayOffset(int d) {
@@ -855,8 +896,7 @@ final class Prescriber {
     if (role != _DayRole.normal ||
         ws.intent == WeekIntent.taper ||
         ws.intent == WeekIntent.competition ||
-        ws.intent == WeekIntent.transition ||
-        (ws.intent == WeekIntent.realization && ws.stage >= 1)) {
+        ws.intent == WeekIntent.transition) {
       return null;
     }
     final x = _new(s);
@@ -895,7 +935,9 @@ final class Prescriber {
     }
     final reps = intense ? 3 : 4;
     x
-      ..sets = ws.light ? 2 : _scaled(s.sets, ws, min: 2)
+      ..sets = ws.light || ws.intent == WeekIntent.realization
+          ? 2
+          : _scaled(s.sets, ws, min: 2)
       ..minSets = 1
       ..repsLow = reps
       ..repsHigh = reps
@@ -998,9 +1040,7 @@ final class Prescriber {
     final e = x.e;
     final max = _maxOf(s);
     final stage = _stage(ws);
-    final sets = ws.light && ws.intent != WeekIntent.intro
-        ? 2
-        : _scaled(s.sets, ws, min: 2);
+    final sets = _scaled(s.sets, ws, min: 2);
     x
       ..sets = role == _DayRole.primerFar ? 2 : sets
       ..minSets = 2
@@ -1047,14 +1087,14 @@ final class Prescriber {
     // R4-G5 : densité — une série courte par minute, à 30 à 45 % du
     // maximum ; on ajoute des minutes avant d'ajouter des répétitions.
     final stage = _stage(ws);
-    var share = _level >= 2 ? 0.40 : 0.35;
+    var share = _level >= 2 ? 0.45 : 0.40;
     if (coachHighRisk(e)) {
       share = 0.30;
     }
     final reps = _clampInt(_round(max * share), 1, max);
     var minutes =
         s.sets + (ws.kind == WeekKind.build ? (stage > 4 ? 4 : stage) : 0);
-    minutes = _round(minutes * (ws.light ? 0.6 : 1));
+    minutes = _round(minutes * (ws.kind == WeekKind.build ? 1 : ws.volume));
     if (minutes < 4) {
       minutes = 4;
     }
@@ -1067,7 +1107,7 @@ final class Prescriber {
       ..minSets = 4
       ..repsLow = reps
       ..repsHigh = reps
-      ..rir = 5
+      ..rir = _rirOf(e, 4, ws, week)
       ..rest = work >= 50 ? 10 : 60 - work
       ..everyMinute = true
       ..intensity = _shareOf(e.id, reps, max)
@@ -1083,9 +1123,7 @@ final class Prescriber {
     final x = _new(s);
     final e = x.e;
     final max = _maxOf(s);
-    final sets = ws.light && ws.intent != WeekIntent.intro
-        ? 2
-        : _scaled(s.sets, ws, min: 2);
+    final sets = _scaled(s.sets, ws, min: 2);
     x
       ..sets = role == _DayRole.primerFar ? 2 : sets
       ..minSets = 2
@@ -1135,9 +1173,7 @@ final class Prescriber {
     // R4-F1, R5-P27 : technique à l'état frais, séries très courtes, 2
     // répétitions en réserve au moins, arrêt dès que la qualité baisse.
     final reps = max <= 2 ? 1 : (max <= 4 ? 2 : _round(max * 0.5));
-    final sets = ws.light && ws.intent != WeekIntent.intro
-        ? 3
-        : _scaled(s.sets + (max <= 2 ? 1 : 0), ws, min: 3);
+    final sets = _scaled(s.sets + (max <= 2 ? 1 : 0), ws, min: 2);
     x
       ..sets = sets
       ..minSets = 3
@@ -1158,12 +1194,10 @@ final class Prescriber {
   _Draft? _beginnerMain(SlotSpec s, WeekSpec ws, int week, _DayRole role) {
     final x = _new(s);
     final e = x.e;
-    final sets = ws.light && ws.intent != WeekIntent.intro
-        ? (s.sets > 2 ? s.sets - 1 : 2)
-        : _scaled(s.sets, ws, min: 2);
+    final sets = _scaled(s.sets, ws, min: s.sets >= 3 ? 2 : 1);
     x
       ..sets = sets
-      ..minSets = 2
+      ..minSets = 1
       ..rest = 120;
     if (e.unit == MeasureUnit.seconds) {
       final known = a.holds[e.id] ?? 0;
@@ -1179,8 +1213,9 @@ final class Prescriber {
     final max = a.reps[e.id] ?? 0;
     if (max >= 4) {
       // R5-P2, R5-P4 : 50 à 70 % du maximum, 3 répétitions en réserve.
-      final low = _clampInt(_round(max * 0.5), 2, max);
-      final high = _clampInt(_round(max * 0.7), low, max);
+      final shift = _shift(ws);
+      final low = _clampInt(_round(max * 0.5) + shift, 2, max);
+      final high = _clampInt(_round(max * 0.7) + shift, low, max);
       x
         ..repsLow = low
         ..repsHigh = high
@@ -1193,8 +1228,8 @@ final class Prescriber {
         e.family == MovementFamily.jambesGenou ||
         e.family == MovementFamily.jambesHanche;
     x
-      ..repsLow = lower ? 8 : 6
-      ..repsHigh = lower ? 12 : 10
+      ..repsLow = (lower ? 8 : 6) + _shift(ws)
+      ..repsHigh = (lower ? 10 : 8) + _shift(ws)
       ..rir = _rirOf(e, 3, ws, week)
       ..reasons.add(_rule(CoachRules.doubleProgression, 1, 'reps'));
     return x;
@@ -1239,9 +1274,7 @@ final class Prescriber {
     if (e.unit != MeasureUnit.seconds) {
       // Étape dynamique d'une figure : séries courtes, loin de l'échec.
       x
-        ..sets = ws.light && ws.intent != WeekIntent.intro
-            ? 2
-            : _scaled(s.sets, ws, min: 2)
+        ..sets = _scaled(s.sets, ws, min: 2)
         ..minSets = 2
         ..repsLow = 2
         ..repsHigh = 4
@@ -1259,9 +1292,7 @@ final class Prescriber {
     hold = _clampInt(hold, low, high);
     final sets = role == _DayRole.primerFar || role == _DayRole.primerNear
         ? 2
-        : (ws.light && ws.intent != WeekIntent.intro
-              ? (s.sets > 2 ? _round(s.sets * 0.6) : 2)
-              : _scaled(s.sets, ws, min: 2));
+        : _scaled(s.sets, ws, min: 2);
     x
       ..sets = sets < 2 ? 2 : sets
       ..minSets = 2
@@ -1297,7 +1328,7 @@ final class Prescriber {
     // maximal, arrêt avant la perte de forme.
     final hold = _clampInt(known > 0 ? _round(known * 0.5) : 15, 8, 45);
     x
-      ..sets = ws.light && ws.intent != WeekIntent.intro ? 3 : s.sets
+      ..sets = _scaled(s.sets, ws, min: 2)
       ..minSets = 2
       ..secondsLow = hold
       ..secondsHigh = hold
@@ -1324,9 +1355,7 @@ final class Prescriber {
         }),
       );
     }
-    final sets = ws.light && ws.intent != WeekIntent.intro
-        ? 2
-        : _scaled(s.sets, ws, min: 2);
+    final sets = _scaled(s.sets, ws, min: 2);
     x
       ..sets = sets
       ..minSets = 1
@@ -1352,8 +1381,8 @@ final class Prescriber {
     // propres. Les descentes freinées se comptent à l'unité.
     final negative = e.id.contains('negati');
     x
-      ..repsLow = negative ? 2 : 3
-      ..repsHigh = negative ? 3 : 5
+      ..repsLow = (negative ? 2 : 3) + (_shift(ws) > 0 ? 1 : 0)
+      ..repsHigh = (negative ? 3 : 5) + (_shift(ws) > 0 ? 1 : 0)
       ..rir = _rirOf(e, 3, ws, week);
     if (negative) {
       x
@@ -1387,7 +1416,10 @@ final class Prescriber {
     final x = _new(s);
     final e = x.e;
     final easy = ws.light && ws.intent != WeekIntent.intro;
-    var sets = easy ? (s.sets > 2 ? s.sets - 1 : s.sets) : _scaled(s.sets, ws);
+    var sets = _scaled(s.sets, ws);
+    if (easy && method == Method.accessoryIsolation) {
+      return null;
+    }
     if (ws.intent == WeekIntent.taper || ws.intent == WeekIntent.competition) {
       sets = sets > 2 ? 2 : sets;
     }
@@ -1440,14 +1472,14 @@ final class Prescriber {
           ..rest = 60;
       case Method.accessoryLegs:
         x
-          ..repsLow = 6
-          ..repsHigh = 10
+          ..repsLow = 6 + _shift(ws)
+          ..repsHigh = 8 + _shift(ws)
           ..rir = _rirOf(e, 3, ws, week)
           ..rest = 90;
       default:
         x
-          ..repsLow = 8
-          ..repsHigh = 12
+          ..repsLow = 8 + _shift(ws)
+          ..repsHigh = 10 + _shift(ws)
           ..rir = _rirOf(e, _level == 0 ? 3 : 2.5, ws, week)
           ..rest = 105;
     }
@@ -1567,7 +1599,7 @@ final class Prescriber {
     final warm = s.note == 'run_warmup';
     var minutes = warm
         ? 12.0
-        : (long ? 40.0 : 28.0) * (1 + 0.08 * (stage > 4 ? 4 : stage));
+        : (long ? 45.0 : 30.0) * (1 + 0.08 * (stage > 4 ? 4 : stage));
     if (!warm) {
       minutes *= easy ? 0.7 : 1;
       if (role != _DayRole.normal) {
@@ -2175,11 +2207,24 @@ final class Prescriber {
         if (x.sets <= 1 && !(removable && items.length > 1)) {
           continue;
         }
+        // D'abord là où il reste le plus de séries (au-dessus de deux),
+        // puis au plus bas de l'ordre de retrait.
+        final big = x.sets > 2;
+        final pickBig = pick != null && pick.sets > 2;
         final better =
             pick == null ||
-            Method.cutRank(x.method) < Method.cutRank(pick.method) ||
-            (Method.cutRank(x.method) == Method.cutRank(pick.method) &&
-                x.sets > pick.sets);
+            (big && !pickBig) ||
+            (big == pickBig &&
+                (big
+                    ? (x.sets > pick.sets ||
+                          (x.sets == pick.sets &&
+                              Method.cutRank(x.method) <
+                                  Method.cutRank(pick.method)))
+                    : (Method.cutRank(x.method) <
+                              Method.cutRank(pick.method) ||
+                          (Method.cutRank(x.method) ==
+                                  Method.cutRank(pick.method) &&
+                              x.sets > pick.sets))));
         if (better) {
           pick = x;
           home = items;
@@ -2200,7 +2245,6 @@ final class Prescriber {
   void _fitVolume(List<List<_Draft>> days, WeekSpec ws) {
     final index = _history.length;
     final light = <bool>[for (final h in _history) h.light, ws.light];
-    final ceiling = coachWeeklyCeiling[_level] * a.volumeFactor;
     final rise = a.slowRamp ? coachVolumeRise / 2 : coachVolumeRise;
     final tolerance = a.slowRamp ? 1.0 : 2.0;
     for (final g in MuscleGroup.values) {
@@ -2216,7 +2260,7 @@ final class Prescriber {
             sets += x.creditOf(g);
           }
         }
-        var limit = ceiling;
+        var limit = coachGroupCap(a, g);
         if (index > 0) {
           final series = <double>[
             for (final h in _history) h.groups[g.index],
@@ -2399,6 +2443,29 @@ final class Prescriber {
     );
   }
 
+  /// Donne le même nombre de tours aux exercices enchaînés d'une séance.
+  void _equalize(List<_Draft> items) {
+    final rounds = <String, int>{};
+    final count = <String, int>{};
+    for (final x in items) {
+      final g = x.group;
+      if (g != null && x.kind == SetKind.work) {
+        final before = rounds[g];
+        rounds[g] = before == null || x.sets < before ? x.sets : before;
+        count[g] = (count[g] ?? 0) + 1;
+      }
+    }
+    for (final x in items) {
+      final g = x.group;
+      if (g != null && x.kind == SetKind.work && (count[g] ?? 0) >= 2) {
+        x
+          ..sets = rounds[g]!
+          ..backoff = false
+          ..everyMinute = false;
+      }
+    }
+  }
+
   DayPrescription _freezeDay(int day, List<_Draft> items, WeekSpec ws) {
     // Enchaînements : au moins deux membres, même nombre de tours.
     final members = <String, List<_Draft>>{};
@@ -2520,9 +2587,11 @@ final class Prescriber {
           _dayDrafts(d, w, ws, roles[d], tested),
       ];
       for (var d = 0; d < a.dayCount; d++) {
+        _equalize(days[d]);
         _fitTime(days[d], a.days[d].minutes);
       }
       _fitVolume(days, ws);
+      days.forEach(_equalize);
       final trace = _WeekTrace(ws.light);
       _fitLoads(days, trace);
       for (final items in days) {

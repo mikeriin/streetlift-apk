@@ -9,7 +9,7 @@ import '../assemble.dart';
 import '../traits.dart';
 import 'athlete.dart';
 import 'model.dart';
-import 'prescribe.dart' show straightArmFamilyOf;
+import 'prescribe.dart' show coachGroupCap, straightArmFamilyOf;
 import 'season.dart';
 import 'tables.dart';
 
@@ -304,6 +304,11 @@ void _buildBeginner(_Builder b) {
   // R5-P1 : 4 à 6 séries par groupe et par semaine au départ ; les séries
   // par exercice se règlent sur le nombre de séances.
   final sets = a.dayCount >= 3 ? 2 : 3;
+  // Tirage horizontal : deux séances par semaine suffisent quand le tirage
+  // vertical est travaillé à chaque séance (plafond du débutant, R1-P1).
+  final rowDays = a.dayCount <= 2
+      ? b.allDays
+      : spreadDays(a, b.allDays, a.dayCount >= 4 ? 3 : 2);
   // R4-F10 : au plus deux jours d'appui bras tendus par semaine chez le
   // débutant, non consécutifs.
   final supportDays = b.a.dayCount <= 2
@@ -322,7 +327,7 @@ void _buildBeginner(_Builder b) {
         <String>[Ids.pull],
         SlotRole.main,
         Method.beginnerMain,
-        sets: sets + 1,
+        sets: sets,
       );
     } else {
       b.add(
@@ -353,7 +358,7 @@ void _buildBeginner(_Builder b) {
         <String>[Ids.pushUp, ...Picks.easyPushUp],
         SlotRole.main,
         Method.beginnerMain,
-        sets: sets + 1,
+        sets: sets,
       );
     } else {
       b.add(
@@ -361,7 +366,7 @@ void _buildBeginner(_Builder b) {
         Picks.easyPushUp,
         SlotRole.main,
         Method.beginnerMain,
-        sets: sets + 1,
+        sets: sets,
         referenceId: Ids.pushUp,
       );
       if (pushMax >= 1 && !heavy) {
@@ -377,6 +382,7 @@ void _buildBeginner(_Builder b) {
       }
     }
     // Tirage horizontal (autant que de tirage vertical : R5-P8, R5-P27).
+    if (rowDays.contains(d) || pullMax >= 5) {
     b.add(
       d,
       rowMax != null && rowMax >= 10
@@ -387,6 +393,7 @@ void _buildBeginner(_Builder b) {
       sets: sets,
       referenceId: Ids.row,
     );
+    }
     // Jambes : squat et fente en alternance, hanche si le temps le permet.
     final squatFirst = d.isEven;
     b.add(
@@ -396,7 +403,7 @@ void _buildBeginner(_Builder b) {
       Method.beginnerMain,
       sets: sets,
     );
-    if (minutes >= 55) {
+    if (minutes >= 40) {
       b.add(
         d,
         squatFirst ? Picks.beginnerLunge : Picks.beginnerHip,
@@ -1509,6 +1516,121 @@ void _buildFigures(_Builder b, Set<int> runDays) {
 
 // ---------------------------------------------------------------- squelette
 
+/// Méthodes dont les séries ne comptent pas comme séries dures (loin de
+/// l'échec par construction).
+const Set<String> _easyMethods = <String>{
+  Method.warmupPrep,
+  Method.accessoryPrehab,
+  Method.liftLight,
+  Method.mobility,
+  Method.runEasy,
+  Method.runLong,
+  Method.runQuality,
+};
+
+/// Ramène le volume hebdomadaire de chaque groupe musculaire sous son
+/// plafond (R1-P1, R5-P21) : une série en moins là où il en reste le plus,
+/// au plus bas de l'ordre de retrait à égalité ; le travail principal
+/// garde deux séries, la densité quatre minutes.
+void _fitBudget(_Builder b) {
+  final a = b.a;
+  double credit(SlotSpec s, MuscleGroup g) {
+    if (_easyMethods.contains(s.method)) {
+      return 0;
+    }
+    final t = a.traits.find(s.exerciseId);
+    if (t == null || !t.kind.isResistance) {
+      return 0;
+    }
+    return s.sets * t.creditOf(g) / 2;
+  }
+
+  for (final g in MuscleGroup.values) {
+    if (!g.major) {
+      continue;
+    }
+    final cap = coachGroupCap(a, g);
+    var guard = 0;
+    while (guard < 200) {
+      guard++;
+      var total = 0.0;
+      for (final day in b.days) {
+        for (final s in day.slots) {
+          total += credit(s, g);
+        }
+      }
+      if (total <= cap + 1e-9) {
+        break;
+      }
+      SlotSpec? pick;
+      DaySpec? home;
+      for (final day in b.days) {
+        for (final s in day.slots) {
+          if (credit(s, g) <= 0) {
+            continue;
+          }
+          final floor = s.method == Method.repsDensity
+              ? 4
+              : (Method.cutRank(s.method) >
+                        Method.cutRank(Method.liftVariant)
+                    ? 2
+                    : 1);
+          if (s.sets <= floor) {
+            continue;
+          }
+          final current = pick;
+          if (current == null ||
+              s.sets > current.sets ||
+              (s.sets == current.sets &&
+                  Method.cutRank(s.method) <
+                      Method.cutRank(current.method))) {
+            pick = s;
+            home = day;
+          }
+        }
+      }
+      if (pick == null || home == null) {
+        // Plus rien à réduire : un emplacement d'assistance en moins.
+        SlotSpec? drop;
+        DaySpec? from;
+        for (final day in b.days) {
+          for (final s in day.slots) {
+            if (credit(s, g) > 0 &&
+                Method.cutRank(s.method) <=
+                    Method.cutRank(Method.liftVariant) &&
+                day.slots.length > 2 &&
+                (drop == null ||
+                    Method.cutRank(s.method) < Method.cutRank(drop.method))) {
+              drop = s;
+              from = day;
+            }
+          }
+        }
+        if (drop == null || from == null) {
+          break;
+        }
+        from.slots.remove(drop);
+        continue;
+      }
+      final at = home.slots.indexOf(pick);
+      home.slots[at] = SlotSpec(
+        exerciseId: pick.exerciseId,
+        role: pick.role,
+        method: pick.method,
+        sets: pick.sets - 1,
+        stress: pick.stress,
+        referenceId: pick.referenceId,
+        skillTargetId: pick.skillTargetId,
+        group: pick.group,
+        weak: pick.weak,
+        fromWeek: pick.fromWeek,
+        untilWeek: pick.untilWeek,
+        note: pick.note,
+      );
+    }
+  }
+}
+
 /// Séances bras tendus par famille et par semaine (R4-F10 : 2 chez le
 /// débutant, 3 chez l'intermédiaire et l'avancé, 4 en élite).
 const List<int> coachStraightArmDays = <int>[2, 3, 3, 4];
@@ -1616,6 +1738,7 @@ Skeleton buildSkeleton(
       _buildFigures(b, runDays);
   }
   _limitStraightArmDays(b);
+  _fitBudget(b);
   // Mobilité en fin de séance quand le profil la demande.
   var mobility = 0;
   for (final s in a.profile.disciplines.secondaries) {

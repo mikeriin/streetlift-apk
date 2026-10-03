@@ -40,6 +40,7 @@ export 'src/coach/skeleton.dart'
         spreadDays,
         styleOf;
 export 'src/coach/tables.dart';
+export 'src/coach/texts.dart';
 export 'src/context.dart'
     show
         DisciplineClass,
