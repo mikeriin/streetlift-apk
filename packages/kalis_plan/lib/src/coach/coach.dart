@@ -200,12 +200,7 @@ final class CoachEngine {
         l.exerciseId!,
   };
 
-  Skeleton _skeleton(
-    Athlete a,
-    int blockIndex,
-    int seed, {
-    int? blockWeeks,
-  }) {
+  Skeleton _skeleton(Athlete a, int blockIndex, int seed, {int? blockWeeks}) {
     final shape = shapeBlock(a, a.start, blockIndex, blockWeeks: blockWeeks);
     return buildSkeleton(a, shape, blockIndex, rotation: seed % 16);
   }
@@ -452,8 +447,7 @@ final class CoachEngine {
       locks: base.locks,
       adaptation: base.adaptation,
       pass1: request.pass1,
-      previous:
-          base.previousBlock?.pass2.weeks ?? const <WeekPrescription>[],
+      previous: base.previousBlock?.pass2.weeks ?? const <WeekPrescription>[],
     );
   }
 
@@ -488,7 +482,8 @@ final class CoachEngine {
           reason(ReasonCodes.planVariety)
         else
           reason(ReasonCodes.planSeasonPhase, <String, Object?>{
-            'phase': pass1.intent?.phase.code ?? SeasonPhaseKind.accumulation.code,
+            'phase':
+                pass1.intent?.phase.code ?? SeasonPhaseKind.accumulation.code,
             'weeksToEvent': pass1.intent?.weeksToEvent ?? 0,
           }),
       ],
@@ -698,7 +693,11 @@ final class CoachEngine {
           reasons: <Reason>[reason(ReasonCodes.planUserReplaced)],
         );
         addLock(
-          PlanLock(kind: LockKind.keepSlot, slotId: slot.slotId, exerciseId: id),
+          PlanLock(
+            kind: LockKind.keepSlot,
+            slotId: slot.slotId,
+            exerciseId: id,
+          ),
         );
         touched.add(slot.slotId);
       case ReviewKind.add:
@@ -1034,7 +1033,11 @@ final class CoachEngine {
   /// inadmissible pour le profil (matériel, zone à ménager, niveau,
   /// prérequis, exclusion). Un emplacement verrouillé par la requête
   /// échappe aux règles d'admission.
-  List<String> violations(Catalog catalog, PlanRequest request, Pass1Plan plan) {
+  List<String> violations(
+    Catalog catalog,
+    PlanRequest request,
+    Pass1Plan plan,
+  ) {
     final out = <String>[];
     final a = Athlete.read(
       catalog,

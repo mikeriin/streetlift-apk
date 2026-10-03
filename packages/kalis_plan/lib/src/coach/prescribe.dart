@@ -171,7 +171,8 @@ int _clampInt(int v, int low, int high) =>
 /// Famille bras tendus de l'exercice [e] : 0 appui (planche, back lever,
 /// appuis tendus), 1 suspension (front lever), 2 mixte, ou −1.
 int straightArmFamilyOf(CatalogExercise e) {
-  if (e.rootId.startsWith('cs-back-lever') || e.id.startsWith('cs-back-lever')) {
+  if (e.rootId.startsWith('cs-back-lever') ||
+      e.id.startsWith('cs-back-lever')) {
     return 0;
   }
   return switch (e.pattern) {
@@ -507,7 +508,9 @@ final class Prescriber {
       } else if (offset > best) {
         roles[d] = _DayRole.after;
       } else {
-        roles[d] = best - offset >= 3 ? _DayRole.primerFar : _DayRole.primerNear;
+        roles[d] = best - offset >= 3
+            ? _DayRole.primerFar
+            : _DayRole.primerNear;
       }
     }
     return roles;
@@ -538,7 +541,8 @@ final class Prescriber {
   void _loadAt(_Draft x, double pct, String? referenceId) {
     final e = x.e;
     final total = _totalFor(e, referenceId);
-    if (_basisOf(e) == LoadBasis.unloaded || _basisOf(e) == LoadBasis.bodyweight) {
+    if (_basisOf(e) == LoadBasis.unloaded ||
+        _basisOf(e) == LoadBasis.bodyweight) {
       return;
     }
     if (total == null) {
@@ -610,8 +614,16 @@ final class Prescriber {
     final base = s.sets;
     if (role == _DayRole.primerFar) {
       // R3-P13 : dernier rappel lourd et court, 3 à 5 jours avant.
-      _topSet(x, sets: 2, reps: 1, pct: 0.88, rir: 3, drop: 0.10, ws: ws,
-          week: week);
+      _topSet(
+        x,
+        sets: 2,
+        reps: 1,
+        pct: 0.88,
+        rir: 3,
+        drop: 0.10,
+        ws: ws,
+        week: week,
+      );
       x
         ..backoffRepsLow = 2
         ..backoffRepsHigh = 2
@@ -647,37 +659,76 @@ final class Prescriber {
     }
     switch (ws.intent) {
       case WeekIntent.intro:
-        _topSet(x, sets: _scaled(base, ws, min: 2), reps: 5, pct: 0.76,
-            rir: 3, drop: 0.08, ws: ws, week: week);
+        _topSet(
+          x,
+          sets: _scaled(base, ws, min: 2),
+          reps: 5,
+          pct: 0.76,
+          rir: 3,
+          drop: 0.08,
+          ws: ws,
+          week: week,
+        );
       case WeekIntent.accumulation || WeekIntent.maintenance:
         // R3-P4 : accumulation à 80 à 84 % en séries de 5.
         var pct = 0.80 + 0.015 * stage;
         if (pct > 0.845) {
           pct = 0.845;
         }
-        _topSet(x, sets: _scaled(base, ws, min: 2), reps: 5, pct: pct,
-            rir: 2, drop: 0.08, ws: ws, week: week);
+        _topSet(
+          x,
+          sets: _scaled(base, ws, min: 2),
+          reps: 5,
+          pct: pct,
+          rir: 2,
+          drop: 0.08,
+          ws: ws,
+          week: week,
+        );
       case WeekIntent.intensification:
         // R3-P4 : intensification à 86 à 90 % en séries de 3.
         var pct = 0.86 + 0.015 * stage;
         if (pct > 0.90) {
           pct = 0.90;
         }
-        _topSet(x, sets: _scaled(base, ws, min: 2), reps: 3, pct: pct,
-            rir: 2, drop: 0.08, ws: ws, week: week);
+        _topSet(
+          x,
+          sets: _scaled(base, ws, min: 2),
+          reps: 3,
+          pct: pct,
+          rir: 2,
+          drop: 0.08,
+          ws: ws,
+          week: week,
+        );
       case WeekIntent.realization:
         // R3-P4 : réalisation à 91 à 94 %, doubles puis simples.
         final single = ws.stage >= 1;
-        _topSet(x, sets: _scaled(base, ws, min: 2), reps: single ? 1 : 2,
-            pct: single ? 0.93 : 0.91, rir: single ? 1 : 1.5, drop: 0.10,
-            ws: ws, week: week);
+        _topSet(
+          x,
+          sets: _scaled(base, ws, min: 2),
+          reps: single ? 1 : 2,
+          pct: single ? 0.93 : 0.91,
+          rir: single ? 1 : 1.5,
+          drop: 0.10,
+          ws: ws,
+          week: week,
+        );
         x
           ..backoffRepsLow = 2
           ..backoffRepsHigh = 2;
       case WeekIntent.taper:
         // R3-P12, P13 : volume −40 à −60 %, intensité gardée.
-        _topSet(x, sets: 3, reps: 1, pct: 0.90, rir: 2, drop: 0.10, ws: ws,
-            week: week);
+        _topSet(
+          x,
+          sets: 3,
+          reps: 1,
+          pct: 0.90,
+          rir: 2,
+          drop: 0.10,
+          ws: ws,
+          week: week,
+        );
         x
           ..backoffRepsLow = 2
           ..backoffRepsHigh = 2;
@@ -687,7 +738,8 @@ final class Prescriber {
           WeekIntent.transition:
         // R3-P9 : allègement — séries −40 à −50 %, charge un peu sous
         // celle du bloc, même format de répétitions.
-        final reps = _shape.phase == SeasonPhaseKind.intensification ||
+        final reps =
+            _shape.phase == SeasonPhaseKind.intensification ||
                 _shape.phase == SeasonPhaseKind.realization
             ? 3
             : 5;
@@ -743,7 +795,8 @@ final class Prescriber {
           WeekIntent.test ||
           WeekIntent.competition ||
           WeekIntent.transition:
-        reps = _shape.phase == SeasonPhaseKind.intensification ||
+        reps =
+            _shape.phase == SeasonPhaseKind.intensification ||
                 _shape.phase == SeasonPhaseKind.realization
             ? 4
             : 6;
@@ -829,7 +882,8 @@ final class Prescriber {
       return x;
     }
     final stage = _stage(ws);
-    final intense = ws.intent == WeekIntent.intensification ||
+    final intense =
+        ws.intent == WeekIntent.intensification ||
         ws.intent == WeekIntent.realization;
     final partial = e.id.contains('partiel');
     var pct = (intense ? 0.74 : 0.70) + 0.01 * stage + (partial ? 0.15 : 0);
@@ -879,7 +933,11 @@ final class Prescriber {
     final risk = coachHighRisk(e);
     final stage = _stage(ws);
     if (role == _DayRole.primerFar || role == _DayRole.primerNear) {
-      final reps = _clampInt(_round(max * (role == _DayRole.primerFar ? 0.5 : 0.35)), 1, max);
+      final reps = _clampInt(
+        _round(max * (role == _DayRole.primerFar ? 0.5 : 0.35)),
+        1,
+        max,
+      );
       x
         ..sets = 2
         ..repsLow = reps
@@ -994,7 +1052,8 @@ final class Prescriber {
       share = 0.30;
     }
     final reps = _clampInt(_round(max * share), 1, max);
-    var minutes = s.sets + (ws.kind == WeekKind.build ? (stage > 4 ? 4 : stage) : 0);
+    var minutes =
+        s.sets + (ws.kind == WeekKind.build ? (stage > 4 ? 4 : stage) : 0);
     minutes = _round(minutes * (ws.light ? 0.6 : 1));
     if (minutes < 4) {
       minutes = 4;
@@ -1315,10 +1374,13 @@ final class Prescriber {
     final method = s.method;
     final prehab = method == Method.accessoryPrehab;
     if (role == _DayRole.event ||
-        (role != _DayRole.normal && !prehab && method != Method.accessoryCore)) {
+        (role != _DayRole.normal &&
+            !prehab &&
+            method != Method.accessoryCore)) {
       return null;
     }
-    if ((ws.intent == WeekIntent.taper || ws.intent == WeekIntent.competition) &&
+    if ((ws.intent == WeekIntent.taper ||
+            ws.intent == WeekIntent.competition) &&
         method == Method.accessoryIsolation) {
       return null;
     }
@@ -1390,7 +1452,8 @@ final class Prescriber {
           ..rest = 105;
     }
     final basis = _basisOf(e);
-    if (basis == LoadBasis.external || basis == LoadBasis.bodyweightPlusExternal) {
+    if (basis == LoadBasis.external ||
+        basis == LoadBasis.bodyweightPlusExternal) {
       final total = a.totalOneRm(e.id);
       if (total != null) {
         // 8 à 12 répétitions à 2 ou 3 de l'échec : environ 70 % du 1RM.
@@ -1780,18 +1843,42 @@ final class Prescriber {
             ? _beginnerNegative(s, ws, week, role)
             : null;
       case Method.beginnerHold:
-        return _hold(s, ws, week, role,
-            share: 0.6, low: 8, high: 30, fallback: 10);
+        return _hold(
+          s,
+          ws,
+          week,
+          role,
+          share: 0.6,
+          low: 8,
+          high: 30,
+          fallback: 10,
+        );
       case Method.skillHold:
         // R4-F6 : maintiens à 50 à 70 % du maintien maximal.
-        return _hold(s, ws, week, role,
-            share: 0.6, low: 3, high: 20, fallback: 5);
+        return _hold(
+          s,
+          ws,
+          week,
+          role,
+          share: 0.6,
+          low: 3,
+          high: 20,
+          fallback: 5,
+        );
       case Method.skillEasyHold:
         if (role != _DayRole.normal) {
           return null;
         }
-        return _hold(s, ws, week, role,
-            share: 0.6, low: 5, high: 25, fallback: 10);
+        return _hold(
+          s,
+          ws,
+          week,
+          role,
+          share: 0.6,
+          low: 5,
+          high: 25,
+          fallback: 10,
+        );
       case Method.skillAttempt || Method.skillDynamic:
         return _skillDynamic(s, ws, week, role);
       case Method.skillBalance:
@@ -1836,7 +1923,8 @@ final class Prescriber {
         // (R3-P16) ; il mesure le progrès et règle le bloc suivant.
         final e = a.catalog.exercise(s.exerciseId);
         // Débutant sans répétition acquise : pas de test maximal.
-        final skip = _level == 0 &&
+        final skip =
+            _level == 0 &&
             e.unit != MeasureUnit.seconds &&
             (a.reps[e.id] ?? 0) <= 0;
         if (!skip) {
@@ -1885,7 +1973,8 @@ final class Prescriber {
         if (s.method == Method.warmupPrep) {
           continue;
         }
-        final x = _draft(s, day, week, ws, _DayRole.primerNear) ??
+        final x =
+            _draft(s, day, week, ws, _DayRole.primerNear) ??
             _draft(s, day, week, ws, _DayRole.primerFar) ??
             _draft(s, day, week, ws, _DayRole.normal);
         if (x != null) {
@@ -2002,7 +2091,10 @@ final class Prescriber {
             cut = true;
             break;
           }
-          if (!x.isResistance && meters != null && meters > 1500 && x.sets == 1) {
+          if (!x.isResistance &&
+              meters != null &&
+              meters > 1500 &&
+              x.sets == 1) {
             x.distance = meters - 300;
             cut = true;
             break;
@@ -2022,8 +2114,13 @@ final class Prescriber {
     }
   }
 
-  double _limit(List<double> series, List<bool> light, int index, double rise,
-      double tolerance) {
+  double _limit(
+    List<double> series,
+    List<bool> light,
+    int index,
+    double rise,
+    double tolerance,
+  ) {
     var loaded = 0.0;
     var easy = 0.0;
     var anyLoaded = false;
@@ -2073,12 +2170,13 @@ final class Prescriber {
         if (!counts) {
           continue;
         }
-        final removable = Method.cutRank(x.method) <=
-            Method.cutRank(Method.liftVariant);
+        final removable =
+            Method.cutRank(x.method) <= Method.cutRank(Method.liftVariant);
         if (x.sets <= 1 && !(removable && items.length > 1)) {
           continue;
         }
-        final better = pick == null ||
+        final better =
+            pick == null ||
             Method.cutRank(x.method) < Method.cutRank(pick.method) ||
             (Method.cutRank(x.method) == Method.cutRank(pick.method) &&
                 x.sets > pick.sets);
@@ -2379,7 +2477,8 @@ final class Prescriber {
             continue;
           }
           final flames = p.targetFlames;
-          final hard = t.kind.isResistance &&
+          final hard =
+              t.kind.isResistance &&
               p.kind != SetKind.warmup &&
               (flames == null ||
                   !Flames.isValid(flames) ||

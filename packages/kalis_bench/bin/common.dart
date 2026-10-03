@@ -74,7 +74,7 @@ int runBench({
   final timings = <String, Map<String, double>>{};
   for (final profile in inputs.profiles) {
     // Temps de création (premier bloc, passes 1 et 2) sur un moteur neuf.
-    final adapted = adaptProfile(profile);
+    final adapted = adaptProfile(profile, catalog: inputs.catalog);
     final request = PlanRequest(
       profile: adapted.profile,
       seed: seed,

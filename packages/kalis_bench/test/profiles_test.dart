@@ -76,11 +76,19 @@ void main() {
 
     final multi = benchProfileOf('autres_10_contraintes_multiples');
     final adapted = adaptProfile(multi);
-    // L'antécédent sans gêne actuelle n'a pas de place dans le profil v2.
-    expect(adapted.profile.limitations.length, 1);
-    expect(adapted.lost, contains('injury_history'));
-    expect(adapted.lost, contains('sleep'));
-    expect(adapted.lost, contains('break'));
+    // Schéma 3 : l'antécédent sans gêne actuelle, le sommeil et la coupure
+    // sont transmis.
+    expect(adapted.profile.limitations.length, multi.injuries.length);
+    expect(
+      adapted.profile.limitations.any(
+        (l) => l.discomfort == 0 && l.since != null,
+      ),
+      isTrue,
+    );
+    expect(adapted.profile.sleep, isNotNull);
+    expect(adapted.profile.trainingGap, isNot(TrainingGap.none));
+    expect(adapted.lost, contains('injury_label'));
+    expect(adapted.profile.isSchema3, isTrue);
   });
 
   test('adaptateur : record nul et niveau inconnu', () {
