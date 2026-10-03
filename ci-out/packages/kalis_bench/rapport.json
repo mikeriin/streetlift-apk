@@ -15921,112 +15921,112 @@
  ],
  "timingsMs": {
   "autres_01_debutant_musculation": {
-   "createBlockMs": 314.8,
-   "benchMs": 823.8
+   "createBlockMs": 293.4,
+   "benchMs": 782.6
   },
   "autres_02_hypertrophie_intermediaire": {
-   "createBlockMs": 533.5,
-   "benchMs": 575.2
+   "createBlockMs": 635.0,
+   "benchMs": 393.7
   },
   "autres_03_powerlifter_competition": {
-   "createBlockMs": 365.4,
-   "benchMs": 331.4
+   "createBlockMs": 506.8,
+   "benchMs": 337.5
   },
   "autres_04_force_generale_46_ans": {
-   "createBlockMs": 170.0,
-   "benchMs": 374.5
+   "createBlockMs": 161.6,
+   "benchMs": 324.0
   },
   "autres_05_course_10_km_debutante": {
-   "createBlockMs": 33.7,
-   "benchMs": 47.4
+   "createBlockMs": 32.2,
+   "benchMs": 47.6
   },
   "autres_06_semi_marathon_intermediaire": {
-   "createBlockMs": 54.3,
-   "benchMs": 126.8
+   "createBlockMs": 53.3,
+   "benchMs": 160.4
   },
   "autres_07_mobilite_sante_senior": {
-   "createBlockMs": 50.5,
-   "benchMs": 104.7
+   "createBlockMs": 47.7,
+   "benchMs": 115.6
   },
   "autres_08_crossfit_intermediaire": {
-   "createBlockMs": 141.4,
-   "benchMs": 440.5
+   "createBlockMs": 116.5,
+   "benchMs": 568.7
   },
   "autres_09_perte_de_poids_debutante": {
-   "createBlockMs": 60.0,
-   "benchMs": 124.4
+   "createBlockMs": 49.9,
+   "benchMs": 110.4
   },
   "autres_10_contraintes_multiples": {
-   "createBlockMs": 130.9,
-   "benchMs": 81.4
+   "createBlockMs": 117.6,
+   "benchMs": 112.7
   },
   "street_01_debutant_complet": {
-   "createBlockMs": 86.7,
-   "benchMs": 178.4
-  },
-  "street_02_debutant_surpoids": {
-   "createBlockMs": 26.8,
-   "benchMs": 83.0
-  },
-  "street_03_debutante": {
-   "createBlockMs": 49.6,
-   "benchMs": 79.3
-  },
-  "street_04_reprise_longue_pause": {
-   "createBlockMs": 161.0,
-   "benchMs": 165.9
-  },
-  "street_05_inter_calisthenie_front_lever": {
-   "createBlockMs": 72.1,
-   "benchMs": 330.7
-  },
-  "street_06_inter_sets_reps": {
-   "createBlockMs": 46.7,
-   "benchMs": 149.8
-  },
-  "street_07_avance_streetlifting_competition": {
-   "createBlockMs": 92.5,
-   "benchMs": 235.1
-  },
-  "street_08_avance_sets_reps_competition": {
-   "createBlockMs": 99.8,
+   "createBlockMs": 34.6,
    "benchMs": 195.0
   },
+  "street_02_debutant_surpoids": {
+   "createBlockMs": 27.3,
+   "benchMs": 76.0
+  },
+  "street_03_debutante": {
+   "createBlockMs": 30.9,
+   "benchMs": 118.9
+  },
+  "street_04_reprise_longue_pause": {
+   "createBlockMs": 123.2,
+   "benchMs": 174.0
+  },
+  "street_05_inter_calisthenie_front_lever": {
+   "createBlockMs": 156.6,
+   "benchMs": 241.2
+  },
+  "street_06_inter_sets_reps": {
+   "createBlockMs": 45.1,
+   "benchMs": 129.7
+  },
+  "street_07_avance_streetlifting_competition": {
+   "createBlockMs": 99.4,
+   "benchMs": 222.2
+  },
+  "street_08_avance_sets_reps_competition": {
+   "createBlockMs": 93.6,
+   "benchMs": 194.8
+  },
   "street_09_elite_streetlifting": {
-   "createBlockMs": 86.5,
-   "benchMs": 216.8
+   "createBlockMs": 82.5,
+   "benchMs": 221.5
   },
   "street_10_elite_figures": {
-   "createBlockMs": 66.9,
-   "benchMs": 222.1
+   "createBlockMs": 64.7,
+   "benchMs": 221.6
   },
   "street_11_master_51_ans": {
-   "createBlockMs": 64.0,
-   "benchMs": 182.8
+   "createBlockMs": 61.3,
+   "benchMs": 182.4
   },
   "street_12_antecedent_coude": {
-   "createBlockMs": 83.5,
-   "benchMs": 223.7
+   "createBlockMs": 79.5,
+   "benchMs": 210.0
   },
   "street_13_peu_de_temps": {
-   "createBlockMs": 33.0,
-   "benchMs": 88.7
+   "createBlockMs": 32.4,
+   "benchMs": 90.0
   },
   "street_14_parc_sans_lest": {
-   "createBlockMs": 39.1,
-   "benchMs": 134.2
+   "createBlockMs": 37.8,
+   "benchMs": 151.3
   },
   "street_15_travail_physique_sommeil_court": {
-   "createBlockMs": 40.2,
-   "benchMs": 90.2
+   "createBlockMs": 37.8,
+   "benchMs": 91.6
   },
   "street_16_specialisation_traction_lestee": {
-   "createBlockMs": 75.2,
-   "benchMs": 164.1
+   "createBlockMs": 71.1,
+   "benchMs": 160.7
   },
   "street_17_hybride_street_course": {
-   "createBlockMs": 55.1,
-   "benchMs": 136.5
+   "createBlockMs": 53.4,
+   "benchMs": 138.1
   }
  }
 }

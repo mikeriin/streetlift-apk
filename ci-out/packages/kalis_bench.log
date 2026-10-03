@@ -79,10 +79,10 @@ No issues found!
 00:00 +17: test/quality_test.dart: programme du propriétaire : couples lus, ressemblance mesurée
 00:00 +18: test/safety_test.dart: affutage_absent : course seule, mesuré en minutes d'effort
 00:00 +19: test/quality_test.dart: attentes de coach : tenue et non tenue
-00:00 +20: test/quality_test.dart: attentes de coach : tenue et non tenue
-00:00 +21: test/safety_test.dart: echec_risque : échec sur mouvement à risque, quasi-échec débutant
-00:00 +22: test/quality_test.dart: type d'attente inconnu : erreur de format
-00:00 +23: test/quality_test.dart: type d'attente inconnu : erreur de format
+00:00 +20: test/safety_test.dart: levier_trop_tot : palier suivant avant le délai du niveau
+00:00 +21: test/quality_test.dart: type d'attente inconnu : erreur de format
+00:00 +22: test/safety_test.dart: echec_risque : échec sur mouvement à risque, quasi-échec débutant
+00:00 +23: test/safety_test.dart: seance_trop_longue
 00:00 +24: test/safety_test.dart: decharge_absente : trop de semaines de charge de suite
 00:00 +25: test/safety_test.dart: affutage_absent : volume inchangé la semaine de l'échéance
 00:00 +26: test/safety_test.dart: reprise_trop_dure : effort élevé dès la reprise
@@ -112,15 +112,15 @@ No issues found!
 00:00 +50: test/profiles_test.dart: le profil élite de streetlifting diffère de celui du propriétaire
 00:01 +51: test/bench_test.dart: tous les profils : programme créé, critères et attentes rendus
 00:03 +52: test/bench_test.dart: tous les profils : programme créé, critères et attentes rendus
-00:04 +53: test/bench_test.dart: tous les profils : programme créé, critères et attentes rendus
-00:06 +54: test/bench_test.dart: tous les profils : programme créé, critères et attentes rendus
-00:06 +55: test/properties_test.dart: propriétés des critères, graines 7500 à 9999
+00:05 +53: test/bench_test.dart: tous les profils : programme créé, critères et attentes rendus
+00:06 +54: test/properties_test.dart: propriétés des critères, graines 5000 à 7499
+00:06 +55: test/bench_test.dart: déterminisme : deux exécutions, mêmes fichiers à l'octet près
 00:07 +56: test/bench_test.dart: déterminisme : deux exécutions, mêmes fichiers à l'octet près
 00:08 +57: test/bench_test.dart: une autre graine change le programme
 00:08 +58: test/bench_test.dart: export du programme : français, sans identifiant technique
 00:08 +59: test/bench_test.dart: trajectoire : mesures et export
-00:08 +60: test/bench_test.dart: verdicts de trajectoire : repères tenus, non tenus, sans objet
-00:08 +61: test/bench_test.dart: athlète simulé : niveau, gain par défaut, réglages du profil
-00:08 +62: All tests passed!
+00:09 +60: test/bench_test.dart: verdicts de trajectoire : repères tenus, non tenus, sans objet
+00:09 +61: test/bench_test.dart: athlète simulé : niveau, gain par défaut, réglages du profil
+00:09 +62: All tests passed!
 kalis_bench 0.1.0 : 27 profils, mode croisement, 117 violation(s) de sécurité, rapport écrit dans /home/runner/work/streetlift-apk/streetlift-apk/out-packages/kalis_bench (9 s).
-durée : 29 s
+durée : 28 s
