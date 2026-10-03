@@ -1,0 +1,10 @@
+{
+ "pack": "2.0.0",
+ "archive": "kalis_content_pack_v1_final.zip",
+ "sha256": "5a13a91e3171c303391e00123c24f5cb8e2577e775e4f4be60622351108f9086",
+ "schema_exercice": "2.1.0",
+ "exercices": 625,
+ "muscles": 81,
+ "gabarits": 246,
+ "progressions": 24
+}

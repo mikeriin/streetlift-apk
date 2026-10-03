@@ -1,0 +1,93 @@
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.build/
+.buildlog/
+.history
+.svn/
+.swiftpm/
+migrate_working_dir/
+
+# IntelliJ related
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# The .vscode folder contains launch configuration and tasks you configure in
+# VS Code which you may wish to be included in version control, so this line
+# is commented out by default.
+#.vscode/
+
+# Flutter/Dart/Pub related
+**/doc/api/
+**/ios/Flutter/.last_build_id
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.pub-cache/
+.pub/
+/build/
+
+# Symbolication related
+app.*.symbols
+
+# Obfuscation related
+app.*.map.json
+
+# Android Studio will place build artifacts here
+/android/app/debug
+/android/app/profile
+/android/app/release
+
+# Signature locale : seule l'empreinte publique est distribuable.
+/signing/*
+!/signing/certificate.sha256
+*.p12
+*.pfx
+*.jks
+*.keystore
+*.key
+**/key.properties
+**/keystore.properties
+.env
+.env.*
+*.apk
+*.aab
+
+# ---------------------------------------------------------------------------
+# M4c (5.3.2) : dépôt en sources. Tout ce que tools/release_security.py
+# (package_release.py --check, check_release_without_secrets.py --tree)
+# refuse dans l'arbre suivi : caches, fichiers locaux, clés, artefacts.
+# ---------------------------------------------------------------------------
+build/
+.gradle/
+__pycache__/
+node_modules/
+.flutter-plugins*
+local.properties
+gradle.properties.local
+*.apks
+*.zip
+*.7z
+*.tar
+*.tgz
+# Généré par le build hook de flutter_scene (hook/build.dart).
+/flutter_scene_generated/*
+!/flutter_scene_generated/.gitignore
+# Sorties locales de la CI 3D (publiées sur la branche claude/ci-3d).
+/ci-out/
+# Fichiers de projet IntelliJ livrés avec le projet (exceptions à *.iml).
+!/streetlift_tracker.iml
+!/android/streetlift_tracker_android.iml
+
+# M6c : ressources sous licence en clair (déchiffrées par
+# tools/secure_assets.py avec la clé KT_ASSETS_KEY), jamais suivies.
+/assets_secure/clair/
+/assets/anatomy/mannequin.glb
+# M7 : mannequin animable (chiffré dans assets_secure/mannequin_anime.glb.enc).
+/assets/anatomy/mannequin_anime.glb

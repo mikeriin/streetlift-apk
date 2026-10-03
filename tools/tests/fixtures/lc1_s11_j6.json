@@ -1,0 +1,224 @@
+{
+ "j": 6,
+ "title": "SKILL MUSCLE-UP + POINTS FAIBLES",
+ "cycle": "DELOAD",
+ "conduite": "CONDUITE J6 — Technique : transition MU, points faibles, squat endurance, conditionnement. AUCUNE charge maximale. GtG dans la journée. | Échauffement 12 min : cardio 5 → mobilité → 2×10 scap pulls/push → montée en charge. Collagène 15 g + vit C 50 mg, 60 min avant.",
+ "exercises": [
+  {
+   "id": "B1-519",
+   "name": "Isométrie maximale — transition MU, 3 angles",
+   "sets": {
+    "type": "text",
+    "value": "3×6 s par angle"
+   },
+   "intensity": "Effort maximal",
+   "load": {
+    "type": "fixed",
+    "kg": 0.0
+   },
+   "rest": "2 min",
+   "restSec": 120,
+   "tempo": "2 s de montée en tension",
+   "cue": "Smith verrouillée à 3 hauteurs (poitrine / mi-transition / sortie) : le blocage se déplace avec l'angle.",
+   "main": false,
+   "prevention": false
+  },
+  {
+   "id": "B1-520",
+   "name": "Excentriques de transition LESTÉS",
+   "sets": {
+    "type": "text",
+    "value": "4×3"
+   },
+   "intensity": "~95 % système — excentrique seul",
+   "load": {
+    "type": "system",
+    "ref": "B10",
+    "pct": 0.95
+   },
+   "rest": "2-3 min",
+   "restSec": 180,
+   "tempo": "4-5 s de descente",
+   "cue": "Négatif lesté sur la seule transition (dessus de barre → coudes fléchis). Levier n°1 du déblocage. Descente 4-5 s COMPTÉES, tempo volontaire.",
+   "main": true,
+   "prevention": false
+  },
+  {
+   "id": "B1-521",
+   "name": "Tractions explosives poitrine-barre",
+   "sets": {
+    "type": "text",
+    "value": "5×3"
+   },
+   "intensity": "PdC — vitesse maximale",
+   "load": {
+    "type": "fixed",
+    "kg": 0.0
+   },
+   "rest": "2-3 min",
+   "restSec": 180,
+   "tempo": "Explosif",
+   "cue": "Tire le plus haut possible, la barre doit toucher le bas de la poitrine. Si elle ne dépasse plus le sternum, tu arrêtes la série.",
+   "main": false,
+   "prevention": false
+  },
+  {
+   "id": "B1-522",
+   "name": "Négatifs de muscle-up complets",
+   "sets": {
+    "type": "text",
+    "value": "4×3"
+   },
+   "intensity": "PdC",
+   "load": {
+    "type": "fixed",
+    "kg": 0.0
+   },
+   "rest": "2 min",
+   "restSec": 120,
+   "tempo": "4 s de descente",
+   "cue": "Poignets en flexion par-dessus la barre pendant toute la descente.",
+   "main": false,
+   "prevention": false
+  },
+  {
+   "id": "B1-523",
+   "name": "Transitions de muscle-up à l'élastique",
+   "sets": {
+    "type": "text",
+    "value": "4×3"
+   },
+   "intensity": "Élastique d'assistance",
+   "load": {
+    "type": "fixed",
+    "kg": 0.0
+   },
+   "rest": "2 min",
+   "restSec": 120,
+   "tempo": "Technique",
+   "cue": "Qualité maximale, aucune fatigue recherchée. Tu répètes le geste juste.",
+   "main": false,
+   "prevention": false
+  },
+  {
+   "id": "B1-524",
+   "name": "Isométrie maximale — bas de dip",
+   "sets": {
+    "type": "text",
+    "value": "3×6 s"
+   },
+   "intensity": "Effort maximal",
+   "load": {
+    "type": "fixed",
+    "kg": 0.0
+   },
+   "rest": "2 min",
+   "restSec": 120,
+   "tempo": "2 s de montée en tension",
+   "cue": "Smith verrouillée en bas de dip, poussée maximale. Recrutement max sans fatigue excentrique.",
+   "main": false,
+   "prevention": false
+  },
+  {
+   "id": "B1-525",
+   "name": "Squat endurance @ 70 kg",
+   "sets": {
+    "type": "volume",
+    "prefix": "3 × ",
+    "coef": 0.9,
+    "ref": "B20",
+    "div": 3,
+    "suffix": " reps"
+   },
+   "intensity": "Sous-maximal, RIR 3",
+   "load": {
+    "type": "fixed",
+    "kg": 70.0
+   },
+   "rest": "3 min",
+   "restSec": 180,
+   "tempo": "Respiration en haut",
+   "cue": "Volume = 0.9 × ton max à 70 kg. Série continue, re-rack interdit : c'est la capacité tampon que tu entraînes, pas la force.",
+   "main": true,
+   "prevention": false
+  },
+  {
+   "id": "B1-526",
+   "name": "False grip hold (anneaux ou barre)",
+   "sets": {
+    "type": "text",
+    "value": "3×25-30 s"
+   },
+   "intensity": "PdC",
+   "load": {
+    "type": "fixed",
+    "kg": 0.0
+   },
+   "rest": "90 s",
+   "restSec": 90,
+   "tempo": "Isométrie",
+   "cue": "Poignet en flexion par-dessus la barre. Prépare la position de transition.",
+   "main": false,
+   "prevention": false
+  },
+  {
+   "id": "B1-527",
+   "name": "Leg raises lestés (suspendu)",
+   "sets": {
+    "type": "text",
+    "value": "2×10"
+   },
+   "intensity": "RIR 2",
+   "load": {
+    "type": "acc",
+    "ref": "B42",
+    "dayReps": 10,
+    "step": 1.0
+   },
+   "rest": "90 s",
+   "restSec": 90,
+   "tempo": "Contrôlé",
+   "cue": "Rétroversion du bassin, pas d'élan.",
+   "main": false,
+   "prevention": false
+  },
+  {
+   "id": "B1-528",
+   "name": "HIIT court",
+   "sets": {
+    "type": "text",
+    "value": "6× (30 s effort / 30 s repos)"
+   },
+   "intensity": "Intense",
+   "load": {
+    "type": "fixed",
+    "kg": 0.0
+   },
+   "rest": "—",
+   "restSec": null,
+   "tempo": "Max",
+   "cue": "Assault bike, rameur ou burpees. Conditionnement bref : jamais de cardio long continu.",
+   "main": false,
+   "prevention": false
+  },
+  {
+   "id": "B1-529",
+   "name": "Mobilité épaules + poignets",
+   "sets": {
+    "type": "text",
+    "value": "10 min"
+   },
+   "intensity": "—",
+   "load": {
+    "type": "fixed",
+    "kg": 0.0
+   },
+   "rest": "—",
+   "restSec": null,
+   "tempo": "Lent",
+   "cue": "Bâton, élastiques, extensions de poignet. La mobilité de poignet limite ta réception de muscle-up.",
+   "main": false,
+   "prevention": false
+  }
+ ]
+}
