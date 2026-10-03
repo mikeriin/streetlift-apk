@@ -323,7 +323,8 @@ List<String> coachAudit(
       if (series[w] > limit + 1e-9) {
         out.add(
           's$w : ${group.code} ${series[w]} séries pour $limit — '
-          '${<String>[for (final (c, n) in who[w]) if (c[group.index] > 0) n].join(', ')}',
+          '${<String>[for (final (c, n) in who[w])
+            if (c[group.index] > 0) n].join(', ')}',
         );
       } else if (w > 1 &&
           !light[w] &&

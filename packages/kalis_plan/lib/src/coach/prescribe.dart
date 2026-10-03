@@ -202,11 +202,10 @@ abstract final class CoachRules {
 }
 
 /// Plafond de séries dures par groupe et par semaine que le moteur se
-/// donne, par niveau : une série sous le plafond du débutant (R1-P1 : 12),
-/// puis le haut des bornes d'ancienneté (R5-P13 : 16 chez l'intermédiaire,
+/// donne, par niveau : le plafond du débutant (R1-P1 : 12), puis le haut des bornes d'ancienneté (R5-P13 : 16 chez l'intermédiaire,
 /// 20 chez l'avancé) et, en élite, le plafond du niveau avancé (R1-P1 : 25 ;
 /// 30 n'est admis que sur un ou deux muscles).
-const List<double> coachWeeklyCeiling = <double>[11, 16, 20, 25];
+const List<double> coachWeeklyCeiling = <double>[12, 16, 20, 25];
 
 /// Hausse relative maximale du volume d'un groupe d'une semaine à l'autre
 /// (R5-P22 : +10 à +20 %).
@@ -2843,6 +2842,74 @@ final class Prescriber {
     }
   }
 
+  /// Plancher de la semaine de l'échéance, avant les garde-fous de volume
+  /// (qui gardent le dernier mot).
+  void _floorEvent(List<List<_Draft>> days, WeekSpec ws) {
+    if (!ws.eventWeek) {
+      return;
+    }
+    var peak = 0.0;
+    for (var k = _history.length - 6; k < _history.length; k++) {
+      if (k >= 0 && _history[k].hard > peak) {
+        peak = _history[k].hard;
+      }
+    }
+    if (peak <= 0) {
+      return;
+    }
+    var guard = 0;
+    // R3-P12, R3-P21 : l'affûtage garde l'intensité et 40 à 60 % du volume ;
+    // une semaine d'échéance trop vide désentraîne. Sous 42 % du pic, les
+    // rappels des jours éloignés de l'épreuve reprennent une série, le
+    // travail le plus spécifique d'abord, dans le temps de la séance.
+    final floor = peak * 0.42;
+    final closed = <_Draft>{};
+    while (guard < 60) {
+      guard++;
+      var total = 0.0;
+      for (final items in days) {
+        for (final x in items) {
+          if (x.hard) {
+            total += x.sets;
+          }
+        }
+      }
+      if (total >= floor - 1e-9) {
+        break;
+      }
+      _Draft? pick;
+      var home = -1;
+      for (var d = 0; d < days.length; d++) {
+        for (final x in days[d]) {
+          if (!x.hard ||
+              x.fixed ||
+              x.kind != SetKind.work ||
+              x.sets >= 4 ||
+              closed.contains(x) ||
+              !Method.essential(x.method, support: x.support)) {
+            continue;
+          }
+          if (pick == null ||
+              x.sets < pick.sets ||
+              (x.sets == pick.sets &&
+                  Method.cutRank(x.method) > Method.cutRank(pick.method))) {
+            pick = x;
+            home = d;
+          }
+        }
+      }
+      if (pick == null) {
+        break;
+      }
+      pick.sets++;
+      if (_daySeconds(days[home], a.days[home].minutes) >
+          a.days[home].minutes * 60.0) {
+        pick.sets--;
+        closed.add(pick);
+      }
+    }
+  }
+
   /// Borne la hausse de charge d'une semaine à l'autre à répétitions
   /// égales (R5-P3, R5-P22).
   void _fitLoads(List<List<_Draft>> days, _WeekTrace trace) {
@@ -3122,6 +3189,7 @@ final class Prescriber {
         _equalize(days[d]);
         _fitTime(days[d], a.days[d].minutes);
       }
+      _floorEvent(days, ws);
       _fitVolume(days, ws);
       _fitTaper(days, ws);
       days.forEach(_equalize);
