@@ -1619,5 +1619,12 @@ REASONS += [
     ("adapt.mini_set_stop", {"cause": "string"}, "Mini-séries arrêtées (répétitions manquées, plafond atteint, qualité)."),
 ]
 
+REASONS += [
+    # ---- plan, ajoutés en 0.4.1 (lot CP1, évolution additive) : notes de coach ----
+    ("plan.coach_note", {"note": "string", "value": "double"}, "Note de coach du bloc, de la semaine ou de la séance : un code de note (vocabulaire de `kalis_plan`) et sa valeur."),
+    ("plan.progression_rule", {"rule": "string", "step": "double", "unit": "string"}, "Règle de progression d'un exercice d'une séance à l'autre (code de règle, pas, unité)."),
+    ("plan.pain_rule", {"zone": "string", "continueBelow": "int", "regressAt": "int", "stopAt": "int"}, "Conduite à tenir selon la gêne ressentie (échelle de 0 à 10) : continuer en dessous d'un seuil, alléger, arrêter."),
+]
+
 SCHEMA_VERSIONS = {t.name: t.schema_version for t in TYPES if t.schema_version is not None}
 MODULES = ["common", "profile", "journal", "plan", "adapt", "quest", "season"]
