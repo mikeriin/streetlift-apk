@@ -1,0 +1,70 @@
+{
+  "ecole": "hypertrophie",
+  "programmes": [
+    {
+      "programme": "programme_1.md",
+      "criteres": {"H1": 1.5, "H2": 3, "H3": 0.5, "H4": 1, "H5": 0.5, "H6": 2, "H7": 1, "H8": 0.5, "H9": 0},
+      "sans_objet": [],
+      "ensemble": 1,
+      "points_perdus": [
+        {"critere": "H1", "perte": 8.5, "raison": "Semaine 1 : 6 séries à l'échec de traction + 6 de négatives lestées + 5 de muscle-up + 5 de front lever = environ 22 séries de tirage par séance et environ 66 par semaine pour un débutant à 0 mois, puis +2 séries par exercice et par semaine (environ 28 séries par exercice en S12). Très au-dessus du plafond débutant (R1-P1 à P4) ; le volume ne part pas bas et n'augmente pas sous condition (R1-P3, R1-P18)."},
+        {"critere": "H2", "perte": 7, "raison": "La même séance revient trois fois par semaine (lundi, mercredi, vendredi), sans alternance lourde/légère. Plus de 20 séries de dos par séance, alors que R1-P8 demande de répartir le volume avec au plus 8 à 11 séries par muscle et par séance."},
+        {"critere": "H3", "perte": 9.5, "raison": "Toutes les séries sont menées à l'échec, y compris des négatives lestées et des muscle-up en élan, alors que l'athlète fait 0 traction. R1-P13 réserve l'échec aux exercices sûrs. Les plages ne sont pas adaptées : 'maximum de tentatives' à 0 répétition ne donne aucune série productive."},
+        {"critere": "H4", "perte": 9, "raison": "Traction complète, dips complets, muscle-up en élan et front lever tuck sont prescrits sans aucun prérequis (0 traction, 0 dips). Les négatives sont lestées à +10 kg alors que le poids du corps n'est pas maîtrisé. Il n'y a ni row australien (6 répétitions) ni traction assistée à l'élastique, alors que l'élastique est disponible (R6-P4, R6-P5)."},
+        {"critere": "H5", "perte": 9.5, "raison": "La progression est brutale et sans condition : +2 séries par exercice chaque semaine et +2,5 kg par semaine sur les négatives, ce qui donne environ +37,5 kg de lest en S12. Aucune règle de répétitions puis de charge (R5-P3, R1-P18)."},
+        {"critere": "H6", "perte": 8, "raison": "Aucun tirage horizontal, alors que la note écrit elle-même 'pas de tirage horizontal'. Le bas du corps se limite à des sauts sur box haute 5 × 20. Il n'y a ni arrière d'épaule ni chaîne postérieure (R5-P27)."},
+        {"critere": "H7", "perte": 9, "raison": "Environ 90 minutes de contenu pour 45 minutes disponibles. Les repos de 30 à 45 s entre des séries à l'échec sur des polyarticulaires lourds et des excentriques lestés coûtent du volume de qualité (R1-P15, R1-P16)."},
+        {"critere": "H8", "perte": 9.5, "raison": "12 semaines sans allègement, à volume croissant et avec l'échec partout. Les douleurs de coude sont déclarées 'normales, continuer' (R3-P9). L'intensification (excentriques lestés à l'échec) est empilée."},
+        {"critere": "H9", "perte": 10, "raison": "Le texte le dit lui-même : 'programme d'athlète confirmé donné tel quel'. Il ignore le niveau (débutant, 0 traction, 0 dips), le temps (45 min) et l'objectif (3 tractions en 12 semaines, R5-P1)."},
+        {"critere": "ensemble", "perte": 9, "raison": "Programme dangereux, plafonné à 5 puis bien en dessous : échec systématique sur des mouvements sans prérequis, excentriques lestés en volume massif, aucun allègement et douleurs de coude ignorées. Le risque de tendinopathie du coude ou d'atteinte musculaire est réel. Le volume et la durée sont aussi infaisables, et l'objectif ne sera probablement pas atteint."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Remplacer les tractions et dips 'maximum à l'échec' par une progression accessible : suspension active, rétractions scapulaires, row australien (3 à 4 séries de 6 à 10 à 2 ou 3 RIR), tractions assistées à l'élastique (3 à 4 séries de 5 à 8), dips assistés ou pompes.", "consequence": "À 0 traction, les séries 'maximum' ne produisent aucun travail utile. L'athlète échoue à chaque série et ne progresse pas vers ses 3 tractions."},
+        {"type": "necessaire", "texte": "Supprimer le lest des négatives. Faire au plus 2 à 3 séries de 3 à 5 descentes de 3 à 5 s au poids du corps, sans échec.", "consequence": "48 descentes lestées par séance, trois fois par semaine, chez un débutant exposent à de fortes courbatures, à une tendinopathie du coude et à une atteinte musculaire."},
+        {"type": "necessaire", "texte": "Retirer le muscle-up en élan, les dips complets et le front lever tant que les prérequis ne sont pas acquis (par exemple 8 à 10 tractions et 10 dips).", "consequence": "Ce sont des techniques sans prérequis, avec un risque pour les épaules et les coudes et aucun bénéfice pour l'objectif."},
+        {"type": "necessaire", "texte": "Ramener le tirage à 6 à 10 séries dures par semaine au départ, réparties sur 3 séances, et ne monter qu'à condition (répétitions gagnées, pas de douleur). Remplacer '+2 séries par semaine' par une double progression : répétitions puis réduction de l'assistance.", "consequence": "Le volume dépasse vite toute capacité de récupération. Fatigue, blessure ou abandon sont probables avant la semaine 12."},
+        {"type": "necessaire", "texte": "Retenir l'échec au mieux sur la dernière série de pompes ou d'exercices sûrs. Viser 1 à 3 RIR ailleurs.", "consequence": "Avec l'échec partout, la technique se dégrade, la fatigue s'accumule et le risque augmente."},
+        {"type": "necessaire", "texte": "Adapter la séance aux 45 minutes : 4 à 5 exercices et 2 à 3 min de repos sur les exercices de tirage principaux.", "consequence": "La séance de 90 minutes est infaisable dans le temps disponible. Les repos de 30 à 45 s sabotent la qualité des séries."},
+        {"type": "necessaire", "texte": "Ajouter un tirage horizontal (row australien), du bas du corps (squat, fente, pont fessier) et un allègement en semaines 4 et 8 environ.", "consequence": "Le physique se déséquilibre, sans progression du tirage horizontal qui prépare la traction, et la fatigue s'accumule sur 12 semaines."},
+        {"type": "necessaire", "texte": "Remplacer la consigne 'douleurs de coude normales, continuer' par une règle d'arrêt : douleur à 3/10 ou plus, on réduit ; douleur persistante, on consulte.", "consequence": "Une douleur de coude ignorée évolue vers une tendinopathie qui stoppe l'entraînement pendant des semaines."},
+        {"type": "amelioration", "texte": "Ajouter un test toutes les 3 à 4 semaines (traction max, tractions assistées, row australien) pour piloter la réduction de l'élastique."},
+        {"type": "amelioration", "texte": "Ajouter un échauffement articulaire (épaules, coudes, poignets) en début de séance."}
+      ],
+      "points_forts": ["Trois séances par semaine, ce qui correspond aux disponibilités du profil.", "Les pompes partent de son record (8 répétitions)."]
+    },
+    {
+      "programme": "programme_2.md",
+      "criteres": {"H1": 8.5, "H2": 9.5, "H3": 9.5, "H4": 9, "H5": 9, "H6": 8.5, "H7": 9.5, "H8": 9.5, "H9": 9.5},
+      "sans_objet": [],
+      "ensemble": 9,
+      "points_perdus": [
+        {"critere": "H1", "perte": 1.5, "raison": "Le tableau ne correspond pas aux séances. En S1, il annonce 10 séries de dips alors que les séances en comptent 14 (4 lundi, 3 en pause lundi, 4 jeudi, 3 vendredi), 5 de muscle-up au lieu de 8, et 10 de traction alors que les séances, avec les tractions au poids du corps du samedi, en comptent 15. Le volume réel de dos et de triceps est donc sous-estimé (R1-P2). Les ischio-jambiers ne reçoivent que 3 séries de soulevé de terre roumain par semaine."},
+        {"critere": "H2", "perte": 0.5, "raison": "Bonne ondulation lourd/volume/léger par mouvement. En revanche, le tirage vertical revient 4 jours (lundi, jeudi, vendredi, samedi au poids du corps), alors que la règle écrite plafonne la traction à 3 fois par semaine à cause des coudes."},
+        {"critere": "H3", "perte": 0.5, "raison": "Les marges sont adaptées : 1 à 3 RIR, top set à RPE 8–9, isolations à 2 RIR, aucun échec (R1-P13). Le muscle-up de S1 est annoncé à ≈ 82 % mais vaut ≈ 85 % (95,5 / 113)."},
+        {"critere": "H4", "perte": 1, "raison": "Les exercices visent bien les points faibles (dips en pause et en clusters, développé couché prise serrée pour le verrouillage, transition à l'élastique). Mais l'excentrique accentué de traction à +85 kg (100 % du 1RM) sur 3 semaines au pic de volume est un choix risqué pour des coudes à antécédent. Les accessoires n'ont pas de rotation prévue (R6-P4)."},
+        {"critere": "H5", "perte": 1, "raison": "La progression est claire pour les mouvements de compétition : +2,5 / +5 / +1,25 kg par semaine, paliers de séries, et surcharge en S9 sous condition. Les accessoires (rowing 80 kg, curl 16 kg, fente 20 kg) ont des charges fixes, sans règle de répétitions puis de charge (R5-P3)."},
+        {"critere": "H6", "perte": 1.5, "raison": "Le tirage domine la poussée et les points faibles sont traités. La chaîne postérieure est mince (3 séries de soulevé de terre roumain et 3 d'extension lombaire) pour un squat visé à 200 kg. Les épaules et les deltoïdes postérieurs reposent seulement sur 3 séries de tirage visage."},
+        {"critere": "H7", "perte": 0.5, "raison": "Les repos dépendent du type d'exercice (4 min en lourd, 60 à 90 s en isolation) et les séances tiennent dans les créneaux. Aucun superset d'antagonistes n'est utilisé sur les accessoires pour gagner du temps (R2-P15)."},
+        {"critere": "H8", "perte": 0.5, "raison": "Les décharges en S4 et S8 sont bien placées, la surcharge est conditionnelle et l'affûtage se fait en 2 semaines. Mais les excentriques supramaximaux tombent au pic de volume, juste avant la première décharge."},
+        {"critere": "H9", "perte": 0.5, "raison": "Le programme tient très bien compte de l'échéance, des coudes (règles à 3/10 et 5/10), du matériel et du temps. Une seule nuance : il n'y a pas de règle sur le poids de corps ni sur la catégorie, alors que les pourcentages sont calculés sur la charge totale à 78 kg."},
+        {"critere": "ensemble", "perte": 1, "raison": "Je n'ai aucune correction nécessaire : le programme est sûr, individualisé et tourné vers l'échéance. Il me reste des améliorations sur le comptage du volume, l'excentrique supramaximal et la chaîne postérieure."}
+      ],
+      "corrections": [
+        {"type": "amelioration", "texte": "Mettre le tableau des 'séries directes' en accord avec les séances (dips en pause, transitions, tractions et dips du samedi), ou préciser ce qui est compté."},
+        {"type": "amelioration", "texte": "Réduire l'excentrique accentué à environ 90 à 95 % du 1RM, ou le limiter aux semaines 1 et 2, à cause de l'antécédent de coude."},
+        {"type": "amelioration", "texte": "Lever l'ambiguïté du plafond 'traction 3 fois par semaine' : les tractions au poids du corps du samedi comptent-elles ? Sinon, les remplacer par du tirage horizontal ou à la poulie."},
+        {"type": "amelioration", "texte": "Ajouter 2 à 3 séries d'ischio-jambiers (leg curl) ou monter le soulevé de terre roumain à 4 séries pour soutenir le squat à 200 kg."},
+        {"type": "amelioration", "texte": "Écrire une double progression pour les accessoires : haut de la plage atteint, alors +charge."},
+        {"type": "amelioration", "texte": "Ajouter une consigne sur le poids de corps (rester à 78 kg ou recalculer le lest), puisque les pourcentages se calculent sur la charge totale."}
+      ],
+      "points_forts": [
+        "Les pourcentages sur la charge totale sont explicites et cohérents (traction +50 kg ≈ 79 %, dips +95 kg ≈ 85 %).",
+        "Chaque mouvement a une ondulation lourd/volume/léger, et les décharges sont placées aux jonctions de blocs.",
+        "Les points faibles sont traités spécifiquement : dips en pause et en clusters, développé couché prise serrée, transition de muscle-up décomposée.",
+        "Les règles de coude sont graduées (3/10 puis 5/10), avec le kiné en dernier recours.",
+        "L'affûtage est précis : dernier lourd à J−9 et premières barres fixées sur les charges réussies.",
+        "Il n'y a aucun échec hors compétition, et la surcharge de S9 est conditionnelle."
+      ]
+    }
+  ]
+}

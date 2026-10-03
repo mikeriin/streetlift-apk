@@ -1,0 +1,129 @@
+{
+  "ecole": "sante",
+  "programmes": [
+    {
+      "programme": "programme_1.md",
+      "criteres": {"S1": 5, "S2": 6, "S3": 4, "S5": 5, "S6": 7, "S7": 7, "S8": 2.5, "S9": 4.5},
+      "sans_objet": ["S4"],
+      "ensemble": 4,
+      "points_perdus": [
+        {"critere": "S1", "perte": 5, "raison": "Antécédent de coudes sensibles en fin de gros cycle de traction (gêne 1/10) : aucun seuil de douleur écrit (R5-P23, R4-F11), et le vendredi + lundi cumulent traction lestée 6 séries, high pull lesté 4 séries, tirage vertical 4 séries, traction pronation 4 × 17-25, dead hang lesté, rowing menton en 3 variantes. Aucune modulation du tirage selon la gêne (R5-P20, R5-P24), pas de bilan kiné avant le bloc lourd prévu pour l'élite (R5-P20)."},
+        {"critere": "S2", "perte": 4, "raison": "Hausses de charge petites et régulières, mais charges de départ affichées « ≈ 77 % » qui valent en réalité ≈ 69 % (dips +62,5 kg = 140,5/203 ; traction +35 kg = 113/163 ; squat 130/190 ; muscle-up au poids du corps = 78/113) ; progression sans règle de reprise ni conduite après une séance manquée. La trajectoire montre une capacité estimée en baisse (dips 188 → 174)."},
+        {"critere": "S3", "perte": 6, "raison": "Cinq séances de force maximale avec squat 2×/sem, soulevé de terre 2×/sem (conventionnel mardi, pause jeudi) et deux séances de dips lestés : aucune donnée de sommeil, stress ou travail recueillie ni utilisée ; seules allègements = semaines de test ; pas de critère de baisse du jour."},
+        {"critere": "S5", "perte": 5, "raison": "Aucun échauffement écrit ; travail de coiffe limité au face pull élastique le mardi ; trois variantes de rowing menton (épaule en rotation interne sous charge) ajoutées sans raison pour un streetlifter ; rien d'adapté à l'historique du coude (prises, supination/pronation, volume de tirage)."},
+        {"critere": "S6", "perte": 3, "raison": "Marges prudentes et identiques sur tous les mouvements (3 → 2 RIR), sans distinguer muscle-up lesté (mouvement technique à risque) des accessoires ; les accessoires d'isolation montent à 1,5 RIR alors que les mouvements de compétition restent à 2 RIR (R4-G3)."},
+        {"critere": "S7", "perte": 3, "raison": "Séances de 40-68 min dans 90-120 min disponibles : faisable, mais accessoires sans rapport avec l'épreuve (développé couché, sissy squat, rowing menton) qui consomment de la récupération."},
+        {"critere": "S8", "perte": 7.5, "raison": "Championnat priorité A à 12 semaines : la semaine 11 est la plus lourde du cycle (124 séries dures) et la semaine 12 est un « test » de triples à 1 RIR, sans affûtage de 10-14 jours (R6-P11 : −30 à −50 % de volume, séance lourde J−11 à J−5) ; pas de jour de compétition, pas d'ouvertures ni de stratégie de tentatives ; aucune séance au-delà de 81 % alors que la cible demande +5 kg sur chaque mouvement. La trajectoire donne la meilleure série à 93,7 % des semaines précédentes et une progression de 0,017 %/sem."},
+        {"critere": "S9", "perte": 5.5, "raison": "Pourcentages affichés contradictoires avec les charges écrites (≈ 77 % annoncés pour ≈ 69 % réels) ; « charge : voir les séries » en semaines de test sans séries détaillées ; aucune consigne en cas de douleur au coude."},
+        {"critere": "ensemble", "perte": 6, "raison": "Quatre corrections nécessaires dont deux majeures (absence d'affûtage et intensités trop basses pour un pic de force élite) : l'objectif de la compétition ne sera probablement pas servi, comme le confirme la trajectoire."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Remplacer les semaines 11-12 par un affûtage de 10-14 jours : dernière séance lourde (simples à 90-95 %) à J−10/J−7, volume −40 à −50 %, dernière séance à J−3, puis jour de compétition écrit avec ouvertures (≈ 90-92 %), deuxièmes et troisièmes tentatives pour les quatre mouvements.", "consequence": "L'athlète arrive à la compétition après sa semaine la plus chargée, sans pic : la trajectoire montre une meilleure série à 93,7 % des semaines précédentes, donc les records visés ne seront pas atteints."},
+        {"type": "necessaire", "texte": "Recalculer les charges sur la charge totale (poids du corps + lest) et monter dans le bloc 2 vers 85-92 % en séries de 1-3 sur les quatre mouvements de compétition (ex. dips lestés : +78 kg pour 77 %, +100 kg et plus en fin de bloc).", "consequence": "Un élite entraîné à 68-72 % pendant 12 semaines perd sa force maximale spécifique : la capacité estimée baisse déjà (dips 188 → 174)."},
+        {"type": "necessaire", "texte": "Écrire les seuils de douleur au coude (0-2 continuer, 3-4 sans progresser, ≥ 5 régresser, ≥ 6 arrêter et consulter) et réduire le volume de tirage accessoire (high pull, tirage vertical, traction pronation 4 × 17-25, dead hang lesté) en fin de bloc, là où l'antécédent s'est déclaré.", "consequence": "Le schéma qui a causé la gêne (fin de gros cycle de traction) se reproduit sans alarme, avec un risque de tendinopathie du coude juste avant le championnat."},
+        {"type": "necessaire", "texte": "Traiter les deux points faibles déclarés : verrouillage du dips (dips partiels haut lourds, pause en haut, extensions) et transition du muscle-up lesté (muscle-up lesté léger en technique, transitions négatives, tirage haut à la barre).", "consequence": "Les deux limites qui plafonnent les records visés restent en l'état ; le muscle-up stagne déjà (+21,25 kg max contre +35 kg de 1RM)."},
+        {"type": "amelioration", "texte": "Retirer développé couché, sissy squat et les trois variantes de rowing menton ; remplacer par du travail de coiffe (rotation externe), de la supination/préhension et un échauffement écrit spécifique coude-épaule."},
+        {"type": "amelioration", "texte": "Ajouter une question sur le sommeil, le stress et le travail physique, et une règle de baisse du jour (réduire la dernière série principale si la première série d'approche paraît lourde de plus de 1 RIR)."},
+        {"type": "amelioration", "texte": "Écrire quoi faire après une séance manquée (reprendre la séance sans rattrapage, garder la charge prévue)."}
+      ],
+      "points_forts": [
+        "Hausses de charge progressives et petites, sans échec (0 % d'échecs non voulus dans la trajectoire).",
+        "Les quatre mouvements de compétition sont travaillés 1-2 fois par semaine.",
+        "Une semaine de test au milieu (S6) donne un point de recalage."
+      ]
+    },
+    {
+      "programme": "programme_2.md",
+      "criteres": {"S1": 5, "S2": 5.5, "S3": 6.5, "S5": 5, "S6": 7.5, "S7": 7.5, "S8": 4, "S9": 6},
+      "sans_objet": ["S4"],
+      "ensemble": 4.5,
+      "points_perdus": [
+        {"critere": "S1", "perte": 5, "raison": "Back lever (supination bras tendus, biceps distal) prescrit 4-5 × 5-10 s sans niveau de départ dans le profil ni bloc tendineux préalable (R4-F8, R4-F12) ; traction un bras assistée 5-6 séries pour un athlète à 12 tractions ; budget tendineux bras tendus (front lever 2×, back lever, elbow lever) sans règle d'espacement (R4-F10) ; aucun seuil de douleur (R5-P23, R4-F11) ni préparation des poignets avant le handstand (R4-F12)."},
+        {"critere": "S2", "perte": 4.5, "raison": "Le front lever reste en tuck avancé 6-9 s pendant 16 semaines : aucun passage de levier (one-leg, straddle) ni critère de passage (R4-F7) ; seule l'effort visé change. La trajectoire montre des tractions immobiles (11,1 → 11,6) et une progression moyenne de 0,27 %/sem."},
+        {"critere": "S3", "perte": 3.5, "raison": "Allègements planifiés toutes les 5 semaines, mais aucune question sur sommeil, stress, travail ; pas de critère de baisse du jour."},
+        {"critere": "S5", "perte": 5, "raison": "Aucun échauffement écrit (handstand, levers bras tendus) ; pas de rotation externe ni de travail scapulaire dédié (dépression/rétraction pour le front lever) ; volume de poussée très faible (dips 1×/sem) face à un tirage bras tendus quotidien."},
+        {"critere": "S6", "perte": 2.5, "raison": "Marges prudentes mais uniformes ; tests de front lever à effort maximal (10/10) sur une figure bras tendus sans consigne d'arrêt à la perte de ligne (R4-F2)."},
+        {"critere": "S7", "perte": 2.5, "raison": "Séances de 38-55 min dans 75 min : faisable ; mais dispersion (elbow lever, handstand shoulder taps, back lever, traction un bras) qui dilue le temps consacré à l'objectif."},
+        {"critere": "S8", "perte": 6, "raison": "Objectif à 16 semaines : la semaine 16 est une semaine d'introduction, sans test final du front lever ni allègement avant ; les tests intermédiaires (S5, S10, S15) ne testent que le tuck avancé."},
+        {"critere": "S9", "perte": 4, "raison": "Effort des maintiens exprimé en « répétitions en réserve » sur des tenues en secondes ; « 2 × 1 à 18 s » au test ; aucune consigne de qualité de position ni de douleur."},
+        {"critere": "ensemble", "perte": 5.5, "raison": "Quatre corrections nécessaires dont une majeure : le programme ne fait jamais progresser le levier du front lever, l'objectif principal à 16 semaines ne sera pas atteint (plafond 6), et le back lever sans prérequis expose le biceps."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Construire une vraie progression de front lever : tuck avancé → one-leg/straddle partiel par demi-pas dès 3 séries propres de 10-15 s sur 3 séances (R4-F7), plus du dynamique (front lever rows tuck, négatifs, ice-cream makers) et un travail de tirage bras tendus à l'élastique ; 3 expositions/sem à l'état frais en début de séance.", "consequence": "L'athlète tiendra un meilleur tuck avancé en semaine 16, mais n'aura jamais travaillé de levier plus long : le front lever complet ne sera pas débloqué."},
+        {"type": "necessaire", "texte": "Retirer le back lever (ou le limiter au tuck, en pronation, 2 × 10 s) tant qu'un bloc tendineux de 8-12 semaines n'a pas été fait, et compter planche/back lever/front lever dans un budget bras tendus avec 48 h entre séances lourdes.", "consequence": "Supination bras tendus sans préparation chez un intermédiaire : risque de tendinopathie ou de lésion du biceps distal (R4-F12)."},
+        {"type": "necessaire", "texte": "Augmenter le tirage de force (tractions 2-3×/sem, en lesté léger ou en séries de 5-8 propres) : la force de tirage horizontal/vertical est le moteur du front lever.", "consequence": "Avec 12 tractions et une seule séance de tractions par semaine, la capacité stagne (11,1 → 11,6 dans la trajectoire), insuffisant pour le levier complet."},
+        {"type": "necessaire", "texte": "Écrire un échauffement (poignets 5 min avant handstand, scapulas, épaules) et les seuils de douleur 0-2 / 3-4 / ≥ 5 / ≥ 6 appliqués au coude et à l'épaule.", "consequence": "Charges tendineuses bras tendus 4×/sem sans préparation ni alarme : la tendinopathie, première blessure du street workout, n'est pas surveillée."},
+        {"type": "amelioration", "texte": "Remplacer la semaine 16 « introduction » par une semaine de test du front lever (meilleure position tenue 3 s propres) précédée d'un allègement."},
+        {"type": "amelioration", "texte": "Ajouter rotation externe et pompes scapulaires / dépressions scapulaires suspendu pour équilibrer et préparer l'épaule."},
+        {"type": "amelioration", "texte": "Exprimer l'effort des maintiens en « secondes en réserve » ou « arrêt à la perte de ligne » plutôt qu'en répétitions en réserve."}
+      ],
+      "points_forts": [
+        "Départ prudent (RIR 3,5) et allègements planifiés toutes les 5 semaines.",
+        "Séances courtes dans le temps disponible, matériel du parc respecté.",
+        "Travail de tronc et de compression utile aux levers."
+      ]
+    },
+    {
+      "programme": "programme_3.md",
+      "criteres": {"S1": 6.5, "S2": 6.5, "S3": 6, "S4": 3.5, "S5": 6, "S6": 7, "S7": 7, "S8": 2, "S9": 5},
+      "sans_objet": [],
+      "ensemble": 4,
+      "points_perdus": [
+        {"critere": "S1", "perte": 3.5, "raison": "Tenue menton au-dessus de la barre un bras 5 × 5-10 s et traction archer chez un intermédiaire à 15 tractions : forte charge unilatérale du coude, sans seuils de douleur (R5-P23) ni échauffement."},
+        {"critere": "S2", "perte": 3.5, "raison": "Progression par l'effort visé seulement, sans règle de double progression (R5-P3) ni +10-20 % de volume par bloc (R4-G8) ; les blocs 2 et 3 répètent le bloc 1."},
+        {"critere": "S3", "perte": 4, "raison": "Allègements en S5 et S10, mais aucune question sur sommeil, stress, travail ; pas de critère de baisse du jour."},
+        {"critere": "S4", "perte": 6.5, "raison": "Objectif d'endurance de force (20 tractions, 35 dips) traité en séries moyennes à 90 s de repos : aucune densité (échelles, cluster, EMOM, R4-G6), aucun sous-maximal fréquent alors que le max est de 15 (R4-G5, R4-G2), traction pronation 1×/sem seulement contre 3 recommandées (R4-G8), aucun travail au-delà de 18 répétitions aux dips ; traction archer et typewriter prescrites en 6-12 alors que l'athlète en fait 1-3 (trajectoire). Résultat : tractions 13,9 → 14,4, dips 22,9 → 24,1."},
+        {"critere": "S5", "perte": 4, "raison": "Aucun échauffement écrit ; pompes scapulaires et élévations latérales présentes, mais rien pour la coiffe en rotation externe malgré un volume de tirage et de dips élevé."},
+        {"critere": "S6", "perte": 3, "raison": "Marges prudentes et uniformes ; tests à l'échec bien isolés (S5, S10) mais tenue un bras sans marge adaptée au risque."},
+        {"critere": "S7", "perte": 3, "raison": "Séances de 32-46 min dans 60 min : faisable, mais exercices où l'athlète échoue presque (archer, typewriter 1-3 rép. pour une cible de 6-12) et handstand/shrimp squat sans lien avec l'objectif."},
+        {"critere": "S8", "perte": 8, "raison": "Objectif à 12 semaines : la semaine 12 est une « montée » à 76 séries dures, sans test final ni affûtage de 7 jours à −40 % (R3-P21), sans simulation du test (R4-G7)."},
+        {"critere": "S9", "perte": 5, "raison": "Fourchettes de répétitions infaisables pour archer/typewriter ; « 1 × 1 à 36 » aux tests ; aucune consigne de douleur ou de fatigue."},
+        {"critere": "ensemble", "perte": 6, "raison": "Quatre corrections nécessaires : l'échéance est ignorée (plafond 6) et la méthode d'endurance de force ne mène pas aux 20 tractions / 35 dips, comme le montre la trajectoire."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Finir le cycle par une semaine d'affûtage (volume −40 %, intensité gardée) et un test de répétitions maximales en tractions et en dips en semaine 12, standardisé (amplitude complète, repos 48 h avant).", "consequence": "L'échéance passe en pleine semaine de charge, sans mesure : l'objectif ne peut ni être atteint ni être constaté."},
+        {"type": "necessaire", "texte": "Passer les tractions à 3 séances/sem et ajouter des méthodes d'endurance de force : échelles ou clusters à 40-50 % du max, EMOM, une séance de séries longues proche du format du test (1re série à 60-70 % du max, pauses courtes) ; idem aux dips avec des séries de 20-25.", "consequence": "Des séries de 7-11 tractions une fois par semaine ne transfèrent pas vers 20 répétitions : la trajectoire plafonne à 14 tractions et 24 dips."},
+        {"type": "necessaire", "texte": "Remplacer traction archer et typewriter 6-12 par des tractions lestées légères ou des tractions pronation en séries de 5-8, et la tenue un bras par une tenue menton deux bras ou des négatifs lents.", "consequence": "Séances infaisables telles qu'écrites (1-3 répétitions réalisées pour 6-12 visées) et surcharge unilatérale du coude sans bénéfice pour l'objectif."},
+        {"type": "necessaire", "texte": "Écrire un échauffement épaule-coude et les seuils de douleur (0-2 continuer, 3-4 sans progresser, ≥ 5 régresser, ≥ 6 arrêter).", "consequence": "Gros volume de tirage et de dips sans alarme : risque de tendinopathie du coude ou de l'épaule non repéré."},
+        {"type": "amelioration", "texte": "Ajouter de la rotation externe à l'élastique et réduire handstand/shrimp squat au profit du tirage."},
+        {"type": "amelioration", "texte": "Écrire une règle de double progression : quand toutes les séries atteignent le haut de la fourchette, ajouter des répétitions ou une série au bloc suivant (+10-20 %)."}
+      ],
+      "points_forts": [
+        "Tests de max programmés toutes les 5 semaines, isolés dans des semaines allégées.",
+        "Volume modéré, peu d'échecs non voulus (0,2 %).",
+        "Séances dans le temps disponible et avec le matériel du parc."
+      ]
+    },
+    {
+      "programme": "programme_4.md",
+      "criteres": {"S1": 4.5, "S2": 7, "S3": 5, "S4": 2, "S5": 6, "S6": 5, "S7": 6.5, "S9": 5},
+      "sans_objet": ["S8"],
+      "ensemble": 5,
+      "points_perdus": [
+        {"critere": "S1", "perte": 5.5, "raison": "Homme de 104 kg, sédentaire, 0 traction : relevé de genoux suspendu 2 × 10-15 alors que le dead hang est de 5-12 s (épaules et préhension surchargées, séance infaisable) ; pompe classique 2-3 × 1 à « 4 RIR » alors que son max est de 2, d'où des échecs répétés dans la trajectoire (RIR réel ≈ 0,7, 1-3 échecs/sem) ; aucun seuil de douleur (R5-P23) ni consigne pour le surpoids (genoux sur le shrimp/air squat, impact)."},
+        {"critere": "S2", "perte": 3, "raison": "Départ prudent (2 séries, RIR 4) et hausses en séries limitées (R5-P22), mais aucune règle de passage d'un niveau à l'autre (pompe genoux → inclinée → classique) ni conduite après une semaine manquée."},
+        {"critere": "S3", "perte": 5, "raison": "Sommeil 6,5 h, stress 3/5 et déficit énergétique déclarés mais jamais utilisés dans le programme (R5-P14 à P19) ; aucun allègement réactif ni critère de baisse du jour."},
+        {"critere": "S4", "perte": 8, "raison": "Objectif « reprendre une activité et perdre du poids » : aucune marche, aucun cardio, aucun objectif de pas (R6-P32 : +1 000 pas/1-2 sem, faible impact ; R6-P21) ; seule la musculation 3 × 25 min est prescrite."},
+        {"critere": "S5", "perte": 4, "raison": "Aucun échauffement écrit ; rotation externe n'arrive qu'en semaine 9 ; suspensions et relevés suspendus chez un débutant lourd sans préparation progressive de la préhension."},
+        {"critere": "S6", "perte": 5, "raison": "Un débutant ne devrait jamais aller à l'échec (R4-G3) : la pompe classique prescrite à 1 répétition de son max produit 2,7 % d'échecs et des séries au bord de l'échec."},
+        {"critere": "S7", "perte": 3.5, "raison": "Séances courtes (22-30 min) et fréquence 3/sem adaptées (R5-P1, R5-P2), mais compression pike assis 3×/sem, pont fessier unilatéral et tuck-up sont des exercices où ce profil réussit mal ou qui ne servent pas son but."},
+        {"critere": "S9", "perte": 5, "raison": "Consigne contradictoire « 1 répétition à 4 RIR » sur un max de 2 ; aucune consigne sur quoi faire en cas de douleur, d'essoufflement ou de fatigue."},
+        {"critere": "ensemble", "perte": 5, "raison": "Quatre corrections nécessaires : deux exercices infaisables ou à échec pour ce profil et l'absence totale d'activité d'endurance pour un objectif de perte de poids ; programme trop générique face à la charge de vie déclarée."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Remplacer la pompe classique 2-3 × 1 par des pompes inclinées (mains sur la barre basse ou un banc) 2-3 × 8-12 à 3-4 RIR, avec passage à une inclinaison plus basse quand 3 × 12 sont propres.", "consequence": "L'athlète échoue sur sa répétition chaque semaine (RIR réel ≈ 0,7) : frustration, risque d'abandon chez un débutant et aucun progrès (2 → 2,4 rép.)."},
+        {"type": "necessaire", "texte": "Remplacer le relevé de genoux suspendu par des relevés de genoux allongé au sol ou un dead bug, et réintroduire la suspension seulement quand le dead hang dépasse 30 s.", "consequence": "À 104 kg avec 5-12 s de suspension, la série de 10-15 relevés est infaisable et charge épaules et mains au-delà de leur tolérance."},
+        {"type": "necessaire", "texte": "Ajouter de la marche à faible impact : objectif de pas quotidien partant du niveau actuel, +1 000 pas toutes les 1-2 semaines, ou 2-3 marches rapides de 20-30 min les jours sans séance.", "consequence": "Sans activité d'endurance, 75 min de musculation par semaine ne produiront pas la perte de poids voulue ni les bénéfices de santé attendus pour ce profil sédentaire."},
+        {"type": "necessaire", "texte": "Écrire un échauffement de 5 min (mobilité épaules, hanches, marche) et les seuils de douleur (0-2 continuer, 3-4 sans progresser, ≥ 5 régresser, ≥ 6 arrêter, consulter si ≥ 2 semaines), avec une consigne d'essoufflement modéré (pouvoir parler).", "consequence": "Un sédentaire de 38 ans en surpoids n'a aucun repère pour distinguer une gêne banale d'une douleur à respecter : risque de blessure aux genoux ou épaules et d'abandon."},
+        {"type": "amelioration", "texte": "Utiliser le sommeil (6,5 h) et le déficit : prévoir une version courte de 15 min pour les jours de fatigue ou de stress élevé, et une règle simple de baisse du jour (une série de moins si le sommeil a été < 6 h)."},
+        {"type": "amelioration", "texte": "Remplacer compression pike assis et tuck-up par du squat sur box, des fentes assistées et du rowing australien supplémentaire ; travailler le bas du corps 2-3×/sem."},
+        {"type": "amelioration", "texte": "Ajouter un test simple toutes les 4-6 semaines (pompes inclinées max, dead hang, rowing australien) pour montrer les progrès et soutenir l'habitude."}
+      ],
+      "points_forts": [
+        "Dose de départ modeste (2 séries, RIR 4) et séances courtes, cohérentes avec l'objectif d'habitude.",
+        "Fréquence de 3 séances/sem conforme à R5-P2, toutes faites dans la trajectoire (36/36).",
+        "Progressions accessibles pour le tirage (row australien, traction assistée pieds au sol)."
+      ]
+    }
+  ]
+}

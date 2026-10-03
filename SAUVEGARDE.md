@@ -15,8 +15,11 @@ Session de reprise du 03/10/2026 (lancée 11:14 UTC).
 - Contrôle 7bc71e7c (avant corrections) : kalis_adapt, kalis_bench, kalis_core, kalis_plan verts sur l'arbre complet de moteurs (run annulé pendant kalis_quest) ; programmes des moteurs 0.1 identiques à ceux du 02/10 (kalis_core 0.4.0 ne change rien). Contrôle bd81c62d (corrections, sources à formater) lancé 12:30 UTC : résultat attendu ; reprendre les sources formatées dans ci-out/packages/kalis_bench/_src.
 - Étalonnage du panel, manche 1 (52 appels Opus, notes dans cp-travail/panel_etal1) : (a) 0–1, (b) 4–6, (c) 8–9, (d) 6,5–8,5 ; répétabilité ≤ 1 point. (d) < 9 : ancres haute réécrites (d3, privées, dans /tmp puis archive chiffrée) et COMMUN.md précisé (corrections « nécessaires » contre « améliorations » ; 9 = aucune correction nécessaire). Manche 2 préparée (/tmp/panel/etal2, 32 appels).
 
+- Étalonnage manche 2 terminé (32 appels) : (a) ≤ 1, (b) 4–7, (c) 8–9, (d) 9 partout ; répétabilité ≤ 1. Grilles GELÉES (SHA-256 dans docs/PANEL.md). docs/PANEL.md, docs/ETALONNAGE_PANEL.md, docs/etalonnage/ écrits. Ancres (d) privées : archive chiffrée (à repousser avec d3/d4).
+- Passe complète du panel sur les moteurs 0.1 faite (28 appels, 27 profils × 4 écoles, programme + annexe trajectoire) : notes dans cp-travail/panel_base (plan.json donne la correspondance fichier → profil). Notes d'ensemble entre 3 et 7.
+
 ## En cours
-- Étalonnage du panel, manche 2 ; puis gel des grilles (SHA-256 dans PANEL.md).
+- Récupérer les sources formatées du contrôle bd81c62d, relancer un contrôle complet ; écrire BASELINE_0_1.md à partir de rapport.json du contrôle final et de cp-travail/panel_base ; page de relecture ; fin de lot.
 
 ## Reste à faire
 - tool/panel_export.py (export concis pour le panel), PANEL.md + 4 grilles + étalonnage (4 profils × 4 variantes × 4 écoles + répétabilité), gel + SHA-256.

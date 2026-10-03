@@ -1,0 +1,102 @@
+{
+  "ecole": "calisthenie",
+  "programmes": [
+    {
+      "programme": "programme_1.md",
+      "criteres": {"C1": 5, "C2": 6.5, "C3": 5, "C4": 4, "C5": 4.5, "C6": 3, "C7": 6.5, "C8": 6, "C9": 6},
+      "sans_objet": [],
+      "ensemble": 4.5,
+      "points_perdus": [
+        {"critere": "C1", "perte": 5, "raison": "Le muscle-up négatif est un choix plausible, mais la traction explosive poitrine à la barre est prescrite en 2–3 × 10 à 15 à 3 RIR pour un athlète à 10 tractions strictes max : la plage est hors de portée (R1-P17, intermédiaire 5–12). Pas de dips à la barre droite ni d'exercice de transition, pourtant indispensables au muscle-up. Les handstand shoulder taps du mercredi, notés « figure / technique », ne servent pas l'objectif."},
+        {"critere": "C2", "perte": 3.5, "raison": "Le négatif est placé en tête de séance le lundi et le vendredi, ce qui est correct, mais il n'y a que 2 expositions par semaine, sans aucune consigne technique (fausse prise, trajectoire, bascule). Aucune exposition au geste complet (R4-F1, R4-F4)."},
+        {"critere": "C3", "perte": 5, "raison": "Le dosage en semaines de montée est raisonnable (2–5 répétitions, RIR 3,5 → 2,5). En revanche, les semaines 5, 10 et 15 prescrivent un « Muscle-up barre négatif 1 × 1 à 10, effort maximal 10/10 », soit un excentrique à l'échec sur un geste à risque (R5-P27 : risque élevé, RIR ≥ 2 ; R1-P14 : échec hors test). Les répétitions ne sont jamais reliées à un record du geste."},
+        {"critere": "C4", "perte": 6, "raison": "Le budget de tirage n'est pas pensé. Il y a du tirage tous les jours d'entraînement : lundi négatif + traction explosive + traction kipping 3–4 × 8–12 en metcon, mardi rowing, mercredi tractions, vendredi négatif + rowing, samedi tirage d'arraché + burpee avec traction. Coudes et épaules sont chargés 5 jours sur 6 en volume élevé, kipping compris (R4-F10, R4-F12)."},
+        {"critere": "C5", "perte": 5.5, "raison": "Peu de tirage strict dosé pour le muscle-up : le mercredi n'a que 2–3 × 5–7 tractions, et il n'y a ni dips, ni dips à la barre droite, ni tirage haut (poitrine-sternum). Le gainage est générique (V-up, gainage latéral, windshield wiper), sans hollow (R1-P17)."},
+        {"critere": "C6", "perte": 7, "raison": "Sur 16 semaines, la seule progression du négatif est le RIR (3,5 → 2,5) et une série de plus. Il n'y a aucun palier vers le geste complet (muscle-up sauté, transition en barre basse, tirage à la hanche), aucun critère de passage, et aucune tentative de muscle-up strict n'est planifiée ni testée, pas même en semaine 16 (R4-F7)."},
+        {"critere": "C7", "perte": 3.5, "raison": "La préparation de l'épaule est réelle (lift-off en rotation externe, wall slides, sleeper stretch). Rien en revanche pour les poignets avant les handstand shoulder taps, et le mercredi de la semaine 6 commence sans aucun échauffement (R4-F12)."},
+        {"critere": "C8", "perte": 4, "raison": "L'ordre technique → force est correct et un allègement revient toutes les 5 semaines. Mais l'objectif muscle-up est noyé dans une structure de CrossFit générique avec metcons, sans spécialisation ni réallocation du volume vers la cible (R4-H2, R4-H4)."},
+        {"critere": "C9", "perte": 4, "raison": "Les séances tiennent dans 60 min, mais aucune consigne d'exécution n'est donnée. L'épaulé-jeté est annoncé « 57,5 kg ≈ 81 % du 1RM », alors que 57,5 kg font 72 % de 80 kg : la charge est incohérente. Les charges des metcons ne sont pas déterminées."},
+        {"critere": "ensemble", "perte": 5.5, "raison": "Plafond à 5 : échec planifié (10/10) sur un excentrique de muscle-up, mouvement à risque. Quatre corrections nécessaires, dont l'absence de toute progression vers le geste strict : l'objectif du profil ne sera probablement pas servi."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Construire une vraie progression vers le muscle-up strict : tirage explosif haut (poitrine puis sternum, 3–6 répétitions rapides), dips à la barre droite, travail de transition en barre basse ou muscle-up sauté, puis tentatives du geste complet à partir du bloc 2, avec un critère de passage (par exemple 3 séries propres sur 3 séances).", "consequence": "Après 16 semaines de négatifs au même dosage, l'athlète n'a jamais tenté le geste et ne débloquera probablement pas le muscle-up strict à l'échéance."},
+        {"type": "necessaire", "texte": "Remplacer le test « Muscle-up barre négatif 1 × 1 à 10 à 10/10 » des semaines 5, 10 et 15 par des tentatives de muscle-up strict, ou un test de hauteur de tirage, à RIR ≥ 2, et ajouter un test du muscle-up strict en semaine 16.", "consequence": "Excentrique mené à l'échec dans la transition (risque épaule et coude), et l'objectif n'est jamais mesuré."},
+        {"type": "necessaire", "texte": "Ramener la traction explosive poitrine à la barre à 4–5 × 3–6 répétitions, avec arrêt dès que la vitesse ou la hauteur baisse.", "consequence": "Avec 10 tractions strictes max, des séries de 10 à 15 deviennent des tractions lentes ou à l'échec : elles ne développent pas la puissance utile au muscle-up et fatiguent le geste du jour."},
+        {"type": "necessaire", "texte": "Plafonner le tirage hors cible : supprimer la traction kipping et le burpee avec traction des metcons du lundi et du samedi (les remplacer par du rameur ou de l'air bike) et garder au moins 48 h entre deux séances de tirage lourd.", "consequence": "Le tirage en volume 5 jours par semaine, kipping compris, expose coudes et épaules à une tendinopathie (R4-F10, R4-F12) et dégrade la fraîcheur des séances de muscle-up."},
+        {"type": "amelioration", "texte": "Ajouter 5 min de préparation des poignets avant les handstand shoulder taps, ou remplacer ces derniers par du travail d'appui utile au muscle-up (support hold à la barre, dips à la barre droite)."},
+        {"type": "amelioration", "texte": "Donner une consigne par série sur le négatif (fausse prise, coudes près de la barre, descente en 3–5 s) et rendre le hollow body explicite dans le gainage."},
+        {"type": "amelioration", "texte": "Corriger les pourcentages de l'épaulé-jeté (57,5 kg = 72 % du 1RM)."}
+      ],
+      "points_forts": [
+        "Travail spécifique du muscle-up placé en début de séance, à l'état frais, deux fois par semaine.",
+        "Préparation et entretien de l'épaule (rotation externe, wall slides, capsule postérieure) régulièrement présents.",
+        "Allègement toutes les 5 semaines et séances qui tiennent dans le temps disponible."
+      ]
+    },
+    {
+      "programme": "programme_2.md",
+      "criteres": {"C1": 4.5, "C2": 5, "C3": 5, "C4": 6, "C5": 6, "C6": 4, "C7": 2.5, "C8": 5.5, "C9": 5},
+      "sans_objet": [],
+      "ensemble": 4.5,
+      "points_perdus": [
+        {"critere": "C1", "perte": 5.5, "raison": "Les tractions à 9–13 répétitions pour un max de 18 sont plausibles. Mais le front lever complet est prescrit en 4–5 × 5–10 s sans aucun record de front lever, alors que le lundi travaille la version tuck : le palier n'est pas déduit d'un maintien max (R4-F7). Le Nordic hamstring curl complet en 3–4 × 10 à 15 répétitions est hors de portée de presque tout athlète. Le handstand libre 10–20 s n'est relié à aucun record."},
+        {"critere": "C2", "perte": 5, "raison": "Les figures ouvrent bien les séances, mais chacune n'est vue qu'une fois par semaine : front lever le mercredi, muscle-up le vendredi, handstand le dimanche seulement. C'est la fréquence de l'ancrage 4 pour le handstand (R4-F1 : intermédiaire 4–5 fois par semaine). Aucune consigne technique."},
+        {"critere": "C3", "perte": 5, "raison": "Les durées de maintien (front lever 5–10 s, handstand 10–20 s) ne sont pas exprimées en % du max ni en secondes cumulées (R4-F2). L'effort est noté en « RIR » sur des maintiens, ce qui ne veut rien dire pour l'athlète."},
+        {"critere": "C4", "perte": 4, "raison": "L'espacement lundi (rowing front lever tuck), mercredi (front lever), vendredi (muscle-up) laisse bien 48 h. En revanche, aucun bloc de préparation tendineuse ne précède le front lever complet, et la hausse se fait de 4 à 5 séries d'un coup (R4-F8, R4-F9)."},
+        {"critere": "C5", "perte": 4, "raison": "Tractions, dips et pompes sont présents, mais en dosage générique et identique pendant 12 semaines. Aucune variante plus dure (archer, excentrique lent) pour la séance lourde recommandée au-delà de 15–20 tractions (R4-G2). Pas de hollow (arch rocks et arch hold seulement)."},
+        {"critere": "C6", "perte": 6, "raison": "La plage des tractions reste 9–13 du début à la fin : seuls le RIR et une série de plus bougent. Pas de densité (EMOM, échelles, clusters, R4-G6), pas de critère de passage. La semaine 12, celle de l'échéance, est une semaine de « montée » sans test. La trajectoire montre une meilleure série bloquée à 13 et une capacité de 16,7 → 17,7, sous le record de départ."},
+        {"critere": "C7", "perte": 7.5, "raison": "Aucun échauffement dans tout le programme, aucune préparation des poignets avant la marche en appui renversé et le handstand, aucun travail scapulaire ni de rotateurs, alors que le front lever et le muscle-up chargent l'épaule (R4-F12)."},
+        {"critere": "C8", "perte": 4.5, "raison": "L'ordre figure → force est correct et un allègement revient toutes les 5 semaines. Mais l'objectif (25 tractions) n'est pas la priorité : seulement 2 séances de tractions sur 4, alors que trois figures (front lever, muscle-up, handstand) prennent du volume sans réallocation (R4-H2, R4-H4). Pas d'affûtage ni de test à l'échéance."},
+        {"critere": "C9", "perte": 5, "raison": "Les séances (35–48 min) tiennent dans le temps, mais le matériel déclaré est « barres du parc seulement » : la marche en appui renversé « au mur » suppose un mur, et le Nordic curl un point d'ancrage pour les pieds, sans alternative prévue. Aucune consigne d'exécution."},
+        {"critere": "ensemble", "perte": 5.5, "raison": "Plafond à 5 : front lever complet sans prérequis et Nordic complet à 10–15 répétitions. Cinq corrections nécessaires, et la progression des tractions est trop faible pour l'objectif ; la trajectoire simulée n'atteint même pas 18."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Faire progresser les tractions vers 25 : 3 séances par semaine dont une de densité (EMOM à 40 % du max, échelles, clusters), une de volume avec une plage qui monte (de 9–13 vers 12–16), et une lourde au poids du corps (archer, excentrique lent 4–5 s), avec +10–20 % de volume par bloc (R4-G2, R4-G6, R4-G8).", "consequence": "La plage fixe de 9–13 répétitions pendant 12 semaines maintient le niveau sans l'élever : l'objectif de 25 ne sera pas atteint (la simulation reste sous 18)."},
+        {"type": "necessaire", "texte": "Terminer le programme par un allègement et un test du max de tractions en semaine 12, et annoncer qu'un gain réaliste chez un pratiquant entraîné est d'environ +15 % en 12 semaines (R4-G8).", "consequence": "Pas de mesure à l'échéance, et un athlète arrivé fatigué en semaine 12 de « montée » ne pourra pas exprimer son niveau."},
+        {"type": "necessaire", "texte": "Remplacer le front lever complet par le palier déduit d'un test (tuck ou advanced tuck, maintien max 8–25 s), dosé en séries à 50–70 % du max avec des secondes cumulées.", "consequence": "Sans prérequis, l'athlète ne tiendra pas la position : séances inutiles ou maintiens en mauvaise ligne qui surchargent coude et épaule bras tendus."},
+        {"type": "necessaire", "texte": "Ramener le Nordic hamstring curl à 3 × 3–5 excentriques (version négative seulement, une fois par semaine) avec un ancrage précisé à la barre basse.", "consequence": "3–4 × 10–15 Nordic complets deux fois par semaine sont infaisables et exposent à une lésion des ischio-jambiers et à des courbatures sévères."},
+        {"type": "necessaire", "texte": "Ajouter à chaque séance 8–10 min d'échauffement : poignets avant l'appui renversé, activation scapulaire et rotateurs avant front lever et muscle-up.", "consequence": "Appui renversé et bras tendus sur des articulations non préparées : c'est le schéma de tendinopathie le plus fréquent en street workout (R4-F12)."},
+        {"type": "amelioration", "texte": "Pratiquer le handstand plus souvent et plus court (10 min, 3–4 fois par semaine en début de séance) plutôt qu'une fois par semaine."},
+        {"type": "amelioration", "texte": "Remplacer le RIR des maintiens par un repère en secondes (% du maintien max) et ajouter du hollow body au gainage."},
+        {"type": "amelioration", "texte": "Prévoir une alternative au mur absent (handstand face à un poteau ou au sol avec chute en roulade)."}
+      ],
+      "points_forts": [
+        "Plages de tractions, dips et pompes compatibles avec les records (environ 50–70 % du max).",
+        "Matériel respecté pour l'essentiel (poids du corps, barres), jambes travaillées sans charge (pistol, shrimp squat).",
+        "Tests intermédiaires du max de tractions en semaines 5 et 10, avec allègement."
+      ]
+    },
+    {
+      "programme": "programme_3.md",
+      "criteres": {"C1": 3.5, "C2": 6, "C3": 5, "C4": 4, "C5": 7, "C6": 5, "C7": 3, "C8": 6, "C9": 5},
+      "sans_objet": [],
+      "ensemble": 4.5,
+      "points_perdus": [
+        {"critere": "C1", "perte": 6.5, "raison": "« Muscle-up lesté de compétition » prescrit en 2 × 3–6 avec lest à un athlète de 51 ans dont le profil ne mentionne aucun muscle-up, et qui fait 10 tractions max. Front lever complet en 5–6 × 5–10 s sans aucun record. Traction chest-to-bar en 2 × 6–12 alors que le max en traction classique est 10. Ces paliers ne sont pas déduits des records (R4-F7, R1-P17)."},
+        {"critere": "C2", "perte": 4, "raison": "Handstand 2 fois et front lever 1 fois par semaine, placés en début de séance : correct. Mais aucune consigne technique, et le lundi s'ouvre sur un geste lesté complexe plutôt que sur une habileté à l'état frais."},
+        {"critere": "C3", "perte": 5, "raison": "Le front lever passe de 5 à 6 × 5–10 s en semaine 3, sans lien avec un maintien max ni de secondes cumulées. Handstand 5–10 s, sans référence (R4-F2, R4-F6)."},
+        {"critere": "C4", "perte": 6, "raison": "Trois séances de tirage chargé : lundi muscle-up lesté + traction lestée + chest-to-bar, mercredi front lever, vendredi tractions + high pull lesté. L'espacement est de 48 h, mais rien ne prépare coudes et tendons avant le muscle-up lesté et le front lever, pour un athlète de 51 ans (R4-F8, R4-F12)."},
+        {"critere": "C5", "perte": 3, "raison": "Bonne base : traction lestée dosée d'après le 1RM, dips, pompes puis pompes aux anneaux, row scapulaire. Gainage suspendu mais pas de hollow ; le « dips lesté partiel haut surchargé » n'est pas justifié pour ce profil."},
+        {"critere": "C6", "perte": 5, "raison": "Seuls le RIR et quelques séries progressent ; la plage des tractions pronation reste 5–7 sur 16 semaines, sans densité ni critère de passage. Les tests de semaines 5, 10 et 15 sont un bon point. La trajectoire stagne autour de 9 répétitions pour un objectif de 14."},
+        {"critere": "C7", "perte": 7, "raison": "Aucun échauffement ni préparation des poignets avant le handstand libre, ni des épaules et coudes avant le muscle-up lesté, les dips lestés partiels et le high pull, à 51 ans (R4-F12). L'équilibre poussée/tirage est correct."},
+        {"critere": "C8", "perte": 4, "raison": "Allègement toutes les 5 semaines et entretien du reste. Mais la cible (14 tractions) n'a qu'une séance spécifique : le vendredi 3–4 × 5–7. Trois figures et des variantes lestées dispersent le volume (R4-H2, R4-H4). Le lundi, intitulé « haut du corps », contient deux exercices de jambes."},
+        {"critere": "C9", "perte": 5, "raison": "Séances de 39 à 52 min, faisables. Mais des noms peu clairs (« Dips lesté partiel haut surchargé », « Muscle-up lesté de compétition ») et une charge contradictoire (« poids du corps, ≈ 77 % du 1RM »). Aucune consigne d'exécution."},
+        {"critere": "ensemble", "perte": 5.5, "raison": "Plafond à 5 : muscle-up lesté et front lever complet sans prérequis chez un athlète de 51 ans qui demande explicitement de ne pas se blesser. Quatre corrections nécessaires, et une progression des tractions trop faible pour viser 14."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Supprimer le muscle-up lesté et le remplacer par une traction lestée lourde (3–5 répétitions à RIR 2–3) ou des excentriques lents de traction.", "consequence": "Geste balistique chargé sans aucun muscle-up acquis dans le profil : risque élevé pour le coude et l'épaule d'un athlète de 51 ans, contraire à son objectif « sans se blesser »."},
+        {"type": "necessaire", "texte": "Remplacer le front lever complet par le palier testé (tuck ou advanced tuck, maintien max 8–25 s), dosé à 50–70 % du max, ou le retirer au profit du volume de tractions.", "consequence": "Maintiens bras tendus hors de portée : séances inutiles et surcharge tendineuse sans préparation (R4-F8, R4-F9)."},
+        {"type": "necessaire", "texte": "Ajouter à chaque séance 8–10 min d'échauffement articulaire : poignets avant le handstand, scapulas et rotateurs avant les tractions lestées et les dips.", "consequence": "À 51 ans, des charges lestées et l'appui renversé à froid exposent aux tendinopathies du coude, de l'épaule et du poignet."},
+        {"type": "necessaire", "texte": "Faire de la traction pronation la priorité : 3 expositions par semaine (une lourde lestée, une de volume à plage montante de 5–7 vers 8–10, une de densité ou d'échelles), avec la chest-to-bar ramenée à 3–6 répétitions (R4-G2, R4-G8).", "consequence": "Une seule séance spécifique à plage fixe ne fera pas passer de 10 à 14 tractions ; la simulation stagne à 9."},
+        {"type": "amelioration", "texte": "Remplacer les dips lestés partiels surchargés par des dips complets lestés légers, et le high pull lesté par une traction lestée classique, plus lisibles et moins risqués pour ce profil."},
+        {"type": "amelioration", "texte": "Ajouter du hollow body et des consignes d'exécution (ligne, scapulas, respiration) ; corriger la mention « poids du corps ≈ 77 % du 1RM »."},
+        {"type": "amelioration", "texte": "Placer le test final en semaine 16 après un allègement, ou finir le programme sur le test de la semaine 15."}
+      ],
+      "points_forts": [
+        "Traction lestée dosée à partir du 1RM lesté du profil, conformément au streetlifting pratiqué.",
+        "Tests réguliers du max de tractions (semaines 5, 10, 15) et allègements toutes les 5 semaines.",
+        "Équilibre poussée/tirage et travail des jambes et du tronc maintenus ; séances dans le temps disponible."
+      ]
+    }
+  ]
+}

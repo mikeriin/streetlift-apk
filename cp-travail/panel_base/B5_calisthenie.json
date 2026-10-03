@@ -1,0 +1,109 @@
+{
+  "ecole": "calisthenie",
+  "programmes": [
+    {
+      "programme": "programme_1.md",
+      "criteres": {"C1": 4, "C2": 4.5, "C3": 5, "C4": 2.5, "C5": 4.5, "C6": 4, "C7": 3, "C8": 4.5, "C9": 5},
+      "sans_objet": [],
+      "ensemble": 3.5,
+      "points_perdus": [
+        {"critere": "C1", "perte": 6, "raison": "Variantes choisies contre la gêne du coude interne : suspension en supination (jeudi, puis lundi et jeudi S11-12), traction typewriter (charge unilatérale du coude, samedi), muscle-up lesté (jeudi), isométrie lestée en haut de traction (mardi) ; HSPU libre négatif (samedi) sans aucun record de handstand libre dans le profil (R4-F7, R4-F12). Les paliers ne sont pas reliés aux records (lest du muscle-up « à déterminer »)."},
+        {"critere": "C2", "perte": 5.5, "raison": "Le seul travail de type habileté (compression straddle assis) n'a aucun lien avec l'objectif dips ; le mouvement visé (dips lesté) n'est pratiqué lourd qu'une fois par semaine (mardi), contre 2-3/sem pour un intermédiaire (R2-P7)."},
+        {"critere": "C3", "perte": 5, "raison": "Isométries lestées en haut de traction et en appui aux barres parallèles en 5 à 12 s « lest à déterminer », sans référence à un maintien max (R4-F2, R4-F6) ; dead hang et suspensions 20-40 s dosées en « répétitions en réserve », unité incompréhensible pour un maintien."},
+        {"critere": "C4", "perte": 7.5, "raison": "Tendinopathie du coude interne à 3/10 ignorée : aucune réduction du tirage et de la préhension (R5-P24 : −30 à −50 %), supination ajoutée, typewriter, muscle-up lesté et traction lestée cumulés mardi-jeudi-samedi ; aucune règle de douleur (R4-F11, R5-P23 : 3-4/10 = ne pas progresser)."},
+        {"critere": "C5", "perte": 5.5, "raison": "Pour un objectif de +57,5 kg, le dips lesté plafonne à +15 kg (≈ 73 % de la charge totale de 132 kg, et non 81 % comme écrit) : aucune série ≥ 85 % (R2-P8, R2-P1) ; le dips au poids du corps du samedi ne compense pas. Le volume est dispersé sur squat, rack pull, soulevé de terre et élévations latérales sans rapport avec l'objectif."},
+        {"critere": "C6", "perte": 6, "raison": "Progression limitée à +1 à +5 kg de lest en 4 semaines puis retour à +10 kg en S6 et S11 ; aucun critère de passage ; trajectoire simulée plate (capacité dips 119,7 → 121, meilleure série de +22,5 à +16,25 kg)."},
+        {"critere": "C7", "perte": 7, "raison": "Aucun échauffement, aucune préparation des coudes, des poignets ni des épaules alors que le profil a une gêne active et que des HSPU libres et muscle-up lestés sont programmés (R4-F12, R5-P24) ; pompe scapulaire et row scapulaire seulement."},
+        {"critere": "C8", "perte": 5.5, "raison": "Semaines « test » S5 et S10 sans charge écrite (« voir les séries ») et le programme finit sur une semaine de montée (S12) : ni affûtage ni test à l'échéance de 12 semaines (R2-P10). Allègements présents."},
+        {"critere": "C9", "perte": 5, "raison": "Contradictions : « Traction lestée de compétition, poids du corps, ≈ 77 % du 1RM » ; « séance poussée » du jeudi qui contient un soulevé de terre ; charges des tests non définies ; aucune consigne d'exécution."},
+        {"critere": "ensemble", "perte": 6.5, "raison": "Plafond à 5 pour contre-indication ignorée (coude interne douloureux chargé en supination, typewriter et muscle-up lesté) ; plus de trois corrections nécessaires et objectif de dips probablement manqué (simulation : aucune progression)."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Adapter le tirage au coude droit (R5-P24) : retirer suspension en supination, traction typewriter et muscle-up lesté ; réduire de 30 à 50 % le volume de tirage et de préhension ; ajouter une règle de douleur (3-4/10 = ne pas progresser, ≥ 5 = régresser).", "consequence": "La tendinopathie médiale, encore à 3/10, sera rechargée trois fois par semaine en position provocante et risque de rechuter."},
+        {"type": "necessaire", "texte": "Monter le dips lesté à 2 séances par semaine avec un travail lourd (top set de 1-3 à RPE 8-9 et séries à 85-90 % de la charge totale) et des lests écrits à partir du 1RM de +50 kg.", "consequence": "Avec un maximum de +15 kg une fois par semaine, le 1RM ne progresse pas (trajectoire simulée plate) et l'objectif de +57,5 kg est manqué."},
+        {"type": "necessaire", "texte": "Terminer par un affûtage (S11 allégée, intensité ≥ 85 %) et un test du 1RM de dips en S12, avec des paliers de charge écrits pour les semaines de test.", "consequence": "L'échéance de 12 semaines arrive en pleine semaine de montée, fatigué, sans test prévu."},
+        {"type": "necessaire", "texte": "Remplacer le HSPU libre négatif par un pike push-up ou un HSPU négatif contre le mur, et ajouter 5 min de préparation des poignets et des épaules.", "consequence": "Une descente en équilibre libre sans maîtrise du handstand expose à une chute sur la tête ou les poignets."},
+        {"type": "necessaire", "texte": "Corriger les charges incohérentes (traction lestée « poids du corps ≈ 77 % », pourcentages du dips mal calculés) et doser les maintiens en secondes par rapport à un maintien max mesuré.", "consequence": "L'athlète ne sait pas quelle charge mettre et les séances ne correspondent pas à l'intensité annoncée."},
+        {"type": "amelioration", "texte": "Retirer les élévations latérales, l'écarté et le rack pull au profit de développé bras fléchis lourd, de dips lourds en appui et de triceps, en rapport avec l'objectif."},
+        {"type": "amelioration", "texte": "Remplacer la compression straddle, sans rapport avec le dips, par un travail de position basse en dips (pause en bas) ou par de la mobilité des épaules."}
+      ],
+      "points_forts": ["Effort contrôlé (RIR 2-4) sans échec non voulu", "Allègements toutes les 4-5 semaines", "Tirage horizontal présent pour l'équilibre poussée/tirage"]
+    },
+    {
+      "programme": "programme_2.md",
+      "criteres": {"C1": 6, "C5": 5, "C6": 4, "C7": 6, "C8": 3, "C9": 6},
+      "sans_objet": ["C2", "C3", "C4"],
+      "ensemble": 4,
+      "points_perdus": [
+        {"critere": "C1", "perte": 4, "raison": "Variantes pertinentes (barre basse, développé couché, soulevé de terre conventionnel), mais les secondaires sont surtout des machines de bodybuilding (élévations latérales, rowing menton, curls) peu reliées aux trois mouvements, et aucune variante spécifique (pause bench, squat pause) (R2-P9)."},
+        {"critere": "C5", "perte": 5, "raison": "Intensité plafonnée à 81 % hors test sur 10 semaines pour un avancé : 0 série ≥ 85 % hors S6 (R2-P8 : 3-6 séries/sem ≥ 85 %) ; développé couché une seule fois par semaine (lundi), sous la fréquence de R2-P7, alors que l'objectif est +5 kg."},
+        {"critere": "C6", "perte": 6, "raison": "Progression de +2,5 à +7,5 kg en 5 semaines puis retour aux charges de S1 en S7 ; aucun critère de passage ; simulation : meilleure série au développé couché qui baisse (+117,5 → +115 kg) et soulevé de terre en recul."},
+        {"critere": "C7", "perte": 4, "raison": "Rotation externe, Y raise et halo présents, mais aucun échauffement ni préparation de hanches et d'épaules écrits ; rowing menton à la poulie à 1,5 RIR, position à risque d'accrochage pour une épaule de développé couché lourd."},
+        {"critere": "C8", "perte": 7, "raison": "La semaine 10 « montée — ÉCHÉANCE » répète la S4 à 118 séries dures : aucun affûtage, aucune réduction de volume, aucun lourd ≥ 90 % à J−7/J−5, pas de repos avant la compétition (R2-P10)."},
+        {"critere": "C9", "perte": 4, "raison": "Séances faisables (≈ 70 min sur 120), mais semaines de test avec « charge : voir les séries » non définies, aucune consigne d'exécution ni de tentatives de compétition."},
+        {"critere": "ensemble", "perte": 6, "raison": "Plafond à 6 car l'échéance de compétition est ignorée (pas de pic) ; en plus, intensité trop basse et fréquence insuffisante au développé couché : l'objectif ne sera probablement pas servi."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Construire un pic sur les semaines 9-10 : volume −50 à −70 %, intensité ≥ 85-90 %, dernier lourd à J−7/J−5, 2-4 jours de repos, puis les tentatives de compétition (R2-P10).", "consequence": "L'athlète arrive à la compétition après une semaine de 118 séries dures, fatigué, sans avoir touché de charge proche du maximum."},
+        {"type": "necessaire", "texte": "Introduire des séries lourdes (top set de 1-3 à RPE 8-9 + back-offs à 80-90 %) sur les trois mouvements à partir de S3 (R2-P6, R2-P8).", "consequence": "Plafonné à 81 % pendant 10 semaines, le 1RM ne progresse pas (simulation : 0,04 %/sem) et les objectifs de +5 à +7,5 kg sont manqués."},
+        {"type": "necessaire", "texte": "Passer le développé couché à 2-3 séances par semaine en remplaçant le développé haltères assis ou la presse pectorale machine par une variante de développé couché.", "consequence": "Une seule exposition par semaine ne suffit pas pour gagner 5 kg chez un avancé."},
+        {"type": "necessaire", "texte": "Écrire les charges des semaines de test (paliers montant vers un 1RM ou un 3RM).", "consequence": "Les séances de test sont inexploitables, et on ne peut pas recaler les charges du bloc 2."},
+        {"type": "amelioration", "texte": "Remplacer le rowing menton par un face pull et réduire les isolations de bras au profit de triceps lourds en soutien du développé couché."},
+        {"type": "amelioration", "texte": "Ajouter un échauffement spécifique écrit (montée de charges, mobilité de hanches et d'épaules)."}
+      ],
+      "points_forts": ["Squat 2×/sem et soulevé de terre 2×/sem", "Gainage varié (hollow, RKC, Pallof)", "Aucun échec non voulu, hausses de charge prudentes"]
+    },
+    {
+      "programme": "programme_3.md",
+      "criteres": {"C1": 5.5, "C3": 6, "C5": 5, "C6": 5, "C7": 6, "C8": 6.5, "C9": 6},
+      "sans_objet": ["C2", "C4"],
+      "ensemble": 5.5,
+      "points_perdus": [
+        {"critere": "C1", "perte": 4.5, "raison": "Pompe classique au sol dès S1 pour une femme de 68 ans qui n'a jamais fait de musculation, en mode prudent, sans régression (mur, plan incliné) ; mountain climbers et dislocations d'épaules au bâton dès la première séance ; sleeper stretch (rotation interne forcée) peu adapté à une épaule âgée non préparée."},
+        {"critere": "C3", "perte": 4, "raison": "Chaise contre le mur 1 × 5 à 12 s et gainages de 10 à 20 s dosés en « répétitions en réserve », sans repère de durée max ; simulation : effort réel 6-9 RIR, donc stimulus quasi nul."},
+        {"critere": "C5", "perte": 5, "raison": "Bas du corps quasi absent pour un objectif d'autonomie : un seul maintien de chaise jusqu'en S8, air squat seulement en S9, aucun lever de chaise, aucune montée de marche."},
+        {"critere": "C6", "perte": 5, "raison": "Progression limitée à baisser le RIR de 4 à 3 ; aucun ajout de répétitions ni de levier (pompe inclinée → sol), aucun critère de passage."},
+        {"critere": "C7", "perte": 4, "raison": "Mobilité abondante, mais l'équilibre, demandé explicitement dans le profil, n'est jamais travaillé (aucun appui unipodal, aucune marche en tandem)."},
+        {"critere": "C8", "perte": 3.5, "raison": "Ordre cohérent (échauffement → renforcement → retour au calme), mais pas de semaine allégée ni de structure qui fasse évoluer la force sur 12 semaines (R3-P9)."},
+        {"critere": "C9", "perte": 4, "raison": "Séances de 23-31 min faisables, mais nombreuses transitions sol/debout (pigeon, demi-grand écart, 90/90) sans consigne pour se relever ; aucune consigne d'exécution ni de régression."},
+        {"critere": "ensemble", "perte": 4.5, "raison": "Quatre corrections nécessaires : équilibre absent, bas du corps sous-dosé, pompe au sol sans régression, mouvements d'épaule agressifs pour un mode prudent."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Ajouter 5 min d'équilibre à chaque séance (appui unipodal près d'un appui, marche talon-pointe, transferts de poids), en progressant par réduction de l'appui des mains.", "consequence": "L'objectif d'équilibre n'est pas servi et le risque de chute, premier enjeu d'autonomie à 68 ans, reste inchangé."},
+        {"type": "necessaire", "texte": "Introduire dès S1 le lever de chaise (assis-debout) 2-3 × 6-10, 2 fois par semaine, et des montées de marche, puis progresser vers l'air squat.", "consequence": "Sans force des jambes travaillée avant S9, l'autonomie (se lever, monter des escaliers) n'est pas améliorée."},
+        {"type": "necessaire", "texte": "Remplacer la pompe classique par une pompe contre le mur puis sur plan incliné, avec un critère de passage écrit (3 séries de 10 propres).", "consequence": "Pour une débutante de 68 ans, la pompe au sol est probablement infaisable ou faite avec une ligne cassée, ce qui sollicite les épaules et le bas du dos."},
+        {"type": "necessaire", "texte": "Retirer sleeper stretch et dislocations d'épaules au bâton des premières semaines, au profit de mobilité d'épaule en amplitude libre (glissements au mur, rotations à l'élastique léger).", "consequence": "En mode prudent, des positions d'épaule en bout d'amplitude chez une débutante âgée exposent à une irritation de la coiffe."},
+        {"type": "amelioration", "texte": "Prévoir une consigne pour descendre au sol et se relever (et une version sur chaise des étirements au sol)."},
+        {"type": "amelioration", "texte": "Faire progresser la marche rapide au-delà de 15 min et ajouter un repère d'essoufflement."}
+      ],
+      "points_forts": ["Séances courtes, réalistes, adaptées aux 30 min et au matériel de la maison", "Équilibre tirage/poussée (rowing, face pull, pompe)", "Effort très prudent, aucun échec"]
+    },
+    {
+      "programme": "programme_4.md",
+      "criteres": {"C1": 6, "C2": 6, "C3": 6, "C4": 7, "C5": 6, "C6": 4.5, "C7": 3.5, "C8": 6, "C9": 6},
+      "sans_objet": [],
+      "ensemble": 6,
+      "points_perdus": [
+        {"critere": "C1", "perte": 4, "raison": "Tractions à 3-4 répétitions pour un max de 6 et tenue menton au-dessus de la barre cohérentes, mais nordic hamstring curl négatif en 10 à 15 répétitions, palier hors de portée (c'est un mouvement de 3 à 6 répétitions excentriques) ; aucune négative ni traction assistée à l'élastique alors que l'élastique est disponible (R4-F7, R2-P17)."},
+        {"critere": "C2", "perte": 4, "raison": "Traction pronation seulement 2 fois par semaine (mardi, dimanche) ; le dimanche, la tenue isométrique de 4-5 séries précède les tractions et les fatigue."},
+        {"critere": "C3", "perte": 4, "raison": "Tenue menton 10 à 20 s sans lien avec un maintien max mesuré, dosée en « répétitions en réserve » ; 4-5 séries répétées 2 fois par semaine sans alternance (R4-F2, R4-F6)."},
+        {"critere": "C4", "perte": 3, "raison": "Supination isométrique jeudi puis dimanche plus traction supination le dimanche, sans préparation du coude ni du biceps (R4-F12) ; volume modéré, sans excès."},
+        {"critere": "C5", "perte": 4, "raison": "Tirage vertical présent, mais aucun tirage horizontal (rowing australien à la barre basse disponible) ni travail scapulaire ; gainage spécifique de la traction (hollow) absent."},
+        {"critere": "C6", "perte": 5.5, "raison": "La traction reste à 3 × 3-4 pendant 12 semaines, seul le RIR change ; aucun critère de passage, aucune hausse de répétitions ni de séries ; simulation : capacité 5,55 → 5,9 pour un objectif de 9."},
+        {"critere": "C7", "perte": 6.5, "raison": "Aucun échauffement, aucune préparation des épaules, des scapulas ni des poignets avant tractions, dips et pompe en T (R4-F12)."},
+        {"critere": "C8", "perte": 4, "raison": "Allègements S5 et S10 présents, mais S12 finit en montée, sans test de l'objectif à l'échéance ; isométrie placée avant la traction le dimanche."},
+        {"critere": "C9", "perte": 4, "raison": "Séances de 21-38 min, compatibles avec les 45 min ; nordic assisté à l'élastique au parc sans point d'ancrage décrit ; aucune consigne d'exécution."},
+        {"critere": "ensemble", "perte": 4, "raison": "Quatre corrections nécessaires : progression de la traction insuffisante pour l'objectif, nordic surdosé, pas de test à l'échéance, aucune préparation articulaire."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Faire progresser la traction pronation : 3 séances par semaine, séries de 3-4 puis 4-5, avec un critère de passage (3 × 4 propres sur 3 séances → +1 répétition ou +1 série), et ajouter des négatives lentes ou des tractions assistées à l'élastique.", "consequence": "À 3 × 3-4 fixes, la traction ne progresse presque pas (simulation 5,55 → 5,9) et l'objectif de 9 répétitions est manqué."},
+        {"type": "necessaire", "texte": "Ramener le nordic hamstring curl à 2-3 × 3-5 excentriques, assistés à l'élastique, avec un point d'ancrage écrit.", "consequence": "10-15 nordics négatifs chez une intermédiaire non préparée expose à une lésion des ischio-jambiers et à de fortes courbatures qui compromettent les séances suivantes."},
+        {"type": "necessaire", "texte": "Ajouter 5-8 min d'échauffement articulaire avant chaque séance (scapulas à la barre, rotations d'épaules à l'élastique, poignets).", "consequence": "Tractions, dips et pompe en T sur épaules froides, avec 6,5 h de sommeil, augmentent le risque de douleur à l'épaule et au coude (R4-F12)."},
+        {"type": "necessaire", "texte": "Prévoir un test du max de tractions en S12 après quelques jours allégés.", "consequence": "On ne saura pas si l'objectif est atteint à l'échéance."},
+        {"type": "amelioration", "texte": "Placer la tenue menton après les tractions du dimanche ou la remplacer par un rowing australien à la barre basse pour le tirage horizontal."},
+        {"type": "amelioration", "texte": "Ajouter un hollow body hold dosé en secondes pour la ligne de traction."}
+      ],
+      "points_forts": ["Séances courtes, compatibles avec 45 min et le matériel du parc", "Travail sous-maximal de la traction à 2-3 RIR, adapté à un max de 6", "Bas du corps au poids du corps bien choisi (shrimp squat débutant, skater squat)", "Allègements toutes les 5 semaines"]
+    }
+  ]
+}

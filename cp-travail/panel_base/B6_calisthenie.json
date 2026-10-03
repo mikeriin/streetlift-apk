@@ -1,0 +1,127 @@
+{
+  "ecole": "calisthenie",
+  "programmes": [
+    {
+      "programme": "programme_1.md",
+      "criteres": {"C1": 6.5, "C3": 6, "C5": 7, "C6": 5, "C7": 5.5, "C8": 6, "C9": 7},
+      "sans_objet": ["C2", "C4"],
+      "ensemble": 7,
+      "points_perdus": [
+        {"critere": "C1", "perte": 3.5, "raison": "Les deux points faibles déclarés ne pilotent pas le choix des exercices : le hip thrust, seul travail direct des fessiers, n'apparaît qu'une fois par semaine (mardi, en 4e position, 2-3 séries) ; le travail du deltoïde moyen tient en 2 élévations + 1 rowing menton. Les charges écrites ne correspondent pas aux pourcentages annoncés : 27,5 kg au développé couché, c'est 61 % de 45 kg et non 70 % ; 50 kg au squat, c'est 62,5 % de 80 kg."},
+        {"critere": "C3", "perte": 4, "raison": "Tout le programme reste entre 2 et 4 RIR, y compris l'isolation (élévations, curls, écartés) : c'est hors de la fourchette 0-2 RIR en isolation et 1-3 RIR en polyarticulaire pour une intermédiaire en hypertrophie (R1-P13). La trajectoire confirme : l'écart moyen réel est de 2,5 RIR au-delà de la cible."},
+        {"critere": "C5", "perte": 3, "raison": "Le seul travail au poids du corps de base, les tractions, ne vient qu'une fois par semaine, sans critère pour passer à 12 répétitions ni lest ; gainage de base présent (hollow, RKC) mais sans consigne de rétroversion."},
+        {"critere": "C6", "perte": 5, "raison": "Seul le RIR progresse (3 → 2) ; la charge du développé couché reste à 27,5 kg du début à la fin, sans règle de double progression ni critère de passage. Résultat de la trajectoire : +0,1 %/semaine, capacité estimée du développé couché en baisse (43,1 → 40,0)."},
+        {"critere": "C7", "perte": 4.5, "raison": "Aucun échauffement ni préparation des épaules écrits, alors que le profil vise les épaules et inclut développé militaire et rowing menton (rotation interne sous charge) ; l'équilibre tirage/poussée est en revanche bon (rowings, tirage, tractions)."},
+        {"critere": "C8", "perte": 4, "raison": "Décharges en semaines 5 et 10, correct (R3-P9). Mais les points faibles sont placés en accessoire après 2-3 polyarticulaires, au lieu d'être mis en tête de séance avec +30 à 50 % de séries (R6-P6) ; volume fessiers direct ≈ 3 séries/semaine."},
+        {"critere": "C9", "perte": 3, "raison": "Les séances sont faisables, avec des repos précisés. Mais elles occupent 28 à 47 min sur 75 disponibles, aucune consigne d'exécution n'est donnée, et les séances d'un programme d'hypertrophie sont étiquetées « force »."},
+        {"critere": "ensemble", "perte": 3, "raison": "Deux corrections nécessaires : priorité fessiers/deltoïdes non traduite en volume ni en placement ; effort trop loin de l'échec sans progression de charge. Sûr mais peu individualisé pour l'objectif."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Faire des points faibles la priorité réelle : hip thrust ou pont lesté 2 fois/semaine en premier exercice (≥ 8-10 séries directes de fessiers par semaine, plus fente/step-up), élévations latérales 3 fois/semaine en début de séance (12-16 séries, R6-P6, R1-P1).", "consequence": "Les fessiers et le deltoïde moyen reçoivent le volume d'un muscle quelconque ; l'objectif esthétique ne sera pas atteint plus vite que sans programme ciblé."},
+        {"type": "necessaire", "texte": "Rapprocher l'effort de l'échec (1-2 RIR en polyarticulaire, 0-1 en isolation, R1-P13) et écrire une double progression : quand le haut de la plage est atteint sur toutes les séries, +2,5 kg (barre) ou palier d'haltère suivant ; recaler les charges de départ sur les pourcentages annoncés.", "consequence": "La charge reste figée (27,5 kg au développé couché pendant 12 semaines) ; la trajectoire montre une stagnation complète (+0,1 %/semaine)."},
+        {"type": "amelioration", "texte": "Ajouter 5 min de préparation des épaules (rotations externes à l'élastique, glissés au mur) avant les séances avec développé militaire, et remplacer le rowing menton par une élévation latérale à la poulie."},
+        {"type": "amelioration", "texte": "Utiliser le temps disponible (30 min libres par séance) pour le volume ciblé plutôt que d'ajouter des exercices de tronc qui tournent à chaque bloc."},
+        {"type": "amelioration", "texte": "Prévoir une progression des tractions (de 6 à 12 répétitions, puis lest) et une consigne de rétroversion sur le hollow et la planche RKC."}
+      ],
+      "points_forts": [
+        "Bon équilibre entre tirage et poussée, tirage bras fléchis vertical et horizontal présent",
+        "Décharges planifiées toutes les 5 semaines, montée progressive du volume de 2 à 3 séries",
+        "Matériel cohérent avec la salle disponible, repos précisés"
+      ]
+    },
+    {
+      "programme": "programme_2.md",
+      "criteres": {"C1": 4.5, "C2": 6, "C3": 6, "C4": 6.5, "C5": 6.5, "C6": 4.5, "C7": 4.5, "C8": 5.5, "C9": 5},
+      "sans_objet": [],
+      "ensemble": 5,
+      "points_perdus": [
+        {"critere": "C1", "perte": 5.5, "raison": "Le handstand libre (3-4 × 5-10 s) arrive sans aucun record ni prérequis (handstand au mur, maintien ventre au mur) : palier hors de portée probable (R4-F7). Le nordic négatif est prescrit à 10-15 répétitions, alors que la dose de négatives pour un premier contact est de 3-5 répétitions (R2-P17). Les tractions restent à 4-6 répétitions pendant 12 semaines, sans variante qui fasse avancer vers 11 (négatives, lest, montée en répétitions)."},
+        {"critere": "C2", "perte": 4, "raison": "Le handstand n'est pratiqué qu'une fois par semaine (mardi), alors que l'équilibre demande 3-4 expositions courtes (R4-F1). Il est bien placé en début de séance."},
+        {"critere": "C3", "perte": 4, "raison": "Maintiens de handstand à 5-10 s sans max de référence ; HSPU 10-15 répétitions. Les tractions à 4-6 répétitions et 2-3 RIR pour un max de 8 sont cohérentes."},
+        {"critere": "C4", "perte": 3.5, "raison": "Pas d'excès bras tendus. Mais les pompes sur le bout des doigts (sem. 6) et le handstand arrivent sans préparation des poignets ni des doigts, et le budget n'est pas pensé."},
+        {"critere": "C5", "perte": 3.5, "raison": "Bases présentes (traction, row archer, dips, pompes, gainage). Le dosage reste générique : 4-6 répétitions figées, ni lest ni levier ajusté pour viser 11 tractions."},
+        {"critere": "C6", "perte": 5.5, "raison": "Aucune règle de progression sur la traction, l'objectif principal : seul le RIR descend, le schéma reste 3 × 4-6. Tests prévus en semaines 5 et 10, mais sans règle d'ajustement ensuite. Trajectoire : 7,4 → 7,9 répétitions de capacité pour un objectif de 11."},
+        {"critere": "C7", "perte": 5.5, "raison": "Aucune préparation des poignets ni des épaules avant handstand, HSPU et pompes sur les doigts (R4-F12) ; pas d'échauffement de course."},
+        {"critere": "C8", "perte": 4.5, "raison": "Le footing est collé à chaque séance de renforcement ; la séance « cardio, fractionné » du dimanche commence par du HSPU et des dips. Les semaines « test » allègent bien. Mais la qualité de course se limite à un 30/30 hebdomadaire, sans allure cible pour 10 km en 50 min."},
+        {"critere": "C9", "perte": 5, "raison": "Lundi des semaines 5 et 10 : 78 min estimées pour 60 disponibles. Le test des 10 km y est noté « footing en endurance fondamentale », juste après un max de tractions : la consigne contredit le but du test. Aucune régression n'est prévue si le handstand n'est pas tenu."},
+        {"critere": "ensemble", "perte": 5, "raison": "Quatre corrections nécessaires, dont une à risque de blessure (volume de nordic) qui plafonne la note à 5 ; l'objectif de tractions ne sera probablement pas atteint."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Ramener le nordic négatif à 3 × 3-5 répétitions de 3-5 s (R2-P17), avec une hausse d'une répétition toutes les 2 semaines, et ne pas le placer la veille de la séance de fractionné.", "consequence": "10-15 excentriques maximaux des ischios dès la semaine 1, chez une coureuse : courbatures sévères et risque de lésion des ischio-jambiers, qui compromettent aussi la course."},
+        {"type": "necessaire", "texte": "Écrire une progression de traction vers 11 : par exemple 4 séries montant de 4-6 à 6-8 répétitions, puis lest léger ou négatives de 4 s en fin de séance ; critère : toutes les séries au haut de la plage sur 2 séances → palier suivant ; ajuster le volume d'après le test de la semaine 5.", "consequence": "3 × 4-6 figés pendant 12 semaines : la trajectoire plafonne à 7,9 répétitions et l'objectif de 11 est manqué."},
+        {"type": "necessaire", "texte": "Remplacer le handstand libre par un handstand ventre au mur (3-4 × 15-30 s à 50-70 % du max), avec 5 min de préparation des poignets avant, et ne passer au libre qu'après 30 s propres au mur.", "consequence": "Une figure hors de portée ne se travaille pas : les séries se résument à des chutes, sans progrès et sans poignets préparés."},
+        {"type": "necessaire", "texte": "Sortir le test des 10 km de la séance de lundi (le faire seul, le dimanche ou le samedi, après échauffement, à allure maximale soutenue) et ne pas le cumuler avec un max de tractions.", "consequence": "La séance dépasse le temps disponible de 18 min, et le chrono, couru fatigué sous l'étiquette « endurance fondamentale », ne mesure rien d'exploitable."},
+        {"type": "amelioration", "texte": "Ajouter une séance de qualité de course spécifique au 10 km (par exemple 3 × 8 min à allure 10 km cible de 5:00/km), et séparer course et renforcement quand c'est possible (R5-P19, R6-P30)."},
+        {"type": "amelioration", "texte": "Distribuer le handstand en 5-10 min sur 3 séances fraîches plutôt qu'une seule fois par semaine (R4-F1)."},
+        {"type": "amelioration", "texte": "Préparer doigts et poignets avant d'introduire les pompes sur le bout des doigts, ou les garder en option."}
+      ],
+      "points_forts": [
+        "Traction travaillée 3 fois par semaine, loin de l'échec, avec du tirage complémentaire varié (supination, row archer, row australien)",
+        "Semaines allégées avec test du max en semaines 5 et 10",
+        "Course et renforcement répartis sur 5 séances avec un fractionné progressif"
+      ]
+    },
+    {
+      "programme": "programme_3.md",
+      "criteres": {"C1": 5, "C3": 7, "C5": 5.5, "C6": 5.5, "C7": 6.5, "C8": 6, "C9": 6},
+      "sans_objet": ["C2", "C4"],
+      "ensemble": 5,
+      "points_perdus": [
+        {"critere": "C1", "perte": 5, "raison": "Fente latérale 2-3 × 3-8 alors que le genou droit est douloureux à 5/10 en flexion profonde, sans limite d'amplitude ni règle de douleur. Pompe classique 3-8 répétitions pour un homme de 88 kg reprenant après 200 semaines d'arrêt, sans régression inclinée (R1-P17 : régression si < 5 répétitions). Le pigeon (dès la semaine 5) met le genou en flexion-rotation."},
+        {"critere": "C3", "perte": 3, "raison": "RIR 3-4 adapté au mode prudent et au sommeil de 6 h (R5-P14). Les gainages de 10-20 s sont cohérents, mais aucun max de référence n'est donné et le travail réel reste très loin de la cible (6-8 RIR au rowing élastique)."},
+        {"critere": "C5", "perte": 4.5, "raison": "Bas du corps quasi absent : fente latérale et reverse hyper seulement, rien pour les quadriceps adapté au genou (box squat haut, step-up bas, isométrie), alors qu'un genou sensible chez un homme de 55 ans demande justement ce renforcement."},
+        {"critere": "C6", "perte": 4.5, "raison": "Seul le RIR évolue (4 → 3) dans chaque bloc. Aucune règle de charge pour les élastiques ou les haltères, aucun critère de passage pour les pompes, aucun suivi de la douleur au genou."},
+        {"critere": "C7", "perte": 3.5, "raison": "Bonne préparation de l'épaule (CARs, wall slides, face pull, oiseau). Mais la mobilité de hanche choisie (90/90, pigeon) charge le genou sensible, et rien n'adapte la séance à cette gêne."},
+        {"critere": "C8", "perte": 4, "raison": "Structure simple et cohérente pour un débutant (R3-P2). Mais la composante cardio (20 % du profil) se réduit à 9-15 min de marche par semaine, avec un vélo disponible inutilisé."},
+        {"critere": "C9", "perte": 4, "raison": "Les séances tiennent dans le temps (22-35 min). En revanche, aucune consigne d'exécution ni d'amplitude n'est donnée pour le genou, aucune régression n'est prévue si les pompes ne passent pas, et le samedi est étiqueté « cardio, endurance » alors qu'il contient surtout du renforcement."},
+        {"critere": "ensemble", "perte": 5, "raison": "Contre-indication du genou ignorée (flexion profonde à 5/10 chargée sans règle), ce qui plafonne la note à 5, plus trois autres corrections nécessaires."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Remplacer la fente latérale par un box squat sur banc haut ou un step-up bas, à amplitude sans douleur, avec la règle écrite : douleur ≤ 3/10 on continue, 4-5/10 on réduit l'amplitude, ≥ 6/10 on arrête (R5-P23).", "consequence": "Une flexion profonde chargée sur un genou déjà à 5/10, sans garde-fou, risque d'aggraver la douleur et de faire abandonner l'objectif d'habitude."},
+        {"type": "necessaire", "texte": "Remplacer le pigeon et la 90/90 par des mobilités de hanche qui épargnent le genou droit (étirement des fléchisseurs en fente haute avec coussin, figure 4 couché).", "consequence": "La flexion-rotation passive du genou, répétée à chaque séance, entretient la gêne."},
+        {"type": "necessaire", "texte": "Commencer les pompes inclinées sur le banc (8-12 répétitions) et ne passer au sol qu'après 3 × 12 propres (R1-P17).", "consequence": "3-8 pompes au sol sont probablement infaisables proprement après 4 ans d'arrêt à 88 kg : séries ratées ou mal exécutées, et l'épaule opérée est sollicitée en mauvaise position."},
+        {"type": "necessaire", "texte": "Donner sa place au cardio prévu au profil : 15-20 min de vélo à intensité modérée à la fin de chaque séance, ou séance de vélo dédiée, progressant de 10 % par semaine.", "consequence": "La composante cardio (20 %) reste à environ 10 min de marche par semaine, très loin d'un effet utile sur la santé à 55 ans (R6-P21)."},
+        {"type": "amelioration", "texte": "Ajouter une isométrie de quadriceps (chaise au mur à angle confortable, 3 × 20-30 s) pour renforcer le genou sans flexion profonde."},
+        {"type": "amelioration", "texte": "Écrire une règle simple de progression : quand 3 × 12 sont faits à 3 RIR, élastique plus fort ou haltère suivant."},
+        {"type": "amelioration", "texte": "Ajouter un suivi hebdomadaire de la douleur au genou (0-10) pour piloter la progression."}
+      ],
+      "points_forts": [
+        "Préparation de l'épaule opérée soignée : CARs, wall slides, face pull, oiseau, band pull-apart",
+        "Effort prudent (RIR 3-4), adapté au mode prudent, au sommeil court et à la reprise",
+        "Séances courtes qui tiennent dans le temps disponible, favorables à l'objectif d'habitude"
+      ]
+    },
+    {
+      "programme": "programme_4.md",
+      "criteres": {"C1": 5, "C2": 6, "C3": 6, "C4": 7, "C5": 5.5, "C6": 4, "C7": 4.5, "C8": 5.5, "C9": 6},
+      "sans_objet": [],
+      "ensemble": 6,
+      "points_perdus": [
+        {"critere": "C1", "perte": 5, "raison": "Le seul mouvement de traction est la traction sautée : pas de négative (R2-P17 : 3-5 × 3-5 de 3-5 s pour le débutant), pas de traction assistée à l'élastique (pourtant disponible), pas de traction scapulaire. Le row australien 2-3 × 3-4 à 4 RIR pour un max de 6 est contradictoire : avec 6 répétitions au max, 4 RIR laisse 2 répétitions."},
+        {"critere": "C2", "perte": 4, "raison": "Compression et handstand au mur sont pratiqués 2 fois par semaine, en tête de séance, ce qui est correct. Mais aucune consigne technique n'est donnée, et l'équilibre reste en dessous des 3-4 expositions par semaine (R4-F1)."},
+        {"critere": "C3", "perte": 4, "raison": "Maintiens de 5-10 s au mur et de 5-12 s en dead hang, sans maintien max de référence : durées courtes, sans lien explicite avec un max (R4-F2) ; secondes cumulées non pensées."},
+        {"critere": "C4", "perte": 3, "raison": "Aucune charge bras tendus lourde, mais la mise en charge des poignets en handstand se fait sans préparation (R4-F12)."},
+        {"critere": "C5", "perte": 4.5, "raison": "Le tirage horizontal est présent, mais aucun travail pour les dips (0 répétition) alors que les barres parallèles sont disponibles (support hold, dips négatifs). Le gainage hollow, utile pour la ligne de traction, est absent."},
+        {"critere": "C6", "perte": 6, "raison": "Le test des semaines 4, 8 et 12 porte sur la traction sautée à effort maximal, jamais sur la traction stricte, l'objectif du profil. Aucun critère de passage vers les négatives ou la traction stricte. Seuls les RIR évoluent."},
+        {"critere": "C7", "perte": 5.5, "raison": "Aucune préparation des poignets ni des épaules avant le handstand ventre au mur, aucun échauffement scapulaire avant les tractions."},
+        {"critere": "C8", "perte": 4.5, "raison": "Trois semaines « test » sur 12, avec 1 seule série dure chacune, alors que le débutant décharge seulement si besoin (R3-P9) et se contente d'une progression linéaire (R3-P2) : un quart du temps est perdu. Les séances n'utilisent que 21-32 min sur 45."},
+        {"critere": "C9", "perte": 4, "raison": "Les séances sont faisables, mais aucune consigne d'exécution n'est donnée (amplitude de la traction sautée, contrôle de la descente), et la prescription du row australien ne peut pas être suivie telle qu'écrite."},
+        {"critere": "ensemble", "perte": 4, "raison": "Quatre corrections nécessaires, centrées sur l'objectif : la traction stricte n'est ni travaillée par ses progressions classiques ni testée."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Ajouter les progressions spécifiques de la traction : négatives de 3-5 s (3 × 3-5), traction assistée à l'élastique (3 × 5-8) et tractions scapulaires, 3 fois par semaine en tête de séance, avec un critère écrit (3 × 5 négatives de 5 s propres sur 2 séances → première tentative stricte).", "consequence": "La traction sautée seule développe peu la phase haute et le contrôle : l'objectif de 3 tractions strictes risque d'être manqué."},
+        {"type": "necessaire", "texte": "Remplacer le test de traction sautée par un test de traction stricte (max de répétitions, ou durée de la négative contrôlée tant que le max est de 0).", "consequence": "On ne saura jamais si l'objectif est atteint ni quand changer de palier."},
+        {"type": "necessaire", "texte": "Corriger le row australien : choisir une inclinaison qui permette 3 × 6-8 à 2-3 RIR (corps plus vertical) au lieu de 3-4 répétitions à 4 RIR avec un max de 6.", "consequence": "La consigne ne peut pas être respectée : le pratiquant fait des séries quasi à l'échec ou n'importe quoi, et perd le principal exercice de force de tirage."},
+        {"type": "necessaire", "texte": "Ajouter 5 min de préparation des poignets et des épaules (cercles, appuis en quadrupédie, pompes scapulaires) avant le handstand ventre au mur (R4-F12), et ne monter au mur que si l'appui en pike est tenu 20 s.", "consequence": "Un débutant total qui charge ses poignets tête en bas sans préparation s'expose à des douleurs de poignet qui bloqueront aussi pompes et appuis."},
+        {"type": "amelioration", "texte": "Remplacer deux des trois semaines « test » par des semaines normales et ne garder qu'un test à mi-parcours et un en semaine 12 (R3-P2, R3-P9)."},
+        {"type": "amelioration", "texte": "Ajouter un travail de dips (support hold aux barres parallèles 3 × 10-20 s, puis négatives) et un hollow body hold."},
+        {"type": "amelioration", "texte": "Utiliser les 13 à 24 min libres par séance pour le dead hang (vers 30 s) et le travail de traction."}
+      ],
+      "points_forts": [
+        "Effort prudent adapté au débutant, aucun échec hors test",
+        "Figures introduites avec mesure (compression, handstand au mur) et placées en tête de séance",
+        "Traction travaillée 2 fois par semaine, tirage horizontal présent, séances courtes et réalistes"
+      ]
+    }
+  ]
+}

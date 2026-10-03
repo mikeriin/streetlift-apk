@@ -1,0 +1,69 @@
+{
+  "ecole": "force",
+  "programmes": [
+    {
+      "programme": "programme_1.md",
+      "criteres": {"F1": 2, "F2": 1, "F3": 1, "F4": 1, "F5": 1, "F6": 0, "F7": 1, "F8": 0, "F9": 1},
+      "sans_objet": [],
+      "ensemble": 1,
+      "points_perdus": [
+        {"critere": "F1", "perte": 8, "raison": "La traction exacte est présente, mais sous forme de 6 × tentatives maximales sur un mouvement à 0 répétition : aucune exposition réalisable. Elle est noyée parmi des dips à 0 répétition, des muscle-ups et un front lever. Aucune progression d'apprentissage (suspension, row australien, traction assistée à l'élastique). Pour un débutant, R2-P9 et R1-P9 demandent un mouvement exact réalisable 2 fois par semaine."},
+        {"critere": "F2", "perte": 9, "raison": "Échec visé sur tous les exercices, y compris les négatives lestées et les muscle-ups. +10 kg sur des négatives (8 descentes de 10 s) chez un débutant qui ne fait aucune traction, puis +2,5 kg par semaine (+37,5 kg en S12). Contraire à R2-P20 et R5-P27 : jamais d'échec chez le débutant."},
+        {"critere": "F3", "perte": 9, "raison": "6 séries par exercice dès S1, puis +2 séries par semaine : 28 séries par exercice et par séance en S12. 48 descentes excentriques lestées par séance, 3 fois par semaine. R2-P8 prévoit 4 à 8 séries par semaine et par mouvement pour un débutant."},
+        {"critere": "F4", "perte": 9, "raison": "Progression arbitraire et exponentielle en séries et en charge, aucune décharge en 12 semaines (« aucun allègement »). La double progression simple de R3-P2 et R5-P3 est ignorée."},
+        {"critere": "F5", "perte": 9, "raison": "L'objectif à 12 semaines (3 tractions) n'est préparé par aucun test intermédiaire ni aucune semaine allégée avant le test final (R2-P10 débutant, R3-P16 : 1RM ou répétitions estimés toutes les 4 à 6 semaines)."},
+        {"critere": "F6", "perte": 10, "raison": "Négatives lestées à 10 s, muscle-up en élan, front lever et échec chez un débutant complet : techniques servies sans prérequis et empilées. R2-P17 réserve au débutant les négatives au poids du corps, 3 à 5 × 3 à 5 de 3 à 5 s. R2-P22 : matrice d'accès violée."},
+        {"critere": "F7", "perte": 9, "raison": "Aucun tirage horizontal alors que le row australien (6 répétitions) est la base de la traction. Pas d'apprentissage de la suspension, pas de gainage. Sauts sur box 5 × 20 sans lien avec l'objectif. Déséquilibre poussée/tirage."},
+        {"critere": "F8", "perte": 10, "raison": "Hausse brutale du volume, échec sur des mouvements à risque (muscle-up, dips complets impossibles, négatives lestées), aucune décharge. Douleurs de coude déclarées « normales, continuer », contraire à R5-P23 et R5-P24. Risque élevé de tendinopathie du coude et de rhabdomyolyse (48 excentriques lestés dès S1)."},
+        {"critere": "F9", "perte": 9, "raison": "Séance estimée à environ 90 min pour 45 min disponibles. Repos de 45 s entre des séries à l'échec. « Maximum de tentatives » pour des mouvements à 0 répétition rend la séance incompréhensible. Pas de box au matériel du parc. Pas d'échauffement."},
+        {"critere": "ensemble", "perte": 9, "raison": "Programme dangereux et sans rapport avec un débutant complet : plafond à 5 pour risque réel, largement dépassé vers le bas. Plus de trois corrections nécessaires, chacune majeure."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Supprimer l'échec sur tous les exercices et viser 2 à 3 répétitions en réserve (R2-P20, R5-P27).", "consequence": "Échecs répétés sur des mouvements à risque, avec un risque élevé de blessure et sans apprentissage technique."},
+        {"type": "necessaire", "texte": "Retirer les négatives lestées et les remplacer par des négatives au poids du corps, 3 à 5 × 3 à 5 descentes de 3 à 5 s (R2-P17).", "consequence": "48 excentriques lestés par séance chez un non-entraîné : courbatures sévères, risque de rhabdomyolyse et de tendinopathie du coude."},
+        {"type": "necessaire", "texte": "Retirer le muscle-up, le front lever et les dips complets. Construire la traction avec la suspension active, les scapular pulls, le row australien progressif, la traction assistée à l'élastique et les négatives.", "consequence": "Mouvements infaisables (0 répétition) et techniques sans prérequis : aucune progression vers les 3 tractions, et risque pour l'épaule et le coude."},
+        {"type": "necessaire", "texte": "Remplacer « +2 séries par semaine, aucun allègement » par une double progression de 4 à 8 séries par semaine et par mouvement (R2-P8, R3-P2, R5-P3), avec une semaine allégée avant le test.", "consequence": "28 séries par exercice en S12 : surmenage, blessure et abandon avant l'échéance."},
+        {"type": "necessaire", "texte": "Remplacer « douleurs de coude normales, continuer » par les seuils de R5-P23 : 0 à 2/10 continuer, 3 à 4/10 sans progresser, 5/10 régresser, 6/10 ou plus arrêter et consulter.", "consequence": "Une tendinopathie naissante sera aggravée au lieu d'être gérée."},
+        {"type": "necessaire", "texte": "Ramener la séance à 45 min (4 à 5 exercices, repos de 2 à 3 min sur le tirage) et retirer les sauts sur box (matériel absent).", "consequence": "Séance infaisable dans le temps et avec le matériel donnés."},
+        {"type": "necessaire", "texte": "Ajouter du tirage horizontal (row australien) et prévoir un test de répétitions maximales toutes les 4 semaines.", "consequence": "Déséquilibre poussée/tirage et aucun pilotage vers l'objectif des 3 tractions."},
+        {"type": "amelioration", "texte": "Écrire un échauffement spécifique (épaules, scapulas, suspension) et des consignes techniques (gainage creux, départ bras tendus)."}
+      ],
+      "points_forts": ["Le mouvement visé (traction pronation) figure dans chaque séance.", "Trois séances par semaine, ce qui correspond aux disponibilités du profil."]
+    },
+    {
+      "programme": "programme_2.md",
+      "criteres": {"F1": 9.5, "F2": 9.5, "F3": 8.5, "F4": 9, "F5": 9.5, "F6": 8.5, "F7": 9, "F8": 8.5, "F9": 9.5},
+      "sans_objet": [],
+      "ensemble": 9,
+      "points_perdus": [
+        {"critere": "F1", "perte": 0.5, "raison": "La règle « traction 3 fois par semaine » est contredite par le samedi (traction au poids du corps 3 × 12), qui fait 4 expositions de tirage, dont 3 jours consécutifs jeudi-vendredi-samedi, chez un athlète aux coudes sensibles (R2-P7 : plafonner par la tolérance tendineuse)."},
+        {"critere": "F2", "perte": 0.5, "raison": "Muscle-up lesté en transmutation à 5 × 2 à 85–88 % puis 2 simples à 90 % : à 88 %, une double laisse probablement moins de 2 répétitions en réserve, ce qui contredit la règle « 2 RIR au moins sur le muscle-up lesté » (R5-P27). Il manque un plafond de RPE. Le lest de +60,5 kg (S5) n'est pas réalisable avec des disques standard."},
+        {"critere": "F3", "perte": 1.5, "raison": "Les séries du tableau ne concordent pas avec les séances de S1 : dips 14 séries lestées écrites contre 10 annoncées, muscle-up 8 contre 5, traction 12 contre 10 (hors poids du corps du samedi). Les réductions en pourcentage (−45 %, −25 %) deviennent ambiguës. Le volume reste dans la fourchette élite de R2-P8."},
+        {"critere": "F4", "perte": 1, "raison": "Les blocs, l'ondulation, les décharges (R3-P9) et la surcharge conditionnelle en S−3 (R3-P15) sont bien placés. Il manque des critères explicites de passage de phase (par exemple atteindre les charges de tête prévues à RPE ≤ 8,5 avant de passer en transmutation), au-delà de la seule condition de fatigue de S9."},
+        {"critere": "F5", "perte": 0.5, "raison": "Affûtage conforme (R3-P12, R3-P14 : dernier lourd à J−9, dernière séance à J−4, 2 jours de repos), barres prévues. Le lundi de S11, dips 2 × 3 à 80 % descend sous 85 % sur une série principale avant la dernière séance (R3-P13)."},
+        {"critere": "F6", "perte": 1.5, "raison": "Les clusters de dips répondent au point faible nommé (verrouillage) avec une dose conforme à R2-P12, mais sans critère d'arrêt (première répétition ralentie). L'excentrique accentué de traction à 100 % (S1–S3) ne répond à aucun problème nommé (R2-P22) et charge le coude de l'antécédent, sans critère de retrait propre (R2-P17 : au premier signal tendineux)."},
+        {"critere": "F7", "perte": 1, "raison": "Points faibles bien traités (dips avec pause en haut, développé serré, transition à l'élastique), antagonistes et tronc présents. Certains accessoires ne sont pas justifiés (extension lombaire, curl marteau, réduit « de moitié » sans précision)."},
+        {"critere": "F8", "perte": 1.5, "raison": "Règle de douleur du coude conforme à R5-P23. En revanche, 4 jours de tirage dont 3 consécutifs, un excentrique à 100 % du 1RM en pic de volume et l'absence de bilan kiné avant le bloc lourd (R5-P20, élite) pour un athlète dont le coude a déjà cédé en fin de gros cycle de traction."},
+        {"critere": "F9", "perte": 0.5, "raison": "Séances dans le temps, repos précisés, échauffement écrit. Lest de +60,5 kg non réalisable ; les semaines 9 à 12 sont données en pourcentages seulement (calculables)."},
+        {"critere": "ensemble", "perte": 1, "raison": "Aucune correction nécessaire : programme de pic sûr et individualisé. Il reste plusieurs améliorations (cohérence du tableau des séries, fréquence de tirage, excentrique accentué)."}
+      ],
+      "corrections": [
+        {"type": "amelioration", "texte": "Aligner le tableau des séries directes sur les séances écrites, ou l'inverse, pour que les réductions de −45 % et −25 % soient calculables sans ambiguïté."},
+        {"type": "amelioration", "texte": "Remplacer la traction au poids du corps du samedi par du tirage horizontal ou la retirer, pour respecter la règle annoncée de 3 expositions de traction et éviter 3 jours de tirage consécutifs."},
+        {"type": "amelioration", "texte": "Supprimer l'excentrique accentué de traction (S1–S3) ou le justifier par un problème nommé, avec retrait au premier signal tendineux (R2-P17, R2-P22)."},
+        {"type": "amelioration", "texte": "Plafonner le muscle-up lesté de transmutation à RPE 8 (2 RIR) plutôt qu'à 85–88 % fixes."},
+        {"type": "amelioration", "texte": "Ajouter aux clusters de dips l'arrêt à la première répétition ralentie (R2-P12)."},
+        {"type": "amelioration", "texte": "Prévoir un bilan kiné du coude avant le bloc de transmutation (R5-P20, élite)."},
+        {"type": "amelioration", "texte": "Arrondir les charges aux disques disponibles (+60 ou +61,25 kg) et ajouter des critères de passage de phase."}
+      ],
+      "points_forts": [
+        "Pourcentages calculés sur la charge totale (R2-P4), charges de S1 vérifiables et justes (+50 kg ≈ 79 %, +82,5 kg ≈ 79 %, squat 150 kg = 79 %).",
+        "Périodisation complète en blocs avec ondulation interne, décharges aux jonctions et surcharge S−3 conditionnelle (R3-P4, R3-P9, R3-P15).",
+        "Affûtage de 2 semaines conforme : dernier lourd ≥ 90 % à J−9 dans l'ordre et avec les commandements, dernière séance à J−4, 2 jours d'arrêt, plan des trois barres (R3-P12 à P14).",
+        "Top set, back-offs et règle d'ajustement si le top set est manqué ; aucun échec hors compétition.",
+        "Points faibles (verrouillage du dips, transition du muscle-up) traités par des variantes et techniques ciblées.",
+        "Règle de gestion du coude chiffrée (3/10 et 5/10) et fréquence lourde jamais deux jours de suite."
+      ]
+    }
+  ]
+}

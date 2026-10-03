@@ -1,0 +1,128 @@
+{
+  "ecole": "hypertrophie",
+  "programmes": [
+    {
+      "programme": "programme_1.md",
+      "criteres": {"H1": 5, "H2": 7, "H3": 7, "H4": 6, "H5": 5, "H6": 6, "H7": 8, "H8": 4.5, "H9": 4},
+      "sans_objet": [],
+      "ensemble": 4.5,
+      "points_perdus": [
+        {"critere": "H1", "perte": 5, "raison": "Dorsaux S3-S5 et S9-S11 : traction un bras 5 + traction lestée 5 + tirage vertical 4 (lundi) + front lever 4 + traction lestée 6 (jeudi) + traction pronation 4 (samedi) + muscle-up 2 ≈ 30 séries directes/sem., au-dessus du plafond avancé de 25 et du seuil de 20 (R1-P1, R1-P3) ; lundi ≈ 14 séries de dorsaux en une séance (> 10, R1-P4, R6-P3). Biceps ≈ 9 séries directes (3 curls) + ≈ 15 indirectes ≈ 24 fractionnées en pleine préparation de compétition : volume d'isolation sans rapport avec l'objectif de force."},
+        {"critere": "H2", "perte": 3, "raison": "Fréquence 2-3 expositions par groupe correcte, mais le volume de tirage est concentré le lundi (14 séries) et le mardi empile squat pause, soulevé de terre, roumain, dips de compétition et dips barre fixe (≈ 20 séries lourdes) ; aucune alternance lourde/légère par groupe hors semaines de test."},
+        {"critere": "H3", "perte": 3, "raison": "Polyarticulaires à 3 → 2 RIR, cohérent ; mais isolations à 2,5 → 1,5 RIR alors que l'avancé travaille l'isolation à 0-1 (R1-P13), marges uniformes ; S12 mardi : Dips sur barre fixe lesté 1 × 1 à 16 à effort maximal (10/10) la semaine de la compétition, en contradiction avec R5-P27 et R3-P14. Points rendus pour les séries de calibrage."},
+        {"critere": "H4", "perte": 4, "raison": "Soulevé de terre conventionnel + soulevé de terre roumain le même mardi (4 + 4 séries à 2 RIR) : doublon de charnière lourde sans raison pour un streetlifteur, qui squatte 48 h après ; trois curls et trois élévations latérales ; surtout, le muscle-up lesté — mouvement de compétition visé à +22,5 kg — n'apparaît jamais : seul un muscle-up strict au poids du corps 2 × 2-5 en « technique »."},
+        {"critere": "H5", "perte": 5, "raison": "Aucune règle écrite (répétitions puis charge) ; le bloc 2 repart exactement aux charges du bloc 1 (S7 : traction +17,5 kg, dips +37,5 kg, squat 110 kg = S1) et culmine aux mêmes 81 % qu'en S5 : aucune surcharge d'un bloc à l'autre (R5-P3). La trajectoire simulée le confirme : +0,03 %/sem., meilleure série de l'échéance à 94 % des semaines précédentes."},
+        {"critere": "H6", "perte": 4, "raison": "Tirage ≥ poussée et arrière d'épaule traités, mais le point faible déclaré (départ bras tendus lent en traction lestée) n'est ciblé par aucun exercice (pas de traction depuis l'arrêt, ni pause bras tendus, ni traction scapulaire lestée) ; volume esthétique (curls, shrugs, 3 élévations latérales) ajouté au lieu d'être déplacé vers ce point faible (R4-H2)."},
+        {"critere": "H7", "perte": 2, "raison": "Repos 3 min sur les mouvements de compétition à 77-81 %, correct, mais 4-5 min seraient plus adaptés au-delà de 80 % ; séances de 63-71 min dans les 90 min disponibles ; pas de superset pour les accessoires."},
+        {"critere": "H8", "perte": 5.5, "raison": "Pas d'affûtage : S11 est la semaine la plus chargée (125 séries dures, 81 %) et S12 enchaîne directement les tests de compétition (R3-P12 avancé : 1-2 sem. à −40/−50 % ; R3-P13 : ≥ 85 % sur les séries principales). Aucune série ≥ 90 % à J−7/J−10 (R3-P14). Seule la S6 (test) allège ; S7-S11 = 5 semaines à 92-125 séries sans décharge."},
+        {"critere": "H9", "perte": 6, "raison": "L'échéance (4 records visés) est mal servie : muscle-up lesté jamais entraîné, pas d'affûtage, tests maximaux répartis lundi-mardi-jeudi de la semaine de compétition, point faible ignoré ; rien ne dit ce qui change si la récupération ne suit pas."},
+        {"critere": "ensemble", "perte": 5.5, "raison": "Cinq corrections nécessaires, dont un mouvement de compétition absent et un affûtage absent (plafond 6 pour l'échéance), plus une série à l'échec maximal en semaine de compétition (risque, plafond 5) ; la trajectoire simulée montre une stagnation."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Ajouter le muscle-up lesté (2 expositions/sem., 2-3 séries de 1-3 à 70-85 %, RIR ≥ 2, R5-P27) dès le bloc 1, en remplacement du muscle-up strict de technique.", "consequence": "L'athlète arrivera en compétition sans avoir porté de lest au muscle-up depuis le test d'il y a 3 semaines : +22,5 kg est hors de portée et le total en pâtit."},
+        {"type": "necessaire", "texte": "Transformer S11-S12 en affûtage : S11 volume −40 à −50 % en gardant ≥ 85 % sur les mouvements de compétition, dernier lourd (≥ 90 %, sans échec) à J−7/J−10, dernière séance J−3/J−4, retirer les tests maximaux et la série 10/10 de dips barre fixe de la semaine de compétition (R3-P12 à P14).", "consequence": "Il se présente fatigué par la semaine la plus lourde du cycle et par des tests maximaux faits quelques jours avant : la simulation montre déjà la meilleure série de l'échéance à 94 % des semaines précédentes."},
+        {"type": "necessaire", "texte": "Ramener le tirage à ≈ 20-22 séries/sem. et ≤ 10 par séance : supprimer le tirage vertical poulie ou la traction un bras assistée le lundi, réduire la traction pronation du samedi.", "consequence": "30 séries de dorsaux par semaine (14 le lundi) accumulent une fatigue des fléchisseurs du coude et des dorsaux qui freine la traction lestée, le mouvement principal (R1-P3, R1-P4)."},
+        {"type": "necessaire", "texte": "Écrire une progression de charge d'un bloc à l'autre : le bloc 2 doit partir des charges finales du bloc 1 (ou du test de S6), pas des charges de S1, puis monter vers 85-90 %.", "consequence": "Le bloc 2 reproduit le bloc 1 au kilo près : pas de surcharge, donc pas de gain de force vers +65 / +97,5 / 170 kg."},
+        {"type": "necessaire", "texte": "Traiter le point faible : 2-3 séries de traction lestée avec pause de 2 s bras tendus (ou départ arrêt) le lundi, à la place d'un des exercices de tirage redondants.", "consequence": "Le départ bras tendus reste le point de blocage et limite le 1RM de traction en compétition."},
+        {"type": "amelioration", "texte": "Ne garder qu'une charnière le mardi (roumain 3 × 6-8) et retirer le soulevé de terre conventionnel, qui n'est pas une épreuve et charge le dos avant le squat du jeudi."},
+        {"type": "amelioration", "texte": "Réduire les curls à un exercice et les élévations latérales à deux pendant la préparation ; isolations à 0-1 RIR sur la dernière série (R1-P13 avancé)."},
+        {"type": "amelioration", "texte": "Repos de 4 min au-delà de 80 % sur les mouvements de compétition ; ajouter une règle de repli (RIR dégradé de 2 points à charge égale → retirer une série, R3-P11)."}
+      ],
+      "points_forts": [
+        "Répartition sur 5 séances qui respecte les durées disponibles (≤ 71 min pour 90 min).",
+        "Charges de départ chiffrées en lest et en % du 1RM, avec séries de calibrage.",
+        "Tirage supérieur à la poussée, arrière d'épaule et ischios (nordic) présents.",
+        "Rotation d'exercices accessoires entre les deux blocs."
+      ]
+    },
+    {
+      "programme": "programme_2.md",
+      "criteres": {"H1": 6.5, "H2": 8, "H3": 7, "H4": 6, "H5": 4.5, "H6": 5, "H7": 8, "H8": 8, "H9": 6.5},
+      "sans_objet": [],
+      "ensemble": 7,
+      "points_perdus": [
+        {"critere": "H1", "perte": 3.5, "raison": "Haut du corps dans la fourchette débutant (pectoraux ≈ 7,5, dos ≈ 10 en S2-S4), mais ischios sous le plancher de 4 (soulevé de terre kettlebell 3 en charnière + reverse hyper 2 ≈ 3-4 fractionnées), quadriceps à 4 séries en semaines d'introduction (fente 2 + Spanish squat 2) (R1-P1, R5-P1) ; à l'inverse 4 exercices d'épaule accessoires (élévations latérales ×2, W/Y raise, rotation externe)."},
+        {"critere": "H2", "perte": 2, "raison": "Corps entier 3 fois, chaque groupe 2 fois (R6-P3 débutant) ; mais le lundi « haut du corps » est le seul jour sans travail de cuisse, et le volume de jambes est minime à chaque séance."},
+        {"critere": "H3", "perte": 3, "raison": "RIR 4 → 3 uniforme sur polyarticulaires et isolations, sans rapprocher les isolations de l'échec (débutant 2-3 RIR, R1-P13) ; chaque bloc revient à 4 RIR ; la simulation montre un RIR réel de 5 à 6 sur le développé couché, donc des séries peu productives. Plages 8-12 / 10-15 adaptées."},
+        {"critere": "H4", "perte": 4, "raison": "Soulevé de terre kettlebell et Spanish squat à l'élastique : exercices à charge plafonnée ou non mesurable, impossibles à surcharger sur 12 semaines alors que barre, rack, presse à cuisses et poulie sont disponibles ; aucun leg curl ni squat/presse ; W raise, Y raise et rotation externe sans gêne déclarée."},
+        {"critere": "H5", "perte": 5.5, "raison": "Aucune règle écrite de progression de charge (R5-P3 débutant : +2-5 % haut, +5-10 % bas quand la plage est dépassée) ; les trois blocs reproduisent la même montée (2 → 3 séries, 4 → 3 RIR), S5 et S9 reviennent au point de départ de S1. Simulation : +0,65 %/sem., faible pour un débutant complet."},
+        {"critere": "H6", "perte": 5, "raison": "Déséquilibre haut/bas : en S2-S4, ≈ 6 séries de quadriceps et ≈ 4 d'ischios contre ≈ 14 séries d'épaules (développé, élévations, W raise, rotation) ; pour « prendre du muscle et de la force », le bas du corps est sous-traité."},
+        {"critere": "H7", "perte": 2, "raison": "Repos par type d'exercice corrects (2 min / 75 s, R1-P15) ; séances de 30-47 min pour 60 disponibles : 15-20 min inutilisées qui pourraient accueillir le travail de jambes manquant."},
+        {"critere": "H8", "perte": 2, "raison": "Semaines d'introduction allégées toutes les 4 semaines, cohérent pour un débutant (R3-P9 réactive) ; aucune règle de repli si fatigue."},
+        {"critere": "H9", "perte": 3.5, "raison": "Durée et matériel respectés, mais objectif « muscle et force » mal servi pour le bas du corps ; aucune introduction progressive du squat ou du développé couché alors que le profil les signale « niveau inconnu » ; rien sur ce qui change si la récupération ne suit pas."},
+        {"critere": "ensemble", "perte": 3, "raison": "Programme sûr et lisible, mais deux corrections nécessaires : bas du corps sous-dosé avec des exercices non progressables, et absence de règle de surcharge."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Remplacer le soulevé de terre kettlebell par un soulevé de terre roumain haltères ou barre, le Spanish squat par une presse à cuisses ou un goblet squat (3 × 8-12), et ajouter un leg curl à la machine/poulie 2 × 10-15 ; viser 6-10 séries/sem. pour quadriceps et ischios.", "consequence": "Le bas du corps restera sous le plancher de volume avec des charges qui ne peuvent pas monter : prise de muscle et de force des jambes minime sur 12 semaines."},
+        {"type": "necessaire", "texte": "Écrire une double progression : quand toutes les séries atteignent le haut de la plage au RIR visé, +2-5 % (haut du corps) ou +5-10 % (bas du corps) ; ne pas revenir aux charges de S1 à chaque bloc.", "consequence": "Sans règle, l'athlète refait les mêmes charges ; la simulation montre une progression de 0,65 %/sem., très en dessous du potentiel d'un débutant."},
+        {"type": "amelioration", "texte": "Retirer W raise / Y raise / rotation externe (aucune gêne déclarée) et utiliser ce temps pour le bas du corps (R4-H2 : déplacer le volume plutôt que l'ajouter)."},
+        {"type": "amelioration", "texte": "Viser 2 RIR sur les isolations dès le bloc 2 et garder la cible du bloc précédent au lieu de revenir à 4 RIR."},
+        {"type": "amelioration", "texte": "Introduire le squat barre et le développé couché barre à charge légère en fin de bloc 1, avec une série de 3-8 pour estimer le 1RM toutes les 4-6 semaines (R3-P16)."}
+      ],
+      "points_forts": [
+        "Corps entier 3 fois par semaine, adapté au débutant (R6-P3).",
+        "Volume de départ bas (2 séries) puis hausse par palier, séries de calibrage.",
+        "Tirage ≥ poussée, repos adaptés, séances largement dans le temps disponible.",
+        "Rotation d'exercices accessoires au bloc 3."
+      ]
+    },
+    {
+      "programme": "programme_3.md",
+      "criteres": {"H1": 7, "H2": 8, "H3": 7, "H4": 7, "H5": 5, "H6": 7.5, "H7": 7.5, "H8": 8.5, "H9": 6.5},
+      "sans_objet": [],
+      "ensemble": 7,
+      "points_perdus": [
+        {"critere": "H1", "perte": 3, "raison": "Dorsaux ≈ 9 séries dynamiques + 12 séries de front lever assisté ; poussée ≈ 8 (pectoraux) / 11 (triceps) : dans la fourchette intermédiaire. Mais jambes ≈ 6 séries de quadriceps (shrimp + skater) et ≈ 15-16 séries de tronc/sem., disproportionnées ; et le volume monte de 54 à 76 séries dures entre S1 et S2 (+41 %) après 36 semaines d'arrêt (R5-P7, R5-P22 : +30 % sur 2 semaines au plus)."},
+        {"critere": "H2", "perte": 2, "raison": "Quatre séances, tirage et poussée 2-3 fois chacun ; dips (mouvement principal) une seule fois par semaine (jeudi, 4 séries) ; pas d'alternance lourde/légère."},
+        {"critere": "H3", "perte": 3, "raison": "RIR 3 → 2 uniforme sur tous les exercices, isolations et accessoires compris (R1-P13 : isolations plus près de l'échec) ; plages adaptées au sets & reps (pompes 17-26, dips 10-15)."},
+        {"critere": "H4", "perte": 3, "raison": "Bons choix pour le parc ; mais Shrimp squat débutant gardé 12 semaines pour un athlète de 3 ans (la simulation le montre à 5-6 RIR réels), dead hang et row scapulaire à faible apport musculaire ; aucune rotation vers une variante plus dure."},
+        {"critere": "H5", "perte": 5, "raison": "Aucune règle écrite (répétitions puis variante ou lest) ; chaque bloc refait la montée du bloc 1 (S6 = S1, S7 = S2…) sans hausse de difficulté. Le regain devrait être rapide (R5-P6) ; la simulation donne +0,38 %/sem. et une capacité estimée à la traction qui baisse (11,97 → 9,94)."},
+        {"critere": "H6", "perte": 2.5, "raison": "Tirage ≥ poussée, ischios (nordic) traités ; jambes au minimum et 16 séries de tronc prennent la place de travail utile au sets & reps."},
+        {"critere": "H7", "perte": 2.5, "raison": "Repos de 90 s sur tractions 6-9 et dips 10-15 : en dessous de 120-150 s pour un intermédiaire (R1-P15) ; séances de 42-49 min pour 60 disponibles."},
+        {"critere": "H8", "perte": 1.5, "raison": "Décharges en S5 et S10 (toutes les 5 semaines, −50 % de séries, RIR ≥ 4) conformes à R3-P9 ; aucune règle de repli en cours de bloc."},
+        {"critere": "H9", "perte": 3.5, "raison": "Matériel du parc et durée respectés, départ à RIR 3 prudent ; mais la reprise après 36 semaines ne suit pas de barème de volume (saut S1 → S2), aucun retest des maxima vieux de 40 semaines, et rien ne dit ce qui change si coudes/épaules (tendons, R5-P6) réagissent."},
+        {"critere": "ensemble", "perte": 3, "raison": "Programme sûr dans l'ensemble et adapté au parc, avec décharges bien placées, mais deux corrections nécessaires : la hausse de volume de la S2 et l'absence de règle de progression."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Lisser la reprise : passer de 54 à ≈ 62-65 séries en S2 puis ≈ 70-76 en S3 (+10-20 %/sem., R5-P22), au lieu d'ajouter une série à chaque exercice dès la S2.", "consequence": "Un saut de +41 % de volume après 9 mois d'arrêt expose les tendons du coude et de l'épaule (front lever, dips, handstand), qui reviennent moins vite que le muscle (R5-P6)."},
+        {"type": "necessaire", "texte": "Écrire une double progression : quand le haut de la plage est atteint sur toutes les séries au RIR visé, passer à la variante suivante (shrimp squat complet, front lever un genou, traction lestée légère) ; chaque bloc part du niveau atteint, pas des paramètres de S1.", "consequence": "Les trois blocs se répètent à l'identique et l'athlète ne retrouvera pas ses 12 tractions / 20 dips en 12 semaines (la simulation montre une capacité estimée en baisse)."},
+        {"type": "amelioration", "texte": "Tester les répétitions maximales (traction, dips, pompes) en S1 et après chaque décharge (R3-P17) pour recalibrer les plages."},
+        {"type": "amelioration", "texte": "Monter les repos à 2 min sur tractions et dips ; ramener le tronc à 8-10 séries/sem. et ajouter une 2e exposition aux dips (lundi ou samedi)."},
+        {"type": "amelioration", "texte": "Rapprocher les accessoires (pompe sphinx, row archer) de 1-2 RIR à partir du bloc 2."}
+      ],
+      "points_forts": [
+        "Départ prudent à RIR 3 et volume de S1 modéré après un long arrêt.",
+        "Décharges placées en S5 et S10, conformes à R3-P9.",
+        "Exercices tous faisables au parc avec barre fixe, parallèles, barre basse et élastique.",
+        "Équilibre tirage/poussée et travail des ischios (nordic) présents."
+      ]
+    },
+    {
+      "programme": "programme_4.md",
+      "criteres": {"H1": 2, "H6": 3, "H7": 3, "H8": 4, "H9": 4},
+      "sans_objet": ["H2", "H3", "H4", "H5"],
+      "ensemble": 4.5,
+      "points_perdus": [
+        {"critere": "H1", "perte": 8, "raison": "Zéro série de renforcement sur 12 semaines (« séries dures : 0 ») alors que le renforcement du coureur réduit le risque de blessure de près de deux tiers (RR 0,34, R6-P22 : débutant 2 séances légères) ; mollets, fessiers, quadriceps et tronc entièrement oubliés."},
+        {"critere": "H6", "perte": 7, "raison": "Aucun travail des muscles qui servent la course (mollets/soléaire, fessiers, quadriceps) : seuls des étirements, dont l'effet préventif est nul (R6-P22)."},
+        {"critere": "H7", "perte": 7, "raison": "Le test de 10 000 m est placé le mardi en S4, S8 et S12 (80 min estimées) alors que le mardi offre 45 min : séance infaisable telle qu'écrite ; dimanche S3/S7/S11 à 61 min pour 60."},
+        {"critere": "H8", "perte": 6, "raison": "Pas d'affûtage : S11 est la semaine la plus longue (sortie de 54-60 min) et S12 enchaîne l'échéance (R6-P20 débutant : 5-7 jours allégés). Le premier 10 km (≈ 75-80 min) arrive en S4 après une plus longue sortie de 54-60 min (≈ 130 %, au-delà de 110 %, R6-P16)."},
+        {"critere": "H9", "perte": 6, "raison": "Distance cible traitée par tests répétés plutôt que par progression de la sortie longue ; aucune indication d'allure ou d'effort (colonne vide, R6-P14 débutant : RPE / test de la parole) ; aucune règle de repli."},
+        {"critere": "ensemble", "perte": 5.5, "raison": "Plus de trois corrections nécessaires, dont une séance infaisable dans le temps et une progression brutale vers le 10 km (plafond 5) ; l'absence totale de renforcement est la faute centrale pour ma grille."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Ajouter 2 blocs de renforcement de 15-20 min (fin du mardi et du jeudi) : mollets debout / soléaire genou fléchi 2-3 × 12-20, fente ou step-up sur box/escaliers 2-3 × 8-12, pont fessier unilatéral 2-3 × 10-15, gainage ; 2-3 RIR, progression par répétitions puis variante (R6-P22).", "consequence": "Une débutante qui double sa distance de course sans renforcement reste exposée au risque de blessure que le renforcement réduit d'environ deux tiers."},
+        {"type": "necessaire", "texte": "Déplacer le 10 km (tests et échéance) sur le dimanche, le seul jour à 60 min, ou le remplacer en S4/S8 par une sortie longue chronométrée qui tient dans la plage disponible.", "consequence": "Telle qu'écrite, la séance de 80 min ne tient pas dans les 45 min du mardi : elle sera écourtée ou sautée."},
+        {"type": "necessaire", "texte": "Supprimer le 10 km de S4 et faire monter la sortie longue de ≤ 10 % par rapport à la plus longue des 30 derniers jours (45 → 50 → 55 → 60 → 65 → 70 min), pour atteindre ≈ 70 min vers S9-S10 (R6-P16).", "consequence": "Passer d'une sortie de 54-60 min à un 10 km de ≈ 80 min dès la S4 est un saut de ≈ 130 % qui augmente le risque de blessure (rapports 1,5 à 2,3 au-delà de 110 %)."},
+        {"type": "necessaire", "texte": "Alléger S11-S12 : S11 à −30/−40 % de volume, dernière sortie longue à J−7/J−10, deux footings courts dans la semaine de course (R6-P20).", "consequence": "Elle se présente au départ fatiguée par sa semaine la plus chargée."},
+        {"type": "amelioration", "texte": "Indiquer l'intensité de chaque footing (RPE 3-4/10, test de la parole, R6-P14) et une règle de repli (douleur ≥ 3/10 → ne pas progresser, R5-P23)."},
+        {"type": "amelioration", "texte": "Réduire les étirements statiques, sans effet préventif, au profit du renforcement (R6-P22)."}
+      ],
+      "points_forts": [
+        "Trois séances de course continue en endurance fondamentale, cohérentes avec un débutant (R6-P15).",
+        "Hausse du volume hebdomadaire de course de 10-20 % dans chaque bloc.",
+        "Séances de footing courtes en semaine et sortie longue le dimanche."
+      ]
+    }
+  ]
+}

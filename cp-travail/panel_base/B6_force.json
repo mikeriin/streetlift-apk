@@ -1,0 +1,123 @@
+{
+  "ecole": "force",
+  "programmes": [
+    {
+      "programme": "programme_1.md",
+      "criteres": {"F1": 5, "F2": 5, "F3": 5.5, "F4": 6, "F7": 5, "F8": 8, "F9": 6.5},
+      "sans_objet": ["F5", "F6"],
+      "ensemble": 6,
+      "points_perdus": [
+        {"critere": "F1", "perte": 5, "raison": "Les fessiers sont la priorité déclarée, mais le hip thrust n'apparaît qu'une fois par semaine (mardi), classé accessoire, à 2–3 séries ; le seul mouvement noté 'principal' du lundi est le développé couché, qui n'est pas visé. Fréquence du travail prioritaire inférieure à 2 (R2-P7, R2-P9)."},
+        {"critere": "F2", "perte": 5, "raison": "Charges incohérentes : développé couché à 27,5 kg annoncé '≈70 %' alors que 70 % de 45 kg font 31,5 kg (61 %), back squat à 50 kg annoncé '70 %' pour 80 kg (62,5 %). Des % de 1RM sont donnés sur des exercices sans 1RM connu (haltères, belt squat, rowings). En semaine 3, la charge passe à '≈71 %' sans changer de kilo (R2-P1, R2-P4)."},
+        {"critere": "F3", "perte": 4.5, "raison": "Volume direct fessiers d'environ 2 à 3 séries par semaine (hip thrust), alors que le vendredi garde 2 écartés pectoraux (6 séries), sans lien avec l'objectif. Faisceau moyen correct (2 élévations latérales + rowing menton), mais tous les exercices ont le même dosage (R1-P5)."},
+        {"critere": "F4", "perte": 4, "raison": "Les blocs et les décharges en S5 et S10 sont lisibles, mais la progression ne se fait que par le RIR (3 → 2) et le nombre de séries. Aucune règle de charge (R5-P3). Trajectoire : +0,096 %/semaine et capacité estimée en baisse sur squat et développé couché."},
+        {"critere": "F7", "perte": 5, "raison": "Pas de travail de fessiers ciblé autre que le hip thrust (ni abduction, ni fente, ni step-up). Les isolations bras et pectoraux sont nombreuses alors que les points faibles déclarés sont les fessiers et les épaules (R2-P9)."},
+        {"critere": "F8", "perte": 2, "raison": "Pas de faute, marges RIR ≥ 2, mais rien n'est personnalisé (aucune consigne sur le rowing menton ni règle de douleur)."},
+        {"critere": "F9", "perte": 3.5, "raison": "Séances de 27–45 min estimées sur 75 disponibles : le temps libre n'est pas utilisé pour la priorité. Une majorité de charges 'à déterminer' sans méthode de calibrage écrite."},
+        {"critere": "ensemble", "perte": 4, "raison": "Trois corrections nécessaires (priorité fessiers, règle de progression de charge, charges incohérentes). Programme assez générique : il conviendrait tel quel à beaucoup d'autres profils."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Faire des fessiers un mouvement principal 2 à 3 fois par semaine : hip thrust lourd (par ex. 3–4 × 6–10 à 70–80 % de 110 kg, soit 77–88 kg) le mardi et le jeudi, plus fente bulgare ou step-up et abduction, avec 10–16 séries directes par semaine ; utiliser le temps libre des séances.", "consequence": "La priorité déclarée reçoit moins de 4 séries par semaine : le développement des fessiers ne progressera pas significativement en 12 semaines."},
+        {"type": "necessaire", "texte": "Écrire une règle de double progression (R5-P3) : quand le haut de la fourchette est atteint au RIR visé deux séances de suite, +2,5 kg au bas du corps, +1–2 kg au haut du corps.", "consequence": "Les charges restent fixes pendant 12 semaines (simulation : +0,1 %/semaine), donc le stimulus mécanique stagne."},
+        {"type": "necessaire", "texte": "Corriger les charges : 70 % = 31,5 kg au développé couché et 56 kg au squat ; supprimer les % de 1RM sur les exercices sans référence et les remplacer par 'charge permettant le RIR visé'.", "consequence": "L'athlète ne sait pas s'il faut suivre le kilo ou le pourcentage ; la consigne se contredit sur la charge réelle."},
+        {"type": "amelioration", "texte": "Remplacer un des deux écartés du vendredi par une élévation latérale ou un développé haltères, au service du deltoïde moyen."},
+        {"type": "amelioration", "texte": "Renommer les séances 'hypertrophie' et séparer une série lourde (6–8 rép.) du volume de construction sur squat et hip thrust (R2-P6)."},
+        {"type": "amelioration", "texte": "Écrire un échauffement spécifique avant le squat et le soulevé de terre."}
+      ],
+      "points_forts": [
+        "Décharges placées toutes les 5 semaines et correctement dosées (séries −33 %, RIR 4)",
+        "Marges RIR prudentes, aucun échec planifié ; 0,3 % d'échecs non voulus en simulation",
+        "Repos précisés, équilibre poussée/tirage respecté, tronc présent à chaque séance"
+      ]
+    },
+    {
+      "programme": "programme_2.md",
+      "criteres": {"F1": 6.5, "F2": 5.5, "F3": 6.5, "F4": 4.5, "F5": 3, "F7": 6.5, "F8": 6, "F9": 5},
+      "sans_objet": ["F6"],
+      "ensemble": 5,
+      "points_perdus": [
+        {"critere": "F1", "perte": 3.5, "raison": "La traction pronation revient 3 fois par semaine, ce qui est bien. Mais toutes les expositions se font au même dosage (4–6 rép., 3 RIR), sans alternance lourde/légère. Pour la course, objectif 10 km en 50 min, il n'y a ni travail au seuil ni allure spécifique : seulement de l'endurance fondamentale et du 30/30 (R2-P7)."},
+        {"critere": "F2", "perte": 4.5, "raison": "Une seule variable, le RIR (3 → 2). Aucune variante plus dure ni lest léger, et aucune cible de répétitions qui monte pour la traction (R1-P11, R5-P3)."},
+        {"critere": "F3", "perte": 3.5, "raison": "9 séries de traction par semaine, ce qui est raisonnable. En revanche, les nordiques négatifs à 10–15 répétitions sont hors des fourchettes utiles et la quantité de course est faible pour un objectif chronométré."},
+        {"critere": "F4", "perte": 5.5, "raison": "Les blocs 2 et 3 répètent le bloc 1 sans progression des répétitions ni de la variante pour la traction. Simulation : capacité de 7,4 à 7,9, loin de l'objectif de 11. Les semaines 'test' en S5 et S10 servent de décharge mais coupent les blocs au milieu (R3-P9)."},
+        {"critere": "F5", "perte": 7, "raison": "L'échéance est fixée à 12 semaines, mais la semaine 12 est une 'montée' : aucun affûtage, aucun test final ni de la traction ni du 10 km. Les seuls tests tombent en S5 et S10 (R3-P12, R2-P10)."},
+        {"critere": "F7", "perte": 3.5, "raison": "Tirage et poussée sont équilibrés et le tronc est présent. La série de pompes en T, le handstand libre et le HSPU dispersent le temps sans servir les deux objectifs."},
+        {"critere": "F8", "perte": 4, "raison": "Nordiques négatifs à 2–3 × 10–15 rép. le samedi, la veille d'une séance de course : dose excentrique très élevée pour les ischio-jambiers d'une coureuse, sans progression. Handstand libre sans prérequis vérifié (R5-P27)."},
+        {"critere": "F9", "perte": 5, "raison": "Lundi des semaines 5 et 10 : 78 min estimées pour 60 disponibles. La séance enchaîne un test de traction à l'échec et un 10 km. Le dimanche est titré 'cardio' mais commence par du HSPU."},
+        {"critere": "ensemble", "perte": 5, "raison": "Plus de trois corrections nécessaires, échéance ignorée (plafond 6), progression insuffisante pour l'objectif de traction."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Placer l'échéance en S12 : réduire le volume de 40 à 50 % sur la semaine, puis tester la traction maximale en début de semaine et le 10 km chronométré 2 à 3 jours plus tard.", "consequence": "L'objectif n'est jamais mesuré à l'échéance et l'athlète arrive au jour J sans affûtage."},
+        {"type": "necessaire", "texte": "Séparer les tests de S5 et S10 : traction maximale le lundi, 10 km un autre jour, pour respecter les 60 min du lundi.", "consequence": "La séance dépasse le temps disponible de 18 min et le 10 km est couru après un effort maximal : le résultat du test sera faussé."},
+        {"type": "necessaire", "texte": "Donner une progression à la traction : séries qui montent (par ex. 4×4 → 4×6 → 5×6), ou une séance par semaine en lest léger ou en excentrique 3–5 s, avec une cible de répétitions par bloc.", "consequence": "Les répétitions restent à 4–6 avec 3 RIR pendant 12 semaines : la simulation plafonne vers 8 tractions pour un objectif de 11."},
+        {"type": "necessaire", "texte": "Ramener les nordiques à 2–3 × 3–6 répétitions et les éloigner de la veille de la course.", "consequence": "Une dose excentrique de 30 à 45 répétitions par séance, la veille d'une course, expose à des courbatures sévères ou à une lésion des ischio-jambiers."},
+        {"type": "necessaire", "texte": "Ajouter une séance de course à allure spécifique (par ex. 3–5 × 1 km à 4:50–5:00/km) en remplacement d'un footing.", "consequence": "Sans travail au seuil ni allure cible, gagner 2 minutes sur 10 km en 12 semaines est peu probable."},
+        {"type": "amelioration", "texte": "Retirer ou alléger le handstand libre et la pompe en T, et réinvestir ce temps dans la traction ou la course."},
+        {"type": "amelioration", "texte": "Écrire un échauffement spécifique de la traction (suspension, tirages scapulaires, 1–2 séries légères)."}
+      ],
+      "points_forts": [
+        "Traction 3 fois par semaine, réparties sur des jours non consécutifs",
+        "Marges RIR prudentes, aucun échec hors tests",
+        "Tests intermédiaires prévus en S5 et S10"
+      ]
+    },
+    {
+      "programme": "programme_3.md",
+      "criteres": {"F1": 6, "F2": 5, "F3": 6, "F4": 6, "F7": 5.5, "F8": 4.5, "F9": 7},
+      "sans_objet": ["F5", "F6"],
+      "ensemble": 5,
+      "points_perdus": [
+        {"critere": "F1", "perte": 4, "raison": "L'objectif d'habitude est servi par 3 séances courtes. En revanche, chaque mouvement de base n'est vu qu'une fois par semaine et le bas du corps n'a qu'une fente latérale au poids du corps."},
+        {"critere": "F2", "perte": 5, "raison": "Charges 'à déterminer' ; en S4, S8 et S12 apparaît '≈67 % du 1RM' au développé haltères alors qu'aucun 1RM n'est connu. Simulation : RIR réel de 7–8 au rowing élastique pour une cible de 3–4, signe d'un sous-dosage sans règle de correction (R1-P11)."},
+        {"critere": "F3", "perte": 4, "raison": "Environ 20–25 séries dures par semaine, volume adapté à une reprise. Mais 3 séries de jambes seulement, et le cardio (20 % des disciplines) se limite à 9–15 min de marche alors qu'un home-trainer est disponible."},
+        {"critere": "F4", "perte": 4, "raison": "Les blocs de 4 semaines avec 'introduction' allégée tiennent lieu de décharge (acceptable pour un débutant, R3-P9). Mais aucune règle de progression de charge ou de résistance d'élastique (R5-P3) : l'élastique est dépassé (15–20 rép. sur une cible de 8–12)."},
+        {"critere": "F7", "perte": 4.5, "raison": "Bon équilibre tirage/poussée pour l'épaule opérée (face pull, oiseau, pull-apart). Bas du corps presque absent pour un homme de 55 ans, et aucun renforcement du genou adapté (quadriceps à amplitude contrôlée)."},
+        {"critere": "F8", "perte": 5.5, "raison": "Le genou droit est à 5/10 en flexion profonde, et le programme prescrit une fente latérale (flexion profonde de la jambe d'appui) et des mountain climbers sans limite d'amplitude ni règle de douleur. Selon R5-P23, une douleur de 5/10 impose de régresser. Point positif : la reprise après 200 semaines d'arrêt est prudente (RIR 4, R5-P7)."},
+        {"critere": "F9", "perte": 3, "raison": "Séances dans le temps imparti, échauffement et retour au calme écrits. Les charges ne sont pas prêtes à l'emploi."},
+        {"critere": "ensemble", "perte": 5, "raison": "La gêne du genou à 5/10 est ignorée (plafond 5). S'y ajoutent deux autres corrections nécessaires : la progression de charge et le bas du corps."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Remplacer la fente latérale par un squat sur box ou un step-up bas à amplitude indolore (douleur ≤ 3/10). Écrire la règle R5-P23 : 0–2 on continue, 3–4 on ne progresse pas, 5 on régresse l'amplitude ou la charge, ≥ 6 on arrête et on consulte si la douleur dure 2 semaines.", "consequence": "Une flexion profonde chargée sur un genou déjà à 5/10 risque d'aggraver la douleur et de faire abandonner l'habitude visée."},
+        {"type": "necessaire", "texte": "Écrire une double progression : au haut de la fourchette au RIR visé deux séances de suite, haltère plus lourd de 1–2 kg ou élastique plus fort. Supprimer les '% du 1RM' sans 1RM.", "consequence": "Les séries restent à 7–8 RIR réels (simulation) : le stimulus est trop faible pour gagner de la force en 12 semaines."},
+        {"type": "necessaire", "texte": "Ajouter du bas du corps compatible avec le genou (pont fessier, soulevé de terre roumain aux haltères, squat sur box) pour 4–6 séries par semaine.", "consequence": "Un homme de 55 ans en reprise perd de la force aux jambes, ce qui est la priorité fonctionnelle à son âge."},
+        {"type": "amelioration", "texte": "Remplacer la marche de récupération du samedi par 15–20 min de home-trainer en endurance, sans douleur au genou, pour servir la part cardio de 20 %."},
+        {"type": "amelioration", "texte": "Ajouter une consigne pour l'épaule gauche opérée : amplitude du développé couché limitée si gêne, et retrait en cas de douleur."}
+      ],
+      "points_forts": [
+        "Reprise très prudente après 200 semaines d'arrêt (RIR 4 → 3, volume faible), conforme à R5-P7",
+        "Échauffement de l'épaule (CARs, wall slides) et tirage horizontal dominant, protecteurs pour l'épaule opérée",
+        "Séances courtes, dans le temps donné, adaptées au sommeil de 6 h et à l'objectif d'habitude"
+      ]
+    },
+    {
+      "programme": "programme_4.md",
+      "criteres": {"F1": 5, "F2": 5.5, "F3": 6, "F4": 4.5, "F5": 4, "F7": 6, "F8": 7, "F9": 6.5},
+      "sans_objet": ["F6"],
+      "ensemble": 5.5,
+      "points_perdus": [
+        {"critere": "F1", "perte": 5, "raison": "Le mouvement visé (traction stricte) n'est jamais pratiqué : seulement des tractions sautées, du rowing australien et de la suspension. Ni traction assistée à l'élastique (pourtant disponible), ni excentrique 3–5 s, qui sont la séquence de R5-P8."},
+        {"critere": "F2", "perte": 4.5, "raison": "Rowing australien à 2–3 × 3–4 rép. avec 4 RIR pour un maximum de 6 : la consigne demande de pouvoir en faire 7–8, elle est donc irréalisable telle qu'écrite. Aucune intensité réglée pour la traction (le saut absorbe l'effort)."},
+        {"critere": "F3", "perte": 4, "raison": "6 séries de tractions sautées et 3–6 séries de rowing par semaine : volume de tirage modeste. Les séances durent 21–32 min sur 45 disponibles."},
+        {"critere": "F4", "perte": 5.5, "raison": "Une semaine 'test' toutes les 4 semaines avec une seule série dure : 3 semaines sur 12 presque perdues, alors que R3-P9 réserve au débutant une décharge réactive seulement. Aucune règle de progression vers une variante plus dure (R5-P3)."},
+        {"critere": "F5", "perte": 6, "raison": "Les tests portent sur un maximum de tractions sautées (1 × 1–24) et jamais sur la traction stricte, alors que l'objectif est de 3 tractions en S12. L'objectif n'est donc pas mesuré à l'échéance (R2-P10)."},
+        {"critere": "F7", "perte": 4, "raison": "Le handstand au mur et la compression straddle prennent du temps au début de séance sans servir l'objectif. Les dips (0) n'ont aucune progression (pas de dips assistés ni d'excentriques)."},
+        {"critere": "F8", "perte": 3, "raison": "Marges prudentes et pas d'échec, conformes au débutant (R5-P27). Mais le handstand ventre au mur est prescrit sans prérequis vérifié pour un débutant qui fait 8 pompes, et aucune consigne de sortie n'est écrite."},
+        {"critere": "F9", "perte": 3.5, "raison": "Séances dans le temps, repos précisés. Pas d'échauffement spécifique, et la consigne du rowing australien est contradictoire."},
+        {"critere": "ensemble", "perte": 4.5, "raison": "Trois corrections nécessaires, dont deux qui touchent directement l'objectif (méthode de première traction absente, objectif jamais testé) : l'objectif risque de ne pas être atteint ni vérifié."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Construire la séquence R5-P8 : traction assistée à l'élastique 3 × 5–8 et excentriques de 3–5 s (2–3 × 2–3, puis 3 × 5) deux fois par semaine, en gardant le rowing australien et les tirages scapulaires.", "consequence": "Les tractions sautées, sans travail excentrique contrôlé ni assistance, construisent mal la force de la position haute et du départ bras tendus : 3 tractions strictes en 12 semaines devient peu probable."},
+        {"type": "necessaire", "texte": "Tester la traction stricte en S8 et en S12 (au repos, après échauffement, 1 série maximale) au lieu des tractions sautées.", "consequence": "L'objectif n'est jamais mesuré : impossible de savoir s'il est atteint ni d'ajuster le dernier bloc."},
+        {"type": "necessaire", "texte": "Supprimer les semaines 'test' allégées de S4 et S8 (garder un test court dans une semaine normale) et ne décharger qu'en cas de besoin, comme pour tout débutant.", "consequence": "Un quart des semaines n'a qu'une seule série dure : le débutant perd une partie de ses gains les plus rapides."},
+        {"type": "amelioration", "texte": "Corriger le rowing australien : choisir une inclinaison qui permette 6–8 rép. à RIR 3, et augmenter la difficulté par l'inclinaison."},
+        {"type": "amelioration", "texte": "Ajouter des dips assistés à l'élastique ou des excentriques de dips, puisque les dips sont à 0."},
+        {"type": "amelioration", "texte": "Déplacer le handstand et la compression en fin de séance, ou les réduire, et écrire la sortie en roulade ou en pivot avant le handstand au mur."}
+      ],
+      "points_forts": [
+        "Fréquence de tirage de 3 séances par semaine avec suspension et rowing australien, une base pertinente",
+        "Marges RIR adaptées au débutant, aucun échec, progression prudente",
+        "Séances courtes et faisables au parc avec le matériel déclaré"
+      ]
+    }
+  ]
+}

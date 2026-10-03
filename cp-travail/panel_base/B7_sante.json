@@ -1,0 +1,133 @@
+{
+  "ecole": "sante",
+  "programmes": [
+    {
+      "programme": "programme_1.md",
+      "criteres": {"S1": 5, "S2": 7, "S3": 6, "S5": 4, "S6": 7, "S7": 7, "S8": 4, "S9": 6},
+      "sans_objet": ["S4"],
+      "ensemble": 4,
+      "points_perdus": [
+        {"critere": "S1", "perte": 5, "raison": "Gêne actuelle déclarée (poignets raides 2/10 après les grosses séances de planche) totalement ignorée : planche straddle 3 fois par semaine (lun, mer, sam, jusqu'à 6 séries en S9/S15), handstand 3 fois, L-sit sur parallettes 2 fois, aucune préparation des poignets (R4-F12 : 5 min avant handstand et planche), aucun seuil de douleur (R5-P23, R4-F11), aucune orientation prévue si la gêne monte."},
+        {"critere": "S2", "perte": 3, "raison": "Hausses en séries raisonnables, mais front lever passé de 3 à 6 séries en 3 semaines le vendredi (S1→S3, S7→S9 : 3→5→6), soit +100 % sur un mouvement bras tendus quand R5-P22 donne +5–10 %/sem en bras tendus à l'élite ; rien sur une semaine manquée."},
+        {"critere": "S3", "perte": 4, "raison": "Six séances par semaine sans jour de repos entre vendredi et lundi (ven-sam-dim-lun-mar-mer), allègements seulement via les semaines de test 6 et 12 ; aucune question ni règle sur sommeil, stress ou fatigue du jour (R5-P14, P15)."},
+        {"critere": "S5", "perte": 6, "raison": "Aucun échauffement écrit, aucun travail de poignet, de coiffe ou scapulaire (pas de scap pull, pas de rotation externe), budget tendineux planche + handstand + L-sit sur la même zone 5 à 6 jours par semaine (R4-F10 : 3–4 séances lourdes par zone à l'élite), alors que l'historique (poignets) le demande."},
+        {"critere": "S6", "perte": 3, "raison": "Marges uniformes 3–4 RIR quel que soit le mouvement ; RIR appliqué à des maintiens de 3–4 s sans traduction en pourcentage du max hold (R4-F2) ; échec sur traction haute lestée en S2 dans la trajectoire (calibrage à +78,75 kg)."},
+        {"critere": "S7", "perte": 3, "raison": "Nordic hamstring curl complet 3–4 × 10 à 15 dès la S1 : volume irréaliste en nordic complet, même pour un élite de figures, donc séance non faisable telle qu'écrite ; séances de 35–52 min sur 90 disponibles, temps non utilisé pour la préparation spécifique."},
+        {"critere": "S8", "perte": 6, "raison": "Échéance de 16 semaines pour la planche complète et le front lever de 15 s : la semaine 16 est une « montée » sans test final ni allègement ; les tests des semaines 6 et 12 ne testent que la planche straddle et le front lever (2 × 1–15 s), jamais la planche complète."},
+        {"critere": "S9", "perte": 4, "raison": "Effort exprimé en « rép. en réserve » sur des maintiens et des holds ; aucune consigne de douleur ou de fatigue ; incohérence de charge : traction lestée « +18,75 kg ≈ 77 % du 1RM » alors que 77 % de 119 kg (64 + 55) donne environ +27 kg."},
+        {"critere": "ensemble", "perte": 6, "raison": "Objectifs non servis : aucun travail spécifique de la planche complète (leans, half-lay, négatifs, partiels en position complète), front lever plafonné à des tenues de 4–6 s sans progression de durée vers 15 s ; la trajectoire montre une capacité réelle de front lever passant de 8,16 à 8,23 s en 16 semaines (progression moyenne 0,028 %/sem). Gêne des poignets ignorée (plafond santé à 5). Cinq corrections nécessaires."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Protéger les poignets : 5–8 min de préparation des poignets écrite avant chaque séance planche/handstand (R4-F12), seuils de douleur écrits (0–2 continuer, 3–4 sans progresser, ≥ 5 reculer d'un levier et −30 à −50 % de volume, > 5 ou nocturne : kiné ; R4-F11, R5-P23), et limiter les séances lourdes poignets à 3–4 par semaine en comptant planche, handstand et L-sit sur parallettes dans le même budget (R4-F10).", "consequence": "La raideur à 2/10 sous 5–6 expositions hebdomadaires risque d'évoluer en tendinopathie du poignet et d'interrompre tout le travail de planche avant l'échéance."},
+        {"type": "necessaire", "texte": "Ajouter une progression spécifique de la planche complète : planche lean / pseudo-planche push-ups lestés, half-lay ou straddle étroit, négatifs et partiels en position complète, avec critère de passage (3 séries propres sur 3 séances ; R4-F7) et max hold toutes les 1–2 semaines (R4-F2 élite).", "consequence": "Seule la planche straddle est entraînée, à 3–4 s et 4/10 : l'athlète arrivera en S16 sans avoir jamais travaillé la position visée et ne débloquera pas la planche complète."},
+        {"type": "necessaire", "texte": "Faire progresser la durée du front lever : séries de 50–70 % du max hold allongées par paliers (par exemple 4–6 s → 6–9 s → 8–10 s), maintiens lestés ou négatifs lents, une séance de tenues longues (R4-F2, R4-F6), un max hold toutes les 1–2 semaines.", "consequence": "Les tenues restent plafonnées à 4–6 s pendant 16 semaines ; la trajectoire confirme une stagnation à environ 8 s, loin des 15 s visées."},
+        {"type": "necessaire", "texte": "Faire de la semaine 16 (ou des semaines 15–16) un allègement suivi d'un test final : planche complète et front lever en max hold, à l'état frais, avec −40 à −50 % de volume la semaine précédente.", "consequence": "L'échéance de 16 semaines passe sans mesure de l'objectif, en pleine semaine de montée avec 120 séries dures."},
+        {"type": "necessaire", "texte": "Remplacer le nordic hamstring curl complet 10–15 répétitions par 3 × 3–6 nordics excentriques ou une variante assistée à l'élastique, sur une seule séance par semaine en début de bloc.", "consequence": "Séance infaisable telle qu'écrite ; si l'athlète force le volume, courbatures sévères et risque de lésion des ischio-jambiens."},
+        {"type": "amelioration", "texte": "Corriger le calcul des charges de traction lestée (77 % de 119 kg = environ +27 kg et non +18,75 kg) pour éviter un calibrage inutile."},
+        {"type": "amelioration", "texte": "Mettre un jour de repos dans le bloc ven-sam-dim-lun-mar-mer, ou alléger le dimanche, et écrire une règle de baisse du jour (sommeil < 6 h ou fatigue : −1 série, RIR +1 ; R5-P14)."},
+        {"type": "amelioration", "texte": "Ajouter du travail de coiffe et scapulaire (rotation externe, scap pulls, protraction) et un échauffement écrit à chaque séance."},
+        {"type": "amelioration", "texte": "Exprimer l'effort des maintiens en pourcentage du max hold et en « arrêt à la perte de ligne » plutôt qu'en répétitions en réserve."}
+      ],
+      "points_forts": [
+        "Structure en trois blocs avec semaines de test (S6, S12) qui servent aussi d'allègement.",
+        "Hausses de charge sur les mouvements lestés très prudentes (≤ 2,3 % d'une séance à l'autre) et aucun échec non voulu dans la trajectoire.",
+        "Séances courtes qui laissent de la marge sur les 90 minutes disponibles."
+      ]
+    },
+    {
+      "programme": "programme_2.md",
+      "criteres": {"S1": 7, "S2": 7, "S3": 5, "S4": 3, "S5": 6.5, "S6": 7, "S7": 7, "S8": 2, "S9": 6},
+      "sans_objet": [],
+      "ensemble": 4,
+      "points_perdus": [
+        {"critere": "S1", "perte": 3, "raison": "Rien de contre-indiqué, mais aucun échauffement écrit avant les muscle-ups (lestés compris), aucun seuil de douleur (R5-P23) alors que le volume de tirage est élevé (tractions 4–5 jours sur 5 avec MU)."},
+        {"critere": "S2", "perte": 3, "raison": "Hausse de 89 à 116 séries dures de S1 à S2 (+30 % en une semaine, au plafond de R5-P22) ; rien sur une semaine manquée ; aucune progression des répétitions totales sur les mouvements de l'épreuve."},
+        {"critere": "S3", "perte": 5, "raison": "Seul allègement : la semaine de test 6 ; la semaine de compétition est la plus chargée (117 séries dures) ; aucune règle de baisse du jour ni prise en compte de la charge de vie (R5-P14, P15)."},
+        {"critere": "S4", "perte": 7, "raison": "Endurance traitée comme de la force : muscle-up strict en 2 × 2–5 à 4/10, muscle-up lesté, traction et dips lestés en 3–6, squat de compétition 2 fois par semaine, rack pull, good morning, soulevé de terre jambes tendues ; dips au poids du corps une seule fois par semaine (2–3 × 25–30). R4-G1 demande 40/60 force/endurance chez l'avancé et ≥ 50 % du bloc spécifique dans la zone de l'épreuve ; aucune densité (R4-G6), aucun repos court (R4-G4 : 15–60 s), aucune simulation du format (R4-G7)."},
+        {"critere": "S5", "perte": 3.5, "raison": "Pompe scapulaire, row scapulaire, Cuban press : bonne prévention ; mais pas d'échauffement écrit et curls à 1 RIR en plus d'un tirage quotidien, pour les coudes d'un athlète qui fait du MU 3 fois par semaine."},
+        {"critere": "S6", "perte": 3, "raison": "Marges prudentes mais uniformes ; curls à 1 RIR alors que les mouvements de l'épreuve ne s'approchent jamais du format réel (pas d'échec sur la dernière série d'une simulation, R4-G7)."},
+        {"critere": "S7", "perte": 3, "raison": "Séances de 40–59 min, faisables, mais 7–8 exercices dont une bonne partie hors sujet (curls, élévations latérales, Russian twist) ; incohérence de charge (traction lestée « +8,75 kg ≈ 77 % du 1RM » alors que 77 % de 117 kg = environ +18 kg)."},
+        {"critere": "S8", "perte": 8, "raison": "La semaine 8 est notée ÉCHÉANCE mais c'est une « montée » à 117 séries dures : aucun affûtage (R3-P21 : 8–14 jours, −40 à −60 %), aucun circuit complet à J−7/J−10 (R3-P17), aucune stratégie de série ou de pauses (R4-G7). Trajectoire : meilleure série de la semaine d'échéance à 85,6 % des semaines précédentes."},
+        {"critere": "S9", "perte": 4, "raison": "Efforts lisibles, mais aucune consigne en cas de douleur ou de fatigue, et charges annoncées incohérentes avec les 1RM donnés."},
+        {"critere": "ensemble", "perte": 6, "raison": "Échéance ignorée (plafond 6) et objectif (14 MU, 32 tractions, 56 dips) non servi : la trajectoire montre une capacité de MU stable (11,3), une meilleure série de 7 MU en semaine 8 et une capacité estimée en baisse. Quatre corrections nécessaires."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Remplacer la semaine 8 et la fin de la semaine 7 par un affûtage de 8–10 jours : volume −40 à −60 %, allure de compétition gardée sur fractions courtes (séries de MU, tractions et dips à 50–60 % du max), dernier circuit complet à J−7/J−10, 1–2 jours de repos complet avant le jour J (R3-P21, R4-G7).", "consequence": "L'athlète arrive à la compétition après sa semaine la plus chargée et performe sous son niveau (trajectoire : 85,6 % de sa meilleure série)."},
+        {"type": "necessaire", "texte": "Construire l'endurance spécifique : au moins la moitié du volume de tirage et de poussée dans la zone de l'épreuve (séries de MU, tractions et dips à 50–80 % du max, EMOM à 40–50 %, rest-pause, repos de 15–60 s), avec une progression en répétitions totales ou en densité semaine après semaine (R4-G1, G4, G6, R3-P20).", "consequence": "Avec des MU en 2 × 2–5 et du lest en 3–6, la force progresse peut-être mais pas le nombre de répétitions : 14 MU, 32 tractions et 56 dips ne seront pas atteints."},
+        {"type": "necessaire", "texte": "Programmer des simulations du format de compétition toutes les 2 semaines (R4-G7, avancé), avec un plan de fractionnement et des pauses de 5–20 s, la dernière à J−7/J−10.", "consequence": "L'athlète n'aura jamais répété l'enchaînement MU–tractions–dips ni sa gestion des pauses, et partira trop vite ou s'arrêtera trop tôt le jour J."},
+        {"type": "necessaire", "texte": "Réduire fortement le travail lourd du bas du corps et de chaîne postérieure (squat de compétition 2 fois par semaine, rack pull, good morning, soulevé de terre jambes tendues) à une séance de maintien, et libérer ce temps et cette récupération pour les mouvements de l'épreuve.", "consequence": "Deux séances entières sur cinq servent un objectif absent du profil et prennent de la récupération (dos, préhension) sur un bloc de 8 semaines déjà court."},
+        {"type": "amelioration", "texte": "Recalculer les charges lestées à partir des 1RM (traction : 77 % de 117 kg ≈ +18 kg ; dips : 77 % de 142 kg ≈ +37 kg)."},
+        {"type": "amelioration", "texte": "Écrire un échauffement spécifique avant les muscle-ups et des seuils de douleur pour les coudes et les épaules ; limiter les curls à 2–3 RIR."},
+        {"type": "amelioration", "texte": "Ajouter une règle de baisse du jour (sommeil, stress, fatigue : −1 série, RIR +1)."}
+      ],
+      "points_forts": [
+        "Tests de répétitions maximales sur les trois mouvements de l'épreuve en semaine 6, à l'état relativement frais.",
+        "Bonne présence du travail scapulaire (row scapulaire, pompe scapulaire, Cuban press).",
+        "Hausses de charge très prudentes et aucun échec non voulu dans la trajectoire."
+      ]
+    },
+    {
+      "programme": "programme_3.md",
+      "criteres": {"S1": 4, "S2": 5, "S3": 6, "S4": 4, "S5": 6, "S6": 8.5, "S7": 7, "S9": 6},
+      "sans_objet": ["S8"],
+      "ensemble": 5,
+      "points_perdus": [
+        {"critere": "S1", "perte": 6, "raison": "Femme sédentaire de 92 kg (IMC ≈ 32,6) : footing continu de 18–20 min dès la S1 puis 22–25 min, mountain climbers et pas chassés ; impact inadapté (R5-P9 : sauts exclus avant 3 × 10 squats et 3 × 8 fentes indolores ; R6-P17 : débutant en marche-course 1 min / 1–2 min). Dips sur box à 92 kg, poids lourd sur l'épaule antérieure ; aucun seuil de douleur."},
+        {"critere": "S2", "perte": 5, "raison": "Footing de 18–20 à 22–25 min de S1 à S2 (+25 %), au-delà du garde-fou de 10–20 % par semaine (R6-P16) pour une personne qui ne court pas ; le renforcement, lui, progresse prudemment."},
+        {"critere": "S3", "perte": 4, "raison": "Sommeil de 6,5 h, stress 3/5 et déficit énergétique déclarés mais jamais cités ; des semaines d'introduction (5, 9) servent d'allègement, mais rien sur l'adaptation du jour (R5-P14 à P16)."},
+        {"critere": "S4", "perte": 6, "raison": "« Endurance fondamentale » et « rameur en endurance » sans repère d'intensité (test de la parole, RPE ; R6-P14) ; environ 30–35 min de cardio par semaine, très loin de 150 min (R6-P21) et des > 250 min de R6-P32 pour la perte de poids ; la marche annoncée dans le profil n'est jamais programmée."},
+        {"critere": "S5", "perte": 4, "raison": "Échauffement écrit seulement le mercredi ; choix d'accessoires peu utiles pour ce profil (élévations latérales, Y/W raise, reverse hyper) quand le bas du corps se limite à air squat et pont fessier."},
+        {"critere": "S6", "perte": 1.5, "raison": "Marges très prudentes (4 RIR → 3 RIR), adaptées à une débutante, mais uniformes ; RIR appliqué à des mountain climbers en secondes."},
+        {"critere": "S7", "perte": 3, "raison": "Séances de 30–40 min, 3 par semaine, dose de départ modeste ; mais pompe classique et dips sur box pour une débutante de 92 kg : exercices où elle risque d'échouer (R5-P9 : variante permettant 6–8 répétitions à RIR ≥ 3)."},
+        {"critere": "S9", "perte": 4, "raison": "Intensité du cardio incompréhensible pour ce public (« endurance fondamentale » non définie) ; aucune consigne en cas de douleur, d'essoufflement ou de fatigue."},
+        {"critere": "ensemble", "perte": 5, "raison": "Course à pied continue imposée d'emblée à une sédentaire en surpoids : risque réel pour les articulations et tendons (plafond 5). Quatre corrections nécessaires, dont l'absence de la marche pour un objectif de perte de poids durable."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Remplacer le footing continu par de la marche rapide ou de la marche-course progressive (par exemple 1 min de course / 2 min de marche, 20–30 min, 9–16 semaines ; R6-P17), ou par du vélo ou du rameur à faible impact, et retirer mountain climbers et pas chassés jusqu'à 3 × 10 squats et 3 × 8 fentes indolores (R5-P9).", "consequence": "À 92 kg sans passé sportif, 20–25 min de course continue dès la première semaine exposent genoux, tendons d'Achille et tibias, avec un risque élevé de blessure et d'abandon."},
+        {"type": "necessaire", "texte": "Définir l'intensité du cardio par le test de la parole ou un RPE 3–5/10 (R6-P14) et limiter la hausse à 10–20 % par semaine en minutes (R6-P16).", "consequence": "Sans repère, une débutante court trop vite, s'essouffle, et associe l'exercice à l'échec."},
+        {"type": "necessaire", "texte": "Programmer la marche annoncée dans le profil : un objectif de pas ou de minutes, augmenté d'environ 1 000 pas toutes les 1–2 semaines, à faible impact (R6-P32, R6-P21).", "consequence": "Avec 30–35 min de cardio par semaine, la dépense est trop faible pour une perte de poids nette et durable : l'objectif principal ne sera pas servi."},
+        {"type": "necessaire", "texte": "Remplacer la pompe classique par une pompe inclinée (mains sur box ou banc) et les dips sur box par un développé haltères ou une poussée à la machine, à une hauteur permettant 6–12 répétitions propres (R5-P9) ; écrire des seuils de douleur (R5-P23).", "consequence": "La débutante échouera ou compensera sur les pompes, et les dips sur box chargent fort l'avant de l'épaule à 92 kg, avec un risque de douleur et d'abandon."},
+        {"type": "amelioration", "texte": "Mentionner le sommeil de 6,5 h et le déficit : règle du jour (mauvaise nuit ou fatigue : −1 série, RIR +1), volume gelé plutôt que réduit (R5-P16)."},
+        {"type": "amelioration", "texte": "Remplacer élévations latérales, Y/W raise et reverse hyper par des mouvements polyarticulaires utiles (presse à cuisses, goblet squat, rowing, soulevé de terre roumain au kettlebell) et écrire un échauffement à chaque séance."},
+        {"type": "amelioration", "texte": "Prévoir une version courte (20 min) pour les semaines chargées, afin de tenir l'objectif d'habitude de 3 séances par semaine."}
+      ],
+      "points_forts": [
+        "Dose de départ modeste et marges de 4 RIR adaptées à une débutante (R5-P1).",
+        "Trois séances corps entier espacées (lundi, mercredi, samedi), conformes à R5-P2.",
+        "Retours au calme et respiration écrits, et des semaines d'introduction qui allègent régulièrement."
+      ]
+    },
+    {
+      "programme": "programme_4.md",
+      "criteres": {"S1": 7, "S2": 6, "S3": 6, "S4": 4, "S5": 6, "S6": 6, "S7": 8, "S8": 5, "S9": 5},
+      "sans_objet": [],
+      "ensemble": 5,
+      "points_perdus": [
+        {"critere": "S1", "perte": 3, "raison": "Rien de dangereux, mais aucun seuil de douleur (R5-P23) ni consigne pour les coudes sur un volume de traction assistée, traction sautée et rows, et dips à l'élastique chez une débutante sans base de poussée."},
+        {"critere": "S2", "perte": 4, "raison": "Aucune règle de progression de l'assistance (élastique non spécifié, jamais allégé) ni des pompes (2–4 × 1–2 répétitions pendant 12 semaines) ; R5-P3 et R4-F7 demandent une variante plus dure quand la cible est dépassée."},
+        {"critere": "S3", "perte": 4, "raison": "Trois semaines de test sur 12 (S4, S8, S12) réduites à environ 2 séries dures : trop d'allègement pour une débutante qui récupère vite ; rien sur la charge de vie."},
+        {"critere": "S4", "perte": 6, "raison": "Objectif 10 pompes : le volume de pompes se limite à des séries de 1–2 répétitions sur pompe classique, sans variante permettant 6–12 répétitions ni progression en répétitions totales (R4-G8, R3-P20 débutant). Trajectoire : capacité de 3,1 à 3,8 pompes en 12 semaines."},
+        {"critere": "S5", "perte": 4, "raison": "Aucun échauffement écrit ; pas de scap pulls ni de travail scapulaire spécifique avant le tirage ; dead hang retiré dès le bloc 2."},
+        {"critere": "S6", "perte": 4, "raison": "« Pompe classique 2 × 1 à 2, 4 rép. en réserve » alors que le max est de 3 : la consigne est impossible (1 répétition laisse 2 en réserve) ; marges uniformes sur les autres exercices."},
+        {"critere": "S7", "perte": 2, "raison": "Séances de 23–31 min sur 60, 3 par semaine : faisables et favorables à l'adhésion ; mais le compression straddle assis en tête de chaque séance n'a pas de lien avec les objectifs."},
+        {"critere": "S8", "perte": 5, "raison": "Tests planifiés (S4, S8, S12), mais celui de traction porte sur la traction assistée à l'élastique (1 × 1–24), jamais sur la traction stricte visée ; aucune tentative de traction stricte n'est prévue en S12."},
+        {"critere": "S9", "perte": 5, "raison": "Élastique non précisé (« poids du corps, à calibrer »), RIR contradictoire sur les pompes, aucune consigne en cas de douleur ou de fatigue."},
+        {"critere": "ensemble", "perte": 5, "raison": "Programme sûr et faisable, mais les deux objectifs ne seront probablement pas atteints : pompes plafonnées à 1–2 répétitions sans variante (trajectoire à 3,8), traction stricte jamais travaillée en excentrique ni testée. Quatre corrections nécessaires."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Construire les pompes avec une variante adaptée : pompe inclinée (mains sur barre basse ou barres parallèles) à une hauteur permettant 6–12 répétitions à 3 RIR, abaissée par paliers (R5-P9, R4-F7), plus 1–2 séries de pompes classiques ou d'excentriques lents ; progression en répétitions totales.", "consequence": "Avec 2–8 répétitions de pompes par séance, la capacité stagne (trajectoire : 3,8 pompes en S12) et l'objectif de 10 répétitions est manqué."},
+        {"type": "necessaire", "texte": "Ajouter la séquence de la première traction : excentriques de 3–5 s (2–3 × 2–3, vers 3 × 5 ; R5-P8), scap pulls, et une règle d'allègement de l'élastique (par exemple quand 3 × 8 sont propres deux séances de suite).", "consequence": "Sans excentriques ni réduction de l'assistance, la force en position haute et à la descente n'est jamais sollicitée sans aide et la première traction stricte a peu de chances d'arriver en 12 semaines."},
+        {"type": "necessaire", "texte": "Tester la traction stricte (tentative de 1 répétition, ou excentrique contrôlé chronométré) en S8 et S12, et non la traction assistée.", "consequence": "L'objectif n'est jamais mesuré : on ne saura pas en S12 si la traction est acquise."},
+        {"type": "necessaire", "texte": "Corriger la consigne d'effort des pompes (une cible de 4 RIR sur 1–2 répétitions est impossible avec un max de 3) en passant à la variante inclinée ci-dessus.", "consequence": "Consigne contradictoire qui change ce que fait l'athlète : elle ne peut pas la respecter et ne sait pas à quel effort travailler."},
+        {"type": "amelioration", "texte": "Réduire les semaines de test à un test court en fin de semaine de travail (S4 et S8) plutôt qu'à des semaines presque vides : une débutante n'a pas besoin de 3 allègements en 12 semaines."},
+        {"type": "amelioration", "texte": "Écrire un échauffement (épaules, poignets, scapulas) et des seuils de douleur pour les coudes (R5-P23)."},
+        {"type": "amelioration", "texte": "Remplacer le compression straddle assis par du gainage creux (hollow body), plus utile au gainage de la pompe et de la traction."}
+      ],
+      "points_forts": [
+        "Dose de départ modeste et marges prudentes, adaptées à une débutante (R5-P1, R5-P4).",
+        "Séances courtes et régulières (lundi, mercredi, samedi), propices à l'adhésion.",
+        "Présence du row australien et du dead hang, bases pertinentes vers la première traction."
+      ]
+    }
+  ]
+}

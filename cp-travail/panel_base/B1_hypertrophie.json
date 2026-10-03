@@ -1,0 +1,101 @@
+{
+  "ecole": "hypertrophie",
+  "programmes": [
+    {
+      "programme": "programme_1.md",
+      "criteres": {"H1": 7, "H2": 7, "H3": 6.5, "H4": 6, "H5": 6.5, "H6": 6.5, "H7": 8, "H8": 8, "H9": 6.5},
+      "sans_objet": [],
+      "ensemble": 6.5,
+      "points_perdus": [
+        {"critere": "H1", "perte": 3, "raison": "Grand dorsal à environ 20 séries dures/semaine (MU négatif 4+4, traction explosive 3, traction 3, rowing barre 3, rowing haltères 3, tirage d'arraché 5) sans compter tractions kipping et burpees-tractions des circuits : au plafond intermédiaire (R1-P1, seuil 16 de R1-P3) ; à l'inverse triceps/pectoraux sous-dosés (développé haltères 3, pompe hindoue 3) alors que la phase de poussée du muscle-up en dépend."},
+        {"critere": "H2", "perte": 3, "raison": "Tirage exposé 5 fois/semaine, poussée au-dessus de la barre 1 à 2 fois avec très peu de volume ; répartition guidée par le CrossFit plus que par les besoins de la figure (R1-P8)."},
+        {"critere": "H3", "perte": 3.5, "raison": "Traction explosive poitrine à la barre 10 à 15 répétitions à 3 RIR pour un athlète à 10 tractions strictes : cible inatteignable (trajectoire : meilleure série 8–10, RIR réel 4,4–6,2) ; marges uniformes 3,5→2 RIR, pas d'isolation plus proche de l'échec (R1-P13)."},
+        {"critere": "H4", "perte": 4, "raison": "Aucun dips, dips barre droite ni travail de transition (faux grip, muscle-up assisté par élastique) pour un muscle-up barre ; handstand shoulder taps et tirage d'arraché sans lien avec l'objectif ; un seul exercice de poussée verticale (R6-P4, R6-P5)."},
+        {"critere": "H5", "perte": 3.5, "raison": "Progression par +1 série puis −0,5 RIR et +1 % de charge, mais aucune règle écrite répétitions puis charge (R5-P3) ; la figure reste au muscle-up négatif pendant 16 semaines, sans étape vers le mouvement complet."},
+        {"critere": "H6", "perte": 3.5, "raison": "Tirage très supérieur à la poussée, ce qui est correct pour l'épaule mais laisse sans travail la poussée finale du muscle-up, point faible prévisible du profil (R5-P27)."},
+        {"critere": "H7", "perte": 2, "raison": "Repos adaptés (2 min 30 polyarticulaires, 90 s secondaires), séances 32–53 min ; mais les circuits à 15 s de repos enchaînent kipping et burpees-tractions juste après les négatifs, ce qui ajoute de la fatigue de tirage non comptée."},
+        {"critere": "H8", "perte": 2, "raison": "Semaine allégée toutes les 5 semaines (R3-P9), bien placée ; mais la semaine « test » demande un effort maximal sur un muscle-up négatif, sans intérêt pour mesurer l'objectif."},
+        {"critere": "H9", "perte": 3.5, "raison": "Matériel de box bien exploité et durée respectée, mais trame CrossFit générique ; aucun test du muscle-up strict, même à l'échéance (semaine 16 = introduction) ; rien n'est prévu si la récupération ne suit pas (R5-P1)."},
+        {"critere": "ensemble", "perte": 3.5, "raison": "Trois corrections nécessaires, toutes liées à l'objectif (poussée de transition absente, figure jamais progressée ni testée, traction explosive mal dosée) : l'athlète risque de finir avec de bons négatifs mais sans muscle-up."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Ajouter 2 fois par semaine du travail de poussée spécifique : dips barre droite et dips aux barres parallèles (3–4 séries de 5–10 à 1–3 RIR), plus des transitions en faux grip à la barre basse ou des muscle-ups assistés par élastique.", "consequence": "Sans force au-dessus de la barre, l'athlète passera la barre en tirage mais restera bloqué à la sortie : figure non débloquée en 16 semaines."},
+        {"type": "necessaire", "texte": "Faire progresser la figure, du négatif au muscle-up assisté puis aux tentatives strictes (dès le bloc 2), et tester le muscle-up strict lui-même aux semaines 10 et 15/16 au lieu d'un max de négatifs ; prévoir la semaine 16 comme semaine d'échéance.", "consequence": "L'objectif ne sera jamais tenté ni mesuré, et 16 semaines de négatifs seuls ne garantissent pas la transition."},
+        {"type": "necessaire", "texte": "Ramener la traction explosive poitrine à la barre à 4–6 séries de 3–6 répétitions de vitesse maximale (arrêt dès que la vitesse chute), au lieu de 10–15.", "consequence": "La cible de 10–15 répétitions dépasse le maximum de l'athlète : les séries deviennent lentes et non explosives, et la qualité du tirage haut, déterminante pour le muscle-up, est perdue."},
+        {"type": "amelioration", "texte": "Retirer les tractions kipping et les burpees-tractions du lundi, placés après les négatifs, ou compter ces séries dans le budget du dorsal."},
+        {"type": "amelioration", "texte": "Écrire une règle de double progression (haut de la plage atteint deux séances de suite → +2,5–5 %) pour les rowings et le développé (R5-P3)."},
+        {"type": "amelioration", "texte": "Remplacer le handstand shoulder taps par du travail de triceps en position longue (extension au-dessus de la tête) pour soutenir la poussée finale (R6-P4)."}
+      ],
+      "points_forts": [
+        "Muscle-up négatif deux fois par semaine, en tête de séance et avec 2 min 30 de repos.",
+        "Volume monté par paliers (41 → 57–61 séries dures) avec une semaine allégée toutes les 5 semaines.",
+        "Tirage horizontal, oiseau et rotateurs externes présents : épaule bien protégée.",
+        "Séances tenues dans les 60 minutes disponibles."
+      ]
+    },
+    {
+      "programme": "programme_2.md",
+      "criteres": {"H1": 6, "H2": 7.5, "H3": 4.5, "H4": 6, "H5": 5.5, "H6": 7, "H7": 8, "H8": 7.5, "H9": 5},
+      "sans_objet": [],
+      "ensemble": 5,
+      "points_perdus": [
+        {"critere": "H1", "perte": 4, "raison": "Dorsaux autour de 22 séries/semaine en montée (front lever row 5, front lever 5, muscle-up 4–5, tractions 4+4), au-dessus du seuil intermédiaire de 16 (R1-P3) ; ischios à 8 séries de Nordic par semaine dès le départ ; pompes 25–30 pour un max de 50 : séries de remplissage loin de l'échec."},
+        {"critere": "H2", "perte": 2.5, "raison": "Tractions 2 fois/semaine (lundi, vendredi) avec figures de tirage le mercredi : répartition cohérente, mais aucune alternance lourd/léger sur le mouvement-objectif."},
+        {"critere": "H3", "perte": 5.5, "raison": "Tractions 9–13 répétitions « à 3 RIR » pour un max de 18 : en réalité 5–9 RIR (trajectoire : RIR réel 4–5,8, meilleure série 13–14) ; pompes 25–30 pour un max de 50 ; à l'inverse, Nordic complet 10–15 répétitions irréalisable (R1-P13, R6-P2)."},
+        {"critere": "H4", "perte": 4, "raison": "Nordic hamstring curl complet 3–4 × 10–15 le vendredi et Nordic négatif 3–4 × 10–15 le dimanche : variante maximale, sans prérequis ; aucun travail spécifique d'endurance de traction (séries à rampe, séries cumulées, tractions à amplitude complète en fin de série)."},
+        {"critere": "H5", "perte": 4.5, "raison": "Mêmes 9–13 répétitions sur 12 semaines ; seuls le nombre de séries et le RIR bougent ; aucune règle de répétitions pour un objectif en répétitions (R5-P3) ; trajectoire : capacité 16,7 → 17,7, loin de 25."},
+        {"critere": "H6", "perte": 3, "raison": "Tirage ≥ poussée et bas du corps présent (pistol, shrimp, pont fessier), mais la priorité (tractions) n'a pas reçu de volume déplacé : les figures de tirage consomment le budget du dorsal."},
+        {"critere": "H7", "perte": 2, "raison": "90 s sur les tractions et les dips, 2 min sur les figures, séances ≤ 48 min ; pas de supersets pour densifier, alors que de la densité servirait l'objectif d'endurance."},
+        {"critere": "H8", "perte": 2.5, "raison": "Semaines allégées en S5 et S10 (R3-P9), mais 79 séries dures/semaine sur 4 séances, avec deux figures de tirage en plus des tractions."},
+        {"critere": "H9", "perte": 5, "raison": "Objectif à 12 semaines, mais la semaine 12 est une « montée » : ni affûtage ni test final ; le programme est un programme général de street workout qui ne cible pas le passage de 18 à 25 tractions."},
+        {"critere": "ensemble", "perte": 5, "raison": "Trois corrections nécessaires, dont un risque réel pour les ischios (Nordic complet 10–15 répétitions dès la semaine 1, deux fois par semaine) : plafond de 5. L'échéance de 12 semaines n'est pas préparée."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Remplacer le Nordic complet 10–15 répétitions par un Nordic négatif de 3 × 3–5 répétitions une fois par semaine, monté progressivement ; garder le pont fessier ou le pont unilatéral l'autre jour.", "consequence": "Séries irréalisables et excentriques ischios très lourdes deux fois par semaine dès le départ : risque de claquage et de courbatures qui gênent les autres séances."},
+        {"type": "necessaire", "texte": "Rebâtir les tractions autour de l'objectif : un jour de volume (5–6 séries de 60–70 % du max, soit 11–13 répétitions à 1–2 RIR, dernière série au maximum) et un jour de densité (séries cumulées ou en rampe), avec une règle d'ajout de répétitions semaine après semaine.", "consequence": "Les séries actuelles finissent à 5 RIR et plus : l'athlète progresse d'environ une répétition en 12 semaines et ne fera pas 25 tractions."},
+        {"type": "necessaire", "texte": "Faire des semaines 11–12 un affûtage (volume −40 à −50 %, intensité maintenue) et placer le test maximal de tractions à la fin de la semaine 12.", "consequence": "L'échéance arrive en pleine montée de fatigue, sans test : l'objectif ne peut ni être atteint au bon moment ni être constaté."},
+        {"type": "amelioration", "texte": "Retirer une figure de tirage (front lever ou front lever row) pendant ce cycle pour rendre du budget de volume au dorsal sur les tractions (volume déplacé, pas ajouté)."},
+        {"type": "amelioration", "texte": "Remplacer les pompes classiques 25–30 par une variante plus dure (pompes pieds surélevés, pompes archer) à 1–3 RIR."},
+        {"type": "amelioration", "texte": "Ajouter un exercice de biceps et d'avant-bras en position longue (curl en suspension à la barre basse, suspension active) pour l'endurance de prise."}
+      ],
+      "points_forts": [
+        "Le programme utilise bien le parc seul (barre fixe, parallèles, barre basse).",
+        "Tractions exposées deux fois par semaine, figures placées en début de séance.",
+        "Semaines allégées toutes les 5 semaines.",
+        "Bas du corps traité en unilatéral (pistol, shrimp squat), adapté au matériel."
+      ]
+    },
+    {
+      "programme": "programme_3.md",
+      "criteres": {"H1": 7, "H2": 7, "H3": 7, "H4": 4.5, "H5": 6, "H6": 6.5, "H7": 8, "H8": 7.5, "H9": 4},
+      "sans_objet": [],
+      "ensemble": 4.5,
+      "points_perdus": [
+        {"critere": "H1", "perte": 3, "raison": "Dorsaux autour de 15–17 séries/semaine, dans la fourchette (R1-P1), mais ischios presque absents (reverse hyper, puis kickback à la poulie) et quadriceps limités à des pistols sur banc et du skater squat."},
+        {"critere": "H2", "perte": 3, "raison": "Trois séances étiquetées « haut du corps » ; tractions 2 fois/semaine, mais le lundi empile muscle-up lesté, traction lestée et chest-to-bar, et le vendredi traction et high pull : pas d'alternance lourd/léger pensée."},
+        {"critere": "H3", "perte": 3, "raison": "3→2 RIR sur les polyarticulaires, correct (R1-P13) ; mais isolations (row scapulaire, kickback) aux mêmes marges, et charges en « % du 1RM » sur des exercices sans 1RM connu (dips partiel surchargé, high pull, muscle-up lesté)."},
+        {"critere": "H4", "perte": 5.5, "raison": "Muscle-up lesté de compétition alors que le profil ne mentionne aucun muscle-up ; front lever complet 5–6 × 5–10 s et handstand libre sans prérequis connus ; dips partiel haut surchargé et high pull lesté choisis sans raison pour un athlète de 51 ans qui veut éviter la blessure (R6-P5)."},
+        {"critere": "H5", "perte": 4, "raison": "Progression par +1 série puis −0,5 RIR ; aucune règle répétitions puis charge écrite (R5-P3) ; trajectoire : tractions 9,3 → 9,7 en 16 semaines pour un objectif de 14."},
+        {"critere": "H6", "perte": 3.5, "raison": "Tirage ≥ poussée, mais le bas du corps et la chaîne postérieure sont sous-traités ; pas de travail d'arrière d'épaule ni de rotateurs, utile à 51 ans."},
+        {"critere": "H7", "perte": 2, "raison": "Repos par type (3 min lesté, 90 s, 60 s), séances 36–52 min ; aucun superset antagoniste qui libérerait du temps (R2-P15)."},
+        {"critere": "H8", "perte": 2.5, "raison": "Semaine allégée toutes les 5 semaines (R3-P9), correcte pour l'âge, mais deux exercices lestés techniques en tête du lundi."},
+        {"critere": "H9", "perte": 6, "raison": "Âge, sommeil et objectif « sans se blesser » non pris en compte : on sert à un homme de 51 ans à 10 tractions un muscle-up lesté, des dips partiels surchargés et un front lever complet ; pas d'échauffement, pas de règle si la récupération ne suit pas (R5-P10 à P19)."},
+        {"critere": "ensemble", "perte": 5.5, "raison": "Trois corrections nécessaires, dont une technique sans prérequis à risque (muscle-up lesté) pour un athlète de 51 ans qui demande à ne pas se blesser : plafond de 5, abaissé par des charges incalculables et des figures irréalisables."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Supprimer le muscle-up lesté de compétition ; le remplacer par une traction lestée à +5–10 kg 3 × 4–6 à 2–3 RIR ou par la traction chest-to-bar.", "consequence": "Mouvement balistique lesté sans muscle-up acquis : risque réel pour coudes et épaules à 51 ans, et volume de tirage gaspillé."},
+        {"type": "necessaire", "texte": "Remplacer le front lever complet et le handstand libre par des progressions adaptées (front lever tuck ou rowing en front lever tuck, handstand au mur) ou par un rowing aux anneaux.", "consequence": "Séries irréalisables pour un athlète sans ces figures : temps perdu ou compensations en hyperextension lombaire."},
+        {"type": "necessaire", "texte": "Remplacer les charges en % d'un 1RM inexistant (dips partiel haut surchargé, high pull lesté) par des charges fixées au RIR (par exemple dips lestés en amplitude complète 3 × 6–8 à 2–3 RIR, après une série de calibration), ou retirer ces exercices.", "consequence": "Charge incalculable sur des variantes à forte contrainte (épaule en dips surchargé) : l'athlète choisit au hasard, avec un risque de surcharge."},
+        {"type": "amelioration", "texte": "Ajouter une deuxième exposition sous-maximale aux tractions strictes (par exemple 4–5 × 5–6 à 2 RIR le mercredi) et une règle d'ajout d'une répétition par série et par semaine, pour viser les 14 répétitions."},
+        {"type": "amelioration", "texte": "Ajouter un exercice de charnière de hanche (soulevé de terre roumain haltères ou barre) et un travail d'arrière d'épaule (face pull à la poulie), utiles à 51 ans."},
+        {"type": "amelioration", "texte": "Écrire un échauffement articulaire spécifique et une règle de repli (−1 série par exercice si le sommeil ou les douleurs se dégradent)."}
+      ],
+      "points_forts": [
+        "Tractions présentes 2 fois/semaine, dans des plages de répétitions réalistes (5–7 pour un max de 10).",
+        "Semaines allégées toutes les 5 semaines et test des tractions aux semaines 5, 10 et 15.",
+        "Volume de départ modéré (49 séries) monté par paliers.",
+        "Repos longs sur les mouvements lestés."
+      ]
+    }
+  ]
+}

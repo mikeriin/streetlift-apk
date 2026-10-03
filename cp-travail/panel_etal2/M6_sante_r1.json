@@ -1,0 +1,70 @@
+{
+  "ecole": "sante",
+  "programmes": [
+    {
+      "programme": "programme_1.md",
+      "criteres": {"S1": 8.5, "S2": 8.5, "S3": 7.5, "S5": 7.5, "S6": 9, "S7": 9, "S8": 8.5, "S9": 7.5},
+      "sans_objet": ["S4"],
+      "ensemble": 9,
+      "points_perdus": [
+        {"critere": "S1", "perte": 1.5, "raison": "Seuil de douleur écrit (4/10 coude/épaule, retrait des négatives) conforme à R5-P23, mais « en parler si cela dure deux semaines » ne dit pas à qui : pas d'orientation explicite vers un professionnel ; dips assistés introduits dès la semaine 1 chez un athlète à 0 dips sans critère de tolérance de l'épaule antérieure."},
+        {"critere": "S2", "perte": 1.5, "raison": "Départ prudent et hausses par double progression (R5-P3, R5-P7), négatives plafonnées à 15 descentes ; mais rien n'est prévu après une semaine manquée ou une interruption (R5-P22), et le passage S8→S9 cumule élastique fin, doublement des négatives (lundi + vendredi, 3 × 3 au lieu de 2 × 2) et essais de traction la même semaine."},
+        {"critere": "S3", "perte": 2.5, "raison": "Décharge réactive définie (fatigue, deux séances qui régressent) et semaine 12 allégée ; aucune mention du sommeil, du stress ou du travail physique (R5-P14 à P19) ni de critère simple de baisse du jour."},
+        {"critere": "S5", "perte": 2.5, "raison": "Échauffement écrit avec tirages scapulaires et autant de tirage horizontal que vertical (bon équilibre) ; aucun travail de coiffe (rotation externe) ni de poignets/coudes alors que négatives et dips assistés chargent ces zones chez un non-entraîné (R4-F10 à F12)."},
+        {"critere": "S6", "perte": 1, "raison": "Marges 2–4 RIR, aucun échec, essais stoppés à la première répétition non propre : très adapté au débutant (R5-P4) ; marges peu différenciées entre négatives et exercices accessoires."},
+        {"critere": "S7", "perte": 1, "raison": "≈ 40 min pour 45 disponibles, exercices où l'athlète réussit ; pas de version courte prévue."},
+        {"critere": "S8", "perte": 1.5, "raison": "Tests planifiés (semaines 4, 8, 12), allègement lundi/mercredi semaine 12 avant l'essai du vendredi ; mais négatives 3 × 3 maintenues jusqu'au lundi de la semaine 12 et aucune consigne de jour J (échauffement spécifique, nombre de tentatives, repos entre tentatives)."},
+        {"critere": "S9", "perte": 2.5, "raison": "Effort exprimé en « RIR » sans explication pour un athlète qui n'a jamais été entraîné ; incohérence vue d'ensemble (négatives « une séance sur deux ») vs détail semaines 5–8 (« lundi seulement ») ; élastiques « fort/moyen/fin » non définis."},
+        {"critere": "ensemble", "perte": 1, "raison": "Aucune correction nécessaire : programme sûr, individualisé et cohérent avec l'objectif de 3 tractions en 12 semaines ; restent des améliorations de clarté, de prévention et de reprise."}
+      ],
+      "corrections": [
+        {"type": "amelioration", "texte": "Traduire le RIR en langage simple (« finir la série en sentant qu'on pourrait encore en faire 3 ou 4 ») et définir les élastiques (résistance ou couleur)."},
+        {"type": "amelioration", "texte": "Ajouter une règle de reprise : après une semaine manquée, refaire la dernière semaine réussie avec une série de moins ; au-delà de deux semaines, revenir à l'élastique précédent."},
+        {"type": "amelioration", "texte": "Ajouter 2 × 12 rotations externes à l'élastique et une préparation des poignets à l'échauffement, surtout à partir des négatives (semaine 5)."},
+        {"type": "amelioration", "texte": "Préciser l'orientation : douleur ≥ 4/10 qui persiste deux semaines → consulter un kinésithérapeute ou un médecin."},
+        {"type": "amelioration", "texte": "Semaine 12 : supprimer les négatives du lundi et écrire le protocole du test (échauffement, 3 tentatives max, 3 min de repos)."},
+        {"type": "amelioration", "texte": "Harmoniser la vue d'ensemble et le détail sur la fréquence des négatives en semaines 5–8, et lisser le passage S8→S9 (négatives du vendredi à partir de la semaine 10)."},
+        {"type": "amelioration", "texte": "Ajouter un critère de baisse du jour (sommeil court, courbatures marquées → une série de moins par exercice) et une version courte de 25 min."}
+      ],
+      "points_forts": [
+        "Progression vers la traction logique et individualisée (suspension active → élastiques dégressifs → négatives → essais) à partir de records mesurés (0 traction, 6 rows).",
+        "Négatives introduites tard, en petit volume et plafonnées (15 descentes max), aucun échec.",
+        "Seuil de douleur chiffré avec conduite à tenir.",
+        "Séances tenant dans 45 minutes, échauffement écrit avec travail scapulaire, équilibre tirage horizontal/vertical.",
+        "Points d'étape réguliers et décharge réactive adaptée à un débutant."
+      ]
+    },
+    {
+      "programme": "programme_2.md",
+      "criteres": {"S1": 0, "S2": 0, "S3": 0, "S5": 0, "S6": 0, "S7": 0.5, "S8": 0, "S9": 2},
+      "sans_objet": ["S4"],
+      "ensemble": 0.5,
+      "points_perdus": [
+        {"critere": "S1", "perte": 10, "raison": "Antécédent de coudes sensibles en fin de gros cycle de traction explicitement ignoré (« traction lestée lourde cinq jours de suite, malgré l'antécédent ») et aggravé par négatives supramaximales en supination à +105 kg et curl lourd à l'échec (R5-P20, R5-P24) ; squat à 95 % à l'échec sans pareur (R5-P27)."},
+        {"critere": "S2", "perte": 10, "raison": "Test de 1RM quotidien puis +2,5 kg et +1 série chaque semaine sur 11 semaines, sans aucune décharge : saut de charge et de volume continu (R5-P3, R5-P7, R5-P22) ; 6 × maximum à 95 % du 1RM n'est pas réalisable."},
+        {"critere": "S3", "perte": 10, "raison": "Cinq séances à l'échec sur quatre 1RM, aucun jour d'intervalle exploitable, aucune décharge (R5-P10 à P13, R3-P9)."},
+        {"critere": "S5", "perte": 10, "raison": "Aucun échauffement, aucun antagoniste ni travail de coiffe ; coudes et épaules sollicités quotidiennement par tractions, dips, muscle-up, négatives supramaximales et curl lourd (R4-F10 à F12)."},
+        {"critere": "S6", "perte": 10, "raison": "Échec à chaque série sur tous les mouvements, y compris squat sans pareur et dips à +125 kg : échec fréquent sur mouvements à risque (R4-G3, R5-P4, R5-P27)."},
+        {"critere": "S7", "perte": 9.5, "raison": "≈ 150 min par séance pour 90 à 120 disponibles, volume croissant chaque semaine (jusqu'à +13 séries par exercice en semaine 12) : infaisable."},
+        {"critere": "S8", "perte": 10, "raison": "Aucun affûtage, semaine de compétition la plus lourde, test de 1RM la veille, ouverture à 105 % du meilleur test : contraire à R3-P17, P20, P21 ; l'échéance A est sabotée."},
+        {"critere": "S9", "perte": 8, "raison": "Consignes lisibles mais contradictoires (« maximum à 95 % » après un test, charges « et plus ») ; aucune consigne de sécurité, de douleur ou de fatigue ; repos de 60 s incompatible avec des efforts maximaux."},
+        {"critere": "ensemble", "perte": 9.5, "raison": "Programme dangereux : plafond santé (≤ 5) et plafond échéance (≤ 6) tous deux atteints ; risque élevé de blessure du coude, de l'épaule et du rachis, et de manquer le championnat."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Supprimer le test de 1RM quotidien et l'échec systématique ; travailler à RPE 7–9 avec un seul top set lourd par mouvement et par semaine, le reste en séries de volume à 70–85 %.", "consequence": "Blessure aiguë probable (coudes, épaules, rachis) et effondrement des performances en quelques semaines."},
+        {"type": "necessaire", "texte": "Protéger les coudes : traction lourde au plus 2 fois par semaine, retirer les négatives supramaximales en supination et le curl lourd à l'échec, seuil de douleur écrit (≥ 3/10 au coude → baisse de charge, persistance → kinésithérapeute).", "consequence": "Récidive de la tendinopathie du coude à l'approche de la compétition, avec forfait probable."},
+        {"type": "necessaire", "texte": "Squat lourd uniquement dans une cage avec barres de sécurité ou un pareur, jamais à l'échec.", "consequence": "Risque d'écrasement sous 190 kg et plus."},
+        {"type": "necessaire", "texte": "Périodiser les 12 semaines (accumulation, intensification, affûtage de 1 à 2 semaines avec −40 à −60 % de volume), un dernier test lourd à J−10/J−14, et aucun test la veille.", "consequence": "Arrivée épuisée au championnat, performances sous les records actuels."},
+        {"type": "necessaire", "texte": "Ouvrir à environ 90–95 % du 1RM actuel, avec une stratégie de trois tentatives visant +90 / +130 / +37,5 / 200 kg en dernière tentative.", "consequence": "Ouverture à 105 % presque certainement manquée : total nul en compétition."},
+        {"type": "necessaire", "texte": "Ramener chaque séance sous le temps disponible (90 min le vendredi), avec repos de 3 à 5 min sur les séries lourdes et un échauffement écrit.", "consequence": "Séances impossibles à finir, repos de 60 s incompatibles avec des efforts à 95 %."},
+        {"type": "necessaire", "texte": "Supprimer la progression +2,5 kg et +1 série par semaine sur tous les mouvements ; ajouter des décharges.", "consequence": "Volume impossible (jusqu'à 18 séries par exercice) et surmenage."},
+        {"type": "necessaire", "texte": "Cibler les points faibles déclarés : verrouillage du dips lourd (dips partiels, dips avec chaînes) et transition du muscle-up lesté (technique, muscle-up légers, transitions).", "consequence": "Les deux limites identifiées ne progressent pas et l'objectif n'est pas atteint."},
+        {"type": "amelioration", "texte": "Ajouter un travail de coiffe, de rotation externe et d'extenseurs du poignet en fin de séance, adapté à l'historique des coudes."}
+      ],
+      "points_forts": [
+        "Les quatre mouvements de compétition sont présents.",
+        "Le matériel de la salle est bien exploité en principe (lest, barre olympique)."
+      ]
+    }
+  ]
+}

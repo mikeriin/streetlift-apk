@@ -1,0 +1,131 @@
+{
+  "ecole": "sante",
+  "programmes": [
+    {
+      "programme": "programme_1.md",
+      "criteres": {"S1": 6.5, "S2": 5, "S3": 7, "S5": 6.5, "S6": 8, "S7": 7.5, "S9": 5.5},
+      "sans_objet": ["S4", "S8"],
+      "ensemble": 6,
+      "points_perdus": [
+        {"critere": "S1", "perte": 3.5, "raison": "Aucun seuil de douleur écrit (R5-P23), aucun échauffement ; rowing menton haltères (samedi, tous blocs) sans consigne de hauteur de coude, mouvement à risque modéré pour l'épaule alors que l'épaule est une zone de travail prioritaire (R4-F12, R5-P27)."},
+        {"critere": "S2", "perte": 5, "raison": "Pas de règle de progression de charge : développé couché noté 27,5 kg et squat 50 kg de la semaine 1 à la semaine 12, seuls les RIR et le nombre de séries bougent ; la trajectoire simulée confirme +0,1 %/semaine. Pas de double progression (R5-P3) ni de consigne en cas de semaine manquée."},
+        {"critere": "S3", "perte": 3, "raison": "Décharges planifiées en S5 et S10 (R3-P9) mais aucune information de vie (sommeil, stress) ni critère de baisse du jour."},
+        {"critere": "S5", "perte": 3.5, "raison": "Équilibre tirage/poussée correct, mais aucun travail de coiffe ou scapulaire alors que les deltoïdes sont chargés 4 jours sur 5 ; volume lombaire élevé (soulevé de terre samedi + jambes tendues jeudi + deux squats) sans contrepartie ; pas d'échauffement écrit."},
+        {"critere": "S6", "perte": 2, "raison": "Marges prudentes (2 à 4 RIR) mais uniformes entre soulevé de terre et élévations latérales ; pour l'hypertrophie d'une intermédiaire, 1 à 2 RIR sur les isolations serait plus adapté (R6-P2)."},
+        {"critere": "S7", "perte": 2.5, "raison": "Séances de 27 à 47 min pour 75 disponibles : faisable mais le temps libre n'est pas utilisé au profit des priorités ; 'force' dans les intitulés alors que l'objectif est l'hypertrophie."},
+        {"critere": "S9", "perte": 4.5, "raison": "Charges contradictoires : 27,5 kg présenté comme ≈ 70 % d'un 1RM de 45 kg (= 61 %), 50 kg comme ≈ 70 % de 80 kg (= 62,5 %) ; 'charge à déterminer ≈ 70 % du 1RM' pour des mouvements sans 1RM connu ; RIR appliqué à des gainages en secondes ; aucune consigne douleur/fatigue."},
+        {"critere": "ensemble", "perte": 4, "raison": "Trois corrections nécessaires dont une qui touche l'objectif principal (fessiers prioritaires traités en accessoire : hip thrust 2-3 séries/semaine, tandis que la poitrine reçoit 4 exercices) : programme générique, plafond 6 pour priorité ignorée."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Faire des fessiers la priorité réelle (R6-P6) : hip thrust ou pont en début de séance 2 fois/semaine, ajouter abduction de hanche/machine, fente bulgare ou step-up, pour viser ≈ 14-18 séries directes et indirectes ; réduire en contrepartie les écartés (2 exercices le vendredi).", "consequence": "Le point faible déclaré n'aura pas plus de stimulus qu'un muscle non prioritaire ; l'objectif esthétique ne sera pas atteint en 12 semaines."},
+        {"type": "necessaire", "texte": "Écrire une règle de progression de charge (double progression : quand le haut de la fourchette est atteint au RIR visé sur toutes les séries, +2,5 kg ou +1 cran), avec les charges réelles de départ.", "consequence": "Charges figées sur 12 semaines (27,5 kg au couché) : pas de surcharge progressive, stagnation comme le montre la simulation."},
+        {"type": "necessaire", "texte": "Corriger les charges de départ pour qu'elles correspondent aux pourcentages annoncés (≈ 31,5 kg au couché, ≈ 56 kg au squat) ou retirer les pourcentages pour les mouvements sans 1RM.", "consequence": "L'athlète ne sait pas quelle consigne suivre (kilos ou pourcentage) ; la simulation monte d'emblée à 35 et 60 kg, montrant que la charge écrite est inapplicable."},
+        {"type": "amelioration", "texte": "Remplacer le rowing menton par une élévation latérale à la poulie ou limiter l'élévation des coudes à hauteur d'épaule ; ajouter rotations externes ou face pull 2 fois/semaine."},
+        {"type": "amelioration", "texte": "Ajouter un échauffement écrit et la règle de douleur 0-2 / 3-4 / ≥5 (R5-P23)."},
+        {"type": "amelioration", "texte": "Placer les élévations latérales en début de séance au moins une fois et porter le volume deltoïde moyen à 12-16 séries ; utiliser une partie des 30 min libres."},
+        {"type": "amelioration", "texte": "Rapprocher les isolations de 1-2 RIR en fin de bloc (R6-P2)."}
+      ],
+      "points_forts": [
+        "Décharges planifiées toutes les 5 semaines, volume monté par paliers puis effort monté progressivement.",
+        "Aucun échec prévu, 0,3 % d'échecs non voulus en simulation.",
+        "Bon équilibre tirage/poussée, variété d'exercices de dos.",
+        "Rotation d'exercices entre blocs sans toucher aux mouvements principaux."
+      ]
+    },
+    {
+      "programme": "programme_2.md",
+      "criteres": {"S1": 5, "S2": 6.5, "S3": 6, "S4": 4, "S5": 6, "S6": 6.5, "S7": 5.5, "S8": 4, "S9": 5},
+      "sans_objet": [],
+      "ensemble": 5,
+      "points_perdus": [
+        {"critere": "S1", "perte": 5, "raison": "Nordic hamstring curl négatif 2-3 × 10-15 (samedi, puis lundi et samedi en S11-12) : volume excentrique très élevé pour une coureuse non habituée, placé la veille du fractionné 30/30 du dimanche ; handstand libre sans prérequis ni consigne de sortie (R5-P27) ; pas de seuils de douleur."},
+        {"critere": "S2", "perte": 3.5, "raison": "Footing passant de ≈ 70 à ≈ 92 min/semaine entre S1 et S2 (+30 %, au-delà des garde-fous R5-P22 / R6-P16) ; pas de règle de progression des tractions (toujours 4-6 rép.) ; rien sur la semaine manquée."},
+        {"critere": "S3", "perte": 4, "raison": "Semaines de test servent d'allègement, mais week-end samedi-dimanche enchaîné (nordics puis HSPU, dips, footing et 30/30) ; aucune donnée de vie ni critère de baisse du jour."},
+        {"critere": "S4", "perte": 6, "raison": "Course sans intensité définie (aucune allure, zone ni RPE malgré un chrono connu, R6-P14) ; aucune séance au seuil ni sortie plus longue que 25 min alors que l'objectif est 10 km en 50 min (R6-P15) ; seul travail de qualité = 30/30 après une séance de renforcement du haut du corps. Tractions : pas de travail sous-maximal fréquent progressif ni de densité vers 11 rép. (R4-G5, G6, G8)."},
+        {"critere": "S5", "perte": 4, "raison": "Pompes sur le bout des doigts sans progression, tractions 3 fois/semaine sans travail de coiffe ; pas d'échauffement écrit ; ischios sur-sollicités par les nordics alors que la course les charge déjà."},
+        {"critere": "S6", "perte": 3.5, "raison": "Marges prudentes et uniformes ; test de tractions à 10/10 correct mais nordic en 10-15 rép. rend le RIR illusoire sur un excentrique."},
+        {"critere": "S7", "perte": 4.5, "raison": "Lundi de test (S5 et S10) estimé à 78 min pour 60 disponibles : infaisable ; dimanche étiqueté 'cardio, fractionné' alors qu'il commence par 3 exercices de force."},
+        {"critere": "S8", "perte": 6, "raison": "Échéance à 12 semaines : tests en S5 et S10 mais la semaine 12 est une semaine de 'montée', sans test final ni affûtage (R3-P21, R6-P20) ; le 10 km est couru dans la même séance que le max de tractions, sans stratégie d'allure."},
+        {"critere": "S9", "perte": 5, "raison": "'Footing en endurance fondamentale 1 × 10000 m' : ambigu (contre-la-montre ou footing facile ?) ; RIR appliqué au handstand et aux gainages ; aucune consigne douleur/fatigue."},
+        {"critere": "ensemble", "perte": 5, "raison": "Plus de trois corrections nécessaires, dont un risque nommé (volume de nordics excentriques avant le fractionné) : plafond 5."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Ramener les nordics à 2-3 × 3-6 rép. excentriques contrôlées, une fois par semaine, à au moins 48 h du fractionné ; progression lente.", "consequence": "Courbatures et risque de lésion des ischios juste avant la séance de vitesse du dimanche."},
+        {"type": "necessaire", "texte": "Définir les intensités de course à partir du chrono (footing facile ≈ 6:00-6:20/km ou test de la parole ; allure cible 10 km = 5:00/km) et ajouter une séance de qualité au seuil/allure 10 km (ex. 3 × 8 min puis 2 × 15 min) et une sortie progressive jusqu'à 50-60 min.", "consequence": "Footings courts sans intensité et un 30/30 isolé ne suffisent pas à gagner 2 min sur 10 km."},
+        {"type": "necessaire", "texte": "Prévoir le test final en semaine 12 avec un affûtage de 7-10 jours (volume −40 à −50 %, intensité gardée), et séparer le test de 10 km et le max de tractions sur deux jours.", "consequence": "L'échéance n'est pas évaluée et le test du 10 km se fait fatigué par le max de tractions."},
+        {"type": "necessaire", "texte": "Ramener la séance de test du lundi à 60 min (déplacer le test de tractions au jeudi).", "consequence": "Séance de 78 min sur un créneau de 60 : l'athlète coupe au hasard, souvent le test."},
+        {"type": "necessaire", "texte": "Écrire une progression des tractions vers 11 rép. : séries sous-maximales à 50-70 % du max avec ajout de répétitions ou de séries chaque semaine, densité croissante (R4-G5, G6, G8).", "consequence": "4-6 rép. fixes pendant 12 semaines : la simulation plafonne à ≈ 8 tractions, objectif de 11 manqué."},
+        {"type": "amelioration", "texte": "Remplacer le handstand libre par un handstand dos/ventre au mur avec sortie apprise ; préparer progressivement les pompes sur le bout des doigts."},
+        {"type": "amelioration", "texte": "Ajouter échauffement écrit, seuils de douleur (R5-P23) et renforcement mollet/Achille (R6-P22)."},
+        {"type": "amelioration", "texte": "Placer la course avant ou à distance des exercices de force le dimanche (R6-P30)."}
+      ],
+      "points_forts": [
+        "Deux objectifs du profil couverts, fréquence de traction élevée (3 fois/semaine).",
+        "Volume de force monté par paliers, aucun échec non voulu.",
+        "Tests intermédiaires planifiés en S5 et S10.",
+        "Matériel du parc bien utilisé (barre basse, parallèles)."
+      ]
+    },
+    {
+      "programme": "programme_3.md",
+      "criteres": {"S1": 5.5, "S2": 8.5, "S3": 6.5, "S4": 4, "S5": 7.5, "S6": 9, "S7": 8.5, "S9": 6},
+      "sans_objet": ["S8"],
+      "ensemble": 7,
+      "points_perdus": [
+        {"critere": "S1", "perte": 4.5, "raison": "Questionnaire santé en mode prudent, 55 ans, 200 semaines d'arrêt : aucune orientation médicale prévue (R5-P25, R5-P26). Genou à 5/10 : aucune règle de douleur écrite (R5-P23 : 5 = régresser), fente latérale sans consigne d'amplitude, aucune variante de flexion du genou adaptée (box squat haut, isométrie)."},
+        {"critere": "S2", "perte": 1.5, "raison": "Départ très prudent (RIR 4, 2 séries) conforme à R5-P7 ; manque seulement une consigne pour une semaine manquée et la progression de charge sur les élastiques."},
+        {"critere": "S3", "perte": 3.5, "raison": "Volume faible et RIR élevés cohérents avec sommeil 6 h et stress 3/5, mais la charge de vie n'est pas mentionnée et aucun critère de baisse du jour n'est écrit (R5-P14, P15) ; pas de décharge en 12 semaines (acceptable vu le faible volume)."},
+        {"critere": "S4", "perte": 6, "raison": "Cardio = 20 % du profil, home-trainer disponible, mais seulement 9-15 min de 'marche de récupération' une fois par semaine, sans intensité ni progression ; loin du repère santé (R6-P21)."},
+        {"critere": "S5", "perte": 2.5, "raison": "Bon travail scapulaire (CARs, wall slides, face pull, oiseau, band pull-apart) et échauffements écrits pour l'épaule opérée ; mais le genou n'a pas de travail ciblé et le bas du corps est quasi absent (fente latérale, reverse hyper seulement)."},
+        {"critere": "S6", "perte": 1, "raison": "RIR 3-4, jamais d'échec chez un débutant reprenant : adapté (R5-P27)."},
+        {"critere": "S7", "perte": 1.5, "raison": "Séances de 22-35 min dans les créneaux, exercices simples à la maison ; pas de version courte écrite."},
+        {"critere": "S9", "perte": 4, "raison": "'≈ 67 % du 1RM' au développé haltères sans 1RM connu ; RIR appliqué au gainage et aux mountain climbers ; aucune consigne si le genou ou l'épaule font mal."},
+        {"critere": "ensemble", "perte": 3, "raison": "Programme sûr dans l'ensemble et bien dosé pour l'adhésion, mais trois corrections nécessaires : orientation médicale, gestion du genou, cardio."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Conditionner le démarrage à un avis médical (questionnaire en mode prudent, 55 ans, 4 ans d'arrêt) et l'écrire en tête du programme.", "consequence": "Un éventuel problème cardiovasculaire ou articulaire non dépisté est exposé à l'effort sans filet."},
+        {"type": "necessaire", "texte": "Écrire la règle de douleur du genou (0-2 continuer, 3-4 sans progresser, ≥5 régresser, consulter si ≥ 2 semaines) et ajouter un travail de genou adapté : assis-debout sur banc ou squat à amplitude indolore, isométrie de quadriceps, pont fessier, en progressant l'amplitude.", "consequence": "Le genou à 5/10 n'est ni suivi ni renforcé ; à 55 ans le bas du corps se déconditionne et la fente latérale peut l'aggraver sans repère."},
+        {"type": "necessaire", "texte": "Utiliser le home-trainer : 15-20 min de vélo facile (test de la parole) aux deux autres séances ou en fin de séance, progression de 2-5 min/semaine vers 30 min.", "consequence": "La part cardio du profil (20 %) et l'enjeu santé d'un homme de 55 ans déconditionné ne sont pas servis."},
+        {"type": "amelioration", "texte": "Préciser l'épaule opérée : amplitude confortable au développé haltères, prise neutre, test côté opéré contre côté sain (R5-P20)."},
+        {"type": "amelioration", "texte": "Ajouter une règle simple : nuit < 5 h ou stress élevé = −1 série, RIR +1 (R5-P14, P15) et quoi faire après une semaine manquée."},
+        {"type": "amelioration", "texte": "Retirer les pourcentages de 1RM inconnus et décrire l'effort en mots simples."}
+      ],
+      "points_forts": [
+        "Départ très prudent après 4 ans d'arrêt (2 séries, RIR 4), montée lente, aucun échec.",
+        "Épaule opérée protégée et travaillée sans exclusion : CARs, wall slides, face pull, oiseau, band pull-apart.",
+        "Séances courtes, simples, tenant dans les créneaux : bon levier d'adhésion pour l'objectif d'habitude.",
+        "Échauffement et retour au calme écrits à chaque séance."
+      ]
+    },
+    {
+      "programme": "programme_4.md",
+      "criteres": {"S1": 7, "S2": 6.5, "S3": 7, "S5": 6.5, "S6": 8.5, "S7": 8.5, "S8": 4.5, "S9": 6},
+      "sans_objet": ["S4"],
+      "ensemble": 6.5,
+      "points_perdus": [
+        {"critere": "S1", "perte": 3, "raison": "Handstand ventre au mur dès la semaine 1 chez un débutant à 8 pompes, sans prérequis ni apprentissage de la sortie (R5-P27) ; pas de seuils de douleur (R5-P23) ni d'échauffement écrit."},
+        {"critere": "S2", "perte": 3.5, "raison": "Les blocs 2 et 3 reprennent le bloc 1 à l'identique sur les exercices de traction : aucune progression vers des variantes plus dures (négatives, assistance élastique décroissante), contrairement à R5-P8 et R5-P3."},
+        {"critere": "S3", "perte": 3, "raison": "Allègements via les semaines de test (S4, S8, S12) ; aucune information de vie ni critère de baisse du jour."},
+        {"critere": "S5", "perte": 3.5, "raison": "Dead hang seulement le mercredi, 5-12 s ; aucun travail scapulaire actif (scapular pulls) ni coiffe ; pas d'échauffement des coudes/épaules avant les tractions sautées."},
+        {"critere": "S6", "perte": 1.5, "raison": "Marges débutant (RIR 3-4) respectées ; le max de tractions sautées à 10/10 (1 à 24 rép.) est inutile et fatiguant."},
+        {"critere": "S7", "perte": 1.5, "raison": "Séances de 17-32 min pour 45 disponibles, simples, faisables ; pas de version courte écrite."},
+        {"critere": "S8", "perte": 5.5, "raison": "Les tests de S4, S8 et S12 mesurent la traction sautée, jamais la traction stricte qui est l'objectif (R3-P17) : l'échéance n'est pas évaluée ; pas de tentative de traction stricte planifiée."},
+        {"critere": "S9", "perte": 4, "raison": "RIR appliqué à des maintiens (compression, handstand, gainage) ; row australien 3-4 rép. le lundi contre 3-8 le mercredi sans explication ; aucune consigne de douleur."},
+        {"critere": "ensemble", "perte": 3.5, "raison": "Deux corrections nécessaires qui touchent directement l'objectif (progression vers la traction stricte absente, test inadapté) ; programme sûr et tenable mais l'objectif de 3 tractions est servi de façon indirecte."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Introduire la séquence de la première traction (R5-P8) : tractions assistées à l'élastique (élastique disponible) puis négatives de 3-5 s en 2-3 × 2-3, progressant vers 3 × 5, plafond 15 excentriques/séance ; scapular pulls ; dead hang à chaque séance de tirage.", "consequence": "Seules des tractions sautées et des rows : la force en position haute et l'excentrique stricte ne sont pas construits, l'objectif de 3 tractions risque d'être manqué."},
+        {"type": "necessaire", "texte": "Remplacer le max de traction sautée par une tentative de traction pronation stricte (et un test de négative tenue en secondes) en S4, S8, S12.", "consequence": "L'échéance n'est jamais mesurée : impossible de savoir si l'objectif est atteint ni d'ajuster les blocs."},
+        {"type": "amelioration", "texte": "Remplacer le handstand ventre au mur par un appui pieds sur banc/pike hold jusqu'à 3 × 10 pompes, puis apprendre la sortie avant le mur."},
+        {"type": "amelioration", "texte": "Ajouter un échauffement écrit (épaules, poignets, scapulas) et la règle de douleur coude/épaule (R5-P23, R5-P24)."},
+        {"type": "amelioration", "texte": "Utiliser une partie des 15-25 min libres pour un 2e exercice de tirage le mercredi ou du travail de dips assistés."}
+      ],
+      "points_forts": [
+        "Dose de départ modeste et séances courtes, idéales pour l'adhésion d'un débutant complet.",
+        "Fréquence de tirage 3 fois/semaine avec rows australiens et tractions sautées adaptés au niveau.",
+        "Aucun échec planifié sur les exercices de travail, RIR débutant respectés.",
+        "Allègements réguliers toutes les 4 semaines."
+      ]
+    }
+  ]
+}

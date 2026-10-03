@@ -1,0 +1,137 @@
+{
+  "ecole": "hypertrophie",
+  "programmes": [
+    {
+      "programme": "programme_1.md",
+      "criteres": {"H1": 6.5, "H2": 7.5, "H3": 6.5, "H4": 7, "H5": 5, "H6": 5.5, "H7": 7.5, "H8": 7.5, "H9": 6},
+      "sans_objet": [],
+      "ensemble": 7,
+      "points_perdus": [
+        {"critere": "H1", "perte": 3.5, "raison": "Semaine 2 en comptage fractionné (R1-P2) : fessiers ≈ 10,5 séries (hip thrust 3 directes + squats/SdT en indirect), deltoïde moyen ≈ 10,5, pectoraux ≈ 12, triceps ≈ 12, dos ≈ 15. Les deux muscles prioritaires du profil ne reçoivent pas plus que les muscles non prioritaires (R1-P1 : monter le volume sur 1 à 3 muscles prioritaires). Saut de 62 à 93 séries entre S1 et S2 (+50 %), au-delà de la hausse prudente de R1-P18."},
+        {"critere": "H2", "perte": 2.5, "raison": "Chaque groupe est vu 2 fois ou plus, mais hip thrust (seul travail direct des fessiers) une seule fois par semaine (mardi) ; pas d'alternance lourde/légère par groupe."},
+        {"critere": "H3", "perte": 3.5, "raison": "Marges uniformes : isolations (élévations latérales, curls, écartés, leg curl) à 3 puis 2 RIR comme les polyarticulaires, alors que R1-P13 place l'isolation de l'intermédiaire à 0–2 RIR ; semaine d'introduction à 3 RIR partout. Plages 6–10 / 10–15 correctes."},
+        {"critere": "H4", "perte": 3, "raison": "Bons choix (élévation latérale buste appuyé, leg curl, belt squat, rowing poitrine appuyée), mais aucun exercice d'abduction de hanche ni de fente/split squat pour la priorité fessiers ; doublons de pectoraux (2 développés + 2 écartés par semaine) ; rowing menton à la place d'un 3e exercice de deltoïde moyen plus stable ; 2 à 3 exercices de tronc par séance."},
+        {"critere": "H5", "perte": 5, "raison": "Aucune règle écrite répétitions-puis-charge (R5-P3) : la progression ne joue que sur le RIR (3 → 2) et la charge affichée reste à 27,5 kg au développé couché et 50 kg au squat sur 12 semaines. Trajectoire : progression réelle 0,1 %/semaine, capacités estimées en baisse (DC 43 → 40 kg, squat talons surélevés 58 → 53 kg)."},
+        {"critere": "H6", "perte": 4.5, "raison": "Tirage ≥ poussée respecté, mais les points faibles déclarés (fessiers, deltoïde moyen) ne sont pas renforcés au-delà des autres groupes ; le volume n'est pas déplacé vers eux (pectoraux 12 séries, bras 12–13)."},
+        {"critere": "H7", "perte": 2.5, "raison": "Repos par type d'exercice corrects (2 min / 75 s / 60 s, R1-P15), mais séances de 40–45 min sur 75 disponibles : le temps existe pour la priorité fessiers et il n'est pas utilisé ; aucun superset."},
+        {"critere": "H8", "perte": 2.5, "raison": "Décharges aux semaines 5 et 10 à environ 50 % du volume (R1-P18, R3-P9) ; pas de technique d'intensification. Charge de décharge en baisse (squat 47,5 kg) alors que R1-P18 demande de garder la charge."},
+        {"critere": "H9", "perte": 4, "raison": "Adapté au niveau et au matériel, mais générique : séances intitulées « force », mêmes 3 séries partout, rien ne dit ce qui change si la récupération ne suit pas, et l'objectif esthétique du profil (fessiers, épaules) n'oriente pas la construction."},
+        {"critere": "ensemble", "perte": 3, "raison": "Deux corrections nécessaires : la priorité fessiers n'est pas traduite en volume, et il n'y a pas de règle de surcharge progressive (stagnation confirmée par la trajectoire). Programme sûr par ailleurs."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Traduire la priorité fessiers en volume : porter les fessiers à 14–16 séries fractionnées/semaine sur 2–3 séances (par ex. hip thrust aussi le jeudi ou le samedi, abduction de hanche à la machine ou à la poulie 2–3 séries ×2/semaine, fente bulgare ou split squat 3 séries), en retirant le volume équivalent sur les pectoraux (un des deux écartés) et le tronc.", "consequence": "Les fessiers progressent au même rythme que les autres muscles et le point faible déclaré reste un point faible au bout de 12 semaines."},
+        {"type": "necessaire", "texte": "Écrire une règle de double progression : quand toutes les séries atteignent le haut de la plage au RIR visé, ajouter 2,5 kg (polyarticulaires) ou le plus petit cran (isolations), sinon ajouter des répétitions ; afficher la charge réelle de la semaine précédente au lieu d'un poids figé.", "consequence": "Les charges restent figées (27,5 kg au DC, 50 kg au squat) et la surcharge progressive manque, comme la trajectoire le montre (≈ 0,1 % par semaine)."},
+        {"type": "amelioration", "texte": "Rapprocher les isolations de l'échec : élévations latérales, curls, leg curl et écartés à 1–2 RIR dès le bloc 1, 0–1 sur la dernière série (R1-P13)."},
+        {"type": "amelioration", "texte": "Remplacer le rowing menton par une élévation latérale à la poulie unilatérale (position longue, R6-P4), et passer le deltoïde moyen à 12–14 séries sur 3 séances."},
+        {"type": "amelioration", "texte": "Ramener le tronc à un exercice par séance et utiliser les 30 minutes libérées pour le volume prioritaire ou des supersets antagonistes (R2-P15)."},
+        {"type": "amelioration", "texte": "Monter le volume par paliers (+1 série sur les muscles prioritaires toutes les 2 semaines) plutôt que +50 % d'un coup entre S1 et S2, et garder la charge en décharge en ne coupant que les séries (R1-P18)."},
+        {"type": "amelioration", "texte": "Ajouter une règle de repli : si les répétitions baissent deux séances de suite sur un mouvement principal, retirer une série par muscle concerné."}
+      ],
+      "points_forts": [
+        "Cinq séances bien réparties, chaque grand groupe vu au moins deux fois par semaine.",
+        "Bons exercices stables : élévation latérale buste appuyé, belt squat, rowing poitrine appuyée, leg curl debout unilatéral.",
+        "Tirage supérieur à la poussée ; chaîne postérieure présente (SdT jambes tendues, SdT, leg curl).",
+        "Décharges planifiées toutes les 5 semaines ; rotation d'exercices par bloc.",
+        "Repos adaptés au type d'exercice ; aucune technique d'intensification inutile."
+      ]
+    },
+    {
+      "programme": "programme_2.md",
+      "criteres": {"H1": 6.5, "H2": 6.5, "H3": 5.5, "H4": 5.5, "H5": 4.5, "H6": 7, "H7": 6, "H8": 6.5, "H9": 5.5},
+      "sans_objet": [],
+      "ensemble": 6,
+      "points_perdus": [
+        {"critere": "H1", "perte": 3.5, "raison": "Dos ≈ 18 séries directes en montée (tractions 9, supination 3, row archer 3, row australien 3) : utile pour l'objectif tractions mais en haut de fourchette pour une intermédiaire qui court aussi (R1-P1, R1-P3) ; quadriceps 6 séries le mardi seulement ; tronc ≈ 15–17 séries/semaine (superman 4, gainages, relevés), un volume disproportionné."},
+        {"critere": "H2", "perte": 3.5, "raison": "Tractions pronation 3 fois/semaine, bien réparties ; mais quadriceps et fessiers une seule exposition (mardi) et poussée horizontale concentrée le jeudi et le dimanche ; séance du dimanche intitulée « cardio, fractionné » alors qu'elle contient HSPU, dips et rows."},
+        {"critere": "H3", "perte": 4.5, "raison": "Tractions 4–6 à 3 → 2 RIR, cohérent (max 8). Nordic négatif et nordic assisté prescrits 10–15 répétitions à 2–3 RIR, ce qui est irréaliste pour une excentrique maximale ; tous les accessoires à marge uniforme ; aucune série de calibration de la marge sur les tractions."},
+        {"critere": "H4", "perte": 4.5, "raison": "Nordic négatif 2–3 × 10–15 dès la semaine 1 (puis deux fois par semaine au bloc 3), mal dosé pour une coureuse ; pompes sur le bout des doigts sans intérêt pour l'objectif ; hip airplane compté en série dure ; pas d'exercice de biceps ni de travail des tractions en haute répétition (élastique, négatives) pour aller de 8 à 11 répétitions."},
+        {"critere": "H5", "perte": 5.5, "raison": "Aucune règle de progression écrite pour le poids du corps (R1-P17 : progression quand le haut de plage est atteint partout) ; seuls le RIR et le nombre de séries bougent. Les tractions restent à 4–6 répétitions les 12 semaines. Trajectoire : capacité réelle 7,4 → 7,9 répétitions, loin de l'objectif de 11."},
+        {"critere": "H6", "perte": 3, "raison": "Tirage > poussée, chaîne postérieure présente ; mais bas du corps (quadriceps, mollets) trop faible pour une coureuse et tronc surdosé."},
+        {"critere": "H7", "perte": 4, "raison": "Semaines 5 et 10 : le lundi est estimé à 78 min pour 60 disponibles, avec un test max de tractions puis un 10 000 m dans la même séance. Ailleurs, des repos de 90 s sur les tractions à 4–6 répétitions sont courts pour un mouvement principal (R1-P16)."},
+        {"critere": "H8", "perte": 3.5, "raison": "Les semaines de test servent de décharge (29 séries), bien placées ; mais les nordics excentriques à haut volume, suivis de footings le même jour (samedi), créent une fatigue et des courbatures mal gérées pour la course."},
+        {"critere": "H9", "perte": 4.5, "raison": "Matériel du parc respecté et course intégrée, mais les deux objectifs chiffrés ne pilotent pas la construction (ni stratégie de volume de tractions, ni progression de l'allure) ; la séance test est infaisable dans le temps donné ; rien ne dit quoi faire si la récupération ne suit pas."},
+        {"critere": "ensemble", "perte": 4, "raison": "Trois corrections nécessaires (séance test hors temps et mal conçue, dosage des nordics, absence de progression vers 11 tractions) ; la progression vers l'échéance est le choix le plus discutable."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Semaines 5 et 10 : séparer le test de tractions (lundi) et le test du 10 000 m (samedi ou dimanche, à la place du footing), pour tenir dans les 60 min et ne pas courir le test sur un haut du corps épuisé.", "consequence": "La séance de 78 min ne tient pas dans les 60 min disponibles et l'un des deux tests est faussé par l'autre."},
+        {"type": "necessaire", "texte": "Ramener les nordics à 2–3 × 3–6 répétitions excentriques (ou assistés à l'élastique), une seule fois par semaine, à distance des footings, avec une montée progressive.", "consequence": "10 à 15 nordics négatifs par série sont irréalisables ou provoquent de fortes courbatures des ischios, avec un risque de lésion et une gêne directe sur la course."},
+        {"type": "necessaire", "texte": "Écrire une progression vers 11 tractions : garder 2 séances lourdes (4–6 répétitions, ajouter une répétition par série quand le haut de plage est atteint, lest ensuite) et ajouter une séance de volume (séries de 60–70 % du max, ou cumul de 25–35 répétitions/semaine) ; retester toutes les 4–5 semaines et réajuster.", "consequence": "Les tractions restent travaillées à 4–6 répétitions sans surcharge et l'objectif de 11 n'est pas atteint (la trajectoire plafonne vers 8)."},
+        {"type": "amelioration", "texte": "Réduire le tronc à un exercice par séance (≈ 8–10 séries/semaine) et réinvestir dans une deuxième séance de jambes (fente bulgare, pistol assisté, mollets) utile à la course."},
+        {"type": "amelioration", "texte": "Porter le repos des tractions principales à 2–3 min (R1-P16)."},
+        {"type": "amelioration", "texte": "Remplacer les pompes sur le bout des doigts par une variante utile (pompe déclinée ou archer) et ajouter un curl à la barre basse ou des tractions supination en haute répétition pour les fléchisseurs du coude."},
+        {"type": "amelioration", "texte": "Renommer la séance du dimanche et préciser l'allure du 30/30 et des footings par rapport à l'objectif de 50 min."}
+      ],
+      "points_forts": [
+        "Tractions pronation trois fois par semaine : fréquence adaptée à l'objectif.",
+        "Tirage nettement supérieur à la poussée, avec plusieurs angles (pronation, supination, archer, australien).",
+        "Matériel du parc pleinement respecté.",
+        "Semaines de test qui servent aussi de semaines allégées."
+      ]
+    },
+    {
+      "programme": "programme_3.md",
+      "criteres": {"H1": 5, "H2": 6, "H3": 7, "H4": 4.5, "H5": 4.5, "H6": 5, "H7": 8, "H8": 8, "H9": 5},
+      "sans_objet": [],
+      "ensemble": 5,
+      "points_perdus": [
+        {"critere": "H1", "perte": 5, "raison": "Haut du corps dans la fourchette débutant (pectoraux ≈ 6, dos ≈ 6 + face pull/oiseau), mais bas du corps quasi absent : fente latérale 3 séries et reverse hyper 2 séries par semaine ; quadriceps et fessiers sous le plancher de 4 séries (R1-P1), à 55 ans après 4 ans d'arrêt."},
+        {"critere": "H2", "perte": 4, "raison": "Pectoraux (mardi + samedi) et dos (jeudi + samedi) vus deux fois, mais quadriceps une seule fois ; trois séances courtes qui auraient permis un corps entier symétrique (R1-P8 : débutant 2–3 expositions)."},
+        {"critere": "H3", "perte": 3, "raison": "RIR 4 → 3 cohérent pour un débutant de 55 ans en mode prudent (R1-P13) ; mais la trajectoire montre un effort réel à 6–8 RIR sur les exercices à l'élastique, sans consigne pour corriger, et la fente latérale « 3 à 8 » n'a pas de logique de plage."},
+        {"critere": "H4", "perte": 5.5, "raison": "Fente latérale (flexion profonde sur la jambe d'appui) prescrite malgré un genou droit douloureux à la flexion profonde (5/10), sans limite d'amplitude ni alternative ; aucun exercice de quadriceps adapté au genou (box squat haut, step-up bas) ni de charnière aux haltères (SdT roumain) alors que haltères et banc sont disponibles."},
+        {"critere": "H5", "perte": 5.5, "raison": "Aucune règle de progression écrite (R5-P3, R1-P12 débutant : répétitions fixes puis charge) ; seul le RIR bouge. Trajectoire : rowing élastique à 15–20 répétitions pour 8–12 visées et 7–8 RIR réels, sans changement de résistance."},
+        {"critere": "H6", "perte": 5, "raison": "Tirage ≥ poussée et soin de l'épaule opérée (face pull, oiseau, CARs) bien faits ; bas du corps et chaîne postérieure insuffisants pour un homme de 55 ans."},
+        {"critere": "H7", "perte": 2, "raison": "Séances dans les temps (24–35 min) avec des repos corrects ; la séance « cardio, endurance » du samedi se limite à 9–15 min de marche alors que le vélo est disponible."},
+        {"critere": "H8", "perte": 2, "raison": "Volume bas et semaines d'introduction toutes les 4 semaines, adaptés au sommeil de 6 h ; pas de décharge explicite, ce qui est acceptable à ce volume."},
+        {"critere": "H9", "perte": 5, "raison": "Âge, matériel, temps et épaule pris en compte, mais la gêne du genou est ignorée dans le choix des exercices, et aucune règle de douleur ni de repli si la récupération (6 h de sommeil, stress 3/5) ne suit pas."},
+        {"critere": "ensemble", "perte": 5, "raison": "Plafond à 5 : contre-indication du genou ignorée (fente latérale en flexion profonde avec gêne 5/10). Deux autres corrections nécessaires : bas du corps insuffisant, absence de progression des charges et des élastiques."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Remplacer la fente latérale par un exercice de quadriceps à amplitude contrôlée, sans douleur (box squat aux haltères sur banc haut, step-up bas, extension de genou à l'élastique), avec une règle de douleur écrite : gêne ≤ 3/10 pendant l'exercice et pas d'aggravation le lendemain, sinon réduire l'amplitude ou la charge.", "consequence": "La flexion profonde chargée d'un genou déjà douloureux à 5/10 risque d'aggraver la douleur et d'interrompre l'habitude visée."},
+        {"type": "necessaire", "texte": "Porter le bas du corps à 6–8 séries/semaine sur 2–3 séances : un exercice de quadriceps adapté au genou + un SdT roumain aux haltères ou un pont fessier, en gardant le reverse hyper.", "consequence": "À 55 ans et après 4 ans d'arrêt, la masse et la force des jambes ne sont pas reconstruites, alors que ce sont elles qui servent le plus la santé et l'autonomie."},
+        {"type": "necessaire", "texte": "Écrire une double progression : quand toutes les séries atteignent 12 répétitions à 3 RIR, passer à l'élastique ou à l'haltère supérieur (ou doubler l'élastique) et repartir à 8.", "consequence": "Les exercices à l'élastique restent à 7–8 RIR réels (trajectoire) et ne fournissent pas de stimulus suffisant."},
+        {"type": "amelioration", "texte": "Donner au samedi un vrai bloc cardio de 15–20 min au vélo en zone facile, en cohérence avec les 20 % de cardio du profil."},
+        {"type": "amelioration", "texte": "Ajouter une consigne pour l'épaule gauche au développé couché haltères (amplitude sans douleur, prise neutre)."},
+        {"type": "amelioration", "texte": "Indiquer quoi faire si le sommeil ou le stress se dégradent (retirer une série par exercice, garder la charge)."}
+      ],
+      "points_forts": [
+        "Volume de départ bas et RIR prudent, adaptés à un débutant de 55 ans en reprise.",
+        "Séances qui tiennent dans 30 et 40 minutes, avec échauffement et retour au calme.",
+        "Tirage supérieur à la poussée, travail de l'arrière d'épaule et mobilité scapulaire pour l'épaule opérée.",
+        "Exercices adaptés au matériel à la maison."
+      ]
+    },
+    {
+      "programme": "programme_4.md",
+      "criteres": {"H1": 6, "H2": 7, "H3": 6, "H4": 4.5, "H5": 4.5, "H6": 6, "H7": 8, "H8": 5, "H9": 5.5},
+      "sans_objet": [],
+      "ensemble": 6,
+      "points_perdus": [
+        {"critere": "H1", "perte": 4, "raison": "Dos ≈ 12 séries/semaine (tractions sautées 6, rows australiens 6), dans la fourchette débutant (R1-P1) ; pectoraux 6 ; mais jambes ≈ 5 séries (fente latérale 3, pont fessier 2), et 3 semaines sur 12 à 1 seule série dure."},
+        {"critere": "H2", "perte": 3, "raison": "Tirage vertical lundi et vendredi, horizontal lundi et mercredi : répartition correcte ; jambes une seule fois par semaine."},
+        {"critere": "H3", "perte": 4, "raison": "RIR 4 → 2 adapté au débutant (R1-P13) ; mais row australien 3–4 répétitions à 4 RIR alors que le maximum est de 6 (consigne contradictoire) ; la trajectoire montre les tractions sautées à 4,5–6 RIR réels, sans consigne pour les durcir."},
+        {"critere": "H4", "perte": 5.5, "raison": "L'élastique, seul matériel de progression disponible, n'est jamais utilisé : ni traction assistée, ni négative lente, ni maintien en position haute, alors que ce sont les étapes classiques vers la première traction stricte ; la traction sautée seule travaille surtout la phase haute. Handstand ventre au mur pour un débutant qui fait 8 pompes, sans prérequis."},
+        {"critere": "H5", "perte": 5.5, "raison": "Aucune règle de progression (R1-P17 débutant : régression/progression de variante) ni de passage traction sautée → négative → assistée → stricte. Les tests des semaines 4, 8 et 12 mesurent la traction sautée (1 × 1 à 24), jamais la traction stricte qui est l'objectif."},
+        {"critere": "H6", "perte": 4, "raison": "Tirage ≥ poussée, cohérent avec l'objectif ; bas du corps minimal (pas de squat ni de charnière) pour un débutant complet."},
+        {"critere": "H7", "perte": 2, "raison": "Séances de 21–32 min pour 45 disponibles, repos adaptés ; marge de temps inutilisée pour les progressions de traction."},
+        {"critere": "H8", "perte": 5, "raison": "Une semaine sur quatre réduite à 1 série dure (semaines 4, 8, 12) : pour un débutant qui progresse, R1-P18 ne prévoit pas d'allègement sans fatigue ; 25 % du programme perd presque tout stimulus."},
+        {"critere": "H9", "perte": 4.5, "raison": "Fréquence et temps respectés, mais le programme ne mène pas méthodiquement à la traction stricte (élastique ignoré, objectif jamais testé) et ne dit pas quoi faire si les répétitions stagnent."},
+        {"critere": "ensemble", "perte": 4, "raison": "Trois corrections nécessaires, toutes liées à l'objectif : pas de progression vers la traction stricte avec l'élastique, objectif jamais testé, semaines de test qui vident un quart du programme."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Construire une progression vers la traction stricte : négatives lentes (3–5 s) 3 × 3–5 et tractions assistées à l'élastique 3 × 5–8 deux fois par semaine, avec critère de passage (quand 3 × 8 est atteint, élastique plus faible ; quand 3 négatives de 5 s sont tenues, tenter une traction stricte), la traction sautée restant en complément.", "consequence": "Le débutant progresse en traction sautée (trajectoire 13 → 16 répétitions) sans construire la force excentrique et le départ bras tendus qui manquent pour la première traction stricte."},
+        {"type": "necessaire", "texte": "Tester la traction pronation stricte (1 série max, départ bras tendus) aux semaines 4, 8 et 12 au lieu de la traction sautée.", "consequence": "L'objectif (3 tractions strictes) n'est jamais mesuré et le programme ne peut pas être ajusté vers lui."},
+        {"type": "necessaire", "texte": "Remplacer les semaines de test à 1 série dure par une semaine normale avec le test en début de séance (au plus un allègement de 40 % du volume, sur signe de fatigue seulement).", "consequence": "Trois semaines sur douze presque sans stimulus retardent la première traction chez un débutant qui progresserait chaque semaine."},
+        {"type": "amelioration", "texte": "Ajuster le row australien (corps plus vertical) pour viser 6–10 répétitions à 3 RIR plutôt que 3–4 à 4 RIR alors que le maximum est de 6."},
+        {"type": "amelioration", "texte": "Remplacer le handstand ventre au mur par du pike hold ou des pompes piquées tant que 15 pompes ne sont pas acquises."},
+        {"type": "amelioration", "texte": "Ajouter un squat au poids du corps ou un split squat 2–3 séries deux fois par semaine pour un bas du corps minimal."},
+        {"type": "amelioration", "texte": "Ajouter du scapular pull-up et un maintien menton au-dessus de la barre (isométrie haute, R2-P16) pour les phases faibles de la traction."}
+      ],
+      "points_forts": [
+        "Tirage vertical et horizontal deux à trois fois par semaine, en lien direct avec l'objectif.",
+        "Volume de départ bas, effort prudent qui monte progressivement, adapté à un débutant complet.",
+        "Séances courtes, faisables au parc, avec dead hang pour la préhension.",
+        "Ratio tirage/poussée favorable."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,134 @@
+{
+  "ecole": "calisthenie",
+  "programmes": [
+    {
+      "programme": "programme_1.md",
+      "criteres": {"C1": 5, "C2": 5, "C3": 5, "C4": 7, "C5": 7, "C6": 4.5, "C7": 3, "C8": 4, "C9": 6},
+      "sans_objet": [],
+      "ensemble": 5,
+      "points_perdus": [
+        {"critere": "C1", "perte": 5, "raison": "Variantes et plages de bodybuilding (traction 3 × 12–15, dips 3–4 × 15–20, curl, latérales, extension poulie) sans lien avec les records (28 tractions, 50 dips, 12 muscle-ups) ni avec les cibles (32 / 56 / 14) : aucune série exprimée en % du maximum (R4-G2 : au-delà de 15–20, endurance spécifique + 1 séance lourde)."},
+        {"critere": "C2", "perte": 5, "raison": "Muscle-up, mouvement de compétition, travaillé une seule fois par semaine (vendredi, 4 × 4–6) : pratique non distribuée (R4-F1) pour une épreuve où il compte autant que les tractions."},
+        {"critere": "C3", "perte": 5, "raison": "Répétitions techniques et séries d'endurance non reliées au maximum ; aucune série longue, fractionnée ni simulation d'épreuve ; 2 RIR partout, y compris en isolation, sans logique de dosage."},
+        {"critere": "C4", "perte": 3, "raison": "Pas d'excès, mais aucun budget coude : lundi traction lestée + tractions, vendredi muscle-up + supination, dips lestés et dips 2×/sem., sans règle de douleur (R4-F11, R5-P24)."},
+        {"critere": "C5", "perte": 3, "raison": "Lest présent et bien dosé (+15 / +25 kg), mais gainage générique (relevés de jambes, « planche » 45 s) et rien de spécifique à la transition du muscle-up (tirage explosif, dips sur barre droite un seul jour)."},
+        {"critere": "C6", "perte": 5.5, "raison": "Règle linéaire « +2,5 kg ou +1 rép » sans critère de passage ni test de maximum planifié (R3-P17 : max toutes les 4–6 sem. + circuit, dernier à J−7/J−10) ; impossible de savoir à S4 si les cibles sont en route."},
+        {"critere": "C7", "perte": 7, "raison": "Aucun échauffement écrit, aucune préparation poignets/coudes/épaules avant muscle-up et dips lestés à +25 kg (R4-F12) ; seul le face pull du vendredi."},
+        {"critere": "C8", "perte": 6, "raison": "Décharge S4 à une série de moins (≈ −25 %, RIR 2) sous la fourchette R3-P9 (−40 à −50 %, RIR ≥ 4) ; S8 = même allègement et séances lundi à vendredi complètes, la dernière la veille de la compétition : pas d'affûtage (R3-P21 : 8–14 j, −40 à −60 %, 1–2 j de repos complet). Aucune phase spécifique (R3-P20)."},
+        {"critere": "C9", "perte": 4, "raison": "Faisable en 75 min, mais aucune consigne d'exécution ; charges « — » sur poulie, mollets ; « Planche 3 × 45 s » ambigu en calisthénie (figure ou gainage ?)."},
+        {"critere": "ensemble", "perte": 5, "raison": "Programme générique push/pull/legs qui conviendrait à n'importe quel pratiquant ; quatre corrections nécessaires (spécificité, affûtage, tests/simulation, préparation) ; l'échéance A est mal servie (plafond 6), et l'absence d'affûtage la compromet."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Rendre le bloc spécifique : à partir de S3, ≥ 50 % du volume dans la zone de l'épreuve (R4-G1) — séries longues à 60–75 % du max, séries fractionnées, EMOM, simulation du format de compétition ; garder une séance lourde lestée par semaine (R4-G2) et retirer curl, latérales, extension poulie.", "consequence": "L'athlète gagne de la force en séries de 6–15 mais pas l'endurance spécifique : 32 tractions et 56 dips ont peu de chances d'être atteints en 8 semaines."},
+        {"type": "necessaire", "texte": "Écrire un affûtage : S8 (voire S7–S8) à −40 à −60 % de volume, intensité spécifique gardée sur fractions courtes, dernière séance dure à J−4, 1–2 jours de repos complet avant la compétition (R3-P21, R3-P14) ; supprimer la séance du vendredi de S8.", "consequence": "L'athlète arrive à la compétition avec la fatigue de quatre séances à 2 RIR dans la semaine, dont une la veille : performances sous son niveau."},
+        {"type": "necessaire", "texte": "Planifier les tests : maximum des trois mouvements fin S3 ou S4 et un circuit complet à J−10 (R3-P17), recalculer les séries en % du nouveau maximum, prévoir la conduite si le repère n'est pas atteint.", "consequence": "Aucune mesure avant le jour J : pas de pilotage, plages arbitraires, pas de répétition du format de compétition."},
+        {"type": "necessaire", "texte": "Écrire un échauffement de 8–10 min (poignets, épaules, tirages et pompes scapulaires, séries d'approche avant le lest et le muscle-up) et une règle de douleur coude/épaule (R4-F12, R5-P23).", "consequence": "Muscle-ups et dips à +25 kg, puis +35 kg en fin de bloc, attaqués à froid : risque de tendinopathie du coude, la blessure la plus fréquente du street workout."},
+        {"type": "amelioration", "texte": "Porter le muscle-up à deux expositions courtes par semaine en début de séance (ex. EMOM de singles ou doubles), jamais à l'échec (R5-P27)."},
+        {"type": "amelioration", "texte": "Renforcer la décharge S4 : −40 à −50 % de séries, RIR ≥ 4 (R3-P9)."},
+        {"type": "amelioration", "texte": "Remplacer « Planche » par « gainage ventral » ou par un hollow hold, plus spécifique au muscle-up et sans ambiguïté."},
+        {"type": "amelioration", "texte": "Ajouter des consignes d'exécution (amplitude réglementaire, cadence) et une régression si la série n'est pas tenue."}
+      ],
+      "points_forts": [
+        "Lest de départ cohérent avec les 1RM (+15 kg pour +45, +25 kg pour +70)",
+        "Répartition tirage / poussée équilibrée et jambes entretenues pour la part streetlifting",
+        "Effort contrôlé à 2 RIR, aucun échec",
+        "Séances tenues dans les 75 minutes disponibles"
+      ]
+    },
+    {
+      "programme": "programme_2.md",
+      "criteres": {"C1": 9, "C2": 8.5, "C3": 8.5, "C4": 8.5, "C5": 8, "C6": 9, "C7": 8, "C8": 9, "C9": 8.5},
+      "sans_objet": [],
+      "ensemble": 9,
+      "points_perdus": [
+        {"critere": "C1", "perte": 1, "raison": "Séries calées en % du maximum (15 / 25 / 40 / 3) et recalculées en S6 ; pas de demi-paliers prévus pour le muscle-up entre 1 + négative et 5 × 2."},
+        {"critere": "C2", "perte": 1.5, "raison": "Muscle-up deux fois par semaine, en tête de séance, sans échec : bon ; pas de consigne technique par série (R4-F4)."},
+        {"critere": "C3", "perte": 1.5, "raison": "Dosage en % et RIR exemplaire ; l'EMOM de dips à 24 % du max reste peu exigeant et ne progresse en intensité qu'en S9 (choix défendable)."},
+        {"critere": "C4", "perte": 1.5, "raison": "Budget dips écrit (≈ 170 puis ≤ 220 rép./sem.) et un seul changement par semaine ; trois expositions de tirage dur + échelle le samedi et dips 4 jours sur 4 : la charge cumulée du coude n'est suivie que par la règle de douleur."},
+        {"critere": "C5", "perte": 2, "raison": "Tempo et arrêt en bas pour remplacer le lest absent, hollow présent ; aucun travail bras tendus ni rétroversion, et pas de variante plus dure (archer, traction lente) pour la force maximale."},
+        {"critere": "C6", "perte": 1, "raison": "Tests S6 et S12, repères 17–18 / 29–30, conduite écrite si non atteints, condition 4 muscle-ups pour passer à 5 × 2 ; critère de passage des variantes des jambes seulement."},
+        {"critere": "C7", "perte": 2, "raison": "Échauffement avec poignets, tirages et pompes scapulaires, face pull : correct ; pas de mobilité d'épaule ciblée pour les dips profonds ni de travail des rotateurs externes au-delà du face pull."},
+        {"critere": "C8", "perte": 1, "raison": "Technique → force → endurance, allègements S6 et S11, reste entretenu ; en S6, le tirage du vendredi précède le test du samedi, en contradiction avec la règle « 48 h sans tirage dur avant chaque test » (tirage allégé, donc sans risque)."},
+        {"critere": "C9", "perte": 1.5, "raison": "Séances en 55 min, matériel du parc respecté, repos précisés, régression à l'élastique ; peu de consignes d'exécution (ligne, amplitude réglementaire, respiration)."},
+        {"critere": "ensemble", "perte": 1, "raison": "Aucune correction nécessaire ; restent des améliorations de détail."}
+      ],
+      "corrections": [
+        {"type": "amelioration", "texte": "En S6, déplacer les tractions du vendredi au mercredi ou les réduire à 2 × 5 faciles, pour respecter la règle des 48 h avant le test du samedi."},
+        {"type": "amelioration", "texte": "Ajouter une consigne par série sur le muscle-up (« amène la barre aux hanches ») et des demi-paliers (négatives seules, transition basse barre)."},
+        {"type": "amelioration", "texte": "Ajouter un exercice bras tendus ou de gainage en rétroversion (tirage scapulaire bras tendus à la barre basse, hollow body rocks)."},
+        {"type": "amelioration", "texte": "Écrire les critères d'exécution de la répétition valide (bras tendus, menton au-dessus, épaules sous les coudes aux dips) pour standardiser tests et séries."}
+      ],
+      "points_forts": [
+        "Toutes les séries exprimées en % du maximum et en RIR, recalculées après test",
+        "Un seul changement par semaine en S4 et S5, budget de répétitions de dips écrit",
+        "Échec encadré (une série par mouvement et par semaine, jamais au muscle-up)",
+        "Règles de douleur, de baisse du jour, de séance manquée et de repère non atteint",
+        "Objectifs ambitieux reconnus comme tels, avec cible de repli",
+        "Muscle-up travaillé frais deux fois par semaine sans dominer la séance"
+      ]
+    },
+    {
+      "programme": "programme_3.md",
+      "criteres": {"C1": 9, "C2": 8.5, "C3": 9, "C4": 8.5, "C5": 8, "C6": 9.5, "C7": 8, "C8": 9, "C9": 8.5},
+      "sans_objet": [],
+      "ensemble": 9,
+      "points_perdus": [
+        {"critere": "C1", "perte": 1, "raison": "Tailles de blocs et séries calées sur le maximum de 18 et recalées après test ; aucune variante plus dure (archer, traction lente) pour la force, faute de lest."},
+        {"critere": "C2", "perte": 1.5, "raison": "Tractions spécifiques deux fois par semaine et muscle-up une fois, à l'état frais ; muscle-up 5 × 2 sans progression ni consigne technique."},
+        {"critere": "C3", "perte": 1, "raison": "Séries fractionnées au-dessus du max continu mais marge sur le dernier bloc, repos de 5–6 min, EMOM facile, isométries loin de l'échec ; pas d'alternance de maintiens courts intenses."},
+        {"critere": "C4", "perte": 1.5, "raison": "Hausse ≤ 10 %/sem. respectée (99 → 105 → 115…), 96 h entre séances spécifiques ; mais tirage quatre jours sur quatre (tractions lundi et vendredi, muscle-up mercredi, rows dimanche) : coude sollicité sans jour libre, budget non totalisé."},
+        {"critere": "C5", "perte": 2, "raison": "Rows à tempo, dips, hollow, dead hang : bonnes bases ; pas de séance de force relative pour un maximum > 15 (R4-G2 : endurance spécifique + 1 séance lourde), aucun travail bras tendus."},
+        {"critere": "C6", "perte": 0.5, "raison": "Tests S4, S8, S12 au protocole fixe, repères 20 puis 22–23, règle écrite si le repère n'est pas atteint ; critère de passage clair pour pompes piquées et pistol."},
+        {"critere": "C7", "perte": 2, "raison": "Échauffement avec poignets, scapulas, rotations externes, Y-T-W : bon ; pas de mobilité d'épaule ciblée ni d'adaptation de prise au-delà de l'EMOM."},
+        {"critere": "C8", "perte": 1, "raison": "Cycles 3 + 1, affûtage S11 −40 % intensité gardée, poussée et jambes entretenues ; sortie de spécialisation non écrite."},
+        {"critere": "C9", "perte": 1.5, "raison": "Séances de 45–55 min, matériel du parc seul, cadence du test écrite ; « mardi et mercredi sans traction » en S12 alors que le profil ne s'entraîne pas le mardi ; peu de consignes de ligne et de respiration."},
+        {"critere": "ensemble", "perte": 1, "raison": "Aucune correction nécessaire ; améliorations de détail sur la force relative et le budget du coude."}
+      ],
+      "corrections": [
+        {"type": "amelioration", "texte": "Ajouter une fois par semaine 3–4 × 3–5 tractions archer ou à descente de 5 s, pour la force relative en l'absence de lest (R4-G2)."},
+        {"type": "amelioration", "texte": "Totaliser le tirage hebdomadaire (tractions + muscle-ups + rows) et prévoir de retirer les rows du dimanche si le coude dépasse 2/10."},
+        {"type": "amelioration", "texte": "Donner une progression au muscle-up (5 × 2 → 4 × 3 quand 5 × 2 est propre sur 3 séances) et une consigne par série."},
+        {"type": "amelioration", "texte": "Écrire l'après-test final : semaine de transition et réallocation du volume (R3-P19, R4-H4)."}
+      ],
+      "points_forts": [
+        "Protocole de tractions calé sur le maximum (18) avec volume hebdomadaire chiffré et hausse ≤ 10 %",
+        "Une seule série par semaine au-delà du maximum continu, marge sur la dernière répétition",
+        "Tests au protocole identique, cadence du test final écrite, repère réaliste 22–23 annoncé",
+        "Règles de douleur conformes (0–2 / 3–4 / 5 / ≥ 6), baisse du jour, semaine manquée",
+        "Variation de prise sur l'EMOM et 48 h sans tirage vertical avant le lundi",
+        "Pistol, shrimp et extension de hanche : jambes progressées sans matériel"
+      ]
+    },
+    {
+      "programme": "programme_4.md",
+      "criteres": {"C1": 1, "C2": 1, "C3": 0.5, "C4": 0.5, "C5": 2, "C6": 0, "C7": 0, "C8": 0, "C9": 0},
+      "sans_objet": [],
+      "ensemble": 1,
+      "points_perdus": [
+        {"critere": "C1", "perte": 9, "raison": "Tractions 8 × maximum pour une athlète à 8 répétitions max, dips 8 × max à 14, squat sauté lesté 6 × 20, sauts en contrebas de 5 marches : aucune variante adaptée, aucun palier."},
+        {"critere": "C2", "perte": 9, "raison": "Tractions placées après 4 km de sprint, 90 sauts en contrebas et 120 squats sautés à l'échec : travaillées épuisée, en fin de séance."},
+        {"critere": "C3", "perte": 9.5, "raison": "Toutes les séries à l'échec avec 30 s de repos (R4-G3 : intermédiaire ≤ 1 série à l'échec ; R1-P16 repos longs) ; progression par +1 série d'échec par semaine."},
+        {"critere": "C4", "perte": 9.5, "raison": "16 séries à l'échec de traction et dips 5 jours sur 5, sans 48 h entre charges (R4-F10), +2 séries puis +1 série chaque semaine ; kilométrage 20 → 45 → 90 km puis +10 km/sem. (R5-P22 : +10–20 %/sem., +30 % sur 2 sem.)."},
+        {"critere": "C5", "perte": 8, "raison": "Tractions et dips présents, mais aucun gainage, aucun tirage horizontal, aucune base dosée."},
+        {"critere": "C6", "perte": 10, "raison": "Progression par accumulation brute (+1 série, +10 km/sem.), aucun critère, aucun test intermédiaire."},
+        {"critere": "C7", "perte": 10, "raison": "Ni échauffement, ni préparation des épaules, coudes, poignets ; consigne « tibia douloureux : continuer en serrant les lacets » contraire à R5-P23."},
+        {"critere": "C8", "perte": 10, "raison": "Ordre incohérent (sprint → pliométrie → échec → 5 km maximal), aucune décharge sur 12 semaines (R3-P9), aucune sortie facile pour la course, 10 km chronométré le lendemain d'une séance complète."},
+        {"critere": "C9", "perte": 10, "raison": "Séances de ≈ 120 min pour 45 à 75 min disponibles ; sac de 20 kg absent du matériel ; 90 km/sem. impossibles dans les créneaux."},
+        {"critere": "ensemble", "perte": 9, "raison": "Programme dangereux : échec systématique sur tractions et dips, pliométrie de haute hauteur, kilométrage multiplié par 4,5 en deux semaines, douleur tibiale ignorée ; plafond de 5 largement franchi, objectifs (11 tractions, 10 km en 50 min) desservis par la fatigue."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Supprimer l'échec systématique : tractions et dips en 3–4 séries à 2–3 RIR, repos 2–3 min, au plus une série à 1 RIR par semaine (R4-G3), 2 à 3 séances de tirage non consécutives.", "consequence": "Tendinopathie du coude ou de l'épaule probable en quelques semaines et stagnation des tractions sous 8."},
+        {"type": "necessaire", "texte": "Ramener le kilométrage à ≈ 20 km puis +10–20 %/sem. au plus, avec 80 % en endurance fondamentale et une seule séance de qualité par semaine.", "consequence": "Passer de 20 à 90 km en deux semaines expose à une fracture de fatigue ou une périostite tibiale."},
+        {"type": "necessaire", "texte": "Remplacer la consigne de douleur tibiale par la règle 0–2 / 3–4 / 5 / ≥ 6 avec arrêt et avis médical (R5-P23, R5-P25).", "consequence": "Une fracture de fatigue débutante est aggravée en continuant de courir."},
+        {"type": "necessaire", "texte": "Retirer les sauts en contrebas de 5 marches et le squat sauté lesté à l'échec, ou les remplacer par une pliométrie basse et dosée.", "consequence": "Risque de blessure aux genoux, chevilles et tendons d'Achille, sur des jambes déjà épuisées."},
+        {"type": "necessaire", "texte": "Séparer course et street workout et faire tenir chaque séance dans son créneau (45 à 75 min) ; tractions en début de séance de force.", "consequence": "Séances de 120 min infaisables : l'athlète abandonne ou bâcle, et les tractions sont faites épuisée."},
+        {"type": "necessaire", "texte": "Ajouter une décharge toutes les 4–6 semaines, un affûtage de 7 jours et 1–2 jours de repos avant le 10 km chronométré (R3-P9, R3-P21).", "consequence": "Fatigue cumulée sur 12 semaines sans répit : surmenage et test final raté."},
+        {"type": "necessaire", "texte": "Écrire un échauffement (épaules, scapulas, poignets) et des tests intermédiaires des tractions à S4 et S8.", "consequence": "Charges maximales attaquées à froid, et aucun pilotage vers 11 tractions."},
+        {"type": "necessaire", "texte": "Retirer le sac de 20 kg (absent du matériel) ou le rendre optionnel.", "consequence": "Exercice infaisable tel qu'écrit."}
+      ],
+      "points_forts": [
+        "Tractions et dips présents, mouvements cohérents avec la discipline street workout"
+      ]
+    }
+  ]
+}

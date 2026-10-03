@@ -1,0 +1,101 @@
+{
+  "ecole": "sante",
+  "programmes": [
+    {
+      "programme": "programme_1.md",
+      "criteres": {"S1": 7, "S2": 6.5, "S3": 6, "S4": 4.5, "S5": 6.5, "S6": 5, "S7": 8, "S8": 4, "S9": 6},
+      "sans_objet": [],
+      "ensemble": 5,
+      "points_perdus": [
+        {"critere": "S1", "perte": 3, "raison": "Questionnaire vierge et rien de contre-indiqué, mais aucun seuil de douleur écrit (R5-P23, R4-F11) alors que le coude et l'épaule encaissent 4 à 5 expositions de tirage par semaine (négatifs, tractions explosives, kipping, burpee-traction) ; aucune orientation prévue."},
+        {"critere": "S2", "perte": 3.5, "raison": "Séries dures de 41 à 57 entre S1 et S2 (+39 % en une semaine), au-delà des garde-fous de R5-P22 (+10 à 20 %/sem., +30 % sur 2 sem.) ; le conditionnement monte aussi de 3 à 4-5 tours. Aucune règle pour une semaine manquée."},
+        {"critere": "S3", "perte": 4, "raison": "Allègement planifié toutes les 5 semaines, mais aucune donnée ni consigne sur sommeil, stress, travail, et aucun critère de baisse du jour (R5-P14, P15). Lundi-mardi-mercredi enchaînés avec tirage et sauts."},
+        {"critere": "S4", "perte": 5.5, "raison": "Le conditionnement (thrusters, burpees, tuck jumps, box jump-over, 15 s de repos) n'a ni intensité, ni durée cible, ni charge (« charge à déterminer »), ni progression autre que +1 tour ; sans lien avec l'objectif muscle-up (R6 CrossFit, R5-P19)."},
+        {"critere": "S5", "perte": 3.5, "raison": "Bon travail de coiffe (lift-off, sleeper, oiseau, wall slides), mais pas d'échauffement spécifique coudes/poignets avant les négatifs de muscle-up, et volume de tirage répété sur 4-5 jours (kipping 4 × 8-12 le lundi en plus des négatifs) sans budget tendineux (R4-F10)."},
+        {"critere": "S6", "perte": 5, "raison": "Semaines 5, 10, 15 : « Muscle-up barre négatif 1 × 1 à 10, effort maximal 10/10 » = série à l'échec sur une figure à risque élevé, interdit par R5-P27 (RIR ≥ 2) ; ailleurs les marges sont prudentes mais uniformes."},
+        {"critere": "S7", "perte": 2, "raison": "Séances de 26 à 53 min dans 60 min, faisable ; pas de version courte, et calibrages nombreux (« charge à déterminer » partout)."},
+        {"critere": "S8", "perte": 6, "raison": "Objectif « muscle-up strict d'ici 16 semaines » : aucun essai de muscle-up complet n'est jamais programmé ; les tests mesurent des négatifs ; la semaine 16 est une « introduction » de bloc 4 au lieu d'une semaine allégée avec tentative (R3-P17)."},
+        {"critere": "S9", "perte": 4, "raison": "RIR lisibles, mais charges de conditionnement non définies, aucune consigne en cas de douleur au coude ou de fatigue, et aucune description technique des négatifs (tempo, sortie)."},
+        {"critere": "ensemble", "perte": 5, "raison": "Trois corrections nécessaires dont un échec programmé sur mouvement à risque (plafond 5) ; l'objectif est mal servi : aucun travail de transition ni de dips à la barre, aucun essai du muscle-up. La simulation montre une progression moyenne de 0,17 %/sem."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Ajouter le travail spécifique du muscle-up strict : tirage haut vers le sternum (traction poitrine-barre, lestée ou à l'élastique), dips à la barre droite et maintien en appui haut, travail de transition (au sol ou barre basse, false grip), 2 à 3 fois par semaine, dans la progression de R5-P8.", "consequence": "Sans force d'appui à la barre ni transition, l'athlète restera bloqué au passage du tirage à l'appui et ne débloquera probablement pas la figure en 16 semaines."},
+        {"type": "necessaire", "texte": "Remplacer le test « négatif 10/10 » par un test sous-maximal (RIR ≥ 2, négatifs de 3-5 s comptés propres) et plafonner les excentriques à environ 15 par séance (R5-P8, R5-P27).", "consequence": "Des négatifs à l'échec sur le muscle-up exposent le coude et l'épaule à une surcharge excentrique et à une perte de contrôle en sortie."},
+        {"type": "necessaire", "texte": "Programmer des tentatives de muscle-up strict (2-3 essais frais) aux semaines de test, et faire de la semaine 16 une semaine allégée (−40 %) terminée par la tentative finale, au lieu d'une « introduction » de bloc 4.", "consequence": "L'échéance des 16 semaines passe sans que la figure soit jamais essayée ni évaluée."},
+        {"type": "amelioration", "texte": "Retirer le kipping et réduire les burpee-tractions pendant les semaines où les négatifs montent, pour tenir le budget de tirage (R4-F10)."},
+        {"type": "amelioration", "texte": "Définir le conditionnement : format (AMRAP/EMOM), durée, charge des thrusters et wall balls, effort cible (RPE ou allure)."},
+        {"type": "amelioration", "texte": "Écrire des seuils de douleur (0-2 continuer, 3-4 sans progresser, ≥ 5 régresser, R5-P23) et un échauffement coude/poignet avant les négatifs."},
+        {"type": "amelioration", "texte": "Limiter la hausse S1→S2 à +20-30 % de séries dures et ajouter une règle après semaine manquée."}
+      ],
+      "points_forts": [
+        "Prévention de coiffe et de scapula présente dans presque toutes les séances (lift-off 90/90, sleeper stretch, oiseau, wall slides).",
+        "Allègements planifiés toutes les 5 semaines et séances tenant dans l'heure disponible.",
+        "Marges RIR prudentes sur l'haltérophilie (épaulé-jeté, tirage d'arraché) et aucune hausse brutale de charge dans la simulation."
+      ]
+    },
+    {
+      "programme": "programme_2.md",
+      "criteres": {"S1": 4.5, "S2": 5.5, "S3": 6, "S4": 4, "S5": 5, "S6": 7, "S7": 8, "S8": 3, "S9": 6},
+      "sans_objet": [],
+      "ensemble": 4,
+      "points_perdus": [
+        {"critere": "S1", "perte": 5.5, "raison": "« Nordic hamstring curl complet 3 × 10 à 15 » dès la semaine 1 (4 × 10-15 en S2), plus « Nordic négatif 3-4 × 10-15 » deux jours après : un volume excentrique d'ischios de niveau très avancé, sans prérequis ni rampe, et sans ancrage des chevilles prévu au parc. Risque élevé de lésion des ischios. Aucun seuil de douleur."},
+        {"critere": "S2", "perte": 4.5, "raison": "Séries dures 59 → 79 (+34 %) entre S1 et S2, au-delà de R5-P22 ; un nouvel exercice comme le Nordic devrait commencer à 50-60 %. Aucune règle de reprise."},
+        {"critere": "S3", "perte": 4, "raison": "Allègements planifiés (S5, S10) mais aucune consigne liée au sommeil, au stress ni à la forme du jour (R5-P14, P15) ; vendredi-dimanche enchaînent deux séances de Nordic et de tirage."},
+        {"critere": "S4", "perte": 6, "raison": "Pour passer de 18 à 25 tractions (R4-G2 : > 15 → endurance spécifique + 1 séance plus dure), le programme ne propose que 3-5 × 9-13 à RIR 2-3 deux fois par semaine, sans densité (EMOM, échelles, rest-pause, R4-G6), sans séries proches du format du test, sans variante plus dure, avec une fréquence sous les 3/sem de R4-G8. Simulation : capacité 16,7 → 17,7, test à 16."},
+        {"critere": "S5", "perte": 5, "raison": "Aucun échauffement écrit, aucune préparation des poignets avant le handstand (R4-F12), aucun travail de coiffe ; tirage lourd cumulé (front lever, front lever row, muscle-up, tractions) sans contrepartie ciblée."},
+        {"critere": "S6", "perte": 3, "raison": "Marges RIR 2-3,5 prudentes mais uniformes ; le RIR est appliqué à des maintiens en secondes (front lever, handstand)."},
+        {"critere": "S7", "perte": 2, "raison": "Séances de 26 à 48 min dans 60 min, matériel du parc respecté ; pas de version courte."},
+        {"critere": "S8", "perte": 7, "raison": "Échéance à 12 semaines : la semaine 12 est une semaine de « montée » (79 séries dures), sans affûtage (R3-P21 : 7 jours à −40 % pour un intermédiaire) ni test final ; dernier test en S10."},
+        {"critere": "S9", "perte": 4, "raison": "« Rép. en réserve » sur des maintiens chronométrés, incompréhensible ; aucune consigne en cas de douleur ou de fatigue."},
+        {"critere": "ensemble", "perte": 6, "raison": "Quatre corrections nécessaires, dont un risque de santé (Nordic, plafond 5) et une échéance ignorée (plafond 6) ; l'objectif de 25 tractions ne sera probablement pas atteint (simulation : 16 au test)."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Remplacer les Nordic complets et négatifs à 10-15 répétitions par une progression d'ischios accessible au parc (pont unilatéral, curl glissé, Nordic partiel 2-3 × 3-5 avec ancrage sûr), une seule fois par semaine, en partant de 50-60 % du volume cible.", "consequence": "Un volume excentrique d'ischios de ce niveau, sans préparation, risque une lésion des ischio-jambiers et des courbatures qui feront sauter des séances."},
+        {"type": "necessaire", "texte": "Faire de la semaine 12 une semaine d'affûtage (−40 à −60 % de volume, tractions sous-maximales gardées) terminée par le test de tractions maximales ; placer la dernière simulation de séries longues 7-10 jours avant.", "consequence": "L'athlète arrive à l'échéance fatigué, sans test, et ne pourra pas savoir s'il a atteint 25."},
+        {"type": "necessaire", "texte": "Restructurer le travail de tractions vers l'endurance spécifique : 3 séances/sem (R4-G8), une séance de densité (EMOM à 40 %, échelles, rest-pause), une séance de séries longues proches du max (1 série RIR 1-2), une séance plus dure (archer, tempo, pause en haut) ; progresser en répétitions totales.", "consequence": "Avec 9-13 répétitions à RIR 3 deux fois par semaine, la progression simulée plafonne à 16-18 et l'objectif de 25 est manqué."},
+        {"type": "necessaire", "texte": "Écrire un échauffement par séance, avec préparation des poignets avant le handstand (R4-F12) et travail scapulaire/coiffe (rotation externe sans matériel, scapular pull-ups).", "consequence": "Avec un volume de tirage et d'appui renversé élevé et aucun échauffement, le risque de tendinopathie d'épaule ou de poignet augmente (62 % de blessés en street workout, R4-F12)."},
+        {"type": "amelioration", "texte": "Exprimer les maintiens (front lever, handstand) en secondes propres ou en % du maintien max, pas en RIR."},
+        {"type": "amelioration", "texte": "Ajouter des seuils de douleur (R5-P23) et une règle après semaine manquée."},
+        {"type": "amelioration", "texte": "Limiter la hausse S1→S2 à environ +20-30 % de séries dures."}
+      ],
+      "points_forts": [
+        "Le programme respecte le matériel (parc seulement) et le temps disponible.",
+        "Allègement toutes les 5 semaines et tests de tractions maximales en S5 et S10.",
+        "Équilibre tirage/poussée (dips, pompes) et travail du tronc varié."
+      ]
+    },
+    {
+      "programme": "programme_3.md",
+      "criteres": {"S1": 3.5, "S2": 6, "S3": 6, "S4": 4.5, "S5": 4.5, "S6": 7, "S7": 7, "S8": 5.5, "S9": 5},
+      "sans_objet": [],
+      "ensemble": 4,
+      "points_perdus": [
+        {"critere": "S1", "perte": 6.5, "raison": "Athlète de 51 ans dont l'objectif est « progresser sans se blesser » : on lui sert « Muscle-up lesté de compétition » dès la semaine 1 alors qu'aucun muscle-up n'est enregistré dans son profil (technique sans prérequis), « Dips lesté partiel haut surchargé » avec 15 dips au max et front lever 5-6 × 5-10 s sans prérequis connu. Aucun échauffement, aucun seuil de douleur (R5-P23, R5-P27)."},
+        {"critere": "S2", "perte": 4, "raison": "Hausses de séries raisonnables (49 → 60, +22 %), mais la charge de la traction lestée est incohérente : « poids du corps, ≈ 77 % du 1RM » alors que le 1RM total vaut 91 kg (77 % = 70 kg < 76 kg de poids de corps). La simulation l'exécute à +0 kg. Aucune règle de reprise."},
+        {"critere": "S3", "perte": 4, "raison": "Sommeil (7 h) et stress (2/5) déclarés mais non exploités ; allègements toutes les 5 semaines ; aucun critère de baisse du jour malgré l'âge (R5-P10 : progression ralentie après 40 ans)."},
+        {"critere": "S4", "perte": 5.5, "raison": "Objectif 10 → 14 tractions (R4-G2, 8-15 : mixte) : la traction au poids de corps n'apparaît qu'une fois par semaine (3-4 × 5-7), sans densité (R4-G6), sans séries proches du format du test, fréquence sous R4-G8. Simulation : capacité 9,3 → 9,7, test à 9 aux trois tests."},
+        {"critere": "S5", "perte": 5.5, "raison": "Aucun échauffement écrit à 51 ans ; le lundi concentre muscle-up lesté, traction lestée, chest-to-bar, dips lestés partiels et dips (coudes et épaules surchargés le même jour, R4-F10) ; seul le row scapulaire fait de la prévention."},
+        {"critere": "S6", "perte": 3, "raison": "Marges RIR 2-3 correctes pour un intermédiaire, mais identiques sur un muscle-up lesté (risque élevé, R5-P27) et sur un pistol sur banc."},
+        {"critere": "S7", "perte": 3, "raison": "Séances de 17 à 52 min dans 60 min ; complexité inutile (deux exercices « de compétition » lestés) pour un objectif de répétitions."},
+        {"critere": "S8", "perte": 4.5, "raison": "Tests de tractions maximales en S5, S10, S15 dans des semaines allégées, mais la semaine 16 est une « introduction » de bloc : aucun test ni affûtage à l'échéance (R3-P21)."},
+        {"critere": "S9", "perte": 5, "raison": "Charge de la traction lestée impossible à calculer (moins que le poids du corps) ; « lest à déterminer » sur le muscle-up lesté sans repère ; aucune consigne douleur/fatigue."},
+        {"critere": "ensemble", "perte": 6, "raison": "Quatre corrections nécessaires dont une technique sans prérequis à 51 ans (plafond 5) ; l'objectif des 14 tractions n'est pas servi (simulation : 9 aux trois tests)."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Supprimer le muscle-up lesté et les dips lestés partiels surchargés ; les remplacer par une traction lestée légère (RIR ≥ 2) et des dips complets au poids du corps. N'introduire un muscle-up que si l'athlète en réussit un au poids du corps.", "consequence": "Un muscle-up lesté sans muscle-up acquis, à 51 ans, expose coudes et épaules à une blessure, à l'opposé de l'objectif « sans se blesser »."},
+        {"type": "necessaire", "texte": "Corriger la charge de la traction lestée : exprimer la charge en lest ajouté (par exemple +5 kg, 3 × 3-5 à RIR 2), cohérent avec le 1RM de +15 kg.", "consequence": "La consigne « poids du corps à 77 % du 1RM » est incalculable : l'athlète ne sait pas quoi faire."},
+        {"type": "necessaire", "texte": "Monter le travail de tractions au poids du corps à 3 séances/sem : une de densité (EMOM ou échelles à 40 %), une de séries longues (1 série RIR 1-2 + séries à 60-70 %), une lourde (lestée) ; progresser en répétitions totales (R4-G2, G6, G8).", "consequence": "Avec une seule exposition hebdomadaire au mouvement visé, la progression simulée stagne à 9-10 tractions, loin des 14."},
+        {"type": "necessaire", "texte": "Écrire un échauffement par séance (coiffe, scapula, poignets avant le handstand), répartir les exercices de coude/épaule lourds sur deux jours, et ajouter des seuils de douleur (R5-P23 ; ≥ 5/10 ou douleur nocturne = consultation).", "consequence": "À 51 ans, sans échauffement et avec cinq exercices de tirage/appui lourds le lundi, le risque de tendinopathie du coude ou de l'épaule est réel."},
+        {"type": "amelioration", "texte": "Faire de la semaine 16 une semaine allégée (−40 %) terminée par le test final de tractions."},
+        {"type": "amelioration", "texte": "Remplacer le front lever complet par un tuck ou un advanced tuck sauf si le maintien est acquis (R4-F7)."},
+        {"type": "amelioration", "texte": "Ajouter une règle de baisse du jour (mauvaise nuit, stress ponctuel : −1 série, RIR +1)."}
+      ],
+      "points_forts": [
+        "Volume de départ modéré et hausses dans les garde-fous ; aucune hausse brutale de charge dans la simulation (1,6 % max).",
+        "Allègements et tests de tractions maximales toutes les 5 semaines.",
+        "Présence d'un row scapulaire et d'un travail des jambes et du tronc varié."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,131 @@
+{
+  "ecole": "hypertrophie",
+  "programmes": [
+    {
+      "programme": "programme_1.md",
+      "criteres": {"H1": 8, "H2": 8.5, "H3": 7, "H4": 6.5, "H5": 4.5, "H6": 7.5, "H7": 8.5, "H8": 8.5, "H9": 6},
+      "sans_objet": [],
+      "ensemble": 6,
+      "points_perdus": [
+        {"critere": "H1", "perte": 2, "raison": "Quadriceps environ 11 à 12 séries (barre basse 3, barre haute 4, belt squat 3, soulevé de terre fractionné), dos et ischios dans la fourchette intermédiaire (R1-P1). Mais la hausse 2 puis 3 séries est automatique à chaque bloc, sans condition (R1-P18), et le mouvement objectif, le squat barre haute, ne reçoit que 3 à 4 séries directes par semaine, sous les 5 à 10 de R1-P5."},
+        {"critere": "H2", "perte": 1.5, "raison": "Trois séances corps entier, deux à trois expositions par groupe, et une alternance barre basse moyenne / barre haute lourde / belt squat léger. En revanche, le squat barre haute, mouvement visé, n'est travaillé qu'une fois par semaine (R1-P9 : 2 à 3 séances par mouvement pour un intermédiaire)."},
+        {"critere": "H3", "perte": 3, "raison": "Les marges vont de 3,5 à 2 RIR partout, y compris en isolation (curls, élévations latérales, leg curl) : c'est loin des 0 à 2 RIR de R1-P13 pour un intermédiaire. La trajectoire montre aussi une barre basse finie à 9,5 et 10,4 RIR réels (semaines 1 et 3) : la calibration n'est pas recadrée."},
+        {"critere": "H4", "perte": 3.5, "raison": "Les accessoires sont dispersés et sans logique d'ensemble : pompe en T dans une salle équipée, halo kettlebell, cuban press, puis Y raise, Lu raise et W raise qui tournent d'un bloc à l'autre. Trois variantes de squat se partagent la semaine, et le mouvement de l'objectif est le moins exposé."},
+        {"critere": "H5", "perte": 5.5, "raison": "Aucune règle de progression écrite. Les blocs 2 et 3 recopient les charges du bloc 1 (barre haute 67,5 kg, puis 70 kg en semaines 4, 9 et 14). Les pourcentages sont faux : 67,5 kg vaut 67,5 % de 100 kg, pas 76 %. En semaines 5, 10 et 15, la charge est « voir les séries » sans aucune série chiffrée. La trajectoire progresse de 0,15 % par semaine (meilleure série 4 à 80 kg)."},
+        {"critere": "H6", "perte": 2.5, "raison": "Le tirage égale à peu près la poussée (environ 9 séries de chaque) et la chaîne postérieure est présente. Mais le volume n'est pas déplacé vers la priorité, le squat barre haute : il est dilué entre trois variantes et des accessoires de bras et d'épaules."},
+        {"critere": "H7", "perte": 1.5, "raison": "Les repos sont adaptés (3 min au squat lourd, 2 min aux polyarticulaires, 75 s en isolation) et les séances tiennent en 57 à 59 min sur 75. Aucun superset d'antagonistes, alors qu'il reste du temps à mieux employer."},
+        {"critere": "H8", "perte": 1.5, "raison": "Une semaine allégée toutes les cinq (R3-P9) et aucune technique d'intensification. Mais ces semaines allégées contiennent un travail lourd à 1 RIR sans charge définie."},
+        {"critere": "H9", "perte": 4, "raison": "La lombalgie a moins de 12 mois (R5-P20), l'athlète a 46 ans (R5-P10) et dort 6,5 h (R5-P14) : le programme n'en dit rien. Aucun critère de surveillance lombaire sur le soulevé de terre et le squat barre basse, ni règle de repli si la récupération ne suit pas."},
+        {"critere": "ensemble", "perte": 4, "raison": "Trois corrections nécessaires, dont deux font manquer l'objectif de 115 kg : charges figées et fausses sur le mouvement visé, et ni pic ni test en fin de programme (la semaine 16 est une introduction). La trajectoire le confirme. Plafond de 6 : l'objectif chiffré n'est pas servi."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Faire progresser le squat barre haute d'un bloc à l'autre à partir de pourcentages justes du 1RM de 100 kg : bloc 1 à 75–80 %, bloc 2 à 80–85 %, bloc 3 à 85–90 %. Passer à 2 expositions par semaine, par exemple en remplaçant la barre basse du lundi par une barre haute plus légère.", "consequence": "Plafonnée à 67,5–70 kg pendant 16 semaines, la barre haute n'atteindra pas 115 kg : la trajectoire stagne à 80 kg × 3–5."},
+        {"type": "necessaire", "texte": "Chiffrer les séries des semaines 5, 10 et 15, au lieu de « voir les séries » (par exemple montée jusqu'à un triple à RPE 8 avec paliers en kg). Terminer en semaine 16 par un affûtage et un test de 1RM, pas par une semaine d'introduction.", "consequence": "L'athlète ne sait pas quoi charger en semaine test et l'objectif n'est jamais testé à l'échéance."},
+        {"type": "necessaire", "texte": "Tenir compte de la lombalgie de moins de 12 mois : au soulevé de terre et au squat barre basse, poser un critère d'arrêt (gêne > 2/10 le lendemain), une montée de charge prudente et une règle de repli (−1 série, RIR +1) si le sommeil ou la gêne se dégradent.", "consequence": "Sur un antécédent récent (R5-P20), monter la charge sans garde-fou expose à une récidive qui arrêterait le cycle."},
+        {"type": "amelioration", "texte": "Rapprocher les isolations (curls, élévations latérales, leg curl) de 1–2 RIR en fin de bloc, comme le prévoit R1-P13 pour un intermédiaire."},
+        {"type": "amelioration", "texte": "Remplacer la pompe en T, le halo et le cuban press par un développé incliné haltères et un oiseau à la poulie, et garder les mêmes accessoires sur les 16 semaines pour pouvoir y suivre la surcharge."},
+        {"type": "amelioration", "texte": "Écrire une double progression : haut de la plage atteint sur toutes les séries, alors +2,5 kg."}
+      ],
+      "points_forts": [
+        "Trois expositions de squat par semaine avec une alternance de charges.",
+        "Volumes par muscle dans la fourchette intermédiaire, séances qui tiennent dans le temps disponible.",
+        "Allègement toutes les cinq semaines, aucune technique d'intensification superflue.",
+        "Charges de départ prudentes, compatibles avec l'antécédent lombaire."
+      ]
+    },
+    {
+      "programme": "programme_2.md",
+      "criteres": {"H1": 5.5, "H2": 5, "H3": 7.5, "H4": 5, "H5": 5.5, "H6": 6, "H7": 8, "H8": 5.5, "H9": 4.5},
+      "sans_objet": [],
+      "ensemble": 5,
+      "points_perdus": [
+        {"critere": "H1", "perte": 4.5, "raison": "Le volume est ajouté au lieu d'être réparti, entre 101 et 111 séries dures par semaine. Charnière de hanche : soulevé de terre roumain 4, conventionnel 4 et jambes tendues 4, plus 10 séries de squat. Dips à 11 séries et muscle-up lesté à 6, alors qu'ils sont en entretien : bien au-delà du maintien de R4-H1 (1/3 à 1/2 du volume)."},
+        {"critere": "H2", "perte": 5, "raison": "La traction lestée, mouvement prioritaire, n'est travaillée lourd qu'une fois par semaine (mercredi). Les dips en entretien le sont deux fois (lundi et vendredi). R1-P9 donne 2 à 4 séances par mouvement pour un avancé, et R4-H2 conseille de monter la fréquence de la priorité d'abord."},
+        {"critere": "H3", "perte": 2.5, "raison": "Les marges sont cohérentes (3 → 2 RIR aux polyarticulaires, 1,5 RIR en isolation) et les séries de calibrage sont présentes. Mais les pourcentages sont faux : +11,25 kg correspond à 69 % de 125 kg, pas 77 %, et le moteur a dû corriger à +23,75 kg."},
+        {"critere": "H4", "perte": 5, "raison": "Trois variantes de soulevé de terre, dont deux le même samedi après le squat. S'y ajoutent deux shrugs et trois élévations latérales. Le muscle-up lesté lourd à 6 séries se cumule aux dips le même lundi. Peu d'exercice d'assistance spécifique à la traction lourde (R1-P5 : variantes à charge moyenne)."},
+        {"critere": "H5", "perte": 4.5, "raison": "Aucune règle écrite. Le bloc 2 recopie le bloc 1 (traction de nouveau à +11,25 kg). La traction stagne à 3–4 répétitions à +30 kg et la progression mesurée est de 0,03 % par semaine."},
+        {"critere": "H6", "perte": 4, "raison": "Le tirage domine bien la poussée, mais le volume n'est pas déplacé vers la priorité (R4-H2, R4-H4) : il est empilé sur les mouvements d'entretien et la chaîne postérieure."},
+        {"critere": "H7", "perte": 2, "raison": "Les repos sont adaptés (3 min aux lourds, 75 s en isolation) et les séances durent de 64 à 74 min sur 90. Aucun superset pour alléger les longues séances du lundi."},
+        {"critere": "H8", "perte": 4.5, "raison": "Il y a un allègement en semaine 6 (R3-P9). Mais la semaine 10, celle de l'échéance, est la plus chargée du plan (111 séries) : aucun affûtage (R3-P12) et aucun test de 1RM programmé."},
+        {"critere": "H9", "perte": 5.5, "raison": "La spécialisation déclarée (priorité traction, entretien dips et squat) n'est pas traduite dans la structure. L'échéance n'est pas préparée."},
+        {"critere": "ensemble", "perte": 5, "raison": "Quatre corrections nécessaires : priorité inversée, absence d'affûtage et de test à l'échéance, entretien surdosé, charges mal calculées ou absentes. L'objectif de +57,5 kg ne sera probablement pas atteint, la trajectoire stagne à +30 kg × 4."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Passer la traction lestée à 2–3 séances par semaine (lourde, moyenne, et une variante comme la traction haute), et ramener les dips à 1 séance de 3–4 séries lourdes et le muscle-up lesté à 2–3 séries.", "consequence": "Avec une seule séance lourde par semaine, la priorité progresse moins que les mouvements d'entretien : la trajectoire stagne."},
+        {"type": "necessaire", "texte": "Remplacer la semaine 10 « montée » par un affûtage (séries −40 à −50 %, intensité gardée, R3-P12) et programmer le test de 1RM de traction lestée en fin de semaine 10. Ajouter un bloc de surcharge en semaines 7 à 9.", "consequence": "L'athlète arrive au test au pic de fatigue (111 séries), et le test n'est même pas programmé."},
+        {"type": "necessaire", "texte": "Réduire l'entretien à 1/3–1/2 du volume (R4-H1) : squat 1 séance de 3 séries lourdes, une seule variante de soulevé de terre, et supprimer le doublon conventionnel + jambes tendues du samedi.", "consequence": "Cette fatigue de dos et de préhension prise sur la récupération de la traction freine la priorité."},
+        {"type": "necessaire", "texte": "Corriger les charges : 77 % de 125 kg vaut un lest de +21 kg, pas +11,25 kg. Chiffrer les séries de traction de la semaine 6, au lieu de « voir les séries ».", "consequence": "Les charges écrites sont trop légères de 10 kg et la semaine test est incompréhensible."},
+        {"type": "amelioration", "texte": "Garder une seule élévation latérale et un seul shrug, et rendre le temps gagné à des tractions lestées en séries de recul (back-off)."},
+        {"type": "amelioration", "texte": "Écrire une règle de hausse de charge (+1,25 kg quand toutes les séries atteignent le haut de la plage au RIR visé)."}
+      ],
+      "points_forts": [
+        "Les marges de répétitions sont cohérentes et des séries de calibrage sont prévues.",
+        "Le tirage domine la poussée, les arrières d'épaule et les trapèzes sont traités.",
+        "Les séances tiennent dans le temps disponible, avec des repos adaptés au travail lourd.",
+        "Une semaine allégée au milieu du cycle."
+      ]
+    },
+    {
+      "programme": "programme_3.md",
+      "criteres": {"H1": 6, "H2": 6, "H3": 6, "H4": 5, "H5": 5, "H6": 5, "H7": 5, "H8": 4.5, "H9": 4},
+      "sans_objet": [],
+      "ensemble": 4.5,
+      "points_perdus": [
+        {"critere": "H1", "perte": 4, "raison": "Le volume total (15–18 séries dures) est raisonnable pour un coureur, mais mal réparti : mollets et soléaires à 0 série, quadriceps à 2–3 séries (reverse nordic puis chaise isométrique), aucun travail unilatéral. Les muscles utiles à la course ne sont pas entretenus."},
+        {"critere": "H2", "perte": 4, "raison": "Chaque groupe n'est travaillé qu'une fois par semaine. Le renforcement des jambes est placé après la sortie longue du dimanche, quand la fatigue est maximale."},
+        {"critere": "H3", "perte": 4, "raison": "Pont fessier et pompes au poids du corps, prescrits à 3 RIR : la trajectoire montre des pompes finies à 4,5–11,5 RIR réels. Les isométries (chaise, gainage, mountain climbers) reçoivent des RIR qui n'ont pas de sens. Aucune variante plus dure pour rapprocher les séries de la cible."},
+        {"critere": "H4", "perte": 5, "raison": "Pompe prise large classée « principal » pour un coureur. Hip airplane, mountain climbers et lift-off en accessoires. Ni mollets (montée sur pointes), ni squat unilatéral, ni fente. Le reverse nordic est remplacé par une chaise au mur dès le bloc 2."},
+        {"critere": "H5", "perte": 5, "raison": "Seul le RIR progresse : ni variante, ni lest à l'élastique, ni règle de répétitions. Les blocs se répètent à l'identique."},
+        {"critere": "H6", "perte": 5, "raison": "Pas de travail du mollet ni du pied. La chaîne postérieure se limite au pont fessier au poids du corps. Le haut du corps est équilibré (élastique contre pompes) mais peu utile pour l'objectif."},
+        {"critere": "H7", "perte": 5, "raison": "Les dimanches des semaines 5 et 10 sont estimés à 136–137 min pour 120 min disponibles : la séance est infaisable. Les repos sont corrects ailleurs."},
+        {"critere": "H8", "perte": 5.5, "raison": "Les semaines « test » 5 et 10 sont présentées comme allégées mais contiennent la course la plus longue du plan (21,1 km). La semaine 12, celle de la course, est une semaine de montée : aucun affûtage (R3-P21)."},
+        {"critere": "H9", "perte": 6, "raison": "La course n'est pas placée dans le programme (la trajectoire : « aucun des mouvements visés n'est fait la semaine de l'échéance »). La sortie longue passe de 67–75 min à 21,1 km d'un coup. Aucun travail à l'allure semi pour un objectif de 1 h 45."},
+        {"critere": "ensemble", "perte": 5.5, "raison": "Quatre corrections nécessaires, dont une progression brutale de la sortie longue (plafond 5) et une échéance ignorée (plafond 6). Le renforcement n'entretient pas les muscles de la course."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Placer le semi-marathon en fin de semaine 12, précédé de 7 à 10 jours d'affûtage (volume de course −40 %, intensité gardée), et retirer le renforcement dur de cette semaine.", "consequence": "Programme tel quel : l'athlète arrive à la course en pleine semaine de montée, ou la course n'est pas faite du tout."},
+        {"type": "necessaire", "texte": "Supprimer les 21,1 km des semaines 5 et 10, et monter la sortie longue par paliers d'environ 10 % jusqu'à 85–95 min.", "consequence": "Passer de 75 min de course à environ 105–135 min expose à une blessure de surcharge, et la séance dépasse le temps disponible (137 min pour 120)."},
+        {"type": "necessaire", "texte": "Ajouter au renforcement des montées sur pointes unilatérales (jambe tendue et genou fléchi, 2 × 10–15 à 1–2 RIR) et un squat bulgare ou une fente, deux fois par semaine, à la place des mountain climbers et du hip airplane.", "consequence": "Mollets, soléaires et quadriceps, les muscles qui encaissent la course, ne sont pas entretenus au moment où le kilométrage monte : risque accru de tendinopathie d'Achille et de douleur au genou."},
+        {"type": "necessaire", "texte": "Ajouter un travail à l'allure semi (environ 5:00/km), par exemple 2 × 15 min puis 3 × 15 min le jeudi.", "consequence": "Sans travail spécifique, l'objectif de 1 h 45 (environ 5:00/km) reste improbable avec un 10 km à 4:48/km."},
+        {"type": "amelioration", "texte": "Rapprocher le renforcement de la cible (ponts unilatéraux, élastique plus fort) et écrire une progression de variante quand le haut de la plage est atteint."},
+        {"type": "amelioration", "texte": "Déplacer le renforcement des jambes du dimanche (après la sortie longue) au jeudi."}
+      ],
+      "points_forts": [
+        "Le volume de renforcement est sobre et n'empiète pas sur la course.",
+        "Le tirage égale ou dépasse la poussée.",
+        "Les séances de semaine tiennent dans le temps disponible."
+      ]
+    },
+    {
+      "programme": "programme_4.md",
+      "criteres": {"H1": 7.5, "H2": 8, "H3": 7, "H4": 6.5, "H5": 5, "H6": 7.5, "H7": 8.5, "H8": 7.5, "H9": 4.5},
+      "sans_objet": [],
+      "ensemble": 6,
+      "points_perdus": [
+        {"critere": "H1", "perte": 2.5, "raison": "Grand dorsal à environ 12–15 séries (pronation 6, commando 3, supination 3, rows 6 fractionnés) et poussée à environ 15 : dans la fourchette intermédiaire. Mais le volume n'est pas réduit malgré 5,5 h de sommeil et un métier physique lourd (R5-P14, R5-P18 : −10 à −20 %). Les jambes sont au minimum (skater squat 4 séries)."},
+        {"critere": "H2", "perte": 2, "raison": "Trois expositions au tirage vertical par semaine (R4-G8 : 3 pour un intermédiaire) et une poussée répartie. Pas d'alternance lourde / légère sur la traction : la pronation est en 4–6 répétitions les deux jours."},
+        {"critere": "H3", "perte": 3, "raison": "Les marges sont plausibles (3 → 2 RIR) mais identiques partout. Les isométries (L-sit, planche) reçoivent des RIR. Aucune série de calibration avant la semaine 5."},
+        {"critere": "H4", "perte": 3.5, "raison": "HSPU négatif en 10–15 répétitions : c'est incohérent pour une excentrique et sans prérequis connu (aucun test de poirier dans le profil). Le choix des variantes de traction (commando, supination, row australien) est par ailleurs pertinent."},
+        {"critere": "H5", "perte": 5, "raison": "Aucune règle écrite. Les blocs 2 et 3 recopient le bloc 1 : traction 4–6 répétitions, mêmes séries, seul le RIR bouge. Pas de test en semaine 12. La trajectoire stagne : meilleure série à 5 répétitions, capacité 8,3 → 8,8, alors que l'objectif est 12."},
+        {"critere": "H6", "perte": 2.5, "raison": "Le tirage (environ 18) dépasse la poussée (environ 15). Bas du corps et chaîne postérieure réduits au minimum, ce qui reste acceptable pour un maçon sollicité au travail."},
+        {"critere": "H7", "perte": 1.5, "raison": "Séances de 25 à 42 min sur 60, repos de 90 s adaptés à l'endurance de force (R4-G4). Pas de superset pour raccourcir encore les séances après le travail."},
+        {"critere": "H8", "perte": 2.5, "raison": "Un allègement toutes les cinq semaines et aucune technique d'intensification. Mais rien n'est prévu pour ajuster selon la fatigue professionnelle."},
+        {"critere": "H9", "perte": 5.5, "raison": "Sommeil de 5,5 h de qualité 2/5, stress 4/5, travail physique lourd : aucune adaptation du volume ni du RIR (R5-P14, R5-P15, R5-P18), aucune règle de repli. L'heure d'entraînement n'est pas mentionnée."},
+        {"critere": "ensemble", "perte": 4, "raison": "Trois corrections nécessaires : progression absente vers 12 tractions et pas de test final, profil de récupération ignoré, HSPU négatif sans prérequis. La trajectoire confirme que l'objectif ne sera probablement pas atteint."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Écrire une progression de la traction d'un bloc à l'autre : plage de répétitions qui monte (4–6, puis 5–7, puis 6–8), ou ajout d'une série courte quand toutes les séries atteignent le haut de la plage, avec une séance d'échelles sous-maximales. Programmer un test de répétitions maximales en fin de semaine 12, après une semaine allégée.", "consequence": "Avec des blocs identiques, le nombre de tractions stagne (la trajectoire plafonne à 8) et l'objectif de 12 n'est jamais testé."},
+        {"type": "necessaire", "texte": "Adapter au sommeil, au stress et au métier : volume −10 à −20 % sur la préhension et le dos, RIR +1 (R5-P14, R5-P18). Ajouter une règle de repli : nuit < 5 h ou journée très lourde → −1 série par exercice, pas de test.", "consequence": "Sans ajustement, la fatigue cumulée d'un maçon qui dort 5,5 h empêche l'adaptation et augmente le risque de surmenage des coudes et des épaules."},
+        {"type": "necessaire", "texte": "Remplacer les HSPU négatifs 3 × 10–15 par des pompes piquées sur surélévation ou des négatifs de 3–5 répétitions, après validation de 30 s de poirier au mur.", "consequence": "Des excentriques tête en bas en séries longues, sans prérequis vérifié, exposent les cervicales et les épaules à une chute ou une surcharge."},
+        {"type": "amelioration", "texte": "Rapprocher les isolations et les pompes de 1–2 RIR, et ajouter une série de calibration de la marge en semaine 1."},
+        {"type": "amelioration", "texte": "Alterner une séance de traction lourde (4–6 répétitions) et une séance de volume (séries de 60–70 % du maximum)."}
+      ],
+      "points_forts": [
+        "Le tirage vertical est travaillé trois fois par semaine avec des variantes complémentaires (commando, supination, row australien).",
+        "Le tirage domine la poussée.",
+        "Les séances sont courtes et compatibles avec une fin de journée de travail.",
+        "Un allègement régulier, sans technique d'intensification inutile."
+      ]
+    }
+  ]
+}

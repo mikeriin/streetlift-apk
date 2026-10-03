@@ -1,0 +1,130 @@
+{
+  "ecole": "sante",
+  "programmes": [
+    {
+      "programme": "programme_1.md",
+      "criteres": {"S1": 6.5, "S2": 5, "S3": 5, "S4": 6, "S5": 5.5, "S6": 6, "S7": 6.5, "S8": 2, "S9": 4},
+      "sans_objet": [],
+      "ensemble": 4,
+      "points_perdus": [
+        {"critere": "S1", "perte": 3.5, "raison": "Questionnaire vierge donc rien de contre-indiqué, mais aucun échauffement écrit, aucun seuil de douleur (R5-P23, R4-F11) alors que coudes et épaules encaissent traction lestée 2×/sem, traction un bras, muscle-up, 3 variantes de dips et 3 curls par semaine ; Nordic complet 2 × 10 à 15 dès la S1 (risque de lésion des ischios)."},
+        {"critere": "S2", "perte": 5, "raison": "Séries dures 93 → 121 de S1 à S2 (+30 % en une semaine) puis 126, et de nouveau 92 → 120 de S7 à S8 : au-delà des garde-fous +10–20 %/sem (R5-P22) ; ~125 séries dures/semaine pour un avancé dépassent largement les bornes R5-P13 (10–14 → 20 séries par groupe)."},
+        {"critere": "S3", "perte": 5, "raison": "Seule la S6 allège ; S8–S11 restent au pic de volume juste avant l'échéance ; aucun critère de baisse du jour, ni prise en compte du sommeil/stress (R5-P14, P15) ; jeudi-vendredi-samedi enchaînés avec squat jeudi et samedi après soulevé de terre + roumain + squat pause le mardi."},
+        {"critere": "S4", "perte": 4, "raison": "Le volet sets & reps (10 %) se limite à des dips 20–30 et des tractions 12–18 sans format ni densité (R4-G6, R4-G7) ; acceptable vu la part de la discipline mais non construit."},
+        {"critere": "S5", "perte": 4.5, "raison": "Pas de rotation externe de coiffe, pas d'échauffement écrit, charge de coude/épaule très répétitive (R4-F10, R4-F12) ; deltoïde postérieur et Lu raise présents, ce qui sauve une partie."},
+        {"critere": "S6", "perte": 4, "raison": "Dips sur barre fixe lesté 1 × 1 à 16 à effort maximal (10/10) le mardi de la semaine de compétition (S12) et en S6 : échec sur un mouvement d'épaule chargé, contraire à R4-G3 (pas d'échec en affûtage) et R5-P27."},
+        {"critere": "S7", "perte": 3.5, "raison": "Séances de 28 à 71 min dans des créneaux de 60 à 90 min, faisables ; mais Nordic complet 10 à 15 répétitions irréaliste, et 7–8 exercices par séance avec beaucoup de « charge à déterminer »."},
+        {"critere": "S8", "perte": 8, "raison": "Aucun affûtage : S11 au pic (125 séries dures, 81 %), puis S12 = semaine de test (R3-P13, P14, P21 : 8–14 jours, −40 à −60 %, dernier lourd ≥ 90 % à J−7/J−10). Les quatre mouvements sont testés sur trois jours différents et non dans le format de compétition ; le muscle-up lesté (mouvement de l'épreuve, objectif +22,5 kg) n'est ni entraîné lesté ni testé. Trajectoire : 3 mouvements sur 4, meilleure série à 94 % des semaines précédentes."},
+        {"critere": "S9", "perte": 6, "raison": "Charges contradictoires : traction « +17,5 kg ≈ 77 % du 1RM (charge totale) » alors que 77 % de 140 kg = 108 kg soit ≈ +28 kg (+17,5 kg = 70 %) ; squat « 110 kg ≈ 77 % » alors que 110/160 = 69 % ; dips « +37,5 kg ≈ 77 % » = 69 % de 170 kg. L'athlète ne sait pas quoi charger. Aucune consigne douleur/fatigue."},
+        {"critere": "ensemble", "perte": 6, "raison": "Sept corrections nécessaires dont deux qui font manquer l'échéance (absence d'affûtage, muscle-up lesté absent) et une progression brutale de volume : plafond 5 (risque) et 6 (échéance mal servie) ; trajectoire à 0,03 %/semaine de progression pour des objectifs de +5 à +10 kg."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Écrire un affûtage de 10 à 14 jours : S11 volume −40 à −60 % en gardant ≥ 85 % sur les principaux, dernier lourd (≥ 90 %, sans échec) à J−7/J−10, dernière séance à J−3/J−4, 2–3 jours de repos ; supprimer S12 « test » sur trois jours et placer la compétition en fin de S12 (R3-P13, R3-P14).", "consequence": "L'athlète arrive à la compétition après sa semaine la plus lourde, fatigué : records non battus (la trajectoire le montre déjà)."},
+        {"type": "necessaire", "texte": "Ajouter le muscle-up lesté de compétition 1 à 2 fois par semaine (singles/doubles de +10 à +20 kg montant vers 90 %) et le tester en S6.", "consequence": "Un mouvement de l'épreuve sur quatre arrive non préparé sous charge : objectif +22,5 kg très improbable, risque technique au premier essai lourd."},
+        {"type": "necessaire", "texte": "Monter l'intensité des principaux en bloc 2 (singles/doubles/triples à 85–92 %) au lieu de plafonner à 81 % en séries de 2 à 5.", "consequence": "Spécificité insuffisante pour un 1RM : progression quasi nulle (0,03 %/sem dans la trajectoire), objectifs manqués."},
+        {"type": "necessaire", "texte": "Rendre charges et pourcentages cohérents (calcul sur la charge totale poids du corps + lest) ou n'afficher qu'un des deux.", "consequence": "Consigne contradictoire : l'athlète charge 10 à 15 kg de moins que le pourcentage visé ou l'inverse, selon ce qu'il lit."},
+        {"type": "necessaire", "texte": "Limiter la hausse de volume à +10–20 %/semaine (93 → 105 → 115) et réduire le volume de jambes du mardi (soulevé de terre + roumain + squat pause = 12 séries dures en S2) qui ne sert pas l'épreuve.", "consequence": "Pic de fatigue et risque de surcharge (coudes, lombaires) en pleine préparation, avec moins de récupération pour les mouvements de l'épreuve."},
+        {"type": "necessaire", "texte": "Remplacer le Nordic complet 10 à 15 répétitions par 3 × 3 à 5 négatifs (assistés si besoin), loin des séances de squat lourd.", "consequence": "Série infaisable ou exécutée en souffrance : courbatures/lésion des ischios avant le squat du samedi."},
+        {"type": "necessaire", "texte": "Supprimer la série à effort maximal (10/10) de dips sur barre fixe lesté en S6 et S12 ; garder RIR ≥ 2.", "consequence": "Échec sur mouvement d'épaule chargé la semaine de compétition : fatigue et risque d'épaule au pire moment."},
+        {"type": "amelioration", "texte": "Traiter le point faible (départ bras tendus lent) : tractions lestées départ mort avec pause de 2 s en bas, tirage scapulaire lesté, isométrie à 90° du coude."},
+        {"type": "amelioration", "texte": "Écrire un échauffement spécifique (montée en charge par paliers) et des seuils de douleur coude/épaule (0–2 continuer, 3–4 sans progresser, ≥ 5 régresser, R5-P23)."},
+        {"type": "amelioration", "texte": "Ajouter de la rotation externe de coiffe et réduire les curls (3 variantes) au profit de la santé du coude."},
+        {"type": "amelioration", "texte": "Prévoir la conduite après une semaine manquée et une simulation de compétition (ordre des mouvements, tentatives) à S−3/S−4."}
+      ],
+      "points_forts": [
+        "Les quatre mouvements de compétition (sauf le muscle-up lesté) sont entraînés 1 à 2 fois par semaine avec des marges RIR 2–3 prudentes.",
+        "Semaine de test intermédiaire en S6 pour recaler les charges.",
+        "Séances qui tiennent dans les créneaux disponibles ; travail de deltoïdes postérieurs présent."
+      ]
+    },
+    {
+      "programme": "programme_2.md",
+      "criteres": {"S1": 7.5, "S2": 6, "S3": 7, "S5": 8, "S6": 9, "S7": 7.5, "S9": 6},
+      "sans_objet": ["S4", "S8"],
+      "ensemble": 7,
+      "points_perdus": [
+        {"critere": "S1", "perte": 2.5, "raison": "Rien de dangereux et des marges larges, mais aucun échauffement écrit ni seuil de douleur (R5-P23) pour un débutant complet."},
+        {"critere": "S2", "perte": 4, "raison": "Aucune règle de progression de charge écrite (« charge à déterminer, à calibrer » partout, R5-P3 double progression absente) ; les blocs se réinitialisent (S5 et S9 reviennent à 2 séries à RIR 4), si bien que la seule progression est l'effort ; 47 → 58 séries dures en S2 (+23 %), légèrement au-dessus des garde-fous R5-P22. Trajectoire : fente arrière de +6 à +8 kg en 12 semaines, 0,65 %/sem pour un débutant qui devrait progresser vite."},
+        {"critere": "S3", "perte": 3, "raison": "Semaines d'introduction allégées toutes les 4 semaines, adaptées ; aucune charge de vie déclarée ni critère de baisse du jour."},
+        {"critere": "S5", "perte": 2, "raison": "Bon équilibre tirage/poussée, rotation externe, W et Y raise ; pas d'échauffement écrit."},
+        {"critere": "S6", "perte": 1, "raison": "RIR 3–4 constant, aucun échec : conforme à R4-G3/R5-P4 ; marge uniforme sur tous les exercices."},
+        {"critere": "S7", "perte": 2.5, "raison": "Séances de 30 à 47 min pour 60 disponibles, bien ; mais 7–8 exercices par séance, rotation d'accessoires d'un bloc à l'autre et Spanish squat à l'élastique (montage et dosage peu évidents pour un novice)."},
+        {"critere": "S9", "perte": 4, "raison": "« ≈ 67 % du 1RM » affiché à un débutant dont aucun 1RM n'est connu ; « à calibrer » sans méthode de calibrage ; aucune consigne en cas de douleur."},
+        {"critere": "ensemble", "perte": 3, "raison": "Deux corrections nécessaires : bas du corps sous-dosé et sans mouvement de force progressif pour un objectif « muscle et force », et absence de règle de progression de charge."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Introduire un squat chargé progressif (goblet squat puis back squat barre haute, ou presse à cuisses) 2×/semaine, avec un test estimé (série de 5–8) en S4–S6 ; le profil signale justement squat et développé couché comme niveaux inconnus.", "consequence": "Le bas du corps reste à ~5–6 séries de quadriceps/semaine (Spanish squat + 2–3 fentes) : l'objectif force et muscle n'est servi qu'à moitié."},
+        {"type": "necessaire", "texte": "Écrire une double progression : quand le haut de la fourchette est atteint sur toutes les séries à l'effort visé deux séances de suite, +2–5 % (haut du corps) ou +5–10 % (bas du corps) (R5-P3) ; ne pas revenir à 2 séries RIR 4 à chaque bloc.", "consequence": "Charges qui stagnent (trajectoire : quasi-plateau sur 12 semaines) et motivation qui s'érode faute de progrès visibles."},
+        {"type": "amelioration", "texte": "Remplacer les pourcentages du 1RM par une consigne simple (« charge avec laquelle tu ferais encore 3 à 4 répétitions propres ») et expliquer la série de calibrage."},
+        {"type": "amelioration", "texte": "Écrire un échauffement de 5 à 8 min et des seuils de douleur (0–2 continuer, 3–4 sans progresser, ≥ 5 arrêter l'exercice)."},
+        {"type": "amelioration", "texte": "Prévoir une version courte (3 exercices principaux) et la conduite après une semaine manquée."}
+      ],
+      "points_forts": [
+        "Dose de départ modeste, RIR 3–4 et aucun échec : adapté à un débutant (R5-P1, R5-P4).",
+        "Corps entier 3×/semaine, chaque groupe ≥ 2×/semaine (R5-P2), séances courtes qui favorisent l'adhésion.",
+        "Prévention d'épaule présente (rotation externe, W/Y raise, rowing)."
+      ]
+    },
+    {
+      "programme": "programme_3.md",
+      "criteres": {"S1": 5, "S2": 4, "S3": 6, "S4": 5, "S5": 6.5, "S6": 7, "S7": 7, "S9": 6.5},
+      "sans_objet": ["S8"],
+      "ensemble": 5,
+      "points_perdus": [
+        {"critere": "S1", "perte": 5, "raison": "Après 36 semaines d'arrêt : Nordic négatif 2 × 10 à 15 dès la S1 (3 × en S2), handstand libre 4–5 séries sans préparation des poignets (R4-F12), front lever à l'élastique 3×/semaine alors que les tendons reviennent moins vite que les muscles (R5-P6) ; aucun seuil de douleur écrit."},
+        {"critere": "S2", "perte": 6, "raison": "Reprise non conforme à R5-P7 (au-delà de 16 semaines : au moins −50 % de volume et −20 à −30 % de charge) : 54 séries dures dès la S1, puis 76 en S2 (+41 % en une semaine, garde-fou R5-P22 +10–20 %). Répétitions fixées sur des maxima vieux de 40 semaines sans retest (pompes 3 × 17 à 26 sur un max de 35)."},
+        {"critere": "S3", "perte": 4, "raison": "Décharges planifiées en S5 et S10, bien ; mais naissance récente et déménagement ignorés (sommeil, R5-P14) et aucun critère de baisse du jour."},
+        {"critere": "S4", "perte": 5, "raison": "Street workout sets & reps = 60 % du profil, mais aucune méthode d'endurance de force : ni densité, ni EMOM, ni échelles, ni max de répétitions planifié (R4-G6, R4-G8, R3-P17) ; repos de 90 s partout. Trajectoire : meilleure série de tractions 8 → 6 et dips 15 → 15 en 12 semaines."},
+        {"critere": "S5", "perte": 3.5, "raison": "Row scapulaire, traction scapulaire, dead hang, pompe sphinx : bonne prévention ; manque échauffement écrit et préparation des poignets avant handstand."},
+        {"critere": "S6", "perte": 3, "raison": "RIR 2–3, pas d'échec ; mais traction prise serrée 2–3 × 10 à 15 à 3 RIR exige un max de 13 à 18 alors que l'athlète faisait 12 avant l'arrêt : séries forcées au bord de l'échec."},
+        {"critere": "S7", "perte": 3, "raison": "Séances de 26 à 49 min dans 60 min, matériel du parc respecté ; Nordic sans point d'ancrage précisé au parc."},
+        {"critere": "S9", "perte": 3.5, "raison": "Efforts lisibles, mais aucune consigne douleur/fatigue, rien sur le premier retest ni sur la conduite si une fourchette est inatteignable."},
+        {"critere": "ensemble", "perte": 5, "raison": "Quatre corrections nécessaires, dont une reprise à plein régime après 9 mois d'arrêt (progression brutale) : plafond 5."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Commencer par un retest (max tractions, dips, pompes à 2 RIR) puis démarrer à ~50 % du volume d'avant (≈ 30 séries dures) et monter de 10 à 20 %/semaine au plus, sans sauter de 54 à 76 (R5-P7, R5-P22).", "consequence": "Courbatures fortes et surcharge tendineuse (coudes, épaules) dans les premières semaines, avec risque d'abandon de la reprise."},
+        {"type": "necessaire", "texte": "Remplacer le Nordic négatif 10 à 15 répétitions par 2 × 3 à 5 négatifs assistés à l'élastique, en précisant l'ancrage des pieds (barre basse).", "consequence": "Série infaisable après un arrêt de 9 mois ; risque réel de lésion des ischios et de courbatures invalidantes pour le shrimp squat suivant."},
+        {"type": "necessaire", "texte": "Ramener la traction prise serrée à 3 × 5 à 8 (ou la calculer sur le retest) ; idem calibrer pompes et dips sur le retest.", "consequence": "Fourchette inatteignable : séries finies à l'échec ou abandonnées, ce qui charge les coudes en pleine reprise."},
+        {"type": "necessaire", "texte": "Ajouter du travail spécifique sets & reps à partir du bloc 2 : densité (EMOM à 40 % du max, échelles), progression en répétitions totales, max de répétitions retesté toutes les 4–6 semaines (R4-G6, R3-P17).", "consequence": "Discipline principale non travaillée : les repères de tractions/dips ne reviennent pas (trajectoire en stagnation)."},
+        {"type": "amelioration", "texte": "Tenir compte du sommeil avec un nouveau-né : règle simple « nuit < 5 h : −1 série par exercice, pas de figure à risque » (R5-P14)."},
+        {"type": "amelioration", "texte": "Écrire un échauffement avec 5 min de poignets avant handstand (R4-F12) et des seuils de douleur (R5-P23)."},
+        {"type": "amelioration", "texte": "Réduire le front lever élastique à 2 séances non consécutives les 4 premières semaines (R4-F10)."}
+      ],
+      "points_forts": [
+        "Séances courtes et entièrement réalisables au parc avec le matériel déclaré.",
+        "Décharges planifiées toutes les 5 semaines, aucune série à l'échec prévue.",
+        "Bonne place donnée au bas du corps au poids du corps (shrimp squat, skater squat) et au travail scapulaire."
+      ]
+    },
+    {
+      "programme": "programme_4.md",
+      "criteres": {"S1": 4, "S2": 4, "S3": 6, "S4": 5, "S5": 5, "S7": 4, "S8": 2.5, "S9": 4},
+      "sans_objet": ["S6"],
+      "ensemble": 4,
+      "points_perdus": [
+        {"critere": "S1", "perte": 6, "raison": "Coureuse débutante (6 mois) : course test de 10 000 m dès la S4 alors que sa sortie la plus longue a été de 54 à 60 min, sans aucun renforcement (mollets, hanches), sans seuil de douleur ni conduite en cas de douleur au tibia ou au tendon d'Achille (R5-P23, R4-F11)."},
+        {"critere": "S2", "perte": 6, "raison": "S1–S3 progressent raisonnablement (≈ 95 → 125 min/sem), mais le test 10 km de S4 représente une sortie d'au moins 70 min à intensité de course, saut brutal de durée et d'intensité ; puis les blocs repartent aux volumes de S1, sans progression d'un bloc à l'autre ; la sortie du dimanche passe de 35 min (repère du profil) à 40–45 min dès la S1."},
+        {"critere": "S3", "perte": 4, "raison": "Semaines de test allégées, mais aucun élément de charge de vie ni critère de baisse du jour."},
+        {"critere": "S4", "perte": 5, "raison": "Uniquement de l'endurance fondamentale, sans intensité définie (« Effort visé : — »), sans allure, fréquence cardiaque ni test de parole ; aucune fraction à allure 10 km pour une débutante qui doit apprendre son allure (R6 course)."},
+        {"critere": "S5", "perte": 5, "raison": "Étirements statiques seulement ; aucun renforcement préventif du coureur (mollets, soléaire, fessiers), aucun échauffement écrit."},
+        {"critere": "S7", "perte": 6, "raison": "Mardi de S4, S8 et S12 : 80 min estimées dans un créneau de 45 min, séance infaisable ; la trajectoire confirme que le 10 km n'est pas fait la semaine de l'échéance."},
+        {"critere": "S8", "perte": 7.5, "raison": "Aucun affûtage : S11 au pic de volume, puis S12 copie de la S4 avec un 10 km le mardi ; jour de course non placé, aucune stratégie d'allure (R3-P21 : débutant 3 à 5 jours allégés) ; deux 10 km complets en S4 et S8 au lieu de tests partiels."},
+        {"critere": "S9", "perte": 6, "raison": "« Endurance fondamentale » non expliquée à une débutante, aucune consigne marche/course, douleur ou fatigue."},
+        {"critere": "ensemble", "perte": 6, "raison": "Quatre corrections nécessaires dont une progression brutale (10 km complet en S4) et une échéance mal servie (pas d'affûtage, course dans un créneau trop court) : plafond 5, ramené à 4."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Supprimer les 10 km de S4 et S8 ; les remplacer par un test 5 km ou par l'allongement progressif de la sortie du dimanche (+5 min/sem, jusqu'à 65–70 min vers S9–S10), et placer toute séance longue le dimanche (60 min disponibles).", "consequence": "Séance infaisable dans les 45 min du mardi, et une sortie de plus de 70 min à intensité de course dès la 4e semaine expose à une blessure de surcharge (tibia, tendon d'Achille)."},
+        {"type": "necessaire", "texte": "Écrire un affûtage : S11 à −20 %, semaine de course à −40 à −50 % avec 2 courtes sorties dont quelques minutes à allure cible, course placée le dimanche, consigne d'allure (départ à ~7 min 15/km, régulier).", "consequence": "Elle arrive à la course fatiguée par sa semaine la plus chargée, ou court le 10 km dans un créneau trop court : objectif de finir en 70 min compromis."},
+        {"type": "necessaire", "texte": "Définir l'intensité : endurance fondamentale = pouvoir parler en phrases complètes, effort 3–4/10, environ 7 min 30 à 8 min/km, marche autorisée ; ajouter dès le bloc 2 une séance avec quelques fractions à allure 10 km.", "consequence": "Une débutante court ses footings trop vite, accumule la fatigue et ne connaît pas son allure de course."},
+        {"type": "necessaire", "texte": "Ajouter des seuils de douleur (0–2 continuer, 3–4 ne pas augmenter, ≥ 5 ou douleur qui boite : arrêter et consulter si > 2 semaines) et 10 min de renforcement 2×/semaine (mollets genou tendu/fléchi, pont fessier, fente).", "consequence": "Sans règle ni renforcement, une douleur de surcharge débutante sera poursuivie jusqu'à la blessure qui empêche le départ."},
+        {"type": "amelioration", "texte": "Écrire un échauffement (5 min de marche rapide puis footing lent, gammes) et prévoir la conduite après une semaine manquée."},
+        {"type": "amelioration", "texte": "Faire progresser les blocs 2 et 3 au-delà des volumes du bloc 1 plutôt que de répéter trois fois les mêmes durées."}
+      ],
+      "points_forts": [
+        "Trois séances non consécutives, 48 h entre chaque sortie.",
+        "Progression des volumes raisonnable sur S1–S3 et semaines allégées régulières.",
+        "Travail de mobilité présent, conforme à la part déclarée (10 %)."
+      ]
+    }
+  ]
+}

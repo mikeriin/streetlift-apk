@@ -1,0 +1,129 @@
+{
+  "ecole": "hypertrophie",
+  "programmes": [
+    {
+      "programme": "programme_1.md",
+      "criteres": {"H1": 8.5, "H2": 9.5, "H3": 9, "H4": 8.5, "H5": 9, "H6": 8, "H7": 8.5, "H8": 9.5, "H9": 9.5},
+      "sans_objet": [],
+      "ensemble": 9,
+      "points_perdus": [
+        {"critere": "H1", "perte": 1.5, "raison": "Volume exprimé en répétitions hebdomadaires (80/165/270/270) et non en séries dures par muscle (R1-P1, R1-P2) ; le lundi cumule pour les dorsaux pyramide de muscle-ups (7 paliers), 3 séries longues de muscle-ups et 3 séries tractions + muscle-up, soit au-delà du plafond de 10 séries par séance de l'avancé (R1-P4) si l'on compte les paliers lourds de la pyramide."},
+        {"critere": "H2", "perte": 0.5, "raison": "Excellente répartition (tirage vertical lundi/jeudi/samedi à 48 h, poussée mardi/vendredi, lourd/léger) ; seul le tirage horizontal reste concentré sur deux jours de poussée sans progression propre."},
+        {"critere": "H3", "perte": 1, "raison": "Marges cohérentes et calibrées sur les maximums, mais l'étiquette « 3 à 4 en réserve » sur la série de 22 tractions (max 28) correspond en réalité à 6 RIR ; aucun travail d'isolation plus près de l'échec (R1-P13), défendable pour une préparation de compétition."},
+        {"critere": "H4", "perte": 1.5, "raison": "Choix très spécifiques et stables, mais aucune isolation en position longue (biceps, triceps, arrière d'épaule hors un seul 3 × 15 le vendredi) pour protéger coudes et épaules sous 300 dips par semaine (R6-P4)."},
+        {"critere": "H5", "perte": 1, "raison": "Paliers écrits semaine par semaine et règle de lest du muscle-up ; pas de critère individuel d'ajout ou de retrait de séries hors la règle de douleur et la baisse du jour (R1-P18)."},
+        {"critere": "H6", "perte": 2, "raison": "Bas du corps réduit à squat 3 × 6, soulevé roumain 2 × 8 et squat gobelet (acceptable pour le profil) ; arrière d'épaule et rotateurs traités une seule fois par semaine face à un volume de poussée très élevé (dips, pompes, dips lestés) (R5-P27)."},
+        {"critere": "H7", "perte": 1.5, "raison": "Jeudi semaine 1 : test de lest par paliers de 2,5 kg à 3 min de repos, EMOM, trois séries longues à 4–5 min, 3 × 6 lestées et finition annoncés en 65 min : le test peut à lui seul prendre 15 à 20 min, la séance déborde probablement."},
+        {"critere": "H8", "perte": 0.5, "raison": "Allègement en semaine 4 et double affûtage bien placés (R3-P9, R3-P21) ; la simulation au bout en semaine allégée réduit un peu la décharge."},
+        {"critere": "H9", "perte": 0.5, "raison": "Très individualisé (maximums, lests, échéance, plan B) ; le format de l'épreuve reste supposé, ce qui est dit explicitement."},
+        {"critere": "ensemble", "perte": 1, "raison": "Aucune correction nécessaire ; restent des améliorations sur la protection des épaules et coudes et le temps du jeudi de test."}
+      ],
+      "corrections": [
+        {"type": "amelioration", "texte": "Ajouter 2 séries d'oiseau ou de tirage visage le mardi en plus du vendredi, et 2 séries de rotation externe, pour équilibrer le volume de poussée de 270 à 300 dips et 270 à 300 pompes par semaine."},
+        {"type": "amelioration", "texte": "Jeudi semaine 1 : sortir le test de lest du muscle-up vers le lundi ou supprimer la finition isométrique ce jour-là pour tenir les 75 min."},
+        {"type": "amelioration", "texte": "Corriger l'étiquette de marge sur les séries longues de tractions (22 sur 28 = environ 6 en réserve) pour que l'athlète sache réellement à quelle distance de l'échec il travaille."},
+        {"type": "amelioration", "texte": "Exprimer en parallèle le volume en séries dures par muscle et par séance (dorsaux le lundi) pour vérifier le plafond R1-P4."}
+      ],
+      "points_forts": [
+        "Volume calé sur les maximums réels et sur les cibles de compétition (14/32/56), plafonds de dips et de poussée écrits.",
+        "Fréquence du tirage vertical répartie à 48 h, alternance lourde/légère, muscle-up lesté limité à deux séances.",
+        "Allègement semaine 4, deux simulations, affûtage en deux temps avec lest conservé et plan B de fractionnement.",
+        "Règles de douleur, de baisse du jour et de séance manquée claires et graduées."
+      ]
+    },
+    {
+      "programme": "programme_2.md",
+      "criteres": {"H1": 1, "H2": 1.5, "H3": 0.5, "H4": 1.5, "H5": 1, "H6": 2, "H7": 0, "H8": 0, "H9": 0.5},
+      "sans_objet": [],
+      "ensemble": 1,
+      "points_perdus": [
+        {"critere": "H1", "perte": 9, "raison": "10 puis 15 puis jusqu'à 25 séries à l'échec de tractions et de dips par séance, 4 fois par semaine : 100 séries de dorsaux par semaine en semaine 12, très au-delà du plafond intermédiaire de 16–20 séries/semaine (R1-P1, R1-P3) et de 8 par séance (R1-P4)."},
+        {"critere": "H2", "perte": 8.5, "raison": "Séance identique lundi, mercredi, vendredi, samedi (vendredi-samedi consécutifs) avec le même volume énorme sur les mêmes muscles : aucune répartition (R1-P8)."},
+        {"critere": "H3", "perte": 9.5, "raison": "Échec à chaque série de chaque exercice, y compris muscle-up en kipping forcé et traction lestée (R1-P13 : échec réservé aux exercices sûrs) ; aucune plage de répétitions."},
+        {"critere": "H4", "perte": 8.5, "raison": "Muscle-up en élan forcé, dips avec rebond en amplitude maximale, négatives de traction à un bras pour un athlète à 15 tractions : exercices instables ou sans prérequis (R6-P4) ; +30 kg en sac à dos pour un athlète de 68 kg à 15 tractions."},
+        {"critere": "H5", "perte": 9, "raison": "Seule progression : +50 % de séries en semaine 2 puis +1 série par exercice chaque semaine, sans critère ; aucune surcharge réglée (R5-P3, R1-P18)."},
+        {"critere": "H6", "perte": 8, "raison": "Aucun travail de jambes (« elles alourdissent »), aucun tirage horizontal ni arrière d'épaule (R5-P27)."},
+        {"critere": "H7", "perte": 10, "raison": "30 s de repos entre séries à l'échec de polyarticulaires et de traction lestée (R1-P15) ; séance estimée à 95 min pour 60 min disponibles, et plus longue chaque semaine."},
+        {"critere": "H8", "perte": 10, "raison": "Aucune semaine allégée sur 12 semaines à volume croissant (R3-P9), échec permanent."},
+        {"critere": "H9", "perte": 9.5, "raison": "Consigne « serrer les dents » en cas de douleur au coude ; pas de test ; séance hors du temps ; rien d'adapté au niveau ni à l'objectif."},
+        {"critere": "ensemble", "perte": 9, "raison": "Dangereux : échec permanent sur mouvements à risque, volume explosif, douleur ignorée ; plafond à 5 largement dépassé vers le bas."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Supprimer la consigne « serrer les dents » et la remplacer par une échelle de douleur avec arrêt et avis médical au-delà d'un seuil.", "consequence": "Une tendinopathie du coude débutante deviendra chronique et arrêtera l'athlète des mois."},
+        {"type": "necessaire", "texte": "Remplacer les 10 à 25 séries au maximum par 4 à 6 séries de tractions et de dips par séance, 2 à 3 séances par muscle, 1 à 3 répétitions en réserve (R1-P4, R1-P13).", "consequence": "Surcharge articulaire et fatigue cumulée : régression des maximums et blessure probable avant la semaine 12."},
+        {"type": "necessaire", "texte": "Porter les repos à 2–3 min sur tractions, dips et tractions lestées (R1-P15).", "consequence": "Séries suivantes effondrées, volume de qualité perdu, technique dégradée sous fatigue."},
+        {"type": "necessaire", "texte": "Retirer le muscle-up en kipping forcé à l'échec et les négatives à un bras ; travailler le muscle-up en technique propre loin de l'échec et des négatives à deux bras.", "consequence": "Risque élevé de blessure d'épaule et de coude sur des mouvements sans prérequis."},
+        {"type": "necessaire", "texte": "Supprimer le rebond en bas des dips ; amplitude contrôlée jusqu'à l'épaule au niveau du coude.", "consequence": "Contrainte capsulaire et sur le tendon du grand pectoral à chaque répétition."},
+        {"type": "necessaire", "texte": "Traction lestée : partir de +5 à +10 kg à 2–3 répétitions en réserve, ceinture de lest plutôt que sac à dos, repos 3 min.", "consequence": "+30 kg à l'échec à 30 s de repos pour un athlète de 68 kg à 15 tractions : échec en position dangereuse, blessure probable."},
+        {"type": "necessaire", "texte": "Ramener la séance à 60 min et réduire le volume en conséquence.", "consequence": "Séance infaisable (95 min annoncées pour 60 min, et plus chaque semaine)."},
+        {"type": "necessaire", "texte": "Prévoir une semaine allégée toutes les 5–6 semaines et un test des maximums (R3-P9).", "consequence": "Fatigue non dissipée et aucune mesure de la progression vers 20 tractions et 35 dips."},
+        {"type": "necessaire", "texte": "Ajouter 1 à 2 séances ou blocs de jambes et du tirage horizontal (row inversé, barre basse disponible).", "consequence": "Déséquilibre du physique et des épaules, bas du corps abandonné."},
+        {"type": "necessaire", "texte": "Remplacer la progression +1 série par semaine par une double progression (répétitions puis volume par paliers de 1–2 séries toutes les 2 semaines, R1-P18).", "consequence": "Volume exponentiel jusqu'à 25 séries par exercice et par séance, surentraînement certain."}
+      ],
+      "points_forts": [
+        "Les deux mouvements de l'objectif (tractions et dips) sont présents à chaque séance."
+      ]
+    },
+    {
+      "programme": "programme_3.md",
+      "criteres": {"H1": 6.5, "H2": 6, "H3": 5, "H4": 7, "H5": 5, "H6": 6.5, "H7": 8, "H8": 6.5, "H9": 5},
+      "sans_objet": [],
+      "ensemble": 6,
+      "points_perdus": [
+        {"critere": "H1", "perte": 3.5, "raison": "Mercredi : dips 4 + pompes 4 + dips barre droite 3 = 11 séries directes de pectoraux et 14 de triceps en une séance, au-delà du plafond intermédiaire de 8 par séance (R1-P4), alors que la priorité (tractions) n'a que 7 séries le lundi et 3 le dimanche ; volume ni bas au départ ni monté par paliers."},
+        {"critere": "H2", "perte": 4, "raison": "Split tirage/poussée/jambes/corps entier : la poussée et les jambes sont concentrées une fois par semaine avec gros volume ; le tirage, priorité, n'a que deux expositions (lundi, dimanche) dont une légère (R1-P8)."},
+        {"critere": "H3", "perte": 5, "raison": "2 RIR uniforme sur tout, y compris relevés de jambes et squat au poids du corps 4 × 25 ; incohérent avec les plages : 10–12 tractions à 2 RIR alors que le maximum est 18 (première série à 6–8 RIR), pistol 3 × 3 à 2 RIR pour un max de 6 (R1-P13, R1-P10)."},
+        {"critere": "H4", "perte": 3, "raison": "Exercices corrects pour le matériel, mais aucun travail spécifique à l'endurance de force en traction (séries longues, fractionnées, densité) pour viser 25 répétitions ; squat au poids du corps 4 × 25 peu stimulant pour un athlète qui fait des pistols."},
+        {"critere": "H5", "perte": 5, "raison": "« +1 répétition par série quand la plage est atteinte » : règle ambiguë (on dépasse la plage ? jusqu'où ?), sans palier de volume ni passage à des variantes plus dures en l'absence de lest (R5-P3)."},
+        {"critere": "H6", "perte": 3.5, "raison": "Poussée (≈ 20 séries/semaine) ≥ tirage (≈ 16) alors que l'objectif est le tirage ; arrière d'épaule absent ; volume non déplacé vers la priorité (R5-P27)."},
+        {"critere": "H7", "perte": 2, "raison": "Repos par type d'exercice corrects ; aucune consigne de repos différencié pour le corps entier du dimanche (2 min uniformes, y compris pour la planche)."},
+        {"critere": "H8", "perte": 3.5, "raison": "Allègement toutes les 4 semaines réduit à une série de moins (environ −25 %), en deçà des −40 à −50 % (R3-P9) ; la semaine 12 allégée ne contient aucun test."},
+        {"critere": "H9", "perte": 5, "raison": "Programme générique (conviendrait à beaucoup d'autres) : rien ne mesure l'objectif de 25 tractions, pas d'échauffement, pas de règle de douleur ni de repli."},
+        {"critere": "ensemble", "perte": 4, "raison": "Sûr mais quatre corrections nécessaires : pas de travail ni de test orienté vers 25 tractions, marges contradictoires, progression ambiguë, volume mal réparti par rapport à la priorité."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Ajouter du travail spécifique d'endurance de force en traction (séries longues à 70–80 % du max, une série fractionnée, EMOM de densité) et un test du maximum aux semaines 4, 8 et 12.", "consequence": "Des séries de 10–12 loin de l'échec ne mèneront probablement pas de 18 à 25 répétitions, et rien ne vérifie l'objectif à 12 semaines."},
+        {"type": "necessaire", "texte": "Caler les plages sur les maximums : tractions 4 × 12–14 à 2–3 RIR pour un max de 18, pistols 3 × 3–4 à 2 RIR (cohérent), marges plus proches de l'échec sur les isolations.", "consequence": "L'athlète ne sait pas s'il doit s'arrêter à 12 ou aller à 16 répétitions : le stimulus sur la priorité reste indéfini."},
+        {"type": "necessaire", "texte": "Écrire une progression explicite : répétitions jusqu'au haut de la plage, puis variante plus dure (traction archer, pause, tempo lent) ou +1 série par exercice prioritaire toutes les 2 semaines (R1-P18).", "consequence": "Sans lest, la règle actuelle bloque au haut de la plage ou dérive sans fin ; progression probablement stoppée après 4–6 semaines."},
+        {"type": "necessaire", "texte": "Déplacer du volume de la poussée vers le tirage : retirer les dips sur barre droite du mercredi (pectoraux/triceps de 11 à 8 séries) et ajouter une troisième exposition de tractions (par exemple le mercredi) ; ajouter du travail d'arrière d'épaule.", "consequence": "La priorité (tirage) reste sous-dosée et le mercredi dépasse le plafond par séance sans bénéfice."},
+        {"type": "amelioration", "texte": "Rendre la semaine allégée plus nette (−40 % de séries, 4 RIR) et y placer le test."},
+        {"type": "amelioration", "texte": "Remplacer le squat au poids du corps 4 × 25 par fentes bulgares ou pistols en plus grand volume, plus stimulants pour ce niveau."},
+        {"type": "amelioration", "texte": "Ajouter un échauffement et une règle de douleur (coude, épaule)."}
+      ],
+      "points_forts": [
+        "Programme sûr, tenant dans le temps disponible, sans matériel non disponible.",
+        "Repos de 2 min sur les polyarticulaires, bas du corps présent, semaine allégée planifiée."
+      ]
+    },
+    {
+      "programme": "programme_4.md",
+      "criteres": {"H1": 9, "H2": 8, "H3": 9, "H4": 8.5, "H5": 9.5, "H6": 8.5, "H7": 9, "H8": 9.5, "H9": 9.5},
+      "sans_objet": [],
+      "ensemble": 9,
+      "points_perdus": [
+        {"critere": "H1", "perte": 1, "raison": "Volumes de 10–12 séries de tirage, 9–11 de poussée et 5–6 de jambes, adaptés à un profil hybride (R1-P1) et montés par paliers ; la poussée n'est pas un objectif, mais le volume pompes/dips n'est pas recalé sur les maximums entre tests."},
+        {"critere": "H2", "perte": 2, "raison": "La poussée n'a qu'une exposition dure par semaine (jeudi), et le jeudi cumule tractions, dips, pompes et tirage ; une seconde exposition légère le lundi répartirait mieux (R1-P8)."},
+        {"critere": "H3", "perte": 1, "raison": "Marges calibrées en % du maximum et retestées toutes les 4 semaines ; peu d'exercices menés près de l'échec en isolation (tirage visage « facile »)."},
+        {"critere": "H4", "perte": 1.5, "raison": "Choix cohérents et stables ; la note « prise sur une série de pompes » sur la traction supination à l'élastique est obscure ; aucune isolation biceps en position longue alors que la barre basse le permet."},
+        {"critere": "H5", "perte": 0.5, "raison": "Règle écrite (deux séances à 3 RIR → +1 répétition), repli à l'élastique ; « 4 × 6 (ou 60 % du nouveau maximum) » laisse deux consignes possibles."},
+        {"critere": "H6", "perte": 1.5, "raison": "Tirage ≥ poussée, arrière d'épaule et prévention du coureur présents ; chaîne postérieure limitée au pont fessier une jambe 2 × 12."},
+        {"critere": "H7", "perte": 1, "raison": "Repos par type d'exercice, séances dans le temps ; pas de superset d'antagonistes pour alléger le jeudi chargé."},
+        {"critere": "H8", "perte": 0.5, "raison": "Allègements semaines 4, 8, affûtage 11–12 bien dosés, gestion des interférences course/force écrite."},
+        {"critere": "H9", "perte": 0.5, "raison": "Très adapté (temps par jour, matériel, course, douleurs basses et hautes, baisse du jour) ; la consigne sur le mardi « force et course ne partagent pas une demi-journée, sauf le mardi » est confuse."},
+        {"critere": "ensemble", "perte": 1, "raison": "Aucune correction nécessaire : programme sûr et ciblé ; restent des améliorations de répartition de la poussée et de clarté de quelques consignes."}
+      ],
+      "corrections": [
+        {"type": "amelioration", "texte": "Ajouter une exposition légère de poussée le lundi (2 × 8 pompes à 3 RIR) en retirant une série de pompes le jeudi, pour répartir sans ajouter."},
+        {"type": "amelioration", "texte": "Clarifier les notes ambiguës : « prise sur une série de pompes » (traction supination à l'élastique), « 4 × 6 ou 60 % du nouveau maximum », et l'exception du mardi."},
+        {"type": "amelioration", "texte": "Ajouter 2 séries de curl à la barre basse ou de traction supination lente en fin de lundi pour le biceps, utile à la traction."},
+        {"type": "amelioration", "texte": "Ajouter un exercice de chaîne postérieure (pont fessier ou soulevé de terre une jambe) un second jour, utile à la course."}
+      ],
+      "points_forts": [
+        "Objectifs de tractions et de course chiffrés, tests standardisés aux semaines 4, 8, 12.",
+        "Tractions deux fois par semaine, lourde le lundi et en densité le jeudi, séries fractionnées progressives.",
+        "Gestion de l'interférence course/force (jambes loin de la qualité, une seule séance de qualité, limites de sortie longue).",
+        "Règles de douleur, de baisse du jour et de semaine manquée complètes ; allègements et affûtage bien placés."
+      ]
+    }
+  ]
+}

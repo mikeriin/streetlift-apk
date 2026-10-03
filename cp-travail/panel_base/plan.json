@@ -1,0 +1,166 @@
+{
+ "B1_force": {
+  "programme_1.md": "autres_08_crossfit_intermediaire",
+  "programme_2.md": "street_14_parc_sans_lest",
+  "programme_3.md": "street_11_master_51_ans"
+ },
+ "B1_calisthenie": {
+  "programme_1.md": "autres_08_crossfit_intermediaire",
+  "programme_2.md": "street_14_parc_sans_lest",
+  "programme_3.md": "street_11_master_51_ans"
+ },
+ "B1_hypertrophie": {
+  "programme_1.md": "autres_08_crossfit_intermediaire",
+  "programme_2.md": "street_14_parc_sans_lest",
+  "programme_3.md": "street_11_master_51_ans"
+ },
+ "B1_sante": {
+  "programme_1.md": "autres_08_crossfit_intermediaire",
+  "programme_2.md": "street_14_parc_sans_lest",
+  "programme_3.md": "street_11_master_51_ans"
+ },
+ "B2_force": {
+  "programme_1.md": "street_07_avance_streetlifting_competition",
+  "programme_2.md": "autres_01_debutant_musculation",
+  "programme_3.md": "street_04_reprise_longue_pause",
+  "programme_4.md": "autres_05_course_10_km_debutante"
+ },
+ "B2_calisthenie": {
+  "programme_1.md": "street_07_avance_streetlifting_competition",
+  "programme_2.md": "autres_01_debutant_musculation",
+  "programme_3.md": "street_04_reprise_longue_pause",
+  "programme_4.md": "autres_05_course_10_km_debutante"
+ },
+ "B2_hypertrophie": {
+  "programme_1.md": "street_07_avance_streetlifting_competition",
+  "programme_2.md": "autres_01_debutant_musculation",
+  "programme_3.md": "street_04_reprise_longue_pause",
+  "programme_4.md": "autres_05_course_10_km_debutante"
+ },
+ "B2_sante": {
+  "programme_1.md": "street_07_avance_streetlifting_competition",
+  "programme_2.md": "autres_01_debutant_musculation",
+  "programme_3.md": "street_04_reprise_longue_pause",
+  "programme_4.md": "autres_05_course_10_km_debutante"
+ },
+ "B3_force": {
+  "programme_1.md": "street_09_elite_streetlifting",
+  "programme_2.md": "street_05_inter_calisthenie_front_lever",
+  "programme_3.md": "street_06_inter_sets_reps",
+  "programme_4.md": "street_02_debutant_surpoids"
+ },
+ "B3_calisthenie": {
+  "programme_1.md": "street_09_elite_streetlifting",
+  "programme_2.md": "street_05_inter_calisthenie_front_lever",
+  "programme_3.md": "street_06_inter_sets_reps",
+  "programme_4.md": "street_02_debutant_surpoids"
+ },
+ "B3_hypertrophie": {
+  "programme_1.md": "street_09_elite_streetlifting",
+  "programme_2.md": "street_05_inter_calisthenie_front_lever",
+  "programme_3.md": "street_06_inter_sets_reps",
+  "programme_4.md": "street_02_debutant_surpoids"
+ },
+ "B3_sante": {
+  "programme_1.md": "street_09_elite_streetlifting",
+  "programme_2.md": "street_05_inter_calisthenie_front_lever",
+  "programme_3.md": "street_06_inter_sets_reps",
+  "programme_4.md": "street_02_debutant_surpoids"
+ },
+ "B4_force": {
+  "programme_1.md": "autres_04_force_generale_46_ans",
+  "programme_2.md": "street_16_specialisation_traction_lestee",
+  "programme_3.md": "autres_06_semi_marathon_intermediaire",
+  "programme_4.md": "street_15_travail_physique_sommeil_court"
+ },
+ "B4_calisthenie": {
+  "programme_1.md": "autres_04_force_generale_46_ans",
+  "programme_2.md": "street_16_specialisation_traction_lestee",
+  "programme_3.md": "autres_06_semi_marathon_intermediaire",
+  "programme_4.md": "street_15_travail_physique_sommeil_court"
+ },
+ "B4_hypertrophie": {
+  "programme_1.md": "autres_04_force_generale_46_ans",
+  "programme_2.md": "street_16_specialisation_traction_lestee",
+  "programme_3.md": "autres_06_semi_marathon_intermediaire",
+  "programme_4.md": "street_15_travail_physique_sommeil_court"
+ },
+ "B4_sante": {
+  "programme_1.md": "autres_04_force_generale_46_ans",
+  "programme_2.md": "street_16_specialisation_traction_lestee",
+  "programme_3.md": "autres_06_semi_marathon_intermediaire",
+  "programme_4.md": "street_15_travail_physique_sommeil_court"
+ },
+ "B5_force": {
+  "programme_1.md": "street_12_antecedent_coude",
+  "programme_2.md": "autres_03_powerlifter_competition",
+  "programme_3.md": "autres_07_mobilite_sante_senior",
+  "programme_4.md": "street_13_peu_de_temps"
+ },
+ "B5_calisthenie": {
+  "programme_1.md": "street_12_antecedent_coude",
+  "programme_2.md": "autres_03_powerlifter_competition",
+  "programme_3.md": "autres_07_mobilite_sante_senior",
+  "programme_4.md": "street_13_peu_de_temps"
+ },
+ "B5_hypertrophie": {
+  "programme_1.md": "street_12_antecedent_coude",
+  "programme_2.md": "autres_03_powerlifter_competition",
+  "programme_3.md": "autres_07_mobilite_sante_senior",
+  "programme_4.md": "street_13_peu_de_temps"
+ },
+ "B5_sante": {
+  "programme_1.md": "street_12_antecedent_coude",
+  "programme_2.md": "autres_03_powerlifter_competition",
+  "programme_3.md": "autres_07_mobilite_sante_senior",
+  "programme_4.md": "street_13_peu_de_temps"
+ },
+ "B6_force": {
+  "programme_1.md": "autres_02_hypertrophie_intermediaire",
+  "programme_2.md": "street_17_hybride_street_course",
+  "programme_3.md": "autres_10_contraintes_multiples",
+  "programme_4.md": "street_01_debutant_complet"
+ },
+ "B6_calisthenie": {
+  "programme_1.md": "autres_02_hypertrophie_intermediaire",
+  "programme_2.md": "street_17_hybride_street_course",
+  "programme_3.md": "autres_10_contraintes_multiples",
+  "programme_4.md": "street_01_debutant_complet"
+ },
+ "B6_hypertrophie": {
+  "programme_1.md": "autres_02_hypertrophie_intermediaire",
+  "programme_2.md": "street_17_hybride_street_course",
+  "programme_3.md": "autres_10_contraintes_multiples",
+  "programme_4.md": "street_01_debutant_complet"
+ },
+ "B6_sante": {
+  "programme_1.md": "autres_02_hypertrophie_intermediaire",
+  "programme_2.md": "street_17_hybride_street_course",
+  "programme_3.md": "autres_10_contraintes_multiples",
+  "programme_4.md": "street_01_debutant_complet"
+ },
+ "B7_force": {
+  "programme_1.md": "street_10_elite_figures",
+  "programme_2.md": "street_08_avance_sets_reps_competition",
+  "programme_3.md": "autres_09_perte_de_poids_debutante",
+  "programme_4.md": "street_03_debutante"
+ },
+ "B7_calisthenie": {
+  "programme_1.md": "street_10_elite_figures",
+  "programme_2.md": "street_08_avance_sets_reps_competition",
+  "programme_3.md": "autres_09_perte_de_poids_debutante",
+  "programme_4.md": "street_03_debutante"
+ },
+ "B7_hypertrophie": {
+  "programme_1.md": "street_10_elite_figures",
+  "programme_2.md": "street_08_avance_sets_reps_competition",
+  "programme_3.md": "autres_09_perte_de_poids_debutante",
+  "programme_4.md": "street_03_debutante"
+ },
+ "B7_sante": {
+  "programme_1.md": "street_10_elite_figures",
+  "programme_2.md": "street_08_avance_sets_reps_competition",
+  "programme_3.md": "autres_09_perte_de_poids_debutante",
+  "programme_4.md": "street_03_debutante"
+ }
+}
