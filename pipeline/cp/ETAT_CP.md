@@ -16,7 +16,7 @@ Tous les lots sont lancés par la conversation de pilotage d'après ce fichier (
 ## Liens
 
 - Page de suivi : https://claude.ai/artifact/7tr7vJvnnn85KzVx5qYRw5 (partie « Calibrage » créée par le premier lot CP qui livre)
-- Page de relecture : à créer par CR
+- Page de relecture : https://claude.ai/artifact/48CYFBy75Xykohm674vLNq (publiée par CR le 03/10/2026 ; manche 0 = moteurs 0.1, 10 programmes)
 - Actions GitHub : https://github.com/mikeriin/streetlift-apk/actions (contrôles : `claude/ci-cp-a`, `claude/ci-cp-b`, `claude/ci-3d`)
 
 ## Entrées du propriétaire
@@ -40,7 +40,7 @@ Chaque lot ne modifie que sa ligne (PIPELINE_CP.md §1).
 
 | Lot | Voie | Prérequis | Livré | Panel (min) | Date | Statut |
 | --- | --- | --- | --- | --- | --- | --- |
-| CR | A | références reçues | — | — | — | en cours depuis 2026-10-03 11:15 UTC (reprise depuis `claude/ci-cp-a` f0195e34) |
+| CR | A | références reçues | — | — | — | à faire (reprise) — session du 03/10 11:14 UTC muette depuis 14:32 UTC après le commit moteurs 0d219144 (kalis_bench 0.1.0) et l'étiquette ; reste : section CR de DECISIONS_CP, LIVRAISON_CR, ETAT, page de suivi, notification |
 | CQ | B | — | `kalis_core` 0.4.0 (`etiquettes/kalis_core-v0.4.0`, commit ef4c57ae, run 37106401044) ; profil v3 : 16 questions débutant, 29 élite | — (lot sans panel) | 2026-10-03 | livré |
 | CP1 | A | CR, CQ | — | — | — | en attente de CR, CQ |
 | CA1 | B | CR, CQ | — | — | — | en attente de CR, CQ |
