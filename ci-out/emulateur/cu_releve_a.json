@@ -1,0 +1,39 @@
+{
+  "partie": "a",
+  "theme": "sombre",
+  "couleur_dominante": "rouge",
+  "perso_schema": 3,
+  "perso_questions_a_completer": [
+    "training_age",
+    "benchmarks",
+    "skills",
+    "recent_training",
+    "events",
+    "specialization",
+    "weak_points",
+    "sleep",
+    "stress",
+    "outside_load",
+    "body_weight_goal"
+  ],
+  "perso_invitation": true,
+  "completer_etapes": [
+    "experience",
+    "levels",
+    "goals",
+    "recovery"
+  ],
+  "completer_questions": [
+    "training_age",
+    "benchmarks",
+    "skills",
+    "recent_training",
+    "events",
+    "specialization",
+    "weak_points",
+    "sleep",
+    "stress",
+    "outside_load",
+    "body_weight_goal"
+  ]
+}
