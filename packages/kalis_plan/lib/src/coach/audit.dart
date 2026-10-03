@@ -204,7 +204,11 @@ List<String> coachAudit(
           }
           final e = t.exercise;
           final imposed = imposedSlotIds.contains(p.slotId);
-          if (!imposed) {
+          // Le test d'un mouvement visé par un objectif est admis même si
+          // le mouvement n'est pas encore acquis (essai de première
+          // traction).
+          if (!imposed &&
+              !(p.kind == SetKind.test && athlete.aimsAt(e.id))) {
             final why = athlete.rejection(e.id, d);
             if (why != null) {
               out.add('$where : ${e.id} inadmissible ($why)');
@@ -323,7 +327,8 @@ List<String> coachAudit(
       if (series[w] > limit + 1e-9) {
         out.add(
           's$w : ${group.code} ${series[w]} séries pour $limit — '
-          '${<String>[for (final (c, n) in who[w]) if (c[group.index] > 0) n].join(', ')}',
+          '${<String>[for (final (c, n) in who[w])
+            if (c[group.index] > 0) n].join(', ')}',
         );
       } else if (w > 1 &&
           !light[w] &&

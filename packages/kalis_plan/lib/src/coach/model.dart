@@ -133,8 +133,11 @@ abstract final class Method {
   /// Vrai pour le travail essentiel de la séance (mouvements principaux,
   /// figures, volume des piliers) : il garde ses séries plus longtemps que
   /// l'assistance.
-  static bool essential(String method, {bool support = false}) =>
-      !support && cutRank(method) > cutRank(liftVariant);
+  static bool essential(
+    String method, {
+    bool support = false,
+    bool keep = false,
+  }) => keep || (!support && cutRank(method) > cutRank(liftVariant));
 
   /// Passe de réduction d'un emplacement de [sets] séries quand un plafond
   /// impose de retirer du volume : 1, l'assistance au-dessus de deux
@@ -148,8 +151,9 @@ abstract final class Method {
     int sets, {
     required bool beginner,
     bool support = false,
+    bool keep = false,
   }) {
-    if (!essential(method, support: support)) {
+    if (!essential(method, support: support, keep: keep)) {
       return sets > 2 ? 1 : (sets > 1 ? 3 : 4);
     }
     if (sets > 3) {
@@ -173,18 +177,27 @@ abstract final class Method {
     required bool beginner,
     bool support = false,
     bool otherSupport = false,
+    bool keep = false,
+    bool otherKeep = false,
   }) {
-    final pass = trimPass(method, sets, beginner: beginner, support: support);
+    final pass = trimPass(
+      method,
+      sets,
+      beginner: beginner,
+      support: support,
+      keep: keep,
+    );
     final other = trimPass(
       otherMethod,
       otherSets,
       beginner: beginner,
       support: otherSupport,
+      keep: otherKeep,
     );
     if (pass != other) {
       return pass < other;
     }
-    if (essential(method, support: support)) {
+    if (essential(method, support: support, keep: keep)) {
       return sets > otherSets ||
           (sets == otherSets && cutRank(method) < cutRank(otherMethod));
     }
@@ -217,6 +230,7 @@ final class SlotSpec {
     this.untilWeek = 99,
     this.note,
     this.support = false,
+    this.keep = false,
   });
 
   /// Copie de l'emplacement avec [sets] séries.
@@ -234,6 +248,7 @@ final class SlotSpec {
     untilWeek: untilWeek,
     note: note,
     support: support,
+    keep: keep,
   )..slotId = slotId;
 
   /// Exercice.
@@ -277,6 +292,11 @@ final class SlotSpec {
   /// programme de figures, complément de fin de séance) : il cède ses
   /// séries avant le travail visé quand un plafond l'impose.
   final bool support;
+
+  /// Vrai pour un travail d'assistance à garder quoi qu'il arrive (tirage
+  /// horizontal d'équilibre) : il compte comme l'essentiel quand un
+  /// plafond impose de retirer du volume.
+  final bool keep;
 
   /// Identifiant de l'emplacement (donné à l'assemblage).
   String slotId = '';

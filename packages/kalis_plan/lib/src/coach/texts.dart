@@ -37,9 +37,9 @@ String coachZoneLabel(String code) => switch (code) {
 
 /// Nom français d'une phase de saison.
 String coachPhaseLabel(String code) => switch (code) {
-  'accumulation' => 'accumulation (volume)',
-  'intensification' => 'intensification (charges lourdes)',
-  'realization' => 'réalisation (pic de forme)',
+  'accumulation' => 'construction (volume)',
+  'intensification' => 'intensification (séries plus dures)',
+  'realization' => "réalisation (spécifique à l'objectif)",
   'taper' => 'affûtage',
   'competition' => 'échéance',
   'transition' => 'transition (récupération)',
@@ -124,10 +124,102 @@ String? coachReasonText(Reason r, Catalog catalog) {
           "Repos avant l'échéance : mobilité et préparation articulaire "
               'seulement, rien de fatigant dans les 2 à 4 derniers jours.',
         CoachNotes.badDay =>
-          'Baisse du jour (nuit de moins de 6 h, courbatures marquées sur '
-              'la zone, journée très stressante) : ${_int(v)} série de moins '
-              'par exercice, aucune série à moins de 3 répétitions en '
-              'réserve, pas de test.',
+          v is num && v >= 2
+              ? 'Baisse du jour : ton sommeil court habituel est déjà compté '
+                    'dans le programme. Elle ne se déclenche que sur une '
+                    "nuit nettement pire que d'habitude (moins de 5 h), des "
+                    'courbatures marquées sur la zone ou une journée très '
+                    'éprouvante : 1 série de moins par exercice, aucune '
+                    'série à moins de 3 répétitions en réserve, test '
+                    'reporté.'
+              : 'Baisse du jour (nuit de moins de 6 h, courbatures marquées '
+                    'sur la zone, journée très stressante) : 1 série de moins '
+                    'par exercice, aucune série à moins de 3 répétitions en '
+                    'réserve, pas de test.',
+        CoachNotes.attemptsGoal =>
+          "Troisième tentative : la barre de l'objectif "
+              '(${_plain(v)} kg de lest ou de charge) si la deuxième est '
+              'montée vite et proprement ; sinon 2,5 à 5 kg de plus que la '
+              'deuxième. Recale les trois barres sur tes séries lourdes des '
+              'deux dernières semaines de charge.',
+        CoachNotes.painGeneral =>
+          'Douleur articulaire ou tendineuse (coude, épaule, poignet, '
+              'genou) : de 0 à 2 sur 10, continue ; à 3 ou 4, finis la '
+              "séance sans progresser et n'ajoute rien la semaine "
+              'suivante ; à 5, prends la variante plus facile et retire 30 '
+              'à 50 % du volume de la zone ; à ${_int(v)} ou plus, douleur '
+              'la nuit ou gêne qui dure deux semaines : arrête le mouvement '
+              'et consulte un professionnel de santé. Regarde la tendance '
+              'sur deux à trois semaines, pas une seule séance.',
+        CoachNotes.redFlags =>
+          'Arrêt immédiat et avis médical : douleur dans la poitrine, '
+              'essoufflement anormal, malaise ou vertige. Souffle pendant '
+              "l'effort, sans bloquer la respiration sur les séries longues.",
+        CoachNotes.shortVersion =>
+          'Jour chargé : version courte de ${_int(v)} min — échauffement, '
+              'puis les deux ou trois premiers exercices de la séance. Une '
+              "séance courte vaut mieux qu'une séance sautée.",
+        CoachNotes.bandChoice =>
+          "Élastique : prends celui qui permet ${_int(v)} répétitions "
+              'propres avec la réserve prévue ; note-le à chaque séance. '
+              'Si même le plus fort ne suffit pas, fais la traction pieds '
+              'en appui (barre basse) en attendant.',
+        CoachNotes.cue => switch (v is num ? v.round() : 0) {
+          1 =>
+            'Exécution : départ bras tendus, épaules basses, menton '
+                'au-dessus de la barre, sans élan.',
+          2 =>
+            "Exécution : épaules basses, descente contrôlée jusqu'à "
+                "l'épaule au niveau du coude, verrouillage complet en haut.",
+          3 =>
+            'Exécution : tirage explosif vers les hanches, transition '
+                'rapide, poitrine au-dessus de la barre avant de pousser.',
+          4 =>
+            'Exécution : bras tendus, tire la barre vers les hanches, '
+                'bassin en rétroversion, corps aligné.',
+          5 =>
+            'Exécution : repousse le sol loin de toi, épaules en avant '
+                'des mains, bras tendus, bassin en rétroversion.',
+          6 =>
+            'Exécution : corps gainé de la tête aux talons, poitrine près '
+                'du sol, coudes à 45°.',
+          7 =>
+            'Exécution : même profondeur à chaque répétition, tronc '
+                'gainé, pieds ancrés.',
+          8 =>
+            'Exécution : doigts écartés, épaules ouvertes, côtes '
+                'rentrées ; sors proprement dès que la ligne se perd.',
+          _ => null,
+        },
+        CoachNotes.intervalPace =>
+          'Allure des fractions : 400 m en '
+              '${v is num ? '${v.round() ~/ 60} min ${(v.round() % 60).toString().padLeft(2, '0')}' : ''} '
+              '(ton allure estimée sur 5 km), récupération en trottinant ; '
+              "si l'allure ne tient plus, arrête la série.",
+        CoachNotes.goalPace =>
+          "Allure de l'objectif : "
+              '${v is num ? '${v.round() ~/ 60} min ${(v.round() % 60).toString().padLeft(2, '0')}' : ''} '
+              'au kilomètre, régulière du début à la fin.',
+        CoachNotes.timeTrial =>
+          'Test chronométré sur ${v is num ? _plain(v / 1000) : ''} km, '
+              "après 10 à 15 min d'échauffement, à allure régulière. Il "
+              'recale les allures du bloc suivant.',
+        CoachNotes.skillHorizon =>
+          'Objectif de figure : chaque étape demande au moins '
+              '${_int(v)} semaines (le tendon suit moins vite que le '
+              'muscle). Ce programme vise les étapes écrites dans '
+              "l'échelle ; la figure complète vient après, étape par "
+              "étape, et le test final porte sur l'étape réellement "
+              'travaillée.',
+        CoachNotes.walking =>
+          'Pour la perte de poids : en plus des séances, marche rapide '
+              '${_int(v)} min, deux à trois fois par semaine (tu peux '
+              'parler en marchant), et 5 min de plus toutes les deux '
+              'semaines.',
+        CoachNotes.pushMaintenance =>
+          "Poussée en entretien : ton objectif porte sur le tirage, la "
+              'poussée garde ${_int(v)} séries par séance pour '
+              "l'équilibre des épaules.",
         CoachNotes.missed =>
           'Séance manquée : elle ne se rattrape pas. Semaine manquée : '
               'refais la dernière semaine terminée. Deux semaines ou plus : '
@@ -179,14 +271,17 @@ String? coachReasonText(Reason r, Catalog catalog) {
               '60 % puis 75 à 80 % de la charge du jour) avant la série de '
               'tête.',
         CoachNotes.topSetBackoff =>
-          'Une série de tête, puis des séries allégées de ${_int(v)} % '
-              '(charge totale, poids du corps compris).',
+          'Une série de tête, puis des séries allégées (la baisse, en % '
+              'de la charge totale poids du corps compris, est écrite sur '
+              'la ligne).',
         CoachNotes.speedWork =>
           'Séance légère à ${_pct(v)} du 1RM : chaque répétition rapide et '
               "propre, très loin de l'échec.",
         CoachNotes.attemptsPlan =>
-          'Trois tentatives : ${_pct(v)} du 1RM, puis 96 %, puis la '
-              'troisième selon la vitesse de la deuxième (99 à 102 %).',
+          'Trois tentatives : ${_pct(v)} du 1RM (une barre déjà réussie à '
+              "l'entraînement), puis 96 %, puis la troisième selon la "
+              'vitesse de la deuxième (99 à 102 %). Au moins 6 min entre '
+              'deux tentatives.',
         CoachNotes.opener =>
           "Dernier rappel lourd avant l'échéance : ${_pct(v)} du 1RM, une "
               'seule série de tête, sans forcer.',
@@ -207,8 +302,9 @@ String? coachReasonText(Reason r, Catalog catalog) {
               'ne contrôles plus la descente.',
         CoachNotes.eventDay =>
           v is num && v > 0
-              ? "Séance de l'échéance (elle a lieu ${_int(v)} jour(s) plus "
-                    'tard : cale cette séance sur le jour réel).'
+              ? "Séance de l'échéance : elle se fait le jour même de "
+                    "l'épreuve, ${_int(v)} jour(s) après ce créneau "
+                    'habituel.'
               : "Jour de l'échéance.",
         CoachNotes.recovery =>
           'Récupération : facile, sans chercher la performance.',
@@ -223,10 +319,11 @@ String? coachReasonText(Reason r, Catalog catalog) {
           'Allure de conversation (tu peux parler en phrases), '
               '${_int(v)} min.',
         CoachNotes.generalWarmup =>
-          "Chaque séance commence par ${_int(v)} min d'échauffement : "
-              'épaules, poignets et hanches en mobilité, 2 × 8 tirages '
-              'scapulaires, 2 × 8 pompes scapulaires, puis quelques '
-              'répétitions faciles du premier mouvement.',
+          "Chaque séance commence par ${_int(v)} min d'échauffement au "
+              'plus (comptées dans la durée estimée) : épaules, poignets '
+              'et hanches en mobilité, 2 × 8 tirages scapulaires, 2 × 8 '
+              'pompes scapulaires, puis quelques répétitions faciles du '
+              'premier mouvement.',
         CoachNotes.toleranceVolume =>
           'Volume réglé à ${_pct(v)} du volume type de ton niveau, au vu de '
               'ta récupération.',
@@ -244,20 +341,26 @@ String? coachReasonText(Reason r, Catalog catalog) {
               'plage avec la réserve prévue, passe à la variante ou à la '
               'charge suivante et repars du bas de la plage.',
         CoachRules.loadStep =>
-          'Progression : la charge monte d\'environ '
-              '${step is num ? step.toString().replaceAll('.', ',') : ''} % '
-              'du 1RM par semaine si la réserve prévue est tenue ; sinon '
-              'garde la charge.',
+          'Charges lestées : elles suivent les pourcentages écrits semaine '
+              'par semaine ; si la série de tête ne laisse pas la réserve '
+              'prévue, garde la charge de la semaine précédente.',
         CoachRules.repStep =>
-          'Progression : ${_int(step)} répétition de plus par semaine tant '
-              'que la réserve prévue est tenue.',
+          'Séries au poids du corps : les répétitions écrites suivent ta '
+              "trajectoire vers l'objectif (environ une répétition de "
+              'plus toutes les une à deux semaines sur la série de tête) ; '
+              'si la réserve prévue ne tient pas, garde les chiffres de la '
+              'semaine précédente.',
         CoachRules.holdStep =>
-          'Progression : +${_int(step)} s par tenue quand toutes les tenues '
-              "sont propres ; l'étape suivante quand le critère de passage "
-              'est atteint.',
+          step is num && step >= 5
+              ? "Gainage et tenues d'appoint : +5 s par tenue quand toutes "
+                    'les tenues sont propres.'
+              : 'Tenues de figure : +1 s par tenue quand toutes les tenues '
+                    "sont propres ; l'étape suivante quand le critère de "
+                    "passage de l'échelle est atteint.",
         CoachRules.densityStep =>
-          'Progression : une minute de plus par semaine, puis une '
-              'répétition de plus par minute.',
+          'Départs au chrono : un départ de plus toutes les deux semaines '
+              "au plus ; les répétitions par départ ne montent qu'après "
+              'un test.',
         CoachRules.durationStep =>
           'Progression : durée +${_int(step)} % par semaine au plus.',
         _ => null,
@@ -286,6 +389,7 @@ String? coachReasonText(Reason r, Catalog catalog) {
               "d'un maximum.",
         'max_reps' =>
           'Test : une seule série maximale, arrêt dès que la forme casse.',
+        'time_trial' => 'Test chronométré.',
         'max_hold' =>
           'Test : un maintien maximal, arrêt dès que la position se '
               'dégrade.',
