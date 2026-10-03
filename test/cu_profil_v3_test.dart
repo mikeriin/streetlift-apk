@@ -878,7 +878,13 @@ void main() {
       );
       expect(flow(tester).visibleSteps, contains('recovery'));
       // Retour au débutant : questions masquées.
-      await tap(tester, 'flow-experience-beginner');
+      await scrollToAction(
+        tester,
+        find.byKey(const ValueKey('flow-experience-beginner')),
+        up: true,
+      );
+      await tester.tap(find.byKey(const ValueKey('flow-experience-beginner')));
+      await tester.pumpAndSettle();
       expect(find.byKey(const ValueKey('q-training_age')), findsNothing);
       expect(flow(tester).visibleSteps, isNot(contains('recovery')));
     });
@@ -996,7 +1002,8 @@ void main() {
       expect(find.byType(AthleteProfileFlow), findsNothing);
       expect(store.athleteProfile!.sleep, SleepBand.hours7Plus);
       expect(store.athleteProfile!.schemaVersion, 3);
-      expect(store.athlete!.programChangePending, isFalse);
+      // Compléter son profil ne touche pas le programme.
+      expect(store.athlete!.changes.last.program, isFalse);
       expect(jsonEncode(backupOf(store)['logs']), programBefore);
       // Questions laissées sans réponse : passées, plus reproposées.
       expect(

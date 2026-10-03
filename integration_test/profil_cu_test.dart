@@ -221,7 +221,7 @@ void main() {
     releve['completer_ferme'] = flow(tester) == null;
     releve['completer_sommeil'] = store.athleteProfile?.sleep?.code;
     releve['completer_programme_a_refaire'] =
-        store.athlete?.programChangePending;
+        store.athlete?.changes.last.program;
     releve['completer_journal_inchange'] =
         jsonEncode(jsonDecode(store.exportAll())['logs']) == logsBefore;
     await wait(tester, 1200);

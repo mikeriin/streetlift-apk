@@ -132,8 +132,7 @@ String? _protocolFor(AthleteProfile p, Catalog c, CatalogExercise e) {
       e.family == MovementFamily.recuperation) {
     return null;
   }
-  if (e.family == MovementFamily.cardio ||
-      e.unit == MeasureUnit.distance) {
+  if (e.family == MovementFamily.cardio || e.unit == MeasureUnit.distance) {
     // Les protocoles d'endurance sont des tests de course.
     if (!name.contains('course') && !name.contains('footing')) return null;
     final longRun = p.enduranceBase?.longRun;
