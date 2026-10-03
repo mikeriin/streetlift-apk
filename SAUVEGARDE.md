@@ -18,8 +18,10 @@ Clé des références : lue dans le projet claude.ai (`claude/CLE_REFERENCES_CP.
 5. Notes de coach = codes de raison ; nouveaux codes → kalis_core 0.4.1 (commit séparé, additif).
 6. Banc : adaptateur v3, generateProgram passe la saison, export rendu des nouveautés (saison, techniques, règles, échelles) → kalis_bench 0.1.1.
 
-## En cours
-- Lecture du code de kalis_plan (traits, scheme, assemble, pass2) et du catalogue street.
+## En cours (21:10 UTC)
+- kalis_core 0.4.1 (3 codes de raison : plan.coach_note, plan.progression_rule, plan.pain_rule) : commit local d6d24460 sur moteurs (non poussé), validé en CI de mise au point.
+- Écrits (non compilés) : packages/kalis_plan/lib/src/coach/{athlete,season,model,tables,skeleton}.dart.
+- Outils hors dépôt : /home/claude/cp1/{ci.sh,ci_wait.sh,sauve.sh,aa_fmt/} (à recréer en cas de reprise : ci.sh pose l'arbre sur claude/ci-cp-a).
 
 ## Reste à faire
-- Tout le code ; boucles de calibrage ; livraison.
+- coach/prescribe.dart (passe 2 par méthode), branchement dans engine.dart, inspecteur, SeasonPlanner, version 0.2.0, CONTRAT §12, tests (10 000 profils), banc 0.1.1 (adaptateur v3, export), calibrage (panel + relecture), livraison.
