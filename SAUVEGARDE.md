@@ -8,7 +8,8 @@ Session de reprise du 03/10/2026 (05:51 UTC). L'arbre de cette branche = `moteur
 - Audit indépendant de `docs/RELECTURES_CQ.md` contre l'arbre : constats traités (body_weight_goal reportée pour un débutant, recent_training après skills, CONTRAT §1/§9/§12/§13, PacingSegment.setReps min 1, tableau débutant par discipline, RELECTURES remis à jour : plus aucun « À ARBITRER »).
 - Générateurs relancés ; `pytest tools/catalog/tests` : 86 verts.
 
-## En cours
+## En cours (mis à jour 07:35 UTC)
+- Run 37103369029 : seuls 2 tests du parcours échouaient (attente « recovery » alors que body_weight_goal est aussi reportée) : corrigés ; sources formatées appliquées ; zz_dev_test retiré ; passe finale poussée.
 - Contrôle CI sur `claude/ci-cp-b` (run 37103369029 lancé à 06:32 UTC, environ 45 min) : 1) passe avec `test/zz_dev_test.dart` (export des sources formatées dans `ci-out/packages/kalis_core/formatted`), 2) copie des sources formatées (lib, test, bin), retrait de `zz_dev_test.dart`, passe finale.
 
 ## Reste à faire

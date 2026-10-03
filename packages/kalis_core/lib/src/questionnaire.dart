@@ -204,7 +204,11 @@ final class ProfileQuestionnaire {
       jsonList(json, 'screens', (v) => jsonAsObject(v, 'screens')),
       questions,
       tests,
-      jsonList(json, 'rulesetPresets', (v) => jsonAsObject(v, 'rulesetPresets')),
+      jsonList(
+        json,
+        'rulesetPresets',
+        (v) => jsonAsObject(v, 'rulesetPresets'),
+      ),
     );
   }
 

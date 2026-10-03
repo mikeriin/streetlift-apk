@@ -220,10 +220,7 @@ void main() {
         expect(novice, isNotNull);
         // Même valeur ; un novice n'est jamais estimé plus précisément.
         expect(novice!.valueKg, plain!.valueKg);
-        expect(
-          novice.relativeError,
-          greaterThanOrEqualTo(plain.relativeError),
-        );
+        expect(novice.relativeError, greaterThanOrEqualTo(plain.relativeError));
         if (reps == 1 && rir == 0) {
           // Maximum mesuré : 4 %, novice ou non.
           expect(plain.relativeError, 0.04);
@@ -232,10 +229,7 @@ void main() {
           measured++;
         } else {
           expect(novice.relativeError, 0.10);
-          expect(
-            plain.relativeError,
-            rir > 0 || reps + rir > 6 ? 0.075 : 0.05,
-          );
+          expect(plain.relativeError, rir > 0 || reps + rir > 6 ? 0.075 : 0.05);
         }
         for (final e in <OneRmEstimate>[plain, novice]) {
           expect(e.lowKg, closeTo(e.valueKg * (1 - e.relativeError), 1e-9));

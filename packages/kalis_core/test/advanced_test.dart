@@ -97,7 +97,11 @@ void main() {
           // Un paramètre obligatoire absent est signalé, à son chemin.
           for (final n in required) {
             final missing = <String, Object?>{...minimal}..remove(n);
-            expect(codes(missing), contains('missing_field'), reason: '$where −$n');
+            expect(
+              codes(missing),
+              contains('missing_field'),
+              reason: '$where −$n',
+            );
             expect(
               found(missing),
               contains('\$.$n:missing_field'),
@@ -136,8 +140,9 @@ void main() {
           codec.fromJson(<String, Object?>{
             ...base,
             discriminator: rules.keys.first,
-            for (final n in (rules.values.first['required']! as List<Object?>)
-                .cast<String>())
+            for (final n
+                in (rules.values.first['required']! as List<Object?>)
+                    .cast<String>())
               n: samples[n],
           }),
         );
@@ -146,10 +151,11 @@ void main() {
     }
 
     test('toutes les techniques de série ont une règle', () {
-      final rules = (types.firstWhere((t) => t['type'] == 'SetTechnique')['rules']!
-              as Map<String, Object?>)
-          .keys
-          .toList();
+      final rules =
+          (types.firstWhere((t) => t['type'] == 'SetTechnique')['rules']!
+                  as Map<String, Object?>)
+              .keys
+              .toList();
       expect(rules, <String>[for (final k in SetTechniqueKind.values) k.code]);
       expect(SetTechniqueKind.values, hasLength(17));
       expect(SetTechniqueKind.values.last, SetTechniqueKind.forTime);
@@ -215,9 +221,10 @@ void main() {
       expect(GroupFormat.values, hasLength(7));
       const superset = GroupSpec(groupId: 'g1', format: GroupFormat.superset);
       expect(superset.toJson().keys.toList(), <String>['groupId', 'format']);
-      expect(_tagged(superset.copyWith(durationSeconds: 600).validate()), <
-        String
-      >[r'$.durationSeconds:unexpected_field']);
+      expect(
+        _tagged(superset.copyWith(durationSeconds: 600).validate()),
+        <String>[r'$.durationSeconds:unexpected_field'],
+      );
       expect(
         _tagged(superset.copyWith(format: GroupFormat.circuit).validate()),
         <String>[r'$.rounds:missing_field'],
@@ -262,7 +269,9 @@ void main() {
       );
       expect(
         _tagged(
-          superset.copyWith(format: GroupFormat.intervals, rounds: 8).validate(),
+          superset
+              .copyWith(format: GroupFormat.intervals, rounds: 8)
+              .validate(),
         ),
         <String>[r'$.intervalSeconds:missing_field'],
       );
@@ -327,15 +336,10 @@ void main() {
         ],
       );
       expect(p.validate(), isEmpty);
-      expect(
-        ExercisePrescription.fromJson(viaJsonText(p.toJson())),
-        p,
-      );
+      expect(ExercisePrescription.fromJson(viaJsonText(p.toJson())), p);
       // Les séries allégées sont comptées dans `sets`, avec la série de tête.
       expect(
-        codesOf(
-          p.copyWith(sets: 3, setTargets: null).validate(),
-        ),
+        codesOf(p.copyWith(sets: 3, setTargets: null).validate()),
         <String>['set_count'],
       );
     });
@@ -418,9 +422,10 @@ void main() {
       expect(codesOf(backoff.copyWith(backoffRepsLow: 6).validate()), <String>[
         'range_inverted',
       ]);
-      expect(codesOf(backoff.copyWith(backoffRepsHigh: null).validate()), <
-        String
-      >['range_incomplete']);
+      expect(
+        codesOf(backoff.copyWith(backoffRepsHigh: null).validate()),
+        <String>['range_incomplete'],
+      );
       const wave = SetTechnique(
         kind: SetTechniqueKind.wave,
         waves: 2,
@@ -445,7 +450,10 @@ void main() {
       ]);
       // L'écart entre la première et la dernière marche est un multiple du pas.
       expect(ladder.copyWith(ladderStep: 2).validate(), isEmpty);
-      expect(ladder.copyWith(ladderStep: 4, ladderCount: null).validate(), isEmpty);
+      expect(
+        ladder.copyWith(ladderStep: 4, ladderCount: null).validate(),
+        isEmpty,
+      );
       expect(
         _tagged(ladder.copyWith(ladderStep: 2, ladderTop: 6).validate()),
         <String>[r'$.ladderStep:ladder_step'],
@@ -473,9 +481,10 @@ void main() {
         intraRestSeconds: 20,
       );
       expect(cluster.validate(), isEmpty);
-      expect(codesOf(cluster.copyWith(intraRestSeconds: 0).validate()), <
-        String
-      >['below_min']);
+      expect(
+        codesOf(cluster.copyWith(intraRestSeconds: 0).validate()),
+        <String>['below_min'],
+      );
     });
 
     test('technique au temps, temps total visé, dernière série seulement', () {
@@ -486,9 +495,10 @@ void main() {
       expect(forTime.validate(), isEmpty);
       expect(forTime.copyWith(durationSeconds: 600).validate(), isEmpty);
       expect(SetTechnique.fromJson(viaJsonText(forTime.toJson())), forTime);
-      expect(_tagged(forTime.copyWith(totalRepsTarget: null).validate()), <
-        String
-      >[r'$.totalRepsTarget:missing_field']);
+      expect(
+        _tagged(forTime.copyWith(totalRepsTarget: null).validate()),
+        <String>[r'$.totalRepsTarget:missing_field'],
+      );
       expect(_tagged(forTime.copyWith(intervals: 10).validate()), <String>[
         r'$.intervals:unexpected_field',
       ]);
@@ -502,9 +512,10 @@ void main() {
       expect(codesOf(hold.copyWith(totalSecondsTarget: 0).validate()), <String>[
         'below_min',
       ]);
-      expect(codesOf(hold.copyWith(totalSecondsTarget: 3601).validate()), <
-        String
-      >['above_max']);
+      expect(
+        codesOf(hold.copyWith(totalSecondsTarget: 3601).validate()),
+        <String>['above_max'],
+      );
       const practice = SetTechnique(
         kind: SetTechniqueKind.skillPractice,
         qualityFloor: 4,
@@ -518,9 +529,10 @@ void main() {
         miniSetReps: 2,
         intraRestSeconds: 20,
       );
-      expect(_tagged(cluster.copyWith(totalSecondsTarget: 60).validate()), <
-        String
-      >[r'$.totalSecondsTarget:unexpected_field']);
+      expect(
+        _tagged(cluster.copyWith(totalSecondsTarget: 60).validate()),
+        <String>[r'$.totalSecondsTarget:unexpected_field'],
+      );
       // `lastSetOnly` n'est pas un paramètre de variante : il est admis
       // partout et s'écrit en dernier.
       const last = SetTechnique(
@@ -633,9 +645,7 @@ void main() {
       expect(
         _tagged(
           ladders
-              .copyWith(
-                technique: ladder.copyWith(ladderStep: 2, ladderTop: 6),
-              )
+              .copyWith(technique: ladder.copyWith(ladderStep: 2, ladderTop: 6))
               .validate(),
         ),
         <String>[r'$.technique.ladderStep:ladder_step'],
@@ -675,7 +685,10 @@ void main() {
         kind: SetTechniqueKind.restPause,
         intraRestSeconds: 15,
       );
-      expect(basePrescription.copyWith(technique: restPause).validate(), isEmpty);
+      expect(
+        basePrescription.copyWith(technique: restPause).validate(),
+        isEmpty,
+      );
       expect(
         basePrescription.copyWith(sets: 1, technique: restPause).validate(),
         isEmpty,
@@ -720,12 +733,14 @@ void main() {
       );
       expect(clusters.validate(), isEmpty);
       expect(clusters.copyWith(repsLow: 5, repsHigh: 8).validate(), isEmpty);
-      expect(_tagged(clusters.copyWith(repsLow: 8, repsHigh: 12).validate()), <
-        String
-      >[r'$:reps_mismatch']);
-      expect(_tagged(clusters.copyWith(repsLow: 3, repsHigh: 5).validate()), <
-        String
-      >[r'$:reps_mismatch']);
+      expect(
+        _tagged(clusters.copyWith(repsLow: 8, repsHigh: 12).validate()),
+        <String>[r'$:reps_mismatch'],
+      );
+      expect(
+        _tagged(clusters.copyWith(repsLow: 3, repsHigh: 5).validate()),
+        <String>[r'$:reps_mismatch'],
+      );
       expect(
         clusters
             .copyWith(
@@ -764,9 +779,10 @@ void main() {
         technique: pyramid,
       );
       expect(pyramids.validate(), isEmpty);
-      expect(_tagged(pyramids.copyWith(repsLow: 8, repsHigh: 12).validate()), <
-        String
-      >[r'$:reps_mismatch']);
+      expect(
+        _tagged(pyramids.copyWith(repsLow: 8, repsHigh: 12).validate()),
+        <String>[r'$:reps_mismatch'],
+      );
       const ladder = SetTechnique(
         kind: SetTechniqueKind.ladder,
         ladderStart: 1,
@@ -801,12 +817,14 @@ void main() {
       expect(percent.copyWith(percentOfOneRm: 0.75).validate(), isEmpty);
       expect(percent.copyWith(percentOfOneRm: 0.85).validate(), isEmpty);
       expect(percent.copyWith(percentOfOneRm: null).validate(), isEmpty);
-      expect(_tagged(percent.copyWith(percentOfOneRm: 0.9).validate()), <String>[
-        r'$.intensity:intensity_mismatch',
-      ]);
-      expect(_tagged(percent.copyWith(percentOfOneRm: 0.7).validate()), <String>[
-        r'$.intensity:intensity_mismatch',
-      ]);
+      expect(
+        _tagged(percent.copyWith(percentOfOneRm: 0.9).validate()),
+        <String>[r'$.intensity:intensity_mismatch'],
+      );
+      expect(
+        _tagged(percent.copyWith(percentOfOneRm: 0.7).validate()),
+        <String>[r'$.intensity:intensity_mismatch'],
+      );
       // Sans haut de plage, la valeur exacte.
       final exact = percent.copyWith(
         intensity: range.copyWith(value: 0.8, valueHigh: null),
@@ -837,7 +855,11 @@ void main() {
       expect(basePrescription.targetFlames, 7);
       expect(Flames.toRir(7), 2.0);
       expect(flames.validate(), isEmpty);
-      expect(flames.copyWith(targetFlames: 5).validate(), isEmpty, reason: 'RIR 3');
+      expect(
+        flames.copyWith(targetFlames: 5).validate(),
+        isEmpty,
+        reason: 'RIR 3',
+      );
       expect(flames.copyWith(targetFlames: null).validate(), isEmpty);
       expect(_tagged(flames.copyWith(targetFlames: 9).validate()), <String>[
         r'$.intensity:intensity_mismatch',
@@ -954,99 +976,103 @@ void main() {
       );
     });
 
-    test('groupes d\'exercices enchaînés : séance prescrite, séance du jour', () {
-      final first = basePrescription.copyWith(groupId: 'g1');
-      final second = basePrescription.copyWith(
-        slotId: 'd0s1',
-        exerciseId: 'sl-traction-lestee',
-        groupId: 'g1',
-      );
-      const circuit = GroupSpec(
-        groupId: 'g1',
-        format: GroupFormat.circuit,
-        rounds: 3,
-        restBetweenRoundsSeconds: 60,
-      );
-      final day = DayPrescription(
-        dayIndex: 0,
-        items: <ExercisePrescription>[first, second],
-        groups: const <GroupSpec>[circuit],
-      );
-      expect(day.validate(), isEmpty);
-      expect(DayPrescription.fromJson(viaJsonText(day.toJson())), day);
-      expect(day.copyWith(groups: null).toJson().keys.toList(), <String>[
-        'dayIndex',
-        'items',
-      ]);
-      expect(
-        _tagged(
-          day
-              .copyWith(
-                groups: <GroupSpec>[circuit.copyWith(rounds: null)],
-              )
-              .validate(),
-        ),
-        <String>[r'$.groups[0].rounds:missing_field'],
-      );
-      expect(
-        _tagged(
-          day
-              .copyWith(
-                groups: <GroupSpec>[
-                  for (var i = 0; i < 21; i++)
-                    GroupSpec(groupId: 'g$i', format: GroupFormat.superset),
-                ],
-              )
-              .validate(),
-        ),
-        contains(r'$.groups:too_long'),
-      );
-      // Groupes distincts, et chacun a au moins un membre dans la séance.
-      expect(
-        _tagged(
-          day
-              .copyWith(groups: const <GroupSpec>[circuit, circuit])
-              .validate(),
-        ),
-        <String>[r'$.groups:duplicate'],
-      );
-      const orphan = GroupSpec(groupId: 'g2', format: GroupFormat.superset);
-      expect(
-        _tagged(
-          day.copyWith(groups: const <GroupSpec>[circuit, orphan]).validate(),
-        ),
-        <String>[r'$.groups[1].groupId:unknown_group'],
-      );
-      final plan = SessionPlan(
-        date: CivilDate(2026, 10, 5),
-        blockId: 'b0',
-        weekIndex: 0,
-        dayIndex: 0,
-        items: <ExercisePrescription>[first, second],
-        adjustments: const <SessionAdjustment>[],
-        confidence: 0.8,
-        reasons: const <Reason>[],
-        phase: SeasonPhaseKind.maintenance,
-        groups: const <GroupSpec>[circuit],
-      );
-      expect(plan.validate(), isEmpty);
-      expect(SessionPlan.fromJson(viaJsonText(plan.toJson())), plan);
-      expect(plan.copyWith(groups: null).toJson().containsKey('groups'), isFalse);
-      expect(
-        _tagged(
-          plan
-              .copyWith(
-                groups: <GroupSpec>[circuit.copyWith(durationSeconds: 600)],
-              )
-              .validate(),
-        ),
-        <String>[r'$.groups[0].durationSeconds:unexpected_field'],
-      );
-      expect(
-        _tagged(plan.copyWith(groups: const <GroupSpec>[orphan]).validate()),
-        <String>[r'$.groups[0].groupId:unknown_group'],
-      );
-    });
+    test(
+      'groupes d\'exercices enchaînés : séance prescrite, séance du jour',
+      () {
+        final first = basePrescription.copyWith(groupId: 'g1');
+        final second = basePrescription.copyWith(
+          slotId: 'd0s1',
+          exerciseId: 'sl-traction-lestee',
+          groupId: 'g1',
+        );
+        const circuit = GroupSpec(
+          groupId: 'g1',
+          format: GroupFormat.circuit,
+          rounds: 3,
+          restBetweenRoundsSeconds: 60,
+        );
+        final day = DayPrescription(
+          dayIndex: 0,
+          items: <ExercisePrescription>[first, second],
+          groups: const <GroupSpec>[circuit],
+        );
+        expect(day.validate(), isEmpty);
+        expect(DayPrescription.fromJson(viaJsonText(day.toJson())), day);
+        expect(day.copyWith(groups: null).toJson().keys.toList(), <String>[
+          'dayIndex',
+          'items',
+        ]);
+        expect(
+          _tagged(
+            day
+                .copyWith(groups: <GroupSpec>[circuit.copyWith(rounds: null)])
+                .validate(),
+          ),
+          <String>[r'$.groups[0].rounds:missing_field'],
+        );
+        expect(
+          _tagged(
+            day
+                .copyWith(
+                  groups: <GroupSpec>[
+                    for (var i = 0; i < 21; i++)
+                      GroupSpec(groupId: 'g$i', format: GroupFormat.superset),
+                  ],
+                )
+                .validate(),
+          ),
+          contains(r'$.groups:too_long'),
+        );
+        // Groupes distincts, et chacun a au moins un membre dans la séance.
+        expect(
+          _tagged(
+            day
+                .copyWith(groups: const <GroupSpec>[circuit, circuit])
+                .validate(),
+          ),
+          <String>[r'$.groups:duplicate'],
+        );
+        const orphan = GroupSpec(groupId: 'g2', format: GroupFormat.superset);
+        expect(
+          _tagged(
+            day.copyWith(groups: const <GroupSpec>[circuit, orphan]).validate(),
+          ),
+          <String>[r'$.groups[1].groupId:unknown_group'],
+        );
+        final plan = SessionPlan(
+          date: CivilDate(2026, 10, 5),
+          blockId: 'b0',
+          weekIndex: 0,
+          dayIndex: 0,
+          items: <ExercisePrescription>[first, second],
+          adjustments: const <SessionAdjustment>[],
+          confidence: 0.8,
+          reasons: const <Reason>[],
+          phase: SeasonPhaseKind.maintenance,
+          groups: const <GroupSpec>[circuit],
+        );
+        expect(plan.validate(), isEmpty);
+        expect(SessionPlan.fromJson(viaJsonText(plan.toJson())), plan);
+        expect(
+          plan.copyWith(groups: null).toJson().containsKey('groups'),
+          isFalse,
+        );
+        expect(
+          _tagged(
+            plan
+                .copyWith(
+                  groups: <GroupSpec>[circuit.copyWith(durationSeconds: 600)],
+                )
+                .validate(),
+          ),
+          <String>[r'$.groups[0].durationSeconds:unexpected_field'],
+        );
+        expect(
+          _tagged(plan.copyWith(groups: const <GroupSpec>[orphan]).validate()),
+          <String>[r'$.groups[0].groupId:unknown_group'],
+        );
+      },
+    );
 
     test('intensité et autorégulation : plages', () {
       // `hold_fraction` n'existe plus : une part du maintien max s'écrit
@@ -1150,11 +1176,9 @@ void main() {
       ]) {
         final t = IntensityTarget(basis: basis, value: 1.5);
         expect(t.validate(), isEmpty, reason: basis.code);
-        expect(
-          _tagged(t.copyWith(value: 1.6).validate()),
-          <String>[r'$.value:above_max'],
-          reason: basis.code,
-        );
+        expect(_tagged(t.copyWith(value: 1.6).validate()), <String>[
+          r'$.value:above_max',
+        ], reason: basis.code);
         expect(
           _tagged(t.copyWith(value: 1.0, valueHigh: 2.0).validate()),
           <String>[r'$.valueHigh:above_max'],
@@ -1170,9 +1194,10 @@ void main() {
       expect(_tagged(benchmark.copyWith(value: 1.6).validate()), <String>[
         r'$.value:above_max',
       ]);
-      expect(_tagged(benchmark.copyWith(referenceKind: null).validate()), <
-        String
-      >[r'$.referenceKind:missing_field']);
+      expect(
+        _tagged(benchmark.copyWith(referenceKind: null).validate()),
+        <String>[r'$.referenceKind:missing_field'],
+      );
       // Répétitions en réserve : de 0 à 10.
       const rir = IntensityTarget(basis: IntensityBasis.rir, value: 10);
       expect(rir.validate(), isEmpty);
@@ -1204,9 +1229,10 @@ void main() {
       expect(codesOf(speed.copyWith(value: 5.0).validate()), <String>[
         'range_inverted',
       ]);
-      expect(codesOf(speed.copyWith(value: double.nan).validate()), contains(
-        'not_finite',
-      ));
+      expect(
+        codesOf(speed.copyWith(value: double.nan).validate()),
+        contains('not_finite'),
+      );
       // `eventId` : seulement pour une part de l'allure cible d'une course.
       const pace = IntensityTarget(
         basis: IntensityBasis.speedFraction,
@@ -1231,9 +1257,7 @@ void main() {
         r'$.eventId:too_short',
       ]);
       expect(
-        _tagged(
-          pace.copyWith(basis: IntensityBasis.percentOneRm).validate(),
-        ),
+        _tagged(pace.copyWith(basis: IntensityBasis.percentOneRm).validate()),
         <String>[r'$.eventId:unexpected_field'],
       );
       expect(
@@ -1249,10 +1273,7 @@ void main() {
 
     test('autorégulation : arrêt sur baisse de propreté, allègement', () {
       expect(AutoregulationKind.values, hasLength(7));
-      expect(
-        AutoregulationKind.stopOnQualityDrop.code,
-        'stop_on_quality_drop',
-      );
+      expect(AutoregulationKind.stopOnQualityDrop.code, 'stop_on_quality_drop');
       const quality = AutoregulationRule(
         kind: AutoregulationKind.stopOnQualityDrop,
         qualityFloor: 3,
@@ -1260,7 +1281,10 @@ void main() {
         maxSets: 6,
       );
       expect(quality.validate(), isEmpty);
-      expect(AutoregulationRule.fromJson(viaJsonText(quality.toJson())), quality);
+      expect(
+        AutoregulationRule.fromJson(viaJsonText(quality.toJson())),
+        quality,
+      );
       expect(
         quality.copyWith(minSets: null, maxSets: null).validate(),
         isEmpty,
@@ -1385,11 +1409,7 @@ void main() {
     test('journal : parties d\'une série', () {
       expect(const SetPart(reps: 2).validate(), isEmpty);
       expect(const SetPart(seconds: 10).validate(), isEmpty);
-      const drop = SetPart(
-        reps: 8,
-        externalLoadKg: 40,
-        restBeforeSeconds: 0,
-      );
+      const drop = SetPart(reps: 8, externalLoadKg: 40, restBeforeSeconds: 0);
       expect(drop.validate(), isEmpty);
       expect(SetPart.fromJson(viaJsonText(drop.toJson())), drop);
       // Au moins des répétitions ou une durée.
@@ -1403,9 +1423,10 @@ void main() {
       expect(_tagged(const SetPart(reps: 1001).validate()), <String>[
         r'$.reps:above_max',
       ]);
-      expect(_tagged(drop.copyWith(restBeforeSeconds: 3601).validate()), <
-        String
-      >[r'$.restBeforeSeconds:above_max']);
+      expect(
+        _tagged(drop.copyWith(restBeforeSeconds: 3601).validate()),
+        <String>[r'$.restBeforeSeconds:above_max'],
+      );
       // Dans une série : de 1 à 120 parties, chacune contrôlée à son rang.
       final dropSet = baseSet.copyWith(
         technique: SetTechniqueKind.dropSet,
@@ -1427,9 +1448,10 @@ void main() {
         ),
         <String>[r'$.parts[1]:no_measure'],
       );
-      expect(_tagged(dropSet.copyWith(parts: const <SetPart>[]).validate()), <
-        String
-      >[r'$.parts:too_short']);
+      expect(
+        _tagged(dropSet.copyWith(parts: const <SetPart>[]).validate()),
+        <String>[r'$.parts:too_short'],
+      );
       expect(
         _tagged(
           dropSet
@@ -1444,10 +1466,9 @@ void main() {
       );
       // Quand toutes les parties ont des répétitions, leur somme est le
       // total de la série.
-      expect(
-        _tagged(dropSet.copyWith(reps: 25).validate()),
-        <String>[r'$.parts:parts_mismatch'],
-      );
+      expect(_tagged(dropSet.copyWith(reps: 25).validate()), <String>[
+        r'$.parts:parts_mismatch',
+      ]);
       expect(
         dropSet
             .copyWith(
@@ -1458,7 +1479,10 @@ void main() {
         reason: 'une partie sans répétitions : pas de total à recouper',
       );
       // Sans parties, la série s'écrit comme en 0.3.0.
-      expect(dropSet.copyWith(parts: null).toJson().containsKey('parts'), isFalse);
+      expect(
+        dropSet.copyWith(parts: null).toJson().containsKey('parts'),
+        isFalse,
+      );
     });
 
     test('journal : résultats des groupes d\'exercices enchaînés', () {
@@ -1472,7 +1496,10 @@ void main() {
       expect(result.validate(), isEmpty);
       expect(GroupResult.fromJson(viaJsonText(result.toJson())), result);
       expect(
-        const GroupResult(groupId: 'g1', completed: false).toJson().keys.toList(),
+        const GroupResult(
+          groupId: 'g1',
+          completed: false,
+        ).toJson().keys.toList(),
         <String>['groupId', 'completed'],
       );
       expect(_tagged(result.copyWith(groupId: '').validate()), <String>[
@@ -1484,9 +1511,10 @@ void main() {
       expect(_tagged(result.copyWith(rounds: -1).validate()), <String>[
         r'$.rounds:below_min',
       ]);
-      final done = session('s1', '2026-10-05').copyWith(
-        groupResults: const <GroupResult>[result],
-      );
+      final done = session(
+        's1',
+        '2026-10-05',
+      ).copyWith(groupResults: const <GroupResult>[result]);
       expect(done.validate(), isEmpty);
       expect(SessionRecord.fromJson(viaJsonText(done.toJson())), done);
       expect(done.toJson().keys.last, 'groupResults');
@@ -1537,14 +1565,13 @@ void main() {
       SeasonPhaseKind kind,
       String start,
       int weeks,
-    ) =>
-        SeasonPhase(
-          index: index,
-          kind: kind,
-          startDate: CivilDate.parse(start),
-          weeks: weeks,
-          reasons: const <Reason>[],
-        );
+    ) => SeasonPhase(
+      index: index,
+      kind: kind,
+      startDate: CivilDate.parse(start),
+      weeks: weeks,
+      reasons: const <Reason>[],
+    );
     SeasonPlan plan(List<SeasonPhase> phases) => SeasonPlan(
       createdOn: CivilDate(2026, 10, 5),
       engineVersion: '0.0.0-test',
@@ -1605,7 +1632,10 @@ void main() {
         SeasonPhaseKind.maintenance,
         SeasonPhaseKind.reintroduction,
       ]);
-      expect(SeasonPhaseKind.fromCode('maintenance'), SeasonPhaseKind.maintenance);
+      expect(
+        SeasonPhaseKind.fromCode('maintenance'),
+        SeasonPhaseKind.maintenance,
+      );
       expect(
         SeasonPhaseKind.fromCode('reintroduction'),
         SeasonPhaseKind.reintroduction,
@@ -1650,7 +1680,9 @@ void main() {
         <String>[r'$.phases[0].eventId:unknown_event'],
       );
       expect(
-        _tagged(known.copyWith(eventIds: const <String>['e1', 'e1']).validate()),
+        _tagged(
+          known.copyWith(eventIds: const <String>['e1', 'e1']).validate(),
+        ),
         <String>[r'$.eventIds:duplicate'],
       );
     });
@@ -1930,9 +1962,10 @@ void main() {
       expect(_tagged(timed.copyWith(timeLimitSeconds: 0).validate()), <String>[
         r'$.timeLimitSeconds:below_min',
       ]);
-      expect(_tagged(timed.copyWith(restAfterSeconds: 3601).validate()), <
-        String
-      >[r'$.restAfterSeconds:above_max']);
+      expect(
+        _tagged(timed.copyWith(restAfterSeconds: 3601).validate()),
+        <String>[r'$.restAfterSeconds:above_max'],
+      );
       expect(
         const EventStation(exerciseId: 'sw-pompe', seconds: 30).validate(),
         isEmpty,
@@ -1974,12 +2007,14 @@ void main() {
       expect(_tagged(full.copyWith(heats: 21).validate()), <String>[
         r'$.heats:above_max',
       ]);
-      expect(_tagged(full.copyWith(plannedBodyWeightKg: 20.0).validate()), <
-        String
-      >[r'$.plannedBodyWeightKg:below_min']);
-      expect(_tagged(full.copyWith(elements: const <String>['x']).validate()), <
-        String
-      >[r'$.elements:unexpected_field']);
+      expect(
+        _tagged(full.copyWith(plannedBodyWeightKg: 20.0).validate()),
+        <String>[r'$.plannedBodyWeightKg:below_min'],
+      );
+      expect(
+        _tagged(full.copyWith(elements: const <String>['x']).validate()),
+        <String>[r'$.elements:unexpected_field'],
+      );
       // Des postes sans format : le format manque.
       final other = SeasonEvent(
         id: 'e3',
@@ -2003,9 +2038,10 @@ void main() {
       );
       expect(freestyle.validate(), isEmpty);
       expect(SeasonEvent.fromJson(viaJsonText(freestyle.toJson())), freestyle);
-      expect(_tagged(freestyle.copyWith(bestTotalReps: 10).validate()), <String>[
-        r'$.bestTotalReps:unexpected_field',
-      ]);
+      expect(
+        _tagged(freestyle.copyWith(bestTotalReps: 10).validate()),
+        <String>[r'$.bestTotalReps:unexpected_field'],
+      );
       expect(
         _tagged(freestyle.copyWith(elements: const <String>['']).validate()),
         <String>[r'$.elements[0]:too_short'],
@@ -2162,10 +2198,12 @@ void main() {
         AttemptFailure.technique,
         AttemptFailure.judging,
       ]);
-      expect(
-        failed.copyWith(failure: null).toJson().keys.toList(),
-        <String>['exerciseId', 'index', 'loadKg', 'success'],
-      );
+      expect(failed.copyWith(failure: null).toJson().keys.toList(), <String>[
+        'exerciseId',
+        'index',
+        'loadKg',
+        'success',
+      ]);
       expect(
         () => AttemptResult.fromJson(<String, Object?>{
           ...viaJsonText(failed.toJson()),
@@ -2307,10 +2345,7 @@ void main() {
         ],
       );
       expect(request.validate(), isEmpty);
-      expect(
-        EventDayRequest.fromJson(viaJsonText(request.toJson())),
-        request,
-      );
+      expect(EventDayRequest.fromJson(viaJsonText(request.toJson())), request);
       // Objectif du jour, total visé, cause d'un échec.
       final aimed = request.copyWith(
         objective: EventObjective.secureTotal,
@@ -2336,15 +2371,19 @@ void main() {
       ]);
       expect(request.toJson().containsKey('objective'), isFalse);
       expect(request.toJson().containsKey('targetTotalKg'), isFalse);
-      expect(_tagged(aimed.copyWith(targetTotalKg: 5001.0).validate()), <String>[
-        r'$.targetTotalKg:above_max',
-      ]);
+      expect(
+        _tagged(aimed.copyWith(targetTotalKg: 5001.0).validate()),
+        <String>[r'$.targetTotalKg:above_max'],
+      );
       expect(_tagged(aimed.copyWith(targetTotalKg: -1.0).validate()), <String>[
         r'$.targetTotalKg:below_min',
       ]);
       final day = advisor.planEventDay(catalog, request);
       expect(day.validate(), isEmpty);
-      expect(day.lifts.single.attempts.first.loadKg, greaterThanOrEqualTo(72.5));
+      expect(
+        day.lifts.single.attempts.first.loadKg,
+        greaterThanOrEqualTo(72.5),
+      );
       expect(EventDayPlan.fromJson(viaJsonText(day.toJson())), day);
       expect(day.lifts.single.warmup, hasLength(2));
       final next = advisor.planEventDay(catalog, aimed);
