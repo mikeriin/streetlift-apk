@@ -41,7 +41,7 @@ Chaque lot ne modifie que sa ligne (PIPELINE_CP.md §1).
 
 | Lot | Voie | Prérequis | Livré | Panel (min) | Date | Statut |
 | --- | --- | --- | --- | --- | --- | --- |
-| CR | A | références reçues | — | — | — | à faire (reprise) — session du 03/10 11:14 UTC muette depuis 14:32 UTC après le commit moteurs 0d219144 (kalis_bench 0.1.0) et l'étiquette ; reste : section CR de DECISIONS_CP, LIVRAISON_CR, ETAT, page de suivi, notification |
+| CR | A | références reçues | — | — | — | en cours depuis 2026-10-03 19:22 UTC (reprise, fin de lot sur Opus 5.5, C5.1) |
 | CQ | B | — | `kalis_core` 0.4.0 (`etiquettes/kalis_core-v0.4.0`, commit ef4c57ae, run 37106401044) ; profil v3 : 16 questions débutant, 29 élite | — (lot sans panel) | 2026-10-03 | livré |
 | CP1 | A | CR, CQ | — | — | — | en attente de CR, CQ |
 | CA1 | B | CR, CQ | — | — | — | en attente de CR, CQ |
