@@ -831,9 +831,7 @@ void _buildReps(_Builder b, Set<int> runDays) {
           wanted,
         );
 
-  final pullMethods = competition
-      ? _competitionMethods
-      : _repsMethods(pullMax);
+  final pullMethods = competition ? _competitionMethods : _repsMethods(pullMax);
   final dipMethods = competition ? _competitionMethods : _repsMethods(dipMax);
   var pullAt = 0;
   var dipAt = 1;
@@ -1583,7 +1581,7 @@ void _buildFigures(_Builder b, Set<int> runDays) {
               : Method.repsStrength,
           sets: 3,
           stress: DayStress.medium,
-        support: true,
+          support: true,
           referenceId: Ids.dip,
         );
       } else {
@@ -1594,7 +1592,7 @@ void _buildFigures(_Builder b, Set<int> runDays) {
           Method.repsVolume,
           sets: 3,
           stress: DayStress.medium,
-        support: true,
+          support: true,
         );
       }
     }
@@ -1662,7 +1660,9 @@ double _slotSeconds(Athlete a, SlotSpec s) {
       rest = 180;
     case Method.repsVolume:
       effort = max * 0.6 * 3;
-      rest = s.group != null ? 60 : (a.level <= 0 ? 120 : (a.level == 1 ? 90 : 60));
+      rest = s.group != null
+          ? 60
+          : (a.level <= 0 ? 120 : (a.level == 1 ? 90 : 60));
     case Method.repsDensity:
       return 45 + s.sets * 90;
     case Method.repsStrength:
@@ -1758,7 +1758,11 @@ const List<(List<String>, SlotRole, String, int)> _fillers =
         2,
       ),
       (
-        <String>['mu-dead-bug', 'mu-hollow-body-groupe', 'mu-gainage-ventral-coudes'],
+        <String>[
+          'mu-dead-bug',
+          'mu-hollow-body-groupe',
+          'mu-gainage-ventral-coudes',
+        ],
         SlotRole.core,
         Method.accessoryCore,
         2,
@@ -1806,14 +1810,34 @@ void _fillTime(_Builder b, Set<int> runDays) {
       return t;
     }
 
+    // Trois compléments au plus par séance ; en spécialisation, seuls la
+    // prévention et la mobilité complètent (le volume dur reste à la
+    // priorité, R4-H2).
+    final lean = a.profile.specialization != null;
+    var added = 0;
     for (final (candidates, role, method, sets) in _fillers) {
-      if (total() >= target) {
+      if (total() >= target || added >= 3) {
         break;
       }
-      if (b.days[d].slots.any((s) => candidates.contains(s.exerciseId))) {
+      if (lean &&
+          method != Method.accessoryPrehab &&
+          method != Method.mobility) {
         continue;
       }
-      b.add(d, candidates, role, method, sets: sets, support: true, rotate: true);
+      added++;
+      if (b.days[d].slots.any((s) => candidates.contains(s.exerciseId))) {
+        added--;
+        continue;
+      }
+      b.add(
+        d,
+        candidates,
+        role,
+        method,
+        sets: sets,
+        support: true,
+        rotate: true,
+      );
     }
     // La mobilité reste en fin de séance.
     final slots = b.days[d].slots;

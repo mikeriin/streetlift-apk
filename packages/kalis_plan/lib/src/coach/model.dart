@@ -174,12 +174,7 @@ abstract final class Method {
     bool support = false,
     bool otherSupport = false,
   }) {
-    final pass = trimPass(
-      method,
-      sets,
-      beginner: beginner,
-      support: support,
-    );
+    final pass = trimPass(method, sets, beginner: beginner, support: support);
     final other = trimPass(
       otherMethod,
       otherSets,
