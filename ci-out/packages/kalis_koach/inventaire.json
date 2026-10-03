@@ -1,0 +1,2267 @@
+{
+ "schema": 1,
+ "version": "0.1.0",
+ "commonFrame": [
+  -710,
+  -1196,
+  954,
+  41
+ ],
+ "poses": [
+  {
+   "id": "explain_board",
+   "sheet": "A",
+   "cell": [
+    1,
+    1
+   ],
+   "emotion": "explaining",
+   "usages": [
+    "explanation",
+    "program",
+    "review"
+   ],
+   "eyes": "open",
+   "framing": "full",
+   "gaze": "right",
+   "bubbleSide": "left",
+   "bounds": [
+    -325,
+    -1001,
+    914,
+    1
+   ],
+   "ink": {
+    "subpaths": 9,
+    "lines": 32,
+    "cubics": 221
+   },
+   "paper": {
+    "subpaths": 6,
+    "lines": 4,
+    "cubics": 67
+   },
+   "eyeBoxes": [
+    [
+     -165,
+     -556,
+     -38,
+     -429
+    ],
+    [
+     52,
+     -569,
+     151,
+     -437
+    ]
+   ],
+   "ints": 2303
+  },
+  {
+   "id": "read_tip",
+   "sheet": "A",
+   "cell": [
+    1,
+    2
+   ],
+   "emotion": "explaining",
+   "usages": [
+    "tip",
+    "explanation",
+    "featureIntro"
+   ],
+   "eyes": "open",
+   "framing": "full",
+   "gaze": "front",
+   "bubbleSide": "left",
+   "bounds": [
+    -352,
+    -1001,
+    493,
+    0
+   ],
+   "ink": {
+    "subpaths": 4,
+    "lines": 34,
+    "cubics": 196
+   },
+   "paper": {
+    "subpaths": 8,
+    "lines": 12,
+    "cubics": 113
+   },
+   "eyeBoxes": [
+    [
+     -158,
+     -571,
+     -45,
+     -447
+    ],
+    [
+     44,
+     -582,
+     159,
+     -450
+    ]
+   ],
+   "ints": 2468
+  },
+  {
+   "id": "anatomy",
+   "sheet": "A",
+   "cell": [
+    1,
+    3
+   ],
+   "emotion": "explaining",
+   "usages": [
+    "explanation",
+    "exercise"
+   ],
+   "eyes": "open",
+   "framing": "full",
+   "gaze": "right",
+   "bubbleSide": "left",
+   "bounds": [
+    -338,
+    -1001,
+    783,
+    0
+   ],
+   "ink": {
+    "subpaths": 11,
+    "lines": 58,
+    "cubics": 336
+   },
+   "paper": {
+    "subpaths": 17,
+    "lines": 32,
+    "cubics": 195
+   },
+   "eyeBoxes": [
+    [
+     -174,
+     -559,
+     -30,
+     -443
+    ],
+    [
+     56,
+     -613,
+     146,
+     -466
+    ]
+   ],
+   "ints": 4205
+  },
+  {
+   "id": "progress_chart",
+   "sheet": "A",
+   "cell": [
+    2,
+    1
+   ],
+   "emotion": "proud",
+   "usages": [
+    "progress",
+    "record",
+    "goal"
+   ],
+   "eyes": "open",
+   "framing": "full",
+   "gaze": "right",
+   "bubbleSide": "left",
+   "bounds": [
+    -335,
+    -1001,
+    876,
+    0
+   ],
+   "ink": {
+    "subpaths": 7,
+    "lines": 40,
+    "cubics": 163
+   },
+   "paper": {
+    "subpaths": 6,
+    "lines": 10,
+    "cubics": 56
+   },
+   "eyeBoxes": [
+    [
+     -177,
+     -544,
+     -37,
+     -419
+    ],
+    [
+     55,
+     -594,
+     156,
+     -441
+    ]
+   ],
+   "ints": 1846
+  },
+  {
+   "id": "think",
+   "sheet": "A",
+   "cell": [
+    2,
+    2
+   ],
+   "emotion": "thinking",
+   "usages": [
+    "why",
+    "question",
+    "profile"
+   ],
+   "eyes": "open",
+   "framing": "full",
+   "gaze": "front",
+   "bubbleSide": "left",
+   "bounds": [
+    -304,
+    -1000,
+    490,
+    0
+   ],
+   "ink": {
+    "subpaths": 5,
+    "lines": 22,
+    "cubics": 150
+   },
+   "paper": {
+    "subpaths": 5,
+    "lines": 12,
+    "cubics": 82
+   },
+   "eyeBoxes": [
+    [
+     -155,
+     -575,
+     -48,
+     -439
+    ],
+    [
+     38,
+     -547,
+     168,
+     -430
+    ]
+   ],
+   "ints": 1871
+  },
+  {
+   "id": "checklist",
+   "sheet": "A",
+   "cell": [
+    2,
+    3
+   ],
+   "emotion": "explaining",
+   "usages": [
+    "profile",
+    "review",
+    "healthCheck"
+   ],
+   "eyes": "open",
+   "framing": "full",
+   "gaze": "right",
+   "bubbleSide": "left",
+   "bounds": [
+    -338,
+    -1000,
+    672,
+    0
+   ],
+   "ink": {
+    "subpaths": 8,
+    "lines": 38,
+    "cubics": 207
+   },
+   "paper": {
+    "subpaths": 12,
+    "lines": 20,
+    "cubics": 137
+   },
+   "eyeBoxes": [
+    [
+     -178,
+     -547,
+     -42,
+     -428
+    ],
+    [
+     58,
+     -582,
+     159,
+     -446
+    ]
+   ],
+   "ints": 2788
+  },
+  {
+   "id": "choice",
+   "sheet": "A",
+   "cell": [
+    3,
+    1
+   ],
+   "emotion": "thinking",
+   "usages": [
+    "decision",
+    "proposal"
+   ],
+   "eyes": "open",
+   "framing": "bust",
+   "gaze": "front",
+   "bubbleSide": "left",
+   "bounds": [
+    -592,
+    -911,
+    659,
+    0
+   ],
+   "ink": {
+    "subpaths": 6,
+    "lines": 40,
+    "cubics": 150
+   },
+   "paper": {
+    "subpaths": 7,
+    "lines": 26,
+    "cubics": 68
+   },
+   "eyeBoxes": [
+    [
+     -154,
+     -498,
+     -46,
+     -367
+    ],
+    [
+     40,
+     -488,
+     160,
+     -363
+    ]
+   ],
+   "ints": 1882
+  },
+  {
+   "id": "idea",
+   "sheet": "A",
+   "cell": [
+    3,
+    2
+   ],
+   "emotion": "curious",
+   "usages": [
+    "tip",
+    "featureIntro"
+   ],
+   "eyes": "open",
+   "framing": "bust",
+   "gaze": "right",
+   "bubbleSide": "left",
+   "bounds": [
+    -344,
+    -936,
+    610,
+    0
+   ],
+   "ink": {
+    "subpaths": 9,
+    "lines": 18,
+    "cubics": 175
+   },
+   "paper": {
+    "subpaths": 8,
+    "lines": 4,
+    "cubics": 91
+   },
+   "eyeBoxes": [
+    [
+     -185,
+     -438,
+     -28,
+     -329
+    ],
+    [
+     63,
+     -524,
+     145,
+     -368
+    ]
+   ],
+   "ints": 2116
+  },
+  {
+   "id": "settings",
+   "sheet": "A",
+   "cell": [
+    3,
+    3
+   ],
+   "emotion": "explaining",
+   "usages": [
+    "settings",
+    "devSession",
+    "adjustment"
+   ],
+   "eyes": "open",
+   "framing": "bust",
+   "gaze": "right",
+   "bubbleSide": "left",
+   "bounds": [
+    -422,
+    -882,
+    606,
+    0
+   ],
+   "ink": {
+    "subpaths": 4,
+    "lines": 50,
+    "cubics": 154
+   },
+   "paper": {
+    "subpaths": 8,
+    "lines": 10,
+    "cubics": 75
+   },
+   "eyeBoxes": [
+    [
+     -167,
+     -460,
+     -39,
+     -333
+    ],
+    [
+     54,
+     -466,
+     150,
+     -338
+    ]
+   ],
+   "ints": 1956
+  },
+  {
+   "id": "determined",
+   "sheet": "A",
+   "cell": [
+    4,
+    1
+   ],
+   "emotion": "determined",
+   "usages": [
+    "encouragement",
+    "sessionStart"
+   ],
+   "eyes": "open",
+   "framing": "full",
+   "gaze": "right",
+   "bubbleSide": "right",
+   "bounds": [
+    -328,
+    -1000,
+    456,
+    0
+   ],
+   "ink": {
+    "subpaths": 5,
+    "lines": 34,
+    "cubics": 157
+   },
+   "paper": {
+    "subpaths": 6,
+    "lines": 10,
+    "cubics": 94
+   },
+   "eyeBoxes": [
+    [
+     -165,
+     -578,
+     -40,
+     -443
+    ],
+    [
+     51,
+     -580,
+     155,
+     -450
+    ]
+   ],
+   "ints": 2052
+  },
+  {
+   "id": "direction",
+   "sheet": "A",
+   "cell": [
+    4,
+    2
+   ],
+   "emotion": "explaining",
+   "usages": [
+    "program",
+    "nextStep"
+   ],
+   "eyes": "open",
+   "framing": "full",
+   "gaze": "right",
+   "bubbleSide": "left",
+   "bounds": [
+    -323,
+    -1001,
+    839,
+    0
+   ],
+   "ink": {
+    "subpaths": 9,
+    "lines": 40,
+    "cubics": 191
+   },
+   "paper": {
+    "subpaths": 10,
+    "lines": 6,
+    "cubics": 98
+   },
+   "eyeBoxes": [
+    [
+     -166,
+     -559,
+     -41,
+     -432
+    ],
+    [
+     53,
+     -573,
+     155,
+     -440
+    ]
+   ],
+   "ints": 2362
+  },
+  {
+   "id": "analyze",
+   "sheet": "A",
+   "cell": [
+    4,
+    3
+   ],
+   "emotion": "curious",
+   "usages": [
+    "analysis",
+    "calibration",
+    "review"
+   ],
+   "eyes": "open",
+   "framing": "full",
+   "gaze": "right",
+   "bubbleSide": "left",
+   "bounds": [
+    -355,
+    -1002,
+    567,
+    0
+   ],
+   "ink": {
+    "subpaths": 6,
+    "lines": 36,
+    "cubics": 148
+   },
+   "paper": {
+    "subpaths": 7,
+    "lines": 12,
+    "cubics": 70
+   },
+   "eyeBoxes": [
+    [
+     -175,
+     -538,
+     -43,
+     -413
+    ],
+    [
+     58,
+     -557,
+     157,
+     -427
+    ]
+   ],
+   "ints": 1820
+  },
+  {
+   "id": "wave",
+   "sheet": "B",
+   "cell": [
+    1,
+    1
+   ],
+   "emotion": "greeting",
+   "usages": [
+    "welcome",
+    "devSession"
+   ],
+   "eyes": "open",
+   "framing": "full",
+   "gaze": "left",
+   "bubbleSide": "left",
+   "bounds": [
+    -473,
+    -1000,
+    294,
+    -1
+   ],
+   "ink": {
+    "subpaths": 4,
+    "lines": 28,
+    "cubics": 142
+   },
+   "paper": {
+    "subpaths": 6,
+    "lines": 8,
+    "cubics": 63
+   },
+   "eyeBoxes": [
+    [
+     -144,
+     -595,
+     -44,
+     -460
+    ],
+    [
+     33,
+     -590,
+     161,
+     -456
+    ]
+   ],
+   "ints": 1682
+  },
+  {
+   "id": "thumbs_up",
+   "sheet": "B",
+   "cell": [
+    1,
+    2
+   ],
+   "emotion": "approving",
+   "usages": [
+    "confirmation",
+    "success"
+   ],
+   "eyes": "open",
+   "framing": "full",
+   "gaze": "left",
+   "bubbleSide": "left",
+   "bounds": [
+    -425,
+    -1000,
+    303,
+    1
+   ],
+   "ink": {
+    "subpaths": 6,
+    "lines": 36,
+    "cubics": 137
+   },
+   "paper": {
+    "subpaths": 6,
+    "lines": 14,
+    "cubics": 70
+   },
+   "eyeBoxes": [
+    [
+     -138,
+     -586,
+     -50,
+     -450
+    ],
+    [
+     30,
+     -548,
+     165,
+     -435
+    ]
+   ],
+   "ints": 1760
+  },
+  {
+   "id": "happy",
+   "sheet": "B",
+   "cell": [
+    1,
+    3
+   ],
+   "emotion": "happy",
+   "usages": [
+    "success",
+    "program"
+   ],
+   "eyes": "closed",
+   "framing": "full",
+   "gaze": "front",
+   "bubbleSide": "right",
+   "bounds": [
+    -466,
+    -1000,
+    455,
+    0
+   ],
+   "ink": {
+    "subpaths": 8,
+    "lines": 36,
+    "cubics": 152
+   },
+   "paper": {
+    "subpaths": 7,
+    "lines": 10,
+    "cubics": 54
+   },
+   "eyeBoxes": [],
+   "ints": 1640
+  },
+  {
+   "id": "point",
+   "sheet": "B",
+   "cell": [
+    2,
+    1
+   ],
+   "emotion": "explaining",
+   "usages": [
+    "nextStep",
+    "explanation"
+   ],
+   "eyes": "open",
+   "framing": "full",
+   "gaze": "right",
+   "bubbleSide": "left",
+   "bounds": [
+    -344,
+    -1001,
+    548,
+    0
+   ],
+   "ink": {
+    "subpaths": 5,
+    "lines": 28,
+    "cubics": 127
+   },
+   "paper": {
+    "subpaths": 6,
+    "lines": 14,
+    "cubics": 61
+   },
+   "eyeBoxes": [
+    [
+     -154,
+     -569,
+     -37,
+     -445
+    ],
+    [
+     46,
+     -580,
+     145,
+     -450
+    ]
+   ],
+   "ints": 1599
+  },
+  {
+   "id": "ponder",
+   "sheet": "B",
+   "cell": [
+    2,
+    2
+   ],
+   "emotion": "thinking",
+   "usages": [
+    "why",
+    "question",
+    "decision"
+   ],
+   "eyes": "open",
+   "framing": "full",
+   "gaze": "front",
+   "bubbleSide": "left",
+   "bounds": [
+    -233,
+    -1000,
+    298,
+    0
+   ],
+   "ink": {
+    "subpaths": 3,
+    "lines": 28,
+    "cubics": 119
+   },
+   "paper": {
+    "subpaths": 3,
+    "lines": 16,
+    "cubics": 66
+   },
+   "eyeBoxes": [
+    [
+     -134,
+     -614,
+     -49,
+     -487
+    ],
+    [
+     33,
+     -569,
+     158,
+     -475
+    ]
+   ],
+   "ints": 1564
+  },
+  {
+   "id": "shrug",
+   "sheet": "B",
+   "cell": [
+    2,
+    3
+   ],
+   "emotion": "unsure",
+   "usages": [
+    "unknown",
+    "cancel"
+   ],
+   "eyes": "open",
+   "framing": "full",
+   "gaze": "front",
+   "bubbleSide": "left",
+   "bounds": [
+    -429,
+    -1000,
+    448,
+    0
+   ],
+   "ink": {
+    "subpaths": 2,
+    "lines": 20,
+    "cubics": 117
+   },
+   "paper": {
+    "subpaths": 2,
+    "lines": 4,
+    "cubics": 21
+   },
+   "eyeBoxes": [
+    [
+     -147,
+     -576,
+     -43,
+     -445
+    ],
+    [
+     40,
+     -569,
+     154,
+     -443
+    ]
+   ],
+   "ints": 1159
+  },
+  {
+   "id": "oops",
+   "sheet": "B",
+   "cell": [
+    3,
+    1
+   ],
+   "emotion": "sorry",
+   "usages": [
+    "error",
+    "cancel"
+   ],
+   "eyes": "open",
+   "framing": "full",
+   "gaze": "left",
+   "bubbleSide": "left",
+   "bounds": [
+    -356,
+    -1001,
+    295,
+    0
+   ],
+   "ink": {
+    "subpaths": 7,
+    "lines": 28,
+    "cubics": 167
+   },
+   "paper": {
+    "subpaths": 5,
+    "lines": 16,
+    "cubics": 102
+   },
+   "eyeBoxes": [
+    [
+     -137,
+     -504,
+     -55,
+     -418
+    ],
+    [
+     36,
+     -548,
+     156,
+     -420
+    ]
+   ],
+   "ints": 2160
+  },
+  {
+   "id": "please",
+   "sheet": "B",
+   "cell": [
+    3,
+    2
+   ],
+   "emotion": "caring",
+   "usages": [
+    "request",
+    "healthCheck",
+    "rest"
+   ],
+   "eyes": "open",
+   "framing": "full",
+   "gaze": "front",
+   "bubbleSide": "left",
+   "bounds": [
+    -255,
+    -1001,
+    265,
+    0
+   ],
+   "ink": {
+    "subpaths": 4,
+    "lines": 16,
+    "cubics": 143
+   },
+   "paper": {
+    "subpaths": 7,
+    "lines": 4,
+    "cubics": 92
+   },
+   "eyeBoxes": [
+    [
+     -152,
+     -537,
+     -39,
+     -463
+    ],
+    [
+     43,
+     -536,
+     153,
+     -464
+    ]
+   ],
+   "ints": 1869
+  },
+  {
+   "id": "love",
+   "sheet": "B",
+   "cell": [
+    3,
+    3
+   ],
+   "emotion": "caring",
+   "usages": [
+    "thanks",
+    "care",
+    "rest"
+   ],
+   "eyes": "open",
+   "framing": "full",
+   "gaze": "front",
+   "bubbleSide": "left",
+   "bounds": [
+    -376,
+    -1001,
+    381,
+    0
+   ],
+   "ink": {
+    "subpaths": 6,
+    "lines": 26,
+    "cubics": 161
+   },
+   "paper": {
+    "subpaths": 5,
+    "lines": 10,
+    "cubics": 87
+   },
+   "eyeBoxes": [
+    [
+     -143,
+     -577,
+     -42,
+     -459
+    ],
+    [
+     37,
+     -574,
+     151,
+     -456
+    ]
+   ],
+   "ints": 2000
+  },
+  {
+   "id": "flex",
+   "sheet": "B",
+   "cell": [
+    4,
+    1
+   ],
+   "emotion": "proud",
+   "usages": [
+    "record",
+    "progress"
+   ],
+   "eyes": "open",
+   "framing": "full",
+   "gaze": "right",
+   "bubbleSide": "right",
+   "bounds": [
+    -306,
+    -1000,
+    390,
+    0
+   ],
+   "ink": {
+    "subpaths": 3,
+    "lines": 22,
+    "cubics": 122
+   },
+   "paper": {
+    "subpaths": 5,
+    "lines": 8,
+    "cubics": 46
+   },
+   "eyeBoxes": [
+    [
+     -152,
+     -609,
+     -33,
+     -474
+    ],
+    [
+     42,
+     -598,
+     144,
+     -476
+    ]
+   ],
+   "ints": 1404
+  },
+  {
+   "id": "run",
+   "sheet": "B",
+   "cell": [
+    4,
+    2
+   ],
+   "emotion": "energetic",
+   "usages": [
+    "sessionStart",
+    "encouragement"
+   ],
+   "eyes": "open",
+   "framing": "full",
+   "gaze": "right",
+   "bubbleSide": "right",
+   "bounds": [
+    -670,
+    -1000,
+    240,
+    0
+   ],
+   "ink": {
+    "subpaths": 4,
+    "lines": 20,
+    "cubics": 151
+   },
+   "paper": {
+    "subpaths": 4,
+    "lines": 0,
+    "cubics": 27
+   },
+   "eyeBoxes": [
+    [
+     -133,
+     -624,
+     -31,
+     -497
+    ],
+    [
+     41,
+     -597,
+     129,
+     -491
+    ]
+   ],
+   "ints": 1451
+  },
+  {
+   "id": "victory",
+   "sheet": "B",
+   "cell": [
+    4,
+    3
+   ],
+   "emotion": "celebrating",
+   "usages": [
+    "record",
+    "success",
+    "sessionEnd"
+   ],
+   "eyes": "closed",
+   "framing": "full",
+   "gaze": "front",
+   "bubbleSide": "left",
+   "bounds": [
+    -438,
+    -1000,
+    452,
+    0
+   ],
+   "ink": {
+    "subpaths": 8,
+    "lines": 28,
+    "cubics": 157
+   },
+   "paper": {
+    "subpaths": 6,
+    "lines": 8,
+    "cubics": 62
+   },
+   "eyeBoxes": [],
+   "ints": 1697
+  },
+  {
+   "id": "thumbs_up_2",
+   "sheet": "C",
+   "cell": [
+    1,
+    1
+   ],
+   "emotion": "approving",
+   "usages": [
+    "confirmation",
+    "success"
+   ],
+   "eyes": "open",
+   "framing": "full",
+   "gaze": "front",
+   "bubbleSide": "right",
+   "bounds": [
+    -443,
+    -1000,
+    279,
+    0
+   ],
+   "ink": {
+    "subpaths": 5,
+    "lines": 20,
+    "cubics": 170
+   },
+   "paper": {
+    "subpaths": 7,
+    "lines": 6,
+    "cubics": 82
+   },
+   "eyeBoxes": [
+    [
+     -142,
+     -618,
+     -48,
+     -482
+    ],
+    [
+     33,
+     -582,
+     163,
+     -468
+    ]
+   ],
+   "ints": 2017
+  },
+  {
+   "id": "cheer",
+   "sheet": "C",
+   "cell": [
+    1,
+    2
+   ],
+   "emotion": "celebrating",
+   "usages": [
+    "success",
+    "record"
+   ],
+   "eyes": "closed",
+   "framing": "full",
+   "gaze": "front",
+   "bubbleSide": "right",
+   "bounds": [
+    -422,
+    -999,
+    397,
+    0
+   ],
+   "ink": {
+    "subpaths": 8,
+    "lines": 14,
+    "cubics": 178
+   },
+   "paper": {
+    "subpaths": 8,
+    "lines": 8,
+    "cubics": 82
+   },
+   "eyeBoxes": [],
+   "ints": 1950
+  },
+  {
+   "id": "pump",
+   "sheet": "C",
+   "cell": [
+    1,
+    3
+   ],
+   "emotion": "determined",
+   "usages": [
+    "encouragement",
+    "sessionStart"
+   ],
+   "eyes": "open",
+   "framing": "full",
+   "gaze": "front",
+   "bubbleSide": "left",
+   "bounds": [
+    -282,
+    -1000,
+    354,
+    0
+   ],
+   "ink": {
+    "subpaths": 4,
+    "lines": 20,
+    "cubics": 159
+   },
+   "paper": {
+    "subpaths": 7,
+    "lines": 8,
+    "cubics": 80
+   },
+   "eyeBoxes": [
+    [
+     -156,
+     -536,
+     -44,
+     -434
+    ],
+    [
+     45,
+     -572,
+     151,
+     -446
+    ]
+   ],
+   "ints": 1918
+  },
+  {
+   "id": "flag",
+   "sheet": "C",
+   "cell": [
+    1,
+    4
+   ],
+   "emotion": "proud",
+   "usages": [
+    "goal",
+    "progress"
+   ],
+   "eyes": "open",
+   "framing": "full",
+   "gaze": "right",
+   "bubbleSide": "left",
+   "bounds": [
+    -303,
+    -1156,
+    566,
+    0
+   ],
+   "ink": {
+    "subpaths": 3,
+    "lines": 34,
+    "cubics": 177
+   },
+   "paper": {
+    "subpaths": 9,
+    "lines": 6,
+    "cubics": 86
+   },
+   "eyeBoxes": [
+    [
+     -158,
+     -556,
+     -39,
+     -450
+    ],
+    [
+     49,
+     -601,
+     146,
+     -469
+    ]
+   ],
+   "ints": 2119
+  },
+  {
+   "id": "fist_bump",
+   "sheet": "C",
+   "cell": [
+    2,
+    1
+   ],
+   "emotion": "encouraging",
+   "usages": [
+    "encouragement",
+    "welcome"
+   ],
+   "eyes": "open",
+   "framing": "full",
+   "gaze": "right",
+   "bubbleSide": "right",
+   "bounds": [
+    -511,
+    -1002,
+    242,
+    0
+   ],
+   "ink": {
+    "subpaths": 6,
+    "lines": 32,
+    "cubics": 208
+   },
+   "paper": {
+    "subpaths": 5,
+    "lines": 18,
+    "cubics": 122
+   },
+   "eyeBoxes": [
+    [
+     -168,
+     -559,
+     -35,
+     -457
+    ],
+    [
+     52,
+     -609,
+     146,
+     -476
+    ]
+   ],
+   "ints": 2637
+  },
+  {
+   "id": "heart",
+   "sheet": "C",
+   "cell": [
+    2,
+    2
+   ],
+   "emotion": "caring",
+   "usages": [
+    "thanks",
+    "care"
+   ],
+   "eyes": "closed",
+   "framing": "full",
+   "gaze": "front",
+   "bubbleSide": "left",
+   "bounds": [
+    -266,
+    -1000,
+    442,
+    1
+   ],
+   "ink": {
+    "subpaths": 7,
+    "lines": 32,
+    "cubics": 190
+   },
+   "paper": {
+    "subpaths": 6,
+    "lines": 20,
+    "cubics": 131
+   },
+   "eyeBoxes": [],
+   "ints": 2455
+  },
+  {
+   "id": "you",
+   "sheet": "C",
+   "cell": [
+    2,
+    3
+   ],
+   "emotion": "encouraging",
+   "usages": [
+    "request",
+    "nextStep"
+   ],
+   "eyes": "open",
+   "framing": "full",
+   "gaze": "left",
+   "bubbleSide": "left",
+   "bounds": [
+    -445,
+    -1000,
+    279,
+    1
+   ],
+   "ink": {
+    "subpaths": 7,
+    "lines": 22,
+    "cubics": 222
+   },
+   "paper": {
+    "subpaths": 8,
+    "lines": 12,
+    "cubics": 150
+   },
+   "eyeBoxes": [
+    [
+     -156,
+     -546,
+     -45,
+     -474
+    ],
+    [
+     43,
+     -581,
+     158,
+     -480
+    ]
+   ],
+   "ints": 2865
+  },
+  {
+   "id": "double_biceps",
+   "sheet": "C",
+   "cell": [
+    2,
+    4
+   ],
+   "emotion": "proud",
+   "usages": [
+    "record",
+    "progress"
+   ],
+   "eyes": "open",
+   "framing": "full",
+   "gaze": "front",
+   "bubbleSide": "right",
+   "bounds": [
+    -449,
+    -1001,
+    426,
+    0
+   ],
+   "ink": {
+    "subpaths": 2,
+    "lines": 22,
+    "cubics": 119
+   },
+   "paper": {
+    "subpaths": 4,
+    "lines": 2,
+    "cubics": 45
+   },
+   "eyeBoxes": [
+    [
+     -156,
+     -586,
+     -47,
+     -471
+    ],
+    [
+     48,
+     -600,
+     156,
+     -476
+    ]
+   ],
+   "ints": 1340
+  },
+  {
+   "id": "clap",
+   "sheet": "C",
+   "cell": [
+    3,
+    1
+   ],
+   "emotion": "celebrating",
+   "usages": [
+    "sessionEnd",
+    "success"
+   ],
+   "eyes": "closed",
+   "framing": "full",
+   "gaze": "right",
+   "bubbleSide": "right",
+   "bounds": [
+    -295,
+    -1000,
+    307,
+    0
+   ],
+   "ink": {
+    "subpaths": 7,
+    "lines": 36,
+    "cubics": 194
+   },
+   "paper": {
+    "subpaths": 8,
+    "lines": 16,
+    "cubics": 107
+   },
+   "eyeBoxes": [],
+   "ints": 2323
+  },
+  {
+   "id": "sprint",
+   "sheet": "C",
+   "cell": [
+    3,
+    2
+   ],
+   "emotion": "energetic",
+   "usages": [
+    "sessionStart",
+    "encouragement"
+   ],
+   "eyes": "open",
+   "framing": "full",
+   "gaze": "right",
+   "bubbleSide": "right",
+   "bounds": [
+    -605,
+    -1000,
+    187,
+    1
+   ],
+   "ink": {
+    "subpaths": 5,
+    "lines": 12,
+    "cubics": 166
+   },
+   "paper": {
+    "subpaths": 8,
+    "lines": 4,
+    "cubics": 62
+   },
+   "eyeBoxes": [
+    [
+     -144,
+     -609,
+     -30,
+     -501
+    ],
+    [
+     45,
+     -629,
+     127,
+     -508
+    ]
+   ],
+   "ints": 1808
+  },
+  {
+   "id": "fist_up",
+   "sheet": "C",
+   "cell": [
+    3,
+    3
+   ],
+   "emotion": "celebrating",
+   "usages": [
+    "goal",
+    "success"
+   ],
+   "eyes": "closed",
+   "framing": "full",
+   "gaze": "front",
+   "bubbleSide": "right",
+   "bounds": [
+    -394,
+    -1000,
+    255,
+    0
+   ],
+   "ink": {
+    "subpaths": 6,
+    "lines": 18,
+    "cubics": 153
+   },
+   "paper": {
+    "subpaths": 7,
+    "lines": 10,
+    "cubics": 75
+   },
+   "eyeBoxes": [],
+   "ints": 1732
+  },
+  {
+   "id": "present",
+   "sheet": "C",
+   "cell": [
+    3,
+    4
+   ],
+   "emotion": "welcoming",
+   "usages": [
+    "featureIntro",
+    "welcome",
+    "explanation"
+   ],
+   "eyes": "closed",
+   "framing": "full",
+   "gaze": "front",
+   "bubbleSide": "right",
+   "bounds": [
+    -432,
+    -1000,
+    285,
+    0
+   ],
+   "ink": {
+    "subpaths": 4,
+    "lines": 18,
+    "cubics": 177
+   },
+   "paper": {
+    "subpaths": 10,
+    "lines": 10,
+    "cubics": 105
+   },
+   "eyeBoxes": [],
+   "ints": 2114
+  }
+ ],
+ "flames": [
+  {
+   "level": 1,
+   "label": "Difficulté 1 sur 10",
+   "tint": 0.0,
+   "bounds": [
+    -149,
+    -411,
+    149,
+    0
+   ],
+   "ints": 565
+  },
+  {
+   "level": 2,
+   "label": "Difficulté 2 sur 10",
+   "tint": 0.1111111111111111,
+   "bounds": [
+    -179,
+    -482,
+    179,
+    0
+   ],
+   "ints": 514
+  },
+  {
+   "level": 3,
+   "label": "Difficulté 3 sur 10",
+   "tint": 0.2222222222222222,
+   "bounds": [
+    -207,
+    -538,
+    207,
+    0
+   ],
+   "ints": 564
+  },
+  {
+   "level": 4,
+   "label": "Difficulté 4 sur 10",
+   "tint": 0.3333333333333333,
+   "bounds": [
+    -233,
+    -604,
+    233,
+    0
+   ],
+   "ints": 649
+  },
+  {
+   "level": 5,
+   "label": "Difficulté 5 sur 10",
+   "tint": 0.4444444444444444,
+   "bounds": [
+    -260,
+    -667,
+    260,
+    0
+   ],
+   "ints": 781
+  },
+  {
+   "level": 6,
+   "label": "Difficulté 6 sur 10",
+   "tint": 0.5555555555555556,
+   "bounds": [
+    -283,
+    -726,
+    283,
+    0
+   ],
+   "ints": 788
+  },
+  {
+   "level": 7,
+   "label": "Difficulté 7 sur 10",
+   "tint": 0.6666666666666666,
+   "bounds": [
+    -300,
+    -787,
+    301,
+    0
+   ],
+   "ints": 781
+  },
+  {
+   "level": 8,
+   "label": "Difficulté 8 sur 10",
+   "tint": 0.7777777777777778,
+   "bounds": [
+    -323,
+    -851,
+    323,
+    0
+   ],
+   "ints": 1040
+  },
+  {
+   "level": 9,
+   "label": "Difficulté 9 sur 10",
+   "tint": 0.8888888888888888,
+   "bounds": [
+    -344,
+    -919,
+    345,
+    0
+   ],
+   "ints": 1034
+  },
+  {
+   "level": 10,
+   "label": "Difficulté 10 sur 10",
+   "tint": 1.0,
+   "bounds": [
+    -386,
+    -1000,
+    386,
+    0
+   ],
+   "ints": 1034
+  }
+ ],
+ "events": [
+  {
+   "event": "welcome",
+   "variants": 2,
+   "poses": [
+    "wave",
+    "present"
+   ],
+   "params": [],
+   "priority": 20,
+   "actions": [
+    "start"
+   ],
+   "why": null
+  },
+  {
+   "event": "profileStart",
+   "variants": 2,
+   "poses": [
+    "checklist",
+    "wave"
+   ],
+   "params": [],
+   "priority": 20,
+   "actions": [
+    "continueOn"
+   ],
+   "why": null
+  },
+  {
+   "event": "profileStep",
+   "variants": 3,
+   "poses": [
+    "checklist",
+    "thumbs_up",
+    "think"
+   ],
+   "params": [
+    "remaining"
+   ],
+   "priority": 20,
+   "actions": [],
+   "why": null
+  },
+  {
+   "event": "profileDone",
+   "variants": 2,
+   "poses": [
+    "thumbs_up",
+    "happy"
+   ],
+   "params": [],
+   "priority": 40,
+   "actions": [
+    "continueOn"
+   ],
+   "why": null
+  },
+  {
+   "event": "profileUpdateNeeded",
+   "variants": 2,
+   "poses": [
+    "please",
+    "checklist"
+   ],
+   "params": [
+    "field"
+   ],
+   "priority": 70,
+   "actions": [
+    "editProfile",
+    "later",
+    "why"
+   ],
+   "why": "why.profile_update"
+  },
+  {
+   "event": "programGenerating",
+   "variants": 2,
+   "poses": [
+    "analyze",
+    "think"
+   ],
+   "params": [],
+   "priority": 50,
+   "actions": [],
+   "why": null
+  },
+  {
+   "event": "programDraftReady",
+   "variants": 2,
+   "poses": [
+    "explain_board",
+    "direction"
+   ],
+   "params": [
+    "weeks"
+   ],
+   "priority": 50,
+   "actions": [
+    "details",
+    "why"
+   ],
+   "why": "why.program_draft"
+  },
+  {
+   "event": "programReady",
+   "variants": 2,
+   "poses": [
+    "happy",
+    "flag",
+    "present"
+   ],
+   "params": [
+    "weeks"
+   ],
+   "priority": 50,
+   "actions": [
+    "start"
+   ],
+   "why": null
+  },
+  {
+   "event": "reviewIntro",
+   "variants": 2,
+   "poses": [
+    "explain_board",
+    "checklist"
+   ],
+   "params": [],
+   "priority": 50,
+   "actions": [
+    "continueOn",
+    "why"
+   ],
+   "why": "why.review"
+  },
+  {
+   "event": "reviewChangeApplied",
+   "variants": 2,
+   "poses": [
+    "thumbs_up",
+    "settings"
+   ],
+   "params": [],
+   "priority": 40,
+   "actions": [
+    "ok",
+    "undo"
+   ],
+   "why": null
+  },
+  {
+   "event": "proposalNew",
+   "variants": 2,
+   "poses": [
+    "choice",
+    "ponder"
+   ],
+   "params": [],
+   "priority": 70,
+   "actions": [
+    "accept",
+    "decline",
+    "why"
+   ],
+   "why": "why.generic_change"
+  },
+  {
+   "event": "proposalAccepted",
+   "variants": 2,
+   "poses": [
+    "thumbs_up_2",
+    "thumbs_up"
+   ],
+   "params": [],
+   "priority": 40,
+   "actions": [],
+   "why": null
+  },
+  {
+   "event": "proposalDeclined",
+   "variants": 2,
+   "poses": [
+    "shrug",
+    "thumbs_up"
+   ],
+   "params": [],
+   "priority": 40,
+   "actions": [],
+   "why": null
+  },
+  {
+   "event": "changeApplied",
+   "variants": 2,
+   "poses": [
+    "settings",
+    "analyze"
+   ],
+   "params": [],
+   "priority": 75,
+   "actions": [
+    "ok",
+    "why"
+   ],
+   "why": "why.generic_change"
+  },
+  {
+   "event": "healthCheckIntro",
+   "variants": 2,
+   "poses": [
+    "please",
+    "checklist"
+   ],
+   "params": [],
+   "priority": 80,
+   "actions": [
+    "continueOn",
+    "why"
+   ],
+   "why": "why.health_check"
+  },
+  {
+   "event": "healthCheckGood",
+   "variants": 2,
+   "poses": [
+    "thumbs_up",
+    "pump",
+    "run"
+   ],
+   "params": [],
+   "priority": 40,
+   "actions": [
+    "start"
+   ],
+   "why": null
+  },
+  {
+   "event": "healthCheckDiscomfort",
+   "variants": 2,
+   "poses": [
+    "please",
+    "love"
+   ],
+   "params": [],
+   "priority": 80,
+   "actions": [
+    "continueOn"
+   ],
+   "why": null
+  },
+  {
+   "event": "healthCheckPain",
+   "variants": 2,
+   "poses": [
+    "please",
+    "heart"
+   ],
+   "params": [],
+   "priority": 100,
+   "actions": [
+    "ok",
+    "why"
+   ],
+   "why": "why.health_pain"
+  },
+  {
+   "event": "sessionEndGood",
+   "variants": 3,
+   "poses": [
+    "clap",
+    "victory",
+    "thumbs_up_2"
+   ],
+   "params": [],
+   "priority": 60,
+   "actions": [],
+   "why": null
+  },
+  {
+   "event": "sessionEndHard",
+   "variants": 2,
+   "poses": [
+    "fist_bump",
+    "love"
+   ],
+   "params": [],
+   "priority": 60,
+   "actions": [],
+   "why": null
+  },
+  {
+   "event": "sessionEndPartial",
+   "variants": 2,
+   "poses": [
+    "thumbs_up",
+    "fist_bump"
+   ],
+   "params": [
+    "done",
+    "planned"
+   ],
+   "priority": 60,
+   "actions": [],
+   "why": null
+  },
+  {
+   "event": "personalRecord",
+   "variants": 3,
+   "poses": [
+    "victory",
+    "cheer",
+    "double_biceps",
+    "flex"
+   ],
+   "params": [
+    "exercise",
+    "value"
+   ],
+   "priority": 65,
+   "actions": [],
+   "why": null
+  },
+  {
+   "event": "error",
+   "variants": 2,
+   "poses": [
+    "oops",
+    "shrug"
+   ],
+   "params": [],
+   "priority": 90,
+   "actions": [
+    "retry"
+   ],
+   "why": null
+  },
+  {
+   "event": "actionCancelled",
+   "variants": 2,
+   "poses": [
+    "shrug",
+    "oops"
+   ],
+   "params": [],
+   "priority": 60,
+   "actions": [],
+   "why": null
+  },
+  {
+   "event": "devSessionEnter",
+   "variants": 2,
+   "poses": [
+    "settings",
+    "wave"
+   ],
+   "params": [],
+   "priority": 85,
+   "actions": [
+    "ok",
+    "why"
+   ],
+   "why": "why.dev_session"
+  },
+  {
+   "event": "devSessionExit",
+   "variants": 2,
+   "poses": [
+    "wave",
+    "thumbs_up"
+   ],
+   "params": [],
+   "priority": 85,
+   "actions": [],
+   "why": null
+  },
+  {
+   "event": "featureIntro",
+   "variants": 2,
+   "poses": [
+    "present",
+    "idea",
+    "read_tip"
+   ],
+   "params": [
+    "feature"
+   ],
+   "priority": 30,
+   "actions": [
+    "details",
+    "later",
+    "why"
+   ],
+   "why": "why.feature"
+  },
+  {
+   "event": "why",
+   "rule": "explication d’une réplique"
+  }
+ ],
+ "reasons": [
+  {
+   "code": "calibration",
+   "proposals": 1,
+   "applied": 1,
+   "why": "why.calibration",
+   "params": [
+    "exercise"
+   ],
+   "poses": [
+    "analyze",
+    "anatomy"
+   ]
+  },
+  {
+   "code": "deload",
+   "proposals": 2,
+   "applied": 1,
+   "why": "why.deload",
+   "params": [],
+   "poses": [
+    "love",
+    "please"
+   ]
+  },
+  {
+   "code": "exercise_replaced",
+   "proposals": 2,
+   "applied": 1,
+   "why": "why.exercise_replaced",
+   "params": [
+    "exercise",
+    "replacement"
+   ],
+   "poses": [
+    "choice",
+    "direction"
+   ]
+  },
+  {
+   "code": "load_increased",
+   "proposals": 2,
+   "applied": 1,
+   "why": "why.load_increased",
+   "params": [
+    "exercise"
+   ],
+   "poses": [
+    "flex",
+    "progress_chart"
+   ]
+  },
+  {
+   "code": "session_shortened",
+   "proposals": 2,
+   "applied": 1,
+   "why": "why.session_shortened",
+   "params": [
+    "minutes"
+   ],
+   "poses": [
+    "sprint",
+    "run"
+   ]
+  },
+  {
+   "code": "volume_reduced",
+   "proposals": 2,
+   "applied": 1,
+   "why": "why.volume_reduced",
+   "params": [
+    "exercise"
+   ],
+   "poses": [
+    "please",
+    "analyze"
+   ]
+  }
+ ],
+ "messages": 99,
+ "timing": {
+  "linesRendered": 19286,
+  "microsecondsPerLine": 2.40516436793529
+ }
+}
