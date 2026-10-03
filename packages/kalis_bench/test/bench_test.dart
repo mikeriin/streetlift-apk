@@ -3,6 +3,7 @@
 import 'dart:convert';
 
 import 'package:kalis_bench/kalis_bench.dart';
+import 'package:kalis_core/kalis_core.dart';
 import 'package:kalis_plan/kalis_plan.dart';
 import 'package:test/test.dart';
 
