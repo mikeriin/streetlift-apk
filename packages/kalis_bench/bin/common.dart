@@ -3,6 +3,7 @@
 // Seuls les fichiers de `bin/` lisent le disque et l'horloge.
 import 'dart:convert';
 import 'dart:io';
+import 'dart:isolate';
 
 import 'package:kalis_bench/kalis_bench.dart';
 import 'package:kalis_core/kalis_core.dart';
@@ -129,6 +130,13 @@ int runBench({
     file.writeAsStringSync(
       '${jsonEncode(<Object?>[for (final b in program.blocks) b.toJson()])}\n',
     );
+    // Profil au contrat de `kalis_core` (sortie de l'adaptateur) et
+    // réglages de l'athlète simulé : fixtures des tests de `kalis_adapt`.
+    final profileFile = File('$outPath/profils/${profile.key}.json');
+    profileFile.parent.createSync(recursive: true);
+    profileFile.writeAsStringSync(
+      '${jsonEncode(<String, Object?>{'profile': program.profile.toJson(), 'athlete': athleteSpecJson(profile)})}\n',
+    );
   }
   total.stop();
   var violations = 0;
@@ -141,4 +149,65 @@ int runBench({
     '$outPath (${total.elapsed.inSeconds} s).',
   );
   return violations;
+}
+
+Map<String, Object?> _campaignOf(String key, int seeds) {
+  final inputs = loadInputs('street');
+  final bench = inputs.profiles.firstWhere((p) => p.key == key);
+  final adapted = adaptProfile(bench, catalog: inputs.catalog);
+  return streetCampaignOf(
+    inputs.catalog,
+    KalisPlan(),
+    bench,
+    adapted.profile,
+    seeds: seeds,
+  );
+}
+
+/// Lance la campagne du profil [key] dans un isolat (la fermeture ne
+/// capture que des valeurs simples).
+Future<Map<String, Object?>> _spawnCampaign(String key, int seeds) =>
+    Isolate.run(() => _campaignOf(key, seeds));
+
+/// Campagne street (voir `streetCampaignOf`) : un isolat par profil, au
+/// plus [parallel] à la fois ; écrit `campagne_street.json` et
+/// `CAMPAGNE_STREET.md` dans [outPath]. Le fichier `campaign_seeds.txt` à
+/// la racine du paquet, s'il existe, remplace [seeds] (essais rapides).
+Future<void> runStreetCampaign({
+  required String outPath,
+  int seeds = 100,
+  int parallel = 4,
+}) async {
+  final watch = Stopwatch()..start();
+  var count = seeds;
+  final file = File('campaign_seeds.txt');
+  if (file.existsSync()) {
+    count = int.parse(
+      file.readAsStringSync().trim().split(RegExp(r'\s+')).first,
+    );
+  }
+  final keys = <String>[for (final p in loadInputs('street').profiles) p.key];
+  final results = <String, Map<String, Object?>>{};
+  var next = 0;
+  Future<void> worker() async {
+    while (next < keys.length) {
+      final key = keys[next++];
+      results[key] = await _spawnCampaign(key, count);
+    }
+  }
+
+  await Future.wait(<Future<void>>[
+    for (var i = 0; i < parallel; i++) worker(),
+  ]);
+  final ordered = <Map<String, Object?>>[for (final k in keys) results[k]!];
+  File('$outPath/campagne_street.json').writeAsStringSync(
+    '${jsonEncode(<String, Object?>{'benchVersion': kalisBenchVersion, 'seeds': count, 'profiles': ordered})}\n',
+  );
+  File(
+    '$outPath/CAMPAGNE_STREET.md',
+  ).writeAsStringSync(streetCampaignMarkdown(ordered));
+  stdout.writeln(
+    'campagne street : ${keys.length} profils × $count graines × 3 modèles '
+    '(${watch.elapsed.inSeconds} s).',
+  );
 }

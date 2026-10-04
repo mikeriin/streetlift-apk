@@ -97,16 +97,17 @@ Map<String, bool?> trajectoryVerdicts(Map<String, Object?> metrics) {
 
 /// Athlète simulé du profil [p] : niveau et gain par défaut, puis les
 /// réglages de `simulation` (champs de `AthleteSpec`).
-AthleteSpec athleteSpecOf(BenchProfile p) {
-  final json = <String, Object?>{
-    'key': p.key,
-    'profileKey': p.key,
-    'level': p.level.index,
-    'weeklyGain': defaultWeeklyGain[p.level.index],
-    ...p.simulation,
-  };
-  return athleteFromJson(json);
-}
+AthleteSpec athleteSpecOf(BenchProfile p) =>
+    athleteFromJson(athleteSpecJson(p));
+
+/// Objet JSON de l'athlète simulé du profil [p] (lu par `athleteFromJson`).
+Map<String, Object?> athleteSpecJson(BenchProfile p) => <String, Object?>{
+  'key': p.key,
+  'profileKey': p.key,
+  'level': p.level.index,
+  'weeklyGain': defaultWeeklyGain[p.level.index],
+  ...p.simulation,
+};
 
 /// Ligne hebdomadaire d'une trajectoire pour un exercice.
 final class TrajectoryRow {
@@ -432,6 +433,7 @@ Trajectory simulateTrajectory(
     'coached': coached,
     'effortGap': _r(cm.effortGap.mean),
     'effortBias': _r(cm.effortBias.mean),
+    'effortReachableShare': _r(cm.reachableShare.mean),
     'harderRate': _r(cm.harderRate.mean),
     'easierRate': _r(cm.easierRate.mean),
     'coachFailureRate': _r(cm.failRate.mean),
@@ -443,6 +445,26 @@ Trajectory simulateTrajectory(
     'eventOverDayMax': cm.eventPerformance.n == 0
         ? null
         : _r(cm.eventPerformance.mean),
+  };
+  // Écart d'effort par exercice (mise au point) : séries, effort visé
+  // moyen, effort réel moyen.
+  final byExercise = <String, List<double>>{};
+  for (final s in run.sets) {
+    if (s.test || s.plannedFailure || !s.reachable) {
+      continue;
+    }
+    final e = byExercise.putIfAbsent(s.exerciseId, () => <double>[0, 0, 0]);
+    e[0] += 1;
+    e[1] += s.wantRir;
+    e[2] += s.trueRir;
+  }
+  metrics['effortByExercise'] = <String, Object?>{
+    for (final e in byExercise.entries)
+      e.key: <Object?>[
+        e.value[0].round(),
+        _r(e.value[1] / e.value[0]),
+        _r(e.value[2] / e.value[0]),
+      ],
   };
   metrics['verdicts'] = trajectoryVerdicts(metrics);
   return Trajectory(

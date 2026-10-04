@@ -126,6 +126,14 @@ final class AdaptParams {
     this.coachCorridorDown = 0.05,
     this.coachCorridorUp = 0.075,
     this.coachCorridorWiden = 0.025,
+    this.coachCensorRir = 3,
+    this.coachHoldMaxShare = 0.8,
+    this.coachDirectGuardRir = 2,
+    this.biasLearnRate = 0.25,
+    this.biasLearnRir = 3,
+    this.biasLearnMaxStep = 0.1,
+    this.biasMin = 0,
+    this.biasMax = 0.6,
     this.coachCorridorUpMax = 0.15,
     this.coachWorstSetSlack = 1.5,
     this.coachBreachRir = 1,
@@ -567,6 +575,39 @@ final class AdaptParams {
   /// plus que visé (la courbe charge-répétitions de l'athlète est plus
   /// plate que la moyenne : la note d'effort prime sur la part du 1RM).
   final double coachCorridorWiden;
+
+  /// Mode coach : à partir de ce RIR dit, une note ne se lit que comme une
+  /// borne basse (« au moins tant en réserve ») : la prédiction des
+  /// répétitions restantes se dégrade loin de l'échec (Zourdos et al.
+  /// 2021 ; Halperin et al. 2022).
+  final double coachCensorRir;
+
+  /// Mode coach : part du maximum du jour qu'un maintien d'entraînement
+  /// ne dépasse pas (les maintiens se travaillent sous le maximum, la
+  /// propreté d'abord : R4-F9).
+  final double coachHoldMaxShare;
+
+  /// Mode coach, exercice sans charge : réserve minimale (avec la marge de
+  /// prudence) sous laquelle les répétitions écrites par le bloc sont
+  /// réduites.
+  final double coachDirectGuardRir;
+
+  /// Part de l'écart d'un test (rapporté à [biasLearnRir] répétitions)
+  /// portée au biais de note appris.
+  final double biasLearnRate;
+
+  /// RIR typique des séries notées, pour convertir un écart de test en
+  /// biais.
+  final double biasLearnRir;
+
+  /// Correction maximale du biais par test.
+  final double biasLearnMaxStep;
+
+  /// Biais de note appris, au moins.
+  final double biasMin;
+
+  /// Biais de note appris, au plus.
+  final double biasMax;
 
   /// Haut du couloir élargi, au plus (part du 1RM au-dessus de la part du
   /// bloc).

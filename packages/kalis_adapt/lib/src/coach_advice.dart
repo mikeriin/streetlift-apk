@@ -215,11 +215,27 @@ CoachAdvice? coachAdvise(
 
   // Plafond d'effort : une ligne finie nettement sous le plancher de
   // réserve allège la suivante ; deux de suite arrêtent l'exercice.
-  final gap = floor - _rirOf(previous);
+  // Une note au plafond de ce qu'une personne sait dire (« 4 en réserve
+  // ou plus ») ne dit pas que la série était trop dure ; des répétitions
+  // qui manquent à la cible, si.
+  final floorSaid = floor > p.coachCensorRir ? p.coachCensorRir : floor;
+  double gapOf(ObservedSet o) {
+    var g = floorSaid - _rirOf(o);
+    if (g < 0) {
+      g = 0;
+    }
+    final aimed = o.target?.low;
+    if (aimed != null && o.amount < aimed) {
+      g += hold ? (aimed - o.amount) / (0.1 * aimed) : aimed - o.amount;
+    }
+    return g;
+  }
+
+  final gap = gapOf(previous);
   final breach = !previous.failed && gap >= p.coachBreachRir - 1e-9;
   var breaches = 0;
   for (final o in ex.observed.reversed) {
-    if (!o.failed && floor - _rirOf(o) >= p.coachBreachRir - 1e-9) {
+    if (!o.failed && gapOf(o) >= p.coachBreachRir - 1e-9) {
       breaches++;
     } else {
       break;
@@ -261,7 +277,7 @@ CoachAdvice? coachAdvise(
       if (kg > topLoad) {
         kg = topLoad;
       }
-      final topGap = floor - _rirOf(top);
+      final topGap = gapOf(top);
       if (!top.failed && topGap >= p.coachBreachRir - 1e-9) {
         // Série de tête plus dure que prévu : 2,5 à 5 % de moins.
         kg = _lighter(run, ex, kg, topGap);
@@ -413,8 +429,40 @@ CoachAdvice? coachAdvise(
     }
   }
 
-  // Sinon : la cible prévue.
-  final advice = CoachAdvice(next: planned, action: IntraSessionAction.keep);
+  // Sinon : la cible prévue — jamais plus lourde que la dernière ligne
+  // quand une ligne précédente de l'exercice a dû être allégée.
+  var kept = planned;
+  var eased = false;
+  for (final o in ex.observed) {
+    if (!o.failed && gapOf(o) >= p.coachBreachRir - 1e-9) {
+      eased = true;
+    }
+  }
+  final lastLoad = previous.loadKg;
+  final keptLoad = planned.loadKg;
+  if (eased &&
+      loaded &&
+      lastLoad != null &&
+      keptLoad != null &&
+      keptLoad > lastLoad + 1e-9) {
+    kept = planned.withLoad(lastLoad);
+  } else if (eased && !loaded && planned.high > previous.amount) {
+    final amount = previous.amount < 1 ? 1 : previous.amount;
+    kept = SetPlan(
+      loadKg: null,
+      low: amount < planned.low ? amount : planned.low,
+      high: amount,
+      flames: planned.flames,
+      open: planned.open && amount > planned.low,
+      role: planned.role,
+    );
+  }
+  final advice = CoachAdvice(
+    next: kept,
+    action: identical(kept, planned)
+        ? IntraSessionAction.keep
+        : (loaded ? IntraSessionAction.loadDown : IntraSessionAction.repsDown),
+  );
   final t = sessionItem.technique;
   if (t != null &&
       (served == SetTechniqueKind.cluster ||

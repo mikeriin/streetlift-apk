@@ -23,6 +23,7 @@ final class CoachMetrics {
       policy = runs.isEmpty ? '' : runs.first.policy,
       runs = runs.length {
     final gaps = <double>[];
+    final reachable = <double>[];
     final biases = <double>[];
     final harder = <double>[];
     final easier = <double>[];
@@ -35,6 +36,7 @@ final class CoachMetrics {
       var gapSum = 0.0;
       var biasSum = 0.0;
       var gapCount = 0;
+      var sets = 0;
       var hard = 0;
       var easy = 0;
       var work = 0;
@@ -96,6 +98,13 @@ final class CoachMetrics {
         if (s.plannedFailure) {
           continue;
         }
+        sets++;
+        if (!s.reachable) {
+          // Cible hors d'atteinte avec ce matériel et cette plage (exercice
+          // d'activation, exercice au poids du corps trop facile) : pas un
+          // écart de réglage.
+          continue;
+        }
         final diff = s.trueRir - s.wantRir;
         final gap = s.openTarget ? (diff < 0 ? -diff : 0.0) : diff.abs();
         gapSum += gap;
@@ -107,6 +116,9 @@ final class CoachMetrics {
         if (!s.openTarget && diff >= 3) {
           easy++;
         }
+      }
+      if (sets > 0) {
+        reachable.add(gapCount / sets);
       }
       if (gapCount > 0) {
         gaps.add(gapSum / gapCount);
@@ -138,6 +150,7 @@ final class CoachMetrics {
       }
     }
     effortGap = Stat.of(gaps);
+    reachableShare = Stat.of(reachable);
     effortBias = Stat.of(biases);
     harderRate = Stat.of(harder);
     easierRate = Stat.of(easier);
@@ -157,10 +170,15 @@ final class CoachMetrics {
   /// Nombre de simulations.
   final int runs;
 
-  /// Écart absolu moyen à l'effort visé, en répétitions en réserve (cible
-  /// « 5 et plus » : seul un effort plus dur compte), hors tests, après les
-  /// trois premières séances de chaque exercice.
+  /// Écart absolu moyen à l'effort affiché, en répétitions en réserve
+  /// (cible « 5 et plus » : seul un effort plus dur compte), sur les séries
+  /// dont la cible est atteignable, hors tests, après les trois premières
+  /// séances de chaque exercice.
   late final Stat effortGap;
+
+  /// Part des séries dont la cible est atteignable (voir
+  /// `SimAthlete.reachable`) : les seules comptées dans les écarts.
+  late final Stat reachableShare;
 
   /// Écart moyen signé (positif : plus facile que visé).
   late final Stat effortBias;
@@ -206,6 +224,7 @@ final class CoachMetrics {
     'policy': policy,
     'runs': runs,
     'effortGap': effortGap.toJson(),
+    'reachableShare': reachableShare.toJson(),
     'effortBias': effortBias.toJson(),
     'harderRate': harderRate.toJson(),
     'easierRate': easierRate.toJson(),

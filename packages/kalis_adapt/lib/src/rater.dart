@@ -11,6 +11,34 @@ final class RatingModel {
 
   RatingModel._copy(RatingModel o) {
     window.addAll(o.window);
+    bias = o.bias;
+    biasNotes = o.biasNotes;
+  }
+
+  /// Biais de report appris (mode coach), ou `null` : celui des
+  /// paramètres.
+  double? bias;
+
+  /// Nombre de tests qui ont corrigé [bias].
+  int biasNotes = 0;
+
+  /// Corrige le biais d'après un test mené près de l'échec : [innovation]
+  /// est l'écart, en répétitions, entre ce que le test montre et ce que
+  /// les séries notées laissaient prévoir. Un test qui montre plus que
+  /// prévu dit que les notes sous-estiment la réserve davantage que
+  /// supposé.
+  void learn(double innovation, AdaptParams p) {
+    final current = bias ?? p.rirBias;
+    var step = p.biasLearnRate * innovation / p.biasLearnRir;
+    if (step > p.biasLearnMaxStep) {
+      step = p.biasLearnMaxStep;
+    }
+    if (step < -p.biasLearnMaxStep) {
+      step = -p.biasLearnMaxStep;
+    }
+    final next = current + step;
+    bias = next < p.biasMin ? p.biasMin : (next > p.biasMax ? p.biasMax : next);
+    biasNotes++;
   }
 
   /// Copie indépendante.
@@ -69,5 +97,5 @@ final class RatingModel {
   }
 
   /// RIR réel attendu pour un RIR dit [rir] (sous-estimation moyenne).
-  double trueRir(double rir, AdaptParams p) => rir * (1 + p.rirBias);
+  double trueRir(double rir, AdaptParams p) => rir * (1 + (bias ?? p.rirBias));
 }

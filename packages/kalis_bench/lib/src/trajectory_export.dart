@@ -11,7 +11,6 @@ import 'package:kalis_plan/kalis_plan.dart' show coachPhaseLabel;
 
 import 'analysis.dart';
 import 'export.dart';
-import 'profile.dart';
 import 'trajectory.dart';
 
 String _n(double v, [int digits = 2]) {
@@ -77,7 +76,7 @@ String _techniqueLabel(String code) => switch (code) {
 String _causeLabel(String code) => switch (code) {
   'failure' || 'previous_failure' => 'après un échec non prévu',
   'pain' => 'zone douloureuse',
-  'health' => 'bilan du jour bas',
+  'health' || 'health_strong' || 'health_low' => 'bilan du jour bas',
   'cap' => 'hausse plafonnée d\'une séance à la suivante',
   'phase' => 'semaine où le programme se sert tel quel',
   'level' => 'niveau d\'expérience insuffisant pour cette technique',
@@ -99,8 +98,8 @@ String? adaptReasonText(Reason r, Catalog catalog) {
     case ReasonCodes.adaptLoadHeld:
       return 'charge non augmentée (${_causeLabel(_text(r, 'cause'))})';
     case ReasonCodes.adaptRirCap:
-      return 'allégé pour garder au moins ${_n(_num(r, 'rir') ?? 0, 1)} '
-          'répétition(s) en réserve';
+      return 'allégé pour garder la marge prévue (au moins '
+          '${_n(_num(r, 'rir') ?? 0, 1)} en réserve)';
     case ReasonCodes.adaptBackoffFromTopSet:
       return 'séries allégées calculées sur la série de tête réalisée '
           '(${_kg(_num(r, 'topLoadKg') ?? 0)}, '
@@ -110,13 +109,13 @@ String? adaptReasonText(Reason r, Catalog catalog) {
           'servie : ${_causeLabel(_text(r, 'cause'))} — séries classiques à '
           'la place';
     case ReasonCodes.adaptPhaseRespected:
-      return 'semaine de ${coachPhaseLabel(_text(r, 'phase'))} servie '
-          'telle que le programme l\'écrit';
+      return 'phase « ${coachPhaseLabel(_text(r, 'phase'))} » : séances '
+          'servies telles que le programme les écrit';
     case ReasonCodes.adaptTaperNoVolume:
       return 'affûtage : aucun volume ajouté, intensité gardée';
     case ReasonCodes.adaptEventNear:
-      return 'échéance dans ${(_num(r, 'days') ?? 0).round()} jours : '
-          'décisions prudentes, pas de hausse au-delà du programme';
+      return 'échéance proche : décisions prudentes, pas de hausse au-delà '
+          'du programme';
     case ReasonCodes.adaptAttemptOpener:
       return 'ouverture à ${_pct(_num(r, 'pct'))} du maximum estimé';
     case ReasonCodes.adaptAttemptNext:
@@ -153,7 +152,8 @@ String? adaptReasonText(Reason r, Catalog catalog) {
           '${_n(_num(r, 'value') ?? 0, 1)} '
           '(± ${_n(_num(r, 'standardError') ?? 0, 1)})';
     case ReasonCodes.adaptHealthLow:
-      return 'bilan du jour bas (${(_num(r, 'overall') ?? 0).round()}/5)';
+      final overall = (_num(r, 'overall') ?? 0).round();
+      return 'bilan du jour ${overall >= 3 ? 'moyen' : 'bas'} ($overall/5)';
     case ReasonCodes.adaptSleepLow:
       return 'nuit courte';
     case ReasonCodes.adaptTimeShort:
@@ -296,20 +296,24 @@ String _written(ExercisePrescription it) {
   return b.toString();
 }
 
-String _done(List<SetRecord> sets, bool hold) {
+String _done(List<SetRow> sets, bool hold) {
   if (sets.isEmpty) {
     return 'non fait';
   }
   final parts = <String>[];
   var i = 0;
   while (i < sets.length) {
-    final load = sets[i].externalLoadKg;
+    final load = sets[i].loadKg;
     var j = i;
     final amounts = <String>[];
-    while (j < sets.length && sets[j].externalLoadKg == load) {
+    while (j < sets.length && sets[j].loadKg == load) {
       final s = sets[j];
-      final amount = hold ? s.seconds : s.reps;
-      amounts.add('${amount ?? 0}${s.success ? '' : ' (manqué)'}');
+      final mark = s.failed
+          ? (s.attempt ? ' (manquée)' : ' (échec)')
+          : (s.amount < s.targetLow && !s.test
+                ? ' (arrêt avant la cible)'
+                : '');
+      amounts.add('${s.amount}$mark');
       j++;
     }
     parts.add(
@@ -365,9 +369,11 @@ String coachTrajectoryMarkdown(
       '${_pct(m['coachFailureRate'])} des séries de travail.',
     )
     ..writeln(
-      '- Écart moyen entre l\'effort visé et l\'effort réel : '
-      '${_n((m['effortGap'] as num? ?? 0).toDouble())} répétition en réserve '
-      '(séries « 5 en réserve et plus » : seul un effort plus dur compte) ; '
+      '- Écart moyen entre l\'effort affiché par le moteur et l\'effort '
+      'réel : ${_n((m['effortGap'] as num? ?? 0).toDouble())} répétition en '
+      'réserve (sur les ${_pct(m['effortReachableShare'], 0)} de séries dont '
+      'la cible est atteignable avec le matériel ; séries « 5 en réserve et '
+      'plus » : seul un effort plus dur compte) ; '
       'séries au moins 2 répétitions plus dures que visé : '
       '${_pct(m['harderRate'])} ; au moins 3 plus faciles : '
       '${_pct(m['easierRate'])}.',
@@ -421,7 +427,8 @@ String coachTrajectoryMarkdown(
     ..writeln(
       'Pour chaque mouvement, la séance la plus lourde de la semaine : ce '
       'que le programme écrit, ce que le moteur sert et ce que l\'athlète '
-      'fait, l\'effort visé et l\'effort réel (répétitions en réserve), le '
+      'fait, l\'effort affiché par le moteur et l\'effort réel (répétitions '
+      'en réserve ; première série, puis moyenne des suivantes), le '
       'maximum réel et le maximum estimé par le moteur (1RM de charge '
       'totale, répétitions ou secondes), puis les décisions du moteur.',
     )
@@ -449,7 +456,6 @@ String coachTrajectoryMarkdown(
       SimSession? best;
       var bestLoad = -1.0;
       ExercisePrescription? bestItem;
-      final notes = <String>[];
       for (final s in byWeek[w] ?? const <SimSession>[]) {
         for (final it in s.plan.items) {
           if (it.exerciseId != id) {
@@ -466,47 +472,56 @@ String coachTrajectoryMarkdown(
             bestLoad = top;
             bestItem = it;
           }
-          for (final r in it.reasons) {
-            final text = adaptReasonText(r, catalog);
-            if (text != null && !notes.contains(text)) {
-              notes.add(text);
-            }
-          }
-        }
-        for (final a in s.advices) {
-          if (a.exerciseId != id) {
-            continue;
-          }
-          for (final r in a.reasons) {
-            final text = adaptReasonText(r, catalog);
-            if (text != null && !notes.contains(text)) {
-              notes.add(text);
-            }
-          }
         }
       }
       if (best == null || bestItem == null) {
         continue;
       }
-      final sets = <SetRecord>[
-        for (final r in best.record.sets)
-          if (r.exerciseId == id) r,
-      ];
-      final hold = sets.isNotEmpty && sets.first.seconds != null;
+      // Décisions de la séance montrée (et conseils d'entre-séries).
+      final notes = <String>[];
+      void note(Reason r) {
+        final text = adaptReasonText(r, catalog);
+        if (text != null && !notes.contains(text)) {
+          notes.add(text);
+        }
+      }
+
+      bestItem.reasons.forEach(note);
+      for (final a in best.advices) {
+        if (a.exerciseId == id) {
+          a.reasons.forEach(note);
+        }
+      }
       final rows = rowsOf['${best.simDay}|$id'] ?? const <SetRow>[];
-      var want = 0.0;
-      var real = 0.0;
-      var count = 0;
+      final hold = rows.isNotEmpty && rows.first.mode == CapacityMode.hold;
+      // Effort de la première ligne, puis des suivantes.
+      String effort(List<SetRow> part) {
+        var want = 0.0;
+        var real = 0.0;
+        var open = false;
+        for (final r in part) {
+          want += r.wantRir;
+          real += r.trueRir;
+          open = open || r.openTarget;
+        }
+        return '${_n(want / part.length, 1)}${open ? '+' : ''} → '
+            '${_n(real / part.length, 1)}';
+      }
+
+      final work = <SetRow>[
+        for (final r in rows)
+          if (!r.test) r,
+      ];
       double? dayMax;
       for (final r in rows) {
         dayMax = r.dayMax;
-        if (r.test) {
-          continue;
-        }
-        want += r.wantRir;
-        real += r.trueRir;
-        count++;
       }
+      final effortText = work.isEmpty
+          ? (rows.isEmpty ? '—' : 'test')
+          : (work.length == 1
+                ? effort(work)
+                : '${effort(work.sublist(0, 1))} ; suivantes '
+                      '${effort(work.sublist(1))}');
       double? estimate;
       for (final e in run.estimates) {
         if (e.week == w && e.exerciseId == id) {
@@ -534,11 +549,8 @@ String coachTrajectoryMarkdown(
               ? weekKindLabel(best.weekKind)
               : coachPhaseLabel(intent.code),
           written == null ? '—' : _written(written),
-          _done(sets, hold),
-          count == 0
-              ? (rows.isEmpty ? '—' : 'test')
-              : '${_n(want / count, 1)}${rows.any((r) => r.openTarget) ? '+' : ''}'
-                    ' → ${_n(real / count, 1)}',
+          _done(rows, hold),
+          effortText,
           '${max(dayMax)} / ${max(estimate)}',
           notes.isEmpty ? '—' : notes.take(4).join(' ; '),
         ]),
@@ -573,6 +585,7 @@ String coachTrajectoryMarkdown(
       );
     }
     final sessionNotes = <String, int>{};
+    final adjusted = <String, Set<String>>{};
     for (final s in sessions) {
       for (final r in s.plan.reasons) {
         final text = adaptReasonText(r, catalog);
@@ -586,13 +599,11 @@ String coachTrajectoryMarkdown(
             if (adaptReasonText(r, catalog) != null)
               adaptReasonText(r, catalog)!,
         ];
-        final exercise = a.exerciseId == null
-            ? ''
-            : ' — ${name(a.exerciseId!)}';
-        final text =
-            '${_adjustmentLabel(a.kind.code)}$exercise'
+        final key =
+            '${_adjustmentLabel(a.kind.code)}'
             '${causes.isEmpty ? '' : ' (${causes.join(', ')})'}';
-        sessionNotes[text] = (sessionNotes[text] ?? 0) + 1;
+        final id = a.exerciseId;
+        adjusted.putIfAbsent(key, () => <String>{}).add(id ?? '');
       }
       for (final it in s.plan.items) {
         for (final r in it.reasons) {
@@ -623,6 +634,19 @@ String coachTrajectoryMarkdown(
     }
     for (final e in sessionNotes.entries) {
       lines.add(e.value > 1 ? '${e.key} (× ${e.value})' : e.key);
+    }
+    for (final e in adjusted.entries) {
+      final ids = e.value.where((id) => id.isNotEmpty).toList();
+      final at = e.key.indexOf(' (');
+      final label = at < 0 ? e.key : e.key.substring(0, at);
+      final causes = at < 0 ? '' : e.key.substring(at);
+      lines.add(
+        ids.isEmpty
+            ? e.key
+            : (ids.length <= 2
+                  ? '$label — ${ids.map(name).join(', ')}$causes'
+                  : '$label sur ${ids.length} exercices$causes'),
+      );
     }
     for (final pr in proposalsOf[w] ?? const <ProposalRow>[]) {
       lines.add('proposition appliquée : ${_proposalText(pr.kind.code)}');
@@ -672,7 +696,7 @@ String coachTrajectoryMarkdown(
     b.writeln(
       '- **Semaine ${w + 1}'
       '${intent == null ? '' : ' (${coachPhaseLabel(intent.code)})'}** : '
-      '${lines.join(' ; ')}.',
+      '${lines.take(12).join(' ; ')}.',
     );
   }
 
