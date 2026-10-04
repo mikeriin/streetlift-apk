@@ -1516,7 +1516,7 @@ List<AttemptPick> attemptLadder({
           goal != null &&
           goal > kg &&
           chance(goal) >= p.attemptRecordProbability &&
-          objective != EventObjective.secureTotal) {
+          objective == EventObjective.record) {
         final floored = grid.floor(goal);
         kg = floored > goal ? goal : floored;
       }

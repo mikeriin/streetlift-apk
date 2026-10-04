@@ -24,6 +24,7 @@ final class CoachMetrics {
       runs = runs.length {
     final gaps = <double>[];
     final reachable = <double>[];
+    final modeSums = <CapacityMode, List<double>>{};
     final biases = <double>[];
     final harder = <double>[];
     final easier = <double>[];
@@ -110,6 +111,10 @@ final class CoachMetrics {
         gapSum += gap;
         biasSum += s.openTarget && diff > 0 ? 0 : diff;
         gapCount++;
+        final byMode = modeSums.putIfAbsent(s.mode, () => <double>[0, 0, 0]);
+        byMode[0] += 1;
+        byMode[1] += gap;
+        byMode[2] += s.openTarget && diff > 0 ? 0 : diff;
         if (diff <= -2) {
           hard++;
         }
@@ -151,6 +156,14 @@ final class CoachMetrics {
     }
     effortGap = Stat.of(gaps);
     reachableShare = Stat.of(reachable);
+    for (final e in modeSums.entries) {
+      final n = e.value[0];
+      byMode[e.key.name] = <double>[
+        n,
+        n == 0 ? 0 : roundTo(e.value[1] / n, 3),
+        n == 0 ? 0 : roundTo(e.value[2] / n, 3),
+      ];
+    }
     effortBias = Stat.of(biases);
     harderRate = Stat.of(harder);
     easierRate = Stat.of(easier);
@@ -205,6 +218,10 @@ final class CoachMetrics {
   /// Part d'ouvertures réussies.
   late final Stat openerRate;
 
+  /// Par mode de capacité (`loaded`, `reps`, `hold`) : séries comptées,
+  /// écart absolu moyen, écart signé moyen (toutes graines confondues).
+  final Map<String, List<double>> byMode = <String, List<double>>{};
+
   /// Tentatives faites.
   int attempts = 0;
 
@@ -226,6 +243,7 @@ final class CoachMetrics {
     'effortGap': effortGap.toJson(),
     'reachableShare': reachableShare.toJson(),
     'effortBias': effortBias.toJson(),
+    'effortByMode': byMode,
     'harderRate': harderRate.toJson(),
     'easierRate': easierRate.toJson(),
     'failRate': failRate.toJson(),

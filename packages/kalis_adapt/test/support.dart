@@ -37,6 +37,37 @@ List<ProfileFixture> loadProfiles() => _profiles ??= readProfileFixtures(
 AthleteProfile profileOf(String key) =>
     loadProfiles().firstWhere((p) => p.key == key).profile;
 
+Map<String, Object?>? _street;
+
+Map<String, Object?> _streetFixtures() =>
+    _street ??= readJsonObject('test/fixtures/street_profiles.json.gz');
+
+/// Clés des 17 profils street du banc (`kalis_bench`), triées.
+List<String> streetKeys() => _streetFixtures().keys.toList()..sort();
+
+/// Profil street du banc de clé [key], tel que l'adaptateur de
+/// `kalis_bench` le remet aux moteurs (schéma 3).
+AthleteProfile streetProfile(String key) {
+  final entry = _streetFixtures()[key]! as Map<String, Object?>;
+  return AthleteProfile.fromJson(entry['profile']! as Map<String, Object?>);
+}
+
+/// Athlète simulé du profil street de clé [key].
+AthleteSpec streetAthlete(String key) {
+  final entry = _streetFixtures()[key]! as Map<String, Object?>;
+  return athleteFromJson(entry['athlete']! as Map<String, Object?>);
+}
+
+/// Programme de `kalis_plan` du profil street de clé [key] (bloc au
+/// contrat 0.4.0) ; [inject] : avec une technique du contrat par
+/// emplacement (programme de test).
+SimProgram streetProgram(String key, {bool inject = false}) => SimProgram(
+  loadCatalog(),
+  _plan,
+  streetProfile(key),
+  transform: inject ? injectTechniques : null,
+);
+
 final KalisPlan _plan = KalisPlan();
 final Map<String, SimProgram> _programs = <String, SimProgram>{};
 
@@ -97,6 +128,7 @@ final class CheckedPolicy implements CoachAwarePolicy {
         session,
         engine.params,
         health: c.health,
+        coached: rich && blockCoached(c.block),
       ),
     );
     return session;
@@ -355,10 +387,14 @@ List<String> checkSession(
   SessionPlan session,
   AdaptParams p, {
   HealthCheck? health,
+  bool coached = false,
 }) {
   final out = <String>[];
   final book = ExerciseBook(catalog, profile);
   final bodyWeight = profile.bodyWeightKg ?? p.referenceBodyWeightKg;
+  if (coached) {
+    out.addAll(checkCoachSession(catalog, profile, block, log, session, p));
+  }
   final roles = <String, SlotRole>{
     for (final d in block.pass1.days)
       for (final s in d.slots) s.slotId: s.role,
@@ -437,7 +473,8 @@ List<String> checkSession(
     final rise = (top + bw) / (reference + bw) - 1;
     final oneStep = info.grid.next(reference, up: true);
     final test = item.kind == SetKind.test;
-    if (roles[item.slotId] == SlotRole.main &&
+    if (!coached &&
+        roles[item.slotId] == SlotRole.main &&
         sessionsOfExercise(log, info) >= p.calibrationSessions &&
         !test &&
         rise > p.maxUpMain + 1e-6 &&
@@ -446,6 +483,11 @@ List<String> checkSession(
         '$where : +${(rise * 100).toStringAsFixed(1)} % sur un mouvement '
         'principal ($reference → $top kg)',
       );
+    }
+    if (test && coached) {
+      // Tentatives et tests : bornés par l'estimation (voir
+      // `checkCoachSession`), pas par la dernière séance.
+      continue;
     }
     if (top > reference + 0.011 && lastHadUnplannedFailure(log, info)) {
       out.add('$where : hausse après un échec non prévu ($reference → $top)');
@@ -611,10 +653,126 @@ List<String> checkAdvice(
       }
     }
   }
-  if (last != null && locked != null && next > last + 0.011) {
+  var attempt = false;
+  for (final item in session.items) {
+    if (item.slotId == advice.slotId) {
+      final kind = item.test?.kind;
+      attempt =
+          item.kind == SetKind.test &&
+          (kind == TestKind.oneRm || kind == TestKind.attemptSimulation);
+    }
+  }
+  if (last != null && locked != null && next > last + 0.011 && !attempt) {
     out.add(
       'conseil ${advice.exerciseId} : hausse malgré $locked ($last → $next)',
     );
+  }
+  return out;
+}
+
+/// Invariants propres au mode coach (blocs au contrat 0.4.0), lus dans le
+/// journal, le bloc et la séance seuls :
+///
+/// C1. hors calibrage et hors test, la charge de tête d'un exercice
+///     n'excède jamais la plus grande de : la charge écrite par le bloc ;
+///     +10 % (ou un cran) de la plus lourde charge de l'exercice au
+///     journal ;
+/// C2. jamais plus de séries que le bloc n'en écrit (affûtage, décharge et
+///     toute autre semaine : le volume ne s'ajoute pas le jour même) ;
+/// C3. une technique n'est servie qu'au niveau d'expérience qui y donne
+///     accès ;
+/// C4. les tentatives d'un test de maximum ne décroissent jamais.
+List<String> checkCoachSession(
+  Catalog catalog,
+  AthleteProfile profile,
+  ProgramBlock block,
+  TrainingLog log,
+  SessionPlan session,
+  AdaptParams p,
+) {
+  final out = <String>[];
+  final book = ExerciseBook(catalog, profile);
+  final bodyWeight = profile.bodyWeightKg ?? p.referenceBodyWeightKg;
+  final experience = profile.experience;
+  final level = experience == null ? 1 : experience.index;
+  final written = <String, ExercisePrescription>{};
+  for (final w in block.pass2.weeks) {
+    if (w.weekIndex != session.weekIndex) {
+      continue;
+    }
+    for (final d in w.days) {
+      if (d.dayIndex == session.dayIndex) {
+        for (final it in d.items) {
+          written[it.slotId] = it;
+        }
+      }
+    }
+  }
+  for (final item in session.items) {
+    final where = '${session.date.iso} ${item.exerciseId}';
+    final basis = written[item.slotId];
+    if (basis != null && item.sets > basis.sets) {
+      out.add('$where : ${item.sets} séries pour ${basis.sets} écrites');
+    }
+    final kind = item.technique?.kind;
+    if (kind != null && level < techniqueAccessLevel(kind)) {
+      out.add('$where : technique ${kind.code} au niveau $level');
+    }
+    final targets = item.setTargets ?? const <SetTarget>[];
+    double? previous;
+    for (final t in targets) {
+      final kg = t.loadKg;
+      if (t.role == SetRole.attempt && kg != null) {
+        if (previous != null && kg < previous - 0.011) {
+          out.add('$where : tentatives décroissantes ($previous → $kg)');
+        }
+        previous = kg;
+      }
+    }
+    final info = book.find(item.exerciseId);
+    if (info == null ||
+        info.mode != CapacityMode.loaded ||
+        item.kind == SetKind.test ||
+        sessionsOfExercise(log, info) < p.calibrationSessions) {
+      continue;
+    }
+    double? heaviest;
+    for (final s in log.countedSessions) {
+      for (final set in s.sets) {
+        if (countsFor(info, set)) {
+          final kg = set.externalLoadKg ?? 0;
+          if (heaviest == null || kg > heaviest) {
+            heaviest = kg;
+          }
+        }
+      }
+    }
+    if (heaviest == null) {
+      continue;
+    }
+    var top = item.startLoadKg ?? 0;
+    for (final t in targets) {
+      final kg = t.loadKg;
+      if (kg != null && kg > top) {
+        top = kg;
+      }
+    }
+    final bw = info.fraction * bodyWeight;
+    var bound = (heaviest + bw) * (1 + p.maxUpMain) - bw;
+    final step = info.grid.next(heaviest, up: true);
+    if (step > bound) {
+      bound = step;
+    }
+    final start = basis?.startLoadKg;
+    if (start != null && start > bound) {
+      bound = start;
+    }
+    if (top > bound + 0.011) {
+      out.add(
+        '$where : $top kg au-delà de la charge écrite ($start) et de +10 % '
+        'de la plus lourde charge du journal ($heaviest)',
+      );
+    }
   }
   return out;
 }
