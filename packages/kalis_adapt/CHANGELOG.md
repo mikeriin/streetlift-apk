@@ -1,5 +1,40 @@
 # Journal des versions de kalis_adapt
 
+## 0.2.0
+
+Lot CA1 du pipeline « Calibrage des programmes » : faire évoluer un athlète street comme un coach qui le
+suit. `kalis_core` 0.4.1, `kalis_plan` 0.2.0.
+
+- **Mode coach** (`CONTRAT.md`, § 11) pour les blocs qui portent le contrat 0.4.0 (intentions, techniques,
+  intensités, règles d'autorégulation, tests, échelles de figures) : la semaine dit ce qui est permis
+  (affûtage, décharge, test et compétition servis tels quels, jamais de série ajoutée) ; charge écrite en
+  part du 1RM pilotée par la réserve dans un couloir, hausse bornée à schéma égal ; toutes les techniques
+  de série exécutées et relues dans le journal (`readLine`), jamais servies sans leurs prérequis ; règles
+  d'autorégulation exécutées (séries allégées sur la série de tête réalisée, arrêts) ; tests et
+  tentatives (ouverture, deuxième, troisième, d'après le maximum estimé et son incertitude) ; figures
+  (étape en cours, critère de passage, étape plus facile un mauvais jour, hausse des maintiens bornée
+  pour les tendons) ; douleur à 5 sur 10 (exercice gardé, allégé) ; récupération déclarée du profil v3 ;
+  reprise graduelle après une coupure.
+- **Notes d'effort** : loin de l'échec, une note se lit comme une borne ; série repère quand les notes
+  n'informent plus ; biais de note appris sur les tests (limite 4 de 0.1) ; courbe apprise sur les séries
+  proches de l'échec.
+- **Sorties** (`kalis_core` 0.4.0) : `SessionPlan.phase`, `weekIntent`, `eventId`, `groups` ;
+  `IntraSessionAdvice.miniSetsLeft`, `stepExerciseId` ; `AdaptReview.testResults`, `skillStates` ;
+  `AdaptationSummary.benchmarks`, `skills`, `volumeTolerance` ; `EventDayAdvisor.planEventDay`
+  (échauffement, tentatives, rythme d'une épreuve de répétitions) ; nouveaux codes de raison `adapt.*`
+  de 0.4.0.
+- **0.1 conservé** : un bloc sans champ du contrat 0.4.0 (programmes de `kalis_plan` 0.1, programme
+  importé du propriétaire) est servi comme en 0.1.0 ; `KalisAdapt(legacy: true)` sert tout bloc comme en
+  0.1.0.
+- **Simulateur** : deux modèles de vérité de plus (B et C, `TruthKind`), exécution des techniques, des
+  tests et des tentatives, journal aux champs de 0.4.0, résultats de test reportés au profil, programmes
+  de test à techniques injectées (`injectTechniques`), coach simple à la note d'effort (`RpeCoachPolicy`),
+  mesures du mode coach (`CoachMetrics`).
+- **Validation** : invariants I1 à I8 inchangés sur 10 240 journaux aléatoires ; invariants du mode coach
+  (C1 à C4, I2 à I8) sur 10 240 journaux aléatoires aux champs de 0.4.0, programmes street du banc et
+  programmes à techniques injectées ; campagne street de `kalis_bench` (17 profils, trois modèles de
+  vérité, quatre politiques) ; calibrage au panel (`docs/CALIBRAGE_CA1.md`).
+
 ## 0.1.0
 
 Première version (lot G8 du pipeline « Génération et progression »).

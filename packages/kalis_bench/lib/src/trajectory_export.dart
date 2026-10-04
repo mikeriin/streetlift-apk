@@ -452,13 +452,18 @@ String coachTrajectoryMarkdown(
       }
     }
   }
-  for (final id in t.mainExerciseIds) {
+  // Une figure visée par le profil et travaillée seulement par ses étapes
+  // a aussi son tableau.
+  final shown = <String>[
+    ...t.mainExerciseIds,
+    for (final id in t.profile.priorityIds)
+      if (!t.mainExerciseIds.contains(id) && stepsOf.containsKey(id)) id,
+  ];
+  for (final id in shown) {
     final ids = <String>{id, ...?stepsOf[id]};
     var covered = false;
     for (final e in stepsOf.entries) {
-      if (e.key != id &&
-          e.value.contains(id) &&
-          t.mainExerciseIds.contains(e.key)) {
+      if (e.key != id && e.value.contains(id) && shown.contains(e.key)) {
         // Étape d'une figure suivie par ailleurs : dans son tableau.
         covered = true;
       }

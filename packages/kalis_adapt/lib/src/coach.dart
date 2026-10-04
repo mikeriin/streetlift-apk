@@ -1183,6 +1183,8 @@ List<SetPlan>? _directPlans(
   // que le moteur ne règle pas — la plage du bloc est gardée.
   final assisted = info.exercise.loadType == LoadType.band;
   var tendonCapped = false;
+  // La marge de sûreté a réduit la première série.
+  var guarded = false;
   final out = <SetPlan>[];
   for (var i = 0; i < sets; i++) {
     final (low, high, role) = c.line(i, sets, served, hold: hold);
@@ -1223,6 +1225,9 @@ List<SetPlan>? _directPlans(
       }
     }
     var target = wanted < safe ? wanted : safe;
+    if (i == 0 && safe < wanted) {
+      guarded = true;
+    }
     if (easyTop != null && easyTop > target) {
       final floor = target < low ? target : low;
       out.add(
@@ -1308,7 +1313,10 @@ List<SetPlan>? _directPlans(
     );
   }
   final floor = c.rirFloor;
-  if (out.isNotEmpty && out.first.high < c.schemeAmount && floor != null) {
+  if (guarded &&
+      out.isNotEmpty &&
+      out.first.high < c.schemeAmount &&
+      floor != null) {
     ex.notes.add(
       _r(ReasonCodes.adaptRirCap, <String, Object?>{'rir': roundTo(floor, 1)}),
     );
