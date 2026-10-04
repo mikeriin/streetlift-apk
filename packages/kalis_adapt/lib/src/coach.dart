@@ -1171,10 +1171,7 @@ List<SetPlan>? _loadedPlans(
       // garde-fous ; les vagues d'avant sont plus légères d'autant.
       final wave = i ~/ waveLength;
       final lastWave = (sets - 1) ~/ waveLength;
-      load = _onGrid(
-        grid,
-        (kg + bw) / (1 + waveStep * (lastWave - wave)) - bw,
-      );
+      load = _onGrid(grid, (kg + bw) / (1 + waveStep * (lastWave - wave)) - bw);
     }
     out.add(
       SetPlan(
