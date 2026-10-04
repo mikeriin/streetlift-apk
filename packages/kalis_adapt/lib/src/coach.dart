@@ -778,6 +778,24 @@ List<SetPlan>? coachPlans(
   if (frozen) {
     lines = before;
   }
+  // Alerte de surmenage : deux séances mesurées de suite nettement sous la
+  // précédente — une semaine à volume réduit d'un tiers, intensité gardée
+  // (hors semaines déjà allégées et tests).
+  final p = run.ctx.params;
+  final ease = track.easeDay;
+  var eased = 0;
+  if (!frozen &&
+      ease != null &&
+      run.day > ease &&
+      run.day - ease <= p.coachOverreachDays &&
+      c.policy.build &&
+      lines >= 2) {
+    eased = (lines * p.coachOverreachCut).round();
+    if (eased < 1) {
+      eased = 1;
+    }
+    lines -= eased;
+  }
   final out = mode == CapacityMode.loaded
       ? _loadedPlans(run, ex, c, item, lines, served)
       : _directPlans(run, ex, c, item, lines, served);
@@ -785,6 +803,15 @@ List<SetPlan>? coachPlans(
     ex.notes.add(
       _r(ReasonCodes.adaptVolumeDown, <String, Object?>{'sets': sets - lines}),
     );
+  }
+  if (eased > 0 && out != null) {
+    ex.notes
+      ..add(_r(ReasonCodes.adaptVolumeDown, <String, Object?>{'sets': eased}))
+      ..add(
+        _r(ReasonCodes.adaptFatigueHigh, <String, Object?>{
+          'readiness': roundTo(track.easeRatio, 3),
+        }),
+      );
   }
   return out;
 }
@@ -1354,15 +1381,15 @@ List<SetPlan>? _directPlans(
   final (firstLow, firstHigh, firstRole) = c.line(0, sets, served, hold: hold);
   if (!hold &&
       !assisted &&
-      share == null &&
+      !(follows && firstLow == firstHigh) &&
       served == SetTechniqueKind.standard &&
       item.kind != SetKind.test &&
       firstLow > 1) {
     final rest = _restOf(ex, c, served, firstHigh);
     final reach = _repsSafe(run, ex, plannedFatigue(0, rir, rest, p), c.slotId);
-    if (reach < firstLow) {
-      // Chaque série garde la réserve du bloc.
-      final kept = (track.filter.capacityToday() - rir + 0.3).floor();
+    // Chaque série garde la réserve du bloc.
+    final kept = (track.filter.capacityToday() - rir + 0.3).floor();
+    if (reach < firstLow || (c.policy.build && kept < firstLow)) {
       // Plage hors de portée aujourd'hui (le bas de la plage ne laisse pas
       // la réserve visée) : séries fractionnées — moins de répétitions par
       // série, plus de séries, pour approcher le travail écrit (au plus le
@@ -1370,7 +1397,9 @@ List<SetPlan>? _directPlans(
       // répétitions au total que le bas de la plage n'en écrit).
       final each = kept < 1 ? 1 : (kept < reach ? kept : reach);
       var count = (sets * firstLow / each).ceil();
-      final most = 2 * sets < 3 ? 3 : 2 * sets;
+      // Après un échec, sur une zone douloureuse ou un jour de bilan bas :
+      // aucune série ajoutée.
+      final most = locked ? sets : (2 * sets < 3 ? 3 : 2 * sets);
       if (count > most) {
         count = most;
       }
@@ -1479,7 +1508,10 @@ List<SetPlan>? _directPlans(
     if (i == 0 && safe < wanted) {
       guarded = true;
     }
-    if (!hold && !follows && !assisted && item.kind != SetKind.test) {
+    if (!hold &&
+        !(follows && low == high) &&
+        !assisted &&
+        item.kind != SetKind.test) {
       // Plage : le haut servi garde la réserve du bloc (« jamais plus que
       // le maximum moins la réserve »), sans descendre sous le bas de la
       // plage tant qu'il reste sûr.
