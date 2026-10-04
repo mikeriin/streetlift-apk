@@ -33,3 +33,7 @@ Le profil élite de streetlifting porte des chiffres anonymes, différents de ce
 Seul endroit qui connaît le schéma du profil des moteurs. En 0.1.0 il produit le profil **v2** (celui que lisent `kalis_plan` 0.1.0 et `kalis_adapt` 0.1.0) et liste ce qu'il perd (`AdaptedProfile.lost`) : valeur exacte et date des records, ancienneté, nature et format de l'échéance, points faibles, antécédents sans gêne actuelle, sommeil, stress, travail physique, déficit énergétique, autres sports, coupure, spécialisation. Le rapport affiche ces pertes par profil : c'est une partie de ce que les moteurs 0.1 ne peuvent pas prendre en compte.
 
 `kalis_core` 0.4.0 (lot CQ) sait porter presque tout cela dans le profil v3 (`trainingAge`, `trainingGap`, `sleep`, `stress`, `occupationalLoad`, `otherSports`, `events`, `weakPoints`, `specialization`, `Limitation.since` : `packages/kalis_core/docs/PROFIL_V3.md`). **Branchement par CP1 et CA1** : réécrire `adaptProfile` pour produire le profil v3 quand le moteur le lit, vider `lost` des champs transmis, garder le reste du banc inchangé. Les profils eux-mêmes ne changent pas.
+
+## 0.1.1
+
+L'adaptateur produit désormais le profil au schéma 3 (détail dans `CHANGELOG.md`) ; `lost` ne garde que ce que ce schéma ne porte pas : points faibles musculaires, description de la blessure, qualité du sommeil, libellé de l'échéance, liste des mouvements à entretenir. Les 27 profils types (`profiles/*.json`), leurs attentes de coach et les grilles du panel sont **inchangés** par rapport à 0.1.0.

@@ -3115,11 +3115,12 @@ final class Prescriber {
           ..repsHigh = 3
           ..rest = 240
           ..ramped = true
-          ..load = _external(e, total, 0.88)
-          ..percent = 0.88
-          ..intensity = const IntensityTarget(
+          // (Mode prudent : 85 % au plus, comme les charges de travail.)
+          ..load = _external(e, total, a.cautious ? 0.85 : 0.88)
+          ..percent = a.cautious ? 0.85 : 0.88
+          ..intensity = IntensityTarget(
             basis: IntensityBasis.percentOneRm,
-            value: 0.88,
+            value: a.cautious ? 0.85 : 0.88,
           );
         x.test = const TestSpec(
           kind: TestKind.repMax,
@@ -4655,8 +4656,9 @@ final class Prescriber {
   }
 
   /// Reprise après dix semaines d'arrêt ou plus (R5-P7, R5-P22) : la
-  /// première semaine à la moitié des séries dures, puis 60 %, 72 % et
-  /// 85 % (hausses de 20 % au plus) — le plein volume à la cinquième.
+  /// première semaine à la moitié des séries dures, puis 57 %, 66 % et
+  /// 76 % (hausses de 10 à 15 %) — le plein volume ensuite, sous le
+  /// garde-fou de +20 % par semaine.
   void _fitReturn(List<List<_Draft>> days, int week) {
     if (blockIndex != 0 || a.gapWeeks < 10 || week >= 4) {
       return;

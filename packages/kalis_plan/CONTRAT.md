@@ -1,4 +1,4 @@
-# Contrat de kalis_plan 0.1.0
+# Contrat de kalis_plan 0.2.0
 
 Moteur statique de Kalis Track (D4) : il crée le programme. Dart pur, sans Flutter, sans stockage, sans
 horloge ; tout ce qu'il rend est une valeur du contrat de `kalis_core` (`docs/TYPES.md`) et des codes de
@@ -505,10 +505,41 @@ facile » ne reposent que sur la lecture des 40 programmes. Les plages de répé
   verrouillée et échappe aux règles d'admission.
 - **Revue sans ré-optimisation** : l'action est appliquée seule ; un exercice écarté est remplacé par le
   plus proche du même schéma, ou retiré s'il n'y en a pas.
-- **Mode prudent** : il écarte les exercices à impact et l'annonce (`plan.cautious_health`) ; il ne
-  plafonne ni les séries ni la réserve, contrairement au chemin 0.1 (§ 5.1).
+- **Mode prudent** : il écarte les exercices à impact, l'annonce (`plan.cautious_health`), garde 2
+  répétitions en réserve au moins, plafonne à 85 % du 1RM les charges calculées par `_loadAt` et
+  remplace le test de 1RM par un 3RM ; il ne plafonne pas les séries, et son plancher de réserve (2)
+  reste sous celui du chemin 0.1 (3, § 5.1).
 - **Restructuration** : la passe 2 est recalculée sans l'historique du bloc précédent ; les repères
   relevés aux tests de ce bloc et la borne de montée du volume entre les deux blocs ne s'appliquent pas.
+- **Historique court** : `Prescriber.seed` ne reçoit que les semaines du bloc précédent ; les tests et
+  les volumes des blocs plus anciens ne sont pas vus (dates de test, nombre de semaines de tests passées).
+- **Échéance en début de semaine** (`_roles`) : une échéance placée avant la première séance de sa
+  semaine est portée par la première séance de la semaine, donc après la date réelle ; les séances de
+  la semaine précédente ne sont pas allégées.
+- **Affûtage de deux semaines et échéance proche** (`shapeBlock`) : si l'échéance tombe dans la
+  première semaine du bloc, la semaine d'affûtage prend la place de la semaine de l'échéance, et la
+  semaine de compétition vient après.
+- **48 h avant un test** : le moteur ne les garantit que pour le tirage vertical (`_eveOfTest`, veille
+  d'une semaine de tests) et pour la séance à J−2 d'un test daté ; ailleurs, la note `test_rest` le
+  demande sans que le programme le vérifie.
+- **Antécédents et excentriques** : aucun filtre n'écarte les excentriques (descentes freinées, nordic)
+  quand une zone sollicitée a un antécédent, alors que le texte de la règle (`plan.constraint_history`)
+  dit « pas d'excentrique accentué ».
+- **Charge minimale** : `_external` remonte au minimum de charge (celui du profil, sinon celui du type
+  de charge) une charge calculée plus petite ; la série est alors plus lourde que la part visée.
+- **Tenues très courtes** : avec un maintien maximal de 3 à 4 s, la borne basse de 3 s de
+  `skill.hold` vaut 75 % à 100 % du maximum, au-delà de la part annoncée.
+- **Montée après des semaines légères** (`_limit`) : après trois semaines légères de suite, le
+  garde-fou de montée admet le double de la plus chargée d'entre elles.
+- **Test daté à 0 répétition** (`athlete.dart`) : un test daté (`benchmarks`) de 0 répétition retire
+  l'exercice de la liste des gestes non acquis (et le compte comme su).
+- **Course** : au retour d'une semaine allégée (durées × 0,7), la durée des footings remonte de plus
+  de 10 % d'un coup, malgré la règle `duration_step`.
+- **Sommeil court et stress élevé** : cumulés, ils n'ajoutent qu'une répétition en réserve (les
+  facteurs de volume, eux, se cumulent).
+- **Code mort** : les notes `push_maintenance` et `reconciled` ont un texte mais ne sont jamais émises ;
+  `plannedTrack` (`skeleton.dart`) n'est appelé nulle part et `Method.repsEvent` n'est attribué par
+  aucun squelette.
 - **Reprise après une coupure** : les répétitions et les charges repartent de repères réduits ; les
   maintiens (secondes) gardent le record déclaré.
 - **Gêne du membre supérieur** : une gêne au coude, à l'épaule ou au poignet réduit le plafond du
@@ -660,6 +691,8 @@ de 12 mois », ni « ancien, sans gêne »). Une douleur signalée en restructur
 récente.
 
 **Mode prudent.** Questionnaire santé absent ou non « standard », 65 ans et plus, ou moins de 18 ans.
+Effets : impact écarté (ci-dessous), plancher de réserve de 2 (§ 12.5), charges calculées par `_loadAt`
+plafonnées à 85 % du 1RM (§ 12.5), pas de test de 1RM en trois tentatives (§ 12.7).
 
 **Tolérance.** Facteurs de volume (au plus 1) et réserve ajoutée :
 
@@ -800,7 +833,8 @@ dès 60 min avec un élastique ; pratique des figures (équilibre) deux jours si
 25 % ou plus. En préparation d'une épreuve de répétitions : une séance lestée par semaine ; si les
 pompes ne sont pas à l'épreuve, une seule séance de pompes, en entretien.
 
-**Streetlifting.** Jour léger : le plus court, dès 4 jours. Traction lestée lourde et dips de volume le
+**Streetlifting.** Jour léger : le plus court des jours sans course (le plus tard à égalité), dès 4 jours
+sans course. Traction lestée lourde et dips de volume le
 premier jour lourd ; squat lourd le deuxième ; dips lourd et traction de volume le troisième ; squat de
 volume le quatrième (ou le premier avec trois jours lourds) ; muscle-up lesté (niveau avancé, avec un
 1RM ou 5 muscle-up) le quatrième ou le deuxième, avec une seconde exposition légère à 48 h ; avec moins
@@ -853,29 +887,37 @@ Règles communes :
   dure).
 - **Plancher de réserve** (`_floorRir`) : 2 sur un mouvement à risque de chute ou de fin d'amplitude
   (figures, équilibre, muscle-up, freestyle, haltérophilie, poussée aux anneaux, squat et développés à
-  la barre), chez le débutant, et sur un exercice qui charge une zone à ménager récente ou gênée à 2/10
+  la barre), chez le débutant, en mode prudent, et sur un exercice qui charge une zone à ménager récente ou gênée à 2/10
   ou plus ; en reprise (premier bloc, 2 semaines d'arrêt ou plus) : 3 la première semaine, les deux
   premières après 4 semaines, tout le bloc après 10, 4 la première semaine après 16 ; après 10 semaines
   d'arrêt, 2 sur les trois premiers blocs.
 - **Repères de reprise** : charges et maximums visés × 0,90 (coupure de moins de 4 semaines), 0,82
   (moins de 8), 0,75 (au-delà) ; après un test, à mi-chemin des anciens records (0,92 au plus), puis
   0,95, puis 1.
+- **Série d'entrée de reprise** (note `entry_set`) : premier bloc, première semaine, 2 semaines d'arrêt
+  ou plus ; écrite sur la ligne de travail (`reps.top`, `reps.strength`, `reps.volume`, `reps.density`)
+  d'un mouvement qui a un record de répétitions, à la première séance de la semaine qui le porte :
+  première série jusqu'à 3 répétitions de l'échec (4 après 16 semaines d'arrêt ou plus).
 - **Décalage de plage** (`_shift`) : +1 répétition toutes les deux semaines de montée (chaque semaine à
   partir de l'avancé), +2 au plus.
 - **Part du 1RM et répétitions** (tableau R2-P2) : 1 répétition à 100 %, 2 à 94 %, 3 à 91 %, 5 à 86 %,
   8 à 79 %, 10 à 75 %, 12 à 71 %, par interpolation. `_honest` (séries de travail à moins de 5 en
   réserve, au pourcentage du 1RM) retire des répétitions tant que la série laisserait moins que la plus
   grande de « réserve voulue − 1 » et du plancher, et écrit la réserve que le tableau donne, entre le
-  plancher et la réserve voulue.
+  plancher et la réserve voulue. Si même une seule répétition ne laisse pas la réserve plancher, la
+  charge descend à la part que le tableau donne pour « 1 + plancher » répétitions (`_pctAt`).
 - **Charge** (`_loadAt`) : `charge externe = arrondi inférieur au pas (part × 1RM total − part du poids
   de corps)`, au moins le minimum du type de charge ; pas et minimum du profil, sinon ceux du chemin
   0.1 (§ 5.3, lest : 1,25 kg). Le 1RM est celui de l'exercice, sinon celui de son mouvement de
-  référence lesté. Sans 1RM : charge « à calibrer » (`plan.to_calibrate`, note `calibrate`). Hors pic
-  de force, quand le poids de corps fait 78 % ou plus du 1RM total, ou que la part visée tombe sous lui :
-  le lest est une part du lest du 1RM selon les répétitions (6 et plus : 15 % ; 5 : 25 % ; 4 : 34 % ;
-  3 : 50 % ; moins : 67 %), note `small_load`. Dans les autres cas où la part tombe sous le poids de
-  corps : série au poids du corps, répétitions possibles par la formule d'Epley moins la réserve, note
-  `bodyweight_floor`.
+  référence lesté. Sans 1RM : charge « à calibrer » (`plan.to_calibrate`, note `calibrate`). Mode
+  prudent : part plafonnée à 85 %. Série de travail hors pic de force (amplitude partielle mise à part),
+  quand le poids de corps fait 78 % ou plus du 1RM total, ou que la part visée tombe sous lui : le lest
+  de départ est celui que le tableau R2-P2 (`_pctAt`) donne pour « répétitions + réserve » (haut de la
+  plage, 5 par défaut ; réserve arrondie au-dessus, 3 par défaut), soit `arrondi inférieur au pas
+  (part × 1RM total − part du poids de corps)` avec cette part, note `small_load` ; s'il est nul ou
+  négatif, la charge est « à calibrer » (`plan.to_calibrate`, note `calibrate`). Dans les autres cas où
+  la part tombe sous le poids de corps (pic de force, série qui n'est pas de travail) : série au poids
+  du corps, répétitions possibles par la formule d'Epley moins la réserve, note `bodyweight_floor`.
 
 Chaque méthode, ci-dessous, donne : répétitions (ou secondes), part du 1RM ou du maximum, réserve
 (avant les règles communes), repos.
@@ -975,7 +1017,8 @@ Repos 180 s (75 s enchaîné), au moins 2 séries (2 en rappel), rien à J−2 e
 
 - Exercice lesté : 5 répétitions, réserve 3. Sans 1RM mais avec au moins 3 répétitions connues sur le
   geste de référence : charge estimée d'après ce maximum (tableau R2-P2 jusqu'à 12 répétitions, Epley
-  borné à 20 au-delà), à 77 % + 1,5 % par rang (quatre au plus), −3 % en semaine allégée, note
+  borné à 20 au-delà), à 77 % + 1,5 % par rang (quatre au plus), sans dépasser la part que le tableau
+  R2-P2 donne pour « 5 + réserve » répétitions, puis −3 % en semaine allégée, note
   `estimated_load` à la toute première semaine. Sinon 78 % du 1RM, ou charge à calibrer. Règle
   `load_step` (1,5 %).
 - Poids du corps avec record : `maximum − marge`, marge 2 (+1 en semaine allégée et au rang 0 de
@@ -995,6 +1038,9 @@ maximum − répétitions (4 au plus) ; repos 150 s ; technique `skill_practice`
 #### `beginner.main` — double progression du débutant
 
 Séries `séries × facteur` ; les deux premières semaines du premier bloc, 2 au plus. Repos 120 s.
+Repli sur `sw-traction-negative` ou `sw-dips-negatifs` (ni élastique ni barre basse admis) : dosé comme
+`beginner.negative` (séances ordinaires seulement), jamais en séries de travail ; rien en surpoids
+(débutant dont l'indice de masse corporelle atteint 30).
 
 - Exercice tenu : 60 % du maintien connu, entre 8 et 40 s (15 s sans repère), plage de +10 s ;
   réserve 3 ; règle `hold_step` (+5 s).
@@ -1041,7 +1087,8 @@ mesure le maintien (`hold_calibrate`). Élite, séance lourde, rangs impairs : p
 
 Seulement les séances ordinaires hors semaines allégées. 2 à 3 s, séries de la pointe (+1 après deux
 semaines de charge, 3 au plus), réserve 5, repos 180 s ou 150 s, note `step_gate` (critère : 12, 10 ou
-8 s). Une étape en répétitions est dosée comme `skill.dynamic`.
+8 s ; le texte donne le repère d'ouverture, un maintien maximal d'au moins 0,75 × critère arrondi à la
+seconde supérieure, la condition de `ready()` au § 12.4). Une étape en répétitions est dosée comme `skill.dynamic`.
 
 #### `skill.balance` — équilibre
 
@@ -1148,7 +1195,8 @@ séance ; **plancher de la semaine d'échéance** ; **reprise longue** ; **plafo
 
 ### 12.7 Tests et repères
 
-**Où.** Semaine de tests hors échéance (`testWeek`, pas `eventWeek`) : dans les séances ordinaires, le
+**Où.** Semaine de tests hors échéance (`testWeek`, pas `eventWeek`), sauf une semaine du bloc qui suit
+celle de l'échéance (`_eventPassed` : aucun test après l'épreuve) : dans les séances ordinaires, le
 travail d'un emplacement principal (`lift.heavy`, `reps.top`, `skill.hold`, `beginner.main` et
 `reps.strength` en rôle principal) est remplacé par un test, un par mouvement. En semaine d'allègement
 avec tests : trois mouvements au plus, ceux de l'objectif d'abord. En semaine de test (intention
@@ -1164,7 +1212,7 @@ l'échauffement.
 | Exercice | Test |
 | --- | --- |
 | Tenu | maintien maximal, 2 essais, plage du maintien prévu à l'objectif (ou + 5 s) ; figure : `hold_ramp` |
-| Lesté avec 1RM, jour de l'échéance, à partir de l'intermédiaire | 1RM en 3 tentatives (91 %, 96 %, puis selon la deuxième ; 6 min), `attempts_plan` ; `attempts_goal` si la barre visée est entre 100 % et 107 % du 1RM |
+| Lesté avec 1RM, jour de l'échéance, à partir de l'intermédiaire, hors mode prudent | 1RM en 3 tentatives (91 %, 96 %, puis selon la deuxième ; 6 min), `attempts_plan` ; `attempts_goal` si la barre visée est entre 100 % et 107 % du 1RM |
 | Lesté avec 1RM, autres cas | 3RM à 88 %, une répétition en réserve |
 | Lesté sans 1RM | 5RM à calibrer |
 | Poids du corps | série maximale, plage du maximum prévu au maximum + 2 (ou l'objectif) ; réserve 1 sur un mouvement à risque ou chez le débutant, 0 sinon ; `max_set_plan` dès 4 répétitions |
@@ -1336,11 +1384,14 @@ raisonné » (le code le dit, ou ne cite rien), ou le journal de calibrage `CALI
 | Tableau répétitions / part du 1RM | 1 à 100 % … 12 à 71 % | R2-P2 |
 | Plancher : mouvement à risque | 2 | R5-P27 |
 | Plancher : débutant | 2 | R5-P4 |
+| Mode prudent : plancher, plafond de charge, test | réserve 2 ; 85 % du 1RM ; pas de 1RM en 3 tentatives | choix raisonné |
+| Réserve plancher impossible sur une répétition (`_honest`) | part R2-P2 de « 1 + plancher » | R2-P2 |
 | Plancher : zone à ménager | 2 | R5-P23 |
 | Plancher : reprise | 3 (1, 2 semaines ou le bloc) ; 4 après 16 semaines | R5-P7 |
 | Plancher : après 10 semaines d'arrêt | 2 sur trois blocs | R5-P6 |
 | Réserve d'intro, d'allègement | + 1 ; ≥ 3 | choix raisonné |
 | Repères de reprise | 0,90, 0,82, 0,75 ; 0,92, 0,95, 1 | R5-P7, R5-P6 |
+| Série d'entrée de reprise | 3 en réserve ; 4 après 16 semaines d'arrêt | choix raisonné |
 | Deux séries au plus la semaine de l'échéance | | R3-P12 |
 | Décalage de plage | + 1 toutes les 2 semaines, + 2 au plus | choix raisonné |
 | `lift.heavy` accumulation, intensification | 80 à 84,5 % × 5 ; 86 à 90 % × 3 | R3-P4 |
@@ -1358,7 +1409,7 @@ raisonné » (le code le dit, ou ne cite rien), ou le journal de calibrage `CALI
 | Amplitude partielle | 95 % + 5 % par bloc + 2,5 % par semaine ; 110 % (105 % coude) | CALIBRAGE_CP1 (C), R5-P24 |
 | Autres variantes | 70 ou 74 % + 1 % ; 80 % au plus | choix raisonné |
 | Arrêt des variantes avant l'échéance | | R3-P13, R2-P9 |
-| Lest d'un 1RM proche du poids de corps | 15, 25, 34, 50, 67 % du lest ; seuil 78 % | choix raisonné (« cohérent avec R2-P2 ») |
+| Lest d'un 1RM proche du poids de corps | part R2-P2 de « répétitions + réserve » ; nul ou négatif : à calibrer ; seuil 78 % | R2-P2 (seuil : choix raisonné) |
 | Muscle-up lesté | 3 répétitions au plus | R5-P27 |
 | `reps.top` : marges, 8 % du maximum, séries à 60-70 % | | R4-G3 |
 | `reps.top` à l'affûtage | 15 % du maximum, 3 au moins | R3-P13, R3-P21 |
@@ -1370,7 +1421,7 @@ raisonné » (le code le dit, ou ne cite rien), ou le journal de calibrage `CALI
 | `reps.density` : départs | + 1 toutes les 2 semaines (3 si lent), + 2 au plus | R5-P22 |
 | `reps.density` : bornes, intervalle | 4 à 10 départs ; 60 à 180 s | choix raisonné |
 | `reps.strength` : marge | 2 (+ 1) | R4-G2 |
-| Charge estimée | 77 % + 1,5 % ; Epley jusqu'à 20 répétitions | R2-P2 |
+| Charge estimée | 77 % + 1,5 %, au plus la part R2-P2 de « 5 + réserve » ; Epley jusqu'à 20 répétitions | R2-P2 |
 | Variante dure sans record | 60 % du maximum de base | choix raisonné |
 | `reps.technique` | 1, 2 ou moitié du maximum | R4-F1, R5-P27 |
 | Débutant : 2 séries les 2 premières semaines | | R5-P1, R5-P22 |
