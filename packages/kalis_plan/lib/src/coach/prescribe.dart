@@ -527,6 +527,10 @@ final class _Draft {
   bool fixed = false;
   bool ramped = false;
 
+  /// Part du 1RM de travail (celui qui règle les répétitions possibles),
+  /// quand elle diffère de la part affichée du 1RM déclaré.
+  double? share;
+
   bool get support => slot?.support ?? false;
 
   bool get keep => slot?.keep ?? false;
@@ -846,7 +850,9 @@ final class Prescriber {
     if (ws.kind != WeekKind.build) {
       return 0;
     }
-    final half = _stage(ws) ~/ 2;
+    // (Blocs de quatre semaines, à partir du niveau avancé : une
+    // répétition de plus chaque semaine de charge après la première.)
+    final half = _level >= 2 ? _stage(ws) : _stage(ws) ~/ 2;
     return half > 2 ? 2 : half;
   }
 
@@ -1006,9 +1012,10 @@ final class Prescriber {
       }
       x
         ..percent = _round3(shown)
+        ..share = p
         ..intensity = IntensityTarget(
           basis: IntensityBasis.percentOneRm,
-          value: _round3(p),
+          value: _round3(shown),
         );
     } else {
       x.intensity = IntensityTarget(
@@ -1601,7 +1608,7 @@ final class Prescriber {
         x.kind != SetKind.work) {
       return;
     }
-    final pct = target.value;
+    final pct = x.share ?? target.value;
     if (pct <= 0 || pct > 1) {
       return;
     }
@@ -1710,11 +1717,9 @@ final class Prescriber {
       ..repsLow = top
       ..repsHigh = top
       // La réserve écrite est la vraie : maximum moins répétitions.
-      ..rir = (max - top).toDouble() - a.rirBonus > coachHardSetMaxRir
+      ..rir = max - top > coachHardSetMaxRir
           ? coachHardSetMaxRir
-          : ((max - top).toDouble() - a.rirBonus < floor
-                ? floor.toDouble()
-                : (max - top).toDouble() - a.rirBonus)
+          : (max - top < floor ? floor.toDouble() : (max - top).toDouble())
       ..rest = 180
       ..backoff = true
       ..backoffRepsLow = back
@@ -1905,7 +1910,12 @@ final class Prescriber {
     if (max > 0) {
       // R4-G2 : sous 8 répétitions, la force d'abord — séries courtes à 2
       // répétitions de l'échec.
-      var margin = 2 + (ws.light ? 1 : 0) + a.rirBonus.round();
+      // (3 en réserve la première semaine de charge du bloc, 2 ensuite :
+      // la progression vient de la réserve, pas d'un progrès supposé.)
+      var margin =
+          2 +
+          (ws.light || (ws.kind == WeekKind.build && ws.stage == 0) ? 1 : 0) +
+          a.rirBonus.round();
       final kept = _floorRir(e, week).ceil();
       if (margin < kept) {
         margin = kept;
@@ -1913,7 +1923,7 @@ final class Prescriber {
       final reps = _clampInt(max - margin, 1, max);
       // La réserve écrite est la vraie (maximum moins répétitions), sans
       // bonus d'introduction : les répétitions ne changent pas.
-      final real = (max - reps).toDouble() - a.rirBonus;
+      final real = (max - reps).toDouble();
       x
         ..repsLow = reps
         ..repsHigh = reps
@@ -1938,8 +1948,8 @@ final class Prescriber {
       high = _clampInt(_round(base * 0.6) - 2, 4, 12);
     }
     x
-      ..repsLow = high - 2 < 3 ? 3 : high - 2
-      ..repsHigh = high
+      ..repsLow = (high - 2 < 3 ? 3 : high - 2) + _shift(ws)
+      ..repsHigh = high + _shift(ws)
       ..rir = _rirOf(e, 2, ws, week)
       ..reasons.add(_rule(CoachRules.doubleProgression, 1, 'reps'));
     return x;
@@ -1955,6 +1965,12 @@ final class Prescriber {
     // R4-F1, R5-P27 : technique à l'état frais, séries très courtes, 2
     // répétitions en réserve au moins, arrêt dès que la qualité baisse.
     final reps = max <= 3 ? 1 : (max <= 5 ? 2 : _round(max * 0.5));
+    if (max > 0 && max - reps < _floorRir(e, week)) {
+      // La réserve demandée (mouvement à risque, reprise) n'existe pas
+      // encore sur le geste complet : il attend, le travail passe par les
+      // éducatifs et le tirage.
+      return null;
+    }
     final sets = _scaled(s.sets + (max <= 3 ? 1 : 0), ws, min: 2);
     x
       ..sets = sets
@@ -2240,7 +2256,13 @@ final class Prescriber {
     final known = a.holds[e.id] ?? 0;
     // R4-F2 : équilibre — pratique fréquente et courte, moitié du maintien
     // maximal, arrêt avant la perte de forme.
-    final hold = _clampInt(known > 0 ? _round(known * 0.5) : 15, 8, 45);
+    final stage = ws.kind == WeekKind.build ? _stage(ws) : 0;
+    final part = 0.5 + 0.03 * (stage > 3 ? 3 : stage);
+    final hold = _clampInt(
+      known > 0 ? _round(known * part) : 15 + 2 * (stage > 3 ? 3 : stage),
+      8,
+      45,
+    );
     x
       ..sets = _scaled(s.sets, ws, min: 2)
       ..minSets = 2
@@ -2406,8 +2428,8 @@ final class Prescriber {
           ..rest = 75;
       case Method.accessoryCore:
         x
-          ..repsLow = 8
-          ..repsHigh = 12
+          ..repsLow = 8 + _shift(ws)
+          ..repsHigh = 12 + _shift(ws)
           ..rir = _rirOf(e, 3, ws, week)
           ..rest = 60;
       case Method.accessoryLegs:

@@ -1111,7 +1111,9 @@ Map<int, String> _assignPillar(
     heavyDays.add(best);
     out[best] = method;
   }
-  var volume = true;
+  // (La densité d'abord : un tiers au moins des séries d'un pilier se
+  // fait au chrono, R4-G6.)
+  var volume = false;
   for (final d in pillarDays) {
     if (out.containsKey(d)) {
       continue;
@@ -1707,9 +1709,9 @@ void _buildLifting(_Builder b, Set<int> runDays) {
       lift(light, Ids.weightedPull, Method.liftLight, DayStress.light, sets: 3);
     }
     if (target == Ids.weightedPull) {
-      // Spécialisation : une exposition de plus sur le geste exact,
-      // légère et technique (R2-P7, R4-H2), à 48 h des deux autres quand
-      // la semaine le permet.
+      // Spécialisation : une troisième séance sur le geste exact, en
+      // volume (R4-H2 : la cible monte en fréquence et en volume), à 48 h
+      // des deux autres quand la semaine le permet.
       final taken = <int>{pullHeavy, if (pullVolume >= 0) pullVolume};
       var extra = -1;
       for (final d in <int>[if (light >= 0) light, ...heavyDays]) {
@@ -1727,7 +1729,7 @@ void _buildLifting(_Builder b, Set<int> runDays) {
         extra = light;
       }
       if (extra >= 0) {
-        lift(extra, Ids.weightedPull, Method.liftLight, DayStress.light);
+        lift(extra, Ids.weightedPull, Method.liftVolume, DayStress.medium);
       }
     }
   } else {
@@ -1895,14 +1897,13 @@ void _buildLifting(_Builder b, Set<int> runDays) {
         !spareElbow &&
         a.level >= 2 &&
         (!lean || target == Ids.weightedPull)) {
-      // Fléchisseurs du coude : moteurs de la traction (trois séries quand
-      // elle est la cible de la spécialisation).
+      // Fléchisseurs du coude : moteurs de la traction.
       b.add(
         d,
         Picks.curl,
         SlotRole.accessory,
         Method.accessoryIsolation,
-        sets: target == Ids.weightedPull ? 3 : 2,
+        sets: 2,
       );
     }
     _addPrehab(b, d);
