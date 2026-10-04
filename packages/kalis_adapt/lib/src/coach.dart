@@ -1414,6 +1414,17 @@ List<SetPlan>? _directPlans(
       final cap = track.filter.capacityToday();
       final fromTest = (share * cap + 0.5).floor();
       wanted = fromTest < 1 ? 1 : fromTest;
+      if (!hold && wanted > high) {
+        // Au-dessus de ce que le bloc écrit : une répétition de plus que
+        // la dernière séance de l'emplacement au plus (la règle du
+        // programme : « +1 répétition quand la réserve est dépassée »),
+        // jamais d'un coup.
+        final lift = mark == null ? 0 : mark.top + 1 - firstHigh;
+        final most = high + (lift > 0 ? lift : 0);
+        if (wanted > most) {
+          wanted = most;
+        }
+      }
       if (!hold) {
         final kept = (cap * (1 - fatigue) - rir + 0.3).floor();
         if (kept < wanted) {

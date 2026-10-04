@@ -602,11 +602,7 @@ String coachTrajectoryMarkdown(
         if (isRecal && recal) {
           return;
         }
-        final text = adaptReasonText(
-          r,
-          catalog,
-          assisted: assisted && !advice,
-        );
+        final text = adaptReasonText(r, catalog, assisted: assisted && !advice);
         if (text != null && !notes.contains(text)) {
           notes.add(text);
           recal = recal || isRecal;
