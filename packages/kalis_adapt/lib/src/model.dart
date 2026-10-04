@@ -120,9 +120,14 @@ final class ExerciseTrack {
   /// plus lourdes d'abord — une ouverture est une barre déjà faite.
   List<(int, double)> heavy = const <(int, double)>[];
 
+  /// Mode coach, exercice assisté : assistance de la dernière série
+  /// (charge externe négative du journal), ou `null`.
+  double? assist;
+
   /// Copie indépendante.
   ExerciseTrack fork() {
     final c = ExerciseTrack(info, filter.fork());
+    c.assist = assist;
     c.lastLoad = lastLoad;
     c.noUp = noUp;
     c.easy = easy;
@@ -798,6 +803,7 @@ final class SessionRun {
   void _open(ExerciseRun run, ExerciseTrack track) {
     final p = _p;
     run.track = track;
+    track.filter.hinge = run.spec.coach != null;
     final info = run.info;
     _resume(track);
     // La courbe pivote sur la plage travaillée quand elle s'est nettement
@@ -917,9 +923,10 @@ final class SessionRun {
         run.painZones.isEmpty &&
         !run.spec.test;
     var rir = run.spec.rir + extraRir;
-    if (run.uncertain && !run.spec.test) {
+    if (run.uncertain && !run.spec.test && run.spec.coach == null) {
       // Un test se fait à l'effort demandé : c'est lui qui lève
-      // l'incertitude.
+      // l'incertitude. (Mode coach : la dose du bloc et les garde-fous
+      // valent ; l'effort affiché reste celui qui est attendu.)
       rir += p.calibrationRirBonus;
     }
     if (run.painZones.isNotEmpty) {
@@ -979,7 +986,10 @@ final class SessionRun {
       }
       final said = o.flames;
       if (o.failed ||
-          (said != null && rirOfFlames(said) < state.rater.ceiling(p))) {
+          (said != null &&
+              (run.spec.coach != null
+                  ? !_censored(said, o.open)
+                  : rirOfFlames(said) < state.rater.ceiling(p)))) {
         track.exactDay = day;
       }
       final kg = o.loadKg;
@@ -1097,6 +1107,23 @@ final class SessionRun {
     } else {
       if (run.track == null) {
         _firstDirect(run, mode, amount, flames, failed);
+      }
+      final track = run.track;
+      if (track != null &&
+          run.spec.coach != null &&
+          info.exercise.loadType == LoadType.band) {
+        // Assistance changée depuis la dernière série (cran d'élastique) :
+        // la capacité attendue se décale d'un cran, l'incertitude grandit.
+        final now = loadKg ?? 0;
+        final before = track.assist;
+        if (before != null && (now - before).abs() > 1e-9) {
+          final step = ln(_p.coachAssistStepShare);
+          track.filter.shiftLevel(
+            now > before ? step : -step,
+            sq(_p.coachAssistStepSd),
+          );
+        }
+        track.assist = now;
       }
       _observeDirect(
         run,
@@ -1270,7 +1297,7 @@ final class SessionRun {
         p: p,
         bound: true,
       );
-    } else if (run.spec.coach != null && _censored(flames)) {
+    } else if (run.spec.coach != null && _censored(flames, open)) {
       // Mode coach : loin de l'échec, la note ne se lit que comme « au
       // moins tant en réserve » (la prédiction des répétitions restantes
       // se dégrade loin de l'échec et plafonne, R2-P3).
@@ -1437,7 +1464,7 @@ final class SessionRun {
         p: p,
         bound: true,
       );
-    } else if (run.spec.coach != null && _censored(flames)) {
+    } else if (run.spec.coach != null && _censored(flames, open)) {
       final said = rirOfFlames(flames);
       f.observeDirect(
         logCapacity: ln(_impliedCapacity(mode, done, said) / keep),
@@ -1515,7 +1542,15 @@ final class SessionRun {
   /// [AdaptParams.adviceGapFlames] flammes sous la cible (D5).
   /// Mode coach : vrai si la note [flames] se lit comme une borne basse
   /// (loin de l'échec).
-  bool _censored(int flames) => rirOfFlames(flames) >= state.rater.ceiling(_p);
+  /// Une série ouverte (au ressenti, série repère) arrêtée à la réserve
+  /// demandée mesure la capacité jusqu'à 2 répétitions en réserve dites.
+  bool _censored(int flames, [bool open = false]) {
+    final rir = rirOfFlames(flames);
+    if (open && rir <= 2) {
+      return false;
+    }
+    return rir >= state.rater.ceiling(_p);
+  }
 
   void _noteEase(
     ExerciseRun run,

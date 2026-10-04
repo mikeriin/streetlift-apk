@@ -337,12 +337,22 @@ CoachAdvice? _coachAdvise(
     final topLoad = top.loadKg;
     final t = sessionItem.technique;
     if (topLoad != null && t != null) {
-      final drop =
+      var drop =
           c.rule(AutoregulationKind.backoffFromTopSet)?.pct ??
           t.backoffDropPct ??
           0.1;
       final grid = info.grid;
       final bw = info.fraction * run.bodyWeightKg;
+      // Baisse prévue le matin (le moteur a pu rapprocher les séries
+      // allégées de la série de tête) : elle vaut si elle est plus petite.
+      final topPlanned = top.target?.loadKg;
+      final backPlanned = planned.loadKg;
+      if (topPlanned != null && backPlanned != null && topPlanned + bw > 0) {
+        final plannedDrop = 1 - (backPlanned + bw) / (topPlanned + bw);
+        if (plannedDrop >= 0 && plannedDrop < drop) {
+          drop = plannedDrop;
+        }
+      }
       final base = (topLoad + bw) * (1 - drop) - bw;
       var kg = grid.floor(base < grid.minimum ? grid.minimum : base);
       if (kg > topLoad) {

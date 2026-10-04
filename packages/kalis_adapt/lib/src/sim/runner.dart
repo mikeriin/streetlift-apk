@@ -6,7 +6,6 @@ import 'package:kalis_core/kalis_core.dart';
 
 import '../apply.dart';
 import '../book.dart';
-import '../coach.dart' show blockCoached;
 import '../engine.dart';
 import '../filter.dart';
 import '../numeric.dart' show exp, ln;
@@ -477,6 +476,7 @@ SimRun simulate({
   final run = SimRun(spec.key, policy.name, seed);
   final sessions = <SessionRecord>[];
   final exerciseSessions = <String, int>{};
+  final bandNotch = <String, int>{};
   final lastMaxLoad = <String, double>{};
   final decisions = <ProposalDecision>[];
   Map<String, Object?>? reviewState;
@@ -624,6 +624,41 @@ SimRun simulate({
           continue;
         }
         athlete.beginExercise(truth, item.slotId);
+        // Exercice assisté à l'élastique (programmes au contrat 0.4.0) :
+        // l'athlète note l'assistance (charge négative) et change de cran
+        // quand le moteur le lui dit ; un cran de moins retire une part de
+        // la capacité, que le moteur ne connaît pas.
+        double? assistKg;
+        if (rich &&
+            truth.mode == CapacityMode.reps &&
+            truth.info.exercise.loadType == LoadType.band) {
+          var notch = bandNotch[item.exerciseId] ?? 3;
+          var change = 0;
+          for (final r in item.reasons) {
+            if (r.code == ReasonCodes.adaptFlamesBelowTarget) {
+              change = -1;
+            } else if (r.code == ReasonCodes.adaptFlamesAboveTarget) {
+              change = 1;
+            }
+          }
+          if ((change < 0 && notch > 0) || (change > 0 && notch < 6)) {
+            final step =
+                0.75 *
+                exp(
+                  0.12 *
+                      SimRandom.of(
+                        seed,
+                        'band|${item.exerciseId}|${change < 0 ? notch : notch + 1}',
+                      ).gauss(),
+                );
+            final factor = change < 0 ? step : 1 / step;
+            truth.capacity *= factor;
+            truth.startCapacity *= factor;
+            notch += change;
+          }
+          bandNotch[item.exerciseId] = notch;
+          assistKg = -10.0 * notch;
+        }
         var basis = item;
         for (final it in prescription.items) {
           if (it.slotId == item.slotId && it.exerciseId == item.exerciseId) {
@@ -950,7 +985,7 @@ SimRun simulate({
               exerciseOrder: order,
               setIndex: i,
               kind: item.kind ?? SetKind.work,
-              externalLoadKg: load,
+              externalLoadKg: load ?? assistKg,
               reps: hold ? null : outcome.amount,
               seconds: hold ? outcome.amount : null,
               flames: outcome.flames,
@@ -1028,11 +1063,7 @@ SimRun simulate({
               targetLow: low,
               targetHigh: high,
               steps: steps,
-              // (Programmes au contrat 0.4.0 : un exercice assisté à
-              // l'élastique se règle par l'assistance, non simulée.)
               reachable:
-                  !(blockCoached(block) &&
-                      truth.info.exercise.loadType == LoadType.band) &&
                   athlete.reachable(
                     truth,
                     basisLow ?? basisHigh ?? low,

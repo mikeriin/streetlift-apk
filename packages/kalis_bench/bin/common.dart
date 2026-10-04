@@ -174,7 +174,13 @@ int runBench({
     file.writeAsStringSync(
       '${jsonEncode(<String, Object?>{
         'sessions': <Object?>[
-          for (final s in t.run.served) <String, Object?>{'week': s.week, 'simDay': s.simDay, 'plan': s.plan.toJson(), 'record': s.record.toJson(), 'advices': <Object?>[for (final a in s.advices) a.toJson()]},
+          for (final s in t.run.served) <String, Object?>{
+              'week': s.week,
+              'simDay': s.simDay,
+              'plan': s.plan.toJson(),
+              'record': s.record.toJson(),
+              'advices': <Object?>[for (final a in s.advices) a.toJson()],
+            },
         ],
         'rows': <Object?>[
           for (final x in t.run.sets) <Object?>[x.week, x.simDay, x.exerciseId, x.slotId, x.setIndex, x.role?.code, x.technique?.code, x.loadKg, x.totalKg, x.amount, x.targetLow, x.targetHigh, x.wantRir, x.trueRir, x.failed, x.open, x.test, x.dayMax, x.reachable],
