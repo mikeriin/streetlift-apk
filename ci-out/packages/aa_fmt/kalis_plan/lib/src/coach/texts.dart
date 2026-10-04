@@ -1,0 +1,726 @@
+/// Textes français des raisons du chemin street : ce que l'athlète lit
+/// sous un exercice ou en tête de bloc. Une raison sans texte propre rend
+/// `null` (le texte générique de `kalis_core` s'applique).
+library;
+
+import 'package:kalis_core/kalis_core.dart';
+
+import 'prescribe.dart';
+
+String _pct(Object? v) => v is num ? '${(v * 100).round()} %' : '';
+
+String _int(Object? v) => v is num ? '${v.round()}' : '';
+
+String _plain(Object? v) {
+  if (v is! num) {
+    return '';
+  }
+  return v == v.roundToDouble()
+      ? '${v.round()}'
+      : v.toString().replaceAll('.', ',');
+}
+
+/// Nom français d'une zone du corps.
+String coachZoneLabel(String code) => switch (code) {
+  'neck' => 'cou',
+  'shoulder' => 'épaule',
+  'elbow' => 'coude',
+  'wrist_hand' => 'poignet et main',
+  'upper_back' => 'haut du dos',
+  'lower_back' => 'bas du dos',
+  'chest' => 'poitrine',
+  'hip' => 'hanche',
+  'knee' => 'genou',
+  'ankle_foot' => 'cheville et pied',
+  _ => code.replaceAll('_', ' '),
+};
+
+/// Nom français d'une phase de saison.
+String coachPhaseLabel(String code) => switch (code) {
+  'accumulation' => 'construction (volume)',
+  'intensification' => 'intensification (séries plus dures)',
+  'realization' => "réalisation (spécifique à l'objectif)",
+  'taper' => 'affûtage',
+  'competition' => 'échéance',
+  'transition' => 'transition (récupération)',
+  'test' => 'test',
+  'deload' => 'allègement',
+  'maintenance' => 'entretien',
+  'reintroduction' => 'reprise progressive',
+  'intro' => 'introduction',
+  _ => code,
+};
+
+/// Nom français d'un point faible.
+String coachWeakPointLabel(String code) => switch (code) {
+  'bottom' => 'bas du mouvement',
+  'mid_range' => 'milieu du mouvement',
+  'lockout' => 'verrouillage',
+  'dead_start' => 'départ bras tendus',
+  'transition' => 'transition',
+  'grip' => 'prise',
+  'late_set_fatigue' => 'fin de série',
+  'balance' => 'équilibre',
+  'mobility' => 'mobilité',
+  'speed' => 'vitesse',
+  _ => code.replaceAll('_', ' '),
+};
+
+String _since(String code) => switch (code) {
+  'under_6_weeks' => 'moins de 6 semaines',
+  'weeks_6_to_12' => '6 à 12 semaines',
+  'months_3_to_12' => '3 à 12 mois',
+  'over_12_months' => 'plus de 12 mois',
+  'past_resolved' => 'ancien, sans gêne',
+  _ => code.replaceAll('_', ' '),
+};
+
+String _gap(String code) => switch (code) {
+  'reduced' => 'entraînement allégé',
+  'under_3_weeks' => 'moins de 3 semaines',
+  'weeks_3_to_10' => '3 à 10 semaines',
+  'weeks_10_to_26' => '10 à 26 semaines',
+  'months_6_to_24' => '6 mois à 2 ans',
+  'over_2_years' => 'plus de 2 ans',
+  _ => code.replaceAll('_', ' '),
+};
+
+String _band(String code) => switch (code) {
+  'under_6_months' => 'moins de 6 mois',
+  'months_6_to_24' => '6 mois à 2 ans',
+  'years_2_to_5' => '2 à 5 ans',
+  'over_5_years' => 'plus de 5 ans',
+  _ => code.replaceAll('_', ' '),
+};
+
+String _sport(String code) => switch (code) {
+  'running' => 'course à pied',
+  'cycling' => 'vélo',
+  'swimming' => 'natation',
+  'other_endurance' => 'endurance',
+  'team_sport' => 'sport collectif',
+  'combat_sport' => 'sport de combat',
+  'climbing' => 'escalade',
+  'racket_sport' => 'sport de raquette',
+  'other_strength' => 'autre sport de force',
+  _ => 'autre sport',
+};
+
+/// Texte français de la raison [r] du chemin street, ou `null`.
+String? coachReasonText(Reason r, Catalog catalog) {
+  final p = r.params;
+  String name(Object? id) => id is String ? (catalog.find(id)?.name ?? id) : '';
+  switch (r.code) {
+    case ReasonCodes.planCoachNote:
+      final v = p['value'];
+      return switch (p['note']) {
+        CoachNotes.negativeGate =>
+          v is num && v < 0
+              ? "Ensuite, seulement si aucune traction n'est passée : la "
+                    'descente la plus lente possible, deux essais '
+                    'chronométrés (monte en sautant depuis un appui, sans '
+                    'élan ; repère : ${_int(-v)} s sans à-coup). Elle '
+                    'mesure le progrès vers la première traction.'
+              : 'Test : la descente la plus lente possible, deux essais '
+                    'chronométrés (monte en sautant depuis un appui, sans '
+                    'élan). Note le temps : ${_int(v)} s ou plus sans '
+                    'à-coup, et la traction stricte est proche.',
+        CoachNotes.strictAttempt =>
+          "Test, d'abord l'essai strict, frais : après l'échauffement et "
+              "1 à 2 tractions faciles à l'élastique, essaie la traction "
+              'stricte — départ bras tendus, menton au-dessus de la barre, '
+              "sans élan — jusqu'à 3 essais séparés de 3 min, autant de "
+              'répétitions propres que possible (objectif : ${_int(v)}). '
+              "Fais cet essai à chaque test, en fin de bloc comme le "
+              "jour de l'échéance, quel que soit le temps de tes "
+              'descentes. Si une traction passe, '
+              "déclare-la dans l'application : les séances commenceront "
+              'alors par 2 à 3 tractions strictes isolées, propres, arrêt '
+              'au premier essai lent ou déformé (jamais un effort '
+              'maximal), le reste en descentes freinées et en tractions '
+              'assistées.',
+        CoachNotes.entrySet =>
+          "Série d'entrée de reprise, aujourd'hui seulement : la première "
+              'série de cette ligne se fait jusqu\'à ${_int(v)} répétitions '
+              "de l'échec, à la place du chiffre écrit (départs au chrono : "
+              'une série avant, puis 3 min de repos). Note le total : ton '
+              'maximum de reprise = ce total + ${_int(v)}. S\'il est sous '
+              'le repère écrit, recalcule les séries de la semaine sur lui, '
+              'aux mêmes pourcentages.',
+        CoachNotes.slowNegativePush =>
+          'Pompe complète en descente freinée : ${_int(v)} s pour '
+              'descendre, corps gainé de la tête aux talons, poitrine au '
+              'sol ; remonte en posant les genoux. Arrête la série dès '
+              "qu'une descente passe sous 2 s ou que le bassin s'affaisse.",
+        CoachNotes.roleForearm =>
+          'Avant-bras : fléchisseurs et extenseurs du poignet en charge '
+              'légère, loin de la limite — tolérance du coude et du '
+              'poignet au volume de tirage et aux appuis.',
+        CoachNotes.roleRunner =>
+          'Renforcement du coureur : mollets en charge lente, rebonds '
+              'courts et élastiques (contacts brefs, sans fatigue) — pour '
+              "le tendon d'Achille et l'économie de course. Douleur au "
+              "tibia, au tendon d'Achille ou au pied à 3 sur 10 : retire "
+              'les rebonds.',
+        CoachNotes.restPause =>
+          'Repos-pause, chaque semaine où cette note figure sur la ligne '
+              '(et seulement celles-là) : la dernière série écrite se '
+              'prolonge par ${_int(v)} relances au '
+              'plus de 3 à 4 répétitions, après 20 s de pause chacune ; '
+              "chaque relance s'arrête avec une répétition en réserve. "
+              'Rien de plus : ces relances comptent pour une série dure. '
+              'Pas de relance si le coude ou l\'épaule dépasse le seuil '
+              'de ta règle de douleur.',
+        CoachNotes.ambitious =>
+          v is num && v < 2000
+              ? 'Objectif ambitieux : plusieurs tractions en partant de zéro '
+                    "sur ce programme, c'est possible, pas garanti. "
+                    '${v.round() % 1000 > 1 ? 'Une ou deux tractions propres' : 'Une première traction propre'} '
+                    'au test final serait déjà un très bon cycle : ne force '
+                    'pas la forme pour en faire plus.'
+              : 'Objectif ambitieux : le gain demandé dépasse le rythme '
+                    'habituel à ton niveau (environ +15 % en 12 semaines '
+                    "chez un pratiquant entraîné). Le programme vise "
+                    "l'objectif, mais un résultat de "
+                    '${v is num ? v.round() ~/ 1000 : ''} à '
+                    '${v is num ? v.round() % 1000 : ''} au test final '
+                    'serait déjà un bon cycle : ne force pas la forme pour '
+                    "y arriver. Si le repère de mi-parcours n'est pas "
+                    "atteint, le plan garde ses volumes et l'objectif se "
+                    'joue au cycle suivant.',
+        CoachNotes.maxSetPlan =>
+          'Avant la série maximale : 2 séries faciles (un quart, puis un '
+              'tiers du maximum), 2 à 3 min de repos. Pendant : rythme '
+              'régulier dès le départ, souffle en haut de chaque '
+              'répétition ; des pauses courtes en position de repos (bras '
+              'tendus) si ton standard les autorise'
+              '${v is num && v > 0 ? ' ; répétition repère à mi-série : ${_int(v)}' : ''}'
+              '.',
+        CoachNotes.holdRamp =>
+          'Avant le maintien maximal : la préparation habituelle des '
+              'poignets et des épaules, puis 2 tenues de montée (une étape '
+              "plus facile 5 s, puis l'étape du test 2 à 3 s), et "
+              "${_int(v)} min de repos avant l'essai. Jamais à froid.",
+        CoachNotes.tracking =>
+          'Suivi : coche chaque séance faite (objectif : ${_int(v)} par '
+              'semaine) et note tes minutes de marche chaque semaine ; '
+              'relève ton poids et ton tour de taille aux semaines 1, 6 et '
+              '12, le matin à jeun. Perte de poids : un déficit modéré '
+              '(500 kcal par jour au plus) garde le muscle, avec des '
+              'protéines à chaque repas et 7 h de sommeil visées ; pour '
+              "l'alimentation, fais-toi accompagner par un professionnel "
+              'de santé.',
+        CoachNotes.smallLoad =>
+          'Ton 1RM lesté est proche du poids du corps : la charge ne se '
+              'calcule pas en pourcentage mais à la réserve — départ '
+              'conseillé : ${_plain(v)} kg de lest. À la première séance '
+              'du bloc, fais une série de calibrage (monte par paliers de '
+              "1,25 à 2,5 kg jusqu'à la série qui laisse la réserve "
+              'écrite, poids du corps seul compris) et garde cette charge ; '
+              'ensuite ajoute '
+              'le plus petit pas quand toutes les séries passent ; si la '
+              "réserve n'est pas tenue, retire 2,5 kg dans la séance.",
+        CoachNotes.pushLadder =>
+          'Échelle de poussée : pompe au mur → mains surélevées (barre '
+              'basse ou barres parallèles, de plus en plus bas) → genoux '
+              '→ sol. Prends dès la première séance le cran qui permet '
+              '${_int(v)} répétitions avec 3 à 4 en réserve ; descends '
+              "d'un cran quand le haut de la plage est tenu sur toutes "
+              'les séries, deux séances de suite.',
+        CoachNotes.primer =>
+          "Amorçage à l'avant-veille : deux simples à ${_pct(v)} du 1RM "
+              "par mouvement, dans l'ordre de l'épreuve, rapides et "
+              'faciles, avec les commandes et le matériel du jour J. '
+              'Rien de plus.',
+        CoachNotes.recalibrate =>
+          'Série de recalage (dernière semaine de charge du bloc) : note '
+              'la charge, les répétitions et la réserve réelle de la série '
+              'de tête. Au moins une répétition de plus en réserve que '
+              'prévu : ton 1RM de travail monte de ${_plain(v)} % au bloc '
+              'suivant ; une de moins : il baisse de ${_plain(v)} %. '
+              "Déclare la série dans l'application, les charges se "
+              'recalent dessus.',
+        CoachNotes.stepGate =>
+          'Étape suivante, sous condition. Repère mesurable : au dernier '
+              "test, un maintien maximal d'au moins "
+              "${v is num ? (v / 0.75).ceil() : ''} s sur l'étape "
+              'actuelle. Tu remplaces alors, une séance lourde par '
+              'semaine, les tenues écrites par 3 × ${_int(v)} s ; quand '
+              'elles sont propres 3 séances de suite (douleur à 2 sur 10 '
+              "au plus), cette ligne s'ouvre : entrées de 2 à 3 s, très "
+              'loin de la limite. Sinon, saute-la. La semaine où elle '
+              "s'ouvre, rien d'autre n'augmente (un seul changement à la "
+              'fois).',
+        CoachNotes.maxAttempt =>
+          'Toutes les ${_int(v)} semaines, la première tenue de cette '
+              "séance est un maintien maximal propre (arrêt dès que la "
+              'ligne casse). Note-le : les secondes des semaines suivantes '
+              'valent 60 à 75 % de ce nouveau repère ; si une tenue passe '
+              'sous 4 sur 5 en qualité, garde la dose.',
+        CoachNotes.holdCalibrate =>
+          'Première séance : mesure ton maintien maximal propre (un seul '
+              'essai), puis travaille à ${_pct(v)} de ce temps. '
+              "Déclare-le dans l'application.",
+        CoachNotes.estimatedLoad =>
+          "Charge de départ estimée d'après ton maximum au poids du "
+              'corps : ${_plain(v)} kg de lest. Ajuste-la à la première '
+              'séance pour garder la réserve prévue, puis ajoute le plus '
+              'petit pas quand toutes les séries passent.',
+        CoachNotes.reconciled =>
+          'Ton maximum de répétitions au poids du corps indique un 1RM '
+              'plus haut que celui déclaré : les charges et les '
+              'pourcentages de cette ligne sont calculés sur un seul '
+              'repère, ${_plain(v)} kg de charge totale (poids du corps '
+              'compris). Le prochain test le recale.',
+        CoachNotes.tendonLoad =>
+          'Charge progressive des fléchisseurs du poignet (face interne '
+              'du coude) : à faire valider par le professionnel qui suit '
+              'ton coude. Même seuil que la règle de douleur de la zone '
+              '(gêne au niveau de départ, ${_int(v)} sur 10 au plus, et '
+              'retour à ce niveau le lendemain). Ajoute le plus petit pas '
+              'quand toutes les séries passent dans ce seuil.',
+        CoachNotes.pullReturn =>
+          'Retour au tirage lesté : quand le coude reste à 2 sur 10 ou '
+              'moins deux semaines de suite sur ces tractions, ajoute '
+              '${_plain(v)} kg (3 × 5, 3 répétitions en réserve), puis '
+              '${_plain(v)} kg toutes les deux semaines au plus. Au-delà '
+              'de 2 sur 10, reviens au palier précédent.',
+        CoachNotes.easyBeforeTest =>
+          'À deux jours du test : séance facile, deux séries au plus à '
+              "${_pct(v)} des répétitions habituelles, très loin de "
+              "l'échec — 48 h sans travail dur avant le test.",
+        CoachNotes.alreadyApplied =>
+          'Les réductions liées à ton profil (sommeil, stress, travail '
+              'physique, âge) sont déjà dans les chiffres des tableaux : '
+              "suis les chiffres écrits, n'en retire pas davantage.",
+        CoachNotes.dressRehearsal =>
+          "Dernier lourd avant l'épreuve (J−${_int(v)}) : fais-le dans "
+              'les conditions du jour J — commandes, matériel de '
+              'compétition, amplitude jugée (filme-toi de profil).',
+        CoachNotes.bodyweightFloor =>
+          'La charge visée tombe sous ton poids de corps : série sans '
+              'lest, à ${_pct(v)} de ton 1RM (poids du corps compris), '
+              'avec moins de répétitions pour garder la réserve.',
+        CoachNotes.overload =>
+          'Amplitude partielle (fin du mouvement, 10 à 15 cm) à ${_pct(v)} '
+              'de ton 1RM complet : toujours avec butées de sécurité '
+              'réglées juste sous la position de travail (barres dans une '
+              'cage, ou box sous les pieds) ou avec parade. Retire '
+              "l'exercice si le coude ou l'épaule dépasse le seuil de ta "
+              'règle de douleur.',
+        CoachNotes.activation =>
+          "Activation à l'avant-veille : deux séries faciles à ${_pct(v)} "
+              'du maximum par atelier, pour garder le geste sans fatigue.',
+        CoachNotes.reentryTest =>
+          "Test d'entrée de reprise : en semaine 1, sur chaque mouvement "
+              'principal, fais une première série arrêtée à ${_int(v)} '
+              "répétitions de l'échec et note le total. Déclare ces "
+              "nouveaux repères dans l'application : tout le programme se "
+              'recale dessus. Tes anciens records ne sont pas des charges '
+              'de travail.',
+        CoachNotes.restBeforeEvent =>
+          "Repos avant l'échéance : mobilité et préparation articulaire "
+              'seulement, rien de fatigant dans les 2 à 4 derniers jours.',
+        CoachNotes.badDay =>
+          v is num && v >= 2
+              ? 'Baisse du jour : ton sommeil court habituel est déjà compté '
+                    'dans le programme. Elle ne se déclenche que sur une '
+                    "nuit nettement pire que d'habitude (moins de 5 h), des "
+                    'courbatures marquées sur la zone ou une journée très '
+                    'éprouvante : 1 série de moins par exercice, aucune '
+                    'série à moins de 3 répétitions en réserve, test '
+                    'reporté.'
+              : 'Baisse du jour (nuit de moins de 6 h, courbatures marquées '
+                    'sur la zone, journée très stressante) : 1 série de moins '
+                    'par exercice, aucune série à moins de 3 répétitions en '
+                    'réserve, pas de test.',
+        CoachNotes.attemptsGoal =>
+          "Barre de l'objectif (${_plain(v)} kg de lest ou de charge) : "
+              'elle est au-dessus de ton 1RM de départ. Elle ne se tente '
+              'que si tes simples lourds des dernières semaines de charge '
+              'sont montés vite avec une répétition en réserve : recalcule '
+              'alors ton 1RM (charge totale du simple ÷ 0,94) et reprends '
+              'les trois barres sur ce nouveau 1RM. Sinon, garde le plan '
+              "des trois tentatives : l'objectif attendra le cycle suivant.",
+        CoachNotes.painGeneral =>
+          'Douleur articulaire ou tendineuse (coude, épaule, poignet, '
+              'genou) : de 0 à 2 sur 10, continue ; à 3 ou 4, finis la '
+              "séance sans progresser et n'ajoute rien la semaine "
+              'suivante ; à 5, prends la variante plus facile et retire 30 '
+              'à 50 % du volume de la zone ; à ${_int(v)} ou plus, douleur '
+              'la nuit ou gêne qui dure deux semaines : arrête le mouvement '
+              'et consulte un professionnel de santé. Regarde la tendance '
+              'sur deux à trois semaines, pas une seule séance.',
+        CoachNotes.redFlags =>
+          'Arrêt immédiat et avis médical : douleur dans la poitrine, '
+              'essoufflement anormal, malaise ou vertige. Souffle pendant '
+              "l'effort, sans bloquer la respiration sur les séries longues.",
+        CoachNotes.shortVersion =>
+          'Jour chargé : version courte de ${_int(v)} min — échauffement, '
+              'puis les deux ou trois premiers exercices de la séance. Une '
+              "séance courte vaut mieux qu'une séance sautée.",
+        CoachNotes.bandChoice =>
+          "Élastique : prends celui qui permet ${_int(v)} répétitions "
+              'propres avec la réserve prévue ; note-le à chaque séance. '
+              'Si même le plus fort ne suffit pas, fais la traction pieds '
+              "en appui (barre basse) en attendant. Dès que l'élastique le "
+              'plus fin passe 8 répétitions, commence la séance par 1 à 3 '
+              'essais isolés de traction stricte, sans forcer.',
+        CoachNotes.cue => switch (v is num ? v.round() : 0) {
+          1 =>
+            'Exécution : départ bras tendus, épaules basses, menton '
+                'au-dessus de la barre, sans élan.',
+          2 =>
+            'Exécution : épaules basses, descente contrôlée, épaule '
+                'nettement sous le coude en bas, verrouillage complet en '
+                'haut.',
+          3 =>
+            'Exécution : amène la barre aux hanches, transition rapide, '
+                'poitrine au-dessus de la barre avant de pousser.',
+          4 =>
+            'Exécution : bras tendus, pousse la barre vers les hanches, '
+                'bassin en rétroversion, corps aligné.',
+          5 =>
+            'Exécution : repousse le sol loin de toi, épaules en avant '
+                'des mains, bras tendus, bassin en rétroversion. Poignet '
+                'sensible (gêne habituelle au-dessus de 1 sur 10) : '
+                'parallettes ou poings fermés par défaut ; retour au sol '
+                'quand la gêne reste à 0 ou 1 le lendemain deux semaines '
+                'de suite.',
+          6 =>
+            'Exécution : corps gainé de la tête aux talons, poitrine près '
+                'du sol, coudes à 45°.',
+          7 =>
+            'Exécution : pli de la hanche sous le haut du genou à chaque '
+                'répétition, tronc gainé, pieds ancrés.',
+          8 =>
+            'Exécution : doigts écartés, épaules ouvertes, côtes '
+                'rentrées ; sors proprement dès que la ligne se perd. '
+                'Poignet sensible (gêne habituelle au-dessus de 1 sur '
+                '10) : poings fermés, barres basses ou parallettes par '
+                'défaut.',
+          9 =>
+            'Exécution : départ bras tendus, tire les coudes vers le bas '
+                "et l'arrière jusqu'à toucher la barre avec la poitrine, "
+                'sans élan.',
+          10 =>
+            'Exécution : corps gainé de la tête aux genoux, poitrine près '
+                "de l'appui, coudes à 45°.",
+          _ => null,
+        },
+        CoachNotes.intervalPace =>
+          'Allure des fractions : 400 m en '
+              '${v is num ? '${v.round() ~/ 60} min ${(v.round() % 60).toString().padLeft(2, '0')}' : ''} '
+              '(ton allure estimée sur 3 km), récupération en trottinant ; '
+              "si l'allure ne tient plus, arrête la série. Chaque test "
+              'chronométré recale cette allure.',
+        CoachNotes.goalPace =>
+          "Allure de l'objectif : "
+              '${v is num ? '${v.round() ~/ 60} min ${(v.round() % 60).toString().padLeft(2, '0')}' : ''} '
+              'au kilomètre, régulière du début à la fin.',
+        CoachNotes.timeTrial =>
+          'Test chronométré sur ${v is num ? _plain(v / 1000) : ''} km, '
+              "après 10 à 15 min d'échauffement, à allure régulière. Il "
+              'recale les allures du bloc suivant.',
+        CoachNotes.skillHorizon =>
+          'Objectif de figure, à lire en premier : la figure complète '
+              "n'est pas atteignable dans ce programme. Chaque étape "
+              'demande au moins ${_int(v)} semaines (le tendon suit moins '
+              'vite que le muscle). Ce programme vise à valider le critère '
+              "de l'étape actuelle, puis à ouvrir la suivante sous "
+              "condition ; le test final porte sur l'étape actuelle. La "
+              'figure complète vient aux cycles suivants, étape par étape.',
+        CoachNotes.walking =>
+          'Pour la perte de poids : en plus des séances, deux marches de '
+              '15 à 20 min en semaine 1, les jours sans séance, à allure '
+              'modérée (tu peux parler en phrases, légèrement essoufflé), '
+              'puis trois marches qui montent vers ${_int(v)} min ; garde '
+              'un jour sans activité. Ajoute '
+              "10 min par semaine au total pour viser 150 min d'endurance "
+              'par semaine vers la semaine 8, puis 200 min et plus en fin '
+              'de programme, marche des séances comprise (si la marche de '
+              'fin de séance raccourcit, les marches des autres jours '
+              'compensent). Toute durée compte : tu peux fractionner. La '
+              'priorité des premières semaines reste de tenir les séances.',
+        CoachNotes.pushMaintenance =>
+          "Poussée en entretien : ton objectif porte sur le tirage, la "
+              'poussée garde ${_int(v)} séries par séance pour '
+              "l'équilibre des épaules.",
+        CoachNotes.missed =>
+          'Séance manquée : elle ne se rattrape pas. Semaine manquée : '
+              'refais la dernière semaine terminée. Deux semaines ou plus : '
+              'reprends deux semaines en arrière avec ${_int(v)} % de volume '
+              'en moins.',
+        CoachNotes.checkpoint =>
+          "Repère sur le chemin de l'objectif : ${_plain(v)}. "
+              "S'il n'est pas atteint, garde les volumes du bloc au lieu de "
+              'les durcir.',
+        CoachNotes.testRest =>
+          '${_int(v)} h sans travail dur du mouvement avant un test.',
+        CoachNotes.rampBodyweight =>
+          'Avant la série de tête : ${_int(v)} séries faciles (un tiers, '
+              'puis la moitié des répétitions prévues).',
+        CoachNotes.loadAdjust =>
+          'Ajustement des charges : si la série de tête laisse moins de '
+              'réserve que prévu, baisse les séries suivantes de 2,5 à 5 % ; '
+              'si elle en laisse au moins deux de plus, ajoute le plus petit '
+              'pas la semaine suivante.',
+        CoachNotes.repsAdjust =>
+          'Ajustement des répétitions : si les répétitions prévues ne '
+              'passent pas avec la réserve demandée, garde les mêmes chiffres '
+              'la semaine suivante ; ${_int(v)} séances de suite en dessous, '
+              'retire une série.',
+        CoachNotes.testUse =>
+          'Les tests de fin de bloc (ou de la semaine de test) recalent '
+              'les charges, les répétitions et les secondes du bloc '
+              'suivant : le plan écrit part du repère attendu au test ; si '
+              'ton résultat est différent, déclare-le et recalcule (série '
+              'de tête = résultat − 2 ; tenues = 60 à 75 % du maintien '
+              'mesuré).',
+        CoachNotes.eventRehearsal =>
+          "Répétition de l'épreuve : une série longue par atelier, dans "
+              "l'ordre de l'épreuve, ${_int(v)} s de repos entre les "
+              'ateliers. Rythme régulier dès le départ, pauses courtes '
+              'bras tendus prévues (5 à 20 s), une répétition repère à '
+              'mi-série ; amplitude et critères du règlement, filme-toi.',
+        CoachNotes.rolePrehab =>
+          'Prévention : coiffe et fixateurs des omoplates, pour encaisser '
+              'le volume de tirage et de poussée.',
+        CoachNotes.roleRow =>
+          'Tirage horizontal : équilibre des épaules face à la poussée et '
+              'au tirage vertical.',
+        CoachNotes.rolePosterior =>
+          'Chaîne postérieure : ischio-jambiers et fessiers, entretien du '
+              'bas du corps.',
+        CoachNotes.roleLegs => 'Jambes : force utile, sans fatigue excessive.',
+        CoachNotes.roleCore =>
+          'Tronc : le gainage qui tient la position à la barre.',
+        CoachNotes.roleElbow =>
+          'Fléchisseurs du coude en charge légère : tolérance du coude au '
+              'tirage lourd.',
+        CoachNotes.rampWarmup =>
+          'Montée en charge : ${_int(v)} séries progressives (environ 40 %, '
+              '60 % puis 75 à 80 % de la charge du jour) avant la série de '
+              'tête.',
+        CoachNotes.topSetBackoff =>
+          'Une série de tête, puis des séries allégées (la baisse, en % '
+              'de la charge totale poids du corps compris, est écrite sur '
+              'la ligne).',
+        CoachNotes.speedWork =>
+          'Séance légère à ${_pct(v)} du 1RM : chaque répétition rapide et '
+              "propre, très loin de l'échec.",
+        CoachNotes.attemptsPlan =>
+          'Trois tentatives : ${_pct(v)} du 1RM (une barre déjà réussie à '
+              "l'entraînement), puis 96 %, puis la troisième = la deuxième "
+              '+ 2,5 à 5 kg selon sa vitesse (99 à 102 %). Au moins 6 min '
+              'entre deux tentatives ; échauffement à 40, 60, 75 puis 85 % '
+              'avant la première ; après un essai manqué, la même barre ou '
+              '2,5 kg de moins. Si une zone à ménager dépasse le seuil de '
+              'ta règle de douleur cette semaine-là, pas de troisième '
+              'barre.',
+        CoachNotes.opener =>
+          "Rappel avant l'échéance : ${_pct(v)} du 1RM, une série de tête "
+              'rapide et facile, sans forcer (le dernier lourd est derrière '
+              'toi).',
+        CoachNotes.maintenance =>
+          "En entretien : volume réduit, charge gardée — le volume va à "
+              "l'objectif.",
+        CoachNotes.everyMinute =>
+          'Départs au chrono : une série toutes les ${_int(v)} s ; si les '
+              'répétitions ne passent plus, arrête là.',
+        CoachNotes.qualityFirst =>
+          'À faire frais, en début de séance ; arrête dès que la qualité '
+              'passe sous ${_int(v)} sur 5.',
+        CoachNotes.submaximalHold =>
+          'Tenues sous-maximales : 60 à 75 % de ton dernier maintien '
+              'maximal mesuré (les secondes écrites partent du dernier '
+              'repère connu : si tu as mesuré un autre maintien, recalcule) '
+              '; chaque tenue reste propre, bassin et épaules placés.',
+        CoachNotes.slowNegative =>
+          'Descente freinée en ${_int(v)} s, sans à-coup (monte en sautant '
+              "depuis un appui) ; l'effort se règle au contrôle, pas à la "
+              "réserve : arrête la série dès qu'une descente passe sous "
+              '3 s. Si la première descente passe déjà sous 3 s, fais-la '
+              "avec l'élastique, ou vise 2 à 3 s, et allonge d'une "
+              'seconde par semaine.',
+        CoachNotes.eventDay =>
+          v is num && v > 0
+              ? "Jour de l'épreuve : cette séance se déplace au jour de "
+                    "l'épreuve, ${_int(v)} jour(s) plus tard dans la "
+                    'semaine ; rien de dur entre-temps.'
+              : "Jour du test de l'objectif : c'est la séance elle-même, "
+                    'après 48 h sans travail dur du mouvement.',
+        CoachNotes.recovery =>
+          'Récupération : facile, sans chercher la performance.',
+        CoachNotes.calibrate =>
+          'Charge à régler à la première séance : monte par paliers '
+              "jusqu'à une série qui laisse ${_int(v)} répétitions en "
+              'réserve.',
+        CoachNotes.superset =>
+          "Enchaîné avec l'exercice suivant ; ${_int(v)} s de repos entre "
+              'les tours.',
+        CoachNotes.easyPace =>
+          'Allure de conversation (tu peux parler en phrases), '
+              '${_int(v)} min.',
+        CoachNotes.generalWarmup =>
+          "Chaque séance commence par ${_int(v)} min d'échauffement au "
+              'plus (comptées dans la durée estimée) : épaules, poignets '
+              'et hanches en mobilité, 2 × 8 tirages scapulaires, 2 × 8 '
+              'pompes scapulaires, puis quelques répétitions faciles du '
+              'premier mouvement.',
+        CoachNotes.toleranceVolume =>
+          'Volume réglé à ${_pct(v)} du volume type de ton niveau, au vu de '
+              'ta récupération.',
+        _ => null,
+      };
+    case ReasonCodes.planProgressionRule:
+      final step = p['step'];
+      return switch (p['rule']) {
+        CoachRules.assistanceStep =>
+          "Assistance : dès que le haut de la plage est tenu avec la "
+              "réserve prévue, passe à un élastique plus fin (ou allège "
+              "l'appui des pieds) et repars du bas de la plage.",
+        CoachRules.doubleProgression =>
+          'Progression : quand toutes les séries atteignent le haut de la '
+              'plage avec la réserve prévue, passe à la variante ou à la '
+              'charge suivante et repars du bas de la plage.',
+        CoachRules.loadStep =>
+          'Charges lestées : elles suivent les pourcentages écrits semaine '
+              'par semaine ; si la série de tête ne laisse pas la réserve '
+              'prévue, garde la charge de la semaine précédente.',
+        CoachRules.repStep =>
+          'Séries au poids du corps : les répétitions sont calées sur ton '
+              'dernier maximum mesuré (ton record, puis chaque test) — '
+              'jamais sur un progrès supposé. Si toutes les séries passent '
+              'avec au moins une répétition de réserve de plus que prévu, '
+              'ajoute une répétition par série la semaine suivante (sans '
+              'dépasser ton maximum − 2) ; si la réserve prévue ne tient '
+              'pas, garde les chiffres de la semaine précédente ; après '
+              'un test, série de tête = résultat − 2.',
+        CoachRules.holdStep =>
+          step is num && step >= 5
+              ? "Gainage et tenues d'appoint : +5 s par tenue quand toutes "
+                    'les tenues sont propres.'
+              : 'Tenues de figure : +1 s par tenue quand toutes les tenues '
+                    "sont propres ; l'étape suivante seulement quand le "
+                    "critère de passage de l'échelle est atteint.",
+        CoachRules.densityStep =>
+          'Départs au chrono : un départ de plus toutes les deux semaines '
+              "au plus ; les répétitions par départ ne montent qu'après "
+              'un test.',
+        CoachRules.durationStep =>
+          'Progression : durée +${_int(step)} % par semaine au plus.',
+        _ => null,
+      };
+    case ReasonCodes.planPainRule:
+      final zone = p['zone'];
+      return 'Douleur (${zone is String ? coachZoneLabel(zone) : ''}), un '
+          'seul seuil pour tous les mouvements qui chargent la zone '
+          '(tirage, préhension, appuis, et le mouvement lesté qui la '
+          'sollicite) : tu ajoutes de la charge ou du volume seulement si '
+          'la gêne reste à 2 sur 10 au plus pendant la séance et le '
+          'lendemain ; à 3 ou 4, tu fais la séance écrite sans rien '
+          'ajouter et tu gardes la charge la semaine suivante, quels que '
+          'soient les pourcentages écrits ; à '
+          '5, prends la variante plus facile et retire 30 à 50 % du volume '
+          "de la zone ; à ${_int(p['stopAt'])} ou plus, douleur la nuit, "
+          'perte de force ou gêne qui dure deux semaines : arrête le '
+          'mouvement et consulte un professionnel de santé. Le programme '
+          'ne pose aucun diagnostic.';
+    case ReasonCodes.planWeakPoint:
+      final kind = p['kind'];
+      return 'Cible ton point faible '
+          '(${kind is String ? coachWeakPointLabel(kind) : ''}) sur : '
+          '${name(p['exerciseId'])}.';
+    case ReasonCodes.planTestScheduled:
+      return switch (p['testKind']) {
+        'one_rm' => 'Test : 1RM en trois tentatives.',
+        'rep_max' =>
+          "Test : monte par paliers jusqu'à une série lourde qui garde "
+              '1 répétition en réserve ; elle estime ton 1RM sans le risque '
+              "d'un maximum.",
+        'max_reps' =>
+          'Test : une seule série maximale, arrêt dès que la forme casse.',
+        'time_trial' => 'Test chronométré.',
+        'max_hold' =>
+          'Test : un maintien maximal, arrêt dès que la position se '
+              'dégrade.',
+        _ => 'Test.',
+      };
+    case ReasonCodes.planEventSpecific:
+      return "Au format de l'échéance.";
+    case ReasonCodes.planTaper:
+      return 'Affûtage : séries dures ramenées à environ '
+          "${_pct(p['volumeFactor'])} de la semaine de pointe, intensité "
+          "et fréquence gardées, à ${_int(p['daysToEvent'])} jours de "
+          "l'échéance au plus.";
+    case ReasonCodes.planToCalibrate:
+      return 'Charges « à calibrer » : à la première séance, trouve la '
+          'charge qui permet le haut de la plage avec la réserve prévue, '
+          'note-la, puis suis la double progression.';
+    case ReasonCodes.planSeasonPhase:
+      final phase = p['phase'];
+      final weeks = p['weeksToEvent'];
+      return 'Phase du bloc : '
+          '${phase is String ? coachPhaseLabel(phase) : ''}'
+          '${weeks is int && weeks > 0 ? " ; l'échéance est dans $weeks semaine(s)" : ''}.';
+    case ReasonCodes.planPeakEvent:
+      return "Les blocs sont calés à rebours sur l'échéance : le dernier "
+          'finit sur elle.';
+    case ReasonCodes.planTrainingAge:
+      final band = p['band'];
+      return "Ancienneté d'entraînement prise en compte : "
+          '${band is String ? _band(band) : ''}.';
+    case ReasonCodes.planReturnFromGap:
+      final gap = p['gap'];
+      return 'Reprise après une coupure (${gap is String ? _gap(gap) : ''}) '
+          ': volume réduit de moitié et au moins 3 répétitions en réserve '
+          'la première semaine, puis retour progressif (+10 à 15 % de '
+          'séries par semaine les quatre premières semaines, +20 % au '
+          'plus ensuite) ; les répétitions écrites partent de tes '
+          'anciens records réduits, jamais des records eux-mêmes — le '
+          "test d'entrée et chaque test les recalent.";
+    case ReasonCodes.planRecoveryProfile:
+      return switch (p['factor']) {
+        'sleep' =>
+          'Sommeil court : volume réduit de 15 % et une répétition en '
+              'réserve de plus. Vise 7 h : horaires réguliers, sieste de '
+              "20 à 30 min quand c'est possible.",
+        'stress' =>
+          'Stress élevé : volume réduit de 10 %, une répétition en réserve '
+              'de plus.',
+        'occupational_load' =>
+          'Travail physique : volume de tirage, de préhension et de jambes '
+              'réduit de 15 %.',
+        'age' =>
+          p['level'] == '60_plus'
+              ? 'À 60 ans et plus : volume réduit de 20 %, progression du '
+                    'volume deux fois plus lente.'
+              : 'À 40 ans et plus : progression du volume deux fois plus '
+                    'lente (+10 % par semaine au plus).',
+        _ => null,
+      };
+    case ReasonCodes.planConcurrentSport:
+      final sport = p['sport'];
+      return '${sport is String ? _sport(sport) : ''} '
+          '(${_int(p['sessions'])} séance(s) par semaine) : pris en compte '
+          'dans le volume des jambes et le placement des séances.';
+    case ReasonCodes.planSpecialization:
+      return 'Spécialisation : ${name(p['target'])} monte en fréquence et '
+          'en volume, le reste passe en entretien (charge gardée, volume '
+          'réduit) pendant ${_int(p['weeks'])} semaines.';
+    case ReasonCodes.planConstraintHistory:
+      final zone = p['zone'];
+      final since = p['since'];
+      return 'Antécédent (${zone is String ? coachZoneLabel(zone) : ''}, '
+          '${since is String ? _since(since) : ''}) : charge graduée sur la '
+          "zone, pas d'échec, pas d'excentrique accentué.";
+    case ReasonCodes.planSkillStep:
+      return "Figure : travail à l'étape « ${name(p['exerciseId'])} ».";
+    case ReasonCodes.planCautiousHealth:
+      return 'Mode prudent (questionnaire santé) : intensité modérée, pas '
+          "d'impact.";
+    default:
+      return null;
+  }
+}
