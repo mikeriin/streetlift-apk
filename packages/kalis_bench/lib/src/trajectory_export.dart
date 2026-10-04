@@ -552,6 +552,9 @@ String coachTrajectoryMarkdown(
           if (!ids.contains(it.exerciseId)) {
             continue;
           }
+          // La plus lourde : plus forte charge, puis plus grande série
+          // servie (exercice sans charge : la séance lourde, pas la séance
+          // au chrono).
           var top = 0.0;
           for (final r in s.record.sets) {
             if (r.exerciseId == it.exerciseId &&
@@ -559,6 +562,14 @@ String coachTrajectoryMarkdown(
               top = r.externalLoadKg ?? 0;
             }
           }
+          var most = 0;
+          for (final t in it.setTargets ?? const <SetTarget>[]) {
+            final n = t.repsHigh ?? t.secondsHigh ?? 0;
+            if (n > most) {
+              most = n;
+            }
+          }
+          top += most / 1000;
           if (best == null || top > bestLoad) {
             best = s;
             bestLoad = top;
@@ -572,10 +583,20 @@ String coachTrajectoryMarkdown(
       // Décisions de la séance montrée (et conseils d'entre-séries).
       final notes = <String>[];
       final assisted = catalog.find(bestItem.exerciseId)?.assisted ?? false;
+      var recal = false;
       void note(Reason r) {
+        // Un seul « recalé sur le maximum mesuré » par ligne ; il rend
+        // inutile « allégé pour garder la marge ».
+        final isRecal =
+            r.code == ReasonCodes.adaptRepsDown ||
+            r.code == ReasonCodes.adaptRepsUp;
+        if (isRecal && recal) {
+          return;
+        }
         final text = adaptReasonText(r, catalog, assisted: assisted);
         if (text != null && !notes.contains(text)) {
           notes.add(text);
+          recal = recal || isRecal;
         }
       }
 
@@ -647,7 +668,13 @@ String coachTrajectoryMarkdown(
           _done(rows, hold),
           effortText,
           '${max(dayMax)} / ${max(estimate)}',
-          notes.isEmpty ? '—' : notes.take(4).join(' ; '),
+          notes.isEmpty
+              ? '—'
+              : <String>[
+                  for (final n in notes)
+                    if (!(recal && n.startsWith('allégé pour garder')))
+                      n,
+                ].take(4).join(' ; '),
         ]),
       );
     }

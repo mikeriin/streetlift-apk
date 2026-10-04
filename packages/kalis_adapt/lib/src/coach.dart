@@ -1164,7 +1164,7 @@ BodyZone tendonZone(ExerciseInfo info) {
 /// non prévu, une douleur ou un bilan bas, jamais plus que le dernier
 /// maintien après un échec dans la séance. La propreté arrête les séries
 /// (règle `stop_on_quality_drop`).
-int _holdSafe(SessionRun run, ExerciseRun ex, double fatigue) {
+int _holdSafe(SessionRun run, ExerciseRun ex, double fatigue, String slotId) {
   final p = run.ctx.params;
   final track = ex.track!;
   final cap = track.filter.capacityToday() * (1 - fatigue);
@@ -1172,9 +1172,16 @@ int _holdSafe(SessionRun run, ExerciseRun ex, double fatigue) {
   if (!ex.spec.test &&
       track.lastDay != null &&
       (track.noUp || ex.painZones.isNotEmpty || run.noIncrease)) {
-    final top = track.lastTop < 1 ? 1 : track.lastTop;
-    if (target > top) {
-      target = top;
+    // Pas de hausse par rapport à la dernière séance du même emplacement
+    // (séance lourde et séance légère d'un même exercice ne se comparent
+    // pas) ; sans elle, après un échec, par rapport à la dernière séance.
+    final slotTop = track.slotMarks[slotId]?.top;
+    final last = slotTop ?? (track.noUp ? track.lastTop : null);
+    if (last != null) {
+      final top = last < 1 ? 1 : last;
+      if (target > top) {
+        target = top;
+      }
     }
   }
   if (ex.fails > 0 && ex.observed.isNotEmpty) {
@@ -1246,7 +1253,7 @@ void _probe(
 /// réserve visée moins un point (au plus `coachDirectGuardRir`) ; mêmes
 /// garde-fous que la règle générale après un échec, une douleur ou un
 /// bilan bas.
-int _repsSafe(SessionRun run, ExerciseRun ex, double fatigue) {
+int _repsSafe(SessionRun run, ExerciseRun ex, double fatigue, String slotId) {
   final p = run.ctx.params;
   final track = ex.track!;
   var guard = ex.rirEff - p.coachBreachRir;
@@ -1260,9 +1267,16 @@ int _repsSafe(SessionRun run, ExerciseRun ex, double fatigue) {
   if (!ex.spec.test &&
       track.lastDay != null &&
       (track.noUp || ex.painZones.isNotEmpty || run.noIncrease)) {
-    final top = track.lastTop < 1 ? 1 : track.lastTop;
-    if (target > top) {
-      target = top;
+    // Pas de hausse par rapport à la dernière séance du même emplacement
+    // (séance lourde et séance légère d'un même exercice ne se comparent
+    // pas) ; sans elle, après un échec, par rapport à la dernière séance.
+    final slotTop = track.slotMarks[slotId]?.top;
+    final last = slotTop ?? (track.noUp ? track.lastTop : null);
+    if (last != null) {
+      final top = last < 1 ? 1 : last;
+      if (target > top) {
+        target = top;
+      }
     }
   }
   if (ex.fails > 0 && ex.observed.isNotEmpty) {
@@ -1327,7 +1341,12 @@ List<SetPlan>? _directPlans(
       item.kind != SetKind.test &&
       firstLow > 1) {
     final rest = _restOf(ex, c, served, firstHigh);
-    final reach = _repsSafe(run, ex, plannedFatigue(0, rir, rest, p));
+    final reach = _repsSafe(
+      run,
+      ex,
+      plannedFatigue(0, rir, rest, p),
+      c.slotId,
+    );
     if (reach < firstLow) {
       // Chaque série garde la réserve du bloc.
       final kept = (track.filter.capacityToday() - rir + 0.3).floor();
@@ -1371,8 +1390,8 @@ List<SetPlan>? _directPlans(
     // Ce que le modèle prévoit de sûr aujourd'hui (réserve gardée, marge de
     // prudence, garde-fous après échec, douleur ou bilan bas).
     final safe = hold
-        ? _holdSafe(run, ex, fatigue)
-        : _repsSafe(run, ex, fatigue);
+        ? _holdSafe(run, ex, fatigue, c.slotId)
+        : _repsSafe(run, ex, fatigue, c.slotId);
     int? easyTop;
     var wanted = high;
     if (follows && low == high) {
