@@ -9,6 +9,7 @@ import 'package:kalis_core/kalis_core.dart';
 
 import 'book.dart';
 import 'filter.dart';
+import 'grid.dart';
 import 'model.dart';
 import 'numeric.dart';
 import 'params.dart';
