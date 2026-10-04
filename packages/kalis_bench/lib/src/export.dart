@@ -263,14 +263,15 @@ String notesText(ItemView i, Catalog catalog) {
   final p = i.p;
   final notes = <String>[];
   final role = roleLabel(i.role);
-  if (role.isNotEmpty) {
+  // Une épreuve n'a pas de rang dans la séance : elle est l'épreuve.
+  if (role.isNotEmpty && p.kind != SetKind.test) {
     notes.add(role);
   }
   if (p.kind == SetKind.test) {
     notes.add('ÉPREUVE');
   } else if (p.kind == SetKind.calibration) {
     notes.add('série de calibrage');
-  } else if (p.kind == SetKind.warmup) {
+  } else if (p.kind == SetKind.warmup && !notes.contains('échauffement')) {
     notes.add('échauffement');
   }
   final format = p.format;
@@ -550,8 +551,11 @@ String _targetText(BenchTarget t, Catalog catalog) {
     GoalMetric.maxHoldSeconds =>
       '$name : tenue de ${value == null ? '' : _num(value)} s',
     GoalMetric.skillUnlocked => '$name : figure à débloquer',
+    // Une course chronométrée se nomme par sa distance, pas par l'exercice
+    // d'entraînement qui la porte.
     GoalMetric.timeSeconds =>
-      '$name : ${t.distanceMeters == null ? '' : '${t.distanceMeters!.round()} m '}'
+      '${t.distanceMeters == null ? name : 'Course chronométrée'} : '
+          '${t.distanceMeters == null ? '' : '${t.distanceMeters!.round()} m '}'
           'en ${value == null ? '' : _duration(value.round())}',
     GoalMetric.distanceMeters =>
       '$name : ${value == null ? '' : '${value.round()} m'}',

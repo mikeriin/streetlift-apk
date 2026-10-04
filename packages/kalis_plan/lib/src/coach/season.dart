@@ -280,8 +280,14 @@ BlockShape shapeBlock(
   final target = targetOf(a.profile, start);
   final model = seasonModelOf(a, target);
   final toEvent = target == null ? null : weeksUntil(start, target.date);
+  // Sans échéance, l'intermédiaire travaille par blocs de six semaines
+  // (R3-P9 : allègement toutes les cinq à six semaines) : deux blocs font
+  // un cycle de douze semaines qui finit sur un allègement et des tests.
   final length =
-      blockWeeks ?? blockLengthFor(toEvent, blockPreferences(a.level));
+      blockWeeks ??
+      (toEvent == null && a.level == 1
+          ? 6
+          : blockLengthFor(toEvent, blockPreferences(a.level)));
   final finalBlock = toEvent != null && toEvent <= length;
   final first = blockIndex == 0;
   final reintroduction = first && a.gapWeeks >= 3;
@@ -320,11 +326,22 @@ BlockShape shapeBlock(
           ? SeasonPhaseKind.reintroduction
           : SeasonPhaseKind.accumulation;
       var stage = 0;
+      // R3-P9, R3-P21 : avant un test daté, la dernière semaine de charge
+      // devient une semaine allégée (volume −30 %, intensité gardée).
+      final tapered = toEvent != null && toEvent >= 5 && toEvent <= length;
       for (var i = 0; i < length; i++) {
         if (i == 0 && first) {
           // R5-P22 : la marche vers la première semaine de charge reste sous
           // +20 %.
           add(WeekKind.intro, WeekIntent.intro, phase, 0.9, 0);
+        } else if (tapered && left(i) == 2) {
+          add(
+            WeekKind.deload,
+            WeekIntent.taper,
+            SeasonPhaseKind.taper,
+            0.7,
+            stage,
+          );
         } else if ((i == length - 1 && length >= 4) || isEvent(i)) {
           add(
             WeekKind.test,
