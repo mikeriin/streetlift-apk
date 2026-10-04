@@ -97,16 +97,17 @@ Map<String, bool?> trajectoryVerdicts(Map<String, Object?> metrics) {
 
 /// Athlète simulé du profil [p] : niveau et gain par défaut, puis les
 /// réglages de `simulation` (champs de `AthleteSpec`).
-AthleteSpec athleteSpecOf(BenchProfile p) {
-  final json = <String, Object?>{
-    'key': p.key,
-    'profileKey': p.key,
-    'level': p.level.index,
-    'weeklyGain': defaultWeeklyGain[p.level.index],
-    ...p.simulation,
-  };
-  return athleteFromJson(json);
-}
+AthleteSpec athleteSpecOf(BenchProfile p) =>
+    athleteFromJson(athleteSpecJson(p));
+
+/// Objet JSON de l'athlète simulé du profil [p] (lu par `athleteFromJson`).
+Map<String, Object?> athleteSpecJson(BenchProfile p) => <String, Object?>{
+  'key': p.key,
+  'profileKey': p.key,
+  'level': p.level.index,
+  'weeklyGain': defaultWeeklyGain[p.level.index],
+  ...p.simulation,
+};
 
 /// Ligne hebdomadaire d'une trajectoire pour un exercice.
 final class TrajectoryRow {

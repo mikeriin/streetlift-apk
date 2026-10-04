@@ -310,7 +310,9 @@ String _done(List<SetRow> sets, bool hold) {
       final s = sets[j];
       final mark = s.failed
           ? (s.attempt ? ' (manquée)' : ' (échec)')
-          : (s.amount < s.targetLow && !s.test ? ' (arrêt avant la cible)' : '');
+          : (s.amount < s.targetLow && !s.test
+                ? ' (arrêt avant la cible)'
+                : '');
       amounts.add('${s.amount}$mark');
       j++;
     }

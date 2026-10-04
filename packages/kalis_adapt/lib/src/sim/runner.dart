@@ -89,28 +89,28 @@ final class SimProgram {
         shaped(
           plan
               .nextBlock(
-              catalog,
-              NextBlockRequest(
-                profile: profile,
-                seed: seed,
-                startDate: start,
-                previous: previous,
-                adaptation: AdaptationSummary(
-                  asOf: start.addDays(-1),
-                  weeksObserved: weeks,
-                  sessionsPlanned: sessions,
-                  sessionsCompleted: sessions,
-                  unlockLevel: UnlockLevel.loadsReps,
-                  confidence: 0,
-                  estimates: const <ExerciseEstimate>[],
-                  pains: const <PainTrend>[],
-                  avoidedExerciseIds: const <String>[],
-                  reasons: const <Reason>[],
+                catalog,
+                NextBlockRequest(
+                  profile: profile,
+                  seed: seed,
+                  startDate: start,
+                  previous: previous,
+                  adaptation: AdaptationSummary(
+                    asOf: start.addDays(-1),
+                    weeksObserved: weeks,
+                    sessionsPlanned: sessions,
+                    sessionsCompleted: sessions,
+                    unlockLevel: UnlockLevel.loadsReps,
+                    confidence: 0,
+                    estimates: const <ExerciseEstimate>[],
+                    pains: const <PainTrend>[],
+                    avoidedExerciseIds: const <String>[],
+                    reasons: const <Reason>[],
+                  ),
+                  locks: const <PlanLock>[],
                 ),
-                locks: const <PlanLock>[],
-              ),
-            )
-            .block,
+              )
+              .block,
         ),
       );
     }
@@ -501,17 +501,17 @@ SimRun simulate({
         block = program.shaped(
           program.plan
               .nextBlock(
-              catalog,
-              NextBlockRequest(
-                profile: current,
-                seed: block.pass1.seed,
-                startDate: blockStart,
-                previous: block,
-                adaptation: last,
-                locks: const <PlanLock>[],
-              ),
-            )
-            .block,
+                catalog,
+                NextBlockRequest(
+                  profile: current,
+                  seed: block.pass1.seed,
+                  startDate: blockStart,
+                  previous: block,
+                  adaptation: last,
+                  locks: const <PlanLock>[],
+                ),
+              )
+              .block,
         );
       }
       run.blocks.add(block);

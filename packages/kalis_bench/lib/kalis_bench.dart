@@ -16,6 +16,7 @@ library;
 
 export 'src/adapter.dart';
 export 'src/analysis.dart';
+export 'src/campaign.dart';
 export 'src/expectations.dart';
 export 'src/export.dart';
 export 'src/profile.dart';

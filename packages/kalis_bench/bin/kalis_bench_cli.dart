@@ -13,7 +13,7 @@ import 'package:kalis_bench/kalis_bench.dart';
 
 import 'common.dart';
 
-void main(List<String> args) {
+Future<void> main(List<String> args) async {
   final outPath = option(args, '--rapport');
   if (outPath == null) {
     stderr.writeln(
@@ -28,4 +28,5 @@ void main(List<String> args) {
     scope: 'tous',
     seed: 0,
   );
+  await runStreetCampaign(outPath: outPath);
 }
