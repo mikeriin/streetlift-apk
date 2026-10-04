@@ -125,6 +125,8 @@ final class AdaptParams {
     this.coachRise = const <double>[0.10, 0.05, 0.05, 0.05],
     this.coachCorridorDown = 0.05,
     this.coachCorridorUp = 0.075,
+    this.coachCorridorWiden = 0.025,
+    this.coachCorridorUpMax = 0.15,
     this.coachWorstSetSlack = 1.5,
     this.coachBreachRir = 1,
     this.coachBreachCut = 0.025,
@@ -559,6 +561,16 @@ final class AdaptParams {
 
   /// Couloir au-dessus de la part écrite par le bloc.
   final double coachCorridorUp;
+
+  /// Élargissement du haut du couloir par séance où, servie au haut du
+  /// couloir, la charge a laissé au moins [coachEasyGapRir] répétitions de
+  /// plus que visé (la courbe charge-répétitions de l'athlète est plus
+  /// plate que la moyenne : la note d'effort prime sur la part du 1RM).
+  final double coachCorridorWiden;
+
+  /// Haut du couloir élargi, au plus (part du 1RM au-dessus de la part du
+  /// bloc).
+  final double coachCorridorUpMax;
 
   /// Marge admise, en répétitions en réserve, entre la cible et la série la
   /// plus dure prévue (quantile prudent) ; jamais moins d'une demi-réserve.

@@ -53,7 +53,7 @@ String jsonText(Map<String, Object?> json) => jsonEncode(json);
 /// passage : validité du contrat et invariants de sécurité (voir
 /// `CONTRAT.md`, § Invariants). Les manquements sont notés dans
 /// [violations].
-final class CheckedPolicy implements SimPolicy {
+final class CheckedPolicy implements CoachAwarePolicy {
   /// Politique contrôlée du moteur [engine].
   CheckedPolicy(this.engine) : inner = KalisAdaptPolicy(engine);
 
@@ -74,6 +74,12 @@ final class CheckedPolicy implements SimPolicy {
 
   @override
   String get name => inner.name;
+
+  @override
+  bool get rich => inner.rich;
+
+  @override
+  List<IntraSessionAdvice> takeAdvices() => inner.takeAdvices();
 
   @override
   SessionPlan plan(SessionContext c) {

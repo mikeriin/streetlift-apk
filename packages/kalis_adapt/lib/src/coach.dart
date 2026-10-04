@@ -281,7 +281,11 @@ final class CoachSpec {
       if (index == 0) {
         return (low, high, SetRole.top);
       }
-      return (t.backoffRepsLow ?? low, t.backoffRepsHigh ?? high, SetRole.backOff);
+      return (
+        t.backoffRepsLow ?? low,
+        t.backoffRepsHigh ?? high,
+        SetRole.backOff,
+      );
     }
     if (served == SetTechniqueKind.wave) {
       final reps = t.waveReps;
@@ -324,7 +328,12 @@ final class SlotMark {
     required this.amount,
     required this.top,
     required this.failed,
+    this.easy = 0,
   });
+
+  /// Séances où la charge, servie au haut du couloir, est restée
+  /// nettement plus facile que visé (élargit le couloir, R2-P3).
+  final int easy;
 
   /// Jour de la séance.
   final int day;
@@ -381,6 +390,7 @@ void noteCoachSession(
   CoachSpec coach,
   int day,
   AdaptParams p,
+  double bodyWeightKg,
 ) {
   if (run.observed.isEmpty) {
     return;
@@ -407,12 +417,50 @@ void noteCoachSession(
     }
   }
   final marks = Map<String, SlotMark>.of(track.slotMarks);
+  // Couloir : une séance servie au haut du couloir et restée nettement
+  // plus facile que visé l'élargit d'un cran ; une séance plus dure que
+  // visé le resserre d'un cran.
+  var easy = marks[coach.slotId]?.easy ?? 0;
+  var rirSum = 0.0;
+  var rirCount = 0;
+  for (final o in run.observed) {
+    final flames = o.flames;
+    if (flames != null && o.role != SetRole.backOff && !o.failed) {
+      rirSum += Flames.toRir(flames);
+      rirCount++;
+    }
+  }
+  // Servie au haut nominal du couloir (à 2 % près) : la part du bloc et
+  // le 1RM estimé de l'exercice lui-même.
+  final pct = coach.pct;
+  final f = track.filter;
+  final ownRef = coach.referenceId == null || coach.referenceId == run.info.id;
+  var atCeiling = false;
+  if (pct != null &&
+      ownRef &&
+      held != null &&
+      f.mode == CapacityMode.loaded) {
+    final ref = exp(f.m[0] + f.m[3] + f.gRef);
+    final bw = run.info.fraction * bodyWeightKg;
+    atCeiling = held + bw >= (pct + p.coachCorridorUp) * ref * 0.98;
+  }
+  if (failed) {
+    easy = easy > 0 ? easy - 1 : 0;
+  } else if (rirCount > 0) {
+    final gap = rirSum / rirCount - run.rirEff;
+    if (atCeiling && gap >= p.coachEasyGapRir - 1e-9) {
+      easy++;
+    } else if (gap <= -p.coachBreachRir + 1e-9 && easy > 0) {
+      easy--;
+    }
+  }
   marks[coach.slotId] = SlotMark(
     day: day,
     loadKg: lowestFailed ?? held,
     amount: coach.schemeAmount,
     top: top,
     failed: failed,
+    easy: easy,
   );
   track.slotMarks = marks;
 }
@@ -782,7 +830,13 @@ List<SetPlan>? _loadedPlans(
     final share = t.eccentricLoadPct ?? pct;
     kg = _onGrid(grid, (share > 1.1 ? 1.1 : share) * ref - bw);
   } else if (pilot) {
-    final up = ex.uncertain ? 0.0 : p.coachCorridorUp;
+    final streak = track.slotMarks[c.slotId]?.easy ?? 0;
+    var up = ex.uncertain
+        ? 0.0
+        : p.coachCorridorUp + p.coachCorridorWiden * streak;
+    if (up > p.coachCorridorUpMax) {
+      up = p.coachCorridorUpMax;
+    }
     final low = _onGrid(grid, (pct - p.coachCorridorDown) * ref - bw);
     final high = _onGrid(grid, (pct + up) * ref - bw);
     kg = high;
@@ -815,9 +869,7 @@ List<SetPlan>? _loadedPlans(
       : null;
   final lockCause = track.noUp || (mark != null && mark.failed)
       ? 'failure'
-      : (ex.painZones.isNotEmpty
-            ? 'pain'
-            : (run.noIncrease ? 'health' : null));
+      : (ex.painZones.isNotEmpty ? 'pain' : (run.noIncrease ? 'health' : null));
   if (markLoad != null) {
     if (kg > markLoad + 1e-9) {
       final floored = grid.floor(markLoad);
@@ -842,10 +894,32 @@ List<SetPlan>? _loadedPlans(
     ex.heldCause = lockCause;
   }
   final lastAny = track.lastLoad;
-  if (track.noUp && lastAny != null && kg > lastAny + 1e-9) {
-    final floored = grid.floor(lastAny);
-    kg = floored > lastAny ? lastAny : floored;
-    ex.heldCause = 'failure';
+  if (markLoad == null && lastAny != null && !ex.calibrating) {
+    // Premier passage à ce schéma : au plus la charge écrite par le bloc,
+    // sauf à rester à +10 % (ou un cran) de la dernière séance.
+    final cap = grid.floor((lastAny + bw) * (1 + p.maxUpMain) - bw);
+    final step = grid.next(lastAny, up: true);
+    var bound = cap > step ? cap : step;
+    final start = item.startLoadKg;
+    if (start != null && start > bound) {
+      bound = start;
+    }
+    if (kg > bound + 1e-9) {
+      kg = bound;
+      ex.heldCause = 'cap';
+    }
+  }
+  if (lastAny != null && kg > lastAny + 1e-9) {
+    // Invariants de 0.1 : aucune hausse par rapport à la dernière séance
+    // de l'exercice après un échec non prévu ni sur une zone douloureuse.
+    final cause = track.noUp
+        ? 'failure'
+        : (ex.painZones.isNotEmpty ? 'pain' : null);
+    if (cause != null) {
+      final floored = grid.floor(lastAny);
+      kg = floored > lastAny ? lastAny : floored;
+      ex.heldCause = cause;
+    }
   }
   if (capped) {
     ex.notes.add(
@@ -976,7 +1050,8 @@ List<SetPlan>? _directPlans(
         item.kind != SetKind.test &&
         target > mark.top) {
       // Bras tendus : hausse bornée d'une séance à la suivante.
-      final rise = p.coachHoldRise[c.level < 0 ? 0 : (c.level > 3 ? 3 : c.level)];
+      final rise =
+          p.coachHoldRise[c.level < 0 ? 0 : (c.level > 3 ? 3 : c.level)];
       final byShare = (mark.top * (1 + rise)).floor();
       final bySlack = mark.top + p.coachHoldRiseSlackSeconds;
       final cap = byShare > bySlack ? byShare : bySlack;
@@ -1054,9 +1129,9 @@ List<SetPlan>? _testPlans(
   final loaded = info.mode == CapacityMode.loaded;
   final low = (hold ? item.secondsLow : item.repsLow) ?? 1;
   final high = (hold ? item.secondsHigh : item.repsHigh) ?? low;
-  final locked =
-      track.noUp || ex.painZones.isNotEmpty || run.noIncrease;
-  if (loaded && (kind == TestKind.oneRm || kind == TestKind.attemptSimulation)) {
+  final locked = track.noUp || ex.painZones.isNotEmpty || run.noIncrease;
+  if (loaded &&
+      (kind == TestKind.oneRm || kind == TestKind.attemptSimulation)) {
     final bw = info.fraction * run.bodyWeightKg;
     final recent = track.heavy.isEmpty ? null : track.heavy.first.$2;
     final lift = competitionLiftOf(run.ctx.profile, info.id, run.day);
@@ -1238,7 +1313,8 @@ List<AttemptPick> attemptLadder({
   if (relSd > p.calibrationSd) {
     globalCause ??= 'uncertainty';
   }
-  double chance(double kg) => attemptProbability(kg + bodyPart, estimate, relSd);
+  double chance(double kg) =>
+      attemptProbability(kg + bodyPart, estimate, relSd);
   final step = minIncrementKg != null && minIncrementKg > grid.step
       ? minIncrementKg
       : grid.step;

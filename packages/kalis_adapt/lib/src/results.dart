@@ -203,8 +203,7 @@ List<Reason> testResultReasons(
 ) {
   final seen = <String>{};
   final out = <Reason>[];
-  final bw =
-      ctx.profile.bodyWeightKg ?? ctx.params.referenceBodyWeightKg;
+  final bw = ctx.profile.bodyWeightKg ?? ctx.params.referenceBodyWeightKg;
   for (final b in tests.reversed) {
     final date = b.date;
     if (date == null || day - date.dayNumber > 14 || !seen.add(b.exerciseId)) {
