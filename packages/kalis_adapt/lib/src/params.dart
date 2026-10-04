@@ -132,6 +132,8 @@ final class AdaptParams {
     this.coachDirectGuardRir = 2,
     this.coachProbeDays = 14,
     this.coachLowDayRir = 3,
+    this.coachBreakDays = 14,
+    this.coachBreakSets = 0.8,
     this.biasLearnRate = 0.25,
     this.biasLearnRir = 3,
     this.biasLearnMaxStep = 0.1,
@@ -607,6 +609,13 @@ final class AdaptParams {
   /// Mode coach : réserve minimale des séries un jour de bilan nettement
   /// bas.
   final double coachLowDayRir;
+
+  /// Mode coach : coupure, en jours, à partir de laquelle la semaine du
+  /// retour est allégée.
+  final int coachBreakDays;
+
+  /// Mode coach : part des séries gardée la semaine du retour.
+  final double coachBreakSets;
 
   /// Part de l'écart d'un test (rapporté à [biasLearnRir] répétitions)
   /// portée au biais de note appris.

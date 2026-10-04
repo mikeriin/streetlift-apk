@@ -293,9 +293,11 @@ CoachAdvice? _coachAdvise(
     if (g < 0) {
       g = 0;
     }
+    // (Maintien : une tenue plus courte que prévu ne compte que si elle
+    // est dite dure ; c'est la propreté qui arrête les tenues.)
     final aimed = o.target?.low;
-    if (aimed != null && o.amount < aimed) {
-      g += hold ? (aimed - o.amount) / (0.1 * aimed) : aimed - o.amount;
+    if (!hold && aimed != null && o.amount < aimed) {
+      g += aimed - o.amount;
     }
     return g;
   }

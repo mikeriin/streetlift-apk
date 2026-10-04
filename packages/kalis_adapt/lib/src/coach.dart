@@ -996,7 +996,10 @@ List<SetPlan>? _loadedPlans(
   final shown = shownFor(kg, head);
   // Vagues : la charge ne monte d'une vague à l'autre qu'un jour sans
   // verrou (ni échec récent, ni douleur, ni bilan bas, ni charge retenue).
-  final waveStep = served == SetTechniqueKind.wave && ex.heldCause == null
+  final waveStep =
+      served == SetTechniqueKind.wave &&
+          ex.heldCause == null &&
+          lockCause == null
       ? t?.waveStepPct
       : null;
   final waveLength = t?.waveReps?.length ?? 1;
@@ -1261,7 +1264,9 @@ List<SetPlan>? _directPlans(
     final expected = hold
         ? (cap <= 0 ? 0.0 : (1 - target / cap) / p.holdReserveShare)
         : cap - target;
-    if (expected >= rir + 1) {
+    if (expected >= rir + 1 || (hold && expected >= 0)) {
+      // (Maintien : la durée servie fait l'effort ; il est affiché tel
+      // quel, dans les deux sens.)
       shown = flamesOfRir(
         expected > 5 ? 5.0 : (expected * 2).floorToDouble() / 2,
       );
