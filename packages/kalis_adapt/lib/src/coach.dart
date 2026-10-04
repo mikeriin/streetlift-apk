@@ -1394,18 +1394,21 @@ List<SetPlan>? _directPlans(
       // Plage hors de portée aujourd'hui (le bas de la plage ne laisse pas
       // la réserve visée) : séries fractionnées — moins de répétitions par
       // série, plus de séries, pour approcher le travail écrit (au plus le
-      // double des séries, trois au moins permises, jamais plus de
-      // répétitions au total que le bas de la plage n'en écrit).
+      // double des séries, trois au moins permises ; le total vise le
+      // bas de la plage écrite, à moins d'une série près).
       final each = kept < 1 ? 1 : (kept < reach ? kept : reach);
       var count = (sets * firstLow / each).ceil();
       // Après un échec, sur une zone douloureuse ou un jour de bilan bas :
-      // aucune série ajoutée.
-      final most = locked ? sets : (2 * sets < 3 ? 3 : 2 * sets);
+      // aucune série ajoutée ; de même tant qu'aucune série n'a mesuré le
+      // maximum (exercice encore estimé d'après le profil).
+      final exact = track.exactDay;
+      final known =
+          !ex.calibrating &&
+          exact != null &&
+          run.day - exact <= 2 * p.coachProbeDays;
+      final most = locked || !known ? sets : (2 * sets < 3 ? 3 : 2 * sets);
       if (count > most) {
         count = most;
-      }
-      while (count > sets && count * each > sets * firstLow) {
-        count--;
       }
       ex.notes.add(
         _r(ReasonCodes.adaptRepsDown, <String, Object?>{
