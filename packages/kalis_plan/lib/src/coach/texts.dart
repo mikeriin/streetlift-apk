@@ -147,17 +147,22 @@ String? coachReasonText(Reason r, Catalog catalog) {
               "Déclare la série dans l'application, les charges se "
               'recalent dessus.',
         CoachNotes.stepGate =>
-          'Étape suivante, sous condition : seulement si ton dernier test '
-              "valide le critère de l'échelle (3 × ${_int(v)} s propres "
-              "sur l'étape actuelle, 3 séances de suite, douleur à 2 sur "
-              '10 au plus). Sinon, saute cette ligne. Entrées de 2 à 3 s, '
-              "très loin de la limite ; rien d'autre ne change cette "
-              'semaine-là (un seul changement à la fois).',
+          'Étape suivante, sous condition. Repère mesurable : au dernier '
+              "test, un maintien maximal d'au moins "
+              "${v is num ? (v / 0.75).ceil() : ''} s sur l'étape "
+              'actuelle. Tu remplaces alors, une séance lourde par '
+              'semaine, les tenues écrites par 3 × ${_int(v)} s ; quand '
+              'elles sont propres 3 séances de suite (douleur à 2 sur 10 '
+              "au plus), cette ligne s'ouvre : entrées de 2 à 3 s, très "
+              'loin de la limite. Sinon, saute-la. La semaine où elle '
+              "s'ouvre, rien d'autre n'augmente (un seul changement à la "
+              'fois).',
         CoachNotes.maxAttempt =>
-          'Toutes les ${_int(v)} semaines, la dernière tenue de cette '
+          'Toutes les ${_int(v)} semaines, la première tenue de cette '
               "séance est un maintien maximal propre (arrêt dès que la "
               'ligne casse). Note-le : les secondes des semaines suivantes '
-              'valent 60 à 75 % de ce nouveau repère.',
+              'valent 60 à 75 % de ce nouveau repère ; si une tenue passe '
+              'sous 4 sur 5 en qualité, garde la dose.',
         CoachNotes.holdCalibrate =>
           'Première séance : mesure ton maintien maximal propre (un seul '
               'essai), puis travaille à ${_pct(v)} de ce temps. '
@@ -169,16 +174,18 @@ String? coachReasonText(Reason r, Catalog catalog) {
               'petit pas quand toutes les séries passent.',
         CoachNotes.reconciled =>
           'Ton maximum de répétitions au poids du corps indique un 1RM '
-              'plus haut que celui déclaré : les charges de travail sont '
-              'calculées sur ${_plain(v)} kg de charge totale (poids du '
-              'corps compris). Le prochain test recale ce repère.',
+              'plus haut que celui déclaré : les charges et les '
+              'pourcentages de cette ligne sont calculés sur un seul '
+              'repère, ${_plain(v)} kg de charge totale (poids du corps '
+              'compris). Le prochain test le recale.',
         CoachNotes.tendonLoad =>
           'Charge progressive des fléchisseurs du poignet (face interne '
               'du coude) : à faire valider par le professionnel qui suit '
-              'ton coude. La gêne reste à ${_int(v)} sur 10 au plus '
-              'pendant la séance et revient à la normale le lendemain ; '
-              'sinon, garde la charge. Ajoute le plus petit pas quand '
-              'toutes les séries passent sans gêne.',
+              'ton coude. Seuil unique pour toute la zone : la gêne ne '
+              'dépasse pas ton niveau de départ (${_int(v)} sur 10 au '
+              'plus) pendant la séance et revient à ce niveau le '
+              'lendemain ; sinon, garde la charge. Ajoute le plus petit '
+              'pas quand toutes les séries passent dans ce seuil.',
         CoachNotes.pullReturn =>
           'Retour au tirage lesté : quand le coude reste à 2 sur 10 ou '
               'moins deux semaines de suite sur ces tractions, ajoute '
@@ -280,7 +287,8 @@ String? coachReasonText(Reason r, Catalog catalog) {
           5 =>
             'Exécution : repousse le sol loin de toi, épaules en avant '
                 'des mains, bras tendus, bassin en rétroversion ; sur '
-                'parallettes dès que le poignet dépasse 1 sur 10.',
+                'parallettes ou poings fermés dès que le poignet dépasse '
+                '1 sur 10.',
           6 =>
             'Exécution : corps gainé de la tête aux talons, poitrine près '
                 'du sol, coudes à 45°.',
@@ -289,8 +297,9 @@ String? coachReasonText(Reason r, Catalog catalog) {
                 'répétition, tronc gainé, pieds ancrés.',
           8 =>
             'Exécution : doigts écartés, épaules ouvertes, côtes '
-                'rentrées ; sors proprement dès que la ligne se perd ; sur '
-                'parallettes dès que le poignet dépasse 1 sur 10.',
+                'rentrées ; sors proprement dès que la ligne se perd ; '
+                'poings fermés, barres basses ou parallettes dès que le '
+                'poignet dépasse 1 sur 10.',
           9 =>
             'Exécution : départ bras tendus, tire les coudes vers le bas '
                 "et l'arrière jusqu'à toucher la barre avec la poitrine, "
@@ -328,8 +337,10 @@ String? coachReasonText(Reason r, Catalog catalog) {
               'les jours sans séance (tu peux parler en marchant). Ajoute '
               "10 min par semaine au total pour viser 150 min d'endurance "
               'par semaine vers la semaine 6, puis 200 min et plus en fin '
-              'de programme, marche des séances comprise. Toute durée '
-              'compte : tu peux fractionner.',
+              'de programme, marche des séances comprise (si la marche de '
+              'fin de séance raccourcit, les marches des autres jours '
+              'compensent). Toute durée compte : tu peux fractionner. La '
+              'priorité des premières semaines reste de tenir les séances.',
         CoachNotes.pushMaintenance =>
           "Poussée en entretien : ton objectif porte sur le tirage, la "
               'poussée garde ${_int(v)} séries par séance pour '
@@ -502,9 +513,12 @@ String? coachReasonText(Reason r, Catalog catalog) {
           'facile et retire 30 à 50 % du volume de la zone ; à '
           "${_int(p['stopAt'])} ou plus, douleur la nuit, perte de force ou "
           'gêne qui dure deux semaines : arrête le mouvement et consulte un '
-          'professionnel de santé. Un mouvement de la zone ne progresse '
-          'que si la gêne reste à 2 sur 10 ou moins pendant la séance et '
-          'le lendemain. Le programme ne pose aucun diagnostic.';
+          'professionnel de santé. Un mouvement de la zone (tirage, '
+          'préhension, et le mouvement lesté qui la charge) ne progresse '
+          'que si la gêne ne dépasse pas ton niveau de départ (3 sur 10 '
+          'au plus) pendant la séance et revient à ce niveau le '
+          'lendemain ; sinon il garde sa charge, quels que soient les '
+          'pourcentages écrits. Le programme ne pose aucun diagnostic.';
     case ReasonCodes.planWeakPoint:
       final kind = p['kind'];
       return 'Cible ton point faible '
@@ -532,7 +546,9 @@ String? coachReasonText(Reason r, Catalog catalog) {
           "volume de pointe, intensité gardée, à ${_int(p['daysToEvent'])} "
           "jours de l'échéance au plus.";
     case ReasonCodes.planToCalibrate:
-      return 'À régler à la première séance.';
+      return 'Charges « à calibrer » : à la première séance, trouve la '
+          'charge qui permet le haut de la plage avec la réserve prévue, '
+          'note-la, puis suis la double progression.';
     case ReasonCodes.planSeasonPhase:
       final phase = p['phase'];
       final weeks = p['weeksToEvent'];
