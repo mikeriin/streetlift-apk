@@ -1029,7 +1029,7 @@ final class SessionRun {
     noteHeavy(track, run, day, p);
     final coach = run.spec.coach;
     if (coach != null) {
-      noteCoachSession(track, run, coach, day, p);
+      noteCoachSession(track, run, coach, day, p, bodyWeightKg);
     }
     f.endSession();
     run.closed = true;

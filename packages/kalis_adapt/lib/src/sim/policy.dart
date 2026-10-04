@@ -444,8 +444,7 @@ final class RpeCoachPolicy implements SimPolicy {
     );
   }
 
-  String _key(ExercisePrescription item) =>
-      '${item.slotId}|${item.exerciseId}';
+  String _key(ExercisePrescription item) => '${item.slotId}|${item.exerciseId}';
 
   void _learn(ExercisePrescription item, List<SetRecord> done) {
     final key = _key(item);

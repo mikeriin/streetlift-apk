@@ -6,6 +6,7 @@ library;
 
 import 'package:kalis_core/kalis_core.dart';
 
+import '../filter.dart';
 import '../numeric.dart';
 import 'metrics.dart';
 import 'runner.dart';

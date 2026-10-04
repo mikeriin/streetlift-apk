@@ -4,6 +4,7 @@
 /// raisons. Français, sans code ni identifiant technique.
 library;
 
+import 'package:kalis_adapt/kalis_adapt.dart' show CapacityMode;
 import 'package:kalis_adapt/simulation.dart';
 import 'package:kalis_core/kalis_core.dart';
 import 'package:kalis_plan/kalis_plan.dart' show coachPhaseLabel;
@@ -93,8 +94,7 @@ String _causeLabel(String code) => switch (code) {
 /// Raison du moteur d'évolution [r] en clair, ou `null` quand elle ne dit
 /// rien de plus que les chiffres de la ligne.
 String? adaptReasonText(Reason r, Catalog catalog) {
-  String name(String key) =>
-      catalog.find(_text(r, key))?.name ?? _text(r, key);
+  String name(String key) => catalog.find(_text(r, key))?.name ?? _text(r, key);
   switch (r.code) {
     case ReasonCodes.adaptLoadHeld:
       return 'charge non augmentée (${_causeLabel(_text(r, 'cause'))})';
@@ -240,11 +240,7 @@ String _truthLabel(TruthKind kind) => switch (kind) {
         'jours marqués, désentraînement rapide)',
 };
 
-ExercisePrescription? _blockItem(
-  SimRun run,
-  SimSession s,
-  String slotId,
-) {
+ExercisePrescription? _blockItem(SimRun run, SimSession s, String slotId) {
   ProgramBlock? block;
   for (var i = 0; i < run.blocks.length; i++) {
     if (i < run.blockWeeks.length && run.blockWeeks[i] <= s.week) {
@@ -446,7 +442,9 @@ String coachTrajectoryMarkdown(
           'Décisions du moteur',
         ]),
       )
-      ..writeln(_row(<String>['---', '---', '---', '---', '---', '---', '---']));
+      ..writeln(
+        _row(<String>['---', '---', '---', '---', '---', '---', '---']),
+      );
     for (var w = 0; w < t.weeks; w++) {
       SimSession? best;
       var bestLoad = -1.0;
@@ -588,7 +586,9 @@ String coachTrajectoryMarkdown(
             if (adaptReasonText(r, catalog) != null)
               adaptReasonText(r, catalog)!,
         ];
-        final exercise = a.exerciseId == null ? '' : ' — ${name(a.exerciseId!)}';
+        final exercise = a.exerciseId == null
+            ? ''
+            : ' — ${name(a.exerciseId!)}';
         final text =
             '${_adjustmentLabel(a.kind.code)}$exercise'
             '${causes.isEmpty ? '' : ' (${causes.join(', ')})'}';
@@ -600,7 +600,8 @@ String coachTrajectoryMarkdown(
               r.code == ReasonCodes.adaptSkillStepDown ||
               r.code == ReasonCodes.adaptSkillHold ||
               r.code == ReasonCodes.adaptTendonLoad) {
-            final text = '${name(it.exerciseId)} : '
+            final text =
+                '${name(it.exerciseId)} : '
                 '${adaptReasonText(r, catalog)}';
             sessionNotes[text] = (sessionNotes[text] ?? 0) + 1;
           }
@@ -723,7 +724,9 @@ String coachTrajectoryMarkdown(
       ..writeln(_row(<String>['---', '---', '---', '---', '---']));
     final groups = <String, List<SetRow>>{};
     for (final r in attemptRows) {
-      groups.putIfAbsent('${r.simDay}|${r.exerciseId}', () => <SetRow>[]).add(r);
+      groups
+          .putIfAbsent('${r.simDay}|${r.exerciseId}', () => <SetRow>[])
+          .add(r);
     }
     for (final g in groups.values) {
       final first = g.first;
