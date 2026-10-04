@@ -2135,6 +2135,13 @@ final class Prescriber {
     if (role == _DayRole.primerNear || role == _DayRole.after) {
       return null;
     }
+    if (s.role == SlotRole.secondary &&
+        s.exerciseId == Ids.pull &&
+        (ws.testWeek || ws.eventWeek)) {
+      // Exposition légère de traction : elle saute en semaine de test (48 h
+      // sans tirage avant le test).
+      return null;
+    }
     final x = _new(s);
     final e = x.e;
     final max = _maxOf(s);
