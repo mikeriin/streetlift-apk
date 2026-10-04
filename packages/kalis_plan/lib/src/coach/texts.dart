@@ -163,8 +163,9 @@ String? coachReasonText(Reason r, Catalog catalog) {
               "tibia, au tendon d'Achille ou au pied à 3 sur 10 : retire "
               'les rebonds.',
         CoachNotes.restPause =>
-          'Repos-pause, cette semaine seulement sur ce mouvement : la '
-              'dernière série écrite se prolonge par ${_int(v)} relances au '
+          'Repos-pause, chaque semaine où cette note figure sur la ligne '
+              '(et seulement celles-là) : la dernière série écrite se '
+              'prolonge par ${_int(v)} relances au '
               'plus de 3 à 4 répétitions, après 20 s de pause chacune ; '
               "chaque relance s'arrête avec une répétition en réserve. "
               'Rien de plus : ces relances comptent pour une série dure. '
@@ -211,9 +212,12 @@ String? coachReasonText(Reason r, Catalog catalog) {
               'de santé.',
         CoachNotes.smallLoad =>
           'Ton 1RM lesté est proche du poids du corps : la charge ne se '
-              'calcule pas en pourcentage mais sur le lest lui-même — '
-              '${_plain(v)} kg de lest pour ces séries. Ajuste-la à la '
-              'première séance pour garder la réserve écrite, puis ajoute '
+              'calcule pas en pourcentage mais à la réserve — départ '
+              'conseillé : ${_plain(v)} kg de lest. À la première séance '
+              'du bloc, fais une série de calibrage (monte par paliers de '
+              "1,25 à 2,5 kg jusqu'à la série qui laisse la réserve "
+              'écrite, poids du corps seul compris) et garde cette charge ; '
+              'ensuite ajoute '
               'le plus petit pas quand toutes les séries passent ; si la '
               "réserve n'est pas tenue, retire 2,5 kg dans la séance.",
         CoachNotes.pushLadder =>
@@ -427,11 +431,13 @@ String? coachReasonText(Reason r, Catalog catalog) {
               "condition ; le test final porte sur l'étape actuelle. La "
               'figure complète vient aux cycles suivants, étape par étape.',
         CoachNotes.walking =>
-          'Pour la perte de poids : en plus des séances, trois marches '
-              'rapides de ${_int(v)} min par semaine dès la semaine 1, '
-              'les jours sans séance (tu peux parler en marchant). Ajoute '
+          'Pour la perte de poids : en plus des séances, deux marches de '
+              '15 à 20 min en semaine 1, les jours sans séance, à allure '
+              'modérée (tu peux parler en phrases, légèrement essoufflé), '
+              'puis trois marches qui montent vers ${_int(v)} min ; garde '
+              'un jour sans activité. Ajoute '
               "10 min par semaine au total pour viser 150 min d'endurance "
-              'par semaine vers la semaine 6, puis 200 min et plus en fin '
+              'par semaine vers la semaine 8, puis 200 min et plus en fin '
               'de programme, marche des séances comprise (si la marche de '
               'fin de séance raccourcit, les marches des autres jours '
               'compensent). Toute durée compte : tu peux fractionner. La '
@@ -611,11 +617,11 @@ String? coachReasonText(Reason r, Catalog catalog) {
       return 'Douleur (${zone is String ? coachZoneLabel(zone) : ''}), un '
           'seul seuil pour tous les mouvements qui chargent la zone '
           '(tirage, préhension, appuis, et le mouvement lesté qui la '
-          'sollicite) : tu progresses tant que la gêne ne dépasse pas ton '
-          "niveau de départ (${_int(p['continueBelow'])} sur 10 au plus) "
-          'pendant la séance et revient à ce niveau le lendemain ; à '
-          "${_int(p['regressAt'])}, garde la charge et n'ajoute rien la "
-          'semaine suivante, quels que soient les pourcentages écrits ; à '
+          'sollicite) : tu ajoutes de la charge ou du volume seulement si '
+          'la gêne reste à 2 sur 10 au plus pendant la séance et le '
+          'lendemain ; à 3 ou 4, tu fais la séance écrite sans rien '
+          'ajouter et tu gardes la charge la semaine suivante, quels que '
+          'soient les pourcentages écrits ; à '
           '5, prends la variante plus facile et retire 30 à 50 % du volume '
           "de la zone ; à ${_int(p['stopAt'])} ou plus, douleur la nuit, "
           'perte de force ou gêne qui dure deux semaines : arrête le '
