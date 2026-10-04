@@ -1,4 +1,4 @@
-# Contrat de kalis_bench 0.1.0
+# Contrat de kalis_bench 0.1.1
 
 Banc d'essai du calibrage des programmes (pipeline CP). Dart pur : ni Flutter, ni `dart:io` dans `lib/`, ni horloge, ni hasard hors des graines. Il **lit et appelle** `kalis_core`, `kalis_plan`, `kalis_adapt` par chemin, sans les modifier.
 

@@ -577,4 +577,237 @@ void main() {
       }
     });
   });
+
+  group('CP1 — invariants de calibrage', () {
+    // Semaines d'allègement ou d'échéance ; les autres sont des semaines
+    // de charge.
+    const relief = <WeekIntent>{
+      WeekIntent.deload,
+      WeekIntent.taper,
+      WeekIntent.competition,
+      WeekIntent.test,
+      WeekIntent.transition,
+    };
+    bool loadWeek(WeekPrescription w) {
+      final intent = w.intent;
+      return intent != null && !relief.contains(intent);
+    }
+
+    List<WeekPrescription> weeksOf(List<ProgramBlock> blocks) {
+      return <WeekPrescription>[for (final b in blocks) ...b.pass2.weeks];
+    }
+
+    final lifterBlocks = _program(catalog, _lifter(), 12);
+    final beginnerBlocks = _program(catalog, _beginner(), 12);
+
+    test('débutant : aucune série de travail sous 2 en réserve', () {
+      for (final w in weeksOf(beginnerBlocks)) {
+        for (final d in w.days) {
+          for (final i in d.items) {
+            if (i.kind != null && i.kind != SetKind.work) {
+              continue;
+            }
+            final where = 's${w.weekIndex} j${d.dayIndex} ${i.exerciseId}';
+            final flames = i.targetFlames;
+            if (flames != null) {
+              expect(
+                Flames.toRir(flames),
+                greaterThanOrEqualTo(2),
+                reason: '$where : $flames flammes',
+              );
+            }
+            final intensity = i.intensity;
+            if (intensity != null && intensity.basis == IntensityBasis.rir) {
+              expect(
+                intensity.value,
+                greaterThanOrEqualTo(2),
+                reason: '$where : RIR visé ${intensity.value}',
+              );
+            }
+          }
+        }
+      }
+    });
+
+    test('descentes freinées : 15 excentriques au plus, descente de 3 s', () {
+      const negatives = <String>{'sw-traction-negative', 'sw-pompe-negative'};
+      var seen = 0;
+      for (final w in weeksOf(beginnerBlocks)) {
+        for (final d in w.days) {
+          final eccentrics = <String, int>{};
+          for (final i in d.items) {
+            // Le test de descente est chronométré (secondes, sans tempo).
+            if (!negatives.contains(i.exerciseId) || i.kind == SetKind.test) {
+              continue;
+            }
+            seen++;
+            final where = 's${w.weekIndex} j${d.dayIndex} ${i.exerciseId}';
+            final reps = i.repsHigh;
+            expect(reps, isNotNull, reason: '$where : répétitions absentes');
+            eccentrics[i.exerciseId] =
+                (eccentrics[i.exerciseId] ?? 0) + i.sets * (reps ?? 0);
+            final tempo = i.tempo;
+            expect(tempo, isNotNull, reason: '$where : tempo absent');
+            expect(
+              tempo?.eccentricSeconds ?? 0,
+              greaterThanOrEqualTo(3),
+              reason: '$where : descente de ${tempo?.eccentricSeconds} s',
+            );
+          }
+          for (final e in eccentrics.entries) {
+            expect(
+              e.value,
+              lessThanOrEqualTo(15),
+              reason:
+                  's${w.weekIndex} j${d.dayIndex} ${e.key} : '
+                  '${e.value} excentriques dans la séance',
+            );
+          }
+        }
+      }
+      expect(seen, greaterThan(0), reason: 'aucune descente freinée prescrite');
+    });
+
+    test('affûtage et échéance : moins de séries dures qu\'au pic', () {
+      final weeks = weeksOf(lifterBlocks);
+      final hard = hardSetsByWeek(catalog, weeks);
+      var overall = 0.0;
+      for (var k = 0; k < weeks.length; k++) {
+        if (loadWeek(weeks[k]) && hard[k] > overall) {
+          overall = hard[k];
+        }
+      }
+      var checked = 0;
+      var offset = 0;
+      for (final b in lifterBlocks) {
+        final end = offset + b.pass2.weeks.length;
+        var peak = 0.0;
+        for (var k = offset; k < end; k++) {
+          if (loadWeek(weeks[k]) && hard[k] > peak) {
+            peak = hard[k];
+          }
+        }
+        // Bloc sans semaine de charge : le pic de tout le programme.
+        if (peak == 0) {
+          peak = overall;
+        }
+        for (var k = offset; k < end; k++) {
+          final intent = weeks[k].intent;
+          if (intent == WeekIntent.taper || intent == WeekIntent.competition) {
+            checked++;
+            expect(
+              hard[k],
+              lessThan(peak),
+              reason:
+                  'semaine $k (${weeks[k].intent?.code}) : ${hard[k]} '
+                  'séries dures, '
+                  'pic de charge du bloc $peak',
+            );
+          }
+        }
+        offset = end;
+      }
+      expect(checked, greaterThan(0), reason: 'aucune semaine d\'affûtage');
+    });
+
+    test('reprise après plus de 10 semaines : montée de 50 % à 100 %', () {
+      for (final gap in <TrainingGap>[
+        TrainingGap.weeks10To26,
+        TrainingGap.months6To24,
+      ]) {
+        final profile = _profile(
+          experience: ExperienceLevel.intermediate,
+          gap: gap,
+          benchmarks: <Benchmark>[
+            _maxReps('sw-traction-pronation', 12),
+            _maxReps('sw-dips-barres-paralleles', 20),
+            _maxReps('sw-pompe', 35),
+          ],
+        );
+        final weeks = weeksOf(_program(catalog, profile, 5));
+        expect(weeks.length, greaterThanOrEqualTo(5), reason: gap.code);
+        final hard = hardSetsByWeek(catalog, weeks);
+        expect(
+          hard[0],
+          lessThanOrEqualTo(hard[4] * 0.7),
+          reason:
+              '${gap.code} : semaine 1 ${hard[0]} séries dures, '
+              'semaine 5 ${hard[4]}',
+        );
+        for (var k = 1; k < 5; k++) {
+          if (!loadWeek(weeks[k - 1]) || !loadWeek(weeks[k])) {
+            continue;
+          }
+          expect(
+            hard[k],
+            lessThanOrEqualTo(hard[k - 1] * 1.2 + 2),
+            reason:
+                '${gap.code} : semaine ${k + 1} ${hard[k]} séries dures '
+                'après ${hard[k - 1]}',
+          );
+        }
+      }
+    });
+
+    test('aucune charge au-delà du 1RM, sauf amplitude partielle', () {
+      var seen = 0;
+      for (final w in weeksOf(lifterBlocks)) {
+        for (final d in w.days) {
+          for (final i in d.items) {
+            if (i.exerciseId.contains('partiel')) {
+              continue;
+            }
+            final where = 's${w.weekIndex} j${d.dayIndex} ${i.exerciseId}';
+            final pct = i.percentOfOneRm;
+            if (pct != null) {
+              seen++;
+              expect(pct, lessThanOrEqualTo(1.0), reason: '$where : $pct');
+            }
+            final intensity = i.intensity;
+            if (intensity != null &&
+                intensity.basis == IntensityBasis.percentOneRm) {
+              final high = intensity.valueHigh ?? intensity.value;
+              expect(
+                intensity.value > high ? intensity.value : high,
+                lessThanOrEqualTo(1.0),
+                reason: '$where : intensité ${intensity.value} à $high',
+              );
+            }
+          }
+        }
+      }
+      expect(seen, greaterThan(0), reason: 'aucune part du 1RM prescrite');
+    });
+
+    test('notes et règles de coach : codes connus, texte non vide', () {
+      var seen = 0;
+      for (final blocks in <List<ProgramBlock>>[lifterBlocks, beginnerBlocks]) {
+        for (final b in blocks) {
+          for (final r in <Reason>[
+            ...b.pass1.reasons,
+            for (final d in b.pass1.days)
+              for (final s in d.slots) ...s.reasons,
+            ...b.pass2.reasons,
+            for (final w in b.pass2.weeks)
+              for (final d in w.days)
+                for (final i in d.items) ...i.reasons,
+          ]) {
+            final where = jsonEncode(r.toJson());
+            if (r.code == ReasonCodes.planCoachNote) {
+              expect(CoachNotes.all, contains(r.params['note']), reason: where);
+            } else if (r.code == ReasonCodes.planProgressionRule) {
+              expect(CoachRules.all, contains(r.params['rule']), reason: where);
+            } else {
+              continue;
+            }
+            seen++;
+            final text = coachReasonText(r, catalog);
+            expect(text, isNotNull, reason: where);
+            expect((text ?? '').trim(), isNotEmpty, reason: where);
+          }
+        }
+      }
+      expect(seen, greaterThan(0), reason: 'aucune note de coach émise');
+    });
+  });
 }
