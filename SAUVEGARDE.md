@@ -48,3 +48,9 @@ Corrections : repère calé sur le dernier test (plus de progrès supposé), acc
 Panel [force, cali, hyper, santé | doc] : 01 [8,8,9,9|7] 02 [8,8,9,9|7] 03 [7,8,8,8|6] 04 [8,8,8,7|7] 05 [8,8,8,8|6] 06 [9,9,9,9|7] 07 [9,9,9,9|8] 08 [8,8,8,8|7] 09 [9,8,9,9|8] 10 [8,7,8,9|7] 11 [8,8,8,8|6] 12 [8,7,8,9|7] 13 [8,9,9,9|7] 14 [9,8,8,8|7] 15 [9,9,9,9|8] 16 [9,9,9,9|7] 17 [8,9,8,8|6]
 Panel : min 7, moyenne 8,38 ; relecture documentée : min 6, moyenne 6,94. Banc : 0 violation street, attentes tenues sauf street_12 c1 (conflit documenté).
 Notes complètes : /home/claude/cp1/panel/p2.
+
+## Boucle 3 (04/10/2026 ≈ 03:40 UTC)
+Corrections : repère relevé seulement après un test de l'exercice (tests de dips et de pompes ajoutés, reprise par paliers aux tests), 1RM de travail affiché sur un seul repère, descentes freinées au contrôle (plafond propre R5-P8) dès la semaine 2, tirage assisté 3 séries, étape actuelle des figures prioritaire sur l'étape facile, critère de passage mesurable, tests en tête de séance et sur le geste visé, semaine du test à 2 séries, pas de simple lourd hors épreuve de force, premier bloc toujours en construction, muscle-up après la traction quand l'objectif est la traction, textes (douleur, calibrage, parallettes).
+[force, cali, hyper, santé | doc] : 01 [8,9,8,9|7] 02 [9,9,9,8|7] 03 [7,8,7,8|6] 04 [9,9,9,9|6] 05 [8,9,9,9|7] 06 [9,9,9,9|8] 07 [9,9,9,9|8] 08 [8,8,9,9|7] 09 [9,9,9,8|8] 10 [9,9,9,9|7] 11 [8,9,9,8|7] 12 [8,8,8,8|8] 13 [9,9,9,9|8] 14 [9,8,9,9|7] 15 [9,9,9,9|8] 16 [9.5,9,9,9.5|8] 17 [8,8,8,9|7]
+Panel : min 7, moyenne 8,68 ; relecture documentée : min 6, moyenne 7,29. Banc : 0 violation street.
+Notes : /home/claude/cp1/panel/p3.
