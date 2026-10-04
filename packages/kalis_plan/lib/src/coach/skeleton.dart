@@ -487,12 +487,11 @@ void _buildBeginner(_Builder b) {
             : Picks.easyRow,
         SlotRole.secondary,
         Method.beginnerMain,
-        sets: sets,
+        // Chemin vers la première traction : le plafond du grand dorsal
+        // (12 séries) va d'abord à la traction assistée et aux descentes
+        // freinées ; le tirage horizontal garde une série par séance.
+        sets: pullMax < 1 && a.aimsAt(Ids.pull) && !heavy ? 1 : sets,
         referenceId: Ids.row,
-        // Chemin vers la première traction : quand le plafond du grand
-        // dorsal serre, le tirage horizontal cède ses séries avant la
-        // traction assistée et les descentes freinées.
-        support: pullMax < 1 && a.aimsAt(Ids.pull),
       );
     }
     // Jambes : squat et fente en alternance, hanche si le temps le permet.
@@ -965,7 +964,7 @@ void _addMuscleUpPractice(_Builder b, int d, int muMax) {
     ],
     SlotRole.skill,
     Method.skillDynamic,
-    sets: 4,
+    sets: 3,
     referenceId: Ids.muscleUp,
     skillTargetId: Ids.muscleUp,
     weak: weak ? WeakPointKind.transition : null,
@@ -1102,7 +1101,8 @@ void _buildReps(_Builder b, Set<int> runDays) {
   final dipMax = a.reps[Ids.dip] ?? 0;
   final pushMax = a.reps[Ids.pushUp] ?? 0;
   final muMax = a.reps[Ids.muscleUp] ?? 0;
-  final spared = a.pullFactor < 1 || a.volumeFactor < 1;
+  final returning = a.gapWeeks >= 10 && b.blockIndex == 0;
+  final spared = a.pullFactor < 1 || a.volumeFactor < 1 || returning;
 
   // Fréquence par pilier (R4-G8 : 2 à 3 séances chez le débutant, 3 chez
   // l'intermédiaire, 3 à 4 chez l'avancé, 4 à 5 en élite), bornée par les
@@ -1156,7 +1156,7 @@ void _buildReps(_Builder b, Set<int> runDays) {
     for (final m in (competition
         ? _competitionMethods
         : _repsMethods(pullMax)))
-      if (m == Method.repsTop || m == Method.repsStrength) m,
+      if (m == Method.repsTop || (m == Method.repsStrength && !returning)) m,
   ];
   final pullMethod = pullMax < 8 && !competition
       ? <int, String>{
@@ -1177,7 +1177,7 @@ void _buildReps(_Builder b, Set<int> runDays) {
       : _assignPillar(
           a,
           dipDays,
-          competition
+          competition || returning
               ? const <String>[Method.repsTop]
               : const <String>[Method.repsTop, Method.repsStrength],
           avoid: <int>{
@@ -1743,8 +1743,9 @@ void _buildFigures(_Builder b, Set<int> runDays) {
   final muWeak = (a.profile.weakPoints ?? const <WeakPoint>[]).any(
     (w) => w.exerciseId == Ids.muscleUp,
   );
+  final muPool = <int>[...rest, if (firstDays.length >= 3) firstDays[1]];
   final muDays = muMax >= 1 && (muWeak || muMax < 5)
-      ? spreadDays(a, rest.isEmpty ? days : rest, 2)
+      ? spreadDays(a, muPool.length >= 2 ? muPool : days, 2)
       : <int>[];
   final legDays = spreadDays(
     a,
@@ -1949,7 +1950,10 @@ void _buildFigures(_Builder b, Set<int> runDays) {
           stress: DayStress.medium,
         );
       }
-    } else if (pullMax >= 1 && a.can(Ids.pull, d) && strengthDays.contains(d)) {
+    } else if (pullMax >= 1 &&
+        a.can(Ids.pull, d) &&
+        strengthDays.isNotEmpty &&
+        d == strengthDays.first) {
       b.add(
         d,
         <String>[Ids.pull],
@@ -2002,7 +2006,7 @@ void _buildFigures(_Builder b, Set<int> runDays) {
         );
       }
     }
-    if (skillLoad == 0 || minutes >= 75) {
+    if (strengthDays.contains(d)) {
       b.add(
         d,
         a.level >= 2
@@ -2014,6 +2018,7 @@ void _buildFigures(_Builder b, Set<int> runDays) {
         SlotRole.accessory,
         Method.accessoryCompound,
         sets: 3,
+        keep: true,
       );
     }
     if (legDays.contains(d)) {

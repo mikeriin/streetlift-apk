@@ -928,12 +928,14 @@ final class Prescriber {
         : (week <= 1 ? 0.06 : (week == 2 ? 0.03 : 0.0));
     if (role == _DayRole.primerFar && !maintain) {
       // R3-P13 : dernier rappel lourd et court, 3 à 5 jours avant.
+      // (R3-P14 : le dernier lourd est passé, à J−7 à J−10 ; ce rappel
+      // reste facile et rapide, à 85 %.)
       _topSet(
         x,
         sets: 2,
         reps: 1,
-        pct: 0.88,
-        rir: 3,
+        pct: 0.85,
+        rir: 4,
         drop: 0.10,
         ws: ws,
         week: week,
@@ -941,7 +943,7 @@ final class Prescriber {
       x
         ..backoffRepsLow = 2
         ..backoffRepsHigh = 2
-        ..reasons.add(_note(CoachNotes.opener, 0.88));
+        ..reasons.add(_note(CoachNotes.opener, 0.85));
       return x;
     }
     if (role == _DayRole.primerNear) {
@@ -967,10 +969,10 @@ final class Prescriber {
           ..minSets = 1
           ..repsLow = 3
           ..repsHigh = 3
-          ..rir = 5
-          ..rest = 120
+          ..rir = 4
+          ..rest = 150
           ..reasons.add(_note(CoachNotes.maintenance, 2));
-        _loadAt(x, 0.72, s.referenceId);
+        _loadAt(x, 0.75, s.referenceId);
         return x;
       }
       x
@@ -1321,7 +1323,13 @@ final class Prescriber {
       // R3-P13 : à l'affûtage, l'intensité reste, les séries tombent.
       margin = 2;
     }
-    final floor = risk || _level == 0 ? 2 : 1;
+    var floor = risk || _level == 0 ? 2 : 1;
+    // La réserve écrite est la vraie : les planchers (reprise, zone à
+    // ménager, risque) règlent les répétitions, pas seulement l'étiquette.
+    final kept = _floorRir(e, week).ceil();
+    if (floor < kept) {
+      floor = kept;
+    }
     if (margin < floor) {
       margin = floor;
     }
@@ -1410,7 +1418,8 @@ final class Prescriber {
       return null;
     }
     final max = _maxOf(s);
-    if (max < 5) {
+    if (max < 5 || role == _DayRole.primerFar) {
+      // (Semaine de l'échéance : deux séries courtes à la place du chrono.)
       return _repsVolume(s, ws, week, role);
     }
     final x = _new(s);
@@ -1499,7 +1508,11 @@ final class Prescriber {
     if (max > 0) {
       // R4-G2 : sous 8 répétitions, la force d'abord — séries courtes à 2
       // répétitions de l'échec.
-      final margin = 2 + (ws.light ? 1 : 0) + a.rirBonus.round();
+      var margin = 2 + (ws.light ? 1 : 0) + a.rirBonus.round();
+      final kept = _floorRir(e, week).ceil();
+      if (margin < kept) {
+        margin = kept;
+      }
       final reps = _clampInt(max - margin, 1, max);
       x
         ..repsLow = reps
@@ -3467,7 +3480,7 @@ final class Prescriber {
           if (!x.hard ||
               x.fixed ||
               x.kind != SetKind.work ||
-              x.sets >= 3 ||
+              x.sets >= (_shape.model == SeasonModel.strengthPeak ? 4 : 3) ||
               closed.contains(x) ||
               !Method.essential(x.method, support: x.support, keep: x.keep)) {
             continue;
