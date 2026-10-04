@@ -22,9 +22,9 @@ Un athlète simulé (capacités réelles connues du simulateur, jamais du moteur
 
 - Séances faites : 36 sur 36 (6 ajustées le jour même).
 - Échecs non voulus (hors tests et tentatives) : 0 % des séries de travail.
-- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 1,67 répétition en réserve (sur les 60 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 22 %.
+- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 1,7 répétition en réserve (sur les 59 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 22,4 %.
 - Plus forte hausse de charge totale d'un mouvement principal d'une séance à la suivante, à schéma égal : 0 % ; hausses de plus de 10 % faites de plusieurs crans : 0.
-- Progression réelle moyenne des mouvements suivis : 1,416 % par semaine.
+- Progression réelle moyenne des mouvements suivis : 1,403 % par semaine.
 - Douleur : 0 hausse(s) de charge sur une zone douloureuse signalée.
 
 ## Mouvements suivis, semaine par semaine
@@ -40,7 +40,7 @@ Pour chaque mouvement, la séance la plus lourde de la semaine : ce que le progr
 | 8 | construction (volume) | 2 × 3 à 6 | 1-1-1-1 | 1-1-1-1 | 2 → 2,2 ; suivantes 2 → 1,4 | 3 / 3 | répétitions recalées sur le maximum mesuré (2 de moins par série que le programme) |
 | 9 | construction (volume) | 2 × 3 à 6 | 1-1-1-1 | 1-1-1-1 | 2 → 2,2 ; suivantes 2 → 1,2 | 3 / 3 | répétitions recalées sur le maximum mesuré (2 de moins par série que le programme) |
 | 10 | construction (volume) | 2 × 3 à 7 | 1-1-1-1 | 1-1-1-1 | 2 → 2,3 ; suivantes 2 → 1,1 | 3 / 3 | répétitions recalées sur le maximum mesuré (2 de moins par série que le programme) |
-| 11 | affûtage | 1 × 3 | 1-1-1 | 1-1 | 2 → 2,3 ; suivantes 2 → 1,7 | 3 / 3 | répétitions recalées sur le maximum mesuré (2 de moins par série que le programme) ; dernières séries plus dures que prévu |
+| 11 | affûtage | 1 × 3 | 1 | 1 | 2 → 2,3 | 3 / 3 | répétitions recalées sur le maximum mesuré (2 de moins par série que le programme) |
 | 12 | test | 1 × 6 à 10, test | (2 à 10) | 2 | test | 4 / 3 | — |
 
 Athlète simulé, maximum réel hors fatigue : 3 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 3 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
@@ -59,8 +59,8 @@ Athlète simulé, maximum réel hors fatigue : 3 au départ (le record déclaré
 | 8 | construction (volume) | 2 × 7 à 9 | (7 à 18)-(7 à 18) | 15-14 | 3 → 6,2 ; suivantes 3 → 4,6 | 21 / 17 | allégé pour garder la marge prévue (au moins 3 en réserve) ; dernières séries plus dures que prévu |
 | 9 | construction (volume) | 2 × 7 à 9 | (7 à 18)-(7 à 18) | 18-14 | 3 → 4 ; suivantes 3 → 5 | 22 / 18 | allégé pour garder la marge prévue (au moins 3 en réserve) ; dernières séries plus dures que prévu |
 | 10 | construction (volume) | 2 × 8 à 10 | (8 à 20)-(8 à 20) | 14-12 | 3 → 8,1 ; suivantes 3 → 8,1 | 22 / 18 | — |
-| 11 | affûtage | 2 × 6 à 8 | (6 à 8)-(6 à 8) | 8-7 | 5+ → 13,9 ; suivantes 5+ → 12,9 | 22 / 19 | — |
-| 12 | test | 1 × 6 à 8 | (6 à 8) | 8 | 5+ → 14,8 | 23 / 19 | — |
+| 11 | affûtage | 2 × 6 à 8 | (6 à 8)-(6 à 8) | 8-7 | 5+ → 14 ; suivantes 5+ → 13 | 22 / 19 | — |
+| 12 | test | 1 × 6 à 8 | (6 à 8) | 8 | 5+ → 15,1 | 23 / 19 | — |
 
 Athlète simulé, maximum réel hors fatigue : 19 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 23 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
 
@@ -79,7 +79,7 @@ Athlète simulé, maximum réel hors fatigue : 19 au départ (le record déclar�
 | 9 | construction (volume) | 2 × 7 à 9 | (7 à 9)-(7 à 8) | 9-7 | 1,5 → 4,2 ; suivantes 3 → 5,2 | 13 / 11 | — |
 | 10 | construction (volume) | 2 × 8 à 10 | (8 à 9)-(8 à 18) | 8-10 | 3 → 5,4 ; suivantes 2 → 2,6 | 13 / 12 | allégé pour garder la marge prévue (au moins 3 en réserve) ; série repère : une série ouverte (au ressenti, 2 en réserve) pour mesurer où en est l'athlète |
 | 11 | affûtage | 1 × 6 à 8 | (6 à 8) | 8 | 3 → 5,8 | 14 / 12 | — |
-| 12 | test | 2 × 6 à 8 | (6 à 8)-(6 à 8) | 8-8 | 4 → 5,3 ; suivantes 3 → 4,4 | 13 / 12 | — |
+| 12 | test | 2 × 6 à 8 | (6 à 8)-(6 à 8) | 8-8 | 4 → 5,3 ; suivantes 3 → 4,5 | 13 / 12 | — |
 
 Athlète simulé, maximum réel hors fatigue : 16 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 14 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
 
@@ -113,7 +113,7 @@ Athlète simulé, maximum réel hors fatigue : 15 au départ (le record déclar�
 - **Semaine 8 (construction (volume))** : Traction assistée à l'élastique : un cran d'assistance de plus (élastique plus épais, plus d'appui) : la plage ne laisse plus la réserve visée ; Pompe classique : répétitions recalées sur le maximum mesuré (2 de moins par série que le programme) ; Face pull à l'élastique : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; Traction assistée à l'élastique : un cran d'assistance de moins (élastique plus fin, moins d'appui) : la série repère a montré 3 répétitions de réserve de plus que visé ; Support hold aux barres parallèles : hausse du maintien bornée pour les tendons (épaule) ; Pompe classique : séries arrêtées en cours de séance (allégé pour garder la marge prévue (au moins 2 en réserve), dernières séries plus dures que prévu).
 - **Semaine 9 (construction (volume))** : Pompe classique : répétitions recalées sur le maximum mesuré (2 de moins par série que le programme) ; Air squat : séries arrêtées en cours de séance (allégé pour garder la marge prévue (au moins 3 en réserve), dernières séries plus dures que prévu) ; Pompe classique : séries arrêtées en cours de séance (allégé pour garder la marge prévue (au moins 2 en réserve), dernières séries plus dures que prévu) ; temps réduit (36 min au lieu de 65) ; exercice retiré sur 4 exercices (temps réduit (36 min au lieu de 65)) ; séries retirées — Air squat, Pompe classique (temps réduit (36 min au lieu de 65)).
 - **Semaine 10 (construction (volume))** : Pompe classique : répétitions recalées sur le maximum mesuré (2 de moins par série que le programme) ; Pompe classique : séries arrêtées en cours de séance (allégé pour garder la marge prévue (au moins 2 en réserve), dernières séries plus dures que prévu).
-- **Semaine 11 (affûtage)** : phase « affûtage » : séances servies telles que le programme les écrit (× 3) ; affûtage : aucun volume ajouté, intensité gardée (× 3) ; Pompe classique : répétitions recalées sur le maximum mesuré (2 de moins par série que le programme) ; Pompe classique : séries arrêtées en cours de séance (allégé pour garder la marge prévue (au moins 2 en réserve), dernières séries plus dures que prévu) (× 3).
+- **Semaine 11 (affûtage)** : phase « affûtage » : séances servies telles que le programme les écrit (× 3) ; affûtage : aucun volume ajouté, intensité gardée (× 3) ; Pompe classique : répétitions recalées sur le maximum mesuré (2 de moins par série que le programme).
 - **Semaine 12 (test)** : phase « test » : séances servies telles que le programme les écrit (× 3) ; Pompe classique : répétitions recalées sur le maximum mesuré (2 de moins par série que le programme) ; résultat de test reporté au profil : Traction négative 15 répétitions ; résultat de test reporté au profil : Pompe classique 2 répétitions.
 
 ## Même programme, autres athlètes simulés
@@ -122,6 +122,6 @@ Le même profil et le même moteur, avec d'autres hypothèses sur l'athlète ré
 
 | Athlète simulé | Échecs non voulus | Écart d'effort | Séries ≥ 2 rép. plus dures | Plus forte hausse à schéma égal | Progression par semaine | Tentatives réussies | Échéance / maximum du jour | Hausses sur zone douloureuse |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| modèle 2 (courbe linéaire, notes d'effort entières et plafonnées, récupération lente entre séries, tendons à adaptation lente) | 0 % | 1,67 | 0 % | 0 % | 1,416 % | — | — | 0 |
+| modèle 2 (courbe linéaire, notes d'effort entières et plafonnées, récupération lente entre séries, tendons à adaptation lente) | 0 % | 1,7 | 0 % | 0 % | 1,403 % | — | — | 0 |
 | modèle 1 (courbe charge-répétitions à plateau, notes d'effort continues) | 0 % | 1,86 | 0 % | 0 % | 1,354 % | — | — | 0 |
-| modèle 3 (courbe en puissance, forme masquée par la fatigue, mauvais jours marqués, désentraînement rapide) | 0,2 % | 1,97 | 0 % | 0 % | 1,113 % | — | — | 0 |
+| modèle 3 (courbe en puissance, forme masquée par la fatigue, mauvais jours marqués, désentraînement rapide) | 0,2 % | 2 | 0 % | 0 % | 1,094 % | — | — | 0 |

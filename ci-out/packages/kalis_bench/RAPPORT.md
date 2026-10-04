@@ -84,18 +84,18 @@ Violations de sécurité : **23** au total (Pas d'allègement avant l'échéance
 | `autres_10_contraintes_multiples` | 36/36 | 0.0 | 2.888 | 0.978 | 0.0 | 0.774 | — | 0 | ecart_rir | 0 |
 | `street_01_debutant_complet` | 36/36 | 0.0 | 2.878 | 0.721 | 0.0 | 1.406 | — | 0 | ecart_rir, ecart_effort | 0 |
 | `street_02_debutant_surpoids` | 36/36 | 0.0 | 2.744 | 0.808 | 0.0 | 0.865 | — | 0 | ecart_rir, ecart_effort | 0 |
-| `street_03_debutante` | 36/36 | 0.0 | 2.794 | 0.613 | 0.0 | 1.416 | — | 0 | ecart_rir, ecart_effort | 0 |
+| `street_03_debutante` | 36/36 | 0.0 | 2.818 | 0.611 | 0.0 | 1.403 | — | 0 | ecart_rir, ecart_effort | 0 |
 | `street_04_reprise_longue_pause` | 48/48 | 0.0 | 3.104 | 0.573 | 0.0 | 0.575 | — | 0 | ecart_rir | 0 |
 | `street_05_inter_calisthenie_front_lever` | 63/64 | 0.0 | 1.771 | 0.637 | 0.0 | — | — | 0 | ecart_rir | 0 |
 | `street_06_inter_sets_reps` | 48/48 | 0.0 | 2.178 | 0.56 | 0.0 | 0.291 | — | 0 | ecart_rir | 0 |
 | `street_07_avance_streetlifting_competition` | 60/60 | 0.001 | 2.774 | 0.682 | 0.464 | 0.06 | 0.996 | 0 | ecart_rir, pics_de_charge, performance_echeance, ecart_effort | 0 |
-| `street_08_avance_sets_reps_competition` | 40/40 | 0.0 | 3.649 | 0.535 | 0.0 | 0.137 | 0.867 | 0 | ecart_rir, performance_echeance | 0 |
+| `street_08_avance_sets_reps_competition` | 40/40 | 0.0 | 3.663 | 0.534 | 0.0 | 0.137 | 0.867 | 0 | ecart_rir, performance_echeance | 0 |
 | `street_09_elite_streetlifting` | 60/60 | 0.0 | 3.392 | 0.612 | 0.455 | 0.023 | 0.986 | 0 | ecart_rir, pics_de_charge, performance_echeance, ecart_effort | 0 |
-| `street_10_elite_figures` | 91/96 | 0.0 | 2.741 | 0.282 | 0.0 | 0.054 | — | 0 | ecart_rir, ecart_effort | 0 |
+| `street_10_elite_figures` | 91/96 | 0.0 | 2.725 | 0.281 | 0.0 | 0.054 | — | 0 | ecart_rir, ecart_effort | 0 |
 | `street_11_master_51_ans` | 48/48 | 0.0 | 1.774 | 0.747 | 0.034 | 0.285 | — | 0 | ecart_rir, ecart_effort | 0 |
 | `street_12_antecedent_coude` | 48/48 | 0.0 | 2.409 | 0.626 | 0.286 | 0.249 | — | 0 | ecart_rir, pics_de_charge, ecart_effort | 0 |
 | `street_13_peu_de_temps` | 34/36 | 0.0 | 1.421 | 0.718 | 0.0 | 0.654 | — | 0 | ecart_rir, ecart_effort | 0 |
-| `street_14_parc_sans_lest` | 46/48 | 0.0 | 2.211 | 0.622 | 0.0 | 0.389 | — | 0 | ecart_rir | 0 |
+| `street_14_parc_sans_lest` | 46/48 | 0.0 | 2.212 | 0.623 | 0.0 | 0.389 | — | 0 | ecart_rir | 0 |
 | `street_15_travail_physique_sommeil_court` | 36/36 | 0.0 | 2.121 | 0.692 | 0.0 | 0.607 | — | 0 | ecart_rir, ecart_effort | 0 |
 | `street_16_specialisation_traction_lestee` | 40/40 | 0.002 | 2.679 | 0.714 | 0.376 | 0.118 | 0.988 | 0 | ecart_rir, pics_de_charge, performance_echeance, ecart_effort | 0 |
 | `street_17_hybride_street_course` | 58/60 | 0.002 | 1.885 | 0.678 | 0.0 | 0.588 | — | 0 | ecart_rir, ecart_effort | 0 |
