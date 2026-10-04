@@ -7,6 +7,7 @@ import 'package:kalis_core/kalis_core.dart';
 import 'package:kalis_plan/kalis_plan.dart' show planSimilarity;
 
 import 'book.dart';
+import 'coach.dart';
 import 'fatigue.dart';
 import 'filter.dart';
 import 'numeric.dart';
@@ -86,6 +87,11 @@ final class ExerciseTrack {
   /// Jour de la dernière série repère.
   int? benchmarkDay;
 
+  /// Mode coach : jour de la dernière série qui mesure la capacité (note
+  /// sous le seuil « loin de l'échec », échec) ; au-delà d'un délai, une
+  /// série repère est proposée.
+  int? exactDay;
+
   /// Jour de la première séance.
   int? firstDay;
 
@@ -106,9 +112,44 @@ final class ExerciseTrack {
   /// Plus grande valeur d'une série (répétitions ou secondes), record.
   double bestAmount = 0;
 
+  /// Mode coach : dernière séance de chaque emplacement (charge et schéma),
+  /// pour borner les hausses à schéma égal.
+  Map<String, SlotMark> slotMarks = const <String, SlotMark>{};
+
+  /// Mode coach : barres réussies récemment (jour, charge externe), les
+  /// plus lourdes d'abord — une ouverture est une barre déjà faite.
+  List<(int, double)> heavy = const <(int, double)>[];
+
+  /// Mode coach : ce que la dernière série repère a montré de la capacité
+  /// (répétitions faites plus la réserve dite, au plus celle demandée),
+  /// ou `null`.
+  double? probeCapacity;
+
+  /// Mode coach, exercice assisté : assistance de la dernière série
+  /// (charge externe négative du journal), ou `null`.
+  double? assist;
+
+  /// Mode coach : performance (logarithme de la capacité du jour) des
+  /// dernières séances qui ont mesuré la capacité, trois au plus (jour,
+  /// valeur).
+  List<(int, double)> form = const <(int, double)>[];
+
+  /// Mode coach : jour où l'alerte de surmenage s'est déclenchée (deux
+  /// séances mesurées de suite nettement sous la précédente), ou `null`.
+  int? easeDay;
+
+  /// Mode coach : performance des deux séances de l'alerte, en part de la
+  /// séance de référence.
+  double easeRatio = 1;
+
   /// Copie indépendante.
   ExerciseTrack fork() {
     final c = ExerciseTrack(info, filter.fork());
+    c.assist = assist;
+    c.form = form;
+    c.easeDay = easeDay;
+    c.easeRatio = easeRatio;
+    c.probeCapacity = probeCapacity;
     c.lastLoad = lastLoad;
     c.noUp = noUp;
     c.easy = easy;
@@ -116,13 +157,59 @@ final class ExerciseTrack {
     c.lastTop = lastTop;
     c.fatigueBaseline = fatigueBaseline;
     c.benchmarkDay = benchmarkDay;
+    c.exactDay = exactDay;
     c.firstDay = firstDay;
     c.lastDay = lastDay;
     c.resumedDay = resumedDay;
     c.lastResidual = lastResidual;
     c.lastSets = lastSets;
     c.bestAmount = bestAmount;
+    c.slotMarks = slotMarks;
+    c.heavy = heavy;
     return c;
+  }
+}
+
+/// Alerte de surmenage (mode coach) : suite [form] des performances
+/// mesurées (jour, logarithme de la capacité du jour ; trois au plus) après
+/// la séance du jour [day] de performance [value], et part de la séance de
+/// référence tenue par les deux dernières quand l'alerte se déclenche —
+/// deux séances mesurées de suite nettement sous celle d'avant
+/// (`coachOverreachDrop`), les trois dans `coachOverreachSpanDays` jours —
+/// sinon `null`. La séance d'alerte devient la nouvelle référence.
+(List<(int, double)>, double?) formAfter(
+  List<(int, double)> form,
+  int day,
+  double value,
+  AdaptParams p,
+) {
+  final next = <(int, double)>[
+    for (final e in form)
+      if (e.$1 != day) e,
+    (day, value),
+  ];
+  while (next.length > 3) {
+    next.removeAt(0);
+  }
+  if (next.length == 3 && day - next[0].$1 <= p.coachOverreachSpanDays) {
+    final limit = next[0].$2 + ln(1 - p.coachOverreachDrop);
+    if (next[1].$2 <= limit && next[2].$2 <= limit) {
+      final best = next[1].$2 > next[2].$2 ? next[1].$2 : next[2].$2;
+      return (<(int, double)>[next[2]], exp(best - next[0].$2));
+    }
+  }
+  return (next, null);
+}
+
+/// Retient dans [track] la performance mesurée [value] de la séance du jour
+/// [day] et ouvre, à l'alerte de surmenage, une semaine à volume réduit
+/// (`ExerciseTrack.easeDay`) ; voir [formAfter].
+void noteForm(ExerciseTrack track, int day, double value, AdaptParams p) {
+  final (form, ratio) = formAfter(track.form, day, value, p);
+  track.form = form;
+  if (ratio != null) {
+    track.easeDay = day;
+    track.easeRatio = ratio;
   }
 }
 
@@ -237,6 +324,7 @@ final class SetPlan {
     required this.flames,
     this.open = false,
     this.benchmark = false,
+    this.role,
   });
 
   /// Charge externe en kg (exercices chargés), sinon `null`.
@@ -257,6 +345,9 @@ final class SetPlan {
   /// Série repère : ouverte, plus près de l'échec que les autres.
   final bool benchmark;
 
+  /// Rôle de la série dans sa technique (mode coach), ou `null`.
+  final SetRole? role;
+
   /// La même cible à une autre charge.
   SetPlan withLoad(double? kg) => SetPlan(
     loadKg: kg,
@@ -265,6 +356,7 @@ final class SetPlan {
     flames: flames,
     open: open,
     benchmark: benchmark,
+    role: role,
   );
 }
 
@@ -282,7 +374,17 @@ final class SlotSpec {
     required this.benchmarkOk,
     required this.hasTarget,
     this.test = false,
+    this.coach,
+    this.coachRead = false,
   });
+
+  /// Séance d'un bloc au contrat 0.4.0 dont la prescription n'est plus
+  /// connue (bloc précédent) : le journal se lit comme en mode coach.
+  final bool coachRead;
+
+  /// Vrai si le journal de cet emplacement se lit comme en mode coach
+  /// (bornes « charnière », notes isolées lues comme bornes).
+  bool get reads => coach != null || coachRead;
 
   /// Bas de la plage (répétitions ou secondes).
   final int low;
@@ -311,6 +413,10 @@ final class SlotSpec {
   /// Séries de test.
   final bool test;
 
+  /// Lecture « coach » de la prescription (bloc qui porte les champs de
+  /// `kalis_core` 0.4.0), ou `null` : règle générale de 0.1.
+  final CoachSpec? coach;
+
   /// Haut de plage étendu quand la charge suivante n'est pas atteignable.
   int get highExtended => high + (high + 2) ~/ 3;
 
@@ -334,6 +440,9 @@ final class ObservedSet {
     required this.unplannedFail,
     required this.open,
     required this.target,
+    this.rir = 0,
+    this.quality,
+    this.role,
   });
 
   /// Charge externe, en kg.
@@ -356,6 +465,15 @@ final class ObservedSet {
 
   /// Cible affichée.
   final SetPlan? target;
+
+  /// Réserve estimée par le modèle après la série, en répétitions.
+  final double rir;
+
+  /// Propreté déclarée (1 à 5), ou `null`.
+  final int? quality;
+
+  /// Rôle de la ligne dans sa technique, ou `null`.
+  final SetRole? role;
 }
 
 /// Un exercice en cours dans une séance.
@@ -397,6 +515,18 @@ final class ExerciseRun {
   /// Échecs non prévus de la séance.
   int fails = 0;
 
+  /// Mode coach : une série de la séance a mesuré la capacité (série
+  /// ouverte ou test près de l'échec, répétitions manquantes).
+  bool measured = false;
+
+  /// Mode coach : la séance du jour est servie en séries fractionnées
+  /// (plus de lignes que le bloc n'en écrit, plus courtes).
+  bool split = false;
+
+  /// Mode coach : lignes retenues pour la séance (gel sur une zone
+  /// douloureuse, alerte de surmenage), ou `null`.
+  int? lines;
+
   /// Séries notées face à une cible.
   int ratedSets = 0;
 
@@ -435,6 +565,20 @@ final class ExerciseRun {
 
   /// Vrai une fois les apprentissages de fin d'exercice faits.
   bool closed = false;
+
+  /// Mode coach : raisons des décisions prises pour cet exercice.
+  final List<Reason> notes = <Reason>[];
+
+  /// Mode coach : la technique du bloc n'est pas servie aujourd'hui.
+  bool techniqueWithheld = false;
+
+  /// Mode coach : la semaine interdit toute hausse de charge (allègement,
+  /// affûtage, test, compétition).
+  bool lockUp = false;
+
+  /// Mode coach : plafond de hausse d'une séance à l'autre, ou `null` :
+  /// ceux de 0.1.
+  double? riseCap;
 
   /// Vrai si l'exercice a un filtre ouvert.
   bool get modelled => track != null;
@@ -745,6 +889,7 @@ final class SessionRun {
   void _open(ExerciseRun run, ExerciseTrack track) {
     final p = _p;
     run.track = track;
+    track.filter.hinge = run.spec.reads;
     final info = run.info;
     _resume(track);
     // La courbe pivote sur la plage travaillée quand elle s'est nettement
@@ -864,9 +1009,10 @@ final class SessionRun {
         run.painZones.isEmpty &&
         !run.spec.test;
     var rir = run.spec.rir + extraRir;
-    if (run.uncertain && !run.spec.test) {
+    if (run.uncertain && !run.spec.test && run.spec.coach == null) {
       // Un test se fait à l'effort demandé : c'est lui qui lève
-      // l'incertitude.
+      // l'incertitude. (Mode coach : la dose du bloc et les garde-fous
+      // valent ; l'effort affiché reste celui qui est attendu.)
       rir += p.calibrationRirBonus;
     }
     if (run.painZones.isNotEmpty) {
@@ -924,6 +1070,13 @@ final class SessionRun {
       if (o.amount > top) {
         top = o.amount;
       }
+      final said = o.flames;
+      if (o.failed ||
+          (run.spec.reads
+              ? run.measured
+              : (said != null && rirOfFlames(said) < state.rater.ceiling(p)))) {
+        track.exactDay = day;
+      }
       final kg = o.loadKg;
       if (kg != null) {
         if (lowest == null || kg < lowest) {
@@ -936,8 +1089,18 @@ final class SessionRun {
           lowestFailed = kg;
         }
       }
-      if (o.open) {
+      // Série repère. (Mode coach : les séries d'une plage sont toutes
+      // « au ressenti » ; seule une série ouverte au-delà du haut de la
+      // plage du bloc est une série repère.)
+      if (o.open &&
+          (!run.spec.reads || (o.target?.high ?? 0) > run.spec.high)) {
         openSet = true;
+        final said = o.flames;
+        if (run.spec.reads && !o.failed && said != null) {
+          final asked = rirOfFlames(o.target!.flames);
+          final rir = rirOfFlames(said);
+          track.probeCapacity = o.amount + (rir < asked ? rir : asked);
+        }
       }
       if (o.amount > track.bestAmount) {
         track.bestAmount = o.amount.toDouble();
@@ -979,6 +1142,14 @@ final class SessionRun {
     track.firstDay ??= day;
     track.lastDay = day;
     track.lastSets = run.observed.length;
+    noteHeavy(track, run, day, p);
+    final coach = run.spec.coach;
+    if (coach != null) {
+      noteCoachSession(track, run, coach, day, p, bodyWeightKg);
+      if (run.measured || run.fails > 0) {
+        noteForm(track, day, f.m[0] + f.m[3], p);
+      }
+    }
     f.endSession();
     run.closed = true;
     closed.add(run);
@@ -996,6 +1167,10 @@ final class SessionRun {
     required bool missed,
     required SetPlan? target,
     bool test = false,
+    bool boundOnly = false,
+    int? quality,
+    SetRole? role,
+    int? lineAmount,
   }) {
     final run = current!;
     final info = run.info;
@@ -1022,12 +1197,44 @@ final class SessionRun {
         failed,
         target,
         test,
+        boundOnly,
+        quality,
+        role,
+        lineAmount ?? amount,
       );
     } else {
       if (run.track == null) {
         _firstDirect(run, mode, amount, flames, failed);
       }
-      _observeDirect(run, mode, amount, flames, failed, target);
+      final track = run.track;
+      if (track != null && run.spec.reads && info.exercise.assisted) {
+        // Assistance changée depuis la dernière série (cran d'élastique) :
+        // la capacité attendue se décale d'un cran, l'incertitude grandit.
+        final now = loadKg ?? 0;
+        final before = track.assist;
+        if (before != null && (now - before).abs() > 1e-9) {
+          track.probeCapacity = null;
+          final step = ln(_p.coachAssistStepShare);
+          track.filter.shiftLevel(
+            now > before ? step : -step,
+            sq(_p.coachAssistStepSd),
+          );
+        }
+        track.assist = now;
+      }
+      _observeDirect(
+        run,
+        mode,
+        amount,
+        flames,
+        failed,
+        target,
+        boundOnly,
+        quality,
+        role,
+        test,
+        lineAmount ?? amount,
+      );
     }
   }
 
@@ -1127,6 +1334,10 @@ final class SessionRun {
     bool failed,
     SetPlan? target,
     bool test,
+    bool boundOnly,
+    int? quality,
+    SetRole? role,
+    int shown,
   ) {
     final p = _p;
     final track = run.track!;
@@ -1165,7 +1376,7 @@ final class SessionRun {
         learnK: fresh,
         clip: p.failOutlier,
       );
-    } else if (flames == null) {
+    } else if (flames == null || boundOnly) {
       f.observeLoad(
         logLoad: logLoad,
         n: reps.toDouble(),
@@ -1183,8 +1394,29 @@ final class SessionRun {
         p: p,
         bound: true,
       );
+    } else if (run.spec.reads &&
+        _asBound(run, flames, open, test, reps, target)) {
+      // Mode coach : loin de l'échec, la note ne se lit que comme « au
+      // moins tant en réserve » (la prédiction des répétitions restantes
+      // se dégrade loin de l'échec et plafonne, R2-P3).
+      final rir = rirOfFlames(flames);
+      f.observeLoad(
+        logLoad: logLoad,
+        n: reps + rir,
+        nSd: state.rater.rirSd(rir, reps, p),
+        fatigue: fatigue,
+        p: p,
+        bound: true,
+      );
     } else {
       final rir = rirOfFlames(flames);
+      if (test && run.spec.coach != null && role != SetRole.attempt) {
+        // Test mené près de l'échec : l'écart à la prévision corrige le
+        // biais de note appris (limite 4 de 0.1).
+        if (rir <= 1) {
+          state.rater.learn(reps + rir - nPred, p);
+        }
+      }
       final confirmed =
           target != null &&
           !target.open &&
@@ -1217,7 +1449,13 @@ final class SessionRun {
           nSd: sd,
           fatigue: fatigue,
           p: p,
-          learnK: fresh && (test || open) && rir <= 2,
+          // Mode coach : toute série notée près de l'échec, fraîche,
+          // renseigne la forme de la courbe (séries de tête lourdes et
+          // séries longues se recoupent).
+          learnK:
+              fresh &&
+              ((test || open) && rir <= 2 ||
+                  (run.spec.reads && rir <= p.coachCurveRir)),
         );
       }
       f.observeLoad(
@@ -1244,16 +1482,19 @@ final class SessionRun {
     if (unplanned) {
       run.fails++;
     }
-    _noteEase(run, reps, flames, failed, target);
+    _noteEase(run, shown, flames, failed, target);
     run.observed.add(
       ObservedSet(
         loadKg: loadKg,
-        amount: reps,
+        amount: shown,
         flames: flames,
         failed: failed,
         unplannedFail: unplanned,
         open: open,
         target: target,
+        rir: rirEstimate,
+        quality: quality,
+        role: role,
       ),
     );
   }
@@ -1265,12 +1506,27 @@ final class SessionRun {
     int? flames,
     bool failed,
     SetPlan? target,
+    bool boundOnly,
+    int? quality,
+    SetRole? role,
+    bool test,
+    int shown,
   ) {
     final p = _p;
     final track = run.track!;
     final f = track.filter;
     final fatigue = f.fatigueNow(p);
     final keep = 1 - fatigue;
+    if (test &&
+        run.spec.coach != null &&
+        mode == CapacityMode.reps &&
+        amount >= 1 &&
+        (failed || (flames != null && rirOfFlames(flames) <= 1))) {
+      // Test de répétitions mené près de l'échec : l'écart à la prévision
+      // corrige le biais de note appris (limite 4 de 0.1).
+      final shown = amount + (failed ? p.failExtraReps : rirOfFlames(flames!));
+      state.rater.learn(shown - f.capacityToday() * keep, p);
+    }
     final done = amount < 1 ? 1 : amount;
     final open = target != null && target.open;
     var rirEstimate = 0.0;
@@ -1291,7 +1547,7 @@ final class SessionRun {
         p: p,
         clip: p.failOutlier,
       );
-    } else if (flames == null) {
+    } else if (flames == null || boundOnly) {
       f.observeDirect(
         logCapacity: ln(done / keep),
         sd: 0.05,
@@ -1303,6 +1559,15 @@ final class SessionRun {
       f.observeDirect(
         logCapacity: ln(_impliedCapacity(mode, done, rir) / keep),
         sd: relSd(p.openRir),
+        p: p,
+        bound: true,
+      );
+    } else if (run.spec.reads &&
+        _asBound(run, flames, open, test, amount, target)) {
+      final said = rirOfFlames(flames);
+      f.observeDirect(
+        logCapacity: ln(_impliedCapacity(mode, done, said) / keep),
+        sd: relSd(said),
         p: p,
         bound: true,
       );
@@ -1353,16 +1618,19 @@ final class SessionRun {
     if (unplanned) {
       run.fails++;
     }
-    _noteEase(run, amount, flames, failed, target);
+    _noteEase(run, shown, flames, failed, target);
     run.observed.add(
       ObservedSet(
         loadKg: null,
-        amount: amount,
+        amount: shown,
         flames: flames,
         failed: failed,
         unplannedFail: unplanned,
         open: open,
         target: target,
+        rir: rirEstimate,
+        quality: quality,
+        role: role,
       ),
     );
   }
@@ -1371,6 +1639,48 @@ final class SessionRun {
   /// l'exercice : cible atteinte et note d'une flamme (« 5 répétitions en
   /// réserve et plus », qui ne borne la capacité que par le bas), au moins
   /// [AdaptParams.adviceGapFlames] flammes sous la cible (D5).
+  /// Mode coach : vrai si la note [flames] se lit comme une borne basse
+  /// (loin de l'échec).
+  /// Une série ouverte (au ressenti, série repère) arrêtée à la réserve
+  /// demandée mesure la capacité jusqu'à 2 répétitions en réserve dites.
+  bool _censored(int flames, [bool open = false]) {
+    final rir = rirOfFlames(flames);
+    if (open && rir <= 2) {
+      return false;
+    }
+    return rir >= state.rater.ceiling(_p);
+  }
+
+  /// Mode coach : vrai si la série se lit comme une borne basse. Une série
+  /// à cible fixe menée à bien ne mesure pas la capacité, quelle que soit
+  /// sa note : une note isolée est trop peu sûre (erreur de 2,6 à 3,4
+  /// répétitions, Steele et al. 2017 ; sous-estimation, Halperin et al.
+  /// 2022) — elle sert au conseil de la série suivante, pas à l'estimation.
+  /// Ce que l'athlète fait mesure : un échec, des répétitions qui manquent
+  /// à la cible avec une note dure, une série ouverte arrêtée à la réserve
+  /// demandée, un test.
+  bool _asBound(
+    ExerciseRun run,
+    int flames,
+    bool open,
+    bool test,
+    int amount,
+    SetPlan? target,
+  ) {
+    // Série ouverte menée jusqu'au haut de sa plage : elle n'a pas été
+    // arrêtée au ressenti, elle ne mesure pas.
+    final byFeel = open && (target == null || amount < target.high);
+    if (_censored(flames, byFeel)) {
+      return true;
+    }
+    final short = target != null && amount < target.low;
+    if (byFeel || test || short) {
+      run.measured = true;
+      return false;
+    }
+    return true;
+  }
+
   void _noteEase(
     ExerciseRun run,
     int amount,
@@ -1382,11 +1692,21 @@ final class SessionRun {
       return;
     }
     run.ratedSets++;
+    // Mode coach : une note au plafond de ce qu'une personne sait dire
+    // (« 3 en réserve ou plus »), au-dessus de la réserve visée, compte
+    // comme « plus facile que visé » — elle ouvre une série au ressenti
+    // qui dira ce que la charge (ou la plage) vaut vraiment.
+    final said = rirOfFlames(flames);
+    final coachEasy =
+        run.spec.coach != null &&
+        said >= state.rater.ceiling(_p) &&
+        said - rirOfFlames(target.flames) >= 0.5;
     final easy =
         !failed &&
         amount >= target.high &&
-        flames == Flames.min &&
-        target.flames - flames >= _p.adviceGapFlames;
+        ((flames == Flames.min &&
+                target.flames - flames >= _p.adviceGapFlames) ||
+            coachEasy);
     if (easy) {
       run.easySets++;
     }
@@ -1517,9 +1837,13 @@ final class SessionRun {
       run.heldCause = 'health';
       return kg;
     }
+    if (run.lockUp) {
+      run.heldCause = 'phase';
+      return kg;
+    }
     final rise = run.calibrating
         ? p.maxUpCalibration
-        : (spec.main ? p.maxUpMain : p.maxUpOther);
+        : (run.riseCap ?? (spec.main ? p.maxUpMain : p.maxUpOther));
     final capTotal = (last + bw) * (1 + rise);
     for (var i = 0; i < 60; i++) {
       final next = grid.next(kg, up: true);
@@ -1688,9 +2012,16 @@ final class SessionRun {
     // devient ouverte (autant de répétitions que possible en gardant la
     // réserve dite), comme dans l'APRE (Mann et al. 2010).
     final lastBenchmark = track.benchmarkDay;
+    // Mode coach : aussi quand aucune série n'a mesuré la capacité depuis
+    // `coachProbeDays` (notes au plafond de ce qu'une personne sait dire).
+    final exact = track.exactDay;
+    final blind =
+        spec.coach != null &&
+        track.lastDay != null &&
+        (exact == null || day - exact >= p.coachProbeDays);
     final every = state.rater.weight(p) < p.benchmarkWeight
         ? p.benchmarkEveryDays
-        : p.benchmarkEveryDaysRated;
+        : (blind ? p.coachProbeDays : p.benchmarkEveryDaysRated);
     if (wantsBenchmark(run) &&
         every > 0 &&
         (lastBenchmark == null || day - lastBenchmark >= every)) {

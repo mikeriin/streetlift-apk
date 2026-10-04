@@ -12,9 +12,30 @@ import 'package:kalis_core/kalis_core.dart';
 import 'package:kalis_plan/kalis_plan.dart' show MuscleGroup;
 
 import '../book.dart';
+import '../coach.dart' show tendonLoaded;
 import '../filter.dart';
 import '../numeric.dart';
 import 'rng.dart';
+
+/// Modèle de vérité de l'athlète simulé. Les trois modèles diffèrent par
+/// la forme de la courbe répétitions ↔ charge, le bruit et le biais de la
+/// note, la réponse à la dose, la fatigue de séance, l'effet de
+/// l'affûtage et l'adaptation des tendons (`docs/VALIDATION.md`, § 8) :
+/// le moteur est jugé sur tous, aucun n'est le sien.
+enum TruthKind {
+  /// Modèle de 0.1 : courbe exponentielle, dose saturante, note gaussienne.
+  a,
+
+  /// Courbe linéaire (Brzycki), dose logarithmique pondérée par
+  /// l'intensité, note arrondie à la répétition et plafonnée, bonus
+  /// d'affûtage, tolérance des tendons en retard sur la force.
+  b,
+
+  /// Courbe en puissance (Lombardi), forme et fatigue à deux composantes
+  /// (performance masquée par la fatigue récente), biais de note selon le
+  /// niveau et décalage du jour, perte dès sept jours d'arrêt.
+  c,
+}
 
 /// Physiologie et comportement d'un athlète simulé.
 final class AthleteSpec {
@@ -148,6 +169,18 @@ final class TruthExercise {
   /// Part de la tenue maximale que vaut une répétition en réserve.
   double holdShare = 0.1;
 
+  /// Modèle de vérité (forme de la courbe).
+  TruthKind kind = TruthKind.a;
+
+  /// Pente de la courbe linéaire (modèle B) : part perdue par répétition.
+  double slope = 0.0278;
+
+  /// Exposant de la courbe en puissance (modèle C).
+  double power = 0.10;
+
+  /// Part de la fatigue d'une série encore présente deux séries plus tard.
+  double carry = 0.5;
+
   /// Effet de jour de la séance en cours.
   double day = 0;
 
@@ -179,18 +212,40 @@ final class TruthExercise {
   double lastCapacity = 0;
 
   /// Part du 1RM soulevable [n] fois.
-  double share(double n) => curveA + (1 - curveA) * exp(-curveB * (n - 1));
+  double share(double n) {
+    switch (kind) {
+      case TruthKind.a:
+        return curveA + (1 - curveA) * exp(-curveB * (n - 1));
+      case TruthKind.b:
+        final v = 1 - slope * ((n < 1 ? 1 : n) - 1);
+        return v < 0.3 ? 0.3 : v;
+      case TruthKind.c:
+        return exp(-power * ln(n < 1 ? 1 : n));
+    }
+  }
 
   /// Répétitions possibles à la part [share] du 1RM.
   double repsAtShare(double share) {
     if (share >= 1) {
       return 1 - (share - 1) * 20;
     }
-    if (share <= curveA + 1e-6) {
-      return 100;
+    switch (kind) {
+      case TruthKind.a:
+        if (share <= curveA + 1e-6) {
+          return 100;
+        }
+        final n = 1 - ln((share - curveA) / (1 - curveA)) / curveB;
+        return n > 100 ? 100 : n;
+      case TruthKind.b:
+        final n = 1 + (1 - share) / slope;
+        return n > 100 ? 100 : n;
+      case TruthKind.c:
+        if (share <= 0.05) {
+          return 100;
+        }
+        final n = exp(-ln(share) / power);
+        return n > 100 ? 100 : n;
     }
-    final n = 1 - ln((share - curveA) / (1 - curveA)) / curveB;
-    return n > 100 ? 100 : n;
   }
 
   /// Perte relative de capacité de la série à venir.
@@ -198,7 +253,7 @@ final class TruthExercise {
     var total = 0.0;
     final n = setFatigue.length;
     for (var i = 0; i < n; i++) {
-      total += setFatigue[i] * exp((n - 1 - i) / 2 * ln(0.5));
+      total += setFatigue[i] * exp((n - 1 - i) / 2 * ln(carry));
     }
     return total > 0.8 ? 0.8 : total;
   }
@@ -230,6 +285,10 @@ final class SetOutcome {
 const List<double> _levelScale = <double>[0.62, 1.0, 1.3, 1.5];
 const List<double> _levelAbility = <double>[3, 5, 7, 9];
 const List<double> _weeksTrained = <double>[8, 60, 200, 400];
+
+/// Biais de report du RIR par niveau du modèle C : la prédiction des
+/// répétitions restantes s'améliore avec l'expérience (Steele et al. 2017).
+const List<double> _levelBias = <double>[0.45, 0.30, 0.20, 0.12];
 
 /// Rapport du 1RM de charge totale au poids du corps, niveau
 /// intermédiaire (ordre de grandeur pour la simulation seulement).
@@ -340,16 +399,33 @@ double _ratioOf(CatalogExercise e) {
 
 /// Athlète simulé.
 final class SimAthlete {
-  /// Athlète [spec] de profil [profile], pour la graine [seed].
-  SimAthlete(this.spec, this.profile, this.book, this.seed) {
+  /// Athlète [spec] de profil [profile], pour la graine [seed], sous le
+  /// modèle de vérité [kind].
+  SimAthlete(
+    this.spec,
+    this.profile,
+    this.book,
+    this.seed, {
+    this.kind = TruthKind.a,
+  }) {
     final r = SimRandom.of(seed, 'athlete');
     bodyWeightKg = profile.bodyWeightKg ?? 72;
     sensAcute = 0.004 * exp(0.4 * r.gauss());
     sensChronic = 0.0006 * exp(0.4 * r.gauss());
-    beta = clampDouble(spec.rirBias + spec.rirBiasSd * r.gauss(), -0.15, 0.8);
+    final draw = r.gauss();
+    beta = kind == TruthKind.c
+        ? clampDouble(
+            _levelBias[spec.level] + spec.rirBiasSd * draw,
+            -0.15,
+            0.8,
+          )
+        : clampDouble(spec.rirBias + spec.rirBiasSd * draw, -0.15, 0.8);
     noise = spec.ratingNoise * exp(0.15 * r.gauss());
     weeksTrained = _weeksTrained[spec.level];
   }
+
+  /// Modèle de vérité.
+  final TruthKind kind;
 
   /// Comportement et physiologie.
   final AthleteSpec spec;
@@ -400,6 +476,21 @@ final class SimAthlete {
   int painAggravations = 0;
 
   bool _painKnown = false;
+
+  // Modèles B et C : charge d'entraînement récente (7 jours) et de fond
+  // (28 jours), dernier jour d'une série lourde, secondes de tenue en bras
+  // tendus de la semaine, tolérance des tendons, décalage de note du jour.
+  double _fast = 0;
+  double _slow = 0;
+  int? _lastHeavyDay;
+  double _holdWeek = 0;
+  double? _tendon;
+  BodyZone? _tendonZone;
+  double _ratingOffset = 0;
+
+  /// Zone de l'épisode de douleur en cours : celle de la fiche, sinon celle
+  /// d'une surcharge des tendons (modèle B).
+  BodyZone? get painZone => spec.painZone ?? _tendonZone;
 
   /// Vérités connues (exercices déjà rencontrés).
   Iterable<TruthExercise> get truths =>
@@ -489,6 +580,16 @@ final class SimAthlete {
         t.holdShare = 0.1 * exp(0.2 * r.gauss());
     }
     t.fatigueScale = exp(0.35 * r.gauss());
+    if (kind != TruthKind.a) {
+      // Courbes propres aux modèles B (Brzycki 1993 : une répétition de
+      // plus coûte 1/36 du 1RM) et C (Lombardi 1989 : 1RM = charge ×
+      // répétitions^0,10), avec leur dispersion entre personnes.
+      t
+        ..kind = kind
+        ..slope = (lower ? 0.0236 : 0.0278) * exp(0.18 * r.gauss())
+        ..power = (lower ? 0.085 : 0.10) * exp(0.2 * r.gauss())
+        ..carry = kind == TruthKind.c ? 0.6 : 0.5;
+    }
     t.startCapacity = t.capacity;
     _truth[id] = t;
     return t;
@@ -509,9 +610,21 @@ final class SimAthlete {
       _acute[i] *= ea;
     }
     _chronic *= exp(-dt / 6);
+    if (kind != TruthKind.a) {
+      _fast *= exp(-dt / 7);
+      _slow *= exp(-dt / 28);
+      _ratingOffset = kind == TruthKind.c ? 0.6 * r.gauss() : 0;
+    }
     for (final t in truths) {
       final last = t.lastDay;
-      if (last != null && day - last > 21) {
+      if (kind == TruthKind.c) {
+        // Modèle C : la force maximale baisse dès que l'arrêt dépasse sept
+        // jours (R3-P14 : 1 à 4 %), puis continue de baisser.
+        if (last != null && day - last > 7) {
+          final over = dt < day - last - 7 ? dt : day - last - 7;
+          t.capacity *= exp(-0.0025 * over);
+        }
+      } else if (last != null && day - last > 21) {
         final over = dt < day - last - 21 ? dt : day - last - 21;
         t.capacity *= exp(-0.01 * over / 7);
       }
@@ -536,10 +649,38 @@ final class SimAthlete {
   /// Vrai si l'épisode de douleur est en cours.
   bool get inPain => painIntensity > 0 && _day <= painUntil;
 
+  /// Effet de la charge récente sur la performance (modèles B et C) :
+  /// rapport de la charge des 7 derniers jours à la charge de fond.
+  ///
+  /// B : bonus d'affûtage quand la charge récente passe sous la charge de
+  /// fond en gardant une série lourde dans les dix jours (R3-P12, R3-P13 ;
+  /// Bosquet et al. 2007 : gain de l'ordre de 2 à 3 %), malus sinon.
+  /// C : forme masquée par la fatigue récente (Banister ; Busso 2003) —
+  /// la performance monte quand la fatigue retombe, baisse en surcharge.
+  double _sharpness() {
+    if (kind == TruthKind.a || _slow < 4) {
+      return 0;
+    }
+    final ratio = (_fast / 7) / (_slow / 28);
+    if (kind == TruthKind.b) {
+      var bonus = clampDouble(0.03 * (1 - ratio), -0.01, 0.025);
+      final heavy = _lastHeavyDay;
+      if (heavy != null && _day - heavy > 10) {
+        final late = (_day - heavy - 10) / 10;
+        bonus -= 0.02 * (late > 1 ? 1 : late);
+      }
+      return bonus;
+    }
+    return clampDouble(-0.02 * ln(ratio < 0.25 ? 0.25 : ratio), -0.015, 0.03);
+  }
+
   double _globalReadiness() {
     var r = _life - sensChronic * _chronic;
     if (ill) {
       r -= 0.08;
+    }
+    if (kind != TruthKind.a) {
+      r += _sharpness();
     }
     return r;
   }
@@ -577,7 +718,7 @@ final class SimAthlete {
       return HealthCheck(overall: overall);
     }
     // Réponse basse : le détail est demandé (D5.8).
-    if (inPain && spec.painZone != null) {
+    if (inPain && painZone != null) {
       _painKnown = true;
     }
     return HealthCheck(
@@ -586,9 +727,9 @@ final class SimAthlete {
       energy: overall <= 2 ? 2 : null,
       minutesAvailable: short ? (budget * 0.6).round() : null,
       pains: <PainReport>[
-        if (inPain && spec.painZone != null)
+        if (inPain && painZone != null)
           PainReport(
-            zone: spec.painZone!,
+            zone: painZone!,
             side: BodySide.both,
             intensity: painIntensity,
             phase: PainPhase.before,
@@ -599,7 +740,7 @@ final class SimAthlete {
 
   /// Douleurs signalées pendant la séance (à appeler en fin de séance).
   List<PainReport> sessionPains() {
-    final zone = spec.painZone;
+    final zone = painZone;
     if (!inPain || zone == null) {
       return const <PainReport>[];
     }
@@ -617,7 +758,19 @@ final class SimAthlete {
   /// Ouvre l'exercice [t] dans la séance du jour.
   void beginExercise(TruthExercise t, String slotKey) {
     final r = SimRandom.of(seed, 'day|$_day|$slotKey|${t.info.id}');
-    t.day = _readiness(t.info) + spec.daySd * 0.66 * r.gauss();
+    switch (kind) {
+      case TruthKind.a:
+        t.day = _readiness(t.info) + spec.daySd * 0.66 * r.gauss();
+      case TruthKind.b:
+        // Variation d'un jour à l'autre plus large (coefficient de
+        // variation médian du 1RM : 4,2 %, Grgic et al. 2020).
+        t.day = _readiness(t.info) + spec.daySd * 1.3 * 0.66 * r.gauss();
+      case TruthKind.c:
+        // Queue lourde : un jour sur dix est nettement mauvais.
+        final g = r.gauss();
+        final bad = r.next() < 0.1;
+        t.day = _readiness(t.info) + spec.daySd * 0.66 * g - (bad ? 0.04 : 0);
+    }
     t.setFatigue = <double>[];
     t.sessionLoad = null;
   }
@@ -772,8 +925,27 @@ final class SimAthlete {
       amount = wanted;
       trueRir = rirAfter(amount.toDouble());
       var perceived = trueRir / (1 + bias);
-      perceived +=
-          noise * (0.3 + 0.2 * (trueRir > 6 ? 6 : trueRir)) * long * r.gauss();
+      final capped = trueRir > 6 ? 6.0 : trueRir;
+      switch (kind) {
+        case TruthKind.a:
+          perceived += noise * (0.3 + 0.2 * capped) * long * r.gauss();
+        case TruthKind.b:
+          // Note dite en répétitions entières, plafonnée à 4, erreur qui
+          // grandit loin de l'échec (Zourdos et al. 2021), une note sur
+          // douze franchement fausse.
+          perceived += noise * (0.5 + 0.25 * capped) * long * r.gauss();
+          if (r.next() < 0.08) {
+            perceived += r.next() < 0.5 ? 2 : -2;
+          }
+          perceived = perceived.roundToDouble();
+          if (perceived > 4) {
+            perceived = 4;
+          }
+        case TruthKind.c:
+          // Décalage commun aux séries du jour, en plus du bruit par série.
+          perceived +=
+              _ratingOffset + noise * (0.3 + 0.2 * capped) * long * r.gauss();
+      }
       if (perceived < 0) {
         perceived = 0;
       }
@@ -792,10 +964,18 @@ final class SimAthlete {
       flames = r.next() < spec.skipRating ? null : said;
     }
     // Fatigue laissée par la série (vérité : RIR réel et repos).
-    final base =
-        0.85 *
-        exp(-restSeconds / 160) *
-        exp(-(trueRir > 8 ? 8 : trueRir) / 1.4);
+    final rirCapped = trueRir > 8 ? 8.0 : trueRir;
+    final double base;
+    switch (kind) {
+      case TruthKind.a:
+        base = 0.85 * exp(-restSeconds / 160) * exp(-rirCapped / 1.4);
+      case TruthKind.b:
+        // Récupération hyperbolique avec le repos (chute des répétitions
+        // à 1, 3 et 5 min : de Salles et al. 2009).
+        base = 0.8 / (1 + restSeconds / 75) / (1 + rirCapped / 1.2);
+      case TruthKind.c:
+        base = 0.7 * exp(-restSeconds / 200) * exp(-rirCapped / 2);
+    }
     t.setFatigue.add(base * t.fatigueScale * exp(0.2 * r.gauss()));
     var w = 1 - (trueRir > 6 ? 6 : trueRir) / 8;
     if (w < 0.3) {
@@ -819,9 +999,40 @@ final class SimAthlete {
     if (t.mode == CapacityMode.loaded) {
       heavy = info.totalLoad(loadKg ?? 0, bodyWeightKg) / t.capacity >= 0.5;
     }
-    if (amount > 0 && heavy) {
-      final value = 1 - 0.1 * (trueRir > 2 ? trueRir - 2 : 0);
-      t.stimulus += value < 0.2 ? 0.2 : value;
+    switch (kind) {
+      case TruthKind.a:
+        if (amount > 0 && heavy) {
+          final value = 1 - 0.1 * (trueRir > 2 ? trueRir - 2 : 0);
+          t.stimulus += value < 0.2 ? 0.2 : value;
+        }
+      case TruthKind.b:
+        // La force répond à la charge plus qu'à la proximité de l'échec
+        // (R1-P11, R1-P14) : une série compte selon sa part du 1RM.
+        if (amount > 0) {
+          var value = trueRir <= 4 ? 1.0 : 0.6;
+          if (t.mode == CapacityMode.loaded) {
+            final part = info.totalLoad(loadKg ?? 0, bodyWeightKg) / t.capacity;
+            value = part >= 0.85
+                ? 1.5
+                : (part >= 0.7 ? 1.0 : (part >= 0.5 ? 0.6 : 0.2));
+            if (part >= 0.85) {
+              _lastHeavyDay = _day;
+            }
+          }
+          t.stimulus += value;
+        }
+      case TruthKind.c:
+        if (amount > 0 && heavy) {
+          final value = 1 - 0.15 * (trueRir > 3 ? trueRir - 3 : 0);
+          t.stimulus += value < 0.3 ? 0.3 : value;
+        }
+    }
+    if (kind != TruthKind.a && amount > 0) {
+      _fast += w;
+      _slow += w;
+      if (tendonLoaded(info)) {
+        _holdWeek += amount;
+      }
     }
     t.lastDay = _day;
     if (loadKg != null) {
@@ -830,7 +1041,7 @@ final class SimAthlete {
         t.sessionLoad = loadKg;
       }
       // Douleur : une charge accrue sur la zone aggrave et prolonge.
-      final zone = spec.painZone;
+      final zone = painZone;
       final last = t.lastLoad;
       if (inPain &&
           _painKnown &&
@@ -860,13 +1071,58 @@ final class SimAthlete {
     _weeks++;
     final over = (_chronic > 14 ? _chronic - 14 : 0) / 14;
     final rate = spec.weeklyGain / (1 + _weeks / 40);
+    if (kind != TruthKind.a) {
+      // Tendons (modèle B) : la tolérance suit la dose de tenues en bras
+      // tendus avec retard (R4-F9) ; une semaine très au-dessus déclenche
+      // un épisode de gêne au poignet.
+      final tolerance = _tendon;
+      if (tolerance == null) {
+        if (_holdWeek > 0) {
+          _tendon = _holdWeek;
+        }
+      } else {
+        if (kind == TruthKind.b &&
+            _holdWeek > 1.3 * tolerance + 10 &&
+            spec.painZone == null &&
+            !inPain) {
+          _tendonZone = BodyZone.wristHand;
+          painIntensity = 4;
+          painUntil = _day + 10;
+        }
+        _tendon = tolerance + (_holdWeek - tolerance) / 6;
+      }
+      _holdWeek = 0;
+    }
     for (final t in truths) {
       final s = t.stimulus;
-      var dose = s <= 0 ? 0.0 : s / (s + 3) / (6 / 9);
-      if (dose > 1.3) {
-        dose = 1.3;
+      double dose;
+      double fast;
+      switch (kind) {
+        case TruthKind.a:
+          dose = s <= 0 ? 0.0 : s / (s + 3) / (6 / 9);
+          if (dose > 1.3) {
+            dose = 1.3;
+          }
+          fast = t.mode == CapacityMode.loaded ? 1.0 : 2.0;
+        case TruthKind.b:
+          // Réponse logarithmique au nombre de séries (rendements
+          // décroissants, Ralston et al. 2017).
+          dose = s <= 0 ? 0.0 : ln(1 + s) / ln(9);
+          if (dose > 1.25) {
+            dose = 1.25;
+          }
+          fast = t.mode == CapacityMode.loaded
+              ? 1.0
+              : (tendonLoaded(t.info) ? 1.2 : 2.0);
+        case TruthKind.c:
+          dose = s <= 0 ? 0.0 : (1 - exp(-s / 5)) / (1 - exp(-6 / 5));
+          if (dose > 1.2) {
+            dose = 1.2;
+          }
+          fast = t.mode == CapacityMode.loaded
+              ? 1.0
+              : (tendonLoaded(t.info) ? 1.2 : 1.8);
       }
-      final fast = t.mode == CapacityMode.loaded ? 1.0 : 2.0;
       var keep = 1 - 0.5 * over;
       if (keep < 0.2) {
         keep = 0.2;
@@ -874,5 +1130,42 @@ final class SimAthlete {
       t.capacity *= exp(rate * fast * dose * keep);
       t.stimulus = 0;
     }
+  }
+
+  /// Propreté d'une ligne de figure ou de maintien (1 à 5) : parfaite avec
+  /// deux répétitions en réserve et plus, dégradée près de l'échec.
+  int qualityOf(SetOutcome outcome) {
+    if (outcome.failed) {
+      return 2;
+    }
+    final rir = outcome.trueRir;
+    return rir >= 2 ? 5 : (rir >= 1 ? 4 : (rir >= 0.3 ? 3 : 2));
+  }
+
+  /// Exécute une descente surchargée ou seule : la capacité excentrique
+  /// dépasse la capacité concentrique d'environ 30 % (ordre de grandeur :
+  /// 20 à 60 % selon les études, choix raisonné).
+  SetOutcome performEccentric(
+    TruthExercise t, {
+    required double? loadKg,
+    required int low,
+    required int high,
+    required int flamesTarget,
+    required int restSeconds,
+    required String noiseKey,
+  }) {
+    final before = t.day;
+    t.day = before + ln(1.3);
+    final outcome = perform(
+      t,
+      loadKg: loadKg,
+      low: low,
+      high: high,
+      flamesTarget: flamesTarget,
+      restSeconds: restSeconds,
+      noiseKey: noiseKey,
+    );
+    t.day = before;
+    return outcome;
   }
 }

@@ -16,6 +16,7 @@ library;
 
 export 'src/adapter.dart';
 export 'src/analysis.dart';
+export 'src/campaign.dart';
 export 'src/expectations.dart';
 export 'src/export.dart';
 export 'src/profile.dart';
@@ -24,4 +25,5 @@ export 'src/quality.dart';
 export 'src/report.dart';
 export 'src/safety.dart';
 export 'src/trajectory.dart';
+export 'src/trajectory_export.dart';
 export 'src/version.dart';

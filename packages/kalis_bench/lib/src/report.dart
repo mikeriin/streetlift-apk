@@ -6,6 +6,7 @@ library;
 import 'dart:convert';
 
 import 'package:kalis_adapt/kalis_adapt.dart' show kalisAdaptVersion;
+import 'package:kalis_adapt/simulation.dart' show TruthKind;
 import 'package:kalis_core/kalis_core.dart';
 import 'package:kalis_plan/kalis_plan.dart' show kalisPlanVersion;
 import 'package:kalis_plan/report.dart' show OwnerProgram;
@@ -19,6 +20,7 @@ import 'program.dart';
 import 'quality.dart';
 import 'safety.dart';
 import 'trajectory.dart';
+import 'trajectory_export.dart';
 import 'version.dart';
 
 /// Ce que le banc fait tourner.
@@ -84,7 +86,12 @@ final class ProfileReport {
     this.checks = const <CheckResult>[],
     this.trajectory,
     this.realizedSafety,
+    this.otherTruths = const <Trajectory>[],
   });
+
+  /// La même trajectoire sous les autres modèles de vérité (programmes au
+  /// contrat 0.4.0).
+  final List<Trajectory> otherTruths;
 
   /// Profil.
   final BenchProfile profile;
@@ -156,6 +163,7 @@ ProfileReport evaluateProfile(
     checks = evaluateChecks(v, profile);
   }
   Trajectory? trajectory;
+  var others = const <Trajectory>[];
   List<Finding>? realized;
   if (mode != BenchMode.plan) {
     final t = simulateTrajectory(
@@ -166,7 +174,49 @@ ProfileReport evaluateProfile(
       seed: seed,
     );
     trajectory = t;
+    if (t.coached) {
+      // Programme au contrat 0.4.0 : la trajectoire racontée est celle du
+      // modèle de vérité le plus éloigné des hypothèses du moteur ; les
+      // deux autres sont mesurées à côté.
+      final main = simulateTrajectory(
+        catalog,
+        plan,
+        profile,
+        program.profile,
+        seed: seed,
+        truth: TruthKind.b,
+      );
+      others = <Trajectory>[
+        t,
+        simulateTrajectory(
+          catalog,
+          plan,
+          profile,
+          program.profile,
+          seed: seed,
+          truth: TruthKind.c,
+        ),
+      ];
+      trajectory = main;
+    }
     if (mode == BenchMode.croisement) {
+      // Sécurité du programme tel qu'il a évolué, sous chaque modèle de
+      // vérité (le compte des autres modèles va dans leurs mesures).
+      for (final o in others) {
+        o.metrics['realizedSafetyViolations'] = safetyFindings(
+          ProgramView(
+            catalog,
+            BenchProgram(
+              bench: profile,
+              adapted: program.adapted,
+              request: program.request,
+              blocks: o.run.blocks,
+              horizonWeeks: program.horizonWeeks,
+            ),
+          ),
+          profile,
+        ).length;
+      }
       realized = safetyFindings(
         ProgramView(
           catalog,
@@ -174,7 +224,7 @@ ProfileReport evaluateProfile(
             bench: profile,
             adapted: program.adapted,
             request: program.request,
-            blocks: t.run.blocks,
+            blocks: trajectory.run.blocks,
             horizonWeeks: program.horizonWeeks,
           ),
         ),
@@ -191,6 +241,7 @@ ProfileReport evaluateProfile(
     checks: checks,
     trajectory: trajectory,
     realizedSafety: realized,
+    otherTruths: others,
   );
 }
 
@@ -248,6 +299,10 @@ Map<String, Object?> profileReportJson(ProfileReport r) {
       'realizedSafety': <Object?>[for (final f in realized) f.toJson()],
     },
     if (trajectory != null) 'trajectory': trajectory.metrics,
+    if (r.otherTruths.isNotEmpty)
+      'trajectoryOtherTruths': <Object?>[
+        for (final o in r.otherTruths) o.metrics,
+      ],
   };
 }
 
@@ -466,10 +521,9 @@ Map<String, String> renderReport(
     }
     final t = r.trajectory;
     if (t != null) {
-      files['trajectoires/${r.profile.key}.md'] = trajectoryMarkdown(
-        t,
-        catalog,
-      );
+      files['trajectoires/${r.profile.key}.md'] = t.coached
+          ? coachTrajectoryMarkdown(t, catalog, others: r.otherTruths)
+          : trajectoryMarkdown(t, catalog);
     }
   }
   return files;
