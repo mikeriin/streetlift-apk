@@ -1395,12 +1395,15 @@ ExercisePrescription _finishCoach(EngineContext ctx, SessionRun run, _Draft d) {
   final loaded = info.mode == CapacityMode.loaded;
   final reasons = <Reason>[...item.reasons, ...d.reasons, ...exercise.notes];
 
-  if (used.last.benchmark) {
-    reasons.add(
-      reason(ReasonCodes.adaptBenchmarkSet, <String, Object?>{
-        'rir': rirOfFlames(used.last.flames),
-      }),
-    );
+  for (final s in used) {
+    if (s.benchmark) {
+      reasons.add(
+        reason(ReasonCodes.adaptBenchmarkSet, <String, Object?>{
+          'rir': rirOfFlames(s.flames),
+        }),
+      );
+      break;
+    }
   }
   // Technique servie, cohérente avec le nombre de lignes du jour.
   var technique = exercise.techniqueWithheld ? null : item.technique;

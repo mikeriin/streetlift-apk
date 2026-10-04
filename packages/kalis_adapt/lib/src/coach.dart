@@ -776,9 +776,7 @@ List<SetPlan>? coachPlans(
       : _directPlans(run, ex, c, item, lines, served);
   if (frozen && out != null) {
     ex.notes.add(
-      _r(ReasonCodes.adaptVolumeDown, <String, Object?>{
-        'sets': sets - lines,
-      }),
+      _r(ReasonCodes.adaptVolumeDown, <String, Object?>{'sets': sets - lines}),
     );
   }
   return out;
@@ -1021,8 +1019,9 @@ List<SetPlan>? _loadedPlans(
     if (pilot && judged && tail.isNotEmpty && lockCause == null) {
       // Semaine de charge : des séries allégées qui laisseraient nettement
       // plus de réserve que visé (un point de plus que la série de tête)
-      // sont rapprochées de la série de tête, jusqu'à la moitié de la baisse écrite (au moins
-      // `coachBackoffMinDrop`), tant que la réserve visée tient.
+      // sont rapprochées de la série de tête, jusqu'à la moitié de la
+      // baisse écrite (au moins `coachBackoffMinDrop`), tant que la réserve
+      // visée tient.
       final least = drop / 2 > p.coachBackoffMinDrop
           ? drop / 2
           : p.coachBackoffMinDrop;
@@ -1063,6 +1062,34 @@ List<SetPlan>? _loadedPlans(
           open: high > low,
           role: role,
         ),
+      );
+    }
+    // Série de tête repère : quand aucune série n'a mesuré la capacité
+    // depuis `coachProbeDays`, la série de tête d'une semaine de charge
+    // (hors réalisation) devient ouverte — les répétitions écrites, et
+    // jusqu'à `coachTopProbeReps` de plus si la réserve visée le permet.
+    final exact = track.exactDay;
+    final probed = track.benchmarkDay;
+    if (pilot &&
+        lockCause == null &&
+        ex.heldCause != 'failure' &&
+        c.policy.intent != WeekIntent.realization &&
+        item.kind != SetKind.test &&
+        lines.first.$2 >= 2 &&
+        lines.first.$1 == lines.first.$2 &&
+        track.lastDay != null &&
+        (exact == null || run.day - exact >= p.coachProbeDays) &&
+        (probed == null || run.day - probed >= p.coachProbeDays)) {
+      final top = out.first;
+      final reserve = rir > p.benchmarkRir ? rir : p.benchmarkRir;
+      out[0] = SetPlan(
+        loadKg: top.loadKg,
+        low: top.low,
+        high: top.high + p.coachTopProbeReps,
+        flames: flamesOfRir(reserve),
+        open: true,
+        benchmark: true,
+        role: top.role,
       );
     }
     return out;

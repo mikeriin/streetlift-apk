@@ -152,7 +152,7 @@ String? adaptReasonText(Reason r, Catalog catalog, {bool assisted = false}) {
           '${_n(_num(r, 'value') ?? 0, 1)} '
           '(± ${_n(_num(r, 'standardError') ?? 0, 1)})';
     case ReasonCodes.adaptBenchmarkSet:
-      return 'série repère : dernière série ouverte (au ressenti, '
+      return 'série repère : une série ouverte (au ressenti, '
           '${_n(_num(r, 'rir') ?? 0, 1)} en réserve) pour mesurer où en est '
           'l\'athlète';
     case ReasonCodes.adaptHealthLow:

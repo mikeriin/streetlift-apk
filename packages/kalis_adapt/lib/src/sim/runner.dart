@@ -1063,13 +1063,12 @@ SimRun simulate({
               targetLow: low,
               targetHigh: high,
               steps: steps,
-              reachable:
-                  athlete.reachable(
-                    truth,
-                    basisLow ?? basisHigh ?? low,
-                    basisHigh ?? basisLow ?? high,
-                    Flames.toRir(flamesTarget),
-                  ),
+              reachable: athlete.reachable(
+                truth,
+                basisLow ?? basisHigh ?? low,
+                basisHigh ?? basisLow ?? high,
+                Flames.toRir(flamesTarget),
+              ),
               simDay: simDay,
               slotId: item.slotId,
               role: lineRole,

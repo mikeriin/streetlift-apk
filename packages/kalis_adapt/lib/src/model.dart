@@ -441,6 +441,15 @@ final class ExerciseRun {
   /// Échecs non prévus de la séance.
   int fails = 0;
 
+  /// Mode coach : une série de la séance a déjà été dite dure (moins de
+  /// `coachCensorRir` en réserve) ou manquée.
+  bool hardSeen = false;
+
+  /// Mode coach : une série de la séance a mesuré la capacité (échec,
+  /// série ouverte ou test près de l'échec, séries dures qui se
+  /// confirment).
+  bool measured = false;
+
   /// Séries notées face à une cible.
   int ratedSets = 0;
 
@@ -986,10 +995,10 @@ final class SessionRun {
       }
       final said = o.flames;
       if (o.failed ||
-          (said != null &&
-              (run.spec.coach != null
-                  ? !_censored(said, o.open)
-                  : rirOfFlames(said) < state.rater.ceiling(p)))) {
+          (run.spec.coach != null
+              ? run.measured
+              : (said != null &&
+                    rirOfFlames(said) < state.rater.ceiling(p)))) {
         track.exactDay = day;
       }
       final kg = o.loadKg;
@@ -1297,7 +1306,7 @@ final class SessionRun {
         p: p,
         bound: true,
       );
-    } else if (run.spec.coach != null && _censored(flames, open)) {
+    } else if (run.spec.coach != null && _asBound(run, flames, open, test, reps, target)) {
       // Mode coach : loin de l'échec, la note ne se lit que comme « au
       // moins tant en réserve » (la prédiction des répétitions restantes
       // se dégrade loin de l'échec et plafonne, R2-P3).
@@ -1384,6 +1393,9 @@ final class SessionRun {
     if (unplanned) {
       run.fails++;
     }
+    if (failed) {
+      run.hardSeen = true;
+    }
     _noteEase(run, shown, flames, failed, target);
     run.observed.add(
       ObservedSet(
@@ -1464,7 +1476,7 @@ final class SessionRun {
         p: p,
         bound: true,
       );
-    } else if (run.spec.coach != null && _censored(flames, open)) {
+    } else if (run.spec.coach != null && _asBound(run, flames, open, test, amount, target)) {
       final said = rirOfFlames(flames);
       f.observeDirect(
         logCapacity: ln(_impliedCapacity(mode, done, said) / keep),
@@ -1519,6 +1531,9 @@ final class SessionRun {
     if (unplanned) {
       run.fails++;
     }
+    if (failed) {
+      run.hardSeen = true;
+    }
     _noteEase(run, shown, flames, failed, target);
     run.observed.add(
       ObservedSet(
@@ -1550,6 +1565,38 @@ final class SessionRun {
       return false;
     }
     return rir >= state.rater.ceiling(_p);
+  }
+
+  /// Mode coach : vrai si la série se lit comme une borne basse. Une série
+  /// à cible fixe, menée à bien et dite dure, ne mesure la capacité que si
+  /// une autre série de la séance l'a déjà dit (ou a manqué) : une note
+  /// isolée est trop peu sûre (erreur de 2,6 à 3,4 répétitions, Steele et
+  /// al. 2017 ; sous-estimation, Halperin et al. 2022). Des répétitions
+  /// qui manquent à la cible, une série ouverte arrêtée à la réserve
+  /// demandée, un test : mesures.
+  bool _asBound(
+    ExerciseRun run,
+    int flames,
+    bool open,
+    bool test,
+    int amount,
+    SetPlan? target,
+  ) {
+    if (_censored(flames, open)) {
+      return true;
+    }
+    if (open || test) {
+      run.measured = true;
+      return false;
+    }
+    final short = target != null && amount < target.low;
+    if (short || run.hardSeen) {
+      run.hardSeen = true;
+      run.measured = true;
+      return false;
+    }
+    run.hardSeen = true;
+    return true;
   }
 
   void _noteEase(
