@@ -1,0 +1,163 @@
+{
+ "schemaVersion": 1,
+ "key": "autres_01_debutant_musculation",
+ "group": "autres",
+ "title": "Débutant en musculation",
+ "summary": "Homme de 22 ans, 68 kg, jamais entraîné. Veut prendre du muscle et de la force. Trois séances d'une heure, en salle.",
+ "level": "beginner",
+ "trainingAgeMonths": 0,
+ "core": {
+  "sex": "male",
+  "birthYear": 2004,
+  "heightCm": 179,
+  "bodyWeightKg": 68.0,
+  "disciplines": {
+   "primary": "musculation",
+   "primaryPct": 100,
+   "secondaries": []
+  },
+  "availability": [
+   {
+    "weekday": 1,
+    "minutes": 60
+   },
+   {
+    "weekday": 3,
+    "minutes": 60
+   },
+   {
+    "weekday": 5,
+    "minutes": 60
+   }
+  ],
+  "places": [
+   "salle"
+  ],
+  "equipment": [
+   "barre olympique",
+   "disques",
+   "cage / rack",
+   "banc plat",
+   "banc inclinable",
+   "haltères",
+   "poulie",
+   "machine guidée",
+   "presse à cuisses",
+   "machine à mollets",
+   "barre EZ",
+   "kettlebell",
+   "barre fixe",
+   "barres parallèles",
+   "tapis",
+   "rameur",
+   "vélo / home-trainer",
+   "tapis de course",
+   "élastique",
+   "box / plinth"
+  ],
+  "loadIncrements": [
+   {
+    "loadType": "barre",
+    "stepKg": 2.5,
+    "minKg": 20.0
+   },
+   {
+    "loadType": "halteres",
+    "stepKg": 2.0,
+    "minKg": 2.0
+   },
+   {
+    "loadType": "machine",
+    "stepKg": 5.0,
+    "minKg": 5.0
+   },
+   {
+    "loadType": "poulie",
+    "stepKg": 2.5,
+    "minKg": 2.5
+   },
+   {
+    "loadType": "kettlebell",
+    "stepKg": 4.0,
+    "minKg": 4.0
+   },
+   {
+    "loadType": "lest",
+    "stepKg": 1.25
+   }
+  ],
+  "likedExerciseIds": [],
+  "dislikedExerciseIds": [],
+  "experience": "beginner",
+  "guidanceMode": "assisted",
+  "healthScreening": {
+   "questionnaireId": "kalis-sante-l13-v1",
+   "answeredOn": "2026-10-01",
+   "outcome": "standard"
+  }
+ },
+ "records": [],
+ "unknownLevels": [
+  "mu-back-squat-barre-haute",
+  "mu-developpe-couche-barre"
+ ],
+ "habitGoal": {
+  "sessionsPerWeek": 3,
+  "weeks": 12
+ },
+ "expectations": {
+  "text": [
+   "Corps entier trois fois par semaine, 6 à 10 séries dures par groupe, 8 à 15 répétitions, 2 à 4 en réserve (R6-P1 à P3).",
+   "Polyarticulaires d'abord (squat ou presse, développé, tirage, charnière), un exercice par muscle, amplitude complète (R6-P4, P5).",
+   "Double progression, charges à calibrer sur les premières séances, aucun 1RM vrai (R5-P3, R3-P16)."
+  ],
+  "checks": [
+   {
+    "id": "c1",
+    "type": "min_rir_first_weeks",
+    "label": "Au moins 2 répétitions en réserve les quatre premières semaines",
+    "weeks": 4,
+    "rir": 2
+   },
+   {
+    "id": "c2",
+    "type": "pattern_present",
+    "label": "Squat ou presse au moins deux fois par semaine",
+    "patterns": [
+     "squat"
+    ],
+    "perWeek": 2
+   },
+   {
+    "id": "c3",
+    "type": "pattern_present",
+    "label": "Tirage au moins deux fois par semaine",
+    "patterns": [
+     "tirage_vertical",
+     "tirage_horizontal"
+    ],
+    "perWeek": 2
+   },
+   {
+    "id": "c4",
+    "type": "max_group_sets",
+    "label": "Pectoraux : pas plus de 12 séries dures par semaine",
+    "group": "chest",
+    "sets": 12
+   },
+   {
+    "id": "c5",
+    "type": "min_group_sets",
+    "label": "Quadriceps : au moins 5 séries dures par semaine",
+    "group": "quads",
+    "sets": 5
+   },
+   {
+    "id": "c6",
+    "type": "max_exercise_level",
+    "label": "Aucun exercice avancé ou élite",
+    "level": "Intermédiaire"
+   }
+  ]
+ }
+}

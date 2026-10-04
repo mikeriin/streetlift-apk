@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Android 12+ : toile transparente de 288 dp, drapeau central de 84 × 56 dp.
+     Le drapeau reste entièrement dans le cercle de sécurité de 192 dp. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="288dp"
+    android:height="288dp"
+    android:viewportWidth="288"
+    android:viewportHeight="288">
+    <path android:fillColor="#002654" android:pathData="M102,116H130V172H102Z" />
+    <path android:fillColor="#FFFFFF" android:pathData="M130,116H158V172H130Z" />
+    <path android:fillColor="#ED2939" android:pathData="M158,116H186V172H158Z" />
+</vector>
