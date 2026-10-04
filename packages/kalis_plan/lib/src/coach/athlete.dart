@@ -289,6 +289,11 @@ final class Athlete {
       }
     }
 
+    // Record sans date : il vaut à la dernière mise à jour du profil.
+    for (final id in <String>[...reps.keys, ...holds.keys]) {
+      recordDay.putIfAbsent(id, () => profile.updatedOn);
+    }
+
     final cannot = (profile.cannotDoExerciseIds ?? const <String>[]).toSet();
     final notAcquired = <CatalogExercise>[];
     for (final id in <String>{...zero, ...cannot}) {
@@ -686,7 +691,12 @@ final class Athlete {
         rate = cap;
       }
     }
-    final gain = rate * weeks;
+    var gain = rate * weeks;
+    // Sans objectif chiffré, le plan ne suppose jamais plus de 20 % de
+    // progrès sans nouveau test.
+    if (target == null && gain > 0.20) {
+      gain = 0.20;
+    }
     return gain > ceiling ? ceiling : gain;
   }
 

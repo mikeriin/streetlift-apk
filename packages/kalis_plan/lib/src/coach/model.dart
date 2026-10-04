@@ -141,8 +141,8 @@ abstract final class Method {
 
   /// Passe de réduction d'un emplacement de [sets] séries quand un plafond
   /// impose de retirer du volume : 1, l'assistance au-dessus de deux
-  /// séries ; 2, l'essentiel au-dessus de trois ; 3, l'assistance
-  /// au-dessus d'une ; 4, l'assistance retirée ; 5, l'essentiel au-dessus
+  /// séries ; 2, l'essentiel au-dessus de trois ; 4, l'assistance à deux
+  /// séries retirée ; 5, l'essentiel au-dessus
   /// de deux (d'une chez le débutant) ; 6, l'essentiel au-dessus d'une ;
   /// 7, l'essentiel retiré (le plafond est un invariant de sécurité : il
   /// passe avant tout emplacement).
@@ -154,7 +154,9 @@ abstract final class Method {
     bool keep = false,
   }) {
     if (!essential(method, support: support, keep: keep)) {
-      return sets > 2 ? 1 : (sets > 1 ? 3 : 4);
+      // L'assistance ne tombe jamais à une série : sous deux séries, elle
+      // est retirée (une série isolée ne sert à rien et encombre).
+      return sets > 2 ? 1 : 4;
     }
     if (sets > 3) {
       return 2;

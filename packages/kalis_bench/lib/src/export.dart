@@ -809,7 +809,9 @@ String programMarkdown(ProgramView view) {
         )
         ..writeln(_row(<String>['---', '---', '---', '---', '---', '---']));
       for (final i in d.items) {
-        final rest = i.p.restSeconds;
+        final rest = i.p.technique?.kind == SetTechniqueKind.emom
+            ? null
+            : i.p.restSeconds;
         b.writeln(
           _row(<String>[
             i.exercise.name,
@@ -867,7 +869,11 @@ Map<String, Object?> programJson(ProgramView view) {
                       'scheme': i.scheme,
                       'load': loadText(i),
                       'effort': effortText(i),
-                      'rest': i.p.restSeconds,
+                      // Départs au chrono : le repos est ce qui reste de
+                      // l'intervalle, pas une consigne à part.
+                      'rest': i.p.technique?.kind == SetTechniqueKind.emom
+                          ? null
+                          : i.p.restSeconds,
                       'notes': notesText(i, catalog),
                     },
                 ],

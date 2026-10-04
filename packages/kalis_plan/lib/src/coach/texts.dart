@@ -306,8 +306,9 @@ String? coachReasonText(Reason r, Catalog catalog) {
               'vitesse de la deuxième (99 à 102 %). Au moins 6 min entre '
               'deux tentatives.',
         CoachNotes.opener =>
-          "Dernier rappel lourd avant l'échéance : ${_pct(v)} du 1RM, une "
-              'seule série de tête, sans forcer.',
+          "Rappel avant l'échéance : ${_pct(v)} du 1RM, une série de tête "
+              'rapide et facile, sans forcer (le dernier lourd est derrière '
+              'toi).',
         CoachNotes.maintenance =>
           'En entretien pendant la spécialisation : volume réduit, charge '
               'gardée.',

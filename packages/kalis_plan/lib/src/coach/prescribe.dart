@@ -760,9 +760,7 @@ final class Prescriber {
         // jours avant une épreuve de répétitions.
         // (Épreuve de répétitions : à J−2, une activation courte et
         // facile ; repos complet la veille.)
-        roles[d] = best - offset > 2
-            ? _DayRole.primerFar
-            : _DayRole.primerNear;
+        roles[d] = best - offset > 2 ? _DayRole.primerFar : _DayRole.primerNear;
         if (best - offset == 2 && _shape.model == SeasonModel.repsPeak) {
           _activation.add(d);
         }
@@ -797,12 +795,7 @@ final class Prescriber {
 
   /// Charge, part du 1RM et intensité d'un item à [pct] du 1RM de
   /// référence ; sans 1RM connu, charge à régler à la première séance.
-  void _loadAt(
-    _Draft x,
-    double pct,
-    String? referenceId, {
-    bool over = false,
-  }) {
+  void _loadAt(_Draft x, double pct, String? referenceId, {bool over = false}) {
     final e = x.e;
     final total = _totalFor(e, referenceId);
     if (_basisOf(e) == LoadBasis.unloaded ||
@@ -891,8 +884,8 @@ final class Prescriber {
       final total = _totalFor(x.e, x.slot?.referenceId);
       final load = x.load;
       if (total != null && load != null && total > 0) {
-        final room = load / (load + (x.e.bodyweightFraction?.value ?? 0) *
-            a.bodyWeight);
+        final room =
+            load / (load + (x.e.bodyweightFraction?.value ?? 0) * a.bodyWeight);
         if (lighter > room) {
           lighter = (room * 20).floorToDouble() / 20;
         }
@@ -928,12 +921,14 @@ final class Prescriber {
         : (week <= 1 ? 0.06 : (week == 2 ? 0.03 : 0.0));
     if (role == _DayRole.primerFar && !maintain) {
       // R3-P13 : dernier rappel lourd et court, 3 à 5 jours avant.
+      // (R3-P14 : le dernier lourd est passé, à J−7 à J−10 ; ce rappel
+      // reste facile et rapide, à 85 %.)
       _topSet(
         x,
         sets: 2,
         reps: 1,
-        pct: 0.88,
-        rir: 3,
+        pct: 0.85,
+        rir: 4,
         drop: 0.10,
         ws: ws,
         week: week,
@@ -941,7 +936,7 @@ final class Prescriber {
       x
         ..backoffRepsLow = 2
         ..backoffRepsHigh = 2
-        ..reasons.add(_note(CoachNotes.opener, 0.88));
+        ..reasons.add(_note(CoachNotes.opener, 0.85));
       return x;
     }
     if (role == _DayRole.primerNear) {
@@ -967,10 +962,10 @@ final class Prescriber {
           ..minSets = 1
           ..repsLow = 3
           ..repsHigh = 3
-          ..rir = 5
-          ..rest = 120
+          ..rir = 4
+          ..rest = 150
           ..reasons.add(_note(CoachNotes.maintenance, 2));
-        _loadAt(x, 0.72, s.referenceId);
+        _loadAt(x, 0.75, s.referenceId);
         return x;
       }
       x
@@ -1321,7 +1316,13 @@ final class Prescriber {
       // R3-P13 : à l'affûtage, l'intensité reste, les séries tombent.
       margin = 2;
     }
-    final floor = risk || _level == 0 ? 2 : 1;
+    var floor = risk || _level == 0 ? 2 : 1;
+    // La réserve écrite est la vraie : les planchers (reprise, zone à
+    // ménager, risque) règlent les répétitions, pas seulement l'étiquette.
+    final kept = _floorRir(e, week).ceil();
+    if (floor < kept) {
+      floor = kept;
+    }
     if (margin < floor) {
       margin = floor;
     }
@@ -1410,7 +1411,8 @@ final class Prescriber {
       return null;
     }
     final max = _maxOf(s);
-    if (max < 5) {
+    if (max < 5 || role == _DayRole.primerFar) {
+      // (Semaine de l'échéance : deux séries courtes à la place du chrono.)
       return _repsVolume(s, ws, week, role);
     }
     final x = _new(s);
@@ -1429,9 +1431,7 @@ final class Prescriber {
     // au plus dans le bloc ; aucun tant que le profil gèle le volume.
     var minutes = s.sets;
     if (ws.kind == WeekKind.build) {
-      final step = a.freezeVolume
-          ? 0
-          : (a.slowRamp ? stage ~/ 3 : stage ~/ 2);
+      final step = a.freezeVolume ? 0 : (a.slowRamp ? stage ~/ 3 : stage ~/ 2);
       minutes += step > 2 ? 2 : step;
     } else if (ws.kind == WeekKind.intro) {
       minutes -= 1;
@@ -1499,7 +1499,11 @@ final class Prescriber {
     if (max > 0) {
       // R4-G2 : sous 8 répétitions, la force d'abord — séries courtes à 2
       // répétitions de l'échec.
-      final margin = 2 + (ws.light ? 1 : 0) + a.rirBonus.round();
+      var margin = 2 + (ws.light ? 1 : 0) + a.rirBonus.round();
+      final kept = _floorRir(e, week).ceil();
+      if (margin < kept) {
+        margin = kept;
+      }
       final reps = _clampInt(max - margin, 1, max);
       x
         ..repsLow = reps
@@ -1516,11 +1520,7 @@ final class Prescriber {
     final base = referenceId == null
         ? 0
         : _maxOf(
-            SlotSpec(
-              exerciseId: referenceId,
-              role: s.role,
-              method: s.method,
-            ),
+            SlotSpec(exerciseId: referenceId, role: s.role, method: s.method),
           );
     var high = 6;
     if (base > 0) {
@@ -1723,6 +1723,11 @@ final class Prescriber {
         final wanted = cumulative[_level] * part * ws.volume * volumeScale;
         sets = _clampInt(_round(wanted / hold), 2, 6);
       }
+      // Séance légère de la figure (pratique distribuée, R4-F1) : trois
+      // tenues au plus.
+      if (s.stress == DayStress.light && sets > 3) {
+        sets = 3;
+      }
     }
     x
       ..sets = sets < 2 ? 2 : sets
@@ -1867,9 +1872,10 @@ final class Prescriber {
     if (factor < 1 && sets > 2) {
       sets = _round(sets * factor);
     }
+    // Jamais une série isolée d'assistance : deux, ou rien.
     x
-      ..sets = sets < 1 ? 1 : sets
-      ..minSets = 1;
+      ..sets = sets < 2 ? 2 : sets
+      ..minSets = 2;
     final stage = _stage(ws);
     if (e.unit == MeasureUnit.seconds) {
       final known = a.holds[e.id] ?? 0;
@@ -2300,9 +2306,7 @@ final class Prescriber {
       final own = a.reps[e.id] ?? 0;
       final max = own <= 0
           ? 0
-          : _maxOf(
-              SlotSpec(exerciseId: e.id, role: SlotRole.main, method: ''),
-            );
+          : _maxOf(SlotSpec(exerciseId: e.id, role: SlotRole.main, method: ''));
       final goal = a.goalOn(e.id, GoalMetric.maxReps)?.targetValue;
       kind = TestKind.maxReps;
       x
@@ -3402,10 +3406,18 @@ final class Prescriber {
       if (pick == null || home == null) {
         break;
       }
-      if (pick.sets > 1) {
+      final essential = Method.essential(
+        pick.method,
+        support: pick.support,
+        keep: pick.keep,
+      );
+      if (pick.sets > 2 || (essential && pick.sets > 1)) {
         pick.sets--;
-      } else {
+      } else if (home.length > 1) {
         home.remove(pick);
+      } else {
+        pick.sets = 1;
+        break;
       }
     }
   }
@@ -3453,7 +3465,7 @@ final class Prescriber {
           if (!x.hard ||
               x.fixed ||
               x.kind != SetKind.work ||
-              x.sets >= 3 ||
+              x.sets >= (_shape.model == SeasonModel.strengthPeak ? 4 : 3) ||
               closed.contains(x) ||
               !Method.essential(x.method, support: x.support, keep: x.keep)) {
             continue;
@@ -3866,7 +3878,9 @@ List<Reason> blockReasonsOf(Athlete a, Skeleton skeleton) {
   }
   final assisted = skeleton.days.any(
     (d) => d.slots.any(
-      (s) => s.exerciseId.contains('assiste') && s.exerciseId.contains('elastique'),
+      (s) =>
+          s.exerciseId.contains('assiste') &&
+          s.exerciseId.contains('elastique'),
     ),
   );
   out
@@ -3874,10 +3888,7 @@ List<Reason> blockReasonsOf(Athlete a, Skeleton skeleton) {
     // Sommeil court habituel : la baisse du jour se déclenche sur une nuit
     // nettement pire que d'habitude (valeur 2), pas sur la nuit ordinaire.
     ..add(
-      note(
-        CoachNotes.badDay,
-        profile.sleep == SleepBand.under6Hours ? 2 : 1,
-      ),
+      note(CoachNotes.badDay, profile.sleep == SleepBand.under6Hours ? 2 : 1),
     )
     ..add(note(CoachNotes.shortVersion, shortest >= 50 ? 25 : 15))
     ..add(note(CoachNotes.redFlags, 0))

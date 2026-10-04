@@ -9,8 +9,7 @@ import '../assemble.dart';
 import '../traits.dart';
 import 'athlete.dart';
 import 'model.dart';
-import 'prescribe.dart'
-    show CoachNotes, coachGroupCap, straightArmFamilyOf;
+import 'prescribe.dart' show CoachNotes, coachGroupCap, straightArmFamilyOf;
 import 'season.dart';
 import 'tables.dart';
 
@@ -487,12 +486,11 @@ void _buildBeginner(_Builder b) {
             : Picks.easyRow,
         SlotRole.secondary,
         Method.beginnerMain,
-        sets: sets,
+        // Chemin vers la première traction : le plafond du grand dorsal
+        // (12 séries) va d'abord à la traction assistée et aux descentes
+        // freinées ; le tirage horizontal garde une série par séance.
+        sets: pullMax < 1 && a.aimsAt(Ids.pull) && !heavy ? 1 : sets,
         referenceId: Ids.row,
-        // Chemin vers la première traction : quand le plafond du grand
-        // dorsal serre, le tirage horizontal cède ses séries avant la
-        // traction assistée et les descentes freinées.
-        support: pullMax < 1 && a.aimsAt(Ids.pull),
       );
     }
     // Jambes : squat et fente en alternance, hanche si le temps le permet.
@@ -965,14 +963,17 @@ void _addMuscleUpPractice(_Builder b, int d, int muMax) {
     ],
     SlotRole.skill,
     Method.skillDynamic,
-    sets: 4,
+    sets: 3,
     referenceId: Ids.muscleUp,
     skillTargetId: Ids.muscleUp,
     weak: weak ? WeakPointKind.transition : null,
   );
   b.add(
     d,
-    const <String>['cd-traction-explosive-poitrine-barre', 'sw-traction-chest-to-bar'],
+    const <String>[
+      'cd-traction-explosive-poitrine-barre',
+      'sw-traction-chest-to-bar',
+    ],
     SlotRole.skill,
     Method.skillDynamic,
     sets: 3,
@@ -1102,7 +1103,8 @@ void _buildReps(_Builder b, Set<int> runDays) {
   final dipMax = a.reps[Ids.dip] ?? 0;
   final pushMax = a.reps[Ids.pushUp] ?? 0;
   final muMax = a.reps[Ids.muscleUp] ?? 0;
-  final spared = a.pullFactor < 1 || a.volumeFactor < 1;
+  final returning = a.gapWeeks >= 10 && b.blockIndex == 0;
+  final spared = a.pullFactor < 1 || a.volumeFactor < 1 || returning;
 
   // Fréquence par pilier (R4-G8 : 2 à 3 séances chez le débutant, 3 chez
   // l'intermédiaire, 3 à 4 chez l'avancé, 4 à 5 en élite), bornée par les
@@ -1153,10 +1155,8 @@ void _buildReps(_Builder b, Set<int> runDays) {
   final pullGoal = a.aimsAt(Ids.pull) || a.aimsAt(Ids.muscleUp);
   final pushMaintenance = pullGoal && !pushGoal && !competition;
   final pullHeavy = <String>[
-    for (final m in (competition
-        ? _competitionMethods
-        : _repsMethods(pullMax)))
-      if (m == Method.repsTop || m == Method.repsStrength) m,
+    for (final m in (competition ? _competitionMethods : _repsMethods(pullMax)))
+      if (m == Method.repsTop || (m == Method.repsStrength && !returning)) m,
   ];
   final pullMethod = pullMax < 8 && !competition
       ? <int, String>{
@@ -1177,7 +1177,7 @@ void _buildReps(_Builder b, Set<int> runDays) {
       : _assignPillar(
           a,
           dipDays,
-          competition
+          competition || returning
               ? const <String>[Method.repsTop]
               : const <String>[Method.repsTop, Method.repsStrength],
           avoid: <int>{
@@ -1672,13 +1672,7 @@ void _buildLifting(_Builder b, Set<int> runDays) {
         sets: lean ? 2 : (hasPull ? 3 : 4),
       );
     } else if (!hasSquat) {
-      b.add(
-        d,
-        rowPick,
-        SlotRole.accessory,
-        Method.accessoryCompound,
-        sets: 3,
-      );
+      b.add(d, rowPick, SlotRole.accessory, Method.accessoryCompound, sets: 3);
     }
     if (hasPull && !spareElbow && a.level >= 2 && !lean) {
       b.add(
@@ -1743,8 +1737,9 @@ void _buildFigures(_Builder b, Set<int> runDays) {
   final muWeak = (a.profile.weakPoints ?? const <WeakPoint>[]).any(
     (w) => w.exerciseId == Ids.muscleUp,
   );
+  final muPool = <int>[...rest, if (firstDays.length >= 3) firstDays[1]];
   final muDays = muMax >= 1 && (muWeak || muMax < 5)
-      ? spreadDays(a, rest.isEmpty ? days : rest, 2)
+      ? spreadDays(a, muPool.length >= 2 ? muPool : days, 2)
       : <int>[];
   final legDays = spreadDays(
     a,
@@ -1770,7 +1765,12 @@ void _buildFigures(_Builder b, Set<int> runDays) {
   // Force de base : deux séances regroupées par semaine (à volume égal, la
   // dispersion n'apporte rien), hors des jours de maintien lourd quand
   // c'est possible.
-  final strengthDays = spreadDays(a, rest.length >= 2 ? rest : days, 2);
+  final strengthPool = <int>[...rest, if (firstDays.length >= 3) firstDays[1]];
+  final strengthDays = spreadDays(
+    a,
+    strengthPool.length >= 2 ? strengthPool : days,
+    2,
+  );
 
   void ladderOf(SkillTrack t) {
     final holdTarget = a.level <= 1 ? 12 : (a.level == 2 ? 10 : 8);
@@ -1824,9 +1824,9 @@ void _buildFigures(_Builder b, Set<int> runDays) {
         <String>[t.currentId, if (easier != null) easier],
         SlotRole.skill,
         Method.skillHold,
-        sets: a.level >= 2 ? 5 : 4,
+        sets: heavy ? (a.level >= 2 ? 5 : 4) : 3,
         skillTargetId: t.targetId,
-        stress: DayStress.heavy,
+        stress: heavy ? DayStress.heavy : DayStress.light,
       );
       if (hold < 8 && easier != null && a.level >= 1) {
         // R4-F7 : deux à trois semaines de chevauchement avec l'étape
@@ -1923,9 +1923,6 @@ void _buildFigures(_Builder b, Set<int> runDays) {
     // Force de base au service des figures (R1-P17, R4-F5) : lestée quand
     // le matériel et le niveau le permettent, sinon au poids du corps ;
     // plus de séries les jours sans maintien lourd.
-    final skillLoad = b.days[d].slots
-        .where((s) => s.method == Method.skillHold)
-        .length;
     final weightedPull =
         a.oneRm[Ids.weightedPull] != null &&
         a.level >= 2 &&
@@ -1941,13 +1938,16 @@ void _buildFigures(_Builder b, Set<int> runDays) {
           stress: DayStress.medium,
         );
       }
-    } else if (pullMax >= 1 && a.can(Ids.pull, d) && skillLoad < 2) {
+    } else if (pullMax >= 1 &&
+        a.can(Ids.pull, d) &&
+        strengthDays.isNotEmpty &&
+        d == strengthDays.first) {
       b.add(
         d,
         <String>[Ids.pull],
         SlotRole.secondary,
         pullMax < 8 ? Method.repsStrength : Method.repsVolume,
-        sets: skillLoad == 0 ? 4 : 3,
+        sets: 4,
         stress: DayStress.medium,
       );
     }
@@ -1970,7 +1970,7 @@ void _buildFigures(_Builder b, Set<int> runDays) {
         a.level >= 2 && strengthDays.every((o) => a.can(Ids.weightedDip, o));
     if (weightedDip && !strengthDays.contains(d)) {
       // Dips lestés regroupés sur les deux séances de force.
-    } else if (dipMax >= 1 && a.can(Ids.dip, d) && skillLoad < 2) {
+    } else if (dipMax >= 1 && a.can(Ids.dip, d) && strengthDays.contains(d)) {
       if (weightedDip) {
         b.add(
           d,
@@ -1994,7 +1994,7 @@ void _buildFigures(_Builder b, Set<int> runDays) {
         );
       }
     }
-    if (skillLoad == 0 || minutes >= 75) {
+    if (strengthDays.contains(d)) {
       b.add(
         d,
         a.level >= 2
@@ -2006,6 +2006,7 @@ void _buildFigures(_Builder b, Set<int> runDays) {
         SlotRole.accessory,
         Method.accessoryCompound,
         sets: 3,
+        keep: true,
       );
     }
     if (legDays.contains(d)) {
@@ -2117,79 +2118,72 @@ double _slotSeconds(Athlete a, SlotSpec s) {
 /// mobilité. Ils chargent les groupes que les mouvements de barre
 /// laissent sous leur plancher (R1-P1) et ne prennent rien aux piliers
 /// (emplacements d'appoint).
-const List<(List<String>, SlotRole, String, int)> _fillers =
-    <(List<String>, SlotRole, String, int)>[
-      (
-        <String>[
-          'mu-gainage-lateral-coude',
-          'mu-gainage-lateral-releves-hanche',
-        ],
-        SlotRole.core,
-        Method.accessoryCore,
-        2,
-      ),
-      (
-        <String>['mu-bird-dog', 'mu-superman', 'mu-arch-hold'],
-        SlotRole.core,
-        Method.accessoryCore,
-        2,
-      ),
-      (
-        <String>[
-          'mu-pont-fessier-sol',
-          'mu-pont-fessier-unilateral',
-          'mu-hip-thrust-unilateral',
-          'mu-souleve-de-terre-roumain-halteres',
-          'mu-hip-thrust-barre',
-        ],
-        SlotRole.accessory,
-        Method.accessoryCompound,
-        2,
-      ),
-      (
-        <String>[
-          'mu-face-pull-elastique',
-          'mu-band-pull-apart',
-          'mu-rotation-externe-elastique',
-          'sw-row-scapulaire',
-        ],
-        SlotRole.accessory,
-        Method.accessoryPrehab,
-        2,
-      ),
-      (
-        <String>[
-          'mu-dead-bug',
-          'mu-gainage-ventral-coudes',
-          'mu-hollow-body-hold',
-          'mu-hollow-rocks',
-          'sw-dragon-flag-tuck',
-        ],
-        SlotRole.core,
-        Method.accessoryCore,
-        2,
-      ),
-      (
-        <String>[
-          'mo-cars-epaule',
-          'mo-etirement-grand-dorsal-barre',
-          'mo-cat-cow',
-        ],
-        SlotRole.mobility,
-        Method.mobility,
-        1,
-      ),
-      (
-        <String>[
-          'mo-squat-profond-tenu',
-          'mo-cars-hanche',
-          'mo-etirement-flechisseurs-poignet-bras-tendu',
-        ],
-        SlotRole.mobility,
-        Method.mobility,
-        1,
-      ),
-    ];
+const List<(List<String>, SlotRole, String, int)>
+_fillers = <(List<String>, SlotRole, String, int)>[
+  (
+    <String>['mu-gainage-lateral-coude', 'mu-gainage-lateral-releves-hanche'],
+    SlotRole.core,
+    Method.accessoryCore,
+    2,
+  ),
+  (
+    <String>['mu-bird-dog', 'mu-superman', 'mu-arch-hold'],
+    SlotRole.core,
+    Method.accessoryCore,
+    2,
+  ),
+  (
+    <String>[
+      'mu-pont-fessier-sol',
+      'mu-pont-fessier-unilateral',
+      'mu-hip-thrust-unilateral',
+      'mu-souleve-de-terre-roumain-halteres',
+      'mu-hip-thrust-barre',
+    ],
+    SlotRole.accessory,
+    Method.accessoryCompound,
+    2,
+  ),
+  (
+    <String>[
+      'mu-face-pull-elastique',
+      'mu-band-pull-apart',
+      'mu-rotation-externe-elastique',
+      'sw-row-scapulaire',
+    ],
+    SlotRole.accessory,
+    Method.accessoryPrehab,
+    2,
+  ),
+  (
+    <String>[
+      'mu-dead-bug',
+      'mu-gainage-ventral-coudes',
+      'mu-hollow-body-hold',
+      'mu-hollow-rocks',
+      'sw-dragon-flag-tuck',
+    ],
+    SlotRole.core,
+    Method.accessoryCore,
+    2,
+  ),
+  (
+    <String>['mo-cars-epaule', 'mo-etirement-grand-dorsal-barre', 'mo-cat-cow'],
+    SlotRole.mobility,
+    Method.mobility,
+    1,
+  ),
+  (
+    <String>[
+      'mo-squat-profond-tenu',
+      'mo-cars-hanche',
+      'mo-etirement-flechisseurs-poignet-bras-tendu',
+    ],
+    SlotRole.mobility,
+    Method.mobility,
+    1,
+  ),
+];
 
 /// Complète les séances qui laissent plus d'un cinquième de leur temps
 /// libre (hors jours de course).
@@ -2234,14 +2228,7 @@ void _fillTime(_Builder b, Set<int> runDays) {
         added--;
         continue;
       }
-      b.add(
-        d,
-        candidates,
-        role,
-        method,
-        sets: sets,
-        support: true,
-      );
+      b.add(d, candidates, role, method, sets: sets, support: true);
     }
     // La mobilité reste en fin de séance.
     final slots = b.days[d].slots;
