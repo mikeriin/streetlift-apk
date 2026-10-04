@@ -18,3 +18,9 @@ Session Fable lancée le 04/10/2026 à 08:50 UTC. Base : `moteurs` d0d60018.
 
 ## Reste à faire
 - Tout le code, les tests, les boucles de calibrage (panel + relecture documentée), relecture indépendante, livraison.
+
+## Étape : mode coach écrit, vérités B et C (truth.dart)
+- Moteur : coach.dart, coach_advice.dart, skills.dart, results.dart, event_day.dart écrits ; session/advise/review/replay/engine branchés.
+- CI rapide « mode coach, compilation 2 » (be3f539b) poussée, résultat à lire (ci_get.sh fmt).
+- truth.dart : TruthKind a/b/c écrit, pas encore compilé.
+- Reste : runner (exécution des techniques, rôles, qualité, profil mis à jour par testResults), policy (RpeCoachPolicy, legacy), injecteur de techniques, bench (trajectoires A/B/C, export riche), tests, docs, calibrage, fin de lot.

@@ -1,0 +1,1354 @@
+/// Mode coach : lecture des prescriptions de `kalis_core` 0.4.0 (technique,
+/// intensité, autorégulation, test, intention de la semaine) et cibles des
+/// séries qui en découlent. Un bloc sans ces champs (kalis_plan 0.1,
+/// programme importé) ne passe jamais ici : il garde la règle générale de
+/// 0.1. Règles et sources : `CONTRAT.md`, § 11.
+library;
+
+import 'package:kalis_core/kalis_core.dart';
+
+import 'book.dart';
+import 'filter.dart';
+import 'grid.dart';
+import 'model.dart';
+import 'numeric.dart';
+import 'params.dart';
+
+Reason _r(String code, [Map<String, Object?> params = const {}]) =>
+    Reason(code: code, params: params);
+
+/// Vrai si le bloc [block] porte des champs de `kalis_core` 0.4.0 que le
+/// moteur doit exécuter : intention du bloc ou d'une semaine, technique,
+/// intensité, règle d'autorégulation, test décrit, étape de figure.
+bool blockCoached(ProgramBlock block) {
+  if (block.pass1.intent != null || block.pass1.skillLadders != null) {
+    return true;
+  }
+  for (final week in block.pass2.weeks) {
+    if (week.intent != null) {
+      return true;
+    }
+    for (final day in week.days) {
+      if (day.groups != null || day.stress != null) {
+        return true;
+      }
+      for (final item in day.items) {
+        if (item.technique != null ||
+            item.intensity != null ||
+            item.autoregulation != null ||
+            item.test != null ||
+            item.skillTargetId != null ||
+            item.dayStress != null) {
+          return true;
+        }
+      }
+    }
+  }
+  return false;
+}
+
+/// Ce que l'intention d'une semaine permet au moteur.
+final class WeekPolicy {
+  /// Semaine d'intention [intent] et de nature [kind].
+  const WeekPolicy(this.intent, this.kind);
+
+  /// Intention (0.4.0), ou `null`.
+  final WeekIntent? intent;
+
+  /// Nature de la semaine, ou `null`.
+  final WeekKind? kind;
+
+  /// Semaine de charge : le RIR pilote la charge, une plage peut s'étendre.
+  bool get build {
+    final i = intent;
+    if (i == null) {
+      return kind == null || kind == WeekKind.build;
+    }
+    return i == WeekIntent.accumulation ||
+        i == WeekIntent.intensification ||
+        i == WeekIntent.realization;
+  }
+
+  /// Semaine d'affûtage ou de compétition : aucun volume ajouté, intensité
+  /// gardée, aucune technique qui mène près de l'échec.
+  bool get peak =>
+      intent == WeekIntent.taper || intent == WeekIntent.competition;
+
+  /// Semaine où la charge du bloc est servie telle quelle (allègement,
+  /// affûtage, test, compétition, transition, introduction).
+  bool get locked => !build && intent != WeekIntent.maintenance;
+
+  /// Code de la phase (paramètre `phase` de `adapt.phase_respected`).
+  String get code => intent?.code ?? kind?.code ?? WeekKind.build.code;
+
+  /// Phase de saison que la semaine réalise, ou `null`.
+  SeasonPhaseKind? get phase {
+    final i = intent;
+    if (i == null) {
+      return null;
+    }
+    if (i == WeekIntent.accumulation || i == WeekIntent.intro) {
+      return SeasonPhaseKind.accumulation;
+    }
+    if (i == WeekIntent.intensification) {
+      return SeasonPhaseKind.intensification;
+    }
+    if (i == WeekIntent.realization) {
+      return SeasonPhaseKind.realization;
+    }
+    if (i == WeekIntent.deload) {
+      return SeasonPhaseKind.deload;
+    }
+    if (i == WeekIntent.taper) {
+      return SeasonPhaseKind.taper;
+    }
+    if (i == WeekIntent.test) {
+      return SeasonPhaseKind.test;
+    }
+    if (i == WeekIntent.competition) {
+      return SeasonPhaseKind.competition;
+    }
+    if (i == WeekIntent.transition) {
+      return SeasonPhaseKind.transition;
+    }
+    if (i == WeekIntent.maintenance) {
+      return SeasonPhaseKind.maintenance;
+    }
+    return null;
+  }
+}
+
+/// Niveau d'accès minimal d'une technique (0 débutant … 3 élite) : matrice
+/// du référentiel (R2-P22), telle que le banc la contrôle.
+int techniqueAccessLevel(SetTechniqueKind kind) {
+  if (kind == SetTechniqueKind.topSetBackoff ||
+      kind == SetTechniqueKind.dropSet ||
+      kind == SetTechniqueKind.amrap ||
+      kind == SetTechniqueKind.pyramid ||
+      kind == SetTechniqueKind.ladder ||
+      kind == SetTechniqueKind.density ||
+      kind == SetTechniqueKind.forTime) {
+    return 1;
+  }
+  if (kind == SetTechniqueKind.cluster ||
+      kind == SetTechniqueKind.restPause ||
+      kind == SetTechniqueKind.myoReps ||
+      kind == SetTechniqueKind.accentuatedEccentric ||
+      kind == SetTechniqueKind.contrast ||
+      kind == SetTechniqueKind.wave) {
+    return 2;
+  }
+  return 0;
+}
+
+/// Vrai si la technique mène près de l'échec ou surcharge : elle n'est
+/// servie ni sur une zone douloureuse, ni un jour de bilan nettement bas,
+/// ni en affûtage.
+bool techniqueIntensifies(SetTechniqueKind kind) =>
+    kind == SetTechniqueKind.restPause ||
+    kind == SetTechniqueKind.myoReps ||
+    kind == SetTechniqueKind.dropSet ||
+    kind == SetTechniqueKind.accentuatedEccentric ||
+    kind == SetTechniqueKind.amrap ||
+    kind == SetTechniqueKind.cluster ||
+    kind == SetTechniqueKind.wave ||
+    kind == SetTechniqueKind.contrast;
+
+/// Lecture « coach » d'une prescription du bloc.
+final class CoachSpec {
+  /// Lecture de [item] à l'emplacement [slotId].
+  const CoachSpec({
+    required this.slotId,
+    required this.item,
+    required this.policy,
+    required this.level,
+    required this.eventDays,
+    required this.eventNear,
+    required this.fragile,
+  });
+
+  /// Emplacement.
+  final String slotId;
+
+  /// Prescription du bloc.
+  final ExercisePrescription item;
+
+  /// Semaine.
+  final WeekPolicy policy;
+
+  /// Niveau d'expérience (0 débutant … 3 élite).
+  final int level;
+
+  /// Jours avant la prochaine échéance principale, ou `null`.
+  final int? eventDays;
+
+  /// Échéance principale proche : décisions prudentes.
+  final bool eventNear;
+
+  /// L'exercice sollicite une zone à antécédent récent ou à gêne déclarée.
+  final bool fragile;
+
+  /// Technique du bloc.
+  SetTechniqueKind get technique =>
+      item.technique?.kind ?? SetTechniqueKind.standard;
+
+  /// Part du 1RM de charge totale écrite par le bloc, ou `null`.
+  double? get pct {
+    final intensity = item.intensity;
+    if (intensity != null && intensity.basis == IntensityBasis.percentOneRm) {
+      return intensity.value;
+    }
+    return item.percentOfOneRm;
+  }
+
+  /// Exercice dont le 1RM sert de référence à [pct], s'il diffère.
+  String? get referenceId {
+    final intensity = item.intensity;
+    if (intensity != null && intensity.basis == IntensityBasis.percentOneRm) {
+      return intensity.referenceExerciseId;
+    }
+    return null;
+  }
+
+  /// Part d'un test de référence (répétitions max, maintien max), ou
+  /// `null`.
+  double? get benchmarkShare {
+    final intensity = item.intensity;
+    if (intensity != null &&
+        intensity.basis == IntensityBasis.percentBenchmark &&
+        (intensity.referenceExerciseId == null ||
+            intensity.referenceExerciseId == item.exerciseId)) {
+      return intensity.value;
+    }
+    return null;
+  }
+
+  /// Séance ou série légère : très loin de l'échec, la charge du bloc est
+  /// servie telle quelle.
+  bool get light {
+    final flames = item.targetFlames;
+    return item.dayStress == DayStress.light || (flames != null && flames <= 2);
+  }
+
+  /// Règle d'autorégulation de nature [kind], ou `null`.
+  AutoregulationRule? rule(AutoregulationKind kind) {
+    for (final r in item.autoregulation ?? const <AutoregulationRule>[]) {
+      if (r.kind == kind) {
+        return r;
+      }
+    }
+    return null;
+  }
+
+  /// Plancher de répétitions en réserve (plafond d'effort) : `rirCap` de
+  /// l'intensité, sinon celui de la règle `stop_at_rir`, sinon `null`.
+  double? get rirFloor {
+    final cap = item.intensity?.rirCap;
+    if (cap != null) {
+      return cap;
+    }
+    return rule(AutoregulationKind.stopAtRir)?.rirFloor;
+  }
+
+  /// Répétitions (ou secondes) du schéma : haut de la plage de la première
+  /// ligne.
+  int get schemeAmount => item.repsHigh ?? item.secondsHigh ?? 0;
+
+  /// Plage et rôle de la ligne de rang [index] parmi [sets], pour la
+  /// technique servie [served] ; [hold] : exercice tenu (secondes).
+  (int, int, SetRole?) line(
+    int index,
+    int sets,
+    SetTechniqueKind served, {
+    required bool hold,
+  }) {
+    final low = (hold ? item.secondsLow : item.repsLow) ?? 1;
+    final high = (hold ? item.secondsHigh : item.repsHigh) ?? low;
+    final t = item.technique;
+    if (item.kind == SetKind.test) {
+      final test = item.test?.kind;
+      final attempt =
+          test == TestKind.oneRm || test == TestKind.attemptSimulation;
+      return (low, high, attempt ? SetRole.attempt : SetRole.test);
+    }
+    if (t == null || served == SetTechniqueKind.standard) {
+      return (low, high, null);
+    }
+    if (t.lastSetOnly == true && index < sets - 1) {
+      return (low, high, null);
+    }
+    if (served == SetTechniqueKind.topSetBackoff) {
+      if (index == 0) {
+        return (low, high, SetRole.top);
+      }
+      return (t.backoffRepsLow ?? low, t.backoffRepsHigh ?? high, SetRole.backOff);
+    }
+    if (served == SetTechniqueKind.wave) {
+      final reps = t.waveReps;
+      if (reps != null && reps.isNotEmpty) {
+        final n = reps[index % reps.length];
+        return (n, n, SetRole.wave);
+      }
+    }
+    if (served == SetTechniqueKind.pyramid) {
+      final reps = t.pyramidReps;
+      if (reps != null && reps.isNotEmpty) {
+        final n = reps[index < reps.length ? index : reps.length - 1];
+        return (n, n, SetRole.rung);
+      }
+    }
+    if (served == SetTechniqueKind.ladder) {
+      final start = t.ladderStart;
+      final step = t.ladderStep;
+      final top = t.ladderTop;
+      if (start != null && step != null && top != null && step > 0) {
+        final rungs = (top - start) ~/ step + 1;
+        final n = start + step * (index % (rungs < 1 ? 1 : rungs));
+        return (n, n, SetRole.rung);
+      }
+    }
+    if (served == SetTechniqueKind.emom) {
+      return (low, high, SetRole.interval);
+    }
+    return (low, high, null);
+  }
+}
+
+/// Dernière séance d'un emplacement (mode coach) : ce à quoi la séance
+/// suivante du même emplacement se compare, à schéma égal.
+final class SlotMark {
+  /// Marque.
+  const SlotMark({
+    required this.day,
+    required this.loadKg,
+    required this.amount,
+    required this.top,
+    required this.failed,
+  });
+
+  /// Jour de la séance.
+  final int day;
+
+  /// Plus forte charge externe menée à bien (après un échec non prévu : la
+  /// plus légère des charges échouées), ou `null` sans charge.
+  final double? loadKg;
+
+  /// Répétitions (ou secondes) du schéma ce jour-là.
+  final int amount;
+
+  /// Plus grande série faite (répétitions ou secondes).
+  final int top;
+
+  /// Un échec non prévu a eu lieu.
+  final bool failed;
+}
+
+/// Note dans le suivi [track] les barres réussies de la séance de [run] :
+/// les six plus lourdes des dernières semaines sont gardées (une ouverture
+/// est une barre déjà faite). Sans effet sur les décisions de 0.1.
+void noteHeavy(ExerciseTrack track, ExerciseRun run, int day, AdaptParams p) {
+  var any = false;
+  for (final o in run.observed) {
+    if (o.loadKg != null && !o.failed && o.amount >= 1) {
+      any = true;
+    }
+  }
+  if (!any) {
+    return;
+  }
+  final heavy = <(int, double)>[
+    for (final h in track.heavy)
+      if (day - h.$1 <= p.attemptRecentDays) h,
+  ];
+  for (final o in run.observed) {
+    final kg = o.loadKg;
+    if (kg != null && !o.failed && o.amount >= 1) {
+      heavy.add((day, kg));
+    }
+  }
+  heavy.sort((a, b) {
+    final byLoad = b.$2.compareTo(a.$2);
+    return byLoad != 0 ? byLoad : b.$1.compareTo(a.$1);
+  });
+  track.heavy = heavy.length > 6 ? heavy.sublist(0, 6) : heavy;
+}
+
+/// Note la séance de l'exercice [run] dans son suivi [track] : marque de
+/// l'emplacement.
+void noteCoachSession(
+  ExerciseTrack track,
+  ExerciseRun run,
+  CoachSpec coach,
+  int day,
+  AdaptParams p,
+) {
+  if (run.observed.isEmpty) {
+    return;
+  }
+  double? held;
+  double? lowestFailed;
+  var top = 0;
+  var failed = false;
+  for (final o in run.observed) {
+    if (o.amount > top && !o.failed) {
+      top = o.amount;
+    }
+    final kg = o.loadKg;
+    if (o.unplannedFail) {
+      failed = true;
+      if (kg != null && (lowestFailed == null || kg < lowestFailed)) {
+        lowestFailed = kg;
+      }
+    }
+    if (kg != null && !o.failed && o.amount >= 1) {
+      if (held == null || kg > held) {
+        held = kg;
+      }
+    }
+  }
+  final marks = Map<String, SlotMark>.of(track.slotMarks);
+  marks[coach.slotId] = SlotMark(
+    day: day,
+    loadKg: lowestFailed ?? held,
+    amount: coach.schemeAmount,
+    top: top,
+    failed: failed,
+  );
+  track.slotMarks = marks;
+}
+
+/// Ce qu'une ligne du journal dit de la capacité quand elle porte des
+/// champs de 0.4.0 (technique, parties, rôle, propreté).
+final class LineReading {
+  /// Lecture.
+  const LineReading({
+    required this.skip,
+    this.amount,
+    this.loadKg,
+    this.boundOnly = false,
+    this.unclean = false,
+  });
+
+  /// La ligne ne dit rien de la capacité.
+  final bool skip;
+
+  /// Répétitions ou secondes à retenir (première partie, plus grande
+  /// partie), ou `null` : celles de la ligne.
+  final int? amount;
+
+  /// Charge externe à retenir, ou `null` : celle de la ligne.
+  final double? loadKg;
+
+  /// La ligne ne donne qu'une borne basse (« au moins tant »).
+  final bool boundOnly;
+
+  /// Propreté sous le plancher : la capacité propre est dépassée.
+  final bool unclean;
+}
+
+/// Lecture de la ligne [set] ; `null` : ligne sans champ de 0.4.0, lue
+/// comme en 0.1. [item] est la prescription du bloc, si elle est connue.
+LineReading? readLine(
+  SetRecord set, {
+  required bool hold,
+  ExercisePrescription? item,
+}) {
+  final parts = set.parts;
+  final quality = set.quality;
+  final kind = set.technique ?? item?.technique?.kind;
+  if (set.technique == null &&
+      parts == null &&
+      set.role == null &&
+      quality == null) {
+    return null;
+  }
+  if (set.role == SetRole.warmup) {
+    return const LineReading(skip: true);
+  }
+  if (kind == SetTechniqueKind.accentuatedEccentric) {
+    // Une descente surchargée ou seule ne mesure pas la capacité du
+    // mouvement complet.
+    return const LineReading(skip: true);
+  }
+  var unclean = false;
+  if (quality != null) {
+    var floor = item?.technique?.qualityFloor;
+    for (final r in item?.autoregulation ?? const <AutoregulationRule>[]) {
+      if (r.kind == AutoregulationKind.stopOnQualityDrop) {
+        floor ??= r.qualityFloor;
+      }
+    }
+    unclean = quality < (floor ?? 3);
+  }
+  if (kind == SetTechniqueKind.restPause ||
+      kind == SetTechniqueKind.myoReps ||
+      kind == SetTechniqueKind.dropSet) {
+    // Seule la première partie se lit comme une série : le total d'une
+    // série relancée dépasse ce qu'une série d'une traite permet.
+    if (parts == null || parts.isEmpty) {
+      return const LineReading(skip: true);
+    }
+    final first = parts.first;
+    final amount = hold ? first.seconds : first.reps;
+    if (amount == null) {
+      return const LineReading(skip: true);
+    }
+    return LineReading(
+      skip: false,
+      amount: amount,
+      loadKg: first.externalLoadKg,
+      unclean: unclean,
+    );
+  }
+  if (kind == SetTechniqueKind.cluster ||
+      kind == SetTechniqueKind.density ||
+      kind == SetTechniqueKind.forTime ||
+      (kind == SetTechniqueKind.amrap &&
+          (parts != null || set.elapsedSeconds != null))) {
+    // Répétitions fractionnées : chaque partie est une borne basse.
+    if (parts == null || parts.isEmpty) {
+      return const LineReading(skip: true);
+    }
+    var most = 0;
+    for (final part in parts) {
+      final amount = hold ? part.seconds : part.reps;
+      if (amount != null && amount > most) {
+        most = amount;
+      }
+    }
+    if (most < 1) {
+      return const LineReading(skip: true);
+    }
+    return LineReading(skip: false, amount: most, boundOnly: true);
+  }
+  return LineReading(skip: false, unclean: unclean);
+}
+
+/// Technique servie aujourd'hui pour l'exercice [ex] : celle du bloc, ou
+/// `standard` quand un prérequis manque (niveau, douleur, bilan, phase,
+/// échéance proche, antécédent) ; la cause est notée dans [ex].
+SetTechniqueKind servedTechnique(SessionRun run, ExerciseRun ex, CoachSpec c) {
+  final kind = c.technique;
+  if (kind == SetTechniqueKind.standard) {
+    return kind;
+  }
+  final p = run.ctx.params;
+  String? cause;
+  if (c.level < techniqueAccessLevel(kind)) {
+    cause = 'level';
+  } else if (techniqueIntensifies(kind)) {
+    final days = c.eventDays;
+    if (ex.painZones.isNotEmpty) {
+      cause = 'pain';
+    } else if (run.health.level >= 2) {
+      cause = 'health';
+    } else if (c.policy.locked) {
+      cause = 'phase';
+    } else if (kind == SetTechniqueKind.accentuatedEccentric &&
+        days != null &&
+        days <= p.coachEccentricEventDays) {
+      cause = 'event';
+    } else if (kind == SetTechniqueKind.accentuatedEccentric && c.fragile) {
+      cause = 'history';
+    }
+  }
+  if (cause == null) {
+    return kind;
+  }
+  ex.techniqueWithheld = true;
+  ex.notes.add(
+    _r(ReasonCodes.planTechniqueWithheld, <String, Object?>{
+      'technique': kind.code,
+      'cause': cause,
+    }),
+  );
+  return SetTechniqueKind.standard;
+}
+
+/// 1RM de charge totale auquel se rapporte la part écrite par le bloc :
+/// celui de l'exercice (effet du jour compris), ou celui du mouvement de
+/// référence ; `null` s'il est inconnu.
+double? referenceTotal(SessionRun run, ExerciseRun ex, CoachSpec c) {
+  final own = ex.track?.filter;
+  final ref = c.referenceId;
+  if (ref == null || ref == ex.info.id) {
+    if (own == null || own.mode != CapacityMode.loaded) {
+      return null;
+    }
+    return exp(own.m[0] + own.m[3] + own.gRef);
+  }
+  final other = run.state.tracks[ref];
+  if (other != null && other.info.mode == CapacityMode.loaded) {
+    final shift = own == null ? ex.baseShift : own.m[3];
+    return other.filter.capacity * exp(shift);
+  }
+  final info = run.ctx.book.find(ref);
+  if (info == null) {
+    return null;
+  }
+  for (final declared in run.ctx.profile.movementLevels) {
+    final low = declared.low;
+    final high = declared.high;
+    if (declared.exerciseId == ref &&
+        declared.known &&
+        declared.measure == LevelMeasure.oneRmKg &&
+        low != null &&
+        high != null &&
+        low > 0) {
+      return info.totalLoad((low + high) / 2, run.bodyWeightKg);
+    }
+  }
+  return null;
+}
+
+/// Hausse maximale d'une séance à la suivante du même emplacement, à
+/// schéma égal, pour l'exercice de [c].
+double coachRiseOf(CoachSpec c, AdaptParams p) {
+  final base = p.coachRise[c.level < 0 ? 0 : (c.level > 3 ? 3 : c.level)];
+  return c.fragile ? base * p.coachHistoryRiseFactor : base;
+}
+
+/// Répétitions possibles, frais, à la charge externe [kg], après la perte
+/// relative [fatigue] (valeur centrale, sans marge de prudence).
+double _possible(SessionRun run, ExerciseRun ex, double kg, double fatigue) {
+  final total = ex.info.totalLoad(kg, run.bodyWeightKg);
+  if (total <= 0) {
+    return 1000;
+  }
+  return ex.track!.filter.repsPossible(ln(total)) * (1 - fatigue);
+}
+
+/// Vrai si la charge [kg] laisse en moyenne [rir] répétitions en réserve
+/// sur les lignes [reps] (répétitions, fatigue prévue) et, avec la marge
+/// de prudence, au moins [worst] sur la plus dure.
+bool _holdsRir(
+  SessionRun run,
+  ExerciseRun ex,
+  double kg,
+  List<(int, double)> reps,
+  double rir,
+  double worst,
+) {
+  if (reps.isEmpty) {
+    return true;
+  }
+  var sum = 0.0;
+  for (final (n, fatigue) in reps) {
+    sum += _possible(run, ex, kg, fatigue) - n;
+    if (run.predictedReps(ex, kg, 0, fatigue) - n < worst - 1e-9) {
+      return false;
+    }
+  }
+  return sum / reps.length >= rir - 1e-9;
+}
+
+/// Plus forte charge de la grille, de [from] vers le bas (au plus [steps]
+/// crans), qui tient [test] ; la plus basse essayée sinon.
+double _stepDownTo(
+  LoadGrid grid,
+  double from,
+  int steps,
+  bool Function(double kg) test,
+) {
+  var kg = from;
+  for (var i = 0; i < steps; i++) {
+    if (test(kg)) {
+      return kg;
+    }
+    final next = grid.next(kg, up: false);
+    if (next >= kg - 1e-9) {
+      break;
+    }
+    kg = next;
+  }
+  return kg;
+}
+
+double _onGrid(LoadGrid grid, double kg, {bool nearest = false}) {
+  final floor = kg < grid.minimum ? grid.minimum : kg;
+  return nearest ? grid.nearest(floor) : grid.floor(floor);
+}
+
+/// Cibles des séries de l'exercice [ex] en mode coach, ou `null` quand la
+/// règle générale de 0.1 s'applique (charge « à calibrer », plage sans
+/// part du 1RM). [sets] est le nombre de lignes du jour.
+List<SetPlan>? coachPlans(
+  SessionRun run,
+  ExerciseRun ex,
+  ExercisePrescription item,
+  int sets,
+) {
+  final c = ex.spec.coach;
+  final track = ex.track;
+  final mode = ex.info.mode;
+  if (c == null || track == null || mode == null || sets < 1) {
+    return null;
+  }
+  final served = servedTechnique(run, ex, c);
+  if (item.kind == SetKind.test && item.test != null) {
+    return _testPlans(run, ex, c, item, sets);
+  }
+  if (mode == CapacityMode.loaded) {
+    return _loadedPlans(run, ex, c, item, sets, served);
+  }
+  return _directPlans(run, ex, c, item, sets, served);
+}
+
+int _restOf(ExerciseRun ex, CoachSpec c, SetTechniqueKind served, int reps) {
+  final t = c.item.technique;
+  if (served == SetTechniqueKind.emom && t != null) {
+    final interval = t.intervalSeconds;
+    if (interval != null) {
+      final rest = interval - reps * 3;
+      return rest < 10 ? 10 : rest;
+    }
+  }
+  return ex.spec.restSeconds;
+}
+
+List<SetPlan>? _loadedPlans(
+  SessionRun run,
+  ExerciseRun ex,
+  CoachSpec c,
+  ExercisePrescription item,
+  int sets,
+  SetTechniqueKind served,
+) {
+  final p = run.ctx.params;
+  final info = ex.info;
+  final track = ex.track!;
+  final grid = info.grid;
+  final bw = info.fraction * run.bodyWeightKg;
+  final pct = c.pct;
+  final ref = referenceTotal(run, ex, c);
+  if (pct == null || ref == null || ref <= 0) {
+    return null;
+  }
+  final ownRef = c.referenceId == null || c.referenceId == info.id;
+  final rir = ex.rirEff;
+  final flames = flamesOfRir(rir);
+  final t = item.technique;
+  final lines = <(int, int, SetRole?)>[
+    for (var i = 0; i < sets; i++) c.line(i, sets, served, hold: false),
+  ];
+
+  // Lignes qui partagent la charge de tête, avec leur fatigue prévue.
+  final topSet = served == SetTechniqueKind.topSetBackoff;
+  final head = <(int, double)>[];
+  final tail = <(int, double)>[];
+  if (served == SetTechniqueKind.cluster && t != null) {
+    final mini = t.miniSets ?? 1;
+    final each = t.miniSetReps ?? lines.first.$2;
+    final intra = t.intraRestSeconds ?? 30;
+    for (var i = 0; i < mini; i++) {
+      head.add((each, plannedFatigue(i, rir, intra, p)));
+    }
+  } else {
+    for (var i = 0; i < sets; i++) {
+      final rest = _restOf(ex, c, served, lines[i].$2);
+      final entry = (lines[i].$2, plannedFatigue(i, rir, rest, p));
+      if (topSet && i > 0) {
+        tail.add(entry);
+      } else {
+        head.add(entry);
+      }
+    }
+  }
+  final worst = rir - p.coachWorstSetSlack < 0.5
+      ? 0.5
+      : rir - p.coachWorstSetSlack;
+  // Sans suivi propre fiable (variante calée sur un autre mouvement), le
+  // plafond d'effort ne se juge pas encore : la part du bloc vaut.
+  final judged = ownRef || !ex.uncertain;
+  bool pilotOk(double kg) =>
+      !judged || _holdsRir(run, ex, kg, head, rir, worst);
+  bool guardOk(double kg) =>
+      !judged || _holdsRir(run, ex, kg, head, rir - p.coachBreachRir, worst);
+
+  final written = _onGrid(grid, pct * ref - bw, nearest: true);
+  final pilot =
+      c.policy.build &&
+      !c.light &&
+      !c.eventNear &&
+      c.level >= 1 &&
+      served != SetTechniqueKind.accentuatedEccentric &&
+      ex.painZones.isEmpty &&
+      !run.noIncrease;
+  double kg;
+  var capped = false;
+  if (served == SetTechniqueKind.accentuatedEccentric && t != null) {
+    // Charge de la descente : part du 1RM écrite par la technique, jamais
+    // au-dessus de 110 % (R2-P17).
+    final share = t.eccentricLoadPct ?? pct;
+    kg = _onGrid(grid, (share > 1.1 ? 1.1 : share) * ref - bw);
+  } else if (pilot) {
+    final up = ex.uncertain ? 0.0 : p.coachCorridorUp;
+    final low = _onGrid(grid, (pct - p.coachCorridorDown) * ref - bw);
+    final high = _onGrid(grid, (pct + up) * ref - bw);
+    kg = high;
+    while (kg > low + 1e-9 && !pilotOk(kg)) {
+      final next = grid.next(kg, up: false);
+      if (next >= kg - 1e-9) {
+        break;
+      }
+      kg = next;
+    }
+    if (!guardOk(kg)) {
+      kg = _stepDownTo(grid, kg, 8, guardOk);
+      capped = true;
+    }
+  } else {
+    kg = written;
+    if (!guardOk(kg)) {
+      kg = _stepDownTo(grid, kg, 8, guardOk);
+      capped = true;
+    }
+  }
+
+  // Garde-fous : hausse bornée à schéma égal, aucune hausse après un échec
+  // non prévu, sur une zone douloureuse ou un jour de bilan bas.
+  ex.heldCause = null;
+  ex.coarse = false;
+  final mark = track.slotMarks[c.slotId];
+  final markLoad = mark != null && mark.amount == lines.first.$2
+      ? mark.loadKg
+      : null;
+  final lockCause = track.noUp || (mark != null && mark.failed)
+      ? 'failure'
+      : (ex.painZones.isNotEmpty
+            ? 'pain'
+            : (run.noIncrease ? 'health' : null));
+  if (markLoad != null) {
+    if (kg > markLoad + 1e-9) {
+      final floored = grid.floor(markLoad);
+      final last = floored > markLoad ? markLoad : floored;
+      if (lockCause != null) {
+        kg = last;
+        ex.heldCause = lockCause;
+      } else {
+        final cap = grid.floor((markLoad + bw) * (1 + coachRiseOf(c, p)) - bw);
+        final step = grid.next(last, up: true);
+        final ceiling = cap > step ? cap : step;
+        if (kg > ceiling + 1e-9) {
+          kg = ceiling;
+          ex.heldCause = 'cap';
+        }
+      }
+    }
+  } else if (lockCause != null && kg > written + 1e-9) {
+    // Première fois à ce schéma un jour sans hausse : la part du bloc, pas
+    // davantage.
+    kg = written;
+    ex.heldCause = lockCause;
+  }
+  final lastAny = track.lastLoad;
+  if (track.noUp && lastAny != null && kg > lastAny + 1e-9) {
+    final floored = grid.floor(lastAny);
+    kg = floored > lastAny ? lastAny : floored;
+    ex.heldCause = 'failure';
+  }
+  if (capped) {
+    ex.notes.add(
+      _r(ReasonCodes.adaptRirCap, <String, Object?>{
+        'rir': roundTo(c.rirFloor ?? rir, 1),
+      }),
+    );
+  }
+
+  final out = <SetPlan>[];
+  if (topSet && t != null) {
+    final drop =
+        t.backoffDropPct ??
+        c.rule(AutoregulationKind.backoffFromTopSet)?.pct ??
+        0.1;
+    var back = _onGrid(grid, (kg + bw) * (1 - drop) - bw);
+    if (back > kg) {
+      back = kg;
+    }
+    if (judged && tail.isNotEmpty) {
+      back = _stepDownTo(
+        grid,
+        back,
+        6,
+        (x) => _holdsRir(run, ex, x, tail, rir - p.coachBreachRir, worst),
+      );
+    }
+    for (var i = 0; i < sets; i++) {
+      final (low, high, role) = lines[i];
+      out.add(
+        SetPlan(
+          loadKg: i == 0 ? kg : back,
+          low: low,
+          high: high,
+          flames: flames,
+          open: high > low,
+          role: role,
+        ),
+      );
+    }
+    return out;
+  }
+  final waveStep = served == SetTechniqueKind.wave ? t?.waveStepPct : null;
+  final waveLength = t?.waveReps?.length ?? 1;
+  for (var i = 0; i < sets; i++) {
+    final (low, high, role) = lines[i];
+    var load = kg;
+    if (waveStep != null && waveLength > 0) {
+      final wave = i ~/ waveLength;
+      load = _onGrid(grid, (kg + bw) * (1 + waveStep * wave) - bw);
+    }
+    out.add(
+      SetPlan(
+        loadKg: load,
+        low: low,
+        high: high,
+        flames: flames,
+        open: high > low,
+        role: role,
+      ),
+    );
+  }
+  return out;
+}
+
+/// Vrai si l'exercice [info] est une tenue en bras tendus ou en appui dont
+/// la progression est bornée pour les tendons (R4-F9, R5-P22).
+bool tendonLoaded(ExerciseInfo info) =>
+    info.mode == CapacityMode.hold &&
+    info.exercise.family == MovementFamily.figureStatique;
+
+/// Zone du corps la plus contrainte par l'exercice [info] parmi le poignet,
+/// le coude et l'épaule (paramètre `zone` de `adapt.tendon_load`).
+BodyZone tendonZone(ExerciseInfo info) {
+  var best = BodyZone.shoulder;
+  var level = -1.0;
+  for (final zone in const <BodyZone>[
+    BodyZone.elbow,
+    BodyZone.shoulder,
+    BodyZone.wristHand,
+  ]) {
+    final l = info.zoneLevel(zone);
+    if (l > level) {
+      level = l;
+      best = zone;
+    }
+  }
+  return best;
+}
+
+List<SetPlan>? _directPlans(
+  SessionRun run,
+  ExerciseRun ex,
+  CoachSpec c,
+  ExercisePrescription item,
+  int sets,
+  SetTechniqueKind served,
+) {
+  final p = run.ctx.params;
+  final info = ex.info;
+  final track = ex.track!;
+  final hold = info.mode == CapacityMode.hold;
+  final rir = ex.rirEff;
+  final flames = flamesOfRir(rir);
+  final share = c.benchmarkShare;
+  final follows = share != null && c.policy.build && !c.light && !c.eventNear;
+  final mark = track.slotMarks[c.slotId];
+  final tendon = tendonLoaded(info);
+  var tendonCapped = false;
+  final out = <SetPlan>[];
+  for (var i = 0; i < sets; i++) {
+    final (low, high, role) = c.line(i, sets, served, hold: hold);
+    final rest = _restOf(ex, c, served, high);
+    final fatigue = plannedFatigue(i, rir, rest, p);
+    // Ce que le modèle prévoit de sûr aujourd'hui (réserve gardée, marge de
+    // prudence, garde-fous après échec, douleur ou bilan bas).
+    final safe = run.targetAmount(ex, fatigue);
+    var wanted = high;
+    if (follows && low == high) {
+      // Part d'un test : elle suit le maximum mesuré, dans les deux sens.
+      final fromTest = (share * track.filter.capacityToday() + 0.5).floor();
+      wanted = fromTest < 1 ? 1 : fromTest;
+    }
+    var target = wanted < safe ? wanted : safe;
+    if (tendon &&
+        mark != null &&
+        mark.top > 0 &&
+        item.kind != SetKind.test &&
+        target > mark.top) {
+      // Bras tendus : hausse bornée d'une séance à la suivante.
+      final rise = p.coachHoldRise[c.level < 0 ? 0 : (c.level > 3 ? 3 : c.level)];
+      final byShare = (mark.top * (1 + rise)).floor();
+      final bySlack = mark.top + p.coachHoldRiseSlackSeconds;
+      final cap = byShare > bySlack ? byShare : bySlack;
+      if (target > cap) {
+        target = cap;
+        tendonCapped = true;
+      }
+    }
+    if (target < 1) {
+      target = 1;
+    }
+    if (high > low && target >= low && !follows) {
+      // Plage du bloc : série au ressenti, sans dépasser ce qui est sûr.
+      out.add(
+        SetPlan(
+          loadKg: null,
+          low: low,
+          high: target,
+          flames: flames,
+          open: target > low,
+          role: role,
+        ),
+      );
+    } else {
+      out.add(
+        SetPlan(
+          loadKg: null,
+          low: target,
+          high: target,
+          flames: flames,
+          role: role,
+        ),
+      );
+    }
+  }
+  if (tendonCapped) {
+    final first = track.firstDay;
+    ex.notes.add(
+      _r(ReasonCodes.adaptTendonLoad, <String, Object?>{
+        'zone': tendonZone(info).code,
+        'weeks': first == null ? 0 : (run.day - first) ~/ 7,
+      }),
+    );
+  }
+  final floor = c.rirFloor;
+  if (out.isNotEmpty && out.first.high < c.schemeAmount && floor != null) {
+    ex.notes.add(
+      _r(ReasonCodes.adaptRirCap, <String, Object?>{'rir': roundTo(floor, 1)}),
+    );
+  }
+  return out;
+}
+
+/// Écart-type relatif du maximum du jour de l'exercice [ex] : estimation
+/// et effet de jour.
+double dayRelSd(ExerciseRun ex) {
+  final f = ex.track!.filter;
+  return f.loadSd(1);
+}
+
+List<SetPlan>? _testPlans(
+  SessionRun run,
+  ExerciseRun ex,
+  CoachSpec c,
+  ExercisePrescription item,
+  int sets,
+) {
+  final p = run.ctx.params;
+  final info = ex.info;
+  final track = ex.track!;
+  final f = track.filter;
+  final test = item.test!;
+  final kind = test.kind;
+  final hold = info.mode == CapacityMode.hold;
+  final loaded = info.mode == CapacityMode.loaded;
+  final low = (hold ? item.secondsLow : item.repsLow) ?? 1;
+  final high = (hold ? item.secondsHigh : item.repsHigh) ?? low;
+  final locked =
+      track.noUp || ex.painZones.isNotEmpty || run.noIncrease;
+  if (loaded && (kind == TestKind.oneRm || kind == TestKind.attemptSimulation)) {
+    final bw = info.fraction * run.bodyWeightKg;
+    final recent = track.heavy.isEmpty ? null : track.heavy.first.$2;
+    final lift = competitionLiftOf(run.ctx.profile, info.id, run.day);
+    final ladder = attemptLadder(
+      estimateTotal: exp(f.m[0] + f.m[3] + f.gRef),
+      relSd: dayRelSd(ex),
+      bodyPart: bw,
+      grid: info.grid,
+      attempts: sets,
+      done: const <(double, bool)>[],
+      recentBest: recent,
+      targetKg: lift?.targetKg,
+      objective: kind == TestKind.attemptSimulation
+          ? EventObjective.secureTotal
+          : null,
+      healthLevel: run.health.level,
+      prudentCause: track.noUp
+          ? 'previous_failure'
+          : (ex.painZones.isNotEmpty ? 'pain' : null),
+      p: p,
+      minIncrementKg: lift?.minIncrementKg,
+    );
+    final out = <SetPlan>[];
+    for (var i = 0; i < sets; i++) {
+      final a = ladder[i < ladder.length ? i : ladder.length - 1];
+      out.add(
+        SetPlan(
+          loadKg: a.loadKg,
+          low: 1,
+          high: 1,
+          flames: i == 0 ? 7 : (i == 1 ? 9 : Flames.failure),
+          role: SetRole.attempt,
+        ),
+      );
+    }
+    if (ladder.isNotEmpty) {
+      ex.notes.add(
+        _r(ReasonCodes.adaptAttemptOpener, <String, Object?>{
+          'pct': roundTo(ladder.first.share, 3),
+        }),
+      );
+    }
+    return out;
+  }
+  final targetRir = test.targetRir ?? 1;
+  final flames = flamesOfRir(targetRir);
+  if (loaded) {
+    // xRM ou série d'estimation : la charge que le modèle prévoit pour les
+    // répétitions dites en gardant la réserve du test.
+    final bw = info.fraction * run.bodyWeightKg;
+    final n = high + targetRir;
+    final shift = -run.quantileZ(targetRir) * f.loadSd(n);
+    var kg = _onGrid(info.grid, exp(f.logLoadFor(n, shift: shift)) - bw);
+    final last = track.lastLoad;
+    if (locked && last != null && kg > last) {
+      final floored = info.grid.floor(last);
+      kg = floored > last ? last : floored;
+      ex.heldCause = track.noUp
+          ? 'failure'
+          : (ex.painZones.isNotEmpty ? 'pain' : 'health');
+    }
+    return <SetPlan>[
+      for (var i = 0; i < sets; i++)
+        SetPlan(
+          loadKg: kg,
+          low: low,
+          high: kind == TestKind.amrapEstimate && high == low ? low + 6 : high,
+          flames: flames,
+          open: kind == TestKind.amrapEstimate || high > low,
+          role: SetRole.test,
+        ),
+    ];
+  }
+  // Répétitions ou maintien maximal : série ouverte, la prévision prudente
+  // sert de repère bas.
+  final out = <SetPlan>[];
+  for (var i = 0; i < sets; i++) {
+    final fatigue = plannedFatigue(i, targetRir, ex.spec.restSeconds, p);
+    var floor = (run.predictedAmount(ex, targetRir, fatigue)).floor();
+    if (locked && track.lastTop > 0 && floor > track.lastTop) {
+      floor = track.lastTop;
+    }
+    if (floor > low) {
+      floor = low;
+    }
+    if (floor < 1) {
+      floor = 1;
+    }
+    var top = high > floor ? high : floor + (hold ? 5 : 2);
+    if (locked && track.lastTop > 0 && top > track.lastTop) {
+      top = track.lastTop < floor ? floor : track.lastTop;
+    }
+    out.add(
+      SetPlan(
+        loadKg: null,
+        low: floor,
+        high: top,
+        flames: flames,
+        open: top > floor,
+        role: SetRole.test,
+      ),
+    );
+  }
+  return out;
+}
+
+/// Tentative proposée.
+final class AttemptPick {
+  /// Tentative de rang [index] à la charge externe [loadKg].
+  const AttemptPick({
+    required this.index,
+    required this.loadKg,
+    required this.probability,
+    required this.share,
+    required this.cause,
+  });
+
+  /// Rang (0 = ouverture).
+  final int index;
+
+  /// Charge externe, en kg.
+  final double loadKg;
+
+  /// Probabilité de réussite estimée.
+  final double probability;
+
+  /// Part du maximum estimé du jour (charge totale).
+  final double share;
+
+  /// Cause d'une tentative prudente (`uncertainty`, `previous_failure`,
+  /// `health`, `untested`, `weigh_in`), ou `null`.
+  final String? cause;
+}
+
+/// Probabilité de réussir la charge totale [total] quand le maximum du
+/// jour est estimé à [estimateTotal] avec l'écart-type relatif [relSd].
+double attemptProbability(double total, double estimateTotal, double relSd) {
+  if (total <= 0) {
+    return 1;
+  }
+  final sd = relSd < 0.01 ? 0.01 : relSd;
+  return normCdf((ln(estimateTotal) - ln(total)) / sd);
+}
+
+/// Tentatives restantes d'un mouvement (ouverture, deuxième, troisième…),
+/// de la plus légère à la plus lourde.
+///
+/// [estimateTotal] : maximum du jour estimé (charge totale) ; [relSd] : son
+/// écart-type relatif ; [bodyPart] : part du poids du corps dans la charge
+/// totale ; [done] : tentatives déjà faites (charge externe, réussite) ;
+/// [recentBest] : plus lourde barre réussie récemment à l'entraînement ;
+/// [targetKg] : barre visée ; [prudentCause] : cause d'une prudence de plus
+/// (`pain`, `previous_failure`, `weigh_in`), ou `null`.
+List<AttemptPick> attemptLadder({
+  required double estimateTotal,
+  required double relSd,
+  required double bodyPart,
+  required LoadGrid grid,
+  required int attempts,
+  required List<(double, bool)> done,
+  required double? recentBest,
+  required double? targetKg,
+  required EventObjective? objective,
+  required int healthLevel,
+  required String? prudentCause,
+  required AdaptParams p,
+  double? minIncrementKg,
+}) {
+  var estimate = estimateTotal;
+  String? globalCause;
+  if (healthLevel > 0) {
+    estimate *= 1 - p.attemptLowHealthShare * healthLevel;
+    globalCause = 'health';
+  }
+  if (prudentCause != null) {
+    estimate *= 1 - p.attemptLowHealthShare;
+    globalCause ??= prudentCause;
+  }
+  if (relSd > p.calibrationSd) {
+    globalCause ??= 'uncertainty';
+  }
+  double chance(double kg) => attemptProbability(kg + bodyPart, estimate, relSd);
+  final step = minIncrementKg != null && minIncrementKg > grid.step
+      ? minIncrementKg
+      : grid.step;
+
+  // Plus forte charge de la grille dont la probabilité de réussite atteint
+  // `probability`, sans dépasser la part `share` du maximum estimé.
+  double heaviest(double probability, double share) {
+    var kg = _onGrid(grid, share * estimate - bodyPart);
+    for (var i = 0; i < 400 && chance(kg) < probability; i++) {
+      final next = grid.next(kg, up: false);
+      if (next >= kg - 1e-9) {
+        break;
+      }
+      kg = next;
+    }
+    return kg;
+  }
+
+  double third() {
+    if (objective == EventObjective.secureTotal) {
+      return p.attemptSecureProbability;
+    }
+    if (objective == EventObjective.record) {
+      return p.attemptRecordProbability;
+    }
+    return p.attemptThirdProbability;
+  }
+
+  final out = <AttemptPick>[];
+  double? previous;
+  var previousOk = true;
+  if (done.isNotEmpty) {
+    previous = done.last.$1;
+    previousOk = done.last.$2;
+  }
+  for (var index = done.length; index < attempts; index++) {
+    double kg;
+    String? cause = globalCause;
+    if (previous != null && !previousOk) {
+      // Tentative manquée : la même barre, jamais une plus légère.
+      kg = previous;
+      cause = 'previous_failure';
+    } else if (index == 0) {
+      kg = heaviest(p.attemptOpenerProbability, p.attemptOpenerShare);
+      final best = recentBest;
+      if (best != null) {
+        if (kg > best && best + bodyPart >= 0.85 * estimate) {
+          // Une ouverture est une barre déjà réussie à l'entraînement.
+          final floored = grid.floor(best);
+          kg = floored > best ? best : floored;
+        }
+      } else {
+        cause ??= 'untested';
+      }
+    } else {
+      final probability = index == 1 ? p.attemptSecondProbability : third();
+      kg = heaviest(probability, 1.5);
+      final goal = targetKg;
+      if (index >= 2 &&
+          goal != null &&
+          goal > kg &&
+          chance(goal) >= p.attemptRecordProbability &&
+          objective != EventObjective.secureTotal) {
+        final floored = grid.floor(goal);
+        kg = floored > goal ? goal : floored;
+      }
+    }
+    if (previous != null) {
+      final least = previousOk ? previous + step : previous;
+      if (kg < least) {
+        kg = least;
+      }
+    }
+    out.add(
+      AttemptPick(
+        index: index,
+        loadKg: kg,
+        probability: chance(kg),
+        share: (kg + bodyPart) / estimateTotal,
+        cause: cause,
+      ),
+    );
+    previous = kg;
+    previousOk = true;
+  }
+  return out;
+}
+
+/// Mouvement de compétition [exerciseId] de l'échéance du profil la plus
+/// proche à partir du jour [day] (barre visée, plus petit saut de charge),
+/// ou `null`.
+CompetitionLift? competitionLiftOf(
+  AthleteProfile profile,
+  String exerciseId,
+  int day,
+) {
+  CompetitionLift? best;
+  int? bestDay;
+  for (final event in profile.events ?? const <SeasonEvent>[]) {
+    final when = event.date.dayNumber;
+    if (when < day) {
+      continue;
+    }
+    for (final lift in event.lifts ?? const <CompetitionLift>[]) {
+      if (lift.exerciseId == exerciseId &&
+          (bestDay == null || when < bestDay)) {
+        best = lift;
+        bestDay = when;
+      }
+    }
+  }
+  return best;
+}

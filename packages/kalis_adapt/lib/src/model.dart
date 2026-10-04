@@ -7,6 +7,7 @@ import 'package:kalis_core/kalis_core.dart';
 import 'package:kalis_plan/kalis_plan.dart' show planSimilarity;
 
 import 'book.dart';
+import 'coach.dart';
 import 'fatigue.dart';
 import 'filter.dart';
 import 'numeric.dart';
@@ -106,6 +107,14 @@ final class ExerciseTrack {
   /// Plus grande valeur d'une série (répétitions ou secondes), record.
   double bestAmount = 0;
 
+  /// Mode coach : dernière séance de chaque emplacement (charge et schéma),
+  /// pour borner les hausses à schéma égal.
+  Map<String, SlotMark> slotMarks = const <String, SlotMark>{};
+
+  /// Mode coach : barres réussies récemment (jour, charge externe), les
+  /// plus lourdes d'abord — une ouverture est une barre déjà faite.
+  List<(int, double)> heavy = const <(int, double)>[];
+
   /// Copie indépendante.
   ExerciseTrack fork() {
     final c = ExerciseTrack(info, filter.fork());
@@ -122,6 +131,8 @@ final class ExerciseTrack {
     c.lastResidual = lastResidual;
     c.lastSets = lastSets;
     c.bestAmount = bestAmount;
+    c.slotMarks = slotMarks;
+    c.heavy = heavy;
     return c;
   }
 }
@@ -237,6 +248,7 @@ final class SetPlan {
     required this.flames,
     this.open = false,
     this.benchmark = false,
+    this.role,
   });
 
   /// Charge externe en kg (exercices chargés), sinon `null`.
@@ -257,6 +269,9 @@ final class SetPlan {
   /// Série repère : ouverte, plus près de l'échec que les autres.
   final bool benchmark;
 
+  /// Rôle de la série dans sa technique (mode coach), ou `null`.
+  final SetRole? role;
+
   /// La même cible à une autre charge.
   SetPlan withLoad(double? kg) => SetPlan(
     loadKg: kg,
@@ -265,6 +280,7 @@ final class SetPlan {
     flames: flames,
     open: open,
     benchmark: benchmark,
+    role: role,
   );
 }
 
@@ -282,6 +298,7 @@ final class SlotSpec {
     required this.benchmarkOk,
     required this.hasTarget,
     this.test = false,
+    this.coach,
   });
 
   /// Bas de la plage (répétitions ou secondes).
@@ -311,6 +328,10 @@ final class SlotSpec {
   /// Séries de test.
   final bool test;
 
+  /// Lecture « coach » de la prescription (bloc qui porte les champs de
+  /// `kalis_core` 0.4.0), ou `null` : règle générale de 0.1.
+  final CoachSpec? coach;
+
   /// Haut de plage étendu quand la charge suivante n'est pas atteignable.
   int get highExtended => high + (high + 2) ~/ 3;
 
@@ -334,6 +355,9 @@ final class ObservedSet {
     required this.unplannedFail,
     required this.open,
     required this.target,
+    this.rir = 0,
+    this.quality,
+    this.role,
   });
 
   /// Charge externe, en kg.
@@ -356,6 +380,15 @@ final class ObservedSet {
 
   /// Cible affichée.
   final SetPlan? target;
+
+  /// Réserve estimée par le modèle après la série, en répétitions.
+  final double rir;
+
+  /// Propreté déclarée (1 à 5), ou `null`.
+  final int? quality;
+
+  /// Rôle de la ligne dans sa technique, ou `null`.
+  final SetRole? role;
 }
 
 /// Un exercice en cours dans une séance.
@@ -435,6 +468,20 @@ final class ExerciseRun {
 
   /// Vrai une fois les apprentissages de fin d'exercice faits.
   bool closed = false;
+
+  /// Mode coach : raisons des décisions prises pour cet exercice.
+  final List<Reason> notes = <Reason>[];
+
+  /// Mode coach : la technique du bloc n'est pas servie aujourd'hui.
+  bool techniqueWithheld = false;
+
+  /// Mode coach : la semaine interdit toute hausse de charge (allègement,
+  /// affûtage, test, compétition).
+  bool lockUp = false;
+
+  /// Mode coach : plafond de hausse d'une séance à l'autre, ou `null` :
+  /// ceux de 0.1.
+  double? riseCap;
 
   /// Vrai si l'exercice a un filtre ouvert.
   bool get modelled => track != null;
@@ -979,6 +1026,11 @@ final class SessionRun {
     track.firstDay ??= day;
     track.lastDay = day;
     track.lastSets = run.observed.length;
+    noteHeavy(track, run, day, p);
+    final coach = run.spec.coach;
+    if (coach != null) {
+      noteCoachSession(track, run, coach, day, p);
+    }
     f.endSession();
     run.closed = true;
     closed.add(run);
@@ -996,6 +1048,9 @@ final class SessionRun {
     required bool missed,
     required SetPlan? target,
     bool test = false,
+    bool boundOnly = false,
+    int? quality,
+    SetRole? role,
   }) {
     final run = current!;
     final info = run.info;
@@ -1022,12 +1077,25 @@ final class SessionRun {
         failed,
         target,
         test,
+        boundOnly,
+        quality,
+        role,
       );
     } else {
       if (run.track == null) {
         _firstDirect(run, mode, amount, flames, failed);
       }
-      _observeDirect(run, mode, amount, flames, failed, target);
+      _observeDirect(
+        run,
+        mode,
+        amount,
+        flames,
+        failed,
+        target,
+        boundOnly,
+        quality,
+        role,
+      );
     }
   }
 
@@ -1127,6 +1195,9 @@ final class SessionRun {
     bool failed,
     SetPlan? target,
     bool test,
+    bool boundOnly,
+    int? quality,
+    SetRole? role,
   ) {
     final p = _p;
     final track = run.track!;
@@ -1165,7 +1236,7 @@ final class SessionRun {
         learnK: fresh,
         clip: p.failOutlier,
       );
-    } else if (flames == null) {
+    } else if (flames == null || boundOnly) {
       f.observeLoad(
         logLoad: logLoad,
         n: reps.toDouble(),
@@ -1254,6 +1325,9 @@ final class SessionRun {
         unplannedFail: unplanned,
         open: open,
         target: target,
+        rir: rirEstimate,
+        quality: quality,
+        role: role,
       ),
     );
   }
@@ -1265,6 +1339,9 @@ final class SessionRun {
     int? flames,
     bool failed,
     SetPlan? target,
+    bool boundOnly,
+    int? quality,
+    SetRole? role,
   ) {
     final p = _p;
     final track = run.track!;
@@ -1291,7 +1368,7 @@ final class SessionRun {
         p: p,
         clip: p.failOutlier,
       );
-    } else if (flames == null) {
+    } else if (flames == null || boundOnly) {
       f.observeDirect(
         logCapacity: ln(done / keep),
         sd: 0.05,
@@ -1363,6 +1440,9 @@ final class SessionRun {
         unplannedFail: unplanned,
         open: open,
         target: target,
+        rir: rirEstimate,
+        quality: quality,
+        role: role,
       ),
     );
   }
@@ -1517,9 +1597,13 @@ final class SessionRun {
       run.heldCause = 'health';
       return kg;
     }
+    if (run.lockUp) {
+      run.heldCause = 'phase';
+      return kg;
+    }
     final rise = run.calibrating
         ? p.maxUpCalibration
-        : (spec.main ? p.maxUpMain : p.maxUpOther);
+        : (run.riseCap ?? (spec.main ? p.maxUpMain : p.maxUpOther));
     final capTotal = (last + bw) * (1 + rise);
     for (var i = 0; i < 60; i++) {
       final next = grid.next(kg, up: true);

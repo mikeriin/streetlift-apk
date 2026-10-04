@@ -13,7 +13,9 @@ import 'model.dart';
 import 'numeric.dart';
 import 'params.dart';
 import 'replay.dart';
+import 'results.dart';
 import 'session.dart';
+import 'skills.dart';
 import 'version.dart';
 
 /// Proposition candidate avant les filtres (déblocage, confiance, utilité,
@@ -33,6 +35,7 @@ final class _Candidate {
     this.exerciseId,
     this.diff,
     this.freeSlots,
+    this.detail,
   });
 
   /// Clé stable de la proposition hors semaine (`volume:chest:up`).
@@ -64,6 +67,13 @@ final class _Candidate {
 
   /// Jour visé (restructuration d'une séance).
   int? dayIndex;
+
+  /// Précision de la proposition (0.4.0), ou `null`.
+  final ProposalDetail? detail;
+
+  /// Mode coach : cause pour laquelle la proposition est retenue d'office
+  /// (phase, échéance proche, récupération), ou `null`.
+  String? blocked;
 
   double get utility => progress - risk - fatigue - adherence;
 }
@@ -436,6 +446,33 @@ AdaptReview buildReview(
     );
   }
 
+  // Sorties de 0.4.0 : rendues pour un bloc en mode coach ou un profil au
+  // schéma 3 (une application qui connaît `kalis_core` 0.4.0).
+  final modern = view.coached || input.profile.schemaVersion >= 3;
+  final board = view.coached
+      ? SkillBoard.of(ctx, view, state, digests, day)
+      : null;
+  final tests = modern
+      ? testBenchmarks(ctx, input.log, day)
+      : const <Benchmark>[];
+  List<Benchmark>? benchmarks;
+  List<VolumeTolerance>? tolerance;
+  if (modern) {
+    reasons.addAll(testResultReasons(ctx, state, tests, day));
+    final all = <Benchmark>[
+      ...tests,
+      ...trainingBenchmarks(ctx, input.log, day),
+    ];
+    benchmarks = all.isEmpty
+        ? null
+        : (all.length > 200 ? all.sublist(all.length - 200) : all);
+    final tolerated = volumeToleranceOf(ctx, digests, day);
+    tolerance = tolerated.isEmpty ? null : tolerated;
+  }
+  if (view.coached) {
+    reasons.addAll(recoveryReasons(input.profile));
+  }
+
   final summary = AdaptationSummary(
     asOf: today,
     weeksObserved: weeksObserved,
@@ -452,6 +489,9 @@ AdaptReview buildReview(
     pains: painTrends,
     avoidedExerciseIds: avoided,
     reasons: reasons,
+    benchmarks: benchmarks,
+    skills: board?.progress(),
+    volumeTolerance: tolerance,
   );
 
   // ------------------------------------------------------------ candidates
@@ -877,6 +917,36 @@ AdaptReview buildReview(
     }
   }
 
+  // Mode coach : la phase, l'échéance et la récupération déclarée bornent
+  // les propositions ; une étape de figure acquise est proposée.
+  if (view.coached) {
+    final nextPolicy = view.policyOf(view.week(nextWeek));
+    final days = view.daysToEvent(day);
+    final near = days != null && days <= 2 * p.coachEventNearDays;
+    final limited = recoveryLimited(input.profile);
+    for (final c in candidates) {
+      final volumeUp =
+          c.kind == ProposalKind.volume && c.family.contains(':up:');
+      if (volumeUp && !nextPolicy.build) {
+        c.blocked = 'phase';
+      } else if (volumeUp && limited) {
+        c.blocked = 'recovery';
+      } else if ((volumeUp || c.kind == ProposalKind.exerciseSwap) && near) {
+        c.blocked = 'event_near';
+      } else if (c.kind == ProposalKind.deload && nextPolicy.locked) {
+        c.blocked = 'phase';
+      }
+    }
+    if (board != null && hasNextWeek) {
+      for (final line in board.lines) {
+        final c = _skillStepCandidate(ctx, view, line, nextWeek);
+        if (c != null) {
+          candidates.add(c);
+        }
+      }
+    }
+  }
+
   // ------------------------------------------------------ filtres, émission
   final previous = input.state;
   var sequence = 0;
@@ -979,7 +1049,9 @@ AdaptReview buildReview(
     };
     String? withheld;
     final refusedOn = refused[c.family];
-    if (c.level.index > unlock.index) {
+    if (c.blocked != null) {
+      withheld = c.blocked;
+    } else if (c.level.index > unlock.index) {
       withheld = 'unlock';
     } else if (c.confidence < confidenceThreshold(c.level, p)) {
       withheld = 'confidence';
@@ -1053,6 +1125,7 @@ AdaptReview buildReview(
         diff: c.diff,
         block: c.block,
         reasons: c.reasons,
+        detail: c.detail,
       ),
     );
     write('proposal', data, confidence: confidenceOut, reasons: c.reasons);
@@ -1087,6 +1160,113 @@ AdaptReview buildReview(
     state: stateOut,
     log: log,
     records: recordsOf(ctx, input.log),
+    testResults: tests.isEmpty ? null : tests,
+    skillStates: board?.states(),
+  );
+}
+
+/// Passage à l'étape suivante d'une figure dont le critère est tenu : sur
+/// les semaines de charge restantes, un emplacement de l'étape actuelle
+/// par séance, une séance sur deux, reçoit l'étape suivante en maintiens
+/// courts (les autres gardent l'étape actuelle : chevauchement des
+/// paliers, R4-F7). `null` si le passage n'est pas acquis, ou si le bloc
+/// prescrit déjà l'étape suivante.
+_Candidate? _skillStepCandidate(
+  EngineContext ctx,
+  BlockView view,
+  SkillLine line,
+  int fromWeek,
+) {
+  final next = line.idAt(line.index + 1);
+  if (!line.earned || next == null) {
+    return null;
+  }
+  final target = line.ladder.targetExerciseId;
+  final current = line.step.exerciseId;
+  final from = ctx.catalog.find(current);
+  final to = ctx.catalog.find(next);
+  if (from == null || to == null || from.unit != to.unit) {
+    return null;
+  }
+  final criterion = line.ladder.steps[line.index + 1].criterion;
+  final why = <Reason>[
+    reason(ReasonCodes.adaptSkillStepUp, <String, Object?>{'exerciseId': next}),
+  ];
+  final changes = <PlanChange>[];
+  for (final week in view.block.pass2.weeks) {
+    if (week.weekIndex < fromWeek) {
+      continue;
+    }
+    var session = 0;
+    for (final d in week.days) {
+      ExercisePrescription? slot;
+      for (final item in d.items) {
+        if (item.skillTargetId == target && item.exerciseId == next) {
+          // Le bloc ouvre déjà l'étape : le moteur la servira.
+          return null;
+        }
+        if (slot == null &&
+            item.skillTargetId == target &&
+            item.exerciseId == current &&
+            item.kind != SetKind.test) {
+          slot = item;
+        }
+      }
+      if (slot == null) {
+        continue;
+      }
+      session++;
+      if (session.isEven || !view.policyOf(week).build) {
+        continue;
+      }
+      final hold = slot.secondsHigh != null;
+      final need = hold ? criterion.holdSeconds : criterion.reps;
+      var start = need == null ? (hold ? 5 : 3) : (need + 1) ~/ 2;
+      if (start < (hold ? 2 : 1)) {
+        start = hold ? 2 : 1;
+      }
+      changes.add(
+        PlanChange(
+          kind: ChangeKind.prescriptionChanged,
+          dayIndex: d.dayIndex,
+          weekIndex: week.weekIndex,
+          slotId: slot.slotId,
+          fromPrescription: slot,
+          toPrescription: slot.copyWith(
+            exerciseId: next,
+            repsLow: hold ? null : start,
+            repsHigh: hold ? null : start,
+            secondsLow: hold ? start : null,
+            secondsHigh: hold ? start : null,
+            toCalibrate: true,
+            setTargets: null,
+            intensity: null,
+            startLoadKg: null,
+            percentOfOneRm: null,
+            reasons: <Reason>[...slot.reasons, ...why],
+          ),
+          reasons: why,
+        ),
+      );
+    }
+  }
+  if (changes.isEmpty) {
+    return null;
+  }
+  return _Candidate(
+    family: 'skill:$target:$next:${view.block.pass1.blockId}',
+    kind: ProposalKind.load,
+    scope: ProposalScope.exercise,
+    level: UnlockLevel.loadsReps,
+    confidence: 0.9,
+    progress: 0.3,
+    risk: 0.05,
+    fatigue: 0,
+    adherence: 0.05,
+    reasons: why,
+    exerciseId: next,
+    diff: PlanDiff(changes: changes),
+    detail: ProposalDetail.skillStepUp,
   );
 }
 

@@ -7,12 +7,14 @@ import 'package:kalis_core/kalis_core.dart';
 import 'package:kalis_plan/kalis_plan.dart' show planSimilarity;
 
 import 'book.dart';
+import 'coach.dart';
 import 'fatigue.dart';
 import 'filter.dart';
 import 'model.dart';
 import 'numeric.dart';
 import 'params.dart';
 import 'replay.dart';
+import 'skills.dart';
 
 /// Raison de code [code] et de paramètres [params].
 Reason reason(String code, [Map<String, Object?> params = const {}]) =>
@@ -34,6 +36,12 @@ final class _Draft {
   ExerciseRun? run;
   final List<Reason> reasons = <Reason>[];
   bool removed = false;
+
+  /// Cibles calculées par le mode coach.
+  bool coached = false;
+
+  /// Douleur de 5 sur 10 sur une contrainte moyenne : exercice allégé.
+  bool regress = false;
 }
 
 /// Matériel disponible aujourd'hui : celui du lieu [place] si le profil le
@@ -152,7 +160,10 @@ SessionPlan buildSessionPlan(
       'jour ${request.dayIndex}',
     );
   }
-  final weekKind = view.week(request.weekIndex)?.kind;
+  final week = view.week(request.weekIndex);
+  final weekKind = week?.kind;
+  final policy = view.policyOf(week);
+  final coached = view.coached;
   final state = replayed.state.fork();
   final check = request.healthCheck;
   final health = readHealth(check, p);
@@ -223,6 +234,27 @@ SessionPlan buildSessionPlan(
       );
     }
   }
+  final eventDays = coached ? view.daysToEvent(day) : null;
+  if (coached) {
+    if (policy.locked) {
+      sessionReasons.add(
+        reason(ReasonCodes.adaptPhaseRespected, <String, Object?>{
+          'phase': policy.code,
+        }),
+      );
+    }
+    if (policy.peak) {
+      sessionReasons.add(reason(ReasonCodes.adaptTaperNoVolume));
+    }
+    if (eventDays != null && eventDays <= p.coachEventNearDays) {
+      sessionReasons.add(
+        reason(ReasonCodes.adaptEventNear, <String, Object?>{
+          'days': eventDays,
+        }),
+      );
+    }
+    sessionReasons.addAll(recoveryReasons(ctx.profile));
+  }
   final weight = state.rater.weight(p);
   if (weight < p.benchmarkWeight) {
     sessionReasons.add(
@@ -259,10 +291,15 @@ SessionPlan buildSessionPlan(
         entry.key,
         entry.value,
         hard: p.painHard,
-        severe: p.painSevere,
+        severe: coached ? p.coachPainStop : p.painSevere,
       )) {
         painZone = entry.key;
         break;
+      }
+      if (coached &&
+          entry.value >= p.coachPainRegress &&
+          info.zoneLevel(entry.key) >= 0.5) {
+        d.regress = true;
       }
     }
     // Plus petite charge du matériel encore trop lourde : la dernière
@@ -333,11 +370,71 @@ SessionPlan buildSessionPlan(
     d.item = _retarget(d.item, substitute);
   }
 
+  // 1 bis. Mode coach, figures : une étape dont le passage n'est pas acquis
+  // n'est pas servie — l'étape actuelle la remplace (ou reste seule si elle
+  // est déjà dans la séance).
+  final board = coached
+      ? SkillBoard.of(ctx, view, state, replayed.digests, day)
+      : null;
+  if (board != null) {
+    for (final d in drafts) {
+      final target = d.item.skillTargetId;
+      if (d.removed ||
+          target == null ||
+          board.allowed(target, d.item.exerciseId)) {
+        continue;
+      }
+      final current = board.currentStep(target);
+      final substitute = current == null ? null : ctx.book.find(current);
+      final why = <Reason>[
+        reason(ReasonCodes.adaptSkillHold, <String, Object?>{
+          'exerciseId': current ?? d.item.exerciseId,
+          'weeksAtStep': board.weeksAtStep(target),
+        }),
+      ];
+      if (substitute == null ||
+          substitute.mode == null ||
+          taken.contains(substitute.id)) {
+        d.removed = true;
+        adjustments.add(
+          SessionAdjustment(
+            kind: AdjustmentKind.exerciseRemoved,
+            exerciseId: d.item.exerciseId,
+            reasons: why,
+          ),
+        );
+        continue;
+      }
+      taken.add(substitute.id);
+      adjustments.add(
+        SessionAdjustment(
+          kind: AdjustmentKind.exerciseSwapped,
+          exerciseId: d.item.exerciseId,
+          replacementExerciseId: substitute.id,
+          reasons: why,
+        ),
+      );
+      d.reasons.addAll(why);
+      final intensity = d.item.intensity;
+      d.info = substitute;
+      d.item = d.item.copyWith(
+        exerciseId: substitute.id,
+        toCalibrate: true,
+        intensity: intensity != null && intensity.referenceExerciseId != null
+            ? intensity.copyWith(referenceExerciseId: substitute.id)
+            : intensity,
+      );
+    }
+  }
+
   // 2. Bilan nettement bas : une série de moins par exercice (les
   // mouvements principaux gardent au moins trois séries).
   if (health.level >= 2) {
     for (final d in drafts) {
       if (d.removed || d.item.targetFlames == null) {
+        continue;
+      }
+      if (coached && !_setsAdjustable(d.item)) {
         continue;
       }
       final floor = d.role == SlotRole.main ? 3 : 2;
@@ -352,6 +449,40 @@ SessionPlan buildSessionPlan(
           ),
         );
         d.reasons.addAll(healthReasons);
+      }
+    }
+  }
+
+  // 2 bis. Mode coach : douleur de 5 sur 10 sur une contrainte moyenne —
+  // l'exercice est gardé avec moins de séries (R5-P23, R4-F11).
+  if (coached) {
+    for (final d in drafts) {
+      if (d.removed || !d.regress || !_setsAdjustable(d.item)) {
+        continue;
+      }
+      var kept = (d.sets * p.coachPainRegressSets).floor();
+      if (kept < 1) {
+        kept = 1;
+      }
+      if (kept < d.sets) {
+        final why = <Reason>[
+          for (final entry in painsToday.entries)
+            if (entry.value >= p.coachPainRegress &&
+                (d.info?.zoneLevel(entry.key) ?? 0) >= 0.5)
+              reason(ReasonCodes.adaptPainReported, <String, Object?>{
+                'zone': entry.key.code,
+                'intensity': entry.value,
+              }),
+        ];
+        adjustments.add(
+          SessionAdjustment(
+            kind: AdjustmentKind.setsReduced,
+            exerciseId: d.item.exerciseId,
+            setsDelta: kept - d.sets,
+            reasons: why,
+          ),
+        );
+        d.sets = kept;
       }
     }
   }
@@ -371,11 +502,18 @@ SessionPlan buildSessionPlan(
     final driven =
         item.targetFlames != null ||
         item.percentOfOneRm != null ||
-        item.setTargets != null;
+        item.setTargets != null ||
+        (coached && item.kind == SetKind.test && item.test != null);
     if (!driven) {
       continue;
     }
-    final spec = view.specOf(info, item, weekKind);
+    final spec = view.specOf(
+      info,
+      item,
+      weekKind,
+      weekIndex: request.weekIndex,
+      day: day,
+    );
     final sized = SlotSpec(
       low: spec.low,
       high: spec.high,
@@ -386,9 +524,22 @@ SessionPlan buildSessionPlan(
       benchmarkOk: spec.benchmarkOk,
       hasTarget: spec.hasTarget,
       test: spec.test,
+      coach: spec.coach,
     );
     final exercise = run.begin(info, sized);
     d.run = exercise;
+    final coach = spec.coach;
+    if (coach != null) {
+      // Semaine verrouillée : aucune hausse ; plafonds de hausse du niveau.
+      exercise.lockUp = policy.locked || coach.eventNear;
+      final rise = coachRiseOf(coach, p);
+      exercise.riseCap = spec.main || d.role == SlotRole.secondary
+          ? rise
+          : 2 * rise;
+      if (d.regress && exercise.rirEff < 5) {
+        exercise.rirEff = exercise.rirEff + 1 > 5 ? 5 : exercise.rirEff + 1;
+      }
+    }
     confidenceCount++;
     final track = exercise.track;
     if (track == null) {
@@ -399,7 +550,21 @@ SessionPlan buildSessionPlan(
     }
     final sd = track.filter.loadSd(exercise.nPlan, withDay: false);
     confidenceSum += clampDouble(1 - sd / (2 * p.calibrationSd), 0, 1);
-    d.plans = _plansFor(run, exercise, item, d.sets);
+    if (coach != null) {
+      final plans = coachPlans(run, exercise, item, d.sets);
+      if (plans != null) {
+        exercise.plan = List<SetPlan?>.of(plans);
+        d.plans = plans;
+        d.coached = true;
+      }
+    }
+    if (!d.coached) {
+      d.plans = _plansFor(run, exercise, item, d.sets);
+      if (coach != null && !policy.build) {
+        d.plans = _withinBlock(d.plans!, sized);
+        exercise.plan = List<SetPlan?>.of(d.plans!);
+      }
+    }
     if (health.level >= 1 &&
         info.mode == CapacityMode.loaded &&
         health.shift < 0) {
@@ -524,8 +689,27 @@ SessionPlan buildSessionPlan(
   // 5. Mise en forme.
   final items = <ExercisePrescription>[
     for (final d in drafts)
-      if (!d.removed) _finish(ctx, run, d),
+      if (!d.removed)
+        d.coached ? _finishCoach(ctx, run, d) : _finish(ctx, run, d),
   ];
+  List<GroupSpec>? groups;
+  String? eventId;
+  if (coached) {
+    final used = <String>{
+      for (final item in items)
+        if (item.groupId != null) item.groupId!,
+    };
+    final kept = <GroupSpec>[
+      for (final g in dayPrescription.groups ?? const <GroupSpec>[])
+        if (used.contains(g.groupId)) g,
+    ];
+    groups = kept.isEmpty ? null : kept;
+    for (final event in ctx.profile.events ?? const <SeasonEvent>[]) {
+      if (event.date.dayNumber == day) {
+        eventId = event.id;
+      }
+    }
+  }
   return SessionPlan(
     date: today,
     blockId: view.block.pass1.blockId,
@@ -537,8 +721,91 @@ SessionPlan buildSessionPlan(
         ? 0.5
         : roundTo(confidenceSum / confidenceCount, 3),
     reasons: sessionReasons,
+    phase: coached ? policy.phase : null,
+    weekIntent: coached ? policy.intent : null,
+    eventId: eventId,
+    groups: groups,
   );
 }
+
+/// Vrai si le nombre de séries de [item] peut être réduit le jour même sans
+/// défaire sa technique (les techniques dont `sets` compte des paliers ou
+/// des intervalles sont servies entières ou pas du tout).
+bool _setsAdjustable(ExercisePrescription item) {
+  if (item.kind == SetKind.test) {
+    return false;
+  }
+  final kind = item.technique?.kind;
+  return kind == null ||
+      kind == SetTechniqueKind.standard ||
+      kind == SetTechniqueKind.topSetBackoff ||
+      kind == SetTechniqueKind.isometricHold ||
+      kind == SetTechniqueKind.skillPractice ||
+      kind == SetTechniqueKind.restPause ||
+      kind == SetTechniqueKind.myoReps ||
+      kind == SetTechniqueKind.dropSet ||
+      kind == SetTechniqueKind.accentuatedEccentric ||
+      kind == SetTechniqueKind.contrast ||
+      kind == SetTechniqueKind.amrap;
+}
+
+/// Cibles de la règle générale ramenées dans la plage du bloc : une
+/// semaine d'allègement, d'affûtage, de test ou de compétition ne reçoit ni
+/// plage étendue ni série repère.
+List<SetPlan> _withinBlock(List<SetPlan> plans, SlotSpec spec) {
+  return <SetPlan>[
+    for (final s in plans)
+      SetPlan(
+        loadKg: s.loadKg,
+        low: s.low > spec.high ? spec.high : s.low,
+        high: s.high > spec.high ? spec.high : s.high,
+        flames: s.benchmark ? flamesOfRir(spec.rir) : s.flames,
+        open: s.open && !s.benchmark && s.low < spec.high,
+        role: s.role,
+      ),
+  ];
+}
+
+/// Raisons de tolérance tirées des réponses de récupération et de vie du
+/// profil (schéma 3) : sommeil habituel court, stress élevé, métier
+/// physique, déficit énergétique.
+List<Reason> recoveryReasons(AthleteProfile profile) {
+  final out = <Reason>[];
+  void add(String factor, String level) {
+    out.add(
+      reason(ReasonCodes.adaptRecoveryProfile, <String, Object?>{
+        'factor': factor,
+        'level': level,
+      }),
+    );
+  }
+
+  final sleep = profile.sleep;
+  if (sleep == SleepBand.under6Hours) {
+    add('sleep', SleepBand.under6Hours.code);
+  }
+  final stress = profile.stress;
+  if (stress == StressBand.high) {
+    add('stress', StressBand.high.code);
+  }
+  final job = profile.occupationalLoad;
+  if (job == OccupationalLoad.heavy) {
+    add('occupational_load', OccupationalLoad.heavy.code);
+  }
+  final goal = profile.bodyWeightGoal;
+  if (goal == BodyWeightGoal.lose) {
+    add('body_weight_goal', BodyWeightGoal.lose.code);
+  }
+  return out;
+}
+
+/// Vrai si le profil déclare une récupération réduite (sommeil habituel
+/// sous 6 h, stress élevé ou métier physique lourd) : aucune hausse de
+/// volume n'est proposée tant que cela dure (R5-P14, R5-P15, R5-P18).
+bool recoveryLimited(AthleteProfile profile) =>
+    profile.sleep == SleepBand.under6Hours ||
+    profile.stress == StressBand.high ||
+    profile.occupationalLoad == OccupationalLoad.heavy;
 
 /// La prescription [item] portée sur l'exercice de remplacement
 /// [substitute] : mêmes séries, même plage, même cible ; la charge sera
@@ -820,5 +1087,188 @@ ExercisePrescription _finish(EngineContext ctx, SessionRun run, _Draft d) {
     format: item.format,
     kind: item.kind,
     reasons: reasons,
+  );
+}
+
+/// Prescription d'un exercice dont les cibles viennent du mode coach : la
+/// prescription du bloc, avec les charges, les répétitions et les flammes
+/// du jour, sa technique (ajustée au nombre de séries, ou retirée quand un
+/// prérequis manque) et les raisons des décisions.
+ExercisePrescription _finishCoach(EngineContext ctx, SessionRun run, _Draft d) {
+  final p = ctx.params;
+  final item = d.item;
+  final exercise = d.run!;
+  final plans = d.plans!;
+  final coach = exercise.spec.coach!;
+  final info = exercise.info;
+  final track = exercise.track!;
+  final used = plans.length > d.sets ? plans.sublist(0, d.sets) : plans;
+  final hold = info.mode == CapacityMode.hold;
+  final loaded = info.mode == CapacityMode.loaded;
+  final reasons = <Reason>[...item.reasons, ...d.reasons, ...exercise.notes];
+
+  // Technique servie, cohérente avec le nombre de lignes du jour.
+  var technique = exercise.techniqueWithheld ? null : item.technique;
+  var keepRange = false;
+  if (technique != null) {
+    final kind = technique.kind;
+    if (technique.lastSetOnly == true) {
+      keepRange = true;
+    } else if (kind == SetTechniqueKind.topSetBackoff) {
+      technique = used.length < 2
+          ? null
+          : technique.copyWith(backoffSets: used.length - 1);
+    } else if (kind == SetTechniqueKind.emom) {
+      technique = technique.copyWith(intervals: used.length);
+    } else if (kind == SetTechniqueKind.wave ||
+        kind == SetTechniqueKind.pyramid ||
+        kind == SetTechniqueKind.ladder) {
+      if (used.length == item.sets) {
+        keepRange = true;
+      } else {
+        technique = null;
+      }
+    } else if (kind == SetTechniqueKind.cluster) {
+      keepRange = true;
+    } else if ((kind == SetTechniqueKind.density ||
+            kind == SetTechniqueKind.forTime) &&
+        used.length != 1) {
+      technique = null;
+    }
+  }
+  var low = used.first.low;
+  var high = used.first.high;
+  if (keepRange) {
+    low = (hold ? item.secondsLow : item.repsLow) ?? low;
+    high = (hold ? item.secondsHigh : item.repsHigh) ?? high;
+  } else if (technique?.kind != SetTechniqueKind.topSetBackoff) {
+    for (final s in used) {
+      if (s.low < low) {
+        low = s.low;
+      }
+      if (s.high > high) {
+        high = s.high;
+      }
+    }
+  }
+
+  final first = used.first;
+  final firstLoad = first.loadKg;
+  if (exercise.calibrating) {
+    reasons.add(
+      reason(ReasonCodes.adaptCalibration, <String, Object?>{
+        'session': track.filter.sessions + 1,
+      }),
+    );
+  } else if (exercise.uncertain) {
+    final sd = track.filter.loadSd(exercise.nPlan, withDay: false);
+    reasons.add(
+      reason(ReasonCodes.adaptLowConfidence, <String, Object?>{
+        'confidence': roundTo(
+          clampDouble(1 - sd / (2 * p.calibrationSd), 0, 1),
+          3,
+        ),
+      }),
+    );
+  }
+  // Hausse ou baisse : par rapport à la dernière séance du même
+  // emplacement, à schéma égal.
+  final mark = track.slotMarks[coach.slotId];
+  final markLoad = mark != null && mark.amount == coach.schemeAmount
+      ? mark.loadKg
+      : null;
+  if (loaded && firstLoad != null && markLoad != null) {
+    final delta = roundTo(firstLoad - markLoad, 2);
+    if (delta > 0) {
+      reasons.add(
+        reason(ReasonCodes.adaptLoadUp, <String, Object?>{'deltaKg': delta}),
+      );
+    } else if (delta < 0) {
+      reasons.add(
+        reason(ReasonCodes.adaptLoadDown, <String, Object?>{'deltaKg': -delta}),
+      );
+    }
+  }
+  final held = exercise.heldCause;
+  if (held != null) {
+    reasons.add(
+      reason(ReasonCodes.adaptLoadHeld, <String, Object?>{'cause': held}),
+    );
+  }
+  for (final zone in exercise.painZones) {
+    final state = run.state.pains[zone];
+    final r = reason(ReasonCodes.adaptPainReported, <String, Object?>{
+      'zone': zone.code,
+      'intensity': state?.lastIntensity ?? 0,
+    });
+    if (!reasons.contains(r)) {
+      reasons.add(r);
+    }
+  }
+  if (technique != null && technique.kind != SetTechniqueKind.standard) {
+    reasons.add(
+      reason(ReasonCodes.adaptTechniqueExecuted, <String, Object?>{
+        'technique': technique.kind.code,
+      }),
+    );
+  }
+
+  double? share;
+  if (loaded && firstLoad != null) {
+    final total = info.totalLoad(firstLoad, run.bodyWeightKg);
+    share = roundTo(clampDouble(total / track.filter.capacity, 0, 1.5), 3);
+  }
+  final test = item.kind == SetKind.test;
+  final flames = test ? item.targetFlames : flamesOfRir(exercise.rirEff);
+  // Deux écritures de la même intensité doivent s'accorder (contrat de
+  // kalis_core) : l'intensité rendue est celle du jour.
+  var intensity = item.intensity;
+  if (intensity != null) {
+    if (intensity.basis == IntensityBasis.percentOneRm &&
+        intensity.referenceExerciseId == null) {
+      intensity = share == null
+          ? null
+          : IntensityTarget(
+              basis: IntensityBasis.percentOneRm,
+              value: share,
+              rirCap: intensity.rirCap,
+            );
+    } else if (intensity.basis == IntensityBasis.rir) {
+      intensity = flames == null
+          ? null
+          : IntensityTarget(
+              basis: IntensityBasis.rir,
+              value: rirOfFlames(flames),
+            );
+    }
+  }
+  return item.copyWith(
+    sets: used.length,
+    repsLow: hold ? null : low,
+    repsHigh: hold ? null : high,
+    secondsLow: hold ? low : null,
+    secondsHigh: hold ? high : null,
+    targetFlames: flames,
+    startLoadKg:
+        loaded && firstLoad != null && item.loadBasis != LoadBasis.unloaded
+        ? roundTo(firstLoad, 2)
+        : null,
+    percentOfOneRm: share,
+    toCalibrate: exercise.uncertain,
+    setTargets: <SetTarget>[
+      for (final s in used)
+        SetTarget(
+          repsLow: hold ? null : s.low,
+          repsHigh: hold ? null : s.high,
+          secondsLow: hold ? s.low : null,
+          secondsHigh: hold ? s.high : null,
+          loadKg: s.loadKg == null ? null : roundTo(s.loadKg!, 2),
+          flames: s.flames,
+          role: s.role,
+        ),
+    ],
+    reasons: reasons,
+    technique: technique,
+    intensity: intensity,
   );
 }
