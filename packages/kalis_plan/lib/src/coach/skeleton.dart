@@ -9,8 +9,7 @@ import '../assemble.dart';
 import '../traits.dart';
 import 'athlete.dart';
 import 'model.dart';
-import 'prescribe.dart'
-    show CoachNotes, coachGroupCap, straightArmFamilyOf;
+import 'prescribe.dart' show CoachNotes, coachGroupCap, straightArmFamilyOf;
 import 'season.dart';
 import 'tables.dart';
 
@@ -971,7 +970,10 @@ void _addMuscleUpPractice(_Builder b, int d, int muMax) {
   );
   b.add(
     d,
-    const <String>['cd-traction-explosive-poitrine-barre', 'sw-traction-chest-to-bar'],
+    const <String>[
+      'cd-traction-explosive-poitrine-barre',
+      'sw-traction-chest-to-bar',
+    ],
     SlotRole.skill,
     Method.skillDynamic,
     sets: 3,
@@ -1153,9 +1155,7 @@ void _buildReps(_Builder b, Set<int> runDays) {
   final pullGoal = a.aimsAt(Ids.pull) || a.aimsAt(Ids.muscleUp);
   final pushMaintenance = pullGoal && !pushGoal && !competition;
   final pullHeavy = <String>[
-    for (final m in (competition
-        ? _competitionMethods
-        : _repsMethods(pullMax)))
+    for (final m in (competition ? _competitionMethods : _repsMethods(pullMax)))
       if (m == Method.repsTop || (m == Method.repsStrength && !returning)) m,
   ];
   final pullMethod = pullMax < 8 && !competition
@@ -1670,15 +1670,12 @@ void _buildLifting(_Builder b, Set<int> runDays) {
         SlotRole.accessory,
         Method.accessoryCompound,
         sets: lean ? 2 : (hasPull ? 3 : 4),
+        // Coude à ménager : le tirage horizontal en prise neutre porte le
+        // tirage de la semaine, il est gardé.
+        keep: spareElbow,
       );
     } else if (!hasSquat) {
-      b.add(
-        d,
-        rowPick,
-        SlotRole.accessory,
-        Method.accessoryCompound,
-        sets: 3,
-      );
+      b.add(d, rowPick, SlotRole.accessory, Method.accessoryCompound, sets: 3);
     }
     if (hasPull && !spareElbow && a.level >= 2 && !lean) {
       b.add(
@@ -1771,10 +1768,7 @@ void _buildFigures(_Builder b, Set<int> runDays) {
   // Force de base : deux séances regroupées par semaine (à volume égal, la
   // dispersion n'apporte rien), hors des jours de maintien lourd quand
   // c'est possible.
-  final strengthPool = <int>[
-    ...rest,
-    if (firstDays.length >= 3) firstDays[1],
-  ];
+  final strengthPool = <int>[...rest, if (firstDays.length >= 3) firstDays[1]];
   final strengthDays = spreadDays(
     a,
     strengthPool.length >= 2 ? strengthPool : days,
@@ -2127,79 +2121,72 @@ double _slotSeconds(Athlete a, SlotSpec s) {
 /// mobilité. Ils chargent les groupes que les mouvements de barre
 /// laissent sous leur plancher (R1-P1) et ne prennent rien aux piliers
 /// (emplacements d'appoint).
-const List<(List<String>, SlotRole, String, int)> _fillers =
-    <(List<String>, SlotRole, String, int)>[
-      (
-        <String>[
-          'mu-gainage-lateral-coude',
-          'mu-gainage-lateral-releves-hanche',
-        ],
-        SlotRole.core,
-        Method.accessoryCore,
-        2,
-      ),
-      (
-        <String>['mu-bird-dog', 'mu-superman', 'mu-arch-hold'],
-        SlotRole.core,
-        Method.accessoryCore,
-        2,
-      ),
-      (
-        <String>[
-          'mu-pont-fessier-sol',
-          'mu-pont-fessier-unilateral',
-          'mu-hip-thrust-unilateral',
-          'mu-souleve-de-terre-roumain-halteres',
-          'mu-hip-thrust-barre',
-        ],
-        SlotRole.accessory,
-        Method.accessoryCompound,
-        2,
-      ),
-      (
-        <String>[
-          'mu-face-pull-elastique',
-          'mu-band-pull-apart',
-          'mu-rotation-externe-elastique',
-          'sw-row-scapulaire',
-        ],
-        SlotRole.accessory,
-        Method.accessoryPrehab,
-        2,
-      ),
-      (
-        <String>[
-          'mu-dead-bug',
-          'mu-gainage-ventral-coudes',
-          'mu-hollow-body-hold',
-          'mu-hollow-rocks',
-          'sw-dragon-flag-tuck',
-        ],
-        SlotRole.core,
-        Method.accessoryCore,
-        2,
-      ),
-      (
-        <String>[
-          'mo-cars-epaule',
-          'mo-etirement-grand-dorsal-barre',
-          'mo-cat-cow',
-        ],
-        SlotRole.mobility,
-        Method.mobility,
-        1,
-      ),
-      (
-        <String>[
-          'mo-squat-profond-tenu',
-          'mo-cars-hanche',
-          'mo-etirement-flechisseurs-poignet-bras-tendu',
-        ],
-        SlotRole.mobility,
-        Method.mobility,
-        1,
-      ),
-    ];
+const List<(List<String>, SlotRole, String, int)>
+_fillers = <(List<String>, SlotRole, String, int)>[
+  (
+    <String>['mu-gainage-lateral-coude', 'mu-gainage-lateral-releves-hanche'],
+    SlotRole.core,
+    Method.accessoryCore,
+    2,
+  ),
+  (
+    <String>['mu-bird-dog', 'mu-superman', 'mu-arch-hold'],
+    SlotRole.core,
+    Method.accessoryCore,
+    2,
+  ),
+  (
+    <String>[
+      'mu-pont-fessier-sol',
+      'mu-pont-fessier-unilateral',
+      'mu-hip-thrust-unilateral',
+      'mu-souleve-de-terre-roumain-halteres',
+      'mu-hip-thrust-barre',
+    ],
+    SlotRole.accessory,
+    Method.accessoryCompound,
+    2,
+  ),
+  (
+    <String>[
+      'mu-face-pull-elastique',
+      'mu-band-pull-apart',
+      'mu-rotation-externe-elastique',
+      'sw-row-scapulaire',
+    ],
+    SlotRole.accessory,
+    Method.accessoryPrehab,
+    2,
+  ),
+  (
+    <String>[
+      'mu-dead-bug',
+      'mu-gainage-ventral-coudes',
+      'mu-hollow-body-hold',
+      'mu-hollow-rocks',
+      'sw-dragon-flag-tuck',
+    ],
+    SlotRole.core,
+    Method.accessoryCore,
+    2,
+  ),
+  (
+    <String>['mo-cars-epaule', 'mo-etirement-grand-dorsal-barre', 'mo-cat-cow'],
+    SlotRole.mobility,
+    Method.mobility,
+    1,
+  ),
+  (
+    <String>[
+      'mo-squat-profond-tenu',
+      'mo-cars-hanche',
+      'mo-etirement-flechisseurs-poignet-bras-tendu',
+    ],
+    SlotRole.mobility,
+    Method.mobility,
+    1,
+  ),
+];
 
 /// Complète les séances qui laissent plus d'un cinquième de leur temps
 /// libre (hors jours de course).
@@ -2244,14 +2231,7 @@ void _fillTime(_Builder b, Set<int> runDays) {
         added--;
         continue;
       }
-      b.add(
-        d,
-        candidates,
-        role,
-        method,
-        sets: sets,
-        support: true,
-      );
+      b.add(d, candidates, role, method, sets: sets, support: true);
     }
     // La mobilité reste en fin de séance.
     final slots = b.days[d].slots;

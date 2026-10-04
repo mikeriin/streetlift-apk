@@ -760,9 +760,7 @@ final class Prescriber {
         // jours avant une épreuve de répétitions.
         // (Épreuve de répétitions : à J−2, une activation courte et
         // facile ; repos complet la veille.)
-        roles[d] = best - offset > 2
-            ? _DayRole.primerFar
-            : _DayRole.primerNear;
+        roles[d] = best - offset > 2 ? _DayRole.primerFar : _DayRole.primerNear;
         if (best - offset == 2 && _shape.model == SeasonModel.repsPeak) {
           _activation.add(d);
         }
@@ -797,12 +795,7 @@ final class Prescriber {
 
   /// Charge, part du 1RM et intensité d'un item à [pct] du 1RM de
   /// référence ; sans 1RM connu, charge à régler à la première séance.
-  void _loadAt(
-    _Draft x,
-    double pct,
-    String? referenceId, {
-    bool over = false,
-  }) {
+  void _loadAt(_Draft x, double pct, String? referenceId, {bool over = false}) {
     final e = x.e;
     final total = _totalFor(e, referenceId);
     if (_basisOf(e) == LoadBasis.unloaded ||
@@ -891,8 +884,8 @@ final class Prescriber {
       final total = _totalFor(x.e, x.slot?.referenceId);
       final load = x.load;
       if (total != null && load != null && total > 0) {
-        final room = load / (load + (x.e.bodyweightFraction?.value ?? 0) *
-            a.bodyWeight);
+        final room =
+            load / (load + (x.e.bodyweightFraction?.value ?? 0) * a.bodyWeight);
         if (lighter > room) {
           lighter = (room * 20).floorToDouble() / 20;
         }
@@ -1438,9 +1431,7 @@ final class Prescriber {
     // au plus dans le bloc ; aucun tant que le profil gèle le volume.
     var minutes = s.sets;
     if (ws.kind == WeekKind.build) {
-      final step = a.freezeVolume
-          ? 0
-          : (a.slowRamp ? stage ~/ 3 : stage ~/ 2);
+      final step = a.freezeVolume ? 0 : (a.slowRamp ? stage ~/ 3 : stage ~/ 2);
       minutes += step > 2 ? 2 : step;
     } else if (ws.kind == WeekKind.intro) {
       minutes -= 1;
@@ -1529,11 +1520,7 @@ final class Prescriber {
     final base = referenceId == null
         ? 0
         : _maxOf(
-            SlotSpec(
-              exerciseId: referenceId,
-              role: s.role,
-              method: s.method,
-            ),
+            SlotSpec(exerciseId: referenceId, role: s.role, method: s.method),
           );
     var high = 6;
     if (base > 0) {
@@ -1885,7 +1872,16 @@ final class Prescriber {
     if (factor < 1 && sets > 2) {
       sets = _round(sets * factor);
     }
-    // Jamais une série isolée d'assistance : deux, ou rien.
+    // Jamais une série isolée d'assistance : deux, ou rien. En reprise,
+    // tant que le volume est sous les trois quarts, l'assistance attend
+    // (l'essentiel d'abord, R5-P7).
+    if (sets < 2 &&
+        ws.phase == SeasonPhaseKind.reintroduction &&
+        ws.volume < 0.75 &&
+        !s.keep &&
+        !prehab) {
+      return null;
+    }
     x
       ..sets = sets < 2 ? 2 : sets
       ..minSets = 2;
@@ -2319,9 +2315,7 @@ final class Prescriber {
       final own = a.reps[e.id] ?? 0;
       final max = own <= 0
           ? 0
-          : _maxOf(
-              SlotSpec(exerciseId: e.id, role: SlotRole.main, method: ''),
-            );
+          : _maxOf(SlotSpec(exerciseId: e.id, role: SlotRole.main, method: ''));
       final goal = a.goalOn(e.id, GoalMetric.maxReps)?.targetValue;
       kind = TestKind.maxReps;
       x
@@ -3458,7 +3452,8 @@ final class Prescriber {
     // une semaine d'échéance trop vide désentraîne. Sous 36 % du pic, les
     // rappels des jours éloignés de l'épreuve reprennent une série (trois
     // au plus), le travail le plus spécifique d'abord.
-    final floor = peak * 0.36;
+    final floor =
+        peak * (_shape.model == SeasonModel.repsPeak ? 0.37 : 0.42);
     final closed = <_Draft>{};
     while (guard < 60) {
       guard++;
@@ -3893,7 +3888,9 @@ List<Reason> blockReasonsOf(Athlete a, Skeleton skeleton) {
   }
   final assisted = skeleton.days.any(
     (d) => d.slots.any(
-      (s) => s.exerciseId.contains('assiste') && s.exerciseId.contains('elastique'),
+      (s) =>
+          s.exerciseId.contains('assiste') &&
+          s.exerciseId.contains('elastique'),
     ),
   );
   out
@@ -3901,10 +3898,7 @@ List<Reason> blockReasonsOf(Athlete a, Skeleton skeleton) {
     // Sommeil court habituel : la baisse du jour se déclenche sur une nuit
     // nettement pire que d'habitude (valeur 2), pas sur la nuit ordinaire.
     ..add(
-      note(
-        CoachNotes.badDay,
-        profile.sleep == SleepBand.under6Hours ? 2 : 1,
-      ),
+      note(CoachNotes.badDay, profile.sleep == SleepBand.under6Hours ? 2 : 1),
     )
     ..add(note(CoachNotes.shortVersion, shortest >= 50 ? 25 : 15))
     ..add(note(CoachNotes.redFlags, 0))
