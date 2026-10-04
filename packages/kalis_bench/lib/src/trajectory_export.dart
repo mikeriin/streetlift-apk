@@ -86,7 +86,9 @@ String _causeLabel(String code) => switch (code) {
   'uncertain' => 'maximum encore mal connu',
   'rir' => 'effort plus dur que prévu',
   'quality' => 'propreté en baisse',
-  'reps' => 'répétitions en baisse',
+  'reps' => 'répétitions écrites non atteintes la dernière fois',
+  'rep_drop' => 'répétitions en baisse',
+  'quality_drop' => 'propreté en baisse',
   _ => code,
 };
 
@@ -552,6 +554,9 @@ String coachTrajectoryMarkdown(
           if (!ids.contains(it.exerciseId)) {
             continue;
           }
+          // La plus lourde : plus forte charge, puis plus grande série
+          // servie (exercice sans charge : la séance lourde, pas la séance
+          // au chrono).
           var top = 0.0;
           for (final r in s.record.sets) {
             if (r.exerciseId == it.exerciseId &&
@@ -559,6 +564,14 @@ String coachTrajectoryMarkdown(
               top = r.externalLoadKg ?? 0;
             }
           }
+          var most = 0;
+          for (final t in it.setTargets ?? const <SetTarget>[]) {
+            final n = t.repsHigh ?? t.secondsHigh ?? 0;
+            if (n > most) {
+              most = n;
+            }
+          }
+          top += most / 1000;
           if (best == null || top > bestLoad) {
             best = s;
             bestLoad = top;
@@ -572,10 +585,27 @@ String coachTrajectoryMarkdown(
       // Décisions de la séance montrée (et conseils d'entre-séries).
       final notes = <String>[];
       final assisted = catalog.find(bestItem.exerciseId)?.assisted ?? false;
-      void note(Reason r) {
-        final text = adaptReasonText(r, catalog, assisted: assisted);
+      var recal = false;
+      void note(Reason r, {bool advice = false}) {
+        // Conseil d'entre-séries : « série suivante raccourcie » est déjà
+        // dit par « dernières séries plus dures que prévu ».
+        if (advice &&
+            (r.code == ReasonCodes.adaptRepsDown ||
+                r.code == ReasonCodes.adaptRepsUp)) {
+          return;
+        }
+        // Un seul « recalé sur le maximum mesuré » par ligne ; il rend
+        // inutile « allégé pour garder la marge ».
+        final isRecal =
+            r.code == ReasonCodes.adaptRepsDown ||
+            r.code == ReasonCodes.adaptRepsUp;
+        if (isRecal && recal) {
+          return;
+        }
+        final text = adaptReasonText(r, catalog, assisted: assisted && !advice);
         if (text != null && !notes.contains(text)) {
           notes.add(text);
+          recal = recal || isRecal;
         }
       }
 
@@ -583,7 +613,9 @@ String coachTrajectoryMarkdown(
       bestItem.reasons.forEach(note);
       for (final a in best.advices) {
         if (a.exerciseId == served) {
-          a.reasons.forEach(note);
+          for (final r in a.reasons) {
+            note(r, advice: true);
+          }
         }
       }
       final rows = rowsOf['${best.simDay}|$served'] ?? const <SetRow>[];
@@ -647,7 +679,12 @@ String coachTrajectoryMarkdown(
           _done(rows, hold),
           effortText,
           '${max(dayMax)} / ${max(estimate)}',
-          notes.isEmpty ? '—' : notes.take(4).join(' ; '),
+          notes.isEmpty
+              ? '—'
+              : <String>[
+                  for (final n in notes)
+                    if (!(recal && n.startsWith('allégé pour garder'))) n,
+                ].take(4).join(' ; '),
         ]),
       );
     }

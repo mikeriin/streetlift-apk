@@ -364,9 +364,16 @@ final class SlotMark {
 /// les six plus lourdes des dernières semaines sont gardées (une ouverture
 /// est une barre déjà faite). Sans effet sur les décisions de 0.1.
 void noteHeavy(ExerciseTrack track, ExerciseRun run, int day, AdaptParams p) {
+  // (Une barre où les répétitions demandées n'ont pas été faites n'est
+  // pas une barre réussie.)
+  bool made(ObservedSet o) =>
+      o.loadKg != null &&
+      !o.failed &&
+      o.amount >= 1 &&
+      o.amount >= (o.target?.low ?? 1);
   var any = false;
   for (final o in run.observed) {
-    if (o.loadKg != null && !o.failed && o.amount >= 1) {
+    if (made(o)) {
       any = true;
     }
   }
@@ -379,7 +386,7 @@ void noteHeavy(ExerciseTrack track, ExerciseRun run, int day, AdaptParams p) {
   ];
   for (final o in run.observed) {
     final kg = o.loadKg;
-    if (kg != null && !o.failed && o.amount >= 1) {
+    if (kg != null && made(o)) {
       heavy.add((day, kg));
     }
   }
@@ -923,9 +930,14 @@ List<SetPlan>? _loadedPlans(
   final markLoad = mark != null && mark.amount == lines.first.$2
       ? mark.loadKg
       : null;
+  // (Répétitions écrites non atteintes à la dernière séance de
+  // l'emplacement : pas de hausse non plus.)
+  final missed = mark != null && mark.top > 0 && mark.top < mark.amount;
   final lockCause = track.noUp || (mark != null && mark.failed)
       ? 'failure'
-      : (ex.painZones.isNotEmpty ? 'pain' : (run.noIncrease ? 'health' : null));
+      : (ex.painZones.isNotEmpty
+            ? 'pain'
+            : (run.noIncrease ? 'health' : (missed ? 'reps' : null)));
   if (markLoad != null) {
     if (kg > markLoad + 1e-9) {
       final floored = grid.floor(markLoad);
@@ -1164,7 +1176,7 @@ BodyZone tendonZone(ExerciseInfo info) {
 /// non prévu, une douleur ou un bilan bas, jamais plus que le dernier
 /// maintien après un échec dans la séance. La propreté arrête les séries
 /// (règle `stop_on_quality_drop`).
-int _holdSafe(SessionRun run, ExerciseRun ex, double fatigue) {
+int _holdSafe(SessionRun run, ExerciseRun ex, double fatigue, String slotId) {
   final p = run.ctx.params;
   final track = ex.track!;
   final cap = track.filter.capacityToday() * (1 - fatigue);
@@ -1172,9 +1184,19 @@ int _holdSafe(SessionRun run, ExerciseRun ex, double fatigue) {
   if (!ex.spec.test &&
       track.lastDay != null &&
       (track.noUp || ex.painZones.isNotEmpty || run.noIncrease)) {
-    final top = track.lastTop < 1 ? 1 : track.lastTop;
-    if (target > top) {
-      target = top;
+    // Après un échec non prévu ou sur une zone douloureuse : pas de hausse
+    // par rapport à la dernière séance de l'exercice (I2, I3). Un jour de
+    // bilan bas : par rapport à la dernière séance du même emplacement
+    // (séance lourde et séance au chrono d'un même exercice ne se
+    // comparent pas).
+    final last = track.noUp || ex.painZones.isNotEmpty
+        ? track.lastTop
+        : track.slotMarks[slotId]?.top;
+    if (last != null) {
+      final top = last < 1 ? 1 : last;
+      if (target > top) {
+        target = top;
+      }
     }
   }
   if (ex.fails > 0 && ex.observed.isNotEmpty) {
@@ -1246,7 +1268,7 @@ void _probe(
 /// réserve visée moins un point (au plus `coachDirectGuardRir`) ; mêmes
 /// garde-fous que la règle générale après un échec, une douleur ou un
 /// bilan bas.
-int _repsSafe(SessionRun run, ExerciseRun ex, double fatigue) {
+int _repsSafe(SessionRun run, ExerciseRun ex, double fatigue, String slotId) {
   final p = run.ctx.params;
   final track = ex.track!;
   var guard = ex.rirEff - p.coachBreachRir;
@@ -1260,9 +1282,19 @@ int _repsSafe(SessionRun run, ExerciseRun ex, double fatigue) {
   if (!ex.spec.test &&
       track.lastDay != null &&
       (track.noUp || ex.painZones.isNotEmpty || run.noIncrease)) {
-    final top = track.lastTop < 1 ? 1 : track.lastTop;
-    if (target > top) {
-      target = top;
+    // Après un échec non prévu ou sur une zone douloureuse : pas de hausse
+    // par rapport à la dernière séance de l'exercice (I2, I3). Un jour de
+    // bilan bas : par rapport à la dernière séance du même emplacement
+    // (séance lourde et séance au chrono d'un même exercice ne se
+    // comparent pas).
+    final last = track.noUp || ex.painZones.isNotEmpty
+        ? track.lastTop
+        : track.slotMarks[slotId]?.top;
+    if (last != null) {
+      final top = last < 1 ? 1 : last;
+      if (target > top) {
+        target = top;
+      }
     }
   }
   if (ex.fails > 0 && ex.observed.isNotEmpty) {
@@ -1327,7 +1359,7 @@ List<SetPlan>? _directPlans(
       item.kind != SetKind.test &&
       firstLow > 1) {
     final rest = _restOf(ex, c, served, firstHigh);
-    final reach = _repsSafe(run, ex, plannedFatigue(0, rir, rest, p));
+    final reach = _repsSafe(run, ex, plannedFatigue(0, rir, rest, p), c.slotId);
     if (reach < firstLow) {
       // Chaque série garde la réserve du bloc.
       final kept = (track.filter.capacityToday() - rir + 0.3).floor();
@@ -1371,8 +1403,8 @@ List<SetPlan>? _directPlans(
     // Ce que le modèle prévoit de sûr aujourd'hui (réserve gardée, marge de
     // prudence, garde-fous après échec, douleur ou bilan bas).
     final safe = hold
-        ? _holdSafe(run, ex, fatigue)
-        : _repsSafe(run, ex, fatigue);
+        ? _holdSafe(run, ex, fatigue, c.slotId)
+        : _repsSafe(run, ex, fatigue, c.slotId);
     int? easyTop;
     var wanted = high;
     if (follows && low == high) {
@@ -1382,6 +1414,17 @@ List<SetPlan>? _directPlans(
       final cap = track.filter.capacityToday();
       final fromTest = (share * cap + 0.5).floor();
       wanted = fromTest < 1 ? 1 : fromTest;
+      if (!hold && wanted > high) {
+        // Au-dessus de ce que le bloc écrit : une répétition de plus que
+        // la dernière séance de l'emplacement au plus (la règle du
+        // programme : « +1 répétition quand la réserve est dépassée »),
+        // jamais d'un coup.
+        final lift = mark == null ? 0 : mark.top + 1 - firstHigh;
+        final most = high + (lift > 0 ? lift : 0);
+        if (wanted > most) {
+          wanted = most;
+        }
+      }
       if (!hold) {
         final kept = (cap * (1 - fatigue) - rir + 0.3).floor();
         if (kept < wanted) {
