@@ -243,7 +243,7 @@ String? coachReasonText(Reason r, Catalog catalog) {
         CoachNotes.stepGate =>
           'Étape suivante, sous condition. Repère mesurable : au dernier '
               "test, un maintien maximal d'au moins "
-              "${v is num ? (v / 0.75).ceil() : ''} s sur l'étape "
+              "${v is num ? (v * 0.75).ceil() : ''} s sur l'étape "
               'actuelle. Tu remplaces alors, une séance lourde par '
               'semaine, les tenues écrites par 3 × ${_int(v)} s ; quand '
               'elles sont propres 3 séances de suite (douleur à 2 sur 10 '
@@ -674,9 +674,10 @@ String? coachReasonText(Reason r, Catalog catalog) {
     case ReasonCodes.planReturnFromGap:
       final gap = p['gap'];
       return 'Reprise après une coupure (${gap is String ? _gap(gap) : ''}) '
-          ': volume réduit de moitié et au moins 3 répétitions en réserve '
-          'la première semaine, puis retour progressif (+10 à 15 % de '
-          'séries par semaine les quatre premières semaines, +20 % au '
+          ': volume réduit la première semaine (de moitié après dix '
+          "semaines d'arrêt ou plus) et au moins 3 répétitions en réserve, "
+          'puis retour progressif (+10 à 15 % de séries par semaine les '
+          'quatre premières semaines après une longue coupure, +20 % au '
           'plus ensuite) ; les répétitions écrites partent de tes '
           'anciens records réduits, jamais des records eux-mêmes — le '
           "test d'entrée et chaque test les recalent.";
