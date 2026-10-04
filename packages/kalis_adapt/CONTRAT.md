@@ -698,8 +698,9 @@ choix de ce lot, à valider (§ 9).
 
 | Intention de la semaine | Ce que le moteur fait |
 | --- | --- |
-| accumulation, intensification, réalisation, maintien (semaines de charge) | la réserve visée pilote la charge dans un couloir autour de la part écrite (§ 11.2) ; séries au ressenti et série repère possibles (§ 11.4) ; le volume peut être proposé à la hausse par la revue |
+| accumulation, intensification, réalisation (semaines de charge) | la réserve visée pilote la charge dans un couloir autour de la part écrite (§ 11.2) ; séries au ressenti et série repère possibles (§ 11.4) ; le volume peut être proposé à la hausse par la revue |
 | introduction, décharge, affûtage, test, compétition, transition (semaines servies telles quelles) | la séance du bloc est servie telle qu'elle est écrite : aucune hausse au-delà de la charge écrite, aucune série ajoutée, aucune série repère, aucune technique qui mène près de l'échec ; raison `adapt.phase_respected` (et `adapt.taper_no_volume` en affûtage et en compétition : R3-P12, R3-P13) |
+| maintien | la séance du bloc est servie avec les garde-fous (réserve gardée, verrous après échec ou douleur), sans pilotage à la hausse, sans série repère ni série au ressenti |
 | échéance principale à 14 jours ou moins (`coachEventNearDays`) | décisions prudentes : pas de pilotage à la hausse, pas de série au ressenti ; `adapt.event_near` |
 
 Le jour même, le moteur ne sert **jamais plus de séries** que le bloc n'en écrit (invariant C2, § 7) ; le
@@ -763,7 +764,7 @@ le journal par `readLine` :
 | `cluster` | charge qui tient la réserve visée sur les mini-séries, repos courts comptés | le total de la ligne se compare à la cible ; chaque partie est une borne basse de la capacité |
 | `rest_pause`, `myo_reps`, `drop_set` | première partie comme une série classique ; `miniSetsLeft` conseillé | seule la première partie mesure la capacité |
 | `accentuated_eccentric` | charge de la descente : part écrite, au plus 110 % du 1RM (R2-P17) ; jamais à 10 jours ou moins d'une échéance (`coachEccentricEventDays`) ni sur une zone à antécédent | la ligne ne mesure pas la capacité du mouvement complet |
-| `wave`, `pyramid`, `ladder` | un palier par ligne (rôles `wave`, `rung`) ; la charge ne monte d'une vague à l'autre qu'un jour sans verrou | ligne par ligne |
+| `wave`, `pyramid`, `ladder` | un palier par ligne (rôles `wave`, `rung`) ; la charge ne monte d'une vague à l'autre qu'un jour sans verrou, et la vague la plus lourde est à la charge retenue par les garde-fous (les vagues d'avant sont plus légères d'autant) | ligne par ligne |
 | `emom`, `density`, `for_time` | intervalles ou bloc au temps ; arrêt quand les répétitions chutent (`stop_on_rep_drop`) — sauf si la série en baisse est dite facile (au moins 3 en réserve) : ce n'est pas de la fatigue | parties : bornes basses |
 | `isometric_hold`, `skill_practice` | durée écrite ou part du maintien maximal mesuré (§ 11.5) ; arrêt quand la propreté passe sous le plancher (`stop_on_quality_drop`) | une ligne sous le plancher de propreté compte comme un échec |
 | `amrap` | dernière série ouverte | série ouverte |
@@ -814,7 +815,8 @@ Séries qui mesurent, quand rien n'a mesuré depuis 14 jours (`coachProbeDays`) 
   (`coachTopProbeReps`) si la réserve visée le permet.
 - **Tenue repère** : la première tenue d'un maintien dont le maximum n'est pas connu se fait jusqu'à la
   durée écrite par le bloc, arrêt avant la perte de position ; plus tard, quand l'estimation fait servir
-  moins que la durée écrite, la dernière tenue est ouverte jusqu'à cette durée (jamais au-delà).
+  moins que la durée écrite, la dernière tenue est ouverte jusqu'à cette durée (jamais au-delà ; bras tendus
+  et appuis : dans la borne de hausse d'une séance à la suivante, § 11.5).
 
 Jamais en semaine servie telle quelle, près d'une échéance, un jour léger, un jour de bilan bas, sur une zone
 douloureuse ni après un échec.
@@ -845,8 +847,10 @@ douloureuse ni après un échec.
   semaine : il n'est plus sûr) : séries fractionnées — moins de répétitions par série (chaque série garde
   la réserve du bloc), plus de séries, pour approcher le travail écrit : au plus le double des séries (trois
   au moins permises), un total qui vise le bas de la plage écrite à moins d'une série près
-  (`adapt.reps_down`). Aucune série n'est ajoutée après un échec, sur une zone douloureuse, un jour de bilan
-  bas, ni tant qu'aucune série n'a mesuré le maximum de l'exercice (28 jours au plus). Séries fractionnées
+  (`adapt.reps_down`). Aucune série n'est ajoutée en semaine servie telle quelle (§ 11.1), après un échec, sur
+  une zone douloureuse, un jour de bilan bas, quand le bloc écrit une technique, ni tant qu'aucune série n'a
+  mesuré le maximum de l'exercice (28 jours au plus). La réserve est calculée sur la première série ;
+  l'effort affiché des suivantes tient compte de la fatigue prévue. Séries fractionnées
   et séries classiques se valent pour la force (Jukic et al. 2021) ; aucun essai chez des débutants limités
   à 1 à 5 répétitions : choix raisonné.
 - **Effort affiché** : celui du bloc ; quand la quantité servie laisse au moins un point de plus ou de moins
@@ -884,7 +888,7 @@ douloureuse ni après un échec.
   cette barre (R3-P14 : le dernier lourd fixe la première barre). Deuxième : 80 % de chances. Troisième :
   50 % (70 % pour assurer un total, 35 % pour un record, où la barre visée du profil est tentée si elle
   garde 35 %). Jamais décroissantes ; après une barre manquée, la même barre ; saut minimal de la
-  compétition respecté ; bilan bas, douleur ou échec récent : maximum du jour réduit de 2 % par cause
+  compétition respecté ; bilan bas, douleur ou échec récent : maximum du jour réduit de 2 % par cause (bilan bas : 2 % par palier du bilan)
   (`adapt.attempt_conservative`). La probabilité est celle d'une loi normale sur le `ln` de la charge,
   d'écart-type celui du maximum du jour (estimation et effet de jour, § 3). Les barres suivantes sont
   recalculées après chaque tentative (`adapt.attempt_next`). Une tentative réussie se lit « au moins une
@@ -928,7 +932,8 @@ Chaque séance d'un mouvement principal qui mesure la capacité (§ 11.4) laisse
 estimée du jour. Quand deux séances mesurées de suite restent au moins 5 % sous la précédente
 (`coachOverreachDrop`), les trois en 21 jours au plus (`coachOverreachSpanDays`), le moteur sert pendant
 7 jours (`coachOverreachDays`) 40 % de lignes en moins sur ce mouvement (`coachOverreachCut`, une ligne au
-moins retirée, jamais la dernière), intensité gardée, en semaine de charge seulement (les semaines déjà
+moins retirée, jamais la dernière ; le gel des lignes d'une zone douloureuse s'applique d'abord, § 11.8),
+intensité gardée, en semaine de charge seulement (les semaines déjà
 allégées et les tests sont servis tels quels) ; raisons `adapt.volume_down` (`sets`) et `adapt.fatigue_high`
 (`readiness` : part de la séance de référence tenue par les deux séances de l'alerte). La séance d'alerte
 devient la nouvelle référence : pas d'alerte en chaîne.
@@ -968,6 +973,8 @@ retour au niveau, séances trop espacées, deux passages le même jour) ; plage 
 | `coachCensorRir`, `coachCurveRir` | 2 ; 3 répétitions | Zourdos et al. 2021, Halperin et al. 2022, Steele et al. 2017 |
 | `coachProbeDays`, `coachTopProbeReps` | 14 jours ; 3 répétitions | choix raisonné (APRE : Mann et al. 2010) |
 | `coachHoldMaxShare`, `coachHoldRise` | 75 % ; 20 %, 15 %, 10 %, 10 % | R4-F2, R4-F9, R5-P22 ; choix raisonné |
+| `coachHoldRiseSlackSeconds` | 1 s | choix raisonné (une tenue courte peut toujours gagner une seconde) |
+| `coachStopMinSets`, `coachEasyStepShare` | 2 séries ; 5 % | choix raisonnés |
 | `coachHoldEasyShare`, `coachHoldUsefulShare` | 40 % ; 50 % | R4-F2 ; Oranchuk et al. 2019 ; choix raisonné |
 | `coachOverreachDrop`, `coachOverreachDays`, `coachOverreachSpanDays`, `coachOverreachCut` | 5 % ; 7 jours ; 21 jours ; 40 % | Grandou et al. 2020, Grgic et al. 2020, Bell et al. 2023, Bosquet et al. 2007 ; seuil : choix raisonné |
 | `coachAssistGapRir`, `coachAssistStepShare`, `coachAssistStepSd` | 2 répétitions ; 0,75 ; 0,25 | ACSM 2009 (transposé) ; choix raisonné |
@@ -998,7 +1005,14 @@ retour au niveau, séances trop espacées, deux passages le même jour) ; plage 
 4. **Séries fractionnées** : extrapolées d'essais avec charges chez des pratiquants entraînés.
 5. **Notes d'effort** : loin de l'échec, le moteur ne sait que ce que l'athlète montre (série repère, série
    arrêtée, test) ; un athlète qui ne va jamais près de sa limite reste estimé par défaut, prudemment.
-6. **Négatives et tempo** : la durée d'une descente n'est pas pilotée ; une négative écrite à dose fixe est
+6. **Niveau d'expérience absent du profil** : l'athlète est servi comme un intermédiaire (couloir, techniques
+   de ce niveau) ; choix de ce lot, à revoir avec l'application.
+7. **Constats de la relecture indépendante non corrigés** (`docs/VALIDATION.md`, § 9) : le conseil
+   d'entre-séries ne reprend pas tous les ajustements de la séance un jour de bilan bas ; la règle
+   « répétitions écrites non atteintes » ne voit pas un manque sur une série de tête plus courte que les
+   séries allégées ; la série repère et la série de tête repère n'ont pas exactement les mêmes verrous ;
+   l'intensité rendue d'une variante garde la part écrite quand la charge d'entrée est réduite.
+8. **Négatives et tempo** : la durée d'une descente n'est pas pilotée ; une négative écrite à dose fixe est
    servie telle quelle.
 
 ### 11.13 Références du mode coach
