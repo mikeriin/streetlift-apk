@@ -631,7 +631,7 @@ SimRun simulate({
         double? assistKg;
         if (rich &&
             truth.mode == CapacityMode.reps &&
-            truth.info.exercise.loadType == LoadType.band) {
+            truth.info.exercise.assisted) {
           var notch = bandNotch[item.exerciseId] ?? 3;
           var change = 0;
           for (final r in item.reasons) {

@@ -1070,6 +1070,14 @@ List<SetPlan>? _loadedPlans(
     // jusqu'à `coachTopProbeReps` de plus si la réserve visée le permet.
     final exact = track.exactDay;
     final probed = track.benchmarkDay;
+    ex.notes.add(
+      _r(ReasonCodes.adaptLoadHeld, <String, Object?>{
+        'cause':
+            'dbg p=$pilot l=$lockCause h=${ex.heldCause} '
+            'i=${c.policy.intent?.code} e=$exact b=$probed d=${run.day} '
+            'n=${lines.first}',
+      }),
+    );
     if (pilot &&
         lockCause == null &&
         ex.heldCause != 'failure' &&
@@ -1207,7 +1215,7 @@ void _probe(
       track.noUp ||
       ex.painZones.isNotEmpty ||
       run.noIncrease ||
-      out.last.open ||
+      out.last.benchmark ||
       (exact != null && run.day - exact < p.coachProbeDays) ||
       (probed != null && run.day - probed < p.coachProbeDays)) {
     return;
@@ -1218,7 +1226,13 @@ void _probe(
     SetPlan(
       loadKg: last.loadKg,
       low: last.low,
-      high: last.high + p.benchmarkExtraReps,
+      // (Sans charge : jusqu'au double du haut de la plage, pour que la
+      // série mesure même une plage devenue très facile.)
+      high:
+          last.high +
+          (last.loadKg == null && last.high > p.benchmarkExtraReps
+              ? last.high
+              : p.benchmarkExtraReps),
       flames: flamesOfRir(reserve),
       open: true,
       benchmark: true,
@@ -1281,9 +1295,10 @@ List<SetPlan>? _directPlans(
   final tendon = tendonLoaded(info);
   final locked =
       track.noUp || ex.painZones.isNotEmpty || run.noIncrease || ex.fails > 0;
-  // Exercice assisté (élastique) : la progression passe par l'assistance ;
+  // Exercice assisté (élastique, appui des pieds, machine) : la
+  // progression passe par l'assistance ;
   // la plage du bloc est gardée et le moteur dit quand changer de cran.
-  final assisted = info.exercise.loadType == LoadType.band;
+  final assisted = info.exercise.assisted;
   var tendonCapped = false;
   // La marge de sûreté a réduit la première série.
   var guarded = false;

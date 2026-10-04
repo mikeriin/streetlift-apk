@@ -1120,7 +1120,7 @@ final class SessionRun {
       final track = run.track;
       if (track != null &&
           run.spec.coach != null &&
-          info.exercise.loadType == LoadType.band) {
+          info.exercise.assisted) {
         // Assistance changée depuis la dernière série (cran d'élastique) :
         // la capacité attendue se décale d'un cran, l'incertitude grandit.
         final now = loadKg ?? 0;
