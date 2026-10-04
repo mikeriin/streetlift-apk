@@ -6,6 +6,8 @@ import 'package:kalis_plan/kalis_plan.dart';
 import 'package:kalis_plan/testing.dart';
 import 'package:test/test.dart';
 
+import 'support.dart';
+
 void main() {
   test('debug', () {
     final catalog = loadCatalog();
@@ -25,7 +27,7 @@ void main() {
       // ignore: avoid_print
       print('DBG $seed profil ${profile.length > 3000 ? profile.substring(0, 3000) : profile}');
       // ignore: avoid_print
-      print('DBG $seed start ${request.startDate.toJson()}');
+      print('DBG $seed start ${request.startDate}');
       for (final w in p2.weeks) {
         for (final d in w.days) {
           // ignore: avoid_print
