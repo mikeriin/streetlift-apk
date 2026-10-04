@@ -75,3 +75,10 @@ Panel renoté : 01, 03, 04, 06 (4 écoles) ; 09, 11, 12, 14 (force, calisthénie
 [force, cali, hyper, santé | doc] : 01 [9,9,8,9|8] 02 [9,9,9,9|8] 03 [9,9,8,9|7] 04 [8,8,8,8|7] 05 [9,9,9,9|6] 06 [9,8,9,9|7] 07 [9,9,9,9|8] 08 [9,9,9,9|7] 09 [9,9,9,9|7] 10 [9,9,9,9|6] 11 [9,9,9,9|6] 12 [8,9,9,9|7] 13 [9,9,9,9|7] 14 [9,9,9,9|7] 15 [9,9,9,9|7] 16 [9.5,9,9,9.5|7] 17 [9,9,9,9|7]
 Panel : min 8, moyenne 8,90 ; relecture documentée : min 6, moyenne 7,0 (05, 10, 11 : export inchangé, note 7 → 6 : dispersion du jury). Banc : 0 violation street, attentes tenues sauf street_12 c1.
 Notes : /home/claude/cp1/panel/p6.
+
+## Boucle 7 = passe finale complète (04/10/2026)
+Corrections : reprise — montée +10 à 15 % (17 → 19 → 22 → 25 → 29), série d'entrée écrite sur la ligne, repère d'un exercice non testé gelé ; débutant — descentes 3 séries un seul jour au bloc 2 ; exposition légère de traction jamais le lendemain d'un jour de tirage ; seuils de douleur renvoyés à la règle unique ; textes (approche du test, objectif ambitieux depuis zéro).
+Passe complète : 17 profils × 4 écoles + relecture documentée des 17 profils.
+[force, cali, hyper, santé | doc] : 01 [9,9,9,9|8] 02 [9,9,9,8|8] 03 [9,9,9,9|7] 04 [9,9,9,9|7] 05 [9,9,9,9|7] 06 [9,9,9,9|7] 07 [9,9,9,9|8] 08 [9,8,9,9|7] 09 [9,9,9,9|8] 10 [9,9,9,9|7] 11 [9,9,8,9|7] 12 [8,9,9,9|7] 13 [9,9,9,9|8] 14 [9,8,9,9|7] 15 [9,9,9,9|8] 16 [9,9,9,9|8] 17 [8,9,8,9|7]
+Panel : min 8, moyenne 8,90 (61 notes sur 68 à 9) ; relecture documentée : min 7, moyenne 7,41. Banc : 0 violation street, attentes tenues sauf street_12 c1.
+Notes : /home/claude/cp1/panel/p7. Reste : tests, docs, CI complète, fin de lot.
