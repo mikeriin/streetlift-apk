@@ -894,10 +894,32 @@ List<SetPlan>? _loadedPlans(
     ex.heldCause = lockCause;
   }
   final lastAny = track.lastLoad;
-  if (track.noUp && lastAny != null && kg > lastAny + 1e-9) {
-    final floored = grid.floor(lastAny);
-    kg = floored > lastAny ? lastAny : floored;
-    ex.heldCause = 'failure';
+  if (markLoad == null && lastAny != null && !ex.calibrating) {
+    // Premier passage à ce schéma : au plus la charge écrite par le bloc,
+    // sauf à rester à +10 % (ou un cran) de la dernière séance.
+    final cap = grid.floor((lastAny + bw) * (1 + p.maxUpMain) - bw);
+    final step = grid.next(lastAny, up: true);
+    var bound = cap > step ? cap : step;
+    final start = item.startLoadKg;
+    if (start != null && start > bound) {
+      bound = start;
+    }
+    if (kg > bound + 1e-9) {
+      kg = bound;
+      ex.heldCause = 'cap';
+    }
+  }
+  if (lastAny != null && kg > lastAny + 1e-9) {
+    // Invariants de 0.1 : aucune hausse par rapport à la dernière séance
+    // de l'exercice après un échec non prévu ni sur une zone douloureuse.
+    final cause = track.noUp
+        ? 'failure'
+        : (ex.painZones.isNotEmpty ? 'pain' : null);
+    if (cause != null) {
+      final floored = grid.floor(lastAny);
+      kg = floored > lastAny ? lastAny : floored;
+      ex.heldCause = cause;
+    }
   }
   if (capped) {
     ex.notes.add(

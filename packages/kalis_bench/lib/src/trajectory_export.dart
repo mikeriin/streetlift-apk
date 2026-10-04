@@ -11,7 +11,6 @@ import 'package:kalis_plan/kalis_plan.dart' show coachPhaseLabel;
 
 import 'analysis.dart';
 import 'export.dart';
-import 'profile.dart';
 import 'trajectory.dart';
 
 String _n(double v, [int digits = 2]) {

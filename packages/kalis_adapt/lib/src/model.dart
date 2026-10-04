@@ -1095,6 +1095,7 @@ final class SessionRun {
         boundOnly,
         quality,
         role,
+        test,
       );
     }
   }
@@ -1254,8 +1255,29 @@ final class SessionRun {
         p: p,
         bound: true,
       );
+    } else if (run.spec.coach != null &&
+        rirOfFlames(flames) >= p.coachCensorRir) {
+      // Mode coach : loin de l'échec, la note ne se lit que comme « au
+      // moins tant en réserve » (la prédiction des répétitions restantes
+      // se dégrade loin de l'échec et plafonne, R2-P3).
+      final rir = rirOfFlames(flames);
+      f.observeLoad(
+        logLoad: logLoad,
+        n: reps + state.rater.trueRir(rir, p),
+        nSd: state.rater.rirSd(rir, reps, p),
+        fatigue: fatigue,
+        p: p,
+        bound: true,
+      );
     } else {
       final rir = rirOfFlames(flames);
+      if (test && run.spec.coach != null && role != SetRole.attempt) {
+        // Test mené près de l'échec : l'écart à la prévision corrige le
+        // biais de note appris (limite 4 de 0.1).
+        if (rir <= 1) {
+          state.rater.learn(reps + rir - nPred, p);
+        }
+      }
       final confirmed =
           target != null &&
           !target.open &&
@@ -1342,12 +1364,24 @@ final class SessionRun {
     bool boundOnly,
     int? quality,
     SetRole? role,
+    bool test,
   ) {
     final p = _p;
     final track = run.track!;
     final f = track.filter;
     final fatigue = f.fatigueNow(p);
     final keep = 1 - fatigue;
+    if (test &&
+        run.spec.coach != null &&
+        mode == CapacityMode.reps &&
+        amount >= 1 &&
+        (failed || (flames != null && rirOfFlames(flames) <= 1))) {
+      // Test de répétitions mené près de l'échec : l'écart à la prévision
+      // corrige le biais de note appris (limite 4 de 0.1).
+      final shown =
+          amount + (failed ? p.failExtraReps : rirOfFlames(flames!));
+      state.rater.learn(shown - f.capacityToday() * keep, p);
+    }
     final done = amount < 1 ? 1 : amount;
     final open = target != null && target.open;
     var rirEstimate = 0.0;
@@ -1380,6 +1414,16 @@ final class SessionRun {
       f.observeDirect(
         logCapacity: ln(_impliedCapacity(mode, done, rir) / keep),
         sd: relSd(p.openRir),
+        p: p,
+        bound: true,
+      );
+    } else if (run.spec.coach != null &&
+        rirOfFlames(flames) >= p.coachCensorRir) {
+      final said = rirOfFlames(flames);
+      final rir = state.rater.trueRir(said, p);
+      f.observeDirect(
+        logCapacity: ln(_impliedCapacity(mode, done, rir) / keep),
+        sd: relSd(said),
         p: p,
         bound: true,
       );
