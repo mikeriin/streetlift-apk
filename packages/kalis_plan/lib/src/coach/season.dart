@@ -327,7 +327,8 @@ BlockShape shapeBlock(
           : SeasonPhaseKind.accumulation;
       var stage = 0;
       // R3-P9, R3-P21 : avant un test daté, la dernière semaine de charge
-      // devient une semaine allégée (volume −30 %, intensité gardée).
+      // devient une semaine allégée (volume −40 à −50 %, intensité et
+      // fréquence gardées : Bosquet 2007, optimum −41 à −60 %).
       final tapered = toEvent != null && toEvent >= 5 && toEvent <= length;
       for (var i = 0; i < length; i++) {
         if (i == 0 && first) {
@@ -339,7 +340,7 @@ BlockShape shapeBlock(
             WeekKind.deload,
             WeekIntent.taper,
             SeasonPhaseKind.taper,
-            0.75,
+            0.6,
             stage,
           );
         } else if ((i == length - 1 && length >= 4) || isEvent(i)) {
@@ -398,7 +399,7 @@ BlockShape shapeBlock(
             WeekKind.deload,
             WeekIntent.taper,
             SeasonPhaseKind.taper,
-            0.65,
+            0.55,
             stage,
           );
         } else if (isEvent(i)) {

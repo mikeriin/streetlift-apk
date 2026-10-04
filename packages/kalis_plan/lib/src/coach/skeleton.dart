@@ -415,7 +415,14 @@ void _buildBeginner(_Builder b) {
         Method.beginnerMain,
         // Objectif de première traction : trois séries de tirage assisté
         // (les descentes freinées ont leur propre plafond, R5-P8).
-        sets: heavy ? mainSets : (a.aimsAt(Ids.pull) && sets < 3 ? 3 : sets),
+        // Les jours de descentes freinées, deux séries assistées : six
+        // séries de tirage au plus par séance, une douzaine de séries
+        // directes par semaine (R1-P5, R2-P8, R5-P1).
+        sets: heavy
+            ? mainSets
+            : (a.aimsAt(Ids.pull)
+                  ? (negativeDays.contains(d) ? 2 : 3)
+                  : sets),
         referenceId: Ids.pull,
       );
       if (negativeDays.contains(d) && !heavy) {
@@ -453,7 +460,9 @@ void _buildBeginner(_Builder b) {
         Method.beginnerMain,
         sets: sets,
       );
-    } else if (pushPlanned >= 4 && !heavy && a.can(Ids.pushUp, d)) {
+    } else if ((pushPlanned >= 4 || (pushMax >= 1 && a.aimsAt(Ids.pushUp))) &&
+        !heavy &&
+        a.can(Ids.pushUp, d)) {
       // Quelques pompes acquises : des séries courtes du geste complet
       // d'abord (spécificité), puis la variante facile pour le volume.
       b.add(
@@ -795,6 +804,33 @@ void _addPrehab(_Builder b, int d) {
     Method.accessoryPrehab,
     sets: 2,
   );
+  // Coude ou poignet avec antécédent : fléchisseurs et extenseurs du
+  // poignet en charge légère, deux séances par semaine (R4-F12, R5-P24 :
+  // la tolérance du tendon se construit en le chargeant progressivement).
+  final a = b.a;
+  final elbow = a.limitOn(Joint.elbow) != null;
+  final wrist = a.limitOn(Joint.wrist) != null;
+  if (!elbow && !wrist) {
+    return;
+  }
+  const ids = <String>['mu-wrist-curl-barre', 'mu-reverse-wrist-curl-haltere'];
+  var count = 0;
+  for (final day in b.days) {
+    if (day.slots.any((s) => ids.contains(s.exerciseId))) {
+      count++;
+    }
+  }
+  if (count >= 2 || b.days[d].slots.any((s) => ids.contains(s.exerciseId))) {
+    return;
+  }
+  final picks = <String>[
+    for (final id in wrist && !elbow ? ids.reversed : ids)
+      if (a.catalog.find(id)?.stressOn(Joint.elbow) != JointStress.high) id,
+  ];
+  if (picks.isEmpty) {
+    return;
+  }
+  b.add(d, picks, SlotRole.accessory, Method.accessoryPrehab, sets: 2);
 }
 
 // ------------------------------------------------------------ sets & reps
@@ -1177,6 +1213,7 @@ void _buildReps(_Builder b, Set<int> runDays) {
     frequency = n;
   }
   var pullDays = spreadDays(a, days, frequency);
+  final pullWanted = pullDays;
   // Jusqu'à l'intermédiaire, pas deux jours de tirage consécutifs (R4-F10,
   // R5-P22 : 48 h entre deux charges d'une même zone) : la fréquence cède.
   while (a.level <= 1 && frequency > 2 && _minGap(a, pullDays) < 2) {
@@ -1221,6 +1258,16 @@ void _buildReps(_Builder b, Set<int> runDays) {
   final pushGoal = a.aimsAt(Ids.dip) || a.aimsAt(Ids.pushUp);
   final pullGoal = a.aimsAt(Ids.pull) || a.aimsAt(Ids.muscleUp);
   final pushMaintenance = pullGoal && !pushGoal && !competition;
+  // Jour de tirage écarté parce qu'il touche un autre jour de tirage :
+  // quand l'objectif porte sur la traction, il garde une exposition
+  // légère au geste (trois séries courtes, très loin de l'échec — pratique
+  // distribuée, R4-G5, R4-G8 : trois expositions par semaine), les séries
+  // dures restant aux deux autres jours.
+  final lightPull = <int>{
+    if (pullGoal && !spared && !competition && pullMax >= 4)
+      for (final d in pullWanted)
+        if (!pullDays.contains(d)) d,
+  };
   final pullHeavy = <String>[
     for (final m in (competition ? _competitionMethods : _repsMethods(pullMax)))
       if (m == Method.repsTop || (m == Method.repsStrength && !returning)) m,
@@ -1348,6 +1395,16 @@ void _buildReps(_Builder b, Set<int> runDays) {
       } else {
         _addMuscleUpPractice(b, d, muMax);
       }
+    }
+    if (lightPull.contains(d) && a.can(Ids.pull, d)) {
+      b.add(
+        d,
+        <String>[Ids.pull],
+        SlotRole.skill,
+        Method.repsTechnique,
+        sets: 3,
+        stress: DayStress.light,
+      );
     }
     final pulls = pullDays.contains(d);
     final group = short && a.level >= 1 ? 'A' : null;
@@ -1547,6 +1604,32 @@ void _buildReps(_Builder b, Set<int> runDays) {
     }
     if (legDays.contains(d)) {
       _addLegs(b, d, main: d == legDays.first, sets: minutes >= 55 ? 3 : 2);
+      if (runDays.isNotEmpty && minutes >= 45) {
+        // Hybride course : mollets en charge lente et petits rebonds — le
+        // renforcement du coureur (R6-P22 : raideur du tendon d'Achille
+        // et économie de course), loin d'une séance de course dure.
+        b.add(
+          d,
+          const <String>[
+            'mu-mollets-poids-du-corps-marche',
+            'mu-mollets-unilateral-haltere',
+          ],
+          SlotRole.accessory,
+          Method.accessoryIsolation,
+          sets: 2,
+          keep: true,
+        );
+        if (!a.heavyImpactBanned) {
+          b.add(
+            d,
+            const <String>['cf-pogo-jumps', 'ca-corde-sauts-simples'],
+            SlotRole.accessory,
+            Method.accessoryPrehab,
+            sets: 2,
+            keep: true,
+          );
+        }
+      }
     }
     if (minutes >= 55 || !legDays.contains(d)) {
       _addCore(b, d, skill: skillDays.contains(d));
@@ -1647,7 +1730,9 @@ void _buildLifting(_Builder b, Set<int> runDays) {
     b.add(
       d,
       <String>[id],
-      method == Method.liftHeavy ? SlotRole.main : SlotRole.secondary,
+      method == Method.liftHeavy && !maintained(id)
+          ? SlotRole.main
+          : SlotRole.secondary,
       maintained(id) ? Method.liftMaintain : method,
       sets: maintained(id)
           ? (method == Method.liftHeavy ? 3 : 2)
@@ -1769,11 +1854,16 @@ void _buildLifting(_Builder b, Set<int> runDays) {
         lift(extra, Ids.weightedPull, Method.liftVolume, DayStress.medium);
       }
     }
-  } else {
-    // Coude à ménager : tirage au poids du corps en prise neutre, charge
-    // graduée (R5-P20, R5-P24).
-    final pullDays = spreadDays(a, days, n >= 3 ? 2 : 1);
-    for (final d in pullDays) {
+  }
+  // Coude à ménager : tirage au poids du corps en prise neutre, charge
+  // graduée (R5-P20, R5-P24) — après le mouvement visé (le dips lourd se
+  // fait frais) ; le travail des fléchisseurs du poignet ferme la séance
+  // (il ne doit pas fatiguer la prise avant les séries lourdes).
+  final sparePullDays = pull
+      ? const <int>[]
+      : spreadDays(a, days, n >= 3 ? 2 : 1);
+  void sparePull() {
+    for (final d in sparePullDays) {
       b.add(
         d,
         <String>['sw-traction-neutre', 'sw-traction-anneaux', Ids.pull],
@@ -1784,6 +1874,11 @@ void _buildLifting(_Builder b, Set<int> runDays) {
         referenceId: Ids.pull,
         note: 'pull_return',
       );
+    }
+  }
+
+  void tendonWork() {
+    for (final d in sparePullDays) {
       // R5-P24 : charge graduée des fléchisseurs du poignet, légère et
       // loin de l'échec (aucun programme de soin : à coordonner avec le
       // professionnel qui suit le coude).
@@ -1808,6 +1903,7 @@ void _buildLifting(_Builder b, Set<int> runDays) {
       }
     }
   }
+
   if (squat && !squatAimed && !maintained(Ids.squat)) {
     // Objectif déclaré ailleurs, pas d'épreuve : le squat passe en
     // entretien (R4-H3, R4-H4 : charge gardée, volume réduit).
@@ -1846,6 +1942,8 @@ void _buildLifting(_Builder b, Set<int> runDays) {
       lift(dipVolume, Ids.weightedDip, Method.liftVolume, DayStress.medium);
     }
   }
+
+  sparePull();
 
   // Assistance (R2-P9, R5-P27) : tirage horizontal, chaîne postérieure,
   // prévention, tronc ; jour léger : jambes en unilatéral et mobilité.
@@ -1951,6 +2049,7 @@ void _buildLifting(_Builder b, Set<int> runDays) {
     }
     _addPrehab(b, d);
   }
+  tendonWork();
 }
 
 // ---------------------------------------------------------------- figures
