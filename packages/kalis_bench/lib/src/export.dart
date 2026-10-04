@@ -269,6 +269,25 @@ String effortText(ItemView i) {
         : 'tenue dure, arrêt avant de perdre la position';
   }
   final text = rir == rir.roundToDouble() ? rir.toStringAsFixed(0) : _num(rir);
+  // Séries à une part du maximum de répétitions : la réserve écrite est
+  // celle de la dernière série (les séries se cumulent à repos court) ; la
+  // première en laisse davantage — on le dit, pour que l'étiquette ne
+  // contredise pas les chiffres.
+  final intensity = i.p.intensity;
+  final top = i.p.repsHigh;
+  if (intensity != null &&
+      intensity.basis == IntensityBasis.percentBenchmark &&
+      intensity.referenceKind != BenchmarkKind.maxHold &&
+      intensity.value > 0 &&
+      top != null &&
+      i.p.sets >= 2 &&
+      i.p.technique?.kind != SetTechniqueKind.topSetBackoff) {
+    final base = (top / intensity.value).round();
+    if (base - top >= rir + 2) {
+      return '$text rép. en réserve sur la dernière série (davantage sur '
+          'les premières)';
+    }
+  }
   return '$text rép. en réserve';
 }
 
@@ -335,7 +354,12 @@ String notesText(ItemView i, Catalog catalog) {
   }
   final tempo = p.tempo;
   if (tempo != null && tempo.eccentricSeconds > 0) {
-    notes.add('descente en ${tempo.eccentricSeconds} s');
+    notes.add(
+      tempo.topPauseSeconds > 0
+          ? '${tempo.topPauseSeconds} s tenues en haut, puis descente en '
+                '${tempo.eccentricSeconds} s'
+          : 'descente en ${tempo.eccentricSeconds} s',
+    );
   }
   if (p.restMode == RestMode.jog) {
     notes.add('récupération en trottinant');

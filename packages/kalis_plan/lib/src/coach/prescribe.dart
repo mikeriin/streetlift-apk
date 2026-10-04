@@ -233,8 +233,42 @@ abstract final class CoachNotes {
   /// la plage).
   static const String pushLadder = 'push_ladder';
 
+  /// Lest réglé sur le lest du 1RM quand la charge visée tombe sous le
+  /// poids du corps (`value` : lest en kg).
+  static const String smallLoad = 'small_load';
+
+  /// Rôle : avant-bras (tolérance du coude et du poignet).
+  static const String roleForearm = 'role_forearm';
+
+  /// Rôle : renforcement du coureur (mollets, rebonds).
+  static const String roleRunner = 'role_runner';
+
+  /// Série en repos-pause vers l'objectif de répétitions (`value` : total
+  /// visé).
+  static const String restPause = 'rest_pause';
+
+  /// Objectif ambitieux (`value` : résultat probable).
+  static const String ambitious = 'ambitious';
+
+  /// Stratégie de la série maximale (`value` : répétition repère).
+  static const String maxSetPlan = 'max_set_plan';
+
+  /// Montée avant un maintien maximal (`value` : secondes de la montée).
+  static const String holdRamp = 'hold_ramp';
+
+  /// Suivi de l'assiduité et du poids (`value` : séances par semaine).
+  static const String tracking = 'tracking';
+
   /// Tous les codes.
   static const List<String> all = <String>[
+    roleForearm,
+    roleRunner,
+    restPause,
+    ambitious,
+    maxSetPlan,
+    holdRamp,
+    tracking,
+    smallLoad,
     pushLadder,
     dressRehearsal,
     primer,
@@ -962,14 +996,30 @@ final class Prescriber {
     // moins de répétitions (formule d'Epley) pour garder la réserve.
     final floor = (e.bodyweightFraction?.value ?? 0) * a.bodyWeight / total;
     if (floor > 0 &&
-        p < floor - 1e-9 &&
+        (p < floor - 1e-9 || floor >= 0.78) &&
         _shape.model != SeasonModel.strengthPeak &&
         x.kind == SetKind.work &&
         !over) {
-      // Hors préparation d'une épreuve de force : un 1RM lesté qui donne
-      // une charge sous le poids du corps ne règle plus rien (il est
-      // souvent ancien). La charge se règle à la première séance sur la
-      // réserve prévue, puis progresse par le plus petit pas.
+      // Hors préparation d'une épreuve de force : un 1RM lesté proche du
+      // poids du corps ne se travaille pas en pourcentage (la charge
+      // visée tomberait sous le poids du corps). Le lest part d'une part
+      // du lest du 1RM, réglée sur les répétitions — un quart à six
+      // répétitions, un tiers à cinq, la moitié à quatre, deux tiers à
+      // trois (choix raisonné, cohérent avec R2-P2 sur la charge totale)
+      // —, s'ajuste à la première séance sur la réserve prévue, puis
+      // progresse par le plus petit pas.
+      final added = total - floor * total;
+      final reps = x.repsHigh ?? 5;
+      final part = reps >= 6
+          ? 0.25
+          : (reps == 5 ? 0.34 : (reps == 4 ? 0.5 : (reps == 3 ? 0.67 : 0.8)));
+      final lest = _external(e, total, floor + added * part / total);
+      if (added > 0 && lest != null && lest > 0) {
+        x
+          ..load = lest
+          ..reasons.add(_note(CoachNotes.smallLoad, lest));
+        return;
+      }
       x
         ..calibrate = true
         ..reasons.add(reason(ReasonCodes.planToCalibrate))
@@ -1494,17 +1544,19 @@ final class Prescriber {
       // la plus lourde du programme ne va pas dans un allègement).
       return null;
     }
-    // Amplitude partielle (verrouillage) : de 95 à 105 % du 1RM complet
-    // (pratique de terrain, CALIBRAGE_CP1 C : 100 à 110 % ; borne basse
-    // retenue ici) — 100 % au plus quand le coude a un antécédent ; les
+    // Amplitude partielle (verrouillage) : elle n'a de sens qu'au niveau
+    // du 1RM complet et au-dessus (pratique de terrain, CALIBRAGE_CP1 C :
+    // 100 à 110 %) — 105 % au plus quand le coude a un antécédent ; les
     // autres variantes restent sous le mouvement de compétition.
     final top = partial
-        ? (a.limitOn(Joint.elbow) != null ? 1.0 : 1.05)
+        ? (a.limitOn(Joint.elbow) != null ? 1.05 : 1.10)
         : 0.80;
-    // (Entrée graduée : 87 % la première semaine, +3 % par semaine de
-    // charge, R5-P24.)
+    // (Entrée graduée et monotone : 95 % la première semaine, +2,5 % par
+    // semaine de charge, et chaque bloc repart du sommet du précédent ;
+    // R5-P24.)
+    final steps = stage > 2 ? 2 : stage;
     var pct = partial
-        ? 0.87 + 0.03 * stage
+        ? 0.95 + 0.05 * (blockIndex > 2 ? 2 : blockIndex) + 0.025 * steps
         : (intense ? 0.74 : 0.70) + 0.01 * stage;
     if (pct > top) {
       pct = top;
@@ -1751,6 +1803,23 @@ final class Prescriber {
       ..intensity = _shareOf(e.id, top, max)
       ..reasons.add(_note(CoachNotes.rampBodyweight, 2))
       ..reasons.add(_rule(CoachRules.repStep, 1, 'reps'));
+    // Objectif de série longue (15 répétitions et plus) : à partir du
+    // deuxième bloc, la dernière série de la séance lourde se finit en
+    // repos-pause jusqu'au total visé (R4-G6, R4-G7 : endurance de la fin
+    // de série, au format de l'épreuve) — pas sur un mouvement à risque,
+    // ni avec une zone à ménager.
+    final wanted = a.goalOn(e.id, GoalMetric.maxReps)?.targetValue;
+    if (wanted != null &&
+        wanted >= 15 &&
+        wanted > max &&
+        !risk &&
+        kept < 2 &&
+        _level >= 1 &&
+        ws.kind == WeekKind.build &&
+        (blockIndex >= 1 || realization) &&
+        _shape.model != SeasonModel.repsPeak) {
+      x.reasons.add(_note(CoachNotes.restPause, wanted));
+    }
     return x;
   }
 
@@ -2074,9 +2143,12 @@ final class Prescriber {
       // réserve prévue — la progression suit ce qui est réussi, elle
       // n'est pas supposée.
       x
-        ..sets = ws.light ? sets : (more > 4 ? 4 : more)
+        ..sets = ws.light || blockIndex == 0 ? sets : (more > 4 ? 4 : more)
         ..repsLow = reps
-        ..repsHigh = ws.light ? reps : reps + 2
+        // Le haut de la plage s'ouvre d'une répétition toutes les deux
+        // semaines de charge : le bas reste sûr (maximum moins la
+        // réserve), le haut donne la cible de la semaine.
+        ..repsHigh = ws.light ? reps : reps + 2 + _shift(ws)
         ..rir = max - reps < kept ? kept.toDouble() : (max - reps).toDouble()
         ..reasons.add(_rule(CoachRules.doubleProgression, 1, 'reps'));
       return x;
@@ -2124,11 +2196,16 @@ final class Prescriber {
     // L'effort d'une descente freinée se règle au contrôle de la descente,
     // pas à la réserve : elle a son propre plafond (15 par séance) et ne
     // compte pas parmi les séries dures.
-    final stage = _stage(ws);
-    final seconds = stage >= 2 ? 5 : 4;
-    final reps = ws.light ? 2 : (stage >= 5 ? 5 : (stage >= 3 ? 4 : 3));
+    // Premier bloc : 4 puis 5 s, 3 puis 4 descentes ; ensuite la descente
+    // s'allonge (6 puis 7 s, après 2 s tenues menton au-dessus de la
+    // barre) à nombre de descentes égal — la progression vient du
+    // contrôle, pas du nombre d'excentriques.
+    final stage = ws.stage;
+    final later = blockIndex > 0;
+    final seconds = later ? (stage >= 2 ? 7 : 6) : (stage >= 2 ? 5 : 4);
+    final reps = ws.light ? 2 : (later ? 3 : (stage >= 3 ? 4 : 3));
     x
-      ..sets = ws.light ? 2 : (stage >= 2 ? 3 : s.sets)
+      ..sets = ws.light ? 2 : (later ? 3 : s.sets)
       ..minSets = 1
       ..repsLow = reps
       ..repsHigh = reps
@@ -2138,7 +2215,7 @@ final class Prescriber {
         eccentricSeconds: seconds,
         bottomPauseSeconds: 0,
         concentricSeconds: 0,
-        topPauseSeconds: 0,
+        topPauseSeconds: later ? 2 : 0,
       )
       ..reasons.add(_note(CoachNotes.slowNegative, seconds));
     return x;
@@ -2453,6 +2530,8 @@ final class Prescriber {
         ws.volume < 0.75 &&
         !s.keep &&
         !prehab &&
+        // (le tronc aussi : il tient la position à la barre.)
+        method != Method.accessoryCore &&
         // (les jambes gardent deux séries dès la première semaine : tous
         // les grands groupes reprennent ensemble.)
         e.family != MovementFamily.jambesGenou) {
@@ -2577,7 +2656,13 @@ final class Prescriber {
   void _roleNote(_Draft x) {
     final e = x.e;
     String? note;
-    if (x.method == Method.accessoryPrehab) {
+    if (e.id.contains('wrist-curl')) {
+      note = CoachNotes.roleForearm;
+    } else if (e.id.contains('mollets') ||
+        e.id == 'cf-pogo-jumps' ||
+        e.id.startsWith('ca-corde')) {
+      note = CoachNotes.roleRunner;
+    } else if (x.method == Method.accessoryPrehab) {
       note = CoachNotes.rolePrehab;
     } else if (e.pattern == MovementPattern.tirageHorizontal) {
       note = CoachNotes.roleRow;
@@ -2953,8 +3038,22 @@ final class Prescriber {
         'testKind': kind.code,
       }),
     );
+    if (kind == TestKind.maxHold && straightArmFamilyOf(e) >= 0) {
+      // Maintien maximal d'une figure : jamais à froid.
+      x.reasons.add(_note(CoachNotes.holdRamp, 3));
+    }
+    if (kind == TestKind.maxReps && (a.reps[e.id] ?? 0) >= 4) {
+      // Série maximale : approche courte et stratégie de série (R4-G7).
+      final best = _maxOf(
+        SlotSpec(exerciseId: e.id, role: SlotRole.main, method: ''),
+        expected: true,
+      );
+      x.reasons.add(_note(CoachNotes.maxSetPlan, best >= 12 ? best ~/ 2 : 0));
+    }
     final marker = _checkpoint(e, ws);
-    if (marker != null) {
+    // (Le jour de l'échéance, plus de repère de parcours : c'est le test
+    // de l'objectif lui-même.)
+    if (marker != null && !event) {
       x.reasons.add(_note(CoachNotes.checkpoint, marker));
     }
     if (event && eventId != null) {
@@ -3236,6 +3335,15 @@ final class Prescriber {
     }
     final x = _dosed(s, day, week, ws, role);
     if (x != null &&
+        x.kind == SetKind.work &&
+        _eveOfTest(day, week) &&
+        (x.e.pattern == MovementPattern.tirageVertical ||
+            x.e.rootId == Ids.muscleUp)) {
+      // Veille d'un test de tirage (premier jour de la semaine de test) :
+      // 48 h sans travail dur du mouvement — le tirage de ce jour saute.
+      return null;
+    }
+    if (x != null &&
         _easyDay(role) &&
         x.kind == SetKind.work &&
         x.isResistance &&
@@ -3265,6 +3373,36 @@ final class Prescriber {
         ..reasons.add(_note(CoachNotes.easyBeforeTest, 0.6));
     }
     return x;
+  }
+
+  /// Vrai si la séance [day] de la semaine [week] précède de moins de 48 h
+  /// un test de tirage placé à la première séance de la semaine suivante.
+  bool _eveOfTest(int day, int week) {
+    if (week + 1 >= _shape.weeks.length) {
+      return false;
+    }
+    final next = _shape.weeks[week + 1];
+    if (!_blockTests(next)) {
+      return false;
+    }
+    var first = 0;
+    for (var d = 1; d < a.dayCount; d++) {
+      if (_dayOffset(d) < _dayOffset(first)) {
+        first = d;
+      }
+    }
+    if (_dayOffset(first) + 7 - _dayOffset(day) > 1) {
+      return false;
+    }
+    return skeleton.days[first].slots.any(
+      (o) =>
+          (o.method == Method.repsTop ||
+              o.method == Method.liftHeavy ||
+              o.method == Method.repsStrength ||
+              o.method == Method.beginnerMain) &&
+          a.catalog.find(o.exerciseId)?.pattern ==
+              MovementPattern.tirageVertical,
+    );
   }
 
   /// Dosage ordinaire de l'emplacement [s] selon sa méthode.
@@ -3376,16 +3514,20 @@ final class Prescriber {
           ..stress = DayStress.heavy
           // Valeur négative : l'essai strict suit dans la même séance (une
           // seule consigne).
-          ..reasons.add(_note(CoachNotes.negativeGate, attempt ? -10 : 10));
+          ;
     gate.test = const TestSpec(
       kind: TestKind.maxHold,
       targetRir: 1,
       attempts: 2,
     );
     if (attempt) {
+      // L'essai strict d'abord, frais ; la descente chronométrée ensuite,
+      // seulement si la traction n'est pas passée (elle mesure alors le
+      // progrès sans coûter la répétition visée).
       final goal = a.goalOn(Ids.pull, GoalMetric.maxReps)?.targetValue;
       gate.reasons.add(_note(CoachNotes.strictAttempt, goal ?? 1));
     }
+    gate.reasons.add(_note(CoachNotes.negativeGate, attempt ? -10 : 10));
     return gate;
   }
 
@@ -4238,7 +4380,11 @@ final class Prescriber {
     if (peak <= 0) {
       return;
     }
-    final limit = peak * (ws.eventWeek ? 0.55 : 0.65);
+    // Affûtage : −45 % au moins (Bosquet 2007 : optimum −41 à −60 %,
+    // intensité et fréquence gardées) ; allègement ordinaire : −35 %.
+    final limit =
+        peak *
+        (ws.eventWeek || ws.intent == WeekIntent.taper ? 0.55 : 0.65);
     var guard = 0;
     while (guard < 80) {
       guard++;
@@ -4708,7 +4854,19 @@ final class Prescriber {
           if (ws.intent == WeekIntent.taper && target != null && left != null) {
             x.reasons.add(
               reason(ReasonCodes.planTaper, <String, Object?>{
-                'volumeFactor': _round2(ws.volume),
+                // Part réelle des séries dures de la semaine de pointe
+                // (la note dit ce que les tableaux montrent).
+                'volumeFactor': () {
+                  var peak = 0.0;
+                  for (final t in _history) {
+                    if (t.hard > peak) {
+                      peak = t.hard;
+                    }
+                  }
+                  return peak > 0 && trace.hard > 0
+                      ? _round2((trace.hard / peak * 20).round() / 20)
+                      : _round2(ws.volume);
+                }(),
                 'daysToEvent': left * 7,
               }),
             );
@@ -4779,6 +4937,44 @@ List<Reason> blockReasonsOf(Athlete a, Skeleton skeleton) {
     ReasonCodes.planCoachNote,
     <String, Object?>{'note': code, 'value': value},
   );
+  // Objectif de répétitions au-dessus du rythme habituel (R4-G8 : environ
+  // +15 % en 12 semaines chez un pratiquant entraîné) : on le dit, avec
+  // une fourchette probable — l'objectif reste visé, mais un résultat
+  // en dessous n'est pas un échec du plan.
+  if (a.level >= 1) {
+    for (final g in profile.goals) {
+      final id = g.exerciseId;
+      final wanted = g.targetValue;
+      final deadline = g.targetDate;
+      if (id == null ||
+          wanted == null ||
+          deadline == null ||
+          g.metric != GoalMetric.maxReps) {
+        continue;
+      }
+      final own = a.reps[id] ?? 0;
+      final weeks = a.start.daysUntil(deadline) / 7;
+      if (own < 4 || weeks < 4 || wanted <= own) {
+        continue;
+      }
+      final rate = (wanted / own - 1) / weeks;
+      if (rate <= (a.level >= 2 ? 0.015 : 0.02)) {
+        continue;
+      }
+      var low = (own * (1 + 0.15 * weeks / 12)).round();
+      if (low <= own) {
+        low = own + 1;
+      }
+      var high = (own + 0.7 * (wanted - own)).round();
+      if (high <= low) {
+        high = low + 1;
+      }
+      if (high >= wanted) {
+        continue;
+      }
+      out.add(note(CoachNotes.ambitious, low * 1000.0 + high));
+    }
+  }
   final loaded = skeleton.days.any(
     (d) => d.slots.any(
       (s) =>
@@ -4915,7 +5111,9 @@ List<Reason> blockReasonsOf(Athlete a, Skeleton skeleton) {
   if (profile.bodyWeightGoal == BodyWeightGoal.lose) {
     // Perte de poids : le renforcement garde le muscle, la dépense vient
     // surtout de la marche (CALIBRAGE_CP1, A-21).
-    out.add(note(CoachNotes.walking, 30));
+    out
+      ..add(note(CoachNotes.walking, 30))
+      ..add(note(CoachNotes.tracking, a.dayCount.toDouble()));
   }
   // R5-P23 : règle de douleur — continuer jusqu'à 3 sur 10, régresser à 4
   // ou 5, arrêter à 6.
