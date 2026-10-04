@@ -3,6 +3,8 @@ library;
 
 import 'package:kalis_core/kalis_core.dart';
 
+import 'coach.dart' show blockCoached;
+
 /// Bloc obtenu en appliquant [proposal] à [block].
 ///
 /// - Une restructuration porte son bloc résultant : il est rendu tel quel.
@@ -41,9 +43,9 @@ ProgramBlock applyProposal(ProgramBlock block, Proposal proposal) {
     return block;
   }
   var touched = false;
-  // Bloc au contrat 0.4.0 (intention de bloc) : tout champ est gardé ; un
+  // Bloc au contrat 0.4.0 (`blockCoached`) : tout champ est gardé ; un
   // bloc de 0.1 est reconstruit comme en 0.2.0 (à l'octet près).
-  final coached = block.pass1.intent != null;
+  final coached = blockCoached(block);
   final weeks = <WeekPrescription>[];
   for (final week in block.pass2.weeks) {
     final days = <DayPrescription>[];

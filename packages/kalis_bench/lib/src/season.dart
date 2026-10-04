@@ -84,8 +84,9 @@ enum SeasonScenario {
   final String label;
 }
 
-/// Semaines jusqu'à l'échéance du profil brut [json] (échéance principale,
-/// sinon le plus lointain des objectifs datés), ou `null`.
+/// Semaines jusqu'à l'échéance du profil brut [json] : la plus proche des
+/// échéances principales, sinon la plus proche des autres échéances ; sans
+/// échéance, le plus lointain des objectifs datés ; ou `null`.
 int? seasonTargetWeeks(Map<String, Object?> json) {
   final events = json['events'];
   int? best;
@@ -181,7 +182,11 @@ Map<String, Object?> seasonProfileJson(
         continue;
       }
       final copy = Map<String, Object?>.of(g);
-      if (!eventMoved && copy['weeksOut'] == target) {
+      // Échéance avancée : tout objectif daté du même jour avance avec
+      // elle (comme `shiftTargetDate` pour le profil des moteurs) ;
+      // deuxième échéance : un objectif n'est doublé que sans échéance.
+      if (copy['weeksOut'] == target &&
+          (scenario == SeasonScenario.earlier || !eventMoved)) {
         if (scenario == SeasonScenario.earlier) {
           copy['weeksOut'] = target - 2;
           goals.add(copy);
@@ -403,7 +408,10 @@ int undoneOf(SimRun run, Set<String> priority) {
   for (var k = 1; k < run.blocks.length; k++) {
     final after = run.blocks[k];
     final phase = after.pass1.intent?.phase;
-    if (phase == SeasonPhaseKind.transition) {
+    final weeks = after.pass2.weeks;
+    if (phase == SeasonPhaseKind.transition ||
+        (weeks.isNotEmpty &&
+            weeks.first.intent == WeekIntent.transition)) {
       continue;
     }
     final avoided = <String>{};
@@ -488,7 +496,7 @@ Map<String, Object?> _stat(List<double> values) {
       ss += (v - s.mean) * (v - s.mean);
     }
     sd = ss / (values.length - 1);
-    // Racine par Newton (Dart pur, sans `dart:math` côté données).
+    // Racine carrée par la méthode de Newton.
     var x = sd <= 0 ? 0.0 : sd;
     for (var i = 0; i < 30 && x > 0; i++) {
       x = 0.5 * (x + sd / x);

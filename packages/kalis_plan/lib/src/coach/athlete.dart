@@ -94,11 +94,6 @@ const Set<TrainingDiscipline> coachStreetDisciplines = <TrainingDiscipline>{
   TrainingDiscipline.calisthenics,
 };
 
-/// Vrai si [profile] relève du chemin street de `kalis_plan` 0.2 : profil
-/// au schéma 3 rempli par le questionnaire 0.4 (expérience et ancienneté
-/// renseignées — sans elles le niveau n'est pas lisible et le chemin 0.1
-/// s'applique), discipline principale street (streetlifting, sets & reps,
-/// calisthénie), disciplines secondaires street, cardio ou mobilité.
 /// Séries observées au moins pour qu'une estimation du moteur d'évolution
 /// recale un repère (choix raisonné : deux semaines de séances sur le
 /// mouvement).
@@ -113,6 +108,11 @@ const double coachEstimateMaxError = 0.06;
 /// un pas de charge ou une répétition sur dix (choix raisonné).
 const double coachEstimateMargin = 0.025;
 
+/// Vrai si [profile] relève du chemin street de `kalis_plan` 0.2 : profil
+/// au schéma 3 rempli par le questionnaire 0.4 (expérience et ancienneté
+/// renseignées — sans elles le niveau n'est pas lisible et le chemin 0.1
+/// s'applique), discipline principale street (streetlifting, sets & reps,
+/// calisthénie), disciplines secondaires street, cardio ou mobilité.
 bool coachEligible(AthleteProfile profile) {
   if (!profile.isSchema3 ||
       profile.experience == null ||
@@ -183,6 +183,7 @@ final class Athlete {
     CivilDate start, {
     Set<String> extraExcluded = const <String>{},
     List<(BodyZone, int)> extraPains = const <(BodyZone, int)>[],
+    List<(BodyZone, int)> trendPains = const <(BodyZone, int)>[],
     Map<int, int> minutesOverride = const <int, int>{},
     List<ExerciseEstimate> estimates = const <ExerciseEstimate>[],
   }) {
@@ -366,14 +367,21 @@ final class Athlete {
       // que l'athlète a montré à l'entraînement (estimation du moteur
       // d'évolution sur assez de séries) : un seul test d'un mauvais jour
       // ne fait pas tomber tout le bloc (R3-P16 ; panel CX, boucle 1).
+      // (Répétitions et maintiens ; l'estimation doit être sûre et récente,
+      // quinze jours au plus avant le test. Un 1RM testé plus bas fait foi :
+      // une barre manquée se recale à la baisse.)
       int lowered(int measured, int? before, CapacityUnit unit) {
         if (before == null || measured >= before) {
           return measured;
         }
         for (final e in estimates) {
+          final seen = e.lastObservedOn;
           if (e.exerciseId == b.exerciseId &&
               e.unit == unit &&
               e.observations >= coachEstimateMinObservations &&
+              e.standardError <= coachEstimateMaxError * e.capacity &&
+              seen != null &&
+              seen.compareTo(day.addDays(-14)) >= 0 &&
               e.capacity > measured) {
             final shown = e.capacity.floor();
             return shown < before ? shown : before;
@@ -467,6 +475,7 @@ final class Athlete {
               !e.exerciseId.startsWith('sl-');
           if ((before == null && external > 0 && !partial) ||
               (before != null &&
+                  external > 0 &&
                   e.capacity < total * (1 - coachEstimateMargin))) {
             oneRm[e.exerciseId] = external;
             recordDay[e.exerciseId] = seen;
@@ -560,6 +569,18 @@ final class Athlete {
       );
     }
     for (final (zone, pain) in extraPains) {
+      limits.add(
+        CoachLimit(
+          zone: zone,
+          joint: zone.joint,
+          discomfort: pain,
+          recent: true,
+          since: null,
+          trend: false,
+        ),
+      );
+    }
+    for (final (zone, pain) in trendPains) {
       limits.add(
         CoachLimit(
           zone: zone,

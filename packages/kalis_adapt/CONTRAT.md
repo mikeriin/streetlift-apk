@@ -1052,5 +1052,5 @@ Une correction en 0.2.1 : `applyProposal` garde les champs du contrat 0.4.0 (int
 devient `apply(profil)` (par exemple une échéance avancée de deux semaines) ; si `replan` est vrai, le bloc
 en cours s'arrête à la fin de la semaine précédente et le bloc suivant est écrit par `nextBlock` sur le
 profil changé, avec le résumé d'adaptation du moment. `SimRun.changes` garde la semaine et le libellé de
-chaque changement. Sans changement, la simulation est identique à celle de 0.2.0 (mêmes séances, mêmes
-décisions). Utilisé par le mode saisons de `kalis_bench` 0.2.0.
+chaque changement. Sans changement, la simulation suit celle de 0.2.0 ; seuls diffèrent les blocs au contrat
+0.4.0 après une proposition appliquée (correction d'`applyProposal`). Utilisé par le mode saisons de `kalis_bench` 0.2.0.

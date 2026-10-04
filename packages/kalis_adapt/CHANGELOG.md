@@ -13,7 +13,7 @@ Lot CX du pipeline « Calibrage des programmes » (croisement avec `kalis_plan` 
 - **Changement de profil en cours de saison** (`simulation.dart`) : `simulate(changes: …)` applique un
   `ProfileChange` au début d'une semaine (échéance avancée, par exemple) ; s'il le demande, le bloc en
   cours s'arrête et le bloc suivant est écrit sur le profil changé. `SimRun.changes` garde la trace. Sans
-  `changes`, la simulation est identique à 0.2.0.
+  `changes`, la simulation suit 0.2.0 (aux blocs près que la correction d'`applyProposal` garde au contrat 0.4.0).
 
 ## 0.2.0
 

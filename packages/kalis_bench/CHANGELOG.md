@@ -2,8 +2,13 @@
 
 ## 0.2.0 — 04/10/2026 (lot CX)
 
-Saisons street complètes, couple `kalis_plan` 0.2.1 × `kalis_adapt` 0.2.1. Profils types, attentes de coach,
-critères de sécurité et grilles du panel **inchangés**.
+Saisons street complètes, couple `kalis_plan` 0.2.1 × `kalis_adapt` 0.2.1. Profils types, attentes de coach et
+grilles du panel **inchangés** ; un seul critère de sécurité précisé (ci-dessous).
+
+- **Critère `tendon_figures` précisé** : la tenue menton au-dessus de la barre (bras fléchis) n'entre plus dans
+  le budget des tenues bras tendus — le catalogue la range avec les figures statiques de tirage, mais elle ne
+  charge pas le coude en extension (R4-F10 vise les leviers bras tendus). Effet : les débutants dont le test
+  du chemin vers la traction est cette tenue ne sont plus signalés ; aucun seuil ne change.
 
 - **Mode saisons** (`lib/src/season.dart`, `lib/src/season_export.dart`) : chaque profil street sur toute
   sa saison (16 semaines au moins, jusqu'à l'échéance et une semaine après), sous les trois modèles de
