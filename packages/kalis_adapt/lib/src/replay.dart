@@ -5,6 +5,7 @@ import 'package:kalis_core/kalis_core.dart';
 import 'package:kalis_plan/kalis_plan.dart' show SlotKind;
 
 import 'book.dart';
+import 'coach.dart';
 import 'fatigue.dart';
 import 'filter.dart';
 import 'model.dart';
@@ -14,11 +15,33 @@ import 'params.dart';
 /// Lecture du bloc en cours : prescriptions par semaine, jour et
 /// emplacement, rôles des emplacements.
 final class BlockView {
-  /// Vue du bloc [block].
-  BlockView(this.block, this.params) {
+  /// Vue du bloc [block] pour le profil [profile]. [legacy] : le bloc est
+  /// lu comme par `kalis_adapt` 0.1, même s'il porte les champs de
+  /// `kalis_core` 0.4.0 (comparaison des deux versions).
+  BlockView(this.block, this.params, {this.profile, bool legacy = false})
+    : coached = !legacy && blockCoached(block) {
     for (final day in block.pass1.days) {
       for (final slot in day.slots) {
         _roles[slot.slotId] = slot.role;
+      }
+    }
+    final p = profile;
+    if (coached && p != null) {
+      for (final event in p.events ?? const <SeasonEvent>[]) {
+        if (event.priority == EventPriority.main) {
+          _eventDays.add(event.date.dayNumber);
+        }
+      }
+      _eventDays.sort();
+      for (final l in p.limitations) {
+        final since = l.since;
+        final recent =
+            since == ConstraintSince.under6Weeks ||
+            since == ConstraintSince.weeks6To12 ||
+            since == ConstraintSince.months3To12;
+        if (recent || l.discomfort >= 2) {
+          _fragile.add(l.zone);
+        }
       }
     }
   }
@@ -28,6 +51,66 @@ final class BlockView {
 
   /// Paramètres.
   final AdaptParams params;
+
+  /// Profil (échéances, antécédents), ou `null`.
+  final AthleteProfile? profile;
+
+  /// Mode coach : le bloc porte des champs de `kalis_core` 0.4.0 que le
+  /// moteur exécute. Faux : règle générale de 0.1, inchangée.
+  final bool coached;
+
+  final List<int> _eventDays = <int>[];
+  final Set<BodyZone> _fragile = <BodyZone>{};
+
+  /// Zones à antécédent récent (moins de 12 mois) ou à gêne déclarée d'au
+  /// moins 2 sur 10.
+  Set<BodyZone> get fragileZones => _fragile;
+
+  /// Jours entre [day] et la prochaine échéance principale du profil
+  /// ([day] compris), ou `null`.
+  int? daysToEvent(int day) {
+    for (final d in _eventDays) {
+      if (d >= day) {
+        return d - day;
+      }
+    }
+    return null;
+  }
+
+  /// Ce que la semaine [week] permet.
+  WeekPolicy policyOf(WeekPrescription? week) =>
+      WeekPolicy(coached ? week?.intent : null, week?.kind);
+
+  /// Lecture « coach » de la prescription [item] de la semaine
+  /// [weekIndex], au jour [day] ; `null` hors mode coach.
+  CoachSpec? coachOf(
+    ExerciseInfo info,
+    ExercisePrescription? item,
+    int? weekIndex,
+    int? day,
+  ) {
+    if (!coached || item == null || weekIndex == null) {
+      return null;
+    }
+    final p = profile;
+    final experience = p?.experience;
+    final days = day == null ? null : daysToEvent(day);
+    var fragile = false;
+    for (final zone in _fragile) {
+      if (info.zoneLevel(zone) >= 0.5) {
+        fragile = true;
+      }
+    }
+    return CoachSpec(
+      slotId: item.slotId,
+      item: item,
+      policy: policyOf(week(weekIndex)),
+      level: experience == null ? 1 : experience.index,
+      eventDays: days,
+      eventNear: days != null && days <= params.coachEventNearDays,
+      fragile: fragile,
+    );
+  }
 
   final Map<String, SlotRole> _roles = <String, SlotRole>{};
 
@@ -99,6 +182,8 @@ final class BlockView {
     ExercisePrescription? item,
     WeekKind? kind, {
     SetTarget? fallback,
+    int? weekIndex,
+    int? day,
   }) {
     final p = params;
     final hold = info.mode == CapacityMode.hold;
@@ -133,7 +218,9 @@ final class BlockView {
       lo = hold ? 10 : (info.mode == CapacityMode.loaded ? 6 : 5);
       hi = hold ? 30 : (info.mode == CapacityMode.loaded ? 10 : 15);
     }
-    final rir = flames == null ? 3.0 : rirOfFlames(flames);
+    final coach = coachOf(info, item, weekIndex, day);
+    final testRir = coach == null ? null : item?.test?.targetRir;
+    final rir = flames == null ? (testRir ?? 3.0) : rirOfFlames(flames);
     final role = item == null ? null : roleOf(item.slotId);
     final test = item != null && item.kind == SetKind.test;
     return SlotSpec(
@@ -153,6 +240,7 @@ final class BlockView {
               role == SlotRole.accessory),
       hasTarget: flames != null,
       test: test,
+      coach: coach,
     );
   }
 }
@@ -280,6 +368,7 @@ SetPlan? planOfTarget(SetTarget? target, {required bool hold}) {
     high: high,
     flames: flames,
     open: high > low,
+    role: target.role,
   );
 }
 
@@ -370,12 +459,20 @@ void replaySessions(
         continue;
       }
       final hold = info.mode == CapacityMode.hold;
-      final amount = hold ? set.seconds : set.reps;
+      // Lignes qui portent des champs de 0.4.0 (technique, parties, rôle,
+      // propreté) : lecture propre à la technique ; sinon lecture de 0.1.
+      final item = view.item(ref, set.slotId, set.exerciseId);
+      final reading = readLine(set, hold: hold, item: item);
+      if (reading != null && reading.skip) {
+        continue;
+      }
+      final amount = reading?.amount ?? (hold ? set.seconds : set.reps);
       if (amount == null) {
         continue;
       }
+      final loadKg = reading?.loadKg ?? set.externalLoadKg;
       if (info.mode == CapacityMode.loaded &&
-          info.totalLoad(set.externalLoadKg ?? 0, run.bodyWeightKg) <= 0) {
+          info.totalLoad(loadKg ?? 0, run.bodyWeightKg) <= 0) {
         // Charge totale nulle ou négative : la série ne dit rien.
         continue;
       }
@@ -384,10 +481,16 @@ void replaySessions(
       final key = '${set.slotId ?? ''}|${set.exerciseId}|${set.exerciseOrder}';
       if (key != openKey) {
         openKey = key;
-        final item = view.item(ref, set.slotId, set.exerciseId);
         run.begin(
           info,
-          view.specOf(info, item, kind, fallback: set.target),
+          view.specOf(
+            info,
+            item,
+            kind,
+            fallback: set.target,
+            weekIndex: kind == null ? null : ref?.weekIndex,
+            day: day,
+          ),
           key: key,
         );
       }
@@ -395,13 +498,17 @@ void replaySessions(
       if (!set.isRated) {
         digest.unrated++;
       }
+      final unclean = reading != null && reading.unclean;
       run.observe(
-        loadKg: set.externalLoadKg,
+        loadKg: loadKg,
         amount: amount,
-        flames: set.flames,
+        flames: unclean ? Flames.failure : set.flames,
         missed: !set.success,
         target: planOfTarget(set.target, hold: hold),
         test: set.kind == SetKind.test,
+        boundOnly: reading != null && reading.boundOnly,
+        quality: set.quality,
+        role: set.role,
       );
     }
     run.closeAll();

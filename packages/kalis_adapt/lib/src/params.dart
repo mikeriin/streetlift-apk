@@ -122,6 +122,43 @@ final class AdaptParams {
     this.repSeconds = 3,
     this.transitionSeconds = 45,
     this.referenceBodyWeightKg = 70,
+    this.coachRise = const <double>[0.10, 0.05, 0.05, 0.05],
+    this.coachCorridorDown = 0.05,
+    this.coachCorridorUp = 0.075,
+    this.coachWorstSetSlack = 1.5,
+    this.coachBreachRir = 1,
+    this.coachBreachCut = 0.025,
+    this.coachBreachCutMax = 0.05,
+    this.coachEasyGapRir = 2,
+    this.coachHistoryRiseFactor = 0.5,
+    this.coachHoldRise = const <double>[0.20, 0.15, 0.10, 0.10],
+    this.coachHoldRiseSlackSeconds = 1,
+    this.coachEventNearDays = 14,
+    this.coachEccentricEventDays = 10,
+    this.coachStopMinSets = 2,
+    this.coachPainRegress = 5,
+    this.coachPainStop = 6,
+    this.coachPainRegressSets = 0.6,
+    this.coachEasyStepShare = 0.05,
+    this.attemptOpenerShare = 0.93,
+    this.attemptOpenerProbability = 0.95,
+    this.attemptSecondProbability = 0.80,
+    this.attemptThirdProbability = 0.50,
+    this.attemptSecureProbability = 0.70,
+    this.attemptRecordProbability = 0.35,
+    this.attemptLowHealthShare = 0.02,
+    this.attemptRecentDays = 42,
+    this.skillSessions = 3,
+    this.skillDownSessions = 2,
+    this.skillDownShare = 0.5,
+    this.skillTenureWeeks = const <int>[2, 8, 18, 30],
+    this.skillPainMax = 3,
+    this.pacingFirstShare = 0.65,
+    this.pacingNextShare = 0.5,
+    this.pacingRestSeconds = 15,
+    this.toleranceMinWeeks = 3,
+    this.trainingSetMaxReps = 6,
+    this.trainingSetMaxRir = 3,
   });
 
   /// Réglage par défaut.
@@ -509,4 +546,141 @@ final class AdaptParams {
   /// Poids de corps de référence quand ni le profil ni la séance n'en
   /// donnent (il ne sert qu'à l'échelle interne des exercices lestés).
   final double referenceBodyWeightKg;
+
+  // -------------------------------------------------------------- mode coach
+
+  /// Hausse maximale d'une séance à la suivante du même emplacement, à
+  /// répétitions égales, par niveau (débutant → élite), en charge totale.
+  final List<double> coachRise;
+
+  /// Couloir sous la part du 1RM écrite par le bloc quand le RIR pilote
+  /// la charge (points de 1RM).
+  final double coachCorridorDown;
+
+  /// Couloir au-dessus de la part écrite par le bloc.
+  final double coachCorridorUp;
+
+  /// Marge admise, en répétitions en réserve, entre la cible et la série la
+  /// plus dure prévue (quantile prudent) ; jamais moins d'une demi-réserve.
+  final double coachWorstSetSlack;
+
+  /// Écart sous le plancher de réserve, en répétitions, qui compte comme
+  /// un plafond d'effort dépassé.
+  final double coachBreachRir;
+
+  /// Baisse de charge par répétition d'écart quand le plafond d'effort est
+  /// dépassé.
+  final double coachBreachCut;
+
+  /// Baisse de charge maximale d'une série à la suivante pour ce motif.
+  final double coachBreachCutMax;
+
+  /// Réserve de plus que la cible à partir de laquelle la série suivante
+  /// peut monter d'un cran.
+  final double coachEasyGapRir;
+
+  /// Facteur appliqué aux hausses sur une zone à antécédent récent.
+  final double coachHistoryRiseFactor;
+
+  /// Hausse maximale d'une tenue en bras tendus d'une séance à la suivante,
+  /// par niveau.
+  final List<double> coachHoldRise;
+
+  /// Tolérance de cette hausse, en secondes.
+  final int coachHoldRiseSlackSeconds;
+
+  /// Jours avant une échéance principale à partir desquels les décisions
+  /// sont prudentes.
+  final int coachEventNearDays;
+
+  /// Jours avant une échéance sous lesquels aucun excentrique accentué
+  /// n'est servi.
+  final int coachEccentricEventDays;
+
+  /// Séries faites avant qu'une règle d'arrêt puisse arrêter l'exercice,
+  /// quand la règle ne le dit pas.
+  final int coachStopMinSets;
+
+  /// Douleur à partir de laquelle un exercice à contrainte moyenne sur la
+  /// zone est allégé (moins de séries, une réserve de plus).
+  final int coachPainRegress;
+
+  /// Douleur à partir de laquelle un exercice à contrainte moyenne sur la
+  /// zone est écarté.
+  final int coachPainStop;
+
+  /// Part des séries gardée quand un exercice est allégé pour une douleur.
+  final double coachPainRegressSets;
+
+  /// Hausse maximale d'une série à la suivante quand la série a été notée
+  /// nettement plus facile que visé.
+  final double coachEasyStepShare;
+
+  // -------------------------------------------------------------- tentatives
+
+  /// Part du maximum estimé que l'ouverture ne dépasse pas.
+  final double attemptOpenerShare;
+
+  /// Probabilité de réussite minimale de l'ouverture.
+  final double attemptOpenerProbability;
+
+  /// Probabilité de réussite minimale de la deuxième tentative.
+  final double attemptSecondProbability;
+
+  /// Probabilité de réussite minimale de la troisième tentative (objectif
+  /// « plus gros total »).
+  final double attemptThirdProbability;
+
+  /// La même pour l'objectif « assurer un total ».
+  final double attemptSecureProbability;
+
+  /// La même pour l'objectif « record ».
+  final double attemptRecordProbability;
+
+  /// Part retirée au maximum estimé par palier de bilan bas.
+  final double attemptLowHealthShare;
+
+  /// Jours pendant lesquels une barre réussie à l'entraînement compte comme
+  /// « déjà faite » pour l'ouverture.
+  final int attemptRecentDays;
+
+  // ------------------------------------------------------------------ figures
+
+  /// Séances de suite où le critère d'une étape doit être tenu, quand
+  /// l'échelle ne le dit pas.
+  final int skillSessions;
+
+  /// Séances de suite sous le critère qui font proposer l'étape plus facile.
+  final int skillDownSessions;
+
+  /// Part du critère sous laquelle une séance compte comme manquée.
+  final double skillDownShare;
+
+  /// Semaines déjà passées à l'étape, par tranche déclarée au profil.
+  final List<int> skillTenureWeeks;
+
+  /// Douleur au-dessus de laquelle une étape ne monte pas.
+  final int skillPainMax;
+
+  // ------------------------------------------------- épreuves de répétitions
+
+  /// Part du maximum de la première série d'un poste.
+  final double pacingFirstShare;
+
+  /// Part de la série précédente des séries suivantes.
+  final double pacingNextShare;
+
+  /// Repos entre deux séries d'un poste, en secondes.
+  final int pacingRestSeconds;
+
+  // ---------------------------------------------------------------- tolérance
+
+  /// Semaines de données avant de rendre un volume toléré.
+  final int toleranceMinWeeks;
+
+  /// Répétitions au plus d'une série d'entraînement retenue comme repère.
+  final int trainingSetMaxReps;
+
+  /// Réserve au plus d'une série d'entraînement retenue comme repère.
+  final double trainingSetMaxRir;
 }

@@ -5,6 +5,8 @@ library;
 import 'package:kalis_core/kalis_core.dart';
 
 import 'book.dart';
+import 'coach.dart';
+import 'coach_advice.dart';
 import 'fatigue.dart';
 import 'filter.dart';
 import 'model.dart';
@@ -12,6 +14,7 @@ import 'numeric.dart';
 import 'params.dart';
 import 'replay.dart';
 import 'session.dart';
+import 'skills.dart';
 
 ExercisePrescription? _itemOf(SessionPlan session, String? slotId, String id) {
   if (slotId != null) {
@@ -47,6 +50,7 @@ SlotSpec _specOf(
   ExerciseInfo info,
   ExercisePrescription? sessionItem,
   String? slotId,
+  int day,
 ) {
   final ref = ProgramRef(
     blockId: session.blockId,
@@ -61,6 +65,8 @@ SlotSpec _specOf(
     info,
     blockItem != null && blockItem.slotId == slotId ? blockItem : sessionItem,
     kind,
+    weekIndex: session.weekIndex,
+    day: day,
   );
   final sets = sessionItem?.sets ?? base.sets;
   return SlotSpec(
@@ -73,6 +79,7 @@ SlotSpec _specOf(
     benchmarkOk: base.benchmarkOk,
     hasTarget: base.hasTarget,
     test: base.test,
+    coach: base.coach,
   );
 }
 
@@ -123,22 +130,27 @@ IntraSessionAdvice buildAdvice(
       continue;
     }
     final hold = info.mode == CapacityMode.hold;
-    final amount = hold ? set.seconds : set.reps;
+    final item = _itemOf(session, set.slotId, set.exerciseId);
+    final reading = readLine(set, hold: hold, item: item);
+    if (reading != null && reading.skip) {
+      continue;
+    }
+    final amount = reading?.amount ?? (hold ? set.seconds : set.reps);
     if (amount == null) {
       continue;
     }
+    final loadKg = reading?.loadKg ?? set.externalLoadKg;
     if (info.mode == CapacityMode.loaded &&
-        info.totalLoad(set.externalLoadKg ?? 0, run.bodyWeightKg) <= 0) {
+        info.totalLoad(loadKg ?? 0, run.bodyWeightKg) <= 0) {
       continue;
     }
     final key = '${set.slotId ?? ''}|${set.exerciseId}|${set.exerciseOrder}';
     if (key != openKey) {
       openKey = key;
-      final item = _itemOf(session, set.slotId, set.exerciseId);
       final slot = item?.slotId ?? set.slotId;
       final exercise = run.begin(
         info,
-        _specOf(view, session, info, item, slot),
+        _specOf(view, session, info, item, slot, day),
         key: key,
       );
       if (item != null && exercise.observed.isEmpty) {
@@ -153,13 +165,17 @@ IntraSessionAdvice buildAdvice(
     final target =
         planOfTarget(set.target, hold: hold) ??
         (index < exercise.plan.length ? exercise.plan[index] : null);
+    final unclean = reading != null && reading.unclean;
     run.observe(
-      loadKg: set.externalLoadKg,
+      loadKg: loadKg,
       amount: amount,
-      flames: set.flames,
+      flames: unclean ? Flames.failure : set.flames,
       missed: !set.success,
       target: target,
       test: set.kind == SetKind.test,
+      boundOnly: reading != null && reading.boundOnly,
+      quality: set.quality,
+      role: set.role,
     );
   }
 
@@ -228,8 +244,19 @@ IntraSessionAdvice buildAdvice(
       reasons: const <Reason>[],
     );
   }
-  final (next, action) = run.advise(exercise, index);
-  final reasons = <Reason>[];
+  final coached = exercise.spec.coach == null
+      ? null
+      : coachAdvise(
+          run,
+          exercise,
+          index,
+          wanted,
+          SkillBoard.of(ctx, view, state, replayed.digests, day),
+        );
+  final (next, action) = coached == null
+      ? run.advise(exercise, index)
+      : (coached.next, coached.action);
+  final reasons = <Reason>[...?coached?.reasons];
   final previousTarget = previous.target;
   final rated = previous.flames;
   if (previous.failed && previous.unplannedFail) {
@@ -322,6 +349,8 @@ IntraSessionAdvice buildAdvice(
     restSeconds: restNext,
     confidence: roundTo(clampDouble(1 - sd / (2 * p.calibrationSd), 0, 1), 3),
     reasons: reasons,
+    miniSetsLeft: coached?.miniSetsLeft,
+    stepExerciseId: coached?.stepExerciseId,
   );
 }
 
