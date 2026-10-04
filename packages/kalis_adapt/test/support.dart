@@ -820,7 +820,32 @@ List<String> checkCoachSession(
       final timed =
           blockKind == SetTechniqueKind.density ||
           blockKind == SetTechniqueKind.forTime;
-      if (!timed || item.technique != null) {
+      // Séries fractionnées (plage hors de portée) : des lignes plus
+      // courtes que le bas de la plage écrite, au plus le double des
+      // séries (trois au moins permises), pour un total qui ne dépasse le
+      // bas de la plage écrite que de moins d'une série.
+      final targets = item.setTargets ?? const <SetTarget>[];
+      final low = basis.repsLow;
+      var split =
+          low != null &&
+          basis.kind != SetKind.test &&
+          targets.length == item.sets &&
+          item.sets <= (2 * basis.sets < 3 ? 3 : 2 * basis.sets);
+      var total = 0;
+      var each = 0;
+      for (final t in targets) {
+        final reps = t.repsHigh;
+        if (reps == null || t.repsLow != reps || low == null || reps >= low) {
+          split = false;
+          break;
+        }
+        total += reps;
+        each = reps;
+      }
+      if (split && low != null && total >= basis.sets * low + each) {
+        split = false;
+      }
+      if ((!timed || item.technique != null) && !split) {
         out.add('$where : ${item.sets} séries pour ${basis.sets} écrites');
       }
     }

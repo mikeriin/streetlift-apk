@@ -170,6 +170,49 @@ final class ExerciseTrack {
   }
 }
 
+/// Alerte de surmenage (mode coach) : suite [form] des performances
+/// mesurées (jour, logarithme de la capacité du jour ; trois au plus) après
+/// la séance du jour [day] de performance [value], et part de la séance de
+/// référence tenue par les deux dernières quand l'alerte se déclenche —
+/// deux séances mesurées de suite nettement sous celle d'avant
+/// (`coachOverreachDrop`), les trois dans `coachOverreachSpanDays` jours —
+/// sinon `null`. La séance d'alerte devient la nouvelle référence.
+(List<(int, double)>, double?) formAfter(
+  List<(int, double)> form,
+  int day,
+  double value,
+  AdaptParams p,
+) {
+  final next = <(int, double)>[
+    for (final e in form)
+      if (e.$1 != day) e,
+    (day, value),
+  ];
+  while (next.length > 3) {
+    next.removeAt(0);
+  }
+  if (next.length == 3 && day - next[0].$1 <= p.coachOverreachSpanDays) {
+    final limit = next[0].$2 + ln(1 - p.coachOverreachDrop);
+    if (next[1].$2 <= limit && next[2].$2 <= limit) {
+      final best = next[1].$2 > next[2].$2 ? next[1].$2 : next[2].$2;
+      return (<(int, double)>[next[2]], exp(best - next[0].$2));
+    }
+  }
+  return (next, null);
+}
+
+/// Retient dans [track] la performance mesurée [value] de la séance du jour
+/// [day] et ouvre, à l'alerte de surmenage, une semaine à volume réduit
+/// (`ExerciseTrack.easeDay`) ; voir [formAfter].
+void noteForm(ExerciseTrack track, int day, double value, AdaptParams p) {
+  final (form, ratio) = formAfter(track.form, day, value, p);
+  track.form = form;
+  if (ratio != null) {
+    track.easeDay = day;
+    track.easeRatio = ratio;
+  }
+}
+
 /// État du modèle individuel après le rejeu du journal.
 final class ModelState {
   /// État neuf.
@@ -979,32 +1022,6 @@ final class SessionRun {
     }
   }
 
-  /// Alerte de surmenage (mode coach) : retient la performance mesurée de
-  /// la séance ; deux séances mesurées de suite nettement sous celle
-  /// d'avant ouvrent une semaine à volume réduit.
-  void _noteForm(ExerciseTrack track, double value, AdaptParams p) {
-    final form = <(int, double)>[
-      for (final e in track.form)
-        if (e.$1 != day) e,
-      (day, value),
-    ];
-    while (form.length > 3) {
-      form.removeAt(0);
-    }
-    if (form.length == 3 && day - form[0].$1 <= p.coachOverreachSpanDays) {
-      final limit = form[0].$2 + ln(1 - p.coachOverreachDrop);
-      if (form[1].$2 <= limit && form[2].$2 <= limit) {
-        track.easeDay = day;
-        final worst = form[1].$2 > form[2].$2 ? form[1].$2 : form[2].$2;
-        track.easeRatio = exp(worst - form[0].$2);
-        // La séance d'alerte devient la nouvelle référence.
-        track.form = <(int, double)>[form[2]];
-        return;
-      }
-    }
-    track.form = form;
-  }
-
   void _finalize(ExerciseRun run) {
     _pending.remove(run);
     if (identical(current, run)) {
@@ -1122,7 +1139,7 @@ final class SessionRun {
     if (coach != null) {
       noteCoachSession(track, run, coach, day, p, bodyWeightKg);
       if (run.measured || run.fails > 0) {
-        _noteForm(track, f.m[0] + f.m[3], p);
+        noteForm(track, day, f.m[0] + f.m[3], p);
       }
     }
     f.endSession();

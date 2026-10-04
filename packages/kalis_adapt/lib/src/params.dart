@@ -143,7 +143,7 @@ final class AdaptParams {
     this.coachOverreachDrop = 0.05,
     this.coachOverreachDays = 7,
     this.coachOverreachSpanDays = 21,
-    this.coachOverreachCut = 1 / 3,
+    this.coachOverreachCut = 0.4,
     this.coachLowDayRir = 3,
     this.coachBreakDays = 14,
     this.coachBreakSets = 0.8,
@@ -662,10 +662,12 @@ final class AdaptParams {
   final int coachTopProbeReps;
 
   /// Mode coach, alerte de surmenage : baisse relative de la performance
-  /// mesurée (deux séances mesurées de suite sous la séance de référence)
-  /// qui déclenche une semaine à volume réduit (Meeusen et al. 2013 : la
-  /// baisse de performance est le critère du surmenage ; variation
-  /// ordinaire d'un jour à l'autre de l'ordre de 2 à 4 %).
+  /// estimée (deux séances mesurées de suite sous la séance de référence)
+  /// qui déclenche une semaine à volume réduit. La baisse durable de
+  /// performance est le seul indicateur fiable du surmenage en
+  /// musculation (Grandou et al. 2020) ; aucun seuil n'est publié : celui-ci
+  /// est un choix du moteur, au-dessus de la variation test-retest médiane
+  /// d'un 1RM (4,2 %, Grgic et al. 2020), exigé deux séances de suite.
   final double coachOverreachDrop;
 
   /// Mode coach, alerte de surmenage : jours à volume réduit.
@@ -675,8 +677,10 @@ final class AdaptParams {
   /// trois séances mesurées comparées.
   final int coachOverreachSpanDays;
 
-  /// Mode coach, alerte de surmenage : part des lignes retirées (intensité
-  /// gardée ; Bosquet et al. 2007, Pritchard et al. 2015).
+  /// Mode coach, alerte de surmenage : part des lignes retirées, intensité
+  /// gardée (décharge d'environ 7 jours par la baisse du volume, Bell et
+  /// al. 2023 ; baisse de volume de 41 à 60 % à l'affûtage, Bosquet et al.
+  /// 2007).
   final double coachOverreachCut;
 
   /// Mode coach : réserve minimale des séries un jour de bilan nettement

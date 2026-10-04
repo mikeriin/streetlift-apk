@@ -209,3 +209,96 @@ Recherche ciblée (un sous-agent Opus, recherche web).
 - **Fréquence et volume.** Grgic et al. 2018 (Sports Med 48:1207–1220) ; Ralston et al. 2018 (Sports Med Open
   4:36) : à volume égal la fréquence compte peu. Aucune étude sur la pratique distribuée des tractions ni sur
   le passage de 6 à 9 tractions.
+
+## Boucle 2 — ce qui a changé
+
+- **Haut de plage à la réserve du bloc** : une série de plage sans part de test ne dépasse plus le maximum du
+  jour, fatigue prévue comprise, moins la réserve du bloc (sans descendre sous le bas de la plage tant qu'il
+  reste sûr).
+- **Maintiens trop faciles** : une durée écrite sous 40 % du maximum mesuré monte vers 50 % du maximum
+  (`coachHoldEasyShare`, `coachHoldUsefulShare`), par les paliers de hausse des tendons.
+
+Mesures (contrôle rapide, 2 graines) : écart d'effort A 0,99 / B 1,13 / C 1,81 (0.1 : 1,11 / 2,27 / 1,63) ;
+échecs non voulus 0,12 / 0,05 / 0,39 % ; jour J à 96,3 / 95,6 / 95,3 % du maximum du jour (0.1 : 90,9 / 89,2 /
+89,6) ; 0 manquement de sécurité réalisé sur les 17 profils street.
+
+## Passe 2 (39 couples sous 9 à la passe 1 ; · : note de la passe 1 gardée)
+
+| Profil | Force | Calisthénie | Hypertrophie | Santé |
+| --- | --- | --- | --- | --- |
+| street_01 | 9 | 9 · | 8 | 9 |
+| street_02 | 9 · | 9 · | 9 · | 9 · |
+| street_03 | 7 | 7,5 | 7,5 | 8 |
+| street_04 | 9 · | 9 · | 9 · | 9 · |
+| street_05 | 7,5 | 8 | 7 | 9 |
+| street_06 | 9 · | 9 · | 7 | 9 · |
+| street_07 | 9 · | 9 · | 9 · | 9 · |
+| street_08 | 4 | 8 | 8 | 9 · |
+| street_09 | 7 | 8 | 8 | 9 · |
+| street_10 | 9 | 7 | 8 | 8 |
+| street_11 | 9 | 8 | 9 | 9 |
+| street_12 | 9 | 9 · | 9 · | 9 · |
+| street_13 | 8 | 8 | 8 | 9 |
+| street_14 | 9 · | 8 | 8 | 9 · |
+| street_15 | 9 | 9 | 9 | 9 · |
+| street_16 | 9 · | 9 · | 9 · | 9 · |
+| street_17 | 9 · | 8 | 9 | 9 |
+
+Couples à 9 ou plus : 43 sur 68 (passe 1 : 29) ; minimum 4 (passe 1 : 6) ; moyenne 8,48 → **gain en nombre de
+couples à 9**, minimum en baisse. Sur les 39 couples rejugés, 25 montent et 5 baissent. Une partie du gain
+tient à l'incertitude du panel (un point) : l'export de street_08 n'a changé que de trois lignes entre les deux
+passes et sa note « force » passe de 8 à 4 (passe 0 : 9) — le relecteur plafonne la note pour le volume et la
+fréquence écrits sur les trois mouvements de compétition (programme écrit) et lit comme une régression le
+passage du record déclaré (28 tractions) au maximum mesuré (23 à 25) : le maximum réel de l'athlète simulé est
+de 26 du début à la fin.
+
+Corrections nécessaires de la passe 2, lues en entier : programme écrit pour l'essentiel (pompe hors de portée
+et échelle de poussée — street_03 ; progression de la figure jusqu'au critère et seuil d'ouverture —
+street_05 ; volume et fréquence de tirage, bloc 2 écrit sur des repères supposés — street_06, 08, 09 ; dips
+partiels surchargés introduits d'un coup — street_09 ; répartition des charges sur le poignet — street_10 ;
+réalisation non spécifique — street_11 ; matériel — street_14 ; repli de 15 minutes — street_17 ; négatives à
+dose fixe — street_01). À la portée du moteur : plage avec part de test servie au-dessus du maximum moins la
+réserve (street_13, trois écoles) ; pompe servie 1-1 quand le maximum est de 3 (street_03) ; absence d'alerte
+de surmenage (street_08, street_09) ; lecture du maximum réel dans l'export.
+
+## Boucle 3 — sources consultées
+
+Recherche ciblée (un sous-agent Opus, recherche web ; « résumé » : seul le résumé a pu être lu).
+
+- **Surmenage.** Grandou et al. 2020 (Sports Med 50:815–828, résumé) : en musculation, la baisse durable de
+  performance est le seul indicateur fiable ; aucun seuil en pourcentage n'est publié. Variation test-retest
+  d'un 1RM : coefficient de variation médian de 4,2 % (0,5 à 12,1 %), Grgic et al. 2020 (Sports Med Open
+  6:31, texte lu). Traction et dips lestés : plus petite variation utile de 3 à 4 % (Coyne et al. 2015, J Aust
+  Strength Cond 23(4):21–27, résumé). Aucune fiabilité publiée en écart test-retest pour les maxima de
+  répétitions au poids du corps. → **Décision** (choix du moteur, non validé par un essai) : alerte quand la
+  performance estimée par le modèle (lissée, donc moins bruitée qu'un test isolé) reste au moins 5 % sous
+  celle de la séance de référence sur deux séances mesurées de suite, mouvements principaux seulement.
+- **Décharge.** Bell et al. 2023 (consensus Delphi, Sports Med Open 9:87, texte lu) : l'intensité peut rester
+  élevée pendant que le volume baisse ; une décharge peut être prise dès que l'athlète est fatigué ; environ
+  7 jours. Bell et al. 2022 (Front Sports Act Living 4:1073223, résumé) : 5 à 7 jours, moins de séries et de
+  répétitions. Bosquet et al. 2007 (Med Sci Sports Exerc 39:1358–1365, résumé) : à l'affûtage, baisse du
+  volume de 41 à 60 % sans toucher à l'intensité ; Travis et al. 2020 (Sports 8:125, résumé) : preuves
+  insuffisantes en force. Aucun essai contrôlé sur une décharge déclenchée par la baisse de performance.
+  → **Décision** : 7 jours à 40 % de lignes en moins, intensité gardée (`coachOverreach*`).
+- **Séries fractionnées.** Jukic et al. 2021 (méta-analyse, Sports Med 51:1061–1086, résumé) : séries
+  fractionnées ou à repos redistribué équivalentes aux séries classiques pour la force (différence
+  standardisée −0,06) et l'hypertrophie (−0,03), inférieures pour l'endurance musculaire (−0,38). Robinson et
+  al. 2024 (Sports Med 54:2209–2231, résumé) : la proximité de l'échec ne change pas notablement la force.
+  Aucune étude sur des débutants limités à 1 à 5 répétitions au poids du corps : extrapolation. → **Décision**
+  : quand le bas de la plage ne laisse pas la réserve du bloc, des séries plus courtes et plus nombreuses (au
+  plus le double) gardent la réserve et approchent le travail écrit.
+- **Réserve estimée.** Halperin et al. 2022 (méta-analyse, Sports Med 52:377–390, résumé) : sous-estimation
+  moyenne d'environ une répétition, plus précise près de l'échec. Hughes et al. 2020 est rétracté : non
+  utilisé.
+
+## Boucle 3 — ce qui a changé
+
+- **Plage avec part de test** : la réserve du bloc borne aussi le haut d'une plage écrite avec une part de
+  test (street_13 : « 3 × 4 à 5 (67 %) » pour un maximum de 6, servi 4-4-4 au lieu de 5-4-4).
+- **Séries fractionnées effectives** : quand le bas de la plage ne laisse pas la réserve du bloc (semaines de
+  charge), le moteur sert des séries plus courtes et plus nombreuses — au plus le double, trois au moins
+  permises, aucune série ajoutée après un échec, sur une zone douloureuse ou un jour de bilan bas. Les
+  lignes ajoutées étaient jusque-là coupées au nombre de séries du bloc.
+- **Alerte de surmenage** : voir ci-dessus ; raisons `adapt.volume_down` et `adapt.fatigue_high`.
+- **Export des trajectoires** (`kalis_bench`) : sous chaque tableau, le maximum réel hors fatigue de
+  l'athlète simulé au départ et en fin de cycle (le record déclaré peut être plus haut).
