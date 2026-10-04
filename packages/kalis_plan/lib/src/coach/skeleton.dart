@@ -1712,7 +1712,14 @@ void _buildLifting(_Builder b, Set<int> runDays) {
   bool maintained(String id) => target != null && target != id;
 
   // Jour léger : le plus court.
-  final light = n >= 4 ? b.shortestDay : -1;
+  // (Le plus court des jours sans course ; à égalité, le plus tard.)
+  var shortest = days.first;
+  for (final d in days) {
+    if (a.days[d].minutes <= a.days[shortest].minutes) {
+      shortest = d;
+    }
+  }
+  final light = n >= 4 ? shortest : -1;
   final heavyDays = <int>[
     for (final d in days)
       if (d != light) d,

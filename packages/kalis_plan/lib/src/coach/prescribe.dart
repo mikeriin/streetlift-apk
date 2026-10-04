@@ -776,7 +776,7 @@ final class Prescriber {
     if (coachHighRisk(e)) {
       floor = 2;
     }
-    if (_level == 0 && floor < 2) {
+    if ((_level == 0 || a.cautious) && floor < 2) {
       floor = 2;
     }
     for (final l in a.limits) {
@@ -1007,6 +1007,11 @@ final class Prescriber {
     }
     final regained = pct * _regain;
     var p = regained > 1 && !over ? 1.0 : regained;
+    if (a.cautious && p > 0.85) {
+      // Mode prudent (questionnaire santé, moins de 18 ans, 65 ans et
+      // plus) : intensité modérée, 85 % au plus.
+      p = 0.85;
+    }
     // Mouvement lesté dont la charge visée tombe sous le poids du corps :
     // la série se fait au poids du corps, à sa vraie part du 1RM, avec
     // moins de répétitions (formule d'Epley) pour garder la réserve.
@@ -1017,20 +1022,18 @@ final class Prescriber {
         x.kind == SetKind.work &&
         !over) {
       // Hors préparation d'une épreuve de force : un 1RM lesté proche du
-      // poids du corps ne se travaille pas en pourcentage (la charge
-      // visée tomberait sous le poids du corps). Le lest part d'une part
-      // du lest du 1RM, réglée sur les répétitions — un quart à six
-      // répétitions, un tiers à cinq, la moitié à quatre, deux tiers à
-      // trois (choix raisonné, cohérent avec R2-P2 sur la charge totale)
-      // —, s'ajuste à la première séance sur la réserve prévue, puis
-      // progresse par le plus petit pas.
+      // poids du corps ne se travaille pas en pourcentage affiché (la
+      // charge visée tomberait sous le poids du corps).
+      // Le lest de départ est celui que la table R2-P2 donne pour les
+      // répétitions écrites plus la réserve (jamais une série plus dure
+      // que son étiquette) ; s'il tombe sous le plus petit pas, la série
+      // se règle à la première séance, poids du corps seul compris.
       final added = total - floor * total;
       final reps = x.repsHigh ?? 5;
-      final part = reps >= 6
-          ? 0.15
-          : (reps == 5 ? 0.25 : (reps == 4 ? 0.34 : (reps == 3 ? 0.5 : 0.67)));
-      final lest = _external(e, total, floor + added * part / total);
-      if (added > 0 && lest != null && lest > 0) {
+      final kept = (x.rir ?? 3).ceil();
+      final lest = _external(e, total, _pctAt(reps + kept));
+      final raw = total * _pctAt(reps + kept) - floor * total;
+      if (added > 0 && raw > 0 && lest != null && lest > 0) {
         x
           ..load = lest
           ..reasons.add(_note(CoachNotes.smallLoad, lest));
@@ -1759,6 +1762,28 @@ final class Prescriber {
     if (real < floor) {
       real = floor;
     }
+    if (kept == 1 && possible - 1 < floor - 0.25) {
+      // La réserve plancher n'existe pas à cette charge, même sur une
+      // seule répétition : la charge descend jusqu'à la part qui la
+      // laisse (R2-P2) — l'étiquette ne ment pas.
+      final total = _totalFor(x.e, x.slot?.referenceId);
+      final lower = _pctAt(1 + floor.ceil());
+      if (total != null && lower < pct) {
+        x
+          ..load = _external(x.e, total, lower)
+          ..share = lower
+          ..intensity = target.copyWith(value: _round3(lower))
+          ..reasons.removeWhere((r) => r.code == ReasonCodes.planPercentBased)
+          ..reasons.add(
+            reason(ReasonCodes.planPercentBased, <String, Object?>{
+              'pct': _round3(lower),
+            }),
+          );
+        if (x.percent != null) {
+          x.percent = _round3(lower);
+        }
+      }
+    }
     x
       ..repsLow = kept
       ..repsHigh = kept
@@ -2060,6 +2085,12 @@ final class Prescriber {
             ? weight / _pctAt(known)
             : weight * (1 + (known > 20 ? 20 : known) / 30);
         var pct = 0.77 + 0.015 * (stage > 4 ? 4 : stage);
+        // (Jamais plus lourd que ce que la table donne pour 5 répétitions
+        // plus la réserve écrite.)
+        final honest = _pctAt(5 + (x.rir ?? 3).ceil());
+        if (pct > honest) {
+          pct = honest;
+        }
         if (ws.light) {
           // Allègement : les séries tombent, la charge reste à 3 % près
           // (le retour à la charge du bloc reste sous +5 %).
@@ -3041,7 +3072,7 @@ final class Prescriber {
     } else if (total != null &&
         _basisOf(e) != LoadBasis.bodyweight &&
         _basisOf(e) != LoadBasis.unloaded) {
-      if (event && _level >= 1) {
+      if (event && _level >= 1 && !a.cautious) {
         // R3-P15 : trois tentatives — 91 %, 96 %, puis selon la deuxième.
         kind = TestKind.oneRm;
         x
@@ -3559,6 +3590,15 @@ final class Prescriber {
       case Method.repsTechnique:
         return _repsTechnique(s, ws, week, role);
       case Method.beginnerMain:
+        if (s.exerciseId == 'sw-traction-negative' ||
+            s.exerciseId == 'sw-dips-negatifs') {
+          // Repli sur un excentrique (ni élastique ni barre basse) : il
+          // se dose comme une descente freinée (plafond R5-P8), jamais
+          // en séries de 6 à 8 ; pas d'excentrique en surpoids.
+          return role == _DayRole.normal && !a.heavyImpactBanned
+              ? _beginnerNegative(s, ws, week, role)
+              : null;
+        }
         return role == _DayRole.primerNear
             ? null
             : _beginnerMain(s, ws, week, role);
@@ -3724,7 +3764,22 @@ final class Prescriber {
   }
 
   /// Vrai si la semaine [ws] porte des tests hors échéance (fin de bloc).
-  bool _blockTests(WeekSpec ws) => ws.testWeek && !ws.eventWeek;
+  bool _blockTests(WeekSpec ws) =>
+      ws.testWeek && !ws.eventWeek && !_eventPassed(ws);
+
+  /// Vrai si la semaine [ws] suit la semaine de l'échéance dans le bloc :
+  /// aucun test dans les jours qui suivent une épreuve.
+  bool _eventPassed(WeekSpec ws) {
+    for (final w in _shape.weeks) {
+      if (identical(w, ws)) {
+        return false;
+      }
+      if (w.eventWeek) {
+        return true;
+      }
+    }
+    return false;
+  }
 
   /// Vrai si l'emplacement principal [s] est testé la semaine [ws] : les
   /// mouvements de l'objectif d'abord ; en semaine d'allègement, deux tests
@@ -3877,7 +3932,7 @@ final class Prescriber {
                 m == Method.repsDensity) &&
             (a.reps[x.e.id] ?? 0) > 0 &&
             _entered.add(x.e.id)) {
-          x.reasons.add(_note(CoachNotes.entrySet, 3));
+          x.reasons.add(_note(CoachNotes.entrySet, a.gapWeeks >= 16 ? 4 : 3));
         }
       }
     }
@@ -5249,7 +5304,7 @@ List<Reason> blockReasonsOf(Athlete a, Skeleton skeleton) {
       reason(ReasonCodes.planReturnFromGap, <String, Object?>{'gap': gap.code}),
     );
     if (a.gapWeeks >= 4) {
-      out.add(note(CoachNotes.reentryTest, 3));
+      out.add(note(CoachNotes.reentryTest, a.gapWeeks >= 16 ? 4 : 3));
     }
   }
   final sleep = profile.sleep;
