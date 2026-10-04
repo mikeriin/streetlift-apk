@@ -1126,6 +1126,9 @@ List<SetPlan>? _directPlans(
   final follows = share != null && c.policy.build && !c.light && !c.eventNear;
   final mark = track.slotMarks[c.slotId];
   final tendon = tendonLoaded(info);
+  // Exercice assisté (élastique) : la progression passe par l'assistance,
+  // que le moteur ne règle pas — la plage du bloc est gardée.
+  final assisted = info.exercise.loadType == LoadType.band;
   var tendonCapped = false;
   final out = <SetPlan>[];
   for (var i = 0; i < sets; i++) {
@@ -1145,6 +1148,7 @@ List<SetPlan>? _directPlans(
       wanted = fromTest < 1 ? 1 : fromTest;
     } else if (!hold &&
         share == null &&
+        !assisted &&
         served == SetTechniqueKind.standard &&
         item.kind != SetKind.test &&
         c.policy.build &&
@@ -1199,16 +1203,18 @@ List<SetPlan>? _directPlans(
     if (target < 1) {
       target = 1;
     }
-    // Maintien : l'effort affiché est celui de la durée servie (part du
-    // maximum du jour), pas celui de la plage du bloc.
+    // Effort affiché : celui du bloc ; quand la quantité servie (part d'un
+    // test, plage du bloc, durée écrite) laisse nettement plus de réserve
+    // que la cible du bloc, l'effort attendu est affiché à sa place.
     var shown = flames;
-    if (hold) {
-      final cap = track.filter.capacityToday() * (1 - fatigue);
-      final reserve = cap <= 0 ? 0.0 : (1 - target / cap) / p.holdReserveShare;
-      shown = flamesOfRir(reserve < 0 ? 0.0 : (reserve > 5 ? 5.0 : reserve));
-      if (shown < flames) {
-        shown = flames;
-      }
+    final cap = track.filter.capacityToday() * (1 - fatigue);
+    final expected = hold
+        ? (cap <= 0 ? 0.0 : (1 - target / cap) / p.holdReserveShare)
+        : cap - target;
+    if (expected >= rir + 1) {
+      shown = flamesOfRir(
+        expected > 5 ? 5.0 : (expected * 2).floorToDouble() / 2,
+      );
     }
     if (high > low && target >= low && !follows) {
       // Plage du bloc : série au ressenti, sans dépasser ce qui est sûr.
@@ -1241,6 +1247,7 @@ List<SetPlan>? _directPlans(
   final probed = track.benchmarkDay;
   if (!hold &&
       share == null &&
+      !assisted &&
       served == SetTechniqueKind.standard &&
       item.kind != SetKind.test &&
       out.length >= 2 &&

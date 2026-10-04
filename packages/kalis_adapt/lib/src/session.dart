@@ -458,6 +458,32 @@ SessionPlan buildSessionPlan(
     }
   }
 
+  // 1 quater. Mode coach : pas de test un jour de bilan nettement bas
+  // (hors jour d'échéance) — le test est retiré, il se refera frais.
+  if (coached && health.level >= 2) {
+    var eventToday = false;
+    for (final event in ctx.profile.events ?? const <SeasonEvent>[]) {
+      if (event.date.dayNumber == day) {
+        eventToday = true;
+      }
+    }
+    if (!eventToday) {
+      for (final d in drafts) {
+        if (d.removed || d.item.kind != SetKind.test) {
+          continue;
+        }
+        d.removed = true;
+        adjustments.add(
+          SessionAdjustment(
+            kind: AdjustmentKind.exerciseRemoved,
+            exerciseId: d.item.exerciseId,
+            reasons: healthReasons,
+          ),
+        );
+      }
+    }
+  }
+
   // 2. Bilan nettement bas : une série de moins par exercice (les
   // mouvements principaux gardent au moins trois séries).
   if (health.level >= 2) {
@@ -571,6 +597,13 @@ SessionPlan buildSessionPlan(
           : 2 * rise;
       if (d.regress && exercise.rirEff < 5) {
         exercise.rirEff = exercise.rirEff + 1 > 5 ? 5 : exercise.rirEff + 1;
+      }
+      if (health.level >= 2 &&
+          item.kind != SetKind.test &&
+          exercise.rirEff < p.coachLowDayRir) {
+        // Bilan nettement bas : aucune série à moins de trois répétitions
+        // en réserve (règle du programme, R5-P14).
+        exercise.rirEff = p.coachLowDayRir;
       }
     }
     confidenceCount++;

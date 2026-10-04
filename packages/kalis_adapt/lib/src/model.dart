@@ -1309,10 +1309,6 @@ final class SessionRun {
       if (w < 0.999) {
         sd = sd / sqrt(w < 1e-3 ? 1e-3 : w);
       }
-      if (run.spec.coach != null && rir >= state.rater.ceiling(p) - 1) {
-        // Juste sous le plafond des notes : la note est en partie tronquée.
-        sd *= p.coachNearCeilingSd;
-      }
       final nObserved = reps + state.rater.trueRir(rir, p);
       // Atténuation des écarts aberrants (Huber) : au-delà du seuil, le
       // bruit est gonflé pour ramener l'innovation au seuil.
@@ -1464,9 +1460,6 @@ final class SessionRun {
       if (w < 0.999) {
         sd = sd / sqrt(w < 1e-3 ? 1e-3 : w);
       }
-      if (run.spec.coach != null && rir >= state.rater.ceiling(p) - 1) {
-        sd *= p.coachNearCeilingSd;
-      }
       final implied = _impliedCapacity(mode, done, state.rater.trueRir(rir, p));
       final e = ln(implied / keep) - (f.m[0] + f.m[3]);
       final s = sq(sd) + sq(f.loadSd(1));
@@ -1520,14 +1513,10 @@ final class SessionRun {
   /// l'exercice : cible atteinte et note d'une flamme (« 5 répétitions en
   /// réserve et plus », qui ne borne la capacité que par le bas), au moins
   /// [AdaptParams.adviceGapFlames] flammes sous la cible (D5).
-  /// Mode coach : note la réserve dite par [flames] et dit si elle se lit
-  /// comme une borne basse (au plafond de ce que la personne sait dire).
-  bool _censored(int flames) {
-    final said = rirOfFlames(flames);
-    final censored = said >= state.rater.ceiling(_p);
-    state.rater.noteSaid(said);
-    return censored;
-  }
+  /// Mode coach : vrai si la note [flames] se lit comme une borne basse
+  /// (loin de l'échec).
+  bool _censored(int flames) =>
+      rirOfFlames(flames) >= state.rater.ceiling(_p);
 
   void _noteEase(
     ExerciseRun run,
