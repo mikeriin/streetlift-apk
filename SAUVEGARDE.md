@@ -54,3 +54,10 @@ Corrections : repère relevé seulement après un test de l'exercice (tests de d
 [force, cali, hyper, santé | doc] : 01 [8,9,8,9|7] 02 [9,9,9,8|7] 03 [7,8,7,8|6] 04 [9,9,9,9|6] 05 [8,9,9,9|7] 06 [9,9,9,9|8] 07 [9,9,9,9|8] 08 [8,8,9,9|7] 09 [9,9,9,8|8] 10 [9,9,9,9|7] 11 [8,9,9,8|7] 12 [8,8,8,8|8] 13 [9,9,9,9|8] 14 [9,8,9,9|7] 15 [9,9,9,9|8] 16 [9.5,9,9,9.5|8] 17 [8,8,8,9|7]
 Panel : min 7, moyenne 8,68 ; relecture documentée : min 6, moyenne 7,29. Banc : 0 violation street.
 Notes : /home/claude/cp1/panel/p3.
+
+## Boucle 4 (04/10/2026 ≈ 03:35 UTC)
+Corrections : charge lestée sous le poids du corps calibrée à la réserve (1RM « réconcilié » retiré), séance facile à J−2 d'un test, répétition générale à une série par atelier, affûtage linéaire avant une échéance datée, petits records (< 6) en double progression, montée lente des reprises longues, compléments plafonnés, rampe du total de séries dures, étape suivante des figures en tentatives sous condition, intervalles de course à l'allure visée.
+Panel renoté pour 01, 02, 03, 05, 08, 09, 11, 12, 14, 17 (notes de la boucle 3 reprises pour les autres, export changé de moins de 10 %).
+[force, cali, hyper, santé | doc] : 01 [8,9,8,9|8] 02 [9,9,9,9|7] 03 [8,9,8,8|7] 04 [9,9,9,9|7] 05 [9,9,9,9|7] 06 [9,9,9,9|8] 07 [9,9,9,9|8] 08 [9,9,9,9|7] 09 [9,8,9,9|8] 10 [9,9,9,9|7] 11 [8,8,8,9|7] 12 [9,8,9,9|7] 13 [9,9,9,9|7] 14 [9,8,9,9|7] 15 [9,9,9,9|8] 16 [9.5,9,9,9.5|7] 17 [9,8,9,9|7]
+Panel : min 8, moyenne 8,84 ; relecture documentée : min 7, moyenne 7,29. Banc : 0 violation street, attentes tenues sauf street_12 c1.
+Notes : /home/claude/cp1/panel/p4.
