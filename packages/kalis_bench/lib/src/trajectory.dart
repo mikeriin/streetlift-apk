@@ -444,6 +444,26 @@ Trajectory simulateTrajectory(
         ? null
         : _r(cm.eventPerformance.mean),
   };
+  // Écart d'effort par exercice (mise au point) : séries, effort visé
+  // moyen, effort réel moyen.
+  final byExercise = <String, List<double>>{};
+  for (final s in run.sets) {
+    if (s.test || s.plannedFailure) {
+      continue;
+    }
+    final e = byExercise.putIfAbsent(s.exerciseId, () => <double>[0, 0, 0]);
+    e[0] += 1;
+    e[1] += s.wantRir;
+    e[2] += s.trueRir;
+  }
+  metrics['effortByExercise'] = <String, Object?>{
+    for (final e in byExercise.entries)
+      e.key: <Object?>[
+        e.value[0].round(),
+        _r(e.value[1] / e.value[0]),
+        _r(e.value[2] / e.value[0]),
+      ],
+  };
   metrics['verdicts'] = trajectoryVerdicts(metrics);
   return Trajectory(
     profile: bench,

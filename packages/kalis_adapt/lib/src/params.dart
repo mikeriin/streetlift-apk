@@ -127,6 +127,8 @@ final class AdaptParams {
     this.coachCorridorUp = 0.075,
     this.coachCorridorWiden = 0.025,
     this.coachCensorRir = 4,
+    this.coachHoldMaxShare = 0.8,
+    this.coachDirectGuardRir = 2,
     this.biasLearnRate = 0.25,
     this.biasLearnRir = 3,
     this.biasLearnMaxStep = 0.1,
@@ -579,6 +581,16 @@ final class AdaptParams {
   /// répétitions restantes se dégrade loin de l'échec (Zourdos et al.
   /// 2021 ; Halperin et al. 2022).
   final double coachCensorRir;
+
+  /// Mode coach : part du maximum du jour qu'un maintien d'entraînement
+  /// ne dépasse pas (les maintiens se travaillent sous le maximum, la
+  /// propreté d'abord : R4-F9).
+  final double coachHoldMaxShare;
+
+  /// Mode coach, exercice sans charge : réserve minimale (avec la marge de
+  /// prudence) sous laquelle les répétitions écrites par le bloc sont
+  /// réduites.
+  final double coachDirectGuardRir;
 
   /// Part de l'écart d'un test (rapporté à [biasLearnRir] répétitions)
   /// portée au biais de note appris.

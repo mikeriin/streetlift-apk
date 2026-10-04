@@ -76,7 +76,7 @@ String _techniqueLabel(String code) => switch (code) {
 String _causeLabel(String code) => switch (code) {
   'failure' || 'previous_failure' => 'après un échec non prévu',
   'pain' => 'zone douloureuse',
-  'health' => 'bilan du jour bas',
+  'health' || 'health_strong' || 'health_low' => 'bilan du jour bas',
   'cap' => 'hausse plafonnée d\'une séance à la suivante',
   'phase' => 'semaine où le programme se sert tel quel',
   'level' => 'niveau d\'expérience insuffisant pour cette technique',
@@ -98,8 +98,8 @@ String? adaptReasonText(Reason r, Catalog catalog) {
     case ReasonCodes.adaptLoadHeld:
       return 'charge non augmentée (${_causeLabel(_text(r, 'cause'))})';
     case ReasonCodes.adaptRirCap:
-      return 'allégé pour garder au moins ${_n(_num(r, 'rir') ?? 0, 1)} '
-          'répétition(s) en réserve';
+      return 'allégé pour garder la marge prévue (au moins '
+          '${_n(_num(r, 'rir') ?? 0, 1)} en réserve)';
     case ReasonCodes.adaptBackoffFromTopSet:
       return 'séries allégées calculées sur la série de tête réalisée '
           '(${_kg(_num(r, 'topLoadKg') ?? 0)}, '
@@ -109,13 +109,13 @@ String? adaptReasonText(Reason r, Catalog catalog) {
           'servie : ${_causeLabel(_text(r, 'cause'))} — séries classiques à '
           'la place';
     case ReasonCodes.adaptPhaseRespected:
-      return 'semaine de ${coachPhaseLabel(_text(r, 'phase'))} servie '
-          'telle que le programme l\'écrit';
+      return 'phase « ${coachPhaseLabel(_text(r, 'phase'))} » : séances '
+          'servies telles que le programme les écrit';
     case ReasonCodes.adaptTaperNoVolume:
       return 'affûtage : aucun volume ajouté, intensité gardée';
     case ReasonCodes.adaptEventNear:
-      return 'échéance dans ${(_num(r, 'days') ?? 0).round()} jours : '
-          'décisions prudentes, pas de hausse au-delà du programme';
+      return 'échéance proche : décisions prudentes, pas de hausse au-delà '
+          'du programme';
     case ReasonCodes.adaptAttemptOpener:
       return 'ouverture à ${_pct(_num(r, 'pct'))} du maximum estimé';
     case ReasonCodes.adaptAttemptNext:
@@ -152,7 +152,8 @@ String? adaptReasonText(Reason r, Catalog catalog) {
           '${_n(_num(r, 'value') ?? 0, 1)} '
           '(± ${_n(_num(r, 'standardError') ?? 0, 1)})';
     case ReasonCodes.adaptHealthLow:
-      return 'bilan du jour bas (${(_num(r, 'overall') ?? 0).round()}/5)';
+      final overall = (_num(r, 'overall') ?? 0).round();
+      return 'bilan du jour ${overall >= 3 ? 'moyen' : 'bas'} ($overall/5)';
     case ReasonCodes.adaptSleepLow:
       return 'nuit courte';
     case ReasonCodes.adaptTimeShort:
@@ -572,6 +573,7 @@ String coachTrajectoryMarkdown(
       );
     }
     final sessionNotes = <String, int>{};
+    final adjusted = <String, Set<String>>{};
     for (final s in sessions) {
       for (final r in s.plan.reasons) {
         final text = adaptReasonText(r, catalog);
@@ -585,13 +587,11 @@ String coachTrajectoryMarkdown(
             if (adaptReasonText(r, catalog) != null)
               adaptReasonText(r, catalog)!,
         ];
-        final exercise = a.exerciseId == null
-            ? ''
-            : ' — ${name(a.exerciseId!)}';
-        final text =
-            '${_adjustmentLabel(a.kind.code)}$exercise'
+        final key =
+            '${_adjustmentLabel(a.kind.code)}'
             '${causes.isEmpty ? '' : ' (${causes.join(', ')})'}';
-        sessionNotes[text] = (sessionNotes[text] ?? 0) + 1;
+        final id = a.exerciseId;
+        adjusted.putIfAbsent(key, () => <String>{}).add(id ?? '');
       }
       for (final it in s.plan.items) {
         for (final r in it.reasons) {
@@ -622,6 +622,19 @@ String coachTrajectoryMarkdown(
     }
     for (final e in sessionNotes.entries) {
       lines.add(e.value > 1 ? '${e.key} (× ${e.value})' : e.key);
+    }
+    for (final e in adjusted.entries) {
+      final ids = e.value.where((id) => id.isNotEmpty).toList();
+      final at = e.key.indexOf(' (');
+      final label = at < 0 ? e.key : e.key.substring(0, at);
+      final causes = at < 0 ? '' : e.key.substring(at);
+      lines.add(
+        ids.isEmpty
+            ? e.key
+            : (ids.length <= 2
+                  ? '$label — ${ids.map(name).join(', ')}$causes'
+                  : '$label sur ${ids.length} exercices$causes'),
+      );
     }
     for (final pr in proposalsOf[w] ?? const <ProposalRow>[]) {
       lines.add('proposition appliquée : ${_proposalText(pr.kind.code)}');
@@ -671,7 +684,7 @@ String coachTrajectoryMarkdown(
     b.writeln(
       '- **Semaine ${w + 1}'
       '${intent == null ? '' : ' (${coachPhaseLabel(intent.code)})'}** : '
-      '${lines.join(' ; ')}.',
+      '${lines.take(12).join(' ; ')}.',
     );
   }
 

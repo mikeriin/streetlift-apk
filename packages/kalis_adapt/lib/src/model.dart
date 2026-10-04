@@ -1378,8 +1378,7 @@ final class SessionRun {
         (failed || (flames != null && rirOfFlames(flames) <= 1))) {
       // Test de répétitions mené près de l'échec : l'écart à la prévision
       // corrige le biais de note appris (limite 4 de 0.1).
-      final shown =
-          amount + (failed ? p.failExtraReps : rirOfFlames(flames!));
+      final shown = amount + (failed ? p.failExtraReps : rirOfFlames(flames!));
       state.rater.learn(shown - f.capacityToday() * keep, p);
     }
     final done = amount < 1 ? 1 : amount;

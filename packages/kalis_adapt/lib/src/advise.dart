@@ -272,7 +272,13 @@ IntraSessionAdvice buildAdvice(
       reason(ReasonCodes.adaptNoRating, <String, Object?>{'sets': 1}),
     );
   } else if (previousTarget != null) {
-    final delta = rated - previousTarget.flames;
+    // Mode coach : deux notes au-delà du seuil « loin de l'échec » ne se
+    // comparent pas (ni plus dur, ni plus facile que prévu).
+    final far =
+        exercise.spec.coach != null &&
+        rirOfFlames(rated) >= p.coachCensorRir &&
+        rirOfFlames(previousTarget.flames) >= p.coachCensorRir;
+    final delta = far ? 0 : rated - previousTarget.flames;
     if (delta >= p.adviceGapFlames) {
       reasons.add(
         reason(ReasonCodes.adaptFlamesAboveTarget, <String, Object?>{

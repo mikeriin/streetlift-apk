@@ -1010,6 +1010,68 @@ BodyZone tendonZone(ExerciseInfo info) {
   return best;
 }
 
+/// Durée sûre d'un maintien aujourd'hui : une part du maximum du jour
+/// (`coachHoldMaxShare`), jamais plus que la dernière séance après un échec
+/// non prévu, une douleur ou un bilan bas, jamais plus que le dernier
+/// maintien après un échec dans la séance. La propreté arrête les séries
+/// (règle `stop_on_quality_drop`).
+int _holdSafe(SessionRun run, ExerciseRun ex, double fatigue) {
+  final p = run.ctx.params;
+  final track = ex.track!;
+  final cap = track.filter.capacityToday() * (1 - fatigue);
+  var target = (p.coachHoldMaxShare * cap + 0.5).floor();
+  if (!ex.spec.test &&
+      track.lastDay != null &&
+      (track.noUp || ex.painZones.isNotEmpty || run.noIncrease)) {
+    final top = track.lastTop < 1 ? 1 : track.lastTop;
+    if (target > top) {
+      target = top;
+    }
+  }
+  if (ex.fails > 0 && ex.observed.isNotEmpty) {
+    final done = ex.observed.last.amount;
+    final top = done < 1 ? 1 : done;
+    if (target > top) {
+      target = top;
+    }
+  }
+  return target < 1 ? 1 : target;
+}
+
+/// Répétitions sûres aujourd'hui pour un exercice sans charge : ce que le
+/// bloc écrit est servi tant qu'il reste, avec la marge de prudence, la
+/// réserve visée moins un point (au plus `coachDirectGuardRir`) ; mêmes
+/// garde-fous que la règle générale après un échec, une douleur ou un
+/// bilan bas.
+int _repsSafe(SessionRun run, ExerciseRun ex, double fatigue) {
+  final p = run.ctx.params;
+  final track = ex.track!;
+  var guard = ex.rirEff - p.coachBreachRir;
+  if (guard > p.coachDirectGuardRir) {
+    guard = p.coachDirectGuardRir;
+  }
+  if (guard < 0.5) {
+    guard = 0.5;
+  }
+  var target = (run.predictedAmount(ex, guard, fatigue) + 0.5).floor();
+  if (!ex.spec.test &&
+      track.lastDay != null &&
+      (track.noUp || ex.painZones.isNotEmpty || run.noIncrease)) {
+    final top = track.lastTop < 1 ? 1 : track.lastTop;
+    if (target > top) {
+      target = top;
+    }
+  }
+  if (ex.fails > 0 && ex.observed.isNotEmpty) {
+    final done = ex.observed.last.amount;
+    final top = done < 1 ? 1 : done;
+    if (target > top) {
+      target = top;
+    }
+  }
+  return target < 1 ? 1 : target;
+}
+
 List<SetPlan>? _directPlans(
   SessionRun run,
   ExerciseRun ex,
@@ -1036,12 +1098,29 @@ List<SetPlan>? _directPlans(
     final fatigue = plannedFatigue(i, rir, rest, p);
     // Ce que le modèle prévoit de sûr aujourd'hui (réserve gardée, marge de
     // prudence, garde-fous après échec, douleur ou bilan bas).
-    final safe = run.targetAmount(ex, fatigue);
+    final safe = hold
+        ? _holdSafe(run, ex, fatigue)
+        : _repsSafe(run, ex, fatigue);
     var wanted = high;
     if (follows && low == high) {
       // Part d'un test : elle suit le maximum mesuré, dans les deux sens.
       final fromTest = (share * track.filter.capacityToday() + 0.5).floor();
       wanted = fromTest < 1 ? 1 : fromTest;
+    } else if (!hold &&
+        share == null &&
+        served == SetTechniqueKind.standard &&
+        item.kind != SetKind.test &&
+        c.policy.build &&
+        !c.light &&
+        !c.eventNear) {
+      // Sans charge, les répétitions sont le seul réglage : quand la plage
+      // du bloc est devenue trop facile, elle s'étend comme en 0.1 (au
+      // plus le double), jusqu'à ce que la revue propose une variante plus
+      // dure.
+      final extended = run.targetAmount(ex, fatigue);
+      if (extended > wanted) {
+        wanted = extended;
+      }
     }
     var target = wanted < safe ? wanted : safe;
     if (tendon &&
@@ -1063,6 +1142,17 @@ List<SetPlan>? _directPlans(
     if (target < 1) {
       target = 1;
     }
+    // Maintien : l'effort affiché est celui de la durée servie (part du
+    // maximum du jour), pas celui de la plage du bloc.
+    var shown = flames;
+    if (hold) {
+      final cap = track.filter.capacityToday() * (1 - fatigue);
+      final reserve = cap <= 0 ? 0.0 : (1 - target / cap) / p.holdReserveShare;
+      shown = flamesOfRir(reserve < 0 ? 0.0 : (reserve > 5 ? 5.0 : reserve));
+      if (shown < flames) {
+        shown = flames;
+      }
+    }
     if (high > low && target >= low && !follows) {
       // Plage du bloc : série au ressenti, sans dépasser ce qui est sûr.
       out.add(
@@ -1070,7 +1160,7 @@ List<SetPlan>? _directPlans(
           loadKg: null,
           low: low,
           high: target,
-          flames: flames,
+          flames: shown,
           open: target > low,
           role: role,
         ),
@@ -1081,7 +1171,7 @@ List<SetPlan>? _directPlans(
           loadKg: null,
           low: target,
           high: target,
-          flames: flames,
+          flames: shown,
           role: role,
         ),
       );
