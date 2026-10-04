@@ -553,7 +553,11 @@ List<String> checkSession(
       continue;
     }
     if (top > reference + 0.011 && lastHadUnplannedFailure(log, info)) {
-      out.add('$where : hausse après un échec non prévu ($reference → $top)');
+      out.add(
+        '$where : hausse après un échec non prévu ($reference → $top) '
+        '${_lastLines(journal, info)} ${item.technique?.kind.code} '
+        '${item.reasons.map((r) => '${r.code}${r.params}').join(',')}',
+      );
     }
     final failedAt = lowestFailedLoad(log, info);
     if (failedAt != null && top > failedAt + 0.011) {
@@ -614,8 +618,7 @@ List<String> checkAdvice(
     if (item.slotId == advice.slotId || item.exerciseId == advice.exerciseId) {
       final kind = item.test?.kind;
       if ((item.kind == SetKind.test &&
-              (kind == TestKind.oneRm ||
-                  kind == TestKind.attemptSimulation)) ||
+              (kind == TestKind.oneRm || kind == TestKind.attemptSimulation)) ||
           (item.setTargets ?? const <SetTarget>[]).any(
             (t) => t.role == SetRole.attempt,
           )) {
@@ -915,4 +918,27 @@ String _trace(
     '→ ${advice.action.code} ${advice.reasons.map((r) => r.code).join(',')}]',
   );
   return b.toString();
+}
+
+/// Lignes brutes de la dernière séance du journal où l'exercice [info]
+/// apparaît (diagnostic d'un manquement).
+String _lastLines(TrainingLog log, ExerciseInfo info) {
+  for (final session in log.sessions.reversed) {
+    final lines = <String>[
+      for (final s in session.sets)
+        if (s.exerciseId == info.id)
+          '${s.reps ?? s.seconds}@${s.externalLoadKg} f${s.flames} '
+              '${s.success ? 'ok' : 'raté'} t${s.target?.flames}/'
+              '${s.target?.repsHigh}/${s.target?.loadKg} ${s.role?.code} '
+              '${s.technique?.code} ${s.kind.code} q${s.quality} '
+              'p${s.parts?.map((p) => '${p.reps}@${p.externalLoadKg}').join('+')}'
+              '${s.excluded ? ' exclu' : ''} ${s.slotId}',
+    ];
+    if (lines.isNotEmpty) {
+      return '[${session.date.iso} ${session.resume ? 'reprise ' : ''}'
+          '${session.programRef?.blockId}/${session.programRef?.weekIndex}/'
+          '${session.programRef?.dayIndex} : ${lines.join(' ; ')}]';
+    }
+  }
+  return '[]';
 }

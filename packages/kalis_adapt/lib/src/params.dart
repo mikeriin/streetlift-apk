@@ -126,7 +126,7 @@ final class AdaptParams {
     this.coachCorridorDown = 0.05,
     this.coachCorridorUp = 0.075,
     this.coachCorridorWiden = 0.025,
-    this.coachCensorRir = 3,
+    this.coachCensorRir = 2,
     this.coachCurveRir = 3,
     this.coachHoldMaxShare = 0.8,
     this.coachDirectGuardRir = 2,

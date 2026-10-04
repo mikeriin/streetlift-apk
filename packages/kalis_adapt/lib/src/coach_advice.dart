@@ -87,14 +87,15 @@ CoachAdvice? coachAdvise(
     return advice;
   }
   // (Un arrêt reste un arrêt ; la cible rendue avec lui tient les verrous.)
-  final held = CoachAdvice(
-      next: clamped,
-      action: advice.action == IntraSessionAction.stopExercise
-          ? IntraSessionAction.stopExercise
-          : IntraSessionAction.keep,
-    )
-    ..miniSetsLeft = advice.miniSetsLeft
-    ..stepExerciseId = advice.stepExerciseId;
+  final held =
+      CoachAdvice(
+          next: clamped,
+          action: advice.action == IntraSessionAction.stopExercise
+              ? IntraSessionAction.stopExercise
+              : IntraSessionAction.keep,
+        )
+        ..miniSetsLeft = advice.miniSetsLeft
+        ..stepExerciseId = advice.stepExerciseId;
   held.reasons.addAll(advice.reasons);
   return held;
 }
