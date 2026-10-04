@@ -1,0 +1,4 @@
+kalis_adapt=success
+kalis_bench=failure
+kalis_core=failure
+kalis_plan=failure
