@@ -68,3 +68,10 @@ Panel renoté : 01, 03, 04, 06, 10, 12, 14, 17 (4 écoles), 09 et 11 (force, cal
 [force, cali, hyper, santé | doc] : 01 [8,9,9,8|7] 02 [9,9,9,9|8] 03 [8,9,9,8|8] 04 [8,8,8,7.5|7] 05 [9,9,9,9|7] 06 [8,8,8,9|8] 07 [9,9,9,9|8] 08 [9,9,9,9|7] 09 [8,9,9,9|8] 10 [9,9,9,9|7] 11 [9,8,9,9|7] 12 [8,9,9,9|8] 13 [9,9,9,9|7] 14 [9,8,9,9|7] 15 [9,9,9,9|8] 16 [9.5,9,9,9.5|8] 17 [9,9,9,9|6]
 Panel : min 7,5, moyenne 8,79 ; relecture documentée : min 6, moyenne 7,41. Banc : 0 violation street, attentes tenues sauf street_12 c1.
 Notes : /home/claude/cp1/panel/p5.
+
+## Boucle 6 (04/10/2026)
+Corrections : reprise longue — semaine 1 à la moitié des séries dures puis hausses de 20 % au plus (plein volume en semaine 5), 3 RIR tout le premier bloc ; débutant — deux séries par exercice les deux premières semaines, descentes freinées en tête de séance, tenue menton à partir de la semaine 3, affûtage court (−30 %), essai strict à chaque test, note « plusieurs tractions depuis zéro » ; repos-pause réécrit (3 relances au plus, un seul mouvement par semaine, à partir de la 2e semaine du bloc) ; lest proche du poids du corps : échelle abaissée ; rappel lourd à J−4/J−6 avant un test daté de 1RM ; rebonds en dose fixe ; repère affiché sur le bas de la plage.
+Panel renoté : 01, 03, 04, 06 (4 écoles) ; 09, 11, 12, 14 (force, calisthénie) ; relecture documentée : 17 profils.
+[force, cali, hyper, santé | doc] : 01 [9,9,8,9|8] 02 [9,9,9,9|8] 03 [9,9,8,9|7] 04 [8,8,8,8|7] 05 [9,9,9,9|6] 06 [9,8,9,9|7] 07 [9,9,9,9|8] 08 [9,9,9,9|7] 09 [9,9,9,9|7] 10 [9,9,9,9|6] 11 [9,9,9,9|6] 12 [8,9,9,9|7] 13 [9,9,9,9|7] 14 [9,9,9,9|7] 15 [9,9,9,9|7] 16 [9.5,9,9,9.5|7] 17 [9,9,9,9|7]
+Panel : min 8, moyenne 8,90 ; relecture documentée : min 6, moyenne 7,0 (05, 10, 11 : export inchangé, note 7 → 6 : dispersion du jury). Banc : 0 violation street, attentes tenues sauf street_12 c1.
+Notes : /home/claude/cp1/panel/p6.
