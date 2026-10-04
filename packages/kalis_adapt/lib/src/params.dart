@@ -129,6 +129,8 @@ final class AdaptParams {
     this.coachCensorRir = 2,
     this.coachCurveRir = 3,
     this.coachHoldMaxShare = 0.75,
+    this.coachHoldEasyShare = 0.4,
+    this.coachHoldUsefulShare = 0.5,
     this.coachAssistGapRir = 2,
     this.coachAssistStepShare = 0.75,
     this.coachAssistStepSd = 0.25,
@@ -602,6 +604,15 @@ final class AdaptParams {
   /// ne dépasse pas (les maintiens se travaillent sous le maximum, la
   /// propreté d'abord : R4-F9).
   final double coachHoldMaxShare;
+
+  /// Mode coach : part du maintien maximal mesuré sous laquelle une durée
+  /// écrite est tenue pour trop facile, et part vers laquelle elle monte
+  /// alors (R4-F2 : maintiens à 50–70 % du maximum ; aucune étude ne fixe
+  /// de seuil en part de la durée maximale — choix raisonné).
+  final double coachHoldEasyShare;
+
+  /// Voir [coachHoldEasyShare].
+  final double coachHoldUsefulShare;
 
   /// Mode coach, exercice assisté (élastique) : écart de réserve, au-delà
   /// de la cible, à partir duquel un cran d'assistance de moins est
