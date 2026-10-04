@@ -1,4 +1,4 @@
-# Contrat de kalis_bench 0.1.1
+# Contrat de kalis_bench 0.1.2
 
 Banc d'essai du calibrage des programmes (pipeline CP). Dart pur : ni Flutter, ni `dart:io` dans `lib/`, ni horloge, ni hasard hors des graines. Il **lit et appelle** `kalis_core`, `kalis_plan`, `kalis_adapt` par chemin, sans les modifier.
 
@@ -22,8 +22,9 @@ Banc d'essai du calibrage des programmes (pipeline CP). Dart pur : ni Flutter, n
 - `generateProgram(catalog, plan, profil)` → `BenchProgram` (blocs enchaînés jusqu'à l'horizon du profil : échéance, objectif daté, sinon 12 semaines ; 16 au plus).
 - `ProgramView` → semaines, séances, exercices avec les grandeurs mesurées.
 - `safetyFindings`, `qualityMeasures`, `evaluateChecks` → constats, notes, contrôles.
-- `simulateTrajectory` → trajectoire sous `kalis_adapt` (boucle complète), mesures et verdicts.
-- `programMarkdown`, `programJson`, `trajectoryMarkdown` → exports.
+- `simulateTrajectory` → trajectoire sous `kalis_adapt` (boucle complète), mesures et verdicts ; modèle de vérité A, B ou C (0.1.2).
+- `streetCampaignOf`, `streetCampaignMarkdown` → campagne street (0.1.2) : profils street × graines × modèles de vérité × politiques.
+- `programMarkdown`, `programJson`, `trajectoryMarkdown`, `coachTrajectoryMarkdown` (programmes au contrat 0.4.0, 0.1.2) → exports.
 - CLI : `dart run bin/kalis_bench_cli.dart --rapport <dossier>` (CI) ; `dart run kalis_bench:run --moteur plan|adapt|croisement --profils street|autres|tous --graine <n> --sortie <dossier>`.
 
 ## Invariants (testés)

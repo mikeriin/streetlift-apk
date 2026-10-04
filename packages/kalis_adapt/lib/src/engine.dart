@@ -5,6 +5,7 @@ import 'package:kalis_core/kalis_core.dart';
 import 'package:kalis_plan/kalis_plan.dart' show KalisPlan;
 
 import 'advise.dart';
+import 'event_day.dart';
 import 'model.dart';
 import 'params.dart';
 import 'replay.dart';
@@ -19,17 +20,27 @@ import 'version.dart';
 /// ne change aucun résultat (le dernier rejeu, repris tant que le
 /// catalogue, le profil, le bloc et le début du journal sont les mêmes
 /// objets).
-final class KalisAdapt implements AdaptEngine {
+final class KalisAdapt implements AdaptEngine, EventDayAdvisor {
   /// Moteur de paramètres [params] ; [plan] est le moteur statique appelé
   /// pour les restructurations (D5.1).
-  KalisAdapt({this.params = AdaptParams.standard, PlanEngine? plan})
-    : plan = plan ?? KalisPlan();
+  ///
+  /// [legacy] : les blocs qui portent les champs de `kalis_core` 0.4.0 sont
+  /// servis comme par `kalis_adapt` 0.1 (comparaison des deux versions) ;
+  /// par défaut, ils passent par le mode coach.
+  KalisAdapt({
+    this.params = AdaptParams.standard,
+    PlanEngine? plan,
+    this.legacy = false,
+  }) : plan = plan ?? KalisPlan();
 
   /// Paramètres.
   final AdaptParams params;
 
   /// Moteur statique.
   final PlanEngine plan;
+
+  /// Vrai : comportement de 0.1 pour tous les blocs.
+  final bool legacy;
 
   Catalog? _catalog;
   AthleteProfile? _profile;
@@ -105,7 +116,12 @@ final class KalisAdapt implements AdaptEngine {
       profile: input.profile,
       params: params,
     );
-    view = BlockView(input.block, params);
+    view = BlockView(
+      input.block,
+      params,
+      profile: input.profile,
+      legacy: legacy,
+    );
     final state = ModelState(params);
     final digests = <SessionDigest>[];
     replaySessions(context, view, state, digests, sessions);
@@ -146,6 +162,12 @@ final class KalisAdapt implements AdaptEngine {
   AdaptReview review(Catalog catalog, AdaptInput input) {
     final (context, view, replayed) = prepare(catalog, input);
     return buildReview(context, view, replayed, input, plan);
+  }
+
+  @override
+  EventDayPlan planEventDay(Catalog catalog, EventDayRequest request) {
+    final (context, view, replayed) = prepare(catalog, request.input);
+    return buildEventDay(context, view, replayed, request);
   }
 
   /// Estimations de capacité pour [input] (inspecteur, simulateur).

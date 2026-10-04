@@ -1,4 +1,4 @@
-# kalis_adapt 0.1.0 — validation
+# kalis_adapt 0.2.0 — validation
 
 Lecture des mesures de `MESURES.md` (campagne du simulateur), du rejeu du programme importé
 (`PROPRIETAIRE.md`) et des tests. Écrit à la main après lecture complète des résultats ; les tableaux de
@@ -227,3 +227,108 @@ utilisateurs (échecs doublés pour 0,05 à 0,15 d'écart au RIR) ; apprentissag
 (aucun gain) ; échelle individuelle de la fatigue de séance (aucun gain) ; `k` appris sur toutes les
 notes (dérive) ; pivot déplacé à chaque séance (écart au RIR +0,1 à +0,2) ; charge de référence abaissée
 après un échec ou une série sous la cible (+0,05 à +0,25). Détail : `CONTRAT.md`, § 6.
+
+## 9. Mode coach (0.2.0, lot CA1)
+
+Les § 1 à 8 lisent la campagne de 0.1.0 (programmes sans champ du contrat 0.4.0, servis comme en 0.1.0 :
+`MESURES.md` est régénéré par le moteur 0.2.0 et vérifié par `test/docs_test.dart`). Ce paragraphe lit ce
+qui a été mesuré du mode coach.
+
+### 9.1 Simulateur
+
+Trois modèles de vérité (`TruthKind`) : A, celui de 0.1 (courbe exponentielle, notes continues) ; B (courbe
+linéaire, notes entières plafonnées à 4 en réserve et bruitées loin de l'échec, confirmations paresseuses,
+récupération hyperbolique entre séries, réponse logarithmique à la dose, tendons à adaptation lente, bonus
+d'affûtage) ; C (courbe en puissance, forme masquée par la fatigue récente, biais de note variable d'un jour
+à l'autre, désentraînement dès 7 jours). B et C ont été écrits pour s'éloigner des hypothèses du moteur ; ils
+restent des modèles écrits par ce lot, pas des données. Exercices assistés : l'assistance est un cran
+abstrait (× 0,75 de capacité par cran, bruit de 12 %), que l'athlète simulé change quand le moteur le
+conseille.
+
+### 9.2 Campagne street
+
+`docs/CAMPAGNE_STREET.md` (généré par `kalis_bench`, contrôle complet) : 17 profils street, jusqu'à
+l'échéance (16 semaines au moins sans échéance), 100 graines par modèle de vérité, quatre politiques —
+`kalis_adapt` 0.2.0, `kalis_adapt` en comportement 0.1 sur les mêmes programmes, un coach simple à la note
+d'effort, l'oracle (qui connaît la vérité). Moyennes sur les profils :
+
+| Modèle | Politique | Écart d'effort | Séries ≥ 2 rép. plus dures | Échecs non voulus | Progression / sem. | Tentatives réussies | Jour J ÷ maximum du jour |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| A | 0.2.0 | 0,81 | 0,3 % | 0,20 % | 0,358 % | 79 % | 96,6 % |
+| A | 0.1 | 0,87 | 1,1 % | 0,22 % | 0,374 % | 100 % | 92,3 % |
+| A | coach simple | 2,61 | 1,7 % | 2,21 % | 0,315 % | 90 % | 91,7 % |
+| B | 0.2.0 | 0,97 | 0,4 % | 0,14 % | 0,341 % | 88 % | 95,5 % |
+| B | 0.1 | 1,98 | 0,5 % | 0,04 % | 0,334 % | 100 % | 89,8 % |
+| B | coach simple | 2,17 | 2,3 % | 1,88 % | 0,329 % | 92 % | 91,3 % |
+| C | 0.2.0 | 1,61 | 0,7 % | 0,55 % | 0,170 % | 94 % | 94,7 % |
+| C | 0.1 | 1,34 | 2,1 % | 0,58 % | 0,174 % | 100 % | 89,2 % |
+| C | coach simple | 4,84 | 3,4 % | 4,24 % | 0,141 % | 86 % | 91,7 % |
+
+Ce que cela dit :
+
+- **Exactitude** : l'écart entre l'effort affiché et l'effort réel est sous une répétition sous A et B (B :
+  deux fois plus juste que 0.1). Sous C, 0.2.0 est **moins juste que 0.1** (1,61 contre 1,34) : quand la forme
+  varie beaucoup d'un jour à l'autre, lire les notes loin de l'échec comme des bornes prive le moteur
+  d'information ; pire profil : `street_10` (figures), 4,76. La cible d'une répétition n'est pas tenue sous C.
+- **Sécurité** : moins de séries nettement plus dures que visé que 0.1 sous les trois modèles ; échecs non
+  voulus du même ordre (plus nombreux sous B : 0,14 % contre 0,04 %). Douleur : aucune hausse sur une zone
+  douloureuse, sauf `street_10` sous B (0,02 par simulation, soit 2 hausses en 100 simulations) — non
+  expliqué, à reprendre.
+- **Progression** : égale à 0.1 à 5 % près (un peu moins sous A et C, un peu plus sous B) ; sous C, les
+  profils de streetlifting perdent du maximum réel (désentraînement du modèle), avec 0.1 comme avec 0.2.0.
+- **Jour de l'échéance** : meilleure barre ou meilleure série à 95 à 97 % du maximum réel du jour, contre 89
+  à 92 % pour 0.1, le coach simple et l'oracle au programme égal. En contrepartie les tentatives réussissent
+  moins souvent (79 à 94 %) que celles de 0.1, qui ouvre et finit bas : une troisième barre « record » accepte
+  une chance sur deux (§ 11.6 du contrat).
+- **Hausses à schéma égal** : le repère « aucune hausse de plus de 10 % en plusieurs crans » n'est pas tenu au
+  sens de la mesure — 202, 187 et 139 hausses pour 1 700 simulations (A, B, C ; 0.1 : 311, 211, 316 ; oracle :
+  123, 265, 74), presque toutes sur les profils lestés (`street_07`, `09`, `11`, `12`). La mesure compte le
+  retour à la charge du programme après une séance allégée (bilan bas, décharge) ; l'invariant C1, lui, est
+  tenu sur tous les journaux.
+- Programme tel qu'il a évolué sous le moteur (trajectoire racontée, modèle B) : **0 manquement aux critères
+  de sécurité calculables** sur les 17 profils (`RAPPORT.md` du banc).
+
+### 9.3 Invariants et tests
+
+10 240 journaux aléatoires de 0.1 (I1 à I8, inchangés) et 10 240 journaux aux champs de 0.4.0 (C1 à C4, I2 à
+I8) ; 17 programmes street × 3 modèles de vérité en boucle complète ; programmes à techniques injectées ;
+règles du calibrage (`test/coach_rules_test.dart`) ; temps de calcul (machine de contrôle, pas un
+téléphone) : `MESURES.md` § 5 — décision de séance 0,04 ms en médiane (maximum 6,4 ms, cible 50 ms), conseil
+après une série 0,04 ms en médiane, 99ᵉ centile 0,10 ms, maximum 9,3 ms (cible 5 ms tenue en médiane, pas sur
+le maximum) ; mode coach : médianes sous les cibles sur 12 semaines d'un programme street
+(`test/coach_test.dart`).
+
+### 9.4 Panel et relecture documentée
+
+`docs/CALIBRAGE_CA1.md` : panel (4 écoles × 17 profils) 34 couples sur 68 à 9 ou plus, minimum 7, moyenne
+8,35 ; relecture documentée (sources du web seulement) de 5 à 7. **Cible « 9 partout » non atteinte.** Les
+corrections nécessaires du panel portent sur le programme écrit ; celles de la relecture documentée sur la
+prudence de l'estimation (maxima sous-estimés de 3 à 5 % en fin de cycle sous le modèle B) et sur des règles
+que le programme écrit en texte (échelle d'assistance).
+
+### 9.5 Relecture indépendante du code et du contrat (mode coach)
+
+Faite avant livraison par un relecteur automatique distinct (Opus), en lecture seule, sans exécution ;
+20 constats.
+
+| # | Constat | Suite |
+| --- | --- | --- |
+| 1 | Vagues : la charge montait d'une vague à l'autre après les garde-fous | corrigé : la vague la plus lourde est à la charge retenue par les garde-fous |
+| 2, 11 | Lignes retirées (douleur, alerte de surmenage) perdues quand la règle générale sert l'exercice ; nombre de séries du jour non réduit | corrigé : les lignes retenues valent pour la règle générale et le temps de séance |
+| 3 | Tenue repère hors de la borne de hausse des tendons, proposée un jour léger | corrigé |
+| 4 | Alerte de surmenage ignorée un jour de douleur | corrigé : les deux règles s'appliquent |
+| 5 | Séries fractionnées ajoutées en semaine servie telle quelle | corrigé : aucune série ajoutée |
+| 6 | Semaine de maintien rangée parmi les semaines de charge au contrat | contrat corrigé (§ 11.1) |
+| 7 | Barres réussies de plus de six semaines encore lues | corrigé (`recentHeavy`) |
+| 8 | « Répétitions écrites non atteintes » ne voit pas un manque sur une série de tête plus courte que les séries allégées | non corrigé ; limite 7 du § 11.12 |
+| 9 | Conseil d'entre-séries : réserve d'un jour de bilan bas et objectif des tentatives non repris | non corrigé ; limite 7 |
+| 10 | Profil sans niveau d'expérience servi comme intermédiaire | écrit au contrat (limite 6) |
+| 12 | Tests : l'alerte de surmenage n'est testée que par sa fonction pure ; C1 et C2 plus larges que les règles | noté ; `coach_rules_test.dart` couvre la réserve d'une plage, les séries fractionnées et le test d'un jour de bilan bas en boucle complète |
+| 13 | Paramètres absents du tableau | trois ajoutés (§ 11.11) ; reprise après coupure, hausse des exercices d'assistance : au tableau par leurs paramètres seulement |
+| 14 | Tentatives : 2 % par palier du bilan, non « par cause » | contrat corrigé (§ 11.6) |
+| 15 | Recherche des barres bornée à 400 crans | non corrigé : hors d'atteinte avec les grilles du catalogue (pas de 1,25 kg et plus) ; à borner autrement si une grille plus fine arrive |
+| 16 | Haut du couloir constaté après la mise à jour du filtre | non corrigé (effet : élargissement du couloir plus rare, donc plus prudent) |
+| 17 | Série repère et série de tête repère : verrous différents | non corrigé ; limite 7 |
+| 18 | Séries fractionnées : réserve calculée sur la première série | écrit au contrat (§ 11.5) |
+| 19 | Intensité rendue d'une variante à charge d'entrée réduite | non corrigé ; limite 7 |
+| 20 | Tentative rendue avec une réserve ; repères chargés comparés sans égard aux répétitions | corrigé |

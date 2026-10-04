@@ -7,6 +7,7 @@
 /// - [safetyFindings], [qualityMeasures], [evaluateChecks] : critères
 ///   calculables et attentes de coach ;
 /// - [simulateTrajectory] : trajectoire sous `kalis_adapt` ;
+/// - [seasonCampaignOf], [seasonMarkdown] : saisons croisées (0.2.0) ;
 /// - [programMarkdown], [trajectoryMarkdown] : exports lisibles ;
 /// - [evaluateProfile], [renderReport] : rapport.
 ///
@@ -16,6 +17,7 @@ library;
 
 export 'src/adapter.dart';
 export 'src/analysis.dart';
+export 'src/campaign.dart';
 export 'src/expectations.dart';
 export 'src/export.dart';
 export 'src/profile.dart';
@@ -23,5 +25,8 @@ export 'src/program.dart';
 export 'src/quality.dart';
 export 'src/report.dart';
 export 'src/safety.dart';
+export 'src/season.dart';
+export 'src/season_export.dart';
 export 'src/trajectory.dart';
+export 'src/trajectory_export.dart';
 export 'src/version.dart';
