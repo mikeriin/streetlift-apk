@@ -1872,9 +1872,10 @@ final class Prescriber {
     if (factor < 1 && sets > 2) {
       sets = _round(sets * factor);
     }
+    // Jamais une série isolée d'assistance : deux, ou rien.
     x
-      ..sets = sets < 1 ? 1 : sets
-      ..minSets = 1;
+      ..sets = sets < 2 ? 2 : sets
+      ..minSets = 2;
     final stage = _stage(ws);
     if (e.unit == MeasureUnit.seconds) {
       final known = a.holds[e.id] ?? 0;
@@ -3407,29 +3408,19 @@ final class Prescriber {
       if (pick == null || home == null) {
         break;
       }
-      if (pick.sets > 1) {
-        pick.sets--;
-      } else {
-        home.remove(pick);
-      }
-    }
-  }
-
-  /// Retire les miettes : un travail d'assistance réduit à une seule série
-  /// par les garde-fous ne sert plus à rien et encombre la séance.
-  void _tidy(List<List<_Draft>> days) {
-    for (final items in days) {
-      items.removeWhere(
-        (x) =>
-            x.sets <= 1 &&
-            x.kind == SetKind.work &&
-            x.isResistance &&
-            !x.fixed &&
-            !x.keep &&
-            x.minSets <= 1 &&
-            items.length > 2 &&
-            !Method.essential(x.method, support: x.support),
+      final essential = Method.essential(
+        pick.method,
+        support: pick.support,
+        keep: pick.keep,
       );
+      if (pick.sets > 2 || (essential && pick.sets > 1)) {
+        pick.sets--;
+      } else if (home.length > 1) {
+        home.remove(pick);
+      } else {
+        pick.sets = 1;
+        break;
+      }
     }
   }
 
@@ -3789,7 +3780,6 @@ final class Prescriber {
       _floorEvent(days, ws);
       _fitVolume(days, ws);
       _fitTaper(days, ws);
-      _tidy(days);
       days.forEach(_equalize);
       final trace = _WeekTrace(ws.light);
       _fitLoads(days, trace);
