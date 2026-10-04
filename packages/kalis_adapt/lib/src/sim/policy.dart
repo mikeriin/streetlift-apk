@@ -159,6 +159,18 @@ abstract class SimPolicy {
   SimEstimate? estimate(SessionContext c, String exerciseId, double n);
 }
 
+/// Politique qui sait lire et écrire les champs de `kalis_core` 0.4.0
+/// (techniques, rôles, parties, propreté, tentatives) : le simulateur
+/// exécute alors chaque technique et journalise ces champs.
+abstract class CoachAwarePolicy implements SimPolicy {
+  /// Vrai si le journal doit porter les champs de 0.4.0.
+  bool get rich;
+
+  /// Conseils d'entre-séries qui ont changé la suite depuis le dernier
+  /// appel (arrêt, allègement, étape plus facile) ; la liste est vidée.
+  List<IntraSessionAdvice> takeAdvices();
+}
+
 /// Cible de la série [index] telle que la prescription [item] la donne.
 SetTarget targetOfItem(ExercisePrescription item, int index) {
   final targets = item.setTargets;
@@ -171,6 +183,7 @@ SetTarget targetOfItem(ExercisePrescription item, int index) {
       secondsHigh: t.secondsHigh ?? item.secondsHigh,
       loadKg: t.loadKg ?? item.startLoadKg,
       flames: t.flames ?? item.targetFlames,
+      role: t.role,
     );
   }
   return SetTarget(
@@ -185,7 +198,7 @@ SetTarget targetOfItem(ExercisePrescription item, int index) {
 
 /// `kalis_adapt` par son interface publique : `prescribeSession` avant la
 /// séance, `adviseNextSet` après chaque série.
-final class KalisAdaptPolicy implements SimPolicy {
+final class KalisAdaptPolicy implements CoachAwarePolicy {
   /// Politique du moteur [engine].
   KalisAdaptPolicy(this.engine);
 
@@ -194,11 +207,23 @@ final class KalisAdaptPolicy implements SimPolicy {
 
   SessionPlan? _session;
 
+  final List<IntraSessionAdvice> _advices = <IntraSessionAdvice>[];
+
+  @override
+  bool get rich => !engine.legacy;
+
+  @override
+  List<IntraSessionAdvice> takeAdvices() {
+    final out = List<IntraSessionAdvice>.of(_advices);
+    _advices.clear();
+    return out;
+  }
+
   /// Dernière séance prescrite.
   SessionPlan? get lastSession => _session;
 
   @override
-  String get name => 'kalis_adapt';
+  String get name => engine.legacy ? 'kalis_adapt_0_1' : 'kalis_adapt';
 
   AdaptInput _input(SessionContext c) =>
       AdaptInput(profile: c.profile, block: c.block, log: c.log, today: c.date);
@@ -240,6 +265,9 @@ final class KalisAdaptPolicy implements SimPolicy {
         healthCheck: c.health,
       ),
     );
+    if (advice.action != IntraSessionAction.keep) {
+      _advices.add(advice);
+    }
     if (advice.action == IntraSessionAction.stopExercise) {
       return null;
     }
@@ -257,6 +285,7 @@ final class KalisAdaptPolicy implements SimPolicy {
       secondsHigh: seconds,
       loadKg: advice.nextLoadKg,
       flames: base.flames,
+      role: base.role,
     );
   }
 
@@ -376,6 +405,115 @@ final class DoubleProgressionPolicy implements SimPolicy {
         _load[id] = info.grid.next(load, up: false);
       } else {
         _load[id] = load;
+      }
+    }
+  }
+
+  @override
+  SimEstimate? estimate(SessionContext c, String exerciseId, double n) => null;
+}
+
+/// Coach simple : le programme tel qu'il est écrit, la charge corrigée à
+/// la note d'effort, série après série et d'une séance à la suivante
+/// (autorégulation classique : 4 % de charge par point d'écart au RIR
+/// visé, Helms et al. 2018 ; au plus deux points comptés par série, la
+/// correction cumulée reste entre −20 % et +20 %). Les tests et les
+/// exercices sans charge suivent le bloc.
+final class RpeCoachPolicy implements SimPolicy {
+  final Map<String, double> _factor = <String, double>{};
+  final Map<String, int> _seen = <String, int>{};
+
+  /// Correction de charge par point de RIR d'écart.
+  static const double stepPerRir = 0.04;
+
+  @override
+  String get name => 'coach_rpe';
+
+  @override
+  SessionPlan plan(SessionContext c) {
+    _seen.clear();
+    return SessionPlan(
+      date: c.date,
+      blockId: c.block.pass1.blockId,
+      weekIndex: c.weekIndex,
+      dayIndex: c.dayIndex,
+      items: c.prescription.items,
+      adjustments: const <SessionAdjustment>[],
+      confidence: 0,
+      reasons: const <Reason>[],
+    );
+  }
+
+  String _key(ExercisePrescription item) =>
+      '${item.slotId}|${item.exerciseId}';
+
+  void _learn(ExercisePrescription item, List<SetRecord> done) {
+    final key = _key(item);
+    var index = 0;
+    final seen = _seen[key] ?? 0;
+    for (final s in done) {
+      if (s.slotId != item.slotId || s.exerciseId != item.exerciseId) {
+        continue;
+      }
+      if (index >= seen) {
+        final said = s.flames;
+        final want = s.target?.flames;
+        if (said != null && want != null && !Flames.isOpenEnded(want)) {
+          var gap = Flames.toRir(said) - Flames.toRir(want);
+          if (!s.success) {
+            gap = -2;
+          }
+          if (gap.abs() >= 0.5) {
+            final bounded = gap < -2 ? -2.0 : (gap > 2 ? 2.0 : gap);
+            final next = (_factor[key] ?? 1) * (1 + stepPerRir * bounded);
+            _factor[key] = next < 0.8 ? 0.8 : (next > 1.2 ? 1.2 : next);
+          }
+        }
+      }
+      index++;
+    }
+    _seen[key] = index;
+  }
+
+  @override
+  SetTarget? nextSet(
+    SessionContext c,
+    ExercisePrescription item,
+    int index,
+    List<SetRecord> done,
+  ) {
+    final base = targetOfItem(item, index);
+    final info = c.book.find(item.exerciseId);
+    final written = base.loadKg;
+    if (info == null ||
+        info.mode != CapacityMode.loaded ||
+        item.kind == SetKind.test ||
+        written == null) {
+      return base;
+    }
+    _learn(item, done);
+    final factor = _factor[_key(item)] ?? 1;
+    final bw = info.fraction * (c.profile.bodyWeightKg ?? 72);
+    var kg = info.grid.floor((written + bw) * factor - bw);
+    if (kg < info.grid.minimum) {
+      kg = info.grid.minimum;
+    }
+    return SetTarget(
+      repsLow: base.repsLow,
+      repsHigh: base.repsHigh,
+      loadKg: kg,
+      flames: base.flames,
+    );
+  }
+
+  @override
+  void finish(SessionContext c, SessionRecord record) {
+    for (final item in c.prescription.items) {
+      final info = c.book.find(item.exerciseId);
+      if (info != null &&
+          info.mode == CapacityMode.loaded &&
+          item.kind != SetKind.test) {
+        _learn(item, record.sets);
       }
     }
   }

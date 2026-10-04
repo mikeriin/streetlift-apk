@@ -81,6 +81,17 @@ Map<String, bool?> trajectoryVerdicts(Map<String, Object?> metrics) {
         : event >= TrajectoryLimits.eventPerformance - 1e-9,
     'deblocages': unlock == null ? null : unlock <= 0,
     'douleur': pain == null ? null : pain <= 0,
+    if (metrics['coached'] == true) ...<String, bool?>{
+      'ecart_effort': number('effortGap') == null
+          ? null
+          : number('effortGap')! <= TrajectoryLimits.rirGap + 1e-9,
+      'pics_a_schema_egal': number('schemeRisesOverLimit') == null
+          ? null
+          : number('schemeRisesOverLimit')! <= 0,
+      'ouvertures': number('openerRate') == null
+          ? null
+          : number('openerRate')! >= 1 - 1e-9,
+    },
   };
 }
 
@@ -158,7 +169,15 @@ final class Trajectory {
     required this.rows,
     required this.metrics,
     required this.mainExerciseIds,
+    this.truth = TruthKind.a,
+    this.coached = false,
   });
+
+  /// Modèle de vérité de l'athlète simulé.
+  final TruthKind truth;
+
+  /// Programme au contrat 0.4.0 (parts du 1RM, techniques, tests).
+  final bool coached;
 
   /// Profil du banc.
   final BenchProfile profile;
@@ -191,9 +210,11 @@ Trajectory simulateTrajectory(
   AthleteProfile profile, {
   int seed = 0,
   int? weeks,
+  TruthKind truth = TruthKind.a,
+  bool legacy = false,
 }) {
   final horizon = weeks ?? horizonOf(bench);
-  final engine = KalisAdapt();
+  final engine = KalisAdapt(legacy: legacy);
   final run = simulate(
     catalog: catalog,
     spec: athleteSpecOf(bench),
@@ -203,7 +224,10 @@ Trajectory simulateTrajectory(
     program: SimProgram(catalog, plan, profile, seed: seed),
     weeks: horizon,
     loop: engine,
+    truthKind: truth,
   );
+  final coached = run.blocks.isNotEmpty && blockCoached(run.blocks.first);
+  final cm = CoachMetrics(<SimRun>[run]);
 
   // Exercices suivis : cibles du profil présentes dans la simulation, puis
   // mouvements principaux les plus travaillés.
@@ -404,6 +428,21 @@ Trajectory simulateTrajectory(
     'proposalsWithheld': Map<String, Object?>.of(run.withheld),
     'painAggravations': run.painAggravations,
     'blocks': run.blocks.length,
+    'truth': truth.name,
+    'coached': coached,
+    'effortGap': _r(cm.effortGap.mean),
+    'effortBias': _r(cm.effortBias.mean),
+    'harderRate': _r(cm.harderRate.mean),
+    'easierRate': _r(cm.easierRate.mean),
+    'coachFailureRate': _r(cm.failRate.mean),
+    'maxSchemeRise': _r(cm.maxSchemeRise),
+    'schemeRisesOverLimit': cm.schemeRisesOverLimit,
+    'attempts': cm.attempts,
+    'attemptsMade': cm.attemptsMade,
+    'openerRate': cm.openerRate.n == 0 ? null : _r(cm.openerRate.mean),
+    'eventOverDayMax': cm.eventPerformance.n == 0
+        ? null
+        : _r(cm.eventPerformance.mean),
   };
   metrics['verdicts'] = trajectoryVerdicts(metrics);
   return Trajectory(
@@ -413,5 +452,7 @@ Trajectory simulateTrajectory(
     rows: rows,
     metrics: metrics,
     mainExerciseIds: followed,
+    truth: truth,
+    coached: coached,
   );
 }

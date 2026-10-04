@@ -49,12 +49,7 @@ double _rirOf(ObservedSet set) {
   return rirOfFlames(flames);
 }
 
-double _lighter(
-  SessionRun run,
-  ExerciseRun ex,
-  double fromKg,
-  double gapRir,
-) {
+double _lighter(SessionRun run, ExerciseRun ex, double fromKg, double gapRir) {
   final p = run.ctx.params;
   final grid = ex.info.grid;
   final bw = ex.info.fraction * run.bodyWeightKg;
@@ -101,10 +96,7 @@ CoachAdvice? coachAdvise(
   final rirTarget = ex.rirEff;
   final floor = c.rirFloor ?? rirTarget;
   final free =
-      ex.fails == 0 &&
-      ex.painZones.isEmpty &&
-      !run.noIncrease &&
-      !track.noUp;
+      ex.fails == 0 && ex.painZones.isEmpty && !run.noIncrease && !track.noUp;
 
   // Tentatives d'un test de maximum : la suivante d'après les précédentes
   // et le maximum du jour réestimé.
@@ -242,7 +234,9 @@ CoachAdvice? coachAdvise(
         action: IntraSessionAction.stopExercise,
       );
       advice.reasons.add(
-        _r(ReasonCodes.adaptRirCap, <String, Object?>{'rir': roundTo(floor, 1)}),
+        _r(ReasonCodes.adaptRirCap, <String, Object?>{
+          'rir': roundTo(floor, 1),
+        }),
       );
       return advice;
     }
@@ -348,7 +342,9 @@ CoachAdvice? coachAdvise(
         action: IntraSessionAction.loadDown,
       );
       advice.reasons.add(
-        _r(ReasonCodes.adaptRirCap, <String, Object?>{'rir': roundTo(floor, 1)}),
+        _r(ReasonCodes.adaptRirCap, <String, Object?>{
+          'rir': roundTo(floor, 1),
+        }),
       );
       return advice;
     }
@@ -377,7 +373,9 @@ CoachAdvice? coachAdvise(
             : IntraSessionAction.keep,
       );
       advice.reasons.add(
-        _r(ReasonCodes.adaptRirCap, <String, Object?>{'rir': roundTo(floor, 1)}),
+        _r(ReasonCodes.adaptRirCap, <String, Object?>{
+          'rir': roundTo(floor, 1),
+        }),
       );
       return advice;
     }

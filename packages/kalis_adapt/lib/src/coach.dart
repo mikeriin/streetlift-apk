@@ -281,7 +281,11 @@ final class CoachSpec {
       if (index == 0) {
         return (low, high, SetRole.top);
       }
-      return (t.backoffRepsLow ?? low, t.backoffRepsHigh ?? high, SetRole.backOff);
+      return (
+        t.backoffRepsLow ?? low,
+        t.backoffRepsHigh ?? high,
+        SetRole.backOff,
+      );
     }
     if (served == SetTechniqueKind.wave) {
       final reps = t.waveReps;
@@ -815,9 +819,7 @@ List<SetPlan>? _loadedPlans(
       : null;
   final lockCause = track.noUp || (mark != null && mark.failed)
       ? 'failure'
-      : (ex.painZones.isNotEmpty
-            ? 'pain'
-            : (run.noIncrease ? 'health' : null));
+      : (ex.painZones.isNotEmpty ? 'pain' : (run.noIncrease ? 'health' : null));
   if (markLoad != null) {
     if (kg > markLoad + 1e-9) {
       final floored = grid.floor(markLoad);
@@ -976,7 +978,8 @@ List<SetPlan>? _directPlans(
         item.kind != SetKind.test &&
         target > mark.top) {
       // Bras tendus : hausse bornée d'une séance à la suivante.
-      final rise = p.coachHoldRise[c.level < 0 ? 0 : (c.level > 3 ? 3 : c.level)];
+      final rise =
+          p.coachHoldRise[c.level < 0 ? 0 : (c.level > 3 ? 3 : c.level)];
       final byShare = (mark.top * (1 + rise)).floor();
       final bySlack = mark.top + p.coachHoldRiseSlackSeconds;
       final cap = byShare > bySlack ? byShare : bySlack;
@@ -1054,9 +1057,9 @@ List<SetPlan>? _testPlans(
   final loaded = info.mode == CapacityMode.loaded;
   final low = (hold ? item.secondsLow : item.repsLow) ?? 1;
   final high = (hold ? item.secondsHigh : item.repsHigh) ?? low;
-  final locked =
-      track.noUp || ex.painZones.isNotEmpty || run.noIncrease;
-  if (loaded && (kind == TestKind.oneRm || kind == TestKind.attemptSimulation)) {
+  final locked = track.noUp || ex.painZones.isNotEmpty || run.noIncrease;
+  if (loaded &&
+      (kind == TestKind.oneRm || kind == TestKind.attemptSimulation)) {
     final bw = info.fraction * run.bodyWeightKg;
     final recent = track.heavy.isEmpty ? null : track.heavy.first.$2;
     final lift = competitionLiftOf(run.ctx.profile, info.id, run.day);
@@ -1238,7 +1241,8 @@ List<AttemptPick> attemptLadder({
   if (relSd > p.calibrationSd) {
     globalCause ??= 'uncertainty';
   }
-  double chance(double kg) => attemptProbability(kg + bodyPart, estimate, relSd);
+  double chance(double kg) =>
+      attemptProbability(kg + bodyPart, estimate, relSd);
   final step = minIncrementKg != null && minIncrementKg > grid.step
       ? minIncrementKg
       : grid.step;

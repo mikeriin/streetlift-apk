@@ -64,10 +64,7 @@ EventDayPlan buildEventDay(
     bodyWeightKg: bodyWeight,
     noIncrease: health.level >= 1,
   );
-  final readiness = readinessOf(
-    health.shift + state.fatigue.globalShift(p),
-    p,
-  );
+  final readiness = readinessOf(health.shift + state.fatigue.globalShift(p), p);
   final reasons = <Reason>[
     reason(ReasonCodes.adaptReadiness, <String, Object?>{
       'readiness': roundTo(readiness, 3),

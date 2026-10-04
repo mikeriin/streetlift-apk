@@ -8,7 +8,7 @@ import '../apply.dart';
 import '../book.dart';
 import '../engine.dart';
 import '../filter.dart';
-import '../numeric.dart' show ln;
+import '../numeric.dart' show exp, ln;
 import '../review.dart';
 import 'policy.dart';
 import 'rng.dart';
@@ -126,7 +126,67 @@ final class SetRow {
     required this.targetHigh,
     required this.reachable,
     required this.steps,
+    this.simDay = 0,
+    this.slotId,
+    this.role,
+    this.technique,
+    this.schemeRise,
+    this.schemeSteps = 0,
+    this.attempt = false,
+    this.eventDay = false,
+    this.truePct,
+    this.totalKg,
+    this.dayMax,
+    this.quality,
+    this.test = false,
+    this.openTarget = false,
   });
+
+  /// Jour de la simulation (0 = premier).
+  final int simDay;
+
+  /// Emplacement de la semaine type.
+  final String? slotId;
+
+  /// Rôle de la ligne (programmes au contrat 0.4.0), ou `null`.
+  final SetRole? role;
+
+  /// Technique servie, ou `null`.
+  final SetTechniqueKind? technique;
+
+  /// Hausse relative de la charge totale par rapport à la séance
+  /// précédente du même emplacement, à répétitions demandées égales
+  /// (première ligne seulement, hors test), sinon `null`.
+  final double? schemeRise;
+
+  /// Crans de la grille de cette hausse.
+  final int schemeSteps;
+
+  /// Tentative (test de 1RM ou simulation de tentatives).
+  final bool attempt;
+
+  /// Séance du jour d'une échéance du profil.
+  final bool eventDay;
+
+  /// Part du 1RM vrai (charge totale) de la ligne, exercice chargé.
+  final double? truePct;
+
+  /// Charge totale (lest et part du poids de corps), exercice chargé.
+  final double? totalKg;
+
+  /// Maximum vrai du jour, frais (1RM de charge totale, répétitions ou
+  /// secondes).
+  final double? dayMax;
+
+  /// Propreté notée (1 à 5), ou `null`.
+  final int? quality;
+
+  /// Ligne de test ou tentative.
+  final bool test;
+
+  /// Cible « 5 répétitions en réserve et plus » : seul un effort plus dur
+  /// que prévu est un écart.
+  final bool openTarget;
 
   /// Semaine de la simulation (0 = première).
   final int week;
@@ -310,6 +370,53 @@ final class SimRun {
 
   /// Blocs suivis.
   final List<ProgramBlock> blocks = <ProgramBlock>[];
+
+  /// Séances servies, dans l'ordre (prescription du jour, bilan, journal).
+  final List<SimSession> served = <SimSession>[];
+
+  /// Revues de fin de semaine (boucle complète).
+  final List<(int, AdaptReview)> reviews = <(int, AdaptReview)>[];
+
+  /// Semaine de chaque bloc de [blocks] (0 = première).
+  final List<int> blockWeeks = <int>[];
+
+  /// Profil en fin de simulation (repères et étapes de figure reportés).
+  AthleteProfile? finalProfile;
+}
+
+/// Une séance servie pendant une simulation.
+final class SimSession {
+  /// Séance.
+  const SimSession({
+    required this.week,
+    required this.weekInBlock,
+    required this.simDay,
+    required this.weekKind,
+    required this.plan,
+    required this.record,
+    required this.advices,
+  });
+
+  /// Semaine de la simulation.
+  final int week;
+
+  /// Semaine dans le bloc.
+  final int weekInBlock;
+
+  /// Jour de la simulation.
+  final int simDay;
+
+  /// Nature de la semaine.
+  final WeekKind weekKind;
+
+  /// Séance prescrite le jour même.
+  final SessionPlan plan;
+
+  /// Séance faite.
+  final SessionRecord record;
+
+  /// Conseils d'entre-séries qui ont changé la suite (arrêt, allègement).
+  final List<IntraSessionAdvice> advices;
 }
 
 int _measureOf(ExercisePrescription item) {
@@ -339,9 +446,17 @@ SimRun simulate({
   required SimProgram program,
   int weeks = 24,
   KalisAdapt? loop,
+  TruthKind truthKind = TruthKind.a,
 }) {
   final book = ExerciseBook(catalog, profile);
-  final athlete = SimAthlete(spec, profile, book, seed);
+  final athlete = SimAthlete(spec, profile, book, seed, kind: truthKind);
+  final aware = policy is CoachAwarePolicy ? policy : null;
+  final rich = aware?.rich ?? false;
+  final schemeLoad = <String, double>{};
+  final eventDays = <int>{
+    for (final e in profile.events ?? const <SeasonEvent>[]) e.date.dayNumber,
+  };
+  var current = profile;
   final run = SimRun(spec.key, policy.name, seed);
   final sessions = <SessionRecord>[];
   final exerciseSessions = <String, int>{};
@@ -356,6 +471,7 @@ SimRun simulate({
   var weekInBlock = 0;
   var blockStart = simStartDate;
   run.blocks.add(block);
+  run.blockWeeks.add(0);
 
   for (var g = 0; g < weeks; g++) {
     if (weekInBlock >= block.pass1.weeks) {
@@ -370,7 +486,7 @@ SimRun simulate({
             .nextBlock(
               catalog,
               NextBlockRequest(
-                profile: profile,
+                profile: current,
                 seed: block.pass1.seed,
                 startDate: blockStart,
                 previous: block,
@@ -381,6 +497,7 @@ SimRun simulate({
             .block;
       }
       run.blocks.add(block);
+      run.blockWeeks.add(g);
     }
     WeekPrescription? week;
     for (final w in block.pass2.weeks) {
@@ -420,7 +537,7 @@ SimRun simulate({
           : null;
       final context = SessionContext(
         catalog: catalog,
-        profile: profile,
+        profile: current,
         book: book,
         block: block,
         weekIndex: weekInBlock,
@@ -499,6 +616,12 @@ SimRun simulate({
         final count = exerciseSessions[item.exerciseId] ?? 0;
         final role = context.roleOf(item.slotId);
         final rest = item.restSeconds ?? 90;
+        final technique = rich ? item.technique : null;
+        final isTest = item.kind == SetKind.test;
+        final testKind = isTest ? item.test?.kind : null;
+        final isAttempt =
+            testKind == TestKind.oneRm ||
+            testKind == TestKind.attemptSimulation;
         var performed = 0;
         double? sessionMax;
         for (var i = 0; i < item.sets; i++) {
@@ -527,15 +650,281 @@ SimRun simulate({
               selfSelected = true;
             }
           }
-          final outcome = athlete.perform(
-            truth,
-            loadKg: load,
-            low: low,
-            high: high,
-            flamesTarget: flamesTarget,
-            restSeconds: rest,
-            noiseKey: '$simDay|${item.slotId}|$i',
-          );
+          final key = '$simDay|${item.slotId}|$i';
+          final lineRole = rich ? target.role : null;
+          final applies =
+              technique != null &&
+              (technique.lastSetOnly != true || i == item.sets - 1);
+          final served = applies ? technique.kind : null;
+          final dayMax = truth.capacity * exp(truth.day);
+          var plannedFailure = flamesTarget >= Flames.failure;
+          List<SetPart>? parts;
+          int? elapsed;
+          SetOutcome outcome;
+          if (lineRole == SetRole.attempt) {
+            // Tentative : une répétition, réussie ou manquée.
+            outcome = athlete.perform(
+              truth,
+              loadKg: load,
+              low: 1,
+              high: 1,
+              flamesTarget: flamesTarget,
+              restSeconds: rest,
+              noiseKey: key,
+            );
+            plannedFailure = true;
+          } else if (lineRole == SetRole.test &&
+              (!loaded || high > low) &&
+              flamesTarget >= 8) {
+            // Test au maximum : la série va jusqu'à la réserve du test.
+            outcome = athlete.perform(
+              truth,
+              loadKg: load,
+              low: low,
+              high: high + (hold ? 600 : 200),
+              flamesTarget: flamesTarget,
+              restSeconds: rest,
+              noiseKey: key,
+            );
+            plannedFailure = true;
+          } else if (served == SetTechniqueKind.cluster && !hold) {
+            final mini = technique!.miniSets ?? 1;
+            final each = technique.miniSetReps ?? high;
+            final intra = technique.intraRestSeconds ?? 30;
+            parts = <SetPart>[];
+            var total = 0;
+            SetOutcome? last;
+            for (var k = 0; k < mini; k++) {
+              final o = athlete.perform(
+                truth,
+                loadKg: load,
+                low: each,
+                high: each,
+                flamesTarget: flamesTarget,
+                restSeconds: k < mini - 1 ? intra : rest,
+                noiseKey: '$key|$k',
+              );
+              last = o;
+              if (o.amount >= 1) {
+                parts.add(
+                  SetPart(
+                    reps: o.amount,
+                    restBeforeSeconds: k == 0 ? null : intra,
+                  ),
+                );
+                total += o.amount;
+              }
+              if (o.failed || o.amount < each) {
+                break;
+              }
+            }
+            outcome = SetOutcome(
+              amount: total,
+              flames: last?.flames,
+              trueRir: last?.trueRir ?? 0,
+              failed: last?.failed ?? false,
+            );
+            low = mini * each;
+            high = mini * each;
+          } else if ((served == SetTechniqueKind.restPause ||
+                  served == SetTechniqueKind.myoReps) &&
+              !hold) {
+            final myo = served == SetTechniqueKind.myoReps;
+            final intra = technique!.intraRestSeconds ?? (myo ? 15 : 20);
+            final cap = technique.miniSets ?? (myo ? 5 : 2);
+            final each = technique.miniSetReps ?? 3;
+            final goal = technique.totalRepsTarget;
+            final first = athlete.perform(
+              truth,
+              loadKg: load,
+              low: low,
+              high: high,
+              flamesTarget: flamesTarget,
+              restSeconds: intra,
+              noiseKey: key,
+            );
+            parts = <SetPart>[
+              if (first.amount >= 1) SetPart(reps: first.amount),
+            ];
+            var total = first.amount;
+            if (!first.failed) {
+              for (var k = 1; k <= cap; k++) {
+                if (goal != null && total >= goal) {
+                  break;
+                }
+                final o = athlete.perform(
+                  truth,
+                  loadKg: load,
+                  low: myo ? each : 1,
+                  high: myo ? each : high,
+                  flamesTarget: 9,
+                  restSeconds: k < cap ? intra : rest,
+                  noiseKey: '$key|$k',
+                );
+                if (o.amount < 1) {
+                  break;
+                }
+                parts.add(SetPart(reps: o.amount, restBeforeSeconds: intra));
+                total += o.amount;
+                if (o.failed || (myo && o.amount < each)) {
+                  break;
+                }
+              }
+            }
+            outcome = SetOutcome(
+              amount: total,
+              flames: first.flames,
+              trueRir: first.trueRir,
+              failed: first.failed,
+            );
+            if (parts.isEmpty) {
+              parts = null;
+            }
+          } else if (served == SetTechniqueKind.dropSet &&
+              loaded &&
+              load != null) {
+            final drops = technique!.drops ?? 1;
+            final pct = technique.dropPct ?? 0.2;
+            final first = athlete.perform(
+              truth,
+              loadKg: load,
+              low: low,
+              high: high,
+              flamesTarget: flamesTarget,
+              restSeconds: 10,
+              noiseKey: key,
+            );
+            parts = <SetPart>[
+              if (first.amount >= 1)
+                SetPart(reps: first.amount, externalLoadKg: load),
+            ];
+            var total = first.amount;
+            final bw = truth.info.fraction * athlete.bodyWeightKg;
+            var kg = load;
+            if (!first.failed) {
+              for (var k = 1; k <= drops; k++) {
+                var next = truth.info.grid.floor((kg + bw) * (1 - pct) - bw);
+                if (next < truth.info.grid.minimum) {
+                  next = truth.info.grid.minimum;
+                }
+                if (next >= kg) {
+                  break;
+                }
+                kg = next;
+                final o = athlete.perform(
+                  truth,
+                  loadKg: kg,
+                  low: 1,
+                  high: high + 10,
+                  flamesTarget: 9,
+                  restSeconds: k < drops ? 10 : rest,
+                  noiseKey: '$key|$k',
+                );
+                if (o.amount < 1) {
+                  break;
+                }
+                parts.add(
+                  SetPart(
+                    reps: o.amount,
+                    externalLoadKg: kg,
+                    restBeforeSeconds: 10,
+                  ),
+                );
+                total += o.amount;
+              }
+            }
+            outcome = SetOutcome(
+              amount: total,
+              flames: first.flames,
+              trueRir: first.trueRir,
+              failed: first.failed,
+            );
+            if (parts.isEmpty) {
+              parts = null;
+            }
+          } else if (served == SetTechniqueKind.accentuatedEccentric) {
+            outcome = athlete.performEccentric(
+              truth,
+              loadKg: load,
+              low: low,
+              high: high,
+              flamesTarget: flamesTarget,
+              restSeconds: rest,
+              noiseKey: key,
+            );
+          } else if ((served == SetTechniqueKind.density ||
+                  served == SetTechniqueKind.forTime) &&
+              !hold) {
+            // Bloc au temps : passages d'un tiers du maximum du moment,
+            // vingt secondes de repos, jusqu'au total ou à la durée.
+            final goal = technique!.totalRepsTarget ?? high;
+            final limit = technique.durationSeconds;
+            parts = <SetPart>[];
+            var total = 0;
+            var seconds = 0;
+            SetOutcome? last;
+            for (var k = 0; k < 120 && total < goal; k++) {
+              var chunk = (athlete.capacityNow(truth, load) / 3).round();
+              if (chunk < 1) {
+                chunk = 1;
+              }
+              if (chunk > goal - total) {
+                chunk = goal - total;
+              }
+              final o = athlete.perform(
+                truth,
+                loadKg: load,
+                low: chunk,
+                high: chunk,
+                flamesTarget: 6,
+                restSeconds: 20,
+                noiseKey: '$key|$k',
+              );
+              last = o;
+              if (o.amount < 1) {
+                break;
+              }
+              parts.add(
+                SetPart(reps: o.amount, restBeforeSeconds: k == 0 ? null : 20),
+              );
+              total += o.amount;
+              seconds += o.amount * 3 + 20;
+              if (limit != null && seconds >= limit) {
+                break;
+              }
+            }
+            elapsed = seconds > 20 ? seconds - 20 : seconds;
+            outcome = SetOutcome(
+              amount: total,
+              flames: last?.flames,
+              trueRir: last?.trueRir ?? 0,
+              failed: false,
+            );
+            if (parts.isEmpty) {
+              parts = null;
+            }
+            low = total < low ? total : low;
+          } else {
+            outcome = athlete.perform(
+              truth,
+              loadKg: load,
+              low: low,
+              high:
+                  served == SetTechniqueKind.amrap &&
+                      technique!.durationSeconds == null
+                  ? high + 200
+                  : high,
+              flamesTarget: flamesTarget,
+              restSeconds: rest,
+              noiseKey: key,
+            );
+          }
+          final quality =
+              rich &&
+                  (served == SetTechniqueKind.isometricHold ||
+                      served == SetTechniqueKind.skillPractice)
+              ? athlete.qualityOf(outcome)
+              : null;
           done.add(
             SetRecord(
               exerciseId: item.exerciseId,
@@ -556,7 +945,14 @@ SimRun simulate({
                 secondsHigh: hold ? high : null,
                 loadKg: selfSelected ? null : load,
                 flames: flamesTarget,
+                role: lineRole,
               ),
+              technique: served == SetTechniqueKind.standard ? null : served,
+              role: lineRole,
+              parts: parts,
+              elapsedSeconds: elapsed,
+              quality: quality,
+              attemptIndex: lineRole == SetRole.attempt ? i : null,
             ),
           );
           double? rise;
@@ -572,6 +968,22 @@ SimRun simulate({
                 steps++;
               }
             }
+          }
+          double? schemeRise;
+          var schemeSteps = 0;
+          if (i == 0 && load != null && !isTest) {
+            final schemeKey = '${item.slotId}|${item.exerciseId}|$high';
+            final before = schemeLoad[schemeKey];
+            if (before != null) {
+              final bw = truth.info.fraction * athlete.bodyWeightKg;
+              schemeRise = (load + bw) / (before + bw) - 1;
+              var kg = before;
+              while (kg < load - 1e-9 && schemeSteps < 50) {
+                kg = truth.info.grid.next(kg, up: true);
+                schemeSteps++;
+              }
+            }
+            schemeLoad[schemeKey] = load;
           }
           if (load != null && (sessionMax == null || load > sessionMax)) {
             sessionMax = load;
@@ -590,7 +1002,7 @@ SimRun simulate({
               trueRir: outcome.trueRir,
               wantRir: Flames.toRir(flamesTarget),
               failed: outcome.failed,
-              plannedFailure: flamesTarget >= Flames.failure,
+              plannedFailure: plannedFailure,
               main: role == SlotRole.main,
               open: high > low,
               rise: rise,
@@ -603,6 +1015,25 @@ SimRun simulate({
                 basisHigh ?? basisLow ?? high,
                 Flames.toRir(flamesTarget),
               ),
+              simDay: simDay,
+              slotId: item.slotId,
+              role: lineRole,
+              technique: served,
+              schemeRise: schemeRise,
+              schemeSteps: schemeSteps,
+              attempt: isAttempt,
+              eventDay: eventDays.contains(dayNumber),
+              truePct: loaded && load != null
+                  ? truth.info.totalLoad(load, athlete.bodyWeightKg) /
+                        truth.capacity
+                  : null,
+              totalKg: loaded && load != null
+                  ? truth.info.totalLoad(load, athlete.bodyWeightKg)
+                  : null,
+              dayMax: dayMax,
+              quality: quality,
+              test: isTest,
+              openTarget: Flames.isOpenEnded(flamesTarget),
             ),
           );
           performed++;
@@ -632,9 +1063,21 @@ SimRun simulate({
         healthCheck: health,
         sets: done,
         pains: athlete.sessionPains(),
+        eventId: rich ? session.eventId : null,
       );
       policy.finish(context, record);
       sessions.add(record);
+      run.served.add(
+        SimSession(
+          week: g,
+          weekInBlock: weekInBlock,
+          simDay: simDay,
+          weekKind: week.kind,
+          plan: session,
+          record: record,
+          advices: aware?.takeAdvices() ?? const <IntraSessionAdvice>[],
+        ),
+      );
       run.sessionsDone++;
       final after = context.withLog(
         TrainingLog(sessions: List<SessionRecord>.of(sessions)),
@@ -684,7 +1127,7 @@ SimRun simulate({
       final review = loop.review(
         catalog,
         AdaptInput(
-          profile: profile,
+          profile: current,
           block: block,
           log: TrainingLog(sessions: List<SessionRecord>.of(sessions)),
           today: today,
@@ -694,6 +1137,26 @@ SimRun simulate({
       );
       reviewState = review.state;
       summary = review.summary;
+      run.reviews.add((g, review));
+      // Résultats de test et étapes de figure reportés dans le profil,
+      // comme l'application le fait (contrat de `kalis_core`, § 12).
+      final tests = review.testResults;
+      if (tests != null && tests.isNotEmpty) {
+        current = current.copyWith(
+          benchmarks: <Benchmark>[
+            for (final b in current.benchmarks ?? const <Benchmark>[])
+              if (!tests.any(
+                (t) => t.exerciseId == b.exerciseId && t.kind == b.kind,
+              ))
+                b,
+            ...tests,
+          ],
+        );
+      }
+      final skills = review.skillStates;
+      if (skills != null && skills.isNotEmpty) {
+        current = current.copyWith(skills: skills);
+      }
       for (final level in UnlockLevel.values) {
         if (level.index <= review.summary.unlockLevel.index) {
           run.unlockWeek.putIfAbsent(level, () => g);
@@ -746,6 +1209,7 @@ SimRun simulate({
         ln(t.lastCapacity / t.firstCapacity) / ((last - first) / 7);
   }
   run.painAggravations = athlete.painAggravations;
+  run.finalProfile = current;
   run.sessions.addAll(sessions);
   return run;
 }
