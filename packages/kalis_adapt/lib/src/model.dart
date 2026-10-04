@@ -978,7 +978,8 @@ final class SessionRun {
         top = o.amount;
       }
       final said = o.flames;
-      if (o.failed || (said != null && rirOfFlames(said) < p.coachCensorRir)) {
+      if (o.failed ||
+          (said != null && rirOfFlames(said) < state.rater.ceiling(p))) {
         track.exactDay = day;
       }
       final kg = o.loadKg;
@@ -1061,6 +1062,7 @@ final class SessionRun {
     bool boundOnly = false,
     int? quality,
     SetRole? role,
+    int? lineAmount,
   }) {
     final run = current!;
     final info = run.info;
@@ -1090,6 +1092,7 @@ final class SessionRun {
         boundOnly,
         quality,
         role,
+        lineAmount ?? amount,
       );
     } else {
       if (run.track == null) {
@@ -1106,6 +1109,7 @@ final class SessionRun {
         quality,
         role,
         test,
+        lineAmount ?? amount,
       );
     }
   }
@@ -1209,6 +1213,7 @@ final class SessionRun {
     bool boundOnly,
     int? quality,
     SetRole? role,
+    int shown,
   ) {
     final p = _p;
     final track = run.track!;
@@ -1265,8 +1270,7 @@ final class SessionRun {
         p: p,
         bound: true,
       );
-    } else if (run.spec.coach != null &&
-        rirOfFlames(flames) >= p.coachCensorRir) {
+    } else if (run.spec.coach != null && _censored(flames)) {
       // Mode coach : loin de l'échec, la note ne se lit que comme « au
       // moins tant en réserve » (la prédiction des répétitions restantes
       // se dégrade loin de l'échec et plafonne, R2-P3).
@@ -1305,6 +1309,10 @@ final class SessionRun {
       if (w < 0.999) {
         sd = sd / sqrt(w < 1e-3 ? 1e-3 : w);
       }
+      if (run.spec.coach != null && rir >= state.rater.ceiling(p) - 1) {
+        // Juste sous le plafond des notes : la note est en partie tronquée.
+        sd *= p.coachNearCeilingSd;
+      }
       final nObserved = reps + state.rater.trueRir(rir, p);
       // Atténuation des écarts aberrants (Huber) : au-delà du seuil, le
       // bruit est gonflé pour ramener l'innovation au seuil.
@@ -1320,7 +1328,13 @@ final class SessionRun {
           nSd: sd,
           fatigue: fatigue,
           p: p,
-          learnK: fresh && (test || open) && rir <= 2,
+          // Mode coach : toute série notée près de l'échec, fraîche,
+          // renseigne la forme de la courbe (séries de tête lourdes et
+          // séries longues se recoupent).
+          learnK:
+              fresh &&
+              ((test || open) && rir <= 2 ||
+                  (run.spec.coach != null && rir <= p.coachCurveRir)),
         );
       }
       f.observeLoad(
@@ -1347,11 +1361,11 @@ final class SessionRun {
     if (unplanned) {
       run.fails++;
     }
-    _noteEase(run, reps, flames, failed, target);
+    _noteEase(run, shown, flames, failed, target);
     run.observed.add(
       ObservedSet(
         loadKg: loadKg,
-        amount: reps,
+        amount: shown,
         flames: flames,
         failed: failed,
         unplannedFail: unplanned,
@@ -1375,6 +1389,7 @@ final class SessionRun {
     int? quality,
     SetRole? role,
     bool test,
+    int shown,
   ) {
     final p = _p;
     final track = run.track!;
@@ -1426,8 +1441,7 @@ final class SessionRun {
         p: p,
         bound: true,
       );
-    } else if (run.spec.coach != null &&
-        rirOfFlames(flames) >= p.coachCensorRir) {
+    } else if (run.spec.coach != null && _censored(flames)) {
       final said = rirOfFlames(flames);
       f.observeDirect(
         logCapacity: ln(_impliedCapacity(mode, done, said) / keep),
@@ -1449,6 +1463,9 @@ final class SessionRun {
       var sd = relSd(rir);
       if (w < 0.999) {
         sd = sd / sqrt(w < 1e-3 ? 1e-3 : w);
+      }
+      if (run.spec.coach != null && rir >= state.rater.ceiling(p) - 1) {
+        sd *= p.coachNearCeilingSd;
       }
       final implied = _impliedCapacity(mode, done, state.rater.trueRir(rir, p));
       final e = ln(implied / keep) - (f.m[0] + f.m[3]);
@@ -1482,11 +1499,11 @@ final class SessionRun {
     if (unplanned) {
       run.fails++;
     }
-    _noteEase(run, amount, flames, failed, target);
+    _noteEase(run, shown, flames, failed, target);
     run.observed.add(
       ObservedSet(
         loadKg: null,
-        amount: amount,
+        amount: shown,
         flames: flames,
         failed: failed,
         unplannedFail: unplanned,
@@ -1503,6 +1520,15 @@ final class SessionRun {
   /// l'exercice : cible atteinte et note d'une flamme (« 5 répétitions en
   /// réserve et plus », qui ne borne la capacité que par le bas), au moins
   /// [AdaptParams.adviceGapFlames] flammes sous la cible (D5).
+  /// Mode coach : note la réserve dite par [flames] et dit si elle se lit
+  /// comme une borne basse (au plafond de ce que la personne sait dire).
+  bool _censored(int flames) {
+    final said = rirOfFlames(flames);
+    final censored = said >= state.rater.ceiling(_p);
+    state.rater.noteSaid(said);
+    return censored;
+  }
+
   void _noteEase(
     ExerciseRun run,
     int amount,
@@ -1521,7 +1547,7 @@ final class SessionRun {
     final said = rirOfFlames(flames);
     final coachEasy =
         run.spec.coach != null &&
-        said >= _p.coachCensorRir &&
+        said >= state.rater.ceiling(_p) &&
         said - rirOfFlames(target.flames) >= 0.5;
     final easy =
         !failed &&

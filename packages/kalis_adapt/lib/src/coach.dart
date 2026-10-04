@@ -504,8 +504,7 @@ LineReading? readLine(
   // parties sans technique déclarée prend celle de la prescription. Une
   // ligne sans technique ni parties est une série classique (technique
   // non servie ce jour-là).
-  final kind =
-      set.technique ?? (parts != null ? item?.technique?.kind : null);
+  final kind = set.technique ?? (parts != null ? item?.technique?.kind : null);
   if (set.technique == null &&
       parts == null &&
       set.role == null &&
@@ -995,7 +994,11 @@ List<SetPlan>? _loadedPlans(
     return out;
   }
   final shown = shownFor(kg, head);
-  final waveStep = served == SetTechniqueKind.wave ? t?.waveStepPct : null;
+  // Vagues : la charge ne monte d'une vague à l'autre qu'un jour sans
+  // verrou (ni échec récent, ni douleur, ni bilan bas, ni charge retenue).
+  final waveStep = served == SetTechniqueKind.wave && ex.heldCause == null
+      ? t?.waveStepPct
+      : null;
   final waveLength = t?.waveReps?.length ?? 1;
   for (var i = 0; i < sets; i++) {
     final (low, high, role) = lines[i];

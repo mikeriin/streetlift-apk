@@ -723,7 +723,11 @@ SessionPlan buildSessionPlan(
   final items = <ExercisePrescription>[
     for (final d in drafts)
       if (!d.removed)
-        d.coached ? _finishCoach(ctx, run, d) : _finish(ctx, run, d),
+        d.coached
+        ? _finishCoach(ctx, run, d)
+        : (coached
+              ? coherentTechnique(_finish(ctx, run, d))
+              : _finish(ctx, run, d)),
   ];
   List<GroupSpec>? groups;
   String? eventId;
@@ -759,6 +763,77 @@ SessionPlan buildSessionPlan(
     eventId: eventId,
     groups: groups,
   );
+}
+
+/// La prescription [item] dont la technique est rendue cohérente avec son
+/// nombre de lignes (`sets`) : séries allégées et intervalles recomptés ;
+/// une technique à paliers ou un bloc au temps dont le nombre de lignes ne
+/// tient plus laisse la place à des séries classiques.
+ExercisePrescription coherentTechnique(ExercisePrescription item) {
+  final t = item.technique;
+  if (t == null || t.lastSetOnly == true) {
+    return item;
+  }
+  final sets = item.sets;
+  ExercisePrescription plain() {
+    final rules = <AutoregulationRule>[
+      for (final r in item.autoregulation ?? const <AutoregulationRule>[])
+        if (r.kind != AutoregulationKind.backoffFromTopSet &&
+            r.kind != AutoregulationKind.stopOnRepDrop)
+          r,
+    ];
+    return item.copyWith(
+      technique: null,
+      autoregulation: rules.isEmpty ? null : rules,
+    );
+  }
+
+  switch (t.kind) {
+    case SetTechniqueKind.topSetBackoff:
+      final backoff = t.backoffSets;
+      if (sets < 2) {
+        return plain();
+      }
+      return backoff != null && backoff >= sets
+          ? item.copyWith(technique: t.copyWith(backoffSets: sets - 1))
+          : item;
+    case SetTechniqueKind.emom:
+      return t.intervals == sets
+          ? item
+          : item.copyWith(technique: t.copyWith(intervals: sets));
+    case SetTechniqueKind.wave:
+      final reps = t.waveReps;
+      final waves = t.waves;
+      return reps != null && waves != null && waves * reps.length != sets
+          ? plain()
+          : item;
+    case SetTechniqueKind.pyramid:
+      final reps = t.pyramidReps;
+      return reps != null && reps.length != sets ? plain() : item;
+    case SetTechniqueKind.ladder:
+      final start = t.ladderStart;
+      final step = t.ladderStep;
+      final top = t.ladderTop;
+      if (start == null || step == null || top == null || step <= 0) {
+        return item;
+      }
+      final rungs = ((top - start) ~/ step + 1) * (t.ladderCount ?? 1);
+      return rungs != sets ? plain() : item;
+    case SetTechniqueKind.density:
+    case SetTechniqueKind.forTime:
+      return sets != 1 ? plain() : item;
+    case SetTechniqueKind.standard:
+    case SetTechniqueKind.cluster:
+    case SetTechniqueKind.restPause:
+    case SetTechniqueKind.myoReps:
+    case SetTechniqueKind.dropSet:
+    case SetTechniqueKind.isometricHold:
+    case SetTechniqueKind.accentuatedEccentric:
+    case SetTechniqueKind.contrast:
+    case SetTechniqueKind.amrap:
+    case SetTechniqueKind.skillPractice:
+      return item;
+  }
 }
 
 /// La prescription [item] sans sa technique : séries classiques au même
@@ -1076,7 +1151,8 @@ ExercisePrescription _finish(EngineContext ctx, SessionRun run, _Draft d) {
     );
     final sets = d.sets;
     item = standardEquivalent(item);
-    if (item.sets != sets && technique.kind != SetTechniqueKind.density &&
+    if (item.sets != sets &&
+        technique.kind != SetTechniqueKind.density &&
         technique.kind != SetTechniqueKind.forTime) {
       item = item.copyWith(sets: sets);
     }

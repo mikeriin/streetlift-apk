@@ -369,8 +369,8 @@ Set<BodyZone> painsSince(
 /// La série [s] telle que le moteur la lit quand elle porte des champs de
 /// `kalis_core` 0.4.0 (voir `readLine`) : `null` si elle ne compte pas
 /// (échauffement, descente accentuée, série relancée sans parties) ;
-/// répétitions et charge de la partie lue ; une ligne sous le plancher de
-/// propreté compte comme un échec.
+/// charge de la partie lue (le total de la ligne reste sa quantité) ; une
+/// ligne sous le plancher de propreté compte comme un échec.
 SetRecord? asRead(SetRecord s, ExerciseInfo? info, ExercisePrescription? item) {
   if (info == null) {
     return s;
@@ -384,10 +384,6 @@ SetRecord? asRead(SetRecord s, ExerciseInfo? info, ExercisePrescription? item) {
     return null;
   }
   var out = s;
-  final amount = reading.amount;
-  if (amount != null) {
-    out = hold ? out.copyWith(seconds: amount) : out.copyWith(reps: amount);
-  }
   final load = reading.loadKg;
   if (load != null) {
     out = out.copyWith(externalLoadKg: load);
@@ -601,11 +597,15 @@ List<String> checkAdvice(
     for (final s in lines)
       if (!coached)
         s
-      else if (asRead(s, book.find(s.exerciseId), <ExercisePrescription?>[
-            for (final it in session.items)
-              if (it.slotId == s.slotId) it,
-            null,
-          ].first)
+      else if (asRead(
+            s,
+            book.find(s.exerciseId),
+            <ExercisePrescription?>[
+              for (final it in session.items)
+                if (it.slotId == s.slotId) it,
+              null,
+            ].first,
+          )
           case final read?)
         read,
   ];
@@ -614,8 +614,12 @@ List<String> checkAdvice(
     if (item.slotId == advice.slotId) {
       final kind = item.test?.kind;
       attemptLine =
-          item.kind == SetKind.test &&
-          (kind == TestKind.oneRm || kind == TestKind.attemptSimulation);
+          (item.kind == SetKind.test &&
+              (kind == TestKind.oneRm ||
+                  kind == TestKind.attemptSimulation)) ||
+          (item.setTargets ?? const <SetTarget>[]).any(
+            (t) => t.role == SetRole.attempt,
+          );
     }
   }
   if (attemptLine) {
@@ -803,7 +807,16 @@ List<String> checkCoachSession(
     final where = '${session.date.iso} ${item.exerciseId}';
     final basis = written[item.slotId];
     if (basis != null && item.sets > basis.sets) {
-      out.add('$where : ${item.sets} séries pour ${basis.sets} écrites');
+      // Un bloc au temps dont la technique n'est pas servie devient des
+      // séries classiques : c'est le total de répétitions qui se compare.
+      final blockKind = basis.technique?.kind;
+      final timed =
+          blockKind == SetTechniqueKind.density ||
+          blockKind == SetTechniqueKind.forTime;
+      final total = item.sets * (item.repsHigh ?? 0);
+      if (!timed || item.technique != null || total > (basis.repsHigh ?? 0)) {
+        out.add('$where : ${item.sets} séries pour ${basis.sets} écrites');
+      }
     }
     final kind = item.technique?.kind;
     if (kind != null && level < techniqueAccessLevel(kind)) {
