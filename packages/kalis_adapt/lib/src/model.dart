@@ -120,6 +120,11 @@ final class ExerciseTrack {
   /// plus lourdes d'abord — une ouverture est une barre déjà faite.
   List<(int, double)> heavy = const <(int, double)>[];
 
+  /// Mode coach : ce que la dernière série repère a montré de la capacité
+  /// (répétitions faites plus la réserve dite, au plus celle demandée),
+  /// ou `null`.
+  double? probeCapacity;
+
   /// Mode coach, exercice assisté : assistance de la dernière série
   /// (charge externe négative du journal), ou `null`.
   double? assist;
@@ -128,6 +133,7 @@ final class ExerciseTrack {
   ExerciseTrack fork() {
     final c = ExerciseTrack(info, filter.fork());
     c.assist = assist;
+    c.probeCapacity = probeCapacity;
     c.lastLoad = lastLoad;
     c.noUp = noUp;
     c.easy = easy;
@@ -1013,6 +1019,12 @@ final class SessionRun {
       if (o.open &&
           (run.spec.coach == null || (o.target?.high ?? 0) > run.spec.high)) {
         openSet = true;
+        final said = o.flames;
+        if (run.spec.coach != null && !o.failed && said != null) {
+          final asked = rirOfFlames(o.target!.flames);
+          final rir = rirOfFlames(said);
+          track.probeCapacity = o.amount + (rir < asked ? rir : asked);
+        }
       }
       if (o.amount > track.bestAmount) {
         track.bestAmount = o.amount.toDouble();
@@ -1122,6 +1134,7 @@ final class SessionRun {
         final now = loadKg ?? 0;
         final before = track.assist;
         if (before != null && (now - before).abs() > 1e-9) {
+          track.probeCapacity = null;
           final step = ln(_p.coachAssistStepShare);
           track.filter.shiftLevel(
             now > before ? step : -step,
@@ -1575,11 +1588,14 @@ final class SessionRun {
     int amount,
     SetPlan? target,
   ) {
-    if (_censored(flames, open)) {
+    // Série ouverte menée jusqu'au haut de sa plage : elle n'a pas été
+    // arrêtée au ressenti, elle ne mesure pas.
+    final byFeel = open && (target == null || amount < target.high);
+    if (_censored(flames, byFeel)) {
       return true;
     }
     final short = target != null && amount < target.low;
-    if (open || test || short) {
+    if (byFeel || test || short) {
       run.measured = true;
       return false;
     }

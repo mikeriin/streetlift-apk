@@ -1546,8 +1546,15 @@ List<SetPlan>? _directPlans(
     // plage ne laisse plus la réserve visée moins un point, un cran de
     // plus.
     final exact = track.exactDay;
-    final measured = exact != null && run.day - exact <= 2 * p.coachProbeDays;
-    final cap = track.filter.capacityToday();
+    final probed = track.benchmarkDay;
+    final measured =
+        (exact != null && run.day - exact <= 2 * p.coachProbeDays) ||
+        (probed != null && run.day - probed <= 2 * p.coachProbeDays);
+    // (Une série repère notée « loin de l'échec » borne la capacité par le
+    // bas : cela suffit pour retirer un cran d'assistance.)
+    final shown = track.probeCapacity;
+    final estimate = track.filter.capacityToday();
+    final cap = shown != null && shown > estimate ? shown : estimate;
     final spare = cap - c.schemeAmount - rir;
     final (low, _, _) = c.line(0, sets, served, hold: false);
     if (measured &&
