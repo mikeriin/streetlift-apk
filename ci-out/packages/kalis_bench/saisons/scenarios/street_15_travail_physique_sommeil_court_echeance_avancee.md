@@ -33,7 +33,7 @@ Chaque bloc est écrit par le moteur de création au moment où il commence, d'a
 
 - Séances faites : 47 sur 48 (3 ajustées le jour même).
 - Échecs non voulus (hors tests et tentatives) : 0 % des séries de travail.
-- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 1,04 répétition en réserve (sur les 68 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 3,4 %.
+- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 1,12 répétition en réserve (sur les 68 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 3,6 %.
 - Plus forte hausse de charge totale d'un mouvement principal d'une séance à la suivante, à schéma égal : 0 % ; hausses de plus de 10 % faites de plusieurs crans : 0.
 - Progression réelle moyenne des mouvements suivis : 0,603 % par semaine.
 - Douleur : 0 hausse(s) de charge sur une zone douloureuse signalée.
@@ -54,7 +54,7 @@ Pour chaque mouvement, la séance la plus lourde de la semaine : ce que le progr
 | 6 | allègement | 1 × 10 à 12, test | (7 à 12) | 8 | test | 9 / 8 | — |
 | 7 | réalisation (spécifique à l'objectif) | 3 × 5 (63 % du maximum testé), série de tête puis séries allégées | 5-5-5 | 5-5-4 | 3 → 3,3 ; suivantes 3 → 3 | 8 / 8 | allégé pour garder la marge prévue (au moins 3 en réserve) ; dernières séries plus dures que prévu |
 | 8 | réalisation (spécifique à l'objectif) | 3 × 5 (63 % du maximum testé), série de tête puis séries allégées | 5-5-5 | 5-5-5 | 3 → 4,2 ; suivantes 3 → 3,6 | 9 / 8 | — |
-| 9 | réalisation (spécifique à l'objectif) | 3 × 5 (63 % du maximum testé), série de tête puis séries allégées | 5-5-5 | 5-5-5 | 3 → 3,8 ; suivantes 3 → 3,1 | 9 / 8 | — |
+| 9 | réalisation (spécifique à l'objectif) | 3 × 6 (75 % du maximum testé) | 6-5-4 | 6-4-4 | 2 → 2,7 ; suivantes 2 → 3,7 | 9 / 8 | allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |
 | 10 | test | 1 × 9 à 12, test | (7 à 12) | 8 (échec) | test | 9 / 8 | — |
 | 11 | construction (volume) | 3 × 6 (67 % du maximum testé), série de tête puis séries allégées | 5-5-5 | 5-5-5 | 3 → 4,1 ; suivantes 3 → 3,1 | 9 / 8 | répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) |
 | 12 | construction (volume) | 3 × 6 (67 % du maximum testé), série de tête puis séries allégées | 5-5-5 | 5-4 | 3 → 3,6 ; suivantes 3 → 4,1 | 9 / 8 | répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; dernières séries plus dures que prévu |

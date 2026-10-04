@@ -55,7 +55,7 @@ Changed 49 dependencies!
 Try `dart pub outdated` for more information.
 Changed lib/src/coach/prescribe.dart
 Changed test/coach_test.dart
-Formatted 58 files (2 changed) in 0.29 seconds.
+Formatted 58 files (2 changed) in 0.41 seconds.
 formatage : échec
 Analyzing kalis_plan...
 No issues found!
@@ -79,9 +79,9 @@ No issues found!
 00:00 +16: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
 00:00 +17: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
 00:00 +18: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
-00:03 +19: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
-00:08 +19 -1: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
-00:08 +19 -1: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour [E]
+00:04 +19: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:10 +19 -1: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:10 +19 -1: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour [E]
   docs/PROFILS_TYPES.md, ligne 3 :
     fichier : Fichier généré par `dart run bin/kalis_plan_cli.dart --rapport <dossier>` (kalis_plan 0.2.0, catalogue 1.1.0, règles 1.1.0) — ne pas modifier à la main ; `test/docs_test.dart` le compare au moteur.
     moteur  : Fichier généré par `dart run bin/kalis_plan_cli.dart --rapport <dossier>` (kalis_plan 0.2.1, catalogue 1.1.0, règles 1.1.0) — ne pas modifier à la main ; `test/docs_test.dart` le compare au moteur.
@@ -89,8 +89,8 @@ No issues found!
   test/docs_test.dart 24:7  _expectSame
   test/docs_test.dart 34:5  main.<fn>
   
-00:10 +19 -2: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
-00:10 +19 -2: test/docs_test.dart: docs/COMPARAISON_L10.md est à jour [E]
+00:13 +19 -2: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:13 +19 -2: test/docs_test.dart: docs/COMPARAISON_L10.md est à jour [E]
   docs/COMPARAISON_L10.md, ligne 3 :
     fichier : Fichier généré par `dart run bin/kalis_plan_cli.dart --rapport <dossier>` (kalis_plan 0.2.0) à partir de `docs/data/l10_sorties.json.gz` — ne pas modifier à la main ; `test/docs_test.dart` le compare au moteur. Lecture et limites de la comparaison : `docs/VALIDATION.md`, § 5.
     moteur  : Fichier généré par `dart run bin/kalis_plan_cli.dart --rapport <dossier>` (kalis_plan 0.2.1) à partir de `docs/data/l10_sorties.json.gz` — ne pas modifier à la main ; `test/docs_test.dart` le compare au moteur. Lecture et limites de la comparaison : `docs/VALIDATION.md`, § 5.
@@ -98,165 +98,213 @@ No issues found!
   test/docs_test.dart 24:7  _expectSame
   test/docs_test.dart 41:5  main.<fn>
   
-00:10 +20 -2: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
-00:11 +21 -2: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
-00:11 +22 -2: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
-00:11 +23 -2: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
-00:11 +24 -2: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
-00:11 +25 -2: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
-00:11 +26 -2: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
-00:11 +27 -2: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
-00:11 +28 -2: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
-00:11 +29 -2: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
-00:11 +30 -2: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
-00:11 +31 -2: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
-00:12 +32 -2: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
-00:12 +33 -2: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
-00:12 +34 -2: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
-00:12 +35 -2: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
-00:12 +36 -2: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
-00:13 +37 -2: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
-00:13 +38 -2: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
-00:13 +39 -2: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
-00:13 +40 -2: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
-00:13 +41 -2: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
-00:13 +42 -2: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
-00:13 +43 -2: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
-00:13 +44 -2: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
-00:13 +44 -3: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
-00:13 +44 -3: test/coach_test.dart: CX — saison complète répétitions avancé : pas de traction deux jours de suite [E]
+00:13 +20 -2: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:14 +21 -2: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:15 +22 -2: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:15 +23 -2: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:15 +24 -2: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:15 +25 -2: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:15 +26 -2: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:15 +27 -2: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:15 +28 -2: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:15 +29 -2: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:15 +30 -2: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:15 +31 -2: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:15 +32 -2: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:15 +33 -2: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:15 +34 -2: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:15 +35 -2: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:15 +36 -2: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:16 +37 -2: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:16 +38 -2: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:16 +39 -2: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:16 +40 -2: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:16 +41 -2: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:16 +42 -2: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:16 +43 -2: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:16 +44 -2: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:16 +44 -3: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:16 +44 -3: test/coach_test.dart: CX — saison complète répétitions avancé : pas de traction deux jours de suite [E]
   Invalid argument(s): Profil invalide (1 violation(s)) : $.events[0].mode missing_field reps_competition
   package:kalis_plan/src/engine.dart 173:7  KalisPlan._check
   package:kalis_plan/src/engine.dart 184:5  KalisPlan.createPass1
   test/coach_test.dart 118:24               _program
   test/coach_test.dart 872:25               main.<fn>.<fn>
   
-00:13 +45 -3: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
-00:13 +46 -3: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
-00:13 +47 -3: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
-00:16 +48 -3: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 0 à 159
-00:27 +49 -3: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2720 à 2879
-00:28 +50 -3: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 160 à 319
-00:38 +51 -3: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2880 à 3039
-00:39 +52 -3: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 320 à 479
-00:49 +53 -3: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 3040 à 3199
-00:50 +54 -3: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 480 à 639
-01:00 +55 -3: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 480 à 639
-01:02 +56 -3: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 3360 à 3519
-01:11 +57 -3: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 640 à 799
-01:12 +58 -3: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 3520 à 3679
-01:21 +59 -3: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 800 à 959
-01:23 +60 -3: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 3680 à 3839
-01:32 +61 -3: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 960 à 1119
-01:35 +62 -3: test/coach_properties_4_test.dart: chemin street, profils 5120 à 6399 profils 5120 à 5279
-01:36 +63 -3: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 1120 à 1279
-01:38 +64 -3: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 1120 à 1279
-01:40 +65 -3: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 1120 à 1279
-01:41 +66 -3: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 1120 à 1279
-01:43 +67 -3: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 1120 à 1279
-01:44 +68 -3: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 1120 à 1279
-01:45 +69 -3: test/coach_properties_4_test.dart: chemin street, profils 5120 à 6399 profils 6080 à 6239
-01:46 +70 -3: test/coach_properties_4_test.dart: chemin street, profils 5120 à 6399 profils 6240 à 6399
-01:48 +71 -3: test/smoke_test.dart: les 40 profils types : passe 1, revue, passe 2 sans violation
-01:51 +72 -3: test/coach_properties_0_test.dart: chemin street, profils 0 à 1279 profils 0 à 159
-01:52 +73 -3: test/engine_test.dart: déterminisme même requête, même JSON, quelle que soit l'instance
-01:54 +74 -3: test/engine_test.dart: déterminisme même requête, même JSON, quelle que soit l'instance
-01:56 +75 -3: test/engine_test.dart: déterminisme même requête, même JSON, quelle que soit l'instance
-01:58 +76 -3: test/engine_test.dart: déterminisme même requête, même JSON, quelle que soit l'instance
-01:59 +77 -3: test/engine_test.dart: déterminisme même requête, même JSON, quelle que soit l'instance
-02:01 +78 -3: test/engine_test.dart: déterminisme même requête, même JSON, quelle que soit l'instance
-02:03 +79 -3: test/engine_test.dart: déterminisme même requête, même JSON, quelle que soit l'instance
-02:04 +80 -3: test/coach_properties_0_test.dart: chemin street, profils 0 à 1279 profils 1120 à 1279
-02:04 +81 -3: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
-02:05 +82 -3: test/coach_properties_6_test.dart: chemin street, profils 7680 à 8959 profils 7680 à 7839
-02:05 +83 -3: test/coach_properties_6_test.dart: chemin street, profils 7680 à 8959 profils 7680 à 7839
-02:09 +84 -3: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
-02:10 +85 -3: test/coach_properties_6_test.dart: chemin street, profils 7680 à 8959 profils 7840 à 7999
-02:10 +86 -3: test/coach_properties_6_test.dart: chemin street, profils 7680 à 8959 profils 7840 à 7999
-02:10 +87 -3: test/coach_properties_6_test.dart: chemin street, profils 7680 à 8959 profils 7840 à 7999
-02:11 +88 -3: test/coach_properties_6_test.dart: chemin street, profils 7680 à 8959 profils 7840 à 7999
-02:11 +89 -3: test/coach_properties_6_test.dart: chemin street, profils 7680 à 8959 profils 7840 à 7999
-02:11 +90 -3: test/coach_properties_6_test.dart: chemin street, profils 7680 à 8959 profils 7840 à 7999
-02:11 +91 -3: test/coach_properties_6_test.dart: chemin street, profils 7680 à 8959 profils 7840 à 7999
-02:11 +92 -3: test/coach_properties_6_test.dart: chemin street, profils 7680 à 8959 profils 7840 à 7999
-02:11 +93 -3: test/engine_test.dart: ligne de commande dart run kalis_plan:plan rend le programme du moteur
-02:14 +94 -3: test/engine_test.dart: ligne de commande dart run kalis_plan:plan rend le programme du moteur
-02:14 +95 -3: test/coach_properties_6_test.dart: chemin street, profils 7680 à 8959 profils 8160 à 8319
-02:16 +96 -3: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 7680 à 7839
-02:18 +97 -3: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 7680 à 7839
-02:20 +98 -3: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 7680 à 7839
-02:22 +99 -3: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 7680 à 7839
-02:24 +100 -3: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 7680 à 7839
-02:29 +101 -3: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 3840 à 3999
-02:40 +102 -3: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 7840 à 7999
-02:41 +103 -3: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 4000 à 4159
-02:51 +104 -3: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 8000 à 8159
-02:53 +105 -3: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 4160 à 4319
-03:02 +106 -3: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 8160 à 8319
-03:05 +107 -3: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 4320 à 4479
-03:13 +108 -3: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 8320 à 8479
-03:17 +109 -3: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 4480 à 4639
-03:24 +110 -3: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 8480 à 8639
-03:28 +111 -3: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 4640 à 4799
-03:35 +112 -3: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 8640 à 8799
-03:40 +113 -3: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 4800 à 4959
-03:45 +114 -3: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 8800 à 8959
-03:51 +115 -3: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 4960 à 5119
-03:56 +116 -3: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 1280 à 1439
-04:00 +117 -3: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 1280 à 1439
-04:07 +118 -3: test/admission_test.dart: 600 profils aléatoires : mode prudent et exercices réservés relus sans le vivier
-04:19 +119 -3: test/admission_test.dart: 600 profils aléatoires : mode prudent et exercices réservés relus sans le vivier
-04:25 +120 -3: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 1600 à 1759
-04:32 +121 -3: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 8960 à 9119
-04:40 +122 -3: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 1760 à 1919
-04:44 +123 -3: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9120 à 9279
-04:50 +124 -3: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 1920 à 2079
-04:57 +125 -3: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9280 à 9439
-05:01 +126 -3: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 2080 à 2239
-05:09 +127 -3: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9440 à 9599
-05:13 +128 -3: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 2240 à 2399
-05:22 +129 -3: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9600 à 9759
-05:24 +130 -3: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 2400 à 2559
-05:34 +131 -3: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9760 à 9919
-05:35 +132 -3: test/coach_properties_7_test.dart: chemin street, profils 8960 à 10239 profils 8960 à 9119
-05:39 +133 -3: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9920 à 10079
-05:41 +134 -3: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9920 à 10079
-05:42 +135 -3: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9920 à 10079
-05:44 +136 -3: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9920 à 10079
-05:45 +137 -3: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9920 à 10079
-05:46 +138 -3: test/coach_properties_7_test.dart: chemin street, profils 8960 à 10239 profils 9760 à 9919
-05:47 +139 -3: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 10080 à 10239
-05:48 +140 -3: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 10080 à 10239
-05:50 +141 -3: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 10080 à 10239
-05:50 +142 -3: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 10080 à 10239
-05:50 +143 -3: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 10080 à 10239
-05:50 +144 -3: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 10080 à 10239
-05:50 +145 -3: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 10080 à 10239
-05:50 +146 -3: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 10080 à 10239
-05:50 +147 -3: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 10080 à 10239
-05:50 +148 -3: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 10080 à 10239
-05:50 +149 -3: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 10080 à 10239
-05:50 +150 -3: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 10080 à 10239
-05:50 +151 -3: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 10080 à 10239
-05:50 +152 -3: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 10080 à 10239
-05:50 +153 -3: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 10080 à 10239
-05:50 +154 -3: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 10080 à 10239
-05:50 +155 -3: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 10080 à 10239
-05:50 +156 -3: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 10080 à 10239
-05:57 +157 -3: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5120 à 5279
-06:01 +158 -3: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5120 à 5279
-06:03 +159 -3: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5120 à 5279
-06:05 +160 -3: test/coach_properties_2_test.dart: chemin street, profils 2560 à 3839 profils 2880 à 3039
-06:05 +161 -3: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5280 à 5439
-06:06 +162 -3: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5280 à 5439
-06:08 +163 -3: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5280 à 5439
-06:09 +164 -3: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5280 à 5439
-06:11 +165 -3: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5280 à 5439
-06:12 +166 -3: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5280 à 5439
-06:12 +167 -3: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5280 à 5439
-06:12 +168 -3: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5280 à 5439
-06:12 +169 -3: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5280 à 5439
-06:17 +170 -3: test/resemblance_test.dart: profils types, graines 0 à 3 : ressemblance sous le seuil
-06:17 +171 -3: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5440 à 5599
-06:27 +172 -3: test/resemblance_test.dart: 600 profils aléatoires : ressemblance sous le seuil, aucun accessoire propre au propriétaire sur-représenté sans discipline street
-06:40 +173 -3: test/resemblance_test.dart: 600 profils aléatoires : ressemblance sous le seuil, aucun accessoire propre au propriétaire sur-représenté sans discipline street
+00:16 +45 -3: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:16 +46 -3: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:16 +47 -3: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:20 +48 -3: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 0 à 159
+00:35 +49 -3: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2720 à 2879
+00:35 +50 -3: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 160 à 319
+00:48 +51 -3: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 160 à 319
+00:49 +52 -3: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 3040 à 3199
+01:02 +53 -3: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 320 à 479
+01:04 +54 -3: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 3200 à 3359
+01:16 +55 -3: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 480 à 639
+01:20 +56 -3: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 3360 à 3519
+01:29 +57 -3: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 640 à 799
+01:33 +58 -3: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 3520 à 3679
+01:43 +59 -3: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 800 à 959
+01:47 +60 -3: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 3680 à 3839
+01:56 +61 -3: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 960 à 1119
+02:02 +62 -3: test/coach_properties_4_test.dart: chemin street, profils 5120 à 6399 profils 5120 à 5279
+02:03 +63 -3: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 1120 à 1279
+02:05 +64 -3: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 1120 à 1279
+02:08 +65 -3: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 1120 à 1279
+02:10 +66 -3: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 1120 à 1279
+02:12 +67 -3: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 1120 à 1279
+02:14 +68 -3: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 1120 à 1279
+02:16 +69 -3: test/coach_properties_4_test.dart: chemin street, profils 5120 à 6399 profils 6080 à 6239
+02:16 +70 -3: test/coach_properties_4_test.dart: chemin street, profils 5120 à 6399 profils 6240 à 6399
+02:19 +71 -3: test/smoke_test.dart: les 40 profils types : passe 1, revue, passe 2 sans violation
+02:22 +72 -3: test/coach_properties_0_test.dart: chemin street, profils 0 à 1279 profils 0 à 159
+02:25 +73 -3: test/engine_test.dart: déterminisme même requête, même JSON, quelle que soit l'instance
+02:27 +74 -3: test/engine_test.dart: déterminisme même requête, même JSON, quelle que soit l'instance
+02:29 +75 -3: test/engine_test.dart: déterminisme même requête, même JSON, quelle que soit l'instance
+02:31 +76 -3: test/engine_test.dart: déterminisme même requête, même JSON, quelle que soit l'instance
+02:33 +77 -3: test/engine_test.dart: déterminisme même requête, même JSON, quelle que soit l'instance
+02:36 +78 -3: test/engine_test.dart: déterminisme même requête, même JSON, quelle que soit l'instance
+02:37 +79 -3: test/engine_test.dart: déterminisme même requête, même JSON, quelle que soit l'instance
+02:39 +80 -3: test/coach_properties_0_test.dart: chemin street, profils 0 à 1279 profils 1120 à 1279
+02:39 +81 -3: test/engine_test.dart: déterminisme le résultat ne dépend pas de l'ordre des disponibilités, du matériel, des niveaux et des goûts
+02:41 +82 -3: test/coach_properties_6_test.dart: chemin street, profils 7680 à 8959 profils 7680 à 7839
+02:41 +83 -3: test/coach_properties_6_test.dart: chemin street, profils 7680 à 8959 profils 7680 à 7839
+02:46 +84 -3: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:46 +85 -3: test/coach_properties_6_test.dart: chemin street, profils 7680 à 8959 profils 7840 à 7999
+02:47 +86 -3: test/coach_properties_6_test.dart: chemin street, profils 7680 à 8959 profils 7840 à 7999
+02:47 +87 -3: test/coach_properties_6_test.dart: chemin street, profils 7680 à 8959 profils 7840 à 7999
+02:48 +88 -3: test/coach_properties_6_test.dart: chemin street, profils 7680 à 8959 profils 7840 à 7999
+02:48 +89 -3: test/engine_test.dart: verrous jour gardé : la revue d'un autre jour n'y touche pas
+02:48 +90 -3: test/coach_properties_6_test.dart: chemin street, profils 7680 à 8959 profils 8000 à 8159
+02:48 +91 -3: test/coach_properties_6_test.dart: chemin street, profils 7680 à 8959 profils 8000 à 8159
+02:48 +92 -3: test/coach_properties_6_test.dart: chemin street, profils 7680 à 8959 profils 8000 à 8159
+02:48 +93 -3: test/coach_properties_6_test.dart: chemin street, profils 7680 à 8959 profils 8000 à 8159
+02:50 +94 -3: test/engine_test.dart: ligne de commande dart run kalis_plan:plan rend le programme du moteur
+02:52 +95 -3: test/coach_properties_6_test.dart: chemin street, profils 7680 à 8959 profils 8160 à 8319
+02:53 +96 -3: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 7680 à 7839
+02:55 +97 -3: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 7680 à 7839
+02:57 +98 -3: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 7680 à 7839
+02:59 +99 -3: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 7680 à 7839
+03:01 +100 -3: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 7680 à 7839
+03:13 +101 -3: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 3840 à 3999
+03:20 +102 -3: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 7840 à 7999
+03:26 +103 -3: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 4000 à 4159
+03:34 +104 -3: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 8000 à 8159
+03:41 +105 -3: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 4160 à 4319
+03:47 +106 -3: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 8160 à 8319
+03:55 +107 -3: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 4320 à 4479
+04:01 +108 -3: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 8320 à 8479
+04:08 +109 -3: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 4480 à 4639
+04:14 +110 -3: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 8480 à 8639
+04:22 +111 -3: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 4640 à 4799
+04:28 +112 -3: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 8640 à 8799
+04:36 +113 -3: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 4800 à 4959
+04:41 +114 -3: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 8800 à 8959
+04:50 +115 -3: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 4960 à 5119
+04:55 +116 -3: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 1280 à 1439
+05:01 +117 -3: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 1280 à 1439
+05:10 +118 -3: test/admission_test.dart: 600 profils aléatoires : mode prudent et exercices réservés relus sans le vivier
+05:23 +119 -3: test/admission_test.dart: 600 profils aléatoires : mode prudent et exercices réservés relus sans le vivier
+05:31 +120 -3: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 1600 à 1759
+05:38 +121 -3: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 8960 à 9119
+05:51 +122 -3: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 8960 à 9119
+05:52 +123 -3: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 1920 à 2079
+06:05 +124 -3: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 1920 à 2079
+06:06 +125 -3: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9280 à 9439
+06:18 +126 -3: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9280 à 9439
+06:19 +127 -3: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 2240 à 2399
+06:32 +128 -3: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9440 à 9599
+06:34 +129 -3: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 2400 à 2559
+06:45 +130 -3: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9600 à 9759
+06:49 +131 -3: test/coach_properties_7_test.dart: chemin street, profils 8960 à 10239 profils 8960 à 9119
+06:51 +132 -3: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9760 à 9919
+06:53 +133 -3: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9760 à 9919
+06:56 +134 -3: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9760 à 9919
+06:58 +135 -3: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9760 à 9919
+07:00 +136 -3: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9760 à 9919
+07:02 +137 -3: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9760 à 9919
+07:03 +138 -3: test/coach_properties_7_test.dart: chemin street, profils 8960 à 10239 profils 9920 à 10079
+07:04 +139 -3: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9920 à 10079
+07:06 +140 -3: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9920 à 10079
+07:06 +141 -3: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9920 à 10079
+07:06 +142 -3: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9920 à 10079
+07:06 +143 -3: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9920 à 10079
+07:06 +144 -3: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9920 à 10079
+07:06 +145 -3: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9920 à 10079
+07:06 +146 -3: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9920 à 10079
+07:06 +147 -3: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9920 à 10079
+07:06 +148 -3: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9920 à 10079
+07:06 +149 -3: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9920 à 10079
+07:06 +150 -3: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9920 à 10079
+07:06 +151 -3: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9920 à 10079
+07:06 +152 -3: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9920 à 10079
+07:06 +153 -3: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9920 à 10079
+07:06 +154 -3: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9920 à 10079
+07:06 +155 -3: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9920 à 10079
+07:18 +156 -3: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5120 à 5279
+07:24 +157 -3: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 10080 à 10239
+07:32 +158 -3: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5280 à 5439
+07:37 +159 -3: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5280 à 5439
+07:40 +160 -3: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5280 à 5439
+07:40 +161 -3: test/coach_properties_2_test.dart: chemin street, profils 2560 à 3839 profils 2880 à 3039
+07:42 +162 -3: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5440 à 5599
+07:44 +163 -3: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5440 à 5599
+07:46 +164 -3: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5440 à 5599
+07:48 +165 -3: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5440 à 5599
+07:50 +166 -3: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5440 à 5599
+07:52 +167 -3: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5440 à 5599
+07:52 +168 -3: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5440 à 5599
+07:52 +169 -3: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5440 à 5599
+07:52 +170 -3: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5440 à 5599
+07:53 +171 -3: test/resemblance_test.dart: profils types, graines 0 à 3 : ressemblance sous le seuil
+07:58 +172 -3: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5600 à 5759
+08:07 +173 -3: test/resemblance_test.dart: 600 profils aléatoires : ressemblance sous le seuil, aucun accessoire propre au propriétaire sur-représenté sans discipline street
+08:20 +174 -3: test/resemblance_test.dart: 600 profils aléatoires : ressemblance sous le seuil, aucun accessoire propre au propriétaire sur-représenté sans discipline street
+08:29 +175 -3: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5920 à 6079
+08:34 +176 -3: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5920 à 6079
+08:35 +177 -3: test/coach_properties_1_test.dart: chemin street, profils 1280 à 2559 profils 1440 à 1599
+08:37 +178 -3: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 6080 à 6239
+08:39 +179 -3: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 6080 à 6239
+08:42 +180 -3: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 6080 à 6239
+08:44 +181 -3: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 6080 à 6239
+08:46 +182 -3: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 6080 à 6239
+08:48 +183 -3: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 6080 à 6239
+08:50 +184 -3: test/coach_properties_1_test.dart: chemin street, profils 1280 à 2559 profils 2400 à 2559
+08:50 +185 -3: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 6240 à 6399
+09:03 +186 -3: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6400 à 6559
+09:09 +187 -3: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6400 à 6559
+09:11 +188 -3: test/coach_properties_3_test.dart: chemin street, profils 3840 à 5119 profils 4000 à 4159
+09:11 +189 -3: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6560 à 6719
+09:13 +190 -3: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6560 à 6719
+09:15 +191 -3: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6560 à 6719
+09:17 +192 -3: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6560 à 6719
+09:19 +193 -3: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6560 à 6719
+09:21 +194 -3: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6560 à 6719
+09:23 +195 -3: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6560 à 6719
+09:25 +196 -3: test/coach_properties_5_test.dart: chemin street, profils 6400 à 7679 profils 6400 à 6559
+09:28 +197 -3: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6720 à 6879
+09:31 +198 -3: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6720 à 6879
+09:33 +199 -3: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6720 à 6879
+09:35 +200 -3: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6720 à 6879
+09:37 +201 -3: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6720 à 6879
+09:39 +202 -3: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6720 à 6879
+09:40 +203 -3: test/coach_properties_5_test.dart: chemin street, profils 6400 à 7679 profils 7360 à 7519
+09:41 +204 -3: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6880 à 7039
+09:43 +205 -3: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6880 à 7039
+09:54 +206 -3: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 7040 à 7199
+10:07 +207 -3: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 7200 à 7359
+10:19 +208 -3: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 7360 à 7519
+10:33 +209 -3: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 7520 à 7679
+10:46 +210 -3: Some tests failed.
+
+Failing tests:
+  test/coach_test.dart: CX — saison complète répétitions avancé : pas de traction deux jours de suite
+  test/docs_test.dart: docs/COMPARAISON_L10.md est à jour
+  test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+
+Consider enabling the flag chain-stack-traces to receive more detailed exceptions.
+For example, 'dart test --chain-stack-traces'.
+tests : échec
+kalis_plan 0.2.1 : rapport écrit dans /home/runner/work/streetlift-apk/streetlift-apk/out-packages/kalis_plan (166 s).
+durée : 825 s

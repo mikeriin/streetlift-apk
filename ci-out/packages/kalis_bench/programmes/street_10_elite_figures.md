@@ -68,7 +68,7 @@ Homme de 27 ans, 64 kg, sept ans de pratique. Front lever complet tenu 8 s, plan
 - Jour chargé : version courte de 25 min — échauffement, puis les deux ou trois premiers exercices de la séance. Une séance courte vaut mieux qu'une séance sautée.
 - Arrêt immédiat et avis médical : douleur dans la poitrine, essoufflement anormal, malaise ou vertige. Souffle pendant l'effort, sans bloquer la respiration sur les séries longues.
 - Séance manquée : elle ne se rattrape pas. Semaine manquée : refais la dernière semaine terminée. Deux semaines ou plus : reprends deux semaines en arrière avec 20 % de volume en moins.
-- Les tests de fin de bloc (ou de la semaine de test) recalent les charges, les répétitions et les secondes du bloc suivant : le plan écrit part du repère attendu au test ; si ton résultat est différent, déclare-le et recalcule (série de tête = résultat − 2 ; tenues = 60 à 75 % du maintien mesuré).
+- Les tests de fin de bloc (ou de la semaine de test) recalent les charges, les répétitions et les secondes du bloc suivant : déclare ton résultat, le bloc suivant est écrit dessus (série de tête = résultat − 2 ; tenues = 60 à 85 % du maintien mesuré), jamais sur un progrès supposé. Un test fait un jour de bilan bas se reporte de 48 à 72 h.
 - 48 h sans travail dur du mouvement avant un test.
 - Ancienneté d'entraînement prise en compte : plus de 5 ans.
 - Les réductions liées à ton profil habituel (sommeil, stress, travail physique, âge) sont déjà dans les chiffres des tableaux : ne les retire pas une deuxième fois. La baisse du jour (nuit nettement plus courte que d'habitude, bilan bas) s'applique en plus, elle.

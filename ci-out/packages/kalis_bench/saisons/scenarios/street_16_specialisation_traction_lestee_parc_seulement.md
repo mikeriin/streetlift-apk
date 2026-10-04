@@ -28,14 +28,14 @@ Chaque bloc est écrit par le moteur de création au moment où il commence, d'a
 | --- | --- | --- | --- | --- |
 | 1 | 1 à 4 | construction (volume) | introduction, construction (volume), construction (volume), allègement | le profil de départ |
 | 2 | 5 à 10 | réalisation (spécifique à l'objectif) | intensification (séries plus dures), intensification (séries plus dures), réalisation (spécifique à l'objectif), réalisation (spécifique à l'objectif), affûtage, échéance | le point de fin du bloc 1 |
-| 3 | 11 à 14 | construction (volume) | transition (récupération), construction (volume), construction (volume), allègement | les tests du bloc 2 (Traction lestée de compétition : 1 × +48,75 kg) et son point de fin de bloc |
-| 4 | 15 à 16 | construction (volume) | —, — | les tests du bloc 3 (Traction lestée de compétition : 3 × +37,5 kg) et son point de fin de bloc |
+| 3 | 11 à 14 | construction (volume) | transition (récupération), introduction, construction (volume), allègement | les tests du bloc 2 (Traction lestée de compétition : 1 × +48,75 kg) et son point de fin de bloc |
+| 4 | 15 à 16 | construction (volume) | —, — | les tests du bloc 3 (Traction lestée de compétition : 3 × +36,25 kg) et son point de fin de bloc |
 
 ## Bilan
 
-- Séances faites : 63 sur 64 (19 ajustées le jour même).
-- Échecs non voulus (hors tests et tentatives) : 0,3 % des séries de travail.
-- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 1,58 répétition en réserve (sur les 67 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 16,1 %.
+- Séances faites : 63 sur 64 (18 ajustées le jour même).
+- Échecs non voulus (hors tests et tentatives) : 0,1 % des séries de travail.
+- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 1,7 répétition en réserve (sur les 67 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 19,4 %.
 - Plus forte hausse de charge totale d'un mouvement principal d'une séance à la suivante, à schéma égal : 5,4 % ; hausses de plus de 10 % faites de plusieurs crans : 0.
 - Progression réelle moyenne des mouvements suivis : 0,117 % par semaine.
 - Tentatives de maximum : 3 réussies sur 3 ; ouvertures réussies : 100 %.
@@ -61,11 +61,11 @@ Pour chaque mouvement, la séance la plus lourde de la semaine : ce que le progr
 | 9 | affûtage | 3 × 1 à 90 %, série de tête puis séries allégées | 1 à 35 kg puis 2-2 à 26,25 kg | 1 à 35 kg puis 2-2 à 26,25 kg | 3 → 6,4 ; suivantes 5+ → 8,2 | 126 (lest 53) / 121 (lest 48) | — |
 | 10 | échéance | 3 × 1 à 91 %, test | 1 à 38,75 kg puis 1 à 43,75 kg puis 1 à 48,75 kg | 1 à 38,75 kg puis 1 à 43,75 kg puis 1 à 48,75 kg | test | 122 (lest 49) / 122 (lest 49) | ouverture à 91,8 % du maximum estimé ; barre suivante choisie pour 81 % de chances de réussite ; barre suivante choisie pour 50 % de chances de réussite |
 | 11 | transition (récupération) | 3 × 5 à 65 % | 5-5-5 à 6,25 kg | 5-5-5 à 6,25 kg | 5+ → 12 ; suivantes 5+ → 11,8 | 125 (lest 52) / 123 (lest 50) | — |
-| 12 | construction (volume) | 3 × 5 à 78 % | 5-5-5 à 28,75 kg | 5 à 28,75 kg puis 5 à 30 kg puis 5 à 31,25 kg | 2 → 4,5 ; suivantes 2 → 3,6 | 126 (lest 53) / 124 (lest 51) | — |
-| 13 | construction (volume) | 3 × 4 à 85 %, série de tête puis séries allégées | (4 à 7) à 35 kg puis 4-4 à 28,75 kg | 4 à 35 kg puis 4-4 à 25 kg | 2 → 2,6 ; suivantes 3,5 → 5,9 | 124 (lest 51) / 125 (lest 52) | série repère : une série ouverte (au ressenti, 2 en réserve) pour mesurer où en est l'athlète ; séries allégées calculées sur la série de tête réalisée (35 kg, −5,8 %) ; dernières séries plus dures que prévu |
-| 14 | allègement | 1 × 3 à 88 %, test | 3 à 37,5 kg | 3 à 37,5 kg | test | 125 (lest 52) / 124 (lest 52) | — |
-| 15 | construction (volume) | 4 × 4 à 85 %, série de tête puis séries allégées | 4 à 35 kg puis 4-4-4 à 28,75 kg | 4 à 35 kg puis 4-4-4 à 28,75 kg | 2 → 2,5 ; suivantes 4 → 4,4 | 123 (lest 51) / 124 (lest 51) | — |
-| 16 | montée | 5 × 4 à 85 %, série de tête puis séries allégées | 4 à 33,75 kg puis 4-4-4-4 à 27,5 kg | 4 à 33,75 kg puis 4-4-4-4 à 27,5 kg | 2 → 3,1 ; suivantes 3,5 → 5 | 124 (lest 51) / 124 (lest 52) | — |
+| 12 | introduction | 3 × 5 à 67 %, série de tête puis séries allégées | 5 à 10 kg puis 5-5 à 2,5 kg | 5 à 10 kg puis 5-5 à 2,5 kg | 5+ → 11,9 ; suivantes 5+ → 14,1 | 130 (lest 57) / 123 (lest 50) | — |
+| 13 | construction (volume) | 5 × 4 à 85 %, série de tête puis séries allégées | (4 à 7) à 33,75 kg puis 4-4-4-4 à 27,5 kg | 4 à 33,75 kg puis 4-4-4-4 à 23,75 kg | 2 → 3,2 ; suivantes 3,5 → 6,3 | 124 (lest 51) / 123 (lest 50) | série repère : une série ouverte (au ressenti, 2 en réserve) pour mesurer où en est l'athlète ; séries allégées calculées sur la série de tête réalisée (33,75 kg, −5,9 %) ; dernières séries plus dures que prévu |
+| 14 | allègement | 1 × 3 à 88 %, test | 3 à 36,25 kg | 3 à 36,25 kg | test | 124 (lest 52) / 123 (lest 50) | — |
+| 15 | construction (volume) | 5 × 4 à 85 %, série de tête puis séries allégées | 4 à 33,75 kg puis 4-4-4-4 à 27,5 kg | 4 à 33,75 kg puis 4-4-4 à 27,5 kg puis 4 à 23,75 kg | 2 → 2,9 ; suivantes 3,5 → 5,1 | 123 (lest 51) / 124 (lest 51) | séries allégées calculées sur la série de tête réalisée (33,75 kg, −5,9 %) ; dernières séries plus dures que prévu |
+| 16 | construction (volume) | 5 × 4 à 85 %, série de tête puis séries allégées | (4 à 7) à 32,5 kg puis 4-4-4-4 à 26,25 kg | 4 à 32,5 kg puis 4-4-4-4 à 26,25 kg | 2 → 3,6 ; suivantes 3,5 → 5,5 | 124 (lest 51) / 124 (lest 52) | série repère : une série ouverte (au ressenti, 2 en réserve) pour mesurer où en est l'athlète |
 
 Athlète simulé, maximum réel hors fatigue : 122 (lest 49) au départ (le record déclaré au profil peut être plus haut ou plus ancien), 124 (lest 52) en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
 
@@ -81,11 +81,11 @@ Athlète simulé, maximum réel hors fatigue : 122 (lest 49) au départ (le reco
 - **Semaine 9 (affûtage)** : phase « affûtage » : séances servies telles que le programme les écrit (× 4) ; affûtage : aucun volume ajouté, intensité gardée (× 4) ; échéance proche : décisions prudentes, pas de hausse au-delà du programme (× 4) ; exercice retiré — Squat de compétition, Rotation externe à la poulie coude au corps (lieu différent : exercices adaptés au matériel).
 - **Semaine 10 (échéance)** : phase « échéance » : séances servies telles que le programme les écrit (× 4) ; affûtage : aucun volume ajouté, intensité gardée (× 4) ; échéance proche : décisions prudentes, pas de hausse au-delà du programme (× 4) ; exercice retiré — Squat de compétition, Rotation externe à la poulie coude au corps (lieu différent : exercices adaptés au matériel) ; résultat de test reporté au profil : Traction lestée de compétition 1 × 48,75 kg.
 - **Semaine 11 (transition (récupération))** : nouveau bloc construit à partir du point de fin de bloc (maxima estimés, résultats de test, tolérance) ; phase « transition (récupération) » : séances servies telles que le programme les écrit (× 4).
-- **Semaine 12 (construction (volume))** : Nordic hamstring curl assisté à l'élastique : un cran d'assistance de plus (élastique plus épais, plus d'appui) : la plage ne laisse plus la réserve visée ; bilan du jour bas (2/5) ; Nordic hamstring curl assisté à l'élastique : un cran d'assistance de moins (élastique plus fin, moins d'appui) : la série repère a montré 6 répétitions de réserve de plus que visé ; charges réduites sur 4 exercices (bilan du jour bas (2/5)).
-- **Semaine 13 (construction (volume))** : Nordic hamstring curl assisté à l'élastique : un cran d'assistance de moins (élastique plus fin, moins d'appui) : la série repère a montré 3 répétitions de réserve de plus que visé.
-- **Semaine 14 (allègement)** : phase « allègement » : séances servies telles que le programme les écrit (× 4) ; résultat de test reporté au profil : Traction lestée de compétition 3 × 37,5 kg.
-- **Semaine 15 (construction (volume))** : nouveau bloc construit à partir du point de fin de bloc (maxima estimés, résultats de test, tolérance) ; proposition appliquée : volume ajusté.
-- **Semaine 16** : 1 séance(s) manquée(s) sur 4 ; Curl marteau aux haltères : séries arrêtées en cours de séance (allégé pour garder la marge prévue (au moins 2 en réserve), dernières séries plus dures que prévu) ; bilan du jour bas (2/5) ; nuit courte ; séries retirées — Traction lestée de compétition, Dips lesté de compétition (bilan du jour bas (2/5), nuit courte) ; charges réduites sur 4 exercices (bilan du jour bas (2/5), nuit courte) ; proposition appliquée : volume ajusté ; proposition appliquée : exercice échangé.
+- **Semaine 12 (introduction)** : phase « introduction » : séances servies telles que le programme les écrit (× 4) ; bilan du jour bas (2/5) ; charges réduites sur 4 exercices (bilan du jour bas (2/5)).
+- **Semaine 13 (construction (volume))** : Nordic hamstring curl assisté à l'élastique : un cran d'assistance de plus (élastique plus épais, plus d'appui) : la plage ne laisse plus la réserve visée ; Nordic hamstring curl assisté à l'élastique : un cran d'assistance de moins (élastique plus fin, moins d'appui) : la série repère a montré 7 répétitions de réserve de plus que visé.
+- **Semaine 14 (allègement)** : phase « allègement » : séances servies telles que le programme les écrit (× 4) ; résultat de test reporté au profil : Traction lestée de compétition 3 × 36,25 kg.
+- **Semaine 15 (construction (volume))** : nouveau bloc construit à partir du point de fin de bloc (maxima estimés, résultats de test, tolérance).
+- **Semaine 16 (construction (volume))** : 1 séance(s) manquée(s) sur 4 ; Dips lesté de compétition : séries arrêtées en cours de séance (allégé pour garder la marge prévue (au moins 3 en réserve), dernières séries plus dures que prévu) ; proposition appliquée : volume ajusté.
 
 ## Tentatives de maximum
 

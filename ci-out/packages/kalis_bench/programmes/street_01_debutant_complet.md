@@ -28,13 +28,13 @@ Homme de 24 ans, jamais entraîné, ne fait aucune traction ni aucun dips. Veut 
 | 3 | 1 | construction (volume) | 3 | 33 |
 | 4 | 1 | construction (volume) | 3 | 33 |
 | 5 | 1 | construction (volume) | 3 | 33 |
-| 6 | 1 | test | 3 | 21 |
+| 6 | 1 | test | 3 | 23 |
 | 7 | 2 | construction (volume) | 3 | 35 |
 | 8 | 2 | construction (volume) | 3 | 37 |
 | 9 | 2 | construction (volume) | 3 | 37 |
 | 10 | 2 | construction (volume) | 3 | 37 |
 | 11 | 2 | affûtage | 3 | 25 |
-| 12 | 2 | test | 3 | 7 |
+| 12 | 2 | test | 3 | 9 |
 
 ## Saison
 
@@ -50,7 +50,7 @@ Homme de 24 ans, jamais entraîné, ne fait aucune traction ni aucun dips. Veut 
 - Jour chargé : version courte de 15 min — échauffement, puis les deux ou trois premiers exercices de la séance. Une séance courte vaut mieux qu'une séance sautée.
 - Arrêt immédiat et avis médical : douleur dans la poitrine, essoufflement anormal, malaise ou vertige. Souffle pendant l'effort, sans bloquer la respiration sur les séries longues.
 - Séance manquée : elle ne se rattrape pas. Semaine manquée : refais la dernière semaine terminée. Deux semaines ou plus : reprends deux semaines en arrière avec 20 % de volume en moins.
-- Les tests de fin de bloc (ou de la semaine de test) recalent les charges, les répétitions et les secondes du bloc suivant : le plan écrit part du repère attendu au test ; si ton résultat est différent, déclare-le et recalcule (série de tête = résultat − 2 ; tenues = 60 à 75 % du maintien mesuré).
+- Les tests de fin de bloc (ou de la semaine de test) recalent les charges, les répétitions et les secondes du bloc suivant : déclare ton résultat, le bloc suivant est écrit dessus (série de tête = résultat − 2 ; tenues = 60 à 85 % du maintien mesuré), jamais sur un progrès supposé. Un test fait un jour de bilan bas se reporte de 48 à 72 h.
 - 48 h sans travail dur du mouvement avant un test.
 - Ancienneté d'entraînement prise en compte : moins de 6 mois.
 - Élastique : prends celui qui permet 8 répétitions propres avec la réserve prévue ; note-le à chaque séance. Si même le plus fort ne suffit pas, fais la traction pieds en appui (barre basse) en attendant. Dès que l'élastique le plus fin passe 8 répétitions, commence la séance par 1 à 3 essais isolés de traction stricte, sans forcer.
@@ -159,13 +159,13 @@ Homme de 24 ans, jamais entraîné, ne fait aucune traction ni aucun dips. Veut 
 | Support hold aux barres parallèles | 3 × 10 s | poids du corps | sous-maximal : arrêt bien avant la perte de position | 2 min 30 s | accessoire ; tenue isométrique |
 | Face pull à l'élastique | 2 × 12 à 15 | — | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
 
-### mercredi — force, corps entier (45 min disponibles, 32 min estimées)
+### mercredi — force, corps entier (45 min disponibles, 38 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
 | Traction assistée à l'élastique | 3 × 6 à 8 | poids du corps | 3 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
-| Tenue menton au-dessus de la barre pronation | 1 × 5 s | poids du corps | sous-maximal : arrêt bien avant la perte de position | 2 min 30 s | secondaire ; tenue isométrique |
+| Tenue menton au-dessus de la barre pronation | 3 × 5 s | poids du corps | sous-maximal : arrêt bien avant la perte de position | 2 min 30 s | secondaire ; tenue isométrique |
 | Pompe classique | 2 × 4 à 5 | poids du corps | 3 rép. en réserve | 2 min | principal ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Fente arrière au poids du corps | 2 × 8 à 10 | poids du corps | 3 rép. en réserve | 2 min | secondaire |
 | Pont fessier au sol | 2 × 8 à 10 | poids du corps | 3 rép. en réserve | 105 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
@@ -202,13 +202,13 @@ Homme de 24 ans, jamais entraîné, ne fait aucune traction ni aucun dips. Veut 
 | Support hold aux barres parallèles | 3 × 11 s | poids du corps | sous-maximal : arrêt bien avant la perte de position | 2 min 30 s | accessoire ; tenue isométrique |
 | Face pull à l'élastique | 2 × 12 à 15 | — | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
 
-### mercredi — force, corps entier (45 min disponibles, 33 min estimées)
+### mercredi — force, corps entier (45 min disponibles, 38 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
 | Traction assistée à l'élastique | 3 × 7 à 9 | poids du corps | 3 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
-| Tenue menton au-dessus de la barre pronation | 1 × 6 s | poids du corps | sous-maximal : arrêt bien avant la perte de position | 2 min 30 s | secondaire ; tenue isométrique |
+| Tenue menton au-dessus de la barre pronation | 3 × 6 s | poids du corps | sous-maximal : arrêt bien avant la perte de position | 2 min 30 s | secondaire ; tenue isométrique |
 | Pompe classique | 2 × 5 | poids du corps | 3 rép. en réserve | 2 min | principal ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Fente arrière au poids du corps | 2 × 9 à 11 | poids du corps | 3 rép. en réserve | 2 min | secondaire |
 | Pont fessier au sol | 2 × 9 à 11 | poids du corps | 3 rép. en réserve | 105 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
@@ -245,13 +245,13 @@ Homme de 24 ans, jamais entraîné, ne fait aucune traction ni aucun dips. Veut 
 | Support hold aux barres parallèles | 3 × 11 s | poids du corps | sous-maximal : arrêt bien avant la perte de position | 2 min 30 s | accessoire ; tenue isométrique |
 | Face pull à l'élastique | 2 × 12 à 15 | — | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
 
-### mercredi — force, corps entier (45 min disponibles, 33 min estimées)
+### mercredi — force, corps entier (45 min disponibles, 38 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
 | Traction assistée à l'élastique | 3 × 7 à 9 | poids du corps | 3 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
-| Tenue menton au-dessus de la barre pronation | 1 × 6 s | poids du corps | sous-maximal : arrêt bien avant la perte de position | 2 min 30 s | secondaire ; tenue isométrique |
+| Tenue menton au-dessus de la barre pronation | 3 × 6 s | poids du corps | sous-maximal : arrêt bien avant la perte de position | 2 min 30 s | secondaire ; tenue isométrique |
 | Pompe classique | 2 × 5 | poids du corps | 3 rép. en réserve | 2 min | principal ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Fente arrière au poids du corps | 2 × 9 à 11 | poids du corps | 3 rép. en réserve | 2 min | secondaire |
 | Pont fessier au sol | 2 × 9 à 11 | poids du corps | 3 rép. en réserve | 105 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
@@ -274,23 +274,25 @@ Homme de 24 ans, jamais entraîné, ne fait aucune traction ni aucun dips. Veut 
 
 ## Semaine 6 — test (bloc 1)
 
-### lundi — force, corps entier, séance légère (45 min disponibles, 19 min estimées)
+### lundi — force, corps entier, séance légère (45 min disponibles, 23 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
+| Tenue menton au-dessus de la barre pronation | 2 × 5 à 30 s | poids du corps | — | 3 min | ÉPREUVE ; Test, d'abord l'essai strict, frais : après l'échauffement et 1 à 2 tractions faciles à l'élastique, essaie la traction stricte — départ bras tendus, menton au-dessus de la barre, sans élan — jusqu'à 3 essais séparés de 3 min, autant de répétitions propres que possible (objectif : 3). Fais cet essai à chaque test, en fin de bloc comme le jour de l'échéance, quel que soit le temps de tes descentes. Si une traction passe, déclare-la dans l'application : les séances commenceront alors par 2 à 3 tractions strictes isolées, propres, arrêt au premier essai lent ou déformé (jamais un effort maximal), le reste en descentes freinées et en tractions assistées. ; Ensuite, seulement si aucune traction n'est passée : la tenue menton au-dessus de la barre la plus longue, deux essais chronométrés (monte en sautant depuis un appui, bras fléchis, menton au-dessus de la barre ; repère : 10 s). Elle mesure la force de la position haute, d'un test à l'autre. |
 | Pompe classique | 1 série maximale (repère : 9 à 11) | poids du corps | — | 4 min | ÉPREUVE ; Test : une seule série maximale, arrêt dès que la forme casse. ; Avant la série maximale : 2 séries faciles (un quart, puis un tiers du maximum), 2 à 3 min de repos. Pendant : rythme régulier dès le départ, souffle en haut de chaque répétition ; des pauses courtes en position de repos (bras tendus) si ton standard les autorise. |
 | Row australien genoux fléchis pieds à plat | 1 × 6 à 8 | poids du corps | 3 rép. en réserve | 2 min | secondaire |
 | Air squat | 1 × 8 à 10 | poids du corps | 3 rép. en réserve | 2 min | secondaire |
 | Fente arrière au poids du corps | 2 × 8 à 10 | poids du corps | 3 rép. en réserve | 105 s | accessoire |
 | Support hold aux barres parallèles | 2 × 10 s | poids du corps | sous-maximal : arrêt bien avant la perte de position | 2 min 30 s | accessoire ; tenue isométrique |
 
-### mercredi — force, corps entier, séance légère (45 min disponibles, 21 min estimées)
+### mercredi — force, corps entier, séance légère (45 min disponibles, 24 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
 | Traction assistée à l'élastique | 2 × 6 à 8 | poids du corps | 3 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
+| Tenue menton au-dessus de la barre pronation | 2 × 5 s | poids du corps | sous-maximal : arrêt bien avant la perte de position | 2 min 30 s | secondaire ; tenue isométrique |
 | Pompe classique | 1 × 4 à 5 | poids du corps | 3 rép. en réserve | 2 min | principal ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Fente arrière au poids du corps | 1 × 8 à 10 | poids du corps | 3 rép. en réserve | 2 min | secondaire |
 | Pont fessier au sol | 2 × 8 à 10 | poids du corps | 3 rép. en réserve | 105 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
@@ -326,13 +328,13 @@ Homme de 24 ans, jamais entraîné, ne fait aucune traction ni aucun dips. Veut 
 | Dips assistés à l'élastique | 1 × 6 à 8 | poids du corps | 3 rép. en réserve | 2 min | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Face pull à l'élastique | 2 × 12 à 15 | — | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
 
-### mercredi — force, corps entier (45 min disponibles, 35 min estimées)
+### mercredi — force, corps entier (45 min disponibles, 38 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
 | Traction assistée à l'élastique | 3 × 6 à 8 | poids du corps | 3 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
-| Tenue menton au-dessus de la barre pronation | 2 × 5 s | poids du corps | sous-maximal : arrêt bien avant la perte de position | 2 min 30 s | secondaire ; tenue isométrique |
+| Tenue menton au-dessus de la barre pronation | 3 × 5 s | poids du corps | sous-maximal : arrêt bien avant la perte de position | 2 min 30 s | secondaire ; tenue isométrique |
 | Pompe classique | 2 × 5 à 6 | poids du corps | 2 rép. en réserve | 2 min | principal ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Fente arrière au poids du corps | 2 × 8 à 10 | poids du corps | 3 rép. en réserve | 2 min | secondaire |
 | Pont fessier au sol | 2 × 8 à 10 | poids du corps | 3 rép. en réserve | 105 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
@@ -369,13 +371,13 @@ Homme de 24 ans, jamais entraîné, ne fait aucune traction ni aucun dips. Veut 
 | Dips assistés à l'élastique | 2 × 7 à 9 | poids du corps | 3 rép. en réserve | 2 min | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Face pull à l'élastique | 2 × 12 à 15 | — | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
 
-### mercredi — force, corps entier (45 min disponibles, 36 min estimées)
+### mercredi — force, corps entier (45 min disponibles, 38 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
 | Traction assistée à l'élastique | 3 × 7 à 9 | poids du corps | 3 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
-| Tenue menton au-dessus de la barre pronation | 2 × 6 s | poids du corps | sous-maximal : arrêt bien avant la perte de position | 2 min 30 s | secondaire ; tenue isométrique |
+| Tenue menton au-dessus de la barre pronation | 3 × 6 s | poids du corps | sous-maximal : arrêt bien avant la perte de position | 2 min 30 s | secondaire ; tenue isométrique |
 | Pompe classique | 2 × 6 | poids du corps | 2 rép. en réserve | 2 min | principal ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Fente arrière au poids du corps | 2 × 9 à 11 | poids du corps | 3 rép. en réserve | 2 min | secondaire |
 | Pont fessier au sol | 2 × 9 à 11 | poids du corps | 3 rép. en réserve | 105 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
@@ -412,13 +414,13 @@ Homme de 24 ans, jamais entraîné, ne fait aucune traction ni aucun dips. Veut 
 | Dips assistés à l'élastique | 2 × 7 à 9 | poids du corps | 3 rép. en réserve | 2 min | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Face pull à l'élastique | 2 × 12 à 15 | — | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
 
-### mercredi — force, corps entier (45 min disponibles, 36 min estimées)
+### mercredi — force, corps entier (45 min disponibles, 38 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
 | Traction assistée à l'élastique | 3 × 7 à 9 | poids du corps | 3 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
-| Tenue menton au-dessus de la barre pronation | 2 × 6 s | poids du corps | sous-maximal : arrêt bien avant la perte de position | 2 min 30 s | secondaire ; tenue isométrique |
+| Tenue menton au-dessus de la barre pronation | 3 × 6 s | poids du corps | sous-maximal : arrêt bien avant la perte de position | 2 min 30 s | secondaire ; tenue isométrique |
 | Pompe classique | 2 × 6 | poids du corps | 2 rép. en réserve | 2 min | principal ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Fente arrière au poids du corps | 2 × 9 à 11 | poids du corps | 3 rép. en réserve | 2 min | secondaire |
 | Pont fessier au sol | 2 × 9 à 11 | poids du corps | 3 rép. en réserve | 105 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
@@ -455,13 +457,13 @@ Homme de 24 ans, jamais entraîné, ne fait aucune traction ni aucun dips. Veut 
 | Dips assistés à l'élastique | 2 × 8 à 10 | poids du corps | 3 rép. en réserve | 2 min | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Face pull à l'élastique | 2 × 12 à 15 | — | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
 
-### mercredi — force, corps entier (45 min disponibles, 36 min estimées)
+### mercredi — force, corps entier (45 min disponibles, 39 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
 | Traction assistée à l'élastique | 3 × 8 à 10 | poids du corps | 3 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
-| Tenue menton au-dessus de la barre pronation | 2 × 6 s | poids du corps | sous-maximal : arrêt bien avant la perte de position | 2 min 30 s | secondaire ; tenue isométrique |
+| Tenue menton au-dessus de la barre pronation | 3 × 6 s | poids du corps | sous-maximal : arrêt bien avant la perte de position | 2 min 30 s | secondaire ; tenue isométrique |
 | Pompe classique | 2 × 6 | poids du corps | 2 rép. en réserve | 2 min | principal ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Fente arrière au poids du corps | 2 × 10 à 12 | poids du corps | 3 rép. en réserve | 2 min | secondaire |
 | Pont fessier au sol | 2 × 10 à 12 | poids du corps | 3 rép. en réserve | 105 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
@@ -533,18 +535,20 @@ Homme de 24 ans, jamais entraîné, ne fait aucune traction ni aucun dips. Veut 
 | Fente arrière au poids du corps | 2 × 8 à 10 | poids du corps | 3 rép. en réserve | 105 s | accessoire |
 | Dips assistés à l'élastique | 1 × 6 à 8 | poids du corps | 3 rép. en réserve | 2 min | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 
-### mercredi — force, corps entier (45 min disponibles, 16 min estimées)
+### mercredi — force, corps entier (45 min disponibles, 19 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
 | Traction assistée à l'élastique | 2 × 5 | poids du corps | 5 rép. en réserve ou plus | 2 min | principal ; À deux jours du test : séance facile, deux séries au plus à 60 % des répétitions habituelles, très loin de l'échec — 48 h sans travail dur avant le test. ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
+| Tenue menton au-dessus de la barre pronation | 2 × 5 s | poids du corps | sous-maximal : arrêt bien avant la perte de position | 2 min 30 s | secondaire ; tenue isométrique ; À deux jours du test : séance facile, deux séries au plus à 60 % des répétitions habituelles, très loin de l'échec — 48 h sans travail dur avant le test. |
 | Pompe classique | 1 × 4 | poids du corps | 5 rép. en réserve ou plus | 2 min | principal ; À deux jours du test : séance facile, deux séries au plus à 60 % des répétitions habituelles, très loin de l'échec — 48 h sans travail dur avant le test. ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Fente arrière au poids du corps | 1 × 6 | poids du corps | 5 rép. en réserve ou plus | 2 min | secondaire ; À deux jours du test : séance facile, deux séries au plus à 60 % des répétitions habituelles, très loin de l'échec — 48 h sans travail dur avant le test. |
 | Dead bug | 2 × 7 | poids du corps | 5 rép. en réserve ou plus | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. ; À deux jours du test : séance facile, deux séries au plus à 60 % des répétitions habituelles, très loin de l'échec — 48 h sans travail dur avant le test. |
 
-### vendredi — force, corps entier (45 min disponibles, 7 min estimées)
+### vendredi — force, corps entier, séance lourde (45 min disponibles, 12 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
+| Tenue menton au-dessus de la barre pronation | 2 × 5 à 30 s | poids du corps | — | 3 min | ÉPREUVE ; Test, d'abord l'essai strict, frais : après l'échauffement et 1 à 2 tractions faciles à l'élastique, essaie la traction stricte — départ bras tendus, menton au-dessus de la barre, sans élan — jusqu'à 3 essais séparés de 3 min, autant de répétitions propres que possible (objectif : 3). Fais cet essai à chaque test, en fin de bloc comme le jour de l'échéance, quel que soit le temps de tes descentes. Si une traction passe, déclare-la dans l'application : les séances commenceront alors par 2 à 3 tractions strictes isolées, propres, arrêt au premier essai lent ou déformé (jamais un effort maximal), le reste en descentes freinées et en tractions assistées. ; Ensuite, seulement si aucune traction n'est passée : la tenue menton au-dessus de la barre la plus longue, deux essais chronométrés (monte en sautant depuis un appui, bras fléchis, menton au-dessus de la barre ; repère : 10 s). Elle mesure la force de la position haute, d'un test à l'autre. |

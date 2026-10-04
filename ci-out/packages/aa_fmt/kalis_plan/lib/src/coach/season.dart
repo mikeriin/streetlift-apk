@@ -642,6 +642,20 @@ BlockShape shapeBlock(
       stage: 0,
       weeksToEvent: w0.weeksToEvent,
     );
+    // Puis une semaine de reprise à environ 75 % du volume : de la
+    // transition (50 %) au volume plein, deux marches au lieu d'une
+    // (R3-P19, R5-P22 : +10 à 20 % par semaine ; panel CX, boucle 1).
+    final w1 = weeks[1];
+    if (w1.kind == WeekKind.build && !w1.eventWeek && !w1.testWeek) {
+      weeks[1] = WeekSpec(
+        kind: WeekKind.intro,
+        intent: WeekIntent.intro,
+        phase: w1.phase,
+        volume: 0.75,
+        stage: 0,
+        weeksToEvent: w1.weeksToEvent,
+      );
+    }
   }
   return BlockShape(
     model: model,

@@ -50,7 +50,7 @@ Homme de 41 ans, 84 kg, maçon, trois ans de pratique. 9 tractions, 18 dips, 35 
 - Jour chargé : version courte de 25 min — échauffement, puis les deux ou trois premiers exercices de la séance. Une séance courte vaut mieux qu'une séance sautée.
 - Arrêt immédiat et avis médical : douleur dans la poitrine, essoufflement anormal, malaise ou vertige. Souffle pendant l'effort, sans bloquer la respiration sur les séries longues.
 - Séance manquée : elle ne se rattrape pas. Semaine manquée : refais la dernière semaine terminée. Deux semaines ou plus : reprends deux semaines en arrière avec 20 % de volume en moins.
-- Les tests de fin de bloc (ou de la semaine de test) recalent les charges, les répétitions et les secondes du bloc suivant : le plan écrit part du repère attendu au test ; si ton résultat est différent, déclare-le et recalcule (série de tête = résultat − 2 ; tenues = 60 à 75 % du maintien mesuré).
+- Les tests de fin de bloc (ou de la semaine de test) recalent les charges, les répétitions et les secondes du bloc suivant : déclare ton résultat, le bloc suivant est écrit dessus (série de tête = résultat − 2 ; tenues = 60 à 85 % du maintien mesuré), jamais sur un progrès supposé. Un test fait un jour de bilan bas se reporte de 48 à 72 h.
 - 48 h sans travail dur du mouvement avant un test.
 - Ancienneté d'entraînement prise en compte : 2 à 5 ans.
 - Sommeil court : volume réduit de 15 % et une répétition en réserve de plus. Vise 7 h : horaires réguliers, sieste de 20 à 30 min quand c'est possible.
@@ -318,20 +318,20 @@ Homme de 41 ans, 84 kg, maçon, trois ans de pratique. 9 tractions, 18 dips, 35 
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
 | Traction pronation | 1 × 7 (série de tête), puis 2 × 7 | poids du corps, ≈ 70 % du maximum de répétitions (repère : 10) | 3 rép. en réserve | 3 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
-| Dips aux barres parallèles | 3 × 11 | poids du corps, ≈ 61 % du maximum de répétitions (repère : 18) | 4 rép. en réserve sur la dernière série (davantage sur les premières) | 90 s | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
+| Dips aux barres parallèles | 3 × 12 | poids du corps, ≈ 67 % du maximum de répétitions (repère : 18) | 4 rép. en réserve sur la dernière série (davantage sur les premières) | 90 s | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Row australien | 2 × 8 à 10 | poids du corps | 3 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Relevé de jambes tendues suspendu | 2 × 8 à 12 | poids du corps | 4 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
 | Face pull à l'élastique | 2 × 12 à 15 | — | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
 | Gainage latéral sur le coude | 2 × 25 s | poids du corps | position parfaite, quelques secondes de marge | 60 s | tronc ; tenue isométrique ; Tronc : le gainage qui tient la position à la barre. |
 | Hollow body hold | 2 × 25 s | poids du corps | position parfaite, quelques secondes de marge | 60 s | tronc ; tenue isométrique ; Tronc : le gainage qui tient la position à la barre. |
 
-### jeudi — force, haut du corps, séance moyenne (60 min disponibles, 43 min estimées)
+### jeudi — force, haut du corps, séance moyenne (60 min disponibles, 44 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
-| Traction pronation | 7 min : 4 rép. au début de chaque minute | poids du corps, ≈ 40 % du maximum de répétitions (repère : 10) | 5 rép. en réserve ou plus | — | secondaire |
-| Pompe classique | 3 × 22 | poids du corps, ≈ 63 % du maximum de répétitions (repère : 35) | 4 rép. en réserve sur la dernière série (davantage sur les premières) | 2 min | secondaire ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
+| Traction pronation | 7 min : 5 rép. au début de chaque minute | poids du corps, ≈ 50 % du maximum de répétitions (repère : 10) | 5 rép. en réserve ou plus | — | secondaire |
+| Pompe classique | 3 × 23 | poids du corps, ≈ 66 % du maximum de répétitions (repère : 35) | 4 rép. en réserve sur la dernière série (davantage sur les premières) | 2 min | secondaire ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Skater squat | 3 × 6 à 8 | poids du corps | 4 rép. en réserve | 90 s | secondaire ; Jambes : force utile, sans fatigue excessive. |
 | Pont fessier unilatéral | 2 × 8 à 10 | poids du corps | 3 rép. en réserve | 105 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Relevé de jambes tendues suspendu | 2 × 8 à 12 | poids du corps | 4 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
@@ -343,8 +343,8 @@ Homme de 41 ans, 84 kg, maçon, trois ans de pratique. 9 tractions, 18 dips, 35 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
-| Traction pronation | 3 × 6 | poids du corps, ≈ 60 % du maximum de répétitions (repère : 10) | 4 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
-| Dips aux barres parallèles | 3 × 11 | poids du corps, ≈ 61 % du maximum de répétitions (repère : 18) | 4 rép. en réserve sur la dernière série (davantage sur les premières) | 90 s | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
+| Traction pronation | 3 × 7 | poids du corps, ≈ 70 % du maximum de répétitions (repère : 10) | 3 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
+| Dips aux barres parallèles | 3 × 12 | poids du corps, ≈ 67 % du maximum de répétitions (repère : 18) | 4 rép. en réserve sur la dernière série (davantage sur les premières) | 90 s | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Row australien | 2 × 8 à 10 | poids du corps | 3 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Relevé de jambes tendues suspendu | 2 × 8 à 12 | poids du corps | 4 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
 | Face pull à l'élastique | 2 × 12 à 15 | — | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
@@ -371,8 +371,8 @@ Homme de 41 ans, 84 kg, maçon, trois ans de pratique. 9 tractions, 18 dips, 35 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
-| Traction pronation | 7 min : 4 rép. au début de chaque minute | poids du corps, ≈ 40 % du maximum de répétitions (repère : 10) | 5 rép. en réserve ou plus | — | secondaire |
-| Pompe classique | 3 × 23 | poids du corps, ≈ 66 % du maximum de répétitions (repère : 35) | 4 rép. en réserve sur la dernière série (davantage sur les premières) | 2 min | secondaire ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
+| Traction pronation | 7 min : 5 rép. au début de chaque minute | poids du corps, ≈ 50 % du maximum de répétitions (repère : 10) | 5 rép. en réserve ou plus | — | secondaire |
+| Pompe classique | 3 × 24 | poids du corps, ≈ 69 % du maximum de répétitions (repère : 35) | 4 rép. en réserve sur la dernière série (davantage sur les premières) | 2 min | secondaire ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Skater squat | 3 × 7 à 9 | poids du corps | 4 rép. en réserve | 90 s | secondaire ; Jambes : force utile, sans fatigue excessive. |
 | Pont fessier unilatéral | 2 × 9 à 11 | poids du corps | 3 rép. en réserve | 105 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Relevé de jambes tendues suspendu | 2 × 9 à 13 | poids du corps | 4 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
@@ -384,7 +384,7 @@ Homme de 41 ans, 84 kg, maçon, trois ans de pratique. 9 tractions, 18 dips, 35 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
-| Traction pronation | 3 × 6 | poids du corps, ≈ 60 % du maximum de répétitions (repère : 10) | 4 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
+| Traction pronation | 3 × 7 | poids du corps, ≈ 70 % du maximum de répétitions (repère : 10) | 3 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Dips aux barres parallèles | 3 × 12 | poids du corps, ≈ 67 % du maximum de répétitions (repère : 18) | 4 rép. en réserve sur la dernière série (davantage sur les premières) | 90 s | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Row australien | 2 × 9 à 11 | poids du corps | 3 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Relevé de jambes tendues suspendu | 2 × 9 à 13 | poids du corps | 4 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
@@ -400,7 +400,7 @@ Homme de 41 ans, 84 kg, maçon, trois ans de pratique. 9 tractions, 18 dips, 35 
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
 | Traction pronation | 1 × 7 (série de tête), puis 2 × 7 | poids du corps, ≈ 70 % du maximum de répétitions (repère : 10) | 3 rép. en réserve | 3 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
-| Dips aux barres parallèles | 3 × 12 | poids du corps, ≈ 67 % du maximum de répétitions (repère : 18) | 4 rép. en réserve sur la dernière série (davantage sur les premières) | 90 s | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
+| Dips aux barres parallèles | 3 × 13 | poids du corps, ≈ 72 % du maximum de répétitions (repère : 18) | 4 rép. en réserve | 90 s | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Row australien | 2 × 9 à 11 | poids du corps | 3 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Relevé de jambes tendues suspendu | 2 × 9 à 13 | poids du corps | 4 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
 | Face pull à l'élastique | 2 × 12 à 15 | — | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
@@ -412,8 +412,8 @@ Homme de 41 ans, 84 kg, maçon, trois ans de pratique. 9 tractions, 18 dips, 35 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
-| Traction pronation | 7 min : 4 rép. au début de chaque minute | poids du corps, ≈ 40 % du maximum de répétitions (repère : 10) | 5 rép. en réserve ou plus | — | secondaire |
-| Pompe classique | 3 × 24 | poids du corps, ≈ 69 % du maximum de répétitions (repère : 35) | 4 rép. en réserve sur la dernière série (davantage sur les premières) | 2 min | secondaire ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
+| Traction pronation | 7 min : 6 rép. au début de chaque minute | poids du corps, ≈ 60 % du maximum de répétitions (repère : 10) | 5 rép. en réserve ou plus | — | secondaire |
+| Pompe classique | 3 × 25 | poids du corps, ≈ 71 % du maximum de répétitions (repère : 35) | 4 rép. en réserve sur la dernière série (davantage sur les premières) | 2 min | secondaire ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Skater squat | 3 × 7 à 9 | poids du corps | 4 rép. en réserve | 90 s | secondaire ; Jambes : force utile, sans fatigue excessive. |
 | Pont fessier unilatéral | 2 × 9 à 11 | poids du corps | 3 rép. en réserve | 105 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Relevé de jambes tendues suspendu | 2 × 9 à 13 | poids du corps | 4 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
@@ -425,8 +425,8 @@ Homme de 41 ans, 84 kg, maçon, trois ans de pratique. 9 tractions, 18 dips, 35 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
-| Traction pronation | 3 × 6 | poids du corps, ≈ 60 % du maximum de répétitions (repère : 10) | 4 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
-| Dips aux barres parallèles | 3 × 12 | poids du corps, ≈ 67 % du maximum de répétitions (repère : 18) | 4 rép. en réserve sur la dernière série (davantage sur les premières) | 90 s | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
+| Traction pronation | 3 × 7 | poids du corps, ≈ 70 % du maximum de répétitions (repère : 10) | 3 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
+| Dips aux barres parallèles | 3 × 13 | poids du corps, ≈ 72 % du maximum de répétitions (repère : 18) | 4 rép. en réserve | 90 s | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Row australien | 2 × 9 à 11 | poids du corps | 3 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Relevé de jambes tendues suspendu | 2 × 9 à 13 | poids du corps | 4 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
 | Face pull à l'élastique | 2 × 12 à 15 | — | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
@@ -453,8 +453,8 @@ Homme de 41 ans, 84 kg, maçon, trois ans de pratique. 9 tractions, 18 dips, 35 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
-| Traction pronation | 7 min : 4 rép. au début de chaque minute | poids du corps, ≈ 40 % du maximum de répétitions (repère : 10) | 5 rép. en réserve ou plus | — | secondaire |
-| Pompe classique | 3 × 25 | poids du corps, ≈ 71 % du maximum de répétitions (repère : 35) | 4 rép. en réserve sur la dernière série (davantage sur les premières) | 2 min | secondaire ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
+| Traction pronation | 7 min : 6 rép. au début de chaque minute | poids du corps, ≈ 60 % du maximum de répétitions (repère : 10) | 5 rép. en réserve ou plus | — | secondaire |
+| Pompe classique | 3 × 26 | poids du corps, ≈ 74 % du maximum de répétitions (repère : 35) | 4 rép. en réserve sur la dernière série (davantage sur les premières) | 2 min | secondaire ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Skater squat | 3 × 8 à 10 | poids du corps | 4 rép. en réserve | 90 s | secondaire ; Jambes : force utile, sans fatigue excessive. |
 | Pont fessier unilatéral | 2 × 10 à 12 | poids du corps | 3 rép. en réserve | 105 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Relevé de jambes tendues suspendu | 2 × 10 à 14 | poids du corps | 4 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |

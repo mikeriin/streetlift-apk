@@ -90,5 +90,5 @@ Le même profil et le même moteur, avec d'autres hypothèses sur l'athlète ré
 | Athlète simulé | Échecs non voulus | Écart d'effort | Séries ≥ 2 rép. plus dures | Plus forte hausse à schéma égal | Progression par semaine | Tentatives réussies | Échéance / maximum du jour | Hausses sur zone douloureuse |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | modèle 2 (courbe linéaire, notes d'effort entières et plafonnées, récupération lente entre séries, tendons à adaptation lente) | 0 % | 1,06 | 0 % | 0 % | 0,529 % | — | — | 0 |
-| modèle 1 (courbe charge-répétitions à plateau, notes d'effort continues) | 0 % | 1,06 | 0 % | 0 % | 0,637 % | — | — | 0 |
+| modèle 1 (courbe charge-répétitions à plateau, notes d'effort continues) | 0 % | 1,05 | 0 % | 0 % | 0,627 % | — | — | 0 |
 | modèle 3 (courbe en puissance, forme masquée par la fatigue, mauvais jours marqués, désentraînement rapide) | 0 % | 1,08 | 0 % | 0 % | 0,571 % | — | — | 0 |

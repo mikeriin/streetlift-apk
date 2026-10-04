@@ -27,16 +27,16 @@ Chaque bloc est écrit par le moteur de création au moment où il commence, d'a
 | Bloc | Semaines | Phase | Semaines du bloc | Écrit d'après |
 | --- | --- | --- | --- | --- |
 | 1 | 1 à 6 | construction (volume) | introduction, construction (volume), construction (volume), construction (volume), construction (volume), test | le profil de départ |
-| 2 | 7 à 12 | construction (volume) | construction (volume), construction (volume), construction (volume), construction (volume), affûtage, test | les tests du bloc 1 (Dead hang : 21 s ; Pompe classique : 2 répétitions) et son point de fin de bloc |
-| 3 | 13 à 16 | construction (volume) | construction (volume), construction (volume), construction (volume), construction (volume) | les tests du bloc 2 (Dead hang : 21 s ; Pompe classique : 2 répétitions) et son point de fin de bloc |
+| 2 | 7 à 12 | construction (volume) | construction (volume), construction (volume), construction (volume), construction (volume), affûtage, test | les tests du bloc 1 (Pompe classique : 2 répétitions) et son point de fin de bloc |
+| 3 | 13 à 16 | construction (volume) | construction (volume), construction (volume), construction (volume), construction (volume) | les tests du bloc 2 (Tenue menton au-dessus de la barre pronation : 30 s ; Pompe classique : 2 répétitions) et son point de fin de bloc |
 
 ## Bilan
 
 - Séances faites : 47 sur 48 (17 ajustées le jour même).
 - Échecs non voulus (hors tests et tentatives) : 0 % des séries de travail.
-- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 2,02 répétition en réserve (sur les 69 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 28,5 %.
+- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 1,61 répétition en réserve (sur les 70 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 21 %.
 - Plus forte hausse de charge totale d'un mouvement principal d'une séance à la suivante, à schéma égal : 0 % ; hausses de plus de 10 % faites de plusieurs crans : 0.
-- Progression réelle moyenne des mouvements suivis : 0,706 % par semaine.
+- Progression réelle moyenne des mouvements suivis : 1,279 % par semaine.
 - Douleur : 0 hausse(s) de charge sur une zone douloureuse signalée.
 
 ## Mouvements suivis, semaine par semaine
@@ -48,9 +48,18 @@ Pour chaque mouvement, la séance la plus lourde de la semaine : ce que le progr
 | Sem. | Phase | Écrit par le programme | Servi par le moteur | Fait | Effort visé → réel | Maximum réel / estimé | Décisions du moteur |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | 6 | test | 1 × 4 à 10, test | (1 à 10) | 2 | test | 3 / 3 | calibrage (séance 1 sur ce mouvement) ; douleur signalée (épaule, 5/10) |
-| 12 | test | 1 × 4 à 10, test | 2 | 2 | test | 3 / 3 | calibrage (séance 2 sur ce mouvement) ; douleur signalée (épaule, 0/10) |
+| 7 | construction (volume) | 1 × 1 à 3 | 1 | 1 | 2 → 2,1 | 3 / 3 | allégé pour garder la marge prévue (au moins 2 en réserve) ; calibrage (séance 2 sur ce mouvement) ; douleur signalée (épaule, 5/10) |
+| 8 | construction (volume) | 1 × 1 à 4 | 1 | 1 | 2 → 2,3 | 3 / 3 | allégé pour garder la marge prévue (au moins 2 en réserve) ; douleur signalée (épaule, 5/10) |
+| 9 | construction (volume) | 2 × 1 à 4 | (1 à 8)-(1 à 16) | 1-1 | 2 → 2,3 ; suivantes 2 → 1,7 | 3 / 3 | série repère : une série ouverte (au ressenti, 2 en réserve) pour mesurer où en est l'athlète |
+| 10 | construction (volume) | 2 × 1 à 5 | 1-1 | 1-1 | 2 → 2,2 ; suivantes 2 → 1,9 | 3 / 3 | allégé pour garder la marge prévue (au moins 2 en réserve) |
+| 11 | affûtage | 1 × 1 | 1 | 1 | 2 → 2,3 | 3 / 3 | — |
+| 12 | test | 1 × 4 à 10, test | (2 à 10) | 2 | test | 3 / 3 | — |
+| 13 | construction (volume) | 2 × 1 à 4 | (1 à 8)-(1 à 8) | 1-1 | 2 → 2,4 ; suivantes 2 → 1,7 | 3 / 3 | allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |
+| 14 | construction (volume) | 2 × 1 à 4 | (1 à 8)-(1 à 8) | 1-1 | 2 → 2,5 ; suivantes 2 → 2 | 3 / 3 | allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |
+| 15 | construction (volume) | 2 × 1 à 5 | 1-1 | 1-1 | 2 → 2,5 ; suivantes 2 → 2,1 | 4 / 4 | allégé pour garder la marge prévue (au moins 2 en réserve) |
+| 16 | construction (volume) | 2 × 1 à 5 | (1 à 10)-(1 à 10) | 1-1 | 2 → 2,6 ; suivantes 2 → 2,1 | 4 / 3 | allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |
 
-Athlète simulé, maximum réel hors fatigue : 3 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 3 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
+Athlète simulé, maximum réel hors fatigue : 3 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 4 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
 
 ### Pompe inclinée (mains surélevées)
 
@@ -61,17 +70,17 @@ Athlète simulé, maximum réel hors fatigue : 3 au départ (le record déclaré
 | 3 | construction (volume) | 2 × 6 à 8 | (6 à 11)-(6 à 10) | 11-10 | 3 → 12,2 ; suivantes 3 → 12,2 | 23 / 15 | — |
 | 4 | construction (volume) | 3 × 7 à 9 | (7 à 18)-(7 à 18)-(7 à 18) | 15-15-14 | 3 → 7,9 ; suivantes 3 → 6,8 | 23 / 20 | allégé pour garder la marge prévue (au moins 3 en réserve) ; dernières séries plus dures que prévu |
 | 5 | construction (volume) | 3 × 7 à 9 | (7 à 17)-(7 à 16)-(7 à 15) | 17-14-14 | 3 → 6,9 ; suivantes 3 → 8,5 | 24 / 20 | allégé pour garder la marge prévue (au moins 3 en réserve) ; dernières séries plus dures que prévu |
-| 6 | test | 2 × 8 à 11 | (8 à 11) | 11 | 5+ → 12,4 | 23 / 21 | douleur signalée (épaule, 5/10) |
-| 7 | construction (volume) | 3 × 9 à 12 | (9 à 11) | 11 | 5+ → 13 | 24 / 20 | allégé pour garder la marge prévue (au moins 2 en réserve) ; douleur signalée (épaule, 5/10) |
-| 8 | construction (volume) | 3 × 10 à 13 | (10 à 11) | 11 | 5+ → 12,7 | 24 / 20 | allégé pour garder la marge prévue (au moins 2 en réserve) ; douleur signalée (épaule, 5/10) |
-| 9 | construction (volume) | 3 × 10 à 13 | (10 à 18)-(10 à 16)-(10 à 28) | 18-16-18 | 2 → 6,5 ; suivantes 2 → 5,9 | 25 / 21 | série repère : une série ouverte (au ressenti, 2 en réserve) pour mesurer où en est l'athlète |
-| 10 | construction (volume) | 3 × 11 à 14 | (11 à 19)-(11 à 17)-(11 à 15) | 19-17-14 | 2 → 5,6 ; suivantes 2 → 7,6 | 25 / 22 | allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |
-| 11 | affûtage | 2 × 9 à 12 | (9 à 12)-(9 à 12) | 12-12 | 5+ → 13,9 ; suivantes 5+ → 12,8 | 26 / 22 | — |
-| 12 | test | 2 × 9 à 12 | (9 à 12)-(9 à 12) | 12-12 | 5+ → 14,4 ; suivantes 5+ → 13,4 | 26 / 22 | — |
-| 13 | construction (volume) | 3 × 11 à 14 | (11 à 20)-(11 à 18)-(11 à 32) | 20-18-18 | 2 → 5,2 ; suivantes 2 → 5,1 | 25 / 23 | série repère : une série ouverte (au ressenti, 2 en réserve) pour mesurer où en est l'athlète |
-| 14 | construction (volume) | 3 × 11 à 14 | (11 à 28)-(11 à 28)-(11 à 28) | 22-22-21 | 2 → 4,9 ; suivantes 2 → 3,2 | 27 / 26 | allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |
-| 15 | construction (volume) | 3 × 12 à 15 | (12 à 24)-(12 à 22)-(12 à 20) | 22-21-19 | 2 → 5 ; suivantes 2 → 4,7 | 27 / 26 | allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |
-| 16 | construction (volume) | 3 × 12 à 15 | (12 à 30)-(12 à 30) | 22-22 | 2 → 5,9 ; suivantes 2 → 4,6 | 28 / 26 | −1 série(s) ; alerte de surmenage : performance en baisse deux séances mesurées de suite (au moins −11 %) — volume réduit pendant une semaine, intensité gardée ; allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |
+| 6 | test | 2 × 6 à 8 | (6 à 8) | 8 | 5+ → 15,5 | 23 / 21 | douleur signalée (épaule, 5/10) |
+| 7 | construction (volume) | 2 × 9 à 12 | 8 | 8 | 5+ → 15,3 | 23 / 20 | répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; douleur signalée (épaule, 5/10) |
+| 8 | construction (volume) | 2 × 8 à 12 | 8 | 8 | 5+ → 15,6 | 24 / 20 | allégé pour garder la marge prévue (au moins 2 en réserve) ; douleur signalée (épaule, 5/10) |
+| 9 | construction (volume) | 2 × 8 à 12 | (8 à 18)-(8 à 32) | 18-20 | 2 → 6,8 ; suivantes 2 → 3,8 | 25 / 21 | série repère : une série ouverte (au ressenti, 2 en réserve) pour mesurer où en est l'athlète |
+| 10 | construction (volume) | 2 × 8 à 12 | (8 à 24)-(8 à 24) | 19-17 | 2 → 5,8 ; suivantes 2 → 6,4 | 25 / 22 | — |
+| 11 | affûtage | 1 × 9 à 12 | (9 à 12) | 12 | 5+ → 12,3 | 24 / 23 | — |
+| 12 | test | 1 × 9 à 12 | (9 à 12) | 12 | 5+ → 12,4 | 24 / 23 | — |
+| 13 | construction (volume) | 2 × 8 à 12 | (8 à 21)-(8 à 38) | 21-17 | 2 → 3,8 ; suivantes 2 → 5,7 | 25 / 24 | série repère : une série ouverte (au ressenti, 2 en réserve) pour mesurer où en est l'athlète ; allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |
+| 14 | construction (volume) | 2 × 8 à 12 | (8 à 24)-(8 à 24) | 24-22 | 2 → 3,1 ; suivantes 2 → 2,6 | 27 / 26 | — |
+| 15 | construction (volume) | 2 × 8 à 12 | (8 à 24)-(8 à 21) | 22-21 | 2 → 4 ; suivantes 2 → 2,8 | 26 / 26 | — |
+| 16 | construction (volume) | 2 × 8 à 12 | (8 à 24)-(8 à 24) | 24-20 | 2 → 3,4 ; suivantes 2 → 4,8 | 27 / 26 | — |
 
 Athlète simulé, maximum réel hors fatigue : 22 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 27 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
 
@@ -89,22 +98,14 @@ Athlète simulé, maximum réel hors fatigue : 22 au départ (le record déclar�
 | 8 | construction (volume) | 1 × 7 à 9 | (7 à 8) | 8 | 3,5 → 9,9 | 18 / 12 | allégé pour garder la marge prévue (au moins 3 en réserve) ; douleur signalée (épaule, 5/10) |
 | 9 | construction (volume) | 2 × 7 à 9 | (7 à 9)-(7 à 18) | 9-13 | 3 → 9 ; suivantes 2 → 4,2 | 18 / 13 | série repère : une série ouverte (au ressenti, 2 en réserve) pour mesurer où en est l'athlète |
 | 10 | construction (volume) | 1 × 8 à 10 | (8 à 10) | 9 | 3 → 4,8 | 14 / 12 | un cran d'assistance de moins (élastique plus fin, moins d'appui) : la série repère a montré 2 répétitions de réserve de plus que visé |
-| 11 | affûtage | 1 × 6 à 8 | (6 à 8) | 7 | 4 → 6,5 | 14 / 12 | — |
+| 11 | affûtage | 1 × 6 à 8 | (6 à 8) | 7 | 4 → 6,5 | 13 / 12 | — |
 | 12 | test | 1 × 6 à 8 | (6 à 8) | 8 | 3 → 5 | 13 / 12 | — |
-| 13 | construction (volume) | 2 × 7 à 9 | (7 à 9)-(7 à 18) | 9-10 | 3 → 5,1 ; suivantes 2 → 3,1 | 14 / 12 | série repère : une série ouverte (au ressenti, 2 en réserve) pour mesurer où en est l'athlète |
-| 14 | construction (volume) | 3 × 7 à 9 | (7 à 9)-(7 à 9)-(7 à 9) | 8-8-7 | 3 → 5,4 ; suivantes 3 → 4,2 | 13 / 12 | allégé pour garder la marge prévue (au moins 3 en réserve) ; dernières séries plus dures que prévu |
-| 15 | construction (volume) | 3 × 8 à 10 | (8 à 10)-(8 à 9)-(8 à 9) | 9-8-9 | 3 → 5,1 ; suivantes 2,3 → 3,9 | 14 / 12 | — |
-| 16 | construction (volume) | 3 × 8 à 10 | (8 à 10)-(8 à 10)-(8 à 9) | 10-10-8 | 3 → 5,1 ; suivantes 2,3 → 4,5 | 15 / 12 | — |
+| 13 | construction (volume) | 2 × 7 à 9 | (7 à 9)-(7 à 18) | 9-10 | 3 → 5,1 ; suivantes 2 → 3 | 14 / 12 | série repère : une série ouverte (au ressenti, 2 en réserve) pour mesurer où en est l'athlète |
+| 14 | construction (volume) | 3 × 7 à 9 | (7 à 9)-(7 à 9)-(7 à 9) | 8-8-7 | 3 → 5,3 ; suivantes 3 → 4,1 | 13 / 12 | allégé pour garder la marge prévue (au moins 3 en réserve) ; dernières séries plus dures que prévu |
+| 15 | construction (volume) | 3 × 8 à 10 | (8 à 10)-(8 à 9)-(8 à 9) | 9-8-9 | 3 → 5 ; suivantes 2,3 → 3,9 | 14 / 12 | — |
+| 16 | construction (volume) | 3 × 8 à 10 | (8 à 10)-(8 à 10)-(8 à 9) | 10-10-8 | 3 → 5 ; suivantes 2,3 → 4,5 | 15 / 12 | — |
 
 Athlète simulé, maximum réel hors fatigue : 16 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 14 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
-
-### Dead hang
-
-| Sem. | Phase | Écrit par le programme | Servi par le moteur | Fait | Effort visé → réel | Maximum réel / estimé | Décisions du moteur |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| 6 | test | 1 × 28 à 33 s, test | (21 à 33) s | 21 s | test | 25 / 25 | calibrage (séance 1 sur ce mouvement) |
-
-Athlète simulé, maximum réel hors fatigue : 25 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 25 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
 
 ## Journal des décisions
 
@@ -112,18 +113,18 @@ Athlète simulé, maximum réel hors fatigue : 25 au départ (le record déclar�
 - **Semaine 2 (construction (volume))** : Pompe négative : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; Traction assistée à l'élastique : un cran d'assistance de moins (élastique plus fin, moins d'appui) : la série repère a montré 4 répétitions de réserve de plus que visé.
 - **Semaine 3 (construction (volume))** : Pompe négative : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; bilan du jour bas (2/5) ; nuit courte ; temps réduit (36 min au lieu de 44) ; Traction négative : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; séries retirées — Fente arrière au poids du corps, Support hold aux barres parallèles (bilan du jour bas (2/5), nuit courte) ; exercice retiré sur 3 exercices (temps réduit (36 min au lieu de 44)).
 - **Semaine 4 (construction (volume))** : bilan du jour bas (2/5) ; nuit courte ; Traction négative : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; Fente arrière au poids du corps : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; Traction assistée à l'élastique : un cran d'assistance de plus (élastique plus épais, plus d'appui) : la plage ne laisse plus la réserve visée ; séries retirées — Fente arrière au poids du corps, Support hold aux barres parallèles (bilan du jour bas (2/5), nuit courte).
-- **Semaine 5 (construction (volume))** : Pompe négative : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; Face pull à l'élastique : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; bilan du jour bas (2/5) (× 2) ; nuit courte (× 2) ; Traction négative : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; Fente arrière au poids du corps : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; Dead bug : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; exercice retiré — Support hold aux barres parallèles (douleur signalée (épaule, 5/10)) ; séries retirées — Fente arrière au poids du corps, Air squat (bilan du jour bas (2/5), nuit courte) ; séries retirées sur 5 exercices (douleur signalée (épaule, 5/10)) ; proposition appliquée : zone douloureuse épargnée.
-- **Semaine 6 (test)** : phase « test » : séances servies telles que le programme les écrit (× 3) ; séries retirées sur 4 exercices (douleur signalée (épaule, 5/10)) ; résultat de test reporté au profil : Dead hang 21 s ; résultat de test reporté au profil : Pompe classique 2 répétitions.
-- **Semaine 7 (construction (volume))** : nouveau bloc construit à partir du point de fin de bloc (maxima estimés, résultats de test, tolérance) ; Pompe négative : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; Face pull à l'élastique : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; Traction négative : répétitions recalées sur le maximum mesuré (2 de moins par série que le programme) ; séries retirées sur 7 exercices (douleur signalée (épaule, 5/10)).
-- **Semaine 8 (construction (volume))** : Pompe négative : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; Face pull à l'élastique : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; Traction négative : répétitions recalées sur le maximum mesuré (2 de moins par série que le programme) ; Dead bug : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; séries retirées sur 7 exercices (douleur signalée (épaule, 5/10)).
-- **Semaine 9 (construction (volume))** : Pompe négative : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; Face pull à l'élastique : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; Traction négative : répétitions recalées sur le maximum mesuré (3 de moins par série que le programme) ; temps réduit (36 min au lieu de 52) ; séries retirées sur 4 exercices (douleur signalée (épaule, 5/10)) ; exercice retiré sur 4 exercices (temps réduit (36 min au lieu de 52)) ; séries retirées — Air squat (temps réduit (36 min au lieu de 52)).
-- **Semaine 10 (construction (volume))** : Traction assistée à l'élastique : un cran d'assistance de moins (élastique plus fin, moins d'appui) : la série repère a montré 2 répétitions de réserve de plus que visé ; Pompe négative : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; Traction négative : répétitions recalées sur le maximum mesuré (2 de moins par série que le programme) ; Pompe inclinée (mains surélevées) : séries arrêtées en cours de séance (allégé pour garder la marge prévue (au moins 2 en réserve), dernières séries plus dures que prévu).
+- **Semaine 5 (construction (volume))** : Pompe négative : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; Face pull à l'élastique : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; bilan du jour bas (2/5) (× 2) ; nuit courte (× 2) ; Traction négative : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; Fente arrière au poids du corps : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; Dead bug : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; exercice retiré — Support hold aux barres parallèles (douleur signalée (épaule, 5/10)) ; séries retirées — Fente arrière au poids du corps, Air squat (bilan du jour bas (2/5), nuit courte) ; séries retirées sur 5 exercices (douleur signalée (épaule, 5/10)).
+- **Semaine 6 (test)** : phase « test » : séances servies telles que le programme les écrit (× 3) ; exercice retiré — Tenue menton au-dessus de la barre pronation, Support hold aux barres parallèles (douleur signalée (épaule, 5/10)) ; séries retirées sur 4 exercices (douleur signalée (épaule, 5/10)) ; résultat de test reporté au profil : Pompe classique 2 répétitions.
+- **Semaine 7 (construction (volume))** : nouveau bloc construit à partir du point de fin de bloc (maxima estimés, résultats de test, tolérance) ; Pompe inclinée (mains surélevées) : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; Face pull à l'élastique : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; Traction négative : répétitions recalées sur le maximum mesuré (2 de moins par série que le programme) ; exercice retiré — Tenue menton au-dessus de la barre pronation (douleur signalée (épaule, 5/10)) ; séries retirées sur 6 exercices (douleur signalée (épaule, 5/10)).
+- **Semaine 8 (construction (volume))** : Face pull à l'élastique : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; Traction négative : répétitions recalées sur le maximum mesuré (2 de moins par série que le programme) ; Row australien genoux fléchis pieds à plat : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; Dead bug : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; exercice retiré — Tenue menton au-dessus de la barre pronation (douleur signalée (épaule, 5/10)) ; séries retirées sur 7 exercices (douleur signalée (épaule, 5/10)).
+- **Semaine 9 (construction (volume))** : Face pull à l'élastique : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; Air squat : séries arrêtées en cours de séance (allégé pour garder la marge prévue (au moins 2 en réserve), dernières séries plus dures que prévu) ; Traction négative : répétitions recalées sur le maximum mesuré (3 de moins par série que le programme) ; Row australien genoux fléchis pieds à plat : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; temps réduit (36 min au lieu de 54) ; exercice retiré — Tenue menton au-dessus de la barre pronation (douleur signalée (épaule, 5/10)) ; séries retirées sur 4 exercices (douleur signalée (épaule, 5/10)) ; exercice retiré sur 5 exercices (temps réduit (36 min au lieu de 54)) ; séries retirées — Air squat (temps réduit (36 min au lieu de 54)).
+- **Semaine 10 (construction (volume))** : Traction assistée à l'élastique : un cran d'assistance de moins (élastique plus fin, moins d'appui) : la série repère a montré 2 répétitions de réserve de plus que visé ; Traction négative : répétitions recalées sur le maximum mesuré (2 de moins par série que le programme) ; Air squat : séries arrêtées en cours de séance (allégé pour garder la marge prévue (au moins 2 en réserve), dernières séries plus dures que prévu).
 - **Semaine 11 (affûtage)** : phase « affûtage » : séances servies telles que le programme les écrit (× 3) ; affûtage : aucun volume ajouté, intensité gardée (× 3).
-- **Semaine 12 (test)** : phase « test » : séances servies telles que le programme les écrit (× 3) ; résultat de test reporté au profil : Pompe classique 2 répétitions.
-- **Semaine 13 (construction (volume))** : nouveau bloc construit à partir du point de fin de bloc (maxima estimés, résultats de test, tolérance) ; Traction négative : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; Pompe inclinée (mains surélevées) : séries arrêtées en cours de séance (allégé pour garder la marge prévue (au moins 2 en réserve), dernières séries plus dures que prévu).
-- **Semaine 14 (construction (volume))** : Face pull à l'élastique : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; temps réduit (36 min au lieu de 44) ; exercice retiré — CARs d'épaule, Face pull à l'élastique (temps réduit (36 min au lieu de 44)) ; séries retirées — Fente arrière au poids du corps (temps réduit (36 min au lieu de 44)).
-- **Semaine 15 (construction (volume))** : Air squat : séries arrêtées en cours de séance (allégé pour garder la marge prévue (au moins 2 en réserve), dernières séries plus dures que prévu) ; Traction négative : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; Pompe inclinée (mains surélevées) : séries arrêtées en cours de séance (allégé pour garder la marge prévue (au moins 2 en réserve), dernières séries plus dures que prévu) ; Fente arrière au poids du corps : séries arrêtées en cours de séance (allégé pour garder la marge prévue (au moins 2 en réserve), dernières séries plus dures que prévu) ; Pompe inclinée (mains surélevées) : alerte de surmenage : performance en baisse deux séances mesurées de suite (au moins −11 %) — volume réduit pendant une semaine, intensité gardée.
-- **Semaine 16 (construction (volume))** : 1 séance(s) manquée(s) sur 3 ; Pompe inclinée (mains surélevées) : alerte de surmenage : performance en baisse deux séances mesurées de suite (au moins −11 %) — volume réduit pendant une semaine, intensité gardée ; Pompe négative : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme).
+- **Semaine 12 (test)** : phase « test » : séances servies telles que le programme les écrit (× 3) ; résultat de test reporté au profil : Tenue menton au-dessus de la barre pronation 30 s ; résultat de test reporté au profil : Pompe classique 2 répétitions.
+- **Semaine 13 (construction (volume))** : nouveau bloc construit à partir du point de fin de bloc (maxima estimés, résultats de test, tolérance) ; Traction négative : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme).
+- **Semaine 14 (construction (volume))** : Tenue menton au-dessus de la barre pronation : hausse du maintien bornée pour les tendons (coude) ; temps réduit (36 min au lieu de 47) ; exercice retiré — CARs d'épaule, Face pull à l'élastique (temps réduit (36 min au lieu de 47)) ; séries retirées — Fente arrière au poids du corps, Traction négative (temps réduit (36 min au lieu de 47)).
+- **Semaine 15 (construction (volume))** : Air squat : séries arrêtées en cours de séance (allégé pour garder la marge prévue (au moins 2 en réserve), dernières séries plus dures que prévu) ; Traction négative : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme).
+- **Semaine 16 (construction (volume))** : 1 séance(s) manquée(s) sur 3.
 
 ## Figures
 

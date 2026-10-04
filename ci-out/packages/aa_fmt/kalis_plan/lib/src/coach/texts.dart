@@ -479,10 +479,10 @@ String? coachReasonText(Reason r, Catalog catalog) {
         CoachNotes.testUse =>
           'Les tests de fin de bloc (ou de la semaine de test) recalent '
               'les charges, les répétitions et les secondes du bloc '
-              'suivant : le plan écrit part du repère attendu au test ; si '
-              'ton résultat est différent, déclare-le et recalcule (série '
-              'de tête = résultat − 2 ; tenues = 60 à 75 % du maintien '
-              'mesuré).',
+              'suivant : déclare ton résultat, le bloc suivant est écrit '
+              'dessus (série de tête = résultat − 2 ; tenues = 60 à 85 % '
+              'du maintien mesuré), jamais sur un progrès supposé. Un test '
+              'fait un jour de bilan bas se reporte de 48 à 72 h.',
         CoachNotes.weightClass =>
           v is num && v < 0
               ? 'Catégorie de poids : plus de ${_int(-v)} kg. Pesée (règlement '
@@ -498,6 +498,14 @@ String? coachReasonText(Reason r, Catalog catalog) {
                     "l'épreuve, change plutôt de catégorie que de couper du "
                     'poids à la fin ; si ton poids change, les charges, '
                     'écrites en charge totale, se recalculent.',
+        CoachNotes.painTrend =>
+          'Douleur relevée au bloc précédent (${_int(v)}/10 sur cette '
+              'zone) : la figure reste au programme, avec environ 40 % de '
+              'volume en moins et la variante la plus douce pour la zone '
+              '(parallettes ou poings pour le poignet) ; pas de hausse tant '
+              'que la gêne ne reste pas sous 2/10 deux semaines de suite. '
+              'À 6/10, douleur la nuit ou gêne qui dure : arrête le '
+              'mouvement et consulte.',
         CoachNotes.eventFormat =>
           "Format de l'épreuve : il n'existe pas de règlement unique. "
               "Saisis-le dans ton échéance (ordre des ateliers, temps limite, "

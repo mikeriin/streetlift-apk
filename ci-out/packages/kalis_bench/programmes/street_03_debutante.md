@@ -29,13 +29,13 @@ Femme de 29 ans, 58 kg, active mais jamais entraînée en force. Veut sa premiè
 | 3 | 1 | construction (volume) | 3 | 32 |
 | 4 | 1 | construction (volume) | 3 | 35 |
 | 5 | 1 | construction (volume) | 3 | 35 |
-| 6 | 1 | test | 3 | 19 |
+| 6 | 1 | test | 3 | 21 |
 | 7 | 2 | construction (volume) | 3 | 35 |
 | 8 | 2 | construction (volume) | 3 | 37 |
 | 9 | 2 | construction (volume) | 3 | 38 |
 | 10 | 2 | construction (volume) | 3 | 38 |
 | 11 | 2 | affûtage | 3 | 26 |
-| 12 | 2 | test | 3 | 13 |
+| 12 | 2 | test | 3 | 15 |
 
 ## Saison
 
@@ -55,7 +55,7 @@ Femme de 29 ans, 58 kg, active mais jamais entraînée en force. Veut sa premiè
 - Jour chargé : version courte de 25 min — échauffement, puis les deux ou trois premiers exercices de la séance. Une séance courte vaut mieux qu'une séance sautée.
 - Arrêt immédiat et avis médical : douleur dans la poitrine, essoufflement anormal, malaise ou vertige. Souffle pendant l'effort, sans bloquer la respiration sur les séries longues.
 - Séance manquée : elle ne se rattrape pas. Semaine manquée : refais la dernière semaine terminée. Deux semaines ou plus : reprends deux semaines en arrière avec 20 % de volume en moins.
-- Les tests de fin de bloc (ou de la semaine de test) recalent les charges, les répétitions et les secondes du bloc suivant : le plan écrit part du repère attendu au test ; si ton résultat est différent, déclare-le et recalcule (série de tête = résultat − 2 ; tenues = 60 à 75 % du maintien mesuré).
+- Les tests de fin de bloc (ou de la semaine de test) recalent les charges, les répétitions et les secondes du bloc suivant : déclare ton résultat, le bloc suivant est écrit dessus (série de tête = résultat − 2 ; tenues = 60 à 85 % du maintien mesuré), jamais sur un progrès supposé. Un test fait un jour de bilan bas se reporte de 48 à 72 h.
 - 48 h sans travail dur du mouvement avant un test.
 - Ancienneté d'entraînement prise en compte : moins de 6 mois.
 - Élastique : prends celui qui permet 8 répétitions propres avec la réserve prévue ; note-le à chaque séance. Si même le plus fort ne suffit pas, fais la traction pieds en appui (barre basse) en attendant. Dès que l'élastique le plus fin passe 8 répétitions, commence la séance par 1 à 3 essais isolés de traction stricte, sans forcer.
@@ -155,13 +155,13 @@ Femme de 29 ans, 58 kg, active mais jamais entraînée en force. Veut sa premiè
 
 ## Semaine 3 — construction (volume) (bloc 1)
 
-### lundi — force, corps entier (60 min disponibles, 32 min estimées)
+### lundi — force, corps entier (60 min disponibles, 38 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
 | Traction assistée à l'élastique | 3 × 6 à 8 | poids du corps | 3 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
-| Tenue menton au-dessus de la barre pronation | 1 × 5 s | poids du corps | sous-maximal : arrêt bien avant la perte de position | 2 min 30 s | secondaire ; tenue isométrique |
+| Tenue menton au-dessus de la barre pronation | 3 × 5 s | poids du corps | sous-maximal : arrêt bien avant la perte de position | 2 min 30 s | secondaire ; tenue isométrique |
 | Pompe inclinée (mains surélevées) | 2 × 6 à 8 | poids du corps | 3 rép. en réserve | 2 min | principal ; Échelle de poussée : pompe au mur → mains surélevées (barre basse ou barres parallèles, de plus en plus bas) → genoux → sol. Prends dès la première séance le cran qui permet 6 répétitions avec 3 à 4 en réserve ; descends d'un cran quand le haut de la plage est tenu sur toutes les séries, deux séances de suite. ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Pompe négative | 2 × 3 | poids du corps | au contrôle : arrêt dès qu'une descente accélère | 90 s | secondaire ; descente en 3 s ; Pompe complète en descente freinée : 3 s pour descendre, corps gainé de la tête aux talons, poitrine au sol ; remonte en posant les genoux. Arrête la série dès qu'une descente passe sous 2 s ou que le bassin s'affaisse. |
 | Air squat | 3 × 8 à 10 | poids du corps | 3 rép. en réserve | 2 min | secondaire |
@@ -199,13 +199,13 @@ Femme de 29 ans, 58 kg, active mais jamais entraînée en force. Veut sa premiè
 
 ## Semaine 4 — construction (volume) (bloc 1)
 
-### lundi — force, corps entier (60 min disponibles, 36 min estimées)
+### lundi — force, corps entier (60 min disponibles, 41 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
 | Traction assistée à l'élastique | 3 × 7 à 9 | poids du corps | 3 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
-| Tenue menton au-dessus de la barre pronation | 1 × 6 s | poids du corps | sous-maximal : arrêt bien avant la perte de position | 2 min 30 s | secondaire ; tenue isométrique |
+| Tenue menton au-dessus de la barre pronation | 3 × 6 s | poids du corps | sous-maximal : arrêt bien avant la perte de position | 2 min 30 s | secondaire ; tenue isométrique |
 | Pompe inclinée (mains surélevées) | 3 × 7 à 9 | poids du corps | 3 rép. en réserve | 2 min | principal ; Échelle de poussée : pompe au mur → mains surélevées (barre basse ou barres parallèles, de plus en plus bas) → genoux → sol. Prends dès la première séance le cran qui permet 6 répétitions avec 3 à 4 en réserve ; descends d'un cran quand le haut de la plage est tenu sur toutes les séries, deux séances de suite. ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Pompe négative | 2 × 3 | poids du corps | au contrôle : arrêt dès qu'une descente accélère | 90 s | secondaire ; descente en 4 s ; Pompe complète en descente freinée : 4 s pour descendre, corps gainé de la tête aux talons, poitrine au sol ; remonte en posant les genoux. Arrête la série dès qu'une descente passe sous 2 s ou que le bassin s'affaisse. |
 | Air squat | 3 × 9 à 11 | poids du corps | 3 rép. en réserve | 2 min | secondaire |
@@ -244,13 +244,13 @@ Femme de 29 ans, 58 kg, active mais jamais entraînée en force. Veut sa premiè
 
 ## Semaine 5 — construction (volume) (bloc 1)
 
-### lundi — force, corps entier (60 min disponibles, 36 min estimées)
+### lundi — force, corps entier (60 min disponibles, 41 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
 | Traction assistée à l'élastique | 3 × 7 à 9 | poids du corps | 3 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
-| Tenue menton au-dessus de la barre pronation | 1 × 6 s | poids du corps | sous-maximal : arrêt bien avant la perte de position | 2 min 30 s | secondaire ; tenue isométrique |
+| Tenue menton au-dessus de la barre pronation | 3 × 6 s | poids du corps | sous-maximal : arrêt bien avant la perte de position | 2 min 30 s | secondaire ; tenue isométrique |
 | Pompe inclinée (mains surélevées) | 3 × 7 à 9 | poids du corps | 3 rép. en réserve | 2 min | principal ; Échelle de poussée : pompe au mur → mains surélevées (barre basse ou barres parallèles, de plus en plus bas) → genoux → sol. Prends dès la première séance le cran qui permet 6 répétitions avec 3 à 4 en réserve ; descends d'un cran quand le haut de la plage est tenu sur toutes les séries, deux séances de suite. ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Pompe négative | 2 × 4 | poids du corps | au contrôle : arrêt dès qu'une descente accélère | 90 s | secondaire ; descente en 4 s ; Pompe complète en descente freinée : 4 s pour descendre, corps gainé de la tête aux talons, poitrine au sol ; remonte en posant les genoux. Arrête la série dès qu'une descente passe sous 2 s ou que le bassin s'affaisse. |
 | Air squat | 3 × 9 à 11 | poids du corps | 3 rép. en réserve | 2 min | secondaire |
@@ -289,12 +289,14 @@ Femme de 29 ans, 58 kg, active mais jamais entraînée en force. Veut sa premiè
 
 ## Semaine 6 — test (bloc 1)
 
-### lundi — force, corps entier, séance légère (60 min disponibles, 14 min estimées)
+### lundi — force, corps entier, séance légère (60 min disponibles, 23 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
+| Tenue menton au-dessus de la barre pronation | 2 × 5 à 30 s | poids du corps | — | 3 min | ÉPREUVE ; Test, d'abord l'essai strict, frais : après l'échauffement et 1 à 2 tractions faciles à l'élastique, essaie la traction stricte — départ bras tendus, menton au-dessus de la barre, sans élan — jusqu'à 3 essais séparés de 3 min, autant de répétitions propres que possible (objectif : 1). Fais cet essai à chaque test, en fin de bloc comme le jour de l'échéance, quel que soit le temps de tes descentes. Si une traction passe, déclare-la dans l'application : les séances commenceront alors par 2 à 3 tractions strictes isolées, propres, arrêt au premier essai lent ou déformé (jamais un effort maximal), le reste en descentes freinées et en tractions assistées. ; Ensuite, seulement si aucune traction n'est passée : la tenue menton au-dessus de la barre la plus longue, deux essais chronométrés (monte en sautant depuis un appui, bras fléchis, menton au-dessus de la barre ; repère : 10 s). Elle mesure la force de la position haute, d'un test à l'autre. |
 | Pompe classique | 1 série maximale (repère : 4 à 10) | poids du corps | — | 4 min | ÉPREUVE ; Test : une seule série maximale, arrêt dès que la forme casse. ; Repère sur le chemin de l'objectif : 6. S'il n'est pas atteint, garde les volumes du bloc au lieu de les durcir. |
+| Tenue menton au-dessus de la barre pronation | 2 × 5 s | poids du corps | sous-maximal : arrêt bien avant la perte de position | 2 min 30 s | secondaire ; tenue isométrique |
 | Pompe négative | 2 × 2 | poids du corps | au contrôle : arrêt dès qu'une descente accélère | 90 s | secondaire ; descente en 4 s ; Pompe complète en descente freinée : 4 s pour descendre, corps gainé de la tête aux talons, poitrine au sol ; remonte en posant les genoux. Arrête la série dès qu'une descente passe sous 2 s ou que le bassin s'affaisse. |
 | Air squat | 2 × 8 à 10 | poids du corps | 3 rép. en réserve | 2 min | secondaire |
 
@@ -328,13 +330,13 @@ Femme de 29 ans, 58 kg, active mais jamais entraînée en force. Veut sa premiè
 
 ## Semaine 7 — construction (volume) (bloc 2)
 
-### lundi — force, corps entier (60 min disponibles, 34 min estimées)
+### lundi — force, corps entier (60 min disponibles, 36 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
 | Traction assistée à l'élastique | 3 × 6 à 8 | poids du corps | 3 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
-| Tenue menton au-dessus de la barre pronation | 2 × 5 s | poids du corps | sous-maximal : arrêt bien avant la perte de position | 2 min 30 s | secondaire ; tenue isométrique |
+| Tenue menton au-dessus de la barre pronation | 3 × 5 s | poids du corps | sous-maximal : arrêt bien avant la perte de position | 2 min 30 s | secondaire ; tenue isométrique |
 | Pompe classique | 1 × 3 à 5 | poids du corps | 2 rép. en réserve | 2 min | principal ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Pompe inclinée (mains surélevées) | 2 × 6 à 8 | poids du corps | 3 rép. en réserve | 2 min | secondaire ; Échelle de poussée : pompe au mur → mains surélevées (barre basse ou barres parallèles, de plus en plus bas) → genoux → sol. Prends dès la première séance le cran qui permet 6 répétitions avec 3 à 4 en réserve ; descends d'un cran quand le haut de la plage est tenu sur toutes les séries, deux séances de suite. ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Air squat | 3 × 8 à 10 | poids du corps | 3 rép. en réserve | 2 min | secondaire |
@@ -374,13 +376,13 @@ Femme de 29 ans, 58 kg, active mais jamais entraînée en force. Veut sa premiè
 
 ## Semaine 8 — construction (volume) (bloc 2)
 
-### lundi — force, corps entier (60 min disponibles, 34 min estimées)
+### lundi — force, corps entier (60 min disponibles, 37 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
 | Traction assistée à l'élastique | 3 × 7 à 9 | poids du corps | 3 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
-| Tenue menton au-dessus de la barre pronation | 2 × 6 s | poids du corps | sous-maximal : arrêt bien avant la perte de position | 2 min 30 s | secondaire ; tenue isométrique |
+| Tenue menton au-dessus de la barre pronation | 3 × 6 s | poids du corps | sous-maximal : arrêt bien avant la perte de position | 2 min 30 s | secondaire ; tenue isométrique |
 | Pompe classique | 1 × 3 à 6 | poids du corps | 2 rép. en réserve | 2 min | principal ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Pompe inclinée (mains surélevées) | 2 × 7 à 9 | poids du corps | 3 rép. en réserve | 2 min | secondaire ; Échelle de poussée : pompe au mur → mains surélevées (barre basse ou barres parallèles, de plus en plus bas) → genoux → sol. Prends dès la première séance le cran qui permet 6 répétitions avec 3 à 4 en réserve ; descends d'un cran quand le haut de la plage est tenu sur toutes les séries, deux séances de suite. ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Air squat | 3 × 9 à 11 | poids du corps | 3 rép. en réserve | 2 min | secondaire |
@@ -420,13 +422,13 @@ Femme de 29 ans, 58 kg, active mais jamais entraînée en force. Veut sa premiè
 
 ## Semaine 9 — construction (volume) (bloc 2)
 
-### lundi — force, corps entier (60 min disponibles, 37 min estimées)
+### lundi — force, corps entier (60 min disponibles, 40 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
 | Traction assistée à l'élastique | 3 × 7 à 9 | poids du corps | 3 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
-| Tenue menton au-dessus de la barre pronation | 2 × 6 s | poids du corps | sous-maximal : arrêt bien avant la perte de position | 2 min 30 s | secondaire ; tenue isométrique |
+| Tenue menton au-dessus de la barre pronation | 3 × 6 s | poids du corps | sous-maximal : arrêt bien avant la perte de position | 2 min 30 s | secondaire ; tenue isométrique |
 | Pompe classique | 2 × 3 à 6 | poids du corps | 2 rép. en réserve | 2 min | principal ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Pompe inclinée (mains surélevées) | 2 × 7 à 9 | poids du corps | 3 rép. en réserve | 2 min | secondaire ; Échelle de poussée : pompe au mur → mains surélevées (barre basse ou barres parallèles, de plus en plus bas) → genoux → sol. Prends dès la première séance le cran qui permet 6 répétitions avec 3 à 4 en réserve ; descends d'un cran quand le haut de la plage est tenu sur toutes les séries, deux séances de suite. ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Air squat | 3 × 9 à 11 | poids du corps | 3 rép. en réserve | 2 min | secondaire |
@@ -466,13 +468,13 @@ Femme de 29 ans, 58 kg, active mais jamais entraînée en force. Veut sa premiè
 
 ## Semaine 10 — construction (volume) (bloc 2)
 
-### lundi — force, corps entier (60 min disponibles, 37 min estimées)
+### lundi — force, corps entier (60 min disponibles, 40 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
 | Traction assistée à l'élastique | 3 × 8 à 10 | poids du corps | 3 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
-| Tenue menton au-dessus de la barre pronation | 2 × 6 s | poids du corps | sous-maximal : arrêt bien avant la perte de position | 2 min 30 s | secondaire ; tenue isométrique |
+| Tenue menton au-dessus de la barre pronation | 3 × 6 s | poids du corps | sous-maximal : arrêt bien avant la perte de position | 2 min 30 s | secondaire ; tenue isométrique |
 | Pompe classique | 2 × 3 à 7 | poids du corps | 2 rép. en réserve | 2 min | principal ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Pompe inclinée (mains surélevées) | 2 × 8 à 10 | poids du corps | 3 rép. en réserve | 2 min | secondaire ; Échelle de poussée : pompe au mur → mains surélevées (barre basse ou barres parallèles, de plus en plus bas) → genoux → sol. Prends dès la première séance le cran qui permet 6 répétitions avec 3 à 4 en réserve ; descends d'un cran quand le haut de la plage est tenu sur toutes les séries, deux séances de suite. ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Air squat | 3 × 10 à 12 | poids du corps | 3 rép. en réserve | 2 min | secondaire |
@@ -552,12 +554,13 @@ Femme de 29 ans, 58 kg, active mais jamais entraînée en force. Veut sa premiè
 
 ## Semaine 12 — test (bloc 2)
 
-### lundi — force, corps entier (60 min disponibles, 16 min estimées)
+### lundi — force, corps entier (60 min disponibles, 20 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
 | Traction assistée à l'élastique | 2 × 6 à 8 | poids du corps | 3 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
+| Tenue menton au-dessus de la barre pronation | 2 × 5 s | poids du corps | sous-maximal : arrêt bien avant la perte de position | 2 min 30 s | secondaire ; tenue isométrique |
 | Pompe classique | 1 × 3 | poids du corps | 2 rép. en réserve | 2 min | principal ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Pompe inclinée (mains surélevées) | 1 × 6 à 8 | poids du corps | 3 rép. en réserve | 2 min | secondaire ; Échelle de poussée : pompe au mur → mains surélevées (barre basse ou barres parallèles, de plus en plus bas) → genoux → sol. Prends dès la première séance le cran qui permet 6 répétitions avec 3 à 4 en réserve ; descends d'un cran quand le haut de la plage est tenu sur toutes les séries, deux séances de suite. ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Air squat | 2 × 8 à 10 | poids du corps | 3 rép. en réserve | 2 min | secondaire |
@@ -576,9 +579,10 @@ Femme de 29 ans, 58 kg, active mais jamais entraînée en force. Veut sa premiè
 | Support hold aux barres parallèles | 2 × 10 s | poids du corps | sous-maximal : arrêt bien avant la perte de position | 2 min 30 s | accessoire ; tenue isométrique |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 20 s | mobilité |
 
-### samedi — force, corps entier, séance lourde (60 min disponibles, 8 min estimées)
+### samedi — force, corps entier, séance lourde (60 min disponibles, 13 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
+| Tenue menton au-dessus de la barre pronation | 2 × 5 à 30 s | poids du corps | — | 3 min | ÉPREUVE ; Test, d'abord l'essai strict, frais : après l'échauffement et 1 à 2 tractions faciles à l'élastique, essaie la traction stricte — départ bras tendus, menton au-dessus de la barre, sans élan — jusqu'à 3 essais séparés de 3 min, autant de répétitions propres que possible (objectif : 1). Fais cet essai à chaque test, en fin de bloc comme le jour de l'échéance, quel que soit le temps de tes descentes. Si une traction passe, déclare-la dans l'application : les séances commenceront alors par 2 à 3 tractions strictes isolées, propres, arrêt au premier essai lent ou déformé (jamais un effort maximal), le reste en descentes freinées et en tractions assistées. ; Ensuite, seulement si aucune traction n'est passée : la tenue menton au-dessus de la barre la plus longue, deux essais chronométrés (monte en sautant depuis un appui, bras fléchis, menton au-dessus de la barre ; repère : 10 s). Elle mesure la force de la position haute, d'un test à l'autre. |
 | Pompe classique | 1 série maximale (repère : 6 à 10) | poids du corps | — | 4 min | ÉPREUVE ; Test : une seule série maximale, arrêt dès que la forme casse. ; Jour du test de l'objectif : c'est la séance elle-même, après 48 h sans travail dur du mouvement. |

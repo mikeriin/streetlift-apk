@@ -31,7 +31,7 @@ Chaque bloc est écrit par le moteur de création au moment où il commence, d'a
 
 - Séances faites : 47 sur 48 (2 ajustées le jour même).
 - Échecs non voulus (hors tests et tentatives) : 0 % des séries de travail.
-- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 2,73 répétition en réserve (sur les 81 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 39,5 %.
+- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 2,63 répétition en réserve (sur les 74 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 37,6 %.
 - Plus forte hausse de charge totale d'un mouvement principal d'une séance à la suivante, à schéma égal : 0 % ; hausses de plus de 10 % faites de plusieurs crans : 0.
 - Progression réelle moyenne des mouvements suivis : 1,488 % par semaine.
 - Douleur : 0 hausse(s) de charge sur une zone douloureuse signalée.
@@ -50,16 +50,16 @@ Pour chaque mouvement, la séance la plus lourde de la semaine : ce que le progr
 | 4 | construction (volume) | 2 × 7 à 9 | (7 à 16)-(7 à 15) | 16-15 | 3 → 6,3 ; suivantes 3 → 6,6 | 22 / 19 | — |
 | 5 | construction (volume) | 2 × 7 à 9 | (7 à 18)-(7 à 18) | 18-14 | 3 → 5,4 ; suivantes 3 → 7,9 | 23 / 19 | allégé pour garder la marge prévue (au moins 3 en réserve) ; dernières séries plus dures que prévu |
 | 6 | test | 1 × 8 à 15, test | (8 à 15) | 20 | test | 24 / 20 | — |
-| 7 | construction (volume) | 2 × 10 à 14 | (10 à 17)-(10 à 30) | 17-17 | 2 → 7,3 ; suivantes 2 → 6 | 24 / 24 | série repère : une série ouverte (au ressenti, 2 en réserve) pour mesurer où en est l'athlète ; allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |
-| 8 | construction (volume) | 3 × 11 à 15 | (11 à 22)-(11 à 19)-(11 à 18) | 21-18 | 2 → 3,8 ; suivantes 2 → 4,5 | 25 / 23 | allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |
-| 9 | construction (volume) | 3 × 11 à 15 | (11 à 30)-(11 à 30) | 20-21 | 2 → 5 ; suivantes 2 → 2,7 | 25 / 24 | −1 série(s) ; alerte de surmenage : performance en baisse deux séances mesurées de suite (au moins −13 %) — volume réduit pendant une semaine, intensité gardée |
-| 10 | construction (volume) | 3 × 12 à 16 | (12 à 30)-(12 à 30) | 20-21 | 2 → 5,5 ; suivantes 2 → 2,7 | 25 / 24 | temps réduit (24 min au lieu de 40) |
-| 11 | construction (volume) | 3 × 12 à 16 | (12 à 22)-(12 à 19)-(12 à 17) | 22-19-16 | 2 → 5 ; suivantes 2 → 8 | 27 / 24 | allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |
+| 7 | construction (volume) | 2 × 8 à 12 | (8 à 17)-(8 à 30) | 17-17 | 2 → 7,3 ; suivantes 2 → 6 | 24 / 24 | série repère : une série ouverte (au ressenti, 2 en réserve) pour mesurer où en est l'athlète ; allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |
+| 8 | construction (volume) | 3 × 8 à 12 | (8 à 22)-(8 à 19)-(8 à 18) | 21-18 | 2 → 3,8 ; suivantes 2 → 4,5 | 25 / 23 | allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |
+| 9 | construction (volume) | 3 × 8 à 12 | (8 à 24)-(8 à 24) | 20-21 | 2 → 5 ; suivantes 2 → 2,7 | 25 / 24 | −1 série(s) ; alerte de surmenage : performance en baisse deux séances mesurées de suite (au moins −13 %) — volume réduit pendant une semaine, intensité gardée |
+| 10 | construction (volume) | 3 × 8 à 12 | (8 à 24)-(8 à 24) | 20-21 | 2 → 5,5 ; suivantes 2 → 2,7 | 25 / 24 | temps réduit (24 min au lieu de 40) |
+| 11 | construction (volume) | 3 × 8 à 12 | (8 à 22)-(8 à 19)-(8 à 17) | 22-19-16 | 2 → 5 ; suivantes 2 → 8 | 27 / 24 | allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |
 | 12 | test | 1 × 24 à 26, test | (22 à 26) | 22 | test | 26 / 24 | — |
-| 13 | construction (volume) | 3 × 12 à 16 | (12 à 22)-(12 à 19)-(12 à 18) | 22-19-18 | 2 → 6,2 ; suivantes 2 → 7,8 | 28 / 25 | — |
-| 14 | construction (volume) | 3 × 12 à 16 | (12 à 30)-(12 à 30)-(12 à 30) | 26-19 | 2 → 1,2 ; suivantes 2 → 4,3 | 27 / 26 | allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |
-| 15 | construction (volume) | 3 × 13 à 17 | (13 à 25)-(13 à 22)-(13 à 20) | 23-21-20 | 2 → 4,2 ; suivantes 2 → 4,9 | 27 / 27 | allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |
-| 16 | construction (volume) | 3 × 13 à 17 | (13 à 30)-(13 à 30)-(13 à 30) | 23-23-21 | 2 → 4,7 ; suivantes 2 → 3,6 | 28 / 27 | — |
+| 13 | construction (volume) | 3 × 8 à 12 | (8 à 22)-(8 à 19)-(8 à 18) | 22-19-18 | 2 → 6,2 ; suivantes 2 → 7,8 | 28 / 25 | — |
+| 14 | construction (volume) | 3 × 8 à 12 | (8 à 24)-(8 à 24)-(8 à 24) | 24-21-19 | 2 → 3,2 ; suivantes 2 → 4,7 | 27 / 27 | allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |
+| 15 | construction (volume) | 3 × 8 à 12 | (8 à 24)-(8 à 22)-(8 à 20) | 19-22-19 | 3,5 → 10,5 ; suivantes 2 → 7,7 | 29 / 27 | allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |
+| 16 | construction (volume) | 3 × 8 à 12 | (8 à 24)-(8 à 22)-(8 à 20) | 20-22-20 | 3 → 7,8 ; suivantes 2 → 5,2 | 28 / 27 | — |
 
 Athlète simulé, maximum réel hors fatigue : 22 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 28 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
 
@@ -104,18 +104,18 @@ Athlète simulé, maximum réel hors fatigue : 40 au départ (le record déclar�
 - **Semaine 6 (test)** : phase « test » : séances servies telles que le programme les écrit (× 3) ; récupération réduite (perte de poids en cours) : pas de volume ajouté (× 3) ; résultat de test reporté au profil : Dead hang 15 s ; résultat de test reporté au profil : Pompe inclinée (mains surélevées) 20 répétitions.
 - **Semaine 7 (construction (volume))** : nouveau bloc construit à partir du point de fin de bloc (maxima estimés, résultats de test, tolérance) ; récupération réduite (perte de poids en cours) : pas de volume ajouté (× 3).
 - **Semaine 8 (construction (volume))** : récupération réduite (perte de poids en cours) : pas de volume ajouté (× 3) ; Pompe inclinée (mains surélevées) : séries arrêtées en cours de séance (allégé pour garder la marge prévue (au moins 2 en réserve), dernières séries plus dures que prévu) ; Pompe inclinée (mains surélevées) : alerte de surmenage : performance en baisse deux séances mesurées de suite (au moins −13 %) — volume réduit pendant une semaine, intensité gardée.
-- **Semaine 9 (construction (volume))** : récupération réduite (perte de poids en cours) : pas de volume ajouté (× 3) ; Pompe inclinée (mains surélevées) : alerte de surmenage : performance en baisse deux séances mesurées de suite (au moins −13 %) — volume réduit pendant une semaine, intensité gardée ; Traction assistée pieds au sol : séries arrêtées en cours de séance (allégé pour garder la marge prévue (au moins 2 en réserve), dernières séries plus dures que prévu) ; temps réduit (24 min au lieu de 43) ; exercice retiré sur 3 exercices (temps réduit (24 min au lieu de 43)) ; séries retirées — Pompe inclinée (mains surélevées), Traction assistée pieds au sol (temps réduit (24 min au lieu de 43)).
+- **Semaine 9 (construction (volume))** : récupération réduite (perte de poids en cours) : pas de volume ajouté (× 3) ; Pompe inclinée (mains surélevées) : alerte de surmenage : performance en baisse deux séances mesurées de suite (au moins −13 %) — volume réduit pendant une semaine, intensité gardée ; Traction assistée pieds au sol : séries arrêtées en cours de séance (allégé pour garder la marge prévue (au moins 2 en réserve), dernières séries plus dures que prévu) ; temps réduit (24 min au lieu de 44) ; exercice retiré sur 3 exercices (temps réduit (24 min au lieu de 44)) ; séries retirées — Pompe inclinée (mains surélevées), Traction assistée pieds au sol (temps réduit (24 min au lieu de 44)).
 - **Semaine 10 (construction (volume))** : récupération réduite (perte de poids en cours) : pas de volume ajouté (× 3) ; temps réduit (24 min au lieu de 40) ; exercice retiré — Marche rapide, Suspension active (temps réduit (24 min au lieu de 40)) ; séries retirées — Pompe inclinée (mains surélevées) (temps réduit (24 min au lieu de 40)).
 - **Semaine 11 (construction (volume))** : récupération réduite (perte de poids en cours) : pas de volume ajouté (× 3).
 - **Semaine 12 (test)** : phase « test » : séances servies telles que le programme les écrit (× 3) ; récupération réduite (perte de poids en cours) : pas de volume ajouté (× 3) ; résultat de test reporté au profil : Traction assistée pieds au sol 12 répétitions ; résultat de test reporté au profil : Pompe inclinée (mains surélevées) 22 répétitions.
 - **Semaine 13 (construction (volume))** : nouveau bloc construit à partir du point de fin de bloc (maxima estimés, résultats de test, tolérance) ; récupération réduite (perte de poids en cours) : pas de volume ajouté (× 3).
-- **Semaine 14 (construction (volume))** : récupération réduite (perte de poids en cours) : pas de volume ajouté (× 3) ; Pompe inclinée (mains surélevées) : séries arrêtées en cours de séance (allégé pour garder la marge prévue (au moins 2 en réserve), dernières séries plus dures que prévu).
+- **Semaine 14 (construction (volume))** : récupération réduite (perte de poids en cours) : pas de volume ajouté (× 3).
 - **Semaine 15 (construction (volume))** : récupération réduite (perte de poids en cours) : pas de volume ajouté (× 3).
 - **Semaine 16 (construction (volume))** : 1 séance(s) manquée(s) sur 3 ; récupération réduite (perte de poids en cours) : pas de volume ajouté (× 2) ; Traction assistée pieds au sol : séries arrêtées en cours de séance (allégé pour garder la marge prévue (au moins 2 en réserve), dernières séries plus dures que prévu).
 
 ## Figures
 
-- Pompe classique : étape « Pompe inclinée (mains surélevées) » depuis 15 semaine(s), meilleure série 26 ; critère de passage rempli.
+- Pompe classique : étape « Pompe inclinée (mains surélevées) » depuis 15 semaine(s), meilleure série 24 ; critère de passage rempli.
 
 ## Même programme, autres athlètes simulés
 
@@ -123,6 +123,6 @@ Le même profil et le même moteur, avec d'autres hypothèses sur l'athlète ré
 
 | Athlète simulé | Échecs non voulus | Écart d'effort | Séries ≥ 2 rép. plus dures | Plus forte hausse à schéma égal | Progression par semaine | Tentatives réussies | Échéance / maximum du jour | Hausses sur zone douloureuse |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| modèle 2 (courbe linéaire, notes d'effort entières et plafonnées, récupération lente entre séries, tendons à adaptation lente) | 0 % | 2,73 | 0 % | 0 % | 1,488 % | — | — | 0 |
-| modèle 1 (courbe charge-répétitions à plateau, notes d'effort continues) | 0 % | 2,78 | 0 % | 0 % | 1,638 % | — | — | 0 |
-| modèle 3 (courbe en puissance, forme masquée par la fatigue, mauvais jours marqués, désentraînement rapide) | 0 % | 3,16 | 0 % | 0 % | 1,315 % | — | — | 0 |
+| modèle 2 (courbe linéaire, notes d'effort entières et plafonnées, récupération lente entre séries, tendons à adaptation lente) | 0 % | 2,63 | 0 % | 0 % | 1,488 % | — | — | 0 |
+| modèle 1 (courbe charge-répétitions à plateau, notes d'effort continues) | 0 % | 2,76 | 0 % | 0 % | 1,635 % | — | — | 0 |
+| modèle 3 (courbe en puissance, forme masquée par la fatigue, mauvais jours marqués, désentraînement rapide) | 0 % | 3,09 | 0 % | 0 % | 1,317 % | — | — | 0 |
