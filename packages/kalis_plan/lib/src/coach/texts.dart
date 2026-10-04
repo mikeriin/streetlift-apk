@@ -131,10 +131,9 @@ String? coachReasonText(Reason r, Catalog catalog) {
               'stricte — départ bras tendus, menton au-dessus de la barre, '
               "sans élan — jusqu'à 3 essais séparés de 3 min, autant de "
               'répétitions propres que possible (objectif : ${_int(v)}). '
-              "En fin de bloc, fais l'essai si tes descentes de "
-              "l'entraînement tiennent 8 s ou plus, ou si l'élastique le "
-              "plus fin passe 8 répétitions ; le jour de l'échéance, "
-              'fais-le dans tous les cas. Si une traction passe, '
+              "Fais cet essai à chaque test, en fin de bloc comme le "
+              "jour de l'échéance, quel que soit le temps de tes "
+              'descentes. Si une traction passe, '
               "déclare-la dans l'application : les séances commenceront "
               'alors par 2 à 3 tractions strictes isolées, propres, arrêt '
               'au premier essai lent ou déformé (jamais un effort '
@@ -156,18 +155,20 @@ String? coachReasonText(Reason r, Catalog catalog) {
               "tibia, au tendon d'Achille ou au pied à 3 sur 10 : retire "
               'les rebonds.',
         CoachNotes.restPause =>
-          'Dernière série en repos-pause, une fois par semaine : après la '
-              'série écrite, 15 à 20 s en suspension ou au sol, puis des '
-              "mini-séries de 3 à 4 répétitions jusqu'à un total de "
-              '${_int(v)} répétitions ; arrêt dès que la forme casse. '
-              "C'est la fin de série de ton objectif qui se travaille ici.",
+          'Repos-pause, cette semaine seulement sur ce mouvement : la '
+              'dernière série écrite se prolonge par ${_int(v)} relances au '
+              'plus de 3 à 4 répétitions, après 20 s de pause chacune ; '
+              "chaque relance s'arrête avec une répétition en réserve. "
+              'Rien de plus : ces relances comptent pour une série dure. '
+              'Pas de relance si le coude ou l\'épaule dépasse 2 sur 10.',
         CoachNotes.ambitious =>
           'Objectif ambitieux : le gain demandé dépasse le rythme '
               'habituel à ton niveau (environ +15 % en 12 semaines chez '
               "un pratiquant entraîné). Le programme vise l'objectif, mais "
               'un résultat de '
-              '${v is num ? v.round() ~/ 1000 : ''} à '
-              '${v is num ? v.round() % 1000 : ''} au test final serait '
+              '${v is num ? v.round() ~/ 1000 : ''}'
+              '${v is num && v.round() % 1000 != v.round() ~/ 1000 ? ' à ${v.round() % 1000}' : ''} '
+              'au test final serait '
               'déjà un bon cycle : ne force pas la forme pour y arriver. '
               "Si le repère de mi-parcours n'est pas atteint, le plan "
               "garde ses volumes et l'objectif se joue au cycle suivant.",
@@ -198,7 +199,8 @@ String? coachReasonText(Reason r, Catalog catalog) {
               'calcule pas en pourcentage mais sur le lest lui-même — '
               '${_plain(v)} kg de lest pour ces séries. Ajuste-la à la '
               'première séance pour garder la réserve écrite, puis ajoute '
-              'le plus petit pas quand toutes les séries passent.',
+              'le plus petit pas quand toutes les séries passent ; si la '
+              "réserve n'est pas tenue, retire 2,5 kg dans la séance.",
         CoachNotes.pushLadder =>
           'Échelle de poussée : pompe au mur → mains surélevées (barre '
               'basse ou barres parallèles, de plus en plus bas) → genoux '

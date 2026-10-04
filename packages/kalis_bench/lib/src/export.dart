@@ -207,7 +207,9 @@ String loadText(ItemView i) {
     } else if (intensity.basis == IntensityBasis.percentBenchmark) {
       // Le repère utilisé est écrit en clair (dernier maximum mesuré ou
       // repère de reprise) : l'athlète sait sur quoi porte le pourcentage.
-      final top = p.secondsHigh ?? p.repsHigh;
+      // (Plage de répétitions ouverte vers le haut : la part porte sur le
+      // bas de la plage.)
+      final top = p.secondsHigh ?? p.repsLow ?? p.repsHigh;
       final base = top == null || intensity.value <= 0
           ? null
           : (top / intensity.value).round();
