@@ -205,10 +205,18 @@ String loadText(ItemView i) {
     if (intensity.basis == IntensityBasis.percentOneRm) {
       parts.add('≈ $share du 1RM du mouvement de compétition');
     } else if (intensity.basis == IntensityBasis.percentBenchmark) {
+      // Le repère utilisé est écrit en clair (dernier maximum mesuré ou
+      // repère de reprise) : l'athlète sait sur quoi porte le pourcentage.
+      final top = p.secondsHigh ?? p.repsHigh;
+      final base = top == null || intensity.value <= 0
+          ? null
+          : (top / intensity.value).round();
       parts.add(
         intensity.referenceKind == BenchmarkKind.maxHold
             ? '≈ $share du maintien maximal'
-            : '≈ $share du maximum de répétitions',
+                  '${base == null ? '' : ' (repère : $base s)'}'
+            : '≈ $share du maximum de répétitions'
+                  '${base == null ? '' : ' (repère : $base)'}',
       );
     }
   }
@@ -263,7 +271,8 @@ String notesText(ItemView i, Catalog catalog) {
   final p = i.p;
   final notes = <String>[];
   final role = roleLabel(i.role);
-  if (role.isNotEmpty) {
+  // Une épreuve n'a pas de rang dans la séance : elle est l'épreuve.
+  if (role.isNotEmpty && p.kind != SetKind.test) {
     notes.add(role);
   }
   if (p.kind == SetKind.test) {
@@ -550,8 +559,11 @@ String _targetText(BenchTarget t, Catalog catalog) {
     GoalMetric.maxHoldSeconds =>
       '$name : tenue de ${value == null ? '' : _num(value)} s',
     GoalMetric.skillUnlocked => '$name : figure à débloquer',
+    // Une course chronométrée se nomme par sa distance, pas par l'exercice
+    // d'entraînement qui la porte.
     GoalMetric.timeSeconds =>
-      '$name : ${t.distanceMeters == null ? '' : '${t.distanceMeters!.round()} m '}'
+      '${t.distanceMeters == null ? name : 'Course chronométrée'} : '
+          '${t.distanceMeters == null ? '' : '${t.distanceMeters!.round()} m '}'
           'en ${value == null ? '' : _duration(value.round())}',
     GoalMetric.distanceMeters =>
       '$name : ${value == null ? '' : '${value.round()} m'}',
