@@ -2515,9 +2515,12 @@ void _fillTime(_Builder b, Set<int> runDays, CoachStyle style) {
     // priorité, R4-H2).
     final lean = a.profile.specialization != null;
     var added = 0;
+    // (Un seul complément dans une séance de 45 minutes ou moins, deux
+    // sous 75 minutes, trois au-delà.)
+    final most = minutes <= 45 ? 1 : (minutes < 75 ? 2 : 3);
     for (var k = 0; k < _fillers.length; k++) {
       final (base, role, method, sets) = _fillers[k];
-      if (total() >= target || added >= 3) {
+      if (total() >= target || added >= most) {
         break;
       }
       // Du plus dur au plus facile à partir du niveau avancé ; l'ordre de
