@@ -1400,10 +1400,13 @@ List<SetPlan>? _directPlans(
       var count = (sets * firstLow / each).ceil();
       // Après un échec, sur une zone douloureuse ou un jour de bilan bas :
       // aucune série ajoutée ; de même tant qu'aucune série n'a mesuré le
-      // maximum (exercice encore estimé d'après le profil).
+      // maximum (exercice encore estimé d'après le profil), ou quand le
+      // bloc écrit une technique (servie ou non).
       final exact = track.exactDay;
       final known =
           !ex.calibrating &&
+          item.technique == null &&
+          c.item.technique == null &&
           exact != null &&
           run.day - exact <= 2 * p.coachProbeDays;
       final most = locked || !known ? sets : (2 * sets < 3 ? 3 : 2 * sets);
@@ -1415,6 +1418,7 @@ List<SetPlan>? _directPlans(
           'delta': firstLow - each,
         }),
       );
+      ex.split = count > sets;
       return <SetPlan>[
         for (var i = 0; i < count; i++)
           SetPlan(

@@ -846,7 +846,13 @@ List<String> checkCoachSession(
         split = false;
       }
       if ((!timed || item.technique != null) && !split) {
-        out.add('$where : ${item.sets} séries pour ${basis.sets} écrites');
+        final lines = <String>[
+          for (final t in targets) '${t.repsLow}-${t.repsHigh}',
+        ].join(' ');
+        out.add(
+          '$where : ${item.sets} séries pour ${basis.sets} écrites '
+          '(lignes $lines ; bas de plage écrit $low)',
+        );
       }
     }
     final kind = item.technique?.kind;

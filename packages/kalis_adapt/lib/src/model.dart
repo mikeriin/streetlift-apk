@@ -519,6 +519,10 @@ final class ExerciseRun {
   /// ouverte ou test près de l'échec, répétitions manquantes).
   bool measured = false;
 
+  /// Mode coach : la séance du jour est servie en séries fractionnées
+  /// (plus de lignes que le bloc n'en écrit, plus courtes).
+  bool split = false;
+
   /// Séries notées face à une cible.
   int ratedSets = 0;
 

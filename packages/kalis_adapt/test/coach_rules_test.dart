@@ -13,14 +13,26 @@ import 'support.dart';
 
 /// Politique contrôlée qui retient, avant chaque séance, la capacité
 /// estimée des exercices suivis.
-final class _Captured extends CheckedPolicy {
-  _Captured(super.engine, this.ids);
+final class _Captured implements CoachAwarePolicy {
+  _Captured(KalisAdapt engine, this.ids) : inner = CheckedPolicy(engine);
 
+  final CheckedPolicy inner;
   final Set<String> ids;
 
   /// Capacité estimée avant la séance, par date et par exercice.
   final Map<String, Map<String, double>> before =
       <String, Map<String, double>>{};
+
+  List<String> get violations => inner.violations;
+
+  @override
+  String get name => inner.name;
+
+  @override
+  bool get rich => inner.rich;
+
+  @override
+  List<IntraSessionAdvice> takeAdvices() => inner.takeAdvices();
 
   @override
   SessionPlan plan(SessionContext c) {
@@ -32,8 +44,24 @@ final class _Captured extends CheckedPolicy {
       }
     }
     before[c.date.iso] = seen;
-    return super.plan(c);
+    return inner.plan(c);
   }
+
+  @override
+  SetTarget? nextSet(
+    SessionContext c,
+    ExercisePrescription item,
+    int index,
+    List<SetRecord> done,
+  ) => inner.nextSet(c, item, index, done);
+
+  @override
+  void finish(SessionContext c, SessionRecord record) =>
+      inner.finish(c, record);
+
+  @override
+  SimEstimate? estimate(SessionContext c, String exerciseId, double n) =>
+      inner.estimate(c, exerciseId, n);
 }
 
 void main() {
