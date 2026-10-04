@@ -1287,7 +1287,10 @@ void _buildReps(_Builder b, Set<int> runDays) {
   final lightPull = <int>{
     if (pullGoal && !spared && !competition && pullMax >= 4)
       for (final d in pullWanted)
-        if (!pullDays.contains(d)) d,
+        // (Jamais le lendemain d'un jour de tirage : l'exposition légère
+        // précède la séance dure, elle ne la suit pas.)
+        if (!pullDays.contains(d) && !pullDays.any((o) => b.dayBefore(o, d)))
+          d,
   };
   final pullHeavy = <String>[
     for (final m in (competition ? _competitionMethods : _repsMethods(pullMax)))
@@ -1421,7 +1424,7 @@ void _buildReps(_Builder b, Set<int> runDays) {
       b.add(
         d,
         <String>[Ids.pull],
-        SlotRole.skill,
+        SlotRole.secondary,
         Method.repsTechnique,
         sets: 3,
         stress: DayStress.light,

@@ -237,6 +237,9 @@ abstract final class CoachNotes {
   /// poids du corps (`value` : lest en kg).
   static const String smallLoad = 'small_load';
 
+  /// Série d'entrée de reprise, écrite sur la ligne (`value` : réserve).
+  static const String entrySet = 'entry_set';
+
   /// Pompe en descente freinée (`value` : secondes).
   static const String slowNegativePush = 'slow_negative_push';
 
@@ -264,6 +267,7 @@ abstract final class CoachNotes {
 
   /// Tous les codes.
   static const List<String> all = <String>[
+    entrySet,
     slowNegativePush,
     roleForearm,
     roleRunner,
@@ -646,6 +650,9 @@ final class Prescriber {
 
   final List<_WeekTrace> _history = <_WeekTrace>[];
 
+  /// Mouvements dont la série d'entrée de reprise est déjà écrite.
+  final Set<String> _entered = <String>{};
+
   /// Jours d'activation (J−2 d'une épreuve de répétitions) de la semaine
   /// en cours.
   final Set<int> _activation = <int>{};
@@ -838,7 +845,10 @@ final class Prescriber {
   /// coupure (R5-P7 : charge −10 % après 2 à 4 semaines d'arrêt, −15 à
   /// −20 % après 4 à 8, −20 à −30 % au-delà ; R5-P6 : retour à 90 % des
   /// repères en un bloc, puis au niveau antérieur).
-  double get _regain {
+  double get _regain => _regainAt(_testsDone);
+
+  /// Part des anciens repères après [tests] tests passés.
+  double _regainAt(int tests) {
     final gap = a.gapWeeks;
     if (gap < 2) {
       return 1;
@@ -847,13 +857,13 @@ final class Prescriber {
     // Le repère ne monte qu'après un test (jamais sur un progrès
     // supposé) : au premier test, à mi-chemin des anciens records ; au
     // deuxième, à 95 % ; au troisième, aux anciens records.
-    if (_testsDone <= 0) {
+    if (tests <= 0) {
       return base;
     }
-    if (_testsDone == 1) {
+    if (tests == 1) {
       return (base + 1) / 2 > 0.92 ? 0.92 : (base + 1) / 2;
     }
-    return _testsDone == 2 ? 0.95 : 1;
+    return tests == 2 ? 0.95 : 1;
   }
 
   int _scaled(int sets, WeekSpec ws, {int min = 1}) {
@@ -1668,7 +1678,10 @@ final class Prescriber {
       final gain = a.plannedGain(s.exerciseId, GoalMetric.maxReps, own, day);
       return (own * (1 + gain) + 1e-9).floor();
     }
-    final regained = (own * _regain).floor();
+    // (Un exercice qui n'a pas été testé garde son repère de reprise : il
+    // ne monte jamais sur un progrès supposé.)
+    final tested = _testedOn[s.exerciseId] != null || expected;
+    final regained = (own * (tested ? _regain : _regainAt(0))).floor();
     return regained < 1 ? 1 : regained;
   }
 
@@ -2262,7 +2275,12 @@ final class Prescriber {
         : (push ? (stage >= 2 ? 4 : 3) : (stage >= 2 ? 5 : 4));
     final reps = ws.light ? 2 : (later ? 3 : (stage >= 3 ? 4 : 3));
     x
-      ..sets = ws.light ? 2 : (later ? 3 : s.sets)
+      // (Bloc suivant : trois séries un seul jour par semaine, deux
+      // l'autre — une dizaine de séries de tirage vertical direct par
+      // semaine chez le débutant, R1-P1.)
+      ..sets = ws.light
+          ? 2
+          : (later && (push || _dayNow == _firstNegativeDay) ? 3 : s.sets)
       ..minSets = 1
       ..repsLow = reps
       ..repsHigh = reps
@@ -3459,6 +3477,16 @@ final class Prescriber {
     return x;
   }
 
+  /// Première séance de la semaine qui porte des descentes freinées.
+  int get _firstNegativeDay {
+    for (final d in skeleton.days) {
+      if (d.slots.any((o) => o.exerciseId == 'sw-traction-negative')) {
+        return d.dayIndex;
+      }
+    }
+    return -1;
+  }
+
   /// Vrai si deux objectifs de série longue (15 répétitions et plus)
   /// coexistent.
   bool get _twoLongGoals {
@@ -3828,6 +3856,22 @@ final class Prescriber {
       if (x != null) {
         _cue(x);
         out.add(x);
+      }
+    }
+    if (blockIndex == 0 && week == 0 && a.gapWeeks >= 2) {
+      // Reprise : la série d'entrée est écrite sur la ligne, à la première
+      // séance qui porte le mouvement.
+      for (final x in out) {
+        final m = x.method;
+        if (x.kind == SetKind.work &&
+            (m == Method.repsTop ||
+                m == Method.repsStrength ||
+                m == Method.repsVolume ||
+                m == Method.repsDensity) &&
+            (a.reps[x.e.id] ?? 0) > 0 &&
+            _entered.add(x.e.id)) {
+          x.reasons.add(_note(CoachNotes.entrySet, 3));
+        }
       }
     }
     if (gated) {
@@ -4555,7 +4599,7 @@ final class Prescriber {
     if (blockIndex != 0 || a.gapWeeks < 10 || week >= 4) {
       return;
     }
-    final factor = const <double>[0.5, 0.6, 0.72, 0.85][week];
+    final factor = const <double>[0.5, 0.57, 0.66, 0.76][week];
     double total() {
       var t = 0.0;
       for (final items in days) {
