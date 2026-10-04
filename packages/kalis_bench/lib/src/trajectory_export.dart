@@ -427,7 +427,8 @@ String coachTrajectoryMarkdown(
     ..writeln(
       'Pour chaque mouvement, la séance la plus lourde de la semaine : ce '
       'que le programme écrit, ce que le moteur sert et ce que l\'athlète '
-      'fait, l\'effort visé et l\'effort réel (répétitions en réserve), le '
+      'fait, l\'effort affiché par le moteur et l\'effort réel (répétitions '
+      'en réserve ; première série, puis moyenne des suivantes), le '
       'maximum réel et le maximum estimé par le moteur (1RM de charge '
       'totale, répétitions ou secondes), puis les décisions du moteur.',
     )
@@ -455,7 +456,6 @@ String coachTrajectoryMarkdown(
       SimSession? best;
       var bestLoad = -1.0;
       ExercisePrescription? bestItem;
-      final notes = <String>[];
       for (final s in byWeek[w] ?? const <SimSession>[]) {
         for (final it in s.plan.items) {
           if (it.exerciseId != id) {
@@ -472,43 +472,56 @@ String coachTrajectoryMarkdown(
             bestLoad = top;
             bestItem = it;
           }
-          for (final r in it.reasons) {
-            final text = adaptReasonText(r, catalog);
-            if (text != null && !notes.contains(text)) {
-              notes.add(text);
-            }
-          }
-        }
-        for (final a in s.advices) {
-          if (a.exerciseId != id) {
-            continue;
-          }
-          for (final r in a.reasons) {
-            final text = adaptReasonText(r, catalog);
-            if (text != null && !notes.contains(text)) {
-              notes.add(text);
-            }
-          }
         }
       }
       if (best == null || bestItem == null) {
         continue;
       }
+      // Décisions de la séance montrée (et conseils d'entre-séries).
+      final notes = <String>[];
+      void note(Reason r) {
+        final text = adaptReasonText(r, catalog);
+        if (text != null && !notes.contains(text)) {
+          notes.add(text);
+        }
+      }
+
+      bestItem.reasons.forEach(note);
+      for (final a in best.advices) {
+        if (a.exerciseId == id) {
+          a.reasons.forEach(note);
+        }
+      }
       final rows = rowsOf['${best.simDay}|$id'] ?? const <SetRow>[];
       final hold = rows.isNotEmpty && rows.first.mode == CapacityMode.hold;
-      var want = 0.0;
-      var real = 0.0;
-      var count = 0;
+      // Effort de la première ligne, puis des suivantes.
+      String effort(List<SetRow> part) {
+        var want = 0.0;
+        var real = 0.0;
+        var open = false;
+        for (final r in part) {
+          want += r.wantRir;
+          real += r.trueRir;
+          open = open || r.openTarget;
+        }
+        return '${_n(want / part.length, 1)}${open ? '+' : ''} → '
+            '${_n(real / part.length, 1)}';
+      }
+
+      final work = <SetRow>[
+        for (final r in rows)
+          if (!r.test) r,
+      ];
       double? dayMax;
       for (final r in rows) {
         dayMax = r.dayMax;
-        if (r.test) {
-          continue;
-        }
-        want += r.wantRir;
-        real += r.trueRir;
-        count++;
       }
+      final effortText = work.isEmpty
+          ? (rows.isEmpty ? '—' : 'test')
+          : (work.length == 1
+                ? effort(work)
+                : '${effort(work.sublist(0, 1))} ; suivantes '
+                      '${effort(work.sublist(1))}');
       double? estimate;
       for (final e in run.estimates) {
         if (e.week == w && e.exerciseId == id) {
@@ -537,10 +550,7 @@ String coachTrajectoryMarkdown(
               : coachPhaseLabel(intent.code),
           written == null ? '—' : _written(written),
           _done(rows, hold),
-          count == 0
-              ? (rows.isEmpty ? '—' : 'test')
-              : '${_n(want / count, 1)}${rows.any((r) => r.openTarget) ? '+' : ''}'
-                    ' → ${_n(real / count, 1)}',
+          effortText,
           '${max(dayMax)} / ${max(estimate)}',
           notes.isEmpty ? '—' : notes.take(4).join(' ; '),
         ]),

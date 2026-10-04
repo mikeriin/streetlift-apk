@@ -1263,7 +1263,7 @@ final class SessionRun {
       final rir = rirOfFlames(flames);
       f.observeLoad(
         logLoad: logLoad,
-        n: reps + state.rater.trueRir(rir, p),
+        n: reps + rir,
         nSd: state.rater.rirSd(rir, reps, p),
         fatigue: fatigue,
         p: p,
@@ -1419,9 +1419,8 @@ final class SessionRun {
     } else if (run.spec.coach != null &&
         rirOfFlames(flames) >= p.coachCensorRir) {
       final said = rirOfFlames(flames);
-      final rir = state.rater.trueRir(said, p);
       f.observeDirect(
-        logCapacity: ln(_impliedCapacity(mode, done, rir) / keep),
+        logCapacity: ln(_impliedCapacity(mode, done, said) / keep),
         sd: relSd(said),
         p: p,
         bound: true,
@@ -1505,11 +1504,21 @@ final class SessionRun {
       return;
     }
     run.ratedSets++;
+    // Mode coach : une note au plafond de ce qu'une personne sait dire
+    // (« 3 en réserve ou plus »), au-dessus de la réserve visée, compte
+    // comme « plus facile que visé » — elle ouvre une série au ressenti
+    // qui dira ce que la charge (ou la plage) vaut vraiment.
+    final said = rirOfFlames(flames);
+    final coachEasy =
+        run.spec.coach != null &&
+        said >= _p.coachCensorRir &&
+        said - rirOfFlames(target.flames) >= 0.5;
     final easy =
         !failed &&
         amount >= target.high &&
-        flames == Flames.min &&
-        target.flames - flames >= _p.adviceGapFlames;
+        ((flames == Flames.min &&
+                target.flames - flames >= _p.adviceGapFlames) ||
+            coachEasy);
     if (easy) {
       run.easySets++;
     }

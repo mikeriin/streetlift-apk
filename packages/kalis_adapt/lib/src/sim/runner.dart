@@ -635,8 +635,8 @@ SimRun simulate({
         final role = context.roleOf(item.slotId);
         final rest = item.restSeconds ?? 90;
         final technique = rich ? item.technique : null;
-        final isTest = item.kind == SetKind.test;
-        final testKind = isTest ? item.test?.kind : null;
+        final isTest = item.kind == SetKind.test || basis.kind == SetKind.test;
+        final testKind = isTest ? (item.test ?? basis.test)?.kind : null;
         final isAttempt =
             testKind == TestKind.oneRm ||
             testKind == TestKind.attemptSimulation;

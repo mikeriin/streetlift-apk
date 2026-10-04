@@ -182,11 +182,11 @@ Future<void> runStreetCampaign({
   var count = seeds;
   final file = File('campaign_seeds.txt');
   if (file.existsSync()) {
-    count = int.parse(file.readAsStringSync().trim().split(RegExp(r'\s+')).first);
+    count = int.parse(
+      file.readAsStringSync().trim().split(RegExp(r'\s+')).first,
+    );
   }
-  final keys = <String>[
-    for (final p in loadInputs('street').profiles) p.key,
-  ];
+  final keys = <String>[for (final p in loadInputs('street').profiles) p.key];
   final results = <String, Map<String, Object?>>{};
   var next = 0;
   Future<void> worker() async {
@@ -196,7 +196,9 @@ Future<void> runStreetCampaign({
     }
   }
 
-  await Future.wait(<Future<void>>[for (var i = 0; i < parallel; i++) worker()]);
+  await Future.wait(<Future<void>>[
+    for (var i = 0; i < parallel; i++) worker(),
+  ]);
   final ordered = <Map<String, Object?>>[for (final k in keys) results[k]!];
   File('$outPath/campagne_street.json').writeAsStringSync(
     '${jsonEncode(<String, Object?>{'benchVersion': kalisBenchVersion, 'seeds': count, 'profiles': ordered})}\n',

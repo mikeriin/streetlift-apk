@@ -429,8 +429,40 @@ CoachAdvice? coachAdvise(
     }
   }
 
-  // Sinon : la cible prévue.
-  final advice = CoachAdvice(next: planned, action: IntraSessionAction.keep);
+  // Sinon : la cible prévue — jamais plus lourde que la dernière ligne
+  // quand une ligne précédente de l'exercice a dû être allégée.
+  var kept = planned;
+  var eased = false;
+  for (final o in ex.observed) {
+    if (!o.failed && gapOf(o) >= p.coachBreachRir - 1e-9) {
+      eased = true;
+    }
+  }
+  final lastLoad = previous.loadKg;
+  final keptLoad = planned.loadKg;
+  if (eased &&
+      loaded &&
+      lastLoad != null &&
+      keptLoad != null &&
+      keptLoad > lastLoad + 1e-9) {
+    kept = planned.withLoad(lastLoad);
+  } else if (eased && !loaded && planned.high > previous.amount) {
+    final amount = previous.amount < 1 ? 1 : previous.amount;
+    kept = SetPlan(
+      loadKg: null,
+      low: amount < planned.low ? amount : planned.low,
+      high: amount,
+      flames: planned.flames,
+      open: planned.open && amount > planned.low,
+      role: planned.role,
+    );
+  }
+  final advice = CoachAdvice(
+    next: kept,
+    action: identical(kept, planned)
+        ? IntraSessionAction.keep
+        : (loaded ? IntraSessionAction.loadDown : IntraSessionAction.repsDown),
+  );
   final t = sessionItem.technique;
   if (t != null &&
       (served == SetTechniqueKind.cluster ||

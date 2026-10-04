@@ -510,6 +510,11 @@ LineReading? readLine(
   if (set.role == SetRole.warmup) {
     return const LineReading(skip: true);
   }
+  if (set.role == SetRole.attempt && !hold) {
+    // Tentative : une barre réussie dit « au moins une fois » ; la note
+    // d'une répétition unique ne se lit pas comme une réserve mesurée.
+    return const LineReading(skip: false, boundOnly: true);
+  }
   if (kind == SetTechniqueKind.accentuatedEccentric) {
     // Une descente surchargée ou seule ne mesure pas la capacité du
     // mouvement complet.
@@ -1124,6 +1129,7 @@ List<SetPlan>? _directPlans(
     final safe = hold
         ? _holdSafe(run, ex, fatigue)
         : _repsSafe(run, ex, fatigue);
+    int? easyTop;
     var wanted = high;
     if (follows && low == high) {
       // Part d'un test : elle suit le maximum mesuré, dans les deux sens.
@@ -1144,8 +1150,28 @@ List<SetPlan>? _directPlans(
       if (extended > wanted) {
         wanted = extended;
       }
+      if (ex.easyMode) {
+        // Dernière séance notée « plus facile que visé » : séries au
+        // ressenti jusqu'au haut de plage étendu (elles diront ce que la
+        // plage vaut, que les notes ne bornent que par le bas).
+        easyTop = ex.spec.wideTop;
+      }
     }
     var target = wanted < safe ? wanted : safe;
+    if (easyTop != null && easyTop > target) {
+      final floor = target < low ? target : low;
+      out.add(
+        SetPlan(
+          loadKg: null,
+          low: floor < 1 ? 1 : floor,
+          high: easyTop,
+          flames: flames,
+          open: true,
+          role: role,
+        ),
+      );
+      continue;
+    }
     if (tendon &&
         mark != null &&
         mark.top > 0 &&
