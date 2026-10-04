@@ -1116,6 +1116,21 @@ final class Prescriber {
     }
   }
 
+  /// Vrai quand l'échéance du bloc vise des maxima de répétitions (objectifs
+  /// datés en répétitions, ou épreuve de répétitions) et aucune charge
+  /// maximale.
+  bool get _repsAim {
+    final target = _shape.target;
+    if (target == null) {
+      return false;
+    }
+    if (target.event != null) {
+      return isRepsTarget(target);
+    }
+    return target.goals.isNotEmpty &&
+        target.goals.every((g) => g.metric == GoalMetric.maxReps);
+  }
+
   /// Séries d'un mouvement lourd en intensification et en réalisation :
   /// trois au moins (une série de tête et deux séries allégées à −5 %, soit
   /// trois séries à 85 % et plus : R2-P8, 3 à 6 séries à 85 % et plus par
@@ -1518,6 +1533,19 @@ final class Prescriber {
         } else if (pct > 0.78) {
           pct = 0.78;
         }
+      case WeekIntent.intensification || WeekIntent.realization
+          when _repsAim:
+        // Objectif de répétitions maximales (sans épreuve de force) : le
+        // lest garde des séries de 5 à 75 à 80 % — la réserve de force sert
+        // l'endurance de force, le travail spécifique se fait au poids du
+        // corps (CX, panel : 4 × 3 lourd en réalisation ne transfère pas
+        // vers un maximum de répétitions ; R4-G1, R4-G2).
+        reps = 5;
+        pct = 0.75 + 0.015 * stage;
+        if (pct > 0.80) {
+          pct = 0.80;
+        }
+        rir = 3;
       case WeekIntent.intensification:
         reps = 4;
         pct = 0.78 + 0.015 * stage;

@@ -429,6 +429,80 @@ void main() {
       );
     });
 
+    test('faisabilité selon le lieu (0.4.2)', () {
+      final wall = catalog.exercise('cs-handstand-dos-au-mur');
+      expect(wall.equipment, contains('mur'));
+      // Un mur ne bloque jamais feasibleWith (lecture de 0.4.1).
+      expect(wall.feasibleWith(<String>{}), isTrue);
+      expect(wall.feasibleAt(<String>{}, place: Place.home), isTrue);
+      expect(wall.feasibleAt(<String>{}, place: Place.gym), isTrue);
+      expect(wall.feasibleAt(<String>{}, place: Place.outdoor), isFalse);
+      expect(wall.feasibleAt(<String>{'mur'}, place: Place.outdoor), isTrue);
+      expect(
+        wall.feasibleAt(<String>{}, places: <Place>{Place.outdoor}),
+        isFalse,
+      );
+      expect(
+        wall.feasibleAt(
+          <String>{},
+          places: <Place>{Place.outdoor, Place.home},
+        ),
+        isTrue,
+      );
+      expect(wall.feasibleAt(<String>{}), isTrue);
+
+      final incline = catalog.exercise('sw-pompe-inclinee');
+      expect(incline.feasibleAt(<String>{}, place: Place.home), isTrue);
+      expect(incline.feasibleAt(<String>{}, place: Place.outdoor), isFalse);
+      expect(
+        incline.feasibleAt(<String>{'barre basse'}, place: Place.outdoor),
+        isTrue,
+      );
+      expect(
+        incline.feasibleAt(<String>{'barres parallèles'}, place: Place.gym),
+        isTrue,
+      );
+
+      final pike = catalog.exercise('cs-handstand-pike-pieds-sureleves');
+      expect(pike.feasibleAt(<String>{}, place: Place.outdoor), isFalse);
+      expect(
+        pike.feasibleAt(<String>{'banc plat'}, place: Place.outdoor),
+        isTrue,
+      );
+
+      final pullUp = catalog.exercise('sw-traction-pronation');
+      expect(pullUp.feasibleAt(<String>{}, place: Place.home), isFalse);
+      expect(
+        pullUp.feasibleAt(<String>{'barre fixe'}, place: Place.outdoor),
+        isTrue,
+      );
+    });
+
+    test('tables de lieu et de remplacement cohérentes avec le catalogue', () {
+      final vocabulary = catalog.equipmentVocabulary.toSet();
+      expect(vocabulary, containsAll(placeBoundEquipment.keys));
+      for (final entry in equipmentAlternatives.entries) {
+        expect(catalog.exercise(entry.key).id, entry.key);
+        for (final alternative in entry.value) {
+          expect(vocabulary, containsAll(alternative));
+        }
+      }
+      for (final id in homeFurnitureExercises) {
+        expect(catalog.exercise(id).id, id);
+      }
+      // feasibleAt n'est jamais plus strict que feasibleWith hors du mur.
+      for (final e in catalog.exercises) {
+        if (e.equipment.contains('mur')) {
+          continue;
+        }
+        for (final place in Place.values) {
+          if (e.feasibleWith(<String>{})) {
+            expect(e.feasibleAt(<String>{}, place: place), isTrue, reason: e.id);
+          }
+        }
+      }
+    });
+
     test('contrôles de références', () {
       expect(catalog.checkExerciseIds(<String>['sw-pompe']), isEmpty);
       expect(

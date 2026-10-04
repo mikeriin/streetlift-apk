@@ -28,6 +28,11 @@ Session Opus 5.5 lancée le 04/10/2026 vers 17:35 UTC. Base : `moteurs` ccde1ad2
 - Passe 0 (68 couples, saisons des moteurs 0.2.0) : 1/68 à 9, minimum 4,5, moyenne 7,01 ; notes : cx-outils/notes/p0.json ; tableau et familles : packages/kalis_bench/docs/CALIBRAGE_CX.md.
 - Boucle 1 écrite et poussée en dev (43426224) : estimations du résumé d'adaptation (Athlete.read `estimates`, vers le bas seulement) et douleurs (`adaptationPains`) dans le bloc suivant ; transition après une épreuve principale (`justAfterEvent`) ; tirage non consécutif (reps : avancé jusqu'à 3 jours ; streetlifting : volume et séance légère à 48 h) ; partielles : coude à antécédent 90-95 %, retirées les 4 dernières semaines ; négatives du débutant 3 × 4-5 de 5 s ; volume lesté avancé 5 × 75-80 % ; pas d'étape suivante quand l'étape actuelle est écartée ; texte already_applied ; notes weight_class et event_format.
 
+## Étape 19:15 UTC (suite) : pendant le contrôle de la boucle 1
+- kalis_core 0.4.2 : tests `feasibleAt` (catalog_test), CHANGELOG, CONTRAT (en-tête, ligne `lieux`).
+- kalis_plan : groupe de tests « CX — saison complète » (coach_test : pas de traction deux jours de suite en streetlifting et en répétitions, catégorie de poids puis transition, échelle de poussée, test mesuré plus bas qui fait foi).
+- `kalis_bench/tool/relecture/build_manche_saisons.py` (manche « saisons » de la page de relecture).
+
 ## Reste à faire
 - Lire le contrôle dev, corriger la compilation ; passe 0 du panel sur les saisons (mesure avant).
 - Corrections du programme écrit (LANCEMENTS.md CX, points 1 à 7 ; C7.7 street_08 et street_14 ; remarques de la relecture documentée des manches 1 et 2 qui relèvent du programme).
