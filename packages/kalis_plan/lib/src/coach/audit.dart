@@ -151,6 +151,7 @@ List<String> coachAudit(
   final arms = <List<double>>[];
   final light = <bool>[];
   final hard = <double>[];
+  final work = <double>[];
   final who = <List<(List<int>, String)>>[];
   final lastLoad = <String, (int, double, int)>{};
   var global = 0;
@@ -173,6 +174,7 @@ List<String> coachAudit(
       final armDays = <Set<int>>[<int>{}, <int>{}, <int>{}];
       final names = <(List<int>, String)>[];
       var hardSets = 0.0;
+      var workSets = 0.0;
       for (final day in week.days) {
         final d = day.dayIndex;
         final where = 'bloc ${pass1.blockIndex} s${week.weekIndex} j$d';
@@ -250,6 +252,9 @@ List<String> coachAudit(
               (rir == null || rir <= coachHardSetMaxRir);
           if (isHard) {
             hardSets += p.sets;
+            if (p.kind != SetKind.test) {
+              workSets += p.sets;
+            }
             names.add((
               <int>[for (final group in MuscleGroup.values) t.creditOf(group)],
               '${e.id}×${p.sets}'
@@ -305,6 +310,7 @@ List<String> coachAudit(
       arms.add(s);
       light.add(_light(week.kind));
       hard.add(hardSets);
+      work.add(workSets);
       global++;
     }
   }
@@ -365,7 +371,9 @@ List<String> coachAudit(
       }
     }
     final drop = level >= 2 ? 0.40 : 0.30;
-    if (peak >= 10 && hard[at] > peak * (1 - drop) + 1e-9) {
+    // (Les tentatives de l'épreuve ne se retirent pas : la règle porte sur
+    // le travail hors épreuve.)
+    if (peak >= 10 && work[at] > peak * (1 - drop) + 1e-9) {
       out.add(
         's$at : échéance à ${hard[at]} séries dures pour un pic de $peak',
       );
