@@ -200,6 +200,23 @@ ProfileReport evaluateProfile(
       trajectory = main;
     }
     if (mode == BenchMode.croisement) {
+      // Sécurité du programme tel qu'il a évolué, sous chaque modèle de
+      // vérité (le compte des autres modèles va dans leurs mesures).
+      for (final o in others) {
+        o.metrics['realizedSafetyViolations'] = safetyFindings(
+          ProgramView(
+            catalog,
+            BenchProgram(
+              bench: profile,
+              adapted: program.adapted,
+              request: program.request,
+              blocks: o.run.blocks,
+              horizonWeeks: program.horizonWeeks,
+            ),
+          ),
+          profile,
+        ).length;
+      }
       realized = safetyFindings(
         ProgramView(
           catalog,

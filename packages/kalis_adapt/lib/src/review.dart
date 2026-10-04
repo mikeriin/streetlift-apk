@@ -1095,6 +1095,13 @@ AdaptReview buildReview(
           // une épargne de zone qui déborde de ses emplacements est une
           // restructuration, pas encore permise à ce titre.
           withheld = 'scope';
+        } else if (view.coached &&
+            !restructureKeepsDose(view.block, result.block, nextWeek)) {
+          // Bloc au contrat 0.4.0 : une restructuration qui ajoute du
+          // volume, allonge les maintiens ou vide une semaine défait la
+          // périodisation écrite (affûtage, montée du volume) — la zone
+          // reste épargnée séance par séance.
+          withheld = 'dose';
         } else {
           c.diff = result.diff;
           c.block = result.block;
@@ -1448,4 +1455,49 @@ _Candidate _volumeCandidate(
     exerciseId: item.exerciseId,
     diff: PlanDiff(changes: changes),
   );
+}
+
+/// Vrai si le bloc [proposed] garde, pour chaque semaine à partir de
+/// [fromWeek], la dose du bloc [current] : entre 90 % et 100 % de ses
+/// séries, et pas plus de 105 % de ses secondes de maintien.
+bool restructureKeepsDose(
+  ProgramBlock current,
+  ProgramBlock proposed,
+  int fromWeek,
+) {
+  (int, int) dose(WeekPrescription w) {
+    var sets = 0;
+    var seconds = 0;
+    for (final d in w.days) {
+      for (final it in d.items) {
+        if (it.kind == SetKind.warmup) {
+          continue;
+        }
+        sets += it.sets;
+        final hold = it.secondsHigh;
+        if (hold != null) {
+          seconds += it.sets * hold;
+        }
+      }
+    }
+    return (sets, seconds);
+  }
+
+  final before = <int, (int, int)>{
+    for (final w in current.pass2.weeks) w.weekIndex: dose(w),
+  };
+  for (final w in proposed.pass2.weeks) {
+    if (w.weekIndex < fromWeek) {
+      continue;
+    }
+    final old = before[w.weekIndex];
+    if (old == null) {
+      return false;
+    }
+    final (sets, seconds) = dose(w);
+    if (sets > old.$1 || sets < 0.9 * old.$1 || seconds > 1.05 * old.$2) {
+      return false;
+    }
+  }
+  return true;
 }

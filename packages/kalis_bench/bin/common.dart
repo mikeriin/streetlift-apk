@@ -153,7 +153,11 @@ int runBench({
         'blockWeeks': t.run.blockWeeks,
         'blocks': <Object?>[for (final b in t.run.blocks) b.toJson()],
         'summaries': <Object?>[
-          for (final (week, review) in t.run.reviews) <String, Object?>{'week': week, 'summary': review.summary.toJson(), 'proposals': <Object?>[for (final p in review.proposals) p.toJson()]},
+          for (final (week, review) in t.run.reviews) <String, Object?>{
+              'week': week,
+              'summary': review.summary.toJson(),
+              'proposals': <Object?>[for (final p in review.proposals) p.toJson()],
+            },
         ],
       })}\n',
     );
