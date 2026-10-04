@@ -237,6 +237,9 @@ abstract final class CoachNotes {
   /// poids du corps (`value` : lest en kg).
   static const String smallLoad = 'small_load';
 
+  /// Pompe en descente freinée (`value` : secondes).
+  static const String slowNegativePush = 'slow_negative_push';
+
   /// Rôle : avant-bras (tolérance du coude et du poignet).
   static const String roleForearm = 'role_forearm';
 
@@ -261,6 +264,7 @@ abstract final class CoachNotes {
 
   /// Tous les codes.
   static const List<String> all = <String>[
+    slowNegativePush,
     roleForearm,
     roleRunner,
     restPause,
@@ -2201,8 +2205,11 @@ final class Prescriber {
     // barre) à nombre de descentes égal — la progression vient du
     // contrôle, pas du nombre d'excentriques.
     final stage = ws.stage;
-    final later = blockIndex > 0;
-    final seconds = later ? (stage >= 2 ? 7 : 6) : (stage >= 2 ? 5 : 4);
+    final push = x.e.id == 'sw-pompe-negative';
+    final later = blockIndex > 0 && !push;
+    final seconds = later
+        ? (stage >= 2 ? 7 : 6)
+        : (push ? (stage >= 2 ? 4 : 3) : (stage >= 2 ? 5 : 4));
     final reps = ws.light ? 2 : (later ? 3 : (stage >= 3 ? 4 : 3));
     x
       ..sets = ws.light ? 2 : (later ? 3 : s.sets)
@@ -2217,7 +2224,15 @@ final class Prescriber {
         concentricSeconds: 0,
         topPauseSeconds: later ? 2 : 0,
       )
-      ..reasons.add(_note(CoachNotes.slowNegative, seconds));
+      ..reasons.add(
+        _note(
+          push ? CoachNotes.slowNegativePush : CoachNotes.slowNegative,
+          seconds,
+        ),
+      );
+    if (push) {
+      x.rest = 90;
+    }
     return x;
   }
 

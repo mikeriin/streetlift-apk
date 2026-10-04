@@ -140,6 +140,11 @@ String? coachReasonText(Reason r, Catalog catalog) {
               'au premier essai lent ou déformé (jamais un effort '
               'maximal), le reste en descentes freinées et en tractions '
               'assistées.',
+        CoachNotes.slowNegativePush =>
+          'Pompe complète en descente freinée : ${_int(v)} s pour '
+              'descendre, corps gainé de la tête aux talons, poitrine au '
+              'sol ; remonte en posant les genoux. Arrête la série dès '
+              "qu'une descente passe sous 2 s ou que le bassin s'affaisse.",
         CoachNotes.roleForearm =>
           'Avant-bras : fléchisseurs et extenseurs du poignet en charge '
               'légère, loin de la limite — tolérance du coude et du '

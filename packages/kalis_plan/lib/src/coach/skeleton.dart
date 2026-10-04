@@ -460,9 +460,7 @@ void _buildBeginner(_Builder b) {
         Method.beginnerMain,
         sets: sets,
       );
-    } else if ((pushPlanned >= 4 || (pushMax >= 1 && a.aimsAt(Ids.pushUp))) &&
-        !heavy &&
-        a.can(Ids.pushUp, d)) {
+    } else if (pushPlanned >= 4 && !heavy && a.can(Ids.pushUp, d)) {
       // Quelques pompes acquises : des séries courtes du geste complet
       // d'abord (spécificité), puis la variante facile pour le volume.
       b.add(
@@ -491,6 +489,21 @@ void _buildBeginner(_Builder b) {
         sets: mainSets,
         referenceId: Ids.pushUp,
       );
+      if (!heavy && a.aimsAt(Ids.pushUp)) {
+        // Objectif de pompes : le geste complet dès la première semaine,
+        // en descentes freinées (corps gainé de la tête aux talons) — la
+        // spécificité sans la série dure que le geste ne permet pas
+        // encore ; les pompes complètes prennent le relais dès que le
+        // maximum prévu le permet.
+        b.add(
+          d,
+          const <String>['sw-pompe-negative'],
+          SlotRole.secondary,
+          Method.beginnerNegative,
+          sets: 2,
+          referenceId: Ids.pushUp,
+        );
+      }
     }
     // Tirage horizontal (autant que de tirage vertical : R5-P8, R5-P27).
     if (rowDays.contains(d) || pullMax >= 5) {
@@ -2125,7 +2138,17 @@ void _buildFigures(_Builder b, Set<int> runDays) {
       : (supportTrack(second) ? secondDays : <int>[]);
   final balanceDays = handstand >= 20
       ? (supportDays.isNotEmpty
-            ? supportDays.take(n >= 5 ? 3 : 2).toList()
+            // (Poignet à ménager, sans objectif d'équilibre : deux jours
+            // d'entretien — l'extension du poignet va à la figure visée.)
+            ? supportDays
+                  .take(
+                    n >= 5 &&
+                            (a.limitOn(Joint.wrist) == null ||
+                                a.aimsAt('cs-handstand'))
+                        ? 3
+                        : 2,
+                  )
+                  .toList()
             : spreadDays(a, rest.isEmpty ? days : rest, n >= 5 ? 3 : 2))
       : <int>[];
   // Force de base : deux séances regroupées par semaine (à volume égal, la
@@ -2256,9 +2279,14 @@ void _buildFigures(_Builder b, Set<int> runDays) {
       // R4-F5 : compléter le statique par du dynamique dans le même schéma.
       // Du travail dynamique au niveau de l'étape : la variante de même
       // rang, sinon la plus proche en dessous.
-      final top = t.stepIndex >= dynamics.length
+      var top = t.stepIndex >= dynamics.length
           ? dynamics.length - 1
           : t.stepIndex;
+      if (a.level >= 3 && hold >= 5 && top + 1 < dynamics.length) {
+        // Élite qui tient déjà l'étape : le dynamique se fait un cran
+        // au-dessus (la force au levier visé, pas en dessous ; R4-F5).
+        top++;
+      }
       b.add(
         d,
         <String>[
@@ -2405,7 +2433,9 @@ void _buildFigures(_Builder b, Set<int> runDays) {
         referenceId: Ids.pull,
       );
     }
-    if (balanceDays.contains(d) && a.level >= 2) {
+    if (balanceDays.contains(d) &&
+        a.level >= 2 &&
+        (a.limitOn(Joint.wrist) == null || d == balanceDays.first)) {
       // Poussée verticale tête en bas : la force qui porte l'équilibre et
       // la planche (R4-F5).
       final dynamics = skillDynamics['cs-handstand']!;
