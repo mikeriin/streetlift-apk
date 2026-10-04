@@ -158,7 +158,8 @@ List<Benchmark> testBenchmarks(
         session.eventId == null &&
         readHealth(session.healthCheck, p).level >= 2;
     for (final b in found) {
-      if (lowDay && _below(b, <Benchmark>[...?ctx.profile.benchmarks, ...out])) {
+      if (lowDay &&
+          _below(b, <Benchmark>[...?ctx.profile.benchmarks, ...out])) {
         continue;
       }
       out.add(b);

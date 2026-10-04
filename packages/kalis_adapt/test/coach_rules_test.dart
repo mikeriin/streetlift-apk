@@ -102,12 +102,7 @@ void main() {
       double? ratio;
       (form, _) = formAfter(form, 0, 3.0, p);
       (form, _) = formAfter(form, 14, 2.8, p);
-      (form, ratio) = formAfter(
-        form,
-        p.coachOverreachSpanDays + 1,
-        2.8,
-        p,
-      );
+      (form, ratio) = formAfter(form, p.coachOverreachSpanDays + 1, 2.8, p);
       expect(ratio, isNull);
     });
     test('deux passages le même jour ne comptent qu\'une fois', () {
