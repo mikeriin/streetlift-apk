@@ -296,7 +296,12 @@ final class DayView {
     required this.focus,
     required this.items,
     this.groupFormats = const <String>[],
+    this.stress,
   });
+
+  /// Charge de la séance (lourde, moyenne, légère) quand le moteur la
+  /// donne (`kalis_core` 0.4.0), sinon `null`.
+  final DayStress? stress;
 
   /// Formats des enchaînements du jour (`GroupFormat` de `kalis_core`
   /// 0.4.0 : superset, circuit, emom…), vide pour les moteurs 0.1.
@@ -339,7 +344,12 @@ final class WeekView {
     required this.weekInBlock,
     required this.kind,
     required this.days,
+    this.intent,
   });
+
+  /// Intention de la semaine quand le moteur la donne (`kalis_core`
+  /// 0.4.0), sinon `null`.
+  final WeekIntent? intent;
 
   /// Rang global (0 = première).
   final int index;
@@ -527,6 +537,7 @@ final class ProgramView {
                 for (final g in day.groups ?? const <GroupSpec>[])
                   g.format.code,
               ],
+              stress: day.stress,
             ),
           );
         }
@@ -537,6 +548,7 @@ final class ProgramView {
             weekInBlock: week.weekIndex,
             kind: week.kind,
             days: days,
+            intent: week.intent,
           ),
         );
         global++;

@@ -3,6 +3,8 @@
 library;
 
 import 'package:kalis_core/kalis_core.dart';
+import 'package:kalis_plan/kalis_plan.dart'
+    show CoachNotes, coachPhaseLabel, coachReasonText;
 
 import 'adapter.dart';
 import 'analysis.dart';
@@ -99,6 +101,39 @@ String _range(int low, int high) => low == high ? '$low' : '$low à $high';
 /// Séries et répétitions (ou durée, distance) d'une prescription.
 String volumeText(ItemView i) {
   final p = i.p;
+  final technique = p.technique;
+  if (technique != null && i.isReps) {
+    switch (technique.kind) {
+      case SetTechniqueKind.topSetBackoff:
+        final back = technique.backoffSets ?? p.sets - 1;
+        final low = technique.backoffRepsLow ?? i.repsLow;
+        final high = technique.backoffRepsHigh ?? i.repsHigh;
+        final drop = technique.backoffDropPct;
+        return '1 × ${_range(i.repsLow, i.repsHigh)} (série de tête), puis '
+            '$back × ${_range(low, high)}'
+            '${drop == null || drop == 0 ? '' : ' à −${_num(drop * 100)} %'}';
+      case SetTechniqueKind.emom:
+        final count = technique.intervals ?? p.sets;
+        final every = technique.intervalSeconds ?? 60;
+        return every == 60
+            ? '$count min : ${_range(i.repsLow, i.repsHigh)} rép. au début '
+                  'de chaque minute'
+            : '$count × ${_range(i.repsLow, i.repsHigh)}, un départ toutes '
+                  'les ${_duration(every)}';
+      default:
+        break;
+    }
+  }
+  final test = p.test;
+  if (test != null && i.isReps) {
+    return switch (test.kind) {
+      TestKind.oneRm =>
+        '${p.sets} tentatives × ${_range(i.repsLow, i.repsHigh)}',
+      TestKind.maxReps =>
+        '1 série maximale (repère : ${_range(i.repsLow, i.repsHigh)})',
+      _ => '${p.sets} × ${_range(i.repsLow, i.repsHigh)}',
+    };
+  }
   if (i.isReps) {
     return '${p.sets} × ${_range(i.repsLow, i.repsHigh)}';
   }
@@ -114,7 +149,9 @@ String volumeText(ItemView i) {
   }
   final meters = p.distanceMeters;
   if (meters != null) {
-    return '${p.sets} × ${meters.round()} m';
+    return p.sets == 1 && meters >= 1500
+        ? '${_num(meters / 1000)} km'
+        : '${p.sets} × ${meters.round()} m';
   }
   final calories = p.calories;
   if (calories != null) {
@@ -162,24 +199,98 @@ String loadText(ItemView i) {
   if (percent != null) {
     parts.add('≈ ${(percent * 100).round()} % du 1RM (charge totale)');
   }
+  final intensity = p.intensity;
+  if (intensity != null && percent == null) {
+    final share = '${(intensity.value * 100).round()} %';
+    if (intensity.basis == IntensityBasis.percentOneRm) {
+      parts.add('≈ $share du 1RM du mouvement de compétition');
+    } else if (intensity.basis == IntensityBasis.percentBenchmark) {
+      // Le repère utilisé est écrit en clair (dernier maximum mesuré ou
+      // repère de reprise) : l'athlète sait sur quoi porte le pourcentage.
+      // (Plage de répétitions ouverte vers le haut : la part porte sur le
+      // bas de la plage.)
+      final top = p.secondsHigh ?? p.repsLow ?? p.repsHigh;
+      final base = top == null || intensity.value <= 0
+          ? null
+          : (top / intensity.value).round();
+      parts.add(
+        intensity.referenceKind == BenchmarkKind.maxHold
+            ? '≈ $share du maintien maximal'
+                  '${base == null ? '' : ' (repère : $base s)'}'
+            : '≈ $share du maximum de répétitions'
+                  '${base == null ? '' : ' (repère : $base)'}',
+      );
+    }
+  }
   if (p.toCalibrate) {
     parts.add('à calibrer');
   }
   return parts.isEmpty ? '—' : parts.join(', ');
 }
 
-/// Effort visé d'une prescription.
+/// Effort visé d'une prescription : les répétitions en réserve (la note en
+/// flammes de l'application n'est pas affichée : elle se lisait comme une
+/// difficulté sur 10).
 String effortText(ItemView i) {
   final flames = i.p.targetFlames;
   if (flames == null) {
     return '—';
   }
-  final rir = Flames.toRir(flames);
+  if (!i.traits.kind.isResistance) {
+    // Course et cardio : l'effort se lit dans l'allure donnée en note, pas
+    // en répétitions en réserve.
+    return i.p.test != null
+        ? 'chrono'
+        : (Flames.isOpenEnded(flames) ? 'allure facile' : 'allure soutenue');
+  }
   if (flames >= Flames.failure) {
-    return 'effort maximal (10/10)';
+    return 'effort maximal';
+  }
+  final hold =
+      i.p.repsHigh == null &&
+      i.p.repsLow == null &&
+      (i.p.secondsHigh ?? i.p.secondsLow) != null;
+  if (Flames.isOpenEnded(flames)) {
+    // Descente freinée : l'effort se règle au contrôle, pas à la réserve.
+    final tempo = i.p.tempo;
+    if (tempo != null &&
+        tempo.eccentricSeconds >= 3 &&
+        tempo.concentricSeconds == 0) {
+      return "au contrôle : arrêt dès qu'une descente accélère";
+    }
+    return hold
+        ? 'sous-maximal : arrêt bien avant la perte de position'
+        : '5 rép. en réserve ou plus';
+  }
+  final rir = Flames.toRir(flames);
+  if (hold) {
+    // Une tenue ne se compte pas en répétitions : la marge se lit sur la
+    // qualité de la position.
+    return rir >= 3
+        ? 'position parfaite, quelques secondes de marge'
+        : 'tenue dure, arrêt avant de perdre la position';
   }
   final text = rir == rir.roundToDouble() ? rir.toStringAsFixed(0) : _num(rir);
-  return '$text rép. en réserve ($flames/10)';
+  // Séries à une part du maximum de répétitions : la réserve écrite est
+  // celle de la dernière série (les séries se cumulent à repos court) ; la
+  // première en laisse davantage — on le dit, pour que l'étiquette ne
+  // contredise pas les chiffres.
+  final intensity = i.p.intensity;
+  final top = i.p.repsHigh;
+  if (intensity != null &&
+      intensity.basis == IntensityBasis.percentBenchmark &&
+      intensity.referenceKind != BenchmarkKind.maxHold &&
+      intensity.value > 0 &&
+      top != null &&
+      i.p.sets >= 2 &&
+      i.p.technique?.kind != SetTechniqueKind.topSetBackoff) {
+    final base = (top / intensity.value).round();
+    if (base - top >= rir + 2) {
+      return '$text rép. en réserve sur la dernière série (davantage sur '
+          'les premières)';
+    }
+  }
+  return '$text rép. en réserve';
 }
 
 /// Notes de coach d'une prescription : rôle, épreuve, format, détail des
@@ -188,14 +299,15 @@ String notesText(ItemView i, Catalog catalog) {
   final p = i.p;
   final notes = <String>[];
   final role = roleLabel(i.role);
-  if (role.isNotEmpty) {
+  // Une épreuve n'a pas de rang dans la séance : elle est l'épreuve.
+  if (role.isNotEmpty && p.kind != SetKind.test) {
     notes.add(role);
   }
   if (p.kind == SetKind.test) {
     notes.add('ÉPREUVE');
   } else if (p.kind == SetKind.calibration) {
     notes.add('série de calibrage');
-  } else if (p.kind == SetKind.warmup) {
+  } else if (p.kind == SetKind.warmup && !notes.contains('échauffement')) {
     notes.add('échauffement');
   }
   final format = p.format;
@@ -228,7 +340,217 @@ String notesText(ItemView i, Catalog catalog) {
     }
     notes.add('séries : ${detail.join(' ; ')}');
   }
+  final technique = p.technique;
+  if (technique != null && p.format == null) {
+    final label = switch (technique.kind) {
+      SetTechniqueKind.isometricHold => 'tenue isométrique',
+      SetTechniqueKind.skillPractice => 'pratique technique',
+      SetTechniqueKind.standard ||
+      SetTechniqueKind.topSetBackoff ||
+      SetTechniqueKind.emom => '',
+      _ => formatLabel(technique.kind.code),
+    };
+    if (label.isNotEmpty) {
+      notes.add(label);
+    }
+  }
+  final tempo = p.tempo;
+  if (tempo != null && tempo.eccentricSeconds > 0) {
+    notes.add(
+      tempo.topPauseSeconds > 0
+          ? '${tempo.topPauseSeconds} s tenues en haut, puis descente en '
+                '${tempo.eccentricSeconds} s'
+          : 'descente en ${tempo.eccentricSeconds} s',
+    );
+  }
+  if (p.restMode == RestMode.jog) {
+    notes.add('récupération en trottinant');
+  }
+  for (final r in p.reasons) {
+    if (_ruleCodes.contains(r.code) || _isBlockNote(r)) {
+      continue;
+    }
+    final text = coachReasonText(r, catalog);
+    if (text != null) {
+      notes.add(text);
+    }
+  }
   return notes.join(' ; ');
+}
+
+/// Raisons écrites une fois, dans les règles du programme, et non sous
+/// chaque exercice.
+const Set<String> _ruleCodes = <String>{
+  ReasonCodes.planProgressionRule,
+  ReasonCodes.planToCalibrate,
+};
+
+bool _isBlockNote(Reason r) {
+  if (r.code != ReasonCodes.planCoachNote) {
+    return false;
+  }
+  final note = r.params['note'];
+  return note == CoachNotes.rampWarmup ||
+      note == CoachNotes.rampBodyweight ||
+      note == CoachNotes.loadAdjust ||
+      note == CoachNotes.repsAdjust ||
+      note == CoachNotes.testUse ||
+      note == CoachNotes.badDay ||
+      note == CoachNotes.missed ||
+      note == CoachNotes.testRest ||
+      note == CoachNotes.topSetBackoff ||
+      note == CoachNotes.submaximalHold ||
+      note == CoachNotes.qualityFirst ||
+      note == CoachNotes.everyMinute ||
+      note == CoachNotes.generalWarmup;
+}
+
+/// Nom français de l'intention d'une semaine.
+String weekIntentLabel(WeekIntent intent) => coachPhaseLabel(intent.code);
+
+/// Nom français de la charge d'une séance.
+String dayStressLabel(DayStress stress) => switch (stress) {
+  DayStress.heavy => 'séance lourde',
+  DayStress.medium => 'séance moyenne',
+  DayStress.light => 'séance légère',
+};
+
+/// Règles du programme, écrites une fois : lecture du profil, phase,
+/// règles de progression, de douleur et d'exécution (raisons du bloc et
+/// règles communes aux exercices). Vide pour un moteur 0.1.
+List<String> programRules(ProgramView view) {
+  final catalog = view.catalog;
+  final out = <String>[];
+  void add(String? text) {
+    if (text != null && !out.contains(text)) {
+      out.add(text);
+    }
+  }
+
+  final blocks = view.program.blocks;
+  if (blocks.isEmpty || blocks.first.pass1.intent == null) {
+    return out;
+  }
+  for (final r in blocks.first.pass2.reasons) {
+    if (r.code != ReasonCodes.planSeasonPhase) {
+      add(coachReasonText(r, catalog));
+    }
+  }
+  for (final w in view.weeks) {
+    for (final i in w.items) {
+      for (final r in i.p.reasons) {
+        if (_isBlockNote(r) && r.params['note'] == CoachNotes.everyMinute) {
+          add(
+            'Départs au chrono : chaque série part à heure fixe (le repos '
+            'est ce qui reste) ; si les répétitions ne passent plus, arrête '
+            'là.',
+          );
+        } else if (_ruleCodes.contains(r.code) || _isBlockNote(r)) {
+          add(coachReasonText(r, catalog));
+        }
+      }
+    }
+  }
+  add(
+    'Effort visé : les « répétitions en réserve » sont celles que tu '
+    "pourrais encore faire proprement à la fin de la série ; s'il t'en "
+    'reste moins que prévu, allège ou arrête la série.',
+  );
+  return out;
+}
+
+/// Saison : une ligne par bloc (semaines, phases).
+List<String> seasonLines(ProgramView view) {
+  final out = <String>[];
+  final blocks = view.program.blocks;
+  if (blocks.isEmpty || blocks.first.pass1.intent == null) {
+    return out;
+  }
+  var first = 0;
+  for (var b = 0; b < blocks.length; b++) {
+    final weeks = <WeekView>[
+      for (final w in view.weeks)
+        if (w.blockIndex == b) w,
+    ];
+    if (weeks.isEmpty) {
+      continue;
+    }
+    final parts = <String>[];
+    String? current;
+    var from = 0;
+    void flush(int to) {
+      final label = current;
+      if (label != null) {
+        parts.add(
+          from == to
+              ? 'semaine ${from + 1} : $label'
+              : 'semaines ${from + 1} à ${to + 1} : $label',
+        );
+      }
+    }
+
+    for (final w in weeks) {
+      final intent = w.intent;
+      final label = intent == null
+          ? weekKindLabel(w.kind)
+          : weekIntentLabel(intent);
+      if (label != current) {
+        flush(w.index - 1);
+        current = label;
+        from = w.index;
+      }
+    }
+    flush(weeks.last.index);
+    final intent = blocks[b].pass1.intent;
+    out.add(
+      '- **Bloc ${b + 1}** (semaines ${first + 1} à ${weeks.last.index + 1}'
+      '${intent == null ? '' : ', ${coachPhaseLabel(intent.phase.code)}'}) — '
+      '${parts.join(' ; ')}.',
+    );
+    first = weeks.last.index + 1;
+  }
+  return out;
+}
+
+/// Échelles des figures travaillées : étapes et critère de passage.
+List<String> ladderLines(ProgramView view) {
+  final out = <String>[];
+  final blocks = view.program.blocks;
+  if (blocks.isEmpty) {
+    return out;
+  }
+  final catalog = view.catalog;
+  final current = <String>{
+    for (final r in blocks.first.pass1.reasons)
+      if (r.code == ReasonCodes.planSkillStep &&
+          r.params['exerciseId'] is String)
+        r.params['exerciseId']! as String,
+  };
+  for (final ladder
+      in blocks.first.pass1.skillLadders ?? const <SkillLadder>[]) {
+    final target =
+        catalog.find(ladder.targetExerciseId)?.name ?? ladder.targetExerciseId;
+    final steps = <String>[
+      for (final s in ladder.steps)
+        '${catalog.find(s.exerciseId)?.name ?? s.exerciseId}'
+            '${current.contains(s.exerciseId) ? ' (étape actuelle)' : ''}',
+    ];
+    out.add('- **Vers : $target** — ${steps.join(' → ')}.');
+    if (ladder.steps.isNotEmpty) {
+      final c = ladder.steps.first.criterion;
+      final hold = c.holdSeconds;
+      final reps = c.reps;
+      out.add(
+        "  - Passage à l'étape suivante : ${c.sets} séries de "
+        '${hold != null ? '$hold s' : '${reps ?? 3} répétitions'} propres'
+        '${c.minQuality == null ? '' : ' (qualité ${c.minQuality} sur 5 au moins)'}'
+        '${c.sessions == null ? '' : ', sur ${c.sessions} séances de suite'}'
+        '${c.minWeeks == null ? '' : ', et au moins ${c.minWeeks} semaines sur l\'étape'}'
+        ' ; sinon on reste, sans forcer le levier.',
+      );
+    }
+  }
+  return out;
 }
 
 String _sexLabel(String? code) => switch (code) {
@@ -270,8 +592,11 @@ String _targetText(BenchTarget t, Catalog catalog) {
     GoalMetric.maxHoldSeconds =>
       '$name : tenue de ${value == null ? '' : _num(value)} s',
     GoalMetric.skillUnlocked => '$name : figure à débloquer',
+    // Une course chronométrée se nomme par sa distance, pas par l'exercice
+    // d'entraînement qui la porte.
     GoalMetric.timeSeconds =>
-      '$name : ${t.distanceMeters == null ? '' : '${t.distanceMeters!.round()} m '}'
+      '${t.distanceMeters == null ? name : 'Course chronométrée'} : '
+          '${t.distanceMeters == null ? '' : '${t.distanceMeters!.round()} m '}'
           'en ${value == null ? '' : _duration(value.round())}',
     GoalMetric.distanceMeters =>
       '$name : ${value == null ? '' : '${value.round()} m'}',
@@ -421,6 +746,13 @@ List<String> profileLines(BenchProfile p, Catalog catalog) {
 
 String _row(List<String> cells) => '| ${cells.join(' | ')} |';
 
+/// Nature d'une semaine : son intention quand le moteur la donne, sinon
+/// sa nature 0.1.
+String weekLabel(WeekView w) {
+  final intent = w.intent;
+  return intent == null ? weekKindLabel(w.kind) : weekIntentLabel(intent);
+}
+
 /// Programme lu, en Markdown : profil, vue d'ensemble, puis semaine par
 /// semaine, séance par séance.
 String programMarkdown(ProgramView view) {
@@ -460,24 +792,52 @@ String programMarkdown(ProgramView view) {
       _row(<String>[
         '${w.index + 1}',
         '${w.blockIndex + 1}',
-        '${weekKindLabel(w.kind)}$mark',
+        '${weekLabel(w)}$mark',
         '${w.days.length}',
         w.hardSets.toStringAsFixed(0),
       ]),
     );
   }
+  final season = seasonLines(view);
+  if (season.isNotEmpty) {
+    b
+      ..writeln()
+      ..writeln('## Saison')
+      ..writeln();
+    season.forEach(b.writeln);
+  }
+  final ladders = ladderLines(view);
+  if (ladders.isNotEmpty) {
+    b
+      ..writeln()
+      ..writeln('## Échelles des figures')
+      ..writeln();
+    ladders.forEach(b.writeln);
+  }
+  final rules = programRules(view);
+  if (rules.isNotEmpty) {
+    b
+      ..writeln()
+      ..writeln('## Règles du programme')
+      ..writeln();
+    for (final r in rules) {
+      b.writeln('- $r');
+    }
+  }
   for (final w in view.weeks) {
     b
       ..writeln()
       ..writeln(
-        '## Semaine ${w.index + 1} — ${weekKindLabel(w.kind)} '
+        '## Semaine ${w.index + 1} — ${weekLabel(w)} '
         '(bloc ${w.blockIndex + 1})',
       );
     for (final d in w.days) {
+      final stress = d.stress;
       b
         ..writeln()
         ..writeln(
-          '### ${weekdayNames[d.weekday - 1]} — ${focusLabel(d.focus)} '
+          '### ${weekdayNames[d.weekday - 1]} — ${focusLabel(d.focus)}'
+          '${stress == null ? '' : ', ${dayStressLabel(stress)}'} '
           '(${d.minutesBudget} min disponibles, '
           '${d.estimatedMinutes.round()} min estimées)',
         )
@@ -494,7 +854,9 @@ String programMarkdown(ProgramView view) {
         )
         ..writeln(_row(<String>['---', '---', '---', '---', '---', '---']));
       for (final i in d.items) {
-        final rest = i.p.restSeconds;
+        final rest = i.p.technique?.kind == SetTechniqueKind.emom
+            ? null
+            : i.p.restSeconds;
         b.writeln(
           _row(<String>[
             i.exercise.name,
@@ -524,18 +886,23 @@ Map<String, Object?> programJson(ProgramView view) {
     'level': p.level.code,
     'profile': profileLines(p, catalog),
     'eventWeek': p.mainEvent?.weeksOut,
+    'season': seasonLines(view),
+    'ladders': ladderLines(view),
+    'rules': programRules(view),
     'weeks': <Object?>[
       for (final w in view.weeks)
         <String, Object?>{
           'week': w.index + 1,
           'block': w.blockIndex + 1,
-          'kind': weekKindLabel(w.kind),
+          'kind': weekLabel(w),
           'hardSets': w.hardSets.round(),
           'days': <Object?>[
             for (final d in w.days)
               <String, Object?>{
                 'day': weekdayNames[d.weekday - 1],
-                'focus': focusLabel(d.focus),
+                'focus':
+                    '${focusLabel(d.focus)}'
+                    '${d.stress == null ? '' : ', ${dayStressLabel(d.stress!)}'}',
                 'minutes': d.minutesBudget,
                 'estimated': d.estimatedMinutes.round(),
                 'items': <Object?>[
@@ -547,7 +914,11 @@ Map<String, Object?> programJson(ProgramView view) {
                       'scheme': i.scheme,
                       'load': loadText(i),
                       'effort': effortText(i),
-                      'rest': i.p.restSeconds,
+                      // Départs au chrono : le repos est ce qui reste de
+                      // l'intervalle, pas une consigne à part.
+                      'rest': i.p.technique?.kind == SetTechniqueKind.emom
+                          ? null
+                          : i.p.restSeconds,
                       'notes': notesText(i, catalog),
                     },
                 ],
