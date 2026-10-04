@@ -1454,9 +1454,40 @@ List<SetPlan>? _directPlans(
         easyTop = ex.spec.wideTop;
       }
     }
+    if (hold &&
+        share == null &&
+        c.policy.build &&
+        !c.eventNear &&
+        !locked &&
+        item.kind != SetKind.test) {
+      // Maintien devenu très facile : quand une tenue a mesuré le maximum
+      // et que la durée écrite en vaut moins de 40 %, la durée monte vers
+      // la moitié du maximum (R4-F2 : maintiens à 50–70 % du maximum) —
+      // par les paliers de hausse des tendons, jamais d'un coup.
+      final exact = track.exactDay;
+      final cap = track.filter.capacityToday();
+      if (exact != null &&
+          run.day - exact <= 2 * p.coachProbeDays &&
+          high < p.coachHoldEasyShare * cap) {
+        final floorHalf = (p.coachHoldUsefulShare * cap).floor();
+        if (floorHalf > wanted) {
+          wanted = floorHalf;
+        }
+      }
+    }
     var target = wanted < safe ? wanted : safe;
     if (i == 0 && safe < wanted) {
       guarded = true;
+    }
+    if (!hold && !follows && !assisted && item.kind != SetKind.test) {
+      // Plage : le haut servi garde la réserve du bloc (« jamais plus que
+      // le maximum moins la réserve »), sans descendre sous le bas de la
+      // plage tant qu'il reste sûr.
+      final kept = (track.filter.capacityToday() * (1 - fatigue) - rir + 0.3)
+          .floor();
+      if (kept < target) {
+        target = kept >= low ? kept : (low < target ? low : target);
+      }
     }
     if (easyTop != null && easyTop > target) {
       final floor = target < low ? target : low;

@@ -118,3 +118,94 @@ et n'augmente pas d'une semaine à l'autre. Aucune étude ne chiffre la conduite
 **Amplitude partielle surchargée.** Wolf et al. 2023, Int J Strength Cond 3(1) ; Pallarés et al. 2021, Scand J
 Med Sci Sports 31:1866–1881 : gains spécifiques à l'amplitude ; aucune donnée sur la charge de départ ni sur
 le risque pour le coude. → **Décision** : choix raisonné (R5-P22 : exercice nouveau gradué).
+
+## Boucle 1 — ce qui a changé
+
+Moteur (détail et paramètres : CONTRAT § 11) :
+
+- bornes « charnière » (`CapacityFilter.hinge`) ; seul ce que l'athlète fait mesure (échec, répétitions
+  manquantes, série ouverte arrêtée avant le haut de sa plage, test) ; le journal des blocs précédents se lit
+  en mode coach (`SlotSpec.coachRead`) ;
+- séries repères : aussi sur les plages (au-delà du haut de la plage), sur la série de tête (hors
+  réalisation), sur les maintiens (jusqu'à la durée écrite) ;
+- répétitions au poids du corps recalées sur le maximum mesuré (part du test, jamais plus que le maximum
+  moins la réserve ; +1 répétition par séance au plus au-dessus de l'écrit) ; effort attendu affiché dans les
+  deux sens ; plus de bonus de calibrage ; séries fractionnées quand la plage est hors de portée ;
+- assistance : un cran de moins sur série repère, un cran de plus sur faits ;
+- maintiens à 75 % du maximum du jour au plus, temps total sous tension borné comme la durée d'une tenue ;
+- zone douloureuse : pas plus de séries que la dernière séance de l'emplacement ;
+- séries allégées rapprochées de la série de tête (baisse d'au moins 5 %) ; pas de hausse après des
+  répétitions écrites non atteintes ; exercice calé sur un autre mouvement : entrée à 60 %, paliers de 10 %,
+  plafond à 100 % sur zone à antécédent ; départs au chrono non arrêtés sur une chute dite facile.
+
+Simulateur (ajouts, sans toucher aux modèles de vérité existants) : crans d'assistance des exercices assistés
+(programmes au contrat 0.4.0 seulement), auparavant « non simulés ».
+
+Banc : colonne « Servi par le moteur » dans les trajectoires ; `series/<profil>.json` (mise au point).
+
+Mesures (campagne rapide, 2 graines, moyenne des 17 profils) :
+
+| Modèle | Écart d'effort avant → après | Échéance / maximum du jour avant → après | Échecs non voulus après |
+| --- | --- | --- | --- |
+| A | 0,95 → 1,01 | 96,4 % → 96,3 % | 0,10 % |
+| B | 1,20 → 1,19 | 95,2 % → 95,5 % | 0,06 % |
+| C | 1,79 → 1,85 | 95,6 % → 95,3 % | 0,39 % |
+
+(« Avant » : version de la passe 0, dont l'estimation dérivait vers le haut ; les moyennes sont proches, mais
+l'estimation ne s'effondre plus en cours de bloc et ne change plus à chaque nouveau bloc.)
+
+## Passe 1 (complète : tous les exports ont changé)
+
+| Profil | Force | Calisthénie | Hypertrophie | Santé |
+| --- | --- | --- | --- | --- |
+| street_01 | 8 | 9 | 8 | 8 |
+| street_02 | 9 | 9 | 9 | 9 |
+| street_03 | 6,5 | 7 | 6,5 | 7 |
+| street_04 | 9 | 9 | 9 | 9 |
+| street_05 | 8 | 8 | 8 | 8 |
+| street_06 | 9 | 9 | 8 | 9 |
+| street_07 | 9 | 9 | 9 | 9 |
+| street_08 | 8 | 7 | 7,5 | 9 |
+| street_09 | 8 | 6,5 | 8 | 9 |
+| street_10 | 8 | 7 | 6 | 8 |
+| street_11 | 7 | 7 | 8 | 8 |
+| street_12 | 8 | 9 | 9 | 9 |
+| street_13 | 8 | 8 | 8 | 8 |
+| street_14 | 9 | 7 | 8 | 9 |
+| street_15 | 8 | 8 | 8 | 9 |
+| street_16 | 9 | 9 | 9 | 9 |
+| street_17 | 9 | 7 | 8 | 8 |
+
+Couples à 9 ou plus : 29 sur 68 ; minimum 6 ; moyenne 8,21 → **pas de gain** (passe 0 : 29, minimum 6).
+Treize couples montent d'au moins un point (street_04 passe à 9 partout, street_06 à 9 sur trois écoles),
+quinze baissent ; l'incertitude du panel est d'un point (docs/PANEL.md).
+
+Lecture des corrections nécessaires de la passe 1 : presque toutes portent sur le **programme écrit**
+(`kalis_plan`), que ce lot ne modifie pas — tableaux écrits sur un repère attendu (street_05, 06, 08, 10, 11,
+14, 15), seuil d'ouverture d'une étape de figure (street_05, street_10), prescription de pompe hors de portée
+et absence d'échelle de poussée (street_03), volume et répartition dans la semaine (street_08, street_10,
+street_14, street_17), bloc de réalisation non spécifique (street_11, street_15, street_17), séries allégées
+écrites à −15 % (street_09, street_12), charge « à calibrer » (street_11), négatives à dose fixe (street_01).
+Les relecteurs relèvent que le moteur recale (« la règle de recalcul compense », « recalé par le moteur »),
+mais notent le texte du programme et l'absence de progrès de l'athlète simulé. Corrections encore à la
+portée du moteur : haut de plage servi au-dessus du maximum moins la réserve (street_13), maintien servi très
+loin sous le maximum mesuré (street_10).
+
+## Boucle 2 — sources consultées
+
+Recherche ciblée (un sous-agent Opus, recherche web).
+
+- **Répétitions d'une série à l'autre.** Aucune étude au poids du corps à réserve fixée. Séries à l'échec avec
+  charges : les répétitions de la première série ne sont jamais tenues sur les suivantes, quel que soit le
+  repos (Willardson et Burkett 2006, J Strength Cond Res 20:400–403 et 20:396–399, résumés vérifiés) ; 71
+  répétitions par séance avec 2 min de repos contre 84 avec 5 min (Senna et al. 2009, J Sports Sci Med
+  8:197–202, vérifié). Ordre de grandeur déduit, non validé : −1 répétition en série 2, −1 à −2 en série 3.
+  → **Décision** : le haut d'une plage servie garde la réserve du bloc sur chaque série, fatigue prévue
+  comprise (`maximum du jour − réserve`) ; choix raisonné.
+- **Maintiens.** Oranchuk et al. 2019 (Scand J Med Sci Sports 29:484–503, vérifié) : gains de force à toute
+  intensité, adaptation du tendon à 70 % de la force maximale et plus. Aucune étude ne fixe de seuil en part
+  de la durée maximale de maintien. → **Décision** : choix raisonné (R4-F2) — une durée écrite sous 40 % du
+  maximum mesuré monte vers 50 %, par les paliers de hausse des tendons.
+- **Fréquence et volume.** Grgic et al. 2018 (Sports Med 48:1207–1220) ; Ralston et al. 2018 (Sports Med Open
+  4:36) : à volume égal la fréquence compte peu. Aucune étude sur la pratique distribuée des tractions ni sur
+  le passage de 6 à 9 tractions.
