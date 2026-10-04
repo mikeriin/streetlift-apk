@@ -3,7 +3,12 @@
 ## 0.2.1
 
 Lot CX du pipeline « Calibrage des programmes » (croisement avec `kalis_plan` 0.2.1). `kalis_core` 0.4.2.
-Le moteur d'évolution est inchangé ; seul le simulateur gagne une entrée.
+
+- **Correction : une proposition appliquée gardait le bloc au contrat 0.4.0** (`applyProposal`) : le diff de
+  prescriptions reconstruisait les semaines sans leur intention (ni les autres champs du contrat 0.4.0), et le
+  bloc repassait au mode 0.1 pour la suite (vu sur les saisons croisées : bloc après une proposition de
+  volume servi sans phase). Les semaines et séances d'un bloc qui porte une intention sont maintenant
+  copiées (`copyWith`) ; un bloc de 0.1 est reconstruit comme en 0.2.0, à l'octet près.
 
 - **Changement de profil en cours de saison** (`simulation.dart`) : `simulate(changes: …)` applique un
   `ProfileChange` au début d'une semaine (échéance avancée, par exemple) ; s'il le demande, le bloc en

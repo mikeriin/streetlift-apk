@@ -1099,7 +1099,9 @@ final class Prescriber {
       final reserve = (x.rir ?? 3).ceil();
       if (high != null) {
         final reach = possible - reserve;
-        final reps = _clampInt(reach, 1, reach > high ? 8 : high);
+        // (Rappel, amorçage et simples gardent leurs répétitions écrites.)
+        final open = !x.fixed && high >= 3 && reach > high;
+        final reps = _clampInt(reach, 1, open ? 8 : high);
         x
           ..repsLow = reps
           ..repsHigh = reps;
@@ -1792,8 +1794,15 @@ final class Prescriber {
       // niveau). Il ne bouge plus jusqu'au test suivant : le plan ne
       // suppose jamais un progrès qui n'a pas été mesuré. [expected] : le
       // repère attendu le jour même (cible d'un test).
-      final day = expected ? _today : _testedOn[s.exerciseId];
-      if (day == null || _measuredAt(s.exerciseId, day)) {
+      // Séries de travail : le dernier repère mesuré, jamais un progrès
+      // supposé (CX, boucle 2 : des blocs restaient écrits sur le repère
+      // attendu au test du bloc). Seule la cible d'un test (`expected`)
+      // vise le repère attendu ce jour-là.
+      if (!expected) {
+        return own;
+      }
+      final day = _today;
+      if (_measuredAt(s.exerciseId, day)) {
         return own;
       }
       final gain = a.plannedGain(s.exerciseId, GoalMetric.maxReps, own, day);
@@ -1821,10 +1830,10 @@ final class Prescriber {
     if (own <= 0) {
       return 0;
     }
-    final day = expected ? _today : _testedOn[id];
-    if (day == null || a.gapWeeks >= 2 || _measuredAt(id, day)) {
+    if (!expected || a.gapWeeks >= 2 || _measuredAt(id, _today)) {
       return own;
     }
+    final day = _today;
     final gain = a.plannedGain(id, GoalMetric.maxHoldSeconds, own, day);
     return (own * (1 + gain) + 1e-9).floor();
   }
@@ -3795,7 +3804,10 @@ final class Prescriber {
           role,
           share: 0.6,
           low: chin ? 3 : 8,
-          high: chin ? 15 : 30,
+          // (Tenue menton : 60 à 70 % du maintien mesuré, jusqu'à 25 s ;
+          // panel CX, boucle 2 — un plafond de 15 s la laissait à 46 % d'un
+          // maintien de 33 s.)
+          high: chin ? 25 : 30,
           fallback: chin ? 5 : 10,
         )?..rir = 5;
       case Method.skillHold:
@@ -3821,7 +3833,9 @@ final class Prescriber {
           role,
           share: 0.6,
           low: 5,
-          high: 25,
+          // (Étape plus facile tenue longtemps : 60 % de son maintien
+          // jusqu'à 40 s ; panel CX, boucle 2.)
+          high: 40,
           fallback: 10,
         );
       case Method.skillAttempt:
@@ -4250,11 +4264,19 @@ final class Prescriber {
     }
     // Les tests se font frais : juste après l'échauffement.
     if (role != _DayRole.event && out.any((x) => x.kind == SetKind.test)) {
+      // (Le test de l'objectif d'abord, frais ; les autres ensuite ; panel
+      // CX, boucle 2 : le test de traction venait après la série maximale
+      // de pompes.)
+      bool goal(_Draft x) =>
+          a.aimsAt(x.e.id) ||
+          (x.e.id == coachGateExercise && a.aimsAt(Ids.pull));
       final ordered = <_Draft>[
         for (final x in out)
           if (x.kind == SetKind.warmup) x,
         for (final x in out)
-          if (x.kind == SetKind.test) x,
+          if (x.kind == SetKind.test && goal(x)) x,
+        for (final x in out)
+          if (x.kind == SetKind.test && !goal(x)) x,
         for (final x in out)
           if (x.kind != SetKind.warmup && x.kind != SetKind.test) x,
       ];

@@ -369,9 +369,14 @@ String? coachReasonText(Reason r, Catalog catalog) {
           "Élastique : prends celui qui permet ${_int(v)} répétitions "
               'propres avec la réserve prévue ; note-le à chaque séance. '
               'Si même le plus fort ne suffit pas, fais la traction pieds '
-              "en appui (barre basse) en attendant. Dès que l'élastique le "
-              'plus fin passe 8 répétitions, commence la séance par 1 à 3 '
-              'essais isolés de traction stricte, sans forcer.',
+              'en appui (barre basse) en attendant. Quand toutes les séries '
+              'passent le haut de la plage avec 2 répétitions de réserve de '
+              "plus que prévu, deux séances de suite, prends l'élastique plus "
+              'fin dès la séance suivante. À partir de la sixième semaine, '
+              'commence deux séances par semaine par 1 à 3 essais isolés de '
+              'traction stricte, frais, 2 min entre eux, arrêt au premier '
+              "essai lent ; tant qu'aucun ne passe, fais à la place une "
+              "traction sautée suivie d'une descente de 5 s.",
         CoachNotes.cue => switch (v is num ? v.round() : 0) {
           1 =>
             'Exécution : départ bras tendus, épaules basses, menton '

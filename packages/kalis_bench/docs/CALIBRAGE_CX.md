@@ -115,3 +115,58 @@ Violations de sécurité de la saison réalisée (banc, 4 graines × 3 vérités
 dans tous les tirages du scénario « échéance avancée » de street_07, 08 et 09 était un artefact de mesure (la
 saison réalisée mettait bout à bout les blocs écrits, y compris les semaines non servies du bloc arrêté par le
 changement de profil) : `servedBlocksOf` ne garde que les semaines servies.
+
+## Boucle 2 (04/10/2026)
+
+Corrections (contrôles fca6bf0 et 093f556) : tenue menton hors du budget des tenues bras tendus (plan et banc) —
+le test du chemin vers la traction n'est plus retiré ; douleur relevée au bloc précédent : figure gardée à 60 %
+des séries (`pain_trend`, Silbernagel et al. 2007) ; variante facile de l'échelle de poussée plafonnée à 8-12 ;
+pompe au sol en séries courtes dès le deuxième bloc ; réalisation des échéances de répétitions à 65-75 % du
+maximum, départs au chrono qui montent ; semaine de reprise à 75 % après la transition ; partielles d'entrée à
+82,5 % sur un coude à antécédent ; lest sous le poids du corps : série au poids du corps d'après le maximum au
+poids du corps ; note « 1RM proche du poids du corps » seulement à 78 % ; test plus bas recoupé par
+l'estimation ; allègement à 65 % au plus ; descentes freinées de traction sous dix tractions. Recherche :
+`cx-outils/docs/recherche_boucle2.md`.
+
+Panel (couples sous 9 ou dont l'export a changé de plus de 10 % : 59 couples renotés ; street_04, street_14 et
+street_17 santé gardés) :
+
+| Profil | Force | Calisthénie | Hypertrophie | Santé |
+| --- | --- | --- | --- | --- |
+| `street_01_debutant_complet` | 7 | 8 | 7 | 7,5 |
+| `street_02_debutant_surpoids` | 9 | 8 | 8 | 9 |
+| `street_03_debutante` | 6,5 | 7 | 6,5 | 6,5 |
+| `street_04_reprise_longue_pause` | 9 | 9 | 9 | 9 |
+| `street_05_inter_calisthenie_front_lever` | 7 | 7 | 6,5 | 8 |
+| `street_06_inter_sets_reps` | 8 | 8 | 9 | 8 |
+| `street_07_avance_streetlifting_competition` | 9 | 8 | 8 | 8 |
+| `street_08_avance_sets_reps_competition` | 6 | 6,5 | 5,5 | 8 |
+| `street_09_elite_streetlifting` | 7,5 | 7 | 7 | 7,5 |
+| `street_10_elite_figures` | 6 | 5,5 | 5 | 7 |
+| `street_11_master_51_ans` | 7 | 8 | 8 | 7 |
+| `street_12_antecedent_coude` | 9 | 8 | 8 | 8 |
+| `street_13_peu_de_temps` | 6,5 | 7 | 9 | 9 |
+| `street_14_parc_sans_lest` | 9 | 9 | 9 | 9 |
+| `street_15_travail_physique_sommeil_court` | 9 | 9 | 8 | 9 |
+| `street_16_specialisation_traction_lestee` | 9 | 8 | 8 | 9 |
+| `street_17_hybride_street_course` | 9 | 7 | 7 | 9 |
+
+22 couples sur 68 à 9 (23 à la boucle 1) ; minimum 5 (4) ; moyenne 7,80 (7,81). Gain sur le minimum, pas sur le
+nombre. Ce que la lecture des corrections a montré :
+
+1. **Bloc repassé au mode 0.1 après une proposition appliquée** (street_03, 08 et plusieurs scénarios) :
+   `kalis_adapt` reconstruisait les semaines sans leur intention en appliquant un diff de prescriptions ; le bloc
+   suivant était ensuite servi sans phase. Corrigé dans `kalis_adapt` 0.2.1 (`applyProposal`).
+2. **Séries de travail encore écrites sur le repère attendu au test du bloc** (street_08, 11) : corrigé — le
+   repère attendu ne vaut plus que pour la cible d'un test.
+3. **Estimations sans record sur des exercices où elles ne mesurent pas un 1RM** (partielles surchargées de
+   street_09 : « +52,5 kg ≈ 95 % » ; curl du poignet de street_12) : limitées aux mouvements de compétition
+   lestés.
+4. **Amorçage du muscle-up lesté écrit 2 × 8** (street_09) : la série au poids du corps ouvrait les répétitions
+   d'un simple ; corrigé.
+5. **Débutants** : tenue menton à 46 % du maintien (plafond de 15 s), test de traction placé après la série
+   maximale de pompes, négatives de pompe retirées au deuxième bloc, traction stricte jamais essayée avant le
+   test ; corrigés (plafond 25 s, test de l'objectif d'abord, négatives gardées, essais stricts dès la sixième
+   semaine dans la règle de l'élastique).
+6. **Restent** : volume de street_08 au premier bloc (densité de dips), figures de street_05 et 10 (progression
+   des tenues, force dynamique, charge des poignets), affûtage de street_09 en une marche.

@@ -1047,7 +1047,7 @@ qui a été lu de chacune, dans `docs/CALIBRAGE_CA1.md`.
 
 ### 11.14 Simulateur : changement de profil en cours de saison (0.2.1, lot CX)
 
-Le moteur d'évolution n'a pas changé en 0.2.1. Le simulateur (`simulation.dart`) prend une liste de
+Une correction en 0.2.1 : `applyProposal` garde les champs du contrat 0.4.0 (intention de semaine, etc.) d'un bloc qui porte une intention ; un bloc de 0.1 est reconstruit comme avant. Le simulateur (`simulation.dart`) prend une liste de
 `ProfileChange` (`week`, `apply`, `replan`, `label`) : au début de la semaine `week`, le profil simulé
 devient `apply(profil)` (par exemple une échéance avancée de deux semaines) ; si `replan` est vrai, le bloc
 en cours s'arrête à la fin de la semaine précédente et le bloc suivant est écrit par `nextBlock` sur le
