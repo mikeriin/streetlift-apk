@@ -1407,6 +1407,7 @@ List<SetPlan>? _directPlans(
           !ex.calibrating &&
           item.technique == null &&
           c.item.technique == null &&
+          !ex.techniqueWithheld &&
           exact != null &&
           run.day - exact <= 2 * p.coachProbeDays;
       final most = locked || !known ? sets : (2 * sets < 3 ? 3 : 2 * sets);
