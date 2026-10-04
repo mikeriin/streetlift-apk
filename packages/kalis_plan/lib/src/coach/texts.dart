@@ -294,9 +294,11 @@ String? coachReasonText(Reason r, Catalog catalog) {
               "${_pct(v)} des répétitions habituelles, très loin de "
               "l'échec — 48 h sans travail dur avant le test.",
         CoachNotes.alreadyApplied =>
-          'Les réductions liées à ton profil (sommeil, stress, travail '
-              'physique, âge) sont déjà dans les chiffres des tableaux : '
-              "suis les chiffres écrits, n'en retire pas davantage.",
+          'Les réductions liées à ton profil habituel (sommeil, stress, '
+              'travail physique, âge) sont déjà dans les chiffres des '
+              "tableaux : ne les retire pas une deuxième fois. La baisse "
+              "du jour (nuit nettement plus courte que d'habitude, bilan "
+              "bas) s'applique en plus, elle.",
         CoachNotes.dressRehearsal =>
           "Dernier lourd avant l'épreuve (J−${_int(v)}) : fais-le dans "
               'les conditions du jour J — commandes, matériel de '

@@ -35,30 +35,45 @@ enum SeasonScenario {
   base('reference', 'saison de référence'),
 
   /// Séances manquées : une séance sur quatre, et dix jours d'arrêt.
-  missed('seances_manquees', 'une séance sur quatre manquée et dix jours sans '
-      'entraînement (semaines 6 et 7)'),
+  missed(
+    'seances_manquees',
+    'une séance sur quatre manquée et dix jours sans '
+        'entraînement (semaines 6 et 7)',
+  ),
 
   /// Semaine de maladie.
   illness('maladie', 'une semaine de maladie (semaine 7)'),
 
   /// Douleur au coude.
-  elbow('douleur_coude', 'douleur au coude à 5 sur 10 pendant trois semaines '
-      '(semaines 5 à 7)'),
+  elbow(
+    'douleur_coude',
+    'douleur au coude à 5 sur 10 pendant trois semaines '
+        '(semaines 5 à 7)',
+  ),
 
   /// Douleur à l'épaule.
-  shoulder('douleur_epaule', 'douleur à l\'épaule à 5 sur 10 pendant trois '
-      'semaines (semaines 5 à 7)'),
+  shoulder(
+    'douleur_epaule',
+    'douleur à l\'épaule à 5 sur 10 pendant trois '
+        'semaines (semaines 5 à 7)',
+  ),
 
   /// Parc seulement.
   park('parc_seulement', 'trois semaines au parc seulement (semaines 8 à 10)'),
 
   /// Échéance avancée de deux semaines.
-  earlier('echeance_avancee', 'échéance avancée de deux semaines, annoncée six '
-      'semaines avant la date prévue'),
+  earlier(
+    'echeance_avancee',
+    'échéance avancée de deux semaines, annoncée six '
+        'semaines avant la date prévue',
+  ),
 
   /// Deuxième échéance dans la saison.
-  second('deuxieme_echeance', 'deuxième échéance six semaines après la '
-      'première');
+  second(
+    'deuxieme_echeance',
+    'deuxième échéance six semaines après la '
+        'première',
+  );
 
   const SeasonScenario(this.code, this.label);
 
@@ -85,7 +100,9 @@ int? seasonTargetWeeks(Map<String, Object?> json) {
         continue;
       }
       final main = e['priority'] == 'A';
-      if (best == null || (main && !bestMain) || (main == bestMain && w < best)) {
+      if (best == null ||
+          (main && !bestMain) ||
+          (main == bestMain && w < best)) {
         best = w;
         bestMain = main;
       }
@@ -281,7 +298,8 @@ List<ProfileChange> seasonChanges(
     ProfileChange(
       week: week,
       apply: (p) => shiftTargetDate(p, from, -14),
-      label: 'échéance avancée de deux semaines (semaine $target → '
+      label:
+          'échéance avancée de deux semaines (semaine $target → '
           'semaine ${target - 2})',
     ),
   ];
@@ -342,7 +360,9 @@ double? writtenGapOf(SimRun run, Set<String> priority) {
         continue;
       }
       final w = writtenItemOf(run, s, it.slotId);
-      if (w == null || w.kind == SetKind.test || w.exerciseId != it.exerciseId) {
+      if (w == null ||
+          w.kind == SetKind.test ||
+          w.exerciseId != it.exerciseId) {
         continue;
       }
       final written = _amountOf(w);
@@ -404,6 +424,31 @@ int undoneOf(SimRun run, Set<String> priority) {
   return count;
 }
 
+/// Blocs tels qu'ils ont été servis : un bloc arrêté avant son terme (un
+/// changement de profil re-planifie la saison) est réduit à ses semaines
+/// servies, pour que la semaine `k` de la saison réalisée soit bien la
+/// semaine `k` vécue.
+List<ProgramBlock> servedBlocksOf(SimRun run) {
+  final out = <ProgramBlock>[];
+  for (var k = 0; k < run.blocks.length; k++) {
+    final b = run.blocks[k];
+    if (k + 1 < run.blockWeeks.length) {
+      final served = run.blockWeeks[k + 1] - run.blockWeeks[k];
+      if (served >= 1 && served < b.pass2.weeks.length) {
+        out.add(
+          ProgramBlock(
+            pass1: b.pass1.copyWith(weeks: served),
+            pass2: b.pass2.copyWith(weeks: b.pass2.weeks.sublist(0, served)),
+          ),
+        );
+        continue;
+      }
+    }
+    out.add(b);
+  }
+  return out;
+}
+
 /// Violations de sécurité du programme tel qu'il a évolué dans [run]
 /// (blocs reconstruits et propositions appliquées), lues sur [bench]
 /// (profil du scénario) jusqu'à [weeks] semaines.
@@ -425,7 +470,7 @@ List<Finding> realizedFindings(
         startDate: benchStartDate,
         locks: const <PlanLock>[],
       ),
-      blocks: run.blocks,
+      blocks: servedBlocksOf(run),
       horizonWeeks: weeks,
     ),
   ),
@@ -492,7 +537,9 @@ Map<String, Object?> seasonCampaignOf(
     final byCouple = <String, Object?>{};
     for (final couple in couples) {
       final legacy = couple == 'v01';
-      final profile = legacy ? legacyProfileOf(adapted.profile) : adapted.profile;
+      final profile = legacy
+          ? legacyProfileOf(adapted.profile)
+          : adapted.profile;
       final byTruth = <String, Object?>{};
       for (final truth in TruthKind.values) {
         final runs = <SimRun>[];

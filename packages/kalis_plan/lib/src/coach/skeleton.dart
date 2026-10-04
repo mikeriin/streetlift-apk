@@ -561,13 +561,9 @@ void _buildBeginner(_Builder b) {
       );
       // Échelle de poussée écrite au contrat (CX, correction 2), une fois
       // par bloc, à partir de la variante retenue.
-      final ladder = push == null
-          ? null
-          : coachPushLadderFrom(push.exerciseId);
+      final ladder = push == null ? null : coachPushLadderFrom(push.exerciseId);
       if (ladder != null &&
-          !b.ladders.any(
-            (l) => l.targetExerciseId == coachPushLadderTarget,
-          )) {
+          !b.ladders.any((l) => l.targetExerciseId == coachPushLadderTarget)) {
         b.ladders.add(ladder);
       }
       if (!heavy && a.aimsAt(Ids.pushUp) && !negativeDays.contains(d) ||
@@ -1922,8 +1918,7 @@ void _buildLifting(_Builder b, Set<int> runDays) {
           if (b.dayBefore(d, pullHeavy) ||
               b.dayBefore(pullHeavy, d) ||
               (pullVolume >= 0 &&
-                  (b.dayBefore(d, pullVolume) ||
-                      b.dayBefore(pullVolume, d)))) {
+                  (b.dayBefore(d, pullVolume) || b.dayBefore(pullVolume, d)))) {
             continue;
           }
           second = d;
@@ -2384,7 +2379,13 @@ void _buildFigures(_Builder b, Set<int> runDays) {
         );
       }
       final next = t.nextId;
-      if (heavy && next != null && ready(t) && (attempts[next] ?? 0) < 2) {
+      // (Jamais l'étape suivante quand l'étape actuelle est écartée ce
+      // jour-là — douleur, exercice évité — : CX, panel.)
+      if (heavy &&
+          next != null &&
+          ready(t) &&
+          a.can(t.currentId, d) &&
+          (attempts[next] ?? 0) < 2) {
         // Deux séances par semaine au plus, deux entrées de 2 à 3 s.
         final slot = b.add(
           d,

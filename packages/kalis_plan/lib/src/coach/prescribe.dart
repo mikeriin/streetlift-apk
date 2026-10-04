@@ -1116,6 +1116,21 @@ final class Prescriber {
     }
   }
 
+  /// Vrai quand l'échéance du bloc vise des maxima de répétitions (objectifs
+  /// datés en répétitions, ou épreuve de répétitions) et aucune charge
+  /// maximale.
+  bool get _repsAim {
+    final target = _shape.target;
+    if (target == null) {
+      return false;
+    }
+    if (target.event != null) {
+      return isRepsTarget(target);
+    }
+    return target.goals.isNotEmpty &&
+        target.goals.every((g) => g.metric == GoalMetric.maxReps);
+  }
+
   /// Séries d'un mouvement lourd en intensification et en réalisation :
   /// trois au moins (une série de tête et deux séries allégées à −5 %, soit
   /// trois séries à 85 % et plus : R2-P8, 3 à 6 séries à 85 % et plus par
@@ -1505,9 +1520,32 @@ final class Prescriber {
         pct = 0.70;
         rir = 3;
       case WeekIntent.accumulation || WeekIntent.maintenance:
-        if (pct > 0.78) {
+        if (_level >= 2) {
+          // Avancé et élite : séries de 5 à 75 à 80 %, 2 à 3 répétitions en
+          // réserve (CX, panel : 6 répétitions à 72 % laissaient 5 à 6
+          // répétitions en réserve ; R2-P2, R1-P11).
+          reps = 5;
+          pct = 0.75 + 0.015 * stage;
+          if (pct > 0.80) {
+            pct = 0.80;
+          }
+          rir = 2;
+        } else if (pct > 0.78) {
           pct = 0.78;
         }
+      case WeekIntent.intensification || WeekIntent.realization
+          when _repsAim:
+        // Objectif de répétitions maximales (sans épreuve de force) : le
+        // lest garde des séries de 5 à 75 à 80 % — la réserve de force sert
+        // l'endurance de force, le travail spécifique se fait au poids du
+        // corps (CX, panel : 4 × 3 lourd en réalisation ne transfère pas
+        // vers un maximum de répétitions ; R4-G1, R4-G2).
+        reps = 5;
+        pct = 0.75 + 0.015 * stage;
+        if (pct > 0.80) {
+          pct = 0.80;
+        }
+        rir = 3;
       case WeekIntent.intensification:
         reps = 4;
         pct = 0.78 + 0.015 * stage;
@@ -2359,13 +2397,17 @@ final class Prescriber {
     // s'allonge (6 puis 7 s, après 2 s tenues menton au-dessus de la
     // barre) à nombre de descentes égal — la progression vient du
     // contrôle, pas du nombre d'excentriques.
+    // CX (panel, saisons) : à partir du deuxième bloc, le nombre de
+    // descentes monte vers 3 × 5 de 5 s (R5-P8 ; R2-P17 : 3 à 5 × 3 à 5
+    // descentes de 3 à 5 s chez le débutant), au lieu d'allonger la
+    // descente à nombre égal — le plafond de 15 par séance reste.
     final stage = ws.stage;
     final push = x.e.id == 'sw-pompe-negative';
     final later = blockIndex > 0 && !push;
-    final seconds = later
-        ? (stage >= 2 ? 7 : 6)
-        : (push ? (stage >= 2 ? 4 : 3) : (stage >= 2 ? 5 : 4));
-    final reps = ws.light ? 2 : (later ? 3 : (stage >= 3 ? 4 : 3));
+    final seconds = later ? 5 : (push ? (stage >= 2 ? 4 : 3) : (stage >= 2 ? 5 : 4));
+    final reps = ws.light
+        ? 2
+        : (later ? (stage >= 2 ? 5 : 4) : (stage >= 3 ? 4 : 3));
     x
       // (Bloc suivant : trois séries un seul jour par semaine, deux
       // l'autre — une dizaine de séries de tirage vertical direct par
@@ -2565,9 +2607,7 @@ final class Prescriber {
       ..isometric = true
       ..rir = 5
       ..rest = _level >= 2 ? 180 : 150
-      ..reasons.add(
-        _note(CoachNotes.stepGate, coachStepHold(_level)),
-      );
+      ..reasons.add(_note(CoachNotes.stepGate, coachStepHold(_level)));
     return x;
   }
 
@@ -3741,16 +3781,15 @@ final class Prescriber {
       return null;
     }
     final attempt = a.aimsAt(Ids.pull);
-    final gate =
-        _Draft(s, slotId, a.catalog.exercise(hang), a.traits.of(hang))
-          ..method = s?.method ?? Method.beginnerMain
-          ..kind = SetKind.test
-          ..fixed = true
-          ..sets = 2
-          ..secondsLow = 5
-          ..secondsHigh = 30
-          ..rest = 180
-          ..stress = DayStress.heavy
+    final gate = _Draft(s, slotId, a.catalog.exercise(hang), a.traits.of(hang))
+      ..method = s?.method ?? Method.beginnerMain
+      ..kind = SetKind.test
+      ..fixed = true
+      ..sets = 2
+      ..secondsLow = 5
+      ..secondsHigh = 30
+      ..rest = 180
+      ..stress = DayStress.heavy
     // Valeur négative : l'essai strict suit dans la même séance (une
     // seule consigne).
     ;

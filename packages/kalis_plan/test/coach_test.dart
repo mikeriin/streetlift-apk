@@ -810,4 +810,156 @@ void main() {
       expect(seen, greaterThan(0), reason: 'aucune note de coach émise');
     });
   });
+  group('CX — saison complète', () {
+    // Tractions à la barre : un jour qui en contient en travail principal,
+    // secondaire ou de figure ne suit pas un autre jour qui en contient
+    // (48 h de récupération, ACSM 2011 ; LANCEMENTS.md CX, correction 6).
+    bool barPull(String id) =>
+        id == 'sl-traction-lestee' ||
+        id == 'sw-traction-pronation' ||
+        id == 'sw-traction-supination' ||
+        id.contains('muscle-up');
+    const hardRoles = <SlotRole>{
+      SlotRole.main,
+      SlotRole.secondary,
+      SlotRole.skill,
+    };
+
+    void noBackToBackPulls(List<ProgramBlock> blocks) {
+      for (final b in blocks) {
+        final pulls = <int>[
+          for (final d in b.pass1.days)
+            if (d.slots.any(
+              (s) => hardRoles.contains(s.role) && barPull(s.exerciseId),
+            ))
+              d.weekday,
+        ];
+        for (final x in pulls) {
+          for (final y in pulls) {
+            expect(
+              (y - x) % 7 == 1,
+              isFalse,
+              reason: 'bloc ${b.pass1.blockIndex} : jours $x et $y',
+            );
+          }
+        }
+      }
+    }
+
+    test('streetlifting : pas de traction deux jours de suite', () {
+      noBackToBackPulls(_program(catalog, _lifter(), 12));
+    });
+
+    test('répétitions avancé : pas de traction deux jours de suite', () {
+      final profile = _profile(
+        experience: ExperienceLevel.advanced,
+        weekdays: const <int>[1, 2, 4, 6],
+        minutes: 75,
+        benchmarks: <Benchmark>[
+          _maxReps('sw-traction-pronation', 22),
+          _maxReps('sw-dips-barres-paralleles', 35),
+          _maxReps('sw-pompe', 60),
+        ],
+        events: <SeasonEvent>[
+          SeasonEvent(
+            id: 'e1',
+            kind: EventKind.repsCompetition,
+            priority: EventPriority.main,
+            date: _start.addDays(7 * 12 - 2),
+          ),
+        ],
+      );
+      noBackToBackPulls(_program(catalog, profile, 12));
+    });
+
+    test('épreuve de force : catégorie de poids, puis transition', () {
+      final blocks = _program(catalog, _lifter(weeksOut: 8), 14);
+      final reasons = <Reason>[
+        for (final b in blocks) ...b.pass1.reasons,
+        for (final b in blocks) ...b.pass2.reasons,
+      ];
+      expect(
+        reasons.any(
+          (r) =>
+              r.code == ReasonCodes.planCoachNote &&
+              r.params['note'] == CoachNotes.weightClass &&
+              r.params['value'] == 80,
+        ),
+        isTrue,
+        reason: '78 kg : catégorie des −80 kg',
+      );
+      final eventDay = _start.addDays(7 * 8 - 2);
+      final after = blocks.where((b) {
+        final days = eventDay.daysUntil(b.pass1.startDate);
+        return days >= 1 && days <= 10;
+      }).toList();
+      expect(after, hasLength(1));
+      expect(after.single.pass2.weeks.first.intent, WeekIntent.transition);
+    });
+
+    test('débutant sans pompe : échelle genoux, mains surélevées, sol', () {
+      final profile = _beginner().copyWith(
+        benchmarks: <Benchmark>[_maxReps('sw-pompe-genoux', 8)],
+      );
+      final pass1 = _program(catalog, profile, 4).first.pass1;
+      final ladder = (pass1.skillLadders ?? const <SkillLadder>[]).where(
+        (l) => l.targetExerciseId == 'sw-pompe',
+      );
+      expect(ladder, hasLength(1));
+      final steps = ladder.single.steps.map((s) => s.exerciseId).toList();
+      expect(steps.last, 'sw-pompe');
+      expect(steps, contains('sw-pompe-inclinee'));
+      expect(
+        pass1.days.any(
+          (d) => d.slots.any((s) => s.exerciseId == 'sw-pompe'),
+        ),
+        isFalse,
+        reason: 'pompe au sol avant le critère de passage',
+      );
+    });
+
+    test('un test mesuré plus bas que le record déclaré fait foi', () {
+      final declared = _profile(
+        experience: ExperienceLevel.intermediate,
+        benchmarks: <Benchmark>[
+          _maxReps('sw-traction-pronation', 14),
+          _maxReps('sw-dips-barres-paralleles', 20),
+        ],
+      );
+      final tested = declared.copyWith(
+        benchmarks: <Benchmark>[
+          ...declared.benchmarks!,
+          Benchmark(
+            exerciseId: 'sw-traction-pronation',
+            kind: BenchmarkKind.maxReps,
+            source: BenchmarkSource.guidedTest,
+            reps: 9,
+            date: _start.addDays(-3),
+          ),
+        ],
+      );
+      int pullReps(AthleteProfile p) {
+        var most = 0;
+        final week = _program(catalog, p, 4).first.pass2.weeks.first;
+        for (final d in week.days) {
+          for (final i in d.items) {
+            if (i.exerciseId == 'sw-traction-pronation' &&
+                (i.kind == null || i.kind == SetKind.work)) {
+              final reps = i.repsHigh;
+              if (reps != null && reps > most) {
+                most = reps;
+              }
+            }
+          }
+        }
+        return most;
+      }
+
+      final before = pullReps(declared);
+      final after = pullReps(tested);
+      expect(before, greaterThan(0));
+      expect(after, lessThan(before));
+      expect(after, lessThan(9));
+    });
+  });
 }

@@ -383,8 +383,9 @@ final class Athlete {
     // précédent, CX, correction 1) : une capacité nettement plus basse que
     // le repère, estimée sur assez de séries et sans test plus récent,
     // devient le repère du bloc (le bloc suivant part de ce que l'athlète
-    // a montré, R2-P20 ; Helms et al. 2018). Jamais vers le haut : une
-    // hausse attend un test (CP1.3).
+    // a montré, R2-P20 ; Helms et al. 2018). Jamais au-dessus d'un repère
+    // connu : une hausse attend un test (CP1.3). Un exercice sans repère
+    // prend l'estimation.
     for (final e in estimates) {
       final seen = e.lastObservedOn;
       if (e.observations < coachEstimateMinObservations ||
@@ -409,24 +410,29 @@ final class Athlete {
               catalog.find(e.exerciseId)?.bodyweightFraction?.value ?? 0;
           final external = e.capacity - fraction * bodyWeight;
           final total = (before ?? 0) + fraction * bodyWeight;
-          if (before != null &&
-              e.capacity < total * (1 - coachEstimateMargin)) {
+          if ((before == null && external > 0) ||
+              (before != null &&
+                  e.capacity < total * (1 - coachEstimateMargin))) {
             oneRm[e.exerciseId] = external;
             recordDay[e.exerciseId] = seen;
           }
+        // Sans repère du tout (variante jamais déclarée ni testée, dosée
+        // jusque-là par une plage fixe), l'estimation devient le repère :
+        // elle remplace une plage supposée par ce que l'athlète a montré
+        // (CX, correction 1 ; R5-P2 : 50 à 70 % du maximum).
         case CapacityUnit.maxReps:
           final before = reps[e.exerciseId];
-          if (before != null &&
-              e.capacity < before * (1 - coachEstimateMargin) &&
-              e.capacity >= 1) {
+          if (e.capacity >= 1 &&
+              (before == null ||
+                  e.capacity < before * (1 - coachEstimateMargin))) {
             reps[e.exerciseId] = e.capacity.floor();
             recordDay[e.exerciseId] = seen;
           }
         case CapacityUnit.maxHoldSeconds:
           final before = holds[e.exerciseId];
-          if (before != null &&
-              e.capacity < before * (1 - coachEstimateMargin) &&
-              e.capacity >= 1) {
+          if (e.capacity >= 1 &&
+              (before == null ||
+                  e.capacity < before * (1 - coachEstimateMargin))) {
             holds[e.exerciseId] = e.capacity.floor();
             recordDay[e.exerciseId] = seen;
           }

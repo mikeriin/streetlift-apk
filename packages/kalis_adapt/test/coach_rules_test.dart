@@ -7,6 +7,7 @@ import 'package:kalis_adapt/kalis_adapt.dart';
 import 'package:kalis_adapt/simulation.dart';
 import 'package:kalis_adapt/src/model.dart' show formAfter;
 import 'package:kalis_core/kalis_core.dart';
+import 'package:kalis_plan/kalis_plan.dart';
 import 'package:test/test.dart';
 
 import 'support.dart';
@@ -184,21 +185,34 @@ void main() {
   });
 
   group('séries fractionnées', () {
-    // Débutante : pompe classique écrite 2 × 3 à 6 à 2 en réserve pour un
-    // maximum de 3 — des séries plus courtes et plus nombreuses.
+    // Débutante qui déclare 8 pompes pour un maximum réel de 3 : la pompe
+    // classique est écrite au-dessus de sa portée — des séries plus
+    // courtes et plus nombreuses. (Avec son maximum déclaré de 3,
+    // `kalis_plan` 0.2.1 écrit l'échelle de poussée et non plus la pompe
+    // classique : le cas est reconstruit par un record surestimé.)
     test('street_03 : plage hors de portée, plus de séries, plus '
         'courtes', () {
       const key = 'street_03_debutante';
       const id = 'sw-pompe';
+      final declared = streetProfile(key);
+      final profile = declared.copyWith(
+        benchmarks: <Benchmark>[
+          for (final b in declared.benchmarks ?? const <Benchmark>[])
+            if (b.exerciseId == id && b.kind == BenchmarkKind.maxReps)
+              b.copyWith(reps: 8)
+            else
+              b,
+        ],
+      );
       final engine = KalisAdapt();
       final policy = _Captured(engine, <String>{id});
       final run = simulate(
         catalog: catalog,
         spec: streetAthlete(key),
-        profile: streetProfile(key),
+        profile: profile,
         seed: 4,
         policy: policy,
-        program: streetProgram(key),
+        program: SimProgram(catalog, KalisPlan(), profile),
         weeks: 10,
         loop: engine,
         truthKind: TruthKind.b,
