@@ -1610,10 +1610,8 @@ final class Prescriber {
     }
     final reps = intense ? 3 : 4;
     if (referenceId == Ids.weightedMuscleUp &&
-        (e.rootId != Ids.weightedMuscleUp ||
-            e.id.contains('dips-barre') ||
-            e.id.contains('traction-haute')) &&
-        a.oneRm[e.id] == null) {
+        e.rootId != Ids.weightedMuscleUp &&
+        a.totalOneRm(e.id) == null) {
       // Éducatif du muscle-up sans record propre : la charge ne se déduit
       // pas du 1RM du muscle-up — elle se règle à la première séance.
       x
@@ -4312,8 +4310,12 @@ final class Prescriber {
   void _fitVolume(List<List<_Draft>> days, WeekSpec ws) {
     final index = _history.length;
     final light = <bool>[for (final h in _history) h.light, ws.light];
-    final rise = _slow ? coachVolumeRise / 2 : coachVolumeRise;
-    final tolerance = _slow ? 1.0 : 2.0;
+    // (Reprise longue : les cinq premières semaines remontent du demi-
+    // volume au plein volume par hausses de 20 % au plus ; ensuite la
+    // montée lente reprend.)
+    final regaining = blockIndex == 0 && a.gapWeeks >= 10 && index <= 4;
+    final rise = _slow && !regaining ? coachVolumeRise / 2 : coachVolumeRise;
+    final tolerance = _slow && !regaining ? 1.0 : 2.0;
     for (final g in MuscleGroup.values) {
       if (!g.major) {
         continue;
