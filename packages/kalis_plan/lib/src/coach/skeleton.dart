@@ -1932,9 +1932,6 @@ void _buildFigures(_Builder b, Set<int> runDays) {
     // Force de base au service des figures (R1-P17, R4-F5) : lestée quand
     // le matériel et le niveau le permettent, sinon au poids du corps ;
     // plus de séries les jours sans maintien lourd.
-    final skillLoad = b.days[d].slots
-        .where((s) => s.method == Method.skillHold)
-        .length;
     final weightedPull =
         a.oneRm[Ids.weightedPull] != null &&
         a.level >= 2 &&
