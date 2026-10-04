@@ -1177,9 +1177,9 @@ void _buildReps(_Builder b, Set<int> runDays) {
     frequency = n;
   }
   var pullDays = spreadDays(a, days, frequency);
-  // Jusqu'à l'avancé, pas deux jours de tirage consécutifs (R4-F10,
+  // Jusqu'à l'intermédiaire, pas deux jours de tirage consécutifs (R4-F10,
   // R5-P22 : 48 h entre deux charges d'une même zone) : la fréquence cède.
-  while (a.level <= 2 && frequency > 2 && _minGap(a, pullDays) < 2) {
+  while (a.level <= 1 && frequency > 2 && _minGap(a, pullDays) < 2) {
     frequency--;
     pullDays = spreadDays(a, days, frequency);
   }
@@ -1742,8 +1742,6 @@ void _buildLifting(_Builder b, Set<int> runDays) {
     if (light >= 0 &&
         !maintained(Ids.weightedPull) &&
         a.level >= 2 &&
-        // (48 h de coude avant le muscle-up lourd.)
-        !(mu && b.dayBefore(light, muDay)) &&
         target != Ids.weightedPull) {
       lift(light, Ids.weightedPull, Method.liftLight, DayStress.light, sets: 3);
     }

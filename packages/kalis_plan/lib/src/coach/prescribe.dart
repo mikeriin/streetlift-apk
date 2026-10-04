@@ -4294,9 +4294,9 @@ final class Prescriber {
   /// Plancher de la semaine de l'échéance, avant les garde-fous de volume
   /// (qui gardent le dernier mot).
   void _floorEvent(List<List<_Draft>> days, WeekSpec ws) {
-    // (Épreuves de force seulement : ailleurs, le volume continue de
-    // baisser jusqu'au test.)
-    if (!ws.eventWeek || _shape.model != SeasonModel.strengthPeak) {
+    // (Échéances avec pic de forme seulement : avant un simple test daté,
+    // le volume continue de baisser jusqu'au test.)
+    if (!ws.eventWeek || !(_shape.target?.peak ?? false)) {
       return;
     }
     var peak = 0.0;
