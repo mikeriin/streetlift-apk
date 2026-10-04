@@ -434,9 +434,7 @@ void _buildBeginner(_Builder b) {
         // directes par semaine (R1-P5, R2-P8, R5-P1).
         sets: heavy
             ? mainSets
-            : (a.aimsAt(Ids.pull)
-                  ? (negativeDays.contains(d) ? 2 : 3)
-                  : sets),
+            : (a.aimsAt(Ids.pull) ? (negativeDays.contains(d) ? 2 : 3) : sets),
         referenceId: Ids.pull,
       );
       if (negativeDays.contains(d) && !heavy) {
@@ -1289,8 +1287,7 @@ void _buildReps(_Builder b, Set<int> runDays) {
       for (final d in pullWanted)
         // (Jamais le lendemain d'un jour de tirage : l'exposition légère
         // précède la séance dure, elle ne la suit pas.)
-        if (!pullDays.contains(d) && !pullDays.any((o) => b.dayBefore(o, d)))
-          d,
+        if (!pullDays.contains(d) && !pullDays.any((o) => b.dayBefore(o, d))) d,
   };
   final pullHeavy = <String>[
     for (final m in (competition ? _competitionMethods : _repsMethods(pullMax)))
@@ -1345,8 +1342,7 @@ void _buildReps(_Builder b, Set<int> runDays) {
   // sont à l'épreuve (R4-G1 : spécificité).
   final event = shape.target?.event;
   final eventIds = <String>{
-    for (final st in event?.stations ?? const <EventStation>[])
-      st.exerciseId,
+    for (final st in event?.stations ?? const <EventStation>[]) st.exerciseId,
   };
   final pushUps = !competition || eventIds.contains(Ids.pushUp);
   // Séance lestée de la semaine d'une préparation d'épreuve : en tête
@@ -1820,12 +1816,7 @@ void _buildLifting(_Builder b, Set<int> runDays) {
         }
       }
       if (second >= 0) {
-        lift(
-          second,
-          Ids.weightedMuscleUp,
-          Method.liftLight,
-          DayStress.light,
-        );
+        lift(second, Ids.weightedMuscleUp, Method.liftLight, DayStress.light);
         final weak = _weakVariant(a, Ids.weightedMuscleUp);
         if (weak != null && weak.$2 == WeakPointKind.transition) {
           // Point faible « transition » : un éducatif dédié, léger.
@@ -2431,9 +2422,7 @@ void _buildFigures(_Builder b, Set<int> runDays) {
           stress: DayStress.medium,
         );
       }
-    } else if (pullMax >= 1 &&
-        a.can(Ids.pull, d) &&
-        strengthDays.contains(d)) {
+    } else if (pullMax >= 1 && a.can(Ids.pull, d) && strengthDays.contains(d)) {
       b.add(
         d,
         // Première séance de force : une variante dure en séries courtes
