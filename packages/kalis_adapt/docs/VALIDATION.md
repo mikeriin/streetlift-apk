@@ -247,13 +247,56 @@ conseille.
 
 ### 9.2 Campagne street
 
-MESURES_CAMPAGNE
+`docs/CAMPAGNE_STREET.md` (généré par `kalis_bench`, contrôle complet) : 17 profils street, jusqu'à
+l'échéance (16 semaines au moins sans échéance), 100 graines par modèle de vérité, quatre politiques —
+`kalis_adapt` 0.2.0, `kalis_adapt` en comportement 0.1 sur les mêmes programmes, un coach simple à la note
+d'effort, l'oracle (qui connaît la vérité). Moyennes sur les profils :
+
+| Modèle | Politique | Écart d'effort | Séries ≥ 2 rép. plus dures | Échecs non voulus | Progression / sem. | Tentatives réussies | Jour J ÷ maximum du jour |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| A | 0.2.0 | 0,81 | 0,3 % | 0,20 % | 0,358 % | 79 % | 96,6 % |
+| A | 0.1 | 0,87 | 1,1 % | 0,22 % | 0,374 % | 100 % | 92,3 % |
+| A | coach simple | 2,61 | 1,7 % | 2,21 % | 0,315 % | 90 % | 91,7 % |
+| B | 0.2.0 | 0,97 | 0,4 % | 0,14 % | 0,341 % | 88 % | 95,5 % |
+| B | 0.1 | 1,98 | 0,5 % | 0,04 % | 0,334 % | 100 % | 89,8 % |
+| B | coach simple | 2,17 | 2,3 % | 1,88 % | 0,329 % | 92 % | 91,3 % |
+| C | 0.2.0 | 1,61 | 0,7 % | 0,55 % | 0,170 % | 94 % | 94,7 % |
+| C | 0.1 | 1,34 | 2,1 % | 0,58 % | 0,174 % | 100 % | 89,2 % |
+| C | coach simple | 4,84 | 3,4 % | 4,24 % | 0,141 % | 86 % | 91,7 % |
+
+Ce que cela dit :
+
+- **Exactitude** : l'écart entre l'effort affiché et l'effort réel est sous une répétition sous A et B (B :
+  deux fois plus juste que 0.1). Sous C, 0.2.0 est **moins juste que 0.1** (1,61 contre 1,34) : quand la forme
+  varie beaucoup d'un jour à l'autre, lire les notes loin de l'échec comme des bornes prive le moteur
+  d'information ; pire profil : `street_10` (figures), 4,76. La cible d'une répétition n'est pas tenue sous C.
+- **Sécurité** : moins de séries nettement plus dures que visé que 0.1 sous les trois modèles ; échecs non
+  voulus du même ordre (plus nombreux sous B : 0,14 % contre 0,04 %). Douleur : aucune hausse sur une zone
+  douloureuse, sauf `street_10` sous B (0,02 par simulation, soit 2 hausses en 100 simulations) — non
+  expliqué, à reprendre.
+- **Progression** : égale à 0.1 à 5 % près (un peu moins sous A et C, un peu plus sous B) ; sous C, les
+  profils de streetlifting perdent du maximum réel (désentraînement du modèle), avec 0.1 comme avec 0.2.0.
+- **Jour de l'échéance** : meilleure barre ou meilleure série à 95 à 97 % du maximum réel du jour, contre 89
+  à 92 % pour 0.1, le coach simple et l'oracle au programme égal. En contrepartie les tentatives réussissent
+  moins souvent (79 à 94 %) que celles de 0.1, qui ouvre et finit bas : une troisième barre « record » accepte
+  une chance sur deux (§ 11.6 du contrat).
+- **Hausses à schéma égal** : le repère « aucune hausse de plus de 10 % en plusieurs crans » n'est pas tenu au
+  sens de la mesure — 202, 187 et 139 hausses pour 1 700 simulations (A, B, C ; 0.1 : 311, 211, 316 ; oracle :
+  123, 265, 74), presque toutes sur les profils lestés (`street_07`, `09`, `11`, `12`). La mesure compte le
+  retour à la charge du programme après une séance allégée (bilan bas, décharge) ; l'invariant C1, lui, est
+  tenu sur tous les journaux.
+- Programme tel qu'il a évolué sous le moteur (trajectoire racontée, modèle B) : **0 manquement aux critères
+  de sécurité calculables** sur les 17 profils (`RAPPORT.md` du banc).
 
 ### 9.3 Invariants et tests
 
 10 240 journaux aléatoires de 0.1 (I1 à I8, inchangés) et 10 240 journaux aux champs de 0.4.0 (C1 à C4, I2 à
 I8) ; 17 programmes street × 3 modèles de vérité en boucle complète ; programmes à techniques injectées ;
-règles du calibrage (`test/coach_rules_test.dart`) ; temps de calcul : MESURES_TEMPS.
+règles du calibrage (`test/coach_rules_test.dart`) ; temps de calcul (machine de contrôle, pas un
+téléphone) : `MESURES.md` § 5 — décision de séance 0,04 ms en médiane (maximum 6,4 ms, cible 50 ms), conseil
+après une série 0,04 ms en médiane, 99ᵉ centile 0,10 ms, maximum 9,3 ms (cible 5 ms tenue en médiane, pas sur
+le maximum) ; mode coach : médianes sous les cibles sur 12 semaines d'un programme street
+(`test/coach_test.dart`).
 
 ### 9.4 Panel et relecture documentée
 
