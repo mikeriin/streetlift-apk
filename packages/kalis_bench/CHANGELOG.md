@@ -1,5 +1,21 @@
 # Journal
 
+## 0.2.0 — 04/10/2026 (lot CX)
+
+Saisons street complètes, couple `kalis_plan` 0.2.1 × `kalis_adapt` 0.2.1. Profils types, attentes de coach,
+critères de sécurité et grilles du panel **inchangés**.
+
+- **Mode saisons** (`lib/src/season.dart`, `lib/src/season_export.dart`) : chaque profil street sur toute
+  sa saison (16 semaines au moins, jusqu'à l'échéance et une semaine après), sous les trois modèles de
+  vérité et plusieurs graines ; scénarios imposés (séances manquées, semaine de maladie, douleur au coude ou
+  à l'épaule, parc seulement, échéance avancée de deux semaines, deuxième échéance) ; mesures : progression,
+  jour de l'échéance rapporté au maximum atteignable, tentatives, échecs non voulus, écart entre programme
+  écrit et séances servies, exercices prioritaires retirés sans raison, violations de sécurité de la saison
+  réalisée, stabilité entre graines, comparaison aux moteurs 0.1. Sorties : `saisons.json`, `SAISONS.md`,
+  `saisons/` (export de chaque saison, scénarios, sécurité).
+- `simulateTrajectory` prend un athlète simulé (`spec`) et des changements de profil (`changes`).
+- `tool/relecture/build_manche_saisons.py` : manche « saisons » de la page de relecture.
+
 ## 0.1.2 — 04/10/2026 (lot CA1)
 
 Ajouts pour les trajectoires de `kalis_adapt` 0.2.0 (mode coach). Profils types, attentes de coach, critères de sécurité et grilles du panel **inchangés**.

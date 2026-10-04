@@ -10,7 +10,7 @@ rm -rf $T && mkdir -p $T
 (cd $WT && git ls-files -co --exclude-standard -z | xargs -0 cp --parents -t $T/)
 rm -rf $T/.github
 mkdir -p $T/cx-outils
-cp -r /home/claude/cx/panel.py /home/claude/cx/ci.sh /home/claude/cx/save.sh /home/claude/cx/aa_fmt $T/cx-outils/
+cp -r /home/claude/cx/page /home/claude/cx/fmtsync.py /home/claude/cx/panel.py /home/claude/cx/ci.sh /home/claude/cx/save.sh /home/claude/cx/aa_fmt $T/cx-outils/
 [ -d /home/claude/cx/notes ] && cp -r /home/claude/cx/notes $T/cx-outils/ || true
 [ -d /home/claude/cx/docs ] && cp -r /home/claude/cx/docs $T/cx-outils/ || true
 cp /home/claude/cx/SAUVEGARDE.md $T/SAUVEGARDE.md

@@ -1,5 +1,15 @@
 # Journal des versions de kalis_adapt
 
+## 0.2.1
+
+Lot CX du pipeline « Calibrage des programmes » (croisement avec `kalis_plan` 0.2.1). `kalis_core` 0.4.2.
+Le moteur d'évolution est inchangé ; seul le simulateur gagne une entrée.
+
+- **Changement de profil en cours de saison** (`simulation.dart`) : `simulate(changes: …)` applique un
+  `ProfileChange` au début d'une semaine (échéance avancée, par exemple) ; s'il le demande, le bloc en
+  cours s'arrête et le bloc suivant est écrit sur le profil changé. `SimRun.changes` garde la trace. Sans
+  `changes`, la simulation est identique à 0.2.0.
+
 ## 0.2.0
 
 Lot CA1 du pipeline « Calibrage des programmes » : faire évoluer un athlète street comme un coach qui le

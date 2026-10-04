@@ -33,6 +33,8 @@ Session Opus 5.5 lancée le 04/10/2026 vers 17:35 UTC. Base : `moteurs` ccde1ad2
 - kalis_plan : groupe de tests « CX — saison complète » (coach_test : pas de traction deux jours de suite en streetlifting et en répétitions, catégorie de poids puis transition, échelle de poussée, test mesuré plus bas qui fait foi).
 - `kalis_bench/tool/relecture/build_manche_saisons.py` (manche « saisons » de la page de relecture).
 
+- Versions : kalis_plan 0.2.1, kalis_adapt 0.2.1, kalis_bench 0.2.0 (version.dart, pubspec, CHANGELOG). Page de relecture étendue (rendu « Saison simulée » et « Scénario imposé ») : cx-outils/page/index.html.
+
 ## Reste à faire
 - Lire le contrôle dev, corriger la compilation ; passe 0 du panel sur les saisons (mesure avant).
 - Corrections du programme écrit (LANCEMENTS.md CX, points 1 à 7 ; C7.7 street_08 et street_14 ; remarques de la relecture documentée des manches 1 et 2 qui relèvent du programme).
