@@ -139,6 +139,14 @@ String? coachReasonText(Reason r, Catalog catalog) {
               'au premier essai lent ou déformé (jamais un effort '
               'maximal), le reste en descentes freinées et en tractions '
               'assistées.',
+        CoachNotes.entrySet =>
+          "Série d'entrée de reprise, aujourd'hui seulement : la première "
+              'série de cette ligne se fait jusqu\'à ${_int(v)} répétitions '
+              "de l'échec, à la place du chiffre écrit (départs au chrono : "
+              'une série avant, puis 3 min de repos). Note le total : ton '
+              'maximum de reprise = ce total + ${_int(v)}. S\'il est sous '
+              'le repère écrit, recalcule les séries de la semaine sur lui, '
+              'aux mêmes pourcentages.',
         CoachNotes.slowNegativePush =>
           'Pompe complète en descente freinée : ${_int(v)} s pour '
               'descendre, corps gainé de la tête aux talons, poitrine au '
@@ -160,21 +168,28 @@ String? coachReasonText(Reason r, Catalog catalog) {
               'plus de 3 à 4 répétitions, après 20 s de pause chacune ; '
               "chaque relance s'arrête avec une répétition en réserve. "
               'Rien de plus : ces relances comptent pour une série dure. '
-              'Pas de relance si le coude ou l\'épaule dépasse 2 sur 10.',
+              'Pas de relance si le coude ou l\'épaule dépasse le seuil '
+              'de ta règle de douleur.',
         CoachNotes.ambitious =>
-          'Objectif ambitieux : le gain demandé dépasse le rythme '
-              'habituel à ton niveau (environ +15 % en 12 semaines chez '
-              "un pratiquant entraîné). Le programme vise l'objectif, mais "
-              'un résultat de '
-              '${v is num ? v.round() ~/ 1000 : ''}'
-              '${v is num && v.round() % 1000 != v.round() ~/ 1000 ? ' à ${v.round() % 1000}' : ''} '
-              'au test final serait '
-              'déjà un bon cycle : ne force pas la forme pour y arriver. '
-              "Si le repère de mi-parcours n'est pas atteint, le plan "
-              "garde ses volumes et l'objectif se joue au cycle suivant.",
+          v is num && v < 2000
+              ? 'Objectif ambitieux : plusieurs tractions en partant de zéro '
+                    "sur ce programme, c'est possible, pas garanti. "
+                    '${v.round() % 1000 > 1 ? 'Une ou deux tractions propres' : 'Une première traction propre'} '
+                    'au test final serait déjà un très bon cycle : ne force '
+                    'pas la forme pour en faire plus.'
+              : 'Objectif ambitieux : le gain demandé dépasse le rythme '
+                    'habituel à ton niveau (environ +15 % en 12 semaines '
+                    "chez un pratiquant entraîné). Le programme vise "
+                    "l'objectif, mais un résultat de "
+                    '${v is num ? v.round() ~/ 1000 : ''} à '
+                    '${v is num ? v.round() % 1000 : ''} au test final '
+                    'serait déjà un bon cycle : ne force pas la forme pour '
+                    "y arriver. Si le repère de mi-parcours n'est pas "
+                    "atteint, le plan garde ses volumes et l'objectif se "
+                    'joue au cycle suivant.',
         CoachNotes.maxSetPlan =>
-          'Avant la série maximale : 2 séries faciles (un tiers, puis un '
-              'quart du maximum), 2 à 3 min de repos. Pendant : rythme '
+          'Avant la série maximale : 2 séries faciles (un quart, puis un '
+              'tiers du maximum), 2 à 3 min de repos. Pendant : rythme '
               'régulier dès le départ, souffle en haut de chaque '
               'répétition ; des pauses courtes en position de repos (bras '
               'tendus) si ton standard les autorise'
@@ -287,7 +302,8 @@ String? coachReasonText(Reason r, Catalog catalog) {
               'de ton 1RM complet : toujours avec butées de sécurité '
               'réglées juste sous la position de travail (barres dans une '
               'cage, ou box sous les pieds) ou avec parade. Retire '
-              "l'exercice si le coude ou l'épaule dépasse 2 sur 10.",
+              "l'exercice si le coude ou l'épaule dépasse le seuil de ta "
+              'règle de douleur.',
         CoachNotes.activation =>
           "Activation à l'avant-veille : deux séries faciles à ${_pct(v)} "
               'du maximum par atelier, pour garder le geste sans fatigue.',
@@ -493,8 +509,9 @@ String? coachReasonText(Reason r, Catalog catalog) {
               '+ 2,5 à 5 kg selon sa vitesse (99 à 102 %). Au moins 6 min '
               'entre deux tentatives ; échauffement à 40, 60, 75 puis 85 % '
               'avant la première ; après un essai manqué, la même barre ou '
-              '2,5 kg de moins. Si une zone à ménager dépasse 2 sur 10 '
-              'cette semaine-là, pas de troisième barre.',
+              '2,5 kg de moins. Si une zone à ménager dépasse le seuil de '
+              'ta règle de douleur cette semaine-là, pas de troisième '
+              'barre.',
         CoachNotes.opener =>
           "Rappel avant l'échéance : ${_pct(v)} du 1RM, une série de tête "
               'rapide et facile, sans forcer (le dernier lourd est derrière '
@@ -653,7 +670,8 @@ String? coachReasonText(Reason r, Catalog catalog) {
       return 'Reprise après une coupure (${gap is String ? _gap(gap) : ''}) '
           ': volume réduit de moitié et au moins 3 répétitions en réserve '
           'la première semaine, puis retour progressif (+10 à 15 % de '
-          'séries par semaine) ; les répétitions écrites partent de tes '
+          'séries par semaine les quatre premières semaines, +20 % au '
+          'plus ensuite) ; les répétitions écrites partent de tes '
           'anciens records réduits, jamais des records eux-mêmes — le '
           "test d'entrée et chaque test les recalent.";
     case ReasonCodes.planRecoveryProfile:
