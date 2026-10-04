@@ -133,7 +133,7 @@ final class AdaptParams {
     this.coachAssistStepShare = 0.75,
     this.coachAssistStepSd = 0.25,
     this.coachBackoffMinDrop = 0.05,
-    this.coachNewExerciseShare = 0.85,
+    this.coachNewExerciseShare = 0.6,
     this.coachOverloadFragileMax = 1.0,
     this.coachDirectGuardRir = 2,
     this.coachProbeDays = 14,

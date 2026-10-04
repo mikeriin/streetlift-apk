@@ -932,7 +932,13 @@ List<SetPlan>? _loadedPlans(
         kg = last;
         ex.heldCause = lockCause;
       } else {
-        final cap = grid.floor((markLoad + bw) * (1 + coachRiseOf(c, p)) - bw);
+        // (Exercice calé sur le 1RM d'un autre mouvement, encore sous la
+        // charge écrite : il la rejoint par paliers de 10 % au plus, 5 %
+        // sur une zone à antécédent — R5-P22.)
+        final rise = ownRef
+            ? coachRiseOf(c, p)
+            : (c.fragile ? p.maxUpMain / 2 : p.maxUpMain);
+        final cap = grid.floor((markLoad + bw) * (1 + rise) - bw);
         final step = grid.next(last, up: true);
         final ceiling = cap > step ? cap : step;
         if (kg > ceiling + 1e-9) {
@@ -959,7 +965,7 @@ List<SetPlan>? _loadedPlans(
     final step = grid.next(base, up: true);
     var bound = cap > step ? cap : step;
     final start = item.startLoadKg;
-    if (start != null && start > bound) {
+    if (ownRef && start != null && start > bound) {
       bound = start;
     }
     if (kg > bound + 1e-9) {
@@ -1070,14 +1076,6 @@ List<SetPlan>? _loadedPlans(
     // jusqu'à `coachTopProbeReps` de plus si la réserve visée le permet.
     final exact = track.exactDay;
     final probed = track.benchmarkDay;
-    ex.notes.add(
-      _r(ReasonCodes.adaptLoadHeld, <String, Object?>{
-        'cause':
-            'dbg p=$pilot l=$lockCause h=${ex.heldCause} '
-            'i=${c.policy.intent?.code} e=$exact b=$probed d=${run.day} '
-            'n=${lines.first}',
-      }),
-    );
     if (pilot &&
         lockCause == null &&
         ex.heldCause != 'failure' &&
@@ -1502,6 +1500,41 @@ List<SetPlan>? _directPlans(
   }
   if (!hold && share == null) {
     _probe(run, ex, c, item, served, out);
+  }
+  if (hold && item.kind != SetKind.test && out.isNotEmpty) {
+    // Tenue repère : quand le moteur sert moins que la durée écrite parce
+    // que son estimation du maintien maximal est basse et qu'aucune tenue
+    // ne l'a mesuré depuis `coachProbeDays`, la dernière tenue est
+    // ouverte jusqu'à la durée écrite par le bloc (jamais au-delà), arrêt
+    // avant la perte de position.
+    final (_, writtenHigh, _) = c.line(
+      out.length - 1,
+      sets,
+      served,
+      hold: true,
+    );
+    final exact = track.exactDay;
+    final probed = track.benchmarkDay;
+    final last = out.last;
+    if (!locked &&
+        !tendonCapped &&
+        c.policy.build &&
+        !c.eventNear &&
+        share == null &&
+        track.lastDay != null &&
+        last.high < writtenHigh &&
+        (exact == null || run.day - exact >= p.coachProbeDays) &&
+        (probed == null || run.day - probed >= p.coachProbeDays)) {
+      out[out.length - 1] = SetPlan(
+        loadKg: null,
+        low: last.high,
+        high: writtenHigh,
+        flames: flamesOfRir(2),
+        open: true,
+        benchmark: true,
+        role: last.role,
+      );
+    }
   }
   if (assisted && !hold && item.kind != SetKind.test && out.isNotEmpty) {
     // Assistance : quand une série a mesuré la capacité récemment et que

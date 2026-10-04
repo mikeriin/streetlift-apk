@@ -441,13 +441,8 @@ final class ExerciseRun {
   /// Échecs non prévus de la séance.
   int fails = 0;
 
-  /// Mode coach : une série de la séance a déjà été dite dure (moins de
-  /// `coachCensorRir` en réserve) ou manquée.
-  bool hardSeen = false;
-
-  /// Mode coach : une série de la séance a mesuré la capacité (échec,
-  /// série ouverte ou test près de l'échec, séries dures qui se
-  /// confirment).
+  /// Mode coach : une série de la séance a mesuré la capacité (série
+  /// ouverte ou test près de l'échec, répétitions manquantes).
   bool measured = false;
 
   /// Séries notées face à une cible.
@@ -1393,9 +1388,6 @@ final class SessionRun {
     if (unplanned) {
       run.fails++;
     }
-    if (failed) {
-      run.hardSeen = true;
-    }
     _noteEase(run, shown, flames, failed, target);
     run.observed.add(
       ObservedSet(
@@ -1531,9 +1523,6 @@ final class SessionRun {
     if (unplanned) {
       run.fails++;
     }
-    if (failed) {
-      run.hardSeen = true;
-    }
     _noteEase(run, shown, flames, failed, target);
     run.observed.add(
       ObservedSet(
@@ -1568,12 +1557,13 @@ final class SessionRun {
   }
 
   /// Mode coach : vrai si la série se lit comme une borne basse. Une série
-  /// à cible fixe, menée à bien et dite dure, ne mesure la capacité que si
-  /// une autre série de la séance l'a déjà dit (ou a manqué) : une note
-  /// isolée est trop peu sûre (erreur de 2,6 à 3,4 répétitions, Steele et
-  /// al. 2017 ; sous-estimation, Halperin et al. 2022). Des répétitions
-  /// qui manquent à la cible, une série ouverte arrêtée à la réserve
-  /// demandée, un test : mesures.
+  /// à cible fixe menée à bien ne mesure pas la capacité, quelle que soit
+  /// sa note : une note isolée est trop peu sûre (erreur de 2,6 à 3,4
+  /// répétitions, Steele et al. 2017 ; sous-estimation, Halperin et al.
+  /// 2022) — elle sert au conseil de la série suivante, pas à l'estimation.
+  /// Ce que l'athlète fait mesure : un échec, des répétitions qui manquent
+  /// à la cible avec une note dure, une série ouverte arrêtée à la réserve
+  /// demandée, un test.
   bool _asBound(
     ExerciseRun run,
     int flames,
@@ -1585,17 +1575,11 @@ final class SessionRun {
     if (_censored(flames, open)) {
       return true;
     }
-    if (open || test) {
-      run.measured = true;
-      return false;
-    }
     final short = target != null && amount < target.low;
-    if (short || run.hardSeen) {
-      run.hardSeen = true;
+    if (open || test || short) {
       run.measured = true;
       return false;
     }
-    run.hardSeen = true;
     return true;
   }
 

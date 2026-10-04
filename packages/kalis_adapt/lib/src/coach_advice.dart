@@ -275,8 +275,13 @@ CoachAdvice? _coachAdvise(
     final first = ex.observed.first.amount;
     final aimed = previous.target?.low ?? first;
     final reference = aimed < first ? aimed : first;
+    // (Une chute dite facile — au moins 3 en réserve — n'est pas de la
+    // fatigue : le bloc continue.)
+    final said = previous.flames;
+    final easy = !previous.failed && said != null && rirOfFlames(said) >= 3;
     if (reference - previous.amount >= repDrop &&
-        index >= (dropRule?.minSets ?? 1)) {
+        index >= (dropRule?.minSets ?? 1) &&
+        !easy) {
       return stop('rep_drop');
     }
   }
