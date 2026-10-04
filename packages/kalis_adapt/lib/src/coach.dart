@@ -778,8 +778,8 @@ List<SetPlan>? coachPlans(
   if (frozen) {
     lines = before;
   }
-  // Alerte de surmenage : deux séances mesurées de suite nettement sous la
-  // précédente — une semaine à volume réduit d'un tiers, intensité gardée
+  // Alerte de surmenage (mouvements principaux) : deux séances mesurées de
+  // suite nettement sous la précédente — une semaine à volume réduit (environ 40 % des lignes), intensité gardée
   // (hors semaines déjà allégées et tests).
   final p = run.ctx.params;
   final ease = track.easeDay;
@@ -789,6 +789,7 @@ List<SetPlan>? coachPlans(
       run.day > ease &&
       run.day - ease <= p.coachOverreachDays &&
       c.policy.build &&
+      ex.spec.main &&
       lines >= 2) {
     eased = (lines * p.coachOverreachCut).round();
     if (eased < 1) {

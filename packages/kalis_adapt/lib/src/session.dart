@@ -669,6 +669,10 @@ SessionPlan buildSessionPlan(
     if (coach != null) {
       final plans = coachPlans(run, exercise, item, d.sets);
       if (plans != null) {
+        if (plans.length > d.sets) {
+          // Séries fractionnées : plus de lignes, plus courtes.
+          d.sets = plans.length;
+        }
         exercise.plan = List<SetPlan?>.of(plans);
         d.plans = plans;
         d.coached = true;

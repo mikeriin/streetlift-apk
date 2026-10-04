@@ -235,7 +235,7 @@ String _overreachText(Reason r) {
   final ratio = _num(r, 'readiness') ?? 1;
   final drop = ((1 - ratio) * 100).round();
   return 'alerte de surmenage : performance en baisse deux séances '
-      'mesurées de suite (au moins −$drop %) — volume réduit d\'un tiers '
+      'mesurées de suite (au moins −$drop %) — volume réduit '
       'pendant une semaine, intensité gardée';
 }
 
@@ -802,8 +802,7 @@ String coachTrajectoryMarkdown(
             // Alerte de surmenage : dite une fois par mouvement et par
             // semaine.
             if (onceSaid.add('${it.exerciseId}|${r.code}|$w')) {
-              sessionNotes['${name(it.exerciseId)} : ${_overreachText(r)}'] =
-                  1;
+              sessionNotes['${name(it.exerciseId)} : ${_overreachText(r)}'] = 1;
             }
             continue;
           }
