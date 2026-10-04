@@ -1068,6 +1068,19 @@ void _addRepsPillar(
       stress: max < 8 ? DayStress.heavy : DayStress.medium,
       group: group,
     );
+    if (exerciseId == Ids.pull && max < 10 && !short && !spare) {
+      // Moins de dix tractions, sans lest : des descentes freinées après
+      // la séance de force, le levier de surcharge du tirage (R4-G2,
+      // R5-P8 : 3 à 5 s, 15 descentes au plus ; panel CX, boucle 1).
+      b.add(
+        d,
+        const <String>['sw-traction-negative'],
+        SlotRole.secondary,
+        Method.beginnerNegative,
+        sets: 2,
+        referenceId: Ids.pull,
+      );
+    }
     return;
   }
   b.add(
