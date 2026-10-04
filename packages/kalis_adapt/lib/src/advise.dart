@@ -80,6 +80,7 @@ SlotSpec _specOf(
     hasTarget: base.hasTarget,
     test: base.test,
     coach: base.coach,
+    coachRead: base.coachRead,
   );
 }
 

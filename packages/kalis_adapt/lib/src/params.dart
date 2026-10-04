@@ -133,10 +133,11 @@ final class AdaptParams {
     this.coachAssistStepShare = 0.75,
     this.coachAssistStepSd = 0.25,
     this.coachBackoffMinDrop = 0.05,
-    this.coachNewExerciseShare = 0.85,
+    this.coachNewExerciseShare = 0.6,
     this.coachOverloadFragileMax = 1.0,
     this.coachDirectGuardRir = 2,
     this.coachProbeDays = 14,
+    this.coachTopProbeReps = 3,
     this.coachLowDayRir = 3,
     this.coachBreakDays = 14,
     this.coachBreakSets = 0.8,
@@ -640,6 +641,10 @@ final class AdaptParams {
   /// notes au plafond « loin de l'échec ») au bout desquels la dernière
   /// série devient une série repère (APRE, Mann et al. 2010).
   final int coachProbeDays;
+
+  /// Mode coach : répétitions de plus que la série de tête écrite permises
+  /// à une série de tête repère (ouverte).
+  final int coachTopProbeReps;
 
   /// Mode coach : réserve minimale des séries un jour de bilan nettement
   /// bas.

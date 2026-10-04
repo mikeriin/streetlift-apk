@@ -241,6 +241,7 @@ final class BlockView {
       hasTarget: flames != null,
       test: test,
       coach: coach,
+      coachRead: coached,
     );
   }
 }

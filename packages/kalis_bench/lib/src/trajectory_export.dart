@@ -152,7 +152,7 @@ String? adaptReasonText(Reason r, Catalog catalog, {bool assisted = false}) {
           '${_n(_num(r, 'value') ?? 0, 1)} '
           '(± ${_n(_num(r, 'standardError') ?? 0, 1)})';
     case ReasonCodes.adaptBenchmarkSet:
-      return 'série repère : dernière série ouverte (au ressenti, '
+      return 'série repère : une série ouverte (au ressenti, '
           '${_n(_num(r, 'rir') ?? 0, 1)} en réserve) pour mesurer où en est '
           'l\'athlète';
     case ReasonCodes.adaptHealthLow:
@@ -187,12 +187,14 @@ String? adaptReasonText(Reason r, Catalog catalog, {bool assisted = false}) {
       return 'série manquée la dernière fois';
     case ReasonCodes.adaptFlamesAboveTarget:
       return assisted
-          ? 'un cran d\'assistance de plus (élastique plus épais) : la '
+          ? 'un cran d\'assistance de plus (élastique plus épais, plus '
+                'd\'appui) : la '
                 'plage ne laisse plus la réserve visée'
           : 'dernières séries plus dures que prévu';
     case ReasonCodes.adaptFlamesBelowTarget:
       return assisted
-          ? 'un cran d\'assistance de moins (élastique plus fin) : la série '
+          ? 'un cran d\'assistance de moins (élastique plus fin, moins '
+                'd\'appui) : la série '
                 'repère a montré ${_n(_num(r, 'delta') ?? 0, 0)} répétitions '
                 'de réserve de plus que visé'
           : 'dernières séries plus faciles que prévu';
@@ -569,8 +571,7 @@ String coachTrajectoryMarkdown(
       }
       // Décisions de la séance montrée (et conseils d'entre-séries).
       final notes = <String>[];
-      final assisted =
-          catalog.find(bestItem.exerciseId)?.loadType == LoadType.band;
+      final assisted = catalog.find(bestItem.exerciseId)?.assisted ?? false;
       void note(Reason r) {
         final text = adaptReasonText(r, catalog, assisted: assisted);
         if (text != null && !notes.contains(text)) {
@@ -708,7 +709,7 @@ String coachTrajectoryMarkdown(
         adjusted.putIfAbsent(key, () => <String>{}).add(id ?? '');
       }
       for (final it in s.plan.items) {
-        final band = catalog.find(it.exerciseId)?.loadType == LoadType.band;
+        final band = catalog.find(it.exerciseId)?.assisted ?? false;
         for (final r in it.reasons) {
           if (band &&
               (r.code == ReasonCodes.adaptFlamesBelowTarget ||

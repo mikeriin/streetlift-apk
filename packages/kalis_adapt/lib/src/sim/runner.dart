@@ -6,6 +6,7 @@ import 'package:kalis_core/kalis_core.dart';
 
 import '../apply.dart';
 import '../book.dart';
+import '../coach.dart' show blockCoached;
 import '../engine.dart';
 import '../filter.dart';
 import '../numeric.dart' show exp, ln;
@@ -630,8 +631,9 @@ SimRun simulate({
         // la capacité, que le moteur ne connaît pas.
         double? assistKg;
         if (rich &&
+            blockCoached(block) &&
             truth.mode == CapacityMode.reps &&
-            truth.info.exercise.loadType == LoadType.band) {
+            truth.info.exercise.assisted) {
           var notch = bandNotch[item.exerciseId] ?? 3;
           var change = 0;
           for (final r in item.reasons) {
@@ -654,6 +656,7 @@ SimRun simulate({
             final factor = change < 0 ? step : 1 / step;
             truth.capacity *= factor;
             truth.startCapacity *= factor;
+            truth.firstCapacity *= factor;
             notch += change;
           }
           bandNotch[item.exerciseId] = notch;
@@ -1063,13 +1066,12 @@ SimRun simulate({
               targetLow: low,
               targetHigh: high,
               steps: steps,
-              reachable:
-                  athlete.reachable(
-                    truth,
-                    basisLow ?? basisHigh ?? low,
-                    basisHigh ?? basisLow ?? high,
-                    Flames.toRir(flamesTarget),
-                  ),
+              reachable: athlete.reachable(
+                truth,
+                basisLow ?? basisHigh ?? low,
+                basisHigh ?? basisLow ?? high,
+                Flames.toRir(flamesTarget),
+              ),
               simDay: simDay,
               slotId: item.slotId,
               role: lineRole,
