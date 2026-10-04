@@ -266,8 +266,18 @@ abstract final class CoachNotes {
   /// Suivi de l'assiduité et du poids (`value` : séances par semaine).
   static const String tracking = 'tracking';
 
+  /// Catégorie de poids et pesée d'une épreuve de force (`value` : limite
+  /// de la catégorie en kg ; négative pour une catégorie « plus de »).
+  static const String weightClass = 'weight_class';
+
+  /// Format d'une épreuve de répétitions à saisir (`value` : repos entre
+  /// les ateliers supposé en attendant, en s).
+  static const String eventFormat = 'event_format';
+
   /// Tous les codes.
   static const List<String> all = <String>[
+    weightClass,
+    eventFormat,
     entrySet,
     slowNegativePush,
     roleForearm,
@@ -1495,7 +1505,17 @@ final class Prescriber {
         pct = 0.70;
         rir = 3;
       case WeekIntent.accumulation || WeekIntent.maintenance:
-        if (pct > 0.78) {
+        if (_level >= 2) {
+          // Avancé et élite : séries de 5 à 75 à 80 %, 2 à 3 répétitions en
+          // réserve (CX, panel : 6 répétitions à 72 % laissaient 5 à 6
+          // répétitions en réserve ; R2-P2, R1-P11).
+          reps = 5;
+          pct = 0.75 + 0.015 * stage;
+          if (pct > 0.80) {
+            pct = 0.80;
+          }
+          rir = 2;
+        } else if (pct > 0.78) {
           pct = 0.78;
         }
       case WeekIntent.intensification:
@@ -1619,22 +1639,34 @@ final class Prescriber {
         ws.intent == WeekIntent.intensification ||
         ws.intent == WeekIntent.realization;
     final partial = e.id.contains('partiel');
-    if (partial && ws.light) {
+    if (partial &&
+        (ws.light ||
+            ws.intent == WeekIntent.realization ||
+            (ws.weeksToEvent ?? 99) <= 4)) {
       // Semaine allégée : pas d'amplitude partielle surchargée (la charge
-      // la plus lourde du programme ne va pas dans un allègement).
+      // la plus lourde du programme ne va pas dans un allègement) ; ni
+      // dans les quatre dernières semaines avant l'échéance (CX : le pic
+      // se prépare sur le mouvement complet, R3-P13, et le coude n'a pas
+      // à porter la charge la plus lourde de la saison au moment du pic).
       return null;
     }
     // Amplitude partielle (verrouillage) : elle n'a de sens qu'au niveau
     // du 1RM complet et au-dessus (pratique de terrain, CALIBRAGE_CP1 C :
     // 100 à 110 %) — 105 % au plus quand le coude a un antécédent ; les
     // autres variantes restent sous le mouvement de compétition.
-    final top = partial ? (a.limitOn(Joint.elbow) != null ? 1.05 : 1.10) : 0.80;
+    // Coude à antécédent : 90 à 95 % du 1RM complet, jamais au-dessus (CX,
+    // panel : des charges supramaximales répétées sur l'extension du coude
+    // d'un athlète à antécédent, R5-P24).
+    final elbowHistory = a.limitOn(Joint.elbow) != null;
+    final top = partial ? (elbowHistory ? 0.95 : 1.10) : 0.80;
     // (Entrée graduée et monotone : 95 % la première semaine, +2,5 % par
     // semaine de charge, et chaque bloc repart du sommet du précédent ;
     // R5-P24.)
     final steps = stage > 2 ? 2 : stage;
     var pct = partial
-        ? 0.95 + 0.05 * (blockIndex > 2 ? 2 : blockIndex) + 0.025 * steps
+        ? (elbowHistory ? 0.90 : 0.95) +
+              0.05 * (blockIndex > 2 ? 2 : blockIndex) +
+              0.025 * steps
         : (intense ? 0.74 : 0.70) + 0.01 * stage;
     if (pct > top) {
       pct = top;
@@ -2337,13 +2369,17 @@ final class Prescriber {
     // s'allonge (6 puis 7 s, après 2 s tenues menton au-dessus de la
     // barre) à nombre de descentes égal — la progression vient du
     // contrôle, pas du nombre d'excentriques.
+    // CX (panel, saisons) : à partir du deuxième bloc, le nombre de
+    // descentes monte vers 3 × 5 de 5 s (R5-P8 ; R2-P17 : 3 à 5 × 3 à 5
+    // descentes de 3 à 5 s chez le débutant), au lieu d'allonger la
+    // descente à nombre égal — le plafond de 15 par séance reste.
     final stage = ws.stage;
     final push = x.e.id == 'sw-pompe-negative';
     final later = blockIndex > 0 && !push;
-    final seconds = later
-        ? (stage >= 2 ? 7 : 6)
-        : (push ? (stage >= 2 ? 4 : 3) : (stage >= 2 ? 5 : 4));
-    final reps = ws.light ? 2 : (later ? 3 : (stage >= 3 ? 4 : 3));
+    final seconds = later ? 5 : (push ? (stage >= 2 ? 4 : 3) : (stage >= 2 ? 5 : 4));
+    final reps = ws.light
+        ? 2
+        : (later ? (stage >= 2 ? 5 : 4) : (stage >= 3 ? 4 : 3));
     x
       // (Bloc suivant : trois séries un seul jour par semaine, deux
       // l'autre — une dizaine de séries de tirage vertical direct par
@@ -5252,6 +5288,33 @@ final class Prescriber {
 }
 
 /// Raisons du bloc : phase, échéance, lecture du profil, règles de douleur.
+/// Limites des catégories de poids d'une épreuve de streetlifting
+/// (règlement FinalRep, lu en partie le 04/10/2026), hommes puis femmes.
+const List<double> coachMenClasses = <double>[66, 73, 80, 87, 94, 101];
+
+/// Catégories des femmes.
+const List<double> coachWomenClasses = <double>[52, 57, 63, 70];
+
+/// Catégorie de poids d'un athlète de [bodyWeight] kg : la limite de la
+/// première catégorie qui le contient (tolérance de 0,1 kg), négative pour
+/// la catégorie ouverte ; `null` quand le sexe n'est pas dit.
+double? coachWeightClassOf(Sex? sex, double bodyWeight) {
+  final table = switch (sex) {
+    Sex.male => coachMenClasses,
+    Sex.female => coachWomenClasses,
+    _ => null,
+  };
+  if (table == null) {
+    return null;
+  }
+  for (final limit in table) {
+    if (bodyWeight <= limit + 0.1 + 1e-9) {
+      return limit;
+    }
+  }
+  return -table.last;
+}
+
 List<Reason> blockReasonsOf(Athlete a, Skeleton skeleton) {
   final shape = skeleton.shape;
   final target = shape.target;
@@ -5278,6 +5341,31 @@ List<Reason> blockReasonsOf(Athlete a, Skeleton skeleton) {
     ReasonCodes.planCoachNote,
     <String, Object?>{'note': code, 'value': value},
   );
+  // Épreuve de force : catégorie de poids et pesée (CX, correction 5 ;
+  // règlement FinalRep : catégories −66 à +101 kg chez l'homme, −52 à
+  // +70 kg chez la femme, pesée 2 h avant la première vague, tolérance de
+  // 0,1 kg). La catégorie déclarée prime ; sinon celle du poids actuel.
+  final event = target?.event;
+  if (event != null &&
+      event.kind == EventKind.strengthCompetition &&
+      (event.lifts ?? const <CompetitionLift>[]).isNotEmpty) {
+    final declared = event.weightClassKg;
+    final open = event.openWeightClass ?? false;
+    final limit = declared != null
+        ? (open ? -declared : declared)
+        : coachWeightClassOf(profile.sex, a.bodyWeight);
+    if (limit != null) {
+      out.add(note(CoachNotes.weightClass, limit));
+    }
+  }
+  // Épreuve de répétitions sans format connu : le dire, et dire ce que le
+  // programme suppose en attendant (aucun règlement unifié : CQ.6 ;
+  // recherche CX, boucle 0).
+  if (event != null &&
+      event.kind == EventKind.repsCompetition &&
+      event.formatKnown != true) {
+    out.add(note(CoachNotes.eventFormat, 300));
+  }
   // Objectif de répétitions au-dessus du rythme habituel (R4-G8 : environ
   // +15 % en 12 semaines chez un pratiquant entraîné) : on le dit, avec
   // une fourchette probable — l'objectif reste visé, mais un résultat

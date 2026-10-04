@@ -35,7 +35,11 @@ void main(List<String> args) {
     }
     copies.add('$out/$name');
   }
-  final result = Process.runSync('dart', <String>['format', ...copies]);
+  final result = Process.runSync('dart', <String>[
+    'format',
+    '--language-version=3.10',
+    ...copies,
+  ]);
   File('$out/format.txt')
     ..createSync(recursive: true)
     ..writeAsStringSync('${result.stdout}\n${result.stderr}');

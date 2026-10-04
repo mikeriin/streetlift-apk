@@ -95,6 +95,18 @@ CoachTarget? targetOf(AthleteProfile profile, CivilDate start) {
   );
 }
 
+/// Vrai si une échéance principale du profil a eu lieu dans les dix jours
+/// qui précèdent le [start] (la semaine qui suit l'épreuve).
+bool justAfterEvent(AthleteProfile profile, CivilDate start) {
+  for (final e in profile.events ?? const <SeasonEvent>[]) {
+    final days = e.date.daysUntil(start);
+    if (e.priority == EventPriority.main && days >= 1 && days <= 10) {
+      return true;
+    }
+  }
+  return false;
+}
+
 /// Modèle de saison.
 enum SeasonModel {
   /// Débutant : progression linéaire, test en fin de bloc (R3-P2).
@@ -289,8 +301,14 @@ BlockShape shapeBlock(
           ? 6
           : blockLengthFor(toEvent, blockPreferences(a.level)));
   final finalBlock = toEvent != null && toEvent <= length;
-  final first = blockIndex == 0;
-  final reintroduction = first && a.gapWeeks >= 3;
+  // Bloc qui suit de près une épreuve principale (CX : panel, saisons
+  // croisées) : sa première semaine est une transition active (volume
+  // −50 %, effort loin de l'échec, R3-P19 ; Pritchard et al. 2016, les
+  // athlètes de force reprennent après quelques jours de repos relatif),
+  // la deuxième une semaine d'introduction.
+  final recovering = blockIndex > 0 && justAfterEvent(a.profile, start);
+  final first = blockIndex == 0 || recovering;
+  final reintroduction = blockIndex == 0 && a.gapWeeks >= 3;
   final weeks = <WeekSpec>[];
 
   int? left(int i) => toEvent == null ? null : toEvent - i;
@@ -613,6 +631,17 @@ BlockShape shapeBlock(
           }
         }
       }
+  }
+  if (recovering && weeks.length >= 3 && !weeks.first.eventWeek) {
+    final w0 = weeks.first;
+    weeks[0] = WeekSpec(
+      kind: WeekKind.deload,
+      intent: WeekIntent.transition,
+      phase: SeasonPhaseKind.transition,
+      volume: 0.5,
+      stage: 0,
+      weeksToEvent: w0.weeksToEvent,
+    );
   }
   return BlockShape(
     model: model,

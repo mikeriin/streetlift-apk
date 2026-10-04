@@ -23,6 +23,11 @@ Session Opus 5.5 lancée le 04/10/2026 vers 17:35 UTC. Base : `moteurs` ccde1ad2
 - kalis_core 0.4.2 (catalog.dart) : `feasibleAt`, `placeBoundEquipment` (mur : maison, salle), `equipmentAlternatives` (pompe inclinée, pike pieds surélevés), `homeFurnitureExercises` ; version 0.4.2 (pubspec, version.dart, parcours_spec.py, parcours_v3.json régénéré ; tests Python 86 verts). Utilisé par kalis_plan (athlete.dart rejection).
 - Recherche boucle 0 : cx-outils/docs/recherche_boucle0.md (FinalRep : catégories, pesée 2 h, ordre ; sets & reps sans règlement unifié ; isométrie ≥ 70 % ; flexed-arm hang : lien faible ; affûtage Pritchard).
 
+## Étape 19:15 UTC : passe 0 faite, boucle 1 en contrôle
+- Contrôle dev run 37222464508 (3cfa0a26) : banc des saisons compile ; formatage seul en échec (aa_fmt corrigé : --language-version=3.10 ; fmtsync.py ne recopie que les fichiers inchangés depuis le push).
+- Passe 0 (68 couples, saisons des moteurs 0.2.0) : 1/68 à 9, minimum 4,5, moyenne 7,01 ; notes : cx-outils/notes/p0.json ; tableau et familles : packages/kalis_bench/docs/CALIBRAGE_CX.md.
+- Boucle 1 écrite et poussée en dev (43426224) : estimations du résumé d'adaptation (Athlete.read `estimates`, vers le bas seulement) et douleurs (`adaptationPains`) dans le bloc suivant ; transition après une épreuve principale (`justAfterEvent`) ; tirage non consécutif (reps : avancé jusqu'à 3 jours ; streetlifting : volume et séance légère à 48 h) ; partielles : coude à antécédent 90-95 %, retirées les 4 dernières semaines ; négatives du débutant 3 × 4-5 de 5 s ; volume lesté avancé 5 × 75-80 % ; pas d'étape suivante quand l'étape actuelle est écartée ; texte already_applied ; notes weight_class et event_format.
+
 ## Reste à faire
 - Lire le contrôle dev, corriger la compilation ; passe 0 du panel sur les saisons (mesure avant).
 - Corrections du programme écrit (LANCEMENTS.md CX, points 1 à 7 ; C7.7 street_08 et street_14 ; remarques de la relecture documentée des manches 1 et 2 qui relèvent du programme).
