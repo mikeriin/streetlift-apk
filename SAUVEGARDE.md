@@ -37,3 +37,8 @@ Notes d'ensemble [force, calisthénie, hypertrophie, santé | relecture document
 13 [6,6,7,6|5] 14 [7,5.5,6,6.5|6] 15 [6.5,6.5,7,6.5|6] 16 [8,8,8,8|7] 17 [7,7,6.5,6|5]
 Panel : min 4, moyenne ≈ 6,9 ; relecture documentée : min 4, moyenne ≈ 5,8. Quota de recherches web de la session épuisé (200/200) pendant la relecture documentée.
 Notes complètes : /home/claude/cp1/panel/p0 (all.json, corrections.txt).
+
+## Boucle 1 (04/10/2026)
+Corrections : trajectoire prévue vers l'objectif, densité plafonnée, poussée en entretien, tirage horizontal gardé, tests visés, tentatives vers l'objectif, course (allures, test chronométré), débutant (négatives, tenue menton, marche), figures (étapes prévues, budget poignet, force regroupée), reprise, coude, textes des règles.
+Panel [force, cali, hyper, santé] : 01 [7,8,7,8] 02 [9,7.5,9,8] 03 [7,7,7,7] 04 [7,8,8,5] 05 [8,8,8,8] 06 [9,9,9,8] 07 [8,7,8,8] 08 [8,7,7,8] 09 [8,8,8,8] 10 [5,5,5,5] 11 [8,8,9,9] 12 [9,7,9,9] 13 [8,8,9,9] 14 [8,7,8,8] 15 [9,8,9,8] 16 [7.5,7,8,8] 17 [8,7,8,8] — min 5, moyenne 7,76.
+Relecture documentée : 01 6, 02 7, 03 6, 04 7, 05 6, 06 7, 11 7, 12 6, 13 6, 14 7, 15 7, 17 6, 07 7, 08 6, 16 7, 09 7, 10 5 — min 5, moyenne 6,5.

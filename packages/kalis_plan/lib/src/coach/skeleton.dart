@@ -1670,6 +1670,9 @@ void _buildLifting(_Builder b, Set<int> runDays) {
         SlotRole.accessory,
         Method.accessoryCompound,
         sets: lean ? 2 : (hasPull ? 3 : 4),
+        // Coude à ménager : le tirage horizontal en prise neutre porte le
+        // tirage de la semaine, il est gardé.
+        keep: spareElbow,
       );
     } else if (!hasSquat) {
       b.add(d, rowPick, SlotRole.accessory, Method.accessoryCompound, sets: 3);

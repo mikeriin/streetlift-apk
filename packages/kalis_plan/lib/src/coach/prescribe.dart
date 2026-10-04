@@ -1551,7 +1551,11 @@ final class Prescriber {
       ..repsLow = reps
       ..repsHigh = reps
       // La réserve écrite est la vraie : maximum moins répétitions.
-      ..rir = _rirOf(e, max <= 0 ? 3 : (max - reps).toDouble(), ws, week)
+      // (Pas de bonus d'introduction ici : les répétitions ne changent pas,
+      // l'étiquette non plus.)
+      ..rir = max <= 0
+          ? _rirOf(e, 3, ws, week)
+          : (max - reps > 4 ? 4.0 : (max - reps).toDouble())
       ..rest = 150
       ..practice = true
       ..reasons.add(_note(CoachNotes.qualityFirst, 4));
@@ -1872,7 +1876,16 @@ final class Prescriber {
     if (factor < 1 && sets > 2) {
       sets = _round(sets * factor);
     }
-    // Jamais une série isolée d'assistance : deux, ou rien.
+    // Jamais une série isolée d'assistance : deux, ou rien. En reprise,
+    // tant que le volume est sous les trois quarts, l'assistance attend
+    // (l'essentiel d'abord, R5-P7).
+    if (sets < 2 &&
+        ws.phase == SeasonPhaseKind.reintroduction &&
+        ws.volume < 0.75 &&
+        !s.keep &&
+        !prehab) {
+      return null;
+    }
     x
       ..sets = sets < 2 ? 2 : sets
       ..minSets = 2;
@@ -3443,7 +3456,8 @@ final class Prescriber {
     // une semaine d'échéance trop vide désentraîne. Sous 36 % du pic, les
     // rappels des jours éloignés de l'épreuve reprennent une série (trois
     // au plus), le travail le plus spécifique d'abord.
-    final floor = peak * 0.36;
+    final floor =
+        peak * (_shape.model == SeasonModel.repsPeak ? 0.37 : 0.42);
     final closed = <_Draft>{};
     while (guard < 60) {
       guard++;

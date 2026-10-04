@@ -270,7 +270,7 @@ String notesText(ItemView i, Catalog catalog) {
     notes.add('ÉPREUVE');
   } else if (p.kind == SetKind.calibration) {
     notes.add('série de calibrage');
-  } else if (p.kind == SetKind.warmup) {
+  } else if (p.kind == SetKind.warmup && !notes.contains('échauffement')) {
     notes.add('échauffement');
   }
   final format = p.format;
