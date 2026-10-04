@@ -1,0 +1,288 @@
+== kalis_plan
+Resolving dependencies...
+Downloading packages...
+  lints 4.0.0 (6.1.0 available)
+Got dependencies!
+1 package has newer versions incompatible with dependency constraints.
+Try `dart pub outdated` for more information.
+Formatted 44 files (0 changed) in 0.35 seconds.
+Analyzing kalis_plan...
+No issues found!
+00:00 +0: loading test/units_test.dart
+00:00 +0: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:00 +1: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:00 +2: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:00 +3: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:00 +4: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:00 +5: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:00 +6: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:00 +7: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:00 +8: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:00 +9: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:00 +10: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:00 +11: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:00 +12: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:00 +13: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:00 +14: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:00 +15: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:00 +16: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:00 +17: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:00 +18: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:04 +19: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:05 +20: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:05 +21: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:05 +22: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:05 +23: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:05 +24: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:05 +25: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:05 +26: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:05 +26 -1: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:05 +26 -1: test/coach_test.dart: saison et échéance relecture : aucun manquement [E]
+  Expected: empty
+    Actual: [
+              'bloc 1 s0 j3 : sl-traction-lestee +7.1 %',
+              'bloc 1 s0 j3 : sl-dips-leste +8.2 %',
+              'bloc 2 s0 j3 : sl-traction-lestee +7.1 %',
+              'bloc 2 s0 j3 : sl-dips-leste +8.2 %'
+            ]
+  
+  package:matcher             expect
+  test/coach_test.dart 344:7  main.<fn>.<fn>
+  
+00:05 +27 -1: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:05 +28 -1: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:06 +29 -1: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:06 +30 -1: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:06 +31 -1: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:06 +32 -1: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:06 +33 -1: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:06 +34 -1: test/coach_test.dart: déterminisme et budgets même requête, même JSON
+00:06 +35 -1: test/docs_test.dart: docs/COMPARAISON_L10.md est à jour
+00:07 +36 -1: test/docs_test.dart: docs/COMPARAISON_L10.md est à jour
+00:08 +37 -1: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 0 à 159
+00:08 +38 -1: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 0 à 159
+00:15 +39 -1: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 0 à 159
+00:20 +39 -2: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 0 à 159
+00:20 +39 -2: test/coach_properties_0_test.dart: chemin street, profils 0 à 1279 profils 0 à 159 [E]
+  Expected: empty
+    Actual: [
+              'profil 94 — relecture (deux blocs) : bloc 1 s0 j0 : sl-traction-lestee +6.6 %',
+              'profil 94 — relecture (deux blocs) : bloc 1 s0 j2 : sl-traction-lestee +7.3 %',
+              'profil 94 — relecture (deux blocs) : bloc 1 s0 j3 : sl-muscle-up-leste +7.7 %',
+              'profil 94 — relecture (deux blocs) : bloc 1 s0 j5 : sl-muscle-up-leste +8.9 %',
+              'profil 94 — relecture (deux blocs) : bloc 1 s0 j5 : sl-traction-lestee +7.5 %',
+              'profil 106 — relecture (deux blocs) : bloc 1 s0 j4 : sl-dips-leste +9.1 %'
+            ]
+  6 manquement(s)
+  
+  package:matcher                   expect
+  test/coach_properties.dart 515:9  coachPropertyShard.<fn>.<fn>
+  
+00:22 +39 -3: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 0 à 159
+00:22 +39 -3: test/coach_properties_0_test.dart: chemin street, profils 0 à 1279 profils 160 à 319 [E]
+  Expected: empty
+    Actual: [
+              'profil 174 — relecture (deux blocs) : bloc 1 s0 j4 : sl-dips-leste +8.9 %',
+              'profil 198 — relecture (deux blocs) : bloc 1 s0 j0 : sl-traction-lestee +7.2 %',
+              'profil 198 — relecture (deux blocs) : bloc 1 s0 j0 : sl-squat-competition +7.0 %',
+              'profil 198 — relecture (deux blocs) : bloc 1 s0 j3 : sl-traction-lestee +7.2 %',
+              'profil 206 — relecture (deux blocs) : bloc 1 s0 j0 : sl-dips-leste +7.2 %',
+              'profil 206 — relecture (deux blocs) : bloc 1 s0 j2 : sl-traction-lestee +8.5 %',
+              'profil 214 — relecture (deux blocs) : bloc 1 s0 j3 : sl-traction-lestee +9.6 %',
+              'profil 226 — relecture (deux blocs) : bloc 1 s0 j1 : sl-squat-competition +10.0 %',
+              'profil 238 — relecture (deux blocs) : bloc 1 s0 j0 : sl-dips-leste +9.8 %',
+              'profil 246 — relecture : bloc 0 s2 j2 : sl-dips-leste +6.6 %',
+              'profil 246 — relecture (deux blocs) : bloc 0 s2 j2 : sl-dips-leste +6.6 %',
+              'profil 246 — relecture (deux blocs) : bloc 1 s0 j0 : sl-dips-leste +9.3 %',
+              'profil 246 — relecture (deux blocs) : bloc 1 s0 j2 : sl-dips-leste +9.3 %',
+              'profil 246 — relecture (deux blocs) : bloc 1 s0 j4 : sl-dips-leste +7.5 %',
+              'profil 274 — relecture (deux blocs) : bloc 1 s0 j1 : sl-dips-leste +10.0 %',
+              'profil 290 — relecture (deux blocs) : bloc 1 s0 j2 : sl-squat-competition +7.7 %',
+              'profil 302 — relecture (deux blocs) : bloc 1 s0 j0 : sl-traction-lestee +8.2 %',
+              'profil 302 — relecture (deux blocs) : bloc 1 s0 j0 : sl-dips-leste +6.6 %',
+              'profil 302 — relecture (deux blocs) : bloc 1 s0 j1 : sl-traction-lestee +8.2 %',
+              'profil 306 — relecture (deux blocs) : bloc 1 s0 j1 : sl-traction-lestee +10.4 %',
+              'profil 306 — relecture (deux blocs) : bloc 1 s0 j1 : sl-dips-leste +10.0 %',
+              'profil 306 — relecture (deux blocs) : bloc 1 s0 j3 : sl-traction-lestee +10.4 %',
+              'profil 306 — relecture (deux blocs) : bloc 1 s0 j3 : sl-dips-leste +10.0 %',
+              'profil 318 — relecture (deux blocs) : bloc 1 s0 j2 : sl-dips-leste +9.0 %',
+              'profil 318 — relecture (deux blocs) : bloc 1 s0 j3 : sl-dips-leste +7.5 %'
+            ]
+  25 manquement(s)
+  
+  package:matcher                   expect
+  test/coach_properties.dart 515:9  coachPropertyShard.<fn>.<fn>
+  
+00:24 +39 -4: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 0 à 159
+00:24 +39 -4: test/coach_properties_0_test.dart: chemin street, profils 0 à 1279 profils 320 à 479 [E]
+  Expected: empty
+    Actual: ['profil 350 — relecture (deux blocs) : bloc 1 s0 j4 : sl-dips-leste +9.0 %']
+  1 manquement(s)
+  
+  package:matcher                   expect
+  test/coach_properties.dart 515:9  coachPropertyShard.<fn>.<fn>
+  
+00:25 +40 -4: test/coach_properties_0_test.dart: chemin street, profils 0 à 1279 profils 480 à 639
+00:26 +40 -5: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 160 à 319
+00:26 +40 -5: test/coach_properties_0_test.dart: chemin street, profils 0 à 1279 profils 480 à 639 [E]
+  Expected: empty
+    Actual: [
+              'profil 546 — relecture (deux blocs) : bloc 1 s0 j0 : sl-dips-leste +10.0 %',
+              'profil 546 — relecture (deux blocs) : bloc 1 s0 j0 : sl-squat-competition +7.7 %',
+              'profil 546 — relecture (deux blocs) : bloc 1 s0 j1 : sl-dips-leste +10.0 %',
+              'profil 554 — relecture (deux blocs) : bloc 1 s0 j1 : sl-squat-competition +9.1 %',
+              'profil 570 — relecture (deux blocs) : bloc 1 s0 j0 : sl-dips-leste +9.0 %',
+              'profil 574 — relecture (deux blocs) : bloc 1 s0 j2 : sl-traction-lestee +8.7 %',
+              'profil 618 — relecture (deux blocs) : bloc 1 s0 j2 : sl-dips-leste +8.1 %',
+              'profil 638 — relecture (deux blocs) : bloc 1 s0 j2 : sl-dips-leste +10.4 %'
+            ]
+  8 manquement(s)
+  
+  package:matcher                   expect
+  test/coach_properties.dart 515:9  coachPropertyShard.<fn>.<fn>
+  
+00:28 +40 -6: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 160 à 319
+00:28 +40 -6: test/coach_properties_0_test.dart: chemin street, profils 0 à 1279 profils 640 à 799 [E]
+  Expected: empty
+    Actual: [
+              'profil 646 — relecture (deux blocs) : bloc 1 s0 j3 : sl-traction-lestee +10.8 %',
+              'profil 646 — relecture (deux blocs) : bloc 1 s0 j3 : sl-dips-leste +7.5 %',
+              'profil 654 — relecture (deux blocs) : bloc 1 s0 j0 : sl-dips-leste +9.6 %',
+              'profil 654 — relecture (deux blocs) : bloc 1 s0 j3 : sl-traction-lestee +9.0 %',
+              'profil 654 — relecture (deux blocs) : bloc 1 s0 j3 : sl-dips-leste +8.6 %',
+              'profil 702 — relecture (deux blocs) : bloc 1 s0 j1 : sl-dips-leste +7.2 %',
+              'profil 702 — relecture (deux blocs) : bloc 1 s0 j5 : sl-dips-leste +7.2 %',
+              'profil 726 — relecture (deux blocs) : bloc 1 s0 j1 : sl-traction-lestee +8.8 %',
+              'profil 746 — relecture (deux blocs) : bloc 1 s0 j0 : sl-traction-lestee +6.2 %',
+              'profil 746 — relecture (deux blocs) : bloc 1 s0 j2 : sl-traction-lestee +7.0 %',
+              'profil 746 — relecture (deux blocs) : bloc 1 s0 j4 : sl-traction-lestee +8.1 %',
+              'profil 787 — relecture : bloc 0 s3 j1 : sl-squat-competition +11.1 %',
+              'profil 790 — relecture (deux blocs) : bloc 1 s0 j0 : sl-dips-leste +9.6 %',
+              'profil 790 — relecture (deux blocs) : bloc 1 s0 j2 : sl-traction-lestee +10.8 %',
+              'profil 790 — relecture (deux blocs) : bloc 1 s0 j2 : sl-dips-leste +8.6 %',
+              'profil 790 — relecture (deux blocs) : bloc 1 s0 j3 : sl-traction-lestee +8.3 %',
+              'profil 790 — relecture (deux blocs) : bloc 1 s0 j3 : sl-dips-leste +7.7 %'
+            ]
+  17 manquement(s)
+  
+  package:matcher                   expect
+  test/coach_properties.dart 515:9  coachPropertyShard.<fn>.<fn>
+  
+00:30 +40 -7: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 160 à 319
+00:30 +40 -7: test/coach_properties_0_test.dart: chemin street, profils 0 à 1279 profils 800 à 959 [E]
+  Expected: empty
+    Actual: [
+              'profil 810 — relecture (deux blocs) : bloc 1 s0 j0 : sl-dips-leste +9.9 %',
+              'profil 810 — relecture (deux blocs) : bloc 1 s0 j1 : sl-dips-leste +8.1 %',
+              'profil 810 — relecture (deux blocs) : bloc 1 s0 j3 : sl-dips-leste +8.8 %',
+              'profil 822 — relecture (deux blocs) : bloc 1 s0 j0 : sl-dips-leste +10.5 %',
+              'profil 822 — relecture (deux blocs) : bloc 1 s0 j2 : sl-dips-leste +10.5 %',
+              'profil 826 — relecture (deux blocs) : bloc 1 s0 j0 : sl-dips-leste +5.3 %',
+              'profil 830 — relecture (deux blocs) : bloc 1 s0 j4 : sl-dips-leste +9.7 %',
+              'profil 862 — relecture (deux blocs) : bloc 1 s0 j1 : sl-squat-competition +8.9 %',
+              'profil 862 — relecture (deux blocs) : bloc 1 s0 j3 : sl-squat-competition +8.9 %',
+              'profil 878 — relecture (deux blocs) : bloc 1 s0 j2 : sl-traction-lestee +9.3 %',
+              'profil 878 — relecture (deux blocs) : bloc 1 s0 j3 : sl-traction-lestee +7.7 %',
+              'profil 882 — relecture (deux blocs) : bloc 1 s0 j1 : sl-traction-lestee +9.1 %',
+              'profil 898 — relecture (deux blocs) : bloc 1 s0 j0 : sl-dips-leste +8.5 %',
+              'profil 898 — relecture (deux blocs) : bloc 1 s0 j2 : sl-dips-leste +8.5 %',
+              'profil 914 — relecture (deux blocs) : bloc 1 s0 j1 : sl-dips-leste +8.7 %',
+              'profil 914 — relecture (deux blocs) : bloc 1 s0 j3 : sl-dips-leste +8.7 %'
+            ]
+  16 manquement(s)
+  
+  package:matcher                   expect
+  test/coach_properties.dart 515:9  coachPropertyShard.<fn>.<fn>
+  
+00:31 +40 -8: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 160 à 319
+00:31 +40 -8: test/coach_properties_0_test.dart: chemin street, profils 0 à 1279 profils 960 à 1119 [E]
+  Expected: empty
+    Actual: [
+              'profil 962 — relecture (deux blocs) : bloc 1 s0 j1 : sl-squat-competition +9.5 %',
+              'profil 982 — relecture (deux blocs) : bloc 1 s0 j0 : sl-dips-leste +7.2 %',
+              'profil 982 — relecture (deux blocs) : bloc 1 s0 j2 : sl-dips-leste +6.4 %',
+              'profil 1014 — relecture (deux blocs) : bloc 1 s0 j2 : sl-traction-lestee +8.0 %',
+              'profil 1014 — relecture (deux blocs) : bloc 1 s0 j3 : sl-dips-leste +8.5 %',
+              'profil 1022 — relecture (deux blocs) : bloc 1 s0 j3 : sl-traction-lestee +7.4 %',
+              'profil 1022 — relecture (deux blocs) : bloc 1 s0 j3 : sl-dips-leste +7.1 %',
+              'profil 1062 — relecture (deux blocs) : bloc 1 s0 j3 : sl-traction-lestee +9.7 %',
+              'profil 1062 — relecture (deux blocs) : bloc 1 s0 j4 : sl-dips-leste +8.7 %',
+              'profil 1090 — relecture (deux blocs) : bloc 1 s0 j0 : sl-dips-leste +7.3 %',
+              'profil 1090 — relecture (deux blocs) : bloc 1 s0 j2 : sl-dips-leste +9.0 %',
+              'profil 1114 — relecture (deux blocs) : bloc 1 s0 j1 : sl-traction-lestee +7.6 %',
+              'profil 1114 — relecture (deux blocs) : bloc 1 s0 j3 : sl-traction-lestee +10.3 %'
+            ]
+  13 manquement(s)
+  
+  package:matcher                   expect
+  test/coach_properties.dart 515:9  coachPropertyShard.<fn>.<fn>
+  
+00:33 +40 -9: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 160 à 319
+00:33 +40 -9: test/coach_properties_0_test.dart: chemin street, profils 0 à 1279 profils 1120 à 1279 [E]
+  Expected: empty
+    Actual: [
+              'profil 1122 — relecture (deux blocs) : bloc 1 s0 j1 : sl-squat-competition +11.8 %',
+              'profil 1126 — relecture (deux blocs) : bloc 1 s0 j3 : sl-dips-leste +8.6 %',
+              'profil 1134 — relecture (deux blocs) : bloc 1 s0 j2 : sl-squat-competition +10.7 %',
+              'profil 1134 — relecture (deux blocs) : bloc 1 s0 j5 : sl-squat-competition +10.7 %',
+              'profil 1146 — relecture (deux blocs) : bloc 1 s0 j3 : sl-traction-lestee +11.0 %'
+            ]
+  5 manquement(s)
+  
+  package:matcher                   expect
+  test/coach_properties.dart 515:9  coachPropertyShard.<fn>.<fn>
+  
+00:39 +41 -9: test/engine_test.dart: déterminisme même requête, même JSON, quelle que soit l'instance
+00:49 +42 -9: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 320 à 479
+00:51 +43 -9: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 320 à 479
+00:51 +44 -9: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 320 à 479
+00:53 +45 -9: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+00:56 +46 -9: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 480 à 639
+00:57 +47 -9: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 480 à 639
+00:57 +48 -9: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 480 à 639
+00:57 +49 -9: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 480 à 639
+00:58 +50 -9: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 480 à 639
+00:58 +51 -9: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 480 à 639
+00:58 +52 -9: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 480 à 639
+00:58 +53 -9: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 480 à 639
+01:01 +54 -9: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 480 à 639
+01:07 +55 -9: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 480 à 639
+01:09 +56 -9: test/admission_test.dart: 600 profils aléatoires : mode prudent et exercices réservés relus sans le vivier
+01:21 +57 -9: test/admission_test.dart: 600 profils aléatoires : mode prudent et exercices réservés relus sans le vivier
+01:35 +58 -9: test/admission_test.dart: 600 profils aléatoires : mode prudent et exercices réservés relus sans le vivier
+01:37 +59 -9: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 960 à 1119
+01:37 +60 -9: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 960 à 1119
+01:37 +61 -9: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 960 à 1119
+01:37 +62 -9: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 960 à 1119
+01:37 +63 -9: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 960 à 1119
+01:37 +64 -9: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 960 à 1119
+01:37 +65 -9: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 960 à 1119
+01:37 +66 -9: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 960 à 1119
+01:37 +67 -9: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 960 à 1119
+01:37 +68 -9: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 960 à 1119
+01:37 +69 -9: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 960 à 1119
+01:37 +70 -9: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 960 à 1119
+01:37 +71 -9: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 960 à 1119
+01:37 +72 -9: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 960 à 1119
+01:38 +73 -9: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 960 à 1119
+01:38 +74 -9: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 960 à 1119
+01:38 +75 -9: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 960 à 1119
+01:38 +76 -9: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 960 à 1119
+01:38 +77 -9: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 960 à 1119
+01:44 +78 -9: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 960 à 1119
+01:50 +79 -9: test/resemblance_test.dart: 600 profils aléatoires : ressemblance sous le seuil, aucun accessoire propre au propriétaire sur-représenté sans discipline street
+02:02 +80 -9: test/resemblance_test.dart: 600 profils aléatoires : ressemblance sous le seuil, aucun accessoire propre au propriétaire sur-représenté sans discipline street
+02:14 +81 -9: Some tests failed.
+
+Failing tests:
+  test/coach_properties_0_test.dart: chemin street, profils 0 à 1279 profils 0 à 159
+  test/coach_properties_0_test.dart: chemin street, profils 0 à 1279 profils 1120 à 1279
+  test/coach_properties_0_test.dart: chemin street, profils 0 à 1279 profils 160 à 319
+  test/coach_properties_0_test.dart: chemin street, profils 0 à 1279 profils 320 à 479
+  ... and 5 more
+
+Consider enabling the flag chain-stack-traces to receive more detailed exceptions.
+For example, 'dart test --chain-stack-traces'.
+tests : échec
+kalis_plan 0.2.0 : rapport écrit dans /home/runner/work/streetlift-apk/streetlift-apk/out-packages/kalis_plan (164 s).
+durée : 310 s
