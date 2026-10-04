@@ -79,16 +79,23 @@ CoachAdvice? coachAdvise(
   SkillBoard? skills,
 ) {
   final advice = _coachAdvise(run, ex, index, sessionItem, skills);
-  if (advice == null || advice.action == IntraSessionAction.stopExercise) {
+  if (advice == null) {
     return advice;
   }
   final clamped = clampLocked(run, ex, advice.next);
   if (clamped == null) {
     return advice;
   }
-  final held = CoachAdvice(next: clamped, action: IntraSessionAction.keep)
-    ..miniSetsLeft = advice.miniSetsLeft
-    ..stepExerciseId = advice.stepExerciseId;
+  // (Un arrêt reste un arrêt ; la cible rendue avec lui tient les verrous.)
+  final held =
+      CoachAdvice(
+          next: clamped,
+          action: advice.action == IntraSessionAction.stopExercise
+              ? IntraSessionAction.stopExercise
+              : IntraSessionAction.keep,
+        )
+        ..miniSetsLeft = advice.miniSetsLeft
+        ..stepExerciseId = advice.stepExerciseId;
   held.reasons.addAll(advice.reasons);
   return held;
 }
@@ -286,9 +293,11 @@ CoachAdvice? _coachAdvise(
     if (g < 0) {
       g = 0;
     }
+    // (Maintien : une tenue plus courte que prévu ne compte que si elle
+    // est dite dure ; c'est la propreté qui arrête les tenues.)
     final aimed = o.target?.low;
-    if (aimed != null && o.amount < aimed) {
-      g += hold ? (aimed - o.amount) / (0.1 * aimed) : aimed - o.amount;
+    if (!hold && aimed != null && o.amount < aimed) {
+      g += aimed - o.amount;
     }
     return g;
   }

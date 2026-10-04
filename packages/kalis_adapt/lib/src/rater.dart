@@ -13,30 +13,11 @@ final class RatingModel {
     window.addAll(o.window);
     bias = o.bias;
     biasNotes = o.biasNotes;
-    topSaid = o.topSaid;
   }
 
-  /// Mode coach : plus grande réserve dite jusqu'ici par une note fermée
-  /// (de 2 à 9 flammes), ou `null`. Une personne ne sait pas dire plus
-  /// qu'un certain nombre de répétitions en réserve : sa note la plus
-  /// haute se lit comme « au moins tant ».
-  double? topSaid;
-
-  /// Note une réserve dite [rir] par une note fermée.
-  void noteSaid(double rir) {
-    final top = topSaid;
-    if (top == null || rir > top) {
-      topSaid = rir;
-    }
-  }
-
-  /// Réserve dite à partir de laquelle une note ne se lit que comme une
-  /// borne basse : la plus haute réserve que la personne ait jamais dite,
-  /// au moins [AdaptParams.coachCensorRir].
-  double ceiling(AdaptParams p) {
-    final top = topSaid;
-    return top == null || top < p.coachCensorRir ? p.coachCensorRir : top;
-  }
+  /// Mode coach : réserve dite à partir de laquelle une note ne se lit
+  /// que comme une borne basse (« au moins tant en réserve »).
+  double ceiling(AdaptParams p) => p.coachCensorRir;
 
   /// Biais de report appris (mode coach), ou `null` : celui des
   /// paramètres.

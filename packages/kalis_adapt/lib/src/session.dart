@@ -484,6 +484,55 @@ SessionPlan buildSessionPlan(
     }
   }
 
+  // 1 quinquies. Mode coach : reprise après une coupure d'au moins deux
+  // semaines — pendant la semaine du retour, un cinquième de séries en
+  // moins (règle du programme ; R5-P22 : pas de pic au retour).
+  if (coached && replayed.digests.isNotEmpty) {
+    var breakDays = 0;
+    final digests = replayed.digests;
+    if (day - digests.last.day >= p.coachBreakDays) {
+      breakDays = day - digests.last.day;
+    } else {
+      for (var i = digests.length - 1; i >= 1; i--) {
+        if (digests[i].day < day - 7) {
+          break;
+        }
+        final gap = digests[i].day - digests[i - 1].day;
+        if (gap >= p.coachBreakDays) {
+          breakDays = gap;
+          break;
+        }
+      }
+    }
+    if (breakDays > 0) {
+      final why = <Reason>[
+        reason(ReasonCodes.adaptResumeAfterBreak, <String, Object?>{
+          'days': breakDays,
+        }),
+      ];
+      for (final d in drafts) {
+        if (d.removed ||
+            d.item.kind == SetKind.test ||
+            !_setsAdjustable(d.item)) {
+          continue;
+        }
+        final kept = (d.sets * p.coachBreakSets).round();
+        if (kept >= 1 && kept < d.sets) {
+          adjustments.add(
+            SessionAdjustment(
+              kind: AdjustmentKind.setsReduced,
+              exerciseId: d.item.exerciseId,
+              setsDelta: kept - d.sets,
+              reasons: why,
+            ),
+          );
+          d.sets = kept;
+          d.reasons.addAll(why);
+        }
+      }
+    }
+  }
+
   // 2. Bilan nettement bas : une série de moins par exercice (les
   // mouvements principaux gardent au moins trois séries).
   if (health.level >= 2) {
@@ -757,10 +806,10 @@ SessionPlan buildSessionPlan(
     for (final d in drafts)
       if (!d.removed)
         d.coached
-        ? _finishCoach(ctx, run, d)
-        : (coached
-              ? coherentTechnique(_finish(ctx, run, d))
-              : _finish(ctx, run, d)),
+            ? _finishCoach(ctx, run, d)
+            : (coached
+                  ? coherentTechnique(_finish(ctx, run, d))
+                  : _finish(ctx, run, d)),
   ];
   List<GroupSpec>? groups;
   String? eventId;

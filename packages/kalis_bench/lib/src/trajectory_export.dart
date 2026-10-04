@@ -145,8 +145,8 @@ String? adaptReasonText(Reason r, Catalog catalog) {
     case ReasonCodes.adaptSkillStepDown:
       return 'étape plus facile aujourd\'hui : ${name('exerciseId')}';
     case ReasonCodes.adaptSkillHold:
-      return 'étape gardée (${(_num(r, 'weeksAtStep') ?? 0).round()} '
-          'semaine(s) à cette étape) : ${name('exerciseId')}';
+      return 'étape en cours gardée tant que le critère de passage n\'est '
+          'pas rempli (${name('exerciseId')})';
     case ReasonCodes.adaptTestResult:
       return 'résultat de test retenu : ${name('exerciseId')} '
           '${_n(_num(r, 'value') ?? 0, 1)} '
@@ -437,10 +437,40 @@ String coachTrajectoryMarkdown(
       'totale, répétitions ou secondes), puis les décisions du moteur.',
     )
     ..writeln();
+  // Étapes de figure : les exercices travaillés pour une figure visée
+  // sont suivis dans le tableau de la figure.
+  final stepsOf = <String, Set<String>>{};
+  for (final block in run.blocks) {
+    for (final w in block.pass2.weeks) {
+      for (final d in w.days) {
+        for (final it in d.items) {
+          final target = it.skillTargetId;
+          if (target != null) {
+            stepsOf.putIfAbsent(target, () => <String>{}).add(it.exerciseId);
+          }
+        }
+      }
+    }
+  }
   for (final id in t.mainExerciseIds) {
+    final ids = <String>{id, ...?stepsOf[id]};
+    var covered = false;
+    for (final e in stepsOf.entries) {
+      if (e.key != id &&
+          e.value.contains(id) &&
+          t.mainExerciseIds.contains(e.key)) {
+        // Étape d'une figure suivie par ailleurs : dans son tableau.
+        covered = true;
+      }
+    }
+    if (covered) {
+      continue;
+    }
     final fraction = catalog.find(id)?.bodyweightFraction?.value ?? 0;
     b
-      ..writeln('### ${name(id)}')
+      ..writeln(
+        '### ${name(id)}${ids.length > 1 ? ' (étapes de la figure)' : ''}',
+      )
       ..writeln()
       ..writeln(
         _row(<String>[
@@ -462,12 +492,13 @@ String coachTrajectoryMarkdown(
       ExercisePrescription? bestItem;
       for (final s in byWeek[w] ?? const <SimSession>[]) {
         for (final it in s.plan.items) {
-          if (it.exerciseId != id) {
+          if (!ids.contains(it.exerciseId)) {
             continue;
           }
           var top = 0.0;
           for (final r in s.record.sets) {
-            if (r.exerciseId == id && (r.externalLoadKg ?? 0) > top) {
+            if (r.exerciseId == it.exerciseId &&
+                (r.externalLoadKg ?? 0) > top) {
               top = r.externalLoadKg ?? 0;
             }
           }
@@ -490,13 +521,14 @@ String coachTrajectoryMarkdown(
         }
       }
 
+      final served = bestItem.exerciseId;
       bestItem.reasons.forEach(note);
       for (final a in best.advices) {
-        if (a.exerciseId == id) {
+        if (a.exerciseId == served) {
           a.reasons.forEach(note);
         }
       }
-      final rows = rowsOf['${best.simDay}|$id'] ?? const <SetRow>[];
+      final rows = rowsOf['${best.simDay}|$served'] ?? const <SetRow>[];
       final hold = rows.isNotEmpty && rows.first.mode == CapacityMode.hold;
       // Effort de la première ligne, puis des suivantes.
       String effort(List<SetRow> part) {
@@ -528,7 +560,7 @@ String coachTrajectoryMarkdown(
                       '${effort(work.sublist(1))}');
       double? estimate;
       for (final e in run.estimates) {
-        if (e.week == w && e.exerciseId == id) {
+        if (e.week == w && e.exerciseId == served) {
           estimate = e.capacity;
         }
       }
@@ -553,7 +585,7 @@ String coachTrajectoryMarkdown(
               ? weekKindLabel(best.weekKind)
               : coachPhaseLabel(intent.code),
           written == null ? '—' : _written(written),
-          _done(rows, hold),
+          '${served == id ? '' : '${name(served)} : '}${_done(rows, hold)}',
           effortText,
           '${max(dayMax)} / ${max(estimate)}',
           notes.isEmpty ? '—' : notes.take(4).join(' ; '),
@@ -575,6 +607,7 @@ String coachTrajectoryMarkdown(
     proposalsOf.putIfAbsent(pr.week, () => <ProposalRow>[]).add(pr);
   }
   final seenTests = <String>{};
+  final onceSaid = <String>{};
   final steps = <String, String>{};
   for (var w = 0; w < t.weeks; w++) {
     final lines = <String>[];
@@ -592,6 +625,13 @@ String coachTrajectoryMarkdown(
     final adjusted = <String, Set<String>>{};
     for (final s in sessions) {
       for (final r in s.plan.reasons) {
+        // Un bilan moyen (3 sur 5) ne change rien ; « charge non
+        // augmentée » redit le bilan bas déjà noté.
+        if (r.code == ReasonCodes.adaptLoadHeld ||
+            (r.code == ReasonCodes.adaptHealthLow &&
+                (_num(r, 'overall') ?? 0) >= 3)) {
+          continue;
+        }
         final text = adaptReasonText(r, catalog);
         if (text != null) {
           sessionNotes[text] = (sessionNotes[text] ?? 0) + 1;
@@ -618,7 +658,15 @@ String coachTrajectoryMarkdown(
             final text =
                 '${name(it.exerciseId)} : '
                 '${adaptReasonText(r, catalog)}';
-            sessionNotes[text] = (sessionNotes[text] ?? 0) + 1;
+            // Dit une fois : la borne des tendons et l'étape gardée valent
+            // pour les semaines qui suivent.
+            final standing =
+                r.code == ReasonCodes.adaptTendonLoad ||
+                r.code == ReasonCodes.adaptSkillHold;
+            if (standing && !onceSaid.add('${it.exerciseId}|${r.code}')) {
+              continue;
+            }
+            sessionNotes[text] = standing ? 1 : (sessionNotes[text] ?? 0) + 1;
           }
         }
       }

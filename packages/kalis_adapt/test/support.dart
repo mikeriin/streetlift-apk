@@ -553,7 +553,11 @@ List<String> checkSession(
       continue;
     }
     if (top > reference + 0.011 && lastHadUnplannedFailure(log, info)) {
-      out.add('$where : hausse après un échec non prévu ($reference → $top)');
+      out.add(
+        '$where : hausse après un échec non prévu ($reference → $top) '
+        '${_lastLines(journal, info)} ${item.technique?.kind.code} '
+        '${item.reasons.map((r) => '${r.code}${r.params}').join(',')}',
+      );
     }
     final failedAt = lowestFailedLoad(log, info);
     if (failedAt != null && top > failedAt + 0.011) {
@@ -611,15 +615,15 @@ List<String> checkAdvice(
   ];
   var attemptLine = false;
   for (final item in session.items) {
-    if (item.slotId == advice.slotId) {
+    if (item.slotId == advice.slotId || item.exerciseId == advice.exerciseId) {
       final kind = item.test?.kind;
-      attemptLine =
-          (item.kind == SetKind.test &&
-              (kind == TestKind.oneRm ||
-                  kind == TestKind.attemptSimulation)) ||
+      if ((item.kind == SetKind.test &&
+              (kind == TestKind.oneRm || kind == TestKind.attemptSimulation)) ||
           (item.setTargets ?? const <SetTarget>[]).any(
             (t) => t.role == SetRole.attempt,
-          );
+          )) {
+        attemptLine = true;
+      }
     }
   }
   if (attemptLine) {
@@ -670,7 +674,7 @@ List<String> checkAdvice(
       if (high > cap) {
         out.add(
           'conseil ${advice.exerciseId} : cible $high après un échec '
-          '(dernière série : $lastAmount)',
+          '(dernière série : $lastAmount) ${_trace(session, done, advice)}',
         );
       }
     }
@@ -719,7 +723,8 @@ List<String> checkAdvice(
   }
   if (last != null && failed && next > last + 0.011) {
     out.add(
-      'conseil ${advice.exerciseId} : hausse après un échec ($last → $next)',
+      'conseil ${advice.exerciseId} : hausse après un échec ($last → $next)'
+      ' ${_trace(session, done, advice)}',
     );
   }
   if (advice.action == IntraSessionAction.loadUp && failed) {
@@ -755,7 +760,8 @@ List<String> checkAdvice(
   }
   if (last != null && locked != null && next > last + 0.011) {
     out.add(
-      'conseil ${advice.exerciseId} : hausse malgré $locked ($last → $next)',
+      'conseil ${advice.exerciseId} : hausse malgré $locked ($last → $next)'
+      ' ${_trace(session, done, advice)}',
     );
   }
   return out;
@@ -807,14 +813,14 @@ List<String> checkCoachSession(
     final where = '${session.date.iso} ${item.exerciseId}';
     final basis = written[item.slotId];
     if (basis != null && item.sets > basis.sets) {
-      // Un bloc au temps dont la technique n'est pas servie devient des
-      // séries classiques : c'est le total de répétitions qui se compare.
+      // Un bloc au temps (une ligne) dont la technique n'est pas servie
+      // devient des séries classiques : le nombre de lignes ne se compare
+      // pas.
       final blockKind = basis.technique?.kind;
       final timed =
           blockKind == SetTechniqueKind.density ||
           blockKind == SetTechniqueKind.forTime;
-      final total = item.sets * (item.repsHigh ?? 0);
-      if (!timed || item.technique != null || total > (basis.repsHigh ?? 0)) {
+      if (!timed || item.technique != null) {
         out.add('$where : ${item.sets} séries pour ${basis.sets} écrites');
       }
     }
@@ -880,4 +886,59 @@ List<String> checkCoachSession(
     }
   }
   return out;
+}
+
+/// Trace d'un conseil pour le diagnostic d'un manquement : prescription de
+/// l'emplacement, lignes faites, raisons du conseil.
+String _trace(
+  SessionPlan session,
+  List<SetRecord> done,
+  IntraSessionAdvice advice,
+) {
+  final b = StringBuffer('[');
+  for (final item in session.items) {
+    if (item.slotId == advice.slotId) {
+      b.write(
+        'item ${item.kind?.code}/${item.test?.kind.code}/'
+        '${item.technique?.kind.code} sets ${item.sets} ; ',
+      );
+    }
+  }
+  for (final s in done) {
+    if (s.slotId == advice.slotId) {
+      b.write(
+        '${s.reps ?? s.seconds}@${s.externalLoadKg} f${s.flames} '
+        '${s.success ? 'ok' : 'raté'} t${s.target?.flames}/'
+        '${s.target?.repsHigh ?? s.target?.secondsHigh} ${s.role?.code} '
+        '${s.technique?.code} ${s.kind.code} q${s.quality} ; ',
+      );
+    }
+  }
+  b.write(
+    '→ ${advice.action.code} ${advice.reasons.map((r) => r.code).join(',')}]',
+  );
+  return b.toString();
+}
+
+/// Lignes brutes de la dernière séance du journal où l'exercice [info]
+/// apparaît (diagnostic d'un manquement).
+String _lastLines(TrainingLog log, ExerciseInfo info) {
+  for (final session in log.sessions.reversed) {
+    final lines = <String>[
+      for (final s in session.sets)
+        if (s.exerciseId == info.id)
+          '${s.reps ?? s.seconds}@${s.externalLoadKg} f${s.flames} '
+              '${s.success ? 'ok' : 'raté'} t${s.target?.flames}/'
+              '${s.target?.repsHigh}/${s.target?.loadKg} ${s.role?.code} '
+              '${s.technique?.code} ${s.kind.code} q${s.quality} '
+              'p${s.parts?.map((p) => '${p.reps}@${p.externalLoadKg}').join('+')}'
+              '${s.excluded ? ' exclu' : ''} ${s.slotId}',
+    ];
+    if (lines.isNotEmpty) {
+      return '[${session.date.iso} ${session.resume ? 'reprise ' : ''}'
+          '${session.programRef?.blockId}/${session.programRef?.weekIndex}/'
+          '${session.programRef?.dayIndex} : ${lines.join(' ; ')}]';
+    }
+  }
+  return '[]';
 }

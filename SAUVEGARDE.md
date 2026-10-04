@@ -44,3 +44,10 @@ Session Fable lancée le 04/10/2026 à 08:50 UTC. Base : `moteurs` d0d60018.
 - Tests : test/coach_test.dart, coach_properties_{0..3}_test.dart (10 240 journaux coach), fixtures street_profiles.json.gz, invariants C1 à C4 (support.dart).
 - Moteur : plafond des notes appris (RatingModel.topSaid), courbe apprise sur les séries ≤ 3 en réserve, série repère (coachProbeDays 14), techniques au-dessus du niveau → séries classiques (standardEquivalent), coherentTechnique, clampLocked, pas de test un jour de bilan nettement bas, exercices à l'élastique : plage gardée.
 - Outil panel : /home/claude/wt/tools/panel.py (prepare / collect).
+
+## Étape : invariants coach presque tous tenus, réglage des notes
+- Propriétés coach : 10 240 journaux, 1 cas restant (vagues après échec) corrigé, à confirmer.
+- coachCensorRir = 2 retenu (essai) : écart d'effort A 0,91 / B 1,16 / C 1,75 (0.1 : 1,18 / 2,43 / 1,72) ; échéance 96 / 95 / 96 % du maximum du jour (0.1 : 91 / 89 / 90) ; mesures rapides à 2 graines.
+- Ajouts : effort attendu affiché (maintiens dans les deux sens), séries repères chargées, reprise graduelle (coachBreakDays 14, −20 % de séries la semaine du retour), étapes de figure dans le tableau de la figure, journal des décisions allégé.
+- Brouillon du § 11 du contrat : /home/claude/wt/tools/contrat_11.md (dans la sauvegarde ci-dessous, à reporter dans CONTRAT.md).
+- Prochaine étape : première passe complète du panel (20 appels Opus), boucles, docs, fin de lot.
