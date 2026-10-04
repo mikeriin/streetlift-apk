@@ -23,19 +23,16 @@ void main() {
   final street = _street();
 
   test('les huit scénarios imposés, codes uniques', () {
-    expect(
-      SeasonScenario.values.map((s) => s.code).toList(),
-      <String>[
-        'reference',
-        'seances_manquees',
-        'maladie',
-        'douleur_coude',
-        'douleur_epaule',
-        'parc_seulement',
-        'echeance_avancee',
-        'deuxieme_echeance',
-      ],
-    );
+    expect(SeasonScenario.values.map((s) => s.code).toList(), <String>[
+      'reference',
+      'seances_manquees',
+      'maladie',
+      'douleur_coude',
+      'douleur_epaule',
+      'parc_seulement',
+      'echeance_avancee',
+      'deuxieme_echeance',
+    ]);
   });
 
   test('saisons de 16 semaines au moins, jusqu\'à une semaine après '
@@ -55,9 +52,7 @@ void main() {
         // Échéance avancée : deux semaines plus tôt, apprise en cours de
         // saison.
         expect(
-          seasonTargetWeeks(
-            seasonProfileJson(json, SeasonScenario.earlier),
-          ),
+          seasonTargetWeeks(seasonProfileJson(json, SeasonScenario.earlier)),
           target - 2,
           reason: '$key',
         );

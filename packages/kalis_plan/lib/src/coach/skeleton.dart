@@ -2264,9 +2264,10 @@ void _buildFigures(_Builder b, Set<int> runDays) {
   final firstDays = first == null
       ? <int>[]
       : spreadDays(a, days, heavyCount > n ? n : heavyCount);
-  // La seconde figure partage les jours de la première quand elle charge
-  // une autre zone (planche et front lever), pour garder des jours sans
-  // bras tendus ; sinon elle prend les jours restants.
+  // La seconde figure prend des jours où la première n'est pas : une seule
+  // figure lourde bras tendus par séance (panel CX : planche et front lever
+  // empilés le même jour chargeaient le poignet et le coude d'un coup) ;
+  // à défaut de jours libres, elle partage.
   final rest = <int>[
     for (final d in days)
       if (!firstDays.contains(d)) d,
@@ -2274,12 +2275,7 @@ void _buildFigures(_Builder b, Set<int> runDays) {
   const secondCount = 2;
   final secondDays = second == null
       ? <int>[]
-      : (n >= 5
-            ? <int>[
-                firstDays.first,
-                if (firstDays.length > 1) firstDays.last,
-              ].take(secondCount).toList()
-            : spreadDays(a, rest.isEmpty ? days : rest, secondCount));
+      : spreadDays(a, rest.length >= secondCount ? rest : days, secondCount);
   final handstand = a.holds['cs-handstand'] ?? 0;
   final muMax = a.reps[Ids.muscleUp] ?? 0;
   final muWeak = (a.profile.weakPoints ?? const <WeakPoint>[]).any(
@@ -2604,6 +2600,27 @@ void _buildFigures(_Builder b, Set<int> runDays) {
         sets: d == strengthDays.first ? 4 : 3,
         stress: DayStress.medium,
         referenceId: Ids.pull,
+      );
+    }
+    final frontLever = <SkillTrack?>[
+      first,
+      second,
+    ].any((t) => t != null && t.targetId == 'cs-front-lever');
+    if (frontLever && strengthDays.contains(d)) {
+      // Front lever : tirage bras tendus (grand dorsal en abaissement,
+      // coude tendu) les jours de force, en plus des tenues et du
+      // dynamique de la figure (R1-P17, R4-F5 ; panel CX : la force de
+      // tirage bras tendus limitait le front lever).
+      b.add(
+        d,
+        const <String>[
+          'mu-tirage-bras-tendus-elastique',
+          'mu-tirage-bras-tendus-poulie-barre',
+        ],
+        SlotRole.accessory,
+        Method.accessoryIsolation,
+        sets: 3,
+        stress: DayStress.medium,
       );
     }
     if (balanceDays.contains(d) &&
