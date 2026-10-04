@@ -613,12 +613,14 @@ List<String> checkAdvice(
   for (final item in session.items) {
     if (item.slotId == advice.slotId || item.exerciseId == advice.exerciseId) {
       final kind = item.test?.kind;
-      attemptLine =
-          (item.kind == SetKind.test &&
-              (kind == TestKind.oneRm || kind == TestKind.attemptSimulation)) ||
+      if ((item.kind == SetKind.test &&
+              (kind == TestKind.oneRm ||
+                  kind == TestKind.attemptSimulation)) ||
           (item.setTargets ?? const <SetTarget>[]).any(
             (t) => t.role == SetRole.attempt,
-          );
+          )) {
+        attemptLine = true;
+      }
     }
   }
   if (attemptLine) {
@@ -755,7 +757,8 @@ List<String> checkAdvice(
   }
   if (last != null && locked != null && next > last + 0.011) {
     out.add(
-      'conseil ${advice.exerciseId} : hausse malgré $locked ($last → $next)',
+      'conseil ${advice.exerciseId} : hausse malgré $locked ($last → $next)'
+      ' ${_trace(session, done, advice)}',
     );
   }
   return out;

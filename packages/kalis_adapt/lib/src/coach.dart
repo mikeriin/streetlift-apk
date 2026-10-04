@@ -1018,6 +1018,7 @@ List<SetPlan>? _loadedPlans(
       ),
     );
   }
+  _probe(run, ex, c, item, served, out);
   return out;
 }
 
@@ -1072,6 +1073,55 @@ int _holdSafe(SessionRun run, ExerciseRun ex, double fatigue) {
     }
   }
   return target < 1 ? 1 : target;
+}
+
+/// Série repère : quand aucune série n'a mesuré la capacité depuis
+/// `coachProbeDays` (toutes les notes au plafond « loin de l'échec »), la
+/// dernière série classique d'un exercice devient ouverte, près de la
+/// réserve du repère (APRE, Mann et al. 2010) — jamais en semaine servie
+/// telle quelle, près d'une échéance, un jour léger, sur une zone
+/// douloureuse, un jour de bilan bas ni après un échec.
+void _probe(
+  SessionRun run,
+  ExerciseRun ex,
+  CoachSpec c,
+  ExercisePrescription item,
+  SetTechniqueKind served,
+  List<SetPlan> out,
+) {
+  final p = run.ctx.params;
+  final track = ex.track!;
+  final exact = track.exactDay;
+  final probed = track.benchmarkDay;
+  if (served != SetTechniqueKind.standard ||
+      item.kind == SetKind.test ||
+      out.length < 2 ||
+      !c.policy.build ||
+      c.light ||
+      c.eventNear ||
+      track.lastDay == null ||
+      track.noUp ||
+      ex.painZones.isNotEmpty ||
+      run.noIncrease ||
+      ex.uncertain ||
+      out.last.open ||
+      (exact != null && run.day - exact < p.coachProbeDays) ||
+      (probed != null && run.day - probed < p.coachProbeDays)) {
+    return;
+  }
+  final last = out.removeLast();
+  final reserve = c.level == 0 && p.benchmarkRir < 2 ? 2.0 : p.benchmarkRir;
+  out.add(
+    SetPlan(
+      loadKg: last.loadKg,
+      low: last.low,
+      high: last.high + p.benchmarkExtraReps,
+      flames: flamesOfRir(reserve),
+      open: true,
+      benchmark: true,
+      role: last.role,
+    ),
+  );
 }
 
 /// Répétitions sûres aujourd'hui pour un exercice sans charge : ce que le
@@ -1240,41 +1290,8 @@ List<SetPlan>? _directPlans(
       );
     }
   }
-  // Série repère : quand aucune série n'a mesuré la capacité depuis
-  // `coachProbeDays` (notes au plafond), la dernière série d'un exercice
-  // en répétitions devient ouverte, près de la réserve du repère.
-  final exact = track.exactDay;
-  final probed = track.benchmarkDay;
-  if (!hold &&
-      share == null &&
-      !assisted &&
-      served == SetTechniqueKind.standard &&
-      item.kind != SetKind.test &&
-      out.length >= 2 &&
-      c.policy.build &&
-      !c.light &&
-      !c.eventNear &&
-      track.lastDay != null &&
-      !track.noUp &&
-      ex.painZones.isEmpty &&
-      !run.noIncrease &&
-      !ex.uncertain &&
-      !out.last.open &&
-      (exact == null || run.day - exact >= p.coachProbeDays) &&
-      (probed == null || run.day - probed >= p.coachProbeDays)) {
-    final last = out.removeLast();
-    final reserve = c.level == 0 && p.benchmarkRir < 2 ? 2.0 : p.benchmarkRir;
-    out.add(
-      SetPlan(
-        loadKg: null,
-        low: last.low,
-        high: last.high + p.benchmarkExtraReps,
-        flames: flamesOfRir(reserve),
-        open: true,
-        benchmark: true,
-        role: last.role,
-      ),
-    );
+  if (!hold && share == null && !assisted) {
+    _probe(run, ex, c, item, served, out);
   }
   if (tendonCapped) {
     final first = track.firstDay;

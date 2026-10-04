@@ -1515,8 +1515,7 @@ final class SessionRun {
   /// [AdaptParams.adviceGapFlames] flammes sous la cible (D5).
   /// Mode coach : vrai si la note [flames] se lit comme une borne basse
   /// (loin de l'échec).
-  bool _censored(int flames) =>
-      rirOfFlames(flames) >= state.rater.ceiling(_p);
+  bool _censored(int flames) => rirOfFlames(flames) >= state.rater.ceiling(_p);
 
   void _noteEase(
     ExerciseRun run,

@@ -79,14 +79,20 @@ CoachAdvice? coachAdvise(
   SkillBoard? skills,
 ) {
   final advice = _coachAdvise(run, ex, index, sessionItem, skills);
-  if (advice == null || advice.action == IntraSessionAction.stopExercise) {
+  if (advice == null) {
     return advice;
   }
   final clamped = clampLocked(run, ex, advice.next);
   if (clamped == null) {
     return advice;
   }
-  final held = CoachAdvice(next: clamped, action: IntraSessionAction.keep)
+  // (Un arrêt reste un arrêt ; la cible rendue avec lui tient les verrous.)
+  final held = CoachAdvice(
+      next: clamped,
+      action: advice.action == IntraSessionAction.stopExercise
+          ? IntraSessionAction.stopExercise
+          : IntraSessionAction.keep,
+    )
     ..miniSetsLeft = advice.miniSetsLeft
     ..stepExerciseId = advice.stepExerciseId;
   held.reasons.addAll(advice.reasons);

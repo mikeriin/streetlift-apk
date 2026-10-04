@@ -757,10 +757,10 @@ SessionPlan buildSessionPlan(
     for (final d in drafts)
       if (!d.removed)
         d.coached
-        ? _finishCoach(ctx, run, d)
-        : (coached
-              ? coherentTechnique(_finish(ctx, run, d))
-              : _finish(ctx, run, d)),
+            ? _finishCoach(ctx, run, d)
+            : (coached
+                  ? coherentTechnique(_finish(ctx, run, d))
+                  : _finish(ctx, run, d)),
   ];
   List<GroupSpec>? groups;
   String? eventId;
