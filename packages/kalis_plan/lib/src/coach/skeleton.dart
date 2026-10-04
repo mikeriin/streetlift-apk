@@ -2638,6 +2638,8 @@ void _fillTime(_Builder b, Set<int> runDays, CoachStyle style) {
 const Set<String> _easyMethods = <String>{
   Method.warmupPrep,
   Method.beginnerHold,
+  // Descentes freinées : dosées au contrôle, plafond propre (R5-P8).
+  Method.beginnerNegative,
   Method.accessoryPrehab,
   Method.liftLight,
   Method.mobility,

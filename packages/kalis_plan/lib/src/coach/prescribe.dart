@@ -2062,18 +2062,23 @@ final class Prescriber {
     }
     final max = _maxOf(s);
     final firm = blockIndex > 0 ? 2.0 : 3.0;
-    if (max >= 1 && max < 4) {
-      // Geste tout juste acquis : séries très courtes et nombreuses, une
-      // répétition sous le maximum (spécificité du geste complet).
+    if (max >= 1 && max < 6) {
+      // Geste tout juste acquis : séries très courtes, deux répétitions
+      // sous le maximum mesuré, et de plus en plus nombreuses (la
+      // progression vient des séries — trois, puis quatre, puis cinq —,
+      // pas d'un progrès supposé ; R5-P3).
+      final stage = ws.kind == WeekKind.build ? _stage(ws) : 0;
+      final more = sets + 1 + (stage >= 2 ? 1 : 0) + (stage >= 4 ? 1 : 0);
+      final reps = max - 2 < 1 ? 1 : max - 2;
       x
-        ..sets = sets + 1
-        ..repsLow = max - 2 < 1 ? 1 : max - 2
-        ..repsHigh = max - 2 < 1 ? 1 : max - 2
-        ..rir = _rirOf(e, 2, ws, week)
+        ..sets = ws.light ? sets : (more > 5 ? 5 : more)
+        ..repsLow = reps
+        ..repsHigh = reps
+        ..rir = max - reps < 2 ? 2 : (max - reps).toDouble()
         ..reasons.add(_rule(CoachRules.repStep, 1, 'reps'));
       return x;
     }
-    if (max >= 4) {
+    if (max >= 6) {
       // R5-P2, R5-P4 : 50 à 70 % du maximum, 3 répétitions en réserve.
       // 50 à 70 % du maximum, sans jamais dépasser le maximum moins trois
       // (la réserve demandée doit exister).
