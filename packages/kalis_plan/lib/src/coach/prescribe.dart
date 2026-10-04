@@ -1099,7 +1099,9 @@ final class Prescriber {
       final reserve = (x.rir ?? 3).ceil();
       if (high != null) {
         final reach = possible - reserve;
-        final reps = _clampInt(reach, 1, reach > high ? 8 : high);
+        // (Rappel, amorçage et simples gardent leurs répétitions écrites.)
+        final open = !x.fixed && high >= 3 && reach > high;
+        final reps = _clampInt(reach, 1, open ? 8 : high);
         x
           ..repsLow = reps
           ..repsHigh = reps;

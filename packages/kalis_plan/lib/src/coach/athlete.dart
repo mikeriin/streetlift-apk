@@ -457,7 +457,10 @@ final class Athlete {
               catalog.find(e.exerciseId)?.bodyweightFraction?.value ?? 0;
           final external = e.capacity - fraction * bodyWeight;
           final total = (before ?? 0) + fraction * bodyWeight;
-          if ((before == null && external > 0) ||
+          // (Une amplitude partielle surchargée ne prend pas d'estimation
+          // sans record : ses séries servies ne mesurent pas un 1RM.)
+          final partial = e.exerciseId.contains('partiel');
+          if ((before == null && external > 0 && !partial) ||
               (before != null &&
                   e.capacity < total * (1 - coachEstimateMargin))) {
             oneRm[e.exerciseId] = external;
