@@ -75,3 +75,8 @@ Session Fable lancée le 04/10/2026 à 08:50 UTC. Base : `moteurs` d0d60018.
 - Calibrage arrêté après la boucle 3 (passe 3 complète : 34/68 à 9, minimum 7) ; boucle 4 = corrections de la relecture documentée et de la relecture indépendante (non renotées, < 10 % des lignes).
 - Contrôle complet lancé (`claude/ci-cp-b`, commit deeefff9) ; à sa fin : copier `ci-out` → docs générés (MESURES, PROPRIETAIRE, CAMPAGNE_STREET), remplir `docs/VALIDATION.md` § 9.2 (repères MESURES_CAMPAGNE, MESURES_TEMPS), relancer un contrôle complet, puis fin de lot.
 - Fin de lot prête : `/tmp/decisions_ca1.md` (section DECISIONS), `tools/manche2.sh` (manche 2 de la page de relecture), `tools/relecture_documentee_ca1.json` (notes à écrire dans la page, auteur relecture-documentee), `tools/panel_p3_notes.json`.
+
+
+## Lot livré (04/10, 17:10 UTC)
+
+`moteurs` ccde1ad2, étiquettes `kalis_adapt-v0.2.0` et `kalis_bench-v0.1.2`, contrôle complet run 37215089957, pipeline 1b08ac58, pages republiées, notification envoyée. Rien à reprendre.
