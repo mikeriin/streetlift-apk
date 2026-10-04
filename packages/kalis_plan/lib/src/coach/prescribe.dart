@@ -1788,12 +1788,6 @@ final class Prescriber {
       return 0;
     }
     if (a.gapWeeks < 2) {
-      // Le repère de travail est le record tant qu'aucun test n'a eu
-      // lieu ; après un test, c'est le repère attendu à ce test sur la
-      // trajectoire vers l'objectif (ou la progression plausible du
-      // niveau). Il ne bouge plus jusqu'au test suivant : le plan ne
-      // suppose jamais un progrès qui n'a pas été mesuré. [expected] : le
-      // repère attendu le jour même (cible d'un test).
       // Séries de travail : le dernier repère mesuré, jamais un progrès
       // supposé (CX, boucle 2 : des blocs restaient écrits sur le repère
       // attendu au test du bloc). Seule la cible d'un test (`expected`)
@@ -2479,10 +2473,7 @@ final class Prescriber {
     // L'effort d'une descente freinée se règle au contrôle de la descente,
     // pas à la réserve : elle a son propre plafond (15 par séance) et ne
     // compte pas parmi les séries dures.
-    // Premier bloc : 4 puis 5 s, 3 puis 4 descentes ; ensuite la descente
-    // s'allonge (6 puis 7 s, après 2 s tenues menton au-dessus de la
-    // barre) à nombre de descentes égal — la progression vient du
-    // contrôle, pas du nombre d'excentriques.
+    // Premier bloc : 4 puis 5 s, 3 puis 4 descentes.
     // CX (panel, saisons) : à partir du deuxième bloc, le nombre de
     // descentes monte vers 3 × 5 de 5 s (R5-P8 ; R2-P17 : 3 à 5 × 3 à 5
     // descentes de 3 à 5 s chez le débutant), au lieu d'allonger la
@@ -5475,7 +5466,6 @@ final class Prescriber {
   }
 }
 
-/// Raisons du bloc : phase, échéance, lecture du profil, règles de douleur.
 /// Limites des catégories de poids d'une épreuve de streetlifting
 /// (règlement FinalRep, lu en partie le 04/10/2026), hommes puis femmes.
 const List<double> coachMenClasses = <double>[66, 73, 80, 87, 94, 101];
@@ -5503,6 +5493,7 @@ double? coachWeightClassOf(Sex? sex, double bodyWeight) {
   return -table.last;
 }
 
+/// Raisons du bloc : phase, échéance, lecture du profil, règles de douleur.
 List<Reason> blockReasonsOf(Athlete a, Skeleton skeleton) {
   final shape = skeleton.shape;
   final target = shape.target;

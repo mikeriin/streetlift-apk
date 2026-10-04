@@ -336,14 +336,16 @@ final class ProposalRow {
   final int changes;
 }
 
-/// Résultat d'une simulation.
 /// Changement du profil en cours de saison (scénarios du croisement,
 /// `kalis_bench`) : échéance avancée, échéance ajoutée… Il prend effet au
 /// début de la semaine [week] de la simulation ; avec [replan], le bloc en
 /// cours s'arrête à la fin de la semaine précédente et le bloc suivant est
 /// construit tout de suite par `nextBlock`, à partir du profil changé et
 /// du dernier résumé d'adaptation (comme l'application le fait quand
-/// l'athlète change une échéance).
+/// l'athlète change une échéance). Le bloc n'est pas reconstruit (le
+/// changement vaut alors au bloc suivant) sans moteur d'évolution, avant le
+/// premier résumé d'adaptation ou en première semaine d'un bloc ; le
+/// changement est noté dans `SimRun.changes` dans tous les cas.
 final class ProfileChange {
   /// Changement.
   const ProfileChange({
@@ -366,6 +368,7 @@ final class ProfileChange {
   final String label;
 }
 
+/// Résultat d'une simulation.
 final class SimRun {
   /// Résultat.
   SimRun(this.athlete, this.policy, this.seed);

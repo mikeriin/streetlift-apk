@@ -3,6 +3,7 @@
 import 'dart:io';
 
 import 'package:kalis_bench/kalis_bench.dart';
+import 'package:kalis_core/kalis_core.dart';
 import 'package:kalis_plan/kalis_plan.dart';
 import 'package:test/test.dart';
 
@@ -56,18 +57,32 @@ void main() {
           target - 2,
           reason: '$key',
         );
-        expect(
-          seasonChanges(json, SeasonScenario.earlier),
-          hasLength(1),
-          reason: '$key',
-        );
+        final changes = seasonChanges(json, SeasonScenario.earlier);
+        expect(changes, hasLength(1), reason: '$key');
+        // Le changement avance bien l'échéance du profil des moteurs.
+        final profile = adaptProfile(
+          BenchProfile.fromJson(json),
+          catalog: loadCatalog(),
+        ).profile;
+        final from = eventDate(benchStartDate, target);
+        final moved = changes.single.apply(profile);
+        final before = <String>[
+          for (final e in profile.events ?? const <SeasonEvent>[]) e.date.iso,
+        ];
+        final after = <String>[
+          for (final e in moved.events ?? const <SeasonEvent>[]) e.date.iso,
+        ];
+        if (before.contains(from.iso)) {
+          expect(after, contains(from.addDays(-14).iso), reason: '$key');
+          expect(after, isNot(contains(from.iso)), reason: '$key');
+        }
       }
       expect(seasonChanges(json, SeasonScenario.base), isEmpty);
     }
   });
 
-  test('campagne d\'une saison : couples cx et 0.1, trois vérités, saison '
-      'réalisée semaine pour semaine', () {
+  test('campagne d\'une saison : couples cx et 0.1, trois vérités, '
+      'scénario réservé au couple cx', () {
     final catalog = loadCatalog();
     final json = street.firstWhere(
       (j) => j['key'] == 'street_08_avance_sets_reps_competition',

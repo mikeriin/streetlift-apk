@@ -1550,8 +1550,9 @@ barres parallèles) ; meuble stable à la maison.
 **Saison** : semaine de transition (volume 50 %, intention `transition`) puis semaine de reprise (75 %)
 quand une épreuve principale a eu lieu dans les dix jours qui précèdent le bloc (`justAfterEvent`).
 
-**Squelettes** : tirage jamais deux jours de suite (répétitions : jours de tirage non consécutifs, jusqu'à
-trois chez l'avancé ; streetlifting : volume et séance légère loin du tirage lourd et du muscle-up) ;
+**Squelettes** : jours de tirage écartés de 48 h autant que les jours d'entraînement le permettent
+(répétitions : jours de tirage non consécutifs, la fréquence descend jusqu'à trois chez l'avancé ; avec
+trop de jours consécutifs, deux séances de tirage peuvent se suivre ; streetlifting : volume et séance légère loin du tirage lourd et du muscle-up) ;
 échelle de poussée du débutant (genoux → mains surélevées → sol) écrite dans `skillLadders`, critère de
 passage 12 ou 10 répétitions × 3 sur deux séances, deux semaines au moins ; dès le deuxième bloc, pompe au
 sol en séries courtes à chaque séance quand l'objectif est la pompe et que deux pompes au moins sont
@@ -1589,7 +1590,7 @@ format d'épreuve de répétitions à saisir (`event_format`) ; figure gardée s
 | Échelle de poussée | genoux, mains surélevées, sol ; 8-12 répétitions | Ebben et al. 2011 ; R5-P9 |
 | Partielles, coude à antécédent | 82,5 % puis +2,5 %/semaine, 95 % au plus | R5-P24 |
 | Catégories de poids | −66 à +101 kg (hommes), −52 à +70 kg (femmes), pesée 2 h avant, 0,1 kg | règlement FinalRep |
-| Tirage | jamais deux jours de suite | ACSM 2009/2011 (48 h) ; Miranda et al. 2018 |
+| Tirage | 48 h entre deux séances de tirage quand les jours le permettent | ACSM 2009/2011 (48 h) ; Miranda et al. 2018 |
 
 Invariants ajoutés aux tests (`test/coach_test.dart`, groupe « CX — saison complète ») : pas de traction
 deux jours de suite (streetlifting, répétitions avancé) ; catégorie de poids puis transition après une

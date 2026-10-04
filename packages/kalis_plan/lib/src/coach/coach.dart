@@ -387,7 +387,7 @@ final class CoachEngine {
         ..._excludedBy(request.locks),
         ...?request.adaptation?.avoidedExerciseIds,
       },
-      extraPains: adaptationPains(request.adaptation),
+      trendPains: adaptationPains(request.adaptation),
       estimates: request.adaptation?.estimates ?? const <ExerciseEstimate>[],
     );
     final sk = _skeleton(
@@ -431,10 +431,8 @@ final class CoachEngine {
         ...?adaptation?.avoidedExerciseIds,
         ...extraExcluded,
       },
-      extraPains: <(BodyZone, int)>[
-        ...extraPains,
-        ...adaptationPains(adaptation),
-      ],
+      extraPains: extraPains,
+      trendPains: adaptationPains(adaptation),
       minutesOverride: minutesOverride,
       estimates: adaptation?.estimates ?? const <ExerciseEstimate>[],
     );
@@ -926,6 +924,8 @@ final class CoachEngine {
         ...?request.adaptation?.avoidedExerciseIds,
       },
       extraPains: pains,
+      trendPains: adaptationPains(request.adaptation),
+      estimates: request.adaptation?.estimates ?? const <ExerciseEstimate>[],
       minutesOverride: minutes,
     );
     final lockedSlots = <String>{};

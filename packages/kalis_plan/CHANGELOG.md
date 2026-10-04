@@ -20,7 +20,8 @@ journal de calibrage : `packages/kalis_bench/docs/CALIBRAGE_CX.md`.
   plus petit pas : série chiffrée au poids du corps.
 - **Échéance** : catégorie de poids et pesée (streetlifting), format d'épreuve inconnu dit (sets & reps),
   semaine de transition après une épreuve principale, partielles retirées les quatre dernières semaines.
-- **Récupération** : pas de traction deux jours de suite (répétitions, streetlifting, séance légère).
+- **Récupération** : jours de traction écartés de 48 h autant que les jours d'entraînement le permettent
+  (répétitions : jusqu'à trois séances de tirage ; streetlifting : volume et séance légère loin du tirage lourd).
 - **Test du chemin vers la traction** : tenue menton au-dessus de la barre, comptée en secondes.
 - Lieu du jour : un exercice au mur n'est plus proposé au parc sans mur (`feasibleAt` de `kalis_core`
   0.4.2).
