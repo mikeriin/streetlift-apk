@@ -73,6 +73,25 @@ Le programme tel qu'il a évolué sous le moteur est repassé aux critères de s
 
 La campagne street (`CAMPAGNE_STREET.md` du rapport) donne ces mesures sur plusieurs graines et les compare à `kalis_adapt` en comportement 0.1, à un coach simple à la note d'effort et à l'oracle.
 
+### 4.1 Saisons croisées (0.2.0, lot CX)
+
+Chaque profil street sur sa saison entière (`saisons.json`, `SAISONS.md`), sous le couple `kalis_plan` 0.2 ×
+`kalis_adapt` 0.2 et, pour la saison de référence, sous les moteurs 0.1. Mesures ajoutées aux mesures de
+trajectoire :
+
+| Mesure | Lecture | Fondement |
+|---|---|---|
+| Écart écrit ↔ servi | écart relatif moyen entre les répétitions (ou secondes) que le bloc écrit et celles que le moteur d'évolution sert, mouvements prioritaires, hors tests : plus il est petit, plus le programme écrit est réaliste pour l'athlète réel | LANCEMENTS CX (cohérence plan ↔ évolution) |
+| Retirés sans raison | mouvement prioritaire présent dans un bloc et absent du suivant, sans exercice écarté par le résumé d'adaptation ni bloc de transition (une étape de figure compte pour sa figure) | « rien de défait d'un bloc à l'autre sans raison » |
+| Violations de la saison réalisée | les critères de sécurité (§ 1) sur les blocs tels qu'ils ont été servis (un bloc arrêté par un changement de profil est réduit à ses semaines servies) | § 1 |
+| Stabilité | écart type, entre graines, de la performance du jour de l'échéance et de la progression | LANCEMENTS CX |
+
+Scénarios imposés (`SeasonScenario`) : séances manquées (une sur quatre, et dix jours d'arrêt), semaine de
+maladie, douleur au coude ou à l'épaule (5/10 pendant trois semaines), parc seulement (trois semaines),
+échéance avancée de deux semaines (apprise six semaines avant), deuxième échéance (six semaines après la
+première). Tenue menton au-dessus de la barre (bras fléchis) : hors des tenues bras tendus de
+`tendon_figures` depuis 0.2.0 (le catalogue la range avec les figures statiques de tirage).
+
 ## 5. Ce que les critères ne voient pas
 
 L'ordre des exercices dans la séance, la cohérence d'une séance pour un humain, la pertinence d'un exercice pour un objectif, la qualité des consignes, le réalisme d'un enchaînement, la place d'une technique dans un bloc : c'est le rôle du panel de coachs virtuels (`PANEL.md`) et de la relecture du propriétaire.

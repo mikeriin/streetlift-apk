@@ -1,4 +1,4 @@
-# Contrat de kalis_plan 0.2.0
+# Contrat de kalis_plan 0.2.1
 
 Moteur statique de Kalis Track (D4) : il crée le programme. Dart pur, sans Flutter, sans stockage, sans
 horloge ; tout ce qu'il rend est une valeur du contrat de `kalis_core` (`docs/TYPES.md`) et des codes de
@@ -1521,3 +1521,81 @@ et des jours, ou par l'identifiant (remplacements). Même requête, même JSON :
 testés sur 40 profils street aléatoires, sur la machine du contrôle : création (passes 1 et 2) en moins
 d'une seconde, passe 2 refaite en moins de 300 ms. Aucune mesure du chemin street n'est encore dans
 `docs/MESURES.md`.
+
+### 12.13 Saison complète (0.2.1, lot CX)
+
+Changements du chemin street faits pour une saison entière écrite bloc après bloc d'après ce que
+l'athlète a montré (croisement avec `kalis_adapt` 0.2.1, `kalis_bench` 0.2.0, mode saisons). Le chemin
+0.1 n'est pas touché (mêmes programmes à l'octet près, version du moteur mise à part). Aucun type ni code
+de raison de `kalis_core` n’est ajouté ; trois codes de note de coach (`pain_trend`, `weight_class`,
+`event_format` : `docs/NOTES_COACH.md`) s'ajoutent au vocabulaire de `plan.coach_note`.
+
+**Repères du bloc suivant** (`Athlete.read`, paramètres `extraPains` et `estimates`, passés par
+`createPass1` et `nextBlock` depuis le résumé d'adaptation) :
+- le dernier résultat daté d'un test guidé ou d'une compétition fait foi, même plus bas qu'un record
+  déclaré, sauf valeur déclarée plus récente ; un test plus bas que le repère n'abaisse le repère que
+  jusqu'à ce que l'estimation du moteur d'évolution montre (6 séries au moins) ;
+- aucun gain supposé quand le repère vient d'un test de la semaine précédente (`_measuredAt`) ;
+- une estimation (6 observations au moins, erreur ≤ 6 % de la capacité, aucun test plus récent) abaisse
+  un repère de plus de 2,5 % ; elle devient le repère d'un exercice qui n'en avait pas (variante jamais
+  déclarée ni testée, dosée jusque-là par une plage fixe) ; elle ne monte jamais un repère connu ;
+- une douleur du résumé (3/10 et plus) devient une gêne récente du bloc (`CoachLimit.trend`) : une figure
+  sur cette zone reste au programme sous 6/10, à 60 % de ses séries, avec la note `pain_trend` ; les autres
+  exercices suivent l'admission habituelle.
+
+**Lieu** : l'admission d'un exercice lit `CatalogExercise.feasibleAt` (kalis_core 0.4.2) : pas d'appui au
+mur au parc sans mur déclaré ; matériel de remplacement (pompe mains surélevées sur barre basse, box ou
+barres parallèles) ; meuble stable à la maison.
+
+**Saison** : semaine de transition (volume 50 %, intention `transition`) puis semaine de reprise (75 %)
+quand une épreuve principale a eu lieu dans les dix jours qui précèdent le bloc (`justAfterEvent`).
+
+**Squelettes** : tirage jamais deux jours de suite (répétitions : jours de tirage non consécutifs, jusqu'à
+trois chez l'avancé ; streetlifting : volume et séance légère loin du tirage lourd et du muscle-up) ;
+échelle de poussée du débutant (genoux → mains surélevées → sol) écrite dans `skillLadders`, critère de
+passage 12 ou 10 répétitions × 3 sur deux séances, deux semaines au moins ; dès le deuxième bloc, pompe au
+sol en séries courtes à chaque séance quand l'objectif est la pompe et que deux pompes au moins sont
+acquises ; descentes freinées de traction après la séance de force quand le maximum est sous dix ; test du
+chemin vers la traction : tenue menton au-dessus de la barre en secondes, hors du budget des tenues bras
+tendus.
+
+**Dosage** : critère de passage d'une figure à environ 75 % du maximum (`coachStepHold`, 12, 11, 9, 7 s),
+étape suivante ouverte quand le maximum atteint ce seuil ; tenues à 60-70 % les jours légers, 75-85 % les
+jours lourds ; séries allégées −8 % (introduction, accumulation, dernier lourd), −5 % (intensification,
+réalisation) ; trois séries lourdes au moins en intensification et réalisation ; hausse hebdomadaire du
+volume 15 % au plus ; semaine d'allègement à 65 % au plus de la plus chargée des trois précédentes ;
+réalisation d'une échéance de répétitions : séries de volume à 65-75 % du maximum, départs au chrono qui
+montent de 5 % par semaine jusqu'à 55 % ; variante facile de l'échelle de poussée plafonnée à 8-12
+répétitions ; lest sous le plus petit pas ou sous le poids du corps : série au poids du corps chiffrée
+d'après le maximum au poids du corps (jusqu'à 8 répétitions) ; partielles surchargées retirées les quatre
+dernières semaines avant l'échéance, entrée à 82,5 % puis +2,5 % par semaine et 95 % au plus quand le coude
+a un antécédent.
+
+**Notes** : catégorie de poids et pesée d'une épreuve de force (`weight_class`, règlement FinalRep) ;
+format d'épreuve de répétitions à saisir (`event_format`) ; figure gardée sur douleur (`pain_trend`).
+
+| Paramètre | Valeur | Source |
+| --- | --- | --- |
+| Estimation retenue : observations, erreur, marge | 6 ; 6 % ; 2,5 % | choix raisonné (CALIBRAGE_CX) ; Helms et al. 2018 (régler sur la performance mesurée) |
+| Douleur relevée retenue | 3/10 et plus | règle de douleur du programme (3-4 : sans progression) |
+| Figure sur douleur relevée | 60 % des séries, arrêt à 6/10 | R5-P23 (−30 à −50 %) ; Silbernagel et al. 2007 (suivi de la douleur, ≤ 5/10) |
+| Transition après épreuve ; reprise | 50 % ; 75 % du volume | R3-P19 ; R5-P22 (+10 à 20 % par semaine) |
+| Critère de passage d'une figure | 12, 11, 9, 7 s × 3, deux séances (≈ 75 % du maximum) | Oranchuk et al. 2019 (isométrie ≥ 70 %) ; panel CX |
+| Tenues | 60-70 % léger, 75-85 % lourd | Bohm et al. 2015 (80-90 % pour le tendon) ; R4-F2 |
+| Séries allégées | −8 % ; −5 % | R2-P8, R3-P4 |
+| Hausse hebdomadaire du volume | 15 % | R5-P22 |
+| Allègement | ≤ 65 % du volume récent | R3-P11 (décharge de 40 à 60 %) |
+| Réalisation des répétitions | volume 65-75 % ; départs 45-55 % | R3-P20, R4-G3, R4-G6 ; Prestes et al. 2017 |
+| Échelle de poussée | genoux, mains surélevées, sol ; 8-12 répétitions | Ebben et al. 2011 ; R5-P9 |
+| Partielles, coude à antécédent | 82,5 % puis +2,5 %/semaine, 95 % au plus | R5-P24 |
+| Catégories de poids | −66 à +101 kg (hommes), −52 à +70 kg (femmes), pesée 2 h avant, 0,1 kg | règlement FinalRep |
+| Tirage | jamais deux jours de suite | ACSM 2009/2011 (48 h) ; Miranda et al. 2018 |
+
+Invariants ajoutés aux tests (`test/coach_test.dart`, groupe « CX — saison complète ») : pas de traction
+deux jours de suite (streetlifting, répétitions avancé) ; catégorie de poids puis transition après une
+épreuve ; échelle de poussée du débutant sans pompe ; un test mesuré plus bas que le record déclaré fait
+foi.
+
+Limites : la pompe au sol, la traction stricte et l'étape suivante d'une figure ne s'ouvrent dans le
+programme écrit qu'à un bloc suivant (le moteur d'évolution sert le jour même) ; le temps de séance
+disponible n'est pas rempli d'office ; les athlètes de ces mesures sont simulés.
