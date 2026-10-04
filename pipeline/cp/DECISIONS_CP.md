@@ -71,6 +71,15 @@ Constat : la relance de fin de lot de CR (Fable, 17:20 UTC) a échoué en 6 s ; 
 - **C7.3 Deux jurys dans la boucle** : panel (référentiel de CR) et relecture documentée (sources web seulement, indépendante du référentiel) ; PIPELINE_CP.md §2.
 - **C7.4** S'applique à CP1, CA1 (trajectoires), CX, CP2, CA2, CY. Le budget d'utilisation (C3, C5) reste en vigueur : quand la part Fable est épuisée, le lot finit sur la tâche Opus moteurs (reprise depuis `cp-sauvegardes/<LOT>`).
 
+### C7 révisée après CP1 (04/10/2026, 08:50 UTC, conversation de pilotage)
+
+> « Pour l'instant un panel à 9 et on fera un nouveau pipeline pour arriver à 10 » (propriétaire, à la session CP1, après sa livraison ; section CP1).
+
+- **C7.5 Cible en vigueur** (remplace C7.1 jusqu'à nouvel ordre) : pour chaque profil du périmètre et chaque école du panel, **note d'ensemble ≥ 9** (« aucune correction nécessaire »), **0 violation de sécurité**. Plus de seuil de moyenne (le panel ne donne pas de 10 : CR.4, CP1.8). Viser 10 relève d'un pipeline ultérieur, à la demande du propriétaire. La lecture de la session CP1 est confirmée.
+- **C7.6 Relecture documentée** : sans seuil. Elle reste écrite dans la page de relecture et chaque lot la lit et traite chaque commentaire (C6.2). La relecture documentée **indépendante** de la conversation de pilotage n'est plus faite après chaque lot, mais **une fois, sur la manche de CX**, avant que le propriétaire valide CX (C6.4), puis sur celle de CY. Les passes « <LOT> correction n » ne se déclenchent plus que sur le panel (C7.5) ou sur une violation. Raison : budget d'utilisation (C3) ; un regard indépendant compte surtout au moment où le propriétaire décide.
+- **C7.7 Les deux couples de CP1 à 8 vont à CX, pas à une correction de CP1** : `street_14_parc_sans_lest` dépend du catalogue de `kalis_core` (matériel de l'appui renversé au mur, recommandation (f) de CP1) ; `street_08_avance_sets_reps_competition` est un choix d'ordre (muscle-up avant la traction, comme à l'épreuve) que CX doit soit défendre au panel, soit changer. CX ne se livre pas sans ces deux couples à 9. Raison : éviter une passe Fable pour deux couples que CX touche de toute façon.
+- **C7.8 Clé des références (écart de CP1)** : contrôle de la conversation de pilotage du 04/10/2026, 08:45 UTC : la clé n'apparaît dans aucun fichier des 40 branches du dépôt ni dans l'historique et les messages de commit depuis le 03/10. **Pas de rotation**, sauf demande du propriétaire. Règle ajoutée pour tous les lots : la clé se lit dans un fichier ou une variable, jamais sur une ligne de commande.
+
 ## Sections des lots
 
 Chaque lot ajoute ici ses décisions techniques numérotées (`CR.1`, `CR.2`…), ses écarts, ses recommandations et, le cas échéant, la question posée au propriétaire.
