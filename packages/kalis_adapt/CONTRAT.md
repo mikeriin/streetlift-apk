@@ -1,4 +1,4 @@
-# Contrat de kalis_adapt 0.1.0
+# Contrat de kalis_adapt 0.2.0
 
 Moteur dynamique de Kalis Track (D5) : il suit l'utilisateur et adapte son programme séance après séance.
 Dart pur, sans Flutter, sans stockage, sans horloge ; tout ce qu'il rend est une valeur du contrat de
@@ -8,6 +8,10 @@ Ce document fixe ce que le moteur garantit (§ 2 et 7), le modèle qu'il estime 
 (§ 4), d'où vient chaque nombre (§ 5 et 6), ce qu'il ne sait pas faire (§ 8) et ce qui a été vérifié, par
 qui (§ 9). Les mesures citées viennent de `docs/MESURES.md` (relevé du simulateur) et sont lues dans
 `docs/VALIDATION.md`. **Le contenu sportif n'a pas été relu par un professionnel diplômé** (§ 9).
+
+Les § 1 à 10 décrivent le moteur de 0.1.0, toujours servi tel quel aux blocs sans champ du contrat 0.4.0
+de `kalis_core` (programme importé du propriétaire compris). Le § 11 décrit le **mode coach** de 0.2.0
+(blocs au contrat 0.4.0), son calibrage au panel (`docs/CALIBRAGE_CA1.md`) et ses limites.
 
 ## 1. Vocabulaire
 
@@ -597,6 +601,9 @@ une machine modeste) : `docs/MESURES.md`, § 5 — mesurés sur la machine de co
 | Références bibliographiques | relevées par recherche documentaire pour ce lot ; plusieurs vérifiées sur le résumé seulement (§ 10) |
 | Paramètres marqués H | hypothèses, non validées sur des données réelles |
 | Relecture indépendante du code et des documents | faite avant livraison par un second relecteur automatique, sans exécution du code ; 19 constats, suites données dans `docs/VALIDATION.md`, § 7 |
+| Mode coach (0.2.0) : invariants C1 à C4 et I2 à I8 | testés sur 10 240 journaux aléatoires aux champs de 0.4.0, 17 programmes street sous trois modèles de vérité, programmes à techniques injectées (§ 11.10) |
+| Mode coach : trajectoires simulées des 17 profils street | jugées par le panel de `kalis_bench` (4 écoles) ; résultat et corrections restantes dans `docs/CALIBRAGE_CA1.md` — cible « 9 partout » **non atteinte** |
+| Mode coach : paramètres « choix raisonné » | non validés sur des données réelles (§ 11.11) |
 | **Relecture par un professionnel diplômé (préparateur physique, kinésithérapeute)** | **non faite** |
 | **Validation sur des journaux réels d'utilisateurs** | **non faite** (aucune donnée réelle n'a servi) |
 
@@ -671,3 +678,355 @@ secondaire.
 Deux nombres souvent cités n'ont **pas** été retrouvés dans leur source et ne sont pas utilisés : une
 table « 40/20/16/10/2 % » attribuée à l'ACSM 2009, et les constantes « 45/15 jours, 1/2 » attribuées à
 Morton et al. 1990.
+
+## 11. Mode coach (0.2.0) : blocs au contrat 0.4.0
+
+Un bloc « porte le contrat 0.4.0 » dès qu'il écrit une intention de bloc ou de semaine, une échelle de
+figure, un groupe, une technique, une intensité, une règle d'autorégulation, un test décrit ou une étape de
+figure (`blockCoached`). Le moteur le sert alors en **mode coach** : il exécute ce que le programme écrit
+et n'en sort que pour protéger l'athlète ou quand le journal montre que le chiffre écrit ne lui va pas. Un
+bloc sans aucun de ces champs (programmes de `kalis_plan` 0.1, programme importé du propriétaire) est servi
+comme en 0.1.0, à l'octet près (§ 7) ; `KalisAdapt(legacy: true)` sert aussi un bloc 0.4.0 comme en 0.1.0
+(comparaisons de `docs/CAMPAGNE_STREET.md`). `KalisAdapt` implémente aussi `EventDayAdvisor`
+(`planEventDay`, § 11.7).
+
+Les identifiants « R2-P3 », « R4-F9 »… renvoient au référentiel de `kalis_bench`
+(`docs/REFERENTIEL.md`), qui cite ses sources. « Choix raisonné » : aucun chiffre publié, la valeur est un
+choix de ce lot, à valider (§ 9).
+
+### 11.1 Ce que la semaine permet
+
+| Intention de la semaine | Ce que le moteur fait |
+| --- | --- |
+| accumulation, intensification, réalisation, maintien (semaines de charge) | la réserve visée pilote la charge dans un couloir autour de la part écrite (§ 11.2) ; séries au ressenti et série repère possibles (§ 11.4) ; le volume peut être proposé à la hausse par la revue |
+| introduction, décharge, affûtage, test, compétition, transition (semaines servies telles quelles) | la séance du bloc est servie telle qu'elle est écrite : aucune hausse au-delà de la charge écrite, aucune série ajoutée, aucune série repère, aucune technique qui mène près de l'échec ; raison `adapt.phase_respected` (et `adapt.taper_no_volume` en affûtage et en compétition : R3-P12, R3-P13) |
+| échéance principale à 14 jours ou moins (`coachEventNearDays`) | décisions prudentes : pas de pilotage à la hausse, pas de série au ressenti ; `adapt.event_near` |
+
+Le jour même, le moteur ne sert **jamais plus de séries** que le bloc n'en écrit (invariant C2, § 7) ; le
+volume ne monte que par une proposition de la revue, jamais en affûtage ni quand le profil déclare une
+récupération réduite (sommeil habituel sous 6 h, stress élevé, métier physique lourd : `adapt.recovery_profile`,
+R5-P14, R5-P15, R5-P18).
+
+### 11.2 Exercice chargé écrit en part du 1RM
+
+La charge écrite est `part × 1RM estimé` (le 1RM de l'exercice, ou celui de l'exercice de référence de
+l'intensité, corrigé de l'écart appris entre les deux), sur la grille du matériel, charge totale (R2-P4).
+
+- **Semaine de charge, niveau intermédiaire et plus, hors jour léger** : la charge est la plus forte du
+  couloir `[part − 5 % ; part + 7,5 %]` du 1RM (`coachCorridorDown`, `coachCorridorUp` : ±2,5 % par point
+  d'écart, R2-P3, bornés à deux points vers le bas et trois vers le haut — choix raisonné) qui laisse en
+  moyenne la réserve visée sur les séries de tête et, avec la marge de prudence, la réserve visée moins 1,5
+  sur la plus dure (`coachWorstSetSlack`). Quand une séance servie au haut du couloir est restée au moins
+  2 répétitions plus facile que visé (`coachEasyGapRir`), le haut du couloir monte de 2,5 % (`coachCorridorWiden`),
+  jusqu'à +15 % (`coachCorridorUpMax`) ; une séance plus dure que visé le redescend d'un cran.
+- **Débutant, jour léger, semaine servie telle quelle, échéance proche, zone douloureuse, bilan bas** : la
+  charge écrite, allégée seulement si elle ne laisse pas la réserve visée moins un point (plafond d'effort,
+  `adapt.rir_cap`).
+- **Garde-fous** (dans cet ordre) : à schéma égal (même emplacement, mêmes répétitions), la charge totale
+  ne monte pas de plus de 10 % (débutant) ou 5 % (autres niveaux) d'une séance à la suivante
+  (`coachRise` ; moitié sur une zone à antécédent ou à gêne déclarée, `coachHistoryRiseFactor`) — un cran
+  de grille reste toujours permis (limite 12 de 0.1 : un lest léger ne double plus) ; au premier passage à
+  un schéma, jamais plus que la plus grande de la charge écrite par le bloc et de +10 % de la plus lourde
+  barre réussie des six dernières semaines (invariant C1) ; aucune hausse par rapport à la dernière séance
+  de l'exercice après un échec non prévu ni sur une zone douloureuse (I2, I3) ; `adapt.load_held` dit la
+  cause.
+- **Effort affiché** : celui du bloc ; quand la charge servie est retenue sous ce que la réserve visée
+  demanderait (couloir, plafond de hausse, semaine servie telle quelle), les flammes affichées sont celles
+  de l'effort attendu, jamais plus dures que la cible du bloc.
+
+- **Séries allégées** (`top_set_backoff`). En semaine de charge, des séries allégées qui laisseraient
+  nettement plus de réserve que visé (un point de plus que la série de tête) sont rapprochées de la série de
+  tête : la baisse servie descend jusqu'à la moitié de la baisse écrite, au moins 5 % (`coachBackoffMinDrop` ;
+  choix raisonné, R2-P6 : aucun pourcentage n'est validé par un essai). Le conseil d'entre-séries garde cette
+  baisse quand il recalcule sur la série de tête réalisée.
+- **Répétitions écrites non atteintes** à la dernière séance de l'emplacement : aucune hausse
+  (`adapt.load_held`, cause `reps`). Une barre où les répétitions demandées n'ont pas été faites n'est pas une
+  « barre réussie ».
+- **Exercice écrit en part du 1RM d'un autre mouvement** (variante, amplitude partielle surchargée).
+  Première séance : 60 % de la charge écrite (`coachNewExerciseShare`, R5-P22 : un exercice nouveau démarre à
+  50–60 %) ; ensuite la charge rejoint la charge écrite par paliers de 10 % au plus d'une séance à la suivante
+  (5 % sur une zone à antécédent), et dès la deuxième séance le plafond d'effort se juge sur le suivi propre
+  de l'exercice. Sur une zone à antécédent, jamais plus que 100 % du 1RM de référence
+  (`coachOverloadFragileMax`).
+
+Un exercice chargé sans part du 1RM (plage et réserve seulement), ou sans suivi encore, suit la règle
+générale de 0.1 (§ 4.1), bornée par la plage du bloc en semaine servie telle quelle.
+
+### 11.3 Techniques
+
+Chaque technique est servie avec `sets` = lignes de journal (contrat de `kalis_core`, § 12), et relue dans
+le journal par `readLine` :
+
+| Technique | Séance servie | Lecture du journal |
+| --- | --- | --- |
+| `top_set_backoff` | série de tête pilotée (§ 11.2) ; séries allégées à la baisse écrite, calculées pendant la séance sur la série de tête **réalisée** (`adapt.backoff_from_top_set`), 2,5 % de moins par point de réserve manquant (5 % au plus) | une ligne par série, rôles `top` et `back_off` |
+| `cluster` | charge qui tient la réserve visée sur les mini-séries, repos courts comptés | le total de la ligne se compare à la cible ; chaque partie est une borne basse de la capacité |
+| `rest_pause`, `myo_reps`, `drop_set` | première partie comme une série classique ; `miniSetsLeft` conseillé | seule la première partie mesure la capacité |
+| `accentuated_eccentric` | charge de la descente : part écrite, au plus 110 % du 1RM (R2-P17) ; jamais à 10 jours ou moins d'une échéance (`coachEccentricEventDays`) ni sur une zone à antécédent | la ligne ne mesure pas la capacité du mouvement complet |
+| `wave`, `pyramid`, `ladder` | un palier par ligne (rôles `wave`, `rung`) ; la charge ne monte d'une vague à l'autre qu'un jour sans verrou | ligne par ligne |
+| `emom`, `density`, `for_time` | intervalles ou bloc au temps ; arrêt quand les répétitions chutent (`stop_on_rep_drop`) — sauf si la série en baisse est dite facile (au moins 3 en réserve) : ce n'est pas de la fatigue | parties : bornes basses |
+| `isometric_hold`, `skill_practice` | durée écrite ou part du maintien maximal mesuré (§ 11.5) ; arrêt quand la propreté passe sous le plancher (`stop_on_quality_drop`) | une ligne sous le plancher de propreté compte comme un échec |
+| `amrap` | dernière série ouverte | série ouverte |
+
+Une ligne du journal sans technique déclarée ni parties est lue comme une série classique.
+
+**Prérequis** (R2-P22). Niveau d'accès : intermédiaire pour la série de tête, la dégressive, la série au
+maximum, la pyramide, l'échelle, la densité et le contre-la-montre ; avancé pour les clusters, le rest-pause,
+les myo-reps, la descente accentuée, le contraste et les vagues. Une technique au-dessus du niveau n'est
+jamais servie : des séries classiques au même travail approché la remplacent (`standardEquivalent`). Une
+technique qui mène près de l'échec ou surcharge n'est servie ni sur une zone douloureuse, ni un jour de
+bilan nettement bas, ni en semaine servie telle quelle. Raison : `plan.technique_withheld` (technique,
+cause).
+
+**Règles d'autorégulation portées par la prescription** : `stop_at_rir` (une ligne finie au moins un point
+sous le plancher allège la suivante de 2,5 à 5 % ; deux de suite arrêtent l'exercice, après `minSets`
+lignes), `stop_on_rep_drop`, `stop_on_quality_drop` (avec l'étape plus facile conseillée,
+`stepExerciseId`, quand les deux premières lignes sont sales), `backoff_from_top_set`, `hold_from_best`,
+`last_set_amrap`. Une ligne qui a dû être allégée le reste jusqu'à la fin de l'exercice.
+
+### 11.4 Ce qui mesure la capacité
+
+Une note d'effort isolée est peu sûre : erreur de mesure de 2,6 à 3,4 répétitions (Steele et al. 2017),
+sous-estimation moyenne d'une répétition, plus grande loin de l'échec et sur les séries longues (Halperin et
+al. 2022 ; Zourdos et al. 2021). Aucune étude ne valide une note « 4 en réserve ou plus ». Le mode coach en
+tire quatre règles.
+
+- **Une série à cible fixe menée à bien est une borne, quelle que soit sa note** : elle dit « au moins les
+  répétitions faites plus la réserve dite » (sans gonflement par le biais). Sa note sert au conseil de la série
+  suivante (§ 11.3), pas à l'estimation.
+- **Ce que l'athlète fait mesure** : un échec ; des répétitions qui manquent à la cible avec une note sous
+  2 en réserve (`coachCensorRir`) ; une série ouverte arrêtée au ressenti avant le haut de sa plage, notée
+  2 en réserve ou moins ; un test.
+- **Une borne tenue n'apprend rien ; une borne franchie ramène l'estimation vers elle**
+  (`CapacityFilter.hinge`). La mise à jour par loi normale tronquée de 0.1, répétée série après série sur des
+  bornes qui ne sont pas indépendantes, compte la même information plusieurs fois et pousse l'estimation
+  au-delà de la borne (Simon et Simon 2010 ; filtre de Kalman pour mesures censurées : Allik et al. 2016).
+- **Le journal des blocs précédents se lit de la même façon** (`SlotSpec.coachRead`) : l'estimation ne
+  change pas quand un nouveau bloc commence.
+
+Séries qui mesurent, quand rien n'a mesuré depuis 14 jours (`coachProbeDays`) :
+
+- **Série repère** (`adapt.benchmark_set`) : la dernière série classique devient ouverte, à 1,5 répétition
+  en réserve (2 pour un débutant), comme dans l'APRE (Mann et al. 2010) ; sans charge, jusqu'au double du
+  haut de la plage.
+- **Série de tête repère** : en semaine de charge hors réalisation, la série de tête d'un « série de tête
+  puis séries allégées » devient ouverte : les répétitions écrites, et jusqu'à 3 de plus
+  (`coachTopProbeReps`) si la réserve visée le permet.
+- **Tenue repère** : la première tenue d'un maintien dont le maximum n'est pas connu se fait jusqu'à la
+  durée écrite par le bloc, arrêt avant la perte de position ; plus tard, quand l'estimation fait servir
+  moins que la durée écrite, la dernière tenue est ouverte jusqu'à cette durée (jamais au-delà).
+
+Jamais en semaine servie telle quelle, près d'une échéance, un jour léger, un jour de bilan bas, sur une zone
+douloureuse ni après un échec.
+
+- **Séries au ressenti.** Une séance notée au plafond alors que la cible était plus dure ouvre, la fois
+  suivante, des séries au ressenti (plage étendue, § 4.3).
+- **Biais de note appris** (limite 4 de 0.1). Un test mené près de l'échec (série de test ou de
+  répétitions maximales, pas une tentative) compare ce que les séries laissaient prévoir à ce que l'athlète
+  montre ; un quart de l'écart, rapporté à trois répétitions, corrige le biais de la personne, de 0,1 au plus
+  par test, entre 0 et 0,6 (`biasLearn…`, choix raisonnés).
+- **Forme de la courbe.** Toute série fraîche qui mesure, à moins de 3 en réserve, renseigne `k` (§ 3.1).
+- **Pas de bonus de calibrage** : en mode coach, l'effort visé d'un exercice encore mal connu n'est pas
+  relevé d'un point (règle de 0.1) ; la dose du bloc et les garde-fous valent.
+
+### 11.5 Exercices sans charge, maintiens, figures
+
+- **Répétitions au poids du corps, part d'un test** (`percent_benchmark`). La cible suit le maximum mesuré,
+  dans les deux sens : `part × maximum estimé`, et jamais plus que `maximum du jour − réserve visée` (la
+  règle des programmes : « série de tête = maximum mesuré moins la réserve », jamais sur un progrès supposé).
+  Au-dessus de ce que le bloc écrit, une répétition de plus que la dernière séance de l'emplacement au plus.
+  `adapt.reps_down` ou `adapt.reps_up` dit l'écart au programme.
+- **Répétitions au poids du corps, plage** (avec ou sans part de test). Le haut servi garde la réserve du
+  bloc sur chaque série, fatigue prévue comprise : jamais plus que `maximum du jour − réserve visée`, sans
+  descendre sous le bas de la plage tant qu'il reste sûr (marge de prudence : la réserve visée moins un
+  point, 2 au plus, `coachDirectGuardRir`) ; en semaine de charge, une plage sans part de test s'étend
+  comme en 0.1 quand elle est devenue trop facile.
+- **Plage hors de portée** (semaine de charge : le bas de la plage ne laisse pas la réserve visée ; toute
+  semaine : il n'est plus sûr) : séries fractionnées — moins de répétitions par série (chaque série garde
+  la réserve du bloc), plus de séries, pour approcher le travail écrit : au plus le double des séries (trois
+  au moins permises), un total qui vise le bas de la plage écrite à moins d'une série près
+  (`adapt.reps_down`). Aucune série n'est ajoutée après un échec, sur une zone douloureuse, un jour de bilan
+  bas, ni tant qu'aucune série n'a mesuré le maximum de l'exercice (28 jours au plus). Séries fractionnées
+  et séries classiques se valent pour la force (Jukic et al. 2021) ; aucun essai chez des débutants limités
+  à 1 à 5 répétitions : choix raisonné.
+- **Effort affiché** : celui du bloc ; quand la quantité servie laisse au moins un point de plus ou de moins
+  que la cible du bloc, l'effort attendu est affiché à sa place (un maintien : toujours).
+- **Exercice assisté** (élastique, appui des pieds, machine : `assiste` du catalogue). La plage du bloc est
+  gardée ; la progression passe par l'assistance, que l'athlète note en charge négative. Quand une série
+  repère a montré au moins 2 répétitions de réserve de plus que visé au haut de la plage
+  (`coachAssistGapRir` ; ACSM 2009 : une à deux répétitions de plus que la cible), le moteur conseille un cran
+  d'assistance de moins (`adapt.flames_below_target` sur la prescription) ; un cran de plus
+  (`adapt.flames_above_target`) seulement sur ce que l'athlète a fait : échec, ou bas de la plage manqué.
+  Quand l'assistance du journal change, la capacité attendue se décale d'un cran (× 0,75,
+  `coachAssistStepShare` ; l'assistance d'un élastique ne se lit pas en kg, McMaster et Cronin 2010) et
+  l'incertitude grandit.
+- **Maintiens.** La durée écrite (ou la part du maintien maximal mesuré) est servie, au plus 75 % du
+  maximum du jour (`coachHoldMaxShare` ; R4-F2 : maintiens à 50–70 % du maximum, arrêt à la perte de ligne).
+  En semaine de charge, une durée écrite sous 40 % d'un maximum mesuré depuis moins de 28 jours monte vers
+  50 % de ce maximum (`coachHoldEasyShare`, `coachHoldUsefulShare`), par les paliers ci-dessous.
+  Bras tendus et appuis : la durée d'une tenue ne monte pas de plus de 20 % (débutant), 15 % (intermédiaire)
+  ou 10 % (avancé, élite) d'une séance à la suivante du même emplacement, et le temps total sous tension de
+  l'emplacement non plus — quand le bloc ajoute une série, les tenues raccourcissent d'autant : un seul
+  changement à la fois (`coachHoldRise`, R4-F9, R5-P22 ; `adapt.tendon_load`).
+- **Figures** (`SkillLadder`). Le tableau des figures (`SkillBoard`) suit l'étape en cours : critère de
+  passage (maintien ou répétitions, propreté, nombre de séances de suite, semaines minimales à l'étape)
+  lu dans le journal. Une étape dont le passage n'est pas acquis n'est pas servie : l'étape en cours la
+  remplace (`adapt.skill_hold`). Critère rempli : proposition de passage (`ProposalKind.load`, détail
+  `skillStepUp`, `adapt.skill_step_up`). Mauvais jour (deux premières lignes sous le plancher de
+  propreté) : l'étape plus facile est conseillée (`adapt.skill_step_down`). États rendus par la revue
+  (`skillStates`, `summary.skills`).
+
+### 11.6 Tests
+
+- **Tentatives** (`one_rm`, `attempt_simulation`). Ouverture : la plus lourde barre réussie à 95 % de
+  chances au moins (`attemptOpenerProbability`), au plus 93 % du maximum estimé du jour
+  (`attemptOpenerShare`) et, quand une barre proche a été réussie dans les six dernières semaines, au plus
+  cette barre (R3-P14 : le dernier lourd fixe la première barre). Deuxième : 80 % de chances. Troisième :
+  50 % (70 % pour assurer un total, 35 % pour un record, où la barre visée du profil est tentée si elle
+  garde 35 %). Jamais décroissantes ; après une barre manquée, la même barre ; saut minimal de la
+  compétition respecté ; bilan bas, douleur ou échec récent : maximum du jour réduit de 2 % par cause
+  (`adapt.attempt_conservative`). La probabilité est celle d'une loi normale sur le `ln` de la charge,
+  d'écart-type celui du maximum du jour (estimation et effet de jour, § 3). Les barres suivantes sont
+  recalculées après chaque tentative (`adapt.attempt_next`). Une tentative réussie se lit « au moins une
+  fois » ; sa note n'est pas lue comme une réserve mesurée.
+- **xRM, série d'estimation, répétitions ou maintien maximal** : charge prévue pour les répétitions dites
+  à la réserve du test ; séries ouvertes pour les maxima.
+- **Pas de test un jour de bilan nettement bas** (hors jour d'échéance) : le test est retiré de la séance.
+- **Résultats.** La revue rend `testResults` (`Benchmark` de source `guided_test`, ou `competition` le
+  jour d'une échéance) que l'application reporte au profil, `summary.benchmarks` (tests et meilleures
+  séries d'entraînement de moins de 3 en réserve), les estimations avec leur erreur standard
+  (`summary.estimates`), la tolérance au volume apprise après trois semaines (`summary.volumeTolerance`)
+  et les raisons `adapt.test_result`.
+
+### 11.7 Jour d'échéance (`planEventDay`)
+
+`EventDayPlan` : pour une compétition de force, par mouvement, le maximum estimé et son erreur standard,
+l'échauffement (paliers à 40, 55, 70, 80 et 87 % de l'ouverture, `warmupSteps`) et les tentatives (règle
+du § 11.6, objectif `secure_total`, `max_total` ou `record`, tentatives déjà faites prises en compte) ;
+pour une épreuve de répétitions, l'objectif (`adapt.pacing`) et le rythme : première série à 65 % du
+maximum (`pacingFirstShare`), puis des séries de la moitié de la précédente, 15 s de repos (choix
+raisonnés, pratique de terrain du format).
+
+### 11.8 Douleur, bilan du jour, récupération
+
+- Douleur (R5-P23, R4-F11 ; limite 11 de 0.1 ; modèle de surveillance de la douleur : Silbernagel et al.
+  2007) : de 0 à 3, rien ne change ; au-dessus de 3, aucune hausse sur la zone (I3), ni de charge, ni de
+  répétitions, ni de séries (pas plus de lignes que la dernière séance de l'emplacement,
+  `adapt.volume_down`) ; à 5 sur une contrainte moyenne, l'exercice est gardé avec 60 % de ses séries et un
+  point de réserve de plus (`coachPainRegress`, `coachPainRegressSets`) ; à 6 et plus, il est retiré
+  (`coachPainStop`).
+- Bilan nettement bas : une série de moins par exercice, charges réduites (§ 4.5), aucune série à moins
+  de 3 répétitions en réserve (`coachLowDayRir`), pas de test, pas de technique qui mène près de l'échec.
+  Sans charge, « pas de hausse » se compte par rapport à la dernière séance du même emplacement (séance
+  lourde et séance au chrono d'un même exercice ne se comparent pas) ; après un échec non prévu ou sur une
+  zone douloureuse, par rapport à la dernière séance de l'exercice (I2, I3).
+- Récupération déclarée réduite (profil v3) : dite dans la séance, aucune hausse de volume proposée.
+
+### 11.9 Alerte de surmenage
+
+Chaque séance d'un mouvement principal qui mesure la capacité (§ 11.4) laisse une performance : la capacité
+estimée du jour. Quand deux séances mesurées de suite restent au moins 5 % sous la précédente
+(`coachOverreachDrop`), les trois en 21 jours au plus (`coachOverreachSpanDays`), le moteur sert pendant
+7 jours (`coachOverreachDays`) 40 % de lignes en moins sur ce mouvement (`coachOverreachCut`, une ligne au
+moins retirée, jamais la dernière), intensité gardée, en semaine de charge seulement (les semaines déjà
+allégées et les tests sont servis tels quels) ; raisons `adapt.volume_down` (`sets`) et `adapt.fatigue_high`
+(`readiness` : part de la séance de référence tenue par les deux séances de l'alerte). La séance d'alerte
+devient la nouvelle référence : pas d'alerte en chaîne.
+
+Sources : la baisse durable de performance est le seul indicateur fiable du surmenage en musculation, sans
+seuil publié (Grandou et al. 2020) ; variation test-retest médiane d'un 1RM de 4,2 % (Grgic et al. 2020) ;
+décharge d'environ 7 jours par la baisse du volume, intensité gardée, dès que l'athlète est fatigué (Bell et
+al. 2023) ; baisse de volume de 41 à 60 % à l'affûtage (Bosquet et al. 2007). Le seuil et la règle des deux
+séances sont des choix raisonnés ; aucun essai ne porte sur une décharge déclenchée par la performance.
+
+### 11.10 Invariants du mode coach
+
+Vérifiés depuis le journal, le bloc et la sortie (`checkCoachSession`, `test/support.dart`) sur 10 240
+journaux aléatoires aux champs de 0.4.0, les 17 programmes street du banc sous les trois modèles de vérité
+et les programmes à techniques injectées ; I2 à I8 (§ 7) valent aussi.
+
+| # | Invariant |
+| --- | --- |
+| C1 | Hors calibrage et hors test, la charge de tête d'un mouvement principal n'excède jamais la plus grande de : la charge écrite par le bloc ; +10 % (ou un cran) de la plus lourde charge de l'exercice au journal |
+| C2 | Jamais plus de séries que le bloc n'en écrit ; seule exception, les séries fractionnées (§ 11.5) : lignes fixes plus courtes que le bas de la plage écrite, au plus le double des séries (trois au moins permises), total sous le bas de la plage écrite plus une série |
+| C3 | Une technique n'est servie qu'au niveau d'expérience qui y donne accès |
+| C4 | Les tentatives d'un test de maximum ne décroissent jamais |
+
+Tests des règles ajoutées au calibrage (`test/coach_rules_test.dart`) : alerte de surmenage (déclenchement,
+retour au niveau, séances trop espacées, deux passages le même jour) ; plage servie à la réserve du bloc
+(street_13, boucle complète) ; séries fractionnées (street_03, boucle complète).
+
+### 11.11 Paramètres du mode coach
+
+| Paramètre | Valeur | Source |
+| --- | --- | --- |
+| `coachCorridorDown`, `coachCorridorUp` | 5 % ; 7,5 % | R2-P3 (±2,5 % par point d'écart) ; bornes : choix raisonné |
+| `coachCorridorWiden`, `coachCorridorUpMax` | 2,5 % ; 15 % | choix raisonné |
+| `coachRise` (par niveau), `coachHistoryRiseFactor` | 10 %, 5 %, 5 %, 5 % ; 0,5 | R5-P22 (garde-fous de progression) ; choix raisonné |
+| `coachWorstSetSlack`, `coachBreachRir`, `coachEasyGapRir` | 1,5 ; 1 ; 2 répétitions | R2-P3 (écart d'un point) ; choix raisonné |
+| `coachBreachCut`, `coachBreachCutMax` | 2,5 % ; 5 % | R2-P3 |
+| `coachCensorRir`, `coachCurveRir` | 2 ; 3 répétitions | Zourdos et al. 2021, Halperin et al. 2022, Steele et al. 2017 |
+| `coachProbeDays`, `coachTopProbeReps` | 14 jours ; 3 répétitions | choix raisonné (APRE : Mann et al. 2010) |
+| `coachHoldMaxShare`, `coachHoldRise` | 75 % ; 20 %, 15 %, 10 %, 10 % | R4-F2, R4-F9, R5-P22 ; choix raisonné |
+| `coachHoldEasyShare`, `coachHoldUsefulShare` | 40 % ; 50 % | R4-F2 ; Oranchuk et al. 2019 ; choix raisonné |
+| `coachOverreachDrop`, `coachOverreachDays`, `coachOverreachSpanDays`, `coachOverreachCut` | 5 % ; 7 jours ; 21 jours ; 40 % | Grandou et al. 2020, Grgic et al. 2020, Bell et al. 2023, Bosquet et al. 2007 ; seuil : choix raisonné |
+| `coachAssistGapRir`, `coachAssistStepShare`, `coachAssistStepSd` | 2 répétitions ; 0,75 ; 0,25 | ACSM 2009 (transposé) ; choix raisonné |
+| `coachBackoffMinDrop` | 5 % | choix raisonné (R2-P6) |
+| `coachNewExerciseShare`, `coachOverloadFragileMax` | 60 % ; 100 % | R5-P22 ; choix raisonné |
+| `coachBreakDays`, `coachBreakSets` | 14 jours ; 80 % | choix raisonné (R5-P7) |
+| `coachDirectGuardRir`, `coachLowDayRir` | 2 ; 3 répétitions | choix raisonné ; règle du programme |
+| `coachEventNearDays`, `coachEccentricEventDays` | 14 ; 10 jours | R3-P14 ; R2-P17 |
+| `coachPainRegress`, `coachPainStop`, `coachPainRegressSets` | 5 ; 6 ; 0,6 | R5-P23, R4-F11 (seuils raisonnés) |
+| `attemptOpenerShare`, probabilités des tentatives | 93 % ; 95 %, 80 %, 50 % (70 %, 35 %) | pratique de terrain de la force athlétique (ouverture qu'on réussit « un mauvais jour ») ; choix raisonné |
+| `attemptLowHealthShare`, `attemptRecentDays` | 2 % ; 42 jours | choix raisonné |
+| `skillSessions`, `skillDownSessions`, `skillTenureWeeks`, `skillPainMax` | 3 ; 2 ; 2, 8, 18, 30 semaines ; 3 | R4-F9 (délais par levier) ; contrat des échelles |
+| `pacingFirstShare`, `pacingNextShare`, `pacingRestSeconds` | 65 % ; 50 % ; 15 s | choix raisonné |
+| `biasLearnRate`, `biasLearnRir`, `biasLearnMaxStep`, `biasMin`, `biasMax` | 0,25 ; 3 ; 0,1 ; 0 ; 0,6 | choix raisonné (Halperin et al. 2022 pour l'ordre de grandeur du biais) |
+| `toleranceMinWeeks`, `trainingSetMaxReps`, `trainingSetMaxRir` | 3 ; 6 ; 3 | choix raisonné |
+
+### 11.12 Limites du mode coach
+
+1. **Le moteur ne réécrit pas le programme.** Volume et fréquence d'un mouvement, répartition dans la
+   semaine, choix des exercices, seuils d'ouverture d'une étape de figure, forme du bloc de réalisation :
+   il les sert tels que `kalis_plan` les écrit, et n'agit que sur les charges, les répétitions, les durées,
+   le nombre de lignes (à la baisse) et les techniques. Les corrections que le panel demande encore portent
+   pour l'essentiel sur ce texte (`docs/CALIBRAGE_CA1.md`).
+2. **Athlètes simulés.** Tout a été mesuré sur trois modèles de vérité écrits pour ce lot (A, B, C), jamais
+   sur des journaux réels ; l'assistance d'un élastique y est un cran abstrait.
+3. **Alerte de surmenage** : seuil et durée sans validation publiée (§ 11.9) ; un record déclaré trop haut
+   au profil peut ressembler à une baisse pendant les premières séances mesurées.
+4. **Séries fractionnées** : extrapolées d'essais avec charges chez des pratiquants entraînés.
+5. **Notes d'effort** : loin de l'échec, le moteur ne sait que ce que l'athlète montre (série repère, série
+   arrêtée, test) ; un athlète qui ne va jamais près de sa limite reste estimé par défaut, prudemment.
+6. **Négatives et tempo** : la durée d'une descente n'est pas pilotée ; une négative écrite à dose fixe est
+   servie telle quelle.
+
+### 11.13 Références du mode coach
+
+Vérifiées sur le texte ou le résumé ; « (résumé) » : résumé seul.
+
+- Bell L. et al. (2022). Coaches' perceptions, practices and experiences of deloading in strength and
+  physique sports. *Front Sports Act Living* 4:1073223. (résumé)
+- Bell L. et al. (2023). Integrating deloading into strength and physique sports training programmes: an
+  international Delphi consensus approach. *Sports Med Open* 9:87.
+- Bosquet L. et al. (2007). Effects of tapering on performance: a meta-analysis. *Med Sci Sports Exerc*
+  39(8). (résumé)
+- Coyne J.O. et al. (2015). Reliability of pull up and dip maximal strength tests. *J Aust Strength Cond*
+  23(4). (résumé)
+- Grandou C. et al. (2020). Overtraining in resistance exercise: an exploratory systematic review and
+  methodological appraisal of the literature. *Sports Med* 50(4). (résumé)
+- Jukic I. et al. (2021). The effects of set structure manipulation on chronic adaptations to resistance
+  training: a systematic review and meta-analysis. *Sports Med* 51(5). (résumé)
+- McMaster D.T., Cronin J. (2010). Quantification of rubber and chain-based resistance modes. *J Strength
+  Cond Res* 24(8).
+- Oranchuk D.J. et al. (2019). Isometric training and long-term adaptations: effects of muscle length,
+  intensity, and intent. *Scand J Med Sci Sports* 29(4).
+- Robinson Z.P. et al. (2024). Exploring the dose-response relationship between estimated resistance
+  training proximity to failure, strength gain, and muscle hypertrophy. *Sports Med* 54(9). (résumé)
+- Senna G. et al. (2009). Influence of two different rest interval lengths in resistance training sessions
+  for upper and lower body. *J Sports Sci Med* 8(2).
+- Willardson J.M., Burkett L.N. (2006). The effect of rest interval length on the sustainability of squat
+  and bench press repetitions. *J Strength Cond Res* 20(2). (résumé)
+
+Les autres sources du calibrage (séries repère, lecture des notes, tendons, douleur) sont listées, avec ce
+qui a été lu de chacune, dans `docs/CALIBRAGE_CA1.md`.

@@ -1415,6 +1415,7 @@ List<SetPlan>? _directPlans(
           'delta': firstLow - each,
         }),
       );
+      ex.split = count > sets;
       return <SetPlan>[
         for (var i = 0; i < count; i++)
           SetPlan(
