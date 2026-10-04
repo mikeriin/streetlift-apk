@@ -562,6 +562,19 @@ void _buildBeginner(_Builder b) {
           !b.ladders.any((l) => l.targetExerciseId == coachPushLadderTarget)) {
         b.ladders.add(ladder);
       }
+      if (a.aimsAt(Ids.pushUp) && pushMax < 6 && !negativeDays.contains(d)) {
+        // Objectif de pompes sous six : les descentes freinées au sol
+        // restent tout le cycle (le pont vers la répétition complète ;
+        // panel CX, boucle 2).
+        b.add(
+          d,
+          const <String>['sw-pompe-negative'],
+          SlotRole.secondary,
+          Method.beginnerNegative,
+          sets: 2,
+          referenceId: Ids.pushUp,
+        );
+      }
     } else {
       final push = b.add(
         d,

@@ -459,7 +459,12 @@ final class Athlete {
           final total = (before ?? 0) + fraction * bodyWeight;
           // (Une amplitude partielle surchargée ne prend pas d'estimation
           // sans record : ses séries servies ne mesurent pas un 1RM.)
-          final partial = e.exerciseId.contains('partiel');
+          // (Seuls les mouvements de compétition lestés prennent une
+          // estimation sans record : un 1RM d'isolation ou de variante
+          // estimé sur des séries longues n'est pas fiable.)
+          final partial =
+              e.exerciseId.contains('partiel') ||
+              !e.exerciseId.startsWith('sl-');
           if ((before == null && external > 0 && !partial) ||
               (before != null &&
                   e.capacity < total * (1 - coachEstimateMargin))) {
