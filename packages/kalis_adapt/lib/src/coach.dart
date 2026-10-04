@@ -364,9 +364,16 @@ final class SlotMark {
 /// les six plus lourdes des dernières semaines sont gardées (une ouverture
 /// est une barre déjà faite). Sans effet sur les décisions de 0.1.
 void noteHeavy(ExerciseTrack track, ExerciseRun run, int day, AdaptParams p) {
+  // (Une barre où les répétitions demandées n'ont pas été faites n'est
+  // pas une barre réussie.)
+  bool made(ObservedSet o) =>
+      o.loadKg != null &&
+      !o.failed &&
+      o.amount >= 1 &&
+      o.amount >= (o.target?.low ?? 1);
   var any = false;
   for (final o in run.observed) {
-    if (o.loadKg != null && !o.failed && o.amount >= 1) {
+    if (made(o)) {
       any = true;
     }
   }
@@ -379,7 +386,7 @@ void noteHeavy(ExerciseTrack track, ExerciseRun run, int day, AdaptParams p) {
   ];
   for (final o in run.observed) {
     final kg = o.loadKg;
-    if (kg != null && !o.failed && o.amount >= 1) {
+    if (kg != null && made(o)) {
       heavy.add((day, kg));
     }
   }
@@ -923,9 +930,14 @@ List<SetPlan>? _loadedPlans(
   final markLoad = mark != null && mark.amount == lines.first.$2
       ? mark.loadKg
       : null;
+  // (Répétitions écrites non atteintes à la dernière séance de
+  // l'emplacement : pas de hausse non plus.)
+  final missed = mark != null && mark.top > 0 && mark.top < mark.amount;
   final lockCause = track.noUp || (mark != null && mark.failed)
       ? 'failure'
-      : (ex.painZones.isNotEmpty ? 'pain' : (run.noIncrease ? 'health' : null));
+      : (ex.painZones.isNotEmpty
+            ? 'pain'
+            : (run.noIncrease ? 'health' : (missed ? 'reps' : null)));
   if (markLoad != null) {
     if (kg > markLoad + 1e-9) {
       final floored = grid.floor(markLoad);
@@ -1172,11 +1184,14 @@ int _holdSafe(SessionRun run, ExerciseRun ex, double fatigue, String slotId) {
   if (!ex.spec.test &&
       track.lastDay != null &&
       (track.noUp || ex.painZones.isNotEmpty || run.noIncrease)) {
-    // Pas de hausse par rapport à la dernière séance du même emplacement
-    // (séance lourde et séance légère d'un même exercice ne se comparent
-    // pas) ; sans elle, après un échec, par rapport à la dernière séance.
-    final slotTop = track.slotMarks[slotId]?.top;
-    final last = slotTop ?? (track.noUp ? track.lastTop : null);
+    // Après un échec non prévu ou sur une zone douloureuse : pas de hausse
+    // par rapport à la dernière séance de l'exercice (I2, I3). Un jour de
+    // bilan bas : par rapport à la dernière séance du même emplacement
+    // (séance lourde et séance au chrono d'un même exercice ne se
+    // comparent pas).
+    final last = track.noUp || ex.painZones.isNotEmpty
+        ? track.lastTop
+        : track.slotMarks[slotId]?.top;
     if (last != null) {
       final top = last < 1 ? 1 : last;
       if (target > top) {
@@ -1267,11 +1282,14 @@ int _repsSafe(SessionRun run, ExerciseRun ex, double fatigue, String slotId) {
   if (!ex.spec.test &&
       track.lastDay != null &&
       (track.noUp || ex.painZones.isNotEmpty || run.noIncrease)) {
-    // Pas de hausse par rapport à la dernière séance du même emplacement
-    // (séance lourde et séance légère d'un même exercice ne se comparent
-    // pas) ; sans elle, après un échec, par rapport à la dernière séance.
-    final slotTop = track.slotMarks[slotId]?.top;
-    final last = slotTop ?? (track.noUp ? track.lastTop : null);
+    // Après un échec non prévu ou sur une zone douloureuse : pas de hausse
+    // par rapport à la dernière séance de l'exercice (I2, I3). Un jour de
+    // bilan bas : par rapport à la dernière séance du même emplacement
+    // (séance lourde et séance au chrono d'un même exercice ne se
+    // comparent pas).
+    final last = track.noUp || ex.painZones.isNotEmpty
+        ? track.lastTop
+        : track.slotMarks[slotId]?.top;
     if (last != null) {
       final top = last < 1 ? 1 : last;
       if (target > top) {

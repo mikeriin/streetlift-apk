@@ -86,7 +86,9 @@ String _causeLabel(String code) => switch (code) {
   'uncertain' => 'maximum encore mal connu',
   'rir' => 'effort plus dur que prévu',
   'quality' => 'propreté en baisse',
-  'reps' => 'répétitions en baisse',
+  'reps' => 'répétitions écrites non atteintes la dernière fois',
+  'rep_drop' => 'répétitions en baisse',
+  'quality_drop' => 'propreté en baisse',
   _ => code,
 };
 
