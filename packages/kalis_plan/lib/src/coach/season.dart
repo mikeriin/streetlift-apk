@@ -339,7 +339,7 @@ BlockShape shapeBlock(
             WeekKind.deload,
             WeekIntent.taper,
             SeasonPhaseKind.taper,
-            0.7,
+            0.75,
             stage,
           );
         } else if ((i == length - 1 && length >= 4) || isEvent(i)) {
@@ -347,7 +347,7 @@ BlockShape shapeBlock(
             WeekKind.test,
             WeekIntent.test,
             SeasonPhaseKind.test,
-            0.7,
+            isEvent(i) ? 0.6 : 0.7,
             stage,
             test: true,
           );
@@ -368,7 +368,10 @@ BlockShape shapeBlock(
           ? SeasonPhaseKind.reintroduction
           : (finalBlock
                 ? SeasonPhaseKind.realization
-                : (after != null && after <= 6
+                // (Le premier bloc construit toujours le volume avant
+                // d'intensifier : pas de montée vers les charges lourdes
+                // sans base.)
+                : (after != null && after <= 6 && !first
                       ? SeasonPhaseKind.intensification
                       : SeasonPhaseKind.accumulation));
       final intent = switch (phase) {

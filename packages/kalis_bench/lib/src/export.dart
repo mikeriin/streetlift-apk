@@ -249,6 +249,13 @@ String effortText(ItemView i) {
       i.p.repsLow == null &&
       (i.p.secondsHigh ?? i.p.secondsLow) != null;
   if (Flames.isOpenEnded(flames)) {
+    // Descente freinée : l'effort se règle au contrôle, pas à la réserve.
+    final tempo = i.p.tempo;
+    if (tempo != null &&
+        tempo.eccentricSeconds >= 3 &&
+        tempo.concentricSeconds == 0) {
+      return "au contrôle : arrêt dès qu'une descente accélère";
+    }
     return hold
         ? 'sous-maximal : arrêt bien avant la perte de position'
         : '5 rép. en réserve ou plus';

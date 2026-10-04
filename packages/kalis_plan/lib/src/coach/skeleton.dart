@@ -413,7 +413,9 @@ void _buildBeginner(_Builder b) {
             : <String>[...Picks.assistedPull, 'sw-traction-negative'],
         SlotRole.main,
         Method.beginnerMain,
-        sets: heavy ? mainSets : sets,
+        // Objectif de première traction : trois séries de tirage assisté
+        // (les descentes freinées ont leur propre plafond, R5-P8).
+        sets: heavy ? mainSets : (a.aimsAt(Ids.pull) && sets < 3 ? 3 : sets),
         referenceId: Ids.pull,
       );
       if (negativeDays.contains(d) && !heavy) {
@@ -426,7 +428,7 @@ void _buildBeginner(_Builder b) {
           Method.beginnerNegative,
           sets: 2,
           referenceId: Ids.pull,
-          fromWeek: later ? 0 : 2,
+          fromWeek: later ? 0 : 1,
         );
       } else if (!heavy && a.aimsAt(Ids.pull)) {
         // Les autres jours : tenue menton au-dessus de la barre, courte et
@@ -436,9 +438,8 @@ void _buildBeginner(_Builder b) {
           const <String>['cs-tenue-menton-barre-pronation'],
           SlotRole.secondary,
           Method.beginnerHold,
-          sets: 2,
+          sets: 3,
           referenceId: Ids.pull,
-          fromWeek: later ? 0 : 2,
         );
       }
     }
@@ -469,7 +470,8 @@ void _buildBeginner(_Builder b) {
         Method.beginnerMain,
         sets: 2,
         referenceId: Ids.pushUp,
-        support: true,
+        // Le volume de poussée qui construit les répétitions : il reste.
+        keep: true,
       );
     } else {
       b.add(
@@ -485,9 +487,9 @@ void _buildBeginner(_Builder b) {
     if (rowDays.contains(d) || pullMax >= 5) {
       b.add(
         d,
-        // Corps tendu dès six répétitions au record ; genoux fléchis en
-        // dessous.
-        rowMax != null && rowMax >= 6
+        // Corps tendu à partir de dix répétitions au record ; en dessous,
+        // la variante genoux fléchis permet de travailler en 8 à 10.
+        rowMax != null && rowMax >= 10
             ? <String>[Ids.row, ...Picks.easyRow]
             : Picks.easyRow,
         SlotRole.secondary,
@@ -520,7 +522,7 @@ void _buildBeginner(_Builder b) {
     }
     // Dips : appui, puis dips assistés quand les pompes sont installées.
     if (!heavy && dipMax < 5 && supportDays.contains(d)) {
-      if (later && pushMax >= 3) {
+      if (later && pushMax >= 6) {
         b.add(
           d,
           Picks.assistedDip,
@@ -801,11 +803,13 @@ void _addPrehab(_Builder b, int d) {
 /// d'abord sous 8, mixte de 8 à 15, endurance au-delà.
 List<String> _repsMethods(int max) {
   if (max < 8) {
+    // (La densité demande cinq répétitions au maximum ; en dessous, la
+    // passe 2 la remplace par du volume.)
     return const <String>[
       Method.repsStrength,
+      Method.repsDensity,
       Method.repsVolume,
-      Method.repsVolume,
-      Method.repsVolume,
+      Method.repsDensity,
       Method.repsVolume,
     ];
   }
@@ -1306,7 +1310,10 @@ void _buildReps(_Builder b, Set<int> runDays) {
       );
     }
     // Muscle-up : à l'état frais, en début de séance (R4-F1, R5-P27).
-    if (muDays.contains(d)) {
+    // (Quand l'objectif porte sur la traction et pas sur le muscle-up, la
+    // traction passe d'abord : le mouvement visé se fait frais.)
+    final muLate = pullGoal && !a.aimsAt(Ids.muscleUp) && !competition;
+    if (muDays.contains(d) && !muLate) {
       if (muMax >= 6) {
         b.add(
           d,
@@ -1398,6 +1405,9 @@ void _buildReps(_Builder b, Set<int> runDays) {
         sets: 3,
         referenceId: Ids.pull,
       );
+    }
+    if (muDays.contains(d) && muLate) {
+      _addMuscleUpPractice(b, d, muMax);
     }
     // Poussée : dips les jours de traction (méthodes décalées), pompes en
     // complément.
@@ -1661,12 +1671,20 @@ void _buildLifting(_Builder b, Set<int> runDays) {
       // de séance, à 48 h au moins du muscle-up lourd (R4-F1 : pratique
       // distribuée du geste le plus technique).
       var second = -1;
-      for (final d in <int>[if (light >= 0) light, ...heavyDays]) {
-        if (d == muDay || b.dayBefore(d, muDay) || b.dayBefore(muDay, d)) {
-          continue;
+      for (final skipPull in <bool>[true, false]) {
+        for (final d in <int>[if (light >= 0) light, ...heavyDays]) {
+          if (d == muDay || b.dayBefore(d, muDay) || b.dayBefore(muDay, d)) {
+            continue;
+          }
+          if (skipPull && d == pullHeavy) {
+            continue;
+          }
+          second = d;
+          break;
         }
-        second = d;
-        break;
+        if (second >= 0) {
+          break;
+        }
       }
       if (second >= 0) {
         lift(
@@ -1828,7 +1846,13 @@ void _buildLifting(_Builder b, Set<int> runDays) {
           MovementPattern.tirageVertical,
     );
     final lower = slots.where((s) => s.exerciseId == Ids.squat).length;
-    b.days[d].focus = lower > 0 && slots.length <= 3
+    final upperLift = slots.any(
+      (s) =>
+          s.exerciseId == Ids.weightedPull ||
+          s.exerciseId == Ids.weightedDip ||
+          s.exerciseId == Ids.weightedMuscleUp,
+    );
+    b.days[d].focus = lower > 0 && !upperLift
         ? FocusCodes.lower
         : FocusCodes.fullBody;
     if (d == light) {
@@ -2181,7 +2205,9 @@ void _buildFigures(_Builder b, Set<int> runDays) {
         <String>['cs-handstand', 'cs-handstand-dos-au-mur'],
         SlotRole.skill,
         Method.skillBalance,
-        sets: 4,
+        // Budget du poignet (R4-F12) : trois tenues quand la séance porte
+        // aussi une figure d'appui.
+        sets: supportDays.contains(d) ? 3 : 4,
       );
     }
     if (muDays.contains(d)) {
@@ -2226,8 +2252,7 @@ void _buildFigures(_Builder b, Set<int> runDays) {
       }
     } else if (pullMax >= 1 &&
         a.can(Ids.pull, d) &&
-        strengthDays.isNotEmpty &&
-        d == strengthDays.first) {
+        strengthDays.contains(d)) {
       b.add(
         d,
         <String>[Ids.pull],
