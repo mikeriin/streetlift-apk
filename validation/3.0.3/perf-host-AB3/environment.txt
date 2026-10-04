@@ -1,0 +1,19 @@
+commit=ebff3c6d3be3514301d72410b30d30b51ee2a948
+date=2026-09-26T17:35:17Z
+Flutter 3.29.3 • channel stable • https://github.com/flutter/flutter.git
+Framework • revision ea121f8859 (1 year, 6 months ago) • 2025-04-11 19:10:07 +0000
+Engine • revision cf56914b32
+Tools • Dart 3.7.2 • DevTools 2.42.3
+CPU(s):                                  2
+Model name:                              Intel(R) Xeon(R) Platinum 8370C CPU @ 2.80GHz
+CPU(s) scaling MHz:                      125%
+CPU max MHz:                             2800.0000
+CPU min MHz:                             800.0000
+               total        used        free      shared  buff/cache   available
+Mem:            7937        1599        2011          46        4687        6338
+base_lib=d36363378ee8b35ce737e6838673c5e5793978720102317f47e1c5544e5fc260  -
+cand_lib=e1469ec22e918512f4c66053062af2e4cdbb5e0d5b007ddb85c646f916d63332  -
+fixture=f0eef30ab76d59e38165232a0ce567514928501fa4c98f9eac544fff909c3669  streetlift_tracker/test/support/perf_fixtures.dart
+7cde06514d9ef336bf009c029f4b8f16cc266811ce4a910e0907de7f01f00021  streetlift_tracker/test/l6_perf_bench_test.dart
+fixtures identiques
+banc identique
