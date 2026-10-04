@@ -1605,9 +1605,7 @@ final class Prescriber {
     // du 1RM complet et au-dessus (pratique de terrain, CALIBRAGE_CP1 C :
     // 100 à 110 %) — 105 % au plus quand le coude a un antécédent ; les
     // autres variantes restent sous le mouvement de compétition.
-    final top = partial
-        ? (a.limitOn(Joint.elbow) != null ? 1.05 : 1.10)
-        : 0.80;
+    final top = partial ? (a.limitOn(Joint.elbow) != null ? 1.05 : 1.10) : 0.80;
     // (Entrée graduée et monotone : 95 % la première semaine, +2,5 % par
     // semaine de charge, et chaque bloc repart du sommet du précédent ;
     // R5-P24.)
@@ -2241,7 +2239,9 @@ final class Prescriber {
       // pas d'un progrès supposé ; R5-P3).
       final stage = ws.kind == WeekKind.build ? _stage(ws) : 0;
       final more = sets + 1 + (stage >= 2 ? 1 : 0) + (stage >= 4 ? 1 : 0);
-      final kept = _floorRir(e, week).ceil() < 2 ? 2 : _floorRir(e, week).ceil();
+      final kept = _floorRir(e, week).ceil() < 2
+          ? 2
+          : _floorRir(e, week).ceil();
       final reps = max - kept < 1 ? 1 : max - kept;
       // Plage ouverte vers le haut (double progression, R5-P3) : une
       // répétition de plus dès que toutes les séries passent avec la
@@ -3060,8 +3060,10 @@ final class Prescriber {
       kind = TestKind.maxHold;
       x
         ..sets = 1
-        ..secondsLow = known > 0 ? known : (hang ? 15 : 5)
-        ..secondsHigh = known > 0 ? aim : (hang ? 45 : 15)
+        // (Tenue bras tendus sans repère : un essai court, 3 à 5 s — pas
+        // de saut de charge sur les tendons le jour du test.)
+        ..secondsLow = known > 0 ? known : (hang ? 15 : 3)
+        ..secondsHigh = known > 0 ? aim : (hang ? 45 : 5)
         ..rest = 180;
       x.test = const TestSpec(
         kind: TestKind.maxHold,
@@ -3496,8 +3498,7 @@ final class Prescriber {
       if (reps != null && !x.practice) {
         final easy = _clampInt(_round(reps * 0.6), 1, reps);
         final target = x.intensity;
-        if (target != null &&
-            target.basis == IntensityBasis.percentBenchmark) {
+        if (target != null && target.basis == IntensityBasis.percentBenchmark) {
           x.intensity = target.copyWith(
             value: _round3(target.value * easy / reps),
           );
@@ -3685,9 +3686,9 @@ final class Prescriber {
           ..secondsHigh = 10
           ..rest = 180
           ..stress = DayStress.heavy
-          // Valeur négative : l'essai strict suit dans la même séance (une
-          // seule consigne).
-          ;
+    // Valeur négative : l'essai strict suit dans la même séance (une
+    // seule consigne).
+    ;
     gate.test = const TestSpec(
       kind: TestKind.maxHold,
       targetRir: 1,
@@ -3871,9 +3872,13 @@ final class Prescriber {
             !tested.contains(goalId)) {
           final goal = a.catalog.exercise(goalId);
           out.add(
-            _testOf(slotIdFor(day, 70 + tested.length), null, goal, ws,
-                event: false)
-              ..group = null,
+            _testOf(
+              slotIdFor(day, 70 + tested.length),
+              null,
+              goal,
+              ws,
+              event: false,
+            )..group = null,
           );
           tested.add(goalId);
           continue;
@@ -3903,8 +3908,7 @@ final class Prescriber {
         // Surpoids : pas de descente freinée — le test est la suspension
         // la plus longue.
         const hang = 'sw-dead-hang';
-        if (a.rejection(hang, day) == null &&
-            !out.any((x) => x.e.id == hang)) {
+        if (a.rejection(hang, day) == null && !out.any((x) => x.e.id == hang)) {
           out.add(
             _testOf(s.slotId, s, a.catalog.exercise(hang), ws, event: false)
               ..group = null,
@@ -4071,6 +4075,21 @@ final class Prescriber {
         if (x != null) {
           out.add(x..kind = SetKind.work);
           break;
+        }
+      }
+    }
+    // Un autre test de tirage le même jour : un seul essai de descente.
+    final otherPull = out.any(
+      (x) =>
+          x.kind == SetKind.test &&
+          x.e.id != 'sw-traction-negative' &&
+          (x.e.pattern == MovementPattern.tirageVertical ||
+              x.e.rootId == Ids.muscleUp),
+    );
+    if (otherPull) {
+      for (final x in out) {
+        if (x.kind == SetKind.test && x.e.id == 'sw-traction-negative') {
+          x.sets = 1;
         }
       }
     }
@@ -4734,8 +4753,7 @@ final class Prescriber {
     // une semaine d'échéance trop vide désentraîne. Sous 36 % du pic, les
     // rappels des jours éloignés de l'épreuve reprennent une série (trois
     // au plus), le travail le plus spécifique d'abord.
-    final floor =
-        peak * (_shape.model == SeasonModel.repsPeak ? 0.37 : 0.42);
+    final floor = peak * (_shape.model == SeasonModel.repsPeak ? 0.37 : 0.42);
     final closed = <_Draft>{};
     while (guard < 60) {
       guard++;
@@ -5081,7 +5099,12 @@ final class Prescriber {
           w + 1 < _shape.weeks.length &&
           _shape.weeks[w + 1].kind == WeekKind.deload &&
           _shape.weeks[w + 1].intent == WeekIntent.deload;
-      final roles = _roles(w, ws);
+      var roles = _roles(w, ws);
+      if (_eventPassed(ws)) {
+        // Semaine qui suit l'échéance dans le bloc : récupération (ni test,
+        // ni travail dur, ni tenue bras tendus).
+        roles = List<_DayRole>.filled(a.dayCount, _DayRole.after);
+      }
       final tested = <String>{};
       final days = <List<_Draft>>[
         for (var d = 0; d < a.dayCount; d++)
