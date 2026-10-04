@@ -4244,7 +4244,21 @@ final class Prescriber {
         final fraction = x.e.bodyweightFraction?.value ?? 0;
         var total = load + fraction * a.bodyWeight;
         final key = '$d|${x.slotId}|${x.e.id}';
-        final before = previous?.loads[key];
+        // Référence : la charge la plus lourde des trois dernières
+        // semaines aux mêmes répétitions (revenir, après un allègement, à
+        // la charge d'avant n'est pas une hausse).
+        var before = previous?.loads[key];
+        for (var k = _history.length - 3; k < _history.length - 1; k++) {
+          if (k < 0) {
+            continue;
+          }
+          final older = _history[k].loads[key];
+          if (older != null &&
+              older.$2 == reps &&
+              (before == null || before.$2 != reps || older.$1 > before.$1)) {
+            before = older;
+          }
+        }
         if (before != null &&
             x.kind != SetKind.test &&
             before.$2 == reps &&
