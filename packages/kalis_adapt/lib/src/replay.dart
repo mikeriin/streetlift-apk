@@ -509,6 +509,7 @@ void replaySessions(
         boundOnly: reading != null && reading.boundOnly,
         quality: set.quality,
         role: set.role,
+        lineAmount: hold ? set.seconds : set.reps,
       );
     }
     run.closeAll();

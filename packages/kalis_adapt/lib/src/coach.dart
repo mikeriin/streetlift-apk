@@ -500,7 +500,11 @@ LineReading? readLine(
 }) {
   final parts = set.parts;
   final quality = set.quality;
-  final kind = set.technique ?? item?.technique?.kind;
+  // La technique est celle que la ligne déclare ; une ligne découpée en
+  // parties sans technique déclarée prend celle de la prescription. Une
+  // ligne sans technique ni parties est une série classique (technique
+  // non servie ce jour-là).
+  final kind = set.technique ?? (parts != null ? item?.technique?.kind : null);
   if (set.technique == null &&
       parts == null &&
       set.role == null &&
@@ -990,7 +994,11 @@ List<SetPlan>? _loadedPlans(
     return out;
   }
   final shown = shownFor(kg, head);
-  final waveStep = served == SetTechniqueKind.wave ? t?.waveStepPct : null;
+  // Vagues : la charge ne monte d'une vague à l'autre qu'un jour sans
+  // verrou (ni échec récent, ni douleur, ni bilan bas, ni charge retenue).
+  final waveStep = served == SetTechniqueKind.wave && ex.heldCause == null
+      ? t?.waveStepPct
+      : null;
   final waveLength = t?.waveReps?.length ?? 1;
   for (var i = 0; i < sets; i++) {
     final (low, high, role) = lines[i];
@@ -1118,6 +1126,9 @@ List<SetPlan>? _directPlans(
   final follows = share != null && c.policy.build && !c.light && !c.eventNear;
   final mark = track.slotMarks[c.slotId];
   final tendon = tendonLoaded(info);
+  // Exercice assisté (élastique) : la progression passe par l'assistance,
+  // que le moteur ne règle pas — la plage du bloc est gardée.
+  final assisted = info.exercise.loadType == LoadType.band;
   var tendonCapped = false;
   final out = <SetPlan>[];
   for (var i = 0; i < sets; i++) {
@@ -1137,6 +1148,7 @@ List<SetPlan>? _directPlans(
       wanted = fromTest < 1 ? 1 : fromTest;
     } else if (!hold &&
         share == null &&
+        !assisted &&
         served == SetTechniqueKind.standard &&
         item.kind != SetKind.test &&
         c.policy.build &&
@@ -1225,6 +1237,42 @@ List<SetPlan>? _directPlans(
         ),
       );
     }
+  }
+  // Série repère : quand aucune série n'a mesuré la capacité depuis
+  // `coachProbeDays` (notes au plafond), la dernière série d'un exercice
+  // en répétitions devient ouverte, près de la réserve du repère.
+  final exact = track.exactDay;
+  final probed = track.benchmarkDay;
+  if (!hold &&
+      share == null &&
+      !assisted &&
+      served == SetTechniqueKind.standard &&
+      item.kind != SetKind.test &&
+      out.length >= 2 &&
+      c.policy.build &&
+      !c.light &&
+      !c.eventNear &&
+      track.lastDay != null &&
+      !track.noUp &&
+      ex.painZones.isEmpty &&
+      !run.noIncrease &&
+      !ex.uncertain &&
+      !out.last.open &&
+      (exact == null || run.day - exact >= p.coachProbeDays) &&
+      (probed == null || run.day - probed >= p.coachProbeDays)) {
+    final last = out.removeLast();
+    final reserve = c.level == 0 && p.benchmarkRir < 2 ? 2.0 : p.benchmarkRir;
+    out.add(
+      SetPlan(
+        loadKg: null,
+        low: last.low,
+        high: last.high + p.benchmarkExtraReps,
+        flames: flamesOfRir(reserve),
+        open: true,
+        benchmark: true,
+        role: last.role,
+      ),
+    );
   }
   if (tendonCapped) {
     final first = track.firstDay;

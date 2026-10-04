@@ -42,6 +42,13 @@ final class _Draft {
 
   /// Douleur de 5 sur 10 sur une contrainte moyenne : exercice allégé.
   bool regress = false;
+
+  /// Bloc au contrat 0.4.0 : les techniques sont filtrées par leurs
+  /// prérequis même quand la règle générale sert l'exercice.
+  bool gated = false;
+
+  /// Semaine servie telle que le bloc l'écrit (décharge, affûtage, test).
+  bool locked = false;
 }
 
 /// Matériel disponible aujourd'hui : celui du lieu [place] si le profil le
@@ -427,6 +434,56 @@ SessionPlan buildSessionPlan(
     }
   }
 
+  // 1 ter. Mode coach : une technique au-dessus du niveau d'expérience
+  // n'est pas servie (R2-P22) — séries classiques équivalentes à la place.
+  if (coached) {
+    final experience = ctx.profile.experience;
+    final level = experience == null ? 1 : experience.index;
+    for (final d in drafts) {
+      final technique = d.item.technique;
+      if (d.removed ||
+          technique == null ||
+          technique.kind == SetTechniqueKind.standard ||
+          level >= techniqueAccessLevel(technique.kind)) {
+        continue;
+      }
+      d.item = standardEquivalent(d.item);
+      d.sets = d.item.sets;
+      d.reasons.add(
+        reason(ReasonCodes.planTechniqueWithheld, <String, Object?>{
+          'technique': technique.kind.code,
+          'cause': 'level',
+        }),
+      );
+    }
+  }
+
+  // 1 quater. Mode coach : pas de test un jour de bilan nettement bas
+  // (hors jour d'échéance) — le test est retiré, il se refera frais.
+  if (coached && health.level >= 2) {
+    var eventToday = false;
+    for (final event in ctx.profile.events ?? const <SeasonEvent>[]) {
+      if (event.date.dayNumber == day) {
+        eventToday = true;
+      }
+    }
+    if (!eventToday) {
+      for (final d in drafts) {
+        if (d.removed || d.item.kind != SetKind.test) {
+          continue;
+        }
+        d.removed = true;
+        adjustments.add(
+          SessionAdjustment(
+            kind: AdjustmentKind.exerciseRemoved,
+            exerciseId: d.item.exerciseId,
+            reasons: healthReasons,
+          ),
+        );
+      }
+    }
+  }
+
   // 2. Bilan nettement bas : une série de moins par exercice (les
   // mouvements principaux gardent au moins trois séries).
   if (health.level >= 2) {
@@ -528,6 +585,8 @@ SessionPlan buildSessionPlan(
     );
     final exercise = run.begin(info, sized);
     d.run = exercise;
+    d.gated = coached;
+    d.locked = coached && policy.locked;
     final coach = spec.coach;
     if (coach != null) {
       // Semaine verrouillée : aucune hausse ; plafonds de hausse du niveau.
@@ -538,6 +597,13 @@ SessionPlan buildSessionPlan(
           : 2 * rise;
       if (d.regress && exercise.rirEff < 5) {
         exercise.rirEff = exercise.rirEff + 1 > 5 ? 5 : exercise.rirEff + 1;
+      }
+      if (health.level >= 2 &&
+          item.kind != SetKind.test &&
+          exercise.rirEff < p.coachLowDayRir) {
+        // Bilan nettement bas : aucune série à moins de trois répétitions
+        // en réserve (règle du programme, R5-P14).
+        exercise.rirEff = p.coachLowDayRir;
       }
     }
     confidenceCount++;
@@ -690,7 +756,11 @@ SessionPlan buildSessionPlan(
   final items = <ExercisePrescription>[
     for (final d in drafts)
       if (!d.removed)
-        d.coached ? _finishCoach(ctx, run, d) : _finish(ctx, run, d),
+        d.coached
+        ? _finishCoach(ctx, run, d)
+        : (coached
+              ? coherentTechnique(_finish(ctx, run, d))
+              : _finish(ctx, run, d)),
   ];
   List<GroupSpec>? groups;
   String? eventId;
@@ -725,6 +795,148 @@ SessionPlan buildSessionPlan(
     weekIntent: coached ? policy.intent : null,
     eventId: eventId,
     groups: groups,
+  );
+}
+
+/// La prescription [item] dont la technique est rendue cohérente avec son
+/// nombre de lignes (`sets`) : séries allégées et intervalles recomptés ;
+/// une technique à paliers ou un bloc au temps dont le nombre de lignes ne
+/// tient plus laisse la place à des séries classiques.
+ExercisePrescription coherentTechnique(ExercisePrescription item) {
+  final t = item.technique;
+  if (t == null || t.lastSetOnly == true) {
+    return item;
+  }
+  final sets = item.sets;
+  ExercisePrescription plain() {
+    final rules = <AutoregulationRule>[
+      for (final r in item.autoregulation ?? const <AutoregulationRule>[])
+        if (r.kind != AutoregulationKind.backoffFromTopSet &&
+            r.kind != AutoregulationKind.stopOnRepDrop)
+          r,
+    ];
+    return item.copyWith(
+      technique: null,
+      autoregulation: rules.isEmpty ? null : rules,
+    );
+  }
+
+  switch (t.kind) {
+    case SetTechniqueKind.topSetBackoff:
+      final backoff = t.backoffSets;
+      if (sets < 2) {
+        return plain();
+      }
+      return backoff != null && backoff >= sets
+          ? item.copyWith(technique: t.copyWith(backoffSets: sets - 1))
+          : item;
+    case SetTechniqueKind.emom:
+      return t.intervals == sets
+          ? item
+          : item.copyWith(technique: t.copyWith(intervals: sets));
+    case SetTechniqueKind.wave:
+      final reps = t.waveReps;
+      final waves = t.waves;
+      return reps != null && waves != null && waves * reps.length != sets
+          ? plain()
+          : item;
+    case SetTechniqueKind.pyramid:
+      final reps = t.pyramidReps;
+      return reps != null && reps.length != sets ? plain() : item;
+    case SetTechniqueKind.ladder:
+      final start = t.ladderStart;
+      final step = t.ladderStep;
+      final top = t.ladderTop;
+      if (start == null || step == null || top == null || step <= 0) {
+        return item;
+      }
+      final rungs = ((top - start) ~/ step + 1) * (t.ladderCount ?? 1);
+      return rungs != sets ? plain() : item;
+    case SetTechniqueKind.density:
+    case SetTechniqueKind.forTime:
+      return sets != 1 ? plain() : item;
+    case SetTechniqueKind.standard:
+    case SetTechniqueKind.cluster:
+    case SetTechniqueKind.restPause:
+    case SetTechniqueKind.myoReps:
+    case SetTechniqueKind.dropSet:
+    case SetTechniqueKind.isometricHold:
+    case SetTechniqueKind.accentuatedEccentric:
+    case SetTechniqueKind.contrast:
+    case SetTechniqueKind.amrap:
+    case SetTechniqueKind.skillPractice:
+      return item;
+  }
+}
+
+/// La prescription [item] sans sa technique : séries classiques au même
+/// travail approché. Paliers (vagues, échelle, pyramide) : autant de séries
+/// que de paliers, au nombre médian de répétitions ; bloc au temps
+/// (densité, contre la montre) : trois séries d'un quart du total ; les
+/// autres techniques gardent leurs séries et leur plage.
+ExercisePrescription standardEquivalent(ExercisePrescription item) {
+  final t = item.technique;
+  if (t == null) {
+    return item;
+  }
+  int median(List<int> reps) {
+    final sorted = List<int>.of(reps)..sort();
+    return sorted[sorted.length ~/ 2];
+  }
+
+  var sets = item.sets;
+  var low = item.repsLow;
+  var high = item.repsHigh;
+  final kind = t.kind;
+  final wave = t.waveReps;
+  final pyramid = t.pyramidReps;
+  if (kind == SetTechniqueKind.wave && wave != null && wave.isNotEmpty) {
+    low = median(wave);
+    high = low;
+  } else if (kind == SetTechniqueKind.pyramid &&
+      pyramid != null &&
+      pyramid.isNotEmpty) {
+    low = median(pyramid);
+    high = low;
+  } else if (kind == SetTechniqueKind.ladder) {
+    final start = t.ladderStart;
+    final top = t.ladderTop;
+    if (start != null && top != null) {
+      low = (start + top) ~/ 2;
+      high = low;
+    }
+  } else if ((kind == SetTechniqueKind.density ||
+          kind == SetTechniqueKind.forTime) &&
+      low != null &&
+      high != null) {
+    final total = t.totalRepsTarget ?? high;
+    final each = total ~/ 4 < 1 ? 1 : total ~/ 4;
+    sets = total < 4 ? 1 : 3;
+    low = each;
+    high = each;
+  } else if (kind == SetTechniqueKind.cluster) {
+    final mini = t.miniSets;
+    final each = t.miniSetReps;
+    if (mini != null && each != null && low != null && high != null) {
+      // Série d'une traite : deux tiers du total fractionné.
+      final whole = (2 * mini * each + 2) ~/ 3;
+      low = whole < 1 ? 1 : whole;
+      high = low;
+    }
+  }
+  final rules = <AutoregulationRule>[
+    for (final r in item.autoregulation ?? const <AutoregulationRule>[])
+      if (r.kind != AutoregulationKind.backoffFromTopSet &&
+          r.kind != AutoregulationKind.stopOnRepDrop)
+        r,
+  ];
+  return item.copyWith(
+    sets: sets,
+    repsLow: low,
+    repsHigh: high,
+    technique: null,
+    setTargets: null,
+    autoregulation: rules.isEmpty ? null : rules,
   );
 }
 
@@ -947,10 +1159,37 @@ List<SetPlan> _plansFor(
 
 ExercisePrescription _finish(EngineContext ctx, SessionRun run, _Draft d) {
   final p = ctx.params;
-  final item = d.item;
+  var item = d.item;
   final plans = d.plans;
   final exercise = d.run;
   final reasons = <Reason>[...item.reasons, ...d.reasons];
+  // Bloc au contrat 0.4.0 servi par la règle générale (pas encore de suivi
+  // ou pas de part du 1RM) : une technique qui mène près de l'échec n'est
+  // pas servie en semaine verrouillée, un jour de bilan nettement bas ou
+  // sur une zone douloureuse.
+  final technique = item.technique;
+  if (d.gated &&
+      technique != null &&
+      techniqueIntensifies(technique.kind) &&
+      (d.locked ||
+          run.health.level >= 2 ||
+          (exercise != null && exercise.painZones.isNotEmpty))) {
+    reasons.add(
+      reason(ReasonCodes.planTechniqueWithheld, <String, Object?>{
+        'technique': technique.kind.code,
+        'cause': d.locked
+            ? 'phase'
+            : (run.health.level >= 2 ? 'health' : 'pain'),
+      }),
+    );
+    final sets = d.sets;
+    item = standardEquivalent(item);
+    if (item.sets != sets &&
+        technique.kind != SetTechniqueKind.density &&
+        technique.kind != SetTechniqueKind.forTime) {
+      item = item.copyWith(sets: sets);
+    }
+  }
   if (plans == null || exercise == null || plans.isEmpty) {
     // Exercice non modélisé, ou sans a priori : la prescription du bloc,
     // au nombre de séries du jour.
@@ -1107,6 +1346,13 @@ ExercisePrescription _finishCoach(EngineContext ctx, SessionRun run, _Draft d) {
   final loaded = info.mode == CapacityMode.loaded;
   final reasons = <Reason>[...item.reasons, ...d.reasons, ...exercise.notes];
 
+  if (used.last.benchmark) {
+    reasons.add(
+      reason(ReasonCodes.adaptBenchmarkSet, <String, Object?>{
+        'rir': rirOfFlames(used.last.flames),
+      }),
+    );
+  }
   // Technique servie, cohérente avec le nombre de lignes du jour.
   var technique = exercise.techniqueWithheld ? null : item.technique;
   var keepRange = false;

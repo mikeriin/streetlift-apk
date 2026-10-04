@@ -37,3 +37,10 @@ Session Fable lancée le 04/10/2026 à 08:50 UTC. Base : `moteurs` d0d60018.
 - Simulateur : sim/techniques.dart (injecteur), SimProgram.transform.
 - Mesures rapides (2 graines) : échéance 97 % du maximum du jour (0.1 : 90 %, coach RPE : 92 %) ; écart d'effort 1,6 à 2,3 (0.1 : 1,1 à 2,3) → à améliorer en A et C.
 - Reste : tests coach (fixtures prêtes), docs, calibrage panel, fin de lot.
+
+## Étape : tests du mode coach, dérive du panel
+- Empreintes des cinq grilles vérifiées (identiques à docs/PANEL.md, concaténation 7d337a2e…).
+- Dérive du panel (ancres p08_a et p14_c, un appel Opus par école) : (a) = 1 / 1 / 1 / 1 ; (c) = 8 (force) / 8 (calisthénie) / 9 (hypertrophie) / 8 (santé) → pas de dérive.
+- Tests : test/coach_test.dart, coach_properties_{0..3}_test.dart (10 240 journaux coach), fixtures street_profiles.json.gz, invariants C1 à C4 (support.dart).
+- Moteur : plafond des notes appris (RatingModel.topSaid), courbe apprise sur les séries ≤ 3 en réserve, série repère (coachProbeDays 14), techniques au-dessus du niveau → séries classiques (standardEquivalent), coherentTechnique, clampLocked, pas de test un jour de bilan nettement bas, exercices à l'élastique : plage gardée.
+- Outil panel : /home/claude/wt/tools/panel.py (prepare / collect).

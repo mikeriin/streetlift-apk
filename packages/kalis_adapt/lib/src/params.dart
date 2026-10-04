@@ -127,8 +127,12 @@ final class AdaptParams {
     this.coachCorridorUp = 0.075,
     this.coachCorridorWiden = 0.025,
     this.coachCensorRir = 3,
+    this.coachNearCeilingSd = 1.5,
+    this.coachCurveRir = 3,
     this.coachHoldMaxShare = 0.8,
     this.coachDirectGuardRir = 2,
+    this.coachProbeDays = 14,
+    this.coachLowDayRir = 3,
     this.biasLearnRate = 0.25,
     this.biasLearnRir = 3,
     this.biasLearnMaxStep = 0.1,
@@ -576,11 +580,20 @@ final class AdaptParams {
   /// plate que la moyenne : la note d'effort prime sur la part du 1RM).
   final double coachCorridorWiden;
 
-  /// Mode coach : à partir de ce RIR dit, une note ne se lit que comme une
-  /// borne basse (« au moins tant en réserve ») : la prédiction des
-  /// répétitions restantes se dégrade loin de l'échec (Zourdos et al.
-  /// 2021 ; Halperin et al. 2022).
+  /// Mode coach : à partir de ce RIR dit — ou de la plus haute réserve que
+  /// la personne ait jamais dite, si elle est plus grande —, une note ne se
+  /// lit que comme une borne basse (« au moins tant en réserve ») : la
+  /// prédiction des répétitions restantes se dégrade loin de l'échec et
+  /// plafonne (Zourdos et al. 2021 ; Halperin et al. 2022).
   final double coachCensorRir;
+
+  /// Mode coach : facteur du bruit d'une note à moins d'un point du
+  /// plafond des notes de la personne (note en partie tronquée).
+  final double coachNearCeilingSd;
+
+  /// Mode coach : réserve dite jusqu'à laquelle une série fraîche renseigne
+  /// la forme de la courbe répétitions ↔ charge.
+  final double coachCurveRir;
 
   /// Mode coach : part du maximum du jour qu'un maintien d'entraînement
   /// ne dépasse pas (les maintiens se travaillent sous le maximum, la
@@ -591,6 +604,15 @@ final class AdaptParams {
   /// prudence) sous laquelle les répétitions écrites par le bloc sont
   /// réduites.
   final double coachDirectGuardRir;
+
+  /// Mode coach : jours sans série qui mesure la capacité (toutes les
+  /// notes au plafond « loin de l'échec ») au bout desquels la dernière
+  /// série devient une série repère (APRE, Mann et al. 2010).
+  final int coachProbeDays;
+
+  /// Mode coach : réserve minimale des séries un jour de bilan nettement
+  /// bas.
+  final double coachLowDayRir;
 
   /// Part de l'écart d'un test (rapporté à [biasLearnRir] répétitions)
   /// portée au biais de note appris.

@@ -6,6 +6,7 @@ import 'package:kalis_core/kalis_core.dart';
 
 import '../apply.dart';
 import '../book.dart';
+import '../coach.dart' show blockCoached;
 import '../engine.dart';
 import '../filter.dart';
 import '../numeric.dart' show exp, ln;
@@ -1027,12 +1028,17 @@ SimRun simulate({
               targetLow: low,
               targetHigh: high,
               steps: steps,
-              reachable: athlete.reachable(
-                truth,
-                basisLow ?? basisHigh ?? low,
-                basisHigh ?? basisLow ?? high,
-                Flames.toRir(flamesTarget),
-              ),
+              // (Programmes au contrat 0.4.0 : un exercice assisté à
+              // l'élastique se règle par l'assistance, non simulée.)
+              reachable:
+                  !(blockCoached(block) &&
+                      truth.info.exercise.loadType == LoadType.band) &&
+                  athlete.reachable(
+                    truth,
+                    basisLow ?? basisHigh ?? low,
+                    basisHigh ?? basisLow ?? high,
+                    Flames.toRir(flamesTarget),
+                  ),
               simDay: simDay,
               slotId: item.slotId,
               role: lineRole,

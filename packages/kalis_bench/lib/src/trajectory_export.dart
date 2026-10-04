@@ -151,6 +151,10 @@ String? adaptReasonText(Reason r, Catalog catalog) {
       return 'résultat de test retenu : ${name('exerciseId')} '
           '${_n(_num(r, 'value') ?? 0, 1)} '
           '(± ${_n(_num(r, 'standardError') ?? 0, 1)})';
+    case ReasonCodes.adaptBenchmarkSet:
+      return 'série repère : dernière série ouverte (au ressenti, '
+          '${_n(_num(r, 'rir') ?? 0, 1)} en réserve) pour mesurer où en est '
+          'l\'athlète';
     case ReasonCodes.adaptHealthLow:
       final overall = (_num(r, 'overall') ?? 0).round();
       return 'bilan du jour ${overall >= 3 ? 'moyen' : 'bas'} ($overall/5)';

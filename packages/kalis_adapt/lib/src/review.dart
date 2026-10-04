@@ -563,15 +563,19 @@ AdaptReview buildReview(
               weekIndex: nextWeek,
               slotId: item.slotId,
               fromPrescription: item,
-              toPrescription: item.copyWith(
-                sets: sets,
-                targetFlames: flamesOfRir(rir > 5 ? 5.0 : rir),
-                setTargets: targets == null
-                    ? unset
-                    : <SetTarget>[
-                        for (var i = 0; i < sets; i++)
-                          targets[i < targets.length ? i : targets.length - 1],
-                      ],
+              toPrescription: coherentTechnique(
+                item.copyWith(
+                  sets: sets,
+                  targetFlames: flamesOfRir(rir > 5 ? 5.0 : rir),
+                  setTargets: targets == null
+                      ? unset
+                      : <SetTarget>[
+                          for (var i = 0; i < sets; i++)
+                            targets[i < targets.length
+                                ? i
+                                : targets.length - 1],
+                        ],
+                ),
               ),
               reasons: why,
             ),
@@ -1391,6 +1395,18 @@ _Candidate _volumeCandidate(
         if (sets < 1 || sets > 20) {
           continue;
         }
+        final structure = it.technique;
+        if (structure != null &&
+            structure.lastSetOnly != true &&
+            (structure.kind == SetTechniqueKind.wave ||
+                structure.kind == SetTechniqueKind.pyramid ||
+                structure.kind == SetTechniqueKind.ladder ||
+                structure.kind == SetTechniqueKind.density ||
+                structure.kind == SetTechniqueKind.forTime)) {
+          // Paliers ou bloc au temps : le volume ne se règle pas par le
+          // nombre de lignes.
+          continue;
+        }
         final targets = it.setTargets;
         changes.add(
           PlanChange(
@@ -1399,14 +1415,16 @@ _Candidate _volumeCandidate(
             weekIndex: week.weekIndex,
             slotId: it.slotId,
             fromPrescription: it,
-            toPrescription: it.copyWith(
-              sets: sets,
-              setTargets: targets == null
-                  ? unset
-                  : <SetTarget>[
-                      for (var i = 0; i < sets; i++)
-                        targets[i < targets.length ? i : targets.length - 1],
-                    ],
+            toPrescription: coherentTechnique(
+              it.copyWith(
+                sets: sets,
+                setTargets: targets == null
+                    ? unset
+                    : <SetTarget>[
+                        for (var i = 0; i < sets; i++)
+                          targets[i < targets.length ? i : targets.length - 1],
+                      ],
+              ),
             ),
             reasons: why,
           ),

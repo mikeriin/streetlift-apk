@@ -78,6 +78,67 @@ CoachAdvice? coachAdvise(
   ExercisePrescription sessionItem,
   SkillBoard? skills,
 ) {
+  final advice = _coachAdvise(run, ex, index, sessionItem, skills);
+  if (advice == null || advice.action == IntraSessionAction.stopExercise) {
+    return advice;
+  }
+  final clamped = clampLocked(run, ex, advice.next);
+  if (clamped == null) {
+    return advice;
+  }
+  final held = CoachAdvice(next: clamped, action: IntraSessionAction.keep)
+    ..miniSetsLeft = advice.miniSetsLeft
+    ..stepExerciseId = advice.stepExerciseId;
+  held.reasons.addAll(advice.reasons);
+  return held;
+}
+
+/// Invariants de 0.1, quelle que soit la règle suivie : après un échec non
+/// prévu dans la séance, sur une zone douloureuse ou un jour de bilan bas,
+/// la ligne suivante [next] n'est jamais plus lourde que la précédente ;
+/// sans charge, après un échec, jamais plus longue. Rend la cible bornée,
+/// ou `null` quand [next] tient déjà (ou pour une tentative, qui suit sa
+/// propre règle).
+SetPlan? clampLocked(SessionRun run, ExerciseRun ex, SetPlan next) {
+  if (next.role == SetRole.attempt || ex.observed.isEmpty) {
+    return null;
+  }
+  final previous = ex.observed.last;
+  final locked = ex.fails > 0 || ex.painZones.isNotEmpty || run.noIncrease;
+  if (!locked) {
+    return null;
+  }
+  if (ex.info.mode == CapacityMode.loaded) {
+    final last = previous.loadKg;
+    final kg = next.loadKg;
+    if (last != null && kg != null && kg > last + 1e-9) {
+      return next.withLoad(last);
+    }
+    return null;
+  }
+  if (ex.fails > 0) {
+    final cap = previous.amount < 1 ? 1 : previous.amount;
+    if (next.high > cap) {
+      return SetPlan(
+        loadKg: null,
+        low: next.low > cap ? cap : next.low,
+        high: cap,
+        flames: next.flames,
+        open: next.open && next.low < cap,
+        role: next.role,
+      );
+    }
+  }
+  return null;
+}
+
+CoachAdvice? _coachAdvise(
+  SessionRun run,
+  ExerciseRun ex,
+  int index,
+  ExercisePrescription sessionItem,
+  SkillBoard? skills,
+) {
   final c = ex.spec.coach;
   final track = ex.track;
   if (c == null || track == null || ex.observed.isEmpty) {
@@ -218,7 +279,8 @@ CoachAdvice? coachAdvise(
   // Une note au plafond de ce qu'une personne sait dire (« 4 en réserve
   // ou plus ») ne dit pas que la série était trop dure ; des répétitions
   // qui manquent à la cible, si.
-  final floorSaid = floor > p.coachCensorRir ? p.coachCensorRir : floor;
+  final ceiling = run.state.rater.ceiling(p);
+  final floorSaid = floor > ceiling ? ceiling : floor;
   double gapOf(ObservedSet o) {
     var g = floorSaid - _rirOf(o);
     if (g < 0) {

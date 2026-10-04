@@ -176,6 +176,7 @@ IntraSessionAdvice buildAdvice(
       boundOnly: reading != null && reading.boundOnly,
       quality: set.quality,
       role: set.role,
+      lineAmount: hold ? set.seconds : set.reps,
     );
   }
 
@@ -253,9 +254,17 @@ IntraSessionAdvice buildAdvice(
           wanted,
           SkillBoard.of(ctx, view, state, replayed.digests, day),
         );
-  final (next, action) = coached == null
+  var (next, action) = coached == null
       ? run.advise(exercise, index)
       : (coached.next, coached.action);
+  if (coached == null && exercise.spec.coach != null) {
+    // Bloc au contrat 0.4.0 servi par la règle générale : mêmes verrous.
+    final clamped = clampLocked(run, exercise, next);
+    if (clamped != null) {
+      next = clamped;
+      action = IntraSessionAction.keep;
+    }
+  }
   final reasons = <Reason>[...?coached?.reasons];
   final previousTarget = previous.target;
   final rated = previous.flames;
@@ -276,8 +285,8 @@ IntraSessionAdvice buildAdvice(
     // comparent pas (ni plus dur, ni plus facile que prévu).
     final far =
         exercise.spec.coach != null &&
-        rirOfFlames(rated) >= p.coachCensorRir &&
-        rirOfFlames(previousTarget.flames) >= p.coachCensorRir;
+        rirOfFlames(rated) >= run.state.rater.ceiling(p) &&
+        rirOfFlames(previousTarget.flames) >= run.state.rater.ceiling(p);
     final delta = far ? 0 : rated - previousTarget.flames;
     if (delta >= p.adviceGapFlames) {
       reasons.add(

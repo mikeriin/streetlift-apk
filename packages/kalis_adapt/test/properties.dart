@@ -70,7 +70,11 @@ final class RandomCase {
     required this.dayIndex,
     required this.health,
     required this.place,
+    this.rich = false,
   });
+
+  /// Journal aux champs de 0.4.0 (techniques, rôles, parties, propreté).
+  final bool rich;
 
   /// Graine.
   final int seed;
@@ -234,6 +238,55 @@ SetRecord _randomSet(
   );
 }
 
+/// La série [set] avec des champs de `kalis_core` 0.4.0 tirés au hasard :
+/// technique (celle de la prescription ou une autre), rôle, parties (dont
+/// la somme vaut les répétitions), propreté, rang de tentative.
+SetRecord _decorate(SeededRandom r, SetRecord set, ExercisePrescription? item) {
+  var out = set;
+  final written = item?.technique?.kind;
+  if (written != null && _chance(r, 75)) {
+    out = out.copyWith(technique: written);
+  } else if (_chance(r, 12)) {
+    out = out.copyWith(
+      technique:
+          SetTechniqueKind.values[r.nextInt(SetTechniqueKind.values.length)],
+    );
+  }
+  if (_chance(r, 35)) {
+    out = out.copyWith(role: SetRole.values[r.nextInt(SetRole.values.length)]);
+  }
+  final reps = out.reps;
+  if (reps != null && reps >= 2 && _chance(r, 25)) {
+    final count = _between(r, 2, reps < 4 ? reps : 4);
+    final parts = <SetPart>[];
+    var left = reps;
+    for (var i = 0; i < count; i++) {
+      final n = i == count - 1 ? left : _between(r, 1, left - (count - 1 - i));
+      left -= n;
+      parts.add(
+        SetPart(
+          reps: n,
+          externalLoadKg: _chance(r, 20) ? out.externalLoadKg : null,
+          restBeforeSeconds: i > 0 && _chance(r, 60)
+              ? _between(r, 5, 40)
+              : null,
+        ),
+      );
+    }
+    out = out.copyWith(parts: parts);
+  }
+  if (_chance(r, out.seconds != null ? 60 : 8)) {
+    out = out.copyWith(quality: _between(r, 1, 5));
+  }
+  if (out.kind == SetKind.test && _chance(r, 60)) {
+    out = out.copyWith(attemptIndex: out.setIndex, role: SetRole.attempt);
+  }
+  if (_chance(r, 4)) {
+    out = out.copyWith(elapsedSeconds: _between(r, 20, 900));
+  }
+  return out;
+}
+
 /// Enchaîne les séries des exercices deux à deux, dans l'ordre de
 /// réalisation d'un superset : A1, B1, A2, B2…
 void _interleave(List<SetRecord> sets) {
@@ -261,8 +314,9 @@ void _interleave(List<SetRecord> sets) {
 RandomCase randomCase(
   Catalog catalog,
   List<(AthleteProfile, SimProgram)> programs,
-  int seed,
-) {
+  int seed, {
+  bool rich = false,
+}) {
   final r = SeededRandom(fnvMix(0x4A4F5552, seed));
   final (profile, program) = programs[r.nextInt(programs.length)];
   final blockPick = r.nextInt(100);
@@ -320,7 +374,8 @@ RandomCase randomCase(
       bases[info.id] = base;
       final count = _between(r, 1, item.sets + 1);
       for (var i = 0; i < count; i++) {
-        sets.add(_randomSet(r, info, slotItem, order, i, base));
+        final made = _randomSet(r, info, slotItem, order, i, base);
+        sets.add(rich ? _decorate(r, made, slotItem) : made);
       }
       order++;
     }
@@ -382,6 +437,7 @@ RandomCase randomCase(
     dayIndex: prescription.dayIndex,
     health: _randomHealth(r),
     place: _chance(r, 12) ? Place.values[r.nextInt(3)] : null,
+    rich: rich,
   );
 }
 
@@ -403,6 +459,7 @@ List<String> checkCase(Catalog catalog, KalisAdapt engine, RandomCase c) {
   for (final v in session.validate()) {
     out.add('$where, séance : ${v.path} ${v.code} ${v.message}');
   }
+  final coached = blockCoached(c.block);
   out.addAll(
     checkSession(
       catalog,
@@ -412,6 +469,7 @@ List<String> checkCase(Catalog catalog, KalisAdapt engine, RandomCase c) {
       session,
       p,
       health: c.health,
+      coached: coached,
     ).map((v) => '$where, $v'),
   );
   // I3 : aucun exercice exclu par une douleur du jour n'est prescrit.
@@ -545,7 +603,8 @@ List<String> checkCase(Catalog catalog, KalisAdapt engine, RandomCase c) {
       final shown = targets == null || targets.isEmpty
           ? null
           : targets[i < targets.length ? i : targets.length - 1];
-      final made = _randomSet(r, info, item, order, i, info.grid.floor(base));
+      final plain = _randomSet(r, info, item, order, i, info.grid.floor(base));
+      final made = c.rich ? _decorate(r, plain, item) : plain;
       // Trois fois sur quatre, la cible enregistrée est celle affichée.
       done.add(
         _chance(r, 75) && shown != null
@@ -572,6 +631,7 @@ List<String> checkCase(Catalog catalog, KalisAdapt engine, RandomCase c) {
           done,
           advice,
           p,
+          coached: coached,
         ).map((v) => '$where, $v'),
       );
       if (advices == 1 &&
@@ -602,6 +662,7 @@ List<String> checkCase(Catalog catalog, KalisAdapt engine, RandomCase c) {
             done,
             bare,
             p,
+            coached: coached,
           ).map((v) => '$where, sans bilan, $v'),
         );
       }
@@ -640,6 +701,7 @@ List<String> checkCase(Catalog catalog, KalisAdapt engine, RandomCase c) {
         done,
         late,
         p,
+        coached: coached,
       ).map((v) => '$where, enchaîné, $v'),
     );
   }
@@ -720,6 +782,50 @@ void propertyTests(int file) {
       for (var seed = first; seed < first + chunk; seed++) {
         failures.addAll(
           checkCase(catalog, engine, randomCase(catalog, programs, seed)),
+        );
+        if (failures.length > 20) {
+          break;
+        }
+      }
+      expect(failures, isEmpty);
+    }, timeout: const Timeout(Duration(minutes: 20)));
+  }
+}
+
+/// Journaux aléatoires par fichier de propriétés du mode coach : 4 × 2 560
+/// = 10 240 journaux.
+const int coachJournalsPerFile = 2560;
+
+/// Programmes street du banc (blocs au contrat 0.4.0), tels que
+/// `kalis_plan` les écrit et avec une technique du contrat injectée par
+/// emplacement.
+List<(AthleteProfile, SimProgram)> coachPropertyPrograms() =>
+    <(AthleteProfile, SimProgram)>[
+      for (final key in streetKeys()) ...<(AthleteProfile, SimProgram)>[
+        (streetProfile(key), streetProgram(key)),
+        (streetProfile(key), streetProgram(key, inject: true)),
+      ],
+    ];
+
+/// Déclare les tests du mode coach du fichier de rang [file] : mêmes
+/// invariants (I2 à I8), I1 remplacé par les invariants C1 à C4 (voir
+/// `checkCoachSession`), sur des journaux aux champs de 0.4.0.
+void coachPropertyTests(int file) {
+  final catalog = loadCatalog();
+  final programs = coachPropertyPrograms();
+  const chunk = 160;
+  for (var from = 0; from < coachJournalsPerFile; from += chunk) {
+    final first = 100000 + file * coachJournalsPerFile + from;
+    test('journaux aléatoires (mode coach) $first à ${first + chunk - 1}', () {
+      final engine = KalisAdapt();
+      final failures = <String>[];
+      for (var seed = first; seed < first + chunk; seed++) {
+        failures.addAll(
+          checkCase(
+            catalog,
+            engine,
+            randomCase(catalog, programs, seed, rich: true),
+          ),
         );
         if (failures.length > 20) {
           break;
