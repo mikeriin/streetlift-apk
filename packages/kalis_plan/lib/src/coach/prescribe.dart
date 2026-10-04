@@ -2069,12 +2069,13 @@ final class Prescriber {
       // pas d'un progrès supposé ; R5-P3).
       final stage = ws.kind == WeekKind.build ? _stage(ws) : 0;
       final more = sets + 1 + (stage >= 2 ? 1 : 0) + (stage >= 4 ? 1 : 0);
-      final reps = max - 2 < 1 ? 1 : max - 2;
+      final kept = _floorRir(e, week).ceil() < 2 ? 2 : _floorRir(e, week).ceil();
+      final reps = max - kept < 1 ? 1 : max - kept;
       x
         ..sets = ws.light ? sets : (more > 5 ? 5 : more)
         ..repsLow = reps
         ..repsHigh = reps
-        ..rir = max - reps < 2 ? 2 : (max - reps).toDouble()
+        ..rir = max - reps < kept ? kept.toDouble() : (max - reps).toDouble()
         ..reasons.add(_rule(CoachRules.repStep, 1, 'reps'));
       return x;
     }
