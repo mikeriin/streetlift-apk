@@ -205,10 +205,18 @@ String loadText(ItemView i) {
     if (intensity.basis == IntensityBasis.percentOneRm) {
       parts.add('≈ $share du 1RM du mouvement de compétition');
     } else if (intensity.basis == IntensityBasis.percentBenchmark) {
+      // Le repère utilisé est écrit en clair (dernier maximum mesuré ou
+      // repère de reprise) : l'athlète sait sur quoi porte le pourcentage.
+      final top = p.secondsHigh ?? p.repsHigh;
+      final base = top == null || intensity.value <= 0
+          ? null
+          : (top / intensity.value).round();
       parts.add(
         intensity.referenceKind == BenchmarkKind.maxHold
             ? '≈ $share du maintien maximal'
-            : '≈ $share du maximum de répétitions',
+                  '${base == null ? '' : ' (repère : $base s)'}'
+            : '≈ $share du maximum de répétitions'
+                  '${base == null ? '' : ' (repère : $base)'}',
       );
     }
   }

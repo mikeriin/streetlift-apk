@@ -679,6 +679,11 @@ final class Prescriber {
     return a.totalOneRm(referenceId);
   }
 
+  /// Vrai pour la séance facile à deux jours d'un test daté sans pic de
+  /// forme (le rôle « dernier rappel » n'existe alors qu'à J−2).
+  bool _easyDay(_DayRole role) =>
+      role == _DayRole.primerFar && !(_shape.target?.peak ?? false);
+
   /// Jours entre la séance en cours et l'échéance, ou `null`.
   int? get _toEventDays {
     final target = _shape.target;
@@ -1091,8 +1096,7 @@ final class Prescriber {
     final ease = !spared || blockIndex > 0
         ? 0.0
         : (week <= 1 ? 0.06 : (week == 2 ? 0.03 : 0.0));
-    final left = _toEventDays;
-    if (role == _DayRole.primerFar && left != null && left <= 2) {
+    if (_easyDay(role)) {
       // À deux jours d'un test sans pic de forme : deux séries légères et
       // rapides, rien de fatigant (R3-P14).
       x
@@ -1398,8 +1402,7 @@ final class Prescriber {
         rir = 4;
     }
     if (role == _DayRole.primerFar) {
-      final left = _toEventDays;
-      if (left != null && left <= 2) {
+      if (_easyDay(role)) {
         return null;
       }
       reps = 3;
@@ -1885,11 +1888,15 @@ final class Prescriber {
       final known = baseId == null ? 0 : (a.reps[baseId] ?? 0);
       final weight = (e.bodyweightFraction?.value ?? 0) * a.bodyWeight;
       if (_totalFor(e, baseId) == null && known >= 3 && weight > 0) {
-        // Charge de départ estimée d'après le maximum au poids du corps
-        // (R2-P2, borné à 12 répétitions : au-delà la table ne vaut plus),
-        // 5 répétitions à 3 de l'échec, puis +1,5 % par semaine de charge.
+        // Charge de départ estimée d'après le maximum au poids du corps :
+        // table R2-P2 jusqu'à 12 répétitions ; au-delà, formule d'Epley
+        // bornée à 20 répétitions (estimation prudente, à ajuster à la
+        // première séance). 5 répétitions à 3 de l'échec, puis +1,5 % par
+        // semaine de charge.
         final stage = _stage(ws);
-        final total = weight / _pctAt(known > 12 ? 12 : known);
+        final total = known <= 12
+            ? weight / _pctAt(known)
+            : weight * (1 + (known > 20 ? 20 : known) / 30);
         var pct = 0.77 + 0.015 * (stage > 4 ? 4 : stage);
         if (ws.light) {
           pct = 0.72;
@@ -3141,11 +3148,8 @@ final class Prescriber {
       return x;
     }
     final x = _dosed(s, day, week, ws, role);
-    final left = _toEventDays;
     if (x != null &&
-        role == _DayRole.primerFar &&
-        left != null &&
-        left <= 2 &&
+        _easyDay(role) &&
         x.kind == SetKind.work &&
         x.isResistance &&
         s.method != Method.liftHeavy &&

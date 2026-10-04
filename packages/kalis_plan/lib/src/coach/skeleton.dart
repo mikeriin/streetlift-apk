@@ -1194,15 +1194,17 @@ void _buildReps(_Builder b, Set<int> runDays) {
       if (!pullDays.contains(d)) d,
   ];
   final short = days.every((d) => a.days[d].minutes <= 50);
+  // (Les jours sans traction d'abord ; s'il en manque, on complète avec
+  // les autres jours.)
+  final others = <int>[
+    for (final d in legCandidates.isEmpty ? days : legCandidates)
+      if (!free.contains(d)) d,
+  ];
   final legDays = short
       ? days
-      : spreadDays(
-          a,
-          free.length >= wanted
-              ? free
-              : (legCandidates.isEmpty ? days : legCandidates),
-          wanted,
-        );
+      : (free.length >= wanted
+            ? spreadDays(a, free, wanted)
+            : <int>[...free, ...spreadDays(a, others, wanted - free.length)]);
 
   // Poussée en entretien quand l'objectif ne porte que sur le tirage
   // (R4-H4 : on déplace du volume, on n'en ajoute pas).
