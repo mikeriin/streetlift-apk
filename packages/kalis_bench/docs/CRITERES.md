@@ -62,6 +62,17 @@ Un athlète simulé à vérité connue (simulateur de `kalis_adapt`, appelé tel
 
 Le programme tel qu'il a évolué sous le moteur est repassé aux critères de sécurité (« violations, programme évolué »).
 
+**Programmes au contrat 0.4.0 (0.1.2, lot CA1).** Un programme écrit en parts du 1RM, avec des jours lourds et des jours légers, des tests et des tentatives, ne se lit pas avec les deux premiers repères de hausse et d'écart tels quels : la charge change d'une séance à l'autre parce que le programme l'écrit, et une cible « 5 répétitions en réserve et plus » n'a pas de borne haute. Les repères de 0.1.0 restent calculés et publiés ; trois mesures s'y ajoutent pour ces programmes, sous chacun des trois modèles de vérité du simulateur (A, celui de 0.1 ; B et C, ajoutés par `kalis_adapt` 0.2.0, `docs/VALIDATION.md` de ce paquet) :
+
+| Mesure | Repère | Fondement |
+|---|---|---|
+| Écart absolu moyen entre l'effort affiché par le moteur et l'effort réel, sur les cibles atteignables (cible « 5 et plus » : seul un effort plus dur compte ; un exercice assisté à l'élastique, réglé par l'assistance, n'est pas compté) | ≤ 1 répétition | même cible que 0.1.0 |
+| Hausses de plus de 10 % d'un mouvement principal d'une séance à la suivante **du même emplacement, à répétitions égales**, faites de plusieurs crans | 0 | R5-P3, R5-P22 |
+| Ouvertures réussies (première tentative d'un test de maximum) | toutes | R3-P14 : la première barre se réussit un mauvais jour |
+| Tentatives réussies ; meilleure performance du jour de l'échéance ÷ maximum réel du jour | comparées entre versions et politiques | — |
+
+La campagne street (`CAMPAGNE_STREET.md` du rapport) donne ces mesures sur plusieurs graines et les compare à `kalis_adapt` en comportement 0.1, à un coach simple à la note d'effort et à l'oracle.
+
 ## 5. Ce que les critères ne voient pas
 
 L'ordre des exercices dans la séance, la cohérence d'une séance pour un humain, la pertinence d'un exercice pour un objectif, la qualité des consignes, le réalisme d'un enchaînement, la place d'une technique dans un bloc : c'est le rôle du panel de coachs virtuels (`PANEL.md`) et de la relecture du propriétaire.

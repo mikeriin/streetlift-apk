@@ -51,3 +51,8 @@ Session Fable lancée le 04/10/2026 à 08:50 UTC. Base : `moteurs` d0d60018.
 - Ajouts : effort attendu affiché (maintiens dans les deux sens), séries repères chargées, reprise graduelle (coachBreakDays 14, −20 % de séries la semaine du retour), étapes de figure dans le tableau de la figure, journal des décisions allégé.
 - Brouillon du § 11 du contrat : /home/claude/wt/tools/contrat_11.md (dans la sauvegarde ci-dessous, à reporter dans CONTRAT.md).
 - Prochaine étape : première passe complète du panel (20 appels Opus), boucles, docs, fin de lot.
+
+## Étape : avant la première passe du panel
+- Export des trajectoires : tableau d'une figure visée travaillée par ses seules étapes (planche) ; note « marge prévue » seulement quand la garde a réduit la série.
+- kalis_bench 0.1.2 (CHANGELOG, CONTRAT, CRITERES).
+- Prochaine étape : passe 0 complète du panel, boucles de calibrage.
