@@ -129,10 +129,26 @@ final class ExerciseTrack {
   /// (charge externe négative du journal), ou `null`.
   double? assist;
 
+  /// Mode coach : performance (logarithme de la capacité du jour) des
+  /// dernières séances qui ont mesuré la capacité, trois au plus (jour,
+  /// valeur).
+  List<(int, double)> form = const <(int, double)>[];
+
+  /// Mode coach : jour où l'alerte de surmenage s'est déclenchée (deux
+  /// séances mesurées de suite nettement sous la précédente), ou `null`.
+  int? easeDay;
+
+  /// Mode coach : performance des deux séances de l'alerte, en part de la
+  /// séance de référence.
+  double easeRatio = 1;
+
   /// Copie indépendante.
   ExerciseTrack fork() {
     final c = ExerciseTrack(info, filter.fork());
     c.assist = assist;
+    c.form = form;
+    c.easeDay = easeDay;
+    c.easeRatio = easeRatio;
     c.probeCapacity = probeCapacity;
     c.lastLoad = lastLoad;
     c.noUp = noUp;
@@ -963,6 +979,32 @@ final class SessionRun {
     }
   }
 
+  /// Alerte de surmenage (mode coach) : retient la performance mesurée de
+  /// la séance ; deux séances mesurées de suite nettement sous celle
+  /// d'avant ouvrent une semaine à volume réduit.
+  void _noteForm(ExerciseTrack track, double value, AdaptParams p) {
+    final form = <(int, double)>[
+      for (final e in track.form)
+        if (e.$1 != day) e,
+      (day, value),
+    ];
+    while (form.length > 3) {
+      form.removeAt(0);
+    }
+    if (form.length == 3 && day - form[0].$1 <= p.coachOverreachSpanDays) {
+      final limit = form[0].$2 + ln(1 - p.coachOverreachDrop);
+      if (form[1].$2 <= limit && form[2].$2 <= limit) {
+        track.easeDay = day;
+        final worst = form[1].$2 > form[2].$2 ? form[1].$2 : form[2].$2;
+        track.easeRatio = exp(worst - form[0].$2);
+        // La séance d'alerte devient la nouvelle référence.
+        track.form = <(int, double)>[form[2]];
+        return;
+      }
+    }
+    track.form = form;
+  }
+
   void _finalize(ExerciseRun run) {
     _pending.remove(run);
     if (identical(current, run)) {
@@ -1079,6 +1121,9 @@ final class SessionRun {
     final coach = run.spec.coach;
     if (coach != null) {
       noteCoachSession(track, run, coach, day, p, bodyWeightKg);
+      if (run.measured || run.fails > 0) {
+        _noteForm(track, f.m[0] + f.m[3], p);
+      }
     }
     f.endSession();
     run.closed = true;

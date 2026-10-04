@@ -228,6 +228,17 @@ String? adaptReasonText(Reason r, Catalog catalog, {bool assisted = false}) {
   return null;
 }
 
+/// Alerte de surmenage sur un mouvement (raison `adapt.fatigue_high` d'un
+/// exercice) : la performance mesurée des deux dernières séances, en part
+/// de la séance de référence.
+String _overreachText(Reason r) {
+  final ratio = _num(r, 'readiness') ?? 1;
+  final drop = ((1 - ratio) * 100).round();
+  return 'alerte de surmenage : performance en baisse deux séances '
+      'mesurées de suite (au moins −$drop %) — volume réduit d\'un tiers '
+      'pendant une semaine, intensité gardée';
+}
+
 String _adjustmentLabel(String code) => switch (code) {
   'load_reduced' => 'charges réduites',
   'sets_reduced' => 'séries retirées',
@@ -602,7 +613,9 @@ String coachTrajectoryMarkdown(
         if (isRecal && recal) {
           return;
         }
-        final text = adaptReasonText(r, catalog, assisted: assisted && !advice);
+        final text = !advice && r.code == ReasonCodes.adaptFatigueHigh
+            ? _overreachText(r)
+            : adaptReasonText(r, catalog, assisted: assisted && !advice);
         if (text != null && !notes.contains(text)) {
           notes.add(text);
           recal = recal || isRecal;
@@ -688,6 +701,34 @@ String coachTrajectoryMarkdown(
         ]),
       );
     }
+    // Maximum réel hors fatigue de l'athlète simulé, au départ et à la
+    // fin : le profil peut déclarer un record plus ancien ou plus haut.
+    EstimateRow? firstRow;
+    EstimateRow? lastRow;
+    for (final e in run.estimates) {
+      if (e.exerciseId == id) {
+        firstRow ??= e;
+        lastRow = e;
+      }
+    }
+    if (firstRow != null && lastRow != null) {
+      String cap(EstimateRow e) {
+        if (e.mode != CapacityMode.loaded) {
+          return _n(e.truth, 0);
+        }
+        final ext = e.truth - fraction * bodyWeight;
+        return '${_n(e.truth, 0)}${fraction > 0 ? ' (lest ${_n(ext, 0)})' : ''}';
+      }
+
+      b
+        ..writeln()
+        ..writeln(
+          'Athlète simulé, maximum réel hors fatigue : ${cap(firstRow)} au '
+          'départ (le record déclaré au profil peut être plus haut ou plus '
+          'ancien), ${cap(lastRow)} en fin de cycle ; la colonne « réel » '
+          'du tableau est le maximum du jour, fatigue comprise.',
+        );
+    }
     b.writeln();
   }
 
@@ -755,6 +796,15 @@ String coachTrajectoryMarkdown(
                 '${name(it.exerciseId)} : '
                 '${adaptReasonText(r, catalog, assisted: true)}';
             sessionNotes[text] = (sessionNotes[text] ?? 0) + 1;
+            continue;
+          }
+          if (r.code == ReasonCodes.adaptFatigueHigh) {
+            // Alerte de surmenage : dite une fois par mouvement et par
+            // semaine.
+            if (onceSaid.add('${it.exerciseId}|${r.code}|$w')) {
+              sessionNotes['${name(it.exerciseId)} : ${_overreachText(r)}'] =
+                  1;
+            }
             continue;
           }
           if (r.code == ReasonCodes.adaptRepsDown ||
