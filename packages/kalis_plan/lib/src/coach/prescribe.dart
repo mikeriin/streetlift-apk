@@ -229,8 +229,13 @@ abstract final class CoachNotes {
   /// (`value` : jours avant l'épreuve).
   static const String dressRehearsal = 'dress_rehearsal';
 
+  /// Échelle des variantes de poussée (`value` : répétitions du bas de
+  /// la plage).
+  static const String pushLadder = 'push_ladder';
+
   /// Tous les codes.
   static const List<String> all = <String>[
+    pushLadder,
     dressRehearsal,
     primer,
     recalibrate,
@@ -669,7 +674,7 @@ final class Prescriber {
   double? _totalFor(CatalogExercise e, String? referenceId) {
     final own = a.totalOneRm(e.id);
     if (own != null) {
-      return _reconciled(e, own);
+      return own;
     }
     if (referenceId == null || e.loadType != LoadType.addedWeight) {
       return null;
@@ -717,30 +722,6 @@ final class Prescriber {
       }
     }
     return 0.71;
-  }
-
-  /// 1RM de charge totale retenu pour doser [e] : celui du profil, relevé
-  /// quand le maximum de répétitions au poids du corps en indique un plus
-  /// haut (R2-P2 ; +12 % au plus) — un 1RM lesté ancien ne doit pas ramener
-  /// les séries lourdes au poids du corps. Hors pic de force seulement :
-  /// les tentatives d'une épreuve gardent le 1RM déclaré.
-  double _reconciled(CatalogExercise e, double total) {
-    if (_shape.model == SeasonModel.strengthPeak) {
-      return total;
-    }
-    final base = e.id == Ids.weightedPull
-        ? Ids.pull
-        : (e.id == Ids.weightedDip ? Ids.dip : null);
-    final reps = base == null ? 0 : (a.reps[base] ?? 0);
-    final weight = (e.bodyweightFraction?.value ?? 0) * a.bodyWeight;
-    if (reps < 2 || reps > 12 || weight <= 0) {
-      return total;
-    }
-    final implied = weight / _pctAt(reps);
-    if (implied <= total) {
-      return total;
-    }
-    return implied > total * 1.12 ? total * 1.12 : implied;
   }
 
   /// RIR plancher de l'exercice [e] : mouvement à risque (R5-P27), zone à
@@ -980,6 +961,21 @@ final class Prescriber {
     // la série se fait au poids du corps, à sa vraie part du 1RM, avec
     // moins de répétitions (formule d'Epley) pour garder la réserve.
     final floor = (e.bodyweightFraction?.value ?? 0) * a.bodyWeight / total;
+    if (floor > 0 &&
+        p < floor - 1e-9 &&
+        _shape.model != SeasonModel.strengthPeak &&
+        x.kind == SetKind.work &&
+        !over) {
+      // Hors préparation d'une épreuve de force : un 1RM lesté qui donne
+      // une charge sous le poids du corps ne règle plus rien (il est
+      // souvent ancien). La charge se règle à la première séance sur la
+      // réserve prévue, puis progresse par le plus petit pas.
+      x
+        ..calibrate = true
+        ..reasons.add(reason(ReasonCodes.planToCalibrate))
+        ..reasons.add(_note(CoachNotes.calibrate, x.rir ?? 3));
+      return;
+    }
     if (floor > 0 && p < floor - 1e-9) {
       p = floor;
       final possible = (30 * (1 / p - 1)).floor();
@@ -1016,9 +1012,6 @@ final class Prescriber {
       // relevé d'après le maximum de répétitions).
       // Part affichée : celle du 1RM de travail, écrit en clair quand il
       // est relevé d'après le maximum de répétitions (un seul repère).
-      if (total > declared + 1e-9) {
-        x.reasons.add(_note(CoachNotes.reconciled, _round2(total)));
-      }
       x
         ..percent = _round3(p)
         ..share = p
@@ -1508,8 +1501,10 @@ final class Prescriber {
     final top = partial
         ? (a.limitOn(Joint.elbow) != null ? 1.0 : 1.05)
         : 0.80;
+    // (Entrée graduée : 87 % la première semaine, +3 % par semaine de
+    // charge, R5-P24.)
     var pct = partial
-        ? 0.95 + 0.02 * stage
+        ? 0.87 + 0.03 * stage
         : (intense ? 0.74 : 0.70) + 0.01 * stage;
     if (pct > top) {
       pct = top;
@@ -1971,9 +1966,12 @@ final class Prescriber {
       // La réserve écrite est la vraie (maximum moins répétitions), sans
       // bonus d'introduction : les répétitions ne changent pas.
       final real = (max - reps).toDouble();
+      // (Plage d'une répétition en semaine de charge : la répétition de
+      // plus se prend quand la réserve le permet, elle n'est pas supposée.)
+      final open = ws.kind == WeekKind.build && ws.stage >= 1 && reps < max - 1;
       x
         ..repsLow = reps
-        ..repsHigh = reps
+        ..repsHigh = open ? reps + 1 : reps
         ..rir = real < kept
             ? kept.toDouble()
             : (real > coachHardSetMaxRir ? coachHardSetMaxRir : real)
@@ -2071,12 +2069,16 @@ final class Prescriber {
       final more = sets + 1 + (stage >= 2 ? 1 : 0) + (stage >= 4 ? 1 : 0);
       final kept = _floorRir(e, week).ceil() < 2 ? 2 : _floorRir(e, week).ceil();
       final reps = max - kept < 1 ? 1 : max - kept;
+      // Plage ouverte vers le haut (double progression, R5-P3) : une
+      // répétition de plus dès que toutes les séries passent avec la
+      // réserve prévue — la progression suit ce qui est réussi, elle
+      // n'est pas supposée.
       x
-        ..sets = ws.light ? sets : (more > 5 ? 5 : more)
+        ..sets = ws.light ? sets : (more > 4 ? 4 : more)
         ..repsLow = reps
-        ..repsHigh = reps
+        ..repsHigh = ws.light ? reps : reps + 2
         ..rir = max - reps < kept ? kept.toDouble() : (max - reps).toDouble()
-        ..reasons.add(_rule(CoachRules.repStep, 1, 'reps'));
+        ..reasons.add(_rule(CoachRules.doubleProgression, 1, 'reps'));
       return x;
     }
     if (max >= 6) {
@@ -2098,6 +2100,9 @@ final class Prescriber {
     // R5-P9 : une variante qui permet 6 à 10 répétitions avec 3 en réserve.
     if (e.assisted) {
       x.reasons.add(_rule(CoachRules.assistanceStep, 1, 'cran'));
+    }
+    if (s.referenceId == Ids.pushUp && e.id != Ids.pushUp) {
+      x.reasons.add(_note(CoachNotes.pushLadder, 6));
     }
     final lower =
         e.family == MovementFamily.jambesGenou ||
@@ -2933,7 +2938,7 @@ final class Prescriber {
         ..sets = 1
         ..repsLow = max > 0 ? max : (variant ? 8 : 1)
         ..repsHigh = max > 0
-            ? max + 2
+            ? (goal != null && goal > max + 2 ? goal.round() : max + 2)
             : (variant || goal == null ? 15 : goal.round())
         ..rest = 240;
       x.test = TestSpec(
@@ -3199,7 +3204,9 @@ final class Prescriber {
     final ahead = _toEventDays;
     if (_shape.model == SeasonModel.repsPeak &&
         role == _DayRole.normal &&
-        (s.method == Method.repsDensity || s.method == Method.repsVolume) &&
+        (s.method == Method.repsDensity ||
+            s.method == Method.repsVolume ||
+            s.method == Method.repsTop) &&
         // R4-G7 : une simulation toutes les deux semaines chez l'avancé,
         // chaque semaine en élite ; la dernière à J−9 ou J−10, aucune
         // ensuite.
@@ -3216,8 +3223,15 @@ final class Prescriber {
         stress: DayStress.heavy,
       )..slotId = s.slotId;
       final x = _repsTop(top, ws, week, role);
-      x?.reasons.add(_note(CoachNotes.eventRehearsal, 300));
-      x?.rest = 300;
+      // Au format du jour J : une seule série longue par atelier, sans
+      // séries de recul.
+      x
+        ?..sets = 1
+        ..minSets = 1
+        ..backoff = false
+        ..fixed = true
+        ..rest = 300
+        ..reasons.add(_note(CoachNotes.eventRehearsal, 300));
       return x;
     }
     final x = _dosed(s, day, week, ws, role);
@@ -4280,7 +4294,9 @@ final class Prescriber {
   /// Plancher de la semaine de l'échéance, avant les garde-fous de volume
   /// (qui gardent le dernier mot).
   void _floorEvent(List<List<_Draft>> days, WeekSpec ws) {
-    if (!ws.eventWeek) {
+    // (Épreuves de force seulement : ailleurs, le volume continue de
+    // baisser jusqu'au test.)
+    if (!ws.eventWeek || _shape.model != SeasonModel.strengthPeak) {
       return;
     }
     var peak = 0.0;

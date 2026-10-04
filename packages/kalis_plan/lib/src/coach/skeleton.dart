@@ -1000,11 +1000,17 @@ void _addMuscleUpPractice(_Builder b, int d, int muMax) {
   }
   b.add(
     d,
-    const <String>[
-      'cd-muscle-up-barre-assiste-elastique',
-      'cd-muscle-up-barre-negatif',
-      'cd-muscle-up-barre-basse-pieds-au-sol',
-    ],
+    weak
+        ? const <String>[
+            'cd-muscle-up-barre-basse-pieds-au-sol',
+            'cd-muscle-up-barre-negatif',
+            'cd-muscle-up-barre-assiste-elastique',
+          ]
+        : const <String>[
+            'cd-muscle-up-barre-assiste-elastique',
+            'cd-muscle-up-barre-negatif',
+            'cd-muscle-up-barre-basse-pieds-au-sol',
+          ],
     SlotRole.skill,
     Method.skillDynamic,
     sets: 3,
@@ -1171,18 +1177,18 @@ void _buildReps(_Builder b, Set<int> runDays) {
     frequency = n;
   }
   var pullDays = spreadDays(a, days, frequency);
-  // Jusqu'à l'intermédiaire, pas deux jours de tirage consécutifs (R4-F10,
+  // Jusqu'à l'avancé, pas deux jours de tirage consécutifs (R4-F10,
   // R5-P22 : 48 h entre deux charges d'une même zone) : la fréquence cède.
-  while (a.level <= 1 && frequency > 2 && _minGap(a, pullDays) < 2) {
+  while (a.level <= 2 && frequency > 2 && _minGap(a, pullDays) < 2) {
     frequency--;
     pullDays = spreadDays(a, days, frequency);
   }
-  final muPool = competition || pullDays.length < 2 ? days : pullDays;
+  final muPoolAll = competition || pullDays.length < 2 ? days : pullDays;
   final muDays = muMax >= 1
       ? spreadDays(
           a,
-          muPool,
-          competition ? (n >= 4 ? 3 : n) : (muPool.length >= 2 ? 2 : 1),
+          muPoolAll,
+          competition ? (n >= 4 ? 3 : n) : (muPoolAll.length >= 2 ? 2 : 1),
         )
       : <int>[];
   final legCount = a.legsFactor < 1 ? 1 : (n >= 3 ? 2 : 1);
@@ -1247,6 +1253,23 @@ void _buildReps(_Builder b, Set<int> runDays) {
           },
         );
   final rowDays = spreadDays(a, days, n >= 2 ? 2 : 1);
+  // Objectif de traction sans objectif de muscle-up : la pratique du
+  // muscle-up se fait les jours sans série longue ni force en traction
+  // (ni avant le mouvement visé, ni après, sous fatigue).
+  final muCalm = <int>[
+    for (final d in days)
+      if (pullMethod[d] != Method.repsTop &&
+          pullMethod[d] != Method.repsStrength)
+        d,
+  ];
+  final muEff =
+      muMax >= 1 &&
+          pullGoal &&
+          !a.aimsAt(Ids.muscleUp) &&
+          !competition &&
+          muCalm.isNotEmpty
+      ? spreadDays(a, muCalm, muCalm.length >= 2 ? 2 : 1)
+      : muDays;
   // Épreuve de répétitions : les pompes ne gardent du volume que si elles
   // sont à l'épreuve (R4-G1 : spécificité).
   final event = shape.target?.event;
@@ -1310,10 +1333,7 @@ void _buildReps(_Builder b, Set<int> runDays) {
       );
     }
     // Muscle-up : à l'état frais, en début de séance (R4-F1, R5-P27).
-    // (Quand l'objectif porte sur la traction et pas sur le muscle-up, la
-    // traction passe d'abord : le mouvement visé se fait frais.)
-    final muLate = pullGoal && !a.aimsAt(Ids.muscleUp) && !competition;
-    if (muDays.contains(d) && !muLate) {
+    if (muEff.contains(d)) {
       if (muMax >= 6) {
         b.add(
           d,
@@ -1393,7 +1413,7 @@ void _buildReps(_Builder b, Set<int> runDays) {
         <String>[Ids.pull],
         SlotRole.secondary,
         Method.repsDensity,
-        sets: 5,
+        sets: 7,
         stress: DayStress.light,
       );
     } else if (pulls) {
@@ -1405,9 +1425,6 @@ void _buildReps(_Builder b, Set<int> runDays) {
         sets: 3,
         referenceId: Ids.pull,
       );
-    }
-    if (muDays.contains(d) && muLate) {
-      _addMuscleUpPractice(b, d, muMax);
     }
     // Poussée : dips les jours de traction (méthodes décalées), pompes en
     // complément.
@@ -1725,6 +1742,8 @@ void _buildLifting(_Builder b, Set<int> runDays) {
     if (light >= 0 &&
         !maintained(Ids.weightedPull) &&
         a.level >= 2 &&
+        // (48 h de coude avant le muscle-up lourd.)
+        !(mu && b.dayBefore(light, muDay)) &&
         target != Ids.weightedPull) {
       lift(light, Ids.weightedPull, Method.liftLight, DayStress.light, sets: 3);
     }
@@ -2198,8 +2217,7 @@ void _buildFigures(_Builder b, Set<int> runDays) {
     b.add(d, Picks.shoulderPrep, SlotRole.warmup, Method.warmupPrep, sets: 2);
     // Équilibre : pratique courte, à l'état frais (R4-F1), hors des jours
     // d'appui lourd.
-    if (balanceDays.contains(d)) {
-      b.add(d, Picks.wristPrep, SlotRole.warmup, Method.warmupPrep, sets: 2);
+    void balance() {
       b.add(
         d,
         <String>['cs-handstand', 'cs-handstand-dos-au-mur'],
@@ -2209,6 +2227,21 @@ void _buildFigures(_Builder b, Set<int> runDays) {
         // aussi une figure d'appui.
         sets: supportDays.contains(d) ? 3 : 4,
       );
+    }
+
+    if (balanceDays.contains(d)) {
+      // Préparation des poignets avant tout appui sur les mains.
+      b.add(d, Picks.wristPrep, SlotRole.warmup, Method.warmupPrep, sets: 2);
+      b.add(
+        d,
+        const <String>['mo-rotations-poignets', 'mo-pressions-doigts-appui'],
+        SlotRole.warmup,
+        Method.warmupPrep,
+        sets: 2,
+      );
+      if (!supportDays.contains(d)) {
+        balance();
+      }
     }
     if (muDays.contains(d)) {
       _addMuscleUpPractice(b, d, muMax);
@@ -2231,6 +2264,11 @@ void _buildFigures(_Builder b, Set<int> runDays) {
     }
     if (second != null && d == secondLight) {
       skillDay(d, second, heavy: false);
+    }
+    if (balanceDays.contains(d) && supportDays.contains(d)) {
+      // La figure d'appui d'abord (la plus exigeante, à l'état frais),
+      // l'équilibre ensuite.
+      balance();
     }
     // Force de base au service des figures (R1-P17, R4-F5) : lestée quand
     // le matériel et le niveau le permettent, sinon au poids du corps ;
@@ -2255,11 +2293,19 @@ void _buildFigures(_Builder b, Set<int> runDays) {
         strengthDays.contains(d)) {
       b.add(
         d,
-        <String>[Ids.pull],
+        // Première séance de force : une variante dure en séries courtes
+        // (R1-P17, R4-G2) quand le maximum le permet ; la seconde, le
+        // geste de base en volume.
+        d == strengthDays.first && pullMax >= 10
+            ? <String>[...Picks.hardPull, Ids.pull]
+            : <String>[Ids.pull],
         SlotRole.secondary,
-        pullMax < 8 ? Method.repsStrength : Method.repsVolume,
-        sets: 4,
+        pullMax < 8 || (d == strengthDays.first && pullMax >= 10)
+            ? Method.repsStrength
+            : Method.repsVolume,
+        sets: d == strengthDays.first ? 4 : 3,
         stress: DayStress.medium,
+        referenceId: Ids.pull,
       );
     }
     if (balanceDays.contains(d) && a.level >= 2) {

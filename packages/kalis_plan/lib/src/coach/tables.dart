@@ -95,9 +95,9 @@ const Map<String, List<String>> skillLadders = <String, List<String>>{
 const Map<String, List<String>> skillDynamics = <String, List<String>>{
   'cs-front-lever': <String>[
     'cd-front-lever-raise-tuck',
-    'cd-ice-cream-maker-tuck',
     'cd-front-lever-raise-tuck-avance',
     'cd-front-lever-row-tuck',
+    'cd-ice-cream-maker-tuck',
     'cd-front-lever-raise-straddle',
     'cd-ice-cream-maker',
   ],
