@@ -61,3 +61,10 @@ Panel renoté pour 01, 02, 03, 05, 08, 09, 11, 12, 14, 17 (notes de la boucle 3 
 [force, cali, hyper, santé | doc] : 01 [8,9,8,9|8] 02 [9,9,9,9|7] 03 [8,9,8,8|7] 04 [9,9,9,9|7] 05 [9,9,9,9|7] 06 [9,9,9,9|8] 07 [9,9,9,9|8] 08 [9,9,9,9|7] 09 [9,8,9,9|8] 10 [9,9,9,9|7] 11 [8,8,8,9|7] 12 [9,8,9,9|7] 13 [9,9,9,9|7] 14 [9,8,9,9|7] 15 [9,9,9,9|8] 16 [9.5,9,9,9.5|7] 17 [9,8,9,9|7]
 Panel : min 8, moyenne 8,84 ; relecture documentée : min 7, moyenne 7,29. Banc : 0 violation street, attentes tenues sauf street_12 c1.
 Notes : /home/claude/cp1/panel/p4.
+
+## Boucle 5 (04/10/2026)
+Corrections : essai strict avant la descente chronométrée (débutant), tirage du débutant plafonné (2 séries assistées les jours de descentes, descentes allongées au bloc 2), pompes en descente freinée dès la semaine 1 (objectif pompes), affûtage −45 % et note calée sur les séries dures réelles, étiquette de réserve « sur la dernière série » (export), lest réglé sur le lest du 1RM quand il est proche du poids du corps, coude à ménager : dips d'abord, poignet en fin de séance, troisième exposition légère de traction (jour écarté), mollets et rebonds (hybride course), avant-bras (antécédent coude/poignet), partiels à 95–105 % monotones, veille de test sans tirage, repos-pause (objectif ≥ 15 rép.), notes : objectif ambitieux, stratégie de série maximale, montée avant maintien maximal, suivi (perte de poids), figures élite un cran au-dessus en dynamique.
+Panel renoté : 01, 03, 04, 06, 10, 12, 14, 17 (4 écoles), 09 et 11 (force, calisthénie, hypertrophie) ; relecture documentée : 17 profils.
+[force, cali, hyper, santé | doc] : 01 [8,9,9,8|7] 02 [9,9,9,9|8] 03 [8,9,9,8|8] 04 [8,8,8,7.5|7] 05 [9,9,9,9|7] 06 [8,8,8,9|8] 07 [9,9,9,9|8] 08 [9,9,9,9|7] 09 [8,9,9,9|8] 10 [9,9,9,9|7] 11 [9,8,9,9|7] 12 [8,9,9,9|8] 13 [9,9,9,9|7] 14 [9,8,9,9|7] 15 [9,9,9,9|8] 16 [9.5,9,9,9.5|8] 17 [9,9,9,9|6]
+Panel : min 7,5, moyenne 8,79 ; relecture documentée : min 6, moyenne 7,41. Banc : 0 violation street, attentes tenues sauf street_12 c1.
+Notes : /home/claude/cp1/panel/p5.
