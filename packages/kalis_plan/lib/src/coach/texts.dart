@@ -117,14 +117,17 @@ String? coachReasonText(Reason r, Catalog catalog) {
         CoachNotes.negativeGate =>
           v is num && v < 0
               ? "Ensuite, seulement si aucune traction n'est passée : la "
-                    'descente la plus lente possible, deux essais '
-                    'chronométrés (monte en sautant depuis un appui, sans '
-                    'élan ; repère : ${_int(-v)} s sans à-coup). Elle '
-                    'mesure le progrès vers la première traction.'
-              : 'Test : la descente la plus lente possible, deux essais '
-                    'chronométrés (monte en sautant depuis un appui, sans '
-                    'élan). Note le temps : ${_int(v)} s ou plus sans '
-                    'à-coup, et la traction stricte est proche.',
+                    'tenue menton au-dessus de la barre la plus longue, '
+                    'deux essais chronométrés (monte en sautant depuis un '
+                    'appui, bras fléchis, menton au-dessus de la barre ; '
+                    'repère : ${_int(-v)} s). Elle mesure la force de la '
+                    "position haute, d'un test à l'autre."
+              : 'Test : la tenue menton au-dessus de la barre la plus '
+                    'longue, deux essais chronométrés (monte en sautant '
+                    'depuis un appui, bras fléchis, menton au-dessus de la '
+                    "barre). Note le temps (repère : ${_int(v)} s) : s'il "
+                    "monte d'un test à l'autre, la position haute de la "
+                    'traction se renforce.',
         CoachNotes.strictAttempt =>
           "Test, d'abord l'essai strict, frais : après l'échauffement et "
               "1 à 2 tractions faciles à l'élastique, essaie la traction "
@@ -243,19 +246,20 @@ String? coachReasonText(Reason r, Catalog catalog) {
         CoachNotes.stepGate =>
           'Étape suivante, sous condition. Repère mesurable : au dernier '
               "test, un maintien maximal d'au moins "
-              "${v is num ? (v * 0.75).ceil() : ''} s sur l'étape "
-              'actuelle. Tu remplaces alors, une séance lourde par '
-              'semaine, les tenues écrites par 3 × ${_int(v)} s ; quand '
-              'elles sont propres 3 séances de suite (douleur à 2 sur 10 '
-              "au plus), cette ligne s'ouvre : entrées de 2 à 3 s, très "
-              'loin de la limite. Sinon, saute-la. La semaine où elle '
+              "${v is num ? (v / 0.75).round() : ''} s sur l'étape "
+              'actuelle (des tenues de ${_int(v)} s en valent alors 75 %). '
+              'Tu remplaces ensuite, une séance lourde par semaine, les '
+              'tenues écrites par 3 × ${_int(v)} s ; quand elles sont '
+              'propres 2 séances de suite (douleur à 2 sur 10 au plus), '
+              "cette ligne s'ouvre : entrées de 2 à 3 s, très loin de la "
+              'limite. Sinon, saute-la. La semaine où elle '
               "s'ouvre, rien d'autre n'augmente (un seul changement à la "
               'fois).',
         CoachNotes.maxAttempt =>
           'Toutes les ${_int(v)} semaines, la première tenue de cette '
               "séance est un maintien maximal propre (arrêt dès que la "
               'ligne casse). Note-le : les secondes des semaines suivantes '
-              'valent 60 à 75 % de ce nouveau repère ; si une tenue passe '
+              'valent 60 à 85 % de ce nouveau repère ; si une tenue passe '
               'sous 4 sur 5 en qualité, garde la dose.',
         CoachNotes.holdCalibrate =>
           'Première séance : mesure ton maintien maximal propre (un seul '
@@ -532,10 +536,11 @@ String? coachReasonText(Reason r, Catalog catalog) {
           'À faire frais, en début de séance ; arrête dès que la qualité '
               'passe sous ${_int(v)} sur 5.',
         CoachNotes.submaximalHold =>
-          'Tenues sous-maximales : 60 à 75 % de ton dernier maintien '
-              'maximal mesuré (les secondes écrites partent du dernier '
-              'repère connu : si tu as mesuré un autre maintien, recalcule) '
-              '; chaque tenue reste propre, bassin et épaules placés.',
+          'Tenues sous-maximales : 60 à 70 % de ton dernier maintien '
+              'maximal mesuré les jours légers, 75 à 85 % les jours lourds '
+              '(les secondes écrites partent du dernier repère connu : si '
+              'tu as mesuré un autre maintien, recalcule) ; chaque tenue '
+              'reste propre, bassin et épaules placés.',
         CoachNotes.slowNegative =>
           'Descente freinée en ${_int(v)} s, sans à-coup (monte en sautant '
               "depuis un appui) ; l'effort se règle au contrôle, pas à la "

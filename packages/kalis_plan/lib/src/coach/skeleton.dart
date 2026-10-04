@@ -77,6 +77,20 @@ final class SkillTrack {
 /// 8 en élite).
 int coachStepWeeks(int level) => level <= 0 ? 12 : (level >= 3 ? 6 : 8);
 
+/// Critère de passage d'une étape de figure, en secondes par tenue (trois
+/// tenues propres) : 12, 11, 9, 7 s du débutant à l'élite. Les tenues du
+/// critère valent environ 75 % du maintien maximal qui ouvre l'étape
+/// suivante (CX, correction 3 : le critère 3 × 12 s pour un maximum de 12 à
+/// 13 s était hors de portée ; Oranchuk et al. 2019 et R4-F6 : 70 % et plus
+/// du maximum pour le tendon). Choix raisonné : la littérature ne fixe pas
+/// de seuil de passage d'une étape de figure ; R4-F6 situe un levier utile
+/// à un maintien maximal de 8 à 25 s.
+int coachStepHold(int level) => const <int>[12, 11, 9, 7][level.clamp(0, 3)];
+
+/// Maintien maximal, en secondes, qui rend le critère de passage tenable :
+/// le critère vaut 75 % de ce maximum.
+int coachStepMax(int level) => (coachStepHold(level) / 0.75).round();
+
 /// Étape de travail prévue pour la figure [t] au début du bloc : l'étape
 /// du profil, avancée d'un cran par délai minimal écoulé depuis le record
 /// de cette étape (le plan suppose le critère de passage validé ; le test
@@ -2171,7 +2185,7 @@ void _buildFigures(_Builder b, Set<int> runDays) {
   );
 
   void ladderOf(SkillTrack t) {
-    final holdTarget = a.level <= 1 ? 12 : (a.level == 2 ? 10 : 8);
+    final holdTarget = coachStepHold(a.level);
     final minWeeks = a.level == 0 ? 12 : (a.level >= 3 ? 6 : 8);
     b.ladders.add(
       SkillLadder(
@@ -2189,7 +2203,7 @@ void _buildFigures(_Builder b, Set<int> runDays) {
                     : 3,
                 sets: 3,
                 minQuality: 4,
-                sessions: 3,
+                sessions: 2,
                 minWeeks: minWeeks,
               ),
             ),
@@ -2206,7 +2220,8 @@ void _buildFigures(_Builder b, Set<int> runDays) {
 
   // Étape suivante sous condition : délai minimal de l'étape écoulé
   // (R4-F9), au moins un test passé (deuxième bloc ou plus) et maintien
-  // de l'étape actuelle aux trois quarts du critère de passage.
+  // maximal de l'étape actuelle à 75 % au moins du maintien qui rend le
+  // critère tenable (seuil d'ouverture, CX, correction 3).
   bool ready(SkillTrack t) {
     if (t.nextId == null || b.blockIndex == 0) {
       return false;
@@ -2214,9 +2229,8 @@ void _buildFigures(_Builder b, Set<int> runDays) {
     final anchor = a.recordDay[t.currentId] ?? a.profile.updatedOn;
     final elapsed = anchor.daysUntil(a.start) ~/ 7;
     final hold = a.holds[t.currentId] ?? 0;
-    final criterion = a.level <= 1 ? 12 : (a.level == 2 ? 10 : 8);
     return t.weeksAtStep + elapsed >= coachStepWeeks(a.level) &&
-        hold * 4 >= criterion * 3;
+        hold * 4 >= coachStepMax(a.level) * 3;
   }
 
   final attempts = <String, int>{};

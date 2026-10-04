@@ -289,6 +289,81 @@ final class Athlete {
       }
     }
 
+    // Le dernier test mesuré fait foi (CX, correction 1 : « le bloc suivant
+    // part du résultat réel du test ») : un résultat de test ou de
+    // compétition daté remplace la valeur du même mouvement, même plus
+    // basse, tant qu'aucune valeur déclarée plus récente ne le contredit.
+    // Un record déclaré n'est qu'un repère de départ ; le test le recale
+    // dans les deux sens (R2-P2, R3-P14 ; Helms et al. 2018 : régler la
+    // charge sur la performance mesurée plutôt que sur un pourcentage
+    // supposé). Le moteur d'évolution ne rend pas un test fait un jour de
+    // bilan nettement bas (`kalis_adapt`, CA1).
+    final latest = <String, Benchmark>{};
+    final newestOther = <String, CivilDate>{};
+    for (final b in profile.benchmarks ?? const <Benchmark>[]) {
+      final day = b.date;
+      if (day == null) {
+        continue;
+      }
+      final key = '${b.kind.code}|${b.exerciseId}';
+      final measured =
+          b.source == BenchmarkSource.guidedTest ||
+          b.source == BenchmarkSource.competition;
+      if (measured) {
+        final current = latest[key];
+        if (current == null || day.compareTo(current.date!) >= 0) {
+          latest[key] = b;
+        }
+      } else {
+        final current = newestOther[key];
+        if (current == null || day.compareTo(current) > 0) {
+          newestOther[key] = day;
+        }
+      }
+    }
+    for (final entry in latest.entries) {
+      final b = entry.value;
+      final day = b.date!;
+      final other = newestOther[entry.key];
+      if (other != null && other.compareTo(day) > 0) {
+        continue;
+      }
+      switch (b.kind) {
+        case BenchmarkKind.maxReps:
+          final n = b.reps;
+          if (n != null && n > 0 && (b.externalLoadKg ?? 0) == 0) {
+            reps[b.exerciseId] = n;
+            recordDay[b.exerciseId] = day;
+            zero.remove(b.exerciseId);
+          }
+        case BenchmarkKind.maxHold:
+          final s = b.seconds;
+          if (s != null && s > 0 && (b.externalLoadKg ?? 0) == 0) {
+            holds[b.exerciseId] = s;
+            recordDay[b.exerciseId] = day;
+          }
+        case BenchmarkKind.loadReps:
+          final load = b.externalLoadKg;
+          final n = b.reps;
+          if (load == null || n == null || n < 1) {
+            break;
+          }
+          final e = catalog.find(b.exerciseId);
+          final fraction = e?.bodyweightFraction?.value ?? 0;
+          final estimate = estimateOneRm(
+            loadKg: load + fraction * (b.bodyWeightKg ?? bodyWeight),
+            reps: n,
+            rir: b.rir ?? 0,
+          );
+          if (estimate != null) {
+            oneRm[b.exerciseId] = estimate.valueKg - fraction * bodyWeight;
+            recordDay[b.exerciseId] = day;
+          }
+        default:
+          break;
+      }
+    }
+
     // Record sans date : il vaut à la dernière mise à jour du profil.
     for (final id in <String>[...reps.keys, ...holds.keys]) {
       recordDay.putIfAbsent(id, () => profile.updatedOn);
@@ -727,7 +802,15 @@ final class Athlete {
     final placeOk = place == null
         ? e.places.any(profile.places.contains)
         : e.places.contains(place);
-    if (!placeOk || !e.feasibleWith(info.equipment)) {
+    // Mur : sûr à la maison et en salle seulement ; matériel de
+    // remplacement (barre basse pour une pompe mains surélevées…) : kalis_core
+    // 0.4.2 (CX, correction 7).
+    if (!placeOk ||
+        !e.feasibleAt(
+          info.equipment,
+          place: place,
+          places: profile.places.toSet(),
+        )) {
       return 'equipment';
     }
     for (final l in limits) {
