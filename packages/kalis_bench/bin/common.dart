@@ -162,6 +162,29 @@ int runBench({
       })}\n',
     );
   }
+  // Séries de la trajectoire racontée (mise au point) : chaque séance
+  // servie, faite, et ce que le simulateur sait de l'effort réel.
+  for (final r in reports) {
+    final t = r.trajectory;
+    if (t == null || r.profile.group != 'street') {
+      continue;
+    }
+    final file = File('$outPath/series/${r.profile.key}.json');
+    file.parent.createSync(recursive: true);
+    file.writeAsStringSync(
+      '${jsonEncode(<String, Object?>{
+        'sessions': <Object?>[
+          for (final s in t.run.served) <String, Object?>{'week': s.week, 'simDay': s.simDay, 'plan': s.plan.toJson(), 'record': s.record.toJson(), 'advices': <Object?>[for (final a in s.advices) a.toJson()]},
+        ],
+        'rows': <Object?>[
+          for (final x in t.run.sets) <Object?>[x.week, x.simDay, x.exerciseId, x.slotId, x.setIndex, x.role?.code, x.technique?.code, x.loadKg, x.totalKg, x.amount, x.targetLow, x.targetHigh, x.wantRir, x.trueRir, x.failed, x.open, x.test, x.dayMax, x.reachable],
+        ],
+        'estimates': <Object?>[
+          for (final e in t.run.estimates) <Object?>[e.week, e.exerciseId, e.capacity, e.truth, e.relSd],
+        ],
+      })}\n',
+    );
+  }
   total.stop();
   var violations = 0;
   for (final r in reports) {
