@@ -128,7 +128,13 @@ final class AdaptParams {
     this.coachCorridorWiden = 0.025,
     this.coachCensorRir = 2,
     this.coachCurveRir = 3,
-    this.coachHoldMaxShare = 0.8,
+    this.coachHoldMaxShare = 0.75,
+    this.coachAssistGapRir = 2,
+    this.coachAssistStepShare = 0.75,
+    this.coachAssistStepSd = 0.25,
+    this.coachBackoffMinDrop = 0.05,
+    this.coachNewExerciseShare = 0.85,
+    this.coachOverloadFragileMax = 1.0,
     this.coachDirectGuardRir = 2,
     this.coachProbeDays = 14,
     this.coachLowDayRir = 3,
@@ -595,6 +601,35 @@ final class AdaptParams {
   /// ne dépasse pas (les maintiens se travaillent sous le maximum, la
   /// propreté d'abord : R4-F9).
   final double coachHoldMaxShare;
+
+  /// Mode coach, exercice assisté (élastique) : écart de réserve, au-delà
+  /// de la cible, à partir duquel un cran d'assistance de moins est
+  /// conseillé (choix raisonné ; ACSM 2009 : une à deux répétitions de
+  /// plus que la cible, deux séances de suite).
+  final double coachAssistGapRir;
+
+  /// Mode coach : part de la capacité attendue après un cran d'assistance
+  /// de moins (choix raisonné : l'assistance d'un élastique ne se lit pas
+  /// en kg, McMaster et Cronin 2010), et écart-type relatif ajouté à
+  /// l'estimation quand l'assistance change.
+  final double coachAssistStepShare;
+
+  /// Voir [coachAssistStepShare].
+  final double coachAssistStepSd;
+
+  /// Mode coach : plus petite baisse de charge des séries allégées quand
+  /// le moteur les rapproche de la réserve visée (au moins la moitié de
+  /// la baisse écrite ; choix raisonné, R2-P6).
+  final double coachBackoffMinDrop;
+
+  /// Mode coach : part de la charge écrite servie à la première séance
+  /// d'un exercice jamais fait dont la charge est écrite en part du 1RM
+  /// d'un autre mouvement (entrée graduée, R5-P22).
+  final double coachNewExerciseShare;
+
+  /// Mode coach : part du 1RM de référence qu'un exercice surchargé
+  /// (amplitude partielle) ne dépasse pas sur une zone à antécédent.
+  final double coachOverloadFragileMax;
 
   /// Mode coach, exercice sans charge : réserve minimale (avec la marge de
   /// prudence) sous laquelle les répétitions écrites par le bloc sont

@@ -329,7 +329,15 @@ final class SlotMark {
     required this.top,
     required this.failed,
     this.easy = 0,
+    this.total = 0,
+    this.sets = 0,
   });
+
+  /// Somme des répétitions (ou secondes) menées à bien ce jour-là.
+  final int total;
+
+  /// Lignes faites ce jour-là.
+  final int sets;
 
   /// Séances où la charge, servie au haut du couloir, est restée
   /// nettement plus facile que visé (élargit le couloir, R2-P3).
@@ -399,9 +407,13 @@ void noteCoachSession(
   double? lowestFailed;
   var top = 0;
   var failed = false;
+  var total = 0;
   for (final o in run.observed) {
     if (o.amount > top && !o.failed) {
       top = o.amount;
+    }
+    if (!o.failed) {
+      total += o.amount;
     }
     final kg = o.loadKg;
     if (o.unplannedFail) {
@@ -458,8 +470,17 @@ void noteCoachSession(
     top: top,
     failed: failed,
     easy: easy,
+    // (Un jour écourté — bilan bas, temps court — ne ramène pas le repère
+    // de volume loin sous la séance d'avant.)
+    total: _keptTotal(marks[coach.slotId]?.total ?? 0, total),
+    sets: run.observed.length,
   );
   track.slotMarks = marks;
+}
+
+int _keptTotal(int before, int now) {
+  final kept = (before * 0.85).floor();
+  return now > kept ? now : kept;
 }
 
 /// Ce qu'une ligne du journal dit de la capacité quand elle porte des
@@ -742,10 +763,25 @@ List<SetPlan>? coachPlans(
   if (item.kind == SetKind.test && item.test != null) {
     return _testPlans(run, ex, c, item, sets);
   }
-  if (mode == CapacityMode.loaded) {
-    return _loadedPlans(run, ex, c, item, sets, served);
+  // Zone douloureuse (au-dessus de 3 sur 10) : pas de progression, donc
+  // pas plus de lignes que la dernière séance de l'emplacement (R5-P23).
+  var lines = sets;
+  final before = track.slotMarks[c.slotId]?.sets ?? 0;
+  final frozen = ex.painZones.isNotEmpty && before > 0 && lines > before;
+  if (frozen) {
+    lines = before;
   }
-  return _directPlans(run, ex, c, item, sets, served);
+  final out = mode == CapacityMode.loaded
+      ? _loadedPlans(run, ex, c, item, lines, served)
+      : _directPlans(run, ex, c, item, lines, served);
+  if (frozen && out != null) {
+    ex.notes.add(
+      _r(ReasonCodes.adaptVolumeDown, <String, Object?>{
+        'sets': sets - lines,
+      }),
+    );
+  }
+  return out;
 }
 
 int _restOf(ExerciseRun ex, CoachSpec c, SetTechniqueKind served, int reps) {
@@ -819,8 +855,22 @@ List<SetPlan>? _loadedPlans(
   bool guardOk(double kg) =>
       !judged || _holdsRir(run, ex, kg, head, rir - p.coachBreachRir, worst);
 
-  final written = _onGrid(grid, pct * ref - bw, nearest: true);
+  // Exercice surchargé (au-dessus du 1RM de référence) sur une zone à
+  // antécédent : jamais plus que le 1RM de référence.
+  final overload = !ownRef && pct > p.coachOverloadFragileMax && c.fragile;
+  final pctWritten = overload ? p.coachOverloadFragileMax : pct;
+  // Exercice jamais fait, écrit en part du 1RM d'un autre mouvement :
+  // entrée graduée (R5-P22), la hausse suit ensuite le plafond de hausse
+  // à schéma égal.
+  final entry = !ownRef && track.lastLoad == null && item.kind != SetKind.test;
+  final written = _onGrid(
+    grid,
+    pctWritten * ref * (entry ? p.coachNewExerciseShare : 1) - bw,
+    nearest: true,
+  );
   final pilot =
+      !entry &&
+      !overload &&
       c.policy.build &&
       !c.light &&
       !c.eventNear &&
@@ -968,6 +1018,30 @@ List<SetPlan>? _loadedPlans(
     if (back > kg) {
       back = kg;
     }
+    if (pilot && judged && tail.isNotEmpty && lockCause == null) {
+      // Semaine de charge : des séries allégées qui laisseraient nettement
+      // plus de réserve que visé (un point de plus que la série de tête)
+      // sont rapprochées de la série de tête, jusqu'à la moitié de la baisse écrite (au moins
+      // `coachBackoffMinDrop`), tant que la réserve visée tient.
+      final least = drop / 2 > p.coachBackoffMinDrop
+          ? drop / 2
+          : p.coachBackoffMinDrop;
+      var x = _onGrid(grid, (kg + bw) * (1 - least) - bw);
+      if (x > kg) {
+        x = kg;
+      }
+      for (var i = 0; i < 12 && x > back + 1e-9; i++) {
+        if (_holdsRir(run, ex, x, tail, rir + 1, worst)) {
+          back = x;
+          break;
+        }
+        final next = grid.next(x, up: false);
+        if (next >= x - 1e-9) {
+          break;
+        }
+        x = next;
+      }
+    }
     if (judged && tail.isNotEmpty) {
       back = _stepDownTo(
         grid,
@@ -1106,7 +1180,6 @@ void _probe(
       track.noUp ||
       ex.painZones.isNotEmpty ||
       run.noIncrease ||
-      ex.uncertain ||
       out.last.open ||
       (exact != null && run.day - exact < p.coachProbeDays) ||
       (probed != null && run.day - probed < p.coachProbeDays)) {
@@ -1179,12 +1252,72 @@ List<SetPlan>? _directPlans(
   final follows = share != null && c.policy.build && !c.light && !c.eventNear;
   final mark = track.slotMarks[c.slotId];
   final tendon = tendonLoaded(info);
-  // Exercice assisté (élastique) : la progression passe par l'assistance,
-  // que le moteur ne règle pas — la plage du bloc est gardée.
+  final locked =
+      track.noUp || ex.painZones.isNotEmpty || run.noIncrease || ex.fails > 0;
+  // Exercice assisté (élastique) : la progression passe par l'assistance ;
+  // la plage du bloc est gardée et le moteur dit quand changer de cran.
   final assisted = info.exercise.loadType == LoadType.band;
   var tendonCapped = false;
   // La marge de sûreté a réduit la première série.
   var guarded = false;
+
+  // Effort affiché d'une ligne de [target] (répétitions ou secondes) après
+  // la perte [fatigue] : celui du bloc ; quand la quantité servie laisse
+  // nettement plus, ou nettement moins, de réserve que la cible du bloc,
+  // l'effort attendu est affiché à sa place (un maintien : toujours).
+  int shownFor(int target, double fatigue) {
+    final cap = track.filter.capacityToday() * (1 - fatigue);
+    final expected = hold
+        ? (cap <= 0 ? 0.0 : (1 - target / cap) / p.holdReserveShare)
+        : cap - target;
+    if (expected >= rir + 1 || expected <= rir - 1 || (hold && expected >= 0)) {
+      final e = expected > 5 ? 5.0 : (expected < 0.5 ? 0.5 : expected);
+      return flamesOfRir((e * 2).floorToDouble() / 2);
+    }
+    return flames;
+  }
+
+  final (firstLow, firstHigh, firstRole) = c.line(0, sets, served, hold: hold);
+  if (!hold &&
+      !assisted &&
+      share == null &&
+      served == SetTechniqueKind.standard &&
+      item.kind != SetKind.test &&
+      firstLow > 1) {
+    final rest = _restOf(ex, c, served, firstHigh);
+    final reach = _repsSafe(run, ex, plannedFatigue(0, rir, rest, p));
+    if (reach < firstLow) {
+      // Plage hors de portée aujourd'hui (le bas de la plage ne laisse pas
+      // la réserve visée) : séries fractionnées — moins de répétitions par
+      // série, plus de séries, pour approcher le travail écrit (au plus le
+      // double des séries, jamais plus de répétitions au total que le bas
+      // de la plage n'en écrit).
+      final each = reach < 1 ? 1 : reach;
+      var count = (sets * firstLow / each).ceil();
+      if (count > 2 * sets) {
+        count = 2 * sets;
+      }
+      while (count > sets && count * each > sets * firstLow) {
+        count--;
+      }
+      ex.notes.add(
+        _r(ReasonCodes.adaptRepsDown, <String, Object?>{
+          'delta': firstLow - each,
+        }),
+      );
+      return <SetPlan>[
+        for (var i = 0; i < count; i++)
+          SetPlan(
+            loadKg: null,
+            low: each,
+            high: each,
+            flames: shownFor(each, plannedFatigue(i, rir, rest, p)),
+            role: firstRole,
+          ),
+      ];
+    }
+  }
+
   final out = <SetPlan>[];
   for (var i = 0; i < sets; i++) {
     final (low, high, role) = c.line(i, sets, served, hold: hold);
@@ -1198,9 +1331,18 @@ List<SetPlan>? _directPlans(
     int? easyTop;
     var wanted = high;
     if (follows && low == high) {
-      // Part d'un test : elle suit le maximum mesuré, dans les deux sens.
-      final fromTest = (share * track.filter.capacityToday() + 0.5).floor();
+      // Part d'un test : elle suit le maximum mesuré, dans les deux sens —
+      // et la série garde la réserve écrite (« série de tête = maximum
+      // mesuré moins la réserve », jamais sur un progrès supposé).
+      final cap = track.filter.capacityToday();
+      final fromTest = (share * cap + 0.5).floor();
       wanted = fromTest < 1 ? 1 : fromTest;
+      if (!hold) {
+        final kept = (cap * (1 - fatigue) - rir + 0.3).floor();
+        if (kept < wanted) {
+          wanted = kept < 1 ? 1 : kept;
+        }
+      }
     } else if (!hold &&
         share == null &&
         !assisted &&
@@ -1261,21 +1403,7 @@ List<SetPlan>? _directPlans(
     if (target < 1) {
       target = 1;
     }
-    // Effort affiché : celui du bloc ; quand la quantité servie (part d'un
-    // test, plage du bloc, durée écrite) laisse nettement plus de réserve
-    // que la cible du bloc, l'effort attendu est affiché à sa place.
-    var shown = flames;
-    final cap = track.filter.capacityToday() * (1 - fatigue);
-    final expected = hold
-        ? (cap <= 0 ? 0.0 : (1 - target / cap) / p.holdReserveShare)
-        : cap - target;
-    if (expected >= rir + 1 || (hold && expected >= 0)) {
-      // (Maintien : la durée servie fait l'effort ; il est affiché tel
-      // quel, dans les deux sens.)
-      shown = flamesOfRir(
-        expected > 5 ? 5.0 : (expected * 2).floorToDouble() / 2,
-      );
-    }
+    final shown = shownFor(target, fatigue);
     if (high > low && target >= low && !follows) {
       // Plage du bloc : série au ressenti, sans dépasser ce qui est sûr.
       out.add(
@@ -1300,8 +1428,69 @@ List<SetPlan>? _directPlans(
       );
     }
   }
-  if (!hold && share == null && !assisted) {
+  if (hold && tendon && mark != null && mark.total > 0 && out.length > 1) {
+    // Bras tendus : le temps total sous tension de l'emplacement ne monte
+    // pas plus vite que la durée d'une tenue (séries ajoutées comprises) :
+    // un seul changement à la fois (R4-F9, R5-P22).
+    final rise = p.coachHoldRise[c.level < 0 ? 0 : (c.level > 3 ? 3 : c.level)];
+    final byShare = (mark.total * (1 + rise)).floor();
+    final bySlack = mark.total + p.coachHoldRiseSlackSeconds;
+    final most = byShare > bySlack ? byShare : bySlack;
+    var total = 0;
+    for (final s in out) {
+      total += s.high;
+    }
+    if (item.kind != SetKind.test && total > most) {
+      final each = most ~/ out.length < 1 ? 1 : most ~/ out.length;
+      for (var i = 0; i < out.length; i++) {
+        final s = out[i];
+        if (s.high > each) {
+          out[i] = SetPlan(
+            loadKg: null,
+            low: s.low > each ? each : s.low,
+            high: each,
+            flames: shownFor(each, 0),
+            open: s.open && each > (s.low > each ? each : s.low),
+            role: s.role,
+          );
+        }
+      }
+      tendonCapped = true;
+    }
+  }
+  if (!hold && share == null) {
     _probe(run, ex, c, item, served, out);
+  }
+  if (assisted && !hold && item.kind != SetKind.test && out.isNotEmpty) {
+    // Assistance : quand une série a mesuré la capacité récemment et que
+    // le haut de la plage laisse nettement plus de réserve que visé, un
+    // cran d'assistance de moins (élastique plus fin) ; quand le bas de la
+    // plage ne laisse plus la réserve visée moins un point, un cran de
+    // plus.
+    final exact = track.exactDay;
+    final measured = exact != null && run.day - exact <= 2 * p.coachProbeDays;
+    final cap = track.filter.capacityToday();
+    final spare = cap - c.schemeAmount - rir;
+    final (low, _, _) = c.line(0, sets, served, hold: false);
+    if (measured &&
+        !locked &&
+        c.policy.build &&
+        !c.eventNear &&
+        spare >= p.coachAssistGapRir - 1e-9) {
+      ex.notes.add(
+        _r(ReasonCodes.adaptFlamesBelowTarget, <String, Object?>{
+          'delta': roundTo(spare, 1),
+          'sets': sets,
+        }),
+      );
+    } else if (measured && cap - low < rir - p.coachBreachRir - 1e-9) {
+      ex.notes.add(
+        _r(ReasonCodes.adaptFlamesAboveTarget, <String, Object?>{
+          'delta': roundTo(rir - (cap - low), 1),
+          'sets': sets,
+        }),
+      );
+    }
   }
   if (tendonCapped) {
     final first = track.firstDay;
@@ -1312,14 +1501,24 @@ List<SetPlan>? _directPlans(
       }),
     );
   }
-  final floor = c.rirFloor;
-  if (guarded &&
-      out.isNotEmpty &&
-      out.first.high < c.schemeAmount &&
-      floor != null) {
-    ex.notes.add(
-      _r(ReasonCodes.adaptRirCap, <String, Object?>{'rir': roundTo(floor, 1)}),
-    );
+  if (out.isNotEmpty && !hold) {
+    final floor = c.rirFloor;
+    if (guarded && out.first.high < c.schemeAmount && floor != null) {
+      ex.notes.add(
+        _r(ReasonCodes.adaptRirCap, <String, Object?>{
+          'rir': roundTo(floor, 1),
+        }),
+      );
+    } else if (follows && out.first.high != c.schemeAmount) {
+      // Recalé sur le maximum mesuré : dit en clair.
+      final delta = out.first.high - c.schemeAmount;
+      ex.notes.add(
+        _r(
+          delta > 0 ? ReasonCodes.adaptRepsUp : ReasonCodes.adaptRepsDown,
+          <String, Object?>{'delta': delta.abs()},
+        ),
+      );
+    }
   }
   return out;
 }

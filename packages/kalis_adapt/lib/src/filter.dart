@@ -76,6 +76,7 @@ final class CapacityFilter {
     sessions = o.sessions;
     sets = o.sets;
     inSession = o.inSession;
+    hinge = o.hinge;
     setFatigue = List<double>.of(o.setFatigue);
     history = List<TrackPoint>.of(o.history);
   }
@@ -136,6 +137,14 @@ final class CapacityFilter {
 
   /// Vrai entre [beginSession] et [endSession].
   bool inSession = false;
+
+  /// Mode coach (0.2.0) : une borne déjà tenue n'apprend rien ; une borne
+  /// franchie ramène l'estimation vers elle comme une mesure. (Par défaut,
+  /// comme en 0.1.0 : loi normale tronquée, qui déplace aussi la moyenne
+  /// quand la borne est tenue de peu — répétée série après série, elle
+  /// fait dériver l'estimation vers le haut quand toutes les notes sont
+  /// des bornes.)
+  bool hinge = false;
 
   /// Pertes relatives de répétitions laissées par les séries de la séance.
   List<double> setFatigue = <double>[];
@@ -451,6 +460,12 @@ final class CapacityFilter {
   /// déplace de `K·√S·λ`, la covariance fait la part `λ(a + λ)` d'une mise
   /// à jour complète.
   void _lowerBound(List<double> jac, double margin, double r, bool learnK) {
+    if (hinge) {
+      if (margin < 0) {
+        _update(jac, -margin, r, learnK);
+      }
+      return;
+    }
     final (h, noise) = _effective(jac, r, learnK);
     final gain = _gain(h, noise, learnK);
     final s = sqrt(gain[4]);

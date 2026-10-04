@@ -92,7 +92,7 @@ String _causeLabel(String code) => switch (code) {
 
 /// Raison du moteur d'évolution [r] en clair, ou `null` quand elle ne dit
 /// rien de plus que les chiffres de la ligne.
-String? adaptReasonText(Reason r, Catalog catalog) {
+String? adaptReasonText(Reason r, Catalog catalog, {bool assisted = false}) {
   String name(String key) => catalog.find(_text(r, key))?.name ?? _text(r, key);
   switch (r.code) {
     case ReasonCodes.adaptLoadHeld:
@@ -186,9 +186,24 @@ String? adaptReasonText(Reason r, Catalog catalog) {
     case ReasonCodes.adaptSetFailed:
       return 'série manquée la dernière fois';
     case ReasonCodes.adaptFlamesAboveTarget:
-      return 'dernières séries plus dures que prévu';
+      return assisted
+          ? 'un cran d\'assistance de plus (élastique plus épais) : la '
+                'plage ne laisse plus la réserve visée'
+          : 'dernières séries plus dures que prévu';
     case ReasonCodes.adaptFlamesBelowTarget:
-      return 'dernières séries plus faciles que prévu';
+      return assisted
+          ? 'un cran d\'assistance de moins (élastique plus fin) : la série '
+                'repère a montré ${_n(_num(r, 'delta') ?? 0, 0)} répétitions '
+                'de réserve de plus que visé'
+          : 'dernières séries plus faciles que prévu';
+    case ReasonCodes.adaptRepsDown:
+      return 'répétitions recalées sur le maximum mesuré '
+          '(${(_num(r, 'delta') ?? 0).round()} de moins par série que le '
+          'programme)';
+    case ReasonCodes.adaptRepsUp:
+      return 'répétitions recalées sur le maximum mesuré '
+          '(${(_num(r, 'delta') ?? 0).round()} de plus par série que le '
+          'programme)';
     case ReasonCodes.adaptCalibration:
       return 'calibrage (séance ${(_num(r, 'session') ?? 0).round()} sur ce '
           'mouvement)';
@@ -298,6 +313,39 @@ String _written(ExercisePrescription it) {
     b.write(', test');
   }
   return b.toString();
+}
+
+/// Ce que le moteur a servi le jour même : cibles ligne par ligne.
+String _served(ExercisePrescription it) {
+  final targets = it.setTargets;
+  if (targets == null || targets.isEmpty) {
+    return _written(it);
+  }
+  final hold = it.secondsHigh != null || it.secondsLow != null;
+  final parts = <String>[];
+  var i = 0;
+  while (i < targets.length) {
+    final load = targets[i].loadKg;
+    var j = i;
+    final amounts = <String>[];
+    while (j < targets.length && targets[j].loadKg == load) {
+      final t = targets[j];
+      final low = hold ? t.secondsLow : t.repsLow;
+      final high = hold ? t.secondsHigh : t.repsHigh;
+      amounts.add(
+        low == null || high == null || low == high
+            ? '${high ?? low ?? '?'}'
+            : '($low à $high)',
+      );
+      j++;
+    }
+    parts.add(
+      '${amounts.join('-')}${hold ? ' s' : ''}'
+      '${load == null || load == 0 ? '' : ' à ${_kg(load)}'}',
+    );
+    i = j;
+  }
+  return parts.join(' puis ');
 }
 
 String _done(List<SetRow> sets, bool hold) {
@@ -430,8 +478,9 @@ String coachTrajectoryMarkdown(
     ..writeln()
     ..writeln(
       'Pour chaque mouvement, la séance la plus lourde de la semaine : ce '
-      'que le programme écrit, ce que le moteur sert et ce que l\'athlète '
-      'fait, l\'effort affiché par le moteur et l\'effort réel (répétitions '
+      'que le programme écrit, ce que le moteur sert ce jour-là (charges et '
+      'répétitions recalées sur les maxima mesurés ; une plage entre '
+      'parenthèses est une série au ressenti) et ce que l\'athlète fait, l\'effort affiché par le moteur et l\'effort réel (répétitions '
       'en réserve ; première série, puis moyenne des suivantes), le '
       'maximum réel et le maximum estimé par le moteur (1RM de charge '
       'totale, répétitions ou secondes), puis les décisions du moteur.',
@@ -482,14 +531,15 @@ String coachTrajectoryMarkdown(
           'Sem.',
           'Phase',
           'Écrit par le programme',
-          'Fait (séance la plus lourde)',
+          'Servi par le moteur',
+          'Fait',
           'Effort visé → réel',
           'Maximum réel / estimé',
           'Décisions du moteur',
         ]),
       )
       ..writeln(
-        _row(<String>['---', '---', '---', '---', '---', '---', '---']),
+        _row(<String>['---', '---', '---', '---', '---', '---', '---', '---']),
       );
     for (var w = 0; w < t.weeks; w++) {
       SimSession? best;
@@ -519,8 +569,10 @@ String coachTrajectoryMarkdown(
       }
       // Décisions de la séance montrée (et conseils d'entre-séries).
       final notes = <String>[];
+      final assisted =
+          catalog.find(bestItem.exerciseId)?.loadType == LoadType.band;
       void note(Reason r) {
-        final text = adaptReasonText(r, catalog);
+        final text = adaptReasonText(r, catalog, assisted: assisted);
         if (text != null && !notes.contains(text)) {
           notes.add(text);
         }
@@ -590,7 +642,8 @@ String coachTrajectoryMarkdown(
               ? weekKindLabel(best.weekKind)
               : coachPhaseLabel(intent.code),
           written == null ? '—' : _written(written),
-          '${served == id ? '' : '${name(served)} : '}${_done(rows, hold)}',
+          '${served == id ? '' : '${name(served)} : '}${_served(bestItem)}',
+          _done(rows, hold),
           effortText,
           '${max(dayMax)} / ${max(estimate)}',
           notes.isEmpty ? '—' : notes.take(4).join(' ; '),
@@ -655,7 +708,26 @@ String coachTrajectoryMarkdown(
         adjusted.putIfAbsent(key, () => <String>{}).add(id ?? '');
       }
       for (final it in s.plan.items) {
+        final band = catalog.find(it.exerciseId)?.loadType == LoadType.band;
         for (final r in it.reasons) {
+          if (band &&
+              (r.code == ReasonCodes.adaptFlamesBelowTarget ||
+                  r.code == ReasonCodes.adaptFlamesAboveTarget)) {
+            final text =
+                '${name(it.exerciseId)} : '
+                '${adaptReasonText(r, catalog, assisted: true)}';
+            sessionNotes[text] = (sessionNotes[text] ?? 0) + 1;
+            continue;
+          }
+          if (r.code == ReasonCodes.adaptRepsDown ||
+              r.code == ReasonCodes.adaptRepsUp) {
+            final text =
+                '${name(it.exerciseId)} : ${adaptReasonText(r, catalog)}';
+            if (onceSaid.add('${it.exerciseId}|${r.code}|$w')) {
+              sessionNotes[text] = 1;
+            }
+            continue;
+          }
           if (r.code == ReasonCodes.planTechniqueWithheld ||
               r.code == ReasonCodes.adaptSkillStepDown ||
               r.code == ReasonCodes.adaptSkillHold ||

@@ -56,3 +56,9 @@ Session Fable lancée le 04/10/2026 à 08:50 UTC. Base : `moteurs` d0d60018.
 - Export des trajectoires : tableau d'une figure visée travaillée par ses seules étapes (planche) ; note « marge prévue » seulement quand la garde a réduit la série.
 - kalis_bench 0.1.2 (CHANGELOG, CONTRAT, CRITERES).
 - Prochaine étape : passe 0 complète du panel, boucles de calibrage.
+
+## Étape : passe 0 du panel faite, boucle 1 en cours
+- Passe 0 (68 couples) : 29 à 9 ou plus, minimum 6 (street_03), moyenne 8,23 ; notes dans tools/panel_p0_notes.json et packages/kalis_adapt/docs/CALIBRAGE_CA1.md (tableau, familles de corrections, sources de la boucle 1).
+- Mise au point : bin de kalis_bench exporte series/<profil>.json (séances servies, faites, effort réel) ; outil /tmp/dbg/show.py.
+- Boucle 1 (code écrit, CI en cours) : bornes « charnière » en mode coach (CapacityFilter.hinge), plus de bonus de calibrage en mode coach, répétitions recalées sur le test (maximum mesuré moins la réserve), effort attendu affiché dans les deux sens, séries fractionnées quand la plage est hors de portée, maintiens à 75 % du maximum et temps total borné, gel des séries sur zone douloureuse, séries allégées rapprochées (coachBackoffMinDrop), entrée graduée d'un exercice calé sur un autre mouvement (coachNewExerciseShare) et plafond à 100 % sur zone à antécédent, assistance à l'élastique (conseil d'un cran, simulateur : crans), séries ouvertes notées ≤ 2 lues comme mesures, série repère même quand l'estimation est incertaine ; export : colonne « Servi par le moteur ».
+- À faire ensuite : lire le CI, corriger les tests, renoter les couples sous 9, boucles suivantes ; docs (CONTRAT § 11 à mettre à jour avec ces règles), fin de lot.
