@@ -631,6 +631,7 @@ SessionPlan buildSessionPlan(
       hasTarget: spec.hasTarget,
       test: spec.test,
       coach: spec.coach,
+      coachRead: spec.coachRead,
     );
     final exercise = run.begin(info, sized);
     d.run = exercise;

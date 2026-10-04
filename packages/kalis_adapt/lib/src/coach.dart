@@ -908,7 +908,9 @@ List<SetPlan>? _loadedPlans(
   } else {
     kg = written;
     if (!guardOk(kg)) {
-      kg = _stepDownTo(grid, kg, 8, guardOk);
+      // (Exercice calé sur un autre mouvement : la charge écrite peut être
+      // loin de ce que son propre suivi permet.)
+      kg = _stepDownTo(grid, kg, ownRef ? 8 : 400, guardOk);
       capped = true;
     }
   }

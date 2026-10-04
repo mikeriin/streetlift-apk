@@ -316,7 +316,16 @@ final class SlotSpec {
     required this.hasTarget,
     this.test = false,
     this.coach,
+    this.coachRead = false,
   });
+
+  /// Séance d'un bloc au contrat 0.4.0 dont la prescription n'est plus
+  /// connue (bloc précédent) : le journal se lit comme en mode coach.
+  final bool coachRead;
+
+  /// Vrai si le journal de cet emplacement se lit comme en mode coach
+  /// (bornes « charnière », notes isolées lues comme bornes).
+  bool get reads => coach != null || coachRead;
 
   /// Bas de la plage (répétitions ou secondes).
   final int low;
@@ -813,7 +822,7 @@ final class SessionRun {
   void _open(ExerciseRun run, ExerciseTrack track) {
     final p = _p;
     run.track = track;
-    track.filter.hinge = run.spec.coach != null;
+    track.filter.hinge = run.spec.reads;
     final info = run.info;
     _resume(track);
     // La courbe pivote sur la plage travaillée quand elle s'est nettement
@@ -996,7 +1005,7 @@ final class SessionRun {
       }
       final said = o.flames;
       if (o.failed ||
-          (run.spec.coach != null
+          (run.spec.reads
               ? run.measured
               : (said != null && rirOfFlames(said) < state.rater.ceiling(p)))) {
         track.exactDay = day;
@@ -1017,10 +1026,10 @@ final class SessionRun {
       // « au ressenti » ; seule une série ouverte au-delà du haut de la
       // plage du bloc est une série repère.)
       if (o.open &&
-          (run.spec.coach == null || (o.target?.high ?? 0) > run.spec.high)) {
+          (!run.spec.reads || (o.target?.high ?? 0) > run.spec.high)) {
         openSet = true;
         final said = o.flames;
-        if (run.spec.coach != null && !o.failed && said != null) {
+        if (run.spec.reads && !o.failed && said != null) {
           final asked = rirOfFlames(o.target!.flames);
           final rir = rirOfFlames(said);
           track.probeCapacity = o.amount + (rir < asked ? rir : asked);
@@ -1128,7 +1137,7 @@ final class SessionRun {
         _firstDirect(run, mode, amount, flames, failed);
       }
       final track = run.track;
-      if (track != null && run.spec.coach != null && info.exercise.assisted) {
+      if (track != null && run.spec.reads && info.exercise.assisted) {
         // Assistance changée depuis la dernière série (cran d'élastique) :
         // la capacité attendue se décale d'un cran, l'incertitude grandit.
         final now = loadKg ?? 0;
@@ -1315,7 +1324,7 @@ final class SessionRun {
         p: p,
         bound: true,
       );
-    } else if (run.spec.coach != null &&
+    } else if (run.spec.reads &&
         _asBound(run, flames, open, test, reps, target)) {
       // Mode coach : loin de l'échec, la note ne se lit que comme « au
       // moins tant en réserve » (la prédiction des répétitions restantes
@@ -1376,7 +1385,7 @@ final class SessionRun {
           learnK:
               fresh &&
               ((test || open) && rir <= 2 ||
-                  (run.spec.coach != null && rir <= p.coachCurveRir)),
+                  (run.spec.reads && rir <= p.coachCurveRir)),
         );
       }
       f.observeLoad(
@@ -1483,7 +1492,7 @@ final class SessionRun {
         p: p,
         bound: true,
       );
-    } else if (run.spec.coach != null &&
+    } else if (run.spec.reads &&
         _asBound(run, flames, open, test, amount, target)) {
       final said = rirOfFlames(flames);
       f.observeDirect(
