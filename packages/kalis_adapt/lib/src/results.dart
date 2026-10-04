@@ -37,8 +37,10 @@ double _benchmarkValue(Benchmark b) => switch (b.kind) {
 /// exercice et de la même nature parmi [known].
 bool _below(Benchmark b, List<Benchmark> known) {
   for (final k in known) {
+    // Repères chargés : comparés à répétitions égales seulement.
     if (k.exerciseId == b.exerciseId &&
         k.kind == b.kind &&
+        (b.kind != BenchmarkKind.loadReps || k.reps == b.reps) &&
         _benchmarkValue(k) > _benchmarkValue(b)) {
       return true;
     }
@@ -108,7 +110,11 @@ List<Benchmark> testBenchmarks(
               date: session.date,
               externalLoadKg: set.externalLoadKg ?? 0,
               reps: reps,
-              rir: flames == null || flames == Flames.min
+              // Une tentative ne se lit pas comme une réserve mesurée.
+              rir:
+                  flames == null ||
+                      flames == Flames.min ||
+                      set.role == SetRole.attempt
                   ? null
                   : rirOfFlames(flames),
               bodyWeightKg: bodyWeightOf(session, ctx.profile, p),

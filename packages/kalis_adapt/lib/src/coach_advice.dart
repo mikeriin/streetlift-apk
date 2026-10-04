@@ -183,7 +183,7 @@ CoachAdvice? _coachAdvise(
       grid: info.grid,
       attempts: done.length + 1,
       done: done,
-      recentBest: track.heavy.isEmpty ? null : track.heavy.first.$2,
+      recentBest: recentHeavy(track, run.day, p),
       targetKg: lift?.targetKg,
       objective: null,
       healthLevel: run.health.level,

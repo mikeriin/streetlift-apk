@@ -23,6 +23,17 @@ suit. `kalis_core` 0.4.1, `kalis_plan` 0.2.0.
   `AdaptationSummary.benchmarks`, `skills`, `volumeTolerance` ; `EventDayAdvisor.planEventDay`
   (échauffement, tentatives, rythme d'une épreuve de répétitions) ; nouveaux codes de raison `adapt.*`
   de 0.4.0.
+- **Règles issues du calibrage au panel** (`docs/CALIBRAGE_CA1.md`, `CONTRAT.md` § 11.4, 11.5, 11.9) :
+  seules les séries qui montrent la capacité la mesurent (série au ressenti arrêtée avant le haut de sa
+  plage, test, série restée sous sa cible) — les autres ne donnent qu'une borne basse ; séries repère sur
+  une plage, une série de tête ou un maintien ; répétitions et maintiens écrits en part d'un test recalés
+  sur le maximum mesuré, dans les deux sens ; haut d'une plage servi à la réserve du bloc ; séries
+  fractionnées quand la plage est hors de portée ; maintien trop facile remonté vers la moitié du maximum ;
+  exercice assisté : cran d'assistance conseillé et lu dans le journal ; exercice jamais fait : entrée à
+  60 % de la charge de référence ; séries allégées pilotées sur la série de tête réalisée ; zone
+  douloureuse : volume gelé ; alerte de surmenage (deux séances mesurées de suite à −5 % : une semaine à
+  40 % de lignes en moins sur le mouvement) ; un test fait un jour de bilan nettement bas ne fait pas
+  baisser le repère.
 - **0.1 conservé** : un bloc sans champ du contrat 0.4.0 (programmes de `kalis_plan` 0.1, programme
   importé du propriétaire) est servi comme en 0.1.0 ; `KalisAdapt(legacy: true)` sert tout bloc comme en
   0.1.0.
@@ -33,7 +44,9 @@ suit. `kalis_core` 0.4.1, `kalis_plan` 0.2.0.
 - **Validation** : invariants I1 à I8 inchangés sur 10 240 journaux aléatoires ; invariants du mode coach
   (C1 à C4, I2 à I8) sur 10 240 journaux aléatoires aux champs de 0.4.0, programmes street du banc et
   programmes à techniques injectées ; campagne street de `kalis_bench` (17 profils, trois modèles de
-  vérité, quatre politiques) ; calibrage au panel (`docs/CALIBRAGE_CA1.md`).
+  vérité, quatre politiques) ; règles du calibrage (`test/coach_rules_test.dart`) ; calibrage au panel
+  (`docs/CALIBRAGE_CA1.md`) : 34 couples sur 68 à 9 ou plus, minimum 7 — **cible « 9 partout » non
+  atteinte**, les corrections restantes portent sur le programme écrit par `kalis_plan`.
 
 ## 0.1.0
 

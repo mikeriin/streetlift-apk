@@ -523,6 +523,10 @@ final class ExerciseRun {
   /// (plus de lignes que le bloc n'en écrit, plus courtes).
   bool split = false;
 
+  /// Mode coach : lignes retenues pour la séance (gel sur une zone
+  /// douloureuse, alerte de surmenage), ou `null`.
+  int? lines;
+
   /// Séries notées face à une cible.
   int ratedSets = 0;
 

@@ -139,7 +139,7 @@ EventDayPlan buildEventDay(
       grid: info.grid,
       attempts: lift.attempts,
       done: done,
-      recentBest: track.heavy.isEmpty ? null : track.heavy.first.$2,
+      recentBest: recentHeavy(track, run.day, p),
       targetKg: lift.targetKg,
       objective: request.objective,
       healthLevel: health.level,

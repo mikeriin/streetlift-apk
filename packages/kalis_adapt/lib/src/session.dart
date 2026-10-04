@@ -675,6 +675,12 @@ SessionPlan buildSessionPlan(
         }
       }
       final plans = coachPlans(run, exercise, item, d.sets);
+      final kept = exercise.lines;
+      if (kept != null && kept < d.sets) {
+        // Moins de lignes que le bloc (douleur, alerte de surmenage) :
+        // le temps de séance et la règle générale en tiennent compte.
+        d.sets = kept;
+      }
       if (plans != null) {
         if (exercise.split && plans.length > d.sets) {
           // Séries fractionnées : plus de lignes, plus courtes.

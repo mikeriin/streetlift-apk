@@ -238,6 +238,71 @@ void main() {
       expect(split, greaterThan(0));
     }, timeout: const Timeout(Duration(minutes: 10)));
   });
+
+  group('test un jour de bilan bas', () {
+    // Un test fait un jour de bilan nettement bas, hors compétition, ne
+    // fait pas baisser le repère : il n'est rendu que s'il vaut au moins
+    // le meilleur repère connu.
+    for (final key in const <String>[
+      'street_05_inter_calisthenie_front_lever',
+      'street_08_avance_sets_reps_competition',
+    ]) {
+      test('$key : aucun repère abaissé par un test de mauvais jour', () {
+        final engine = KalisAdapt();
+        final policy = CheckedPolicy(engine);
+        final profile = streetProfile(key);
+        final run = simulate(
+          catalog: catalog,
+          spec: streetAthlete(key),
+          profile: profile,
+          seed: 4,
+          policy: policy,
+          program: streetProgram(key),
+          weeks: 16,
+          loop: engine,
+          truthKind: TruthKind.b,
+        );
+        expect(policy.violations, isEmpty);
+        double value(Benchmark b) => switch (b.kind) {
+          BenchmarkKind.maxReps => (b.reps ?? 0).toDouble(),
+          BenchmarkKind.maxHold => (b.seconds ?? 0).toDouble(),
+          _ => b.externalLoadKg ?? 0,
+        };
+        final low = <String>{};
+        for (final s in run.served) {
+          if (s.record.eventId == null &&
+              readHealth(s.record.healthCheck, p).level >= 2) {
+            low.add(s.record.date.iso);
+          }
+        }
+        var results = 0;
+        for (final (_, review) in run.reviews) {
+          final tests = review.testResults ?? const <Benchmark>[];
+          for (final b in tests) {
+            results++;
+            final when = b.date;
+            if (when == null || !low.contains(when.iso)) {
+              continue;
+            }
+            for (final k in <Benchmark>[
+              ...?profile.benchmarks,
+              for (final t in tests)
+                if ((t.date?.dayNumber ?? when.dayNumber) < when.dayNumber) t,
+            ]) {
+              if (k.exerciseId == b.exerciseId && k.kind == b.kind) {
+                expect(
+                  value(b),
+                  greaterThanOrEqualTo(value(k)),
+                  reason: '${b.exerciseId} le ${when.iso}',
+                );
+              }
+            }
+          }
+        }
+        expect(results, greaterThan(0));
+      }, timeout: const Timeout(Duration(minutes: 10)));
+    }
+  });
 }
 
 /// Prescription écrite par le bloc pour l'emplacement [slotId] de la séance

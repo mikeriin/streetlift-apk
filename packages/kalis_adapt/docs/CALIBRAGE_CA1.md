@@ -302,3 +302,72 @@ Recherche ciblée (un sous-agent Opus, recherche web ; « résumé » : seul le 
 - **Alerte de surmenage** : voir ci-dessus ; raisons `adapt.volume_down` et `adapt.fatigue_high`.
 - **Export des trajectoires** (`kalis_bench`) : sous chaque tableau, le maximum réel hors fatigue de
   l'athlète simulé au départ et en fin de cycle (le record déclaré peut être plus haut).
+
+## Passe 3 (complète, 68 couples) — version livrée
+
+| Profil | Force | Calisthénie | Hypertrophie | Santé | Relecture documentée |
+| --- | --- | --- | --- | --- | --- |
+| street_01 | 8 | 8 | 8 | 9 | 6 |
+| street_02 | 9 | 9 | 9 | 9 | 6 |
+| street_03 | 7 | 7 | 7 | 7 | 5 |
+| street_04 | 9 | 7 | 9 | 8 | 7 |
+| street_05 | 7 | 7 | 7 | 9 | 6 |
+| street_06 | 8 | 9 | 7,5 | 9 | 6 |
+| street_07 | 9 | 9 | 9 | 9 | 7 |
+| street_08 | 9 | 9 | 9 | 8 | 6 |
+| street_09 | 8 | 8 | 8 | 9 | 6 |
+| street_10 | 8 | 8 | 8 | 8 | 5 |
+| street_11 | 9 | 9 | 9 | 9 | 6 |
+| street_12 | 8 | 9 | 9 | 9 | 6 |
+| street_13 | 9 | 8 | 8 | 9 | 6 |
+| street_14 | 9 | 8 | 9 | 9 | 6 |
+| street_15 | 9 | 8 | 8 | 8 | 7 |
+| street_16 | 8 | 8 | 9 | 9 | 7 |
+| street_17 | 9 | 7 | 7 | 8 | 6 |
+
+Panel : couples à 9 ou plus : 34 sur 68 ; minimum 7 ; moyenne 8,35. Passes complètes précédentes : passe 0 et
+passe 1, 29 sur 68, minimum 6. La passe 2 (43, minimum 4) gardait les notes de la passe 1 pour les couples déjà
+à 9 : rejugés ici, plusieurs repassent à 8 — l'incertitude d'un point du panel pèse autant que les changements
+du moteur. **Cible « 9 partout » non atteinte.** Aucun manquement de sécurité réalisé sur les 17 profils.
+
+Corrections nécessaires de la passe 3, lues en entier (34 couples) : **toutes portent sur le programme écrit**
+— échelle de poussée et pompe hors de portée (street_03), négatives à dose fixe et volume de tirage
+(street_01), hausses hebdomadaires de dips et de handstand (street_04), critère de passage et seuil d'ouverture
+d'une étape de figure, tirage de force absent (street_05, street_10), séries dures trop rares sur le mouvement
+visé (street_06), volume de la première semaine (street_08), séries allégées à −10 / −15 % et travail à 85 %
+et plus trop rare, dips partiels surchargés (street_09, street_12, street_16), tenues écrites à 10 s et à
+60 % du maximum à la fois (street_10), bloc de réalisation non spécifique (street_13, street_15, street_17),
+plage de chest-to-bar non testée (street_14), tractions deux jours de suite et repli de 15 minutes
+(street_17). Le moteur recale ces chiffres séance après séance, mais ne réécrit ni la structure ni le texte
+du programme (`CONTRAT.md`, § 11.12) : elles reviennent à `kalis_plan`.
+
+**Arrêt du calibrage après la boucle 3.** Le critère d'arrêt anticipé (deux boucles de suite sans gain) n'est
+pas rempli à la lettre : la boucle 2 gagne en nombre de couples, la boucle 3 en minimum. Mais plus aucune
+correction nécessaire du panel n'est à la portée de `kalis_adapt` ; d'autres boucles ne feraient que
+rejouer l'incertitude du panel. Décision à prendre par le propriétaire (`DECISIONS_CP.md`, section CA1).
+
+## Relecture documentée (C7.3, sans seuil)
+
+Quatre relecteurs Opus, sources du web seulement (ni référentiel ni code), profil + programme + trajectoire ;
+notes d'ensemble de 5 à 7 (moyenne 6,1) : plus sévères que le panel, et tournées vers la conduite par le
+moteur. Notes et commentaires écrits dans la manche 2 de la page de relecture. Chaque remarque sur le moteur :
+
+| Remarque | Suite |
+| --- | --- |
+| Maxima sous-estimés, charges et séries allégées servies trop faciles (street_01, 02, 07, 09, 10, 11, 12, 16) | **Expliqué, non corrigé.** Le profil déclare des records au-dessus du maximum réel de l'athlète simulé (jusqu'à 7 %) ; sous le modèle de vérité B les notes loin de l'échec sont bruitées et l'athlète s'arrête tôt : le moteur ne lit que des bornes basses, un mauvais jour mené à l'échec pèse plus qu'un bon jour resté loin de l'échec. Fin de cycle : estimation 3 à 5 % sous le maximum réel sur les mouvements lestés. Prudent par construction (0 série au moins 2 répétitions plus dure que visé) ; limite 5 du § 11.12 ; à reprendre en CA2 (série repère obligatoire après un échec, repère sur les meilleurs simples récents). |
+| Échelle d'assistance : pompes sur les genoux jamais passées aux mains surélevées, élastique affiné une seule fois, plages étendues jusqu'à 26 répétitions (street_02, 03) | **Expliqué.** L'échelle de poussée est un texte du programme, pas une `SkillLadder` du bloc : le moteur n'a pas de cran à proposer et étend la plage. À écrire par `kalis_plan` comme échelle (CP1 correction ou CX). |
+| Test fait un jour de bilan bas reporté au profil, repères abaissés (street_05, street_08) | **Corrigé (boucle 4).** Un test d'un jour de bilan nettement bas, hors compétition, n'est plus rendu s'il est sous le meilleur repère connu (`testBenchmarks`). |
+| Simples à 1 répétition pendant six semaines sur la pompe (street_03) ; 4-4-4 à 1 ou 2 en réserve (street_13) | **Expliqué.** Séries fractionnées à la réserve du bloc (boucle 3) : le panel demandait ce recalage, la relecture documentée préfère une variante plus facile dans une plage de 5 à 8 — choix d'exercice, donc programme. |
+| Test de descente (négative) rendu en répétitions et non en secondes (street_01, 03) | **Non corrigé, limite.** Le programme écrit un test de maintien sur un exercice que le catalogue compte en répétitions ; le moteur et le simulateur le lisent en répétitions. À régler à l'interface plan ↔ catalogue (CX). |
+| Douleur au poignet à 4/10 pendant cinq semaines : handstand remplacé, dips gardés (street_04, 10) | **Expliqué.** Entre 3 et 5 sur 10 le moteur gèle la progression et le volume de la zone et remplace les exercices les plus sollicitants (§ 11.8) ; l'arrêt d'un mouvement et l'avis médical au-delà de deux semaines sont une consigne du programme, que l'application doit afficher. |
+| Squat retenté à la même barre après un échec le jour de l'échéance (street_09) ; saut de 5 kg à 54 % de réussite (street_16) | **Expliqué.** En compétition une barre manquée ne se baisse pas ; la troisième barre d'un objectif « record » accepte une réussite sur deux (`attemptRecordProbability`) : paramètre, à revoir avec le propriétaire. |
+| Répétitions figées (5-5-5) alors que la réserve réelle dépasse la cible (street_15, 17) ; « dernières séries plus dures » seize semaines sans changement de structure (street_11) | **Expliqué.** Profils à récupération limitée : aucune hausse au-delà du programme (§ 11.8) ; une répétition de plus par séance au plus sinon. Limite notée pour CA2. |
+| Allures de course non pilotées (street_17) | **Hors périmètre** de CA1 (street) ; lot CA2. |
+| Traction lestée servie à 2,5 kg pour un athlète à +15 kg (street_11) | **Expliqué.** Charge écrite « à calibrer » par le programme : le moteur part bas et monte de 10 % par séance au plus ; à chiffrer par `kalis_plan` depuis le 1RM du profil. |
+
+## Boucle 4 (après la relecture documentée)
+
+- **Test d'un jour de bilan bas** : voir ci-dessus. Trajectoires touchées : celles où un test tombe un jour de
+  bilan à 2 sur 5 ou moins ; les couples dont l'export change de plus de 10 % de lignes sont rejugés (voir
+  `LIVRAISON_CA1.md`).
+- **Séries fractionnées** : aucune série ajoutée quand le bloc écrit une technique, servie ou retirée.

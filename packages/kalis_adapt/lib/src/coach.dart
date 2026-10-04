@@ -360,6 +360,17 @@ final class SlotMark {
   final bool failed;
 }
 
+/// Plus lourde barre réussie du suivi [track] dans les
+/// `attemptRecentDays` jours avant [day], ou `null`.
+double? recentHeavy(ExerciseTrack track, int day, AdaptParams p) {
+  for (final h in track.heavy) {
+    if (day - h.$1 <= p.attemptRecentDays) {
+      return h.$2;
+    }
+  }
+  return null;
+}
+
 /// Note dans le suivi [track] les barres réussies de la séance de [run] :
 /// les six plus lourdes des dernières semaines sont gardées (une ouverture
 /// est une barre déjà faite). Sans effet sur les décisions de 0.1.
@@ -784,8 +795,7 @@ List<SetPlan>? coachPlans(
   final p = run.ctx.params;
   final ease = track.easeDay;
   var eased = 0;
-  if (!frozen &&
-      ease != null &&
+  if (ease != null &&
       run.day > ease &&
       run.day - ease <= p.coachOverreachDays &&
       c.policy.build &&
@@ -800,19 +810,20 @@ List<SetPlan>? coachPlans(
   final out = mode == CapacityMode.loaded
       ? _loadedPlans(run, ex, c, item, lines, served)
       : _directPlans(run, ex, c, item, lines, served);
-  if (frozen && out != null) {
+  // Lignes retenues : elles valent aussi quand la règle générale de 0.1
+  // sert l'exercice (aucune cible du mode coach).
+  ex.lines = lines;
+  if (lines < sets) {
     ex.notes.add(
       _r(ReasonCodes.adaptVolumeDown, <String, Object?>{'sets': sets - lines}),
     );
   }
-  if (eased > 0 && out != null) {
-    ex.notes
-      ..add(_r(ReasonCodes.adaptVolumeDown, <String, Object?>{'sets': eased}))
-      ..add(
-        _r(ReasonCodes.adaptFatigueHigh, <String, Object?>{
-          'readiness': roundTo(track.easeRatio, 3),
-        }),
-      );
+  if (eased > 0) {
+    ex.notes.add(
+      _r(ReasonCodes.adaptFatigueHigh, <String, Object?>{
+        'readiness': roundTo(track.easeRatio, 3),
+      }),
+    );
   }
   return out;
 }
@@ -1001,7 +1012,7 @@ List<SetPlan>? _loadedPlans(
     // sauf à rester à +10 % (ou un cran) de la plus lourde barre récente.
     // (La plus lourde barre réussie des dernières semaines, quel que soit
     // le schéma ; sans elle, la dernière charge.)
-    final heaviest = track.heavy.isEmpty ? lastAny : track.heavy.first.$2;
+    final heaviest = recentHeavy(track, run.day, p) ?? lastAny;
     final base = heaviest > lastAny ? heaviest : lastAny;
     final cap = grid.floor((base + bw) * (1 + p.maxUpMain) - bw);
     final step = grid.next(base, up: true);
@@ -1156,8 +1167,14 @@ List<SetPlan>? _loadedPlans(
     final (low, high, role) = lines[i];
     var load = kg;
     if (waveStep != null && waveLength > 0) {
+      // La vague la plus lourde est à la charge retenue par les
+      // garde-fous ; les vagues d'avant sont plus légères d'autant.
       final wave = i ~/ waveLength;
-      load = _onGrid(grid, (kg + bw) * (1 + waveStep * wave) - bw);
+      final lastWave = (sets - 1) ~/ waveLength;
+      load = _onGrid(
+        grid,
+        (kg + bw) / (1 + waveStep * (lastWave - wave)) - bw,
+      );
     }
     out.add(
       SetPlan(
@@ -1410,7 +1427,9 @@ List<SetPlan>? _directPlans(
           !ex.techniqueWithheld &&
           exact != null &&
           run.day - exact <= 2 * p.coachProbeDays;
-      final most = locked || !known ? sets : (2 * sets < 3 ? 3 : 2 * sets);
+      final most = locked || !known || c.policy.locked
+          ? sets
+          : (2 * sets < 3 ? 3 : 2 * sets);
       if (count > most) {
         count = most;
       }
@@ -1636,19 +1655,33 @@ List<SetPlan>? _directPlans(
     final exact = track.exactDay;
     final probed = track.benchmarkDay;
     final last = out.last;
+    // Bras tendus et appuis : la tenue repère garde la borne de hausse
+    // d'une séance à la suivante.
+    var probeHigh = writtenHigh;
+    if (tendon && mark != null && mark.top > 0) {
+      final rise =
+          p.coachHoldRise[c.level < 0 ? 0 : (c.level > 3 ? 3 : c.level)];
+      final byShare = (mark.top * (1 + rise)).floor();
+      final bySlack = mark.top + p.coachHoldRiseSlackSeconds;
+      final cap = byShare > bySlack ? byShare : bySlack;
+      if (probeHigh > cap) {
+        probeHigh = cap;
+      }
+    }
     if (!locked &&
         !tendonCapped &&
+        !c.light &&
         c.policy.build &&
         !c.eventNear &&
         share == null &&
         track.lastDay != null &&
-        last.high < writtenHigh &&
+        last.high < probeHigh &&
         (exact == null || run.day - exact >= p.coachProbeDays) &&
         (probed == null || run.day - probed >= p.coachProbeDays)) {
       out[out.length - 1] = SetPlan(
         loadKg: null,
         low: last.high,
-        high: writtenHigh,
+        high: probeHigh,
         flames: flamesOfRir(2),
         open: true,
         benchmark: true,
@@ -1756,7 +1789,7 @@ List<SetPlan>? _testPlans(
   if (loaded &&
       (kind == TestKind.oneRm || kind == TestKind.attemptSimulation)) {
     final bw = info.fraction * run.bodyWeightKg;
-    final recent = track.heavy.isEmpty ? null : track.heavy.first.$2;
+    final recent = recentHeavy(track, run.day, p);
     final lift = competitionLiftOf(run.ctx.profile, info.id, run.day);
     final ladder = attemptLadder(
       estimateTotal: exp(f.m[0] + f.m[3] + f.gRef),
