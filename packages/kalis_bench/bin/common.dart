@@ -301,6 +301,7 @@ void writeSeasonExports(String outPath) {
     ..writeln()
     ..writeln('| Profil | Scénario | Violations |')
     ..writeln('| --- | --- | --- |');
+  final details = StringBuffer();
   for (final json in readStreetJson()) {
     for (final scenario in SeasonScenario.values) {
       final scenarioJson = seasonProfileJson(json, scenario);
@@ -336,7 +337,7 @@ void writeSeasonExports(String outPath) {
             startDate: benchStartDate,
             locks: const <PlanLock>[],
           ),
-          blocks: main.run.blocks,
+          blocks: servedBlocksOf(main.run),
           horizonWeeks: weeks,
         ),
       );
@@ -345,12 +346,21 @@ void writeSeasonExports(String outPath) {
         '| ${bench.key} | ${scenario.code} | ${found.length}'
         '${found.isEmpty ? '' : ' (${found.map((f) => f.code).toSet().join(', ')})'} |',
       );
+      for (final f in found) {
+        details.writeln(
+          '- `${bench.key}`, ${scenario.code}, `${f.code}` : ${f.message}',
+        );
+      }
       if (scenario == SeasonScenario.base) {
         final others = <Trajectory>[sim(TruthKind.a), sim(TruthKind.c)];
-        _write('$outPath/saisons/${bench.key}.md',
-            seasonMarkdown(main, catalog, others: others));
-        _write('$outPath/saisons/${bench.key}.json',
-            '${jsonEncode(programJson(view))}\n');
+        _write(
+          '$outPath/saisons/${bench.key}.md',
+          seasonMarkdown(main, catalog, others: others),
+        );
+        _write(
+          '$outPath/saisons/${bench.key}.json',
+          '${jsonEncode(programJson(view))}\n',
+        );
       } else {
         _write(
           '$outPath/saisons/scenarios/${bench.key}_${scenario.code}.md',
@@ -358,6 +368,13 @@ void writeSeasonExports(String outPath) {
         );
       }
     }
+  }
+  if (details.isNotEmpty) {
+    safety
+      ..writeln()
+      ..writeln('## Détail')
+      ..writeln()
+      ..write(details.toString());
   }
   _write('$outPath/saisons/SECURITE.md', safety.toString());
 }
@@ -391,9 +408,7 @@ Future<void> runSeasonCampaign({
       file.readAsStringSync().trim().split(RegExp(r'\s+')).first,
     );
   }
-  final keys = <String>[
-    for (final j in readStreetJson()) j['key']! as String,
-  ];
+  final keys = <String>[for (final j in readStreetJson()) j['key']! as String];
   final results = <String, Map<String, Object?>>{};
   var next = 0;
   Future<void> worker() async {

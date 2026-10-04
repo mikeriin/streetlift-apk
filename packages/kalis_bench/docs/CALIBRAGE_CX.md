@@ -57,3 +57,61 @@ famille et par nombre de couples concernés :
    (street_04), partielles surchargées au-dessus du 1RM sur un coude à antécédent (street_09).
 7. **Divers** : séries de volume de traction lestée trop faciles (street_16), règle « réductions déjà
    appliquées » contradictoire avec la baisse du jour (street_10).
+
+## Boucle 1 (04/10/2026)
+
+Corrections (moteurs du contrôle 43426224) : le dernier test mesuré fait foi, sans gain supposé après un test ;
+estimations du résumé d'adaptation (6 séries au moins, erreur ≤ 6 %) qui abaissent un repère ; douleurs du
+résumé lues comme des gênes ; semaine de transition après une épreuve principale ; tirage jamais deux jours de
+suite ; partielles retirées les quatre dernières semaines et plafonnées à 95 % sur un coude à antécédent ;
+négatives du débutant 3 × 4-5 de 5 s ; échelle de poussée écrite au contrat ; critère de passage des figures à
+environ 75 % du maximum ; tenues 60-70 % / 75-85 % ; séries allégées −5 / −8 % ; trois séries lourdes en
+intensification et réalisation ; hausse de volume 15 % ; catégorie de poids et format d'épreuve ; test du chemin
+vers la traction en secondes ; lieu du jour (`feasibleAt`, kalis_core 0.4.2).
+
+Recherche ciblée : `cx-outils/docs/recherche_boucle0.md` (règlement FinalRep, absence de règlement unifié en
+sets & reps, isométrie ≥ 70 % pour les tendons, lien faible de la tenue menton avec la traction, affûtage).
+
+Panel complet (68 couples, saisons du contrôle 43426224) :
+
+| Profil | Force | Calisthénie | Hypertrophie | Santé |
+| --- | --- | --- | --- | --- |
+| `street_01_debutant_complet` | 6,5 | 7 | 6 | 7,5 |
+| `street_02_debutant_surpoids` | 8 | 9 | 9 | 9 |
+| `street_03_debutante` | 5,5 | 6 | 5,5 | 7 |
+| `street_04_reprise_longue_pause` | 9 | 9 | 9 | 9 |
+| `street_05_inter_calisthenie_front_lever` | 8 | 6 | 7 | 7 |
+| `street_06_inter_sets_reps` | 8 | 9 | 8 | 9 |
+| `street_07_avance_streetlifting_competition` | 9 | 7 | 9 | 9 |
+| `street_08_avance_sets_reps_competition` | 9 | 7 | 8 | 8 |
+| `street_09_elite_streetlifting` | 8 | 8 | 8 | 9 |
+| `street_10_elite_figures` | 5,5 | 4 | 6,5 | 5 |
+| `street_11_master_51_ans` | 8 | 8 | 8 | 8 |
+| `street_12_antecedent_coude` | 9 | 9 | 9 | 9 |
+| `street_13_peu_de_temps` | 8 | 7 | 8 | 7 |
+| `street_14_parc_sans_lest` | 9 | 9 | 9 | 9 |
+| `street_15_travail_physique_sommeil_court` | 7 | 8 | 8 | 8 |
+| `street_16_specialisation_traction_lestee` | 8 | 8 | 7 | 8 |
+| `street_17_hybride_street_course` | 7 | 7 | 8 | 9 |
+
+Couples à 9 ou plus : 23 sur 68 (1 en passe 0) ; minimum 4 (4,5) ; moyenne 7,81 (7,01). `street_14` : 9 dans
+les quatre écoles. Les blocs écrits sur le test ne sont plus relevés ; restent, par famille :
+
+1. **Objectif non testé** (street_01, 03) : le test du chemin vers la traction (tenue menton) était retiré
+   par le budget des tenues bras tendus, où la tenue bras fléchis était comptée à tort.
+2. **Poussée du débutant** (street_02, 03) : la variante facile monte en séries d'endurance (13-17), la pompe
+   au sol n'est pas pratiquée avant le troisième bloc.
+3. **Figure retirée sur douleur** (street_10) : poignet à 4/10, la planche disparaît quatre semaines (la
+   douleur relevée rejetait l'exercice) ; test final sur un exercice hors de l'échelle.
+4. **Réalisation des répétitions** (street_06, 13, 15, 17) : semaines identiques, séries à 40-60 % du
+   maximum, bloc spécifique plus léger que la construction.
+5. **Lest sous le poids du corps** (street_11, 16) : séries de 2-3 tractions faciles à « 83 % » ; note « 1RM
+   proche du poids du corps » erronée en semaine de transition.
+6. **Divers** : test d'un mauvais jour qui fait tomber tout le bloc de figure (street_05), reprise après
+   transition en une marche (street_08), partielles surchargées d'emblée (street_09), force dynamique du front
+   lever (street_05).
+
+Violations de sécurité de la saison réalisée (banc, 4 graines × 3 vérités × 8 scénarios) : `affutage_absent`
+dans tous les tirages du scénario « échéance avancée » de street_07, 08 et 09 était un artefact de mesure (la
+saison réalisée mettait bout à bout les blocs écrits, y compris les semaines non servies du bloc arrêté par le
+changement de profil) : `servedBlocksOf` ne garde que les semaines servies.

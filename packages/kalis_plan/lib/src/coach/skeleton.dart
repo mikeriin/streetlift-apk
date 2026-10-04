@@ -530,7 +530,14 @@ void _buildBeginner(_Builder b) {
         Method.beginnerMain,
         sets: sets,
       );
-    } else if (pushPlanned >= 4 && !heavy && a.can(Ids.pushUp, d)) {
+    } else if ((pushPlanned >= 4 ||
+            // Objectif de pompes, geste acquis (2 au moins) : dès le
+            // deuxième bloc, des séries courtes du geste complet à chaque
+            // séance (spécificité ; panel CX, boucle 1), la variante
+            // facile garde le volume.
+            (later && pushMax >= 2 && a.aimsAt(Ids.pushUp))) &&
+        !heavy &&
+        a.can(Ids.pushUp, d)) {
       // Quelques pompes acquises : des séries courtes du geste complet
       // d'abord (spécificité), puis la variante facile pour le volume.
       b.add(
@@ -540,7 +547,7 @@ void _buildBeginner(_Builder b) {
         Method.beginnerMain,
         sets: sets,
       );
-      b.add(
+      final easy = b.add(
         d,
         Picks.easyPushUp,
         SlotRole.secondary,
@@ -550,6 +557,11 @@ void _buildBeginner(_Builder b) {
         // Le volume de poussée qui construit les répétitions : il reste.
         keep: true,
       );
+      final ladder = easy == null ? null : coachPushLadderFrom(easy.exerciseId);
+      if (ladder != null &&
+          !b.ladders.any((l) => l.targetExerciseId == coachPushLadderTarget)) {
+        b.ladders.add(ladder);
+      }
     } else {
       final push = b.add(
         d,
@@ -561,13 +573,9 @@ void _buildBeginner(_Builder b) {
       );
       // Échelle de poussée écrite au contrat (CX, correction 2), une fois
       // par bloc, à partir de la variante retenue.
-      final ladder = push == null
-          ? null
-          : coachPushLadderFrom(push.exerciseId);
+      final ladder = push == null ? null : coachPushLadderFrom(push.exerciseId);
       if (ladder != null &&
-          !b.ladders.any(
-            (l) => l.targetExerciseId == coachPushLadderTarget,
-          )) {
+          !b.ladders.any((l) => l.targetExerciseId == coachPushLadderTarget)) {
         b.ladders.add(ladder);
       }
       if (!heavy && a.aimsAt(Ids.pushUp) && !negativeDays.contains(d) ||
@@ -1922,8 +1930,7 @@ void _buildLifting(_Builder b, Set<int> runDays) {
           if (b.dayBefore(d, pullHeavy) ||
               b.dayBefore(pullHeavy, d) ||
               (pullVolume >= 0 &&
-                  (b.dayBefore(d, pullVolume) ||
-                      b.dayBefore(pullVolume, d)))) {
+                  (b.dayBefore(d, pullVolume) || b.dayBefore(pullVolume, d)))) {
             continue;
           }
           second = d;

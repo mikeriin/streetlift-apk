@@ -68,15 +68,20 @@ String seasonBlocksMarkdown(Trajectory t, Catalog catalog) {
       sources.add('le profil de départ');
     } else {
       final previous = run.blockWeeks[k - 1];
-      final tests = <String>[];
+      // Dernier résultat de chaque mouvement (une revue rend les tests du
+      // bloc faits jusque-là).
+      final byMovement = <String, String>{};
       for (final (week, review) in run.reviews) {
         if (week < previous || week >= start) {
           continue;
         }
         for (final r in review.testResults ?? const <Benchmark>[]) {
-          tests.add(_value(r, catalog));
+          final key = '${r.exerciseId}|${r.kind.code}';
+          byMovement.remove(key);
+          byMovement[key] = _value(r, catalog);
         }
       }
+      final tests = byMovement.values.toList();
       sources.add(
         tests.isEmpty
             ? 'le point de fin du bloc $k'
@@ -109,10 +114,7 @@ String seasonMarkdown(
   SeasonScenario scenario = SeasonScenario.base,
 }) {
   var text = coachTrajectoryMarkdown(t, catalog, others: others);
-  text = text.replaceFirst(
-    '# Trajectoire simulée — ',
-    '# Saison simulée — ',
-  );
+  text = text.replaceFirst('# Trajectoire simulée — ', '# Saison simulée — ');
   final scenarioLine = scenario == SeasonScenario.base
       ? ''
       : '**Scénario** : ${scenario.label}.\n\n';

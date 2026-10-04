@@ -49,6 +49,7 @@ final class CoachLimit {
     required this.discomfort,
     required this.recent,
     required this.since,
+    this.trend = false,
   });
 
   /// Zone du corps.
@@ -66,7 +67,25 @@ final class CoachLimit {
 
   /// Ancienneté déclarée, ou `null`.
   final ConstraintSince? since;
+
+  /// Vrai pour une douleur relevée par le moteur d'évolution pendant le
+  /// bloc précédent (et non déclarée au profil).
+  final bool trend;
 }
+
+/// Schémas des figures (tenues et dynamiques bras tendus, équilibres).
+const Set<MovementPattern> coachFigurePatterns = <MovementPattern>{
+  MovementPattern.figureStatiquePoussee,
+  MovementPattern.figureStatiqueTirage,
+  MovementPattern.figureStatiqueMixte,
+  MovementPattern.figureDynamiquePoussee,
+  MovementPattern.figureDynamiqueTirage,
+  MovementPattern.equilibreMains,
+};
+
+/// Part du volume gardée sur une figure qui charge une zone douloureuse
+/// pendant le bloc précédent (R5-P23 : −30 à −50 %).
+const double coachTrendPainShare = 0.6;
 
 /// Disciplines que le chemin street sait programmer.
 const Set<TrainingDiscipline> coachStreetDisciplines = <TrainingDiscipline>{
@@ -343,18 +362,46 @@ final class Athlete {
       if (other != null && other.compareTo(day) > 0) {
         continue;
       }
+      // Un test plus bas que le repère n'abaisse le repère que jusqu'à ce
+      // que l'athlète a montré à l'entraînement (estimation du moteur
+      // d'évolution sur assez de séries) : un seul test d'un mauvais jour
+      // ne fait pas tomber tout le bloc (R3-P16 ; panel CX, boucle 1).
+      int lowered(int measured, int? before, CapacityUnit unit) {
+        if (before == null || measured >= before) {
+          return measured;
+        }
+        for (final e in estimates) {
+          if (e.exerciseId == b.exerciseId &&
+              e.unit == unit &&
+              e.observations >= coachEstimateMinObservations &&
+              e.capacity > measured) {
+            final shown = e.capacity.floor();
+            return shown < before ? shown : before;
+          }
+        }
+        return measured;
+      }
+
       switch (b.kind) {
         case BenchmarkKind.maxReps:
           final n = b.reps;
           if (n != null && n > 0 && (b.externalLoadKg ?? 0) == 0) {
-            reps[b.exerciseId] = n;
+            reps[b.exerciseId] = lowered(
+              n,
+              reps[b.exerciseId],
+              CapacityUnit.maxReps,
+            );
             recordDay[b.exerciseId] = day;
             zero.remove(b.exerciseId);
           }
         case BenchmarkKind.maxHold:
           final s = b.seconds;
           if (s != null && s > 0 && (b.externalLoadKg ?? 0) == 0) {
-            holds[b.exerciseId] = s;
+            holds[b.exerciseId] = lowered(
+              s,
+              holds[b.exerciseId],
+              CapacityUnit.maxHoldSeconds,
+            );
             recordDay[b.exerciseId] = day;
           }
         case BenchmarkKind.loadReps:
@@ -383,8 +430,9 @@ final class Athlete {
     // précédent, CX, correction 1) : une capacité nettement plus basse que
     // le repère, estimée sur assez de séries et sans test plus récent,
     // devient le repère du bloc (le bloc suivant part de ce que l'athlète
-    // a montré, R2-P20 ; Helms et al. 2018). Jamais vers le haut : une
-    // hausse attend un test (CP1.3).
+    // a montré, R2-P20 ; Helms et al. 2018). Jamais au-dessus d'un repère
+    // connu : une hausse attend un test (CP1.3). Un exercice sans repère
+    // prend l'estimation.
     for (final e in estimates) {
       final seen = e.lastObservedOn;
       if (e.observations < coachEstimateMinObservations ||
@@ -409,24 +457,29 @@ final class Athlete {
               catalog.find(e.exerciseId)?.bodyweightFraction?.value ?? 0;
           final external = e.capacity - fraction * bodyWeight;
           final total = (before ?? 0) + fraction * bodyWeight;
-          if (before != null &&
-              e.capacity < total * (1 - coachEstimateMargin)) {
+          if ((before == null && external > 0) ||
+              (before != null &&
+                  e.capacity < total * (1 - coachEstimateMargin))) {
             oneRm[e.exerciseId] = external;
             recordDay[e.exerciseId] = seen;
           }
+        // Sans repère du tout (variante jamais déclarée ni testée, dosée
+        // jusque-là par une plage fixe), l'estimation devient le repère :
+        // elle remplace une plage supposée par ce que l'athlète a montré
+        // (CX, correction 1 ; R5-P2 : 50 à 70 % du maximum).
         case CapacityUnit.maxReps:
           final before = reps[e.exerciseId];
-          if (before != null &&
-              e.capacity < before * (1 - coachEstimateMargin) &&
-              e.capacity >= 1) {
+          if (e.capacity >= 1 &&
+              (before == null ||
+                  e.capacity < before * (1 - coachEstimateMargin))) {
             reps[e.exerciseId] = e.capacity.floor();
             recordDay[e.exerciseId] = seen;
           }
         case CapacityUnit.maxHoldSeconds:
           final before = holds[e.exerciseId];
-          if (before != null &&
-              e.capacity < before * (1 - coachEstimateMargin) &&
-              e.capacity >= 1) {
+          if (e.capacity >= 1 &&
+              (before == null ||
+                  e.capacity < before * (1 - coachEstimateMargin))) {
             holds[e.exerciseId] = e.capacity.floor();
             recordDay[e.exerciseId] = seen;
           }
@@ -506,6 +559,7 @@ final class Athlete {
           discomfort: pain,
           recent: true,
           since: null,
+          trend: true,
         ),
       );
     }
@@ -890,6 +944,15 @@ final class Athlete {
         continue;
       }
       final stress = e.stressOn(joint);
+      // Douleur relevée pendant le bloc précédent, sous le seuil d'arrêt
+      // (6/10) : une figure reste au programme, en volume réduit
+      // (`coachTrendPainShare`) — on recule, on n'abandonne pas (R5-P23,
+      // R5-P24 ; panel CX, boucle 1 : la planche retirée quatre semaines
+      // régressait).
+      final figure = coachFigurePatterns.contains(e.pattern);
+      if (l.trend && figure && l.discomfort < 6) {
+        continue;
+      }
       if ((stress == JointStress.high && l.discomfort >= 4) ||
           (stress != JointStress.low && l.discomfort >= 6)) {
         return 'joint';
