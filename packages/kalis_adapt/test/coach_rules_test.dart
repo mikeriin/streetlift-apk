@@ -185,8 +185,8 @@ void main() {
   });
 
   group('séries fractionnées', () {
-    // Débutante qui déclare 8 pompes pour un maximum réel de 3 : la pompe
-    // classique est écrite au-dessus de sa portée — des séries plus
+    // Débutante qui déclare 5 pompes pour un maximum réel de 3 : la pompe
+    // classique est écrite 2 × 3 à 5 à 2 en réserve, au-dessus de sa portée — des séries plus
     // courtes et plus nombreuses. (Avec son maximum déclaré de 3,
     // `kalis_plan` 0.2.1 écrit l'échelle de poussée et non plus la pompe
     // classique : le cas est reconstruit par un record surestimé.)
@@ -199,7 +199,7 @@ void main() {
         benchmarks: <Benchmark>[
           for (final b in declared.benchmarks ?? const <Benchmark>[])
             if (b.exerciseId == id && b.kind == BenchmarkKind.maxReps)
-              b.copyWith(reps: 8)
+              b.copyWith(reps: 5)
             else
               b,
         ],

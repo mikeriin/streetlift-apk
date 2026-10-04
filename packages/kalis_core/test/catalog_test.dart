@@ -443,10 +443,7 @@ void main() {
         isFalse,
       );
       expect(
-        wall.feasibleAt(
-          <String>{},
-          places: <Place>{Place.outdoor, Place.home},
-        ),
+        wall.feasibleAt(<String>{}, places: <Place>{Place.outdoor, Place.home}),
         isTrue,
       );
       expect(wall.feasibleAt(<String>{}), isTrue);
@@ -497,7 +494,11 @@ void main() {
         }
         for (final place in Place.values) {
           if (e.feasibleWith(<String>{})) {
-            expect(e.feasibleAt(<String>{}, place: place), isTrue, reason: e.id);
+            expect(
+              e.feasibleAt(<String>{}, place: place),
+              isTrue,
+              reason: e.id,
+            );
           }
         }
       }

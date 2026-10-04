@@ -866,6 +866,7 @@ void main() {
             kind: EventKind.repsCompetition,
             priority: EventPriority.main,
             date: _start.addDays(7 * 12 - 2),
+            mode: RepsEventMode.maxReps,
           ),
         ],
       );
@@ -910,9 +911,7 @@ void main() {
       expect(steps.last, 'sw-pompe');
       expect(steps, contains('sw-pompe-inclinee'));
       expect(
-        pass1.days.any(
-          (d) => d.slots.any((s) => s.exerciseId == 'sw-pompe'),
-        ),
+        pass1.days.any((d) => d.slots.any((s) => s.exerciseId == 'sw-pompe')),
         isFalse,
         reason: 'pompe au sol avant le critère de passage',
       );
