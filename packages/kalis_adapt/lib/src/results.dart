@@ -6,6 +6,7 @@ library;
 import 'package:kalis_core/kalis_core.dart';
 import 'package:kalis_plan/kalis_plan.dart' show MuscleGroup;
 
+import 'fatigue.dart';
 import 'filter.dart';
 import 'model.dart';
 import 'numeric.dart';
@@ -24,6 +25,27 @@ bool _isTest(SetRecord set) =>
 /// séance et par exercice, la meilleure ligne de test menée à bien (plus
 /// forte charge, plus de répétitions, plus long maintien). Les 200 plus
 /// récents.
+/// Valeur d'un repère pour la comparaison à un repère du même exercice
+/// et de la même nature (lest, répétitions ou secondes).
+double _benchmarkValue(Benchmark b) => switch (b.kind) {
+  BenchmarkKind.maxReps => (b.reps ?? 0).toDouble(),
+  BenchmarkKind.maxHold => (b.seconds ?? 0).toDouble(),
+  _ => b.externalLoadKg ?? 0,
+};
+
+/// Vrai si le repère [b] est sous le meilleur repère connu du même
+/// exercice et de la même nature parmi [known].
+bool _below(Benchmark b, List<Benchmark> known) {
+  for (final k in known) {
+    if (k.exerciseId == b.exerciseId &&
+        k.kind == b.kind &&
+        _benchmarkValue(k) > _benchmarkValue(b)) {
+      return true;
+    }
+  }
+  return false;
+}
+
 List<Benchmark> testBenchmarks(
   EngineContext ctx,
   TrainingLog log,
@@ -67,6 +89,7 @@ List<Benchmark> testBenchmarks(
     final source = session.eventId != null
         ? BenchmarkSource.competition
         : BenchmarkSource.guidedTest;
+    final found = <Benchmark>[];
     for (final id in order) {
       final set = best[id]!;
       final mode = ctx.book.find(id)!.mode!;
@@ -77,7 +100,7 @@ List<Benchmark> testBenchmarks(
           if (reps == null || reps < 1) {
             continue;
           }
-          out.add(
+          found.add(
             Benchmark(
               exerciseId: id,
               kind: BenchmarkKind.loadReps,
@@ -97,7 +120,7 @@ List<Benchmark> testBenchmarks(
           if (reps == null || reps < 1) {
             continue;
           }
-          out.add(
+          found.add(
             Benchmark(
               exerciseId: id,
               kind: BenchmarkKind.maxReps,
@@ -111,7 +134,7 @@ List<Benchmark> testBenchmarks(
           if (seconds == null || seconds < 1) {
             continue;
           }
-          out.add(
+          found.add(
             Benchmark(
               exerciseId: id,
               kind: BenchmarkKind.maxHold,
@@ -121,6 +144,18 @@ List<Benchmark> testBenchmarks(
             ),
           );
       }
+    }
+    // Test fait un jour de bilan nettement bas, hors compétition : il ne
+    // fait pas baisser le repère (un coach refait le test un bon jour) ;
+    // un résultat au niveau du repère connu, ou au-dessus, est gardé.
+    final lowDay =
+        session.eventId == null &&
+        readHealth(session.healthCheck, p).level >= 2;
+    for (final b in found) {
+      if (lowDay && _below(b, <Benchmark>[...?ctx.profile.benchmarks, ...out])) {
+        continue;
+      }
+      out.add(b);
     }
   }
   return out.length > 200 ? out.sublist(out.length - 200) : out;

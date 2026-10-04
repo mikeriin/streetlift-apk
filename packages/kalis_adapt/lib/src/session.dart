@@ -667,6 +667,13 @@ SessionPlan buildSessionPlan(
     final sd = track.filter.loadSd(exercise.nPlan, withDay: false);
     confidenceSum += clampDouble(1 - sd / (2 * p.calibrationSd), 0, 1);
     if (coach != null) {
+      for (final r in d.reasons) {
+        if (r.code == ReasonCodes.planTechniqueWithheld) {
+          // Technique retirée pour le niveau : séries classiques
+          // équivalentes, sans série ajoutée.
+          exercise.techniqueWithheld = true;
+        }
+      }
       final plans = coachPlans(run, exercise, item, d.sets);
       if (plans != null) {
         if (exercise.split && plans.length > d.sets) {

@@ -851,7 +851,11 @@ List<String> checkCoachSession(
         ].join(' ');
         out.add(
           '$where : ${item.sets} séries pour ${basis.sets} écrites '
-          '(lignes $lines ; bas de plage écrit $low)',
+          '(lignes $lines ; bas de plage écrit $low ; écrit '
+          '${basis.exerciseId} ${basis.repsLow}-${basis.repsHigh} '
+          '${basis.technique?.kind.code} ${basis.setTargets?.length} ; servi '
+          '${item.repsLow}-${item.repsHigh} ${item.technique?.kind.code} ; '
+          '${[for (final r in item.reasons) r.code].join(',')})',
         );
       }
     }
