@@ -138,6 +138,26 @@ int runBench({
       '${jsonEncode(<String, Object?>{'profile': program.profile.toJson(), 'athlete': athleteSpecJson(profile)})}\n',
     );
   }
+  // Blocs tels que la trajectoire les a suivis (propositions appliquées,
+  // blocs suivants construits d'après le résumé d'adaptation) et résumés
+  // de fin de semaine : mise au point du croisement.
+  for (final r in reports) {
+    final t = r.trajectory;
+    if (t == null || r.profile.group != 'street') {
+      continue;
+    }
+    final file = File('$outPath/blocs_realises/${r.profile.key}.json');
+    file.parent.createSync(recursive: true);
+    file.writeAsStringSync(
+      '${jsonEncode(<String, Object?>{
+        'blockWeeks': t.run.blockWeeks,
+        'blocks': <Object?>[for (final b in t.run.blocks) b.toJson()],
+        'summaries': <Object?>[
+          for (final (week, review) in t.run.reviews) <String, Object?>{'week': week, 'summary': review.summary.toJson(), 'proposals': <Object?>[for (final p in review.proposals) p.toJson()]},
+        ],
+      })}\n',
+    );
+  }
   total.stop();
   var violations = 0;
   for (final r in reports) {
