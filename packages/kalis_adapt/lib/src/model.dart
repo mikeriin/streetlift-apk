@@ -992,8 +992,7 @@ final class SessionRun {
       if (o.failed ||
           (run.spec.coach != null
               ? run.measured
-              : (said != null &&
-                    rirOfFlames(said) < state.rater.ceiling(p)))) {
+              : (said != null && rirOfFlames(said) < state.rater.ceiling(p)))) {
         track.exactDay = day;
       }
       final kg = o.loadKg;
@@ -1008,7 +1007,12 @@ final class SessionRun {
           lowestFailed = kg;
         }
       }
-      if (o.open) {
+      // Série repère. (Mode coach : les séries d'une plage sont toutes
+      // « au ressenti » ; seule une série ouverte au-delà du haut de la
+      // plage du bloc est une série repère.)
+      if (o.open &&
+          (run.spec.coach == null ||
+              (o.target?.high ?? 0) > run.spec.high)) {
         openSet = true;
       }
       if (o.amount > track.bestAmount) {
@@ -1113,9 +1117,7 @@ final class SessionRun {
         _firstDirect(run, mode, amount, flames, failed);
       }
       final track = run.track;
-      if (track != null &&
-          run.spec.coach != null &&
-          info.exercise.assisted) {
+      if (track != null && run.spec.coach != null && info.exercise.assisted) {
         // Assistance changée depuis la dernière série (cran d'élastique) :
         // la capacité attendue se décale d'un cran, l'incertitude grandit.
         final now = loadKg ?? 0;
@@ -1301,7 +1303,8 @@ final class SessionRun {
         p: p,
         bound: true,
       );
-    } else if (run.spec.coach != null && _asBound(run, flames, open, test, reps, target)) {
+    } else if (run.spec.coach != null &&
+        _asBound(run, flames, open, test, reps, target)) {
       // Mode coach : loin de l'échec, la note ne se lit que comme « au
       // moins tant en réserve » (la prédiction des répétitions restantes
       // se dégrade loin de l'échec et plafonne, R2-P3).
@@ -1468,7 +1471,8 @@ final class SessionRun {
         p: p,
         bound: true,
       );
-    } else if (run.spec.coach != null && _asBound(run, flames, open, test, amount, target)) {
+    } else if (run.spec.coach != null &&
+        _asBound(run, flames, open, test, amount, target)) {
       final said = rirOfFlames(flames);
       f.observeDirect(
         logCapacity: ln(_impliedCapacity(mode, done, said) / keep),

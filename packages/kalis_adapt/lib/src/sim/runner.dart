@@ -6,6 +6,7 @@ import 'package:kalis_core/kalis_core.dart';
 
 import '../apply.dart';
 import '../book.dart';
+import '../coach.dart' show blockCoached;
 import '../engine.dart';
 import '../filter.dart';
 import '../numeric.dart' show exp, ln;
@@ -630,6 +631,7 @@ SimRun simulate({
         // la capacité, que le moteur ne connaît pas.
         double? assistKg;
         if (rich &&
+            blockCoached(block) &&
             truth.mode == CapacityMode.reps &&
             truth.info.exercise.assisted) {
           var notch = bandNotch[item.exerciseId] ?? 3;
