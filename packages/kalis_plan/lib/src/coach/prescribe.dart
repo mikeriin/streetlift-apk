@@ -2643,7 +2643,9 @@ final class Prescriber {
       );
       return x;
     }
-    if (s.method == Method.runQuality && role == _DayRole.normal) {
+    if (s.method == Method.runQuality &&
+        s.note != 'goal_pace' &&
+        (role == _DayRole.normal || role == _DayRole.primerFar)) {
       // R6-P15 : une séance de qualité par semaine ; R6-P16 : fractions
       // courtes, récupération égale à l'effort. R6-P20 : +10 % par semaine
       // au plus — une fraction de plus toutes les deux semaines ; en
@@ -2655,6 +2657,11 @@ final class Prescriber {
       }
       if (reps < 4) {
         reps = 4;
+      }
+      if (role == _DayRole.primerFar) {
+        // Semaine de l'épreuve : trois fractions, pour garder l'allure
+        // sans fatigue (R6-P20, affûtage).
+        reps = 3;
       }
       x
         ..sets = reps
