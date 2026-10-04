@@ -408,6 +408,11 @@ abstract final class CoachRules {
 /// 30 n'est admis que sur un ou deux muscles).
 const List<double> coachWeeklyCeiling = <double>[12, 16, 20, 25];
 
+/// Part du volume (séries dures) gardée en semaine d'allègement, au plus,
+/// rapportée à la semaine la plus chargée des trois précédentes (R3-P11 :
+/// décharge de 40 à 60 % ; marge sous le seuil de 70 % du banc).
+const double coachDeloadShare = 0.65;
+
 /// Hausse relative maximale du volume d'un groupe d'une semaine à l'autre :
 /// 15 % (R5-P22 : +10 à +20 % ; CX, correction 6 : le panel et la
 /// relecture documentée demandent des hausses hebdomadaires de 10 à 15 %,
@@ -1068,11 +1073,7 @@ final class Prescriber {
       // lorsqu'il l'est vraiment (poids du corps à 78 % du 1RM ou plus) ;
       // une semaine légère dont la part tombe sous le poids du corps se
       // fait au poids du corps (ci-dessous ; panel CX, boucle 1).
-      if (floor >= 0.78 &&
-          added > 0 &&
-          raw > 0 &&
-          lest != null &&
-          lest > 0) {
+      if (floor >= 0.78 && added > 0 && raw > 0 && lest != null && lest > 0) {
         x
           ..load = lest
           ..reasons.add(_note(CoachNotes.smallLoad, lest));
@@ -1567,8 +1568,7 @@ final class Prescriber {
         } else if (pct > 0.78) {
           pct = 0.78;
         }
-      case WeekIntent.intensification || WeekIntent.realization
-          when _repsAim:
+      case WeekIntent.intensification || WeekIntent.realization when _repsAim:
         // Objectif de répétitions maximales (sans épreuve de force) : le
         // lest garde des séries de 5 à 75 à 80 % — la réserve de force sert
         // l'endurance de force, le travail spécifique se fait au poids du
@@ -2481,7 +2481,9 @@ final class Prescriber {
     final stage = ws.stage;
     final push = x.e.id == 'sw-pompe-negative';
     final later = blockIndex > 0 && !push;
-    final seconds = later ? 5 : (push ? (stage >= 2 ? 4 : 3) : (stage >= 2 ? 5 : 4));
+    final seconds = later
+        ? 5
+        : (push ? (stage >= 2 ? 4 : 3) : (stage >= 2 ? 5 : 4));
     final reps = ws.light
         ? 2
         : (later ? (stage >= 2 ? 5 : 4) : (stage >= 3 ? 4 : 3));
@@ -4733,6 +4735,36 @@ final class Prescriber {
       final limit = _limit(series, light, index, rise, 2);
       if (total <= limit + 1e-9 || !_trim(days, any: true)) {
         break;
+      }
+    }
+    // Semaine d'allègement : 65 % au plus du plus haut des trois semaines
+    // précédentes du bloc (R3-P11 : décharge de 40 à 60 % du volume ; le
+    // plancher de deux séries par exercice la laissait parfois à 75 % sur
+    // les programmes à nombreux exercices ; panel et banc CX, boucle 2).
+    if (ws.kind == WeekKind.deload &&
+        ws.intent == WeekIntent.deload &&
+        index > 0) {
+      var peak = 0.0;
+      for (var k = index - 3; k < index; k++) {
+        if (k >= 0 && _history[k].hard > peak) {
+          peak = _history[k].hard;
+        }
+      }
+      var guardRelief = 0;
+      while (guardRelief < 80 && peak > 0) {
+        guardRelief++;
+        var total = 0.0;
+        for (final items in days) {
+          for (final x in items) {
+            if (x.hard) {
+              total += x.sets;
+            }
+          }
+        }
+        if (total <= peak * coachDeloadShare + 1e-9 ||
+            !_trim(days, any: true)) {
+          break;
+        }
       }
     }
     // Tenues bras tendus (R4-F10, R5-P22).

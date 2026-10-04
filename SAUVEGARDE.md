@@ -35,6 +35,11 @@ Session Opus 5.5 lancée le 04/10/2026 vers 17:35 UTC. Base : `moteurs` ccde1ad2
 
 - Versions : kalis_plan 0.2.1, kalis_adapt 0.2.1, kalis_bench 0.2.0 (version.dart, pubspec, CHANGELOG). Page de relecture étendue (rendu « Saison simulée » et « Scénario imposé ») : cx-outils/page/index.html.
 
+## Étape 21:15 UTC : boucle 1 notée, boucle 2 en contrôle
+- Panel boucle 1 (saisons du contrôle 43426224) : 23/68 à 9, min 4, moyenne 7,81 ; notes cx-outils/notes/p1.json, corrections p1_corrections.md ; tableau dans CALIBRAGE_CX.md.
+- Boucle 2 (fca6bf0, puis 2b 093f556) : tenue menton hors budget bras tendus (plan et banc), douleur relevée = figure gardée −40 % (`pain_trend`), poussée du débutant (plage plafonnée 8-12, pompe au sol dès le bloc 2), réalisation répétitions (65-75 %, départs qui montent), semaine de reprise à 75 % après la transition, partielles 82,5 % d'entrée (coude), lest sous le poids du corps (maximum au poids du corps), note small_load seulement à 78 %, test bas recoupé par l'estimation, allègement ≤ 65 %, descentes freinées sous 10 tractions ; banc : servedBlocksOf, détail de SECURITE.md, test season_test.dart.
+- Recherche boucle 2 : cx-outils/docs/recherche_boucle2.md.
+
 ## Reste à faire
 - Lire le contrôle dev, corriger la compilation ; passe 0 du panel sur les saisons (mesure avant).
 - Corrections du programme écrit (LANCEMENTS.md CX, points 1 à 7 ; C7.7 street_08 et street_14 ; remarques de la relecture documentée des manches 1 et 2 qui relèvent du programme).
