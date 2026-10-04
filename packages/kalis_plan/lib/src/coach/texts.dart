@@ -130,9 +130,17 @@ String? coachReasonText(Reason r, Catalog catalog) {
               'sans élan — une seule série, autant de répétitions propres '
               'que possible (objectif : ${_int(v)}). Sinon, pas de '
               "tentative aujourd'hui. Si une traction passe, déclare-la "
-              "dans l'application : les séances commenceront alors par 3 "
-              'à 5 séries de 1 traction stricte, les tractions assistées '
-              'en complément.',
+              "dans l'application : les séances commenceront alors par 2 "
+              'à 3 tractions strictes isolées, propres, arrêt au premier '
+              'essai lent ou déformé (jamais un effort maximal), le reste '
+              'en descentes freinées et en tractions assistées.',
+        CoachNotes.pushLadder =>
+          'Échelle de poussée : pompe au mur → mains surélevées (barre '
+              'basse ou barres parallèles, de plus en plus bas) → genoux '
+              '→ sol. Prends dès la première séance le cran qui permet '
+              '${_int(v)} répétitions avec 3 à 4 en réserve ; descends '
+              "d'un cran quand le haut de la plage est tenu sur toutes "
+              'les séries, deux séances de suite.',
         CoachNotes.primer =>
           "Amorçage à l'avant-veille : deux simples à ${_pct(v)} du 1RM "
               "par mouvement, dans l'ordre de l'épreuve, rapides et "
@@ -181,11 +189,10 @@ String? coachReasonText(Reason r, Catalog catalog) {
         CoachNotes.tendonLoad =>
           'Charge progressive des fléchisseurs du poignet (face interne '
               'du coude) : à faire valider par le professionnel qui suit '
-              'ton coude. Seuil unique pour toute la zone : la gêne ne '
-              'dépasse pas ton niveau de départ (${_int(v)} sur 10 au '
-              'plus) pendant la séance et revient à ce niveau le '
-              'lendemain ; sinon, garde la charge. Ajoute le plus petit '
-              'pas quand toutes les séries passent dans ce seuil.',
+              'ton coude. Même seuil que la règle de douleur de la zone '
+              '(gêne au niveau de départ, ${_int(v)} sur 10 au plus, et '
+              'retour à ce niveau le lendemain). Ajoute le plus petit pas '
+              'quand toutes les séries passent dans ce seuil.',
         CoachNotes.pullReturn =>
           'Retour au tirage lesté : quand le coude reste à 2 sur 10 ou '
               'moins deux semaines de suite sur ces tractions, ajoute '
@@ -486,9 +493,12 @@ String? coachReasonText(Reason r, Catalog catalog) {
         CoachRules.repStep =>
           'Séries au poids du corps : les répétitions sont calées sur ton '
               'dernier maximum mesuré (ton record, puis chaque test) — '
-              'jamais sur un progrès supposé. Si la réserve prévue ne '
-              'tient pas, garde les chiffres de la semaine précédente ; '
-              'après un test, série de tête = résultat − 2.',
+              'jamais sur un progrès supposé. Si toutes les séries passent '
+              'avec au moins une répétition de réserve de plus que prévu, '
+              'ajoute une répétition par série la semaine suivante (sans '
+              'dépasser ton maximum − 2) ; si la réserve prévue ne tient '
+              'pas, garde les chiffres de la semaine précédente ; après '
+              'un test, série de tête = résultat − 2.',
         CoachRules.holdStep =>
           step is num && step >= 5
               ? "Gainage et tenues d'appoint : +5 s par tenue quand toutes "
@@ -506,19 +516,19 @@ String? coachReasonText(Reason r, Catalog catalog) {
       };
     case ReasonCodes.planPainRule:
       final zone = p['zone'];
-      return 'Douleur (${zone is String ? coachZoneLabel(zone) : ''}) : '
-          "de 0 à 2 sur 10, continue ; à ${_int(p['continueBelow'])} ou "
-          "${_int(p['regressAt'])}, finis la séance sans progresser et "
-          "n'ajoute rien la semaine suivante ; à 5, prends la variante plus "
-          'facile et retire 30 à 50 % du volume de la zone ; à '
-          "${_int(p['stopAt'])} ou plus, douleur la nuit, perte de force ou "
-          'gêne qui dure deux semaines : arrête le mouvement et consulte un '
-          'professionnel de santé. Un mouvement de la zone (tirage, '
-          'préhension, et le mouvement lesté qui la charge) ne progresse '
-          'que si la gêne ne dépasse pas ton niveau de départ (3 sur 10 '
-          'au plus) pendant la séance et revient à ce niveau le '
-          'lendemain ; sinon il garde sa charge, quels que soient les '
-          'pourcentages écrits. Le programme ne pose aucun diagnostic.';
+      return 'Douleur (${zone is String ? coachZoneLabel(zone) : ''}), un '
+          'seul seuil pour tous les mouvements qui chargent la zone '
+          '(tirage, préhension, appuis, et le mouvement lesté qui la '
+          'sollicite) : tu progresses tant que la gêne ne dépasse pas ton '
+          "niveau de départ (${_int(p['continueBelow'])} sur 10 au plus) "
+          'pendant la séance et revient à ce niveau le lendemain ; à '
+          "${_int(p['regressAt'])}, garde la charge et n'ajoute rien la "
+          'semaine suivante, quels que soient les pourcentages écrits ; à '
+          '5, prends la variante plus facile et retire 30 à 50 % du volume '
+          "de la zone ; à ${_int(p['stopAt'])} ou plus, douleur la nuit, "
+          'perte de force ou gêne qui dure deux semaines : arrête le '
+          'mouvement et consulte un professionnel de santé. Le programme '
+          'ne pose aucun diagnostic.';
     case ReasonCodes.planWeakPoint:
       final kind = p['kind'];
       return 'Cible ton point faible '
