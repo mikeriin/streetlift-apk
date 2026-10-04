@@ -1,0 +1,110 @@
+== kalis_plan
+Resolving dependencies...
+Downloading packages...
+  lints 4.0.0 (6.1.0 available)
+Got dependencies!
+1 package has newer versions incompatible with dependency constraints.
+Try `dart pub outdated` for more information.
+Formatted 44 files (0 changed) in 0.35 seconds.
+Analyzing kalis_plan...
+No issues found!
+00:00 +0: loading test/units_test.dart
+00:00 +0: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:00 +1: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:00 +2: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:00 +3: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:00 +4: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:00 +5: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:00 +6: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:00 +7: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:00 +8: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:00 +9: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:00 +10: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:00 +11: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:00 +12: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:00 +13: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:00 +14: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:00 +15: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:00 +16: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:00 +17: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:00 +18: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:04 +19: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:05 +20: test/docs_test.dart: docs/PROFILS_TYPES.md est à jour
+00:05 +21: test/coach_test.dart: choix du chemin schéma 2, ancienneté absente ou discipline non street : 0.1
+00:06 +22: test/docs_test.dart: docs/COMPARAISON_L10.md est à jour
+00:06 +23: test/docs_test.dart: docs/COMPARAISON_L10.md est à jour
+00:06 +24: test/docs_test.dart: docs/COMPARAISON_L10.md est à jour
+00:06 +25: test/docs_test.dart: docs/COMPARAISON_L10.md est à jour
+00:06 +26: test/docs_test.dart: docs/COMPARAISON_L10.md est à jour
+00:06 +27: test/docs_test.dart: docs/COMPARAISON_L10.md est à jour
+00:06 +28: test/docs_test.dart: docs/COMPARAISON_L10.md est à jour
+00:06 +29: test/docs_test.dart: docs/COMPARAISON_L10.md est à jour
+00:06 +30: test/docs_test.dart: docs/COMPARAISON_L10.md est à jour
+00:06 +31: test/docs_test.dart: docs/COMPARAISON_L10.md est à jour
+00:06 +32: test/docs_test.dart: docs/COMPARAISON_L10.md est à jour
+00:06 +33: test/docs_test.dart: docs/COMPARAISON_L10.md est à jour
+00:06 +34: test/docs_test.dart: docs/COMPARAISON_L10.md est à jour
+00:06 +35: test/docs_test.dart: docs/COMPARAISON_L10.md est à jour
+00:06 +36: test/docs_test.dart: docs/COMPARAISON_L10.md est à jour
+00:07 +37: test/docs_test.dart: docs/COMPARAISON_L10.md est à jour
+00:07 +38: test/docs_test.dart: docs/COMPARAISON_L10.md est à jour
+00:07 +39: test/docs_test.dart: docs/COMPARAISON_L10.md est à jour
+00:07 +40: test/docs_test.dart: docs/COMPARAISON_L10.md est à jour
+00:07 +41: test/docs_test.dart: docs/COMPARAISON_L10.md est à jour
+00:07 +42: test/docs_test.dart: docs/COMPARAISON_L10.md est à jour
+00:07 +43: test/docs_test.dart: docs/COMPARAISON_L10.md est à jour
+00:07 +44: test/docs_test.dart: PROFILS_TYPES.md : 40 profils, aucune violation
+00:07 +45: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 0 à 159
+00:13 +46: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 0 à 159
+00:19 +47: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 0 à 159
+00:21 +48: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 0 à 159
+00:23 +49: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 0 à 159
+00:24 +50: test/coach_properties_0_test.dart: chemin street, profils 0 à 1279 profils 480 à 639
+00:25 +51: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 160 à 319
+00:27 +52: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 160 à 319
+00:29 +53: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 160 à 319
+00:31 +54: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 160 à 319
+00:33 +55: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 160 à 319
+00:37 +56: test/engine_test.dart: déterminisme même requête, même JSON, quelle que soit l'instance
+00:48 +57: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 320 à 479
+00:49 +58: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 320 à 479
+00:49 +59: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 320 à 479
+00:50 +60: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+00:54 +61: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 480 à 639
+00:54 +62: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 480 à 639
+00:55 +63: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 480 à 639
+00:55 +64: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 480 à 639
+00:55 +65: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 480 à 639
+00:55 +66: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 480 à 639
+00:55 +67: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 480 à 639
+00:55 +68: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 480 à 639
+00:58 +69: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 480 à 639
+01:04 +70: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 480 à 639
+01:05 +71: test/admission_test.dart: 600 profils aléatoires : mode prudent et exercices réservés relus sans le vivier
+01:17 +72: test/admission_test.dart: 600 profils aléatoires : mode prudent et exercices réservés relus sans le vivier
+01:30 +73: test/admission_test.dart: 600 profils aléatoires : mode prudent et exercices réservés relus sans le vivier
+01:32 +74: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 960 à 1119
+01:32 +75: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 960 à 1119
+01:32 +76: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 960 à 1119
+01:32 +77: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 960 à 1119
+01:32 +78: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 960 à 1119
+01:32 +79: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 960 à 1119
+01:32 +80: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 960 à 1119
+01:32 +81: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 960 à 1119
+01:32 +82: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 960 à 1119
+01:32 +83: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 960 à 1119
+01:32 +84: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 960 à 1119
+01:32 +85: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 960 à 1119
+01:32 +86: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 960 à 1119
+01:32 +87: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 960 à 1119
+01:32 +88: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 960 à 1119
+01:32 +89: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 960 à 1119
+01:32 +90: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 960 à 1119
+01:32 +91: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 960 à 1119
+01:32 +92: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 960 à 1119
+01:38 +93: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 960 à 1119
+01:43 +94: test/resemblance_test.dart: 600 profils aléatoires : ressemblance sous le seuil, aucun accessoire propre au propriétaire sur-représenté sans discipline street
+01:55 +95: test/resemblance_test.dart: 600 profils aléatoires : ressemblance sous le seuil, aucun accessoire propre au propriétaire sur-représenté sans discipline street
+02:07 +96: All tests passed!
+kalis_plan 0.2.0 : rapport écrit dans /home/runner/work/streetlift-apk/streetlift-apk/out-packages/kalis_plan (155 s).
+durée : 293 s
