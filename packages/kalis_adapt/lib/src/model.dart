@@ -1011,8 +1011,7 @@ final class SessionRun {
       // « au ressenti » ; seule une série ouverte au-delà du haut de la
       // plage du bloc est une série repère.)
       if (o.open &&
-          (run.spec.coach == null ||
-              (o.target?.high ?? 0) > run.spec.high)) {
+          (run.spec.coach == null || (o.target?.high ?? 0) > run.spec.high)) {
         openSet = true;
       }
       if (o.amount > track.bestAmount) {

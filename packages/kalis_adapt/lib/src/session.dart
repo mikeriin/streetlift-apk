@@ -1242,6 +1242,32 @@ ExercisePrescription _finish(EngineContext ctx, SessionRun run, _Draft d) {
   if (plans == null || exercise == null || plans.isEmpty) {
     // Exercice non modélisé, ou sans a priori : la prescription du bloc,
     // au nombre de séries du jour.
+    final written = item.secondsHigh;
+    if (exercise != null &&
+        exercise.spec.coach != null &&
+        exercise.track == null &&
+        exercise.info.mode == CapacityMode.hold &&
+        item.kind != SetKind.test &&
+        written != null &&
+        written >= 3) {
+      // Mode coach, premier maintien d'un exercice dont le maximum n'est
+      // pas connu : tenue repère — jusqu'à la durée écrite par le bloc,
+      // arrêt avant la perte de position. Elle dit d'où part la
+      // progression (les hausses suivantes se comptent depuis ce qui a été
+      // tenu).
+      return item.copyWith(
+        sets: d.sets,
+        secondsLow: written ~/ 3 < 1 ? 1 : written ~/ 3,
+        secondsHigh: written,
+        targetFlames: flamesOfRir(2),
+        setTargets: unset,
+        toCalibrate: true,
+        reasons: <Reason>[
+          ...reasons,
+          reason(ReasonCodes.adaptBenchmarkSet, <String, Object?>{'rir': 2.0}),
+        ],
+      );
+    }
     final targets = item.setTargets;
     return item.copyWith(
       sets: d.sets,

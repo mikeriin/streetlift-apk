@@ -847,7 +847,7 @@ List<SetPlan>? _loadedPlans(
       : rir - p.coachWorstSetSlack;
   // Sans suivi propre fiable (variante calée sur un autre mouvement), le
   // plafond d'effort ne se juge pas encore : la part du bloc vaut.
-  final judged = ownRef || !ex.uncertain;
+  final judged = ownRef || !ex.uncertain || track.lastLoad != null;
   bool pilotOk(double kg) =>
       !judged || _holdsRir(run, ex, kg, head, rir, worst);
   bool guardOk(double kg) =>
@@ -1327,15 +1327,18 @@ List<SetPlan>? _directPlans(
     final rest = _restOf(ex, c, served, firstHigh);
     final reach = _repsSafe(run, ex, plannedFatigue(0, rir, rest, p));
     if (reach < firstLow) {
+      // Chaque série garde la réserve du bloc.
+      final kept = (track.filter.capacityToday() - rir + 0.3).floor();
       // Plage hors de portée aujourd'hui (le bas de la plage ne laisse pas
       // la réserve visée) : séries fractionnées — moins de répétitions par
       // série, plus de séries, pour approcher le travail écrit (au plus le
-      // double des séries, jamais plus de répétitions au total que le bas
-      // de la plage n'en écrit).
-      final each = reach < 1 ? 1 : reach;
+      // double des séries, trois au moins permises, jamais plus de
+      // répétitions au total que le bas de la plage n'en écrit).
+      final each = kept < 1 ? 1 : (kept < reach ? kept : reach);
       var count = (sets * firstLow / each).ceil();
-      if (count > 2 * sets) {
-        count = 2 * sets;
+      final most = 2 * sets < 3 ? 3 : 2 * sets;
+      if (count > most) {
+        count = most;
       }
       while (count > sets && count * each > sets * firstLow) {
         count--;
