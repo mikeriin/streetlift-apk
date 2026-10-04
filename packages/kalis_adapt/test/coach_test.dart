@@ -209,16 +209,18 @@ void main() {
 
   group('programmes de test (techniques injectées)', () {
     final seen = <SetTechniqueKind>{};
-    for (final key in const <String>[
-      'street_06_inter_sets_reps',
-      'street_07_avance_streetlifting_competition',
-      'street_09_elite_streetlifting',
-      'street_11_master_51_ans',
-      'street_14_parc_sans_lest',
+    for (final (key, offset) in const <(String, int)>[
+      ('street_06_inter_sets_reps', 0),
+      ('street_07_avance_streetlifting_competition', 0),
+      ('street_07_avance_streetlifting_competition', 5),
+      ('street_09_elite_streetlifting', 3),
+      ('street_09_elite_streetlifting', 9),
+      ('street_11_master_51_ans', 6),
+      ('street_14_parc_sans_lest', 8),
     ]) {
-      test('$key : toutes les lignes valides, invariants tenus', () {
+      test('$key, rang $offset : lignes valides, invariants tenus', () {
         final profile = streetProfile(key);
-        final program = streetProgram(key, inject: true);
+        final program = streetProgram(key, inject: true, offset: offset);
         final block = program.block(0);
         expect(block.validate(), isEmpty, reason: 'bloc injecté $key');
         final engine = KalisAdapt();
@@ -283,84 +285,91 @@ void main() {
   });
 
   group('périodisation', () {
-    test('affûtage et échéance : aucun volume ajouté, tentatives le jour J', () {
-      const key = 'street_07_avance_streetlifting_competition';
-      final profile = streetProfile(key);
-      final program = streetProgram(key);
-      final engine = KalisAdapt();
-      final policy = CheckedPolicy(engine);
-      final run = simulate(
-        catalog: catalog,
-        spec: streetAthlete(key),
-        profile: profile,
-        seed: 5,
-        policy: policy,
-        program: program,
-        weeks: 12,
-        loop: engine,
-        truthKind: TruthKind.b,
-      );
-      expect(policy.violations, isEmpty);
-      var taperSessions = 0;
-      var attempts = 0;
-      for (final s in run.served) {
-        final intent = s.plan.weekIntent;
-        if (intent == WeekIntent.taper || intent == WeekIntent.competition) {
-          taperSessions++;
-          ProgramBlock? block;
-          for (var i = 0; i < run.blocks.length; i++) {
-            if (run.blockWeeks[i] <= s.week) {
-              block = run.blocks[i];
+    test(
+      'affûtage et échéance : aucun volume ajouté, tentatives le jour J',
+      () {
+        const key = 'street_07_avance_streetlifting_competition';
+        final profile = streetProfile(key);
+        final program = streetProgram(key);
+        final engine = KalisAdapt();
+        final policy = CheckedPolicy(engine);
+        final run = simulate(
+          catalog: catalog,
+          spec: streetAthlete(key),
+          profile: profile,
+          seed: 5,
+          policy: policy,
+          program: program,
+          weeks: 12,
+          loop: engine,
+          truthKind: TruthKind.b,
+        );
+        expect(policy.violations, isEmpty);
+        var taperSessions = 0;
+        var attempts = 0;
+        for (final s in run.served) {
+          final intent = s.plan.weekIntent;
+          if (intent == WeekIntent.taper || intent == WeekIntent.competition) {
+            taperSessions++;
+            ProgramBlock? block;
+            for (var i = 0; i < run.blocks.length; i++) {
+              if (run.blockWeeks[i] <= s.week) {
+                block = run.blocks[i];
+              }
             }
-          }
-          final written = <String, int>{};
-          for (final w in block!.pass2.weeks) {
-            if (w.weekIndex == s.weekInBlock) {
-              for (final d in w.days) {
-                if (d.dayIndex == s.plan.dayIndex) {
-                  for (final it in d.items) {
-                    written[it.slotId] = it.sets;
+            final written = <String, int>{};
+            for (final w in block!.pass2.weeks) {
+              if (w.weekIndex == s.weekInBlock) {
+                for (final d in w.days) {
+                  if (d.dayIndex == s.plan.dayIndex) {
+                    for (final it in d.items) {
+                      written[it.slotId] = it.sets;
+                    }
                   }
                 }
               }
             }
+            for (final it in s.plan.items) {
+              final sets = written[it.slotId];
+              if (sets != null) {
+                expect(it.sets, lessThanOrEqualTo(sets));
+              }
+            }
           }
-          for (final it in s.plan.items) {
-            final sets = written[it.slotId];
-            if (sets != null) {
-              expect(it.sets, lessThanOrEqualTo(sets));
+          for (final set in s.record.sets) {
+            if (set.role == SetRole.attempt) {
+              attempts++;
             }
           }
         }
-        for (final set in s.record.sets) {
-          if (set.role == SetRole.attempt) {
-            attempts++;
+        expect(taperSessions, greaterThan(0));
+        expect(attempts, greaterThanOrEqualTo(9));
+        // Tentatives croissantes, ouverture réussie plus de neuf fois sur dix
+        // (une seule simulation : toutes les ouvertures doivent passer).
+        final byLift = <String, List<SetRow>>{};
+        for (final row in run.sets) {
+          if (row.attempt) {
+            byLift
+                .putIfAbsent(
+                  '${row.simDay}|${row.exerciseId}',
+                  () => <SetRow>[],
+                )
+                .add(row);
           }
         }
-      }
-      expect(taperSessions, greaterThan(0));
-      expect(attempts, greaterThanOrEqualTo(9));
-      // Tentatives croissantes, ouverture réussie plus de neuf fois sur dix
-      // (une seule simulation : toutes les ouvertures doivent passer).
-      final byLift = <String, List<SetRow>>{};
-      for (final row in run.sets) {
-        if (row.attempt) {
-          byLift
-              .putIfAbsent('${row.simDay}|${row.exerciseId}', () => <SetRow>[])
-              .add(row);
+        for (final rows in byLift.values) {
+          for (var i = 1; i < rows.length; i++) {
+            expect(
+              rows[i].loadKg! + 1e-9,
+              greaterThanOrEqualTo(rows[i - 1].loadKg!),
+            );
+          }
         }
-      }
-      for (final rows in byLift.values) {
-        for (var i = 1; i < rows.length; i++) {
-          expect(
-            rows[i].loadKg! + 1e-9,
-            greaterThanOrEqualTo(rows[i - 1].loadKg!),
-          );
-        }
-      }
-      // Résultats de test reportés au profil.
-      expect(run.finalProfile?.benchmarks, isNotNull);
-    }, timeout: const Timeout(Duration(minutes: 10)));
+        // Résultats de test reportés au profil.
+        expect(run.finalProfile?.benchmarks, isNotNull);
+      },
+      timeout: const Timeout(Duration(minutes: 10)),
+    );
 
     test('comportement 0.1 à la demande : aucun champ du mode coach', () {
       const key = 'street_07_avance_streetlifting_competition';

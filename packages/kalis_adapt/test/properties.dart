@@ -267,7 +267,9 @@ SetRecord _decorate(SeededRandom r, SetRecord set, ExercisePrescription? item) {
         SetPart(
           reps: n,
           externalLoadKg: _chance(r, 20) ? out.externalLoadKg : null,
-          restBeforeSeconds: i > 0 && _chance(r, 60) ? _between(r, 5, 40) : null,
+          restBeforeSeconds: i > 0 && _chance(r, 60)
+              ? _between(r, 5, 40)
+              : null,
         ),
       );
     }
@@ -629,6 +631,7 @@ List<String> checkCase(Catalog catalog, KalisAdapt engine, RandomCase c) {
           done,
           advice,
           p,
+          coached: coached,
         ).map((v) => '$where, $v'),
       );
       if (advices == 1 &&
@@ -659,6 +662,7 @@ List<String> checkCase(Catalog catalog, KalisAdapt engine, RandomCase c) {
             done,
             bare,
             p,
+            coached: coached,
           ).map((v) => '$where, sans bilan, $v'),
         );
       }
@@ -697,6 +701,7 @@ List<String> checkCase(Catalog catalog, KalisAdapt engine, RandomCase c) {
         done,
         late,
         p,
+        coached: coached,
       ).map((v) => '$where, enchaîné, $v'),
     );
   }

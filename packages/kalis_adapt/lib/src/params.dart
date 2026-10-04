@@ -129,6 +129,7 @@ final class AdaptParams {
     this.coachCensorRir = 3,
     this.coachHoldMaxShare = 0.8,
     this.coachDirectGuardRir = 2,
+    this.coachProbeDays = 14,
     this.biasLearnRate = 0.25,
     this.biasLearnRir = 3,
     this.biasLearnMaxStep = 0.1,
@@ -591,6 +592,11 @@ final class AdaptParams {
   /// prudence) sous laquelle les répétitions écrites par le bloc sont
   /// réduites.
   final double coachDirectGuardRir;
+
+  /// Mode coach : jours sans série qui mesure la capacité (toutes les
+  /// notes au plafond « loin de l'échec ») au bout desquels la dernière
+  /// série devient une série repère (APRE, Mann et al. 2010).
+  final int coachProbeDays;
 
   /// Part de l'écart d'un test (rapporté à [biasLearnRir] répétitions)
   /// portée au biais de note appris.

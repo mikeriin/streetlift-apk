@@ -78,6 +78,61 @@ CoachAdvice? coachAdvise(
   ExercisePrescription sessionItem,
   SkillBoard? skills,
 ) {
+  final advice = _coachAdvise(run, ex, index, sessionItem, skills);
+  if (advice == null ||
+      advice.action == IntraSessionAction.stopExercise ||
+      advice.next.role == SetRole.attempt ||
+      ex.observed.isEmpty) {
+    return advice;
+  }
+  // Invariants de 0.1, quelle que soit la règle suivie : après un échec
+  // non prévu dans la séance, sur une zone douloureuse ou un jour de bilan
+  // bas, la ligne suivante n'est jamais plus lourde que la précédente ;
+  // sans charge, après un échec, jamais plus longue.
+  final previous = ex.observed.last;
+  final next = advice.next;
+  final locked =
+      ex.fails > 0 || ex.painZones.isNotEmpty || run.noIncrease;
+  if (!locked) {
+    return advice;
+  }
+  SetPlan? clamped;
+  if (ex.info.mode == CapacityMode.loaded) {
+    final last = previous.loadKg;
+    final kg = next.loadKg;
+    if (last != null && kg != null && kg > last + 1e-9) {
+      clamped = next.withLoad(last);
+    }
+  } else if (ex.fails > 0) {
+    final cap = previous.amount < 1 ? 1 : previous.amount;
+    if (next.high > cap) {
+      clamped = SetPlan(
+        loadKg: null,
+        low: next.low > cap ? cap : next.low,
+        high: cap,
+        flames: next.flames,
+        open: next.open && next.low < cap,
+        role: next.role,
+      );
+    }
+  }
+  if (clamped == null) {
+    return advice;
+  }
+  final held = CoachAdvice(next: clamped, action: IntraSessionAction.keep)
+    ..miniSetsLeft = advice.miniSetsLeft
+    ..stepExerciseId = advice.stepExerciseId;
+  held.reasons.addAll(advice.reasons);
+  return held;
+}
+
+CoachAdvice? _coachAdvise(
+  SessionRun run,
+  ExerciseRun ex,
+  int index,
+  ExercisePrescription sessionItem,
+  SkillBoard? skills,
+) {
   final c = ex.spec.coach;
   final track = ex.track;
   if (c == null || track == null || ex.observed.isEmpty) {

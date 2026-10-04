@@ -61,12 +61,13 @@ AthleteSpec streetAthlete(String key) {
 /// Programme de `kalis_plan` du profil street de clé [key] (bloc au
 /// contrat 0.4.0) ; [inject] : avec une technique du contrat par
 /// emplacement (programme de test).
-SimProgram streetProgram(String key, {bool inject = false}) => SimProgram(
-  loadCatalog(),
-  _plan,
-  streetProfile(key),
-  transform: inject ? injectTechniques : null,
-);
+SimProgram streetProgram(String key, {bool inject = false, int offset = 0}) =>
+    SimProgram(
+      loadCatalog(),
+      _plan,
+      streetProfile(key),
+      transform: inject ? (b) => injectTechniques(b, offset: offset) : null,
+    );
 
 final KalisPlan _plan = KalisPlan();
 final Map<String, SimProgram> _programs = <String, SimProgram>{};
@@ -169,6 +170,7 @@ final class CheckedPolicy implements CoachAwarePolicy {
           done,
           advice,
           engine.params,
+          coached: rich && blockCoached(c.block),
         ),
       );
     }
@@ -364,6 +366,68 @@ Set<BodyZone> painsSince(
   return zones;
 }
 
+/// La série [s] telle que le moteur la lit quand elle porte des champs de
+/// `kalis_core` 0.4.0 (voir `readLine`) : `null` si elle ne compte pas
+/// (échauffement, descente accentuée, série relancée sans parties) ;
+/// répétitions et charge de la partie lue ; une ligne sous le plancher de
+/// propreté compte comme un échec.
+SetRecord? asRead(SetRecord s, ExerciseInfo? info, ExercisePrescription? item) {
+  if (info == null) {
+    return s;
+  }
+  final hold = info.mode == CapacityMode.hold;
+  final reading = readLine(s, hold: hold, item: item);
+  if (reading == null) {
+    return s;
+  }
+  if (reading.skip) {
+    return null;
+  }
+  var out = s;
+  final amount = reading.amount;
+  if (amount != null) {
+    out = hold ? out.copyWith(seconds: amount) : out.copyWith(reps: amount);
+  }
+  final load = reading.loadKg;
+  if (load != null) {
+    out = out.copyWith(externalLoadKg: load);
+  }
+  if (reading.unclean) {
+    out = out.copyWith(flames: Flames.failure);
+  }
+  return out;
+}
+
+/// Le journal [log] tel que le moteur le lit pour le bloc [block] (mode
+/// coach).
+TrainingLog logAsRead(
+  Catalog catalog,
+  AthleteProfile profile,
+  ProgramBlock block,
+  TrainingLog log,
+  AdaptParams p,
+) {
+  final book = ExerciseBook(catalog, profile);
+  final view = BlockView(block, p, profile: profile);
+  return TrainingLog(
+    sessions: <SessionRecord>[
+      for (final session in log.sessions)
+        session.copyWith(
+          sets: <SetRecord>[
+            for (final s in session.sets)
+              if (asRead(
+                    s,
+                    book.find(s.exerciseId),
+                    view.item(session.programRef, s.slotId, s.exerciseId),
+                  )
+                  case final read?)
+                read,
+          ],
+        ),
+    ],
+  );
+}
+
 /// Invariants de sécurité d'une séance prescrite, lus dans le journal seul
 /// (sans l'état du moteur) :
 ///
@@ -383,7 +447,7 @@ List<String> checkSession(
   Catalog catalog,
   AthleteProfile profile,
   ProgramBlock block,
-  TrainingLog log,
+  TrainingLog journal,
   SessionPlan session,
   AdaptParams p, {
   HealthCheck? health,
@@ -392,6 +456,9 @@ List<String> checkSession(
   final out = <String>[];
   final book = ExerciseBook(catalog, profile);
   final bodyWeight = profile.bodyWeightKg ?? p.referenceBodyWeightKg;
+  final log = coached
+      ? logAsRead(catalog, profile, block, journal, p)
+      : journal;
   if (coached) {
     out.addAll(checkCoachSession(catalog, profile, block, log, session, p));
   }
@@ -522,12 +589,41 @@ List<String> checkAdvice(
   Catalog catalog,
   AthleteProfile profile,
   SessionPlan session,
-  List<SetRecord> done,
+  List<SetRecord> lines,
   IntraSessionAdvice advice,
-  AdaptParams p,
-) {
+  AdaptParams p, {
+  bool coached = false,
+}) {
   final out = <String>[];
-  final info = ExerciseBook(catalog, profile).find(advice.exerciseId);
+  final book = ExerciseBook(catalog, profile);
+  final info = book.find(advice.exerciseId);
+  final done = <SetRecord>[
+    for (final s in lines)
+      if (!coached)
+        s
+      else if (asRead(s, book.find(s.exerciseId), <ExercisePrescription?>[
+            for (final it in session.items)
+              if (it.slotId == s.slotId) it,
+            null,
+          ].first)
+          case final read?)
+        read,
+  ];
+  var attemptLine = false;
+  for (final item in session.items) {
+    if (item.slotId == advice.slotId) {
+      final kind = item.test?.kind;
+      attemptLine =
+          item.kind == SetKind.test &&
+          (kind == TestKind.oneRm || kind == TestKind.attemptSimulation);
+    }
+  }
+  if (attemptLine) {
+    // Tentatives : règle propre (même barre après un échec, hausse après
+    // une réussite), contrôlée par `checkCoachSession` et les tests des
+    // tentatives.
+    return out;
+  }
   if (info != null &&
       (info.mode == CapacityMode.reps || info.mode == CapacityMode.hold)) {
     final hold = info.mode == CapacityMode.hold;
@@ -653,16 +749,7 @@ List<String> checkAdvice(
       }
     }
   }
-  var attempt = false;
-  for (final item in session.items) {
-    if (item.slotId == advice.slotId) {
-      final kind = item.test?.kind;
-      attempt =
-          item.kind == SetKind.test &&
-          (kind == TestKind.oneRm || kind == TestKind.attemptSimulation);
-    }
-  }
-  if (last != null && locked != null && next > last + 0.011 && !attempt) {
+  if (last != null && locked != null && next > last + 0.011) {
     out.add(
       'conseil ${advice.exerciseId} : hausse malgré $locked ($last → $next)',
     );
@@ -673,8 +760,8 @@ List<String> checkAdvice(
 /// Invariants propres au mode coach (blocs au contrat 0.4.0), lus dans le
 /// journal, le bloc et la séance seuls :
 ///
-/// C1. hors calibrage et hors test, la charge de tête d'un exercice
-///     n'excède jamais la plus grande de : la charge écrite par le bloc ;
+/// C1. hors calibrage et hors test, la charge de tête d'un mouvement
+///     principal n'excède jamais la plus grande de : la charge écrite par le bloc ;
 ///     +10 % (ou un cran) de la plus lourde charge de l'exercice au
 ///     journal ;
 /// C2. jamais plus de séries que le bloc n'en écrit (affûtage, décharge et
@@ -695,6 +782,10 @@ List<String> checkCoachSession(
   final bodyWeight = profile.bodyWeightKg ?? p.referenceBodyWeightKg;
   final experience = profile.experience;
   final level = experience == null ? 1 : experience.index;
+  final roles = <String, SlotRole>{
+    for (final d in block.pass1.days)
+      for (final s in d.slots) s.slotId: s.role,
+  };
   final written = <String, ExercisePrescription>{};
   for (final w in block.pass2.weeks) {
     if (w.weekIndex != session.weekIndex) {
@@ -733,6 +824,7 @@ List<String> checkCoachSession(
     if (info == null ||
         info.mode != CapacityMode.loaded ||
         item.kind == SetKind.test ||
+        roles[item.slotId] != SlotRole.main ||
         sessionsOfExercise(log, info) < p.calibrationSessions) {
       continue;
     }

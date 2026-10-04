@@ -172,9 +172,10 @@ ExercisePrescription _withTechnique(
 
 /// Le bloc [block] où chaque emplacement de travail en répétitions, sans
 /// technique ni groupe, reçoit une des techniques de [injectedTechniques]
-/// (la même toutes les semaines), à partir du rang [offset]. Les tests,
-/// les échauffements, les maintiens et les emplacements déjà dotés d'une
-/// technique sont laissés tels quels.
+/// (la même toutes les semaines), à partir du rang [offset] ; ses règles
+/// d'autorégulation sont retirées. Les tests, les échauffements, les
+/// maintiens, les groupes et les emplacements dotés d'une autre technique
+/// que « série de tête puis séries allégées » sont laissés tels quels.
 ProgramBlock injectTechniques(ProgramBlock block, {int offset = 0}) {
   var counter = offset;
   final bySlot = <String, SetTechniqueKind?>{};
@@ -186,8 +187,9 @@ ProgramBlock injectTechniques(ProgramBlock block, {int offset = 0}) {
         it.repsHigh == null ||
         it.sets < 2 ||
         it.groupId != null ||
-        it.autoregulation != null ||
-        (technique != null && technique.kind != SetTechniqueKind.standard)) {
+        (technique != null &&
+            technique.kind != SetTechniqueKind.standard &&
+            technique.kind != SetTechniqueKind.topSetBackoff)) {
       return it;
     }
     final loaded = it.startLoadKg != null || it.percentOfOneRm != null;
@@ -201,7 +203,9 @@ ProgramBlock injectTechniques(ProgramBlock block, {int offset = 0}) {
       }
       return null;
     });
-    return kind == null ? it : _withTechnique(it, kind);
+    return kind == null
+        ? it
+        : _withTechnique(it.copyWith(autoregulation: null), kind);
   }
 
   return block.copyWith(

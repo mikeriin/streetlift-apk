@@ -87,6 +87,11 @@ final class ExerciseTrack {
   /// Jour de la dernière série repère.
   int? benchmarkDay;
 
+  /// Mode coach : jour de la dernière série qui mesure la capacité (note
+  /// sous le seuil « loin de l'échec », échec) ; au-delà d'un délai, une
+  /// série repère est proposée.
+  int? exactDay;
+
   /// Jour de la première séance.
   int? firstDay;
 
@@ -125,6 +130,7 @@ final class ExerciseTrack {
     c.lastTop = lastTop;
     c.fatigueBaseline = fatigueBaseline;
     c.benchmarkDay = benchmarkDay;
+    c.exactDay = exactDay;
     c.firstDay = firstDay;
     c.lastDay = lastDay;
     c.resumedDay = resumedDay;
@@ -970,6 +976,10 @@ final class SessionRun {
     for (final o in run.observed) {
       if (o.amount > top) {
         top = o.amount;
+      }
+      final said = o.flames;
+      if (o.failed || (said != null && rirOfFlames(said) < p.coachCensorRir)) {
+        track.exactDay = day;
       }
       final kg = o.loadKg;
       if (kg != null) {
@@ -1824,9 +1834,16 @@ final class SessionRun {
     // devient ouverte (autant de répétitions que possible en gardant la
     // réserve dite), comme dans l'APRE (Mann et al. 2010).
     final lastBenchmark = track.benchmarkDay;
+    // Mode coach : aussi quand aucune série n'a mesuré la capacité depuis
+    // `coachProbeDays` (notes au plafond de ce qu'une personne sait dire).
+    final exact = track.exactDay;
+    final blind =
+        spec.coach != null &&
+        track.lastDay != null &&
+        (exact == null || day - exact >= p.coachProbeDays);
     final every = state.rater.weight(p) < p.benchmarkWeight
         ? p.benchmarkEveryDays
-        : p.benchmarkEveryDaysRated;
+        : (blind ? p.coachProbeDays : p.benchmarkEveryDaysRated);
     if (wantsBenchmark(run) &&
         every > 0 &&
         (lastBenchmark == null || day - lastBenchmark >= every)) {
