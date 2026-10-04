@@ -20,6 +20,16 @@ import 'prescribe.dart';
 import 'season.dart';
 import 'skeleton.dart';
 
+/// Douleurs encore présentes à la fin du bloc précédent (résumé
+/// d'adaptation, CX, correction 1) : une zone à 3 sur 10 ou plus à la
+/// dernière séance qui l'a notée est ménagée par le bloc suivant (R5-P23 :
+/// travailler sous 3 à 4 sur 10 ; Silbernagel et al. 2007).
+List<(BodyZone, int)> adaptationPains(AdaptationSummary? adaptation) =>
+    <(BodyZone, int)>[
+      for (final p in adaptation?.pains ?? const <PainTrend>[])
+        if (p.lastIntensity >= 3) (p.zone, p.lastIntensity),
+    ];
+
 /// Identifiant du bloc de rang [blockIndex] commençant le [startDate].
 String coachBlockIdFor(int blockIndex, CivilDate startDate) =>
     'kp-b$blockIndex-${startDate.iso}';
@@ -377,6 +387,8 @@ final class CoachEngine {
         ..._excludedBy(request.locks),
         ...?request.adaptation?.avoidedExerciseIds,
       },
+      extraPains: adaptationPains(request.adaptation),
+      estimates: request.adaptation?.estimates ?? const <ExerciseEstimate>[],
     );
     final sk = _skeleton(
       a,
@@ -419,8 +431,12 @@ final class CoachEngine {
         ...?adaptation?.avoidedExerciseIds,
         ...extraExcluded,
       },
-      extraPains: extraPains,
+      extraPains: <(BodyZone, int)>[
+        ...extraPains,
+        ...adaptationPains(adaptation),
+      ],
       minutesOverride: minutesOverride,
+      estimates: adaptation?.estimates ?? const <ExerciseEstimate>[],
     );
     final canonical = _skeleton(
       a,

@@ -80,6 +80,20 @@ const Set<TrainingDiscipline> coachStreetDisciplines = <TrainingDiscipline>{
 /// renseignées — sans elles le niveau n'est pas lisible et le chemin 0.1
 /// s'applique), discipline principale street (streetlifting, sets & reps,
 /// calisthénie), disciplines secondaires street, cardio ou mobilité.
+/// Séries observées au moins pour qu'une estimation du moteur d'évolution
+/// recale un repère (choix raisonné : deux semaines de séances sur le
+/// mouvement).
+const int coachEstimateMinObservations = 6;
+
+/// Erreur type relative maximale de cette estimation (choix raisonné :
+/// l'incertitude d'un 1RM estimé sur des séries sous-maximales est de
+/// l'ordre de 5 %, Helms et al. 2016).
+const double coachEstimateMaxError = 0.06;
+
+/// Écart minimal sous le repère pour que l'estimation le remplace : 2,5 %,
+/// un pas de charge ou une répétition sur dix (choix raisonné).
+const double coachEstimateMargin = 0.025;
+
 bool coachEligible(AthleteProfile profile) {
   if (!profile.isSchema3 ||
       profile.experience == null ||
@@ -151,6 +165,7 @@ final class Athlete {
     Set<String> extraExcluded = const <String>{},
     List<(BodyZone, int)> extraPains = const <(BodyZone, int)>[],
     Map<int, int> minutesOverride = const <int, int>{},
+    List<ExerciseEstimate> estimates = const <ExerciseEstimate>[],
   }) {
     final traits = CatalogTraits.of(catalog);
     final bodyWeight = profile.bodyWeightKg ?? coachDefaultBodyWeightKg;
@@ -286,6 +301,137 @@ final class Athlete {
         if (before == null || n > before) {
           reps[s.currentExerciseId] = n;
         }
+      }
+    }
+
+    // Le dernier test mesuré fait foi (CX, correction 1 : « le bloc suivant
+    // part du résultat réel du test ») : un résultat de test ou de
+    // compétition daté remplace la valeur du même mouvement, même plus
+    // basse, tant qu'aucune valeur déclarée plus récente ne le contredit.
+    // Un record déclaré n'est qu'un repère de départ ; le test le recale
+    // dans les deux sens (R2-P2, R3-P14 ; Helms et al. 2018 : régler la
+    // charge sur la performance mesurée plutôt que sur un pourcentage
+    // supposé). Le moteur d'évolution ne rend pas un test fait un jour de
+    // bilan nettement bas (`kalis_adapt`, CA1).
+    final latest = <String, Benchmark>{};
+    final newestOther = <String, CivilDate>{};
+    for (final b in profile.benchmarks ?? const <Benchmark>[]) {
+      final day = b.date;
+      if (day == null) {
+        continue;
+      }
+      final key = '${b.kind.code}|${b.exerciseId}';
+      final measured =
+          b.source == BenchmarkSource.guidedTest ||
+          b.source == BenchmarkSource.competition;
+      if (measured) {
+        final current = latest[key];
+        if (current == null || day.compareTo(current.date!) >= 0) {
+          latest[key] = b;
+        }
+      } else {
+        final current = newestOther[key];
+        if (current == null || day.compareTo(current) > 0) {
+          newestOther[key] = day;
+        }
+      }
+    }
+    for (final entry in latest.entries) {
+      final b = entry.value;
+      final day = b.date!;
+      final other = newestOther[entry.key];
+      if (other != null && other.compareTo(day) > 0) {
+        continue;
+      }
+      switch (b.kind) {
+        case BenchmarkKind.maxReps:
+          final n = b.reps;
+          if (n != null && n > 0 && (b.externalLoadKg ?? 0) == 0) {
+            reps[b.exerciseId] = n;
+            recordDay[b.exerciseId] = day;
+            zero.remove(b.exerciseId);
+          }
+        case BenchmarkKind.maxHold:
+          final s = b.seconds;
+          if (s != null && s > 0 && (b.externalLoadKg ?? 0) == 0) {
+            holds[b.exerciseId] = s;
+            recordDay[b.exerciseId] = day;
+          }
+        case BenchmarkKind.loadReps:
+          final load = b.externalLoadKg;
+          final n = b.reps;
+          if (load == null || n == null || n < 1) {
+            break;
+          }
+          final e = catalog.find(b.exerciseId);
+          final fraction = e?.bodyweightFraction?.value ?? 0;
+          final estimate = estimateOneRm(
+            loadKg: load + fraction * (b.bodyWeightKg ?? bodyWeight),
+            reps: n,
+            rir: b.rir ?? 0,
+          );
+          if (estimate != null) {
+            oneRm[b.exerciseId] = estimate.valueKg - fraction * bodyWeight;
+            recordDay[b.exerciseId] = day;
+          }
+        default:
+          break;
+      }
+    }
+
+    // Estimations du moteur d'évolution (résumé d'adaptation du bloc
+    // précédent, CX, correction 1) : une capacité nettement plus basse que
+    // le repère, estimée sur assez de séries et sans test plus récent,
+    // devient le repère du bloc (le bloc suivant part de ce que l'athlète
+    // a montré, R2-P20 ; Helms et al. 2018). Jamais vers le haut : une
+    // hausse attend un test (CP1.3).
+    for (final e in estimates) {
+      final seen = e.lastObservedOn;
+      if (e.observations < coachEstimateMinObservations ||
+          e.capacity <= 0 ||
+          e.standardError > coachEstimateMaxError * e.capacity ||
+          seen == null) {
+        continue;
+      }
+      var newer = false;
+      for (final b in latest.values) {
+        if (b.exerciseId == e.exerciseId && b.date!.compareTo(seen) >= 0) {
+          newer = true;
+        }
+      }
+      if (newer) {
+        continue;
+      }
+      switch (e.unit) {
+        case CapacityUnit.oneRmKg:
+          final before = oneRm[e.exerciseId];
+          final fraction =
+              catalog.find(e.exerciseId)?.bodyweightFraction?.value ?? 0;
+          final external = e.capacity - fraction * bodyWeight;
+          final total = (before ?? 0) + fraction * bodyWeight;
+          if (before != null &&
+              e.capacity < total * (1 - coachEstimateMargin)) {
+            oneRm[e.exerciseId] = external;
+            recordDay[e.exerciseId] = seen;
+          }
+        case CapacityUnit.maxReps:
+          final before = reps[e.exerciseId];
+          if (before != null &&
+              e.capacity < before * (1 - coachEstimateMargin) &&
+              e.capacity >= 1) {
+            reps[e.exerciseId] = e.capacity.floor();
+            recordDay[e.exerciseId] = seen;
+          }
+        case CapacityUnit.maxHoldSeconds:
+          final before = holds[e.exerciseId];
+          if (before != null &&
+              e.capacity < before * (1 - coachEstimateMargin) &&
+              e.capacity >= 1) {
+            holds[e.exerciseId] = e.capacity.floor();
+            recordDay[e.exerciseId] = seen;
+          }
+        default:
+          break;
       }
     }
 
@@ -727,7 +873,15 @@ final class Athlete {
     final placeOk = place == null
         ? e.places.any(profile.places.contains)
         : e.places.contains(place);
-    if (!placeOk || !e.feasibleWith(info.equipment)) {
+    // Mur : sûr à la maison et en salle seulement ; matériel de
+    // remplacement (barre basse pour une pompe mains surélevées…) : kalis_core
+    // 0.4.2 (CX, correction 7).
+    if (!placeOk ||
+        !e.feasibleAt(
+          info.equipment,
+          place: place,
+          places: profile.places.toSet(),
+        )) {
       return 'equipment';
     }
     for (final l in limits) {
