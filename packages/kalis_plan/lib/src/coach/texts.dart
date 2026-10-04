@@ -275,10 +275,10 @@ String? coachReasonText(Reason r, Catalog catalog) {
         CoachNotes.tendonLoad =>
           'Charge progressive des fléchisseurs du poignet (face interne '
               'du coude) : à faire valider par le professionnel qui suit '
-              'ton coude. Même seuil que la règle de douleur de la zone '
-              '(gêne au niveau de départ, ${_int(v)} sur 10 au plus, et '
-              'retour à ce niveau le lendemain). Ajoute le plus petit pas '
-              'quand toutes les séries passent dans ce seuil.',
+              'ton coude. Même seuil que la règle de douleur de la zone : '
+              'tu ajoutes le plus petit pas seulement si la gêne reste à 2 '
+              'sur 10 au plus pendant la séance et le lendemain ; à '
+              '${_int(v)} ou 4, charge inchangée.',
         CoachNotes.pullReturn =>
           'Retour au tirage lesté : quand le coude reste à 2 sur 10 ou '
               'moins deux semaines de suite sur ces tractions, ajoute '
