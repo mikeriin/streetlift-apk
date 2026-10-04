@@ -3942,6 +3942,21 @@ final class Prescriber {
       out.removeWhere(
         (x) => x.kind != SetKind.test && x.e.id == 'sw-traction-negative',
       );
+      // Un autre test de tirage le même jour : un seul essai de descente.
+      final other = out.any(
+        (x) =>
+            x.kind == SetKind.test &&
+            x.e.id != 'sw-traction-negative' &&
+            (x.e.pattern == MovementPattern.tirageVertical ||
+                x.e.rootId == Ids.muscleUp),
+      );
+      if (other) {
+        for (final x in out) {
+          if (x.kind == SetKind.test && x.e.id == 'sw-traction-negative') {
+            x.sets = 1;
+          }
+        }
+      }
     }
     if (role == _DayRole.event) {
       var k = 0;
@@ -5081,7 +5096,12 @@ final class Prescriber {
           w + 1 < _shape.weeks.length &&
           _shape.weeks[w + 1].kind == WeekKind.deload &&
           _shape.weeks[w + 1].intent == WeekIntent.deload;
-      final roles = _roles(w, ws);
+      var roles = _roles(w, ws);
+      if (_eventPassed(ws)) {
+        // Semaine qui suit l'échéance dans le bloc : récupération (ni test,
+        // ni travail dur, ni tenue bras tendus).
+        roles = List<_DayRole>.filled(a.dayCount, _DayRole.after);
+      }
       final tested = <String>{};
       final days = <List<_Draft>>[
         for (var d = 0; d < a.dayCount; d++)
