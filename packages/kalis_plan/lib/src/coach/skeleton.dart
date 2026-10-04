@@ -404,6 +404,20 @@ void _buildBeginner(_Builder b) {
         sets: sets,
       );
     } else {
+      if (negativeDays.contains(d) && !heavy) {
+        // R5-P8 : excentriques de 3 à 5 s, 2 à 3 × 2 à 3, en premier, à
+        // l'état frais — le travail le plus spécifique de la première
+        // traction.
+        b.add(
+          d,
+          <String>['sw-traction-negative'],
+          SlotRole.secondary,
+          Method.beginnerNegative,
+          sets: 2,
+          referenceId: Ids.pull,
+          fromWeek: later ? 0 : 1,
+        );
+      }
       b.add(
         d,
         // R5-P9 : en surpoids, l'appui des pieds dose mieux l'assistance
@@ -426,17 +440,7 @@ void _buildBeginner(_Builder b) {
         referenceId: Ids.pull,
       );
       if (negativeDays.contains(d) && !heavy) {
-        // R5-P8 : excentriques de 3 à 5 s, 2 à 3 × 2 à 3, juste après la
-        // traction assistée.
-        b.add(
-          d,
-          <String>['sw-traction-negative'],
-          SlotRole.secondary,
-          Method.beginnerNegative,
-          sets: 2,
-          referenceId: Ids.pull,
-          fromWeek: later ? 0 : 1,
-        );
+        // (descentes freinées déjà placées en tête.)
       } else if (!heavy && a.aimsAt(Ids.pull)) {
         // Les autres jours : tenue menton au-dessus de la barre, courte et
         // propre (le haut du mouvement, sans excentrique).
@@ -447,6 +451,9 @@ void _buildBeginner(_Builder b) {
           Method.beginnerHold,
           sets: 3,
           referenceId: Ids.pull,
+          // (À partir de la troisième semaine : le volume de tirage monte
+          // par paliers, R5-P22.)
+          fromWeek: later ? 0 : 2,
         );
       }
     }
@@ -489,7 +496,8 @@ void _buildBeginner(_Builder b) {
         sets: mainSets,
         referenceId: Ids.pushUp,
       );
-      if (!heavy && a.aimsAt(Ids.pushUp)) {
+      if (!heavy && a.aimsAt(Ids.pushUp) && !negativeDays.contains(d) ||
+          (!heavy && a.aimsAt(Ids.pushUp) && a.dayCount <= 2)) {
         // Objectif de pompes : le geste complet dès la première semaine,
         // en descentes freinées (corps gainé de la tête aux talons) — la
         // spécificité sans la série dure que le geste ne permet pas

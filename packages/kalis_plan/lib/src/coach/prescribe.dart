@@ -789,7 +789,9 @@ final class Prescriber {
     if (blockIndex == 0 && a.gapWeeks >= 2) {
       // (quatre semaines après dix semaines d'arrêt ou plus : le tendon
       // revient moins vite que le muscle, R5-P6.)
-      final weeks = a.gapWeeks >= 10 ? 4 : (a.gapWeeks >= 4 ? 2 : 1);
+      // (Tout le premier bloc après dix semaines d'arrêt ou plus : la
+      // force revient plus vite que les tissus conjonctifs.)
+      final weeks = a.gapWeeks >= 10 ? 99 : (a.gapWeeks >= 4 ? 2 : 1);
       if (week < weeks && floor < 3) {
         floor = 3;
       }
@@ -1015,8 +1017,8 @@ final class Prescriber {
       final added = total - floor * total;
       final reps = x.repsHigh ?? 5;
       final part = reps >= 6
-          ? 0.25
-          : (reps == 5 ? 0.34 : (reps == 4 ? 0.5 : (reps == 3 ? 0.67 : 0.8)));
+          ? 0.15
+          : (reps == 5 ? 0.25 : (reps == 4 ? 0.34 : (reps == 3 ? 0.5 : 0.67)));
       final lest = _external(e, total, floor + added * part / total);
       if (added > 0 && lest != null && lest > 0) {
         x
@@ -1147,6 +1149,34 @@ final class Prescriber {
     final ease = !spared || blockIndex > 0
         ? 0.0
         : (week <= 1 ? 0.06 : (week == 2 ? 0.03 : 0.0));
+    final dated = _shape.target;
+    if (ws.eventWeek &&
+        role == _DayRole.normal &&
+        dated != null &&
+        !dated.peak &&
+        !maintain &&
+        a.aimsAt(x.e.id) &&
+        (_toEventDays ?? 0) >= 4) {
+      // Test daté d'un 1RM, sans pic de forme : un dernier rappel lourd et
+      // court à J−4 à J−6 (simple à 88 %, deux doubles à 85 % environ),
+      // pour arriver au test avec une exposition récente au lourd
+      // (R3-P13, R3-P14).
+      _topSet(
+        x,
+        sets: 3,
+        reps: 1,
+        pct: 0.88,
+        rir: 3,
+        drop: 0.05,
+        ws: ws,
+        week: week,
+      );
+      x
+        ..backoffRepsLow = 2
+        ..backoffRepsHigh = 2
+        ..reasons.add(_note(CoachNotes.opener, 0.88));
+      return x;
+    }
     if (_easyDay(role)) {
       // À deux jours d'un test sans pic de forme : deux séries légères et
       // rapides, rien de fatigant (R3-P14).
@@ -1398,6 +1428,16 @@ final class Prescriber {
   }
 
   _Draft? _liftVolume(SlotSpec s, WeekSpec ws, int week, _DayRole role) {
+    final dated = _shape.target;
+    if (ws.eventWeek &&
+        role == _DayRole.normal &&
+        dated != null &&
+        !dated.peak &&
+        s.method != Method.liftMaintain &&
+        a.aimsAt(s.exerciseId) &&
+        (_toEventDays ?? 0) >= 4) {
+      return _liftHeavy(s, ws, week, role);
+    }
     if (role == _DayRole.primerNear) {
       return null;
     }
@@ -1570,8 +1610,10 @@ final class Prescriber {
     }
     final reps = intense ? 3 : 4;
     if (referenceId == Ids.weightedMuscleUp &&
-        e.rootId != Ids.weightedMuscleUp &&
-        a.totalOneRm(e.id) == null) {
+        (e.rootId != Ids.weightedMuscleUp ||
+            e.id.contains('dips-barre') ||
+            e.id.contains('traction-haute')) &&
+        a.oneRm[e.id] == null) {
       // Éducatif du muscle-up sans record propre : la charge ne se déduit
       // pas du 1RM du muscle-up — elle se règle à la première séance.
       x
@@ -1820,9 +1862,14 @@ final class Prescriber {
         kept < 2 &&
         _level >= 1 &&
         ws.kind == WeekKind.build &&
+        ws.stage >= 1 &&
         (blockIndex >= 1 || realization) &&
-        _shape.model != SeasonModel.repsPeak) {
-      x.reasons.add(_note(CoachNotes.restPause, wanted));
+        _shape.model != SeasonModel.repsPeak &&
+        // Un seul mouvement en repos-pause par semaine : le tirage les
+        // semaines impaires du bloc, la poussée les semaines paires.
+        ((e.pattern == MovementPattern.tirageVertical) == ws.stage.isOdd ||
+            !_twoLongGoals)) {
+      x.reasons.add(_note(CoachNotes.restPause, 3));
     }
     return x;
   }
@@ -2115,7 +2162,12 @@ final class Prescriber {
   _Draft? _beginnerMain(SlotSpec s, WeekSpec ws, int week, _DayRole role) {
     final x = _new(s);
     final e = x.e;
-    final sets = _scaled(s.sets, ws, min: s.sets >= 3 ? 2 : 1);
+    var sets = _scaled(s.sets, ws, min: s.sets >= 3 ? 2 : 1);
+    if (blockIndex == 0 && week < 2 && sets > 2) {
+      // R5-P1, R5-P22 : les deux premières semaines à deux séries par
+      // exercice, puis trois — le volume monte avant l'effort.
+      sets = 2;
+    }
     x
       ..sets = sets
       ..minSets = 1
@@ -2556,6 +2608,25 @@ final class Prescriber {
       ..sets = sets < 2 ? 2 : sets
       ..minSets = 2;
     final stage = _stage(ws);
+    if (e.id == 'cf-pogo-jumps' || e.id.startsWith('ca-corde')) {
+      // Rebonds courts : dose fixe et brève (la raideur élastique, pas
+      // l'endurance du mollet), la même en semaine allégée.
+      x
+        ..sets = 2
+        ..rir = 5
+        ..rest = 60;
+      if (e.unit == MeasureUnit.seconds) {
+        x
+          ..secondsLow = 20
+          ..secondsHigh = 20;
+      } else {
+        x
+          ..repsLow = 15
+          ..repsHigh = 20;
+      }
+      _roleNote(x);
+      return x;
+    }
     if (e.unit == MeasureUnit.seconds) {
       final known = a.holds[e.id] ?? 0;
       final straight = straightArmFamilyOf(e) >= 0;
@@ -3390,6 +3461,19 @@ final class Prescriber {
     return x;
   }
 
+  /// Vrai si deux objectifs de série longue (15 répétitions et plus)
+  /// coexistent.
+  bool get _twoLongGoals {
+    var n = 0;
+    for (final g in a.profile.goals) {
+      final v = g.targetValue;
+      if (g.metric == GoalMetric.maxReps && v != null && v >= 15) {
+        n++;
+      }
+    }
+    return n >= 2;
+  }
+
   /// Vrai si la séance [day] de la semaine [week] précède de moins de 48 h
   /// un test de tirage placé à la première séance de la semaine suivante.
   bool _eveOfTest(int day, int week) {
@@ -3747,6 +3831,12 @@ final class Prescriber {
         _cue(x);
         out.add(x);
       }
+    }
+    if (gated) {
+      // Le test de descente remplace les descentes de la séance.
+      out.removeWhere(
+        (x) => x.kind != SetKind.test && x.e.id == 'sw-traction-negative',
+      );
     }
     if (role == _DayRole.event) {
       var k = 0;
@@ -4399,7 +4489,11 @@ final class Prescriber {
     // intensité et fréquence gardées) ; allègement ordinaire : −35 %.
     final limit =
         peak *
-        (ws.eventWeek || ws.intent == WeekIntent.taper ? 0.55 : 0.65);
+        // (Débutant : la fatigue se dissipe en quelques jours, l'affûtage
+        // reste court et léger — −30 %, R3-P12, R3-P21.)
+        (_level == 0
+            ? (ws.eventWeek ? 0.6 : 0.7)
+            : (ws.eventWeek || ws.intent == WeekIntent.taper ? 0.55 : 0.65));
     var guard = 0;
     while (guard < 80) {
       guard++;
@@ -4448,6 +4542,61 @@ final class Prescriber {
       } else {
         pick.sets = 1;
         break;
+      }
+    }
+  }
+
+  /// Reprise après dix semaines d'arrêt ou plus (R5-P7, R5-P22) : la
+  /// première semaine à la moitié des séries dures, puis 60 %, 72 % et
+  /// 85 % (hausses de 20 % au plus) — le plein volume à la cinquième.
+  void _fitReturn(List<List<_Draft>> days, int week) {
+    if (blockIndex != 0 || a.gapWeeks < 10 || week >= 4) {
+      return;
+    }
+    final factor = const <double>[0.5, 0.6, 0.72, 0.85][week];
+    double total() {
+      var t = 0.0;
+      for (final items in days) {
+        for (final x in items) {
+          if (x.hard) {
+            t += x.sets;
+          }
+        }
+      }
+      return t;
+    }
+
+    final limit = total() * factor;
+    var guard = 0;
+    while (total() > limit + 1e-9 && guard < 120) {
+      guard++;
+      _Draft? pick;
+      for (final items in days) {
+        for (final x in items) {
+          if (!x.hard || x.kind == SetKind.test) {
+            continue;
+          }
+          final least = x.everyMinute ? 3 : 1;
+          if (x.sets <= least) {
+            continue;
+          }
+          if (pick == null ||
+              x.sets > pick.sets ||
+              (x.sets == pick.sets &&
+                  Method.cutRank(x.method) < Method.cutRank(pick.method))) {
+            pick = x;
+          }
+        }
+      }
+      if (pick == null) {
+        break;
+      }
+      pick.sets--;
+      if (pick.minSets > pick.sets) {
+        pick.minSets = pick.sets;
+      }
+      if (pick.backoff && pick.sets < 2) {
+        pick.backoff = false;
       }
     }
   }
@@ -4833,6 +4982,7 @@ final class Prescriber {
         _fitTime(days[d], a.days[d].minutes);
       }
       _floorEvent(days, ws);
+      _fitReturn(days, w);
       _fitVolume(days, ws);
       _fitTaper(days, ws);
       days.forEach(_equalize);
@@ -4956,6 +5106,11 @@ List<Reason> blockReasonsOf(Athlete a, Skeleton skeleton) {
   // +15 % en 12 semaines chez un pratiquant entraîné) : on le dit, avec
   // une fourchette probable — l'objectif reste visé, mais un résultat
   // en dessous n'est pas un échec du plan.
+  final firstPull = a.goalOn(Ids.pull, GoalMetric.maxReps)?.targetValue;
+  if ((a.reps[Ids.pull] ?? 0) <= 0 && firstPull != null && firstPull >= 2) {
+    // Plusieurs tractions en partant de zéro : possible, pas garanti.
+    out.add(note(CoachNotes.ambitious, 1000.0 + (firstPull >= 3 ? 2 : 1)));
+  }
   if (a.level >= 1) {
     for (final g in profile.goals) {
       final id = g.exerciseId;

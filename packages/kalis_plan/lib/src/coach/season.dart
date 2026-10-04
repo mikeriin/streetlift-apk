@@ -340,7 +340,7 @@ BlockShape shapeBlock(
             WeekKind.deload,
             WeekIntent.taper,
             SeasonPhaseKind.taper,
-            0.6,
+            a.level == 0 ? 0.75 : 0.6,
             stage,
           );
         } else if ((i == length - 1 && length >= 4) || isEvent(i)) {
