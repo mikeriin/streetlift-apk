@@ -432,6 +432,7 @@ Trajectory simulateTrajectory(
     'coached': coached,
     'effortGap': _r(cm.effortGap.mean),
     'effortBias': _r(cm.effortBias.mean),
+    'effortReachableShare': _r(cm.reachableShare.mean),
     'harderRate': _r(cm.harderRate.mean),
     'easierRate': _r(cm.easierRate.mean),
     'coachFailureRate': _r(cm.failRate.mean),
@@ -448,7 +449,7 @@ Trajectory simulateTrajectory(
   // moyen, effort réel moyen.
   final byExercise = <String, List<double>>{};
   for (final s in run.sets) {
-    if (s.test || s.plannedFailure) {
+    if (s.test || s.plannedFailure || !s.reachable) {
       continue;
     }
     final e = byExercise.putIfAbsent(s.exerciseId, () => <double>[0, 0, 0]);

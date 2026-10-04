@@ -23,14 +23,28 @@ final CivilDate simStartDate = CivilDate(2026, 10, 5);
 /// politiques soient comparées à programme égal.
 final class SimProgram {
   /// Programme du profil [profile] par le moteur statique [plan].
-  SimProgram(this.catalog, this.plan, this.profile, {this.seed = 0});
+  SimProgram(
+    this.catalog,
+    this.plan,
+    this.profile, {
+    this.seed = 0,
+    this.transform,
+  });
 
   /// Programme réduit au bloc [block] déjà construit (programme importé) :
   /// la simulation ne doit pas dépasser sa durée.
   SimProgram.fixed(this.catalog, this.plan, this.profile, ProgramBlock block)
-    : seed = block.pass1.seed {
+    : seed = block.pass1.seed,
+      transform = null {
     _blocks.add(block);
   }
+
+  /// Transformation appliquée à chaque bloc construit (programmes de
+  /// test : techniques injectées), ou `null`.
+  final ProgramBlock Function(ProgramBlock block)? transform;
+
+  /// Le bloc [block] tel que la simulation le suit.
+  ProgramBlock shaped(ProgramBlock block) => transform?.call(block) ?? block;
 
   /// Catalogue.
   final Catalog catalog;
@@ -61,7 +75,7 @@ final class SimProgram {
           catalog,
           Pass2Request(request: request, pass1: pass1),
         );
-        _blocks.add(ProgramBlock(pass1: pass1, pass2: pass2));
+        _blocks.add(shaped(ProgramBlock(pass1: pass1, pass2: pass2)));
         continue;
       }
       final previous = _blocks.last;
@@ -72,8 +86,9 @@ final class SimProgram {
       final start = simStartDate.addDays(7 * weeks);
       final sessions = weeks * previous.pass1.days.length;
       _blocks.add(
-        plan
-            .nextBlock(
+        shaped(
+          plan
+              .nextBlock(
               catalog,
               NextBlockRequest(
                 profile: profile,
@@ -96,6 +111,7 @@ final class SimProgram {
               ),
             )
             .block,
+        ),
       );
     }
     return _blocks[index];
@@ -482,8 +498,9 @@ SimRun simulate({
       if (loop == null || last == null) {
         block = program.block(blockIndex);
       } else {
-        block = program.plan
-            .nextBlock(
+        block = program.shaped(
+          program.plan
+              .nextBlock(
               catalog,
               NextBlockRequest(
                 profile: current,
@@ -494,7 +511,8 @@ SimRun simulate({
                 locks: const <PlanLock>[],
               ),
             )
-            .block;
+            .block,
+        );
       }
       run.blocks.add(block);
       run.blockWeeks.add(g);

@@ -436,10 +436,7 @@ void noteCoachSession(
   final f = track.filter;
   final ownRef = coach.referenceId == null || coach.referenceId == run.info.id;
   var atCeiling = false;
-  if (pct != null &&
-      ownRef &&
-      held != null &&
-      f.mode == CapacityMode.loaded) {
+  if (pct != null && ownRef && held != null && f.mode == CapacityMode.loaded) {
     final ref = exp(f.m[0] + f.m[3] + f.gRef);
     final bw = run.info.fraction * bodyWeightKg;
     atCeiling = held + bw >= (pct + p.coachCorridorUp) * ref * 0.98;
@@ -896,9 +893,13 @@ List<SetPlan>? _loadedPlans(
   final lastAny = track.lastLoad;
   if (markLoad == null && lastAny != null && !ex.calibrating) {
     // Premier passage à ce schéma : au plus la charge écrite par le bloc,
-    // sauf à rester à +10 % (ou un cran) de la dernière séance.
-    final cap = grid.floor((lastAny + bw) * (1 + p.maxUpMain) - bw);
-    final step = grid.next(lastAny, up: true);
+    // sauf à rester à +10 % (ou un cran) de la plus lourde barre récente.
+    // (La plus lourde barre réussie des dernières semaines, quel que soit
+    // le schéma ; sans elle, la dernière charge.)
+    final heaviest = track.heavy.isEmpty ? lastAny : track.heavy.first.$2;
+    final base = heaviest > lastAny ? heaviest : lastAny;
+    final cap = grid.floor((base + bw) * (1 + p.maxUpMain) - bw);
+    final step = grid.next(base, up: true);
     var bound = cap > step ? cap : step;
     final start = item.startLoadKg;
     if (start != null && start > bound) {
@@ -929,6 +930,25 @@ List<SetPlan>? _loadedPlans(
     );
   }
 
+  // Effort affiché : celui du bloc ; quand la charge servie est retenue
+  // sous ce que la réserve visée demanderait (plafond de hausse, couloir,
+  // semaine servie telle quelle), l'effort attendu est affiché à sa place
+  // (jamais plus dur que la cible du bloc).
+  int shownFor(double load, List<(int, double)> entries) {
+    if (entries.isEmpty || !judged) {
+      return flames;
+    }
+    var sum = 0.0;
+    for (final (n, fatigue) in entries) {
+      sum += _possible(run, ex, load, fatigue) - n;
+    }
+    final expected = sum / entries.length;
+    if (expected < rir + 1) {
+      return flames;
+    }
+    return flamesOfRir(expected > 5 ? 5.0 : (expected * 2).floorToDouble() / 2);
+  }
+
   final out = <SetPlan>[];
   if (topSet && t != null) {
     final drop =
@@ -947,6 +967,8 @@ List<SetPlan>? _loadedPlans(
         (x) => _holdsRir(run, ex, x, tail, rir - p.coachBreachRir, worst),
       );
     }
+    final shownTop = shownFor(kg, head);
+    final shownBack = shownFor(back, tail);
     for (var i = 0; i < sets; i++) {
       final (low, high, role) = lines[i];
       out.add(
@@ -954,7 +976,7 @@ List<SetPlan>? _loadedPlans(
           loadKg: i == 0 ? kg : back,
           low: low,
           high: high,
-          flames: flames,
+          flames: i == 0 ? shownTop : shownBack,
           open: high > low,
           role: role,
         ),
@@ -962,6 +984,7 @@ List<SetPlan>? _loadedPlans(
     }
     return out;
   }
+  final shown = shownFor(kg, head);
   final waveStep = served == SetTechniqueKind.wave ? t?.waveStepPct : null;
   final waveLength = t?.waveReps?.length ?? 1;
   for (var i = 0; i < sets; i++) {
@@ -976,7 +999,7 @@ List<SetPlan>? _loadedPlans(
         loadKg: load,
         low: low,
         high: high,
-        flames: flames,
+        flames: shown,
         open: high > low,
         role: role,
       ),

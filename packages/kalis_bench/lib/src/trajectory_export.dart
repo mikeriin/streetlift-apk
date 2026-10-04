@@ -296,20 +296,22 @@ String _written(ExercisePrescription it) {
   return b.toString();
 }
 
-String _done(List<SetRecord> sets, bool hold) {
+String _done(List<SetRow> sets, bool hold) {
   if (sets.isEmpty) {
     return 'non fait';
   }
   final parts = <String>[];
   var i = 0;
   while (i < sets.length) {
-    final load = sets[i].externalLoadKg;
+    final load = sets[i].loadKg;
     var j = i;
     final amounts = <String>[];
-    while (j < sets.length && sets[j].externalLoadKg == load) {
+    while (j < sets.length && sets[j].loadKg == load) {
       final s = sets[j];
-      final amount = hold ? s.seconds : s.reps;
-      amounts.add('${amount ?? 0}${s.success ? '' : ' (manqué)'}');
+      final mark = s.failed
+          ? (s.attempt ? ' (manquée)' : ' (échec)')
+          : (s.amount < s.targetLow && !s.test ? ' (arrêt avant la cible)' : '');
+      amounts.add('${s.amount}$mark');
       j++;
     }
     parts.add(
@@ -365,9 +367,11 @@ String coachTrajectoryMarkdown(
       '${_pct(m['coachFailureRate'])} des séries de travail.',
     )
     ..writeln(
-      '- Écart moyen entre l\'effort visé et l\'effort réel : '
-      '${_n((m['effortGap'] as num? ?? 0).toDouble())} répétition en réserve '
-      '(séries « 5 en réserve et plus » : seul un effort plus dur compte) ; '
+      '- Écart moyen entre l\'effort affiché par le moteur et l\'effort '
+      'réel : ${_n((m['effortGap'] as num? ?? 0).toDouble())} répétition en '
+      'réserve (sur les ${_pct(m['effortReachableShare'], 0)} de séries dont '
+      'la cible est atteignable avec le matériel ; séries « 5 en réserve et '
+      'plus » : seul un effort plus dur compte) ; '
       'séries au moins 2 répétitions plus dures que visé : '
       '${_pct(m['harderRate'])} ; au moins 3 plus faciles : '
       '${_pct(m['easierRate'])}.',
@@ -488,12 +492,8 @@ String coachTrajectoryMarkdown(
       if (best == null || bestItem == null) {
         continue;
       }
-      final sets = <SetRecord>[
-        for (final r in best.record.sets)
-          if (r.exerciseId == id) r,
-      ];
-      final hold = sets.isNotEmpty && sets.first.seconds != null;
       final rows = rowsOf['${best.simDay}|$id'] ?? const <SetRow>[];
+      final hold = rows.isNotEmpty && rows.first.mode == CapacityMode.hold;
       var want = 0.0;
       var real = 0.0;
       var count = 0;
@@ -534,7 +534,7 @@ String coachTrajectoryMarkdown(
               ? weekKindLabel(best.weekKind)
               : coachPhaseLabel(intent.code),
           written == null ? '—' : _written(written),
-          _done(sets, hold),
+          _done(rows, hold),
           count == 0
               ? (rows.isEmpty ? '—' : 'test')
               : '${_n(want / count, 1)}${rows.any((r) => r.openTarget) ? '+' : ''}'
