@@ -3060,8 +3060,10 @@ final class Prescriber {
       kind = TestKind.maxHold;
       x
         ..sets = 1
-        ..secondsLow = known > 0 ? known : (hang ? 15 : 5)
-        ..secondsHigh = known > 0 ? aim : (hang ? 45 : 15)
+        // (Tenue bras tendus sans repère : un essai court, 3 à 5 s — pas
+        // de saut de charge sur les tendons le jour du test.)
+        ..secondsLow = known > 0 ? known : (hang ? 15 : 3)
+        ..secondsHigh = known > 0 ? aim : (hang ? 45 : 5)
         ..rest = 180;
       x.test = const TestSpec(
         kind: TestKind.maxHold,
@@ -3942,21 +3944,6 @@ final class Prescriber {
       out.removeWhere(
         (x) => x.kind != SetKind.test && x.e.id == 'sw-traction-negative',
       );
-      // Un autre test de tirage le même jour : un seul essai de descente.
-      final other = out.any(
-        (x) =>
-            x.kind == SetKind.test &&
-            x.e.id != 'sw-traction-negative' &&
-            (x.e.pattern == MovementPattern.tirageVertical ||
-                x.e.rootId == Ids.muscleUp),
-      );
-      if (other) {
-        for (final x in out) {
-          if (x.kind == SetKind.test && x.e.id == 'sw-traction-negative') {
-            x.sets = 1;
-          }
-        }
-      }
     }
     if (role == _DayRole.event) {
       var k = 0;
@@ -4086,6 +4073,21 @@ final class Prescriber {
         if (x != null) {
           out.add(x..kind = SetKind.work);
           break;
+        }
+      }
+    }
+    // Un autre test de tirage le même jour : un seul essai de descente.
+    final otherPull = out.any(
+      (x) =>
+          x.kind == SetKind.test &&
+          x.e.id != 'sw-traction-negative' &&
+          (x.e.pattern == MovementPattern.tirageVertical ||
+              x.e.rootId == Ids.muscleUp),
+    );
+    if (otherPull) {
+      for (final x in out) {
+        if (x.kind == SetKind.test && x.e.id == 'sw-traction-negative') {
+          x.sets = 1;
         }
       }
     }
