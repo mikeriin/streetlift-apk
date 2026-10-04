@@ -1899,7 +1899,9 @@ final class Prescriber {
             : weight * (1 + (known > 20 ? 20 : known) / 30);
         var pct = 0.77 + 0.015 * (stage > 4 ? 4 : stage);
         if (ws.light) {
-          pct = 0.72;
+          // Allègement : les séries tombent, la charge reste à 3 % près
+          // (le retour à la charge du bloc reste sous +5 %).
+          pct -= 0.03;
         }
         final load = _external(e, total, pct);
         x
@@ -4244,21 +4246,7 @@ final class Prescriber {
         final fraction = x.e.bodyweightFraction?.value ?? 0;
         var total = load + fraction * a.bodyWeight;
         final key = '$d|${x.slotId}|${x.e.id}';
-        // Référence : la charge la plus lourde des trois dernières
-        // semaines aux mêmes répétitions (revenir, après un allègement, à
-        // la charge d'avant n'est pas une hausse).
-        var before = previous?.loads[key];
-        for (var k = _history.length - 3; k < _history.length - 1; k++) {
-          if (k < 0) {
-            continue;
-          }
-          final older = _history[k].loads[key];
-          if (older != null &&
-              older.$2 == reps &&
-              (before == null || before.$2 != reps || older.$1 > before.$1)) {
-            before = older;
-          }
-        }
+        final before = previous?.loads[key];
         if (before != null &&
             x.kind != SetKind.test &&
             before.$2 == reps &&
