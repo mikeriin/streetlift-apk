@@ -1570,10 +1570,13 @@ List<SetPlan>? _directPlans(
           'sets': sets,
         }),
       );
-    } else if (measured && cap - low < rir - p.coachBreachRir - 1e-9) {
+    } else if (track.lastDay != null &&
+        (track.noUp || (track.lastTop > 0 && track.lastTop < low))) {
+      // (Un cran de plus seulement sur ce que l'athlète a fait : échec, ou
+      // bas de la plage manqué à la dernière séance.)
       ex.notes.add(
         _r(ReasonCodes.adaptFlamesAboveTarget, <String, Object?>{
-          'delta': roundTo(rir - (cap - low), 1),
+          'delta': roundTo(low - track.lastTop.toDouble(), 1),
           'sets': sets,
         }),
       );

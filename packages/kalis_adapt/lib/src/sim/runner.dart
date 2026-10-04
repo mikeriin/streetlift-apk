@@ -656,6 +656,7 @@ SimRun simulate({
             final factor = change < 0 ? step : 1 / step;
             truth.capacity *= factor;
             truth.startCapacity *= factor;
+            truth.firstCapacity *= factor;
             notch += change;
           }
           bandNotch[item.exerciseId] = notch;
