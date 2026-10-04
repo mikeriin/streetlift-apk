@@ -4698,12 +4698,12 @@ final class Prescriber {
       if (ws.kind == WeekKind.build || ws.kind == WeekKind.intro) {
         _loadedBefore++;
       }
-      var tested = false;
+      var anyTest = false;
       for (final items in days) {
         for (final x in items) {
           if (x.kind == SetKind.test) {
             // Le test recale le repère de l'exercice pour la suite.
-            tested = true;
+            anyTest = true;
             _testedOn[x.e.id] = a.start.addDays(7 * (w + 1));
             final ref = x.slot?.referenceId;
             if (ref != null && x.e.id == 'sw-traction-negative') {
@@ -4712,7 +4712,7 @@ final class Prescriber {
           }
         }
       }
-      if (tested) {
+      if (anyTest) {
         _testsDone++;
       }
       out.add(
