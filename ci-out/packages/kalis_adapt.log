@@ -1,0 +1,1356 @@
+== kalis_adapt
+Resolving dependencies...
+Downloading packages...
++ _fe_analyzer_shared 108.0.0
++ analyzer 14.4.0
++ args 2.7.0
++ async 2.13.1
++ boolean_selector 2.1.2
++ cli_config 0.2.0
++ collection 1.19.1
++ convert 3.1.2
++ coverage 1.15.1
++ crypto 3.0.7
++ file 7.0.1
++ frontend_server_client 4.1.0
++ glob 2.2.0
++ http_multi_server 3.2.2
++ http_parser 4.1.2
++ io 1.1.0
++ kalis_core 0.4.1 from path ../kalis_core
++ kalis_plan 0.2.0 from path ../kalis_plan
++ lints 4.0.0 (6.1.0 available)
++ logging 1.3.0
++ matcher 0.12.20
++ meta 1.19.0
++ mime 2.1.0
++ node_preamble 2.0.2
++ package_config 3.0.0
++ path 1.9.1
++ pool 1.5.3
++ pub_semver 2.2.1
++ shelf 1.4.2
++ shelf_packages_handler 3.0.2
++ shelf_static 1.1.3
++ shelf_web_socket 3.0.0
++ source_map_stack_trace 2.1.2
++ source_maps 0.10.14
++ source_span 1.10.2
++ stack_trace 1.12.2
++ stream_channel 2.1.4
++ string_scanner 1.4.1
++ term_glyph 1.2.2
++ test 1.32.0
++ test_api 0.7.14
++ test_core 0.6.20
++ typed_data 1.4.0
++ vm_service 15.3.0
++ watcher 1.2.1
++ web 1.1.1
++ web_socket 1.0.1
++ web_socket_channel 3.0.3
++ webkit_inspection_protocol 1.2.1
++ yaml 3.1.4
+Changed 50 dependencies!
+1 package has newer versions incompatible with dependency constraints.
+Try `dart pub outdated` for more information.
+Changed lib/src/session.dart
+Changed test/support.dart
+Formatted 59 files (2 changed) in 0.23 seconds.
+formatage : échec
+Analyzing kalis_adapt...
+No issues found!
+00:00 +0: loading test/properties_2_test.dart
+00:00 +0: test/properties_2_test.dart: journaux aléatoires 2560 à 2719
+00:00 +1: test/properties_2_test.dart: journaux aléatoires 2560 à 2719
+00:00 +2: test/properties_2_test.dart: journaux aléatoires 2560 à 2719
+00:00 +3: test/properties_2_test.dart: journaux aléatoires 2560 à 2719
+00:00 +4: test/properties_2_test.dart: journaux aléatoires 2560 à 2719
+00:00 +5: test/properties_2_test.dart: journaux aléatoires 2560 à 2719
+00:00 +6: test/properties_2_test.dart: journaux aléatoires 2560 à 2719
+00:00 +7: test/properties_2_test.dart: journaux aléatoires 2560 à 2719
+00:00 +8: test/properties_2_test.dart: journaux aléatoires 2560 à 2719
+00:00 +9: test/properties_2_test.dart: journaux aléatoires 2560 à 2719
+00:00 +10: test/properties_2_test.dart: journaux aléatoires 2560 à 2719
+00:00 +11: test/properties_2_test.dart: journaux aléatoires 2560 à 2719
+00:00 +12: test/properties_2_test.dart: journaux aléatoires 2560 à 2719
+00:00 +13: test/properties_2_test.dart: journaux aléatoires 2560 à 2719
+00:00 +14: test/properties_2_test.dart: journaux aléatoires 2560 à 2719
+00:00 +15: test/properties_2_test.dart: journaux aléatoires 2560 à 2719
+00:00 +16: test/properties_2_test.dart: journaux aléatoires 2560 à 2719
+00:00 +17: test/properties_2_test.dart: journaux aléatoires 2560 à 2719
+00:00 +18: test/properties_2_test.dart: journaux aléatoires 2560 à 2719
+00:00 +19: test/properties_2_test.dart: journaux aléatoires 2560 à 2719
+00:00 +20: test/properties_2_test.dart: journaux aléatoires 2560 à 2719
+00:00 +21: test/properties_2_test.dart: journaux aléatoires 2560 à 2719
+00:00 +22: test/properties_2_test.dart: journaux aléatoires 2560 à 2719
+00:00 +23: test/properties_2_test.dart: journaux aléatoires 2560 à 2719
+00:00 +24: test/properties_2_test.dart: journaux aléatoires 2560 à 2719
+00:00 +25: test/properties_2_test.dart: journaux aléatoires 2560 à 2719
+00:00 +26: test/properties_2_test.dart: journaux aléatoires 2560 à 2719
+00:00 +27: test/properties_2_test.dart: journaux aléatoires 2560 à 2719
+00:01 +28: test/properties_2_test.dart: journaux aléatoires 2560 à 2719
+00:01 +29: test/properties_2_test.dart: journaux aléatoires 2560 à 2719
+00:01 +30: test/properties_2_test.dart: journaux aléatoires 2560 à 2719
+00:02 +31: test/properties_2_test.dart: journaux aléatoires 2560 à 2719
+00:03 +32: test/properties_2_test.dart: journaux aléatoires 2560 à 2719
+00:03 +33: test/properties_2_test.dart: journaux aléatoires 2560 à 2719
+00:04 +34: test/coach_test.dart: programmes street du banc street_03_debutante : bloc au contrat 0.4.0, boucle complète, trois vérités
+00:04 +35: test/properties_2_test.dart: journaux aléatoires 2720 à 2879
+00:04 +36: test/properties_2_test.dart: journaux aléatoires 2720 à 2879
+00:04 +37: test/coach_test.dart: programmes street du banc street_05_inter_calisthenie_front_lever : bloc au contrat 0.4.0, boucle complète, trois vérités
+00:05 +38: test/properties_2_test.dart: journaux aléatoires 2880 à 3039
+00:05 +39: test/properties_2_test.dart: journaux aléatoires 2880 à 3039
+00:05 +40: test/coach_test.dart: programmes street du banc street_07_avance_streetlifting_competition : bloc au contrat 0.4.0, boucle complète, trois vérités
+00:06 +41: test/coach_test.dart: programmes street du banc street_07_avance_streetlifting_competition : bloc au contrat 0.4.0, boucle complète, trois vérités
+00:06 +41 -1: test/properties_2_test.dart: journaux aléatoires 3200 à 3359
+00:06 +41 -1: test/coach_test.dart: programmes street du banc street_07_avance_streetlifting_competition : bloc au contrat 0.4.0, boucle complète, trois vérités [E]
+  Expected: empty
+    Actual: [
+              'conseil sl-squat-competition : hausse après un échec (125.0 → 130.0)',
+              'conseil sl-muscle-up-leste : hausse après un échec (5.0 → 11.25)'
+            ]
+  street_07_avance_streetlifting_competition, vérité c
+  
+  package:matcher              expect
+  test/coach_test.dart 191:11  main.<fn>.<fn>
+  
+00:07 +42 -1: test/coach_test.dart: programmes street du banc street_08_avance_sets_reps_competition : bloc au contrat 0.4.0, boucle complète, trois vérités
+00:07 +43 -1: test/properties_2_test.dart: journaux aléatoires 3360 à 3519
+00:07 +44 -1: test/coach_test.dart: programmes street du banc street_09_elite_streetlifting : bloc au contrat 0.4.0, boucle complète, trois vérités
+00:07 +44 -2: test/properties_2_test.dart: journaux aléatoires 3520 à 3679
+00:07 +44 -2: test/coach_test.dart: programmes street du banc street_09_elite_streetlifting : bloc au contrat 0.4.0, boucle complète, trois vérités [E]
+  Expected: empty
+    Actual: [
+              'conseil sl-dips-leste : hausse après un échec (63.75 → 66.25)',
+              'conseil sl-muscle-up-leste : hausse après un échec (18.75 → 25.0)'
+            ]
+  street_09_elite_streetlifting, vérité c
+  
+  package:matcher              expect
+  test/coach_test.dart 191:11  main.<fn>.<fn>
+  
+00:08 +45 -2: test/coach_test.dart: programmes street du banc street_10_elite_figures : bloc au contrat 0.4.0, boucle complète, trois vérités
+00:08 +46 -2: test/properties_2_test.dart: journaux aléatoires 3680 à 3839
+00:08 +47 -2: test/coach_test.dart: programmes street du banc street_11_master_51_ans : bloc au contrat 0.4.0, boucle complète, trois vérités
+00:08 +48 -2: test/coach_test.dart: programmes street du banc street_12_antecedent_coude : bloc au contrat 0.4.0, boucle complète, trois vérités
+00:08 +49 -2: test/coach_test.dart: programmes street du banc street_13_peu_de_temps : bloc au contrat 0.4.0, boucle complète, trois vérités
+00:08 +50 -2: test/properties_0_test.dart: journaux aléatoires 0 à 159
+00:09 +51 -2: test/properties_0_test.dart: journaux aléatoires 0 à 159
+00:09 +52 -2: test/properties_0_test.dart: journaux aléatoires 0 à 159
+00:09 +53 -2: test/properties_0_test.dart: journaux aléatoires 0 à 159
+00:09 +54 -2: test/properties_0_test.dart: journaux aléatoires 0 à 159
+00:09 +55 -2: test/properties_0_test.dart: journaux aléatoires 0 à 159
+00:09 +56 -2: test/properties_0_test.dart: journaux aléatoires 0 à 159
+00:09 +57 -2: test/properties_0_test.dart: journaux aléatoires 0 à 159
+00:10 +58 -2: test/properties_0_test.dart: journaux aléatoires 0 à 159
+00:10 +59 -2: test/properties_0_test.dart: journaux aléatoires 0 à 159
+00:10 +60 -2: test/properties_0_test.dart: journaux aléatoires 0 à 159
+00:10 +61 -2: test/properties_0_test.dart: journaux aléatoires 0 à 159
+00:10 +62 -2: test/properties_0_test.dart: journaux aléatoires 0 à 159
+00:10 +63 -2: test/properties_0_test.dart: journaux aléatoires 0 à 159
+00:10 +64 -2: test/properties_0_test.dart: journaux aléatoires 0 à 159
+00:10 +65 -2: test/properties_0_test.dart: journaux aléatoires 0 à 159
+00:11 +66 -2: test/properties_0_test.dart: journaux aléatoires 0 à 159
+00:12 +67 -2: test/properties_0_test.dart: journaux aléatoires 0 à 159
+00:13 +68 -2: test/smoke_test.dart: avance_street : 8 semaines en boucle complète
+00:13 +69 -2: test/properties_0_test.dart: journaux aléatoires 160 à 319
+00:13 +70 -2: test/smoke_test.dart: notes_paresseuses : 8 semaines en boucle complète
+00:13 +71 -2: test/properties_0_test.dart: journaux aléatoires 320 à 479
+00:14 +72 -2: test/properties_0_test.dart: journaux aléatoires 320 à 479
+00:14 +73 -2: test/properties_0_test.dart: journaux aléatoires 320 à 479
+00:14 +74 -2: test/properties_0_test.dart: journaux aléatoires 320 à 479
+00:14 +75 -2: test/smoke_test.dart: douleur_et_lieu : 8 semaines en boucle complète
+00:14 +76 -2: test/properties_0_test.dart: journaux aléatoires 480 à 639
+00:15 +77 -2: test/coach_properties_0_test.dart: journaux aléatoires (mode coach) 100000 à 100159
+00:15 +78 -2: test/coach_properties_0_test.dart: journaux aléatoires (mode coach) 100000 à 100159
+00:15 +79 -2: test/coach_properties_0_test.dart: journaux aléatoires (mode coach) 100000 à 100159
+00:16 +80 -2: test/coach_properties_0_test.dart: journaux aléatoires (mode coach) 100000 à 100159
+00:17 +81 -2: test/coach_properties_0_test.dart: journaux aléatoires (mode coach) 100000 à 100159
+00:17 +82 -2: test/coach_properties_0_test.dart: journaux aléatoires (mode coach) 100000 à 100159
+00:17 +83 -2: test/coach_properties_0_test.dart: journaux aléatoires (mode coach) 100000 à 100159
+00:18 +83 -3: test/properties_6_test.dart: journaux aléatoires 7680 à 7839
+00:18 +83 -3: test/coach_properties_0_test.dart: journaux aléatoires (mode coach) 100000 à 100159 [E]
+  Expected: empty
+    Actual: [
+              'graine 100037, 2026-11-04 sw-pompe-genoux : 3 séries pour 1 écrites',
+              'graine 100060, 2026-11-17 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites',
+              'graine 100069, 2027-03-04 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites',
+              'graine 100133, 2026-10-05 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites'
+            ]
+  
+  package:matcher             expect
+  test/properties.dart 834:7  coachPropertyTests.<fn>
+  
+00:19 +83 -4: test/properties_6_test.dart: journaux aléatoires 7680 à 7839
+00:19 +83 -4: test/coach_properties_0_test.dart: journaux aléatoires (mode coach) 100160 à 100319 [E]
+  Expected: empty
+    Actual: [
+              'graine 100162, 2026-10-06 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites',
+              'graine 100165, conseil sw-dips-barres-paralleles : cible 7 après un échec (dernière série : 1)',
+              'graine 100165, conseil sw-dips-barres-paralleles : cible 7 après un échec (dernière série : 3)',
+              'graine 100212, 2026-11-03 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites',
+              'graine 100304, 2027-01-11 sw-pompe-genoux : 3 séries pour 1 écrites',
+              'graine 100307, conseil sw-traction-pronation : cible 13 après un échec (dernière série : 3)'
+            ]
+  
+  package:matcher             expect
+  test/properties.dart 834:7  coachPropertyTests.<fn>
+  
+00:19 +83 -5: test/properties_6_test.dart: journaux aléatoires 7680 à 7839
+00:19 +83 -5: test/coach_properties_0_test.dart: journaux aléatoires (mode coach) 100320 à 100479 [E]
+  Expected: empty
+    Actual: [
+              'graine 100322, 2026-11-16 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites',
+              'graine 100334, 2026-09-12 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites',
+              'graine 100342, conseil sw-pompe : cible 15 après un échec (dernière série : 6)',
+              'graine 100342, conseil sw-pompe : cible 15 après un échec (dernière série : 6)',
+              'graine 100342, conseil sw-pompe : cible 15 après un échec (dernière série : 6)',
+              'graine 100342, enchaîné, conseil sw-pompe : cible 15 après un échec (dernière série : 6)',
+              'graine 100352, conseil sw-traction-pronation : cible 7 après un échec (dernière série : 3)',
+              'graine 100381, conseil sw-pompe : cible 16 après un échec (dernière série : 2)',
+              'graine 100381, conseil sw-pompe : cible 16 après un échec (dernière série : 3)',
+              'graine 100381, enchaîné, conseil sw-pompe : cible 16 après un échec (dernière série : 3)',
+              'graine 100386, conseil sw-traction-pronation : cible 13 après un échec (dernière série : 5)',
+              'graine 100441, conseil sw-traction-pronation : cible 13 après un échec (dernière série : 7)',
+              'graine 100451, 2027-01-28 sw-pompe-genoux : 3 séries pour 1 écrites'
+            ]
+  
+  package:matcher             expect
+  test/properties.dart 834:7  coachPropertyTests.<fn>
+  
+00:20 +83 -6: test/properties_6_test.dart: journaux aléatoires 7680 à 7839
+00:20 +83 -6: test/coach_properties_0_test.dart: journaux aléatoires (mode coach) 100480 à 100639 [E]
+  Expected: empty
+    Actual: [
+              'graine 100585, conseil sl-traction-lestee : hausse après un échec (20.0 → 21.25)',
+              'graine 100585, conseil sl-traction-lestee : hausse malgré bilan bas (20.0 → 21.25)',
+              'graine 100585, enchaîné, conseil sl-traction-lestee : hausse après un échec (20.0 → 21.25)',
+              'graine 100585, enchaîné, conseil sl-traction-lestee : hausse malgré bilan bas (20.0 → 21.25)',
+              'graine 100587, 2026-10-14 sw-pompe-genoux : 3 séries pour 1 écrites',
+              'graine 100638, 2027-02-07 sw-pompe-genoux : 3 séries pour 1 écrites'
+            ]
+  
+  package:matcher             expect
+  test/properties.dart 834:7  coachPropertyTests.<fn>
+  
+00:21 +83 -7: test/properties_6_test.dart: journaux aléatoires 7680 à 7839
+00:21 +83 -7: test/coach_properties_0_test.dart: journaux aléatoires (mode coach) 100640 à 100799 [E]
+  Expected: empty
+    Actual: [
+              'graine 100682, 2026-12-08 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites',
+              'graine 100684, 2026-11-04 sw-traction-assistee-elastique : 3 séries pour 1 écrites',
+              'graine 100710, conseil sw-dips-barres-paralleles : cible 25 après un échec (dernière série : 11)',
+              'graine 100719, 2027-01-08 mu-pont-fessier-sol : 3 séries pour 1 écrites'
+            ]
+  
+  package:matcher             expect
+  test/properties.dart 834:7  coachPropertyTests.<fn>
+  
+00:21 +84 -7: test/coach_properties_0_test.dart: journaux aléatoires (mode coach) 100800 à 100959
+00:22 +84 -8: test/properties_6_test.dart: journaux aléatoires 7840 à 7999
+00:22 +84 -8: test/coach_properties_0_test.dart: journaux aléatoires (mode coach) 100800 à 100959 [E]
+  Expected: empty
+    Actual: [
+              'graine 100813, 2026-12-05 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites',
+              'graine 100826, 2027-01-08 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites',
+              'graine 100879, conseil sw-pompe : cible 16 après un échec (dernière série : 9)',
+              'graine 100879, conseil sw-pompe : cible 16 après un échec (dernière série : 6)',
+              'graine 100879, conseil sw-pompe : cible 16 après un échec (dernière série : 6)',
+              'graine 100879, enchaîné, conseil sw-pompe : cible 16 après un échec (dernière série : 6)'
+            ]
+  
+  package:matcher             expect
+  test/properties.dart 834:7  coachPropertyTests.<fn>
+  
+00:22 +85 -8: test/coach_properties_0_test.dart: journaux aléatoires (mode coach) 100960 à 101119
+00:22 +85 -9: test/properties_6_test.dart: journaux aléatoires 8000 à 8159
+00:22 +85 -9: test/coach_properties_0_test.dart: journaux aléatoires (mode coach) 100960 à 101119 [E]
+  Expected: empty
+    Actual: [
+              'graine 100993, conseil sw-traction-pronation : cible 4 après un échec (dernière série : 3)',
+              'graine 100996, 2027-03-23 sw-pompe : 3 séries pour 1 écrites',
+              'graine 100996, 2027-03-23 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites',
+              'graine 101016, conseil sw-dips-barres-paralleles : cible 10 après un échec (dernière série : 9)',
+              'graine 101016, enchaîné, conseil sw-dips-barres-paralleles : cible 10 après un échec (dernière série : 9)',
+              'graine 101101, conseil sw-traction-pronation : cible 4 après un échec (dernière série : 2)',
+              'graine 101101, enchaîné, conseil sw-traction-pronation : cible 4 après un échec (dernière série : 2)'
+            ]
+  
+  package:matcher             expect
+  test/properties.dart 834:7  coachPropertyTests.<fn>
+  
+00:23 +86 -9: test/coach_properties_0_test.dart: journaux aléatoires (mode coach) 101120 à 101279
+00:23 +86 -10: test/properties_6_test.dart: journaux aléatoires 8160 à 8319
+00:23 +86 -10: test/coach_properties_0_test.dart: journaux aléatoires (mode coach) 101120 à 101279 [E]
+  Expected: empty
+    Actual: [
+              'graine 101157, conseil sw-dips-barres-paralleles : cible 6 après un échec (dernière série : 3)',
+              'graine 101160, conseil sw-dips-barres-paralleles : cible 14 après un échec (dernière série : 6)',
+              'graine 101160, enchaîné, conseil sw-dips-barres-paralleles : cible 14 après un échec (dernière série : 6)',
+              'graine 101163, conseil sw-dips-barres-paralleles : cible 14 après un échec (dernière série : 4)',
+              'graine 101201, conseil sw-pompe : cible 5 après un échec (dernière série : 3)',
+              'graine 101231, 2027-02-27 sw-pompe : 3 séries pour 1 écrites',
+              'graine 101244, conseil sw-traction-pronation : cible 13 après un échec (dernière série : 6)',
+              'graine 101244, enchaîné, conseil sw-traction-pronation : cible 13 après un échec (dernière série : 6)',
+              'graine 101251, conseil sw-dips-barres-paralleles : cible 11 après un échec (dernière série : 2)',
+              'graine 101276, conseil sw-dips-barres-paralleles : cible 23 après un échec (dernière série : 0)'
+            ]
+  
+  package:matcher             expect
+  test/properties.dart 834:7  coachPropertyTests.<fn>
+  
+00:23 +87 -10: test/coach_properties_0_test.dart: journaux aléatoires (mode coach) 101280 à 101439
+00:24 +87 -11: test/properties_6_test.dart: journaux aléatoires 8320 à 8479
+00:24 +87 -11: test/coach_properties_0_test.dart: journaux aléatoires (mode coach) 101280 à 101439 [E]
+  Expected: empty
+    Actual: [
+              'graine 101319, 2026-08-06 sw-pompe-genoux : 3 séries pour 1 écrites',
+              'graine 101321, 2026-12-27 sw-pompe-genoux : 3 séries pour 1 écrites',
+              'graine 101325, 2026-10-14 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites',
+              'graine 101412, conseil sw-traction-pronation : cible 7 après un échec (dernière série : 3)',
+              'graine 101412, enchaîné, conseil sw-traction-pronation : cible 7 après un échec (dernière série : 3)',
+              'graine 101420, conseil sw-traction-pronation : cible 13 après un échec (dernière série : 3)',
+              'graine 101420, conseil sw-traction-pronation : cible 13 après un échec (dernière série : 3)',
+              'graine 101420, conseil sw-traction-pronation : cible 13 après un échec (dernière série : 1)',
+              'graine 101420, enchaîné, conseil sw-traction-pronation : cible 13 après un échec (dernière série : 1)'
+            ]
+  
+  package:matcher             expect
+  test/properties.dart 834:7  coachPropertyTests.<fn>
+  
+00:24 +88 -11: test/coach_properties_0_test.dart: journaux aléatoires (mode coach) 101440 à 101599
+00:24 +88 -12: test/properties_6_test.dart: journaux aléatoires 8480 à 8639
+00:24 +88 -12: test/coach_properties_0_test.dart: journaux aléatoires (mode coach) 101440 à 101599 [E]
+  Expected: empty
+    Actual: [
+              'graine 101469, conseil sl-traction-lestee : hausse malgré bilan bas (12.5 → 26.25)',
+              'graine 101500, 2026-08-28 sw-pompe-genoux : 3 séries pour 1 écrites',
+              'graine 101521, conseil sw-dips-barres-paralleles : cible 10 après un échec (dernière série : 2)',
+              'graine 101546, 2027-02-10 sw-pompe-genoux : 3 séries pour 1 écrites',
+              'graine 101590, 2027-02-12 sw-row-australien-genoux-flechis : 3 séries pour 1 écrites'
+            ]
+  
+  package:matcher             expect
+  test/properties.dart 834:7  coachPropertyTests.<fn>
+  
+00:24 +89 -12: test/coach_properties_0_test.dart: journaux aléatoires (mode coach) 101600 à 101759
+00:25 +89 -13: test/properties_6_test.dart: journaux aléatoires 8640 à 8799
+00:25 +89 -13: test/coach_properties_0_test.dart: journaux aléatoires (mode coach) 101600 à 101759 [E]
+  Expected: empty
+    Actual: [
+              'graine 101624, 2027-03-16 sw-traction-assistee-elastique : 3 séries pour 1 écrites',
+              'graine 101624, 2027-03-16 sw-row-australien-genoux-flechis : 3 séries pour 1 écrites',
+              'graine 101647, 2027-01-04 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites',
+              'graine 101666, 2027-05-26 sw-row-australien-genoux-flechis : 3 séries pour 1 écrites',
+              'graine 101666, 2027-05-26 sw-dips-assistes-elastique : 3 séries pour 1 écrites',
+              'graine 101679, 2027-01-06 sw-pompe-genoux : 3 séries pour 1 écrites',
+              'graine 101725, conseil sw-traction-pronation : cible 4 après un échec (dernière série : 1)',
+              'graine 101725, conseil sw-traction-pronation : cible 4 après un échec (dernière série : 2)',
+              'graine 101726, conseil sw-traction-pronation : cible 4 après un échec (dernière série : 0)',
+              'graine 101726, enchaîné, conseil sw-traction-pronation : cible 4 après un échec (dernière série : 0)',
+              'graine 101730, conseil sl-traction-lestee : hausse malgré douleur chest (75.0 → 76.25)',
+              'graine 101736, conseil sl-squat-competition : hausse malgré bilan bas (22.5 → 25.0)'
+            ]
+  
+  package:matcher             expect
+  test/properties.dart 834:7  coachPropertyTests.<fn>
+  
+00:25 +90 -13: test/coach_properties_0_test.dart: journaux aléatoires (mode coach) 101760 à 101919
+00:25 +90 -14: test/properties_6_test.dart: journaux aléatoires 8800 à 8959
+00:25 +90 -14: test/coach_properties_0_test.dart: journaux aléatoires (mode coach) 101760 à 101919 [E]
+  Expected: empty
+    Actual: [
+              'graine 101792, conseil sw-traction-pronation : cible 7 après un échec (dernière série : 2)',
+              'graine 101792, enchaîné, conseil sw-traction-pronation : cible 7 après un échec (dernière série : 2)',
+              'graine 101862, 2026-09-29 sw-traction-assistee-elastique : 3 séries pour 1 écrites',
+              'graine 101891, conseil sw-dips-barres-paralleles : cible 5 après un échec (dernière série : 3)',
+              'graine 101908, conseil sw-pompe : cible 14 après un échec (dernière série : 2)'
+            ]
+  
+  package:matcher             expect
+  test/properties.dart 834:7  coachPropertyTests.<fn>
+  
+00:25 +91 -14: test/coach_properties_0_test.dart: journaux aléatoires (mode coach) 101920 à 102079
+00:26 +91 -15: test/properties_3_test.dart: journaux aléatoires 3840 à 3999
+00:26 +91 -15: test/coach_properties_0_test.dart: journaux aléatoires (mode coach) 101920 à 102079 [E]
+  Expected: empty
+    Actual: [
+              'graine 101939, conseil sw-pompe : cible 16 après un échec (dernière série : 7)',
+              'graine 101939, enchaîné, conseil sw-pompe : cible 16 après un échec (dernière série : 7)',
+              'graine 101941, conseil sw-traction-pronation : cible 10 après un échec (dernière série : 4)',
+              'graine 101941, conseil sw-traction-pronation : cible 10 après un échec (dernière série : 6)',
+              'graine 101941, conseil sw-traction-pronation : cible 10 après un échec (dernière série : 6)',
+              'graine 101947, conseil sw-traction-pronation : cible 14 après un échec (dernière série : 4)',
+              'graine 101972, conseil sw-pompe : cible 16 après un échec (dernière série : 1)',
+              'graine 101984, 2026-10-13 sl-traction-lestee : hausse après un échec non prévu (43.75 → 46.25)',
+              'graine 101984, 2026-10-13 sl-traction-lestee : 46.25 kg après un échec non prévu à 43.75 kg',
+              'graine 101988, 2026-12-24 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites',
+              'graine 102012, 2026-10-06 sw-pompe-genoux : 3 séries pour 1 écrites'
+            ]
+  
+  package:matcher             expect
+  test/properties.dart 834:7  coachPropertyTests.<fn>
+  
+00:26 +91 -16: test/properties_3_test.dart: journaux aléatoires 3840 à 3999
+00:26 +91 -16: test/coach_properties_0_test.dart: journaux aléatoires (mode coach) 102080 à 102239 [E]
+  Expected: empty
+    Actual: [
+              'graine 102090, conseil sw-traction-pronation : cible 2 après un échec (dernière série : 1)',
+              'graine 102090, sans bilan, conseil sw-traction-pronation : cible 2 après un échec (dernière série : 1)',
+              'graine 102090, enchaîné, conseil sw-traction-pronation : cible 2 après un échec (dernière série : 1)',
+              'graine 102098, 2027-01-10 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites',
+              'graine 102183, 2027-01-19 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites',
+              'graine 102195, conseil sw-traction-pronation : cible 6 après un échec (dernière série : 4)',
+              'graine 102206, conseil sw-dips-barres-paralleles : cible 10 après un échec (dernière série : 3)',
+              'graine 102206, conseil sw-dips-barres-paralleles : cible 10 après un échec (dernière série : 0)',
+              'graine 102209, 2026-10-26 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites',
+              'graine 102221, 2027-01-05 sw-traction-assistee-elastique : 3 séries pour 1 écrites',
+              'graine 102221, 2027-01-05 mu-pont-fessier-sol : 3 séries pour 1 écrites'
+            ]
+  
+  package:matcher             expect
+  test/properties.dart 834:7  coachPropertyTests.<fn>
+  
+00:27 +91 -17: test/properties_3_test.dart: journaux aléatoires 3840 à 3999
+00:27 +91 -17: test/coach_properties_0_test.dart: journaux aléatoires (mode coach) 102240 à 102399 [E]
+  Expected: empty
+    Actual: [
+              'graine 102257, conseil sw-traction-pronation : cible 4 après un échec (dernière série : 3)',
+              'graine 102271, 2026-11-23 sw-pompe-genoux : 3 séries pour 1 écrites',
+              'graine 102278, 2027-02-08 sw-pompe-genoux : 3 séries pour 1 écrites',
+              'graine 102291, conseil sw-traction-pronation : cible 4 après un échec (dernière série : 2)',
+              'graine 102303, conseil sw-pompe : cible 11 après un échec (dernière série : 1)',
+              'graine 102335, conseil sw-traction-pronation : cible 7 après un échec (dernière série : 5)',
+              'graine 102335, conseil sw-pompe : cible 9 après un échec (dernière série : 3)',
+              'graine 102335, conseil sw-pompe : cible 9 après un échec (dernière série : 3)',
+              'graine 102335, enchaîné, conseil sw-traction-pronation : cible 7 après un échec (dernière série : 5)',
+              'graine 102352, conseil sw-pompe : cible 16 après un échec (dernière série : 3)',
+              'graine 102352, enchaîné, conseil sw-pompe : cible 16 après un échec (dernière série : 3)',
+              'graine 102373, conseil sw-traction-pronation : cible 7 après un échec (dernière série : 0)',
+              'graine 102375, 2027-01-04 sw-pompe-genoux : 3 séries pour 1 écrites'
+            ]
+  
+  package:matcher             expect
+  test/properties.dart 834:7  coachPropertyTests.<fn>
+  
+00:28 +91 -18: test/properties_3_test.dart: journaux aléatoires 3840 à 3999
+00:28 +91 -18: test/coach_properties_0_test.dart: journaux aléatoires (mode coach) 102400 à 102559 [E]
+  Expected: empty
+    Actual: [
+              'graine 102404, conseil sw-traction-pronation : cible 7 après un échec (dernière série : 3)',
+              'graine 102416, conseil sw-dips-barres-paralleles : cible 4 après un échec (dernière série : 2)',
+              'graine 102416, conseil sw-dips-barres-paralleles : cible 4 après un échec (dernière série : 2)',
+              'graine 102434, 2026-08-23 sw-pompe-genoux : 3 séries pour 1 écrites',
+              'graine 102448, conseil sw-traction-pronation : cible 4 après un échec (dernière série : 3)',
+              'graine 102452, conseil sw-traction-pronation : cible 4 après un échec (dernière série : 1)',
+              'graine 102452, conseil sw-traction-pronation : cible 4 après un échec (dernière série : 1)',
+              'graine 102452, enchaîné, conseil sw-traction-pronation : cible 4 après un échec (dernière série : 1)',
+              'graine 102462, 2026-09-12 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites',
+              'graine 102487, 2026-12-05 sw-dips-assistes-elastique : 3 séries pour 1 écrites',
+              'graine 102544, conseil sw-dips-barres-paralleles : cible 23 après un échec (dernière série : 1)',
+              'graine 102544, conseil sw-dips-barres-paralleles : cible 23 après un échec (dernière série : 6)',
+              'graine 102550, 2027-01-05 sw-traction-assistee-elastique : 3 séries pour 1 écrites',
+              'graine 102550, 2027-01-05 sw-row-australien-genoux-flechis : 3 séries pour 1 écrites'
+            ]
+  
+  package:matcher             expect
+  test/properties.dart 834:7  coachPropertyTests.<fn>
+  
+00:30 +92 -18: test/properties_1_test.dart: journaux aléatoires 1280 à 1439
+00:30 +93 -18: test/properties_1_test.dart: journaux aléatoires 1280 à 1439
+00:31 +94 -18: test/properties_1_test.dart: journaux aléatoires 1280 à 1439
+00:31 +95 -18: test/properties_1_test.dart: journaux aléatoires 1280 à 1439
+00:32 +96 -18: test/properties_1_test.dart: journaux aléatoires 1280 à 1439
+00:32 +97 -18: test/properties_3_test.dart: journaux aléatoires 4640 à 4799
+00:32 +98 -18: test/properties_1_test.dart: journaux aléatoires 1440 à 1599
+00:33 +99 -18: test/properties_3_test.dart: journaux aléatoires 4800 à 4959
+00:33 +100 -18: test/properties_1_test.dart: journaux aléatoires 1600 à 1759
+00:33 +101 -18: test/properties_3_test.dart: journaux aléatoires 4960 à 5119
+00:34 +102 -18: test/properties_1_test.dart: journaux aléatoires 1760 à 1919
+00:34 +103 -18: test/properties_1_test.dart: journaux aléatoires 1920 à 2079
+Formatted fmtwork/lib/src/session.dart
+Formatted fmtwork/test/support.dart
+Formatted 57 files (2 changed) in 0.22 seconds.
+
+
+00:34 +104 -18: test/properties_1_test.dart: journaux aléatoires 1920 à 2079
+00:34 +105 -18: test/properties_1_test.dart: journaux aléatoires 2080 à 2239
+00:35 +106 -18: test/properties_7_test.dart: journaux aléatoires 8960 à 9119
+00:35 +107 -18: test/properties_7_test.dart: journaux aléatoires 8960 à 9119
+00:36 +108 -18: test/properties_7_test.dart: journaux aléatoires 8960 à 9119
+00:36 +109 -18: test/properties_7_test.dart: journaux aléatoires 8960 à 9119
+00:36 +110 -18: test/properties_7_test.dart: journaux aléatoires 8960 à 9119
+00:36 +111 -18: test/properties_7_test.dart: journaux aléatoires 8960 à 9119
+00:36 +112 -18: test/properties_7_test.dart: journaux aléatoires 8960 à 9119
+00:36 +113 -18: test/properties_7_test.dart: journaux aléatoires 8960 à 9119
+00:36 +114 -18: test/properties_7_test.dart: journaux aléatoires 8960 à 9119
+00:36 +115 -18: test/properties_7_test.dart: journaux aléatoires 8960 à 9119
+00:36 +116 -18: test/properties_7_test.dart: journaux aléatoires 8960 à 9119
+00:36 +117 -18: test/properties_7_test.dart: journaux aléatoires 8960 à 9119
+00:36 +118 -18: test/properties_7_test.dart: journaux aléatoires 8960 à 9119
+00:36 +119 -18: test/properties_7_test.dart: journaux aléatoires 8960 à 9119
+00:36 +120 -18: test/properties_7_test.dart: journaux aléatoires 8960 à 9119
+00:36 +121 -18: test/properties_7_test.dart: journaux aléatoires 8960 à 9119
+00:36 +122 -18: test/properties_7_test.dart: journaux aléatoires 8960 à 9119
+00:36 +123 -18: test/properties_7_test.dart: journaux aléatoires 8960 à 9119
+00:36 +124 -18: test/properties_7_test.dart: journaux aléatoires 8960 à 9119
+00:37 +125 -18: test/properties_7_test.dart: journaux aléatoires 8960 à 9119
+00:37 +126 -18: test/properties_7_test.dart: journaux aléatoires 8960 à 9119
+00:37 +127 -18: test/properties_7_test.dart: journaux aléatoires 8960 à 9119
+00:37 +128 -18: test/properties_7_test.dart: journaux aléatoires 8960 à 9119
+00:37 +129 -18: test/properties_7_test.dart: journaux aléatoires 8960 à 9119
+00:37 +130 -18: test/properties_7_test.dart: journaux aléatoires 8960 à 9119
+00:37 +131 -18: test/properties_7_test.dart: journaux aléatoires 8960 à 9119
+00:37 +132 -18: test/properties_7_test.dart: journaux aléatoires 8960 à 9119
+00:37 +133 -18: test/properties_7_test.dart: journaux aléatoires 8960 à 9119
+00:37 +134 -18: test/properties_7_test.dart: journaux aléatoires 8960 à 9119
+00:37 +135 -18: test/properties_7_test.dart: journaux aléatoires 8960 à 9119
+00:39 +136 -18: test/properties_4_test.dart: journaux aléatoires 5120 à 5279
+00:39 +137 -18: test/properties_4_test.dart: journaux aléatoires 5120 à 5279
+00:40 +138 -18: test/properties_4_test.dart: journaux aléatoires 5120 à 5279
+00:40 +139 -18: test/properties_4_test.dart: journaux aléatoires 5120 à 5279
+00:41 +140 -18: test/properties_4_test.dart: journaux aléatoires 5120 à 5279
+00:42 +141 -18: test/properties_4_test.dart: journaux aléatoires 5120 à 5279
+00:42 +142 -18: test/properties_7_test.dart: journaux aléatoires 9920 à 10079
+00:42 +143 -18: test/properties_4_test.dart: journaux aléatoires 5280 à 5439
+00:43 +144 -18: test/properties_7_test.dart: journaux aléatoires 10080 à 10239
+00:43 +145 -18: test/properties_4_test.dart: journaux aléatoires 5440 à 5599
+00:43 +146 -18: test/properties_4_test.dart: journaux aléatoires 5600 à 5759
+00:44 +147 -18: test/coach_properties_2_test.dart: journaux aléatoires (mode coach) 105120 à 105279
+00:44 +148 -18: test/coach_properties_2_test.dart: journaux aléatoires (mode coach) 105120 à 105279
+00:45 +149 -18: test/coach_properties_2_test.dart: journaux aléatoires (mode coach) 105120 à 105279
+00:46 +150 -18: test/coach_properties_2_test.dart: journaux aléatoires (mode coach) 105120 à 105279
+00:46 +151 -18: test/coach_properties_2_test.dart: journaux aléatoires (mode coach) 105120 à 105279
+00:47 +151 -19: test/coach_properties_2_test.dart: journaux aléatoires (mode coach) 105120 à 105279 [E]
+  Expected: empty
+    Actual: [
+              'graine 105153, conseil sw-traction-pronation : cible 4 après un échec (dernière série : 2)',
+              'graine 105221, conseil sw-traction-pronation : cible 6 après un échec (dernière série : 2)',
+              'graine 105221, enchaîné, conseil sw-traction-pronation : cible 6 après un échec (dernière série : 2)',
+              'graine 105241, 2026-10-10 sw-traction-assistee-elastique : 3 séries pour 1 écrites',
+              'graine 105241, 2026-10-10 mu-pont-fessier-sol : 3 séries pour 1 écrites',
+              'graine 105244, 2027-01-06 sw-pompe : 3 séries pour 1 écrites',
+              'graine 105275, 2026-12-29 sw-pompe-genoux : 3 séries pour 1 écrites'
+            ]
+  
+  package:matcher             expect
+  test/properties.dart 834:7  coachPropertyTests.<fn>
+  
+00:47 +151 -19: test/coach_properties_2_test.dart: journaux aléatoires (mode coach) 105280 à 105439
+00:47 +151 -20: test/coach_properties_1_test.dart: journaux aléatoires (mode coach) 102560 à 102719
+00:47 +151 -20: test/coach_properties_2_test.dart: journaux aléatoires (mode coach) 105280 à 105439 [E]
+  Expected: empty
+    Actual: [
+              'graine 105285, conseil sw-traction-pronation : cible 6 après un échec (dernière série : 0)',
+              'graine 105331, conseil sw-dips-barres-paralleles : cible 23 après un échec (dernière série : 1)',
+              'graine 105340, conseil sw-traction-pronation : cible 4 après un échec (dernière série : 1)',
+              'graine 105382, 2027-03-08 sw-pompe-genoux : 3 séries pour 1 écrites',
+              'graine 105392, conseil sw-traction-pronation : cible 2 après un échec (dernière série : 1)',
+              'graine 105419, 2027-03-11 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites',
+              'graine 105424, 2026-12-05 sw-pompe-genoux : 3 séries pour 1 écrites'
+            ]
+  
+  package:matcher             expect
+  test/properties.dart 834:7  coachPropertyTests.<fn>
+  
+00:48 +151 -21: test/coach_properties_1_test.dart: journaux aléatoires (mode coach) 102560 à 102719
+00:48 +151 -21: test/coach_properties_2_test.dart: journaux aléatoires (mode coach) 105440 à 105599 [E]
+  Expected: empty
+    Actual: [
+              'graine 105532, conseil sw-traction-pronation : cible 4 après un échec (dernière série : 1)',
+              'graine 105532, enchaîné, conseil sw-traction-pronation : cible 4 après un échec (dernière série : 1)',
+              'graine 105546, conseil sw-dips-barres-paralleles : cible 14 après un échec (dernière série : 7)',
+              'graine 105546, conseil sw-dips-barres-paralleles : cible 14 après un échec (dernière série : 6)',
+              'graine 105546, conseil sw-dips-barres-paralleles : cible 14 après un échec (dernière série : 3)',
+              'graine 105566, conseil sw-dips-barres-paralleles : cible 10 après un échec (dernière série : 4)'
+            ]
+  
+  package:matcher             expect
+  test/properties.dart 834:7  coachPropertyTests.<fn>
+  
+00:49 +151 -22: test/coach_properties_1_test.dart: journaux aléatoires (mode coach) 102560 à 102719
+00:49 +151 -22: test/coach_properties_2_test.dart: journaux aléatoires (mode coach) 105600 à 105759 [E]
+  Expected: empty
+    Actual: [
+              'graine 105608, 2026-11-29 sw-dips-assistes-elastique : 3 séries pour 1 écrites',
+              'graine 105623, conseil sl-traction-lestee : hausse malgré bilan bas (15.0 → 16.25)',
+              'graine 105630, conseil cd-muscle-up-barre-strict : cible 4 après un échec (dernière série : 2)',
+              'graine 105634, 2026-11-18 sw-pompe : 3 séries pour 1 écrites',
+              'graine 105657, 2027-02-06 sw-pompe : 3 séries pour 1 écrites',
+              'graine 105657, 2027-02-06 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites',
+              'graine 105696, conseil sw-traction-pronation : cible 13 après un échec (dernière série : 3)',
+              'graine 105710, conseil sw-traction-pronation : cible 6 après un échec (dernière série : 5)',
+              'graine 105718, conseil sw-dips-barres-paralleles : cible 6 après un échec (dernière série : 5)',
+              'graine 105728, 2026-12-22 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites',
+              'graine 105730, 2027-02-23 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites'
+            ]
+  
+  package:matcher             expect
+  test/properties.dart 834:7  coachPropertyTests.<fn>
+  
+00:49 +151 -23: test/coach_properties_1_test.dart: journaux aléatoires (mode coach) 102560 à 102719
+00:49 +151 -23: test/coach_properties_2_test.dart: journaux aléatoires (mode coach) 105760 à 105919 [E]
+  Expected: empty
+    Actual: [
+              'graine 105766, 2026-09-27 sw-traction-assistee-elastique : 3 séries pour 1 écrites',
+              'graine 105774, conseil sw-traction-pronation : cible 4 après un échec (dernière série : 1)',
+              'graine 105774, enchaîné, conseil sw-traction-pronation : cible 4 après un échec (dernière série : 1)',
+              'graine 105778, 2027-02-16 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites',
+              'graine 105826, conseil sw-traction-pronation : cible 13 après un échec (dernière série : 8)',
+              'graine 105826, enchaîné, conseil sw-traction-pronation : cible 13 après un échec (dernière série : 8)',
+              'graine 105835, 2026-11-10 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites',
+              'graine 105855, conseil sw-traction-pronation : cible 13 après un échec (dernière série : 3)',
+              'graine 105855, conseil sw-traction-pronation : cible 13 après un échec (dernière série : 1)',
+              'graine 105855, enchaîné, conseil sw-traction-pronation : cible 13 après un échec (dernière série : 1)',
+              'graine 105873, 2026-11-19 sw-dips-assistes-elastique : 3 séries pour 1 écrites'
+            ]
+  
+  package:matcher             expect
+  test/properties.dart 834:7  coachPropertyTests.<fn>
+  
+00:50 +151 -24: test/coach_properties_2_test.dart: journaux aléatoires (mode coach) 105920 à 106079
+00:50 +151 -24: test/coach_properties_1_test.dart: journaux aléatoires (mode coach) 102560 à 102719 [E]
+  Expected: empty
+    Actual: [
+              'graine 102561, conseil sw-traction-pronation : cible 2 après un échec (dernière série : 1)',
+              'graine 102565, conseil sw-traction-pronation : cible 4 après un échec (dernière série : 3)',
+              'graine 102565, sans bilan, conseil sw-traction-pronation : cible 4 après un échec (dernière série : 3)',
+              'graine 102574, conseil sw-traction-pronation : cible 4 après un échec (dernière série : 2)',
+              'graine 102574, enchaîné, conseil sw-traction-pronation : cible 4 après un échec (dernière série : 2)',
+              'graine 102594, 2026-11-03 sw-pompe-genoux : 3 séries pour 1 écrites',
+              'graine 102630, conseil sw-pompe : cible 14 après un échec (dernière série : 7)',
+              'graine 102630, enchaîné, conseil sw-pompe : cible 14 après un échec (dernière série : 7)',
+              'graine 102692, 2026-10-04 sw-traction-assistee-elastique : 3 séries pour 1 écrites',
+              'graine 102692, 2026-10-04 mu-pont-fessier-sol : 3 séries pour 1 écrites'
+            ]
+  
+  package:matcher             expect
+  test/properties.dart 834:7  coachPropertyTests.<fn>
+  
+00:50 +151 -25: test/coach_properties_1_test.dart: journaux aléatoires (mode coach) 102720 à 102879
+00:50 +151 -25: test/coach_properties_2_test.dart: journaux aléatoires (mode coach) 105920 à 106079 [E]
+  Expected: empty
+    Actual: [
+              'graine 105963, 2027-01-11 sw-row-australien-genoux-flechis : 3 séries pour 1 écrites',
+              'graine 106004, conseil cd-muscle-up-barre-strict : cible 4 après un échec (dernière série : 3)',
+              'graine 106004, conseil cd-muscle-up-barre-strict : cible 4 après un échec (dernière série : 3)',
+              'graine 106004, enchaîné, conseil cd-muscle-up-barre-strict : cible 4 après un échec (dernière série : 3)',
+              'graine 106028, 2026-12-16 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites',
+              'graine 106054, 2026-09-24 sw-pompe-genoux : 3 séries pour 1 écrites'
+            ]
+  
+  package:matcher             expect
+  test/properties.dart 834:7  coachPropertyTests.<fn>
+  
+00:50 +151 -26: test/coach_properties_2_test.dart: journaux aléatoires (mode coach) 106080 à 106239
+00:50 +151 -26: test/coach_properties_1_test.dart: journaux aléatoires (mode coach) 102720 à 102879 [E]
+  Expected: empty
+    Actual: [
+              'graine 102741, 2026-10-27 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites',
+              'graine 102751, conseil sw-traction-pronation : cible 4 après un échec (dernière série : 3)',
+              'graine 102751, enchaîné, conseil sw-traction-pronation : cible 4 après un échec (dernière série : 3)',
+              'graine 102754, conseil sw-traction-pronation : cible 9 après un échec (dernière série : 1)',
+              'graine 102754, conseil sw-traction-pronation : cible 9 après un échec (dernière série : 3)',
+              'graine 102776, 2026-09-26 sw-pompe-genoux : 3 séries pour 1 écrites',
+              'graine 102780, conseil sw-dips-barres-paralleles : cible 10 après un échec (dernière série : 3)',
+              'graine 102784, 2026-11-12 sw-pompe : 3 séries pour 1 écrites',
+              'graine 102793, 2026-09-10 sw-traction-assistee-elastique : 3 séries pour 1 écrites',
+              'graine 102821, 2026-10-19 sw-pompe-genoux : 3 séries pour 1 écrites',
+              'graine 102847, 2027-02-07 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites',
+              'graine 102863, 2026-12-31 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites'
+            ]
+  
+  package:matcher             expect
+  test/properties.dart 834:7  coachPropertyTests.<fn>
+  
+00:51 +151 -27: test/coach_properties_1_test.dart: journaux aléatoires (mode coach) 102880 à 103039
+00:51 +151 -27: test/coach_properties_2_test.dart: journaux aléatoires (mode coach) 106080 à 106239 [E]
+  Expected: empty
+    Actual: [
+              'graine 106111, conseil sw-traction-pronation : cible 7 après un échec (dernière série : 2)',
+              'graine 106166, conseil sw-traction-pronation : cible 14 après un échec (dernière série : 4)',
+              'graine 106172, conseil sw-pompe : cible 16 après un échec (dernière série : 5)',
+              'graine 106172, enchaîné, conseil sw-pompe : cible 16 après un échec (dernière série : 5)',
+              'graine 106191, 2026-10-20 sw-pompe-genoux : 3 séries pour 1 écrites',
+              'graine 106213, 2026-11-23 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites'
+            ]
+  
+  package:matcher             expect
+  test/properties.dart 834:7  coachPropertyTests.<fn>
+  
+00:51 +151 -28: test/coach_properties_2_test.dart: journaux aléatoires (mode coach) 106240 à 106399
+00:51 +151 -28: test/coach_properties_1_test.dart: journaux aléatoires (mode coach) 102880 à 103039 [E]
+  Expected: empty
+    Actual: [
+              'graine 102907, 2026-11-30 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites',
+              'graine 102931, 2026-09-07 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites',
+              'graine 103017, conseil cd-muscle-up-barre-strict : cible 4 après un échec (dernière série : 3)',
+              'graine 103017, conseil cd-muscle-up-barre-strict : cible 4 après un échec (dernière série : 3)'
+            ]
+  
+  package:matcher             expect
+  test/properties.dart 834:7  coachPropertyTests.<fn>
+  
+00:52 +151 -29: test/coach_properties_1_test.dart: journaux aléatoires (mode coach) 103040 à 103199
+00:52 +151 -29: test/coach_properties_2_test.dart: journaux aléatoires (mode coach) 106240 à 106399 [E]
+  Expected: empty
+    Actual: [
+              'graine 106261, conseil sw-traction-pronation : cible 7 après un échec (dernière série : 3)',
+              'graine 106275, 2026-11-18 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites',
+              'graine 106293, 2027-03-19 sw-pompe-genoux : 3 séries pour 1 écrites',
+              'graine 106342, conseil sw-traction-pronation : cible 13 après un échec (dernière série : 10)',
+              'graine 106346, 2026-12-19 mu-pont-fessier-sol : 3 séries pour 1 écrites',
+              'graine 106354, 2026-11-19 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites'
+            ]
+  
+  package:matcher             expect
+  test/properties.dart 834:7  coachPropertyTests.<fn>
+  
+00:52 +151 -30: test/coach_properties_2_test.dart: journaux aléatoires (mode coach) 106400 à 106559
+00:52 +151 -30: test/coach_properties_1_test.dart: journaux aléatoires (mode coach) 103040 à 103199 [E]
+  Expected: empty
+    Actual: [
+              'graine 103060, conseil sw-traction-pronation : cible 2 après un échec (dernière série : 1)',
+              'graine 103140, 2027-02-05 sw-traction-assistee-elastique : 3 séries pour 1 écrites',
+              'graine 103140, 2027-02-05 sw-row-australien-genoux-flechis : 3 séries pour 1 écrites',
+              'graine 103156, 2026-10-12 sw-traction-assistee-elastique : 3 séries pour 1 écrites',
+              'graine 103170, 2026-10-07 mu-pont-fessier-sol : 3 séries pour 1 écrites',
+              'graine 103192, 2026-09-10 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites',
+              'graine 103193, conseil sw-dips-barres-paralleles : cible 23 après un échec (dernière série : 5)'
+            ]
+  
+  package:matcher             expect
+  test/properties.dart 834:7  coachPropertyTests.<fn>
+  
+00:52 +151 -31: test/coach_properties_1_test.dart: journaux aléatoires (mode coach) 103200 à 103359
+00:52 +151 -31: test/coach_properties_2_test.dart: journaux aléatoires (mode coach) 106400 à 106559 [E]
+  Expected: empty
+    Actual: [
+              'graine 106430, 2027-05-07 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites',
+              'graine 106497, 2026-10-20 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites',
+              'graine 106499, 2026-09-24 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites',
+              'graine 106519, 2026-12-21 sw-pompe-genoux : 3 séries pour 1 écrites'
+            ]
+  
+  package:matcher             expect
+  test/properties.dart 834:7  coachPropertyTests.<fn>
+  
+00:52 +151 -32: test/coach_properties_2_test.dart: journaux aléatoires (mode coach) 106560 à 106719
+00:52 +151 -32: test/coach_properties_1_test.dart: journaux aléatoires (mode coach) 103200 à 103359 [E]
+  Expected: empty
+    Actual: [
+              'graine 103260, conseil sw-traction-pronation : cible 4 après un échec (dernière série : 2)',
+              'graine 103287, conseil sw-dips-barres-paralleles : cible 10 après un échec (dernière série : 3)',
+              'graine 103287, conseil sw-dips-barres-paralleles : cible 10 après un échec (dernière série : 0)',
+              'graine 103326, conseil sw-dips-barres-paralleles : cible 6 après un échec (dernière série : 1)',
+              'graine 103326, conseil sw-dips-barres-paralleles : cible 6 après un échec (dernière série : 2)'
+            ]
+  
+  package:matcher             expect
+  test/properties.dart 834:7  coachPropertyTests.<fn>
+  
+00:53 +151 -33: test/coach_properties_1_test.dart: journaux aléatoires (mode coach) 103360 à 103519
+00:53 +151 -33: test/coach_properties_2_test.dart: journaux aléatoires (mode coach) 106560 à 106719 [E]
+  Expected: empty
+    Actual: [
+              'graine 106583, 2026-12-09 sw-dips-assistes-elastique : 3 séries pour 1 écrites',
+              'graine 106594, 2026-11-16 sw-traction-assistee-elastique : 3 séries pour 1 écrites',
+              'graine 106605, 2026-11-03 sw-pompe-genoux : 3 séries pour 1 écrites'
+            ]
+  
+  package:matcher             expect
+  test/properties.dart 834:7  coachPropertyTests.<fn>
+  
+00:53 +151 -34: test/coach_properties_2_test.dart: journaux aléatoires (mode coach) 106720 à 106879
+00:53 +151 -34: test/coach_properties_1_test.dart: journaux aléatoires (mode coach) 103360 à 103519 [E]
+  Expected: empty
+    Actual: [
+              'graine 103361, 2026-12-17 sw-pompe-genoux : 3 séries pour 1 écrites',
+              'graine 103501, 2026-12-30 sw-pompe : 3 séries pour 1 écrites'
+            ]
+  
+  package:matcher             expect
+  test/properties.dart 834:7  coachPropertyTests.<fn>
+  
+00:53 +151 -35: test/coach_properties_1_test.dart: journaux aléatoires (mode coach) 103520 à 103679
+00:53 +151 -35: test/coach_properties_2_test.dart: journaux aléatoires (mode coach) 106720 à 106879 [E]
+  Expected: empty
+    Actual: [
+              'graine 106721, conseil sw-traction-pronation : cible 7 après un échec (dernière série : 3)',
+              'graine 106763, conseil sw-dips-barres-paralleles : cible 8 après un échec (dernière série : 7)',
+              'graine 106851, 2026-12-02 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites',
+              'graine 106854, 2027-02-09 sw-pompe : 3 séries pour 1 écrites',
+              'graine 106854, 2027-02-09 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites'
+            ]
+  
+  package:matcher             expect
+  test/properties.dart 834:7  coachPropertyTests.<fn>
+  
+00:53 +151 -36: test/coach_properties_2_test.dart: journaux aléatoires (mode coach) 106880 à 107039
+00:53 +151 -36: test/coach_properties_1_test.dart: journaux aléatoires (mode coach) 103520 à 103679 [E]
+  Expected: empty
+    Actual: [
+              'graine 103527, conseil sl-dips-leste : hausse malgré bilan bas (0.0 → 81.25)',
+              'graine 103563, 2026-12-03 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites',
+              'graine 103565, 2027-04-29 sw-pompe : 3 séries pour 1 écrites',
+              'graine 103616, 2026-10-24 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites',
+              'graine 103637, 2027-02-02 sw-pompe-genoux : 3 séries pour 1 écrites'
+            ]
+  
+  package:matcher             expect
+  test/properties.dart 834:7  coachPropertyTests.<fn>
+  
+00:54 +151 -37: test/coach_properties_1_test.dart: journaux aléatoires (mode coach) 103680 à 103839
+00:54 +151 -37: test/coach_properties_2_test.dart: journaux aléatoires (mode coach) 106880 à 107039 [E]
+  Expected: empty
+    Actual: [
+              'graine 106905, conseil sw-dips-barres-paralleles : cible 7 après un échec (dernière série : 2)',
+              'graine 106922, 2027-06-03 sw-pompe : 3 séries pour 1 écrites',
+              'graine 106942, conseil sw-traction-pronation : cible 4 après un échec (dernière série : 2)',
+              'graine 106948, conseil sw-dips-barres-paralleles : cible 23 après un échec (dernière série : 4)',
+              'graine 106948, conseil sw-dips-barres-paralleles : cible 23 après un échec (dernière série : 13)',
+              'graine 106948, conseil sw-dips-barres-paralleles : cible 23 après un échec (dernière série : 13)',
+              'graine 106955, conseil sw-traction-pronation : cible 3 après un échec (dernière série : 1)',
+              'graine 106994, 2026-11-22 sw-traction-assistee-elastique : 3 séries pour 1 écrites',
+              'graine 106994, 2026-11-22 mu-pont-fessier-sol : 3 séries pour 1 écrites',
+              'graine 107006, conseil cd-muscle-up-barre-strict : cible 4 après un échec (dernière série : 1)',
+              'graine 107006, enchaîné, conseil cd-muscle-up-barre-strict : cible 4 après un échec (dernière série : 1)',
+              'graine 107027, conseil sw-traction-pronation : cible 4 après un échec (dernière série : 2)',
+              'graine 107027, enchaîné, conseil sw-traction-pronation : cible 4 après un échec (dernière série : 2)',
+              'graine 107038, conseil cd-muscle-up-barre-strict : cible 4 après un échec (dernière série : 1)',
+              'graine 107038, conseil cd-muscle-up-barre-strict : cible 4 après un échec (dernière série : 1)',
+              'graine 107038, enchaîné, conseil cd-muscle-up-barre-strict : cible 4 après un échec (dernière série : 1)',
+              'graine 107039, 2026-09-28 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites'
+            ]
+  
+  package:matcher             expect
+  test/properties.dart 834:7  coachPropertyTests.<fn>
+  
+00:54 +151 -38: test/coach_properties_2_test.dart: journaux aléatoires (mode coach) 107040 à 107199
+00:54 +151 -38: test/coach_properties_1_test.dart: journaux aléatoires (mode coach) 103680 à 103839 [E]
+  Expected: empty
+    Actual: [
+              'graine 103764, 2026-10-20 sw-pompe : 3 séries pour 1 écrites',
+              'graine 103772, 2027-01-05 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites',
+              'graine 103833, 2027-01-12 sw-pompe : 3 séries pour 1 écrites'
+            ]
+  
+  package:matcher             expect
+  test/properties.dart 834:7  coachPropertyTests.<fn>
+  
+00:54 +151 -39: test/coach_properties_1_test.dart: journaux aléatoires (mode coach) 103840 à 103999
+00:54 +151 -39: test/coach_properties_2_test.dart: journaux aléatoires (mode coach) 107040 à 107199 [E]
+  Expected: empty
+    Actual: [
+              'graine 107043, conseil sw-traction-pronation : cible 8 après un échec (dernière série : 1)',
+              'graine 107043, conseil sw-traction-pronation : cible 8 après un échec (dernière série : 2)',
+              'graine 107043, conseil sw-traction-pronation : cible 8 après un échec (dernière série : 2)',
+              'graine 107121, 2026-12-11 sw-row-australien-genoux-flechis : 3 séries pour 1 écrites',
+              'graine 107121, 2026-12-11 sw-dips-assistes-elastique : 3 séries pour 1 écrites',
+              'graine 107145, 2026-11-17 mu-pont-fessier-sol : 3 séries pour 1 écrites',
+              'graine 107160, 2026-12-05 sw-pompe : 3 séries pour 1 écrites',
+              'graine 107163, 2026-12-30 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites',
+              'graine 107165, conseil sw-traction-pronation : cible 3 après un échec (dernière série : 0)'
+            ]
+  
+  package:matcher             expect
+  test/properties.dart 834:7  coachPropertyTests.<fn>
+  
+00:54 +151 -40: test/coach_properties_2_test.dart: journaux aléatoires (mode coach) 107200 à 107359
+00:54 +151 -40: test/coach_properties_1_test.dart: journaux aléatoires (mode coach) 103840 à 103999 [E]
+  Expected: empty
+    Actual: [
+              'graine 103863, 2026-11-19 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites',
+              'graine 103868, 2026-09-15 sw-pompe-genoux : 3 séries pour 1 écrites',
+              'graine 103880, 2026-11-28 sw-pompe-genoux : 3 séries pour 1 écrites',
+              'graine 103914, 2026-09-09 sw-traction-assistee-elastique : 3 séries pour 1 écrites',
+              'graine 103948, conseil sw-dips-barres-paralleles : cible 23 après un échec (dernière série : 0)',
+              'graine 103961, 2026-10-12 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites',
+              'graine 103972, conseil sw-traction-pronation : cible 8 après un échec (dernière série : 4)',
+              'graine 103972, conseil sw-traction-pronation : cible 8 après un échec (dernière série : 5)',
+              'graine 103979, conseil sw-traction-pronation : cible 4 après un échec (dernière série : 3)',
+              'graine 103979, enchaîné, conseil sw-traction-pronation : cible 4 après un échec (dernière série : 3)'
+            ]
+  
+  package:matcher             expect
+  test/properties.dart 834:7  coachPropertyTests.<fn>
+  
+00:55 +151 -41: test/coach_properties_1_test.dart: journaux aléatoires (mode coach) 104000 à 104159
+00:55 +151 -41: test/coach_properties_2_test.dart: journaux aléatoires (mode coach) 107200 à 107359 [E]
+  Expected: empty
+    Actual: [
+              'graine 107255, conseil sw-pompe : cible 27 après un échec (dernière série : 0)',
+              'graine 107255, enchaîné, conseil sw-pompe : cible 27 après un échec (dernière série : 0)',
+              'graine 107256, 2026-11-13 sw-traction-assistee-elastique : 3 séries pour 1 écrites',
+              'graine 107259, 2026-11-21 sw-pompe : 3 séries pour 1 écrites',
+              'graine 107276, conseil sw-traction-pronation : cible 14 après un échec (dernière série : 1)',
+              'graine 107283, 2026-12-14 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites',
+              'graine 107309, conseil sw-traction-pronation : cible 4 après un échec (dernière série : 1)',
+              'graine 107318, 2026-08-30 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites'
+            ]
+  
+  package:matcher             expect
+  test/properties.dart 834:7  coachPropertyTests.<fn>
+  
+00:55 +151 -42: test/coach_properties_2_test.dart: journaux aléatoires (mode coach) 107360 à 107519
+00:55 +151 -42: test/coach_properties_1_test.dart: journaux aléatoires (mode coach) 104000 à 104159 [E]
+  Expected: empty
+    Actual: [
+              'graine 104011, 2027-01-27 sw-row-australien-genoux-flechis : 3 séries pour 1 écrites',
+              'graine 104025, 2027-02-05 sw-pompe : 3 séries pour 1 écrites',
+              'graine 104053, 2026-12-23 sw-pompe : 3 séries pour 1 écrites',
+              'graine 104062, conseil sw-dips-barres-paralleles : cible 10 après un échec (dernière série : 7)',
+              'graine 104062, sans bilan, conseil sw-dips-barres-paralleles : cible 10 après un échec (dernière série : 7)',
+              'graine 104062, enchaîné, conseil sw-dips-barres-paralleles : cible 10 après un échec (dernière série : 7)',
+              'graine 104093, 2026-12-07 sw-pompe-genoux : 3 séries pour 1 écrites',
+              'graine 104106, conseil sw-dips-barres-paralleles : cible 12 après un échec (dernière série : 10)',
+              'graine 104117, 2027-01-17 mu-dead-bug : 3 séries pour 1 écrites',
+              'graine 104122, 2026-11-14 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites',
+              'graine 104128, 2026-12-15 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites'
+            ]
+  
+  package:matcher             expect
+  test/properties.dart 834:7  coachPropertyTests.<fn>
+  
+00:55 +151 -43: test/coach_properties_1_test.dart: journaux aléatoires (mode coach) 104160 à 104319
+00:55 +151 -43: test/coach_properties_2_test.dart: journaux aléatoires (mode coach) 107360 à 107519 [E]
+  Expected: empty
+    Actual: [
+              'graine 107363, conseil sw-traction-pronation : cible 11 après un échec (dernière série : 5)',
+              'graine 107376, 2026-10-06 sw-pompe-genoux : 3 séries pour 1 écrites',
+              'graine 107384, 2026-12-09 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites',
+              'graine 107428, 2026-10-29 sw-pompe-genoux : 3 séries pour 1 écrites',
+              'graine 107462, conseil sw-traction-pronation : cible 4 après un échec (dernière série : 1)'
+            ]
+  
+  package:matcher             expect
+  test/properties.dart 834:7  coachPropertyTests.<fn>
+  
+00:55 +151 -44: test/coach_properties_2_test.dart: journaux aléatoires (mode coach) 107520 à 107679
+00:55 +151 -44: test/coach_properties_1_test.dart: journaux aléatoires (mode coach) 104160 à 104319 [E]
+  Expected: empty
+    Actual: [
+              'graine 104167, conseil sw-traction-pronation : cible 14 après un échec (dernière série : 6)',
+              'graine 104167, conseil sw-traction-pronation : cible 14 après un échec (dernière série : 4)',
+              'graine 104167, enchaîné, conseil sw-traction-pronation : cible 14 après un échec (dernière série : 4)',
+              'graine 104221, 2026-11-22 sw-pompe : 3 séries pour 1 écrites',
+              'graine 104226, 2027-01-29 sw-pompe-genoux : 3 séries pour 1 écrites',
+              'graine 104264, 2027-02-08 sw-pompe : 3 séries pour 1 écrites',
+              'graine 104282, 2026-09-30 sw-row-australien-genoux-flechis : 3 séries pour 1 écrites',
+              'graine 104282, 2026-09-30 sw-dips-assistes-elastique : 3 séries pour 1 écrites',
+              'graine 104286, 2026-10-26 sw-traction-assistee-elastique : 3 séries pour 1 écrites',
+              'graine 104300, conseil sw-traction-pronation : cible 4 après un échec (dernière série : 0)',
+              'graine 104316, 2026-09-05 mu-pont-fessier-sol : 3 séries pour 1 écrites'
+            ]
+  
+  package:matcher             expect
+  test/properties.dart 834:7  coachPropertyTests.<fn>
+  
+00:56 +151 -45: test/coach_properties_1_test.dart: journaux aléatoires (mode coach) 104320 à 104479
+00:56 +151 -45: test/coach_properties_2_test.dart: journaux aléatoires (mode coach) 107520 à 107679 [E]
+  Expected: empty
+    Actual: [
+              'graine 107524, 2026-09-25 sw-pompe-genoux : 3 séries pour 1 écrites',
+              'graine 107586, 2026-11-24 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites',
+              'graine 107612, conseil sw-dips-barres-paralleles : cible 23 après un échec (dernière série : 0)',
+              'graine 107621, conseil sw-dips-barres-paralleles : cible 14 après un échec (dernière série : 7)',
+              'graine 107639, 2026-12-17 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites',
+              'graine 107660, 2026-10-11 sw-pompe-genoux : 3 séries pour 1 écrites',
+              'graine 107669, 2026-08-31 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites'
+            ]
+  
+  package:matcher             expect
+  test/properties.dart 834:7  coachPropertyTests.<fn>
+  
+00:56 +151 -46: test/coach_properties_1_test.dart: journaux aléatoires (mode coach) 104320 à 104479 [E]
+  Expected: empty
+    Actual: [
+              'graine 104357, 2026-10-20 sw-traction-assistee-elastique : 3 séries pour 1 écrites',
+              'graine 104369, 2027-02-02 sw-pompe : 3 séries pour 1 écrites',
+              'graine 104373, 2026-12-18 sw-pompe-genoux : 3 séries pour 1 écrites',
+              'graine 104377, 2027-04-03 sw-pompe-genoux : 3 séries pour 1 écrites',
+              'graine 104403, conseil sw-pompe : cible 13 après un échec (dernière série : 1)',
+              'graine 104413, 2027-01-15 sw-dips-assistes-elastique : 3 séries pour 1 écrites',
+              'graine 104436, conseil sw-traction-pronation : cible 14 après un échec (dernière série : 5)',
+              'graine 104436, conseil sw-traction-pronation : cible 14 après un échec (dernière série : 6)',
+              'graine 104441, 2026-11-24 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites',
+              'graine 104462, 2026-10-28 sw-pompe-genoux : 3 séries pour 1 écrites'
+            ]
+  
+  package:matcher             expect
+  test/properties.dart 834:7  coachPropertyTests.<fn>
+  
+00:56 +151 -46: test/coach_properties_1_test.dart: journaux aléatoires (mode coach) 104480 à 104639
+00:56 +151 -47: test/properties_5_test.dart: journaux aléatoires 6400 à 6559
+00:56 +151 -47: test/coach_properties_1_test.dart: journaux aléatoires (mode coach) 104480 à 104639 [E]
+  Expected: empty
+    Actual: [
+              'graine 104525, 2026-12-12 sw-pompe : 3 séries pour 1 écrites',
+              'graine 104526, conseil sw-traction-pronation : cible 2 après un échec (dernière série : 1)',
+              'graine 104527, conseil sw-traction-pronation : cible 13 après un échec (dernière série : 4)',
+              'graine 104538, 2026-10-23 sw-pompe-genoux : 3 séries pour 1 écrites',
+              'graine 104583, 2027-04-07 sw-pompe : 3 séries pour 1 écrites',
+              'graine 104589, conseil sw-traction-pronation : cible 4 après un échec (dernière série : 0)',
+              'graine 104589, enchaîné, conseil sw-traction-pronation : cible 4 après un échec (dernière série : 0)'
+            ]
+  
+  package:matcher             expect
+  test/properties.dart 834:7  coachPropertyTests.<fn>
+  
+00:57 +151 -48: test/properties_5_test.dart: journaux aléatoires 6400 à 6559
+00:57 +151 -48: test/coach_properties_1_test.dart: journaux aléatoires (mode coach) 104640 à 104799 [E]
+  Expected: empty
+    Actual: [
+              'graine 104659, 2027-01-30 sw-dips-assistes-elastique : 3 séries pour 1 écrites',
+              'graine 104663, 2026-11-17 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites',
+              'graine 104677, 2027-02-05 sw-row-australien-genoux-flechis : 3 séries pour 1 écrites',
+              'graine 104677, 2027-02-05 sw-dips-assistes-elastique : 3 séries pour 1 écrites',
+              'graine 104686, 2026-10-09 sw-traction-assistee-elastique : 3 séries pour 1 écrites',
+              'graine 104693, 2026-11-30 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites',
+              'graine 104767, conseil sw-traction-pronation : cible 13 après un échec (dernière série : 1)',
+              'graine 104775, 2026-12-09 sw-pompe-genoux : 3 séries pour 1 écrites',
+              'graine 104784, conseil sw-traction-pronation : cible 13 après un échec (dernière série : 4)',
+              'graine 104784, enchaîné, conseil sw-traction-pronation : cible 13 après un échec (dernière série : 4)'
+            ]
+  
+  package:matcher             expect
+  test/properties.dart 834:7  coachPropertyTests.<fn>
+  
+00:57 +151 -49: test/properties_5_test.dart: journaux aléatoires 6400 à 6559
+00:57 +151 -49: test/coach_properties_1_test.dart: journaux aléatoires (mode coach) 104800 à 104959 [E]
+  Expected: empty
+    Actual: [
+              'graine 104802, conseil sw-traction-pronation : cible 4 après un échec (dernière série : 3)',
+              'graine 104849, 2026-09-02 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites',
+              'graine 104868, 2027-02-21 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites',
+              'graine 104887, 2026-09-03 sw-pompe-genoux : 3 séries pour 1 écrites',
+              'graine 104903, conseil sw-pompe : cible 16 après un échec (dernière série : 9)',
+              'graine 104903, conseil sw-pompe : cible 16 après un échec (dernière série : 7)',
+              'graine 104945, 2026-11-25 sw-dips-assistes-elastique : 3 séries pour 1 écrites',
+              'graine 104949, 2027-01-16 sw-dips-assistes-elastique : 3 séries pour 1 écrites'
+            ]
+  
+  package:matcher             expect
+  test/properties.dart 834:7  coachPropertyTests.<fn>
+  
+00:58 +151 -50: test/properties_5_test.dart: journaux aléatoires 6400 à 6559
+00:58 +151 -50: test/coach_properties_1_test.dart: journaux aléatoires (mode coach) 104960 à 105119 [E]
+  Expected: empty
+    Actual: [
+              'graine 104971, 2027-01-12 sw-pompe : 3 séries pour 1 écrites',
+              'graine 104971, 2027-01-12 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites',
+              'graine 104979, conseil sw-traction-pronation : cible 4 après un échec (dernière série : 1)',
+              'graine 104979, enchaîné, conseil sw-traction-pronation : cible 4 après un échec (dernière série : 1)',
+              'graine 104985, 2027-01-28 sw-pompe : 3 séries pour 1 écrites',
+              'graine 104985, 2027-01-28 mu-dead-bug : 3 séries pour 1 écrites',
+              'graine 104992, 2026-08-01 sw-pompe-genoux : 3 séries pour 1 écrites',
+              'graine 104996, conseil sw-traction-pronation : cible 6 après un échec (dernière série : 4)',
+              'graine 105005, 2026-11-05 sw-pompe-genoux : 3 séries pour 1 écrites',
+              'graine 105021, 2026-10-27 sw-pompe-genoux : 3 séries pour 1 écrites',
+              'graine 105054, conseil sw-traction-pronation : cible 3 après un échec (dernière série : 0)',
+              'graine 105054, enchaîné, conseil sw-traction-pronation : cible 3 après un échec (dernière série : 0)',
+              'graine 105083, 2026-12-03 sw-pompe-genoux : 3 séries pour 1 écrites',
+              'graine 105103, 2027-01-11 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites',
+              'graine 105104, 2026-10-25 sw-pompe-genoux : 3 séries pour 1 écrites'
+            ]
+  
+  package:matcher             expect
+  test/properties.dart 834:7  coachPropertyTests.<fn>
+  
+01:00 +152 -50: test/coach_properties_3_test.dart: journaux aléatoires (mode coach) 107680 à 107839
+01:01 +153 -50: test/coach_properties_3_test.dart: journaux aléatoires (mode coach) 107680 à 107839
+01:01 +154 -50: test/coach_properties_3_test.dart: journaux aléatoires (mode coach) 107680 à 107839
+01:02 +154 -51: test/properties_5_test.dart: journaux aléatoires 6880 à 7039
+01:02 +154 -51: test/coach_properties_3_test.dart: journaux aléatoires (mode coach) 107680 à 107839 [E]
+  Expected: empty
+    Actual: [
+              'graine 107695, 2026-10-16 sw-pompe-genoux : 3 séries pour 1 écrites',
+              'graine 107720, conseil sw-traction-pronation : cible 13 après un échec (dernière série : 0)',
+              'graine 107720, conseil sw-traction-pronation : cible 13 après un échec (dernière série : 1)',
+              'graine 107720, conseil sw-traction-pronation : cible 13 après un échec (dernière série : 1)',
+              'graine 107747, 2026-12-02 sw-pompe-genoux : 3 séries pour 1 écrites',
+              'graine 107750, conseil sw-traction-pronation : cible 8 après un échec (dernière série : 2)',
+              'graine 107750, conseil sw-traction-pronation : cible 8 après un échec (dernière série : 4)',
+              'graine 107750, conseil sw-traction-pronation : cible 8 après un échec (dernière série : 2)',
+              'graine 107755, conseil sw-traction-pronation : cible 4 après un échec (dernière série : 2)',
+              'graine 107755, enchaîné, conseil sw-traction-pronation : cible 4 après un échec (dernière série : 2)',
+              'graine 107792, 2026-11-06 sw-pompe-genoux : 3 séries pour 1 écrites',
+              'graine 107804, conseil sw-pompe : cible 16 après un échec (dernière série : 9)'
+            ]
+  
+  package:matcher             expect
+  test/properties.dart 834:7  coachPropertyTests.<fn>
+  
+01:02 +155 -51: test/coach_properties_3_test.dart: journaux aléatoires (mode coach) 107840 à 107999
+01:02 +155 -52: test/properties_5_test.dart: journaux aléatoires 7040 à 7199
+01:02 +155 -52: test/coach_properties_3_test.dart: journaux aléatoires (mode coach) 107840 à 107999 [E]
+  Expected: empty
+    Actual: [
+              'graine 107855, 2027-01-11 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites',
+              'graine 107899, conseil sw-traction-pronation : cible 3 après un échec (dernière série : 2)',
+              'graine 107952, 2026-11-24 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites',
+              'graine 107982, 2026-11-08 sw-traction-assistee-elastique : 3 séries pour 1 écrites',
+              'graine 107982, 2026-11-08 mu-pont-fessier-sol : 3 séries pour 1 écrites',
+              'graine 107998, 2027-01-01 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites'
+            ]
+  
+  package:matcher             expect
+  test/properties.dart 834:7  coachPropertyTests.<fn>
+  
+01:03 +156 -52: test/coach_properties_3_test.dart: journaux aléatoires (mode coach) 108000 à 108159
+01:03 +156 -53: test/properties_5_test.dart: journaux aléatoires 7200 à 7359
+01:03 +156 -53: test/coach_properties_3_test.dart: journaux aléatoires (mode coach) 108000 à 108159 [E]
+  Expected: empty
+    Actual: [
+              'graine 108076, conseil sw-pompe : cible 16 après un échec (dernière série : 13)',
+              'graine 108076, conseil sw-pompe : cible 16 après un échec (dernière série : 14)',
+              'graine 108076, enchaîné, conseil sw-pompe : cible 16 après un échec (dernière série : 14)',
+              'graine 108104, 2026-12-20 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites',
+              'graine 108114, conseil sw-pompe : cible 11 après un échec (dernière série : 1)',
+              'graine 108114, enchaîné, conseil sw-pompe : cible 11 après un échec (dernière série : 1)'
+            ]
+  
+  package:matcher             expect
+  test/properties.dart 834:7  coachPropertyTests.<fn>
+  
+01:03 +157 -53: test/coach_properties_3_test.dart: journaux aléatoires (mode coach) 108160 à 108319
+01:04 +157 -54: test/properties_5_test.dart: journaux aléatoires 7360 à 7519
+01:04 +157 -54: test/coach_properties_3_test.dart: journaux aléatoires (mode coach) 108160 à 108319 [E]
+  Expected: empty
+    Actual: [
+              'graine 108175, 2026-12-12 sw-pompe-genoux : 3 séries pour 1 écrites',
+              'graine 108193, 2026-08-20 sw-pompe-genoux : 3 séries pour 1 écrites',
+              'graine 108209, conseil sw-pompe : cible 11 après un échec (dernière série : 8)',
+              'graine 108209, conseil sw-pompe : cible 11 après un échec (dernière série : 9)',
+              'graine 108209, conseil sw-pompe : cible 11 après un échec (dernière série : 9)',
+              'graine 108248, conseil sw-traction-pronation : cible 7 après un échec (dernière série : 3)',
+              'graine 108318, 2027-04-12 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites'
+            ]
+  
+  package:matcher             expect
+  test/properties.dart 834:7  coachPropertyTests.<fn>
+  
+01:04 +158 -54: test/coach_properties_3_test.dart: journaux aléatoires (mode coach) 108320 à 108479
+01:04 +158 -55: test/properties_5_test.dart: journaux aléatoires 7520 à 7679
+01:04 +158 -55: test/coach_properties_3_test.dart: journaux aléatoires (mode coach) 108320 à 108479 [E]
+  Expected: empty
+    Actual: [
+              'graine 108329, 2026-10-21 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites',
+              'graine 108390, conseil sw-dips-barres-paralleles : cible 7 après un échec (dernière série : 6)',
+              'graine 108390, conseil sw-dips-barres-paralleles : cible 7 après un échec (dernière série : 2)',
+              'graine 108405, 2026-11-24 sw-pompe-genoux : 3 séries pour 1 écrites',
+              'graine 108469, conseil sw-dips-barres-paralleles : cible 6 après un échec (dernière série : 1)'
+            ]
+  
+  package:matcher             expect
+  test/properties.dart 834:7  coachPropertyTests.<fn>
+  
+01:04 +159 -55: test/coach_properties_3_test.dart: journaux aléatoires (mode coach) 108480 à 108639
+01:05 +159 -56: test/coach_properties_3_test.dart: journaux aléatoires (mode coach) 108480 à 108639 [E]
+  Expected: empty
+    Actual: [
+              'graine 108489, 2026-11-24 sw-pompe : 3 séries pour 1 écrites',
+              'graine 108496, 2027-03-23 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites',
+              'graine 108533, 2027-01-20 sw-row-australien-genoux-flechis : 3 séries pour 1 écrites',
+              'graine 108539, conseil sw-traction-pronation : cible 4 après un échec (dernière série : 3)',
+              'graine 108542, 2026-12-29 sw-pompe : 3 séries pour 1 écrites',
+              'graine 108569, conseil sw-traction-pronation : cible 2 après un échec (dernière série : 1)',
+              'graine 108631, 2027-01-06 sw-pompe : 3 séries pour 1 écrites',
+              'graine 108631, 2027-01-06 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites'
+            ]
+  
+  package:matcher             expect
+  test/properties.dart 834:7  coachPropertyTests.<fn>
+  
+01:05 +159 -56: test/coach_properties_3_test.dart: journaux aléatoires (mode coach) 108640 à 108799
+01:05 +159 -57: test/coach_properties_3_test.dart: journaux aléatoires (mode coach) 108640 à 108799 [E]
+  Expected: empty
+    Actual: [
+              'graine 108731, conseil sw-traction-pronation : cible 4 après un échec (dernière série : 2)',
+              'graine 108732, conseil sw-dips-barres-paralleles : cible 23 après un échec (dernière série : 0)',
+              'graine 108744, 2026-08-18 sw-pompe-genoux : 3 séries pour 1 écrites',
+              'graine 108747, 2026-08-15 sw-pompe-genoux : 3 séries pour 1 écrites',
+              'graine 108759, conseil sw-traction-pronation : cible 8 après un échec (dernière série : 7)',
+              'graine 108795, conseil sw-dips-barres-paralleles : cible 10 après un échec (dernière série : 9)'
+            ]
+  
+  package:matcher             expect
+  test/properties.dart 834:7  coachPropertyTests.<fn>
+  
+01:05 +159 -57: test/coach_properties_3_test.dart: journaux aléatoires (mode coach) 108800 à 108959
+01:06 +159 -58: test/coach_properties_3_test.dart: journaux aléatoires (mode coach) 108800 à 108959 [E]
+  Expected: empty
+    Actual: [
+              'graine 108823, 2026-12-12 sw-dips-assistes-elastique : 3 séries pour 1 écrites',
+              'graine 108826, conseil sw-dips-barres-paralleles : cible 25 après un échec (dernière série : 9)',
+              'graine 108856, 2026-12-15 sw-pompe-genoux : 3 séries pour 1 écrites',
+              'graine 108859, 2027-01-31 sw-pompe-genoux : 3 séries pour 1 écrites',
+              'graine 108861, 2027-02-05 sw-row-australien-genoux-flechis : 3 séries pour 1 écrites',
+              'graine 108874, conseil sw-dips-barres-paralleles : cible 6 après un échec (dernière série : 4)',
+              'graine 108918, 2026-10-21 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites',
+              'graine 108948, 2027-01-26 sw-pompe : 3 séries pour 1 écrites'
+            ]
+  
+  package:matcher             expect
+  test/properties.dart 834:7  coachPropertyTests.<fn>
+  
+01:06 +159 -58: test/coach_properties_3_test.dart: journaux aléatoires (mode coach) 108960 à 109119
+01:06 +159 -59: test/coach_properties_3_test.dart: journaux aléatoires (mode coach) 108960 à 109119 [E]
+  Expected: empty
+    Actual: [
+              'graine 108972, conseil sw-traction-pronation : cible 3 après un échec (dernière série : 2)',
+              'graine 108972, sans bilan, conseil sw-traction-pronation : cible 3 après un échec (dernière série : 2)',
+              'graine 108972, enchaîné, conseil sw-traction-pronation : cible 3 après un échec (dernière série : 2)',
+              'graine 108973, conseil sw-traction-pronation : cible 5 après un échec (dernière série : 3)',
+              'graine 109051, 2026-11-16 sw-traction-assistee-elastique : 3 séries pour 1 écrites',
+              'graine 109051, 2026-11-16 mu-pont-fessier-sol : 3 séries pour 1 écrites',
+              'graine 109055, 2026-09-29 sw-pompe-genoux : 3 séries pour 1 écrites',
+              'graine 109060, conseil sw-traction-pronation : cible 4 après un échec (dernière série : 0)',
+              'graine 109060, enchaîné, conseil sw-traction-pronation : cible 4 après un échec (dernière série : 0)',
+              'graine 109066, conseil sw-pompe : cible 16 après un échec (dernière série : 8)',
+              'graine 109066, conseil sw-pompe : cible 16 après un échec (dernière série : 8)',
+              'graine 109098, 2027-01-14 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites',
+              'graine 109110, conseil sw-traction-pronation : cible 8 après un échec (dernière série : 1)',
+              'graine 109110, conseil sw-traction-pronation : cible 8 après un échec (dernière série : 1)',
+              'graine 109110, conseil sw-traction-pronation : cible 8 après un échec (dernière série : 1)',
+              'graine 109111, conseil sl-squat-competition : hausse malgré bilan bas (50.0 → 90.0)',
+              'graine 109112, conseil sw-dips-barres-paralleles : cible 14 après un échec (dernière série : 1)',
+              'graine 109112, conseil sw-dips-barres-paralleles : cible 14 après un échec (dernière série : 9)',
+              'graine 109117, 2026-11-07 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites'
+            ]
+  
+  package:matcher             expect
+  test/properties.dart 834:7  coachPropertyTests.<fn>
+  
+01:06 +159 -59: test/coach_properties_3_test.dart: journaux aléatoires (mode coach) 109120 à 109279
+01:07 +159 -60: test/coach_properties_3_test.dart: journaux aléatoires (mode coach) 109120 à 109279 [E]
+  Expected: empty
+    Actual: [
+              'graine 109205, conseil sw-traction-pronation : cible 4 après un échec (dernière série : 3)',
+              'graine 109205, enchaîné, conseil sw-traction-pronation : cible 4 après un échec (dernière série : 3)',
+              'graine 109275, 2026-11-11 sw-pompe-genoux : 3 séries pour 1 écrites'
+            ]
+  
+  package:matcher             expect
+  test/properties.dart 834:7  coachPropertyTests.<fn>
+  
+01:07 +159 -60: test/coach_properties_3_test.dart: journaux aléatoires (mode coach) 109280 à 109439
+01:07 +159 -61: test/coach_properties_3_test.dart: journaux aléatoires (mode coach) 109280 à 109439 [E]
+  Expected: empty
+    Actual: [
+              'graine 109332, conseil cd-muscle-up-barre-strict : cible 4 après un échec (dernière série : 2)',
+              'graine 109332, enchaîné, conseil cd-muscle-up-barre-strict : cible 4 après un échec (dernière série : 2)',
+              'graine 109366, 2027-02-07 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites',
+              'graine 109383, conseil sw-dips-barres-paralleles : cible 23 après un échec (dernière série : 9)',
+              'graine 109383, conseil sw-dips-barres-paralleles : cible 23 après un échec (dernière série : 12)',
+              'graine 109402, conseil sw-traction-pronation : cible 4 après un échec (dernière série : 1)',
+              'graine 109415, conseil sw-traction-pronation : cible 4 après un échec (dernière série : 2)'
+            ]
+  
+  package:matcher             expect
+  test/properties.dart 834:7  coachPropertyTests.<fn>
+  
+01:07 +159 -61: test/coach_properties_3_test.dart: journaux aléatoires (mode coach) 109440 à 109599
+01:07 +159 -62: test/coach_properties_3_test.dart: journaux aléatoires (mode coach) 109440 à 109599 [E]
+  Expected: empty
+    Actual: [
+              'graine 109465, conseil sw-traction-pronation : cible 4 après un échec (dernière série : 1)',
+              'graine 109465, conseil sw-traction-pronation : cible 4 après un échec (dernière série : 1)',
+              'graine 109465, enchaîné, conseil sw-traction-pronation : cible 4 après un échec (dernière série : 1)',
+              'graine 109469, conseil sw-traction-pronation : cible 4 après un échec (dernière série : 3)',
+              'graine 109514, conseil sw-traction-pronation : cible 4 après un échec (dernière série : 3)',
+              'graine 109565, conseil sw-traction-pronation : cible 5 après un échec (dernière série : 2)',
+              'graine 109565, conseil sw-traction-pronation : cible 5 après un échec (dernière série : 2)',
+              'graine 109565, enchaîné, conseil sw-traction-pronation : cible 5 après un échec (dernière série : 2)'
+            ]
+  
+  package:matcher             expect
+  test/properties.dart 834:7  coachPropertyTests.<fn>
+  
+01:07 +159 -62: test/coach_properties_3_test.dart: journaux aléatoires (mode coach) 109600 à 109759
+01:08 +159 -63: test/coach_properties_3_test.dart: journaux aléatoires (mode coach) 109600 à 109759 [E]
+  Expected: empty
+    Actual: [
+              'graine 109606, 2027-05-27 sw-row-australien-genoux-flechis : 3 séries pour 1 écrites',
+              'graine 109633, 2026-11-29 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites',
+              'graine 109650, conseil sw-dips-barres-paralleles : cible 6 après un échec (dernière série : 5)',
+              'graine 109650, conseil sw-dips-barres-paralleles : cible 6 après un échec (dernière série : 5)',
+              'graine 109651, conseil sw-dips-barres-paralleles : cible 23 après un échec (dernière série : 4)',
+              'graine 109651, conseil sw-dips-barres-paralleles : cible 23 après un échec (dernière série : 0)',
+              'graine 109651, conseil sw-dips-barres-paralleles : cible 23 après un échec (dernière série : 0)',
+              'graine 109659, 2026-10-22 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites',
+              'graine 109703, 2026-09-22 sw-traction-assistee-elastique : 3 séries pour 1 écrites',
+              'graine 109703, 2026-09-22 mu-pont-fessier-sol : 3 séries pour 1 écrites',
+              'graine 109749, 2027-01-30 sw-pompe : 3 séries pour 1 écrites',
+              'graine 109749, 2027-01-30 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites'
+            ]
+  
+  package:matcher             expect
+  test/properties.dart 834:7  coachPropertyTests.<fn>
+  
+01:08 +159 -63: test/coach_properties_3_test.dart: journaux aléatoires (mode coach) 109760 à 109919
+01:08 +159 -64: test/coach_properties_3_test.dart: journaux aléatoires (mode coach) 109760 à 109919 [E]
+  Expected: empty
+    Actual: [
+              'graine 109772, 2026-10-24 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites',
+              'graine 109775, 2026-10-11 sw-traction-assistee-elastique : 3 séries pour 1 écrites',
+              'graine 109795, conseil cd-muscle-up-barre-strict : cible 4 après un échec (dernière série : 2)',
+              'graine 109795, enchaîné, conseil cd-muscle-up-barre-strict : cible 4 après un échec (dernière série : 2)',
+              'graine 109804, 2027-02-17 sw-pompe : 3 séries pour 1 écrites',
+              'graine 109823, 2026-09-21 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites',
+              'graine 109865, conseil cs-handstand-dos-au-mur : cible 21 après un échec (dernière série : 14)',
+              'graine 109866, 2027-01-16 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites'
+            ]
+  
+  package:matcher             expect
+  test/properties.dart 834:7  coachPropertyTests.<fn>
+  
+01:08 +159 -64: test/coach_properties_3_test.dart: journaux aléatoires (mode coach) 109920 à 110079
+01:09 +159 -65: test/coach_properties_3_test.dart: journaux aléatoires (mode coach) 109920 à 110079 [E]
+  Expected: empty
+    Actual: [
+              'graine 109929, conseil sw-traction-pronation : cible 7 après un échec (dernière série : 4)',
+              'graine 109957, 2027-01-30 mu-fente-arriere-poids-du-corps : 3 séries pour 1 écrites'
+            ]
+  
+  package:matcher             expect
+  test/properties.dart 834:7  coachPropertyTests.<fn>
+  
+01:09 +159 -65: test/coach_properties_3_test.dart: journaux aléatoires (mode coach) 110080 à 110239
+01:09 +159 -66: test/coach_properties_3_test.dart: journaux aléatoires (mode coach) 110080 à 110239 [E]
+  Expected: empty
+    Actual: [
+              'graine 110106, 2026-11-22 sw-pompe-genoux : 3 séries pour 1 écrites',
+              'graine 110134, 2026-09-07 sw-pompe-genoux : 3 séries pour 1 écrites',
+              'graine 110146, 2026-11-21 sw-pompe-genoux : 3 séries pour 1 écrites',
+              'graine 110223, conseil sw-pompe : cible 29 après un échec (dernière série : 14)',
+              'graine 110223, conseil sw-pompe : cible 29 après un échec (dernière série : 12)',
+              'graine 110223, conseil sw-pompe : cible 29 après un échec (dernière série : 12)'
+            ]
+  
+  package:matcher             expect
+  test/properties.dart 834:7  coachPropertyTests.<fn>
+  
+01:09 +159 -66: Some tests failed.
+
+Failing tests:
+  test/coach_properties_0_test.dart: journaux aléatoires (mode coach) 100000 à 100159
+  test/coach_properties_0_test.dart: journaux aléatoires (mode coach) 100160 à 100319
+  test/coach_properties_0_test.dart: journaux aléatoires (mode coach) 100320 à 100479
+  test/coach_properties_0_test.dart: journaux aléatoires (mode coach) 100480 à 100639
+  ... and 62 more
+
+Consider enabling the flag chain-stack-traces to receive more detailed exceptions.
+For example, 'dart test --chain-stack-traces'.
+tests : échec
+  notes_paresseuses : fait (7 s)
+  debutant_salle : fait (8 s)
+  irregulier : fait (10 s)
+  intermediaire_salle : fait (11 s)
+  calisthenie_parc : fait (11 s)
+  maison_halteres : fait (12 s)
+  avance_street : fait (14 s)
+  douleur_et_lieu : fait (15 s)
+kalis_adapt 0.2.0 : rapport écrit dans /home/runner/work/streetlift-apk/streetlift-apk/out-packages/kalis_adapt (16 s).
+durée : 97 s
