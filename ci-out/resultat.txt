@@ -1,0 +1,4 @@
+run=37230280565
+commit=945059fc263eb894d196fcd5fd98013354dcabd3
+branche=claude/ci-cp-a
+packages=cancelled
