@@ -586,7 +586,14 @@ String coachTrajectoryMarkdown(
       final notes = <String>[];
       final assisted = catalog.find(bestItem.exerciseId)?.assisted ?? false;
       var recal = false;
-      void note(Reason r) {
+      void note(Reason r, {bool advice = false}) {
+        // Conseil d'entre-séries : « série suivante raccourcie » est déjà
+        // dit par « dernières séries plus dures que prévu ».
+        if (advice &&
+            (r.code == ReasonCodes.adaptRepsDown ||
+                r.code == ReasonCodes.adaptRepsUp)) {
+          return;
+        }
         // Un seul « recalé sur le maximum mesuré » par ligne ; il rend
         // inutile « allégé pour garder la marge ».
         final isRecal =
@@ -595,7 +602,11 @@ String coachTrajectoryMarkdown(
         if (isRecal && recal) {
           return;
         }
-        final text = adaptReasonText(r, catalog, assisted: assisted);
+        final text = adaptReasonText(
+          r,
+          catalog,
+          assisted: assisted && !advice,
+        );
         if (text != null && !notes.contains(text)) {
           notes.add(text);
           recal = recal || isRecal;
@@ -606,7 +617,9 @@ String coachTrajectoryMarkdown(
       bestItem.reasons.forEach(note);
       for (final a in best.advices) {
         if (a.exerciseId == served) {
-          a.reasons.forEach(note);
+          for (final r in a.reasons) {
+            note(r, advice: true);
+          }
         }
       }
       final rows = rowsOf['${best.simDay}|$served'] ?? const <SetRow>[];
@@ -674,8 +687,7 @@ String coachTrajectoryMarkdown(
               ? '—'
               : <String>[
                   for (final n in notes)
-                    if (!(recal && n.startsWith('allégé pour garder')))
-                      n,
+                    if (!(recal && n.startsWith('allégé pour garder'))) n,
                 ].take(4).join(' ; '),
         ]),
       );

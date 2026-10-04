@@ -1359,12 +1359,7 @@ List<SetPlan>? _directPlans(
       item.kind != SetKind.test &&
       firstLow > 1) {
     final rest = _restOf(ex, c, served, firstHigh);
-    final reach = _repsSafe(
-      run,
-      ex,
-      plannedFatigue(0, rir, rest, p),
-      c.slotId,
-    );
+    final reach = _repsSafe(run, ex, plannedFatigue(0, rir, rest, p), c.slotId);
     if (reach < firstLow) {
       // Chaque série garde la réserve du bloc.
       final kept = (track.filter.capacityToday() - rir + 0.3).floor();
