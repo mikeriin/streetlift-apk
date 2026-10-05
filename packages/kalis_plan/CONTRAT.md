@@ -1537,7 +1537,8 @@ de raison de `kalis_core` n’est ajouté ; trois codes de note de coach (`pain_
   jusqu'à ce que l'estimation du moteur d'évolution montre (6 séries au moins) ;
 - aucun gain supposé quand le repère vient d'un test de la semaine précédente (`_measuredAt`) ;
 - une estimation (6 observations au moins, erreur ≤ 6 % de la capacité, aucun test plus récent) abaisse
-  un repère de plus de 2,5 % ; elle devient le repère d'un exercice qui n'en avait pas (variante jamais
+  un repère de plus de 2,5 % (6 % pour un 1RM : l'estimation du moteur d'évolution se tient 3 à 5 % sous le
+  1RM réel) ; elle devient le repère d'un exercice qui n'en avait pas (variante jamais
   déclarée ni testée, dosée jusque-là par une plage fixe) ; elle ne monte jamais un repère connu ;
 - une douleur du résumé (3/10 et plus) devient une gêne récente du bloc (`CoachLimit.trend`) : une figure
   sur cette zone reste au programme sous 6/10, à 60 % de ses séries, avec la note `pain_trend` ; les autres
@@ -1572,12 +1573,23 @@ d'après le maximum au poids du corps (jusqu'à 8 répétitions) ; partielles su
 dernières semaines avant l'échéance, entrée à 82,5 % puis +2,5 % par semaine et 95 % au plus quand le coude
 a un antécédent.
 
+**Ajouts des boucles 3 à 5** : séries de travail sur le dernier repère mesuré (le repère attendu ne vaut
+que pour la cible d'un test) ; figure écartée par le moteur d'évolution pour une douleur relevée sous 6/10 :
+gardée au bloc suivant (`pain_trend`) ; 1RM de travail relevé d'après le maximum au poids du corps quand il
+le dépasse (table R2-P2, Epley au-delà de 12) ; tenue menton à 60-70 % du maintien, jusqu'à 25 s ; étape plus
+facile d'une figure jusqu'à 40 s ; test de l'objectif en tête de séance ; critère de l'échelle de poussée :
+2 × 12 sur deux séances ; pompe au sol d'un objectif de pompes en grappes (5 séries courtes) ; négatives de
+pompe gardées tant que le maximum est sous six ; une seule règle d'élastique (`assistance_step`) et essais
+stricts de traction dès la sixième semaine ; tirage bras tendus à l'élastique les jours de force quand le
+front lever est visé ; semaine d'introduction à 80 % chez l'avancé et l'élite qui préparent une échéance de
+répétitions ; séries de volume d'introduction une marche sous la semaine suivante.
+
 **Notes** : catégorie de poids et pesée d'une épreuve de force (`weight_class`, règlement FinalRep) ;
 format d'épreuve de répétitions à saisir (`event_format`) ; figure gardée sur douleur (`pain_trend`).
 
 | Paramètre | Valeur | Source |
 | --- | --- | --- |
-| Estimation retenue : observations, erreur, marge | 6 ; 6 % ; 2,5 % | choix raisonné (CALIBRAGE_CX) ; Helms et al. 2018 (régler sur la performance mesurée) |
+| Estimation retenue : observations, erreur, marge (répétitions, maintiens ; 1RM) | 6 ; 6 % ; 2,5 % ; 6 % | choix raisonné (CALIBRAGE_CX) ; Helms et al. 2018 (régler sur la performance mesurée) |
 | Douleur relevée retenue | 3/10 et plus | règle de douleur du programme (3-4 : sans progression) |
 | Figure sur douleur relevée | 60 % des séries, arrêt à 6/10 | R5-P23 (−30 à −50 %) ; Silbernagel et al. 2007 (suivi de la douleur, ≤ 5/10) |
 | Transition après épreuve ; reprise | 50 % ; 75 % du volume | R3-P19 ; R5-P22 (+10 à 20 % par semaine) |
