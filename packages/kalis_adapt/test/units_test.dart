@@ -425,6 +425,38 @@ void main() {
       expect(changed.pass1, same(block.pass1));
     });
 
+    test('bloc au contrat 0.4.0 : les intentions des semaines restent '
+        '(0.2.1)', () {
+      final coached = streetProgram(
+        'street_08_avance_sets_reps_competition',
+      ).block(0);
+      final target = coached.pass2.weeks[1].days[0].items.first;
+      final changed = applyProposal(
+        coached,
+        proposal(
+          diff: PlanDiff(
+            changes: <PlanChange>[
+              PlanChange(
+                kind: ChangeKind.prescriptionChanged,
+                weekIndex: 1,
+                dayIndex: 0,
+                slotId: target.slotId,
+                fromPrescription: target,
+                toPrescription: target.copyWith(sets: target.sets + 1),
+                reasons: const <Reason>[],
+              ),
+            ],
+          ),
+        ),
+      );
+      expect(changed.validate(), isEmpty);
+      for (var w = 0; w < coached.pass2.weeks.length; w++) {
+        expect(changed.pass2.weeks[w].intent, coached.pass2.weeks[w].intent);
+        expect(changed.pass2.weeks[w].intent, isNotNull);
+      }
+      expect(changed.pass2.weeks[0].toJson(), coached.pass2.weeks[0].toJson());
+    });
+
     test('une restructuration porte son bloc ; sans rien, bloc inchangé', () {
       final other = programOf('femme_45_musculation_salle_4x60').block(0);
       expect(applyProposal(block, proposal(result: other)), same(other));

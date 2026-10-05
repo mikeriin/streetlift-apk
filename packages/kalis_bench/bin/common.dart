@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:isolate';
 
+import 'package:kalis_adapt/simulation.dart' show TruthKind, athleteFromJson;
 import 'package:kalis_bench/kalis_bench.dart';
 import 'package:kalis_core/kalis_core.dart';
 import 'package:kalis_plan/kalis_plan.dart';
@@ -262,5 +263,172 @@ Future<void> runStreetCampaign({
   stdout.writeln(
     'campagne street : ${keys.length} profils × $count graines × 3 modèles '
     '(${watch.elapsed.inSeconds} s).',
+  );
+}
+
+/// Profils street bruts (JSON) du dossier `profiles`, triés par nom de
+/// fichier.
+List<Map<String, Object?>> readStreetJson() {
+  final paths = <String>[
+    for (final f in Directory('profiles').listSync())
+      if (f is File && f.path.endsWith('.json')) f.path,
+  ]..sort();
+  return <Map<String, Object?>>[
+    for (final path in paths)
+      if (readJsonObject(path)['group'] == 'street') readJsonObject(path),
+  ];
+}
+
+/// Saisons racontées (lot CX) : pour chaque profil street, la saison de
+/// référence sous le modèle de vérité B (les modèles A et C mesurés à
+/// côté) et chaque scénario imposé sous le modèle B. Écrit dans
+/// [outPath]/saisons : `<profil>.md` (saison), `<profil>.json` (programme
+/// tel que les blocs l'ont réalisé, lu par `tool/panel_export.py`),
+/// `scenarios/<profil>_<scénario>.md`, et `SECURITE.md` (violations de
+/// sécurité des programmes réalisés).
+void writeSeasonExports(String outPath) {
+  final inputs = loadInputs('street');
+  final catalog = inputs.catalog;
+  final plan = KalisPlan();
+  final safety = StringBuffer()
+    ..writeln('# Sécurité des saisons racontées')
+    ..writeln()
+    ..writeln(
+      'Violations de sécurité (critères calculables du banc) du programme '
+      'tel que les blocs l\'ont réalisé, sous le modèle de vérité B, graine '
+      '0, saison de référence et scénarios.',
+    )
+    ..writeln()
+    ..writeln('| Profil | Scénario | Violations |')
+    ..writeln('| --- | --- | --- |');
+  final details = StringBuffer();
+  for (final json in readStreetJson()) {
+    for (final scenario in SeasonScenario.values) {
+      final scenarioJson = seasonProfileJson(json, scenario);
+      final bench = BenchProfile.fromJson(scenarioJson);
+      final adapted = adaptProfile(
+        BenchProfile.fromJson(
+          scenario == SeasonScenario.second ? scenarioJson : json,
+        ),
+        catalog: catalog,
+      );
+      final weeks = seasonWeeksOf(json, scenario);
+      final spec = athleteFromJson(seasonSpecJson(bench, scenario));
+      final changes = seasonChanges(json, scenario);
+      Trajectory sim(TruthKind truth) => simulateTrajectory(
+        catalog,
+        plan,
+        bench,
+        adapted.profile,
+        weeks: weeks,
+        truth: truth,
+        spec: spec,
+        changes: changes,
+      );
+      final main = sim(TruthKind.b);
+      final view = ProgramView(
+        catalog,
+        BenchProgram(
+          bench: bench,
+          adapted: adapted,
+          request: PlanRequest(
+            profile: adapted.profile,
+            seed: 0,
+            startDate: benchStartDate,
+            locks: const <PlanLock>[],
+          ),
+          blocks: servedBlocksOf(main.run),
+          horizonWeeks: weeks,
+        ),
+      );
+      final found = safetyFindings(view, bench);
+      safety.writeln(
+        '| ${bench.key} | ${scenario.code} | ${found.length}'
+        '${found.isEmpty ? '' : ' (${found.map((f) => f.code).toSet().join(', ')})'} |',
+      );
+      for (final f in found) {
+        details.writeln(
+          '- `${bench.key}`, ${scenario.code}, `${f.code}` : ${f.message}',
+        );
+      }
+      if (scenario == SeasonScenario.base) {
+        final others = <Trajectory>[sim(TruthKind.a), sim(TruthKind.c)];
+        _write(
+          '$outPath/saisons/${bench.key}.md',
+          seasonMarkdown(main, catalog, others: others),
+        );
+        _write(
+          '$outPath/saisons/${bench.key}.json',
+          '${jsonEncode(programJson(view))}\n',
+        );
+      } else {
+        _write(
+          '$outPath/saisons/scenarios/${bench.key}_${scenario.code}.md',
+          seasonMarkdown(main, catalog, scenario: scenario),
+        );
+      }
+    }
+  }
+  if (details.isNotEmpty) {
+    safety
+      ..writeln()
+      ..writeln('## Détail')
+      ..writeln()
+      ..write(details.toString());
+  }
+  _write('$outPath/saisons/SECURITE.md', safety.toString());
+}
+
+void _write(String path, String text) {
+  final file = File(path);
+  file.parent.createSync(recursive: true);
+  file.writeAsStringSync(text);
+}
+
+Map<String, Object?> _seasonOf(String key, int seeds) {
+  final inputs = loadInputs('street');
+  final json = readStreetJson().firstWhere((j) => j['key'] == key);
+  return seasonCampaignOf(inputs.catalog, KalisPlan(), json, seeds: seeds);
+}
+
+/// Saisons croisées (voir `seasonCampaignOf`) : un isolat par profil, au
+/// plus [parallel] à la fois ; écrit `saisons.json` et `SAISONS.md` dans
+/// [outPath]. Le fichier `season_seeds.txt` à la racine du paquet, s'il
+/// existe, remplace [seeds] (essais rapides).
+Future<void> runSeasonCampaign({
+  required String outPath,
+  int seeds = 100,
+  int parallel = 4,
+}) async {
+  final watch = Stopwatch()..start();
+  var count = seeds;
+  final file = File('season_seeds.txt');
+  if (file.existsSync()) {
+    count = int.parse(
+      file.readAsStringSync().trim().split(RegExp(r'\s+')).first,
+    );
+  }
+  final keys = <String>[for (final j in readStreetJson()) j['key']! as String];
+  final results = <String, Map<String, Object?>>{};
+  var next = 0;
+  Future<void> worker() async {
+    while (next < keys.length) {
+      final key = keys[next++];
+      results[key] = await Isolate.run(() => _seasonOf(key, count));
+    }
+  }
+
+  await Future.wait(<Future<void>>[
+    for (var i = 0; i < parallel; i++) worker(),
+  ]);
+  final ordered = <Map<String, Object?>>[for (final k in keys) results[k]!];
+  _write(
+    '$outPath/saisons.json',
+    '${jsonEncode(<String, Object?>{'benchVersion': kalisBenchVersion, 'seeds': count, 'profiles': ordered})}\n',
+  );
+  _write('$outPath/SAISONS.md', seasonCampaignMarkdown(ordered));
+  stdout.writeln(
+    'saisons croisées : ${keys.length} profils × $count graines × 3 modèles '
+    '× ${SeasonScenario.values.length} saisons (${watch.elapsed.inSeconds} s).',
   );
 }

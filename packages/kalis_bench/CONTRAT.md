@@ -1,4 +1,4 @@
-# Contrat de kalis_bench 0.1.2
+# Contrat de kalis_bench 0.2.0
 
 Banc d'essai du calibrage des programmes (pipeline CP). Dart pur : ni Flutter, ni `dart:io` dans `lib/`, ni horloge, ni hasard hors des graines. Il **lit et appelle** `kalis_core`, `kalis_plan`, `kalis_adapt` par chemin, sans les modifier.
 
@@ -24,6 +24,8 @@ Banc d'essai du calibrage des programmes (pipeline CP). Dart pur : ni Flutter, n
 - `safetyFindings`, `qualityMeasures`, `evaluateChecks` → constats, notes, contrôles.
 - `simulateTrajectory` → trajectoire sous `kalis_adapt` (boucle complète), mesures et verdicts ; modèle de vérité A, B ou C (0.1.2).
 - `streetCampaignOf`, `streetCampaignMarkdown` → campagne street (0.1.2) : profils street × graines × modèles de vérité × politiques.
+- `seasonCampaignOf`, `seasonCampaignMarkdown` → saisons croisées (0.2.0, lot CX) : chaque profil street sur sa saison entière (16 semaines au moins, jusqu'à l'échéance et une semaine après), huit scénarios (`SeasonScenario` : référence, séances manquées, maladie, douleur au coude ou à l'épaule, parc seulement, échéance avancée, deuxième échéance) × graines × modèles de vérité, couples « cx » (`kalis_plan` 0.2 × `kalis_adapt` 0.2) et « v01 » (moteurs 0.1, saison de référence) ; mesures : progression, échéance rapportée au maximum du jour, tentatives, échecs, écart écrit ↔ servi (`writtenGapOf`), mouvements prioritaires retirés sans raison (`undoneOf`), violations de sécurité de la saison réalisée (`realizedFindings` sur `servedBlocksOf` : les semaines vraiment servies), stabilité entre graines.
+- `seasonMarkdown`, `seasonBlocksMarkdown` → export d'une saison (plan de saison et blocs, ce qui a nourri chaque bloc) ; CLI : `saisons.json`, `SAISONS.md`, `saisons/<profil>.md|json`, `saisons/scenarios/`, `saisons/SECURITE.md` (graines : fichier `season_seeds.txt`, 100 par défaut).
 - `programMarkdown`, `programJson`, `trajectoryMarkdown`, `coachTrajectoryMarkdown` (programmes au contrat 0.4.0, 0.1.2) → exports.
 - CLI : `dart run bin/kalis_bench_cli.dart --rapport <dossier>` (CI) ; `dart run kalis_bench:run --moteur plan|adapt|croisement --profils street|autres|tous --graine <n> --sortie <dossier>`.
 
@@ -34,6 +36,7 @@ Banc d'essai du calibrage des programmes (pipeline CP). Dart pur : ni Flutter, n
 3. Chaque critère de sécurité a un cas construit à la main qui doit être signalé et un cas voisin qui ne doit pas l'être (`safety_test.dart`) ; propriétés sur 10 000 programmes seedés : codes connus, notes entre 0 et 1, aucun critère de hausse sur un programme constant (`properties_test.dart`).
 4. Exports en français, sans identifiant technique (`bench_test.dart`).
 5. Aucun nom ni extrait des programmes de référence dans le paquet (`purity_test.dart`) ; le profil élite de streetlifting diffère de celui du propriétaire (`profiles_test.dart`).
+7. Mode saisons : huit scénarios aux codes fixes, saisons de 16 semaines au moins et au-delà de l'échéance, échéance avancée de deux semaines apprise en cours de saison, couples et modèles de vérité rendus (`season_test.dart`).
 6. Les 27 profils sont valides pour le contrat de `kalis_core` et connus du catalogue ; chacun a au moins 3 attentes écrites et 4 contrôles (`profiles_test.dart`).
 
 ## Évolution

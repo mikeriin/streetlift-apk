@@ -1,4 +1,4 @@
-# Contrat de kalis_adapt 0.2.0
+# Contrat de kalis_adapt 0.2.1
 
 Moteur dynamique de Kalis Track (D5) : il suit l'utilisateur et adapte son programme séance après séance.
 Dart pur, sans Flutter, sans stockage, sans horloge ; tout ce qu'il rend est une valeur du contrat de
@@ -1044,3 +1044,13 @@ Vérifiées sur le texte ou le résumé ; « (résumé) » : résumé seul.
 
 Les autres sources du calibrage (séries repère, lecture des notes, tendons, douleur) sont listées, avec ce
 qui a été lu de chacune, dans `docs/CALIBRAGE_CA1.md`.
+
+### 11.14 Simulateur : changement de profil en cours de saison (0.2.1, lot CX)
+
+Une correction en 0.2.1 : `applyProposal` garde les champs du contrat 0.4.0 (intention de semaine, etc.) d'un bloc qui porte une intention ; un bloc de 0.1 est reconstruit comme avant. Le simulateur (`simulation.dart`) prend une liste de
+`ProfileChange` (`week`, `apply`, `replan`, `label`) : au début de la semaine `week`, le profil simulé
+devient `apply(profil)` (par exemple une échéance avancée de deux semaines) ; si `replan` est vrai, le bloc
+en cours s'arrête à la fin de la semaine précédente et le bloc suivant est écrit par `nextBlock` sur le
+profil changé, avec le résumé d'adaptation du moment. `SimRun.changes` garde la semaine et le libellé de
+chaque changement. Sans changement, la simulation suit celle de 0.2.0 ; seuls diffèrent les blocs au contrat
+0.4.0 après une proposition appliquée (correction d'`applyProposal`). Utilisé par le mode saisons de `kalis_bench` 0.2.0.

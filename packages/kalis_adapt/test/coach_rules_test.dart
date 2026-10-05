@@ -7,6 +7,7 @@ import 'package:kalis_adapt/kalis_adapt.dart';
 import 'package:kalis_adapt/simulation.dart';
 import 'package:kalis_adapt/src/model.dart' show formAfter;
 import 'package:kalis_core/kalis_core.dart';
+import 'package:kalis_plan/kalis_plan.dart';
 import 'package:test/test.dart';
 
 import 'support.dart';
@@ -184,48 +185,74 @@ void main() {
   });
 
   group('séries fractionnées', () {
-    // Débutante : pompe classique écrite 2 × 3 à 6 à 2 en réserve pour un
-    // maximum de 3 — des séries plus courtes et plus nombreuses.
-    test('street_03 : plage hors de portée, plus de séries, plus '
-        'courtes', () {
-      const key = 'street_03_debutante';
-      const id = 'sw-pompe';
-      final engine = KalisAdapt();
-      final policy = _Captured(engine, <String>{id});
-      final run = simulate(
-        catalog: catalog,
-        spec: streetAthlete(key),
-        profile: streetProfile(key),
-        seed: 4,
-        policy: policy,
-        program: streetProgram(key),
-        weeks: 10,
-        loop: engine,
-        truthKind: TruthKind.b,
-      );
-      expect(policy.violations, isEmpty);
+    // Plage écrite hors de portée le jour même (record déclaré au-dessus du
+    // maximum réel, ou maximum en baisse) : des séries plus courtes et plus
+    // nombreuses. Depuis `kalis_plan` 0.2.1 (lot CX), les blocs sont écrits
+    // sur le dernier test et la débutante de street_03 reçoit l'échelle de
+    // poussée : le cas se cherche sur plusieurs profils et graines, avec un
+    // record de pompes surestimé pour street_03 (5 déclarées, 3 réelles).
+    test('séries fractionnées : plus de séries, chacune sous le bas de la '
+        'plage écrite', () {
       var split = 0;
-      for (final s in run.served) {
-        final cap = policy.before[s.plan.date.iso]?[id];
-        for (final it in s.plan.items) {
-          if (it.exerciseId != id || it.kind == SetKind.test || cap == null) {
-            continue;
-          }
-          final written = _written(run, s, it.slotId);
-          final low = written?.repsLow;
-          if (written == null || low == null) {
-            continue;
-          }
-          final targets = it.setTargets ?? const <SetTarget>[];
-          if (targets.length > written.sets) {
-            split++;
-            // Jamais plus du double des séries (trois au moins permises),
-            // chaque série plus courte que le bas de la plage écrite.
-            final most = 2 * written.sets < 3 ? 3 : 2 * written.sets;
-            expect(targets.length, lessThanOrEqualTo(most));
-            for (final t in targets) {
-              expect(t.repsHigh, lessThan(low));
-              expect(t.repsHigh, greaterThanOrEqualTo(1));
+      for (final key in const <String>[
+        'street_03_debutante',
+        'street_13_peu_de_temps',
+        'street_17_hybride_street_course',
+        'street_06_inter_sets_reps',
+      ]) {
+        final declared = streetProfile(key);
+        final profile = key != 'street_03_debutante'
+            ? declared
+            : declared.copyWith(
+                benchmarks: <Benchmark>[
+                  for (final b in declared.benchmarks ?? const <Benchmark>[])
+                    if (b.exerciseId == 'sw-pompe' &&
+                        b.kind == BenchmarkKind.maxReps)
+                      b.copyWith(reps: 5)
+                    else
+                      b,
+                ],
+              );
+        for (final seed in const <int>[4, 0]) {
+          final engine = KalisAdapt();
+          final policy = _Captured(engine, const <String>{});
+          final run = simulate(
+            catalog: catalog,
+            spec: streetAthlete(key),
+            profile: profile,
+            seed: seed,
+            policy: policy,
+            program: SimProgram(catalog, KalisPlan(), profile),
+            weeks: 10,
+            loop: engine,
+            truthKind: TruthKind.b,
+          );
+          expect(policy.violations, isEmpty, reason: key);
+          for (final s in run.served) {
+            for (final it in s.plan.items) {
+              if (it.kind == SetKind.test) {
+                continue;
+              }
+              final written = _written(run, s, it.slotId);
+              final low = written?.repsLow;
+              if (written == null ||
+                  low == null ||
+                  written.exerciseId != it.exerciseId) {
+                continue;
+              }
+              final targets = it.setTargets ?? const <SetTarget>[];
+              if (targets.length > written.sets) {
+                split++;
+                // Jamais plus du double des séries (trois au moins
+                // permises), chaque série plus courte que le bas de la
+                // plage écrite.
+                final most = 2 * written.sets < 3 ? 3 : 2 * written.sets;
+                expect(targets.length, lessThanOrEqualTo(most), reason: key);
+                for (final t in targets) {
+                  expect(t.repsHigh, lessThan(low), reason: key);
+                  expect(t.repsHigh, greaterThanOrEqualTo(1), reason: key);
+                }
+              }
             }
           }
         }

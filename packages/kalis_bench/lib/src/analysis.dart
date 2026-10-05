@@ -233,6 +233,13 @@ final class ItemView {
         exercise.id.startsWith('cs-back-lever')) {
       return StraightArmFamily.push;
     }
+    // Tenue menton au-dessus de la barre : coudes fléchis, hors du budget
+    // des tenues bras tendus (0.2.0, lot CX : le catalogue la range avec
+    // les figures statiques de tirage).
+    if (exercise.rootId.startsWith('cs-tenue-menton') ||
+        exercise.id.startsWith('cs-tenue-menton')) {
+      return null;
+    }
     switch (exercise.pattern) {
       case MovementPattern.figureStatiquePoussee:
         return StraightArmFamily.push;

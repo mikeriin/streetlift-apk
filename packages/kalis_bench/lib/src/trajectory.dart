@@ -213,12 +213,14 @@ Trajectory simulateTrajectory(
   int? weeks,
   TruthKind truth = TruthKind.a,
   bool legacy = false,
+  AthleteSpec? spec,
+  List<ProfileChange> changes = const <ProfileChange>[],
 }) {
   final horizon = weeks ?? horizonOf(bench);
   final engine = KalisAdapt(legacy: legacy);
   final run = simulate(
     catalog: catalog,
-    spec: athleteSpecOf(bench),
+    spec: spec ?? athleteSpecOf(bench),
     profile: profile,
     seed: seed,
     policy: KalisAdaptPolicy(engine),
@@ -226,6 +228,7 @@ Trajectory simulateTrajectory(
     weeks: horizon,
     loop: engine,
     truthKind: truth,
+    changes: changes,
   );
   final coached = run.blocks.isNotEmpty && blockCoached(run.blocks.first);
   final cm = CoachMetrics(<SimRun>[run]);

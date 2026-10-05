@@ -1,5 +1,38 @@
 # Journal des versions de kalis_plan
 
+## 0.2.1
+
+Lot CX du pipeline « Calibrage des programmes » : le programme écrit tenu sur une saison street complète
+(croisement avec `kalis_adapt` 0.2.1). `kalis_core` 0.4.2. Le chemin 0.1 est inchangé (mêmes programmes à
+l'octet près, version du moteur mise à part). Détail, sources et mesures : `CONTRAT.md`, § 12.13 ;
+journal de calibrage : `packages/kalis_bench/docs/CALIBRAGE_CX.md`.
+
+- **Bloc suivant d'après le test réel** : le dernier test mesuré (test guidé, compétition) fait foi, même
+  plus bas qu'un record déclaré ; pas de gain supposé quand le repère vient du test de la semaine
+  précédente ; les estimations du résumé d'adaptation (assez d'observations, erreur faible) abaissent le
+  repère, jamais ne le montent ; les douleurs du résumé sont lues comme des gênes.
+- **Échelle de poussée du débutant** (genoux → mains surélevées → sol) écrite comme une échelle de figure
+  (`Pass1Plan.skillLadders`), critère de passage mesurable.
+- **Figures** : critère de passage chiffré (tenue de 12, 11, 9 ou 7 s × 3 sur deux séances, environ 75 %
+  du maximum), étape suivante ouverte à 75 % ; tenues à 60-70 % les jours légers, 75-85 % les jours lourds.
+- **Charges** : séries allégées à −5 % (intensification, réalisation) ou −8 % ; trois séries lourdes au
+  moins en intensification et en réalisation ; hausse hebdomadaire du volume de 15 % au plus ; lest sous le
+  plus petit pas : série chiffrée au poids du corps.
+- **Échéance** : catégorie de poids et pesée (streetlifting), format d'épreuve inconnu dit (sets & reps),
+  semaine de transition après une épreuve principale, partielles retirées les quatre dernières semaines.
+- **Récupération** : jours de traction écartés de 48 h autant que les jours d'entraînement le permettent
+  (répétitions : jusqu'à trois séances de tirage ; streetlifting : volume et séance légère loin du tirage lourd).
+- **Test du chemin vers la traction** : tenue menton au-dessus de la barre, comptée en secondes.
+- Lieu du jour : un exercice au mur n'est plus proposé au parc sans mur (`feasibleAt` de `kalis_core`
+  0.4.2).
+- **Douleur relevée par le moteur d'évolution** (sous 6/10) : une figure reste au bloc suivant, à 60 % de ses
+  séries (`pain_trend`), même quand le moteur l'avait écartée.
+- **Débutants** : tenue menton à 60-70 % du maintien, test de l'objectif en tête de séance, pompe au sol en
+  grappes dès le deuxième bloc, négatives de pompe gardées, critère de l'échelle de poussée sur deux séries,
+  une seule règle d'élastique, essais stricts de traction dès la sixième semaine.
+- **Lest** : 1RM de travail relevé d'après le maximum au poids du corps ; une estimation n'abaisse un 1RM
+  qu'au-delà de 6 %.
+
 ## 0.2.0
 
 Lot CP1 du pipeline « Calibrage des programmes » : le street au niveau d'un coach.

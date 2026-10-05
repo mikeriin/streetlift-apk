@@ -336,6 +336,38 @@ final class ProposalRow {
   final int changes;
 }
 
+/// Changement du profil en cours de saison (scénarios du croisement,
+/// `kalis_bench`) : échéance avancée, échéance ajoutée… Il prend effet au
+/// début de la semaine [week] de la simulation ; avec [replan], le bloc en
+/// cours s'arrête à la fin de la semaine précédente et le bloc suivant est
+/// construit tout de suite par `nextBlock`, à partir du profil changé et
+/// du dernier résumé d'adaptation (comme l'application le fait quand
+/// l'athlète change une échéance). Le bloc n'est pas reconstruit (le
+/// changement vaut alors au bloc suivant) sans moteur d'évolution, avant le
+/// premier résumé d'adaptation ou en première semaine d'un bloc ; le
+/// changement est noté dans `SimRun.changes` dans tous les cas.
+final class ProfileChange {
+  /// Changement.
+  const ProfileChange({
+    required this.week,
+    required this.apply,
+    this.replan = true,
+    this.label = '',
+  });
+
+  /// Semaine de la simulation (0 = première) où le changement prend effet.
+  final int week;
+
+  /// Profil changé, à partir du profil courant.
+  final AthleteProfile Function(AthleteProfile profile) apply;
+
+  /// Vrai pour reconstruire le bloc dès cette semaine.
+  final bool replan;
+
+  /// Libellé lisible du changement.
+  final String label;
+}
+
 /// Résultat d'une simulation.
 final class SimRun {
   /// Résultat.
@@ -396,6 +428,9 @@ final class SimRun {
 
   /// Semaine de chaque bloc de [blocks] (0 = première).
   final List<int> blockWeeks = <int>[];
+
+  /// Changements du profil appliqués : (semaine, libellé).
+  final List<(int, String)> changes = <(int, String)>[];
 
   /// Profil en fin de simulation (repères et étapes de figure reportés).
   AthleteProfile? finalProfile;
@@ -464,6 +499,7 @@ SimRun simulate({
   int weeks = 24,
   KalisAdapt? loop,
   TruthKind truthKind = TruthKind.a,
+  List<ProfileChange> changes = const <ProfileChange>[],
 }) {
   final book = ExerciseBook(catalog, profile);
   final athlete = SimAthlete(spec, profile, book, seed, kind: truthKind);
@@ -492,8 +528,29 @@ SimRun simulate({
   run.blockWeeks.add(0);
 
   for (var g = 0; g < weeks; g++) {
-    if (weekInBlock >= block.pass1.weeks) {
-      blockStart = blockStart.addDays(7 * block.pass1.weeks);
+    var replan = false;
+    for (final c in changes) {
+      if (c.week != g) {
+        continue;
+      }
+      current = c.apply(current);
+      eventDays
+        ..clear()
+        ..addAll(<int>[
+          for (final e in current.events ?? const <SeasonEvent>[])
+            e.date.dayNumber,
+        ]);
+      run.changes.add((g, c.label));
+      if (c.replan &&
+          loop != null &&
+          summary != null &&
+          weekInBlock > 0 &&
+          weekInBlock < block.pass1.weeks) {
+        replan = true;
+      }
+    }
+    if (weekInBlock >= block.pass1.weeks || replan) {
+      blockStart = blockStart.addDays(7 * weekInBlock);
       blockIndex++;
       weekInBlock = 0;
       final last = summary;
