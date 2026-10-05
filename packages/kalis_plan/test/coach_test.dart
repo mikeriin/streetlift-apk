@@ -967,49 +967,52 @@ void main() {
       );
     });
 
-    test('un test mesuré plus bas que le record déclaré (15 % au plus) fait foi', () {
-      final declared = _profile(
-        experience: ExperienceLevel.intermediate,
-        benchmarks: <Benchmark>[
-          _maxReps('sw-traction-pronation', 14),
-          _maxReps('sw-dips-barres-paralleles', 20),
-        ],
-      );
-      final tested = declared.copyWith(
-        benchmarks: <Benchmark>[
-          ...declared.benchmarks!,
-          Benchmark(
-            exerciseId: 'sw-traction-pronation',
-            kind: BenchmarkKind.maxReps,
-            source: BenchmarkSource.guidedTest,
-            reps: 12,
-            date: _start.addDays(-3),
-          ),
-        ],
-      );
-      int pullReps(AthleteProfile p) {
-        var most = 0;
-        final week = _program(catalog, p, 4).first.pass2.weeks.first;
-        for (final d in week.days) {
-          for (final i in d.items) {
-            if (i.exerciseId == 'sw-traction-pronation' &&
-                (i.kind == null || i.kind == SetKind.work)) {
-              final reps = i.repsHigh;
-              if (reps != null && reps > most) {
-                most = reps;
+    test(
+      'un test mesuré plus bas que le record déclaré (15 % au plus) fait foi',
+      () {
+        final declared = _profile(
+          experience: ExperienceLevel.intermediate,
+          benchmarks: <Benchmark>[
+            _maxReps('sw-traction-pronation', 14),
+            _maxReps('sw-dips-barres-paralleles', 20),
+          ],
+        );
+        final tested = declared.copyWith(
+          benchmarks: <Benchmark>[
+            ...declared.benchmarks!,
+            Benchmark(
+              exerciseId: 'sw-traction-pronation',
+              kind: BenchmarkKind.maxReps,
+              source: BenchmarkSource.guidedTest,
+              reps: 12,
+              date: _start.addDays(-3),
+            ),
+          ],
+        );
+        int pullReps(AthleteProfile p) {
+          var most = 0;
+          final week = _program(catalog, p, 4).first.pass2.weeks.first;
+          for (final d in week.days) {
+            for (final i in d.items) {
+              if (i.exerciseId == 'sw-traction-pronation' &&
+                  (i.kind == null || i.kind == SetKind.work)) {
+                final reps = i.repsHigh;
+                if (reps != null && reps > most) {
+                  most = reps;
+                }
               }
             }
           }
+          return most;
         }
-        return most;
-      }
 
-      final before = pullReps(declared);
-      final after = pullReps(tested);
-      expect(before, greaterThan(0));
-      expect(after, lessThan(before));
-      expect(after, lessThan(12));
-    });
+        final before = pullReps(declared);
+        final after = pullReps(tested);
+        expect(before, greaterThan(0));
+        expect(after, lessThan(before));
+        expect(after, lessThan(12));
+      },
+    );
   });
   group('CX correction 1', () {
     bool noted(ProgramBlock b, String note) =>

@@ -393,9 +393,15 @@ String? coachReasonText(Reason r, Catalog catalog) {
               'essoufflement anormal, malaise ou vertige. Souffle pendant '
               "l'effort, sans bloquer la respiration sur les séries longues.",
         CoachNotes.shortVersion =>
-          'Jour chargé : version courte de ${_int(v)} min — échauffement, '
-              'puis les deux ou trois premiers exercices de la séance. Une '
-              "séance courte vaut mieux qu'une séance sautée.",
+          v is num && v < 20
+              ? 'Jour chargé : version courte de ${_int(v)} min — 4 min '
+                    "d'échauffement, puis le premier exercice seul (le "
+                    "mouvement de l'objectif), 2 séries. Une séance courte "
+                    "vaut mieux qu'une séance sautée."
+              : 'Jour chargé : version courte de ${_int(v)} min — '
+                    "5 min d'échauffement, puis les deux premiers exercices "
+                    'de la séance, 2 séries chacun. Une séance courte vaut '
+                    "mieux qu'une séance sautée.",
         CoachNotes.bandChoice =>
           "Élastique : prends celui qui permet ${_int(v)} répétitions "
               'propres avec la réserve prévue ; note-le à chaque séance. '
@@ -500,8 +506,9 @@ String? coachReasonText(Reason r, Catalog catalog) {
               'en moins.',
         CoachNotes.checkpoint =>
           "Repère sur le chemin de l'objectif : ${_plain(v)}. "
-              "S'il n'est pas atteint, garde les volumes du bloc au lieu de "
-              'les durcir.',
+              "S'il n'est pas atteint, suis la progression écrite (une "
+              'variable à la fois) sans ajouter de séries ; le bloc suivant '
+              'change de méthode.',
         CoachNotes.testRest =>
           '${_int(v)} h sans travail dur du mouvement avant un test.',
         CoachNotes.rampBodyweight =>

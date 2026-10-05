@@ -116,13 +116,16 @@ bool coachPainProvokes(CatalogExercise e, BodyZone zone) {
     return false;
   }
   final stress = e.stressOn(joint);
-  if (stress == JointStress.high) {
-    return true;
+  // Poignet : tout appui en extension (contrainte moyenne ou forte) sans
+  // prise neutre ; sur parallettes, anneaux ou poignées, la figure reste
+  // tant que la gêne ne monte pas (règle écrite du programme ; CX,
+  // correction 1, panel : quatre semaines sans planche faisaient régresser
+  // la figure visée).
+  if (zone == BodyZone.wristHand) {
+    return stress != JointStress.low &&
+        !e.equipment.any(coachNeutralGripEquipment.contains);
   }
-  if (zone == BodyZone.wristHand && stress == JointStress.moderate) {
-    return !e.equipment.any(coachNeutralGripEquipment.contains);
-  }
-  return false;
+  return stress == JointStress.high;
 }
 
 /// Vrai si [e] est écarté pendant un arrêt pour douleur qui dure sur
@@ -213,6 +216,11 @@ const double coachEstimateMargin = 0.025;
 /// de cette marge, elle ferait baisser à tort les charges du bloc suivant
 /// (panel CX, boucle 5 : séries allégées à 6 à 10 répétitions de réserve).
 const double coachEstimateLoadMargin = 0.06;
+
+/// Correction de l'estimation d'un 1RM par le moteur d'évolution avant
+/// qu'elle serve de repère : +3 % (bas de l'écart prudent de CA1.3, 3 à
+/// 5 % sous le 1RM réel ; CX, correction 1).
+const double coachEstimateLoadBias = 0.03;
 
 /// Vrai si [profile] relève du chemin street de `kalis_plan` 0.2 : profil
 /// au schéma 3 rempli par le questionnaire 0.4 (expérience et ancienneté
@@ -643,7 +651,12 @@ final class Athlete {
           final before = oneRm[e.exerciseId];
           final fraction =
               catalog.find(e.exerciseId)?.bodyweightFraction?.value ?? 0;
-          final external = e.capacity - fraction * bodyWeight;
+          // (L'estimation se tient 3 à 5 % sous le 1RM réel, CA1.3 : elle
+          // est remontée de 3 % avant de servir de repère — CX, correction
+          // 1, panel : 1RM de travail qui dérivait vers le bas, barres de
+          // l'épreuve à 88 à 92 % du maximum du jour.)
+          final capacity = e.capacity * (1 + coachEstimateLoadBias);
+          final external = capacity - fraction * bodyWeight;
           final total = (before ?? 0) + fraction * bodyWeight;
           // (Une amplitude partielle surchargée ne prend pas d'estimation
           // sans record : ses séries servies ne mesurent pas un 1RM.)
@@ -656,7 +669,7 @@ final class Athlete {
           if ((before == null && external > 0 && !partial) ||
               (before != null &&
                   external > 0 &&
-                  e.capacity < total * (1 - coachEstimateLoadMargin))) {
+                  capacity < total * (1 - coachEstimateLoadMargin))) {
             oneRm[e.exerciseId] = external;
             recordDay[e.exerciseId] = seen;
           }
