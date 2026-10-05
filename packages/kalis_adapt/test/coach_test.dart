@@ -118,6 +118,21 @@ void main() {
           if (picks[i].loadKg < picks[i - 1].loadKg - 1e-9) {
             failures.add('$where : tentatives décroissantes');
           }
+          // Sauts (CX, correction 1) : +5 % puis +3 % du total au plus,
+          // +5 kg de charge externe au plus, sauf le plus petit saut.
+          final previous = picks[i - 1].loadKg;
+          final rise = i == 1 ? 0.05 : 0.03;
+          var cap = (previous + bodyPart) * (1 + rise) - bodyPart;
+          if (cap > previous + 5) {
+            cap = previous + 5;
+          }
+          final least = previous + grid.step;
+          if (picks[i].loadKg > (cap > least ? cap : least) + 1e-9) {
+            failures.add(
+              '$where : saut de ${picks[i].loadKg - previous} kg '
+              '(tentative ${i + 1})',
+            );
+          }
         }
         final opener = picks.first.loadKg + bodyPart;
         final floorKg = grid.minimum + bodyPart;

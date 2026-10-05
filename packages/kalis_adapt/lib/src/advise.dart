@@ -289,7 +289,15 @@ IntraSessionAdvice buildAdvice(
         rirOfFlames(rated) >= run.state.rater.ceiling(p) &&
         rirOfFlames(previousTarget.flames) >= run.state.rater.ceiling(p);
     final delta = far ? 0 : rated - previousTarget.flames;
-    if (delta >= p.adviceGapFlames) {
+    // Mode coach : une note isolée plus dure sur une série menée au haut
+    // de sa plage, que le modèle juge nettement plus facile que visé, ne
+    // se dit pas « plus dure que prévu » (CX, correction 1).
+    final doubtful =
+        exercise.spec.coach != null &&
+        previous.amount >= previousTarget.high &&
+        previous.rir - rirOfFlames(previousTarget.flames) >= 2 &&
+        delta < p.adviceGapFlames + 2;
+    if (delta >= p.adviceGapFlames && !doubtful) {
       reasons.add(
         reason(ReasonCodes.adaptFlamesAboveTarget, <String, Object?>{
           'delta': delta.toDouble(),

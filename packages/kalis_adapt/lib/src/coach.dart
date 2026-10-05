@@ -331,7 +331,14 @@ final class SlotMark {
     this.easy = 0,
     this.total = 0,
     this.sets = 0,
+    this.reached = 0,
   });
+
+  /// Séances de suite où toutes les séries ont atteint le haut de leur
+  /// plage sans être dites plus dures que visé, ou où la première série a
+  /// été dite au moins deux répétitions plus facile que visé (exercice
+  /// assisté : règle d'assistance du programme, CX, correction 1).
+  final int reached;
 
   /// Somme des répétitions (ou secondes) menées à bien ce jour-là.
   final int total;
@@ -481,8 +488,43 @@ void noteCoachSession(
       easy--;
     }
   }
+  // Règle d'assistance : toutes les séries au haut de leur plage, aucune
+  // dite plus dure que visé ; ou première série dite au moins deux
+  // répétitions plus facile que visé.
+  var allTop = true;
+  for (final o in run.observed) {
+    final t = o.target;
+    final said = o.flames;
+    if (o.failed ||
+        t == null ||
+        o.amount < t.high ||
+        (said != null && rirOfFlames(said) < rirOfFlames(t.flames) - 0.5)) {
+      allTop = false;
+    }
+  }
+  final first = run.observed.first;
+  final firstSaid = first.flames;
+  final firstTarget = first.target;
+  final firstEasy =
+      !first.failed &&
+      firstSaid != null &&
+      firstTarget != null &&
+      first.amount >= firstTarget.low &&
+      rirOfFlames(firstSaid) - rirOfFlames(firstTarget.flames) >= 2 - 1e-9;
+  // La série ne compte qu'à charge (ou assistance) et plage égales : un cran
+  // retiré ou une plage changée la remet à zéro (relecture du code CX,
+  // correction 1).
+  final before = marks[coach.slotId];
+  var streak = 0;
+  if (before != null &&
+      before.amount == coach.schemeAmount &&
+      before.loadKg == held) {
+    streak = before.reached;
+  }
+  final reached = allTop || firstEasy ? streak + 1 : 0;
   marks[coach.slotId] = SlotMark(
     day: day,
+    reached: reached,
     loadKg: lowestFailed ?? held,
     amount: coach.schemeAmount,
     top: top,
@@ -1038,6 +1080,21 @@ List<SetPlan>? _loadedPlans(
       ex.heldCause = cause;
     }
   }
+  // Simple d'entraînement : 92 % au plus du maximum estimé du jour, 85 %
+  // un jour de bilan bas (CX, correction 1 : un simple servi à 96 % un
+  // jour de bilans bas finit en échec ; Helms et al. 2018).
+  if (item.kind != SetKind.test &&
+      lines.isNotEmpty &&
+      lines.first.$2 == 1 &&
+      served != SetTechniqueKind.accentuatedEccentric &&
+      ownRef) {
+    final share = run.health.level >= 1 ? 0.85 : 0.92;
+    final most = grid.floor(share * ref - bw);
+    if (kg > most + 1e-9) {
+      kg = most < grid.minimum ? grid.minimum : most;
+      ex.heldCause ??= run.health.level >= 1 ? 'health' : 'cap';
+    }
+  }
   if (capped) {
     ex.notes.add(
       _r(ReasonCodes.adaptRirCap, <String, Object?>{
@@ -1570,7 +1627,14 @@ List<SetPlan>? _directPlans(
           p.coachHoldRise[c.level < 0 ? 0 : (c.level > 3 ? 3 : c.level)];
       final byShare = (mark.top * (1 + rise)).floor();
       final bySlack = mark.top + p.coachHoldRiseSlackSeconds;
-      final cap = byShare > bySlack ? byShare : bySlack;
+      var cap = byShare > bySlack ? byShare : bySlack;
+      // (Jamais sous 55 % du meilleur maintien mesuré.)
+      final byBest = hold
+          ? (track.bestAmount * p.coachHoldMaxFloorShare).floor()
+          : 0;
+      if (byBest > cap) {
+        cap = byBest;
+      }
       if (target > cap) {
         target = cap;
         tendonCapped = true;
@@ -1611,7 +1675,13 @@ List<SetPlan>? _directPlans(
     final rise = p.coachHoldRise[c.level < 0 ? 0 : (c.level > 3 ? 3 : c.level)];
     final byShare = (mark.total * (1 + rise)).floor();
     final bySlack = mark.total + p.coachHoldRiseSlackSeconds;
-    final most = byShare > bySlack ? byShare : bySlack;
+    var most = byShare > bySlack ? byShare : bySlack;
+    // (Jamais sous 55 % du meilleur maintien mesuré par tenue.)
+    final byBest =
+        (track.bestAmount * p.coachHoldMaxFloorShare).floor() * out.length;
+    if (byBest > most) {
+      most = byBest;
+    }
     var total = 0;
     for (final s in out) {
       total += s.high;
@@ -1660,7 +1730,11 @@ List<SetPlan>? _directPlans(
           p.coachHoldRise[c.level < 0 ? 0 : (c.level > 3 ? 3 : c.level)];
       final byShare = (mark.top * (1 + rise)).floor();
       final bySlack = mark.top + p.coachHoldRiseSlackSeconds;
-      final cap = byShare > bySlack ? byShare : bySlack;
+      var cap = byShare > bySlack ? byShare : bySlack;
+      final byBest = (track.bestAmount * p.coachHoldMaxFloorShare).floor();
+      if (byBest > cap) {
+        cap = byBest;
+      }
       if (probeHigh > cap) {
         probeHigh = cap;
       }
@@ -1704,14 +1778,17 @@ List<SetPlan>? _directPlans(
     final cap = shown != null && shown > estimate ? shown : estimate;
     final spare = cap - c.schemeAmount - rir;
     final (low, _, _) = c.line(0, sets, served, hold: false);
-    if (measured &&
-        !locked &&
+    // (Règle d'assistance du programme : deux séances de suite au haut de
+    // la plage avec la réserve prévue, ou première série dite au moins
+    // deux répétitions plus facile que visé — un cran de moins.)
+    final streak = (mark?.reached ?? 0) >= 2;
+    if (!locked &&
         c.policy.build &&
         !c.eventNear &&
-        spare >= p.coachAssistGapRir - 1e-9) {
+        (streak || (measured && spare >= p.coachAssistGapRir - 1e-9))) {
       ex.notes.add(
         _r(ReasonCodes.adaptFlamesBelowTarget, <String, Object?>{
-          'delta': roundTo(spare, 1),
+          'delta': roundTo(spare > 2 ? spare : 2.0, 1),
           'sets': sets,
         }),
       );
@@ -1838,6 +1915,15 @@ List<SetPlan>? _testPlans(
     final n = high + targetRir;
     final shift = -run.quantileZ(targetRir) * f.loadSd(n);
     var kg = _onGrid(info.grid, exp(f.logLoadFor(n, shift: shift)) - bw);
+    // Semaine allégée ou de test : jamais plus lourd que la charge écrite
+    // par le programme (CX, correction 1 ; un test servi au-dessus du
+    // plan finit en échec).
+    final written = item.startLoadKg;
+    if (c.policy.locked && written != null && kg > written + 1e-9) {
+      kg = info.grid.floor(written) > written
+          ? written
+          : info.grid.floor(written);
+    }
     final last = track.lastLoad;
     if (locked && last != null && kg > last) {
       final floored = info.grid.floor(last);
@@ -2033,6 +2119,19 @@ List<AttemptPick> attemptLadder({
           objective == EventObjective.record) {
         final floored = grid.floor(goal);
         kg = floored > goal ? goal : floored;
+      }
+    }
+    if (previous != null && previousOk && index >= 1) {
+      // Sauts des tentatives (CX, correction 1 ; pratique des élites :
+      // deuxième vers +4 à 5 %, troisième vers +2 à 3 %, Travis et al.) :
+      // jamais au-delà du plan écrit (+5 kg de charge externe au plus).
+      final rise = index == 1 ? 0.05 : 0.03;
+      var cap = grid.floor((previous + bodyPart) * (1 + rise) - bodyPart);
+      if (cap > previous + 5.0 + 1e-9) {
+        cap = grid.floor(previous + 5.0);
+      }
+      if (kg > cap) {
+        kg = cap;
       }
     }
     if (previous != null) {

@@ -351,3 +351,145 @@ Cinq boucles sur dix (C7.2). La règle « deux boucles de suite sans gain » n'e
 boucle coûte un contrôle de 50 minutes et une passe partielle du panel, et les corrections restantes sont
 profondes (dosage des figures de l'élite et conduite d'une douleur qui dure, montée de volume de street_08,
 poussée de la débutante, plateau sans changement de stimulus).
+
+## Correction 1 (05/10/2026) — `kalis_plan` 0.2.2, `kalis_adapt` 0.2.2, `kalis_bench` 0.2.1
+
+Passe « CX correction 1 » (LANCEMENTS.md) : relecture du pilotage de CX (notes 4 à 7) et panel final de CX
+(25 couples sur 68 à 9, minimum 4). Mesure avant : passe finale de CX (mêmes moteurs, 0.2.1).
+
+### Recherche ciblée (sources vérifiées, sous-agent Opus)
+
+| Règle | Valeur retenue | Verdict | Sources |
+| --- | --- | --- | --- |
+| Douleur qui dure : arrêt des mouvements qui provoquent la zone, consulter | 3/10 pendant 2 semaines, 5/10 plus d'une semaine, ou retour dans les 12 semaines après un épisode réel | partiellement soutenu : 3/10 = seuil du coude (Coombes 2015), plus prudent que le modèle de Silbernagel (5/10 si calmé le lendemain) ; 2 semaines = délai NHS avant de consulter ; 5/10 et 12 semaines : choix prudents | Coombes, Bisset, Vicenzino 2015, JOSPT 45(11) ; Silbernagel et al. 2007, AJSM 35(6) ; NHS « Tennis elbow » |
+| Reprise graduée après l'arrêt | après 2 semaines à 2/10 au plus ; 50 % du volume, +10 %/semaine, 3 en réserve au moins | partiellement soutenu : reprise graduée guidée par la douleur (Coombes 2015, Silbernagel 2007) ; chiffres = conventions prudentes | idem ; Gabbett 2016, BJSM 50(5) |
+| Coude : prise neutre à la place de la pronation | tirage en pronation retiré pendant une poussée | partiellement soutenu (éviter de soulever avant-bras en pronation, Coombes 2015 ; pronation contrariée provocante dans l'épicondylite médiale) | Coombes 2015 ; StatPearls « Golfer's elbow » (NCBI Bookshelf, page non ouverte : captcha) |
+| Test après des jours légers, deux mesures concordantes avant de baisser un repère | test à partir du 3e jour de la semaine, reporté un jour de bilan bas | partiellement soutenu (affûtage : Bosquet et al. 2007, MSSE 39(8)) ; deux mesures : règle de mesure | Bosquet 2007 ; Helms et al. 2018, Front Physiol |
+| Montée du volume de répétitions | +15 % par semaine au plus (max. des 3 semaines d'avant) | partiellement soutenu : seuil de risque de Gabbett ; « règle des 10 % » non démontrée (Buist 2008), ACWR critiqué (Impellizzeri 2020) — garde-fou prudent, non présenté comme règle validée | Gabbett 2016 ; Buist et al. 2008, AJSM ; Impellizzeri et al. 2020, IJSPP |
+| Tentatives | ouverture 91 %, 2e +5 % au plus, 3e +3 % au plus, +5 kg de charge externe au plus | soutenu (élites IPF 2012-2019 : ~91 %, +5 %, +3 % de la 3e visée) | Travis, Zourdos, Bazyler 2021, Percept Mot Skills 128(1) |
+| Échec imprévu, simples d'entraînement | −7,5 % après une série manquée ; simple ≤ 92 % du max estimé (85 % un jour de bilan bas) | partiellement soutenu (autorégulation RPE/RIR ; un simple à RPE 8-9 ≈ 90-94 %) | Helms 2018 ; Halperin et al. 2022 (revue des échelles RIR) |
+| Montée d'échauffement | 5 @40 %, 3 @60 %, 2 @75 %, 1 @85 % ; aussi avant le muscle-up | partiellement soutenu (échauffement spécifique proche du maximum : Ribeiro et al. 2021, revue) | Ribeiro et al. 2021, Motricidade ; Kraemer & Ratamess 2004, MSSE |
+| Plateau : changer de méthode | test qui ne dépasse pas le repère → variante (tempo, archer, typewriter), cible intermédiaire | partiellement soutenu (variation planifiée ; aucun modèle supérieur, Kiely 2012) | Kraemer & Ratamess 2004 ; Kiely 2012, IJSPP |
+| Tenues de figures | partie intense 60 à 75 % du max (80 % au plus), jusqu'à 10 séries quand le max ≤ 5 s | partiellement soutenu (isométrie ≥ 70 % de la force max., Oranchuk et al. 2019) ; chiffres = heuristique d'entraîneur | Oranchuk et al. 2019, Scand J Med Sci Sports |
+
+### Dérive du panel (avant la première boucle)
+
+Ancres `p08_a` et `p14_c`, un appel Opus par école : variante (a) 1 / 1 / 1 / 1, variante (c) 8 / 8 / 8 / 8 →
+pas de dérive ((a) ≤ 2, (c) ≥ 8).
+
+### Boucles
+
+| Boucle | Contrôle | Panel | Couples à 9 | Min. | Moy. |
+| --- | --- | --- | --- | --- | --- |
+| passe 0 (0.2.1) | — | complet | 24 / 68 | 4 | 7,99 |
+| 1 | d2 | p1, complet | 14 / 68 | 5,5 | 7,77 |
+| 2 | d4 | p2, complet | 15 / 68 | 6,5 | 7,98 |
+| 3 et 3 bis | d7 | p3, complet | 23 / 68 | 6 | 8,06 |
+| 4 | d8 | p4, 45 couples sous 9 | 35 / 68 (combiné) | 6 | 8,21 |
+| 5 | d9 | p5, 33 couples sous 9 | 39 / 68 (combiné) | 5,5 | 8,34 |
+| 6 et 7 | d15 | p7, **complet** | 23 / 68 | 5,5 | 7,99 |
+| 8 | d18 | p8, 36 couples des 9 profils changés | 23 / 68 (combiné avec p7) | 5,5 | 7,95 |
+
+Boucle 1 : garde de douleur et report des tests, coude (pronation retirée), baisse de repère bornée à 15 %,
+tests de figures sur l'étape visée, tenues arrondies, charges après transition, départs au chrono (+1 par
+semaine, 2 sur deux semaines), ouverture ≥ 98 % du dernier lourd, estimation +3 %, séries allégées +3 % par
+palier, repos 2 min en phase spécifique, version courte, poignet en prise neutre.
+Boucle 2 : traction au tempo complète (45 % du maximum), arrêt pour douleur visible en séance, tenues
+60/65/70 % (75 % au plus), règle des départs réécrite, 1RM déclaré ou testé jamais abaissé par l'estimation.
+Boucle 3 et 3 bis : la restructuration lit les semaines gardées ; relecture indépendante du code.
+Boucle 4 : note d'arrêt à la place de `pain_trend` quand la zone est à l'arrêt ; affûtage en doubles à 86 % ;
+partielle repartie de son entrée ; zone de l'épreuve ; repos-pause avancé et élite ; marge de force +1
+seulement en introduction et allègement ; tenues du débutant +15 % par semaine ; essais stricts seulement
+sans traction acquise.
+Boucle 5 : zone de l'épreuve sur le mouvement exact (objectif ≥ 12) ; densité sous 10 de maximum par les
+départs seuls, 5 en réserve vraies, volume sous 7 ; affûtage qui garde l'intensité au poids du corps ;
+préparation des poignets du débutant ; test de la tenue menton non borné à 30 s.
+Boucle 6 (sur les notes de p5) : un test plus bas fait foi seul, quelle que soit la baisse (la règle « deux
+mesures concordantes » de la boucle 5 laissait le bloc 2 écrit sur le repère d'avant : séries de tête à
+maximum − 1 dans six profils) ; répétitions + réserve ≤ repère au poids du corps ; tenue du débutant jamais
+sous 55 % du maintien testé ; recul d'étape pour douleur écrit (`pain_step`) ; un 1RM n'est plus abaissé de
+plus de 15 % par une série de plusieurs répétitions (`street_12`) et seul un 1RM estimé est relevé par le
+maximum au poids du corps (`street_11`).
+
+Boucle 7 (sur la relecture documentée ci-dessous) : la borne de hausse d'une tenue (`kalis_adapt`) laisse
+toujours servir 55 % du meilleur maintien mesuré (la tenue menton écrite à 17-19 s après un test de 30 s
+était servie à 5-9 s) ; pompes sur poignets retirées de l'échauffement quand le poignet est douloureux ;
+l'étape de travail d'une figure du profil n'est plus écartée du bloc suivant parce que le moteur
+d'évolution l'a vue sautée (planche de `street_10` retirée du bloc 4 et de son test sans douleur).
+
+### Relecture documentée (manche 4)
+
+Trois relecteurs (Opus), sources publiques en ligne seulement, consigne inchangée, sur les saisons du
+contrôle de la boucle 6 (mêmes sept profils que la manche 3). Sans seuil (C7.6) ; notes écrites sur la page
+de relecture (manche 4, auteur « relecture-documentee »).
+
+| Profil | Ensemble | Adapté | Progression | Volume | Exercices | Faisable |
+| --- | --- | --- | --- | --- | --- | --- |
+| `street_01_debutant_complet` | 7 | 7,5 | 6,5 | 7 | 7 | 8 |
+| `street_06_inter_sets_reps` | 6 | 6 | 5 | 6,5 | 6 | 8 |
+| `street_07_avance_streetlifting_competition` | 7,5 | 8 | 7,5 | 7,5 | 8 | 8,5 |
+| `street_08_avance_sets_reps_competition` | 6,5 | 6,5 | 5,5 | 6 | 7 | 7,5 |
+| `street_10_elite_figures` | 5,5 | 5 | 4,5 | 6 | 5,5 | 6 |
+| `street_12_antecedent_coude` | 7,5 | 8 | 6,5 | 7,5 | 7,5 | 8,5 |
+| `street_14_parc_sans_lest` | 6 | 7 | 5 | 6,5 | 6,5 | 8,5 |
+
+Moyenne 6,6 (manche 3 : 6,1). Traitement : tenue servie sous l'écrit et pompes sur poignets douloureux
+(`street_01`) et planche retirée (`street_10`) → boucle 7. Non retenus, avec la raison : 1RM du bloc 3 de
+`street_12` (115 kg = le simple du test, 36,25 kg plus 96 % du poids du corps ; le relecteur a compté 100 %) ;
+départ sur des records déclarés au-dessus du niveau du jour (`street_06`, `07`, `08`, `12` : la série de tête
+et l'autorégulation recalent ; un test d'entrée → CP2) ; lest pour un objectif de répétitions (`street_06`),
+affûtage de deux semaines (`street_06`), muscle-up après l'échéance et volume de poussée (`street_08`),
+changement de méthode des figures après des tests sans progrès et force dynamique bras tendus
+(`street_10`), volume de traction au chrono (`street_14`) → CP2.
+
+### Boucle 8 et arrêt
+
+Boucle 8 (sur les notes de p7, toutes lues) : une forte baisse (plus de 15 %) ne fait baisser le repère qu'à
+85 % sans test qui la confirme, et seulement sur un repère récent hors reprise (`street_05` : un test de 9 s un
+jour de bilan bas pour un maximum de 12 s) ; une baisse modérée fait foi sans relèvement par l'estimation
+(`street_17`) ; un 1RM déclaré est de nouveau relevé par le maximum au poids du corps (`street_11` : la séance
+lourde tombait au poids du corps, à 7 répétitions de réserve — retour sur la boucle 6) ; note de la zone de
+l'épreuve sur la part écrite (`street_15`) ; arrondi des tenues de figure à 8 points de la part visée
+(`street_10`) ; borne de hausse de charge d'un bloc à l'autre (`street_08` : dips lestés de 67 à 79 % du 1RM
+juste après l'allègement) ; textes du repère de mi-parcours alignés sur le moteur. Corrections de la relecture
+indépendante du code (ci-dessous).
+
+**Lecture des passes.** La passe complète p7 (fin de la boucle 7) donne 23 couples à 9 sur 68, comme p3 ; les
+passes partielles (p4, p5) montaient à 35 puis 39 en combinant des notes de passes différentes. Sur des exports
+proches, le panel varie d'environ un point par couple (C9) : la passe complète fait foi. p8, sur les neuf profils
+changés par la boucle 8, ne gagne rien en net (des couples montent, d'autres descendent). J'arrête le calibrage
+après la boucle 8 : deux passes sans gain, et les constats restants demandent des changements de méthode
+(progression des tenues de figure vers le critère, bloc spécifique d'un objectif de répétitions qui change
+vraiment de méthode, budget d'appui du poignet de l'élite, test d'entrée sur des records déclarés).
+
+### Relecture indépendante du code (sous-agent Opus)
+
+Quatorze points et des remarques, tous lus. Corrigés : un arrêt pour douleur déjà noté reste un arrêt quand une
+restructuration est lancée pour une autre raison ; la borne de forte baisse ne vaut que pour un repère récent
+hors reprise ; un 1RM tiré d'une série de plusieurs répétitions est borné à 85 % du 1RM connu (au lieu d'être
+ignoré) ; un test n'est jamais placé le premier jour quand un jour plus tardif existe ; la note `pain_step`
+seulement quand la douleur écarte l'étape ; commentaires périmés. Laissés à CP2 et écrits au contrat
+(`kalis_plan` § 12.14, limites) : note `plateau` plus large que le changement de méthode réel, densité sans
+variable qui monte sous 12 de maximum, ordre réserve/charge en reprise après douleur sur un lesté proche du poids
+du corps, test d'un mouvement en reprise reporté d'un bloc, plancher des tenues du débutant prioritaire sur la
+hausse de 15 %, meilleur maintien de `kalis_adapt` qui ne baisse pas après un arrêt.
+
+### Contrôle complet, sécurité, non-ressemblance
+
+Contrôle complet (`claude/ci-cp-a`, run 37330259003, commit dc819ddf, 100 graines) : vert pour tous les
+paquets. Programmes créés : 0 violation sur les 17 profils street (les 23 du rapport viennent des autres
+disciplines, moteur 0.1, hors périmètre). Saisons racontées (modèle B, graine 0) : 0 violation sur les 136
+saisons street (référence et 7 scénarios). Moyennes des saisons croisées (trois modèles de vérité, saison de
+référence) : écart d'effort 1,03 répétition (CX : 1,12 ; 0.1 : 1,49), échecs non voulus 0,32 %, progression
+0,252 % par semaine (CX : 0,278 %), tentatives réussies 95 % (CX : 87 %), jour J à 94,0 % du maximum du jour
+(CX : 95,6 %), violations 0,01 par saison (CX : 0,03).
+
+Non-ressemblance (`tool/reference_jaccard.py` sur les 17 saisons écrites du contrôle complet) : maximum exact
+0,158, tolérant 0,188 (seuil 0,30). Détail chiffré : `analyse_CXc1.tar.gpg` sur `cp-references`.
+
+### Reportés
+
+Reportés à CP2 / CA2 (notés par le panel, hors du périmètre street de cette correction) : créneau horaire,
+volume de poussée, jambes, profils hors street, échelle de poussée du débutant, volume de tirage du
+débutant, troisième exposition de traction (`street_17`), progression des tenues de figure jusqu'au
+critère de passage (`street_05`), tenues longues sur demi-palier pour le front lever de l'élite.

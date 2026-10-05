@@ -5,7 +5,12 @@ library;
 
 import 'package:kalis_core/kalis_core.dart';
 import 'package:kalis_plan/kalis_plan.dart'
-    show MuscleGroup, deloadRirBonus, deloadVolumeFactor, volumeBandsByLevel;
+    show
+        MuscleGroup,
+        coachPainStopHits,
+        deloadRirBonus,
+        deloadVolumeFactor,
+        volumeBandsByLevel;
 
 import 'fatigue.dart';
 import 'filter.dart';
@@ -375,7 +380,21 @@ AdaptReview buildReview(
         consecutiveAboveThreshold: s.consecutiveAbove,
       ),
     );
-    if (s.consecutiveAbove > 2) {
+    // Mode coach (CX, correction 1, sécurité) : l'arrêt d'une douleur qui
+    // dure, qui revient ou forte plus d'une semaine est signalé tant que
+    // deux semaines à 2 sur 10 au plus n'ont pas passé ; `kalis_plan` écarte
+    // alors les mouvements qui la provoquent et écrit la consultation.
+    final stop = view.coached ? s.stopAt(day) : null;
+    if (stop != null) {
+      reasons.add(
+        reason(ReasonCodes.adaptPainPersistent, <String, Object?>{
+          'zone': zone.code,
+          'sessions': stop.sessions,
+        }),
+      );
+    } else if (!view.coached && s.consecutiveAbove > 2) {
+      // Chemin 0.1 seulement : en mode coach, l'arrêt ci-dessus (et sa fin
+      // après deux semaines calmes) fait seul foi.
       reasons.add(
         reason(ReasonCodes.adaptPainPersistent, <String, Object?>{
           'zone': zone.code,
@@ -453,7 +472,7 @@ AdaptReview buildReview(
       ? SkillBoard.of(ctx, view, state, digests, day)
       : null;
   final tests = modern
-      ? testBenchmarks(ctx, input.log, day)
+      ? testBenchmarks(ctx, input.log, day, coached: view.coached)
       : const <Benchmark>[];
   List<Benchmark>? benchmarks;
   List<VolumeTolerance>? tolerance;
@@ -810,8 +829,55 @@ AdaptReview buildReview(
       candidates.add(swap);
     }
 
+    // Douleur qui dure ou qui revient (mode coach) : arrêt des mouvements
+    // qui provoquent la zone dès la semaine suivante.
+    final stopped = <BodyZone>{};
+    if (view.coached) {
+      for (final stop in state.painStops(day)) {
+        final free = <String>{
+          for (final d in pass1.days)
+            for (final slot in d.slots)
+              if (!slot.locked)
+                if (ctx.catalog.find(slot.exerciseId) case final e?
+                    when coachPainStopHits(e, stop.zone))
+                  slot.slotId,
+        };
+        if (free.isEmpty) {
+          continue;
+        }
+        stopped.add(stop.zone);
+        candidates.add(
+          _Candidate(
+            family: 'pain_stop:${stop.zone.code}:${pass1.blockId}',
+            kind: ProposalKind.painSparing,
+            scope: ProposalScope.block,
+            level: UnlockLevel.loadsReps,
+            confidence: 0.95,
+            progress: 0.3,
+            risk: -0.5,
+            fatigue: 0,
+            adherence: 0.1,
+            reasons: <Reason>[
+              reason(ReasonCodes.adaptPainPersistent, <String, Object?>{
+                'zone': stop.zone.code,
+                'sessions': stop.sessions,
+              }),
+              reason(ReasonCodes.adaptPainReported, <String, Object?>{
+                'zone': stop.zone.code,
+                'intensity': stop.intensity,
+              }),
+            ],
+            freeSlots: free,
+          ),
+        );
+      }
+    }
+
     // Douleur persistante : la zone est épargnée sur la fin du bloc.
     for (final s in state.pains.values) {
+      if (stopped.contains(s.zone)) {
+        continue;
+      }
       if (s.consecutiveAbove >= 2 && state.painActive(s.zone, day, p)) {
         candidates.add(
           _Candidate(

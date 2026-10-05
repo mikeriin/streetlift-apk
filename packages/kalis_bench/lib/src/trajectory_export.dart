@@ -170,8 +170,11 @@ String? adaptReasonText(Reason r, Catalog catalog, {bool assisted = false}) {
       return 'douleur signalée (${_zoneLabel(_text(r, 'zone'))}, '
           '${(_num(r, 'intensity') ?? 0).round()}/10)';
     case ReasonCodes.adaptPainPersistent:
-      return 'douleur qui dure (${_zoneLabel(_text(r, 'zone'))}, '
-          '${(_num(r, 'sessions') ?? 0).round()} séances)';
+      return 'douleur qui dure ou qui revient '
+          '(${_zoneLabel(_text(r, 'zone'))}, '
+          '${(_num(r, 'sessions') ?? 0).round()} séances à 3/10 ou plus) : '
+          'mouvements qui la provoquent retirés, consulter un médecin ou un '
+          'kiné, reprise après deux semaines à 2/10 au plus';
     case ReasonCodes.adaptFatigueHigh:
       return 'fatigue accumulée élevée';
     case ReasonCodes.adaptDeload:

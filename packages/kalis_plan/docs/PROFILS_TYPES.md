@@ -1,6 +1,6 @@
 # Profils types de kalis_plan
 
-Fichier généré par `dart run bin/kalis_plan_cli.dart --rapport <dossier>` (kalis_plan 0.2.1, catalogue 1.1.0, règles 1.1.0) — ne pas modifier à la main ; `test/docs_test.dart` le compare au moteur.
+Fichier généré par `dart run bin/kalis_plan_cli.dart --rapport <dossier>` (kalis_plan 0.2.2, catalogue 1.1.0, règles 1.1.0) — ne pas modifier à la main ; `test/docs_test.dart` le compare au moteur.
 
 Pour chacun des 40 profils des jeux de données de `kalis_core` : la passe 1 (exercices par séance), une revue simulée (« je ne sais pas faire » sur un exercice, puis remplacement d'un autre par sa variante équivalente), le diff, puis la passe 2 du programme revu. Notation d'une prescription : séries × plage · flammes visées · repos · charge de départ (ou part du 1RM visée).
 

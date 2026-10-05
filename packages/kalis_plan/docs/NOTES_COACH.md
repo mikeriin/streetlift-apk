@@ -1,4 +1,4 @@
-# Notes de coach du chemin street (kalis_plan 0.2.1)
+# Notes de coach du chemin street (kalis_plan 0.2.2)
 
 Le chemin street (`CONTRAT.md`, § 12) ne rend aucune phrase. Il rend deux sortes de raisons :
 
@@ -160,3 +160,15 @@ Les notes de rôle sont choisies dans l'ordre du tableau : la première qui conv
 `plan.return_from_gap`, `plan.recovery_profile` (sommeil, stress, travail, âge), `plan.concurrent_sport`,
 `plan.specialization`, `plan.constraint_history`, `plan.skill_step`, `plan.cautious_health`. Pour toute
 autre raison, il rend `null` : le texte générique de `kalis_core` s'applique.
+
+## Ajouts de 0.2.2 (lot CX, correction 1)
+
+| Code | `value` | Émise quand | Texte rendu (résumé) |
+| --- | --- | --- | --- |
+| `pain_stop` | rang de la zone (`BodyZone.values`) | bloc : une douleur qui dure ou qui revient met la zone à l'arrêt ; ligne : figure gardée sur prise neutre pendant l'arrêt | mouvements qui provoquent la zone retirés, consulter, reprise après deux semaines à 2/10 au plus |
+| `pain_return` | zone × 100 + palier de départ × 10 + dernier palier | bloc qui suit un arrêt | reprise graduée : 50 % puis +10 % par semaine, 3 en réserve |
+| `pain_return_item` | part du volume habituel | ligne d'un mouvement en reprise | part du volume de la semaine |
+| `pain_step` | 0 | ligne : étape plus facile d'une figure servie parce que la douleur écarte l'étape de travail | raison, retour après deux semaines à 2/10 au plus, test remis à ce retour |
+| `plateau` | dernier résultat de test | bloc : test sans progrès sur le mouvement visé | le bloc change de méthode (variante plus dure du tirage) |
+| `slow_tempo` | durée de la descente (s) | ligne : traction au tempo excentrique (plateau) | montée sans élan, 2 s en haut, descente freinée, arrêt quand la montée ralentit |
+| `event_zone` | part du maximum écrite (%) | ligne : séries de la zone de l'épreuve en réalisation d'un objectif de répétitions | séries vers cette part, repos court, réserve sur la dernière |
