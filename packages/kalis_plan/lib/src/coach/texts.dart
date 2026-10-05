@@ -546,6 +546,11 @@ String? coachReasonText(Reason r, Catalog catalog) {
               'séries de volume) devient une séance de surcharge en séries '
               'courtes — variante plus dure ou lest léger, 2 répétitions en '
               "réserve. Tu n'ajoutes jamais de séries toi-même.",
+        CoachNotes.safetyPins =>
+          'Charge lourde (${_int(v)} % du 1RM et plus) : sécurités de la '
+              'cage réglées juste sous le point le plus bas, ou un pareur. '
+              "Si la dernière montée d'échauffement n'est pas rapide, la "
+              'série de tête se fait à cette charge-là.',
         CoachNotes.checkpointBody =>
           "Repère sur le chemin de l'objectif : ${_plain(v)}. Une seule "
               "règle : le bloc suivant est écrit sur le résultat du test ; "

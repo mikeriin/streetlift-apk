@@ -118,6 +118,10 @@ abstract final class CoachNotes {
   /// Repère d'un test intermédiaire (`value` : valeur attendue).
   static const String checkpoint = 'checkpoint';
 
+  /// Sécurités de la cage ou pareur au squat et au développé couché
+  /// lourds (`value` : part du 1RM à partir de laquelle la note s'écrit).
+  static const String safetyPins = 'safety_pins';
+
   /// Repère d'un objectif de répétitions sans lest au matériel (`value` :
   /// valeur attendue) : la surcharge passe par une variante plus dure
   /// (CP2, partie 0, boucle 2).
@@ -402,6 +406,7 @@ abstract final class CoachNotes {
     badDay,
     missed,
     checkpoint,
+    safetyPins,
     checkpointBody,
     checkpointHold,
     checkpointLoad,
@@ -6568,6 +6573,24 @@ final class Prescriber {
           restBetweenRoundsSeconds: 90,
         ),
       );
+    }
+    // Squat et développé couché à 85 % du 1RM et plus : sécurités de la
+    // cage ou pareur, et barrière de forme du jour (CP2, partie 0, boucle
+    // 2 ; panel p1, `street_09` : échec sous la barre de squat sans
+    // sécurité écrite ; NSCA, Essentials of Strength Training and
+    // Conditioning, 4e éd. : pareur ou sécurités pour les mouvements
+    // au-dessus du visage ou chargés sur le dos).
+    var pinned = false;
+    for (final x in items) {
+      final pct = x.percent;
+      if (!pinned &&
+          x.kind == SetKind.work &&
+          pct != null &&
+          pct >= 0.85 &&
+          (x.e.id.contains('squat') || x.e.id.contains('developpe-couche'))) {
+        x.reasons.add(_note(CoachNotes.safetyPins, 85));
+        pinned = true;
+      }
     }
     DayStress? stress;
     for (final x in items) {
