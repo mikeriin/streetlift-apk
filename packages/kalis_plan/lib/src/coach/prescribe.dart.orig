@@ -6112,7 +6112,9 @@ final class Prescriber {
     for (final entry in drafts.entries) {
       final before = reference?.tonnage[entry.key];
       var now = tonnageOf(entry.value);
-      if (before != null && before > 0 && !(reference?.restart ?? false)) {
+      if (before != null &&
+          before > 0 &&
+          !(reference?.restart ?? false)) {
         final limit = before * (1 + coachVolumeRise);
         // Séries retirées d'abord aux emplacements les plus fournis, jamais
         // sous leur minimum ni dans un groupe enchaîné.

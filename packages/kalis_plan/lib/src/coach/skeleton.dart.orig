@@ -2724,10 +2724,7 @@ void _buildFigures(_Builder b, Set<int> runDays) {
     void balance() {
       b.add(
         d,
-        _wristFirst(a, const <String>[
-          'cs-handstand',
-          'cs-handstand-dos-au-mur',
-        ]),
+        _wristFirst(a, const <String>['cs-handstand', 'cs-handstand-dos-au-mur']),
         SlotRole.skill,
         Method.skillBalance,
         // Budget du poignet (R4-F12) : trois tenues quand la séance porte

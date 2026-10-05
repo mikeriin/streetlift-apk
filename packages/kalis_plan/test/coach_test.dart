@@ -1579,4 +1579,218 @@ void main() {
       }
     });
   });
+
+  group('CP2 partie 0', () {
+    bool noteOn(ExercisePrescription i, String note) => i.reasons.any(
+      (r) => r.code == ReasonCodes.planCoachNote && r.params['note'] == note,
+    );
+
+    test('coude gêné : charge lestée +2,5 kg par semaine au plus', () {
+      final profile = _lifter().copyWith(
+        limitations: const <Limitation>[
+          Limitation(
+            zone: BodyZone.elbow,
+            side: BodySide.right,
+            discomfort: 3,
+            since: ConstraintSince.months3To12,
+          ),
+        ],
+      );
+      final blocks = _program(catalog, profile, 12);
+      final history = <Map<String, double>>[];
+      for (final b in blocks) {
+        for (final w in b.pass2.weeks) {
+          final heaviest = <String, double>{};
+          for (final d in w.days) {
+            for (final i in d.items) {
+              final e = catalog.exercise(i.exerciseId);
+              final load = i.startLoadKg;
+              if (load == null ||
+                  i.kind == SetKind.test ||
+                  e.loadType != LoadType.addedWeight ||
+                  e.stressOn(Joint.elbow) == JointStress.low) {
+                continue;
+              }
+              final total =
+                  load + (e.bodyweightFraction?.value ?? 0) * 78.0;
+              if (total > (heaviest[e.id] ?? 0)) {
+                heaviest[e.id] = total;
+              }
+            }
+          }
+          final peaking =
+              w.intent == WeekIntent.realization ||
+              w.intent == WeekIntent.taper ||
+              w.intent == WeekIntent.competition;
+          for (final entry in heaviest.entries) {
+            var most = 0.0;
+            for (final h in history.skip(
+              history.length > 3 ? history.length - 3 : 0,
+            )) {
+              final v = h[entry.key] ?? 0;
+              if (v > most) {
+                most = v;
+              }
+            }
+            if (most > 0) {
+              expect(
+                entry.value,
+                lessThanOrEqualTo(most + (peaking ? 5 : 2.5) + 1e-6),
+                reason: '${entry.key}, bloc ${b.pass1.blockIndex}',
+              );
+            }
+          }
+          history.add(heaviest);
+        }
+      }
+    });
+
+    test('poignet sensible : une seule séance de dynamique de planche, '
+        'poussée tête en bas sur prise neutre, pas de wrist push-ups', () {
+      final profile = _profile(
+        experience: ExperienceLevel.elite,
+        primary: TrainingDiscipline.calisthenics,
+        weekdays: const <int>[1, 2, 3, 5, 6, 7],
+        minutes: 90,
+        equipment: const <String>[..._park, 'parallettes', 'anneaux'],
+        benchmarks: <Benchmark>[
+          const Benchmark(
+            exerciseId: 'cs-planche-straddle',
+            kind: BenchmarkKind.maxHold,
+            source: BenchmarkSource.declared,
+            seconds: 6,
+          ),
+          const Benchmark(
+            exerciseId: 'cs-handstand',
+            kind: BenchmarkKind.maxHold,
+            source: BenchmarkSource.declared,
+            seconds: 60,
+          ),
+          _maxReps('sw-traction-pronation', 22),
+          _maxReps('sw-dips-barres-paralleles', 35),
+        ],
+        skills: const <SkillState>[
+          SkillState(
+            targetExerciseId: 'cs-planche',
+            currentExerciseId: 'cs-planche-straddle',
+          ),
+        ],
+        limitations: const <Limitation>[
+          Limitation(
+            zone: BodyZone.wristHand,
+            side: BodySide.both,
+            discomfort: 2,
+            since: ConstraintSince.months3To12,
+          ),
+        ],
+      );
+      final dynamics = <String>{
+        for (final id in skillDynamics['cs-planche']!) ...<String>[
+          id,
+          '$id-parallettes',
+        ],
+      };
+      final blocks = _program(catalog, profile, 8);
+      for (final b in blocks) {
+        for (final w in b.pass2.weeks) {
+          var days = 0;
+          for (final d in w.days) {
+            if (d.items.any((i) => dynamics.contains(i.exerciseId))) {
+              days++;
+            }
+            for (final i in d.items) {
+              expect(i.exerciseId, isNot(coachWristLoadedPrep));
+              if (i.exerciseId.startsWith('cd-hspu')) {
+                final e = catalog.exercise(i.exerciseId);
+                expect(
+                  coachPainProvokes(e, BodyZone.wristHand),
+                  isFalse,
+                  reason: i.exerciseId,
+                );
+              }
+            }
+          }
+          expect(days, lessThanOrEqualTo(1));
+        }
+      }
+    });
+
+    test('record déclaré : série repère à la première séance', () {
+      final profile = _profile(
+        experience: ExperienceLevel.intermediate,
+        weekdays: const <int>[1, 3, 5],
+        minutes: 75,
+        benchmarks: <Benchmark>[
+          _maxReps('sw-traction-pronation', 15),
+          _maxReps('sw-dips-barres-paralleles', 25),
+        ],
+      );
+      final blocks = _program(catalog, profile, 6);
+      final week0 = blocks.first.pass2.weeks.first;
+      final checked = <String>{
+        for (final d in week0.days)
+          for (final i in d.items)
+            if (noteOn(i, CoachNotes.entryCheck)) i.exerciseId,
+      };
+      expect(checked, contains('sw-traction-pronation'));
+      // Une seule ligne par mouvement, et jamais après la première semaine.
+      var count = 0;
+      for (final d in week0.days) {
+        for (final i in d.items) {
+          if (noteOn(i, CoachNotes.entryCheck) &&
+              i.exerciseId == 'sw-traction-pronation') {
+            count++;
+          }
+        }
+      }
+      expect(count, 1);
+      for (final w in blocks.first.pass2.weeks.skip(1)) {
+        for (final d in w.days) {
+          for (final i in d.items) {
+            expect(noteOn(i, CoachNotes.entryCheck), isFalse);
+          }
+        }
+      }
+      // Record testé il y a deux semaines : pas de série repère.
+      final tested = profile.copyWith(
+        benchmarks: <Benchmark>[
+          Benchmark(
+            exerciseId: 'sw-traction-pronation',
+            kind: BenchmarkKind.maxReps,
+            source: BenchmarkSource.guidedTest,
+            reps: 15,
+            date: _start.addDays(-14),
+          ),
+        ],
+      );
+      final again = _program(catalog, tested, 6);
+      for (final d in again.first.pass2.weeks.first.days) {
+        for (final i in d.items) {
+          if (i.exerciseId == 'sw-traction-pronation') {
+            expect(noteOn(i, CoachNotes.entryCheck), isFalse);
+          }
+        }
+      }
+    });
+
+    test('pompe complète du débutant : jamais sous 3 de maximum', () {
+      final profile = _profile(
+        experience: ExperienceLevel.beginner,
+        trainingAge: null,
+        benchmarks: <Benchmark>[_maxReps('sw-pompe', 2)],
+      );
+      final blocks = _program(catalog, profile, 12);
+      for (final b in blocks) {
+        for (final w in b.pass2.weeks) {
+          for (final d in w.days) {
+            for (final i in d.items) {
+              if (i.exerciseId == 'sw-pompe' && i.kind == SetKind.work) {
+                fail('pompe complète prescrite sur un maximum de 2');
+              }
+            }
+          }
+        }
+      }
+    });
+  });
 }

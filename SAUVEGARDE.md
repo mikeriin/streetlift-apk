@@ -14,6 +14,11 @@ Session Opus 5.5 lancée le 05/10/2026 vers 18:14 UTC (pas de ligne « Lot : » 
   - débutant : pompe complète seulement à 3 de maximum, un seul critère pour l'échelle de poussée (2 × 12), tirage du débutant plafonné (assistée 2 séries, tenue 2).
   - `coachEligible` : débutant sans ancienneté accepté.
 
+## Boucle 1, contrôles
+- Dérive du panel vérifiée (ancres p14_a / p08_c : 1/0,5/1/1 et 9/8/8/8) : pas de dérive. Empreintes des grilles vérifiées.
+- Contrôle dev 45fec01f : compile ; échecs corrigés (jours d'équilibre vides, borne de charge alignée sur la relecture `coachAudit` : même emplacement vs semaine d'avant allégée comprise, profils 0.1 aléatoires au schéma 2 dans `testing.dart`). Contrôle dev 6fd64980 poussé.
+- Ajouts suivants (non poussés au moment de la sauvegarde) : tests « CP2 partie 0 » (coude +2,5 kg, poignet, série repère, pompe du débutant), règle de la relecture `coachAudit` à répétitions différentes, lest léger gardé (`street_11`), budget de tirage du coude (`street_09`).
+
 ## Reste à faire
 - Compiler (CI dev), corriger ; tests des nouvelles règles ; version 0.2.3.
 - Boucles du panel partie 0 (≤ 5, arrêt après une boucle sans gain) ; relecture documentée (3 sous-agents) ; publication intermédiaire 0.2.3 (contrôle vert, étiquette, DECISIONS, ETAT, manche page, notification).

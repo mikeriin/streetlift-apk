@@ -155,6 +155,9 @@ List<String> coachAudit(
   final who = <List<(List<int>, String)>>[];
   final lastLoad = <String, (int, double, int)>{};
   var global = 0;
+  // Semaine d'avant de transition ou d'introduction (la charge qui suit
+  // remonte sans borne d'écart de répétitions).
+  var restartBefore = false;
   int? eventWeek;
   for (final block in blocks) {
     final pass1 = block.pass1;
@@ -169,6 +172,12 @@ List<String> coachAudit(
       eventWeek = global + weeksToEvent - 1;
     }
     for (final week in block.pass2.weeks) {
+      // Pic de forme : simples et doubles lourds par dessein.
+      final peaking =
+          week.intent == WeekIntent.realization ||
+          week.intent == WeekIntent.taper ||
+          week.intent == WeekIntent.competition ||
+          global == eventWeek;
       final g = List<double>.filled(MuscleGroup.values.length, 0);
       final s = <double>[0, 0, 0];
       final armDays = <Set<int>>[<int>{}, <int>{}, <int>{}];
@@ -288,6 +297,25 @@ List<String> coachAudit(
                   '${((total / before.$2 - 1) * 100).toStringAsFixed(1)} %',
                 );
               }
+              // À répétitions différentes (CP2, partie 0) : 2,5 % par
+              // répétition de moins, deux répétitions au plus, hors pic de
+              // forme et hors reprise après une transition.
+              if (before != null &&
+                  before.$1 == global - 1 &&
+                  before.$3 != reps &&
+                  !restartBefore &&
+                  !peaking) {
+                final delta = before.$3 - reps > 2 ? 2 : before.$3 - reps;
+                final factor =
+                    1 + coachLoadRise[level] + coachLoadPerRep * delta;
+                if (total / before.$2 > factor + 1e-9) {
+                  out.add(
+                    '$where : ${e.id} +'
+                    '${((total / before.$2 - 1) * 100).toStringAsFixed(1)} % '
+                    '(${before.$3} → $reps répétitions)',
+                  );
+                }
+              }
               lastLoad[key] = (global, total, reps);
             }
           }
@@ -311,6 +339,10 @@ List<String> coachAudit(
       light.add(_light(week.kind));
       hard.add(hardSets);
       work.add(workSets);
+      restartBefore =
+          week.kind == WeekKind.intro ||
+          week.intent == WeekIntent.transition ||
+          week.intent == WeekIntent.intro;
       global++;
     }
   }
