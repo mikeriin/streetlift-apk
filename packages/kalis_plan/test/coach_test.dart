@@ -1233,7 +1233,10 @@ void main() {
           }
           for (final d in w.days) {
             for (final i in d.items) {
-              final pct = i.percent;
+              final t = i.intensity;
+              final pct = t != null && t.basis == IntensityBasis.percentOneRm
+                  ? t.value
+                  : null;
               if (!i.exerciseId.startsWith('sl-') ||
                   i.exerciseId.contains('partiel') ||
                   (i.kind != null && i.kind != SetKind.work) ||

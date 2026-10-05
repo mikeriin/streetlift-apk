@@ -620,9 +620,7 @@ final class Athlete {
         // quel (« série de tête = résultat − 2, jamais sur un progrès
         // supposé »).
         if (measured >= coachTestDropShare * before) {
-          return priorValue != null && priorValue < before
-              ? measured
-              : before;
+          return priorValue != null && priorValue < before ? measured : before;
         }
         // Forte baisse : confirmée par une mesure elle aussi nettement plus
         // basse, elle cède devant le plus haut du test et de l'estimation

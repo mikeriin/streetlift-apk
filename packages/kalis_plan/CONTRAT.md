@@ -1612,3 +1612,95 @@ foi.
 Limites : la pompe au sol, la traction stricte et l'étape suivante d'une figure ne s'ouvrent dans le
 programme écrit qu'à un bloc suivant (le moteur d'évolution sert le jour même) ; le temps de séance
 disponible n'est pas rempli d'office ; les athlètes de ces mesures sont simulés.
+
+### 12.14 Correction de la saison complète (0.2.2, lot CX correction 1)
+
+Corrections du chemin street faites sur la relecture du pilotage de CX, le panel (quatre écoles) et une
+relecture documentée indépendante (sources du web seulement), croisement avec `kalis_adapt` 0.2.2 et
+`kalis_bench` 0.2.1. Le chemin 0.1 n'est pas touché (mêmes programmes à l'octet près, version du moteur
+mise à part). Aucun type ni code de raison de `kalis_core` n'est ajouté ; les notes de coach `pain_stop`,
+`pain_return`, `pain_return_item`, `plateau`, `slow_tempo` et `event_zone` s'ajoutent au vocabulaire de
+`plan.coach_note`. Journal et sources : `packages/kalis_bench/docs/CALIBRAGE_CX.md`, section « Correction 1 ».
+
+**Douleur qui dure (sécurité).** Une raison `adapt.pain_persistent` du résumé d'adaptation (ou de la
+demande de restructuration) met la zone à l'arrêt pour le bloc : tout mouvement qui la provoque est écarté
+(`coachPainStopHits` : contrainte forte sur l'articulation ; pour le poignet, tout appui mains à plat en
+extension, et sous contrainte forte seul un appui tenu — parallettes, anneaux, barres parallèles,
+poignées — reste ; pour le coude, aussi le tirage vertical en pronation), avec la note `pain_stop`
+(consulter un médecin ou un kinésithérapeute ; reprise après deux semaines à 2/10 au plus). Une figure
+gardée sur prise neutre porte la note d'arrêt, jamais la note `pain_trend` (deux consignes contraires). Le
+bloc suivant rend ces mouvements à 50 % des séries, +10 % par semaine de charge, 3 en réserve au moins,
+les mouvements lestés vers 67,5 % du 1RM (`pain_return`, `pain_return_item`).
+
+**Repères.** Une mesure plus basse que le repère ne le fait baisser qu'avec une deuxième concordante (le
+test mesuré le plus récent des dix semaines d'avant est lui aussi sous le repère) : baisse de 15 % au plus
+→ le test fait foi ; plus forte → le plus haut du test et de l'estimation sûre ; sans confirmation, le
+repère reste. Exception : un muscle-up testé plus bas fait foi seul (mouvement à risque). Une estimation
+du moteur d'évolution ne défait pas un test des quatre semaines d'avant ; elle ne baisse jamais un 1RM
+déclaré ou testé. Un 1RM mesuré par un test guidé ou une compétition fait foi ; un record déclaré ou une
+estimation peut être relevé d'après le maximum au poids du corps. Une barre de compétition plus basse que
+le 1RM connu ne l'abaisse pas. Après un test mesuré depuis la reprise, pas de gain supposé. Les tests sont
+placés à partir du troisième jour de la semaine (deuxième sinon), jamais pendant une reprise ; un test de
+figure porte sur l'étape visée elle-même.
+
+**Plateau.** Un test qui ne dépasse pas le repère d'avant change la méthode du bloc suivant (note
+`plateau`) : variante plus dure du tirage (traction au tempo excentrique, 45 % du maximum, note
+`slow_tempo` ; archer ; typewriter). En bloc de réalisation d'un objectif de répétitions maximales (12 et
+plus), la séance de force du mouvement visé devient une séance de la zone de l'épreuve sur le mouvement
+exact.
+
+**Zone de l'épreuve.** En réalisation d'un objectif de répétitions maximales, les séries de volume du
+mouvement visé passent à 72-80 % du maximum, 90 s de repos (75 s chez l'avancé), 2 en réserve (note
+`event_zone`). Le repos-pause sur le mouvement principal est réservé à l'avancé et à l'élite.
+
+**Volume et densité.** Répétitions au poids du corps : +15 % par semaine au plus sur le maximum des trois
+semaines d'avant, par famille de mouvement. Départs au chrono : un de plus par semaine au plus, deux sur
+deux semaines au plus ; sous dix répétitions de maximum, la densité monte par les départs seulement ; le
+premier départ garde 5 répétitions en réserve ; sous sept, le chrono cède la place à des séries de volume.
+Tenues du débutant : +15 % (2 s au moins) par semaine au plus sur la plus longue des trois semaines
+d'avant ; la part affichée suit la tenue écrite.
+
+**Charges.** Hausse comparée à la semaine précédente seule ; après une transition ou une introduction,
+2,5 % de charge totale par répétition d'écart ; estimation de 1RM sans repère +3 % ; séries allégées des
+répétitions à 65 % puis +3 % par palier du maximum, au moins une répétition sous la série de tête ;
+ouverture d'une épreuve à 98 % au moins du plus lourd simple ou double des trois semaines d'avant ;
+pourcentage affiché sur la charge arrondie ; affûtage : doubles à 86 % (hors dernier lourd) ; amplitude
+partielle surchargée qui revient après quatre semaines d'absence : repart de son entrée.
+
+**Figures.** Partie intense des tenues à 60, 65 puis 70 % du maximum (+2 % par palier, 75 % au plus, 70 %
+les jours légers) ; tenues longues sur l'étape plus facile gardées quand l'objectif est une durée sur
+l'étape actuelle.
+
+**Restructuration.** Les semaines déjà écrites et gardées du bloc nourrissent les garde-fous de volume et
+de charge de la réécriture (`Prescriber.kept`).
+
+**Débutant.** Préparation des poignets à l'échauffement des séances d'appui ; essais isolés de traction
+stricte écrits seulement pour qui n'en a pas encore une (`band_choice`, `value` + 100) ; test de la tenue
+menton au-dessus de la barre non borné à 30 s (une fois et demie le dernier maintien).
+
+| Paramètre | Valeur | Source |
+| --- | --- | --- |
+| Arrêt sur douleur qui dure | 3/10 deux semaines, 5/10 plus d'une semaine, ou retour dans les 12 semaines | Coombes et al. 2015 ; Silbernagel et al. 2007 ; NHS |
+| Reprise après l'arrêt | après 2 semaines à 2/10 au plus ; 50 %, +10 %/semaine ; lesté vers 67,5 % | Coombes 2015 ; Gabbett 2016 ; relecture documentée CX |
+| Baisse d'un repère | deux mesures concordantes ; ≤ 15 % : le test fait foi | Bosquet et al. 2007 ; Helms et al. 2018 ; choix raisonné |
+| Hausse des répétitions au poids du corps | +15 %/semaine (max. des 3 semaines d'avant) | R5-P22 ; Gabbett 2016 |
+| Zone de l'épreuve | 72-80 % du maximum, 90 s, 2 en réserve | R4-G1, R4-G3, R4-G4 |
+| Repos-pause sur le principal | avancé et élite | R2-P13, R4-G6 |
+| Affûtage, séances lourdes | doubles à 86 % | R3-P13 ; Bosquet 2007 ; R2-P2 |
+| Tenues du débutant | +15 %/semaine, 2 s au moins | R5-P22 |
+| Tenues de figure | 60/65/70 % (+2 %/palier, ≤ 75 %) | Oranchuk et al. 2019 ; R4-F2 |
+| Charge par répétition d'écart | 2,5 % de la charge totale | R2-P2 (table %-répétitions) |
+| Ouverture d'épreuve | ≥ 98 % du plus lourd simple ou double des 3 semaines | R3-P14, R3-P15 ; Travis et al. 2021 |
+
+Invariants ajoutés aux tests (`test/coach_test.dart`, groupe « CX correction 1 » ;
+`test/coach_properties.dart`) : arrêt et reprise graduée (poignet, coude) ; deux mesures avant de baisser
+(dont la plus récente) ; tests après le premier jour de la semaine ; hausse de répétitions ≤ 15 % ;
+poignet sous contrainte forte à la barre fixe écarté ; affûtage ≥ 85 % ; essais stricts seulement sans
+traction ; tenue du débutant +15 % au plus ; une restructuration de portée bloc n'ajoute aucune hausse de
+volume trop rapide au programme d'origine.
+
+Limites : en restructuration de portée semaine ou séance, les séances gardées et les semaines suivantes
+restent celles du bloc d'origine, mêlées à la réécriture (des hausses de volume trop rapides apparaissent
+dans des saisons de scénario de douleur) ; le front lever de l'élite (tenues longues sur un demi-palier),
+le critère de passage d'une figure relatif au maximum, le volume de tirage et l'échelle de poussée du
+débutant, une troisième exposition à la traction (`street_17`) relèvent de CP2.
