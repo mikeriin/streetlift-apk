@@ -509,7 +509,10 @@ final class Athlete {
         if (before == null || measured >= before) {
           return measured;
         }
-        var concordant = false;
+        // Un record seulement déclaré n'est pas une mesure : le premier
+        // test mesuré le recale (une seule mesure suffit alors).
+        var concordant = true;
+        var measuredBefore = false;
         for (final o in profile.benchmarks ?? const <Benchmark>[]) {
           final when = o.date;
           if (identical(o, b) ||
@@ -519,14 +522,19 @@ final class Athlete {
               (o.externalLoadKg ?? 0) != 0 ||
               (o.source != BenchmarkSource.guidedTest &&
                   o.source != BenchmarkSource.competition) ||
-              when.compareTo(day) >= 0 ||
-              when.compareTo(day.addDays(-70)) < 0) {
+              when.compareTo(day) >= 0) {
             continue;
+          }
+          if (!measuredBefore) {
+            measuredBefore = true;
+            concordant = false;
           }
           final value = unit == CapacityUnit.maxHoldSeconds
               ? o.seconds
               : o.reps;
-          if (value != null && value < before) {
+          if (value != null &&
+              value < before &&
+              when.compareTo(day.addDays(-70)) >= 0) {
             concordant = true;
           }
         }
