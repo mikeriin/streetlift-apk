@@ -1028,7 +1028,23 @@ final class Prescriber {
   /// référence ; sans 1RM connu, charge à régler à la première séance.
   void _loadAt(_Draft x, double pct, String? referenceId, {bool over = false}) {
     final e = x.e;
-    final total = _totalFor(e, referenceId);
+    var total = _totalFor(e, referenceId);
+    // 1RM de travail relevé d'après le maximum au poids du corps quand il
+    // le dépasse (table R2-P2 jusqu'à 12 répétitions, Epley au-delà, borné
+    // à 20) : un 1RM lesté sous-estimé ne doit pas ramener la séance lourde
+    // au poids du corps avec une réserve fausse (panel CX, boucle 4 :
+    // « traction lestée » du vendredi à 6 ou 7 répétitions de réserve).
+    final bwId = _bodyweightOf[e.id];
+    final bwMax = bwId == null ? 0 : (a.reps[bwId] ?? 0);
+    final weight = (e.bodyweightFraction?.value ?? 0) * a.bodyWeight;
+    if (total != null && bwMax >= 3 && weight > 0) {
+      final fromReps = bwMax <= 12
+          ? weight / _pctAt(bwMax)
+          : weight * (1 + (bwMax > 20 ? 20 : bwMax) / 30);
+      if (fromReps > total) {
+        total = fromReps;
+      }
+    }
     if (_basisOf(e) == LoadBasis.unloaded ||
         _basisOf(e) == LoadBasis.bodyweight) {
       return;
@@ -2087,7 +2103,12 @@ final class Prescriber {
         share = 0.75;
       }
     }
-    if (ws.light || role == _DayRole.primerFar) {
+    if (ws.intent == WeekIntent.intro && role != _DayRole.primerFar) {
+      // Introduction : une marche sous la semaine suivante, pas une moitié
+      // (panel CX, boucle 4 : 3 × 25 puis 4 × 34 d'une semaine à l'autre ;
+      // R5-P22, +10 à 20 %).
+      share -= 0.05;
+    } else if (ws.light || role == _DayRole.primerFar) {
       share = 0.5;
     }
     final reps = _clampInt(_round(max * share), 1, max);
@@ -2404,8 +2425,14 @@ final class Prescriber {
       // répétition de plus dès que toutes les séries passent avec la
       // réserve prévue — la progression suit ce qui est réussi, elle
       // n'est pas supposée.
+      // Pompe au sol d'un objectif de pompes : des séries courtes répétées
+      // (5 × 1-2, grappes ; panel CX, boucle 4), pas une ou deux
+      // répétitions isolées.
+      final clusters = e.id == Ids.pushUp && a.aimsAt(Ids.pushUp) && !ws.light;
       x
-        ..sets = ws.light || blockIndex == 0 ? sets : (more > 4 ? 4 : more)
+        ..sets = clusters
+            ? 5
+            : (ws.light || blockIndex == 0 ? sets : (more > 4 ? 4 : more))
         ..repsLow = reps
         // Le haut de la plage s'ouvre d'une répétition toutes les deux
         // semaines de charge : le bas reste sûr (maximum moins la

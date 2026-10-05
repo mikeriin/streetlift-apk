@@ -184,6 +184,7 @@ final class Athlete {
     Set<String> extraExcluded = const <String>{},
     List<(BodyZone, int)> extraPains = const <(BodyZone, int)>[],
     List<(BodyZone, int)> trendPains = const <(BodyZone, int)>[],
+    Iterable<String> avoidedIds = const <String>[],
     Map<int, int> minutesOverride = const <int, int>{},
     List<ExerciseEstimate> estimates = const <ExerciseEstimate>[],
   }) {
@@ -525,10 +526,31 @@ final class Athlete {
       ...reps.keys,
       ...holds.keys,
     };
+    // Figure écartée par le moteur d'évolution à cause d'une douleur
+    // relevée sous le seuil d'arrêt (6/10) : elle revient au bloc suivant,
+    // en volume réduit (`pain_trend`) — on recule, on n'abandonne pas
+    // (R5-P23, R5-P24 ; panel CX, boucle 4 : planche retirée quatre
+    // semaines).
+    bool keptFigure(String id) {
+      final e = catalog.find(id);
+      if (e == null || !coachFigurePatterns.contains(e.pattern)) {
+        return false;
+      }
+      for (final (zone, pain) in trendPains) {
+        final joint = zone.joint;
+        if (pain < 6 && joint != null && e.stressOn(joint) != JointStress.low) {
+          return true;
+        }
+      }
+      return false;
+    }
+
     final excluded = <String>{
       ...profile.dislikedExerciseIds,
       ...cannot,
       ...extraExcluded,
+      for (final id in avoidedIds)
+        if (!keptFigure(id)) id,
     };
 
     // Niveau : expérience déclarée, sinon ancienneté.
