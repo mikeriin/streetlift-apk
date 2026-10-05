@@ -311,7 +311,8 @@ void main() {
     releve['seance_trouvee'] = hit != null;
     if (hit != null) {
       final (w, j, item) = hit;
-      releve['seance'] = 'S$w-J$j ${item.exerciseId} ${item.technique?.kind.code}';
+      releve['seance'] =
+          'S$w-J$j ${item.exerciseId} ${item.technique?.kind.code}';
       final s = store.program.start!;
       final date = DateTime(s.year, s.month, s.day + (w - 1) * 7 + j - 1);
       await SessionHost.restart(

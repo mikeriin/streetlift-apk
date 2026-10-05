@@ -436,8 +436,8 @@ void main() {
     });
   });
 
-  test('version affichée : « 6.8.0 » hors build de développement (CU)', () {
-    expect(kVersion, '6.8.0');
-    expect(kAppVersion, '6.8.0');
+  test('version affichée : « 6.9.0 » hors build de développement (CI1)', () {
+    expect(kVersion, '6.9.0');
+    expect(kAppVersion, '6.9.0');
   });
 }

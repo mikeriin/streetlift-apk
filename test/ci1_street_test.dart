@@ -134,7 +134,10 @@ void main() {
       expect(view.phases.length, plan.season!.phases.length);
       expect(view.phases.where((p) => p.current).length, lessThanOrEqualTo(1));
       expect(view.daysToEvent, isNotNull);
-      expect(view.blockWeeks.length, plan.blocks.single.block.pass2.weeks.length);
+      expect(
+        view.blockWeeks.length,
+        plan.blocks.single.block.pass2.weeks.length,
+      );
       expect(view.rules, isNotEmpty);
       // Section relue à l'identique.
       final json = jsonEncode(plan.toJson());
@@ -189,15 +192,18 @@ void main() {
       expect(_view(app)?.event?.id, 'ci1-competition');
     });
 
-    test('autre discipline (musculation) : chemin 0.1, pas de saison', () async {
-      _save(app, _street('musculation'));
-      expect(PlanStore(app).planCoachEligible, isFalse);
-      _create(app);
-      final plan = app.planProgram!;
-      expect(isCoachBlock(plan.blocks.single.block), isFalse);
-      expect(plan.season, isNull);
-      expect(_view(app), isNull);
-    });
+    test(
+      'autre discipline (musculation) : chemin 0.1, pas de saison',
+      () async {
+        _save(app, _street('musculation'));
+        expect(PlanStore(app).planCoachEligible, isFalse);
+        _create(app);
+        final plan = app.planProgram!;
+        expect(isCoachBlock(plan.blocks.single.block), isFalse);
+        expect(plan.season, isNull);
+        expect(_view(app), isNull);
+      },
+    );
 
     test('séance : série de tête puis séries allégées guidées, lignes '
         'nommées, journal avec les rôles', () async {
@@ -330,15 +336,16 @@ void main() {
       expect(isCoachBlock(moved.proposal.block), isTrue);
     });
 
-    test('programme du propriétaire : pas de saison, jamais régénéré', () async {
-      expect(app.planProgram, isNull);
-      final weeks = jsonEncode([
-        for (final w in app.program.weeks) w.n,
-      ]);
-      expect(_view(app), isNull);
-      expect(PlanStore(app).planOnLegacyEngine, isFalse);
-      expect(jsonEncode([for (final w in app.program.weeks) w.n]), weeks);
-    });
+    test(
+      'programme du propriétaire : pas de saison, jamais régénéré',
+      () async {
+        expect(app.planProgram, isNull);
+        final weeks = jsonEncode([for (final w in app.program.weeks) w.n]);
+        expect(_view(app), isNull);
+        expect(PlanStore(app).planOnLegacyEngine, isFalse);
+        expect(jsonEncode([for (final w in app.program.weeks) w.n]), weeks);
+      },
+    );
 
     test('résultats des tests du moteur reportés au profil, une seule '
         'fois', () async {
@@ -377,13 +384,62 @@ void main() {
     });
   });
 
+  group('relevé', () {
+    test('techniques écrites et servies par profil (journal du test)', () async {
+      for (final (key, profile) in [
+        ('competiteur', sampleStreetProfile()),
+        ('debutant', sampleStreetProfile(beginner: true)),
+        ('sets_reps', _street('street_workout')),
+        ('elite', _street('streetlifting')),
+      ]) {
+        SharedPreferences.setMockInitialValues({});
+        var clock = DateTime(2026, 10, 1, 9);
+        final app = AppStore()..storeClock = () => clock;
+        await app.init();
+        _save(app, profile);
+        _create(app);
+        final block = app.planProgram!.blocks.single.block;
+        final kinds = <String, int>{};
+        for (final w in block.pass2.weeks) {
+          for (final d in w.days) {
+            for (final it in d.items) {
+              final k = it.kind == kc.SetKind.test
+                  ? 'test:${it.test?.kind.code}'
+                  : (it.technique?.kind.code ?? 'classique');
+              kinds[k] = (kinds[k] ?? 0) + 1;
+            }
+          }
+        }
+        // ignore: avoid_print
+        print('CI1 $key : ${block.pass2.weeks.length} semaines, '
+            'phases ${app.planProgram!.season?.phases.map((p) => '${p.kind.code}/${p.weeks}').join(' ')} ; $kinds');
+        final hit = _find(app, (it) => it.technique != null, weeks: 2);
+        if (hit != null) {
+          clock = _dateOf(app, hit.week, hit.j);
+          final base = app.program.week(hit.week).day(hit.j)!;
+          final a = app.adaptOpen(hit.week, base);
+          if (a != null) {
+            final day = app.adaptDay(hit.week, base, a);
+            for (final e in day.exercises.where((x) => x.engine)) {
+              final it = app.adaptItemFor(hit.week, hit.j, e)!;
+              // ignore: avoid_print
+              print('  S${hit.week}J${hit.j} ${e.name} : ${it.technique?.kind.code ?? '-'} '
+                  '${app.setsLabel(e)} lignes ${[for (var i = 0; i < it.sets; i++) app.adaptRowLabel(hit.week, hit.j, e, i) ?? '${i + 1}'].join(',')} '
+                  'chrono ${e.timer?['type']} mesure ${app.logSpec(e).kind}');
+            }
+          }
+        }
+        await app.flush();
+        app.dispose();
+      }
+    });
+  });
+
   group('textes', () {
     test('chaque code de raison a une phrase (plan ou moteur dynamique)', () {
       for (final spec in kc.reasonRegistry) {
         final r = kc.Reason(code: spec.code, params: const {});
-        final t = spec.code.startsWith('adapt.')
-            ? adaptReasonText(r)
-            : null;
+        final t = spec.code.startsWith('adapt.') ? adaptReasonText(r) : null;
         if (spec.code.startsWith('adapt.') && t == null) {
           // Codes internes 0.1 : rien à dire à l'utilisateur.
           continue;
