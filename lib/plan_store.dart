@@ -481,10 +481,7 @@ extension PlanStore on AppStore {
   void setPlanKeepLegacyEngine(bool keep) {
     final plan = planProgram;
     if (plan == null || plan.keepLegacyEngine == keep) return;
-    planProgram = plan.copyWith(
-      updatedAt: _planAt,
-      keepLegacyEngine: keep,
-    );
+    planProgram = plan.copyWith(updatedAt: _planAt, keepLegacyEngine: keep);
     _planChanged();
   }
 

@@ -10,7 +10,8 @@
 // (`coachReasonText`) : l'application les affiche telles quelles.
 // Aucune règle d'entraînement ici : seulement de la lecture.
 import 'package:kalis_core/kalis_core.dart' as kc;
-import 'package:kalis_plan/kalis_plan.dart' as kp
+import 'package:kalis_plan/kalis_plan.dart'
+    as kp
     show CoachNotes, coachPhaseLabel, coachReasonText, isCoachPlan;
 
 String _num(double v) {
@@ -197,8 +198,7 @@ String coachVolumeText(kc.ExercisePrescription p) {
       case kc.SetTechniqueKind.pyramid:
       case kc.SetTechniqueKind.ladder:
         final steps = <int>[
-          for (var i = 0; i < p.sets; i++)
-            prescriptionRow(p, i).high ?? rh,
+          for (var i = 0; i < p.sets; i++) prescriptionRow(p, i).high ?? rh,
         ];
         return '${p.sets} paliers : ${steps.join(' – ')} rép.';
       default:

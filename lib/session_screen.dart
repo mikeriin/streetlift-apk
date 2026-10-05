@@ -1022,9 +1022,10 @@ class SessionExercisePageState extends State<SessionExercisePage> {
       if (t != null && !pain.contains(t)) pain.add(t);
     }
     final notes = [
-      for (final n in block == null
-          ? const <String>[]
-          : ct.coachItemNotes(block, catalog))
+      for (final n
+          in block == null
+              ? const <String>[]
+              : ct.coachItemNotes(block, catalog))
         if (!pain.contains(n)) n,
     ];
     if (lines.isEmpty && pain.isEmpty && notes.isEmpty) return const [];
