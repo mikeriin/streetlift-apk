@@ -20,6 +20,12 @@ const _objectives = <kc.EventObjective, String>{
   kc.EventObjective.record: 'Tenter un record',
 };
 
+String _rest(int s) => s < 120
+    ? '$s\u00A0s'
+    : s % 60 == 0
+    ? '${s ~/ 60}\u00A0min'
+    : '${s ~/ 60}\u00A0min ${s % 60}\u00A0s';
+
 class EventDayScreen extends StatefulWidget {
   final kc.SeasonEvent event;
   const EventDayScreen({super.key, required this.event});
@@ -31,6 +37,11 @@ class EventDayScreen extends StatefulWidget {
 class _EventDayScreenState extends State<EventDayScreen> {
   final List<kc.AttemptResult> _done = [];
   kc.EventObjective _objective = kc.EventObjective.maxTotal;
+
+  /// Dernier plan calculé et sa clé (objectif, tentatives notées) : le
+  /// moteur n'est rappelé que quand l'une change.
+  String? _planKey;
+  kc.EventDayPlan? _plan;
 
   String _name(String id) => store.adaptExerciseName(id);
 
@@ -52,11 +63,17 @@ class _EventDayScreenState extends State<EventDayScreen> {
   Widget build(BuildContext context) {
     final t = Theme.of(context).textTheme;
     final strength = widget.event.kind == kc.EventKind.strengthCompetition;
-    final plan = store.evolutionEventDay(
-      widget.event.id,
-      done: List.unmodifiable(_done),
-      objective: strength ? _objective : null,
-    );
+    final key =
+        '${_objective.code}|${[for (final a in _done) '${a.exerciseId}:${a.index}:${a.success}'].join(',')}';
+    if (key != _planKey) {
+      _planKey = key;
+      _plan = store.evolutionEventDay(
+        widget.event.id,
+        done: List.unmodifiable(_done),
+        objective: strength ? _objective : null,
+      );
+    }
+    final plan = _plan;
     final children = <Widget>[
       KCard(
         child: KoachSays(
@@ -124,7 +141,7 @@ class _EventDayScreenState extends State<EventDayScreen> {
                   for (final w in lift.warmup!)
                     Text(
                       '${adaptKg(w.loadKg)} × ${w.reps}'
-                      '${w.restSeconds == null ? '' : ' · repos ${w.restSeconds! ~/ 60} min'}',
+                      '${w.restSeconds == null ? '' : ' · repos ${_rest(w.restSeconds!)}'}',
                     ),
                 ],
                 for (final a in done)

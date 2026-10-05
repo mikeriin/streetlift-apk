@@ -192,6 +192,17 @@ void main() {
     seed.settings.theme = dark ? 'dark' : 'light';
     seed.settings.accent = accent;
     seed.saveSettings();
+    // Session personnelle : programme du propriétaire commencé il y a
+    // 10 jours, profil d'exemple (chemin 0.1 : sans ancienneté).
+    final real = DateTime.now();
+    await seed.configureStart(DateTime(real.year, real.month, real.day - 10));
+    seed.saveAthleteProfile(
+      ProfileDraft.of(
+        sampleAthleteProfile(
+          on: civilOf(real.subtract(const Duration(days: 20))),
+        ),
+      )..consent = 'refused',
+    );
     await seed.flush();
     seed.dispose();
 
