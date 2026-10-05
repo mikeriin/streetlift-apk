@@ -125,8 +125,7 @@ IntraSessionAdvice buildAdvice(
   final comeback = view.coached
       ? PainReturn.of(view, state, day, session.weekIndex, p)
       : PainReturn.none;
-  final wristGuard =
-      view.coached && wristSensitive(view, state, comeback, day);
+  final wristGuard = view.coached && wristSensitive(view, state, comeback, day);
   final run = SessionRun(
     ctx,
     state,
@@ -181,8 +180,7 @@ IntraSessionAdvice buildAdvice(
       if (view.taperedAt(day)) {
         exercise.tapered = true;
       }
-      if (wristGuard &&
-          coachPainStopHits(info.exercise, BodyZone.wristHand)) {
+      if (wristGuard && coachPainStopHits(info.exercise, BodyZone.wristHand)) {
         exercise.doseCapped = true;
       }
       if (item != null && _inReturn(item)) {
