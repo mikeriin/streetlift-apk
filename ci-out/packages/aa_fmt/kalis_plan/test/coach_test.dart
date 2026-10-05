@@ -968,7 +968,7 @@ void main() {
     });
 
     test(
-      'un test mesuré plus bas que le record déclaré (15 % au plus) fait foi',
+      'un test plus bas que le record (15 % au plus) fait foi une fois confirmé',
       () {
         final declared = _profile(
           experience: ExperienceLevel.intermediate,
@@ -977,16 +977,24 @@ void main() {
             _maxReps('sw-dips-barres-paralleles', 20),
           ],
         );
-        final tested = declared.copyWith(
+        Benchmark tested(int reps, int daysAgo) => Benchmark(
+          exerciseId: 'sw-traction-pronation',
+          kind: BenchmarkKind.maxReps,
+          source: BenchmarkSource.guidedTest,
+          reps: reps,
+          date: _start.addDays(-daysAgo),
+        );
+        final same = declared.copyWith(
+          benchmarks: <Benchmark>[...declared.benchmarks!, tested(14, 3)],
+        );
+        final once = declared.copyWith(
+          benchmarks: <Benchmark>[...declared.benchmarks!, tested(12, 3)],
+        );
+        final twice = declared.copyWith(
           benchmarks: <Benchmark>[
             ...declared.benchmarks!,
-            Benchmark(
-              exerciseId: 'sw-traction-pronation',
-              kind: BenchmarkKind.maxReps,
-              source: BenchmarkSource.guidedTest,
-              reps: 12,
-              date: _start.addDays(-3),
-            ),
+            tested(13, 40),
+            tested(12, 3),
           ],
         );
         int pullReps(AthleteProfile p) {
@@ -1007,8 +1015,10 @@ void main() {
         }
 
         final before = pullReps(declared);
-        final after = pullReps(tested);
         expect(before, greaterThan(0));
+        // (Une mesure seule plus basse ne recale pas : deux mesures.)
+        expect(pullReps(once), pullReps(same));
+        final after = pullReps(twice);
         expect(after, lessThan(before));
         expect(after, lessThan(12));
       },

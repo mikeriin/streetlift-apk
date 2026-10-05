@@ -66,33 +66,36 @@ Homme de 38 ans, sédentaire, 104 kg pour 1,76 m. Veut reprendre une activité e
 
 ## Semaine 1 — introduction (bloc 1)
 
-### mardi — force, corps entier (40 min disponibles, 32 min estimées)
+### mardi — force, corps entier (40 min disponibles, 34 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
+| Wrist push-ups | 2 × 8 à 10 | — | — | 30 s | échauffement |
 | Traction assistée pieds au sol | 2 × 6 à 8 | poids du corps | 4 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Pompe inclinée (mains surélevées) | 2 × 6 à 8 | poids du corps | 4 rép. en réserve | 2 min | principal ; Échelle de poussée : pompe au mur → mains surélevées (barre basse ou barres parallèles, de plus en plus bas) → genoux → sol. Prends dès la première séance le cran qui permet 6 répétitions avec 3 à 4 en réserve ; descends d'un cran quand le haut de la plage est tenu sur toutes les séries, deux séances de suite. ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Row australien genoux fléchis pieds à plat | 2 × 6 à 8 | poids du corps | 4 rép. en réserve | 2 min | secondaire |
 | Air squat | 2 × 8 à 10 | poids du corps | 4 rép. en réserve | 2 min | secondaire |
 | Marche rapide | 10 min | — | allure facile | — | accessoire ; Allure de conversation (tu peux parler en phrases), 10 min. |
 
-### jeudi — force, corps entier (40 min disponibles, 33 min estimées)
+### jeudi — force, corps entier (40 min disponibles, 35 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
+| Wrist push-ups | 2 × 8 à 10 | — | — | 30 s | échauffement |
 | Traction assistée pieds au sol | 2 × 6 à 8 | poids du corps | 4 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Pompe inclinée (mains surélevées) | 2 × 6 à 8 | poids du corps | 4 rép. en réserve | 2 min | principal ; Échelle de poussée : pompe au mur → mains surélevées (barre basse ou barres parallèles, de plus en plus bas) → genoux → sol. Prends dès la première séance le cran qui permet 6 répétitions avec 3 à 4 en réserve ; descends d'un cran quand le haut de la plage est tenu sur toutes les séries, deux séances de suite. ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Fente arrière au poids du corps | 2 × 8 à 10 | poids du corps | 4 rép. en réserve | 2 min | secondaire |
 | Pont fessier au sol | 2 × 8 à 10 | poids du corps | 4 rép. en réserve | 105 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Marche rapide | 10 min | — | allure facile | — | accessoire ; Allure de conversation (tu peux parler en phrases), 10 min. |
 
-### samedi — force, corps entier (40 min disponibles, 37 min estimées)
+### samedi — force, corps entier (40 min disponibles, 39 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
+| Wrist push-ups | 2 × 8 à 10 | — | — | 30 s | échauffement |
 | Traction assistée pieds au sol | 2 × 6 à 8 | poids du corps | 4 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Pompe inclinée (mains surélevées) | 2 × 6 à 8 | poids du corps | 4 rép. en réserve | 2 min | principal ; Échelle de poussée : pompe au mur → mains surélevées (barre basse ou barres parallèles, de plus en plus bas) → genoux → sol. Prends dès la première séance le cran qui permet 6 répétitions avec 3 à 4 en réserve ; descends d'un cran quand le haut de la plage est tenu sur toutes les séries, deux séances de suite. ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Row australien genoux fléchis pieds à plat | 2 × 6 à 8 | poids du corps | 4 rép. en réserve | 2 min | secondaire |
@@ -102,33 +105,36 @@ Homme de 38 ans, sédentaire, 104 kg pour 1,76 m. Veut reprendre une activité e
 
 ## Semaine 2 — construction (volume) (bloc 1)
 
-### mardi — force, corps entier (40 min disponibles, 32 min estimées)
+### mardi — force, corps entier (40 min disponibles, 34 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
+| Wrist push-ups | 2 × 8 à 10 | — | — | 30 s | échauffement |
 | Traction assistée pieds au sol | 2 × 6 à 8 | poids du corps | 3 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Pompe inclinée (mains surélevées) | 2 × 6 à 8 | poids du corps | 3 rép. en réserve | 2 min | principal ; Échelle de poussée : pompe au mur → mains surélevées (barre basse ou barres parallèles, de plus en plus bas) → genoux → sol. Prends dès la première séance le cran qui permet 6 répétitions avec 3 à 4 en réserve ; descends d'un cran quand le haut de la plage est tenu sur toutes les séries, deux séances de suite. ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Row australien genoux fléchis pieds à plat | 2 × 6 à 8 | poids du corps | 3 rép. en réserve | 2 min | secondaire |
 | Air squat | 2 × 8 à 10 | poids du corps | 3 rép. en réserve | 2 min | secondaire |
 | Marche rapide | 10 min | — | allure facile | — | accessoire ; Allure de conversation (tu peux parler en phrases), 10 min. |
 
-### jeudi — force, corps entier (40 min disponibles, 33 min estimées)
+### jeudi — force, corps entier (40 min disponibles, 35 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
+| Wrist push-ups | 2 × 8 à 10 | — | — | 30 s | échauffement |
 | Traction assistée pieds au sol | 2 × 6 à 8 | poids du corps | 3 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Pompe inclinée (mains surélevées) | 2 × 6 à 8 | poids du corps | 3 rép. en réserve | 2 min | principal ; Échelle de poussée : pompe au mur → mains surélevées (barre basse ou barres parallèles, de plus en plus bas) → genoux → sol. Prends dès la première séance le cran qui permet 6 répétitions avec 3 à 4 en réserve ; descends d'un cran quand le haut de la plage est tenu sur toutes les séries, deux séances de suite. ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Fente arrière au poids du corps | 2 × 8 à 10 | poids du corps | 3 rép. en réserve | 2 min | secondaire |
 | Pont fessier au sol | 2 × 8 à 10 | poids du corps | 3 rép. en réserve | 105 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Marche rapide | 10 min | — | allure facile | — | accessoire ; Allure de conversation (tu peux parler en phrases), 10 min. |
 
-### samedi — force, corps entier (40 min disponibles, 37 min estimées)
+### samedi — force, corps entier (40 min disponibles, 39 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
+| Wrist push-ups | 2 × 8 à 10 | — | — | 30 s | échauffement |
 | Traction assistée pieds au sol | 2 × 6 à 8 | poids du corps | 3 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Pompe inclinée (mains surélevées) | 2 × 6 à 8 | poids du corps | 3 rép. en réserve | 2 min | principal ; Échelle de poussée : pompe au mur → mains surélevées (barre basse ou barres parallèles, de plus en plus bas) → genoux → sol. Prends dès la première séance le cran qui permet 6 répétitions avec 3 à 4 en réserve ; descends d'un cran quand le haut de la plage est tenu sur toutes les séries, deux séances de suite. ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Row australien genoux fléchis pieds à plat | 2 × 6 à 8 | poids du corps | 3 rép. en réserve | 2 min | secondaire |
@@ -138,33 +144,36 @@ Homme de 38 ans, sédentaire, 104 kg pour 1,76 m. Veut reprendre une activité e
 
 ## Semaine 3 — construction (volume) (bloc 1)
 
-### mardi — force, corps entier (40 min disponibles, 32 min estimées)
+### mardi — force, corps entier (40 min disponibles, 34 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
+| Wrist push-ups | 2 × 8 à 10 | — | — | 30 s | échauffement |
 | Traction assistée pieds au sol | 2 × 6 à 8 | poids du corps | 3 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Pompe inclinée (mains surélevées) | 2 × 6 à 8 | poids du corps | 3 rép. en réserve | 2 min | principal ; Échelle de poussée : pompe au mur → mains surélevées (barre basse ou barres parallèles, de plus en plus bas) → genoux → sol. Prends dès la première séance le cran qui permet 6 répétitions avec 3 à 4 en réserve ; descends d'un cran quand le haut de la plage est tenu sur toutes les séries, deux séances de suite. ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Row australien genoux fléchis pieds à plat | 2 × 6 à 8 | poids du corps | 3 rép. en réserve | 2 min | secondaire |
 | Air squat | 2 × 8 à 10 | poids du corps | 3 rép. en réserve | 2 min | secondaire |
 | Marche rapide | 10 min | — | allure facile | — | accessoire ; Allure de conversation (tu peux parler en phrases), 10 min. |
 
-### jeudi — force, corps entier (40 min disponibles, 33 min estimées)
+### jeudi — force, corps entier (40 min disponibles, 35 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
+| Wrist push-ups | 2 × 8 à 10 | — | — | 30 s | échauffement |
 | Traction assistée pieds au sol | 2 × 6 à 8 | poids du corps | 3 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Pompe inclinée (mains surélevées) | 2 × 6 à 8 | poids du corps | 3 rép. en réserve | 2 min | principal ; Échelle de poussée : pompe au mur → mains surélevées (barre basse ou barres parallèles, de plus en plus bas) → genoux → sol. Prends dès la première séance le cran qui permet 6 répétitions avec 3 à 4 en réserve ; descends d'un cran quand le haut de la plage est tenu sur toutes les séries, deux séances de suite. ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Fente arrière au poids du corps | 2 × 8 à 10 | poids du corps | 3 rép. en réserve | 2 min | secondaire |
 | Pont fessier au sol | 2 × 8 à 10 | poids du corps | 3 rép. en réserve | 105 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Marche rapide | 10 min | — | allure facile | — | accessoire ; Allure de conversation (tu peux parler en phrases), 10 min. |
 
-### samedi — force, corps entier (40 min disponibles, 37 min estimées)
+### samedi — force, corps entier (40 min disponibles, 39 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
+| Wrist push-ups | 2 × 8 à 10 | — | — | 30 s | échauffement |
 | Traction assistée pieds au sol | 2 × 6 à 8 | poids du corps | 3 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Pompe inclinée (mains surélevées) | 2 × 6 à 8 | poids du corps | 3 rép. en réserve | 2 min | principal ; Échelle de poussée : pompe au mur → mains surélevées (barre basse ou barres parallèles, de plus en plus bas) → genoux → sol. Prends dès la première séance le cran qui permet 6 répétitions avec 3 à 4 en réserve ; descends d'un cran quand le haut de la plage est tenu sur toutes les séries, deux séances de suite. ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Row australien genoux fléchis pieds à plat | 2 × 6 à 8 | poids du corps | 3 rép. en réserve | 2 min | secondaire |
@@ -174,105 +183,114 @@ Homme de 38 ans, sédentaire, 104 kg pour 1,76 m. Veut reprendre une activité e
 
 ## Semaine 4 — construction (volume) (bloc 1)
 
-### mardi — force, corps entier (40 min disponibles, 32 min estimées)
+### mardi — force, corps entier (40 min disponibles, 35 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
+| Wrist push-ups | 2 × 8 à 10 | — | — | 30 s | échauffement |
 | Traction assistée pieds au sol | 2 × 7 à 9 | poids du corps | 3 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Pompe inclinée (mains surélevées) | 2 × 7 à 9 | poids du corps | 3 rép. en réserve | 2 min | principal ; Échelle de poussée : pompe au mur → mains surélevées (barre basse ou barres parallèles, de plus en plus bas) → genoux → sol. Prends dès la première séance le cran qui permet 6 répétitions avec 3 à 4 en réserve ; descends d'un cran quand le haut de la plage est tenu sur toutes les séries, deux séances de suite. ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Row australien genoux fléchis pieds à plat | 2 × 7 à 9 | poids du corps | 3 rép. en réserve | 2 min | secondaire |
 | Air squat | 2 × 9 à 11 | poids du corps | 3 rép. en réserve | 2 min | secondaire |
 | Marche rapide | 10 min | — | allure facile | — | accessoire ; Allure de conversation (tu peux parler en phrases), 10 min. |
 
-### jeudi — force, corps entier (40 min disponibles, 34 min estimées)
+### jeudi — force, corps entier (40 min disponibles, 36 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
+| Wrist push-ups | 2 × 8 à 10 | — | — | 30 s | échauffement |
 | Traction assistée pieds au sol | 2 × 7 à 9 | poids du corps | 3 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Pompe inclinée (mains surélevées) | 2 × 7 à 9 | poids du corps | 3 rép. en réserve | 2 min | principal ; Échelle de poussée : pompe au mur → mains surélevées (barre basse ou barres parallèles, de plus en plus bas) → genoux → sol. Prends dès la première séance le cran qui permet 6 répétitions avec 3 à 4 en réserve ; descends d'un cran quand le haut de la plage est tenu sur toutes les séries, deux séances de suite. ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Fente arrière au poids du corps | 2 × 9 à 11 | poids du corps | 3 rép. en réserve | 2 min | secondaire |
 | Pont fessier au sol | 2 × 9 à 11 | poids du corps | 3 rép. en réserve | 105 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Marche rapide | 10 min | — | allure facile | — | accessoire ; Allure de conversation (tu peux parler en phrases), 10 min. |
 
-### samedi — force, corps entier (40 min disponibles, 37 min estimées)
+### samedi — force, corps entier (40 min disponibles, 38 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
+| Wrist push-ups | 2 × 8 à 10 | — | — | 30 s | échauffement |
 | Traction assistée pieds au sol | 2 × 7 à 9 | poids du corps | 3 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Pompe inclinée (mains surélevées) | 2 × 7 à 9 | poids du corps | 3 rép. en réserve | 2 min | principal ; Échelle de poussée : pompe au mur → mains surélevées (barre basse ou barres parallèles, de plus en plus bas) → genoux → sol. Prends dès la première séance le cran qui permet 6 répétitions avec 3 à 4 en réserve ; descends d'un cran quand le haut de la plage est tenu sur toutes les séries, deux séances de suite. ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Row australien genoux fléchis pieds à plat | 2 × 7 à 9 | poids du corps | 3 rép. en réserve | 2 min | secondaire |
 | Air squat | 2 × 9 à 11 | poids du corps | 3 rép. en réserve | 2 min | secondaire |
 | Fente arrière au poids du corps | 2 × 9 à 11 | poids du corps | 3 rép. en réserve | 105 s | accessoire |
-| Marche rapide | 10 min | — | allure facile | — | accessoire ; Allure de conversation (tu peux parler en phrases), 10 min. |
+| Marche rapide | 9 min | — | allure facile | — | accessoire ; Allure de conversation (tu peux parler en phrases), 10 min. |
 
 ## Semaine 5 — construction (volume) (bloc 1)
 
-### mardi — force, corps entier (40 min disponibles, 32 min estimées)
+### mardi — force, corps entier (40 min disponibles, 35 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
+| Wrist push-ups | 2 × 8 à 10 | — | — | 30 s | échauffement |
 | Traction assistée pieds au sol | 2 × 7 à 9 | poids du corps | 3 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Pompe inclinée (mains surélevées) | 2 × 7 à 9 | poids du corps | 3 rép. en réserve | 2 min | principal ; Échelle de poussée : pompe au mur → mains surélevées (barre basse ou barres parallèles, de plus en plus bas) → genoux → sol. Prends dès la première séance le cran qui permet 6 répétitions avec 3 à 4 en réserve ; descends d'un cran quand le haut de la plage est tenu sur toutes les séries, deux séances de suite. ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Row australien genoux fléchis pieds à plat | 2 × 7 à 9 | poids du corps | 3 rép. en réserve | 2 min | secondaire |
 | Air squat | 2 × 9 à 11 | poids du corps | 3 rép. en réserve | 2 min | secondaire |
 | Marche rapide | 10 min | — | allure facile | — | accessoire ; Allure de conversation (tu peux parler en phrases), 10 min. |
 
-### jeudi — force, corps entier (40 min disponibles, 34 min estimées)
+### jeudi — force, corps entier (40 min disponibles, 36 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
+| Wrist push-ups | 2 × 8 à 10 | — | — | 30 s | échauffement |
 | Traction assistée pieds au sol | 2 × 7 à 9 | poids du corps | 3 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Pompe inclinée (mains surélevées) | 2 × 7 à 9 | poids du corps | 3 rép. en réserve | 2 min | principal ; Échelle de poussée : pompe au mur → mains surélevées (barre basse ou barres parallèles, de plus en plus bas) → genoux → sol. Prends dès la première séance le cran qui permet 6 répétitions avec 3 à 4 en réserve ; descends d'un cran quand le haut de la plage est tenu sur toutes les séries, deux séances de suite. ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Fente arrière au poids du corps | 2 × 9 à 11 | poids du corps | 3 rép. en réserve | 2 min | secondaire |
 | Pont fessier au sol | 2 × 9 à 11 | poids du corps | 3 rép. en réserve | 105 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Marche rapide | 10 min | — | allure facile | — | accessoire ; Allure de conversation (tu peux parler en phrases), 10 min. |
 
-### samedi — force, corps entier (40 min disponibles, 37 min estimées)
+### samedi — force, corps entier (40 min disponibles, 38 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
+| Wrist push-ups | 2 × 8 à 10 | — | — | 30 s | échauffement |
 | Traction assistée pieds au sol | 2 × 7 à 9 | poids du corps | 3 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Pompe inclinée (mains surélevées) | 2 × 7 à 9 | poids du corps | 3 rép. en réserve | 2 min | principal ; Échelle de poussée : pompe au mur → mains surélevées (barre basse ou barres parallèles, de plus en plus bas) → genoux → sol. Prends dès la première séance le cran qui permet 6 répétitions avec 3 à 4 en réserve ; descends d'un cran quand le haut de la plage est tenu sur toutes les séries, deux séances de suite. ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Row australien genoux fléchis pieds à plat | 2 × 7 à 9 | poids du corps | 3 rép. en réserve | 2 min | secondaire |
 | Air squat | 2 × 9 à 11 | poids du corps | 3 rép. en réserve | 2 min | secondaire |
 | Fente arrière au poids du corps | 2 × 9 à 11 | poids du corps | 3 rép. en réserve | 105 s | accessoire |
-| Marche rapide | 10 min | — | allure facile | — | accessoire ; Allure de conversation (tu peux parler en phrases), 10 min. |
+| Marche rapide | 9 min | — | allure facile | — | accessoire ; Allure de conversation (tu peux parler en phrases), 10 min. |
 
 ## Semaine 6 — test (bloc 1)
 
-### mardi — force, corps entier, séance légère (40 min disponibles, 22 min estimées)
+### mardi — force, corps entier, séance légère (40 min disponibles, 24 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
+| Wrist push-ups | 2 × 8 à 10 | — | — | 30 s | échauffement |
 | Traction assistée pieds au sol | 1 × 5 | poids du corps | 5 rép. en réserve ou plus | 2 min | principal ; À deux jours du test : séance facile, deux séries au plus à 60 % des répétitions habituelles, très loin de l'échec — 48 h sans travail dur avant le test. ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Pompe inclinée (mains surélevées) | 1 × 5 | poids du corps | 5 rép. en réserve ou plus | 2 min | principal ; Échelle de poussée : pompe au mur → mains surélevées (barre basse ou barres parallèles, de plus en plus bas) → genoux → sol. Prends dès la première séance le cran qui permet 6 répétitions avec 3 à 4 en réserve ; descends d'un cran quand le haut de la plage est tenu sur toutes les séries, deux séances de suite. ; À deux jours du test : séance facile, deux séries au plus à 60 % des répétitions habituelles, très loin de l'échec — 48 h sans travail dur avant le test. ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Row australien genoux fléchis pieds à plat | 1 × 5 | poids du corps | 5 rép. en réserve ou plus | 2 min | secondaire ; À deux jours du test : séance facile, deux séries au plus à 60 % des répétitions habituelles, très loin de l'échec — 48 h sans travail dur avant le test. |
 | Air squat | 1 × 6 | poids du corps | 5 rép. en réserve ou plus | 2 min | secondaire ; À deux jours du test : séance facile, deux séries au plus à 60 % des répétitions habituelles, très loin de l'échec — 48 h sans travail dur avant le test. |
 | Marche rapide | 10 min | — | allure facile | — | accessoire ; Allure de conversation (tu peux parler en phrases), 10 min. |
 
-### jeudi — force, corps entier, séance légère (40 min disponibles, 26 min estimées)
+### jeudi — force, corps entier, séance légère (40 min disponibles, 28 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
+| Wrist push-ups | 2 × 8 à 10 | — | — | 30 s | échauffement |
 | Dead hang | 1 × 15 à 45 s | poids du corps | — | 3 min | ÉPREUVE ; Test : un maintien maximal, arrêt dès que la position se dégrade. |
 | Pompe inclinée (mains surélevées) | 1 série maximale (repère : 8 à 15) | poids du corps | — | 4 min | ÉPREUVE ; Test : une seule série maximale, arrêt dès que la forme casse. |
 | Fente arrière au poids du corps | 1 × 8 à 10 | poids du corps | 3 rép. en réserve | 2 min | secondaire |
 | Pont fessier au sol | 2 × 8 à 10 | poids du corps | 3 rép. en réserve | 105 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Marche rapide | 10 min | — | allure facile | — | accessoire ; Allure de conversation (tu peux parler en phrases), 10 min. |
 
-### samedi — force, corps entier, séance légère (40 min disponibles, 27 min estimées)
+### samedi — force, corps entier, séance légère (40 min disponibles, 29 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
+| Wrist push-ups | 2 × 8 à 10 | — | — | 30 s | échauffement |
 | Traction assistée pieds au sol | 1 × 6 à 8 | poids du corps | 3 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Pompe inclinée (mains surélevées) | 1 × 6 à 8 | poids du corps | 3 rép. en réserve | 2 min | principal ; Échelle de poussée : pompe au mur → mains surélevées (barre basse ou barres parallèles, de plus en plus bas) → genoux → sol. Prends dès la première séance le cran qui permet 6 répétitions avec 3 à 4 en réserve ; descends d'un cran quand le haut de la plage est tenu sur toutes les séries, deux séances de suite. ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Row australien genoux fléchis pieds à plat | 1 × 6 à 8 | poids du corps | 3 rép. en réserve | 2 min | secondaire |
@@ -282,11 +300,12 @@ Homme de 38 ans, sédentaire, 104 kg pour 1,76 m. Veut reprendre une activité e
 
 ## Semaine 7 — construction (volume) (bloc 2)
 
-### mardi — force, corps entier (40 min disponibles, 32 min estimées)
+### mardi — force, corps entier (40 min disponibles, 34 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
+| Wrist push-ups | 2 × 8 à 10 | — | — | 30 s | échauffement |
 | Traction assistée pieds au sol | 2 × 6 à 8 | poids du corps | 3 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Pompe inclinée (mains surélevées) | 2 × 6 à 8 | poids du corps | 3 rép. en réserve | 2 min | principal ; Échelle de poussée : pompe au mur → mains surélevées (barre basse ou barres parallèles, de plus en plus bas) → genoux → sol. Prends dès la première séance le cran qui permet 6 répétitions avec 3 à 4 en réserve ; descends d'un cran quand le haut de la plage est tenu sur toutes les séries, deux séances de suite. ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Row australien genoux fléchis pieds à plat | 2 × 6 à 8 | poids du corps | 3 rép. en réserve | 2 min | secondaire |
@@ -298,30 +317,33 @@ Homme de 38 ans, sédentaire, 104 kg pour 1,76 m. Veut reprendre une activité e
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
+| Wrist push-ups | 2 × 8 à 10 | — | — | 30 s | échauffement |
 | Traction assistée pieds au sol | 2 × 6 à 8 | poids du corps | 3 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Pompe inclinée (mains surélevées) | 2 × 6 à 8 | poids du corps | 3 rép. en réserve | 2 min | principal ; Échelle de poussée : pompe au mur → mains surélevées (barre basse ou barres parallèles, de plus en plus bas) → genoux → sol. Prends dès la première séance le cran qui permet 6 répétitions avec 3 à 4 en réserve ; descends d'un cran quand le haut de la plage est tenu sur toutes les séries, deux séances de suite. ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Fente arrière au poids du corps | 2 × 8 à 10 | poids du corps | 3 rép. en réserve | 2 min | secondaire |
-| Marche rapide | 10 min | — | allure facile | — | accessoire ; Allure de conversation (tu peux parler en phrases), 10 min. |
+| Marche rapide | 8 min | — | allure facile | — | accessoire ; Allure de conversation (tu peux parler en phrases), 10 min. |
 
-### samedi — force, corps entier (40 min disponibles, 38 min estimées)
+### samedi — force, corps entier (40 min disponibles, 39 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
+| Wrist push-ups | 2 × 8 à 10 | — | — | 30 s | échauffement |
 | Traction assistée pieds au sol | 3 × 6 à 8 | poids du corps | 3 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Pompe inclinée (mains surélevées) | 3 × 6 à 8 | poids du corps | 3 rép. en réserve | 2 min | principal ; Échelle de poussée : pompe au mur → mains surélevées (barre basse ou barres parallèles, de plus en plus bas) → genoux → sol. Prends dès la première séance le cran qui permet 6 répétitions avec 3 à 4 en réserve ; descends d'un cran quand le haut de la plage est tenu sur toutes les séries, deux séances de suite. ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Row australien genoux fléchis pieds à plat | 2 × 6 à 8 | poids du corps | 3 rép. en réserve | 2 min | secondaire |
 | Air squat | 2 × 8 à 10 | poids du corps | 3 rép. en réserve | 2 min | secondaire |
 | Fente arrière au poids du corps | 2 × 8 à 10 | poids du corps | 3 rép. en réserve | 105 s | accessoire |
-| Marche rapide | 7 min | — | allure facile | — | accessoire ; Allure de conversation (tu peux parler en phrases), 10 min. |
+| Marche rapide | 5 min | — | allure facile | — | accessoire ; Allure de conversation (tu peux parler en phrases), 10 min. |
 
 ## Semaine 8 — construction (volume) (bloc 2)
 
-### mardi — force, corps entier (40 min disponibles, 32 min estimées)
+### mardi — force, corps entier (40 min disponibles, 35 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
+| Wrist push-ups | 2 × 8 à 10 | — | — | 30 s | échauffement |
 | Traction assistée pieds au sol | 2 × 7 à 9 | poids du corps | 3 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Pompe inclinée (mains surélevées) | 2 × 7 à 9 | poids du corps | 3 rép. en réserve | 2 min | principal ; Échelle de poussée : pompe au mur → mains surélevées (barre basse ou barres parallèles, de plus en plus bas) → genoux → sol. Prends dès la première séance le cran qui permet 6 répétitions avec 3 à 4 en réserve ; descends d'un cran quand le haut de la plage est tenu sur toutes les séries, deux séances de suite. ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Row australien genoux fléchis pieds à plat | 2 × 7 à 9 | poids du corps | 3 rép. en réserve | 2 min | secondaire |
@@ -333,30 +355,32 @@ Homme de 38 ans, sédentaire, 104 kg pour 1,76 m. Veut reprendre une activité e
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
+| Wrist push-ups | 2 × 8 à 10 | — | — | 30 s | échauffement |
 | Traction assistée pieds au sol | 2 × 7 à 9 | poids du corps | 3 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Pompe inclinée (mains surélevées) | 2 × 7 à 9 | poids du corps | 3 rép. en réserve | 2 min | principal ; Échelle de poussée : pompe au mur → mains surélevées (barre basse ou barres parallèles, de plus en plus bas) → genoux → sol. Prends dès la première séance le cran qui permet 6 répétitions avec 3 à 4 en réserve ; descends d'un cran quand le haut de la plage est tenu sur toutes les séries, deux séances de suite. ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Fente arrière au poids du corps | 2 × 9 à 11 | poids du corps | 3 rép. en réserve | 2 min | secondaire |
-| Marche rapide | 10 min | — | allure facile | — | accessoire ; Allure de conversation (tu peux parler en phrases), 10 min. |
+| Marche rapide | 8 min | — | allure facile | — | accessoire ; Allure de conversation (tu peux parler en phrases), 10 min. |
 
-### samedi — force, corps entier (40 min disponibles, 38 min estimées)
+### samedi — force, corps entier (40 min disponibles, 34 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
+| Wrist push-ups | 2 × 8 à 10 | — | — | 30 s | échauffement |
 | Traction assistée pieds au sol | 3 × 7 à 9 | poids du corps | 3 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Pompe inclinée (mains surélevées) | 3 × 7 à 9 | poids du corps | 3 rép. en réserve | 2 min | principal ; Échelle de poussée : pompe au mur → mains surélevées (barre basse ou barres parallèles, de plus en plus bas) → genoux → sol. Prends dès la première séance le cran qui permet 6 répétitions avec 3 à 4 en réserve ; descends d'un cran quand le haut de la plage est tenu sur toutes les séries, deux séances de suite. ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Row australien genoux fléchis pieds à plat | 2 × 7 à 9 | poids du corps | 3 rép. en réserve | 2 min | secondaire |
 | Air squat | 2 × 9 à 11 | poids du corps | 3 rép. en réserve | 2 min | secondaire |
 | Fente arrière au poids du corps | 2 × 9 à 11 | poids du corps | 3 rép. en réserve | 105 s | accessoire |
-| Marche rapide | 6 min | — | allure facile | — | accessoire ; Allure de conversation (tu peux parler en phrases), 10 min. |
 
 ## Semaine 9 — construction (volume) (bloc 2)
 
-### mardi — force, corps entier (40 min disponibles, 32 min estimées)
+### mardi — force, corps entier (40 min disponibles, 35 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
+| Wrist push-ups | 2 × 8 à 10 | — | — | 30 s | échauffement |
 | Traction assistée pieds au sol | 2 × 7 à 9 | poids du corps | 3 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Pompe inclinée (mains surélevées) | 2 × 7 à 9 | poids du corps | 3 rép. en réserve | 2 min | principal ; Échelle de poussée : pompe au mur → mains surélevées (barre basse ou barres parallèles, de plus en plus bas) → genoux → sol. Prends dès la première séance le cran qui permet 6 répétitions avec 3 à 4 en réserve ; descends d'un cran quand le haut de la plage est tenu sur toutes les séries, deux séances de suite. ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Row australien genoux fléchis pieds à plat | 2 × 7 à 9 | poids du corps | 3 rép. en réserve | 2 min | secondaire |
@@ -368,30 +392,32 @@ Homme de 38 ans, sédentaire, 104 kg pour 1,76 m. Veut reprendre une activité e
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
+| Wrist push-ups | 2 × 8 à 10 | — | — | 30 s | échauffement |
 | Traction assistée pieds au sol | 3 × 7 à 9 | poids du corps | 3 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Pompe inclinée (mains surélevées) | 3 × 7 à 9 | poids du corps | 3 rép. en réserve | 2 min | principal ; Échelle de poussée : pompe au mur → mains surélevées (barre basse ou barres parallèles, de plus en plus bas) → genoux → sol. Prends dès la première séance le cran qui permet 6 répétitions avec 3 à 4 en réserve ; descends d'un cran quand le haut de la plage est tenu sur toutes les séries, deux séances de suite. ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Fente arrière au poids du corps | 2 × 9 à 11 | poids du corps | 3 rép. en réserve | 2 min | secondaire |
-| Marche rapide | 10 min | — | allure facile | — | accessoire ; Allure de conversation (tu peux parler en phrases), 10 min. |
+| Marche rapide | 8 min | — | allure facile | — | accessoire ; Allure de conversation (tu peux parler en phrases), 10 min. |
 
-### samedi — force, corps entier (40 min disponibles, 38 min estimées)
+### samedi — force, corps entier (40 min disponibles, 34 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
+| Wrist push-ups | 2 × 8 à 10 | — | — | 30 s | échauffement |
 | Traction assistée pieds au sol | 3 × 7 à 9 | poids du corps | 3 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Pompe inclinée (mains surélevées) | 3 × 7 à 9 | poids du corps | 3 rép. en réserve | 2 min | principal ; Échelle de poussée : pompe au mur → mains surélevées (barre basse ou barres parallèles, de plus en plus bas) → genoux → sol. Prends dès la première séance le cran qui permet 6 répétitions avec 3 à 4 en réserve ; descends d'un cran quand le haut de la plage est tenu sur toutes les séries, deux séances de suite. ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Row australien genoux fléchis pieds à plat | 2 × 7 à 9 | poids du corps | 3 rép. en réserve | 2 min | secondaire |
 | Air squat | 2 × 9 à 11 | poids du corps | 3 rép. en réserve | 2 min | secondaire |
 | Fente arrière au poids du corps | 2 × 9 à 11 | poids du corps | 3 rép. en réserve | 105 s | accessoire |
-| Marche rapide | 6 min | — | allure facile | — | accessoire ; Allure de conversation (tu peux parler en phrases), 10 min. |
 
 ## Semaine 10 — construction (volume) (bloc 2)
 
-### mardi — force, corps entier (40 min disponibles, 33 min estimées)
+### mardi — force, corps entier (40 min disponibles, 35 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
+| Wrist push-ups | 2 × 8 à 10 | — | — | 30 s | échauffement |
 | Traction assistée pieds au sol | 2 × 8 à 10 | poids du corps | 3 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Pompe inclinée (mains surélevées) | 2 × 8 à 10 | poids du corps | 3 rép. en réserve | 2 min | principal ; Échelle de poussée : pompe au mur → mains surélevées (barre basse ou barres parallèles, de plus en plus bas) → genoux → sol. Prends dès la première séance le cran qui permet 6 répétitions avec 3 à 4 en réserve ; descends d'un cran quand le haut de la plage est tenu sur toutes les séries, deux séances de suite. ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Row australien genoux fléchis pieds à plat | 2 × 8 à 10 | poids du corps | 3 rép. en réserve | 2 min | secondaire |
@@ -403,31 +429,33 @@ Homme de 38 ans, sédentaire, 104 kg pour 1,76 m. Veut reprendre une activité e
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
+| Wrist push-ups | 2 × 8 à 10 | — | — | 30 s | échauffement |
 | Traction assistée pieds au sol | 3 × 8 à 10 | poids du corps | 3 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Pompe inclinée (mains surélevées) | 3 × 8 à 10 | poids du corps | 3 rép. en réserve | 2 min | principal ; Échelle de poussée : pompe au mur → mains surélevées (barre basse ou barres parallèles, de plus en plus bas) → genoux → sol. Prends dès la première séance le cran qui permet 6 répétitions avec 3 à 4 en réserve ; descends d'un cran quand le haut de la plage est tenu sur toutes les séries, deux séances de suite. ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Fente arrière au poids du corps | 2 × 10 à 12 | poids du corps | 3 rép. en réserve | 2 min | secondaire |
 | Pont fessier au sol | 2 × 10 à 12 | poids du corps | 3 rép. en réserve | 105 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
-| Marche rapide | 9 min | — | allure facile | — | accessoire ; Allure de conversation (tu peux parler en phrases), 10 min. |
+| Marche rapide | 7 min | — | allure facile | — | accessoire ; Allure de conversation (tu peux parler en phrases), 10 min. |
 
-### samedi — force, corps entier (40 min disponibles, 39 min estimées)
+### samedi — force, corps entier (40 min disponibles, 34 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
+| Wrist push-ups | 2 × 8 à 10 | — | — | 30 s | échauffement |
 | Traction assistée pieds au sol | 3 × 8 à 10 | poids du corps | 3 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Pompe inclinée (mains surélevées) | 3 × 8 à 10 | poids du corps | 3 rép. en réserve | 2 min | principal ; Échelle de poussée : pompe au mur → mains surélevées (barre basse ou barres parallèles, de plus en plus bas) → genoux → sol. Prends dès la première séance le cran qui permet 6 répétitions avec 3 à 4 en réserve ; descends d'un cran quand le haut de la plage est tenu sur toutes les séries, deux séances de suite. ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Row australien genoux fléchis pieds à plat | 2 × 8 à 10 | poids du corps | 3 rép. en réserve | 2 min | secondaire |
 | Air squat | 2 × 10 à 12 | poids du corps | 3 rép. en réserve | 2 min | secondaire |
 | Fente arrière au poids du corps | 2 × 10 à 12 | poids du corps | 3 rép. en réserve | 105 s | accessoire |
-| Marche rapide | 6 min | — | allure facile | — | accessoire ; Allure de conversation (tu peux parler en phrases), 10 min. |
 
 ## Semaine 11 — construction (volume) (bloc 2)
 
-### mardi — force, corps entier (40 min disponibles, 35 min estimées)
+### mardi — force, corps entier (40 min disponibles, 38 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
+| Wrist push-ups | 2 × 8 à 10 | — | — | 30 s | échauffement |
 | Traction assistée pieds au sol | 2 × 8 à 10 | poids du corps | 3 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Pompe inclinée (mains surélevées) | 3 × 8 à 10 | poids du corps | 3 rép. en réserve | 2 min | principal ; Échelle de poussée : pompe au mur → mains surélevées (barre basse ou barres parallèles, de plus en plus bas) → genoux → sol. Prends dès la première séance le cran qui permet 6 répétitions avec 3 à 4 en réserve ; descends d'un cran quand le haut de la plage est tenu sur toutes les séries, deux séances de suite. ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Row australien genoux fléchis pieds à plat | 2 × 8 à 10 | poids du corps | 3 rép. en réserve | 2 min | secondaire |
@@ -439,53 +467,57 @@ Homme de 38 ans, sédentaire, 104 kg pour 1,76 m. Veut reprendre une activité e
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
+| Wrist push-ups | 2 × 8 à 10 | — | — | 30 s | échauffement |
 | Traction assistée pieds au sol | 3 × 8 à 10 | poids du corps | 3 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Pompe inclinée (mains surélevées) | 3 × 8 à 10 | poids du corps | 3 rép. en réserve | 2 min | principal ; Échelle de poussée : pompe au mur → mains surélevées (barre basse ou barres parallèles, de plus en plus bas) → genoux → sol. Prends dès la première séance le cran qui permet 6 répétitions avec 3 à 4 en réserve ; descends d'un cran quand le haut de la plage est tenu sur toutes les séries, deux séances de suite. ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Fente arrière au poids du corps | 2 × 10 à 12 | poids du corps | 3 rép. en réserve | 2 min | secondaire |
 | Pont fessier au sol | 2 × 10 à 12 | poids du corps | 3 rép. en réserve | 105 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
-| Marche rapide | 9 min | — | allure facile | — | accessoire ; Allure de conversation (tu peux parler en phrases), 10 min. |
+| Marche rapide | 7 min | — | allure facile | — | accessoire ; Allure de conversation (tu peux parler en phrases), 10 min. |
 
-### samedi — force, corps entier (40 min disponibles, 39 min estimées)
+### samedi — force, corps entier (40 min disponibles, 34 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
+| Wrist push-ups | 2 × 8 à 10 | — | — | 30 s | échauffement |
 | Traction assistée pieds au sol | 3 × 8 à 10 | poids du corps | 3 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Pompe inclinée (mains surélevées) | 3 × 8 à 10 | poids du corps | 3 rép. en réserve | 2 min | principal ; Échelle de poussée : pompe au mur → mains surélevées (barre basse ou barres parallèles, de plus en plus bas) → genoux → sol. Prends dès la première séance le cran qui permet 6 répétitions avec 3 à 4 en réserve ; descends d'un cran quand le haut de la plage est tenu sur toutes les séries, deux séances de suite. ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Row australien genoux fléchis pieds à plat | 2 × 8 à 10 | poids du corps | 3 rép. en réserve | 2 min | secondaire |
 | Air squat | 2 × 10 à 12 | poids du corps | 3 rép. en réserve | 2 min | secondaire |
 | Fente arrière au poids du corps | 2 × 10 à 12 | poids du corps | 3 rép. en réserve | 105 s | accessoire |
-| Marche rapide | 6 min | — | allure facile | — | accessoire ; Allure de conversation (tu peux parler en phrases), 10 min. |
 
 ## Semaine 12 — test (bloc 2)
 
-### mardi — force, corps entier, séance légère (40 min disponibles, 24 min estimées)
+### mardi — force, corps entier, séance légère (40 min disponibles, 26 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
+| Wrist push-ups | 2 × 8 à 10 | — | — | 30 s | échauffement |
 | Traction assistée pieds au sol | 1 × 5 | poids du corps | 5 rép. en réserve ou plus | 2 min | principal ; À deux jours du test : séance facile, deux séries au plus à 60 % des répétitions habituelles, très loin de l'échec — 48 h sans travail dur avant le test. ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Pompe inclinée (mains surélevées) | 2 × 5 | poids du corps | 5 rép. en réserve ou plus | 2 min | principal ; Échelle de poussée : pompe au mur → mains surélevées (barre basse ou barres parallèles, de plus en plus bas) → genoux → sol. Prends dès la première séance le cran qui permet 6 répétitions avec 3 à 4 en réserve ; descends d'un cran quand le haut de la plage est tenu sur toutes les séries, deux séances de suite. ; À deux jours du test : séance facile, deux séries au plus à 60 % des répétitions habituelles, très loin de l'échec — 48 h sans travail dur avant le test. ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Row australien genoux fléchis pieds à plat | 1 × 5 | poids du corps | 5 rép. en réserve ou plus | 2 min | secondaire ; À deux jours du test : séance facile, deux séries au plus à 60 % des répétitions habituelles, très loin de l'échec — 48 h sans travail dur avant le test. |
 | Air squat | 1 × 6 | poids du corps | 5 rép. en réserve ou plus | 2 min | secondaire ; À deux jours du test : séance facile, deux séries au plus à 60 % des répétitions habituelles, très loin de l'échec — 48 h sans travail dur avant le test. |
 | Marche rapide | 10 min | — | allure facile | — | accessoire ; Allure de conversation (tu peux parler en phrases), 10 min. |
 
-### jeudi — force, corps entier, séance légère (40 min disponibles, 26 min estimées)
+### jeudi — force, corps entier, séance légère (40 min disponibles, 28 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
+| Wrist push-ups | 2 × 8 à 10 | — | — | 30 s | échauffement |
 | Dead hang | 1 × 15 à 45 s | poids du corps | — | 3 min | ÉPREUVE ; Test : un maintien maximal, arrêt dès que la position se dégrade. |
 | Pompe inclinée (mains surélevées) | 1 série maximale (repère : 8 à 15) | poids du corps | — | 4 min | ÉPREUVE ; Test : une seule série maximale, arrêt dès que la forme casse. |
 | Fente arrière au poids du corps | 1 × 8 à 10 | poids du corps | 3 rép. en réserve | 2 min | secondaire |
 | Pont fessier au sol | 2 × 8 à 10 | poids du corps | 3 rép. en réserve | 105 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Marche rapide | 10 min | — | allure facile | — | accessoire ; Allure de conversation (tu peux parler en phrases), 10 min. |
 
-### samedi — force, corps entier, séance légère (40 min disponibles, 32 min estimées)
+### samedi — force, corps entier, séance légère (40 min disponibles, 34 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
+| Wrist push-ups | 2 × 8 à 10 | — | — | 30 s | échauffement |
 | Traction assistée pieds au sol | 2 × 6 à 8 | poids du corps | 3 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Pompe inclinée (mains surélevées) | 2 × 6 à 8 | poids du corps | 3 rép. en réserve | 2 min | principal ; Échelle de poussée : pompe au mur → mains surélevées (barre basse ou barres parallèles, de plus en plus bas) → genoux → sol. Prends dès la première séance le cran qui permet 6 répétitions avec 3 à 4 en réserve ; descends d'un cran quand le haut de la plage est tenu sur toutes les séries, deux séances de suite. ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Row australien genoux fléchis pieds à plat | 1 × 6 à 8 | poids du corps | 3 rép. en réserve | 2 min | secondaire |

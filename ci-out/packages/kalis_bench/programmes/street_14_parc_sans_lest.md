@@ -30,10 +30,10 @@ Homme de 22 ans, 66 kg, trois ans de pratique. 18 tractions, 30 dips, 50 pompes,
 | 4 | 1 | construction (volume) | 4 | 47 |
 | 5 | 1 | construction (volume) | 4 | 44 |
 | 6 | 1 | allègement | 4 | 25 |
-| 7 | 2 | réalisation (spécifique à l'objectif) | 4 | 47 |
-| 8 | 2 | réalisation (spécifique à l'objectif) | 4 | 47 |
-| 9 | 2 | réalisation (spécifique à l'objectif) | 4 | 47 |
-| 10 | 2 | réalisation (spécifique à l'objectif) | 4 | 47 |
+| 7 | 2 | réalisation (spécifique à l'objectif) | 4 | 46 |
+| 8 | 2 | réalisation (spécifique à l'objectif) | 4 | 46 |
+| 9 | 2 | réalisation (spécifique à l'objectif) | 4 | 46 |
+| 10 | 2 | réalisation (spécifique à l'objectif) | 4 | 46 |
 | 11 | 2 | affûtage | 4 | 25 |
 | 12 | 2 | test | 4 | 9 |
 
@@ -383,27 +383,27 @@ Homme de 22 ans, 66 kg, trois ans de pratique. 18 tractions, 30 dips, 50 pompes,
 | Gainage latéral sur le coude | 2 × 25 s | poids du corps | position parfaite, quelques secondes de marge | 60 s | tronc ; tenue isométrique ; Tronc : le gainage qui tient la position à la barre. |
 | Hollow body hold | 2 × 25 s | poids du corps | position parfaite, quelques secondes de marge | 60 s | tronc ; tenue isométrique ; Tronc : le gainage qui tient la position à la barre. |
 
-### mercredi — force, haut du corps, séance moyenne (60 min disponibles, 34 min estimées)
+### mercredi — force, haut du corps, séance moyenne (60 min disponibles, 32 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
-| Muscle-up barre strict | 3 × 2 | poids du corps, ≈ 40 % du maximum de répétitions (repère : 5) | 3 rép. en réserve | 2 min 30 s | figure / technique ; pratique technique ; Avant le muscle-up : 2 séries de tractions faciles (la moitié de ton maximum), puis 2 ou 3 transitions à la barre basse ou des muscle-ups très faciles ; rien à froid. ; Exécution : amène la barre aux hanches, transition rapide, poitrine au-dessus de la barre avant de pousser. |
+| Muscle-up barre strict | 2 × 2 | poids du corps, ≈ 40 % du maximum de répétitions (repère : 5) | 3 rép. en réserve | 2 min 30 s | figure / technique ; pratique technique ; Avant le muscle-up : 2 séries de tractions faciles (la moitié de ton maximum), puis 2 ou 3 transitions à la barre basse ou des muscle-ups très faciles ; rien à froid. ; Exécution : amène la barre aux hanches, transition rapide, poitrine au-dessus de la barre avant de pousser. |
 | Traction pronation | 6 min : 8 rép. au début de chaque minute | poids du corps, ≈ 44 % du maximum de répétitions (repère : 18) | 5 rép. en réserve ou plus | — | secondaire |
 | Pompe classique | 2 × 33 | poids du corps, ≈ 66 % du maximum de répétitions (repère : 50) | 3 rép. en réserve sur la dernière série (davantage sur les premières) | 2 min | secondaire ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Relevé de jambes tendues suspendu | 2 × 8 à 12 | poids du corps | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
 | Gainage latéral sur le coude | 2 × 25 s | poids du corps | position parfaite, quelques secondes de marge | 60 s | tronc ; tenue isométrique ; Tronc : le gainage qui tient la position à la barre. |
 | Hollow body hold | 2 × 25 s | poids du corps | position parfaite, quelques secondes de marge | 60 s | tronc ; tenue isométrique ; Tronc : le gainage qui tient la position à la barre. |
 
-### vendredi — force, haut du corps, séance lourde (60 min disponibles, 32 min estimées)
+### vendredi — force, haut du corps, séance lourde (60 min disponibles, 29 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
 | Wrist push-ups | 2 × 8 à 10 | — | — | 30 s | échauffement |
-| Traction chest-to-bar | 3 × 7 à 9 | poids du corps | 2 rép. en réserve | 3 min | principal ; Exécution : départ bras tendus, tire les coudes vers le bas et l'arrière jusqu'à toucher la barre avec la poitrine, sans élan. |
+| Traction pronation | 2 × 13 | poids du corps, ≈ 72 % du maximum de répétitions (repère : 18) | 2 rép. en réserve sur la dernière série (davantage sur les premières) | 90 s | principal ; Zone de l'épreuve : séries à environ 72 % de ton maximum, repos court, 2 répétitions en réserve sur la dernière — c'est la fin de série que le test demande. La dernière série s'arrête dès que la forme casse ; si la réserve tombe sous 1, retire une répétition par série la séance suivante. ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Dips aux barres parallèles | 2 × 20 | poids du corps, ≈ 67 % du maximum de répétitions (repère : 30) | 3 rép. en réserve sur la dernière série (davantage sur les premières) | 2 min | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
-| Row australien | 2 × 8 à 10 | poids du corps | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
+| Row australien | 3 × 8 à 10 | poids du corps | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Gainage latéral sur le coude | 2 × 25 s | poids du corps | position parfaite, quelques secondes de marge | 60 s | tronc ; tenue isométrique ; Tronc : le gainage qui tient la position à la barre. |
 | Hollow body hold | 2 × 25 s | poids du corps | position parfaite, quelques secondes de marge | 60 s | tronc ; tenue isométrique ; Tronc : le gainage qui tient la position à la barre. |
 
@@ -435,27 +435,27 @@ Homme de 22 ans, 66 kg, trois ans de pratique. 18 tractions, 30 dips, 50 pompes,
 | Gainage latéral sur le coude | 2 × 30 s | poids du corps | position parfaite, quelques secondes de marge | 60 s | tronc ; tenue isométrique ; Tronc : le gainage qui tient la position à la barre. |
 | Hollow body hold | 2 × 30 s | poids du corps | position parfaite, quelques secondes de marge | 60 s | tronc ; tenue isométrique ; Tronc : le gainage qui tient la position à la barre. |
 
-### mercredi — force, haut du corps, séance moyenne (60 min disponibles, 35 min estimées)
+### mercredi — force, haut du corps, séance moyenne (60 min disponibles, 32 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
-| Muscle-up barre strict | 3 × 2 | poids du corps, ≈ 40 % du maximum de répétitions (repère : 5) | 3 rép. en réserve | 2 min 30 s | figure / technique ; pratique technique ; Avant le muscle-up : 2 séries de tractions faciles (la moitié de ton maximum), puis 2 ou 3 transitions à la barre basse ou des muscle-ups très faciles ; rien à froid. ; Exécution : amène la barre aux hanches, transition rapide, poitrine au-dessus de la barre avant de pousser. |
+| Muscle-up barre strict | 2 × 2 | poids du corps, ≈ 40 % du maximum de répétitions (repère : 5) | 3 rép. en réserve | 2 min 30 s | figure / technique ; pratique technique ; Avant le muscle-up : 2 séries de tractions faciles (la moitié de ton maximum), puis 2 ou 3 transitions à la barre basse ou des muscle-ups très faciles ; rien à froid. ; Exécution : amène la barre aux hanches, transition rapide, poitrine au-dessus de la barre avant de pousser. |
 | Traction pronation | 6 min : 9 rép. au début de chaque minute | poids du corps, ≈ 50 % du maximum de répétitions (repère : 18) | 5 rép. en réserve ou plus | — | secondaire |
 | Pompe classique | 2 × 34 | poids du corps, ≈ 68 % du maximum de répétitions (repère : 50) | 3 rép. en réserve sur la dernière série (davantage sur les premières) | 2 min | secondaire ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Relevé de jambes tendues suspendu | 2 × 9 à 13 | poids du corps | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
 | Gainage latéral sur le coude | 2 × 30 s | poids du corps | position parfaite, quelques secondes de marge | 60 s | tronc ; tenue isométrique ; Tronc : le gainage qui tient la position à la barre. |
 | Hollow body hold | 2 × 30 s | poids du corps | position parfaite, quelques secondes de marge | 60 s | tronc ; tenue isométrique ; Tronc : le gainage qui tient la position à la barre. |
 
-### vendredi — force, haut du corps, séance lourde (60 min disponibles, 32 min estimées)
+### vendredi — force, haut du corps, séance lourde (60 min disponibles, 30 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
 | Wrist push-ups | 2 × 8 à 10 | — | — | 30 s | échauffement |
-| Traction chest-to-bar | 3 × 8 à 10 | poids du corps | 2 rép. en réserve | 3 min | principal ; Exécution : départ bras tendus, tire les coudes vers le bas et l'arrière jusqu'à toucher la barre avec la poitrine, sans élan. |
+| Traction pronation | 2 × 14 | poids du corps, ≈ 78 % du maximum de répétitions (repère : 18) | 2 rép. en réserve sur la dernière série (davantage sur les premières) | 90 s | principal ; Zone de l'épreuve : séries à environ 75 % de ton maximum, repos court, 2 répétitions en réserve sur la dernière — c'est la fin de série que le test demande. La dernière série s'arrête dès que la forme casse ; si la réserve tombe sous 1, retire une répétition par série la séance suivante. ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Dips aux barres parallèles | 2 × 20 | poids du corps, ≈ 67 % du maximum de répétitions (repère : 30) | 3 rép. en réserve sur la dernière série (davantage sur les premières) | 2 min | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
-| Row australien | 2 × 9 à 11 | poids du corps | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
+| Row australien | 3 × 9 à 11 | poids du corps | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Gainage latéral sur le coude | 2 × 30 s | poids du corps | position parfaite, quelques secondes de marge | 60 s | tronc ; tenue isométrique ; Tronc : le gainage qui tient la position à la barre. |
 | Hollow body hold | 2 × 30 s | poids du corps | position parfaite, quelques secondes de marge | 60 s | tronc ; tenue isométrique ; Tronc : le gainage qui tient la position à la barre. |
 
@@ -487,27 +487,27 @@ Homme de 22 ans, 66 kg, trois ans de pratique. 18 tractions, 30 dips, 50 pompes,
 | Gainage latéral sur le coude | 2 × 35 s | poids du corps | position parfaite, quelques secondes de marge | 60 s | tronc ; tenue isométrique ; Tronc : le gainage qui tient la position à la barre. |
 | Hollow body hold | 2 × 35 s | poids du corps | position parfaite, quelques secondes de marge | 60 s | tronc ; tenue isométrique ; Tronc : le gainage qui tient la position à la barre. |
 
-### mercredi — force, haut du corps, séance moyenne (60 min disponibles, 36 min estimées)
+### mercredi — force, haut du corps, séance moyenne (60 min disponibles, 33 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
-| Muscle-up barre strict | 3 × 2 | poids du corps, ≈ 40 % du maximum de répétitions (repère : 5) | 3 rép. en réserve | 2 min 30 s | figure / technique ; pratique technique ; Avant le muscle-up : 2 séries de tractions faciles (la moitié de ton maximum), puis 2 ou 3 transitions à la barre basse ou des muscle-ups très faciles ; rien à froid. ; Exécution : amène la barre aux hanches, transition rapide, poitrine au-dessus de la barre avant de pousser. |
+| Muscle-up barre strict | 2 × 2 | poids du corps, ≈ 40 % du maximum de répétitions (repère : 5) | 3 rép. en réserve | 2 min 30 s | figure / technique ; pratique technique ; Avant le muscle-up : 2 séries de tractions faciles (la moitié de ton maximum), puis 2 ou 3 transitions à la barre basse ou des muscle-ups très faciles ; rien à froid. ; Exécution : amène la barre aux hanches, transition rapide, poitrine au-dessus de la barre avant de pousser. |
 | Traction pronation | 6 min : 10 rép. au début de chaque minute | poids du corps, ≈ 56 % du maximum de répétitions (repère : 18) | 5 rép. en réserve ou plus | — | secondaire |
 | Pompe classique | 2 × 36 | poids du corps, ≈ 72 % du maximum de répétitions (repère : 50) | 3 rép. en réserve sur la dernière série (davantage sur les premières) | 2 min | secondaire ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Relevé de jambes tendues suspendu | 2 × 9 à 13 | poids du corps | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
 | Gainage latéral sur le coude | 2 × 35 s | poids du corps | position parfaite, quelques secondes de marge | 60 s | tronc ; tenue isométrique ; Tronc : le gainage qui tient la position à la barre. |
 | Hollow body hold | 2 × 35 s | poids du corps | position parfaite, quelques secondes de marge | 60 s | tronc ; tenue isométrique ; Tronc : le gainage qui tient la position à la barre. |
 
-### vendredi — force, haut du corps, séance lourde (60 min disponibles, 33 min estimées)
+### vendredi — force, haut du corps, séance lourde (60 min disponibles, 31 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
 | Wrist push-ups | 2 × 8 à 10 | — | — | 30 s | échauffement |
-| Traction chest-to-bar | 3 × 8 à 10 | poids du corps | 2 rép. en réserve | 3 min | principal ; Exécution : départ bras tendus, tire les coudes vers le bas et l'arrière jusqu'à toucher la barre avec la poitrine, sans élan. |
+| Traction pronation | 2 × 14 | poids du corps, ≈ 78 % du maximum de répétitions (repère : 18) | 2 rép. en réserve sur la dernière série (davantage sur les premières) | 90 s | principal ; Zone de l'épreuve : séries à environ 78 % de ton maximum, repos court, 2 répétitions en réserve sur la dernière — c'est la fin de série que le test demande. La dernière série s'arrête dès que la forme casse ; si la réserve tombe sous 1, retire une répétition par série la séance suivante. ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Dips aux barres parallèles | 2 × 21 | poids du corps, ≈ 70 % du maximum de répétitions (repère : 30) | 3 rép. en réserve sur la dernière série (davantage sur les premières) | 2 min | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
-| Row australien | 2 × 9 à 11 | poids du corps | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
+| Row australien | 3 × 9 à 11 | poids du corps | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Gainage latéral sur le coude | 2 × 35 s | poids du corps | position parfaite, quelques secondes de marge | 60 s | tronc ; tenue isométrique ; Tronc : le gainage qui tient la position à la barre. |
 | Hollow body hold | 2 × 35 s | poids du corps | position parfaite, quelques secondes de marge | 60 s | tronc ; tenue isométrique ; Tronc : le gainage qui tient la position à la barre. |
 
@@ -539,27 +539,27 @@ Homme de 22 ans, 66 kg, trois ans de pratique. 18 tractions, 30 dips, 50 pompes,
 | Gainage latéral sur le coude | 2 × 35 s | poids du corps | position parfaite, quelques secondes de marge | 60 s | tronc ; tenue isométrique ; Tronc : le gainage qui tient la position à la barre. |
 | Hollow body hold | 2 × 35 s | poids du corps | position parfaite, quelques secondes de marge | 60 s | tronc ; tenue isométrique ; Tronc : le gainage qui tient la position à la barre. |
 
-### mercredi — force, haut du corps, séance moyenne (60 min disponibles, 36 min estimées)
+### mercredi — force, haut du corps, séance moyenne (60 min disponibles, 33 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
-| Muscle-up barre strict | 3 × 2 | poids du corps, ≈ 40 % du maximum de répétitions (repère : 5) | 3 rép. en réserve | 2 min 30 s | figure / technique ; pratique technique ; Avant le muscle-up : 2 séries de tractions faciles (la moitié de ton maximum), puis 2 ou 3 transitions à la barre basse ou des muscle-ups très faciles ; rien à froid. ; Exécution : amène la barre aux hanches, transition rapide, poitrine au-dessus de la barre avant de pousser. |
+| Muscle-up barre strict | 2 × 2 | poids du corps, ≈ 40 % du maximum de répétitions (repère : 5) | 3 rép. en réserve | 2 min 30 s | figure / technique ; pratique technique ; Avant le muscle-up : 2 séries de tractions faciles (la moitié de ton maximum), puis 2 ou 3 transitions à la barre basse ou des muscle-ups très faciles ; rien à froid. ; Exécution : amène la barre aux hanches, transition rapide, poitrine au-dessus de la barre avant de pousser. |
 | Traction pronation | 6 min : 10 rép. au début de chaque minute | poids du corps, ≈ 56 % du maximum de répétitions (repère : 18) | 5 rép. en réserve ou plus | — | secondaire |
 | Pompe classique | 2 × 37 | poids du corps, ≈ 74 % du maximum de répétitions (repère : 50) | 3 rép. en réserve sur la dernière série (davantage sur les premières) | 2 min | secondaire ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Relevé de jambes tendues suspendu | 2 × 10 à 14 | poids du corps | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
 | Gainage latéral sur le coude | 2 × 35 s | poids du corps | position parfaite, quelques secondes de marge | 60 s | tronc ; tenue isométrique ; Tronc : le gainage qui tient la position à la barre. |
 | Hollow body hold | 2 × 35 s | poids du corps | position parfaite, quelques secondes de marge | 60 s | tronc ; tenue isométrique ; Tronc : le gainage qui tient la position à la barre. |
 
-### vendredi — force, haut du corps, séance lourde (60 min disponibles, 33 min estimées)
+### vendredi — force, haut du corps, séance lourde (60 min disponibles, 31 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
 | Wrist push-ups | 2 × 8 à 10 | — | — | 30 s | échauffement |
-| Traction chest-to-bar | 3 × 9 à 11 | poids du corps | 2 rép. en réserve | 3 min | principal ; Exécution : départ bras tendus, tire les coudes vers le bas et l'arrière jusqu'à toucher la barre avec la poitrine, sans élan. |
+| Traction pronation | 2 × 14 | poids du corps, ≈ 78 % du maximum de répétitions (repère : 18) | 2 rép. en réserve sur la dernière série (davantage sur les premières) | 90 s | principal ; Zone de l'épreuve : séries à environ 78 % de ton maximum, repos court, 2 répétitions en réserve sur la dernière — c'est la fin de série que le test demande. La dernière série s'arrête dès que la forme casse ; si la réserve tombe sous 1, retire une répétition par série la séance suivante. ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Dips aux barres parallèles | 2 × 22 | poids du corps, ≈ 73 % du maximum de répétitions (repère : 30) | 3 rép. en réserve sur la dernière série (davantage sur les premières) | 2 min | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
-| Row australien | 2 × 10 à 12 | poids du corps | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
+| Row australien | 3 × 10 à 12 | poids du corps | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Gainage latéral sur le coude | 2 × 35 s | poids du corps | position parfaite, quelques secondes de marge | 60 s | tronc ; tenue isométrique ; Tronc : le gainage qui tient la position à la barre. |
 | Hollow body hold | 2 × 35 s | poids du corps | position parfaite, quelques secondes de marge | 60 s | tronc ; tenue isométrique ; Tronc : le gainage qui tient la position à la barre. |
 
@@ -578,43 +578,43 @@ Homme de 22 ans, 66 kg, trois ans de pratique. 18 tractions, 30 dips, 50 pompes,
 
 ## Semaine 11 — affûtage (bloc 2)
 
-### lundi — force, haut du corps, séance légère (60 min disponibles, 23 min estimées)
+### lundi — force, haut du corps, séance légère (60 min disponibles, 24 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
 | Wrist push-ups | 2 × 8 à 10 | — | — | 30 s | échauffement |
 | Traction pronation | 1 × 15 (série de tête), puis 1 × 12 | poids du corps, ≈ 83 % du maximum de répétitions (repère : 18) | 3 rép. en réserve | 3 min | principal ; Avant la série de tête : 2 séries faciles (un tiers, puis la moitié des répétitions prévues). ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. ; Affûtage : séries dures ramenées à environ 55 % de la semaine de pointe, intensité et fréquence gardées, à 14 jours de l'échéance au plus. |
-| Dips aux barres parallèles | 2 × 15 | poids du corps, ≈ 50 % du maximum de répétitions (repère : 30) | 3 rép. en réserve sur la dernière série (davantage sur les premières) | 90 s | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
+| Dips aux barres parallèles | 2 × 21 | poids du corps, ≈ 70 % du maximum de répétitions (repère : 30) | 3 rép. en réserve sur la dernière série (davantage sur les premières) | 2 min | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Row australien | 1 × 8 à 10 | poids du corps | 3 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Fente arrière au poids du corps | 2 × 6 à 8 | poids du corps | 3 rép. en réserve | 90 s | accessoire ; Jambes : force utile, sans fatigue excessive. |
 
-### mercredi — force, haut du corps, séance légère (60 min disponibles, 20 min estimées)
+### mercredi — force, haut du corps, séance légère (60 min disponibles, 21 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
 | Muscle-up barre strict | 2 × 2 | poids du corps, ≈ 40 % du maximum de répétitions (repère : 5) | 3 rép. en réserve | 2 min 30 s | figure / technique ; pratique technique ; Avant le muscle-up : 2 séries de tractions faciles (la moitié de ton maximum), puis 2 ou 3 transitions à la barre basse ou des muscle-ups très faciles ; rien à froid. ; Exécution : amène la barre aux hanches, transition rapide, poitrine au-dessus de la barre avant de pousser. ; Affûtage : séries dures ramenées à environ 55 % de la semaine de pointe, intensité et fréquence gardées, à 14 jours de l'échéance au plus. |
 | Traction pronation | 4 min : 7 rép. au début de chaque minute | poids du corps, ≈ 39 % du maximum de répétitions (repère : 18) | 5 rép. en réserve ou plus | — | secondaire |
-| Pompe classique | 2 × 25 | poids du corps, ≈ 50 % du maximum de répétitions (repère : 50) | 3 rép. en réserve sur la dernière série (davantage sur les premières) | 2 min | secondaire ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
+| Pompe classique | 2 × 35 | poids du corps, ≈ 70 % du maximum de répétitions (repère : 50) | 3 rép. en réserve sur la dernière série (davantage sur les premières) | 2 min | secondaire ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 
-### vendredi — force, haut du corps, séance légère (60 min disponibles, 21 min estimées)
+### vendredi — force, haut du corps, séance légère (60 min disponibles, 22 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
 | Wrist push-ups | 2 × 8 à 10 | — | — | 30 s | échauffement |
-| Traction chest-to-bar | 2 × 7 à 9 | poids du corps | 3 rép. en réserve | 3 min | principal ; Exécution : départ bras tendus, tire les coudes vers le bas et l'arrière jusqu'à toucher la barre avec la poitrine, sans élan. ; Affûtage : séries dures ramenées à environ 55 % de la semaine de pointe, intensité et fréquence gardées, à 14 jours de l'échéance au plus. |
-| Dips aux barres parallèles | 2 × 15 | poids du corps, ≈ 50 % du maximum de répétitions (repère : 30) | 3 rép. en réserve sur la dernière série (davantage sur les premières) | 90 s | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
+| Traction pronation | 2 × 13 | poids du corps, ≈ 72 % du maximum de répétitions (repère : 18) | 3 rép. en réserve sur la dernière série (davantage sur les premières) | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. ; Affûtage : séries dures ramenées à environ 55 % de la semaine de pointe, intensité et fréquence gardées, à 14 jours de l'échéance au plus. |
+| Dips aux barres parallèles | 2 × 21 | poids du corps, ≈ 70 % du maximum de répétitions (repère : 30) | 3 rép. en réserve sur la dernière série (davantage sur les premières) | 2 min | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Row australien | 2 × 8 à 10 | poids du corps | 3 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 
-### dimanche — force, haut du corps, séance légère (60 min disponibles, 25 min estimées)
+### dimanche — force, haut du corps, séance légère (60 min disponibles, 26 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
 | Muscle-up barre strict | 2 × 2 | poids du corps, ≈ 40 % du maximum de répétitions (repère : 5) | 3 rép. en réserve | 2 min 30 s | figure / technique ; pratique technique ; Avant le muscle-up : 2 séries de tractions faciles (la moitié de ton maximum), puis 2 ou 3 transitions à la barre basse ou des muscle-ups très faciles ; rien à froid. ; Exécution : amène la barre aux hanches, transition rapide, poitrine au-dessus de la barre avant de pousser. ; Affûtage : séries dures ramenées à environ 55 % de la semaine de pointe, intensité et fréquence gardées, à 14 jours de l'échéance au plus. |
-| Pompe classique | 2 × 25 | poids du corps, ≈ 50 % du maximum de répétitions (repère : 50) | 3 rép. en réserve sur la dernière série (davantage sur les premières) | 2 min | secondaire ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
+| Pompe classique | 2 × 35 | poids du corps, ≈ 70 % du maximum de répétitions (repère : 50) | 3 rép. en réserve sur la dernière série (davantage sur les premières) | 2 min | secondaire ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Pistol squat | 2 × 3 à 4 | poids du corps | 3 rép. en réserve | 90 s | secondaire ; Jambes : force utile, sans fatigue excessive. |
 | Pont fessier unilatéral | 2 × 8 à 10 | poids du corps | 3 rép. en réserve | 105 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 20 s | mobilité |

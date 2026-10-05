@@ -1117,17 +1117,16 @@ final class Prescriber {
     final bwId = _bodyweightOf[e.id];
     final bwMax = bwId == null ? 0 : (a.reps[bwId] ?? 0);
     final weight = (e.bodyweightFraction?.value ?? 0) * a.bodyWeight;
-    // (Seulement sur un 1RM estimé : un record déclaré ou un test fait foi,
-    // le maximum au poids du corps ne le remonte pas — CX, correction 1,
-    // panel et relecture documentée, `street_12` : blocs écrits sur 131 kg
-    // quand le test plaçait le 1RM vers 117 kg.)
+    // (Jamais sur un 1RM mesuré par un test ou une compétition : le
+    // résultat fait foi — CX, correction 1, panel et relecture documentée,
+    // `street_12` : blocs écrits sur 131 kg quand le test plaçait le 1RM
+    // vers 117 kg. Un record déclaré ou une estimation peuvent dater : le
+    // maximum au poids du corps les relève, `street_11`.)
     final source = a.totalOneRm(e.id) != null ? e.id : referenceId;
     if (total != null &&
         bwMax >= 3 &&
         weight > 0 &&
-        (source == null ||
-            !a.oneRm.containsKey(source) ||
-            a.estimatedOneRm.contains(source))) {
+        (source == null || !a.measuredOneRm.contains(source))) {
       final fromReps = bwMax <= 12
           ? weight / _pctAt(bwMax)
           : weight * (1 + (bwMax > 20 ? 20 : bwMax) / 30);
@@ -2330,7 +2329,10 @@ final class Prescriber {
       // (panel CX, boucle 4 : 3 × 25 puis 4 × 34 d'une semaine à l'autre ;
       // R5-P22, +10 à 20 %).
       share -= 0.05;
-    } else if (ws.light || role == _DayRole.primerFar) {
+    } else if (role == _DayRole.primerFar ||
+        (ws.light && ws.intent != WeekIntent.taper)) {
+      // (Affûtage : l'intensité reste, seules les séries baissent — R3-P13 ;
+      // panel CX, correction 1 : séries à 40-50 % en semaine d'affûtage.)
       share = 0.5;
     }
     final reps = _clampInt(_round(max * share), 1, max);
@@ -2384,7 +2386,7 @@ final class Prescriber {
       return null;
     }
     final max = _maxOf(s);
-    if (max < 5 || role == _DayRole.primerFar) {
+    if (max < 7 || role == _DayRole.primerFar) {
       // (Semaine de l'échéance : deux séries courtes à la place du chrono.)
       return _repsVolume(s, ws, week, role);
     }
@@ -2409,7 +2411,21 @@ final class Prescriber {
         share = 0.55;
       }
     }
-    final reps = _clampInt(_round(max * share), 1, max);
+    // (Une répétition de plus par départ vaut plus de 10 % du maximum sous
+    // dix répétitions : la densité monte alors par les départs, jamais par
+    // les répétitions — R5-P22 ; panel CX, correction 1 : 2 puis 3
+    // répétitions par départ pour un maximum de 5, +50 % de volume.)
+    if (max < 10 && !coachHighRisk(e)) {
+      share = _level >= 2 ? 0.45 : 0.40;
+    }
+    var reps = _clampInt(_round(max * share), 1, max);
+    // (Départ loin de l'échec, comme l'écrit la consigne : 5 répétitions en
+    // réserve au moins sur le premier — panel CX, correction 1 : « 5 en
+    // réserve ou plus » écrit pour 4 répétitions sur un maximum de 8 ;
+    // sous 7 répétitions de maximum, la densité cède la place au volume.)
+    if (reps > max - 5) {
+      reps = max - 5 < 1 ? 1 : max - 5;
+    }
     // R5-P22 : +10 à 20 % par semaine au plus — un départ de plus toutes
     // les deux semaines de charge (toutes les trois à 40 ans et plus), deux
     // au plus dans le bloc ; aucun tant que le profil gèle le volume.
@@ -2425,6 +2441,7 @@ final class Prescriber {
             ws.intent == WeekIntent.realization) &&
         _repsAim &&
         !ws.light &&
+        max >= 10 &&
         !coachHighRisk(e);
     if (ws.kind == WeekKind.build || ws.kind == WeekKind.intro) {
       final step = a.freezeVolume || repsRise
@@ -2539,7 +2556,10 @@ final class Prescriber {
       // réalisation, moins que la construction.)
       var margin =
           2 +
-          (ws.light || ws.kind == WeekKind.intro ? 1 : 0) +
+          ((ws.light && ws.intent != WeekIntent.taper) ||
+                  ws.kind == WeekKind.intro
+              ? 1
+              : 0) +
           a.rirBonus.round();
       final kept = _floorRir(e, week).ceil();
       if (margin < kept) {
@@ -4176,6 +4196,13 @@ final class Prescriber {
     );
   }
 
+  /// Haut de la plage du test de la tenue menton au-dessus de la barre.
+  int _gateHigh() {
+    final known = a.holds[coachGateExercise] ?? 0;
+    final wide = _round(known * 1.5);
+    return wide > 30 ? wide : 30;
+  }
+
   /// Dosage ordinaire de l'emplacement [s] selon sa méthode.
   _Draft? _dosed(SlotSpec s, int day, int week, WeekSpec ws, _DayRole role) {
     switch (s.method) {
@@ -4302,7 +4329,10 @@ final class Prescriber {
       ..fixed = true
       ..sets = 2
       ..secondsLow = 5
-      ..secondsHigh = 30
+      // (Le haut de la plage ne borne pas le test : au moins une fois et
+      // demie le dernier maintien mesuré — CX, correction 1, panel : test
+      // borné à 30 s pour un maintien réel de 34 à 36 s.)
+      ..secondsHigh = _gateHigh()
       ..rest = 180
       ..stress = DayStress.heavy
     // Valeur négative : l'essai strict suit dans la même séance (une
@@ -5834,6 +5864,20 @@ final class Prescriber {
             final low = x.secondsLow;
             if (low != null && low > allowed) {
               x.secondsLow = allowed;
+            }
+            // (La part affichée suit la tenue écrite : le repère reste le
+            // dernier maintien mesuré.)
+            final t = x.intensity;
+            if (t != null && t.value > 0) {
+              final known = high / t.value;
+              x.intensity = IntensityTarget(
+                basis: t.basis,
+                value: _round2(allowed / known),
+                referenceExerciseId: t.referenceExerciseId,
+                referenceKind: t.referenceKind,
+                eventId: t.eventId,
+                rirCap: t.rirCap,
+              );
             }
           }
         }

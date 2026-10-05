@@ -100,7 +100,7 @@ Homme de 25 ans, 72 kg, quatre ans de pratique. 12 muscle-ups, 28 tractions, 50 
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
 | Muscle-up barre strict | 5 min : 4 rép. au début de chaque minute | poids du corps, ≈ 33 % du maximum de répétitions (repère : 12) | 5 rép. en réserve ou plus | — | figure / technique ; Avant le muscle-up : 2 séries de tractions faciles (la moitié de ton maximum), puis 2 ou 3 transitions à la barre basse ou des muscle-ups très faciles ; rien à froid. |
-| Traction lestée de compétition | 2 × 6 | lest +10 kg, ≈ 70 % du 1RM (charge totale ; 1RM de référence 115 kg) | 4 rép. en réserve | 3 min | secondaire ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
+| Traction lestée de compétition | 2 × 6 | lest +11,25 kg, ≈ 70 % du 1RM (charge totale ; 1RM de référence 116,5 kg) | 4 rép. en réserve | 3 min | secondaire ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Traction pronation | 7 × 13, un départ toutes les 90 s | poids du corps, ≈ 46 % du maximum de répétitions (repère : 28) | 5 rép. en réserve ou plus | — | secondaire |
 | Dips aux barres parallèles | 1 × 44 (série de tête), puis 2 × 33 | poids du corps, ≈ 88 % du maximum de répétitions (repère : 50) | 4 rép. en réserve | 3 min | principal ; Avant la série de tête : 2 séries faciles (un tiers, puis la moitié des répétitions prévues). ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Rowing barre buste penché prise pronation | 2 × 8 à 10 | charge à déterminer, à calibrer | 3 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
@@ -169,7 +169,7 @@ Homme de 25 ans, 72 kg, quatre ans de pratique. 12 muscle-ups, 28 tractions, 50 
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
 | Muscle-up barre strict | 4 min : 4 rép. au début de chaque minute | poids du corps, ≈ 33 % du maximum de répétitions (repère : 12) | 5 rép. en réserve ou plus | — | figure / technique ; Avant le muscle-up : 2 séries de tractions faciles (la moitié de ton maximum), puis 2 ou 3 transitions à la barre basse ou des muscle-ups très faciles ; rien à froid. |
-| Traction lestée de compétition | 3 × 5 | lest +15 kg, ≈ 74 % du 1RM (charge totale ; 1RM de référence 115 kg) | 3 rép. en réserve | 3 min | secondaire ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
+| Traction lestée de compétition | 3 × 5 | lest +16,25 kg, ≈ 75 % du 1RM (charge totale ; 1RM de référence 115 kg) | 3 rép. en réserve | 3 min | secondaire ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Traction pronation | 5 × 15, un départ toutes les 90 s | poids du corps, ≈ 54 % du maximum de répétitions (repère : 28) | 5 rép. en réserve ou plus | — | secondaire |
 | Dips aux barres parallèles | 1 × 44 (série de tête), puis 3 × 34 | poids du corps, ≈ 88 % du maximum de répétitions (repère : 50) | 4 rép. en réserve | 2 min | principal ; Avant la série de tête : 2 séries faciles (un tiers, puis la moitié des répétitions prévues). ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Rowing barre buste penché prise pronation | 3 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
@@ -238,7 +238,7 @@ Homme de 25 ans, 72 kg, quatre ans de pratique. 12 muscle-ups, 28 tractions, 50 
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
 | Muscle-up barre strict | 5 min : 4 rép. au début de chaque minute | poids du corps, ≈ 33 % du maximum de répétitions (repère : 12) | 5 rép. en réserve ou plus | — | figure / technique ; Avant le muscle-up : 2 séries de tractions faciles (la moitié de ton maximum), puis 2 ou 3 transitions à la barre basse ou des muscle-ups très faciles ; rien à froid. |
-| Traction lestée de compétition | 3 × 5 | lest +18,75 kg, ≈ 77 % du 1RM (charge totale ; 1RM de référence 115 kg) | 3 rép. en réserve | 3 min | secondaire ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
+| Traction lestée de compétition | 3 × 5 | lest +20 kg, ≈ 77 % du 1RM (charge totale ; 1RM de référence 116,5 kg) | 3 rép. en réserve | 3 min | secondaire ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Traction pronation | 6 × 15, un départ toutes les 90 s | poids du corps, ≈ 54 % du maximum de répétitions (repère : 28) | 5 rép. en réserve ou plus | — | secondaire |
 | Dips aux barres parallèles | 1 × 44 (série de tête), puis 2 × 36 | poids du corps, ≈ 88 % du maximum de répétitions (repère : 50) | 4 rép. en réserve | 2 min | principal ; Avant la série de tête : 2 séries faciles (un tiers, puis la moitié des répétitions prévues). ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Rowing barre buste penché prise pronation | 3 × 10 à 12 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
@@ -303,7 +303,7 @@ Homme de 25 ans, 72 kg, quatre ans de pratique. 12 muscle-ups, 28 tractions, 50 
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
 | Dips aux barres parallèles | 1 série maximale (repère : 52 à 56) | poids du corps | — | 4 min | ÉPREUVE ; Test : une seule série maximale, arrêt dès que la forme casse. ; Avant la série maximale : 2 séries faciles (un quart, puis un tiers du maximum), 2 à 3 min de repos. Pendant : rythme régulier dès le départ, souffle en haut de chaque répétition ; des pauses courtes en position de repos (bras tendus) si ton standard les autorise ; répétition repère à mi-série : 26. ; Repère sur le chemin de l'objectif : 53. S'il n'est pas atteint, suis la progression écrite (une variable à la fois) sans ajouter de séries ; le bloc suivant change de méthode. |
 | Muscle-up barre strict | 4 min : 4 rép. au début de chaque minute | poids du corps, ≈ 33 % du maximum de répétitions (repère : 12) | 5 rép. en réserve ou plus | — | figure / technique ; Avant le muscle-up : 2 séries de tractions faciles (la moitié de ton maximum), puis 2 ou 3 transitions à la barre basse ou des muscle-ups très faciles ; rien à froid. |
-| Traction lestée de compétition | 2 × 4 | lest +12,5 kg, ≈ 72 % du 1RM (charge totale ; 1RM de référence 115 kg) | 4 rép. en réserve | 3 min | secondaire ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
+| Traction lestée de compétition | 2 × 4 | lest +13,75 kg, ≈ 72 % du 1RM (charge totale ; 1RM de référence 116,5 kg) | 4 rép. en réserve | 3 min | secondaire ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Traction pronation | 4 × 13, un départ toutes les 90 s | poids du corps, ≈ 46 % du maximum de répétitions (repère : 28) | 5 rép. en réserve ou plus | — | secondaire |
 | Rowing barre buste penché prise pronation | 2 × 8 à 10 | charge à déterminer, à calibrer | 3 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Relevé de jambes tendues suspendu | 2 × 8 à 12 | poids du corps | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
@@ -369,7 +369,7 @@ Homme de 25 ans, 72 kg, quatre ans de pratique. 12 muscle-ups, 28 tractions, 50 
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
 | Muscle-up barre strict | 6 min : 4 rép. au début de chaque minute | poids du corps, ≈ 33 % du maximum de répétitions (repère : 12) | 5 rép. en réserve ou plus | — | figure / technique ; Avant le muscle-up : 2 séries de tractions faciles (la moitié de ton maximum), puis 2 ou 3 transitions à la barre basse ou des muscle-ups très faciles ; rien à froid. |
-| Traction lestée de compétition | 3 × 5 | lest +16,25 kg, ≈ 75 % du 1RM (charge totale ; 1RM de référence 115 kg) | 3 rép. en réserve | 3 min | secondaire ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
+| Traction lestée de compétition | 3 × 5 | lest +16,25 kg, ≈ 74 % du 1RM (charge totale ; 1RM de référence 116,5 kg) | 3 rép. en réserve | 3 min | secondaire ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Traction pronation | 7 × 14, un départ toutes les 90 s | poids du corps, ≈ 50 % du maximum de répétitions (repère : 28) | 5 rép. en réserve ou plus | — | secondaire |
 | Dips aux barres parallèles | 1 × 46 (série de tête), puis 3 × 33 | poids du corps, ≈ 92 % du maximum de répétitions (repère : 50) | 4 rép. en réserve | 2 min | principal ; Avant la série de tête : 2 séries faciles (un tiers, puis la moitié des répétitions prévues). ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Rowing barre buste penché prise pronation | 3 × 8 à 10 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
@@ -438,7 +438,7 @@ Homme de 25 ans, 72 kg, quatre ans de pratique. 12 muscle-ups, 28 tractions, 50 
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
 | Muscle-up barre strict | 6 min : 4 rép. au début de chaque minute | poids du corps, ≈ 33 % du maximum de répétitions (repère : 12) | 5 rép. en réserve ou plus | — | figure / technique ; Avant le muscle-up : 2 séries de tractions faciles (la moitié de ton maximum), puis 2 ou 3 transitions à la barre basse ou des muscle-ups très faciles ; rien à froid. |
-| Traction lestée de compétition | 3 × 5 | lest +17,5 kg, ≈ 76 % du 1RM (charge totale ; 1RM de référence 115 kg) | 3 rép. en réserve | 3 min | secondaire ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
+| Traction lestée de compétition | 3 × 5 | lest +18,75 kg, ≈ 76 % du 1RM (charge totale ; 1RM de référence 116,5 kg) | 3 rép. en réserve | 3 min | secondaire ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Traction pronation | 7 × 15, un départ toutes les 90 s | poids du corps, ≈ 54 % du maximum de répétitions (repère : 28) | 5 rép. en réserve ou plus | — | secondaire |
 | Dips aux barres parallèles | 1 × 46 (série de tête), puis 2 × 34 | poids du corps, ≈ 92 % du maximum de répétitions (repère : 50) | 4 rép. en réserve | 2 min | principal ; Avant la série de tête : 2 séries faciles (un tiers, puis la moitié des répétitions prévues). ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Rowing barre buste penché prise pronation | 3 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
@@ -484,12 +484,12 @@ Homme de 25 ans, 72 kg, quatre ans de pratique. 12 muscle-ups, 28 tractions, 50 
 | Face pull à l'élastique | 2 × 12 à 15 | — | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
 | Cat-cow | 1 × 8 à 10 | — | — | 20 s | mobilité |
 
-### mardi — force, haut du corps, séance légère (75 min disponibles, 24 min estimées)
+### mardi — force, haut du corps, séance légère (75 min disponibles, 25 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
-| Pompe classique | 2 × 33 | poids du corps, ≈ 51 % du maximum de répétitions (repère : 65) | 3 rép. en réserve sur la dernière série (davantage sur les premières) | 2 min | secondaire ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. ; Affûtage : séries dures ramenées à environ 50 % de la semaine de pointe, intensité et fréquence gardées, à 14 jours de l'échéance au plus. |
+| Pompe classique | 2 × 39 | poids du corps, ≈ 60 % du maximum de répétitions (repère : 65) | 3 rép. en réserve sur la dernière série (davantage sur les premières) | 2 min | secondaire ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. ; Affûtage : séries dures ramenées à environ 50 % de la semaine de pointe, intensité et fréquence gardées, à 14 jours de l'échéance au plus. |
 | Fente arrière aux haltères | 2 × 6 à 8 | charge à déterminer, à calibrer | 3 rép. en réserve | 90 s | secondaire ; Jambes : force utile, sans fatigue excessive. |
 | Nordic hamstring curl assisté à l'élastique | 2 × 5 | poids du corps | 3 rép. en réserve | 105 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Rotation externe à la poulie coude au corps | 2 × 12 à 15 | charge à déterminer, à calibrer | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
@@ -500,7 +500,7 @@ Homme de 25 ans, 72 kg, quatre ans de pratique. 12 muscle-ups, 28 tractions, 50 
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
 | Muscle-up barre strict | 4 min : 4 rép. au début de chaque minute | poids du corps, ≈ 33 % du maximum de répétitions (repère : 12) | 5 rép. en réserve ou plus | — | figure / technique ; Avant le muscle-up : 2 séries de tractions faciles (la moitié de ton maximum), puis 2 ou 3 transitions à la barre basse ou des muscle-ups très faciles ; rien à froid. ; Affûtage : séries dures ramenées à environ 50 % de la semaine de pointe, intensité et fréquence gardées, à 14 jours de l'échéance au plus. |
-| Traction lestée de compétition | 2 × 2 | lest +28,75 kg, ≈ 86 % du 1RM (charge totale ; 1RM de référence 115 kg) | 3 rép. en réserve | 3 min | secondaire ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
+| Traction lestée de compétition | 2 × 2 | lest +30 kg, ≈ 86 % du 1RM (charge totale ; 1RM de référence 116,5 kg) | 3 rép. en réserve | 3 min | secondaire ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Traction pronation | 5 × 13, un départ toutes les 90 s | poids du corps, ≈ 46 % du maximum de répétitions (repère : 28) | 5 rép. en réserve ou plus | — | secondaire |
 | Dips aux barres parallèles | 1 × 42 (série de tête), puis 1 × 33 | poids du corps, ≈ 84 % du maximum de répétitions (repère : 50) | 4 rép. en réserve | 3 min | principal ; Avant la série de tête : 2 séries faciles (un tiers, puis la moitié des répétitions prévues). ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Rowing barre buste penché prise pronation | 2 × 8 à 10 | charge à déterminer, à calibrer | 3 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
@@ -516,14 +516,14 @@ Homme de 25 ans, 72 kg, quatre ans de pratique. 12 muscle-ups, 28 tractions, 50 
 | Rotation externe à la poulie coude au corps | 2 × 12 à 15 | charge à déterminer, à calibrer | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
 | Cat-cow | 1 × 8 à 10 | — | — | 20 s | mobilité |
 
-### samedi — force, haut du corps, séance légère (75 min disponibles, 30 min estimées)
+### samedi — force, haut du corps, séance légère (75 min disponibles, 31 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
 | Muscle-up barre strict | 4 min : 4 rép. au début de chaque minute | poids du corps, ≈ 33 % du maximum de répétitions (repère : 12) | 5 rép. en réserve ou plus | — | figure / technique ; Avant le muscle-up : 2 séries de tractions faciles (la moitié de ton maximum), puis 2 ou 3 transitions à la barre basse ou des muscle-ups très faciles ; rien à froid. ; Affûtage : séries dures ramenées à environ 50 % de la semaine de pointe, intensité et fréquence gardées, à 14 jours de l'échéance au plus. |
-| Traction pronation | 2 × 14 | poids du corps, ≈ 50 % du maximum de répétitions (repère : 28) | 3 rép. en réserve sur la dernière série (davantage sur les premières) | 2 min | secondaire ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
-| Dips aux barres parallèles | 2 × 25 | poids du corps, ≈ 50 % du maximum de répétitions (repère : 50) | 3 rép. en réserve sur la dernière série (davantage sur les premières) | 2 min | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
+| Traction pronation | 2 × 17 | poids du corps, ≈ 61 % du maximum de répétitions (repère : 28) | 3 rép. en réserve sur la dernière série (davantage sur les premières) | 2 min | secondaire ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
+| Dips aux barres parallèles | 2 × 30 | poids du corps, ≈ 60 % du maximum de répétitions (repère : 50) | 3 rép. en réserve sur la dernière série (davantage sur les premières) | 2 min | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Relevé de jambes tendues suspendu | 2 × 8 à 12 | poids du corps | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
 | Face pull à l'élastique | 2 × 12 à 15 | — | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
 | Cat-cow | 1 × 8 à 10 | — | — | 20 s | mobilité |

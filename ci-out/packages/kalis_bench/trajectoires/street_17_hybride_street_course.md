@@ -22,7 +22,7 @@ Un athlète simulé (capacités réelles connues du simulateur, jamais du moteur
 
 - Séances faites : 58 sur 60 (5 ajustées le jour même).
 - Échecs non voulus (hors tests et tentatives) : 0 % des séries de travail.
-- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 1,1 répétition en réserve (sur les 58 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 6,5 %.
+- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 1,09 répétition en réserve (sur les 58 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 5,7 %.
 - Plus forte hausse de charge totale d'un mouvement principal d'une séance à la suivante, à schéma égal : 0 % ; hausses de plus de 10 % faites de plusieurs crans : 0.
 - Progression réelle moyenne des mouvements suivis : 0,528 % par semaine.
 - Douleur : 0 hausse(s) de charge sur une zone douloureuse signalée.
@@ -45,7 +45,7 @@ Pour chaque mouvement, la séance la plus lourde de la semaine : ce que le progr
 | 8 | réalisation (spécifique à l'objectif) | 3 × 6 (75 % du maximum testé), série de tête puis séries allégées | 6-5-5 | 6-4 | 2 → 1,6 ; suivantes 2 → 3 | 8 / 8 | allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |
 | 9 | réalisation (spécifique à l'objectif) | 3 × 6 (75 % du maximum testé), série de tête puis séries allégées | 6-5-5 | 6-5-4 | 2 → 1,7 ; suivantes 2 → 2,3 | 8 / 8 | allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |
 | 10 | réalisation (spécifique à l'objectif) | 3 × 6 (75 % du maximum testé), série de tête puis séries allégées | 6-5-5 | 6-4 | 2 → 1,6 ; suivantes 2 → 2,9 | 8 / 8 | allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |
-| 11 | affûtage | 2 × 5 (63 % du maximum testé), série de tête puis séries allégées | 5-4 | 5-4 | 3 → 2,9 ; suivantes 3 → 3,3 | 8 / 8 | — |
+| 11 | affûtage | 2 × 6 (75 % du maximum testé) | 6-6 | 6-6 | 2 → 1,9 ; suivantes 2 → 1,3 | 8 / 8 | — |
 | 12 | test | 1 × 10 à 12, test | (7 à 12) | 7 | test | 8 / 8 | — |
 
 Athlète simulé, maximum réel hors fatigue : 7 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 8 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
@@ -71,6 +71,6 @@ Le même profil et le même moteur, avec d'autres hypothèses sur l'athlète ré
 
 | Athlète simulé | Échecs non voulus | Écart d'effort | Séries ≥ 2 rép. plus dures | Plus forte hausse à schéma égal | Progression par semaine | Tentatives réussies | Échéance / maximum du jour | Hausses sur zone douloureuse |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| modèle 2 (courbe linéaire, notes d'effort entières et plafonnées, récupération lente entre séries, tendons à adaptation lente) | 0 % | 1,1 | 0 % | 0 % | 0,528 % | — | — | 0 |
-| modèle 1 (courbe charge-répétitions à plateau, notes d'effort continues) | 0 % | 1,16 | 0 % | 0 % | 0,601 % | — | — | 0 |
-| modèle 3 (courbe en puissance, forme masquée par la fatigue, mauvais jours marqués, désentraînement rapide) | 0 % | 1,08 | 0 % | 0 % | 0,504 % | — | — | 0 |
+| modèle 2 (courbe linéaire, notes d'effort entières et plafonnées, récupération lente entre séries, tendons à adaptation lente) | 0 % | 1,09 | 0 % | 0 % | 0,528 % | — | — | 0 |
+| modèle 1 (courbe charge-répétitions à plateau, notes d'effort continues) | 0 % | 1,15 | 0 % | 0 % | 0,603 % | — | — | 0 |
+| modèle 3 (courbe en puissance, forme masquée par la fatigue, mauvais jours marqués, désentraînement rapide) | 0 % | 1,11 | 0 % | 0 % | 0,493 % | — | — | 0 |

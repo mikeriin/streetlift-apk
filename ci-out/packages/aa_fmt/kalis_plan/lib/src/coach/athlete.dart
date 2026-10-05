@@ -289,6 +289,7 @@ final class Athlete {
     required this.days,
     required this.oneRm,
     this.estimatedOneRm = const <String>{},
+    this.measuredOneRm = const <String>{},
     required this.reps,
     required this.holds,
     required this.recordDay,
@@ -360,6 +361,9 @@ final class Athlete {
     // test) : seul un 1RM estimé peut être relevé d'après le maximum au
     // poids du corps (`kalis_plan` prescribe, `_loadAt`).
     final estimatedOneRm = <String>{};
+    // 1RM mesuré par un test guidé ou une compétition (le plus récent
+    // résultat) : il fait foi, rien ne le relève.
+    final measuredOneRm = <String>{};
     final reps = <String, int>{};
     final holds = <String, int>{};
     final recordDay = <String, CivilDate>{};
@@ -570,14 +574,6 @@ final class Athlete {
           return high < before ? high : before;
         }
 
-        // Baisse modérée (15 % au plus) : le test fait foi tel quel — le
-        // moteur d'évolution ne le sert qu'un bon jour (`kalis_adapt`
-        // 0.2.2), et le programme écrit « série de tête = résultat − 2,
-        // jamais sur un progrès supposé » (CX, correction 1, panel : repère
-        // remonté à 10 par l'estimation après deux tests à 9).
-        if (measured >= coachTestDropShare * before) {
-          return measured;
-        }
         // Mouvement à risque (muscle-up…) : le test plus bas fait foi même
         // seul — mieux vaut un bloc un peu léger qu'une série de tête à
         // l'échec sur la transition (R5-P27 ; panel CX, correction 1,
@@ -586,10 +582,12 @@ final class Athlete {
             MovementPattern.transitionMuscleUp) {
           return measured;
         }
-        // Forte baisse : une mesure seule est suspecte (test sur la
-        // fatigue) ; il en faut une deuxième concordante, mesurée dans les
-        // dix semaines d'avant — la plus récente d'entre elles —, sinon le
-        // repère (ou l'estimation sûre) reste.
+        // Une mesure plus basse ne fait baisser le repère qu'avec une
+        // deuxième concordante : le test mesuré le plus récent des dix
+        // semaines d'avant est lui aussi sous le repère (Bosquet et al.
+        // 2007 : la forme se lit après des jours légers ; panel CX,
+        // correction 1 : un test seul, fait en semaine allégée, recalait
+        // tout le bloc suivant vers le bas ; deux tests à 9 font foi).
         Benchmark? prior;
         for (final o in profile.benchmarks ?? const <Benchmark>[]) {
           final when = o.date;
@@ -613,13 +611,22 @@ final class Athlete {
             prior = o;
           }
         }
-        if (prior != null) {
-          final value = unit == CapacityUnit.maxHoldSeconds
-              ? prior.seconds
-              : prior.reps;
-          if (value != null && value < coachTestDropShare * before) {
-            return kept(measured);
-          }
+        final priorValue = prior == null
+            ? null
+            : (unit == CapacityUnit.maxHoldSeconds
+                  ? prior.seconds
+                  : prior.reps);
+        // Baisse modérée (15 % au plus), confirmée : le test fait foi tel
+        // quel (« série de tête = résultat − 2, jamais sur un progrès
+        // supposé »).
+        if (measured >= coachTestDropShare * before) {
+          return priorValue != null && priorValue < before ? measured : before;
+        }
+        // Forte baisse : confirmée par une mesure elle aussi nettement plus
+        // basse, elle cède devant le plus haut du test et de l'estimation
+        // sûre ; sinon le repère (ou l'estimation sûre) reste.
+        if (priorValue != null && priorValue < coachTestDropShare * before) {
+          return kept(measured);
         }
         return estimate == null ? before : kept(estimate);
       }
@@ -672,6 +679,7 @@ final class Athlete {
               break;
             }
             oneRm[b.exerciseId] = value;
+            measuredOneRm.add(b.exerciseId);
             recordDay[b.exerciseId] = day;
           }
         default:
@@ -976,6 +984,7 @@ final class Athlete {
       days: days,
       oneRm: oneRm,
       estimatedOneRm: estimatedOneRm,
+      measuredOneRm: measuredOneRm,
       reps: reps,
       holds: holds,
       recordDay: recordDay,
@@ -1034,6 +1043,11 @@ final class Athlete {
   /// (ni record déclaré ni test) : seul un tel 1RM est relevé d'après le
   /// maximum au poids du corps (CX, correction 1).
   final Set<String> estimatedOneRm;
+
+  /// Exercices dont le 1RM vient d'un test guidé ou d'une compétition
+  /// (résultat le plus récent) : il n'est jamais relevé d'après le maximum
+  /// au poids du corps (CX, correction 1).
+  final Set<String> measuredOneRm;
 
   /// Maximum de répétitions par exercice (strictement positif).
   final Map<String, int> reps;

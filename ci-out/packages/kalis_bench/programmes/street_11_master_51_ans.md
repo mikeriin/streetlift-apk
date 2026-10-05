@@ -100,12 +100,12 @@ Homme de 51 ans, 76 kg, six ans de pratique régulière. 10 tractions, 15 dips, 
 | Gainage latéral sur le coude | 2 × 20 s | poids du corps | position parfaite, quelques secondes de marge | 60 s | tronc ; tenue isométrique ; Tronc : le gainage qui tient la position à la barre. |
 | Hollow body hold | 2 × 20 s | poids du corps | position parfaite, quelques secondes de marge | 60 s | tronc ; tenue isométrique ; Tronc : le gainage qui tient la position à la barre. |
 
-### vendredi — force, haut du corps, séance lourde (60 min disponibles, 43 min estimées)
+### vendredi — force, haut du corps, séance lourde (60 min disponibles, 44 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
-| Traction lestée de compétition | 4 × 3 | poids du corps, ≈ 83 % du 1RM (charge totale ; 1RM de référence 88,5 kg) | 3 rép. en réserve | 3 min | principal ; La charge visée tombe sous ton poids de corps : série sans lest, à 83 % de ton 1RM (poids du corps compris), avec moins de répétitions pour garder la réserve. ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
+| Traction lestée de compétition | 4 × 6 | poids du corps, ≈ 75 % du 1RM (charge totale ; 1RM de référence 98,5 kg) | 4 rép. en réserve | 3 min | principal ; La charge visée tombe sous ton poids de corps : série sans lest, à 75 % de ton 1RM (poids du corps compris), avec moins de répétitions pour garder la réserve. ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Dips aux barres parallèles | 3 × 8 | poids du corps, ≈ 53 % du maximum de répétitions (repère : 15) | 4 rép. en réserve sur la dernière série (davantage sur les premières) | 90 s | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Rowing barre buste penché prise pronation | 3 × 8 à 10 | charge à déterminer, à calibrer | 3 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Fente arrière au poids du corps | 2 × 6 à 8 | poids du corps | 4 rép. en réserve | 90 s | accessoire ; Jambes : force utile, sans fatigue excessive. |
@@ -147,7 +147,7 @@ Homme de 51 ans, 76 kg, six ans de pratique régulière. 10 tractions, 15 dips, 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
-| Traction lestée de compétition | 4 × 4 | poids du corps, ≈ 83 % du 1RM (charge totale ; 1RM de référence 88,5 kg) | 2 rép. en réserve | 3 min | principal ; La charge visée tombe sous ton poids de corps : série sans lest, à 83 % de ton 1RM (poids du corps compris), avec moins de répétitions pour garder la réserve. ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
+| Traction lestée de compétition | 4 × 7 | poids du corps, ≈ 75 % du 1RM (charge totale ; 1RM de référence 98,5 kg) | 3 rép. en réserve | 3 min | principal ; La charge visée tombe sous ton poids de corps : série sans lest, à 75 % de ton 1RM (poids du corps compris), avec moins de répétitions pour garder la réserve. ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Dips aux barres parallèles | 3 × 9 | poids du corps, ≈ 60 % du maximum de répétitions (repère : 15) | 3 rép. en réserve sur la dernière série (davantage sur les premières) | 90 s | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Rowing barre buste penché prise pronation | 3 × 8 à 10 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Fente arrière au poids du corps | 2 × 6 à 8 | poids du corps | 3 rép. en réserve | 90 s | accessoire ; Jambes : force utile, sans fatigue excessive. |
@@ -184,12 +184,12 @@ Homme de 51 ans, 76 kg, six ans de pratique régulière. 10 tractions, 15 dips, 
 | Gainage latéral sur le coude | 2 × 25 s | poids du corps | position parfaite, quelques secondes de marge | 60 s | tronc ; tenue isométrique ; Tronc : le gainage qui tient la position à la barre. |
 | Hollow body hold | 2 × 25 s | poids du corps | position parfaite, quelques secondes de marge | 60 s | tronc ; tenue isométrique ; Tronc : le gainage qui tient la position à la barre. |
 
-### vendredi — force, haut du corps, séance lourde (60 min disponibles, 44 min estimées)
+### vendredi — force, haut du corps, séance lourde (60 min disponibles, 45 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
-| Traction lestée de compétition | 4 × 4 | poids du corps, ≈ 83 % du 1RM (charge totale ; 1RM de référence 88,5 kg) | 2 rép. en réserve | 3 min | principal ; La charge visée tombe sous ton poids de corps : série sans lest, à 83 % de ton 1RM (poids du corps compris), avec moins de répétitions pour garder la réserve. ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
+| Traction lestée de compétition | 4 × 7 | poids du corps, ≈ 75 % du 1RM (charge totale ; 1RM de référence 98,5 kg) | 3 rép. en réserve | 3 min | principal ; La charge visée tombe sous ton poids de corps : série sans lest, à 75 % de ton 1RM (poids du corps compris), avec moins de répétitions pour garder la réserve. ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Dips aux barres parallèles | 3 × 9 | poids du corps, ≈ 60 % du maximum de répétitions (repère : 15) | 3 rép. en réserve sur la dernière série (davantage sur les premières) | 90 s | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Rowing barre buste penché prise pronation | 3 × 8 à 10 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Fente arrière au poids du corps | 2 × 6 à 8 | poids du corps | 3 rép. en réserve | 90 s | accessoire ; Jambes : force utile, sans fatigue excessive. |
@@ -226,12 +226,12 @@ Homme de 51 ans, 76 kg, six ans de pratique régulière. 10 tractions, 15 dips, 
 | Gainage latéral sur le coude | 2 × 30 s | poids du corps | position parfaite, quelques secondes de marge | 60 s | tronc ; tenue isométrique ; Tronc : le gainage qui tient la position à la barre. |
 | Hollow body hold | 2 × 30 s | poids du corps | position parfaite, quelques secondes de marge | 60 s | tronc ; tenue isométrique ; Tronc : le gainage qui tient la position à la barre. |
 
-### vendredi — force, haut du corps, séance lourde (60 min disponibles, 45 min estimées)
+### vendredi — force, haut du corps, séance lourde (60 min disponibles, 46 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
-| Traction lestée de compétition | 4 × 4 | poids du corps, ≈ 83 % du 1RM (charge totale ; 1RM de référence 88,5 kg) | 2 rép. en réserve | 3 min | principal ; La charge visée tombe sous ton poids de corps : série sans lest, à 83 % de ton 1RM (poids du corps compris), avec moins de répétitions pour garder la réserve. ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
+| Traction lestée de compétition | 4 × 6 | poids du corps, ≈ 75 % du 1RM (charge totale ; 1RM de référence 98,5 kg) | 3 rép. en réserve | 3 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Dips aux barres parallèles | 3 × 10 | poids du corps, ≈ 67 % du maximum de répétitions (repère : 15) | 3 rép. en réserve sur la dernière série (davantage sur les premières) | 90 s | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Rowing barre buste penché prise pronation | 3 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Fente arrière au poids du corps | 2 × 7 à 9 | poids du corps | 3 rép. en réserve | 90 s | accessoire ; Jambes : force utile, sans fatigue excessive. |
@@ -265,12 +265,12 @@ Homme de 51 ans, 76 kg, six ans de pratique régulière. 10 tractions, 15 dips, 
 | Relevé de jambes tendues suspendu | 2 × 8 à 12 | poids du corps | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
 | Rotation externe à la poulie coude au corps | 2 × 12 à 15 | charge à déterminer, à calibrer | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
 
-### vendredi — force, haut du corps, séance légère (60 min disponibles, 27 min estimées)
+### vendredi — force, haut du corps, séance légère (60 min disponibles, 28 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
-| Traction lestée de compétition | 2 × 3 | poids du corps, ≈ 83 % du 1RM (charge totale ; 1RM de référence 88,5 kg) | 3 rép. en réserve | 3 min | principal ; La charge visée tombe sous ton poids de corps : série sans lest, à 83 % de ton 1RM (poids du corps compris), avec moins de répétitions pour garder la réserve. ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
+| Traction lestée de compétition | 2 × 6 | poids du corps, ≈ 75 % du 1RM (charge totale ; 1RM de référence 98,5 kg) | 4 rép. en réserve | 3 min | principal ; La charge visée tombe sous ton poids de corps : série sans lest, à 75 % de ton 1RM (poids du corps compris), avec moins de répétitions pour garder la réserve. ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Dips aux barres parallèles | 2 × 8 | poids du corps, ≈ 53 % du maximum de répétitions (repère : 15) | 3 rép. en réserve sur la dernière série (davantage sur les premières) | 90 s | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Rowing barre buste penché prise pronation | 2 × 8 à 10 | charge à déterminer, à calibrer | 3 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Fente arrière au poids du corps | 2 × 6 à 8 | poids du corps | 3 rép. en réserve | 90 s | accessoire ; Jambes : force utile, sans fatigue excessive. |
@@ -310,7 +310,7 @@ Homme de 51 ans, 76 kg, six ans de pratique régulière. 10 tractions, 15 dips, 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
-| Traction lestée de compétition | 4 × 4 | poids du corps, ≈ 83 % du 1RM (charge totale ; 1RM de référence 88,5 kg) | 2 rép. en réserve | 3 min | principal ; La charge visée tombe sous ton poids de corps : série sans lest, à 83 % de ton 1RM (poids du corps compris), avec moins de répétitions pour garder la réserve. ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
+| Traction lestée de compétition | 4 × 5 | lest +1,25 kg, ≈ 76 % du 1RM (charge totale ; 1RM de référence 98,5 kg) | 3 rép. en réserve | 3 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Dips aux barres parallèles | 3 × 10 | poids du corps, ≈ 67 % du maximum de répétitions (repère : 15) | 3 rép. en réserve sur la dernière série (davantage sur les premières) | 90 s | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Rowing barre buste penché prise pronation | 3 × 8 à 10 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Fente arrière au poids du corps | 2 × 6 à 8 | poids du corps | 3 rép. en réserve | 90 s | accessoire ; Jambes : force utile, sans fatigue excessive. |
@@ -352,7 +352,7 @@ Homme de 51 ans, 76 kg, six ans de pratique régulière. 10 tractions, 15 dips, 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
-| Traction lestée de compétition | 4 × 4 | poids du corps, ≈ 83 % du 1RM (charge totale ; 1RM de référence 88,5 kg) | 2 rép. en réserve | 3 min | principal ; La charge visée tombe sous ton poids de corps : série sans lest, à 83 % de ton 1RM (poids du corps compris), avec moins de répétitions pour garder la réserve. ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
+| Traction lestée de compétition | 4 × 5 | lest +2,5 kg, ≈ 78 % du 1RM (charge totale ; 1RM de référence 98,5 kg) | 3 rép. en réserve | 3 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Dips aux barres parallèles | 3 × 10 | poids du corps, ≈ 67 % du maximum de répétitions (repère : 15) | 3 rép. en réserve sur la dernière série (davantage sur les premières) | 90 s | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Rowing barre buste penché prise pronation | 3 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Fente arrière au poids du corps | 2 × 7 à 9 | poids du corps | 3 rép. en réserve | 90 s | accessoire ; Jambes : force utile, sans fatigue excessive. |
@@ -382,7 +382,7 @@ Homme de 51 ans, 76 kg, six ans de pratique régulière. 10 tractions, 15 dips, 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
-| Traction pronation | 6 min : 6 rép. au début de chaque minute | poids du corps, ≈ 60 % du maximum de répétitions (repère : 10) | 5 rép. en réserve ou plus | — | secondaire |
+| Traction pronation | 6 min : 5 rép. au début de chaque minute | poids du corps, ≈ 50 % du maximum de répétitions (repère : 10) | 5 rép. en réserve ou plus | — | secondaire |
 | Pompe classique | 3 × 21 | poids du corps, ≈ 70 % du maximum de répétitions (repère : 30) | 3 rép. en réserve sur la dernière série (davantage sur les premières) | 2 min | secondaire ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Relevé de jambes tendues suspendu | 2 × 9 à 13 | poids du corps | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
 | Rotation externe à la poulie coude au corps | 2 × 12 à 15 | charge à déterminer, à calibrer | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
@@ -394,7 +394,7 @@ Homme de 51 ans, 76 kg, six ans de pratique régulière. 10 tractions, 15 dips, 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
-| Traction lestée de compétition | 4 × 4 | poids du corps, ≈ 83 % du 1RM (charge totale ; 1RM de référence 88,5 kg) | 2 rép. en réserve | 3 min | principal ; La charge visée tombe sous ton poids de corps : série sans lest, à 83 % de ton 1RM (poids du corps compris), avec moins de répétitions pour garder la réserve. ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
+| Traction lestée de compétition | 4 × 5 | lest +3,75 kg, ≈ 79 % du 1RM (charge totale ; 1RM de référence 98,5 kg) | 3 rép. en réserve | 3 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Dips aux barres parallèles | 3 × 11 | poids du corps, ≈ 73 % du maximum de répétitions (repère : 15) | 3 rép. en réserve | 90 s | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Rowing barre buste penché prise pronation | 3 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Fente arrière au poids du corps | 2 × 7 à 9 | poids du corps | 3 rép. en réserve | 90 s | accessoire ; Jambes : force utile, sans fatigue excessive. |
@@ -424,19 +424,19 @@ Homme de 51 ans, 76 kg, six ans de pratique régulière. 10 tractions, 15 dips, 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
-| Traction pronation | 6 min : 6 rép. au début de chaque minute | poids du corps, ≈ 60 % du maximum de répétitions (repère : 10) | 5 rép. en réserve ou plus | — | secondaire |
+| Traction pronation | 6 min : 5 rép. au début de chaque minute | poids du corps, ≈ 50 % du maximum de répétitions (repère : 10) | 5 rép. en réserve ou plus | — | secondaire |
 | Pompe classique | 3 × 22 | poids du corps, ≈ 73 % du maximum de répétitions (repère : 30) | 3 rép. en réserve sur la dernière série (davantage sur les premières) | 2 min | secondaire ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Relevé de jambes tendues suspendu | 2 × 10 à 14 | poids du corps | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
 | Rotation externe à la poulie coude au corps | 2 × 12 à 15 | charge à déterminer, à calibrer | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
 | Gainage latéral sur le coude | 2 × 35 s | poids du corps | position parfaite, quelques secondes de marge | 60 s | tronc ; tenue isométrique ; Tronc : le gainage qui tient la position à la barre. |
 | Hollow body hold | 2 × 35 s | poids du corps | position parfaite, quelques secondes de marge | 60 s | tronc ; tenue isométrique ; Tronc : le gainage qui tient la position à la barre. |
 
-### vendredi — force, haut du corps, séance lourde (60 min disponibles, 46 min estimées)
+### vendredi — force, haut du corps, séance lourde (60 min disponibles, 47 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
-| Traction lestée de compétition | 4 × 4 | poids du corps, ≈ 83 % du 1RM (charge totale ; 1RM de référence 88,5 kg) | 2 rép. en réserve | 3 min | principal ; La charge visée tombe sous ton poids de corps : série sans lest, à 83 % de ton 1RM (poids du corps compris), avec moins de répétitions pour garder la réserve. ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
+| Traction lestée de compétition | 4 × 5 | lest +3,75 kg, ≈ 79 % du 1RM (charge totale ; 1RM de référence 98,5 kg) | 3 rép. en réserve | 3 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Dips aux barres parallèles | 3 × 11 | poids du corps, ≈ 73 % du maximum de répétitions (repère : 15) | 3 rép. en réserve | 90 s | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Rowing barre buste penché prise pronation | 3 × 10 à 12 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Fente arrière au poids du corps | 2 × 8 à 10 | poids du corps | 3 rép. en réserve | 90 s | accessoire ; Jambes : force utile, sans fatigue excessive. |
@@ -470,12 +470,12 @@ Homme de 51 ans, 76 kg, six ans de pratique régulière. 10 tractions, 15 dips, 
 | Relevé de jambes tendues suspendu | 2 × 8 à 12 | poids du corps | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
 | Rotation externe à la poulie coude au corps | 2 × 12 à 15 | charge à déterminer, à calibrer | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
 
-### vendredi — force, haut du corps, séance légère (60 min disponibles, 27 min estimées)
+### vendredi — force, haut du corps, séance légère (60 min disponibles, 28 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
-| Traction lestée de compétition | 2 × 3 | poids du corps, ≈ 83 % du 1RM (charge totale ; 1RM de référence 88,5 kg) | 3 rép. en réserve | 3 min | principal ; La charge visée tombe sous ton poids de corps : série sans lest, à 83 % de ton 1RM (poids du corps compris), avec moins de répétitions pour garder la réserve. ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
+| Traction lestée de compétition | 2 × 6 | poids du corps, ≈ 75 % du 1RM (charge totale ; 1RM de référence 98,5 kg) | 4 rép. en réserve | 3 min | principal ; La charge visée tombe sous ton poids de corps : série sans lest, à 75 % de ton 1RM (poids du corps compris), avec moins de répétitions pour garder la réserve. ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Dips aux barres parallèles | 2 × 8 | poids du corps, ≈ 53 % du maximum de répétitions (repère : 15) | 3 rép. en réserve sur la dernière série (davantage sur les premières) | 90 s | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Rowing barre buste penché prise pronation | 2 × 8 à 10 | charge à déterminer, à calibrer | 3 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Fente arrière au poids du corps | 2 × 6 à 8 | poids du corps | 3 rép. en réserve | 90 s | accessoire ; Jambes : force utile, sans fatigue excessive. |
@@ -515,7 +515,7 @@ Homme de 51 ans, 76 kg, six ans de pratique régulière. 10 tractions, 15 dips, 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
-| Traction lestée de compétition | 4 × 4 | poids du corps, ≈ 83 % du 1RM (charge totale ; 1RM de référence 88,5 kg) | 2 rép. en réserve | 3 min | principal ; La charge visée tombe sous ton poids de corps : série sans lest, à 83 % de ton 1RM (poids du corps compris), avec moins de répétitions pour garder la réserve. ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
+| Traction lestée de compétition | 4 × 5 | lest +2,5 kg, ≈ 78 % du 1RM (charge totale ; 1RM de référence 98,5 kg) | 3 rép. en réserve | 3 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Dips aux barres parallèles | 3 × 10 | poids du corps, ≈ 67 % du maximum de répétitions (repère : 15) | 3 rép. en réserve sur la dernière série (davantage sur les premières) | 90 s | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Rowing barre buste penché prise pronation | 3 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Fente arrière au poids du corps | 2 × 7 à 9 | poids du corps | 3 rép. en réserve | 90 s | accessoire ; Jambes : force utile, sans fatigue excessive. |
@@ -557,7 +557,7 @@ Homme de 51 ans, 76 kg, six ans de pratique régulière. 10 tractions, 15 dips, 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
-| Traction lestée de compétition | 4 × 4 | poids du corps, ≈ 83 % du 1RM (charge totale ; 1RM de référence 88,5 kg) | 2 rép. en réserve | 3 min | principal ; La charge visée tombe sous ton poids de corps : série sans lest, à 83 % de ton 1RM (poids du corps compris), avec moins de répétitions pour garder la réserve. ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
+| Traction lestée de compétition | 4 × 5 | lest +3,75 kg, ≈ 79 % du 1RM (charge totale ; 1RM de référence 98,5 kg) | 3 rép. en réserve | 3 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Dips aux barres parallèles | 3 × 10 | poids du corps, ≈ 67 % du maximum de répétitions (repère : 15) | 3 rép. en réserve sur la dernière série (davantage sur les premières) | 90 s | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Rowing barre buste penché prise pronation | 3 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Fente arrière au poids du corps | 2 × 7 à 9 | poids du corps | 3 rép. en réserve | 90 s | accessoire ; Jambes : force utile, sans fatigue excessive. |
@@ -582,24 +582,24 @@ Homme de 51 ans, 76 kg, six ans de pratique régulière. 10 tractions, 15 dips, 
 | Face pull à l'élastique | 2 × 12 à 15 | — | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
 | Gainage latéral sur le coude | 2 × 35 s | poids du corps | position parfaite, quelques secondes de marge | 60 s | tronc ; tenue isométrique ; Tronc : le gainage qui tient la position à la barre. |
 
-### mercredi — force, haut du corps, séance moyenne (60 min disponibles, 37 min estimées)
+### mercredi — force, haut du corps, séance moyenne (60 min disponibles, 36 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
-| Traction pronation | 7 min : 6 rép. au début de chaque minute | poids du corps, ≈ 60 % du maximum de répétitions (repère : 10) | 5 rép. en réserve ou plus | — | secondaire |
+| Traction pronation | 7 min : 5 rép. au début de chaque minute | poids du corps, ≈ 50 % du maximum de répétitions (repère : 10) | 5 rép. en réserve ou plus | — | secondaire |
 | Pompe classique | 3 × 21 | poids du corps, ≈ 70 % du maximum de répétitions (repère : 30) | 3 rép. en réserve sur la dernière série (davantage sur les premières) | 2 min | secondaire ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Relevé de jambes tendues suspendu | 2 × 10 à 14 | poids du corps | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
 | Rotation externe à la poulie coude au corps | 2 × 12 à 15 | charge à déterminer, à calibrer | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
 | Gainage latéral sur le coude | 2 × 35 s | poids du corps | position parfaite, quelques secondes de marge | 60 s | tronc ; tenue isométrique ; Tronc : le gainage qui tient la position à la barre. |
 | Hollow body hold | 2 × 35 s | poids du corps | position parfaite, quelques secondes de marge | 60 s | tronc ; tenue isométrique ; Tronc : le gainage qui tient la position à la barre. |
 
-### vendredi — force, haut du corps, séance lourde (60 min disponibles, 46 min estimées)
+### vendredi — force, haut du corps, séance lourde (60 min disponibles, 47 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
-| Traction lestée de compétition | 4 × 4 | poids du corps, ≈ 83 % du 1RM (charge totale ; 1RM de référence 88,5 kg) | 2 rép. en réserve | 3 min | principal ; La charge visée tombe sous ton poids de corps : série sans lest, à 83 % de ton 1RM (poids du corps compris), avec moins de répétitions pour garder la réserve. ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
+| Traction lestée de compétition | 4 × 5 | lest +3,75 kg, ≈ 79 % du 1RM (charge totale ; 1RM de référence 98,5 kg) | 3 rép. en réserve | 3 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Dips aux barres parallèles | 3 × 11 | poids du corps, ≈ 73 % du maximum de répétitions (repère : 15) | 3 rép. en réserve | 90 s | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Rowing barre buste penché prise pronation | 3 × 10 à 12 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Fente arrière au poids du corps | 2 × 8 à 10 | poids du corps | 3 rép. en réserve | 90 s | accessoire ; Jambes : force utile, sans fatigue excessive. |
@@ -629,19 +629,19 @@ Homme de 51 ans, 76 kg, six ans de pratique régulière. 10 tractions, 15 dips, 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
-| Traction pronation | 7 min : 6 rép. au début de chaque minute | poids du corps, ≈ 60 % du maximum de répétitions (repère : 10) | 5 rép. en réserve ou plus | — | secondaire |
+| Traction pronation | 7 min : 5 rép. au début de chaque minute | poids du corps, ≈ 50 % du maximum de répétitions (repère : 10) | 5 rép. en réserve ou plus | — | secondaire |
 | Pompe classique | 3 × 22 | poids du corps, ≈ 73 % du maximum de répétitions (repère : 30) | 3 rép. en réserve sur la dernière série (davantage sur les premières) | 2 min | secondaire ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Relevé de jambes tendues suspendu | 2 × 10 à 14 | poids du corps | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
 | Rotation externe à la poulie coude au corps | 2 × 12 à 15 | charge à déterminer, à calibrer | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
 | Gainage latéral sur le coude | 2 × 35 s | poids du corps | position parfaite, quelques secondes de marge | 60 s | tronc ; tenue isométrique ; Tronc : le gainage qui tient la position à la barre. |
 | Hollow body hold | 2 × 35 s | poids du corps | position parfaite, quelques secondes de marge | 60 s | tronc ; tenue isométrique ; Tronc : le gainage qui tient la position à la barre. |
 
-### vendredi — force, haut du corps, séance lourde (60 min disponibles, 46 min estimées)
+### vendredi — force, haut du corps, séance lourde (60 min disponibles, 47 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
-| Traction lestée de compétition | 4 × 4 | poids du corps, ≈ 83 % du 1RM (charge totale ; 1RM de référence 88,5 kg) | 2 rép. en réserve | 3 min | principal ; La charge visée tombe sous ton poids de corps : série sans lest, à 83 % de ton 1RM (poids du corps compris), avec moins de répétitions pour garder la réserve. ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
+| Traction lestée de compétition | 4 × 5 | lest +3,75 kg, ≈ 79 % du 1RM (charge totale ; 1RM de référence 98,5 kg) | 3 rép. en réserve | 3 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Dips aux barres parallèles | 3 × 11 | poids du corps, ≈ 73 % du maximum de répétitions (repère : 15) | 3 rép. en réserve | 90 s | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Rowing barre buste penché prise pronation | 3 × 10 à 12 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Fente arrière au poids du corps | 2 × 8 à 10 | poids du corps | 3 rép. en réserve | 90 s | accessoire ; Jambes : force utile, sans fatigue excessive. |
@@ -652,35 +652,35 @@ Homme de 51 ans, 76 kg, six ans de pratique régulière. 10 tractions, 15 dips, 
 
 ## Semaine 15 — affûtage (bloc 3)
 
-### lundi — force, haut du corps, séance légère (60 min disponibles, 29 min estimées)
+### lundi — force, haut du corps, séance légère (60 min disponibles, 30 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
 | Traction pronation | 1 × 7 (série de tête), puis 1 × 6 | poids du corps, ≈ 70 % du maximum de répétitions (repère : 10) | 3 rép. en réserve | 3 min | principal ; Avant la série de tête : 2 séries faciles (un tiers, puis la moitié des répétitions prévues). ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. ; Affûtage : séries dures ramenées à environ 55 % de la semaine de pointe, intensité et fréquence gardées, à 14 jours de l'échéance au plus. |
-| Dips aux barres parallèles | 2 × 8 | poids du corps, ≈ 53 % du maximum de répétitions (repère : 15) | 3 rép. en réserve sur la dernière série (davantage sur les premières) | 90 s | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
+| Dips aux barres parallèles | 2 × 11 | poids du corps, ≈ 73 % du maximum de répétitions (repère : 15) | 3 rép. en réserve | 90 s | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Rowing barre buste penché prise pronation | 2 × 8 à 10 | charge à déterminer, à calibrer | 3 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Fente arrière aux haltères | 2 × 6 à 8 | charge à déterminer, à calibrer | 3 rép. en réserve | 90 s | secondaire ; Jambes : force utile, sans fatigue excessive. |
 | Pont fessier unilatéral | 2 × 8 à 10 | poids du corps | 3 rép. en réserve | 105 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Face pull à l'élastique | 2 × 12 à 15 | — | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
 
-### mercredi — force, haut du corps, séance légère (60 min disponibles, 22 min estimées)
+### mercredi — force, haut du corps, séance légère (60 min disponibles, 23 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
 | Traction pronation | 4 min : 4 rép. au début de chaque minute | poids du corps, ≈ 40 % du maximum de répétitions (repère : 10) | 5 rép. en réserve ou plus | — | secondaire ; Affûtage : séries dures ramenées à environ 55 % de la semaine de pointe, intensité et fréquence gardées, à 14 jours de l'échéance au plus. |
-| Pompe classique | 2 × 15 | poids du corps, ≈ 50 % du maximum de répétitions (repère : 30) | 3 rép. en réserve sur la dernière série (davantage sur les premières) | 90 s | secondaire ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
+| Pompe classique | 2 × 21 | poids du corps, ≈ 70 % du maximum de répétitions (repère : 30) | 3 rép. en réserve sur la dernière série (davantage sur les premières) | 2 min | secondaire ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Relevé de jambes tendues suspendu | 2 × 8 à 12 | poids du corps | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
 | Rotation externe à la poulie coude au corps | 2 × 12 à 15 | charge à déterminer, à calibrer | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
 
-### vendredi — force, haut du corps, séance légère (60 min disponibles, 27 min estimées)
+### vendredi — force, haut du corps, séance légère (60 min disponibles, 28 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
-| Traction lestée de compétition | 2 × 2 | lest +2,5 kg | 3 rép. en réserve | 3 min | principal ; Ton 1RM lesté est proche du poids du corps : la charge ne se calcule pas en pourcentage mais à la réserve — départ conseillé : 2,5 kg de lest. À la première séance du bloc, fais une série de calibrage (monte par paliers de 1,25 à 2,5 kg jusqu'à la série qui laisse la réserve écrite, poids du corps seul compris) et garde cette charge ; ensuite ajoute le plus petit pas quand toutes les séries passent ; si la réserve n'est pas tenue, retire 2,5 kg dans la séance. ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. ; Affûtage : séries dures ramenées à environ 55 % de la semaine de pointe, intensité et fréquence gardées, à 14 jours de l'échéance au plus. |
-| Dips aux barres parallèles | 2 × 8 | poids du corps, ≈ 53 % du maximum de répétitions (repère : 15) | 3 rép. en réserve sur la dernière série (davantage sur les premières) | 90 s | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
+| Traction lestée de compétition | 2 × 2 | lest +10 kg, ≈ 85 % du 1RM (charge totale ; 1RM de référence 98,5 kg) | 3 rép. en réserve | 3 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. ; Affûtage : séries dures ramenées à environ 55 % de la semaine de pointe, intensité et fréquence gardées, à 14 jours de l'échéance au plus. |
+| Dips aux barres parallèles | 2 × 11 | poids du corps, ≈ 73 % du maximum de répétitions (repère : 15) | 3 rép. en réserve | 90 s | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Rowing barre buste penché prise pronation | 2 × 8 à 10 | charge à déterminer, à calibrer | 3 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Fente arrière au poids du corps | 2 × 6 à 8 | poids du corps | 3 rép. en réserve | 90 s | accessoire ; Jambes : force utile, sans fatigue excessive. |
 | Relevé de jambes tendues suspendu | 2 × 8 à 12 | poids du corps | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |

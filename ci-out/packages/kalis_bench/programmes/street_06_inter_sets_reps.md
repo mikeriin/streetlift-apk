@@ -419,13 +419,13 @@ Homme de 23 ans, 68 kg, dix-huit mois de pratique. 15 tractions, 25 dips, 40 pom
 | Relevé de jambes tendues suspendu | 2 × 8 à 12 | poids du corps | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
 | Rotation externe à l'élastique | 2 × 12 à 15 | — | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
 
-### vendredi — force, haut du corps, séance lourde (60 min disponibles, 39 min estimées)
+### vendredi — force, haut du corps, séance lourde (60 min disponibles, 34 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
-| Traction chest-to-bar | 3 × 5 à 7 | poids du corps | 2 rép. en réserve | 3 min | principal ; Exécution : départ bras tendus, tire les coudes vers le bas et l'arrière jusqu'à toucher la barre avec la poitrine, sans élan. |
-| Dips aux barres parallèles buste penché | 3 × 10 à 12 | poids du corps | 2 rép. en réserve | 3 min | principal ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
+| Traction pronation | 3 × 11 | poids du corps, ≈ 73 % du maximum de répétitions (repère : 15) | 2 rép. en réserve sur la dernière série (davantage sur les premières) | 90 s | principal ; Zone de l'épreuve : séries à environ 72 % de ton maximum, repos court, 2 répétitions en réserve sur la dernière — c'est la fin de série que le test demande. La dernière série s'arrête dès que la forme casse ; si la réserve tombe sous 1, retire une répétition par série la séance suivante. ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
+| Dips aux barres parallèles | 3 × 18 | poids du corps, ≈ 72 % du maximum de répétitions (repère : 25) | 2 rép. en réserve sur la dernière série (davantage sur les premières) | 90 s | principal ; Zone de l'épreuve : séries à environ 72 % de ton maximum, repos court, 2 répétitions en réserve sur la dernière — c'est la fin de série que le test demande. La dernière série s'arrête dès que la forme casse ; si la réserve tombe sous 1, retire une répétition par série la séance suivante. ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Row australien | 2 × 8 à 10 | poids du corps | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Relevé de jambes tendues suspendu | 2 × 8 à 12 | poids du corps | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
 | Face pull à l'élastique | 2 × 12 à 15 | — | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
@@ -474,13 +474,13 @@ Homme de 23 ans, 68 kg, dix-huit mois de pratique. 15 tractions, 25 dips, 40 pom
 | Relevé de jambes tendues suspendu | 2 × 9 à 13 | poids du corps | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
 | Rotation externe à l'élastique | 2 × 12 à 15 | — | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
 
-### vendredi — force, haut du corps, séance lourde (60 min disponibles, 40 min estimées)
+### vendredi — force, haut du corps, séance lourde (60 min disponibles, 35 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
-| Traction chest-to-bar | 3 × 6 à 8 | poids du corps | 2 rép. en réserve | 3 min | principal ; Exécution : départ bras tendus, tire les coudes vers le bas et l'arrière jusqu'à toucher la barre avec la poitrine, sans élan. |
-| Dips aux barres parallèles buste penché | 3 × 11 à 13 | poids du corps | 2 rép. en réserve | 3 min | principal ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
+| Traction pronation | 3 × 11 | poids du corps, ≈ 73 % du maximum de répétitions (repère : 15) | 2 rép. en réserve sur la dernière série (davantage sur les premières) | 90 s | principal ; Zone de l'épreuve : séries à environ 75 % de ton maximum, repos court, 2 répétitions en réserve sur la dernière — c'est la fin de série que le test demande. La dernière série s'arrête dès que la forme casse ; si la réserve tombe sous 1, retire une répétition par série la séance suivante. ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
+| Dips aux barres parallèles | 3 × 19 | poids du corps, ≈ 76 % du maximum de répétitions (repère : 25) | 2 rép. en réserve sur la dernière série (davantage sur les premières) | 90 s | principal ; Zone de l'épreuve : séries à environ 75 % de ton maximum, repos court, 2 répétitions en réserve sur la dernière — c'est la fin de série que le test demande. La dernière série s'arrête dès que la forme casse ; si la réserve tombe sous 1, retire une répétition par série la séance suivante. ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Row australien | 2 × 9 à 11 | poids du corps | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Relevé de jambes tendues suspendu | 2 × 9 à 13 | poids du corps | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
 | Face pull à l'élastique | 2 × 12 à 15 | — | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
@@ -529,13 +529,13 @@ Homme de 23 ans, 68 kg, dix-huit mois de pratique. 15 tractions, 25 dips, 40 pom
 | Relevé de jambes tendues suspendu | 2 × 9 à 13 | poids du corps | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
 | Rotation externe à l'élastique | 2 × 12 à 15 | — | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
 
-### vendredi — force, haut du corps, séance lourde (60 min disponibles, 40 min estimées)
+### vendredi — force, haut du corps, séance lourde (60 min disponibles, 36 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
-| Traction chest-to-bar | 3 × 6 à 8 | poids du corps | 2 rép. en réserve | 3 min | principal ; Exécution : départ bras tendus, tire les coudes vers le bas et l'arrière jusqu'à toucher la barre avec la poitrine, sans élan. |
-| Dips aux barres parallèles buste penché | 3 × 11 à 13 | poids du corps | 2 rép. en réserve | 3 min | principal ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
+| Traction pronation | 3 × 12 | poids du corps, ≈ 80 % du maximum de répétitions (repère : 15) | 2 rép. en réserve | 90 s | principal ; Zone de l'épreuve : séries à environ 78 % de ton maximum, repos court, 2 répétitions en réserve sur la dernière — c'est la fin de série que le test demande. La dernière série s'arrête dès que la forme casse ; si la réserve tombe sous 1, retire une répétition par série la séance suivante. ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
+| Dips aux barres parallèles | 3 × 20 | poids du corps, ≈ 80 % du maximum de répétitions (repère : 25) | 2 rép. en réserve sur la dernière série (davantage sur les premières) | 90 s | principal ; Zone de l'épreuve : séries à environ 78 % de ton maximum, repos court, 2 répétitions en réserve sur la dernière — c'est la fin de série que le test demande. La dernière série s'arrête dès que la forme casse ; si la réserve tombe sous 1, retire une répétition par série la séance suivante. ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Row australien | 2 × 9 à 11 | poids du corps | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Relevé de jambes tendues suspendu | 2 × 9 à 13 | poids du corps | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
 | Face pull à l'élastique | 2 × 12 à 15 | — | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
@@ -584,13 +584,13 @@ Homme de 23 ans, 68 kg, dix-huit mois de pratique. 15 tractions, 25 dips, 40 pom
 | Relevé de jambes tendues suspendu | 2 × 10 à 14 | poids du corps | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
 | Rotation externe à l'élastique | 2 × 12 à 15 | — | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
 
-### vendredi — force, haut du corps, séance lourde (60 min disponibles, 41 min estimées)
+### vendredi — force, haut du corps, séance lourde (60 min disponibles, 36 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
-| Traction chest-to-bar | 3 × 7 à 9 | poids du corps | 2 rép. en réserve | 3 min | principal ; Exécution : départ bras tendus, tire les coudes vers le bas et l'arrière jusqu'à toucher la barre avec la poitrine, sans élan. |
-| Dips aux barres parallèles buste penché | 3 × 12 à 14 | poids du corps | 2 rép. en réserve | 3 min | principal ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
+| Traction pronation | 3 × 12 | poids du corps, ≈ 80 % du maximum de répétitions (repère : 15) | 2 rép. en réserve | 90 s | principal ; Zone de l'épreuve : séries à environ 78 % de ton maximum, repos court, 2 répétitions en réserve sur la dernière — c'est la fin de série que le test demande. La dernière série s'arrête dès que la forme casse ; si la réserve tombe sous 1, retire une répétition par série la séance suivante. ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
+| Dips aux barres parallèles | 3 × 20 | poids du corps, ≈ 80 % du maximum de répétitions (repère : 25) | 2 rép. en réserve sur la dernière série (davantage sur les premières) | 90 s | principal ; Zone de l'épreuve : séries à environ 78 % de ton maximum, repos court, 2 répétitions en réserve sur la dernière — c'est la fin de série que le test demande. La dernière série s'arrête dès que la forme casse ; si la réserve tombe sous 1, retire une répétition par série la séance suivante. ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Row australien | 2 × 10 à 12 | poids du corps | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Relevé de jambes tendues suspendu | 2 × 10 à 14 | poids du corps | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
 | Face pull à l'élastique | 2 × 12 à 15 | — | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
@@ -635,13 +635,13 @@ Homme de 23 ans, 68 kg, dix-huit mois de pratique. 15 tractions, 25 dips, 40 pom
 | Pompe classique | 4 × 16, un départ toutes les 2 min | poids du corps, ≈ 40 % du maximum de répétitions (repère : 40) | 5 rép. en réserve ou plus | — | accessoire |
 | Rotation externe à l'élastique | 2 × 12 à 15 | — | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
 
-### vendredi — force, haut du corps, séance légère (60 min disponibles, 23 min estimées)
+### vendredi — force, haut du corps, séance légère (60 min disponibles, 21 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
-| Traction chest-to-bar | 2 × 5 à 7 | poids du corps | 3 rép. en réserve | 3 min | principal ; Exécution : départ bras tendus, tire les coudes vers le bas et l'arrière jusqu'à toucher la barre avec la poitrine, sans élan. ; Affûtage : séries dures ramenées à environ 50 % de la semaine de pointe, intensité et fréquence gardées, à 14 jours de l'échéance au plus. |
-| Dips aux barres parallèles buste penché | 2 × 10 à 12 | poids du corps | 3 rép. en réserve | 3 min | principal ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
+| Traction pronation | 2 × 11 | poids du corps, ≈ 73 % du maximum de répétitions (repère : 15) | 3 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. ; Affûtage : séries dures ramenées à environ 50 % de la semaine de pointe, intensité et fréquence gardées, à 14 jours de l'échéance au plus. |
+| Dips aux barres parallèles | 2 × 18 | poids du corps, ≈ 72 % du maximum de répétitions (repère : 25) | 3 rép. en réserve sur la dernière série (davantage sur les premières) | 90 s | principal ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Row australien | 2 × 8 à 10 | poids du corps | 3 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Face pull à l'élastique | 2 × 12 à 15 | — | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
 

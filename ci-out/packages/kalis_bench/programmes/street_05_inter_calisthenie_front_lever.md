@@ -919,13 +919,13 @@ Homme de 26 ans, 70 kg, deux ans de pratique. 12 tractions, 20 dips, 2 muscle-up
 | Face pull à l'élastique | 2 × 12 à 15 | — | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
 | Cat-cow | 1 × 8 à 10 | — | — | 20 s | mobilité |
 
-### mardi — figures et technique, séance légère (75 min disponibles, 33 min estimées)
+### mardi — figures et technique, séance légère (75 min disponibles, 34 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Traction scapulaire | 2 × 8 à 10 | poids du corps | — | 30 s | échauffement |
 | Traction chest-to-bar | 2 × 3 à 5 | poids du corps | 3 rép. en réserve | 3 min | secondaire ; Exécution : départ bras tendus, tire les coudes vers le bas et l'arrière jusqu'à toucher la barre avec la poitrine, sans élan. ; Affûtage : séries dures ramenées à environ 40 % de la semaine de pointe, intensité et fréquence gardées, à 14 jours de l'échéance au plus. |
-| Dips aux barres parallèles | 2 × 10 | poids du corps, ≈ 50 % du maximum de répétitions (repère : 20) | 3 rép. en réserve sur la dernière série (davantage sur les premières) | 90 s | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
+| Dips aux barres parallèles | 2 × 14 | poids du corps, ≈ 70 % du maximum de répétitions (repère : 20) | 3 rép. en réserve sur la dernière série (davantage sur les premières) | 90 s | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Row australien aux anneaux | 2 × 8 à 10 | poids du corps | 3 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Skater squat | 2 × 6 à 8 | poids du corps | 3 rép. en réserve | 90 s | secondaire ; Jambes : force utile, sans fatigue excessive. |
 | Nordic hamstring curl assisté à l'élastique | 2 × 5 | poids du corps | 3 rép. en réserve | 105 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
@@ -933,14 +933,14 @@ Homme de 26 ans, 70 kg, deux ans de pratique. 12 tractions, 20 dips, 2 muscle-up
 | Cat-cow | 1 × 8 à 10 | — | — | 20 s | mobilité |
 | Squat profond tenu | 2 × 30 à 45 s | — | — | 20 s | mobilité |
 
-### jeudi — figures et technique, séance légère (75 min disponibles, 30 min estimées)
+### jeudi — figures et technique, séance légère (75 min disponibles, 31 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Traction scapulaire | 2 × 8 à 10 | poids du corps | — | 30 s | échauffement |
 | Front lever tuck avancé | 3 × 7 s | poids du corps, ≈ 58 % du maintien maximal (repère : 12 s) | sous-maximal : arrêt bien avant la perte de position | 2 min 30 s | figure / technique ; tenue isométrique ; Exécution : bras tendus, pousse la barre vers les hanches, bassin en rétroversion, corps aligné. ; Affûtage : séries dures ramenées à environ 40 % de la semaine de pointe, intensité et fréquence gardées, à 14 jours de l'échéance au plus. |
-| Traction pronation | 2 × 6 | poids du corps, ≈ 50 % du maximum de répétitions (repère : 12) | 3 rép. en réserve sur la dernière série (davantage sur les premières) | 2 min | secondaire ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
-| Dips aux barres parallèles | 2 × 10 | poids du corps, ≈ 50 % du maximum de répétitions (repère : 20) | 3 rép. en réserve sur la dernière série (davantage sur les premières) | 90 s | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
+| Traction pronation | 2 × 8 | poids du corps, ≈ 67 % du maximum de répétitions (repère : 12) | 3 rép. en réserve | 2 min | secondaire ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
+| Dips aux barres parallèles | 2 × 14 | poids du corps, ≈ 70 % du maximum de répétitions (repère : 20) | 3 rép. en réserve sur la dernière série (davantage sur les premières) | 90 s | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Row australien aux anneaux | 2 × 8 à 10 | poids du corps | 3 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Face pull à l'élastique | 2 × 12 à 15 | — | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
 | Cat-cow | 1 × 8 à 10 | — | — | 20 s | mobilité |
