@@ -6230,9 +6230,11 @@ final class Prescriber {
             // panel p2, `street_07`, `street_09` : « 1 RIR à 71 % × 3 »).
             final rir = x.rir;
             final drop = 1 - (capped + fraction * a.bodyWeight) / total;
-            if (rir != null && drop > 0.03) {
+            // (Une série dure reste une série dure : la réserve ne passe
+            // pas le seuil des séries dures, le volume compté ne bouge pas.)
+            if (rir != null && drop > 0.03 && rir <= coachHardSetMaxRir) {
               final more = rir + (drop / 0.03).floorToDouble();
-              x.rir = more > 5 ? 5 : more;
+              x.rir = more > coachHardSetMaxRir ? coachHardSetMaxRir : more;
             }
             x.load = capped;
             total = capped + fraction * a.bodyWeight;

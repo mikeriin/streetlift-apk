@@ -379,10 +379,7 @@ void main() {
       // (85 % au moins : après un allègement, la hausse d'un emplacement à
       // répétitions égales reste bornée sur la semaine allégée, comme le
       // banc la mesure — CP2, partie 0, boucle 2.)
-      expect(
-        top.reduce((a, b) => a > b ? a : b),
-        inInclusiveRange(0.85, 0.95),
-      );
+      expect(top.reduce((a, b) => a > b ? a : b), inInclusiveRange(0.85, 0.95));
       // Une exposition lourde (85 % et plus) par semaine de réalisation.
       for (var k = 0; k < weeks.length; k++) {
         if (weeks[k].intent == WeekIntent.realization) {
@@ -1402,9 +1399,17 @@ void main() {
           for (final i in d.items) {
             final load = i.startLoadKg;
             final reps = i.repsHigh;
+            // (Séries de travail seulement : une série légère, à 5
+            // répétitions de réserve ou plus, n'est pas la référence d'une
+            // série lourde du même exercice — CP2, partie 0, boucle 3 ;
+            // le banc borne la hausse par emplacement.)
+            final flames = i.targetFlames;
             if (load == null ||
                 reps == null ||
-                (i.kind != null && i.kind != SetKind.work)) {
+                (i.kind != null && i.kind != SetKind.work) ||
+                (flames != null &&
+                    Flames.isValid(flames) &&
+                    Flames.toRir(flames) >= 5)) {
               continue;
             }
             final key = '${i.exerciseId}|$reps';
