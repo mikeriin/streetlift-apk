@@ -248,14 +248,19 @@ const double coachEstimateLoadMargin = 0.06;
 const double coachEstimateLoadBias = 0.03;
 
 /// Vrai si [profile] relève du chemin street de `kalis_plan` 0.2 : profil
-/// au schéma 3 rempli par le questionnaire 0.4 (expérience et ancienneté
-/// renseignées — sans elles le niveau n'est pas lisible et le chemin 0.1
-/// s'applique), discipline principale street (streetlifting, sets & reps,
-/// calisthénie), disciplines secondaires street, cardio ou mobilité.
+/// au schéma 3 rempli par le questionnaire 0.4 (expérience renseignée, et
+/// ancienneté renseignée à partir d'« intermédiaire » — sans elles le
+/// niveau n'est pas lisible et le chemin 0.1 s'applique), discipline
+/// principale street (streetlifting, sets & reps, calisthénie),
+/// disciplines secondaires street, cardio ou mobilité. Un débutant sans
+/// ancienneté est lu « moins de 6 mois » : le parcours v3 ne lui pose pas
+/// la question (CP2, partie 0 ; CI1.4).
 bool coachEligible(AthleteProfile profile) {
-  if (!profile.isSchema3 ||
-      profile.experience == null ||
-      profile.trainingAge == null) {
+  if (!profile.isSchema3 || profile.experience == null) {
+    return false;
+  }
+  if (profile.trainingAge == null &&
+      profile.experience != ExperienceLevel.beginner) {
     return false;
   }
   final mix = profile.disciplines;
@@ -1359,9 +1364,10 @@ final class Athlete {
     // pompes sur le dos des mains ou paumes en extension à l'échauffement
     // — rotations et pressions des doigts à la place (relecture documentée
     // CX, correction 1, `street_01`).
+    // (Dès 2 sur 10 : poignet sensible, CP2, partie 0, `street_10`.)
     if (id == coachWristLoadedPrep &&
         (stopZones.contains(BodyZone.wristHand) ||
-            limits.any((l) => l.joint == Joint.wrist && l.discomfort >= 3))) {
+            limits.any((l) => l.joint == Joint.wrist && l.discomfort >= 2))) {
       return 'joint';
     }
     // Coude douloureux au bloc précédent (3 sur 10 ou plus) : la prise

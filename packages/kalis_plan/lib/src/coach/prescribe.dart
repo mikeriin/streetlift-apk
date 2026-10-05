@@ -309,8 +309,23 @@ abstract final class CoachNotes {
   /// habituel).
   static const String painReturnItem = 'pain_return_item';
 
+  /// Tenues vers le critère de passage de l'étape, une séance lourde par
+  /// semaine en réalisation (`value` : secondes par tenue ; CP2, partie 0).
+  static const String stepCriterion = 'step_criterion';
+
+  /// Série repère de la première séance quand le record n'est pas un test
+  /// récent (`value` : répétitions en réserve ; CP2, partie 0).
+  static const String entryCheck = 'entry_check';
+
+  /// Simulation du test d'un objectif de répétitions, dix jours avant
+  /// (`value` : répétitions visées ; CP2, partie 0).
+  static const String repsRehearsal = 'reps_rehearsal';
+
   /// Tous les codes.
   static const List<String> all = <String>[
+    entryCheck,
+    repsRehearsal,
+    stepCriterion,
     plateau,
     eventZone,
     rampMuscleUp,
@@ -730,6 +745,15 @@ final class _WeekTrace {
   /// hausse tient aussi d'un bloc à l'autre, quand les emplacements
   /// changent.
   final Map<String, double> loadsByExercise = <String, double>{};
+
+  /// Plus lourde charge totale écrite de la semaine par exercice, toutes
+  /// répétitions confondues, avec ses répétitions (CP2, partie 0 : borne
+  /// de hausse à répétitions différentes).
+  final Map<String, (double, int)> heaviest = <String, (double, int)>{};
+
+  /// Tonnage écrit de la semaine par exercice lesté (séries × répétitions
+  /// × charge totale), séries de travail seulement.
+  final Map<String, double> tonnage = <String, double>{};
 
   /// Départs au chrono écrits par emplacement.
   final Map<String, int> minutes = <String, int>{};
@@ -2252,24 +2276,58 @@ final class Prescriber {
     // ni avec une zone à ménager.
     final wanted = a.goalOn(e.id, GoalMetric.maxReps)?.targetValue;
     if (wanted != null &&
-        wanted >= 15 &&
+        wanted >= 8 &&
         wanted > max &&
         !risk &&
         kept < 2 &&
-        // (Repos-pause sur le mouvement principal : avancé et élite
-        // seulement, R2-P13, R4-G6 ; l'intermédiaire travaille la fin de
-        // série par les séries de la zone de l'épreuve — panel CX,
-        // correction 1.)
-        _level >= 2 &&
+        // (Repos-pause sur le mouvement principal : avancé et élite ;
+        // l'intermédiaire seulement en réalisation, une fois par semaine —
+        // CP2, partie 0 : panel CX correction 1, `street_06`, 11, 14, 15, 17
+        // : « une série au maximum − 2 suivie de mini-séries » ; R2-P13,
+        // R4-G6, R4-G7.)
+        (_level >= 2 || (_level == 1 && realization)) &&
         ws.kind == WeekKind.build &&
-        ws.stage >= 1 &&
+        (ws.stage >= 1 || realization) &&
         (blockIndex >= 1 || realization) &&
-        _shape.model != SeasonModel.repsPeak &&
         // Un seul mouvement en repos-pause par semaine : le tirage les
         // semaines impaires du bloc, la poussée les semaines paires.
         ((e.pattern == MovementPattern.tirageVertical) == ws.stage.isOdd ||
             !_twoLongGoals)) {
       x.reasons.add(_note(CoachNotes.restPause, 3));
+    }
+    // Simulation du test d'un objectif de répétitions, à dix jours environ
+    // (dernière semaine de réalisation avant l'affûtage ou le test) : la
+    // série de tête se fait au format du test, jusqu'à une répétition de
+    // l'échec (R3-P20 ; panel CX correction 1, `street_11`, 13, 14 : « une
+    // simulation de série longue au format du test à J−10 »). Pas sur un
+    // mouvement à risque ni une zone à ménager.
+    final next = week + 1 < _shape.weeks.length ? _shape.weeks[week + 1] : null;
+    if (wanted != null &&
+        wanted > max &&
+        realization &&
+        ws.kind == WeekKind.build &&
+        next != null &&
+        (next.intent == WeekIntent.taper || next.testWeek) &&
+        !risk &&
+        kept < 2 &&
+        _level >= 1 &&
+        max >= 6) {
+      final rehearsal = max - 1;
+      x
+        ..sets = 1
+        ..minSets = 1
+        ..backoff = false
+        ..repsLow = rehearsal
+        ..repsHigh = rehearsal
+        ..rir = 1
+        ..rest = 180
+        ..intensity = _shareOf(e.id, rehearsal, max)
+        ..reasons.removeWhere(
+          (r) =>
+              r.code == ReasonCodes.planCoachNote &&
+              r.params['note'] == CoachNotes.restPause,
+        )
+        ..reasons.add(_note(CoachNotes.repsRehearsal, rehearsal));
     }
     return x;
   }
@@ -2397,8 +2455,15 @@ final class Prescriber {
       // (La part dite dans la note est celle des répétitions écrites —
       // passe 7 du panel, `street_15` : note à 75 % pour 3 × 5 à 63 %.)
       final shown = (x.repsHigh ?? reps) / max;
+      // Repos raccourci de 15 s par semaine de réalisation (75-90 s, puis
+      // 60-75 s, 45 s au plus court) : la densité monte, une variable à la
+      // fois (R4-G4 : 45 à 90 s ; panel CX correction 1, `street_06` :
+      // « repos réduit de 15 s par semaine sur les séries de la zone de
+      // l'épreuve »).
+      final shorter = 15 * (ws.stage > 2 ? 2 : ws.stage);
+      final rest = (_level >= 2 ? 75 : 90) - shorter;
       x
-        ..rest = _level >= 2 ? 75 : 90
+        ..rest = rest < 45 ? 45 : rest
         ..rir = rir
         ..reasons.add(_note(CoachNotes.eventZone, _round(shown * 100)));
     }
@@ -2781,20 +2846,22 @@ final class Prescriber {
         ..repsLow = low
         ..repsHigh = high
         // 3 en réserve le premier bloc (R5-P4), 2 ensuite.
-        ..rir = _rirOf(e, firm, ws, week)
-        ..reasons.add(_rule(CoachRules.doubleProgression, 1, 'reps'));
-      if (ladderStep) {
-        x.reasons.add(_note(CoachNotes.pushLadder, 6));
-      }
+        ..rir = _rirOf(e, firm, ws, week);
+      // Palier de l'échelle de poussée : un seul critère de passage, celui
+      // de l'échelle (CP2, partie 0 ; panel CX correction 1, `street_02`,
+      // `street_03` : la double progression et l'échelle se contredisaient).
+      x.reasons.add(
+        ladderStep
+            ? _note(CoachNotes.pushLadder, 12)
+            : _rule(CoachRules.doubleProgression, 1, 'reps'),
+      );
       return x;
     }
     // R5-P9 : une variante qui permet 6 à 10 répétitions avec 3 en réserve.
     if (e.assisted) {
       x.reasons.add(_rule(CoachRules.assistanceStep, 1, 'cran'));
     }
-    if (s.referenceId == Ids.pushUp && e.id != Ids.pushUp) {
-      x.reasons.add(_note(CoachNotes.pushLadder, 6));
-    }
+    final ladder = s.referenceId == Ids.pushUp && e.id != Ids.pushUp;
     final lower =
         e.family == MovementFamily.jambesGenou ||
         e.family == MovementFamily.jambesHanche;
@@ -2802,7 +2869,11 @@ final class Prescriber {
       ..repsLow = (lower ? 8 : 6) + _shift(ws)
       ..repsHigh = (lower ? 10 : 8) + _shift(ws)
       ..rir = _rirOf(e, 3, ws, week)
-      ..reasons.add(_rule(CoachRules.doubleProgression, 1, 'reps'));
+      ..reasons.add(
+        ladder
+            ? _note(CoachNotes.pushLadder, 12)
+            : _rule(CoachRules.doubleProgression, 1, 'reps'),
+      );
     return x;
   }
 
@@ -2982,6 +3053,30 @@ final class Prescriber {
         sets = 3;
       }
     }
+    // Progression des tenues vers le critère de passage (CP2, partie 0 ;
+    // panel CX correction 1, `street_05` et `street_10` : le critère n'était
+    // jamais travaillé, les tenues restaient à 60-70 % du maximum) : en
+    // réalisation, la séance lourde qui porte l'essai maximal fait trois
+    // tenues longues, à la durée du critère, sans dépasser 85 % du dernier
+    // maintien mesuré (R4-F6 ; Oranchuk et al. 2019 : 70 % et plus de
+    // l'effort maximal pour le tendon ; R4-F2 : jamais jusqu'à l'échec).
+    var criterion = false;
+    if (intense &&
+        known > 0 &&
+        ws.kind == WeekKind.build &&
+        ws.intent == WeekIntent.realization &&
+        role == _DayRole.normal &&
+        _maxAttemptDay(s) == _dayNow &&
+        _isLadderStep(s.skillTargetId, e.id)) {
+      final goal = coachStepHold(_level);
+      final most = (known * 0.85 + 1e-9).floor();
+      final rehearsal = goal < most ? goal : most;
+      if (rehearsal > hold) {
+        hold = rehearsal;
+        sets = 3;
+        criterion = true;
+      }
+    }
     x
       ..sets = sets < 2 ? 2 : sets
       ..minSets = 2
@@ -2998,6 +3093,11 @@ final class Prescriber {
       ..calibrate = known <= 0 && blockIndex == 0 && week == 0
       ..reasons.add(_note(CoachNotes.submaximalHold, 0.7))
       ..reasons.add(_rule(CoachRules.holdStep, 1, 's'));
+    if (criterion) {
+      x
+        ..rest = 180
+        ..reasons.add(_note(CoachNotes.stepCriterion, hold));
+    }
     if (known > 0) {
       x.intensity = IntensityTarget(
         basis: IntensityBasis.percentBenchmark,
@@ -3021,6 +3121,22 @@ final class Prescriber {
       x.reasons.add(_note(CoachNotes.holdCalibrate, share));
     }
     return x;
+  }
+
+  /// Vrai si [id] est l'étape actuelle (premier rang) de l'échelle écrite
+  /// de la figure [targetId].
+  bool _isLadderStep(String? targetId, String id) {
+    if (targetId == null) {
+      return false;
+    }
+    for (final l in skeleton.ladders) {
+      if (l.targetExerciseId == targetId &&
+          l.steps.isNotEmpty &&
+          l.steps.first.exerciseId == id) {
+        return true;
+      }
+    }
+    return false;
   }
 
   /// Première séance lourde de la semaine pour la figure de [s] (celle qui
@@ -4761,6 +4877,37 @@ final class Prescriber {
         }
       }
     }
+    if (blockIndex == 0 && week == 0 && a.gapWeeks < 2 && _level >= 1) {
+      // Test d'entrée sur un record déclaré (CP2, partie 0 ; relecture
+      // documentée CX, `street_06`, 07, 08, 12 ; Helms et al. 2016,
+      // Zourdos et al. 2016 : une série à 1 à 3 répétitions de l'échec
+      // estime le maximum du jour) : la première séance qui porte un
+      // mouvement principal dont le record n'est pas un test récent (daté
+      // de six semaines au plus) fait de sa première série une série repère,
+      // jusqu'à 2 répétitions de l'échec ; les séries de la semaine se
+      // recalent dessus quand elle sort nettement sous le repère. Un record
+      // déclaré n'est un repère qu'une fois testé ou recoupé.
+      for (final x in out) {
+        final m = x.method;
+        final reps =
+            (m == Method.repsTop ||
+                m == Method.repsStrength ||
+                m == Method.repsVolume) &&
+            (a.reps[x.e.id] ?? 0) > 0;
+        final lift =
+            (m == Method.liftHeavy || m == Method.liftVolume) &&
+            x.load != null &&
+            a.oneRm[x.e.id] != null;
+        final when = a.recordDay[x.e.id];
+        final recent = when != null && when.daysUntil(a.start) <= 42;
+        if (x.kind == SetKind.work &&
+            (reps || lift) &&
+            !recent &&
+            _entered.add(x.e.id)) {
+          x.reasons.add(_note(CoachNotes.entryCheck, 2));
+        }
+      }
+    }
     if (gated) {
       // Le test de descente remplace les descentes de la séance.
       out.removeWhere(
@@ -5774,13 +5921,62 @@ final class Prescriber {
 
   /// Borne la hausse de charge d'une semaine à l'autre (R5-P3, R5-P22) :
   /// au plus `coachLoadRise` au-dessus de la charge de la semaine d'avant
-  /// sur le même emplacement, corrigée de 2,5 % par répétition de moins
-  /// après une semaine de transition ou d'introduction (CX, correction 1 :
-  /// la charge totale remontait de 20 à 27 % en une semaine quand le nombre
-  /// de répétitions changeait — la borne ne valait qu'à répétitions
-  /// égales) ; ailleurs, à répétitions égales.
-  void _fitLoads(List<List<_Draft>> days, _WeekTrace trace) {
+  /// sur le même emplacement, corrigée de 2,5 % par répétition de moins.
+  /// Après une semaine de transition ou d'introduction, l'écart de
+  /// répétitions compte en entier (CX, correction 1) ; ailleurs, deux
+  /// répétitions au plus (CP2, partie 0, constat de charge de `street_08` :
+  /// la charge totale montait de 67 à 79 % du 1RM en une semaine quand les
+  /// répétitions passaient de 6 à 5 après un allègement, faute de borne à
+  /// répétitions différentes). Une semaine allégée ou de test n'est pas
+  /// une référence : la borne se prend sur la dernière semaine de charge
+  /// (sinon la charge resterait collée à celle de l'allègement). Antécédent
+  /// ou gêne au coude : +2,5 kg de charge totale par semaine au plus sur un
+  /// mouvement lesté qui charge le coude (paliers de reprise, R5-P20,
+  /// R5-P22 ; relecture documentée CX, `street_12`). Le tonnage écrit d'un
+  /// exercice lesté (séries × répétitions × charge) ne monte pas de plus de
+  /// `coachVolumeRise` sur la semaine de charge de référence ; au-delà, des
+  /// séries sont retirées (jamais sous le minimum de l'emplacement).
+  void _fitLoads(List<List<_Draft>> days, _WeekTrace trace, WeekSpec ws) {
     final rise = coachLoadRise[_level];
+    // Pic de forme (réalisation, affûtage, échéance) : les répétitions
+    // baissent par dessein (simples et doubles lourds) ; l'écart de
+    // répétitions compte alors en entier, borné comme après une transition.
+    final peaking =
+        ws.intent == WeekIntent.realization ||
+        ws.intent == WeekIntent.taper ||
+        ws.intent == WeekIntent.competition ||
+        ws.eventWeek;
+    final last = _history.isEmpty ? null : _history.last;
+    // Semaine de charge de référence : la plus récente des trois dernières
+    // qui n'est ni allégée ni de test ; après une transition ou une
+    // introduction, la semaine d'avant elle-même.
+    _WeekTrace? reference;
+    if (last != null && last.restart) {
+      reference = last;
+    } else {
+      for (var k = _history.length - 1; k >= 0; k--) {
+        if (k < _history.length - 3) {
+          break;
+        }
+        if (!_history[k].light) {
+          reference = _history[k];
+          break;
+        }
+      }
+    }
+    final elbow = a.limitOn(Joint.elbow) != null;
+    double factorOf(int beforeReps, int reps, {required bool restart}) {
+      var delta = beforeReps - reps;
+      if (!restart && !peaking && delta > 2) {
+        delta = 2;
+      }
+      var factor = 1 + rise + coachLoadPerRep * delta;
+      if (factor > 1 + rise + 2 * coachLoadPerRep * 4) {
+        factor = 1 + rise + 2 * coachLoadPerRep * 4;
+      }
+      return factor;
+    }
+
     for (var d = 0; d < days.length; d++) {
       for (final x in days[d]) {
         final load = x.load;
@@ -5792,34 +5988,41 @@ final class Prescriber {
         var total = load + fraction * a.bodyWeight;
         final key = '$d|${x.slotId}|${x.e.id}';
         double? allowed;
-        for (var k = _history.length - 1; k < _history.length; k++) {
-          if (k < 0) {
-            continue;
-          }
-          final before = _history[k].loads[key];
-          if (before == null ||
-              before.$1 <= 0 ||
-              (before.$2 != reps && !_history[k].restart)) {
-            continue;
-          }
-          var factor = 1 + rise + coachLoadPerRep * (before.$2 - reps);
-          if (factor > 1 + rise + 2 * coachLoadPerRep * 4) {
-            factor = 1 + rise + 2 * coachLoadPerRep * 4;
-          }
-          final limit = before.$1 * factor;
-          if (allowed == null || limit > allowed) {
-            allowed = limit;
-          }
+        // Même emplacement, semaine d'avant (ou semaine de référence quand
+        // la semaine d'avant est allégée).
+        final source = last == null || (last.light && !last.restart)
+            ? reference
+            : last;
+        final before = source?.loads[key];
+        if (source != null && before != null && before.$1 > 0) {
+          allowed =
+              before.$1 * factorOf(before.$2, reps, restart: source.restart);
         }
         // Nouvel emplacement (début de bloc, après un allègement ou un
-        // test) : même borne sur la plus lourde charge du même exercice à
-        // répétitions égales la semaine d'avant (passe 7 du panel,
-        // `street_08` : dips lestés de 67 à 79 % du 1RM en une semaine,
-        // juste après l'allègement).
-        if (allowed == null && _history.isNotEmpty) {
-          final before = _history.last.loadsByExercise['${x.e.id}|$reps'];
-          if (before != null && before > 0) {
-            allowed = before * (1 + rise);
+        // test) : même borne sur la plus lourde charge du même exercice la
+        // semaine de référence (passe 7 du panel CX, `street_08` : dips
+        // lestés de 67 à 79 % du 1RM en une semaine, juste après
+        // l'allègement).
+        final top = reference?.heaviest[x.e.id];
+        if (allowed == null && top != null && top.$1 > 0) {
+          allowed =
+              top.$1 * factorOf(top.$2, reps, restart: reference!.restart);
+        }
+        if (elbow &&
+            x.e.stressOn(Joint.elbow) != JointStress.low &&
+            x.e.loadType == LoadType.addedWeight) {
+          var most = 0.0;
+          for (var k = _history.length - 3; k < _history.length; k++) {
+            final v = k < 0 ? null : _history[k].heaviest[x.e.id];
+            if (v != null && v.$1 > most) {
+              most = v.$1;
+            }
+          }
+          // (Pic de forme : un simple ou un double lourd peut dépasser de
+          // 5 kg au plus la plus lourde charge des trois semaines d'avant.)
+          final step = peaking ? 5.0 : 2.5;
+          if (most > 0 && (allowed == null || most + step < allowed)) {
+            allowed = most + step;
           }
         }
         if (allowed != null &&
@@ -5847,8 +6050,63 @@ final class Prescriber {
           if (most == null || total > most) {
             trace.loadsByExercise[ex] = total;
           }
+          final heavy = trace.heaviest[x.e.id];
+          if (heavy == null || total > heavy.$1) {
+            trace.heaviest[x.e.id] = (total, reps);
+          }
         }
       }
+    }
+    // Tonnage par exercice lesté.
+    final drafts = <String, List<_Draft>>{};
+    for (final items in days) {
+      for (final x in items) {
+        if (x.load != null &&
+            x.repsHigh != null &&
+            x.kind == SetKind.work &&
+            x.e.loadType == LoadType.addedWeight) {
+          drafts.putIfAbsent(x.e.id, () => <_Draft>[]).add(x);
+        }
+      }
+    }
+    double tonnageOf(List<_Draft> xs) {
+      var t = 0.0;
+      for (final x in xs) {
+        final fraction = x.e.bodyweightFraction?.value ?? 0;
+        t += x.sets * x.repsHigh! * (x.load! + fraction * a.bodyWeight);
+      }
+      return t;
+    }
+
+    for (final entry in drafts.entries) {
+      final before = reference?.tonnage[entry.key];
+      var now = tonnageOf(entry.value);
+      if (before != null &&
+          before > 0 &&
+          !(reference?.restart ?? false)) {
+        final limit = before * (1 + coachVolumeRise);
+        // Séries retirées d'abord aux emplacements les plus fournis, jamais
+        // sous leur minimum ni dans un groupe enchaîné.
+        var guard = 0;
+        while (now > limit + 1e-6 && guard < 20) {
+          guard++;
+          _Draft? pick;
+          for (final x in entry.value) {
+            if (x.group != null || x.sets <= x.minSets || x.sets <= 1) {
+              continue;
+            }
+            if (pick == null || x.sets > pick.sets) {
+              pick = x;
+            }
+          }
+          if (pick == null) {
+            break;
+          }
+          pick.sets--;
+          now = tonnageOf(entry.value);
+        }
+      }
+      trace.tonnage[entry.key] = now;
     }
   }
 
@@ -6270,6 +6528,14 @@ final class Prescriber {
           if (most == null || total > most) {
             trace.loadsByExercise[ex] = total;
           }
+          final top = trace.heaviest[p.exerciseId];
+          if (top == null || total > top.$1) {
+            trace.heaviest[p.exerciseId] = (total, reps);
+          }
+          if (p.kind == null || p.kind == SetKind.work) {
+            trace.tonnage[p.exerciseId] =
+                (trace.tonnage[p.exerciseId] ?? 0) + p.sets * reps * total;
+          }
         }
         if ((p.kind == null || p.kind == SetKind.work) &&
             p.reasons.any(
@@ -6328,7 +6594,7 @@ final class Prescriber {
             ws.intent == WeekIntent.transition ||
             ws.intent == WeekIntent.intro,
       );
-      _fitLoads(days, trace);
+      _fitLoads(days, trace, ws);
       _fitMinutes(days, trace);
       _fitHolds(days, trace);
       _fitReserve(days);

@@ -277,6 +277,18 @@ void main() {
         trainingAge: null,
       );
       expect(coachEligible(noAge), isFalse);
+      // Débutant sans ancienneté (le parcours v3 ne la lui demande pas) :
+      // chemin street, lu « moins de 6 mois » (CP2, partie 0 ; CI1.4).
+      final beginnerNoAge = _profile(
+        experience: ExperienceLevel.beginner,
+        trainingAge: null,
+      );
+      expect(beginnerNoAge.validate(), isEmpty);
+      expect(coachEligible(beginnerNoAge), isTrue);
+      expect(
+        isCoachPlan(KalisPlan().createPass1(catalog, _request(beginnerNoAge))),
+        isTrue,
+      );
       final gym = _profile(
         experience: ExperienceLevel.intermediate,
         primary: TrainingDiscipline.musculation,
