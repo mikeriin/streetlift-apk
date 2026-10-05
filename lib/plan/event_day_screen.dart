@@ -149,7 +149,8 @@ class _EventDayScreenState extends State<EventDayScreen> {
                               style: t.titleSmall,
                             ),
                           ),
-                          if (s.index == (done.isEmpty ? 0 : done.last.index + 1)) ...[
+                          if (s.index ==
+                              (done.isEmpty ? 0 : done.last.index + 1)) ...[
                             IconButton(
                               key: ValueKey(
                                 'event-ok-${lift.exerciseId}-${s.index}',

@@ -2191,3 +2191,76 @@ AthleteProfile sampleAthleteProfile({
     updatedOn: day,
   );
 }
+
+/// CI1 : profils street au profil v3 complet (chemin calibré des moteurs)
+/// pour les tests et la session de test : compétiteur de streetlifting
+/// avancé avec une compétition dans 12 semaines, ou débutant de
+/// calisthénie au parc et à la maison.
+AthleteProfile sampleStreetProfile({
+  CivilDate? on,
+  GuidanceMode guidance = GuidanceMode.assisted,
+  bool beginner = false,
+}) {
+  final day = on ?? CivilDate(2026, 10, 1);
+  final base = sampleAthleteProfile(on: day, guidance: guidance);
+  if (!beginner) {
+    return base.copyWith(
+      trainingAge: TrainingAge.years2To5,
+      trainingGap: TrainingGap.none,
+      events: <SeasonEvent>[
+        SeasonEvent(
+          id: 'ci1-competition',
+          kind: EventKind.strengthCompetition,
+          priority: EventPriority.main,
+          date: day.addDays(84),
+          name: 'Championnat',
+          lifts: const <CompetitionLift>[
+            CompetitionLift(
+              exerciseId: 'sl-traction-lestee',
+              attempts: 3,
+              minIncrementKg: 1.25,
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+  const mode = StreetMode(
+    primary: StreetStyle.calisthenics,
+    streetliftingPct: 0,
+    setsRepsPct: 20,
+    calisthenicsPct: 80,
+  );
+  return base.copyWith(
+    displayName: 'Débutant',
+    disciplines: mode.toDisciplineMix(),
+    streetMode: mode,
+    experience: ExperienceLevel.beginner,
+    trainingAge: TrainingAge.under6Months,
+    trainingGap: TrainingGap.none,
+    movementLevels: const <MovementLevel>[
+      MovementLevel(
+        exerciseId: 'sw-traction-pronation',
+        measure: LevelMeasure.maxReps,
+        known: true,
+        low: 2,
+        high: 4,
+      ),
+    ],
+    goals: <Goal>[
+      Goal(
+        id: 'goal-1',
+        kind: GoalKind.performance,
+        origin: GoalOrigin.user,
+        createdOn: day,
+        exerciseId: 'sw-traction-pronation',
+        metric: GoalMetric.maxReps,
+        targetValue: 8,
+        targetDate: day.addDays(120),
+      ),
+    ],
+    places: const <Place>[Place.outdoor, Place.home],
+    equipment: const <String>['aucun (sol)', 'barre fixe', 'barres parallèles'],
+    events: const <SeasonEvent>[],
+  );
+}

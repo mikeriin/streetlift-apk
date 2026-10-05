@@ -15,7 +15,6 @@ import 'package:kalis_core/kalis_core.dart' as kc;
 import 'package:kalis_plan/kalis_plan.dart' as kp;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:streetlift_tracker/adapt/adapt_texts.dart';
-import 'package:streetlift_tracker/adapt/session_adapt.dart';
 import 'package:streetlift_tracker/athlete_profile.dart';
 import 'package:streetlift_tracker/plan/coach_texts.dart';
 import 'package:streetlift_tracker/plan/plan_program.dart';
@@ -79,6 +78,20 @@ void _create(AppStore app) {
   return null;
 }
 
+/// Vue de la saison du programme de [app] (null : pas de saison).
+SeasonOverview? _view(AppStore app) {
+  final plan = app.planProgram;
+  if (plan == null) return null;
+  final n = app.storeClock();
+  return seasonOverview(
+    plan,
+    events: app.athlete?.profile.events ?? const <kc.SeasonEvent>[],
+    today: DateTime(n.year, n.month, n.day),
+    programStart: app.program.start,
+    catalog: app.content.catalog,
+  );
+}
+
 DateTime _dateOf(AppStore app, int week, int j) {
   final s = app.program.start!;
   return DateTime(s.year, s.month, s.day + (week - 1) * 7 + j - 1, 9);
@@ -117,7 +130,7 @@ void main() {
       expect(plan.season, isNotNull);
       expect(plan.season!.phases, isNotEmpty);
       expect(plan.season!.validate(), isEmpty);
-      final view = storeSeasonOverview()!;
+      final view = _view(app)!;
       expect(view.phases.length, plan.season!.phases.length);
       expect(view.phases.where((p) => p.current).length, lessThanOrEqualTo(1));
       expect(view.daysToEvent, isNotNull);
@@ -162,6 +175,20 @@ void main() {
       }
     });
 
+    test('profils street d’exemple (session de test, émulateur) : valides, '
+        'chemin calibré', () async {
+      for (final b in [false, true]) {
+        final p = sampleStreetProfile(beginner: b);
+        expect(p.validate(), isEmpty, reason: 'débutant : $b');
+        expect(app.content.catalog!.checkProfile(p), isEmpty);
+        expect(kp.coachEligible(p), isTrue);
+      }
+      _save(app, sampleStreetProfile());
+      _create(app);
+      expect(app.planProgram!.season, isNotNull);
+      expect(_view(app)?.event?.id, 'ci1-competition');
+    });
+
     test('autre discipline (musculation) : chemin 0.1, pas de saison', () async {
       _save(app, _street('musculation'));
       expect(PlanStore(app).planCoachEligible, isFalse);
@@ -169,7 +196,7 @@ void main() {
       final plan = app.planProgram!;
       expect(isCoachBlock(plan.blocks.single.block), isFalse);
       expect(plan.season, isNull);
-      expect(storeSeasonOverview(), isNull);
+      expect(_view(app), isNull);
     });
 
     test('séance : série de tête puis séries allégées guidées, lignes '
@@ -308,7 +335,7 @@ void main() {
       final weeks = jsonEncode([
         for (final w in app.program.weeks) w.n,
       ]);
-      expect(storeSeasonOverview(), isNull);
+      expect(_view(app), isNull);
       expect(PlanStore(app).planOnLegacyEngine, isFalse);
       expect(jsonEncode([for (final w in app.program.weeks) w.n]), weeks);
     });
@@ -375,7 +402,7 @@ void main() {
     });
 
     test('rôles des lignes et techniques : libellés', () {
-      final p = kc.ExercisePrescription(
+      const p = kc.ExercisePrescription(
         slotId: 's',
         exerciseId: 'sl-traction-lestee',
         sets: 4,
@@ -383,14 +410,14 @@ void main() {
         repsHigh: 3,
         toCalibrate: false,
         loadBasis: kc.LoadBasis.bodyweightPlusExternal,
-        technique: const kc.SetTechnique(
+        technique: kc.SetTechnique(
           kind: kc.SetTechniqueKind.topSetBackoff,
           backoffSets: 3,
           backoffDropPct: .08,
           backoffRepsLow: 5,
           backoffRepsHigh: 5,
         ),
-        reasons: const [],
+        reasons: [],
       );
       expect(p.validate(), isEmpty);
       expect(prescriptionRow(p, 0).role, kc.SetRole.top);
