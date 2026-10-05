@@ -1105,44 +1105,40 @@ void main() {
     }
 
     test('étape de travail sautée : gardée au bloc suivant', () {
+      const step = 'cs-front-lever-tuck-avance';
       final figures = _profile(
-        experience: ExperienceLevel.advanced,
-        weekdays: const <int>[1, 3, 5],
-        minutes: 90,
+        experience: ExperienceLevel.intermediate,
+        weekdays: const <int>[1, 4, 6],
+        minutes: 75,
         benchmarks: <Benchmark>[
-          _maxReps('sw-traction-pronation', 15),
-          _maxReps('sw-dips-barres-paralleles', 25),
-          Benchmark(
-            exerciseId: 'cs-planche-straddle',
+          _maxReps('sw-traction-pronation', 12),
+          _maxReps('sw-dips-barres-paralleles', 18),
+          const Benchmark(
+            exerciseId: step,
             kind: BenchmarkKind.maxHold,
             source: BenchmarkSource.declared,
-            seconds: 6,
+            seconds: 12,
           ),
         ],
         skills: const <SkillState>[
-          SkillState(
-            targetExerciseId: 'cs-planche',
-            currentExerciseId: 'cs-planche-straddle',
-          ),
+          SkillState(targetExerciseId: 'cs-front-lever', currentExerciseId: step),
         ],
       );
       bool serves(ProgramBlock b) => b.pass2.weeks.any(
-        (w) => w.days.any(
-          (d) => d.items.any((i) => i.exerciseId == 'cs-planche-straddle'),
-        ),
+        (w) => w.days.any((d) => d.items.any((i) => i.exerciseId == step)),
       );
       expect(serves(_programWith(catalog, figures, 4).first), isTrue);
       final blocks = _programWith(
         catalog,
         figures,
         8,
-        avoidedFor: (n) => const <String>['cs-planche-straddle'],
+        avoidedFor: (n) => const <String>[step],
       );
       expect(blocks.length, greaterThanOrEqualTo(2));
       expect(serves(blocks[1]), isTrue);
     });
 
-    test('forte baisse : le test seul fait foi', () {
+    test('forte baisse : 15 % seule, le test confirmé fait foi', () {
       Benchmark tested(int reps, int daysAgo) => Benchmark(
         exerciseId: 'sw-traction-pronation',
         kind: BenchmarkKind.maxReps,
@@ -1174,10 +1170,20 @@ void main() {
       final low = base.copyWith(
         benchmarks: <Benchmark>[...base.benchmarks!, tested(9, 3)],
       );
-      // Série de travail au plus résultat − 2 (« jamais sur un progrès
-      // supposé »).
+      final confirmed = base.copyWith(
+        benchmarks: <Benchmark>[
+          ...base.benchmarks!,
+          tested(9, 30),
+          tested(9, 3),
+        ],
+      );
+      // Seul, un test très bas ne fait baisser le repère que de 15 % (12 →
+      // 10) ; confirmé, il fait foi (série de travail au plus résultat −
+      // 2).
       expect(pullReps(low), lessThan(pullReps(high)));
-      expect(pullReps(low), lessThanOrEqualTo(7));
+      expect(pullReps(low), lessThanOrEqualTo(8));
+      expect(pullReps(confirmed), lessThan(pullReps(low)));
+      expect(pullReps(confirmed), lessThanOrEqualTo(7));
     });
 
     test('poignet : une figure forte à la barre fixe reste écartée', () {
