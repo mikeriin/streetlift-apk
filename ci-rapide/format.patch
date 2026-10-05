@@ -1,0 +1,40 @@
+diff --git a/lib/athlete_profile_store.dart b/lib/athlete_profile_store.dart
+index aaeceed..35214cd 100644
+--- a/lib/athlete_profile_store.dart
++++ b/lib/athlete_profile_store.dart
+@@ -519,7 +519,9 @@ extension AthleteProfileStore on AppStore {
+     }
+     final room = 200 - (a.profile.benchmarks?.length ?? 0);
+     if (added.isEmpty || room <= 0) return false;
+-    final kept = added.length > room ? added.sublist(added.length - room) : added;
++    final kept = added.length > room
++        ? added.sublist(added.length - room)
++        : added;
+     return _saveEngineProfile(
+       a,
+       a.profile.copyWith(
+@@ -553,7 +555,9 @@ extension AthleteProfileStore on AppStore {
+         bestHoldSeconds: best(old.bestHoldSeconds, st.bestHoldSeconds),
+         bestReps: best(old.bestReps, st.bestReps),
+         assessedOn: st.assessedOn ?? (sameStep ? old.assessedOn : null),
+-        atStepSince: sameStep ? (old.atStepSince ?? st.atStepSince) : st.atStepSince,
++        atStepSince: sameStep
++            ? (old.atStepSince ?? st.atStepSince)
++            : st.atStepSince,
+       );
+       if (merged.validate().isNotEmpty) continue;
+       if (jsonEncode(old.toJson()) == jsonEncode(merged.toJson())) continue;
+diff --git a/lib/plan/event_day_screen.dart b/lib/plan/event_day_screen.dart
+index d033166..f5ff36d 100644
+--- a/lib/plan/event_day_screen.dart
++++ b/lib/plan/event_day_screen.dart
+@@ -63,7 +63,8 @@ class _EventDayScreenState extends State<EventDayScreen> {
+   Widget build(BuildContext context) {
+     final t = Theme.of(context).textTheme;
+     final strength = widget.event.kind == kc.EventKind.strengthCompetition;
+-    final key = '${_objective.code}|${[for (final a in _done) '${a.exerciseId}:${a.index}:${a.success}'].join(',')}';
++    final key =
++        '${_objective.code}|${[for (final a in _done) '${a.exerciseId}:${a.index}:${a.success}'].join(',')}';
+     if (key != _planKey) {
+       _planKey = key;
+       _plan = store.evolutionEventDay(
