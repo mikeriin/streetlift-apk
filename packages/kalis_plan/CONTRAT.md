@@ -1636,12 +1636,15 @@ les mouvements lestés vers 67,5 % du 1RM (`pain_return`, `pain_return_item`).
 le résultat (« série de tête = résultat − 2 »). Plus bas, il fait foi quand le test mesuré le plus récent
 des dix semaines d'avant est lui aussi sous 85 % du repère ; seul, il ne fait baisser le repère qu'à 85 %
 (`coachTestDropShare`), ou jusqu'à l'estimation sûre et récente du moteur d'évolution (jamais au-dessus du
-repère d'avant). Un muscle-up testé plus bas fait foi tel quel. Une estimation ne défait pas un test des quatre semaines d'avant ; elle ne baisse jamais un 1RM
+repère d'avant). La borne ne vaut que pour un repère des douze dernières semaines (date du profil pour un
+record déclaré sans date) et hors reprise ; sinon, le test fait foi. Un muscle-up testé plus bas fait foi
+tel quel. Une restructuration garde l'arrêt pour douleur déjà noté dans le bloc en cours. Une estimation ne défait pas un test des quatre semaines d'avant ; elle ne baisse jamais un 1RM
 déclaré ou testé. Un 1RM tiré d'une série de deux répétitions ou plus ne fait pas tomber seul un 1RM connu
-de plus de 15 % (`coachEstimateDropShare`). Un 1RM déclaré ou estimé est relevé d'après le maximum au
+de plus de 15 % (`coachEstimateDropShare` : le 1RM retenu est borné à 85 % du 1RM connu). Un 1RM déclaré ou estimé est relevé d'après le maximum au
 poids du corps (un record peut dater) ; un 1RM testé ou de compétition fait foi. Une barre de compétition plus basse que le 1RM
 connu ne l'abaisse pas. Après un test mesuré depuis la reprise, pas de gain supposé. Les tests sont
-placés à partir du troisième jour de la semaine (deuxième sinon), jamais pendant une reprise ; un test de
+placés à partir du troisième jour de la semaine (deuxième sinon, jamais le premier quand un jour plus
+tardif existe), jamais pendant une reprise ; un test de
 figure porte sur l'étape visée elle-même.
 
 **Plateau.** Un test qui ne dépasse pas le repère d'avant change la méthode du bloc suivant (note
@@ -1725,4 +1728,10 @@ restent celles du bloc d'origine, mêlées à la réécriture (des hausses de vo
 dans des saisons de scénario de douleur) ; le front lever de l'élite (tenues longues sur un demi-palier),
 le critère de passage d'une figure relatif au maximum, le volume de tirage et l'échelle de poussée du
 débutant, une troisième exposition à la traction (`street_17`), la progression des tenues d'une figure
-jusqu'au critère de passage (`street_05`) relèvent de CP2.
+jusqu'au critère de passage (`street_05`) relèvent de CP2. Relevé par la relecture indépendante du code et
+laissé à CP2 : la note `plateau` est écrite pour tout mouvement visé alors que le squelette ne change de
+méthode que pour la traction (maximum de 10 et plus) ; sous 12 de maximum, la densité peut rester sans
+variable qui monte en phase spécifique ; en reprise après douleur, la charge d'un lesté proche du poids du
+corps est calculée avant la réserve de reprise ; le test d'un mouvement en reprise attend le bloc suivant.
+Le plancher des tenues du débutant (55 % du test) l'emporte sur la hausse de 15 % par semaine. Le garde-fou des départs au
+chrono (`_fitMinutes`) est plus strict que le texte : un départ de plus en deux semaines.

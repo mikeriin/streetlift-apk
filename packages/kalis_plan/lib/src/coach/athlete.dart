@@ -365,11 +365,11 @@ final class Athlete {
     // ensuite (borne basse).
     final oneRm = <String, double>{};
     // 1RM pris sur une estimation du moteur d'évolution (aucun record ni
-    // test) : seul un 1RM estimé peut être relevé d'après le maximum au
-    // poids du corps (`kalis_plan` prescribe, `_loadAt`).
+    // test).
     final estimatedOneRm = <String>{};
     // 1RM mesuré par un test guidé ou une compétition (le plus récent
-    // résultat) : il fait foi, rien ne le relève.
+    // résultat) : il fait foi, le maximum au poids du corps ne le relève
+    // pas (`_loadAt`).
     final measuredOneRm = <String>{};
     final reps = <String, int>{};
     final holds = <String, int>{};
@@ -546,15 +546,13 @@ final class Athlete {
       if (other != null && other.compareTo(day) > 0) {
         continue;
       }
-      // Un test plus bas que le repère n'abaisse le repère que jusqu'à ce
-      // que l'athlète a montré à l'entraînement (estimation du moteur
-      // d'évolution sur assez de séries) : un seul test d'un mauvais jour
-      // ne fait pas tomber tout le bloc (R3-P16 ; panel CX, boucle 1).
-      // (Répétitions et maintiens ; l'estimation doit être sûre et récente,
-      // quinze jours au plus avant le test. Un 1RM testé plus bas fait foi :
-      // une barre manquée se recale à la baisse.)
-      // CX, correction 1 : le test plus bas fait foi, relevé seulement par
-      // l'estimation sûre (jamais au-dessus du repère d'avant).
+      // Test plus bas que le repère (répétitions et maintiens ; CX,
+      // correction 1) : une baisse de 15 % au plus fait foi telle quelle ;
+      // une baisse plus forte fait foi confirmée par le test d'avant, ou
+      // quand le repère est ancien ou d'avant une reprise ; sinon, seule,
+      // elle ne descend qu'à 85 % du repère, ou jusqu'à l'estimation sûre
+      // et récente (quinze jours au plus) du moteur d'évolution (R3-P16).
+      // Un 1RM testé plus bas fait foi : une barre manquée se recale.
       int lowered(int measured, int? before, CapacityUnit unit) {
         if (before == null || measured >= before) {
           return measured;
@@ -599,7 +597,7 @@ final class Athlete {
         // et al. 2007 : la forme se lit après des jours légers ; passe 7,
         // `street_05` : un test de 9 s un jour de bilan bas, pour un
         // maximum de 12 s, mettait tout le bloc 2 à 50 % du vrai maximum).
-        Benchmark? prior;
+        Benchmark? earlier;
         for (final o in profile.benchmarks ?? const <Benchmark>[]) {
           final when = o.date;
           if (identical(o, b) ||
@@ -613,17 +611,26 @@ final class Athlete {
               when.compareTo(day.addDays(-70)) < 0) {
             continue;
           }
-          final priorDate = prior?.date;
+          final priorDate = earlier?.date;
           if (priorDate == null || when.compareTo(priorDate) > 0) {
-            prior = o;
+            earlier = o;
           }
         }
-        final priorValue = prior == null
+        final priorValue = earlier == null
             ? null
             : (unit == CapacityUnit.maxHoldSeconds
-                  ? prior.seconds
-                  : prior.reps);
-        if (priorValue != null && priorValue < coachTestDropShare * before) {
+                  ? earlier.seconds
+                  : earlier.reps);
+        // (La borne ne vaut que pour un repère récent, hors reprise : un
+        // record ancien ou d'avant une coupure ne retient pas le bloc
+        // au-dessus du niveau mesuré — relecture indépendante du code.)
+        // (Repère déclaré sans date : celle du profil.)
+        final since = recordDay[b.exerciseId] ?? profile.updatedOn;
+        final recent =
+            since.compareTo(day.addDays(-84)) >= 0 &&
+            profile.trainingGap == null;
+        if (!recent ||
+            (priorValue != null && priorValue < coachTestDropShare * before)) {
           return measured;
         }
         final bounded = (coachTestDropShare * before + 1e-9).floor();
@@ -685,12 +692,8 @@ final class Athlete {
             // `street_12` : 1RM de 131,5 kg ramené à 111 kg sur une série
             // de 3 en semaine allégée). La série de tête du jour et
             // l'autorégulation recalent la charge si elle ne passe pas.
-            if (n >= 2 &&
-                known != null &&
-                value < coachEstimateDropShare * known) {
-              break;
-            }
-            oneRm[b.exerciseId] = value;
+            final bound = known == null ? 0.0 : coachEstimateDropShare * known;
+            oneRm[b.exerciseId] = n >= 2 && value < bound ? bound : value;
             measuredOneRm.add(b.exerciseId);
             recordDay[b.exerciseId] = day;
           }
@@ -1062,8 +1065,8 @@ final class Athlete {
   final Map<String, double> oneRm;
 
   /// Exercices dont le 1RM vient d'une estimation du moteur d'évolution
-  /// (ni record déclaré ni test) : seul un tel 1RM est relevé d'après le
-  /// maximum au poids du corps (CX, correction 1).
+  /// (ni record déclaré ni test), pour les lecteurs du profil lu (CX,
+  /// correction 1).
   final Set<String> estimatedOneRm;
 
   /// Exercices dont le 1RM vient d'un test guidé ou d'une compétition

@@ -1086,7 +1086,8 @@ version du moteur mise à part : la lecture des tests sans mode coach suit 0.2.1
 - **Tenues** : la borne de hausse d'une tenue d'une séance à la suivante (et celle du temps total de
   l'emplacement) laisse toujours servir 55 % du meilleur maintien mesuré (`coachHoldMaxFloorShare`) :
   après un test qui saute, la tenue écrite à 55-65 % du test n'est plus servie au niveau des semaines
-  d'avant.
+  d'avant. (Le meilleur maintien est celui du suivi, toutes séries comprises : il ne baisse pas après un
+  arrêt ; la tenue servie reste bornée par la cible du programme.)
 
 | Paramètre | Valeur | Source |
 | --- | --- | --- |
