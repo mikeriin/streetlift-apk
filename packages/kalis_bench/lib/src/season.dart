@@ -410,8 +410,7 @@ int undoneOf(SimRun run, Set<String> priority) {
     final phase = after.pass1.intent?.phase;
     final weeks = after.pass2.weeks;
     if (phase == SeasonPhaseKind.transition ||
-        (weeks.isNotEmpty &&
-            weeks.first.intent == WeekIntent.transition)) {
+        (weeks.isNotEmpty && weeks.first.intent == WeekIntent.transition)) {
       continue;
     }
     final avoided = <String>{};

@@ -352,7 +352,13 @@ BlockShape shapeBlock(
         if (i == 0 && first) {
           // R5-P22 : la marche vers la première semaine de charge reste sous
           // +20 %.
-          add(WeekKind.intro, WeekIntent.intro, phase, coachIntroVolume(a), 0);
+          add(
+            WeekKind.intro,
+            WeekIntent.intro,
+            phase,
+            coachIntroVolume(a, model),
+            0,
+          );
         } else if (tapered && left(i) == 2) {
           add(
             WeekKind.deload,
@@ -551,7 +557,13 @@ BlockShape shapeBlock(
               loaded,
             );
           } else if (i == 0 && first) {
-            add(WeekKind.intro, WeekIntent.intro, phase, coachIntroVolume(a), 0);
+            add(
+              WeekKind.intro,
+              WeekIntent.intro,
+              phase,
+              coachIntroVolume(a, model),
+              0,
+            );
           } else {
             final ramp = loaded <= 1 ? 1.0 : i / (loaded - 1);
             add(
@@ -624,7 +636,13 @@ BlockShape shapeBlock(
               test: true,
             );
           } else if (i == 0 && first) {
-            add(WeekKind.intro, WeekIntent.intro, phase, coachIntroVolume(a), 0);
+            add(
+              WeekKind.intro,
+              WeekIntent.intro,
+              phase,
+              coachIntroVolume(a, model),
+              0,
+            );
           } else {
             final ramp = loaded <= 1 ? 1.0 : i / (loaded - 1);
             add(WeekKind.build, intent, phase, 0.92 + 0.08 * ramp, i);
@@ -748,8 +766,9 @@ SeasonPlan seasonPlanOf(Athlete a, CivilDate start, CivilDate createdOn) {
   );
 }
 
-/// Volume de la semaine d'introduction d'un premier bloc : 90 %, 80 % chez
-/// l'avancé et l'élite, dont le volume de pointe est le plus haut (R5-P22 :
-/// +10 à 20 % par semaine ; panel CX, boucle 2 : semaine 1 au volume de
-/// pointe).
-double coachIntroVolume(Athlete a) => a.level >= 2 ? 0.8 : 0.9;
+/// Volume de la semaine d'introduction d'un premier bloc : 90 % ; 80 % chez
+/// l'avancé et l'élite qui préparent une échéance de répétitions, dont le
+/// volume de pointe est le plus haut (R5-P22 : +10 à 20 % par semaine ;
+/// panel CX, boucle 2 : semaine 1 au volume de pointe).
+double coachIntroVolume(Athlete a, SeasonModel model) =>
+    a.level >= 2 && model == SeasonModel.repsPeak ? 0.8 : 0.9;

@@ -369,10 +369,9 @@ String? coachReasonText(Reason r, Catalog catalog) {
           "Élastique : prends celui qui permet ${_int(v)} répétitions "
               'propres avec la réserve prévue ; note-le à chaque séance. '
               'Si même le plus fort ne suffit pas, fais la traction pieds '
-              'en appui (barre basse) en attendant. Quand toutes les séries '
-              'passent le haut de la plage avec 2 répétitions de réserve de '
-              "plus que prévu, deux séances de suite, prends l'élastique plus "
-              'fin dès la séance suivante. À partir de la sixième semaine, '
+              'en appui (barre basse) en attendant ; pour changer '
+              "d'élastique, suis la règle d'assistance. À partir de la sixième "
+              'semaine, '
               'commence deux séances par semaine par 1 à 3 essais isolés de '
               'traction stricte, frais, 2 min entre eux, arrêt au premier '
               "essai lent ; tant qu'aucun ne passe, fais à la place une "
@@ -620,9 +619,12 @@ String? coachReasonText(Reason r, Catalog catalog) {
       final step = p['step'];
       return switch (p['rule']) {
         CoachRules.assistanceStep =>
-          "Assistance : dès que le haut de la plage est tenu avec la "
-              "réserve prévue, passe à un élastique plus fin (ou allège "
-              "l'appui des pieds) et repars du bas de la plage.",
+          "Assistance (une seule règle pour changer d'élastique) : quand "
+              'toutes les séries atteignent le haut de la plage avec la '
+              'réserve prévue, deux séances de suite, passe dès la séance '
+              "suivante à l'élastique plus fin (ou allège l'appui des pieds) "
+              'et repars du bas de la plage ; si la réserve ne tient plus, '
+              'reprends le précédent.',
         CoachRules.doubleProgression =>
           'Progression : quand toutes les séries atteignent le haut de la '
               'plage avec la réserve prévue, passe à la variante ou à la '
