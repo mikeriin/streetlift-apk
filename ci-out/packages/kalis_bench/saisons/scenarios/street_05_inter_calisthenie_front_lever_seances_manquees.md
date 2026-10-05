@@ -36,7 +36,7 @@ Chaque bloc est écrit par le moteur de création au moment où il commence, d'a
 
 - Séances faites : 58 sur 68 (4 ajustées le jour même).
 - Échecs non voulus (hors tests et tentatives) : 0 % des séries de travail.
-- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 0,93 répétition en réserve (sur les 66 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 6,3 %.
+- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 0,9 répétition en réserve (sur les 66 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 6,3 %.
 - Plus forte hausse de charge totale d'un mouvement principal d'une séance à la suivante, à schéma égal : 0 % ; hausses de plus de 10 % faites de plusieurs crans : 0.
 - Douleur : 0 hausse(s) de charge sur une zone douloureuse signalée.
 
@@ -53,18 +53,18 @@ Pour chaque mouvement, la séance la plus lourde de la semaine : ce que le progr
 | 3 | construction (volume) | 3 × 7 s (58 % du maximum testé), maintien | Front lever tuck avancé : 7-7-7 s | 7-6-6 s | 3 → 3,5 ; suivantes 3 → 3,9 | 12 / 11 | allégé pour garder la marge prévue (au moins 5 en réserve) ; dernières séries plus dures que prévu |
 | 4 | construction (volume) | 3 × 8 s (67 % du maximum testé), maintien | Front lever tuck avancé : 7-7-7 s | 7-6-6 s | 3 → 3,4 ; suivantes 3 → 3,9 | 12 / 10 | hausse du maintien bornée pour les tendons (coude) ; allégé pour garder la marge prévue (au moins 5 en réserve) ; dernières séries plus dures que prévu |
 | 5 | allègement | 1 × 12 à 17 s, test | Front lever tuck avancé : (8 à 17) s | 9 s | test | 12 / 10 | — |
-| 6 | intensification (séries plus dures) | 6 × 7 s (70 % du maximum testé), maintien | Front lever tuck avancé : 7-7-7-7-7-7 s | 7-6-6-6-6-6 s | 3 → 3,7 ; suivantes 2,5 → 4 | 12 / 10 | allégé pour garder la marge prévue (au moins 5 en réserve) ; dernières séries plus dures que prévu |
-| 7 | intensification (séries plus dures) | 6 × 7 s (70 % du maximum testé), maintien | Front lever tuck avancé : 7-7-7-7-7-7 s | 7-7-7-6-6-6 s | 3 → 3,8 ; suivantes 2,9 → 3,5 | 13 / 10 | allégé pour garder la marge prévue (au moins 5 en réserve) ; dernières séries plus dures que prévu |
-| 8 | intensification (séries plus dures) | 6 × 7 s (70 % du maximum testé), maintien | Front lever tuck avancé : 7-7-7-7-7-7 s | 7-7-6-6-6-6 s | 3 → 3,7 ; suivantes 3 → 3,9 | 13 / 10 | allégé pour garder la marge prévue (au moins 5 en réserve) ; dernières séries plus dures que prévu |
-| 9 | intensification (séries plus dures) | 6 × 7 s (70 % du maximum testé), maintien | Front lever tuck avancé : 7-7-7-7-7-7 s | 7-7-6-6-6-6 s | 3 → 3,8 ; suivantes 3 → 3,8 | 13 / 10 | allégé pour garder la marge prévue (au moins 5 en réserve) ; dernières séries plus dures que prévu |
-| 10 | allègement | 4 × 6 s (60 % du maximum testé), maintien | Front lever tuck avancé : 6-6-6-6 s | 6-6-4 (arrêt avant la cible)-6 s | 4 → 4,3 ; suivantes 4 → 4,4 | 12 / 11 | — |
-| 11 | réalisation (spécifique à l'objectif) | 6 × 7 s (70 % du maximum testé), maintien | Front lever tuck avancé : 7-7-7-7-7-7 s | 7-7-7-7-7-7 s | 3 → 3,6 ; suivantes 3 → 3,1 | 12 / 11 | — |
-| 12 | réalisation (spécifique à l'objectif) | 6 × 7 s (70 % du maximum testé), maintien | Front lever tuck avancé : 7-7-7-7-7-7 s | 7-6-6-6-6-6 s | 3 → 3,6 ; suivantes 3 → 3,9 | 12 / 11 | allégé pour garder la marge prévue (au moins 5 en réserve) ; dernières séries plus dures que prévu |
-| 13 | réalisation (spécifique à l'objectif) | 6 × 7 s (70 % du maximum testé), maintien | Front lever tuck avancé : 7-7-7-7-7-7 s | 7-7-7-7-6-6 s | 3,5 → 3,7 ; suivantes 3 → 3,4 | 12 / 11 | allégé pour garder la marge prévue (au moins 5 en réserve) ; dernières séries plus dures que prévu |
-| 14 | réalisation (spécifique à l'objectif) | 6 × 7 s (70 % du maximum testé), maintien | Front lever tuck avancé : 7-7-7-7-7-7 s | 7-7-7-6-6-6 s | 3 → 3,8 ; suivantes 3 → 3,7 | 13 / 11 | allégé pour garder la marge prévue (au moins 5 en réserve) ; dernières séries plus dures que prévu |
-| 15 | affûtage | 4 × 6 s (60 % du maximum testé), maintien | Front lever tuck avancé : 6-6-6-6 s | 6-6-6-6 s | 4 → 4,4 ; suivantes 4 → 4 | 12 / 10 | — |
-| 16 | test | 3 × 6 s (60 % du maximum testé), maintien | Front lever tuck avancé : 6-6-6 s | 6-6-6 s | 4 → 4,6 ; suivantes 4 → 4,4 | 13 / 10 | — |
-| 17 | construction (volume) | 6 × 6 s (60 % du maximum testé), maintien | Front lever tuck avancé : 6-6-6-6-6-6 s | 6-6-6-6-6-6 s | 4 → 4,7 ; suivantes 4 → 4,4 | 13 / 11 | — |
+| 6 | intensification (séries plus dures) | 6 × 6 s (67 % du maximum testé), maintien | Front lever tuck avancé : 6-6-6-6-6-6 s | 6-6-5-5-5-5 s | 4 → 4,4 ; suivantes 3,5 → 4,6 | 12 / 10 | allégé pour garder la marge prévue (au moins 5 en réserve) ; dernières séries plus dures que prévu |
+| 7 | intensification (séries plus dures) | 6 × 6 s (67 % du maximum testé), maintien | Front lever tuck avancé : 6-6-6-6-6-6 s | 6-6-6-4 (arrêt avant la cible)-6-6 s | 4 → 4,4 ; suivantes 3,8 → 4,2 | 13 / 10 | — |
+| 8 | intensification (séries plus dures) | 6 × 6 s (67 % du maximum testé), maintien | Front lever tuck avancé : 6-6-6-6-6-6 s | 6-6-6-6-5-5 s | 4 → 4,4 ; suivantes 3,7 → 4,4 | 13 / 10 | allégé pour garder la marge prévue (au moins 5 en réserve) ; dernières séries plus dures que prévu |
+| 9 | intensification (séries plus dures) | 6 × 6 s (67 % du maximum testé), maintien | Front lever tuck avancé : 6-6-6-6-6-6 s | 6-6-6-5-5-5 s | 4 → 4,4 ; suivantes 3,7 → 4,5 | 13 / 10 | allégé pour garder la marge prévue (au moins 5 en réserve) ; dernières séries plus dures que prévu |
+| 10 | allègement | 5 × 5 s (56 % du maximum testé), maintien | Front lever tuck avancé : 5-5-5-5-5 s | 5-5-2 (arrêt avant la cible)-5-5 s | 5+ → 5 ; suivantes 4,8+ → 5,2 | 12 / 10 | — |
+| 11 | réalisation (spécifique à l'objectif) | 6 × 6 s (67 % du maximum testé), maintien | Front lever tuck avancé : 6-6-6-6-6-6 s | 6-6-6-6-6-5 (arrêt avant la cible) s | 4 → 4,3 ; suivantes 4 → 4,1 | 12 / 10 | — |
+| 12 | réalisation (spécifique à l'objectif) | 6 × 6 s (67 % du maximum testé), maintien | Front lever tuck avancé : 6-6-6-6-6-6 s | 6-6-6-6-5-5 s | 4 → 4,3 ; suivantes 4 → 4,2 | 12 / 10 | allégé pour garder la marge prévue (au moins 5 en réserve) ; dernières séries plus dures que prévu |
+| 13 | réalisation (spécifique à l'objectif) | 6 × 6 s (67 % du maximum testé), maintien | Front lever tuck avancé : 6-6-6-6-6-6 s | 6-6-6-6-5-5 s | 4 → 4,4 ; suivantes 4 → 4,3 | 12 / 10 | allégé pour garder la marge prévue (au moins 5 en réserve) ; dernières séries plus dures que prévu |
+| 14 | réalisation (spécifique à l'objectif) | 6 × 6 s (67 % du maximum testé), maintien | Front lever tuck avancé : 6-6-6-6-6-6 s | 6-6-6-5-5-5 s | 4 → 4,4 ; suivantes 3,8 → 4,5 | 13 / 10 | allégé pour garder la marge prévue (au moins 5 en réserve) ; dernières séries plus dures que prévu |
+| 15 | affûtage | 5 × 5 s (56 % du maximum testé), maintien | Front lever tuck avancé : 5-5-5-5-5 s | 4 (arrêt avant la cible)-4 (arrêt avant la cible)-5-5-4 (arrêt avant la cible) s | 5+ → 5,8 ; suivantes 4,9+ → 5,2 | 12 / 10 | — |
+| 16 | test | 3 × 5 s (56 % du maximum testé), maintien | Front lever tuck avancé : 5-5-5 s | 4 (arrêt avant la cible)-3 (arrêt avant la cible)-4 (arrêt avant la cible) s | 5+ → 5,9 ; suivantes 5+ → 6,1 | 13 / 10 | — |
+| 17 | construction (volume) | 6 × 6 s (67 % du maximum testé), maintien | Front lever tuck avancé : 6-6-6-6-6-6 s | 6-6-6-6-6-6 s | 4 → 4,7 ; suivantes 4 → 4,4 | 13 / 10 | — |
 
 ## Journal des décisions
 

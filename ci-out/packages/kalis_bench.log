@@ -55,11 +55,11 @@ Downloading packages...
 Changed 51 dependencies!
 1 package has newer versions incompatible with dependency constraints.
 Try `dart pub outdated` for more information.
-Formatted 27 files (0 changed) in 0.12 seconds.
+Formatted 27 files (0 changed) in 0.15 seconds.
 Analyzing kalis_bench...
 No issues found!
 00:00 +0: loading test/season_test.dart
-00:00 +0: test/season_test.dart: les huit scénarios imposés, codes uniques
+00:00 +0: test/quality_test.dart: chaque critère de qualité est rendu une fois, note entre 0 et 1
 00:00 +1: test/quality_test.dart: chaque critère de qualité est rendu une fois, note entre 0 et 1
 00:00 +2: test/quality_test.dart: chaque critère de qualité est rendu une fois, note entre 0 et 1
 00:00 +3: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
@@ -113,19 +113,19 @@ No issues found!
 00:01 +51: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
 00:01 +52: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
 00:01 +53: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
-00:05 +54: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
-00:06 +55: test/bench_test.dart: déterminisme : deux exécutions, mêmes fichiers à l'octet près
-00:09 +56: test/bench_test.dart: déterminisme : deux exécutions, mêmes fichiers à l'octet près
-00:09 +57: test/properties_test.dart: propriétés des critères, graines 2500 à 4999
-00:09 +58: test/properties_test.dart: propriétés des critères, graines 2500 à 4999
-00:09 +59: test/properties_test.dart: propriétés des critères, graines 2500 à 4999
-00:09 +60: test/properties_test.dart: propriétés des critères, graines 2500 à 4999
-00:09 +61: test/properties_test.dart: propriétés des critères, graines 2500 à 4999
-00:09 +62: test/properties_test.dart: propriétés des critères, graines 2500 à 4999
-00:10 +63: test/properties_test.dart: propriétés des critères, graines 5000 à 7499
-00:10 +64: test/properties_test.dart: propriétés des critères, graines 7500 à 9999
-00:11 +65: All tests passed!
-kalis_bench 0.2.1 : 27 profils, mode croisement, 23 violation(s) de sécurité, rapport écrit dans /home/runner/work/streetlift-apk/streetlift-apk/out-packages/kalis_bench (10 s).
-campagne street : 17 profils × 4 graines × 3 modèles (12 s).
-saisons croisées : 17 profils × 4 graines × 3 modèles × 8 saisons (48 s).
-durée : 103 s
+00:06 +54: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
+00:07 +55: test/bench_test.dart: déterminisme : deux exécutions, mêmes fichiers à l'octet près
+00:10 +56: test/bench_test.dart: déterminisme : deux exécutions, mêmes fichiers à l'octet près
+00:10 +57: test/properties_test.dart: propriétés des critères, graines 2500 à 4999
+00:10 +58: test/properties_test.dart: propriétés des critères, graines 2500 à 4999
+00:10 +59: test/properties_test.dart: propriétés des critères, graines 2500 à 4999
+00:10 +60: test/properties_test.dart: propriétés des critères, graines 2500 à 4999
+00:10 +61: test/properties_test.dart: propriétés des critères, graines 2500 à 4999
+00:10 +62: test/properties_test.dart: propriétés des critères, graines 2500 à 4999
+00:11 +63: test/properties_test.dart: propriétés des critères, graines 5000 à 7499
+00:12 +64: test/properties_test.dart: propriétés des critères, graines 7500 à 9999
+00:13 +65: All tests passed!
+kalis_bench 0.2.1 : 27 profils, mode croisement, 23 violation(s) de sécurité, rapport écrit dans /home/runner/work/streetlift-apk/streetlift-apk/out-packages/kalis_bench (12 s).
+campagne street : 17 profils × 4 graines × 3 modèles (15 s).
+saisons croisées : 17 profils × 4 graines × 3 modèles × 8 saisons (62 s).
+durée : 128 s

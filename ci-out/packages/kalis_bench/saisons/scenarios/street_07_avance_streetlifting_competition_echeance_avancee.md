@@ -114,7 +114,7 @@ Athlète simulé, maximum réel hors fatigue : 155 (lest 78) au départ (le reco
 | 13 | construction (volume) | 6 × 3, série de tête puis séries allégées | 3-3-3-3-3-(3 à 9) à 3,75 kg | 3-3 à 3,75 kg puis 3-3 à 1,25 kg puis 3-3 | 2 → 3,3 ; suivantes 1,9 → 3,3 | 96 (lest 19) / 93 (lest 16) | série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète ; allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |
 | 14 | allègement | 1 × 3 à 88 %, test | 3 à 6,25 kg | 3 à 6,25 kg | test | 101 (lest 23) / 93 (lest 15) | — |
 | 15 | construction (volume) | 5 × 3, série de tête puis séries allégées | 3-3-3-3-3 | 3-3-3-3-3 | 2,5 → 5 ; suivantes 2,5 → 4,2 | 97 (lest 20) / 94 (lest 16) | charge non augmentée (bilan du jour bas) |
-| 16 | construction (volume) | 4 × 2 | (2 à 4)-(1 à 4)-(1 à 4)-(1 à 4) à 1,25 kg | 2-1 à 1,25 kg puis 1-1 | 5+ → 5,9 ; suivantes 5+ → 6,5 | 98 (lest 21) / 94 (lest 16) | dernières séries plus faciles que prévu ; allégé pour garder la marge prévue (au moins 5 en réserve) ; dernières séries plus dures que prévu |
+| 16 | construction (volume) | 4 × 1 à 82 % | 1-1-1-1 | 1-1-1-1 | 5+ → 7,3 ; suivantes 5+ → 6,7 | 98 (lest 21) / 94 (lest 16) | — |
 
 Athlète simulé, maximum réel hors fatigue : 99 (lest 22) au départ (le record déclaré au profil peut être plus haut ou plus ancien), 100 (lest 23) en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
 

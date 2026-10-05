@@ -76,6 +76,21 @@ Map<BodyZone, int> coachReturnStepsOf(
   return out;
 }
 
+/// Vrai si le bloc [block] porte la note d'arrêt (`pain_stop`) de la zone
+/// [zone].
+bool _stoppedIn(ProgramBlock block, BodyZone zone) {
+  for (final r in <Reason>[...block.pass1.reasons, ...block.pass2.reasons]) {
+    final value = r.params['value'];
+    if (r.code == ReasonCodes.planCoachNote &&
+        r.params['note'] == CoachNotes.painStop &&
+        value is num &&
+        value.round() == zone.index) {
+      return true;
+    }
+  }
+  return false;
+}
+
 /// Identifiant du bloc de rang [blockIndex] commençant le [startDate].
 String coachBlockIdFor(int blockIndex, CivilDate startDate) =>
     'kp-b$blockIndex-${startDate.iso}';
@@ -972,11 +987,24 @@ final class CoachEngine {
     // Douleur qui dure ou qui revient : arrêt des mouvements qui la
     // provoquent dès la semaine suivante, noté dans le bloc (le bloc
     // suivant en part pour la reprise graduée).
+    // (Un arrêt déjà noté dans le bloc en cours reste un arrêt jusqu'à la
+    // fin du bloc : une restructuration lancée pour une autre raison ne le
+    // change pas en reprise — relecture indépendante du code, CX
+    // correction 1.)
+    final noted = coachReturnStepsOf(current, same: true);
+    final held = <BodyZone>{
+      for (final z in noted.keys)
+        if (noted[z] == 0 && _stoppedIn(current, z)) z,
+    };
     final stops = <BodyZone>{
       ...coachPainStops(request.reasons),
       ...coachPainStops(request.adaptation?.reasons ?? const []),
+      ...held,
     };
-    final returning = coachReturnStepsOf(current, same: true);
+    final returning = <BodyZone, int>{
+      for (final z in noted.keys)
+        if (!held.contains(z)) z: noted[z]!,
+    };
     final a = Athlete.read(
       catalog,
       request.profile,

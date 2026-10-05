@@ -86,7 +86,7 @@ Violations de sécurité : **23** au total (Pas d'allègement avant l'échéance
 | `street_02_debutant_surpoids` | 36/36 | 0.0 | 2.487 | 0.718 | 0.0 | 0.796 | — | 0 | ecart_rir, ecart_effort | 0 |
 | `street_03_debutante` | 36/36 | 0.0 | 3.552 | 0.629 | 0.0 | 1.017 | — | 0 | ecart_rir, ecart_effort | 0 |
 | `street_04_reprise_longue_pause` | 48/48 | 0.0 | 3.042 | 0.438 | 0.0 | 0.531 | — | 0 | ecart_rir | 0 |
-| `street_05_inter_calisthenie_front_lever` | 63/64 | 0.0 | 1.654 | 0.657 | 0.0 | — | — | 0 | ecart_rir | 0 |
+| `street_05_inter_calisthenie_front_lever` | 63/64 | 0.0 | 1.64 | 0.658 | 0.0 | — | — | 0 | ecart_rir | 0 |
 | `street_06_inter_sets_reps` | 48/48 | 0.0 | 2.087 | 0.594 | 0.0 | 0.332 | — | 0 | ecart_rir | 0 |
 | `street_07_avance_streetlifting_competition` | 60/60 | 0.001 | 2.753 | 0.673 | 0.326 | 0.062 | 0.995 | 0 | ecart_rir, pics_de_charge, performance_echeance, ecart_effort, pics_a_schema_egal | 0 |
 | `street_08_avance_sets_reps_competition` | 40/40 | 0.0 | 3.558 | 0.557 | 0.0 | 0.16 | 0.837 | 0 | ecart_rir, performance_echeance, ecart_effort | 0 |
