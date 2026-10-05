@@ -107,6 +107,7 @@ Constats qui fondent ces choix : l'incertitude du panel est d'environ un point (
 - **C9.3 CP2 et CA2 en parallèle** (voies A et B) dès la validation de CX, chacun sur une session de la tâche Opus moteurs ; ils touchent des paquets différents (`kalis_plan`, `kalis_adapt`) ; rebase avant chaque push sur `moteurs`. CY ensuite. Lancement l'un après l'autre (le second seulement quand le premier a écrit « en cours »), pour que chaque session trouve un seul lot « à faire ».
 - **C9.4 La relecture documentée indépendante du pilotage ne bloque plus l'enchaînement** : le pilotage décide sur le panel, les violations et les constats de sécurité du lot, lance la suite, et fait sa relecture en parallèle ; un constat de sécurité qu'elle trouverait déclenche une correction ; ses autres constats vont au lot suivant.
 - **C9.5 Budget** : plus de sessions en même temps consomment plus vite la limite du plan ; si elle est atteinte, les sessions s'arrêtent et reprennent depuis leurs sauvegardes (§9) ; le pilotage relance. Les lots restent sur Opus (C5.1).
+- **C9.6 CI1 validé par le pilotage (05/10/2026, 15:20 UTC)** : dev6.9.0 (main 938de59), build signé (run 37328372801, APK et AAB) et contrôle complet `claude/ci-3d` (run 37324228351) verts, arbre contrôlé identique à `main`. Paquets 0.2.1 de CX ; la correction 1 de CX (0.2.2) suivra par une mise à jour courte CI1b (dev6.9.1) dès sa validation. Limites de CI1 (LIVRAISON_CI1.md, partie 4) renvoyées au lot CI final.
 
 ## Sections des lots
 
