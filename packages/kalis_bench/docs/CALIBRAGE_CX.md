@@ -245,16 +245,14 @@ premier bloc de street_08 ; plateau de répétitions sans changement de stimulus
 
 ## Boucle 5 (05/10/2026)
 
-Contrôles 4b, 5 et 5c (le dernier : 589ceae, tests verts ; seul le contrôle de formatage du mode dev est rouge, comme à
-chaque contrôle dev). Changements : repères manquants remplis par une estimation du journal quand elle est sûre
-(au moins 6 observations, erreur type ≤ 6 %, marge 2,5 % ; 1RM seulement pour les mouvements de compétition
-non partiels), test plus bas que l'estimation récente recoupé avant d'abaisser un repère (marge de 6 % sur une
-charge), douleur qui dure sur une zone (`pain_trend` : volume de la zone ×0,6, la figure reste au programme
-avec la variante la plus douce), échelle de poussée du débutant (critère 2 × 12, pompe au sol en pratique dès
-le bloc 2), négatives de traction après la séance de force sous 10 tractions, plafond de la semaine
-d'allègement à 65 % des séries, volume spécifique de 65 à 75 % en intensification et réalisation pour les
-objectifs de répétitions. Deux essais retirés après un test de propriétés de `kalis_plan` (profil 3770 : montée
-de la charge de squat en semaine de test) : figures sur d'autres jours que la force, introduction restreinte.
+Contrôles 5605ba5, fb02992 et 589ceae (tests verts ; seul le contrôle de formatage du mode dev est rouge, comme à
+chaque contrôle dev). Corrections : 1RM de travail relevé d'après le maximum au poids du corps (traction et dips
+lestés) ; figure écartée par le moteur d'évolution pour une douleur qui dure gardée au bloc suivant avec
+`pain_trend` (planche de street_10, écartée de S9 à S15 à la boucle 4) ; une seule règle d'élastique ; critère
+de l'échelle de poussée sur deux séries ; pompe au sol en grappes ; introduction des séries de volume ; marge de
+6 % avant qu'une estimation abaisse un 1RM. Deux essais retirés après un test de propriétés de `kalis_plan`
+(profil 3770 : montée de la charge de squat en semaine de test) : figures sur d'autres jours que la force,
+introduction restreinte.
 
 Panel (couples renotés selon la règle d'économie) : 32 couples sur 68 à 9 ; minimum 5 ; moyenne 8,06.
 
