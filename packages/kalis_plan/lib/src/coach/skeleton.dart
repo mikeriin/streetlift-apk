@@ -462,6 +462,12 @@ void _buildBeginner(_Builder b) {
     final day = b.days[d]..focus = FocusCodes.fullBody;
     // Préparation de la suspension (R5-P8).
     b.add(d, Picks.hangPrep, SlotRole.warmup, Method.warmupPrep, sets: 2);
+    // Préparation des poignets avant les appuis sur les mains (R4-F12 ;
+    // panel CX, correction 1 : douleur de poignet des débutants dès les
+    // pompes au sol, sans préparation).
+    if (supportDays.contains(d) || pushMax > 0) {
+      b.add(d, Picks.wristPrep, SlotRole.warmup, Method.warmupPrep, sets: 2);
+    }
     // Tirage vertical : chemin vers la traction.
     if (pullMax >= 5) {
       b.add(
@@ -1055,6 +1061,25 @@ void _addRepsPillar(
         sets: 4,
         stress: DayStress.heavy,
         referenceId: exerciseId,
+      );
+      return;
+    }
+    // Bloc de réalisation d'un objectif de répétitions maximales (12 et
+    // plus) : la séance de force du mouvement visé devient une séance de la
+    // zone de l'épreuve sur le mouvement exact (R2-P9 : 80 % au moins du
+    // mouvement exact à l'approche du test ; R4-G1 ; panel CX, correction
+    // 1, `street_14` : traction au tempo lent à la place du travail de
+    // l'épreuve).
+    if (max >= 12 &&
+        b.shape.phase == SeasonPhaseKind.realization &&
+        a.goalOn(exerciseId, GoalMetric.maxReps) != null) {
+      b.add(
+        d,
+        <String>[exerciseId],
+        SlotRole.main,
+        Method.repsVolume,
+        sets: 4,
+        stress: DayStress.heavy,
       );
       return;
     }

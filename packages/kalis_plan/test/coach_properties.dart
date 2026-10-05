@@ -487,7 +487,13 @@ List<String> checkCoachSeed(Catalog catalog, int seed) {
       for (final v in coachAudit(catalog, profile, p1.startDate, [b]))
         if (v.contains(' séries pour '))
           if (RegExp(r'^s(\d+) : (\S+)').firstMatch(v) case final m?)
-            if (int.parse(m.group(1)!) >= from) '${m.group(1)} ${m.group(2)}',
+            // (Portée bloc seulement : en portée semaine ou séance, les
+            // séances gardées de la semaine et les semaines suivantes
+            // restent celles du bloc d'origine, mêlées à la réécriture —
+            // limite notée au contrat.)
+            if (scope == RestructureScope.block &&
+                int.parse(m.group(1)!) >= from)
+              '${m.group(1)} ${m.group(2)}',
     };
     final rampsBefore = ramps(block);
     for (final r in ramps(proposal.block)) {
