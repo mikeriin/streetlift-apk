@@ -1,4 +1,0 @@
-run=37363736150
-commit=4e0f65153b110976963674f6bfeb7c500d27e962
-branche=claude/ci-cp-a
-packages=abandoned

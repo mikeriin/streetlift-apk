@@ -118,6 +118,27 @@ abstract final class CoachNotes {
   /// Repère d'un test intermédiaire (`value` : valeur attendue).
   static const String checkpoint = 'checkpoint';
 
+  /// Repère d'un objectif de répétitions sans lest au matériel (`value` :
+  /// valeur attendue) : la surcharge passe par une variante plus dure
+  /// (CP2, partie 0, boucle 2).
+  static const String checkpointBody = 'checkpoint_body';
+
+  /// Repère d'un objectif de maintien (`value` : secondes attendues) : le
+  /// bloc suivant change de dose sur le levier.
+  static const String checkpointHold = 'checkpoint_hold';
+
+  /// Repère d'un objectif de 1RM (`value` : charge attendue, kg) : le bloc
+  /// suivant est écrit sur le résultat du test.
+  static const String checkpointLoad = 'checkpoint_load';
+
+  /// Repère d'un objectif de pompes du débutant (`value` : répétitions
+  /// attendues) : l'appui baisse d'un cran.
+  static const String checkpointLadder = 'checkpoint_ladder';
+
+  /// Hauteur d'appui de la pompe mains surélevées (`value` : crans de
+  /// 10 cm à descendre) quand le maximum sur l'appui dépasse 15.
+  static const String pushHeight = 'push_height';
+
   /// Repos avant un test (`value` : heures sans travail dur).
   static const String testRest = 'test_rest';
 
@@ -381,6 +402,11 @@ abstract final class CoachNotes {
     badDay,
     missed,
     checkpoint,
+    checkpointBody,
+    checkpointHold,
+    checkpointLoad,
+    checkpointLadder,
+    pushHeight,
     testRest,
     rampBodyweight,
     loadAdjust,
@@ -2866,6 +2892,20 @@ final class Prescriber {
         high = 12;
         low = low > 8 ? 8 : low;
       }
+      // Maximum de plus de 15 sur l'appui mains surélevées : l'appui
+      // descend dès ce bloc, d'un cran de 10 cm par tranche de 5
+      // répétitions au-delà de 13, et les séries sont écrites pour le
+      // nouvel appui (12 à 14 au maximum : 8 à 11 répétitions, 2 à 3 en
+      // réserve — R5-P9 ; CP2, partie 0, boucle 2 ; panel p1, `street_02` :
+      // 15 semaines sur le même appui, test à 26-28).
+      final lower = ladderStep && e.id == 'sw-pompe-inclinee' && max > 15;
+      if (lower) {
+        high = 11;
+        low = 8;
+        x.reasons.add(
+          _note(CoachNotes.pushHeight, _clampInt(((max - 13) / 5).ceil(), 1, 3)),
+        );
+      }
       x
         ..repsLow = low
         ..repsHigh = high
@@ -3084,8 +3124,28 @@ final class Prescriber {
     // tenues longues, à la durée du critère, sans dépasser 85 % du dernier
     // maintien mesuré (R4-F6 ; Oranchuk et al. 2019 : 70 % et plus de
     // l'effort maximal pour le tendon ; R4-F2 : jamais jusqu'à l'échec).
+    // Repère de la figure manqué au dernier test (maintien qui ne dépasse
+    // pas le précédent) : la dose change, comme la note du repère
+    // l'annonce — des tenues plus courtes (60 %) et plus nombreuses, au
+    // même temps total, repos complets (CP2, partie 0, boucle 2 ; panel
+    // p1, `street_10` : « grappes plus courtes, volume cumulé gardé » ;
+    // R1-P16 : 2 à 5 min sur les isométries dures).
+    var regroup = false;
+    if (known > 0 &&
+        a.stalled.contains(e.id) &&
+        role == _DayRole.normal &&
+        !ws.light &&
+        s.method == Method.skillHold &&
+        hold >= 4) {
+      final shorter = _clampInt((hold * 0.6).round(), 2, hold - 1);
+      final total = hold * sets;
+      sets = _clampInt((total / shorter).round(), sets, 10);
+      hold = shorter;
+      regroup = true;
+    }
     var criterion = false;
-    if (intense &&
+    if (!regroup &&
+        intense &&
         known > 0 &&
         ws.kind == WeekKind.build &&
         ws.intent == WeekIntent.realization &&
@@ -3113,7 +3173,11 @@ final class Prescriber {
       ..rir = 5
       // R1-P16 : 2 à 5 min de repos complet sur les isométries dures ;
       // tenues courtes (5 s au plus) en séries nombreuses : 90 s.
-      ..rest = hold <= 5 && sets > 6 ? 90 : (_level >= 2 ? 180 : 150)
+      // (Tenues courtes en séries nombreuses : 2 min — panel p1,
+      // `street_10` : à 90 s, les dernières tenues tombaient à 1-3 s.)
+      ..rest = regroup
+          ? 150
+          : (hold <= 5 && sets > 6 ? 120 : (_level >= 2 ? 180 : 150))
       ..calibrate = known <= 0 && blockIndex == 0 && week == 0
       ..reasons.add(_note(CoachNotes.submaximalHold, 0.7))
       ..reasons.add(_rule(CoachRules.holdStep, 1, 's'));
@@ -3911,7 +3975,7 @@ final class Prescriber {
     // (Le jour de l'échéance, plus de repère de parcours : c'est le test
     // de l'objectif lui-même.)
     if (marker != null && !event) {
-      x.reasons.add(_note(CoachNotes.checkpoint, marker));
+      x.reasons.add(_note(_checkpointCode(e), marker));
     }
     if (event && eventId != null) {
       x.reasons.add(
@@ -3921,6 +3985,42 @@ final class Prescriber {
       );
     }
     return x;
+  }
+
+  /// Note du repère de mi-parcours de [e], selon ce que le programme peut
+  /// réellement changer au bloc suivant (CP2, partie 0, boucle 2 ; panel
+  /// p1 : la règle « départs au chrono → surcharge, lest » était
+  /// inapplicable sans séance au chrono, sans lest, sur une figure ou chez
+  /// le débutant — `street_03`, 10, 13, 14, 15, 16, 17).
+  String _checkpointCode(CatalogExercise e) {
+    for (final g in a.profile.goals) {
+      if (g.kind != GoalKind.performance || g.exerciseId != e.id) {
+        continue;
+      }
+      switch (g.metric) {
+        case GoalMetric.oneRmKg:
+          return CoachNotes.checkpointLoad;
+        case GoalMetric.maxHoldSeconds:
+          return CoachNotes.checkpointHold;
+        default:
+          break;
+      }
+    }
+    if (a.level == 0 && e.id == Ids.pushUp) {
+      return CoachNotes.checkpointLadder;
+    }
+    final weighted = e.id == Ids.pull
+        ? Ids.weightedPull
+        : (e.id == Ids.dip ? Ids.weightedDip : null);
+    var loadable = false;
+    if (weighted != null) {
+      for (var d = 0; d < a.days.length; d++) {
+        if (a.can(weighted, d)) {
+          loadable = true;
+        }
+      }
+    }
+    return loadable ? CoachNotes.checkpoint : CoachNotes.checkpointBody;
   }
 
   /// Charge externe visée sur l'exercice [id] (barre annoncée pour

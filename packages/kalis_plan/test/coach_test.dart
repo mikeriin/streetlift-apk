@@ -1773,6 +1773,59 @@ void main() {
       }
     });
 
+    test('repère manqué sans lest : règle applicable, surcharge écrite', () {
+      final base = _profile(
+        experience: ExperienceLevel.intermediate,
+        weekdays: const <int>[1, 3, 5],
+        minutes: 75,
+        benchmarks: <Benchmark>[
+          _maxReps('sw-traction-pronation', 15),
+          Benchmark(
+            exerciseId: 'sw-traction-pronation',
+            kind: BenchmarkKind.maxReps,
+            source: BenchmarkSource.guidedTest,
+            reps: 14,
+            date: _start.addDays(-5),
+          ),
+        ],
+      );
+      final profile = base.copyWith(
+        goals: <Goal>[
+          Goal(
+            id: 'g1',
+            kind: GoalKind.performance,
+            origin: GoalOrigin.user,
+            createdOn: _start.addDays(-42),
+            exerciseId: 'sw-traction-pronation',
+            metric: GoalMetric.maxReps,
+            targetValue: 20,
+            targetDate: _start.addDays(7 * 10),
+          ),
+        ],
+      );
+      final blocks = _program(catalog, profile, 10);
+      var body = 0;
+      var hard = 0;
+      for (final b in blocks) {
+        for (final w in b.pass2.weeks) {
+          for (final d in w.days) {
+            for (final i in d.items) {
+              expect(noteOn(i, CoachNotes.checkpoint), isFalse);
+              if (noteOn(i, CoachNotes.checkpointBody)) {
+                body++;
+              }
+              if (i.exerciseId == 'sw-traction-tempo-excentrique' ||
+                  i.exerciseId == 'sw-traction-archer') {
+                hard++;
+              }
+            }
+          }
+        }
+      }
+      expect(body, greaterThan(0));
+      expect(hard, greaterThan(0));
+    });
+
     test('pompe complète du débutant : jamais sous 3 de maximum', () {
       final profile = _profile(
         experience: ExperienceLevel.beginner,
