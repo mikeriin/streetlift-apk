@@ -1,0 +1,1727 @@
+== kalis_plan
+Resolving dependencies...
+Downloading packages...
++ _fe_analyzer_shared 108.0.0
++ analyzer 14.4.0
++ args 2.7.0
++ async 2.13.1
++ boolean_selector 2.1.2
++ cli_config 0.2.0
++ collection 1.19.1
++ convert 3.1.2
++ coverage 1.15.1
++ crypto 3.0.7
++ file 7.0.1
++ frontend_server_client 4.1.0
++ glob 2.2.0
++ http_multi_server 3.2.2
++ http_parser 4.1.2
++ io 1.1.0
++ kalis_core 0.4.2 from path ../kalis_core
++ lints 4.0.0 (6.1.0 available)
++ logging 1.3.0
++ matcher 0.12.20
++ meta 1.19.0
++ mime 2.1.0
++ node_preamble 2.0.2
++ package_config 3.0.0
++ path 1.9.1
++ pool 1.5.3
++ pub_semver 2.2.1
++ shelf 1.4.2
++ shelf_packages_handler 3.0.2
++ shelf_static 1.1.3
++ shelf_web_socket 3.0.0
++ source_map_stack_trace 2.1.2
++ source_maps 0.10.14
++ source_span 1.10.2
++ stack_trace 1.12.2
++ stream_channel 2.1.4
++ string_scanner 1.4.1
++ term_glyph 1.2.2
++ test 1.32.0
++ test_api 0.7.14
++ test_core 0.6.20
++ typed_data 1.4.0
++ vm_service 15.3.0
++ watcher 1.2.1
++ web 1.1.1
++ web_socket 1.0.1
++ web_socket_channel 3.0.3
++ webkit_inspection_protocol 1.2.1
++ yaml 3.1.4
+Changed 49 dependencies!
+1 package has newer versions incompatible with dependency constraints.
+Try `dart pub outdated` for more information.
+Changed lib/src/coach/prescribe.dart
+Changed lib/src/coach/skeleton.dart
+Formatted 58 files (2 changed) in 0.41 seconds.
+formatage : échec
+Analyzing kalis_plan...
+No issues found!
+00:00 +0: loading test/properties_2_test.dart
+00:00 +0: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:00 +1: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:00 +2: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:00 +3: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:00 +4: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:00 +5: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:00 +6: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:00 +7: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:00 +8: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:00 +9: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:00 +10: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:00 +11: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:00 +12: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:00 +13: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:00 +14: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:00 +15: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:00 +16: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:00 +17: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:00 +18: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:04 +19: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:10 +20: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:12 +21: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:12 +22: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:13 +23: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:14 +24: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:14 +24 -1: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:14 +24 -1: test/coach_test.dart: choix du chemin les profils aléatoires de 0.1 ne prennent pas le chemin street [E]
+  Expected: false
+    Actual: <true>
+  
+  package:matcher             expect
+  test/coach_test.dart 306:9  main.<fn>.<fn>
+  
+00:14 +25 -1: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:14 +26 -1: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:14 +27 -1: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:14 +28 -1: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:14 +28 -2: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:14 +28 -2: test/coach_test.dart: saison et échéance relecture : aucun manquement [E]
+  Expected: empty
+    Actual: [
+              'bloc 1 s0 j3 : sl-traction-lestee +7.1 %',
+              'bloc 1 s0 j3 : sl-dips-leste +8.2 %',
+              'bloc 2 s0 j3 : sl-traction-lestee +7.1 %',
+              'bloc 2 s0 j3 : sl-dips-leste +8.2 %'
+            ]
+  
+  package:matcher             expect
+  test/coach_test.dart 409:7  main.<fn>.<fn>
+  
+00:14 +29 -2: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:14 +30 -2: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:14 +31 -2: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:14 +32 -2: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:14 +33 -2: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:14 +34 -2: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:14 +35 -2: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:15 +36 -2: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:15 +36 -3: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:15 +36 -3: test/coach_test.dart: déterminisme et budgets création en moins d'une seconde, régénération en 300 ms [E]
+  Bad state: No element
+  dart:core                                           List.first
+  package:kalis_plan/src/coach/skeleton.dart 2839:69  _buildFigures
+  package:kalis_plan/src/coach/skeleton.dart 3440:7   buildSkeleton
+  package:kalis_plan/src/coach/coach.dart 277:12      CoachEngine._skeleton
+  package:kalis_plan/src/coach/coach.dart 454:16      CoachEngine.createPass1
+  package:kalis_plan/src/engine.dart 186:21           KalisPlan.createPass1
+  test/coach_test.dart 628:27                         main.<fn>.<fn>
+  
+00:15 +37 -3: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:15 +38 -3: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:15 +39 -3: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:15 +40 -3: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:15 +41 -3: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:15 +42 -3: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:15 +43 -3: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:15 +44 -3: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:15 +45 -3: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:15 +46 -3: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:15 +47 -3: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:15 +48 -3: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:15 +49 -3: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:15 +49 -4: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:15 +49 -4: test/coach_test.dart: CX correction 1 étape de travail sautée : gardée au bloc suivant [E]
+  Bad state: No element
+  dart:core                                           List.first
+  package:kalis_plan/src/coach/skeleton.dart 2839:69  _buildFigures
+  package:kalis_plan/src/coach/skeleton.dart 3440:7   buildSkeleton
+  package:kalis_plan/src/coach/coach.dart 277:12      CoachEngine._skeleton
+  package:kalis_plan/src/coach/coach.dart 454:16      CoachEngine.createPass1
+  package:kalis_plan/src/engine.dart 186:21           KalisPlan.createPass1
+  test/coach_test.dart 168:24                         _programWith
+  test/coach_test.dart 1148:21                        main.<fn>.<fn>
+  
+00:15 +50 -4: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:15 +51 -4: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:15 +52 -4: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:15 +53 -4: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:15 +54 -4: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:16 +55 -4: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:16 +55 -5: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:16 +55 -5: test/coach_test.dart: CX correction 1 charge lestée : +5 % au plus d'une semaine à l'autre, d'un bloc à l'autre aussi [E]
+  Expected: a value less than or equal to <99.476>
+    Actual: <115.66>
+     Which: is not a value less than or equal to <99.476>
+  semaine 8, sl-traction-lestee|3 : 12.5 puis 40.0 kg
+  
+  package:matcher               expect
+  test/coach_test.dart 1427:11  main.<fn>.<fn>
+  
+00:16 +56 -5: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:16 +57 -5: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:16 +58 -5: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:19 +58 -6: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 0 à 159
+00:19 +58 -6: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719 [E]
+  Expected: empty
+    Actual: [
+              'profil 2565 — restructuration block : contraintes dures day 0: mo-wrist-push-ups inadmissible (niveau, prérequis, prudence) | day 0: sw-traction-negative inadmissible (niveau, prérequis, prudence) | day 0: sw-traction-assistee-elastique inadmissible (niveau, prérequis, prudence)',
+              'profil 2571 — passe 2 : séance au-delà du temps disponible',
+              'profil 2571 — bloc suivant : semaine deload au rang 4',
+              'profil 2571 — bloc suivant : 2 semaines de décharge ou de test'
+            ]
+  4 manquement(s) :
+  profil 2565 — restructuration block : contraintes dures day 0: mo-wrist-push-ups inadmissible (niveau, prérequis, prudence) | day 0: sw-traction-negative inadmissible (niveau, prérequis, prudence) | day 0: sw-traction-assistee-elastique inadmissible (niveau, prérequis, prudence)
+  profil 2571 — passe 2 : séance au-delà du temps disponible
+  profil 2571 — bloc suivant : semaine deload au rang 4
+  profil 2571 — bloc suivant : 2 semaines de décharge ou de test
+  
+  package:matcher             expect
+  test/properties.dart 676:9  propertyShard.<fn>.<fn>
+  
+00:32 +58 -7: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2720 à 2879
+00:32 +58 -7: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 0 à 159 [E]
+  Expected: empty
+    Actual: [
+              'profil 77 — restructuration block : contraintes dures day 0: mo-pressions-doigts-appui inadmissible (niveau, prérequis, prudence) | day 0: sw-pompe-inclinee sans le matériel du jour | day 0: sw-pompe-inclinee inadmissible (niveau, prérequis, prudence)',
+              'profil 85 — passe 2 : séance au-delà du temps disponible',
+              'profil 85 — restructuration session : contraintes dures day 1: 1641 s pour 1320 s | day 1: 5 exercices pour 3'
+            ]
+  3 manquement(s) :
+  profil 77 — restructuration block : contraintes dures day 0: mo-pressions-doigts-appui inadmissible (niveau, prérequis, prudence) | day 0: sw-pompe-inclinee sans le matériel du jour | day 0: sw-pompe-inclinee inadmissible (niveau, prérequis, prudence)
+  profil 85 — passe 2 : séance au-delà du temps disponible
+  profil 85 — restructuration session : contraintes dures day 1: 1641 s pour 1320 s | day 1: 5 exercices pour 3
+  
+  package:matcher             expect
+  test/properties.dart 676:9  propertyShard.<fn>.<fn>
+  
+00:34 +58 -8: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 160 à 319
+00:34 +58 -8: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2720 à 2879 [E]
+  Expected: empty
+    Actual: [
+              'profil 2787 — bloc suivant : semaine deload au rang 3',
+              'profil 2787 — bloc suivant : 2 semaines de décharge ou de test'
+            ]
+  2 manquement(s) :
+  profil 2787 — bloc suivant : semaine deload au rang 3
+  profil 2787 — bloc suivant : 2 semaines de décharge ou de test
+  
+  package:matcher             expect
+  test/properties.dart 676:9  propertyShard.<fn>.<fn>
+  
+00:46 +58 -9: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2880 à 3039
+00:46 +58 -9: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 160 à 319 [E]
+  Expected: empty
+    Actual: ['profil 253 — passe 2 : séance au-delà du temps disponible']
+  1 manquement(s) :
+  profil 253 — passe 2 : séance au-delà du temps disponible
+  
+  package:matcher             expect
+  test/properties.dart 676:9  propertyShard.<fn>.<fn>
+  
+00:47 +59 -9: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 320 à 479
+00:59 +59 -10: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 3040 à 3199
+00:59 +59 -10: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 320 à 479 [E]
+  Expected: empty
+    Actual: [
+              'profil 349 — passe 2 : séance au-delà du temps disponible',
+              'profil 375 — passe 2 : séance au-delà du temps disponible',
+              'profil 389 — passe 2 : séance au-delà du temps disponible',
+              'profil 389 — restructuration session : contraintes dures day 1: mu-fente-arriere-poids-du-corps écarté par le profil ou un verrou | day 1: mu-fente-arriere-poids-du-corps inadmissible (niveau, prérequis, prudence)',
+              'profil 420 — passe 2 : semaine deload au rang 3',
+              'profil 420 — passe 2 : 2 semaines de décharge ou de test'
+            ]
+  6 manquement(s) :
+  profil 349 — passe 2 : séance au-delà du temps disponible
+  profil 375 — passe 2 : séance au-delà du temps disponible
+  profil 389 — passe 2 : séance au-delà du temps disponible
+  profil 389 — restructuration session : contraintes dures day 1: mu-fente-arriere-poids-du-corps écarté par le profil ou un verrou | day 1: mu-fente-arriere-poids-du-corps inadmissible (niveau, prérequis, prudence)
+  profil 420 — passe 2 : semaine deload au rang 3
+  profil 420 — passe 2 : 2 semaines de décharge ou de test
+  
+  package:matcher             expect
+  test/properties.dart 676:9  propertyShard.<fn>.<fn>
+  
+01:01 +59 -11: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 480 à 639
+01:01 +59 -11: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 3040 à 3199 [E]
+  Expected: empty
+    Actual: [
+              'profil 3059 — passe 2 : séance au-delà du temps disponible',
+              'profil 3141 — passe 2 : séance au-delà du temps disponible',
+              'profil 3141 — restructuration session : contraintes dures day 1: mo-wrist-push-ups inadmissible (niveau, prérequis, prudence) | day 1: mo-cars-epaule inadmissible (niveau, prérequis, prudence) | day 1: 11 exercices pour 8'
+            ]
+  3 manquement(s) :
+  profil 3059 — passe 2 : séance au-delà du temps disponible
+  profil 3141 — passe 2 : séance au-delà du temps disponible
+  profil 3141 — restructuration session : contraintes dures day 1: mo-wrist-push-ups inadmissible (niveau, prérequis, prudence) | day 1: mo-cars-epaule inadmissible (niveau, prérequis, prudence) | day 1: 11 exercices pour 8
+  
+  package:matcher             expect
+  test/properties.dart 676:9  propertyShard.<fn>.<fn>
+  
+01:14 +60 -11: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 3200 à 3359
+01:15 +60 -12: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 640 à 799
+01:15 +60 -12: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 3200 à 3359 [E]
+  Expected: empty
+    Actual: [
+              'profil 3331 — passe 2 : semaine deload au rang 4',
+              'profil 3331 — passe 2 : 2 semaines de décharge ou de test'
+            ]
+  2 manquement(s) :
+  profil 3331 — passe 2 : semaine deload au rang 4
+  profil 3331 — passe 2 : 2 semaines de décharge ou de test
+  
+  package:matcher             expect
+  test/properties.dart 676:9  propertyShard.<fn>.<fn>
+  
+01:27 +61 -12: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 3360 à 3519
+01:28 +61 -13: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 800 à 959
+01:28 +61 -13: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 3360 à 3519 [E]
+  Expected: empty
+    Actual: [
+              'profil 3413 — restructuration session : contraintes dures day 1: sw-traction-assistee-elastique inadmissible (niveau, prérequis, prudence) | day 1: 1939 s pour 1800 s | day 1: 5 exercices pour 4',
+              'profil 3469 — passe 2 : séance au-delà du temps disponible',
+              'profil 3469 — restructuration session : contraintes dures day 2: 1164 s pour 600 s | day 2: 4 exercices pour 2',
+              'profil 3517 — passe 2 : séance au-delà du temps disponible'
+            ]
+  4 manquement(s) :
+  profil 3413 — restructuration session : contraintes dures day 1: sw-traction-assistee-elastique inadmissible (niveau, prérequis, prudence) | day 1: 1939 s pour 1800 s | day 1: 5 exercices pour 4
+  profil 3469 — passe 2 : séance au-delà du temps disponible
+  profil 3469 — restructuration session : contraintes dures day 2: 1164 s pour 600 s | day 2: 4 exercices pour 2
+  profil 3517 — passe 2 : séance au-delà du temps disponible
+  
+  package:matcher             expect
+  test/properties.dart 676:9  propertyShard.<fn>.<fn>
+  
+01:41 +61 -14: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 3520 à 3679
+01:41 +61 -14: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 800 à 959 [E]
+  Expected: empty
+    Actual: ['profil 873 — passe 2 : séance au-delà du temps disponible']
+  1 manquement(s) :
+  profil 873 — passe 2 : séance au-delà du temps disponible
+  
+  package:matcher             expect
+  test/properties.dart 676:9  propertyShard.<fn>.<fn>
+  
+01:41 +61 -15: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 960 à 1119
+01:41 +61 -15: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 3520 à 3679 [E]
+  Expected: empty
+    Actual: [
+              'profil 3549 — passe 2 : semaine deload au rang 4',
+              'profil 3549 — passe 2 : 2 semaines de décharge ou de test'
+            ]
+  2 manquement(s) :
+  profil 3549 — passe 2 : semaine deload au rang 4
+  profil 3549 — passe 2 : 2 semaines de décharge ou de test
+  
+  package:matcher             expect
+  test/properties.dart 676:9  propertyShard.<fn>.<fn>
+  
+01:54 +61 -16: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 960 à 1119
+01:54 +61 -16: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 3680 à 3839 [E]
+  Expected: empty
+    Actual: [
+              'profil 3683 — passe 2 : semaine deload au rang 4',
+              'profil 3683 — passe 2 : 2 semaines de décharge ou de test',
+              'profil 3685 — passe 2 : séance au-delà du temps disponible',
+              'profil 3685 — restructuration block : contraintes dures day 0: mo-wrist-push-ups inadmissible (niveau, prérequis, prudence) | day 0: mu-developpe-decline-smith inadmissible (niveau, prérequis, prudence) | day 0: cs-support-barres-paralleles inadmissible (niveau, prérequis, prudence)',
+              'profil 3701 — restructuration session : contraintes dures day 1: sw-pompe-inclinee sans le matériel du jour | day 1: sw-pompe-inclinee inadmissible (niveau, prérequis, prudence) | day 1: mu-fente-arriere-poids-du-corps inadmissible (niveau, prérequis, prudence)',
+              'profil 3735 — passe 2 : séance au-delà du temps disponible',
+              'profil 3779 — passe 2 : séance au-delà du temps disponible',
+              'profil 3831 — passe 2 : séance au-delà du temps disponible'
+            ]
+  8 manquement(s) :
+  profil 3683 — passe 2 : semaine deload au rang 4
+  profil 3683 — passe 2 : 2 semaines de décharge ou de test
+  profil 3685 — passe 2 : séance au-delà du temps disponible
+  profil 3685 — restructuration block : contraintes dures day 0: mo-wrist-push-ups inadmissible (niveau, prérequis, prudence) | day 0: mu-developpe-decline-smith inadmissible (niveau, prérequis, prudence) | day 0: cs-support-barres-paralleles inadmissible (niveau, prérequis, prudence)
+  profil 3701 — restructuration session : contraintes dures day 1: sw-pompe-inclinee sans le matériel du jour | day 1: sw-pompe-inclinee inadmissible (niveau, prérequis, prudence) | day 1: mu-fente-arriere-poids-du-corps inadmissible (niveau, prérequis, prudence)
+  profil 3735 — passe 2 : séance au-delà du temps disponible
+  profil 3779 — passe 2 : séance au-delà du temps disponible
+  profil 3831 — passe 2 : séance au-delà du temps disponible
+  
+  package:matcher             expect
+  test/properties.dart 676:9  propertyShard.<fn>.<fn>
+  
+01:55 +61 -17: test/coach_properties_4_test.dart: chemin street, profils 5120 à 6399 profils 5120 à 5279
+01:55 +61 -17: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 960 à 1119 [E]
+  Expected: empty
+    Actual: [
+              'profil 1075 — passe 2 : séance au-delà du temps disponible',
+              'profil 1095 — passe 2 : séance au-delà du temps disponible'
+            ]
+  2 manquement(s) :
+  profil 1075 — passe 2 : séance au-delà du temps disponible
+  profil 1095 — passe 2 : séance au-delà du temps disponible
+  
+  package:matcher             expect
+  test/properties.dart 676:9  propertyShard.<fn>.<fn>
+  
+01:56 +61 -18: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 1120 à 1279
+01:56 +61 -18: test/coach_properties_4_test.dart: chemin street, profils 5120 à 6399 profils 5120 à 5279 [E]
+  Bad state: No element
+  dart:core                                           List.last
+  package:kalis_plan/src/coach/skeleton.dart 2839:50  _buildFigures
+  package:kalis_plan/src/coach/skeleton.dart 3440:7   buildSkeleton
+  package:kalis_plan/src/coach/coach.dart 277:12      CoachEngine._skeleton
+  package:kalis_plan/src/coach/coach.dart 454:16      CoachEngine.createPass1
+  package:kalis_plan/src/engine.dart 186:21           KalisPlan.createPass1
+  test/coach_properties.dart 208:21                   checkCoachSeed
+  test/coach_properties.dart 572:27                   coachPropertyShard.<fn>.<fn>
+  
+01:57 +61 -19: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 1120 à 1279
+01:57 +61 -19: test/coach_properties_4_test.dart: chemin street, profils 5120 à 6399 profils 5280 à 5439 [E]
+  Bad state: No element
+  dart:core                                           List.first
+  package:kalis_plan/src/coach/skeleton.dart 2839:69  _buildFigures
+  package:kalis_plan/src/coach/skeleton.dart 3440:7   buildSkeleton
+  package:kalis_plan/src/coach/coach.dart 277:12      CoachEngine._skeleton
+  package:kalis_plan/src/coach/coach.dart 454:16      CoachEngine.createPass1
+  package:kalis_plan/src/engine.dart 186:21           KalisPlan.createPass1
+  test/coach_properties.dart 208:21                   checkCoachSeed
+  test/coach_properties.dart 572:27                   coachPropertyShard.<fn>.<fn>
+  
+01:57 +61 -20: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 1120 à 1279
+01:57 +61 -20: test/coach_properties_4_test.dart: chemin street, profils 5120 à 6399 profils 5440 à 5599 [E]
+  Bad state: No element
+  dart:core                                           List.first
+  package:kalis_plan/src/coach/skeleton.dart 2839:69  _buildFigures
+  package:kalis_plan/src/coach/skeleton.dart 3440:7   buildSkeleton
+  package:kalis_plan/src/coach/coach.dart 277:12      CoachEngine._skeleton
+  package:kalis_plan/src/coach/coach.dart 454:16      CoachEngine.createPass1
+  package:kalis_plan/src/engine.dart 186:21           KalisPlan.createPass1
+  test/coach_properties.dart 208:21                   checkCoachSeed
+  test/coach_properties.dart 572:27                   coachPropertyShard.<fn>.<fn>
+  
+01:57 +61 -21: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 1120 à 1279
+01:57 +61 -21: test/coach_properties_4_test.dart: chemin street, profils 5120 à 6399 profils 5600 à 5759 [E]
+  Bad state: No element
+  dart:core                                           List.first
+  package:kalis_plan/src/coach/skeleton.dart 2839:69  _buildFigures
+  package:kalis_plan/src/coach/skeleton.dart 3440:7   buildSkeleton
+  package:kalis_plan/src/coach/coach.dart 277:12      CoachEngine._skeleton
+  package:kalis_plan/src/coach/coach.dart 454:16      CoachEngine.createPass1
+  package:kalis_plan/src/engine.dart 186:21           KalisPlan.createPass1
+  test/coach_properties.dart 208:21                   checkCoachSeed
+  test/coach_properties.dart 572:27                   coachPropertyShard.<fn>.<fn>
+  
+01:57 +61 -22: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 1120 à 1279
+01:57 +61 -22: test/coach_properties_4_test.dart: chemin street, profils 5120 à 6399 profils 5760 à 5919 [E]
+  Bad state: No element
+  dart:core                                           List.first
+  package:kalis_plan/src/coach/skeleton.dart 2839:69  _buildFigures
+  package:kalis_plan/src/coach/skeleton.dart 3440:7   buildSkeleton
+  package:kalis_plan/src/coach/coach.dart 277:12      CoachEngine._skeleton
+  package:kalis_plan/src/coach/coach.dart 454:16      CoachEngine.createPass1
+  package:kalis_plan/src/engine.dart 186:21           KalisPlan.createPass1
+  test/coach_properties.dart 208:21                   checkCoachSeed
+  test/coach_properties.dart 572:27                   coachPropertyShard.<fn>.<fn>
+  
+01:58 +61 -23: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 1120 à 1279
+01:58 +61 -23: test/coach_properties_4_test.dart: chemin street, profils 5120 à 6399 profils 5920 à 6079 [E]
+  Bad state: No element
+  dart:core                                           List.first
+  package:kalis_plan/src/coach/skeleton.dart 2839:69  _buildFigures
+  package:kalis_plan/src/coach/skeleton.dart 3440:7   buildSkeleton
+  package:kalis_plan/src/coach/coach.dart 277:12      CoachEngine._skeleton
+  package:kalis_plan/src/coach/coach.dart 454:16      CoachEngine.createPass1
+  package:kalis_plan/src/engine.dart 186:21           KalisPlan.createPass1
+  test/coach_properties.dart 208:21                   checkCoachSeed
+  test/coach_properties.dart 572:27                   coachPropertyShard.<fn>.<fn>
+  
+01:58 +61 -24: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 1120 à 1279
+01:58 +61 -24: test/coach_properties_4_test.dart: chemin street, profils 5120 à 6399 profils 6080 à 6239 [E]
+  Bad state: No element
+  dart:core                                           List.first
+  package:kalis_plan/src/coach/skeleton.dart 2839:69  _buildFigures
+  package:kalis_plan/src/coach/skeleton.dart 3440:7   buildSkeleton
+  package:kalis_plan/src/coach/coach.dart 277:12      CoachEngine._skeleton
+  package:kalis_plan/src/coach/coach.dart 454:16      CoachEngine.createPass1
+  package:kalis_plan/src/engine.dart 186:21           KalisPlan.createPass1
+  test/coach_properties.dart 208:21                   checkCoachSeed
+  test/coach_properties.dart 572:27                   coachPropertyShard.<fn>.<fn>
+  
+01:58 +61 -25: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 1120 à 1279
+01:58 +61 -25: test/coach_properties_4_test.dart: chemin street, profils 5120 à 6399 profils 6240 à 6399 [E]
+  Bad state: No element
+  dart:core                                           List.first
+  package:kalis_plan/src/coach/skeleton.dart 2839:69  _buildFigures
+  package:kalis_plan/src/coach/skeleton.dart 3440:7   buildSkeleton
+  package:kalis_plan/src/coach/coach.dart 277:12      CoachEngine._skeleton
+  package:kalis_plan/src/coach/coach.dart 454:16      CoachEngine.createPass1
+  package:kalis_plan/src/engine.dart 186:21           KalisPlan.createPass1
+  test/coach_properties.dart 208:21                   checkCoachSeed
+  test/coach_properties.dart 572:27                   coachPropertyShard.<fn>.<fn>
+  
+02:04 +62 -25: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 1120 à 1279
+02:05 +62 -26: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 1120 à 1279
+02:05 +62 -26: test/coach_properties_0_test.dart: chemin street, profils 0 à 1279 profils 0 à 159 [E]
+  Bad state: No element
+  dart:core                                           List.first
+  package:kalis_plan/src/coach/skeleton.dart 2839:69  _buildFigures
+  package:kalis_plan/src/coach/skeleton.dart 3440:7   buildSkeleton
+  package:kalis_plan/src/coach/coach.dart 277:12      CoachEngine._skeleton
+  package:kalis_plan/src/coach/coach.dart 454:16      CoachEngine.createPass1
+  package:kalis_plan/src/engine.dart 186:21           KalisPlan.createPass1
+  test/coach_properties.dart 208:21                   checkCoachSeed
+  test/coach_properties.dart 572:27                   coachPropertyShard.<fn>.<fn>
+  
+02:06 +62 -27: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 1120 à 1279
+02:06 +62 -27: test/coach_properties_0_test.dart: chemin street, profils 0 à 1279 profils 160 à 319 [E]
+  Bad state: No element
+  dart:core                                           List.first
+  package:kalis_plan/src/coach/skeleton.dart 2839:69  _buildFigures
+  package:kalis_plan/src/coach/skeleton.dart 3440:7   buildSkeleton
+  package:kalis_plan/src/coach/coach.dart 277:12      CoachEngine._skeleton
+  package:kalis_plan/src/coach/coach.dart 454:16      CoachEngine.createPass1
+  package:kalis_plan/src/engine.dart 186:21           KalisPlan.createPass1
+  test/coach_properties.dart 208:21                   checkCoachSeed
+  test/coach_properties.dart 572:27                   coachPropertyShard.<fn>.<fn>
+  
+02:06 +62 -28: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 1120 à 1279
+02:06 +62 -28: test/coach_properties_0_test.dart: chemin street, profils 0 à 1279 profils 320 à 479 [E]
+  Bad state: No element
+  dart:core                                           List.first
+  package:kalis_plan/src/coach/skeleton.dart 2839:69  _buildFigures
+  package:kalis_plan/src/coach/skeleton.dart 3440:7   buildSkeleton
+  package:kalis_plan/src/coach/coach.dart 277:12      CoachEngine._skeleton
+  package:kalis_plan/src/coach/coach.dart 454:16      CoachEngine.createPass1
+  package:kalis_plan/src/engine.dart 186:21           KalisPlan.createPass1
+  test/coach_properties.dart 208:21                   checkCoachSeed
+  test/coach_properties.dart 572:27                   coachPropertyShard.<fn>.<fn>
+  
+02:06 +62 -29: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 1120 à 1279
+02:06 +62 -29: test/coach_properties_0_test.dart: chemin street, profils 0 à 1279 profils 480 à 639 [E]
+  Bad state: No element
+  dart:core                                           List.first
+  package:kalis_plan/src/coach/skeleton.dart 2839:69  _buildFigures
+  package:kalis_plan/src/coach/skeleton.dart 3440:7   buildSkeleton
+  package:kalis_plan/src/coach/coach.dart 277:12      CoachEngine._skeleton
+  package:kalis_plan/src/coach/coach.dart 454:16      CoachEngine.createPass1
+  package:kalis_plan/src/engine.dart 186:21           KalisPlan.createPass1
+  test/coach_properties.dart 208:21                   checkCoachSeed
+  test/coach_properties.dart 572:27                   coachPropertyShard.<fn>.<fn>
+  
+02:06 +62 -30: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 1120 à 1279
+02:06 +62 -30: test/coach_properties_0_test.dart: chemin street, profils 0 à 1279 profils 640 à 799 [E]
+  Bad state: No element
+  dart:core                                           List.first
+  package:kalis_plan/src/coach/skeleton.dart 2839:69  _buildFigures
+  package:kalis_plan/src/coach/skeleton.dart 3440:7   buildSkeleton
+  package:kalis_plan/src/coach/coach.dart 277:12      CoachEngine._skeleton
+  package:kalis_plan/src/coach/coach.dart 454:16      CoachEngine.createPass1
+  package:kalis_plan/src/engine.dart 186:21           KalisPlan.createPass1
+  test/coach_properties.dart 208:21                   checkCoachSeed
+  test/coach_properties.dart 572:27                   coachPropertyShard.<fn>.<fn>
+  
+02:07 +62 -31: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 1120 à 1279
+02:07 +62 -31: test/coach_properties_0_test.dart: chemin street, profils 0 à 1279 profils 800 à 959 [E]
+  Bad state: No element
+  dart:core                                           List.first
+  package:kalis_plan/src/coach/skeleton.dart 2839:69  _buildFigures
+  package:kalis_plan/src/coach/skeleton.dart 3440:7   buildSkeleton
+  package:kalis_plan/src/coach/coach.dart 277:12      CoachEngine._skeleton
+  package:kalis_plan/src/coach/coach.dart 454:16      CoachEngine.createPass1
+  package:kalis_plan/src/engine.dart 186:21           KalisPlan.createPass1
+  test/coach_properties.dart 208:21                   checkCoachSeed
+  test/coach_properties.dart 572:27                   coachPropertyShard.<fn>.<fn>
+  
+02:07 +62 -32: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 1120 à 1279
+02:07 +62 -32: test/coach_properties_0_test.dart: chemin street, profils 0 à 1279 profils 960 à 1119 [E]
+  Bad state: No element
+  dart:core                                           List.first
+  package:kalis_plan/src/coach/skeleton.dart 2839:69  _buildFigures
+  package:kalis_plan/src/coach/skeleton.dart 3440:7   buildSkeleton
+  package:kalis_plan/src/coach/coach.dart 277:12      CoachEngine._skeleton
+  package:kalis_plan/src/coach/coach.dart 454:16      CoachEngine.createPass1
+  package:kalis_plan/src/engine.dart 186:21           KalisPlan.createPass1
+  test/coach_properties.dart 208:21                   checkCoachSeed
+  test/coach_properties.dart 572:27                   coachPropertyShard.<fn>.<fn>
+  
+02:07 +62 -33: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 1120 à 1279
+02:07 +62 -33: test/coach_properties_0_test.dart: chemin street, profils 0 à 1279 profils 1120 à 1279 [E]
+  Bad state: No element
+  dart:core                                           List.first
+  package:kalis_plan/src/coach/skeleton.dart 2839:69  _buildFigures
+  package:kalis_plan/src/coach/skeleton.dart 3440:7   buildSkeleton
+  package:kalis_plan/src/coach/coach.dart 277:12      CoachEngine._skeleton
+  package:kalis_plan/src/coach/coach.dart 454:16      CoachEngine.createPass1
+  package:kalis_plan/src/engine.dart 186:21           KalisPlan.createPass1
+  test/coach_properties.dart 208:21                   checkCoachSeed
+  test/coach_properties.dart 572:27                   coachPropertyShard.<fn>.<fn>
+  
+02:09 +62 -34: test/engine_test.dart: déterminisme même requête, même JSON, quelle que soit l'instance
+02:09 +62 -34: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 1120 à 1279 [E]
+  Expected: empty
+    Actual: [
+              'profil 1218 — passe 2 : semaine intro plus chargée que la charge',
+              'profil 1224 — passe 2 : semaine deload au rang 4',
+              'profil 1224 — passe 2 : 2 semaines de décharge ou de test'
+            ]
+  3 manquement(s) :
+  profil 1218 — passe 2 : semaine intro plus chargée que la charge
+  profil 1224 — passe 2 : semaine deload au rang 4
+  profil 1224 — passe 2 : 2 semaines de décharge ou de test
+  
+  package:matcher             expect
+  test/properties.dart 676:9  propertyShard.<fn>.<fn>
+  
+02:10 +62 -35: test/engine_test.dart: déterminisme même requête, même JSON, quelle que soit l'instance
+02:10 +62 -35: test/coach_properties_6_test.dart: chemin street, profils 7680 à 8959 profils 7680 à 7839 [E]
+  Bad state: No element
+  dart:core                                           List.first
+  package:kalis_plan/src/coach/skeleton.dart 2839:69  _buildFigures
+  package:kalis_plan/src/coach/skeleton.dart 3440:7   buildSkeleton
+  package:kalis_plan/src/coach/coach.dart 277:12      CoachEngine._skeleton
+  package:kalis_plan/src/coach/coach.dart 454:16      CoachEngine.createPass1
+  package:kalis_plan/src/engine.dart 186:21           KalisPlan.createPass1
+  test/coach_properties.dart 208:21                   checkCoachSeed
+  test/coach_properties.dart 572:27                   coachPropertyShard.<fn>.<fn>
+  
+02:11 +62 -36: test/engine_test.dart: déterminisme même requête, même JSON, quelle que soit l'instance
+02:11 +62 -36: test/coach_properties_6_test.dart: chemin street, profils 7680 à 8959 profils 7840 à 7999 [E]
+  Bad state: No element
+  dart:core                                           List.first
+  package:kalis_plan/src/coach/skeleton.dart 2839:69  _buildFigures
+  package:kalis_plan/src/coach/skeleton.dart 3440:7   buildSkeleton
+  package:kalis_plan/src/coach/coach.dart 277:12      CoachEngine._skeleton
+  package:kalis_plan/src/coach/coach.dart 454:16      CoachEngine.createPass1
+  package:kalis_plan/src/engine.dart 186:21           KalisPlan.createPass1
+  test/coach_properties.dart 208:21                   checkCoachSeed
+  test/coach_properties.dart 572:27                   coachPropertyShard.<fn>.<fn>
+  
+02:12 +62 -37: test/engine_test.dart: déterminisme même requête, même JSON, quelle que soit l'instance
+02:12 +62 -37: test/coach_properties_6_test.dart: chemin street, profils 7680 à 8959 profils 8000 à 8159 [E]
+  Bad state: No element
+  dart:core                                           List.first
+  package:kalis_plan/src/coach/skeleton.dart 2839:69  _buildFigures
+  package:kalis_plan/src/coach/skeleton.dart 3440:7   buildSkeleton
+  package:kalis_plan/src/coach/coach.dart 277:12      CoachEngine._skeleton
+  package:kalis_plan/src/coach/coach.dart 454:16      CoachEngine.createPass1
+  package:kalis_plan/src/engine.dart 186:21           KalisPlan.createPass1
+  test/coach_properties.dart 208:21                   checkCoachSeed
+  test/coach_properties.dart 572:27                   coachPropertyShard.<fn>.<fn>
+  
+02:12 +62 -38: test/engine_test.dart: déterminisme même requête, même JSON, quelle que soit l'instance
+02:12 +62 -38: test/coach_properties_6_test.dart: chemin street, profils 7680 à 8959 profils 8160 à 8319 [E]
+  Bad state: No element
+  dart:core                                           List.first
+  package:kalis_plan/src/coach/skeleton.dart 2839:69  _buildFigures
+  package:kalis_plan/src/coach/skeleton.dart 3440:7   buildSkeleton
+  package:kalis_plan/src/coach/coach.dart 277:12      CoachEngine._skeleton
+  package:kalis_plan/src/coach/coach.dart 454:16      CoachEngine.createPass1
+  package:kalis_plan/src/engine.dart 186:21           KalisPlan.createPass1
+  test/coach_properties.dart 208:21                   checkCoachSeed
+  test/coach_properties.dart 572:27                   coachPropertyShard.<fn>.<fn>
+  
+02:12 +62 -39: test/engine_test.dart: déterminisme même requête, même JSON, quelle que soit l'instance
+02:12 +62 -39: test/coach_properties_6_test.dart: chemin street, profils 7680 à 8959 profils 8320 à 8479 [E]
+  Bad state: No element
+  dart:core                                           List.first
+  package:kalis_plan/src/coach/skeleton.dart 2839:69  _buildFigures
+  package:kalis_plan/src/coach/skeleton.dart 3440:7   buildSkeleton
+  package:kalis_plan/src/coach/coach.dart 277:12      CoachEngine._skeleton
+  package:kalis_plan/src/coach/coach.dart 454:16      CoachEngine.createPass1
+  package:kalis_plan/src/engine.dart 186:21           KalisPlan.createPass1
+  test/coach_properties.dart 208:21                   checkCoachSeed
+  test/coach_properties.dart 572:27                   coachPropertyShard.<fn>.<fn>
+  
+02:13 +62 -40: test/engine_test.dart: déterminisme même requête, même JSON, quelle que soit l'instance
+02:13 +62 -40: test/coach_properties_6_test.dart: chemin street, profils 7680 à 8959 profils 8480 à 8639 [E]
+  Bad state: No element
+  dart:core                                           List.first
+  package:kalis_plan/src/coach/skeleton.dart 2839:69  _buildFigures
+  package:kalis_plan/src/coach/skeleton.dart 3440:7   buildSkeleton
+  package:kalis_plan/src/coach/coach.dart 277:12      CoachEngine._skeleton
+  package:kalis_plan/src/coach/coach.dart 454:16      CoachEngine.createPass1
+  package:kalis_plan/src/engine.dart 186:21           KalisPlan.createPass1
+  test/coach_properties.dart 208:21                   checkCoachSeed
+  test/coach_properties.dart 572:27                   coachPropertyShard.<fn>.<fn>
+  
+02:13 +62 -41: test/engine_test.dart: déterminisme même requête, même JSON, quelle que soit l'instance
+02:13 +62 -41: test/coach_properties_6_test.dart: chemin street, profils 7680 à 8959 profils 8640 à 8799 [E]
+  Bad state: No element
+  dart:core                                           List.first
+  package:kalis_plan/src/coach/skeleton.dart 2839:69  _buildFigures
+  package:kalis_plan/src/coach/skeleton.dart 3440:7   buildSkeleton
+  package:kalis_plan/src/coach/coach.dart 277:12      CoachEngine._skeleton
+  package:kalis_plan/src/coach/coach.dart 454:16      CoachEngine.createPass1
+  package:kalis_plan/src/engine.dart 186:21           KalisPlan.createPass1
+  test/coach_properties.dart 208:21                   checkCoachSeed
+  test/coach_properties.dart 572:27                   coachPropertyShard.<fn>.<fn>
+  
+02:13 +62 -42: test/engine_test.dart: déterminisme même requête, même JSON, quelle que soit l'instance
+02:13 +62 -42: test/coach_properties_6_test.dart: chemin street, profils 7680 à 8959 profils 8800 à 8959 [E]
+  Bad state: No element
+  dart:core                                           List.first
+  package:kalis_plan/src/coach/skeleton.dart 2839:69  _buildFigures
+  package:kalis_plan/src/coach/skeleton.dart 3440:7   buildSkeleton
+  package:kalis_plan/src/coach/coach.dart 277:12      CoachEngine._skeleton
+  package:kalis_plan/src/coach/coach.dart 454:16      CoachEngine.createPass1
+  package:kalis_plan/src/engine.dart 186:21           KalisPlan.createPass1
+  test/coach_properties.dart 208:21                   checkCoachSeed
+  test/coach_properties.dart 572:27                   coachPropertyShard.<fn>.<fn>
+  
+02:25 +63 -42: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 7680 à 7839
+02:27 +64 -42: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 7680 à 7839
+02:27 +65 -42: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 7680 à 7839
+02:32 +66 -42: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 7680 à 7839
+02:33 +67 -42: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 7680 à 7839
+02:33 +68 -42: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 7680 à 7839
+02:34 +69 -42: test/engine_test.dart: verrous emplacement gardé : même exercice, même emplacement, verrouillé
+02:34 +70 -42: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 7840 à 7999
+02:34 +71 -42: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 7840 à 7999
+02:34 +72 -42: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 7840 à 7999
+02:34 +73 -42: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 7840 à 7999
+02:34 +74 -42: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 7840 à 7999
+02:38 +75 -42: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 7840 à 7999
+02:50 +75 -43: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 3840 à 3999
+02:50 +75 -43: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 7840 à 7999 [E]
+  Expected: empty
+    Actual: [
+              'profil 7933 — passe 2 : séance au-delà du temps disponible',
+              'profil 7933 — restructuration session : contraintes dures day 3: sw-active-hang inadmissible (niveau, prérequis, prudence) | day 3: mo-wrist-push-ups inadmissible (niveau, prérequis, prudence) | day 3: sw-traction-negative inadmissible (niveau, prérequis, prudence)'
+            ]
+  2 manquement(s) :
+  profil 7933 — passe 2 : séance au-delà du temps disponible
+  profil 7933 — restructuration session : contraintes dures day 3: sw-active-hang inadmissible (niveau, prérequis, prudence) | day 3: mo-wrist-push-ups inadmissible (niveau, prérequis, prudence) | day 3: sw-traction-negative inadmissible (niveau, prérequis, prudence)
+  
+  package:matcher             expect
+  test/properties.dart 676:9  propertyShard.<fn>.<fn>
+  
+02:57 +75 -44: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 8000 à 8159
+02:57 +75 -44: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 3840 à 3999 [E]
+  Expected: empty
+    Actual: [
+              'profil 3981 — restructuration session : contraintes dures day 3: mo-cars-epaule inadmissible (niveau, prérequis, prudence) | day 3: mo-squat-profond-tenu inadmissible (niveau, prérequis, prudence)'
+            ]
+  1 manquement(s) :
+  profil 3981 — restructuration session : contraintes dures day 3: mo-cars-epaule inadmissible (niveau, prérequis, prudence) | day 3: mo-squat-profond-tenu inadmissible (niveau, prérequis, prudence)
+  
+  package:matcher             expect
+  test/properties.dart 676:9  propertyShard.<fn>.<fn>
+  
+03:07 +76 -44: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 4000 à 4159
+03:11 +77 -44: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 8160 à 8319
+03:22 +77 -45: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 4160 à 4319
+03:22 +77 -45: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 8160 à 8319 [E]
+  Expected: empty
+    Actual: ['profil 8223 — passe 2 : séance au-delà du temps disponible']
+  1 manquement(s) :
+  profil 8223 — passe 2 : séance au-delà du temps disponible
+  
+  package:matcher             expect
+  test/properties.dart 676:9  propertyShard.<fn>.<fn>
+  
+03:24 +77 -46: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 8320 à 8479
+03:24 +77 -46: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 4160 à 4319 [E]
+  Expected: empty
+    Actual: [
+              'profil 4203 — passe 2 : semaine intro plus chargée que la charge',
+              'profil 4213 — passe 2 : séance au-delà du temps disponible',
+              'profil 4213 — restructuration block : contraintes dures day 0: mo-wrist-push-ups inadmissible (niveau, prérequis, prudence) | day 0: sw-traction-negative inadmissible (niveau, prérequis, prudence) | day 0: sw-traction-assistee-elastique inadmissible (niveau, prérequis, prudence)',
+              'profil 4215 — passe 2 : séance au-delà du temps disponible',
+              'profil 4239 — passe 2 : séance au-delà du temps disponible'
+            ]
+  5 manquement(s) :
+  profil 4203 — passe 2 : semaine intro plus chargée que la charge
+  profil 4213 — passe 2 : séance au-delà du temps disponible
+  profil 4213 — restructuration block : contraintes dures day 0: mo-wrist-push-ups inadmissible (niveau, prérequis, prudence) | day 0: sw-traction-negative inadmissible (niveau, prérequis, prudence) | day 0: sw-traction-assistee-elastique inadmissible (niveau, prérequis, prudence)
+  profil 4215 — passe 2 : séance au-delà du temps disponible
+  profil 4239 — passe 2 : séance au-delà du temps disponible
+  
+  package:matcher             expect
+  test/properties.dart 676:9  propertyShard.<fn>.<fn>
+  
+03:38 +78 -46: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 8320 à 8479
+03:38 +79 -46: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 4480 à 4639
+03:52 +79 -47: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 8480 à 8639
+03:52 +79 -47: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 4480 à 4639 [E]
+  Expected: empty
+    Actual: [
+              'profil 4605 — passe 2 : séance au-delà du temps disponible',
+              'profil 4621 — passe 2 : séance au-delà du temps disponible',
+              'profil 4621 — restructuration session : contraintes dures day 1: mo-cars-epaule inadmissible (niveau, prérequis, prudence)'
+            ]
+  3 manquement(s) :
+  profil 4605 — passe 2 : séance au-delà du temps disponible
+  profil 4621 — passe 2 : séance au-delà du temps disponible
+  profil 4621 — restructuration session : contraintes dures day 1: mo-cars-epaule inadmissible (niveau, prérequis, prudence)
+  
+  package:matcher             expect
+  test/properties.dart 676:9  propertyShard.<fn>.<fn>
+  
+03:54 +80 -47: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 4640 à 4799
+04:06 +80 -48: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 8640 à 8799
+04:06 +80 -48: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 4640 à 4799 [E]
+  Expected: empty
+    Actual: [
+              'profil 4779 — bloc suivant : semaine deload au rang 4',
+              'profil 4779 — bloc suivant : 2 semaines de décharge ou de test',
+              'profil 4795 — passe 2 : séance au-delà du temps disponible'
+            ]
+  3 manquement(s) :
+  profil 4779 — bloc suivant : semaine deload au rang 4
+  profil 4779 — bloc suivant : 2 semaines de décharge ou de test
+  profil 4795 — passe 2 : séance au-delà du temps disponible
+  
+  package:matcher             expect
+  test/properties.dart 676:9  propertyShard.<fn>.<fn>
+  
+04:10 +81 -48: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 4800 à 4959
+04:19 +81 -49: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 8800 à 8959
+04:19 +81 -49: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 4800 à 4959 [E]
+  Expected: empty
+    Actual: [
+              'profil 4867 — passe 2 : séance au-delà du temps disponible',
+              'profil 4933 — restructuration block : contraintes dures day 0: mo-wrist-push-ups inadmissible (niveau, prérequis, prudence) | day 0: mo-cars-epaule inadmissible (niveau, prérequis, prudence) | day 0: mo-marche-pointes inadmissible (niveau, prérequis, prudence)'
+            ]
+  2 manquement(s) :
+  profil 4867 — passe 2 : séance au-delà du temps disponible
+  profil 4933 — restructuration block : contraintes dures day 0: mo-wrist-push-ups inadmissible (niveau, prérequis, prudence) | day 0: mo-cars-epaule inadmissible (niveau, prérequis, prudence) | day 0: mo-marche-pointes inadmissible (niveau, prérequis, prudence)
+  
+  package:matcher             expect
+  test/properties.dart 676:9  propertyShard.<fn>.<fn>
+  
+04:27 +81 -50: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 4960 à 5119
+04:27 +81 -50: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 8800 à 8959 [E]
+  Expected: empty
+    Actual: [
+              'profil 8933 — restructuration session : contraintes dures day 2: mo-wrist-push-ups inadmissible (niveau, prérequis, prudence)'
+            ]
+  1 manquement(s) :
+  profil 8933 — restructuration session : contraintes dures day 2: mo-wrist-push-ups inadmissible (niveau, prérequis, prudence)
+  
+  package:matcher             expect
+  test/properties.dart 676:9  propertyShard.<fn>.<fn>
+  
+04:33 +81 -51: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 1280 à 1439
+04:33 +81 -51: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 4960 à 5119 [E]
+  Expected: empty
+    Actual: [
+              'profil 5049 — passe 2 : séance au-delà du temps disponible',
+              'profil 5053 — passe 2 : séance au-delà du temps disponible',
+              'profil 5053 — restructuration session : contraintes dures day 4: 1146 s pour 600 s | day 4: 4 exercices pour 2',
+              'profil 5083 — passe 2 : séance au-delà du temps disponible'
+            ]
+  4 manquement(s) :
+  profil 5049 — passe 2 : séance au-delà du temps disponible
+  profil 5053 — passe 2 : séance au-delà du temps disponible
+  profil 5053 — restructuration session : contraintes dures day 4: 1146 s pour 600 s | day 4: 4 exercices pour 2
+  profil 5083 — passe 2 : séance au-delà du temps disponible
+  
+  package:matcher             expect
+  test/properties.dart 676:9  propertyShard.<fn>.<fn>
+  
+04:38 +82 -51: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 1280 à 1439
+04:45 +83 -51: test/admission_test.dart: 600 profils aléatoires : mode prudent et exercices réservés relus sans le vivier
+04:58 +83 -52: test/admission_test.dart: 600 profils aléatoires : mode prudent et exercices réservés relus sans le vivier
+04:58 +83 -52: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 1440 à 1599 [E]
+  Expected: empty
+    Actual: [
+              'profil 1443 — bloc suivant : semaine deload au rang 4',
+              'profil 1443 — bloc suivant : 2 semaines de décharge ou de test',
+              'profil 1455 — passe 2 : séance au-delà du temps disponible',
+              'profil 1503 — passe 2 : séance au-delà du temps disponible'
+            ]
+  4 manquement(s) :
+  profil 1443 — bloc suivant : semaine deload au rang 4
+  profil 1443 — bloc suivant : 2 semaines de décharge ou de test
+  profil 1455 — passe 2 : séance au-delà du temps disponible
+  profil 1503 — passe 2 : séance au-delà du temps disponible
+  
+  package:matcher             expect
+  test/properties.dart 676:9  propertyShard.<fn>.<fn>
+  
+05:09 +84 -52: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 1600 à 1759
+05:12 +84 -53: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 8960 à 9119
+05:12 +84 -53: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 1600 à 1759 [E]
+  Expected: empty
+    Actual: [
+              'profil 1611 — passe 2 : séance au-delà du temps disponible',
+              'profil 1613 — restructuration session : contraintes dures day 5: sw-pompe-inclinee sans le matériel du jour | day 5: sw-pompe-inclinee inadmissible (niveau, prérequis, prudence)'
+            ]
+  2 manquement(s) :
+  profil 1611 — passe 2 : séance au-delà du temps disponible
+  profil 1613 — restructuration session : contraintes dures day 5: sw-pompe-inclinee sans le matériel du jour | day 5: sw-pompe-inclinee inadmissible (niveau, prérequis, prudence)
+  
+  package:matcher             expect
+  test/properties.dart 676:9  propertyShard.<fn>.<fn>
+  
+05:26 +85 -53: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 8960 à 9119
+05:29 +85 -54: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 1920 à 2079
+05:29 +85 -54: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 8960 à 9119 [E]
+  Expected: empty
+    Actual: [
+              'profil 8987 — bloc suivant : semaine test au rang 0',
+              'profil 8987 — bloc suivant : 2 semaines de décharge ou de test',
+              'profil 9021 — passe 2 : séance au-delà du temps disponible',
+              'profil 9021 — restructuration session : contraintes dures day 2: mo-wrist-push-ups inadmissible (niveau, prérequis, prudence) | day 2: mo-cars-epaule inadmissible (niveau, prérequis, prudence) | day 2: mo-squat-profond-tenu inadmissible (niveau, prérequis, prudence)'
+            ]
+  4 manquement(s) :
+  profil 8987 — bloc suivant : semaine test au rang 0
+  profil 8987 — bloc suivant : 2 semaines de décharge ou de test
+  profil 9021 — passe 2 : séance au-delà du temps disponible
+  profil 9021 — restructuration session : contraintes dures day 2: mo-wrist-push-ups inadmissible (niveau, prérequis, prudence) | day 2: mo-cars-epaule inadmissible (niveau, prérequis, prudence) | day 2: mo-squat-profond-tenu inadmissible (niveau, prérequis, prudence)
+  
+  package:matcher             expect
+  test/properties.dart 676:9  propertyShard.<fn>.<fn>
+  
+05:40 +85 -55: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9120 à 9279
+05:40 +85 -55: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 1920 à 2079 [E]
+  Expected: empty
+    Actual: [
+              'profil 2029 — passe 2 : séance au-delà du temps disponible',
+              'profil 2061 — passe 2 : séance au-delà du temps disponible'
+            ]
+  2 manquement(s) :
+  profil 2029 — passe 2 : séance au-delà du temps disponible
+  profil 2061 — passe 2 : séance au-delà du temps disponible
+  
+  package:matcher             expect
+  test/properties.dart 676:9  propertyShard.<fn>.<fn>
+  
+05:42 +85 -56: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 2080 à 2239
+05:42 +85 -56: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9120 à 9279 [E]
+  Expected: empty
+    Actual: ['profil 9243 — passe 2 : semaine intro plus chargée que la charge']
+  1 manquement(s) :
+  profil 9243 — passe 2 : semaine intro plus chargée que la charge
+  
+  package:matcher             expect
+  test/properties.dart 676:9  propertyShard.<fn>.<fn>
+  
+05:53 +85 -57: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9280 à 9439
+05:53 +85 -57: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 2080 à 2239 [E]
+  Expected: empty
+    Actual: [
+              'profil 2093 — restructuration session : contraintes dures day 1: mo-wrist-push-ups inadmissible (niveau, prérequis, prudence) | day 1: sw-pompe-inclinee inadmissible (niveau, prérequis, prudence) | day 1: 9 exercices pour 8',
+              'profil 2171 — passe 2 : séance au-delà du temps disponible',
+              'profil 2196 — passe 2 : semaine intro plus chargée que la charge'
+            ]
+  3 manquement(s) :
+  profil 2093 — restructuration session : contraintes dures day 1: mo-wrist-push-ups inadmissible (niveau, prérequis, prudence) | day 1: sw-pompe-inclinee inadmissible (niveau, prérequis, prudence) | day 1: 9 exercices pour 8
+  profil 2171 — passe 2 : séance au-delà du temps disponible
+  profil 2196 — passe 2 : semaine intro plus chargée que la charge
+  
+  package:matcher             expect
+  test/properties.dart 676:9  propertyShard.<fn>.<fn>
+  
+05:56 +85 -58: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 2240 à 2399
+05:56 +85 -58: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9280 à 9439 [E]
+  Expected: empty
+    Actual: [
+              'profil 9437 — restructuration block : contraintes dures day 0: mo-pressions-doigts-appui inadmissible (niveau, prérequis, prudence) | day 0: sw-traction-negative inadmissible (niveau, prérequis, prudence) | day 0: sw-traction-assistee-pieds-au-sol inadmissible (niveau, prérequis, prudence)'
+            ]
+  1 manquement(s) :
+  profil 9437 — restructuration block : contraintes dures day 0: mo-pressions-doigts-appui inadmissible (niveau, prérequis, prudence) | day 0: sw-traction-negative inadmissible (niveau, prérequis, prudence) | day 0: sw-traction-assistee-pieds-au-sol inadmissible (niveau, prérequis, prudence)
+  
+  package:matcher             expect
+  test/properties.dart 676:9  propertyShard.<fn>.<fn>
+  
+06:06 +85 -59: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9440 à 9599
+06:06 +85 -59: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 2240 à 2399 [E]
+  Expected: empty
+    Actual: [
+              'profil 2337 — passe 2 : semaine intro plus chargée que la charge',
+              'profil 2337 — passe 2 : séance au-delà du temps disponible',
+              'profil 2347 — passe 2 : séance au-delà du temps disponible',
+              'profil 2347 — bloc suivant : semaine deload au rang 3',
+              'profil 2347 — bloc suivant : 2 semaines de décharge ou de test',
+              'profil 2349 — passe 2 : semaine intro plus chargée que la charge',
+              'profil 2365 — restructuration session : contraintes dures day 0: sw-traction-negative inadmissible (niveau, prérequis, prudence) | day 0: sw-traction-assistee-elastique inadmissible (niveau, prérequis, prudence) | day 0: sw-pompe-inclinee inadmissible (niveau, prérequis, prudence)'
+            ]
+  7 manquement(s) :
+  profil 2337 — passe 2 : semaine intro plus chargée que la charge
+  profil 2337 — passe 2 : séance au-delà du temps disponible
+  profil 2347 — passe 2 : séance au-delà du temps disponible
+  profil 2347 — bloc suivant : semaine deload au rang 3
+  profil 2347 — bloc suivant : 2 semaines de décharge ou de test
+  profil 2349 — passe 2 : semaine intro plus chargée que la charge
+  profil 2365 — restructuration session : contraintes dures day 0: sw-traction-negative inadmissible (niveau, prérequis, prudence) | day 0: sw-traction-assistee-elastique inadmissible (niveau, prérequis, prudence) | day 0: sw-pompe-inclinee inadmissible (niveau, prérequis, prudence)
+  
+  package:matcher             expect
+  test/properties.dart 676:9  propertyShard.<fn>.<fn>
+  
+06:11 +85 -60: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 2400 à 2559
+06:11 +85 -60: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9440 à 9599 [E]
+  Expected: empty
+    Actual: [
+              'profil 9555 — bloc suivant : semaine deload au rang 3',
+              'profil 9555 — bloc suivant : 2 semaines de décharge ou de test',
+              'profil 9565 — restructuration block : contraintes dures day 0: sw-active-hang inadmissible (niveau, prérequis, prudence) | day 1: sw-active-hang inadmissible (niveau, prérequis, prudence) | day 1: mo-wrist-push-ups inadmissible (niveau, prérequis, prudence)'
+            ]
+  3 manquement(s) :
+  profil 9555 — bloc suivant : semaine deload au rang 3
+  profil 9555 — bloc suivant : 2 semaines de décharge ou de test
+  profil 9565 — restructuration block : contraintes dures day 0: sw-active-hang inadmissible (niveau, prérequis, prudence) | day 1: sw-active-hang inadmissible (niveau, prérequis, prudence) | day 1: mo-wrist-push-ups inadmissible (niveau, prérequis, prudence)
+  
+  package:matcher             expect
+  test/properties.dart 676:9  propertyShard.<fn>.<fn>
+  
+06:19 +85 -61: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9600 à 9759
+06:19 +85 -61: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 2400 à 2559 [E]
+  Expected: empty
+    Actual: [
+              'profil 2469 — passe 2 : semaine deload au rang 4',
+              'profil 2469 — passe 2 : 2 semaines de décharge ou de test',
+              'profil 2469 — restructuration session : contraintes dures day 3: sw-pompe-inclinee sans le matériel du jour | day 3: sw-pompe-inclinee inadmissible (niveau, prérequis, prudence) | day 3: 8 exercices pour 6',
+              'profil 2483 — passe 2 : séance au-delà du temps disponible'
+            ]
+  4 manquement(s) :
+  profil 2469 — passe 2 : semaine deload au rang 4
+  profil 2469 — passe 2 : 2 semaines de décharge ou de test
+  profil 2469 — restructuration session : contraintes dures day 3: sw-pompe-inclinee sans le matériel du jour | day 3: sw-pompe-inclinee inadmissible (niveau, prérequis, prudence) | day 3: 8 exercices pour 6
+  profil 2483 — passe 2 : séance au-delà du temps disponible
+  
+  package:matcher             expect
+  test/properties.dart 676:9  propertyShard.<fn>.<fn>
+  
+06:21 +85 -62: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9600 à 9759
+06:21 +85 -62: test/coach_properties_7_test.dart: chemin street, profils 8960 à 10239 profils 8960 à 9119 [E]
+  Bad state: No element
+  dart:core                                           List.first
+  package:kalis_plan/src/coach/skeleton.dart 2839:69  _buildFigures
+  package:kalis_plan/src/coach/skeleton.dart 3440:7   buildSkeleton
+  package:kalis_plan/src/coach/coach.dart 277:12      CoachEngine._skeleton
+  package:kalis_plan/src/coach/coach.dart 454:16      CoachEngine.createPass1
+  package:kalis_plan/src/engine.dart 186:21           KalisPlan.createPass1
+  test/coach_properties.dart 208:21                   checkCoachSeed
+  test/coach_properties.dart 572:27                   coachPropertyShard.<fn>.<fn>
+  
+06:21 +85 -63: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9600 à 9759
+06:21 +85 -63: test/coach_properties_7_test.dart: chemin street, profils 8960 à 10239 profils 9120 à 9279 [E]
+  Bad state: No element
+  dart:core                                           List.first
+  package:kalis_plan/src/coach/skeleton.dart 2839:69  _buildFigures
+  package:kalis_plan/src/coach/skeleton.dart 3440:7   buildSkeleton
+  package:kalis_plan/src/coach/coach.dart 277:12      CoachEngine._skeleton
+  package:kalis_plan/src/coach/coach.dart 454:16      CoachEngine.createPass1
+  package:kalis_plan/src/engine.dart 186:21           KalisPlan.createPass1
+  test/coach_properties.dart 208:21                   checkCoachSeed
+  test/coach_properties.dart 572:27                   coachPropertyShard.<fn>.<fn>
+  
+06:21 +85 -64: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9600 à 9759
+06:21 +85 -64: test/coach_properties_7_test.dart: chemin street, profils 8960 à 10239 profils 9280 à 9439 [E]
+  Bad state: No element
+  dart:core                                           List.first
+  package:kalis_plan/src/coach/skeleton.dart 2839:69  _buildFigures
+  package:kalis_plan/src/coach/skeleton.dart 3440:7   buildSkeleton
+  package:kalis_plan/src/coach/coach.dart 277:12      CoachEngine._skeleton
+  package:kalis_plan/src/coach/coach.dart 454:16      CoachEngine.createPass1
+  package:kalis_plan/src/engine.dart 186:21           KalisPlan.createPass1
+  test/coach_properties.dart 208:21                   checkCoachSeed
+  test/coach_properties.dart 572:27                   coachPropertyShard.<fn>.<fn>
+  
+06:22 +85 -65: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9600 à 9759
+06:22 +85 -65: test/coach_properties_7_test.dart: chemin street, profils 8960 à 10239 profils 9440 à 9599 [E]
+  Bad state: No element
+  dart:core                                           List.first
+  package:kalis_plan/src/coach/skeleton.dart 2839:69  _buildFigures
+  package:kalis_plan/src/coach/skeleton.dart 3440:7   buildSkeleton
+  package:kalis_plan/src/coach/coach.dart 277:12      CoachEngine._skeleton
+  package:kalis_plan/src/coach/coach.dart 454:16      CoachEngine.createPass1
+  package:kalis_plan/src/engine.dart 186:21           KalisPlan.createPass1
+  test/coach_properties.dart 208:21                   checkCoachSeed
+  test/coach_properties.dart 572:27                   coachPropertyShard.<fn>.<fn>
+  
+06:22 +85 -66: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9600 à 9759
+06:22 +85 -66: test/coach_properties_7_test.dart: chemin street, profils 8960 à 10239 profils 9600 à 9759 [E]
+  Bad state: No element
+  dart:core                                           List.first
+  package:kalis_plan/src/coach/skeleton.dart 2839:69  _buildFigures
+  package:kalis_plan/src/coach/skeleton.dart 3440:7   buildSkeleton
+  package:kalis_plan/src/coach/coach.dart 277:12      CoachEngine._skeleton
+  package:kalis_plan/src/coach/coach.dart 454:16      CoachEngine.createPass1
+  package:kalis_plan/src/engine.dart 186:21           KalisPlan.createPass1
+  test/coach_properties.dart 208:21                   checkCoachSeed
+  test/coach_properties.dart 572:27                   coachPropertyShard.<fn>.<fn>
+  
+06:22 +85 -67: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9600 à 9759
+06:22 +85 -67: test/coach_properties_7_test.dart: chemin street, profils 8960 à 10239 profils 9760 à 9919 [E]
+  Bad state: No element
+  dart:core                                           List.first
+  package:kalis_plan/src/coach/skeleton.dart 2839:69  _buildFigures
+  package:kalis_plan/src/coach/skeleton.dart 3440:7   buildSkeleton
+  package:kalis_plan/src/coach/coach.dart 277:12      CoachEngine._skeleton
+  package:kalis_plan/src/coach/coach.dart 454:16      CoachEngine.createPass1
+  package:kalis_plan/src/engine.dart 186:21           KalisPlan.createPass1
+  test/coach_properties.dart 208:21                   checkCoachSeed
+  test/coach_properties.dart 572:27                   coachPropertyShard.<fn>.<fn>
+  
+06:23 +85 -68: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9600 à 9759
+06:23 +85 -68: test/coach_properties_7_test.dart: chemin street, profils 8960 à 10239 profils 9920 à 10079 [E]
+  Bad state: No element
+  dart:core                                           List.first
+  package:kalis_plan/src/coach/skeleton.dart 2839:69  _buildFigures
+  package:kalis_plan/src/coach/skeleton.dart 3440:7   buildSkeleton
+  package:kalis_plan/src/coach/coach.dart 277:12      CoachEngine._skeleton
+  package:kalis_plan/src/coach/coach.dart 454:16      CoachEngine.createPass1
+  package:kalis_plan/src/engine.dart 186:21           KalisPlan.createPass1
+  test/coach_properties.dart 208:21                   checkCoachSeed
+  test/coach_properties.dart 572:27                   coachPropertyShard.<fn>.<fn>
+  
+06:23 +85 -69: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9600 à 9759
+06:23 +85 -69: test/coach_properties_7_test.dart: chemin street, profils 8960 à 10239 profils 10080 à 10239 [E]
+  Bad state: No element
+  dart:core                                           List.first
+  package:kalis_plan/src/coach/skeleton.dart 2839:69  _buildFigures
+  package:kalis_plan/src/coach/skeleton.dart 3440:7   buildSkeleton
+  package:kalis_plan/src/coach/coach.dart 277:12      CoachEngine._skeleton
+  package:kalis_plan/src/coach/coach.dart 454:16      CoachEngine.createPass1
+  package:kalis_plan/src/engine.dart 186:21           KalisPlan.createPass1
+  test/coach_properties.dart 208:21                   checkCoachSeed
+  test/coach_properties.dart 572:27                   coachPropertyShard.<fn>.<fn>
+  
+06:23 +86 -69: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9600 à 9759
+06:23 +87 -69: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9600 à 9759
+06:23 +88 -69: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9600 à 9759
+06:23 +89 -69: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9600 à 9759
+06:23 +90 -69: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9600 à 9759
+06:23 +91 -69: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9600 à 9759
+06:23 +92 -69: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9600 à 9759
+06:23 +93 -69: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9600 à 9759
+06:23 +94 -69: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9600 à 9759
+06:23 +95 -69: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9600 à 9759
+06:23 +96 -69: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9600 à 9759
+06:23 +97 -69: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9600 à 9759
+06:23 +98 -69: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9600 à 9759
+06:23 +99 -69: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9600 à 9759
+06:23 +100 -69: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9600 à 9759
+06:26 +100 -70: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5120 à 5279
+06:26 +100 -70: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9600 à 9759 [E]
+  Expected: empty
+    Actual: [
+              'profil 9643 — passe 2 : semaine deload au rang 3',
+              'profil 9643 — passe 2 : 2 semaines de décharge ou de test',
+              'profil 9693 — restructuration block : contraintes dures day 0: 1377 s pour 900 s | day 0: 5 exercices pour 2 | day 1: mo-wrist-push-ups inadmissible (niveau, prérequis, prudence)',
+              'profil 9733 — passe 2 : séance au-delà du temps disponible'
+            ]
+  4 manquement(s) :
+  profil 9643 — passe 2 : semaine deload au rang 3
+  profil 9643 — passe 2 : 2 semaines de décharge ou de test
+  profil 9693 — restructuration block : contraintes dures day 0: 1377 s pour 900 s | day 0: 5 exercices pour 2 | day 1: mo-wrist-push-ups inadmissible (niveau, prérequis, prudence)
+  profil 9733 — passe 2 : séance au-delà du temps disponible
+  
+  package:matcher             expect
+  test/properties.dart 676:9  propertyShard.<fn>.<fn>
+  
+06:40 +101 -70: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5120 à 5279
+06:41 +101 -71: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9920 à 10079
+06:41 +101 -71: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5120 à 5279 [E]
+  Expected: empty
+    Actual: [
+              'profil 5173 — passe 2 : séance au-delà du temps disponible',
+              'profil 5173 — restructuration block : contraintes dures day 0: mo-rotations-poignets inadmissible (niveau, prérequis, prudence) | day 0: sw-traction-negative inadmissible (niveau, prérequis, prudence) | day 0: sw-row-australien-genoux-flechis inadmissible (niveau, prérequis, prudence)'
+            ]
+  2 manquement(s) :
+  profil 5173 — passe 2 : séance au-delà du temps disponible
+  profil 5173 — restructuration block : contraintes dures day 0: mo-rotations-poignets inadmissible (niveau, prérequis, prudence) | day 0: sw-traction-negative inadmissible (niveau, prérequis, prudence) | day 0: sw-row-australien-genoux-flechis inadmissible (niveau, prérequis, prudence)
+  
+  package:matcher             expect
+  test/properties.dart 676:9  propertyShard.<fn>.<fn>
+  
+06:54 +101 -72: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5280 à 5439
+06:54 +101 -72: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9920 à 10079 [E]
+  Expected: empty
+    Actual: [
+              'profil 10061 — passe 2 : séance au-delà du temps disponible',
+              'profil 10061 — restructuration block : contraintes dures day 0: mo-wrist-push-ups inadmissible (niveau, prérequis, prudence) | day 0: 1357 s pour 900 s | day 0: 4 exercices pour 2'
+            ]
+  2 manquement(s) :
+  profil 10061 — passe 2 : séance au-delà du temps disponible
+  profil 10061 — restructuration block : contraintes dures day 0: mo-wrist-push-ups inadmissible (niveau, prérequis, prudence) | day 0: 1357 s pour 900 s | day 0: 4 exercices pour 2
+  
+  package:matcher             expect
+  test/properties.dart 676:9  propertyShard.<fn>.<fn>
+  
+06:56 +101 -73: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 10080 à 10239
+06:56 +101 -73: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5280 à 5439 [E]
+  Expected: empty
+    Actual: ['profil 5319 — passe 2 : séance au-delà du temps disponible']
+  1 manquement(s) :
+  profil 5319 — passe 2 : séance au-delà du temps disponible
+  
+  package:matcher             expect
+  test/properties.dart 676:9  propertyShard.<fn>.<fn>
+  
+07:07 +101 -74: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5440 à 5599
+07:07 +101 -74: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 10080 à 10239 [E]
+  Expected: empty
+    Actual: [
+              'profil 10133 — passe 2 : semaine intro plus chargée que la charge',
+              'profil 10133 — passe 2 : séance au-delà du temps disponible'
+            ]
+  2 manquement(s) :
+  profil 10133 — passe 2 : semaine intro plus chargée que la charge
+  profil 10133 — passe 2 : séance au-delà du temps disponible
+  
+  package:matcher             expect
+  test/properties.dart 676:9  propertyShard.<fn>.<fn>
+  
+07:08 +101 -75: test/coach_properties_2_test.dart: chemin street, profils 2560 à 3839 profils 2560 à 2719
+07:08 +101 -75: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5440 à 5599 [E]
+  Expected: empty
+    Actual: ['profil 5445 — passe 2 : séance au-delà du temps disponible']
+  1 manquement(s) :
+  profil 5445 — passe 2 : séance au-delà du temps disponible
+  
+  package:matcher             expect
+  test/properties.dart 676:9  propertyShard.<fn>.<fn>
+  
+07:09 +101 -76: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5600 à 5759
+07:09 +101 -76: test/coach_properties_2_test.dart: chemin street, profils 2560 à 3839 profils 2560 à 2719 [E]
+  Bad state: No element
+  dart:core                                           List.first
+  package:kalis_plan/src/coach/skeleton.dart 2839:69  _buildFigures
+  package:kalis_plan/src/coach/skeleton.dart 3440:7   buildSkeleton
+  package:kalis_plan/src/coach/coach.dart 277:12      CoachEngine._skeleton
+  package:kalis_plan/src/coach/coach.dart 454:16      CoachEngine.createPass1
+  package:kalis_plan/src/engine.dart 186:21           KalisPlan.createPass1
+  test/coach_properties.dart 208:21                   checkCoachSeed
+  test/coach_properties.dart 572:27                   coachPropertyShard.<fn>.<fn>
+  
+07:10 +101 -77: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5600 à 5759
+07:10 +101 -77: test/coach_properties_2_test.dart: chemin street, profils 2560 à 3839 profils 2720 à 2879 [E]
+  Bad state: No element
+  dart:core                                           List.first
+  package:kalis_plan/src/coach/skeleton.dart 2839:69  _buildFigures
+  package:kalis_plan/src/coach/skeleton.dart 3440:7   buildSkeleton
+  package:kalis_plan/src/coach/coach.dart 277:12      CoachEngine._skeleton
+  package:kalis_plan/src/coach/coach.dart 454:16      CoachEngine.createPass1
+  package:kalis_plan/src/engine.dart 186:21           KalisPlan.createPass1
+  test/coach_properties.dart 208:21                   checkCoachSeed
+  test/coach_properties.dart 572:27                   coachPropertyShard.<fn>.<fn>
+  
+07:11 +101 -78: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5600 à 5759
+07:11 +101 -78: test/coach_properties_2_test.dart: chemin street, profils 2560 à 3839 profils 2880 à 3039 [E]
+  Bad state: No element
+  dart:core                                           List.first
+  package:kalis_plan/src/coach/skeleton.dart 2839:69  _buildFigures
+  package:kalis_plan/src/coach/skeleton.dart 3440:7   buildSkeleton
+  package:kalis_plan/src/coach/coach.dart 277:12      CoachEngine._skeleton
+  package:kalis_plan/src/coach/coach.dart 454:16      CoachEngine.createPass1
+  package:kalis_plan/src/engine.dart 186:21           KalisPlan.createPass1
+  test/coach_properties.dart 208:21                   checkCoachSeed
+  test/coach_properties.dart 572:27                   coachPropertyShard.<fn>.<fn>
+  
+07:11 +101 -79: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5600 à 5759
+07:11 +101 -79: test/coach_properties_2_test.dart: chemin street, profils 2560 à 3839 profils 3040 à 3199 [E]
+  Bad state: No element
+  dart:core                                           List.first
+  package:kalis_plan/src/coach/skeleton.dart 2839:69  _buildFigures
+  package:kalis_plan/src/coach/skeleton.dart 3440:7   buildSkeleton
+  package:kalis_plan/src/coach/coach.dart 277:12      CoachEngine._skeleton
+  package:kalis_plan/src/coach/coach.dart 454:16      CoachEngine.createPass1
+  package:kalis_plan/src/engine.dart 186:21           KalisPlan.createPass1
+  test/coach_properties.dart 208:21                   checkCoachSeed
+  test/coach_properties.dart 572:27                   coachPropertyShard.<fn>.<fn>
+  
+07:11 +101 -80: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5600 à 5759
+07:11 +101 -80: test/coach_properties_2_test.dart: chemin street, profils 2560 à 3839 profils 3200 à 3359 [E]
+  Bad state: No element
+  dart:core                                           List.first
+  package:kalis_plan/src/coach/skeleton.dart 2839:69  _buildFigures
+  package:kalis_plan/src/coach/skeleton.dart 3440:7   buildSkeleton
+  package:kalis_plan/src/coach/coach.dart 277:12      CoachEngine._skeleton
+  package:kalis_plan/src/coach/coach.dart 454:16      CoachEngine.createPass1
+  package:kalis_plan/src/engine.dart 186:21           KalisPlan.createPass1
+  test/coach_properties.dart 208:21                   checkCoachSeed
+  test/coach_properties.dart 572:27                   coachPropertyShard.<fn>.<fn>
+  
+07:11 +101 -81: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5600 à 5759
+07:11 +101 -81: test/coach_properties_2_test.dart: chemin street, profils 2560 à 3839 profils 3360 à 3519 [E]
+  Bad state: No element
+  dart:core                                           List.last
+  package:kalis_plan/src/coach/skeleton.dart 2839:50  _buildFigures
+  package:kalis_plan/src/coach/skeleton.dart 3440:7   buildSkeleton
+  package:kalis_plan/src/coach/coach.dart 277:12      CoachEngine._skeleton
+  package:kalis_plan/src/coach/coach.dart 454:16      CoachEngine.createPass1
+  package:kalis_plan/src/engine.dart 186:21           KalisPlan.createPass1
+  test/coach_properties.dart 208:21                   checkCoachSeed
+  test/coach_properties.dart 572:27                   coachPropertyShard.<fn>.<fn>
+  
+07:11 +101 -82: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5600 à 5759
+07:11 +101 -82: test/coach_properties_2_test.dart: chemin street, profils 2560 à 3839 profils 3520 à 3679 [E]
+  Bad state: No element
+  dart:core                                           List.first
+  package:kalis_plan/src/coach/skeleton.dart 2839:69  _buildFigures
+  package:kalis_plan/src/coach/skeleton.dart 3440:7   buildSkeleton
+  package:kalis_plan/src/coach/coach.dart 277:12      CoachEngine._skeleton
+  package:kalis_plan/src/coach/coach.dart 454:16      CoachEngine.createPass1
+  package:kalis_plan/src/engine.dart 186:21           KalisPlan.createPass1
+  test/coach_properties.dart 208:21                   checkCoachSeed
+  test/coach_properties.dart 572:27                   coachPropertyShard.<fn>.<fn>
+  
+07:11 +101 -83: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5600 à 5759
+07:11 +101 -83: test/coach_properties_2_test.dart: chemin street, profils 2560 à 3839 profils 3680 à 3839 [E]
+  Bad state: No element
+  dart:core                                           List.first
+  package:kalis_plan/src/coach/skeleton.dart 2839:69  _buildFigures
+  package:kalis_plan/src/coach/skeleton.dart 3440:7   buildSkeleton
+  package:kalis_plan/src/coach/coach.dart 277:12      CoachEngine._skeleton
+  package:kalis_plan/src/coach/coach.dart 454:16      CoachEngine.createPass1
+  package:kalis_plan/src/engine.dart 186:21           KalisPlan.createPass1
+  test/coach_properties.dart 208:21                   checkCoachSeed
+  test/coach_properties.dart 572:27                   coachPropertyShard.<fn>.<fn>
+  
+07:12 +102 -83: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5600 à 5759
+07:12 +103 -83: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5600 à 5759
+07:12 +104 -83: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5600 à 5759
+07:18 +105 -83: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5600 à 5759
+07:23 +105 -84: test/resemblance_test.dart: 600 profils aléatoires : ressemblance sous le seuil, aucun accessoire propre au propriétaire sur-représenté sans discipline street
+07:23 +105 -84: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5600 à 5759 [E]
+  Expected: empty
+    Actual: ['profil 5651 — passe 2 : séance au-delà du temps disponible']
+  1 manquement(s) :
+  profil 5651 — passe 2 : séance au-delà du temps disponible
+  
+  package:matcher             expect
+  test/properties.dart 676:9  propertyShard.<fn>.<fn>
+  
+07:36 +105 -85: test/resemblance_test.dart: 600 profils aléatoires : ressemblance sous le seuil, aucun accessoire propre au propriétaire sur-représenté sans discipline street
+07:36 +105 -85: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5760 à 5919 [E]
+  Expected: empty
+    Actual: ['profil 5883 — passe 2 : séance au-delà du temps disponible']
+  1 manquement(s) :
+  profil 5883 — passe 2 : séance au-delà du temps disponible
+  
+  package:matcher             expect
+  test/properties.dart 676:9  propertyShard.<fn>.<fn>
+  
+07:48 +106 -85: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5920 à 6079
+07:49 +106 -86: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5920 à 6079
+07:49 +106 -86: test/coach_properties_1_test.dart: chemin street, profils 1280 à 2559 profils 1280 à 1439 [E]
+  Bad state: No element
+  dart:core                                           List.first
+  package:kalis_plan/src/coach/skeleton.dart 2839:69  _buildFigures
+  package:kalis_plan/src/coach/skeleton.dart 3440:7   buildSkeleton
+  package:kalis_plan/src/coach/coach.dart 277:12      CoachEngine._skeleton
+  package:kalis_plan/src/coach/coach.dart 454:16      CoachEngine.createPass1
+  package:kalis_plan/src/engine.dart 186:21           KalisPlan.createPass1
+  test/coach_properties.dart 208:21                   checkCoachSeed
+  test/coach_properties.dart 572:27                   coachPropertyShard.<fn>.<fn>
+  
+07:50 +106 -87: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5920 à 6079
+07:50 +106 -87: test/coach_properties_1_test.dart: chemin street, profils 1280 à 2559 profils 1440 à 1599 [E]
+  Bad state: No element
+  dart:core                                           List.first
+  package:kalis_plan/src/coach/skeleton.dart 2839:69  _buildFigures
+  package:kalis_plan/src/coach/skeleton.dart 3440:7   buildSkeleton
+  package:kalis_plan/src/coach/coach.dart 277:12      CoachEngine._skeleton
+  package:kalis_plan/src/coach/coach.dart 454:16      CoachEngine.createPass1
+  package:kalis_plan/src/engine.dart 186:21           KalisPlan.createPass1
+  test/coach_properties.dart 208:21                   checkCoachSeed
+  test/coach_properties.dart 572:27                   coachPropertyShard.<fn>.<fn>
+  
+07:50 +106 -88: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5920 à 6079
+07:50 +106 -88: test/coach_properties_1_test.dart: chemin street, profils 1280 à 2559 profils 1600 à 1759 [E]
+  Bad state: No element
+  dart:core                                           List.first
+  package:kalis_plan/src/coach/skeleton.dart 2839:69  _buildFigures
+  package:kalis_plan/src/coach/skeleton.dart 3440:7   buildSkeleton
+  package:kalis_plan/src/coach/coach.dart 277:12      CoachEngine._skeleton
+  package:kalis_plan/src/coach/coach.dart 454:16      CoachEngine.createPass1
+  package:kalis_plan/src/engine.dart 186:21           KalisPlan.createPass1
+  test/coach_properties.dart 208:21                   checkCoachSeed
+  test/coach_properties.dart 572:27                   coachPropertyShard.<fn>.<fn>
+  
+07:50 +106 -89: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5920 à 6079
+07:50 +106 -89: test/coach_properties_1_test.dart: chemin street, profils 1280 à 2559 profils 1760 à 1919 [E]
+  Bad state: No element
+  dart:core                                           List.first
+  package:kalis_plan/src/coach/skeleton.dart 2839:69  _buildFigures
+  package:kalis_plan/src/coach/skeleton.dart 3440:7   buildSkeleton
+  package:kalis_plan/src/coach/coach.dart 277:12      CoachEngine._skeleton
+  package:kalis_plan/src/coach/coach.dart 454:16      CoachEngine.createPass1
+  package:kalis_plan/src/engine.dart 186:21           KalisPlan.createPass1
+  test/coach_properties.dart 208:21                   checkCoachSeed
+  test/coach_properties.dart 572:27                   coachPropertyShard.<fn>.<fn>
+  
+07:50 +106 -90: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5920 à 6079
+07:50 +106 -90: test/coach_properties_1_test.dart: chemin street, profils 1280 à 2559 profils 1920 à 2079 [E]
+  Bad state: No element
+  dart:core                                           List.first
+  package:kalis_plan/src/coach/skeleton.dart 2839:69  _buildFigures
+  package:kalis_plan/src/coach/skeleton.dart 3440:7   buildSkeleton
+  package:kalis_plan/src/coach/coach.dart 277:12      CoachEngine._skeleton
+  package:kalis_plan/src/coach/coach.dart 454:16      CoachEngine.createPass1
+  package:kalis_plan/src/engine.dart 186:21           KalisPlan.createPass1
+  test/coach_properties.dart 208:21                   checkCoachSeed
+  test/coach_properties.dart 572:27                   coachPropertyShard.<fn>.<fn>
+  
+07:51 +106 -91: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5920 à 6079
+07:51 +106 -91: test/coach_properties_1_test.dart: chemin street, profils 1280 à 2559 profils 2080 à 2239 [E]
+  Bad state: No element
+  dart:core                                           List.first
+  package:kalis_plan/src/coach/skeleton.dart 2839:69  _buildFigures
+  package:kalis_plan/src/coach/skeleton.dart 3440:7   buildSkeleton
+  package:kalis_plan/src/coach/coach.dart 277:12      CoachEngine._skeleton
+  package:kalis_plan/src/coach/coach.dart 454:16      CoachEngine.createPass1
+  package:kalis_plan/src/engine.dart 186:21           KalisPlan.createPass1
+  test/coach_properties.dart 208:21                   checkCoachSeed
+  test/coach_properties.dart 572:27                   coachPropertyShard.<fn>.<fn>
+  
+07:51 +106 -92: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5920 à 6079
+07:51 +106 -92: test/coach_properties_1_test.dart: chemin street, profils 1280 à 2559 profils 2240 à 2399 [E]
+  Bad state: No element
+  dart:core                                           List.first
+  package:kalis_plan/src/coach/skeleton.dart 2839:69  _buildFigures
+  package:kalis_plan/src/coach/skeleton.dart 3440:7   buildSkeleton
+  package:kalis_plan/src/coach/coach.dart 277:12      CoachEngine._skeleton
+  package:kalis_plan/src/coach/coach.dart 454:16      CoachEngine.createPass1
+  package:kalis_plan/src/engine.dart 186:21           KalisPlan.createPass1
+  test/coach_properties.dart 208:21                   checkCoachSeed
+  test/coach_properties.dart 572:27                   coachPropertyShard.<fn>.<fn>
+  
+07:51 +106 -93: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5920 à 6079
+07:51 +106 -93: test/coach_properties_1_test.dart: chemin street, profils 1280 à 2559 profils 2400 à 2559 [E]
+  Bad state: No element
+  dart:core                                           List.first
+  package:kalis_plan/src/coach/skeleton.dart 2839:69  _buildFigures
+  package:kalis_plan/src/coach/skeleton.dart 3440:7   buildSkeleton
+  package:kalis_plan/src/coach/coach.dart 277:12      CoachEngine._skeleton
+  package:kalis_plan/src/coach/coach.dart 454:16      CoachEngine.createPass1
+  package:kalis_plan/src/engine.dart 186:21           KalisPlan.createPass1
+  test/coach_properties.dart 208:21                   checkCoachSeed
+  test/coach_properties.dart 572:27                   coachPropertyShard.<fn>.<fn>
+  
+07:51 +107 -93: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6400 à 6559
+08:07 +107 -94: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6400 à 6559
+08:07 +107 -94: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 6080 à 6239 [E]
+  Expected: empty
+    Actual: [
+              'profil 6115 — passe 2 : séance au-delà du temps disponible',
+              'profil 6147 — passe 2 : séance au-delà du temps disponible'
+            ]
+  2 manquement(s) :
+  profil 6115 — passe 2 : séance au-delà du temps disponible
+  profil 6147 — passe 2 : séance au-delà du temps disponible
+  
+  package:matcher             expect
+  test/properties.dart 676:9  propertyShard.<fn>.<fn>
+  
+08:11 +108 -94: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 6240 à 6399
+08:20 +108 -95: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6560 à 6719
+08:20 +108 -95: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 6240 à 6399 [E]
+  Expected: empty
+    Actual: [
+              'profil 6245 — restructuration session : contraintes dures day 1: 1218 s pour 1200 s | day 1: 4 exercices pour 3',
+              'profil 6249 — passe 2 : séance au-delà du temps disponible',
+              'profil 6277 — passe 2 : séance au-delà du temps disponible',
+              'profil 6339 — passe 2 : semaine deload au rang 4',
+              'profil 6339 — passe 2 : 2 semaines de décharge ou de test',
+              'profil 6365 — passe 2 : séance au-delà du temps disponible',
+              'profil 6365 — restructuration session : contraintes dures day 0: mo-pressions-doigts-appui inadmissible (niveau, prérequis, prudence) | day 0: sw-traction-assistee-pieds-au-sol inadmissible (niveau, prérequis, prudence) | day 0: sw-pompe-negative inadmissible (niveau, prérequis, prudence)',
+              'profil 6397 — passe 2 : séance au-delà du temps disponible'
+            ]
+  8 manquement(s) :
+  profil 6245 — restructuration session : contraintes dures day 1: 1218 s pour 1200 s | day 1: 4 exercices pour 3
+  profil 6249 — passe 2 : séance au-delà du temps disponible
+  profil 6277 — passe 2 : séance au-delà du temps disponible
+  profil 6339 — passe 2 : semaine deload au rang 4
+  profil 6339 — passe 2 : 2 semaines de décharge ou de test
+  profil 6365 — passe 2 : séance au-delà du temps disponible
+  profil 6365 — restructuration session : contraintes dures day 0: mo-pressions-doigts-appui inadmissible (niveau, prérequis, prudence) | day 0: sw-traction-assistee-pieds-au-sol inadmissible (niveau, prérequis, prudence) | day 0: sw-pompe-negative inadmissible (niveau, prérequis, prudence)
+  profil 6397 — passe 2 : séance au-delà du temps disponible
+  
+  package:matcher             expect
+  test/properties.dart 676:9  propertyShard.<fn>.<fn>
+  
+08:21 +108 -96: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6560 à 6719
+08:21 +108 -96: test/coach_properties_3_test.dart: chemin street, profils 3840 à 5119 profils 3840 à 3999 [E]
+  Bad state: No element
+  dart:core                                           List.first
+  package:kalis_plan/src/coach/skeleton.dart 2839:69  _buildFigures
+  package:kalis_plan/src/coach/skeleton.dart 3440:7   buildSkeleton
+  package:kalis_plan/src/coach/coach.dart 277:12      CoachEngine._skeleton
+  package:kalis_plan/src/coach/coach.dart 454:16      CoachEngine.createPass1
+  package:kalis_plan/src/engine.dart 186:21           KalisPlan.createPass1
+  test/coach_properties.dart 208:21                   checkCoachSeed
+  test/coach_properties.dart 572:27                   coachPropertyShard.<fn>.<fn>
+  
+08:21 +108 -97: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6560 à 6719
+08:21 +108 -97: test/coach_properties_3_test.dart: chemin street, profils 3840 à 5119 profils 4000 à 4159 [E]
+  Bad state: No element
+  dart:core                                           List.first
+  package:kalis_plan/src/coach/skeleton.dart 2839:69  _buildFigures
+  package:kalis_plan/src/coach/skeleton.dart 3440:7   buildSkeleton
+  package:kalis_plan/src/coach/coach.dart 277:12      CoachEngine._skeleton
+  package:kalis_plan/src/coach/coach.dart 454:16      CoachEngine.createPass1
+  package:kalis_plan/src/engine.dart 186:21           KalisPlan.createPass1
+  test/coach_properties.dart 208:21                   checkCoachSeed
+  test/coach_properties.dart 572:27                   coachPropertyShard.<fn>.<fn>
+  
+08:21 +108 -98: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6560 à 6719
+08:21 +108 -98: test/coach_properties_3_test.dart: chemin street, profils 3840 à 5119 profils 4160 à 4319 [E]
+  Bad state: No element
+  dart:core                                           List.first
+  package:kalis_plan/src/coach/skeleton.dart 2839:69  _buildFigures
+  package:kalis_plan/src/coach/skeleton.dart 3440:7   buildSkeleton
+  package:kalis_plan/src/coach/coach.dart 277:12      CoachEngine._skeleton
+  package:kalis_plan/src/coach/coach.dart 454:16      CoachEngine.createPass1
+  package:kalis_plan/src/engine.dart 186:21           KalisPlan.createPass1
+  test/coach_properties.dart 208:21                   checkCoachSeed
+  test/coach_properties.dart 572:27                   coachPropertyShard.<fn>.<fn>
+  
+08:22 +108 -99: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6560 à 6719
+08:22 +108 -99: test/coach_properties_3_test.dart: chemin street, profils 3840 à 5119 profils 4320 à 4479 [E]
+  Bad state: No element
+  dart:core                                           List.first
+  package:kalis_plan/src/coach/skeleton.dart 2839:69  _buildFigures
+  package:kalis_plan/src/coach/skeleton.dart 3440:7   buildSkeleton
+  package:kalis_plan/src/coach/coach.dart 277:12      CoachEngine._skeleton
+  package:kalis_plan/src/coach/coach.dart 454:16      CoachEngine.createPass1
+  package:kalis_plan/src/engine.dart 186:21           KalisPlan.createPass1
+  test/coach_properties.dart 208:21                   checkCoachSeed
+  test/coach_properties.dart 572:27                   coachPropertyShard.<fn>.<fn>
+  
+08:23 +108 -100: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6560 à 6719
+08:23 +108 -100: test/coach_properties_3_test.dart: chemin street, profils 3840 à 5119 profils 4480 à 4639 [E]
+  Bad state: No element
+  dart:core                                           List.first
+  package:kalis_plan/src/coach/skeleton.dart 2839:69  _buildFigures
+  package:kalis_plan/src/coach/skeleton.dart 3440:7   buildSkeleton
+  package:kalis_plan/src/coach/coach.dart 277:12      CoachEngine._skeleton
+  package:kalis_plan/src/coach/coach.dart 454:16      CoachEngine.createPass1
+  package:kalis_plan/src/engine.dart 186:21           KalisPlan.createPass1
+  test/coach_properties.dart 208:21                   checkCoachSeed
+  test/coach_properties.dart 572:27                   coachPropertyShard.<fn>.<fn>
+  
+08:23 +108 -101: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6560 à 6719
+08:23 +108 -101: test/coach_properties_3_test.dart: chemin street, profils 3840 à 5119 profils 4640 à 4799 [E]
+  Bad state: No element
+  dart:core                                           List.last
+  package:kalis_plan/src/coach/skeleton.dart 2839:50  _buildFigures
+  package:kalis_plan/src/coach/skeleton.dart 3440:7   buildSkeleton
+  package:kalis_plan/src/coach/coach.dart 277:12      CoachEngine._skeleton
+  package:kalis_plan/src/coach/coach.dart 454:16      CoachEngine.createPass1
+  package:kalis_plan/src/engine.dart 186:21           KalisPlan.createPass1
+  test/coach_properties.dart 208:21                   checkCoachSeed
+  test/coach_properties.dart 572:27                   coachPropertyShard.<fn>.<fn>
+  
+08:23 +108 -102: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6560 à 6719
+08:23 +108 -102: test/coach_properties_3_test.dart: chemin street, profils 3840 à 5119 profils 4800 à 4959 [E]
+  Bad state: No element
+  dart:core                                           List.first
+  package:kalis_plan/src/coach/skeleton.dart 2839:69  _buildFigures
+  package:kalis_plan/src/coach/skeleton.dart 3440:7   buildSkeleton
+  package:kalis_plan/src/coach/coach.dart 277:12      CoachEngine._skeleton
+  package:kalis_plan/src/coach/coach.dart 454:16      CoachEngine.createPass1
+  package:kalis_plan/src/engine.dart 186:21           KalisPlan.createPass1
+  test/coach_properties.dart 208:21                   checkCoachSeed
+  test/coach_properties.dart 572:27                   coachPropertyShard.<fn>.<fn>
+  
+08:23 +108 -103: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6560 à 6719
+08:23 +108 -103: test/coach_properties_3_test.dart: chemin street, profils 3840 à 5119 profils 4960 à 5119 [E]
+  Bad state: No element
+  dart:core                                           List.first
+  package:kalis_plan/src/coach/skeleton.dart 2839:69  _buildFigures
+  package:kalis_plan/src/coach/skeleton.dart 3440:7   buildSkeleton
+  package:kalis_plan/src/coach/coach.dart 277:12      CoachEngine._skeleton
+  package:kalis_plan/src/coach/coach.dart 454:16      CoachEngine.createPass1
+  package:kalis_plan/src/engine.dart 186:21           KalisPlan.createPass1
+  test/coach_properties.dart 208:21                   checkCoachSeed
+  test/coach_properties.dart 572:27                   coachPropertyShard.<fn>.<fn>
+  
+08:24 +108 -104: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6560 à 6719
+08:24 +108 -104: test/coach_properties_5_test.dart: chemin street, profils 6400 à 7679 profils 6400 à 6559 [E]
+  Bad state: No element
+  dart:core                                           List.first
+  package:kalis_plan/src/coach/skeleton.dart 2839:69  _buildFigures
+  package:kalis_plan/src/coach/skeleton.dart 3440:7   buildSkeleton
+  package:kalis_plan/src/coach/coach.dart 277:12      CoachEngine._skeleton
+  package:kalis_plan/src/coach/coach.dart 454:16      CoachEngine.createPass1
+  package:kalis_plan/src/engine.dart 186:21           KalisPlan.createPass1
+  test/coach_properties.dart 208:21                   checkCoachSeed
+  test/coach_properties.dart 572:27                   coachPropertyShard.<fn>.<fn>
+  
+08:24 +108 -105: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6560 à 6719
+08:24 +108 -105: test/coach_properties_5_test.dart: chemin street, profils 6400 à 7679 profils 6560 à 6719 [E]
+  Bad state: No element
+  dart:core                                           List.first
+  package:kalis_plan/src/coach/skeleton.dart 2839:69  _buildFigures
+  package:kalis_plan/src/coach/skeleton.dart 3440:7   buildSkeleton
+  package:kalis_plan/src/coach/coach.dart 277:12      CoachEngine._skeleton
+  package:kalis_plan/src/coach/coach.dart 454:16      CoachEngine.createPass1
+  package:kalis_plan/src/engine.dart 186:21           KalisPlan.createPass1
+  test/coach_properties.dart 208:21                   checkCoachSeed
+  test/coach_properties.dart 572:27                   coachPropertyShard.<fn>.<fn>
+  
+08:24 +108 -106: test/coach_properties_5_test.dart: chemin street, profils 6400 à 7679 profils 6720 à 6879
+08:25 +108 -106: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6560 à 6719 [E]
+  Expected: empty
+    Actual: ['profil 6681 — passe 2 : séance au-delà du temps disponible']
+  1 manquement(s) :
+  profil 6681 — passe 2 : séance au-delà du temps disponible
+  
+  package:matcher             expect
+  test/properties.dart 676:9  propertyShard.<fn>.<fn>
+  
+08:25 +108 -107: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6720 à 6879
+08:25 +108 -107: test/coach_properties_5_test.dart: chemin street, profils 6400 à 7679 profils 6720 à 6879 [E]
+  Bad state: No element
+  dart:core                                           List.first
+  package:kalis_plan/src/coach/skeleton.dart 2839:69  _buildFigures
+  package:kalis_plan/src/coach/skeleton.dart 3440:7   buildSkeleton
+  package:kalis_plan/src/coach/coach.dart 277:12      CoachEngine._skeleton
+  package:kalis_plan/src/coach/coach.dart 454:16      CoachEngine.createPass1
+  package:kalis_plan/src/engine.dart 186:21           KalisPlan.createPass1
+  test/coach_properties.dart 208:21                   checkCoachSeed
+  test/coach_properties.dart 572:27                   coachPropertyShard.<fn>.<fn>
+  
+08:26 +108 -108: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6720 à 6879
+08:26 +108 -108: test/coach_properties_5_test.dart: chemin street, profils 6400 à 7679 profils 6880 à 7039 [E]
+  Bad state: No element
+  dart:core                                           List.first
+  package:kalis_plan/src/coach/skeleton.dart 2839:69  _buildFigures
+  package:kalis_plan/src/coach/skeleton.dart 3440:7   buildSkeleton
+  package:kalis_plan/src/coach/coach.dart 277:12      CoachEngine._skeleton
+  package:kalis_plan/src/coach/coach.dart 454:16      CoachEngine.createPass1
+  package:kalis_plan/src/engine.dart 186:21           KalisPlan.createPass1
+  test/coach_properties.dart 208:21                   checkCoachSeed
+  test/coach_properties.dart 572:27                   coachPropertyShard.<fn>.<fn>
+  
+08:27 +108 -109: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6720 à 6879
+08:27 +108 -109: test/coach_properties_5_test.dart: chemin street, profils 6400 à 7679 profils 7040 à 7199 [E]
+  Bad state: No element
+  dart:core                                           List.first
+  package:kalis_plan/src/coach/skeleton.dart 2839:69  _buildFigures
+  package:kalis_plan/src/coach/skeleton.dart 3440:7   buildSkeleton
+  package:kalis_plan/src/coach/coach.dart 277:12      CoachEngine._skeleton
+  package:kalis_plan/src/coach/coach.dart 454:16      CoachEngine.createPass1
+  package:kalis_plan/src/engine.dart 186:21           KalisPlan.createPass1
+  test/coach_properties.dart 208:21                   checkCoachSeed
+  test/coach_properties.dart 572:27                   coachPropertyShard.<fn>.<fn>
+  
+08:28 +108 -110: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6720 à 6879
+08:28 +108 -110: test/coach_properties_5_test.dart: chemin street, profils 6400 à 7679 profils 7200 à 7359 [E]
+  Bad state: No element
+  dart:core                                           List.first
+  package:kalis_plan/src/coach/skeleton.dart 2839:69  _buildFigures
+  package:kalis_plan/src/coach/skeleton.dart 3440:7   buildSkeleton
+  package:kalis_plan/src/coach/coach.dart 277:12      CoachEngine._skeleton
+  package:kalis_plan/src/coach/coach.dart 454:16      CoachEngine.createPass1
+  package:kalis_plan/src/engine.dart 186:21           KalisPlan.createPass1
+  test/coach_properties.dart 208:21                   checkCoachSeed
+  test/coach_properties.dart 572:27                   coachPropertyShard.<fn>.<fn>
+  
+08:28 +108 -111: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6720 à 6879
+08:28 +108 -111: test/coach_properties_5_test.dart: chemin street, profils 6400 à 7679 profils 7360 à 7519 [E]
+  Bad state: No element
+  dart:core                                           List.first
+  package:kalis_plan/src/coach/skeleton.dart 2839:69  _buildFigures
+  package:kalis_plan/src/coach/skeleton.dart 3440:7   buildSkeleton
+  package:kalis_plan/src/coach/coach.dart 277:12      CoachEngine._skeleton
+  package:kalis_plan/src/coach/coach.dart 454:16      CoachEngine.createPass1
+  package:kalis_plan/src/engine.dart 186:21           KalisPlan.createPass1
+  test/coach_properties.dart 208:21                   checkCoachSeed
+  test/coach_properties.dart 572:27                   coachPropertyShard.<fn>.<fn>
+  
+08:28 +108 -112: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6720 à 6879
+08:28 +108 -112: test/coach_properties_5_test.dart: chemin street, profils 6400 à 7679 profils 7520 à 7679 [E]
+  Bad state: No element
+  dart:core                                           List.first
+  package:kalis_plan/src/coach/skeleton.dart 2839:69  _buildFigures
+  package:kalis_plan/src/coach/skeleton.dart 3440:7   buildSkeleton
+  package:kalis_plan/src/coach/coach.dart 277:12      CoachEngine._skeleton
+  package:kalis_plan/src/coach/coach.dart 454:16      CoachEngine.createPass1
+  package:kalis_plan/src/engine.dart 186:21           KalisPlan.createPass1
+  test/coach_properties.dart 208:21                   checkCoachSeed
+  test/coach_properties.dart 572:27                   coachPropertyShard.<fn>.<fn>
+  
+08:38 +108 -113: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6720 à 6879 [E]
+  Expected: empty
+    Actual: [
+              'profil 6749 — passe 2 : semaine deload au rang 3',
+              'profil 6749 — passe 2 : 2 semaines de décharge ou de test',
+              'profil 6749 — restructuration session : contraintes dures day 0: mo-wrist-push-ups inadmissible (niveau, prérequis, prudence) | day 0: sw-traction-assistee-elastique inadmissible (niveau, prérequis, prudence) | day 0: sw-row-australien-genoux-flechis inadmissible (niveau, prérequis, prudence)'
+            ]
+  3 manquement(s) :
+  profil 6749 — passe 2 : semaine deload au rang 3
+  profil 6749 — passe 2 : 2 semaines de décharge ou de test
+  profil 6749 — restructuration session : contraintes dures day 0: mo-wrist-push-ups inadmissible (niveau, prérequis, prudence) | day 0: sw-traction-assistee-elastique inadmissible (niveau, prérequis, prudence) | day 0: sw-row-australien-genoux-flechis inadmissible (niveau, prérequis, prudence)
+  
+  package:matcher             expect
+  test/properties.dart 676:9  propertyShard.<fn>.<fn>
+  
+08:38 +108 -113: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6880 à 7039
+08:52 +109 -113: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 7040 à 7199
+09:05 +109 -114: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 7040 à 7199 [E]
+  Expected: empty
+    Actual: [
+              'profil 7109 — passe 2 : séance au-delà du temps disponible',
+              'profil 7109 — restructuration block : contraintes dures day 0: mo-wrist-push-ups inadmissible (niveau, prérequis, prudence) | day 0: sw-pompe-inclinee inadmissible (niveau, prérequis, prudence) | day 1: sw-pompe-inclinee inadmissible (niveau, prérequis, prudence)',
+              'profil 7125 — restructuration session : contraintes dures day 2: mo-wrist-push-ups inadmissible (niveau, prérequis, prudence) | day 2: sw-traction-prise-mixte inadmissible (niveau, prérequis, prudence) | day 2: sw-pompe-inclinee sans le matériel du jour'
+            ]
+  3 manquement(s) :
+  profil 7109 — passe 2 : séance au-delà du temps disponible
+  profil 7109 — restructuration block : contraintes dures day 0: mo-wrist-push-ups inadmissible (niveau, prérequis, prudence) | day 0: sw-pompe-inclinee inadmissible (niveau, prérequis, prudence) | day 1: sw-pompe-inclinee inadmissible (niveau, prérequis, prudence)
+  profil 7125 — restructuration session : contraintes dures day 2: mo-wrist-push-ups inadmissible (niveau, prérequis, prudence) | day 2: sw-traction-prise-mixte inadmissible (niveau, prérequis, prudence) | day 2: sw-pompe-inclinee sans le matériel du jour
+  
+  package:matcher             expect
+  test/properties.dart 676:9  propertyShard.<fn>.<fn>
+  
+09:05 +109 -114: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 7200 à 7359
+09:18 +109 -115: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 7200 à 7359 [E]
+  Expected: empty
+    Actual: [
+              'profil 7331 — passe 2 : séance au-delà du temps disponible',
+              'profil 7331 — bloc suivant : semaine deload au rang 3',
+              'profil 7331 — bloc suivant : 2 semaines de décharge ou de test'
+            ]
+  3 manquement(s) :
+  profil 7331 — passe 2 : séance au-delà du temps disponible
+  profil 7331 — bloc suivant : semaine deload au rang 3
+  profil 7331 — bloc suivant : 2 semaines de décharge ou de test
+  
+  package:matcher             expect
+  test/properties.dart 676:9  propertyShard.<fn>.<fn>
+  
+09:18 +109 -115: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 7360 à 7519
+09:32 +109 -116: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 7360 à 7519 [E]
+  Expected: empty
+    Actual: ['profil 7491 — passe 2 : séance au-delà du temps disponible']
+  1 manquement(s) :
+  profil 7491 — passe 2 : séance au-delà du temps disponible
+  
+  package:matcher             expect
+  test/properties.dart 676:9  propertyShard.<fn>.<fn>
+  
+09:32 +109 -116: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 7520 à 7679
+09:45 +109 -117: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 7520 à 7679 [E]
+  Expected: empty
+    Actual: [
+              'profil 7533 — restructuration session : contraintes dures day 2: mo-wrist-push-ups inadmissible (niveau, prérequis, prudence) | day 2: 2094 s pour 600 s | day 2: 7 exercices pour 2'
+            ]
+  1 manquement(s) :
+  profil 7533 — restructuration session : contraintes dures day 2: mo-wrist-push-ups inadmissible (niveau, prérequis, prudence) | day 2: 2094 s pour 600 s | day 2: 7 exercices pour 2
+  
+  package:matcher             expect
+  test/properties.dart 676:9  propertyShard.<fn>.<fn>
+  
+09:45 +109 -117: Some tests failed.
+
+Failing tests:
+  test/coach_properties_0_test.dart: chemin street, profils 0 à 1279 profils 0 à 159
+  test/coach_properties_0_test.dart: chemin street, profils 0 à 1279 profils 1120 à 1279
+  test/coach_properties_0_test.dart: chemin street, profils 0 à 1279 profils 160 à 319
+  test/coach_properties_0_test.dart: chemin street, profils 0 à 1279 profils 320 à 479
+  ... and 113 more
+
+Consider enabling the flag chain-stack-traces to receive more detailed exceptions.
+For example, 'dart test --chain-stack-traces'.
+tests : échec
+kalis_plan 0.2.2 : rapport écrit dans /home/runner/work/streetlift-apk/streetlift-apk/out-packages/kalis_plan (167 s).
+durée : 764 s
