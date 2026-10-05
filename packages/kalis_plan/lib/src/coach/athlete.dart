@@ -125,6 +125,14 @@ bool coachPainProvokes(CatalogExercise e, BodyZone zone) {
   return false;
 }
 
+/// Vrai si [e] est écarté pendant un arrêt pour douleur qui dure sur
+/// [zone] (et ramené par la reprise graduée) : mouvements qui provoquent
+/// la zone et, pour le coude, tirage vertical en pronation (CX,
+/// correction 1).
+bool coachPainStopHits(CatalogExercise e, BodyZone zone) =>
+    coachPainProvokes(e, zone) ||
+    (zone == BodyZone.elbow && coachPronationPull(e));
+
 /// Vrai pour un tirage vertical en pronation (prise ordinaire ou large,
 /// derrière la nuque) : la prise la plus provocante d'une tendinopathie
 /// des fléchisseurs et pronateurs du coude (NCBI Bookshelf, épicondylite
@@ -709,7 +717,7 @@ final class Athlete {
         return false;
       }
       for (final zone in stopZones) {
-        if (coachPainProvokes(e, zone)) {
+        if (coachPainStopHits(e, zone)) {
           return false;
         }
       }
@@ -1047,7 +1055,7 @@ final class Athlete {
   double? returnShareOf(CatalogExercise e, int loaded) {
     double? least;
     for (final entry in returnSteps.entries) {
-      if (!coachPainProvokes(e, entry.key)) {
+      if (!coachPainStopHits(e, entry.key)) {
         continue;
       }
       final step = entry.value + (loaded < 0 ? 0 : loaded);
@@ -1223,7 +1231,7 @@ final class Athlete {
     // deux semaines à 2 sur 10 au plus (NHS : consulter si la douleur ne
     // s'améliore pas en deux semaines ou revient).
     for (final zone in stopZones) {
-      if (coachPainProvokes(e, zone)) {
+      if (coachPainStopHits(e, zone)) {
         return 'joint';
       }
     }

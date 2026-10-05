@@ -19,6 +19,7 @@ export 'src/coach/athlete.dart'
         CoachLimit,
         coachEligible,
         coachPainProvokes,
+        coachPainStopHits,
         coachPronationPull;
 export 'src/coach/audit.dart';
 export 'src/coach/coach.dart'

@@ -5,7 +5,7 @@ library;
 
 import 'package:kalis_core/kalis_core.dart';
 import 'package:kalis_plan/kalis_plan.dart'
-    show coachPainProvokes, planSimilarity;
+    show coachPainStopHits, planSimilarity;
 
 import 'book.dart';
 import 'coach.dart';
@@ -395,7 +395,7 @@ SessionPlan buildSessionPlan(
         if (d.removed ||
             info == null ||
             d.item.kind == SetKind.warmup ||
-            !coachPainProvokes(info.exercise, stop.zone)) {
+            !coachPainStopHits(info.exercise, stop.zone)) {
           continue;
         }
         d.removed = true;
@@ -524,7 +524,10 @@ SessionPlan buildSessionPlan(
   // jour, au moins 48 h après, avant le travail du jour (règle du
   // programme : « un test fait un jour de bilan bas se reporte de 48 à
   // 72 h » ; R3-P16).
-  if (coached && health.level == 0 && week != null) {
+  // (Jamais un jour de douleur au-dessus du seuil, ni sur une zone à
+  // l'arrêt.)
+  final stops = coached ? state.painStops(day) : const <PainStop>[];
+  if (coached && health.level == 0 && painsToday.isEmpty && week != null) {
     final doneTests = <String>{};
     for (final d in replayed.digests) {
       final ref = d.session.programRef;
@@ -569,7 +572,8 @@ SessionPlan buildSessionPlan(
             item.test == null ||
             info == null ||
             doneTests.contains(item.exerciseId) ||
-            today.contains(item.exerciseId)) {
+            today.contains(item.exerciseId) ||
+            stops.any((x) => coachPainStopHits(info.exercise, x.zone))) {
           continue;
         }
         final moved = _Draft(item, info, view.roleOf(item.slotId))

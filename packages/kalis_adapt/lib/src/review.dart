@@ -7,7 +7,7 @@ import 'package:kalis_core/kalis_core.dart';
 import 'package:kalis_plan/kalis_plan.dart'
     show
         MuscleGroup,
-        coachPainProvokes,
+        coachPainStopHits,
         deloadRirBonus,
         deloadVolumeFactor,
         volumeBandsByLevel;
@@ -837,7 +837,7 @@ AdaptReview buildReview(
             for (final slot in d.slots)
               if (!slot.locked)
                 if (ctx.catalog.find(slot.exerciseId) case final e?
-                    when coachPainProvokes(e, stop.zone))
+                    when coachPainStopHits(e, stop.zone))
                   slot.slotId,
         };
         if (free.isEmpty) {

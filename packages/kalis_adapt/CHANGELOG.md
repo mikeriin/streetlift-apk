@@ -1,5 +1,27 @@
 # Journal des versions de kalis_adapt
 
+## 0.2.2
+
+Lot « CX correction 1 » du pipeline « Calibrage des programmes » (croisement avec `kalis_plan` 0.2.2).
+`kalis_core` 0.4.2. Le mode 0.1 est inchangé. Détail et sources : `CONTRAT.md`, § 11.
+
+- **Douleur qui dure ou qui revient (mode coach, sécurité)** : suivi daté des signalements par zone ; arrêt
+  quand la douleur reste à 3/10 ou plus deux semaines, à 5/10 ou plus plus d'une semaine, ou revient dans les
+  douze semaines après un épisode réel ; levé après deux semaines sans signalement au-dessus de 2/10. Pendant
+  l'arrêt, les mouvements qui provoquent la zone sont retirés des séances (`adapt.pain_persistent`) et la
+  revue propose de les écarter du bloc ; la douleur montrée dans le journal reste celle du dernier
+  signalement récent.
+- **Sous-dosage** : chaque série est jugée contre sa propre réserve visée ; une série facile n'est plus lue
+  comme « plus dure que prévu » ; une série au ressenti qui suppose moins de 90 % de la prédiction est lue
+  comme une borne basse ; cran d'élastique retiré après deux séances au haut de la plage (ou une première
+  série dite deux répétitions plus facile).
+- **Tests** : retirés un jour de bilan bas (1 sur 5 de baisse ou plus) et refaits à une séance suivante de la
+  semaine, 48 h après au moins, un bon jour sans douleur.
+- **Charges** : tentatives (ouverture 91 %, deuxième +5 % au plus, troisième +3 % au plus, +5 kg de charge
+  externe au plus ; la meilleure barre entre la réussie et la manquée est reportée) ; −7,5 % après une série
+  manquée non voulue ; simple d'entraînement à 92 % du maximum estimé au plus (85 % un jour de bilan bas) ;
+  semaine allégée ou de test : jamais plus lourd que la charge écrite.
+
 ## 0.2.1
 
 Lot CX du pipeline « Calibrage des programmes » (croisement avec `kalis_plan` 0.2.1). `kalis_core` 0.4.2.
