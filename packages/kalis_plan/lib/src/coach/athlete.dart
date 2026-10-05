@@ -657,7 +657,6 @@ final class Athlete {
           // l'épreuve à 88 à 92 % du maximum du jour.)
           final capacity = e.capacity * (1 + coachEstimateLoadBias);
           final external = capacity - fraction * bodyWeight;
-          final total = (before ?? 0) + fraction * bodyWeight;
           // (Une amplitude partielle surchargée ne prend pas d'estimation
           // sans record : ses séries servies ne mesurent pas un 1RM.)
           // (Seuls les mouvements de compétition lestés prennent une
@@ -666,10 +665,12 @@ final class Athlete {
           final partial =
               e.exerciseId.contains('partiel') ||
               !e.exerciseId.startsWith('sl-');
-          if ((before == null && external > 0 && !partial) ||
-              (before != null &&
-                  external > 0 &&
-                  capacity < total * (1 - coachEstimateLoadMargin))) {
+          // (Un 1RM déclaré ou testé n'est plus abaissé par l'estimation :
+          // une série loin de l'échec la tire vers le bas — panel CX
+          // correction 1, 1RM de référence à 115 kg pour un record à 132 ;
+          // la baisse passe par un test. L'estimation sert un mouvement
+          // sans repère.)
+          if (before == null && external > 0 && !partial) {
             oneRm[e.exerciseId] = external;
             recordDay[e.exerciseId] = seen;
           }

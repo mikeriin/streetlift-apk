@@ -51,6 +51,9 @@ abstract final class CoachNotes {
   /// Descente freinée (`value` : secondes de descente).
   static const String slowNegative = 'slow_negative';
 
+  /// Traction complète au tempo lent (montée tirée, descente freinée).
+  static const String slowTempo = 'slow_tempo';
+
   /// Jour de l'échéance (`value` : jours entre la séance et l'échéance).
   static const String eventDay = 'event_day';
 
@@ -375,6 +378,7 @@ abstract final class CoachNotes {
     qualityFirst,
     submaximalHold,
     slowNegative,
+    slowTempo,
     eventDay,
     recovery,
     calibrate,
@@ -687,9 +691,14 @@ final class _Draft {
 
 /// Mesures d'une semaine déjà prescrite, pour les garde-fous de montée.
 final class _WeekTrace {
-  _WeekTrace(this.light);
+  _WeekTrace(this.light, {this.restart = false});
 
   final bool light;
+
+  /// Semaine de transition ou d'introduction (reprise après une échéance
+  /// ou une coupure) : la charge qui suit remonte par paliers, même quand
+  /// le nombre de répétitions change.
+  final bool restart;
   final List<double> groups = List<double>.filled(MuscleGroup.values.length, 0);
   final List<double> straightArm = <double>[0, 0, 0];
   double hard = 0;
@@ -1923,7 +1932,8 @@ final class Prescriber {
           when != null &&
           (b.source == BenchmarkSource.guidedTest ||
               b.source == BenchmarkSource.competition) &&
-          (b.kind == BenchmarkKind.maxReps || b.kind == BenchmarkKind.maxHold) &&
+          (b.kind == BenchmarkKind.maxReps ||
+              b.kind == BenchmarkKind.maxHold) &&
           when.compareTo(from) >= 0) {
         return true;
       }
@@ -2143,7 +2153,8 @@ final class Prescriber {
       // entre les séries (R4-G4 : endurance de force, 15 à 60 s chez
       // l'avancé ; panel CX correction 1 : séries allégées à 3 min et très
       // loin de l'échec, sans effet sur l'endurance spécifique).
-      ..rest = _repsAim && (realization || ws.intent == WeekIntent.intensification)
+      ..rest =
+          _repsAim && (realization || ws.intent == WeekIntent.intensification)
           ? 120
           : 180
       ..backoff = true
@@ -2472,9 +2483,12 @@ final class Prescriber {
       high = _clampInt(_round(base * 0.6) - 2, 4, 12);
     }
     if (e.id.contains('tempo-excentrique')) {
-      // Traction lente : descente en 4 s, 2 s tenues en haut — 3 à 6
-      // répétitions (environ un tiers du maximum au tempo normal).
-      high = _clampInt(_round(base * 0.35), 4, 6);
+      // Traction complète au tempo lent : montée tirée, 2 s tenues en haut,
+      // descente en 4 s — environ 45 % du maximum au tempo normal, 4 à 10
+      // répétitions (CX, correction 1, panel : à 3 à 6 répétitions, un
+      // athlète à 18 tractions finissait à 8 de réserve ; la montée n'est
+      // pas sautée).
+      high = _clampInt(_round(base * 0.45), 4, 10);
       x
         ..tempo = const Tempo(
           eccentricSeconds: 4,
@@ -2482,7 +2496,7 @@ final class Prescriber {
           concentricSeconds: 0,
           topPauseSeconds: 2,
         )
-        ..reasons.add(_note(CoachNotes.slowNegative, 4));
+        ..reasons.add(_note(CoachNotes.slowTempo, 4));
     }
     x
       ..repsLow = (high - 2 < 3 ? 3 : high - 2) + _shift(ws)
@@ -2746,15 +2760,17 @@ final class Prescriber {
         _level >= 1;
     var part = share;
     if (intense) {
+      // (65 % puis 70 % : panel CX correction 1, plafond écrit de 80 %
+      // dépassé en réalisation après arrondi.)
       part = switch (ws.intent) {
-        WeekIntent.intensification => 0.70,
-        WeekIntent.realization => 0.75,
+        WeekIntent.intensification => 0.65,
+        WeekIntent.realization => 0.70,
         _ => 0.60,
       };
     }
     if (ws.kind == WeekKind.build && known > 0) {
       part += 0.02 * (stage > 2 ? 2 : stage);
-      final top = intense ? 0.80 : 0.70;
+      final top = intense ? 0.75 : 0.70;
       if (part > top) {
         part = top;
       }
@@ -2764,7 +2780,7 @@ final class Prescriber {
     // tenue « à 60 % » une tenue à 50 % — panel CX correction 1, front
     // lever de `street_10` à 4 s pour un repère de 8 s.)
     var hold = known > 0 ? (known * part + 1e-9).round() : fallback;
-    if (known > 0 && hold > known * (part + 0.05) + 1e-9) {
+    if (known > 0 && hold > known * (part + 0.04) + 1e-9) {
       hold = (known * part + 1e-9).floor();
     }
     if (known <= 0 && ws.kind == WeekKind.build && stage >= 2) {
@@ -3993,9 +4009,7 @@ final class Prescriber {
             (s.method == Method.beginnerMain && s.role == SlotRole.main) ||
             (s.method == Method.repsStrength && s.role == SlotRole.main),
       );
-      if (main &&
-          _testDayOk(d.dayIndex) &&
-          _dayOffset(d.dayIndex) < first) {
+      if (main && _testDayOk(d.dayIndex) && _dayOffset(d.dayIndex) < first) {
         first = _dayOffset(d.dayIndex);
       }
     }
@@ -5570,12 +5584,12 @@ final class Prescriber {
   }
 
   /// Borne la hausse de charge d'une semaine à l'autre (R5-P3, R5-P22) :
-  /// au plus `coachLoadRise` au-dessus de la plus forte charge des trois
-  /// semaines d'avant sur le même emplacement, corrigée de 2,5 % par
-  /// répétition de moins (CX, correction 1 : après une transition, la
-  /// charge totale remontait de 20 à 27 % en une semaine quand le nombre de
-  /// répétitions changeait ; un retour au niveau d'avant l'allègement n'est
-  /// pas une hausse).
+  /// au plus `coachLoadRise` au-dessus de la charge de la semaine d'avant
+  /// sur le même emplacement, corrigée de 2,5 % par répétition de moins
+  /// après une semaine de transition ou d'introduction (CX, correction 1 :
+  /// la charge totale remontait de 20 à 27 % en une semaine quand le nombre
+  /// de répétitions changeait — la borne ne valait qu'à répétitions
+  /// égales) ; ailleurs, à répétitions égales.
   void _fitLoads(List<List<_Draft>> days, _WeekTrace trace) {
     final rise = coachLoadRise[_level];
     for (var d = 0; d < days.length; d++) {
@@ -5589,12 +5603,14 @@ final class Prescriber {
         var total = load + fraction * a.bodyWeight;
         final key = '$d|${x.slotId}|${x.e.id}';
         double? allowed;
-        for (var k = _history.length - 3; k < _history.length; k++) {
+        for (var k = _history.length - 1; k < _history.length; k++) {
           if (k < 0) {
             continue;
           }
           final before = _history[k].loads[key];
-          if (before == null || before.$1 <= 0) {
+          if (before == null ||
+              before.$1 <= 0 ||
+              (before.$2 != reps && !_history[k].restart)) {
             continue;
           }
           var factor = 1 + rise + coachLoadPerRep * (before.$2 - reps);
@@ -5865,6 +5881,10 @@ final class Prescriber {
         w.kind == WeekKind.intro ||
             w.kind == WeekKind.deload ||
             w.kind == WeekKind.test,
+        restart:
+            w.kind == WeekKind.intro ||
+            w.intent == WeekIntent.transition ||
+            w.intent == WeekIntent.intro,
       );
       for (final d in w.days) {
         for (final p in d.items) {
@@ -5913,8 +5933,7 @@ final class Prescriber {
                     r.code == ReasonCodes.planCoachNote &&
                     r.params['note'] == CoachNotes.everyMinute,
               )) {
-            trace.minutes['${d.dayIndex}|${p.slotId}|${p.exerciseId}'] =
-                p.sets;
+            trace.minutes['${d.dayIndex}|${p.slotId}|${p.exerciseId}'] = p.sets;
           }
         }
       }
@@ -5959,7 +5978,13 @@ final class Prescriber {
       _fitVolume(days, ws);
       _fitTaper(days, ws);
       days.forEach(_equalize);
-      final trace = _WeekTrace(ws.light);
+      final trace = _WeekTrace(
+        ws.light,
+        restart:
+            ws.kind == WeekKind.intro ||
+            ws.intent == WeekIntent.transition ||
+            ws.intent == WeekIntent.intro,
+      );
       _fitLoads(days, trace);
       _fitMinutes(days, trace);
       for (final items in days) {
