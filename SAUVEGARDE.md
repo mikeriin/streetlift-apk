@@ -13,4 +13,4 @@ Branche de mise au point : claude/ci-ci1-rapide (rapide.yml) ; contrôle complet
 - Textes 0.4 : adaptReasonText → reasonText04 ; paramètres technique/phase/stress/cause en clair.
 
 ## Reste
-- Essai 7 rapide vert (relecture indépendante traitée : figures fusionnées, records dédoublonnés, « garder » retire l ancienneté, saison effacée). Contrôle complet essai 1 (code avant relecture) en cours sur claude/ci-3d. Brouillon DECISIONS dans la session. Reste : essai 2 complet, captures, main, build signé, livraison.
+- Contrôle complet essai 2 : tout vert sauf émulateur partie b (navigation vers l exercice) ; corrigé (glissement de page) + point final après date abrégée. Essai 3 complet lancé. Brouillons livraison et DECISIONS dans la session (/tmp/ci1).

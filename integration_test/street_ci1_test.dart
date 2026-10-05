@@ -192,6 +192,17 @@ void main() {
     seed.settings.theme = dark ? 'dark' : 'light';
     seed.settings.accent = accent;
     seed.saveSettings();
+    // Session personnelle : programme du propriétaire commencé il y a
+    // 10 jours, profil d'exemple (chemin 0.1 : sans ancienneté).
+    final real = DateTime.now();
+    await seed.configureStart(DateTime(real.year, real.month, real.day - 10));
+    seed.saveAthleteProfile(
+      ProfileDraft.of(
+        sampleAthleteProfile(
+          on: civilOf(real.subtract(const Duration(days: 20))),
+        ),
+      )..consent = 'refused',
+    );
     await seed.flush();
     seed.dispose();
 
@@ -352,27 +363,16 @@ void main() {
           .firstOrNull;
       releve['exercice_servi'] = e != null;
       if (e != null) {
-        final title = store.splitName(e.name).$1;
-        if (find
-            .byKey(ValueKey('coach-panel-${e.id}'))
-            .hitTestable()
-            .evaluate()
-            .isEmpty) {
-          final menu = find.text('Exercices');
-          if (menu.evaluate().isNotEmpty) {
-            await tapF(tester, menu, ms: 900);
-            final tile = find.descendant(
-              of: find.byType(ListTile),
-              matching: find.text(title),
-            );
-            if (tile.evaluate().isNotEmpty) {
-              await tapF(tester, tile, ms: 1500);
-            } else {
-              Navigator.of(tester.element(find.byType(ListTile).first)).pop();
-              await wait(tester, 600);
-            }
-          }
+        // Page de l'exercice : glisser d'exercice en exercice jusqu'à sa
+        // carte (clé de la carte de l'exercice).
+        final card = find.byKey(ValueKey('exercise-card-${e.id}'));
+        for (var i = 0; i < 14 && card.evaluate().isEmpty; i++) {
+          final pages = find.byType(PageView);
+          if (pages.evaluate().isEmpty) break;
+          await tester.drag(pages.first, const Offset(-300, 0));
+          await wait(tester, 900);
         }
+        releve['page_exercice'] = card.evaluate().isNotEmpty;
         final panel = find.byKey(ValueKey('coach-panel-${e.id}'));
         releve['panneau_coach'] = await until(tester, panel, max: 40);
         releve['technique_affichee'] = find

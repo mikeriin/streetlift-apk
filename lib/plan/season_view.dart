@@ -223,6 +223,9 @@ const _months = [
   'déc.',
 ];
 
+/// Point final, sauf après une abréviation (« 4 nov. »).
+String _sentence(String s) => s.endsWith('.') ? s : '$s.';
+
 String _short(DateTime d) => '${d.day} ${_months[d.month - 1]}';
 
 /// Compte à rebours en clair.
@@ -278,8 +281,10 @@ class SeasonCard extends StatelessWidget {
               ),
             if (cur != null)
               Text(
-                'Phase en cours : ${phaseLabel(cur.code)}, jusqu’au '
-                '${_short(cur.end)}.',
+                _sentence(
+                  'Phase en cours : ${phaseLabel(cur.code)}, jusqu’au '
+                  '${_short(cur.end)}',
+                ),
               ),
             if (next != null)
               Text(
