@@ -1,4 +1,12 @@
-# Kalis Track dev6.8.0 — Calibrage des programmes (pipeline « Calibrage des programmes », voie App)
+# Kalis Track dev6.9.0 — Calibrage des programmes (pipeline « Calibrage des programmes », voie App)
+
+## dev6.9.0 — Le street calibré dans l'application (lot CI1)
+
+- **Moteurs calibrés pour le street** (`kalis_plan` 0.2.1, `kalis_adapt` 0.2.1, `kalis_core` 0.4.2) : un profil de streetlifting, de sets & reps ou de calisthénie au profil complet (expérience, ancienneté, disponibilités) reçoit un programme écrit comme par un coach — saison calée à rebours sur ton échéance, blocs qui changent de phase, séries de tête et séries allégées, maintiens chronométrés, descentes freinées, EMOM, tests. Les autres disciplines gardent le moteur d'avant.
+- **Séance guidée** : chaque ligne porte son rôle (« Tête », « A1 » pour une série allégée, « M3 » pour la 3e minute d'un EMOM, « T1 » pour une tentative) ; sous le titre, la technique en clair, la part de ton maximum, le tempo, la consigne ; la règle de douleur du programme est toujours visible (bouclier) ; « Note du coach » ouvre les consignes complètes. Chrono EMOM ou bloc au temps, mini-repos des clusters, repos écrit série par série. Le journal garde le rôle de chaque ligne.
+- **Ta saison** (Réglages › Mon programme) : phases datées, compte à rebours de l'échéance, semaines d'allègement, de test et d'affûtage du bloc, règles du programme, échelles des figures. **Jour J** : échauffement et tentatives proposées avec leurs chances de réussite, recalculées après chaque tentative ; rythme pour une épreuve de répétitions.
+- **Tests** : les résultats lus par le moteur rejoignent les records du profil (une seule fois chacun).
+- **Programme en cours** : un programme du moteur d'avant finit son bloc tel quel ; au bloc suivant, Koach propose le moteur calibré ou de garder l'actuel (jamais imposé). Le programme de 40 semaines du propriétaire n'est pas touché. Version « dev6.9.0 ».
 
 ## dev6.8.0 — Un profil qui pose les bonnes questions (lot CU)
 
