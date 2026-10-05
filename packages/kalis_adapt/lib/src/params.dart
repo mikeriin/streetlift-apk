@@ -786,7 +786,8 @@ final class AdaptParams {
   /// Série lourde dont la réserve dite, lue comme une borne basse, se
   /// corrige du biais de note appris (répétitions possibles au plus ; CA2,
   /// partie 0 : la réserve se juge mieux près de l'échec et sous charge
-  /// lourde, Halperin et al. 2022, Zourdos et al. 2016). Choix raisonné.
+  /// lourde, Halperin et al. 2022 : prédiction moins juste sur les séries
+  /// longues). Choix raisonné.
   final double coachHeavyBoundReps;
 
   /// Reprise graduée conduite par le moteur (arrêt levé au milieu d'un

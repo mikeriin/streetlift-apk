@@ -11,7 +11,7 @@ qui (§ 9). Les mesures citées viennent de `docs/MESURES.md` (relevé du simula
 
 Les § 1 à 10 décrivent le moteur de 0.1.0, toujours servi tel quel aux blocs sans champ du contrat 0.4.0
 de `kalis_core` (programme importé du propriétaire compris). Le § 11 décrit le **mode coach** de 0.2.0
-(blocs au contrat 0.4.0), son calibrage au panel (`docs/CALIBRAGE_CA1.md`) et ses limites.
+(blocs au contrat 0.4.0), son calibrage au panel (`docs/CALIBRAGE_CA1.md`, puis `docs/CALIBRAGE_CA2.md`) et ses limites.
 
 ## 1. Vocabulaire
 
@@ -1177,6 +1177,24 @@ inchangé (séances identiques à l'octet près ; seul le texte de version chang
   compétitions montrent environ 82 à 91 % de deuxièmes barres et 45 à 68 % de troisièmes réussies (Darragh
   et al. 2025, 93 333 athlètes) ; l'échelle des barres reste celle du § 11.15 (91 % ; +5 % ; +3 % ; Travis,
   Zourdos et Bazyler 2021).
+- **Estimation moins prudente** (relecture documentée de la partie 0 : estimations baissées par des séries
+  faciles ou arrêtées tôt, tentatives à 90-92 % du maximum du jour) :
+  - une série lourde (répétitions faites + réserve dite ≤ 8, `coachHeavyBoundReps`) lue comme une borne
+    basse compte la réserve corrigée du biais de note appris, comme une mesure : la réserve se dit mieux
+    près de l'échec et sur les séries courtes (Halperin et al. 2022 : sous-estimation moyenne d'environ une
+    répétition, prédiction moins juste sur les séries longues) ; une série plus longue garde la réserve dite
+    telle quelle ;
+  - une série arrêtée sous le bas de sa cible suit la règle de la série au ressenti (§ 11.15, CX
+    correction 1) : une seule mesure nettement sous l'estimation (moins de 90 %) se lit comme une borne
+    basse, et la baisse attend une deuxième mesure concordante, une autre séance, dans les quatre semaines
+    (avant : la baisse était immédiate) ;
+  - les bornes de santé (hausse d'une séance à la suivante, § 11.15) se comptent depuis la dernière séance
+    d'une semaine de charge de l'emplacement (`SlotMark.loadedTop`, `loadedLoadKg`) : une semaine allégée,
+    de test ou d'affûtage ne fait plus repartir la hausse d'une séance volontairement légère (relecture
+    documentée, `street_08` : dips plafonnés après la transition).
+  Mesure au banc (17 profils × 8 scénarios × 3 modèles × 4 graines) : meilleure barre du jour de
+  l'échéance 94,4 → 95,0 % du maximum réel, tentatives réussies 96,6 → 95,3 %, échecs non voulus 0,21 →
+  0,23 %, écart d'effort 1,085 → 1,069, violations 0,0153 → 0,0135, aucune hausse sur zone douloureuse.
 
 | Paramètre | Valeur | Source |
 | --- | --- | --- |
@@ -1187,6 +1205,7 @@ inchangé (séances identiques à l'octet près ; seul le texte de version chang
 | `coachHoldBestDays` | 28 jours | choix raisonné (Bosquet et al. 2013) |
 | `coachTaperGain` | 2 % | Travis et al. 2020 (bas de la fourchette) ; appliqué avant la première tentative |
 | `coachAssistMinDays` | 7 jours | panel ; ACSM 2009 (« 2 pour 2 ») ; choix raisonné |
+| `coachHeavyBoundReps` | 8 répétitions | Halperin et al. 2022 ; choix raisonné |
 
 **Simulateur** (modèles de vérité B et C) : après un épisode de douleur réel (3/10 et plus), la zone reste
 réactive douze semaines ; sa tolérance part de la plus grande de la moitié de la charge habituelle (séries de
