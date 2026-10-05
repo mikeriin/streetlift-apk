@@ -33,7 +33,7 @@ Chaque bloc est écrit par le moteur de création au moment où il commence, d'a
 
 - Séances faites : 39 sur 48 (7 ajustées le jour même).
 - Échecs non voulus (hors tests et tentatives) : 0 % des séries de travail.
-- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 2,1 répétition en réserve (sur les 73 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 27,1 %.
+- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 2,1 répétition en réserve (sur les 74 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 26,7 %.
 - Plus forte hausse de charge totale d'un mouvement principal d'une séance à la suivante, à schéma égal : 0 % ; hausses de plus de 10 % faites de plusieurs crans : 0.
 - Progression réelle moyenne des mouvements suivis : 1,22 % par semaine.
 - Douleur : 0 hausse(s) de charge sur une zone douloureuse signalée.
@@ -80,7 +80,7 @@ Athlète simulé, maximum réel hors fatigue : 16 au départ (le record déclar�
 | 11 | affûtage | 2 × 4 à 5 | (4 à 5)-(4 à 5) | 5-4 | 3 → 4,4 ; suivantes 3 → 4,5 | 9 / 9 | — |
 | 12 | test | 1 × 4 à 5 | (4 à 5) | 4 | 3,5 → 5,2 | 9 / 9 | — |
 | 13 | construction (volume) | 2 × 5 | 6-5 | 6-4 | 2 → 3,2 ; suivantes 2 → 3,9 | 9 / 8 | allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |
-| 14 | construction (volume) | 2 × 5 | (5 à 10)-(5 à 20) | 5-7 | 2 → 4,7 ; suivantes 2 → 1,8 | 10 / 9 | série repère : une série ouverte (au ressenti, 2 en réserve) pour mesurer où en est l'athlète |
+| 14 | construction (volume) | 2 × 5 | (5 à 10)-(5 à 20) | 5-7 | 2 → 4,6 ; suivantes 2 → 1,8 | 10 / 9 | série repère : une série ouverte (au ressenti, 2 en réserve) pour mesurer où en est l'athlète |
 | 15 | construction (volume) | 2 × 5 | (5 à 10)-(5 à 10) | 7-7 | 2 → 2,8 ; suivantes 2 → 1,1 | 10 / 9 | — |
 | 16 | construction (volume) | 2 × 5 | 7-6 | 7-6 | 2 → 2,8 ; suivantes 2 → 2,3 | 10 / 9 | — |
 
@@ -103,4 +103,4 @@ Athlète simulé, maximum réel hors fatigue : 8 au départ (le record déclaré
 - **Semaine 13 (construction (volume))** : nouveau bloc construit à partir du point de fin de bloc (maxima estimés, résultats de test, tolérance) ; Traction assistée à l'élastique : un cran d'assistance de plus (élastique plus épais, plus d'appui) : la plage ne laisse plus la réserve visée ; Dips assistés à l'élastique : un cran d'assistance de plus (élastique plus épais, plus d'appui) : la plage ne laisse plus la réserve visée ; Traction assistée à l'élastique : un cran d'assistance de moins (élastique plus fin, moins d'appui) : la série repère a montré 3 répétitions de réserve de plus que visé ; Face pull à l'élastique : répétitions recalées sur le maximum mesuré (2 de moins par série que le programme).
 - **Semaine 14 (construction (volume))** : 1 séance(s) manquée(s) sur 3 ; temps réduit (27 min au lieu de 47) ; exercice retiré sur 4 exercices (temps réduit (27 min au lieu de 47)) ; séries retirées — Tenue menton au-dessus de la barre pronation, Traction assistée à l'élastique (temps réduit (27 min au lieu de 47)).
 - **Semaine 15 (construction (volume))** : 1 séance(s) manquée(s) sur 3 ; Dips assistés à l'élastique : un cran d'assistance de plus (élastique plus épais, plus d'appui) : la plage ne laisse plus la réserve visée ; Face pull à l'élastique : répétitions recalées sur le maximum mesuré (3 de moins par série que le programme).
-- **Semaine 16 (construction (volume))** : Dips assistés à l'élastique : un cran d'assistance de moins (élastique plus fin, moins d'appui) : la série repère a montré 4 répétitions de réserve de plus que visé ; Face pull à l'élastique : répétitions recalées sur le maximum mesuré (3 de moins par série que le programme).
+- **Semaine 16 (construction (volume))** : Dips assistés à l'élastique : un cran d'assistance de moins (élastique plus fin, moins d'appui) : la série repère a montré 4 répétitions de réserve de plus que visé ; Face pull à l'élastique : répétitions recalées sur le maximum mesuré (2 de moins par série que le programme).

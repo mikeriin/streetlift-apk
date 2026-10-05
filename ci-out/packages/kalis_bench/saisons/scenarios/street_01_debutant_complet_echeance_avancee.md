@@ -33,9 +33,9 @@ Chaque bloc est écrit par le moteur de création au moment où il commence, d'a
 
 - Séances faites : 48 sur 48 (18 ajustées le jour même).
 - Échecs non voulus (hors tests et tentatives) : 0 % des séries de travail.
-- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 2,36 répétition en réserve (sur les 73 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 33,6 %.
+- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 2,33 répétition en réserve (sur les 74 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 33,3 %.
 - Plus forte hausse de charge totale d'un mouvement principal d'une séance à la suivante, à schéma égal : 0 % ; hausses de plus de 10 % faites de plusieurs crans : 0.
-- Progression réelle moyenne des mouvements suivis : 0,983 % par semaine.
+- Progression réelle moyenne des mouvements suivis : 0,993 % par semaine.
 - Douleur : 0 hausse(s) de charge sur une zone douloureuse signalée.
 
 ## Mouvements suivis, semaine par semaine
@@ -75,12 +75,12 @@ Athlète simulé, maximum réel hors fatigue : 16 au départ (le record déclar�
 | 4 | construction (volume) | 2 × 5 | (5 à 10)-(5 à 10) | 5-5 | 3 → 4,1 ; suivantes 3 → 3,1 | 9 / 8 | allégé pour garder la marge prévue (au moins 3 en réserve) ; dernières séries plus dures que prévu |
 | 5 | construction (volume) | 2 × 5 | 5-5 | 5-4 | 3 → 3,9 ; suivantes 3 → 3,5 | 9 / 8 | allégé pour garder la marge prévue (au moins 3 en réserve) ; dernières séries plus dures que prévu |
 | 6 | test | 1 × 9 à 11, test | (6 à 11) | 7 | test | 9 / 8 | — |
-| 7 | construction (volume) | 1 × 4 à 5 | (4 à 5) | 5 | 2 → 4,5 | 10 / 8 | — |
-| 10 | test | 1 × 4 à 5 | 4 | 4 | 3 → 5,1 | 9 / 8 | allégé pour garder la marge prévue (au moins 2 en réserve) ; douleur signalée (poignet, 4/10) |
-| 11 | construction (volume) | 2 × 5 | 5-(5 à 11) | 5-5 | 2 → 4,4 ; suivantes 2 → 3,5 | 9 / 8 | série repère : une série ouverte (au ressenti, 2 en réserve) pour mesurer où en est l'athlète |
-| 14 | construction (volume) | 2 × 5 | 5-(5 à 11) | 5-6 | 2 → 4,4 ; suivantes 2 → 2,3 | 9 / 8 | série repère : une série ouverte (au ressenti, 2 en réserve) pour mesurer où en est l'athlète |
-| 15 | construction (volume) | 2 × 5 | (5 à 10)-(5 à 10) | 6-5 | 2 → 3,3 ; suivantes 2 → 3 | 9 / 8 | — |
-| 16 | test | 1 × 9 à 11, test | (7 à 11) | 9 | test | 10 / 9 | — |
+| 7 | construction (volume) | 1 × 4 | 6 | 6 | 2 → 3,5 | 10 / 8 | — |
+| 10 | test | 1 × 4 | 4 | 4 | 3 → 5,1 | 9 / 8 | douleur signalée (poignet, 4/10) |
+| 11 | construction (volume) | 2 × 4 | 6-(5 à 11) | 6-5 | 2 → 3,4 ; suivantes 2 → 3,3 | 9 / 8 | série repère : une série ouverte (au ressenti, 2 en réserve) pour mesurer où en est l'athlète |
+| 14 | construction (volume) | 2 × 4 | 5-(4 à 10) | 5-6 | 2 → 4,5 ; suivantes 2 → 2,4 | 9 / 8 | série repère : une série ouverte (au ressenti, 2 en réserve) pour mesurer où en est l'athlète |
+| 15 | construction (volume) | 2 × 4 | (4 à 8)-(4 à 8) | 6-5 | 2 → 3,3 ; suivantes 2 → 3,1 | 9 / 9 | — |
+| 16 | test | 1 × 8 à 10, test | (7 à 10) | 9 | test | 10 / 9 | — |
 
 Athlète simulé, maximum réel hors fatigue : 8 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 10 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
 
@@ -92,16 +92,16 @@ Athlète simulé, maximum réel hors fatigue : 8 au départ (le record déclaré
 | 4 | construction (volume) | 3 × 6 s, maintien | 5-5 s | 5-5 s | 4,5 → 8,1 ; suivantes 4,5 → 8,1 | 33 / 10 | bilan du jour bas (2/5) ; nuit courte ; calibrage (séance 2 sur ce mouvement) |
 | 5 | construction (volume) | 3 × 6 s, maintien | 4-4-4 s | 4-4-4 s | 5+ → 8,4 ; suivantes 5+ → 8,4 | 33 / 10 | hausse du maintien bornée pour les tendons (coude) ; calibrage (séance 3 sur ce mouvement) |
 | 6 | test | 2 × 5 à 30 s, test | (5 à 30)-(5 à 30) s | 28-30-5-5 s | 4,5 → 8,2 ; suivantes 4,5 → 8,1 | 35 / 29 | — |
-| 7 | construction (volume) | 3 × 8 s (27 % du maximum testé), maintien | 5-5-5 s | 5-5-5 s | 5+ → 8,2 ; suivantes 5+ → 8,1 | 35 / 29 | — |
-| 8 | construction (volume) | 3 × 10 s (33 % du maximum testé), maintien | 6-6-6 s | 6-6-6 s | 5+ → 7,9 ; suivantes 5+ → 7,9 | 35 / 29 | hausse du maintien bornée pour les tendons (coude) |
-| 9 | construction (volume) | 3 × 12 s (40 % du maximum testé), maintien | 7-7-7 s | 7-7-7 s | 5+ → 7,7 ; suivantes 5+ → 7,6 | 36 / 30 | hausse du maintien bornée pour les tendons (coude) |
+| 7 | construction (volume) | 3 × 17 s (57 % du maximum testé), maintien | 5-5-5 s | 5-5-5 s | 5+ → 8,2 ; suivantes 5+ → 8,1 | 35 / 29 | — |
+| 8 | construction (volume) | 3 × 19 s (63 % du maximum testé), maintien | 6-6-6 s | 6-6-6 s | 5+ → 7,9 ; suivantes 5+ → 7,9 | 35 / 29 | hausse du maintien bornée pour les tendons (coude) |
+| 9 | construction (volume) | 3 × 19 s (63 % du maximum testé), maintien | 7-7-7 s | 7-7-7 s | 5+ → 7,7 ; suivantes 5+ → 7,6 | 36 / 30 | hausse du maintien bornée pour les tendons (coude) |
 | 10 | test | 2 × 5 à 45 s, test | (5 à 45)-(5 à 45) s | 31-33 (échec) s | test | 36 / 32 | — |
-| 11 | construction (volume) | 3 × 16 s (52 % du maximum testé), maintien | 16-16-16 s | 16-16-16 s | 5+ → 5,5 ; suivantes 4,5 → 5,2 | 37 / 32 | — |
-| 12 | construction (volume) | 3 × 18 s (58 % du maximum testé), maintien | 18-18-18 s | 18-18-18 s | 4 → 4,7 ; suivantes 4 → 4,4 | 35 / 32 | — |
+| 11 | construction (volume) | 3 × 20 s (65 % du maximum testé), maintien | 20-20-20 s | 20-20-20 s | 3,5 → 4,4 ; suivantes 3,5 → 4,1 | 37 / 32 | — |
+| 12 | construction (volume) | 3 × 20 s (65 % du maximum testé), maintien | 20-20-20 s | 20-20-20 s | 3,5 → 4,2 ; suivantes 3,5 → 3,8 | 36 / 32 | — |
 | 13 | construction (volume) | 3 × 20 s (65 % du maximum testé), maintien | 20-20-20 s | 20-20-20 s | 3,5 → 4,2 ; suivantes 3,5 → 3,8 | 36 / 33 | — |
-| 14 | construction (volume) | 3 × 20 s (65 % du maximum testé), maintien | 20-20 s | 20-20 s | 3,5 → 4,3 ; suivantes 3,5 → 4 | 36 / 33 | temps réduit (27 min au lieu de 48) |
+| 14 | construction (volume) | 3 × 20 s (65 % du maximum testé), maintien | 20-20 s | 20-20 s | 3,5 → 4,3 ; suivantes 3,5 → 4 | 37 / 33 | temps réduit (27 min au lieu de 48) |
 | 15 | construction (volume) | 3 × 20 s (65 % du maximum testé), maintien | 20-20-20 s | 20-18-18 s | 3,5 → 4,2 ; suivantes 3,5 → 4,4 | 35 / 34 | allégé pour garder la marge prévue (au moins 5 en réserve) ; dernières séries plus dures que prévu |
-| 16 | test | 2 × 5 à 47 s, test | (5 à 47)-(5 à 47) s | 26-34 (échec)-18 (arrêt avant la cible)-17 s | 4 → 4,6 ; suivantes 4 → 4,6 | 35 / 35 | allégé pour garder la marge prévue (au moins 5 en réserve) ; dernières séries plus dures que prévu |
+| 16 | test | 2 × 5 à 47 s, test | (5 à 47)-(5 à 47) s | 26-34 (échec)-18 (arrêt avant la cible)-17 s | 4 → 4,6 ; suivantes 4 → 4,7 | 35 / 35 | allégé pour garder la marge prévue (au moins 5 en réserve) ; dernières séries plus dures que prévu |
 
 Athlète simulé, maximum réel hors fatigue : 34 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 37 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
 
@@ -120,6 +120,6 @@ Athlète simulé, maximum réel hors fatigue : 34 au départ (le record déclar�
 - **Semaine 11 (construction (volume))** : nouveau bloc construit à partir du point de fin de bloc (maxima estimés, résultats de test, tolérance) ; Traction assistée à l'élastique : un cran d'assistance de plus (élastique plus épais, plus d'appui) : la plage ne laisse plus la réserve visée ; douleur qui dure ou qui revient (poignet, 1 séances à 3/10 ou plus) : mouvements qui la provoquent retirés, consulter un médecin ou un kiné, reprise après deux semaines à 2/10 au plus ; Traction assistée à l'élastique : un cran d'assistance de moins (élastique plus fin, moins d'appui) : la série repère a montré 4 répétitions de réserve de plus que visé ; Face pull à l'élastique : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; douleur qui dure ou qui revient (poignet, 2 séances à 3/10 ou plus) : mouvements qui la provoquent retirés, consulter un médecin ou un kiné, reprise après deux semaines à 2/10 au plus ; exercice retiré — Pompe classique (douleur qui dure ou qui revient (poignet, 1 séances à 3/10 ou plus) : mouvements qui la provoquent retirés, consulter un médecin ou un kiné, reprise après deux semaines à 2/10 au plus) ; exercice retiré — Pompe classique (douleur qui dure ou qui revient (poignet, 2 séances à 3/10 ou plus) : mouvements qui la provoquent retirés, consulter un médecin ou un kiné, reprise après deux semaines à 2/10 au plus).
 - **Semaine 12 (construction (volume))** : douleur qui dure ou qui revient (poignet, 3 séances à 3/10 ou plus) : mouvements qui la provoquent retirés, consulter un médecin ou un kiné, reprise après deux semaines à 2/10 au plus ; douleur qui dure ou qui revient (poignet, 4 séances à 3/10 ou plus) : mouvements qui la provoquent retirés, consulter un médecin ou un kiné, reprise après deux semaines à 2/10 au plus (× 2) ; Face pull à l'élastique : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; bilan du jour bas (2/5) ; exercice retiré — Pompe classique (douleur qui dure ou qui revient (poignet, 3 séances à 3/10 ou plus) : mouvements qui la provoquent retirés, consulter un médecin ou un kiné, reprise après deux semaines à 2/10 au plus) ; exercice retiré — Pompe classique (douleur qui dure ou qui revient (poignet, 4 séances à 3/10 ou plus) : mouvements qui la provoquent retirés, consulter un médecin ou un kiné, reprise après deux semaines à 2/10 au plus).
 - **Semaine 13 (construction (volume))** : douleur qui dure ou qui revient (poignet, 4 séances à 3/10 ou plus) : mouvements qui la provoquent retirés, consulter un médecin ou un kiné, reprise après deux semaines à 2/10 au plus (× 3) ; Dips assistés à l'élastique : un cran d'assistance de moins (élastique plus fin, moins d'appui) : la série repère a montré 2 répétitions de réserve de plus que visé (× 2) ; Face pull à l'élastique : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; exercice retiré — Pompe classique (douleur qui dure ou qui revient (poignet, 4 séances à 3/10 ou plus) : mouvements qui la provoquent retirés, consulter un médecin ou un kiné, reprise après deux semaines à 2/10 au plus).
-- **Semaine 14 (construction (volume))** : Pompe classique : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; temps réduit (27 min au lieu de 48) ; Dips assistés à l'élastique : un cran d'assistance de plus (élastique plus épais, plus d'appui) : la plage ne laisse plus la réserve visée ; exercice retiré sur 4 exercices (temps réduit (27 min au lieu de 48)) ; séries retirées — Tenue menton au-dessus de la barre pronation, Traction assistée à l'élastique (temps réduit (27 min au lieu de 48)).
+- **Semaine 14 (construction (volume))** : temps réduit (27 min au lieu de 48) ; Dips assistés à l'élastique : un cran d'assistance de plus (élastique plus épais, plus d'appui) : la plage ne laisse plus la réserve visée ; exercice retiré sur 4 exercices (temps réduit (27 min au lieu de 48)) ; séries retirées — Tenue menton au-dessus de la barre pronation, Traction assistée à l'élastique (temps réduit (27 min au lieu de 48)).
 - **Semaine 15 (construction (volume))** : Face pull à l'élastique : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme).
 - **Semaine 16 (test)** : phase « test » : séances servies telles que le programme les écrit (× 3) ; Traction assistée à l'élastique : un cran d'assistance de plus (élastique plus épais, plus d'appui) : la plage ne laisse plus la réserve visée ; Dips assistés à l'élastique : un cran d'assistance de plus (élastique plus épais, plus d'appui) : la plage ne laisse plus la réserve visée ; résultat de test reporté au profil : Tenue menton au-dessus de la barre pronation 26 s ; résultat de test reporté au profil : Pompe classique 9 répétitions.

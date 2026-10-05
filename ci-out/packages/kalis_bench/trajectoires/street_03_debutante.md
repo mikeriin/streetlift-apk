@@ -22,7 +22,7 @@ Un athlète simulé (capacités réelles connues du simulateur, jamais du moteur
 
 - Séances faites : 36 sur 36 (10 ajustées le jour même).
 - Échecs non voulus (hors tests et tentatives) : 0 % des séries de travail.
-- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 1,77 répétition en réserve (sur les 59 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 25,4 %.
+- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 1,73 répétition en réserve (sur les 60 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 24,8 %.
 - Plus forte hausse de charge totale d'un mouvement principal d'une séance à la suivante, à schéma égal : 0 % ; hausses de plus de 10 % faites de plusieurs crans : 0.
 - Progression réelle moyenne des mouvements suivis : 1,017 % par semaine.
 - Douleur : 0 hausse(s) de charge sur une zone douloureuse signalée.
@@ -40,7 +40,7 @@ Pour chaque mouvement, la séance la plus lourde de la semaine : ce que le progr
 | 9 | construction (volume) | 2 × 1 à 4 | 1 | 1 | 3 → 2,2 | 3 / 3 | allégé pour garder la marge prévue (au moins 2 en réserve) ; −1 série(s) ; douleur signalée (poignet, 4/10) |
 | 10 | construction (volume) | 2 × 1 à 5 | 1-(1 à 7) | 1-1 | 2 → 2,2 ; suivantes 2 → 1,5 | 3 / 3 | allégé pour garder la marge prévue (au moins 2 en réserve) ; série repère : une série ouverte (au ressenti, 2 en réserve) pour mesurer où en est l'athlète ; dernières séries plus dures que prévu |
 | 11 | affûtage | 1 × 1 | 1 | 1 | 2 → 2,2 | 3 / 3 | — |
-| 12 | test | 1 × 4 à 10, test | (2 à 10) | 2 | test | 3 / 3 | — |
+| 12 | test | 1 × 3 à 10, test | (2 à 10) | 2 | test | 3 / 3 | — |
 
 Athlète simulé, maximum réel hors fatigue : 3 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 3 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
 
@@ -89,11 +89,11 @@ Athlète simulé, maximum réel hors fatigue : 22 au départ (le record déclar�
 | 4 | construction (volume) | 3 × 6 s, maintien | 6-6-6 s | 6-6-6 s | 3,5 → 7,8 ; suivantes 3,5 → 7,7 | 33 / 10 | calibrage (séance 2 sur ce mouvement) |
 | 5 | construction (volume) | 3 × 6 s, maintien | 6-6-6 s | 6-6-6 s | 4 → 7,8 ; suivantes 3,5 → 7,8 | 33 / 10 | calibrage (séance 3 sur ce mouvement) |
 | 6 | test | 2 × 5 à 30 s, test | (5 à 30)-(5 à 30) s | 27-30 s | test | 35 / 32 | — |
-| 7 | construction (volume) | 3 × 8 s (27 % du maximum testé), maintien | 8-8-8 s | 8-8-8 s | 5+ → 7,3 ; suivantes 5+ → 7,1 | 33 / 36 | — |
-| 8 | construction (volume) | 3 × 10 s (33 % du maximum testé), maintien | 9-9-9 s | 9-9-9 s | 5+ → 7,1 ; suivantes 5+ → 7 | 35 / 36 | hausse du maintien bornée pour les tendons (coude) |
-| 9 | construction (volume) | 3 × 12 s (40 % du maximum testé), maintien | 10-10-10 s | 10-10-6 (arrêt avant la cible) s | 5+ → 6,8 ; suivantes 5+ → 7,3 | 35 / 36 | hausse du maintien bornée pour les tendons (coude) |
-| 10 | construction (volume) | 3 × 14 s (47 % du maximum testé), maintien | 10-10-10 s | 10-10-10 s | 5+ → 6,8 ; suivantes 5+ → 6,6 | 34 / 37 | hausse du maintien bornée pour les tendons (coude) |
-| 11 | affûtage | 2 × 16 s (53 % du maximum testé), maintien | 12-12 s | 9 (arrêt avant la cible)-8 (arrêt avant la cible) s | 5+ → 7,1 ; suivantes 5+ → 7,3 | 35 / 37 | hausse du maintien bornée pour les tendons (coude) |
+| 7 | construction (volume) | 3 × 17 s (57 % du maximum testé), maintien | 17-17-17 s | 14 (arrêt avant la cible)-11 (arrêt avant la cible)-16 (arrêt avant la cible) s | 5+ → 5,5 ; suivantes 5+ → 5,4 | 33 / 36 | — |
+| 8 | construction (volume) | 3 × 19 s (63 % du maximum testé), maintien | 16-16-16 s | 15 (arrêt avant la cible)-14 (arrêt avant la cible)-13 (arrêt avant la cible) s | 5+ → 5,4 ; suivantes 5+ → 5,6 | 35 / 36 | hausse du maintien bornée pour les tendons (coude) |
+| 9 | construction (volume) | 3 × 19 s (63 % du maximum testé), maintien | 16-16-16 s | 11 (arrêt avant la cible)-16-6 (arrêt avant la cible) s | 5+ → 6,5 ; suivantes 5+ → 6,4 | 35 / 36 | hausse du maintien bornée pour les tendons (coude) |
+| 10 | construction (volume) | 3 × 19 s (63 % du maximum testé), maintien | 14-14-14 s | 14-13 (arrêt avant la cible)-14 s | 5+ → 5,6 ; suivantes 5+ → 5,5 | 34 / 37 | hausse du maintien bornée pour les tendons (coude) |
+| 11 | affûtage | 2 × 18 s (60 % du maximum testé), maintien | 16-16 s | 9 (arrêt avant la cible)-8 (arrêt avant la cible) s | 5+ → 7,1 ; suivantes 5+ → 7,3 | 35 / 37 | hausse du maintien bornée pour les tendons (coude) |
 | 12 | test | 2 × 5 à 45 s, test | (5 à 45)-(5 à 45) s | 31-33 (échec) s | test | 36 / 37 | — |
 
 Athlète simulé, maximum réel hors fatigue : 34 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 36 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
@@ -123,6 +123,6 @@ Le même profil et le même moteur, avec d'autres hypothèses sur l'athlète ré
 
 | Athlète simulé | Échecs non voulus | Écart d'effort | Séries ≥ 2 rép. plus dures | Plus forte hausse à schéma égal | Progression par semaine | Tentatives réussies | Échéance / maximum du jour | Hausses sur zone douloureuse |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| modèle 2 (courbe linéaire, notes d'effort entières et plafonnées, récupération lente entre séries, tendons à adaptation lente) | 0 % | 1,77 | 0 % | 0 % | 1,017 % | — | — | 0 |
-| modèle 1 (courbe charge-répétitions à plateau, notes d'effort continues) | 0 % | 1,52 | 0 % | 0 % | 1,323 % | — | — | 0 |
-| modèle 3 (courbe en puissance, forme masquée par la fatigue, mauvais jours marqués, désentraînement rapide) | 0 % | 1,63 | 0 % | 0 % | 0,93 % | — | — | 0 |
+| modèle 2 (courbe linéaire, notes d'effort entières et plafonnées, récupération lente entre séries, tendons à adaptation lente) | 0 % | 1,73 | 0 % | 0 % | 1,017 % | — | — | 0 |
+| modèle 1 (courbe charge-répétitions à plateau, notes d'effort continues) | 0 % | 1,53 | 0 % | 0 % | 1,347 % | — | — | 0 |
+| modèle 3 (courbe en puissance, forme masquée par la fatigue, mauvais jours marqués, désentraînement rapide) | 0 % | 1,75 | 0 % | 0 % | 0,335 % | — | — | 0 |

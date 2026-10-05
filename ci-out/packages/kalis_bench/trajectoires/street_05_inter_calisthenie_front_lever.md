@@ -23,7 +23,7 @@ Un athlète simulé (capacités réelles connues du simulateur, jamais du moteur
 
 - Séances faites : 63 sur 64 (2 ajustées le jour même).
 - Échecs non voulus (hors tests et tentatives) : 0 % des séries de travail.
-- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 0,89 répétition en réserve (sur les 65 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 6,1 %.
+- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 0,91 répétition en réserve (sur les 66 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 6 %.
 - Plus forte hausse de charge totale d'un mouvement principal d'une séance à la suivante, à schéma égal : 0 % ; hausses de plus de 10 % faites de plusieurs crans : 0.
 - Douleur : 0 hausse(s) de charge sur une zone douloureuse signalée.
 
@@ -40,15 +40,15 @@ Pour chaque mouvement, la séance la plus lourde de la semaine : ce que le progr
 | 3 | construction (volume) | 3 × 7 s (58 % du maximum testé), maintien | Front lever tuck avancé : 7-7-7 s | 7-6-6 s | 3 → 3,5 ; suivantes 3 → 3,9 | 12 / 11 | allégé pour garder la marge prévue (au moins 5 en réserve) ; dernières séries plus dures que prévu |
 | 4 | construction (volume) | 3 × 8 s (67 % du maximum testé), maintien | Front lever tuck avancé : 7-7-7 s | 7-6-6 s | 3 → 3,4 ; suivantes 3 → 3,9 | 12 / 10 | hausse du maintien bornée pour les tendons (coude) ; allégé pour garder la marge prévue (au moins 5 en réserve) ; dernières séries plus dures que prévu |
 | 5 | allègement | 1 × 12 à 17 s, test | Front lever tuck avancé : (8 à 17) s | 9 s | test | 12 / 10 | — |
-| 6 | intensification (séries plus dures) | 5 × 8 s (67 % du maximum testé), maintien | Front lever tuck avancé : 8-7-7-7-7 s | 8-6-6-6-6 s | 2 → 3 ; suivantes 2,5 → 4 | 12 / 11 | allégé pour garder la marge prévue (au moins 5 en réserve) ; dernières séries plus dures que prévu |
-| 7 | intensification (séries plus dures) | 5 × 8 s (67 % du maximum testé), maintien | Front lever tuck avancé : 8-8-8-8-8 s | 8-8-8-7-7 s | 2 → 3,1 ; suivantes 2 → 2,6 | 13 / 11 | allégé pour garder la marge prévue (au moins 5 en réserve) ; dernières séries plus dures que prévu |
-| 8 | intensification (séries plus dures) | 5 × 8 s (67 % du maximum testé), maintien | Front lever tuck avancé : 8-8-8-8-8 s | 8-7-7-7-7 s | 2,5 → 3,2 ; suivantes 2,3 → 3,3 | 13 / 11 | allégé pour garder la marge prévue (au moins 5 en réserve) ; dernières séries plus dures que prévu |
-| 9 | intensification (séries plus dures) | 5 × 8 s (67 % du maximum testé), maintien | Front lever tuck avancé : 7-7-7-7-7 s | 7-7-6-6-6 s | 3,5 → 3,8 ; suivantes 3,5 → 3,8 | 13 / 11 | hausse du maintien bornée pour les tendons (coude) ; allégé pour garder la marge prévue (au moins 5 en réserve) ; dernières séries plus dures que prévu |
-| 10 | allègement | 1 × 13 à 18 s, test | Front lever tuck avancé : (9 à 18) s | 11 s | test | 13 / 11 | — |
-| 11 | réalisation (spécifique à l'objectif) | 5 × 8 s (73 % du maximum testé), maintien | Front lever tuck avancé : 8-8-8-8-8 s | 8-8-8-7-7 s | 3 → 2,9 ; suivantes 2,5 → 2,6 | 12 / 12 | allégé pour garder la marge prévue (au moins 5 en réserve) ; dernières séries plus dures que prévu |
-| 12 | réalisation (spécifique à l'objectif) | 5 × 8 s (73 % du maximum testé), maintien | Front lever tuck avancé : 8-8-8-8-8 s | 8-7-7-7-7 s | 3 → 2,9 ; suivantes 2,5 → 3,1 | 12 / 11 | allégé pour garder la marge prévue (au moins 5 en réserve) ; dernières séries plus dures que prévu |
-| 13 | réalisation (spécifique à l'objectif) | 5 × 8 s (73 % du maximum testé), maintien | Front lever tuck avancé : 8-8-8-8-8 s | 8-7-7-7-7 s | 3 → 3 ; suivantes 2,5 → 3,1 | 12 / 12 | allégé pour garder la marge prévue (au moins 5 en réserve) ; dernières séries plus dures que prévu |
-| 14 | réalisation (spécifique à l'objectif) | 5 × 8 s (73 % du maximum testé), maintien | Front lever tuck avancé : 8-8-8-8-8 s | 8-7-7-7-7 s | 2,5 → 2,9 ; suivantes 2,5 → 2,8 | 12 / 12 | allégé pour garder la marge prévue (au moins 5 en réserve) ; dernières séries plus dures que prévu |
+| 6 | intensification (séries plus dures) | 6 × 6 s (67 % du maximum testé), maintien | Front lever tuck avancé : 6-6-6-6-6-6 s | 6-6-5-5-5-5 s | 4 → 4,4 ; suivantes 3,5 → 4,6 | 12 / 10 | allégé pour garder la marge prévue (au moins 5 en réserve) ; dernières séries plus dures que prévu |
+| 7 | intensification (séries plus dures) | 6 × 6 s (67 % du maximum testé), maintien | Front lever tuck avancé : 6-6-6-6-6-6 s | 6-5-5-5-5-5 s | 3,5 → 4,3 ; suivantes 3,5 → 4,7 | 12 / 10 | allégé pour garder la marge prévue (au moins 5 en réserve) ; dernières séries plus dures que prévu |
+| 8 | intensification (séries plus dures) | 6 × 6 s (67 % du maximum testé), maintien | Front lever tuck avancé : 6-6-6-6-6-6 s | 6-6-5-5-5-5 s | 4 → 4,5 ; suivantes 3,5 → 4,7 | 13 / 10 | allégé pour garder la marge prévue (au moins 5 en réserve) ; dernières séries plus dures que prévu |
+| 9 | intensification (séries plus dures) | 6 × 6 s (67 % du maximum testé), maintien | Front lever tuck avancé : 6-6-6-6-6-6 s | 6-6-5-5-5-5 s | 3,5 → 4,5 ; suivantes 3,5 → 4,7 | 13 / 10 | allégé pour garder la marge prévue (au moins 5 en réserve) ; dernières séries plus dures que prévu |
+| 10 | allègement | 1 × 9 à 14 s, test | Front lever tuck avancé : (8 à 14) s | 11 s | test | 13 / 11 | — |
+| 11 | réalisation (spécifique à l'objectif) | 5 × 8 s (73 % du maximum testé), maintien | Front lever tuck avancé : 8-8-8-8-8 s | 8-8-8-7-7 s | 2,5 → 2,9 ; suivantes 2,1 → 2,6 | 12 / 11 | allégé pour garder la marge prévue (au moins 5 en réserve) ; dernières séries plus dures que prévu |
+| 12 | réalisation (spécifique à l'objectif) | 5 × 8 s (73 % du maximum testé), maintien | Front lever tuck avancé : 8-8-8-8-8 s | 8-7-7-7-7 s | 2,5 → 2,9 ; suivantes 2,4 → 3,1 | 12 / 11 | allégé pour garder la marge prévue (au moins 5 en réserve) ; dernières séries plus dures que prévu |
+| 13 | réalisation (spécifique à l'objectif) | 5 × 8 s (73 % du maximum testé), maintien | Front lever tuck avancé : 8-8-8-8-8 s | 8-7-7-7-7 s | 2,5 → 3 ; suivantes 2,3 → 3,1 | 12 / 11 | allégé pour garder la marge prévue (au moins 5 en réserve) ; dernières séries plus dures que prévu |
+| 14 | réalisation (spécifique à l'objectif) | 5 × 8 s (73 % du maximum testé), maintien | Front lever tuck avancé : 8-8-8-8-8 s | 8-7-7-7-7 s | 2,5 → 2,9 ; suivantes 2,3 → 2,8 | 12 / 11 | allégé pour garder la marge prévue (au moins 5 en réserve) ; dernières séries plus dures que prévu |
 | 15 | affûtage | 4 × 7 s (64 % du maximum testé), maintien | Front lever tuck avancé : 7-7-7-7 s | 7-7-7-7 s | 3,5 → 3,7 ; suivantes 3,5 → 3,2 | 12 / 11 | — |
 | 16 | test | 3 × 7 s (64 % du maximum testé), maintien | Front lever tuck avancé : 7-7-7 s | 7-7-7 s | 3,5 → 4 ; suivantes 3,5 → 3,7 | 13 / 11 | — |
 
@@ -81,6 +81,6 @@ Le même profil et le même moteur, avec d'autres hypothèses sur l'athlète ré
 
 | Athlète simulé | Échecs non voulus | Écart d'effort | Séries ≥ 2 rép. plus dures | Plus forte hausse à schéma égal | Progression par semaine | Tentatives réussies | Échéance / maximum du jour | Hausses sur zone douloureuse |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| modèle 2 (courbe linéaire, notes d'effort entières et plafonnées, récupération lente entre séries, tendons à adaptation lente) | 0 % | 0,89 | 0 % | 0 % | — | — | — | 0 |
+| modèle 2 (courbe linéaire, notes d'effort entières et plafonnées, récupération lente entre séries, tendons à adaptation lente) | 0 % | 0,91 | 0 % | 0 % | — | — | — | 0 |
 | modèle 1 (courbe charge-répétitions à plateau, notes d'effort continues) | 0 % | 0,9 | 0 % | 0 % | — | — | — | 0 |
 | modèle 3 (courbe en puissance, forme masquée par la fatigue, mauvais jours marqués, désentraînement rapide) | 0 % | 0,86 | 0 % | 0 % | — | — | — | 0 |

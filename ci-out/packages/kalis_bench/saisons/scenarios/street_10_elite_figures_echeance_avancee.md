@@ -39,7 +39,7 @@ Chaque bloc est écrit par le moteur de création au moment où il commence, d'a
 
 - Séances faites : 97 sur 102 (10 ajustées le jour même).
 - Échecs non voulus (hors tests et tentatives) : 0 % des séries de travail.
-- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 1,19 répétition en réserve (sur les 39 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0,2 % ; au moins 3 plus faciles : 12 %.
+- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 1,13 répétition en réserve (sur les 41 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0,2 % ; au moins 3 plus faciles : 11,5 %.
 - Plus forte hausse de charge totale d'un mouvement principal d'une séance à la suivante, à schéma égal : 0 % ; hausses de plus de 10 % faites de plusieurs crans : 0.
 - Progression réelle moyenne des mouvements suivis : 0,059 % par semaine.
 - Douleur : 0 hausse(s) de charge sur une zone douloureuse signalée.
@@ -59,9 +59,9 @@ Pour chaque mouvement, la séance la plus lourde de la semaine : ce que le progr
 | 5 | construction (volume) | 1 × 4 à 6 | Ice cream maker : (4 à 11) | 11 | 3 → 5,8 | 17 / 15 | — |
 | 6 | construction (volume) | 1 × 4 à 6 | Ice cream maker : (4 à 12) | 12 | 3 → 5,7 | 18 / 15 | — |
 | 7 | construction (volume) | 1 × 4 à 6 | Ice cream maker : (4 à 12) | 12 | 3 → 6,2 | 18 / 15 | — |
-| 8 | allègement | 1 × 6 à 15 s, test | (5 à 15) s | 6 s | test | 8 / 6 | — |
+| 8 | allègement | 1 × 7 à 15 s, test | (5 à 15) s | 6 s | test | 8 / 6 | — |
 | 9 | intensification (séries plus dures) | 1 × 9 | Ice cream maker : 11 | 11 | 4 → 6,8 | 18 / 15 | — |
-| 10 | intensification (séries plus dures) | 1 × 9 | Ice cream maker : 11 | 11 | 4 → 6,5 | 18 / 15 | — |
+| 10 | intensification (séries plus dures) | 1 × 9 | Ice cream maker : 11 | 11 | 4 → 6,5 | 17 / 15 | — |
 | 11 | réalisation (spécifique à l'objectif) | 1 × 9 | Ice cream maker : 11 | 11 | 4 → 6,7 | 18 / 15 | — |
 | 12 | réalisation (spécifique à l'objectif) | 1 × 9 | Ice cream maker : 11 | 11 | 4 → 6,4 | 17 / 15 | — |
 | 13 | réalisation (spécifique à l'objectif) | 1 × 9 | Ice cream maker : 11 | 11 | 4 → 6,6 | 18 / 15 | — |
@@ -83,11 +83,11 @@ Athlète simulé, maximum réel hors fatigue : 8 au départ (le record déclaré
 | 5 | construction (volume) | 2 × 4 à 6 | Planche push-up straddle assistée à l'élastique : (4 à 6)-(4 à 12) | 6-10 | 4,5 → 6,8 ; suivantes 1,5 → 2,6 | 13 / 10 | série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète |
 | 6 | construction (volume) | 2 × 4 à 6 | Planche push-up straddle assistée à l'élastique : (4 à 6)-(4 à 6) | 4-4 | 4 → 4,5 ; suivantes 3 → 4,2 | 8 / 8 | — |
 | 7 | construction (volume) | 2 × 4 à 6 | Planche push-up straddle assistée à l'élastique : (4 à 6)-(4 à 6) | 5-6 | 3 → 4,2 ; suivantes 1,5 → 2,8 | 9 / 8 | — |
-| 8 | allègement | 1 × 6 à 11 s, test | Planche straddle : (4 à 11) s | 5 s | test | 6 / 5 | — |
+| 8 | allègement | 1 × 5 à 10 s, test | Planche straddle : (4 à 10) s | 5 s | test | 6 / 5 | — |
 | 9 | intensification (séries plus dures) | 2 × 4 à 6 | Planche push-up straddle assistée à l'élastique : (4 à 5)-(4 à 5) | 4-4 | 3 → 4,9 ; suivantes 3 → 4,5 | 9 / 8 | allégé pour garder la marge prévue (au moins 3 en réserve) |
-| 10 | intensification (séries plus dures) | 2 × 4 à 6 | Planche push-up straddle assistée à l'élastique : (4 à 6)-(4 à 11) | 6-6 | 1,5 → 2,6 ; suivantes 1,5 → 2,1 | 9 / 8 | série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète |
-| 15 | construction (volume) | 1 × 4 | Planche push-up straddle assistée à l'élastique : 4 | 4 | 4 → 4,6 | 9 / 8 | douleur signalée (poignet, 0/10) |
-| 16 | construction (volume) | 1 × 4 | Planche push-up straddle assistée à l'élastique : 4 | 4 | 3 → 5 | 9 / 8 | — |
+| 10 | intensification (séries plus dures) | 2 × 4 à 6 | Planche push-up straddle assistée à l'élastique : (4 à 5)-(4 à 11) | 4-4 | 3 → 4,6 ; suivantes 1,5 → 4,2 | 9 / 7 | allégé pour garder la marge prévue (au moins 3 en réserve) ; série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète ; dernières séries plus dures que prévu |
+| 15 | construction (volume) | 1 × 4 | Planche push-up straddle assistée à l'élastique : 4 | 4 | 4 → 4,6 | 9 / 7 | douleur signalée (poignet, 0/10) |
+| 16 | construction (volume) | 1 × 4 | Planche push-up straddle assistée à l'élastique : 4 | 4 | 3 → 5 | 9 / 7 | — |
 
 ## Journal des décisions
 

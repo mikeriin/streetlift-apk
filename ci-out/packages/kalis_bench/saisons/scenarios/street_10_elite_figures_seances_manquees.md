@@ -39,7 +39,7 @@ Chaque bloc est écrit par le moteur de création au moment où il commence, d'a
 
 - Séances faites : 81 sur 102 (9 ajustées le jour même).
 - Échecs non voulus (hors tests et tentatives) : 0,1 % des séries de travail.
-- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 1,42 répétition en réserve (sur les 34 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0,3 % ; au moins 3 plus faciles : 15,3 %.
+- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 1,42 répétition en réserve (sur les 33 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0,3 % ; au moins 3 plus faciles : 15,3 %.
 - Plus forte hausse de charge totale d'un mouvement principal d'une séance à la suivante, à schéma égal : 0 % ; hausses de plus de 10 % faites de plusieurs crans : 0.
 - Progression réelle moyenne des mouvements suivis : 0,05 % par semaine.
 - Douleur : 0 hausse(s) de charge sur une zone douloureuse signalée.
@@ -59,11 +59,11 @@ Pour chaque mouvement, la séance la plus lourde de la semaine : ce que le progr
 | 5 | construction (volume) | 1 × 4 à 6 | Ice cream maker : (4 à 12) | 11 | 3 → 6,1 | 17 / 15 | — |
 | 6 | construction (volume) | 1 × 4 à 6 | Ice cream maker : (4 à 12) | 12 | 3 → 5,7 | 18 / 15 | — |
 | 8 | allègement | — | (5 à 15) s | 7 s | test | 8 / 6 | — |
-| 9 | intensification (séries plus dures) | 1 × 4 à 6 | Ice cream maker : (4 à 12) | 12 | 3 → 6 | 18 / 15 | — |
-| 10 | intensification (séries plus dures) | 1 × 4 à 6 | Ice cream maker : (4 à 12) | 12 | 3 → 5,5 | 18 / 15 | — |
+| 9 | intensification (séries plus dures) | 1 × 4 à 6 | Ice cream maker : (4 à 12) | 12 | 3 → 5,9 | 18 / 15 | — |
+| 10 | intensification (séries plus dures) | 1 × 4 à 6 | Ice cream maker : (4 à 12) | 12 | 3 → 5,4 | 17 / 15 | — |
 | 11 | intensification (séries plus dures) | 1 × 4 à 6 | Ice cream maker : (4 à 12) | 11 | 3 → 6 | 17 / 15 | — |
 | 12 | allègement | 2 × 10 s, maintien | Front lever half-lay : 10-10 s | 10-10 s | 4,5 → 7,5 ; suivantes 4,5 → 7,4 | 53 / 19 | — |
-| 13 | réalisation (spécifique à l'objectif) | 1 × 4 à 6 | Ice cream maker : (4 à 12) | 11 | 3 → 6,5 | 17 / 16 | — |
+| 13 | réalisation (spécifique à l'objectif) | 1 × 4 à 6 | Ice cream maker : (4 à 12) | 11 | 3 → 6,4 | 17 / 16 | — |
 | 14 | réalisation (spécifique à l'objectif) | 2 × 4 à 6 | Ice cream maker : (4 à 12)-(4 à 12) | 12-10 | 3 → 5,3 ; suivantes 3 → 5,3 | 17 / 16 | — |
 | 15 | réalisation (spécifique à l'objectif) | 1 × 4 à 6 | Ice cream maker : (4 à 12) | 12 | 3 → 6,1 | 18 / 16 | — |
 | 16 | test | 3 × 10 s, maintien | Front lever half-lay : 10-10-10 s | 10-10-10 s | 4,5 → 7,6 ; suivantes 4,5 → 7,5 | 56 / 19 | — |
@@ -81,9 +81,9 @@ Athlète simulé, maximum réel hors fatigue : 8 au départ (le record déclaré
 | 4 | allègement | 1 × 6 à 11 s, test | Planche straddle : (4 à 11) s | 5 s | test | 6 / 6 | — |
 | 5 | construction (volume) | 2 × 4 à 6 | Planche push-up straddle assistée à l'élastique : (4 à 6)-(4 à 12) | 6-11 | 4,5 → 7 ; suivantes 1,5 → 1,8 | 13 / 10 | série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète |
 | 6 | construction (volume) | 2 × 4 à 6 | Planche push-up straddle assistée à l'élastique : (4 à 6)-(4 à 6) | 4-4 | 4 → 4,5 ; suivantes 3 → 4,2 | 8 / 10 | — |
-| 8 | allègement | — | Planche straddle : (4 à 11) s | 4 s | test | 6 / 5 | — |
-| 9 | intensification (séries plus dures) | 2 × 4 à 6 | Planche push-up advanced tuck : (4 à 6)-(4 à 6) | 6-6 | 4 → 7,9 ; suivantes 4 → 6,8 | 14 / 11 | calibrage (séance 2 sur ce mouvement) |
-| 10 | intensification (séries plus dures) | 2 × 4 à 6 | Planche push-up advanced tuck : (4 à 7)-(4 à 14) | 7-7 | 3 → 7,3 ; suivantes 1,5 → 6,3 | 14 / 12 | série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète ; calibrage (séance 3 sur ce mouvement) ; allégé pour garder la marge prévue (au moins 3 en réserve) ; dernières séries plus dures que prévu |
+| 8 | allègement | — | Planche straddle : (4 à 10) s | 4 s | test | 6 / 5 | — |
+| 9 | intensification (séries plus dures) | 2 × 4 à 6 | Planche push-up advanced tuck : (4 à 6)-(4 à 6) | 6-6 | 4 → 7,8 ; suivantes 4 → 6,8 | 14 / 11 | calibrage (séance 2 sur ce mouvement) |
+| 10 | intensification (séries plus dures) | 2 × 4 à 6 | Planche push-up advanced tuck : (4 à 7)-(4 à 14) | 7-7 | 3 → 7,2 ; suivantes 1,5 → 6,3 | 14 / 12 | série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète ; calibrage (séance 3 sur ce mouvement) ; allégé pour garder la marge prévue (au moins 3 en réserve) ; dernières séries plus dures que prévu |
 | 17 | construction (volume) | 2 × 4 à 6 | Planche push-up advanced tuck : (4 à 11)-(4 à 10) | 8-7 | 3 → 5,6 ; suivantes 3 → 5,5 | 14 / 14 | — |
 
 ## Journal des décisions

@@ -2466,6 +2466,9 @@ void _buildFigures(_Builder b, Set<int> runDays) {
       // R4-F6 : levier utile quand le maintien maximal vaut 8 à 25 s ; en
       // dessous, des maintiens courts sur l'étape et du temps sur l'étape
       // plus facile.
+      // (Étape de travail écartée par la douleur : l'étape plus facile la
+      // remplace, avec la raison et le retour écrits.)
+      final painStep = easier != null && a.rejection(t.currentId, d) == 'joint';
       b.add(
         d,
         <String>[t.currentId, if (easier != null) easier],
@@ -2474,6 +2477,7 @@ void _buildFigures(_Builder b, Set<int> runDays) {
         sets: heavy ? (a.level >= 2 ? 5 : 4) : 3,
         skillTargetId: t.targetId,
         stress: heavy ? DayStress.heavy : DayStress.light,
+        note: painStep ? 'pain_step' : null,
       );
       // Avancé et élite : plus de tenue de remplissage sur une étape devenue
       // trop facile (maximum au-delà de 25 s, ou inconnu quand l'étape

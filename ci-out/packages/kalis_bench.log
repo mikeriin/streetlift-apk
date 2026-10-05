@@ -55,7 +55,7 @@ Downloading packages...
 Changed 51 dependencies!
 1 package has newer versions incompatible with dependency constraints.
 Try `dart pub outdated` for more information.
-Formatted 27 files (0 changed) in 0.12 seconds.
+Formatted 27 files (0 changed) in 0.15 seconds.
 Analyzing kalis_bench...
 No issues found!
 00:00 +0: loading test/season_test.dart
@@ -70,27 +70,27 @@ No issues found!
 00:00 +8: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
 00:00 +9: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
 00:00 +10: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
-00:00 +11: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
-00:00 +12: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
-00:00 +13: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
-00:00 +14: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
-00:00 +15: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
-00:00 +16: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
-00:00 +17: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
-00:00 +18: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
-00:00 +19: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
-00:00 +20: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
-00:00 +21: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
-00:00 +22: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
-00:00 +23: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
-00:00 +24: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
-00:00 +25: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
-00:00 +26: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
-00:00 +27: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
-00:00 +28: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
-00:00 +29: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
-00:00 +30: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
-00:00 +31: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
+00:01 +11: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
+00:01 +12: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
+00:01 +13: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
+00:01 +14: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
+00:01 +15: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
+00:01 +16: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
+00:01 +17: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
+00:01 +18: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
+00:01 +19: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
+00:01 +20: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
+00:01 +21: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
+00:01 +22: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
+00:01 +23: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
+00:01 +24: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
+00:01 +25: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
+00:01 +26: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
+00:01 +27: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
+00:01 +28: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
+00:01 +29: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
+00:01 +30: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
+00:01 +31: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
 00:01 +32: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
 00:01 +33: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
 00:01 +34: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
@@ -99,33 +99,33 @@ No issues found!
 00:01 +37: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
 00:01 +38: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
 00:01 +39: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
-00:01 +40: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
-00:01 +41: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
-00:01 +42: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
-00:01 +43: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
-00:01 +44: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
-00:01 +45: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
-00:01 +46: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
-00:01 +47: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
-00:01 +48: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
-00:01 +49: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
-00:01 +50: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
-00:01 +51: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
-00:01 +52: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
-00:01 +53: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
-00:05 +54: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
-00:05 +55: test/bench_test.dart: déterminisme : deux exécutions, mêmes fichiers à l'octet près
-00:07 +56: test/bench_test.dart: déterminisme : deux exécutions, mêmes fichiers à l'octet près
-00:08 +57: test/properties_test.dart: propriétés des critères, graines 2500 à 4999
-00:08 +58: test/properties_test.dart: propriétés des critères, graines 2500 à 4999
-00:08 +59: test/properties_test.dart: propriétés des critères, graines 2500 à 4999
-00:08 +60: test/properties_test.dart: propriétés des critères, graines 2500 à 4999
-00:08 +61: test/properties_test.dart: propriétés des critères, graines 2500 à 4999
-00:08 +62: test/properties_test.dart: propriétés des critères, graines 2500 à 4999
-00:08 +63: test/properties_test.dart: propriétés des critères, graines 5000 à 7499
-00:09 +64: test/properties_test.dart: propriétés des critères, graines 7500 à 9999
-00:10 +65: All tests passed!
-kalis_bench 0.2.1 : 27 profils, mode croisement, 23 violation(s) de sécurité, rapport écrit dans /home/runner/work/streetlift-apk/streetlift-apk/out-packages/kalis_bench (9 s).
-campagne street : 17 profils × 4 graines × 3 modèles (12 s).
-saisons croisées : 17 profils × 4 graines × 3 modèles × 8 saisons (49 s).
-durée : 100 s
+00:02 +40: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
+00:02 +41: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
+00:02 +42: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
+00:02 +43: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
+00:02 +44: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
+00:02 +45: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
+00:02 +46: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
+00:02 +47: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
+00:02 +48: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
+00:02 +49: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
+00:02 +50: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
+00:02 +51: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
+00:02 +52: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
+00:02 +53: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
+00:07 +54: test/season_test.dart: campagne d'une saison : couples cx et 0.1, trois vérités, scénario réservé au couple cx
+00:07 +55: test/bench_test.dart: déterminisme : deux exécutions, mêmes fichiers à l'octet près
+00:10 +56: test/bench_test.dart: déterminisme : deux exécutions, mêmes fichiers à l'octet près
+00:11 +57: test/properties_test.dart: propriétés des critères, graines 2500 à 4999
+00:11 +58: test/properties_test.dart: propriétés des critères, graines 2500 à 4999
+00:11 +59: test/properties_test.dart: propriétés des critères, graines 2500 à 4999
+00:11 +60: test/properties_test.dart: propriétés des critères, graines 2500 à 4999
+00:11 +61: test/properties_test.dart: propriétés des critères, graines 2500 à 4999
+00:11 +62: test/properties_test.dart: propriétés des critères, graines 2500 à 4999
+00:12 +63: test/properties_test.dart: propriétés des critères, graines 5000 à 7499
+00:13 +64: test/properties_test.dart: propriétés des critères, graines 7500 à 9999
+00:14 +65: All tests passed!
+kalis_bench 0.2.1 : 27 profils, mode croisement, 23 violation(s) de sécurité, rapport écrit dans /home/runner/work/streetlift-apk/streetlift-apk/out-packages/kalis_bench (12 s).
+campagne street : 17 profils × 4 graines × 3 modèles (16 s).
+saisons croisées : 17 profils × 4 graines × 3 modèles × 8 saisons (65 s).
+durée : 135 s

@@ -53,7 +53,7 @@ Pour chaque mouvement, la séance la plus lourde de la semaine : ce que le progr
 | 9 | construction (volume) | 2 × 1 à 4 | 1-(1 à 7) | 1-1 | 2 → 2,2 ; suivantes 2 → 1,8 | 3 / 3 | allégé pour garder la marge prévue (au moins 2 en réserve) ; série repère : une série ouverte (au ressenti, 2 en réserve) pour mesurer où en est l'athlète ; dernières séries plus dures que prévu |
 | 10 | construction (volume) | 2 × 1 à 5 | 1-(1 à 7) | 1-1 | 2 → 2,3 ; suivantes 2 → 1,6 | 3 / 3 | allégé pour garder la marge prévue (au moins 2 en réserve) ; série repère : une série ouverte (au ressenti, 2 en réserve) pour mesurer où en est l'athlète ; dernières séries plus dures que prévu |
 | 11 | affûtage | 1 × 1 | 1 | 1 | 2 → 2,3 | 3 / 3 | — |
-| 12 | test | 1 × 4 à 10, test | (2 à 10) | 2 | test | 3 / 3 | — |
+| 12 | test | 1 × 3 à 10, test | (2 à 10) | 2 | test | 3 / 3 | — |
 | 13 | construction (volume) | 2 × 1 à 4 | 1-1 | 1-1 | 2 → 2,2 ; suivantes 2 → 1,6 | 3 / 4 | allégé pour garder la marge prévue (au moins 2 en réserve) |
 | 14 | construction (volume) | 2 × 1 à 4 | (1 à 8)-(1 à 16) | 1-1 | 2 → 2,6 ; suivantes 2 → 2 | 4 / 4 | série repère : une série ouverte (au ressenti, 2 en réserve) pour mesurer où en est l'athlète |
 | 15 | construction (volume) | 2 × 1 à 5 | (1 à 10)-(1 à 10) | 1-1 | 2 → 2,5 ; suivantes 2 → 1,8 | 3 / 4 | allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |

@@ -353,7 +353,7 @@ Femme de 31 ans, 60 kg, deux ans de street workout et de course. 8 tractions, 14
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
-| Traction pronation | 2 × 5 | poids du corps, ≈ 63 % du maximum de répétitions (repère : 8) | 4 rép. en réserve | 2 min 30 s | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
+| Traction pronation | 2 × 4 | poids du corps, ≈ 50 % du maximum de répétitions (repère : 8) | 4 rép. en réserve | 2 min 30 s | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Dips aux barres parallèles | 2 × 7 | poids du corps, ≈ 50 % du maximum de répétitions (repère : 14) | 3 rép. en réserve sur la dernière série (davantage sur les premières) | 90 s | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Row australien | 2 × 8 à 10 | poids du corps | 3 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Relevé de jambes tendues suspendu | 2 × 8 à 12 | poids du corps | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
@@ -669,7 +669,7 @@ Femme de 31 ans, 60 kg, deux ans de street workout et de course. 8 tractions, 14
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
-| Traction pronation | 2 × 5 | poids du corps, ≈ 63 % du maximum de répétitions (repère : 8) | 4 rép. en réserve | 2 min 30 s | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
+| Traction pronation | 2 × 4 | poids du corps, ≈ 50 % du maximum de répétitions (repère : 8) | 4 rép. en réserve | 2 min 30 s | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Dips aux barres parallèles | 2 × 7 | poids du corps, ≈ 50 % du maximum de répétitions (repère : 14) | 3 rép. en réserve sur la dernière série (davantage sur les premières) | 90 s | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Row australien | 2 × 8 à 10 | poids du corps | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Relevé de jambes tendues suspendu | 2 × 8 à 12 | poids du corps | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
