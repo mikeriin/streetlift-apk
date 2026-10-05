@@ -429,6 +429,113 @@ void main() {
       await home(tester);
     }
 
+    // CI1b (paquets 0.2.2) : douleur au poignet à 4/10 notée à chaque
+    // séance pendant plus de deux semaines (journal semé par le magasin, à
+    // l'heure de chaque séance) → la séance suivante s'ouvre sur l'arrêt :
+    // mouvements qui chargent le poignet retirés, consigne de consulter.
+    {
+      final start = store.program.start!;
+      final weeks = store.planProgram?.blocks.first.weeks ?? 0;
+      DateTime dateOf(int w, int j) =>
+          DateTime(start.year, start.month, start.day + (w - 1) * 7 + j - 1);
+      final days = <(int, int)>[
+        for (var w = 1; w <= weeks; w++)
+          for (var j = 1; j <= 7; j++)
+            if (store.program.week(w).day(j)?.exercises.isNotEmpty ?? false)
+              (w, j),
+      ];
+      // Séances semées jusqu'à deux semaines pleines entre le premier et
+      // le dernier signalement (seuil du moteur), puis séance suivante.
+      final clock = store.storeClock;
+      const wrist = kc.PainReport(
+        zone: kc.BodyZone.wristHand,
+        side: kc.BodySide.both,
+        intensity: 4,
+        phase: kc.PainPhase.before,
+      );
+      var seeded = 0;
+      DateTime? firstSeed, lastSeed;
+      (int, int)? stop;
+      for (final (w, j) in days) {
+        final date = dateOf(w, j);
+        // (La séance guidée plus haut est déjà commencée : jamais semée ni
+        // choisie.)
+        if (hit != null && hit.$1 == w && hit.$2 == j) continue;
+        if (firstSeed != null &&
+            lastSeed != null &&
+            lastSeed.difference(firstSeed).inDays >= 15) {
+          stop = (w, j);
+          break;
+        }
+        store.storeClock = () => date.add(const Duration(hours: 9));
+        final base = store.program.week(w).day(j)!;
+        if (store.adaptOpen(w, base) == null) continue;
+        final a = store.adaptAnswer(
+          w,
+          base,
+          const kc.HealthCheck(pains: [wrist]),
+        );
+        if (a == null) continue;
+        final served = store.adaptDay(w, base, a);
+        for (final e in served.exercises) {
+          final log = store.exLog(w, j, e);
+          if (log.sets.isEmpty) continue;
+          store.adaptPrefill(w, j, e, log);
+          if (log.sets.first.reps.isEmpty) log.sets.first.reps = '5';
+          log.sets.first.flames = 7;
+          if (store.toggleSet(log, 0, store.logSpec(e)).ok) {
+            seeded++;
+            firstSeed ??= date;
+            lastSeed = date;
+            break;
+          }
+        }
+      }
+      store.storeClock = clock;
+      releve['douleur_jour'] = stop == null ? null : 'S${stop.$1}-J${stop.$2}';
+      final st = stop;
+      if (st != null) {
+        store.saveLogs();
+        await store.flush();
+        releve['douleur_seances'] = seeded;
+        await SessionHost.restart(
+          () => DevSession.setOffsetDays(_offsetTo(dateOf(st.$1, st.$2))),
+          message: 'Jour de la séance',
+        );
+        await opened(tester);
+        final week = store.program.week(st.$1);
+        final day = week.day(st.$2)!;
+        unawaited(
+          appNavigator.currentState!.push(
+            MaterialPageRoute<void>(
+              builder: (_) => SessionScreen(week: week, day: day),
+            ),
+          ),
+        );
+        releve['douleur_carte'] = await until(
+          tester,
+          find.byKey(const ValueKey('health-pain-stop')),
+        );
+        final a = store.sessionAdapt(st.$1, st.$2);
+        releve['douleur_arret'] =
+            a?.active.reasons.any((r) => r.code == 'adapt.pain_persistent') ??
+            false;
+        releve['douleur_retires'] = [
+          for (final x
+              in a?.active.adjustments ?? const <kc.SessionAdjustment>[])
+            if (x.kind == kc.AdjustmentKind.exerciseRemoved) x.exerciseId,
+        ];
+        await top(tester);
+        await shot('11_douleur_arret');
+        await tap(tester, 'feel-4', ms: 2000);
+        releve['douleur_carte_apres_bilan'] = find
+            .byKey(const ValueKey('health-pain-stop'))
+            .evaluate()
+            .isNotEmpty;
+        await home(tester);
+      }
+    }
+
     // Suppression de la session de test : session personnelle intacte.
     final badge = find.byKey(const ValueKey('dev-badge'));
     if (badge.evaluate().isNotEmpty) {
@@ -459,6 +566,9 @@ void main() {
     expect(releve['seance_trouvee'], isTrue);
     expect(releve['exercice_servi'], isTrue);
     expect(releve['panneau_coach'], isTrue);
+    expect(releve['douleur_carte'], isTrue);
+    expect(releve['douleur_arret'], isTrue);
+    expect(releve['douleur_carte_apres_bilan'], isTrue);
     expect(releve['retour_perso'], isTrue);
     expect(releve['perso_intacte'], isTrue);
     expect(releve['perso_sans_saison_apres'], isTrue);
