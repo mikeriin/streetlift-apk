@@ -10,3 +10,5 @@ En cours : CI rapide (claude/ci-ci1-rapide), puis contrôle complet claude/ci-3d
 Étape 19:15 UTC : main 64e286b3 publié (contrôle ci-3d run 37351278332 vert). Build signé run 37353902820 : essai 1 en échec
 (tests m8_carte_2d_test.dart bloqués 10 min, sans lien avec le lot, verts sur ci-3d) ; relance unique des jobs en échec.
 Reste : build vert, livraison (brouillon dans le scratchpad, copié ici), ETAT/DECISIONS, page de suivi, notification.
+
+Étape finale 19:20 UTC : build signé vert (run 37353902820 essai 2), pipeline d8074424 (livraison, DECISIONS CI1b, ETAT « à valider »), page de suivi republiée, projet claude/LIVRAISON_CI1b.md. Lot terminé.
