@@ -288,6 +288,7 @@ final class Athlete {
     required this.age,
     required this.days,
     required this.oneRm,
+    this.estimatedOneRm = const <String>{},
     required this.reps,
     required this.holds,
     required this.recordDay,
@@ -355,6 +356,10 @@ final class Athlete {
     // Records : tests datés du schéma 3 d'abord, fourchettes du schéma 2
     // ensuite (borne basse).
     final oneRm = <String, double>{};
+    // 1RM pris sur une estimation du moteur d'évolution (aucun record ni
+    // test) : seul un 1RM estimé peut être relevé d'après le maximum au
+    // poids du corps (`kalis_plan` prescribe, `_loadAt`).
+    final estimatedOneRm = <String>{};
     final reps = <String, int>{};
     final holds = <String, int>{};
     final recordDay = <String, CivilDate>{};
@@ -565,10 +570,21 @@ final class Athlete {
           return high < before ? high : before;
         }
 
-        // Baisse modérée (15 % au plus) : le test fait foi — le moteur
-        // d'évolution ne le sert qu'un bon jour (`kalis_adapt` 0.2.2).
+        // Baisse modérée (15 % au plus) : le test fait foi tel quel — le
+        // moteur d'évolution ne le sert qu'un bon jour (`kalis_adapt`
+        // 0.2.2), et le programme écrit « série de tête = résultat − 2,
+        // jamais sur un progrès supposé » (CX, correction 1, panel : repère
+        // remonté à 10 par l'estimation après deux tests à 9).
         if (measured >= coachTestDropShare * before) {
-          return kept(measured);
+          return measured;
+        }
+        // Mouvement à risque (muscle-up…) : le test plus bas fait foi même
+        // seul — mieux vaut un bloc un peu léger qu'une série de tête à
+        // l'échec sur la transition (R5-P27 ; panel CX, correction 1,
+        // `street_08`).
+        if (catalog.find(b.exerciseId)?.pattern ==
+            MovementPattern.transitionMuscleUp) {
+          return measured;
         }
         // Forte baisse : une mesure seule est suspecte (test sur la
         // fatigue) ; il en faut une deuxième concordante, mesurée dans les
@@ -678,9 +694,13 @@ final class Athlete {
           seen == null) {
         continue;
       }
+      // (Un test récent fait foi : l'estimation faite sur les séries des
+      // quatre semaines qui suivent un test ne le défait pas — CX,
+      // correction 1, panel : dips recalés à 41 après un test à 45.)
       var newer = false;
       for (final b in latest.values) {
-        if (b.exerciseId == e.exerciseId && b.date!.compareTo(seen) >= 0) {
+        if (b.exerciseId == e.exerciseId &&
+            b.date!.compareTo(seen.addDays(-28)) >= 0) {
           newer = true;
         }
       }
@@ -713,6 +733,7 @@ final class Athlete {
           // sans repère.)
           if (before == null && external > 0 && !partial) {
             oneRm[e.exerciseId] = external;
+            estimatedOneRm.add(e.exerciseId);
             recordDay[e.exerciseId] = seen;
           }
         // Sans repère du tout (variante jamais déclarée ni testée, dosée
@@ -954,6 +975,7 @@ final class Athlete {
       age: age,
       days: days,
       oneRm: oneRm,
+      estimatedOneRm: estimatedOneRm,
       reps: reps,
       holds: holds,
       recordDay: recordDay,
@@ -1007,6 +1029,11 @@ final class Athlete {
 
   /// 1RM de charge externe par exercice, en kg.
   final Map<String, double> oneRm;
+
+  /// Exercices dont le 1RM vient d'une estimation du moteur d'évolution
+  /// (ni record déclaré ni test) : seul un tel 1RM est relevé d'après le
+  /// maximum au poids du corps (CX, correction 1).
+  final Set<String> estimatedOneRm;
 
   /// Maximum de répétitions par exercice (strictement positif).
   final Map<String, int> reps;
