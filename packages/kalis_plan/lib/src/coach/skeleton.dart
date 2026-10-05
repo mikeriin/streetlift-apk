@@ -2493,9 +2493,7 @@ void _buildFigures(_Builder b, Set<int> runDays) {
       // remplace, avec la raison et le retour écrits.)
       final why = a.rejection(t.currentId, d);
       final painStep =
-          easier != null &&
-          why == 'joint' &&
-          _painOn(a, t.currentId);
+          easier != null && why == 'joint' && _painOn(a, t.currentId);
       b.add(
         d,
         <String>[t.currentId, if (easier != null) easier],

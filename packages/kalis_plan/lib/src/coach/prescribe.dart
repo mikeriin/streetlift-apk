@@ -2919,8 +2919,7 @@ final class Prescriber {
     // 50 % — passe 7 du panel, `street_10`.)
     var hold = known > 0 ? (known * part + 1e-9).round() : fallback;
     if (known > 0 &&
-        (hold > known * (part + 0.08) + 1e-9 ||
-            hold > known * 0.76 + 1e-9)) {
+        (hold > known * (part + 0.08) + 1e-9 || hold > known * 0.76 + 1e-9)) {
       hold = (known * part + 1e-9).floor();
     }
     if (known <= 0 && ws.kind == WeekKind.build && stage >= 2) {
@@ -5874,10 +5873,10 @@ final class Prescriber {
 
   /// Garde-fou des tenues du débutant (tenue menton au-dessus de la barre,
   /// suspension, appui) : la tenue écrite par série ne monte pas de plus de
-  /// 15 % (2 s au moins) sur la plus longue des trois semaines d'avant,
-  /// même quand un test relève le maximum (R5-P22 : +10 à 20 % par
-  /// semaine ; panel CX, correction 1 : 3 × 6 s puis 3 × 19 s d'une semaine
-  /// à l'autre sur le coude d'un débutant).
+  /// 15 % (2 s au moins) sur la plus longue des trois semaines d'avant
+  /// (R5-P22 : +10 à 20 % par semaine), sauf pour rejoindre 55 % du
+  /// maintien testé (`coachHoldFloorShare`, passe 5 du panel : tenues à 30
+  /// à 45 % du test pendant des semaines).
   void _fitHolds(List<List<_Draft>> days, _WeekTrace trace) {
     for (final items in days) {
       for (final x in items) {

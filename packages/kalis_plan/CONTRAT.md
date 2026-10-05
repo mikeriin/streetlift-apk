@@ -1728,4 +1728,10 @@ restent celles du bloc d'origine, mêlées à la réécriture (des hausses de vo
 dans des saisons de scénario de douleur) ; le front lever de l'élite (tenues longues sur un demi-palier),
 le critère de passage d'une figure relatif au maximum, le volume de tirage et l'échelle de poussée du
 débutant, une troisième exposition à la traction (`street_17`), la progression des tenues d'une figure
-jusqu'au critère de passage (`street_05`) relèvent de CP2.
+jusqu'au critère de passage (`street_05`) relèvent de CP2. Relevé par la relecture indépendante du code et
+laissé à CP2 : la note `plateau` est écrite pour tout mouvement visé alors que le squelette ne change de
+méthode que pour la traction (maximum de 10 et plus) ; sous 12 de maximum, la densité peut rester sans
+variable qui monte en phase spécifique ; en reprise après douleur, la charge d'un lesté proche du poids du
+corps est calculée avant la réserve de reprise ; le test d'un mouvement en reprise attend le bloc suivant.
+Le plancher des tenues du débutant (55 % du test) l'emporte sur la hausse de 15 % par semaine. Le garde-fou des départs au
+chrono (`_fitMinutes`) est plus strict que le texte : un départ de plus en deux semaines.

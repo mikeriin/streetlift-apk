@@ -1108,6 +1108,8 @@ void main() {
       const step = 'cs-front-lever-tuck-avance';
       final figures = _profile(
         experience: ExperienceLevel.intermediate,
+        primary: TrainingDiscipline.calisthenics,
+        equipment: const <String>[..._park, 'anneaux'],
         weekdays: const <int>[1, 4, 6],
         minutes: 75,
         benchmarks: <Benchmark>[
@@ -1121,7 +1123,11 @@ void main() {
           ),
         ],
         skills: const <SkillState>[
-          SkillState(targetExerciseId: 'cs-front-lever', currentExerciseId: step),
+          SkillState(
+            targetExerciseId: 'cs-front-lever',
+            currentExerciseId: step,
+            bestHoldSeconds: 12,
+          ),
         ],
       );
       bool serves(ProgramBlock b) => b.pass2.weeks.any(
@@ -1318,7 +1324,7 @@ void main() {
     });
 
     test('1RM : une série de plusieurs répétitions ne le fait pas tomber '
-        'de plus de 15 %', () {
+        'sous 85 %', () {
       Benchmark tested(double kg, int reps) => Benchmark(
         exerciseId: 'sl-dips-leste',
         kind: BenchmarkKind.loadReps,
@@ -1347,11 +1353,21 @@ void main() {
       final far = base.copyWith(
         benchmarks: <Benchmark>[...base.benchmarks!, tested(40, 3)],
       );
+      final alone = base.copyWith(
+        benchmarks: <Benchmark>[
+          for (final b in base.benchmarks!)
+            if (b.exerciseId != 'sl-dips-leste') b,
+          tested(40, 3),
+        ],
+      );
       final single = base.copyWith(
         benchmarks: <Benchmark>[...base.benchmarks!, tested(80, 1)],
       );
       expect(heaviest(base), greaterThan(0));
-      expect(heaviest(far), heaviest(base));
+      // (Borné à 85 % du 1RM connu : plus lourd que la série seule, plus
+      // léger que le record.)
+      expect(heaviest(far), lessThan(heaviest(base)));
+      expect(heaviest(far), greaterThan(heaviest(alone)));
       // (Une barre maximale plus basse fait foi.)
       expect(heaviest(single), lessThan(heaviest(base)));
     });
