@@ -1,0 +1,129 @@
+{
+  "ecole": "calisthenie",
+  "programmes": [
+    {
+      "programme": "programme_1.md",
+      "criteres": {"C1": 7, "C2": 8, "C3": 7.5, "C4": 7.5, "C5": 8, "C6": 7, "C7": 8, "C8": 6.5, "C9": 6},
+      "sans_objet": [],
+      "ensemble": 7,
+      "points_perdus": [
+        {"critere": "C1", "perte": 3, "raison": "Traction lestée du vendredi écrite « 4 × 6 à 75 % du 1RM » alors que la charge tombe sous le poids du corps : la variante réelle (traction au poids du corps, nombre de répétitions « réduit » non chiffré) n'est pas déduite des records ; aucune variante d'endurance spécifique (série dans la zone de l'épreuve) pour un max de 10 (R4-G2 : 8–15 = mixte)."},
+        {"critere": "C2", "perte": 2, "raison": "Traction 3 fois par semaine, en tête de séance, avec EMOM sous-maximal le mercredi (R4-G8, R4-G6) : bien ; pas de consigne technique variée par série (R4-F4)."},
+        {"critere": "C3", "perte": 2.5, "raison": "Réserve 2–4 cohérente (R1-P14) ; mais gainage monté de 20 à 35 s puis ramené brutalement à 19–23 s en semaine 11 sans test de maintien ; tenues sans lien avec un maintien max."},
+        {"critere": "C4", "perte": 2.5, "raison": "Tirage lundi/vendredi espacé (≥ 48 h, R4-F10), mais à 51 ans le saut de lest de +2,5 kg à +7,5 kg (85 % du 1RM) introduit en semaine 15, pendant l'affûtage, est un changement de stimulus au mauvais moment (R4-F9 : un seul changement à la fois)."},
+        {"critere": "C5", "perte": 2, "raison": "Tirage vertical et horizontal, dips, pompes, hollow et relevés de jambes : complet ; dips « épaule nettement sous le coude » sans réserve d'amplitude pour un athlète de 51 ans."},
+        {"critere": "C6", "perte": 3, "raison": "Règles de progression écrites (max − 2, +1 rép.), tests en semaines 5 et 10 ; mais le bloc 3 « réalisation » recopie le bloc 2 (« comme la semaine 7/9 ») : aucune progression vers la zone de l'épreuve, et la simulation finit à 9 au test (échec)."},
+        {"critere": "C7", "perte": 2, "raison": "Échauffement poignets/épaules, face pull, rotation externe à la poulie, suspension active : bien ; rien de spécifique au coude malgré 3 séances de tirage hebdomadaires à 51 ans (R4-F12)."},
+        {"critere": "C8", "perte": 3.5, "raison": "Allègements semaines 5 et 10 (R3-P9) et affûtage présents, mais le bloc « réalisation » n'est pas spécifique (R4-G1 : ≥ 50 % du bloc spécifique dans la zone de l'épreuve) ; semaine 17 isolée hors échéance sans rôle."},
+        {"critere": "C9", "perte": 4, "raison": "Consigne contradictoire sur l'exercice principal du vendredi : « 4 × 6 » en tableau, « avec moins de répétitions pour garder la réserve » en note, puis la note disparaît en semaine 4 alors que la charge reste « poids du corps ≈ 75 % » ; dans la simulation, séries arrêtées à 5-2, 3-3, 2-2."},
+        {"critere": "ensemble", "perte": 3, "raison": "Deux corrections nécessaires : prescription incompréhensible de la traction lestée et absence de travail spécifique à l'épreuve dans le bloc 3."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Remplacer la « traction lestée à 75 % » sous le poids du corps par une prescription chiffrée : par exemple 4 × 5 au poids du corps à 3 RIR (calé sur le max de 10), puis lest réel seulement quand 4 × 6 passe à 3 RIR ; supprimer la contradiction « 4 × 6 / moins de répétitions ».", "consequence": "L'athlète ne sait pas combien de répétitions faire sur son exercice principal du vendredi ; il s'arrête au hasard (séries de 2 à 5 dans la simulation) et le volume de tirage lourd fluctue sans contrôle."},
+        {"type": "necessaire", "texte": "Rendre le bloc 3 spécifique : une séance par semaine de séries dans la zone de l'épreuve (2–3 séries à 65–75 % du max, repos 90 s, réserve 2 sur la dernière), et une simulation de test vers la semaine 13, au lieu de recopier le bloc 2.", "consequence": "Le bloc final reste de la force générale ; l'endurance spécifique demandée par l'objectif de 14 répétitions n'est pas entraînée et le test final stagne (9 dans la simulation)."},
+        {"type": "amelioration", "texte": "Pendant l'affûtage (semaine 15), garder le lest déjà pratiqué (+2,5 kg) au lieu d'introduire +7,5 kg à 85 %."},
+        {"type": "amelioration", "texte": "Laisser l'amplitude des dips au confort de l'épaule (épaule au niveau du coude) pour un athlète de 51 ans, et ajouter un travail de coude (curl marteau, extension du poignet) en préparation."},
+        {"type": "amelioration", "texte": "Recaler les tenues de gainage sur un maintien mesuré plutôt que sur une baisse arbitraire à 19–23 s en semaine 11."},
+        {"type": "amelioration", "texte": "Retirer la semaine 17 ou la présenter comme début du cycle suivant écrit sur le test."}
+      ],
+      "points_forts": [
+        "Traction trois fois par semaine, toujours en tête de séance, avec une séance de densité sous-maximale (EMOM à 40 %).",
+        "Tests intermédiaires en semaines 5 et 10, recalage explicite sur le résultat mesuré, jamais sur un progrès supposé.",
+        "Règle de douleur graduée et prise en compte de l'âge (+10 % de volume par semaine au plus).",
+        "Équilibre tirage/poussée et prévention de la coiffe présents à chaque séance."
+      ]
+    },
+    {
+      "programme": "programme_2.md",
+      "criteres": {"C1": 7, "C2": 8, "C3": 6.5, "C4": 8, "C5": 6.5, "C6": 6.5, "C7": 7.5, "C8": 7.5, "C9": 8},
+      "sans_objet": [],
+      "ensemble": 7,
+      "points_perdus": [
+        {"critere": "C1", "perte": 3, "raison": "Max de 6 : priorité à la force (R4-G2 « max < 8 ») ; la traction stricte est servie en 3 × 3–4 et l'élastique, mais aucune variante de force plus dure que le poids du corps (négatives freinées, tenues en haut) n'est prévue alors qu'aucun lest n'est disponible."},
+        {"critere": "C2", "perte": 2, "raison": "Traction 3 fois par semaine en tête de séance, à l'état frais (R4-G8) ; pas de consigne technique par série."},
+        {"critere": "C3", "perte": 3.5, "raison": "Semaines 9 à 11 : 3 × 4 à 1 RIR avec un repère de max à 5, deux séances par semaine, puis 2 × 4 à 1 RIR en affûtage : au-delà de la marge intermédiaire (R1-P14 : 2–4 ; R4-G3 : ≤ 1 série près de l'échec) et en contradiction avec la règle écrite « sans dépasser ton maximum − 2 »."},
+        {"critere": "C4", "perte": 2, "raison": "Volume de tirage modeste et espacé (mardi/jeudi/dimanche) : pas d'excès ; budget non raisonné entre traction, élastique et row australien du même jour."},
+        {"critere": "C5", "perte": 3.5, "raison": "Bases présentes (tractions, dips, pompes, rows, gainage) mais dosage générique ; le volume strict de tirage (9–12 répétitions par séance) est faible pour faire passer un max de 6 à 9, sans outil de force (excentrique, isométrie) — la simulation reste à 6."},
+        {"critere": "C6", "perte": 3.5, "raison": "Règles de progression écrites, test intermédiaire en semaine 6 ; mais « règle d'assistance » de l'élastique citée et jamais définie, et la progression du bloc 2 (60 % puis 80 % du max) saute directement à 1 RIR sans critère."},
+        {"critere": "C7", "perte": 2.5, "raison": "Échauffement poignets/épaules, tirages et pompes scapulaires, suspension active ; pas de travail de coiffe ni de mobilité ciblée hors échauffement."},
+        {"critere": "C8", "perte": 2.5, "raison": "Ordre correct, allègement semaine 6, affûtage et test à 12 semaines ; le bloc 3 post-échéance est un simple retour au bloc 1."},
+        {"critere": "C9", "perte": 2, "raison": "Séances de 28–34 min dans les 45 min, version courte de 15 min adaptée au profil ; contradiction RIR/règle max − 2 et règle d'assistance absente."},
+        {"critere": "ensemble", "perte": 3, "raison": "Deux corrections nécessaires : effort à 1 RIR contradictoire avec la règle du programme, et absence d'outil de force pour un max de 6."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Semaines 9 à 11 : ramener la traction à 2 RIR (3 × 3 avec un max de 5) ou ne garder qu'une série à 1 RIR par semaine, conformément à la règle « maximum − 2 » écrite.", "consequence": "Six séries hebdomadaires près de l'échec pendant trois semaines, y compris en affûtage, accumulent la fatigue avant le test et contredisent la consigne générale : l'athlète ne sait pas laquelle suivre."},
+        {"type": "necessaire", "texte": "Ajouter un outil de force adapté au parc : 3 × 3 négatives freinées en 4–5 s le dimanche (ou tenues menton au-dessus de la barre 3 × 10–15 s), progressant d'une seconde par semaine.", "consequence": "Avec 9 à 12 tractions strictes par séance et rien de plus dur, le max de 6 stagne (6 au test final dans la simulation) et l'objectif de 9 n'est pas servi."},
+        {"type": "amelioration", "texte": "Écrire la règle d'assistance de l'élastique (passer à l'élastique plus fin quand 2 × 10 passent avec 3 RIR)."},
+        {"type": "amelioration", "texte": "Ajouter 2 × 12–15 rotations externes à l'élastique une fois par semaine pour la coiffe."},
+        {"type": "amelioration", "texte": "Donner une consigne technique par série (épaules basses, gainage hollow pendant la traction)."}
+      ],
+      "points_forts": [
+        "Séances courtes (28–34 min) et version de 15 min centrée sur l'objectif : faisable pour une mère de deux enfants.",
+        "Traction trois fois par semaine en début de séance, avec volume complémentaire à l'élastique et au row australien.",
+        "Test intermédiaire et test final bien préparés (48 h sans travail dur, séance facile à deux jours).",
+        "Matériel du parc respecté (barre basse, élastique)."
+      ]
+    },
+    {
+      "programme": "programme_3.md",
+      "criteres": {"C1": 8, "C2": 9, "C3": 8, "C4": 7, "C5": 7.5, "C6": 8, "C7": 8.5, "C8": 8, "C9": 8},
+      "sans_objet": [],
+      "ensemble": 8,
+      "points_perdus": [
+        {"critere": "C1", "perte": 2, "raison": "Traction calée sur le max de 18 (série de tête à max − 2) et séries « zone de l'épreuve » à 71–77 % : bien ; mais la traction chest-to-bar « 3 × 7 à 9 à 3 RIR » n'est reliée à aucun record (la simulation ne pouvait en faire que 5–6) et aucune variante de force ne la remplace dans le bloc 2."},
+        {"critere": "C2", "perte": 1, "raison": "Muscle-up placé en tête, frais, 3 × 2 à 3 RIR, échauffement spécifique et règle « arrête dès que la qualité passe sous 4/5 » ; pas de consigne variée par série."},
+        {"critere": "C3", "perte": 2, "raison": "Réserve 2–4 cohérente (R1-P14) ; EMOM à 9 rép. (53 % du max) au-dessus des 40 % conseillés pour un intermédiaire (R4-G6) ; gainage sans lien avec un maintien mesuré."},
+        {"critere": "C4", "perte": 3, "raison": "Tirage 4 jours par semaine : muscle-up strict le dimanche puis traction lourde le lundi (24 h, même zone coude/épaule), contraire à l'espacement de 48 h (R4-F10)."},
+        {"critere": "C5", "perte": 2.5, "raison": "Max > 15 : endurance spécifique + une séance lourde par semaine (R4-G2) ; la chest-to-bar disparaît au bloc 2 et le tempo lent n'arrive qu'au bloc 3 : aucune séance plus dure que le poids du corps pendant le bloc spécifique."},
+        {"critere": "C6", "perte": 2, "raison": "Règles de progression, test intermédiaire semaine 6 et recalage sur résultat ; pas de critère de passage écrit pour la chest-to-bar ni le muscle-up."},
+        {"critere": "C7", "perte": 1.5, "raison": "Wrist push-ups, CARs d'épaule, row scapulaire, suspension active : bien ciblé ; row scapulaire et CARs retirés en premier quand le temps manque."},
+        {"critere": "C8", "perte": 2, "raison": "Ordre technique → force → volume, allègement semaine 6, affûtage, test à 12 semaines ; la figure (muscle-up) est maintenue en entretien : bien ; pas de séance lourde dans le bloc spécifique."},
+        {"critere": "C9", "perte": 2, "raison": "Séances de 30–38 min dans 60 min, consignes d'exécution présentes ; prescriptions de chest-to-bar non atteignables telles qu'écrites."},
+        {"critere": "ensemble", "perte": 2, "raison": "Une correction nécessaire : absence de stimulus de force pendant le bloc spécifique pour un athlète à 18 tractions."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Garder une séance de force par semaine dans le bloc 2 (vendredi) : traction tempo lent 3 × 5–6, ou traction archer/typewriter 4 × 3–4 par côté à 2–3 RIR, sans lest disponible.", "consequence": "Avec un max de 18, le seul travail d'endurance plafonne vite (R4-G2) : la simulation stagne à 17 et échoue au test à 16."},
+        {"type": "amelioration", "texte": "Déplacer le muscle-up du dimanche au samedi, ou la traction lourde du lundi au mardi, pour laisser 48 h entre deux charges de coude."},
+        {"type": "amelioration", "texte": "Caler la chest-to-bar sur un test (série de tête = max − 3) au lieu de 3 × 7–9 non chiffrés."},
+        {"type": "amelioration", "texte": "Ramener l'EMOM à 7 répétitions (40 % du max) quand on augmente les départs, une variable à la fois."},
+        {"type": "amelioration", "texte": "Placer row scapulaire et CARs en échauffement pour qu'ils ne soient pas retirés en premier."}
+      ],
+      "points_forts": [
+        "Muscle-up travaillé frais, en tête de séance, loin de l'échec, avec préparation spécifique et critère de qualité.",
+        "Séries « zone de l'épreuve » à 70–77 % du max avec repos court : travail spécifique conforme à R4-G1.",
+        "Préparation des poignets et des épaules (wrist push-ups, CARs, row scapulaire) adaptée au parc.",
+        "Objectif ambitieux (+39 %) recadré honnêtement : 21–23 serait déjà un bon cycle."
+      ]
+    },
+    {
+      "programme": "programme_4.md",
+      "criteres": {"C1": 8.5, "C2": 9, "C3": 8, "C4": 8.5, "C5": 8.5, "C6": 8.5, "C7": 9, "C8": 8.5, "C9": 9},
+      "sans_objet": [],
+      "ensemble": 9,
+      "points_perdus": [
+        {"critere": "C1", "perte": 1.5, "raison": "Variantes déduites du max de 9 (série de tête max − 3, EMOM à 38–44 %, négatives freinées pour la force, R4-G2 « 8–15 = mixte ») ; pas de demi-palier entre négative et traction tempo."},
+        {"critere": "C2", "perte": 1, "raison": "Traction trois fois par semaine en tête de séance ; pas de consigne technique variée par série."},
+        {"critere": "C3", "perte": 2, "raison": "Réserve 3–4 adaptée au sommeil court ; gainage ramené à 19–23 s sans maintien mesuré."},
+        {"critere": "C4", "perte": 1.5, "raison": "Volume réduit pour le métier physique, mardi/jeudi/samedi espacés ; les négatives passent de 2 × 2 à 3 × 5 en 5 s avec 2 s en haut sur quelques semaines, hausse rapide de charge excentrique pour un maçon au sommeil court."},
+        {"critere": "C5", "perte": 1.5, "raison": "Tirage vertical/horizontal, dips, pompes, hollow, gainage latéral, jambes au poids du corps dosées sans surcharge : bien ; préhension non réfléchie malgré le métier."},
+        {"critere": "C6", "perte": 1.5, "raison": "Critères de progression écrits, test intermédiaire semaine 6 ; progression des négatives (« allonge d'une seconde par semaine ») non suivie après la semaine 4."},
+        {"critere": "C7", "perte": 1, "raison": "Face pull, rotation externe, CARs, suspension active, échauffement poignets : complet ; rien de spécifique au coude malgré le travail manuel."},
+        {"critere": "C8", "perte": 1.5, "raison": "Ordre correct, allègement semaine 6, affûtage et test à 12 semaines ; bloc 3 post-échéance sans objectif nommé."},
+        {"critere": "C9", "perte": 1, "raison": "Séances de 34–46 min dans 60 min, règles sommeil/stress/âge explicites et sans double comptage, version courte de 25 min ; régression des négatives prévue."},
+        {"critere": "ensemble", "perte": 1, "raison": "Aucune correction nécessaire ; restent des améliorations sur la montée des négatives et la préparation du coude."}
+      ],
+      "corrections": [
+        {"type": "amelioration", "texte": "Monter les négatives d'une seule variable à la fois (séries, ou répétitions, ou durée), par exemple 2 × 4 en 5 s avant de passer à 3 × 4 avec tenue en haut."},
+        {"type": "amelioration", "texte": "Ajouter 2 × 15 extensions du poignet à l'élastique ou curls marteau légers une fois par semaine pour le coude d'un travailleur manuel."},
+        {"type": "amelioration", "texte": "Recaler les tenues de gainage sur un maintien mesuré."},
+        {"type": "amelioration", "texte": "Donner une consigne technique par série sur la traction (une seule, orientée sur l'effet du geste)."}
+      ],
+      "points_forts": [
+        "Récupération du profil (5 h 30 de sommeil, stress 4/5, maçon, 41 ans) traduite en règles chiffrées, sans double comptage, avec une baisse du jour recalibrée sur son sommeil habituel.",
+        "Traction trois fois par semaine : séance lourde, EMOM sous-maximal, séries dans la zone de l'épreuve à 90 s de repos, plus négatives freinées.",
+        "Prévention de l'épaule complète (face pull, rotation externe, CARs) au parc avec l'élastique.",
+        "Tests intermédiaire et final préparés (séance facile à deux jours, 48 h sans travail dur)."
+      ]
+    }
+  ]
+}

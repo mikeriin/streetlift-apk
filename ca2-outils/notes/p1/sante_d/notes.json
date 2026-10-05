@@ -1,0 +1,40 @@
+{
+  "ecole": "sante",
+  "programmes": [
+    {
+      "programme": "programme_1.md",
+      "criteres": {"S1": 9.5, "S2": 8.5, "S3": 9, "S4": 7, "S5": 9, "S6": 10, "S7": 9, "S8": 8.5, "S9": 9},
+      "sans_objet": [],
+      "ensemble": 8,
+      "points_perdus": [
+        {"critere": "S1", "perte": 0.5, "raison": "Dips : consigne « épaule nettement sous le coude en bas » imposée à toutes les séances sans amplitude de repli écrite pour l'épaule ; seule la règle générale de douleur s'applique (R5-P24, pratique de coach)."},
+        {"critere": "S2", "perte": 1.5, "raison": "Le programme écrit « durée +10 % par semaine au plus », mais le jeudi passe de 35 à 41 min (S4→S5) et de 41 à 48 min (S8→S9), soit +17 % ; le volume de qualité passe de 2 000 m (5 × 400) à 3 000 m (3 × 1 000) de S2 à S3, +50 %. Ça reste dans les garde-fous de R5-P22, mais c'est incohérent avec la règle écrite."},
+        {"critere": "S3", "perte": 1, "raison": "La semaine 6 (allègement) contient deux épreuves maximales (tractions le samedi, 5 km chrono le dimanche), ce qui réduit sa fonction de récupération ; la charge de vie n'est pas renseignée au profil et la règle « réductions déjà dans les chiffres » reste vague (R5-P14 à P19, R3-P9)."},
+        {"critere": "S4", "perte": 3, "raison": "Tractions (objectif 8→11, zone mixte selon R4-G2) : le bloc « réalisation » S7-S10 recopie le bloc de volume (mardi 6-5-5 à 2 RIR de S3 à S10, samedi 3-4 × 5 avec 2 min de repos). Rien dans la zone de l'épreuve (R4-G1 : ≥ 50 % du bloc spécifique), pas de densité, de sous-maximal ni de cluster (R4-G5, G6), aucune simulation avant le test (R4-G7), et 2 expositions par semaine au lieu de 3 pour un intermédiaire (R4-G8). Course : pas de travail au seuil, et les fractions de 400 m dites « allure 3 km » sont en fait courues à l'allure 5 km (1 min 56 = 4:50/km)."},
+        {"critere": "S5", "perte": 1, "raison": "Uniquement la prise pronation (tractions, négatives, suspension) sur 16 semaines, sans variation de prise pour les coudes (R4-F10 à F12) ; la prévention n'est pas reliée à un historique, puisque le questionnaire est vierge."},
+        {"critere": "S7", "perte": 1, "raison": "Le lundi compte 9 exercices plus 20 min de footing pour 54 à 56 min estimées sur 60 disponibles, sans marge ; le document est difficile à suivre, avec de nombreuses règles et des chaînes « comme la semaine X sauf » sur 2 ou 3 niveaux (S11 → S6 → S2)."},
+        {"critere": "S8", "perte": 1.5, "raison": "Dernière séance à l'allure de l'objectif (5 × 1 000 m à 5:00) en S9 ; l'affûtage S11 garde des 400 m mais ne répète pas l'allure 10 km (R3-P21, R6-P20). Aucune simulation de série de tractions entre S6 et S12 (R4-G7 : intermédiaire toutes les 3 à 4 semaines). Le 10 km chrono a lieu le lendemain du test maximal de tractions."},
+        {"critere": "S9", "perte": 1, "raison": "Libellé « allure estimée sur 3 km » erroné pour 1 min 56 au 400 m ; l'allure des 1 000 m est figée à 5:00/km même après les tests, alors que la règle dit que « chaque test chronométré recale l'allure » ; le document est lourd à reconstituer à cause des références emboîtées."},
+        {"critere": "ensemble", "perte": 2, "raison": "Une correction nécessaire : la phase spécifique des tractions n'est ni progressive ni dans le format de l'épreuve, ce qui rend l'objectif de 11 répétitions peu probable (la simulation finit à 7 au test, environ 0,5 %/semaine). Le reste est sûr et bien construit."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Réécrire le travail de tractions du bloc 2 (S7-S10) pour qu'il soit spécifique et progressif : 3 expositions par semaine (ajouter au lundi ou au jeudi 5 à 6 séries sous-maximales à 40-50 % du max, ou un EMOM), mardi lourd gardé, samedi au format de l'épreuve (séries de 6-8 à 1-2 RIR avec 60-90 s de repos, ou clusters/échelles avec un total montant de 10-20 % par semaine), et une simulation (série maximale contrôlée) en S9 (R4-G1, G5 à G8).", "consequence": "Le mardi reste figé à 6-5-5 pendant 8 semaines et le samedi à 4 × 5 avec longs repos : l'athlète entretient sa force sans développer l'endurance de force propre à une série de 11, et elle plafonne autour de 8 au test (la simulation donne 7)."},
+        {"type": "amelioration", "texte": "Ajouter en bloc 2 une séance au seuil (par exemple 2 × 10 min puis 3 × 10 min à l'allure semi/10 km + 10-15 s/km) en alternance avec les 1 000 m, et allonger la sortie longue jusqu'à 65-70 min (75 min disponibles le dimanche)."},
+        {"type": "amelioration", "texte": "En semaine 11 (affûtage), remplacer le 4 × 400 m du jeudi par 3 × 1 000 m à 5:00/km pour répéter l'allure du 10 km à J-10, et prévoir 1 à 2 jours de repos complet avant le chrono."},
+        {"type": "amelioration", "texte": "Faire concorder la règle « +10 % par semaine » avec les hausses réelles du jeudi (+17 %), ou la remplacer par les garde-fous de R5-P22 (+10-20 %/sem., +30 % sur 2 semaines)."},
+        {"type": "amelioration", "texte": "Corriger le libellé « allure 3 km » en « allure 5 km » et recaler l'allure des 1 000 m sur le test 5 km de S6 et sur le 10 km de S12 au lieu de la figer à 5:00."},
+        {"type": "amelioration", "texte": "Faire varier les prises (supination ou prise neutre sur une séance sur deux, ou sur les tractions négatives) pour répartir la contrainte sur les coudes, et proposer une amplitude de dips réduite en cas de gêne antérieure de l'épaule."},
+        {"type": "amelioration", "texte": "Sortir une des deux épreuves de la semaine d'allègement 6 (par exemple 5 km chrono en S7) pour préserver la récupération."}
+      ],
+      "points_forts": [
+        "Seuils de douleur chiffrés (0-2 / 3-4 / 5 / 6+), suivi de tendance sur 2 à 3 semaines, orientation vers un professionnel et arrêt immédiat sur signes cardiaques (R5-P23, R4-F11).",
+        "Règles de séance manquée, de semaine manquée et de reprise après 2 semaines écrites (R5-P7) ; baisse du jour sur critères simples ; version courte de 15 min prévue.",
+        "Marges RIR 2-4 sans échec hors tests, 48 h sans travail dur avant chaque test (R4-G3).",
+        "Course bien dosée pour une intermédiaire : 1 séance de qualité par semaine avec allures chiffrées, sortie longue au test de la parole, progression modérée de la sortie longue, pogo jumps encadrés par un seuil de douleur (R6-P15, P16, P22).",
+        "Peu d'interférence : un jour de jambes (lundi) loin des fractions du jeudi, force avant footing dans la même séance (R6-P29, P30).",
+        "Prévention scapulaire (face pull, rotation externe, tirages scapulaires) et tirages horizontaux qui équilibrent la poussée ; échauffement écrit.",
+        "Échéance respectée : test intermédiaire en S6, affûtage d'environ 55 % sur 8 à 14 jours, test en S12, stratégie de série et d'allure régulière écrite, objectif ambitieux annoncé honnêtement."
+      ]
+    }
+  ]
+}

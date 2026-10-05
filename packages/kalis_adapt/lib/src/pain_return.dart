@@ -155,7 +155,9 @@ final class PainReturn {
         var loaded = lift < start ? (start - lift + 6) ~/ 7 : 0;
         for (var w = 0; w < weekIndex; w++) {
           final weekStart = start + 7 * w;
-          if (weekStart + 6 >= lift &&
+          // (Une semaine compte quand la levée laisse au moins la moitié
+          // de ses jours.)
+          if (weekStart + 3 >= lift &&
               returnLoadedWeek(view.policyOf(view.week(w)))) {
             loaded++;
           }

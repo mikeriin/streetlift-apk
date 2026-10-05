@@ -1,0 +1,126 @@
+{
+  "ecole": "sante",
+  "programmes": [
+    {
+      "programme": "programme_1.md",
+      "criteres": {"S1": 7.5, "S2": 7.5, "S3": 8.5, "S5": 7, "S6": 9, "S7": 9, "S8": 9, "S9": 7.5},
+      "sans_objet": ["S4"],
+      "ensemble": 7,
+      "points_perdus": [
+        {"critere": "S1", "perte": 2.5, "raison": "Douleur au poignet signalée à 4/10 de façon répétée dès la semaine 8 (journal), mais le bloc 3, écrit d'après le point de fin de bloc, garde pompe classique au sol 2 × 4 à 2 RIR et wrist push-ups en échauffement à chaque séance, sans variante en prise neutre (R5-P23, R5-P24 : modifier la prise avant de supprimer)."},
+        {"critere": "S2", "perte": 2.5, "raison": "Le tirage vertical s'accumule vite sur un débutant à 0 mois : S2 ajoute des tractions négatives à deux séances, S3 une 3e série assistée et 3 tenues menton au-dessus ; S7 passe les négatives à 3 × 4 avec 2 s en haut. Le tableau des séries dures (32→33) ne compte pas ces ajouts. Simulation : alerte de surmenage en S4-S5, maximum assisté réel de 16 à 11 sur le cycle (R5-P22, R5-P1 : débutant 4–6 → 10 séries)."},
+        {"critere": "S3", "perte": 1.5, "raison": "Aucune charge de vie déclarée, ce qui ne pénalise pas beaucoup. Mais aucun allègement réactif n'est écrit en cas de baisse de performance sur deux séances (R3-P11), alors que la simulation en a eu besoin."},
+        {"critere": "S5", "perte": 3, "raison": "Face pull une seule fois par semaine (mercredi), et retiré en semaine 11. Rien pour le poignet, alors que la poussée au sol est quotidienne. Les dips assistés commencent en S7 avec une amplitude progressive (bien), mais il n'y a aucune adaptation à l'historique de douleur au poignet."},
+        {"critere": "S6", "perte": 1, "raison": "Marges correctes (RIR 4 → 2, négatives au contrôle, essais stricts arrêtés au premier essai lent). La marge de 2 RIR sur les pompes au sol est conservée malgré la douleur."},
+        {"critere": "S7", "perte": 1, "raison": "Séances de 31 à 42 min pour 45 disponibles, et une version courte existe. En revanche, 8 à 9 exercices par séance, c'est beaucoup pour un débutant complet."},
+        {"critere": "S8", "perte": 1, "raison": "Test en S6, affûtage en S11 (−30 %), test le jour J avec protocole d'essai strict et 48 h de repos. L'affûtage reste un peu court par rapport au volume de tirage accumulé (R3-P21 : débutant 3–5 jours)."},
+        {"critere": "S9", "perte": 2.5, "raison": "Format « comme la semaine X, sauf » avec des notes de plusieurs lignes répétées « au lieu de » : la séance réelle d'une semaine du bloc 3 (comme S8, elle-même comme S5…) est difficile à reconstituer pour un débutant."},
+        {"critere": "ensemble", "perte": 3, "raison": "Deux corrections nécessaires : le volume de tirage et la progression du mouvement de l'objectif, puis le poignet non protégé dans le bloc 3."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Plafonner le tirage vertical à environ 10 séries par semaine en S1-S5 (tractions assistées, négatives et tenues comptées ensemble, en en ajoutant une seule à la fois) et prévoir un allègement réactif d'une semaine si les répétitions assistées baissent deux séances de suite (R3-P11, R5-P8 : plafond de 15 négatives par séance).", "consequence": "Le volume s'empile plus vite que la récupération ne suit : la force du mouvement de l'objectif baisse (16 → 11 en simulation), et les 3 tractions à 12 semaines deviennent hors d'atteinte."},
+        {"type": "necessaire", "texte": "Dans le bloc 3, après la douleur au poignet signalée : pompes sur poignées, parallettes ou barres parallèles (prise neutre) au lieu du sol, wrist push-ups remplacés par des rotations douces non chargées, et reprise au sol par paliers d'environ 10 % après deux semaines à 2/10 au plus.", "consequence": "Chaque séance de poussée recharge le poignet douloureux : la gêne revient (4/10 en S16 dans la simulation) et risque de devenir chronique."},
+        {"type": "amelioration", "texte": "Ajouter le face pull ou la rotation externe aux trois séances, à faible dose, pour équilibrer le volume de tirage et de poussée."},
+        {"type": "amelioration", "texte": "Inscrire les essais de traction stricte (à partir de S6) directement dans les tableaux, et pas seulement dans les règles."},
+        {"type": "amelioration", "texte": "Afficher la séance complète de chaque semaine au lieu de chaînes de différences."}
+      ],
+      "points_forts": [
+        "Seuils de douleur écrits (0-2, 3-4, 5, ≥ 6) avec orientation vers un professionnel, et arrêt sur drapeaux rouges.",
+        "Attentes honnêtes sur l'objectif (« une ou deux tractions serait déjà un très bon cycle »).",
+        "Règles claires pour l'élastique, les séances et semaines manquées, la baisse du jour et la version courte de 15 min.",
+        "Protocole de test le jour J (essai strict frais, 3 essais, 48 h sans travail dur), précédé d'un affûtage."
+      ]
+    },
+    {
+      "programme": "programme_2.md",
+      "criteres": {"S1": 9, "S2": 9, "S3": 9.5, "S4": 8.5, "S5": 7.5, "S6": 9, "S7": 9.5, "S8": 8.5, "S9": 8},
+      "sans_objet": [],
+      "ensemble": 9,
+      "points_perdus": [
+        {"critere": "S1", "perte": 1, "raison": "Bon respect de R5-P9 : traction pieds au sol, pompe inclinée choisie pour 6 répétitions à RIR 3-4, aucun saut. Pas d'orientation médicale proposée avant de commencer, alors qu'il s'agit d'un homme de 38 ans sédentaire à IMC d'environ 33 (R5-P25, pratique de coach)."},
+        {"critere": "S2", "perte": 1, "raison": "Hausses douces et règles présentes. Deux règles de passage coexistent pour la pompe inclinée (« haut de la plage deux séances » contre « 2 × 12, qualité 4/5, 2 semaines ») : l'athlète simulé est resté 15 semaines sur l'étape inclinée en faisant 22 répétitions par série."},
+        {"critere": "S3", "perte": 0.5, "raison": "Sommeil de 6,5 h, stress 3/5 et déficit sont pris en compte (volume modéré et gelé, protéines, 7 h de sommeil visées, critères de baisse du jour). Le placement des marches par rapport aux séances n'est pas fixé."},
+        {"critere": "S4", "perte": 1.5, "raison": "Marche dosée au test de la parole, avec une progression chiffrée (+10 min par semaine, 150 puis 200 min, R6). Mais les marches des jours sans séance n'apparaissent pas dans les tableaux, la marche en fin de séance diminue (10 → 7 min, retirée le samedi en S7), et l'intensité ne progresse pas (marche plus rapide, côtes)."},
+        {"critere": "S5", "perte": 2.5, "raison": "Tirage et poussée équilibrés (rows et tractions assistées), mais aucun travail ciblé de la coiffe ni des fixateurs des omoplates en dehors de l'échauffement, et rien de spécifique pour les genoux à 104 kg (fentes, squats jusqu'à 2 × 14-19)."},
+        {"critere": "S6", "perte": 1, "raison": "RIR de 4 → 2, sans échec. La simulation montre un effort réel bien plus facile que visé (39 % des séries au moins 3 répétitions plus faciles) : la poussée est sous-dosée."},
+        {"critere": "S7", "perte": 0.5, "raison": "Assiduité de 47 séances sur 48 en simulation, version courte de 15 min. La séance du samedi de S1 est estimée à 39 min pour 40 disponibles."},
+        {"critere": "S8", "perte": 1.5, "raison": "Tests en S6 et S12, et pesée avec tour de taille aux semaines 1, 6 et 12. Les marches ne figurent dans aucun bilan, alors que l'objectif est l'habitude."},
+        {"critere": "S9", "perte": 2, "raison": "Consignes simples (allure de conversation, séance cochée), mais le format en différences et la double règle d'échelle brouillent la lecture."},
+        {"critere": "ensemble", "perte": 1, "raison": "Aucune correction nécessaire. Restent des améliorations sur la marche, la prévention et la clarté."}
+      ],
+      "corrections": [
+        {"type": "amelioration", "texte": "Écrire les marches des jours sans séance dans les tableaux de chaque semaine (durée cible et minutes totales), plutôt que de les laisser dans les règles."},
+        {"type": "amelioration", "texte": "Garder une seule règle de passage pour la pompe inclinée (descendre d'un cran dès que 2 × 12 propres sont tenus deux séances de suite), afin que la poussée suive les progrès."},
+        {"type": "amelioration", "texte": "Ajouter un face pull ou une rotation externe à l'élastique (2 × 12-15) dans deux séances."},
+        {"type": "amelioration", "texte": "À partir de S8, faire monter l'intensité de la marche (portions plus rapides ou côtes) et non plus seulement sa durée."},
+        {"type": "amelioration", "texte": "Proposer un avis médical avant de commencer, en l'absence de symptôme (sédentaire, en surpoids, 38 ans)."}
+      ],
+      "points_forts": [
+        "Variantes adaptées au surpoids (pieds au sol, mains surélevées, aucun saut) avec une marge de 3-4 RIR au départ (R5-P9, R5-P4).",
+        "Marche progressive et chiffrée vers 150 puis 200 min, avec fractionnement permis et priorité donnée aux séances.",
+        "Suivi d'habitude (séances cochées), poids et tour de taille, déficit modéré, protéines, sommeil, orientation vers un professionnel pour l'alimentation.",
+        "Seuils de douleur, drapeaux rouges, version courte et règles de séance manquée."
+      ]
+    },
+    {
+      "programme": "programme_3.md",
+      "criteres": {"S1": 9, "S2": 8.5, "S3": 8.5, "S5": 6.5, "S6": 9, "S7": 9, "S8": 9, "S9": 7.5},
+      "sans_objet": ["S4"],
+      "ensemble": 8,
+      "points_perdus": [
+        {"critere": "S1", "perte": 1, "raison": "La règle sur la douleur au poignet qui dure (retrait des appuis mains à plat, maintien de la prise neutre, consultation, retour par paliers de 10 %) est exemplaire. En revanche, les wrist push-ups restent en échauffement jusqu'en S12 malgré la douleur signalée dès S7."},
+        {"critere": "S2", "perte": 1.5, "raison": "Hausses de tirage cumulées entre S2 et S3 (négatives ajoutées à deux séances, puis une série assistée et 3 tenues) ; en S7, négatives à 3 × 4 avec 2 s en haut. Dans la simulation, les tenues à 57-65 % sont souvent arrêtées avant la cible (11-16 s pour 17-19 s prévues)."},
+        {"critere": "S3", "perte": 1.5, "raison": "Aucune charge de vie déclarée. Il y a des critères de baisse du jour, mais aucun allègement réactif sur baisse de performance (R3-P9 : débutant réactif)."},
+        {"critere": "S5", "perte": 3.5, "raison": "Le bloc 3 retire toute la poussée (pompe inclinée, négative, classique) sans aucun substitut en prise neutre, contrairement à sa propre règle (barres parallèles, poignées). Il ne reste que le support hold, et les trois séances ne font que tirer. Le face pull disparaît plusieurs semaines (S6, S11)."},
+        {"critere": "S6", "perte": 1, "raison": "Marges prudentes et sans échec. La pompe classique à 2 RIR avec un maximum de 3 revient à des séries de 1 répétition, ce qui sert peu l'objectif de 10."},
+        {"critere": "S7", "perte": 1, "raison": "Séances de 25 à 49 min pour 60 disponibles, et une version courte de 25 min. Jusqu'à 10 exercices par séance, c'est beaucoup pour une débutante."},
+        {"critere": "S8", "perte": 1, "raison": "Tests en S6 et S12, affûtage en S11, essai strict de traction et pompe maximale au jour J après 48 h. Contrairement à l'objectif de traction, l'objectif de 10 pompes n'est pas présenté comme ambitieux."},
+        {"critere": "S9", "perte": 2.5, "raison": "Format en différences avec des notes répétées « au lieu de » sur plusieurs lignes : il est difficile de savoir ce qui reste dans une séance du bloc 3."},
+        {"critere": "ensemble", "perte": 2, "raison": "Une correction nécessaire : remettre de la poussée en prise neutre dans le bloc 3."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Dans le bloc 3, remplacer les poussées retirées par des variantes en prise neutre : pompes inclinées sur barres parallèles ou poignées, dips assistés à l'élastique avec amplitude progressive, en volume réduit si la gêne ne monte pas, comme le prévoit la règle du programme. Remplacer aussi les wrist push-ups par une mobilisation non chargée dès la première douleur.", "consequence": "Quatre semaines sans aucune poussée : la force de poussée et l'objectif des 10 pompes reculent, et l'équilibre entre tirage et poussée des épaules se perd sur trois séances qui ne font que tirer."},
+        {"type": "amelioration", "texte": "Écrire que 3 → 10 pompes en 12 semaines est ambitieux et fixer un repère intermédiaire réaliste."},
+        {"type": "amelioration", "texte": "Garder le face pull dans toutes les semaines, allègements compris, à faible dose."},
+        {"type": "amelioration", "texte": "Ajouter une règle d'allègement réactif (une semaine à −40 % de séries si les répétitions ou les tenues baissent deux séances de suite)."},
+        {"type": "amelioration", "texte": "Afficher les séances en entier plutôt que des chaînes de différences."}
+      ],
+      "points_forts": [
+        "Règle de la douleur au poignet qui dure, précise et conforme à R5-P23 et R5-P24 : prise neutre gardée, consultation, retour par paliers.",
+        "Progression vers la première traction conforme à R5-P8 (assistance, négatives de 4-5 s arrêtées au contrôle, tenue en position haute), avec essais stricts frais à partir de S6.",
+        "Échelle de poussée et pompes négatives bien dosées pour une débutante, sans échec.",
+        "Tests, affûtage et protocole du jour J cohérents avec l'échéance de 12 semaines."
+      ]
+    },
+    {
+      "programme": "programme_4.md",
+      "criteres": {"S1": 9, "S2": 9.5, "S3": 8, "S4": 8.5, "S5": 8.5, "S6": 9, "S7": 8.5, "S8": 8.5, "S9": 8},
+      "sans_objet": [],
+      "ensemble": 9,
+      "points_perdus": [
+        {"critere": "S1", "perte": 1, "raison": "Seuils de douleur et orientation vers un professionnel présents. En revanche, les dips se font dès S1 à pleine amplitude (« épaule nettement sous le coude ») après 36 semaines d'arrêt, alors que les tendons reviennent moins vite que les muscles (R5-P6)."},
+        {"critere": "S2", "perte": 0.5, "raison": "Reprise conforme (première semaine à mi-volume et à 4 RIR, +10-14 % de séries par semaine, base à environ 75 % des anciens records, test d'entrée ; R5-P7, R5-P22). En S7, la série de tête de traction passe de 6 à 9 répétitions à 2 RIR d'un coup, même si c'est recalé sur le test."},
+        {"critere": "S3", "perte": 2, "raison": "La pause vient d'une naissance et d'un déménagement, mais le programme ne dit rien du sommeil ni de la fatigue d'un jeune parent au-delà de la règle générique de baisse du jour. Les séances du lundi et du mardi s'enchaînent, avec poussée les deux jours. Les allègements en S6 et S12 sont bien placés (R3-P9)."},
+        {"critere": "S4", "perte": 1.5, "raison": "Départs au chrono à 40-44 % du maximum avec une densité qui progresse d'une minute toutes les deux semaines (R4-G). Aucune intensité cible ni aucun test d'endurance de force (répétitions totales, circuit) pour une pratique sets & reps à 60 %."},
+        {"critere": "S5", "perte": 1.5, "raison": "Face pull, rotation externe, rows, CARs, gainage : bon équilibre. Il manque une adaptation des positions extrêmes (fond de dip, suspension) à la reprise."},
+        {"critere": "S6", "perte": 1, "raison": "RIR 4 → 2, sans échec. En bloc 3, la série de tête de dips à 17 répétitions pour un maximum de 19 tombe à 1,4-1,5 RIR réel en simulation."},
+        {"critere": "S7", "perte": 1.5, "raison": "Quatre séances de 18 à 33 min pour 60 disponibles : faisable, avec une version courte. Mais le nombre de règles (départs au chrono, séries au poids du corps, progression, tests) est lourd."},
+        {"critere": "S8", "perte": 1.5, "raison": "Pas d'échéance. Les tests de répétitions maximales en S6 et S12 sont faits en semaine d'allègement après 48 h, conformément à R3-P17, mais sans test d'endurance de force."},
+        {"critere": "S9", "perte": 2, "raison": "Intensités en pourcentage du maximum, faciles à suivre, mais les différences avec notes « au lieu de » et les règles qui se recoupent compliquent la lecture."},
+        {"critere": "ensemble", "perte": 1, "raison": "Aucune correction nécessaire. Restent des améliorations sur l'amplitude des dips à la reprise et sur la prise en compte de la vie de jeune parent."}
+      ],
+      "corrections": [
+        {"type": "amelioration", "texte": "Dips à amplitude progressive sur les 3-4 premières semaines (bras parallèle au sol, puis plus bas si l'épaule ne se plaint pas)."},
+        {"type": "amelioration", "texte": "Ajouter une consigne pour les nuits coupées de jeune parent : moins de 6 h deux nuits de suite, RIR +1 et une série de moins pendant la semaine (R5-P14). Écarter aussi les deux séances de poussée du lundi et du mardi."},
+        {"type": "amelioration", "texte": "Ajouter un test d'endurance de force (total de répétitions en départs au chrono ou circuit court) en S12 pour piloter la part sets & reps."},
+        {"type": "amelioration", "texte": "Regrouper les règles de progression au poids du corps en une seule."}
+      ],
+      "points_forts": [
+        "Reprise après 36 semaines bien construite : test d'entrée arrêté à 4 RIR, base réduite par rapport aux anciens records, première semaine à mi-volume, hausses de séries dans les garde-fous (R5-P7, R5-P22).",
+        "Allègements planifiés toutes les 6 semaines, avec tests de répétitions maximales recalant le bloc suivant.",
+        "Prévention d'épaule présente toute la saison (face pull, rotation externe, CARs) et équilibre entre tirage et poussée.",
+        "Densité en départs au chrono qui progresse d'une seule variable à la fois."
+      ]
+    }
+  ]
+}

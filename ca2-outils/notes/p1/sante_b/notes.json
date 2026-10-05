@@ -1,0 +1,123 @@
+{
+  "ecole": "sante",
+  "programmes": [
+    {
+      "programme": "programme_1.md",
+      "criteres": {"S1": 10, "S2": 8.5, "S3": 9, "S5": 8.5, "S6": 9.5, "S7": 10, "S8": 8.5, "S9": 9},
+      "sans_objet": ["S4"],
+      "ensemble": 8,
+      "points_perdus": [
+        {"critere": "S2", "perte": 1.5, "raison": "Les tenues de front lever tuck avancé restent à 6-8 s pendant 16 semaines (58 à 73 % du maximum), sans tenues longues ni chevauchement avec l'étape suivante (une jambe). Le critère de passage, 3 × 11 s, n'est jamais préparé (R4-F6 : séries de 10 à 20 s chez l'intermédiaire ; R4-F7 : 2 à 3 semaines de chevauchement). Le bloc 2 est aussi recalé à la baisse (repère 9 s) sur un seul test inférieur de 25 % au record, sans le confirmer."},
+        {"critere": "S3", "perte": 1, "raison": "Le mardi (muscle-up, chest-to-bar, rows) suit à 24 h le lundi lourd de front lever. Les tirages se succèdent sans jour de repos entre les deux séances, alors que la récupération à 48 h ne vaut que pour le levier (R4-F10)."},
+        {"critere": "S5", "perte": 1.5, "raison": "Face pulls, rotations externes et tirages scapulaires sont présents et l'échauffement est écrit. En revanche, rien ne prépare le coude ni le biceps au tirage bras tendus répété trois fois par semaine : pas de bloc tendineux avant un passage de levier (R4-F8), pas de travail du biceps en position longue."},
+        {"critere": "S6", "perte": 0.5, "raison": "Les marges sont prudentes et uniformes. Le muscle-up barre basse passe brusquement de 1 × 4-6 à 1 × 9 en semaine 11, sans justification."},
+        {"critere": "S8", "perte": 1.5, "raison": "Le test est planifié en semaine 16 avec 48 h de repos. L'affûtage de la semaine 15, annoncé à environ 40 % du volume de pointe, remonte pourtant les dips à 2 × 14 (70 %) et les tractions à 2 × 8 ; il n'y a pas de stratégie de tentative au-delà de l'échauffement."},
+        {"critere": "S9", "perte": 1, "raison": "Les semaines sont écrites en différences « au lieu de » très longues, difficiles à lire sur le terrain. Les consignes « à deux jours du test » apparaissent en semaine 5 sur des séances qui ne sont pas à deux jours du test."},
+        {"critere": "ensemble", "perte": 2, "raison": "Une correction nécessaire : le dosage du front lever ne mène pas au critère de passage. La trajectoire le confirme : 16 semaines sur la même étape, meilleur maintien 11-13 s, critère non rempli."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Construire le pont vers le critère 3 × 11 s. Une séance par semaine, faire des tenues plus longues (8-12 s) sur un levier plus facile (tuck, ou tuck avancé avec élastique léger). Dès le bloc 2, ajouter 2 à 3 semaines de chevauchement avec l'étape une jambe (tenues courtes de 2-3 s ou négatives, faible volume). Confirmer tout test inférieur au record avant de recaler les secondes à la baisse.", "consequence": "L'athlète reste 16 semaines sur le tuck avancé à 11-13 s sans valider l'étape, et l'objectif front lever recule d'un cycle entier."},
+        {"type": "amelioration", "texte": "Ajouter du tirage dynamique spécifique au front lever (front lever rows en tuck, ice cream maker), afin de rapprocher la part dynamique/statique de 50/50 comme le recommande R4-F5 pour l'intermédiaire."},
+        {"type": "amelioration", "texte": "Faire un muscle-up strict à faible volume (1 à 3 singles propres) après la barre basse, pour transférer le travail de transition vers le geste visé."},
+        {"type": "amelioration", "texte": "Garder l'affûtage de la semaine 15 réellement à environ -40 à -50 % sur tout le tirage, pas seulement sur le levier."},
+        {"type": "amelioration", "texte": "Préparer le coude au tirage bras tendus : curl biceps en supination ou en position longue, 2 × 12 deux fois par semaine."}
+      ],
+      "points_forts": [
+        "Objectif irréaliste (front lever complet en 16 semaines) recadré honnêtement en validation d'étape, avec délai minimal par levier.",
+        "Seuils de douleur complets, de 0-2 à 6+, avec tendance sur 2-3 semaines et orientation vers un professionnel.",
+        "Règles de semaine manquée, de baisse du jour et de version courte écrites.",
+        "Séances de 33 à 47 min pour 75 disponibles : faisables et sans échec."
+      ]
+    },
+    {
+      "programme": "programme_2.md",
+      "criteres": {"S1": 10, "S2": 8, "S3": 8.5, "S4": 8.5, "S5": 8, "S6": 9, "S7": 10, "S8": 9, "S9": 9},
+      "sans_objet": [],
+      "ensemble": 8,
+      "points_perdus": [
+        {"critere": "S2", "perte": 2, "raison": "Le volume dur est figé à 47 séries par semaine de charge dans les blocs 1, 2 et 3. Sur les mouvements visés, il reste d'environ 6 séries dures par semaine pour les tractions et autant pour les dips, d'un bloc à l'autre. R4-G8 et R4-H2 recommandent +10 à 20 % par bloc ; or l'objectif demande +33 % et +40 %."},
+        {"critere": "S3", "perte": 1.5, "raison": "Le bloc 3 enchaîne quatre semaines de construction dès le lendemain de la semaine de test, sans semaine plus légère ni allègement en fin de bloc. Les allègements des semaines 6 et 11 existent, mais aucune charge de vie n'est renseignée ni prise en compte."},
+        {"critere": "S4", "perte": 1.5, "raison": "Les séries en zone de l'épreuve (71 à 79 %, 90 s de repos) et la densité progressive sont bien faites. L'EMOM de tractions monte cependant à 8 répétitions (57 % du maximum) en semaine 9, au-dessus des 40 % de R4-G6 pour l'intermédiaire, et deux variables changent à la fois en semaine 7 (repos de 3 à 2 min et réserve plus basse)."},
+        {"critere": "S5", "perte": 2, "raison": "Les dips sont faits 3 fois par semaine, dont une série de tête à 88-91 %, plus les pompes 2 fois par semaine ; le tirage revient 4 fois avec le muscle-up. Face pulls et rotations externes sont présents, mais il n'y a ni travail du coude ou du poignet ni variation de prise pour un volume de poussée et de tirage aussi répétitif (R4-F10, R4-F12)."},
+        {"critere": "S6", "perte": 1, "raison": "Les marges de 2 à 4 répétitions conviennent à l'intermédiaire. Pourtant, 2 RIR sont demandées sur les séries de tête dès la semaine 3, en bloc de volume, sur les deux mouvements visés."},
+        {"critere": "S8", "perte": 1, "raison": "Tests en semaines 6 et 12, affûtage à -50 %, 48 h de repos avant et répétition repère à mi-série : c'est bien fait. Les deux maximums sont toutefois testés le même jour, sans consigne sur l'ordre ni sur l'effet de la fatigue du premier sur le second."},
+        {"critere": "S9", "perte": 1, "raison": "La règle « Objectif ambitieux » est dupliquée presque mot pour mot. Les nombreuses différences « au lieu de » sont lourdes à lire."},
+        {"critere": "ensemble", "perte": 2, "raison": "Une correction nécessaire : la dose de volume spécifique n'augmente pas d'un bloc à l'autre. La trajectoire montre une progression de +0,2 % par semaine (14 → 14-15 tractions, 23 → 23-24 dips)."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Faire monter le volume spécifique de 10 à 20 % par bloc sur les tractions et les dips (R4-G8). Par exemple, passer de 6 à 7-8 séries dures par semaine et par mouvement en bloc 2, et ajouter une quatrième série en zone ou un deuxième jour en zone, en retirant d'abord des accessoires de jambes ou de tronc pour tenir dans les 60 min.", "consequence": "Les maximums stagnent (trajectoire : 14 tractions et 23 dips au test final) et les deux objectifs sont manqués de loin, au-delà même de la fourchette « bon cycle » annoncée (17-19 et 29-32)."},
+        {"type": "amelioration", "texte": "Après la semaine de test, prévoir 1 semaine active à RIR ≥ 4 et environ 50 % du volume avant de relancer la construction (R3-P19), puis fermer le bloc 3 par un allègement."},
+        {"type": "amelioration", "texte": "Plafonner les EMOM à 40-50 % du maximum chez cet intermédiaire, et ne changer qu'une variable par semaine."},
+        {"type": "amelioration", "texte": "Varier les prises de dips et de tractions (neutre, largeur) et ajouter un travail léger des extenseurs du poignet et du coude pour répartir la contrainte."},
+        {"type": "amelioration", "texte": "Supprimer le doublon de la règle « Objectif ambitieux » en un seul paragraphe citant les deux objectifs."}
+      ],
+      "points_forts": [
+        "Objectifs irréalistes signalés honnêtement, avec une fourchette de réussite crédible et l'interdiction de forcer la forme.",
+        "Séries en zone de l'épreuve, avec repos court et réserve écrite, et densité progressive une variable à la fois (R4-G4, R4-G6).",
+        "Tests aux semaines 6 et 12, affûtage, 48 h de repos et stratégie de série (rythme, souffle, repère à mi-série).",
+        "Seuils de douleur, baisse du jour, version courte et règles de semaine manquée complets."
+      ]
+    },
+    {
+      "programme": "programme_3.md",
+      "criteres": {"S1": 9, "S2": 7, "S3": 8.5, "S4": 9, "S5": 8, "S6": 9, "S7": 10, "S8": 9, "S9": 8.5},
+      "sans_objet": [],
+      "ensemble": 8,
+      "points_perdus": [
+        {"critere": "S1", "perte": 1, "raison": "Les seuils de douleur et l'orientation sont écrits, mais les dips lestés reviennent après 8 semaines d'absence et sont poussés vite vers 79 % d'un 1RM ancien (139 kg), alors que l'épaule est déjà très sollicitée par le volume de dips au poids du corps."},
+        {"critere": "S2", "perte": 3, "raison": "En semaine 13, juste après un allègement, les dips lestés passent de +23,75 à +41,25 kg (67 → 79 %) et la traction lestée de +7,5 à +22,5 kg (67 → 79 %) en une seule semaine, sans retest du 1RM. R5-P22 recommande +5 à 10 % par semaine sur ces mouvements chez l'avancé, et R5-P21 de ne changer qu'une variable à la fois. La trajectoire relève une hausse de 23,4 % à schéma égal : l'athlète s'arrête à 2-3 répétitions sur 5 à 40 kg."},
+        {"critere": "S3", "perte": 1.5, "raison": "La semaine 4, présentée comme un allègement, contient trois séries maximales (dips jeudi, muscle-up et tractions samedi). La décharge est diluée à J-32 d'une échéance A. Aucune charge de vie n'est renseignée."},
+        {"critere": "S4", "perte": 1, "raison": "Les simulations aux semaines 5 et 7, les séries en zone à 71-76 % avec 75 s de repos et les pauses de 5 à 20 s planifiées sont très bien faites. Mais le format d'épreuve reste supposé (ordre et 300 s), et aucun travail de fractionnement (séries fractionnées, rest-pause) n'est fait avant le bloc 4, c'est-à-dire après l'échéance."},
+        {"critere": "S5", "perte": 2, "raison": "En semaines 2-3, environ 400 à 450 dips par semaine (7 × 28, 44 + 3 × 34, 3 × 36), plus les pompes et le muscle-up 3 fois par semaine. La prévention (face pulls, rotations externes, rows scapulaires) est présente, mais aucune contrepartie n'est prévue pour le coude ni la charge antérieure de l'épaule face à ce volume (R4-F10, R4-F12)."},
+        {"critere": "S6", "perte": 1, "raison": "Muscle-up en série de tête à 2 RIR dès la semaine 2 (10 sur 12), sur le mouvement le plus technique et le plus exposé du circuit."},
+        {"critere": "S8", "perte": 1, "raison": "Affûtage de 12 jours à -50 %, activation à J-2 et simulations : conforme à R3-P21 et R4-G7. Les cibles (+12 à +17 % en 8 semaines chez un avancé) ne sont cependant pas présentées comme irréalistes, contrairement à R4-G8 (+15 % en 12 semaines chez l'entraîné), et la dernière simulation tombe à J-12, un peu tôt."},
+        {"critere": "S9", "perte": 1.5, "raison": "Le 1RM de référence de la traction lestée varie entre 115 et 116,5 kg d'une semaine à l'autre. Plusieurs charges sont « à déterminer, à calibrer » et les semaines sont écrites en différences très longues."},
+        {"critere": "ensemble", "perte": 2, "raison": "Une correction nécessaire : la progression brutale des mouvements lestés en semaine 13 (et le saut à 86 % en semaine 7) sur un 1RM non retesté."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Retester ou réestimer le 1RM des dips et tractions lestés (série de 3 à 5 répétitions) avant le bloc 4. Ensuite, monter de 2,5 à 5 % par semaine au plus (par exemple 67 → 70 → 73 → 76 %) au lieu de passer de 67 à 79 % d'un coup. En semaine 7, plafonner la traction lestée vers 80 % plutôt que 86 %.", "consequence": "Le saut de 17,5 kg en une semaine sur des dips lestés repris après 8 semaines expose l'épaule et le coude (séries manquées dès la première séance dans la trajectoire), sur un athlète qui fait déjà plus de 400 dips par semaine."},
+        {"type": "amelioration", "texte": "Sortir les tests maximaux de la semaine d'allègement (semaine 4), ou n'en garder qu'un, pour que la décharge reste une décharge."},
+        {"type": "amelioration", "texte": "Écrire noir sur blanc que 14 / 32 / 56 représentent +12 à +17 % en 8 semaines, au-delà du rythme habituel. Donner une fourchette de réussite réaliste et un plan de séries (fractionnement par atelier, plan B si une série casse)."},
+        {"type": "amelioration", "texte": "Placer la dernière simulation complète entre J-7 et J-10 (R3-P21), par exemple le mercredi ou le jeudi de la semaine 7 plutôt que le lundi."},
+        {"type": "amelioration", "texte": "Limiter les dips au poids du corps à environ 350 par semaine en bloc 1, ou alterner les prises, et ajouter un travail d'extenseurs du coude ou du poignet."}
+      ],
+      "points_forts": [
+        "Blocs calés à rebours sur l'échéance, avec la logique force → spécifique → affûtage → échéance → transition (R3-P19, R3-P20).",
+        "Répétitions de l'épreuve dans l'ordre, avec 300 s de repos, pauses de 5 à 20 s planifiées, répétition repère à mi-série et vidéo.",
+        "Affûtage de 12 jours à -50 % en gardant l'intensité, activation à J-2, repos à J-1.",
+        "Transition après la compétition, à RIR ≥ 4 et environ 60 % du volume."
+      ]
+    },
+    {
+      "programme": "programme_4.md",
+      "criteres": {"S1": 6.5, "S2": 8, "S3": 8.5, "S5": 7, "S6": 9, "S7": 9, "S8": 8.5, "S9": 8.5},
+      "sans_objet": ["S4"],
+      "ensemble": 7,
+      "points_perdus": [
+        {"critere": "S1", "perte": 3.5, "raison": "Le profil signale des poignets raides après les grosses séances de planche (2/10). Or, dès la semaine 1, le lundi empile planche straddle 10 × 4 s, planche push-ups 3 × 3-5, handstand 3 × 30 s, HSPU 3 × 3-5 et wrist push-ups ; le vendredi reprend presque la même charge en extension de poignet. Ce sont précisément les grosses séances qui déclenchent la gêne, servies à plein volume sans dose de départ réduite. Les parallettes par défaut et les seuils écrits limitent le risque, mais la trajectoire montre une douleur à 3-4/10 dès la semaine 6 et la planche retirée de la semaine 8 à la semaine 12. Pour l'élite, aucun bilan kiné n'est prévu avant le bloc lourd (R5-P20, R5-P24)."},
+        {"critere": "S2", "perte": 2, "raison": "La reprise graduée (50 → 60 → 70 → 80 %, +10 %/sem, paliers conditionnés) est exemplaire. En revanche, le départ ne tient pas compte de la gêne déclarée, et les repères sont recalés à la baisse (front lever 8 → 6 s, planche 6 → 5 s) sur des tests faits un jour de bilan bas (semaine 4)."},
+        {"critere": "S3", "perte": 1.5, "raison": "Six séances par semaine, avec des allègements toutes les 4 semaines et une baisse du jour. Mais le tirage revient 5 jours sur 6 (front lever lundi, mercredi et vendredi ; traction lestée mardi et samedi) et le lundi fait 76 min avec les deux leviers lourds."},
+        {"critere": "S5", "perte": 3, "raison": "La préparation des poignets est bien écrite (R4-F12). Mais la charge en extension est concentrée sur deux séances, sans répartition ni plafond hebdomadaire, et le tirage bras tendus (front lever 10 × 5 s + half-lay + ice cream maker) s'ajoute aux tractions lestées sans travail du coude ni du biceps. Planche et front lever partagent pourtant un même budget tendineux (R4-F10)."},
+        {"critere": "S6", "perte": 1, "raison": "Les tenues sont sous-maximales et les marges de 2 à 4 répétitions conviennent. Mais une tenue maximale du half-lay est demandée dès la première séance de mercredi, sans préparation spécifique écrite."},
+        {"critere": "S7", "perte": 1, "raison": "Le lundi de 76 min, avec 14 exercices et deux leviers lourds, est très chargé pour une séance de qualité. Les séances du dimanche (18 min) et du mercredi (31 min) sont, elles, sous-utilisées."},
+        {"critere": "S8", "perte": 1.5, "raison": "Le test est planifié en semaine 16, avec 48 h de repos et des tenues maximales toutes les 2 semaines (R4-F2). Mais les semaines 13 à 15 restent en réalisation pleine, sans allègement avant le test final des leviers."},
+        {"critere": "S9", "perte": 1.5, "raison": "Les notes sont très longues et répétées d'une ligne à l'autre (règles de reprise copiées sur chaque exercice), ce qui les rend difficiles à lire en séance."},
+        {"critere": "ensemble", "perte": 3, "raison": "Deux corrections nécessaires : le dosage de la charge sur le poignet face à la gêne déclarée, et l'absence de pont vers les critères (tenues de 3-5 s seulement). La trajectoire montre une poussée de douleur et aucun progrès (front lever 6 s, planche 5 s)."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Démarrer la planche à environ 60-70 % du volume écrit (par exemple 6-7 × 4 s) et répartir le travail en extension de poignet sur trois jours au lieu de deux : planche le lundi, handstand et HSPU le mercredi, planche le vendredi. Fixer un plafond hebdomadaire de secondes et de séries en appui, puis monter de 5 à 10 % par semaine seulement si la gêne reste ≤ 2/10 le lendemain. Prévoir un bilan kiné du poignet avant le bloc 1, puisque la gêne existe déjà.", "consequence": "Les grosses séances qui déclenchent la gêne sont reproduites deux fois par semaine : la douleur monte à 3-4/10 (trajectoire, semaine 6) et la planche est retirée un mois, ce qui sacrifie l'objectif principal."},
+        {"type": "necessaire", "texte": "Construire le pont vers les objectifs de tenue. Une séance par semaine, faire des tenues longues (8-12 s) sur un levier plus facile (planche tuck avancée, front lever straddle), selon R4-F6 qui recommande chez l'élite d'alterner tenues longues et courtes. Ajouter 2 à 3 semaines de chevauchement en planche half-lay, en tenues de 1-2 s ou en négatives (R4-F7), et viser explicitement le front lever de 15 s par une progression du temps sous tension.", "consequence": "Avec des tenues de 3-5 s seulement pendant 16 semaines, ni le critère 3 × 7 s en straddle ni les 15 s de front lever ne sont préparés : la trajectoire finit à 5 s et 6 s, sans aucune étape validée."},
+        {"type": "amelioration", "texte": "Placer un allègement (-40 à -50 %) dans les 7 à 10 jours avant le test final des leviers, au lieu de trois semaines de réalisation pleine suivies du test."},
+        {"type": "amelioration", "texte": "Ne refaire un test bas (bilan du jour ≤ 2/5) qu'après 48-72 h, avant de recaler les secondes à la baisse."},
+        {"type": "amelioration", "texte": "Ajouter un travail du coude et du biceps en position longue (curl en supination, 2 × 12, deux fois par semaine) pour encaisser le tirage bras tendus 3 fois par semaine en plus des tractions lestées."},
+        {"type": "amelioration", "texte": "Écrire une seule fois les règles de reprise et de douleur dans les règles du programme, et ne garder sur chaque ligne que le pourcentage du palier."}
+      ],
+      "points_forts": [
+        "Gêne de poignet prise au sérieux : parallettes ou poings fermés par défaut, préparation des poignets écrite, seuil unique pour la zone, retrait et consultation si la douleur dure.",
+        "Reprise graduée exemplaire (50 → 80 %, +10 %/sem, paliers gardés seulement si la gêne reste ≤ 2/10 le lendemain).",
+        "Objectif de planche complète recadré honnêtement en validation d'étape.",
+        "Tenues maximales toutes les 2 semaines et tenues de travail à 60-70 % du maximum, conformes à R4-F2."
+      ]
+    }
+  ]
+}

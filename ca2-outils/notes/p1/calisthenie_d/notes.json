@@ -1,0 +1,41 @@
+{
+  "ecole": "calisthenie",
+  "programmes": [
+    {
+      "programme": "programme_1.md",
+      "criteres": {"C1": 7, "C2": 6, "C3": 7.5, "C4": 8, "C5": 8, "C6": 5, "C7": 8.5, "C8": 6, "C9": 8},
+      "sans_objet": [],
+      "ensemble": 6.5,
+      "points_perdus": [
+        {"critere": "C1", "perte": 3, "raison": "Les paliers de traction sont calés sur le record déclaré de 8 (50 %, 63 %, 75 %) et non sur le maximum testé : le test de la semaine 6 donne 7 (échec), et le bloc 2 (semaines 7 à 10, « comme la semaine 3 ») reste écrit sur « repère : 8 » ; la traction assistée à l'élastique, variante naturelle pour du volume sous-maximal vers 11 répétitions, n'apparaît qu'au bloc 3, après l'échéance (R1-P17, R4-F7)."},
+        {"critere": "C2", "perte": 4, "raison": "Traction pronation 2 fois par semaine seulement (mardi, samedi) pour une intermédiaire visant un maximum de répétitions, alors que R4-G8 situe la fréquence à 3/sem à ce niveau et que le lundi (60 min) ne contient aucun tirage vertical ; pas de consigne technique par série au-delà de la ligne d'exécution répétée."},
+        {"critere": "C3", "perte": 2.5, "raison": "Dosage par % du maximum et RIR 2 à 4 cohérent, repos de 3 min sur la séance lourde (R1-P16), mais la séance lourde du mardi est gelée à 6-5-5 à 75 % de 8 des semaines 3 à 10 : sur le maximum réel de 7, la série de tête tombe à 1 RIR (simulation : « dernières séries plus dures que prévu » chaque semaine) ; les tenues de gainage (20 à 35 s) ne sont reliées à aucun maximum mesuré."},
+        {"critere": "C4", "perte": 2, "raison": "Pas de figure bras tendus ni de supination, hausses prudentes ; mais le tirage revient lundi (row australien, suspension, relevés suspendus) puis mardi (tractions lourdes + row) sans 48 h entre charges de la même zone (coude, fléchisseurs) (R4-F10)."},
+        {"critere": "C5", "perte": 2, "raison": "Tirage vertical et horizontal, dips, pompes, hollow, relevés de jambes, négatives avec tenue en haut : bases bien choisies, mais aucun ajustement de levier ou de lest pour le travail de force (pas de traction lestée légère ni de tenue menton au-dessus de la barre) et le row reste au poids du corps sans réglage d'inclinaison."},
+        {"critere": "C6", "perte": 5, "raison": "Règles de progression écrites (haut de plage, +1 répétition par série, maximum − 2), mais la règle « le bloc suivant repart du résultat du test » n'est pas appliquée : test 7 en semaine 6, bloc 2 écrit sur 8 et repère final « 10 à 12 » ; la séance lourde du mardi ne progresse pas du tout sur 8 semaines (semaines 3 à 10) ; aucun format de densité ni d'endurance spécifique avant l'échéance alors que R4-G1 demande ≥ 50 % du bloc spécifique dans la zone de l'épreuve. Résultat simulé : 7 au test final pour un objectif de 11."},
+        {"critere": "C7", "perte": 1.5, "raison": "Échauffement poignets-épaules-hanches, tirages et pompes scapulaires, face pull et rotation externe : bon équilibre ; pas de travail de mobilité utile spécifique (ouverture d'épaule en suspension, pectoral) ni d'adaptation possible puisque aucune gêne n'est déclarée."},
+        {"critere": "C8", "perte": 4, "raison": "Ordre correct (traction en tête), allègement semaine 6, affûtage et test semaines 11-12 (R3-P9) ; mais le bloc 2 « réalisation spécifique » est une copie du bloc 1 (semaines 7, 8, 9 = « comme la semaine 3, 4, 5 » avec une série de plus le samedi) : aucune spécialisation réelle vers l'objectif de répétitions (R4-H2), et les outils spécifiques (EMOM 2 rép./min, traction assistée) arrivent au bloc 3, après l'échéance."},
+        {"critere": "C9", "perte": 2, "raison": "Séances dans le temps disponible, consignes d'exécution et repos précisés, régression de la négative à l'élastique, version courte de 15 min ; mais le chaînage « comme la semaine X, sauf » (semaine 13 = semaine 8, semaine 15 = semaine 10) rend la séance réelle difficile à reconstituer, et l'effort mêle « 3 rép. en réserve » et « 3 rép. en réserve sur la dernière série » sans nécessité."},
+        {"critere": "ensemble", "perte": 3.5, "raison": "Programme sûr et bien encadré (règles de douleur, de baisse du jour, d'arrêt), mais trois corrections nécessaires portent toutes sur l'objectif principal (fréquence, spécificité du bloc 2, recalage sur le test) ; la trajectoire le confirme : maximum réel 7 → 8, test final 7 pour un objectif de 11 en 12 semaines."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Rendre le bloc 2 (semaines 7 à 10) réellement spécifique au maximum de tractions : garder une séance lourde (série de tête à maximum − 2), et ajouter du volume sous-maximal et de la densité — EMOM de 2 à 3 répétitions (≈ 30–40 % du max) sur 6 à 10 min montant d'un départ toutes les deux semaines, traction assistée à l'élastique 2–3 × 8–12 à 2 RIR — au lieu de répéter 6-5-5 pendant huit semaines (R4-G1, R4-G6, R4-G8).", "consequence": "Le mouvement principal reste au même volume et à la même intensité tout le bloc spécifique ; le maximum stagne (simulation : 7 au test final), l'objectif de 11 est manqué."},
+        {"type": "necessaire", "texte": "Passer la traction pronation à 3 expositions par semaine en ajoutant au lundi un bloc court en tête de séance (par exemple 3 × 3 à 4 RIR, ou l'EMOM), et déplacer le row australien du lundi au jeudi ou le réduire pour garder 48 h entre les séances lourdes de tirage (R4-G8, R4-F10).", "consequence": "Deux expositions par semaine pour une intermédiaire visant +3 répétitions en 12 semaines limitent la pratique du geste et le volume utile ; la progression reste sous le rythme nécessaire."},
+        {"type": "necessaire", "texte": "Appliquer la règle écrite du programme : après le test de la semaine 6 (7 répétitions), réécrire le bloc 2 sur 7 (série de tête 5, séries suivantes 4) et ramener le repère du test final à 8–10 en annonçant que 11 se joue au cycle suivant.", "consequence": "Les séries du mardi, prévues à 2 RIR, se font à 1 RIR ou moins chaque semaine (constaté dans la simulation), la fatigue s'accumule sur le mouvement de l'objectif et le repère « 10 à 12 » du test final pousse à forcer la forme."},
+        {"type": "amelioration", "texte": "Ajouter une tenue menton au-dessus de la barre (3 × 10–15 s) et une tenue à mi-hauteur à la fin du travail de traction du samedi, pour renforcer l'angle de blocage en haut, souvent point de rupture des dernières répétitions (R4-F5)."},
+        {"type": "amelioration", "texte": "Prévoir un test intermédiaire supplémentaire en semaine 9 ou 10 (R4-F2 : test toutes les 3 à 4 semaines à niveau intermédiaire) pour recaler les séries avant l'affûtage."},
+        {"type": "amelioration", "texte": "Donner une consigne externe par série de traction (« tire la barre vers la poitrine », « pousse les coudes dans les poches ») plutôt que la seule ligne d'exécution répétée (R4-F4)."},
+        {"type": "amelioration", "texte": "Relier les tenues de hollow et de gainage latéral à un maximum mesuré (50–70 % du maintien max) plutôt qu'à des durées fixes."},
+        {"type": "amelioration", "texte": "Réécrire les semaines 7 à 16 en tableaux complets plutôt qu'en différences chaînées, pour que l'athlète lise la séance qu'elle doit faire."}
+      ],
+      "points_forts": [
+        "Traction placée en tête de séance, après des séries d'approche, avec 3 min de repos sur la séance lourde.",
+        "Négatives freinées avec tenue de 2 s en haut, critère d'arrêt au contrôle et régression à l'élastique.",
+        "Préparation articulaire systématique (poignets, épaules, scapulas) et prévention de la coiffe (face pull, rotation externe).",
+        "Équilibre poussée/tirage et gainage spécifique de la barre (hollow, relevés de jambes suspendus, suspension active).",
+        "Règles de douleur, de baisse du jour, de séance manquée et version courte de 15 min, claires et applicables ; objectif ambitieux annoncé honnêtement.",
+        "Allègement, affûtage et test placés correctement, 48 h sans travail dur avant le test, tests de traction et de course sur des jours différents."
+      ]
+    }
+  ]
+}

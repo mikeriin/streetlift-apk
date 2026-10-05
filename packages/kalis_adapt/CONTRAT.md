@@ -1134,11 +1134,20 @@ inchangé (séances identiques à l'octet près ; seul le texte de version chang
     reprise propre au moteur, 50 % des séries écrites à la première semaine de charge, +10 % par semaine de
     charge (une semaine allégée garde la part de la dernière semaine de charge), charge au plus
     67,5 % + 0,25 × (part − 50 %) du 1RM (`returnPct`) : mêmes paliers que `kalis_plan` (Soligard et al. 2016 :
-    hausses hebdomadaires sous 10 %).
+    hausses hebdomadaires sous 10 %). Une semaine compte quand la levée en laisse au moins la moitié ; les
+    semaines de charge, d'introduction et de maintien comptent. Un mouvement touché par deux zones prend la
+    part la plus basse (celle du bloc ou celle du moteur). Les séries s'arrondissent vers le bas (une au
+    moins). Une reprise écrite par le bloc vaut pour tout le bloc (la note `pain_return` code des paliers,
+    pas des semaines) : ses tests sur la zone sont reportés au bloc suivant.
   - **Tests reportés** : un test n'est jamais servi sur une zone douloureuse au-dessus du seuil (il est retiré,
     pas remplacé : `adapt.pain_reported`), ni sur une zone en reprise ou dont l'arrêt est gardé ; le report à
     une séance suivante de la semaine (§ 11.15) les exclut aussi (contre-indication d'un test maximal en
     présence de douleur : NSW Agency for Clinical Innovation 2022, guide du test 1RM).
+  - **Appui à prise neutre** : un poignet douloureux (sous 6/10, `coachPainStop`) ou à l'arrêt n'efface
+    plus la poussée quand une variante en appui neutre existe (barres parallèles, parallettes, poignées,
+    anneaux : `coachPainProvokes` de `kalis_plan`), faisable avec le matériel du jour et qui ne provoque
+    aucune zone à l'arrêt ni gardée ; sinon le mouvement est retiré. Seul le poignet a cette variante : les
+    autres zones à l'arrêt gardent la règle du § 11.15 (retrait).
   - **Appui du poignet** : quand le poignet est sensible (gêne déclarée au profil ou antécédent récent, gêne
     signalée depuis deux semaines, arrêt ou reprise), les appuis qui le provoquent sont servis à la dose
     écrite par le bloc au plus (`doseCapped`) : le moteur n'ajoute ni séries fractionnées, ni tenue allongée
@@ -1148,11 +1157,13 @@ inchangé (séances identiques à l'octet près ; seul le texte de version chang
 - **Meilleur maintien récent** (`ExerciseTrack.sessionBests`, `recentBestOf`) : le plancher de la borne de
   hausse des tenues (55 % du meilleur maintien, § 11.15) se calcule sur la meilleure tenue des séances
   depuis la dernière coupure d'au moins 14 jours (arrêt, pause) et dans les 28 jours (`coachHoldBestDays`) ;
-  sans séance récente, pas de plancher : la tenue servie part d'un maintien récent, jamais d'un record
-  d'avant un arrêt. 28 jours : choix raisonné (perte de force mesurable à l'arrêt de l'entraînement, plus
+  sans séance récente, pas de plancher : le plancher ne vient plus d'un record d'avant un arrêt (la borne de
+  hausse d'une séance à la suivante reste comptée depuis la dernière séance de l'emplacement). 28 jours : choix raisonné (perte de force mesurable à l'arrêt de l'entraînement, plus
   marquée avec la durée : Bosquet et al. 2013, résumé ; le seuil en semaines n'y est pas chiffré).
 - **Cran d'assistance** (élastique) : un cran de moins seulement après deux séances de suite au même cran
-  au haut de la plage (ou première série dite deux répétitions plus facile) ; un cran de plus seulement
+  au haut de la plage (ou première série dite deux répétitions plus facile), et quatorze jours au moins
+  après le dernier changement de cran (`coachAssistMinDays`, `ExerciseTrack.assistDay` ; panel : « un cran
+  toutes les deux semaines au plus ») ; un cran de plus seulement
   après un échec, le bas de la plage manqué deux séances de suite au même cran
   (`SlotMark.missed`), ou de plus de deux répétitions. L'élastique ne change plus dans un sens puis dans
   l'autre d'une séance à la suivante (relecture documentée, manche 4, `street_01`). Source : ACSM 2009, règle
@@ -1173,7 +1184,8 @@ inchangé (séances identiques à l'octet près ; seul le texte de version chang
 | `coachReturnRir` | 3 répétitions | règle de `kalis_plan` (reprise loin de l'échec) |
 | `coachReturnWatchDays` | 84 jours | `painRecurDays` (choix raisonné) |
 | `coachHoldBestDays` | 28 jours | choix raisonné (Bosquet et al. 2013) |
-| `coachTaperGain` | 2 % | Travis et al. 2020 (bas de la fourchette) |
+| `coachTaperGain` | 2 % | Travis et al. 2020 (bas de la fourchette) ; appliqué avant la première tentative |
+| `coachAssistMinDays` | 14 jours | panel ; ACSM 2009 (« 2 pour 2 ») ; choix raisonné |
 
 **Simulateur** (modèles de vérité B et C) : après un épisode de douleur réel (3/10 et plus), la zone reste
 réactive douze semaines ; sa tolérance part de la plus grande de la moitié de la charge habituelle (séries de
@@ -1181,7 +1193,10 @@ la semaine sur la zone, moyenne mobile) et de la charge tenue la dernière semai
 sans poussée ; une semaine au-dessus de 1,5 fois la tolérance (4 séries au moins) ramène une gêne de 2/10
 pendant six jours, au-dessus du double une gêne de 3/10 (`SimRun.painFlares` ; choix raisonnés du modèle de
 vérité, d'après Cook et Purdam 2009 et Soligard et al. 2016). Une « hausse sur une zone douloureuse »
-(`painAggravations`) se compte désormais au-dessus de 3/10 (seuil du moteur, R5-P23).
+(`painAggravations`) se compte désormais au-dessus de 3/10 (seuil du moteur, R5-P23). Les séries qui comptent
+pour une zone sont celles des mouvements qui la provoquent (`coachPainStopHits`) ; la tolérance ne suit
+que des semaines sans gêne et ne baisse jamais. Ces deux changements touchent aussi les mesures du mode 0.1
+au banc : elles ne se comparent plus chiffre à chiffre à celles de 0.2.2.
 
 Invariants testés (`test/coach_rules_test.dart`, groupe « reprise graduée conduite séance par séance ») :
 levée datée ; maintien récent ; `street_12` avec douleur au coude, quatre graines, 20 semaines : aucun

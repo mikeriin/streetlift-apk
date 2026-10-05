@@ -9,6 +9,7 @@ rm -f $GIT_INDEX_FILE
 git read-tree HEAD
 git add -A .
 git rm -r -q --cached ci-out 2>/dev/null || true
+git rm -r -q --cached ca2-outils 2>/dev/null || true
 if [ "$MODE" = dev ]; then
   git rm -r -q --cached packages/kalis_quest 2>/dev/null || true
   for f in $(git ls-tree -r --name-only 43023273 packages/aa_fmt); do

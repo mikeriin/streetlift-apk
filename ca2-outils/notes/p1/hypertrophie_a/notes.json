@@ -1,0 +1,128 @@
+{
+  "ecole": "hypertrophie",
+  "programmes": [
+    {
+      "programme": "programme_1.md",
+      "criteres": {"H1": 6, "H2": 8, "H3": 7.5, "H4": 7.5, "H5": 7.5, "H6": 8, "H7": 8, "H8": 7.5, "H9": 7.5},
+      "sans_objet": [],
+      "ensemble": 8,
+      "points_perdus": [
+        {"critere": "H1", "perte": 4, "raison": "Grand dorsal/biceps d'un débutant à 0 mois : dès la semaine 7, environ 17 à 19 séries dures de tirage par semaine (traction négative 3 × 4 + traction assistée 2 + row 2 le lundi ; 3 tractions assistées + 3 tenues menton le mercredi ; 2 négatives + 2 assistées + 2 rows le vendredi), soit 6 à 7 séries de tirage par séance. C'est au-dessus du plafond débutant (12/semaine, R1-P1 ; seuil 10, R1-P3) et du maximum par séance (6, R1-P4). Les négatives s'ajoutent au volume au lieu de le remplacer. La simulation va dans ce sens : traction assistée passée de 16 à 8 répétitions max aux semaines 4-5 avec une alerte de surmenage, et 11 en fin de cycle contre 16 au départ."},
+        {"critere": "H2", "perte": 2, "raison": "Trois séances corps entier cohérentes avec les jours (R1-P8), mais trois variantes de tirage vertical le même jour (lundi, vendredi) concentrent le volume au lieu de le répartir, et il n'y a pas d'alternance lourde/légère par groupe."},
+        {"critere": "H3", "perte": 2.5, "raison": "Les réserves de 4 puis 3 puis 2 répétitions conviennent au débutant (R1-P13). En revanche, les pompes restent à 2 × 4-5 puis 2 × 4 tout le cycle : 4 à 5 répétitions, c'est sous la plage hypertrophie du débutant (8-15, R1-P10). Pas de série de calibration écrite."},
+        {"critere": "H4", "perte": 2.5, "raison": "Les exercices de tirage sont complémentaires (assistée, négative, row, tenue haute). Mais la poussée repose uniquement sur des appuis mains à plat (pompes, wrist push-ups), sans variante à prise neutre, et la simulation montre une douleur de poignet à 4/10 de la semaine 8 à la semaine 16 qui fige les pompes. Il y a aussi des doublons de tirage vertical dans la même séance."},
+        {"critere": "H5", "perte": 2.5, "raison": "Les règles d'assistance et de double progression sont écrites (R5-P3). En revanche, le volume de tirage monte sans critère (négatives de 1 × 3 à 3 × 5), et en bloc 3 les tractions assistées sont réécrites à 2-3 × 6 à 2 répétitions en réserve, sans règle d'ajout ou de retrait de séries liée à la performance."},
+        {"critere": "H6", "perte": 2, "raison": "Le tirage domine la poussée, ce qui est voulu, et le bas du corps est entretenu. La poussée stagne toutefois à 2 × 4 pendant 16 semaines (pompe 7 au test des semaines 6 et 12), et les ischios ne sont travaillés que par le pont fessier au sol."},
+        {"critere": "H7", "perte": 2, "raison": "2 min sur les polyarticulaires et 105 s sur les accessoires : c'est correct (R1-P15). Les séances de 31 à 42 min tiennent dans les 45 min, mais aucun superset d'antagonistes ne libère du temps de repos."},
+        {"critere": "H8", "perte": 2.5, "raison": "Il n'y a pas d'allègement planifié : les semaines de test 6, 11 et 12 en tiennent lieu, ce qui reste acceptable chez un débutant (R3-P9, réactif). Mais rien n'est écrit pour une baisse de performance sur deux séances, alors que le volume de tirage la provoque dans la simulation."},
+        {"critere": "H9", "perte": 2.5, "raison": "Le programme tient compte du temps (45 min), du matériel (élastique, barre basse), de l'objectif (essais stricts dès la semaine 6) et d'un débutant total. Mais la tolérance des coudes d'un débutant de 0 mois n'est pas prise en compte dans le cumul de travail excentrique et isométrique au-dessus de la barre."},
+        {"critere": "ensemble", "perte": 2, "raison": "Une correction nécessaire (le volume de tirage au-dessus des plafonds débutant), qui est simple à faire."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Plafonner le tirage à environ 10-12 séries dures par semaine et 5-6 par séance. Quand les tractions négatives apparaissent (semaine 2) puis montent (semaine 7), retirer une série de traction assistée ou de row du même jour ; ne pas dépasser 2 séries de négatives par séance.", "consequence": "Le surmenage déjà visible aux semaines 4-5 (maximum en traction assistée divisé par deux) se reproduit, les coudes encaissent un volume excentrique trop élevé et l'objectif de 3 tractions s'éloigne au lieu de se rapprocher."},
+        {"type": "amelioration", "texte": "Offrir une variante de poussée à prise neutre (pompes inclinées sur barres parallèles, pompes sur poignées) et passer la pompe à 2 × 6-10 à la bonne inclinaison plutôt que 2 × 4 au sol."},
+        {"type": "amelioration", "texte": "Écrire une règle de retrait : si le maximum ou les répétitions d'un mouvement de tirage baissent deux séances de suite, retirer une série par séance pendant une semaine."},
+        {"type": "amelioration", "texte": "Remplacer un exercice de jambes du lundi ou du vendredi par un travail ischios (pont fessier une jambe, nordic assisté) pour équilibrer la chaîne postérieure."},
+        {"type": "amelioration", "texte": "Alterner une séance de tirage lourde (négatives, tenue haute) et une séance plus légère (assistées loin de l'échec) dans la semaine."}
+      ],
+      "points_forts": [
+        "Progression vers la traction bien construite : élastique, négatives freinées au contrôle, tenue menton au-dessus de la barre, essais stricts isolés à partir de la semaine 6.",
+        "Règles de douleur, de baisse du jour et de jour chargé claires et chiffrées.",
+        "Tests recalant le bloc suivant sur le résultat mesuré, et objectif annoncé honnêtement (1 à 2 tractions déjà un bon cycle).",
+        "Tirage prioritaire sur la poussée, face pulls de prévention, bas du corps entretenu sans excès."
+      ]
+    },
+    {
+      "programme": "programme_2.md",
+      "criteres": {"H1": 8, "H2": 8, "H3": 6.5, "H4": 7, "H5": 6.5, "H6": 7, "H7": 8.5, "H8": 8, "H9": 8.5},
+      "sans_objet": [],
+      "ensemble": 8,
+      "points_perdus": [
+        {"critere": "H1", "perte": 2, "raison": "Les volumes sont raisonnables pour un débutant (dos environ 10-12, poussée environ 5-6, jambes environ 8-10 séries par semaine, R1-P1). La poussée tombe toutefois à 5 séries en bloc 2 (1 + 2 + 2 pompes inclinées), et aucun muscle n'est désigné comme prioritaire."},
+        {"critere": "H2", "perte": 2, "raison": "Trois séances corps entier, deux à trois expositions par groupe, 32 à 39 min sur 40 (R1-P8). C'est la répartition standard, sans alternance lourde/légère."},
+        {"critere": "H3", "perte": 3.5, "raison": "Les réserves écrites (4 puis 3 puis 2) sont correctes. Mais l'échelle de la pompe inclinée ne fait pas descendre le levier (voir H5) : dans la simulation, les séries se font avec 7 à 14 répétitions en réserve et 21-24 répétitions par série, loin de la plage utile (8-15, R1-P10) et de l'échec (R1-P13). En déficit, des séries aussi loin de l'échec entretiennent mal la masse musculaire."},
+        {"critere": "H4", "perte": 3, "raison": "Les exercices sont stables et adaptés à la maison et au parc. Mais le pont fessier est retiré dès la semaine 7, ce qui laisse les ischios et les fessiers aux seules fentes. La consigne de l'échelle de poussée (mur → mains surélevées de plus en plus bas → genoux → sol) n'est pas reprise dans l'« Échelle des figures », qui n'a que deux crans."},
+        {"critere": "H5", "perte": 3.5, "raison": "Consigne contradictoire. La note de l'exercice dit « descends d'un cran quand le haut de la plage est tenu sur toutes les séries, deux séances de suite » ; l'« Échelle des figures » exige « 2 séries de 12 propres sur 2 séances et au moins 2 semaines sur l'étape » et ne connaît qu'un passage direct vers la pompe classique. Résultat dans la simulation : 15 semaines sur la même inclinaison, maximum 22 → 27 répétitions, critère « pas encore rempli »."},
+        {"critere": "H6", "perte": 3, "raison": "Le tirage dépasse la poussée, ce qui est correct. La chaîne postérieure disparaît en bloc 2 et 3 (pont fessier retiré), alors que le gainage et les fessiers comptent pour un homme de 104 kg qui marche de plus en plus."},
+        {"critere": "H7", "perte": 1.5, "raison": "Les repos de 2 min sont adaptés et la marche finale est intégrée. Les séances de 32-34 min laissent du temps qu'on pourrait rendre à la chaîne postérieure."},
+        {"critere": "H8", "perte": 2, "raison": "Les semaines de test 6 et 12 allègent, ce qui convient à un débutant (R3-P9 réactif). Mais rien n'est écrit pour moduler le volume en déficit calorique avec 6,5 h de sommeil."},
+        {"critere": "H9", "perte": 1.5, "raison": "Le programme est bien individualisé : marche progressive jusqu'à 150 puis 200 min, suivi du poids et du tour de taille, déficit modéré avec protéines, version de 15 min les jours chargés. Il manque une consigne explicite liant le déficit et le sommeil à la gestion du volume."},
+        {"critere": "ensemble", "perte": 2, "raison": "Une correction nécessaire : la contradiction entre les deux règles de progression de la pompe inclinée."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Unifier la règle de la pompe inclinée. Reprendre dans l'« Échelle des figures » les crans de la note (mains surélevées de plus en plus bas → genoux → sol) avec un seul critère : descendre d'un cran quand toutes les séries atteignent le haut de la plage avec la réserve prévue, deux séances de suite. Plafonner la plage à 12 répétitions.", "consequence": "L'athlète reste toute la saison sur une inclinaison qui lui permet plus de 20 répétitions, ses séries de poussée deviennent de l'endurance loin de l'échec et ne protègent plus la masse musculaire pendant le déficit."},
+        {"type": "amelioration", "texte": "Garder 2 séries de pont fessier (ou passer au pont une jambe) en bloc 2 et 3 au lieu de le retirer."},
+        {"type": "amelioration", "texte": "Écrire qu'en cas de fatigue persistante en déficit (performance en baisse deux séances de suite, sommeil sous 6 h), on retire une série par exercice pendant une semaine avant de toucher à la marche."},
+        {"type": "amelioration", "texte": "Ajouter une troisième série de poussée en bloc 2 pour remonter la poussée à 6-8 séries par semaine."}
+      ],
+      "points_forts": [
+        "Bon dosage de départ pour un débutant sédentaire en surpoids : 2 séries par exercice, 4 répétitions en réserve, montée lente de l'effort.",
+        "Activité d'endurance progressive et chiffrée, suivi du poids, du tour de taille et de l'assiduité adaptés à l'objectif d'habitude.",
+        "Traction assistée pieds au sol et row genoux fléchis : variantes adaptées au poids de l'athlète.",
+        "Règles de sécurité claires (douleur, arrêt médical, séance manquée)."
+      ]
+    },
+    {
+      "programme": "programme_3.md",
+      "criteres": {"H1": 5.5, "H2": 7.5, "H3": 7, "H4": 6, "H5": 6, "H6": 5, "H7": 8, "H8": 7, "H9": 6.5},
+      "sans_objet": [],
+      "ensemble": 6.5,
+      "points_perdus": [
+        {"critere": "H1", "perte": 4.5, "raison": "Le tirage est surdosé : environ 16 séries dures dès la semaine 3, puis environ 19 en semaines 7-10 (lundi : 3 tractions assistées + 3 tenues menton ; mercredi : 3 négatives + 2 assistées + 2 rows = 7 séries ; samedi : 2 + 2 + 2). C'est au-dessus du plafond débutant (12, R1-P1) et du maximum par séance (6, R1-P4). Dans la simulation, les tenues restent sous la cible (11-16 s au lieu de 17-19 s) et la hausse est bornée par les coudes. La poussée, objectif à part entière, ne reçoit qu'environ 6-8 séries, puis zéro en bloc 3."},
+        {"critere": "H2", "perte": 2.5, "raison": "La répartition sur trois séances corps entier est correcte, mais le tirage s'entasse le mercredi et le samedi, et il n'y a pas d'alternance lourde/légère."},
+        {"critere": "H3", "perte": 3, "raison": "Les réserves sont plausibles et la négative de pompe se règle au contrôle. La pompe classique est servie à 1 × 1-3 puis 1 × 1 à 2 répétitions en réserve pour une athlète qui en fait 3 au maximum : le stimulus sur le mouvement cible est minime."},
+        {"critere": "H4", "perte": 4, "raison": "Toute la poussée se fait mains à plat (poignet en extension), sans variante à prise neutre, alors que le matériel la permet (pompes inclinées sur barres parallèles). Le bloc 3 retire pompe inclinée, pompe négative et wrist push-ups sans aucun remplaçant de poussée : il ne reste que le support hold."},
+        {"critere": "H5", "perte": 4, "raison": "Il n'existe pas de progression crédible de 3 à 10 pompes en 12 semaines. Le travail sur la pompe classique se limite à 1 à 4 répétitions par séance à partir de la semaine 7, et l'inclinaison n'est pas descendue (la note et l'« Échelle des figures » se contredisent). Dans la simulation : test de 2 pompes en semaine 6 et maximum de 3 → 3 sur la saison. Les tenues sont prescrites à 63-65 % alors qu'elles échouent régulièrement."},
+        {"critere": "H6", "perte": 5, "raison": "Déséquilibre net en bloc 3 : environ 15-18 séries de tirage contre zéro série de poussée dynamique (R5-P27). Les deux objectifs du profil (traction et pompe) ne sont pas servis à parts égales."},
+        {"critere": "H7", "perte": 2, "raison": "Les repos de 90 s à 2 min 30 sont corrects (R1-P15). Les séances de 25 à 49 min sur 60 disponibles laissent de la place pour mieux répartir le volume, sans recours aux supersets."},
+        {"critere": "H8", "perte": 3, "raison": "Les semaines de test et l'affûtage de la semaine 11 allègent. Mais le volume de tirage monte de la semaine 2 à la semaine 10 sans soupape, malgré des signaux de fatigue des coudes."},
+        {"critere": "H9", "perte": 3.5, "raison": "Le programme respecte le matériel, le temps et le niveau. En revanche, il ne protège pas le poignet d'une débutante qui fait tout son travail de poussée mains à plat, et il abandonne l'un de ses deux objectifs en bloc 3 au lieu d'adapter l'appui."},
+        {"critere": "ensemble", "perte": 3.5, "raison": "Trois corrections nécessaires (volume de tirage, absence de poussée à prise neutre et poussée nulle en bloc 3, progression de pompe insuffisante pour l'objectif de 10). Le programme reste sûr, mais l'objectif pompe ne sera probablement pas atteint."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Ramener le tirage à environ 10-12 séries dures par semaine et 5-6 par séance : les négatives remplacent une série d'assistée ou de row au lieu de s'y ajouter, et les tenues menton passent à 2 séries.", "consequence": "Fatigue des coudes et tenues qui échouent sous la cible, sans gain sur la traction ; risque de tendinopathie du coude chez une débutante."},
+        {"type": "necessaire", "texte": "Donner une poussée à prise neutre (pompes inclinées sur barres parallèles, dips assistés à l'élastique en amplitude partielle) en remplacement des appuis mains à plat dès qu'une gêne de poignet apparaît, et ne jamais laisser un bloc sans poussée dynamique.", "consequence": "En cas de douleur au poignet (simulée dès la semaine 7), la poussée disparaît en bloc 3, les pectoraux et triceps régressent et l'objectif de 10 pompes est abandonné."},
+        {"type": "necessaire", "texte": "Construire la progression vers 10 pompes : 2 à 3 séries de 6-10 sur une inclinaison qu'on descend d'un cran dès que le haut de la plage est tenu (une seule règle, alignée avec l'« Échelle des figures »), plus 2 à 3 négatives, avec 6-9 séries de poussée par semaine.", "consequence": "Avec 1 à 4 pompes classiques par séance et une inclinaison figée, l'athlète finit à 2-3 pompes : l'objectif de 10 à 12 semaines n'est pas atteint."},
+        {"type": "amelioration", "texte": "Utiliser une partie des 15 à 30 minutes non utilisées pour de la poussée et pour séparer tirage lourd et tirage léger dans la semaine."},
+        {"type": "amelioration", "texte": "Recaler les tenues menton au-dessus de la barre sur 55-60 % les jours où les tenues précédentes ont échoué sous la cible."}
+      ],
+      "points_forts": [
+        "Bonne chaîne vers la première traction : élastique, négatives au contrôle, tenue haute, essais stricts frais.",
+        "Règle de douleur au poignet détaillée, avec orientation vers un professionnel.",
+        "Négatives de pompe bien réglées (au contrôle, arrêt quand le bassin s'affaisse).",
+        "Face pulls et CARs d'épaule pour la prévention ; bas du corps et tronc entretenus."
+      ]
+    },
+    {
+      "programme": "programme_4.md",
+      "criteres": {"H1": 6.5, "H2": 9, "H3": 6.5, "H4": 7.5, "H5": 8.5, "H6": 7, "H7": 8, "H8": 9, "H9": 8.5},
+      "sans_objet": [],
+      "ensemble": 8,
+      "points_perdus": [
+        {"critere": "H1", "perte": 3.5, "raison": "Pour un intermédiaire qui reconstruit après 9 mois, le volume reste bas : 22 à 25 séries dures par semaine au total en bloc 2-3, soit environ 8-10 séries de dos et de poussée, au plancher de la fourchette intermédiaire (8-20, R1-P1), et environ 4-6 pour les jambes (fente 2 × 4, skater squat 2 × 4, nordic 2 × 6). Les EMOM à 5 répétitions en réserve ou plus ne comptent pas comme séries dures. La rampe de reprise est bonne, mais le volume ne rejoint jamais 10-16."},
+        {"critere": "H2", "perte": 1, "raison": "Quatre séances avec alternance lourde/moyenne et deux à trois expositions par mouvement : répartition très bonne. Les séances restent courtes (18-33 min) pour 60 min disponibles."},
+        {"critere": "H3", "perte": 3.5, "raison": "Consigne contradictoire sur les pompes : 2 × 9 à « 3 répétitions en réserve sur la dernière série » pour un maximum repère de 26 (35 %). Cela fait environ 15 répétitions en réserve réelles, et l'écart reste à environ 8 répétitions en réserve en semaine 16 (2 × 18, 69 %). Les EMOM traction et dips sont aussi loin de l'échec (R1-P13). Les dips à 90 % du maximum et 2 répétitions en réserve sont bien dosés."},
+        {"critere": "H4", "perte": 2.5, "raison": "Tractions, dips, rows, pompes, nordic et relevés de jambes : choix stables et complémentaires. Mais le row varie bizarrement (1 × 7, 2 × 6, 2 × 4 en semaines 4-6), il n'y a pas de travail en position longue pour les pectoraux et les dorsaux au-delà des mouvements de base, et le bas du corps n'a qu'un exercice par séance au plus."},
+        {"critere": "H5", "perte": 1.5, "raison": "Règles écrites et prudentes : +1 répétition par série si la réserve dépasse, recalage sur test, départs au chrono une variable à la fois (R5-P3). Il manque un critère d'ajout de séries une fois la reprise terminée."},
+        {"critere": "H6", "perte": 3, "raison": "Tirage et poussée sont à peu près équilibrés et le tirage horizontal est présent. Le bas du corps est très peu stimulé (4 répétitions par série en fente et en skater squat), et aucune priorité n'est désignée."},
+        {"critere": "H7", "perte": 2, "raison": "3 min sur les mouvements principaux et 90-105 s sur les accessoires : c'est correct (R1-P15, R1-P16). Mais 27 à 37 min de chaque séance de 60 min ne sont pas utilisées."},
+        {"critere": "H8", "perte": 1, "raison": "Allègements aux semaines 6 et 12 (R3-P9) et rampe de reprise documentée. Les tests maximaux placés dans les semaines d'allègement sont un choix défendable."},
+        {"critere": "H9", "perte": 1.5, "raison": "Très bonne prise en compte de la coupure : records réduits, test d'entrée à 4 répétitions de l'échec, aucun travail sur les anciens records. Le temps disponible et le niveau intermédiaire sont sous-exploités."},
+        {"critere": "ensemble", "perte": 2, "raison": "Une correction nécessaire : la consigne de pompes contradictoire et loin de l'échec."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Recaler les pompes du mardi sur la réserve visée : série de tête à environ maximum − 4 (environ 20-22 sur un maximum de reprise de 26), ou passer à une variante plus dure (pieds surélevés, lestée, archer) à 8-15 répétitions. Supprimer le pourcentage de 35-40 % qui contredit « 3 répétitions en réserve ».", "consequence": "Les séries de pompes se font à 8-15 répétitions en réserve pendant tout le cycle : 2 séries de poussée par semaine qui ne stimulent quasiment pas les pectoraux, ce qui ralentit la reconstruction musculaire."},
+        {"type": "amelioration", "texte": "Après la semaine 6, monter le volume vers 10-14 séries dures par semaine pour le dos et la poussée (+1 à 2 séries par muscle toutes les 2 semaines, R1-P18), en utilisant le temps libre des séances."},
+        {"type": "amelioration", "texte": "Passer les jambes à 6-8 séries par semaine dans des plages de 6-12 répétitions (skater squat, fente bulgare, nordic) plutôt que 2 × 4."},
+        {"type": "amelioration", "texte": "Écrire un critère d'ajout ou de retrait de séries en bloc 3 selon la progression de la série de tête."},
+        {"type": "amelioration", "texte": "Stabiliser le row australien sur une plage (8-12) avec une progression de levier, au lieu des variations de 4 à 12 répétitions."}
+      ],
+      "points_forts": [
+        "Reprise exemplaire : volume réduit de moitié en semaine 1, test d'entrée à 4 répétitions de l'échec, anciens records jamais utilisés comme charges.",
+        "Alternance séances lourdes et moyennes sur 4 jours, avec allègements planifiés aux semaines 6 et 12.",
+        "Règles de progression au poids du corps simples et sûres, recalées à chaque test.",
+        "Prévention de l'épaule (face pulls, rotation externe) et chaîne postérieure (nordic assisté) présentes."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,125 @@
+{
+  "ecole": "hypertrophie",
+  "programmes": [
+    {
+      "programme": "programme_1.md",
+      "criteres": {"H1": 8, "H2": 8.5, "H3": 8, "H4": 7.5, "H5": 7.5, "H6": 8.5, "H7": 8.5, "H8": 8.5, "H9": 8},
+      "sans_objet": [],
+      "ensemble": 8,
+      "points_perdus": [
+        {"critere": "H1", "perte": 2, "raison": "Dos à environ 13 séries dures directes par semaine (traction 3 + rowing 3 le lundi, traction lestée 4 + rowing 3 le vendredi), dans la fourchette intermédiaire de R1-P1. En revanche, les jambes plafonnent à 7 séries (fente 3 + pont 2 + fente 2) et il n'y a aucun travail direct des biceps ni de l'arrière d'épaule au-dessus de 5 RIR. Le volume reste plat du début à la fin, sans palier conditionnel (R1-P18)."},
+        {"critere": "H2", "perte": 1.5, "raison": "Le tirage vertical est vu trois fois par semaine (le mercredi en EMOM à 5 RIR ou plus, donc hors séries dures) et la poussée deux à trois fois : la répartition est cohérente. Mais le vendredi est une deuxième séance de tractions au poids du corps (4 × 6 « sous le poids de corps ») qui double le lundi au lieu de faire une vraie alternance lourde/légère."},
+        {"critere": "H3", "perte": 2, "raison": "Polyarticulaires entre 2 et 4 RIR, conforme à R1-P13 pour un intermédiaire de 51 ans. Les isolations (face pull, rotation externe) sont à 5 RIR ou plus, donc sans stimulus. Surtout, les séries lestées de la semaine 9 (+2,5 kg, 4 × 5 à « 3 RIR ») et de la semaine 15 (+7,5 kg, 2 × 2 à « 3 RIR ») sont calculées sur un 1RM de référence de 96 à 98,5 kg, alors que le record déclaré donne 91 kg (76 + 15). La marge écrite y est irréaliste."},
+        {"critere": "H4", "perte": 2.5, "raison": "Bon choix de rowing barre et de fente aux haltères. En revanche, la « traction lestée de compétition » se fait sans lest pendant 7 des 10 premières semaines, ce qui en fait un doublon de la traction pronation. Aucun exercice ne travaille le biceps ou le grand dorsal en position longue (R6-P4), alors que poulie et haltères sont disponibles."},
+        {"critere": "H5", "perte": 2.5, "raison": "Les règles écrites (double progression, charges à calibrer) sont bonnes. Mais la traction pronation reste à 3 séries de 6 à 8 répétitions sur 16 semaines, quand le test en demande 14. Il existe une règle pour retirer des séries, aucune pour en ajouter quand ça passe (R5-P3, R1-P18)."},
+        {"critere": "H6", "perte": 1.5, "raison": "Tirage supérieur ou égal à la poussée, chaîne postérieure et coiffe présentes. Le travail des biceps, facteur limitant fréquent sur un test de tractions en répétitions, est absent."},
+        {"critere": "H7", "perte": 1.5, "raison": "3 min sur le mouvement principal et 90 à 105 s ailleurs, des séances de 31 à 47 min dans un créneau de 60 min. Passer la traction principale à 2 min en semaines 6 à 9 est à la limite basse pour un athlète de 51 ans (R1-P15). Le temps libre n'est pas utilisé pour des supersets d'antagonistes."},
+        {"critere": "H8", "perte": 1.5, "raison": "Allègements en semaines 5 et 10, affûtage en semaine 15, aucune technique d'intensification : c'est prudent pour un athlète de 51 ans. Mais les deux semaines d'allègement contiennent une série maximale de test, ce qui retire une partie de la récupération."},
+        {"critere": "H9", "perte": 2, "raison": "L'âge est pris en compte (progression du volume à +10 % au plus, échauffement codifié, baisse du jour), le matériel de salle aussi. Le profil de force lestée est mal repris : 1RM de référence incohérent avec le record."},
+        {"critere": "ensemble", "perte": 2, "raison": "Une correction nécessaire : recaler le 1RM de référence de la traction lestée. Le reste est sûr et individualisé ; il reste des améliorations (biceps, progression des répétitions)."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Calculer la traction lestée sur le record déclaré (1RM total = 76 + 15 = 91 kg), et non sur 96 à 98,5 kg. Recalculer les lests des semaines 8-9, 12 et 15 : à 80 %, on reste au poids du corps ou on prend +1 kg au plus ; à 85 %, environ +1 kg, et non +7,5 kg.", "consequence": "En semaines 9 et 15, l'athlète tire à 86 puis 92 % de son vrai 1RM en croyant garder 3 RIR. Ce sont des séries au bord de l'échec sur un mouvement lesté, à 51 ans, pour les coudes et les épaules."},
+        {"type": "amelioration", "texte": "Remplacer la traction « lestée » sans lest du vendredi (semaines 1 à 7) par une traction lestée légère réelle ou une variante complémentaire (tirage poulie prise neutre en position longue), pour éviter le doublon avec le lundi."},
+        {"type": "amelioration", "texte": "Ajouter 2 à 3 séries de curl (haltères inclinés ou poulie) près de l'échec, une à deux fois par semaine, dans le temps libre (séances de 31 à 47 min sur 60)."},
+        {"type": "amelioration", "texte": "Écrire un critère d'ajout : +1 série de traction toutes les deux semaines si toutes les séries passent avec la réserve prévue et sans douleur (R1-P18). En phase de réalisation, ajouter des séries plus longues (10 à 12 répétitions) pour se rapprocher des 14 du test."},
+        {"type": "amelioration", "texte": "Monter les face pulls et la rotation externe à 2 ou 3 RIR, pour qu'ils travaillent réellement l'arrière d'épaule."}
+      ],
+      "points_forts": [
+        "Adaptation à l'âge écrite et chiffrée (progression du volume ralentie, baisse du jour, règles de douleur).",
+        "Tirage supérieur à la poussée, rowing barre, chaîne postérieure et coiffe présents.",
+        "Allègements réguliers, affûtage et test placé sur l'échéance des 16 semaines.",
+        "Échauffement et séries d'approche décrits."
+      ]
+    },
+    {
+      "programme": "programme_2.md",
+      "criteres": {"H1": 8.5, "H2": 9, "H3": 8, "H4": 8.5, "H5": 7, "H6": 8.5, "H7": 8, "H8": 9, "H9": 9},
+      "sans_objet": [],
+      "ensemble": 8,
+      "points_perdus": [
+        {"critere": "H1", "perte": 1.5, "raison": "Dos à environ 15 séries par semaine (9 de tractions, 2 de tractions assistées, 4 de row australien), dans la fourchette intermédiaire (R1-P1), jamais plus de 7 par séance. La poussée descend à 6 ou 7 séries (pompes passées de 3 à 2 séries dès la semaine 2, dips 2 + 2) et les jambes restent à 6 séries : c'est un entretien minimal."},
+        {"critere": "H2", "perte": 1, "raison": "Trois expositions au tirage vertical, réparties sur mardi, jeudi et dimanche, en séances courtes (28 à 34 min) : c'est adapté à une semaine chargée. Il n'y a pas de vraie alternance lourde/légère sur les tractions."},
+        {"critere": "H3", "perte": 2, "raison": "Tractions à 2 ou 3 RIR, puis à 1 RIR en semaines 9 à 11, ce qui reste acceptable (R1-P13). Mais les dips commencent à 5 RIR ou plus (semaine 1 et allègements), donc sans stimulus. Et toutes les tractions strictes se font à 3 ou 4 répétitions, une plage uniforme pour un objectif de 9."},
+        {"critere": "H4", "perte": 1.5, "raison": "Combinaison traction stricte, traction assistée, row australien et dips cohérente avec le parc et l'élastique. Il manque un travail du biceps (curl à l'élastique) et une variante en position longue."},
+        {"critere": "H5", "perte": 3, "raison": "La règle « ajoute une répétition par série sans dépasser ton maximum − 2 » plafonne les tractions à 3 répétitions après le test de la semaine 6 (maximum 5), alors que les semaines 9 à 11 prescrivent 3 × 4 à 1 RIR. La consigne se contredit et bloque la progression vers 9. « Pour changer d'élastique, suis la règle d'assistance » renvoie à une règle qui n'est écrite nulle part."},
+        {"critere": "H6", "perte": 1.5, "raison": "Tirage nettement supérieur à la poussée et jambes entretenues (skater squat, fente). La chaîne postérieure (pont fessier) est absente, ainsi que l'arrière d'épaule."},
+        {"critere": "H7", "perte": 2, "raison": "Séances de 16 à 34 min pour 45 min disponibles, avec un format court de 15 min : c'est bien pensé. Les pompes à 60 s de repos sur un polyarticulaire sont trop courtes (R1-P15 : 120 à 150 s pour un intermédiaire). Le superset dips + row est un bon choix (R2-P15)."},
+        {"critere": "H8", "perte": 1, "raison": "Allègement en semaine 6, affûtage en semaine 11 et test en semaine 12, aucune technique d'intensification. Le bloc 3 enchaîne 4 semaines sans allègement prévu, mais il se situe après l'échéance."},
+        {"critere": "H9", "perte": 1, "raison": "Durée, lieu et matériel respectés, version courte pour les jours chargés. Le sommeil de 6,5 h et le stress de 3/5 ne sont repris que par la baisse du jour."},
+        {"critere": "ensemble", "perte": 2, "raison": "Une correction nécessaire : la contradiction entre le plafond « maximum − 2 » et les 3 × 4 prescrits, sur le mouvement de l'objectif. Le reste est sûr et adapté au temps disponible."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Lever la contradiction sur les tractions : soit écrire 3 × 3 en semaines 9 à 11 avec un maximum à 5, soit remplacer le plafond par « maximum − 1 » quand le maximum est de 6 ou moins, et le dire.", "consequence": "L'athlète ne sait pas s'il doit faire 3 ou 4 répétitions. S'il suit la règle, ses séries restent bloquées à 3 répétitions, et l'objectif de 9 devient hors d'atteinte."},
+        {"type": "amelioration", "texte": "Écrire la « règle d'assistance » : passer à un élastique plus fin quand 2 × 10 passent avec 2 RIR."},
+        {"type": "amelioration", "texte": "Dimanche, ajouter 2 séries de curl à l'élastique proches de l'échec et 2 séries de pont fessier : le temps libre (11 à 17 min) le permet."},
+        {"type": "amelioration", "texte": "Porter le repos des pompes à 90 à 120 s, ou les mettre en superset avec le row australien."},
+        {"type": "amelioration", "texte": "Faire monter les dips de semaine 1 à 3 ou 4 RIR au lieu de 5 ou plus, pour qu'ils comptent."}
+      ],
+      "points_forts": [
+        "Séances courtes et version de 15 min : adapté à une mère active avec un travail prenant.",
+        "Trois expositions hebdomadaires au tirage vertical, complétées par du volume assisté.",
+        "Superset d'antagonistes (dips + row) pour tenir le temps.",
+        "Allègement, affûtage et test placé sur l'échéance des 12 semaines ; attentes réalistes écrites (7 à 8)."
+      ]
+    },
+    {
+      "programme": "programme_3.md",
+      "criteres": {"H1": 8.5, "H2": 9, "H3": 8.5, "H4": 8.5, "H5": 8.5, "H6": 8.5, "H7": 9, "H8": 9, "H9": 9},
+      "sans_objet": [],
+      "ensemble": 9,
+      "points_perdus": [
+        {"critere": "H1", "perte": 1.5, "raison": "Dos à environ 12 à 14 séries dures par semaine (traction 3 + row 2 le lundi, chest-to-bar 3 ou traction 2 + row 2 ou 3 le vendredi, muscle-up 3), plus l'EMOM hors séries dures : c'est dans la fourchette intermédiaire (R1-P1). Mais 4 séances de 30 à 37 min sur 60 disponibles laissent de la marge non utilisée chez un athlète de 22 ans qui récupère bien, et aucun travail direct du biceps."},
+        {"critere": "H2", "perte": 1, "raison": "Tirage vu quatre fois par semaine, avec une alternance lourd (lundi, vendredi) et léger (EMOM du mercredi) : bon. La poussée est répartie sur quatre jours."},
+        {"critere": "H3", "perte": 1.5, "raison": "Tractions entre 2 et 4 RIR, isolations à 3 RIR, série de tête : c'est conforme à R1-P13. En revanche, les pompes à 2 × 35-37 sont très éloignées d'une plage efficace (R6-P2) : le stimulus y dépend surtout de l'endurance."},
+        {"critere": "H4", "perte": 1.5, "raison": "Traction pronation, chest-to-bar, muscle-up, row australien, puis traction au tempo en bloc 3 : des tirages complémentaires et adaptés au parc. Il manque un exercice de biceps à la barre basse (curl au poids du corps) et de l'arrière d'épaule en charge."},
+        {"critere": "H5", "perte": 1.5, "raison": "Règles de progression écrites, séries de « zone de l'épreuve » 2 × 12-13 à repos court bien ciblées pour un objectif de 25, EMOM qui monte d'un départ toutes les deux semaines. Aucun critère d'ajout de séries quand tout passe."},
+        {"critere": "H6", "perte": 1.5, "raison": "Tirage supérieur à la poussée, jambes travaillées (pistol, fente, pont fessier). L'arrière d'épaule ne reçoit que du row scapulaire à 5 RIR ou plus."},
+        {"critere": "H7", "perte": 1, "raison": "Repos par type d'exercice (3 min sur le principal, 90 à 120 s ailleurs), 90 s volontairement sur le travail spécifique au test : cohérent."},
+        {"critere": "H8", "perte": 1, "raison": "Allègement en semaine 6, affûtage en semaine 11, test en semaine 12. Le bloc 3 enchaîne 4 semaines sans allègement, mais après l'échéance."},
+        {"critere": "H9", "perte": 1, "raison": "Âge, matériel (parc seulement) et figures (muscle-up, pistol) bien pris en compte, prérequis respectés. Le temps disponible est sous-utilisé."}
+      ],
+      "corrections": [
+        {"type": "amelioration", "texte": "Ajouter 2 à 3 séries de curl au poids du corps à la barre basse (ou de chin-up en supination) à 1 ou 2 RIR, deux fois par semaine : les biceps limitent souvent les séries de tractions longues."},
+        {"type": "amelioration", "texte": "Remplacer une série de pompes à 35 répétitions ou plus par des pompes déclinées ou pieds surélevés, en 12 à 20 répétitions, pour garder un stimulus de poussée efficace."},
+        {"type": "amelioration", "texte": "Utiliser une partie des 20 à 25 min libres par séance pour un critère d'ajout : +1 série de row ou de traction toutes les deux semaines si la réserve tient (R1-P18)."},
+        {"type": "amelioration", "texte": "Faire monter le row scapulaire à 3 RIR, ou ajouter un row australien prise large coudes ouverts pour l'arrière d'épaule."}
+      ],
+      "points_forts": [
+        "Travail spécifique à l'épreuve (2 × 12-13, repos de 90 s) en phase de réalisation.",
+        "Alternance lourd/léger et 4 expositions au tirage vertical.",
+        "Muscle-up encadré (rien à froid, technique, faible volume) et pistol dosé.",
+        "Allègement, affûtage, test sur l'échéance et attentes réalistes écrites."
+      ]
+    },
+    {
+      "programme": "programme_4.md",
+      "criteres": {"H1": 9, "H2": 9, "H3": 8.5, "H4": 8.5, "H5": 8.5, "H6": 9, "H7": 9, "H8": 9, "H9": 9.5},
+      "sans_objet": [],
+      "ensemble": 9,
+      "points_perdus": [
+        {"critere": "H1", "perte": 1, "raison": "Dos à environ 12 séries dures (traction 3 + row 2 le mardi, traction 3 + négatives 2 à 3 + row 2 le samedi), poussée à 9, jambes à 7. Le volume est volontairement bas (77 % du volume type) au vu du sommeil, du stress et du métier, et il reste dans la fourchette (R1-P1). Biceps non travaillés directement."},
+        {"critere": "H2", "perte": 1, "raison": "Tirage vu trois fois, dont un EMOM léger le jeudi, poussée deux à trois fois. Les séances lourdes sont placées loin du jeudi : bonne répartition pour une récupération limitée."},
+        {"critere": "H3", "perte": 1.5, "raison": "Tractions entre 3 et 4 RIR en semaines 1 à 2, ce qui est loin pour un intermédiaire, mais se justifie par la récupération (une répétition en réserve ajoutée, écrite). Petite incohérence en semaine 7 : la note dit « réserve de 2 au moins » alors que la colonne effort indique 3 RIR."},
+        {"critere": "H4", "perte": 1.5, "raison": "Traction, négatives contrôlées au chrono, row australien, face pull et rotation externe à l'élastique : choix stables et adaptés au parc. Pas de curl à l'élastique, alors que l'élastique est disponible."},
+        {"critere": "H5", "perte": 1.5, "raison": "Règles écrites, négatives qui montent d'une seconde puis d'une répétition, zone de l'épreuve en bloc 2. La progression des tractions reste minime (5-4-4 sur tout le bloc 2), et il n'y a pas de critère d'ajout."},
+        {"critere": "H6", "perte": 1, "raison": "Tirage supérieur à la poussée, chaîne postérieure (deux ponts fessiers), coiffe travaillée. Volume de jambes réduit au vu du métier de maçon : c'est cohérent."},
+        {"critere": "H7", "perte": 1, "raison": "Repos de 2 à 3 min sur le principal, de 90 à 105 s ailleurs. Séances de 34 à 46 min sur 60."},
+        {"critere": "H8", "perte": 1, "raison": "Allègement en semaine 6, affûtage en semaine 11, aucune technique d'intensification, volume réduit d'emblée. Les négatives avec 2 s tenues sont une technique exigeante pour les tendons, mais elles sont dosées au contrôle."},
+        {"critere": "H9", "perte": 0.5, "raison": "Sommeil court, stress et travail physique traduits en réductions chiffrées, seuil de baisse du jour recalé sur ses nuits habituelles, interdiction de compter deux fois les réductions : individualisation exemplaire."}
+      ],
+      "corrections": [
+        {"type": "amelioration", "texte": "Harmoniser la réserve de la traction du samedi en bloc 2 : la note et la colonne doivent dire la même chose (3 RIR, ou 2 au moins)."},
+        {"type": "amelioration", "texte": "Ajouter 2 séries de curl à l'élastique à 2 RIR le jeudi : c'est peu coûteux en récupération et utile pour le test de tractions."},
+        {"type": "amelioration", "texte": "Écrire un critère d'ajout prudent : +1 série de traction après deux semaines où toutes les séries passent avec la réserve prévue et un bilan du jour normal."},
+        {"type": "amelioration", "texte": "Préciser que les négatives avec tenue en haut sont retirées en premier si le coude ou l'épaule dépasse 3 sur 10 (métier de maçon)."}
+      ],
+      "points_forts": [
+        "Réductions de volume chiffrées pour le sommeil, le stress, le métier et l'âge, sans double comptage.",
+        "Baisse du jour recalée sur le sommeil habituel de l'athlète.",
+        "Coiffe, face pull et chaîne postérieure présents ; tirage supérieur à la poussée.",
+        "Négatives contrôlées au chrono avec règle d'arrêt claire."
+      ]
+    }
+  ]
+}

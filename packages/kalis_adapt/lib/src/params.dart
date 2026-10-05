@@ -164,6 +164,7 @@ final class AdaptParams {
     this.coachHoldMaxFloorShare = 0.55,
     this.coachHoldBestDays = 28,
     this.coachTaperGain = 0.02,
+    this.coachAssistMinDays = 14,
     this.coachReturnStart = 0.5,
     this.coachReturnStep = 0.1,
     this.coachReturnFloor = 0.4,
@@ -765,13 +766,20 @@ final class AdaptParams {
   /// semaines d'arrêt — Bosquet et al. 2013).
   final int coachHoldBestDays;
 
-  /// Gain du maximum du jour après un affûtage (semaine d'affûtage ou de
-  /// compétition, ou la semaine d'avant), pris en compte par les
+  /// Gain du maximum du jour après un affûtage (pendant une semaine
+  /// d'affûtage ou de compétition, ou la semaine qui suit), pris en compte
+  /// par les
   /// tentatives : 2 %, le bas de la fourchette mesurée chez les
   /// powerlifters (Travis et al. 2020 : +1,8 à 6,4 % selon le mouvement
   /// après un affûtage d'une à deux semaines). Choix prudent (CA2, partie
   /// 0 : tentatives à 90-93 % du maximum du jour, relecture documentée).
   final double coachTaperGain;
+
+  /// Jours au même cran d'assistance avant d'en retirer un autre (CA2,
+  /// partie 0 : panel, « un cran d'élastique toutes les deux semaines au
+  /// plus » ; règle « 2 pour 2 » de l'ACSM 2009 : deux séances réussies
+  /// avant de charger). Choix raisonné.
+  final int coachAssistMinDays;
 
   /// Reprise graduée conduite par le moteur (arrêt levé au milieu d'un
   /// bloc qui écrit les mouvements provocants) : part du volume écrit à la

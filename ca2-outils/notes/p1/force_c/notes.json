@@ -1,0 +1,127 @@
+{
+  "ecole": "force",
+  "programmes": [
+    {
+      "programme": "programme_1.md",
+      "criteres": {"F1": 7, "F2": 6, "F3": 7.5, "F4": 6.5, "F5": 7.5, "F6": 8, "F7": 8.5, "F8": 7.5, "F9": 8.5},
+      "sans_objet": [],
+      "ensemble": 7,
+      "points_perdus": [
+        {"critere": "F1", "perte": 3, "raison": "Traction pronation vue 3 fois par semaine (lundi séries, mercredi EMOM, vendredi lestée), mais la part du travail dans la zone de l'épreuve n'augmente pas en bloc 3 « réalisation » : les semaines 11 à 14 recopient les semaines 7 à 9 (seul le gainage change). R4-G1 demande au moins 50 % du bloc spécifique dans la zone de l'épreuve."},
+        {"critere": "F2", "perte": 4, "raison": "1RM de référence de la traction lestée écrit à 98,5 kg (puis 95,5 et 96) alors que le profil donne +15 kg pour 76 kg, soit 91 kg de charge totale (R2-P4). En semaines 8, 9 et 12, +1,25 ou +2,5 kg annoncés à 78-80 % représentent en réalité 85-87 % du 1RM, en 4 × 5 à 3 RIR. En semaine 15, +7,5 kg annoncés à 85 % représentent environ 92 %, en 2 × 2 à 3 RIR : la marge écrite ne peut pas tenir. La règle d'ajustement de la série de tête existe, mais elle part de chiffres faux."},
+        {"critere": "F3", "perte": 2.5, "raison": "Le volume par mouvement reste dans les fourchettes, mais la répartition est banale : la série de tête est bien séparée en séance lourde du lundi, sans volume de construction spécifique distinct pour l'endurance de traction."},
+        {"critere": "F4", "perte": 3.5, "raison": "Les phases sont nommées et les décharges placées toutes les 5 semaines (R3-P9). En revanche le bloc 3 « réalisation » n'a pas de contenu propre : il reprend le bloc 2 avec les mêmes schémas (1 × 7 + 2 × 6, EMOM 4 rép.). La progression du mouvement visé est plate de la semaine 6 à la semaine 14."},
+        {"critere": "F5", "perte": 2.5, "raison": "L'affûtage est correct : semaine 15 à environ −45 % (R3-P12/P13), dernier lourd le vendredi de la semaine 15 à J−7, test le vendredi de la semaine 16 après 48 h, tests de mi-parcours en semaines 5 et 10. Mais le « lourd » de l'affûtage (2 × 2 à +7,5 kg) est calculé sur le faux 1RM, et il n'y a pas de plan de série (cadence ni pauses chiffrées)."},
+        {"critere": "F6", "perte": 2, "raison": "L'EMOM a un rôle (densité), une dose (environ 40 %, R4-G6) et une règle de progression d'une variable à la fois. Aucune technique de fin de série (rest-pause, cluster) n'est prévue pour le bloc spécifique d'une épreuve de répétitions, et aucun critère de retrait n'est écrit."},
+        {"critere": "F7", "perte": 1.5, "raison": "Le rowing, le face pull, la rotation externe, les jambes et le tronc sont bien présents. Aucun point faible déclaré n'est analysé (par exemple le haut ou le bas de la traction)."},
+        {"critere": "F8", "perte": 2.5, "raison": "À 51 ans, l'adaptation est bonne : progression du volume +10 %, règle de douleur, prévention de la coiffe. Mais une traction lestée à environ 92 % du vrai 1RM avec une marge écrite de 3 RIR expose à des séries proches de l'échec sur un mouvement chargé (R5-P27)."},
+        {"critere": "F9", "perte": 1.5, "raison": "Séances de 29 à 47 min pour 60 min disponibles, repos précisés, échauffement écrit. Les charges des accessoires sont « à calibrer », mais avec une méthode. La consigne « série sans lest à 75 % du 1RM » est confuse pour l'athlète."},
+        {"critere": "ensemble", "perte": 3, "raison": "Deux corrections nécessaires : le 1RM de référence est faux, et le bloc spécifique n'a pas de contenu spécifique."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Recaler le 1RM de charge totale de la traction lestée sur le profil : 76 + 15 = 91 kg. Recalculer les lests des semaines 8, 9, 12, 15 et 17. Par exemple, la semaine 15 à 85 % donne environ 77 kg, soit +1 à +1,25 kg, en 2 × 2.", "consequence": "Sinon, les séries de 4 × 5 et 2 × 2 sont prescrites à 85-92 % réels avec 3 RIR annoncés : séries proches de l'échec sur traction lestée chez un athlète de 51 ans, et marges d'effort incohérentes."},
+        {"type": "necessaire", "texte": "Donner au bloc 3 un vrai contenu d'épreuve de répétitions. Ajouter une séance par semaine dans la zone de l'épreuve, par exemple 3 séries à 65-75 % du maximum avec 60-90 s de repos et le RIR sur la dernière, ou une série repère suivie de mini-séries. Monter l'EMOM selon la règle des 5 % par départ.", "consequence": "Sinon, le bloc « réalisation » reprend le bloc d'intensification, et le passage de 10 à 14 répétitions a peu de chances d'être servi."},
+        {"type": "amelioration", "texte": "Ajouter une simulation de série maximale avec pauses planifiées (R4-G7) au milieu du bloc 3, et écrire un plan de cadence et de pauses pour le test de la semaine 16."},
+        {"type": "amelioration", "texte": "Reformuler la consigne « série sans lest à 75 % du 1RM » : écrire directement les répétitions à poids du corps et le RIR."},
+        {"type": "amelioration", "texte": "Ajouter un critère de retrait de l'EMOM, par exemple si la dernière minute ne passe plus deux séances de suite."}
+      ],
+      "points_forts": [
+        "Fréquence de 3 expositions par semaine sur le mouvement visé, avec alternance d'expositions lourdes et légères (séries, EMOM, lestée)",
+        "Âge pris en compte : progression du volume +10 % au plus, prévention de la coiffe, règle de douleur graduée",
+        "Affûtage dosé (−45 % environ, intensité et fréquence gardées), 48 h sans travail dur avant le test, tests de mi-parcours toutes les 5 semaines",
+        "Règles d'ajustement de charge et de répétitions claires, séances tenues dans les 60 min"
+      ]
+    },
+    {
+      "programme": "programme_2.md",
+      "criteres": {"F1": 7, "F2": 7, "F3": 5.5, "F4": 6, "F5": 7.5, "F6": 6, "F7": 7.5, "F8": 8.5, "F9": 8.5},
+      "sans_objet": [],
+      "ensemble": 7,
+      "points_perdus": [
+        {"critere": "F1", "perte": 3, "raison": "Traction pronation 3 fois par semaine : la fréquence est bonne (R4-G8). Mais toutes les expositions se ressemblent (3 × 3 ou 3 × 4 au poids du corps), sans alternance lourd/léger réelle ni variante plus dure que le mouvement de test."},
+        {"critere": "F2", "perte": 3, "raison": "Les zones sont calculables en pourcentage du maximum et le RIR est précisé, mais le profil a un maximum inférieur à 8, ce qui en fait d'abord une priorité de force (R4-G2). Aucune exposition au-dessus du poids du corps (négatives, isométries hautes) n'est prévue. En semaines 9 à 11, 3 × 4 puis 2 × 4 à 1 RIR, y compris en affûtage, contre R4-G3."},
+        {"critere": "F3", "perte": 4.5, "raison": "Le volume direct de traction est très bas : 3 × 3 = 9 répétitions par séance en semaines 7-8, environ 27 répétitions strictes par semaine. Les séances durent 27 à 34 min pour 45 disponibles. Le plafond « maximum − 2 » appliqué à un maximum de 5 bloque les séries à 3 répétitions sans ajouter de séries. Il n'y a ni top set ni séries de construction distinctes."},
+        {"critere": "F4", "perte": 4, "raison": "Les semaines 7 et 8 sont identiques (3 × 3 à 60 %), puis la charge saute à 3 × 4 à 1 RIR en semaine 9. Le bloc « réalisation » n'a pas de logique spécifique propre, et la seule progression du mouvement visé passe par la règle d'autorégulation."},
+        {"critere": "F5", "perte": 2.5, "raison": "Affûtage d'une semaine à environ −50 %, test le jeudi de la semaine 12 après une séance facile le mardi, test intermédiaire en semaine 6 : c'est conforme. Mais l'affûtage conserve des séries à 1 RIR (jeudi et dimanche de la semaine 11) et il n'y a pas de plan de série pour le test."},
+        {"critere": "F6", "perte": 4, "raison": "Aucune technique alors que le profil en justifierait : négatives freinées, maintiens en haut ou clusters de 2 répétitions pour accumuler du volume strict à intensité élevée (R4-G6, R4-G2)."},
+        {"critere": "F7", "perte": 2.5, "raison": "Le row australien, la traction élastique, les jambes et le tronc sont présents. Il n'y a aucun travail scapulaire ou de coiffe spécifique, ni de prise en compte des points faibles de la traction."},
+        {"critere": "F8", "perte": 1.5, "raison": "Progression prudente, règle de douleur, baisse du jour adaptée au sommeil de 6,5 h. Rien de spécifique au profil au-delà de cela."},
+        {"critere": "F9", "perte": 1.5, "raison": "Séances tenues dans les 45 min, version courte de 15 min bien pensée pour le profil, matériel du parc respecté. La « règle d'assistance » citée pour changer d'élastique n'est écrite nulle part."},
+        {"critere": "ensemble", "perte": 3, "raison": "Deux corrections nécessaires : le volume spécifique est insuffisant et le programme n'a aucun stimulus de force au-dessus du poids du corps pour un maximum de 6 répétitions. Le programme est sûr mais servira mal l'objectif de 6 à 9 répétitions."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Augmenter le volume strict de traction en multipliant les séries plutôt que les répétitions, dans le temps disponible : par exemple 5 × 3 ou 6 × 2-3 à 2 RIR, ou un EMOM de 2 répétitions sur 6 à 8 min une séance par semaine. Cela fait passer d'environ 27 à 40-50 répétitions strictes par semaine.", "consequence": "Avec 3 × 3 plafonné par la règle « maximum − 2 », le volume reste trop bas pour faire progresser le maximum : l'objectif de 9 répétitions ne sera pas approché."},
+        {"type": "necessaire", "texte": "Ajouter une variante plus dure que le poids du corps : négatives freinées en 4-5 s, 2-3 × 3, ou maintien menton au-dessus de la barre, 3 × 10-15 s. La placer 1 à 2 fois par semaine, après les séries strictes, avec arrêt quand la descente passe sous 3 s.", "consequence": "Sinon, pour un maximum inférieur à 8, la force relative, qui est le facteur limitant (R4-G2), n'est jamais surchargée, et la progression stagne."},
+        {"type": "amelioration", "texte": "En semaine 11, remonter la marge des tractions de 1 à 2 RIR : l'affûtage garde l'intensité mais s'éloigne de l'échec (R4-G3)."},
+        {"type": "amelioration", "texte": "Écrire la règle d'assistance de l'élastique : passer à l'élastique plus fin quand toutes les séries atteignent le haut de la plage avec la réserve prévue."},
+        {"type": "amelioration", "texte": "Ajouter 2 séries de tirage scapulaire ou de face pull à l'élastique pour équilibrer le volume de tirage."}
+      ],
+      "points_forts": [
+        "Contraintes de vie respectées : séances de moins de 45 min, version courte de 15 min centrée sur le mouvement de l'objectif",
+        "Fréquence de 3 expositions par semaine sur la traction",
+        "Échéance tenue : affûtage d'une semaine, test le jeudi de la semaine 12 après 48 h sans travail dur, test intermédiaire en semaine 6",
+        "Objectif ambitieux annoncé honnêtement avec un résultat réaliste (7 à 8)"
+      ]
+    },
+    {
+      "programme": "programme_3.md",
+      "criteres": {"F1": 8, "F2": 8.5, "F3": 8, "F4": 7.5, "F5": 8.5, "F6": 7, "F7": 8.5, "F8": 7.5, "F9": 9},
+      "sans_objet": [],
+      "ensemble": 8,
+      "points_perdus": [
+        {"critere": "F1", "perte": 2, "raison": "La traction est travaillée 3 fois par semaine sous des formes alternées (top set et back-off, EMOM, séries de zone d'épreuve). Mais la fréquence de tirage n'est pas plafonnée par la tolérance des coudes : 4 jours de tirage sur 4, avec muscle-ups le mercredi et le dimanche, rows et chest-to-bar. C'est au-delà de 2-3 séances lourdes par zone pour un intermédiaire (R4-F10)."},
+        {"critere": "F2", "perte": 1.5, "raison": "Zones en pourcentage du maximum et marges précisées, avec règle d'ajustement. Le bloc 2 reste partout à 2 RIR ou plus (plafond « maximum − 2 ») : aucune série proche du maximum dans le bloc spécifique pour un objectif de répétitions maximales (R4-G3 autorise 1 série proche de l'échec chez l'intermédiaire)."},
+        {"critere": "F3", "perte": 2, "raison": "Volume bien réparti entre top set, back-off, densité (EMOM jusqu'à 54 répétitions) et séries de zone. Il n'est pas modulé selon une récupération connue (sommeil et stress absents du profil)."},
+        {"critere": "F4", "perte": 2.5, "raison": "Phases nommées, décharge en semaine 6, progressions chiffrées. Mais le schéma du lundi est figé à 1 × 15 + 2 × 11-12 des semaines 7 à 10, et le seul stimulus de force (chest-to-bar) disparaît du bloc 2 sans remplaçant. Aucun critère de passage n'est écrit."},
+        {"critere": "F5", "perte": 1.5, "raison": "Affûtage d'une semaine à −45 %, intensité gardée, dernier travail dur à J−7, mercredi facile avant le test du vendredi, test intermédiaire en semaine 6 : c'est conforme (R3-P21, R4-G7). En revanche, aucune simulation de série maximale n'est prévue entre les semaines 6 et 12 (R4-G7 : toutes les 3-4 semaines chez l'intermédiaire)."},
+        {"critere": "F6", "perte": 3, "raison": "L'EMOM a un rôle et une règle de progression. Pour passer de 18 à 25 répétitions, aucune technique de fin de série n'est prévue (rest-pause, série repère suivie de mini-séries, R4-G6), et il n'y a pas de critère de retrait."},
+        {"critere": "F7", "perte": 1.5, "raison": "Rows, row scapulaire, CARs, wrist push-ups, jambes (pistol, fente, pont fessier) et tronc : c'est complet. Aucun point faible de la traction n'est nommé."},
+        {"critere": "F8", "perte": 2.5, "raison": "Règles de douleur et d'arrêt présentes, muscle-ups jamais à froid. Mais la charge cumulée sur les coudes n'est ni budgétée ni surveillée : tirage 4 jours sur 4 et muscle-ups 2 fois par semaine (R4-F10, R4-F12, tendinopathie au premier rang en street workout)."},
+        {"critere": "F9", "perte": 1, "raison": "Séances de 30 à 38 min pour 60 disponibles, repos précis, échauffement spécifique écrit. Le muscle-up est retiré puis remis le dimanche sans explication (semaines 5 et 9)."},
+        {"critere": "ensemble", "perte": 2, "raison": "Programme bien individualisé. Une correction nécessaire : le bloc spécifique manque de travail proche du maximum pour un objectif de répétitions maximales."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Dans le bloc 2, ajouter une fois par semaine (le lundi à la place d'un back-off) une série repère à 1 RIR suivie de 2-3 mini-séries avec 15-20 s de pause (rest-pause, R4-G6). Prévoir en semaine 9 une simulation de série maximale avec pauses planifiées (R4-G7).", "consequence": "Sinon, l'athlète arrive au test de la semaine 12 sans avoir jamais travaillé au-delà de « maximum − 2 » depuis la semaine 6 : le gain vers 21-25 répétitions a peu de chances de se produire."},
+        {"type": "amelioration", "texte": "Garder une variante de force une fois par semaine dans le bloc 2 (chest-to-bar 3 × 5-7 ou traction tempo), selon R4-G2 : endurance spécifique plus une séance lourde."},
+        {"type": "amelioration", "texte": "Budgéter la charge des coudes : réduire les muscle-ups à un jour par semaine pendant le bloc spécifique, ou les placer le même jour qu'une séance de tirage légère, et ajouter une surveillance coude/épaule."},
+        {"type": "amelioration", "texte": "Écrire un critère de retrait de l'EMOM et un critère de passage entre phases, en plus du résultat de test."}
+      ],
+      "points_forts": [
+        "Mélange pertinent pour un maximum supérieur à 15 : top set, densité EMOM progressive et séries dans la zone de l'épreuve",
+        "Affûtage et test bien placés, avec repère à mi-série et pauses autorisées",
+        "Objectif irréaliste (+39 %) recadré honnêtement (21 à 23 serait un bon cycle, R4-G8)",
+        "Matériel du parc respecté, échauffement des poignets et du muscle-up écrit, assistance complète"
+      ]
+    },
+    {
+      "programme": "programme_4.md",
+      "criteres": {"F1": 8, "F2": 8.5, "F3": 9, "F4": 7, "F5": 8.5, "F6": 8.5, "F7": 8.5, "F8": 9.5, "F9": 9},
+      "sans_objet": [],
+      "ensemble": 9,
+      "points_perdus": [
+        {"critere": "F1", "perte": 2, "raison": "Traction 3 fois par semaine avec des expositions différentes (top set le mardi, EMOM léger le jeudi, séries de zone et négatives le samedi). La part dans la zone de l'épreuve augmente peu entre les blocs 1 et 2."},
+        {"critere": "F2", "perte": 1.5, "raison": "Zones calculables, marges majorées d'une répétition pour le sommeil et le stress, règle d'ajustement présente. Les intensités du bloc 2 restent uniformes (63 %, 3 RIR partout) sans exposition plus dure planifiée avant l'affûtage."},
+        {"critere": "F3", "perte": 1, "raison": "Volume réglé à 77 % du type, avec des réductions explicites de tirage, de préhension et de jambes pour le métier physique, et des séries de tête séparées. C'est bien fait."},
+        {"critere": "F4", "perte": 3, "raison": "Dans le bloc 2, les tractions écrites sont identiques des semaines 7 à 10 (1 × 5 + 2 × 4 le mardi, 3 × 5 le samedi, EMOM 7 × 3) : la progression écrite ne vient que des négatives. La règle d'autorégulation compense, mais aucune progression chiffrée n'est écrite pour le mouvement visé."},
+        {"critere": "F5", "perte": 1.5, "raison": "Affûtage d'environ −45 % à intensité gardée, dernier travail dur à J−7, jeudi facile avant le test du samedi, test intermédiaire en semaine 6 : c'est conforme. Il n'y a pas de simulation intermédiaire dans le bloc 2."},
+        {"critere": "F6", "perte": 1.5, "raison": "Les négatives ont un rôle (force pour un maximum de 8-9), une dose, une progression d'une seconde par semaine et un critère d'arrêt à moins de 3 s. L'EMOM est dosé à environ 40 % (R4-G6). Il manque un critère de retrait du bloc de négatives."},
+        {"critere": "F7", "perte": 1.5, "raison": "Row australien, face pull et rotation externe à l'élastique, tronc, jambes réduites pour un maçon : c'est cohérent. Aucun point faible propre de la traction n'est nommé."},
+        {"critere": "F8", "perte": 0.5, "raison": "Sommeil court, stress 4/5, métier physique et âge sont intégrés sans double comptage, avec une baisse du jour recalibrée (moins de 5 h), la règle de douleur et l'arrêt médical. Il manque seulement un point de surveillance des coudes et des avant-bras, sollicités par le métier."},
+        {"critere": "F9", "perte": 1, "raison": "Séances de 34 à 46 min pour 60 disponibles, après le travail, repos précis, échauffement écrit, version courte prévue. Le changement « repère 9 → 8 » après le test n'est pas expliqué à l'athlète."},
+        {"critere": "ensemble", "perte": 1, "raison": "Aucune correction nécessaire : le programme est sûr, individualisé pour une récupération faible et vise l'objectif avec réalisme. Il reste des améliorations."}
+      ],
+      "corrections": [
+        {"type": "amelioration", "texte": "Écrire une progression du mouvement visé dans le bloc 2, par exemple samedi 3 × 5 en semaines 7-8, puis 3 × 6 à 2-3 RIR en semaines 9-10, ou un départ de plus à l'EMOM en semaine 9, au lieu de quatre semaines identiques."},
+        {"type": "amelioration", "texte": "Ajouter en semaine 9 une simulation de série maximale avec pauses planifiées (R4-G7), en la reportant si le bilan du jour est bas."},
+        {"type": "amelioration", "texte": "Ajouter un suivi des coudes et des avant-bras dans la règle de douleur : le métier de maçon charge déjà la préhension."},
+        {"type": "amelioration", "texte": "Écrire un critère de retrait des négatives, par exemple quand la traction stricte progresse sur deux tests ou en cas de courbatures du coude plus de 48 h."}
+      ],
+      "points_forts": [
+        "Récupération faible (sommeil de 5,5 h, stress 4/5, métier physique, 41 ans) traduite en chiffres, sans double comptage, avec une baisse du jour recalibrée",
+        "Négatives freinées pertinentes pour un maximum de 8-9, avec une dose, une progression et un critère d'arrêt clairs",
+        "Affûtage, dernier travail dur et test placés selon les règles, test intermédiaire en semaine 6",
+        "Objectif annoncé ambitieux et résultat réaliste donné (10 à 11), séances dans le temps disponible après le travail"
+      ]
+    }
+  ]
+}

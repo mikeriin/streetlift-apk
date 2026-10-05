@@ -80,10 +80,11 @@ final class BlockView {
   /// Vrai si le jour [day] suit un affûtage : sa semaine ou la précédente
   /// est une semaine d'affûtage ou de compétition (CA2, partie 0).
   bool taperedAt(int day) {
-    if (!coached) {
+    final start = block.pass1.startDate.dayNumber;
+    if (!coached || day < start) {
       return false;
     }
-    final w = (day - block.pass1.startDate.dayNumber) ~/ 7;
+    final w = (day - start) ~/ 7;
     for (final i in <int>[w, w - 1]) {
       if (i >= 0 && policyOf(week(i)).peak) {
         return true;

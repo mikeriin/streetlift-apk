@@ -1,0 +1,132 @@
+{
+  "ecole": "sante",
+  "programmes": [
+    {
+      "programme": "programme_1.md",
+      "criteres": {"S1": 9, "S2": 9, "S3": 9.5, "S4": 6, "S5": 9, "S6": 9, "S7": 9, "S8": 8.5, "S9": 7.5},
+      "sans_objet": [],
+      "ensemble": 7,
+      "points_perdus": [
+        {"critere": "S1", "perte": 1, "raison": "Seuils de douleur et orientation écrits (R5-P23, R4-F11), mais à 51 ans avec trois séances de tirage par semaine (traction lundi, EMOM mercredi, traction « lestée » vendredi, plus rowing 2×/sem), rien de ciblé sur le coude (R5-P24)."},
+        {"critere": "S2", "perte": 1, "raison": "Règles d'âge (+10 %/sem) et de semaine manquée présentes, mais l'affûtage S15 introduit la charge la plus lourde du cycle (traction +7,5 kg, 85 % du 1RM, jamais travaillée avant) à 10 jours du test : nouveauté d'intensité en affûtage (R5-P22)."},
+        {"critere": "S3", "perte": 0.5, "raison": "Allègements planifiés S5/S10/S15 et baisse du jour chiffrée ; les semaines 1 à 4 gardent pourtant le même nombre de séries dures (45), l'introduction n'est pas allégée."},
+        {"critere": "S4", "perte": 4, "raison": "Objectif d'endurance de force (10 → 14) : le bloc 3 « réalisation » recopie le bloc 2 (« comme la semaine 7/9 ») — séries de 6 à 8 avec 2 à 3 min de repos, EMOM à 4 rép. (≈ 44 %) ; aucune série dans la zone de l'épreuve (≈ 70-80 % du max, repos 60-90 s), aucune simulation. R4-G1 demande ≥ 50 % du bloc spécifique dans la zone de l'épreuve ; R4-G2 (max 8-15 : mixte). La simulation stagne à 9-10."},
+        {"critere": "S5", "perte": 1, "raison": "Face pull, rotation externe, rowing et échauffement scapulaire écrits ; pas d'adaptation explicite à l'âge (tendons plus lents), pas de variété de prises sur trois séances de traction pronation."},
+        {"critere": "S6", "perte": 1, "raison": "Marges 2 à 4 RIR, aucun échec hors tests ; mais 4 × 7 à 3 RIR au poids du corps (S2-S3 vendredi) avec un max de 10 n'est pas tenable : les séries 2-4 tombent sous la marge (simulation : 7-2-5-5, 0,7 RIR)."},
+        {"critere": "S7", "perte": 1, "raison": "Séances de 30 à 47 min pour 60 disponibles et version courte de 25 min : très bien ; la ligne « traction lestée » sans lest complique inutilement."},
+        {"critere": "S8", "perte": 1.5, "raison": "Tests S5, S10, S16 et affûtage d'environ 12 jours (−47 % de séries dures) conformes à R3-P21 ; pas de série maximale ou de simulation à J−7/J−10 (dernier max 6 semaines avant), et la charge lourde nouvelle en S15 brouille l'affûtage."},
+        {"critere": "S9", "perte": 2.5, "raison": "« ≈ 75 % du 1RM (charge totale ; 1RM de référence 98,5 kg) » puis « série sans lest… avec moins de répétitions » alors que le tableau écrit 4 × 6 ou 4 × 7 : l'athlète ne sait pas combien de répétitions faire."},
+        {"critere": "ensemble", "perte": 3, "raison": "Deux corrections nécessaires : bloc spécifique sans travail dans la zone de l'épreuve, et prescription du vendredi contradictoire. Programme sûr, bien cadré pour un athlète de 51 ans."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Rendre le bloc 3 (S11-S14) vraiment spécifique : remplacer la séance du vendredi (ou les séries du lundi) par 3 à 4 séries à 70-80 % du max testé avec 60-90 s de repos et 2 RIR sur la dernière, et faire monter l'EMOM du mercredi d'environ 5 % du max par départ chaque semaine (5 → 6 rép.), comme la règle du programme le prévoit déjà.", "consequence": "Sans travail dans la zone de l'épreuve, la capacité de répétitions ne progresse pas : l'athlète arrive au test S16 à 9-10, loin de 14 (ce que montre la simulation)."},
+        {"type": "necessaire", "texte": "Réécrire la traction du vendredi quand la charge visée tombe sous le poids du corps : soit des tractions au poids du corps en 4 × 4 à 5 (2-3 RIR), soit un vrai lest léger (+2,5 à 5 kg) en 4 × 4 ; supprimer la mention « 75 % du 1RM charge totale » tant qu'elle est inapplicable.", "consequence": "La consigne contradictoire (4 × 7 écrit, « moins de répétitions » en note) fait soit dépasser la marge dès la deuxième série, soit improviser le volume, sur la séance la plus lourde de la semaine."},
+        {"type": "amelioration", "texte": "En affûtage S15, garder l'intensité déjà connue (lest +2,5 kg, 80 %) plutôt qu'introduire +7,5 kg à 85 %."},
+        {"type": "amelioration", "texte": "Placer une série maximale de répétition (ou une série à 85-90 % du max) à J−8/J−10 pour caler le rythme du test."},
+        {"type": "amelioration", "texte": "Varier les prises (neutre, supination) sur l'une des trois séances de tirage et ajouter 2 × 15 de flexion/extension de poignet légère, pour le coude à 51 ans."},
+        {"type": "amelioration", "texte": "Prévoir une semaine de transition (RIR ≥ 4, volume ~50 %) après le test S16 au lieu d'enchaîner une construction à 45 séries dures (R3-P19)."}
+      ],
+      "points_forts": [
+        "Seuils de douleur chiffrés avec orientation vers un professionnel, arrêt sur signes cardiaques : adapté à 51 ans.",
+        "Règle d'âge explicite (+10 %/sem) et règles de séance ou semaine manquée.",
+        "Prévention de coiffe (face pull, rotation externe à la poulie) et tirage horizontal équilibrant.",
+        "Objectif présenté honnêtement (12-13 serait déjà un bon cycle), tests intermédiaires qui recalent le bloc suivant.",
+        "Séances courtes dans le temps disponible, version de 25 min prévue."
+      ]
+    },
+    {
+      "programme": "programme_2.md",
+      "criteres": {"S1": 9, "S2": 9.5, "S3": 8, "S4": 6, "S5": 7.5, "S6": 8.5, "S7": 10, "S8": 8.5, "S9": 9},
+      "sans_objet": [],
+      "ensemble": 8,
+      "points_perdus": [
+        {"critere": "S1", "perte": 1, "raison": "Seuils de douleur et arrêt médical écrits ; rien de dangereux. Pas de prévention ciblée de l'épaule malgré trois séances de traction par semaine."},
+        {"critere": "S2", "perte": 0.5, "raison": "Départ prudent (3 × 3 à 50 %), règles de semaine manquée ; saut en S9 de 3 × 3 à 2 RIR à 3 × 4 à 1 RIR sur deux séances d'un coup (+33 % de répétitions et une marge de moins)."},
+        {"critere": "S3", "perte": 2, "raison": "Sommeil de 6,5 h et stress de 3/5 avec deux enfants et un travail prenant : aucune adaptation écrite à cette charge de vie (R5-P14, R5-P15) ; seule la baisse du jour (< 6 h) existe."},
+        {"critere": "S4", "perte": 4, "raison": "Max de 6 : priorité force (R4-G2). Les tractions strictes restent à 3 × 3-4 répétitions pendant 10 semaines, l'élastique en 2 × 8-10, sans levier de surcharge (négatives, tempo, échelles, densité) ni hausse du volume total. Aucune progression de densité (R4-G6). La simulation stagne de 6 à 6."},
+        {"critere": "S5", "perte": 2.5, "raison": "Row australien et échauffement scapulaire, mais aucun travail de coiffe (rotation externe ou face pull à l'élastique pourtant disponible) pour trois séances de tirage hebdomadaires."},
+        {"critere": "S6", "perte": 1.5, "raison": "S9-S11 : séries de traction à 1 RIR deux fois par semaine, y compris en affûtage (S11 jeudi et dimanche) ; R4-G3 recommande 2-3 RIR chez l'intermédiaire et pas d'effort proche de l'échec en affûtage."},
+        {"critere": "S8", "perte": 1.5, "raison": "Affûtage d'environ 10 jours (−50 %), test S12 après 48 h, stratégie de série écrite ; mais S11 garde des séries à 1 RIR et il n'y a pas de série maximale à J−7/J−10."},
+        {"critere": "S9", "perte": 1, "raison": "Lisible ; la règle « pour changer d'élastique, suis la règle d'assistance » renvoie à une règle qui n'est pas écrite."},
+        {"critere": "ensemble", "perte": 2, "raison": "Une correction nécessaire : aucun levier de progression de force sur la traction. Programme sûr et très faisable pour ce profil pressé."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Ajouter un levier de force progressif sur la traction : 2-3 négatives de 4-5 s en fin de séance du jeudi (avec un plafond de 3 × 3), ou une échelle 1-2-3 répétée, et augmenter le total de répétitions strictes de 10 à 20 % par bloc (R4-G8) au lieu de garder 3 × 3-4 dix semaines.", "consequence": "Avec un stimulus qui ne change pas, le max reste à 6 (simulation : 6 → 6) et l'objectif de 9 n'est pas approché."},
+        {"type": "amelioration", "texte": "Ajouter 2 × 12-15 de rotation externe ou de face pull à l'élastique deux fois par semaine (R5-P24)."},
+        {"type": "amelioration", "texte": "Écrire la charge de vie : avec 6,5 h de sommeil et un stress de 3/5, garder 2 RIR minimum et retirer une série dès un bilan moyen ; placer la séance la plus dure le dimanche."},
+        {"type": "amelioration", "texte": "Remonter la marge à 2 RIR en S11 (affûtage) et placer une série maximale à J−8."},
+        {"type": "amelioration", "texte": "Écrire la règle de changement d'élastique (élastique plus fin quand 2 × 10 passent avec la réserve prévue)."}
+      ],
+      "points_forts": [
+        "Séances de 28 à 33 min pour 45 disponibles et version de 15 min centrée sur l'objectif : adhésion protégée.",
+        "Départ prudent et règles d'ajustement claires sur le dernier max mesuré.",
+        "Seuils de douleur et arrêt médical écrits.",
+        "Affûtage et test à l'échéance des 12 semaines, test intermédiaire en S6.",
+        "Attentes réalistes (7-8 serait un bon cycle)."
+      ]
+    },
+    {
+      "programme": "programme_3.md",
+      "criteres": {"S1": 9, "S2": 9.5, "S3": 8, "S4": 8.5, "S5": 8.5, "S6": 9, "S7": 9.5, "S8": 9, "S9": 9},
+      "sans_objet": [],
+      "ensemble": 9,
+      "points_perdus": [
+        {"critere": "S1", "perte": 1, "raison": "Prérequis du muscle-up écrits (« rien à froid », à faire frais), seuils de douleur ; pas d'orientation particulière, budget de traction élevé sans gestion du coude."},
+        {"critere": "S2", "perte": 0.5, "raison": "Progression prudente et règles de reprise ; l'EMOM passe de 7 à 9 rép./minute en deux semaines (S7-S8), à la limite de la règle des 5 %/semaine."},
+        {"critere": "S3", "perte": 2, "raison": "Le profil ne renseigne ni sommeil ni stress, et le programme ne le demande pas ; allègements S6/S11 et baisse du jour présents."},
+        {"critere": "S4", "perte": 1.5, "raison": "Max > 15 : endurance spécifique (R4-G2) bien servie en bloc 2 (séries à 71-77 % avec 90 s, EMOM progressif, série de tête à 88 %), mais seulement 2 séries « zone de l'épreuve » par semaine, et plus de séance lourde après le retrait du chest-to-bar en bloc 2 (R4-G2 : + 1 séance lourde/sem)."},
+        {"critere": "S5", "perte": 1.5, "raison": "Row scapulaire, wrist push-ups, CARs et rows écrits ; quatre jours de tirage (tractions, muscle-ups, rows) sans contrepartie pour le coude ni variété de prise."},
+        {"critere": "S6", "perte": 1, "raison": "Marges adaptées (2-4 RIR, muscle-up à 3 RIR) ; série de tête à 2 RIR et 89 % du max chaque lundi, acceptable mais uniforme."},
+        {"critere": "S7", "perte": 0.5, "raison": "Séances de 30-38 min, version courte : très faisable ; quatre séances en parc sans échelle de repli par météo."},
+        {"critere": "S8", "perte": 1, "raison": "Tests S6/S12, affûtage d'environ 12 jours (−45 %), stratégie (rythme, pauses bras tendus, répétition repère à mi-série) ; pas de série longue à J−7/J−10."},
+        {"critere": "S9", "perte": 1, "raison": "Clair dans l'ensemble ; les notes « à deux jours du test » apparaissent en S6 mercredi pour un test le vendredi, ce qui est juste, mais elles restent dans S11 jusqu'à leur retrait explicite : lecture lourde."},
+        {"critere": "ensemble", "perte": 1, "raison": "Aucune correction nécessaire ; améliorations seulement (séance lourde, coude). Objectif de +39 % irréaliste mais présenté honnêtement."}
+      ],
+      "corrections": [
+        {"type": "amelioration", "texte": "Garder une séance de force par semaine en bloc 2 sans matériel : tractions archer ou tempo excentrique 3 × 4-6, en remplacement d'une partie de l'EMOM (R4-G2)."},
+        {"type": "amelioration", "texte": "Ajouter une troisième série dans la zone de l'épreuve le vendredi en S9-S10 (3 × 12-13, 90 s) pour atteindre la moitié du bloc dans la zone (R4-G1)."},
+        {"type": "amelioration", "texte": "Ajouter une prise neutre ou supination sur une des séances et 2 × 15 d'extenseurs de poignet pour le coude (quatre jours de tirage)."},
+        {"type": "amelioration", "texte": "Demander sommeil et stress au profil et l'écrire dans les règles de baisse du jour."},
+        {"type": "amelioration", "texte": "Placer une série longue (≈ 85-90 % du max) à J−8/J−10 pour caler le rythme du test."}
+      ],
+      "points_forts": [
+        "Séries dans la zone de l'épreuve avec repos court en bloc 2 et EMOM progressif : spécifique à l'objectif.",
+        "Stratégie de test écrite (rythme, pauses bras tendus, repère à mi-série).",
+        "Muscle-up placé à frais, avec prérequis et marge de 3 RIR.",
+        "Affûtage correct et 48 h sans travail dur avant chaque test.",
+        "Attentes honnêtes face à un objectif très ambitieux."
+      ]
+    },
+    {
+      "programme": "programme_4.md",
+      "criteres": {"S1": 9, "S2": 9.5, "S3": 10, "S4": 7.5, "S5": 8, "S6": 9, "S7": 9.5, "S8": 8.5, "S9": 9},
+      "sans_objet": [],
+      "ensemble": 9,
+      "points_perdus": [
+        {"critere": "S1", "perte": 1, "raison": "Seuils de douleur, arrêt médical, réductions de profil ; maçon de 41 ans avec beaucoup de suspension et de préhension, mais pas de vigilance écrite sur le coude latéral (épicondyle), fréquent dans ce métier (R5-P24)."},
+        {"critere": "S2", "perte": 0.5, "raison": "Progression lente et règle d'âge ; les négatives passent de 2 × 4 à 3 × 4 avec 2 s de tenue en S7, puis 3 × 5 en S9 : beaucoup d'excentrique pour un profil qui récupère mal."},
+        {"critere": "S4", "perte": 2.5, "raison": "EMOM et séries « zone de l'épreuve » (63 %, 90 s) présents, mais dans le bloc 2 rien ne monte sur la traction (5-4-4 le mardi, 3 × 5 le samedi, EMOM 7 × 3 inchangés S7-S10) : la règle des 5 %/semaine du programme n'est pas appliquée dans les tableaux."},
+        {"critere": "S5", "perte": 2, "raison": "Face pull, rotation externe, CARs, rows : bonne base ; rien pour les avant-bras et le coude d'un maçon (extenseurs du poignet, prise variée)."},
+        {"critere": "S6", "perte": 1, "raison": "Marge relevée d'une répétition pour sommeil et stress, aucun échec : adapté ; marges assez uniformes entre mouvements."},
+        {"critere": "S7", "perte": 0.5, "raison": "Séances de 34-46 min après le travail ; version courte présente ; le jeudi approche 46 min avec 8 exercices, long après une journée de chantier."},
+        {"critere": "S8", "perte": 1.5, "raison": "Tests S6/S12, affûtage d'environ 10 jours (−47 %) ; pas de série longue à J−7/J−10, et l'affûtage S11 samedi monte à 75 % à 2 RIR, plus dur que les semaines de pointe."},
+        {"critere": "S9", "perte": 1, "raison": "Règles très lisibles ; la ligne « volume réglé à 77 % » et les réductions cumulées sont peu concrètes pour l'athlète."},
+        {"critere": "ensemble", "perte": 1, "raison": "Aucune correction nécessaire : la charge de vie lourde est prise en compte de façon exemplaire. Il reste des améliorations sur la progression du bloc spécifique et la protection du coude."}
+      ],
+      "corrections": [
+        {"type": "amelioration", "texte": "Écrire la progression du bloc 2 : +1 répétition par départ sur l'EMOM toutes les deux semaines (3 → 4) et +1 répétition sur la dernière série du samedi en S9."},
+        {"type": "amelioration", "texte": "Ajouter 2 × 15 d'extension de poignet à l'élastique et une prise neutre une fois par semaine, et nommer la douleur au coude latéral dans la règle de douleur (métier de préhension)."},
+        {"type": "amelioration", "texte": "Plafonner les négatives à 3 × 3 (descente 4-5 s) tant que le sommeil reste à 5,5 h."},
+        {"type": "amelioration", "texte": "Raccourcir le jeudi (retirer le pont fessier unilatéral, déjà couvert le samedi) pour rester sous 40 min après le chantier."},
+        {"type": "amelioration", "texte": "Placer une série longue (≈ 85 % du max) à J−8 au lieu de 2 × 6 à 2 RIR en S11."}
+      ],
+      "points_forts": [
+        "Charge de vie traitée explicitement : réductions chiffrées pour sommeil, stress, travail physique et âge, sans double comptage.",
+        "Baisse du jour recalée sur l'habitude de l'athlète (< 5 h plutôt que < 6 h) et conseils de sommeil.",
+        "Séances espacées de 48 h (mardi, jeudi, samedi), durée raisonnable après le travail.",
+        "Prévention de coiffe (face pull, rotation externe) et seuils de douleur écrits.",
+        "Négatives réglées au contrôle, avec repli à l'élastique."
+      ]
+    }
+  ]
+}

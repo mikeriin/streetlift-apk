@@ -1,0 +1,133 @@
+{
+  "ecole": "force",
+  "programmes": [
+    {
+      "programme": "programme_1.md",
+      "criteres": {"F1": 8.5, "F2": 8, "F3": 6.5, "F4": 8, "F5": 8.5, "F6": 9, "F7": 8.5, "F8": 7, "F9": 8.5},
+      "sans_objet": [],
+      "ensemble": 8,
+      "points_perdus": [
+        {"critere": "F1", "perte": 1.5, "raison": "Les essais de traction stricte (le mouvement de l'objectif) n'existent que dans les règles (« à partir de la sixième semaine… ») et n'apparaissent dans aucun tableau de séance. Aucune alternance lourd/léger explicite sur le tirage vertical, et la fréquence n'est pas plafonnée par la tolérance du coude (R2-P7, au-delà des données)."},
+        {"critere": "F2", "perte": 2, "raison": "L'intensité de la traction assistée repose entièrement sur le choix d'élastique au ressenti (« celui qui permet 8 répétitions »), sans repère de départ. Le RIR passe de 4 à 2 en bloc 2 sans règle d'écart chiffrée (R2-P3 débutant : charges fixes, 2–3 RIR)."},
+        {"critere": "F3", "perte": 3.5, "raison": "Semaines 9–10 : traction élastique 7 séries + négatives jusqu'à 5 séries (3×5 + 2×5) + 3 tenues menton-barre = environ 15 séries dures de tirage vertical par semaine, plus 4 séries de row, pour un débutant à 0 traction. C'est au-dessus de R1-P5 (débutant 3–6, max 8 par mouvement) et de R2-P8 (4–8). 32 à 36 séries dures par semaine sont réparties sur 8 à 9 exercices."},
+        {"critere": "F4", "perte": 2, "raison": "Blocs, tests et recalage sont lisibles. Mais aucune décharge n'est placée hors des semaines de test, le bloc 3 (S13–16) est une construction générique sans test ni critère après l'échéance, et l'« affûtage » de S11 reprend un vocabulaire de compétiteur (R3-P2 : débutant, ni blocs ni affûtage)."},
+        {"critere": "F5", "perte": 1.5, "raison": "La semaine allégée S11 (−30 %) et les 48 h avant le test sont conformes au niveau débutant (R2-P10, R3-P12). En revanche, la ligne de test s'intitule « Tenue menton au-dessus de la barre » alors qu'elle contient d'abord l'essai strict, ce qui crée une ambiguïté sur l'épreuve elle-même."},
+        {"critere": "F6", "perte": 1, "raison": "Les négatives et les isométries sont autorisées au débutant (R2-P22), dosées sous le plafond de 15 répétitions par séance (R5-P8), avec un critère d'arrêt (descente sous 3 s). Mais aucun critère de retrait de la technique sur signal tendineux n'est écrit (R2-P17, au-delà des données)."},
+        {"critere": "F7", "perte": 1.5, "raison": "Row, face pull, dips progressifs, jambes et tronc sont présents. En revanche, le face pull n'apparaît qu'une fois par semaine (mercredi) face à 3 séances de tirage et de poussée, et rien n'est prévu pour le poignet alors que la pompe est faite 3 fois par semaine."},
+        {"critere": "F8", "perte": 3, "raison": "Le volume de tirage vertical d'un débutant non adapté (environ 15 séries par semaine) expose le coude. La trajectoire jointe le confirme : alerte de surmenage en S4–S5 (performance −18 % deux séances de suite) et hausse des tenues bornée « pour les tendons (coude) ». Les règles de douleur et de drapeaux rouges sont bonnes."},
+        {"critere": "F9", "perte": 1.5, "raison": "Les séances tiennent dans 45 min, le repos est précisé et l'échauffement écrit. Mais les notes sont recopiées en entier à chaque ligne (« au lieu de … »), ce qui rend la lecture difficile, et la ligne d'épreuve est mal intitulée."},
+        {"critere": "ensemble", "perte": 2, "raison": "Une correction nécessaire : le volume de tirage vertical. Le reste est solide et bien individualisé."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Plafonner le tirage vertical direct à environ 8–10 séries dures par semaine (par exemple traction élastique 2+2+2, négatives 2 séries 2 fois par semaine, tenues seulement les semaines sans négatives au même jour), et ne monter les négatives à 3×5 qu'après deux semaines sans gêne au coude.", "consequence": "Telle qu'écrite, la charge de tirage d'un débutant à 0 traction (environ 15 séries par semaine, 3 jours sur 7) mène au surmenage et à une irritation du coude, comme l'alerte de S4–S5 le montre. La progression vers la traction stricte stagne."},
+        {"type": "amelioration", "texte": "Écrire les 1 à 3 essais de traction stricte en tête de séance dans les tableaux de S6 à S12 au lieu de les laisser dans les règles."},
+        {"type": "amelioration", "texte": "Renommer la ligne d'épreuve « Test traction stricte, puis tenue menton-barre » pour que le test de l'objectif soit identifiable."},
+        {"type": "amelioration", "texte": "Prévoir d'emblée une variante de pompe à prise neutre (poings, barres parallèles basses) et un face pull à chaque séance, vu la fréquence de poussée et la douleur de poignet apparue en simulation."},
+        {"type": "amelioration", "texte": "Donner au bloc 3 un rôle après l'échéance : objectif recalé sur le test de S12 et test en S16."}
+      ],
+      "points_forts": [
+        "Le mouvement visé est travaillé 3 fois par semaine, par trois voies complémentaires : assistance, négatives, position haute.",
+        "Attentes réalistes énoncées : « une ou deux tractions serait déjà un très bon cycle ».",
+        "Règle d'assistance unique et claire. Recalage sur les tests, jamais sur un progrès supposé.",
+        "Négatives dosées avec critère d'arrêt au tempo. Dips introduits en amplitude progressive.",
+        "Gestion de la douleur, des jours bas et des séances manquées complète."
+      ]
+    },
+    {
+      "programme": "programme_2.md",
+      "criteres": {"F1": 8.5, "F2": 8, "F3": 8.5, "F4": 7.5, "F5": 8.5, "F7": 7, "F8": 8.5, "F9": 8},
+      "sans_objet": ["F6"],
+      "ensemble": 8,
+      "points_perdus": [
+        {"critere": "F1", "perte": 1.5, "raison": "L'objectif est une habitude, et chaque mouvement de base est vu 2 à 3 fois par semaine. Mais aucune trajectoire de variante n'est réellement planifiée vers la pompe au sol : la pompe inclinée reste « principale » 16 semaines, avec un test final à 26–28 répétitions sur la même inclinaison."},
+        {"critere": "F2", "perte": 2, "raison": "La charge est réglée par le levier au ressenti. La règle de choix du cran existe, mais le test de S12 fixe un repère de 26–28 répétitions sur pompe inclinée, preuve que le levier n'a pas suivi. On travaille alors l'endurance et non la force (R1-P17 : débutant à 8–15 répétitions, changer de variante)."},
+        {"critere": "F3", "perte": 1.5, "raison": "Volume par mouvement dans les fourchettes du débutant (6–8 séries par semaine). Mais le pont fessier disparaît dès S7 sans remplaçant, et la répartition reste banale."},
+        {"critere": "F4", "perte": 2.5, "raison": "Deux critères de progression contradictoires pour la même pompe. L'échelle des figures demande 2×12 propres sur 2 séances et 2 semaines minimum, et ne compte que deux étapes. La note de l'exercice dit « descends d'un cran quand le haut de la plage [8 ou 12] est tenu deux séances » et en compte quatre (mur, mains surélevées, genoux, sol). Aucune décharge hors des semaines de test."},
+        {"critere": "F5", "perte": 1.5, "raison": "Tests en S6 et S12 avec 48 h sans travail dur. L'échéance est une échéance d'habitude, donc l'affûtage n'est pas requis. Mais aucun test de l'habitude elle-même n'est prévu (bilan des séances cochées en S12) en dehors des relevés de poids."},
+        {"critere": "F7", "perte": 3, "raison": "Aucun travail de tronc (ni gainage ni dead bug) et aucun travail des fixateurs d'omoplate ou de la coiffe sur 16 semaines, pour un sédentaire de 104 kg qui pousse et tire 3 fois par semaine. Le seul travail de chaîne postérieure (pont fessier) est retiré en S7 (R5-P27, équilibre)."},
+        {"critere": "F8", "perte": 1.5, "raison": "Bonne adaptation au surpoids (R5-P9) : variantes à 6–8 répétitions, RIR ≥ 3 au départ, pas de sauts, marche progressive, drapeaux rouges, respiration. En revanche, aucune adaptation explicite à la courte nuit (6,5 h) ni au déficit au-delà de la règle de baisse du jour."},
+        {"critere": "F9", "perte": 2, "raison": "Les séances tiennent dans 40 min, le repos est précisé et l'échauffement écrit. Mais la contradiction entre l'échelle et la note de l'exercice laisse l'athlète sans savoir quand abaisser son appui."},
+        {"critere": "ensemble", "perte": 2, "raison": "Une correction nécessaire, sur la règle de progression de la poussée. Le reste est sûr et bien centré sur l'habitude."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Unifier la progression de la pompe : une seule échelle (mur → mains surélevées hautes → basses → genoux → sol) et un seul critère, par exemple haut de plage 2 séances de suite → cran suivant. Supprimer le repère de test à 26–28 répétitions sur la même inclinaison.", "consequence": "L'athlète ne sait pas quand changer de cran. Il reste sur la même inclinaison en enchaînant 20 répétitions et plus (c'est ce que montre la trajectoire : même étape depuis 15 semaines), et la force de poussée ne progresse plus vers la pompe au sol."},
+        {"type": "amelioration", "texte": "Ajouter 1 exercice de tronc par séance (dead bug, gainage sur genoux) et un face pull ou une rotation externe à l'élastique 2 fois par semaine."},
+        {"type": "amelioration", "texte": "Garder un travail de chaîne postérieure après S7 (pont fessier ou good morning au poids du corps)."},
+        {"type": "amelioration", "texte": "En S12, faire le bilan de l'objectif d'habitude (séances cochées sur 12 semaines, minutes de marche) et pas seulement des tests de force."},
+        {"type": "amelioration", "texte": "Donner une consigne explicite pour le sommeil court et le déficit, par exemple un RIR +1 les semaines où le poids baisse vite (R5-P14, R5-P16)."}
+      ],
+      "points_forts": [
+        "Programme centré sur l'objectif réel, l'habitude : version courte de 15 min, suivi des séances, séance manquée non rattrapée.",
+        "Plan d'endurance à la marche chiffré et progressif, vers 150 puis 200 minutes par semaine.",
+        "Variantes adaptées au poids : traction pieds au sol, pompe inclinée, aucun saut (R5-P9).",
+        "Messages nutritionnels prudents, avec orientation vers un professionnel.",
+        "Règles de douleur, de jours bas et de drapeaux rouges complètes."
+      ]
+    },
+    {
+      "programme": "programme_3.md",
+      "criteres": {"F1": 8, "F2": 7.5, "F3": 6.5, "F4": 7.5, "F5": 8, "F6": 8.5, "F7": 8, "F8": 7, "F9": 8},
+      "sans_objet": [],
+      "ensemble": 7,
+      "points_perdus": [
+        {"critere": "F1", "perte": 2, "raison": "Le tirage est bien spécifique, 3 fois par semaine. En revanche, la pompe au sol (objectif : 10 répétitions) n'apparaît pas avant S7, puis seulement à 1×1–3 jusqu'à 2×1–5. En S11–S12, elle est réduite à 1×1. Le mouvement exact reste marginal face à la pompe inclinée (R2-P9)."},
+        {"critere": "F2", "perte": 2.5, "raison": "Le levier de la pompe inclinée n'est pas réglé par une règle unique, et les plages 8–12 à RIR 2 laissent l'athlète sur une inclinaison où elle fait 18 répétitions (trajectoire). L'intensité de la poussée ne se rapproche donc pas de la pompe au sol. L'élastique de traction est choisi au ressenti."},
+        {"critere": "F3", "perte": 3.5, "raison": "Semaines 9–10 : traction élastique 7 séries + négatives 5 séries + tenues menton-barre 3 séries = environ 15 séries de tirage vertical par semaine pour une débutante de 2 mois. Au-dessus de R1-P5 (débutant, max 8) et de R2-P8 (4–8). Le volume de poussée, lui, est éclaté entre trois variantes (inclinée, négative, classique à 1 répétition)."},
+        {"critere": "F4", "perte": 2.5, "raison": "Même contradiction que dans l'échelle des figures : 2×12 propres et 2 semaines minimum, deux étapes, contre « descends d'un cran au haut de la plage » sur quatre crans. Le bloc 3 après l'échéance retire toute la poussée sans plan de retour chiffré dans les tableaux."},
+        {"critere": "F5", "perte": 2, "raison": "S11 à −30 % et tests en S12 avec 48 h de repos : conformes au débutant. Mais les deux objectifs sont testés le même jour, pompe maximale juste après l'épreuve de traction et de tenue, et la pompe au sol n'a été que très peu exposée à l'approche du test."},
+        {"critere": "F6", "perte": 1.5, "raison": "Négatives de pompe et de traction et isométries ont chacune un rôle, une dose et un critère d'arrêt au tempo. Aucun critère de retrait sur signal tendineux n'est écrit."},
+        {"critere": "F7", "perte": 2, "raison": "Tronc, face pull, CARs et jambes sont présents. Mais les séances n'utilisent que 25–49 min sur 60, alors que le point faible déclaré (poussée : 3 pompes) aurait pu recevoir plus de travail spécifique."},
+        {"critere": "F8", "perte": 3, "raison": "Volume de tirage vertical élevé pour une débutante. La trajectoire montre les tenues bornées « pour les tendons (coude) » de S8 à S16. Les règles de douleur au poignet sont bonnes et bien appliquées en bloc 3."},
+        {"critere": "F9", "perte": 2, "raison": "Séances faisables, repos et échauffement écrits. Mais la contradiction entre les règles de progression de la pompe, et des notes recopiées en entier, rendent la consigne difficile à suivre. Le temps disponible est sous-utilisé."},
+        {"critere": "ensemble", "perte": 3, "raison": "Deux corrections nécessaires : le volume de tirage et la progression de la pompe, qui menace l'objectif de 10 pompes."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Plafonner le tirage vertical à environ 8–10 séries dures par semaine : traction élastique 2 séries par séance, négatives 2 séries 2 fois par semaine, tenues seulement un jour sans négatives. Ne monter à 3×5 négatives qu'après deux semaines sans gêne au coude.", "consequence": "Une débutante de 58 kg tirant environ 15 séries par semaine s'expose à une irritation du coude qui interromprait le travail vers la première traction (tenues déjà bornées pour le coude en simulation)."},
+        {"type": "necessaire", "texte": "Réécrire la progression de la poussée vers 10 pompes : une seule échelle et un seul critère (haut de plage 6–8 deux séances de suite → cran plus bas). Dès que le test le permet, mettre la pompe au sol (ou la pompe genoux au cran juste avant) en premier exercice, 3 séries à résultat −2, 2 à 3 fois par semaine, l'inclinée devenant un complément.", "consequence": "L'athlète reste sur une inclinaison facile à 18 répétitions et fait 1 pompe au sol par séance. L'objectif de 10 pompes à 12 semaines ne sera pas atteint (2–3 pompes au test en simulation)."},
+        {"type": "amelioration", "texte": "Tester la pompe maximale dans une autre séance que l'épreuve de traction, ou au moins avant la tenue menton-barre."},
+        {"type": "amelioration", "texte": "Bloc 3 : garder les pompes inclinées sur barre basse ou barres parallèles (prise neutre, autorisée par la propre règle du programme) en volume réduit, au lieu de retirer toute la poussée."},
+        {"type": "amelioration", "texte": "Utiliser une partie des 60 minutes pour un travail de poussée supplémentaire (par exemple support hold ou dips assistés en amplitude partielle)."}
+      ],
+      "points_forts": [
+        "Le chemin vers la première traction est complet : assistance, négatives, position haute, essais stricts à partir de S6.",
+        "Négatives de pompe bien dosées, avec critère d'arrêt (descente sous 2 s, bassin qui s'affaisse).",
+        "Semaine allégée et test de l'échéance correctement placés, 48 h sans travail dur.",
+        "Règle de douleur du poignet détaillée et appliquée : retrait, avis médical, retour par paliers.",
+        "Tronc, coiffe et jambes présents dès S1."
+      ]
+    },
+    {
+      "programme": "programme_4.md",
+      "criteres": {"F1": 8.5, "F2": 8.5, "F3": 8.5, "F4": 8.5, "F5": 8.5, "F6": 8, "F7": 8.5, "F8": 8, "F9": 8.5},
+      "sans_objet": [],
+      "ensemble": 9,
+      "points_perdus": [
+        {"critere": "F1", "perte": 1.5, "raison": "Traction et dips 3 fois par semaine, en alternance lourd/moyen/au chrono : bien (R2-P7, intermédiaire 2–3). En revanche, la fréquence n'est pas explicitement plafonnée par la reprise tendineuse après 9 mois (R5-P6 : les tendons reviennent moins vite que les muscles)."},
+        {"critere": "F2", "perte": 1.5, "raison": "Répétitions calculées en % du maximum réduit (75 % des anciens records), RIR précisé et recalage par le test d'entrée. Mais la zone reste uniforme sur 16 semaines : dips en séries de 11–17, traction 5–9. Il n'y a pas d'exposition plus lourde, ni lestée, alors que le profil compte 10 % de streetlifting (R1-P11, intermédiaire 3–8 répétitions)."},
+        {"critere": "F3", "perte": 1.5, "raison": "Série de tête puis séries allégées, conformes à R2-P6. Volume par mouvement dans la fourchette intermédiaire. Mais le volume des départs au chrono n'est pas compté dans les séries dures, si bien que le volume réel des dips (EMOM jusqu'à 6×8) est sous-estimé dans la vue d'ensemble."},
+        {"critere": "F4", "perte": 1.5, "raison": "Bloc de reprise, décharges en S6 et S12 (R3-P9 : intermédiaire toutes les 5–6 semaines), tests et règle de progression. Mais les phases s'appellent toutes « construction (volume) ». Il n'y a ni critère de passage ni changement de zone entre blocs (R3-P3), et la série de tête de traction reste figée à 9 de S7 à S16."},
+        {"critere": "F5", "perte": 1.5, "raison": "Pas d'échéance. Tests maximaux en S6 et S12 dans les semaines allégées, avec 48 h de repos et montée en échauffement : bien. Mais aucun test n'est prévu en fin de cycle (S16) pour mesurer le retour vers les anciens records."},
+        {"critere": "F6", "perte": 2, "raison": "Les départs au chrono (EMOM) sont pertinents pour un pratiquant de sets & reps, avec une règle « une variable à la fois ». Mais leur rôle n'est pas nommé, et la règle mentionne une « phase spécifique d'épreuve » qui n'existe pas dans ce programme."},
+        {"critere": "F7", "perte": 1.5, "raison": "Row, face pull, rotation externe, tronc varié et jambes (fente, skater squat, nordic) sont présents. Mais le gainage apparaît et disparaît d'une semaine à l'autre (L-sit retiré en S3, remis, puis retiré en S5) sans justification."},
+        {"critere": "F8", "perte": 2, "raison": "Règle de reprise détaillée, RIR ≥ 4 la première semaine, test d'entrée et règles de douleur. Mais la semaine 1 est à environ 70 % du volume des semaines de construction (17 contre 24 séries dures, EMOM non comptés), alors que la propre règle du programme et R5-P7 demandent la moitié après une longue coupure. Le dips en amplitude profonde (« épaule nettement sous le coude ») est servi dès S1 sans progression d'amplitude."},
+        {"critere": "F9", "perte": 1.5, "raison": "Séances de 18–33 min pour 60 min disponibles, repos et échauffement écrits, charges prêtes à l'emploi. Mais les notes sont répétées en entier, et le temps disponible est sous-utilisé en blocs 2–3."},
+        {"critere": "ensemble", "perte": 1, "raison": "Aucune correction nécessaire. Programme de reprise sûr et bien individualisé ; il reste des améliorations sur la variété des zones et sur la première semaine."}
+      ],
+      "corrections": [
+        {"type": "amelioration", "texte": "Réduire la semaine 1 à environ 50 % du volume de construction, EMOM compris (par exemple EMOM de 3 min au lieu de 5), pour respecter la règle de reprise du programme lui-même (R5-P7)."},
+        {"type": "amelioration", "texte": "Rendre l'amplitude des dips progressive pendant les 2 premières semaines (bras parallèle au sol, puis plus bas), car les tendons de l'épaule reviennent moins vite après 9 mois."},
+        {"type": "amelioration", "texte": "En bloc 3, introduire une exposition par semaine en zone plus lourde (traction et dips à 5–8 répétitions lestées légèrement, ou avec tempo), en accord avec les 10 % de streetlifting du profil (R1-P11, R2-P1)."},
+        {"type": "amelioration", "texte": "Faire progresser la série de tête de traction selon la règle écrite (+1 répétition quand la réserve dépasse la cible) au lieu de la laisser à 9 de S7 à S16, et ajouter un test en S16."},
+        {"type": "amelioration", "texte": "Nommer le rôle des départs au chrono (densité et volume à faible effort) et retirer la mention d'une « phase spécifique d'épreuve » sans objet ici."},
+        {"type": "amelioration", "texte": "Stabiliser le travail de tronc (un exercice fixe par séance) et utiliser une partie des 60 minutes disponibles pour les jambes ou le gainage."}
+      ],
+      "points_forts": [
+        "Reprise construite sur les anciens records réduits (≈ 75 %), avec un test d'entrée à 4 répétitions de l'échec qui recale tout le programme.",
+        "Alternance de séances lourdes et moyennes, plus départs au chrono, pour répartir le volume de traction et de dips.",
+        "Série de tête puis séries allégées : volume de qualité séparé du volume de construction.",
+        "Décharges en S6 et S12, couplées aux tests maximaux, avec montée progressive et arrêt quand la forme casse.",
+        "Équilibre tirage/poussée soigné : row, face pull, rotation externe ; jambes et chaîne postérieure entretenues."
+      ]
+    }
+  ]
+}

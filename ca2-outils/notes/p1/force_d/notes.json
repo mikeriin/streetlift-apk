@@ -1,0 +1,39 @@
+{
+  "ecole": "force",
+  "programmes": [
+    {
+      "programme": "programme_1.md",
+      "criteres": {"F1": 6.5, "F2": 7, "F3": 7.5, "F4": 5.5, "F5": 8, "F6": 7, "F7": 7.5, "F8": 9, "F9": 8.5},
+      "sans_objet": [],
+      "ensemble": 7,
+      "points_perdus": [
+        {"critere": "F1", "perte": 3.5, "raison": "Traction pronation, mouvement de l'objectif (8 -> 11 rép.), à 2 séances par semaine seulement (mardi, samedi), dans le bas de la fourchette intermédiaire de R1-P9 alors que c'est la priorité. Le lundi ne contient aucun tirage vertical. Surtout, la part de travail spécifique au maximum de répétitions ne change pas d'une phase à l'autre : le mardi du bloc 2 « réalisation » (S7 à S10) recopie les S3 à S5 de construction (1 × 6 + 2 × 5 à 75 %), contrairement à R2-P7 et R2-P9."},
+        {"critere": "F2", "perte": 3, "raison": "Les zones sont calculables (% du maximum de répétitions, réserve précisée), mais l'intensité plafonne à 75 % du maximum, soit 6 rép. à 2 en réserve, de S3 à S11. La règle « sans dépasser ton maximum − 2 », avec un maximum recalé seulement aux tests, l'empêche de monter. Aucune exposition proche du maximum (séries à 1 rép. en réserve, 85 à 90 % du maximum) avant le test, pour un objectif de répétitions maximales (R2-P1 à P5)."},
+        {"critere": "F3", "perte": 2.5, "raison": "Volume direct de traction raisonnable : 6 à 7 séries par semaine, plus 2 à 3 séries de négatives, plus le row. La série de tête est bien séparée des séries suivantes le mardi. En revanche, le volume du mardi ne bouge pas de S3 à S10, et le samedi ne progresse qu'en ajoutant des séries de 5 (de 2 à 4 séries). Le volume n'est pas modulé selon la récupération : les séries suivantes sont systématiquement plus dures que prévu dans la trajectoire."},
+        {"critere": "F4", "perte": 4.5, "raison": "Les phases sont nommées et une décharge est placée en S6 (R3-P9), mais la phase de réalisation n'a pas de rôle propre : la consigne « comme la semaine 3, 4, 5 » donne les mêmes chiffres de traction. Il n'y a pas de progression chiffrée vers le maximum, et le plafond « maximum − 2 » fige la double progression (R5-P3). Le repère de mi-parcours manqué (7 au lieu de 9 en S6) ne déclenche rien. Le test final de 7 répétitions confirme que la progression écrite ne mène pas à 11."},
+        {"critere": "F5", "perte": 2, "raison": "Affûtage S11 bien conçu : séries dures à environ 55 %, intensité et fréquence gardées. Il y a 48 h sans travail dur avant le test, un test intermédiaire en S6 et le 10 km le lendemain du test de traction. Mais aucune répétition générale proche du maximum avant le test (dernier passage à 6 rép. en S11), et l'affûtage ne coupe que des séries qui n'étaient déjà pas spécifiques (R3-P15, R3-P17)."},
+        {"critere": "F6", "perte": 3, "raison": "Les tractions négatives ont un rôle, une dose, une progression du tempo et un repli (élastique) : c'est bien. Mais rien ne répond au problème nommé par l'objectif, l'endurance de force sur un maximum de répétitions : pas de densité, de clusters, d'échelles, de départs au chrono avant le bloc 3, ni de rest-pause en fin de série (R2-P22)."},
+        {"critere": "F7", "perte": 2.5, "raison": "Row australien, face pull, rotations externes, tronc suspendu, skater squat, pont fessier et pogo jumps pour la coureuse : l'équilibre est bon et le bas du corps sert la course. Mais aucune assistance ne vise la traction (biceps, dépression scapulaire, isométrie au point de blocage) pour un gain de 3 répétitions."},
+        {"critere": "F8", "perte": 1, "raison": "Conduite à tenir en cas de douleur graduée de 0 à 6+, échec réservé aux tests, échauffement écrit, baisse du jour, aucune hausse brutale. Rien n'est spécifiquement adapté au cumul de suspension (relevés de jambes suspendus et suspension active le lundi, la veille de la séance lourde de traction) pour les coudes et les mains."},
+        {"critere": "F9", "perte": 1.5, "raison": "Séances dans le temps, repos précisés, échauffement et version courte écrits. Deux consignes se contredisent : « 2 séances de suite en dessous, retire une série » et « si la réserve ne tient pas, garde les chiffres ». La règle « durée +10 % par semaine » n'est pas rattachée à un exercice."},
+        {"critere": "ensemble", "perte": 3, "raison": "Deux corrections nécessaires sur la priorité du profil : la phase de réalisation n'est pas spécifique au maximum de répétitions, et la règle de progression est plafonnée. Le programme est sûr et individualisé, mais l'objectif de 11 tractions sera probablement manqué (test à 7)."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Rendre le bloc 2 (S7 à S10) spécifique au maximum de répétitions de traction. Le mardi, monter de 75 à 85-90 % du maximum (série de tête à 1-2 en réserve, puis back-off). Le samedi, remplacer les 4 × 5 par du travail de densité : départs au chrono ou échelles avec un volume total de 2 à 2,5 fois le maximum, ou 1 série à 1-2 en réserve suivie de mini-séries de 2 à 3 rép. Placer une répétition générale à environ 90 % du maximum en S10.", "consequence": "Le bloc de réalisation répète la construction, l'athlète n'est jamais exposé au travail proche de son maximum, et le test plafonne autour de 7 à 8 répétitions au lieu de 11."},
+        {"type": "necessaire", "texte": "Supprimer le plafond « maximum − 2 » de la progression au poids du corps, ou recaler le maximum par un test court en S3-S4 et S9. Écrire une progression chiffrée de la série de tête (par exemple 6 → 7 → 7 → 8 rép.) et prévoir une règle si le repère de mi-parcours est manqué (réduire l'objectif intermédiaire, augmenter la fréquence plutôt que les séries).", "consequence": "Avec un maximum recalé seulement en S6 et S12, la règle bloque la série de tête à 6 répétitions pendant 8 semaines : aucune surcharge progressive sur le mouvement de l'objectif."},
+        {"type": "amelioration", "texte": "Ajouter une troisième exposition légère de traction le lundi (par exemple 3 × 3 à 50 % du maximum, ou des départs au chrono courts), pour passer à 3 séances par semaine sans hausse du volume dur (R1-P9, R2-P7)."},
+        {"type": "amelioration", "texte": "Ajouter une assistance ciblée : tenue isométrique menton au-dessus de la barre ou à 90°, curl à la barre basse ou rangée supination, tirage scapulaire lesté à l'élastique."},
+        {"type": "amelioration", "texte": "Lever la contradiction entre la règle « 2 séances en dessous, retire une série » et la règle « garde les chiffres », et préciser à quoi s'applique « durée +10 % par semaine »."},
+        {"type": "amelioration", "texte": "Placer les relevés de jambes suspendus du lundi sur un autre support (relevé de genoux au sol ou dead bug) pour ménager les avant-bras et les coudes la veille de la séance lourde de traction."}
+      ],
+      "points_forts": [
+        "Charges calculables partout : % du maximum de répétitions, réserve visée, série de tête égale au résultat − 2 après test.",
+        "Affûtage S11 conforme : séries dures réduites à environ 55 %, intensité et fréquence gardées, 48 h sans travail dur avant le test.",
+        "Conduite à tenir en cas de douleur graduée, baisse du jour, version courte de 15 min et règles de séance manquée.",
+        "Bonne cohabitation course et force : le fractionné du jeudi est loin du samedi lourd, et le travail de bas du corps (skater squat, pont fessier, pogo jumps) sert la course.",
+        "Tractions négatives avec rôle, tempo progressif, critère d'arrêt et repli à l'élastique.",
+        "Équilibre poussée/tirage orienté vers le tirage, cohérent avec la priorité."
+      ]
+    }
+  ]
+}

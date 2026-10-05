@@ -9,7 +9,7 @@
 library;
 
 import 'package:kalis_core/kalis_core.dart';
-import 'package:kalis_plan/kalis_plan.dart' show MuscleGroup;
+import 'package:kalis_plan/kalis_plan.dart' show MuscleGroup, coachPainStopHits;
 
 import '../book.dart';
 import '../coach.dart' show tendonLoaded;
@@ -1061,7 +1061,9 @@ final class SimAthlete {
         _holdWeek += amount;
       }
       for (final zone in _tendonZones) {
-        if (info.zoneLevel(zone) >= 0.5) {
+        // (Mouvements qui provoquent la zone au sens de la règle d'arrêt
+        // des moteurs : ce que la reprise graduée dose.)
+        if (coachPainStopHits(info.exercise, zone)) {
           _zoneWeek[zone] = (_zoneWeek[zone] ?? 0.0) + 1;
         }
       }
@@ -1134,7 +1136,9 @@ final class SimAthlete {
           // (Une nouvelle poussée n'est connue du moteur qu'une fois
           // signalée.)
           _painKnown = false;
-        } else {
+        } else if (!inPain && week > _reactiveTolerance) {
+          // La tolérance suit la charge tenue sans gêne, sans jamais
+          // baisser (une semaine d'allègement ne la fait pas retomber).
           _reactiveTolerance += (week - _reactiveTolerance) / 2;
         }
       } else if (!inPain || painZone != z) {

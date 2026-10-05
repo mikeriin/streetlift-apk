@@ -1,0 +1,138 @@
+{
+  "ecole": "calisthenie",
+  "programmes": [
+    {
+      "programme": "programme_1.md",
+      "criteres": {"C1": 8, "C2": 8, "C3": 8.5, "C4": 8.5, "C5": 7, "C6": 6, "C7": 7.5, "C8": 8.5, "C9": 8},
+      "sans_objet": [],
+      "ensemble": 8,
+      "points_perdus": [
+        {"critere": "C1", "perte": 2, "raison": "Palier FL tuck avancé bien déduit du record (7 s ≈ 58 % de 12 s), mais aucun demi-palier (tuck avancé jambes écartées, une jambe en appui partiel) ; le muscle-up est travaillé uniquement en barre basse pieds au sol alors que l'athlète en fait 2 stricts : palier trop facile pour son point faible (R4-F7, R1-P17)."},
+        {"critere": "C2", "perte": 2, "raison": "FL 3 fois par semaine (lundi, jeudi, samedi), en tête lundi et samedi, mais le jeudi il passe après 2 × 3–5 muscle-ups barre basse ; aucune consigne technique par série au-delà de la ligne d'exécution fixe (R4-F1, R4-F4)."},
+        {"critere": "C3", "perte": 1.5, "raison": "Tenues à 58–73 % du max, ~42 s cumulées, 2 min 30 de repos : conforme R4-F2/R1-P16 ; en revanche toutes les tenues sont de 5–8 s, sans alternance avec des tenues plus longues ≥ 70 % (R4-F6)."},
+        {"critere": "C4", "perte": 1.5, "raison": "48 h entre séances FL, hausse bornée, une seule figure bras tendus : bon ; mais aucun bloc de préparation tendineuse prévu avant d'ouvrir le levier suivant (R4-F8)."},
+        {"critere": "C5", "perte": 3, "raison": "Tractions, chest-to-bar, dips, rows aux anneaux, hollow présents, mais rien de tirage bras tendus hors FL (pas de tirage bras tendus à l'élastique, FL rows, ice cream maker) ; pas de lest ni de levier ajusté pour les bases (R1-P17, R4-F5)."},
+        {"critere": "C6", "perte": 4, "raison": "Critère écrit (3 × 11 s propres sur 2 séances, 8 semaines) et tests aux semaines 5, 10, 16, mais les tenues prescrites ne dépassent jamais 8 s pendant 16 semaines : rien ne mène au critère de 11 s, aucun chevauchement avec l'étape une jambe (R4-F7 : 2–3 sem de chevauchement). La simulation reste bloquée à l'étape actuelle, meilleur maintien 11 s."},
+        {"critere": "C7", "perte": 2.5, "raison": "Tirages scapulaires, face pull, rotations externes et mobilité générale présents ; rien de ciblé coude/biceps pour le volume bras tendus en tirage (R4-F12, R4-F8 « préparer coude et biceps »)."},
+        {"critere": "C8", "perte": 1.5, "raison": "Technique → force → accessoires, allègement toutes les 5 semaines, cible unique, jambes entretenues ; pas de sortie de spécialisation prévue, et les séances n'utilisent que 33–47 min sur 75 disponibles."},
+        {"critere": "C9", "perte": 2, "raison": "Faisable, exécution décrite, repos précisés ; aucune régression écrite si une tenue n'est pas tenue (seulement « allège ou arrête »)."},
+        {"critere": "ensemble", "perte": 2, "raison": "Programme individualisé, sûr et honnête sur l'objectif (FL complet hors de portée en 16 semaines), mais une correction nécessaire : il ne construit pas le chemin vers le critère de passage qu'il s'est lui-même fixé."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Dans le bloc 3 (semaines 11–14), faire monter la durée des tenues tuck avancé vers 9–11 s (par ex. 4 × 9 s puis 3 × 10 s à ≤ 75–85 % du max, ou grappes 5 s + 5 s) et ajouter, dès que 3 × 9 s propres passent, 3–4 tenues courtes de 2–3 s en FL une jambe en chevauchement (R4-F7), au lieu de rester à 5 × 8 s.", "consequence": "Les tenues restent à 6–8 s pendant 16 semaines, le critère de 3 × 11 s n'est jamais travaillé : l'athlète finit le cycle au même palier (ce que montre la simulation), sans avoir ouvert l'étape suivante."},
+        {"type": "amelioration", "texte": "Ajouter un tirage bras tendus spécifique (tirage à l'élastique bras tendus, FL rows tuck avancé ou ice cream makers) 2 fois par semaine, après les tenues."},
+        {"type": "amelioration", "texte": "Remplacer une partie du muscle-up barre basse par des transitions au niveau réel : muscle-up négatifs contrôlés, muscle-up à l'élastique, 3–5 singles stricts frais en début de séance du mardi."},
+        {"type": "amelioration", "texte": "Placer le FL en premier le jeudi aussi (avant le muscle-up barre basse) et donner une consigne externe par série (« pousse la barre vers les hanches », « ramène les genoux loin ») qui change toutes les 2–3 semaines."},
+        {"type": "amelioration", "texte": "Ajouter une préparation coude/biceps (curl supination léger, tenues bras tendus en suspension active) et une régression écrite : si une tenue passe sous 4/5, finir les séries en tuck simple."},
+        {"type": "amelioration", "texte": "Utiliser une partie des 30–40 min libres pour un bloc de préparation tendineuse (tenues longues ≥ 20 s au palier inférieur) avant l'ouverture de l'étape une jambe (R4-F8)."}
+      ],
+      "points_forts": [
+        "Objectif recadré honnêtement : la figure complète n'est pas promise, l'étape actuelle est la cible, avec délai de 8 semaines par étape (R4-F9).",
+        "Palier et secondes déduits du maintien maximal mesuré, recalés après chaque test.",
+        "FL pratiqué 3 fois par semaine, à 48 h d'intervalle, en tenues sous-maximales avec arrêt à la perte de ligne.",
+        "Règles de douleur, de baisse du jour et de séance manquée claires ; test jamais à froid.",
+        "Équilibre poussée/tirage et entretien des jambes et de la coiffe."
+      ]
+    },
+    {
+      "programme": "programme_2.md",
+      "criteres": {"C1": 8.5, "C2": 8.5, "C3": 8, "C4": 8, "C5": 8.5, "C6": 6.5, "C7": 8, "C8": 8, "C9": 8},
+      "sans_objet": [],
+      "ensemble": 8,
+      "points_perdus": [
+        {"critere": "C1", "perte": 1.5, "raison": "Variantes cohérentes (chest-to-bar, dips buste penché, tempo excentrique, singles de muscle-up) et séries de tête calées sur les records, mais pas de variante plus dure en levier ou en amplitude pour gagner en réserve de force sans lest (R1-P17)."},
+        {"critere": "C2", "perte": 1.5, "raison": "Muscle-up en premier, frais, 2 fois par semaine : bien ; consigne technique fixe, pas de critère d'arrêt sur la qualité du geste propre au muscle-up (R4-F1)."},
+        {"critere": "C3", "perte": 2, "raison": "Séries de tête à 73–91 % du max avec réserve écrite, EMOM à 40–57 % : cohérent ; mais la combinaison 22 en tête puis 2 × 16–19 à 3 rép. de réserve aux dips dépasse ce que le max de 25 permet (la simulation coupe 3 à 4 rép. par série en semaines 2–5)."},
+        {"critere": "C4", "perte": 2, "raison": "Pas de charge bras tendus, hausses mesurées ; dips 4 jours sur 4 (EMOM lundi, lourd mercredi, buste penché vendredi, pompes samedi) et tirage 4 jours sur 4 : budget coude/épaule non raisonné (R4-F10)."},
+        {"critere": "C5", "perte": 1.5, "raison": "Bases au cœur du programme, gainage hollow et relevés de jambes ; aucun travail bras tendus ni levier ajusté pour les tractions (pas de lest disponible, mais l'archer ou la traction lente en haut n'est pas utilisée)."},
+        {"critere": "C6", "perte": 3.5, "raison": "Tests en semaines 6 et 12 et règles de recalage claires, mais la progression écrite du bloc 2 est presque plate : série de tête traction figée à 12 pendant 4 semaines, dips de tête à 21, seule la séance « zone de l'épreuve » du vendredi bouge d'une répétition. La simulation finit à 14 tractions et 23 dips, sans gain."},
+        {"critere": "C7", "perte": 2, "raison": "Suspension active, tirages et pompes scapulaires, face pull, rotation externe, CARs : bien ; préparation des poignets et des coudes générique malgré 8 séries de dips et pompes par semaine."},
+        {"critere": "C8", "perte": 2, "raison": "Ordre correct, allègement en semaine 6, affûtage et test ; le bloc 3 (semaines 13–16) n'a pas d'allègement et pas de sortie prévue."},
+        {"critere": "C9", "perte": 2, "raison": "Faisable en 60 min, exécution décrite ; les deux règles « Objectif ambitieux » ne nomment pas leur mouvement (17–19 = tractions, 29–32 = dips) et l'ajustement par séance à la réserve est laissé au jugement sans régression écrite."},
+        {"critere": "ensemble", "perte": 2, "raison": "Programme sûr, bien construit pour le sets & reps, honnête sur un objectif trop ambitieux ; une correction nécessaire sur la surcharge progressive du bloc spécifique."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Écrire une surcharge progressive dans le bloc 2 (semaines 7–10) : par exemple +1 rép. par départ chaque semaine sur l'EMOM de tractions du mercredi (6 → 7 → 8 → 9) et une série de plus ou +1 rép. sur la séance « zone de l'épreuve » du vendredi, au lieu de figer la série de tête à 12 et 21 pendant 4 semaines.", "consequence": "Le volume dans la zone de l'épreuve ne monte pas : l'athlète finit le cycle au même maximum (14 et 23 dans la simulation), loin même du repère réaliste de 17–19 / 29–32."},
+        {"type": "amelioration", "texte": "Recaler les séries de dips de retour (2 × 16–19 après une série de tête de 22) sur 65–70 % du max ou allonger le repos à 3 min, pour que la réserve écrite soit tenable."},
+        {"type": "amelioration", "texte": "Préciser dans chaque règle « Objectif ambitieux » le mouvement concerné (tractions / dips)."},
+        {"type": "amelioration", "texte": "Ajouter une préparation coude et poignet ciblée (extenseurs du poignet à l'élastique, rotations de l'avant-bras) vu le volume quotidien de dips et pompes."},
+        {"type": "amelioration", "texte": "Prévoir un allègement en semaine 16 ou un test pour fermer le bloc 3."},
+        {"type": "amelioration", "texte": "Ajouter des négatifs de muscle-up ou des transitions à l'élastique pour faire monter les 3 muscle-ups, en complément des singles."}
+      ],
+      "points_forts": [
+        "Objectif ambitieux signalé honnêtement, avec un repère réaliste et la consigne de ne pas forcer la forme.",
+        "Séries de tête calées sur le dernier maximum mesuré, tests qui recalent les blocs.",
+        "Muscle-up pratiqué frais en début de séance, échauffement spécifique avant, rien à froid.",
+        "Séances « zone de l'épreuve » à réserve faible et repos court, adaptées à une épreuve de répétitions (R4-G1).",
+        "Prévention de la coiffe et des scapulas présente à chaque séance, jambes entretenues."
+      ]
+    },
+    {
+      "programme": "programme_3.md",
+      "criteres": {"C1": 7.5, "C2": 8.5, "C3": 6.5, "C4": 6.5, "C5": 8.5, "C6": 7, "C7": 7.5, "C8": 8, "C9": 7},
+      "sans_objet": [],
+      "ensemble": 7,
+      "points_perdus": [
+        {"critere": "C1", "perte": 2.5, "raison": "Variantes cohérentes (EMOM de muscle-up, traction lestée, simulations d'épreuve), mais les volumes de dips du bloc 1 ne sont pas tirés du record de 50 (44 puis 3 × 34 à 2 min de repos), et le moteur doit retirer 5 à 7 rép. par série en semaines 2–3."},
+        {"critere": "C2", "perte": 1.5, "raison": "Muscle-up 3 fois par semaine, en tête de séance, frais, avec échauffement spécifique ; pas de consigne technique qui varie (R4-F4)."},
+        {"critere": "C3", "perte": 3.5, "raison": "Jeudi semaines 2–3 : dips 44 (88 %) puis 3 × 34 ou 2 × 36 à 2 min de repos « 4 rép. en réserve », et samedi 3 × 36 à 72 % deux jours plus tard : réserve impossible avec un max de 50 (R1-P14, R1-P16) ; la simulation coupe les séries (39-30-26)."},
+        {"critere": "C4", "perte": 3.5, "raison": "Semaine 13 : dips lestés de +23,75 kg à +41,25 kg (67 → 79 % du 1RM) et traction lestée de +7,5 à +22,5 kg en une semaine, hausse de 23 % relevée en simulation : progression brutale sur coude et épaule (R5-P22, R4-F9) ; tirage lourd 3 jours sur 5 en bloc 1."},
+        {"critere": "C5", "perte": 1.5, "raison": "Bases lestées et au poids du corps, rowing, gainage hollow : complet ; le dips lesté disparaît des semaines 1–8 alors que le profil fait 20 % de streetlifting."},
+        {"critere": "C6", "perte": 3, "raison": "Tests en semaine 4, échéance en semaine 8, recalage sur résultat ; mais tests de trois maxima dans une semaine d'allègement juste après l'intensification, et sauts de charge du bloc 4 sans critère."},
+        {"critere": "C7", "perte": 2.5, "raison": "Face pull, rotation externe à la poulie, row scapulaire, étirement des fléchisseurs du poignet ; rien pour le coude malgré 400+ dips par semaine en bloc 1."},
+        {"critere": "C8", "perte": 2, "raison": "Blocs calés à rebours sur l'échéance, affûtage, activation à l'avant-veille, transition après la compétition : bien ; volume de dips du bloc 1 très élevé en intensification, et pas d'avertissement sur l'ambition des cibles (14 / 32 / 56 en 8 semaines pour un avancé)."},
+        {"critere": "C9", "perte": 3, "raison": "Séances dans le temps, matériel présent ; prescriptions de dips intenables telles qu'écrites, et format de l'épreuve supposé (300 s entre ateliers) alors que le jour J impose 4 min."},
+        {"critere": "ensemble", "perte": 3, "raison": "Bonne architecture compétitive et bonne pratique du muscle-up, mais deux corrections nécessaires : dosage des dips du bloc 1 et saut de charges lestées en semaine 13."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Recaler les dips du bloc 1 : après la série de tête à 44, des séries de retour à 25–28 (55 % du max) avec 3 min de repos, et ramener le samedi à 3 × 27–30, pour que la réserve écrite (4 puis 3) soit tenable.", "consequence": "L'athlète ne peut pas faire ce qui est écrit à la réserve demandée : il va à l'échec ou coupe au jugé, le volume réel de la phase d'intensification devient aléatoire et la fatigue des coudes s'accumule à 5 semaines de la compétition."},
+        {"type": "necessaire", "texte": "Semaine 13 : monter les dips lestés et la traction lestée par paliers de 2,5–5 % du 1RM par semaine (par ex. 70 → 73 → 76 %) au lieu de passer de 67 à 79 % en une semaine.", "consequence": "Une hausse de 12 points de 1RM en une semaine, après 4 semaines de reprise légère, expose le coude et l'épaule à une surcharge brutale ; la simulation montre déjà des séries arrêtées à 2 répétitions."},
+        {"type": "amelioration", "texte": "Signaler que les cibles (14 / 32 / 56 en 8 semaines) dépassent le rythme habituel d'un avancé et donner un repère réaliste, comme pour les autres objectifs ambitieux."},
+        {"type": "amelioration", "texte": "Sortir les trois tests maximaux de la semaine 4 d'allègement, ou n'en tester qu'un par séance espacé de 72 h, pour ne pas recaler la phase spécifique sur des maxima déprimés par la fatigue."},
+        {"type": "amelioration", "texte": "Faire la répétition de l'épreuve et le test final au même repos entre ateliers (300 s ou celui du règlement), et demander la saisie du format avant la semaine 5."},
+        {"type": "amelioration", "texte": "Ajouter une préparation des coudes (extensions de triceps légères, rotations de l'avant-bras) les jours de gros volume de dips, et éviter d'introduire une nouvelle intensité de 86 % en traction lestée pendant l'affûtage."}
+      ],
+      "points_forts": [
+        "Planification à rebours sur l'échéance, avec affûtage, activation à l'avant-veille et transition après la compétition.",
+        "Répétitions de l'épreuve dans l'ordre des ateliers, pauses bras tendus, filmage du standard.",
+        "Muscle-up travaillé fréquemment, frais, en volume sous-maximal (EMOM) et en séries longues.",
+        "Recalage systématique sur les tests, jamais sur un progrès supposé.",
+        "Prévention de la coiffe et du tirage horizontal présente à chaque séance."
+      ]
+    },
+    {
+      "programme": "programme_4.md",
+      "criteres": {"C1": 7.5, "C2": 7, "C3": 7, "C4": 6, "C5": 8, "C6": 6, "C7": 7.5, "C8": 6.5, "C9": 8},
+      "sans_objet": [],
+      "ensemble": 6.5,
+      "points_perdus": [
+        {"critere": "C1", "perte": 2.5, "raison": "Planche straddle 4 s (67 % de 6 s) et FL 5 s (63 % de 8 s) déduits des records ; mais le FL half-lay du mercredi est figé à 3 × 10 s sans lien avec le max mesuré (la simulation estime ce max très au-dessus), et aucun demi-palier entre straddle et half-lay (R4-F7)."},
+        {"critere": "C2", "perte": 3, "raison": "Lundi : planche, planche push-ups, puis FL 10 × 5 s, puis handstand 3 × 30 s et HSPU, tout dans la même séance : le handstand (équilibre) arrive fatigué en fin de séance de force, contraire à R4-F1 (à l'état frais)."},
+        {"critere": "C3", "perte": 3, "raison": "Tenues à 60–67 %, 40–50 s cumulées, max toutes les 2 semaines : conforme à R4-F2 ; mais l'objectif FL 15 s n'est servi que par des tenues de 4–5 s, sans aucune tenue longue ≥ 70 % (R4-F6 : alternance pour l'avancé et l'élite)."},
+        {"critere": "C4", "perte": 4, "raison": "Planche et FL empilés deux fois par semaine dans la même séance, avec handstand, HSPU et planche push-ups sur les mêmes poignets, alors que le profil signale des poignets raides après les grosses séances de planche (2/10) ; la simulation passe à 3–4/10 dès la semaine 6 et la planche est retirée 4 semaines (R4-F10, R4-F12)."},
+        {"critere": "C5", "perte": 2, "raison": "Traction et dips lestés, HSPU, rows aux anneaux, hollow, ice cream maker : complet ; pas de poussée bras tendus d'appoint hors planche (pseudo-planche push-ups au lieu de planche push-ups assistées, maltese lean) au service de la planche complète."},
+        {"critere": "C6", "perte": 4, "raison": "Critère de passage écrit et délai de 6 semaines, max toutes les 2 semaines ; mais l'échelle du FL donne un critère de « passage à l'étape suivante » alors que le FL complet est la dernière étape, et la règle « la figure complète n'est pas atteignable » est appliquée à une figure déjà acquise : rien ne dit comment progresser de 8 à 15 s."},
+        {"critere": "C7", "perte": 2.5, "raison": "Préparation des poignets complète (wrist push-ups, rotations, pressions des doigts, étirements) et parallettes par défaut vu la gêne : bien ; mais le volume total en extension du poignet n'est pas réparti (R5-P24)."},
+        {"critere": "C8", "perte": 3.5, "raison": "Deux figures dures, le handstand, l'HSPU et la force lestée poursuivis ensemble, sans cible prioritaire (R4-H2, R4-H4) ; allègements toutes les 4 semaines corrects."},
+        {"critere": "C9", "perte": 2, "raison": "Séances dans les 90 min, exécution décrite, régression parallettes/poings prévue ; consignes du FL contradictoires (objectif 15 s et texte « figure complète non atteignable »)."},
+        {"critere": "ensemble", "perte": 3.5, "raison": "Programme d'élite bien outillé (préparation des poignets, règles de douleur, tests réguliers), mais trois corrections nécessaires : charge du poignet concentrée malgré la gêne déclarée, objectif FL 15 s non travaillé, consignes de figure incohérentes pour le FL."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Répartir la charge du poignet : planche straddle et planche push-ups le lundi et le vendredi, handstand et HSPU le mardi et le samedi (ou en tête d'une séance sans planche), avec un plafond hebdomadaire de séries en extension du poignet tant que la gêne n'est pas à 0–1/10.", "consequence": "Avec planche, planche push-ups, handstand et HSPU le même jour deux fois par semaine, la gêne déclarée de 2/10 monte (3–4/10 dès la semaine 6 en simulation) et la planche doit être retirée plusieurs semaines : l'objectif planche est perdu."},
+        {"type": "necessaire", "texte": "Pour l'objectif FL 15 s, ajouter une séance de tenues longues : par ex. 3–4 × 6–8 s à 75–85 % du max une fois par semaine, ou des grappes 5 + 5 s, en gardant les 10 × 4–5 s l'autre jour ; progression +1 s par tenue jusqu'à 3 × 10 s.", "consequence": "Avec seulement des tenues de 4–5 s, l'athlète n'entraîne pas la durée visée : le maintien reste à 6–8 s (6 s aux tests de la simulation) et l'objectif de 15 s est manqué."},
+        {"type": "necessaire", "texte": "Corriger l'échelle et la règle de figure pour le FL : la figure est acquise, l'objectif est la durée (repères 10, 12, 15 s) ; supprimer le critère de « passage à l'étape suivante » et la phrase « la figure complète n'est pas atteignable » pour le FL.", "consequence": "L'athlète lit deux consignes contradictoires sur ce qu'il doit viser au FL et ne sait pas quand augmenter la durée de ses tenues."},
+        {"type": "amelioration", "texte": "Calibrer le FL half-lay du mercredi sur son maintien maximal mesuré (60 % de ce max) au lieu de 3 × 10 s fixes, ou le remplacer par des négatifs de FL complet."},
+        {"type": "amelioration", "texte": "Prioriser une cible par bloc (par ex. planche en bloc 2–3 avec le FL en entretien, puis l'inverse) et réduire handstand et HSPU à de l'entretien (R4-H1 à H4)."},
+        {"type": "amelioration", "texte": "Placer le handstand en tête de séance, frais, sur parallettes, et ajouter des pseudo-planche push-ups pour la force en poussée bras tendus vers la planche."},
+        {"type": "amelioration", "texte": "Ajouter une préparation des coudes (curl en supination léger, flexions du poignet) vu les tractions lestées 2 fois par semaine en plus du FL 3 fois par semaine."}
+      ],
+      "points_forts": [
+        "Paliers de travail calculés sur les maxima mesurés, tests de maintien maximal toutes les 2 semaines (R4-F2, élite).",
+        "Préparation des poignets complète avant planche et handstand, parallettes ou poings par défaut vu la gêne déclarée.",
+        "Règles de douleur précises et reprise graduée par paliers de 10 % après une douleur qui dure.",
+        "Honnêteté sur la planche complète, hors de portée en 16 semaines, avec délai par étape.",
+        "Force de base lestée et gainage présents, équilibre poussée/tirage respecté."
+      ]
+    }
+  ]
+}

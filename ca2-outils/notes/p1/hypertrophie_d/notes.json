@@ -1,0 +1,40 @@
+{
+  "ecole": "hypertrophie",
+  "programmes": [
+    {
+      "programme": "programme_1.md",
+      "criteres": {"H1": 7.5, "H2": 8, "H3": 7, "H4": 7.5, "H5": 6, "H6": 8, "H7": 9, "H8": 8, "H9": 7},
+      "sans_objet": [],
+      "ensemble": 7,
+      "points_perdus": [
+        {"critere": "H1", "perte": 2.5, "raison": "Dos bien dosé (S4-S5 : tractions 3+3, négatives 2, row 2+3+3 ≈ 16 séries, haut de la fourchette intermédiaire R1-P1), mais le bas du corps tient à 2 séries de skater squat et 2 de pont fessier par semaine, sous le maintien intermédiaire de 3–5 séries (R1-P7) ; volume plat d'entrée (40 séries S1, 39–40 ensuite) au lieu d'un départ bas monté par paliers (R1-P18) ; samedi S9 : tractions 4×5 + négatives 3×5 + row 3 = 10 séries de dos dans une séance, au-delà du maximum intermédiaire de 8 (R1-P4)."},
+        {"critere": "H2", "perte": 2, "raison": "Tirage vertical deux fois (mardi, samedi), poussée trois fois, répartition cohérente avec les jours et les durées ; mais le lundi (60 min, aucune traction) pourrait porter une troisième exposition légère du mouvement de l'objectif plutôt que d'empiler 10 séries de dos le samedi (R1-P8) ; pas d'alternance lourde/légère explicite par groupe."},
+        {"critere": "H3", "perte": 3, "raison": "Marges plausibles mais uniformes (2–4 RIR partout, R1-P13) ; aucune isolation près de l'échec : face pull et rotation externe à « 5 RIR ou plus », hors séries dures ; pompes à « 4 RIR sur la dernière série, davantage sur les premières » en S1 = séries loin de l'échec ; pas de série de calibration de la marge hors des tests."},
+        {"critere": "H4", "perte": 2.5, "raison": "Traction, négative et row australien sont complémentaires et adaptés au parc ; mais la traction assistée à l'élastique (volume dorsal à répétitions plus hautes, sans échec) n'arrive qu'au bloc 3, après l'échéance ; aucune traction supination ni travail direct des fléchisseurs du coude pour un objectif de traction ; skater squat prescrit 6–8 sans régression ni test, recalé de 2 à 3 répétitions chaque semaine dans la trajectoire."},
+        {"critere": "H5", "perte": 4, "raison": "Règles écrites (R5-P3, ajout d'une rép. à réserve tenue), mais le mouvement de l'objectif stagne : mardi 1×6 + 2×5 de S3 à S10 sans changement, le bloc « réalisation » (S7–S10) recopie S3–S5 ; le bloc 2 reste écrit sur le repère 8 alors que le test S6 donne 7 et que la règle dit « série de tête = résultat − 2 » ; trajectoire : dernières séries « plus dures que prévu » chaque semaine de S2 à S10, test S12 à 7 pour un record de 8."},
+        {"critere": "H6", "perte": 2, "raison": "Tirage ≥ poussée, arrière d'épaule et coiffe traités (face pull, rotation externe) ; mais le bas du corps (quadriceps, fessiers) n'est qu'effleuré pour une coureuse qui vise 50 min au 10 km, et le volume n'est pas déplacé vers la traction (la poussée progresse en parallèle : pompes 3×14 → 3×18, dips 3×8 → 3×10)."},
+        {"critere": "H7", "perte": 1, "raison": "Repos par type d'exercice (tractions 2–3 min, row 105 s, prévention 45 s, R1-P15/P16) et séances dans le temps donné ; aucun superset d'antagonistes qui libérerait le lundi pour une exposition de tirage."},
+        {"critere": "H8", "perte": 2, "raison": "Allègement en S6 et affûtage en S11 bien placés (R3-P9) ; mais la semaine d'allègement porte deux tests maximaux (traction samedi, 5 km dimanche), ce qui fait de la semaine de récupération une semaine d'effort maximal ; pas de règle de retrait de séries liée aux « dernières séries plus dures » répétées."},
+        {"critere": "H9", "perte": 3, "raison": "Bien adapté au temps, au matériel du parc et au double objectif, avec des règles de repli complètes (baisse du jour, douleur, séance courte) ; mais l'objectif traction (8 → 11) n'est pas servi par un bloc spécifique distinct, et la trajectoire montre 7 au test de S12, sous le record de départ."},
+        {"critere": "ensemble", "perte": 3, "raison": "Programme sûr et bien construit sur le plan de la récupération et de l'équilibre, mais deux corrections nécessaires : la progression du mouvement de l'objectif stagne pendant le bloc spécifique, et le bloc 2 n'est pas recalé sur le test de S6 comme le veut la règle écrite."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Rendre le bloc 2 (S7–S10) réellement spécifique à la traction : déplacer du volume de poussée vers le tirage vertical (par exemple dips 3 → 2 séries), ajouter dès S7 la traction assistée à l'élastique (2 × 8–12 à 1–2 RIR) et une exposition légère le lundi (2 × 3–4 à 3 RIR), et faire monter les répétitions du mardi par paliers (1×6 + 2×5 → 1×7 + 2×5 → 1×7 + 2×6) au lieu de répéter S3 quatre semaines.", "consequence": "Le volume et l'effort sur le mouvement de l'objectif restent figés huit semaines ; l'athlète arrive au test de S12 sans progrès (la trajectoire donne 7 pour un record de 8) et manque l'objectif de 11, et même le repère de 9–10."},
+        {"type": "necessaire", "texte": "Recaler le bloc 2 sur le résultat du test de S6, comme le dit la règle (série de tête = résultat − 2 : avec 7, 1×5 puis 2×4 au mardi et 3×4 au samedi), au lieu de garder les chiffres écrits sur le repère 8.", "consequence": "Les séries sont systématiquement plus dures que la marge prévue (dernières séries « plus dures que prévu » chaque semaine de S7 à S10), la fatigue s'accumule sur le mouvement de l'objectif et le test de S12 ne reflète pas la forme réelle."},
+        {"type": "amelioration", "texte": "Monter le bas du corps au maintien intermédiaire : 3–4 séries de skater squat ou split squat par semaine (une série de plus le lundi, une le samedi), avec une régression écrite (skater squat assisté, fente arrière) et une série de calibration en S1."},
+        {"type": "amelioration", "texte": "Passer au moins une isolation en séries dures (par exemple curl à l'élastique ou face pull à 1–2 RIR, 12–20 répétitions) pour compter du volume de bras et d'arrière d'épaule utile à la traction."},
+        {"type": "amelioration", "texte": "Séparer les deux tests de la semaine d'allègement (S6) ou alléger le samedi de S6 autour du test de traction, pour que la semaine reste une récupération."},
+        {"type": "amelioration", "texte": "Ajouter une variante supination (traction supination) une fois par semaine pour varier l'angle et charger davantage les fléchisseurs du coude, puis faire tourner les variantes d'un bloc à l'autre."},
+        {"type": "amelioration", "texte": "Écrire une règle explicite de retrait d'une série de tirage quand les dernières séries sortent plus dures que prévu deux séances de suite, et de rajout d'une série quand la marge tient deux semaines."}
+      ],
+      "points_forts": [
+        "Tirage supérieur à la poussée chaque semaine, avec row australien sur trois séances et travail de coiffe/arrière d'épaule.",
+        "Repos adaptés au type d'exercice et séances qui tiennent dans le temps disponible, y compris le mardi à 45 min.",
+        "Allègement en S6, affûtage en S11 et test isolé (48 h sans travail dur) avant l'échéance.",
+        "Règles de repli complètes : baisse du jour, séance courte de 15 min, échelle de douleur, séance ou semaine manquée.",
+        "Objectif ambitieux reconnu honnêtement, avec un repère de mi-parcours et une consigne de ne pas forcer la forme.",
+        "Coexistence course / renforcement bien répartie (fractionné jeudi, sortie longue dimanche, pogo jumps pour le tendon d'Achille)."
+      ]
+    }
+  ]
+}

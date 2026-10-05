@@ -1,0 +1,128 @@
+{
+  "ecole": "calisthenie",
+  "programmes": [
+    {
+      "programme": "programme_1.md",
+      "criteres": {"C1": 7.5, "C2": 7.5, "C3": 8, "C4": 7, "C5": 8, "C6": 7, "C7": 6.5, "C8": 7, "C9": 8},
+      "sans_objet": [],
+      "ensemble": 7,
+      "points_perdus": [
+        {"critere": "C1", "perte": 2.5, "raison": "Chaîne de variantes cohérente (élastique calé sur 8 rép., négatives, tenue menton, support hold → dips assistés en S7), mais aucun demi-palier entre deux élastiques et le palier de traction assistée n'est jamais relié au maximum assisté mesuré (R4-F7)."},
+        {"critere": "C2", "perte": 2.5, "raison": "La traction passe en premier 3 fois par semaine, c'est bien. Mais les essais stricts isolés (dès S6, 2 fois par semaine) n'existent que dans les règles, pas dans les tableaux de séance, et la tenue menton au-dessus de la barre n'est travaillée que le mercredi, après 3 séries assistées (R4-F1)."},
+        {"critere": "C3", "perte": 2, "raison": "Tenues à 57–63 % du maintien max et négatives réglées au contrôle : conforme à R4-F2. Mais dans la trajectoire, les tractions assistées dérivent vers 1,5–2 répétitions en réserve de S8 à S10, sous la cible de 3."},
+        {"critere": "C4", "perte": 3, "raison": "En S3, la trajectoire montre deux crans d'élastique retirés dans la même semaine, alors que le mercredi ajoute déjà une 3ᵉ série et une nouvelle tenue isométrique. Résultat : alerte de surmenage en S4–S5 et maximum assisté qui tombe de 16 à 8–11. Plusieurs changements simultanés, contraires à R4-F9."},
+        {"critere": "C5", "perte": 2, "raison": "Tirage vertical, horizontal, poussée, support hold et dead bug présents ; pas de hollow ni de travail de rétraction scapulaire chargé, alors que la position à la barre en dépend (R1-P17)."},
+        {"critere": "C6", "perte": 3, "raison": "La règle d'assistance (haut de plage deux séances de suite) est écrite. Mais elle n'impose aucun délai minimal entre deux crans ni de critère sans douleur sur 3 séances (R4-F7, R4-F9), et la trajectoire montre l'athlète finir plus faible qu'au départ sur la traction assistée."},
+        {"critere": "C7", "perte": 3.5, "raison": "Wrist push-ups, tirages scapulaires et face pull présents. Mais la douleur au poignet (4/10) revient de S8 à S16 sur les pompes, et le programme ne propose aucune prise neutre ni aucune préparation progressive du poignet (R4-F12)."},
+        {"critere": "C8", "perte": 3, "raison": "L'ordre est correct et les semaines de test servent d'allègement. Mais le bloc 3 (S13–S16) suit l'échéance sans test, sans allègement et sans objectif renouvelé (R4-H3)."},
+        {"critere": "C9", "perte": 2, "raison": "Séances de 31 à 42 min pour 45 disponibles, consignes d'exécution présentes. Les notes répétées sont très longues, et les essais stricts de traction prévus par les règles n'apparaissent pas dans les séances."},
+        {"critere": "ensemble", "perte": 3, "raison": "Deux corrections nécessaires : rythme de réduction de l'assistance, et douleur de poignet sans variante de remplacement."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Limiter la réduction d'assistance à un cran d'élastique toutes les 2 semaines au plus, jamais la même semaine qu'un ajout de série ou d'exercice de tirage (S3 mercredi), et exiger 3 séances propres au nouveau cran avant le suivant.", "consequence": "Comme dans la trajectoire, l'athlète régresse (maximum assisté de 16 à 11) et n'approche pas des 3 tractions strictes à 12 semaines."},
+        {"type": "necessaire", "texte": "Remplacer la pompe au sol mains à plat par une pompe sur barre basse ou sur barres parallèles (prise neutre) dès la première douleur de poignet à 3/10 ou plus, et ajouter 5 min de préparation progressive du poignet (appui sur les doigts, extension en charge partielle).", "consequence": "La douleur au poignet reste à 4/10 pendant 8 semaines et la poussée stagne (pompes bloquées à 2 × 4)."},
+        {"type": "amelioration", "texte": "Écrire dans les tableaux, dès S6, les 1 à 3 essais stricts de traction en tête de séance, au lieu de les laisser seulement dans les règles."},
+        {"type": "amelioration", "texte": "Placer une courte tenue menton au-dessus de la barre (2 × 50 % du max) aussi le lundi ou le vendredi, avant les tractions assistées, pour distribuer la pratique de la position haute."},
+        {"type": "amelioration", "texte": "Ajouter le hollow body hold (2 × 15–20 s) au tronc, et prévoir pour le bloc 3 un test final et un nouvel objectif (par exemple 3 → 5 tractions)."}
+      ],
+      "points_forts": [
+        "Progression vers la traction pertinente : élastique, négatives contrôlées, tenue haute, puis essais stricts frais.",
+        "Dips introduits prudemment : support hold d'abord, puis dips assistés avec amplitude progressive.",
+        "Objectif présenté honnêtement : une à deux tractions au test serait déjà un bon cycle.",
+        "Seuils de douleur et règles de baisse du jour clairs."
+      ]
+    },
+    {
+      "programme": "programme_2.md",
+      "criteres": {"C1": 7, "C2": 8, "C3": 6.5, "C4": 8.5, "C5": 6.5, "C6": 6.5, "C7": 6, "C8": 7.5, "C9": 8.5},
+      "sans_objet": [],
+      "ensemble": 8,
+      "points_perdus": [
+        {"critere": "C1", "perte": 3, "raison": "Variantes bien choisies pour 104 kg (traction pieds au sol, pompe inclinée, row genoux fléchis). Mais la plage de 6–8, puis de 8–12, ne suit pas le test de pompe inclinée (22 répétitions en S6) : la trajectoire montre des séries de 16 à 22 répétitions."},
+        {"critere": "C2", "perte": 2, "raison": "Pas d'objectif de figure ; fréquence de 3 séances par semaine adaptée à l'habitude, mais aucun bloc technique court en tête de séance."},
+        {"critere": "C3", "perte": 3.5, "raison": "Écart d'effort moyen de 2,7 répétitions, et 39 % des séries au moins 3 répétitions plus faciles que visé. Les pompes inclinées à 8–12 avec un maximum de 22 à 27 sont très loin de la cible."},
+        {"critere": "C4", "perte": 1.5, "raison": "Charge articulaire faible et adaptée. Mais rien ne surveille les genoux sous 104 kg sur les fentes, au-delà de la règle générale de douleur."},
+        {"critere": "C5", "perte": 3.5, "raison": "Tirage et poussée présents. Le gainage spécifique est absent : ni hollow, ni planche, ni dead bug, et le pont fessier est retiré en S7. Le gainage n'est demandé qu'en consigne de pompe (R1-P17)."},
+        {"critere": "C6", "perte": 3.5, "raison": "L'échelle de poussée a un critère écrit (2 × 12 propres, 2 séances, 2 semaines). Pourtant l'athlète reste 15 semaines sur la même étape alors que ses séries dépassent largement 12 : le critère et les plages se contredisent."},
+        {"critere": "C7", "perte": 4, "raison": "Mobilité limitée à l'échauffement général ; ni face pull, ni rotation externe, ni travail scapulaire hors échauffement (R5-P24)."},
+        {"critere": "C8", "perte": 2.5, "raison": "Ordre correct, tests en S6 et S12, décharge réactive adaptée au débutant (R3-P9). Mais la marche intégrée raccourcit en séance (10 → 7 min, puis supprimée le samedi), et la compensation par les autres jours n'est pas chiffrée dans les séances."},
+        {"critere": "C9", "perte": 1.5, "raison": "Séances de 24 à 39 min pour 40 disponibles, consignes claires ; aucune régression écrite pour la traction pieds au sol si la série n'est pas tenue."},
+        {"critere": "ensemble", "perte": 2, "raison": "Une correction nécessaire : les plages de poussée contredisent le test et la règle de série de tête."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Après le test de S6 (22 pompes inclinées), recaler l'étape : baisser l'appui d'un cran, ou fixer la série de tête à résultat − 2 comme le dit la règle, au lieu de 8–12 à 2 répétitions en réserve. Appliquer ensuite le critère 2 × 12 pour passer à l'étape suivante.", "consequence": "L'athlète reste 15 semaines à la même inclinaison, très loin de la réserve visée, sans progresser vers la pompe au sol."},
+        {"type": "amelioration", "texte": "Ajouter un gainage de base, deux fois par semaine : planche sur les avant-bras ou dead bug, 2 × 20–30 s."},
+        {"type": "amelioration", "texte": "Ajouter un face pull ou une rotation externe à l'élastique (2 × 12–15) pour équilibrer les épaules."},
+        {"type": "amelioration", "texte": "Garder la marche de séance à 10 min ou plus, et écrire la durée des marches des autres jours semaine par semaine."},
+        {"type": "amelioration", "texte": "Prévoir une régression écrite pour la traction pieds au sol (plus d'appui des jambes) et une progression vers l'élastique à partir de 12 répétitions propres."}
+      ],
+      "points_forts": [
+        "Objectif d'habitude bien servi : séances courtes, version de 15 min les jours chargés, 47 séances sur 48 dans la simulation.",
+        "Variantes accessibles pour 104 kg, avec une échelle de poussée explicite du mur au sol.",
+        "Plan de marche progressif vers 150–200 min, consignes de déficit modéré et d'accompagnement professionnel.",
+        "Aucun échec ni hausse brutale de charge."
+      ]
+    },
+    {
+      "programme": "programme_3.md",
+      "criteres": {"C1": 6.5, "C2": 7, "C3": 6, "C4": 7, "C5": 7, "C6": 6.5, "C7": 6, "C8": 6.5, "C9": 7},
+      "sans_objet": [],
+      "ensemble": 6.5,
+      "points_perdus": [
+        {"critere": "C1", "perte": 3.5, "raison": "Pour l'objectif de 10 pompes, la pompe classique n'apparaît qu'en S7, en 1 × 1–3 à 2 répétitions en réserve, avec un maximum de 2 à 3 : en pratique, une répétition par séance. Aucun palier intermédiaire (pompe sur genoux, inclinaison basse) n'est relié aux records (R4-F7)."},
+        {"critere": "C2", "perte": 3, "raison": "Tractions assistées 3 fois par semaine en tête de séance, c'est bien. Mais la tenue menton n'est travaillée que le lundi, après 3 séries assistées, et la pompe classique arrive en milieu de séance."},
+        {"critere": "C3", "perte": 4, "raison": "Tenues menton prescrites à 17–20 s (57–65 % de 30 s) : la trajectoire montre un arrêt avant la cible sur presque toutes les séries de S7 à S16 (10 à 15 s). Elles sont faites fatiguées, à la perte de position, contrairement à R4-F2."},
+        {"critere": "C4", "perte": 3, "raison": "Pas de bras tendus. Mais le poignet est chargé sans préparation progressive (pompes inclinées, négatives et classiques mains à plat, wrist push-ups), et le moteur doit borner la tenue pour le coude 7 semaines sur 10 (R4-F12)."},
+        {"critere": "C5", "perte": 3, "raison": "Tirage, poussée, support hold, dead bug et gainage latéral présents. Mais en bloc 3, la poussée disparaît presque entièrement (il ne reste que le support hold) et la traction assistée passe à 1 série deux jours sur trois."},
+        {"critere": "C6", "perte": 3.5, "raison": "Critère de passage de l'échelle de poussée écrit. Mais le moteur bascule vers la pompe classique en S9, avec une meilleure série de 2, et aucune progression ne mène de 3 à 10 pompes en 12 semaines."},
+        {"critere": "C7", "perte": 4, "raison": "Face pull, CARs et wrist push-ups présents. Mais la douleur au poignet (4/10) revient de S7 à S12 et la seule réponse est le retrait : aucune variante en prise neutre n'est proposée à la place (R4-F12)."},
+        {"critere": "C8", "perte": 3.5, "raison": "Ordre globalement correct et S6/S12 allégées. Mais après l'échéance, le bloc 3 réduit le travail de traction et ne propose ni objectif ni sortie."},
+        {"critere": "C9", "perte": 3, "raison": "Séances estimées à 23–49 min pour 60 disponibles : un tiers du temps reste inutilisé alors que le volume de poussée manque. Notes très longues et répétées."},
+        {"critere": "ensemble", "perte": 3.5, "raison": "Trois corrections nécessaires, dont une qui fera probablement manquer l'objectif de 10 pompes."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Construire une vraie progression vers 10 pompes : 3 séances par semaine avec des séries à résultat − 2 sur le cran le plus difficile tenu (pompe sur genoux ou barre basse), et des pompes classiques en grappes (5 × 1–2, repos 60–90 s) en début de séance, au lieu de 1 × 1–3 en milieu de séance.", "consequence": "L'athlète reste à 2–3 pompes à l'échéance : l'objectif de 10 est manqué."},
+        {"type": "necessaire", "texte": "Remplacer les appuis mains à plat par des pompes inclinées en prise neutre (barres parallèles, barre basse) dès la douleur au poignet, et ajouter une préparation progressive du poignet. Garder ainsi la poussée en bloc 3 au lieu de la supprimer.", "consequence": "La douleur au poignet revient pendant 8 semaines, la poussée est retirée, et l'objectif de pompes devient impossible."},
+        {"type": "necessaire", "texte": "Placer la tenue menton au-dessus de la barre avant les tractions assistées, et la doser à 50 % du maximum (environ 15 s) tant que les séries ne sont pas tenues entièrement.", "consequence": "Les tenues continuent de finir à la perte de position, ce qui fatigue le coude sans renforcer la position haute de la traction."},
+        {"type": "amelioration", "texte": "Utiliser les 15–25 min libres par séance pour un bloc de pratique en tête (essais stricts, grappes de pompes) et du hollow body hold."},
+        {"type": "amelioration", "texte": "Après l'échéance, redonner au bloc 3 un objectif (2–3 tractions) et garder au moins 2 séries de traction assistée par séance."}
+      ],
+      "points_forts": [
+        "Bonne progression vers la première traction : élastique calé sur 8 répétitions, négatives réglées au contrôle, essais stricts frais à partir de S6.",
+        "Règle de douleur persistante au poignet détaillée, avec orientation vers un professionnel.",
+        "Les deux objectifs sont testés à l'échéance, après 48 h sans travail dur.",
+        "Préparation scapulaire (face pull, CARs) présente."
+      ]
+    },
+    {
+      "programme": "programme_4.md",
+      "criteres": {"C1": 8.5, "C2": 7, "C3": 8, "C4": 8, "C5": 8.5, "C6": 8, "C7": 8, "C8": 8, "C9": 8},
+      "sans_objet": [],
+      "ensemble": 9,
+      "points_perdus": [
+        {"critere": "C1", "perte": 1.5, "raison": "Repères réduits (9 tractions, 15 dips, 26 pompes) puis recalés par la série d'entrée à 4 répétitions de l'échec : très bien. Mais aucune variante de figure n'est proposée, alors que le profil compte 30 % de calisthénie et figures."},
+        {"critere": "C2", "perte": 3, "raison": "Aucune pratique d'habileté courte et fraîche. Le L-sit, seule figure, est retiré puis remis de façon irrégulière (retiré le lundi en S3, le jeudi en S5) (R4-F1)."},
+        {"critere": "C3", "perte": 2, "raison": "Répétitions en pourcentage du maximum, départs au chrono, réserve écrite. Mais en S13–S16, la série de tête de dips est à 17/19 (90 %) chaque semaine, et la trajectoire montre une réserve réelle de 1,4 à 2."},
+        {"critere": "C4", "perte": 2, "raison": "Hausse de 10 à 15 % par semaine conforme aux règles, et 48 h entre les séances de dips. Mais les dips passent en amplitude complète (épaule nettement sous le coude) dès S1 après 36 semaines d'arrêt, sans amplitude progressive (R4-F9, R4-F12)."},
+        {"critere": "C5", "perte": 1.5, "raison": "Tractions, dips, pompes et rows bien dosés ; le gainage spécifique (hollow, L-sit) est ajouté puis retiré sans logique de progression."},
+        {"critere": "C6", "perte": 2, "raison": "Règle d'ajout de répétitions et tests en S6 et S12. Rien n'est prévu pour le passage au lest ou à une variante plus dure quand le record est retrouvé, et le bloc 3 n'a pas de test final."},
+        {"critere": "C7", "perte": 2, "raison": "Face pull, rotation externe, CARs, squat profond et wrist push-ups : bon équilibre. En revanche, aucune mobilité d'épaule ciblée pour la profondeur des dips au retour."},
+        {"critere": "C8", "perte": 2, "raison": "Allègements en S6 et S12 avec tests, ordre lourd → accessoires. Pas de sortie prévue après S16, et la séance du mardi reste très légère (18–22 min)."},
+        {"critere": "C9", "perte": 2, "raison": "Faisable et clair. Mais les séances durent 18 à 33 min pour 60 disponibles, sans explication une fois la phase de reprise passée."},
+        {"critere": "ensemble", "perte": 1, "raison": "Aucune correction nécessaire ; restent des améliorations sur la pratique des figures et l'amplitude des dips au retour."}
+      ],
+      "corrections": [
+        {"type": "amelioration", "texte": "Utiliser 10 à 15 min libres pour un bloc d'habileté en tête de séance, 3 fois par semaine : L-sit tuck → L-sit, et handstand contre le mur après 5 min de préparation des poignets. Cela servira les 30 % de calisthénie et figures."},
+        {"type": "amelioration", "texte": "Reprendre les dips avec une amplitude progressive les 3 premières semaines (bras parallèle au sol, puis plus bas si l'épaule ne se plaint pas)."},
+        {"type": "amelioration", "texte": "En bloc 3, plafonner la série de tête de dips à 85 % du maximum, ou alterner les semaines, pour garder 3 répétitions en réserve réelles."},
+        {"type": "amelioration", "texte": "Prévoir un test final en S16 et le passage au lest léger quand 12 tractions et 20 dips sont retrouvés."}
+      ],
+      "points_forts": [
+        "Reprise exemplaire : volume réduit, repères recalculés depuis les anciens records, série d'entrée à 4 répétitions de l'échec, hausse de 10 à 15 % par semaine.",
+        "Fréquence et espacement corrects des tractions et des dips (48 h), variété des schémas (série de tête, EMOM).",
+        "Prévention des épaules complète (face pull, rotation externe, CARs) et règles de douleur claires.",
+        "Allègements avec test en S6 et S12, qui recalent le bloc suivant."
+      ]
+    }
+  ]
+}

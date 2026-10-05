@@ -27,3 +27,9 @@ Base : `moteurs` 9526ac47 (kalis_plan 0.2.2, kalis_adapt 0.2.2, kalis_bench 0.2.
 - Dérive du panel (ancres p08_a, p14_c) : (a) 1/1/1/1, (c) 9/8/8/8 → pas de dérive. Empreintes des grilles identiques.
 - Recherches : sources vérifiées (Silbernagel 2007 via source secondaire, Soligard 2016, ACSM 2009, Travis 2020/2021, Darragh 2025, Halperin 2022, Bosquet 2013 résumé, NSW ACI 2022, Nielsen 2014, Buist 2008, Wang 2023).
 - Suite : passe panel complète (17 saisons street, contrôle dev 3), relecture documentée, relecture du code, contrôle full, publication 0.2.3.
+
+## Avancement 05/10 ~20:40 UTC
+- Panel passe 1 (13 profils sur dev 2 : 01-06, 08, 10, 11, 13-15, 17) : 11 couples sur 52 à 9 ; corrections nécessaires presque toutes sur le programme écrit (kalis_plan) ; côté adapt : cadence de l'élastique (01), poussée à prise neutre sur poignet douloureux (01, 03). Notes : ca2-outils/notes/p1, p1_corr.md.
+- Boucle 2 : cran d'élastique 14 jours au moins (coachAssistMinDays), substitution prise neutre (poignet), relecture indépendante du code (16 constats, corrigés : levée datée sans compteur courant, substitution poignet seule et qui n'en provoque aucune autre, appui neutre sous 6/10, part la plus basse, arrondi vers le bas, conseil du poignet, zone réactive (tolérance qui ne baisse pas, séries des mouvements provocants), taperedAt avant le bloc, gain d'affûtage avant la 1re tentative, semaine de levée comptée à moitié, contrat).
+- Contrôle dev 5 poussé (remplace dev 4).
+- Reste partie 0 : panel 07, 09, 12, 16 + renote des profils changés (01, 03, 10…) sur dev 5, relecture documentée (7 saisons), contrôle full, publication 0.2.3 (moteurs, étiquette, DECISIONS, ETAT, page de relecture manche 5, notification).

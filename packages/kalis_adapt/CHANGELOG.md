@@ -15,7 +15,10 @@ Lot CA2, partie 0 (street) du pipeline « Calibrage des programmes ». Mode 0.1 
 - **Meilleur maintien récent** : le plancher des tenues ne vient plus d'un record d'avant un arrêt.
 - **Élastique** : deux séances au même cran avant d'en changer, jamais d'aller-retour sans échec.
 - **Tentatives après un affûtage** : maximum du jour +2 %.
-- Simulateur : zone réactive après un épisode de douleur (modèles B et C), poussées comptées.
+- **Appui à prise neutre** : un poignet douloureux ou à l'arrêt garde la poussée par une variante neutre.
+- Simulateur : zone réactive après un épisode de douleur (modèles B et C), poussées comptées ; une hausse
+  sur zone douloureuse se compte au-dessus de 3/10 (les mesures du mode 0.1 au banc ne se comparent plus
+  chiffre à chiffre à celles de 0.2.2).
 
 ## 0.2.2
 
