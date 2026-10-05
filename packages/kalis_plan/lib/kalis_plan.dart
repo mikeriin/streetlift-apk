@@ -13,7 +13,13 @@ library;
 
 export 'src/assemble.dart' show FocusCodes, dayOfSlotId, slotIdFor;
 export 'src/coach/athlete.dart'
-    show Athlete, CoachDay, CoachLimit, coachEligible;
+    show
+        Athlete,
+        CoachDay,
+        CoachLimit,
+        coachEligible,
+        coachPainProvokes,
+        coachPronationPull;
 export 'src/coach/audit.dart';
 export 'src/coach/coach.dart'
     show CoachEngine, coachMethodFor, isCoachPlan, reconcileSkeleton;

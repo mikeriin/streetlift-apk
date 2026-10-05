@@ -168,7 +168,7 @@ final class AdaptParams {
     this.coachPainStop = 6,
     this.coachPainRegressSets = 0.6,
     this.coachEasyStepShare = 0.05,
-    this.attemptOpenerShare = 0.93,
+    this.attemptOpenerShare = 0.91,
     this.attemptOpenerProbability = 0.95,
     this.attemptSecondProbability = 0.80,
     this.attemptThirdProbability = 0.50,

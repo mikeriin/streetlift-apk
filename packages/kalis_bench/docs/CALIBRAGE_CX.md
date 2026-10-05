@@ -242,3 +242,112 @@ les quatre écoles. Restent, par famille : poussée de street_03 (critère de pa
 corps à 6-7 répétitions de réserve (street_11) ; planche encore écartée de S9 à S15 (street_10 : la douleur
 fait écarter l'exercice par le moteur d'évolution, ce qui passait outre `pain_trend`) ; montée de volume du
 premier bloc de street_08 ; plateau de répétitions sans changement de stimulus (street_11, 13).
+
+## Boucle 5 (05/10/2026)
+
+Contrôles 5605ba5, fb02992 et 589ceae (tests verts ; seul le contrôle de formatage du mode dev est rouge, comme à
+chaque contrôle dev). Corrections : 1RM de travail relevé d'après le maximum au poids du corps (traction et dips
+lestés) ; figure écartée par le moteur d'évolution pour une douleur qui dure gardée au bloc suivant avec
+`pain_trend` (planche de street_10, écartée de S9 à S15 à la boucle 4) ; une seule règle d'élastique ; critère
+de l'échelle de poussée sur deux séries ; pompe au sol en grappes ; introduction des séries de volume ; marge de
+6 % avant qu'une estimation abaisse un 1RM. Deux essais retirés après un test de propriétés de `kalis_plan`
+(profil 3770 : montée de la charge de squat en semaine de test) : figures sur d'autres jours que la force,
+introduction restreinte.
+
+Panel (couples renotés selon la règle d'économie) : 32 couples sur 68 à 9 ; minimum 5 ; moyenne 8,06.
+
+## Passe finale (complète, 68 couples) — moteurs livrés (`kalis_plan` 0.2.1, `kalis_adapt` 0.2.1)
+
+Exports du contrôle 589ceae (code identique au contrôle complet fac8af5, 100 graines). Les 68 couples renotés
+par un appel neuf ; `street_16` × force, seul couple sous 9 d'un profil à 9 ailleurs, renoté une fois (C7.9.4) :
+8 puis 9, la dernière notation fait foi.
+
+| Profil | Force | Calisthénie | Hypertrophie | Santé |
+| --- | --- | --- | --- | --- |
+| `street_01_debutant_complet` | 8 | 9 | 8 | 9 |
+| `street_02_debutant_surpoids` | 9 | 8 | 8 | 9 |
+| `street_03_debutante` | 7 | 7 | 7 | 8 |
+| `street_04_reprise_longue_pause` | 9 | 9 | 9 | 9 |
+| `street_05_inter_calisthenie_front_lever` | 7 | 7 | 7 | 8 |
+| `street_06_inter_sets_reps` | 8 | 9 | 7,5 | 9 |
+| `street_07_avance_streetlifting_competition` | 9 | 8 | 9 | 8 |
+| `street_08_avance_sets_reps_competition` | 5 | 8 | 6,5 | 7 |
+| `street_09_elite_streetlifting` | 8 | 9 | 9 | 8 |
+| `street_10_elite_figures` | 6 | 4,5 | 4 | 7 |
+| `street_11_master_51_ans` | 8 | 8 | 7 | 7 |
+| `street_12_antecedent_coude` | 8 | 8 | 8 | 8 |
+| `street_13_peu_de_temps` | 8 | 9 | 8 | 8 |
+| `street_14_parc_sans_lest` | 8 | 8 | 8 | 8 |
+| `street_15_travail_physique_sommeil_court` | 9 | 9 | 9 | 9 |
+| `street_16_specialisation_traction_lestee` | 9 | 9 | 9 | 9 |
+| `street_17_hybride_street_course` | 8 | 9 | 8 | 9 |
+
+25 couples sur 68 à 9 ; minimum 4 ; moyenne 8,01. À 9 dans les quatre écoles : `street_04`, `street_15`,
+`street_16`. La passe finale est plus sévère que la boucle 5 sur des exports identiques ou presque (32 → 25
+couples à 9 ; `street_14` passe de 9 à 8 dans les quatre écoles sur un export inchangé depuis la boucle 5) : c'est l'incertitude d'un point du panel
+(`docs/PANEL.md`), et la dernière notation fait foi. Cible C7.5 non atteinte ; C7.7 non atteinte (`street_08` :
+5 à 8 ; `street_14` : 8 partout).
+
+Corrections nécessaires de la passe finale, par famille (`cx-outils/notes/pf_toutes.json` sur la sauvegarde) :
+
+1. **Figures de l'élite (street_10, 4 à 7)** : tenues réglées trop près du maximum sur des leviers trop durs,
+   pas d'outil de surcharge du front lever, et surtout **gêne de poignet à 4/10 pendant plus de deux semaines
+   sans que la règle d'arrêt et de consultation écrite dans le programme s'applique** : `pain_trend` garde la
+   figure avec −40 % de volume, ce que la règle écrite (« gêne qui dure deux semaines : arrête le mouvement et
+   consulte ») contredit. Le banc ne compte pas ce cas (aucune hausse sur la zone douloureuse) ; deux écoles
+   plafonnent la note à 5 pour risque sur la santé. Constat de sécurité ouvert, non corrigé dans CX.
+2. **Montée de volume du premier bloc de street_08 (5 à 8)** : environ +35 % de dips d'une semaine à l'autre,
+   tests juste après le pic, remontée de charge brutale après l'échéance.
+3. **Poussée de street_03 (7 à 8)** : la pompe au sol en pratique dès le bloc 2 reste à 1 à 3 répétitions ;
+   critères de passage de l'échelle contradictoires ; tirage trop chargé pour une débutante.
+4. **Front lever de street_05 (7 à 8)** : tenues qui ne montent pas vers le critère, tirage de force bras tendus
+   absent (le tirage bras tendus ajouté les jours de force n'apparaît pas pour ce profil).
+5. **Plateau sans changement de stimulus** (street_11, 13) et format spécifique du bloc de réalisation.
+
+## Relecture documentée (manche 3, 05/10/2026)
+
+Trois relecteurs (Opus) sur sept saisons, sources publiques en ligne, consigne `cx-outils/relecture/CONSIGNE.md` ;
+notes écrites sur la page de relecture (manche 3, auteur « relecture-documentee »). Sans seuil (C7.6).
+
+| Profil | Ensemble | Adapté | Progression | Volume | Exercices | Faisable |
+| --- | --- | --- | --- | --- | --- | --- |
+| `street_01_debutant_complet` | 6,5 | 7 | 5,5 | 6 | 7,5 | 8,5 |
+| `street_06_inter_sets_reps` | 6 | 6,5 | 5 | 6 | 6,5 | 8 |
+| `street_14_parc_sans_lest` | 6 | 6 | 5 | 6 | 5,5 | 9 |
+| `street_07_avance_streetlifting_competition` | 7 | 7,5 | 6,5 | 7 | 7,5 | 8 |
+| `street_08_avance_sets_reps_competition` | 6 | 6,5 | 5,5 | 5 | 6,5 | 7,5 |
+| `street_10_elite_figures` | 5 | 6 | 4 | 4,5 | 5,5 | 7 |
+| `street_12_antecedent_coude` | 6 | 7 | 5 | 6,5 | 7 | 7,5 |
+
+Moyenne 6,1 ; minimum 5 (street_10). Une source n'a pu être ouverte (fiche MSD Manual sur l'épicondylite
+médiale, vue seulement dans les résultats de recherche). Traitement, remarque par remarque :
+
+- **Test en semaine d'allègement ou juste après un pic, bloc suivant réécrit à la baisse** (street_06, 08, 10,
+  14) : CX recoupe désormais un test bas avec l'estimation récente (marge 6 %) et garde le repère quand le
+  journal le contredit ; le placement du test (jours légers avant, test seul) reste à faire → CP2.
+- **Séries assistées trop faciles, poussée figée, pas de test final en fin de saison** (street_01) : échelle de
+  poussée et choix de l'élastique sur la série repère faits dans CX ; la pompe au sol reste dosée trop bas et
+  la saison de 16 semaines finit sur un bloc de construction quand l'objectif n'est pas atteint → CP2.
+- **Travail spécifique à l'objectif de répétitions, variantes dures au parc, muscle-up figé** (street_06, 14) :
+  part spécifique portée à 65-75 % en intensification et réalisation ; variantes dures (archer, typewriter,
+  tempo) et figures du profil parc → CP2.
+- **Simples lourds de muscle-up, palier entre 65 et 85 %, jeudi trop dense** (street_07) → CP2.
+- **Volume de street_08, format de l'épreuve, muscle-up chargé** : même constat que le panel → CP2.
+- **Figures de street_10** : même constat que le panel (volume isométrique, changement de variable après un
+  test en baisse, renforcement du poignet) → CP2, en tête.
+- **Pourcentages des dips lestés de street_12 recalés sur le test, objectif ramené à +2,5 à +5 kg, scénario
+  douleur 5/10** : recalage sur le test fait dans CX pour les séries de tête ; l'ouverture et l'objectif →
+  CP2 ; la conduite sous douleur (dips allégés plutôt qu'un changement d'objectif) → CA2.
+
+## Non-ressemblance (programmes finaux)
+
+`tool/reference_jaccard.py` sur les 17 saisons écrites finales : maximum exact 0,150, tolérant 0,214 (seuil
+0,30). Le détail reste chiffré (`analyse_CX.tar.gpg` sur `cp-references`).
+
+## Arrêt du calibrage
+
+Cinq boucles sur dix (C7.2). La règle « deux boucles de suite sans gain » n'est pas remplie (gains de 0,02 à
+0,24 point de moyenne par boucle). J'ai arrêté après la boucle 5 pour le temps et le budget du lot : chaque
+boucle coûte un contrôle de 50 minutes et une passe partielle du panel, et les corrections restantes sont
+profondes (dosage des figures de l'élite et conduite d'une douleur qui dure, montée de volume de street_08,
+poussée de la débutante, plateau sans changement de stimulus).

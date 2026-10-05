@@ -30,6 +30,49 @@ List<(BodyZone, int)> adaptationPains(AdaptationSummary? adaptation) =>
         if (p.lastIntensity >= 3) (p.zone, p.lastIntensity),
     ];
 
+/// Paliers de reprise graduée (CX, correction 1, sécurité) lus dans les
+/// notes du bloc [block] : une zone à l'arrêt dans ce bloc (note
+/// `pain_stop`) repart au premier palier ; une zone en reprise (note
+/// `pain_return`) continue au palier qui suit le dernier du bloc — ou, avec
+/// [same] (restructuration du bloc lui-même), garde le palier de départ du
+/// bloc. Une reprise finie (palier 5 : plein volume) disparaît.
+Map<BodyZone, int> coachReturnStepsOf(ProgramBlock? block, {bool same = false}) {
+  final out = <BodyZone, int>{};
+  if (block == null) {
+    return out;
+  }
+  final stops = <BodyZone>{};
+  for (final r in <Reason>[...block.pass1.reasons, ...block.pass2.reasons]) {
+    if (r.code != ReasonCodes.planCoachNote) {
+      continue;
+    }
+    final note = r.params['note'];
+    final value = r.params['value'];
+    if (value is! num) {
+      continue;
+    }
+    final v = value.round();
+    if (note == CoachNotes.painStop) {
+      if (v >= 0 && v < BodyZone.values.length) {
+        stops.add(BodyZone.values[v]);
+      }
+    } else if (note == CoachNotes.painReturn) {
+      final zone = v ~/ 100;
+      if (zone < 0 || zone >= BodyZone.values.length) {
+        continue;
+      }
+      final step = same ? (v % 100) ~/ 10 : v % 10 + 1;
+      if (step < coachPainReturnSteps) {
+        out[BodyZone.values[zone]] = step;
+      }
+    }
+  }
+  for (final z in stops) {
+    out[z] = 0;
+  }
+  return out;
+}
+
 /// Identifiant du bloc de rang [blockIndex] commençant le [startDate].
 String coachBlockIdFor(int blockIndex, CivilDate startDate) =>
     'kp-b$blockIndex-${startDate.iso}';
@@ -387,6 +430,8 @@ final class CoachEngine {
       avoidedIds: request.adaptation?.avoidedExerciseIds ?? const <String>[],
       trendPains: adaptationPains(request.adaptation),
       estimates: request.adaptation?.estimates ?? const <ExerciseEstimate>[],
+      stopZones: coachPainStops(request.adaptation?.reasons ?? const []),
+      returnSteps: coachReturnStepsOf(previous),
     );
     final sk = _skeleton(
       a,
@@ -419,6 +464,8 @@ final class CoachEngine {
     List<(BodyZone, int)> extraPains = const <(BodyZone, int)>[],
     Map<int, int> minutesOverride = const <int, int>{},
     double? volumeScale,
+    Set<BodyZone> stopZones = const <BodyZone>{},
+    Map<BodyZone, int> returnSteps = const <BodyZone, int>{},
   }) {
     final a = Athlete.read(
       catalog,
@@ -430,6 +477,11 @@ final class CoachEngine {
       trendPains: adaptationPains(adaptation),
       minutesOverride: minutesOverride,
       estimates: adaptation?.estimates ?? const <ExerciseEstimate>[],
+      stopZones: <BodyZone>{
+        ...coachPainStops(adaptation?.reasons ?? const []),
+        ...stopZones,
+      },
+      returnSteps: returnSteps,
     );
     final canonical = _skeleton(
       a,
@@ -458,6 +510,7 @@ final class CoachEngine {
       adaptation: base.adaptation,
       pass1: request.pass1,
       previous: base.previousBlock?.pass2.weeks ?? const <WeekPrescription>[],
+      returnSteps: coachReturnStepsOf(base.previousBlock),
     );
   }
 
@@ -482,6 +535,7 @@ final class CoachEngine {
       adaptation: request.adaptation,
       pass1: pass1,
       previous: request.previous.pass2.weeks,
+      returnSteps: coachReturnStepsOf(request.previous),
     );
     final before = request.previous.pass1;
     final diff = diffPlans(
@@ -910,6 +964,14 @@ final class CoachEngine {
           }
       }
     }
+    // Douleur qui dure ou qui revient : arrêt des mouvements qui la
+    // provoquent dès la semaine suivante, noté dans le bloc (le bloc
+    // suivant en part pour la reprise graduée).
+    final stops = <BodyZone>{
+      ...coachPainStops(request.reasons),
+      ...coachPainStops(request.adaptation?.reasons ?? const []),
+    };
+    final returning = coachReturnStepsOf(current, same: true);
     final a = Athlete.read(
       catalog,
       request.profile,
@@ -920,6 +982,8 @@ final class CoachEngine {
       trendPains: adaptationPains(request.adaptation),
       estimates: request.adaptation?.estimates ?? const <ExerciseEstimate>[],
       minutesOverride: minutes,
+      stopZones: stops,
+      returnSteps: returning,
     );
     final lockedSlots = <String>{};
     final frozen = <int>{};
@@ -996,7 +1060,21 @@ final class CoachEngine {
       planRequest,
       before.copyWith(
         days: days,
-        reasons: <Reason>[...before.reasons, scopeReason],
+        reasons: <Reason>[
+          ...before.reasons,
+          scopeReason,
+          for (final z in stops)
+            if (!before.reasons.any(
+              (r) =>
+                  r.code == ReasonCodes.planCoachNote &&
+                  r.params['note'] == CoachNotes.painStop &&
+                  r.params['value'] == z.index.toDouble(),
+            ))
+              reason(ReasonCodes.planCoachNote, <String, Object?>{
+                'note': CoachNotes.painStop,
+                'value': z.index.toDouble(),
+              }),
+        ],
       ),
     );
     final fresh = _pass2(
@@ -1010,6 +1088,8 @@ final class CoachEngine {
       extraPains: pains,
       minutesOverride: minutes,
       volumeScale: scale > 1 ? 1 : scale,
+      stopZones: stops,
+      returnSteps: returning,
     );
     final weeksOut = <WeekPrescription>[];
     for (var w = 0; w < weeks; w++) {

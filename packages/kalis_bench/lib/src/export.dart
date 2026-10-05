@@ -390,9 +390,10 @@ bool _isBlockNote(Reason r) {
     return false;
   }
   final note = r.params['note'];
-  return note == CoachNotes.rampWarmup ||
-      note == CoachNotes.rampBodyweight ||
-      note == CoachNotes.loadAdjust ||
+  // (Les montées avant la série de tête restent sous chaque exercice : la
+  // relecture documentée de CX ne voyait pas d'échauffement spécifique
+  // dans les séances.)
+  return note == CoachNotes.loadAdjust ||
       note == CoachNotes.repsAdjust ||
       note == CoachNotes.testUse ||
       note == CoachNotes.badDay ||
@@ -507,6 +508,27 @@ List<String> seasonLines(ProgramView view) {
       '${intent == null ? '' : ', ${coachPhaseLabel(intent.phase.code)}'}) — '
       '${parts.join(' ; ')}.',
     );
+    // Règles propres au bloc (CX, correction 1) : arrêt d'une douleur qui
+    // dure, reprise graduée — elles ne valent que pour ce bloc et sont
+    // dites sous sa ligne.
+    final own = <String>[];
+    for (final r in <Reason>[
+      ...blocks[b].pass1.reasons,
+      ...blocks[b].pass2.reasons,
+    ]) {
+      final note = r.params['note'];
+      if (r.code != ReasonCodes.planCoachNote ||
+          (note != CoachNotes.painStop && note != CoachNotes.painReturn)) {
+        continue;
+      }
+      final text = coachReasonText(r, view.catalog);
+      if (text != null && !own.contains(text)) {
+        own.add(text);
+      }
+    }
+    for (final text in own) {
+      out.add('  - $text');
+    }
     first = weeks.last.index + 1;
   }
   return out;

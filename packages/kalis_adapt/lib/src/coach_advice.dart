@@ -224,9 +224,35 @@ CoachAdvice? _coachAdvise(
     return advice;
   }
 
-  // Échec non prévu : règle générale (recalcul sans hausse, arrêt après
-  // deux échecs).
+  // Échec non prévu : la série suivante d'un mouvement chargé descend de
+  // 5 à 10 % (7,5 % de la charge totale ; CX, correction 1 — refaire la
+  // même barre après une série manquée finit en nouvel échec) ; sinon,
+  // ou après deux échecs, la règle générale (recalcul sans hausse, arrêt).
   if (previous.unplannedFail) {
+    final load = previous.loadKg;
+    final plannedLoad = planned.loadKg;
+    if (loaded &&
+        load != null &&
+        ex.fails < 2 &&
+        planned.role != SetRole.attempt &&
+        planned.role != SetRole.test) {
+      final grid = info.grid;
+      final bw = info.fraction * run.bodyWeightKg;
+      var kg = grid.floor((load + bw) * 0.925 - bw);
+      if (kg < grid.minimum) {
+        kg = grid.minimum;
+      }
+      if (plannedLoad != null && plannedLoad < kg) {
+        kg = plannedLoad;
+      }
+      if (kg < load - 1e-9) {
+        final advice = CoachAdvice(
+          next: planned.withLoad(kg),
+          action: IntraSessionAction.loadDown,
+        );
+        return advice;
+      }
+    }
     return null;
   }
 
@@ -293,8 +319,23 @@ CoachAdvice? _coachAdvise(
   // qui manquent à la cible, si.
   final ceiling = run.state.rater.ceiling(p);
   final floorSaid = floor > ceiling ? ceiling : floor;
+  // Chaque série est jugée contre sa propre cible (CX, correction 1 : une
+  // série repère visée à 2 en réserve et dite à 2 n'est pas « plus dure
+  // que prévu » parce que le plafond de l'exercice est à 3).
+  double ownFloor(ObservedSet o) {
+    final t = o.target;
+    if (t == null || t.role == SetRole.attempt) {
+      return floorSaid;
+    }
+    var own = rirOfFlames(t.flames);
+    if (own > ceiling) {
+      own = ceiling;
+    }
+    return own < floorSaid ? own : floorSaid;
+  }
+
   double gapOf(ObservedSet o) {
-    var g = floorSaid - _rirOf(o);
+    var g = ownFloor(o) - _rirOf(o);
     if (g < 0) {
       g = 0;
     }
@@ -307,11 +348,33 @@ CoachAdvice? _coachAdvise(
     return g;
   }
 
+  // Une note isolée plus dure que la cible, sur une série menée au haut
+  // de sa plage que le modèle juge nettement plus facile que visé (2
+  // répétitions de réserve de plus), ne suffit pas : il faut un écart d'un
+  // point de plus (la note est bruitée loin de l'échec, Zourdos et al.
+  // 2021 ; CX, correction 1 : rien n'est baissé quand l'effort réel est
+  // plus facile que la cible).
+  bool breached(ObservedSet o) {
+    if (o.failed) {
+      return false;
+    }
+    final g = gapOf(o);
+    if (g < p.coachBreachRir - 1e-9) {
+      return false;
+    }
+    final t = o.target;
+    final reached = t != null && o.amount >= t.high;
+    if (reached && o.rir - ownFloor(o) >= 2 - 1e-9) {
+      return g >= p.coachBreachRir + 1 - 1e-9;
+    }
+    return true;
+  }
+
   final gap = gapOf(previous);
-  final breach = !previous.failed && gap >= p.coachBreachRir - 1e-9;
+  final breach = breached(previous);
   var breaches = 0;
   for (final o in ex.observed.reversed) {
-    if (!o.failed && gapOf(o) >= p.coachBreachRir - 1e-9) {
+    if (breached(o)) {
       breaches++;
     } else {
       break;
@@ -364,7 +427,7 @@ CoachAdvice? _coachAdvise(
         kg = topLoad;
       }
       final topGap = gapOf(top);
-      if (!top.failed && topGap >= p.coachBreachRir - 1e-9) {
+      if (breached(top)) {
         // Série de tête plus dure que prévu : 2,5 à 5 % de moins.
         kg = _lighter(run, ex, kg, topGap);
       }
@@ -520,7 +583,7 @@ CoachAdvice? _coachAdvise(
   var kept = planned;
   var eased = false;
   for (final o in ex.observed) {
-    if (!o.failed && gapOf(o) >= p.coachBreachRir - 1e-9) {
+    if (breached(o)) {
       eased = true;
     }
   }

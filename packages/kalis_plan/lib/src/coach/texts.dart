@@ -35,6 +35,37 @@ String coachZoneLabel(String code) => switch (code) {
   _ => code.replaceAll('_', ' '),
 };
 
+BodyZone? _zoneAt(Object? v) {
+  if (v is! num) {
+    return null;
+  }
+  final i = v.round();
+  return i >= 0 && i < BodyZone.values.length ? BodyZone.values[i] : null;
+}
+
+/// Zone de rang [v] dans `BodyZone.values`, en français.
+String _zoneOfIndex(Object? v) {
+  final z = _zoneAt(v);
+  return z == null ? 'zone signalée' : coachZoneLabel(z.code);
+}
+
+/// Mouvements retirés pour la zone de rang [v], entre parenthèses.
+String _provokingOfIndex(Object? v) => switch (_zoneAt(v)) {
+  BodyZone.wristHand =>
+    '(tous les appuis poignet en extension : planche, équilibres, pompes '
+        'en appui tendu, shoulder taps, pompes au sol ; les appuis à prise '
+        'neutre — barres parallèles, anneaux, poignées — restent si la gêne '
+        'ne monte pas)',
+  BodyZone.elbow =>
+    '(mouvements lestés et tirages lourds qui chargent le coude, '
+        'pronation lourde ; tractions en prise neutre légères seulement si '
+        'la gêne reste à 2 sur 10 au plus)',
+  BodyZone.shoulder =>
+    '(dips, appuis renversés, figures en appui et tout ce qui charge '
+        "l'épaule en fin d'amplitude)",
+  _ => '(ceux qui chargent fortement la zone)',
+};
+
 /// Nom français d'une phase de saison.
 String coachPhaseLabel(String code) => switch (code) {
   'accumulation' => 'construction (volume)',
@@ -416,6 +447,12 @@ String? coachReasonText(Reason r, Catalog catalog) {
           10 =>
             'Exécution : corps gainé de la tête aux genoux, poitrine près '
                 "de l'appui, coudes à 45°.",
+          11 =>
+            'Exécution : épaules basses, descente lente et contrôlée ; '
+                'amplitude progressive — les premières semaines, descends '
+                "jusqu'au bras parallèle au sol, puis un peu plus bas "
+                "chaque semaine si l'épaule ne se plaint pas ; verrouillage "
+                'complet en haut.',
           _ => null,
         },
         CoachNotes.intervalPace =>
@@ -510,6 +547,44 @@ String? coachReasonText(Reason r, Catalog catalog) {
               'que la gêne ne reste pas sous 2/10 deux semaines de suite. '
               'À 6/10, douleur la nuit ou gêne qui dure : arrête le '
               'mouvement et consulte.',
+        CoachNotes.plateau =>
+          'Plateau au dernier test (${_int(v)} répétitions, sans progrès) : '
+              'ce bloc change de méthode au lieu de recopier le précédent — '
+              'une variante plus dure en séries courtes (descente en 4 à 5 s, '
+              'pause en haut, archer ou typewriter quand le maximum le '
+              'permet), des départs au chrono qui montent d\'une variable à '
+              'la fois, et une seule série de tête par semaine. Cible '
+              'réaliste au prochain test : ${v is num ? v.round() + 1 : ''} '
+              'à ${v is num ? v.round() + 2 : ''} répétitions.',
+        CoachNotes.painStop =>
+          'Douleur qui dure (${_zoneOfIndex(v)}) : 3 sur 10 ou plus depuis '
+              'plus de deux semaines, ou revenue après une reprise. Tous '
+              'les mouvements qui la provoquent sont retirés '
+              '${_provokingOfIndex(v)} ; le travail qui ne la charge pas '
+              'continue. Consulte un médecin ou un kinésithérapeute : une '
+              'douleur qui dure ou qui revient doit être examinée (une '
+              "douleur d'appui du poignet peut cacher une lésion que seul "
+              'un examen montre). Les mouvements retirés ne reviennent '
+              "qu'après deux semaines à 2 sur 10 au plus, par paliers "
+              "d'environ 10 % par semaine.",
+        CoachNotes.painReturn =>
+          'Reprise graduée (${_zoneOfIndex(v is num ? v.round() ~/ 100 : -1)}) : '
+              'les mouvements retirés reviennent à '
+              '${v is num ? 50 + 10 * ((v.round() % 100) ~/ 10) : 50} % de '
+              'leur volume habituel, puis +10 % par semaine de charge '
+              "(jamais pendant une semaine d'allègement), 3 répétitions en "
+              'réserve au moins ; les mouvements lestés repartent vers 67,5 % '
+              'du 1RM, +2,5 % par semaine au plus. Chaque palier se garde '
+              'seulement si la gêne reste à 2 sur 10 au plus pendant la '
+              "séance et revient à ton état habituel le lendemain matin, "
+              "sans hausse d'une semaine à l'autre ; sinon, reviens au "
+              'palier précédent. Si la douleur revient à 3 sur 10 ou plus, '
+              'arrêt et nouvel avis.',
+        CoachNotes.painReturnItem =>
+          'Reprise graduée après une douleur qui dure : ${_pct(v)} du volume '
+              'habituel cette semaine, loin de l\'échec ; le palier suivant '
+              'seulement si la gêne reste à 2 sur 10 au plus et a disparu le '
+              'lendemain.',
         CoachNotes.eventFormat =>
           "Format de l'épreuve : il n'existe pas de règlement unique. "
               "Saisis-le dans ton échéance (ordre des ateliers, temps limite, "
@@ -540,9 +615,13 @@ String? coachReasonText(Reason r, Catalog catalog) {
           'Fléchisseurs du coude en charge légère : tolérance du coude au '
               'tirage lourd.',
         CoachNotes.rampWarmup =>
-          'Montée en charge : ${_int(v)} séries progressives (environ 40 %, '
-              '60 % puis 75 à 80 % de la charge du jour) avant la série de '
-              'tête.',
+          'Montée en charge avant la série de tête : ${_int(v)} séries '
+              'progressives — 5 répétitions à 40 %, 3 à 60 %, 2 à 75 %, '
+              '1 à 85 % de la charge du jour, 1 à 3 min entre elles.',
+        CoachNotes.rampMuscleUp =>
+          'Avant le muscle-up : ${_int(v)} séries de tractions faciles '
+              '(la moitié de ton maximum), puis 2 ou 3 transitions à la '
+              'barre basse ou des muscle-ups très faciles ; rien à froid.',
         CoachNotes.topSetBackoff =>
           'Une série de tête, puis des séries allégées (la baisse, en % '
               'de la charge totale poids du corps compris, est écrite sur '
@@ -573,11 +652,17 @@ String? coachReasonText(Reason r, Catalog catalog) {
           'À faire frais, en début de séance ; arrête dès que la qualité '
               'passe sous ${_int(v)} sur 5.',
         CoachNotes.submaximalHold =>
-          'Tenues sous-maximales : 60 à 70 % de ton dernier maintien '
-              'maximal mesuré les jours légers, 75 à 85 % les jours lourds '
-              '(les secondes écrites partent du dernier repère connu : si '
-              'tu as mesuré un autre maintien, recalcule) ; chaque tenue '
-              'reste propre, bassin et épaules placés.',
+          'Tenues sous-maximales : 55 à 65 % de ton dernier maintien '
+              'maximal mesuré les jours légers ; les jours lourds, 60 % en '
+              'construction, 70 % en intensification, 75 % en réalisation '
+              '(80 % au plus). Le volume se compte en secondes propres '
+              'cumulées par séance (30 à 60 s sur le levier visé). Sur un '
+              'levier dur, tenues courtes de 2 à 5 s, arrêt dès que la '
+              'ligne se perd ; tu peux les enchaîner en grappes de 2 ou 3 '
+              '(15 s entre elles). Les secondes écrites partent du dernier '
+              'repère connu : si tu as mesuré un autre maintien, '
+              'recalcule ; chaque tenue reste propre, bassin et épaules '
+              'placés.',
         CoachNotes.slowNegative =>
           'Descente freinée en ${_int(v)} s, sans à-coup (monte en sautant '
               "depuis un appui) ; l'effort se règle au contrôle, pas à la "

@@ -14,6 +14,61 @@ import 'numeric.dart';
 import 'params.dart';
 import 'rater.dart';
 
+/// Douleur qui dure (CX, correction 1, sécurité) : intensité à partir de
+/// laquelle une gêne compte (3 sur 10 : au-delà de la zone « continue » de
+/// la règle de douleur, R5-P23 ; Silbernagel et al. 2007).
+const int painPersistMin = 3;
+
+/// Durée d'une gêne au même niveau qui demande l'arrêt et un avis : plus
+/// de deux semaines (NHS, douleur du poignet : consulter si elle ne
+/// s'améliore pas en deux semaines ou revient).
+const int painPersistDays = 14;
+
+/// Écart toléré entre deux signalements d'un même épisode (choix
+/// raisonné : une séance manquée ou un jour sans bilan ne coupe pas un
+/// épisode).
+const int painEpisodeGapDays = 10;
+
+/// Jours à 2 sur 10 au plus avant de lever l'arrêt (relecture documentée
+/// CX : reprise seulement après deux semaines à 2 sur 10 au plus).
+const int painResumeDays = 14;
+
+/// Gêne forte (5 sur 10 et plus) plus de sept jours : arrêt et renvoi vers
+/// le kinésithérapeute (relecture documentée CX, `street_12`).
+const int painStrongMin = 5;
+
+/// Durée de la gêne forte qui déclenche l'arrêt.
+const int painStrongDays = 7;
+
+/// Fenêtre où un nouvel épisode compte comme un retour de la douleur
+/// (douze semaines, choix raisonné).
+const int painRecurDays = 84;
+
+/// Arrêt d'une zone : douleur qui dure, qui revient après une reprise, ou
+/// forte plus d'une semaine.
+final class PainStop {
+  /// Arrêt de la zone [zone].
+  const PainStop({
+    required this.zone,
+    required this.sessions,
+    required this.intensity,
+    required this.recurrence,
+  });
+
+  /// Zone.
+  final BodyZone zone;
+
+  /// Séances de l'épisode en cours où la gêne a été signalée à 3 sur 10 ou
+  /// plus.
+  final int sessions;
+
+  /// Plus forte intensité de l'épisode.
+  final int intensity;
+
+  /// Vrai quand la douleur est revenue après une accalmie.
+  final bool recurrence;
+}
+
 /// Suivi d'une zone douloureuse.
 final class PainState {
   /// Suivi de la zone [zone].
@@ -40,6 +95,98 @@ final class PainState {
   /// Jour du dernier signalement au-dessus du seuil, ou `null`.
   int? lastAboveDay;
 
+  /// Intensité du dernier signalement au-dessus du seuil.
+  int lastAboveIntensity = 0;
+
+  /// Signalements datés (jour, intensité), les plus récents à la fin ; une
+  /// zone non citée quand la question est posée vaut 0.
+  final List<(int, int)> history = <(int, int)>[];
+
+  /// Note un signalement du jour [day] à [intensity].
+  void record(int day, int intensity) {
+    if (history.isNotEmpty && history.last.$1 == day) {
+      final before = history.removeLast();
+      history.add((day, intensity > before.$2 ? intensity : before.$2));
+    } else {
+      history.add((day, intensity));
+    }
+    if (history.length > 80) {
+      history.removeAt(0);
+    }
+  }
+
+  /// Arrêt en cours au jour [day] (douleur qui dure, qui revient, ou forte
+  /// plus d'une semaine, sans deux semaines à 2 sur 10 au plus depuis), ou
+  /// `null`.
+  PainStop? stopAt(int day) {
+    final highs = <(int, int)>[
+      for (final h in history)
+        if (h.$2 >= painPersistMin && h.$1 <= day) h,
+    ];
+    if (highs.isEmpty || day - highs.last.$1 >= painResumeDays) {
+      return null;
+    }
+    final episodes = <List<(int, int)>>[];
+    for (final h in highs) {
+      if (episodes.isEmpty || h.$1 - episodes.last.last.$1 > painEpisodeGapDays) {
+        episodes.add(<(int, int)>[h]);
+      } else {
+        episodes.last.add(h);
+      }
+    }
+    final current = episodes.last;
+    final lasting = current.last.$1 - current.first.$1 >= painPersistDays;
+    int? strongFirst;
+    int? strongLast;
+    var worst = 0;
+    for (final h in current) {
+      if (h.$2 > worst) {
+        worst = h.$2;
+      }
+      if (h.$2 >= painStrongMin) {
+        strongFirst ??= h.$1;
+        strongLast = h.$1;
+      }
+    }
+    final strong =
+        strongFirst != null &&
+        strongLast != null &&
+        strongLast - strongFirst >= painStrongDays;
+    // Retour après une accalmie : un épisode antérieur réel (deux
+    // signalements au moins, ou 4 sur 10 et plus) dans les douze semaines.
+    var recurrence = false;
+    if (episodes.length >= 2) {
+      final before = episodes[episodes.length - 2];
+      var real = before.length >= 2;
+      for (final h in before) {
+        if (h.$2 >= painPersistMin + 1) {
+          real = true;
+        }
+      }
+      recurrence = real && current.first.$1 - before.last.$1 <= painRecurDays;
+    }
+    if (!lasting && !strong && !recurrence && consecutiveAbove <= 2) {
+      return null;
+    }
+    return PainStop(
+      zone: zone,
+      sessions: current.length,
+      intensity: worst,
+      recurrence: recurrence,
+    );
+  }
+
+  /// Intensité à montrer pour la zone au jour [day] : la dernière ; si elle
+  /// a été levée depuis un signalement au-dessus du seuil encore récent, ce
+  /// signalement (la douleur affichée est celle du journal).
+  int shownIntensity(int day, int clearDays) {
+    final above = lastAboveDay;
+    if (lastIntensity > 0 || above == null || day - above > clearDays) {
+      return lastIntensity;
+    }
+    return lastAboveIntensity;
+  }
+
   /// Copie indépendante.
   PainState fork() {
     final c = PainState(zone, side);
@@ -48,6 +195,8 @@ final class PainState {
     c.consecutiveAbove = consecutiveAbove;
     c.lastDay = lastDay;
     c.lastAboveDay = lastAboveDay;
+    c.lastAboveIntensity = lastAboveIntensity;
+    c.history.addAll(history);
     return c;
   }
 }
@@ -143,8 +292,14 @@ final class ExerciseTrack {
   double easeRatio = 1;
 
   /// Copie indépendante.
+  /// Jour d'une série repère qui a montré nettement moins que l'estimation
+  /// (lue alors comme une borne basse), ou `null` : une baisse ne se lit
+  /// qu'à la deuxième mesure concordante (CX, correction 1).
+  int? lowProbeDay;
+
   ExerciseTrack fork() {
     final c = ExerciseTrack(info, filter.fork());
+    c.lowProbeDay = lowProbeDay;
     c.assist = assist;
     c.form = form;
     c.easeDay = easeDay;
@@ -264,8 +419,17 @@ final class ModelState {
     s.lastDay = day;
     if (intensity > p.painThreshold) {
       s.lastAboveDay = day;
+      s.lastAboveIntensity = intensity;
     }
+    s.record(day, intensity);
   }
+
+  /// Arrêts en cours au jour [day] (douleur qui dure ou qui revient),
+  /// zone par zone dans l'ordre de `BodyZone.values`.
+  List<PainStop> painStops(int day) => <PainStop>[
+    for (final zone in BodyZone.values)
+      if (pains[zone]?.stopAt(day) case final stop?) stop,
+  ];
 
   /// La question des douleurs a été posée au jour [day] et la zone [zone]
   /// n'a pas été citée : elle n'est plus douloureuse.
@@ -277,6 +441,7 @@ final class ModelState {
     s.lastIntensity = 0;
     s.consecutiveAbove = 0;
     s.lastDay = day;
+    s.record(day, 0);
   }
 
   /// Vrai si la zone [zone] est encore au-dessus du seuil au jour [day] :
@@ -1395,7 +1560,16 @@ final class SessionRun {
         bound: true,
       );
     } else if (run.spec.reads &&
-        _asBound(run, flames, open, test, reps, target)) {
+        _asBound(
+          run,
+          flames,
+          open,
+          test,
+          reps,
+          target,
+          implied: reps + rirOfFlames(flames),
+          predicted: nPred,
+        )) {
       // Mode coach : loin de l'échec, la note ne se lit que comme « au
       // moins tant en réserve » (la prédiction des répétitions restantes
       // se dégrade loin de l'échec et plafonne, R2-P3).
@@ -1563,7 +1737,16 @@ final class SessionRun {
         bound: true,
       );
     } else if (run.spec.reads &&
-        _asBound(run, flames, open, test, amount, target)) {
+        _asBound(
+          run,
+          flames,
+          open,
+          test,
+          amount,
+          target,
+          implied: _impliedCapacity(mode, done, rirOfFlames(flames)),
+          predicted: f.capacityToday() * keep,
+        )) {
       final said = rirOfFlames(flames);
       f.observeDirect(
         logCapacity: ln(_impliedCapacity(mode, done, said) / keep),
@@ -1665,13 +1848,31 @@ final class SessionRun {
     bool open,
     bool test,
     int amount,
-    SetPlan? target,
-  ) {
+    SetPlan? target, {
+    required double implied,
+    required double predicted,
+  }) {
     // Série ouverte menée jusqu'au haut de sa plage : elle n'a pas été
     // arrêtée au ressenti, elle ne mesure pas.
     final byFeel = open && (target == null || amount < target.high);
     if (_censored(flames, byFeel)) {
       return true;
+    }
+    // Série au ressenti qui montre nettement moins que l'estimation (10 %
+    // et plus) : une seule mesure ne fait pas baisser l'estimation — elle se
+    // lit comme une borne basse, et la baisse attend une deuxième mesure
+    // concordante dans les quatre semaines (CX, correction 1 : jamais
+    // d'estimation abaissée sur une seule série d'un mauvais jour ; la note
+    // sous-estime la réserve loin de l'échec, Zourdos et al. 2021).
+    if (byFeel && !test && run.spec.coach != null && predicted > 0) {
+      if (implied < predicted * 0.9) {
+        final track = run.track!;
+        final last = track.lowProbeDay;
+        if (last == null || day - last > 28) {
+          track.lowProbeDay = day;
+          return true;
+        }
+      }
     }
     final short = target != null && amount < target.low;
     if (byFeel || test || short) {

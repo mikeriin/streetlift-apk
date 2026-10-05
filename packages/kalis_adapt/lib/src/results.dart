@@ -88,6 +88,25 @@ List<Benchmark> testBenchmarks(
         best[set.exerciseId] = set;
       }
     }
+    // Tentatives : la barre manquée la plus légère au-dessus de la meilleure
+    // barre réussie, par exercice (CX, correction 1 : après l'échéance, le
+    // repère est le maximum estimé du jour — entre la barre réussie et la
+    // barre manquée — et non la meilleure barre validée).
+    final missed = <String, double>{};
+    for (final set in session.sets) {
+      if (!set.isUsable || set.role != SetRole.attempt || set.success) {
+        continue;
+      }
+      final kg = set.externalLoadKg;
+      final made = best[set.exerciseId]?.externalLoadKg;
+      if (kg == null || made == null || kg <= made + 1e-9) {
+        continue;
+      }
+      final old = missed[set.exerciseId];
+      if (old == null || kg < old) {
+        missed[set.exerciseId] = kg;
+      }
+    }
     final source = session.eventId != null
         ? BenchmarkSource.competition
         : BenchmarkSource.guidedTest;
@@ -102,13 +121,19 @@ List<Benchmark> testBenchmarks(
           if (reps == null || reps < 1) {
             continue;
           }
+          final made = set.externalLoadKg ?? 0;
+          final over = set.role == SetRole.attempt ? missed[id] : null;
+          // (Maximum du jour estimé à mi-chemin, au quart de kilo inférieur.)
+          final kg = over == null
+              ? made
+              : ((made + (over - made) / 2) * 4).floorToDouble() / 4;
           found.add(
             Benchmark(
               exerciseId: id,
               kind: BenchmarkKind.loadReps,
               source: source,
               date: session.date,
-              externalLoadKg: set.externalLoadKg ?? 0,
+              externalLoadKg: kg,
               reps: reps,
               // Une tentative ne se lit pas comme une réserve mesurée.
               rir:
@@ -154,9 +179,10 @@ List<Benchmark> testBenchmarks(
     // Test fait un jour de bilan nettement bas, hors compétition : il ne
     // fait pas baisser le repère (un coach refait le test un bon jour) ;
     // un résultat au niveau du repère connu, ou au-dessus, est gardé.
+    // (Bilan à 2 sur 5 ou moins, nuit courte : CX, correction 1.)
     final lowDay =
         session.eventId == null &&
-        readHealth(session.healthCheck, p).level >= 2;
+        readHealth(session.healthCheck, p).level >= 1;
     for (final b in found) {
       if (lowDay &&
           _below(b, <Benchmark>[...?ctx.profile.benchmarks, ...out])) {
