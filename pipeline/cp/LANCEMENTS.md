@@ -93,7 +93,7 @@ Le texte ajouté au lancement d'une tâche n'arrive pas toujours dans la session
 - Fin de lot : comme le prompt ; `LIVRAISON_CP2.md` avec recommandation ; ligne « à valider » ; le pilotage décide (C8.1).
 - Clé des références : document privé du projet, passée à gpg par un fichier `/tmp` en mode 600, jamais sur une ligne de commande (C7.8). Quota d'environ 200 recherches web par session : répartis-les.
 
-## CA2 (lancé quand CP2 est « en cours », tâche « Opus 5.5, effort maximal, moteurs »)
+## CA2 (lancé le 05/10/2026 vers 18:20 UTC, CP2 « en cours » ; tâche « Opus 5.5, effort maximal, moteurs »)
 
 - Lot : **CA2** (`prompts/CA2.txt`), seul lot « à faire » de la tâche à son lancement (CP2 tourne en parallèle, « en cours », C9.3). **Écris « en cours » sur ta ligne et pousse-la dès le début.** **Modèle : Opus** (C5.1 ; le prompt dit Fable). Contrôle `claude/ci-cp-b`, sauvegardes `cp-sauvegardes/CA2`.
 - **Prérequis « CX validé par le propriétaire »** : rempli par `DECISIONS_CP.md` **C9.7** (C8.1). Délégation totale : aucune question, aucun arrêt « en attente du propriétaire ».
