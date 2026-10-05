@@ -337,6 +337,10 @@ final class ExerciseTrack {
   /// (charge externe négative du journal), ou `null`.
   double? assist;
 
+  /// Mode coach, exercice assisté : jour du dernier changement de cran
+  /// d'assistance, ou `null`.
+  int? assistDay;
+
   /// Mode coach : performance (logarithme de la capacité du jour) des
   /// dernières séances qui ont mesuré la capacité, trois au plus (jour,
   /// valeur).
@@ -360,6 +364,7 @@ final class ExerciseTrack {
     final c = ExerciseTrack(info, filter.fork());
     c.lowProbeDay = lowProbeDay;
     c.assist = assist;
+    c.assistDay = assistDay;
     c.form = form;
     c.easeDay = easeDay;
     c.easeRatio = easeRatio;
@@ -1476,6 +1481,7 @@ final class SessionRun {
         final now = loadKg ?? 0;
         final before = track.assist;
         if (before != null && (now - before).abs() > 1e-9) {
+          track.assistDay = day;
           track.probeCapacity = null;
           final step = ln(_p.coachAssistStepShare);
           track.filter.shiftLevel(

@@ -1825,7 +1825,10 @@ List<SetPlan>? _directPlans(
     final missedTwice = (mark?.missed ?? 0) >= 2;
     final farBelow =
         track.lastTop > 0 && track.lastTop < low - p.coachAssistGapRir;
-    if (!locked && c.policy.build && !c.eventNear && streak) {
+    final changed = track.assistDay;
+    final settled =
+        changed == null || run.day - changed >= p.coachAssistMinDays;
+    if (!locked && c.policy.build && !c.eventNear && streak && settled) {
       ex.notes.add(
         _r(ReasonCodes.adaptFlamesBelowTarget, <String, Object?>{
           'delta': roundTo(spare > 2 ? spare : 2.0, 1),

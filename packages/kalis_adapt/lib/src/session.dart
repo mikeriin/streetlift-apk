@@ -5,7 +5,7 @@ library;
 
 import 'package:kalis_core/kalis_core.dart';
 import 'package:kalis_plan/kalis_plan.dart'
-    show coachPainStopHits, planSimilarity;
+    show coachPainProvokes, coachPainStopHits, planSimilarity;
 
 import 'book.dart';
 import 'coach.dart';
@@ -91,6 +91,8 @@ ExerciseInfo? findSubstitute(
   required Map<BodyZone, int> pains,
   required Set<String> taken,
   LoadType? notLoadType,
+  bool neutralWrist = false,
+  bool Function(CatalogExercise)? avoid,
 }) {
   final p = ctx.params;
   final profile = ctx.profile;
@@ -110,7 +112,8 @@ ExerciseInfo? findSubstitute(
         e.difficulty > o.difficulty ||
         (e.discipline != o.discipline && e.rootId != o.rootId) ||
         !e.feasibleWith(equipment) ||
-        (place != null && !e.places.contains(place))) {
+        (place != null && !e.places.contains(place)) ||
+        (avoid != null && avoid(e))) {
       continue;
     }
     final info = ctx.book.find(e.id);
@@ -119,6 +122,14 @@ ExerciseInfo? findSubstitute(
     }
     var spared = true;
     for (final entry in pains.entries) {
+      if (neutralWrist &&
+          entry.key == BodyZone.wristHand &&
+          !coachPainProvokes(e, BodyZone.wristHand)) {
+        // Mode coach : un appui à prise neutre (barres parallèles,
+        // parallettes, poignées) garde la poussée quand le poignet est
+        // douloureux (CA2, partie 0 ; règle du programme).
+        continue;
+      }
       if (info.excludedByPain(
             entry.key,
             entry.value,
@@ -392,6 +403,7 @@ SessionPlan buildSessionPlan(
             pains: painsToday,
             taken: taken,
             notLoadType: tooHeavy ? e.loadType : null,
+            neutralWrist: coached,
           );
     if (substitute == null) {
       d.removed = true;
@@ -443,6 +455,35 @@ SessionPlan buildSessionPlan(
             info == null ||
             d.item.kind == SetKind.warmup ||
             !coachPainStopHits(info.exercise, stop.zone)) {
+          continue;
+        }
+        // Une variante qui ne provoque pas la zone (poignet : appui à prise
+        // neutre) garde le mouvement ; sinon il est retiré (CA2, partie 0).
+        final substitute = info.mode == null || d.item.kind == SetKind.test
+            ? null
+            : findSubstitute(
+                ctx,
+                info,
+                equipment: equipment,
+                place: place,
+                pains: painsToday,
+                taken: taken,
+                neutralWrist: true,
+                avoid: (e) => coachPainStopHits(e, stop.zone),
+              );
+        if (substitute != null) {
+          taken.add(substitute.id);
+          adjustments.add(
+            SessionAdjustment(
+              kind: AdjustmentKind.exerciseSwapped,
+              exerciseId: d.item.exerciseId,
+              replacementExerciseId: substitute.id,
+              reasons: why,
+            ),
+          );
+          d.reasons.addAll(why);
+          d.info = substitute;
+          d.item = _retarget(d.item, substitute);
           continue;
         }
         d.removed = true;
