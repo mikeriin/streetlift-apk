@@ -1993,10 +1993,7 @@ final class SessionRun {
     // partie 0 — une seule série arrêtée tôt ne fait plus baisser
     // l'estimation ; relecture documentée, manche 4 et partie 0.)
     final short = target != null && amount < target.low;
-    if ((byFeel || short) &&
-        !test &&
-        run.spec.coach != null &&
-        predicted > 0) {
+    if ((byFeel || short) && !test && run.spec.coach != null && predicted > 0) {
       final track = run.track!;
       if (implied < predicted * 0.9) {
         final last = track.lowProbeDay;
