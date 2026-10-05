@@ -395,9 +395,12 @@ SkillLadder? coachPushLadderFrom(String current) {
       for (var i = at; i < coachPushLadder.length; i++)
         SkillStep(
           exerciseId: coachPushLadder[i],
-          criterion: StepCriterion(
-            reps: i == 0 ? 12 : 10,
-            sets: 3,
+          // Deux séries au haut de la plage (12), deux séances de suite :
+          // le critère tient dans les séries écrites (deux au moins ; panel
+          // CX, boucle 4 : « 3 × 10 » pour deux séries prescrites).
+          criterion: const StepCriterion(
+            reps: 12,
+            sets: 2,
             minQuality: 4,
             sessions: 2,
             minWeeks: 2,

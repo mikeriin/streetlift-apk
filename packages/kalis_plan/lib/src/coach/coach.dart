@@ -383,10 +383,9 @@ final class CoachEngine {
       catalog,
       request.profile,
       request.startDate,
-      extraExcluded: <String>{
-        ..._excludedBy(request.locks),
-        ...?request.adaptation?.avoidedExerciseIds,
-      },
+      extraExcluded: _excludedBy(request.locks),
+      avoidedIds:
+          request.adaptation?.avoidedExerciseIds ?? const <String>[],
       trendPains: adaptationPains(request.adaptation),
       estimates: request.adaptation?.estimates ?? const <ExerciseEstimate>[],
     );
@@ -426,11 +425,8 @@ final class CoachEngine {
       catalog,
       profile,
       pass1.startDate,
-      extraExcluded: <String>{
-        ..._excludedBy(locks),
-        ...?adaptation?.avoidedExerciseIds,
-        ...extraExcluded,
-      },
+      extraExcluded: <String>{..._excludedBy(locks), ...extraExcluded},
+      avoidedIds: adaptation?.avoidedExerciseIds ?? const <String>[],
       extraPains: extraPains,
       trendPains: adaptationPains(adaptation),
       minutesOverride: minutesOverride,
@@ -919,10 +915,9 @@ final class CoachEngine {
       catalog,
       request.profile,
       before.startDate,
-      extraExcluded: <String>{
-        ...excluded,
-        ...?request.adaptation?.avoidedExerciseIds,
-      },
+      extraExcluded: excluded,
+      avoidedIds:
+          request.adaptation?.avoidedExerciseIds ?? const <String>[],
       extraPains: pains,
       trendPains: adaptationPains(request.adaptation),
       estimates: request.adaptation?.estimates ?? const <ExerciseEstimate>[],
