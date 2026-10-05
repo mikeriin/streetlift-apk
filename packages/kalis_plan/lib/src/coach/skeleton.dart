@@ -2423,8 +2423,20 @@ void _buildFigures(_Builder b, Set<int> runDays) {
     // plus servie quand elle est devenue trop facile — tenues courtes et
     // légères sur l'étape actuelle à la place.)
     final easierKnown = easier == null ? 0 : (a.holds[easier] ?? 0);
+    // Objectif de durée sur l'étape en cours (front lever 15 s quand le
+    // front lever est l'étape) : une séance légère de tenues longues sur
+    // l'étape plus facile construit la durée (R4-F6 : alternance tenues
+    // courtes intenses et tenues longues ; CX, correction 1, panel).
+    final wanted =
+        a.goalOn(t.currentId, GoalMetric.maxHoldSeconds)?.targetValue ??
+        (t.targetId == t.currentId
+            ? a.goalOn(t.targetId, GoalMetric.maxHoldSeconds)?.targetValue
+            : null);
+    final duration = wanted != null && wanted > hold;
     final tooEasy =
-        a.level >= 2 && (easierKnown > 25 || (easierKnown == 0 && hold >= 4));
+        !duration &&
+        a.level >= 2 &&
+        (easierKnown > 25 || (easierKnown == 0 && hold >= 4));
     if (heavy || easier == null || a.level < 2 || hold <= 0 || tooEasy) {
       // R4-F6 : levier utile quand le maintien maximal vaut 8 à 25 s ; en
       // dessous, des maintiens courts sur l'étape et du temps sur l'étape
