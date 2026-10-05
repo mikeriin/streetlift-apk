@@ -1,2 +1,4 @@
 ALL
-packages
+dev:test/g1_mode_dev_test.dart
+dev:test/g2_mode_dev_test.dart
+dev:test/g3_mode_dev_test.dart

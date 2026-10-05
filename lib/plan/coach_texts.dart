@@ -381,7 +381,38 @@ bool isPainReason(kc.Reason r) =>
     r.code == kc.ReasonCodes.planPainRule ||
     r.code == 'adapt.pain_reported' ||
     r.code == 'adapt.pain_persistent' ||
-    (r.code == 'adapt.exercise_skipped' && r.params['cause'] == 'pain');
+    (r.code == 'adapt.exercise_skipped' && r.params['cause'] == 'pain') ||
+    (r.code == kc.ReasonCodes.planCoachNote &&
+        _painNotes.contains(r.params['note']));
+
+/// CI1b : notes de coach de `kalis_plan` 0.2.2 qui parlent de douleur
+/// (arrêt d'une douleur qui dure, reprise graduée, étape plus facile,
+/// douleur relevée au bloc précédent).
+const Set<String> _painNotes = <String>{
+  kp.CoachNotes.painTrend,
+  kp.CoachNotes.painStop,
+  kp.CoachNotes.painStep,
+  kp.CoachNotes.painReturn,
+  kp.CoachNotes.painReturnItem,
+};
+
+/// CI1b : notes du bloc sur une douleur qui dure (`pain_stop` : arrêt et
+/// consultation ; `pain_return` : reprise graduée), rédigées par
+/// `kalis_plan` 0.2.2 ; vide pour un bloc du chemin 0.1.
+List<String> coachBlockPainNotes(kc.ProgramBlock block, kc.Catalog? catalog) {
+  final out = <String>[];
+  if (!isCoachBlock(block)) return out;
+  for (final r in [...block.pass1.reasons, ...block.pass2.reasons]) {
+    if (r.code != kc.ReasonCodes.planCoachNote) continue;
+    final note = r.params['note'];
+    if (note != kp.CoachNotes.painStop && note != kp.CoachNotes.painReturn) {
+      continue;
+    }
+    final t = coachText(r, catalog);
+    if (t != null && !out.contains(t)) out.add(t);
+  }
+  return out;
+}
 
 /// Règles du programme, écrites une fois (progression, douleur, exécution).
 /// Vide pour un bloc du chemin 0.1.

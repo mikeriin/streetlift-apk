@@ -22,6 +22,7 @@ import '../koach/koach_bubble.dart';
 import '../koach/koach_view.dart';
 import '../models.dart';
 import '../muscle_map_2d.dart';
+import '../plan/coach_texts.dart' show coachBlockPainNotes;
 import '../plan/evolution_widgets.dart' show EvolutionSessionCard;
 import '../store.dart';
 import '../ui.dart';
@@ -139,11 +140,66 @@ class _HealthCheckPageState extends State<HealthCheckPage> {
           // G10 : ce qui change dans cette séance (propositions de Koach
           // appliquées ou acceptées), au début de la séance concernée.
           EvolutionSessionCard(week: _w, j: widget.base.j),
+          ..._painStopCard(a),
           ...(!a.asked || _redo ? _question(a) : _answered(a)),
         ],
       );
     },
   );
+
+  /// CI1b (`kalis_plan` / `kalis_adapt` 0.2.2) : douleur qui dure —
+  /// arrêt des mouvements qui chargent la zone (retirés de la séance),
+  /// consigne de consulter, reprise graduée écrite dans le bloc. Toujours
+  /// en tête de la séance tant qu'elle vaut.
+  List<Widget> _painStopCard(SessionAdapt a) {
+    final stops = painStopsOf(a.active, store.adaptExerciseName);
+    final block = store.adaptPlaceOf(_w, widget.base.j)?.block;
+    final notes = block == null
+        ? const <String>[]
+        : coachBlockPainNotes(block, store.content.catalog);
+    if (stops.isEmpty && notes.isEmpty) return const [];
+    final lines = <String>[
+      for (final s in stops) painStopText(s),
+      // Notes du bloc : l'arrêt déjà dit par la séance n'est pas répété.
+      for (final n in notes)
+        if (stops.isEmpty || !n.startsWith('Douleur qui dure')) n,
+    ];
+    return [
+      KCard(
+        key: const ValueKey('health-pain-stop'),
+        accent: SL.accent,
+        child: KoachSays(
+          pose: koachPose(KoachUsage.care),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Icon(Icons.shield_outlined, size: 18, color: SL.accent),
+                  const SizedBox(width: 6),
+                  Expanded(
+                    child: Text(
+                      stops.isNotEmpty ||
+                              notes.any((n) => n.startsWith('Douleur qui dure'))
+                          ? 'Arrêt pour douleur'
+                          : 'Reprise graduée',
+                      style: const TextStyle(fontWeight: FontWeight.w700),
+                    ),
+                  ),
+                ],
+              ),
+              for (final l in lines)
+                Padding(
+                  padding: const EdgeInsets.only(top: 6),
+                  child: Text(l),
+                ),
+            ],
+          ),
+        ),
+      ),
+      const SizedBox(height: 12),
+    ];
+  }
 
   List<Widget> _question(SessionAdapt a) => [
     KCard(

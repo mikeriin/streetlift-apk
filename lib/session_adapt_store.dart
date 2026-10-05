@@ -944,7 +944,73 @@ extension SessionAdaptStore on AppStore {
         ),
       );
     }
+    // CI1b (`kalis_adapt` 0.2.2, mode coach) : un test de la semaine pas
+    // encore fait (bilan bas, séance manquée) est servi ce jour, avant le
+    // travail du jour ; il porte l'emplacement du jour d'origine.
+    if (place != null && !place.imported) {
+      final known = <String>{
+        ...blockSlots.keys,
+        for (final e in out)
+          if (adaptSlotOf(week, base.j, e.id) case final s?) s,
+      };
+      final moved = <Exercise>[];
+      for (final it in a.active.items) {
+        if (it.kind != kc.SetKind.test || !known.add(it.slotId)) continue;
+        final from = _adaptWeekExercise(week, it.slotId);
+        if (from == null) continue;
+        moved.add(
+          Exercise.engine(
+            from.e,
+            id: planExerciseId(week, base.j, it.slotId),
+            name: from.e.name,
+            setsText: adaptSetsText(it),
+            setCount: it.sets,
+            intensity: 'Test : au maximum, proprement',
+            rest: pt.restLabel(it.restSeconds),
+            restSec: it.restSeconds,
+            cue: from.e.cue,
+            why:
+                'Test de la semaine reporté ici (prévu '
+                '${_adaptDayName(week, from.j)}).',
+            catalogId: it.exerciseId,
+            slotId: it.slotId,
+            tempo: ct.coachTempoText(it),
+            timer: _adaptTimerOf(it),
+          ),
+        );
+      }
+      if (moved.isNotEmpty) {
+        var at = 0;
+        while (at < out.length &&
+            _adaptItem(a, adaptSlotOf(week, base.j, out[at].id))?.kind ==
+                kc.SetKind.warmup) {
+          at++;
+        }
+        out.insertAll(at, moved);
+      }
+    }
     return DayPlan.adapted(base, out);
+  }
+
+  /// CI1b : jour de la semaine (« mardi ») de la journée S[week]·J[j].
+  String _adaptDayName(int week, int j) {
+    final s = program.start;
+    if (s == null) return 'un autre jour';
+    return weekdayName(
+      DateTime(s.year, s.month, s.day + (week - 1) * 7 + j - 1).weekday,
+    );
+  }
+
+  /// CI1b : exercice du programme de la semaine [week] à l'emplacement
+  /// [slot] (autre jour de la semaine), avec son jour.
+  ({Exercise e, int j})? _adaptWeekExercise(int week, String slot) {
+    if (week < 1 || week > program.weeks.length) return null;
+    for (final d in program.week(week).days) {
+      for (final e in d.exercises) {
+        if (adaptSlotOf(week, d.j, e.id) == slot) return (e: e, j: d.j);
+      }
+    }
+    return null;
   }
 
   /// CI1 : chrono de la technique servie (EMOM, bloc au temps), dans le
@@ -979,6 +1045,15 @@ extension SessionAdaptStore on AppStore {
     final place = adaptPlaceOf(week, j);
     for (final it in place?.day?.items ?? const <kc.ExercisePrescription>[]) {
       if (it.slotId == e.slotId) return it;
+    }
+    // CI1b : test reporté d'un autre jour de la semaine.
+    for (final w in place?.block.pass2.weeks ?? const <kc.WeekPrescription>[]) {
+      if (w.weekIndex != place!.weekIndex) continue;
+      for (final d in w.days) {
+        for (final it in d.items) {
+          if (it.slotId == e.slotId) return it;
+        }
+      }
     }
     return null;
   }
