@@ -52,5 +52,5 @@ Chaque lot ne modifie que sa ligne (PIPELINE_CP.md §1).
 | CP2 | A | CX | — | — | — | en attente de CX |
 | CA2 | B | CX | — | — | — | en attente de CX |
 | CY | A | CP2, CA2 | — | — | — | en attente de CP2, CA2 |
-| CI1 | App | CU ; CX (paquets 0.2.1, puis dernières étiquettes, C9.1) | — | — | — | en cours depuis 2026-10-05 11:57 UTC (tâche application, C9.1 ; contexte : LANCEMENTS.md ; sauvegardes : `cp-sauvegardes/CI1`) |
+| CI1 | App | CU ; CX (paquets 0.2.1, puis dernières étiquettes, C9.1) | dev6.9.0 (main 938de59, build signé run 37328372801, contrôle ci-3d run 37324228351) ; paquets `kalis_core` 0.4.2, `kalis_plan` 0.2.1, `kalis_adapt` 0.2.1 (0.2.2 pas encore publiés) | — (lot d'application) | 2026-10-05 | à valider (pilotage, C8.1 ; livraison : `livraisons/LIVRAISON_CI1.md`) |
 | CI | App | CY, CU | — | — | — | en attente de CY, CU |
