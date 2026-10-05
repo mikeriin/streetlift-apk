@@ -1372,6 +1372,56 @@ void main() {
       expect(heaviest(single), lessThan(heaviest(base)));
     });
 
+    test('charge lestée : +5 % au plus d\'une semaine à l\'autre, d\'un bloc '
+        'à l\'autre aussi', () {
+      final weeks = <WeekPrescription>[
+        for (final b in _program(catalog, _lifter(weeksOut: 14), 20))
+          ...b.pass2.weeks,
+      ];
+      Map<String, double> loadsOf(WeekPrescription w) {
+        final out = <String, double>{};
+        for (final d in w.days) {
+          for (final i in d.items) {
+            final load = i.startLoadKg;
+            final reps = i.repsHigh;
+            if (load == null ||
+                reps == null ||
+                (i.kind != null && i.kind != SetKind.work)) {
+              continue;
+            }
+            final key = '${i.exerciseId}|$reps';
+            if ((out[key] ?? -1) < load) {
+              out[key] = load;
+            }
+          }
+        }
+        return out;
+      }
+
+      var checked = 0;
+      for (var k = 1; k < weeks.length; k++) {
+        final before = loadsOf(weeks[k - 1]);
+        final now = loadsOf(weeks[k]);
+        for (final e in now.entries) {
+          final b = before[e.key];
+          if (b == null || b <= 0) {
+            continue;
+          }
+          checked++;
+          final id = e.key.split('|').first;
+          final weight =
+              (catalog.exercise(id).bodyweightFraction?.value ?? 0) * 78;
+          // (Charge totale ; une marge d'un pas de 2,5 kg pour l'arrondi.)
+          expect(
+            e.value + weight,
+            lessThanOrEqualTo((b + weight) * 1.10 + 2.5),
+            reason: 'semaine $k, ${e.key} : $b puis ${e.value} kg',
+          );
+        }
+      }
+      expect(checked, greaterThan(0));
+    });
+
     test('répétitions + réserve jamais au-dessus du repère', () {
       final low = _profile(
         experience: ExperienceLevel.intermediate,

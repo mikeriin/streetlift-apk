@@ -221,8 +221,9 @@ String? coachReasonText(Reason r, Catalog catalog) {
                     '${v is num ? v.round() % 1000 : ''} au test final '
                     'serait déjà un bon cycle : ne force pas la forme pour '
                     "y arriver. Si le repère de mi-parcours n'est pas "
-                    "atteint, le plan garde ses volumes et l'objectif se "
-                    'joue au cycle suivant.',
+                    "atteint, aucune série n'est ajoutée : le bloc suivant "
+                    "repart du résultat du test et l'objectif se joue au "
+                    'cycle suivant.',
         CoachNotes.maxSetPlan =>
           'Avant la série maximale : 2 séries faciles (un quart, puis un '
               'tiers du maximum), 2 à 3 min de repos. Pendant : rythme '
@@ -515,7 +516,7 @@ String? coachReasonText(Reason r, Catalog catalog) {
           "Repère sur le chemin de l'objectif : ${_plain(v)}. "
               "S'il n'est pas atteint, suis la progression écrite (une "
               'variable à la fois) sans ajouter de séries ; le bloc suivant '
-              'change de méthode.',
+              'est écrit sur le résultat du test.',
         CoachNotes.testRest =>
           '${_int(v)} h sans travail dur du mouvement avant un test.',
         CoachNotes.rampBodyweight =>
