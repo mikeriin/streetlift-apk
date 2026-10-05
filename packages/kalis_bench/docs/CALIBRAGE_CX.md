@@ -387,6 +387,8 @@ pas de dérive ((a) ≤ 2, (c) ≥ 8).
 | 3 et 3 bis | d7 | p3, complet | 23 / 68 | 6 | 8,06 |
 | 4 | d8 | p4, 45 couples sous 9 | 35 / 68 (combiné) | 6 | 8,21 |
 | 5 | d9 | p5, 33 couples sous 9 | 39 / 68 (combiné) | 5,5 | 8,34 |
+| 6 et 7 | d15 | p7, **complet** | 23 / 68 | 5,5 | 7,99 |
+| 8 | d18 | p8, 36 couples des 9 profils changés | 23 / 68 (combiné avec p7) | 5,5 | 7,95 |
 
 Boucle 1 : garde de douleur et report des tests, coude (pronation retirée), baisse de repère bornée à 15 %,
 tests de figures sur l'étape visée, tenues arrondies, charges après transition, départs au chrono (+1 par
@@ -439,6 +441,40 @@ et l'autorégulation recalent ; un test d'entrée → CP2) ; lest pour un object
 affûtage de deux semaines (`street_06`), muscle-up après l'échéance et volume de poussée (`street_08`),
 changement de méthode des figures après des tests sans progrès et force dynamique bras tendus
 (`street_10`), volume de traction au chrono (`street_14`) → CP2.
+
+### Boucle 8 et arrêt
+
+Boucle 8 (sur les notes de p7, toutes lues) : une forte baisse (plus de 15 %) ne fait baisser le repère qu'à
+85 % sans test qui la confirme, et seulement sur un repère récent hors reprise (`street_05` : un test de 9 s un
+jour de bilan bas pour un maximum de 12 s) ; une baisse modérée fait foi sans relèvement par l'estimation
+(`street_17`) ; un 1RM déclaré est de nouveau relevé par le maximum au poids du corps (`street_11` : la séance
+lourde tombait au poids du corps, à 7 répétitions de réserve — retour sur la boucle 6) ; note de la zone de
+l'épreuve sur la part écrite (`street_15`) ; arrondi des tenues de figure à 8 points de la part visée
+(`street_10`) ; borne de hausse de charge d'un bloc à l'autre (`street_08` : dips lestés de 67 à 79 % du 1RM
+juste après l'allègement) ; textes du repère de mi-parcours alignés sur le moteur. Corrections de la relecture
+indépendante du code (ci-dessous).
+
+**Lecture des passes.** La passe complète p7 (fin de la boucle 7) donne 23 couples à 9 sur 68, comme p3 ; les
+passes partielles (p4, p5) montaient à 35 puis 39 en combinant des notes de passes différentes. Sur des exports
+proches, le panel varie d'environ un point par couple (C9) : la passe complète fait foi. p8, sur les neuf profils
+changés par la boucle 8, ne gagne rien en net (des couples montent, d'autres descendent). J'arrête le calibrage
+après la boucle 8 : deux passes sans gain, et les constats restants demandent des changements de méthode
+(progression des tenues de figure vers le critère, bloc spécifique d'un objectif de répétitions qui change
+vraiment de méthode, budget d'appui du poignet de l'élite, test d'entrée sur des records déclarés).
+
+### Relecture indépendante du code (sous-agent Opus)
+
+Quatorze points et des remarques, tous lus. Corrigés : un arrêt pour douleur déjà noté reste un arrêt quand une
+restructuration est lancée pour une autre raison ; la borne de forte baisse ne vaut que pour un repère récent
+hors reprise ; un 1RM tiré d'une série de plusieurs répétitions est borné à 85 % du 1RM connu (au lieu d'être
+ignoré) ; un test n'est jamais placé le premier jour quand un jour plus tardif existe ; la note `pain_step`
+seulement quand la douleur écarte l'étape ; commentaires périmés. Laissés à CP2 et écrits au contrat
+(`kalis_plan` § 12.14, limites) : note `plateau` plus large que le changement de méthode réel, densité sans
+variable qui monte sous 12 de maximum, ordre réserve/charge en reprise après douleur sur un lesté proche du poids
+du corps, test d'un mouvement en reprise reporté d'un bloc, plancher des tenues du débutant prioritaire sur la
+hausse de 15 %, meilleur maintien de `kalis_adapt` qui ne baisse pas après un arrêt.
+
+### Reportés
 
 Reportés à CP2 / CA2 (notés par le panel, hors du périmètre street de cette correction) : créneau horaire,
 volume de poussée, jambes, profils hors street, échelle de poussée du débutant, volume de tirage du
