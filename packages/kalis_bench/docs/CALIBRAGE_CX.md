@@ -474,6 +474,19 @@ variable qui monte sous 12 de maximum, ordre réserve/charge en reprise après d
 du corps, test d'un mouvement en reprise reporté d'un bloc, plancher des tenues du débutant prioritaire sur la
 hausse de 15 %, meilleur maintien de `kalis_adapt` qui ne baisse pas après un arrêt.
 
+### Contrôle complet, sécurité, non-ressemblance
+
+Contrôle complet (`claude/ci-cp-a`, run 37330259003, commit dc819ddf, 100 graines) : vert pour tous les
+paquets. Programmes créés : 0 violation sur les 17 profils street (les 23 du rapport viennent des autres
+disciplines, moteur 0.1, hors périmètre). Saisons racontées (modèle B, graine 0) : 0 violation sur les 136
+saisons street (référence et 7 scénarios). Moyennes des saisons croisées (trois modèles de vérité, saison de
+référence) : écart d'effort 1,03 répétition (CX : 1,12 ; 0.1 : 1,49), échecs non voulus 0,32 %, progression
+0,252 % par semaine (CX : 0,278 %), tentatives réussies 95 % (CX : 87 %), jour J à 94,0 % du maximum du jour
+(CX : 95,6 %), violations 0,01 par saison (CX : 0,03).
+
+Non-ressemblance (`tool/reference_jaccard.py` sur les 17 saisons écrites du contrôle complet) : maximum exact
+0,158, tolérant 0,188 (seuil 0,30). Détail chiffré : `analyse_CXc1.tar.gpg` sur `cp-references`.
+
 ### Reportés
 
 Reportés à CP2 / CA2 (notés par le panel, hors du périmètre street de cette correction) : créneau horaire,
