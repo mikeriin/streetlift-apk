@@ -411,6 +411,7 @@ extension PlanStore on AppStore {
       blocks: [...plan.blocks, entry],
       clearPrevious: true,
       season: _planSeasonFor(entry.block, c.profile),
+      clearSeason: true,
     );
     _materializeProgram(program.start);
     if (c.journalOn) unawaited(savePlanJournal(c));
@@ -460,9 +461,10 @@ extension PlanStore on AppStore {
   }
 
   /// Profil donné au moteur pour le bloc suivant : celui de l'utilisateur,
-  /// ou, s'il a choisi de garder le moteur d'avant, le même sans le niveau
-  /// d'expérience (le chemin calibré en a besoin ; le chemin 0.1 ne le lit
-  /// pas) : le bloc suivant reste au chemin 0.1, comme avant la mise à jour.
+  /// ou, s'il a choisi de garder le moteur d'avant, le même sans
+  /// l'ancienneté (le chemin calibré en a besoin ; le chemin 0.1 ne la lit
+  /// pas, il lit l'expérience, gardée) : le bloc suivant reste au chemin
+  /// 0.1, comme avant la mise à jour.
   kc.AthleteProfile? get planNextBlockProfile {
     final p = AthleteProfileStore(this).athleteProfileForEngines;
     if (p == null) return null;
@@ -471,7 +473,7 @@ extension PlanStore on AppStore {
         plan.keepLegacyEngine &&
         planOnLegacyEngine &&
         kp.coachEligible(p)) {
-      return p.copyWith(experience: null);
+      return p.copyWith(trainingAge: null);
     }
     return p;
   }

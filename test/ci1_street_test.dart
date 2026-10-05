@@ -327,6 +327,11 @@ void main() {
       // « Garder le moteur actuel » : le bloc suivant reste au chemin 0.1.
       PlanStore(app).setPlanKeepLegacyEngine(true);
       expect(kp.coachEligible(PlanStore(app).planNextBlockProfile!), isFalse);
+      // L'expérience déclarée reste (le chemin 0.1 la lit).
+      expect(
+        PlanStore(app).planNextBlockProfile!.experience,
+        app.athlete!.profile.experience,
+      );
       final kept = PlanStore(app).proposeNextBlock()!;
       expect(isCoachBlock(kept.proposal.block), isFalse);
       // « Passer au moteur calibré » : bloc suivant calibré.
@@ -380,6 +385,25 @@ void main() {
       expect(AthleteProfileStore(app).reportEngineResults(review), isTrue);
       expect(app.athlete!.profile.benchmarks!.length, before + 1);
       expect(AthleteProfileStore(app).reportEngineResults(review), isFalse);
+      expect(app.athlete!.profile.benchmarks!.length, before + 1);
+      // Même test relu avec un autre poids de corps : pas de doublon ; test
+      // d'avant le bloc : ignoré.
+      final again = kc.AdaptReview(
+        state: const {},
+        summary: review.summary,
+        proposals: const [],
+        log: const [],
+        testResults: [
+          b.copyWith(bodyWeightKg: 80.0),
+          b.copyWith(date: kc.CivilDate(2026, 9, 1), reps: 5),
+        ],
+      );
+      expect(
+        AthleteProfileStore(
+          app,
+        ).reportEngineResults(again, since: kc.CivilDate(2026, 9, 28)),
+        isFalse,
+      );
       expect(app.athlete!.profile.benchmarks!.length, before + 1);
     });
   });

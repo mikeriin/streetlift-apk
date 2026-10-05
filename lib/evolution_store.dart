@@ -201,7 +201,9 @@ extension EvolutionStore on AppStore {
     final reported =
         !place.imported &&
         ct.isCoachBlock(place.block) &&
-        AthleteProfileStore(this).reportEngineResults(review);
+        AthleteProfileStore(
+          this,
+        ).reportEngineResults(review, since: place.block.pass1.startDate);
     return evolutionReceive(place, review.proposals) || reported;
   }
 
