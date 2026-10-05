@@ -1236,6 +1236,30 @@ final class Prescriber {
           ..reasons.add(_note(CoachNotes.smallLoad, lest));
         return;
       }
+      // 1RM lesté de 70 à 78 % au-dessus du poids du corps : la séance
+      // lourde reste lestée — moins de répétitions (3 au moins), avec le
+      // lest que la table donne pour ces répétitions et la réserve, plutôt
+      // qu'une série au poids du corps nommée « lestée » (CP2, partie 0 ;
+      // panel CX correction 1, `street_11` : « 4 × 3-4 avec +2,5 à +5 kg à
+      // 2-3 en réserve »).
+      // (Seulement quand la part visée est à 5 points du poids du corps au
+      // plus : une semaine légère reste au poids du corps.)
+      if (floor >= 0.70 && p >= floor - 0.05 && added > 0 && !x.fixed) {
+        final top = x.repsHigh ?? 5;
+        for (var r = top; r >= 3; r--) {
+          final share = _pctAt(r + kept);
+          final l = _external(e, total, share);
+          final rawLoad = total * share - floor * total;
+          if (l != null && l > 0 && rawLoad + 1e-9 >= l) {
+            x
+              ..load = l
+              ..repsLow = r
+              ..repsHigh = r
+              ..reasons.add(_note(CoachNotes.smallLoad, l));
+            return;
+          }
+        }
+      }
       // Lest sous le plus petit pas : la série s'écrit au poids du corps,
       // avec les répétitions que sa vraie part du 1RM laisse à la réserve
       // visée (CX, correction 6 : une charge chiffrée dès que le 1RM est
@@ -5964,7 +5988,11 @@ final class Prescriber {
         }
       }
     }
-    final elbow = a.limitOn(Joint.elbow) != null;
+    // (Coude : gêne actuelle, ou antécédent de moins de douze mois.)
+    final elbowLimit = a.limitOn(Joint.elbow);
+    final elbow =
+        elbowLimit != null &&
+        (elbowLimit.recent || elbowLimit.discomfort >= 2);
     double factorOf(int beforeReps, int reps, {required bool restart}) {
       var delta = beforeReps - reps;
       if (!restart && !peaking && delta > 2) {
@@ -5988,25 +6016,28 @@ final class Prescriber {
         var total = load + fraction * a.bodyWeight;
         final key = '$d|${x.slotId}|${x.e.id}';
         double? allowed;
-        // Même emplacement, semaine d'avant (ou semaine de référence quand
-        // la semaine d'avant est allégée).
-        final source = last == null || (last.light && !last.restart)
-            ? reference
-            : last;
-        final before = source?.loads[key];
-        if (source != null && before != null && before.$1 > 0) {
+        // Même emplacement, semaine d'avant (allégée comprise : la charge
+        // remonte par paliers après un allègement) : à répétitions égales ou
+        // après une transition, l'écart de répétitions compte en entier ;
+        // à répétitions différentes, deux répétitions au plus.
+        final before = last?.loads[key];
+        if (last != null && before != null && before.$1 > 0) {
           allowed =
-              before.$1 * factorOf(before.$2, reps, restart: source.restart);
+              before.$1 *
+              factorOf(
+                before.$2,
+                reps,
+                restart: last.restart || before.$2 == reps,
+              );
         }
         // Nouvel emplacement (début de bloc, après un allègement ou un
         // test) : même borne sur la plus lourde charge du même exercice la
-        // semaine de référence (passe 7 du panel CX, `street_08` : dips
-        // lestés de 67 à 79 % du 1RM en une semaine, juste après
-        // l'allègement).
-        final top = reference?.heaviest[x.e.id];
+        // semaine d'avant, toutes répétitions (passe 7 du panel CX,
+        // `street_08` : dips lestés de 67 à 79 % du 1RM en une semaine,
+        // juste après l'allègement).
+        final top = last?.heaviest[x.e.id];
         if (allowed == null && top != null && top.$1 > 0) {
-          allowed =
-              top.$1 * factorOf(top.$2, reps, restart: reference!.restart);
+          allowed = top.$1 * factorOf(top.$2, reps, restart: last!.restart);
         }
         if (elbow &&
             x.e.stressOn(Joint.elbow) != JointStress.low &&
@@ -6081,9 +6112,7 @@ final class Prescriber {
     for (final entry in drafts.entries) {
       final before = reference?.tonnage[entry.key];
       var now = tonnageOf(entry.value);
-      if (before != null &&
-          before > 0 &&
-          !(reference?.restart ?? false)) {
+      if (before != null && before > 0 && !(reference?.restart ?? false)) {
         final limit = before * (1 + coachVolumeRise);
         // Séries retirées d'abord aux emplacements les plus fournis, jamais
         // sous leur minimum ni dans un groupe enchaîné.

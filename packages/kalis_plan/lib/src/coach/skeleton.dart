@@ -2149,7 +2149,11 @@ void _buildLifting(_Builder b, Set<int> runDays) {
       if (pullVolume >= 0) pullVolume,
       if (mu) muDay,
     };
+    // (Coude avec antécédent : pas de quatrième exposition de tirage dans
+    // la semaine — trois tirages lourds au plus, 48 h entre eux ; CP2,
+    // partie 0, panel CX correction 1, `street_09` ; R4-F10, R5-P20.)
     if (light >= 0 &&
+        elbow == null &&
         !maintained(Ids.weightedPull) &&
         a.level >= 2 &&
         target != Ids.weightedPull &&
@@ -2353,7 +2357,12 @@ void _buildLifting(_Builder b, Set<int> runDays) {
         rowPick,
         SlotRole.accessory,
         Method.accessoryCompound,
-        sets: lean ? 2 : (hasPull ? 3 : 4),
+        // (Coude avec antécédent, sans gêne : deux séries — le volume de
+        // tirage de la semaine reste vers 18 à 20 séries directes ; CP2,
+        // partie 0, `street_09`.)
+        sets: lean || (elbow != null && !spareElbow)
+            ? 2
+            : (hasPull ? 3 : 4),
         // Coude à ménager : le tirage horizontal en prise neutre porte le
         // tirage de la semaine, il est gardé.
         keep: spareElbow,
@@ -2715,7 +2724,10 @@ void _buildFigures(_Builder b, Set<int> runDays) {
     void balance() {
       b.add(
         d,
-        _wristFirst(a, const <String>['cs-handstand', 'cs-handstand-dos-au-mur']),
+        _wristFirst(a, const <String>[
+          'cs-handstand',
+          'cs-handstand-dos-au-mur',
+        ]),
         SlotRole.skill,
         Method.skillBalance,
         // Budget du poignet (R4-F12) : trois tenues quand la séance porte
@@ -2836,7 +2848,9 @@ void _buildFigures(_Builder b, Set<int> runDays) {
     // (Poignet à ménager : la poussée tête en bas va à la séance d'appui
     // légère, pas à la grosse séance de planche, et sur prise neutre
     // seulement ; CP2, partie 0, `street_10`.)
-    final hspuDay = _wristSpare(a) ? balanceDays.last : balanceDays.first;
+    final hspuDay = balanceDays.isEmpty
+        ? -1
+        : (_wristSpare(a) ? balanceDays.last : balanceDays.first);
     if (balanceDays.contains(d) &&
         a.level >= 2 &&
         (a.limitOn(Joint.wrist) == null || d == hspuDay)) {
