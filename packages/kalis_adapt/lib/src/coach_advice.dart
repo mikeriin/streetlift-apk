@@ -114,10 +114,7 @@ SetPlan? clampLocked(SessionRun run, ExerciseRun ex, SetPlan next) {
   // (Reprise graduée après une douleur qui dure : aucune hausse dans la
   // séance non plus ; CA2, partie 0.)
   final locked =
-      ex.fails > 0 ||
-      ex.painZones.isNotEmpty ||
-      run.noIncrease ||
-      ex.inReturn;
+      ex.fails > 0 || ex.painZones.isNotEmpty || run.noIncrease || ex.inReturn;
   if (!locked) {
     return null;
   }
@@ -187,7 +184,8 @@ CoachAdvice? _coachAdvise(
     final f = track.filter;
     final lift = competitionLiftOf(run.ctx.profile, info.id, run.day);
     final picks = attemptLadder(
-      estimateTotal: exp(f.m[0] + f.m[3] + f.gRef),
+      estimateTotal:
+          exp(f.m[0] + f.m[3] + f.gRef) * (ex.tapered ? 1 + p.coachTaperGain : 1.0),
       relSd: dayRelSd(ex),
       bodyPart: info.fraction * run.bodyWeightKg,
       grid: info.grid,

@@ -1,5 +1,22 @@
 # Journal des versions de kalis_adapt
 
+## 0.2.3
+
+Lot CA2, partie 0 (street) du pipeline « Calibrage des programmes ». Mode 0.1 inchangé. Détail et sources :
+`CONTRAT.md`, § 11.16.
+
+- **Reprise graduée conduite séance par séance (sécurité)** : palier qui recule quand la douleur répond
+  (gêne au-dessus de 2/10, pas revenue au niveau d'avant, en hausse d'une semaine à l'autre) ; dose écrite
+  jamais dépassée, 3 répétitions en réserve, aucune hausse dans la séance ; arrêt gardé quand il se lèverait
+  sur une semaine qui n'est pas de charge ; reprise propre au moteur (50 %, +10 % par semaine de charge,
+  67,5 % du 1RM) quand l'arrêt se lève au milieu d'un bloc qui écrit encore les mouvements provocants.
+- **Tests reportés** : jamais sur une zone douloureuse, en reprise ou à l'arrêt gardé (retirés, pas remplacés).
+- **Appui du poignet sensible** : dose d'appui écrite par le bloc au plus.
+- **Meilleur maintien récent** : le plancher des tenues ne vient plus d'un record d'avant un arrêt.
+- **Élastique** : deux séances au même cran avant d'en changer, jamais d'aller-retour sans échec.
+- **Tentatives après un affûtage** : maximum du jour +2 %.
+- Simulateur : zone réactive après un épisode de douleur (modèles B et C), poussées comptées.
+
 ## 0.2.2
 
 Lot « CX correction 1 » du pipeline « Calibrage des programmes » (croisement avec `kalis_plan` 0.2.2).

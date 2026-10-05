@@ -169,6 +169,9 @@ IntraSessionAdvice buildAdvice(
       if (item != null && exercise.observed.isEmpty) {
         exercise.plan = _plansOf(item, hold: hold);
       }
+      if (view.taperedAt(day)) {
+        exercise.tapered = true;
+      }
       if (item != null && _inReturn(item)) {
         // Reprise graduée (dite par la séance) : mêmes verrous qu'à la
         // préparation de la séance (CA2, partie 0).

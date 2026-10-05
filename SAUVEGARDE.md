@@ -20,3 +20,10 @@ Base : `moteurs` 9526ac47 (kalis_plan 0.2.2, kalis_adapt 0.2.2, kalis_bench 0.2.
 - Code partie 0 écrit (non compilé localement) : `lib/src/pain_return.dart` (reprise graduée : palier qui recule si la douleur répond, arrêt gardé sur semaine non chargée, reprise propre au moteur après une levée en milieu de bloc, part 1RM 67,5 % + 2,5 %/palier), session.dart (tests jamais sur zone douloureuse ni en reprise, appui du poignet sensible = dose écrite au plus), coach.dart (doseCapped/inReturn, maintien récent `recentBestOf`, élastique : 2 séances au même cran, montée seulement après échec / 2 séances sous la plage / >2 rép.), advise/coach_advice (verrous en séance), truth.dart (zone réactive après un épisode, modèles B et C : poussées `painFlares`), kalis_bench season (colonne Douleur « hausses / poussées »).
 - kalis_adapt 0.2.3 (version.dart, pubspec). Tests ajoutés : coach_rules_test (levée, maintien récent, street_12 coude, street_01 élastique).
 - Contrôle dev poussé sur claude/ci-cp-b (commit 55d74554) : outil aa_fmt, graines 4, sans kalis_quest. Script : ci.sh (scratchpad, voir commit).
+
+## Avancement 05/10 ~19:50 UTC
+- Contrôle dev 2 (6afd314b, run 37361856152) : kalis_adapt vert, kalis_bench vert, format OK. Hausses sur zone douloureuse : 0 partout (avant : 0,49 pour street_12 scénarios douleur — tests faits sur zone douloureuse).
+- Ajouts boucle 1 ter : gain d'affûtage 2 % des tentatives (Travis 2020), CONTRAT § 11.16, CHANGELOG 0.2.3 ; contrôle dev 3 poussé (b02991c6).
+- Dérive du panel (ancres p08_a, p14_c) : (a) 1/1/1/1, (c) 9/8/8/8 → pas de dérive. Empreintes des grilles identiques.
+- Recherches : sources vérifiées (Silbernagel 2007 via source secondaire, Soligard 2016, ACSM 2009, Travis 2020/2021, Darragh 2025, Halperin 2022, Bosquet 2013 résumé, NSW ACI 2022, Nielsen 2014, Buist 2008, Wang 2023).
+- Suite : passe panel complète (17 saisons street, contrôle dev 3), relecture documentée, relecture du code, contrôle full, publication 0.2.3.

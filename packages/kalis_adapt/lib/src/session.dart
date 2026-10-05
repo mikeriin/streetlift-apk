@@ -542,7 +542,6 @@ SessionPlan buildSessionPlan(
         final why = <Reason>[
           reason(ReasonCodes.adaptVolumeDown, <String, Object?>{
             'sets': d.sets - sets,
-            'cause': 'pain_return',
           }),
         ];
         adjustments.add(
@@ -920,6 +919,9 @@ SessionPlan buildSessionPlan(
         // Bilan nettement bas : aucune série à moins de trois répétitions
         // en réserve (règle du programme, R5-P14).
         exercise.rirEff = p.coachLowDayRir;
+      }
+      if (item.kind == SetKind.test && view.taperedAt(day)) {
+        exercise.tapered = true;
       }
       if (d.inReturn) {
         // Reprise graduée : la dose écrite au plus, loin de l'échec ;

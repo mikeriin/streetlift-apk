@@ -453,12 +453,15 @@ void main() {
       expect(t.liftedOn(30), isNull);
     });
 
-    test('meilleur maintien récent : jamais un record d\'avant une coupure', () {
-      const bests = <(int, int)>[(0, 40), (3, 42), (30, 20), (33, 22)];
-      expect(recentBestOf(bests, 35, 14, 28), 22);
-      expect(recentBestOf(bests.sublist(0, 2), 5, 14, 28), 42);
-      expect(recentBestOf(bests, 70, 14, 28), 0);
-    });
+    test(
+      'meilleur maintien récent : jamais un record d\'avant une coupure',
+      () {
+        const bests = <(int, int)>[(0, 40), (3, 42), (30, 20), (33, 22)];
+        expect(recentBestOf(bests, 35, 14, 28), 22);
+        expect(recentBestOf(bests.sublist(0, 2), 5, 14, 28), 42);
+        expect(recentBestOf(bests, 70, 14, 28), 0);
+      },
+    );
 
     test('street_12, douleur au coude : aucun test ni hausse sur la zone, '
         'reprise jamais au-dessus de l\'écrit', () {
@@ -471,46 +474,27 @@ void main() {
             ..['painFromDay'] = 28
             ..['painDays'] = 21
             ..['painIntensity'] = 5;
-      final engine = KalisAdapt();
-      final policy = CheckedPolicy(engine);
-      final run = simulate(
-        catalog: catalog,
-        spec: athleteFromJson(athlete),
-        profile: streetProfile(key),
-        seed: 4,
-        policy: policy,
-        program: streetProgram(key),
-        weeks: 16,
-        loop: engine,
-        truthKind: TruthKind.b,
-      );
-      expect(policy.violations, isEmpty);
-      expect(run.painAggravations, 0);
       var returned = 0;
-      for (final s in run.served) {
-        for (final item in s.plan.items) {
-          final back = item.reasons.any(
-            (r) =>
-                r.code == ReasonCodes.adaptLoadHeld &&
-                r.params['cause'] == 'pain_return',
-          );
-          if (!back) {
-            continue;
-          }
-          returned++;
-          expect(item.kind, isNot(SetKind.test));
-          final written = _written(run, s, item.slotId);
-          if (written != null) {
-            expect(
-              item.sets,
-              lessThanOrEqualTo(written.sets),
-              reason: '${item.exerciseId} le ${s.record.date.iso}',
-            );
-          }
-        }
+      for (var seed = 0; seed < 4; seed++) {
+        final engine = KalisAdapt();
+        final policy = CheckedPolicy(engine);
+        final run = simulate(
+          catalog: catalog,
+          spec: athleteFromJson(athlete),
+          profile: streetProfile(key),
+          seed: seed,
+          policy: policy,
+          program: streetProgram(key),
+          weeks: 20,
+          loop: engine,
+          truthKind: TruthKind.b,
+        );
+        expect(policy.violations, isEmpty);
+        expect(run.painAggravations, 0, reason: 'graine $seed');
+        returned += _returnChecked(run);
       }
       expect(returned, greaterThan(0));
-    }, timeout: const Timeout(Duration(minutes: 10)));
+    }, timeout: const Timeout(Duration(minutes: 20)));
 
     test('street_01 : l\'élastique ne change pas dans un sens puis dans '
         'l\'autre d\'une séance à la suivante', () {
@@ -595,4 +579,33 @@ ExercisePrescription? _written(SimRun run, SimSession s, String slotId) {
     }
   }
   return null;
+}
+
+/// Lignes servies en reprise graduée dans [run] ; vérifie qu'aucune n'est un
+/// test ni ne sert plus de séries que le bloc n'en écrit.
+int _returnChecked(SimRun run) {
+  var returned = 0;
+  for (final s in run.served) {
+    for (final item in s.plan.items) {
+      final back = item.reasons.any(
+        (r) =>
+            r.code == ReasonCodes.adaptLoadHeld &&
+            r.params['cause'] == 'pain_return',
+      );
+      if (!back) {
+        continue;
+      }
+      returned++;
+      expect(item.kind, isNot(SetKind.test));
+      final written = _written(run, s, item.slotId);
+      if (written != null) {
+        expect(
+          item.sets,
+          lessThanOrEqualTo(written.sets),
+          reason: '${item.exerciseId} le ${s.record.date.iso}',
+        );
+      }
+    }
+  }
+  return returned;
 }

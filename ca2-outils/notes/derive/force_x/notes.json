@@ -1,0 +1,65 @@
+{
+  "ecole": "force",
+  "programmes": [
+    {
+      "programme": "programme_1.md",
+      "criteres": {"F1": 1.5, "F2": 1, "F3": 1, "F4": 0.5, "F5": 0, "F6": 0, "F7": 2, "F8": 0, "F9": 1},
+      "sans_objet": [],
+      "ensemble": 1,
+      "points_perdus": [
+        {"critere": "F1", "perte": 8.5, "raison": "La compétition porte sur muscle-up strict, tractions et dips au poids du corps en répétitions maximales ; le programme interdit explicitement tractions et dips au poids du corps (« inutile, trop facile ») et ne propose que du lest, des curls et des figures : aucune exposition spécifique au mouvement exact (R2-P9, R1-P9)."},
+        {"critere": "F2", "perte": 9, "raison": "Toutes les séries à l'échec, test de 1RM chaque lundi et mardi, négatives à +85 kg (au-dessus du 1RM de +70 kg) et +5 kg partout chaque semaine sans lien avec un record : aucune marge, zones sans rapport avec un objectif d'endurance de force (R1-P11, R1-P14, R2-P1)."},
+        {"critere": "F3", "perte": 9, "raison": "+60 % de séries en semaine 2 puis +2 séries par exercice chaque semaine (curls à 6 séries en S1 deviennent ~20 séries en S7) ; volume dispersé sur des accessoires de bras, très loin des fourchettes et sans séries de qualité distinctes (R1-P5, R2-P6)."},
+        {"critere": "F4", "perte": 9.5, "raison": "Progression arbitraire et brutale sans aucune décharge sur 8 semaines ; aucun bloc avec rôle (R3-P1 à P9, R3-P9, R5-P3)."},
+        {"critere": "F5", "perte": 10, "raison": "Semaine 8 « la plus chargée », tests de tous les maximums jeudi, deux simulations à l'échec vendredi, compétition samedi : l'inverse d'un affûtage (R3-P12 à P14)."},
+        {"critere": "F6", "perte": 10, "raison": "Négatives supramaximales en dips lestés, muscle-up lesté et muscle-up anneaux à l'échec, échec systématique empilé : techniques sans problème nommé, sans budget ni prérequis (R2-P12 à P22)."},
+        {"critere": "F7", "perte": 8, "raison": "Accessoires de bras massifs sans lien avec l'endurance en tractions/dips ; ni jambes, ni tronc, ni arrière d'épaule ; une journée entière de bras."},
+        {"critere": "F8", "perte": 10, "raison": "Échec sur mouvements à risque (muscle-up lesté, dips lesté à 1RM), 1RM hebdomadaires, négatives au-dessus du 1RM, hausse de volume de +60 % puis continue, coudes sollicités 5 jours sur 7 (tirage lun/ven, bras jeudi, poussée mar, MU sam) : risque tendineux majeur (R5-P3, R5-P20 à P27)."},
+        {"critere": "F9", "perte": 9, "raison": "Séances estimées à 90–110 min pour 75 min disponibles dès la semaine 1, et allongement constant ensuite ; repos de 45 s sur des 1RM et des séries lourdes ; « curl pupitre — » et « extension triceps — » sans charge."},
+        {"critere": "ensemble", "perte": 9, "raison": "Programme dangereux (plafond 5 pour risque santé) et qui ignore l'objectif et l'échéance (pas de mouvements de compétition, pas d'affûtage) : note 0–2."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Réintroduire tractions, dips et muscle-ups stricts au poids du corps comme mouvements principaux, 2 à 3 expositions par semaine chacun, avec séries à % du maximum de répétitions.", "consequence": "L'athlète arrive à une compétition de répétitions sans avoir pratiqué les mouvements jugés : objectif (14/32/56) non atteint."},
+        {"type": "necessaire", "texte": "Supprimer l'échec systématique : 2–3 RIR sur le volume, une seule série proche de l'échec par mouvement et par semaine ; jamais d'échec sur muscle-up lesté ni dips lourds.", "consequence": "Fatigue accumulée, technique dégradée et blessure probable d'épaule ou de coude."},
+        {"type": "necessaire", "texte": "Supprimer les tests de 1RM hebdomadaires et les négatives à +85 kg ; si du lest est gardé, le doser en % du 1RM (70–85 %) avec marge.", "consequence": "Exposition répétée au-dessus du 1RM sur les dips : risque de rupture pectorale ou de lésion d'épaule."},
+        {"type": "necessaire", "texte": "Remplacer +60 % puis +2 séries/semaine par une progression de 10 % maximum par semaine, avec une décharge vers la semaine 4.", "consequence": "Volume multiplié par 3 à 4 en 7 semaines : surcharge tendineuse et surentraînement avant l'échéance."},
+        {"type": "necessaire", "texte": "Écrire un affûtage : volume −40 à −60 % sur les 7–10 derniers jours, intensité gardée, dernier test lourd ≥ 7 jours avant, repos ou activation la veille.", "consequence": "L'athlète se présente épuisé par deux simulations à l'échec la veille : performance effondrée le jour J."},
+        {"type": "necessaire", "texte": "Ramener chaque séance à 75 min et fixer les repos selon l'intensité (3–5 min sur le lourd, 2–3 min sur les séries longues).", "consequence": "Séances impossibles à finir dans le temps donné et séries lourdes ratées faute de récupération."},
+        {"type": "necessaire", "texte": "Supprimer le jour de bras et réduire les curls à 2–3 séries ; ajouter tronc, arrière d'épaule et un peu de bas du corps.", "consequence": "Coudes sollicités cinq jours sur sept : tendinopathie du biceps ou épicondylalgie avant la compétition."},
+        {"type": "amelioration", "texte": "Ajouter un échauffement spécifique écrit et une conduite à tenir en cas de douleur."}
+      ],
+      "points_forts": ["Les records du profil sont repris comme point de départ des charges de lest."]
+    },
+    {
+      "programme": "programme_2.md",
+      "criteres": {"F1": 9, "F2": 9, "F3": 9, "F4": 9.5, "F5": 9, "F6": 9, "F7": 9, "F8": 10, "F9": 9.5},
+      "sans_objet": [],
+      "ensemble": 9,
+      "points_perdus": [
+        {"critere": "F1", "perte": 1, "raison": "Tirage 4 jours sur 4 avec alternance dure/légère bien réglée (R2-P7) ; mais le mouvement exact au standard du test (arrêt bras tendus) n'apparaît que le vendredi, et la part de séries longues proches du test reste faible en bloc 3."},
+        {"critere": "F2", "perte": 1, "raison": "Zones en % du maximum et RIR précisés partout, recalcul après test ; la marge de la série haute du bloc 2–3 (75–80 %) n'est pas chiffrée en RIR, seulement « proche de l'échec »."},
+        {"critere": "F3", "perte": 1, "raison": "Volume hebdomadaire de tractions chiffré et plafonné (+10–15 % par bloc, R1-P5) ; mais la répartition par séance (archer, tempo, EMOM, série haute) n'est pas modulée selon la récupération observée hors règles de douleur/baisse du jour."},
+        {"critere": "F4", "perte": 0.5, "raison": "Trois blocs de 3 semaines + allégée, un levier par semaine, critères de passage liés aux repères de test (20, puis 22) ; en semaine 9, deux leviers changent à la fois (série haute à 80 % et repos 1 min 30), contre la règle « un seul paramètre à la fois »."},
+        {"critere": "F5", "perte": 1, "raison": "Affûtage −40 % en semaine 11, test vendredi S12 avec plan de cadence ; mais le dernier effort lourd (série haute à 80 % le vendredi S11) n'est qu'à 7 jours du test, et le lundi S12 (3 × 8 rapides) est peu justifié (R3-P12 à P14)."},
+        {"critere": "F6", "perte": 1, "raison": "Série fractionnée au-delà du maximum avec rôle (passer le mur des dernières répétitions), place (S7, S10) et dose (une série) ; pas de critère de retrait explicite propre à la technique hors règle « baisse du jour »."},
+        {"critere": "F7", "perte": 1, "raison": "Rows, tirage visage, poussée, tronc et bas du corps deux fois par semaine ; aucun point faible déclaré à cibler, mais aucun accessoire n'est justifié individuellement pour la phase finale (prise : dead hang seulement le dimanche)."},
+        {"critere": "F9", "perte": 0.5, "raison": "Séances estimées dans les 60 min, repos précisés, échauffement écrit ; la règle de douleur prescrit « reculer d'une variante (élastique…) » alors que le profil n'a pas d'élastique."},
+        {"critere": "ensemble", "perte": 1, "raison": "Aucune correction nécessaire ; restent des améliorations (cohérence du levier S9, élastique absent dans la règle de douleur, placement du dernier effort lourd)."}
+      ],
+      "corrections": [
+        {"type": "amelioration", "texte": "Semaine 9 : ne changer qu'un levier (série haute à 80 % avec repos de bloc 2), passer à 1 min 30 seulement en semaine 10, conformément à la règle du programme."},
+        {"type": "amelioration", "texte": "Règle de douleur à 5/10 : remplacer « élastique » par une option disponible au parc (traction pieds au sol sur barre basse, négatives lentes, amplitude réduite)."},
+        {"type": "amelioration", "texte": "Préciser la marge visée pour la série haute du bloc 2–3 (par exemple 1–2 RIR) et pour la fractionnée (s'arrêter si la vitesse chute nettement)."},
+        {"type": "amelioration", "texte": "Ajouter une ou deux séries au standard exact du test (arrêt bras tendus) le lundi en bloc 3, pour augmenter la part du mouvement exact à l'approche du test."},
+        {"type": "amelioration", "texte": "Ajouter un travail de prise (suspensions lestées par le temps) le vendredi en bloc 3, la prise limitant souvent les séries au-delà de 20."}
+      ],
+      "points_forts": [
+        "Objectif servi directement : volume hebdomadaire de tractions chiffré, endurance de force par séries longues, EMOM et réduction des repos, sans lest ni matériel absent.",
+        "Progression prudente : un levier par semaine, +10–15 % par bloc au plus, décharges toutes les 4 semaines, critères de passage conditionnés aux tests.",
+        "Une seule série proche de l'échec par semaine, le reste à 2–4 RIR (R1-P11, R1-P14).",
+        "Règles de conduite complètes : douleur graduée, baisse du jour, séances manquées, repère non atteint, espacement du tirage dur.",
+        "Affûtage et test final planifiés avec plan de cadence et standard de répétition explicite."
+      ]
+    }
+  ]
+}

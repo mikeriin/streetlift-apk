@@ -1,0 +1,73 @@
+{
+  "ecole": "hypertrophie",
+  "programmes": [
+    {
+      "programme": "programme_1.md",
+      "criteres": {"H1": 1, "H2": 3, "H3": 0, "H4": 2, "H5": 1, "H6": 1.5, "H7": 0, "H8": 0, "H9": 1},
+      "sans_objet": [],
+      "ensemble": 1,
+      "points_perdus": [
+        {"critere": "H1", "perte": 9, "raison": "Biceps à ≈ 48 séries de curls à l'échec dès la semaine 1 (lundi 17, jeudi 14, vendredi 17), sans compter les tractions, dos ≈ 22 séries lourdes, puis +60 % de séries en semaine 2 et +2 séries par exercice chaque semaine jusqu'en semaine 8 : volume très au-dessus de tout plafond (R1-P3), montée brutale contraire à R1-P18 ; jambes, pectoraux en volume, deltoïdes postérieurs oubliés."},
+        {"critere": "H2", "perte": 7, "raison": "Lundi et vendredi identiques à l'échec, jeudi bras qui recharge les fléchisseurs du coude entre les deux, samedi muscle-ups lestés : le tirage et les biceps sont sollicités 4 jours sur 5 sans alternance lourde/légère ; séances estimées à 90–110 min pour 75 min disponibles (R1-P8, R6-P3)."},
+        {"critere": "H3", "perte": 10, "raison": "« Toutes les séries à l'échec », y compris tests de 1RM hebdomadaires, muscle-ups lestés et front lever/planche : échec partout, sur des mouvements à risque, contraire à R1-P13 ; aucune variation de plage adaptée à l'exercice."},
+        {"critere": "H4", "perte": 8, "raison": "Trois curls redondants le même jour puis répétés jeudi ; négatives de dips supramaximales à +85 kg (au-dessus du 1RM de +70 kg) ; planche complète et front lever « à l'échec » sans prérequis indiqués ; aucun exercice spécifique au poids du corps alors que l'épreuve est en répétitions au poids du corps (R6-P4, R6-P5)."},
+        {"critere": "H5", "perte": 9, "raison": "Progression arithmétique aveugle : +60 % de séries, +2 séries par exercice et +5 kg partout chaque semaine, sans critère de réussite ni de retrait (R5-P3, R1-P18)."},
+        {"critere": "H6", "perte": 8.5, "raison": "Aucun travail de jambes ni de chaîne postérieure, aucun arrière d'épaule, surcharge des bras ; pas de pompes, dips ni tractions au poids du corps alors que ce sont les épreuves (R5-P27)."},
+        {"critere": "H7", "perte": 10, "raison": "45 s de repos partout, y compris entre essais de 1RM et séries de tractions/dips lestés lourds : ancrage 4 de la grille explicitement atteint, volume de qualité perdu (R1-P15) ; séances hors du temps disponible."},
+        {"critere": "H8", "perte": 10, "raison": "Aucun allègement sur 8 semaines, volume croissant jusqu'à la semaine 8 « la plus chargée », tests de maximum jeudi et deux simulations à l'échec vendredi la veille de la compétition ; négatives supramaximales empilées sur l'échec (R3-P9, R2-P13, R2-P14)."},
+        {"critere": "H9", "perte": 9, "raison": "Programme sans rapport avec l'échéance (sets & reps au poids du corps) et dangereux pour les coudes et épaules d'un athlète avancé ; ne respecte ni le temps disponible ni le besoin d'affûtage (R5-P1, R5-P10 à P19)."},
+        {"critere": "ensemble", "perte": 9, "raison": "Plafond santé (échec systématique sur mouvements à risque, progression brutale, charges supramaximales, 45 s de repos sur des 1RM) et plafond échéance (aucun affûtage, semaine la plus lourde avant la compétition, épreuves non entraînées) ; plus de trois corrections nécessaires majeures : dangereux."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Supprimer l'échec systématique : polyarticulaires et muscle-ups à 1–3 répétitions en réserve, échec réservé à de rares séries sûres (curls, extensions).", "consequence": "Fatigue nerveuse et articulaire cumulée, risque élevé de blessure du coude ou de l'épaule sur muscle-ups lestés et dips lourds, performances en baisse avant l'échéance."},
+        {"type": "necessaire", "texte": "Remplacer la progression (+60 % puis +2 séries/exercice/semaine, +5 kg partout) par un volume de départ dans la fourchette (≈ 10–20 séries par muscle et par semaine) monté par paliers conditionnels.", "consequence": "En semaine 7 les séances dépasseraient plusieurs heures et le volume deviendrait impossible à récupérer : surentraînement ou abandon."},
+        {"type": "necessaire", "texte": "Retirer les tests de 1RM hebdomadaires et les négatives de dips à +85 kg (au-dessus du 1RM).", "consequence": "Exposition chaque semaine à des charges maximales ou supramaximales sans bénéfice pour une épreuve en répétitions, risque de lésion tendineuse ou pectorale."},
+        {"type": "necessaire", "texte": "Porter les repos à 2–3 min sur les polyarticulaires et 3–5 min sur les essais lourds ; travailler la densité seulement sur des séries spécifiques au poids du corps.", "consequence": "Avec 45 s, la qualité des séries s'effondre et les essais lourds sont faits fatigués, donc plus risqués."},
+        {"type": "necessaire", "texte": "Construire le programme autour des épreuves : séries de muscle-ups, tractions et dips au poids du corps sous-maximales, séries hautes, fractionnées et simulations espacées.", "consequence": "Les qualités d'endurance spécifique exigées (14 muscle-ups, 32 tractions, 56 dips) ne seront pas entraînées : objectif manqué."},
+        {"type": "necessaire", "texte": "Remplacer la semaine 8 « la plus chargée » par un affûtage (volume −40 à −60 %, intensité gardée) et supprimer les tests de jeudi et les deux simulations à l'échec de vendredi.", "consequence": "L'athlète arrive épuisé le samedi, en dessous de ses records actuels, avec un risque de blessure en compétition."},
+        {"type": "necessaire", "texte": "Ajouter un allègement en milieu de cycle (semaine 4) et retirer le jour « bras » du jeudi qui recharge les fléchisseurs du coude entre deux séances de tirage.", "consequence": "Tendinopathie du coude probable chez un athlète qui tire 4 jours sur 5."},
+        {"type": "necessaire", "texte": "Ramener chaque séance sous 75 min (supprimer les curls redondants, réduire le nombre d'exercices).", "consequence": "Séances de 90 à 110 min infaisables dans le temps disponible : séances tronquées au hasard."},
+        {"type": "necessaire", "texte": "Exiger un maintien de planche et de front lever sous contrôle avant de les travailler, et ne jamais les pousser à l'échec ; ou les retirer de ce cycle d'épreuve.", "consequence": "Technique sans prérequis à l'échec : risque pour coudes, poignets et épaules, sans lien avec l'échéance."},
+        {"type": "amelioration", "texte": "Ajouter deux expositions hebdomadaires du bas du corps et du travail d'arrière d'épaule (tirage visage, oiseau)."},
+        {"type": "amelioration", "texte": "Prévoir des règles de repli (sommeil, douleur, séance manquée) et une série de calibration de la marge."}
+      ],
+      "points_forts": [
+        "Le profil est clairement décrit (records, échéance, matériel), ce qui permettrait de réécrire un programme adapté."
+      ]
+    },
+    {
+      "programme": "programme_2.md",
+      "criteres": {"H1": 8, "H2": 9, "H3": 8, "H4": 8.5, "H5": 9.5, "H6": 9, "H7": 9, "H8": 9, "H9": 9},
+      "sans_objet": [],
+      "ensemble": 8,
+      "points_perdus": [
+        {"critere": "H1", "perte": 2, "raison": "Lundi : muscle-up 4 + archer 4 + poitrine à la barre 3 + row 3 = 14 séries de tirage dans la séance, au-dessus de 8 à 11 séries par muscle et par séance ; à l'inverse ischio-jambiers à 3 séries/semaine (extension de hanche seule) et aucun travail de deltoïde latéral ; le volume de départ n'est pas « bas » pour un intermédiaire (R1-P1 à P4), même si la hausse est conditionnelle."},
+        {"critere": "H2", "perte": 1, "raison": "Répartition bien pensée (48 h entre tirages durs, dimanche sans traction dynamique, EMOM facile mercredi) ; pas d'alternance lourde/légère formalisée pour la poussée (dips et pompes à peu près au même effort lundi, vendredi, dimanche)."},
+        {"critere": "H3", "perte": 2, "raison": "Marges à 3–4 RIR quasi uniformes sur tous les exercices ; cohérent avec un objectif d'endurance et de prudence articulaire, mais pas de plages ni d'efforts distincts entre polyarticulaires et accessoires (rows, mollets) ; pas de série de calibration de la marge (R1-P13, R6-P2)."},
+        {"critere": "H4", "perte": 1.5, "raison": "Choix stables et complémentaires avec le seul matériel du parc (archer, tempo, arrêt bras tendus, row inversé) ; manque un exercice de flexion du genou/ischios et une alternative au deltoïde latéral ; pas de rotation planifiée (R6-P4, R6-P5)."},
+        {"critere": "H5", "perte": 0.5, "raison": "Règles écrites, un seul levier par semaine, volume plafonné à +10–15 % par bloc et conditionné aux tests, critère de retrait de série si la série haute est manquée ; seul manque : critère d'ajout de séries pour les accessoires (R5-P3, R1-P18)."},
+        {"critere": "H6", "perte": 1, "raison": "Tirage ≥ poussée, arrière d'épaule traité, deux expositions du bas du corps ; chaîne postérieure du bas du corps faible (3 séries d'extension de hanche) (R5-P27)."},
+        {"critere": "H7", "perte": 1, "raison": "Repos différenciés par exercice et réduction des repos par paliers de 15 s ; pas de supersets d'antagonistes pour gagner du temps sur le lundi à ≈ 58 min pour 60 disponibles (R1-P15, R2-P15)."},
+        {"critere": "H8", "perte": 1, "raison": "Allègements en semaines 4 et 8, affûtage en semaine 11, aucune technique d'intensification empilée ; les séries fractionnées au-delà du maximum (semaines 7 et 10) ne sont pas explicitement décomptées du volume de la séance (R3-P9, R2-P13)."},
+        {"critere": "H9", "perte": 1, "raison": "Très bien adapté au temps, au matériel et à l'objectif, avec règles de repli ; mais la règle de douleur propose un élastique absent du profil et contredit la règle d'en-tête sur la douleur de coude à 4/10 (R5-P10 à P19)."},
+        {"critere": "ensemble", "perte": 2, "raison": "Une correction nécessaire simple : consignes de douleur contradictoires et option matérielle indisponible, qui changent ce que l'athlète fait au moment où il a mal."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Unifier la règle de douleur : l'en-tête dit « douleur de coude à 4/10 ou plus : remplacer les tractions du jour par du row inversé, −30 % de volume la semaine suivante », les règles de conduite disent « 3–4/10 : finir la séance sans progresser ; 5/10 : reculer d'une variante (élastique, amplitude réduite) ». Garder une seule échelle et remplacer « élastique » par une variante disponible au parc (traction pieds au sol sur barre basse, négatives, amplitude réduite).", "consequence": "À 4/10 l'athlète ne sait pas s'il continue les tractions ou les remplace, et à 5/10 il ne peut pas appliquer la variante élastique faute de matériel : il risque de poursuivre un tirage douloureux sur le coude."},
+        {"type": "amelioration", "texte": "Ramener le lundi à 10–11 séries de tirage (par exemple 3 séries d'archer au lieu de 4, ou row déplacé au mercredi) pour respecter le plafond par séance."},
+        {"type": "amelioration", "texte": "Ajouter 2–3 séries de flexion de genou au poids du corps (leg curl nordique assisté à la barre basse, glissé) le mercredi pour la chaîne postérieure."},
+        {"type": "amelioration", "texte": "Différencier l'effort : accessoires (rows, mollets, relevés de jambes) à 1–2 RIR, polyarticulaires et tractions à 2–3 RIR, avec une série de calibration de la marge en début de bloc."},
+        {"type": "amelioration", "texte": "Compter explicitement la série fractionnée des semaines 7 et 10 comme une série dure et retirer une série de volume ce jour-là."},
+        {"type": "amelioration", "texte": "Préciser l'échauffement du test du dimanche quand le lundi suit à moins de 24 h et le volume de poussée en semaine d'allègement."}
+      ],
+      "points_forts": [
+        "Progression écrite, un seul levier par semaine, volume de tractions plafonné et conditionné aux tests (semaines 4 et 8).",
+        "Allègements toutes les quatre semaines et affûtage de semaine 11 avant le test final.",
+        "Une seule série proche de l'échec par semaine, le reste à 2–4 RIR : très bonne gestion de la fatigue du coude.",
+        "Espacement de 48 h entre tirages durs et dimanche sans traction dynamique.",
+        "Équilibre tirage/poussée, arrière d'épaule et deux expositions du bas du corps avec le seul matériel du parc.",
+        "Règles de repli complètes : sommeil, séance ou semaine manquée, repère de test non atteint."
+      ]
+    }
+  ]
+}

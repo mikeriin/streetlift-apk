@@ -1,0 +1,73 @@
+{
+  "ecole": "sante",
+  "programmes": [
+    {
+      "programme": "programme_1.md",
+      "criteres": {"S1": 1, "S2": 0, "S3": 0.5, "S4": 1, "S5": 1, "S6": 0, "S7": 1, "S8": 0, "S9": 2},
+      "sans_objet": [],
+      "ensemble": 1,
+      "points_perdus": [
+        {"critere": "S1", "perte": 9, "raison": "Test de 1RM lesté chaque lundi (traction) et chaque mardi (dips) à l'échec avec 45 s de repos entre essais, négatives de dips à +85 kg (supramaximales, au-delà du 1RM de +70 kg) sur l'épaule, muscle-ups lestés +15 kg à l'échec 8 séries : charges maximales répétées sur épaules et coudes sans marge ni seuil de douleur (R5-P23, R5-P27, R4-F11). Aucun échauffement écrit."},
+        {"critere": "S2", "perte": 10, "raison": "Semaine 2 : +60 % de séries ; semaines 3 à 7 : +2 séries par exercice et +5 kg partout chaque semaine (soit +25 kg sur la traction lestée, des curls à 60 kg) : progression brutale, sans aucun garde-fou ni règle de reprise (R5-P3, R5-P7, R5-P22)."},
+        {"critere": "S3", "perte": 9.5, "raison": "Aucune semaine allégée sur 8 semaines, 5 séances à l'échec par semaine, tirage lundi et vendredi plus muscle-ups samedi sans 48 h entre efforts maximaux (R3-P9, R5-P10 à P13) ; aucun critère de baisse du jour."},
+        {"critere": "S4", "perte": 9, "raison": "L'épreuve est une épreuve de répétitions au poids du corps (14 MU, 32 tractions, 56 dips) mais tractions, dips et pompes au poids du corps sont exclus (« trop facile ») : aucun travail dans la zone ni le format de l'épreuve (R4-G1 à G8). 45 s de repos sur des 1RM pour « travailler le cardio » : confusion des qualités."},
+        {"critere": "S5", "perte": 9, "raison": "Volume massif de flexion de coude (curls barre, marteau, pupitre, incliné jusqu'à 8 séries, plus tractions lestées et muscle-ups) et d'extension (barre au front, extensions) : surcharge des coudes, aucun travail scapulaire ni de coiffe, aucun échauffement (R4-F10 à F12, R5-P24)."},
+        {"critere": "S6", "perte": 10, "raison": "« Toutes les séries à l'échec, y compris les muscle-ups » et les 1RM hebdomadaires : échec systématique sur des mouvements à risque, contraire à R4-G3 et R5-P27."},
+        {"critere": "S7", "perte": 9, "raison": "Séances estimées à 90–110 min pour 75 min disponibles dès la semaine 1, puis allongées par +60 % et +2 séries par semaine : infaisable. Front lever et planche « complets » sans prérequis connus dans le profil."},
+        {"critere": "S8", "perte": 10, "raison": "Semaine 8 « la plus chargée », test de tous les maximums jeudi, deux simulations complètes à l'échec vendredi, compétition samedi : l'inverse d'un affûtage de 8 à 14 jours à −40/−60 % (R3-P17, P20, P21). Pas de stratégie de série."},
+        {"critere": "S9", "perte": 8, "raison": "Durées annoncées supérieures au temps disponible, « échec » comme seule consigne, charges +5 kg partout sans base pour les exercices sans charge indiquée (curl pupitre, extension triceps) ; aucune consigne en cas de douleur ou de fatigue."},
+        {"critere": "ensemble", "perte": 9, "raison": "Dangereux (échec systématique sur mouvements à risque, 1RM hebdomadaires, négatives supramaximales, progression brutale) et sans rapport avec l'épreuve (aucun travail de répétitions au poids du corps, pas d'affûtage, épuisement la veille) : plafonds de 5 et de 6 franchis largement."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Supprimer l'échec systématique : 2 à 4 répétitions en réserve sur le volume, une seule série proche de l'échec par mouvement et par semaine, jamais d'échec sur muscle-ups ni charges lourdes.", "consequence": "Blessure probable d'épaule ou de coude et fatigue cumulée qui fait régresser les maximums avant la compétition."},
+        {"type": "necessaire", "texte": "Retirer les tests de 1RM hebdomadaires et les négatives de dips à +85 kg ; garder un entretien de force lestée à 2–3 répétitions en réserve, 2 à 3 min de repos.", "consequence": "Exposition répétée de l'épaule à des charges supramaximales sans marge : risque élevé de lésion pectorale ou de coiffe."},
+        {"type": "necessaire", "texte": "Remplacer la progression +60 % puis +2 séries et +5 kg par semaine par des hausses de 5 à 10 % de volume au plus, avec une semaine allégée toutes les 3 à 4 semaines.", "consequence": "Volume et charges intenables dès la semaine 3, séances de plus de deux heures, surmenage ou blessure."},
+        {"type": "necessaire", "texte": "Construire le programme autour des trois mouvements de l'épreuve au poids du corps (séries sous-maximales, densité croissante, séries fractionnées, simulations à J−10) au lieu des curls et isolations.", "consequence": "Aucun progrès spécifique vers 14 MU, 32 tractions et 56 dips : l'objectif de la compétition est manqué."},
+        {"type": "necessaire", "texte": "Faire de la semaine 7–8 un affûtage (−40 à −60 % de volume, intensité gardée), dernière simulation à J−7/J−10, aucun test ni simulation dans les 72 h avant la compétition.", "consequence": "L'athlète arrive épuisé par les tests de jeudi et les deux simulations à l'échec de vendredi et sous-performe samedi."},
+        {"type": "necessaire", "texte": "Ramener chaque séance sous 75 min, échauffement de 10 min compris, et écrire cet échauffement (épaules, poignets, coudes, scapula).", "consequence": "Séances non faites ou bâclées, mouvements lourds à froid."},
+        {"type": "necessaire", "texte": "Rééquilibrer coudes et épaules : réduire fortement les curls et extensions, ajouter tirage horizontal, travail scapulaire et de coiffe ; inclure jambes au moins une fois par semaine.", "consequence": "Tendinopathie du coude (épicondylalgie, tendon distal du biceps) très probable avec ce volume de flexion à l'échec."},
+        {"type": "necessaire", "texte": "Repos adaptés : 2 à 4 min sur le lourd, repos de l'épreuve sur le travail spécifique ; retirer « 45 s pour le cardio ».", "consequence": "Charges lourdes ratées par fatigue, technique dégradée, risque accru."},
+        {"type": "necessaire", "texte": "Écrire des seuils de douleur (0–10) et une règle de baisse du jour.", "consequence": "Une douleur naissante sera chargée à l'échec jusqu'à la blessure."},
+        {"type": "amelioration", "texte": "Retirer front lever et planche complets ou les remplacer par des progressions validées par un test, puisque le profil n'en mentionne pas la maîtrise."},
+        {"type": "amelioration", "texte": "Prévoir une stratégie de série pour le jour J (cadence, pauses bras tendus, découpage)."}
+      ],
+      "points_forts": [
+        "Le matériel utilisé est disponible au profil.",
+        "La compétition et sa date sont identifiées."
+      ]
+    },
+    {
+      "programme": "programme_2.md",
+      "criteres": {"S1": 9.5, "S2": 10, "S3": 9.5, "S4": 9.5, "S5": 9, "S6": 9.5, "S7": 9, "S8": 9.5, "S9": 8.5},
+      "sans_objet": [],
+      "ensemble": 8,
+      "points_perdus": [
+        {"critere": "S1", "perte": 0.5, "raison": "La règle douleur 5/10 propose « reculer d'une variante (élastique…) » alors que le profil n'a pas d'élastique ; l'alternative amplitude réduite existe, mais l'option principale est impossible."},
+        {"critere": "S3", "perte": 0.5, "raison": "Isométries de tirage le dimanche puis force du lundi à moins de 24 h : assumé et dosé loin de l'échec, mais placement serré au regard de la règle des 48 h (R5-P13), sans alternative proposée."},
+        {"critere": "S4", "perte": 0.5, "raison": "Volumes hebdomadaires du bloc 2 (≈ 165–175) inférieurs à la semaine 3 (≈ 180) alors que la semaine 5 est « la semaine 3 recalculée sur le nouveau maximum » (qui augmenterait le volume) : chiffres de volume incohérents, à clarifier."},
+        {"critere": "S5", "perte": 1, "raison": "Bonne base (échauffement écrit, scapula, tirage visage, row), mais pas de variation de prise (supination, neutre) pour répartir la charge sur le coude malgré ≈ 150–190 tractions par semaine en pronation (R4-F10)."},
+        {"critere": "S6", "perte": 0.5, "raison": "Série fractionnée « au-delà du maximum » (≈ 105 %) : proche de l'échec, encadrée et unique, mais sans consigne d'arrêt si la technique se dégrade."},
+        {"critere": "S7", "perte": 1, "raison": "Séances dans le temps disponible, mais pas de version courte prévue pour un jour pressé."},
+        {"critere": "S8", "perte": 0.5, "raison": "Affûtage d'environ 11 jours et plan de test écrit, mais l'intensité de la semaine 11 (série haute à 80 %) mériterait une marge en répétitions en réserve précisée."},
+        {"critere": "S9", "perte": 1.5, "raison": "Deux règles douleur se contredisent : « douleur de coude à 4/10 ou plus : remplacer les tractions du jour par du row inversé et −30 % la semaine suivante » (vue d'ensemble) contre « 3–4/10 : finir la séance sans progresser » (règles de conduite) ; référence à l'élastique absent."},
+        {"critere": "ensemble", "perte": 2, "raison": "Programme individualisé, progressif et sûr ; une correction nécessaire (consigne douleur contradictoire à 4/10, qui change ce que fait l'athlète) ; reste des améliorations."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Unifier la règle douleur : par exemple 3/10 finir sans progresser ; 4–5/10 tractions remplacées par row inversé ou amplitude réduite et −30 % la semaine suivante ; 6/10 ou plus arrêt et kiné. Supprimer la mention de l'élastique.", "consequence": "À 4/10 au coude, l'athlète ne sait pas s'il doit continuer ses tractions ou les remplacer, et peut continuer à charger un coude irrité."},
+        {"type": "amelioration", "texte": "Remettre en cohérence les volumes hebdomadaires du bloc 2 avec « semaine 3 recalculée sur le nouveau maximum » (donner les séries/répétitions chiffrées de la semaine 5)."},
+        {"type": "amelioration", "texte": "Varier les prises sur une partie du volume (supination, neutre sur les barres parallèles) pour répartir la contrainte sur le coude."},
+        {"type": "amelioration", "texte": "Prévoir une version courte de 35–40 min par séance (séries clés seulement)."},
+        {"type": "amelioration", "texte": "Ajouter une consigne d'arrêt de la série fractionnée si la technique se dégrade (balancement, amplitude incomplète)."},
+        {"type": "amelioration", "texte": "Préciser la marge (2 RIR) de la série haute de la semaine 11."}
+      ],
+      "points_forts": [
+        "Départ prudent (série haute à 5 RIR), un seul levier nouveau par semaine, hausses de volume de 10 à 15 % par bloc conditionnées aux tests.",
+        "Une seule série proche de l'échec par semaine, le reste à 2–4 RIR.",
+        "Seuils de douleur chiffrés avec orientation vers un kinésithérapeute, critères de baisse du jour, règles pour séance et semaine manquées.",
+        "Spécificité : séries hautes, réduction des repos par paliers, série fractionnée, standard de répétition du test, stratégie de série écrite pour le test final.",
+        "Semaines allégées toutes les 4 semaines, affûtage −40 % avec intensité gardée, tests aux semaines 4, 8 et 12 avec repères et règles si non atteints.",
+        "Équilibre : tirage horizontal, tirage visage, échauffement écrit avec scapula, jambes deux fois par semaine, matériel strictement celui du parc."
+      ]
+    }
+  ]
+}

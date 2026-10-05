@@ -130,7 +130,10 @@ EventDayPlan buildEventDay(
     }
     final f = track.filter;
     final bodyPart = info.fraction * bodyWeight;
-    final estimate = exp(f.m[0] + f.m[3] + f.gRef);
+    // (Après un affûtage, le maximum du jour compte son gain : CA2,
+    // partie 0 ; Travis et al. 2020.)
+    final gain = view.taperedAt(day) ? 1 + p.coachTaperGain : 1.0;
+    final estimate = exp(f.m[0] + f.m[3] + f.gRef) * gain;
     final relSd = f.loadSd(1);
     final picks = attemptLadder(
       estimateTotal: estimate,

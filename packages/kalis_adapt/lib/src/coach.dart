@@ -1904,7 +1904,8 @@ List<SetPlan>? _testPlans(
     final recent = recentHeavy(track, run.day, p);
     final lift = competitionLiftOf(run.ctx.profile, info.id, run.day);
     final ladder = attemptLadder(
-      estimateTotal: exp(f.m[0] + f.m[3] + f.gRef),
+      estimateTotal:
+          exp(f.m[0] + f.m[3] + f.gRef) * (ex.tapered ? 1 + p.coachTaperGain : 1.0),
       relSd: dayRelSd(ex),
       bodyPart: bw,
       grid: info.grid,
