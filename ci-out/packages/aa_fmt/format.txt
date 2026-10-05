@@ -1,4 +1,4 @@
-Formatted 185 files (0 changed) in 1.21 seconds.
+Formatted 185 files (0 changed) in 1.24 seconds.
 
 Warning: Package resolution error when reading "analysis_options.yaml" file for "/home/runner/work/streetlift-apk/streetlift-apk/out-packages/aa_fmt/kalis_adapt/bin/kalis_adapt_cli.dart":
 Failed to resolve package URI "package:flutter_lints/flutter.yaml" in include at "/home/runner/work/streetlift-apk/streetlift-apk/analysis_options.yaml".
