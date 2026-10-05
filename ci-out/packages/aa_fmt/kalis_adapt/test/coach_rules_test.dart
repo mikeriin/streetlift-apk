@@ -244,6 +244,53 @@ void main() {
     }, timeout: const Timeout(Duration(minutes: 10)));
   });
 
+  group('tenue après un test', () {
+    // CX, correction 1 : la borne de hausse d'une tenue laisse toujours
+    // servir 55 % du meilleur maintien mesuré (la tenue menton écrite à
+    // 17-19 s après un test de 30 s était servie à 5-9 s).
+    test('street_01 : la tenue servie rejoint 55 % du test', () {
+      const key = 'street_01_debutant_complet';
+      const id = 'cs-tenue-menton-barre-pronation';
+      final engine = KalisAdapt();
+      final policy = CheckedPolicy(engine);
+      final run = simulate(
+        catalog: catalog,
+        spec: streetAthlete(key),
+        profile: streetProfile(key),
+        seed: 4,
+        policy: policy,
+        program: streetProgram(key),
+        weeks: 12,
+        loop: engine,
+        truthKind: TruthKind.b,
+      );
+      expect(policy.violations, isEmpty);
+      var best = 0;
+      var after = 0;
+      var checked = 0;
+      for (final r in run.sets) {
+        if (r.exerciseId != id) {
+          continue;
+        }
+        if (r.test) {
+          if (r.amount > best) {
+            best = r.amount.round();
+          }
+          continue;
+        }
+        if (best > 0) {
+          checked++;
+          if (r.targetHigh > after) {
+            after = r.targetHigh;
+          }
+        }
+      }
+      expect(best, greaterThan(0));
+      expect(checked, greaterThan(0));
+      expect(after, greaterThanOrEqualTo((best * 0.55).floor()));
+    }, timeout: const Timeout(Duration(minutes: 10)));
+  });
+
   group('séries fractionnées', () {
     // Plage écrite hors de portée le jour même (record déclaré au-dessus du
     // maximum réel, ou maximum en baisse) : des séries plus courtes et plus

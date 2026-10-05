@@ -161,6 +161,7 @@ final class AdaptParams {
     this.coachHistoryRiseFactor = 0.5,
     this.coachHoldRise = const <double>[0.20, 0.15, 0.10, 0.10],
     this.coachHoldRiseSlackSeconds = 1,
+    this.coachHoldMaxFloorShare = 0.55,
     this.coachEventNearDays = 14,
     this.coachEccentricEventDays = 10,
     this.coachStopMinSets = 2,
@@ -743,6 +744,12 @@ final class AdaptParams {
 
   /// Tolérance de cette hausse, en secondes.
   final int coachHoldRiseSlackSeconds;
+
+  /// Part du meilleur maintien mesuré que la borne de hausse d'une tenue
+  /// laisse toujours servir (CX, correction 1 : après un test qui saute, la
+  /// tenue écrite à 55-65 % du test était servie à 5-9 s, relecture
+  /// documentée et panel, `street_01` ; R4-F2 : 50 à 70 % du maximum).
+  final double coachHoldMaxFloorShare;
 
   /// Jours avant une échéance principale à partir desquels les décisions
   /// sont prudentes.

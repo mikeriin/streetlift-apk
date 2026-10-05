@@ -92,8 +92,8 @@ Athlète simulé, maximum réel hors fatigue : 22 au départ (le record déclar�
 | 7 | construction (volume) | 3 × 17 s (57 % du maximum testé), maintien | 17-17-17 s | 14 (arrêt avant la cible)-11 (arrêt avant la cible)-16 (arrêt avant la cible) s | 5+ → 5,5 ; suivantes 5+ → 5,4 | 33 / 36 | — |
 | 8 | construction (volume) | 3 × 19 s (63 % du maximum testé), maintien | 16-16-16 s | 15 (arrêt avant la cible)-14 (arrêt avant la cible)-13 (arrêt avant la cible) s | 5+ → 5,4 ; suivantes 5+ → 5,6 | 35 / 36 | hausse du maintien bornée pour les tendons (coude) |
 | 9 | construction (volume) | 3 × 19 s (63 % du maximum testé), maintien | 16-16-16 s | 11 (arrêt avant la cible)-16-6 (arrêt avant la cible) s | 5+ → 6,5 ; suivantes 5+ → 6,4 | 35 / 36 | hausse du maintien bornée pour les tendons (coude) |
-| 10 | construction (volume) | 3 × 19 s (63 % du maximum testé), maintien | 14-14-14 s | 14-13 (arrêt avant la cible)-14 s | 5+ → 5,6 ; suivantes 5+ → 5,5 | 34 / 37 | hausse du maintien bornée pour les tendons (coude) |
-| 11 | affûtage | 2 × 18 s (60 % du maximum testé), maintien | 16-16 s | 9 (arrêt avant la cible)-8 (arrêt avant la cible) s | 5+ → 7,1 ; suivantes 5+ → 7,3 | 35 / 37 | hausse du maintien bornée pour les tendons (coude) |
+| 10 | construction (volume) | 3 × 19 s (63 % du maximum testé), maintien | 16-16-16 s | 16-13 (arrêt avant la cible)-15 (arrêt avant la cible) s | 5+ → 5,1 ; suivantes 5+ → 5,4 | 34 / 37 | hausse du maintien bornée pour les tendons (coude) |
+| 11 | affûtage | 2 × 18 s (60 % du maximum testé), maintien | 18-18 s | 9 (arrêt avant la cible)-8 (arrêt avant la cible) s | 5+ → 7,1 ; suivantes 5+ → 7,3 | 35 / 37 | — |
 | 12 | test | 2 × 5 à 45 s, test | (5 à 45)-(5 à 45) s | 31-33 (échec) s | test | 36 / 37 | — |
 
 Athlète simulé, maximum réel hors fatigue : 34 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 36 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
@@ -125,4 +125,4 @@ Le même profil et le même moteur, avec d'autres hypothèses sur l'athlète ré
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | modèle 2 (courbe linéaire, notes d'effort entières et plafonnées, récupération lente entre séries, tendons à adaptation lente) | 0 % | 1,73 | 0 % | 0 % | 1,017 % | — | — | 0 |
 | modèle 1 (courbe charge-répétitions à plateau, notes d'effort continues) | 0 % | 1,53 | 0 % | 0 % | 1,347 % | — | — | 0 |
-| modèle 3 (courbe en puissance, forme masquée par la fatigue, mauvais jours marqués, désentraînement rapide) | 0 % | 1,75 | 0 % | 0 % | 0,335 % | — | — | 0 |
+| modèle 3 (courbe en puissance, forme masquée par la fatigue, mauvais jours marqués, désentraînement rapide) | 0 % | 1,75 | 0 % | 0 % | 0,336 % | — | — | 0 |

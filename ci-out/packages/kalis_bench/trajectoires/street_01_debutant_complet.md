@@ -21,7 +21,7 @@ Un athlète simulé (capacités réelles connues du simulateur, jamais du moteur
 
 - Séances faites : 36 sur 36 (9 ajustées le jour même).
 - Échecs non voulus (hors tests et tentatives) : 0 % des séries de travail.
-- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 2,25 répétition en réserve (sur les 75 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 32,2 %.
+- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 2,29 répétition en réserve (sur les 75 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 32,2 %.
 - Plus forte hausse de charge totale d'un mouvement principal d'une séance à la suivante, à schéma égal : 0 % ; hausses de plus de 10 % faites de plusieurs crans : 0.
 - Progression réelle moyenne des mouvements suivis : 1,082 % par semaine.
 - Douleur : 0 hausse(s) de charge sur une zone douloureuse signalée.
@@ -60,7 +60,7 @@ Athlète simulé, maximum réel hors fatigue : 16 au départ (le record déclar�
 | 5 | construction (volume) | 2 × 5 | 5-5 | 5-4 | 3 → 3,9 ; suivantes 3 → 3,5 | 9 / 8 | allégé pour garder la marge prévue (au moins 3 en réserve) ; dernières séries plus dures que prévu |
 | 6 | test | 1 × 9 à 11, test | (6 à 11) | 7 | test | 9 / 8 | — |
 | 7 | construction (volume) | 1 × 4 | 6 | 6 | 2 → 3,5 | 10 / 8 | — |
-| 10 | construction (volume) | 2 × 4 | (4 à 8)-(4 à 16) | 7-5 | 2 → 2,6 ; suivantes 2 → 2,6 | 10 / 8 | série repère : une série ouverte (au ressenti, 2 en réserve) pour mesurer où en est l'athlète |
+| 10 | construction (volume) | 2 × 4 | (4 à 8)-(4 à 16) | 7-5 | 2 → 2,5 ; suivantes 2 → 2,6 | 10 / 8 | série repère : une série ouverte (au ressenti, 2 en réserve) pour mesurer où en est l'athlète |
 | 11 | affûtage | 2 × 4 | 4-4 | 4-4 | 4 → 5,4 ; suivantes 3 → 4,6 | 9 / 8 | — |
 | 12 | test | 1 × 4 | 4 | 4 | 4 → 5,2 | 9 / 8 | — |
 
@@ -75,11 +75,11 @@ Athlète simulé, maximum réel hors fatigue : 8 au départ (le record déclaré
 | 5 | construction (volume) | 3 × 6 s, maintien | 4-4-4 s | 4-4-4 s | 5+ → 8,4 ; suivantes 5+ → 8,4 | 33 / 10 | hausse du maintien bornée pour les tendons (coude) ; calibrage (séance 3 sur ce mouvement) |
 | 6 | test | 2 × 5 à 30 s, test | (5 à 30)-(5 à 30) s | 28-30-5-5 s | 4,5 → 8,2 ; suivantes 4,5 → 8,1 | 35 / 29 | — |
 | 7 | construction (volume) | 3 × 17 s (57 % du maximum testé), maintien | 5-5-5 s | 5-5-5 s | 5+ → 8,2 ; suivantes 5+ → 8,1 | 35 / 29 | — |
-| 8 | construction (volume) | 3 × 19 s (63 % du maximum testé), maintien | 6-6-6 s | 6-6-6 s | 5+ → 7,9 ; suivantes 5+ → 7,9 | 35 / 29 | hausse du maintien bornée pour les tendons (coude) |
-| 9 | construction (volume) | 3 × 19 s (63 % du maximum testé), maintien | 7-7-7 s | 7-7-7 s | 5+ → 7,7 ; suivantes 5+ → 7,6 | 36 / 30 | hausse du maintien bornée pour les tendons (coude) |
-| 10 | construction (volume) | 3 × 19 s (63 % du maximum testé), maintien | 8-8-8 s | 8-8-8 s | 5+ → 7,3 ; suivantes 5+ → 7,2 | 34 / 30 | hausse du maintien bornée pour les tendons (coude) |
-| 11 | affûtage | 2 × 18 s (60 % du maximum testé), maintien | 9-9 s | 9-9 s | 5+ → 7,2 ; suivantes 5+ → 7,2 | 37 / 30 | hausse du maintien bornée pour les tendons (coude) |
-| 12 | test | 2 × 5 à 45 s, test | (5 à 45)-(5 à 45) s | 30-32 (échec) s | test | 36 / 37 | — |
+| 8 | construction (volume) | 3 × 19 s (63 % du maximum testé), maintien | 16-16-16 s | 13 (arrêt avant la cible)-16-16 s | 4,5 → 6 ; suivantes 4 → 5 | 35 / 29 | hausse du maintien bornée pour les tendons (coude) |
+| 9 | construction (volume) | 3 × 19 s (63 % du maximum testé), maintien | 18-18-18 s | 18-18-18 s | 3,5 → 4,7 ; suivantes 3,5 → 4,3 | 36 / 30 | hausse du maintien bornée pour les tendons (coude) |
+| 10 | construction (volume) | 3 × 19 s (63 % du maximum testé), maintien | 19-19-19 s | 19-17-17 s | 3,5 → 4,2 ; suivantes 3,5 → 4,4 | 34 / 30 | allégé pour garder la marge prévue (au moins 5 en réserve) ; dernières séries plus dures que prévu |
+| 11 | affûtage | 2 × 18 s (60 % du maximum testé), maintien | 18-18 s | 18-18 s | 4 → 4,9 ; suivantes 3,5 → 4,8 | 37 / 30 | — |
+| 12 | test | 2 × 5 à 45 s, test | (5 à 45)-(5 à 45) s | 30-31 (échec) s | test | 35 / 36 | — |
 
 Athlète simulé, maximum réel hors fatigue : 34 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 36 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
 
@@ -104,6 +104,6 @@ Le même profil et le même moteur, avec d'autres hypothèses sur l'athlète ré
 
 | Athlète simulé | Échecs non voulus | Écart d'effort | Séries ≥ 2 rép. plus dures | Plus forte hausse à schéma égal | Progression par semaine | Tentatives réussies | Échéance / maximum du jour | Hausses sur zone douloureuse |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| modèle 2 (courbe linéaire, notes d'effort entières et plafonnées, récupération lente entre séries, tendons à adaptation lente) | 0 % | 2,25 | 0 % | 0 % | 1,082 % | — | — | 0 |
+| modèle 2 (courbe linéaire, notes d'effort entières et plafonnées, récupération lente entre séries, tendons à adaptation lente) | 0 % | 2,29 | 0 % | 0 % | 1,082 % | — | — | 0 |
 | modèle 1 (courbe charge-répétitions à plateau, notes d'effort continues) | 0 % | 1,94 | 0 % | 0 % | 1,459 % | — | — | 0 |
-| modèle 3 (courbe en puissance, forme masquée par la fatigue, mauvais jours marqués, désentraînement rapide) | 0 % | 1,93 | 0 % | 0 % | 1,006 % | — | — | 0 |
+| modèle 3 (courbe en puissance, forme masquée par la fatigue, mauvais jours marqués, désentraînement rapide) | 0 % | 1,93 | 0 % | 0 % | 1,009 % | — | — | 0 |

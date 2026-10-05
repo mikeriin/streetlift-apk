@@ -82,16 +82,16 @@ Violations de sécurité : **23** au total (Pas d'allègement avant l'échéance
 | `autres_08_crossfit_intermediaire` | 79/80 | 0.0 | 1.656 | 0.824 | 0.125 | 0.167 | — | 0 | ecart_rir | 12 |
 | `autres_09_perte_de_poids_debutante` | 36/36 | 0.005 | 2.255 | 0.828 | 0.143 | 0.823 | — | 0 | ecart_rir | 0 |
 | `autres_10_contraintes_multiples` | 36/36 | 0.0 | 2.888 | 0.978 | 0.0 | 0.774 | — | 0 | ecart_rir | 0 |
-| `street_01_debutant_complet` | 36/36 | 0.0 | 2.914 | 0.779 | 0.0 | 1.082 | — | 0 | ecart_rir, ecart_effort | 0 |
+| `street_01_debutant_complet` | 36/36 | 0.0 | 2.856 | 0.779 | 0.0 | 1.082 | — | 0 | ecart_rir, ecart_effort | 0 |
 | `street_02_debutant_surpoids` | 36/36 | 0.0 | 2.487 | 0.718 | 0.0 | 0.796 | — | 0 | ecart_rir, ecart_effort | 0 |
-| `street_03_debutante` | 36/36 | 0.0 | 3.555 | 0.629 | 0.0 | 1.017 | — | 0 | ecart_rir, ecart_effort | 0 |
+| `street_03_debutante` | 36/36 | 0.0 | 3.552 | 0.629 | 0.0 | 1.017 | — | 0 | ecart_rir, ecart_effort | 0 |
 | `street_04_reprise_longue_pause` | 48/48 | 0.0 | 3.042 | 0.438 | 0.0 | 0.531 | — | 0 | ecart_rir | 0 |
-| `street_05_inter_calisthenie_front_lever` | 63/64 | 0.0 | 1.674 | 0.658 | 0.0 | — | — | 0 | ecart_rir | 0 |
+| `street_05_inter_calisthenie_front_lever` | 63/64 | 0.0 | 1.671 | 0.658 | 0.0 | — | — | 0 | ecart_rir | 0 |
 | `street_06_inter_sets_reps` | 48/48 | 0.0 | 2.087 | 0.594 | 0.0 | 0.332 | — | 0 | ecart_rir | 0 |
 | `street_07_avance_streetlifting_competition` | 60/60 | 0.001 | 2.753 | 0.673 | 0.326 | 0.062 | 0.995 | 0 | ecart_rir, pics_de_charge, performance_echeance, ecart_effort, pics_a_schema_egal | 0 |
 | `street_08_avance_sets_reps_competition` | 40/40 | 0.0 | 3.579 | 0.557 | 0.0 | 0.16 | 0.837 | 0 | ecart_rir, performance_echeance, ecart_effort | 0 |
 | `street_09_elite_streetlifting` | 60/60 | 0.003 | 3.144 | 0.607 | 0.32 | 0.023 | 0.973 | 0 | ecart_rir, pics_de_charge, performance_echeance, ecart_effort | 0 |
-| `street_10_elite_figures` | 91/96 | 0.0 | 2.083 | 0.42 | 0.0 | 0.056 | — | 0 | ecart_rir, ecart_effort | 0 |
+| `street_10_elite_figures` | 91/96 | 0.0 | 2.134 | 0.406 | 0.0 | 0.056 | — | 0 | ecart_rir, ecart_effort | 0 |
 | `street_11_master_51_ans` | 48/48 | 0.001 | 1.608 | 0.782 | 0.049 | 0.261 | — | 0 | ecart_rir | 0 |
 | `street_12_antecedent_coude` | 48/48 | 0.0 | 2.445 | 0.625 | 0.286 | 0.255 | — | 0 | ecart_rir, pics_de_charge, ecart_effort | 0 |
 | `street_13_peu_de_temps` | 34/36 | 0.0 | 1.744 | 0.755 | 0.0 | 0.625 | — | 0 | ecart_rir, ecart_effort | 0 |

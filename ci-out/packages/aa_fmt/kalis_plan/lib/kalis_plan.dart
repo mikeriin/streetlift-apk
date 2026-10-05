@@ -23,7 +23,8 @@ export 'src/coach/athlete.dart'
         coachNeutralSupportEquipment,
         coachPainProvokes,
         coachPainStopHits,
-        coachPronationPull;
+        coachPronationPull,
+        coachWristLoadedPrep;
 export 'src/coach/audit.dart';
 export 'src/coach/coach.dart'
     show CoachEngine, coachMethodFor, isCoachPlan, reconcileSkeleton;

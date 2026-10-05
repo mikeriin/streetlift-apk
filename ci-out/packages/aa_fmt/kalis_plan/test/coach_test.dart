@@ -1069,6 +1069,9 @@ void main() {
               if (zone == BodyZone.elbow) {
                 expect(coachPronationPull(e), isFalse, reason: i.exerciseId);
               }
+              if (zone == BodyZone.wristHand) {
+                expect(i.exerciseId, isNot(coachWristLoadedPrep));
+              }
             }
           }
         }
