@@ -2908,7 +2908,10 @@ final class Prescriber {
         high = 11;
         low = 8;
         x.reasons.add(
-          _note(CoachNotes.pushHeight, _clampInt(((max - 13) / 5).ceil(), 1, 3)),
+          _note(
+            CoachNotes.pushHeight,
+            _clampInt(((max - 13) / 5).ceil(), 1, 3),
+          ),
         );
       }
       x
@@ -5027,8 +5030,20 @@ final class Prescriber {
             (m == Method.liftHeavy || m == Method.liftVolume) &&
             x.load != null &&
             a.oneRm[x.e.id] != null;
-        final when = a.recordDay[x.e.id];
-        final recent = when != null && when.daysUntil(a.start) <= 42;
+        // (Seul un test guidé ou de compétition daté de six semaines au
+        // plus dispense de la série repère : un record déclaré prend la date
+        // du profil, ce n'est pas une mesure.)
+        var recent = false;
+        for (final b in a.profile.benchmarks ?? const <Benchmark>[]) {
+          final when = b.date;
+          if (b.exerciseId == x.e.id &&
+              when != null &&
+              (b.source == BenchmarkSource.guidedTest ||
+                  b.source == BenchmarkSource.competition) &&
+              when.daysUntil(a.start) <= 42) {
+            recent = true;
+          }
+        }
         if (x.kind == SetKind.work &&
             (reps || lift) &&
             !recent &&
@@ -6146,7 +6161,7 @@ final class Prescriber {
         }
         // Même exercice à répétitions égales, quel que soit l'emplacement :
         // +`coachLoadRise` au plus sur la semaine d'avant (CX, correction 1).
-        final same = last?.loadsByExercise['${x.e.id}|$reps'];
+        final same = src?.loadsByExercise['${x.e.id}|$reps'];
         if (same != null && same > 0) {
           allowed = capped(allowed, same * (1 + rise));
         }
