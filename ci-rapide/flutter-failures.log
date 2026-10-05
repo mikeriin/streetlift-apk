@@ -1,0 +1,67 @@
+01:25 +414 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/l4_depart_test.dart: Écrans premier départ : date, référence saisie, les autres inconnues
+01:26 +414 ~5 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/l4_depart_test.dart: Écrans premier départ : date, référence saisie, les autres inconnues
+01:26 +414 ~5 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: parcours asset de l’application : copie octet pour octet du paquet [E]
+  Expected: [
+              123,
+              10,
+              32,
+              34,
+              115,
+              99,
+              104,
+              101,
+              109,
+              97,
+              34,
+              58,
+              32,
+              49,
+              44,
+              10,
+              32,
+              34,
+              118,
+              101,
+              114,
+              115,
+              105,
+              111,
+              ...
+            ]
+    Actual: [
+              123,
+              10,
+--
+01:43 +465 ~7 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: écrans profils types : le flux montre exactement les questions du parcours, écran par écran (clair)
+01:43 +465 ~7 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: écrans profils types : le flux montre exactement les questions du parcours, écran par écran (clair)
+01:43 +465 ~7 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/g7_plan_test.dart: magasin textes : tous les codes de raison du plan ont une phrase [E]
+  Expected: not 'Choix du moteur.'
+    Actual: 'Choix du moteur.'
+  plan.coach_note
+  
+  package:matcher                                     expect
+  package:flutter_test/src/widget_tester.dart 473:18  expect
+  test/g7_plan_test.dart 559:9                        main.<fn>.<fn>
+  
+01:45 +466 ~7 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/g7_plan_test.dart: écrans création complète : passe 1, autre proposition, revue (sais, sais pas + variante, diff, annulation), récapitulatif, passe 2, ajustement refusé, validation
+01:45 +467 ~7 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/g7_plan_test.dart: écrans création complète : passe 1, autre proposition, revue (sais, sais pas + variante, diff, annulation), récapitulatif, passe 2, ajustement refusé, validation
+01:46 +468 ~7 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: écrans records : ajout par la feuille, fourchettes sans le mouvement
+01:46 +469 ~7 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/g7_plan_test.dart: écrans « Où j’en suis » : choix de la semaine et de la séance
+01:46 +470 ~7 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: écrans échéance : compétition de force avec un règlement pré-rempli
+01:47 +471 ~7 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: écrans Compléter mon profil : questions du schéma 3 seulement, programme inchangé
+01:48 +472 ~7 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/m1_engine3d_test.dart: (setUpAll)
+01:48 +472 ~7 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: écrans texte à 200 % : récupération et records sans débordement (sombre)
+01:48 +473 ~7 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: écrans texte à 200 % : récupération et records sans débordement (sombre)
+01:48 +474 ~7 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: écrans texte à 200 % : récupération et records sans débordement (sombre)
+01:48 +475 ~7 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: écrans texte à 200 % : récupération et records sans débordement (sombre)
+01:48 +476 ~7 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: écrans texte à 200 % : récupération et records sans débordement (sombre)
+01:48 +477 ~7 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: écrans texte à 200 % : récupération et records sans débordement (sombre)
+01:48 +478 ~7 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: écrans texte à 200 % : récupération et records sans débordement (sombre)
+01:48 +479 ~7 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: écrans texte à 200 % : récupération et records sans débordement (sombre)
+01:48 +480 ~7 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/m1_engine3d_test.dart: écran sans Flutter GPU lisible 390 px, texte 100 %
+01:49 +481 ~7 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: écrans texte à 200 % : récupération et records sans débordement (clair)
+01:49 +482 ~7 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/cu_profil_v3_test.dart: écrans texte à 200 % : récupération et records sans débordement (clair)
+01:49 +483 ~7 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/m1_engine3d_test.dart: Réglages › À propos › Moteur 3D ouvre l’écran
+01:50 +484 ~7 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/m1_engine3d_test.dart: (tearDownAll)
+01:50 +484 ~7 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/m3_fiche_mannequin_test.dart: (setUpAll)
+01:51 +484 ~7 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/m3_fiche_mannequin_test.dart: correspondance muscles du pack → régions tous les exercices : chaque muscle a une région ou une raison

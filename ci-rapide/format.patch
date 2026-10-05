@@ -1,0 +1,124 @@
+diff --git a/lib/plan/coach_texts.dart b/lib/plan/coach_texts.dart
+index c9cfd4e..28f6a69 100644
+--- a/lib/plan/coach_texts.dart
++++ b/lib/plan/coach_texts.dart
+@@ -10,7 +10,8 @@
+ // (`coachReasonText`) : l'application les affiche telles quelles.
+ // Aucune règle d'entraînement ici : seulement de la lecture.
+ import 'package:kalis_core/kalis_core.dart' as kc;
+-import 'package:kalis_plan/kalis_plan.dart' as kp
++import 'package:kalis_plan/kalis_plan.dart'
++    as kp
+     show CoachNotes, coachPhaseLabel, coachReasonText, isCoachPlan;
+ 
+ String _num(double v) {
+@@ -197,8 +198,7 @@ String coachVolumeText(kc.ExercisePrescription p) {
+       case kc.SetTechniqueKind.pyramid:
+       case kc.SetTechniqueKind.ladder:
+         final steps = <int>[
+-          for (var i = 0; i < p.sets; i++)
+-            prescriptionRow(p, i).high ?? rh,
++          for (var i = 0; i < p.sets; i++) prescriptionRow(p, i).high ?? rh,
+         ];
+         return '${p.sets} paliers : ${steps.join(' – ')} rép.';
+       default:
+diff --git a/lib/plan/season_view.dart b/lib/plan/season_view.dart
+index ed2e8e4..8e987d8 100644
+--- a/lib/plan/season_view.dart
++++ b/lib/plan/season_view.dart
+@@ -95,10 +95,11 @@ class SeasonOverview {
+ 
+ DateTime _day(kc.CivilDate d) => DateTime(d.year, d.month, d.day);
+ 
+-int _days(DateTime a, DateTime b) =>
+-    DateTime.utc(b.year, b.month, b.day)
+-        .difference(DateTime.utc(a.year, a.month, a.day))
+-        .inDays;
++int _days(DateTime a, DateTime b) => DateTime.utc(
++  b.year,
++  b.month,
++  b.day,
++).difference(DateTime.utc(a.year, a.month, a.day)).inDays;
+ 
+ const _specialIntents = {
+   kc.WeekIntent.deload,
+@@ -176,7 +177,9 @@ SeasonOverview? seasonOverview(
+     final special = intent != null
+         ? _specialIntents.contains(intent)
+         : wk.kind == kc.WeekKind.deload || wk.kind == kc.WeekKind.test;
+-    weeks.add(SeasonWeekView(first + w, label, special, first + w == currentWeek));
++    weeks.add(
++      SeasonWeekView(first + w, label, special, first + w == currentWeek),
++    );
+   }
+   return SeasonOverview(
+     phases: phases,
+@@ -251,9 +254,9 @@ class SeasonCard extends StatelessWidget {
+     final next = view.nextSpecial;
+     return KCard(
+       key: const ValueKey('program-season'),
+-      onTap: () => Navigator.of(context).push(
+-        MaterialPageRoute<void>(builder: (_) => const SeasonScreen()),
+-      ),
++      onTap: () => Navigator.of(
++        context,
++      ).push(MaterialPageRoute<void>(builder: (_) => const SeasonScreen())),
+       child: KoachSays(
+         pose: KoachPose.direction,
+         child: Column(
+@@ -348,9 +351,7 @@ class SeasonScreen extends StatelessWidget {
+                         vertical: 8,
+                       ),
+                       child: Column(
+-                        children: [
+-                          for (final p in view.phases) _PhaseRow(p),
+-                        ],
++                        children: [for (final p in view.phases) _PhaseRow(p)],
+                       ),
+                     ),
+                   ],
+@@ -361,9 +362,7 @@ class SeasonScreen extends StatelessWidget {
+                       vertical: 8,
+                     ),
+                     child: Column(
+-                      children: [
+-                        for (final w in view.blockWeeks) _WeekRow(w),
+-                      ],
++                      children: [for (final w in view.blockWeeks) _WeekRow(w)],
+                     ),
+                   ),
+                   if (view.ladders.isNotEmpty) ...[
+diff --git a/lib/plan_store.dart b/lib/plan_store.dart
+index 9a6dbdc..73e3c2f 100644
+--- a/lib/plan_store.dart
++++ b/lib/plan_store.dart
+@@ -481,10 +481,7 @@ extension PlanStore on AppStore {
+   void setPlanKeepLegacyEngine(bool keep) {
+     final plan = planProgram;
+     if (plan == null || plan.keepLegacyEngine == keep) return;
+-    planProgram = plan.copyWith(
+-      updatedAt: _planAt,
+-      keepLegacyEngine: keep,
+-    );
++    planProgram = plan.copyWith(updatedAt: _planAt, keepLegacyEngine: keep);
+     _planChanged();
+   }
+ 
+diff --git a/lib/session_screen.dart b/lib/session_screen.dart
+index 36b0b40..c1bdad9 100644
+--- a/lib/session_screen.dart
++++ b/lib/session_screen.dart
+@@ -1022,9 +1022,10 @@ class SessionExercisePageState extends State<SessionExercisePage> {
+       if (t != null && !pain.contains(t)) pain.add(t);
+     }
+     final notes = [
+-      for (final n in block == null
+-          ? const <String>[]
+-          : ct.coachItemNotes(block, catalog))
++      for (final n
++          in block == null
++              ? const <String>[]
++              : ct.coachItemNotes(block, catalog))
+         if (!pain.contains(n)) n,
+     ];
+     if (lines.isEmpty && pain.isEmpty && notes.isEmpty) return const [];
