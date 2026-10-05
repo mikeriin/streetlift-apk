@@ -1,0 +1,2 @@
+aa_fmt=failure
+kalis_adapt=success
