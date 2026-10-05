@@ -170,3 +170,32 @@ nombre. Ce que la lecture des corrections a montré :
    semaine dans la règle de l'élastique).
 6. **Restent** : volume de street_08 au premier bloc (densité de dips), figures de street_05 et 10 (progression
    des tenues, force dynamique, charge des poignets), affûtage de street_09 en une marche.
+
+## Relecture indépendante du code (04/10/2026)
+
+Un relecteur (sous-agent Opus, sans SDK, diff complet du lot et arbre de travail) : aucun constat bloquant
+(compilation, additivité, identité du chemin 0.1, exception). Douze constats, traités ainsi :
+
+1. `applyProposal` ne gardait le contrat 0.4.0 que sur l'intention de bloc : il lit maintenant `blockCoached`
+   (intention de semaine, échelles, groupes, stress… comptent aussi).
+2. Les douleurs passées par une restructuration devenaient des « douleurs relevées » (figure gardée) :
+   `Athlete.read` sépare `extraPains` (restructuration, admission habituelle) et `trendPains` (résumé
+   d'adaptation) ; la restructuration lit aussi les estimations et les douleurs du résumé.
+3. Le CHANGELOG du banc disait les critères de sécurité inchangés : il dit maintenant la précision de
+   `tendon_figures` (tenue menton hors des tenues bras tendus).
+4. Échéance avancée : les objectifs datés du même jour avancent aussi dans le profil du banc.
+5. Trois commentaires de documentation déplacés (`SimRun`, `coachEligible`, `blockReasonsOf`).
+6. Tests : le test des séries fractionnées est renommé (il vérifie la forme des séries fractionnées, pas la
+   capacité du jour) ; le test des saisons vérifie que le changement avance bien l'échéance de 14 jours ; le
+   titre du test de campagne ne promet plus la saison réalisée.
+7. Estimation d'un 1RM : jamais un lest négatif (garde `external > 0`).
+8. Test plus bas recoupé par l'estimation : seulement une estimation sûre (erreur ≤ 6 %) et récente (quinze
+   jours au plus avant le test) ; un 1RM testé plus bas fait foi (dit dans le commentaire).
+9. « Pas de traction deux jours de suite » nuancé dans le CHANGELOG et le CONTRAT de `kalis_plan` (autant que
+   les jours le permettent).
+10. Commentaires devenus faux corrigés (`_maxOf`, descentes freinées, `seasonTargetWeeks`, `_stat`) ;
+    `undoneOf` exempte aussi un bloc qui commence par une semaine de transition.
+11. Docs de `kalis_adapt` : la simulation sans changement suit 0.2.0, sauf les blocs au contrat 0.4.0 après
+    une proposition appliquée ; conditions où `ProfileChange` ne reconstruit pas le bloc dites.
+12. Coût du rapport CI (100 graines par défaut) : gardé, LANCEMENTS.md CX demande au moins 100 graines par
+    modèle de vérité ; les essais rapides passent par `season_seeds.txt`.
