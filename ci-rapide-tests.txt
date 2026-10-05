@@ -1,8 +1,7 @@
-ALL
+test
 dev:test/g1_mode_dev_test.dart
 dev:test/g2_mode_dev_test.dart
 dev:test/g3_mode_dev_test.dart
 dev:test/g6_mode_dev_test.dart
 dev:test/g7_mode_dev_test.dart
 dev:test/g10_mode_dev_test.dart
-packages

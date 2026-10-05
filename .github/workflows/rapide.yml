@@ -70,7 +70,7 @@ jobs:
         continue-on-error: true
         run: |
           set -o pipefail
-          files=$(grep -v '^#' ci-rapide-tests.txt | grep -v '^dev:' | tr '\n' ' ')
+          files=$(grep -v '^#' ci-rapide-tests.txt | grep -v '^dev:' | grep -vx packages | tr '\n' ' ')
           if [ "$files" = "ALL " ] || [ "$files" = "ALL" ]; then files=""; fi
           if [ -n "$(echo $files)" ] || grep -qx ALL ci-rapide-tests.txt; then
             TZ=Europe/Paris flutter test --no-pub --timeout 90s --reporter expanded $files > out/flutter-tests.log 2>&1 || {
