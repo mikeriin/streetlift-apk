@@ -5,6 +5,10 @@
 // générique ({paramètre} → valeur) en attendant le lot CI, qui les rendra
 // avec les libellés de l'application. Test : test/cu_profil_v3_test.dart.
 
+import 'package:kalis_core/kalis_core.dart' as kc;
+
+import 'coach_texts.dart' show phaseLabel, techniqueLabel;
+
 /// Code de raison → modèle de phrase ({paramètre}).
 const kReasonTexts04 = <String, String>{
   'plan.season_phase':
@@ -82,6 +86,28 @@ String? reasonText04(
     if (v is String && k.toLowerCase().endsWith('exerciseid')) {
       return exerciseName(v);
     }
+    // CI1 : codes rendus avec les libellés de l'application.
+    if (v is String) {
+      switch (k) {
+        case 'technique':
+          final kind = kc.SetTechniqueKind.values
+              .where((x) => x.code == v)
+              .firstOrNull;
+          final l = kind == null ? null : techniqueLabel(kind);
+          return (l ?? 'séries classiques').toLowerCase();
+        case 'phase':
+          return phaseLabel(v);
+        case 'stress':
+          return switch (v) {
+            'heavy' => 'lourd',
+            'medium' => 'moyen',
+            'light' => 'léger',
+            _ => v.replaceAll('_', ' '),
+          };
+        case 'cause' || 'factor':
+          return _causeLabel(v);
+      }
+    }
     if (v is num) {
       final r = (v * 10).round() / 10;
       return r == r.roundToDouble()
@@ -91,3 +117,23 @@ String? reasonText04(
     return '$v';
   });
 }
+
+/// Cause ou facteur d'une raison 0.4, en clair.
+String _causeLabel(String code) => switch (code) {
+  'level' => 'niveau',
+  'pain' => 'douleur',
+  'zone' || 'pain_zone' => 'zone douloureuse',
+  'low_day' || 'health' || 'health_low' => 'bilan du jour bas',
+  'phase' || 'week' => 'semaine allégée',
+  'event_near' => 'échéance proche',
+  'history' => 'antécédent sur cette zone',
+  'recovery' || 'recovery_profile' => 'récupération réduite',
+  'sleep' => 'sommeil court',
+  'stress' => 'stress élevé',
+  'physical_job' => 'travail physique',
+  'failure' => 'échec récent',
+  'reps' || 'rep_drop' => 'répétitions en baisse',
+  'quality' || 'quality_drop' => 'propreté en baisse',
+  'cap' => 'plafond atteint',
+  _ => code.replaceAll('_', ' '),
+};

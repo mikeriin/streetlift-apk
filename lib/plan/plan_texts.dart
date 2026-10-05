@@ -263,6 +263,21 @@ String reasonText(
       return 'Programme prudent, d’après ton questionnaire santé.';
     case 'plan.restructure_scope':
       return 'Changement limité à une partie du programme.';
+    // CI1 : codes de kalis_core 0.4.2 (chemin calibré de kalis_plan 0.2) ;
+    // le texte complet de la note est dans la séance (coach_texts.dart).
+    case 'plan.coach_note':
+      return 'Consigne du coach pour cet exercice : elle est dans ta séance.';
+    case 'plan.progression_rule':
+      return 'Règle de progression de cet exercice : elle est dans les règles '
+          'de ton programme.';
+    case 'plan.pain_rule':
+      final zone = jointLabel(s('zone')).replaceAll('_', ' ');
+      final c = p['continueBelow'], r = p['regressAt'], st = p['stopAt'];
+      if (c is num && r is num && st is num) {
+        return 'Gêne ($zone) : continue en dessous de ${c.round()}/10, '
+            'allège à partir de ${r.round()}/10, arrête à ${st.round()}/10.';
+      }
+      return 'Règle de douleur ($zone) : écoute la gêne, allège ou arrête.';
   }
   // CU : codes ajoutés par kalis_core 0.4.0.
   return reasonText04(r.code, p, exerciseName) ?? 'Choix du moteur.';

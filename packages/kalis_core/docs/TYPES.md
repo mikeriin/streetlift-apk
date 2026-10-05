@@ -1999,3 +1999,6 @@ Le JSON porte le **code** ; l'ordre des valeurs est celui du contrat.
 | `adapt.tendon_load` | `zone` (string), `weeks` (int) | Charge des tendons surveillée : progression en bras tendus ou en appui ralentie. |
 | `adapt.technique_executed` | `technique` (string) | Technique de série exécutée telle que prescrite. |
 | `adapt.mini_set_stop` | `cause` (string) | Mini-séries arrêtées (répétitions manquées, plafond atteint, qualité). |
+| `plan.coach_note` | `note` (string), `value` (double) | Note de coach du bloc, de la semaine ou de la séance : un code de note (vocabulaire de `kalis_plan`) et sa valeur. |
+| `plan.progression_rule` | `rule` (string), `step` (double), `unit` (string) | Règle de progression d'un exercice d'une séance à l'autre (code de règle, pas, unité). |
+| `plan.pain_rule` | `zone` (string), `continueBelow` (int), `regressAt` (int), `stopAt` (int) | Conduite à tenir selon la gêne ressentie (échelle de 0 à 10) : continuer en dessous d'un seuil, alléger, arrêter. |

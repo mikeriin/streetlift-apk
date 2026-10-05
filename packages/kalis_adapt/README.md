@@ -1,7 +1,7 @@
 # kalis_adapt
 
-Moteur dynamique de Kalis Track (lot G8 du pipeline « Génération et progression ») : il suit l'utilisateur
-séance après séance et adapte son programme. Dart pur — aucun import de Flutter, aucune horloge, aucun
+Moteur dynamique de Kalis Track (lot G8 du pipeline « Génération et progression », mode coach du lot
+CA1) : il suit l'utilisateur séance après séance et adapte son programme. Dart pur — aucun import de Flutter, aucune horloge, aucun
 hasard ; `kalis_core` (types, catalogue, registre des raisons) et `kalis_plan` (moteur statique, appelé
 pour les restructurations) sont ses seules dépendances.
 
@@ -17,6 +17,15 @@ pour les restructurations) sont ses seules dépendances.
 - **Revue** : résumé d'adaptation pour le bloc suivant, propositions (volume, décharge anticipée, échange
   d'exercice, restructurations demandées à `kalis_plan`) filtrées par niveau de déblocage, confiance et
   utilité, records, journal du moteur.
+
+- **Mode coach (0.2.0)**, pour les blocs au contrat 0.4.0 de `kalis_core` (programmes street de
+  `kalis_plan` 0.2.0) : la phase de la semaine dit ce qui est permis ; charges en part du 1RM pilotées par
+  la réserve dans un couloir ; techniques de série exécutées ; tests, tentatives et jour d'échéance
+  (`planEventDay`) ; figures (étape en cours, critère de passage) ; répétitions et maintiens recalés sur
+  les maxima mesurés ; séries repère quand les notes n'informent plus ; séries fractionnées quand une plage
+  est hors de portée ; alerte de surmenage ; douleur, bilan du jour, reprise. Un bloc sans champ de 0.4.0
+  (programme importé du propriétaire compris) est servi comme en 0.1.0 ; `KalisAdapt(legacy: true)` sert
+  tout bloc comme en 0.1.0. `CONTRAT.md`, § 11 ; calibrage : `docs/CALIBRAGE_CA1.md`.
 
 Ce que le moteur garantit, le modèle et ses équations, d'où vient chaque nombre et ce qu'il ne sait pas
 faire : [`CONTRAT.md`](CONTRAT.md). Ce que la simulation montre, et ce qu'elle ne montre pas :
@@ -92,4 +101,7 @@ dart run bin/kalis_adapt_cli.dart --rapport <dossier>   # campagne de docs/ (200
 
 `dart test` : briques (`units_test`), scénarios de journal (`sessions_test`), référence croisée Python
 (`reference_test`), huit athlètes en boucle complète (`smoke_test`), 10 240 journaux aléatoires et les invariants de sécurité (`properties_*_test`),
-pureté (`purity_test`), documents générés à jour (`docs_test`).
+pureté (`purity_test`), documents générés à jour (`docs_test`) ; mode coach : tentatives, 17 programmes
+street du banc sous trois modèles de vérité, techniques injectées, périodisation, budgets de temps
+(`coach_test`), règles du calibrage (`coach_rules_test`), 10 240 journaux aléatoires aux champs de 0.4.0
+(`coach_properties_*_test`).

@@ -120,8 +120,24 @@ extension AthleteProfileStore on AppStore {
       healthRefOf(profile?.health ?? HealthData(), caution);
 
   /// Profil v2 pour les moteurs : référence santé recalculée.
-  kc.AthleteProfile? get athleteProfileForEngines =>
-      athlete?.profile.copyWith(healthScreening: athleteHealthRef);
+  ///
+  /// CI1 : le parcours v3 ne demande pas l'ancienneté à un débutant (la
+  /// question ne s'affiche qu'à partir d'« intermédiaire ») ; le chemin
+  /// calibré de `kalis_plan` 0.2 en a besoin pour servir un profil street.
+  /// Pour un débutant sans ancienneté, les moteurs reçoivent « moins de
+  /// 6 mois » (ce que « débutant » veut dire dans le parcours) ; le profil
+  /// enregistré n'est pas modifié. Le niveau du moteur vient de
+  /// l'expérience déclarée, pas de l'ancienneté.
+  kc.AthleteProfile? get athleteProfileForEngines {
+    final p = athlete?.profile.copyWith(healthScreening: athleteHealthRef);
+    if (p != null &&
+        p.isSchema3 &&
+        p.experience == kc.ExperienceLevel.beginner &&
+        p.trainingAge == null) {
+      return p.copyWith(trainingAge: kc.TrainingAge.under6Months);
+    }
+    return p;
+  }
 
   /// Mode prudent avec le profil v2 : âge et gênes du profil v2.
   CautionStatus _cautionWith(UserProfile? legacy, AthleteRecord? a) {
@@ -434,6 +450,65 @@ extension AthleteProfileStore on AppStore {
     final today = civilOf(storeClock());
     final p = a.profile.copyWith(
       benchmarks: [...?a.profile.benchmarks, b],
+      updatedOn: _laterDay(a.profile.createdOn, today),
+    );
+    if (p.validate().isNotEmpty ||
+        (content.catalog?.checkProfile(p).isNotEmpty ?? false)) {
+      return false;
+    }
+    final at = _nowAt;
+    athlete = AthleteRecord(
+      profile: p,
+      savedAt: at,
+      birthYearAt: a.birthYearAt,
+      limitationsAt: a.limitationsAt,
+      changes: _withChange(a.changes, ProfileChange(at, ['levels'], false)),
+    );
+    _athleteRaw = null;
+    _persist();
+    notifyListeners();
+    return true;
+  }
+
+  /// CI1 : résultats que le moteur dynamique rend après les tests d'un bloc
+  /// du chemin calibré (`AdaptReview.testResults`, `skillStates`) reportés
+  /// au profil : records ajoutés (un même record n'est jamais ajouté deux
+  /// fois), étape actuelle de chaque figure remplacée. Rien n'est retiré.
+  /// Vrai si le profil a changé ; faux sinon (ou hors contrat : rien
+  /// d'écrit).
+  bool reportEngineResults(kc.AdaptReview review) {
+    final a = athlete;
+    if (a == null) return false;
+    final tests = review.testResults ?? const <kc.Benchmark>[];
+    final skills = review.skillStates ?? const <kc.SkillState>[];
+    if (tests.isEmpty && skills.isEmpty) return false;
+    final known = {
+      for (final b in a.profile.benchmarks ?? const <kc.Benchmark>[])
+        jsonEncode(b.toJson()),
+    };
+    final added = [
+      for (final b in tests)
+        if (b.validate().isEmpty && !known.contains(jsonEncode(b.toJson()))) b,
+    ];
+    final current = [...?a.profile.skills];
+    var skillChanged = false;
+    for (final st in skills) {
+      if (st.validate().isNotEmpty) continue;
+      final i = current.indexWhere(
+        (x) => x.targetExerciseId == st.targetExerciseId,
+      );
+      if (i < 0) continue; // figure que le profil ne suit pas
+      if (jsonEncode(current[i].toJson()) == jsonEncode(st.toJson())) continue;
+      current[i] = st;
+      skillChanged = true;
+    }
+    if (added.isEmpty && !skillChanged) return false;
+    final today = civilOf(storeClock());
+    final p = a.profile.copyWith(
+      benchmarks: added.isEmpty
+          ? a.profile.benchmarks
+          : <kc.Benchmark>[...?a.profile.benchmarks, ...added],
+      skills: skillChanged ? current : a.profile.skills,
       updatedOn: _laterDay(a.profile.createdOn, today),
     );
     if (p.validate().isNotEmpty ||

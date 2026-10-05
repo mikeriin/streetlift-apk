@@ -200,6 +200,25 @@ vide ou absent.
   `rapide.yml` posé seulement sur cette branche, comme G10) ; le contrôle
   complet reste `claude/ci-3d`.
 
+### CI1 (dev6.9.0, pipeline CP, voie App)
+
+- Cible émulateur par défaut : `integration_test/street_ci1_test.dart`, build
+  de développement, parties `a` (sombre, rouge Kalis, compétiteur de
+  streetlifting) et `b` (clair, violet, débutant de calisthénie) : session
+  personnelle (programme du propriétaire, pas de saison) ; session de test
+  (5 appuis, horloge au 1er octobre 2026) → profil street v3
+  (`sampleStreetProfile`) et programme du chemin calibré ; carte « Ta
+  saison », écran MA SAISON, jour J (partie a) ; séance servie par le mode
+  coach (série de tête et séries allégées, ou maintien), panneau du coach,
+  notes ; suppression de la session de test, session personnelle intacte.
+  Relevés `emulateur/ci1_releve_<partie>.json`, captures
+  `emulateur/ci1_*_<thème>.png`. CU passe sous `CI3D_TOUT=1`. APK de test
+  précompilé sur la cible CI1.
+- Tests Dart du lot : `test/ci1_street_test.dart`.
+- Branche de mise au point du lot : `claude/ci-ci1-rapide` (workflow
+  `rapide.yml` posé seulement sur cette branche, `build-apk.yml` sans
+  déclencheur sur cette branche) ; le contrôle complet reste `claude/ci-3d`.
+
 ### Mode dev dans les tests d'intégration
 
 - Données de la session personnelle semées par un `AppStore()` séparé avant

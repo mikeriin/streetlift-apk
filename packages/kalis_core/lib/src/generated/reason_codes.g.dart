@@ -419,6 +419,18 @@ abstract final class ReasonCodes {
 
   /// Mini-séries arrêtées (répétitions manquées, plafond atteint, qualité).
   static const String adaptMiniSetStop = 'adapt.mini_set_stop';
+
+  /// Note de coach du bloc, de la semaine ou de la séance : un code de note
+  /// (vocabulaire de `kalis_plan`) et sa valeur.
+  static const String planCoachNote = 'plan.coach_note';
+
+  /// Règle de progression d'un exercice d'une séance à l'autre (code de règle,
+  /// pas, unité).
+  static const String planProgressionRule = 'plan.progression_rule';
+
+  /// Conduite à tenir selon la gêne ressentie (échelle de 0 à 10) : continuer
+  /// en dessous d'un seuil, alléger, arrêter.
+  static const String planPainRule = 'plan.pain_rule';
 }
 
 /// Registre des codes de raison et de leurs paramètres typés.
@@ -837,5 +849,20 @@ const List<ReasonSpec> reasonRegistry = <ReasonSpec>[
   }),
   ReasonSpec(ReasonCodes.adaptMiniSetStop, <String, ReasonParamType>{
     'cause': ReasonParamType.text,
+  }),
+  ReasonSpec(ReasonCodes.planCoachNote, <String, ReasonParamType>{
+    'note': ReasonParamType.text,
+    'value': ReasonParamType.number,
+  }),
+  ReasonSpec(ReasonCodes.planProgressionRule, <String, ReasonParamType>{
+    'rule': ReasonParamType.text,
+    'step': ReasonParamType.number,
+    'unit': ReasonParamType.text,
+  }),
+  ReasonSpec(ReasonCodes.planPainRule, <String, ReasonParamType>{
+    'zone': ReasonParamType.text,
+    'continueBelow': ReasonParamType.integer,
+    'regressAt': ReasonParamType.integer,
+    'stopAt': ReasonParamType.integer,
   }),
 ];

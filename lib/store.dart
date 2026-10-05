@@ -32,6 +32,7 @@ import 'persistence.dart';
 import 'plan/plan_creation.dart';
 import 'plan/plan_evolution.dart';
 import 'plan/plan_program.dart';
+import 'plan/coach_texts.dart' as ct;
 import 'plan/plan_texts.dart' as pt;
 import 'profile.dart';
 import 'program_instance.dart';

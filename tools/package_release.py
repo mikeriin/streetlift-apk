@@ -39,7 +39,7 @@ def package(root, output):
     expanded = sum(path.stat().st_size for path in files
                    if not secure_asset(path.relative_to(root).as_posix()))
     if expanded > LIMIT:
-        raise PackagingError('Le dossier extrait dépasserait 25 Mo. Aucune archive remplacée.')
+        raise PackagingError('Le dossier extrait dépasserait 30 Mo. Aucune archive remplacée.')
     try:
         with zipfile.ZipFile(temporary, 'w', zipfile.ZIP_DEFLATED, compresslevel=9) as archive:
             for path in files:
