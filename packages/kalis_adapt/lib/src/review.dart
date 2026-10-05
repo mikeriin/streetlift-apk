@@ -835,10 +835,10 @@ AdaptReview buildReview(
         final free = <String>{
           for (final d in pass1.days)
             for (final slot in d.slots)
-              if (!slot.locked &&
-                  (ctx.catalog.find(slot.exerciseId) case final e?) &&
-                  coachPainProvokes(e, stop.zone))
-                slot.slotId,
+              if (!slot.locked)
+                if (ctx.catalog.find(slot.exerciseId) case final e?
+                    when coachPainProvokes(e, stop.zone))
+                  slot.slotId,
         };
         if (free.isEmpty) {
           continue;

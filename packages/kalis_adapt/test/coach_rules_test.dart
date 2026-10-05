@@ -5,7 +5,8 @@ import 'dart:math' as math;
 
 import 'package:kalis_adapt/kalis_adapt.dart';
 import 'package:kalis_adapt/simulation.dart';
-import 'package:kalis_adapt/src/model.dart' show formAfter;
+import 'package:kalis_adapt/src/model.dart'
+    show PainState, formAfter, painResumeDays;
 import 'package:kalis_core/kalis_core.dart';
 import 'package:kalis_plan/kalis_plan.dart';
 import 'package:test/test.dart';
@@ -68,6 +69,65 @@ final class _Captured implements CoachAwarePolicy {
 void main() {
   const p = AdaptParams.standard;
   final catalog = loadCatalog();
+
+  group('douleur qui dure ou qui revient (CX, correction 1)', () {
+    PainState zone(List<(int, int)> reports) {
+      final s = PainState(BodyZone.wristHand, BodySide.right);
+      for (final (day, intensity) in reports) {
+        s.record(day, intensity);
+      }
+      return s;
+    }
+
+    test('trois sur dix pendant deux semaines : arrêt', () {
+      final s = zone(const <(int, int)>[(0, 3), (3, 3), (7, 4), (10, 3)]);
+      expect(s.stopAt(10), isNull);
+      s.record(14, 3);
+      final stop = s.stopAt(14);
+      expect(stop, isNotNull);
+      expect(stop!.zone, BodyZone.wristHand);
+      expect(stop.sessions, 5);
+      expect(stop.intensity, 4);
+    });
+
+    test('forte plus d\'une semaine : arrêt', () {
+      final s = zone(const <(int, int)>[(0, 6), (3, 5)]);
+      expect(s.stopAt(3), isNull);
+      s.record(7, 5);
+      expect(s.stopAt(7), isNotNull);
+    });
+
+    test('retour après une accalmie : arrêt dès le premier signalement', () {
+      final s = zone(const <(int, int)>[(0, 3), (3, 3), (30, 3)]);
+      expect(s.stopAt(30)?.recurrence, isTrue);
+      // Un seul signalement léger avant : pas un épisode réel.
+      expect(zone(const <(int, int)>[(0, 3), (30, 3)]).stopAt(30), isNull);
+    });
+
+    test('deux semaines sans douleur au-dessus de 2 : reprise', () {
+      final s = zone(const <(int, int)>[
+        (0, 3),
+        (3, 3),
+        (7, 4),
+        (10, 3),
+        (14, 3),
+        (17, 2),
+        (21, 1),
+      ]);
+      expect(s.stopAt(21), isNotNull);
+      expect(s.stopAt(14 + painResumeDays - 1), isNotNull);
+      expect(s.stopAt(14 + painResumeDays), isNull);
+    });
+
+    test('un signalement levé montre la douleur du journal', () {
+      final s = PainState(BodyZone.elbow, BodySide.left)
+        ..lastIntensity = 0
+        ..lastAboveDay = 10
+        ..lastAboveIntensity = 4;
+      expect(s.shownIntensity(12, 7), 4);
+      expect(s.shownIntensity(18, 7), 0);
+    });
+  });
 
   group('alerte de surmenage', () {
     final drop = math.log(1 - p.coachOverreachDrop);

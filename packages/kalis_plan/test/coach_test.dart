@@ -152,6 +152,56 @@ List<ProgramBlock> _program(
   return blocks;
 }
 
+/// Blocs enchaînés jusqu'à couvrir [weeks] semaines, le résumé d'adaptation
+/// du bloc d'indice `n` portant les raisons `reasonsFor(n)` et les repères
+/// du profil pouvant changer d'un bloc à l'autre (`profileFor(n)`).
+List<ProgramBlock> _programWith(
+  Catalog catalog,
+  AthleteProfile profile,
+  int weeks, {
+  List<Reason> Function(int block)? reasonsFor,
+  AthleteProfile Function(int block)? profileFor,
+}) {
+  final engine = KalisPlan();
+  final request = _request(profile);
+  final pass1 = engine.createPass1(catalog, request);
+  final pass2 = engine.createPass2(
+    catalog,
+    Pass2Request(request: request, pass1: pass1),
+  );
+  final blocks = <ProgramBlock>[ProgramBlock(pass1: pass1, pass2: pass2)];
+  var done = pass1.weeks;
+  while (done < weeks) {
+    final previous = blocks.last;
+    final n = blocks.length;
+    final next = engine.nextBlock(
+      catalog,
+      NextBlockRequest(
+        profile: profileFor == null ? profile : profileFor(n),
+        seed: 0,
+        startDate: _start.addDays(7 * done),
+        previous: previous,
+        adaptation: AdaptationSummary(
+          asOf: _start.addDays(7 * done - 1),
+          weeksObserved: previous.pass1.weeks,
+          sessionsPlanned: previous.pass1.weeks * previous.pass1.days.length,
+          sessionsCompleted: previous.pass1.weeks * previous.pass1.days.length,
+          unlockLevel: UnlockLevel.loadsReps,
+          confidence: 0,
+          estimates: const <ExerciseEstimate>[],
+          pains: const <PainTrend>[],
+          avoidedExerciseIds: const <String>[],
+          reasons: reasonsFor == null ? const <Reason>[] : reasonsFor(n),
+        ),
+        locks: const <PlanLock>[],
+      ),
+    );
+    blocks.add(next.block);
+    done += next.block.pass1.weeks;
+  }
+  return blocks;
+}
+
 AthleteProfile _lifter({int weeksOut = 12}) => _profile(
   experience: ExperienceLevel.advanced,
   primary: TrainingDiscipline.streetlifting,
@@ -959,6 +1009,221 @@ void main() {
       expect(before, greaterThan(0));
       expect(after, lessThan(before));
       expect(after, lessThan(9));
+    });
+  });
+  group('CX correction 1', () {
+    bool noted(ProgramBlock b, String note) => <Reason>[
+      ...b.pass1.reasons,
+      ...b.pass2.reasons,
+    ].any((r) => r.code == ReasonCodes.planCoachNote && r.params['note'] == note);
+
+    AthleteProfile street() => _profile(
+      experience: ExperienceLevel.intermediate,
+      weekdays: const <int>[1, 3, 5],
+      minutes: 75,
+      benchmarks: <Benchmark>[
+        _maxReps('sw-traction-pronation', 12),
+        _maxReps('sw-dips-barres-paralleles', 18),
+        _maxReps('sw-pompe', 35),
+      ],
+    );
+
+    for (final zone in <BodyZone>[BodyZone.wristHand, BodyZone.elbow]) {
+      test('douleur qui dure (${zone.code}) : arrêt, puis reprise graduée', () {
+        final blocks = _programWith(
+          catalog,
+          street(),
+          16,
+          reasonsFor: (n) => n == 1
+              ? <Reason>[
+                  Reason(
+                    code: ReasonCodes.adaptPainPersistent,
+                    params: <String, Object?>{'zone': zone.code, 'sessions': 3},
+                  ),
+                ]
+              : const <Reason>[],
+        );
+        expect(blocks.length, greaterThanOrEqualTo(3));
+        final stopped = blocks[1];
+        expect(noted(stopped, CoachNotes.painStop), isTrue);
+        for (final w in stopped.pass2.weeks) {
+          for (final d in w.days) {
+            for (final i in d.items) {
+              final e = catalog.exercise(i.exerciseId);
+              expect(
+                coachPainProvokes(e, zone),
+                isFalse,
+                reason: '${i.exerciseId} provoque ${zone.code}',
+              );
+              if (zone == BodyZone.elbow) {
+                expect(coachPronationPull(e), isFalse, reason: i.exerciseId);
+              }
+            }
+          }
+        }
+        final back = blocks[2];
+        expect(noted(back, CoachNotes.painReturn), isTrue);
+        var returning = 0;
+        for (final w in back.pass2.weeks) {
+          for (final d in w.days) {
+            for (final i in d.items) {
+              final item = i.reasons.any(
+                (r) =>
+                    r.code == ReasonCodes.planCoachNote &&
+                    r.params['note'] == CoachNotes.painReturnItem,
+              );
+              if (!item) {
+                continue;
+              }
+              returning++;
+              final flames = i.targetFlames;
+              if (flames != null && i.kind == SetKind.work) {
+                expect(Flames.toRir(flames), greaterThanOrEqualTo(3));
+              }
+            }
+          }
+        }
+        expect(returning, greaterThan(0));
+      });
+    }
+
+    test('un repère mesuré ne baisse qu\'après deux mesures concordantes', () {
+      Benchmark tested(int reps, int daysAgo) => Benchmark(
+        exerciseId: 'sw-traction-pronation',
+        kind: BenchmarkKind.maxReps,
+        source: BenchmarkSource.guidedTest,
+        reps: reps,
+        date: _start.addDays(-daysAgo),
+      );
+      int pullReps(AthleteProfile p) {
+        var most = 0;
+        final week = _program(catalog, p, 4).first.pass2.weeks.first;
+        for (final d in week.days) {
+          for (final i in d.items) {
+            if (i.exerciseId == 'sw-traction-pronation' &&
+                (i.kind == null || i.kind == SetKind.work)) {
+              final reps = i.repsHigh;
+              if (reps != null && reps > most) {
+                most = reps;
+              }
+            }
+          }
+        }
+        return most;
+      }
+
+      final base = street();
+      // Même plateau des deux côtés (14, puis 14 ou 9) : seul le repère
+      // diffère.
+      final once = base.copyWith(
+        benchmarks: <Benchmark>[
+          ...base.benchmarks!,
+          tested(14, 40),
+          tested(14, 3),
+        ],
+      );
+      final lowOnce = base.copyWith(
+        benchmarks: <Benchmark>[
+          ...base.benchmarks!,
+          tested(14, 40),
+          tested(9, 3),
+        ],
+      );
+      final lowTwice = base.copyWith(
+        benchmarks: <Benchmark>[
+          ...base.benchmarks!,
+          tested(14, 60),
+          tested(10, 30),
+          tested(9, 3),
+        ],
+      );
+      expect(pullReps(lowOnce), pullReps(once));
+      expect(pullReps(lowTwice), lessThan(pullReps(once)));
+    });
+
+    test('tests placés après le premier jour de la semaine', () {
+      for (final profile in <AthleteProfile>[street(), _beginner()]) {
+        for (final b in _program(catalog, profile, 16)) {
+          for (final w in b.pass2.weeks) {
+            for (final d in w.days) {
+              final weekday = b.pass1.days[d.dayIndex].weekday;
+              for (final i in d.items) {
+                if (i.test != null) {
+                  expect(
+                    weekday,
+                    greaterThanOrEqualTo(3),
+                    reason: 'bloc ${b.pass1.blockIndex}, ${i.exerciseId}',
+                  );
+                }
+              }
+            }
+          }
+        }
+      }
+    });
+
+    test('répétitions au poids du corps : +15 % au plus par semaine', () {
+      final reps = _profile(
+        experience: ExperienceLevel.advanced,
+        weekdays: const <int>[1, 2, 4, 6],
+        minutes: 75,
+        benchmarks: <Benchmark>[
+          _maxReps('sw-traction-pronation', 22),
+          _maxReps('sw-dips-barres-paralleles', 35),
+          _maxReps('sw-pompe', 60),
+        ],
+        events: <SeasonEvent>[
+          SeasonEvent(
+            id: 'e1',
+            kind: EventKind.repsCompetition,
+            priority: EventPriority.main,
+            date: _start.addDays(7 * 12 - 2),
+            mode: RepsEventMode.maxReps,
+          ),
+        ],
+      );
+      for (final profile in <AthleteProfile>[street(), reps]) {
+        for (final b in _program(catalog, profile, 12)) {
+          final totals = <Map<String, int>>[];
+          for (final w in b.pass2.weeks) {
+            final t = <String, int>{};
+            for (final d in w.days) {
+              for (final i in d.items) {
+                final e = catalog.exercise(i.exerciseId);
+                final high = i.repsHigh;
+                if (high == null ||
+                    i.kind != SetKind.work ||
+                    i.test != null ||
+                    e.unit != MeasureUnit.repetitions ||
+                    (e.loadType != LoadType.bodyweight &&
+                        e.loadType != LoadType.none)) {
+                  continue;
+                }
+                t[e.rootId] = (t[e.rootId] ?? 0) + i.sets * high;
+              }
+            }
+            totals.add(t);
+          }
+          for (var w = 1; w < totals.length; w++) {
+            for (final root in totals[w].keys) {
+              var reference = 0;
+              for (var k = w - 3; k < w; k++) {
+                if (k >= 0 && (totals[k][root] ?? 0) > reference) {
+                  reference = totals[k][root]!;
+                }
+              }
+              if (reference == 0) {
+                continue;
+              }
+              expect(
+                totals[w][root]!,
+                lessThanOrEqualTo((reference * 1.15).ceil()),
+                reason: 'bloc ${b.pass1.blockIndex}, semaine $w, $root',
+              );
+            }
+          }
+        }
+      }
     });
   });
 }

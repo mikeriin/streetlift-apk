@@ -698,7 +698,7 @@ final class _WeekTrace {
 /// Racine d'un mouvement au poids du corps compté en répétitions, pour le
 /// garde-fou du volume de répétitions, ou `null`.
 String? _repsRootOf(CatalogExercise e) {
-  if (e.unit != MeasureUnit.reps ||
+  if (e.unit != MeasureUnit.repetitions ||
       (e.loadType != LoadType.bodyweight && e.loadType != LoadType.none)) {
     return null;
   }
@@ -1104,8 +1104,7 @@ final class Prescriber {
     // semaine au plus).
     final back = a.returnShareOf(e, _returnWeek);
     if (back != null && x.kind == SetKind.work) {
-      final cap =
-          0.675 + 0.25 * (back - coachPainReturnStart) + 1e-9;
+      final cap = 0.675 + 0.25 * (back - coachPainReturnStart) + 1e-9;
       if (p > cap) {
         p = cap;
       }
@@ -2048,9 +2047,7 @@ final class Prescriber {
     // se pilote à 88 % du maximum environ (marge de 12 %), pas au ressenti
     // (CX, correction 1 : 25 tractions finies à 0,4 en réserve pour 2
     // visées).
-    final relative = _round(
-      max * (realization || max < 15 ? 0.08 : 0.12),
-    );
+    final relative = _round(max * (realization || max < 15 ? 0.08 : 0.12));
     if (margin < relative) {
       margin = relative;
     }
