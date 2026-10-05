@@ -197,7 +197,17 @@ String loadText(ItemView i) {
   }
   final percent = p.percentOfOneRm;
   if (percent != null) {
-    parts.add('≈ ${(percent * 100).round()} % du 1RM (charge totale)');
+    // Le 1RM de référence est écrit en clair (CX, correction 1, panel : un
+    // 1RM recalé sur le bloc précédent rendait le pourcentage illisible
+    // face au record déclaré).
+    final fraction = i.exercise.bodyweightFraction?.value ?? 0;
+    final total = load == null || percent <= 0
+        ? null
+        : (load + fraction * i.bodyWeightKg) / percent;
+    parts.add(
+      '≈ ${(percent * 100).round()} % du 1RM (charge totale'
+      '${total == null ? '' : ' ; 1RM de référence ${_num((total * 2).round() / 2)} kg'})',
+    );
   }
   final intensity = p.intensity;
   if (intensity != null && percent == null) {

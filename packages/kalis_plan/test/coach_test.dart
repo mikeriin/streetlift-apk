@@ -967,7 +967,7 @@ void main() {
       );
     });
 
-    test('un test mesuré plus bas que le record déclaré fait foi', () {
+    test('un test mesuré plus bas que le record déclaré (15 % au plus) fait foi', () {
       final declared = _profile(
         experience: ExperienceLevel.intermediate,
         benchmarks: <Benchmark>[
@@ -982,7 +982,7 @@ void main() {
             exerciseId: 'sw-traction-pronation',
             kind: BenchmarkKind.maxReps,
             source: BenchmarkSource.guidedTest,
-            reps: 9,
+            reps: 12,
             date: _start.addDays(-3),
           ),
         ],
@@ -1008,14 +1008,15 @@ void main() {
       final after = pullReps(tested);
       expect(before, greaterThan(0));
       expect(after, lessThan(before));
-      expect(after, lessThan(9));
+      expect(after, lessThan(12));
     });
   });
   group('CX correction 1', () {
-    bool noted(ProgramBlock b, String note) => <Reason>[
-      ...b.pass1.reasons,
-      ...b.pass2.reasons,
-    ].any((r) => r.code == ReasonCodes.planCoachNote && r.params['note'] == note);
+    bool noted(ProgramBlock b, String note) =>
+        <Reason>[...b.pass1.reasons, ...b.pass2.reasons].any(
+          (r) =>
+              r.code == ReasonCodes.planCoachNote && r.params['note'] == note,
+        );
 
     AthleteProfile street() => _profile(
       experience: ExperienceLevel.intermediate,
@@ -1087,7 +1088,7 @@ void main() {
       });
     }
 
-    test('un repère mesuré ne baisse qu\'après deux mesures concordantes', () {
+    test('forte baisse : deux mesures concordantes avant de baisser', () {
       Benchmark tested(int reps, int daysAgo) => Benchmark(
         exerciseId: 'sw-traction-pronation',
         kind: BenchmarkKind.maxReps,
