@@ -1,0 +1,95 @@
+diff --git a/lib/plan/event_day_screen.dart b/lib/plan/event_day_screen.dart
+index 45c1eb3..6cfbc52 100644
+--- a/lib/plan/event_day_screen.dart
++++ b/lib/plan/event_day_screen.dart
+@@ -149,7 +149,8 @@ class _EventDayScreenState extends State<EventDayScreen> {
+                               style: t.titleSmall,
+                             ),
+                           ),
+-                          if (s.index == (done.isEmpty ? 0 : done.last.index + 1)) ...[
++                          if (s.index ==
++                              (done.isEmpty ? 0 : done.last.index + 1)) ...[
+                             IconButton(
+                               key: ValueKey(
+                                 'event-ok-${lift.exerciseId}-${s.index}',
+diff --git a/test/ci1_street_test.dart b/test/ci1_street_test.dart
+index 01300d5..02d9ef9 100644
+--- a/test/ci1_street_test.dart
++++ b/test/ci1_street_test.dart
+@@ -121,7 +121,10 @@ void main() {
+       expect(view.phases.length, plan.season!.phases.length);
+       expect(view.phases.where((p) => p.current).length, lessThanOrEqualTo(1));
+       expect(view.daysToEvent, isNotNull);
+-      expect(view.blockWeeks.length, plan.blocks.single.block.pass2.weeks.length);
++      expect(
++        view.blockWeeks.length,
++        plan.blocks.single.block.pass2.weeks.length,
++      );
+       expect(view.rules, isNotEmpty);
+       // Section relue à l'identique.
+       final json = jsonEncode(plan.toJson());
+@@ -162,15 +165,18 @@ void main() {
+       }
+     });
+ 
+-    test('autre discipline (musculation) : chemin 0.1, pas de saison', () async {
+-      _save(app, _street('musculation'));
+-      expect(PlanStore(app).planCoachEligible, isFalse);
+-      _create(app);
+-      final plan = app.planProgram!;
+-      expect(isCoachBlock(plan.blocks.single.block), isFalse);
+-      expect(plan.season, isNull);
+-      expect(storeSeasonOverview(), isNull);
+-    });
++    test(
++      'autre discipline (musculation) : chemin 0.1, pas de saison',
++      () async {
++        _save(app, _street('musculation'));
++        expect(PlanStore(app).planCoachEligible, isFalse);
++        _create(app);
++        final plan = app.planProgram!;
++        expect(isCoachBlock(plan.blocks.single.block), isFalse);
++        expect(plan.season, isNull);
++        expect(storeSeasonOverview(), isNull);
++      },
++    );
+ 
+     test('séance : série de tête puis séries allégées guidées, lignes '
+         'nommées, journal avec les rôles', () async {
+@@ -303,15 +309,16 @@ void main() {
+       expect(isCoachBlock(moved.proposal.block), isTrue);
+     });
+ 
+-    test('programme du propriétaire : pas de saison, jamais régénéré', () async {
+-      expect(app.planProgram, isNull);
+-      final weeks = jsonEncode([
+-        for (final w in app.program.weeks) w.n,
+-      ]);
+-      expect(storeSeasonOverview(), isNull);
+-      expect(PlanStore(app).planOnLegacyEngine, isFalse);
+-      expect(jsonEncode([for (final w in app.program.weeks) w.n]), weeks);
+-    });
++    test(
++      'programme du propriétaire : pas de saison, jamais régénéré',
++      () async {
++        expect(app.planProgram, isNull);
++        final weeks = jsonEncode([for (final w in app.program.weeks) w.n]);
++        expect(storeSeasonOverview(), isNull);
++        expect(PlanStore(app).planOnLegacyEngine, isFalse);
++        expect(jsonEncode([for (final w in app.program.weeks) w.n]), weeks);
++      },
++    );
+ 
+     test('résultats des tests du moteur reportés au profil, une seule '
+         'fois', () async {
+@@ -354,9 +361,7 @@ void main() {
+     test('chaque code de raison a une phrase (plan ou moteur dynamique)', () {
+       for (final spec in kc.reasonRegistry) {
+         final r = kc.Reason(code: spec.code, params: const {});
+-        final t = spec.code.startsWith('adapt.')
+-            ? adaptReasonText(r)
+-            : null;
++        final t = spec.code.startsWith('adapt.') ? adaptReasonText(r) : null;
+         if (spec.code.startsWith('adapt.') && t == null) {
+           // Codes internes 0.1 : rien à dire à l'utilisateur.
+           continue;

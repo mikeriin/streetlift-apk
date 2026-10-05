@@ -1,0 +1,6 @@
+Analyzing streetlift-apk...                                     
+
+   info • The import of 'package:streetlift_tracker/adapt/session_adapt.dart' is unnecessary because all of the used elements are also provided by the import of 'package:streetlift_tracker/store.dart'. Try removing the import directive • test/ci1_street_test.dart:18:8 • unnecessary_import
+   info • Use 'const' with the constructor to improve performance. Try adding the 'const' keyword to the constructor invocation • test/ci1_street_test.dart:378:17 • prefer_const_constructors
+
+2 issues found. (ran in 15.5s)
