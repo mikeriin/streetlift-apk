@@ -670,6 +670,12 @@ String? coachReasonText(Reason r, Catalog catalog) {
               'repère connu : si tu as mesuré un autre maintien, '
               'recalcule ; chaque tenue reste propre, bassin et épaules '
               'placés.',
+        CoachNotes.slowTempo =>
+          'Traction complète au tempo : montée tirée sans élan, 2 s le '
+              'menton au-dessus de la barre, descente freinée en ${_int(v)} s. '
+              'Arrête la série dès que la montée ralentit nettement ou '
+              "qu'une descente passe sous 3 s ; si la première série ne "
+              'passe pas, descente en 2 à 3 s.',
         CoachNotes.slowNegative =>
           'Descente freinée en ${_int(v)} s, sans à-coup (monte en sautant '
               "depuis un appui) ; l'effort se règle au contrôle, pas à la "

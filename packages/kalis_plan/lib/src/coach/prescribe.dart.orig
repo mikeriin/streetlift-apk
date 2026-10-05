@@ -51,6 +51,9 @@ abstract final class CoachNotes {
   /// Descente freinée (`value` : secondes de descente).
   static const String slowNegative = 'slow_negative';
 
+  /// Traction complète au tempo lent (montée tirée, descente freinée).
+  static const String slowTempo = 'slow_tempo';
+
   /// Jour de l'échéance (`value` : jours entre la séance et l'échéance).
   static const String eventDay = 'event_day';
 
@@ -375,6 +378,7 @@ abstract final class CoachNotes {
     qualityFirst,
     submaximalHold,
     slowNegative,
+    slowTempo,
     eventDay,
     recovery,
     calibrate,
@@ -2477,9 +2481,12 @@ final class Prescriber {
       high = _clampInt(_round(base * 0.6) - 2, 4, 12);
     }
     if (e.id.contains('tempo-excentrique')) {
-      // Traction lente : descente en 4 s, 2 s tenues en haut — 3 à 6
-      // répétitions (environ un tiers du maximum au tempo normal).
-      high = _clampInt(_round(base * 0.35), 4, 6);
+      // Traction complète au tempo lent : montée tirée, 2 s tenues en haut,
+      // descente en 4 s — environ 45 % du maximum au tempo normal, 4 à 10
+      // répétitions (CX, correction 1, panel : à 3 à 6 répétitions, un
+      // athlète à 18 tractions finissait à 8 de réserve ; la montée n'est
+      // pas sautée).
+      high = _clampInt(_round(base * 0.45), 4, 10);
       x
         ..tempo = const Tempo(
           eccentricSeconds: 4,
@@ -2487,7 +2494,7 @@ final class Prescriber {
           concentricSeconds: 0,
           topPauseSeconds: 2,
         )
-        ..reasons.add(_note(CoachNotes.slowNegative, 4));
+        ..reasons.add(_note(CoachNotes.slowTempo, 4));
     }
     x
       ..repsLow = (high - 2 < 3 ? 3 : high - 2) + _shift(ws)
@@ -5924,8 +5931,7 @@ final class Prescriber {
                     r.code == ReasonCodes.planCoachNote &&
                     r.params['note'] == CoachNotes.everyMinute,
               )) {
-            trace.minutes['${d.dayIndex}|${p.slotId}|${p.exerciseId}'] =
-                p.sets;
+            trace.minutes['${d.dayIndex}|${p.slotId}|${p.exerciseId}'] = p.sets;
           }
         }
       }

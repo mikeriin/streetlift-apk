@@ -51,6 +51,9 @@ abstract final class CoachNotes {
   /// Descente freinée (`value` : secondes de descente).
   static const String slowNegative = 'slow_negative';
 
+  /// Traction complète au tempo lent (montée tirée, descente freinée).
+  static const String slowTempo = 'slow_tempo';
+
   /// Jour de l'échéance (`value` : jours entre la séance et l'échéance).
   static const String eventDay = 'event_day';
 
@@ -375,6 +378,7 @@ abstract final class CoachNotes {
     qualityFirst,
     submaximalHold,
     slowNegative,
+    slowTempo,
     eventDay,
     recovery,
     calibrate,
@@ -1928,7 +1932,8 @@ final class Prescriber {
           when != null &&
           (b.source == BenchmarkSource.guidedTest ||
               b.source == BenchmarkSource.competition) &&
-          (b.kind == BenchmarkKind.maxReps || b.kind == BenchmarkKind.maxHold) &&
+          (b.kind == BenchmarkKind.maxReps ||
+              b.kind == BenchmarkKind.maxHold) &&
           when.compareTo(from) >= 0) {
         return true;
       }
@@ -2148,7 +2153,8 @@ final class Prescriber {
       // entre les séries (R4-G4 : endurance de force, 15 à 60 s chez
       // l'avancé ; panel CX correction 1 : séries allégées à 3 min et très
       // loin de l'échec, sans effet sur l'endurance spécifique).
-      ..rest = _repsAim && (realization || ws.intent == WeekIntent.intensification)
+      ..rest =
+          _repsAim && (realization || ws.intent == WeekIntent.intensification)
           ? 120
           : 180
       ..backoff = true
@@ -2477,9 +2483,12 @@ final class Prescriber {
       high = _clampInt(_round(base * 0.6) - 2, 4, 12);
     }
     if (e.id.contains('tempo-excentrique')) {
-      // Traction lente : descente en 4 s, 2 s tenues en haut — 3 à 6
-      // répétitions (environ un tiers du maximum au tempo normal).
-      high = _clampInt(_round(base * 0.35), 4, 6);
+      // Traction complète au tempo lent : montée tirée, 2 s tenues en haut,
+      // descente en 4 s — environ 45 % du maximum au tempo normal, 4 à 10
+      // répétitions (CX, correction 1, panel : à 3 à 6 répétitions, un
+      // athlète à 18 tractions finissait à 8 de réserve ; la montée n'est
+      // pas sautée).
+      high = _clampInt(_round(base * 0.45), 4, 10);
       x
         ..tempo = const Tempo(
           eccentricSeconds: 4,
@@ -2487,7 +2496,7 @@ final class Prescriber {
           concentricSeconds: 0,
           topPauseSeconds: 2,
         )
-        ..reasons.add(_note(CoachNotes.slowNegative, 4));
+        ..reasons.add(_note(CoachNotes.slowTempo, 4));
     }
     x
       ..repsLow = (high - 2 < 3 ? 3 : high - 2) + _shift(ws)
@@ -3998,9 +4007,7 @@ final class Prescriber {
             (s.method == Method.beginnerMain && s.role == SlotRole.main) ||
             (s.method == Method.repsStrength && s.role == SlotRole.main),
       );
-      if (main &&
-          _testDayOk(d.dayIndex) &&
-          _dayOffset(d.dayIndex) < first) {
+      if (main && _testDayOk(d.dayIndex) && _dayOffset(d.dayIndex) < first) {
         first = _dayOffset(d.dayIndex);
       }
     }
