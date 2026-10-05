@@ -363,14 +363,29 @@ void main() {
           .firstOrNull;
       releve['exercice_servi'] = e != null;
       if (e != null) {
-        // Page de l'exercice : glisser d'exercice en exercice jusqu'à sa
-        // carte (clé de la carte de l'exercice).
+        // Page de l'exercice : liste « Exercices » (le titre peut être
+        // celui d'un groupe « A + B »), sinon pages glissées une à une.
         final card = find.byKey(ValueKey('exercise-card-${e.id}'));
+        final title = store.splitName(e.name).$1;
+        final menu = find.text('Exercices');
+        if (card.evaluate().isEmpty && menu.evaluate().isNotEmpty) {
+          await tapF(tester, menu, ms: 900);
+          final tile = find.descendant(
+            of: find.byType(ListTile),
+            matching: find.textContaining(title),
+          );
+          if (tile.evaluate().isNotEmpty) {
+            await tapF(tester, tile, ms: 1500);
+          } else if (find.byType(ListTile).evaluate().isNotEmpty) {
+            Navigator.of(tester.element(find.byType(ListTile).first)).pop();
+            await wait(tester, 600);
+          }
+        }
         for (var i = 0; i < 14 && card.evaluate().isEmpty; i++) {
-          final pages = find.byType(PageView);
+          final pages = find.byType(PageView).hitTestable();
           if (pages.evaluate().isEmpty) break;
-          await tester.drag(pages.first, const Offset(-300, 0));
-          await wait(tester, 900);
+          await tester.fling(pages.last, const Offset(-320, 0), 1200);
+          await wait(tester, 1200);
         }
         releve['page_exercice'] = card.evaluate().isNotEmpty;
         final panel = find.byKey(ValueKey('coach-panel-${e.id}'));
