@@ -1,2 +1,2 @@
 /// Version du paquet `kalis_adapt` (celle de `pubspec.yaml`).
-const String kalisAdaptVersion = '0.1.0';
+const String kalisAdaptVersion = '0.2.1';
