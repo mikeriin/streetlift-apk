@@ -1,0 +1,5 @@
+Analyzing streetlift-apk...                                     
+
+   info • Unnecessary constructor invocation. Try using a collection literal • lib/adapt/adapt_texts.dart:127:18 • prefer_collection_literals
+
+1 issue found. (ran in 19.5s)
