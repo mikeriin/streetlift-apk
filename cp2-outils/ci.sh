@@ -8,6 +8,7 @@ REPO=/home/claude/streetlift-apk
 T=/tmp/cp2ci
 rm -rf $T && mkdir -p $T
 (cd $WT && git ls-files -co --exclude-standard -z | xargs -0 cp --parents -t $T/)
+[ -n "$RUNNER" ] && sed -i "s/runs-on: ubuntu-24.04/runs-on: $RUNNER/" $T/.github/workflows/ci-paquets.yml
 if [ "$MODE" != full ]; then
   cp -r /home/claude/cp2/aa_fmt $T/packages/aa_fmt
   echo "$SEEDS" > $T/packages/kalis_bench/campaign_seeds.txt

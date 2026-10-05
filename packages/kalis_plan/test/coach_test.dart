@@ -1611,8 +1611,7 @@ void main() {
                   e.stressOn(Joint.elbow) == JointStress.low) {
                 continue;
               }
-              final total =
-                  load + (e.bodyweightFraction?.value ?? 0) * 78.0;
+              final total = load + (e.bodyweightFraction?.value ?? 0) * 78.0;
               if (total > (heaviest[e.id] ?? 0)) {
                 heaviest[e.id] = total;
               }

@@ -1,0 +1,818 @@
+[
+ {
+  "programme": "programme_1.md",
+  "criteres": {
+   "C1": 8.5,
+   "C4": 8.5,
+   "C5": 8.5,
+   "C6": 9.5,
+   "C7": 8.5,
+   "C8": 9.5,
+   "C9": 9.5
+  },
+  "sans_objet": [
+   "C2",
+   "C3"
+  ],
+  "ensemble": 9,
+  "points_perdus": [
+   {
+    "critere": "C1",
+    "perte": 1.5,
+    "raison": "Le travail au poids du corps (traction pronation 4 × 6, dips 3 × 8, relevé de genoux suspendu 3 × 10) est dosé en RIR mais sans aucun repère de départ : aucun record de tractions ou de dips dans le profil, aucun test prévu, donc la variante (lestée ou non, prise) n'est pas déduite du niveau réel (R1-P17). Pour un athlète de 93 kg qui fait 150 kg au couché, des tractions à 6 répétitions au poids du corps peuvent être trop faciles ou trop dures."
+   },
+   {
+    "critere": "C4",
+    "perte": 1.5,
+    "raison": "Couché trois fois par semaine (quatre en semaine 9) plus dips mardi-jeudi et prise serrée : la charge sur l'épaule antérieure et le coude est forte et le jeudi enchaîne terre lourd + couché + dips ; la règle de suppression des dips (gêne ≥ 3/10) existe, mais aucune préparation spécifique coudes/épaules avant les dips n'est écrite (R4-F12)."
+   },
+   {
+    "critere": "C5",
+    "perte": 1.5,
+    "raison": "Gainage générique (relevé de genoux suspendu, planche latérale 3 × 30 s) sans travail anti-extension ni consigne de bassin, alors que la tenue du tronc sous 220–260 kg est le facteur limitant du squat et du terre ; tractions jamais lestées pour un avancé (R1-P17, R4-F5 : levier ou lest ajusté au niveau)."
+   },
+   {
+    "critere": "C6",
+    "perte": 0.5,
+    "raison": "Progression et autorégulation excellentes (règles de RPE, série manquée, semaine manquée), mais les accessoires au poids du corps n'ont aucun critère de progression (tractions 4 × 6 → 3 × 6 → 2 × 5 sans règle d'ajout de répétitions ou de lest)."
+   },
+   {
+    "critere": "C7",
+    "perte": 1.5,
+    "raison": "Échauffement de 10 min correct (hanches, chevilles, thoracique, élastiques) et face pull, mais rien pour les poignets et les coudes alors que le couché est fait 3 à 4 fois par semaine et que les dips sont ajoutés ; pas de travail de rotation externe chargé au-delà du face pull léger (R4-F12, R5-P24)."
+   },
+   {
+    "critere": "C8",
+    "perte": 0.5,
+    "raison": "Ordre et blocs exemplaires (volume → décharge semaine 4 → intensité → affûtage de 12 jours) ; seul reproche : les dips placés en fin de séance du jeudi après terre lourd et couché, fatigués, sur un mouvement à risque d'épaule."
+   },
+   {
+    "critere": "C9",
+    "perte": 0.5,
+    "raison": "Séances chiffrées et dans les 120 min ; consignes d'exécution détaillées pour les trois mouvements, mais aucune consigne d'exécution pour les tractions, dips et relevés (amplitude, scapulas, ligne)."
+   },
+   {
+    "critere": "ensemble",
+    "perte": 1,
+    "raison": "Aucune correction nécessaire : programme individualisé, chiffré sur les records, affûtage et essais cohérents avec l'échéance ; restent des améliorations sur le travail au poids du corps et la préparation articulaire du haut du corps."
+   }
+  ],
+  "corrections": [
+   {
+    "type": "amelioration",
+    "texte": "Tester en semaine 1 le maximum de tractions et de dips propres, puis régler la variante : tractions lestées (par exemple 3 × 5 à 2 RIR avec 10–15 kg) si l'athlète dépasse 12 répétitions, et progression écrite (+1 répétition par série, puis lest +2,5 kg)."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Ajouter à l'échauffement des jours de couché 2 min de préparation poignets/coudes (rotations, appuis en extension progressive) et une série de rotation externe à l'élastique ; déplacer les dips avant les accessoires de tirage ou les remplacer par des pompes lestées les semaines où l'épaule est la plus chargée."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Remplacer une série de relevé de genoux par un travail anti-extension (hollow tenu, roue abdominale ou dead bug) avec consigne de rétroversion du bassin, utile au gainage sous la barre."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Écrire pour les exercices au poids du corps une consigne d'exécution minimale : tractions départ bras tendus, scapulas abaissées, menton au-dessus de la barre ; dips descente jusqu'à l'épaule au niveau du coude, sans plonger plus bas."
+   }
+  ],
+  "points_forts": [
+   "Toutes les charges calculées sur les records et arrondies au palier de 2,5 kg, avec RPE et pourcentages",
+   "Attentes réalistes (+1,6 à +3,2 % du total) et choix des troisièmes essais selon le RPE du deuxième",
+   "Affûtage de 12 jours bien construit, dernier terre lourd à J−9, ouvertures à J−2, repos la veille",
+   "Règles de conduite complètes : autorégulation, série manquée, douleur graduée, baisse du jour, semaine manquée",
+   "Sécurité explicite (barres de sécurité, pareur, jamais d'échec technique au squat et au terre)",
+   "Équilibre poussée/tirage maintenu par rowing, tirages, tractions et face pull"
+  ],
+  "ecole": "calisthenie",
+  "source": "a03_c.md"
+ },
+ {
+  "programme": "programme_2.md",
+  "criteres": {
+   "C1": 1,
+   "C4": 0.5,
+   "C5": 1,
+   "C6": 0.5,
+   "C7": 0.5,
+   "C8": 0.5,
+   "C9": 0.5
+  },
+  "sans_objet": [
+   "C2",
+   "C3"
+  ],
+  "ensemble": 0.5,
+  "points_perdus": [
+   {
+    "critere": "C1",
+    "perte": 9,
+    "raison": "Variantes sans rapport avec une débutante qui court 5 km en 35 min : sprints 100 m maximaux dès la première séance, montées d'escaliers avec gilet de 10 puis 15 kg, sauts en contrebas 5 × 20 « réception jambes tendues », squats sautés à l'échec avec haltères de 12 kg, 1 000 m à 16 % de pente à l'échec ; objectif relevé à 50 min contre 70 min visés au profil (R1-P17)."
+   },
+   {
+    "critere": "C4",
+    "perte": 9.5,
+    "raison": "Kilométrage de 30 km puis +50 % chaque semaine (45, 68 km… plusieurs centaines de km en semaine 12), plyométrie à haut volume dès la semaine 1, aucune semaine allégée : charge tendineuse (Achille, rotulien, tibia) totalement ignorée, très au-delà des garde-fous +10–20 %/sem. et +30 % sur 2 semaines (R5-P22, R4-F8 à F10)."
+   },
+   {
+    "critere": "C5",
+    "perte": 9,
+    "raison": "Aucun travail de force de base ni de gainage contrôlé ; le seul renforcement (squat sauté lesté 5 × 30 à l'échec) est balistique, à l'échec et sans prérequis, contraire à R5-P27 (débutant : jamais d'échec)."
+   },
+   {
+    "critere": "C6",
+    "perte": 9.5,
+    "raison": "Progression brutale et automatique (+50 % de km, +2 répétitions par exercice et par semaine, sortie longue à 21 km dès la semaine 4) sans aucun critère de passage ; consigne de continuer malgré une douleur au tibia, au genou ou à l'Achille, à l'opposé de R5-P23 et R5-P25."
+   },
+   {
+    "critere": "C7",
+    "perte": 9.5,
+    "raison": "Aucun échauffement ni mobilité alors que le profil prévoit 10 % de mobilité ; réceptions jambes tendues qui chargent genoux et rachis sans amorti (R4-F12)."
+   },
+   {
+    "critere": "C8",
+    "perte": 9.5,
+    "raison": "Aucune sortie facile, aucune décharge, aucun affûtage (R3-P9) ; semaine 12 la plus chargée et 10 km à fond la veille de la course ; tout est maximal à chaque séance."
+   },
+   {
+    "critere": "C9",
+    "perte": 9.5,
+    "raison": "Six séances lundi–samedi alors que la disponibilité est mardi, jeudi (45 min) et dimanche (60 min) ; séances de 90 à 100 min annoncées « non disponibles » ; dimanche disponible inutilisé ; piste et gilet lesté et haltères non prévus au matériel."
+   },
+   {
+    "critere": "ensemble",
+    "perte": 9.5,
+    "raison": "Programme dangereux et sans rapport avec le profil : objectif modifié, disponibilités ignorées, progression brutale, échec et plyométrie sans prérequis, consigne d'ignorer la douleur ; plafond santé à 5 largement dépassé vers le bas."
+   }
+  ],
+  "corrections": [
+   {
+    "type": "necessaire",
+    "texte": "Revenir à l'objectif du profil (finir 10 km en environ 70 min) et à ses trois créneaux : mardi 45 min, jeudi 45 min, dimanche 60 min.",
+    "consequence": "L'athlète ne peut pas suivre le plan (six jours dont trois non disponibles, séances de 90–100 min) et vise une allure de 5:00/km qu'elle ne tient pas sur 5 km."
+   },
+   {
+    "type": "necessaire",
+    "texte": "Remplacer le +50 % hebdomadaire par une progression de 10–20 % au plus, partant du volume actuel (environ 10–15 km/sem.), avec une semaine allégée toutes les 3–4 semaines et un affûtage de 7–10 jours.",
+    "consequence": "Fracture de fatigue, tendinopathie d'Achille ou syndrome tibial quasi certains en quelques semaines ; la course ne sera pas courue."
+   },
+   {
+    "type": "necessaire",
+    "texte": "Supprimer sprints maximaux, escaliers lestés, sauts en contrebas, squats sautés lestés et tout travail « à l'échec » ; construire l'essentiel en endurance fondamentale avec, au plus, quelques accélérations courtes après adaptation.",
+    "consequence": "Blessure aiguë (ischios, mollets, chevilles) et rupture de l'adhésion chez une débutante de 6 mois."
+   },
+   {
+    "type": "necessaire",
+    "texte": "Supprimer la consigne « réception jambes tendues » ; si des sauts sont gardés plus tard, réception amortie genoux fléchis, faible volume, sans hauteur de chute.",
+    "consequence": "Choc direct sur genoux, hanches et rachis à chaque réception, sur 100 répétitions par séance."
+   },
+   {
+    "type": "necessaire",
+    "texte": "Remplacer « continuer sans rien changer, la douleur disparaît en courant » par une règle de douleur : 0–2/10 continuer, 3–4 sans progresser, 5 régresser, ≥ 6 arrêter et consulter (R5-P23, R5-P25).",
+    "consequence": "Une douleur tibiale ou d'Achille évolue vers une fracture de fatigue ou une rupture faute d'arrêt."
+   },
+   {
+    "type": "necessaire",
+    "texte": "Supprimer le 10 km à fond hebdomadaire et celui de la veille de la course ; prévoir au plus un test intermédiaire de 5 km vers la semaine 6.",
+    "consequence": "Fatigue cumulée sans récupération et course de l'échéance courue épuisée."
+   },
+   {
+    "type": "necessaire",
+    "texte": "Ajouter un échauffement (marche, footing lent, mobilité chevilles et hanches) et utiliser le créneau de mobilité du profil pour un renforcement mollets, hanches et gainage au poids du corps, à 2–3 répétitions de réserve.",
+    "consequence": "Tissus non préparés aux impacts ; aucun renfort des zones qui cèdent en premier chez la coureuse débutante."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Donner les allures en ressenti (respiration, capacité à parler) et une régression si la sortie n'est pas tenue (marche-course)."
+   }
+  ],
+  "points_forts": [],
+  "ecole": "calisthenie",
+  "source": "a05_a.md"
+ },
+ {
+  "programme": "programme_1.md",
+  "criteres": {
+   "F1": 9.5,
+   "F2": 10,
+   "F3": 9.5,
+   "F4": 9.5,
+   "F5": 10,
+   "F7": 9,
+   "F8": 10,
+   "F9": 9.5
+  },
+  "sans_objet": [
+   "F6"
+  ],
+  "ensemble": 9.5,
+  "points_perdus": [
+   {
+    "critere": "F1",
+    "perte": 0.5,
+    "raison": "Fréquences réglées par mouvement et par phase (couché 3, squat 2, terre 2 puis 1 dès S7) et lourd/léger alternés (R2-P7), mais rien ne plafonne explicitement la fréquence du couché (3 à 4 expositions + prise serrée + dips en S1-S6) par une surveillance des coudes/épaules autre que la règle générale de douleur."
+   },
+   {
+    "critere": "F3",
+    "perte": 0.5,
+    "raison": "Top set et back-off bien séparés, séries comptées par mouvement (R2-P6, R2-P8) ; la modulation par la récupération passe par la règle « baisse du jour » mais aucun indicateur hebdomadaire (au-delà du bilan de S4) ne règle le volume du bloc d'intensité."
+   },
+   {
+    "critere": "F4",
+    "perte": 0.5,
+    "raison": "Phases nommées, progression chiffrée, décharge S4 dosée (−47 %, intensité gardée, R3-P9) ; critères de passage implicites (singles S3 et S8 servent de repères) mais pas de critère formel pour entrer dans le bloc d'intensité si S3 se passe mal."
+   },
+   {
+    "critere": "F7",
+    "perte": 1,
+    "raison": "Variantes choisies par phase faible supposée (pause 2 s, prise serrée, déficit) avec règle de remplacement d'après la vidéo, antagonistes et tronc présents ; mais le profil ne déclare aucun point faible : le choix initial des variantes est un pari, et plusieurs accessoires (presse, développé incliné) ne sont pas justifiés individuellement (R5-P27)."
+   },
+   {
+    "critere": "F9",
+    "perte": 0.5,
+    "raison": "Séances dans les 120 min, repos, charges en kg, échauffement et montées écrits (R1-P16) ; les charges des accessoires restent « à 2 RIR » sans charge de départ, et l'estimation de durée de la séance du lundi S1 (squat + couché 5×5 + déficit + accessoires, montées comprises) est juste."
+   },
+   {
+    "critere": "ensemble",
+    "perte": 0.5,
+    "raison": "Aucune correction nécessaire ; restent des améliorations marginales (décision de catégorie de poids, plafond tendineux du couché, justification de quelques accessoires)."
+   }
+  ],
+  "corrections": [
+   {
+    "type": "amelioration",
+    "texte": "Trancher la catégorie de poids maintenant (le programme renvoie la décision « avant la semaine 1 », c'est-à-dire à aujourd'hui) et écrire la consigne de poids de corps pour les dix semaines."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Ajouter un garde-fou coudes/épaules spécifique au volume de poussée (couché ×3, prise serrée, dips, extensions) : par exemple supprimer les dips et l'extension triceps dès S5 plutôt qu'en S7, ou réduire le couché technique si gêne de coude ≥ 2/10 deux séances de suite."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Donner une charge de départ en kg pour les accessoires principaux (rowing, presse, tirage) afin que la première séance soit prête à l'emploi."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Écrire un critère formel d'entrée dans le bloc d'intensité (par exemple single de 90 % de S3 à RPE ≤ 8 sur les trois mouvements ; sinon S5 reprend les charges de S3)."
+   }
+  ],
+  "points_forts": [
+   "Toutes les charges calculables depuis les records (charges en kg, %, RPE), arrondies au palier de 2,5 kg.",
+   "Périodisation volume → décharge → intensité → affûtage de 12 jours avec dernier terre lourd à J−9, derniers squat et couché à J−7, ouvertures à J−2, repos à J−1 (R3-P12 à P14).",
+   "Plan d'essais complet avec troisième essai conditionné au RPE du deuxième et à la logique du total ; attentes réalistes (+3,2 % annoncé comme haut de fourchette).",
+   "Règles d'autorégulation, de série manquée, de séance/semaine manquée et de baisse du jour clairement chiffrées (R1-P11, R1-P14).",
+   "Sécurité complète : barres de sécurité, pareur au couché ≥ 85 %, aucun échec technique au squat et au terre, conduite graduée en cas de douleur avec exercices de remplacement.",
+   "Spécificité croissante : commandes d'arbitre dès S5, variantes retirées en S9, rien de nouveau dans les quatre dernières semaines."
+  ],
+  "ecole": "force",
+  "source": "a03_c.md"
+ },
+ {
+  "programme": "programme_2.md",
+  "criteres": {
+   "F1": 0,
+   "F2": 0,
+   "F3": 0,
+   "F4": 0,
+   "F5": 0,
+   "F6": 0,
+   "F7": 0,
+   "F8": 0,
+   "F9": 0
+  },
+  "sans_objet": [],
+  "ensemble": 0,
+  "points_perdus": [
+   {
+    "critere": "F1",
+    "perte": 10,
+    "raison": "L'objectif du profil (finir un 10 km en 70 min, en endurance fondamentale) est remplacé par 10 km en 50 min ; aucune course facile, le travail spécifique est noyé dans des sprints, côtes lestées et sauts ; 6 séances alors que 3 sont disponibles (R1-P9)."
+   },
+   {
+    "critere": "F2",
+    "perte": 10,
+    "raison": "Toutes les séances « maximal », « à l'échec », 10 km à fond chaque samedi ; aucune zone d'endurance, aucune marge, chez une débutante (R1-P11, R1-P14, R2-P1)."
+   },
+   {
+    "critere": "F3",
+    "perte": 10,
+    "raison": "30 km en S1 pour une débutante qui court 5 km en 35 min, puis +50 % par semaine (≈ 3 400 km théoriques en S12) ; squats sautés 5 × 30 à l'échec : volume sans rapport avec le niveau (R1-P5, R2-P6)."
+   },
+   {
+    "critere": "F4",
+    "perte": 10,
+    "raison": "Progression arbitraire et exponentielle, explicitement sans semaine allégée (R3-P9, R5-P3, R1-P18)."
+   },
+   {
+    "critere": "F5",
+    "perte": 10,
+    "raison": "Aucun affûtage : S12 est la semaine la plus chargée, avec un 10 km chronométré à fond la veille de la course (R3-P12 à P16)."
+   },
+   {
+    "critere": "F6",
+    "perte": 10,
+    "raison": "Gilet lesté 10 puis 15 kg, sauts en contrebas 5 × 20 réception jambes tendues, squats sautés lestés à l'échec : techniques pliométriques et lestées servies sans aucun prérequis à une débutante, et empilées (R2-P12 à P22)."
+   },
+   {
+    "critere": "F7",
+    "perte": 10,
+    "raison": "Aucune mobilité (10 % du profil), aucun renforcement utile au coureur, accessoires (squats sautés à l'échec) sans lien avec l'objectif."
+   },
+   {
+    "critere": "F8",
+    "perte": 10,
+    "raison": "Hausse brutale de charge, réceptions jambes tendues, échec systématique, et consigne de continuer en cas de douleur au tibia, au genou ou au tendon d'Achille : risque de fracture de fatigue et de tendinopathie (R5-P3, R5-P7, R5-P20 à P27)."
+   },
+   {
+    "critere": "F9",
+    "perte": 10,
+    "raison": "Séances placées sur des jours non disponibles, séances de 90 min dans des créneaux de 45 min, dimanche (60 min disponibles) inutilisé ; matériel (haltères, gilet lesté, piste à 16 % de pente sur tapis) absent du profil."
+   },
+   {
+    "critere": "ensemble",
+    "perte": 10,
+    "raison": "Programme dangereux et sans rapport avec le profil : plafond santé (5) et plafond objectif (6) tous deux atteints, avec des défauts sur tous les critères."
+   }
+  ],
+  "corrections": [
+   {
+    "type": "necessaire",
+    "texte": "Revenir à l'objectif du profil (terminer 10 km en ≈ 70 min) et le respecter.",
+    "consequence": "L'athlète vise une allure de 5 min/km qu'elle ne peut pas tenir et échoue ou se blesse."
+   },
+   {
+    "type": "necessaire",
+    "texte": "Ramener le plan à 3 séances (mardi 45 min, jeudi 45 min, dimanche 60 min) dans les durées disponibles.",
+    "consequence": "Séances infaisables dans l'emploi du temps : le plan est abandonné ou empiète sur la récupération."
+   },
+   {
+    "type": "necessaire",
+    "texte": "Construire la majorité du volume en endurance fondamentale facile, avec une progression du volume ≤ 10 % par semaine à partir du volume actuel (≈ 15 km/sem.) et une semaine allégée toutes les 3 à 4 semaines.",
+    "consequence": "+50 % par semaine depuis 30 km mène à la fracture de fatigue ou à la tendinopathie en quelques semaines."
+   },
+   {
+    "type": "necessaire",
+    "texte": "Supprimer le gilet lesté, les sauts en contrebas (réception jambes tendues) et les squats sautés lestés à l'échec.",
+    "consequence": "Impacts répétés sans prérequis : blessure articulaire (genou, cheville, lombaires) probable."
+   },
+   {
+    "type": "necessaire",
+    "texte": "Supprimer l'effort maximal et l'échec dans toutes les séances ; limiter l'intensité à une séance de qualité modérée par semaine après quelques semaines de base.",
+    "consequence": "Fatigue cumulée, surentraînement et abandon."
+   },
+   {
+    "type": "necessaire",
+    "texte": "Remplacer la consigne « continuer en cas de douleur » par une règle d'arrêt et de consultation pour toute douleur au tibia, au genou ou au tendon d'Achille.",
+    "consequence": "Une périostite ou une tendinopathie évolue en fracture de fatigue ou en rupture."
+   },
+   {
+    "type": "necessaire",
+    "texte": "Supprimer le 10 km chronométré hebdomadaire et prévoir un affûtage de 7 à 10 jours (volume réduit, rien à fond la veille).",
+    "consequence": "L'athlète arrive épuisée le jour de la course, voire blessée."
+   },
+   {
+    "type": "necessaire",
+    "texte": "Retirer le matériel absent du profil (haltères, gilet lesté) et la course sur tapis à 16 % de pente.",
+    "consequence": "Séances impossibles à réaliser telles qu'écrites."
+   },
+   {
+    "type": "necessaire",
+    "texte": "Intégrer la mobilité prévue au profil (10 %) et un renforcement de base au poids du corps (mollets, hanches, tronc).",
+    "consequence": "Le profil n'est pas servi et la tolérance des tissus reste faible face à la hausse de volume."
+   }
+  ],
+  "points_forts": [],
+  "ecole": "force",
+  "source": "a05_a.md"
+ },
+ {
+  "programme": "programme_1.md",
+  "criteres": {
+   "H1": 8.5,
+   "H2": 9.5,
+   "H3": 8,
+   "H4": 9,
+   "H5": 8.5,
+   "H6": 8.5,
+   "H7": 9,
+   "H8": 9.5,
+   "H9": 9.5
+  },
+  "sans_objet": [],
+  "ensemble": 9,
+  "points_perdus": [
+   {
+    "critere": "H1",
+    "perte": 1.5,
+    "raison": "Pectoraux et triceps en semaines 1-3 : environ 17-19 séries de couché + 3 prise serrée + dips 3 + incliné haltères 3 + extensions 3, soit plus de 20 séries par semaine pour la poussée horizontale, au haut de la fourchette avancé (R1-P1 à P4) ; à l'inverse les ischio-jambiers n'ont que 3 séries directes (curl ischio jeudi), supprimées dès la semaine 7. Beaucoup de séries à RPE 7 comptent toutefois peu comme séries dures, d'où une perte limitée."
+   },
+   {
+    "critere": "H2",
+    "perte": 0.5,
+    "raison": "Répartition très bien construite (squat lourd/volume, couché lourd/volume/technique, 72 h entre terre et squat lourd, R1-P8) ; petite réserve : les accessoires du haut du dos sont répartis sur 4 jours mais les ischio n'ont qu'une exposition directe."
+   },
+   {
+    "critere": "H3",
+    "perte": 2,
+    "raison": "Mouvements principaux bien dosés (RPE 6,5-8,5, singles de repère qui calibrent l'effort, R1-P13), mais tous les accessoires d'isolation (extension triceps, curl ischio, face pull) restent uniformément à 2 RIR ou 'facile' : pas d'isolation plus près de l'échec alors qu'elle est sûre (R1-P13, R6-P2)."
+   },
+   {
+    "critere": "H4",
+    "perte": 1,
+    "raison": "Variantes justifiées par la phase faible avec règle de remplacement à volume constant, accessoires stables (rowing poitrine appuyée, curl ischio à la poulie sans charge lombaire) ; pas d'exercice en position longue pour les ischio (curl couché/assis ou RDL) ni de travail direct des biceps, sollicités en squat barre basse (R6-P4)."
+   },
+   {
+    "critere": "H5",
+    "perte": 1.5,
+    "raison": "Progression des mouvements principaux écrite et chiffrée, avec autorégulation et plafond de hausse de volume 10-20 % (R5-P3, R1-P18) ; en revanche les accessoires n'ont qu'une cible '2 RIR' sans règle de double progression ni critère d'ajout de séries."
+   },
+   {
+    "critere": "H6",
+    "perte": 1.5,
+    "raison": "Tirage (rowing, tractions, tirage vertical, rowing poitrine appuyée, face pull ≈ 19 séries en bloc de volume) à peu près égal à la poussée, arrière d'épaule traité ; chaîne postérieure très dépendante du terre, curl ischio supprimé en semaine 7, biceps absents (R5-P27)."
+   },
+   {
+    "critere": "H7",
+    "perte": 1,
+    "raison": "Repos par type d'exercice (4-5 min singles, 3-3 min 30 travail, 60-90 s accessoires) et durées dans les 120 min ; pas de superset d'antagonistes pour les accessoires, et 45 s pour le face pull reste court même si la charge est légère (R1-P15)."
+   },
+   {
+    "critere": "H8",
+    "perte": 0.5,
+    "raison": "Décharge en semaine 4 (−47 %), affûtage de 12 jours placé et dosé, aucune technique d'intensification (R3-P9) ; seule réserve : décharge à volume −47 % avec intensité gardée à 85 % sur les singles, ce qui reste exigeant."
+   },
+   {
+    "critere": "H9",
+    "perte": 0.5,
+    "raison": "Programme d'avancé, échéance et charges calculées sur les records, règles de baisse du jour, douleur, séance manquée, durée (R5-P1, R5-P10 à P19) ; marginalement, la masse musculaire n'est qu'entretenue, ce qui convient à l'objectif."
+   },
+   {
+    "critere": "ensemble",
+    "perte": 1,
+    "raison": "Aucune correction nécessaire : programme de compétition individualisé et sûr, dont la masse musculaire utile au total est entretenue sans excès ; restent des améliorations de dosage et de progression des accessoires."
+   }
+  ],
+  "corrections": [
+   {
+    "type": "amelioration",
+    "texte": "Écrire une double progression pour les accessoires (ex. rowing 3 × 8-12 : atteindre 12 à toutes les séries puis +2 kg haltère / +2,5 kg poulie)."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Pousser les isolations sûres (extension triceps, curl ischio, face pull) à 0-1 RIR sur la dernière série au lieu de 2 RIR uniformes."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Garder 2 séries de curl ischio (ou remplacer par un curl assis en position longue) jusqu'à la semaine 8 plutôt que de le supprimer en semaine 7."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Ajouter 2 séries de curl biceps léger le mardi en blocs de volume, utile pour la tolérance du coude en squat barre basse."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Réduire légèrement le volume de poussée horizontale en semaines 1-3 (par exemple supprimer les dips ou le développé incliné une semaine sur deux) et déplacer ce budget vers les ischio-jambiers."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Passer les accessoires de fin de séance en supersets d'antagonistes (tirage vertical + dips, rowing + incliné) pour gagner du temps sans couper le repos des séries lourdes."
+   }
+  ],
+  "points_forts": [
+   "Charges toutes calculées sur les records, objectifs réalistes discutés (+3,2 %) avec essais de compétition conditionnels",
+   "Répartition hebdomadaire réfléchie (72 h entre terre lourd et squat lourd, couché lourd/volume/technique)",
+   "Variantes choisies selon la phase faible avec règle de remplacement à volume constant",
+   "Décharge en semaine 4 et affûtage de 12 jours précisément dosés",
+   "Règles d'autorégulation, de douleur, de baisse du jour, de séance manquée et de durée explicites",
+   "Sécurité détaillée (barres de sécurité, pareur, arrêt avant échec technique)",
+   "Tirage au moins égal à la poussée, arrière d'épaule traité"
+  ],
+  "ecole": "hypertrophie",
+  "source": "a03_c.md"
+ },
+ {
+  "programme": "programme_2.md",
+  "criteres": {
+   "H1": 0,
+   "H2": 0.5,
+   "H3": 0,
+   "H4": 0,
+   "H5": 0,
+   "H6": 1,
+   "H7": 0,
+   "H8": 0,
+   "H9": 0
+  },
+  "sans_objet": [],
+  "ensemble": 0,
+  "points_perdus": [
+   {
+    "critere": "H1",
+    "perte": 10,
+    "raison": "Volume de jambes délirant pour une débutante : 15 sprints + 10 × 2 min d'escaliers lestés + 100 sauts en contrebas + 5 × 30 squats sautés lestés, 6 jours sur 7, plus un kilométrage de 30 km monté de 50 % par semaine ; très au-dessus de tout plafond de niveau (R1-P1 à P4) et sans hausse lente (R1-P18)."
+   },
+   {
+    "critere": "H2",
+    "perte": 9.5,
+    "raison": "6 séances lundi-samedi alors que le profil n'est disponible que mardi, jeudi (45 min) et dimanche (60 min), dimanche non utilisé : répartition incohérente avec les jours donnés (R1-P8, R6-P3)."
+   },
+   {
+    "critere": "H3",
+    "perte": 10,
+    "raison": "Effort 'maximal', 'à l'échec' ou 'échec' sur toutes les lignes, y compris sauts pliométriques et sprints (R1-P13 : l'échec se réserve aux exercices sûrs) ; aucune plage adaptée."
+   },
+   {
+    "critere": "H4",
+    "perte": 10,
+    "raison": "Sauts en contrebas avec réception jambes tendues (technique dangereuse), squats sautés lestés à l'échec, gilet lesté de 10-15 kg en sprint d'escaliers : exercices instables et à risque pour une débutante (R6-P4, R6-P5) ; pas de matériel déclaré pour les haltères et le gilet."
+   },
+   {
+    "critere": "H5",
+    "perte": 10,
+    "raison": "+50 % de kilométrage chaque semaine (30 km en S1 à plus de 1 700 km en S12) et +2 répétitions par exercice chaque semaine : progression brutale sans aucune règle conditionnelle (R5-P3, R1-P18)."
+   },
+   {
+    "critere": "H6",
+    "perte": 9,
+    "raison": "Uniquement bas du corps en impact et pliométrie, aucun travail de tronc, de haut du corps ni de renforcement préventif des chevilles/mollets (R5-P27)."
+   },
+   {
+    "critere": "H7",
+    "perte": 10,
+    "raison": "Repos de 15 à 30 s entre sprints maximaux et efforts lestés ; séances de 90 à 100 min dans des créneaux de 45 min ou sur des jours non disponibles (R1-P15, R1-P16)."
+   },
+   {
+    "critere": "H8",
+    "perte": 10,
+    "raison": "Aucune semaine allégée ni affûtage sur 12 semaines, semaine 12 la plus chargée et 10 km chronométré à fond la veille de la course ; consigne de continuer malgré une douleur au tibia, au genou ou au tendon d'Achille (R3-P9)."
+   },
+   {
+    "critere": "H9",
+    "perte": 10,
+    "raison": "Objectif relevé arbitrairement de 70 à 50 min (alors qu'elle court 5 km en 35 min), séances hors disponibilités et hors durée, charge sans rapport avec 6 mois d'ancienneté (R5-P1, R5-P10 à P19)."
+   },
+   {
+    "critere": "ensemble",
+    "perte": 10,
+    "raison": "Dangereux : progression brutale, pliométrie à réception jambes tendues, échec partout, consigne d'ignorer la douleur ; ignore l'objectif (70 min) et les disponibilités du profil. Plafonds santé (5) et objectif (6) tous deux franchis ; relève de 0-2."
+   }
+  ],
+  "corrections": [
+   {
+    "type": "necessaire",
+    "texte": "Ramener le plan à 3 séances (mardi 45 min, jeudi 45 min, dimanche 60 min) dans les durées disponibles.",
+    "consequence": "Séances infaisables : l'athlète ne peut pas suivre le plan, ou sacrifie récupération et obligations."
+   },
+   {
+    "type": "necessaire",
+    "texte": "Rétablir l'objectif du profil (finir 10 km en environ 70 min) au lieu de 50 min.",
+    "consequence": "Allures intenables (5 min/km contre 7 min/km actuelles), échec et blessure probables, objectif réel non préparé."
+   },
+   {
+    "type": "necessaire",
+    "texte": "Remplacer la progression de +50 % par semaine par une hausse d'environ 10 % avec une semaine allégée toutes les 3-4 semaines, en partant de 12-15 km/semaine.",
+    "consequence": "Blessure de surcharge (fracture de fatigue, tendinopathie) dans les premières semaines."
+   },
+   {
+    "type": "necessaire",
+    "texte": "Faire de la majorité des séances (80 %) des footings en endurance fondamentale, avec au plus une séance de qualité modérée par semaine à partir de la semaine 3-4.",
+    "consequence": "Fatigue chronique et blessure ; la base aérobie nécessaire au 10 km ne se construit pas."
+   },
+   {
+    "type": "necessaire",
+    "texte": "Supprimer les sauts en contrebas (réception jambes tendues), les squats sautés lestés à l'échec et les escaliers avec gilet lesté.",
+    "consequence": "Risque élevé de blessure du genou, de la cheville et du dos à la réception."
+   },
+   {
+    "type": "necessaire",
+    "texte": "Supprimer le 10 km chronométré hebdomadaire à fond et les sorties de 15-21 km ; prévoir une sortie longue progressive jusqu'à 8-10 km en endurance.",
+    "consequence": "Épuisement hebdomadaire et absence de récupération."
+   },
+   {
+    "type": "necessaire",
+    "texte": "Remplacer la consigne de douleur par : arrêt et avis médical en cas de douleur au tibia, genou ou tendon d'Achille qui persiste ou s'aggrave.",
+    "consequence": "Fracture de fatigue ou rupture tendineuse par course sur une blessure."
+   },
+   {
+    "type": "necessaire",
+    "texte": "Ajouter un affûtage de 7-10 jours (volume −40 %) et un repos la veille de la course.",
+    "consequence": "Arrivée épuisée à la course, voire blessée par le 10 km à fond de la veille."
+   },
+   {
+    "type": "necessaire",
+    "texte": "Allonger les repos des fractions et retirer les efforts à l'échec ; donner un échauffement et des allures chiffrées.",
+    "consequence": "Séances incontrôlables, effort maximal permanent sans qualité."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Ajouter deux fois par semaine 10-15 min de renforcement (mollets, fessiers, tronc) à charge modérée dans les créneaux disponibles, plus la mobilité prévue au profil."
+   }
+  ],
+  "points_forts": [
+   "Le profil (échéance, matériel, distance) est identifié dans l'en-tête"
+  ],
+  "ecole": "hypertrophie",
+  "source": "a05_a.md"
+ },
+ {
+  "programme": "programme_1.md",
+  "criteres": {
+   "S1": 9.5,
+   "S2": 10,
+   "S3": 9.5,
+   "S5": 9,
+   "S6": 9,
+   "S7": 9,
+   "S8": 10,
+   "S9": 9.5
+  },
+  "sans_objet": [
+   "S4"
+  ],
+  "ensemble": 9,
+  "points_perdus": [
+   {
+    "critere": "S1",
+    "perte": 0.5,
+    "raison": "Seuils de douleur écrits (0-3/10 continuer, ≥4/10 remplacer et consulter), barres de sécurité et pareur prévus ; questionnaire vierge donc rien de plus à protéger, mais aucune surveillance spécifique du coude/poignet sur trois puis quatre expositions au couché par semaine (R5-P24)."
+   },
+   {
+    "critere": "S3",
+    "perte": 0.5,
+    "raison": "Décharge planifiée en semaine 4 et critères de baisse du jour (sommeil < 6 h, stress, lombaires) écrits ; la charge de vie (travail, sommeil habituel) n'est jamais demandée au profil, donc le placement ne peut s'y adapter (R5-P14 à P19)."
+   },
+   {
+    "critere": "S5",
+    "perte": 1,
+    "raison": "Échauffement écrit, face pull et tirages élastiques présents ; mais en semaines 7-10 tout le travail de coiffe se réduit au face pull du mardi alors que le couché reste à 3-4 expositions par semaine (R4-F10, R5-P27)."
+   },
+   {
+    "critere": "S6",
+    "perte": 1,
+    "raison": "Pas d'échec technique au squat et au terre, RPE ≤ 9 hors singles, règle de série manquée ; mais singles à RPE 8-8,5 à 94-96,5 % chaque semaine de la semaine 6 à la semaine 9 sans règle explicite de 48 h ou plus avant le mouvement lourd suivant au couché (lundi volume / mardi lourd à 24 h)."
+   },
+   {
+    "critere": "S7",
+    "perte": 1,
+    "raison": "Semaine 1 lundi estimée à 110 min avec trois mouvements principaux et leurs montées de 6-7 paliers à 1-3 min : la marge sur 120 min est faible ; la règle « couper les accessoires d'abord » existe, mais pas de version courte écrite."
+   },
+   {
+    "critere": "S9",
+    "perte": 0.5,
+    "raison": "Consignes très lisibles ; les semaines 2-3 et 6-8 décrites en « comme la semaine précédente, sauf » obligent à reconstituer la séance (accessoires notamment) à partir de plusieurs pages."
+   },
+   {
+    "critere": "ensemble",
+    "perte": 1,
+    "raison": "Aucune correction nécessaire : programme individualisé, progressif, affûtage de 12 jours conforme (R3-P17, P20, P21), stratégie d'essais écrite ; restent des améliorations."
+   }
+  ],
+  "corrections": [
+   {
+    "type": "amelioration",
+    "texte": "Ajouter une rotation externe à la poulie ou à l'élastique (2 × 15) le lundi ou le jeudi en semaines 7 à 10 pour garder un travail de coiffe à côté des 3-4 couchés hebdomadaires."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Écrire une version courte (≈ 75 min) de la séance du lundi : single + séries de travail sur les trois mouvements, accessoires supprimés, pour les jours contraints."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Demander en semaine 0 sommeil habituel, travail et stress, et préciser quelle séance déplacer si la semaine est chargée."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Écrire en entier les séances des semaines 6 à 8 plutôt que par différence, pour éviter les erreurs de reconstitution des accessoires."
+   }
+  ],
+  "points_forts": [
+   "Charges calculées sur les records récents, RPE donné partout, autorégulation chiffrée des singles et règle de série manquée.",
+   "Affûtage de 12 jours (−37 % puis −59 %), dernier terre lourd à J−9, squat et couché à J−7, ouvertures à J−2, repos à J−1.",
+   "Stratégie d'essais complète selon le RPE du deuxième essai, et attentes réalistes (+1,6 à +3,2 %).",
+   "Seuils de douleur écrits avec substitutions et orientation vers un professionnel ; sécurité (barres, pareur, arrêt avant échec technique) explicite.",
+   "Règles pour séance et semaine manquées, plafond de hausse de volume par semaine."
+  ],
+  "ecole": "sante",
+  "source": "a03_c.md"
+ },
+ {
+  "programme": "programme_2.md",
+  "criteres": {
+   "S1": 0,
+   "S2": 0,
+   "S3": 0,
+   "S4": 0.5,
+   "S5": 0,
+   "S6": 0,
+   "S7": 0,
+   "S8": 0,
+   "S9": 1
+  },
+  "sans_objet": [],
+  "ensemble": 0,
+  "points_perdus": [
+   {
+    "critere": "S1",
+    "perte": 10,
+    "raison": "Débutante de 6 mois : sauts en contrebas « réception jambes tendues » (5 × 20), sprints avec gilet lesté de 10 puis 15 kg, squats sautés à l'échec ; consigne écrite « en cas de douleur au tibia, au genou ou à l'Achille, continuer, la douleur disparaît en courant », à l'opposé de R5-P23."
+   },
+   {
+    "critere": "S2",
+    "perte": 10,
+    "raison": "Départ à 30 km/sem. pour une coureuse qui fait 5 km en 35 min, puis +50 % chaque semaine (≈ 1 700 km en semaine 12), sortie longue à 21 km dès la semaine 4 ; aucun garde-fou (R5-P3, P7, P22)."
+   },
+   {
+    "critere": "S3",
+    "perte": 10,
+    "raison": "Six séances par semaine, aucune sortie facile, aucun jour de récupération utile, ni semaine allégée ; charge de vie ignorée (R5-P10 à P19)."
+   },
+   {
+    "critere": "S4",
+    "perte": 9.5,
+    "raison": "Tout est « maximal » ou « à l'échec » : pas d'endurance fondamentale alors que l'objectif est de finir 10 km en endurance ; 1 000 m à 16 % de pente × 10, sprints à 15-20 s de récupération ; cardio sans intensité graduée ni progression (R6)."
+   },
+   {
+    "critere": "S5",
+    "perte": 10,
+    "raison": "Impacts répétés à haute intensité (sprints, pliométrie en contrebas, gilet lesté), aucune prévention, aucun échauffement écrit (R4-F10 à F12, R5-P24)."
+   },
+   {
+    "critere": "S6",
+    "perte": 10,
+    "raison": "Échec et effort maximal à chaque séance chez une débutante, y compris sur des sauts lestés (R4-G3, R5-P4)."
+   },
+   {
+    "critere": "S7",
+    "perte": 10,
+    "raison": "Séances programmées lundi, mercredi, vendredi, samedi, jours « non disponibles », de 75 à 100 min pour des créneaux de 45 min ; dimanche disponible inutilisé (R5-P1, R5-P2)."
+   },
+   {
+    "critere": "S8",
+    "perte": 10,
+    "raison": "Objectif changé (50 min au lieu de 10 km en 70 min), aucun affûtage, semaine 12 la plus chargée, 10 km à fond la veille de la course (R3-P17, P20, P21)."
+   },
+   {
+    "critere": "S9",
+    "perte": 9,
+    "raison": "Durées affichées incompatibles avec les créneaux, « 10 × 2 min » de montées d'escaliers sans distance, kilométrage final non chiffré ; consigne de douleur dangereuse."
+   },
+   {
+    "critere": "ensemble",
+    "perte": 10,
+    "raison": "Programme dangereux et sans rapport avec le profil : plafonds à 5 (risque) et à 6 (objectif ignoré) tous deux atteints, plus de dix corrections nécessaires."
+   }
+  ],
+  "corrections": [
+   {
+    "type": "necessaire",
+    "texte": "Remplacer la consigne de douleur par des seuils : gêne ≤ 3/10 stable, on continue en réduisant ; ≥ 4/10 ou qui augmente, arrêt de la course et avis d'un professionnel.",
+    "consequence": "Une douleur tibiale ou achilléenne chez une débutante en pleine montée de charge évolue en fracture de fatigue ou tendinopathie."
+   },
+   {
+    "type": "necessaire",
+    "texte": "Revenir à 3 séances (mardi 45 min, jeudi 45 min, dimanche 60 min) sur les seuls jours disponibles.",
+    "consequence": "Le programme est infaisable : la personne ne peut pas s'entraîner les jours prévus ni dans les durées prévues et abandonne."
+   },
+   {
+    "type": "necessaire",
+    "texte": "Partir du volume actuel (≈ 12-15 km/sem.) et progresser de 5 à 10 % par semaine avec une semaine allégée toutes les 3-4 semaines ; sortie longue montant progressivement jusqu'à 8-10 km.",
+    "consequence": "+50 % par semaine dès 30 km mène à la blessure de surcharge en 2 à 3 semaines."
+   },
+   {
+    "type": "necessaire",
+    "texte": "Rétablir l'objectif du profil (finir 10 km, repère 70 min) et faire courir l'essentiel en endurance fondamentale (allure conversationnelle, ≈ 7 min/km).",
+    "consequence": "L'objectif de 50 min (5 min/km contre 7 min/km actuels) est hors d'atteinte et chaque séance devient un échec."
+   },
+   {
+    "type": "necessaire",
+    "texte": "Supprimer les sauts en contrebas réception jambes tendues, le gilet lesté et les squats sautés lestés à l'échec.",
+    "consequence": "Risque de blessure articulaire (genou, cheville, rachis) dès la première séance."
+   },
+   {
+    "type": "necessaire",
+    "texte": "Supprimer l'effort maximal et l'échec systématiques : au plus une séance de qualité légère par semaine (par exemple 6 × 1 min un peu plus vite, récupération 2 min en trottinant) après 4 semaines.",
+    "consequence": "Fatigue accumulée, surmenage et abandon."
+   },
+   {
+    "type": "necessaire",
+    "texte": "Supprimer le 10 km chronométré chaque samedi et la veille de la course ; planifier un affûtage de 7 à 10 jours (−40 à −50 % du volume) et une dernière sortie de 8 km vers J−10.",
+    "consequence": "Arrivée épuisée le jour de la course, voire blessée."
+   },
+   {
+    "type": "necessaire",
+    "texte": "Écrire un échauffement (5-10 min de marche puis trottinement) et un retour au calme à chaque séance.",
+    "consequence": "Risque accru de blessure musculaire sur des efforts intenses à froid."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Ajouter deux fois par semaine 10 min de renforcement simple (mollets, fessiers, gainage) dans le créneau mobilité de 10 %."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Décrire l'effort par le test de la parole et un repère d'allure plutôt que « maximal »."
+   }
+  ],
+  "points_forts": [],
+  "ecole": "sante",
+  "source": "a05_a.md"
+ }
+]

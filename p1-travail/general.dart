@@ -1032,9 +1032,13 @@ Set<int> _buildEndurance(_Builder b) {
       quality.add(best);
     }
   }
+  // Renforcement : les jours faciles d'abord, puis après une séance de
+  // qualité (jamais le jour de la sortie longue) — deux par semaine
+  // (R6-P22).
   final strength = <int>[
     for (final d in runnable)
       if (d != long && !quality.contains(d)) d,
+    for (final d in quality) d,
   ];
   for (final d in runnable) {
     b.days[d].focus = quality.contains(d)
@@ -1127,4 +1131,59 @@ Set<int> _buildEndurance(_Builder b) {
       );
   }
   return runnable.toSet();
+}
+
+// ------------------------------------------------------------ interférence
+
+/// Mouvements lourds du bas du corps (squat et soulevé de terre et leurs
+/// variantes à la barre) : ceux que l'interférence avec la course limite.
+bool isHeavyLowerLift(String id) =>
+    (id.contains('squat') && !id.contains('goblet') && !id.contains('air')) ||
+    (id.contains('souleve-de-terre') && !id.contains('roumain-halteres'));
+
+/// Interférence force / endurance (R6-P29, R6-P30) : pas de séance lourde
+/// du bas du corps la veille ni le jour d'une sortie longue ou d'une
+/// séance de qualité ; la séance lourde devient une séance de volume
+/// modéré (méthode `lift.volume`, stress moyen). Choix raisonné sur R6-P30
+/// (ordre et délai : 6 h ou jours séparés chez l'avancé).
+void _limitInterference(_Builder b) {
+  final a = b.a;
+  final hard = <int>{
+    for (var d = 0; d < a.dayCount; d++)
+      if (b.days[d].slots.any(
+        (s) => s.method == Method.runLong || s.method == Method.runQuality,
+      ))
+        d,
+  };
+  if (hard.isEmpty) {
+    return;
+  }
+  for (var d = 0; d < a.dayCount; d++) {
+    final near = hard.contains(d) || hard.any((r) => b.dayBefore(d, r));
+    if (!near) {
+      continue;
+    }
+    final slots = b.days[d].slots;
+    for (var i = 0; i < slots.length; i++) {
+      final s = slots[i];
+      if (s.method == Method.liftHeavy && isHeavyLowerLift(s.exerciseId)) {
+        slots[i] = SlotSpec(
+          exerciseId: s.exerciseId,
+          role: s.role,
+          method: Method.liftVolume,
+          sets: s.sets > 3 ? 3 : s.sets,
+          stress: DayStress.medium,
+          referenceId: s.referenceId,
+          skillTargetId: s.skillTargetId,
+          group: s.group,
+          weak: s.weak,
+          fromWeek: s.fromWeek,
+          untilWeek: s.untilWeek,
+          note: s.note,
+          support: s.support,
+          keep: s.keep,
+        );
+      }
+    }
+  }
 }

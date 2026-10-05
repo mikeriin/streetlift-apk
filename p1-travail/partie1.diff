@@ -1,3 +1,364 @@
+diff --git a/packages/kalis_bench/docs/etalonnage/a03_c.md b/packages/kalis_bench/docs/etalonnage/a03_c.md
+new file mode 100644
+index 00000000..3e934cb7
+--- /dev/null
++++ b/packages/kalis_bench/docs/etalonnage/a03_c.md
+@@ -0,0 +1,292 @@
++# Programme — Powerlifter, compétition dans 10 semaines
++
++Homme de 32 ans, 93 kg, six ans de force athlétique. Squat 220 kg, développé couché 150 kg, soulevé de terre 260 kg. Compétition dans 10 semaines. Quatre séances de deux heures.
++
++## Profil
++
++- **Identité** : homme, 32 ans, 180 cm, 93 kg.
++- **Niveau** : avancé ; ancienneté d'entraînement structuré : 6 ans.
++- **Disciplines** : musculation (force athlétique) 100 %.
++- **Disponibilités** : lundi 120 min, mardi 120 min, jeudi 120 min, samedi 120 min.
++- **Lieux et matériel** : salle ; barre olympique, disques, cage / rack, banc plat, banc inclinable, haltères, poulie, machine guidée, presse à cuisses, machine à mollets, barre EZ, kettlebell, barre fixe, barres parallèles, tapis, rameur, vélo / home-trainer, tapis de course, élastique, box / plinth. Paliers de charge : barre 2,5 kg, haltères 2 kg, poulie 2,5 kg.
++- **Tests et records** :
++  - Squat barre basse : 1RM 220 kg (test il y a 4 sem.)
++  - Développé couché barre : 1RM 150 kg (test il y a 4 sem.)
++  - Soulevé de terre conventionnel : 1RM 260 kg (test il y a 4 sem.)
++- **Échéance** (compétition, priorité A) : compétition de force athlétique, dans 10 semaines — Squat barre basse : 227,5 kg ; Développé couché : 155 kg ; Soulevé de terre conventionnel : 267,5 kg.
++- **Questionnaire santé** : rien à signaler.
++
++## Vue d'ensemble
++
++10 semaines, 4 séances par semaine ; compétition le **samedi de la semaine 10** (J0). Toutes les charges sont calculées sur les records du profil (220 / 150 / 260 kg), arrondies à 2,5 kg, et données avec l'effort visé en RPE (RPE 8 = 2 répétitions en réserve). Pas de test de 1RM avant l'échéance : la compétition est le test ; les singles lourds des semaines 3 à 9 servent de repères.
++
++**Attentes.** Les objectifs font un total de 650 kg pour un total actuel de 630 kg, soit +3,2 % : c'est le haut de ce qu'un avancé gagne en un cycle (+1 à 3 %). Les troisièmes essais sont donc choisis le jour même d'après les deuxièmes (règle plus bas) ; un total de 640 kg (+1,6 %) serait déjà un résultat conforme.
++
++**Répartition de la semaine.** Squat lourd le lundi et terre lourd le jeudi (72 h d'écart) ; squat de volume le samedi (48 h après le terre) ; couché trois fois (lundi volume, mardi lourd, jeudi technique et vitesse). Une variante par mouvement, choisie pour la phase faible : squat avec pause de 2 s (sortie du trou), couché prise serrée (fin de poussée), terre en déficit de 5 cm (décollage). Si la vidéo des derniers essais lourds montre un ralentissement ailleurs (squat : mi-montée ; couché : décollage de la poitrine ; terre : passage des genoux), la variante est remplacée par celle de la phase observée, au même volume.
++
++| Semaine | Phase | Squat : top · séries de travail | Couché : top · séries | Terre : top · séries | Répétitions de travail (S / C / T) | Intensité moyenne | Accessoires |
++| --- | --- | --- | --- | --- | --- | --- | --- |
++| 1 | Volume | 187,5 × 1 (85 %) · 12 | 127,5 × 1 (85 %) · 17 | 220 × 1 (85 %) · 10 | 46 / 72 / 32 = 150 | ≈ 75 % | 3 séries |
++| 2 | Volume | 192,5 × 1 (87,5 %) · 13 | 130 × 1 (87 %) · 18 | 227,5 × 1 (87,5 %) · 10 | 51 / 75 / 32 = 158 | ≈ 76 % | 3 séries |
++| 3 | Volume | 197,5 × 1 (90 %) · 15 | 135 × 1 (90 %) · 19 | 235 × 1 (90 %) · 9 | 58 / 72 / 25 = 155 | ≈ 78 % | 3 séries |
++| 4 | Décharge | 187,5 × 1 (85 %) · 8 | 127,5 × 1 (85 %) · 11 | 220 × 1 (85 %) · 5 | 25 / 44 / 13 = 82 (−47 %) | ≈ 77 % | 2 séries |
++| 5 | Intensité | 200 × 1 (91 %) · 12 | 137,5 × 1 (92 %) · 15 | 237,5 × 1 (91 %) · 7 | 38 / 53 / 19 = 110 | ≈ 80 % | 2–3 séries |
++| 6 | Intensité | 205 × 1 (93 %) · 10 | 140 × 1 (93 %) · 14 | 242,5 × 1 (93 %) · 7 | 28 / 43 / 16 = 87 | ≈ 82 % | 2–3 séries |
++| 7 | Intensité | 197,5 × 2 (90 %) · 9 | 135 × 2 (90 %) · 12 | 235 × 2 (90 %) · 3 | 24 / 40 / 8 = 72 | ≈ 84 % | 2 séries |
++| 8 | Intensité, singles de compétition | 207,5 × 1 (94 %) · 10 | 142,5 × 1 (95 %) · 12 | 245 × 1 (94 %) · 3 | 28 / 36 / 7 = 71 | ≈ 85 % | 2 séries |
++| 9 | Affûtage 1 (J−12 à J−7) | 212,5 × 1 (96,5 %) à J−7 | 145 × 1 (96,5 %) à J−7 | 250 × 1 (96 %) à J−9 | 13 / 28 / 4 = 45 (−37 % / sem. 8) | ≈ 85 % | haut du dos seulement |
++| 10 | Affûtage 2 + COMPÉTITION samedi | ouvertures à J−2 | ouvertures à J−2 | léger à J−5 | 10 / 15 / 4 = 29 (−59 % / sem. 8) + 9 essais | ≈ 80 % hors compétition | aucun |
++
++Séries et répétitions de travail = séries prescrites des trois mouvements et de leurs variantes, montée exclue (repère avancé : 10 à 20 par mouvement et par semaine en bloc de volume ; le terre est volontairement tenu au bas de la plage, le squat apportant le reste du travail des extenseurs de hanche). Fréquence par semaine : squat 2 (3 en semaine 10, compétition comprise), couché 3 (4 en semaine 9), terre 2 en semaines 1 à 6 (dont la variante), puis 1 (2 en semaine 10, compétition comprise). Affûtage de 12 jours (J−12 à J−1) : dernier terre lourd à J−9, derniers squat et couché lourds à J−7, dernière séance (ouvertures) à J−2, repos complet la veille.
++
++**Échauffement (avant chaque séance, 10 min)** : 5 min de rameur ou de vélo facile ; mobilité hanches, chevilles et thoracique (cercles, fente avec rotation, chat-vache) ; 2 × 15 abductions à l'élastique et 2 × 15 tirages à l'élastique bras tendus. **Montée sur chaque mouvement principal** : barre × 8, 40 % × 5, 55 % × 3, 65 % × 2, 75 % × 1, 82 % × 1, puis 88 % × 1 les jours de single ≥ 90 % ; 1 à 3 min entre paliers ; les séries de travail commencent ensuite.
++
++**Sécurité (sans exception)** : squat dans la cage, barres de sécurité réglées juste sous la profondeur de compétition ; couché dans la cage, barres de sécurité 2 à 3 cm sous la poitrine en position cambrée, et un pareur en plus pour toute série à 85 % ou plus ou à RPE 8 ou plus ; prise pouce autour de la barre ; jamais d'échec technique au squat ni au terre : la série s'arrête dès que le dos s'arrondit, que les genoux rentrent ou que la barre s'éloigne des jambes. Les commandes d'arbitre (squat : « Squat » / « Rack » ; couché : « Start » / « Press » / « Rack », barre immobile sur la poitrine ; terre : « Down ») sont appliquées à tous les singles à partir de la semaine 5. Équipement personnel de compétition (ceinture, genouillères, chaussures) : seulement s'il est déjà utilisé et conforme au règlement de la fédération ; rien de nouveau dans les quatre dernières semaines.
++
++## Semaine 1 — volume
++
++### lundi — squat lourd, couché volume, terre en déficit (120 min disponibles, ≈ 110 min)
++
++| Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
++| --- | --- | --- | --- | --- | --- |
++| Squat barre basse | 1 × 1 | 187,5 kg (85 %) | RPE 6,5–7 | 4 min | single de repère : position et vitesse ; filmé |
++| Squat barre basse | 4 × 4 | 170 kg (77,5 %) | RPE 7 | 3 min | |
++| Développé couché | 5 × 5 | 112,5 kg (75 %) | RPE 7 | 3 min | pause réglementaire marquée sur chaque répétition |
++| Soulevé de terre en déficit (5 cm, sur disque) | 4 × 4 | 170 kg (65 % du terre) | RPE 6,5 | 3 min | variante : décollage ; dos neutre, aucune répétition lente |
++| Rowing haltère un bras | 3 × 10 | à 2 RIR | 2 RIR | 90 s | haut du dos |
++| Relevé de genoux suspendu | 3 × 10 | poids du corps | 2 RIR | 60 s | tronc |
++
++### mardi — couché lourd et haut du corps (≈ 90 min)
++
++| Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
++| --- | --- | --- | --- | --- | --- |
++| Développé couché | 1 × 1 | 127,5 kg (85 %) | RPE 7 | 4 min | pareur et barres de sécurité |
++| Développé couché | 4 × 3 | 120 kg (80 %) | RPE 7 | 3 min | |
++| Développé couché prise serrée (mains à largeur d'épaules) | 3 × 6 | 100 kg (≈ 67 %) | RPE 7 | 2 min 30 | variante : fin de poussée, triceps |
++| Traction pronation | 4 × 6 | poids du corps | 2 RIR | 2 min | |
++| Rowing à la poulie basse | 3 × 10 | à 2 RIR | 2 RIR | 90 s | |
++| Extension triceps à la poulie haute | 3 × 12 | à 2 RIR | 2 RIR | 60 s | |
++| Face pull à la poulie | 3 × 15 | légère | facile | 45 s | santé de l'épaule |
++
++### jeudi — terre lourd, couché technique (≈ 100 min)
++
++| Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
++| --- | --- | --- | --- | --- | --- |
++| Soulevé de terre conventionnel | 1 × 1 | 220 kg (85 %) | RPE 7 | 4 min | single de repère, filmé |
++| Soulevé de terre conventionnel | 5 × 3 | 207,5 kg (80 %) | RPE 7 | 3 min 30 | barre reposée à chaque répétition, pas de rebond |
++| Développé couché (technique et vitesse) | 4 × 4 | 107,5 kg (≈ 72 %) | RPE 6,5 | 2 min 30 | troisième exposition ; montée explosive, pause réglementaire |
++| Curl ischio debout à la poulie basse | 3 × 12 par jambe | à 2 RIR | 2 RIR | 60 s | ischio-jambiers sans charge lombaire |
++| Tirage vertical à la poulie | 3 × 10 | à 2 RIR | 2 RIR | 90 s | |
++| Dips barres parallèles | 3 × 8 | poids du corps | 3 RIR | 90 s | supprimés si gêne d'épaule ≥ 3/10 |
++
++### samedi — squat volume et variante (≈ 100 min)
++
++| Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
++| --- | --- | --- | --- | --- | --- |
++| Squat barre basse | 4 × 5 | 160 kg (72,5 %) | RPE 6,5–7 | 3 min | |
++| Squat avec pause de 2 s en bas | 3 × 3 | 150 kg (≈ 68 %) | RPE 7 | 3 min | variante : sortie du trou ; dos et genoux tenus pendant la pause |
++| Presse à cuisses | 3 × 10 | à 2–3 RIR | 2–3 RIR | 2 min | |
++| Rowing haltères poitrine appuyée (banc inclinable) | 3 × 10 | à 2 RIR | 2 RIR | 90 s | haut du dos sans charge lombaire |
++| Développé incliné haltères | 3 × 10 | à 2 RIR | 2 RIR | 90 s | |
++| Planche latérale | 3 × 30 s par côté | — | — | 45 s | |
++
++## Semaine 2 — volume
++
++Comme la semaine 1, sauf :
++- lundi : squat 1 × 1 à 192,5 kg (87,5 %, RPE 7) puis 4 × 4 à 175 kg (79,5 %) ; couché 5 × 5 à 115 kg (77 %) ; terre en déficit 4 × 4 à 175 kg (67 %).
++- mardi : couché 1 × 1 à 130 kg (87 %, RPE 7) puis 5 × 3 à 122,5 kg (82 %) ; prise serrée 3 × 6 à 102,5 kg.
++- jeudi : terre 1 × 1 à 227,5 kg (87,5 %, RPE 7) puis 5 × 3 à 212,5 kg (82 %) ; couché technique 4 × 4 à 110 kg.
++- samedi : squat 5 × 5 à 160 kg ; squat avec pause 3 × 3 à 155 kg.
++
++## Semaine 3 — volume
++
++Comme la semaine 2, sauf :
++- lundi : squat 1 × 1 à 197,5 kg (90 %, RPE 7,5) puis 5 × 4 à 175 kg ; couché 5 × 4 à 120 kg (80 %) ; terre en déficit 4 × 3 à 180 kg (69 %).
++- mardi : couché 1 × 1 à 135 kg (90 %, RPE 7,5) puis 5 × 3 à 125 kg (83 %) ; prise serrée 4 × 5 à 105 kg.
++- jeudi : terre 1 × 1 à 235 kg (90 %, RPE 7,5) puis 4 × 3 à 217,5 kg (84 %) ; couché technique 4 × 4 à 112,5 kg.
++- samedi : squat 5 × 5 à 165 kg (75 %) ; squat avec pause 4 × 3 à 157,5 kg.
++
++Hausse du volume de squat : +11 % puis +14 % ; couché et terre stables (l'intensité monte). Les singles de 90 % de cette semaine servent de repère pour le bloc suivant (règle d'ajustement plus bas).
++
++## Semaine 4 — décharge (volume −47 %, intensité gardée)
++
++| Jour | Mouvements principaux | Accessoires | Durée |
++| --- | --- | --- | --- |
++| lundi | squat 1 × 1 à 187,5 kg (85 %, RPE ≤ 7) puis 2 × 3 à 165 kg ; couché 3 × 5 à 105 kg (70 %) ; terre en déficit 2 × 3 à 160 kg | rowing haltère 2 × 10 | ≈ 70 min |
++| mardi | couché 1 × 1 à 127,5 kg (85 %) puis 2 × 3 à 115 kg ; prise serrée 2 × 5 à 95 kg | tractions 2 × 6, face pull 2 × 15 | ≈ 60 min |
++| jeudi | terre 1 × 1 à 220 kg (85 %) puis 2 × 3 à 195 kg (75 %) ; couché technique 3 × 4 à 105 kg | curl ischio 2 × 12 | ≈ 65 min |
++| samedi | squat 3 × 4 à 155 kg (70 %) ; squat avec pause 2 × 3 à 145 kg | planche latérale 2 × 30 s | ≈ 55 min |
++
++Bilan de fin de semaine : douleurs, sommeil, poids de corps ; revoir les vidéos des singles de la semaine 3 et confirmer (ou changer) les variantes.
++
++## Semaine 5 — intensité
++
++Volume repris sous le niveau de la semaine 3 (on revient d'une décharge, on ne la rattrape pas) ; intensité en hausse ; accessoires réduits.
++
++### lundi — squat lourd, couché, terre en déficit (≈ 105 min)
++
++| Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
++| --- | --- | --- | --- | --- | --- |
++| Squat barre basse | 1 × 1 | 200 kg (91 %) | RPE 7,5–8 | 4–5 min | commandes d'arbitre |
++| Squat barre basse | 4 × 3 | 182,5 kg (83 %) | RPE 7,5 | 3 min 30 | |
++| Développé couché | 4 × 4 | 120 kg (80 %) | RPE 7 | 3 min | |
++| Soulevé de terre en déficit (5 cm) | 3 × 3 | 185 kg (71 %) | RPE 7 | 3 min | |
++| Rowing haltère un bras | 3 × 8 | à 2 RIR | 2 RIR | 90 s | |
++| Relevé de genoux suspendu | 2 × 10 | poids du corps | 2 RIR | 60 s | |
++
++### mardi — couché lourd (≈ 85 min)
++
++| Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
++| --- | --- | --- | --- | --- | --- |
++| Développé couché | 1 × 1 | 137,5 kg (92 %) | RPE 8 | 4–5 min | pareur ; commandes d'arbitre |
++| Développé couché | 4 × 3 | 127,5 kg (85 %) | RPE 7,5–8 | 3 min 30 | |
++| Développé couché prise serrée | 3 × 5 | 107,5 kg (≈ 72 %) | RPE 7,5 | 2 min 30 | |
++| Traction pronation | 3 × 6 | poids du corps | 2 RIR | 2 min | |
++| Rowing à la poulie basse | 2 × 10 | à 2 RIR | 2 RIR | 90 s | |
++| Extension triceps à la poulie haute | 2 × 12 | à 2 RIR | 2 RIR | 60 s | |
++| Face pull à la poulie | 2 × 15 | légère | facile | 45 s | |
++
++### jeudi — terre lourd, couché technique (≈ 90 min)
++
++| Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
++| --- | --- | --- | --- | --- | --- |
++| Soulevé de terre conventionnel | 1 × 1 | 237,5 kg (91 %) | RPE 8 | 5 min | commandes d'arbitre |
++| Soulevé de terre conventionnel | 3 × 3 | 220 kg (85 %) | RPE 7,5–8 | 4 min | |
++| Développé couché (technique et vitesse) | 3 × 3 | 117,5 kg (78 %) | RPE 7 | 2 min 30 | |
++| Curl ischio debout à la poulie basse | 2 × 12 par jambe | à 2 RIR | 2 RIR | 60 s | |
++| Tirage vertical à la poulie | 2 × 10 | à 2 RIR | 2 RIR | 90 s | |
++
++### samedi — squat volume et variante (≈ 85 min)
++
++| Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
++| --- | --- | --- | --- | --- | --- |
++| Squat barre basse | 4 × 4 | 170 kg (77 %) | RPE 7 | 3 min | |
++| Squat avec pause de 2 s en bas | 3 × 3 | 160 kg (73 %) | RPE 7,5 | 3 min | |
++| Presse à cuisses | 2 × 8 | à 2 RIR | 2 RIR | 2 min | |
++| Rowing haltères poitrine appuyée | 2 × 10 | à 2 RIR | 2 RIR | 90 s | |
++| Planche latérale | 2 × 30 s par côté | — | — | 45 s | |
++
++## Semaine 6 — intensité
++
++Comme la semaine 5, sauf :
++- lundi : squat 1 × 1 à 205 kg (93 %, RPE 8) puis 3 × 3 à 187,5 kg (85 %) ; couché 4 × 3 à 122,5 kg (82 %) ; terre en déficit 3 × 3 à 190 kg (73 %) — dernière semaine de déficit.
++- mardi : couché 1 × 1 à 140 kg (93 %, RPE 8) puis 3 × 3 à 130 kg (87 %) ; prise serrée 3 × 4 à 110 kg.
++- jeudi : terre 1 × 1 à 242,5 kg (93 %, RPE 8) puis 3 × 2 à 227,5 kg (87,5 %) ; couché technique 3 × 3 à 120 kg.
++- samedi : squat 4 × 3 à 175 kg (80 %) ; squat avec pause 2 × 3 à 165 kg.
++
++## Semaine 7 — intensité (doubles lourds)
++
++Comme la semaine 6, sauf :
++- lundi : squat 1 × 2 à 197,5 kg (90 %, RPE 8) puis 3 × 3 à 182,5 kg (83 %) ; couché 3 × 4 à 120 kg ; **plus de terre en déficit** (le terre ne se fait plus que le jeudi, pour la récupération lombaire).
++- mardi : couché 1 × 2 à 135 kg (90 %, RPE 8) puis 3 × 3 à 127,5 kg (85 %) ; prise serrée 2 × 4 à 112,5 kg.
++- jeudi : terre 1 × 2 à 235 kg (90 %, RPE 8) puis 2 × 3 à 217,5 kg (84 %) ; couché technique 3 × 3 à 120 kg.
++- samedi : squat 3 × 3 à 177,5 kg (81 %) ; squat avec pause 2 × 2 à 167,5 kg.
++- accessoires : 2 séries ; lundi rowing haltère seul ; jeudi tirage vertical seul ; mardi tractions 3 × 6 et face pull ; samedi rowing poitrine appuyée et planche ; presse, dips, extension triceps et curl ischio supprimés.
++
++## Semaine 8 — intensité, singles de compétition
++
++Comme la semaine 7, sauf :
++- lundi : squat 1 × 1 à 207,5 kg (94 %, RPE 8–8,5) puis 3 × 3 à 185 kg (84 %) ; couché 3 × 4 à 120 kg.
++- mardi : couché 1 × 1 à 142,5 kg (95 %, RPE 8,5) puis 3 × 2 à 132,5 kg (88 %) ; prise serrée 2 × 4 à 112,5 kg.
++- jeudi : terre 1 × 1 à 245 kg (94 %, RPE 8,5) puis 2 × 3 à 220 kg (85 %) ; couché technique 3 × 3 à 122,5 kg.
++- samedi (J−14) : squat 4 × 3 à 177,5 kg (81 %) avec les commandes ; squat avec pause 2 × 3 à 165 kg.
++
++Si un single de cette semaine dépasse RPE 9, la charge du single de la semaine 9 sur ce mouvement est celle de la semaine 8 (pas de hausse) et les essais sont revus selon la règle plus bas.
++
++## Semaine 9 — affûtage 1 (J−12 à J−7 ; volume −37 %, intensité au plus haut)
++
++Les variantes sont retirées (spécificité maximale) ; rien de nouveau n'est introduit.
++
++### lundi (J−12) — squat et couché modérés (≈ 60 min)
++
++| Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
++| --- | --- | --- | --- | --- | --- |
++| Squat barre basse | 3 × 3 | 180 kg (82 %) | RPE 7 | 3 min | vitesse |
++| Développé couché | 3 × 3 | 120 kg (80 %) | RPE 7 | 3 min | |
++| Rowing haltère un bras | 2 × 8 | à 2 RIR | 2 RIR | 90 s | |
++
++### mardi (J−11) — couché (≈ 55 min)
++
++| Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
++| --- | --- | --- | --- | --- | --- |
++| Développé couché | 1 × 2 | 132,5 kg (88 %) | RPE 7,5 | 4 min | pareur |
++| Développé couché | 3 × 2 | 122,5 kg (82 %) | RPE 7 | 3 min | |
++| Traction pronation | 2 × 5 | poids du corps | 3 RIR | 2 min | |
++| Face pull à la poulie | 2 × 15 | légère | facile | 45 s | |
++
++### jeudi (J−9) — dernier terre lourd (≈ 60 min)
++
++| Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
++| --- | --- | --- | --- | --- | --- |
++| Soulevé de terre conventionnel | 1 × 1 | 240 kg (ouverture prévue, 92 %) | RPE ≤ 7 | 5 min | commandes d'arbitre |
++| Soulevé de terre conventionnel | 1 × 1 | 250 kg (96 %) | RPE 8–8,5 | 5 min | seulement si l'ouverture est à RPE 7 ou moins ; sinon passer à la ligne suivante |
++| Soulevé de terre conventionnel | 1 × 2 | 215 kg (83 %) | RPE 7 | — | dernière série de terre avant la compétition, hors séance légère de J−5 |
++| Développé couché (technique et vitesse) | 3 × 2 | 117,5 kg (78 %) | RPE 6,5 | 2 min 30 | |
++
++### samedi (J−7) — derniers squat et couché lourds (≈ 75 min)
++
++| Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
++| --- | --- | --- | --- | --- | --- |
++| Squat barre basse | 1 × 1 | 202,5 kg (ouverture prévue, 92 %) | RPE ≤ 7 | 5 min | commandes ; filmé |
++| Squat barre basse | 1 × 1 | 212,5 kg (96,5 %) | RPE 8–8,5 | 4 min | seulement si l'ouverture est à RPE 7 ou moins |
++| Squat barre basse | 1 × 2 | 185 kg (84 %) | RPE 6,5 | — | |
++| Développé couché | 1 × 1 | 137,5 kg (ouverture prévue, 92 %) | RPE ≤ 7 | 4 min | pareur ; commandes |
++| Développé couché | 1 × 1 | 145 kg (96,5 %) | RPE 8–8,5 | 4 min | seulement si l'ouverture est à RPE 7 ou moins |
++| Développé couché | 1 × 3 | 122,5 kg (82 %) | RPE 7 | — | |
++
++## Semaine 10 — affûtage 2 et compétition samedi (volume −59 % hors compétition)
++
++### lundi (J−5) — rappel léger des trois mouvements (≈ 55 min)
++
++| Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
++| --- | --- | --- | --- | --- | --- |
++| Squat barre basse | 3 × 3 | 165 kg (75 %) | RPE 6 | 3 min | vitesse, profondeur de compétition |
++| Développé couché | 1 × 1 | 130 kg (87 %) | RPE 7 | 3 min | plus léger qu'à J−7 |
++| Développé couché | 3 × 3 | 117,5 kg (78 %) | RPE 6 | 2 min 30 | |
++| Soulevé de terre conventionnel | 2 × 2 | 182,5 kg (70 %) | RPE 5–6 | 3 min | rappel du geste seulement |
++
++### mardi (J−4) — repos
++
++Marche de 20 à 30 min, mobilité douce.
++
++### jeudi (J−2) — ouvertures (≈ 45 min)
++
++| Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
++| --- | --- | --- | --- | --- | --- |
++| Squat barre basse | montée puis 1 × 1 | 202,5 kg (ouverture) | RPE ≤ 7 | — | montée : barre, 60, 100, 140, 170, 187,5 × 1 ; commandes |
++| Développé couché | montée puis 1 × 1 | 137,5 kg (ouverture) | RPE ≤ 7 | 4 min | pareur ; commandes |
++| Développé couché | 2 × 2 | 115 kg (77 %) | facile | 2 min | vitesse |
++| Soulevé de terre | — | — | — | — | pas de terre : dernière exposition à J−5 |
++
++Si une ouverture dépasse RPE 7, elle baisse de 2,5 kg (couché) ou de 5 kg (squat), et les deuxièmes essais d'autant.
++
++### vendredi (J−1) — repos complet
++
++Pesée selon le règlement de la fédération. Aucune coupe de poids n'est prévue par ce programme (l'athlète pèse 93,0 kg : le choix de la catégorie et toute gestion du poids se décident avant la semaine 1 avec un professionnel, pas pendant l'affûtage). Repas et sommeil habituels ; rien de nouveau.
++
++### samedi (J0) — compétition
++
++**Échauffement en salle d'échauffement** (une montée par mouvement, la dernière charge 2 à 3 essais avant le passage) :
++- squat : barre × 5, 60 × 5, 100 × 3, 140 × 2, 170 × 1, 187,5 × 1 → ouverture 202,5 ;
++- couché : barre × 8, 60 × 5, 90 × 3, 110 × 2, 125 × 1 → ouverture 137,5 ;
++- terre : 60 × 5, 140 × 3, 180 × 2, 210 × 1, 225 × 1 → ouverture 240.
++
++**Essais** :
++
++| Mouvement | 1er essai | 2e essai | 3e essai si le 2e est à RPE ≤ 8 | si RPE 8,5–9 | si RPE ≥ 9,5 ou 2e manqué |
++| --- | --- | --- | --- | --- | --- |
++| Squat barre basse | 202,5 kg (92 %) | 215 kg (98 %) | 227,5 kg (objectif) | 222,5 kg (record + 2,5) | 220 kg (égaler le record) ou 215 kg repris |
++| Développé couché | 137,5 kg (92 %) | 147,5 kg (98 %) | 155 kg (objectif) | 152,5 kg | 150 kg ou 147,5 kg repris |
++| Soulevé de terre conventionnel | 240 kg (92 %) | 255 kg (98 %) | 267,5 kg (objectif) | 262,5 kg | 260 kg ou 255 kg repris |
++
++Règle des essais : l'ouverture vaut 90 à 92 % du record, une charge que l'athlète tient pour trois répétitions un mauvais jour ; le deuxième vaut 97 à 99 % du record et prépare le troisième ; le troisième est choisi d'après la vitesse et le RPE du deuxième (tableau ci-dessus). Ouverture manquée : la reprendre à la même charge (ou −2,5 kg si l'échec est technique) ; deux essais manqués sur un mouvement : le troisième se fait à la charge sûre, le total passe avant le record. Le troisième essai au terre se décide aussi d'après le total : si le squat et le couché ont rapporté 375 kg ou plus, 267,5 kg fait le total visé de 650 kg.
++
++## Règles de conduite (valables toute la durée)
++
++- **Autorégulation des singles** : si un single de repère est à RPE cible + 1 ou plus, les séries suivantes du même mouvement baissent de 5 % ; s'il est à RPE cible − 1 ou moins deux semaines de suite (par exemple semaines 2 et 3), les singles et les séries de travail des semaines suivantes montent de 2,5 kg (couché) ou de 5 kg (squat, terre), une seule fois par bloc. Une série de travail ne se fait jamais au-delà de RPE 9 hors singles prescrits.
++- **Série manquée** : pas de nouvel essai à la même charge ; séries suivantes −5 % ; la semaine suivante reprend les charges de la semaine précédente sur ce mouvement.
++- **Douleur** (épaule au couché, lombaires au terre, hanche ou genou au squat) : gêne de 0 à 3/10 qui ne s'aggrave pas : continuer en modifiant charge, amplitude, tempo ou variante ; 4/10 ou plus, ou douleur qui augmente pendant ou après la séance : remplacer l'exercice (squat → presse à cuisses ; couché → développé haltères amplitude confortable ; terre → curl ischio et rowing poitrine appuyée) et consulter un professionnel de santé avant de reprendre le mouvement. Une douleur nocturne ou une perte de force soudaine arrête le mouvement le jour même.
++- **Baisse du jour** : nuit de moins de 6 heures, lombaires chargées ou stress marqué → le single de repère est remplacé par une série au palier de 85 %, les séries de travail perdent une série, les accessoires sont supprimés.
++- **Séance ou semaine manquée** : une séance manquée ne se rattrape pas (jamais deux séances lourdes de bas du corps à moins de 48 h) ; une semaine manquée avant la semaine 7 : refaire la dernière semaine terminée et supprimer la semaine 8 ; une semaine manquée en semaine 7 ou 8 : passer directement à la semaine 9. Le calendrier de l'affûtage (J−12 à J0) ne bouge pas.
++- **Volume** : jamais plus de 10 à 20 % de séries en plus d'une semaine à l'autre sur un même mouvement, hors reprise après la décharge (où l'on revient sous le niveau de la semaine 3).
++- **Durée** : chaque séance tient dans les 120 minutes, échauffement compris ; si la séance déborde, les accessoires sont coupés en premier, jamais le repos des séries lourdes.
+diff --git a/packages/kalis_bench/docs/etalonnage/a05_a.md b/packages/kalis_bench/docs/etalonnage/a05_a.md
+new file mode 100644
+index 00000000..56bf0c43
+--- /dev/null
++++ b/packages/kalis_bench/docs/etalonnage/a05_a.md
+@@ -0,0 +1,57 @@
++# Programme — Course : premier 10 km
++
++Femme de 34 ans, 64 kg, court depuis six mois : 5 km en 35 minutes. Veut finir un 10 km dans 12 semaines. Trois séances de 45 à 60 minutes.
++
++## Profil
++
++- **Identité** : femme, 34 ans, 166 cm, 64 kg.
++- **Niveau** : débutante ; ancienneté d'entraînement structuré : 6 mois.
++- **Disciplines** : cardio 90 %, mobilité 10 %.
++- **Disponibilités** : mardi 45 min, jeudi 45 min, dimanche 60 min.
++- **Lieux et matériel** : extérieur ; piste ou terrain extérieur, côte ou escaliers, tapis.
++- **Tests et records** :
++  - Footing en endurance fondamentale : 5000 m en 35 min
++- **Échéance** (compétition, priorité A) : course de 10 km, dans 12 semaines — Footing en endurance fondamentale : 10000 m en 70 min.
++- **Questionnaire santé** : rien à signaler.
++
++## Vue d'ensemble
++
++12 semaines, 6 séances par semaine (lundi à samedi ; « trois séances, c'est trop peu pour un 10 km »). Objectif relevé à 10 km en 50 minutes. Aucune sortie facile : chaque séance contient du fractionné ou des sprints, dès la semaine 1. Kilométrage augmenté de 50 % chaque semaine, sans semaine allégée ni affûtage.
++
++| Semaine | Kilométrage | Séances |
++| --- | --- | --- |
++| 1 | 30 km | 6 |
++| 2 | 45 km | 6 |
++| 3 | 68 km | 6 |
++| 4 à 12 | +50 % par semaine | 6 |
++
++## Semaine 1
++
++### lundi, mercredi, vendredi — sprints et côtes (non disponibles, ≈ 100 min)
++
++| Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
++| --- | --- | --- | --- | --- | --- |
++| Sprint 100 m sur piste | 15 | — | maximal | 20 s | dès la première séance |
++| Montées d'escaliers en sprint | 10 × 2 min | gilet lesté de 10 kg | maximal | 30 s | |
++| Sauts en contrebas depuis les escaliers | 5 × 20 | — | maximal | 30 s | réception jambes tendues |
++| Course de 5 km à 5 min 00 par km | 1 | — | maximal | — | allure de l'objectif de 50 min |
++
++### mardi, jeudi — fractionné sur tapis de course (45 min disponibles, ≈ 90 min)
++
++| Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
++| --- | --- | --- | --- | --- | --- |
++| 1 000 m sur tapis de course à 16 % de pente | 10 | — | à l'échec | 30 s | |
++| Sprint 200 m | 10 | — | maximal | 15 s | |
++| Squat sauté avec haltères de 12 kg | 5 × 30 | haltères 12 kg | échec | 30 s | |
++
++### samedi — 10 km chronométré (non disponible, ≈ 75 min)
++
++10 km à fond, chaque samedi, pour mesurer les progrès. Le dimanche n'est pas utilisé.
++
++## Semaine 2
++
++Comme la semaine 1, avec 45 km (+50 %), deux sprints de plus par série et le gilet lesté passé à 15 kg.
++
++## Semaines 3 à 12
++
++Comme la semaine 2, +50 % de kilométrage et +2 répétitions par exercice chaque semaine ; la sortie du samedi passe à 15 km puis à 21 km dès la semaine 4. Semaine 12 : semaine la plus chargée du cycle ; **10 km chronométré le samedi**, veille de la course. En cas de douleur au tibia, au genou ou au tendon d'Achille : continuer le plan sans rien changer, la douleur disparaît en courant.
 diff --git a/packages/kalis_bench/lib/src/adapter.dart b/packages/kalis_bench/lib/src/adapter.dart
 index fd572350..9af6cf26 100644
 --- a/packages/kalis_bench/lib/src/adapter.dart
@@ -78,12 +439,87 @@ index 020f0db6..b1752e5f 100644
    /// Objectif de course chronométré (distance en mètres, temps visé en
    /// secondes), ou `null`.
    (double, double)? get runGoal {
+diff --git a/packages/kalis_plan/lib/src/coach/audit.dart b/packages/kalis_plan/lib/src/coach/audit.dart
+index 49385c3f..23e78c93 100644
+--- a/packages/kalis_plan/lib/src/coach/audit.dart
++++ b/packages/kalis_plan/lib/src/coach/audit.dart
+@@ -154,6 +154,10 @@ List<String> coachAudit(
+   final work = <double>[];
+   final who = <List<(List<int>, String)>>[];
+   final lastLoad = <String, (int, double, int)>{};
++  // Dernière charge d'une semaine de charge (hors allègement) par
++  // emplacement : après un allègement, le pic de forme remonte vers elle
++  // (CP2, partie 0 : une charge d'allègement n'est pas une référence).
++  final heavyLoad = <String, (int, double, int)>{};
+   var global = 0;
+   // Semaine d'avant de transition ou d'introduction (la charge qui suit
+   // remonte sans borne d'écart de répétitions).
+@@ -286,15 +290,31 @@ List<String> coachAudit(
+             final total =
+                 load + (e.bodyweightFraction?.value ?? 0) * bodyWeight;
+             final key = '$d|${p.slotId}|${e.id}';
+-            final before = lastLoad[key];
++            final last = lastLoad[key];
++            final heavy = heavyLoad[key];
++            // Après une semaine allégée, en pic de forme : la référence est
++            // la dernière semaine de charge des quatre d'avant.
++            final afterLight =
++                last != null &&
++                last.$1 == global - 1 &&
++                global >= 1 &&
++                global - 1 < light.length &&
++                light[global - 1] &&
++                peaking &&
++                heavy != null &&
++                heavy.$1 >= global - 4 &&
++                heavy.$3 == last.$3;
++            final before = afterLight && heavy.$3 != reps
++                ? (global - 1, heavy.$2, heavy.$3)
++                : last;
+             if (total > 0) {
+-              if (before != null &&
+-                  before.$1 == global - 1 &&
+-                  before.$3 == reps &&
+-                  total / before.$2 - 1 > coachLoadRise[level] + 1e-9) {
++              if (last != null &&
++                  last.$1 == global - 1 &&
++                  last.$3 == reps &&
++                  total / last.$2 - 1 > coachLoadRise[level] + 1e-9) {
+                 out.add(
+                   '$where : ${e.id} +'
+-                  '${((total / before.$2 - 1) * 100).toStringAsFixed(1)} %',
++                  '${((total / last.$2 - 1) * 100).toStringAsFixed(1)} %',
+                 );
+               }
+               // À répétitions différentes (CP2, partie 0) : 2,5 % par
+@@ -305,7 +325,10 @@ List<String> coachAudit(
+                   before.$3 != reps &&
+                   !restartBefore &&
+                   !peaking) {
+-                final delta = before.$3 - reps > 2 ? 2 : before.$3 - reps;
++                // (Plus de répétitions à charge égale ou plus basse : pas
++                // une hausse de charge ; la borne vaut alors 1 + hausse.)
++                final fewer = before.$3 - reps;
++                final delta = fewer > 2 ? 2 : (fewer < 0 ? 0 : fewer);
+                 final factor =
+                     1 + coachLoadRise[level] + coachLoadPerRep * delta;
+                 if (total / before.$2 > factor + 1e-9) {
+@@ -317,6 +340,9 @@ List<String> coachAudit(
+                 }
+               }
+               lastLoad[key] = (global, total, reps);
++              if (!_light(week.kind)) {
++                heavyLoad[key] = (global, total, reps);
++              }
+             }
+           }
+           final pct = p.percentOfOneRm;
 diff --git a/packages/kalis_plan/lib/src/coach/general.dart b/packages/kalis_plan/lib/src/coach/general.dart
 new file mode 100644
-index 00000000..36de761c
+index 00000000..b9c4bd1c
 --- /dev/null
 +++ b/packages/kalis_plan/lib/src/coach/general.dart
-@@ -0,0 +1,1130 @@
+@@ -0,0 +1,1189 @@
 +part of 'skeleton.dart';
 +
 +// ---------------------------------------------------------------------------
@@ -1118,9 +1554,13 @@ index 00000000..36de761c
 +      quality.add(best);
 +    }
 +  }
++  // Renforcement : les jours faciles d'abord, puis après une séance de
++  // qualité (jamais le jour de la sortie longue) — deux par semaine
++  // (R6-P22).
 +  final strength = <int>[
 +    for (final d in runnable)
 +      if (d != long && !quality.contains(d)) d,
++    for (final d in quality) d,
 +  ];
 +  for (final d in runnable) {
 +    b.days[d].focus = quality.contains(d)
@@ -1214,6 +1654,61 @@ index 00000000..36de761c
 +  }
 +  return runnable.toSet();
 +}
++
++// ------------------------------------------------------------ interférence
++
++/// Mouvements lourds du bas du corps (squat et soulevé de terre et leurs
++/// variantes à la barre) : ceux que l'interférence avec la course limite.
++bool isHeavyLowerLift(String id) =>
++    (id.contains('squat') && !id.contains('goblet') && !id.contains('air')) ||
++    (id.contains('souleve-de-terre') && !id.contains('roumain-halteres'));
++
++/// Interférence force / endurance (R6-P29, R6-P30) : pas de séance lourde
++/// du bas du corps la veille ni le jour d'une sortie longue ou d'une
++/// séance de qualité ; la séance lourde devient une séance de volume
++/// modéré (méthode `lift.volume`, stress moyen). Choix raisonné sur R6-P30
++/// (ordre et délai : 6 h ou jours séparés chez l'avancé).
++void _limitInterference(_Builder b) {
++  final a = b.a;
++  final hard = <int>{
++    for (var d = 0; d < a.dayCount; d++)
++      if (b.days[d].slots.any(
++        (s) => s.method == Method.runLong || s.method == Method.runQuality,
++      ))
++        d,
++  };
++  if (hard.isEmpty) {
++    return;
++  }
++  for (var d = 0; d < a.dayCount; d++) {
++    final near = hard.contains(d) || hard.any((r) => b.dayBefore(d, r));
++    if (!near) {
++      continue;
++    }
++    final slots = b.days[d].slots;
++    for (var i = 0; i < slots.length; i++) {
++      final s = slots[i];
++      if (s.method == Method.liftHeavy && isHeavyLowerLift(s.exerciseId)) {
++        slots[i] = SlotSpec(
++          exerciseId: s.exerciseId,
++          role: s.role,
++          method: Method.liftVolume,
++          sets: s.sets > 3 ? 3 : s.sets,
++          stress: DayStress.medium,
++          referenceId: s.referenceId,
++          skillTargetId: s.skillTargetId,
++          group: s.group,
++          weak: s.weak,
++          fromWeek: s.fromWeek,
++          untilWeek: s.untilWeek,
++          note: s.note,
++          support: s.support,
++          keep: s.keep,
++        );
++      }
++    }
++  }
++}
 diff --git a/packages/kalis_plan/lib/src/coach/model.dart b/packages/kalis_plan/lib/src/coach/model.dart
 index e60ff23c..1a6e83f5 100644
 --- a/packages/kalis_plan/lib/src/coach/model.dart
@@ -1263,13 +1758,17 @@ index e60ff23c..1a6e83f5 100644
  final class Skeleton {
    /// Squelette.
 diff --git a/packages/kalis_plan/lib/src/coach/prescribe.dart b/packages/kalis_plan/lib/src/coach/prescribe.dart
-index 91dee7d7..67d86e9b 100644
+index 91dee7d7..ca615fa3 100644
 --- a/packages/kalis_plan/lib/src/coach/prescribe.dart
 +++ b/packages/kalis_plan/lib/src/coach/prescribe.dart
-@@ -118,6 +118,10 @@ abstract final class CoachNotes {
+@@ -118,6 +118,14 @@ abstract final class CoachNotes {
    /// Repère d'un test intermédiaire (`value` : valeur attendue).
    static const String checkpoint = 'checkpoint';
  
++  /// Sécurités de la cage ou pareur au squat et au développé couché
++  /// lourds (`value` : part du 1RM à partir de laquelle la note s'écrit).
++  static const String safetyPins = 'safety_pins';
++
 +  /// Pièce de conditionnement (`value` : effort visé sur 10) : allure
 +  /// tenable, mise à l'échelle (CP2, partie 1).
 +  static const String wodPace = 'wod_pace';
@@ -1277,15 +1776,16 @@ index 91dee7d7..67d86e9b 100644
    /// Repère d'un objectif de répétitions sans lest au matériel (`value` :
    /// valeur attendue) : la surcharge passe par une variante plus dure
    /// (CP2, partie 0, boucle 2).
-@@ -402,6 +406,7 @@ abstract final class CoachNotes {
+@@ -402,6 +410,8 @@ abstract final class CoachNotes {
      badDay,
      missed,
      checkpoint,
++    safetyPins,
 +    wodPace,
      checkpointBody,
      checkpointHold,
      checkpointLoad,
-@@ -549,6 +554,11 @@ double coachWarmupFor(int minutes) {
+@@ -549,6 +559,11 @@ double coachWarmupFor(int minutes) {
  /// Vitesse de course prise pour convertir une durée en distance, en m/s.
  const double coachRunMetersPerSecond = 2.5;
  
@@ -1297,7 +1797,7 @@ index 91dee7d7..67d86e9b 100644
  int _round(double x) => (x + 0.5).floor();
  
  double _round2(double v) => (v * 100).roundToDouble() / 100;
-@@ -791,6 +801,13 @@ final class _WeekTrace {
+@@ -791,6 +806,13 @@ final class _WeekTrace {
    /// Plus longue tenue écrite de la semaine par exercice de maintien du
    /// débutant (secondes par série).
    final Map<String, int> holds = <String, int>{};
@@ -1311,7 +1811,19 @@ index 91dee7d7..67d86e9b 100644
  }
  
  /// Racine d'un mouvement au poids du corps compté en répétitions, pour le
-@@ -3739,12 +3756,43 @@ final class Prescriber {
+@@ -2903,7 +2925,10 @@ final class Prescriber {
+         high = 11;
+         low = 8;
+         x.reasons.add(
+-          _note(CoachNotes.pushHeight, _clampInt(((max - 13) / 5).ceil(), 1, 3)),
++          _note(
++            CoachNotes.pushHeight,
++            _clampInt(((max - 13) / 5).ceil(), 1, 3),
++          ),
+         );
+       }
+       x
+@@ -3739,12 +3764,43 @@ final class Prescriber {
        }
        return x;
      }
@@ -1357,7 +1869,7 @@ index 91dee7d7..67d86e9b 100644
          ? 10.0
          : s.note == 'run_extra'
          ? 20.0
-@@ -3784,6 +3832,63 @@ final class Prescriber {
+@@ -3784,6 +3840,63 @@ final class Prescriber {
      return x;
    }
  
@@ -1421,7 +1933,7 @@ index 91dee7d7..67d86e9b 100644
    // ------------------------------------------------------------------ tests
  
    _Draft _testOf(
-@@ -4582,6 +4687,8 @@ final class Prescriber {
+@@ -4582,6 +4695,8 @@ final class Prescriber {
          return _mobility(s, ws, role);
        case Method.runEasy || Method.runLong || Method.runQuality:
          return _run(s, day, ws, role);
@@ -1430,7 +1942,59 @@ index 91dee7d7..67d86e9b 100644
        default:
          return _accessory(s, ws, week, role);
      }
-@@ -6538,6 +6645,16 @@ final class Prescriber {
+@@ -5022,8 +5137,20 @@ final class Prescriber {
+             (m == Method.liftHeavy || m == Method.liftVolume) &&
+             x.load != null &&
+             a.oneRm[x.e.id] != null;
+-        final when = a.recordDay[x.e.id];
+-        final recent = when != null && when.daysUntil(a.start) <= 42;
++        // (Seul un test guidé ou de compétition daté de six semaines au
++        // plus dispense de la série repère : un record déclaré prend la date
++        // du profil, ce n'est pas une mesure.)
++        var recent = false;
++        for (final b in a.profile.benchmarks ?? const <Benchmark>[]) {
++          final when = b.date;
++          if (b.exerciseId == x.e.id &&
++              when != null &&
++              (b.source == BenchmarkSource.guidedTest ||
++                  b.source == BenchmarkSource.competition) &&
++              when.daysUntil(a.start) <= 42) {
++            recent = true;
++          }
++        }
+         if (x.kind == SetKind.work &&
+             (reps || lift) &&
+             !recent &&
+@@ -6127,8 +6254,18 @@ final class Prescriber {
+         final src = last != null && last.light && !last.restart && peaking
+             ? (reference ?? last)
+             : last;
++        // (À répétitions égales, la semaine d'avant fait toujours foi,
++        // allègement compris : le banc borne la hausse d'un emplacement
++        // d'une semaine à l'autre à schéma égal — CP2, partie 0, boucle 2 :
++        // +6,9 % après l'allègement de `street_07`.)
++        final lastSame = last?.loads[key];
++        final equal =
++            lastSame != null && lastSame.$1 > 0 && lastSame.$2 == reps;
++        if (equal) {
++          allowed = capped(allowed, lastSame.$1 * (1 + rise));
++        }
+         final before = src?.loads[key];
+-        if (src != null && before != null && before.$1 > 0) {
++        if (!equal && src != null && before != null && before.$1 > 0) {
+           allowed = capped(
+             allowed,
+             before.$1 *
+@@ -6141,7 +6278,7 @@ final class Prescriber {
+         }
+         // Même exercice à répétitions égales, quel que soit l'emplacement :
+         // +`coachLoadRise` au plus sur la semaine d'avant (CX, correction 1).
+-        final same = last?.loadsByExercise['${x.e.id}|$reps'];
++        final same = src?.loadsByExercise['${x.e.id}|$reps'];
+         if (same != null && same > 0) {
+           allowed = capped(allowed, same * (1 + rise));
+         }
+@@ -6538,6 +6675,16 @@ final class Prescriber {
      final groupOf = <_Draft, String>{};
      for (final entry in members.entries) {
        final list = entry.value;
@@ -1447,7 +2011,32 @@ index 91dee7d7..67d86e9b 100644
        if (list.length < 2) {
          continue;
        }
-@@ -6591,6 +6708,146 @@ final class Prescriber {
+@@ -6569,6 +6716,24 @@ final class Prescriber {
+         ),
+       );
+     }
++    // Squat et développé couché à 85 % du 1RM et plus : sécurités de la
++    // cage ou pareur, et barrière de forme du jour (CP2, partie 0, boucle
++    // 2 ; panel p1, `street_09` : échec sous la barre de squat sans
++    // sécurité écrite ; NSCA, Essentials of Strength Training and
++    // Conditioning, 4e éd. : pareur ou sécurités pour les mouvements
++    // au-dessus du visage ou chargés sur le dos).
++    var pinned = false;
++    for (final x in items) {
++      final pct = x.percent;
++      if (!pinned &&
++          x.kind == SetKind.work &&
++          pct != null &&
++          pct >= 0.85 &&
++          (x.e.id.contains('squat') || x.e.id.contains('developpe-couche'))) {
++        x.reasons.add(_note(CoachNotes.safetyPins, 85));
++        pinned = true;
++      }
++    }
+     DayStress? stress;
+     for (final x in items) {
+       final s = x.stress;
+@@ -6591,6 +6756,146 @@ final class Prescriber {
      );
    }
  
@@ -1594,7 +2183,7 @@ index 91dee7d7..67d86e9b 100644
    /// Charge l'historique des garde-fous avec les semaines du bloc
    /// précédent [weeks].
    void seed(List<WeekPrescription> weeks) {
-@@ -6642,6 +6899,20 @@ final class Prescriber {
+@@ -6642,6 +6947,20 @@ final class Prescriber {
              trace.groups[g.index] += p.sets * t.creditOf(g) / 2;
            }
          }
@@ -8741,7 +9330,7 @@ index 92d5bd29..00000000
 -  Ids.muscleUp,
 -];
 diff --git a/packages/kalis_plan/lib/src/coach/skeleton.dart b/packages/kalis_plan/lib/src/coach/skeleton.dart
-index 46560d02..702cdd3e 100644
+index 46560d02..24b55f6c 100644
 --- a/packages/kalis_plan/lib/src/coach/skeleton.dart
 +++ b/packages/kalis_plan/lib/src/coach/skeleton.dart
 @@ -13,8 +13,16 @@ import 'prescribe.dart' show CoachNotes, coachGroupCap, straightArmFamilyOf;
@@ -8786,9 +9375,13 @@ index 46560d02..702cdd3e 100644
      case CoachStyle.beginner:
        _buildBeginner(b);
      case CoachStyle.reps:
-@@ -3491,8 +3514,10 @@ Skeleton buildSkeleton(
+@@ -3490,9 +3513,14 @@ Skeleton buildSkeleton(
+     );
    }
    _limitStraightArmDays(b);
++  if (!isStreetStyle(style)) {
++    _limitInterference(b);
++  }
    _fitBudget(b);
 -  _fillTime(b, runDays, style);
 -  _fitBudget(b);
@@ -12352,10 +12945,10 @@ index 72da1d13..00000000
 -  );
 -}
 diff --git a/packages/kalis_plan/lib/src/coach/texts.dart b/packages/kalis_plan/lib/src/coach/texts.dart
-index a9bc9fb8..df015f85 100644
+index a9bc9fb8..d31f6088 100644
 --- a/packages/kalis_plan/lib/src/coach/texts.dart
 +++ b/packages/kalis_plan/lib/src/coach/texts.dart
-@@ -546,6 +546,15 @@ String? coachReasonText(Reason r, Catalog catalog) {
+@@ -546,6 +546,20 @@ String? coachReasonText(Reason r, Catalog catalog) {
                'séries de volume) devient une séance de surcharge en séries '
                'courtes — variante plus dure ou lest léger, 2 répétitions en '
                "réserve. Tu n'ajoutes jamais de séries toi-même.",
@@ -12368,11 +12961,392 @@ index a9bc9fb8..df015f85 100644
 +              'wall ball 9 kg (6 kg), swing 24 kg (16 kg), haltères 22,5 kg '
 +              '(15 kg) ; une charge qui casse ta série dès le premier tour '
 +              'est trop lourde.',
++        CoachNotes.safetyPins =>
++          'Charge lourde (${_int(v)} % du 1RM et plus) : sécurités de la '
++              'cage réglées juste sous le point le plus bas, ou un pareur. '
++              "Si la dernière montée d'échauffement n'est pas rapide, la "
++              'série de tête se fait à cette charge-là.',
          CoachNotes.checkpointBody =>
            "Repère sur le chemin de l'objectif : ${_plain(v)}. Une seule "
                "règle : le bloc suivant est écrit sur le résultat du test ; "
+diff --git a/packages/kalis_plan/lib/testing.dart b/packages/kalis_plan/lib/testing.dart
+index 8f8c42f9..bafe313a 100644
+--- a/packages/kalis_plan/lib/testing.dart
++++ b/packages/kalis_plan/lib/testing.dart
+@@ -839,6 +839,123 @@ AthleteProfile randomCoachProfile(Catalog catalog, int seed) {
+   );
+ }
+ 
++/// Profil aléatoire des autres disciplines (CP2, partie 1) de graine
++/// [seed] : le profil street de même graine, avec une discipline
++/// principale parmi la musculation, la course, le CrossFit, la mobilité et
++/// la forme générale, des secondaires prises dans toutes les disciplines,
++/// souvent le matériel d'une salle, parfois des 1RM et un chrono.
++AthleteProfile randomGeneralProfile(Catalog catalog, int seed) {
++  final base = randomCoachProfile(catalog, seed);
++  final r = SeededRandom(fnvMix(0x47454E45, seed));
++  T pick<T>(List<T> values) => values[r.nextInt(values.length)];
++  bool chance(int pct) => r.nextInt(100) < pct;
++  const primaries = <TrainingDiscipline>[
++    TrainingDiscipline.musculation,
++    TrainingDiscipline.musculation,
++    TrainingDiscipline.cardio,
++    TrainingDiscipline.crossfit,
++    TrainingDiscipline.mobility,
++    TrainingDiscipline.generalFitness,
++  ];
++  final primary = pick(primaries);
++  final others = <TrainingDiscipline>[
++    for (final d in TrainingDiscipline.values)
++      if (d != primary) d,
++  ];
++  final share = chance(40) ? 0 : 10 * (1 + r.nextInt(4));
++  final mix = DisciplineMix(
++    primary: primary,
++    primaryPct: 100 - share,
++    secondaries: share == 0
++        ? const <DisciplineShare>[]
++        : <DisciplineShare>[
++            DisciplineShare(discipline: pick(others), pct: share),
++          ],
++  );
++  final equipment = <String>[...base.equipment];
++  void own(String item) {
++    if (catalog.equipmentVocabulary.contains(item) &&
++        !equipment.contains(item)) {
++      equipment.add(item);
++    }
++  }
++
++  final gym = chance(60);
++  if (gym) {
++    for (final item in const <String>[
++      'barre olympique',
++      'disques',
++      'cage / rack',
++      'banc plat',
++      'haltères',
++      'poulie',
++      'machine guidée',
++      'presse à cuisses',
++      'kettlebell',
++      'rameur',
++      'vélo / home-trainer',
++      'box / plinth',
++    ]) {
++      own(item);
++    }
++  }
++  if (primary == TrainingDiscipline.cardio || chance(30)) {
++    own('piste ou terrain extérieur');
++  }
++  final benchmarks = <Benchmark>[...?base.benchmarks];
++  if (chance(40)) {
++    for (final (id, kg) in const <(String, double)>[
++      ('mu-back-squat-barre-haute', 100),
++      ('mu-developpe-couche-barre', 70),
++      ('mu-souleve-de-terre-conventionnel', 120),
++    ]) {
++      benchmarks.add(
++        Benchmark(
++          exerciseId: id,
++          kind: BenchmarkKind.loadReps,
++          source: BenchmarkSource.declared,
++          reps: 1,
++          externalLoadKg: (kg * (0.6 + r.nextInt(9) / 10) / 2.5).round() * 2.5,
++        ),
++      );
++    }
++  }
++  if (chance(40)) {
++    benchmarks.add(
++      Benchmark(
++        exerciseId: 'ca-footing-endurance-fondamentale',
++        kind: BenchmarkKind.timeTrial,
++        source: BenchmarkSource.declared,
++        seconds: 60 * (20 + r.nextInt(50)),
++        distanceMeters: 5000.0 + 1000 * r.nextInt(6),
++      ),
++    );
++  }
++  return base.copyWith(
++    disciplines: mix,
++    equipment: equipment,
++    equipmentByPlace: null,
++    places: <Place>{...base.places, if (gym) Place.gym}.toList(),
++    benchmarks: benchmarks.isEmpty ? null : benchmarks,
++  );
++}
++
++/// Requête de création pour le profil aléatoire des autres disciplines de
++/// graine [seed].
++PlanRequest randomGeneralRequest(
++  Catalog catalog,
++  int seed, {
++  int planSeed = 0,
++}) {
++  final profile = randomGeneralProfile(catalog, seed);
++  return PlanRequest(
++    profile: profile,
++    seed: planSeed,
++    startDate: CivilDate(2026, 10, 5).addDays(seed % 5 == 0 ? seed % 7 : 0),
++    locks: const <PlanLock>[],
++  );
++}
++
+ /// Requête de création pour le profil street aléatoire de graine [seed] ;
+ /// le premier jour du bloc varie avec la graine (tous les jours de la
+ /// semaine sont couverts).
+diff --git a/packages/kalis_plan/test/coach_general_properties_0_test.dart b/packages/kalis_plan/test/coach_general_properties_0_test.dart
+new file mode 100644
+index 00000000..ef649246
+--- /dev/null
++++ b/packages/kalis_plan/test/coach_general_properties_0_test.dart
+@@ -0,0 +1,5 @@
++// Tests de propriétés des autres disciplines (CP2, partie 1), fichier 0
++// sur 8 (voir `coach_properties.dart`).
++import 'coach_properties.dart';
++
++void main() => coachPropertyShard(0, general: true);
+diff --git a/packages/kalis_plan/test/coach_general_properties_1_test.dart b/packages/kalis_plan/test/coach_general_properties_1_test.dart
+new file mode 100644
+index 00000000..807ddc85
+--- /dev/null
++++ b/packages/kalis_plan/test/coach_general_properties_1_test.dart
+@@ -0,0 +1,5 @@
++// Tests de propriétés des autres disciplines (CP2, partie 1), fichier 1
++// sur 8 (voir `coach_properties.dart`).
++import 'coach_properties.dart';
++
++void main() => coachPropertyShard(1, general: true);
+diff --git a/packages/kalis_plan/test/coach_general_properties_2_test.dart b/packages/kalis_plan/test/coach_general_properties_2_test.dart
+new file mode 100644
+index 00000000..b33844d6
+--- /dev/null
++++ b/packages/kalis_plan/test/coach_general_properties_2_test.dart
+@@ -0,0 +1,5 @@
++// Tests de propriétés des autres disciplines (CP2, partie 1), fichier 2
++// sur 8 (voir `coach_properties.dart`).
++import 'coach_properties.dart';
++
++void main() => coachPropertyShard(2, general: true);
+diff --git a/packages/kalis_plan/test/coach_general_properties_3_test.dart b/packages/kalis_plan/test/coach_general_properties_3_test.dart
+new file mode 100644
+index 00000000..06572b85
+--- /dev/null
++++ b/packages/kalis_plan/test/coach_general_properties_3_test.dart
+@@ -0,0 +1,5 @@
++// Tests de propriétés des autres disciplines (CP2, partie 1), fichier 3
++// sur 8 (voir `coach_properties.dart`).
++import 'coach_properties.dart';
++
++void main() => coachPropertyShard(3, general: true);
+diff --git a/packages/kalis_plan/test/coach_general_properties_4_test.dart b/packages/kalis_plan/test/coach_general_properties_4_test.dart
+new file mode 100644
+index 00000000..fd621bfe
+--- /dev/null
++++ b/packages/kalis_plan/test/coach_general_properties_4_test.dart
+@@ -0,0 +1,5 @@
++// Tests de propriétés des autres disciplines (CP2, partie 1), fichier 4
++// sur 8 (voir `coach_properties.dart`).
++import 'coach_properties.dart';
++
++void main() => coachPropertyShard(4, general: true);
+diff --git a/packages/kalis_plan/test/coach_general_properties_5_test.dart b/packages/kalis_plan/test/coach_general_properties_5_test.dart
+new file mode 100644
+index 00000000..d23b983b
+--- /dev/null
++++ b/packages/kalis_plan/test/coach_general_properties_5_test.dart
+@@ -0,0 +1,5 @@
++// Tests de propriétés des autres disciplines (CP2, partie 1), fichier 5
++// sur 8 (voir `coach_properties.dart`).
++import 'coach_properties.dart';
++
++void main() => coachPropertyShard(5, general: true);
+diff --git a/packages/kalis_plan/test/coach_general_properties_6_test.dart b/packages/kalis_plan/test/coach_general_properties_6_test.dart
+new file mode 100644
+index 00000000..0629a1e5
+--- /dev/null
++++ b/packages/kalis_plan/test/coach_general_properties_6_test.dart
+@@ -0,0 +1,5 @@
++// Tests de propriétés des autres disciplines (CP2, partie 1), fichier 6
++// sur 8 (voir `coach_properties.dart`).
++import 'coach_properties.dart';
++
++void main() => coachPropertyShard(6, general: true);
+diff --git a/packages/kalis_plan/test/coach_general_properties_7_test.dart b/packages/kalis_plan/test/coach_general_properties_7_test.dart
+new file mode 100644
+index 00000000..549a375a
+--- /dev/null
++++ b/packages/kalis_plan/test/coach_general_properties_7_test.dart
+@@ -0,0 +1,5 @@
++// Tests de propriétés des autres disciplines (CP2, partie 1), fichier 7
++// sur 8 (voir `coach_properties.dart`).
++import 'coach_properties.dart';
++
++void main() => coachPropertyShard(7, general: true);
+diff --git a/packages/kalis_plan/test/coach_properties.dart b/packages/kalis_plan/test/coach_properties.dart
+index d9eb65c2..002e7fa2 100644
+--- a/packages/kalis_plan/test/coach_properties.dart
++++ b/packages/kalis_plan/test/coach_properties.dart
+@@ -184,17 +184,19 @@ void _checkPass2(
+ 
+ /// Joue le profil street aléatoire de graine [seed] ; rend la liste des
+ /// manquements (vide si tout est conforme).
+-List<String> checkCoachSeed(Catalog catalog, int seed) {
++List<String> checkCoachSeed(
++  Catalog catalog,
++  int seed, {
++  bool general = false,
++}) {
+   final out = <String>[];
+   void fail(String message) => out.add('profil $seed — $message');
+ 
+   final inspector = PlanInspector(catalog);
+   final engine = KalisPlan();
+-  final request = randomCoachRequest(
+-    catalog,
+-    seed,
+-    planSeed: seed % 16 == 7 ? 1 : 0,
+-  );
++  final request = general
++      ? randomGeneralRequest(catalog, seed, planSeed: seed % 16 == 7 ? 1 : 0)
++      : randomCoachRequest(catalog, seed, planSeed: seed % 16 == 7 ? 1 : 0);
+   final profile = request.profile;
+   for (final v in profile.validate()) {
+     fail('profil : ${v.path} ${v.code}');
+@@ -213,6 +215,9 @@ List<String> checkCoachSeed(Catalog catalog, int seed) {
+   );
+   _checkPass2(fail, 'passe 2', p1, p2);
+   final block = ProgramBlock(pass1: p1, pass2: p2);
++  if (general) {
++    _checkGeneral(fail, catalog, profile, p2);
++  }
+   for (final v in coachAudit(catalog, profile, request.startDate, [block])) {
+     fail('relecture : $v');
+   }
+@@ -553,11 +558,107 @@ List<String> checkCoachSeed(Catalog catalog, int seed) {
+   return out;
+ }
+ 
+-/// Tests du fichier de rang [shard] (profils `shard × 1280` et suivants).
+-void coachPropertyShard(int shard) {
++/// Invariants des autres disciplines (CP2, partie 1) : aucune sortie au-delà
++/// de 110 % de la plus longue course des quatre semaines d'avant (ou du
++/// point de départ du profil, R6-P16), et aucune séance lourde du squat ou
++/// du soulevé de terre (85 % du 1RM et plus) le jour ou la veille d'une
++/// sortie longue ou d'une séance de qualité (R6-P30).
++void _checkGeneral(
++  void Function(String) fail,
++  Catalog catalog,
++  AthleteProfile profile,
++  Pass2Plan p2,
++) {
++  double minutesOf(ExercisePrescription p) {
++    final secs = p.secondsHigh;
++    final meters = p.distanceMeters;
++    if (secs != null) {
++      return secs * p.sets / 60;
++    }
++    if (meters != null) {
++      return meters * p.sets / coachRunMetersPerSecond / 60;
++    }
++    return 0;
++  }
++
++  var known = 0.0;
++  for (final b in profile.benchmarks ?? const <Benchmark>[]) {
++    final t = b.seconds;
++    if (b.kind == BenchmarkKind.timeTrial && t != null && t / 60 > known) {
++      known = t / 60;
++    }
++  }
++  final longest = <double>[];
++  for (final w in p2.weeks) {
++    var top = 0.0;
++    for (final d in w.days) {
++      for (final p in d.items) {
++        if ((p.exerciseId == 'ca-sortie-longue' ||
++                p.exerciseId == 'ca-footing-endurance-fondamentale') &&
++            p.kind != SetKind.test) {
++          final m = minutesOf(p);
++          if (m > top) {
++            top = m;
++          }
++        }
++      }
++    }
++    var before = 0.0;
++    for (var k = longest.length - 4; k < longest.length; k++) {
++      if (k >= 0 && longest[k] > before) {
++        before = longest[k];
++      }
++    }
++    final allowed = before > 0
++        ? before * 1.1 + 1
++        : (known > 0 ? known * 1.25 + 1 : 999);
++    if (top > allowed) {
++      fail(
++        's${w.weekIndex} : sortie de ${top.toStringAsFixed(0)} min '
++        '(borne ${allowed.toStringAsFixed(0)})',
++      );
++    }
++    longest.add(top);
++    final runDays = <int>{
++      for (final d in w.days)
++        if (d.items.any((p) {
++          if (p.exerciseId == 'ca-sortie-longue') {
++            return true;
++          }
++          final e = catalog.find(p.exerciseId);
++          return e != null && e.id.startsWith('ca-fractionne');
++        }))
++          profile.availability[d.dayIndex].weekday,
++    };
++    for (final d in w.days) {
++      final day = profile.availability[d.dayIndex].weekday;
++      final next = day == 7 ? 1 : day + 1;
++      if (!runDays.contains(day) && !runDays.contains(next)) {
++        continue;
++      }
++      for (final p in d.items) {
++        final pct = p.percentOfOneRm;
++        if (p.kind == SetKind.work &&
++            pct != null &&
++            pct >= 0.85 &&
++            (p.exerciseId.contains('squat') ||
++                p.exerciseId.contains('souleve-de-terre'))) {
++          fail(
++            's${w.weekIndex} j${d.dayIndex} : ${p.exerciseId} lourd '
++            'le jour ou la veille d\'une course dure',
++          );
++        }
++      }
++    }
++  }
++}
++
++/// Tests du fichier de rang [shard] (profils `shard × 1280` et suivants) ;
++/// [general] : profils des autres disciplines (CP2, partie 1).
++void coachPropertyShard(int shard, {bool general = false}) {
+   final catalog = loadCatalog();
+   final first = shard * coachProfilesPerShard;
+-  group('chemin street, profils $first à '
++  group('${general ? 'autres disciplines' : 'chemin street'}, profils $first à '
+       '${first + coachProfilesPerShard - 1}', () {
+     for (
+       var chunk = 0;
+@@ -569,7 +670,7 @@ void coachPropertyShard(int shard) {
+       test('profils $from à ${to - 1}', () {
+         final failures = <String>[];
+         for (var seed = from; seed < to; seed++) {
+-          failures.addAll(checkCoachSeed(catalog, seed));
++          failures.addAll(checkCoachSeed(catalog, seed, general: general));
+         }
+         expect(
+           failures.take(40).toList(),
 diff --git a/packages/kalis_plan/test/coach_test.dart b/packages/kalis_plan/test/coach_test.dart
-index 18f1c254..35c9b31b 100644
+index 18f1c254..478f7b72 100644
 --- a/packages/kalis_plan/test/coach_test.dart
 +++ b/packages/kalis_plan/test/coach_test.dart
 @@ -294,10 +294,11 @@ void main() {
@@ -12389,3 +13363,13 @@ index 18f1c254..35c9b31b 100644
        );
      });
  
+@@ -1611,8 +1612,7 @@ void main() {
+                   e.stressOn(Joint.elbow) == JointStress.low) {
+                 continue;
+               }
+-              final total =
+-                  load + (e.bodyweightFraction?.value ?? 0) * 78.0;
++              final total = load + (e.bodyweightFraction?.value ?? 0) * 78.0;
+               if (total > (heaviest[e.id] ?? 0)) {
+                 heaviest[e.id] = total;
+               }

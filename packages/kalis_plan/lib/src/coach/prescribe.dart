@@ -118,6 +118,10 @@ abstract final class CoachNotes {
   /// Repère d'un test intermédiaire (`value` : valeur attendue).
   static const String checkpoint = 'checkpoint';
 
+  /// Sécurités de la cage ou pareur au squat et au développé couché
+  /// lourds (`value` : part du 1RM à partir de laquelle la note s'écrit).
+  static const String safetyPins = 'safety_pins';
+
   /// Repère d'un objectif de répétitions sans lest au matériel (`value` :
   /// valeur attendue) : la surcharge passe par une variante plus dure
   /// (CP2, partie 0, boucle 2).
@@ -402,6 +406,7 @@ abstract final class CoachNotes {
     badDay,
     missed,
     checkpoint,
+    safetyPins,
     checkpointBody,
     checkpointHold,
     checkpointLoad,
@@ -2903,7 +2908,10 @@ final class Prescriber {
         high = 11;
         low = 8;
         x.reasons.add(
-          _note(CoachNotes.pushHeight, _clampInt(((max - 13) / 5).ceil(), 1, 3)),
+          _note(
+            CoachNotes.pushHeight,
+            _clampInt(((max - 13) / 5).ceil(), 1, 3),
+          ),
         );
       }
       x
@@ -5022,8 +5030,20 @@ final class Prescriber {
             (m == Method.liftHeavy || m == Method.liftVolume) &&
             x.load != null &&
             a.oneRm[x.e.id] != null;
-        final when = a.recordDay[x.e.id];
-        final recent = when != null && when.daysUntil(a.start) <= 42;
+        // (Seul un test guidé ou de compétition daté de six semaines au
+        // plus dispense de la série repère : un record déclaré prend la date
+        // du profil, ce n'est pas une mesure.)
+        var recent = false;
+        for (final b in a.profile.benchmarks ?? const <Benchmark>[]) {
+          final when = b.date;
+          if (b.exerciseId == x.e.id &&
+              when != null &&
+              (b.source == BenchmarkSource.guidedTest ||
+                  b.source == BenchmarkSource.competition) &&
+              when.daysUntil(a.start) <= 42) {
+            recent = true;
+          }
+        }
         if (x.kind == SetKind.work &&
             (reps || lift) &&
             !recent &&
@@ -6127,8 +6147,18 @@ final class Prescriber {
         final src = last != null && last.light && !last.restart && peaking
             ? (reference ?? last)
             : last;
+        // (À répétitions égales, la semaine d'avant fait toujours foi,
+        // allègement compris : le banc borne la hausse d'un emplacement
+        // d'une semaine à l'autre à schéma égal — CP2, partie 0, boucle 2 :
+        // +6,9 % après l'allègement de `street_07`.)
+        final lastSame = last?.loads[key];
+        final equal =
+            lastSame != null && lastSame.$1 > 0 && lastSame.$2 == reps;
+        if (equal) {
+          allowed = capped(allowed, lastSame.$1 * (1 + rise));
+        }
         final before = src?.loads[key];
-        if (src != null && before != null && before.$1 > 0) {
+        if (!equal && src != null && before != null && before.$1 > 0) {
           allowed = capped(
             allowed,
             before.$1 *
@@ -6141,7 +6171,7 @@ final class Prescriber {
         }
         // Même exercice à répétitions égales, quel que soit l'emplacement :
         // +`coachLoadRise` au plus sur la semaine d'avant (CX, correction 1).
-        final same = last?.loadsByExercise['${x.e.id}|$reps'];
+        final same = src?.loadsByExercise['${x.e.id}|$reps'];
         if (same != null && same > 0) {
           allowed = capped(allowed, same * (1 + rise));
         }
@@ -6568,6 +6598,24 @@ final class Prescriber {
           restBetweenRoundsSeconds: 90,
         ),
       );
+    }
+    // Squat et développé couché à 85 % du 1RM et plus : sécurités de la
+    // cage ou pareur, et barrière de forme du jour (CP2, partie 0, boucle
+    // 2 ; panel p1, `street_09` : échec sous la barre de squat sans
+    // sécurité écrite ; NSCA, Essentials of Strength Training and
+    // Conditioning, 4e éd. : pareur ou sécurités pour les mouvements
+    // au-dessus du visage ou chargés sur le dos).
+    var pinned = false;
+    for (final x in items) {
+      final pct = x.percent;
+      if (!pinned &&
+          x.kind == SetKind.work &&
+          pct != null &&
+          pct >= 0.85 &&
+          (x.e.id.contains('squat') || x.e.id.contains('developpe-couche'))) {
+        x.reasons.add(_note(CoachNotes.safetyPins, 85));
+        pinned = true;
+      }
     }
     DayStress? stress;
     for (final x in items) {
