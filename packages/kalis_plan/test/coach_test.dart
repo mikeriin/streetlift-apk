@@ -968,7 +968,7 @@ void main() {
     });
 
     test(
-      'un test plus bas que le record (15 % au plus) fait foi une fois confirmé',
+      'un test plus bas que le record (15 % au plus) fait foi tel quel',
       () {
         final declared = _profile(
           experience: ExperienceLevel.intermediate,
@@ -1016,11 +1016,11 @@ void main() {
 
         final before = pullReps(declared);
         expect(before, greaterThan(0));
-        // (Une mesure seule plus basse ne recale pas : deux mesures.)
-        expect(pullReps(once), pullReps(same));
-        final after = pullReps(twice);
-        expect(after, lessThan(before));
-        expect(after, lessThan(12));
+        // (Le test seul recale : série de tête = résultat − 2.)
+        expect(pullReps(same), before);
+        expect(pullReps(once), lessThan(before));
+        expect(pullReps(once), lessThan(12));
+        expect(pullReps(twice), pullReps(once));
       },
     );
   });
@@ -1155,7 +1155,7 @@ void main() {
       expect(pullReps(lowTwice), lessThan(pullReps(once)));
     });
 
-    test('forte baisse : la concordance lit le test le plus récent', () {
+    test('forte baisse : le test seul fait foi', () {
       Benchmark tested(int reps, int daysAgo) => Benchmark(
         exerciseId: 'sw-traction-pronation',
         kind: BenchmarkKind.maxReps,
@@ -1181,25 +1181,16 @@ void main() {
       }
 
       final base = street();
-      final once = base.copyWith(
-        benchmarks: <Benchmark>[
-          ...base.benchmarks!,
-          tested(14, 40),
-          tested(14, 3),
-        ],
+      final high = base.copyWith(
+        benchmarks: <Benchmark>[...base.benchmarks!, tested(14, 3)],
       );
-      // Un test bas ancien, puis un test au repère : le dernier test bas
-      // reste seul (le plus récent d'avant le contredit).
-      final contradicted = base.copyWith(
-        benchmarks: <Benchmark>[
-          ...base.benchmarks!,
-          tested(14, 60),
-          tested(10, 40),
-          tested(14, 20),
-          tested(9, 3),
-        ],
+      final low = base.copyWith(
+        benchmarks: <Benchmark>[...base.benchmarks!, tested(9, 3)],
       );
-      expect(pullReps(contradicted), pullReps(once));
+      // Série de travail au plus résultat − 2 (« jamais sur un progrès
+      // supposé »).
+      expect(pullReps(low), lessThan(pullReps(high)));
+      expect(pullReps(low), lessThanOrEqualTo(7));
     });
 
     test('poignet : une figure forte à la barre fixe reste écartée', () {
@@ -1233,7 +1224,10 @@ void main() {
           }
           for (final d in w.days) {
             for (final i in d.items) {
-              final pct = i.percent;
+              final t = i.intensity;
+              final pct = t != null && t.basis == IntensityBasis.percentOneRm
+                  ? t.value
+                  : null;
               if (!i.exerciseId.startsWith('sl-') ||
                   i.exerciseId.contains('partiel') ||
                   (i.kind != null && i.kind != SetKind.work) ||
@@ -1276,13 +1270,16 @@ void main() {
       }
     });
 
-    test('tenue du débutant : +15 % (2 s au moins) par semaine au plus', () {
+    test('tenue du débutant : +15 % (2 s au moins) par semaine au plus, '
+        '55 % du maintien testé au moins', () {
       final weeks = <WeekPrescription>[
         for (final b in _program(catalog, _beginner(), 16)) ...b.pass2.weeks,
       ];
       final best = <int>[];
+      final floors = <int>[];
       for (final w in weeks) {
         var most = 0;
+        var floor = 0;
         for (final d in w.days) {
           for (final i in d.items) {
             final high = i.secondsHigh;
@@ -1291,10 +1288,18 @@ void main() {
                 high != null &&
                 high > most) {
               most = high;
+              final share = i.intensity?.value ?? 0;
+              if (share > 0) {
+                final f = (high / share * coachHoldFloorShare).round();
+                if (f > floor) {
+                  floor = f;
+                }
+              }
             }
           }
         }
         best.add(most);
+        floors.add(floor);
       }
       for (var k = 1; k < best.length; k++) {
         var before = 0;
@@ -1307,12 +1312,110 @@ void main() {
           continue;
         }
         final rise = (before * 1.15).round();
+        var allowed = rise > before + 2 ? rise : before + 2;
+        if (floors[k] > allowed) {
+          allowed = floors[k];
+        }
         expect(
           best[k],
-          lessThanOrEqualTo(rise > before + 2 ? rise : before + 2),
+          lessThanOrEqualTo(allowed),
           reason: 'semaine $k : ${best[k]} s après $before s',
         );
       }
+    });
+
+    test('1RM : une série de plusieurs répétitions ne le fait pas tomber '
+        'de plus de 15 %', () {
+      Benchmark tested(double kg, int reps) => Benchmark(
+        exerciseId: 'sl-dips-leste',
+        kind: BenchmarkKind.loadReps,
+        source: BenchmarkSource.guidedTest,
+        externalLoadKg: kg,
+        reps: reps,
+        date: _start.addDays(-3),
+      );
+      double heaviest(AthleteProfile p) {
+        var most = 0.0;
+        final week = _program(catalog, p, 4).first.pass2.weeks.first;
+        for (final d in week.days) {
+          for (final i in d.items) {
+            final load = i.startLoadKg;
+            if (i.exerciseId == 'sl-dips-leste' &&
+                load != null &&
+                load > most) {
+              most = load;
+            }
+          }
+        }
+        return most;
+      }
+
+      final base = _lifter();
+      final far = base.copyWith(
+        benchmarks: <Benchmark>[...base.benchmarks!, tested(40, 3)],
+      );
+      final single = base.copyWith(
+        benchmarks: <Benchmark>[...base.benchmarks!, tested(80, 1)],
+      );
+      expect(heaviest(base), greaterThan(0));
+      expect(heaviest(far), heaviest(base));
+      // (Une barre maximale plus basse fait foi.)
+      expect(heaviest(single), lessThan(heaviest(base)));
+    });
+
+    test('répétitions + réserve jamais au-dessus du repère', () {
+      final low = _profile(
+        experience: ExperienceLevel.intermediate,
+        weekdays: const <int>[2, 4, 7],
+        minutes: 45,
+        benchmarks: <Benchmark>[
+          _maxReps('sw-traction-pronation', 6),
+          _maxReps('sw-dips-barres-paralleles', 10),
+          _maxReps('sw-pompe', 20),
+        ],
+      );
+      var checked = 0;
+      for (final profile in <AthleteProfile>[street(), low]) {
+        for (final b in _program(catalog, profile, 16)) {
+          for (final w in b.pass2.weeks) {
+            for (final d in w.days) {
+              for (final i in d.items) {
+                final t = i.intensity;
+                final flames = i.targetFlames;
+                final rir = flames == null ? null : Flames.toRir(flames);
+                final high = i.repsHigh;
+                final lowReps = i.repsLow ?? high;
+                if (t == null ||
+                    t.basis != IntensityBasis.percentBenchmark ||
+                    t.referenceKind == BenchmarkKind.maxHold ||
+                    t.value <= 0 ||
+                    rir == null ||
+                    high == null ||
+                    lowReps == null ||
+                    i.startLoadKg != null ||
+                    i.percentOfOneRm != null ||
+                    i.technique?.kind == SetTechniqueKind.emom ||
+                    (i.kind != null && i.kind != SetKind.work)) {
+                  continue;
+                }
+                final base = (lowReps / t.value).round();
+                if (base - rir.round() < 1) {
+                  continue;
+                }
+                checked++;
+                expect(
+                  high + rir.round(),
+                  lessThanOrEqualTo(base),
+                  reason:
+                      'bloc ${b.pass1.blockIndex}, semaine ${w.weekIndex}, '
+                      '${i.exerciseId} : $high + $rir sur $base',
+                );
+              }
+            }
+          }
+        }
+      }
+      expect(checked, greaterThan(0));
     });
 
     test('tests placés après le premier jour de la semaine', () {

@@ -16,21 +16,33 @@ part). Détail et sources : `CONTRAT.md`, § 12.14 ; journal : `packages/kalis_b
   `pain_return`).
 - **Tests** : placés à partir du troisième jour de la semaine (deuxième si la semaine n'a pas deux séances
   assez tardives), jamais pendant une reprise ; les jours qui précèdent un test sont des jours faciles ; un
-  test de figure porte sur l'étape visée elle-même (jamais un remplaçant). Une baisse de 15 % au plus fait
-  foi ; au-delà, il faut deux mesures concordantes (le test mesuré le plus récent des dix semaines d'avant
-  est lui aussi sous 85 % du repère), sinon le plus haut du repère et de l'estimation sûre reste. Un record
-  déclaré ou testé n'est jamais abaissé par une estimation ; une barre de compétition plus basse que le 1RM
-  connu ne l'abaisse pas. Après un test mesuré depuis la reprise, pas de gain supposé.
+  test de figure porte sur l'étape visée elle-même (jamais un remplaçant). Une mesure plus basse ne fait
+  baisser un repère qu'avec une deuxième concordante (le test mesuré le plus récent des dix semaines
+  d'avant) : 15 % au plus, le test fait foi ; au-delà, le plus haut du test et de l'estimation sûre ; un
+  muscle-up testé plus bas fait foi seul. Une estimation ne défait pas un test de moins de quatre semaines
+  et n'abaisse jamais un 1RM déclaré ou testé ; un 1RM mesuré par un test ou une compétition n'est plus
+  relevé d'après le maximum au poids du corps ; une barre de compétition plus basse que le 1RM connu ne
+  l'abaisse pas. Après un test mesuré depuis la reprise, pas de gain supposé.
 - **Plateau** : un test qui ne dépasse pas le repère d'avant change la méthode du bloc suivant (variantes
   tempo excentrique — 45 % du maximum en répétitions, note `slow_tempo` —, archer, typewriter pour le
   tirage) et le dit (note `plateau`).
+- **Zone de l'épreuve** (objectif de répétitions maximales, bloc de réalisation) : séries du mouvement visé
+  à 72-80 % du maximum, 90 s de repos, 2 en réserve (note `event_zone`), séance de force remplacée par le
+  mouvement exact (12 et plus) ; repos-pause sur le principal réservé à l'avancé et à l'élite ; affûtage :
+  intensité gardée au poids du corps, doubles à 86 % en lesté.
 - **Volume de répétitions au poids du corps** : +15 % par semaine au plus sur le maximum des trois semaines
   d'avant, par famille de mouvement ; une seule variable monte à la fois dans les blocs de densité ; départs
-  au chrono : un départ de plus par semaine au plus, deux sur deux semaines au plus.
+  au chrono : un départ de plus par semaine au plus, deux sur deux semaines au plus ; sous dix répétitions
+  de maximum, les départs montent seuls, 5 en réserve vraies, et sous sept le chrono cède au volume.
+- **Douleur et restructuration** : une figure gardée sur prise neutre pendant un arrêt porte la note d'arrêt,
+  jamais `pain_trend` ; une restructuration lit les semaines gardées du bloc pour ses garde-fous ; une
+  amplitude partielle surchargée qui revient après quatre semaines repart de son entrée.
+- **Débutant** : préparation des poignets, tenues +15 % par semaine au plus (2 s au moins), test de la tenue
+  menton non borné à 30 s, essais stricts de traction écrits seulement sans traction acquise.
 - **Charges** : hausse comparée à la semaine précédente seule ; après une transition ou une introduction,
   2,5 % de charge par répétition d'écart ; estimation du 1RM sans charge connue +3 % ; séries allégées à
   65 % puis +3 % par palier des répétitions de la série lourde ; ouverture d'une épreuve à 98 % au moins du
-  plus lourd simple ou double des trois semaines d'avant (pourcentage affiché recalculé) ; pourcentage
+  plus lourd simple ou double des trois semaines d'avant (pourcentage et note recalculés) ; pourcentage
   affiché calculé sur la charge arrondie ; 1RM de référence écrit dans l'export ; repos de 2 min en phase
   spécifique quand l'objectif est en répétitions.
 - **Figures** : tenues lourdes à 60, 65 puis 70 % du maximum (+2 % par palier, 75 % au plus, 70 % les jours

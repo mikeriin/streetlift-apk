@@ -296,6 +296,10 @@ abstract final class CoachNotes {
   /// consultation (`value` : rang de la zone dans `BodyZone.values`).
   static const String painStop = 'pain_stop';
 
+  /// Étape plus facile servie parce que la douleur écarte l'étape de
+  /// travail (raison et critère de retour écrits ; `value` : 0).
+  static const String painStep = 'pain_step';
+
   /// Reprise graduée après un arrêt (`value` : rang de la zone × 100 +
   /// palier de départ du bloc × 10 + dernier palier du bloc ; part rendue
   /// = 50 % + 10 % par palier).
@@ -311,6 +315,7 @@ abstract final class CoachNotes {
     eventZone,
     rampMuscleUp,
     painStop,
+    painStep,
     painReturn,
     painReturnItem,
     painTrend,
@@ -459,6 +464,11 @@ const double coachVolumeRise = 0.15;
 /// Bosquet et al. 2007 : intensité gardée) — doubles, 3 répétitions en
 /// réserve environ (R2-P2 : 2 répétitions à 86 % laissent 3 à 4).
 const double coachTaperShare = 0.86;
+
+/// Part du maintien testé sous laquelle la hausse plafonnée d'une tenue de
+/// débutant ne la laisse pas (CX, correction 1, passe 5 : bas de la
+/// fourchette 55-65 % demandée par le panel).
+const double coachHoldFloorShare = 0.55;
 
 /// Hausse des secondes de tenue bras tendus par semaine (R5-P22, R4-F10).
 const List<double> coachStraightArmRise = <double>[0.20, 0.15, 0.10, 0.10];
@@ -1117,16 +1127,19 @@ final class Prescriber {
     final bwId = _bodyweightOf[e.id];
     final bwMax = bwId == null ? 0 : (a.reps[bwId] ?? 0);
     final weight = (e.bodyweightFraction?.value ?? 0) * a.bodyWeight;
-    // (Jamais sur un 1RM mesuré par un test ou une compétition : le
-    // résultat fait foi — CX, correction 1, panel et relecture documentée,
-    // `street_12` : blocs écrits sur 131 kg quand le test plaçait le 1RM
-    // vers 117 kg. Un record déclaré ou une estimation peuvent dater : le
-    // maximum au poids du corps les relève, `street_11`.)
+    // (Seulement sur un 1RM estimé : un 1RM déclaré, testé ou de
+    // compétition fait foi — CX, correction 1, panel et relecture
+    // documentée, `street_12` : blocs écrits sur 131 kg quand le test
+    // plaçait le 1RM vers 117 kg ; passe 5, `street_11` : 1RM de référence
+    // de 98,5 kg pour un 1RM déclaré de 91 kg, séries du vendredi coupées
+    // dans la trajectoire. Les répétitions écrites suivent le 1RM déclaré.)
     final source = a.totalOneRm(e.id) != null ? e.id : referenceId;
     if (total != null &&
         bwMax >= 3 &&
         weight > 0 &&
-        (source == null || !a.measuredOneRm.contains(source))) {
+        source != null &&
+        a.estimatedOneRm.contains(source) &&
+        !a.measuredOneRm.contains(source)) {
       final fromReps = bwMax <= 12
           ? weight / _pctAt(bwMax)
           : weight * (1 + (bwMax > 20 ? 20 : bwMax) / 30);
@@ -2366,9 +2379,20 @@ final class Prescriber {
       x.rest = 120;
     }
     if (eventZone) {
+      final rir = _rirOf(e, 2, ws, week);
+      // (Répétitions + réserve jamais au-dessus du maximum : « série =
+      // maximum − 2 » — panel CX, correction 1, passe 5 : 3 × 7 à 3 en
+      // réserve sur un maximum de 9.)
+      final top = max - rir.round();
+      if (top >= 1 && reps > top) {
+        x
+          ..repsLow = top
+          ..repsHigh = top
+          ..intensity = _shareOf(e.id, top, max);
+      }
       x
         ..rest = _level >= 2 ? 75 : 90
-        ..rir = _rirOf(e, 2, ws, week)
+        ..rir = rir
         ..reasons.add(_note(CoachNotes.eventZone, _round(share * 100)));
     }
     if (ws.kind == WeekKind.build) {
@@ -4037,6 +4061,11 @@ final class Prescriber {
       return x;
     }
     final x = _dosed(s, day, week, ws, role);
+    if (x != null && s.note == 'pain_step' && x.e.id == s.exerciseId) {
+      // (Recul d'étape pour douleur : la raison et le retour sont écrits —
+      // panel CX, correction 1, passe 5, `street_10`.)
+      x.reasons.add(_note(CoachNotes.painStep, 0));
+    }
     if (x != null &&
         x.kind == SetKind.work &&
         _eveOfTest(day, week) &&
@@ -5858,7 +5887,17 @@ final class Prescriber {
         }
         if (most != null) {
           final rise = _round(most * (1 + coachVolumeRise));
-          final allowed = rise > most + 2 ? rise : most + 2;
+          var allowed = rise > most + 2 ? rise : most + 2;
+          // (Jamais sous 55 % du maintien testé : après un test qui saute,
+          // la tenue rejoint la règle 60-70 % sans traîner des semaines à
+          // 30-45 % — panel CX, correction 1, passe 5.)
+          final t0 = x.intensity;
+          if (t0 != null && t0.value > 0) {
+            final floor = _round(high / t0.value * coachHoldFloorShare);
+            if (floor > allowed) {
+              allowed = floor < high ? floor : high;
+            }
+          }
           if (high > allowed) {
             x.secondsHigh = allowed;
             final low = x.secondsLow;
@@ -5886,6 +5925,56 @@ final class Prescriber {
         if (before == null || now > before) {
           trace.holds[x.e.id] = now;
         }
+      }
+    }
+  }
+
+  /// Séries au poids du corps sur un maximum de répétitions : répétitions
+  /// + réserve écrite jamais au-dessus du repère (la réserve se lit dès la
+  /// première série). Une série qui dépasse perd des répétitions ; une
+  /// pratique d'une répétition garde sa réserve (elle reste loin de
+  /// l'échec). (R1-P14 ; panel CX, correction 1, passe 5 : 3 × 4 à 5 à 2 en
+  /// réserve sur un maximum de 6, contraire à la règle « maximum − 2 » du
+  /// programme.)
+  void _fitReserve(List<List<_Draft>> days) {
+    for (final items in days) {
+      for (final x in items) {
+        final slot = x.slot;
+        final high = x.repsHigh;
+        final rir = x.rir;
+        final t = x.intensity;
+        if (slot == null ||
+            slot.exerciseId != x.e.id ||
+            high == null ||
+            rir == null ||
+            t == null ||
+            t.basis != IntensityBasis.percentBenchmark ||
+            t.referenceKind == BenchmarkKind.maxHold ||
+            x.kind == SetKind.test ||
+            x.kind == SetKind.calibration ||
+            x.kind == SetKind.warmup ||
+            x.load != null ||
+            x.percent != null ||
+            x.isometric ||
+            x.everyMinute) {
+          continue;
+        }
+        final max = _maxOf(slot);
+        final top = max - rir.round();
+        if (max <= 0 || top < 1 || high <= top) {
+          continue;
+        }
+        final low = x.repsLow;
+        x
+          ..repsHigh = top
+          ..repsLow = low == null || low > top ? top : low;
+        if (x.backoffRepsHigh > top) {
+          x.backoffRepsHigh = top;
+        }
+        if (x.backoffRepsLow > x.backoffRepsHigh) {
+          x.backoffRepsLow = x.backoffRepsHigh;
+        }
+        x.intensity = _shareOf(x.e.id, x.repsLow!, max);
       }
     }
   }
@@ -6206,6 +6295,7 @@ final class Prescriber {
       _fitLoads(days, trace);
       _fitMinutes(days, trace);
       _fitHolds(days, trace);
+      _fitReserve(days);
       for (final items in days) {
         for (final x in items) {
           for (final g in MuscleGroup.values) {
