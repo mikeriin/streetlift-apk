@@ -916,9 +916,9 @@ raisonnés, pratique de terrain du format).
 - Douleur (R5-P23, R4-F11 ; limite 11 de 0.1 ; modèle de surveillance de la douleur : Silbernagel et al.
   2007) : de 0 à 3, rien ne change ; au-dessus de 3, aucune hausse sur la zone (I3), ni de charge, ni de
   répétitions, ni de séries (pas plus de lignes que la dernière séance de l'emplacement,
-  `adapt.volume_down`) ; à 5 sur une contrainte moyenne, l'exercice est gardé avec 60 % de ses séries et un
-  point de réserve de plus (`coachPainRegress`, `coachPainRegressSets`) ; à 6 et plus, il est retiré
-  (`coachPainStop`).
+  `adapt.volume_down`) ; à 4 sur une contrainte moyenne, l'exercice est gardé avec 60 % de ses séries et un
+  point de réserve de plus (`coachPainRegress`, `coachPainRegressSets`) ; à 5 et plus, il est retiré, et un
+  remplaçant qui charge autant la zone aussi (`coachPainStop` ; 0.2.3 : 5 et 6 avant, voir § 11.16).
 - Bilan nettement bas : une série de moins par exercice, charges réduites (§ 4.5), aucune série à moins
   de 3 répétitions en réserve (`coachLowDayRir`), pas de test, pas de technique qui mène près de l'échec.
   Sans charge, « pas de hausse » se compte par rapport à la dernière séance du même emplacement (séance
@@ -983,7 +983,7 @@ retour au niveau, séances trop espacées, deux passages le même jour) ; plage 
 | `coachBreakDays`, `coachBreakSets` | 14 jours ; 80 % | choix raisonné (R5-P7) |
 | `coachDirectGuardRir`, `coachLowDayRir` | 2 ; 3 répétitions | choix raisonné ; règle du programme |
 | `coachEventNearDays`, `coachEccentricEventDays` | 14 ; 10 jours | R3-P14 ; R2-P17 |
-| `coachPainRegress`, `coachPainStop`, `coachPainRegressSets` | 5 ; 6 ; 0,6 | R5-P23, R4-F11 (seuils raisonnés) |
+| `coachPainRegress`, `coachPainStop`, `coachPainRegressSets` | 4 ; 5 ; 0,6 | R5-P23, R4-F11 ; Silbernagel et al. 2007 (douleur pendant l'effort sous 5/10, 0.2.3) |
 | `attemptOpenerShare`, probabilités des tentatives | 93 % ; 95 %, 80 %, 50 % (70 %, 35 %) | pratique de terrain de la force athlétique (ouverture qu'on réussit « un mauvais jour ») ; choix raisonné |
 | `attemptLowHealthShare`, `attemptRecentDays` | 2 % ; 42 jours | choix raisonné |
 | `skillSessions`, `skillDownSessions`, `skillTenureWeeks`, `skillPainMax` | 3 ; 2 ; 2, 8, 18, 30 semaines ; 3 | R4-F9 (délais par levier) ; contrat des échelles |
@@ -1143,7 +1143,7 @@ inchangé (séances identiques à l'octet près ; seul le texte de version chang
     pas remplacé : `adapt.pain_reported`), ni sur une zone en reprise ou dont l'arrêt est gardé ; le report à
     une séance suivante de la semaine (§ 11.15) les exclut aussi (contre-indication d'un test maximal en
     présence de douleur : NSW Agency for Clinical Innovation 2022, guide du test 1RM).
-  - **Appui à prise neutre** : un poignet douloureux (sous 6/10, `coachPainStop`) ou à l'arrêt n'efface
+  - **Appui à prise neutre** : un poignet douloureux (sous 5/10, `coachPainStop`) ou à l'arrêt n'efface
     plus la poussée quand une variante en appui neutre existe (barres parallèles, parallettes, poignées,
     anneaux : `coachPainProvokes` de `kalis_plan`), faisable avec le matériel du jour et qui ne provoque
     aucune zone à l'arrêt ni gardée ; sinon le mouvement est retiré. Seul le poignet a cette variante : les
@@ -1195,6 +1195,26 @@ inchangé (séances identiques à l'octet près ; seul le texte de version chang
   Mesure au banc (17 profils × 8 scénarios × 3 modèles × 4 graines) : meilleure barre du jour de
   l'échéance 94,4 → 95,0 % du maximum réel, tentatives réussies 96,6 → 95,3 %, échecs non voulus 0,21 →
   0,23 %, écart d'effort 1,085 → 1,069, violations 0,0153 → 0,0135, aucune hausse sur zone douloureuse.
+- **Douleur pendant l'arrêt et après** (relecture documentée du pilotage sur la manche 4 : `street_12`,
+  dips au poids du corps servis à 5/10 et remplaçant lourd ; `street_10`, appuis gardés pendant des
+  semaines de douleur à 3/10 et plus ; dips passés de 2 × 5 à 2 × 19 en une semaine d'affûtage juste après
+  la douleur) :
+  - à 5/10 et plus avant la séance, tout mouvement qui charge la zone (contrainte moyenne ou forte) est
+    retiré, et un remplaçant n'est retenu que s'il ne la charge pas autant (`coachPainStop` 5, 6 avant ;
+    allègement dès 4/10, `coachPainRegress`) : la douleur pendant l'effort ne doit pas atteindre 5/10
+    (Silbernagel et al. 2007, modèle de surveillance de la douleur, lu sur une source secondaire) ;
+  - pendant un arrêt (ou un arrêt gardé), les mouvements qui chargent la zone sans la provoquer
+    (contrainte moyenne, appui à prise neutre) restent au premier palier de la reprise : moitié des séries
+    écrites, 3 répétitions en réserve, aucune hausse, 67,5 % du 1RM au plus, jamais de test ; quand la
+    douleur est encore à 3/10 ou plus dans la semaine après deux semaines d'arrêt
+    (`coachStopEscalateDays`), ils sont retirés aussi (Silbernagel et al. 2007 : douleur jamais en hausse
+    d'une semaine à l'autre ; la charge qui reste entretient la douleur) ;
+  - un remplaçant choisi pour une douleur du jour est servi loin de l'échec (3 en réserve), sans hausse, à
+    70 % du 1RM au plus (`coachPainSubPct`, choix raisonné) ;
+  - sur une zone à l'arrêt ou sortie d'un arrêt depuis douze semaines au plus, la quantité par série
+    (répétitions ou secondes) d'un mouvement qui la charge monte de 10 % au plus d'une séance à la suivante,
+    une unité au moins (`coachRecentRise` ; Soligard et al. 2016 : hausses de moins de 10 % par semaine),
+    même quand le bloc écrit davantage (affûtage) ; ni série repère ni plage étendue sur ces mouvements.
 
 | Paramètre | Valeur | Source |
 | --- | --- | --- |
@@ -1206,6 +1226,9 @@ inchangé (séances identiques à l'octet près ; seul le texte de version chang
 | `coachTaperGain` | 2 % | Travis et al. 2020 (bas de la fourchette) ; appliqué avant la première tentative |
 | `coachAssistMinDays` | 7 jours | panel ; ACSM 2009 (« 2 pour 2 ») ; choix raisonné |
 | `coachHeavyBoundReps` | 8 répétitions | Halperin et al. 2022 ; choix raisonné |
+| `coachStopEscalateDays` | 14 jours | Silbernagel et al. 2007 ; durée de la règle d'arrêt de `kalis_plan` ; choix raisonné |
+| `coachPainSubPct` | 70 % du 1RM | relecture documentée du pilotage (manche 4) ; choix raisonné |
+| `coachRecentRise` | 10 % | Soligard et al. 2016 |
 
 **Simulateur** (modèles de vérité B et C) : après un épisode de douleur réel (3/10 et plus), la zone reste
 réactive douze semaines ; sa tolérance part de la plus grande de la moitié de la charge habituelle (séries de

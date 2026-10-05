@@ -504,6 +504,13 @@ void main() {
         expect(policy.violations, isEmpty);
         expect(run.painAggravations, 0, reason: 'graine $seed');
         returned += _returnChecked(run);
+        _painDayChecked(run, ExerciseBook(catalog, streetProfile(key)));
+        _recentRiseChecked(
+          run,
+          ExerciseBook(catalog, streetProfile(key)),
+          BodyZone.elbow,
+          from: 28,
+        );
       }
       expect(returned, greaterThan(0));
     }, timeout: const Timeout(Duration(minutes: 20)));
@@ -620,4 +627,90 @@ int _returnChecked(SimRun run) {
     }
   }
   return returned;
+}
+
+/// Vérifie qu'aucune séance de [run] ne sert, un jour où une zone est
+/// signalée à 5 sur 10 ou plus avant la séance, un exercice qui la charge
+/// (contrainte moyenne ou forte) — Silbernagel et al. 2007 (CA2, partie 0).
+void _painDayChecked(SimRun run, ExerciseBook book) {
+  for (final s in run.served) {
+    final pains = s.record.healthCheck?.pains ?? const <PainReport>[];
+    for (final pain in pains) {
+      if (pain.intensity < 5) {
+        continue;
+      }
+      for (final item in s.plan.items) {
+        if (item.kind == SetKind.warmup) {
+          continue;
+        }
+        final info = book.find(item.exerciseId);
+        expect(
+          info == null || info.zoneLevel(pain.zone) < 0.5,
+          isTrue,
+          reason:
+              '${item.exerciseId} servi le ${s.record.date.iso} '
+              '(${pain.zone.code} à ${pain.intensity}/10)',
+        );
+      }
+    }
+  }
+}
+
+/// Vérifie qu'après le début de la douleur ([from], jour de simulation), la
+/// quantité par série servie sur un mouvement sans charge qui charge
+/// [zone] ne dépasse jamais de plus de 10 % (une unité au moins) la plus
+/// grande série de la séance précédente de ce mouvement (Soligard et al.
+/// 2016 ; CA2, partie 0).
+void _recentRiseChecked(
+  SimRun run,
+  ExerciseBook book,
+  BodyZone zone, {
+  required int from,
+}) {
+  final lastTop = <String, int>{};
+  for (final s in run.served) {
+    final recent = s.simDay >= from;
+    for (final item in s.plan.items) {
+      if (item.kind == SetKind.warmup || item.kind == SetKind.test) {
+        continue;
+      }
+      final info = book.find(item.exerciseId);
+      if (info == null || info.zoneLevel(zone) < 0.5) {
+        continue;
+      }
+      final loaded =
+          item.percentOfOneRm != null ||
+          (item.setTargets ?? const <SetTarget>[]).any(
+            (t) => t.loadKg != null && t.loadKg! > 0,
+          );
+      final before = lastTop[item.exerciseId];
+      if (recent && !loaded && before != null && before > 0) {
+        var served = item.repsHigh ?? item.secondsHigh ?? 0;
+        for (final t in item.setTargets ?? const <SetTarget>[]) {
+          final h = t.repsHigh ?? t.secondsHigh ?? 0;
+          if (h > served) {
+            served = h;
+          }
+        }
+        final grown = (before * 1.1).floor();
+        final most = grown > before + 1 ? grown : before + 1;
+        expect(
+          served,
+          lessThanOrEqualTo(most),
+          reason: '${item.exerciseId} le ${s.record.date.iso}',
+        );
+      }
+    }
+    final tops = <String, int>{};
+    for (final set in s.record.sets) {
+      if (set.kind == SetKind.warmup) {
+        continue;
+      }
+      final amount = set.reps ?? set.seconds ?? 0;
+      if (amount > (tops[set.exerciseId] ?? 0)) {
+        tops[set.exerciseId] = amount;
+      }
+    }
+    lastTop.addAll(tops);
+  }
 }

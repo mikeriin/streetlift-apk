@@ -20,6 +20,13 @@ Lot CA2, partie 0 (street) du pipeline « Calibrage des programmes ». Mode 0.1 
   appris ; une série arrêtée sous la cible ne fait baisser l'estimation qu'à la deuxième mesure concordante ;
   bornes de santé comptées depuis la dernière séance d'une semaine de charge (jamais depuis une séance
   volontairement légère).
+- **Douleur pendant l'arrêt et après (sécurité, relecture documentée du pilotage)** : à 5/10 avant la séance,
+  tout mouvement qui charge la zone est retiré (6/10 avant ; allègement dès 4/10), remplaçants compris ;
+  pendant un arrêt, les mouvements qui chargent la zone sans la provoquer restent au premier palier de la
+  reprise (moitié des séries, 3 en réserve, 67,5 % du 1RM au plus), puis sont retirés si la douleur est
+  encore à 3/10 après deux semaines d'arrêt ; remplaçant d'une douleur du jour à 70 % du 1RM au plus ; sur
+  une zone à l'arrêt ou sortie d'un arrêt depuis douze semaines, répétitions ou secondes par série +10 % au
+  plus d'une séance à la suivante.
 - Simulateur : zone réactive après un épisode de douleur (modèles B et C), poussées comptées ; une hausse
   sur zone douloureuse se compte au-dessus de 3/10 (les mesures du mode 0.1 au banc ne se comparent plus
   chiffre à chiffre à celles de 0.2.2).

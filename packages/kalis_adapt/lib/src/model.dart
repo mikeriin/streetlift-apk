@@ -835,6 +835,13 @@ final class ExerciseRun {
   /// ni tenue allongée au-delà de l'écrit.
   bool doseCapped = false;
 
+  /// Mode coach : mouvement qui charge une zone à l'arrêt ou sortie d'un
+  /// arrêt depuis moins de douze semaines — la quantité par série monte de
+  /// 10 % au plus (une répétition ou une seconde au moins) d'une séance à
+  /// la suivante, même quand le bloc écrit davantage (CA2, partie 0 ;
+  /// Soligard et al. 2016).
+  bool recentZone = false;
+
   /// Mode coach : part du 1RM la plus haute permise pendant une reprise
   /// graduée conduite par le moteur, ou `null`.
   double? returnPct;

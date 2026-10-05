@@ -1350,6 +1350,7 @@ int _holdSafe(SessionRun run, ExerciseRun ex, double fatigue, String slotId) {
       }
     }
   }
+  target = _recentCap(ex, target, run.ctx.params);
   if (ex.fails > 0 && ex.observed.isNotEmpty) {
     final done = ex.observed.last.amount;
     final top = done < 1 ? 1 : done;
@@ -1382,6 +1383,7 @@ void _probe(
       item.kind == SetKind.test ||
       ex.inReturn ||
       ex.doseCapped ||
+      ex.recentZone ||
       out.length < 2 ||
       !c.policy.build ||
       c.light ||
@@ -1451,6 +1453,7 @@ int _repsSafe(SessionRun run, ExerciseRun ex, double fatigue, String slotId) {
       }
     }
   }
+  target = _recentCap(ex, target, run.ctx.params);
   if (ex.fails > 0 && ex.observed.isNotEmpty) {
     final done = ex.observed.last.amount;
     final top = done < 1 ? 1 : done;
@@ -1459,6 +1462,20 @@ int _repsSafe(SessionRun run, ExerciseRun ex, double fatigue, String slotId) {
     }
   }
   return target < 1 ? 1 : target;
+}
+
+/// Zone à l'arrêt ou sortie d'un arrêt récent : la quantité par série
+/// monte de [AdaptParams.coachRecentRise] au plus (une unité au moins)
+/// depuis la dernière séance de l'exercice (Soligard et al. 2016 : hausses
+/// de charge de moins de 10 % par semaine ; CA2, partie 0).
+int _recentCap(ExerciseRun ex, int target, AdaptParams p) {
+  final last = ex.track?.lastTop;
+  if (!ex.recentZone || ex.spec.test || last == null || last < 1) {
+    return target;
+  }
+  final grown = (last * (1 + p.coachRecentRise)).floor();
+  final top = grown > last + 1 ? grown : last + 1;
+  return target > top ? top : target;
 }
 
 List<SetPlan>? _directPlans(
@@ -1618,6 +1635,7 @@ List<SetPlan>? _directPlans(
         share == null &&
         !assisted &&
         !ex.doseCapped &&
+        !ex.recentZone &&
         served == SetTechniqueKind.standard &&
         item.kind != SetKind.test &&
         c.policy.build &&

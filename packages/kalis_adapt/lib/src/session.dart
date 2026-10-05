@@ -61,6 +61,10 @@ final class _Draft {
 
   /// Zone en reprise dont le palier recule aujourd'hui, ou `null`.
   BodyZone? returnBack;
+
+  /// Zone douloureuse du jour pour laquelle l'exercice a été remplacé, ou
+  /// `null` (CA2, partie 0 : remplaçant dosé loin de l'échec).
+  BodyZone? painSub;
 }
 
 /// Matériel disponible aujourd'hui : celui du lieu [place] si le profil le
@@ -134,18 +138,21 @@ ExerciseInfo? findSubstitute(
           entry.key,
           entry.value,
           hard: p.painHard,
-          severe: p.painSevere,
+          severe: p.coachPainStop,
         )) {
           spared = false;
           break;
         }
         continue;
       }
+      // (Mode coach : le remplaçant obéit au même seuil que l'exercice
+      // remplacé — douleur pendant l'effort sous 5 sur 10, Silbernagel et
+      // al. 2007 ; CA2, partie 0.)
       if (info.excludedByPain(
             entry.key,
             entry.value,
             hard: p.painHard,
-            severe: p.painSevere,
+            severe: neutralWrist ? p.coachPainStop : p.painSevere,
           ) ||
           info.zoneLevel(entry.key) > original.zoneLevel(entry.key)) {
         spared = false;
@@ -439,6 +446,9 @@ SessionPlan buildSessionPlan(
     d.reasons.addAll(why);
     d.info = substitute;
     d.item = _retarget(d.item, substitute);
+    if (coached && painZone != null) {
+      d.painSub = painZone;
+    }
   }
 
   // 1 bis 0. Mode coach : douleur qui dure ou qui revient (CX, correction
@@ -594,8 +604,7 @@ SessionPlan buildSessionPlan(
         d.returnBack = back;
       }
       if (ownLower || back != null) {
-        d.returnPct =
-            0.675 + 0.25 * clampDouble(effective - p.coachReturnStart, 0, 1);
+        d.returnPct = _returnLoadAt(effective, p);
       }
       if (sets < 1) {
         sets = 1;
@@ -620,6 +629,110 @@ SessionPlan buildSessionPlan(
         d.reasons.addAll(why);
         d.sets = sets;
       }
+    }
+    // Arrêt en cours : les mouvements qui chargent la zone sans la
+    // provoquer (contrainte moyenne, appui à prise neutre) restent, servis
+    // comme au premier palier de la reprise — moitié des séries écrites,
+    // trois répétitions en réserve, aucune hausse, 67,5 % du 1RM au plus ;
+    // jamais de test. Quand la douleur ne baisse pas après deux semaines
+    // d'arrêt (encore 3 sur 10 ou plus dans la semaine), ils sont retirés
+    // aussi : la charge qui reste entretient la douleur (CA2, partie 0 ;
+    // relecture documentée du pilotage, manche 4 ; Silbernagel et al. 2007 :
+    // douleur sous 5 sur 10 pendant l'effort, revenue le lendemain matin,
+    // jamais en hausse d'une semaine à l'autre).
+    void stopDose(_Draft d, BodyZone zone) {
+      d.inReturn = true;
+      d.returnBack = zone;
+      d.returnPct = _returnLoadAt(p.coachReturnStart, p);
+      d.reasons.add(
+        reason(ReasonCodes.adaptLoadHeld, <String, Object?>{
+          'cause': 'pain_return',
+        }),
+      );
+      var sets = (d.sets * p.coachReturnStart).floor();
+      if (sets < 1) {
+        sets = 1;
+      }
+      if (sets < d.sets) {
+        if (!_setsAdjustable(d.item)) {
+          d.item = standardEquivalent(d.item);
+        }
+        final cut = <Reason>[
+          reason(ReasonCodes.adaptVolumeDown, <String, Object?>{
+            'sets': d.sets - sets,
+          }),
+        ];
+        adjustments.add(
+          SessionAdjustment(
+            kind: AdjustmentKind.setsReduced,
+            exerciseId: d.item.exerciseId,
+            setsDelta: sets - d.sets,
+            reasons: cut,
+          ),
+        );
+        d.reasons.addAll(cut);
+        d.sets = sets;
+      }
+    }
+
+    final stopZones = <BodyZone, int>{
+      for (final stop in allStops) stop.zone: stop.sessions,
+      for (final zone in comeback.held) zone: 0,
+    };
+    for (final entry in stopZones.entries) {
+      final zone = entry.key;
+      final track = state.pains[zone];
+      final escalated =
+          entry.value > 0 &&
+          track != null &&
+          track.stopAt(day - p.coachStopEscalateDays) != null &&
+          track.reportsBetween(day - 6, day).any((r) => r >= painPersistMin);
+      final why = <Reason>[
+        reason(ReasonCodes.adaptPainPersistent, <String, Object?>{
+          'zone': zone.code,
+          'sessions': entry.value,
+        }),
+      ];
+      for (final d in drafts) {
+        final info = d.info;
+        if (d.removed ||
+            info == null ||
+            d.item.kind == SetKind.warmup ||
+            info.zoneLevel(zone) < 0.5) {
+          continue;
+        }
+        if (escalated || d.item.kind == SetKind.test) {
+          d.removed = true;
+          adjustments.add(
+            SessionAdjustment(
+              kind: AdjustmentKind.exerciseRemoved,
+              exerciseId: d.item.exerciseId,
+              reasons: why,
+            ),
+          );
+          continue;
+        }
+        if (!d.inReturn) {
+          stopDose(d, zone);
+        }
+      }
+    }
+    // Remplaçant choisi pour une douleur du jour : loin de l'échec, sans
+    // hausse, 70 % du 1RM au plus (CA2, partie 0 ; relecture documentée du
+    // pilotage, manche 4 : un remplaçant lourd chargeait la zone).
+    for (final d in drafts) {
+      final zone = d.painSub;
+      if (d.removed || zone == null || d.inReturn) {
+        continue;
+      }
+      d.inReturn = true;
+      d.returnBack = zone;
+      d.returnPct = p.coachPainSubPct;
+      d.reasons.add(
+        reason(ReasonCodes.adaptLoadHeld, <String, Object?>{
+          'cause': 'pain_return',
+        }),
+      );
     }
   }
 
@@ -925,6 +1038,9 @@ SessionPlan buildSessionPlan(
 
   // 3. Charges, répétitions et flammes de chaque exercice.
   final wristGuard = coached && wristSensitive(view, state, comeback, day);
+  final recentZones = coached
+      ? recentPainZones(state, day, p)
+      : const <BodyZone>{};
   var confidenceSum = 0.0;
   var confidenceCount = 0;
   for (final d in drafts) {
@@ -1002,6 +1118,12 @@ SessionPlan buildSessionPlan(
         final back = d.returnBack;
         if (back != null && !exercise.painZones.contains(back)) {
           exercise.painZones = <BodyZone>[...exercise.painZones, back];
+        }
+      }
+      for (final zone in recentZones) {
+        if (info.zoneLevel(zone) >= 0.5) {
+          exercise.recentZone = true;
+          break;
         }
       }
       if (wristGuard && coachPainStopHits(info.exercise, BodyZone.wristHand)) {
@@ -2000,4 +2122,29 @@ ExercisePrescription _finishCoach(EngineContext ctx, SessionRun run, _Draft d) {
     technique: technique,
     intensity: intensity,
   );
+}
+
+/// Part du 1RM la plus haute permise au palier de reprise [share] (règle de
+/// `kalis_plan`, CX correction 1 : 67,5 % au premier palier, +2,5 % par
+/// palier de 10 %).
+double _returnLoadAt(double share, AdaptParams p) =>
+    0.675 + 0.25 * clampDouble(share - p.coachReturnStart, 0, 1);
+
+/// Zones à l'arrêt au jour [day] ou sorties d'un arrêt depuis
+/// [AdaptParams.coachReturnWatchDays] jours au plus (CA2, partie 0 : la
+/// quantité par série des mouvements qui les chargent monte de 10 % au plus
+/// d'une séance à la suivante).
+Set<BodyZone> recentPainZones(ModelState state, int day, AdaptParams p) {
+  final out = <BodyZone>{};
+  for (final s in state.pains.values) {
+    if (s.stopAt(day) != null) {
+      out.add(s.zone);
+      continue;
+    }
+    final lift = s.liftedOn(day);
+    if (lift != null && day - lift <= p.coachReturnWatchDays) {
+      out.add(s.zone);
+    }
+  }
+  return out;
 }
