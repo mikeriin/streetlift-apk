@@ -581,11 +581,18 @@ String? coachReasonText(Reason r, Catalog catalog) {
               "facile d'un cran (mains plus basses) et garde les descentes "
               "freinées au sol. Tu n'ajoutes jamais de séries toi-même.",
         CoachNotes.pushHeight =>
-          'Appui trop haut : ton maximum sur cet appui dépasse 15. Baisse '
-              "les mains de ${_int(v)} cran${(v is num && v > 1) ? 's' : ''} "
-              "(environ 10 cm chacun) dès cette semaine : les répétitions "
-              'écrites sont pour le nouvel appui, celui où tu ferais 12 à 14 '
-              'répétitions au maximum. Note la hauteur des mains en cm.',
+          (v is num && v > 0)
+              ? 'Hauteur des mains, à régler cette semaine : ton maximum sur '
+                    "l'appui d'avant dépasse 15 — baisse les mains de "
+                    "${_int(v)} cran${v > 1 ? 's' : ''} (environ 10 cm "
+                    "chacun), jusqu'à l'appui où ton maximum propre est de 12 "
+                    'à 14 répétitions. Note la hauteur en cm : elle sert aux '
+                    'séances et au test, et ne change ensuite que par le '
+                    "critère de l'échelle."
+              : 'Hauteur des mains, à régler à la première séance : '
+                    "l'appui où ton maximum propre est de 12 à 14 répétitions. "
+                    'Note la hauteur en cm : elle sert aux séances et au test, '
+                    "et ne change ensuite que par le critère de l'échelle.',
         CoachNotes.testRest =>
           '${_int(v)} h sans travail dur du mouvement avant un test.',
         CoachNotes.rampBodyweight =>

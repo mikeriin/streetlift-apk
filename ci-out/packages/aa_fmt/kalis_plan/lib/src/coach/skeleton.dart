@@ -564,7 +564,12 @@ void _buildBeginner(_Builder b) {
         // descentes comprises — CP2, partie 0, panel CX correction 1,
         // `street_01`, `street_03` : 16 à 19 séries de tirage par semaine
         // chez un débutant ; R5-P1 : 10 à 12.)
-        sets: heavy ? mainSets : (a.aimsAt(Ids.pull) ? 2 : sets),
+        // (Jour de descentes freinées : une série assistée — tirage
+        // vertical vers 8 à 10 séries par semaine, panel p3, `street_01`,
+        // `street_03`.)
+        sets: heavy
+            ? mainSets
+            : (a.aimsAt(Ids.pull) ? (negativeDays.contains(d) ? 1 : 2) : sets),
         referenceId: Ids.pull,
       );
       if (negativeDays.contains(d) && !heavy) {
@@ -629,7 +634,7 @@ void _buildBeginner(_Builder b) {
           !b.ladders.any((l) => l.targetExerciseId == coachPushLadderTarget)) {
         b.ladders.add(ladder);
       }
-      if (a.aimsAt(Ids.pushUp) && pushMax < 6 && !negativeDays.contains(d)) {
+      if (a.aimsAt(Ids.pushUp) && pushMax < 6) {
         // Objectif de pompes sous six : les descentes freinées au sol
         // restent tout le cycle (le pont vers la répétition complète ;
         // panel CX, boucle 2).
@@ -658,7 +663,10 @@ void _buildBeginner(_Builder b) {
           !b.ladders.any((l) => l.targetExerciseId == coachPushLadderTarget)) {
         b.ladders.add(ladder);
       }
-      if (!heavy && a.aimsAt(Ids.pushUp) && !negativeDays.contains(d) ||
+      // (Objectif de pompes : descentes freinées au sol à chaque séance
+      // facile, jours de descentes de traction compris — panel p3,
+      // `street_03`.)
+      if (!heavy && a.aimsAt(Ids.pushUp) ||
           (!heavy && a.aimsAt(Ids.pushUp) && a.dayCount <= 2)) {
         // Objectif de pompes : le geste complet dès la première semaine,
         // en descentes freinées (corps gainé de la tête aux talons) — la
@@ -1140,7 +1148,10 @@ void _addRepsPillar(
     // mouvement exact à l'approche du test ; R4-G1 ; panel CX, correction
     // 1, `street_14` : traction au tempo lent à la place du travail de
     // l'épreuve).
-    if (max >= 12 &&
+    // (Six répétitions et plus : panel p3, `street_11`, 13, 15 — un bloc
+    // de réalisation sans séance au format de l'objectif ne prépare pas le
+    // test.)
+    if (max >= 6 &&
         b.shape.phase == SeasonPhaseKind.realization &&
         a.goalOn(exerciseId, GoalMetric.maxReps) != null) {
       b.add(

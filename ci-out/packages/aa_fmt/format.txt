@@ -1,4 +1,4 @@
-Formatted 185 files (0 changed) in 1.12 seconds.
+Formatted 184 files (0 changed) in 1.20 seconds.
 
 Warning: Package resolution error when reading "analysis_options.yaml" file for "/home/runner/work/streetlift-apk/streetlift-apk/out-packages/aa_fmt/kalis_adapt/bin/kalis_adapt_cli.dart":
 Failed to resolve package URI "package:flutter_lints/flutter.yaml" in include at "/home/runner/work/streetlift-apk/streetlift-apk/analysis_options.yaml".
@@ -42,5 +42,17 @@ Warning: Package resolution error when reading "analysis_options.yaml" file for 
 Failed to resolve package URI "package:flutter_lints/flutter.yaml" in include at "/home/runner/work/streetlift-apk/streetlift-apk/analysis_options.yaml".
 Warning: Package resolution error when reading "analysis_options.yaml" file for "/home/runner/work/streetlift-apk/streetlift-apk/out-packages/aa_fmt/kalis_plan/lib/src/coach/athlete.dart":
 Failed to resolve package URI "package:flutter_lints/flutter.yaml" in include at "/home/runner/work/streetlift-apk/streetlift-apk/analysis_options.yaml".
+Could not format because the source could not be parsed:
+
+line 596, column 9 of ../../out-packages/aa_fmt/kalis_plan/lib/src/coach/texts.dart: Expected to find ','.
+    ╷
+596 │         CoachNotes.testRest =>
+    │         ^^^^^^^^^^
+    ╵
+line 595, column 76 of ../../out-packages/aa_fmt/kalis_plan/lib/src/coach/texts.dart: Unterminated string literal.
+    ╷
+595 │                     "et ne change ensuite que par le critère de l'échelle.',
+    │                                                                            ^
+    ╵
 Warning: Package resolution error when reading "analysis_options.yaml" file for "/home/runner/work/streetlift-apk/streetlift-apk/out-packages/aa_fmt/kalis_plan/test/admission_test.dart":
 Failed to resolve package URI "package:flutter_lints/flutter.yaml" in include at "/home/runner/work/streetlift-apk/streetlift-apk/analysis_options.yaml".

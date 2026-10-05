@@ -2904,8 +2904,15 @@ final class Prescriber {
       // réserve — R5-P9 ; CP2, partie 0, boucle 2 ; panel p1, `street_02` :
       // 15 semaines sur le même appui, test à 26-28).
       final lower = ladderStep && e.id == 'sw-pompe-inclinee' && max > 15;
+      // Appui de la pompe mains surélevées : réglé à la première semaine du
+      // bloc, là où le maximum propre est de 12 à 14 (panel p3, `street_02`,
+      // `street_03`) ; plage 8 à 12, le haut de la plage est le critère de
+      // l'échelle.
+      if (ladderStep && e.id == 'sw-pompe-inclinee' && !lower && week == 0) {
+        x.reasons.add(_note(CoachNotes.pushHeight, 0));
+      }
       if (lower) {
-        high = 11;
+        high = 12;
         low = 8;
         // (Une seule consigne, à la première semaine du bloc — panel p2,
         // `street_02`, `street_03`.)
