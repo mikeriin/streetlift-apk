@@ -13,6 +13,8 @@
 // Fonctions pures : aucune horloge, aucun stockage.
 import 'package:kalis_core/kalis_core.dart' as kc;
 
+import '../plan/coach_texts.dart' show prescriptionRow;
+
 const kSessionAdaptVersion = 1;
 
 /// Suites possibles d'un ajustement (bilan, conseil).
@@ -370,12 +372,20 @@ class SetGoal {
   final int? high;
   final int? flames;
   final bool seconds;
+
+  /// CI1 : rôle de la ligne dans la technique (série de tête, allégée,
+  /// échauffement, test, tentative, palier, intervalle), null pour une
+  /// série classique ; repos écrit après la ligne.
+  final kc.SetRole? role;
+  final int? restSec;
   const SetGoal({
     this.kg,
     this.low,
     this.high,
     this.flames,
     this.seconds = false,
+    this.role,
+    this.restSec,
   });
 
   /// Valeur pré-remplie de la colonne « valeur » (bas de la plage).
@@ -388,6 +398,8 @@ class SetGoal {
     secondsHigh: seconds ? high : null,
     loadKg: kg,
     flames: flames,
+    role: role,
+    restSeconds: restSec,
   );
 }
 
@@ -399,6 +411,9 @@ bool prescriptionInSeconds(kc.ExercisePrescription p) =>
 SetGoal planGoal(kc.ExercisePrescription p, int index) {
   final seconds = prescriptionInSeconds(p);
   final targets = p.setTargets;
+  // CI1 : rôle de la ligne (contrat 0.4.0, § 12) ; sans cibles par série,
+  // la plage des séries allégées, d'un palier ou d'une vague.
+  final row = prescriptionRow(p, index);
   if (targets != null && targets.isNotEmpty) {
     final t = targets[index < targets.length ? index : targets.length - 1];
     return SetGoal(
@@ -407,14 +422,17 @@ SetGoal planGoal(kc.ExercisePrescription p, int index) {
       high: seconds ? t.secondsHigh : t.repsHigh,
       flames: t.flames ?? p.targetFlames,
       seconds: seconds,
+      role: row.role,
+      restSec: t.restSeconds,
     );
   }
   return SetGoal(
     kg: p.startLoadKg,
-    low: seconds ? p.secondsLow : p.repsLow,
-    high: seconds ? p.secondsHigh : p.repsHigh,
+    low: row.low ?? (seconds ? p.secondsLow : p.repsLow),
+    high: row.high ?? (seconds ? p.secondsHigh : p.repsHigh),
     flames: p.kind == kc.SetKind.test ? kc.Flames.failure : p.targetFlames,
     seconds: seconds,
+    role: row.role,
   );
 }
 
@@ -438,6 +456,8 @@ SetGoal adviceGoal(
     high: last.high ?? last.low ?? g.high,
     flames: g.flames,
     seconds: g.seconds,
+    role: g.role,
+    restSec: g.restSec,
   );
 }
 
@@ -446,7 +466,10 @@ int plannedWorkSetsOf(kc.SessionPlan plan) {
   var n = 0;
   for (final it in plan.items) {
     if (it.kind == kc.SetKind.warmup) continue;
-    n += it.sets;
+    for (var i = 0; i < it.sets; i++) {
+      // CI1 : les montées d'échauffement d'une technique ne comptent pas.
+      if (prescriptionRow(it, i).role != kc.SetRole.warmup) n++;
+    }
   }
   return n;
 }

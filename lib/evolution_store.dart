@@ -112,6 +112,7 @@ extension EvolutionStore on AppStore {
       log: SessionAdaptStore(this).adaptTrainingLog(),
       today: _evoToday,
       decisions: planEvolution.decisions,
+      season: SessionAdaptStore(this).adaptSeasonOf(place),
     );
   }
 
@@ -157,7 +158,13 @@ extension EvolutionStore on AppStore {
       week: w,
       ms: sw.elapsedMilliseconds,
     );
-    return evolutionReceive(place, review.proposals);
+    // CI1 : tests et figures d'un bloc du chemin calibré reportés au
+    // profil (jamais pour le programme importé du propriétaire).
+    final reported =
+        !place.imported &&
+        ct.isCoachBlock(place.block) &&
+        AthleteProfileStore(this).reportEngineResults(review);
+    return evolutionReceive(place, review.proposals) || reported;
   }
 
   /// Propositions [proposals] du moteur pour le bloc de [place] : nouvelles

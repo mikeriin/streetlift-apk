@@ -24,6 +24,7 @@ import 'plan/plan_inspector.dart';
 import 'plan/plan_screens.dart';
 import 'plan/plan_texts.dart';
 import 'plan/program_position.dart';
+import 'plan/season_view.dart';
 import 'session_prefs.dart' show SessionSpace;
 import 'store.dart';
 import 'ui.dart';
@@ -114,6 +115,11 @@ class ProgramScreen extends StatelessWidget {
             ),
           ),
         );
+      }
+      // CI1 : saison du chemin calibré (phases, échéance, semaines
+      // particulières du bloc).
+      if (storeSeasonOverview() case final season?) {
+        children.add(SeasonCard(view: season));
       }
       // G10 (D5.6, D5.7) : évolution du programme — mode, déblocage,
       // historique des changements.

@@ -1,6 +1,6 @@
 # kalis_core — contrat
 
-Version 0.4.0 (lot GC, 01/10/2026 ; évolutions additives des lots G8, G11 et CQ : `CHANGELOG.md`). Ce paquet fixe **tout ce que les moteurs et l'application
+Version 0.4.2 (lot GC, 01/10/2026 ; évolutions additives des lots G8, G11, CQ, CP1 et CX : `CHANGELOG.md`). Ce paquet fixe **tout ce que les moteurs et l'application
 échangent**. Référence exhaustive des types, champ par champ : [`docs/TYPES.md`](docs/TYPES.md)
 (généré depuis `tool/contracts_spec.py`, source unique des types).
 
@@ -73,7 +73,7 @@ des champs calculés), `poids_vecteur`, `references_fraction`, `exercices`.
 | `articularite` | `articularity` | par schéma ; sans objet pour les tenues, le cardio, la mobilité | définition NSCA 2016 (ch. 17 : exercices poly- et mono-articulaires) |
 | `regime` | `contractionMode` | discipline, schéma et mots-clés (négatif, tenue, explosif…) | choix raisonné |
 | `difficulte` 1-10 | `difficulty` | niveau (Débutant 2, Intermédiaire 4, Avancé 7, Élite 9) ± 1 selon la catégorie (figures, haltérophilie, compétition : + 1 ; mobilité légère, machine : − 1) ± 1 selon la position dans la chaîne `variante_de` (régression ou progression à niveau égal avec l'exercice de référence), bornée par niveau (1-3, 3-6, 6-8, 8-10) | choix raisonné ; **invariant testé** : la difficulté ne décroît jamais quand le niveau monte |
-| `lieux` | `places` | intersection, sur le matériel de l'exercice, des lieux où ce matériel est habituellement disponible ou transportable (table `LIEUX_PAR_MATERIEL` ; disques et ceinture de lest sont transportables) | choix raisonné ; le filtre exact reste le matériel du profil (`feasibleWith`, où sol, mur, tapis et magnésie ne bloquent jamais) |
+| `lieux` | `places` | intersection, sur le matériel de l'exercice, des lieux où ce matériel est habituellement disponible ou transportable (table `LIEUX_PAR_MATERIEL` ; disques et ceinture de lest sont transportables) | choix raisonné ; le filtre exact reste le matériel du profil (`feasibleWith`, où sol, mur, tapis et magnésie ne bloquent jamais ; depuis 0.4.2, `feasibleAt` ajoute le lieu : mur sûr à la maison et en salle seulement, matériel de remplacement `equipmentAlternatives`, meuble stable à la maison `homeFurnitureExercises`) |
 | `contraintes` (7 articulations) | `jointStress` | table schéma → niveau par articulation, retouches par mots-clés (derrière la nuque, anneaux, un bras, planche, sauts, charnière à la barre…) | choix raisonné d'entraîneur, orienté par Escamilla 2001 (genou au squat), Cholewicki et al. 1991 (lombaires au soulevé de terre), Kolber et al. 2010 (épaule en musculation). **Ce n'est pas un avis médical.** |
 | `prerequis` | `prerequisites` | hors lest : jusqu'à 2 exercices de la même famille `variante_de`, de difficulté strictement inférieure, les ancêtres d'abord (du parent vers la racine) puis les plus proches en difficulté ; lest : l'exercice au poids du corps non assisté le plus proche de la même famille de mouvement (muscles, schéma, matériel, nom, latéralité) | choix raisonné ; « paliers conseillés », pas une interdiction |
 | `fatigue.systemique`, `fatigue.locale` (1-5) | `systemicFatigue`, `localFatigue` | systémique : table par schéma, + 1 polyarticulaire à la barre ou lesté, 5 pour squats et soulevés de terre lourds et haltérophilie complète, + 1 supramaximal et enchaînements lourds (man maker, devil press), − 1 débutant au poids du corps, machine ou poulie, assisté ; locale : 3, + 1 excentrique ou supramaximal (dommages musculaires plus marqués en excentrique : Proske & Morgan 2001), + 1 isolation d'un seul muscle, + 1 niveau Élite, − 1 conditionnement, portés, préparation scapulaire, équilibre, cou, gainage tenu, assisté (détail exact : `rules.fatigue`) | choix raisonné (échelle ordinale, pas une mesure) |
@@ -219,7 +219,7 @@ leveling depuis tout le journal ≤ 200 ms — mesurés par chaque moteur ; le c
 
 ## 7. Codes de raison
 
-Registre `reasonRegistry` (130 codes : `plan.*`, `adapt.*`, `quest.*` ; les 38 codes de 0.4.0 — 21 `plan.*`, dont
+Registre `reasonRegistry` (133 codes : `plan.*`, `adapt.*`, `quest.*` ; depuis 0.4.1, trois codes de notes de coach en fin de registre — `plan.coach_note`, `plan.progression_rule`, `plan.pain_rule`, lot CP1 ; les 38 codes de 0.4.0 — 21 `plan.*`, dont
 `plan.skill_plateau` et `plan.recent_load`, et 17 `adapt.*` — suivent les 92 premiers, dont le rang ne change pas), constantes `ReasonCodes`, table dans `docs/TYPES.md`. Textes
 courts de Koach proposés pour les 38 codes de 0.4.0 : `docs/RAISONS_0_4.md` (`data/reason_texts_fr_0_4.json`). Un `Reason` valide a un code du registre et exactement les paramètres déclarés,
 du bon type (entier, nombre, texte court, booléen, identifiant d'exercice). Un moteur qui a besoin d'un

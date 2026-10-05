@@ -16,6 +16,17 @@ Ce que le moteur garantit, comment il décide, d'où vient chaque nombre et ce q
 [`CONTRAT.md`](CONTRAT.md). **Le contenu sportif n'a pas été relu par un professionnel diplômé** (registre
 de validation, CONTRAT.md § 10).
 
+**Chemin street (0.2.0).** Pour un profil au schéma 3 rempli par le questionnaire 0.4 (expérience et
+ancienneté renseignées) dont la discipline principale est le streetlifting, le sets & reps ou la
+calisthénie, le moteur prend un second chemin (`lib/src/coach/`) : il construit le programme comme un
+entraîneur — saison calée à rebours sur l'échéance, squelette de séances par style (débutant, sets &
+reps, streetlifting, figures, avec ou sans course), dosage semaine par semaine selon la méthode de chaque
+exercice, puis garde-fous (plafond et montée du volume, tenues bras tendus, hausse des charges, durée
+des séances). Les autres profils gardent le chemin 0.1, inchangé. Détails et sources de chaque
+paramètre : [`CONTRAT.md`, § 12](CONTRAT.md#12-chemin-street-020) ; codes et textes des notes de coach :
+[`docs/NOTES_COACH.md`](docs/NOTES_COACH.md) ; journal de calibrage :
+[`docs/CALIBRAGE_CP1.md`](docs/CALIBRAGE_CP1.md).
+
 ## Utilisation
 
 ```dart

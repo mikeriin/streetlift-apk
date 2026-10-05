@@ -6,8 +6,10 @@
 library;
 
 export 'src/sim/athletes.dart';
+export 'src/sim/coach_metrics.dart';
 export 'src/sim/metrics.dart';
 export 'src/sim/policy.dart';
 export 'src/sim/rng.dart';
 export 'src/sim/runner.dart';
+export 'src/sim/techniques.dart';
 export 'src/sim/truth.dart';

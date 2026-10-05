@@ -641,8 +641,15 @@ extension SessionAdaptStore on AppStore {
       block: place.block,
       log: adaptTrainingLog(excludeKey: excludeKey),
       today: _adaptToday,
+      season: adaptSeasonOf(place),
     );
   }
+
+  /// CI1 : plan de saison du bloc servi (programme créé au chemin
+  /// calibré) ; null pour un bloc importé (programme du propriétaire) ou
+  /// un programme du chemin 0.1.
+  kc.SeasonPlan? adaptSeasonOf(AdaptPlace place) =>
+      place.imported ? null : planProgram?.season;
 
   kc.SessionPlan _adaptPrescribe(
     AdaptPlace place,
@@ -932,10 +939,77 @@ extension SessionAdaptStore on AppStore {
               : e.why,
           catalogId: it.exerciseId,
           slotId: slot,
+          tempo: ct.coachTempoText(it),
+          timer: _adaptTimerOf(it),
         ),
       );
     }
     return DayPlan.adapted(base, out);
+  }
+
+  /// CI1 : chrono de la technique servie (EMOM, bloc au temps), dans le
+  /// format des chronos de l'application ; null : chrono par série ou
+  /// aucun.
+  Map<String, dynamic>? _adaptTimerOf(kc.ExercisePrescription it) {
+    final t = it.technique;
+    if (t == null) return null;
+    switch (t.kind) {
+      case kc.SetTechniqueKind.emom:
+        final every = t.intervalSeconds ?? 60;
+        return {
+          'type': 'emom',
+          'rounds': t.intervals ?? it.sets,
+          'interval': every < 10 ? 60 : every,
+        };
+      case kc.SetTechniqueKind.density:
+      case kc.SetTechniqueKind.amrap:
+      case kc.SetTechniqueKind.forTime:
+        final d = t.durationSeconds;
+        if (d == null || d < 10) return null;
+        return {'type': 'amrap', 'sec': d};
+      default:
+        return null;
+    }
+  }
+
+  /// CI1 : prescription du bloc (programme écrit) de l'exercice servi :
+  /// notes de coach, règle de douleur, technique écrite.
+  kc.ExercisePrescription? adaptBlockItemFor(int week, int j, Exercise e) {
+    if (!e.engine || e.slotId == null) return null;
+    final place = adaptPlaceOf(week, j);
+    for (final it in place?.day?.items ?? const <kc.ExercisePrescription>[]) {
+      if (it.slotId == e.slotId) return it;
+    }
+    return null;
+  }
+
+  /// CI1 : libellé de la ligne [i] d'un exercice servi selon son rôle
+  /// (« Tête », « A1 » pour une série allégée, « Éc1 » pour une montée,
+  /// « M3 » pour la 3e minute d'un EMOM…) ; null : numérotation habituelle.
+  String? adaptRowLabel(int week, int j, Exercise e, int i) {
+    final a = sessionAdapt(week, j);
+    if (a == null || !e.engine) return null;
+    final it = _adaptItem(a, e.slotId);
+    if (it == null) return null;
+    final role = ct.prescriptionRow(it, i).role;
+    if (role == null) return null;
+    var first = i;
+    while (first > 0 && ct.prescriptionRow(it, first - 1).role == role) {
+      first--;
+    }
+    return ct.rowRoleShort(role, i, first);
+  }
+
+  /// CI1 : repos écrit après la ligne [i] d'un exercice servi (cible de la
+  /// série, puis mini-repos d'un EMOM : ce qui reste de la minute est géré
+  /// par le chrono) ; null : repos de l'exercice.
+  int? adaptRestAfter(int week, int j, Exercise e, int i) {
+    final a = sessionAdapt(week, j);
+    if (a == null || !e.engine) return null;
+    final it = _adaptItem(a, e.slotId);
+    if (it == null) return null;
+    if (it.technique?.kind == kc.SetTechniqueKind.emom) return 0;
+    return adviceGoal(it, i, a.advice[e.id] ?? const []).restSec;
   }
 
   /// Prescription d'un exercice de la séance servie.
@@ -1068,9 +1142,15 @@ extension SessionAdaptStore on AppStore {
             exerciseId: id,
             exerciseOrder: order,
             setIndex: setIndex++,
-            kind: it?.kind == kc.SetKind.test
+            kind:
+                it?.kind == kc.SetKind.test ||
+                    g?.role == kc.SetRole.test ||
+                    g?.role == kc.SetRole.attempt
                 ? kc.SetKind.test
+                : g?.role == kc.SetRole.warmup
+                ? kc.SetKind.warmup
                 : kc.SetKind.work,
+            role: g?.role,
             externalLoadKg: parseLoadKg(s.kg),
             reps: seconds ? null : v,
             seconds: seconds ? v : null,
@@ -1239,6 +1319,7 @@ extension SessionAdaptStore on AppStore {
           block: place.block,
           log: adaptTrainingLog(excludeKey: key),
           today: _adaptToday,
+          season: adaptSeasonOf(place),
         ),
       );
       final withLog = adaptTrainingLog();
@@ -1249,6 +1330,7 @@ extension SessionAdaptStore on AppStore {
           block: place.block,
           log: withLog,
           today: _adaptToday,
+          season: adaptSeasonOf(place),
         ),
       );
       kc.ExerciseEstimate? find(List<kc.ExerciseEstimate> l, String id) {

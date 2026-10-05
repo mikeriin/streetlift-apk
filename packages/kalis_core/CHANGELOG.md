@@ -1,5 +1,33 @@
 # Journal des versions de kalis_core
 
+## 0.4.2 — 04/10/2026 (lot CX du pipeline « Calibrage des programmes », évolution additive)
+
+Rien n'est retiré, renommé ni déplacé ; aucun type, aucune énumération, aucune borne, aucun code de raison ne change.
+`CatalogExercise.feasibleWith` garde exactement sa lecture de 0.4.1. Un JSON de 0.4.1 se relit et se réécrit à
+l'identique.
+
+- **`CatalogExercise.feasibleAt(available, {place, places})`** : faisabilité selon le matériel **et le lieu**. Un mur
+  (`placeBoundEquipment`) n'est sûr qu'à la maison et en salle ; au parc, il faut l'avoir déclaré (profil « parc sans
+  lest » du lot CP1 : appui renversé dos au mur proposé dans un parc sans mur). Un exercice de
+  `equipmentAlternatives` se fait aussi avec un matériel de remplacement (pompe mains surélevées : barre basse, box ou
+  barres parallèles ; appui renversé piqué et pompe piquée pieds surélevés : barre basse ou banc). Un exercice de
+  `homeFurnitureExercises` (pompe mains surélevées) se fait à la maison sur un meuble stable. Lieu inconnu : `places`
+  (lieux possibles) ; le mur est admis si l'un d'eux en a un, ou si la liste est vide.
+- Trois tables constantes publiques : `placeBoundEquipment`, `equipmentAlternatives`, `homeFurnitureExercises`.
+- `data/parcours_v3.json` : seul le numéro de version change (0.4.2).
+
+## 0.4.1 — 03/10/2026 (lot CP1 du pipeline « Calibrage des programmes », évolution additive)
+
+Rien n'est retiré, renommé ni déplacé ; aucun type, aucune énumération, aucune borne ne change. Un JSON de 0.4.0 se
+relit et se réécrit à l'identique.
+
+- **Trois codes de raison** en fin de registre (133 codes), pour les notes de coach de `kalis_plan` 0.2.0 :
+  `plan.coach_note` (`note`, `value`) — note du bloc, de la semaine ou de la séance, par un code du vocabulaire de
+  `kalis_plan` (`packages/kalis_plan/docs/NOTES_COACH.md`) ; `plan.progression_rule` (`rule`, `step`, `unit`) — règle de
+  progression d'un exercice ; `plan.pain_rule` (`zone`, `continueBelow`, `regressAt`, `stopAt`) — conduite à tenir
+  selon la gêne. Texte court de Koach proposé pour chacun (`data/reason_texts_fr_0_4.json`, `docs/RAISONS_0_4.md`).
+- `data/parcours_v3.json` : seul le numéro de version change (0.4.1).
+
 ## 0.4.0 — 03/10/2026 (lot CQ du pipeline « Calibrage des programmes », évolution additive)
 
 Par rapport à 0.3.0, rien n'est retiré, renommé ni déplacé ; aucune borne ne change ; aucune valeur n'est ajoutée à
