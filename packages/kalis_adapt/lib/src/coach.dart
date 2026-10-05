@@ -1834,8 +1834,7 @@ List<SetPlan>? _directPlans(
           'sets': sets,
         }),
       );
-    } else if (track.lastDay != null &&
-        (track.noUp || missedTwice)) {
+    } else if (track.lastDay != null && (track.noUp || missedTwice)) {
       ex.notes.add(
         _r(ReasonCodes.adaptFlamesAboveTarget, <String, Object?>{
           'delta': roundTo(low - track.lastTop.toDouble(), 1),

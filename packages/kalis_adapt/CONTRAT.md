@@ -1161,9 +1161,9 @@ inchangé (séances identiques à l'octet près ; seul le texte de version chang
   hausse d'une séance à la suivante reste comptée depuis la dernière séance de l'emplacement). 28 jours : choix raisonné (perte de force mesurable à l'arrêt de l'entraînement, plus
   marquée avec la durée : Bosquet et al. 2013, résumé ; le seuil en semaines n'y est pas chiffré).
 - **Cran d'assistance** (élastique) : un cran de moins seulement après deux séances de suite au même cran
-  au haut de la plage (ou première série dite deux répétitions plus facile), et quatorze jours au moins
-  après le dernier changement de cran (`coachAssistMinDays`, `ExerciseTrack.assistDay` ; panel : « un cran
-  toutes les deux semaines au plus ») ; un cran de plus seulement
+  au haut de la plage (ou première série dite deux répétitions plus facile), et sept jours au moins
+  après le dernier changement de cran (`coachAssistMinDays`, `ExerciseTrack.assistDay` ; le panel demande
+  à la fois de ne pas changer trop souvent et de ne pas attendre trop longtemps) ; un cran de plus seulement
   après un échec ou le bas de la cible servie manqué deux séances de suite au même cran
   (`SlotMark.missed` ; une cible abaissée par un verrou — douleur, bilan bas — puis tenue n'est pas un
   manque). L'élastique ne change plus dans un sens puis dans
@@ -1186,7 +1186,7 @@ inchangé (séances identiques à l'octet près ; seul le texte de version chang
 | `coachReturnWatchDays` | 84 jours | `painRecurDays` (choix raisonné) |
 | `coachHoldBestDays` | 28 jours | choix raisonné (Bosquet et al. 2013) |
 | `coachTaperGain` | 2 % | Travis et al. 2020 (bas de la fourchette) ; appliqué avant la première tentative |
-| `coachAssistMinDays` | 14 jours | panel ; ACSM 2009 (« 2 pour 2 ») ; choix raisonné |
+| `coachAssistMinDays` | 7 jours | panel ; ACSM 2009 (« 2 pour 2 ») ; choix raisonné |
 
 **Simulateur** (modèles de vérité B et C) : après un épisode de douleur réel (3/10 et plus), la zone reste
 réactive douze semaines ; sa tolérance part de la plus grande de la moitié de la charge habituelle (séries de
