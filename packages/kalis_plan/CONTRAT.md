@@ -1632,13 +1632,14 @@ gardée sur prise neutre porte la note d'arrêt, jamais la note `pain_trend` (de
 bloc suivant rend ces mouvements à 50 % des séries, +10 % par semaine de charge, 3 en réserve au moins,
 les mouvements lestés vers 67,5 % du 1RM (`pain_return`, `pain_return_item`).
 
-**Repères.** Un test plus bas que le repère fait foi, même seul et quelle que soit la baisse : le bloc
-suivant est écrit sur le résultat (« série de tête = résultat − 2 ») ; seule une estimation sûre et récente
-du moteur d'évolution le relève, jamais au-dessus du repère d'avant (un muscle-up testé plus bas fait foi
-tel quel). Une estimation ne défait pas un test des quatre semaines d'avant ; elle ne baisse jamais un 1RM
+**Repères.** Un test plus bas que le repère de 15 % au plus fait foi seul : le bloc suivant est écrit sur
+le résultat (« série de tête = résultat − 2 »). Plus bas, il fait foi quand le test mesuré le plus récent
+des dix semaines d'avant est lui aussi sous 85 % du repère ; seul, il ne fait baisser le repère qu'à 85 %
+(`coachTestDropShare`), ou jusqu'à l'estimation sûre et récente du moteur d'évolution (jamais au-dessus du
+repère d'avant). Un muscle-up testé plus bas fait foi tel quel. Une estimation ne défait pas un test des quatre semaines d'avant ; elle ne baisse jamais un 1RM
 déclaré ou testé. Un 1RM tiré d'une série de deux répétitions ou plus ne fait pas tomber seul un 1RM connu
-de plus de 15 % (`coachEstimateDropShare`). Seul un 1RM estimé est relevé d'après le maximum au poids du
-corps ; un 1RM déclaré, testé ou de compétition fait foi. Une barre de compétition plus basse que le 1RM
+de plus de 15 % (`coachEstimateDropShare`). Un 1RM déclaré ou estimé est relevé d'après le maximum au
+poids du corps (un record peut dater) ; un 1RM testé ou de compétition fait foi. Une barre de compétition plus basse que le 1RM
 connu ne l'abaisse pas. Après un test mesuré depuis la reprise, pas de gain supposé. Les tests sont
 placés à partir du troisième jour de la semaine (deuxième sinon), jamais pendant une reprise ; un test de
 figure porte sur l'étape visée elle-même.
@@ -1677,7 +1678,7 @@ pourcentage affiché sur la charge arrondie ; affûtage : doubles à 86 % (hors 
 partielle surchargée qui revient après quatre semaines d'absence : repart de son entrée.
 
 **Figures.** Partie intense des tenues à 60, 65 puis 70 % du maximum (+2 % par palier, 75 % au plus, 70 %
-les jours légers) ; tenues longues sur l'étape plus facile gardées quand l'objectif est une durée sur
+les jours légers), arrondie au plus proche à 8 points de la part visée et 76 % du maximum au plus ; tenues longues sur l'étape plus facile gardées quand l'objectif est une durée sur
 l'étape actuelle.
 
 **Restructuration.** Les semaines déjà écrites et gardées du bloc nourrissent les garde-fous de volume et
@@ -1699,7 +1700,7 @@ menton au-dessus de la barre non borné à 30 s (une fois et demie le dernier ma
 | --- | --- | --- |
 | Arrêt sur douleur qui dure | 3/10 deux semaines, 5/10 plus d'une semaine, ou retour dans les 12 semaines | Coombes et al. 2015 ; Silbernagel et al. 2007 ; NHS |
 | Reprise après l'arrêt | après 2 semaines à 2/10 au plus ; 50 %, +10 %/semaine ; lesté vers 67,5 % | Coombes 2015 ; Gabbett 2016 ; relecture documentée CX |
-| Baisse d'un repère | le test fait foi (relevé seulement par l'estimation sûre) | R1-P12, R1-P14 ; panel CX c1 passe 5 |
+| Baisse d'un repère | ≤ 15 % : le test fait foi ; au-delà, confirmé, sinon 85 % du repère | R1-P12, R1-P14 ; Bosquet et al. 2007 ; panel CX c1 passes 5 et 7 |
 | Baisse d'un 1RM par une série de ≥ 2 rép. | 15 % au plus | R2-P4 (erreur des formules) ; choix raisonné |
 | Répétitions + réserve | ≤ repère | R1-P14 |
 | Hausse des répétitions au poids du corps | +15 %/semaine (max. des 3 semaines d'avant) | R5-P22 ; Gabbett 2016 |
@@ -1713,7 +1714,7 @@ menton au-dessus de la barre non borné à 30 s (une fois et demie le dernier ma
 
 Invariants ajoutés aux tests (`test/coach_test.dart`, groupe « CX correction 1 » ;
 `test/coach_properties.dart`) : arrêt et reprise graduée (poignet, coude) ; test plus bas qui fait foi
-(baisse modérée ou forte) ; 1RM non abaissé de plus de 15 % par une série de plusieurs répétitions ;
+(baisse modérée ; forte, bornée à 15 % sans confirmation) ; 1RM non abaissé de plus de 15 % par une série de plusieurs répétitions ;
 répétitions + réserve ≤ repère ; tests après le premier jour de la semaine ; hausse de répétitions ≤ 15 % ;
 poignet sous contrainte forte à la barre fixe écarté ; affûtage ≥ 85 % ; essais stricts seulement sans
 traction ; tenue du débutant +15 % au plus et 55 % du test au moins ; une restructuration de portée bloc n'ajoute aucune hausse de

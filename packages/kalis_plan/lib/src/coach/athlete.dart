@@ -206,6 +206,11 @@ Set<BodyZone> coachPainStops(Iterable<Reason> reasons) {
 /// plusieurs répétitions ne l'abaisse pas seule (CX, correction 1).
 const double coachEstimateDropShare = 0.85;
 
+/// Part du repère au-dessus de laquelle un test plus bas fait foi seul ;
+/// en dessous, un test seul ne fait baisser le repère que jusqu'à cette
+/// part (CX, correction 1, passe 7 du panel).
+const double coachTestDropShare = 0.85;
+
 /// Préparation des poignets en appui (écartée quand le poignet est
 /// douloureux).
 const String coachWristLoadedPrep = 'mo-wrist-push-ups';
@@ -581,14 +586,48 @@ final class Athlete {
             MovementPattern.transitionMuscleUp) {
           return measured;
         }
-        // Une baisse fait foi, même seule et même forte : le bloc suivant
-        // est écrit sur le résultat (« série de tête = résultat − 2,
-        // jamais sur un progrès supposé ») ; seule une estimation sûre et
-        // récente, faite sur assez de séries, la relève (R3-P16 ; panel CX,
-        // correction 1, passe 5 : le bloc 2 écrit sur le repère d'avant
-        // donnait des séries de tête à maximum − 1 ou des réserves
-        // impossibles dans six profils).
-        return kept(measured);
+        // Baisse modérée (15 % au plus) : le test fait foi tel quel, même
+        // seul (« série de tête = résultat − 2, jamais sur un progrès
+        // supposé » ; panel CX, correction 1, passes 5 et 7).
+        if (measured >= coachTestDropShare * before) {
+          return measured;
+        }
+        // Forte baisse : confirmée par le test mesuré le plus récent des
+        // dix semaines d'avant, lui aussi nettement sous le repère, elle
+        // fait foi ; seule, elle ne fait baisser le repère que de 15 % (ou
+        // jusqu'à l'estimation sûre), le temps d'un deuxième test (Bosquet
+        // et al. 2007 : la forme se lit après des jours légers ; passe 7,
+        // `street_05` : un test de 9 s un jour de bilan bas, pour un
+        // maximum de 12 s, mettait tout le bloc 2 à 50 % du vrai maximum).
+        Benchmark? prior;
+        for (final o in profile.benchmarks ?? const <Benchmark>[]) {
+          final when = o.date;
+          if (identical(o, b) ||
+              when == null ||
+              o.exerciseId != b.exerciseId ||
+              o.kind != b.kind ||
+              (o.externalLoadKg ?? 0) != 0 ||
+              (o.source != BenchmarkSource.guidedTest &&
+                  o.source != BenchmarkSource.competition) ||
+              when.compareTo(day) >= 0 ||
+              when.compareTo(day.addDays(-70)) < 0) {
+            continue;
+          }
+          final priorDate = prior?.date;
+          if (priorDate == null || when.compareTo(priorDate) > 0) {
+            prior = o;
+          }
+        }
+        final priorValue = prior == null
+            ? null
+            : (unit == CapacityUnit.maxHoldSeconds
+                  ? prior.seconds
+                  : prior.reps);
+        if (priorValue != null && priorValue < coachTestDropShare * before) {
+          return measured;
+        }
+        final bounded = (coachTestDropShare * before + 1e-9).floor();
+        return kept(measured > bounded ? measured : bounded);
       }
 
       switch (b.kind) {

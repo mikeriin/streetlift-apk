@@ -1138,7 +1138,7 @@ void main() {
       expect(serves(blocks[1]), isTrue);
     });
 
-    test('forte baisse : le test seul fait foi', () {
+    test('forte baisse : 15 % seule, le test confirmé fait foi', () {
       Benchmark tested(int reps, int daysAgo) => Benchmark(
         exerciseId: 'sw-traction-pronation',
         kind: BenchmarkKind.maxReps,
@@ -1170,10 +1170,20 @@ void main() {
       final low = base.copyWith(
         benchmarks: <Benchmark>[...base.benchmarks!, tested(9, 3)],
       );
-      // Série de travail au plus résultat − 2 (« jamais sur un progrès
-      // supposé »).
+      final confirmed = base.copyWith(
+        benchmarks: <Benchmark>[
+          ...base.benchmarks!,
+          tested(9, 30),
+          tested(9, 3),
+        ],
+      );
+      // Seul, un test très bas ne fait baisser le repère que de 15 % (12 →
+      // 10) ; confirmé, il fait foi (série de travail au plus résultat −
+      // 2).
       expect(pullReps(low), lessThan(pullReps(high)));
-      expect(pullReps(low), lessThanOrEqualTo(7));
+      expect(pullReps(low), lessThanOrEqualTo(8));
+      expect(pullReps(confirmed), lessThan(pullReps(low)));
+      expect(pullReps(confirmed), lessThanOrEqualTo(7));
     });
 
     test('poignet : une figure forte à la barre fixe reste écartée', () {

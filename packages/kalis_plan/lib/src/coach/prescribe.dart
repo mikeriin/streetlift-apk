@@ -1127,19 +1127,17 @@ final class Prescriber {
     final bwId = _bodyweightOf[e.id];
     final bwMax = bwId == null ? 0 : (a.reps[bwId] ?? 0);
     final weight = (e.bodyweightFraction?.value ?? 0) * a.bodyWeight;
-    // (Seulement sur un 1RM estimé : un 1RM déclaré, testé ou de
-    // compétition fait foi — CX, correction 1, panel et relecture
-    // documentée, `street_12` : blocs écrits sur 131 kg quand le test
-    // plaçait le 1RM vers 117 kg ; passe 5, `street_11` : 1RM de référence
-    // de 98,5 kg pour un 1RM déclaré de 91 kg, séries du vendredi coupées
-    // dans la trajectoire. Les répétitions écrites suivent le 1RM déclaré.)
+    // (Jamais sur un 1RM mesuré par un test ou une compétition : le
+    // résultat fait foi — CX, correction 1, `street_12`. Un record déclaré
+    // ou une estimation peuvent dater : le maximum au poids du corps les
+    // relève — passe 7 du panel, `street_11` : un 1RM déclaré de 88,5 kg
+    // pour 10 tractions mettait la séance lourde au poids du corps, à 7
+    // répétitions de réserve.)
     final source = a.totalOneRm(e.id) != null ? e.id : referenceId;
     if (total != null &&
         bwMax >= 3 &&
         weight > 0 &&
-        source != null &&
-        a.estimatedOneRm.contains(source) &&
-        !a.measuredOneRm.contains(source)) {
+        (source == null || !a.measuredOneRm.contains(source))) {
       final fromReps = bwMax <= 12
           ? weight / _pctAt(bwMax)
           : weight * (1 + (bwMax > 20 ? 20 : bwMax) / 30);
@@ -2384,16 +2382,20 @@ final class Prescriber {
       // maximum − 2 » — panel CX, correction 1, passe 5 : 3 × 7 à 3 en
       // réserve sur un maximum de 9.)
       final top = max - rir.round();
+      var shown = share;
       if (top >= 1 && reps > top) {
         x
           ..repsLow = top
           ..repsHigh = top
           ..intensity = _shareOf(e.id, top, max);
+        // (La part dite dans la note est celle des répétitions écrites —
+        // passe 7 du panel, `street_15` : note à 75 % pour 3 × 5 à 63 %.)
+        shown = top / max;
       }
       x
         ..rest = _level >= 2 ? 75 : 90
         ..rir = rir
-        ..reasons.add(_note(CoachNotes.eventZone, _round(share * 100)));
+        ..reasons.add(_note(CoachNotes.eventZone, _round(shown * 100)));
     }
     if (ws.kind == WeekKind.build) {
       x.reasons.add(_rule(CoachRules.repStep, 1, 'reps'));
@@ -2916,8 +2918,14 @@ final class Prescriber {
     // 5 points : sur un maximum court, l'arrondi vers le bas faisait d'une
     // tenue « à 60 % » une tenue à 50 % — panel CX correction 1, front
     // lever de `street_10` à 4 s pour un repère de 8 s.)
+    // (Arrondi au plus proche tant que la tenue reste à 8 points de la
+    // part visée et à 76 % du maximum au plus : sur un maximum de 6 s,
+    // l'arrondi par défaut faisait d'une tenue « à 60 % » une tenue à
+    // 50 % — passe 7 du panel, `street_10`.)
     var hold = known > 0 ? (known * part + 1e-9).round() : fallback;
-    if (known > 0 && hold > known * (part + 0.04) + 1e-9) {
+    if (known > 0 &&
+        (hold > known * (part + 0.08) + 1e-9 ||
+            hold > known * 0.76 + 1e-9)) {
       hold = (known * part + 1e-9).floor();
     }
     if (known <= 0 && ws.kind == WeekKind.build && stage >= 2) {

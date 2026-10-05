@@ -24,6 +24,7 @@ export 'src/coach/athlete.dart'
         coachPainProvokes,
         coachPainStopHits,
         coachPronationPull,
+        coachTestDropShare,
         coachWristLoadedPrep;
 export 'src/coach/audit.dart';
 export 'src/coach/coach.dart'

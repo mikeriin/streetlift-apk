@@ -17,15 +17,17 @@ part). Détail et sources : `CONTRAT.md`, § 12.14 ; journal : `packages/kalis_b
 - **Tests** : placés à partir du troisième jour de la semaine (deuxième si la semaine n'a pas deux séances
   assez tardives), jamais pendant une reprise ; les jours qui précèdent un test sont des jours faciles ; un
   test de figure porte sur l'étape visée elle-même (jamais un remplaçant). Un test plus bas que le repère
-  fait foi, même seul et quelle que soit la baisse (le bloc suivant est écrit sur le résultat) ; seule une
-  estimation sûre et récente le relève, jamais au-dessus du repère d'avant. Une estimation ne défait pas un
-  test de moins de quatre semaines et n'abaisse jamais un 1RM déclaré ou testé ; une série de deux
-  répétitions ou plus n'abaisse pas seule un 1RM connu de plus de 15 % ; seul un 1RM estimé est relevé
-  d'après le maximum au poids du corps (un 1RM déclaré, testé ou de compétition fait foi) ; une barre de
+  de 15 % au plus fait foi seul (le bloc suivant est écrit sur le résultat) ; plus bas, il fait foi confirmé
+  par le test d'avant, et seul il ne fait baisser le repère que de 15 % (ou jusqu'à l'estimation sûre).
+  Une estimation ne défait pas un test de moins de quatre semaines et n'abaisse jamais un 1RM déclaré ou
+  testé ; une série de deux répétitions ou plus n'abaisse pas seule un 1RM connu de plus de 15 % ; un 1RM
+  déclaré ou estimé est relevé d'après le maximum au poids du corps (un 1RM testé ou de compétition fait
+  foi) ; une barre de
   compétition plus basse que le 1RM connu ne l'abaisse pas. Après un test mesuré depuis la reprise, pas de
   gain supposé.
 - **Répétitions et réserve** : au poids du corps sur un maximum de répétitions, répétitions + réserve écrite
-  jamais au-dessus du repère (zone de l'épreuve comprise ; une pratique d'une répétition garde sa réserve).
+  jamais au-dessus du repère (zone de l'épreuve comprise ; une pratique d'une répétition garde sa réserve). La
+  note de la zone de l'épreuve dit la part des répétitions écrites.
 - **Recul d'étape pour douleur** : quand la douleur écarte l'étape de travail d'une figure, l'étape plus
   facile porte la raison et le critère de retour (note `pain_step`).
 - **Plateau** : un test qui ne dépasse pas le repère d'avant change la méthode du bloc suivant (variantes
@@ -57,7 +59,7 @@ part). Détail et sources : `CONTRAT.md`, § 12.14 ; journal : `packages/kalis_b
   affiché calculé sur la charge arrondie ; 1RM de référence écrit dans l'export ; repos de 2 min en phase
   spécifique quand l'objectif est en répétitions.
 - **Figures** : tenues lourdes à 60, 65 puis 70 % du maximum (+2 % par palier, 75 % au plus, 70 % les jours
-  légers), arrondies sous la part visée ; plus de tenues de remplissage quand l'étape plus facile dépasse
+  légers), arrondies au plus proche tant qu'elles restent à 8 points de la part visée et à 76 % au plus ; plus de tenues de remplissage quand l'étape plus facile dépasse
   25 s, sauf si l'objectif est une durée sur l'étape actuelle ; jusqu'à 10 séries quand le maximum est de
   5 s au plus.
 - **Textes** : version courte de la séance (4 ou 5 min d'échauffement, un ou deux exercices, 2 séries),
