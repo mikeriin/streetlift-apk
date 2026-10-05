@@ -376,6 +376,17 @@ SessionPlan buildSessionPlan(
           painZone ??= entry.key;
         }
       }
+      // (Ni tant que la zone a été signalée au-dessus de 2 sur 10 dans la
+      // semaine : relecture documentée du pilotage, manche 4.)
+      for (final s in state.pains.values) {
+        if (painZone == null &&
+            info.zoneLevel(s.zone) >= 0.5 &&
+            s
+                .reportsBetween(day - 6, day)
+                .any((r) => r > p.coachReturnPain)) {
+          painZone = s.zone;
+        }
+      }
       if (painZone != null) {
         d.removed = true;
         adjustments.add(
@@ -468,49 +479,21 @@ SessionPlan buildSessionPlan(
       // séance même quand la douleur du jour a déjà remplacé les
       // mouvements : panel CX correction 1, gêne à 4/10 six semaines sans
       // la règle « douleur qui dure ».)
-      if (!sessionReasons.contains(why.first)) {
+      // Un renvoi vers un professionnel à la première séance de l'arrêt,
+      // puis un rappel par semaine (relecture documentée du pilotage,
+      // manche 4 : une trentaine de rappels identiques noyaient le suivi).
+      if (_stopNoticeDue(state.pains[stop.zone], day) &&
+          !sessionReasons.contains(why.first)) {
         sessionReasons.add(why.first);
       }
       for (final d in drafts) {
         final info = d.info;
+        // (Échauffement compris : un appui sur les poignets à l'échauffement
+        // provoque la zone comme une série de travail — relecture
+        // documentée du pilotage, manche 4.)
         if (d.removed ||
             info == null ||
-            d.item.kind == SetKind.warmup ||
             !coachPainStopHits(info.exercise, stop.zone)) {
-          continue;
-        }
-        // Poignet : un appui à prise neutre, qui ne provoque aucune zone à
-        // l'arrêt, garde le mouvement ; sinon il est retiré (CA2, partie 0).
-        final substitute =
-            stop.zone != BodyZone.wristHand ||
-                info.mode == null ||
-                d.item.kind == SetKind.test
-            ? null
-            : findSubstitute(
-                ctx,
-                info,
-                equipment: equipment,
-                place: place,
-                pains: painsToday,
-                taken: taken,
-                neutralWrist: true,
-                avoid: (e) =>
-                    allStops.any((x) => coachPainStopHits(e, x.zone)) ||
-                    comeback.heldFor(e),
-              );
-        if (substitute != null) {
-          taken.add(substitute.id);
-          adjustments.add(
-            SessionAdjustment(
-              kind: AdjustmentKind.exerciseSwapped,
-              exerciseId: d.item.exerciseId,
-              replacementExerciseId: substitute.id,
-              reasons: why,
-            ),
-          );
-          d.reasons.addAll(why);
-          d.info = substitute;
-          d.item = _retarget(d.item, substitute);
           continue;
         }
         d.removed = true;
@@ -682,11 +665,17 @@ SessionPlan buildSessionPlan(
     for (final entry in stopZones.entries) {
       final zone = entry.key;
       final track = state.pains[zone];
+      // (Poignet : l'arrêt couvre d'emblée toute charge d'appui, prise
+      // neutre comprise — relecture documentée du pilotage, manche 4,
+      // `street_10`.)
       final escalated =
-          entry.value > 0 &&
-          track != null &&
-          track.stopAt(day - p.coachStopEscalateDays) != null &&
-          track.reportsBetween(day - 6, day).any((r) => r >= painPersistMin);
+          zone == BodyZone.wristHand ||
+          (entry.value > 0 &&
+              track != null &&
+              track.stopAt(day - p.coachStopEscalateDays) != null &&
+              track
+                  .reportsBetween(day - 6, day)
+                  .any((r) => r >= painPersistMin));
       final why = <Reason>[
         reason(ReasonCodes.adaptPainPersistent, <String, Object?>{
           'zone': zone.code,
@@ -697,7 +686,7 @@ SessionPlan buildSessionPlan(
         final info = d.info;
         if (d.removed ||
             info == null ||
-            d.item.kind == SetKind.warmup ||
+            (d.item.kind == SetKind.warmup && !escalated) ||
             info.zoneLevel(zone) < 0.5) {
           continue;
         }
@@ -2147,4 +2136,32 @@ Set<BodyZone> recentPainZones(ModelState state, int day, AdaptParams p) {
     }
   }
   return out;
+}
+
+/// Vrai si la séance du jour [day] porte le rappel de l'arrêt de la zone
+/// suivie par [s] : première séance de l'arrêt, puis première séance de
+/// chaque semaine d'arrêt.
+bool _stopNoticeDue(PainState? s, int day) {
+  if (s == null) {
+    return true;
+  }
+  // Début de l'arrêt : premier jour, en remontant les signalements, où
+  // l'arrêt est déjà en cours.
+  var start = day;
+  int? previous;
+  for (var i = s.history.length - 1; i >= 0; i--) {
+    final d = s.history[i].$1;
+    if (d >= day) {
+      continue;
+    }
+    previous ??= d;
+    if (s.stopAt(d) == null) {
+      break;
+    }
+    start = d;
+  }
+  if (previous == null || previous < start) {
+    return true;
+  }
+  return (day - start) ~/ 7 > (previous - start) ~/ 7;
 }

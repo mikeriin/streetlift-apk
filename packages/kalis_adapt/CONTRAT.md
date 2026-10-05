@@ -1209,6 +1209,15 @@ inchangé (séances identiques à l'octet près ; seul le texte de version chang
     douleur est encore à 3/10 ou plus dans la semaine après deux semaines d'arrêt
     (`coachStopEscalateDays`), ils sont retirés aussi (Silbernagel et al. 2007 : douleur jamais en hausse
     d'une semaine à l'autre ; la charge qui reste entretient la douleur) ;
+  - poignet à l'arrêt : l'arrêt couvre d'emblée toute charge d'appui du poignet (contrainte moyenne ou
+    forte, prise neutre comprise, échauffement compris) ; la variante à prise neutre reste celle des jours
+    de douleur sous 5/10 hors arrêt (relecture documentée du pilotage, `street_10`) ; à l'arrêt, un
+    mouvement d'échauffement qui provoque la zone est retiré comme une série de travail (`street_01` :
+    pompes sur les poignets à l'échauffement) ;
+  - aucun test tant que la zone a été signalée au-dessus de 2/10 dans la semaine (`coachReturnPain`) ;
+  - le renvoi vers un professionnel (`adapt.pain_persistent` sur la séance) figure à la première séance de
+    l'arrêt, puis à la première séance de chaque semaine d'arrêt (suivi hebdomadaire) au lieu de chaque
+    séance ; les mouvements retirés gardent leur raison ;
   - un remplaçant choisi pour une douleur du jour est servi loin de l'échec (3 en réserve), sans hausse, à
     70 % du 1RM au plus (`coachPainSubPct`, choix raisonné) ;
   - sur une zone à l'arrêt ou sortie d'un arrêt depuis douze semaines au plus, la quantité par série
