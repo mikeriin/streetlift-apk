@@ -1,0 +1,32 @@
+diff --git a/test/ci1_street_test.dart b/test/ci1_street_test.dart
+index 91349a8..1c8d354 100644
+--- a/test/ci1_street_test.dart
++++ b/test/ci1_street_test.dart
+@@ -411,8 +411,10 @@ void main() {
+           }
+         }
+         // ignore: avoid_print
+-        print('CI1 $key : ${block.pass2.weeks.length} semaines, '
+-            'phases ${app.planProgram!.season?.phases.map((p) => '${p.kind.code}/${p.weeks}').join(' ')} ; $kinds');
++        print(
++          'CI1 $key : ${block.pass2.weeks.length} semaines, '
++          'phases ${app.planProgram!.season?.phases.map((p) => '${p.kind.code}/${p.weeks}').join(' ')} ; $kinds',
++        );
+         final hit = _find(app, (it) => it.technique != null, weeks: 2);
+         if (hit != null) {
+           clock = _dateOf(app, hit.week, hit.j);
+@@ -423,9 +425,11 @@ void main() {
+             for (final e in day.exercises.where((x) => x.engine)) {
+               final it = app.adaptItemFor(hit.week, hit.j, e)!;
+               // ignore: avoid_print
+-              print('  S${hit.week}J${hit.j} ${e.name} : ${it.technique?.kind.code ?? '-'} '
+-                  '${app.setsLabel(e)} lignes ${[for (var i = 0; i < it.sets; i++) app.adaptRowLabel(hit.week, hit.j, e, i) ?? '${i + 1}'].join(',')} '
+-                  'chrono ${e.timer?['type']} mesure ${app.logSpec(e).kind}');
++              print(
++                '  S${hit.week}J${hit.j} ${e.name} : ${it.technique?.kind.code ?? '-'} '
++                '${app.setsLabel(e)} lignes ${[for (var i = 0; i < it.sets; i++) app.adaptRowLabel(hit.week, hit.j, e, i) ?? '${i + 1}'].join(',')} '
++                'chrono ${e.timer?['type']} mesure ${app.logSpec(e).kind}',
++              );
+             }
+           }
+         }
