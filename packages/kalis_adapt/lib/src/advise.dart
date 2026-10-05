@@ -126,6 +126,9 @@ IntraSessionAdvice buildAdvice(
       ? PainReturn.of(view, state, day, session.weekIndex, p)
       : PainReturn.none;
   final wristGuard = view.coached && wristSensitive(view, state, comeback, day);
+  final recentZones = view.coached
+      ? recentPainZones(state, day, p)
+      : const <BodyZone>{};
   final run = SessionRun(
     ctx,
     state,
@@ -182,6 +185,12 @@ IntraSessionAdvice buildAdvice(
       }
       if (wristGuard && coachPainStopHits(info.exercise, BodyZone.wristHand)) {
         exercise.doseCapped = true;
+      }
+      for (final zone in recentZones) {
+        if (info.zoneLevel(zone) >= 0.5) {
+          exercise.recentZone = true;
+          break;
+        }
       }
       if (item != null && _inReturn(item)) {
         // Reprise graduée (dite par la séance) : mêmes verrous qu'à la

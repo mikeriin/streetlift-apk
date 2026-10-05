@@ -43,3 +43,9 @@ Base : `moteurs` 9526ac47 (kalis_plan 0.2.2, kalis_adapt 0.2.2, kalis_bench 0.2.
 ## Avancement 05/10 ~22:50 UTC
 - Contrôle dev boucle 3 (run 37380907642) : tests verts (243), analyse OK, formatage model.dart corrigé (copie aa_fmt). Banc : échéance 94,4 → 95,0 % du max réel, tentatives 96,6 → 95,3 %, échecs non voulus 0,21 → 0,23 %, écart d'effort 1,085 → 1,069, violations 0,0153 → 0,0135, hausses douloureuses 0. Gain mesuré → boucle gardée.
 - Exports p3 (ci8) : changement > 10 % pour 07, 12, 13 (05 à 9,7 %) → renote p3 de 05, 07, 12, 13.
+
+## Avancement 05/10 ~23:08 UTC
+- Panel p3 (05, 07, 12, 13 sur la boucle 3) : 19 couples sur 68 à 9, min 6, moyenne 7,85 (final_p3.json) ; street_12 à 9 partout. Corrections nécessaires restantes : programme écrit (CP2).
+- Notes de relecture du pilotage sur la manche 4 (auteur relecture-documentee-pilotage, 18:55 UTC, arrivées pendant le lot) lues en entier : constats de sécurité côté conduite (street_12 : dips au poids du corps à 5/10, remplaçant lourd, 2×5 → 2×19 à l'affûtage ; street_10 : appuis gardés pendant des semaines à 3/10+).
+- Boucle 4 (sécurité) poussée en dev (2713bccf) : coachPainStop 6→5 (Silbernagel 2007 : douleur pendant l'effort sous 5, vérifié sur source secondaire), coachPainRegress 5→4, remplaçants au même seuil ; arrêt : mouvements à contrainte moyenne au premier palier (50 %, 3 RIR, 67,5 %), retirés après 14 jours d'arrêt si encore ≥3/10 ; remplaçant d'une douleur du jour à 70 % ; zone récente : +10 %/séance au plus (Soligard 2016). Tests ajoutés (_painDayChecked, _recentRiseChecked). Docs CONTRAT § 11.16, CHANGELOG, docs/CALIBRAGE_CA2.md (à compléter boucle 4).
+- Contrôles full 44ed6d11 et d3c2d77c annulés par la boucle 4.
