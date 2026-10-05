@@ -376,3 +376,40 @@ Passe « CX correction 1 » (LANCEMENTS.md) : relecture du pilotage de CX (notes
 
 Ancres `p08_a` et `p14_c`, un appel Opus par école : variante (a) 1 / 1 / 1 / 1, variante (c) 8 / 8 / 8 / 8 →
 pas de dérive ((a) ≤ 2, (c) ≥ 8).
+
+### Boucles
+
+| Boucle | Contrôle | Panel | Couples à 9 | Min. | Moy. |
+| --- | --- | --- | --- | --- | --- |
+| passe 0 (0.2.1) | — | complet | 24 / 68 | 4 | 7,99 |
+| 1 | d2 | p1, complet | 14 / 68 | 5,5 | 7,77 |
+| 2 | d4 | p2, complet | 15 / 68 | 6,5 | 7,98 |
+| 3 et 3 bis | d7 | p3, complet | 23 / 68 | 6 | 8,06 |
+| 4 | d8 | p4, 45 couples sous 9 | 35 / 68 (combiné) | 6 | 8,21 |
+| 5 | d9 | p5, 33 couples sous 9 | 39 / 68 (combiné) | 5,5 | 8,34 |
+
+Boucle 1 : garde de douleur et report des tests, coude (pronation retirée), baisse de repère bornée à 15 %,
+tests de figures sur l'étape visée, tenues arrondies, charges après transition, départs au chrono (+1 par
+semaine, 2 sur deux semaines), ouverture ≥ 98 % du dernier lourd, estimation +3 %, séries allégées +3 % par
+palier, repos 2 min en phase spécifique, version courte, poignet en prise neutre.
+Boucle 2 : traction au tempo complète (45 % du maximum), arrêt pour douleur visible en séance, tenues
+60/65/70 % (75 % au plus), règle des départs réécrite, 1RM déclaré ou testé jamais abaissé par l'estimation.
+Boucle 3 et 3 bis : la restructuration lit les semaines gardées ; relecture indépendante du code.
+Boucle 4 : note d'arrêt à la place de `pain_trend` quand la zone est à l'arrêt ; affûtage en doubles à 86 % ;
+partielle repartie de son entrée ; zone de l'épreuve ; repos-pause avancé et élite ; marge de force +1
+seulement en introduction et allègement ; tenues du débutant +15 % par semaine ; essais stricts seulement
+sans traction acquise.
+Boucle 5 : zone de l'épreuve sur le mouvement exact (objectif ≥ 12) ; densité sous 10 de maximum par les
+départs seuls, 5 en réserve vraies, volume sous 7 ; affûtage qui garde l'intensité au poids du corps ;
+préparation des poignets du débutant ; test de la tenue menton non borné à 30 s.
+Boucle 6 (sur les notes de p5) : un test plus bas fait foi seul, quelle que soit la baisse (la règle « deux
+mesures concordantes » de la boucle 5 laissait le bloc 2 écrit sur le repère d'avant : séries de tête à
+maximum − 1 dans six profils) ; répétitions + réserve ≤ repère au poids du corps ; tenue du débutant jamais
+sous 55 % du maintien testé ; recul d'étape pour douleur écrit (`pain_step`) ; un 1RM n'est plus abaissé de
+plus de 15 % par une série de plusieurs répétitions (`street_12`) et seul un 1RM estimé est relevé par le
+maximum au poids du corps (`street_11`).
+
+Reportés à CP2 / CA2 (notés par le panel, hors du périmètre street de cette correction) : créneau horaire,
+volume de poussée, jambes, profils hors street, échelle de poussée du débutant, volume de tirage du
+débutant, troisième exposition de traction (`street_17`), progression des tenues de figure jusqu'au
+critère de passage (`street_05`), tenues longues sur demi-palier pour le front lever de l'élite.

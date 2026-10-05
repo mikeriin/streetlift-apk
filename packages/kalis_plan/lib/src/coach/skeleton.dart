@@ -128,6 +128,29 @@ SkillTrack plannedTrack(Athlete a, SkillTrack t) {
   );
 }
 
+/// Vrai si une douleur relevée (zone à l'arrêt, ou gêne de 3/10 au moins)
+/// porte sur une articulation que l'exercice [id] sollicite.
+bool _painOn(Athlete a, String id) {
+  final e = a.catalog.find(id);
+  if (e == null) {
+    return false;
+  }
+  for (final zone in a.stopZones) {
+    if (coachPainStopHits(e, zone)) {
+      return true;
+    }
+  }
+  for (final l in a.limits) {
+    final joint = l.joint;
+    if (joint != null &&
+        l.discomfort >= 3 &&
+        e.stressOn(joint) != JointStress.low) {
+      return true;
+    }
+  }
+  return false;
+}
+
 /// Figures visées par l'athlète [a], par ordre de priorité : celles du
 /// profil (`skills`), puis les objectifs qui portent sur une figure.
 List<SkillTrack> skillTargetsOf(Athlete a) {
@@ -2468,8 +2491,11 @@ void _buildFigures(_Builder b, Set<int> runDays) {
       // plus facile.
       // (Étape de travail écartée par la douleur : l'étape plus facile la
       // remplace, avec la raison et le retour écrits.)
+      final why = a.rejection(t.currentId, d);
       final painStep =
-          easier != null && a.rejection(t.currentId, d) == 'joint';
+          easier != null &&
+          (why == 'joint' || why == 'excluded') &&
+          _painOn(a, t.currentId);
       b.add(
         d,
         <String>[t.currentId, if (easier != null) easier],

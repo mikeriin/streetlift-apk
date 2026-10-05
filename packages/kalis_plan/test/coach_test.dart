@@ -967,62 +967,59 @@ void main() {
       );
     });
 
-    test(
-      'un test plus bas que le record (15 % au plus) fait foi tel quel',
-      () {
-        final declared = _profile(
-          experience: ExperienceLevel.intermediate,
-          benchmarks: <Benchmark>[
-            _maxReps('sw-traction-pronation', 14),
-            _maxReps('sw-dips-barres-paralleles', 20),
-          ],
-        );
-        Benchmark tested(int reps, int daysAgo) => Benchmark(
-          exerciseId: 'sw-traction-pronation',
-          kind: BenchmarkKind.maxReps,
-          source: BenchmarkSource.guidedTest,
-          reps: reps,
-          date: _start.addDays(-daysAgo),
-        );
-        final same = declared.copyWith(
-          benchmarks: <Benchmark>[...declared.benchmarks!, tested(14, 3)],
-        );
-        final once = declared.copyWith(
-          benchmarks: <Benchmark>[...declared.benchmarks!, tested(12, 3)],
-        );
-        final twice = declared.copyWith(
-          benchmarks: <Benchmark>[
-            ...declared.benchmarks!,
-            tested(13, 40),
-            tested(12, 3),
-          ],
-        );
-        int pullReps(AthleteProfile p) {
-          var most = 0;
-          final week = _program(catalog, p, 4).first.pass2.weeks.first;
-          for (final d in week.days) {
-            for (final i in d.items) {
-              if (i.exerciseId == 'sw-traction-pronation' &&
-                  (i.kind == null || i.kind == SetKind.work)) {
-                final reps = i.repsHigh;
-                if (reps != null && reps > most) {
-                  most = reps;
-                }
+    test('un test plus bas que le record (15 % au plus) fait foi tel quel', () {
+      final declared = _profile(
+        experience: ExperienceLevel.intermediate,
+        benchmarks: <Benchmark>[
+          _maxReps('sw-traction-pronation', 14),
+          _maxReps('sw-dips-barres-paralleles', 20),
+        ],
+      );
+      Benchmark tested(int reps, int daysAgo) => Benchmark(
+        exerciseId: 'sw-traction-pronation',
+        kind: BenchmarkKind.maxReps,
+        source: BenchmarkSource.guidedTest,
+        reps: reps,
+        date: _start.addDays(-daysAgo),
+      );
+      final same = declared.copyWith(
+        benchmarks: <Benchmark>[...declared.benchmarks!, tested(14, 3)],
+      );
+      final once = declared.copyWith(
+        benchmarks: <Benchmark>[...declared.benchmarks!, tested(12, 3)],
+      );
+      final twice = declared.copyWith(
+        benchmarks: <Benchmark>[
+          ...declared.benchmarks!,
+          tested(13, 40),
+          tested(12, 3),
+        ],
+      );
+      int pullReps(AthleteProfile p) {
+        var most = 0;
+        final week = _program(catalog, p, 4).first.pass2.weeks.first;
+        for (final d in week.days) {
+          for (final i in d.items) {
+            if (i.exerciseId == 'sw-traction-pronation' &&
+                (i.kind == null || i.kind == SetKind.work)) {
+              final reps = i.repsHigh;
+              if (reps != null && reps > most) {
+                most = reps;
               }
             }
           }
-          return most;
         }
+        return most;
+      }
 
-        final before = pullReps(declared);
-        expect(before, greaterThan(0));
-        // (Le test seul recale : série de tête = résultat − 2.)
-        expect(pullReps(same), before);
-        expect(pullReps(once), lessThan(before));
-        expect(pullReps(once), lessThan(12));
-        expect(pullReps(twice), pullReps(once));
-      },
-    );
+      final before = pullReps(declared);
+      expect(before, greaterThan(0));
+      // (Le test seul recale : série de tête = résultat − 2.)
+      expect(pullReps(same), before);
+      expect(pullReps(once), lessThan(before));
+      expect(pullReps(once), lessThan(12));
+      expect(pullReps(twice), pullReps(once));
+    });
   });
   group('CX correction 1', () {
     bool noted(ProgramBlock b, String note) =>
@@ -1072,6 +1069,9 @@ void main() {
               if (zone == BodyZone.elbow) {
                 expect(coachPronationPull(e), isFalse, reason: i.exerciseId);
               }
+              if (zone == BodyZone.wristHand) {
+                expect(i.exerciseId, isNot(coachWristLoadedPrep));
+              }
             }
           }
         }
@@ -1100,60 +1100,6 @@ void main() {
         expect(returning, greaterThan(0));
       });
     }
-
-    test('forte baisse : deux mesures concordantes avant de baisser', () {
-      Benchmark tested(int reps, int daysAgo) => Benchmark(
-        exerciseId: 'sw-traction-pronation',
-        kind: BenchmarkKind.maxReps,
-        source: BenchmarkSource.guidedTest,
-        reps: reps,
-        date: _start.addDays(-daysAgo),
-      );
-      int pullReps(AthleteProfile p) {
-        var most = 0;
-        final week = _program(catalog, p, 4).first.pass2.weeks.first;
-        for (final d in week.days) {
-          for (final i in d.items) {
-            if (i.exerciseId == 'sw-traction-pronation' &&
-                (i.kind == null || i.kind == SetKind.work)) {
-              final reps = i.repsHigh;
-              if (reps != null && reps > most) {
-                most = reps;
-              }
-            }
-          }
-        }
-        return most;
-      }
-
-      final base = street();
-      // Même plateau des deux côtés (14, puis 14 ou 9) : seul le repère
-      // diffère.
-      final once = base.copyWith(
-        benchmarks: <Benchmark>[
-          ...base.benchmarks!,
-          tested(14, 40),
-          tested(14, 3),
-        ],
-      );
-      final lowOnce = base.copyWith(
-        benchmarks: <Benchmark>[
-          ...base.benchmarks!,
-          tested(14, 40),
-          tested(9, 3),
-        ],
-      );
-      final lowTwice = base.copyWith(
-        benchmarks: <Benchmark>[
-          ...base.benchmarks!,
-          tested(14, 60),
-          tested(10, 30),
-          tested(9, 3),
-        ],
-      );
-      expect(pullReps(lowOnce), pullReps(once));
-      expect(pullReps(lowTwice), lessThan(pullReps(once)));
-    });
 
     test('forte baisse : le test seul fait foi', () {
       Benchmark tested(int reps, int daysAgo) => Benchmark(

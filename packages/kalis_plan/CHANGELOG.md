@@ -16,18 +16,24 @@ part). Détail et sources : `CONTRAT.md`, § 12.14 ; journal : `packages/kalis_b
   `pain_return`).
 - **Tests** : placés à partir du troisième jour de la semaine (deuxième si la semaine n'a pas deux séances
   assez tardives), jamais pendant une reprise ; les jours qui précèdent un test sont des jours faciles ; un
-  test de figure porte sur l'étape visée elle-même (jamais un remplaçant). Une mesure plus basse ne fait
-  baisser un repère qu'avec une deuxième concordante (le test mesuré le plus récent des dix semaines
-  d'avant) : 15 % au plus, le test fait foi ; au-delà, le plus haut du test et de l'estimation sûre ; un
-  muscle-up testé plus bas fait foi seul. Une estimation ne défait pas un test de moins de quatre semaines
-  et n'abaisse jamais un 1RM déclaré ou testé ; un 1RM mesuré par un test ou une compétition n'est plus
-  relevé d'après le maximum au poids du corps ; une barre de compétition plus basse que le 1RM connu ne
-  l'abaisse pas. Après un test mesuré depuis la reprise, pas de gain supposé.
+  test de figure porte sur l'étape visée elle-même (jamais un remplaçant). Un test plus bas que le repère
+  fait foi, même seul et quelle que soit la baisse (le bloc suivant est écrit sur le résultat) ; seule une
+  estimation sûre et récente le relève, jamais au-dessus du repère d'avant. Une estimation ne défait pas un
+  test de moins de quatre semaines et n'abaisse jamais un 1RM déclaré ou testé ; une série de deux
+  répétitions ou plus n'abaisse pas seule un 1RM connu de plus de 15 % ; seul un 1RM estimé est relevé
+  d'après le maximum au poids du corps (un 1RM déclaré, testé ou de compétition fait foi) ; une barre de
+  compétition plus basse que le 1RM connu ne l'abaisse pas. Après un test mesuré depuis la reprise, pas de
+  gain supposé.
+- **Répétitions et réserve** : au poids du corps sur un maximum de répétitions, répétitions + réserve écrite
+  jamais au-dessus du repère (zone de l'épreuve comprise ; une pratique d'une répétition garde sa réserve).
+- **Recul d'étape pour douleur** : quand la douleur écarte l'étape de travail d'une figure, l'étape plus
+  facile porte la raison et le critère de retour (note `pain_step`).
 - **Plateau** : un test qui ne dépasse pas le repère d'avant change la méthode du bloc suivant (variantes
   tempo excentrique — 45 % du maximum en répétitions, note `slow_tempo` —, archer, typewriter pour le
   tirage) et le dit (note `plateau`).
 - **Zone de l'épreuve** (objectif de répétitions maximales, bloc de réalisation) : séries du mouvement visé
-  à 72-80 % du maximum, 90 s de repos, 2 en réserve (note `event_zone`), séance de force remplacée par le
+  à 72-80 % du maximum, 90 s de repos, 2 en réserve au moins et répétitions + réserve sous le repère
+  (note `event_zone`), séance de force remplacée par le
   mouvement exact (12 et plus) ; repos-pause sur le principal réservé à l'avancé et à l'élite ; affûtage :
   intensité gardée au poids du corps, doubles à 86 % en lesté.
 - **Volume de répétitions au poids du corps** : +15 % par semaine au plus sur le maximum des trois semaines
@@ -37,7 +43,8 @@ part). Détail et sources : `CONTRAT.md`, § 12.14 ; journal : `packages/kalis_b
 - **Douleur et restructuration** : une figure gardée sur prise neutre pendant un arrêt porte la note d'arrêt,
   jamais `pain_trend` ; une restructuration lit les semaines gardées du bloc pour ses garde-fous ; une
   amplitude partielle surchargée qui revient après quatre semaines repart de son entrée.
-- **Débutant** : préparation des poignets, tenues +15 % par semaine au plus (2 s au moins), test de la tenue
+- **Débutant** : préparation des poignets, tenues +15 % par semaine au plus (2 s au moins, jamais sous 55 %
+  du maintien testé), test de la tenue
   menton non borné à 30 s, essais stricts de traction écrits seulement sans traction acquise.
 - **Charges** : hausse comparée à la semaine précédente seule ; après une transition ou une introduction,
   2,5 % de charge par répétition d'écart ; estimation du 1RM sans charge connue +3 % ; séries allégées à
