@@ -197,6 +197,14 @@ String _civil(DateTime d) =>
         rec['excluded'] = x['excluded'] == true;
         if (slot != null) rec['slotId'] = slot;
         if (target != null && target.isNotEmpty) rec['target'] = target;
+        // CI1 : rôle de la ligne dans la technique servie (série de tête,
+        // allégée, montée, test, tentative…), contrat 0.4.0 § 12.
+        final role = target?['role'];
+        if (role is String) {
+          rec['role'] = role;
+          if (role == 'test' || role == 'attempt') rec['kind'] = 'test';
+          if (role == 'warmup') rec['kind'] = 'warmup';
+        }
         sets.add(rec);
         report.setsConverted++;
       }

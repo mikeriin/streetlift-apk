@@ -232,6 +232,14 @@ class PlanProgram {
   final List<PlanBlockEntry> blocks;
   final PlanPrevious? previous;
 
+  /// CI1 : plan de saison du chemin calibré (`SeasonPlanner.planSeason`),
+  /// renouvelé à chaque bloc ; null pour un programme du chemin 0.1.
+  final kc.SeasonPlan? season;
+
+  /// CI1 : l'utilisateur a choisi de garder le moteur d'avant (0.1) à la
+  /// fin d'un bloc 0.1 ; jamais imposé, réversible.
+  final bool keepLegacyEngine;
+
   const PlanProgram({
     this.version = kPlanProgramVersion,
     required this.origin,
@@ -242,6 +250,8 @@ class PlanProgram {
     this.prefixKoach = const {},
     required this.blocks,
     this.previous,
+    this.season,
+    this.keepLegacyEngine = false,
   });
 
   int get totalWeeks => firstWeek - 1 + blocks.fold(0, (a, b) => a + b.weeks);
@@ -273,6 +283,9 @@ class PlanProgram {
     List<PlanBlockEntry>? blocks,
     PlanPrevious? previous,
     bool clearPrevious = false,
+    kc.SeasonPlan? season,
+    bool clearSeason = false,
+    bool? keepLegacyEngine,
   }) => PlanProgram(
     version: version,
     origin: origin,
@@ -283,6 +296,10 @@ class PlanProgram {
     prefixKoach: prefixKoach,
     blocks: blocks ?? this.blocks,
     previous: clearPrevious ? null : (previous ?? this.previous),
+    // CI1 : [clearSeason] : la saison est celle donnée (null : plus de
+    // saison, bloc du chemin 0.1).
+    season: clearSeason ? season : (season ?? this.season),
+    keepLegacyEngine: keepLegacyEngine ?? this.keepLegacyEngine,
   );
 
   Map<String, Object?> toJson() => {
@@ -295,6 +312,8 @@ class PlanProgram {
     if (prefixKoach.isNotEmpty) 'prefixKoach': prefixKoach,
     'blocks': [for (final b in blocks) b.toJson()],
     if (previous != null) 'previous': previous!.toJson(),
+    if (season != null) 'season': season!.toJson(),
+    if (keepLegacyEngine) 'keepLegacyEngine': true,
   };
 
   /// Lecture ; [FormatException] hors contrat.
@@ -350,6 +369,19 @@ class PlanProgram {
     }
     final blocks = [for (final b in rawBlocks) PlanBlockEntry.fromJson(b)];
     final prev = m['previous'];
+    // CI1 : plan de saison facultatif ; illisible ou hors contrat, il est
+    // ignoré (le programme reste suivi, la vue de la saison se replie sur
+    // les semaines des blocs).
+    kc.SeasonPlan? season;
+    final rawSeason = m['season'];
+    if (rawSeason is Map) {
+      try {
+        final sp = kc.SeasonPlan.fromJson(rawSeason.cast<String, Object?>());
+        if (sp.validate().isEmpty) season = sp;
+      } on Object {
+        season = null;
+      }
+    }
     return PlanProgram(
       version: v,
       origin: origin as String,
@@ -362,6 +394,8 @@ class PlanProgram {
           : (jsonDecode(jsonEncode(pk)) as Map).cast<String, dynamic>(),
       blocks: blocks,
       previous: prev == null ? null : PlanPrevious.fromJson(prev),
+      season: season,
+      keepLegacyEngine: m['keepLegacyEngine'] == true,
     );
   }
 }

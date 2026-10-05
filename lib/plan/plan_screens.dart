@@ -32,6 +32,38 @@ import 'plan_texts.dart';
 /// G10 (D4.8) : fin de bloc — le bloc suivant proposé par le moteur, passé
 /// en revue (nouveaux exercices) puis validé ; vrai s'il a été validé.
 Future<bool> openNextBlock(BuildContext context) async {
+  // CI1 : programme écrit par le moteur d'avant, profil street calibrable :
+  // le passage au moteur calibré est proposé ici, à la fin du bloc, jamais
+  // imposé (il reste possible plus tard).
+  if (PlanStore(store).planOnLegacyEngine) {
+    final choice = await showKoachSheet<String>(
+      context,
+      pose: KoachPose.choice,
+      title: 'Ton prochain bloc',
+      text:
+          'Nouveau : je peux écrire ton prochain bloc avec le moteur '
+          'calibré pour le street — saison calée sur ton échéance, séries '
+          'de tête et séries allégées, maintiens chronométrés, tests. Ou je '
+          'garde la même façon de faire que ton bloc actuel. Tu pourras '
+          'changer d’avis au bloc suivant.',
+      actions: [
+        KoachBubbleAction(
+          'Passer au moteur calibré',
+          () => Navigator.of(context).pop('calibrated'),
+          primary: true,
+          key: const ValueKey('next-block-calibrated'),
+        ),
+        KoachBubbleAction(
+          'Garder le moteur actuel',
+          () => Navigator.of(context).pop('legacy'),
+          key: const ValueKey('next-block-legacy'),
+        ),
+      ],
+    );
+    if (choice == null) return false;
+    PlanStore(store).setPlanKeepLegacyEngine(choice == 'legacy');
+    if (!context.mounted) return false;
+  }
   final c = PlanStore(store).newNextBlockCreation();
   final ok = await Navigator.of(context).push<bool>(
     MaterialPageRoute<bool>(

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kalis_core/kalis_core.dart'
     as kc
-    show Flames, IntraSessionAction, Place;
+    show Flames, IntraSessionAction, Place, SetKind, SetTechniqueKind;
 import 'package:kalis_koach/kalis_koach.dart' show KoachUsage;
 import 'device.dart';
 
@@ -12,6 +12,7 @@ import 'adapt/adapt_summary_screen.dart';
 import 'adapt/adapt_texts.dart';
 import 'adapt/flame_track.dart';
 import 'adapt/health_check.dart';
+import 'plan/coach_texts.dart' as ct;
 import 'koach/koach_bubble.dart'
     show
         KoachSays,
@@ -867,7 +868,12 @@ class SessionExercisePageState extends State<SessionExercisePage> {
         );
       return;
     }
-    final rest = adviceRest ?? store.restAfterSet(ex, sp, i, log.sets.length);
+    final rest =
+        adviceRest ??
+        (widget.adapt && ex.engine
+            ? store.adaptRestAfter(widget.week.n, widget.day.j, ex, i)
+            : null) ??
+        store.restAfterSet(ex, sp, i, log.sets.length);
     if (rest != null && rest > 0) widget.timer.startRest(rest);
   }
 
@@ -984,6 +990,140 @@ class SessionExercisePageState extends State<SessionExercisePage> {
         ),
       ),
     );
+  }
+
+  /// CI1 : la prescription du chemin calibré, en clair : technique
+  /// (série de tête et séries allégées, maintien, EMOM, densité…),
+  /// intensité, tempo, test ; règle de douleur du programme toujours
+  /// visible ; notes de coach dans la feuille de Koach.
+  List<Widget> _coachPanel(Exercise ex) {
+    final it = store.adaptItemFor(widget.week.n, widget.day.j, ex);
+    if (it == null) return const [];
+    final block = store.adaptBlockItemFor(widget.week.n, widget.day.j, ex);
+    final catalog = store.content.catalog;
+    final technique = it.technique?.kind;
+    final label = it.kind == kc.SetKind.test
+        ? 'Test'
+        : technique == null
+        ? null
+        : ct.techniqueLabel(technique);
+    final lines = <String>[
+      if (label != null) '$label : ${ct.coachVolumeText(it)}',
+      if (ct.coachIntensityText(it) case final t?) t,
+      if (ct.techniqueHint(it) case final t?) t,
+    ];
+    final reasons = [...?block?.reasons, ...it.reasons];
+    final pain = <String>[];
+    for (final r in reasons) {
+      if (!ct.isPainReason(r)) continue;
+      final t =
+          ct.coachText(r, catalog) ??
+          adaptReasonText(r, exerciseName: store.adaptExerciseName);
+      if (t != null && !pain.contains(t)) pain.add(t);
+    }
+    final notes = [
+      for (final n
+          in block == null
+              ? const <String>[]
+              : ct.coachItemNotes(block, catalog))
+        if (!pain.contains(n)) n,
+    ];
+    if (lines.isEmpty && pain.isEmpty && notes.isEmpty) return const [];
+    final intra = switch (technique) {
+      kc.SetTechniqueKind.cluster ||
+      kc.SetTechniqueKind.restPause ||
+      kc.SetTechniqueKind.myoReps => it.technique?.intraRestSeconds,
+      _ => null,
+    };
+    final dim = TextStyle(color: SL.dim, fontSize: 12.5);
+    return [
+      const SizedBox(height: 6),
+      Semantics(
+        container: true,
+        child: InkWell(
+          key: ValueKey('coach-panel-${ex.id}'),
+          borderRadius: BorderRadius.circular(12),
+          onTap: notes.isEmpty && lines.length < 2
+              ? null
+              : () => showKoachSheet<void>(
+                  context,
+                  pose: koachPose(KoachUsage.explanation),
+                  title: store.splitName(ex.name).$1,
+                  text: [...lines, ...pain, ...notes].join('\n\n'),
+                ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 2),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (label != null)
+                  Text(
+                    label.toUpperCase(),
+                    key: ValueKey('coach-technique-${ex.id}'),
+                    style: TextStyle(
+                      color: SL.accent,
+                      fontSize: 11.5,
+                      fontWeight: FontWeight.w700,
+                      letterSpacing: 0.4,
+                    ),
+                  ),
+                for (final l in lines)
+                  Text(
+                    label != null && l.startsWith('$label : ')
+                        ? l.substring(label.length + 3)
+                        : l,
+                    style: dim,
+                  ),
+                for (final p in pain)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 4),
+                    child: Row(
+                      key: ValueKey('coach-pain-${ex.id}'),
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Icon(Icons.shield_outlined, size: 16, color: SL.accent),
+                        const SizedBox(width: 6),
+                        Expanded(
+                          child: Text(p, style: dim.copyWith(color: SL.text)),
+                        ),
+                      ],
+                    ),
+                  ),
+                if (notes.isNotEmpty)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 4),
+                    child: Row(
+                      children: [
+                        Icon(Icons.menu_book_outlined, size: 16, color: SL.dim),
+                        const SizedBox(width: 6),
+                        Expanded(
+                          child: Text(
+                            notes.length == 1
+                                ? 'Note du coach : touche pour la lire'
+                                : '${notes.length} notes du coach : touche pour les lire',
+                            style: dim,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+              ],
+            ),
+          ),
+        ),
+      ),
+      if (intra != null && intra > 0)
+        Padding(
+          padding: const EdgeInsets.only(top: 6),
+          child: OutlinedButton.icon(
+            key: ValueKey('coach-intra-${ex.id}'),
+            icon: const Icon(Icons.av_timer),
+            label: Text('Mini-repos $intra\u00A0s'),
+            onPressed: () =>
+                widget.timer.single('INTRA', intra, prepare: false),
+          ),
+        ),
+    ];
   }
 
   /// Ce que le moteur dit de la séance du jour pour un exercice servi :
@@ -1258,6 +1398,13 @@ class SessionExercisePageState extends State<SessionExercisePage> {
     final prev = !readOnly && widget.week.n > 0
         ? store.previousLog(widget.week.n, widget.day.j, ex)
         : null;
+    // CI1 : lignes nommées par leur rôle dans la technique servie (série
+    // de tête, allégées, montées, tentatives, intervalles).
+    String rowLabel(int i) =>
+        (widget.adapt && ex.engine
+            ? store.adaptRowLabel(widget.week.n, widget.day.j, ex, i)
+            : null) ??
+        store.setLabel(sp, i);
 
     return KCard(
       key: ValueKey('exercise-card-${ex.id}'),
@@ -1428,6 +1575,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                       style: TextStyle(color: SL.dim, fontSize: 12.5),
                     ),
                 ],
+                if (!readOnly && widget.adapt && ex.engine) ..._coachPanel(ex),
                 if (!readOnly && widget.adapt && ex.engine) ..._adaptNotes(ex),
                 if (prev != null) ...[
                   const SizedBox(height: 6),
@@ -1526,7 +1674,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
             // pour les exercices sans flammes.
             if (log.sets[i].done && (readOnly || i != _openOf(k)))
               SetSummaryLine(
-                setLabel: store.setLabel(sp, i),
+                setLabel: rowLabel(i),
                 done: setDoneText(log.sets[i], sp, units: !unresolved),
                 flames: flamesOf(log.sets[i]),
                 unknown: log.sets[i].flamesUnknown,
@@ -1536,7 +1684,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
             else ...[
               _SetRow(
                 key: ValueKey('${ex.id}-$i-$epoch'),
-                label: store.setLabel(sp, i),
+                label: rowLabel(i),
                 entry: log.sets[i],
                 spec: sp,
                 showKg: showKg,
@@ -1569,7 +1717,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
               ),
               if (flameSets && log.sets[i].done && !readOnly)
                 FlameTrack(
-                  setLabel: store.setLabel(sp, i),
+                  setLabel: rowLabel(i),
                   value: flamesOf(log.sets[i]),
                   unknown: log.sets[i].flamesUnknown,
                   excluded: log.sets[i].excluded,

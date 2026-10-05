@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "version": "0.4.0",
+ "version": "0.4.1",
  "texts": [
   {
    "code": "plan.season_phase",
@@ -321,6 +321,36 @@
     "cause"
    ],
    "meaning": "Mini-séries arrêtées (répétitions manquées, plafond atteint, qualité)."
+  },
+  {
+   "code": "plan.coach_note",
+   "fr": "Note de coach : {note}.",
+   "params": [
+    "note",
+    "value"
+   ],
+   "meaning": "Note de coach du bloc, de la semaine ou de la séance : un code de note (vocabulaire de `kalis_plan`) et sa valeur."
+  },
+  {
+   "code": "plan.progression_rule",
+   "fr": "Règle de progression : {rule}.",
+   "params": [
+    "rule",
+    "step",
+    "unit"
+   ],
+   "meaning": "Règle de progression d'un exercice d'une séance à l'autre (code de règle, pas, unité)."
+  },
+  {
+   "code": "plan.pain_rule",
+   "fr": "Gêne sous {continueBelow}/10 : continue. À {regressAt} : allège. À {stopAt} ou plus : arrête.",
+   "params": [
+    "zone",
+    "continueBelow",
+    "regressAt",
+    "stopAt"
+   ],
+   "meaning": "Conduite à tenir selon la gêne ressentie (échelle de 0 à 10) : continuer en dessous d'un seuil, alléger, arrêter."
   }
  ]
 }

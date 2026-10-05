@@ -4,6 +4,8 @@
 ///   prescription de la séance du jour, conseil pour la série suivante,
 ///   revue complète (résumé d'adaptation, propositions, records, journal
 ///   du moteur) ;
+/// - [KalisAdapt.planEventDay] : tentatives d'une compétition de force,
+///   rythme d'une épreuve de répétitions (`EventDayAdvisor`) ;
 /// - [AdaptParams] : tous les paramètres chiffrés ;
 /// - [CapacityFilter] : filtre de Kalman d'un exercice.
 ///
@@ -13,7 +15,23 @@ library;
 
 export 'src/apply.dart' show applyProposal;
 export 'src/book.dart' show ExerciseBook, ExerciseInfo, zoneGroups;
+export 'src/coach.dart'
+    show
+        AttemptPick,
+        CoachSpec,
+        LineReading,
+        SlotMark,
+        WeekPolicy,
+        attemptLadder,
+        attemptProbability,
+        blockCoached,
+        competitionLiftOf,
+        readLine,
+        techniqueAccessLevel,
+        techniqueIntensifies,
+        tendonLoaded;
 export 'src/engine.dart' show KalisAdapt;
+export 'src/event_day.dart' show warmupSteps;
 export 'src/fatigue.dart'
     show FatigueModel, HealthReading, effortWeight, readHealth, readinessOf;
 export 'src/filter.dart'
@@ -52,5 +70,18 @@ export 'src/review.dart'
         scheduledDay,
         unlockLevelFor,
         weekOfDay;
-export 'src/session.dart' show equipmentFor, findSubstitute, itemSeconds;
+export 'src/results.dart'
+    show
+        testBenchmarks,
+        testResultReasons,
+        trainingBenchmarks,
+        volumeToleranceOf;
+export 'src/session.dart'
+    show
+        equipmentFor,
+        findSubstitute,
+        itemSeconds,
+        recoveryLimited,
+        recoveryReasons;
+export 'src/skills.dart' show SkillBoard, SkillLine;
 export 'src/version.dart';

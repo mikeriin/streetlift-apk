@@ -12,6 +12,41 @@
 library;
 
 export 'src/assemble.dart' show FocusCodes, dayOfSlotId, slotIdFor;
+export 'src/coach/athlete.dart'
+    show Athlete, CoachDay, CoachLimit, coachEligible;
+export 'src/coach/audit.dart';
+export 'src/coach/coach.dart'
+    show CoachEngine, coachMethodFor, isCoachPlan, reconcileSkeleton;
+export 'src/coach/model.dart';
+export 'src/coach/prescribe.dart'
+    show
+        CoachNotes,
+        CoachRules,
+        coachGroupCap,
+        coachHardSetMaxRir,
+        coachHighRisk,
+        coachLoadRise,
+        coachRunMetersPerSecond,
+        coachSecondsPerRep,
+        coachStraightArmRise,
+        coachTransitionSeconds,
+        coachVolumeRise,
+        coachWarmupSeconds,
+        coachWeeklyCeiling,
+        hardSetsByWeek,
+        prescribeBlock,
+        straightArmFamilyOf;
+export 'src/coach/season.dart';
+export 'src/coach/skeleton.dart'
+    show
+        SkillTrack,
+        buildSkeleton,
+        hasBelt,
+        skillTargetsOf,
+        spreadDays,
+        styleOf;
+export 'src/coach/tables.dart';
+export 'src/coach/texts.dart';
 export 'src/context.dart'
     show
         DisciplineClass,

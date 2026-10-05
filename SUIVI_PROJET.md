@@ -1,8 +1,19 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : CU (pipeline CP), version dev6.8.0 ; précédent : dev6.7.0 (G10)**  
-**Date : 3 octobre 2026, Europe/Paris — version : 6.8.0+107, affichée « dev6.8.0 » dans l'APK (versionCode réel fixé par la CI de build)**  
+**Passe actuelle : CI1 (pipeline CP), version dev6.9.0 ; précédent : dev6.8.0 (CU)**  
+**Date : 5 octobre 2026, Europe/Paris — version : 6.9.0+108, affichée « dev6.9.0 » dans l'APK (versionCode réel fixé par la CI de build)**  
 **Statut : contrôlé en CI (branche `claude/ci-3d`, rendu réel sur émulateur Android) ; à valider par le propriétaire.**
+
+## CI1 — Intégration du street calibré (version dev6.9.0, pipeline CP)
+
+- **Paquets** : `kalis_core` 0.4.2, `kalis_plan` 0.2.1, `kalis_adapt` 0.2.1 récupérés par les branches fixes `etiquettes/…` ; `kalis_koach` inchangé ; `assets/catalog/parcours_v3.json` recopié (0.4.2). Les profils street au profil v3 complet passent par le chemin calibré (`coachEligible`) ; un débutant (ancienneté non demandée par le parcours) est présenté aux moteurs avec « moins de 6 mois » (`athleteProfileForEngines`).
+- **Séance** (`lib/plan/coach_texts.dart`, `lib/session_screen.dart`, `lib/session_adapt_store.dart`) : rôles des lignes (`prescriptionRow`, `SetGoal.role`), panneau du coach (technique, intensité, tempo, règle de douleur, notes `coachReasonText`), chronos EMOM / bloc au temps, mini-repos, repos par ligne ; journal : `SetRecord.role` et nature (test, échauffement) dans `_adaptDone` et `convertLegacyJournal`.
+- **Saison** (`lib/plan/season_view.dart`, `lib/plan/event_day_screen.dart`) : `PlanProgram.season` (plan de `SeasonPlanner.planSeason`, renouvelé à chaque bloc, facultatif) passé à `AdaptInput.season` et `NextBlockRequest.season` ; carte « Ta saison », écran MA SAISON, jour J (`planEventDay`).
+- **Tests** : `AdaptReview.testResults` et `skillStates` reportés au profil pour un bloc calibré (`reportEngineResults`).
+- **Migration** : `PlanProgram.keepLegacyEngine` ; choix à « Préparer le bloc suivant » (`openNextBlock`) ; « garder » présente au moteur le profil sans l'expérience (chemin 0.1).
+- **Textes** : codes 0.4 du moteur dynamique rendus (`adaptReasonText` → `reasonText04`, paramètres en clair) ; `plan.coach_note`, `plan.pain_rule`, `plan.progression_rule`.
+- **Outils** : limite de l'arbre du dépôt (hors ressources chiffrées) portée à 30 Mo (`tools/release_security.py`, paquets calibrés).
+- Tests : `test/ci1_street_test.dart` ; émulateur `integration_test/street_ci1_test.dart` (CU passe sous `CI3D_TOUT=1`).
 
 ## CU — Parcours de création du profil v3 (version dev6.8.0, pipeline CP)
 

@@ -6,6 +6,7 @@
 import 'package:kalis_core/kalis_core.dart' as kc;
 
 import '../athlete_profile.dart' show kZoneLabels;
+import '../plan/reason_texts_0_4.dart' show reasonText04;
 
 /// « 62,5 kg », « 60 kg », « 7,25 kg ».
 String adaptKg(double kg) {
@@ -177,7 +178,8 @@ String? adaptReasonText(
     case 'adapt.estimate_updated':
       return 'Estimation de ${name(p['exerciseId'])} mise à jour.';
   }
-  return null;
+  // CI1 : codes ajoutés par kalis_core 0.4.0, émis par kalis_adapt 0.2.
+  return reasonText04(r.code, p, (id) => name(id));
 }
 
 /// Ajustement d'une séance (bilan, douleur, temps, lieu), en français.

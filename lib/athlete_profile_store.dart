@@ -120,8 +120,24 @@ extension AthleteProfileStore on AppStore {
       healthRefOf(profile?.health ?? HealthData(), caution);
 
   /// Profil v2 pour les moteurs : référence santé recalculée.
-  kc.AthleteProfile? get athleteProfileForEngines =>
-      athlete?.profile.copyWith(healthScreening: athleteHealthRef);
+  ///
+  /// CI1 : le parcours v3 ne demande pas l'ancienneté à un débutant (la
+  /// question ne s'affiche qu'à partir d'« intermédiaire ») ; le chemin
+  /// calibré de `kalis_plan` 0.2 en a besoin pour servir un profil street.
+  /// Pour un débutant sans ancienneté, les moteurs reçoivent « moins de
+  /// 6 mois » (ce que « débutant » veut dire dans le parcours) ; le profil
+  /// enregistré n'est pas modifié. Le niveau du moteur vient de
+  /// l'expérience déclarée, pas de l'ancienneté.
+  kc.AthleteProfile? get athleteProfileForEngines {
+    final p = athlete?.profile.copyWith(healthScreening: athleteHealthRef);
+    if (p != null &&
+        p.isSchema3 &&
+        p.experience == kc.ExperienceLevel.beginner &&
+        p.trainingAge == null) {
+      return p.copyWith(trainingAge: kc.TrainingAge.under6Months);
+    }
+    return p;
+  }
 
   /// Mode prudent avec le profil v2 : âge et gênes du profil v2.
   CautionStatus _cautionWith(UserProfile? legacy, AthleteRecord? a) {
@@ -436,6 +452,125 @@ extension AthleteProfileStore on AppStore {
       benchmarks: [...?a.profile.benchmarks, b],
       updatedOn: _laterDay(a.profile.createdOn, today),
     );
+    if (p.validate().isNotEmpty ||
+        (content.catalog?.checkProfile(p).isNotEmpty ?? false)) {
+      return false;
+    }
+    final at = _nowAt;
+    athlete = AthleteRecord(
+      profile: p,
+      savedAt: at,
+      birthYearAt: a.birthYearAt,
+      limitationsAt: a.limitationsAt,
+      changes: _withChange(a.changes, ProfileChange(at, ['levels'], false)),
+    );
+    _athleteRaw = null;
+    _persist();
+    notifyListeners();
+    return true;
+  }
+
+  /// CI1 : résultats que le moteur dynamique rend après les tests d'un bloc
+  /// du chemin calibré (`AdaptReview.testResults`, `skillStates`) reportés
+  /// au profil : records ajoutés (un même record n'est jamais ajouté deux
+  /// fois), étape actuelle de chaque figure remplacée. Rien n'est retiré.
+  /// Vrai si le profil a changé ; faux sinon (ou hors contrat : rien
+  /// d'écrit).
+  bool reportEngineResults(kc.AdaptReview review, {kc.CivilDate? since}) {
+    final tests = review.testResults ?? const <kc.Benchmark>[];
+    final skills = review.skillStates ?? const <kc.SkillState>[];
+    if (tests.isEmpty && skills.isEmpty) return false;
+    // Deux écritures séparées : un refus de l'une ne bloque pas l'autre.
+    final b = _reportBenchmarks(tests, since);
+    final k = _reportSkills(skills);
+    return b || k;
+  }
+
+  /// Identité d'un record : mêmes exercice, nature, date, source, mesure et
+  /// protocole (le poids de corps et la réserve notés ne comptent pas : le
+  /// moteur relit tout le journal à chaque revue).
+  static String _benchmarkKey(kc.Benchmark b) => [
+    b.exerciseId,
+    b.kind.code,
+    b.date?.iso,
+    b.source.code,
+    b.externalLoadKg,
+    b.reps,
+    b.seconds,
+    b.distanceMeters,
+    b.protocolId,
+  ].join('|');
+
+  bool _reportBenchmarks(List<kc.Benchmark> tests, kc.CivilDate? since) {
+    final a = athlete;
+    if (a == null || tests.isEmpty) return false;
+    final known = {
+      for (final b in a.profile.benchmarks ?? const <kc.Benchmark>[])
+        _benchmarkKey(b),
+    };
+    final added = <kc.Benchmark>[];
+    for (final b in tests) {
+      // Seulement les tests du bloc en cours : un record retiré du profil
+      // à la main ne revient pas d'un ancien bloc.
+      final d = b.date;
+      if (since != null && (d == null || d.compareTo(since) < 0)) continue;
+      if (b.validate().isNotEmpty) continue;
+      if (known.add(_benchmarkKey(b))) added.add(b);
+    }
+    final room = 200 - (a.profile.benchmarks?.length ?? 0);
+    if (added.isEmpty || room <= 0) return false;
+    final kept = added.length > room
+        ? added.sublist(added.length - room)
+        : added;
+    return _saveEngineProfile(
+      a,
+      a.profile.copyWith(
+        benchmarks: <kc.Benchmark>[...?a.profile.benchmarks, ...kept],
+      ),
+    );
+  }
+
+  bool _reportSkills(List<kc.SkillState> skills) {
+    final a = athlete;
+    if (a == null || skills.isEmpty) return false;
+    final current = [...?a.profile.skills];
+    var changed = false;
+    for (final st in skills) {
+      if (st.validate().isNotEmpty) continue;
+      final i = current.indexWhere(
+        (x) => x.targetExerciseId == st.targetExerciseId,
+      );
+      if (i < 0) continue; // figure que le profil ne suit pas
+      final old = current[i];
+      final sameStep = old.currentExerciseId == st.currentExerciseId;
+      int? best(int? stored, int? engine) => engine == null
+          ? (sameStep ? stored : null)
+          : (sameStep && stored != null && stored > engine ? stored : engine);
+      // Fusion champ par champ : ce que l'utilisateur a déclaré (depuis
+      // quand il est à l'étape, meilleure tenue, date) reste tant que
+      // l'étape ne change pas.
+      final merged = kc.SkillState(
+        targetExerciseId: old.targetExerciseId,
+        currentExerciseId: st.currentExerciseId,
+        bestHoldSeconds: best(old.bestHoldSeconds, st.bestHoldSeconds),
+        bestReps: best(old.bestReps, st.bestReps),
+        assessedOn: st.assessedOn ?? (sameStep ? old.assessedOn : null),
+        atStepSince: sameStep
+            ? (old.atStepSince ?? st.atStepSince)
+            : st.atStepSince,
+      );
+      if (merged.validate().isNotEmpty) continue;
+      if (jsonEncode(old.toJson()) == jsonEncode(merged.toJson())) continue;
+      current[i] = merged;
+      changed = true;
+    }
+    if (!changed) return false;
+    return _saveEngineProfile(a, a.profile.copyWith(skills: current));
+  }
+
+  bool _saveEngineProfile(AthleteRecord a, kc.AthleteProfile next) {
+    final today = civilOf(storeClock());
+    final p = next.copyWith(updatedOn: _laterDay(a.profile.createdOn, today));
     if (p.validate().isNotEmpty ||
         (content.catalog?.checkProfile(p).isNotEmpty ?? false)) {
       return false;

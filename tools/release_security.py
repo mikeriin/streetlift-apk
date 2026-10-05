@@ -8,10 +8,16 @@ import stat
 import subprocess
 import zipfile
 
-LIMIT = 25_000_000
+# CI1 (dev6.9.0) : 30 Mo (au lieu de 25) — les moteurs calibrés du pipeline
+# CP (`kalis_plan` 0.2, `kalis_adapt` 0.2, `kalis_core` 0.4.2, récupérés par
+# étiquette avec leurs tests et leur documentation) portent l'arbre hors
+# ressources chiffrées à environ 25,1 Mo. Limite de taille, pas de contenu :
+# les contrôles de secrets, de fichiers exclus et de modèles en clair sont
+# inchangés.
+LIMIT = 30_000_000
 # M6c : ressources sous licence chiffrées (`assets_secure/*.enc` : personnage
 # Mixamo, mannequin d'exécution, écorché acheté) comptées à part, dans leur
-# propre budget ; le reste de l'arbre garde la limite de 25 Mo.
+# propre budget ; le reste de l'arbre garde sa limite (30 Mo depuis CI1).
 SECURE_LIMIT = 60_000_000
 # M6c : aucun modèle 3D suivi en clair (ressources sous licence : chiffrées
 # dans assets_secure/, déchiffrées par la CI avec le secret KT_ASSETS_KEY).
@@ -115,7 +121,7 @@ def check_archive(path):
                 continue
             total += entry.file_size
             if total > LIMIT:
-                raise PackagingError('Contenu extrait supérieur à 25 000 000 octets.')
+                raise PackagingError('Contenu extrait supérieur à 30 000 000 octets.')
             check_content(relative, archive.read(entry))
         if archive.testzip() is not None:
             raise PackagingError('CRC du ZIP invalide.')
@@ -141,7 +147,7 @@ def check_tree(root, files=None):
 
     Refuse tout fichier suivi que la livraison exclurait (clé, secret local,
     cache, artefact, ZIP), tout lien symbolique, tout contenu secret (même
-    renommé ou encodé) et un arbre de plus de 25 Mo. M6c : tout modèle 3D en
+    renommé ou encodé) et un arbre de plus de 30 Mo (25 avant CI1). M6c : tout modèle 3D en
     clair ; ressources chiffrées de assets_secure/ (en-tête OpenSSL exigé)
     dans un budget à part de 60 Mo."""
     root = Path(root)
@@ -168,6 +174,6 @@ def check_tree(root, files=None):
             continue
         total += len(data)
         if total > LIMIT:
-            raise PackagingError('Arbre du dépôt supérieur à 25 000 000 octets.')
+            raise PackagingError('Arbre du dépôt supérieur à 30 000 000 octets.')
         check_content(PurePosixPath(relative.as_posix()), data)
     return len(files), total + secure

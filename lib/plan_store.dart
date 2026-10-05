@@ -197,6 +197,7 @@ extension PlanStore on AppStore {
       prefixKoach: prefixKoach,
       blocks: [c.entry(at)],
       previous: previous,
+      season: _planSeasonFor(c.entry(at).block, c.profile),
     );
     _planProfileLearned(c.profile);
     planProgram = next;
@@ -352,7 +353,7 @@ extension PlanStore on AppStore {
   proposeNextBlock() {
     final plan = planProgram;
     final start = program.start;
-    final profile = AthleteProfileStore(this).athleteProfileForEngines;
+    final profile = planNextBlockProfile;
     final catalog = content.catalog;
     if (plan == null || start == null || profile == null || catalog == null) {
       return null;
@@ -369,6 +370,7 @@ extension PlanStore on AppStore {
       previous: SessionAdaptStore(this)._adaptPlanBlock(plan.blocks.length - 1),
       adaptation: _planSummary(),
       locks: const [],
+      season: plan.season,
     );
     try {
       return (proposal: kp.KalisPlan().nextBlock(catalog, req), request: req);
@@ -381,7 +383,7 @@ extension PlanStore on AppStore {
   /// à valider, comme à la création (G7). Null : impossible.
   PlanCreation? newNextBlockCreation({bool? journal}) {
     final p = proposeNextBlock();
-    final profile = AthleteProfileStore(this).athleteProfileForEngines;
+    final profile = planNextBlockProfile;
     final catalog = content.catalog;
     if (p == null || profile == null || catalog == null) return null;
     return PlanCreation.next(
@@ -403,13 +405,85 @@ extension PlanStore on AppStore {
     if (plan == null || c.pass2 == null) return;
     final at = _planAt;
     _planProfileLearned(c.profile);
+    final entry = c.entry(at);
     planProgram = plan.copyWith(
       updatedAt: at,
-      blocks: [...plan.blocks, c.entry(at)],
+      blocks: [...plan.blocks, entry],
       clearPrevious: true,
+      season: _planSeasonFor(entry.block, c.profile),
+      clearSeason: true,
     );
     _materializeProgram(program.start);
     if (c.journalOn) unawaited(savePlanJournal(c));
+    _planChanged();
+  }
+
+  // ------------------------------------------- moteur calibré (CI1)
+
+  /// Plan de saison d'un bloc du chemin calibré (null : chemin 0.1, ou le
+  /// moteur n'a pas pu le faire). Même calcul que celui du moteur à la
+  /// création du bloc (départ du bloc, échéances du profil).
+  kc.SeasonPlan? _planSeasonFor(kc.ProgramBlock block, kc.AthleteProfile p) {
+    final catalog = content.catalog;
+    if (catalog == null || !ct.isCoachBlock(block)) return null;
+    try {
+      final season = kp.KalisPlan().planSeason(
+        catalog,
+        kc.SeasonRequest(
+          profile: p,
+          seed: 0,
+          today: civilOf(_planToday),
+          startDate: block.pass1.startDate,
+        ),
+      );
+      return season.validate().isEmpty && season.phases.isNotEmpty
+          ? season
+          : null;
+    } catch (_) {
+      return null;
+    }
+  }
+
+  /// Le profil passe par le chemin calibré de `kalis_plan` (street, profil
+  /// v3 complet : expérience, ancienneté, disponibilités).
+  bool get planCoachEligible {
+    final p = AthleteProfileStore(this).athleteProfileForEngines;
+    return p != null && kp.coachEligible(p);
+  }
+
+  /// Le programme en cours est écrit par le moteur d'avant (0.1) alors que
+  /// le profil passe par le moteur calibré : à la fin du bloc, le passage
+  /// est proposé (jamais imposé en cours de bloc).
+  bool get planOnLegacyEngine {
+    final plan = planProgram;
+    if (plan == null || !planCoachEligible) return false;
+    return !ct.isCoachBlock(plan.blocks.last.block);
+  }
+
+  /// Profil donné au moteur pour le bloc suivant : celui de l'utilisateur,
+  /// ou, s'il a choisi de garder le moteur d'avant, le même sans
+  /// l'ancienneté (le chemin calibré en a besoin ; le chemin 0.1 ne la lit
+  /// pas, il lit l'expérience, gardée) : le bloc suivant reste au chemin
+  /// 0.1, comme avant la mise à jour.
+  kc.AthleteProfile? get planNextBlockProfile {
+    final p = AthleteProfileStore(this).athleteProfileForEngines;
+    if (p == null) return null;
+    final plan = planProgram;
+    if (plan != null &&
+        plan.keepLegacyEngine &&
+        planOnLegacyEngine &&
+        kp.coachEligible(p)) {
+      return p.copyWith(trainingAge: null);
+    }
+    return p;
+  }
+
+  /// Choix de l'utilisateur pour la suite d'un programme du moteur
+  /// d'avant : garder ce moteur ([keep] vrai) ou passer au moteur calibré.
+  void setPlanKeepLegacyEngine(bool keep) {
+    final plan = planProgram;
+    if (plan == null || plan.keepLegacyEngine == keep) return;
+    planProgram = plan.copyWith(updatedAt: _planAt, keepLegacyEngine: keep);
     _planChanged();
   }
 

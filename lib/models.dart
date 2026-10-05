@@ -165,15 +165,16 @@ class Exercise {
     required this.why,
     required this.catalogId,
     required this.slotId,
+    String? tempo,
+    this.timer,
   }) : sets = SetsSpec.text(setsText),
        load = LoadSpec.fixed(kg),
-       tempo = base.tempo,
+       tempo = tempo ?? base.tempo,
        main = base.main,
        prevention = base.prevention,
        role = base.role,
        exId = base.exId,
        forcedSets = setCount,
-       timer = null,
        engine = true;
 
   /// L11 : copie adaptée pour une séance (séries réduites, exercice

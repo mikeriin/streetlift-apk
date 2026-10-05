@@ -5,7 +5,7 @@ description: >-
   fatigue, forme du jour, charges et répétitions du jour, conseil pendant la
   séance, propositions de volume, d'échange et de restructuration). Dart pur,
   sans Flutter, sans stockage, sans horloge.
-version: 0.1.0
+version: 0.2.1
 publish_to: none
 
 environment:

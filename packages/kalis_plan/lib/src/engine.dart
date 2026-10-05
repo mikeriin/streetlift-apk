@@ -6,6 +6,8 @@ import 'dart:convert';
 import 'package:kalis_core/kalis_core.dart';
 
 import 'assemble.dart';
+import 'coach/athlete.dart';
+import 'coach/coach.dart';
 import 'context.dart';
 import 'diff.dart';
 import 'hash.dart';
@@ -120,7 +122,7 @@ final class _Regenerated {
 /// garde en mémoire la dernière suite de propositions (« Autre
 /// proposition ») pour ne pas la recalculer ; ce cache ne change aucun
 /// résultat.
-final class KalisPlan implements PlanEngine {
+final class KalisPlan implements PlanEngine, SeasonPlanner {
   /// Moteur de paramètres [params].
   KalisPlan({this.params = PlanParams.standard});
 
@@ -132,6 +134,31 @@ final class KalisPlan implements PlanEngine {
   static const int alternativeCycle = 16;
 
   _Chain? _chain;
+
+  CoachEngine get _coach => CoachEngine(params);
+
+  /// Plan de saison (`SeasonPlanner`) : pour un profil du chemin street,
+  /// les phases calées à rebours sur l'échéance ; sinon un plan sans phase
+  /// (le chemin 0.1 ne planifie pas de saison).
+  @override
+  SeasonPlan planSeason(Catalog catalog, SeasonRequest request) {
+    _check(catalog, request.profile);
+    if (coachEligible(request.profile)) {
+      return _coach.planSeasonFor(
+        catalog,
+        request.profile,
+        request.startDate,
+        createdOn: request.today,
+      );
+    }
+    return SeasonPlan(
+      createdOn: request.today,
+      engineVersion: kalisPlanVersion,
+      eventIds: const <String>[],
+      phases: const <SeasonPhase>[],
+      reasons: const <Reason>[],
+    );
+  }
 
   @override
   String get engineVersion => kalisPlanVersion;
@@ -155,6 +182,9 @@ final class KalisPlan implements PlanEngine {
   @override
   Pass1Plan createPass1(Catalog catalog, PlanRequest request) {
     _check(catalog, request.profile);
+    if (coachEligible(request.profile)) {
+      return _coach.createPass1(catalog, request);
+    }
     final previous = request.previousBlock;
     if (previous != null) {
       return _evolve(
@@ -355,6 +385,14 @@ final class KalisPlan implements PlanEngine {
     final current = request.current;
     final action = request.action;
     _check(catalog, base.profile);
+    if (coachEligible(base.profile) && isCoachPlan(current)) {
+      final r = _coach.review(catalog, request, applyProfileDelta);
+      return ReviewTrace(
+        result: r.result,
+        reference: r.reference,
+        profile: r.profile,
+      );
+    }
     final violations = action.validate();
     if (violations.isNotEmpty) {
       throw ArgumentError(
@@ -881,6 +919,9 @@ final class KalisPlan implements PlanEngine {
     final base = request.request;
     _check(catalog, base.profile);
     final pass1 = request.pass1;
+    if (coachEligible(base.profile) && isCoachPlan(pass1)) {
+      return _coach.createPass2(catalog, request);
+    }
     final ctx = PlanContext.build(
       ContextInputs(
         catalog: catalog,
@@ -908,6 +949,9 @@ final class KalisPlan implements PlanEngine {
   @override
   BlockProposal nextBlock(Catalog catalog, NextBlockRequest request) {
     _check(catalog, request.profile);
+    if (coachEligible(request.profile)) {
+      return _coach.nextBlock(catalog, request);
+    }
     final r = _evolve(
       catalog,
       profile: request.profile,
@@ -1181,6 +1225,9 @@ final class KalisPlan implements PlanEngine {
       );
     }
     final current = request.current;
+    if (coachEligible(request.profile) && isCoachPlan(current.pass1)) {
+      return _coach.restructure(catalog, request);
+    }
     final before = current.pass1;
     final weeks = current.pass2.weeks.length;
     var from = request.fromWeekIndex ?? 0;

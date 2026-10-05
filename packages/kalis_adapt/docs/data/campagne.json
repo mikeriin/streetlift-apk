@@ -1,7 +1,7 @@
 {
- "engineVersion": "0.1.0",
- "coreVersion": "0.2.0",
- "planVersion": "0.1.0",
+ "engineVersion": "0.2.0",
+ "coreVersion": "0.4.1",
+ "planVersion": "0.2.0",
  "weeks": 24,
  "seeds": 200,
  "loopSeeds": 40,
@@ -7764,31 +7764,31 @@
   "advices": 1766,
   "coldSessions": 117,
   "prescribe": {
-   "median": 0.058,
-   "p95": 0.096,
-   "p99": 5.094,
-   "max": 8.435,
+   "median": 0.039,
+   "p95": 0.08,
+   "p99": 5.455,
+   "max": 6.385,
    "n": 117
   },
   "advise": {
-   "median": 0.053,
-   "p95": 0.105,
-   "p99": 0.132,
-   "max": 1.767,
+   "median": 0.039,
+   "p95": 0.077,
+   "p99": 0.096,
+   "max": 9.282,
    "n": 1766
   },
   "review": {
-   "median": 0.68,
-   "p95": 0.786,
-   "p99": 0.797,
-   "max": 0.797,
+   "median": 0.607,
+   "p95": 0.67,
+   "p99": 0.728,
+   "max": 0.728,
    "n": 20
   },
   "cold": {
-   "median": 10.234,
-   "p95": 14.865,
-   "p99": 20.187,
-   "max": 20.187,
+   "median": 7.925,
+   "p95": 11.621,
+   "p99": 19.997,
+   "max": 19.997,
    "n": 20
   },
   "machine": "linux, 4 cœurs"
