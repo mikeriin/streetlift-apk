@@ -255,6 +255,37 @@ CoachAdvice? _coachAdvise(
     }
     return null;
   }
+  // (La baisse vaut pour toutes les séries qui suivent dans la séance, pas
+  // seulement la suivante : jamais plus lourd que 92,5 % de la barre
+  // manquée.)
+  if (loaded &&
+      ex.fails < 2 &&
+      planned.role != SetRole.attempt &&
+      planned.role != SetRole.test) {
+    final plannedLoad = planned.loadKg;
+    final grid = info.grid;
+    final bw = info.fraction * run.bodyWeightKg;
+    double? cap;
+    for (final o in ex.observed) {
+      final kg = o.loadKg;
+      if (!o.unplannedFail || kg == null) {
+        continue;
+      }
+      var most = grid.floor((kg + bw) * 0.925 - bw);
+      if (most < grid.minimum) {
+        most = grid.minimum;
+      }
+      if (cap == null || most < cap) {
+        cap = most;
+      }
+    }
+    if (cap != null && plannedLoad != null && plannedLoad > cap + 1e-9) {
+      return CoachAdvice(
+        next: planned.withLoad(cap),
+        action: IntraSessionAction.loadDown,
+      );
+    }
+  }
 
   CoachAdvice stop(String cause) {
     final advice = CoachAdvice(

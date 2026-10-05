@@ -511,9 +511,17 @@ void noteCoachSession(
       firstTarget != null &&
       first.amount >= firstTarget.low &&
       rirOfFlames(firstSaid) - rirOfFlames(firstTarget.flames) >= 2 - 1e-9;
-  final reached = allTop || firstEasy
-      ? (marks[coach.slotId]?.reached ?? 0) + 1
-      : 0;
+  // La série ne compte qu'à charge (ou assistance) et plage égales : un cran
+  // retiré ou une plage changée la remet à zéro (relecture du code CX,
+  // correction 1).
+  final before = marks[coach.slotId];
+  var streak = 0;
+  if (before != null &&
+      before.amount == coach.schemeAmount &&
+      before.loadKg == held) {
+    streak = before.reached;
+  }
+  final reached = allTop || firstEasy ? streak + 1 : 0;
   marks[coach.slotId] = SlotMark(
     day: day,
     reached: reached,

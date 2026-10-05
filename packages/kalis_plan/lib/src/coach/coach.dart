@@ -463,6 +463,7 @@ final class CoachEngine {
     required AdaptationSummary? adaptation,
     required Pass1Plan pass1,
     required List<WeekPrescription> previous,
+    List<WeekPrescription> kept = const <WeekPrescription>[],
     Set<String> extraExcluded = const <String>{},
     List<(BodyZone, int)> extraPains = const <(BodyZone, int)>[],
     Map<int, int> minutesOverride = const <int, int>{},
@@ -499,6 +500,7 @@ final class CoachEngine {
       blockId: pass1.blockId,
       blockIndex: pass1.blockIndex,
       previous: previous,
+      kept: kept,
       volumeScale: volumeScale ?? adaptationVolumeScale(adaptation),
     );
   }
@@ -1087,6 +1089,7 @@ final class CoachEngine {
       adaptation: request.adaptation,
       pass1: after,
       previous: const <WeekPrescription>[],
+      kept: current.pass2.weeks.sublist(0, from),
       extraExcluded: excluded,
       extraPains: pains,
       minutesOverride: minutes,

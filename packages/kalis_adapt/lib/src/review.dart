@@ -392,7 +392,9 @@ AdaptReview buildReview(
           'sessions': stop.sessions,
         }),
       );
-    } else if (s.consecutiveAbove > 2) {
+    } else if (!view.coached && s.consecutiveAbove > 2) {
+      // Chemin 0.1 seulement : en mode coach, l'arrêt ci-dessus (et sa fin
+      // après deux semaines calmes) fait seul foi.
       reasons.add(
         reason(ReasonCodes.adaptPainPersistent, <String, Object?>{
           'zone': zone.code,
@@ -470,7 +472,7 @@ AdaptReview buildReview(
       ? SkillBoard.of(ctx, view, state, digests, day)
       : null;
   final tests = modern
-      ? testBenchmarks(ctx, input.log, day)
+      ? testBenchmarks(ctx, input.log, day, coached: view.coached)
       : const <Benchmark>[];
   List<Benchmark>? benchmarks;
   List<VolumeTolerance>? tolerance;

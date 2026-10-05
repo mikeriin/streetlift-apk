@@ -51,8 +51,9 @@ bool _below(Benchmark b, List<Benchmark> known) {
 List<Benchmark> testBenchmarks(
   EngineContext ctx,
   TrainingLog log,
-  int untilDay,
-) {
+  int untilDay, {
+  bool coached = false,
+}) {
   final p = ctx.params;
   final out = <Benchmark>[];
   for (final session in log.countedSessions) {
@@ -122,7 +123,9 @@ List<Benchmark> testBenchmarks(
             continue;
           }
           final made = set.externalLoadKg ?? 0;
-          final over = set.role == SetRole.attempt ? missed[id] : null;
+          final over = coached && set.role == SetRole.attempt
+              ? missed[id]
+              : null;
           // (Maximum du jour estimé à mi-chemin, au quart de kilo inférieur.)
           final kg = over == null
               ? made
@@ -182,7 +185,7 @@ List<Benchmark> testBenchmarks(
     // (Bilan à 2 sur 5 ou moins, nuit courte : CX, correction 1.)
     final lowDay =
         session.eventId == null &&
-        readHealth(session.healthCheck, p).level >= 1;
+        readHealth(session.healthCheck, p).level >= (coached ? 1 : 2);
     for (final b in found) {
       if (lowDay &&
           _below(b, <Benchmark>[...?ctx.profile.benchmarks, ...out])) {

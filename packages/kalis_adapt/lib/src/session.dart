@@ -583,6 +583,18 @@ SessionPlan buildSessionPlan(
             stops.any((x) => coachPainStopHits(info.exercise, x.zone))) {
           continue;
         }
+        // (Jamais hors du matériel ou du lieu du jour, ni une étape de
+        // figure dont le passage n'est pas acquis ; relecture du code CX,
+        // correction 1.)
+        final skill = item.skillTargetId;
+        if ((place != null &&
+                (!info.exercise.feasibleWith(equipment) ||
+                    !info.exercise.places.contains(place))) ||
+            (board != null &&
+                skill != null &&
+                !board.allowed(skill, item.exerciseId))) {
+          continue;
+        }
         final moved = _Draft(item, info, view.roleOf(item.slotId))
           ..sets = item.sets;
         drafts.insert(at, moved);

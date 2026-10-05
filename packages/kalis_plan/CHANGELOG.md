@@ -8,23 +8,37 @@ part). Détail et sources : `CONTRAT.md`, § 12.14 ; journal : `packages/kalis_b
 
 - **Douleur qui dure ou qui revient (sécurité)** : une raison `adapt.pain_persistent` du résumé
   d'adaptation (ou de la demande de restructuration) écarte du bloc tout mouvement qui provoque la zone
-  (`coachPainStopHits` : contrainte forte sur l'articulation, contrainte modérée du poignet sans prise
-  neutre, tirage en pronation pour le coude), avec une note « arrêt » (consulter un médecin ou un
-  kinésithérapeute ; reprise après deux semaines à 2/10 au plus) ; le bloc suivant reprend ces mouvements
-  à 50 % des séries, +10 % par semaine, 3 en réserve au moins (notes `pain_stop`, `pain_return`).
+  (`coachPainStopHits` : contrainte forte sur l'articulation ; pour le poignet, tout appui en extension sans
+  prise neutre, et sous contrainte forte seul un appui tenu — parallettes, anneaux, barres parallèles,
+  poignées — reste permis ; tirage en pronation pour le coude), avec une note « arrêt » (consulter un
+  médecin ou un kinésithérapeute ; reprise après deux semaines à 2/10 au plus) ; le bloc suivant reprend
+  ces mouvements à 50 % des séries, +10 % par semaine, 3 en réserve au moins (notes `pain_stop`,
+  `pain_return`).
 - **Tests** : placés à partir du troisième jour de la semaine (deuxième si la semaine n'a pas deux séances
-  assez tardives), jamais pendant une reprise ; les jours qui précèdent un test sont des jours faciles. Un
-  repère mesuré ne baisse qu'après deux mesures concordantes (dix semaines au plus) ; une mesure seule plus
-  basse cède devant le plus haut du test et de l'estimation du moteur d'évolution. Un record seulement
-  déclaré est recalé par le premier test mesuré.
+  assez tardives), jamais pendant une reprise ; les jours qui précèdent un test sont des jours faciles ; un
+  test de figure porte sur l'étape visée elle-même (jamais un remplaçant). Une baisse de 15 % au plus fait
+  foi ; au-delà, il faut deux mesures concordantes (le test mesuré le plus récent des dix semaines d'avant
+  est lui aussi sous 85 % du repère), sinon le plus haut du repère et de l'estimation sûre reste. Un record
+  déclaré ou testé n'est jamais abaissé par une estimation ; une barre de compétition plus basse que le 1RM
+  connu ne l'abaisse pas. Après un test mesuré depuis la reprise, pas de gain supposé.
 - **Plateau** : un test qui ne dépasse pas le repère d'avant change la méthode du bloc suivant (variantes
-  tempo excentrique, archer, typewriter pour le tirage) et le dit (note `plateau`).
+  tempo excentrique — 45 % du maximum en répétitions, note `slow_tempo` —, archer, typewriter pour le
+  tirage) et le dit (note `plateau`).
 - **Volume de répétitions au poids du corps** : +15 % par semaine au plus sur le maximum des trois semaines
-  d'avant, par famille de mouvement (séries, puis répétitions retirées) ; une seule variable monte à la fois
-  dans les blocs de densité.
-- **Figures de l'élite** : plus de tenues de remplissage quand l'étape plus facile dépasse 25 s ; partie
-  intense des tenues à 60, 70 puis 75 % du maximum (+2 % par palier, 80 % au plus), jusqu'à 10 séries quand
-  le maximum est de 5 s au plus.
+  d'avant, par famille de mouvement ; une seule variable monte à la fois dans les blocs de densité ; départs
+  au chrono : un départ de plus par semaine au plus, deux sur deux semaines au plus.
+- **Charges** : hausse comparée à la semaine précédente seule ; après une transition ou une introduction,
+  2,5 % de charge par répétition d'écart ; estimation du 1RM sans charge connue +3 % ; séries allégées à
+  65 % puis +3 % par palier des répétitions de la série lourde ; ouverture d'une épreuve à 98 % au moins du
+  plus lourd simple ou double des trois semaines d'avant (pourcentage affiché recalculé) ; pourcentage
+  affiché calculé sur la charge arrondie ; 1RM de référence écrit dans l'export ; repos de 2 min en phase
+  spécifique quand l'objectif est en répétitions.
+- **Figures** : tenues lourdes à 60, 65 puis 70 % du maximum (+2 % par palier, 75 % au plus, 70 % les jours
+  légers), arrondies sous la part visée ; plus de tenues de remplissage quand l'étape plus facile dépasse
+  25 s, sauf si l'objectif est une durée sur l'étape actuelle ; jusqu'à 10 séries quand le maximum est de
+  5 s au plus.
+- **Textes** : version courte de la séance (4 ou 5 min d'échauffement, un ou deux exercices, 2 séries),
+  point d'étape (une variable à la fois, pas de séries ajoutées), règle des départs au chrono réécrite.
 - **Échauffement** : montée 5 @40 %, 3 @60 %, 2 @75 %, 1 @85 %, écrite à chaque exercice concerné, aussi avant
   le muscle-up ; dips du débutant (ou assistés) à amplitude progressive.
 

@@ -493,6 +493,29 @@ List<String> checkCase(Catalog catalog, KalisAdapt engine, RandomCase c) {
       }
     }
   }
+  // I3 bis (CX, correction 1) : en mode coach, un test servi un jour de
+  // changement de lieu (reporté d'un autre jour ou non) se fait avec le
+  // matériel de ce lieu.
+  final place = c.place;
+  if (coached && place != null) {
+    var equipment = c.profile.equipment.toSet();
+    for (final pe in c.profile.equipmentByPlace ?? const <PlaceEquipment>[]) {
+      if (pe.place == place) {
+        equipment = pe.equipment.toSet();
+      }
+    }
+    for (final item in session.items) {
+      if (item.kind != SetKind.test) {
+        continue;
+      }
+      final e = catalog.exercise(item.exerciseId);
+      if (!e.feasibleWith(equipment) || !e.places.contains(place)) {
+        out.add(
+          '$where : test ${item.exerciseId} hors du matériel de ${place.code}',
+        );
+      }
+    }
+  }
   // I6 : même sortie sans cache.
   final text = jsonText(session.toJson());
   final fresh = KalisAdapt(params: p);

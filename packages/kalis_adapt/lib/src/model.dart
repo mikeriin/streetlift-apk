@@ -26,8 +26,9 @@ const int painPersistDays = 14;
 
 /// Écart toléré entre deux signalements d'un même épisode (choix
 /// raisonné : une séance manquée ou un jour sans bilan ne coupe pas un
-/// épisode).
-const int painEpisodeGapDays = 10;
+/// épisode ; deux semaines, la durée même du seuil de persistance, pour
+/// qu'une gêne signalée une fois par semaine ou moins reste un épisode).
+const int painEpisodeGapDays = 14;
 
 /// Jours à 2 sur 10 au plus avant de lever l'arrêt (relecture documentée
 /// CX : reprise seulement après deux semaines à 2 sur 10 au plus).
@@ -292,12 +293,12 @@ final class ExerciseTrack {
   /// séance de référence.
   double easeRatio = 1;
 
-  /// Copie indépendante.
   /// Jour d'une série repère qui a montré nettement moins que l'estimation
   /// (lue alors comme une borne basse), ou `null` : une baisse ne se lit
-  /// qu'à la deuxième mesure concordante (CX, correction 1).
+  /// qu'à la deuxième mesure concordante, un autre jour (CX, correction 1).
   int? lowProbeDay;
 
+  /// Copie indépendante.
   ExerciseTrack fork() {
     final c = ExerciseTrack(info, filter.fork());
     c.lowProbeDay = lowProbeDay;
@@ -1866,13 +1867,22 @@ final class SessionRun {
     // d'estimation abaissée sur une seule série d'un mauvais jour ; la note
     // sous-estime la réserve loin de l'échec, Zourdos et al. 2021).
     if (byFeel && !test && run.spec.coach != null && predicted > 0) {
+      final track = run.track!;
       if (implied < predicted * 0.9) {
-        final track = run.track!;
         final last = track.lowProbeDay;
+        // Le même mauvais jour ne confirme pas : la deuxième mesure vient
+        // d'une autre séance.
+        if (last == day) {
+          return true;
+        }
         if (last == null || day - last > 28) {
           track.lowProbeDay = day;
           return true;
         }
+        track.lowProbeDay = null;
+      } else {
+        // Une mesure conforme efface la borne basse en attente.
+        track.lowProbeDay = null;
       }
     }
     final short = target != null && amount < target.low;

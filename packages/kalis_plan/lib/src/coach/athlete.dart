@@ -102,6 +102,15 @@ const Set<String> coachNeutralGripEquipment = <String>{
   'sangles de suspension',
 };
 
+/// Appuis tenus qui gardent le poignet neutre même sous contrainte forte
+/// (sous-ensemble de [coachNeutralGripEquipment], sans barre ni sangles).
+const Set<String> coachNeutralSupportEquipment = <String>{
+  'barres parallèles',
+  'anneaux',
+  'parallettes',
+  'poignées',
+};
+
 /// Vrai si l'exercice [e] provoque la zone [zone] au sens de la règle
 /// d'arrêt d'une douleur qui dure (CX, correction 1, sécurité) :
 /// contrainte forte sur l'articulation de la zone ; pour le poignet, aussi
@@ -122,8 +131,17 @@ bool coachPainProvokes(CatalogExercise e, BodyZone zone) {
   // correction 1, panel : quatre semaines sans planche faisaient régresser
   // la figure visée).
   if (zone == BodyZone.wristHand) {
-    return stress != JointStress.low &&
-        !e.equipment.any(coachNeutralGripEquipment.contains);
+    if (stress == JointStress.low) {
+      return false;
+    }
+    // Contrainte forte : seul un appui tenu (parallettes, anneaux, barres
+    // parallèles, poignées) garde le poignet neutre ; une figure forte à
+    // la barre fixe charge le poignet en flexion et reste écartée
+    // (relecture du code CX, correction 1).
+    final neutral = stress == JointStress.high
+        ? coachNeutralSupportEquipment
+        : coachNeutralGripEquipment;
+    return !e.equipment.any(neutral.contains);
   }
   return stress == JointStress.high;
 }
@@ -554,7 +572,9 @@ final class Athlete {
         }
         // Forte baisse : une mesure seule est suspecte (test sur la
         // fatigue) ; il en faut une deuxième concordante, mesurée dans les
-        // dix semaines d'avant, sinon le repère (ou l'estimation sûre) reste.
+        // dix semaines d'avant — la plus récente d'entre elles —, sinon le
+        // repère (ou l'estimation sûre) reste.
+        Benchmark? prior;
         for (final o in profile.benchmarks ?? const <Benchmark>[]) {
           final when = o.date;
           if (identical(o, b) ||
@@ -571,6 +591,16 @@ final class Athlete {
           final value = unit == CapacityUnit.maxHoldSeconds
               ? o.seconds
               : o.reps;
+          final priorDate = prior?.date;
+          if (value != null &&
+              (priorDate == null || when.compareTo(priorDate) > 0)) {
+            prior = o;
+          }
+        }
+        if (prior != null) {
+          final value = unit == CapacityUnit.maxHoldSeconds
+              ? prior.seconds
+              : prior.reps;
           if (value != null && value < coachTestDropShare * before) {
             return kept(measured);
           }

@@ -661,8 +661,8 @@ String? coachReasonText(Reason r, Catalog catalog) {
         CoachNotes.submaximalHold =>
           'Tenues sous-maximales : 55 à 65 % de ton dernier maintien '
               'maximal mesuré les jours légers ; les jours lourds, 60 % en '
-              'construction, 70 % en intensification, 75 % en réalisation '
-              '(80 % au plus). Le volume se compte en secondes propres '
+              'construction, 65 % en intensification, 70 % en réalisation '
+              '(75 % au plus). Le volume se compte en secondes propres '
               'cumulées par séance (30 à 60 s sur le levier visé). Sur un '
               'levier dur, tenues courtes de 2 à 5 s, arrêt dès que la '
               'ligne se perd ; tu peux les enchaîner en grappes de 2 ou 3 '
