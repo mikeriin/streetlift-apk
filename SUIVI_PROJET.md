@@ -1,8 +1,15 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : CI1 (pipeline CP), version dev6.9.0 ; précédent : dev6.8.0 (CU)**  
-**Date : 5 octobre 2026, Europe/Paris — version : 6.9.0+108, affichée « dev6.9.0 » dans l'APK (versionCode réel fixé par la CI de build)**  
+**Passe actuelle : CI1b (pipeline CP), version dev6.9.1 ; précédent : dev6.9.0 (CI1)**  
+**Date : 5 octobre 2026, Europe/Paris — version : 6.9.1+109, affichée « dev6.9.1 » dans l'APK (versionCode réel fixé par la CI de build)**  
 **Statut : contrôlé en CI (branche `claude/ci-3d`, rendu réel sur émulateur Android) ; à valider par le propriétaire.**
+
+## CI1b — Paquets 0.2.2 (version dev6.9.1, pipeline CP)
+
+- **Paquets** : `kalis_plan` 0.2.2 et `kalis_adapt` 0.2.2 (branches fixes `etiquettes/…`, copie octet pour octet) ; `kalis_core` 0.4.2 et `kalis_koach` inchangés ; `pubspec.lock` à jour.
+- **Douleur qui dure** : carte « Arrêt pour douleur » en tête de la séance (`lib/adapt/health_check.dart`, `painStopsOf`, `painStopText`, `coachBlockPainNotes`) ; retrait expliqué (`adjustmentText`) ; notes `pain_stop`, `pain_return`, `pain_return_item`, `pain_step`, `pain_trend` affichées avec le bouclier (`isPainReason`).
+- **Test reporté** : un test retiré un jour de bilan bas est dit « reporté » ; servi par le moteur à une séance suivante de la semaine, il est affiché et journalisé à son emplacement d'origine (`adaptDay`, `adaptBlockItemFor`).
+- Tests : `test/ci1b_pain_test.dart` ; étape « douleur » ajoutée à `integration_test/street_ci1_test.dart`.
 
 ## CI1 — Intégration du street calibré (version dev6.9.0, pipeline CP)
 
