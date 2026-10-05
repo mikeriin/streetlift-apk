@@ -1619,7 +1619,7 @@ Corrections du chemin street faites sur la relecture du pilotage de CX, le panel
 relecture documentée indépendante (sources du web seulement), croisement avec `kalis_adapt` 0.2.2 et
 `kalis_bench` 0.2.1. Le chemin 0.1 n'est pas touché (mêmes programmes à l'octet près, version du moteur
 mise à part). Aucun type ni code de raison de `kalis_core` n'est ajouté ; les notes de coach `pain_stop`,
-`pain_return`, `pain_return_item`, `plateau`, `slow_tempo` et `event_zone` s'ajoutent au vocabulaire de
+`pain_return`, `pain_return_item`, `pain_step`, `plateau`, `slow_tempo` et `event_zone` s'ajoutent au vocabulaire de
 `plan.coach_note`. Journal et sources : `packages/kalis_bench/docs/CALIBRAGE_CX.md`, section « Correction 1 ».
 
 **Douleur qui dure (sécurité).** Une raison `adapt.pain_persistent` du résumé d'adaptation (ou de la
@@ -1632,14 +1632,14 @@ gardée sur prise neutre porte la note d'arrêt, jamais la note `pain_trend` (de
 bloc suivant rend ces mouvements à 50 % des séries, +10 % par semaine de charge, 3 en réserve au moins,
 les mouvements lestés vers 67,5 % du 1RM (`pain_return`, `pain_return_item`).
 
-**Repères.** Une mesure plus basse que le repère ne le fait baisser qu'avec une deuxième concordante (le
-test mesuré le plus récent des dix semaines d'avant est lui aussi sous le repère) : baisse de 15 % au plus
-→ le test fait foi ; plus forte → le plus haut du test et de l'estimation sûre ; sans confirmation, le
-repère reste. Exception : un muscle-up testé plus bas fait foi seul (mouvement à risque). Une estimation
-du moteur d'évolution ne défait pas un test des quatre semaines d'avant ; elle ne baisse jamais un 1RM
-déclaré ou testé. Un 1RM mesuré par un test guidé ou une compétition fait foi ; un record déclaré ou une
-estimation peut être relevé d'après le maximum au poids du corps. Une barre de compétition plus basse que
-le 1RM connu ne l'abaisse pas. Après un test mesuré depuis la reprise, pas de gain supposé. Les tests sont
+**Repères.** Un test plus bas que le repère fait foi, même seul et quelle que soit la baisse : le bloc
+suivant est écrit sur le résultat (« série de tête = résultat − 2 ») ; seule une estimation sûre et récente
+du moteur d'évolution le relève, jamais au-dessus du repère d'avant (un muscle-up testé plus bas fait foi
+tel quel). Une estimation ne défait pas un test des quatre semaines d'avant ; elle ne baisse jamais un 1RM
+déclaré ou testé. Un 1RM tiré d'une série de deux répétitions ou plus ne fait pas tomber seul un 1RM connu
+de plus de 15 % (`coachEstimateDropShare`). Seul un 1RM estimé est relevé d'après le maximum au poids du
+corps ; un 1RM déclaré, testé ou de compétition fait foi. Une barre de compétition plus basse que le 1RM
+connu ne l'abaisse pas. Après un test mesuré depuis la reprise, pas de gain supposé. Les tests sont
 placés à partir du troisième jour de la semaine (deuxième sinon), jamais pendant une reprise ; un test de
 figure porte sur l'étape visée elle-même.
 
@@ -1650,15 +1650,24 @@ plus), la séance de force du mouvement visé devient une séance de la zone de 
 exact.
 
 **Zone de l'épreuve.** En réalisation d'un objectif de répétitions maximales, les séries de volume du
-mouvement visé passent à 72-80 % du maximum, 90 s de repos (75 s chez l'avancé), 2 en réserve (note
-`event_zone`). Le repos-pause sur le mouvement principal est réservé à l'avancé et à l'élite.
+mouvement visé passent à 72-80 % du maximum, 90 s de repos (75 s chez l'avancé), 2 en réserve au moins
+(note `event_zone`), répétitions + réserve jamais au-dessus du repère.
+
+**Répétitions et réserve.** Au poids du corps, sur un maximum de répétitions, toute série de travail garde
+répétitions + réserve écrite ≤ repère (passe `_fitReserve` après le réglage des minutes ; une pratique
+d'une répétition garde sa réserve). R1-P14 ; panel CX correction 1, passe 5.
+
+**Recul d'étape pour douleur.** Quand la douleur écarte l'étape de travail d'une figure, l'étape plus
+facile servie à sa place porte la note `pain_step` (raison, retour après deux semaines à 2/10 au plus, test
+de l'étape remis à ce retour). Le repos-pause sur le mouvement principal est réservé à l'avancé et à l'élite.
 
 **Volume et densité.** Répétitions au poids du corps : +15 % par semaine au plus sur le maximum des trois
 semaines d'avant, par famille de mouvement. Départs au chrono : un de plus par semaine au plus, deux sur
 deux semaines au plus ; sous dix répétitions de maximum, la densité monte par les départs seulement ; le
 premier départ garde 5 répétitions en réserve ; sous sept, le chrono cède la place à des séries de volume.
 Tenues du débutant : +15 % (2 s au moins) par semaine au plus sur la plus longue des trois semaines
-d'avant ; la part affichée suit la tenue écrite.
+d'avant, jamais sous 55 % du maintien testé (`coachHoldFloorShare`) ; la part affichée suit la tenue
+écrite.
 
 **Charges.** Hausse comparée à la semaine précédente seule ; après une transition ou une introduction,
 2,5 % de charge totale par répétition d'écart ; estimation de 1RM sans repère +3 % ; séries allégées des
@@ -1682,25 +1691,29 @@ menton au-dessus de la barre non borné à 30 s (une fois et demie le dernier ma
 | --- | --- | --- |
 | Arrêt sur douleur qui dure | 3/10 deux semaines, 5/10 plus d'une semaine, ou retour dans les 12 semaines | Coombes et al. 2015 ; Silbernagel et al. 2007 ; NHS |
 | Reprise après l'arrêt | après 2 semaines à 2/10 au plus ; 50 %, +10 %/semaine ; lesté vers 67,5 % | Coombes 2015 ; Gabbett 2016 ; relecture documentée CX |
-| Baisse d'un repère | deux mesures concordantes ; ≤ 15 % : le test fait foi | Bosquet et al. 2007 ; Helms et al. 2018 ; choix raisonné |
+| Baisse d'un repère | le test fait foi (relevé seulement par l'estimation sûre) | R1-P12, R1-P14 ; panel CX c1 passe 5 |
+| Baisse d'un 1RM par une série de ≥ 2 rép. | 15 % au plus | R2-P4 (erreur des formules) ; choix raisonné |
+| Répétitions + réserve | ≤ repère | R1-P14 |
 | Hausse des répétitions au poids du corps | +15 %/semaine (max. des 3 semaines d'avant) | R5-P22 ; Gabbett 2016 |
 | Zone de l'épreuve | 72-80 % du maximum, 90 s, 2 en réserve | R4-G1, R4-G3, R4-G4 |
 | Repos-pause sur le principal | avancé et élite | R2-P13, R4-G6 |
 | Affûtage, séances lourdes | doubles à 86 % | R3-P13 ; Bosquet 2007 ; R2-P2 |
-| Tenues du débutant | +15 %/semaine, 2 s au moins | R5-P22 |
+| Tenues du débutant | +15 %/semaine, 2 s au moins, ≥ 55 % du test | R5-P22 ; R4-F2 |
 | Tenues de figure | 60/65/70 % (+2 %/palier, ≤ 75 %) | Oranchuk et al. 2019 ; R4-F2 |
 | Charge par répétition d'écart | 2,5 % de la charge totale | R2-P2 (table %-répétitions) |
 | Ouverture d'épreuve | ≥ 98 % du plus lourd simple ou double des 3 semaines | R3-P14, R3-P15 ; Travis et al. 2021 |
 
 Invariants ajoutés aux tests (`test/coach_test.dart`, groupe « CX correction 1 » ;
-`test/coach_properties.dart`) : arrêt et reprise graduée (poignet, coude) ; deux mesures avant de baisser
-(dont la plus récente) ; tests après le premier jour de la semaine ; hausse de répétitions ≤ 15 % ;
+`test/coach_properties.dart`) : arrêt et reprise graduée (poignet, coude) ; test plus bas qui fait foi
+(baisse modérée ou forte) ; 1RM non abaissé de plus de 15 % par une série de plusieurs répétitions ;
+répétitions + réserve ≤ repère ; tests après le premier jour de la semaine ; hausse de répétitions ≤ 15 % ;
 poignet sous contrainte forte à la barre fixe écarté ; affûtage ≥ 85 % ; essais stricts seulement sans
-traction ; tenue du débutant +15 % au plus ; une restructuration de portée bloc n'ajoute aucune hausse de
+traction ; tenue du débutant +15 % au plus et 55 % du test au moins ; une restructuration de portée bloc n'ajoute aucune hausse de
 volume trop rapide au programme d'origine.
 
 Limites : en restructuration de portée semaine ou séance, les séances gardées et les semaines suivantes
 restent celles du bloc d'origine, mêlées à la réécriture (des hausses de volume trop rapides apparaissent
 dans des saisons de scénario de douleur) ; le front lever de l'élite (tenues longues sur un demi-palier),
 le critère de passage d'une figure relatif au maximum, le volume de tirage et l'échelle de poussée du
-débutant, une troisième exposition à la traction (`street_17`) relèvent de CP2.
+débutant, une troisième exposition à la traction (`street_17`), la progression des tenues d'une figure
+jusqu'au critère de passage (`street_05`) relèvent de CP2.

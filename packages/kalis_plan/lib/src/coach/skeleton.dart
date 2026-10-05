@@ -2468,8 +2468,7 @@ void _buildFigures(_Builder b, Set<int> runDays) {
       // plus facile.
       // (Étape de travail écartée par la douleur : l'étape plus facile la
       // remplace, avec la raison et le retour écrits.)
-      final painStep =
-          easier != null && a.rejection(t.currentId, d) == 'joint';
+      final painStep = easier != null && a.rejection(t.currentId, d) == 'joint';
       b.add(
         d,
         <String>[t.currentId, if (easier != null) easier],
