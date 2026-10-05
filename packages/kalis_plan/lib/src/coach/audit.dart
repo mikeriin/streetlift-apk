@@ -320,15 +320,16 @@ List<String> coachAudit(
               // À répétitions différentes (CP2, partie 0) : 2,5 % par
               // répétition de moins, deux répétitions au plus, hors pic de
               // forme et hors reprise après une transition.
+              // (Seulement quand les répétitions baissent : c'est ce qui
+              // autorise une charge plus haute ; le banc ne borne la hausse
+              // qu'à schéma égal.)
               if (before != null &&
                   before.$1 == global - 1 &&
-                  before.$3 != reps &&
+                  before.$3 > reps &&
                   !restartBefore &&
                   !peaking) {
-                // (Plus de répétitions à charge égale ou plus basse : pas
-                // une hausse de charge ; la borne vaut alors 1 + hausse.)
                 final fewer = before.$3 - reps;
-                final delta = fewer > 2 ? 2 : (fewer < 0 ? 0 : fewer);
+                final delta = fewer > 2 ? 2 : fewer;
                 final factor =
                     1 + coachLoadRise[level] + coachLoadPerRep * delta;
                 if (total / before.$2 > factor + 1e-9) {
