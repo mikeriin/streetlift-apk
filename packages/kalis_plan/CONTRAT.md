@@ -1683,6 +1683,14 @@ l'étape actuelle.
 **Restructuration.** Les semaines déjà écrites et gardées du bloc nourrissent les garde-fous de volume et
 de charge de la réécriture (`Prescriber.kept`).
 
+**Étape de figure sautée.** L'étape de travail ou la figure visée d'une piste du profil (`skills`) reste au
+bloc suivant même quand le moteur d'évolution la signale comme sautée (`avoidedExerciseIds`) ; seul
+l'arrêt pour douleur l'écarte (panel CX correction 1, passe 5, `street_10`).
+
+**Poignet douloureux.** À 3/10 ou plus, ou zone à l'arrêt, la préparation des poignets en appui
+(`coachWristLoadedPrep`) est écartée ; rotations et pressions des doigts la remplacent (relecture
+documentée CX, `street_01`).
+
 **Débutant.** Préparation des poignets à l'échauffement des séances d'appui ; essais isolés de traction
 stricte écrits seulement pour qui n'en a pas encore une (`band_choice`, `value` + 100) ; test de la tenue
 menton au-dessus de la barre non borné à 30 s (une fois et demie le dernier maintien).

@@ -161,6 +161,7 @@ List<ProgramBlock> _programWith(
   int weeks, {
   List<Reason> Function(int block)? reasonsFor,
   AthleteProfile Function(int block)? profileFor,
+  List<String> Function(int block)? avoidedFor,
 }) {
   final engine = KalisPlan();
   final request = _request(profile);
@@ -190,7 +191,9 @@ List<ProgramBlock> _programWith(
           confidence: 0,
           estimates: const <ExerciseEstimate>[],
           pains: const <PainTrend>[],
-          avoidedExerciseIds: const <String>[],
+          avoidedExerciseIds: avoidedFor == null
+              ? const <String>[]
+              : avoidedFor(n),
           reasons: reasonsFor == null ? const <Reason>[] : reasonsFor(n),
         ),
         locks: const <PlanLock>[],
@@ -1100,6 +1103,44 @@ void main() {
         expect(returning, greaterThan(0));
       });
     }
+
+    test('étape de travail sautée : gardée au bloc suivant', () {
+      final figures = _profile(
+        experience: ExperienceLevel.advanced,
+        weekdays: const <int>[1, 3, 5],
+        minutes: 90,
+        benchmarks: <Benchmark>[
+          _maxReps('sw-traction-pronation', 15),
+          _maxReps('sw-dips-barres-paralleles', 25),
+          Benchmark(
+            exerciseId: 'cs-planche-straddle',
+            kind: BenchmarkKind.maxHold,
+            source: BenchmarkSource.declared,
+            seconds: 6,
+          ),
+        ],
+        skills: const <SkillState>[
+          SkillState(
+            targetExerciseId: 'cs-planche',
+            currentExerciseId: 'cs-planche-straddle',
+          ),
+        ],
+      );
+      bool serves(ProgramBlock b) => b.pass2.weeks.any(
+        (w) => w.days.any(
+          (d) => d.items.any((i) => i.exerciseId == 'cs-planche-straddle'),
+        ),
+      );
+      expect(serves(_programWith(catalog, figures, 4).first), isTrue);
+      final blocks = _programWith(
+        catalog,
+        figures,
+        8,
+        avoidedFor: (n) => const <String>['cs-planche-straddle'],
+      );
+      expect(blocks.length, greaterThanOrEqualTo(2));
+      expect(serves(blocks[1]), isTrue);
+    });
 
     test('forte baisse : le test seul fait foi', () {
       Benchmark tested(int reps, int daysAgo) => Benchmark(
