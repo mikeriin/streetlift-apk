@@ -1,0 +1,114 @@
+## autres_01_debutant_musculation
+Homme de 22 ans, 68 kg, jamais entraîné. Veut prendre du muscle et de la force. Trois séances d'une heure, en salle.
+ - Corps entier trois fois par semaine, 6 à 10 séries dures par groupe, 8 à 15 répétitions, 2 à 4 en réserve (R6-P1 à P3).
+ - Polyarticulaires d'abord (squat ou presse, développé, tirage, charnière), un exercice par muscle, amplitude complète (R6-P4, P5).
+ - Double progression, charges à calibrer sur les premières séances, aucun 1RM vrai (R5-P3, R3-P16).
+ * min_rir_first_weeks Au moins 2 répétitions en réserve les quatre premières semaines
+ * pattern_present Squat ou presse au moins deux fois par semaine
+ * pattern_present Tirage au moins deux fois par semaine
+ * max_group_sets Pectoraux : pas plus de 12 séries dures par semaine
+ * min_group_sets Quadriceps : au moins 5 séries dures par semaine
+ * max_exercise_level Aucun exercice avancé ou élite
+## autres_02_hypertrophie_intermediaire
+Femme de 27 ans, 61 kg, trois ans de musculation. Squat 80 kg, développé couché 45 kg, hip thrust 110 kg. Veut développer fessiers et épaules. Cinq séances de 75 minutes, en salle.
+ - 10 à 16 séries dures par groupe et par semaine ; points faibles à +30 à 50 % de séries, en début de séance, deux à trois fois par semaine ; le reste en entretien (R6-P1, R6-P6).
+ - Polyarticulaires en 6 à 10 répétitions à 1-3 en réserve, isolations en 10 à 20 à 0-2 ; un exercice en position étirée par muscle (R6-P2, R6-P4).
+ - Répartition déduite des cinq jours : haut / bas ou poussée / tirage / jambes, pas plus de 10 séries par muscle et par séance (R6-P3).
+ - Décharge toutes les 4 à 8 semaines (R6-P1).
+ * min_group_sets Fessiers : au moins 14 séries dures par semaine
+ * min_group_sets Deltoïde moyen : au moins 10 séries dures par semaine
+ * max_group_sets Fessiers : pas plus de 25 séries dures par semaine
+ * relief_every Pas plus de 7 semaines de charge sans allègement
+ * pattern_present Isolation des épaules au moins deux fois par semaine
+## autres_03_powerlifter_competition
+Homme de 32 ans, 93 kg, six ans de force athlétique. Squat 220 kg, développé couché 150 kg, soulevé de terre 260 kg. Compétition dans 10 semaines. Quatre séances de deux heures.
+ - Squat deux à trois fois, couché trois à quatre fois, terre une à deux fois par semaine (R6-P8) ; intensité moyenne de 75 à 85 % avec des expositions régulières à 90 % et plus (R6-P9).
+ - Une variante par mouvement ciblant la phase faible, accessoires en baisse à l'approche de la compétition (R6-P10).
+ - Affûtage de 10 à 14 jours, volume réduit de 30 à 60 %, dernier squat et dernier terre lourds de J-10 à J-7, couché de J-7 à J-5 (R6-P11).
+ * has_taper Volume réduit de 30 à 70 % la semaine de la compétition
+ * min_frequency Squat au moins deux fois par semaine
+ * min_frequency Développé couché au moins trois fois par semaine
+ * min_frequency Soulevé de terre au moins une fois par semaine
+ * load_prescribed Charges chiffrées sur les trois mouvements
+ * heavy_exposure Une exposition lourde par semaine au moins au squat
+ * test_at_event Épreuve sur les trois mouvements la semaine de la compétition
+## autres_04_force_generale_46_ans
+Homme de 46 ans, 85 kg, deux ans de musculation. Squat 100 kg, développé couché 80 kg, soulevé de terre 130 kg. Lombalgie il y a huit mois, plus de gêne. Trois séances de 75 minutes.
+ - Trois séances corps entier ou presque, 75 à 90 % sur les mouvements de base, 8 à 12 séries par mouvement et par semaine (R6-P9).
+ - Antécédent lombaire de moins de 12 mois : progression à demi-vitesse sur la charnière et le squat lourds, aucun échec dessus, vigilance dès 3 sur 10 (R5-P20).
+ - 40 à 59 ans : progression de volume ralentie, échauffement allongé (R5-P10) ; mobilité utile en complément (R6-P24).
+ * min_frequency Squat au moins deux fois par semaine
+ * load_prescribed Charges chiffrées au squat et au développé couché
+ * relief_every Pas plus de 6 semaines de charge sans allègement
+ * min_rir_first_weeks Jamais moins d'une répétition en réserve
+ * min_weekly_minutes Au moins 20 minutes de mobilité par semaine
+## autres_05_course_10_km_debutante
+Femme de 34 ans, 64 kg, court depuis six mois : 5 km en 35 minutes. Veut finir un 10 km dans 12 semaines. Trois séances de 45 à 60 minutes.
+ - Tout en endurance facile pendant 6 à 8 semaines, puis au plus une séance de qualité par semaine (R6-P15).
+ - Progression en minutes ; aucune sortie au-delà de 110 % de la plus longue des 30 derniers jours ; semaine allégée toutes les 3 à 4 semaines (R6-P16).
+ - Sortie longue de 20 à 30 % du volume hebdomadaire (R6-P19) ; affûtage court de 5 à 7 jours (R6-P20).
+ - Deux petites séances de renforcement (mollets, hanches) dès le début (R6-P17, R6-P22).
+ * min_weekly_minutes Au moins 90 minutes de course par semaine
+ * forbid_patterns Pas de sprint
+ * has_taper Semaine de la course allégée d'au moins 20 %
+ * relief_every Pas plus de 4 semaines de charge sans allègement
+ * max_session_minutes Séances de 65 minutes au plus
+## autres_06_semi_marathon_intermediaire
+Homme de 38 ans, 72 kg, court depuis quatre ans : 10 km en 48 minutes, 30 km par semaine. Semi-marathon dans 12 semaines, objectif 1 h 45. Quatre séances.
+ - Volume de pointe de 35 à 55 km par semaine, sortie longue de 18 à 22 km, quatre à cinq séances (R6-P19).
+ - 80 % en endurance facile, une à deux séances de qualité (seuil, intervalles de 3 à 4 minutes), jamais deux jours intenses de suite (R6-P15, R6-P18).
+ - Hausse hebdomadaire de 10 à 20 %, jamais 30 % ; semaine allégée toutes les 3 à 4 semaines (R6-P16).
+ - Affûtage de 10 à 14 jours, volume réduit de 40 à 60 %, rappels d'allure conservés (R6-P20).
+ - Un à deux renforcements par semaine, coupés 7 à 10 jours avant (R6-P22).
+ * min_weekly_minutes Au moins 180 minutes de course par semaine
+ * pattern_present Une séance de qualité (fractionné) par semaine
+ * min_frequency Sortie longue chaque semaine
+ * relief_every Pas plus de 4 semaines de charge sans allègement
+ * weeks_kind_present Une semaine allégée ou de test avant la course
+## autres_07_mobilite_sante_senior
+Femme de 68 ans, 63 kg, marche régulièrement, jamais de musculation. Veut rester autonome, gagner en souplesse et en équilibre. Quatre séances de 30 minutes à la maison. Questionnaire santé : mode prudent.
+ - Programme multicomposant : équilibre au moins trois jours par semaine, renforcement deux à trois jours, marche pour viser 150 minutes par semaine (R6-P26, R6-P21).
+ - Senior débutant : assis-debout, appui disponible, 1 à 2 séries de 10 à 15 répétitions à effort modéré ; la difficulté d'équilibre progresse avant la charge (R6-P26).
+ - Aucun impact ni saut ; étirements de 30 à 60 s, cinq jours par semaine pour progresser (R6-P23).
+ - L'intensité relative n'est pas bridée par l'âge quand la personne progresse (R5-P10).
+ * forbid_patterns Ni saut, ni sprint, ni corde
+ * min_weekly_minutes Au moins 30 minutes de mobilité par semaine
+ * max_session_minutes Séances de 33 minutes au plus
+ * min_rir_first_weeks Au moins 3 répétitions en réserve
+ * pattern_present Renforcement des jambes (squat, fente, assis-debout) au moins deux fois par semaine
+## autres_08_crossfit_intermediaire
+Homme de 29 ans, 80 kg, deux ans de CrossFit. Squat 120 kg, épaulé-jeté 80 kg, 10 tractions strictes. Cinq séances d'une heure en box.
+ - Séance type : échauffement, bloc de force ou de technique de 15 à 20 minutes, conditionnement de 8 à 20 minutes ; durées mélangées sur la semaine (court, moyen, long) (R6-P27).
+ - Formats codifiés attendus : AMRAP, EMOM, tours chronométrés (R6-P27).
+ - Pas d'haltérophilie lourde ni de gymnastique technique sous fatigue pour qui ne les maîtrise pas frais ; strict avant kipping (R6-P28).
+ - Trois à cinq séances ; pas deux jours longs et lourds de suite sur les mêmes schémas (R6-P27).
+ * format_present Formats codifiés (AMRAP, EMOM, tours)
+ * pattern_present Haltérophilie ou force à la barre au moins trois fois par semaine
+ * min_weekly_minutes Au moins 30 minutes de conditionnement par semaine
+ * relief_every Pas plus de 7 semaines de charge sans allègement
+ * min_frequency Travail vers le muscle-up au moins deux fois par semaine
+## autres_09_perte_de_poids_debutante
+Femme de 42 ans, 92 kg pour 1,68 m, sédentaire. Veut perdre du poids durablement. Trois séances de 45 minutes en salle, et de la marche.
+ - Musculation corps entier deux à trois fois par semaine, 6 à 8 exercices, 2 à 3 séries de 8 à 12 répétitions à 2-3 en réserve ; la charge progresse normalement, même en déficit (R6-P31).
+ - Cardio à faible impact : marche, vélo, rameur ; ni course, ni sauts, ni burpees au début (R6-P32).
+ - Exercices stables où la personne se sent compétente (machines, appuis stables) (R6-P32).
+ - Aucune prescription alimentaire (R6-P31).
+ * forbid_patterns Ni saut, ni sprint, ni corde, ni burpees
+ * forbid_exercises Pas de course à pied au début
+ * min_weekly_minutes Au moins 30 minutes de cardio à faible impact par semaine
+ * min_rir_first_weeks Au moins 2 répétitions en réserve les quatre premières semaines
+ * min_group_sets Quadriceps : au moins 4 séries dures par semaine
+ * max_exercise_level Exercices de niveau débutant ou intermédiaire
+## autres_10_contraintes_multiples
+Homme de 55 ans, 88 kg, reprend après des années. Genou droit sensible (gêne 5 sur 10), épaule gauche opérée il y a deux ans, sommeil de six heures, questionnaire santé en mode prudent. Deux séances de 40 minutes et une de 30, à la maison avec haltères et élastiques.
+ - Mode prudent : aucun impact, charges modérées, 3 répétitions en réserve au moins, aucune isométrie maximale longue, respiration continue (R5-P28, R5-P26).
+ - Genou à 5 sur 10 : aucune flexion profonde sous charge, variantes dans l'amplitude indolore, cardio sans appui contraignant (vélo) (R5-P23).
+ - Reprise après une très longue coupure : 1 à 2 séries par exercice, montée sur 6 à 10 semaines (R5-P7).
+ - Épaule opérée il y a plus de 12 mois, sans gêne : volume normal, vigilance (R5-P20).
+ - Séances courtes : 3 à 5 mouvements, dose minimale (R5-P1).
+ * forbid_joint_stress Aucun exercice à contrainte forte sur le genou
+ * forbid_patterns Ni saut, ni sprint, ni course
+ * min_rir_first_weeks Au moins 3 répétitions en réserve sur les 12 semaines
+ * max_session_minutes Séances de 44 minutes au plus
+ * max_group_sets Quadriceps : pas plus de 8 séries dures par semaine
+ * min_weekly_minutes Au moins 15 minutes de mobilité par semaine

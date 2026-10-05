@@ -9,7 +9,9 @@ rm -rf $T && mkdir -p $T
 (cd $WT && git ls-files -co --exclude-standard -z | xargs -0 cp --parents -t $T/)
 rm -rf $T/.github
 mkdir -p $T/cp2-outils
-for f in page fmtsync.py panel.py ci.sh save.sh aa_fmt notes docs; do
+mkdir -p $T/p1-travail
+(cd /home/claude/p1 && git diff --binary $(git merge-base HEAD cp2-travail) HEAD > $T/p1-travail/partie1.diff; cp packages/kalis_plan/lib/src/coach/general.dart $T/p1-travail/)
+for f in page fmtsync.py panel.py ci.sh save.sh aa_fmt notes docs tools draft SAUVEGARDE.md; do
   [ -e /home/claude/cp2/$f ] && cp -r /home/claude/cp2/$f $T/cp2-outils/ || true
 done
 cp /home/claude/cp2/SAUVEGARDE.md $T/SAUVEGARDE.md
