@@ -748,9 +748,12 @@ String? coachReasonText(Reason r, Catalog catalog) {
                     "sont propres ; l'étape suivante seulement quand le "
                     "critère de passage de l'échelle est atteint.",
         CoachRules.densityStep =>
-          'Départs au chrono : un départ de plus toutes les deux semaines '
-              "au plus ; les répétitions par départ ne montent qu'après "
-              'un test.',
+          'Départs au chrono : une seule variable monte à la fois — un '
+              'départ de plus toutes les deux semaines au plus, ou, dans la '
+              "phase spécifique d'une épreuve de répétitions, environ 5 % "
+              'du maximum de plus par départ chaque semaine (le nombre de '
+              'départs reste) ; hors de cette phase, les répétitions par '
+              "départ ne montent qu'après un test.",
         CoachRules.durationStep =>
           'Progression : durée +${_int(step)} % par semaine au plus.',
         _ => null,

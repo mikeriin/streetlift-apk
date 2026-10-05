@@ -2760,15 +2760,17 @@ final class Prescriber {
         _level >= 1;
     var part = share;
     if (intense) {
+      // (65 % puis 70 % : panel CX correction 1, plafond écrit de 80 %
+      // dépassé en réalisation après arrondi.)
       part = switch (ws.intent) {
-        WeekIntent.intensification => 0.70,
-        WeekIntent.realization => 0.75,
+        WeekIntent.intensification => 0.65,
+        WeekIntent.realization => 0.70,
         _ => 0.60,
       };
     }
     if (ws.kind == WeekKind.build && known > 0) {
       part += 0.02 * (stage > 2 ? 2 : stage);
-      final top = intense ? 0.80 : 0.70;
+      final top = intense ? 0.75 : 0.70;
       if (part > top) {
         part = top;
       }
@@ -2778,7 +2780,7 @@ final class Prescriber {
     // tenue « à 60 % » une tenue à 50 % — panel CX correction 1, front
     // lever de `street_10` à 4 s pour un repère de 8 s.)
     var hold = known > 0 ? (known * part + 1e-9).round() : fallback;
-    if (known > 0 && hold > known * (part + 0.05) + 1e-9) {
+    if (known > 0 && hold > known * (part + 0.04) + 1e-9) {
       hold = (known * part + 1e-9).floor();
     }
     if (known <= 0 && ws.kind == WeekKind.build && stage >= 2) {

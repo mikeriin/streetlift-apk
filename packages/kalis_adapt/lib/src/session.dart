@@ -390,6 +390,13 @@ SessionPlan buildSessionPlan(
           'sessions': stop.sessions,
         }),
       ];
+      // (La consigne — arrêt, consulter, reprise graduée — figure sur la
+      // séance même quand la douleur du jour a déjà remplacé les
+      // mouvements : panel CX correction 1, gêne à 4/10 six semaines sans
+      // la règle « douleur qui dure ».)
+      if (!sessionReasons.contains(why.first)) {
+        sessionReasons.add(why.first);
+      }
       for (final d in drafts) {
         final info = d.info;
         if (d.removed ||
