@@ -592,7 +592,7 @@ String? coachReasonText(Reason r, Catalog catalog) {
               : 'Hauteur des mains, à régler à la première séance : '
                     "l'appui où ton maximum propre est de 12 à 14 répétitions. "
                     'Note la hauteur en cm : elle sert aux séances et au test, '
-                    "et ne change ensuite que par le critère de l'échelle.',
+                    "et ne change ensuite que par le critère de l'échelle.",
         CoachNotes.testRest =>
           '${_int(v)} h sans travail dur du mouvement avant un test.',
         CoachNotes.rampBodyweight =>
