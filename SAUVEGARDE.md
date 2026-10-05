@@ -39,3 +39,7 @@ Base : `moteurs` 9526ac47 (kalis_plan 0.2.2, kalis_adapt 0.2.2, kalis_bench 0.2.
 - Relecture documentée (3 Opus, sources web, 8 saisons dev 7) : 01 6,5 ; 03 5,5 ; 06 6,5 ; 07 6,5 ; 08 5,5 ; 10 5 ; 12 7 ; 14 6 (ca2-outils/notes/reldoc). Constat commun : estimations baissées par des séries faciles ou arrêtées tôt, tentatives à 90-92 %.
 - Boucle 3 (dev 03e643c6) : série lourde lue avec le biais appris (coachHeavyBoundReps 8), série arrêtée sous la cible lue comme borne (deuxième mesure), bilan bas comparé à la dernière séance d'une semaine de charge (SlotMark.loadedTop / loadedLoadKg), élastique 7 jours.
 - Contrôle full f3fe571b annulé par le dev de la boucle 3 (même groupe de concurrence).
+
+## Avancement 05/10 ~22:50 UTC
+- Contrôle dev boucle 3 (run 37380907642) : tests verts (243), analyse OK, formatage model.dart corrigé (copie aa_fmt). Banc : échéance 94,4 → 95,0 % du max réel, tentatives 96,6 → 95,3 %, échecs non voulus 0,21 → 0,23 %, écart d'effort 1,085 → 1,069, violations 0,0153 → 0,0135, hausses douloureuses 0. Gain mesuré → boucle gardée.
+- Exports p3 (ci8) : changement > 10 % pour 07, 12, 13 (05 à 9,7 %) → renote p3 de 05, 07, 12, 13.
