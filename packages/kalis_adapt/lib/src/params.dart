@@ -766,8 +766,9 @@ final class AdaptParams {
   /// semaines d'arrêt — Bosquet et al. 2013).
   final int coachHoldBestDays;
 
-  /// Gain du maximum du jour après un affûtage (semaine d'affûtage ou de
-  /// compétition, ou la semaine d'avant), pris en compte par les
+  /// Gain du maximum du jour après un affûtage (pendant une semaine
+  /// d'affûtage ou de compétition, ou la semaine qui suit), pris en compte
+  /// par les
   /// tentatives : 2 %, le bas de la fourchette mesurée chez les
   /// powerlifters (Travis et al. 2020 : +1,8 à 6,4 % selon le mouvement
   /// après un affûtage d'une à deux semaines). Choix prudent (CA2, partie

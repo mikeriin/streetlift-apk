@@ -124,6 +124,7 @@ ExerciseInfo? findSubstitute(
     for (final entry in pains.entries) {
       if (neutralWrist &&
           entry.key == BodyZone.wristHand &&
+          entry.value < p.coachPainStop &&
           !coachPainProvokes(e, BodyZone.wristHand)) {
         // Mode coach : un appui à prise neutre (barres parallèles,
         // parallettes, poignées) garde la poussée quand le poignet est
@@ -435,7 +436,8 @@ SessionPlan buildSessionPlan(
   // séance (pas remplacé par une variante plus douce de la même zone),
   // jusqu'à deux semaines à 2 sur 10 au plus ; consulte (règle du bloc).
   if (coached) {
-    for (final stop in state.painStops(day)) {
+    final allStops = state.painStops(day);
+    for (final stop in allStops) {
       final why = <Reason>[
         reason(ReasonCodes.adaptPainPersistent, <String, Object?>{
           'zone': stop.zone.code,
@@ -457,9 +459,12 @@ SessionPlan buildSessionPlan(
             !coachPainStopHits(info.exercise, stop.zone)) {
           continue;
         }
-        // Une variante qui ne provoque pas la zone (poignet : appui à prise
-        // neutre) garde le mouvement ; sinon il est retiré (CA2, partie 0).
-        final substitute = info.mode == null || d.item.kind == SetKind.test
+        // Poignet : un appui à prise neutre, qui ne provoque aucune zone à
+        // l'arrêt, garde le mouvement ; sinon il est retiré (CA2, partie 0).
+        final substitute =
+            stop.zone != BodyZone.wristHand ||
+                info.mode == null ||
+                d.item.kind == SetKind.test
             ? null
             : findSubstitute(
                 ctx,
@@ -469,7 +474,9 @@ SessionPlan buildSessionPlan(
                 pains: painsToday,
                 taken: taken,
                 neutralWrist: true,
-                avoid: (e) => coachPainStopHits(e, stop.zone),
+                avoid: (e) =>
+                    allStops.any((x) => coachPainStopHits(e, x.zone)) ||
+                    comeback.heldFor(e),
               );
         if (substitute != null) {
           taken.add(substitute.id);
@@ -555,21 +562,28 @@ SessionPlan buildSessionPlan(
       d.inReturn = true;
       d.reasons.addAll(held);
       final written = writtenReturnShare(d.item);
-      final own = written == null ? comeback.ownShareOf(e) : null;
-      final share = written ?? own ?? 1.0;
+      final own = comeback.ownShareOf(e);
+      // (Plusieurs zones : la part la plus basse, celle du bloc ou celle du
+      // moteur.)
+      var share = written ?? 1.0;
+      var ownLower = false;
+      if (own != null && (written == null || own < written)) {
+        share = own;
+        ownLower = true;
+      }
       var effective = share;
       var sets = d.sets;
-      if (own != null) {
-        sets = (d.sets * own).round();
+      if (ownLower) {
+        sets = (d.sets * share / (written ?? 1.0)).floor();
       }
       final back = comeback.backZoneOf(e);
       if (back != null) {
         final lower = share - p.coachReturnStep;
         effective = lower < p.coachReturnFloor ? p.coachReturnFloor : lower;
-        sets = (sets * effective / share).round();
+        sets = (sets * effective / share).floor();
         d.returnBack = back;
       }
-      if (own != null || back != null) {
+      if (ownLower || back != null) {
         d.returnPct =
             0.675 + 0.25 * clampDouble(effective - p.coachReturnStart, 0, 1);
       }
@@ -764,6 +778,7 @@ SessionPlan buildSessionPlan(
             today.contains(item.exerciseId) ||
             comeback.hits(info.exercise) ||
             comeback.heldFor(info.exercise) ||
+            painsToday.keys.any((z) => info.zoneLevel(z) >= 0.5) ||
             stops.any((x) => coachPainStopHits(info.exercise, x.zone))) {
           continue;
         }
@@ -899,7 +914,7 @@ SessionPlan buildSessionPlan(
   }
 
   // 3. Charges, répétitions et flammes de chaque exercice.
-  final wristGuard = coached && _wristSensitive(view, state, comeback, day);
+  final wristGuard = coached && wristSensitive(view, state, comeback, day);
   var confidenceSum = 0.0;
   var confidenceCount = 0;
   for (final d in drafts) {
@@ -1340,7 +1355,7 @@ ExercisePrescription standardEquivalent(ExercisePrescription item) {
 /// Vrai si l'appui du poignet est sensible au jour [day] : gêne déclarée
 /// au profil ou antécédent récent, gêne signalée depuis deux semaines,
 /// arrêt ou reprise graduée en cours (CA2, partie 0).
-bool _wristSensitive(
+bool wristSensitive(
   BlockView view,
   ModelState state,
   PainReturn comeback,

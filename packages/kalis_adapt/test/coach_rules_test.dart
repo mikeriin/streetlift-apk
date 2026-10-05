@@ -448,6 +448,18 @@ void main() {
       expect(s.liftedOn(7 + painResumeDays - 1), isNull);
       expect(s.liftedOn(7 + painResumeDays), 7 + painResumeDays);
       expect(s.liftedOn(40), 7 + painResumeDays);
+      // Arrêt par trois séances de suite au-dessus du seuil : levée datée
+      // même quand le compteur courant a été remis à zéro depuis.
+      final r = PainState(BodyZone.wristHand, BodySide.both);
+      for (final (day, intensity) in const <(int, int)>[
+        (0, 4),
+        (2, 4),
+        (4, 4),
+        (6, 2),
+      ]) {
+        r.record(day, intensity);
+      }
+      expect(r.liftedOn(4 + painResumeDays), 4 + painResumeDays);
       // Sans arrêt (un seul signalement léger), aucune levée.
       final t = PainState(BodyZone.elbow, BodySide.both)..record(0, 3);
       expect(t.liftedOn(30), isNull);

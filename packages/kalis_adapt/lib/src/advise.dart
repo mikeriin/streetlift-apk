@@ -3,6 +3,7 @@
 library;
 
 import 'package:kalis_core/kalis_core.dart';
+import 'package:kalis_plan/kalis_plan.dart' show coachPainStopHits;
 
 import 'book.dart';
 import 'coach.dart';
@@ -11,6 +12,7 @@ import 'fatigue.dart';
 import 'filter.dart';
 import 'model.dart';
 import 'numeric.dart';
+import 'pain_return.dart';
 import 'params.dart';
 import 'replay.dart';
 import 'session.dart';
@@ -118,6 +120,13 @@ IntraSessionAdvice buildAdvice(
   } else {
     notePains(state, check, const <PainReport>[], day, p);
   }
+  // Appui du poignet sensible : la dose écrite au plus, comme à la
+  // préparation de la séance (CA2, partie 0).
+  final comeback = view.coached
+      ? PainReturn.of(view, state, day, session.weekIndex, p)
+      : PainReturn.none;
+  final wristGuard =
+      view.coached && wristSensitive(view, state, comeback, day);
   final run = SessionRun(
     ctx,
     state,
@@ -171,6 +180,10 @@ IntraSessionAdvice buildAdvice(
       }
       if (view.taperedAt(day)) {
         exercise.tapered = true;
+      }
+      if (wristGuard &&
+          coachPainStopHits(info.exercise, BodyZone.wristHand)) {
+        exercise.doseCapped = true;
       }
       if (item != null && _inReturn(item)) {
         // Reprise graduée (dite par la séance) : mêmes verrous qu'à la

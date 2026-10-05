@@ -119,7 +119,7 @@ final class PainState {
   /// Arrêt en cours au jour [day] (douleur qui dure, qui revient, ou forte
   /// plus d'une semaine, sans deux semaines à 2 sur 10 au plus depuis), ou
   /// `null`.
-  PainStop? stopAt(int day) {
+  PainStop? stopAt(int day, {int? run}) {
     final highs = <(int, int)>[
       for (final h in history)
         if (h.$2 >= painPersistMin && h.$1 <= day) h,
@@ -167,7 +167,7 @@ final class PainState {
       }
       recurrence = real && current.first.$1 - before.last.$1 <= painRecurDays;
     }
-    if (!lasting && !strong && !recurrence && consecutiveAbove <= 2) {
+    if (!lasting && !strong && !recurrence && (run ?? consecutiveAbove) <= 2) {
       return null;
     }
     return PainStop(
@@ -216,10 +216,25 @@ final class PainState {
       return null;
     }
     final lift = lastHigh + painResumeDays;
-    if (lift > day || stopAt(lastHigh) == null) {
+    if (lift > day) {
       return null;
     }
-    return lift;
+    // L'arrêt a-t-il eu lieu à l'un des jours de l'épisode ? Les séances de
+    // suite au-dessus du seuil se recomptent d'après l'historique (le
+    // compteur courant a pu être remis à zéro depuis).
+    var run = 0;
+    for (final h in history) {
+      if (h.$1 > lastHigh) {
+        break;
+      }
+      run = h.$2 > painPersistMin ? run + 1 : 0;
+      if (h.$2 >= painPersistMin &&
+          lastHigh - h.$1 < painEpisodeGapDays + painPersistDays &&
+          stopAt(h.$1, run: run) != null) {
+        return lift;
+      }
+    }
+    return null;
   }
 
   /// Signalements des jours `[from ; to]` (intensités, dans l'ordre).

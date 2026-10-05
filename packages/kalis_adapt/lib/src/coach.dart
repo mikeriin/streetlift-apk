@@ -1468,7 +1468,7 @@ List<SetPlan>? _directPlans(
   // Meilleur maintien mesuré récemment (CA2, partie 0).
   final bestHold = track.recentBest(
     run.day,
-    p.coachProbeDays,
+    p.coachBreakDays,
     p.coachHoldBestDays,
   );
 
