@@ -2382,16 +2382,15 @@ final class Prescriber {
       // maximum − 2 » — panel CX, correction 1, passe 5 : 3 × 7 à 3 en
       // réserve sur un maximum de 9.)
       final top = max - rir.round();
-      var shown = share;
       if (top >= 1 && reps > top) {
         x
           ..repsLow = top
           ..repsHigh = top
           ..intensity = _shareOf(e.id, top, max);
-        // (La part dite dans la note est celle des répétitions écrites —
-        // passe 7 du panel, `street_15` : note à 75 % pour 3 × 5 à 63 %.)
-        shown = top / max;
       }
+      // (La part dite dans la note est celle des répétitions écrites —
+      // passe 7 du panel, `street_15` : note à 75 % pour 3 × 5 à 63 %.)
+      final shown = (x.repsHigh ?? reps) / max;
       x
         ..rest = _level >= 2 ? 75 : 90
         ..rir = rir
@@ -2914,10 +2913,6 @@ final class Prescriber {
         part = top;
       }
     }
-    // (Arrondi au plus proche, sans dépasser la part annoncée de plus de
-    // 5 points : sur un maximum court, l'arrondi vers le bas faisait d'une
-    // tenue « à 60 % » une tenue à 50 % — panel CX correction 1, front
-    // lever de `street_10` à 4 s pour un repère de 8 s.)
     // (Arrondi au plus proche tant que la tenue reste à 8 points de la
     // part visée et à 76 % du maximum au plus : sur un maximum de 6 s,
     // l'arrondi par défaut faisait d'une tenue « à 60 % » une tenue à
@@ -4124,6 +4119,7 @@ final class Prescriber {
   bool _testDayOk(int day) {
     var late = 0;
     var mid = 0;
+    var after = 0;
     for (var d = 0; d < a.dayCount; d++) {
       if (_dayOffset(d) >= 3) {
         late++;
@@ -4131,8 +4127,13 @@ final class Prescriber {
       if (_dayOffset(d) >= 2) {
         mid++;
       }
+      if (_dayOffset(d) >= 1) {
+        after++;
+      }
     }
-    final from = late >= 2 ? 3 : (mid >= 1 ? 2 : 0);
+    // (Jamais le premier jour de la semaine quand un jour plus tardif
+    // existe — relecture indépendante du code.)
+    final from = late >= 2 ? 3 : (mid >= 1 ? 2 : (after >= 1 ? 1 : 0));
     return _dayOffset(day) >= from;
   }
 

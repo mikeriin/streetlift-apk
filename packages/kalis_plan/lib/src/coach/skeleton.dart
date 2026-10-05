@@ -2494,7 +2494,7 @@ void _buildFigures(_Builder b, Set<int> runDays) {
       final why = a.rejection(t.currentId, d);
       final painStep =
           easier != null &&
-          (why == 'joint' || why == 'excluded') &&
+          why == 'joint' &&
           _painOn(a, t.currentId);
       b.add(
         d,
