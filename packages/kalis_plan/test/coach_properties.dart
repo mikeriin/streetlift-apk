@@ -479,27 +479,20 @@ List<String> checkCoachSeed(Catalog catalog, int seed) {
         fail('$label : semaine passée $w modifiée');
       }
     }
-    // CX, correction 1 : la semaine réécrite ne monte pas le volume au-delà
-    // de ce que les semaines gardées admettent (+15 %, une série de
-    // tolérance) quand le bloc d'origine le respectait.
-    if (from >= 1 && from < weeks) {
-      double bound(List<double> hard) {
-        var most = 0.0;
-        for (var w = from - 3 < 0 ? 0 : from - 3; w < from; w++) {
-          if (hard[w] > most) {
-            most = hard[w];
-          }
-        }
-        return most * (1 + coachVolumeRise) + 1;
-      }
-
-      final kept = hardSetsByWeek(catalog, p2.weeks);
-      final neu = hardSetsByWeek(catalog, proposal.block.pass2.weeks);
-      if (kept[from] <= bound(kept) + 1e-9 && neu[from] > bound(kept) + 1e-9) {
-        fail(
-          '$label : ${neu[from]} séries dures en semaine $from, '
-          '${bound(kept)} admises',
-        );
+    // CX, correction 1 : les semaines réécrites ne montent pas le volume
+    // d'un groupe plus vite que les semaines gardées ne l'admettent (même
+    // relecture que le programme d'origine : aucune hausse trop rapide de
+    // plus que lui).
+    Set<String> ramps(ProgramBlock b) => <String>{
+      for (final v in coachAudit(catalog, profile, p1.startDate, [b]))
+        if (v.contains(' séries pour '))
+          if (RegExp(r'^s(\d+) : (\S+)').firstMatch(v) case final m?)
+            if (int.parse(m.group(1)!) >= from) '${m.group(1)} ${m.group(2)}',
+    };
+    final rampsBefore = ramps(block);
+    for (final r in ramps(proposal.block)) {
+      if (!rampsBefore.contains(r)) {
+        fail('$label : hausse de volume trop rapide (semaine, groupe) $r');
       }
     }
     for (final week in proposal.block.pass2.weeks) {
