@@ -276,4 +276,15 @@ Lot livré le 05/10/2026, à valider par la conversation de pilotage (C8.1) : de
 - **CI1.10 Limite de l'arbre** : `tools/release_security.py` : 25 → 30 Mo hors ressources chiffrées (les paquets calibrés portent l'arbre à 25,03 Mo) ; contrôles de contenu inchangés.
 - **CI1.11 Reste (lot complémentaire ou CI)** : mini-séries d'un cluster / rest-pause saisies une par une (`SetRecord.parts` : la ligne porte le total) ; note de propreté (`quality`) des maintiens et figures ; groupes `GroupSpec` (superset, circuit, AMRAP de groupe) affichés comme groupe ; tentatives du jour J journalisées (`attempt`, `attemptIndex`, `eventId`) ; conseils `miniSetsLeft` et `stepExerciseId` du moteur entre les séries ; simulateur du mode dev qui joue les techniques ; textes de Koach propres à chaque nouveau code (certains restent génériques) ; passage aux paquets 0.2.2.
 
+### CI1b
+
+Lot livré le 05/10/2026, à valider par la conversation de pilotage (C8.1) : dev6.9.1 (main 64e286b3, build signé run 37353902820 (essai 2), contrôle `claude/ci-3d` run 37351278332). Détail : `pipeline/cp/livraisons/LIVRAISON_CI1b.md`.
+
+- **CI1b.1 Lancement** : message sans ligne « Lot : » ; seul lot de la voie App « à faire » ; prérequis CI1 validé (C9.6) et CX validé (C9.7). `add_repo` n'est pas proposé à cette session : dépôt déjà dans les sources, push vérifié par `git push --dry-run` puis par le push de la ligne « en cours ».
+- **CI1b.2 Paquets** : `kalis_plan` 0.2.2 et `kalis_adapt` 0.2.2 copiés depuis `etiquettes/…-v0.2.2` (identiques octet pour octet, vérifié par `git diff`) ; `kalis_core` 0.4.2, `kalis_koach` 0.1.0 inchangés ; `kalis_bench` absent de l'application ; `pubspec.lock` : deux versions de chemin.
+- **CI1b.3 Douleur qui dure** : l'application ne code aucune règle ; elle lit `adapt.pain_persistent` (raison de séance) et les ajustements `exerciseRemoved` de `kalis_adapt`, et les notes `pain_stop` / `pain_return` du bloc de `kalis_plan`. Carte « Arrêt pour douleur » (ou « Reprise graduée ») en tête de la page « Bilan du jour », avant le bilan, tant que l'arrêt ou la reprise vaut ; notes `pain_*` avec le bouclier sous chaque exercice. Le texte générique de `adapt.pain_persistent` reste neutre (« demande l'avis d'un médecin ou d'un kinésithérapeute ») parce que la revue du chemin 0.1 l'émet aussi sans rien retirer.
+- **CI1b.4 Test reporté** : nouveau en 0.2.2, le moteur peut servir un test d'un autre jour de la semaine ; sans ce lot l'écran l'ignorait. Il est affiché avant le travail du jour, avec l'identifiant `planExerciseId(semaine, jour, emplacement d'origine)`, et journalisé à son emplacement d'origine. Jamais pour un bloc importé. Le cas n'apparaît pas sur les profils street des fixtures (tests en fin de semaine) : chemin relu, pas exercé (limite).
+- **CI1b.5 Facultatifs** : tentatives du jour J au journal et mini-séries saisies une par une non faits (priorité à la sécurité et au délai) : lot CI final.
+- **Recommandation (C8, le pilotage décide)** : valider dev6.9.1 et le donner au propriétaire à la place de dev6.9.0 ; lot CI final : test reporté sur un profil à 5-6 séances, tentatives au journal, mini-séries.
+
 ### CI

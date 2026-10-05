@@ -53,5 +53,5 @@ Chaque lot ne modifie que sa ligne (PIPELINE_CP.md §1).
 | CA2 | B | CX (validé, C9.7) ; CP2 « en cours » (C9.3) | — | — | — | en cours depuis 2026-10-05 18:17 UTC |
 | CY | A | CP2, CA2 | — | — | — | en attente de CP2, CA2 |
 | CI1 | App | CU ; CX (paquets 0.2.1, puis dernières étiquettes, C9.1) | dev6.9.0 (main 938de59, build signé run 37328372801, contrôle ci-3d run 37324228351) ; paquets `kalis_core` 0.4.2, `kalis_plan` 0.2.1, `kalis_adapt` 0.2.1 (0.2.2 pas encore publiés) | — (lot d'application) | 2026-10-05 | validé (pilotage, C8.1, 05/10/2026 15:20 UTC : build signé run 37328372801 et contrôle ci-3d run 37324228351 verts, arbre contrôlé identique à main 938de59) ; mise à jour des paquets 0.2.2 à suivre (CI1b) |
-| CI1b | App | CI1 ; CX validé (C9.7) | — | — (lot d'application) | — | en cours depuis 2026-10-05 16:51 UTC |
+| CI1b | App | CI1 ; CX validé (C9.7) | dev6.9.1 (main 64e286b, build signé run 37353902820, contrôle ci-3d run 37351278332) ; paquets `kalis_plan` 0.2.2, `kalis_adapt` 0.2.2 ; douleur qui dure (carte « Arrêt pour douleur », reprise graduée), tests reportés | — (lot d'application) | 2026-10-05 | à valider |
 | CI | App | CY, CU | — | — | — | en attente de CY, CU |
