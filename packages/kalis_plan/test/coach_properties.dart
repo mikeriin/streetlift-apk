@@ -104,6 +104,10 @@ void _checkPass2(
   if (pass2.weeks.length != pass1.weeks) {
     fail('$label : ${pass2.weeks.length} semaines pour ${pass1.weeks}');
   }
+  final current = <Object?>{
+    for (final r in pass1.reasons)
+      if (r.code == ReasonCodes.planSkillStep) r.params['exerciseId'],
+  };
   for (final week in pass2.weeks) {
     if (week.intent == null) {
       fail('$label : semaine ${week.weekIndex} sans intention');
@@ -139,6 +143,39 @@ void _checkPass2(
         final seconds = item.secondsHigh;
         if (seconds != null && seconds < 1) {
           fail('$where — $seconds s');
+        }
+        // CX, correction 1 : répétitions + réserve jamais au-dessus du
+        // repère, au poids du corps sur un maximum de répétitions.
+        final t = item.intensity;
+        final low = item.repsLow ?? reps;
+        if (t != null &&
+            flames != null &&
+            Flames.isValid(flames) &&
+            reps != null &&
+            low != null &&
+            t.basis == IntensityBasis.percentBenchmark &&
+            t.referenceKind != BenchmarkKind.maxHold &&
+            t.value > 0 &&
+            item.startLoadKg == null &&
+            item.percentOfOneRm == null &&
+            item.technique?.kind != SetTechniqueKind.emom &&
+            (item.kind == null || item.kind == SetKind.work)) {
+          final base = (low / t.value).round();
+          final rir = Flames.toRir(flames).round();
+          if (base - rir >= 1 && reps + rir > base) {
+            fail('$where — $reps + $rir en réserve sur un repère de $base');
+          }
+        }
+        // Recul d'étape pour douleur : jamais sur l'étape de travail
+        // elle-même, toujours une figure.
+        final stepped = item.reasons.any(
+          (r) =>
+              r.code == ReasonCodes.planCoachNote &&
+              r.params['note'] == CoachNotes.painStep,
+        );
+        if (stepped &&
+            (item.skillTargetId == null || current.contains(item.exerciseId))) {
+          fail('$where — recul d\'étape sur ${item.exerciseId}');
         }
       }
     }
@@ -477,6 +514,28 @@ List<String> checkCoachSeed(Catalog catalog, int seed) {
       if (jsonEncode(proposal.block.pass2.weeks[w].toJson()) !=
           jsonEncode(p2.weeks[w].toJson())) {
         fail('$label : semaine passée $w modifiée');
+      }
+    }
+    // CX, correction 1 : les semaines réécrites ne montent pas le volume
+    // d'un groupe plus vite que les semaines gardées ne l'admettent (même
+    // relecture que le programme d'origine : aucune hausse trop rapide de
+    // plus que lui).
+    Set<String> ramps(ProgramBlock b) => <String>{
+      for (final v in coachAudit(catalog, profile, p1.startDate, [b]))
+        if (v.contains(' séries pour '))
+          if (RegExp(r'^s(\d+) : (\S+)').firstMatch(v) case final m?)
+            // (Portée bloc seulement : en portée semaine ou séance, les
+            // séances gardées de la semaine et les semaines suivantes
+            // restent celles du bloc d'origine, mêlées à la réécriture —
+            // limite notée au contrat.)
+            if (scope == RestructureScope.block &&
+                int.parse(m.group(1)!) >= from)
+              '${m.group(1)} ${m.group(2)}',
+    };
+    final rampsBefore = ramps(block);
+    for (final r in ramps(proposal.block)) {
+      if (!rampsBefore.contains(r)) {
+        fail('$label : hausse de volume trop rapide (semaine, groupe) $r');
       }
     }
     for (final week in proposal.block.pass2.weeks) {

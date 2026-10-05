@@ -77,6 +77,20 @@ final class SkillTrack {
 /// 8 en élite).
 int coachStepWeeks(int level) => level <= 0 ? 12 : (level >= 3 ? 6 : 8);
 
+/// Critère de passage d'une étape de figure, en secondes par tenue (trois
+/// tenues propres) : 12, 11, 9, 7 s du débutant à l'élite. Les tenues du
+/// critère valent environ 75 % du maintien maximal qui ouvre l'étape
+/// suivante (CX, correction 3 : le critère 3 × 12 s pour un maximum de 12 à
+/// 13 s était hors de portée ; Oranchuk et al. 2019 et R4-F6 : 70 % et plus
+/// du maximum pour le tendon). Choix raisonné : la littérature ne fixe pas
+/// de seuil de passage d'une étape de figure ; R4-F6 situe un levier utile
+/// à un maintien maximal de 8 à 25 s.
+int coachStepHold(int level) => const <int>[12, 11, 9, 7][level.clamp(0, 3)];
+
+/// Maintien maximal, en secondes, qui rend le critère de passage tenable :
+/// le critère vaut 75 % de ce maximum.
+int coachStepMax(int level) => (coachStepHold(level) / 0.75).round();
+
 /// Étape de travail prévue pour la figure [t] au début du bloc : l'étape
 /// du profil, avancée d'un cran par délai minimal écoulé depuis le record
 /// de cette étape (le plan suppose le critère de passage validé ; le test
@@ -112,6 +126,29 @@ SkillTrack plannedTrack(Athlete a, SkillTrack t) {
     stepIndex: at,
     weeksAtStep: 0,
   );
+}
+
+/// Vrai si une douleur relevée (zone à l'arrêt, ou gêne de 3/10 au moins)
+/// porte sur une articulation que l'exercice [id] sollicite.
+bool _painOn(Athlete a, String id) {
+  final e = a.catalog.find(id);
+  if (e == null) {
+    return false;
+  }
+  for (final zone in a.stopZones) {
+    if (coachPainStopHits(e, zone)) {
+      return true;
+    }
+  }
+  for (final l in a.limits) {
+    final joint = l.joint;
+    if (joint != null &&
+        l.discomfort >= 3 &&
+        e.stressOn(joint) != JointStress.low) {
+      return true;
+    }
+  }
+  return false;
 }
 
 /// Figures visées par l'athlète [a], par ordre de priorité : celles du
@@ -176,6 +213,12 @@ List<SkillTrack> skillTargetsOf(Athlete a) {
   }
 
   for (final s in a.profile.skills ?? const <SkillState>[]) {
+    // (L'échelle de poussée du débutant n'est pas une figure : son état,
+    // rendu par le moteur d'évolution, règle le choix de la variante, pas
+    // une piste de figure.)
+    if (s.targetExerciseId == coachPushLadderTarget) {
+      continue;
+    }
     consider(s.targetExerciseId, s.currentExerciseId, s.atStepSince);
   }
   for (final g in a.profile.goals) {
@@ -342,6 +385,54 @@ final class _Builder {
 
 // ------------------------------------------------------------- débutant
 
+/// Cible de l'échelle de poussée du débutant (CX, correction 2) : la pompe
+/// classique.
+const String coachPushLadderTarget = 'sw-pompe';
+
+/// Échelle de poussée du débutant, de la plus facile à la plus dure :
+/// pompe sur les genoux, pompe mains surélevées, pompe classique (Ebben et
+/// al. 2011 : environ 49 %, 55 % puis 64 % du poids du corps pour des mains
+/// surélevées d'une trentaine de centimètres ; relecture documentée des
+/// manches 1 et 2).
+const List<String> coachPushLadder = <String>[
+  'sw-pompe-genoux',
+  'sw-pompe-inclinee',
+  'sw-pompe',
+];
+
+/// Échelle de poussée écrite au contrat (`Pass1Plan.skillLadders`) à partir
+/// de l'étape [current] : critère de passage, trois séries de 12
+/// répétitions propres (genoux) ou de 10 (mains surélevées), deux séances
+/// de suite, deux semaines au moins à l'étape (double progression de
+/// l'ACSM 2009 : changer de variante quand le haut de la plage est tenu ;
+/// nombres : choix raisonné). L'étape actuelle et les suivantes seulement :
+/// le moteur d'évolution compte l'étape du rang 0 comme l'étape actuelle.
+SkillLadder? coachPushLadderFrom(String current) {
+  final at = coachPushLadder.indexOf(current);
+  if (at < 0 || at >= coachPushLadder.length - 1) {
+    return null;
+  }
+  return SkillLadder(
+    targetExerciseId: coachPushLadderTarget,
+    steps: <SkillStep>[
+      for (var i = at; i < coachPushLadder.length; i++)
+        SkillStep(
+          exerciseId: coachPushLadder[i],
+          // Deux séries au haut de la plage (12), deux séances de suite :
+          // le critère tient dans les séries écrites (deux au moins ; panel
+          // CX, boucle 4 : « 3 × 10 » pour deux séries prescrites).
+          criterion: const StepCriterion(
+            reps: 12,
+            sets: 2,
+            minQuality: 4,
+            sessions: 2,
+            minWeeks: 2,
+          ),
+        ),
+    ],
+  );
+}
+
 void _buildBeginner(_Builder b) {
   final a = b.a;
   final pullMax = a.reps[Ids.pull] ?? 0;
@@ -394,6 +485,12 @@ void _buildBeginner(_Builder b) {
     final day = b.days[d]..focus = FocusCodes.fullBody;
     // Préparation de la suspension (R5-P8).
     b.add(d, Picks.hangPrep, SlotRole.warmup, Method.warmupPrep, sets: 2);
+    // Préparation des poignets avant les appuis sur les mains (R4-F12 ;
+    // panel CX, correction 1 : douleur de poignet des débutants dès les
+    // pompes au sol, sans préparation).
+    if (supportDays.contains(d) || pushMax > 0) {
+      b.add(d, Picks.wristPrep, SlotRole.warmup, Method.warmupPrep, sets: 2);
+    }
     // Tirage vertical : chemin vers la traction.
     if (pullMax >= 5) {
       b.add(
@@ -465,7 +562,14 @@ void _buildBeginner(_Builder b) {
         Method.beginnerMain,
         sets: sets,
       );
-    } else if (pushPlanned >= 4 && !heavy && a.can(Ids.pushUp, d)) {
+    } else if ((pushPlanned >= 4 ||
+            // Objectif de pompes, geste acquis (2 au moins) : dès le
+            // deuxième bloc, des séries courtes du geste complet à chaque
+            // séance (spécificité ; panel CX, boucle 1), la variante
+            // facile garde le volume.
+            (later && pushMax >= 2 && a.aimsAt(Ids.pushUp))) &&
+        !heavy &&
+        a.can(Ids.pushUp, d)) {
       // Quelques pompes acquises : des séries courtes du geste complet
       // d'abord (spécificité), puis la variante facile pour le volume.
       b.add(
@@ -475,7 +579,7 @@ void _buildBeginner(_Builder b) {
         Method.beginnerMain,
         sets: sets,
       );
-      b.add(
+      final easy = b.add(
         d,
         Picks.easyPushUp,
         SlotRole.secondary,
@@ -485,8 +589,26 @@ void _buildBeginner(_Builder b) {
         // Le volume de poussée qui construit les répétitions : il reste.
         keep: true,
       );
+      final ladder = easy == null ? null : coachPushLadderFrom(easy.exerciseId);
+      if (ladder != null &&
+          !b.ladders.any((l) => l.targetExerciseId == coachPushLadderTarget)) {
+        b.ladders.add(ladder);
+      }
+      if (a.aimsAt(Ids.pushUp) && pushMax < 6 && !negativeDays.contains(d)) {
+        // Objectif de pompes sous six : les descentes freinées au sol
+        // restent tout le cycle (le pont vers la répétition complète ;
+        // panel CX, boucle 2).
+        b.add(
+          d,
+          const <String>['sw-pompe-negative'],
+          SlotRole.secondary,
+          Method.beginnerNegative,
+          sets: 2,
+          referenceId: Ids.pushUp,
+        );
+      }
     } else {
-      b.add(
+      final push = b.add(
         d,
         Picks.easyPushUp,
         SlotRole.main,
@@ -494,6 +616,13 @@ void _buildBeginner(_Builder b) {
         sets: mainSets,
         referenceId: Ids.pushUp,
       );
+      // Échelle de poussée écrite au contrat (CX, correction 2), une fois
+      // par bloc, à partir de la variante retenue.
+      final ladder = push == null ? null : coachPushLadderFrom(push.exerciseId);
+      if (ladder != null &&
+          !b.ladders.any((l) => l.targetExerciseId == coachPushLadderTarget)) {
+        b.ladders.add(ladder);
+      }
       if (!heavy && a.aimsAt(Ids.pushUp) && !negativeDays.contains(d) ||
           (!heavy && a.aimsAt(Ids.pushUp) && a.dayCount <= 2)) {
         // Objectif de pompes : le geste complet dès la première semaine,
@@ -958,13 +1087,45 @@ void _addRepsPillar(
       );
       return;
     }
+    // Bloc de réalisation d'un objectif de répétitions maximales (12 et
+    // plus) : la séance de force du mouvement visé devient une séance de la
+    // zone de l'épreuve sur le mouvement exact (R2-P9 : 80 % au moins du
+    // mouvement exact à l'approche du test ; R4-G1 ; panel CX, correction
+    // 1, `street_14` : traction au tempo lent à la place du travail de
+    // l'épreuve).
+    if (max >= 12 &&
+        b.shape.phase == SeasonPhaseKind.realization &&
+        a.goalOn(exerciseId, GoalMetric.maxReps) != null) {
+      b.add(
+        d,
+        <String>[exerciseId],
+        SlotRole.main,
+        Method.repsVolume,
+        sets: 4,
+        stress: DayStress.heavy,
+      );
+      return;
+    }
     if (max >= 10 && !spare) {
       final hard = exerciseId == Ids.pull
           ? Picks.hardPull
           : (exerciseId == Ids.dip ? Picks.hardDip : Picks.hardPushUp);
+      // Plateau au dernier test, sans lest : la voie « force relative »
+      // passe d'abord par la traction lente (descente en 4 à 5 s, pause en
+      // haut), puis l'archer et la typewriter (relecture documentée CX,
+      // `street_14` ; Kotarsky et al. 2018 : surcharge par des variantes
+      // plus dures).
+      final stalled = a.stalled.contains(exerciseId) && exerciseId == Ids.pull;
       final slot = b.add(
         d,
-        hard,
+        stalled
+            ? <String>[
+                'sw-traction-tempo-excentrique',
+                'sw-traction-archer',
+                'sw-traction-typewriter',
+                ...hard,
+              ]
+            : hard,
         SlotRole.main,
         Method.repsStrength,
         sets: 4,
@@ -984,6 +1145,19 @@ void _addRepsPillar(
       stress: max < 8 ? DayStress.heavy : DayStress.medium,
       group: group,
     );
+    if (exerciseId == Ids.pull && max < 10 && !short && !spare) {
+      // Moins de dix tractions, sans lest : des descentes freinées après
+      // la séance de force, le levier de surcharge du tirage (R4-G2,
+      // R5-P8 : 3 à 5 s, 15 descentes au plus ; panel CX, boucle 1).
+      b.add(
+        d,
+        const <String>['sw-traction-negative'],
+        SlotRole.secondary,
+        Method.beginnerNegative,
+        sets: 2,
+        referenceId: Ids.pull,
+      );
+    }
     return;
   }
   b.add(
@@ -1235,11 +1409,19 @@ void _buildReps(_Builder b, Set<int> runDays) {
   final pullWanted = pullDays;
   // Jusqu'à l'intermédiaire, pas deux jours de tirage consécutifs (R4-F10,
   // R5-P22 : 48 h entre deux charges d'une même zone) : la fréquence cède.
-  while (a.level <= 1 && frequency > 2 && _minGap(a, pullDays) < 2) {
+  // À partir de l'avancé aussi (CX, correction 6 : pas de tractions deux
+  // jours de suite ; ACSM 2011 : 48 h entre deux séances d'un même groupe ;
+  // Miranda et al. 2018 : moins de répétitions à 24 h), jusqu'à trois
+  // séances ; un jour écarté garde une exposition légère au geste quand il
+  // ne suit pas un jour de tirage.
+  while ((a.level <= 1 ? frequency > 2 : frequency > 3) &&
+      _minGap(a, pullDays) < 2) {
     frequency--;
     pullDays = spreadDays(a, days, frequency);
   }
-  final muPoolAll = competition || pullDays.length < 2 ? days : pullDays;
+  // Muscle-up : les mêmes jours que la traction (le coude ne travaille pas
+  // un jour de plus).
+  final muPoolAll = pullDays.length < 2 ? days : pullDays;
   final muDays = muMax >= 1
       ? spreadDays(
           a,
@@ -1283,11 +1465,13 @@ void _buildReps(_Builder b, Set<int> runDays) {
   // distribuée, R4-G5, R4-G8 : trois expositions par semaine), les séries
   // dures restant aux deux autres jours.
   final lightPull = <int>{
-    if (pullGoal && !spared && !competition && pullMax >= 4)
+    if ((pullGoal || competition) && !spared && pullMax >= 4)
       for (final d in pullWanted)
-        // (Jamais le lendemain d'un jour de tirage : l'exposition légère
-        // précède la séance dure, elle ne la suit pas.)
-        if (!pullDays.contains(d) && !pullDays.any((o) => b.dayBefore(o, d))) d,
+        // (Ni le lendemain ni la veille d'un jour de tirage : 48 h autour
+        // des séances dures, CX.)
+        if (!pullDays.contains(d) &&
+            !pullDays.any((o) => b.dayBefore(o, d) || b.dayBefore(d, o)))
+          d,
   };
   final pullHeavy = <String>[
     for (final m in (competition ? _competitionMethods : _repsMethods(pullMax)))
@@ -1733,7 +1917,31 @@ void _buildLifting(_Builder b, Set<int> runDays) {
   // lourdes ; le tirage de volume tombe entre les deux.)
   final muDay = h >= 4 ? dayAt(3) : (h >= 2 ? dayAt(1) : dayAt(0));
   final dipHeavy = h >= 3 ? dayAt(2) : (h >= 2 ? dayAt(1) : dayAt(0));
-  final pullVolume = h >= 3 ? dayAt(2) : (h >= 2 ? dayAt(1) : -1);
+  // Tirage de volume : le jour lourd le plus éloigné de la traction lourde
+  // et du muscle-up lourd ; s'il touche l'un d'eux (veille ou lendemain),
+  // il rejoint la séance du muscle-up (CX, correction 6 : pas de tirage
+  // deux jours de suite ; ACSM 2011 : 48 h entre deux séances d'un même
+  // groupe).
+  var pullVolume = h >= 3 ? dayAt(2) : (h >= 2 ? dayAt(1) : -1);
+  if (pullVolume >= 0) {
+    final hard = <int>{pullHeavy, if (mu && h >= 2) muDay};
+    bool touches(int d) =>
+        hard.any((o) => o == d || b.dayBefore(d, o) || b.dayBefore(o, d));
+    if (touches(pullVolume)) {
+      var best = -1;
+      for (final d in heavyDays) {
+        if (!touches(d)) {
+          best = d;
+          break;
+        }
+      }
+      if (best >= 0) {
+        pullVolume = best;
+      } else if (mu && muDay != pullHeavy) {
+        pullVolume = muDay;
+      }
+    }
+  }
   // Objectif déclaré ailleurs et pas de compétition : le squat garde une
   // seule séance lourde (R4-H4 : le volume va à l'objectif).
   final squatAimed =
@@ -1808,6 +2016,13 @@ void _buildLifting(_Builder b, Set<int> runDays) {
           if (skipPull && d == pullHeavy) {
             continue;
           }
+          // (Pas la veille ni le lendemain d'un tirage lourd : CX.)
+          if (b.dayBefore(d, pullHeavy) ||
+              b.dayBefore(pullHeavy, d) ||
+              (pullVolume >= 0 &&
+                  (b.dayBefore(d, pullVolume) || b.dayBefore(pullVolume, d)))) {
+            continue;
+          }
           second = d;
           break;
         }
@@ -1846,10 +2061,19 @@ void _buildLifting(_Builder b, Set<int> runDays) {
     } else {
       variant(pullHeavy, Ids.weightedPull);
     }
+    // Séance légère de traction : seulement à 48 h des autres séances de
+    // tirage lourd (CX, correction 6 : pas de tirage deux jours de suite).
+    final hardPulls = <int>{
+      pullHeavy,
+      if (pullVolume >= 0) pullVolume,
+      if (mu) muDay,
+    };
     if (light >= 0 &&
         !maintained(Ids.weightedPull) &&
         a.level >= 2 &&
-        target != Ids.weightedPull) {
+        target != Ids.weightedPull &&
+        !hardPulls.contains(light) &&
+        !hardPulls.any((o) => b.dayBefore(o, light) || b.dayBefore(light, o))) {
       lift(light, Ids.weightedPull, Method.liftLight, DayStress.light, sets: 3);
     }
     if (target == Ids.weightedPull) {
@@ -2098,15 +2322,28 @@ void _buildFigures(_Builder b, Set<int> runDays) {
   // chez l'intermédiaire, 3 en avancé, 3 à 4 en élite), 48 h d'écart.
   // (Chez l'intermédiaire qui s'entraîne quatre jours : deux séances
   // lourdes et une légère, R4-F1 — pratique distribuée.)
-  final heavyCount = a.level >= 2 ? 3 : (a.level == 1 && n >= 4 ? 3 : 2);
+  var heavyCount = a.level >= 2 ? 3 : (a.level == 1 && n >= 4 ? 3 : 2);
   final first = statics.isEmpty ? null : statics.first;
+  // Poignet sensible (gêne déclarée à 2 sur 10 ou plus) et figure d'appui
+  // en tête : deux séances d'appui lourd par semaine au plus (relecture
+  // documentée et panel CX, `street_10` : la charge du poignet se répartit,
+  // une grosse séance de planche, l'autre plus légère).
+  if (first != null &&
+      a.catalog.find(first.currentId)?.pattern ==
+          MovementPattern.figureStatiquePoussee &&
+      (a.limitOn(Joint.wrist)?.discomfort ?? 0) >= 2 &&
+      heavyCount > 2) {
+    heavyCount = 2;
+  }
   final second = statics.length > 1 ? statics[1] : null;
   final firstDays = first == null
       ? <int>[]
       : spreadDays(a, days, heavyCount > n ? n : heavyCount);
   // La seconde figure partage les jours de la première quand elle charge
   // une autre zone (planche et front lever), pour garder des jours sans
-  // bras tendus ; sinon elle prend les jours restants.
+  // bras tendus ; sinon elle prend les jours restants. (Essai CX, boucle
+  // 4 : des jours distincts chargeaient les jours de jambes et de force au
+  // point d'en retirer les jambes ; retiré.)
   final rest = <int>[
     for (final d in days)
       if (!firstDays.contains(d)) d,
@@ -2171,7 +2408,7 @@ void _buildFigures(_Builder b, Set<int> runDays) {
   );
 
   void ladderOf(SkillTrack t) {
-    final holdTarget = a.level <= 1 ? 12 : (a.level == 2 ? 10 : 8);
+    final holdTarget = coachStepHold(a.level);
     final minWeeks = a.level == 0 ? 12 : (a.level >= 3 ? 6 : 8);
     b.ladders.add(
       SkillLadder(
@@ -2189,7 +2426,7 @@ void _buildFigures(_Builder b, Set<int> runDays) {
                     : 3,
                 sets: 3,
                 minQuality: 4,
-                sessions: 3,
+                sessions: 2,
                 minWeeks: minWeeks,
               ),
             ),
@@ -2206,7 +2443,8 @@ void _buildFigures(_Builder b, Set<int> runDays) {
 
   // Étape suivante sous condition : délai minimal de l'étape écoulé
   // (R4-F9), au moins un test passé (deuxième bloc ou plus) et maintien
-  // de l'étape actuelle aux trois quarts du critère de passage.
+  // maximal de l'étape actuelle à 75 % au moins du maintien qui rend le
+  // critère tenable (seuil d'ouverture, CX, correction 3).
   bool ready(SkillTrack t) {
     if (t.nextId == null || b.blockIndex == 0) {
       return false;
@@ -2214,9 +2452,8 @@ void _buildFigures(_Builder b, Set<int> runDays) {
     final anchor = a.recordDay[t.currentId] ?? a.profile.updatedOn;
     final elapsed = anchor.daysUntil(a.start) ~/ 7;
     final hold = a.holds[t.currentId] ?? 0;
-    final criterion = a.level <= 1 ? 12 : (a.level == 2 ? 10 : 8);
     return t.weeksAtStep + elapsed >= coachStepWeeks(a.level) &&
-        hold * 4 >= criterion * 3;
+        hold * 4 >= coachStepMax(a.level) * 3;
   }
 
   final attempts = <String, int>{};
@@ -2230,10 +2467,33 @@ void _buildFigures(_Builder b, Set<int> runDays) {
     }
     final hold = a.holds[t.currentId] ?? 0;
     final easier = t.easierId;
-    if (heavy || easier == null || a.level < 2 || hold <= 0) {
+    // (Jour léger d'un avancé ou d'un élite : l'étape plus facile n'est
+    // plus servie quand elle est devenue trop facile — tenues courtes et
+    // légères sur l'étape actuelle à la place.)
+    final easierKnown = easier == null ? 0 : (a.holds[easier] ?? 0);
+    // Objectif de durée sur l'étape en cours (front lever 15 s quand le
+    // front lever est l'étape) : une séance légère de tenues longues sur
+    // l'étape plus facile construit la durée (R4-F6 : alternance tenues
+    // courtes intenses et tenues longues ; CX, correction 1, panel).
+    final wanted =
+        a.goalOn(t.currentId, GoalMetric.maxHoldSeconds)?.targetValue ??
+        (t.targetId == t.currentId
+            ? a.goalOn(t.targetId, GoalMetric.maxHoldSeconds)?.targetValue
+            : null);
+    final duration = wanted != null && wanted > hold;
+    final tooEasy =
+        !duration &&
+        a.level >= 2 &&
+        (easierKnown > 25 || (easierKnown == 0 && hold >= 4));
+    if (heavy || easier == null || a.level < 2 || hold <= 0 || tooEasy) {
       // R4-F6 : levier utile quand le maintien maximal vaut 8 à 25 s ; en
       // dessous, des maintiens courts sur l'étape et du temps sur l'étape
       // plus facile.
+      // (Étape de travail écartée par la douleur : l'étape plus facile la
+      // remplace, avec la raison et le retour écrits.)
+      final why = a.rejection(t.currentId, d);
+      final painStep =
+          easier != null && why == 'joint' && _painOn(a, t.currentId);
       b.add(
         d,
         <String>[t.currentId, if (easier != null) easier],
@@ -2242,8 +2502,18 @@ void _buildFigures(_Builder b, Set<int> runDays) {
         sets: heavy ? (a.level >= 2 ? 5 : 4) : 3,
         skillTargetId: t.targetId,
         stress: heavy ? DayStress.heavy : DayStress.light,
+        note: painStep ? 'pain_step' : null,
       );
-      if (hold < 8 && easier != null && a.level >= 1) {
+      // Avancé et élite : plus de tenue de remplissage sur une étape devenue
+      // trop facile (maximum au-delà de 25 s, ou inconnu quand l'étape
+      // actuelle tient déjà 4 s) — R4-F6 : un levier est utile quand son
+      // maximum vaut 8 à 25 s ; relecture documentée CX : les tenues sous
+      // la moitié du maximum n'apportent rien. Le volume va au levier visé
+      // et aux outils de surcharge (dynamique un cran au-dessus).
+      final easierMax = easier == null ? 0 : (a.holds[easier] ?? 0);
+      final filler =
+          a.level >= 2 && (easierMax > 25 || (easierMax == 0 && hold >= 4));
+      if (hold < 8 && easier != null && a.level >= 1 && !filler) {
         // R4-F7 : deux à trois semaines de chevauchement avec l'étape
         // précédente quand l'étape est neuve ou courte.
         b.add(
@@ -2257,7 +2527,13 @@ void _buildFigures(_Builder b, Set<int> runDays) {
         );
       }
       final next = t.nextId;
-      if (heavy && next != null && ready(t) && (attempts[next] ?? 0) < 2) {
+      // (Jamais l'étape suivante quand l'étape actuelle est écartée ce
+      // jour-là — douleur, exercice évité — : CX, panel.)
+      if (heavy &&
+          next != null &&
+          ready(t) &&
+          a.can(t.currentId, d) &&
+          (attempts[next] ?? 0) < 2) {
         // Deux séances par semaine au plus, deux entrées de 2 à 3 s.
         final slot = b.add(
           d,
@@ -2438,6 +2714,27 @@ void _buildFigures(_Builder b, Set<int> runDays) {
         sets: d == strengthDays.first ? 4 : 3,
         stress: DayStress.medium,
         referenceId: Ids.pull,
+      );
+    }
+    final frontLever = <SkillTrack?>[
+      first,
+      second,
+    ].any((t) => t != null && t.targetId == 'cs-front-lever');
+    if (frontLever && strengthDays.contains(d)) {
+      // Front lever : tirage bras tendus (grand dorsal en abaissement,
+      // coude tendu) les jours de force, en plus des tenues et du
+      // dynamique de la figure (R1-P17, R4-F5 ; panel CX : la force de
+      // tirage bras tendus limitait le front lever).
+      b.add(
+        d,
+        const <String>[
+          'mu-tirage-bras-tendus-elastique',
+          'mu-tirage-bras-tendus-poulie-barre',
+        ],
+        SlotRole.accessory,
+        Method.accessoryIsolation,
+        sets: 3,
+        stress: DayStress.medium,
       );
     }
     if (balanceDays.contains(d) &&

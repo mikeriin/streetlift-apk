@@ -1,4 +1,4 @@
-# Notes de coach du chemin street (kalis_plan 0.2.0)
+# Notes de coach du chemin street (kalis_plan 0.2.2)
 
 Le chemin street (`CONTRAT.md`, § 12) ne rend aucune phrase. Il rend deux sortes de raisons :
 
@@ -26,15 +26,18 @@ Deux codes existent, ont un texte, mais ne sont émis nulle part : `push_mainten
 | `short_version` | minutes (25 si la séance la plus courte dure 50 min ou plus, sinon 15) | toujours | Jour chargé : version courte de 25 (ou 15) min, échauffement puis les deux ou trois premiers exercices. |
 | `red_flags` | 0 | toujours | Arrêt immédiat et avis médical en cas de douleur dans la poitrine, d'essoufflement anormal, de malaise ou de vertige ; souffler pendant l'effort. |
 | `missed` | baisse de volume en % (20) | toujours | Une séance manquée ne se rattrape pas ; une semaine manquée se refait ; deux semaines ou plus : deux semaines en arrière avec 20 % de volume en moins. |
-| `test_use` | 0 | le bloc a une semaine de tests | Les tests recalent les charges, répétitions et secondes du bloc suivant ; série de tête = résultat − 2, tenues = 60 à 75 % du maintien mesuré. |
+| `test_use` | 0 | le bloc a une semaine de tests | Les tests recalent les charges, répétitions et secondes du bloc suivant, jamais sur un progrès supposé ; série de tête = résultat − 2, tenues = 60 à 85 % du maintien mesuré ; un test fait un jour de bilan bas se reporte de 48 à 72 h. |
 | `test_rest` | heures (48) | le bloc a une semaine de tests | 48 h sans travail dur du mouvement avant un test. |
 | `reentry_test` | réserve (3) | coupure de 3 semaines ou plus (`gapWeeks` ≥ 4) | Test d'entrée de reprise : en semaine 1, une première série arrêtée à 3 répétitions de l'échec sur chaque mouvement principal ; déclarer ces repères, les anciens records ne sont pas des charges de travail. |
 | `tolerance_volume` | facteur de volume général (0,6 à moins de 1) | le facteur de volume du profil est sous 1 | Volume réglé à tant % du volume type du niveau, au vu de la récupération. |
-| `already_applied` | 0 | un facteur de volume, de tirage ou de jambes sous 1, une réserve ajoutée, ou 40 ans et plus | Les réductions liées au profil sont déjà dans les chiffres : n'en retire pas davantage. |
-| `band_choice` | répétitions visées (8) | le squelette porte un exercice assisté à l'élastique (identifiant contenant « assiste » et « elastique ») | Prends l'élastique qui permet 8 répétitions propres avec la réserve prévue ; dès que le plus fin passe 8 répétitions, commence par 1 à 3 essais de traction stricte. |
+| `already_applied` | 0 | un facteur de volume, de tirage ou de jambes sous 1, une réserve ajoutée, ou 40 ans et plus | Les réductions liées au profil habituel sont déjà dans les chiffres : ne pas les retirer deux fois ; la baisse du jour s'applique en plus (CX). |
+| `band_choice` | répétitions visées (8) | le squelette porte un exercice assisté à l'élastique (identifiant contenant « assiste » et « elastique ») | Prends l'élastique qui permet 8 répétitions propres avec la réserve prévue, noté à chaque séance ; pieds en appui si le plus fort ne suffit pas ; changement d'élastique : règle `assistance_step` ; dès la sixième semaine, 1 à 3 essais isolés de traction stricte deux séances par semaine (sinon traction sautée et descente de 5 s). |
 | `pain_general` | seuil d'arrêt sur 10 (6) | aucune zone à ménager | Règle de douleur générale : 0 à 2 continuer, 3 ou 4 ne rien ajouter, 5 variante plus facile et −30 à −50 % de volume, 6 et plus arrêter et consulter. |
 | `walking` | minutes (30) | objectif de perte de poids | Marches en plus des séances, de 15 à 20 min vers 30 min, +10 min par semaine au total vers 150 puis 200 min d'endurance par semaine. |
 | `tracking` | séances par semaine (nombre de jours) | objectif de perte de poids | Coche chaque séance (objectif : tant par semaine), note les minutes de marche, relève poids et tour de taille aux semaines 1, 6 et 12, le matin à jeun ; déficit modéré (500 kcal par jour au plus), protéines à chaque repas, 7 h de sommeil visées ; alimentation avec un professionnel de santé. |
+| `pain_trend` | douleur relevée sur 10 | figure sur une zone douloureuse au bloc précédent (douleur du résumé d'adaptation, sous 6/10, CX) | Figure gardée, environ 40 % de volume en moins, variante la plus douce pour la zone, pas de hausse tant que la gêne ne reste pas sous 2/10 deux semaines ; arrêt et consultation à 6/10. |
+| `weight_class` | limite de la catégorie en kg (négative : catégorie ouverte « plus de ») | épreuve de force (streetlifting) : catégorie déclarée, sinon celle du poids actuel (règlement FinalRep, CX) | Catégorie de poids, pesée 2 h avant la première vague (tolérance 0,1 kg, à vérifier pour la compétition), pesée hebdomadaire ; changer de catégorie plutôt que couper du poids à la fin ; charges recalculées si le poids change. |
+| `event_format` | repos entre les ateliers supposé, en s | épreuve de répétitions dont le format n'est pas saisi (CX) | Aucun règlement unique : saisir ordre, temps limite, repos, pauses permises, standard ; en attendant, ordre muscle-up, tractions, dips et le repos supposé. |
 | `skill_horizon` | semaines minimales par étape (12, 8 ou 6 selon le niveau) | une des deux figures statiques n'est pas à sa dernière étape (style figures) ; placée en tête des notes du bloc | La figure complète n'est pas atteignable dans ce programme : chaque étape demande au moins tant de semaines ; le test final porte sur l'étape actuelle. |
 | `maintenance` | séries de l'emplacement | passe 1 : raison de l'emplacement `lift.maintain` (voir aussi § 2) | En entretien : volume réduit, charge gardée, le volume va à l'objectif. |
 
@@ -81,7 +84,7 @@ Deux codes existent, ont un texte, mais ne sont émis nulle part : `push_mainten
 | `slow_negative` | secondes de descente (4 à 7 ; 4 en `skill.dynamic`) | `beginner.negative` sur la traction ; repli de `beginner.main` sur `sw-traction-negative` ou `sw-dips-negatifs` (dosé comme une descente freinée) ; descente freinée en `skill.dynamic` | Descente freinée en tant de secondes, sans à-coup ; arrête dès qu'une descente passe sous 3 s ; sinon élastique ou 2 à 3 s. |
 | `slow_negative_push` | secondes de descente (3 ; 4 à partir du rang 2) | `beginner.negative` sur la pompe en descente freinée (`sw-pompe-negative`) | Pompe complète en descente freinée de tant de secondes, corps gainé de la tête aux talons, poitrine au sol ; remonte en posant les genoux ; arrête dès qu'une descente passe sous 2 s ou que le bassin s'affaisse. |
 | `push_ladder` | répétitions du bas de la plage (6) | `beginner.main` sans record, sur une variante de la pompe | Échelle de poussée (mur, mains surélevées, genoux, sol) : prends le cran qui permet 6 répétitions avec 3 à 4 en réserve. |
-| `negative_gate` | secondes repères ; négative (−10) quand l'essai strict la précède | test de la descente la plus lente (débutant sans traction, semaine de tests ; jour de l'échéance d'un objectif de traction non acquise) | Test : la descente la plus lente, deux essais chronométrés ; 10 s sans à-coup, la traction stricte est proche ; avec la valeur négative, seulement si aucune traction n'est passée. |
+| `negative_gate` | secondes repères ; négative (−10) quand l'essai strict la précède | test de la tenue menton au-dessus de la barre, comptée en secondes (débutant sans traction, semaine de tests ; jour de l'échéance d'un objectif de traction non acquise) — CX : remplace la descente freinée, comptée en répétitions par le catalogue | Test : la tenue menton au-dessus de la barre la plus longue, deux essais chronométrés ; le temps mesure la position haute d'un test à l'autre (pas un critère d'accès à la traction) ; avec la valeur négative, seulement si aucune traction n'est passée. |
 | `strict_attempt` | répétitions de l'objectif de traction (1 sans valeur) | même test, quand la traction est un objectif | Test, d'abord l'essai strict, frais : jusqu'à 3 essais séparés de 3 min ; si une traction passe, la déclarer. |
 
 ## 5. Figures et maintiens
@@ -140,7 +143,7 @@ Les notes de rôle sont choisies dans l'ordre du tableau : la première qui conv
 
 | Code | `step`, `unit` | Émise quand | Texte rendu (résumé) |
 | --- | --- | --- | --- |
-| `assistance_step` | 1, `cran` | `beginner.main` sans record sur un exercice assisté | Dès que le haut de la plage est tenu avec la réserve prévue, élastique plus fin (ou appui plus léger), et repartir du bas de la plage. |
+| `assistance_step` | 1, `cran` | `beginner.main` sans record sur un exercice assisté | Une seule règle pour changer d'élastique : toutes les séries au haut de la plage avec la réserve prévue, deux séances de suite → élastique plus fin (ou appui des pieds allégé) dès la séance suivante, retour au bas de la plage ; réserve non tenue → élastique précédent. |
 | `double_progression` | 1, `reps` | `beginner.main` (sans record ou maximum de 6 et plus), `reps.volume` sans maximum, `reps.strength` sur variante sans record, assistance en répétitions | Quand toutes les séries atteignent le haut de la plage avec la réserve prévue, passer à la variante ou à la charge suivante et repartir du bas. |
 | `load_step` | 1,5, `pct` | `lift.volume` en semaine de montée (charge connue) ; `reps.strength` lesté avec charge connue ou estimée | Les charges suivent les pourcentages écrits ; si la série de tête ne laisse pas la réserve prévue, garder la charge de la semaine précédente. |
 | `rep_step` | 1, `reps` | `reps.top` ; `reps.volume` en semaine de montée ; `reps.strength` au poids du corps avec record | Répétitions calées sur le dernier maximum mesuré ; une de plus par série si toutes passent avec une réserve de plus, sans dépasser maximum − 2 ; après un test, série de tête = résultat − 2. |
@@ -157,3 +160,15 @@ Les notes de rôle sont choisies dans l'ordre du tableau : la première qui conv
 `plan.return_from_gap`, `plan.recovery_profile` (sommeil, stress, travail, âge), `plan.concurrent_sport`,
 `plan.specialization`, `plan.constraint_history`, `plan.skill_step`, `plan.cautious_health`. Pour toute
 autre raison, il rend `null` : le texte générique de `kalis_core` s'applique.
+
+## Ajouts de 0.2.2 (lot CX, correction 1)
+
+| Code | `value` | Émise quand | Texte rendu (résumé) |
+| --- | --- | --- | --- |
+| `pain_stop` | rang de la zone (`BodyZone.values`) | bloc : une douleur qui dure ou qui revient met la zone à l'arrêt ; ligne : figure gardée sur prise neutre pendant l'arrêt | mouvements qui provoquent la zone retirés, consulter, reprise après deux semaines à 2/10 au plus |
+| `pain_return` | zone × 100 + palier de départ × 10 + dernier palier | bloc qui suit un arrêt | reprise graduée : 50 % puis +10 % par semaine, 3 en réserve |
+| `pain_return_item` | part du volume habituel | ligne d'un mouvement en reprise | part du volume de la semaine |
+| `pain_step` | 0 | ligne : étape plus facile d'une figure servie parce que la douleur écarte l'étape de travail | raison, retour après deux semaines à 2/10 au plus, test remis à ce retour |
+| `plateau` | dernier résultat de test | bloc : test sans progrès sur le mouvement visé | le bloc change de méthode (variante plus dure du tirage) |
+| `slow_tempo` | durée de la descente (s) | ligne : traction au tempo excentrique (plateau) | montée sans élan, 2 s en haut, descente freinée, arrêt quand la montée ralentit |
+| `event_zone` | part du maximum écrite (%) | ligne : séries de la zone de l'épreuve en réalisation d'un objectif de répétitions | séries vers cette part, repos court, réserve sur la dernière |

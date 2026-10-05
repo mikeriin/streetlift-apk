@@ -95,6 +95,18 @@ CoachTarget? targetOf(AthleteProfile profile, CivilDate start) {
   );
 }
 
+/// Vrai si une échéance principale du profil a eu lieu dans les dix jours
+/// qui précèdent le [start] (la semaine qui suit l'épreuve).
+bool justAfterEvent(AthleteProfile profile, CivilDate start) {
+  for (final e in profile.events ?? const <SeasonEvent>[]) {
+    final days = e.date.daysUntil(start);
+    if (e.priority == EventPriority.main && days >= 1 && days <= 10) {
+      return true;
+    }
+  }
+  return false;
+}
+
 /// Modèle de saison.
 enum SeasonModel {
   /// Débutant : progression linéaire, test en fin de bloc (R3-P2).
@@ -289,8 +301,14 @@ BlockShape shapeBlock(
           ? 6
           : blockLengthFor(toEvent, blockPreferences(a.level)));
   final finalBlock = toEvent != null && toEvent <= length;
-  final first = blockIndex == 0;
-  final reintroduction = first && a.gapWeeks >= 3;
+  // Bloc qui suit de près une épreuve principale (CX : panel, saisons
+  // croisées) : sa première semaine est une transition active (volume
+  // −50 %, effort loin de l'échec, R3-P19 ; Pritchard et al. 2016, les
+  // athlètes de force reprennent après quelques jours de repos relatif),
+  // la deuxième une semaine d'introduction.
+  final recovering = blockIndex > 0 && justAfterEvent(a.profile, start);
+  final first = blockIndex == 0 || recovering;
+  final reintroduction = blockIndex == 0 && a.gapWeeks >= 3;
   final weeks = <WeekSpec>[];
 
   int? left(int i) => toEvent == null ? null : toEvent - i;
@@ -334,7 +352,13 @@ BlockShape shapeBlock(
         if (i == 0 && first) {
           // R5-P22 : la marche vers la première semaine de charge reste sous
           // +20 %.
-          add(WeekKind.intro, WeekIntent.intro, phase, 0.9, 0);
+          add(
+            WeekKind.intro,
+            WeekIntent.intro,
+            phase,
+            coachIntroVolume(a, model),
+            0,
+          );
         } else if (tapered && left(i) == 2) {
           add(
             WeekKind.deload,
@@ -533,7 +557,13 @@ BlockShape shapeBlock(
               loaded,
             );
           } else if (i == 0 && first) {
-            add(WeekKind.intro, WeekIntent.intro, phase, 0.9, 0);
+            add(
+              WeekKind.intro,
+              WeekIntent.intro,
+              phase,
+              coachIntroVolume(a, model),
+              0,
+            );
           } else {
             final ramp = loaded <= 1 ? 1.0 : i / (loaded - 1);
             add(
@@ -606,13 +636,44 @@ BlockShape shapeBlock(
               test: true,
             );
           } else if (i == 0 && first) {
-            add(WeekKind.intro, WeekIntent.intro, phase, 0.9, 0);
+            add(
+              WeekKind.intro,
+              WeekIntent.intro,
+              phase,
+              coachIntroVolume(a, model),
+              0,
+            );
           } else {
             final ramp = loaded <= 1 ? 1.0 : i / (loaded - 1);
             add(WeekKind.build, intent, phase, 0.92 + 0.08 * ramp, i);
           }
         }
       }
+  }
+  if (recovering && weeks.length >= 3 && !weeks.first.eventWeek) {
+    final w0 = weeks.first;
+    weeks[0] = WeekSpec(
+      kind: WeekKind.deload,
+      intent: WeekIntent.transition,
+      phase: SeasonPhaseKind.transition,
+      volume: 0.5,
+      stage: 0,
+      weeksToEvent: w0.weeksToEvent,
+    );
+    // Puis une semaine de reprise à environ 75 % du volume : de la
+    // transition (50 %) au volume plein, deux marches au lieu d'une
+    // (R3-P19, R5-P22 : +10 à 20 % par semaine ; panel CX, boucle 1).
+    final w1 = weeks[1];
+    if (w1.kind == WeekKind.build && !w1.eventWeek && !w1.testWeek) {
+      weeks[1] = WeekSpec(
+        kind: WeekKind.intro,
+        intent: WeekIntent.intro,
+        phase: w1.phase,
+        volume: 0.75,
+        stage: 0,
+        weeksToEvent: w1.weeksToEvent,
+      );
+    }
   }
   return BlockShape(
     model: model,
@@ -704,3 +765,10 @@ SeasonPlan seasonPlanOf(Athlete a, CivilDate start, CivilDate createdOn) {
     ],
   );
 }
+
+/// Volume de la semaine d'introduction d'un premier bloc : 90 % ; 80 % chez
+/// l'avancé et l'élite qui préparent une échéance de répétitions, dont le
+/// volume de pointe est le plus haut (R5-P22 : +10 à 20 % par semaine ;
+/// panel CX, boucle 2 : semaine 1 au volume de pointe).
+double coachIntroVolume(Athlete a, SeasonModel model) =>
+    a.level >= 2 && model == SeasonModel.repsPeak ? 0.8 : 0.9;

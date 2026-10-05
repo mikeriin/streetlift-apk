@@ -84,6 +84,18 @@ SlotSpec _specOf(
   );
 }
 
+/// Vrai si la séance sert [item] en reprise graduée après une douleur qui
+/// dure (raison `adapt.load_held`, cause `pain_return`).
+bool _inReturn(ExercisePrescription item) {
+  for (final r in item.reasons) {
+    if (r.code == ReasonCodes.adaptLoadHeld &&
+        r.params['cause'] == 'pain_return') {
+      return true;
+    }
+  }
+  return false;
+}
+
 /// Conseil pour la série suivante de l'emplacement demandé par [request].
 IntraSessionAdvice buildAdvice(
   EngineContext ctx,
@@ -156,6 +168,15 @@ IntraSessionAdvice buildAdvice(
       );
       if (item != null && exercise.observed.isEmpty) {
         exercise.plan = _plansOf(item, hold: hold);
+      }
+      if (item != null && _inReturn(item)) {
+        // Reprise graduée (dite par la séance) : mêmes verrous qu'à la
+        // préparation de la séance (CA2, partie 0).
+        exercise.inReturn = true;
+        exercise.doseCapped = true;
+        if (exercise.rirEff < p.coachReturnRir) {
+          exercise.rirEff = p.coachReturnRir;
+        }
       }
       if (slot != null) {
         bySlot[slot] = exercise;
@@ -289,7 +310,15 @@ IntraSessionAdvice buildAdvice(
         rirOfFlames(rated) >= run.state.rater.ceiling(p) &&
         rirOfFlames(previousTarget.flames) >= run.state.rater.ceiling(p);
     final delta = far ? 0 : rated - previousTarget.flames;
-    if (delta >= p.adviceGapFlames) {
+    // Mode coach : une note isolée plus dure sur une série menée au haut
+    // de sa plage, que le modèle juge nettement plus facile que visé, ne
+    // se dit pas « plus dure que prévu » (CX, correction 1).
+    final doubtful =
+        exercise.spec.coach != null &&
+        previous.amount >= previousTarget.high &&
+        previous.rir - rirOfFlames(previousTarget.flames) >= 2 &&
+        delta < p.adviceGapFlames + 2;
+    if (delta >= p.adviceGapFlames && !doubtful) {
       reasons.add(
         reason(ReasonCodes.adaptFlamesAboveTarget, <String, Object?>{
           'delta': delta.toDouble(),

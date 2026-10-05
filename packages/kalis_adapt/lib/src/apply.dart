@@ -3,6 +3,8 @@ library;
 
 import 'package:kalis_core/kalis_core.dart';
 
+import 'coach.dart' show blockCoached;
+
 /// Bloc obtenu en appliquant [proposal] à [block].
 ///
 /// - Une restructuration porte son bloc résultant : il est rendu tel quel.
@@ -41,6 +43,9 @@ ProgramBlock applyProposal(ProgramBlock block, Proposal proposal) {
     return block;
   }
   var touched = false;
+  // Bloc au contrat 0.4.0 (`blockCoached`) : tout champ est gardé ; un
+  // bloc de 0.1 est reconstruit comme en 0.2.0 (à l'octet près).
+  final coached = blockCoached(block);
   final weeks = <WeekPrescription>[];
   for (final week in block.pass2.weeks) {
     final days = <DayPrescription>[];
@@ -55,10 +60,24 @@ ProgramBlock applyProposal(ProgramBlock block, Proposal proposal) {
           items.add(item);
         }
       }
-      days.add(DayPrescription(dayIndex: day.dayIndex, items: items));
+      // (copyWith : les champs du contrat 0.4.0 de la séance et de la
+      // semaine — intention, phase… — restent ; 0.2.1, lot CX : une
+      // proposition appliquée effaçait l'intention des semaines et le bloc
+      // repassait au mode 0.1.)
+      days.add(
+        coached
+            ? day.copyWith(items: items)
+            : DayPrescription(dayIndex: day.dayIndex, items: items),
+      );
     }
     weeks.add(
-      WeekPrescription(weekIndex: week.weekIndex, kind: week.kind, days: days),
+      coached
+          ? week.copyWith(days: days)
+          : WeekPrescription(
+              weekIndex: week.weekIndex,
+              kind: week.kind,
+              days: days,
+            ),
     );
   }
   if (!touched) {
@@ -66,11 +85,13 @@ ProgramBlock applyProposal(ProgramBlock block, Proposal proposal) {
   }
   return ProgramBlock(
     pass1: block.pass1,
-    pass2: Pass2Plan(
-      blockId: block.pass2.blockId,
-      engineVersion: block.pass2.engineVersion,
-      weeks: weeks,
-      reasons: block.pass2.reasons,
-    ),
+    pass2: coached
+        ? block.pass2.copyWith(weeks: weeks)
+        : Pass2Plan(
+            blockId: block.pass2.blockId,
+            engineVersion: block.pass2.engineVersion,
+            weeks: weeks,
+            reasons: block.pass2.reasons,
+          ),
   );
 }

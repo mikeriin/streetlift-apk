@@ -5,8 +5,10 @@ import 'dart:math' as math;
 
 import 'package:kalis_adapt/kalis_adapt.dart';
 import 'package:kalis_adapt/simulation.dart';
-import 'package:kalis_adapt/src/model.dart' show formAfter;
+import 'package:kalis_adapt/src/model.dart'
+    show PainState, formAfter, painResumeDays, recentBestOf;
 import 'package:kalis_core/kalis_core.dart';
+import 'package:kalis_plan/kalis_plan.dart';
 import 'package:test/test.dart';
 
 import 'support.dart';
@@ -67,6 +69,65 @@ final class _Captured implements CoachAwarePolicy {
 void main() {
   const p = AdaptParams.standard;
   final catalog = loadCatalog();
+
+  group('douleur qui dure ou qui revient (CX, correction 1)', () {
+    PainState zone(List<(int, int)> reports) {
+      final s = PainState(BodyZone.wristHand, BodySide.right);
+      for (final (day, intensity) in reports) {
+        s.record(day, intensity);
+      }
+      return s;
+    }
+
+    test('trois sur dix pendant deux semaines : arrêt', () {
+      final s = zone(const <(int, int)>[(0, 3), (3, 3), (7, 4), (10, 3)]);
+      expect(s.stopAt(10), isNull);
+      s.record(14, 3);
+      final stop = s.stopAt(14);
+      expect(stop, isNotNull);
+      expect(stop!.zone, BodyZone.wristHand);
+      expect(stop.sessions, 5);
+      expect(stop.intensity, 4);
+    });
+
+    test('forte plus d\'une semaine : arrêt', () {
+      final s = zone(const <(int, int)>[(0, 6), (3, 5)]);
+      expect(s.stopAt(3), isNull);
+      s.record(7, 5);
+      expect(s.stopAt(7), isNotNull);
+    });
+
+    test('retour après une accalmie : arrêt dès le premier signalement', () {
+      final s = zone(const <(int, int)>[(0, 3), (3, 3), (30, 3)]);
+      expect(s.stopAt(30)?.recurrence, isTrue);
+      // Un seul signalement léger avant : pas un épisode réel.
+      expect(zone(const <(int, int)>[(0, 3), (30, 3)]).stopAt(30), isNull);
+    });
+
+    test('deux semaines sans douleur au-dessus de 2 : reprise', () {
+      final s = zone(const <(int, int)>[
+        (0, 3),
+        (3, 3),
+        (7, 4),
+        (10, 3),
+        (14, 3),
+        (17, 2),
+        (21, 1),
+      ]);
+      expect(s.stopAt(21), isNotNull);
+      expect(s.stopAt(14 + painResumeDays - 1), isNotNull);
+      expect(s.stopAt(14 + painResumeDays), isNull);
+    });
+
+    test('un signalement levé montre la douleur du journal', () {
+      final s = PainState(BodyZone.elbow, BodySide.left)
+        ..lastIntensity = 0
+        ..lastAboveDay = 10
+        ..lastAboveIntensity = 4;
+      expect(s.shownIntensity(12, 7), 4);
+      expect(s.shownIntensity(18, 7), 0);
+    });
+  });
 
   group('alerte de surmenage', () {
     final drop = math.log(1 - p.coachOverreachDrop);
@@ -183,15 +244,15 @@ void main() {
     }, timeout: const Timeout(Duration(minutes: 10)));
   });
 
-  group('séries fractionnées', () {
-    // Débutante : pompe classique écrite 2 × 3 à 6 à 2 en réserve pour un
-    // maximum de 3 — des séries plus courtes et plus nombreuses.
-    test('street_03 : plage hors de portée, plus de séries, plus '
-        'courtes', () {
-      const key = 'street_03_debutante';
-      const id = 'sw-pompe';
+  group('tenue après un test', () {
+    // CX, correction 1 : la borne de hausse d'une tenue laisse toujours
+    // servir 55 % du meilleur maintien mesuré (la tenue menton écrite à
+    // 17-19 s après un test de 30 s était servie à 5-9 s).
+    test('street_01 : la tenue servie rejoint 55 % du test', () {
+      const key = 'street_01_debutant_complet';
+      const id = 'cs-tenue-menton-barre-pronation';
       final engine = KalisAdapt();
-      final policy = _Captured(engine, <String>{id});
+      final policy = CheckedPolicy(engine);
       final run = simulate(
         catalog: catalog,
         spec: streetAthlete(key),
@@ -199,33 +260,106 @@ void main() {
         seed: 4,
         policy: policy,
         program: streetProgram(key),
-        weeks: 10,
+        weeks: 12,
         loop: engine,
         truthKind: TruthKind.b,
       );
       expect(policy.violations, isEmpty);
+      var best = 0;
+      var after = 0;
+      var checked = 0;
+      for (final r in run.sets) {
+        if (r.exerciseId != id) {
+          continue;
+        }
+        if (r.test) {
+          if (r.amount > best) {
+            best = r.amount.round();
+          }
+          continue;
+        }
+        if (best > 0) {
+          checked++;
+          if (r.targetHigh > after) {
+            after = r.targetHigh;
+          }
+        }
+      }
+      expect(best, greaterThan(0));
+      expect(checked, greaterThan(0));
+      expect(after, greaterThanOrEqualTo((best * 0.55).floor()));
+    }, timeout: const Timeout(Duration(minutes: 10)));
+  });
+
+  group('séries fractionnées', () {
+    // Plage écrite hors de portée le jour même (record déclaré au-dessus du
+    // maximum réel, ou maximum en baisse) : des séries plus courtes et plus
+    // nombreuses. Depuis `kalis_plan` 0.2.1 (lot CX), les blocs sont écrits
+    // sur le dernier test et la débutante de street_03 reçoit l'échelle de
+    // poussée : le cas se cherche sur plusieurs profils et graines, avec un
+    // record de pompes surestimé pour street_03 (5 déclarées, 3 réelles).
+    test('séries fractionnées : plus de séries, chacune sous le bas de la '
+        'plage écrite', () {
       var split = 0;
-      for (final s in run.served) {
-        final cap = policy.before[s.plan.date.iso]?[id];
-        for (final it in s.plan.items) {
-          if (it.exerciseId != id || it.kind == SetKind.test || cap == null) {
-            continue;
-          }
-          final written = _written(run, s, it.slotId);
-          final low = written?.repsLow;
-          if (written == null || low == null) {
-            continue;
-          }
-          final targets = it.setTargets ?? const <SetTarget>[];
-          if (targets.length > written.sets) {
-            split++;
-            // Jamais plus du double des séries (trois au moins permises),
-            // chaque série plus courte que le bas de la plage écrite.
-            final most = 2 * written.sets < 3 ? 3 : 2 * written.sets;
-            expect(targets.length, lessThanOrEqualTo(most));
-            for (final t in targets) {
-              expect(t.repsHigh, lessThan(low));
-              expect(t.repsHigh, greaterThanOrEqualTo(1));
+      for (final key in const <String>[
+        'street_03_debutante',
+        'street_13_peu_de_temps',
+        'street_17_hybride_street_course',
+        'street_06_inter_sets_reps',
+      ]) {
+        final declared = streetProfile(key);
+        final profile = key != 'street_03_debutante'
+            ? declared
+            : declared.copyWith(
+                benchmarks: <Benchmark>[
+                  for (final b in declared.benchmarks ?? const <Benchmark>[])
+                    if (b.exerciseId == 'sw-pompe' &&
+                        b.kind == BenchmarkKind.maxReps)
+                      b.copyWith(reps: 5)
+                    else
+                      b,
+                ],
+              );
+        for (final seed in const <int>[4, 0]) {
+          final engine = KalisAdapt();
+          final policy = _Captured(engine, const <String>{});
+          final run = simulate(
+            catalog: catalog,
+            spec: streetAthlete(key),
+            profile: profile,
+            seed: seed,
+            policy: policy,
+            program: SimProgram(catalog, KalisPlan(), profile),
+            weeks: 10,
+            loop: engine,
+            truthKind: TruthKind.b,
+          );
+          expect(policy.violations, isEmpty, reason: key);
+          for (final s in run.served) {
+            for (final it in s.plan.items) {
+              if (it.kind == SetKind.test) {
+                continue;
+              }
+              final written = _written(run, s, it.slotId);
+              final low = written?.repsLow;
+              if (written == null ||
+                  low == null ||
+                  written.exerciseId != it.exerciseId) {
+                continue;
+              }
+              final targets = it.setTargets ?? const <SetTarget>[];
+              if (targets.length > written.sets) {
+                split++;
+                // Jamais plus du double des séries (trois au moins
+                // permises), chaque série plus courte que le bas de la
+                // plage écrite.
+                final most = 2 * written.sets < 3 ? 3 : 2 * written.sets;
+                expect(targets.length, lessThanOrEqualTo(most), reason: key);
+                for (final t in targets) {
+                  expect(t.repsHigh, lessThan(low), reason: key);
+                  expect(t.repsHigh, greaterThanOrEqualTo(1), reason: key);
+                }
+              }
             }
           }
         }
@@ -297,6 +431,139 @@ void main() {
         expect(results, greaterThan(0));
       }, timeout: const Timeout(Duration(minutes: 10)));
     }
+  });
+
+  group('reprise graduée conduite séance par séance (CA2, partie 0)', () {
+    test('levée de l\'arrêt datée après deux semaines sous 3 sur 10', () {
+      final s = PainState(BodyZone.elbow, BodySide.both);
+      for (final (day, intensity) in const <(int, int)>[
+        (0, 5),
+        (3, 5),
+        (7, 5),
+        (10, 2),
+      ]) {
+        s.record(day, intensity);
+      }
+      expect(s.stopAt(7), isNotNull);
+      expect(s.liftedOn(7 + painResumeDays - 1), isNull);
+      expect(s.liftedOn(7 + painResumeDays), 7 + painResumeDays);
+      expect(s.liftedOn(40), 7 + painResumeDays);
+      // Sans arrêt (un seul signalement léger), aucune levée.
+      final t = PainState(BodyZone.elbow, BodySide.both)..record(0, 3);
+      expect(t.liftedOn(30), isNull);
+    });
+
+    test('meilleur maintien récent : jamais un record d\'avant une coupure', () {
+      const bests = <(int, int)>[(0, 40), (3, 42), (30, 20), (33, 22)];
+      expect(recentBestOf(bests, 35, 14, 28), 22);
+      expect(recentBestOf(bests.sublist(0, 2), 5, 14, 28), 42);
+      expect(recentBestOf(bests, 70, 14, 28), 0);
+    });
+
+    test('street_12, douleur au coude : aucun test ni hausse sur la zone, '
+        'reprise jamais au-dessus de l\'écrit', () {
+      const key = 'street_12_antecedent_coude';
+      final fixtures = readJsonObject('test/fixtures/street_profiles.json.gz');
+      final entry = fixtures[key]! as Map<String, Object?>;
+      final athlete =
+          Map<String, Object?>.of(entry['athlete']! as Map<String, Object?>)
+            ..['painZone'] = BodyZone.elbow.code
+            ..['painFromDay'] = 28
+            ..['painDays'] = 21
+            ..['painIntensity'] = 5;
+      final engine = KalisAdapt();
+      final policy = CheckedPolicy(engine);
+      final run = simulate(
+        catalog: catalog,
+        spec: athleteFromJson(athlete),
+        profile: streetProfile(key),
+        seed: 4,
+        policy: policy,
+        program: streetProgram(key),
+        weeks: 16,
+        loop: engine,
+        truthKind: TruthKind.b,
+      );
+      expect(policy.violations, isEmpty);
+      expect(run.painAggravations, 0);
+      var returned = 0;
+      for (final s in run.served) {
+        for (final item in s.plan.items) {
+          final back = item.reasons.any(
+            (r) =>
+                r.code == ReasonCodes.adaptLoadHeld &&
+                r.params['cause'] == 'pain_return',
+          );
+          if (!back) {
+            continue;
+          }
+          returned++;
+          expect(item.kind, isNot(SetKind.test));
+          final written = _written(run, s, item.slotId);
+          if (written != null) {
+            expect(
+              item.sets,
+              lessThanOrEqualTo(written.sets),
+              reason: '${item.exerciseId} le ${s.record.date.iso}',
+            );
+          }
+        }
+      }
+      expect(returned, greaterThan(0));
+    }, timeout: const Timeout(Duration(minutes: 10)));
+
+    test('street_01 : l\'élastique ne change pas dans un sens puis dans '
+        'l\'autre d\'une séance à la suivante', () {
+      const key = 'street_01_debutant_complet';
+      final engine = KalisAdapt();
+      final policy = CheckedPolicy(engine);
+      final run = simulate(
+        catalog: catalog,
+        spec: streetAthlete(key),
+        profile: streetProfile(key),
+        seed: 4,
+        policy: policy,
+        program: streetProgram(key),
+        weeks: 16,
+        loop: engine,
+        truthKind: TruthKind.b,
+      );
+      expect(policy.violations, isEmpty);
+      final assisted = <String>{
+        for (final e in catalog.exercises)
+          if (e.assisted) e.id,
+      };
+      final lastChange = <String, int>{};
+      final lastFailed = <String, bool>{};
+      var reversals = 0;
+      for (final s in run.served) {
+        for (final item in s.plan.items) {
+          if (!assisted.contains(item.exerciseId)) {
+            continue;
+          }
+          final slot = '${item.slotId}|${item.exerciseId}';
+          var change = 0;
+          for (final r in item.reasons) {
+            if (r.code == ReasonCodes.adaptFlamesBelowTarget) {
+              change = -1;
+            } else if (r.code == ReasonCodes.adaptFlamesAboveTarget) {
+              change = 1;
+            }
+          }
+          final before = lastChange[slot] ?? 0;
+          if (change != 0 &&
+              before == -change &&
+              !(lastFailed[slot] ?? false)) {
+            reversals++;
+          }
+          lastChange[slot] = change;
+          lastFailed[slot] = s.record.sets.any(
+            (r) => r.slotId == item.slotId && !r.success,
+          );
+        }
+      }
+      expect(reversals, 0);
+    }, timeout: const Timeout(Duration(minutes: 10)));
   });
 }
 

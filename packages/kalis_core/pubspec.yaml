@@ -6,7 +6,7 @@ description: >-
   avancées, saison et compétition, interfaces et types d'échange de
   kalis_plan, kalis_adapt et kalis_quest. Dart pur, sans Flutter, sans
   stockage, sans horloge.
-version: 0.4.1
+version: 0.4.2
 publish_to: none
 
 environment:

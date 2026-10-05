@@ -20,6 +20,77 @@ import 'prescribe.dart';
 import 'season.dart';
 import 'skeleton.dart';
 
+/// Douleurs encore présentes à la fin du bloc précédent (résumé
+/// d'adaptation, CX, correction 1) : une zone à 3 sur 10 ou plus à la
+/// dernière séance qui l'a notée est ménagée par le bloc suivant (R5-P23 :
+/// travailler sous 3 à 4 sur 10 ; Silbernagel et al. 2007).
+List<(BodyZone, int)> adaptationPains(AdaptationSummary? adaptation) =>
+    <(BodyZone, int)>[
+      for (final p in adaptation?.pains ?? const <PainTrend>[])
+        if (p.lastIntensity >= 3) (p.zone, p.lastIntensity),
+    ];
+
+/// Paliers de reprise graduée (CX, correction 1, sécurité) lus dans les
+/// notes du bloc [block] : une zone à l'arrêt dans ce bloc (note
+/// `pain_stop`) repart au premier palier ; une zone en reprise (note
+/// `pain_return`) continue au palier qui suit le dernier du bloc — ou, avec
+/// [same] (restructuration du bloc lui-même), garde le palier de départ du
+/// bloc. Une reprise finie (palier 5 : plein volume) disparaît.
+Map<BodyZone, int> coachReturnStepsOf(
+  ProgramBlock? block, {
+  bool same = false,
+}) {
+  final out = <BodyZone, int>{};
+  if (block == null) {
+    return out;
+  }
+  final stops = <BodyZone>{};
+  for (final r in <Reason>[...block.pass1.reasons, ...block.pass2.reasons]) {
+    if (r.code != ReasonCodes.planCoachNote) {
+      continue;
+    }
+    final note = r.params['note'];
+    final value = r.params['value'];
+    if (value is! num) {
+      continue;
+    }
+    final v = value.round();
+    if (note == CoachNotes.painStop) {
+      if (v >= 0 && v < BodyZone.values.length) {
+        stops.add(BodyZone.values[v]);
+      }
+    } else if (note == CoachNotes.painReturn) {
+      final zone = v ~/ 100;
+      if (zone < 0 || zone >= BodyZone.values.length) {
+        continue;
+      }
+      final step = same ? (v % 100) ~/ 10 : v % 10 + 1;
+      if (step < coachPainReturnSteps) {
+        out[BodyZone.values[zone]] = step;
+      }
+    }
+  }
+  for (final z in stops) {
+    out[z] = 0;
+  }
+  return out;
+}
+
+/// Vrai si le bloc [block] porte la note d'arrêt (`pain_stop`) de la zone
+/// [zone].
+bool _stoppedIn(ProgramBlock block, BodyZone zone) {
+  for (final r in <Reason>[...block.pass1.reasons, ...block.pass2.reasons]) {
+    final value = r.params['value'];
+    if (r.code == ReasonCodes.planCoachNote &&
+        r.params['note'] == CoachNotes.painStop &&
+        value is num &&
+        value.round() == zone.index) {
+      return true;
+    }
+  }
+  return false;
+}
+
 /// Identifiant du bloc de rang [blockIndex] commençant le [startDate].
 String coachBlockIdFor(int blockIndex, CivilDate startDate) =>
     'kp-b$blockIndex-${startDate.iso}';
@@ -373,10 +444,12 @@ final class CoachEngine {
       catalog,
       request.profile,
       request.startDate,
-      extraExcluded: <String>{
-        ..._excludedBy(request.locks),
-        ...?request.adaptation?.avoidedExerciseIds,
-      },
+      extraExcluded: _excludedBy(request.locks),
+      avoidedIds: request.adaptation?.avoidedExerciseIds ?? const <String>[],
+      trendPains: adaptationPains(request.adaptation),
+      estimates: request.adaptation?.estimates ?? const <ExerciseEstimate>[],
+      stopZones: coachPainStops(request.adaptation?.reasons ?? const []),
+      returnSteps: coachReturnStepsOf(previous),
     );
     final sk = _skeleton(
       a,
@@ -405,22 +478,29 @@ final class CoachEngine {
     required AdaptationSummary? adaptation,
     required Pass1Plan pass1,
     required List<WeekPrescription> previous,
+    List<WeekPrescription> kept = const <WeekPrescription>[],
     Set<String> extraExcluded = const <String>{},
     List<(BodyZone, int)> extraPains = const <(BodyZone, int)>[],
     Map<int, int> minutesOverride = const <int, int>{},
     double? volumeScale,
+    Set<BodyZone> stopZones = const <BodyZone>{},
+    Map<BodyZone, int> returnSteps = const <BodyZone, int>{},
   }) {
     final a = Athlete.read(
       catalog,
       profile,
       pass1.startDate,
-      extraExcluded: <String>{
-        ..._excludedBy(locks),
-        ...?adaptation?.avoidedExerciseIds,
-        ...extraExcluded,
-      },
+      extraExcluded: <String>{..._excludedBy(locks), ...extraExcluded},
+      avoidedIds: adaptation?.avoidedExerciseIds ?? const <String>[],
       extraPains: extraPains,
+      trendPains: adaptationPains(adaptation),
       minutesOverride: minutesOverride,
+      estimates: adaptation?.estimates ?? const <ExerciseEstimate>[],
+      stopZones: <BodyZone>{
+        ...coachPainStops(adaptation?.reasons ?? const []),
+        ...stopZones,
+      },
+      returnSteps: returnSteps,
     );
     final canonical = _skeleton(
       a,
@@ -435,6 +515,7 @@ final class CoachEngine {
       blockId: pass1.blockId,
       blockIndex: pass1.blockIndex,
       previous: previous,
+      kept: kept,
       volumeScale: volumeScale ?? adaptationVolumeScale(adaptation),
     );
   }
@@ -449,6 +530,7 @@ final class CoachEngine {
       adaptation: base.adaptation,
       pass1: request.pass1,
       previous: base.previousBlock?.pass2.weeks ?? const <WeekPrescription>[],
+      returnSteps: coachReturnStepsOf(base.previousBlock),
     );
   }
 
@@ -473,6 +555,7 @@ final class CoachEngine {
       adaptation: request.adaptation,
       pass1: pass1,
       previous: request.previous.pass2.weeks,
+      returnSteps: coachReturnStepsOf(request.previous),
     );
     final before = request.previous.pass1;
     final diff = diffPlans(
@@ -901,16 +984,39 @@ final class CoachEngine {
           }
       }
     }
+    // Douleur qui dure ou qui revient : arrêt des mouvements qui la
+    // provoquent dès la semaine suivante, noté dans le bloc (le bloc
+    // suivant en part pour la reprise graduée).
+    // (Un arrêt déjà noté dans le bloc en cours reste un arrêt jusqu'à la
+    // fin du bloc : une restructuration lancée pour une autre raison ne le
+    // change pas en reprise — relecture indépendante du code, CX
+    // correction 1.)
+    final noted = coachReturnStepsOf(current, same: true);
+    final held = <BodyZone>{
+      for (final z in noted.keys)
+        if (noted[z] == 0 && _stoppedIn(current, z)) z,
+    };
+    final stops = <BodyZone>{
+      ...coachPainStops(request.reasons),
+      ...coachPainStops(request.adaptation?.reasons ?? const []),
+      ...held,
+    };
+    final returning = <BodyZone, int>{
+      for (final z in noted.keys)
+        if (!held.contains(z)) z: noted[z]!,
+    };
     final a = Athlete.read(
       catalog,
       request.profile,
       before.startDate,
-      extraExcluded: <String>{
-        ...excluded,
-        ...?request.adaptation?.avoidedExerciseIds,
-      },
+      extraExcluded: excluded,
+      avoidedIds: request.adaptation?.avoidedExerciseIds ?? const <String>[],
       extraPains: pains,
+      trendPains: adaptationPains(request.adaptation),
+      estimates: request.adaptation?.estimates ?? const <ExerciseEstimate>[],
       minutesOverride: minutes,
+      stopZones: stops,
+      returnSteps: returning,
     );
     final lockedSlots = <String>{};
     final frozen = <int>{};
@@ -987,7 +1093,21 @@ final class CoachEngine {
       planRequest,
       before.copyWith(
         days: days,
-        reasons: <Reason>[...before.reasons, scopeReason],
+        reasons: <Reason>[
+          ...before.reasons,
+          scopeReason,
+          for (final z in stops)
+            if (!before.reasons.any(
+              (r) =>
+                  r.code == ReasonCodes.planCoachNote &&
+                  r.params['note'] == CoachNotes.painStop &&
+                  r.params['value'] == z.index.toDouble(),
+            ))
+              reason(ReasonCodes.planCoachNote, <String, Object?>{
+                'note': CoachNotes.painStop,
+                'value': z.index.toDouble(),
+              }),
+        ],
       ),
     );
     final fresh = _pass2(
@@ -997,10 +1117,13 @@ final class CoachEngine {
       adaptation: request.adaptation,
       pass1: after,
       previous: const <WeekPrescription>[],
+      kept: current.pass2.weeks.sublist(0, from),
       extraExcluded: excluded,
       extraPains: pains,
       minutesOverride: minutes,
       volumeScale: scale > 1 ? 1 : scale,
+      stopZones: stops,
+      returnSteps: returning,
     );
     final weeksOut = <WeekPrescription>[];
     for (var w = 0; w < weeks; w++) {

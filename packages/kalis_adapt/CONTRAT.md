@@ -1,4 +1,4 @@
-# Contrat de kalis_adapt 0.2.0
+# Contrat de kalis_adapt 0.2.1
 
 Moteur dynamique de Kalis Track (D5) : il suit l'utilisateur et adapte son programme séance après séance.
 Dart pur, sans Flutter, sans stockage, sans horloge ; tout ce qu'il rend est une valeur du contrat de
@@ -1044,3 +1044,63 @@ Vérifiées sur le texte ou le résumé ; « (résumé) » : résumé seul.
 
 Les autres sources du calibrage (séries repère, lecture des notes, tendons, douleur) sont listées, avec ce
 qui a été lu de chacune, dans `docs/CALIBRAGE_CA1.md`.
+
+### 11.14 Simulateur : changement de profil en cours de saison (0.2.1, lot CX)
+
+Une correction en 0.2.1 : `applyProposal` garde les champs du contrat 0.4.0 (intention de semaine, etc.) d'un bloc qui porte une intention ; un bloc de 0.1 est reconstruit comme avant. Le simulateur (`simulation.dart`) prend une liste de
+`ProfileChange` (`week`, `apply`, `replan`, `label`) : au début de la semaine `week`, le profil simulé
+devient `apply(profil)` (par exemple une échéance avancée de deux semaines) ; si `replan` est vrai, le bloc
+en cours s'arrête à la fin de la semaine précédente et le bloc suivant est écrit par `nextBlock` sur le
+profil changé, avec le résumé d'adaptation du moment. `SimRun.changes` garde la semaine et le libellé de
+chaque changement. Sans changement, la simulation suit celle de 0.2.0 ; seuls diffèrent les blocs au contrat
+0.4.0 après une proposition appliquée (correction d'`applyProposal`). Utilisé par le mode saisons de `kalis_bench` 0.2.0.
+
+### 11.15 Mode coach : douleur qui dure, sous-dosage, tests reportés (0.2.2, lot CX correction 1)
+
+Corrections du mode coach faites sur la relecture du pilotage de CX, le panel et une relecture documentée
+indépendante (croisement avec `kalis_plan` 0.2.2). Le mode 0.1 est inchangé (mêmes séances à l'octet près,
+version du moteur mise à part : la lecture des tests sans mode coach suit 0.2.1).
+
+- **Douleur qui dure ou qui revient** (`PainState`, `model.dart`) : signalements datés par zone ; arrêt
+  quand la zone reste à 3/10 ou plus deux semaines (`painPersistMin`, `painPersistDays`), à 5/10 ou plus
+  plus d'une semaine (`painStrongMin`, `painStrongDays`), ou revient dans les douze semaines après un
+  épisode réel (`painRecurDays`) ; un épisode tolère deux semaines entre deux signalements
+  (`painEpisodeGapDays`) ; l'arrêt se lève après deux semaines sans signalement au-dessus de 2/10
+  (`painResumeDays`). Pendant l'arrêt, les mouvements qui provoquent la zone (`coachPainStopHits` de
+  `kalis_plan`) sont retirés des séances et la séance porte `adapt.pain_persistent` ; la revue le signale
+  (en mode coach, seul l'arrêt le fait) ; la douleur affichée est celle du dernier signalement récent.
+- **Sous-dosage** : chaque série est jugée contre sa propre réserve visée ; une série au ressenti qui
+  suppose moins de 90 % de la prédiction se lit comme une borne basse, et la baisse attend une deuxième
+  mesure concordante, une autre séance, dans les quatre semaines (`ExerciseTrack.lowProbeDay` ; une mesure
+  conforme efface la borne en attente) ; cran d'élastique retiré après deux séances au haut de la plage à
+  charge et plage égales, ou une première série dite deux répétitions plus facile que visé.
+- **Tests** : retirés un jour de bilan bas (une baisse de 1 sur 5 ou plus) et refaits à une séance suivante
+  de la semaine, 48 h après au moins, un bon jour sans douleur au-dessus du seuil ni zone à l'arrêt, avec le
+  matériel du lieu du jour et seulement pour une étape de figure acquise. Hors mode coach, la lecture des
+  tests (jours bas, milieu des tentatives) suit 0.2.1.
+- **Charges** : tentatives (ouverture 91 %, deuxième +5 % au plus, troisième +3 % au plus, +5 kg de
+  charge externe au plus ; la meilleure barre entre la réussie et la manquée est reportée) ; après une
+  série manquée non voulue, −7,5 % de charge totale, gardé sur les séries suivantes de la séance ; simple
+  d'entraînement à 92 % du maximum estimé au plus (85 % un jour de bilan bas) ; semaine allégée ou de test :
+  jamais plus lourd que la charge écrite.
+- **Tenues** : la borne de hausse d'une tenue d'une séance à la suivante (et celle du temps total de
+  l'emplacement) laisse toujours servir 55 % du meilleur maintien mesuré (`coachHoldMaxFloorShare`) :
+  après un test qui saute, la tenue écrite à 55-65 % du test n'est plus servie au niveau des semaines
+  d'avant. (Le meilleur maintien est celui du suivi, toutes séries comprises : il ne baisse pas après un
+  arrêt ; la tenue servie reste bornée par la cible du programme.)
+
+| Paramètre | Valeur | Source |
+| --- | --- | --- |
+| Arrêt | 3/10 × 14 jours ; 5/10 × 7 jours ; retour sous 84 jours | Coombes et al. 2015 ; NHS (consulter après deux semaines) ; choix prudents |
+| Levée | 14 jours à 2/10 au plus | relecture documentée CX ; Silbernagel et al. 2007 |
+| Écart dans un épisode | 14 jours | choix raisonné (durée du seuil de persistance) |
+| Borne basse | < 90 % de la prédiction ; deuxième mesure sous 28 jours, autre séance | Zourdos et al. 2021 ; Steele et al. 2017 ; choix raisonné |
+| Échec non voulu | −7,5 % de charge totale, séries suivantes comprises | Helms et al. 2018 (autorégulation) |
+| Tentatives | 91 % ; +5 % ; +3 % ; +5 kg au plus | Travis, Zourdos, Bazyler 2021 |
+| Plancher de la borne des tenues | 55 % du meilleur maintien | R4-F2 (50 à 70 % du maximum) ; relecture documentée CX |
+
+Invariants testés : `test/coach_rules_test.dart` (arrêt durable, fort, retour, levée, douleur affichée,
+tenue servie à 55 % du test au moins après le test) ;
+`test/coach_test.dart` (sauts de tentatives) ; propriétés (`test/properties.dart`) : aucun exercice exclu
+par une douleur du jour n'est prescrit ; un test servi un jour de changement de lieu se fait avec le
+matériel de ce lieu.

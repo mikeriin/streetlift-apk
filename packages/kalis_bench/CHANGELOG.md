@@ -1,5 +1,36 @@
 # Journal
 
+## 0.2.1 — 05/10/2026 (lot CX correction 1)
+
+Couple `kalis_plan` 0.2.2 × `kalis_adapt` 0.2.2. Profils types, attentes de coach, critères de sécurité et
+grilles du panel **inchangés**.
+
+- Export des saisons : notes d'arrêt et de reprise après une douleur qui dure listées sous chaque bloc ;
+  montées d'échauffement écrites à chaque exercice ; texte de `adapt.pain_persistent` (consulter, reprise
+  après deux semaines à 2/10) ; texte du pourcentage complété du 1RM de référence (« ; 1RM de référence
+  X kg »).
+
+## 0.2.0 — 04/10/2026 (lot CX)
+
+Saisons street complètes, couple `kalis_plan` 0.2.1 × `kalis_adapt` 0.2.1. Profils types, attentes de coach et
+grilles du panel **inchangés** ; un seul critère de sécurité précisé (ci-dessous).
+
+- **Critère `tendon_figures` précisé** : la tenue menton au-dessus de la barre (bras fléchis) n'entre plus dans
+  le budget des tenues bras tendus — le catalogue la range avec les figures statiques de tirage, mais elle ne
+  charge pas le coude en extension (R4-F10 vise les leviers bras tendus). Effet : les débutants dont le test
+  du chemin vers la traction est cette tenue ne sont plus signalés ; aucun seuil ne change.
+
+- **Mode saisons** (`lib/src/season.dart`, `lib/src/season_export.dart`) : chaque profil street sur toute
+  sa saison (16 semaines au moins, jusqu'à l'échéance et une semaine après), sous les trois modèles de
+  vérité et plusieurs graines ; scénarios imposés (séances manquées, semaine de maladie, douleur au coude ou
+  à l'épaule, parc seulement, échéance avancée de deux semaines, deuxième échéance) ; mesures : progression,
+  jour de l'échéance rapporté au maximum atteignable, tentatives, échecs non voulus, écart entre programme
+  écrit et séances servies, exercices prioritaires retirés sans raison, violations de sécurité de la saison
+  réalisée, stabilité entre graines, comparaison aux moteurs 0.1. Sorties : `saisons.json`, `SAISONS.md`,
+  `saisons/` (export de chaque saison, scénarios, sécurité).
+- `simulateTrajectory` prend un athlète simulé (`spec`) et des changements de profil (`changes`).
+- `tool/relecture/build_manche_saisons.py` : manche « saisons » de la page de relecture.
+
 ## 0.1.2 — 04/10/2026 (lot CA1)
 
 Ajouts pour les trajectoires de `kalis_adapt` 0.2.0 (mode coach). Profils types, attentes de coach, critères de sécurité et grilles du panel **inchangés**.

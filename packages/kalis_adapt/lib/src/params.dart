@@ -161,6 +161,14 @@ final class AdaptParams {
     this.coachHistoryRiseFactor = 0.5,
     this.coachHoldRise = const <double>[0.20, 0.15, 0.10, 0.10],
     this.coachHoldRiseSlackSeconds = 1,
+    this.coachHoldMaxFloorShare = 0.55,
+    this.coachHoldBestDays = 28,
+    this.coachReturnStart = 0.5,
+    this.coachReturnStep = 0.1,
+    this.coachReturnFloor = 0.4,
+    this.coachReturnRir = 3,
+    this.coachReturnPain = 2,
+    this.coachReturnWatchDays = 84,
     this.coachEventNearDays = 14,
     this.coachEccentricEventDays = 10,
     this.coachStopMinSets = 2,
@@ -168,7 +176,7 @@ final class AdaptParams {
     this.coachPainStop = 6,
     this.coachPainRegressSets = 0.6,
     this.coachEasyStepShare = 0.05,
-    this.attemptOpenerShare = 0.93,
+    this.attemptOpenerShare = 0.91,
     this.attemptOpenerProbability = 0.95,
     this.attemptSecondProbability = 0.80,
     this.attemptThirdProbability = 0.50,
@@ -743,6 +751,44 @@ final class AdaptParams {
 
   /// Tolérance de cette hausse, en secondes.
   final int coachHoldRiseSlackSeconds;
+
+  /// Part du meilleur maintien mesuré que la borne de hausse d'une tenue
+  /// laisse toujours servir (CX, correction 1 : après un test qui saute, la
+  /// tenue écrite à 55-65 % du test était servie à 5-9 s, relecture
+  /// documentée et panel, `street_01` ; R4-F2 : 50 à 70 % du maximum).
+  final double coachHoldMaxFloorShare;
+
+  /// Fenêtre du « meilleur maintien récent » qui sert de plancher, en jours
+  /// (CA2, partie 0 : jamais un record d'avant un arrêt ; la force
+  /// isométrique et maximale baisse de façon mesurable après trois à quatre
+  /// semaines d'arrêt — Bosquet et al. 2013).
+  final int coachHoldBestDays;
+
+  /// Reprise graduée conduite par le moteur (arrêt levé au milieu d'un
+  /// bloc qui écrit les mouvements provocants) : part du volume écrit à la
+  /// première semaine de charge (règle de `kalis_plan`, CX correction 1 :
+  /// 50 %, puis +10 % par semaine de charge ; Soligard et al. 2016).
+  final double coachReturnStart;
+
+  /// Hausse de cette part par semaine de charge.
+  final double coachReturnStep;
+
+  /// Plus petite part servie quand le palier recule (douleur qui répond).
+  final double coachReturnFloor;
+
+  /// Réserve minimale d'un mouvement en reprise graduée (répétitions).
+  final double coachReturnRir;
+
+  /// Gêne au-delà de laquelle le palier de reprise recule (sur 10 :
+  /// modèle de surveillance de la douleur, Silbernagel et al. 2007 ; règle
+  /// écrite par `kalis_plan` : « 2 sur 10 au plus pendant la séance et
+  /// retour à l'état habituel le lendemain »).
+  final int coachReturnPain;
+
+  /// Jours après la levée d'un arrêt pendant lesquels la reprise propre au
+  /// moteur peut encore s'appliquer (douze semaines, comme le retour d'une
+  /// douleur : `painRecurDays`).
+  final int coachReturnWatchDays;
 
   /// Jours avant une échéance principale à partir desquels les décisions
   /// sont prudentes.

@@ -49,6 +49,7 @@ final class CoachLimit {
     required this.discomfort,
     required this.recent,
     required this.since,
+    this.trend = false,
   });
 
   /// Zone du corps.
@@ -66,7 +67,153 @@ final class CoachLimit {
 
   /// Ancienneté déclarée, ou `null`.
   final ConstraintSince? since;
+
+  /// Vrai pour une douleur relevée par le moteur d'évolution pendant le
+  /// bloc précédent (et non déclarée au profil).
+  final bool trend;
 }
+
+/// Schémas des figures (tenues et dynamiques bras tendus, équilibres).
+const Set<MovementPattern> coachFigurePatterns = <MovementPattern>{
+  MovementPattern.figureStatiquePoussee,
+  MovementPattern.figureStatiqueTirage,
+  MovementPattern.figureStatiqueMixte,
+  MovementPattern.figureDynamiquePoussee,
+  MovementPattern.figureDynamiqueTirage,
+  MovementPattern.equilibreMains,
+};
+
+/// Part du volume gardée sur une figure qui charge une zone douloureuse
+/// pendant le bloc précédent (R5-P23 : −30 à −50 %).
+const double coachTrendPainShare = 0.6;
+
+/// Matériel qui tient le poignet près de la position neutre : un appui
+/// pris sur une barre, des anneaux, des parallettes ou des poignées ne met
+/// pas le poignet en extension forcée (choix raisonné ; les modifications
+/// de la pompe pour le poignet douloureux passent par ces prises : poings,
+/// poignées, barre basse).
+const Set<String> coachNeutralGripEquipment = <String>{
+  'barre fixe',
+  'barres parallèles',
+  'barre basse',
+  'anneaux',
+  'parallettes',
+  'poignées',
+  'sangles de suspension',
+};
+
+/// Appuis tenus qui gardent le poignet neutre même sous contrainte forte
+/// (sous-ensemble de [coachNeutralGripEquipment], sans barre ni sangles).
+const Set<String> coachNeutralSupportEquipment = <String>{
+  'barres parallèles',
+  'anneaux',
+  'parallettes',
+  'poignées',
+};
+
+/// Vrai si l'exercice [e] provoque la zone [zone] au sens de la règle
+/// d'arrêt d'une douleur qui dure (CX, correction 1, sécurité) :
+/// contrainte forte sur l'articulation de la zone ; pour le poignet, aussi
+/// tout appui en extension (contrainte moyenne sans prise neutre : pompes
+/// au sol ou sur un banc…). Un appui à prise neutre (barres parallèles,
+/// anneaux, poignées) reste permis : c'est la variante « poignet neutre »
+/// (NHS, douleur du poignet : éviter ce qui la déclenche ; e3rehab,
+/// modifications de la pompe pour le poignet).
+bool coachPainProvokes(CatalogExercise e, BodyZone zone) {
+  final joint = zone.joint;
+  if (joint == null) {
+    return false;
+  }
+  final stress = e.stressOn(joint);
+  // Poignet : tout appui en extension (contrainte moyenne ou forte) sans
+  // prise neutre ; sur parallettes, anneaux ou poignées, la figure reste
+  // tant que la gêne ne monte pas (règle écrite du programme ; CX,
+  // correction 1, panel : quatre semaines sans planche faisaient régresser
+  // la figure visée).
+  if (zone == BodyZone.wristHand) {
+    if (stress == JointStress.low) {
+      return false;
+    }
+    // Contrainte forte : seul un appui tenu (parallettes, anneaux, barres
+    // parallèles, poignées) garde le poignet neutre ; une figure forte à
+    // la barre fixe charge le poignet en flexion et reste écartée
+    // (relecture du code CX, correction 1).
+    final neutral = stress == JointStress.high
+        ? coachNeutralSupportEquipment
+        : coachNeutralGripEquipment;
+    return !e.equipment.any(neutral.contains);
+  }
+  return stress == JointStress.high;
+}
+
+/// Vrai si [e] est écarté pendant un arrêt pour douleur qui dure sur
+/// [zone] (et ramené par la reprise graduée) : mouvements qui provoquent
+/// la zone et, pour le coude, tirage vertical en pronation (CX,
+/// correction 1).
+bool coachPainStopHits(CatalogExercise e, BodyZone zone) =>
+    coachPainProvokes(e, zone) ||
+    (zone == BodyZone.elbow && coachPronationPull(e));
+
+/// Vrai pour un tirage vertical en pronation (prise ordinaire ou large,
+/// derrière la nuque) : la prise la plus provocante d'une tendinopathie
+/// des fléchisseurs et pronateurs du coude (NCBI Bookshelf, épicondylite
+/// médiale : la pronation contrariée reproduit la douleur). Après une
+/// poussée de douleur au coude, la prise neutre la remplace.
+bool coachPronationPull(CatalogExercise e) =>
+    e.pattern == MovementPattern.tirageVertical &&
+    !e.id.contains('neutre') &&
+    !e.id.contains('supination') &&
+    !e.id.contains('chin') &&
+    !e.id.contains('corde') &&
+    !e.assisted &&
+    (e.id.contains('pronation') ||
+        e.id.contains('large') ||
+        e.id.contains('nuque') ||
+        e.id == 'sl-traction-lestee');
+
+/// Reprise graduée après une douleur qui dure : part du volume habituel
+/// rendue à la première semaine de charge (choix raisonné sur la relecture
+/// documentée CX : la moitié du volume au départ).
+const double coachPainReturnStart = 0.5;
+
+/// Hausse de la part rendue par semaine de charge (Soligard et al. 2016,
+/// consensus du CIO : petites hausses régulières, de l'ordre de 10 % par
+/// semaine).
+const double coachPainReturnStep = 0.1;
+
+/// Paliers de la reprise graduée (0,5 → 1,0 en cinq semaines de charge).
+const int coachPainReturnSteps = 5;
+
+/// Zones dont l'arrêt (douleur qui dure ou qui revient) est signalé par le
+/// moteur d'évolution dans [reasons] (`adapt.pain_persistent`).
+Set<BodyZone> coachPainStops(Iterable<Reason> reasons) {
+  final out = <BodyZone>{};
+  for (final r in reasons) {
+    if (r.code != ReasonCodes.adaptPainPersistent) {
+      continue;
+    }
+    final code = r.params['zone'];
+    for (final z in BodyZone.values) {
+      if (z.code == code) {
+        out.add(z);
+      }
+    }
+  }
+  return out;
+}
+
+/// Part du 1RM connu sous laquelle une estimation tirée d'une série de
+/// plusieurs répétitions ne l'abaisse pas seule (CX, correction 1).
+const double coachEstimateDropShare = 0.85;
+
+/// Part du repère au-dessus de laquelle un test plus bas fait foi seul ;
+/// en dessous, un test seul ne fait baisser le repère que jusqu'à cette
+/// part (CX, correction 1, passe 7 du panel).
+const double coachTestDropShare = 0.85;
+
+/// Préparation des poignets en appui (écartée quand le poignet est
+/// douloureux).
+const String coachWristLoadedPrep = 'mo-wrist-push-ups';
 
 /// Disciplines que le chemin street sait programmer.
 const Set<TrainingDiscipline> coachStreetDisciplines = <TrainingDiscipline>{
@@ -74,6 +221,31 @@ const Set<TrainingDiscipline> coachStreetDisciplines = <TrainingDiscipline>{
   TrainingDiscipline.streetlifting,
   TrainingDiscipline.calisthenics,
 };
+
+/// Séries observées au moins pour qu'une estimation du moteur d'évolution
+/// recale un repère (choix raisonné : deux semaines de séances sur le
+/// mouvement).
+const int coachEstimateMinObservations = 6;
+
+/// Erreur type relative maximale de cette estimation (choix raisonné :
+/// l'incertitude d'un 1RM estimé sur des séries sous-maximales est de
+/// l'ordre de 5 %, Helms et al. 2016).
+const double coachEstimateMaxError = 0.06;
+
+/// Écart minimal sous le repère pour que l'estimation le remplace : 2,5 %,
+/// un pas de charge ou une répétition sur dix (choix raisonné).
+const double coachEstimateMargin = 0.025;
+
+/// Même écart pour un 1RM : 6 %. L'estimation du moteur d'évolution se
+/// tient 3 à 5 % sous le 1RM réel (CA1.3, prudence voulue) ; au-dessous
+/// de cette marge, elle ferait baisser à tort les charges du bloc suivant
+/// (panel CX, boucle 5 : séries allégées à 6 à 10 répétitions de réserve).
+const double coachEstimateLoadMargin = 0.06;
+
+/// Correction de l'estimation d'un 1RM par le moteur d'évolution avant
+/// qu'elle serve de repère : +3 % (bas de l'écart prudent de CA1.3, 3 à
+/// 5 % sous le 1RM réel ; CX, correction 1).
+const double coachEstimateLoadBias = 0.03;
 
 /// Vrai si [profile] relève du chemin street de `kalis_plan` 0.2 : profil
 /// au schéma 3 rempli par le questionnaire 0.4 (expérience et ancienneté
@@ -123,6 +295,8 @@ final class Athlete {
     required this.age,
     required this.days,
     required this.oneRm,
+    this.estimatedOneRm = const <String>{},
+    this.measuredOneRm = const <String>{},
     required this.reps,
     required this.holds,
     required this.recordDay,
@@ -141,6 +315,9 @@ final class Athlete {
     required this.gapWeeks,
     required this.heavyImpactBanned,
     required this.allImpactBanned,
+    this.stopZones = const <BodyZone>{},
+    this.returnSteps = const <BodyZone, int>{},
+    this.stalled = const <String>{},
   });
 
   /// Lit [profile] pour un bloc qui commence le [start].
@@ -150,7 +327,12 @@ final class Athlete {
     CivilDate start, {
     Set<String> extraExcluded = const <String>{},
     List<(BodyZone, int)> extraPains = const <(BodyZone, int)>[],
+    List<(BodyZone, int)> trendPains = const <(BodyZone, int)>[],
+    Iterable<String> avoidedIds = const <String>[],
     Map<int, int> minutesOverride = const <int, int>{},
+    List<ExerciseEstimate> estimates = const <ExerciseEstimate>[],
+    Set<BodyZone> stopZones = const <BodyZone>{},
+    Map<BodyZone, int> returnSteps = const <BodyZone, int>{},
   }) {
     final traits = CatalogTraits.of(catalog);
     final bodyWeight = profile.bodyWeightKg ?? coachDefaultBodyWeightKg;
@@ -182,6 +364,13 @@ final class Athlete {
     // Records : tests datés du schéma 3 d'abord, fourchettes du schéma 2
     // ensuite (borne basse).
     final oneRm = <String, double>{};
+    // 1RM pris sur une estimation du moteur d'évolution (aucun record ni
+    // test).
+    final estimatedOneRm = <String>{};
+    // 1RM mesuré par un test guidé ou une compétition (le plus récent
+    // résultat) : il fait foi, le maximum au poids du corps ne le relève
+    // pas (`_loadAt`).
+    final measuredOneRm = <String>{};
     final reps = <String, int>{};
     final holds = <String, int>{};
     final recordDay = <String, CivilDate>{};
@@ -289,6 +478,312 @@ final class Athlete {
       }
     }
 
+    // Le dernier test mesuré fait foi (CX, correction 1 : « le bloc suivant
+    // part du résultat réel du test ») : un résultat de test ou de
+    // compétition daté remplace la valeur du même mouvement, même plus
+    // basse, tant qu'aucune valeur déclarée plus récente ne le contredit.
+    // Un record déclaré n'est qu'un repère de départ ; le test le recale
+    // dans les deux sens (R2-P2, R3-P14 ; Helms et al. 2018 : régler la
+    // charge sur la performance mesurée plutôt que sur un pourcentage
+    // supposé). Le moteur d'évolution ne rend pas un test fait un jour de
+    // bilan nettement bas (`kalis_adapt`, CA1).
+    final latest = <String, Benchmark>{};
+    final newestOther = <String, CivilDate>{};
+    for (final b in profile.benchmarks ?? const <Benchmark>[]) {
+      final day = b.date;
+      if (day == null) {
+        continue;
+      }
+      final key = '${b.kind.code}|${b.exerciseId}';
+      final measured =
+          b.source == BenchmarkSource.guidedTest ||
+          b.source == BenchmarkSource.competition;
+      if (measured) {
+        final current = latest[key];
+        if (current == null || day.compareTo(current.date!) >= 0) {
+          latest[key] = b;
+        }
+      } else {
+        final current = newestOther[key];
+        if (current == null || day.compareTo(current) > 0) {
+          newestOther[key] = day;
+        }
+      }
+    }
+    // Plateau (CX, correction 1) : un test de répétitions ou de maintien
+    // qui ne dépasse pas le repère d'avant (record déclaré ou meilleur
+    // résultat d'avant) — le bloc suivant change de méthode.
+    final stalled = <String>{};
+    for (final entry in latest.entries) {
+      final b = entry.value;
+      final day = b.date!;
+      final prior = <int>[
+        for (final l in profile.movementLevels)
+          if (l.exerciseId == b.exerciseId &&
+              l.known &&
+              l.low != null &&
+              ((b.kind == BenchmarkKind.maxReps &&
+                      l.measure == LevelMeasure.maxReps) ||
+                  (b.kind == BenchmarkKind.maxHold &&
+                      l.measure == LevelMeasure.maxHoldSeconds)))
+            l.low!.floor(),
+        for (final o in profile.benchmarks ?? const <Benchmark>[])
+          if (!identical(o, b) &&
+              o.exerciseId == b.exerciseId &&
+              o.kind == b.kind &&
+              (o.externalLoadKg ?? 0) == 0)
+            (b.kind == BenchmarkKind.maxHold ? o.seconds : o.reps) ?? 0,
+      ];
+      final value = b.kind == BenchmarkKind.maxHold ? b.seconds : b.reps;
+      if (value != null &&
+          prior.isNotEmpty &&
+          (b.kind == BenchmarkKind.maxReps ||
+              b.kind == BenchmarkKind.maxHold) &&
+          value <= prior.reduce((x, y) => x > y ? x : y)) {
+        stalled.add(b.exerciseId);
+      }
+      final other = newestOther[entry.key];
+      if (other != null && other.compareTo(day) > 0) {
+        continue;
+      }
+      // Test plus bas que le repère (répétitions et maintiens ; CX,
+      // correction 1) : une baisse de 15 % au plus fait foi telle quelle ;
+      // une baisse plus forte fait foi confirmée par le test d'avant, ou
+      // quand le repère est ancien ou d'avant une reprise ; sinon, seule,
+      // elle ne descend qu'à 85 % du repère, ou jusqu'à l'estimation sûre
+      // et récente (quinze jours au plus) du moteur d'évolution (R3-P16).
+      // Un 1RM testé plus bas fait foi : une barre manquée se recale.
+      int lowered(int measured, int? before, CapacityUnit unit) {
+        if (before == null || measured >= before) {
+          return measured;
+        }
+        int? estimate;
+        for (final e in estimates) {
+          final seen = e.lastObservedOn;
+          if (e.exerciseId == b.exerciseId &&
+              e.unit == unit &&
+              e.observations >= coachEstimateMinObservations &&
+              e.standardError <= coachEstimateMaxError * e.capacity &&
+              seen != null &&
+              seen.compareTo(day.addDays(-14)) >= 0) {
+            estimate = e.capacity.floor();
+          }
+        }
+        // (Le plus haut du test et de l'estimation, jamais au-dessus du
+        // repère d'avant.)
+        int kept(int value) {
+          final high = estimate != null && estimate > value ? estimate : value;
+          return high < before ? high : before;
+        }
+
+        // Mouvement à risque (muscle-up…) : le test plus bas fait foi même
+        // seul — mieux vaut un bloc un peu léger qu'une série de tête à
+        // l'échec sur la transition (R5-P27 ; panel CX, correction 1,
+        // `street_08`).
+        if (catalog.find(b.exerciseId)?.pattern ==
+            MovementPattern.transitionMuscleUp) {
+          return measured;
+        }
+        // Baisse modérée (15 % au plus) : le test fait foi tel quel, même
+        // seul (« série de tête = résultat − 2, jamais sur un progrès
+        // supposé » ; panel CX, correction 1, passes 5 et 7).
+        if (measured >= coachTestDropShare * before) {
+          return measured;
+        }
+        // Forte baisse : confirmée par le test mesuré le plus récent des
+        // dix semaines d'avant, lui aussi nettement sous le repère, elle
+        // fait foi ; seule, elle ne fait baisser le repère que de 15 % (ou
+        // jusqu'à l'estimation sûre), le temps d'un deuxième test (Bosquet
+        // et al. 2007 : la forme se lit après des jours légers ; passe 7,
+        // `street_05` : un test de 9 s un jour de bilan bas, pour un
+        // maximum de 12 s, mettait tout le bloc 2 à 50 % du vrai maximum).
+        Benchmark? earlier;
+        for (final o in profile.benchmarks ?? const <Benchmark>[]) {
+          final when = o.date;
+          if (identical(o, b) ||
+              when == null ||
+              o.exerciseId != b.exerciseId ||
+              o.kind != b.kind ||
+              (o.externalLoadKg ?? 0) != 0 ||
+              (o.source != BenchmarkSource.guidedTest &&
+                  o.source != BenchmarkSource.competition) ||
+              when.compareTo(day) >= 0 ||
+              when.compareTo(day.addDays(-70)) < 0) {
+            continue;
+          }
+          final priorDate = earlier?.date;
+          if (priorDate == null || when.compareTo(priorDate) > 0) {
+            earlier = o;
+          }
+        }
+        final priorValue = earlier == null
+            ? null
+            : (unit == CapacityUnit.maxHoldSeconds
+                  ? earlier.seconds
+                  : earlier.reps);
+        // (La borne ne vaut que pour un repère récent, hors reprise : un
+        // record ancien ou d'avant une coupure ne retient pas le bloc
+        // au-dessus du niveau mesuré — relecture indépendante du code.)
+        // (Repère déclaré sans date : celle du profil.)
+        final since = recordDay[b.exerciseId] ?? profile.updatedOn;
+        final recent =
+            since.compareTo(day.addDays(-84)) >= 0 &&
+            profile.trainingGap == null;
+        if (!recent ||
+            (priorValue != null && priorValue < coachTestDropShare * before)) {
+          return measured;
+        }
+        final bounded = (coachTestDropShare * before + 1e-9).floor();
+        return kept(measured > bounded ? measured : bounded);
+      }
+
+      switch (b.kind) {
+        case BenchmarkKind.maxReps:
+          final n = b.reps;
+          if (n != null && n > 0 && (b.externalLoadKg ?? 0) == 0) {
+            reps[b.exerciseId] = lowered(
+              n,
+              reps[b.exerciseId],
+              CapacityUnit.maxReps,
+            );
+            recordDay[b.exerciseId] = day;
+            zero.remove(b.exerciseId);
+          }
+        case BenchmarkKind.maxHold:
+          final s = b.seconds;
+          if (s != null && s > 0 && (b.externalLoadKg ?? 0) == 0) {
+            holds[b.exerciseId] = lowered(
+              s,
+              holds[b.exerciseId],
+              CapacityUnit.maxHoldSeconds,
+            );
+            recordDay[b.exerciseId] = day;
+          }
+        case BenchmarkKind.loadReps:
+          final load = b.externalLoadKg;
+          final n = b.reps;
+          if (load == null || n == null || n < 1) {
+            break;
+          }
+          final e = catalog.find(b.exerciseId);
+          final fraction = e?.bodyweightFraction?.value ?? 0;
+          final estimate = estimateOneRm(
+            loadKg: load + fraction * (b.bodyWeightKg ?? bodyWeight),
+            reps: n,
+            rir: b.rir ?? 0,
+          );
+          if (estimate != null) {
+            final value = estimate.valueKg - fraction * bodyWeight;
+            final known = oneRm[b.exerciseId];
+            // Une barre de compétition réussie est une tentative prudente,
+            // pas un maximum : plus basse que le repère, elle ne l'abaisse
+            // pas (CX, correction 1, panel : bloc d'après-compétition écrit
+            // 5 % trop léger).
+            if (b.source == BenchmarkSource.competition &&
+                known != null &&
+                value < known) {
+              break;
+            }
+            // Une estimation tirée d'une série de plusieurs répétitions
+            // (pas d'une barre maximale) ne fait pas tomber le 1RM de plus
+            // de 15 % à elle seule : la série du test d'allègement n'est
+            // pas un maximum, et l'erreur des formules grandit avec les
+            // répétitions (R2-P4 ; panel CX, correction 1, passe 5,
+            // `street_12` : 1RM de 131,5 kg ramené à 111 kg sur une série
+            // de 3 en semaine allégée). La série de tête du jour et
+            // l'autorégulation recalent la charge si elle ne passe pas.
+            final bound = known == null ? 0.0 : coachEstimateDropShare * known;
+            oneRm[b.exerciseId] = n >= 2 && value < bound ? bound : value;
+            measuredOneRm.add(b.exerciseId);
+            recordDay[b.exerciseId] = day;
+          }
+        default:
+          break;
+      }
+    }
+
+    // Estimations du moteur d'évolution (résumé d'adaptation du bloc
+    // précédent, CX, correction 1) : une capacité nettement plus basse que
+    // le repère, estimée sur assez de séries et sans test plus récent,
+    // devient le repère du bloc (le bloc suivant part de ce que l'athlète
+    // a montré, R2-P20 ; Helms et al. 2018). Jamais au-dessus d'un repère
+    // connu : une hausse attend un test (CP1.3). Un exercice sans repère
+    // prend l'estimation.
+    for (final e in estimates) {
+      final seen = e.lastObservedOn;
+      if (e.observations < coachEstimateMinObservations ||
+          e.capacity <= 0 ||
+          e.standardError > coachEstimateMaxError * e.capacity ||
+          seen == null) {
+        continue;
+      }
+      // (Un test récent fait foi : l'estimation faite sur les séries des
+      // quatre semaines qui suivent un test ne le défait pas — CX,
+      // correction 1, panel : dips recalés à 41 après un test à 45.)
+      var newer = false;
+      for (final b in latest.values) {
+        if (b.exerciseId == e.exerciseId &&
+            b.date!.compareTo(seen.addDays(-28)) >= 0) {
+          newer = true;
+        }
+      }
+      if (newer) {
+        continue;
+      }
+      switch (e.unit) {
+        case CapacityUnit.oneRmKg:
+          final before = oneRm[e.exerciseId];
+          final fraction =
+              catalog.find(e.exerciseId)?.bodyweightFraction?.value ?? 0;
+          // (L'estimation se tient 3 à 5 % sous le 1RM réel, CA1.3 : elle
+          // est remontée de 3 % avant de servir de repère — CX, correction
+          // 1, panel : 1RM de travail qui dérivait vers le bas, barres de
+          // l'épreuve à 88 à 92 % du maximum du jour.)
+          final capacity = e.capacity * (1 + coachEstimateLoadBias);
+          final external = capacity - fraction * bodyWeight;
+          // (Une amplitude partielle surchargée ne prend pas d'estimation
+          // sans record : ses séries servies ne mesurent pas un 1RM.)
+          // (Seuls les mouvements de compétition lestés prennent une
+          // estimation sans record : un 1RM d'isolation ou de variante
+          // estimé sur des séries longues n'est pas fiable.)
+          final partial =
+              e.exerciseId.contains('partiel') ||
+              !e.exerciseId.startsWith('sl-');
+          // (Un 1RM déclaré ou testé n'est plus abaissé par l'estimation :
+          // une série loin de l'échec la tire vers le bas — panel CX
+          // correction 1, 1RM de référence à 115 kg pour un record à 132 ;
+          // la baisse passe par un test. L'estimation sert un mouvement
+          // sans repère.)
+          if (before == null && external > 0 && !partial) {
+            oneRm[e.exerciseId] = external;
+            estimatedOneRm.add(e.exerciseId);
+            recordDay[e.exerciseId] = seen;
+          }
+        // Sans repère du tout (variante jamais déclarée ni testée, dosée
+        // jusque-là par une plage fixe), l'estimation devient le repère :
+        // elle remplace une plage supposée par ce que l'athlète a montré
+        // (CX, correction 1 ; R5-P2 : 50 à 70 % du maximum).
+        case CapacityUnit.maxReps:
+          final before = reps[e.exerciseId];
+          if (e.capacity >= 1 &&
+              (before == null ||
+                  e.capacity < before * (1 - coachEstimateMargin))) {
+            reps[e.exerciseId] = e.capacity.floor();
+            recordDay[e.exerciseId] = seen;
+          }
+        case CapacityUnit.maxHoldSeconds:
+          final before = holds[e.exerciseId];
+          if (e.capacity >= 1 &&
+              (before == null ||
+                  e.capacity < before * (1 - coachEstimateMargin))) {
+            holds[e.exerciseId] = e.capacity.floor();
+            recordDay[e.exerciseId] = seen;
+          }
+        default:
+          break;
+      }
+    }
+
     // Record sans date : il vaut à la dernière mise à jour du profil.
     for (final id in <String>[...reps.keys, ...holds.keys]) {
       recordDay.putIfAbsent(id, () => profile.updatedOn);
@@ -309,10 +804,46 @@ final class Athlete {
       ...reps.keys,
       ...holds.keys,
     };
+    // Figure écartée par le moteur d'évolution à cause d'une douleur
+    // relevée sous le seuil d'arrêt (6/10) : elle revient au bloc suivant,
+    // en volume réduit (`pain_trend`) — on recule, on n'abandonne pas
+    // (R5-P23, R5-P24 ; panel CX, boucle 4 : planche retirée quatre
+    // semaines).
+    bool keptFigure(String id) {
+      final e = catalog.find(id);
+      if (e == null || !coachFigurePatterns.contains(e.pattern)) {
+        return false;
+      }
+      for (final zone in stopZones) {
+        if (coachPainStopHits(e, zone)) {
+          return false;
+        }
+      }
+      // Étape de travail (ou figure visée) d'une piste du profil : jamais
+      // écartée parce qu'elle a été sautée — seul l'arrêt pour douleur
+      // l'écarte (panel CX, correction 1, passe 5, `street_10` : planche
+      // straddle sautée trois fois en semaine allégée, retirée du dernier
+      // bloc et de son test).
+      for (final st in profile.skills ?? const <SkillState>[]) {
+        if (st.currentExerciseId == id || st.targetExerciseId == id) {
+          return true;
+        }
+      }
+      for (final (zone, pain) in trendPains) {
+        final joint = zone.joint;
+        if (pain < 6 && joint != null && e.stressOn(joint) != JointStress.low) {
+          return true;
+        }
+      }
+      return false;
+    }
+
     final excluded = <String>{
       ...profile.dislikedExerciseIds,
       ...cannot,
       ...extraExcluded,
+      for (final id in avoidedIds)
+        if (!keptFigure(id)) id,
     };
 
     // Niveau : expérience déclarée, sinon ancienneté.
@@ -360,6 +891,19 @@ final class Athlete {
           discomfort: pain,
           recent: true,
           since: null,
+          trend: false,
+        ),
+      );
+    }
+    for (final (zone, pain) in trendPains) {
+      limits.add(
+        CoachLimit(
+          zone: zone,
+          joint: zone.joint,
+          discomfort: pain,
+          recent: true,
+          since: null,
+          trend: true,
         ),
       );
     }
@@ -464,6 +1008,8 @@ final class Athlete {
       age: age,
       days: days,
       oneRm: oneRm,
+      estimatedOneRm: estimatedOneRm,
+      measuredOneRm: measuredOneRm,
       reps: reps,
       holds: holds,
       recordDay: recordDay,
@@ -482,6 +1028,12 @@ final class Athlete {
       gapWeeks: gapWeeks,
       heavyImpactBanned: level == 0 && bmi >= 30,
       allImpactBanned: cautious,
+      stopZones: stopZones,
+      stalled: stalled,
+      returnSteps: <BodyZone, int>{
+        for (final e in returnSteps.entries)
+          if (!stopZones.contains(e.key)) e.key: e.value,
+      },
     );
   }
 
@@ -511,6 +1063,16 @@ final class Athlete {
 
   /// 1RM de charge externe par exercice, en kg.
   final Map<String, double> oneRm;
+
+  /// Exercices dont le 1RM vient d'une estimation du moteur d'évolution
+  /// (ni record déclaré ni test), pour les lecteurs du profil lu (CX,
+  /// correction 1).
+  final Set<String> estimatedOneRm;
+
+  /// Exercices dont le 1RM vient d'un test guidé ou d'une compétition
+  /// (résultat le plus récent) : il n'est jamais relevé d'après le maximum
+  /// au poids du corps (CX, correction 1).
+  final Set<String> measuredOneRm;
 
   /// Maximum de répétitions par exercice (strictement positif).
   final Map<String, int> reps;
@@ -593,6 +1155,52 @@ final class Athlete {
 
   /// Tout exercice à impact écarté (mode prudent).
   final bool allImpactBanned;
+
+  /// Zones à l'arrêt : douleur qui dure ou qui revient (signalée par le
+  /// moteur d'évolution, `adapt.pain_persistent`) — tout mouvement qui les
+  /// provoque est écarté, figures comprises (CX, correction 1).
+  final Set<BodyZone> stopZones;
+
+  /// Exercices dont le dernier test n'a pas dépassé le repère d'avant
+  /// (plateau) : le bloc change de méthode (CX, correction 1).
+  final Set<String> stalled;
+
+  /// Zones en reprise graduée après un arrêt : palier de départ du bloc
+  /// (0 : moitié du volume habituel ; chaque palier ajoute 10 %).
+  final Map<BodyZone, int> returnSteps;
+
+  /// Part du volume habituel rendue la semaine de charge de rang
+  /// [loaded] (0 = première du bloc) à l'exercice [e] en reprise graduée,
+  /// ou `null` hors reprise.
+  double? returnShareOf(CatalogExercise e, int loaded) {
+    double? least;
+    for (final entry in returnSteps.entries) {
+      if (!coachPainStopHits(e, entry.key)) {
+        continue;
+      }
+      final step = entry.value + (loaded < 0 ? 0 : loaded);
+      final share = coachPainReturnStart + coachPainReturnStep * step;
+      if (share >= 1 - 1e-9) {
+        continue;
+      }
+      if (least == null || share < least) {
+        least = share;
+      }
+    }
+    return least;
+  }
+
+  /// Douleur relevée par le moteur d'évolution (bloc précédent) sur
+  /// l'articulation [joint], la plus forte, ou 0.
+  int trendPainOn(Joint joint) {
+    var worst = 0;
+    for (final l in limits) {
+      if (l.trend && l.joint == joint && l.discomfort > worst) {
+        worst = l.discomfort;
+      }
+    }
+    return worst;
+  }
 
   /// Nombre de jours d'entraînement.
   int get dayCount => days.length;
@@ -727,8 +1335,44 @@ final class Athlete {
     final placeOk = place == null
         ? e.places.any(profile.places.contains)
         : e.places.contains(place);
-    if (!placeOk || !e.feasibleWith(info.equipment)) {
+    // Mur : sûr à la maison et en salle seulement ; matériel de
+    // remplacement (barre basse pour une pompe mains surélevées…) : kalis_core
+    // 0.4.2 (CX, correction 7).
+    if (!placeOk ||
+        !e.feasibleAt(
+          info.equipment,
+          place: place,
+          places: profile.places.toSet(),
+        )) {
       return 'equipment';
+    }
+    // Douleur qui dure ou qui revient (CX, correction 1, sécurité) : tout
+    // mouvement qui provoque la zone est écarté, figure comprise, jusqu'à
+    // deux semaines à 2 sur 10 au plus (NHS : consulter si la douleur ne
+    // s'améliore pas en deux semaines ou revient).
+    for (final zone in stopZones) {
+      if (coachPainStopHits(e, zone)) {
+        return 'joint';
+      }
+    }
+    // Poignet douloureux (3 sur 10 ou plus, ou zone à l'arrêt) : pas de
+    // pompes sur le dos des mains ou paumes en extension à l'échauffement
+    // — rotations et pressions des doigts à la place (relecture documentée
+    // CX, correction 1, `street_01`).
+    if (id == coachWristLoadedPrep &&
+        (stopZones.contains(BodyZone.wristHand) ||
+            limits.any((l) => l.joint == Joint.wrist && l.discomfort >= 3))) {
+      return 'joint';
+    }
+    // Coude douloureux au bloc précédent (3 sur 10 ou plus) : la prise
+    // neutre remplace la pronation sur le tirage vertical (relecture
+    // documentée CX, `street_12`).
+    // (Le mouvement de l'objectif lui-même reste, sous la règle de
+    // douleur : il est l'épreuve.)
+    if (coachPronationPull(e) &&
+        !aimsAt(id) &&
+        (trendPainOn(Joint.elbow) >= 3 || stopZones.contains(BodyZone.elbow))) {
+      return 'joint';
     }
     for (final l in limits) {
       final joint = l.joint;
@@ -736,6 +1380,15 @@ final class Athlete {
         continue;
       }
       final stress = e.stressOn(joint);
+      // Douleur relevée pendant le bloc précédent, sous le seuil d'arrêt
+      // (6/10) : une figure reste au programme, en volume réduit
+      // (`coachTrendPainShare`) — on recule, on n'abandonne pas (R5-P23,
+      // R5-P24 ; panel CX, boucle 1 : la planche retirée quatre semaines
+      // régressait).
+      final figure = coachFigurePatterns.contains(e.pattern);
+      if (l.trend && figure && l.discomfort < 6) {
+        continue;
+      }
       if ((stress == JointStress.high && l.discomfort >= 4) ||
           (stress != JointStress.low && l.discomfort >= 6)) {
         return 'joint';
