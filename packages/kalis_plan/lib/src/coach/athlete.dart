@@ -206,6 +206,10 @@ Set<BodyZone> coachPainStops(Iterable<Reason> reasons) {
 /// plusieurs répétitions ne l'abaisse pas seule (CX, correction 1).
 const double coachEstimateDropShare = 0.85;
 
+/// Préparation des poignets en appui (écartée quand le poignet est
+/// douloureux).
+const String coachWristLoadedPrep = 'mo-wrist-push-ups';
+
 /// Disciplines que le chemin street sait programmer.
 const Set<TrainingDiscipline> coachStreetDisciplines = <TrainingDiscipline>{
   TrainingDiscipline.streetWorkout,
@@ -1298,6 +1302,17 @@ final class Athlete {
       if (coachPainStopHits(e, zone)) {
         return 'joint';
       }
+    }
+    // Poignet douloureux (3 sur 10 ou plus, ou zone à l'arrêt) : pas de
+    // pompes sur le dos des mains ou paumes en extension à l'échauffement
+    // — rotations et pressions des doigts à la place (relecture documentée
+    // CX, correction 1, `street_01`).
+    if (id == coachWristLoadedPrep &&
+        (stopZones.contains(BodyZone.wristHand) ||
+            limits.any(
+              (l) => l.joint == Joint.wrist && l.discomfort >= 3,
+            ))) {
+      return 'joint';
     }
     // Coude douloureux au bloc précédent (3 sur 10 ou plus) : la prise
     // neutre remplace la pronation sur le tirage vertical (relecture

@@ -1627,7 +1627,14 @@ List<SetPlan>? _directPlans(
           p.coachHoldRise[c.level < 0 ? 0 : (c.level > 3 ? 3 : c.level)];
       final byShare = (mark.top * (1 + rise)).floor();
       final bySlack = mark.top + p.coachHoldRiseSlackSeconds;
-      final cap = byShare > bySlack ? byShare : bySlack;
+      var cap = byShare > bySlack ? byShare : bySlack;
+      // (Jamais sous 55 % du meilleur maintien mesuré.)
+      final byBest = hold
+          ? (track.bestAmount * p.coachHoldMaxFloorShare).floor()
+          : 0;
+      if (byBest > cap) {
+        cap = byBest;
+      }
       if (target > cap) {
         target = cap;
         tendonCapped = true;
@@ -1668,7 +1675,13 @@ List<SetPlan>? _directPlans(
     final rise = p.coachHoldRise[c.level < 0 ? 0 : (c.level > 3 ? 3 : c.level)];
     final byShare = (mark.total * (1 + rise)).floor();
     final bySlack = mark.total + p.coachHoldRiseSlackSeconds;
-    final most = byShare > bySlack ? byShare : bySlack;
+    var most = byShare > bySlack ? byShare : bySlack;
+    // (Jamais sous 55 % du meilleur maintien mesuré par tenue.)
+    final byBest =
+        (track.bestAmount * p.coachHoldMaxFloorShare).floor() * out.length;
+    if (byBest > most) {
+      most = byBest;
+    }
     var total = 0;
     for (final s in out) {
       total += s.high;
@@ -1717,7 +1730,11 @@ List<SetPlan>? _directPlans(
           p.coachHoldRise[c.level < 0 ? 0 : (c.level > 3 ? 3 : c.level)];
       final byShare = (mark.top * (1 + rise)).floor();
       final bySlack = mark.top + p.coachHoldRiseSlackSeconds;
-      final cap = byShare > bySlack ? byShare : bySlack;
+      var cap = byShare > bySlack ? byShare : bySlack;
+      final byBest = (track.bestAmount * p.coachHoldMaxFloorShare).floor();
+      if (byBest > cap) {
+        cap = byBest;
+      }
       if (probeHigh > cap) {
         probeHigh = cap;
       }
