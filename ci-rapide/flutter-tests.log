@@ -1,0 +1,8 @@
+00:00 +0: loading /home/runner/work/streetlift-apk/streetlift-apk/test/ci1b_pain_test.dart
+00:00 +0: textes des nouvelles raisons (0.2.2) notes de douleur de kalis_plan : signalées comme douleur
+00:00 +1: textes des nouvelles raisons (0.2.2) arrêt pour douleur qui dure, retrait, test reporté : en clair
+00:00 +2: textes des nouvelles raisons (0.2.2) codes émis par les paquets : aucun sans texte
+00:00 +3: séance servie (mode coach 0.2.2) poignet à 4/10 sur plusieurs séances : arrêt, mouvements retirés, consigne de consulter ; le bloc suivant écrit l’arrêt
+00:01 +4: séance servie (mode coach 0.2.2) test retiré un jour de bilan bas, servi à une séance suivante de la semaine, journalisé à son emplacement
+  aucun test reporté par le moteur (0 essais)
+00:01 +4 ~1: All tests passed!

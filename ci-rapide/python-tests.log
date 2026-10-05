@@ -1,0 +1,68 @@
+............................................s.....................................ssssssss........ss...s...............................................
+----------------------------------------------------------------------
+Ran 151 tests in 11.244s
+
+OK (skipped=12)
+OK : apk-absents, refus Gradle attendu observé.
+OK : aab-absents, refus Gradle attendu observé.
+OK : apk-sans-mot-de-passe, refus Gradle attendu observé.
+OK : aab-sans-conteneur, refus Gradle attendu observé.
+OK : apk-base64-invalide, refus Gradle attendu observé.
+# Banc hôte L6 — synthèse
+
+Mesure hôte (flutter_tester, JIT debug, sans GPU) : compare deux versions du code sur la même machine ; ce n'est pas une durée sur téléphone.
+
+Fichiers : base-r1.jsonl, base-r2.jsonl, cand-r1.jsonl, cand-r2.jsonl
+
+| Scénario | Profil | Unité | Base n | Base médiane [min–max] | Cand. n | Cand. médiane [min–max] | Ratio | Conclusion |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| s | p | ms | 18 | 10.4 [10.0–10.8] | 18 | 5.4 [5.0–5.8] | 0.519 | amélioration |
+# Banc hôte L6 — synthèse
+
+Mesure hôte (flutter_tester, JIT debug, sans GPU) : compare deux versions du code sur la même machine ; ce n'est pas une durée sur téléphone.
+
+Fichiers : base-r1.jsonl, cand-r1.jsonl
+
+| Scénario | Profil | Unité | Base n | Base médiane [min–max] | Cand. n | Cand. médiane [min–max] | Ratio | Conclusion |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| s | p | ms | 9 | 1.0 [1.0–1.0] | 0 | nan [nan–nan] |  | non mesuré |
+
+## Résultats métier (empreintes base / candidate)
+
+| Profil | Champ | Verdict (base / candidate) |
+| --- | --- | --- |
+| long | export | DIFFÉRENT (a / b) |
+
+## Mesures en échec
+
+- cand-r1.jsonl x/p : boom
+# Banc hôte L6 — synthèse
+
+Mesure hôte (flutter_tester, JIT debug, sans GPU) : compare deux versions du code sur la même machine ; ce n'est pas une durée sur téléphone.
+
+Fichiers : base-r1.jsonl, base-r2.jsonl, cand-r1.jsonl, cand-r2.jsonl
+
+| Scénario | Profil | Unité | Base n | Base médiane [min–max] | Cand. n | Cand. médiane [min–max] | Ratio | Conclusion |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| s | p | ms | 18 | 7.0 [4.0–10.0] | 18 | 4.75 [4.5–5.0] | 0.679 | gain non démontré |
+# Banc hôte L6 — synthèse
+
+Mesure hôte (flutter_tester, JIT debug, sans GPU) : compare deux versions du code sur la même machine ; ce n'est pas une durée sur téléphone.
+
+Fichiers : base-r1.jsonl, base-r2.jsonl, cand-r1.jsonl, cand-r2.jsonl
+
+| Scénario | Profil | Unité | Base n | Base médiane [min–max] | Cand. n | Cand. médiane [min–max] | Ratio | Conclusion |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| s | p | ms | 18 | 11.0 [10.0–12.0] | 18 | 11.0 [10.0–12.0] | 1.0 | gain non démontré |
+# Banc hôte L6 — synthèse
+
+Mesure hôte (flutter_tester, JIT debug, sans GPU) : compare deux versions du code sur la même machine ; ce n'est pas une durée sur téléphone.
+
+Fichiers : base-r1.jsonl, cand-r1.jsonl
+
+| Scénario | Profil | Unité | Base n | Base médiane [min–max] | Cand. n | Cand. médiane [min–max] | Ratio | Conclusion |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| s | p | ms | 2 | 10.5 [10.0–11.0] | 2 | 1.05 [1.0–1.1] | 0.1 | non concluant (n < 8) |
+programme_v33.json: 13 -> 33 octets
+programme_v33.json: 13 -> 33 octets
+OK : 40 semaines, 280 jours, 1812 exercices du programme, 625 exercices de la base.
