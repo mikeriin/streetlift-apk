@@ -33,6 +33,13 @@ Session Opus 5.5 lancée le 05/10/2026 vers 18:14 UTC (pas de ligne « Lot : » 
 ## Partie 1 (préparée en parallèle, arbre /home/claude/p1, branche locale cp2-p1 ; copie dans `p1-travail/`)
 - `general.dart` installé (part de skeleton), styles hypertrophy/strength/endurance/conditioning/health, `coachEligible` ouvert aux autres disciplines, `Method.wod` (formats AMRAP/EMOM/RFT/chipper/intervalles portés par le code du groupe), sortie longue bornée à 110 % de la plus longue des 4 semaines (`_enduranceMinutes`), cardio à faible impact, banc : point faible musculaire → spécialisation.
 
+## Boucle 2 (contrôle dev 36939513 : paquets verts sauf 2 tests corrigés en 2 e ; banc : 0 violation)
+- Panel p2 (54 couples sous 9, exports `exports_b2`) : combiné 27/68 à 9, min 6, moyenne 8,01 (p1 : 14/68, min 5, 7,58 ; départ CX c1 : 23/68, min 5,5). Corrections nécessaires : `notes/p2_nec.md`.
+- Étalonnage CR.6 (deux ancres hors street, `a03_c` force athlétique experte, `a05_a` course mauvaise) : 9,5/9/9/9 et 0/0,5/0/0 (`notes/ancres_autres`).
+
+## Boucle 3 (contrôle dev d87d1845 poussé)
+- plafond croisé « même exercice, mêmes répétitions » pour un emplacement nouveau seulement ; réserve écrite qui suit une charge baissée ; écart de répétitions compté 4 au plus ; consigne d'appui de la pompe une fois par bloc ; tenues regroupées à 75 % (3 s au moins, 15 tenues au plus) ; sécurités au squat et au couché ≥ 85 %.
+
 ## Reste à faire
 - Compiler (CI dev), corriger ; tests des nouvelles règles ; version 0.2.3.
 - Boucles du panel partie 0 (≤ 5, arrêt après une boucle sans gain) ; relecture documentée (3 sous-agents) ; publication intermédiaire 0.2.3 (contrôle vert, étiquette, DECISIONS, ETAT, manche page, notification).
