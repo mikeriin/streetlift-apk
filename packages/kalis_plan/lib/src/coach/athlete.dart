@@ -181,6 +181,12 @@ Set<BodyZone> coachPainStops(Iterable<Reason> reasons) {
   return out;
 }
 
+/// Part du repère sous laquelle un test plus bas, seul, ne fait pas foi
+/// (CX, correction 1 : une baisse de plus de 15 % se refait — panel,
+/// `street_05` ; deux mesures concordantes avant de baisser, Bosquet et al.
+/// 2007).
+const double coachTestDropShare = 0.85;
+
 /// Disciplines que le chemin street sait programmer.
 const Set<TrainingDiscipline> coachStreetDisciplines = <TrainingDiscipline>{
   TrainingDiscipline.streetWorkout,
@@ -505,46 +511,14 @@ final class Athlete {
       // (Répétitions et maintiens ; l'estimation doit être sûre et récente,
       // quinze jours au plus avant le test. Un 1RM testé plus bas fait foi :
       // une barre manquée se recale à la baisse.)
-      // Un repère ne baisse qu'après deux mesures concordantes (CX,
-      // correction 1 : un test fait sur la fatigue ne réécrit pas le bloc
-      // suivant à la baisse ; Bosquet et al. 2007, la forme se mesure
-      // après quelques jours légers) : une mesure plus basse, seule, cède
-      // devant le plus haut du test et de l'estimation du moteur
-      // d'évolution — et, sans estimation sûre, devant le repère connu.
-      // Deux tests de suite plus bas (dix semaines au plus d'écart) font
-      // foi.
+      // CX, correction 1 : une baisse de 15 % au plus fait foi ; au-delà,
+      // une mesure seule (test sur la fatigue) cède devant le plus haut du
+      // repère d'avant et de l'estimation sûre — deux mesures concordantes
+      // la font foi (Bosquet et al. 2007 : la forme se mesure après des
+      // jours légers).
       int lowered(int measured, int? before, CapacityUnit unit) {
         if (before == null || measured >= before) {
           return measured;
-        }
-        // Un record seulement déclaré n'est pas une mesure : le premier
-        // test mesuré le recale (une seule mesure suffit alors).
-        var concordant = true;
-        var measuredBefore = false;
-        for (final o in profile.benchmarks ?? const <Benchmark>[]) {
-          final when = o.date;
-          if (identical(o, b) ||
-              when == null ||
-              o.exerciseId != b.exerciseId ||
-              o.kind != b.kind ||
-              (o.externalLoadKg ?? 0) != 0 ||
-              (o.source != BenchmarkSource.guidedTest &&
-                  o.source != BenchmarkSource.competition) ||
-              when.compareTo(day) >= 0) {
-            continue;
-          }
-          if (!measuredBefore) {
-            measuredBefore = true;
-            concordant = false;
-          }
-          final value = unit == CapacityUnit.maxHoldSeconds
-              ? o.seconds
-              : o.reps;
-          if (value != null &&
-              value < before &&
-              when.compareTo(day.addDays(-70)) >= 0) {
-            concordant = true;
-          }
         }
         int? estimate;
         for (final e in estimates) {
@@ -558,17 +532,42 @@ final class Athlete {
             estimate = e.capacity.floor();
           }
         }
-        if (concordant) {
-          if (estimate != null && estimate > measured) {
-            return estimate < before ? estimate : before;
+        // (Le plus haut du test et de l'estimation, jamais au-dessus du
+        // repère d'avant.)
+        int kept(int value) {
+          final high = estimate != null && estimate > value ? estimate : value;
+          return high < before ? high : before;
+        }
+
+        // Baisse modérée (15 % au plus) : le test fait foi — le moteur
+        // d'évolution ne le sert qu'un bon jour (`kalis_adapt` 0.2.2).
+        if (measured >= coachTestDropShare * before) {
+          return kept(measured);
+        }
+        // Forte baisse : une mesure seule est suspecte (test sur la
+        // fatigue) ; il en faut une deuxième concordante, mesurée dans les
+        // dix semaines d'avant, sinon le repère (ou l'estimation sûre) reste.
+        for (final o in profile.benchmarks ?? const <Benchmark>[]) {
+          final when = o.date;
+          if (identical(o, b) ||
+              when == null ||
+              o.exerciseId != b.exerciseId ||
+              o.kind != b.kind ||
+              (o.externalLoadKg ?? 0) != 0 ||
+              (o.source != BenchmarkSource.guidedTest &&
+                  o.source != BenchmarkSource.competition) ||
+              when.compareTo(day) >= 0 ||
+              when.compareTo(day.addDays(-70)) < 0) {
+            continue;
           }
-          return measured;
+          final value = unit == CapacityUnit.maxHoldSeconds
+              ? o.seconds
+              : o.reps;
+          if (value != null && value < coachTestDropShare * before) {
+            return kept(measured);
+          }
         }
-        if (estimate == null) {
-          return before;
-        }
-        final high = estimate > measured ? estimate : measured;
-        return high < before ? high : before;
+        return estimate == null ? before : kept(estimate);
       }
 
       switch (b.kind) {
