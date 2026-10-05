@@ -1819,12 +1819,11 @@ List<SetPlan>? _directPlans(
     // séances au même cran, jamais une seule mesure : CA2, partie 0 —
     // l'élastique ne change plus dans un sens puis dans l'autre.)
     final streak = (mark?.reached ?? 0) >= 2;
-    // Un cran de plus seulement sur ce que l'athlète a fait : échec, bas
-    // de la plage manqué deux séances de suite au même cran, ou de plus
-    // de deux répétitions.
+    // Un cran de plus seulement sur ce que l'athlète a fait : échec, ou bas
+    // de la cible servie manqué deux séances de suite au même cran (une
+    // cible abaissée par un verrou — douleur, bilan bas — puis tenue n'est
+    // pas un manque : boucle relevée sur la saison de street_01, CA2).
     final missedTwice = (mark?.missed ?? 0) >= 2;
-    final farBelow =
-        track.lastTop > 0 && track.lastTop < low - p.coachAssistGapRir;
     final changed = track.assistDay;
     final settled =
         changed == null || run.day - changed >= p.coachAssistMinDays;
@@ -1835,8 +1834,7 @@ List<SetPlan>? _directPlans(
           'sets': sets,
         }),
       );
-    } else if (track.lastDay != null &&
-        (track.noUp || missedTwice || farBelow)) {
+    } else if (track.lastDay != null && (track.noUp || missedTwice)) {
       ex.notes.add(
         _r(ReasonCodes.adaptFlamesAboveTarget, <String, Object?>{
           'delta': roundTo(low - track.lastTop.toDouble(), 1),
@@ -1908,7 +1906,8 @@ List<SetPlan>? _testPlans(
     final lift = competitionLiftOf(run.ctx.profile, info.id, run.day);
     final ladder = attemptLadder(
       estimateTotal:
-          exp(f.m[0] + f.m[3] + f.gRef) * (ex.tapered ? 1 + p.coachTaperGain : 1.0),
+          exp(f.m[0] + f.m[3] + f.gRef) *
+          (ex.tapered ? 1 + p.coachTaperGain : 1.0),
       relSd: dayRelSd(ex),
       bodyPart: bw,
       grid: info.grid,

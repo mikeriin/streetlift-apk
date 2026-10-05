@@ -1,0 +1,100 @@
+{
+  "ecole": "force",
+  "programmes": [
+    {
+      "programme": "programme_1.md",
+      "criteres": {"F1": 8.5, "F2": 7, "F3": 8, "F4": 7, "F5": 8.5, "F6": 9, "F7": 9, "F8": 8, "F9": 8.5},
+      "sans_objet": [],
+      "ensemble": 7,
+      "points_perdus": [
+        {"critere": "F1", "perte": 1.5, "raison": "Fréquences justes (traction 2, dips 3, MU 2, squat 2/sem., R2-P7). Mais aucun plafond explicite du volume de tirage lié à l'antécédent de coude : chaque semaine de charge cumule traction 10 séries, MU 7 à 10, high pull, rowing 7 et curls 6. Les expositions lourdes en dips disparaissent le jeudi du bloc 2."},
+        {"critere": "F2", "perte": 3, "raison": "Bloc 2, jeudi : les dips « principal » passent à 68-74 % (1 × 3 + 4 × 3) avec 1 à 2 RIR écrits (S6 : 71 % pour 3 rép. à 1 RIR). La charge et la marge sont incompatibles. Le dips, point faible déclaré (verrouillage), n'a ainsi aucune exposition ≥ 85 % sur le mouvement complet avant S9 (R2-P1 à P5). Le MU baisse en intensification : 82 % en S3, puis 77/73/76 % en S5 à S7."},
+        {"critere": "F3", "perte": 2, "raison": "Volumes dans la fourchette élite (R1-P5), avec top set et back-offs. Mais le volume lourd du MU (point faible de transition) reste faible et léger en bloc 2, et rien ne module le volume de tirage selon la récupération du coude."},
+        {"critere": "F4", "perte": 3, "raison": "Blocs à rebours et décharges en S4 et S8 (R3-P9) : c'est bien. Mais le MU régresse pendant l'« intensification » (S5 à S7, 73 à 77 %), puis saute à des simples à 91 % en S9 sans exposition ≥ 85 % avant. Dans la trajectoire, le 1RM estimé du MU s'effondre (35 → 25-28) et la progression moyenne est de 0,025 %/sem."},
+        {"critere": "F5", "perte": 1.5, "raison": "Bien placés : dernier lourd à J-9/J-7, amorçage à J-2, plan de tentatives, pesée et catégorie. Mais en S11, les séries dures sont ramenées à « environ 25 % de la semaine de pointe » (22 contre 82, -73 %), au-delà de -40/-60 % pour un élite (R3-P12). Et à J-5 (lundi S12), la traction et le squat sont à 84 %, sous le plancher de 85 % (R3-P13)."},
+        {"critere": "F6", "perte": 1, "raison": "Partiels hauts de dips pour le verrouillage et high pull pour la transition : rôle, place, dose, butées et critère de retrait (douleur) sont présents, et ils sortent en réalisation. La dose des partiels (85-93 % du 1RM complet) est basse pour une surcharge en fin d'amplitude, sans justification écrite."},
+        {"critere": "F7", "perte": 1, "raison": "Points faibles traités, antagonistes, coiffe, tronc et bas du corps présents. Le rôle des « dips sur barre fixe » pour la transition du MU est peu clair (charge exprimée en % du dips de compétition)."},
+        {"critere": "F8", "perte": 2, "raison": "Règle de douleur du coude, pas d'échec, pas d'excentrique accentué, butées pour les partiels : c'est bien. Mais un MU lesté (mouvement à risque, R5-P27) passe à des simples à 91 % sans préparation lourde. La charge de tirage est élevée chez un athlète au coude fragile en fin de gros cycle, et aucun bilan kiné n'est prévu avant le bloc lourd (R5-P20, R5-P24, élite)."},
+        {"critere": "F9", "perte": 1.5, "raison": "Séances de 60 à 72 min sur 120 disponibles, échauffement spécifique écrit, repos précisés. Mais certaines consignes sont confuses : dips/high pull à « poids du corps ≈ 68 % du 1RM du mouvement de compétition », RIR incompatibles avec la charge le jeudi en bloc 2, gainage latéral passé de 10-14 à 2 × 4 en S15."},
+        {"critere": "ensemble", "perte": 3, "raison": "Deux corrections nécessaires : la progression du MU en bloc 2 et la cohérence charge/RIR des dips du jeudi, avec l'absence de lourd sur le point faible. Base de périodisation et d'affûtage solide."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Muscle-up lesté, bloc 2 (S5 à S7) : faire monter l'intensité au lieu de la baisser. Par exemple : S5 3 × 3 à 82 %, S6 1 × 2 à 85-86 % + back-offs, S7 1 × 2 à 88 % (2 RIR). Ainsi, les simples à 91 % de S9 arrivent après des expositions ≥ 85 %.", "consequence": "Le MU, point faible et mouvement à risque, passe de 76 % à 91 % en une semaine utile. Il plafonne ou rate en réalisation (le 1RM estimé chute dans la trajectoire) et le jour J se fait à 87 % du maximum du jour."},
+        {"type": "necessaire", "texte": "Dips du jeudi en bloc 2 : soit les écrire en séance lourde réelle (top set de 2-3 à 85-88 %, 1-2 RIR), soit les déclasser en séance légère avec une marge de 4-5 RIR cohérente avec 68-74 %. Garder au moins une exposition ≥ 85 % par semaine sur le dips complet.", "consequence": "L'athlète reçoit une consigne contradictoire (3 rép. à 71 % « à 1 RIR ») et le point faible de verrouillage ne voit aucune charge lourde complète pendant 4 semaines. Le +5 kg visé en dips est compromis."},
+        {"type": "amelioration", "texte": "Affûtage : viser -45 à -60 % de séries dures en S11 (et non -73 %), et garder les simples ≥ 85 % à J-5 (R3-P12, R3-P13)."},
+        {"type": "amelioration", "texte": "Plafonner explicitement les séries de tirage hebdomadaires (traction + MU + high pull + rowing) en fin de bloc, et prévoir un bilan kiné du coude avant le bloc 2 (R5-P20, R5-P24)."},
+        {"type": "amelioration", "texte": "Préciser la dose des partiels hauts de dips (100-110 % du 1RM complet est l'usage pour une surcharge en fin d'amplitude) ou justifier les 85-93 %."},
+        {"type": "amelioration", "texte": "Exprimer les charges des dips sur barre fixe et du high pull dans leur propre référence (et non en % du mouvement de compétition), et corriger l'anomalie du gainage latéral en S15."}
+      ],
+      "points_forts": [
+        "Blocs calés à rebours sur l'échéance, décharges toutes les 4 semaines, série de recalage en fin de bloc.",
+        "Semaine de compétition complète : dernier lourd à J-9/J-7 dans les conditions du jour J, amorçage à J-2, plan de trois tentatives, règle de la barre de l'objectif.",
+        "Gestion de la catégorie de poids et de la pesée.",
+        "Points faibles déclarés traités par des variantes ciblées (partiels hauts avec butées, high pull), retirées en réalisation.",
+        "Règle de douleur du coude unique, chiffrée et prioritaire sur les pourcentages."
+      ]
+    },
+    {
+      "programme": "programme_2.md",
+      "criteres": {"F1": 8.5, "F2": 7.5, "F3": 8, "F4": 8, "F5": 8.5, "F7": 8.5, "F8": 8.5, "F9": 8.5},
+      "sans_objet": ["F6"],
+      "ensemble": 8,
+      "points_perdus": [
+        {"critere": "F1", "perte": 1.5, "raison": "Dips de compétition 2×/sem. lestés + 1×/sem. au poids du corps : fréquence correcte pour un intermédiaire (R2-P7), mouvement exact dominant (R2-P9). Mais pas d'alternance claire entre lourd et léger en bloc 1 : en S2, le jeudi « lourd » baisse sous le lundi en charge."},
+        {"critere": "F2", "perte": 2.5, "raison": "Toutes les charges sont calculées sur un 1RM de +50 kg non daté, après 5 mois de douleur au coude, sans test d'entrée. La trajectoire montre un maximum réel de +41 kg : les « 83-84 % » de S4-S5 valent environ 90 %. En S2, le jeudi passe de 75 % à 73 % alors que la marge écrite passe de 4 à 2 RIR."},
+        {"critere": "F3", "perte": 2, "raison": "Environ 8 séries lestées + 3 au poids du corps par semaine en dips : dans la fourchette intermédiaire (R1-P5, R2-P8), avec top set et back-offs. Mais rien ne module le volume selon la tolérance du coude, hormis la règle générique de douleur."},
+        {"critere": "F4", "perte": 2, "raison": "Phases nommées, décharge en S6, test en S6 qui recale le bloc 2 : il y a un critère de passage. Mais le bloc 3 (S13 à S16) enchaîne 4 semaines de construction après le test sans décharge ni transition, et S16 est une copie de S15."},
+        {"critere": "F5", "perte": 1.5, "raison": "Affûtage d'une semaine, intensité gardée, dernier lourd à J-9, rappel à 88 % à J-5, séance légère à J-2, plan de trois tentatives. Mais la coupe est d'environ -46 % de séries dures, au-delà de -30/-40 % pour un intermédiaire (R3-P12), et le pourcentage écrit des tentatives ne colle pas à la charge (lest +31,25 kg annoncé à 91 % de 121 kg)."},
+        {"critere": "F7", "perte": 1.5, "raison": "Fléchisseurs du poignet chargés progressivement pour une douleur médiale du coude, rowings, face pulls, rotateurs externes, tronc et jambes : c'est pertinent. Mais le volume de tirage vertical reste très bas (1 à 2 séries de traction prise neutre), sans palier chiffré vers un volume normal."},
+        {"critere": "F8", "perte": 1.5, "raison": "Excellente base : règle de douleur, retour au tirage lesté par paliers (R5-P24), validation par le kiné, pas d'échec ni d'excentrique accentué. Mais l'intensité réelle est cachée par un 1RM surestimé chez un tendon en convalescence. Et la règle unique de douleur ne dit pas si une gêne de 3/10 à la traction bloque la progression des dips."},
+        {"critere": "F9", "perte": 1.5, "raison": "Séances de 39 à 47 min sur 75, échauffement et montée en charge écrits, repos précisés. Mais les pourcentages affichés ne correspondent pas aux lests calculés (par exemple +12,5 kg « ≈ 70 % » de 131,5 kg = 72 %)."},
+        {"critere": "ensemble", "perte": 2, "raison": "Une correction nécessaire, simple : partir d'un 1RM vérifié ou prudent. Le reste est individualisé et sûr pour ce coude."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Semaine 1 : mesurer un 3RM à 1 RIR en dips (ou retenir un 1RM de travail à -7,5 à -10 % du record non daté) et calculer le bloc 1 dessus, au lieu d'attendre le test de S6.", "consequence": "Les séances lourdes de S4-S5 (« 83-84 % » à 2 RIR) se font en réalité vers 90 % avec une marge plus faible que prévu, sur un coude encore à 3/10. Le risque de rechute tendineuse augmente et le bloc 1 est mal dosé (séries arrêtées, calibrages répétés dans la trajectoire)."},
+        {"type": "amelioration", "texte": "Préciser la règle de douleur par mouvement : une gêne de 3/10 en tirage gèle le tirage, et le dips continue de progresser s'il reste à 2/10 ou moins."},
+        {"type": "amelioration", "texte": "Ajouter un palier chiffré pour remonter le volume de traction prise neutre (par exemple +1 série toutes les 2 semaines si gêne ≤ 2/10)."},
+        {"type": "amelioration", "texte": "Ramener l'affûtage à -30/-40 % de séries dures (R3-P12, intermédiaire)."},
+        {"type": "amelioration", "texte": "Ajouter une semaine de transition ou de décharge dans le bloc 3, après le test."},
+        {"type": "amelioration", "texte": "Corriger l'incohérence du jeudi en S2 (charge en baisse, RIR en hausse) et aligner les pourcentages affichés sur les lests calculés."}
+      ],
+      "points_forts": [
+        "Tirage lesté remplacé par une traction prise neutre au poids du corps, avec un protocole chiffré de retour au lest.",
+        "Charge progressive des fléchisseurs du poignet adaptée à une douleur médiale du coude, à valider par le kiné.",
+        "Spécificité totale sur le dips de compétition, squat en entretien, test en S6 qui recale le bloc de réalisation.",
+        "Affûtage et semaine de test bien construits (dernier lourd, séance légère à J-2, trois tentatives).",
+        "Règles de repli complètes (baisse du jour, jour chargé, séance manquée)."
+      ]
+    },
+    {
+      "programme": "programme_3.md",
+      "criteres": {"F1": 8.5, "F2": 9, "F3": 9, "F4": 9, "F5": 9.5, "F7": 8.5, "F8": 9, "F9": 9},
+      "sans_objet": ["F6"],
+      "ensemble": 9,
+      "points_perdus": [
+        {"critere": "F1", "perte": 1.5, "raison": "Traction 3×/sem. et mouvement exact à 100 % : c'est bien pour une spécialisation (R2-P7). Mais le mercredi et le vendredi sont des copies (mêmes charges, même marge), au lieu d'une vraie séance légère et d'une séance moyenne. Le samedi (22 min) n'est pas utilisé pour la priorité."},
+        {"critere": "F2", "perte": 1, "raison": "Zones par phase (76 → 93 %), charges calculées, RIR et règle d'ajustement présents. Le 1RM de référence (122,5 kg) ne correspond pas exactement au record déclaré (75 + 50 = 125 kg), sans explication."},
+        {"critere": "F3", "perte": 1, "raison": "14 séries de traction par semaine (avancé : 10 à 18, R2-P8), top set et back-offs le lundi, entretien réduit pour les dips et le squat. Rien ne module le volume selon la récupération des coudes, avec un tirage cumulé élevé (traction 14 + rowing 6 + curls 6)."},
+        {"critere": "F4", "perte": 1, "raison": "Phases nommées, décharge en S4, recalage, progression chiffrée. Les critères de passage vers la réalisation restent implicites."},
+        {"critere": "F5", "perte": 0.5, "raison": "Affûtage à environ -60 %, intensité et fréquence gardées, dernier lourd à 90 % à J-8, dernière séance à J-3, trois tentatives et règle de la barre de l'objectif (R3-P12 à P14). Le dernier lourd est un peu tôt par rapport à J-7/J-5 (R2-P10, avancé)."},
+        {"critere": "F7", "perte": 1.5, "raison": "Antagonistes, coiffe, tronc et chaîne postérieure présents. Pour un avancé hors pic, aucune variante de traction (R2-P9 : 50-70 % du mouvement exact hors pic), et aucun travail ne cible une zone de faiblesse."},
+        {"critere": "F8", "perte": 1, "raison": "Progression dans les garde-fous, pas d'échec, règle de douleur articulaire générique. Le volume de tirage hebdomadaire est élevé, sans consigne propre au coude ni plafond."},
+        {"critere": "F9", "perte": 1, "raison": "Séances de 39 à 50 min sur 90, échauffement spécifique et repos écrits. Le samedi est quasi vide (lunges et prévention), alors que 90 min sont disponibles."},
+        {"critere": "ensemble", "perte": 1, "raison": "Aucune correction nécessaire : la spécialisation, la progression d'intensité et le pic sont bien construits pour cet athlète. Il reste des améliorations."}
+      ],
+      "corrections": [
+        {"type": "amelioration", "texte": "Différencier le mercredi et le vendredi : par exemple, mercredi léger (3 × 3 à 70-72 %, vitesse) et vendredi moyen (4 × 4 à 78-82 %), au lieu de deux séances identiques."},
+        {"type": "amelioration", "texte": "Utiliser le samedi pour une exposition technique légère en traction (2 × 2 à 65-70 %) ou une variante (traction pause en haut, tempo) en blocs 1 et 2 (R2-P9)."},
+        {"type": "amelioration", "texte": "Placer le dernier lourd à J-7 plutôt qu'à J-8, et justifier le 1RM de référence à 122,5 kg."},
+        {"type": "amelioration", "texte": "Ajouter un plafond de séries de tirage hebdomadaires et une consigne propre au coude, vu la hausse de fréquence en traction (R2-P7, au-delà des données)."}
+      ],
+      "points_forts": [
+        "Spécialisation nette : traction 3×/sem., dips et squat en entretien avec charge gardée et volume réduit.",
+        "Montée d'intensité lisible : 76 % → 86-87 % → 91-93 %, top set et back-offs.",
+        "Affûtage conforme au niveau, dernier lourd dans les conditions du jour J, repos avant le test.",
+        "Plan de tentatives avec une règle explicite pour tenter, ou non, la barre de l'objectif.",
+        "Record récent (2 semaines) utilisé comme base de calcul."
+      ]
+    }
+  ]
+}

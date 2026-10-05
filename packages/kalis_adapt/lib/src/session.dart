@@ -128,7 +128,17 @@ ExerciseInfo? findSubstitute(
           !coachPainProvokes(e, BodyZone.wristHand)) {
         // Mode coach : un appui à prise neutre (barres parallèles,
         // parallettes, poignées) garde la poussée quand le poignet est
-        // douloureux (CA2, partie 0 ; règle du programme).
+        // douloureux (CA2, partie 0 ; règle du programme) — pourvu que sa
+        // contrainte sur le poignet reste permise à cette douleur.
+        if (info.excludedByPain(
+          entry.key,
+          entry.value,
+          hard: p.painHard,
+          severe: p.painSevere,
+        )) {
+          spared = false;
+          break;
+        }
         continue;
       }
       if (info.excludedByPain(

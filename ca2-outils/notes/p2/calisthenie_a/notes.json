@@ -1,0 +1,98 @@
+{
+  "ecole": "calisthenie",
+  "programmes": [
+    {
+      "programme": "programme_1.md",
+      "criteres": {"C1": 8, "C2": 8, "C3": 8.5, "C4": 7, "C5": 7.5, "C6": 8, "C7": 7, "C8": 7.5, "C9": 8.5},
+      "sans_objet": [],
+      "ensemble": 8,
+      "points_perdus": [
+        {"critere": "C1", "perte": 2, "raison": "Les paliers sont plausibles (élastique calé sur 8 répétitions, row genoux fléchis pour un max de 6, pompes 2 × 4-5 pour un max de 8), mais le choix de l'élastique se fait au ressenti et non sur un repère mesuré. La saison simulée montre des tractions assistées 4 à 6 répétitions plus faciles que la cible pendant 16 semaines : le palier reste trop facile (R4-F7). Pas de demi-paliers entre la traction sautée et la négative."},
+        {"critere": "C2", "perte": 2, "raison": "Les essais stricts n'arrivent qu'en semaine 6 (2 fois par semaine, frais, arrêt au premier essai lent : c'est bien). Avant, la traction stricte n'est jamais pratiquée et la tenue haute n'a lieu qu'une fois par semaine, le mercredi (R4-F1). Il n'y a pas de consigne à focus externe par série (R4-F4)."},
+        {"critere": "C3", "perte": 1.5, "raison": "Tenues à 57-63 % du maintien testé (30 s), dans la bonne zone (R4-F2) ; négatives réglées au contrôle. Mais les secondes cumulées ne sont pas bornées par niveau dans la séance, et il n'y a pas d'alternance entre maintiens courts et longs."},
+        {"critere": "C4", "perte": 3, "raison": "En semaine 7, quatre changements tombent ensemble sur les fléchisseurs du coude : les négatives passent de 1 × 3 à 3 × 4 avec 2 s tenues en haut, la tenue menton passe de 3 × 5-6 s à 3 × 17 s, les dips assistés sont ajoutés et la réserve passe de 3 à 2 partout. Cela contredit R4-F9 (un seul changement à la fois). Le moteur simulé a dû borner la tenue pour le coude dès la semaine 5, puis aux semaines 8, 9 et 15."},
+        {"critere": "C5", "perte": 2.5, "raison": "Tirage vertical et horizontal, poussée et support hold sont présents. Il n'y a pas de hollow body, pourtant le gainage spécifique de la traction, et le dead bug n'apparaît que 2 fois par semaine. Le row reste genoux fléchis pieds à plat pendant 16 semaines (R1-P17)."},
+        {"critere": "C6", "perte": 2, "raison": "Les règles d'assistance et de progression sont écrites (haut de plage 2 séances de suite), les tests sont planifiés aux semaines 6 et 12, et la série de tête est recalée sur le test. En revanche, le critère « sans douleur » n'est pas intégré au passage, et le bloc 3 répète les semaines 13 = 14 et 15 = 16 sans aucune évolution (R4-F7)."},
+        {"critere": "C7", "perte": 3, "raison": "Il y a des wrist push-ups, des tirages et pompes scapulaires et du face pull. Mais les dips aux parallèles (semaine 7) et le support hold chargent le poignet sans préparation spécifique progressive. La trajectoire montre une douleur au poignet de 4/10 de la semaine 7 à la semaine 16, qui fait retirer les pompes (R4-F12, R5-P24)."},
+        {"critere": "C8", "perte": 2.5, "raison": "L'ordre est cohérent (traction en tête) et les allègements tombent aux semaines 6, 11 et 12. Mais aucun allègement n'est prévu entre les semaines 13 et 16, et le bloc d'après l'échéance n'a ni objectif ni test : c'est de la reconduction (R4-H3)."},
+        {"critere": "C9", "perte": 1.5, "raison": "Les séances tiennent en 30 à 42 minutes sur 45, l'exécution et les repos sont décrits, et la régression (pieds en appui, élastique) est prévue. Les notes, répétées en entier à chaque semaine, rendent les variantes difficiles à lire."},
+        {"critere": "ensemble", "perte": 2, "raison": "Une correction nécessaire (semaine 7 : changements empilés sur le coude). Le reste relève de l'amélioration, et l'objectif est présenté honnêtement comme ambitieux."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Étaler les changements de la semaine 7 sur 3 à 4 semaines : d'abord la tenue recalée à 57 % ; dips assistés une semaine plus tard ; passage des négatives à 3 × 4 avec pause la semaine suivante ; réserve à 2 ensuite (R4-F9).", "consequence": "Un débutant à 0 mois d'ancienneté encaisse d'un coup une hausse nette de charge sur le coude et le poignet. On risque une douleur tendineuse qui interrompt le travail de traction juste avant l'échéance de la semaine 12, comme la simulation le suggère (poignet à 4/10 dès la semaine 7)."},
+        {"type": "amelioration", "texte": "Ajouter un hollow body hold (2-3 × 15-20 s) 2 fois par semaine et des tirages scapulaires en suspension comme travail, pas seulement en échauffement."},
+        {"type": "amelioration", "texte": "Introduire les essais stricts plus tôt, sous forme de 1 à 2 tractions sautées avec descente de 5 s en tête de chaque séance dès la semaine 2, et de tenues à mi-amplitude (angle faible, R4-F5)."},
+        {"type": "amelioration", "texte": "Ajouter une préparation des poignets progressive (appuis sur poings ou parallettes, extensions de poignet en charge légère) avant les dips et le support hold ; donner aux dips une amplitude limitée au départ, ce qui est déjà écrit, mais aussi une consigne sur l'alignement du poignet."},
+        {"type": "amelioration", "texte": "Faire progresser le row australien (pieds plus avancés, jambes tendues) avec le même critère que l'élastique."},
+        {"type": "amelioration", "texte": "Prévoir dans le bloc 3 un objectif (2-3 tractions strictes ou la négative de 8 s) et un allègement en semaine 16."}
+      ],
+      "points_forts": [
+        "Objectif présenté honnêtement : « une ou deux tractions propres au test final serait déjà un très bon cycle ».",
+        "Chaîne de progression cohérente vers la traction : élastique, négatives au contrôle, tenue haute recalée sur le maintien mesuré, essais stricts frais 2 fois par semaine à partir de la semaine 6.",
+        "Règles d'assistance, de douleur et de séance courte claires ; tests aux semaines 6 et 12 avec 48 h de fraîcheur."
+      ]
+    },
+    {
+      "programme": "programme_2.md",
+      "criteres": {"C1": 6.5, "C2": 7.5, "C3": 8, "C4": 7, "C5": 7, "C6": 6.5, "C7": 7, "C8": 7, "C9": 7.5},
+      "sans_objet": [],
+      "ensemble": 6.5,
+      "points_perdus": [
+        {"critere": "C1", "perte": 3.5, "raison": "Dès la semaine 7, le programme ajoute une pompe classique en 1 × 1-3 à « 2 répétitions en réserve » alors que le test de la semaine 6 a donné 2 répétitions. La consigne est irréalisable : 1 + 2 > 2. Le cran d'inclinaison n'est jamais recalé sur un repère : la simulation montre des pompes inclinées faites à 15-18 répétitions pendant que la pompe classique reste à 3 (R4-F7). Les pompes genoux, pourtant dans l'échelle, ne sont jamais prescrites."},
+        {"critere": "C2", "perte": 2.5, "raison": "La pompe classique n'est pratiquée qu'à 1-2 séries de 1 à 5 répétitions, sans consigne de qualité ; les négatives de pompe se limitent à 1 série le lundi. La pratique de la position cible est trop rare pour l'objectif de 10 pompes (R4-F1)."},
+        {"critere": "C3", "perte": 2, "raison": "La tenue menton est à 57-65 % du max de 30 s, ce qui est bien. Mais le gainage latéral grimpe à 4 × 35 s puis 5 × 35 s en semaines 15-16 (175 s) sans rapport avec un max mesuré, et la simulation arrête ces séries avant la cible."},
+        {"critere": "C4", "perte": 3, "raison": "Mêmes changements simultanés en semaine 7 : négatives de 1 × 3 à 3 × 4 avec pause, tenue de 3 × 5 s à 3 × 17 s, pompe classique ajoutée, réserve à 2 (R4-F9). Le moteur borne la tenue pour le coude dès la semaine 8 ; le poignet est à 4/10 dès la semaine 7."},
+        {"critere": "C5", "perte": 3, "raison": "Le tirage est bien couvert. La poussée, en revanche, est sous-dosée pour l'objectif : le travail principal est une pompe inclinée trop facile, avec 1 seule série de négatives par semaine. Il n'y a pas de hollow body, pourtant le gainage de la pompe et de la traction (R1-P17)."},
+        {"critere": "C6", "perte": 3.5, "raison": "L'échelle écrit un critère de passage (2 × 12 propres, 2 séances, 2 semaines), mais le programme introduit la pompe classique en semaine 7 sans que ce critère soit rempli. Deux règles se contredisent. Rien n'est prévu si la pompe classique stagne : en simulation, elle reste à 3 de la semaine 6 à la semaine 16."},
+        {"critere": "C7", "perte": 3, "raison": "Il y a des wrist push-ups, des CARs d'épaule et du face pull. Mais le poignet, très sollicité (pompes inclinées sur barres, pompes, support hold), n'a pas de préparation progressive, et une douleur à 4/10 persiste à partir de la semaine 7 (R4-F12)."},
+        {"critere": "C8", "perte": 3, "raison": "Allègements aux semaines 6, 11 et 12 seulement, puis bloc 3 sans allègement. Les séances de 60 minutes n'en utilisent que 29 à 49, et ce temps libre n'est pas employé pour la poussée, qui en a besoin. La pompe classique devient « principal » mais passe après la tenue menton le lundi."},
+        {"critere": "C9", "perte": 2.5, "raison": "Les séances sont faisables et l'exécution décrite, mais la consigne « 1 × 1 à 3 à 2 répétitions en réserve » est incalculable pour une athlète testée à 2. Les règles de l'échelle et les ajouts de semaine se contredisent."},
+        {"critere": "ensemble", "perte": 3.5, "raison": "Trois corrections nécessaires : poussée sous-dosée et mal calibrée pour 3 → 10 pompes, contradiction entre le critère de l'échelle et l'ajout de la pompe classique en semaine 7, changements empilés en semaine 7. Le second objectif ne sera probablement pas atteint (la simulation reste à 3 pompes)."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Construire la poussée sur le cran le plus dur qui permet 4 à 8 répétitions (pompe genoux ou inclinaison basse), 3 fois par semaine, en 3 séries. Ajouter les négatives de pompe à chaque séance (2-3 × 2-3, descente de 3-5 s). Recaler le cran à chaque séance où le haut de plage passe.", "consequence": "La pompe inclinée reste trop facile (15-18 répétitions faites) et la pompe classique stagne à 2-3 répétitions : l'objectif de 10 pompes en 12 semaines est manqué."},
+        {"type": "necessaire", "texte": "Supprimer l'ajout automatique de la pompe classique en semaine 7, ou l'écrire en essais isolés de 1 répétition fraîche « arrêt au premier essai lent » plutôt qu'à « 2 en réserve ». Appliquer le critère de l'échelle pour le passage.", "consequence": "Avec un maximum de 2, l'athlète ne peut pas respecter « 1 à 3 répétitions à 2 en réserve » : soit elle va à l'échec, soit elle ne fait rien d'utile. Les deux règles écrites se contredisent."},
+        {"type": "necessaire", "texte": "Étaler les changements de la semaine 7 (tenue recalée, négatives 3 × 4 avec pause, pompe classique, réserve à 2) sur 3 à 4 semaines, un seul à la fois (R4-F9).", "consequence": "Hausse brutale de charge sur le coude et le poignet d'une débutante de 2 mois ; douleur qui interrompt la poussée, comme la simulation le montre dès la semaine 7."},
+        {"type": "amelioration", "texte": "Annoncer honnêtement que 10 pompes à partir de 3 en 12 semaines est ambitieux, avec un repère intermédiaire (6 en semaine 6 est déjà écrit) et un plan B (8 pompes ou 10 pompes genoux)."},
+        {"type": "amelioration", "texte": "Ajouter un hollow body 2-3 × 15-20 s et remplacer la montée du gainage latéral à 5 × 35 s par une progression de levier."},
+        {"type": "amelioration", "texte": "Ajouter une préparation des poignets progressive (appuis sur poings ou parallettes, extensions de poignet) avant les pompes sur barres et le support hold."},
+        {"type": "amelioration", "texte": "Utiliser le temps libre (11 à 30 minutes par séance) pour la poussée et le gainage plutôt que d'ajouter du bas du corps."}
+      ],
+      "points_forts": [
+        "Le travail de traction (élastique, négatives au contrôle, tenue haute à 57-65 % du max mesuré, essais stricts frais) sert bien l'objectif d'une traction.",
+        "Échelle de poussée écrite, avec un critère de passage explicite.",
+        "Tests aux semaines 6 et 12 bien placés, avec 48 h de fraîcheur ; règles de douleur et de séance courte claires."
+      ]
+    },
+    {
+      "programme": "programme_3.md",
+      "criteres": {"C1": 8, "C2": 8, "C3": 7.5, "C4": 7.5, "C5": 8.5, "C6": 8, "C7": 8, "C8": 8.5, "C9": 8},
+      "sans_objet": [],
+      "ensemble": 8,
+      "points_perdus": [
+        {"critere": "C1", "perte": 2, "raison": "Les charges sont déduites des 1RM, ce qui est bien. Mais le muscle-up est réglé en pourcentage d'un 1RM proche du poids du corps jusqu'à la semaine 12 : la note « à la réserve » n'arrive qu'au bloc 4. La simulation montre un muscle-up estimé à 15 kg de lest pour un réel de 22."},
+        {"critere": "C2", "perte": 2, "raison": "Le muscle-up, geste technique, est placé en tête le jeudi et le samedi, frais, ce qui est bien. Mais il n'y a pas de pratique technique distribuée de la transition ni de la sortie (muscle-up sans lest, transitions basses), et aucune consigne par série (R4-F1, F4)."},
+        {"critere": "C3", "perte": 2.5, "raison": "Semaines 5 à 7 du jeudi : les dips « principal » sont écrits en 1 × 3 puis 3 × 3 à 68-74 % avec « 1 répétition en réserve » (semaines 6 et 7). Pour un athlète à 40 dips au poids du corps, cette réserve est incompatible avec la charge, et le dosage technique devient incohérent (R1-P14)."},
+        {"critere": "C4", "perte": 2.5, "raison": "Le coude enchaîne jeudi (dips lourds, traction, dead stop, muscle-up), vendredi (dips légers) et samedi (muscle-up lourd), soit trois jours consécutifs (R4-F10). C'est acceptable pour un avancé, mais le budget n'est pas pensé. La simulation relève une hausse de charge de 14,3 % d'une séance à l'autre."},
+        {"critere": "C5", "perte": 1.5, "raison": "Force de base complète : tirage horizontal, dead stop pour le point faible, hollow, relevés de jambes, curl marteau pour le coude. Seul manque un levier de transition pour le muscle-up (traction poitrine-barre, dips profonds sur barre droite)."},
+        {"critere": "C6", "perte": 2, "raison": "Les séries de recalage sont décrites en fin de bloc, le plan des trois tentatives est clair, et une règle conditionne la barre de l'objectif. En revanche, aucun critère n'encadre l'arrivée à 90-93 % en semaines 9-10 sur des 1RM testés 3 semaines avant le début."},
+        {"critere": "C7", "perte": 2, "raison": "Face pull, rotation externe, row scapulaire, cat-cow et étirement des fléchisseurs du poignet sont présents. Il manque une préparation du poignet et du coude avant le muscle-up lesté (fausse prise), et les zones les plus chargées ne sont pas suivies explicitement (R4-F12)."},
+        {"critere": "C8", "perte": 1.5, "raison": "Blocs calés à rebours, allègement toutes les 4 semaines, affûtage à 35 %, amorçage à l'avant-veille, transition puis reprise. Mais pendant l'intensification, la séance lourde de dips du jeudi baisse en charge (68-74 %) alors que la secondaire du lundi monte (78-81 %) : les rôles sont inversés."},
+        {"critere": "C9", "perte": 2, "raison": "Les séances sont faisables (45 à 64 minutes sur 90), l'exécution est décrite et les repos précisés. Mais la consigne « 1 répétition en réserve » à 71 % (dips du jeudi, semaine 6) est contradictoire, et la règle « muscle-up sous le poids du corps : moins de répétitions » est floue."},
+        {"critere": "ensemble", "perte": 2, "raison": "Une correction nécessaire : l'incohérence charge/réserve et l'inversion des rôles des dips en semaines 5 à 7. Le reste est un bon programme de compétition, individualisé."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Semaines 5 à 7 : remettre les dips du jeudi (séance « principal ») à 83-88 % en 1 × 3 puis 3 × 3, avec la réserve écrite. Ou, si l'intention est un jour léger, écrire 4-5 répétitions en réserve et le classer secondaire, en gardant le lundi comme jour lourd.", "consequence": "Telle qu'écrite (71 % pour 3 répétitions à 1 en réserve), la consigne est contradictoire. Soit l'athlète monte la charge seul, sans cadre, soit il fait un bloc d'intensification sans exposition lourde en dips avant le passage à 90 % de la semaine 9."},
+        {"type": "amelioration", "texte": "Régler le muscle-up dès le bloc 1 à la réserve et par paliers de lest (calibrage), comme au bloc 4, plutôt qu'en pourcentage d'un 1RM proche du poids du corps."},
+        {"type": "amelioration", "texte": "Ajouter 2 à 3 séries techniques de muscle-up sans lest (transition rapide, focus « barre aux hanches ») en début de séance du mardi, ou en fin d'échauffement les jours de tirage."},
+        {"type": "amelioration", "texte": "Retirer les dips légers du vendredi, ou les déplacer au mardi, pour éviter trois jours consécutifs de charge sur le coude (jeudi, vendredi, samedi) (R4-F10)."},
+        {"type": "amelioration", "texte": "Ajouter une préparation du poignet et du coude avant le muscle-up lesté (fausse prise en suspension, extensions de poignet)."}
+      ],
+      "points_forts": [
+        "Périodisation à rebours vers l'échéance, avec allègements, affûtage, dernier lourd à J−9/J−7, amorçage à l'avant-veille et repos complet la veille.",
+        "Point faible traité spécifiquement (traction dead stop) ; plan de tentatives 91/96/99-102 % avec règle explicite pour la barre de l'objectif.",
+        "Prévention des épaules et du coude présente chaque semaine (face pull, rotation externe, curl marteau, row scapulaire) ; gestion du poids de catégorie écrite."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,101 @@
+{
+  "ecole": "hypertrophie",
+  "programmes": [
+    {
+      "programme": "programme_1.md",
+      "criteres": {"H1": 6.5, "H2": 8.5, "H3": 8, "H4": 8, "H5": 8.5, "H6": 8, "H7": 9, "H8": 8, "H9": 8.5},
+      "sans_objet": [],
+      "ensemble": 8,
+      "points_perdus": [
+        {"critere": "H1", "perte": 3.5, "raison": "Tirage direct trop haut pour un débutant à 0 mois : en semaines 8 à 10, lundi = négatives 3 + assistées 2 + row 2, mercredi = assistées 3 + tenues menton 3, vendredi = négatives 2 + assistées 2 + row 2, soit environ 19 séries dures de dos par semaine (plus les face pulls), contre un plafond débutant de 12 et un seuil de 10 (R1-P1, R1-P3) ; le lundi dépasse aussi le maximum de 6 séries par muscle et par séance (R1-P4). Le départ est bien bas (10 séries en semaine 1), c'est la montée qui déborde."},
+        {"critere": "H2", "perte": 1.5, "raison": "Corps entier 3 fois par semaine, adapté au profil (R1-P8), mais pas d'alternance lourde/légère par groupe : les trois séances portent le tirage au même niveau de réserve."},
+        {"critere": "H3", "perte": 2, "raison": "Réserve uniforme pour un même jour : 4 puis 3 puis 2 répétitions en réserve sur tout, polyarticulaires comme accessoires (fente, pont fessier, dead bug) ; les isolations ne vont pas plus près de l'échec (R1-P13). Les négatives sont bien réglées au contrôle."},
+        {"critere": "H4", "perte": 2, "raison": "Choix cohérents pour la traction (assistée, négative, tenue haute, row). En revanche la poussée reste figée à 2 × 4 pompes de la semaine 7 à la semaine 16 (record de 8), sans échelle de variantes, alors que la règle « passe à la variante suivante » n'en nomme aucune."},
+        {"critere": "H5", "perte": 1.5, "raison": "La double progression est écrite, avec une règle d'élastique unique et un recalage sur les tests (R5-P3). Mais aucun critère d'ajout de séries, et les semaines 14 et 16 recopient les semaines 13 et 15 sans changement."},
+        {"critere": "H6", "perte": 2, "raison": "Tirage ≥ poussée et face pulls présents. Mais la chaîne postérieure se limite à un pont fessier une fois par semaine, sans charnière de hanche ; les poignets sont très sollicités (wrist push-ups à chaque séance, pompes, support hold, dips) sans précaution écrite."},
+        {"critere": "H7", "perte": 1, "raison": "Repos par type d'exercice (2 min, 105 s, 45 s), séances de 31 à 42 min sur 45 disponibles ; pas de superset d'antagonistes, mais le temps n'en a pas besoin."},
+        {"critere": "H8", "perte": 2, "raison": "Pas d'allègement planifié sur 16 semaines : les semaines de test (6, 11, 12) en tiennent lieu, et R3-P9 accepte un allègement réactif chez le débutant. Le bloc 3 (semaines 13 à 16) monte toutefois à 34 séries dures pendant 4 semaines sans point de bascule."},
+        {"critere": "H9", "perte": 1.5, "raison": "Temps, matériel du parc et niveau respectés, échéance des 12 semaines calée avec un test final et un message réaliste sur l'objectif. Après l'échéance, le bloc 3 n'a ni objectif nouveau ni test."},
+        {"critere": "ensemble", "perte": 2, "raison": "Une correction nécessaire : le volume de tirage dépasse le plafond débutant de R1-P1. Le reste relève de l'amélioration."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Plafonner le tirage direct à 12–14 séries par semaine et 6 par séance : par exemple, à partir de la semaine 7, retirer une série de row australien le lundi et le vendredi et compter les tenues menton au-dessus de la barre dans le budget du mercredi (2 séries au lieu de 3).", "consequence": "Un débutant sans aucun passé d'entraînement accumulerait environ 19 séries dures par semaine sur les fléchisseurs du coude et les dorsaux. Cela crée une dette de récupération et un risque de gêne au coude : la simulation bride déjà les tenues pour les tendons du coude. La progression vers la traction stricte s'en trouve freinée."},
+        {"type": "amelioration", "texte": "Donner une échelle de poussée après 2 × 4 pompes : passer à 2 × 6–8, puis pompes pieds surélevés ou pompes lentes, et appliquer la règle « variante suivante » dans les semaines 7 à 16."},
+        {"type": "amelioration", "texte": "Remplacer un des ponts fessiers, ou en ajouter un, par une charnière de hanche (good morning au poids du corps, pont sur une jambe, curl nordique assisté) pour les ischio-jambiers."},
+        {"type": "amelioration", "texte": "Écrire une précaution pour les poignets : appui sur poings ou parallettes pour les pompes si gêne, et pas de wrist push-ups les jours de dips."},
+        {"type": "amelioration", "texte": "Pour le bloc 3, après l'échéance : fixer un nouvel objectif et un test, et faire varier les semaines au lieu de recopier les semaines 13 et 15."}
+      ],
+      "points_forts": [
+        "Progression spécifique et bien construite vers la première traction : assistée, négative avec tempo, tenue haute, puis essais stricts isolés à partir de la semaine 6.",
+        "Règles claires d'élastique, de douleur, de baisse du jour et de séance courte de 15 min.",
+        "Réserve de départ prudente (4, puis 3, puis 2 répétitions en réserve) et volume de semaine 1 bas.",
+        "Message honnête sur l'objectif (une ou deux tractions seraient déjà un bon cycle).",
+        "Séances qui tiennent dans 45 min, avec les repos complets."
+      ]
+    },
+    {
+      "programme": "programme_2.md",
+      "criteres": {"H1": 6.5, "H2": 8.5, "H3": 7.5, "H4": 7, "H5": 7.5, "H6": 7.5, "H7": 9, "H8": 8, "H9": 8},
+      "sans_objet": [],
+      "ensemble": 7,
+      "points_perdus": [
+        {"critere": "H1", "perte": 3.5, "raison": "Le tirage déborde : en semaine 5, lundi = assistées 3 + tenues 3, mercredi et samedi = négatives 2 + assistées 2 + row 2 chacun, soit environ 18 séries ; environ 19 en semaine 10. Le plafond débutant est de 12 (R1-P1, R1-P3), et le mercredi atteint 7 séries (R1-P4). La poussée, elle, reste dans la fourchette."},
+        {"critere": "H2", "perte": 1.5, "raison": "Corps entier 3 fois par semaine, bien réparti (R1-P8), mais sans alternance lourde/légère par groupe."},
+        {"critere": "H3", "perte": 2.5, "raison": "À partir de la semaine 7, la pompe classique est prescrite en 1 × 1 à 3 répétitions à 2 en réserve pour une athlète qui en fait 3 au maximum (2 au test de la semaine 6) : cela donne 1 répétition, un stimulus quasi nul sur le mouvement de l'objectif. La réserve est uniforme entre polyarticulaires et accessoires (R1-P13)."},
+        {"critere": "H4", "perte": 3, "raison": "Trois progressions contradictoires pour la poussée. L'échelle des figures demande 2 × 12 pompes inclinées sur 2 séances et 2 semaines avant la pompe classique. La note d'exercice décrit une autre échelle (mur → mains surélevées → genoux → sol). Et la pompe classique entre en semaine 7 quel que soit le critère. Le reste du choix d'exercices est correct."},
+        {"critere": "H5", "perte": 2.5, "raison": "Les règles écrites sont bonnes (double progression, élastique, recalage sur les tests). Mais pour l'objectif de 10 pompes, rien ne relie le repère de la semaine 6 (6 pompes) au volume de pompes classiques, qui reste à 1–2 séries d'une répétition. Le gainage latéral grimpe sans raison jusqu'à 5 × 35 s en semaine 16."},
+        {"critere": "H6", "perte": 2.5, "raison": "Tirage ≥ poussée, face pulls et rotations présents. Mais aucune charnière de hanche ni pont fessier : la chaîne postérieure n'est pas travaillée (air squat et fente seulement)."},
+        {"critere": "H7", "perte": 1, "raison": "Repos adaptés (2 min, 90 s, 45 s), séances de 29 à 49 min sur 60 disponibles."},
+        {"critere": "H8", "perte": 2, "raison": "Pas d'allègement planifié : les semaines de test (6, 11, 12) en tiennent lieu, ce qui est acceptable pour une débutante (R3-P9). Le bloc 3 monte de 34 à 37 séries dures sans palier."},
+        {"critere": "H9", "perte": 2, "raison": "Temps, matériel (maison et parc) et niveau respectés, et les deux objectifs sont testés à l'échéance. Mais l'objectif de pompes (3 → 10) n'a pas de chemin dosé : le travail spécifique sur la pompe au sol est symbolique."},
+        {"critere": "ensemble", "perte": 3, "raison": "Deux corrections nécessaires : le volume de tirage au-dessus du plafond débutant, et les consignes contradictoires sur la progression des pompes, objectif principal n° 2."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Ramener le tirage direct à 12–14 séries par semaine et 6 par séance : par exemple, retirer une série de row ou de négatives le mercredi et le samedi, et compter les tenues menton au-dessus de la barre dans le budget du lundi.", "consequence": "Une débutante à 2 mois d'ancienneté cumulerait environ 18 à 19 séries dures par semaine sur les coudes et les dorsaux. Le risque de gêne au coude et de stagnation est réel : la simulation bride déjà les tenues pour les tendons du coude."},
+        {"type": "necessaire", "texte": "Unifier la progression des pompes en une seule échelle avec un seul critère, et doser la pompe au sol. Par exemple : pompes inclinées jusqu'à 2 × 12, puis pompes au sol en séries de 1 à 3 avec une répétition en réserve, regroupées en plusieurs mini-séries (par exemple 4 à 6 × 1 à 2, repos 60–90 s), sans conserver le 1 × 1 actuel.", "consequence": "L'athlète ne sait pas quand faire des pompes au sol. Telle qu'écrite, elle fait une seule répétition au sol par séance pendant 6 semaines, et l'objectif de 10 pompes en 12 semaines sera très probablement manqué (2 répétitions au test de la semaine 6)."},
+        {"type": "amelioration", "texte": "Ajouter une charnière de hanche ou un pont fessier une à deux fois par semaine pour la chaîne postérieure."},
+        {"type": "amelioration", "texte": "Plafonner le gainage latéral à 2–3 × 30–40 s et basculer le surplus vers une variante plus dure, plutôt que d'aller jusqu'à 5 × 35 s."},
+        {"type": "amelioration", "texte": "Profiter des 60 min disponibles pour placer la poussée en tête une séance sur trois et alterner les priorités (traction ou pompe) d'une séance à l'autre."}
+      ],
+      "points_forts": [
+        "Progression vers la traction complète et prudente : assistée, négatives avec tempo, tenue haute, essais stricts isolés.",
+        "Règles de douleur, de baisse du jour et de séance courte, utiles pour une débutante.",
+        "Les deux objectifs sont testés à l'échéance, avec 48 h de fraîcheur.",
+        "Séances bien en dessous du temps disponible, repos respectés.",
+        "Présence d'excentriques de pompe et de travail de coiffe dès la semaine 1."
+      ]
+    },
+    {
+      "programme": "programme_3.md",
+      "criteres": {"H1": 8.5, "H2": 9.5, "H3": 9, "H4": 8.5, "H5": 8, "H6": 8.5, "H7": 9, "H8": 9, "H9": 8.5},
+      "sans_objet": [],
+      "ensemble": 8,
+      "points_perdus": [
+        {"critere": "H1", "perte": 1.5, "raison": "Dos (environ 18–20 séries fractionnées), poussée (environ 12 via les dips) et jambes (squat 8, RDL 6, fentes 2) sont dans les fourchettes avancées (R1-P1), avec un maximum par séance tenu. Mais le volume d'entretien n'a ni hausse conditionnelle ni repère écrit par muscle."},
+        {"critere": "H2", "perte": 0.5, "raison": "Chaque mouvement est vu 2 à 3 fois par semaine, avec une alternance lourde/légère (dips lundi/jeudi/vendredi, squat mardi/samedi) qui correspond aux jours donnés. Le vendredi de 60 min reste très court (13 à 25 min)."},
+        {"critere": "H3", "perte": 1, "raison": "Polyarticulaires de 1 à 4 répétitions en réserve selon la phase, accessoires à 2–3, coiffe à 5 ou plus, et séries de recalage écrites (R1-P13). Mais les curls marteau et les rows sont au même niveau de réserve ; les isolations ne vont pas plus près de l'échec."},
+        {"critere": "H4", "perte": 1.5, "raison": "Bon choix d'exercices : traction pause en bas pour le point faible, row barre, RDL, curl marteau pour la tolérance du coude. Pas de rotation des accessoires sur 16 semaines, ni d'exercice en position longue pour les dorsaux en dehors des tractions."},
+        {"critere": "H5", "perte": 2, "raison": "Les pourcentages progressent (traction 76 → 93 %) avec règles de recalage et d'ajustement (R5-P3). Mais les dips du jeudi, mouvement principal, sont incohérents : 83 % en semaine 3, puis 68, 71 et 74 % dans le bloc d'intensification (semaines 5 à 7), plus légers que les dips secondaires du lundi (78–81 %), puis un saut à 90–93 % en semaines 9 et 10."},
+        {"critere": "H6", "perte": 1.5, "raison": "Tirage ≥ poussée, travail de coiffe et row scapulaire, chaîne postérieure par RDL deux fois par semaine, point faible ciblé. Le deltoïde latéral et le chef long du triceps ne sont pas travaillés en isolation, ce qui reste acceptable pour ce profil."},
+        {"critere": "H7", "perte": 1, "raison": "Repos par type d'exercice (4 min sur la série de tête, 3 min, 105 s, 75 s, 45 s), séances de 45 à 64 min sur 90 disponibles."},
+        {"critere": "H8", "perte": 1, "raison": "Allègements en semaines 4 et 8 et affûtage de 2 semaines, bien placés et dosés (R3-P9) ; aucune technique d'intensification empilée. Mais la semaine 16, nommée « allègement », contient des tests lourds à 88 %."},
+        {"critere": "H9", "perte": 1.5, "raison": "Bien adapté : catégorie de poids, pesée, échéance à rebours, conditions du jour J et règle pour tenter ou non la barre de l'objectif. Les semaines 13 à 16 d'après-compétition sont moins soignées : gainage latéral réduit à 2 × 4 en semaine 15, et tests dans une semaine d'allègement."},
+        {"critere": "ensemble", "perte": 2, "raison": "Une correction nécessaire : l'intensité des dips du jeudi, mouvement principal, qui baisse pendant l'intensification puis remonte brutalement. Le reste relève de l'amélioration."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Réécrire la ligne des dips lestés du jeudi pour les semaines 5 à 7 dans la continuité du bloc 1 : série de tête à environ 84–88 % puis séries allégées, et non 68–74 %. La montée vers les 90–93 % des semaines 9 et 10 se fera alors par paliers.", "consequence": "Le mouvement qui a le plus gros écart à l'objectif (+7,5 kg) perd son intensification au moment où elle compte. L'athlète passe ensuite d'environ 74–81 % à 90 % sur un mouvement d'épaule à risque, ce qui réduit les chances d'atteindre +97,5 kg à l'échéance et augmente le risque de mauvaise tolérance de l'épaule."},
+        {"type": "amelioration", "texte": "Pousser les isolations (curl marteau, éventuellement rotations) à 1–2 répétitions en réserve, et garder les rows à 2–3."},
+        {"type": "amelioration", "texte": "Ajouter une règle d'entretien du volume par muscle (par exemple dos ≥ 14 séries, jambes ≥ 10) pendant la réalisation, et une rotation d'accessoires au bloc 4."},
+        {"type": "amelioration", "texte": "Renommer la semaine 16 en semaine de test, ou déplacer les tests après un allègement réel, et corriger le gainage latéral de 2 × 4 en semaine 15."},
+        {"type": "amelioration", "texte": "Utiliser le vendredi (60 min disponibles, 13 à 25 min estimées) pour un travail léger de deltoïde latéral et d'arrière d'épaule, au service de la tolérance de l'épaule aux dips lourds."}
+      ],
+      "points_forts": [
+        "Périodisation à rebours de l'échéance : volume, intensification, réalisation, affûtage, avec allègements toutes les 4 semaines.",
+        "Point faible traité de façon spécifique (traction pause en bas, dernier lourd filmé de profil).",
+        "Semaine de compétition très bien écrite : amorçage à l'avant-veille, trois tentatives chiffrées, règle pour la barre de l'objectif.",
+        "Masse musculaire d'appui entretenue sans excès (rows, RDL, curl marteau, coiffe) dans le temps disponible.",
+        "Règles d'ajustement de charge, de recalage du 1RM et de gestion du poids de corps claires."
+      ]
+    }
+  ]
+}

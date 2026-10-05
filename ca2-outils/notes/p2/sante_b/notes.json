@@ -1,0 +1,95 @@
+{
+  "ecole": "sante",
+  "programmes": [
+    {
+      "programme": "programme_1.md",
+      "criteres": {"S1": 9, "S2": 8.5, "S3": 9, "S5": 9, "S6": 9, "S7": 10, "S8": 9, "S9": 8},
+      "sans_objet": ["S4"],
+      "ensemble": 8,
+      "points_perdus": [
+        {"critere": "S1", "perte": 1, "raison": "Antécédent de coude survenu en fin de gros cycle de traction : le programme refait un gros cycle de tirage (traction 2×/sem jusqu'à 93 %, muscle-up 2×/sem, high pull, rowing, environ 30 séries dures de tirage par semaine) sans variante de prise ni plafond de tirage écrits pour la zone. La règle de douleur, avec orientation vers un professionnel, est bien là (R5-P23), mais rien d'autre ne protège le coude (R5-P24 : modifier la prise ou l'amplitude avant de supprimer)."},
+        {"critere": "S2", "perte": 1.5, "raison": "Le dips partiel haut surchargé entre en semaine 2 directement à 85 % du 1RM complet (+95 kg), puis monte à 93 % en semaine 7. R5-P22 recommande d'introduire un nouvel exercice à 50–60 %. La simulation montre d'ailleurs des séries arrêtées dès les séances 2 et 3 de calibrage."},
+        {"critere": "S3", "perte": 1, "raison": "Allègements aux semaines 4 et 8 (R3-P9) et critères de baisse du jour présents. En revanche, le profil ne déclare ni sommeil, ni travail, ni stress, et le programme ne le demande pas ; or la saison simulée montre de nombreux bilans bas que rien dans le plan n'anticipe."},
+        {"critere": "S5", "perte": 1, "raison": "Bonne prévention (face pull, rotation externe, row scapulaire, curl marteau, wrist curl, échauffement écrit). Mais le jeudi, le dips principal (76 à 93 % du 1RM, série de tête à 1 RIR) arrive en 4e position, après muscle-up, dips à la barre fixe et traction 5×5–6. Coude et triceps sont pré-fatigués avant la charge la plus lourde de la semaine sur la zone."},
+        {"critere": "S6", "perte": 1, "raison": "Marges correctes et aucun échec voulu. Pourtant, en semaine 6, le jeudi demande des dips à 71 % × 3 avec 1 RIR, ce qui est impossible à cette intensité : la consigne d'effort ne correspond pas à la charge."},
+        {"critere": "S8", "perte": 1, "raison": "L'affûtage ramène la semaine 11 à 22 séries dures contre 82 au pic (note : « environ 25 % »), soit −73 %. C'est au-delà de la fourchette élite de R3-P12 (−40 à −60 %), sur un affûtage de deux semaines."},
+        {"critere": "S9", "perte": 2, "raison": "Format « comme la semaine X, sauf … (au lieu de …) » très lourd à lire. Notes incohérentes : « séance légère à 70 % » en semaine 2 pour une charge de 68 % ; dips du jeudi notés « principal » à 68–74 % en semaines 5 à 7 alors que le lundi est plus lourd ; 71 % × 3 à 1 RIR en semaine 6."},
+        {"critere": "ensemble", "perte": 2, "raison": "Une correction nécessaire, l'ordre de la séance du jeudi. Le reste relève de l'amélioration."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Le jeudi, placer le dips lesté de compétition (mouvement principal, série de tête de 76 % en semaine 1 jusqu'à 93 % en semaine 10) en premier après l'échauffement. Passer ensuite muscle-up léger, dips à la barre fixe et traction 5×n.", "consequence": "Les séries les plus lourdes de dips du cycle se font avec un triceps et un coude pré-fatigués par trois exercices de poussée et de tirage. Le verrouillage, point faible déclaré, s'entraîne en mauvaise qualité, le risque sur le coude augmente, et l'objectif de +130 kg est compromis."},
+        {"type": "amelioration", "texte": "Introduire le dips partiel haut à 70–75 % en semaine 2, puis monter de 5 % par semaine. Ne pas commencer à 85 %."},
+        {"type": "amelioration", "texte": "Écrire une variante de tirage pour le coude (prise neutre ou anneaux sur les séries secondaires) et un plafond de séries de tirage à respecter si la gêne passe de 1 à 3/10."},
+        {"type": "amelioration", "texte": "Affûtage : garder environ 40–50 % des séries dures du pic en semaine 11 (30 à 40 séries), comme le prévoit R3-P12 pour l'élite."},
+        {"type": "amelioration", "texte": "Corriger les incohérences entre pourcentage et RIR : en semaines 5 à 7, le jeudi, dips à 68–74 % × 3 avec 1–2 RIR. Soit monter la charge, soit noter la séance comme légère."},
+        {"type": "amelioration", "texte": "Demander dans le profil le sommeil, le travail et le stress, et proposer un bilan kiné du coude avant le bloc d'intensification (R5-P20, élite)."}
+      ],
+      "points_forts": [
+        "Règle de douleur à seuils, commune à tous les mouvements qui chargent le coude, avec orientation vers un professionnel et arrêt sur les signaux rouges.",
+        "Périodisation calée à rebours sur l'échéance : allègements aux semaines 4 et 8, dernier lourd à J−9/J−7, amorçage à l'avant-veille, trois tentatives avec règle de choix et règle pour la barre de l'objectif.",
+        "Prévention scapulaire, coiffe, avant-bras et fléchisseurs du coude présente à chaque séance ; échauffement écrit ; montée en charge détaillée.",
+        "Règles de semaine manquée, de jour chargé (version de 25 min), de baisse du jour et de gestion de la catégorie de poids : très complet pour un élite."
+      ]
+    },
+    {
+      "programme": "programme_2.md",
+      "criteres": {"S1": 9.5, "S2": 9, "S3": 8.5, "S4": 7, "S5": 9, "S6": 9, "S7": 10, "S8": 8.5, "S9": 7.5},
+      "sans_objet": [],
+      "ensemble": 8,
+      "points_perdus": [
+        {"critere": "S1", "perte": 0.5, "raison": "Très bonne protection (tractions lourdes remplacées par des tractions en prise neutre au poids du corps, retour au lest par paliers de 2,5 kg toutes les deux semaines, wrist curl progressif validé par le kiné, R5-P24). Mais les expositions en suspension restent nombreuses pour une face interne du coude à 3/10 : suspension active à chaque séance et relevés de jambes suspendus 5 séries par semaine."},
+        {"critere": "S2", "perte": 1, "raison": "En semaine 2, le jeudi, la charge de dips baisse (+20 → +17,5 kg) pendant que la réserve visée passe de 4 à 2. Le 1RM de référence change d'une semaine à l'autre (131,5 / 128,5 / 131 / 128 / 121,5 / 121) sans explication pour l'athlète."},
+        {"critere": "S3", "perte": 1.5, "raison": "Il y a un allègement en semaine 6 et des critères de baisse du jour. Mais après le test de la semaine 12, le bloc 3 enchaîne quatre semaines de construction à 48 séries dures, sans transition (R3-P19 : une à deux semaines actives après un pic) et sans allègement ; la semaine 16 est identique à la semaine 15."},
+        {"critere": "S4", "perte": 3, "raison": "Le sets & reps représente 30 % des disciplines, mais il n'est servi que par des dips au poids du corps 3×12–15 le samedi, sans densité ni progression de format (R4-G1, R3-P20). Le tirage d'endurance est absent, ce qui se comprend vu le coude, mais aucune alternative n'est proposée."},
+        {"critere": "S5", "perte": 1, "raison": "Programme adapté à l'antécédent, avec antagonistes et coiffe. Mais la préhension cumulée est élevée pour un coude à 3/10 (suspension 4×/sem, relevés de jambes suspendus, rowing unilatéral, wrist curl 3×/sem), alors que R5-P24 recommande de réduire tirage et préhension de 30 à 50 %."},
+        {"critere": "S6", "perte": 1, "raison": "Aucun échec, marges adaptées à un intermédiaire. Plusieurs couples pourcentage/RIR sont cependant incohérents (73 % × 5 à 2 RIR en semaine 2)."},
+        {"critere": "S8", "perte": 1.5, "raison": "L'affûtage de la semaine 11 (−46 %) et le protocole de test en trois barres sont corrects. Mais rien ne relie le test à l'objectif (+57,5 kg) : la note « barre de l'objectif » manque. Le dernier lourd est à J−9, alors que R3-P14 le place à J−5/J−7 chez l'intermédiaire."},
+        {"critere": "S9", "perte": 2.5, "raison": "Consigne contradictoire : la règle de douleur bloque toute hausse « sur tous les mouvements qui chargent la zone (… appuis, et le mouvement lesté) » tant que la gêne dépasse 2/10. Or la gêne actuelle est de 3/10, et les dips lestés écrits montent chaque semaine. S'y ajoutent les 1RM de référence changeants et le format « au lieu de » très lourd."},
+        {"critere": "ensemble", "perte": 2, "raison": "Une correction nécessaire : la consigne de douleur qui contredit la progression du mouvement objectif."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Préciser que la règle de douleur se lit mouvement par mouvement : la gêne se note pendant et le lendemain de chaque exercice, et les dips progressent si la gêne pendant les dips reste ≤ 2/10, même si les tractions déclenchent 3/10. Ajouter ce que l'athlète fait si les dips eux-mêmes déclenchent 3/10 : prise, amplitude, maintien de la charge.", "consequence": "Avec une gêne déclarée à 3/10, l'athlète doit, selon la règle écrite, ne plus rien ajouter sur les appuis lestés. Soit il gèle les dips pendant 12 semaines et manque l'objectif, soit il ignore la règle de douleur, et la règle perd sa valeur de garde-fou."},
+        {"type": "amelioration", "texte": "Tant que la gêne dépasse 2/10, remplacer la suspension active d'échauffement par des tirages scapulaires au sol ou à l'élastique, et les relevés de jambes suspendus par des relevés allongés ou une roue abdominale. Réduire ainsi la préhension, comme le prévoit R5-P24."},
+        {"type": "amelioration", "texte": "Après le test de la semaine 12, insérer une à deux semaines de transition active (RIR ≥ 4, volume ~50 %) avant le bloc 3, et prévoir l'allègement suivant."},
+        {"type": "amelioration", "texte": "Ajouter au test de la semaine 12 la règle de la barre de l'objectif : quand la tenter, sinon garder trois barres sûres. Rapprocher le dernier lourd de J−7."},
+        {"type": "amelioration", "texte": "Pour le volet sets & reps, ajouter une progression de densité sur les dips au poids du corps (repos dégressifs, répétitions totales) et, quand la gêne le permet, des tractions en prise neutre en séries sous-maximales."},
+        {"type": "amelioration", "texte": "Expliquer en une ligne pourquoi le 1RM de référence change (série de recalage, test), et rendre la réserve visée cohérente avec la charge."}
+      ],
+      "points_forts": [
+        "Antécédent protégé sans exclusion : tractions lourdes remplacées, retour au lest par paliers conditionnés à la douleur, wrist curl progressif soumis au kiné qui suit le coude (R5-P20, R5-P24, R4-F11).",
+        "Seuils de douleur écrits, avec arrêt et orientation vers un professionnel ; pas de troisième barre au test si la zone dépasse le seuil.",
+        "Séances courtes (25 à 47 min sur 75), version de 25 min, règles de séance et de semaine manquées : très bonne faisabilité.",
+        "Test intermédiaire en semaine 6 sous forme de série lourde à 1 RIR plutôt qu'un maximum, et bloc 2 recalé sur le résultat mesuré."
+      ]
+    },
+    {
+      "programme": "programme_3.md",
+      "criteres": {"S1": 9.5, "S2": 9.5, "S3": 9, "S5": 9, "S6": 9, "S7": 10, "S8": 9.5, "S9": 8.5},
+      "sans_objet": ["S4"],
+      "ensemble": 9,
+      "points_perdus": [
+        {"critere": "S1", "perte": 0.5, "raison": "Aucun antécédent. La règle de douleur générale (coude, épaule, poignet, genou) prévoit l'orientation vers un professionnel. En revanche, la traction lourde passe à trois séances par semaine jusqu'à 93 % sans aucune consigne propre au coude, zone la plus exposée en street workout (R4-F12)."},
+        {"critere": "S2", "perte": 0.5, "raison": "Les hausses restent dans les garde-fous (environ +5 % sur la série de tête d'un bloc à l'autre, R5-P22). Mais en semaine 13, après l'échéance, les charges et les réserves visées ne correspondent plus (65 % × 5 à 2 RIR)."},
+        {"critere": "S3", "perte": 1, "raison": "Allègement en semaine 4, affûtage, critères de baisse du jour. Rien n'est demandé sur le sommeil, le travail ou le stress, et le bloc 2 enchaîne quatre semaines d'intensification sans allègement réactif écrit."},
+        {"critere": "S5", "perte": 1, "raison": "Face pull, rotation externe, row scapulaire, curl marteau, étirement des fléchisseurs du poignet, échauffement écrit. Mais avec environ 14 séries dures de traction plus 6 de rowing pronation par semaine, rien ne travaille les extenseurs du poignet et la prise n'est jamais variée."},
+        {"critere": "S6", "perte": 1, "raison": "Aucun échec, marges dégressives jusqu'à 1 RIR sur les singles lourds, ce qui convient à un avancé (R4-G3). Quelques couples pourcentage/RIR sont incohérents (75 % × 5 à 2 RIR le mercredi de la semaine 2)."},
+        {"critere": "S8", "perte": 0.5, "raison": "Affûtage d'environ −60 % sur deux semaines (R3-P12), dernier lourd à J−8, dernière séance à J−3, repos, puis trois tentatives avec la règle de la barre de l'objectif. Il manque seulement un point d'étape écrit vers la semaine 7 pour juger si l'objectif de +57,5 kg reste réaliste."},
+        {"critere": "S9", "perte": 1.5, "raison": "Format « comme la semaine X, sauf … (au lieu de …) » lourd, notes longues et répétées, 1RM de référence qui varie (122,5 / 123) sans explication."},
+        {"critere": "ensemble", "perte": 1, "raison": "Aucune correction nécessaire : il ne reste que des améliorations."}
+      ],
+      "corrections": [
+        {"type": "amelioration", "texte": "Ajouter du travail d'extenseurs du poignet (reverse curl, élastique) et varier la prise sur une des trois séances de traction (neutre ou supination) pour répartir la charge sur le coude pendant la spécialisation."},
+        {"type": "amelioration", "texte": "Écrire un point d'étape en semaine 7 : si le single à 91 % ne monte pas vite à 1 RIR, l'objectif de +57,5 kg est reporté et les tentatives restent sur le plan sûr."},
+        {"type": "amelioration", "texte": "Utiliser une partie du temps libre (les séances durent 22 à 50 min sur 90) pour un travail technique léger de traction le samedi ou pour du gainage, sans ajouter de séries dures."},
+        {"type": "amelioration", "texte": "Recaler les réserves visées sur les charges dans le bloc qui suit l'échéance (semaines 12 et 13), et expliquer en une ligne les changements de 1RM de référence."},
+        {"type": "amelioration", "texte": "Demander dans le profil le sommeil, le travail et le stress, et prévoir un allègement réactif si deux séances de suite baissent pendant les semaines 5 à 8 (R3-P11)."}
+      ],
+      "points_forts": [
+        "Spécialisation claire : traction 3×/sem à 48 h d'écart (R4-F10), dips et squat en entretien avec charge gardée et volume réduit.",
+        "Périodisation calée à rebours sur l'échéance : intensification, réalisation, affûtage d'environ −60 %, dernier lourd à J−8, repos à J−1, trois tentatives avec échauffement et règle d'ajustement.",
+        "Règles de sécurité et d'adhésion complètes : seuils de douleur avec orientation vers un professionnel, baisse du jour, version courte, règles de séance et de semaine manquées.",
+        "Prévention de l'épaule et du coude présente dans chaque séance de tirage."
+      ]
+    }
+  ]
+}
