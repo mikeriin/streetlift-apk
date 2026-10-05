@@ -1,1 +1,3 @@
 test/ci1_street_test.dart
+test/g10_evolution_test.dart
+test/g9_seance_test.dart

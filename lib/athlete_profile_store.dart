@@ -476,41 +476,97 @@ extension AthleteProfileStore on AppStore {
   /// fois), étape actuelle de chaque figure remplacée. Rien n'est retiré.
   /// Vrai si le profil a changé ; faux sinon (ou hors contrat : rien
   /// d'écrit).
-  bool reportEngineResults(kc.AdaptReview review) {
-    final a = athlete;
-    if (a == null) return false;
+  bool reportEngineResults(kc.AdaptReview review, {kc.CivilDate? since}) {
     final tests = review.testResults ?? const <kc.Benchmark>[];
     final skills = review.skillStates ?? const <kc.SkillState>[];
     if (tests.isEmpty && skills.isEmpty) return false;
+    // Deux écritures séparées : un refus de l'une ne bloque pas l'autre.
+    final b = _reportBenchmarks(tests, since);
+    final k = _reportSkills(skills);
+    return b || k;
+  }
+
+  /// Identité d'un record : mêmes exercice, nature, date, source, mesure et
+  /// protocole (le poids de corps et la réserve notés ne comptent pas : le
+  /// moteur relit tout le journal à chaque revue).
+  static String _benchmarkKey(kc.Benchmark b) => [
+    b.exerciseId,
+    b.kind.code,
+    b.date?.iso,
+    b.source.code,
+    b.externalLoadKg,
+    b.reps,
+    b.seconds,
+    b.distanceMeters,
+    b.protocolId,
+  ].join('|');
+
+  bool _reportBenchmarks(List<kc.Benchmark> tests, kc.CivilDate? since) {
+    final a = athlete;
+    if (a == null || tests.isEmpty) return false;
     final known = {
       for (final b in a.profile.benchmarks ?? const <kc.Benchmark>[])
-        jsonEncode(b.toJson()),
+        _benchmarkKey(b),
     };
-    final added = [
-      for (final b in tests)
-        if (b.validate().isEmpty && !known.contains(jsonEncode(b.toJson()))) b,
-    ];
+    final added = <kc.Benchmark>[];
+    for (final b in tests) {
+      // Seulement les tests du bloc en cours : un record retiré du profil
+      // à la main ne revient pas d'un ancien bloc.
+      final d = b.date;
+      if (since != null && (d == null || d.compareTo(since) < 0)) continue;
+      if (b.validate().isNotEmpty) continue;
+      if (known.add(_benchmarkKey(b))) added.add(b);
+    }
+    final room = 200 - (a.profile.benchmarks?.length ?? 0);
+    if (added.isEmpty || room <= 0) return false;
+    final kept = added.length > room ? added.sublist(added.length - room) : added;
+    return _saveEngineProfile(
+      a,
+      a.profile.copyWith(
+        benchmarks: <kc.Benchmark>[...?a.profile.benchmarks, ...kept],
+      ),
+    );
+  }
+
+  bool _reportSkills(List<kc.SkillState> skills) {
+    final a = athlete;
+    if (a == null || skills.isEmpty) return false;
     final current = [...?a.profile.skills];
-    var skillChanged = false;
+    var changed = false;
     for (final st in skills) {
       if (st.validate().isNotEmpty) continue;
       final i = current.indexWhere(
         (x) => x.targetExerciseId == st.targetExerciseId,
       );
       if (i < 0) continue; // figure que le profil ne suit pas
-      if (jsonEncode(current[i].toJson()) == jsonEncode(st.toJson())) continue;
-      current[i] = st;
-      skillChanged = true;
+      final old = current[i];
+      final sameStep = old.currentExerciseId == st.currentExerciseId;
+      int? best(int? stored, int? engine) => engine == null
+          ? (sameStep ? stored : null)
+          : (sameStep && stored != null && stored > engine ? stored : engine);
+      // Fusion champ par champ : ce que l'utilisateur a déclaré (depuis
+      // quand il est à l'étape, meilleure tenue, date) reste tant que
+      // l'étape ne change pas.
+      final merged = kc.SkillState(
+        targetExerciseId: old.targetExerciseId,
+        currentExerciseId: st.currentExerciseId,
+        bestHoldSeconds: best(old.bestHoldSeconds, st.bestHoldSeconds),
+        bestReps: best(old.bestReps, st.bestReps),
+        assessedOn: st.assessedOn ?? (sameStep ? old.assessedOn : null),
+        atStepSince: sameStep ? (old.atStepSince ?? st.atStepSince) : st.atStepSince,
+      );
+      if (merged.validate().isNotEmpty) continue;
+      if (jsonEncode(old.toJson()) == jsonEncode(merged.toJson())) continue;
+      current[i] = merged;
+      changed = true;
     }
-    if (added.isEmpty && !skillChanged) return false;
+    if (!changed) return false;
+    return _saveEngineProfile(a, a.profile.copyWith(skills: current));
+  }
+
+  bool _saveEngineProfile(AthleteRecord a, kc.AthleteProfile next) {
     final today = civilOf(storeClock());
-    final p = a.profile.copyWith(
-      benchmarks: added.isEmpty
-          ? a.profile.benchmarks
-          : <kc.Benchmark>[...?a.profile.benchmarks, ...added],
-      skills: skillChanged ? current : a.profile.skills,
-      updatedOn: _laterDay(a.profile.createdOn, today),
-    );
+    final p = next.copyWith(updatedOn: _laterDay(a.profile.createdOn, today));
     if (p.validate().isNotEmpty ||
         (content.catalog?.checkProfile(p).isNotEmpty ?? false)) {
       return false;

@@ -327,6 +327,11 @@ void main() {
       // « Garder le moteur actuel » : le bloc suivant reste au chemin 0.1.
       PlanStore(app).setPlanKeepLegacyEngine(true);
       expect(kp.coachEligible(PlanStore(app).planNextBlockProfile!), isFalse);
+      // L'expérience déclarée reste (le chemin 0.1 la lit).
+      expect(
+        PlanStore(app).planNextBlockProfile!.experience,
+        app.athlete!.profile.experience,
+      );
       final kept = PlanStore(app).proposeNextBlock()!;
       expect(isCoachBlock(kept.proposal.block), isFalse);
       // « Passer au moteur calibré » : bloc suivant calibré.
@@ -381,6 +386,25 @@ void main() {
       expect(app.athlete!.profile.benchmarks!.length, before + 1);
       expect(AthleteProfileStore(app).reportEngineResults(review), isFalse);
       expect(app.athlete!.profile.benchmarks!.length, before + 1);
+      // Même test relu avec un autre poids de corps : pas de doublon ; test
+      // d'avant le bloc : ignoré.
+      final again = kc.AdaptReview(
+        state: const {},
+        summary: review.summary,
+        proposals: const [],
+        log: const [],
+        testResults: [
+          b.copyWith(bodyWeightKg: 80),
+          b.copyWith(date: kc.CivilDate(2026, 9, 1), reps: 5),
+        ],
+      );
+      expect(
+        AthleteProfileStore(
+          app,
+        ).reportEngineResults(again, since: kc.CivilDate(2026, 9, 28)),
+        isFalse,
+      );
+      expect(app.athlete!.profile.benchmarks!.length, before + 1);
     });
   });
 
@@ -411,8 +435,10 @@ void main() {
           }
         }
         // ignore: avoid_print
-        print('CI1 $key : ${block.pass2.weeks.length} semaines, '
-            'phases ${app.planProgram!.season?.phases.map((p) => '${p.kind.code}/${p.weeks}').join(' ')} ; $kinds');
+        print(
+          'CI1 $key : ${block.pass2.weeks.length} semaines, '
+          'phases ${app.planProgram!.season?.phases.map((p) => '${p.kind.code}/${p.weeks}').join(' ')} ; $kinds',
+        );
         final hit = _find(app, (it) => it.technique != null, weeks: 2);
         if (hit != null) {
           clock = _dateOf(app, hit.week, hit.j);
@@ -423,9 +449,11 @@ void main() {
             for (final e in day.exercises.where((x) => x.engine)) {
               final it = app.adaptItemFor(hit.week, hit.j, e)!;
               // ignore: avoid_print
-              print('  S${hit.week}J${hit.j} ${e.name} : ${it.technique?.kind.code ?? '-'} '
-                  '${app.setsLabel(e)} lignes ${[for (var i = 0; i < it.sets; i++) app.adaptRowLabel(hit.week, hit.j, e, i) ?? '${i + 1}'].join(',')} '
-                  'chrono ${e.timer?['type']} mesure ${app.logSpec(e).kind}');
+              print(
+                '  S${hit.week}J${hit.j} ${e.name} : ${it.technique?.kind.code ?? '-'} '
+                '${app.setsLabel(e)} lignes ${[for (var i = 0; i < it.sets; i++) app.adaptRowLabel(hit.week, hit.j, e, i) ?? '${i + 1}'].join(',')} '
+                'chrono ${e.timer?['type']} mesure ${app.logSpec(e).kind}',
+              );
             }
           }
         }

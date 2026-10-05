@@ -284,6 +284,7 @@ class PlanProgram {
     PlanPrevious? previous,
     bool clearPrevious = false,
     kc.SeasonPlan? season,
+    bool clearSeason = false,
     bool? keepLegacyEngine,
   }) => PlanProgram(
     version: version,
@@ -295,7 +296,9 @@ class PlanProgram {
     prefixKoach: prefixKoach,
     blocks: blocks ?? this.blocks,
     previous: clearPrevious ? null : (previous ?? this.previous),
-    season: season ?? this.season,
+    // CI1 : [clearSeason] : la saison est celle donnée (null : plus de
+    // saison, bloc du chemin 0.1).
+    season: clearSeason ? season : (season ?? this.season),
     keepLegacyEngine: keepLegacyEngine ?? this.keepLegacyEngine,
   );
 
