@@ -63,7 +63,8 @@ class _EventDayScreenState extends State<EventDayScreen> {
   Widget build(BuildContext context) {
     final t = Theme.of(context).textTheme;
     final strength = widget.event.kind == kc.EventKind.strengthCompetition;
-    final key = '${_objective.code}|${[for (final a in _done) '${a.exerciseId}:${a.index}:${a.success}'].join(',')}';
+    final key =
+        '${_objective.code}|${[for (final a in _done) '${a.exerciseId}:${a.index}:${a.success}'].join(',')}';
     if (key != _planKey) {
       _planKey = key;
       _plan = store.evolutionEventDay(

@@ -394,7 +394,7 @@ void main() {
         proposals: const [],
         log: const [],
         testResults: [
-          b.copyWith(bodyWeightKg: 80),
+          b.copyWith(bodyWeightKg: 80.0),
           b.copyWith(date: kc.CivilDate(2026, 9, 1), reps: 5),
         ],
       );

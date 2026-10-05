@@ -519,7 +519,9 @@ extension AthleteProfileStore on AppStore {
     }
     final room = 200 - (a.profile.benchmarks?.length ?? 0);
     if (added.isEmpty || room <= 0) return false;
-    final kept = added.length > room ? added.sublist(added.length - room) : added;
+    final kept = added.length > room
+        ? added.sublist(added.length - room)
+        : added;
     return _saveEngineProfile(
       a,
       a.profile.copyWith(
@@ -553,7 +555,9 @@ extension AthleteProfileStore on AppStore {
         bestHoldSeconds: best(old.bestHoldSeconds, st.bestHoldSeconds),
         bestReps: best(old.bestReps, st.bestReps),
         assessedOn: st.assessedOn ?? (sameStep ? old.assessedOn : null),
-        atStepSince: sameStep ? (old.atStepSince ?? st.atStepSince) : st.atStepSince,
+        atStepSince: sameStep
+            ? (old.atStepSince ?? st.atStepSince)
+            : st.atStepSince,
       );
       if (merged.validate().isNotEmpty) continue;
       if (jsonEncode(old.toJson()) == jsonEncode(merged.toJson())) continue;
