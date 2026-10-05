@@ -1895,7 +1895,9 @@ List<SetPlan>? _testPlans(
     // plan finit en échec).
     final written = item.startLoadKg;
     if (c.policy.locked && written != null && kg > written + 1e-9) {
-      kg = info.grid.floor(written) > written ? written : info.grid.floor(written);
+      kg = info.grid.floor(written) > written
+          ? written
+          : info.grid.floor(written);
     }
     final last = track.lastLoad;
     if (locked && last != null && kg > last) {

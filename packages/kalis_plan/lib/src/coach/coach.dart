@@ -36,7 +36,10 @@ List<(BodyZone, int)> adaptationPains(AdaptationSummary? adaptation) =>
 /// `pain_return`) continue au palier qui suit le dernier du bloc — ou, avec
 /// [same] (restructuration du bloc lui-même), garde le palier de départ du
 /// bloc. Une reprise finie (palier 5 : plein volume) disparaît.
-Map<BodyZone, int> coachReturnStepsOf(ProgramBlock? block, {bool same = false}) {
+Map<BodyZone, int> coachReturnStepsOf(
+  ProgramBlock? block, {
+  bool same = false,
+}) {
   final out = <BodyZone, int>{};
   if (block == null) {
     return out;

@@ -128,7 +128,8 @@ final class PainState {
     }
     final episodes = <List<(int, int)>>[];
     for (final h in highs) {
-      if (episodes.isEmpty || h.$1 - episodes.last.last.$1 > painEpisodeGapDays) {
+      if (episodes.isEmpty ||
+          h.$1 - episodes.last.last.$1 > painEpisodeGapDays) {
         episodes.add(<(int, int)>[h]);
       } else {
         episodes.last.add(h);

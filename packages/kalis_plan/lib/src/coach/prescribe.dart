@@ -698,7 +698,7 @@ final class _WeekTrace {
 /// Racine d'un mouvement au poids du corps compté en répétitions, pour le
 /// garde-fou du volume de répétitions, ou `null`.
 String? _repsRootOf(CatalogExercise e) {
-  if (e.unit != MeasureUnit.reps ||
+  if (e.unit != MeasureUnit.repetitions ||
       (e.loadType != LoadType.bodyweight && e.loadType != LoadType.none)) {
     return null;
   }

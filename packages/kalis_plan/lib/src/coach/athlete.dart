@@ -481,7 +481,8 @@ final class Athlete {
       final value = b.kind == BenchmarkKind.maxHold ? b.seconds : b.reps;
       if (value != null &&
           prior.isNotEmpty &&
-          (b.kind == BenchmarkKind.maxReps || b.kind == BenchmarkKind.maxHold) &&
+          (b.kind == BenchmarkKind.maxReps ||
+              b.kind == BenchmarkKind.maxHold) &&
           value <= prior.reduce((x, y) => x > y ? x : y)) {
         stalled.add(b.exerciseId);
       }
@@ -522,7 +523,9 @@ final class Athlete {
               when.compareTo(day.addDays(-70)) < 0) {
             continue;
           }
-          final value = unit == CapacityUnit.maxHoldSeconds ? o.seconds : o.reps;
+          final value = unit == CapacityUnit.maxHoldSeconds
+              ? o.seconds
+              : o.reps;
           if (value != null && value < before) {
             concordant = true;
           }
