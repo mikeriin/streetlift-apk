@@ -13,4 +13,4 @@ Branche de mise au point : claude/ci-ci1-rapide (rapide.yml) ; contrôle complet
 - Textes 0.4 : adaptReasonText → reasonText04 ; paramètres technique/phase/stress/cause en clair.
 
 ## Reste
-- Contrôle complet essai 2 : tout vert sauf émulateur partie b (navigation vers l exercice) ; corrigé (glissement de page) + point final après date abrégée. Essai 3 complet lancé. Brouillons livraison et DECISIONS dans la session (/tmp/ci1).
+- LIVRÉ : main 938de59, build signé 37328372801, contrôle 37324228351 ; ETAT « à valider », livraison, page de suivi, notification faits. Rien à reprendre.
