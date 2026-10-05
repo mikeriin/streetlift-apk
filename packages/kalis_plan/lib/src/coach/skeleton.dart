@@ -2267,10 +2267,11 @@ void _buildFigures(_Builder b, Set<int> runDays) {
   final firstDays = first == null
       ? <int>[]
       : spreadDays(a, days, heavyCount > n ? n : heavyCount);
-  // La seconde figure prend des jours où la première n'est pas : une seule
-  // figure lourde bras tendus par séance (panel CX : planche et front lever
-  // empilés le même jour chargeaient le poignet et le coude d'un coup) ;
-  // à défaut de jours libres, elle partage.
+  // La seconde figure partage les jours de la première quand elle charge
+  // une autre zone (planche et front lever), pour garder des jours sans
+  // bras tendus ; sinon elle prend les jours restants. (Essai CX, boucle
+  // 4 : des jours distincts chargeaient les jours de jambes et de force au
+  // point d'en retirer les jambes ; retiré.)
   final rest = <int>[
     for (final d in days)
       if (!firstDays.contains(d)) d,
@@ -2278,7 +2279,12 @@ void _buildFigures(_Builder b, Set<int> runDays) {
   const secondCount = 2;
   final secondDays = second == null
       ? <int>[]
-      : spreadDays(a, rest.length >= secondCount ? rest : days, secondCount);
+      : (n >= 5
+            ? <int>[
+                firstDays.first,
+                if (firstDays.length > 1) firstDays.last,
+              ].take(secondCount).toList()
+            : spreadDays(a, rest.isEmpty ? days : rest, secondCount));
   final handstand = a.holds['cs-handstand'] ?? 0;
   final muMax = a.reps[Ids.muscleUp] ?? 0;
   final muWeak = (a.profile.weakPoints ?? const <WeakPoint>[]).any(

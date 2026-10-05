@@ -36,7 +36,7 @@
   "sante": 8
  },
  "street_07_avance_streetlifting_competition": {
-  "calisthenie": 8,
+  "calisthenie": 7.5,
   "force": 9,
   "hypertrophie": 9,
   "sante": 9
@@ -48,7 +48,7 @@
   "sante": 7
  },
  "street_09_elite_streetlifting": {
-  "calisthenie": 8,
+  "calisthenie": 7.5,
   "force": 9,
   "hypertrophie": 8,
   "sante": 8
@@ -62,13 +62,13 @@
  "street_11_master_51_ans": {
   "calisthenie": 8,
   "force": 7,
-  "hypertrophie": 7,
+  "hypertrophie": 8,
   "sante": 7
  },
  "street_12_antecedent_coude": {
   "calisthenie": 8,
   "force": 9,
-  "hypertrophie": 8,
+  "hypertrophie": 9,
   "sante": 9
  },
  "street_13_peu_de_temps": {

@@ -25,6 +25,13 @@ journal de calibrage : `packages/kalis_bench/docs/CALIBRAGE_CX.md`.
 - **Test du chemin vers la traction** : tenue menton au-dessus de la barre, comptée en secondes.
 - Lieu du jour : un exercice au mur n'est plus proposé au parc sans mur (`feasibleAt` de `kalis_core`
   0.4.2).
+- **Douleur relevée par le moteur d'évolution** (sous 6/10) : une figure reste au bloc suivant, à 60 % de ses
+  séries (`pain_trend`), même quand le moteur l'avait écartée.
+- **Débutants** : tenue menton à 60-70 % du maintien, test de l'objectif en tête de séance, pompe au sol en
+  grappes dès le deuxième bloc, négatives de pompe gardées, critère de l'échelle de poussée sur deux séries,
+  une seule règle d'élastique, essais stricts de traction dès la sixième semaine.
+- **Lest** : 1RM de travail relevé d'après le maximum au poids du corps ; une estimation n'abaisse un 1RM
+  qu'au-delà de 6 %.
 
 ## 0.2.0
 

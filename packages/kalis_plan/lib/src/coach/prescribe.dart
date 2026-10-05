@@ -2428,8 +2428,7 @@ final class Prescriber {
       // Pompe au sol d'un objectif de pompes : des séries courtes répétées
       // (5 × 1-2, grappes ; panel CX, boucle 4), pas une ou deux
       // répétitions isolées.
-      final clusters =
-          e.id == Ids.pushUp && a.aimsAt(Ids.pushUp) && !ws.light;
+      final clusters = e.id == Ids.pushUp && a.aimsAt(Ids.pushUp) && !ws.light;
       x
         ..sets = clusters
             ? 5

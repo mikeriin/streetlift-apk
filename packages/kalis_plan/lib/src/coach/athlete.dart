@@ -108,6 +108,12 @@ const double coachEstimateMaxError = 0.06;
 /// un pas de charge ou une répétition sur dix (choix raisonné).
 const double coachEstimateMargin = 0.025;
 
+/// Même écart pour un 1RM : 6 %. L'estimation du moteur d'évolution se
+/// tient 3 à 5 % sous le 1RM réel (CA1.3, prudence voulue) ; au-dessous
+/// de cette marge, elle ferait baisser à tort les charges du bloc suivant
+/// (panel CX, boucle 5 : séries allégées à 6 à 10 répétitions de réserve).
+const double coachEstimateLoadMargin = 0.06;
+
 /// Vrai si [profile] relève du chemin street de `kalis_plan` 0.2 : profil
 /// au schéma 3 rempli par le questionnaire 0.4 (expérience et ancienneté
 /// renseignées — sans elles le niveau n'est pas lisible et le chemin 0.1
@@ -477,7 +483,7 @@ final class Athlete {
           if ((before == null && external > 0 && !partial) ||
               (before != null &&
                   external > 0 &&
-                  e.capacity < total * (1 - coachEstimateMargin))) {
+                  e.capacity < total * (1 - coachEstimateLoadMargin))) {
             oneRm[e.exerciseId] = external;
             recordDay[e.exerciseId] = seen;
           }
@@ -538,9 +544,7 @@ final class Athlete {
       }
       for (final (zone, pain) in trendPains) {
         final joint = zone.joint;
-        if (pain < 6 &&
-            joint != null &&
-            e.stressOn(joint) != JointStress.low) {
+        if (pain < 6 && joint != null && e.stressOn(joint) != JointStress.low) {
           return true;
         }
       }
