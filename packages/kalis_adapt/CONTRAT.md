@@ -1164,8 +1164,9 @@ inchangé (séances identiques à l'octet près ; seul le texte de version chang
   au haut de la plage (ou première série dite deux répétitions plus facile), et quatorze jours au moins
   après le dernier changement de cran (`coachAssistMinDays`, `ExerciseTrack.assistDay` ; panel : « un cran
   toutes les deux semaines au plus ») ; un cran de plus seulement
-  après un échec, le bas de la plage manqué deux séances de suite au même cran
-  (`SlotMark.missed`), ou de plus de deux répétitions. L'élastique ne change plus dans un sens puis dans
+  après un échec ou le bas de la cible servie manqué deux séances de suite au même cran
+  (`SlotMark.missed` ; une cible abaissée par un verrou — douleur, bilan bas — puis tenue n'est pas un
+  manque). L'élastique ne change plus dans un sens puis dans
   l'autre d'une séance à la suivante (relecture documentée, manche 4, `street_01`). Source : ACSM 2009, règle
   « 2 pour 2 » : hausse de charge quand l'athlète fait une à deux répétitions de plus que visé sur deux
   séances consécutives (texte de l'énoncé de preuve).
