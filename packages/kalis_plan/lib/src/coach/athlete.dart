@@ -202,11 +202,9 @@ Set<BodyZone> coachPainStops(Iterable<Reason> reasons) {
   return out;
 }
 
-/// Part du repère sous laquelle un test plus bas, seul, ne fait pas foi
-/// (CX, correction 1 : une baisse de plus de 15 % se refait — panel,
-/// `street_05` ; deux mesures concordantes avant de baisser, Bosquet et al.
-/// 2007).
-const double coachTestDropShare = 0.85;
+/// Part du 1RM connu sous laquelle une estimation tirée d'une série de
+/// plusieurs répétitions ne l'abaisse pas seule (CX, correction 1).
+const double coachEstimateDropShare = 0.85;
 
 /// Disciplines que le chemin street sait programmer.
 const Set<TrainingDiscipline> coachStreetDisciplines = <TrainingDiscipline>{
@@ -546,11 +544,8 @@ final class Athlete {
       // (Répétitions et maintiens ; l'estimation doit être sûre et récente,
       // quinze jours au plus avant le test. Un 1RM testé plus bas fait foi :
       // une barre manquée se recale à la baisse.)
-      // CX, correction 1 : une baisse de 15 % au plus fait foi ; au-delà,
-      // une mesure seule (test sur la fatigue) cède devant le plus haut du
-      // repère d'avant et de l'estimation sûre — deux mesures concordantes
-      // la font foi (Bosquet et al. 2007 : la forme se mesure après des
-      // jours légers).
+      // CX, correction 1 : le test plus bas fait foi, relevé seulement par
+      // l'estimation sûre (jamais au-dessus du repère d'avant).
       int lowered(int measured, int? before, CapacityUnit unit) {
         if (before == null || measured >= before) {
           return measured;
@@ -582,53 +577,14 @@ final class Athlete {
             MovementPattern.transitionMuscleUp) {
           return measured;
         }
-        // Une mesure plus basse ne fait baisser le repère qu'avec une
-        // deuxième concordante : le test mesuré le plus récent des dix
-        // semaines d'avant est lui aussi sous le repère (Bosquet et al.
-        // 2007 : la forme se lit après des jours légers ; panel CX,
-        // correction 1 : un test seul, fait en semaine allégée, recalait
-        // tout le bloc suivant vers le bas ; deux tests à 9 font foi).
-        Benchmark? prior;
-        for (final o in profile.benchmarks ?? const <Benchmark>[]) {
-          final when = o.date;
-          if (identical(o, b) ||
-              when == null ||
-              o.exerciseId != b.exerciseId ||
-              o.kind != b.kind ||
-              (o.externalLoadKg ?? 0) != 0 ||
-              (o.source != BenchmarkSource.guidedTest &&
-                  o.source != BenchmarkSource.competition) ||
-              when.compareTo(day) >= 0 ||
-              when.compareTo(day.addDays(-70)) < 0) {
-            continue;
-          }
-          final value = unit == CapacityUnit.maxHoldSeconds
-              ? o.seconds
-              : o.reps;
-          final priorDate = prior?.date;
-          if (value != null &&
-              (priorDate == null || when.compareTo(priorDate) > 0)) {
-            prior = o;
-          }
-        }
-        final priorValue = prior == null
-            ? null
-            : (unit == CapacityUnit.maxHoldSeconds
-                  ? prior.seconds
-                  : prior.reps);
-        // Baisse modérée (15 % au plus), confirmée : le test fait foi tel
-        // quel (« série de tête = résultat − 2, jamais sur un progrès
-        // supposé »).
-        if (measured >= coachTestDropShare * before) {
-          return priorValue != null && priorValue < before ? measured : before;
-        }
-        // Forte baisse : confirmée par une mesure elle aussi nettement plus
-        // basse, elle cède devant le plus haut du test et de l'estimation
-        // sûre ; sinon le repère (ou l'estimation sûre) reste.
-        if (priorValue != null && priorValue < coachTestDropShare * before) {
-          return kept(measured);
-        }
-        return estimate == null ? before : kept(estimate);
+        // Une baisse fait foi, même seule et même forte : le bloc suivant
+        // est écrit sur le résultat (« série de tête = résultat − 2,
+        // jamais sur un progrès supposé ») ; seule une estimation sûre et
+        // récente, faite sur assez de séries, la relève (R3-P16 ; panel CX,
+        // correction 1, passe 5 : le bloc 2 écrit sur le repère d'avant
+        // donnait des séries de tête à maximum − 1 ou des réserves
+        // impossibles dans six profils).
+        return kept(measured);
       }
 
       switch (b.kind) {
@@ -676,6 +632,19 @@ final class Athlete {
             if (b.source == BenchmarkSource.competition &&
                 known != null &&
                 value < known) {
+              break;
+            }
+            // Une estimation tirée d'une série de plusieurs répétitions
+            // (pas d'une barre maximale) ne fait pas tomber le 1RM de plus
+            // de 15 % à elle seule : la série du test d'allègement n'est
+            // pas un maximum, et l'erreur des formules grandit avec les
+            // répétitions (R2-P4 ; panel CX, correction 1, passe 5,
+            // `street_12` : 1RM de 131,5 kg ramené à 111 kg sur une série
+            // de 3 en semaine allégée). La série de tête du jour et
+            // l'autorégulation recalent la charge si elle ne passe pas.
+            if (n >= 2 &&
+                known != null &&
+                value < coachEstimateDropShare * known) {
               break;
             }
             oneRm[b.exerciseId] = value;

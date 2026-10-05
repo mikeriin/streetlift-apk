@@ -563,7 +563,8 @@ String? coachReasonText(Reason r, Catalog catalog) {
               'mouvement et consulte.',
         CoachNotes.eventZone =>
           "Zone de l'épreuve : séries à environ ${_int(v)} % de ton maximum, "
-              'repos court, 2 répétitions en réserve sur la dernière — '
+              'repos court, la réserve écrite sur la dernière (2 répétitions '
+              'au moins) — '
               "c'est la fin de série que le test demande. La dernière série "
               "s'arrête dès que la forme casse ; si la réserve tombe sous 1, "
               "retire une répétition par série la séance suivante.",
@@ -576,6 +577,13 @@ String? coachReasonText(Reason r, Catalog catalog) {
               'la fois, et une seule série de tête par semaine. Cible '
               'réaliste au prochain test : ${v is num ? v.round() + 1 : ''} '
               'à ${v is num ? v.round() + 2 : ''} répétitions.',
+        CoachNotes.painStep =>
+          "Étape plus facile pour l'instant : la gêne écarte l'étape de "
+              'travail de la figure. Mêmes consignes de tenue, parallettes '
+              "ou poings si l'appui le permet. Retour à l'étape de travail "
+              'après deux semaines à 2 sur 10 au plus ; son test attend ce '
+              "retour (un maintien maximal fait sur la douleur ne mesure pas "
+              'la figure).',
         CoachNotes.painStop =>
           'Douleur qui dure (${_zoneOfIndex(v)}) : 3 sur 10 ou plus depuis '
               'plus de deux semaines, ou revenue après une reprise. Tous '
