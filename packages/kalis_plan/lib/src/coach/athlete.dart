@@ -614,7 +614,18 @@ final class Athlete {
             rir: b.rir ?? 0,
           );
           if (estimate != null) {
-            oneRm[b.exerciseId] = estimate.valueKg - fraction * bodyWeight;
+            final value = estimate.valueKg - fraction * bodyWeight;
+            final known = oneRm[b.exerciseId];
+            // Une barre de compétition réussie est une tentative prudente,
+            // pas un maximum : plus basse que le repère, elle ne l'abaisse
+            // pas (CX, correction 1, panel : bloc d'après-compétition écrit
+            // 5 % trop léger).
+            if (b.source == BenchmarkSource.competition &&
+                known != null &&
+                value < known) {
+              break;
+            }
+            oneRm[b.exerciseId] = value;
             recordDay[b.exerciseId] = day;
           }
         default:

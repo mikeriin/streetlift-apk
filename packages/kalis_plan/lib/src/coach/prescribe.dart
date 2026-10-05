@@ -761,11 +761,6 @@ final class Prescriber {
   /// Vrai pour la dernière semaine de charge avant un allègement.
   bool _lastLoaded = false;
 
-  /// Jour du dernier test prévu de chaque exercice (blocs précédents et
-  /// semaines déjà prescrites) : le repère d'un exercice ne monte qu'après
-  /// un test de cet exercice.
-  final Map<String, CivilDate> _testedOn = <String, CivilDate>{};
-
   /// Semaines de test déjà passées (blocs précédents compris).
   int _testsDone = 0;
 
@@ -1211,16 +1206,20 @@ final class Prescriber {
       );
     final declared = a.totalOneRm(e.id);
     if (declared != null) {
-      // Part affichée : celle du 1RM déclaré (le 1RM de travail peut être
-      // relevé d'après le maximum de répétitions).
-      // Part affichée : celle du 1RM de travail, écrit en clair quand il
-      // est relevé d'après le maximum de répétitions (un seul repère).
+      // Part affichée : celle de la charge écrite (arrondie au pas), sur le
+      // 1RM de travail — un seul repère par bloc, que l'export redonne en
+      // kilos (CX, correction 1, panel : 1RM de référence qui variait de
+      // 121,5 à 123 kg d'une ligne à l'autre).
+      final load = x.load;
+      final shown = load == null
+          ? p
+          : (load + (e.bodyweightFraction?.value ?? 0) * a.bodyWeight) / total;
       x
-        ..percent = _round3(p)
+        ..percent = _round3(shown)
         ..share = p
         ..intensity = IntensityTarget(
           basis: IntensityBasis.percentOneRm,
-          value: _round3(p),
+          value: _round3(shown),
         );
     } else {
       x.intensity = IntensityTarget(
@@ -1895,8 +1894,10 @@ final class Prescriber {
     }
     // (Un exercice qui n'a pas été testé garde son repère de reprise : il
     // ne monte jamais sur un progrès supposé.)
-    final tested = _testedOn[s.exerciseId] != null || expected;
-    final regained = (own * (tested ? _regain : _regainAt(0))).floor();
+    // (Un test seulement écrit n'est pas un test fait : sans mesure depuis
+    // la reprise, le repère reste celui de la reprise — panel CX
+    // correction 1, `street_04` : dips recalés de 15 à 17 sans test.)
+    final regained = (own * (expected ? _regain : _regainAt(0))).floor();
     return regained < 1 ? 1 : regained;
   }
 
@@ -2136,7 +2137,14 @@ final class Prescriber {
     final lift = ws.kind == WeekKind.build
         ? 0.03 * (ws.stage > 3 ? 3 : ws.stage)
         : 0.0;
-    final back = _clampInt(_round(max * (0.65 + lift)), 1, top);
+    // (Les séries allégées restent au moins une répétition sous la série de
+    // tête : à repos incomplet, la même plage ne garde pas la réserve —
+    // panel CX correction 1, « 1 × 6, puis 2 × 6 » sur un maximum de 9.)
+    final back = _clampInt(
+      _round(max * (0.65 + lift)),
+      1,
+      top >= 3 ? top - 1 : top,
+    );
     final sets = ws.intent == WeekIntent.taper
         ? 2
         : _scaled(s.sets, ws, min: 2);
@@ -5866,9 +5874,6 @@ final class Prescriber {
         for (final p in d.items) {
           if (p.kind == SetKind.test) {
             tested = true;
-            _testedOn[p.exerciseId] = a.start.addDays(
-              -7 * (weeks.length - 1 - i),
-            );
           }
         }
       }
@@ -6056,11 +6061,6 @@ final class Prescriber {
           if (x.kind == SetKind.test) {
             // Le test recale le repère de l'exercice pour la suite.
             anyTest = true;
-            _testedOn[x.e.id] = a.start.addDays(7 * (w + 1));
-            final ref = x.slot?.referenceId;
-            if (ref != null && x.e.id == coachGateExercise) {
-              _testedOn[ref] = a.start.addDays(7 * (w + 1));
-            }
           }
         }
       }
