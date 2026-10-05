@@ -5991,8 +5991,7 @@ final class Prescriber {
     // (Coude : gêne actuelle, ou antécédent de moins de douze mois.)
     final elbowLimit = a.limitOn(Joint.elbow);
     final elbow =
-        elbowLimit != null &&
-        (elbowLimit.recent || elbowLimit.discomfort >= 2);
+        elbowLimit != null && (elbowLimit.recent || elbowLimit.discomfort >= 2);
     double factorOf(int beforeReps, int reps, {required bool restart}) {
       var delta = beforeReps - reps;
       if (!restart && !peaking && delta > 2) {
@@ -6016,28 +6015,47 @@ final class Prescriber {
         var total = load + fraction * a.bodyWeight;
         final key = '$d|${x.slotId}|${x.e.id}';
         double? allowed;
+        double? capped(double? now, double v) =>
+            now == null || v < now ? v : now;
+
         // Même emplacement, semaine d'avant (allégée comprise : la charge
-        // remonte par paliers après un allègement) : à répétitions égales ou
-        // après une transition, l'écart de répétitions compte en entier ;
-        // à répétitions différentes, deux répétitions au plus.
-        final before = last?.loads[key];
-        if (last != null && before != null && before.$1 > 0) {
-          allowed =
-              before.$1 *
-              factorOf(
-                before.$2,
-                reps,
-                restart: last.restart || before.$2 == reps,
-              );
+        // remonte par paliers après un allègement ; en pic de forme après
+        // une semaine allégée, la dernière semaine de charge) : à
+        // répétitions égales ou après une transition, l'écart de
+        // répétitions compte en entier ; à répétitions différentes, deux
+        // répétitions au plus.
+        final src = last != null && last.light && !last.restart && peaking
+            ? (reference ?? last)
+            : last;
+        final before = src?.loads[key];
+        if (src != null && before != null && before.$1 > 0) {
+          allowed = capped(
+            allowed,
+            before.$1 *
+                factorOf(
+                  before.$2,
+                  reps,
+                  restart: src.restart || before.$2 == reps,
+                ),
+          );
+        }
+        // Même exercice à répétitions égales, quel que soit l'emplacement :
+        // +`coachLoadRise` au plus sur la semaine d'avant (CX, correction 1).
+        final same = last?.loadsByExercise['${x.e.id}|$reps'];
+        if (same != null && same > 0) {
+          allowed = capped(allowed, same * (1 + rise));
         }
         // Nouvel emplacement (début de bloc, après un allègement ou un
         // test) : même borne sur la plus lourde charge du même exercice la
         // semaine d'avant, toutes répétitions (passe 7 du panel CX,
         // `street_08` : dips lestés de 67 à 79 % du 1RM en une semaine,
         // juste après l'allègement).
-        final top = last?.heaviest[x.e.id];
-        if (allowed == null && top != null && top.$1 > 0) {
-          allowed = top.$1 * factorOf(top.$2, reps, restart: last!.restart);
+        final top = src?.heaviest[x.e.id];
+        if (before == null && src != null && top != null && top.$1 > 0) {
+          allowed = capped(
+            allowed,
+            top.$1 * factorOf(top.$2, reps, restart: src.restart),
+          );
         }
         if (elbow &&
             x.e.stressOn(Joint.elbow) != JointStress.low &&

@@ -2360,9 +2360,7 @@ void _buildLifting(_Builder b, Set<int> runDays) {
         // (Coude avec antécédent, sans gêne : deux séries — le volume de
         // tirage de la semaine reste vers 18 à 20 séries directes ; CP2,
         // partie 0, `street_09`.)
-        sets: lean || (elbow != null && !spareElbow)
-            ? 2
-            : (hasPull ? 3 : 4),
+        sets: lean || (elbow != null && !spareElbow) ? 2 : (hasPull ? 3 : 4),
         // Coude à ménager : le tirage horizontal en prise neutre porte le
         // tirage de la semaine, il est gardé.
         keep: spareElbow,
