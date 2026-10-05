@@ -1108,6 +1108,8 @@ void main() {
       const step = 'cs-front-lever-tuck-avance';
       final figures = _profile(
         experience: ExperienceLevel.intermediate,
+        primary: TrainingDiscipline.calisthenics,
+        equipment: const <String>[..._park, 'anneaux'],
         weekdays: const <int>[1, 4, 6],
         minutes: 75,
         benchmarks: <Benchmark>[
@@ -1121,7 +1123,11 @@ void main() {
           ),
         ],
         skills: const <SkillState>[
-          SkillState(targetExerciseId: 'cs-front-lever', currentExerciseId: step),
+          SkillState(
+            targetExerciseId: 'cs-front-lever',
+            currentExerciseId: step,
+            bestHoldSeconds: 12,
+          ),
         ],
       );
       bool serves(ProgramBlock b) => b.pass2.weeks.any(
@@ -1318,7 +1324,7 @@ void main() {
     });
 
     test('1RM : une série de plusieurs répétitions ne le fait pas tomber '
-        'de plus de 15 %', () {
+        'sous 85 %', () {
       Benchmark tested(double kg, int reps) => Benchmark(
         exerciseId: 'sl-dips-leste',
         kind: BenchmarkKind.loadReps,
@@ -1347,13 +1353,73 @@ void main() {
       final far = base.copyWith(
         benchmarks: <Benchmark>[...base.benchmarks!, tested(40, 3)],
       );
+      final alone = base.copyWith(
+        benchmarks: <Benchmark>[
+          for (final b in base.benchmarks!)
+            if (b.exerciseId != 'sl-dips-leste') b,
+          tested(40, 3),
+        ],
+      );
       final single = base.copyWith(
         benchmarks: <Benchmark>[...base.benchmarks!, tested(80, 1)],
       );
       expect(heaviest(base), greaterThan(0));
-      expect(heaviest(far), heaviest(base));
+      // (Borné à 85 % du 1RM connu : plus lourd que la série seule, plus
+      // léger que le record.)
+      expect(heaviest(far), lessThan(heaviest(base)));
+      expect(heaviest(far), greaterThan(heaviest(alone)));
       // (Une barre maximale plus basse fait foi.)
       expect(heaviest(single), lessThan(heaviest(base)));
+    });
+
+    test('charge lestée : +5 % au plus d\'une semaine à l\'autre, d\'un bloc '
+        'à l\'autre aussi', () {
+      final weeks = <WeekPrescription>[
+        for (final b in _program(catalog, _lifter(weeksOut: 14), 20))
+          ...b.pass2.weeks,
+      ];
+      Map<String, double> loadsOf(WeekPrescription w) {
+        final out = <String, double>{};
+        for (final d in w.days) {
+          for (final i in d.items) {
+            final load = i.startLoadKg;
+            final reps = i.repsHigh;
+            if (load == null ||
+                reps == null ||
+                (i.kind != null && i.kind != SetKind.work)) {
+              continue;
+            }
+            final key = '${i.exerciseId}|$reps';
+            if ((out[key] ?? -1) < load) {
+              out[key] = load;
+            }
+          }
+        }
+        return out;
+      }
+
+      var checked = 0;
+      for (var k = 1; k < weeks.length; k++) {
+        final before = loadsOf(weeks[k - 1]);
+        final now = loadsOf(weeks[k]);
+        for (final e in now.entries) {
+          final b = before[e.key];
+          if (b == null || b <= 0) {
+            continue;
+          }
+          checked++;
+          final id = e.key.split('|').first;
+          final weight =
+              (catalog.exercise(id).bodyweightFraction?.value ?? 0) * 78;
+          // (Charge totale ; une marge d'un pas de 2,5 kg pour l'arrondi.)
+          expect(
+            e.value + weight,
+            lessThanOrEqualTo((b + weight) * 1.10 + 2.5),
+            reason: 'semaine $k, ${e.key} : $b puis ${e.value} kg',
+          );
+        }
+      }
+      expect(checked, greaterThan(0));
     });
 
     test('répétitions + réserve jamais au-dessus du repère', () {

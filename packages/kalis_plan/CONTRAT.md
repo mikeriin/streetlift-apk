@@ -1673,7 +1673,8 @@ Tenues du débutant : +15 % (2 s au moins) par semaine au plus sur la plus longu
 d'avant, jamais sous 55 % du maintien testé (`coachHoldFloorShare`) ; la part affichée suit la tenue
 écrite.
 
-**Charges.** Hausse comparée à la semaine précédente seule ; après une transition ou une introduction,
+**Charges.** Hausse comparée à la semaine précédente seule (même emplacement ; d'un bloc à l'autre, plus lourde
+charge du même exercice à répétitions égales, `loadsByExercise`) ; après une transition ou une introduction,
 2,5 % de charge totale par répétition d'écart ; estimation de 1RM sans repère +3 % ; séries allégées des
 répétitions à 65 % puis +3 % par palier du maximum, au moins une répétition sous la série de tête ;
 ouverture d'une épreuve à 98 % au moins du plus lourd simple ou double des trois semaines d'avant ;

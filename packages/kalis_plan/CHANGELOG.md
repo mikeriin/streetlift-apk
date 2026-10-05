@@ -52,7 +52,8 @@ part). Détail et sources : `CONTRAT.md`, § 12.14 ; journal : `packages/kalis_b
 - **Débutant** : préparation des poignets, tenues +15 % par semaine au plus (2 s au moins, jamais sous 55 %
   du maintien testé), test de la tenue
   menton non borné à 30 s, essais stricts de traction écrits seulement sans traction acquise.
-- **Charges** : hausse comparée à la semaine précédente seule ; après une transition ou une introduction,
+- **Charges** : hausse comparée à la semaine précédente seule, sur le même emplacement ou, d'un bloc à l'autre,
+  sur la plus lourde charge du même exercice à répétitions égales ; après une transition ou une introduction,
   2,5 % de charge par répétition d'écart ; estimation du 1RM sans charge connue +3 % ; séries allégées à
   65 % puis +3 % par palier des répétitions de la série lourde ; ouverture d'une épreuve à 98 % au moins du
   plus lourd simple ou double des trois semaines d'avant (pourcentage et note recalculés) ; pourcentage
@@ -62,7 +63,8 @@ part). Détail et sources : `CONTRAT.md`, § 12.14 ; journal : `packages/kalis_b
   légers), arrondies au plus proche tant qu'elles restent à 8 points de la part visée et à 76 % au plus ; plus de tenues de remplissage quand l'étape plus facile dépasse
   25 s, sauf si l'objectif est une durée sur l'étape actuelle ; jusqu'à 10 séries quand le maximum est de
   5 s au plus.
-- **Textes** : version courte de la séance (4 ou 5 min d'échauffement, un ou deux exercices, 2 séries),
+- **Textes** : objectif ambitieux et repère de mi-parcours alignés sur ce que fait le moteur (le bloc suivant repart
+  du test, aucune série ajoutée) ; version courte de la séance (4 ou 5 min d'échauffement, un ou deux exercices, 2 séries),
   point d'étape (une variable à la fois, pas de séries ajoutées), règle des départs au chrono réécrite.
 - **Échauffement** : montée 5 @40 %, 3 @60 %, 2 @75 %, 1 @85 %, écrite à chaque exercice concerné, aussi avant
   le muscle-up ; dips du débutant (ou assistés) à amplitude progressive.

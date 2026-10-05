@@ -725,6 +725,12 @@ final class _WeekTrace {
   double hard = 0;
   final Map<String, (double, int)> loads = <String, (double, int)>{};
 
+  /// Plus lourde charge totale écrite de la semaine par exercice et par
+  /// nombre de répétitions (clé « exercice|répétitions ») : la borne de
+  /// hausse tient aussi d'un bloc à l'autre, quand les emplacements
+  /// changent.
+  final Map<String, double> loadsByExercise = <String, double>{};
+
   /// Départs au chrono écrits par emplacement.
   final Map<String, int> minutes = <String, int>{};
 
@@ -2919,8 +2925,7 @@ final class Prescriber {
     // 50 % — passe 7 du panel, `street_10`.)
     var hold = known > 0 ? (known * part + 1e-9).round() : fallback;
     if (known > 0 &&
-        (hold > known * (part + 0.08) + 1e-9 ||
-            hold > known * 0.76 + 1e-9)) {
+        (hold > known * (part + 0.08) + 1e-9 || hold > known * 0.76 + 1e-9)) {
       hold = (known * part + 1e-9).floor();
     }
     if (known <= 0 && ws.kind == WeekKind.build && stage >= 2) {
@@ -5806,6 +5811,17 @@ final class Prescriber {
             allowed = limit;
           }
         }
+        // Nouvel emplacement (début de bloc, après un allègement ou un
+        // test) : même borne sur la plus lourde charge du même exercice à
+        // répétitions égales la semaine d'avant (passe 7 du panel,
+        // `street_08` : dips lestés de 67 à 79 % du 1RM en une semaine,
+        // juste après l'allègement).
+        if (allowed == null && _history.isNotEmpty) {
+          final before = _history.last.loadsByExercise['${x.e.id}|$reps'];
+          if (before != null && before > 0) {
+            allowed = before * (1 + rise);
+          }
+        }
         if (allowed != null &&
             x.kind != SetKind.test &&
             total > allowed + 1e-9) {
@@ -5826,6 +5842,11 @@ final class Prescriber {
         }
         if (x.kind != SetKind.test && total > 0) {
           trace.loads[key] = (total, reps);
+          final ex = '${x.e.id}|$reps';
+          final most = trace.loadsByExercise[ex];
+          if (most == null || total > most) {
+            trace.loadsByExercise[ex] = total;
+          }
         }
       }
     }
@@ -6239,10 +6260,16 @@ final class Prescriber {
         final reps = p.repsHigh;
         if (load != null && reps != null && p.kind != SetKind.test) {
           final fraction = t.exercise.bodyweightFraction?.value ?? 0;
+          final total = load + fraction * a.bodyWeight;
           trace.loads['${d.dayIndex}|${p.slotId}|${p.exerciseId}'] = (
-            load + fraction * a.bodyWeight,
+            total,
             reps,
           );
+          final ex = '${p.exerciseId}|$reps';
+          final most = trace.loadsByExercise[ex];
+          if (most == null || total > most) {
+            trace.loadsByExercise[ex] = total;
+          }
         }
         if ((p.kind == null || p.kind == SetKind.work) &&
             p.reasons.any(
