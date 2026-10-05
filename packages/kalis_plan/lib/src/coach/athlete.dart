@@ -538,9 +538,7 @@ final class Athlete {
       }
       for (final (zone, pain) in trendPains) {
         final joint = zone.joint;
-        if (pain < 6 &&
-            joint != null &&
-            e.stressOn(joint) != JointStress.low) {
+        if (pain < 6 && joint != null && e.stressOn(joint) != JointStress.low) {
           return true;
         }
       }

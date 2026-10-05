@@ -199,3 +199,46 @@ Un relecteur (sous-agent Opus, sans SDK, diff complet du lot et arbre de travail
     une proposition appliquée ; conditions où `ProfileChange` ne reconstruit pas le bloc dites.
 12. Coût du rapport CI (100 graines par défaut) : gardé, LANCEMENTS.md CX demande au moins 100 graines par
     modèle de vérité ; les essais rapides passent par `season_seeds.txt`.
+
+## Boucles 3 et 4 (04-05/10/2026)
+
+Boucle 3 (contrôle 19129a8) : intentions gardées après une proposition appliquée (`kalis_adapt`), séries de
+travail sur le dernier repère mesuré, tenue menton à 60-70 % du maintien (jusqu'à 25 s), test de l'objectif
+en tête de séance, négatives de pompe gardées, essais stricts de traction dès la sixième semaine, 1RM estimés
+sans record limités aux mouvements de compétition, amorçage sans répétitions ajoutées. Les exports ont peu
+changé (0 à 16 % des lignes) : pas de passe du panel sur cette boucle.
+
+Boucle 4 (contrôles e3e0e31 et 4e3842b) : deuxième figure sur d'autres jours que la première, tirage bras
+tendus les jours de force quand le front lever est visé, semaine d'introduction à 80 % chez l'avancé et
+l'élite (restreinte ensuite aux échéances de répétitions : un test de propriétés de `kalis_plan` a montré un
+test de squat au-dessus de la montée admise), corrections de la relecture indépendante.
+
+Panel (41 couples renotés : ceux sous 9 dont l'export a changé, et ceux à 9 dont l'export a changé de plus
+de 10 % ; les autres gardent leur note) :
+
+| Profil | Force | Calisthénie | Hypertrophie | Santé |
+| --- | --- | --- | --- | --- |
+| `street_01_debutant_complet` | 8 | 9 | 7 | 8 |
+| `street_02_debutant_surpoids` | 9 | 8 | 8 | 9 |
+| `street_03_debutante` | 6,5 | 6,5 | 6,5 | 6,5 |
+| `street_04_reprise_longue_pause` | 9 | 9 | 9 | 9 |
+| `street_05_inter_calisthenie_front_lever` | 7 | 6,5 | 7 | 8 |
+| `street_06_inter_sets_reps` | 9 | 9 | 9 | 8 |
+| `street_07_avance_streetlifting_competition` | 9 | 8 | 9 | 9 |
+| `street_08_avance_sets_reps_competition` | 8 | 5 | 7 | 7 |
+| `street_09_elite_streetlifting` | 9 | 8 | 8 | 8 |
+| `street_10_elite_figures` | 7 | 7 | 5,5 | 7,5 |
+| `street_11_master_51_ans` | 7 | 8 | 7 | 7 |
+| `street_12_antecedent_coude` | 9 | 8 | 8 | 9 |
+| `street_13_peu_de_temps` | 6,5 | 7 | 9 | 9 |
+| `street_14_parc_sans_lest` | 9 | 9 | 9 | 9 |
+| `street_15_travail_physique_sommeil_court` | 9 | 9 | 8 | 9 |
+| `street_16_specialisation_traction_lestee` | 9 | 9 | 9 | 9 |
+| `street_17_hybride_street_course` | 9 | 7 | 7 | 9 |
+
+31 couples sur 68 à 9 (22 à la boucle 2) ; minimum 5 (5) ; moyenne 8,04 (7,80). `street_16` passe à 9 dans
+les quatre écoles. Restent, par famille : poussée de street_03 (critère de passage « 3 × 10 » pour deux séries
+écrites, une ou deux pompes au sol par séance, deux règles d'élastique) ; « traction lestée » au poids du
+corps à 6-7 répétitions de réserve (street_11) ; planche encore écartée de S9 à S15 (street_10 : la douleur
+fait écarter l'exercice par le moteur d'évolution, ce qui passait outre `pain_trend`) ; montée de volume du
+premier bloc de street_08 ; plateau de répétitions sans changement de stimulus (street_11, 13).
