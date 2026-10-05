@@ -52,6 +52,30 @@ cible() {
     ${4:+--keep-app-running} \
     -d emulator-5554 > "$out/drive-$1${2:+-$2}.log" 2>&1
 }
+# CI1 (dev6.9.0) : street calibré (kalis_plan 0.2, kalis_adapt 0.2), cible
+# du lot, build de développement, en deux parties : a = sombre, rouge
+# Kalis, compétiteur de streetlifting ; b = clair, violet, débutant de
+# calisthénie (session personnelle sans saison ; session de test : carte
+# et écran de la saison, jour J, séance guidée par le mode coach ;
+# suppression de la session de test, session personnelle intacte).
+code_ci1=0
+for part in a b; do
+  cible street_ci1_test "$part" dev
+  c=$?
+  if [ "$c" -ne 0 ] && [ ! -f "$out/ci1_releve_$part.json" ]; then
+    echo "CI1 $part sans relevé (code $c) : adb relancé, second essai."
+    cp "$out/drive-street_ci1_test-$part.log" "$out/drive-ci1-$part-essai1.log"
+    adb kill-server || true
+    adb start-server || true
+    timeout 60 adb wait-for-device || true
+    cible street_ci1_test "$part" dev
+    c=$?
+  fi
+  [ "$c" -ne 0 ] && code_ci1=$c
+  tail -n 30 "$out/drive-street_ci1_test-$part.log"
+done
+code_cu=0
+if [ "${CI3D_TOUT:-0}" = "1" ]; then
 # CU (dev6.8.0) : parcours de création du profil v3, cible du lot, build
 # de développement, en deux parties : a = sombre, rouge Kalis ; b = clair,
 # violet (session personnelle de dev6.7.0 : profil relu au schéma 3,
@@ -74,6 +98,7 @@ for part in a b; do
   [ "$c" -ne 0 ] && code_cu=$c
   tail -n 30 "$out/drive-profil_cu_test-$part.log"
 done
+fi
 code_g10=0
 if [ "${CI3D_TOUT:-0}" = "1" ]; then
 # G10 (dev6.7.0) : évolution du programme, cible du lot, build de
@@ -285,7 +310,7 @@ kill "$logcat_pid" 2>/dev/null || true
 grep -o 'Impeller rendering backend ([^)]*)' "$out/logcat-complet.txt" | sort | uniq -c > "$out/impeller.txt" || true
 grep -iE 'flutter|impeller|vulkan|gles|AndroidRuntime|FATAL|swiftshader|angle|lowmemorykiller|DEBUG|libc|tombstone|ActivityManager' "$out/logcat-complet.txt" | tail -n 3000 > "$out/logcat.txt" || true
 rm -f "$out/logcat-complet.txt"
-echo "code_cu=$code_cu code_g10=$code_g10 code_g9=$code_g9 code_g7=$code_g7 code_g6=$code_g6 code_g5=$code_g5 code_g3=$code_g3 code_g2=$code_g2 code_g1=$code_g1 code_m8=$code_m8 code_m7=$code_m7" > "$out/drive-code.txt"
+echo "code_ci1=$code_ci1 code_cu=$code_cu code_g10=$code_g10 code_g9=$code_g9 code_g7=$code_g7 code_g6=$code_g6 code_g5=$code_g5 code_g3=$code_g3 code_g2=$code_g2 code_g1=$code_g1 code_m8=$code_m8 code_m7=$code_m7" > "$out/drive-code.txt"
 echo "code=$code" >> "$out/drive-code.txt"
 echo "code_mesure=$code_mesure" >> "$out/drive-code.txt"
-[ "$code_cu" -eq 0 ] && [ "$code_g10" -eq 0 ] && [ "$code_g9" -eq 0 ] && [ "$code_g7" -eq 0 ] && [ "$code_g6" -eq 0 ] && [ "$code_g5" -eq 0 ] && [ "$code_g3" -eq 0 ] && [ "$code_g2" -eq 0 ] && [ "$code_g1" -eq 0 ] && [ "$code_m8" -eq 0 ] && [ "$code_m7" -eq 0 ] && [ "$code" -eq 0 ] && [ "$code_mesure" -eq 0 ]
+[ "$code_ci1" -eq 0 ] && [ "$code_cu" -eq 0 ] && [ "$code_g10" -eq 0 ] && [ "$code_g9" -eq 0 ] && [ "$code_g7" -eq 0 ] && [ "$code_g6" -eq 0 ] && [ "$code_g5" -eq 0 ] && [ "$code_g3" -eq 0 ] && [ "$code_g2" -eq 0 ] && [ "$code_g1" -eq 0 ] && [ "$code_m8" -eq 0 ] && [ "$code_m7" -eq 0 ] && [ "$code" -eq 0 ] && [ "$code_mesure" -eq 0 ]

@@ -13,4 +13,4 @@ Branche de mise au point : claude/ci-ci1-rapide (rapide.yml) ; contrôle complet
 - Textes 0.4 : adaptReasonText → reasonText04 ; paramètres technique/phase/stress/cause en clair.
 
 ## Reste
-- Contrôle rapide vert ; tests Dart CI1 (test/ci1_street_test.dart) ; cible émulateur ; jour J (planEventDay) ; dev6.9.0 ; docs ; contrôle complet ; build signé ; livraison.
+- Essai 4 sur claude/ci-ci1-rapide (débutant au chemin calibré : ancienneté implicite). Version 6.9.0+108 posée. Reste : README, SUIVI_PROJET, docs/CI_GP.md, contrôle complet claude/ci-3d (cible street_ci1_test), captures, main, build signé, livraison.

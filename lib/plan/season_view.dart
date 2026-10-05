@@ -15,6 +15,7 @@ import '../koach/koach_bubble.dart' show KoachSays;
 import '../store.dart';
 import '../ui.dart';
 import 'coach_texts.dart';
+import 'event_day_screen.dart';
 import 'plan_program.dart';
 import 'plan_texts.dart' show kWeekKindLabels;
 
@@ -58,6 +59,9 @@ class SeasonOverview {
   final String? eventName;
   final DateTime? eventDate;
 
+  /// Échéance principale à venir.
+  final kc.SeasonEvent? event;
+
   /// Jours avant l'échéance principale (0 : aujourd'hui), null sans
   /// échéance à venir.
   final int? daysToEvent;
@@ -69,6 +73,7 @@ class SeasonOverview {
     required this.phases,
     required this.eventName,
     required this.eventDate,
+    this.event,
     required this.daysToEvent,
     required this.blockWeeks,
     required this.blockIndex,
@@ -95,10 +100,11 @@ class SeasonOverview {
 
 DateTime _day(kc.CivilDate d) => DateTime(d.year, d.month, d.day);
 
-int _days(DateTime a, DateTime b) =>
-    DateTime.utc(b.year, b.month, b.day)
-        .difference(DateTime.utc(a.year, a.month, a.day))
-        .inDays;
+int _days(DateTime a, DateTime b) => DateTime.utc(
+  b.year,
+  b.month,
+  b.day,
+).difference(DateTime.utc(a.year, a.month, a.day)).inDays;
 
 const _specialIntents = {
   kc.WeekIntent.deload,
@@ -176,12 +182,15 @@ SeasonOverview? seasonOverview(
     final special = intent != null
         ? _specialIntents.contains(intent)
         : wk.kind == kc.WeekKind.deload || wk.kind == kc.WeekKind.test;
-    weeks.add(SeasonWeekView(first + w, label, special, first + w == currentWeek));
+    weeks.add(
+      SeasonWeekView(first + w, label, special, first + w == currentWeek),
+    );
   }
   return SeasonOverview(
     phases: phases,
     eventName: event == null ? null : (event.name ?? _eventKind(event.kind)),
     eventDate: event == null ? null : _day(event.date),
+    event: event,
     daysToEvent: event == null ? null : _days(today, _day(event.date)),
     blockWeeks: weeks,
     blockIndex: blockIndex,
@@ -251,9 +260,9 @@ class SeasonCard extends StatelessWidget {
     final next = view.nextSpecial;
     return KCard(
       key: const ValueKey('program-season'),
-      onTap: () => Navigator.of(context).push(
-        MaterialPageRoute<void>(builder: (_) => const SeasonScreen()),
-      ),
+      onTap: () => Navigator.of(
+        context,
+      ).push(MaterialPageRoute<void>(builder: (_) => const SeasonScreen())),
       child: KoachSays(
         pose: KoachPose.direction,
         child: Column(
@@ -336,6 +345,27 @@ class SeasonScreen extends StatelessWidget {
                               '${countdownText(view.daysToEvent!)}',
                               style: t.titleSmall?.copyWith(color: SL.accent),
                             ),
+                            if (view.event case final e?
+                                when e.kind ==
+                                        kc.EventKind.strengthCompetition ||
+                                    e.kind == kc.EventKind.repsCompetition)
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: TextButton.icon(
+                                  key: const ValueKey('season-event-day'),
+                                  icon: const Icon(Icons.emoji_events_outlined),
+                                  label: Text(
+                                    e.kind == kc.EventKind.strengthCompetition
+                                        ? 'Jour J : tentatives'
+                                        : 'Jour J : rythme',
+                                  ),
+                                  onPressed: () => Navigator.of(context).push(
+                                    MaterialPageRoute<void>(
+                                      builder: (_) => EventDayScreen(event: e),
+                                    ),
+                                  ),
+                                ),
+                              ),
                           ],
                         ),
                       ),
@@ -348,9 +378,7 @@ class SeasonScreen extends StatelessWidget {
                         vertical: 8,
                       ),
                       child: Column(
-                        children: [
-                          for (final p in view.phases) _PhaseRow(p),
-                        ],
+                        children: [for (final p in view.phases) _PhaseRow(p)],
                       ),
                     ),
                   ],
@@ -361,9 +389,7 @@ class SeasonScreen extends StatelessWidget {
                       vertical: 8,
                     ),
                     child: Column(
-                      children: [
-                        for (final w in view.blockWeeks) _WeekRow(w),
-                      ],
+                      children: [for (final w in view.blockWeeks) _WeekRow(w)],
                     ),
                   ),
                   if (view.ladders.isNotEmpty) ...[

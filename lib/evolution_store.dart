@@ -102,6 +102,44 @@ extension EvolutionStore on AppStore {
     return null;
   }
 
+  /// CI1 : jour d'échéance (`EventDayAdvisor.planEventDay`) : pour une
+  /// compétition de force, l'échauffement et les tentatives proposées
+  /// (recalculées après chaque tentative faite, [done]) ; pour une épreuve
+  /// de répétitions, l'objectif et le rythme. Null : pas de bloc en cours,
+  /// échéance inconnue du profil ou erreur du moteur.
+  kc.EventDayPlan? evolutionEventDay(
+    String eventId, {
+    List<kc.AttemptResult> done = const [],
+    kc.EventObjective? objective,
+    double? bodyWeightKg,
+  }) {
+    final place = evolutionPlace;
+    final catalog = content.catalog;
+    if (place == null || catalog == null) return null;
+    final input = _evoInput(place);
+    if (input == null) return null;
+    if (!(input.profile.events ?? const <kc.SeasonEvent>[]).any(
+      (e) => e.id == eventId,
+    )) {
+      return null;
+    }
+    try {
+      final plan = kalisAdaptEngine.planEventDay(
+        catalog,
+        kc.EventDayRequest(
+          input: input,
+          eventId: eventId,
+          done: done,
+          objective: objective,
+          bodyWeightKg: bodyWeightKg,
+        ),
+      );
+      return plan.validate().isEmpty ? plan : null;
+    } catch (_) {
+      return null;
+    }
+  }
+
   /// Entrée du moteur pour la revue de la semaine en cours.
   kc.AdaptInput? _evoInput(AdaptPlace place) {
     final profile = SessionAdaptStore(this).adaptProfile;
