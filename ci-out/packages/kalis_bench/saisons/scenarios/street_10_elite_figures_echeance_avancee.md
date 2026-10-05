@@ -33,15 +33,15 @@ Chaque bloc est écrit par le moteur de création au moment où il commence, d'a
 | 2 | 5 à 8 | construction (volume) | construction (volume), construction (volume), construction (volume), allègement | les tests du bloc 1 (Front lever : 6 s ; Planche straddle : 5 s) et son point de fin de bloc |
 | 3 | 9 à 10 | intensification (séries plus dures) | intensification (séries plus dures), intensification (séries plus dures) | les tests du bloc 2 (Front lever : 6 s ; Planche straddle : 5 s) et son point de fin de bloc |
 | 4 | 11 à 14 | réalisation (spécifique à l'objectif) | réalisation (spécifique à l'objectif), réalisation (spécifique à l'objectif), réalisation (spécifique à l'objectif), test | les tests du bloc 3 (Front lever : 6 s ; Planche straddle : 5 s) et son point de fin de bloc ; changement : échéance avancée de deux semaines (semaine 16 → semaine 14) |
-| 5 | 15 à 17 | construction (volume) | construction (volume), construction (volume), construction (volume) | les tests du bloc 4 (Planche straddle : 5 s ; Front lever : 6 s) et son point de fin de bloc |
+| 5 | 15 à 17 | construction (volume) | construction (volume), construction (volume), construction (volume) | les tests du bloc 4 (Planche straddle : 5 s ; Front lever : 7 s) et son point de fin de bloc |
 
 ## Bilan
 
-- Séances faites : 97 sur 102 (8 ajustées le jour même).
+- Séances faites : 97 sur 102 (12 ajustées le jour même).
 - Échecs non voulus (hors tests et tentatives) : 0 % des séries de travail.
-- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 0,95 répétition en réserve (sur les 40 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 10,9 %.
+- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 1,2 répétition en réserve (sur les 35 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 13,8 %.
 - Plus forte hausse de charge totale d'un mouvement principal d'une séance à la suivante, à schéma égal : 0 % ; hausses de plus de 10 % faites de plusieurs crans : 0.
-- Progression réelle moyenne des mouvements suivis : 0,063 % par semaine.
+- Progression réelle moyenne des mouvements suivis : 0,062 % par semaine.
 - Douleur : 0 hausse(s) de charge sur une zone douloureuse signalée.
 
 ## Mouvements suivis, semaine par semaine
@@ -56,17 +56,17 @@ Pour chaque mouvement, la séance la plus lourde de la semaine : ce que le progr
 | 2 | construction (volume) | 2 × 3 à 5 | Ice cream maker : (3 à 7)-(3 à 12) | 7-12 | 3 → 9,8 ; suivantes 1,5 → 4 | 17 / 14 | série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète |
 | 3 | construction (volume) | 1 × 4 à 6 | Ice cream maker : (4 à 11) | 11 | 3 → 7,5 | 18 / 14 | — |
 | 4 | allègement | 1 × 9 à 15 s, test | (6 à 15) s | 6 s | test | 8 / 7 | — |
-| 5 | construction (volume) | 1 × 4 à 6 | Ice cream maker : (4 à 11) | 11 | 3 → 6,4 | 17 / 14 | — |
+| 5 | construction (volume) | 1 × 4 à 6 | Ice cream maker : (4 à 11) | 11 | 3 → 6,3 | 17 / 14 | — |
 | 6 | construction (volume) | 1 × 4 à 6 | Ice cream maker : (4 à 12) | 12 | 3 → 5,8 | 18 / 15 | — |
-| 7 | construction (volume) | 1 × 4 à 6 | Ice cream maker : (4 à 12) | 11 | 3 → 7,5 | 18 / 15 | — |
-| 8 | allègement | 1 × 7 à 15 s, test | (6 à 15) s | 6 s | test | 8 / 7 | — |
-| 9 | intensification (séries plus dures) | 1 × 4 à 6 | Ice cream maker : (4 à 12) | 12 | 3 → 5,1 | 17 / 15 | — |
+| 7 | construction (volume) | 1 × 4 à 6 | Ice cream maker : (4 à 12) | 11 | 3 → 7,4 | 18 / 15 | — |
+| 8 | allègement | 1 × 7 à 15 s, test | (5 à 15) s | 6 s | test | 8 / 7 | — |
+| 9 | intensification (séries plus dures) | 1 × 4 à 6 | Ice cream maker : (4 à 12) | 12 | 3 → 5 | 17 / 15 | — |
 | 10 | intensification (séries plus dures) | 1 × 4 à 6 | Ice cream maker : (4 à 12) | 12 | 3 → 5,9 | 18 / 15 | — |
-| 11 | réalisation (spécifique à l'objectif) | 1 × 4 à 6 | Ice cream maker : (4 à 12) | 10 | 3 → 7,5 | 18 / 15 | — |
-| 12 | réalisation (spécifique à l'objectif) | 1 × 4 à 6 | Ice cream maker : (4 à 12) | 12 | 3 → 5,4 | 17 / 15 | — |
-| 13 | réalisation (spécifique à l'objectif) | 1 × 4 à 6 | Ice cream maker : (4 à 12) | 10 | 3 → 7,2 | 17 / 16 | — |
-| 14 | test | 1 × 7 à 15 s, test | (5 à 15) s | 6 s | test | 8 / 7 | — |
-| 15 | construction (volume) | 1 × 9 | Ice cream maker : 11 | 11 | 4 → 6,7 | 18 / 16 | — |
+| 11 | réalisation (spécifique à l'objectif) | 1 × 4 à 6 | Ice cream maker : (4 à 12) | 9 | 3 → 8,3 | 17 / 15 | — |
+| 12 | réalisation (spécifique à l'objectif) | 1 × 4 à 6 | Ice cream maker : (4 à 12) | 12 | 3 → 5,3 | 17 / 15 | — |
+| 13 | réalisation (spécifique à l'objectif) | 1 × 4 à 6 | Ice cream maker : (4 à 12) | 10 | 3 → 7,1 | 17 / 16 | — |
+| 14 | test | 1 × 7 à 15 s, test | (5 à 15) s | 7 s | test | 8 / 7 | — |
+| 15 | construction (volume) | 1 × 9 | Ice cream maker : 11 | 11 | 4 → 6,8 | 18 / 16 | — |
 | 16 | construction (volume) | 1 × 9 | Ice cream maker : 11 | 11 | 4 → 6,4 | 17 / 16 | — |
 | 17 | construction (volume) | 1 × 9 | Ice cream maker : 11 | 11 | 4 → 7 | 18 / 16 | — |
 
@@ -82,17 +82,15 @@ Athlète simulé, maximum réel hors fatigue : 8 au départ (le record déclaré
 | 4 | allègement | 1 × 6 à 11 s, test | Planche straddle : (5 à 11) s | 5 s | test | 6 / 6 | — |
 | 5 | construction (volume) | 2 × 4 à 6 | Planche push-up straddle assistée à l'élastique : (4 à 6)-(4 à 12) | 6-11 | 4,5 → 7 ; suivantes 1,5 → 1,6 | 13 / 12 | série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète |
 | 6 | construction (volume) | 2 × 4 à 6 | Planche push-up straddle assistée à l'élastique : (4 à 6)-(4 à 6) | 4-4 | 5+ → 4,8 ; suivantes 5+ → 4,4 | 9 / 9 | un cran d'assistance de moins (élastique plus fin, moins d'appui) : la série repère a montré 3 répétitions de réserve de plus que visé |
-| 7 | construction (volume) | 2 × 4 à 6 | Planche push-up straddle assistée à l'élastique : (4 à 6)-(4 à 12) | 5-6 | 3 → 4,3 ; suivantes 1,5 → 3 | 9 / 8 | série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète |
+| 7 | construction (volume) | 2 × 4 à 6 | Planche push-up straddle assistée à l'élastique : (4 à 6)-(4 à 12) | 5-6 | 3 → 4,3 ; suivantes 1,5 → 2,9 | 9 / 8 | série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète |
 | 8 | allègement | 1 × 5 à 10 s, test | Planche straddle : (5 à 10) s | 5 s | test | 5 / 6 | — |
 | 9 | intensification (séries plus dures) | 2 × 4 à 6 | Planche push-up straddle assistée à l'élastique : (4 à 5)-(4 à 5) | 4-5 | 3 → 4,7 ; suivantes 1,5 → 3,4 | 9 / 7 | allégé pour garder la marge prévue (au moins 3 en réserve) |
 | 10 | intensification (séries plus dures) | 2 × 4 à 6 | Planche push-up straddle assistée à l'élastique : (4 à 5)-(4 à 11) | 4-5 | 3 → 4,6 ; suivantes 1,5 → 3,4 | 9 / 7 | allégé pour garder la marge prévue (au moins 3 en réserve) ; série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète |
-| 11 | réalisation (spécifique à l'objectif) | 2 × 4 à 6 | Planche push-up straddle assistée à l'élastique : (4 à 5)-(4 à 5) | 4-5 | 3 → 4,8 ; suivantes 1,5 → 3,5 | 9 / 7 | allégé pour garder la marge prévue (au moins 3 en réserve) |
-| 12 | réalisation (spécifique à l'objectif) | 2 × 4 à 6 | Planche push-up straddle assistée à l'élastique : (4 à 5)-(4 à 11) | 4-5 | 3 → 4,7 ; suivantes 1,5 → 3,4 | 9 / 7 | allégé pour garder la marge prévue (au moins 3 en réserve) ; série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète |
-| 13 | réalisation (spécifique à l'objectif) | 2 × 4 à 6 | Planche push-up straddle assistée à l'élastique : (4 à 5)-(4 à 5) | 4-4 | 3 → 4,6 ; suivantes 1,5 → 4,3 | 9 / 7 | allégé pour garder la marge prévue (au moins 3 en réserve) ; dernières séries plus dures que prévu |
-| 14 | test | 1 × 5 à 10 s, test | Planche straddle : (4 à 10) s | 5 s | test | 6 / 5 | — |
-| 15 | construction (volume) | 3 × 4 | Planche push-up straddle assistée à l'élastique : 4-4-4 | 4-4-4 | 3 → 4,8 ; suivantes 3 → 4,4 | 9 / 7 | — |
-| 16 | construction (volume) | 3 × 4 | Planche push-up straddle assistée à l'élastique : 4-4-(4 à 10) | 4-4-4 | 3 → 5 ; suivantes 2,3 → 4,6 | 9 / 7 | série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète ; allégé pour garder la marge prévue (au moins 3 en réserve) ; dernières séries plus dures que prévu |
-| 17 | construction (volume) | 3 × 4 | Planche push-up straddle assistée à l'élastique : 4-4-(4 à 10) | 4-3-3 | 3 → 4,7 ; suivantes 2,3 → 5,4 | 9 / 7 | série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète ; allégé pour garder la marge prévue (au moins 3 en réserve) ; dernières séries plus dures que prévu |
+| 11 | réalisation (spécifique à l'objectif) | 2 × 4 à 6 | Planche push-up straddle assistée à l'élastique : (4 à 5)-(4 à 5) | 4-5 | 3 → 4,9 ; suivantes 1,5 → 3,6 | 9 / 7 | allégé pour garder la marge prévue (au moins 3 en réserve) |
+| 12 | réalisation (spécifique à l'objectif) | 2 × 4 à 6 | Planche push-up straddle assistée à l'élastique : (4 à 5)-(4 à 11) | 4-4 | 3 → 4,7 ; suivantes 1,5 → 4,4 | 9 / 7 | allégé pour garder la marge prévue (au moins 3 en réserve) ; série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète ; dernières séries plus dures que prévu |
+| 15 | construction (volume) | 2 × 4 à 6 | Planche push-up straddle assistée à l'élastique : 4-4 | 4-4 | 4 → 4,9 ; suivantes 2,5 → 4,6 | 9 / 7 | allégé pour garder la marge prévue (au moins 3 en réserve) ; douleur signalée (poignet, 4/10) |
+| 16 | construction (volume) | 2 × 4 à 6 | Planche push-up straddle assistée à l'élastique : (4 à 5)-(4 à 11) | 5-6 | 3 → 4,1 ; suivantes 1,5 → 2,7 | 9 / 7 | allégé pour garder la marge prévue (au moins 3 en réserve) ; série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète |
+| 17 | construction (volume) | 2 × 4 à 6 | Planche push-up straddle assistée à l'élastique : (4 à 5)-(4 à 5) | 4-4 | 3 → 4,8 ; suivantes 1,5 → 4,4 | 9 / 7 | allégé pour garder la marge prévue (au moins 3 en réserve) ; dernières séries plus dures que prévu |
 
 ## Journal des décisions
 
@@ -107,14 +105,14 @@ Athlète simulé, maximum réel hors fatigue : 8 au départ (le record déclaré
 - **Semaine 9 (intensification (séries plus dures))** : nouveau bloc construit à partir du point de fin de bloc (maxima estimés, résultats de test, tolérance) ; Nordic hamstring curl assisté à l'élastique : un cran d'assistance de moins (élastique plus fin, moins d'appui) : la série repère a montré 6 répétitions de réserve de plus que visé (× 2) ; bilan du jour bas (2/5) ; nuit courte ; séries retirées sur 3 exercices (bilan du jour bas (2/5), nuit courte).
 - **Semaine 10 (intensification (séries plus dures))** : bilan du jour bas (2/5) (× 2) ; nuit courte ; Nordic hamstring curl assisté à l'élastique : un cran d'assistance de moins (élastique plus fin, moins d'appui) : la série repère a montré 5 répétitions de réserve de plus que visé ; charges réduites — Traction lestée de compétition, Dips lesté de compétition (bilan du jour bas (2/5)) ; séries retirées sur 3 exercices (bilan du jour bas (2/5), nuit courte).
 - **Semaine 11 (réalisation (spécifique à l'objectif))** : nouveau bloc construit à partir du point de fin de bloc (maxima estimés, résultats de test, tolérance) ; 1 séance(s) manquée(s) sur 6 ; Nordic hamstring curl assisté à l'élastique : un cran d'assistance de moins (élastique plus fin, moins d'appui) : la série repère a montré 5 répétitions de réserve de plus que visé (× 2).
-- **Semaine 12 (réalisation (spécifique à l'objectif))** : Nordic hamstring curl assisté à l'élastique : un cran d'assistance de moins (élastique plus fin, moins d'appui) : la série repère a montré 5 répétitions de réserve de plus que visé (× 2) ; bilan du jour bas (2/5).
-- **Semaine 13 (réalisation (spécifique à l'objectif))** : 1 séance(s) manquée(s) sur 6 ; bilan du jour bas (2/5) ; Nordic hamstring curl assisté à l'élastique : un cran d'assistance de moins (élastique plus fin, moins d'appui) : la série repère a montré 5 répétitions de réserve de plus que visé ; charges réduites — Traction lestée de compétition, Dips lesté de compétition (bilan du jour bas (2/5)).
-- **Semaine 14 (test)** : 1 séance(s) manquée(s) sur 6 ; phase « test » : séances servies telles que le programme les écrit (× 5) ; résultat de test reporté au profil : Planche straddle 5 s ; résultat de test reporté au profil : Front lever 6 s.
+- **Semaine 12 (réalisation (spécifique à l'objectif))** : Nordic hamstring curl assisté à l'élastique : un cran d'assistance de moins (élastique plus fin, moins d'appui) : la série repère a montré 5 répétitions de réserve de plus que visé (× 2) ; bilan du jour bas (2/5) ; douleur qui dure ou qui revient (poignet, 4 séances à 3/10 ou plus) : mouvements qui la provoquent retirés, consulter un médecin ou un kiné, reprise après deux semaines à 2/10 au plus (× 2) ; douleur qui dure ou qui revient (poignet, 5 séances à 3/10 ou plus) : mouvements qui la provoquent retirés, consulter un médecin ou un kiné, reprise après deux semaines à 2/10 au plus ; exercice remplacé — Planche straddle, Handstand sur parallettes (douleur signalée (poignet, 4/10)).
+- **Semaine 13 (réalisation (spécifique à l'objectif))** : 1 séance(s) manquée(s) sur 6 ; douleur qui dure ou qui revient (poignet, 6 séances à 3/10 ou plus) : mouvements qui la provoquent retirés, consulter un médecin ou un kiné, reprise après deux semaines à 2/10 au plus ; bilan du jour bas (2/5) ; douleur qui dure ou qui revient (poignet, 8 séances à 3/10 ou plus) : mouvements qui la provoquent retirés, consulter un médecin ou un kiné, reprise après deux semaines à 2/10 au plus (× 4) ; Nordic hamstring curl assisté à l'élastique : un cran d'assistance de moins (élastique plus fin, moins d'appui) : la série repère a montré 5 répétitions de réserve de plus que visé ; exercice remplacé sur 3 exercices (douleur signalée (poignet, 4/10)) ; charges réduites — Traction lestée de compétition, Dips lesté de compétition (bilan du jour bas (2/5)) ; proposition appliquée : exercice échangé.
+- **Semaine 14 (test)** : 1 séance(s) manquée(s) sur 6 ; phase « test » : séances servies telles que le programme les écrit (× 5) ; douleur qui dure ou qui revient (poignet, 8 séances à 3/10 ou plus) : mouvements qui la provoquent retirés, consulter un médecin ou un kiné, reprise après deux semaines à 2/10 au plus (× 2) ; exercice remplacé sur 3 exercices (douleur signalée (poignet, 4/10)) ; résultat de test reporté au profil : Front lever 7 s.
 - **Semaine 15 (construction (volume))** : nouveau bloc construit à partir du point de fin de bloc (maxima estimés, résultats de test, tolérance) ; Nordic hamstring curl assisté à l'élastique : un cran d'assistance de moins (élastique plus fin, moins d'appui) : la série repère a montré 5 répétitions de réserve de plus que visé (× 2).
-- **Semaine 16 (construction (volume))** : 1 séance(s) manquée(s) sur 6 ; Nordic hamstring curl assisté à l'élastique : un cran d'assistance de moins (élastique plus fin, moins d'appui) : la série repère a montré 6 répétitions de réserve de plus que visé.
+- **Semaine 16 (construction (volume))** : 1 séance(s) manquée(s) sur 6 ; Nordic hamstring curl assisté à l'élastique : un cran d'assistance de moins (élastique plus fin, moins d'appui) : la série repère a montré 6 répétitions de réserve de plus que visé ; Handstand aux anneaux : hausse du maintien bornée pour les tendons (épaule).
 - **Semaine 17 (construction (volume))** : Nordic hamstring curl assisté à l'élastique : un cran d'assistance de moins (élastique plus fin, moins d'appui) : la série repère a montré 6 répétitions de réserve de plus que visé (× 2) ; bilan du jour bas (2/5) ; nuit courte ; séries retirées — Front lever half-lay (bilan du jour bas (2/5), nuit courte).
 
 ## Figures
 
 - Planche complète : étape « Planche straddle » depuis 16 semaine(s), meilleur maintien 5 s ; critère de passage pas encore rempli.
-- Front lever : étape « Front lever » depuis 16 semaine(s), meilleur maintien 6 s ; critère de passage pas encore rempli.
+- Front lever : étape « Front lever » depuis 16 semaine(s), meilleur maintien 7 s ; critère de passage pas encore rempli.

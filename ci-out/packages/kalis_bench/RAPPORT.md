@@ -33,7 +33,7 @@ Violations de sécurité : **23** au total (Pas d'allègement avant l'échéance
 | `street_13_peu_de_temps` | intermédiaire | 12 | 0 | 0.84 | 6/6 |
 | `street_14_parc_sans_lest` | intermédiaire | 12 | 0 | 0.87 | 4/5 |
 | `street_15_travail_physique_sommeil_court` | intermédiaire | 12 | 0 | 0.90 | 5/6 |
-| `street_16_specialisation_traction_lestee` | avancé | 10 | 0 | 0.76 | 8/8 |
+| `street_16_specialisation_traction_lestee` | avancé | 10 | 0 | 0.76 | 7/8 |
 | `street_17_hybride_street_course` | intermédiaire | 12 | 0 | 0.92 | 6/6 |
 
 ### Qualité par critère
@@ -58,14 +58,14 @@ Violations de sécurité : **23** au total (Pas d'allègement avant l'échéance
 | `street_06_inter_sets_reps` | 0.57 | 1.00 | — | 0.55 | 1.00 | — | — | 1.00 | 1.00 |
 | `street_07_avance_streetlifting_competition` | 0.64 | 1.00 | 1.00 | 0.90 | 1.00 | 1.00 | 1.00 | 0.97 | 1.00 |
 | `street_08_avance_sets_reps_competition` | 0.43 | 1.00 | 0.78 | 0.58 | 1.00 | — | 1.00 | 1.00 | 1.00 |
-| `street_09_elite_streetlifting` | 0.71 | 1.00 | 1.00 | 0.92 | 1.00 | 1.00 | 1.00 | 0.95 | 1.00 |
+| `street_09_elite_streetlifting` | 0.64 | 1.00 | 1.00 | 0.92 | 1.00 | 1.00 | 1.00 | 0.95 | 1.00 |
 | `street_10_elite_figures` | 0.29 | 1.00 | — | 0.72 | 1.00 | — | — | 1.00 | 1.00 |
 | `street_11_master_51_ans` | 0.57 | 1.00 | — | 0.93 | 1.00 | — | — | 1.00 | 1.00 |
 | `street_12_antecedent_coude` | 0.57 | 1.00 | — | 0.50 | 0.82 | — | — | 1.00 | 1.00 |
 | `street_13_peu_de_temps` | 0.50 | 1.00 | — | 0.80 | 0.81 | — | — | 0.95 | 1.00 |
 | `street_14_parc_sans_lest` | 0.57 | 1.00 | — | 0.65 | 1.00 | — | — | 1.00 | 1.00 |
 | `street_15_travail_physique_sommeil_court` | 0.57 | 1.00 | — | 0.88 | 1.00 | — | — | 0.96 | 1.00 |
-| `street_16_specialisation_traction_lestee` | 0.29 | 1.00 | 0.84 | 0.43 | 0.53 | — | 1.00 | 1.00 | 1.00 |
+| `street_16_specialisation_traction_lestee` | 0.29 | 1.00 | 0.81 | 0.43 | 0.58 | — | 1.00 | 1.00 | 1.00 |
 | `street_17_hybride_street_course` | 0.57 | 1.00 | — | 1.00 | 1.00 | — | — | 0.95 | 1.00 |
 
 ## 2. Trajectoires simulées
@@ -86,18 +86,18 @@ Violations de sécurité : **23** au total (Pas d'allègement avant l'échéance
 | `street_02_debutant_surpoids` | 36/36 | 0.0 | 2.337 | 0.647 | 0.0 | 0.796 | — | 0 | ecart_rir, ecart_effort | 0 |
 | `street_03_debutante` | 36/36 | 0.0 | 4.053 | 0.59 | 0.0 | 0.658 | — | 0 | ecart_rir, ecart_effort | 0 |
 | `street_04_reprise_longue_pause` | 48/48 | 0.0 | 3.042 | 0.438 | 0.0 | 0.531 | — | 0 | ecart_rir | 0 |
-| `street_05_inter_calisthenie_front_lever` | 63/64 | 0.0 | 1.676 | 0.681 | 0.0 | — | — | 0 | ecart_rir | 0 |
+| `street_05_inter_calisthenie_front_lever` | 63/64 | 0.0 | 1.636 | 0.674 | 0.0 | — | — | 0 | ecart_rir | 0 |
 | `street_06_inter_sets_reps` | 48/48 | 0.0 | 2.076 | 0.586 | 0.0 | 0.327 | — | 0 | ecart_rir | 0 |
-| `street_07_avance_streetlifting_competition` | 60/60 | 0.001 | 3.089 | 0.675 | 0.349 | 0.063 | 0.993 | 0 | ecart_rir, pics_de_charge, performance_echeance, ecart_effort | 0 |
+| `street_07_avance_streetlifting_competition` | 60/60 | 0.0 | 3.134 | 0.672 | 0.329 | 0.064 | 0.988 | 0 | ecart_rir, pics_de_charge, performance_echeance, ecart_effort | 0 |
 | `street_08_avance_sets_reps_competition` | 40/40 | 0.0 | 3.56 | 0.555 | 0.0 | 0.16 | 0.837 | 0 | ecart_rir, performance_echeance, ecart_effort | 0 |
-| `street_09_elite_streetlifting` | 60/60 | 0.003 | 3.451 | 0.605 | 0.333 | 0.024 | 0.968 | 0 | ecart_rir, pics_de_charge, performance_echeance, ecart_effort | 0 |
-| `street_10_elite_figures` | 91/96 | 0.0 | 1.996 | 0.378 | 0.0 | 0.064 | — | 0 | ecart_rir | 0 |
+| `street_09_elite_streetlifting` | 60/60 | 0.003 | 3.364 | 0.6 | 0.333 | 0.025 | 0.978 | 0 | ecart_rir, pics_de_charge, performance_echeance, ecart_effort | 0 |
+| `street_10_elite_figures` | 91/96 | 0.0 | 2.069 | 0.342 | 0.0 | 0.063 | — | 0 | ecart_rir, ecart_effort | 0 |
 | `street_11_master_51_ans` | 48/48 | 0.0 | 1.627 | 0.761 | 0.034 | 0.247 | — | 0 | ecart_rir | 0 |
-| `street_12_antecedent_coude` | 48/48 | 0.0 | 2.558 | 0.626 | 0.254 | 0.255 | — | 0 | ecart_rir, pics_de_charge, ecart_effort | 0 |
+| `street_12_antecedent_coude` | 48/48 | 0.0 | 2.626 | 0.626 | 0.222 | 0.254 | — | 0 | ecart_rir, pics_de_charge, ecart_effort | 0 |
 | `street_13_peu_de_temps` | 34/36 | 0.0 | 1.738 | 0.723 | 0.0 | 0.618 | — | 0 | ecart_rir, ecart_effort | 0 |
 | `street_14_parc_sans_lest` | 46/48 | 0.0 | 2.279 | 0.654 | 0.0 | 0.41 | — | 0 | ecart_rir | 0 |
 | `street_15_travail_physique_sommeil_court` | 36/36 | 0.0 | 2.098 | 0.669 | 0.0 | 0.592 | — | 0 | ecart_rir, ecart_effort | 0 |
-| `street_16_specialisation_traction_lestee` | 40/40 | 0.002 | 2.464 | 0.714 | 0.354 | 0.118 | 1.034 | 0 | ecart_rir, pics_de_charge, ecart_effort | 0 |
+| `street_16_specialisation_traction_lestee` | 40/40 | 0.002 | 2.377 | 0.711 | 0.305 | 0.118 | 1.045 | 0 | ecart_rir, pics_de_charge, ecart_effort | 0 |
 | `street_17_hybride_street_course` | 58/60 | 0.0 | 1.776 | 0.589 | 0.0 | 0.523 | — | 0 | ecart_rir, ecart_effort | 0 |
 
 ## 3. Détail par profil
@@ -539,9 +539,9 @@ Sécurité : aucune violation.
 Qualité :
 - Volume par muscle dans la bande du référentiel : 0.64 — 9 groupes majeurs sur 14 entre 10 et 25 séries dures par semaine (semaines de montée) ; sous le plancher : deltoïde antérieur, deltoïde moyen, deltoïde postérieur, lombaires, mollets.
 - Fréquence des mouvements prioritaires : 1.00 — Séances par semaine où chaque mouvement prioritaire (ou un palier de sa chaîne) est travaillé ; attendu : au moins 2.
-- Spécificité à l'approche de l'échéance : 1.00 — Part des séries dures sur les mouvements de l'échéance : 50 % avant les quatre dernières semaines, 56 % pendant.
+- Spécificité à l'approche de l'échéance : 1.00 — Part des séries dures sur les mouvements de l'échéance : 49 % avant les quatre dernières semaines, 56 % pendant.
 - Progression planifiée : 0.90 — Sur 10 mouvements principaux, secondaires ou figures du premier bloc — en charge, en répétitions ou en durée entre la première et la dernière semaine de montée : 9 ; seulement en séries ou en effort : 0.
-- Équilibre poussée / tirage : 1.00 — Séries dures de tirage / de poussée sur les semaines de montée : 116 / 69 (rapport 1.69).
+- Équilibre poussée / tirage : 1.00 — Séries dures de tirage / de poussée sur les semaines de montée : 116 / 65 (rapport 1.79).
 - Couverture des points faibles : 1.00 — 1 points faibles couverts sur 1 vérifiables.
 - Affûtage aligné sur la date de l'échéance : 1.00 — Semaine de l'échéance (semaine 12) : nature test, volume 61 % sous le pic des six semaines précédentes ; épreuve la plus proche : semaine 12.
 - Variété utile : 0.97 — 16 exercices de renforcement distincts en première semaine pour 37 emplacements ; 1 doublons de chaîne dans une même séance ; 16 exercices distincts sur tout le programme.
@@ -597,11 +597,11 @@ Non transmis au moteur par le profil actuel : libellé de l'échéance ; descrip
 Sécurité : aucune violation.
 
 Qualité :
-- Volume par muscle dans la bande du référentiel : 0.71 — 10 groupes majeurs sur 14 entre 12 et 30 séries dures par semaine (semaines de montée) ; sous le plancher : deltoïde moyen, lombaires, ischio-jambiers, mollets.
+- Volume par muscle dans la bande du référentiel : 0.64 — 9 groupes majeurs sur 14 entre 12 et 30 séries dures par semaine (semaines de montée) ; sous le plancher : deltoïde moyen, deltoïde postérieur, lombaires, ischio-jambiers, mollets.
 - Fréquence des mouvements prioritaires : 1.00 — Séances par semaine où chaque mouvement prioritaire (ou un palier de sa chaîne) est travaillé ; attendu : au moins 2.
-- Spécificité à l'approche de l'échéance : 1.00 — Part des séries dures sur les mouvements de l'échéance : 53 % avant les quatre dernières semaines, 58 % pendant.
+- Spécificité à l'approche de l'échéance : 1.00 — Part des séries dures sur les mouvements de l'échéance : 51 % avant les quatre dernières semaines, 58 % pendant.
 - Progression planifiée : 0.92 — Sur 12 mouvements principaux, secondaires ou figures du premier bloc — en charge, en répétitions ou en durée entre la première et la dernière semaine de montée : 11 ; seulement en séries ou en effort : 0.
-- Équilibre poussée / tirage : 1.00 — Séries dures de tirage / de poussée sur les semaines de montée : 144 / 112 (rapport 1.29).
+- Équilibre poussée / tirage : 1.00 — Séries dures de tirage / de poussée sur les semaines de montée : 131 / 106 (rapport 1.24).
 - Couverture des points faibles : 1.00 — 2 points faibles couverts sur 2 vérifiables.
 - Affûtage aligné sur la date de l'échéance : 1.00 — Semaine de l'échéance (semaine 12) : nature test, volume 68 % sous le pic des six semaines précédentes ; épreuve la plus proche : semaine 12.
 - Variété utile : 0.95 — 18 exercices de renforcement distincts en première semaine pour 42 emplacements ; 2 doublons de chaîne dans une même séance ; 19 exercices distincts sur tout le programme.
@@ -616,7 +616,7 @@ Attentes de coach (9/10) :
 - tenue — Charges chiffrées sur les quatre mouvements de compétition (mesuré : 82 prescriptions chargées ou en % du 1RM sur 82)
 - tenue — Pas plus de 5 semaines de charge sans allègement (mesuré : 3 semaines de charge de suite au plus)
 - tenue — Série haute puis séries allégées, clusters ou vagues (mesuré : formats : top_set_backoff)
-- tenue — 8 à 18 séries dures par semaine en traction lestée et ses variantes (mesuré : 9.4 séries dures par semaine en montée)
+- tenue — 8 à 18 séries dures par semaine en traction lestée et ses variantes (mesuré : 8.1 séries dures par semaine en montée)
 - tenue — Épreuve sur les mouvements de compétition la semaine du championnat (mesuré : 4 épreuve(s) sur les mouvements visés la semaine de l'échéance (nature : test))
 
 Programme tel qu'il a évolué sous le moteur d'évolution : 0 violation(s) de sécurité.
@@ -632,7 +632,7 @@ Qualité :
 - Fréquence des mouvements prioritaires : 1.00 — Séances par semaine où chaque mouvement prioritaire (ou un palier de sa chaîne) est travaillé ; attendu : au moins 2.
 - Spécificité à l'approche de l'échéance : sans objet — Sans objet : pas d'échéance prioritaire à six semaines ou plus.
 - Progression planifiée : 0.72 — Sur 18 mouvements principaux, secondaires ou figures du premier bloc — en charge, en répétitions ou en durée entre la première et la dernière semaine de montée : 13 ; seulement en séries ou en effort : 0.
-- Équilibre poussée / tirage : 1.00 — Séries dures de tirage / de poussée sur les semaines de montée : 155 / 112 (rapport 1.38).
+- Équilibre poussée / tirage : 1.00 — Séries dures de tirage / de poussée sur les semaines de montée : 149 / 112 (rapport 1.33).
 - Couverture des points faibles : sans objet — Sans objet : aucun point faible déclaré.
 - Affûtage aligné sur la date de l'échéance : sans objet — Sans objet : pas d'échéance prioritaire dans le programme.
 - Variété utile : 1.00 — 17 exercices de renforcement distincts en première semaine pour 40 emplacements ; 0 doublons de chaîne dans une même séance ; 17 exercices distincts sur tout le programme.
@@ -785,17 +785,17 @@ Sécurité : aucune violation.
 Qualité :
 - Volume par muscle dans la bande du référentiel : 0.29 — 4 groupes majeurs sur 14 entre 10 et 25 séries dures par semaine (semaines de montée) ; sous le plancher : deltoïde antérieur, deltoïde moyen, deltoïde postérieur, triceps, abdominaux, lombaires, fessiers, quadriceps, ischio-jambiers, mollets.
 - Fréquence des mouvements prioritaires : 1.00 — Séances par semaine où chaque mouvement prioritaire (ou un palier de sa chaîne) est travaillé ; attendu : au moins 2.
-- Spécificité à l'approche de l'échéance : 0.84 — Part des séries dures sur les mouvements de l'échéance : 33 % avant les quatre dernières semaines, 34 % pendant.
+- Spécificité à l'approche de l'échéance : 0.81 — Part des séries dures sur les mouvements de l'échéance : 30 % avant les quatre dernières semaines, 32 % pendant.
 - Progression planifiée : 0.43 — Sur 7 mouvements principaux, secondaires ou figures du premier bloc — en charge, en répétitions ou en durée entre la première et la dernière semaine de montée : 3 ; seulement en séries ou en effort : 0.
-- Équilibre poussée / tirage : 0.53 — Séries dures de tirage / de poussée sur les semaines de montée : 114 / 30 (rapport 3.80).
+- Équilibre poussée / tirage : 0.58 — Séries dures de tirage / de poussée sur les semaines de montée : 103 / 30 (rapport 3.43).
 - Couverture des points faibles : sans objet — Sans objet : aucun point faible déclaré.
 - Affûtage aligné sur la date de l'échéance : 1.00 — Semaine de l'échéance (semaine 10) : nature test, volume 57 % sous le pic des six semaines précédentes ; épreuve la plus proche : semaine 10.
 - Variété utile : 1.00 — 12 exercices de renforcement distincts en première semaine pour 26 emplacements ; 0 doublons de chaîne dans une même séance ; 12 exercices distincts sur tout le programme.
-- Non-ressemblance au programme du propriétaire : 1.00 — Indice de Jaccard le plus haut entre une semaine générée et une semaine du propriétaire : exercices 0.174, exercices × schémas 0.086 (seuil 0.3).
+- Non-ressemblance au programme du propriétaire : 1.00 — Indice de Jaccard le plus haut entre une semaine générée et une semaine du propriétaire : exercices 0.174, exercices × schémas 0.088 (seuil 0.3).
 
-Attentes de coach (8/8) :
+Attentes de coach (7/8) :
 - tenue — Traction lestée au moins trois fois par semaine (mesuré : 3.0 séance(s) par semaine en montée)
-- tenue — Au moins 30 % des séries dures sur la traction lestée et ses variantes (mesuré : 32 % des séries dures en montée)
+- **non tenue** — Au moins 30 % des séries dures sur la traction lestée et ses variantes (mesuré : 29 % des séries dures en montée)
 - tenue — Dips lesté en entretien : 3 à 8 séries dures par semaine (mesuré : 5.0 séries dures par semaine en montée)
 - tenue — Squat en entretien : 3 à 8 séries dures par semaine (mesuré : 5.0 séries dures par semaine en montée)
 - tenue — Volume réduit de 30 à 60 % la semaine du test (mesuré : volume 57 % sous le pic la semaine de l'échéance)

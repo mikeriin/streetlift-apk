@@ -28,9 +28,9 @@ Homme de 29 ans, 75 kg, cinq ans de pratique. Traction +50 kg, dips +85 kg, squa
 | 2 | 1 | construction (volume) | 4 | 42 |
 | 3 | 1 | construction (volume) | 4 | 42 |
 | 4 | 1 | allègement | 4 | 27 |
-| 5 | 2 | intensification (séries plus dures) | 4 | 42 |
+| 5 | 2 | intensification (séries plus dures) | 4 | 33 |
 | 6 | 2 | intensification (séries plus dures) | 4 | 42 |
-| 7 | 2 | réalisation (spécifique à l'objectif) | 4 | 39 |
+| 7 | 2 | réalisation (spécifique à l'objectif) | 4 | 37 |
 | 8 | 2 | réalisation (spécifique à l'objectif) | 4 | 39 |
 | 9 | 2 | affûtage | 4 | 17 |
 | 10 | 2 | échéance — ÉCHÉANCE | 4 | 18 |
@@ -285,7 +285,7 @@ Homme de 29 ans, 75 kg, cinq ans de pratique. Traction +50 kg, dips +85 kg, squa
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
-| Traction lestée de compétition | 1 × 3 (série de tête), puis 4 × 3 à −5 % | lest +27,5 kg, ≈ 82 % du 1RM (charge totale ; 1RM de référence 122,5 kg) | 2 rép. en réserve | 4 min | principal ; Montée en charge avant la série de tête : 4 séries progressives — 5 répétitions à 40 %, 3 à 60 %, 2 à 75 %, 1 à 85 % de la charge du jour, 1 à 3 min entre elles. ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
+| Traction lestée de compétition | 1 × 3 (série de tête), puis 4 × 3 à −5 % | lest +27,5 kg, ≈ 82 % du 1RM (charge totale ; 1RM de référence 122,5 kg) | 3 rép. en réserve | 4 min | principal ; Montée en charge avant la série de tête : 4 séries progressives — 5 répétitions à 40 %, 3 à 60 %, 2 à 75 %, 1 à 85 % de la charge du jour, 1 à 3 min entre elles. ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Squat de compétition | 2 × 5 | 112,5 kg, ≈ 75 % du 1RM (charge totale ; 1RM de référence 150 kg) | 3 rép. en réserve | 3 min | secondaire ; En entretien : volume réduit, charge gardée — le volume va à l'objectif. |
 | Dips lesté de compétition | 2 × 5 | lest +46,25 kg, ≈ 75 % du 1RM (charge totale ; 1RM de référence 157 kg) | 3 rép. en réserve | 3 min | secondaire ; En entretien : volume réduit, charge gardée — le volume va à l'objectif. |
 | Rowing barre buste penché prise pronation | 2 × 8 à 10 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
@@ -299,7 +299,7 @@ Homme de 29 ans, 75 kg, cinq ans de pratique. Traction +50 kg, dips +85 kg, squa
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
-| Traction lestée de compétition | 4 × 4 | lest +16,25 kg, ≈ 73 % du 1RM (charge totale ; 1RM de référence 123 kg) | 3 rép. en réserve | 3 min | secondaire ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
+| Traction lestée de compétition | 4 × 4 | lest +16,25 kg, ≈ 73 % du 1RM (charge totale ; 1RM de référence 123 kg) | 5 rép. en réserve ou plus | 3 min | secondaire ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Squat de compétition | 3 × 3 | 122,5 kg, ≈ 82 % du 1RM (charge totale ; 1RM de référence 150 kg) | 3 rép. en réserve | 3 min | secondaire ; En entretien : volume réduit, charge gardée — le volume va à l'objectif. |
 | Soulevé de terre roumain à la barre | 2 × 8 à 10 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Relevé de jambes tendues suspendu | 2 × 8 à 12 | poids du corps | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
@@ -315,7 +315,7 @@ Homme de 29 ans, 75 kg, cinq ans de pratique. Traction +50 kg, dips +85 kg, squa
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
-| Traction lestée de compétition | 5 × 4 | lest +16,25 kg, ≈ 73 % du 1RM (charge totale ; 1RM de référence 123 kg) | 3 rép. en réserve | 3 min | secondaire ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
+| Traction lestée de compétition | 5 × 4 | lest +16,25 kg, ≈ 73 % du 1RM (charge totale ; 1RM de référence 123 kg) | 5 rép. en réserve ou plus | 3 min | secondaire ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Dips lesté de compétition | 3 × 3 | lest +57,5 kg, ≈ 83 % du 1RM (charge totale ; 1RM de référence 157 kg) | 3 rép. en réserve | 3 min | secondaire ; En entretien : volume réduit, charge gardée — le volume va à l'objectif. |
 | Rowing barre buste penché prise pronation | 2 × 8 à 10 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Curl marteau aux haltères | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire ; Fléchisseurs du coude en charge légère : tolérance du coude au tirage lourd. |
@@ -355,7 +355,7 @@ Homme de 29 ans, 75 kg, cinq ans de pratique. Traction +50 kg, dips +85 kg, squa
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
-| Traction lestée de compétition | 4 × 4 | lest +20 kg, ≈ 76 % du 1RM (charge totale ; 1RM de référence 122,5 kg) | 3 rép. en réserve | 3 min | secondaire ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
+| Traction lestée de compétition | 4 × 4 | lest +20 kg, ≈ 76 % du 1RM (charge totale ; 1RM de référence 122,5 kg) | 4 rép. en réserve | 3 min | secondaire ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Squat de compétition | 3 × 3 | 122,5 kg, ≈ 82 % du 1RM (charge totale ; 1RM de référence 150 kg) | 3 rép. en réserve | 3 min | secondaire ; En entretien : volume réduit, charge gardée — le volume va à l'objectif. |
 | Soulevé de terre roumain à la barre | 2 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Relevé de jambes tendues suspendu | 2 × 9 à 13 | poids du corps | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
@@ -371,7 +371,7 @@ Homme de 29 ans, 75 kg, cinq ans de pratique. Traction +50 kg, dips +85 kg, squa
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
-| Traction lestée de compétition | 5 × 4 | lest +20 kg, ≈ 76 % du 1RM (charge totale ; 1RM de référence 122,5 kg) | 3 rép. en réserve | 3 min | secondaire ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
+| Traction lestée de compétition | 5 × 4 | lest +20 kg, ≈ 76 % du 1RM (charge totale ; 1RM de référence 122,5 kg) | 4 rép. en réserve | 3 min | secondaire ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Dips lesté de compétition | 3 × 3 | lest +57,5 kg, ≈ 83 % du 1RM (charge totale ; 1RM de référence 157 kg) | 3 rép. en réserve | 3 min | secondaire ; En entretien : volume réduit, charge gardée — le volume va à l'objectif. |
 | Rowing barre buste penché prise pronation | 2 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Curl marteau aux haltères | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire ; Fléchisseurs du coude en charge légère : tolérance du coude au tirage lourd. |
@@ -392,12 +392,12 @@ Homme de 29 ans, 75 kg, cinq ans de pratique. Traction +50 kg, dips +85 kg, squa
 
 ## Semaine 7 — réalisation (spécifique à l'objectif) (bloc 2)
 
-### lundi — force, corps entier, séance lourde (90 min disponibles, 42 min estimées)
+### lundi — force, corps entier, séance lourde (90 min disponibles, 38 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
-| Traction lestée de compétition | 1 × 2 (série de tête), puis 3 × 2 à −5 % | lest +38,75 kg, ≈ 91 % du 1RM (charge totale ; 1RM de référence 123 kg) | 1 rép. en réserve | 4 min | principal ; Montée en charge avant la série de tête : 4 séries progressives — 5 répétitions à 40 %, 3 à 60 %, 2 à 75 %, 1 à 85 % de la charge du jour, 1 à 3 min entre elles. ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
+| Traction lestée de compétition | 1 × 2 (série de tête), puis 2 × 2 à −5 % | lest +38,75 kg, ≈ 91 % du 1RM (charge totale ; 1RM de référence 123 kg) | 1 rép. en réserve | 4 min | principal ; Montée en charge avant la série de tête : 4 séries progressives — 5 répétitions à 40 %, 3 à 60 %, 2 à 75 %, 1 à 85 % de la charge du jour, 1 à 3 min entre elles. ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Squat de compétition | 2 × 5 | 112,5 kg, ≈ 75 % du 1RM (charge totale ; 1RM de référence 150 kg) | 3 rép. en réserve | 3 min | secondaire ; En entretien : volume réduit, charge gardée — le volume va à l'objectif. |
 | Dips lesté de compétition | 2 × 5 | lest +46,25 kg, ≈ 75 % du 1RM (charge totale ; 1RM de référence 157 kg) | 3 rép. en réserve | 3 min | secondaire ; En entretien : volume réduit, charge gardée — le volume va à l'objectif. |
 | Rowing barre buste penché prise pronation | 2 × 8 à 10 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
@@ -422,12 +422,12 @@ Homme de 29 ans, 75 kg, cinq ans de pratique. Traction +50 kg, dips +85 kg, squa
 | Cat-cow | 1 × 8 à 10 | — | — | 20 s | mobilité |
 | Étirement des fléchisseurs du poignet bras tendu | 2 × 30 à 45 s | — | — | 20 s | mobilité |
 
-### vendredi — force, corps entier, séance lourde (90 min disponibles, 38 min estimées)
+### vendredi — force, corps entier, séance lourde (90 min disponibles, 35 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
-| Traction lestée de compétition | 4 × 3 | lest +26,25 kg, ≈ 81 % du 1RM (charge totale ; 1RM de référence 122,5 kg) | 3 rép. en réserve | 3 min | secondaire ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
+| Traction lestée de compétition | 3 × 3 | lest +26,25 kg, ≈ 81 % du 1RM (charge totale ; 1RM de référence 122,5 kg) | 3 rép. en réserve | 3 min | secondaire ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Dips lesté de compétition | 3 × 3 | lest +57,5 kg, ≈ 83 % du 1RM (charge totale ; 1RM de référence 157 kg) | 3 rép. en réserve | 3 min | secondaire ; En entretien : volume réduit, charge gardée — le volume va à l'objectif. |
 | Rowing barre buste penché prise pronation | 2 × 8 à 10 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Curl marteau aux haltères | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire ; Fléchisseurs du coude en charge légère : tolérance du coude au tirage lourd. |

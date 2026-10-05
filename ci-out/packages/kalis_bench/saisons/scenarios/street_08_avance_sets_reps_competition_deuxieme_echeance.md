@@ -37,10 +37,10 @@ Chaque bloc est écrit par le moteur de création au moment où il commence, d'a
 
 - Séances faites : 79 sur 80 (17 ajustées le jour même).
 - Échecs non voulus (hors tests et tentatives) : 0 % des séries de travail.
-- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 0,91 répétition en réserve (sur les 53 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0,2 % ; au moins 3 plus faciles : 12,2 %.
+- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 0,91 répétition en réserve (sur les 53 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0,2 % ; au moins 3 plus faciles : 12,3 %.
 - Plus forte hausse de charge totale d'un mouvement principal d'une séance à la suivante, à schéma égal : 3,6 % ; hausses de plus de 10 % faites de plusieurs crans : 0.
 - Progression réelle moyenne des mouvements suivis : 0,126 % par semaine.
-- Jour de l'échéance : meilleure performance à 93,1 % du maximum réel du jour (moyenne des mouvements).
+- Jour de l'échéance : meilleure performance à 93 % du maximum réel du jour (moyenne des mouvements).
 - Douleur : 0 hausse(s) de charge sur une zone douloureuse signalée.
 
 ## Mouvements suivis, semaine par semaine
@@ -131,7 +131,7 @@ Athlète simulé, maximum réel hors fatigue : 46 au départ (le record déclar�
 | 11 | réalisation (spécifique à l'objectif) | 3 × 5 à 65 % | 5-5 à 2,5 kg | 5-5 à 2,5 kg | 5+ → 11,4 ; suivantes 5+ → 11,1 | 112 (lest 42) / 116 (lest 46) | bilan du jour bas (2/5) ; nuit courte |
 | 12 | réalisation (spécifique à l'objectif) | 3 × 5 à 67 % | 5-5 à 2,5 kg | 5-5 à 2,5 kg | 5+ → 10,4 ; suivantes 5+ → 10,2 | 108 (lest 38) / 116 (lest 46) | bilan du jour bas (2/5) ; nuit courte ; charge non augmentée (bilan du jour bas) |
 | 13 | affûtage | 2 × 2 à 75 % | 2-2 à 16,25 kg | 2-2 à 16,25 kg | 5+ → 9,4 ; suivantes 5+ → 9,2 | 113 (lest 43) / 116 (lest 46) | — |
-| 15 | transition (récupération) | 2 × 6 à 60 % | 6-6 | 6-6 | 5+ → 10,8 ; suivantes 5+ → 10,7 | 110 (lest 40) / 116 (lest 46) | — |
+| 15 | transition (récupération) | 2 × 6 à 60 % | 6-6 | 6-6 | 5+ → 10,9 ; suivantes 5+ → 10,7 | 110 (lest 40) / 116 (lest 46) | — |
 | 16 | introduction | 2 × 6 à 63 % | 6-6 à 2,5 kg | 6-6 à 2,5 kg | 5+ → 10,8 ; suivantes 5+ → 10,5 | 113 (lest 44) / 116 (lest 46) | — |
 
 Athlète simulé, maximum réel hors fatigue : 114 (lest 44) au départ (le record déclaré au profil peut être plus haut ou plus ancien), 115 (lest 45) en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.

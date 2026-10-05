@@ -59,7 +59,7 @@ Violations de sécurité (critères calculables du banc) du programme tel que le
 | street_07_avance_streetlifting_competition | douleur_epaule | 0 |
 | street_07_avance_streetlifting_competition | parc_seulement | 0 |
 | street_07_avance_streetlifting_competition | echeance_avancee | 0 |
-| street_07_avance_streetlifting_competition | deuxieme_echeance | 0 |
+| street_07_avance_streetlifting_competition | deuxieme_echeance | 1 (volume_trop_vite) |
 | street_08_avance_sets_reps_competition | reference | 0 |
 | street_08_avance_sets_reps_competition | seances_manquees | 0 |
 | street_08_avance_sets_reps_competition | maladie | 0 |
@@ -74,15 +74,15 @@ Violations de sécurité (critères calculables du banc) du programme tel que le
 | street_09_elite_streetlifting | douleur_coude | 0 |
 | street_09_elite_streetlifting | douleur_epaule | 0 |
 | street_09_elite_streetlifting | parc_seulement | 0 |
-| street_09_elite_streetlifting | echeance_avancee | 0 |
-| street_09_elite_streetlifting | deuxieme_echeance | 0 |
+| street_09_elite_streetlifting | echeance_avancee | 3 (volume_trop_vite) |
+| street_09_elite_streetlifting | deuxieme_echeance | 3 (volume_trop_vite) |
 | street_10_elite_figures | reference | 0 |
 | street_10_elite_figures | seances_manquees | 0 |
 | street_10_elite_figures | maladie | 0 |
 | street_10_elite_figures | douleur_coude | 0 |
 | street_10_elite_figures | douleur_epaule | 0 |
 | street_10_elite_figures | parc_seulement | 0 |
-| street_10_elite_figures | echeance_avancee | 0 |
+| street_10_elite_figures | echeance_avancee | 1 (volume_trop_vite) |
 | street_10_elite_figures | deuxieme_echeance | 0 |
 | street_11_master_51_ans | reference | 0 |
 | street_11_master_51_ans | seances_manquees | 0 |
@@ -140,3 +140,14 @@ Violations de sécurité (critères calculables du banc) du programme tel que le
 | street_17_hybride_street_course | parc_seulement | 0 |
 | street_17_hybride_street_course | echeance_avancee | 0 |
 | street_17_hybride_street_course | deuxieme_echeance | 0 |
+
+## Détail
+
+- `street_07_avance_streetlifting_competition`, deuxieme_echeance, `volume_trop_vite` : pectoraux : 7.5 séries dures en semaine 18, pour 7.0 admises au vu des trois semaines précédentes.
+- `street_09_elite_streetlifting`, echeance_avancee, `volume_trop_vite` : grand dorsal : 22.0 séries dures en semaine 7, pour 18.2 admises au vu de la semaine 5 (hausse sur deux semaines).
+- `street_09_elite_streetlifting`, echeance_avancee, `volume_trop_vite` : fessiers : 21.0 séries dures en semaine 7, pour 20.8 admises au vu de la semaine 5 (hausse sur deux semaines).
+- `street_09_elite_streetlifting`, echeance_avancee, `volume_trop_vite` : quadriceps : 21.0 séries dures en semaine 7, pour 20.8 admises au vu de la semaine 5 (hausse sur deux semaines).
+- `street_09_elite_streetlifting`, deuxieme_echeance, `volume_trop_vite` : pectoraux : 7.5 séries dures en semaine 18, pour 5.0 admises au vu des trois semaines précédentes.
+- `street_09_elite_streetlifting`, deuxieme_echeance, `volume_trop_vite` : deltoïde antérieur : 4.5 séries dures en semaine 18, pour 4.0 admises au vu des trois semaines précédentes.
+- `street_09_elite_streetlifting`, deuxieme_echeance, `volume_trop_vite` : triceps : 6.0 séries dures en semaine 18, pour 5.0 admises au vu des trois semaines précédentes.
+- `street_10_elite_figures`, echeance_avancee, `volume_trop_vite` : grand dorsal : 14.0 séries dures en semaine 11, pour 13.0 admises au vu de la semaine 9 (hausse sur deux semaines).

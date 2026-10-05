@@ -39,9 +39,9 @@ Chaque bloc est écrit par le moteur de création au moment où il commence, d'a
 
 - Séances faites : 81 sur 102 (11 ajustées le jour même).
 - Échecs non voulus (hors tests et tentatives) : 0 % des séries de travail.
-- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 1,07 répétition en réserve (sur les 35 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 12,8 %.
+- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 1,29 répétition en réserve (sur les 31 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 13,7 %.
 - Plus forte hausse de charge totale d'un mouvement principal d'une séance à la suivante, à schéma égal : 0 % ; hausses de plus de 10 % faites de plusieurs crans : 0.
-- Progression réelle moyenne des mouvements suivis : 0,055 % par semaine.
+- Progression réelle moyenne des mouvements suivis : 0,056 % par semaine.
 - Douleur : 0 hausse(s) de charge sur une zone douloureuse signalée.
 
 ## Mouvements suivis, semaine par semaine
@@ -56,18 +56,18 @@ Pour chaque mouvement, la séance la plus lourde de la semaine : ce que le progr
 | 2 | construction (volume) | 2 × 3 à 5 | Ice cream maker : (3 à 7)-(3 à 12) | 7-12 | 3 → 9,8 ; suivantes 1,5 → 4 | 17 / 14 | série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète |
 | 3 | construction (volume) | 1 × 4 à 6 | Ice cream maker : (4 à 11) | 11 | 3 → 7,5 | 18 / 14 | — |
 | 4 | allègement | 1 × 9 à 15 s, test | (6 à 15) s | 6 s | test | 8 / 7 | — |
-| 5 | construction (volume) | 1 × 4 à 6 | Ice cream maker : (4 à 11) | 11 | 3 → 6,7 | 18 / 14 | — |
+| 5 | construction (volume) | 1 × 4 à 6 | Ice cream maker : (4 à 11) | 11 | 3 → 6,6 | 18 / 14 | — |
 | 6 | construction (volume) | 1 × 4 à 6 | Ice cream maker : (4 à 12) | 12 | 3 → 5,8 | 18 / 15 | — |
-| 8 | allègement | — | (6 à 15) s | 7 s | test | 8 / 7 | — |
-| 9 | intensification (séries plus dures) | 1 × 4 à 6 | Ice cream maker : (4 à 12) | 12 | 3 → 5,3 | 17 / 15 | — |
-| 10 | intensification (séries plus dures) | 1 × 4 à 6 | Ice cream maker : (4 à 12) | 12 | 3 → 5,9 | 18 / 15 | — |
-| 11 | intensification (séries plus dures) | 1 × 4 à 6 | Ice cream maker : (4 à 12) | 10 | 3 → 7,5 | 18 / 15 | — |
-| 12 | allègement | — | (5 à 15) s | 6 s | test | 8 / 7 | — |
-| 13 | réalisation (spécifique à l'objectif) | 1 × 4 à 6 | Ice cream maker : (4 à 12) | 10 | 3 → 7,2 | 17 / 15 | — |
+| 8 | allègement | — | (5 à 15) s | 7 s | test | 8 / 7 | — |
+| 9 | intensification (séries plus dures) | 1 × 4 à 6 | Ice cream maker : (4 à 12) | 12 | 3 → 5,2 | 17 / 15 | — |
+| 10 | intensification (séries plus dures) | 1 × 4 à 6 | Ice cream maker : (4 à 12) | 12 | 3 → 5,8 | 18 / 15 | — |
+| 11 | intensification (séries plus dures) | 1 × 4 à 6 | Ice cream maker : (4 à 12) | 10 | 3 → 7,4 | 17 / 15 | — |
+| 12 | allègement | — | (5 à 15) s | 6 s | test | 8 / 6 | — |
+| 13 | réalisation (spécifique à l'objectif) | 1 × 4 à 6 | Ice cream maker : (4 à 12) | 10 | 3 → 7 | 17 / 15 | — |
 | 14 | réalisation (spécifique à l'objectif) | 2 × 4 à 6 | Ice cream maker : (4 à 12)-(4 à 11) | 12-10 | 3 → 5,3 ; suivantes 3 → 5,3 | 17 / 15 | — |
 | 15 | réalisation (spécifique à l'objectif) | 1 × 4 à 6 | Ice cream maker : (4 à 12) | 12 | 3 → 5,5 | 18 / 15 | — |
 | 16 | test | 3 × 10 s, maintien | Front lever half-lay : 10-10-10 s | 10-10-10 s | 4,5 → 7,6 ; suivantes 4,5 → 7,5 | 56 / 19 | — |
-| 17 | construction (volume) | 1 × 4 à 6 | Ice cream maker : (4 à 12) | 12 | 3 → 5,9 | 18 / 16 | — |
+| 17 | construction (volume) | 1 × 4 à 6 | Ice cream maker : (4 à 12) | 12 | 3 → 5,8 | 18 / 16 | — |
 
 Athlète simulé, maximum réel hors fatigue : 8 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 8 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
 
@@ -83,8 +83,8 @@ Athlète simulé, maximum réel hors fatigue : 8 au départ (le record déclaré
 | 6 | construction (volume) | 2 × 4 à 6 | Planche push-up straddle assistée à l'élastique : (4 à 6)-(4 à 6) | 4-4 | 5+ → 4,8 ; suivantes 5+ → 4,4 | 9 / 9 | un cran d'assistance de moins (élastique plus fin, moins d'appui) : la série repère a montré 3 répétitions de réserve de plus que visé |
 | 8 | allègement | — | Planche straddle : (5 à 10) s | 5 s | test | 6 / 6 | — |
 | 9 | intensification (séries plus dures) | 2 × 4 à 6 | Planche push-up straddle assistée à l'élastique : (4 à 5)-4 | 5-4 | 1,5 → 3,8 ; suivantes 3 → 4,4 | 9 / 7 | allégé pour garder la marge prévue (au moins 3 en réserve) |
-| 10 | intensification (séries plus dures) | 2 × 4 à 6 | Planche push-up straddle assistée à l'élastique : (4 à 5)-(4 à 11) | 4-5 | 3 → 4,6 ; suivantes 1,5 → 3,4 | 9 / 7 | allégé pour garder la marge prévue (au moins 3 en réserve) ; série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète |
-| 11 | intensification (séries plus dures) | 2 × 4 à 6 | Planche push-up straddle assistée à l'élastique : (4 à 5)-(4 à 5) | 4-5 | 3 → 4,9 ; suivantes 1,5 → 3,6 | 9 / 7 | allégé pour garder la marge prévue (au moins 3 en réserve) |
+| 10 | intensification (séries plus dures) | 2 × 4 à 6 | Planche push-up straddle assistée à l'élastique : (4 à 5)-(4 à 11) | 4-5 | 3 → 4,5 ; suivantes 1,5 → 3,4 | 9 / 7 | allégé pour garder la marge prévue (au moins 3 en réserve) ; série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète |
+| 11 | intensification (séries plus dures) | 2 × 4 à 6 | Planche push-up straddle assistée à l'élastique : (4 à 5)-(4 à 5) | 4-5 | 3 → 4,8 ; suivantes 1,5 → 3,5 | 9 / 7 | allégé pour garder la marge prévue (au moins 3 en réserve) |
 | 12 | allègement | — | Planche straddle : (4 à 10) s | 4 s | test | 5 / 5 | — |
 | 13 | réalisation (spécifique à l'objectif) | 10 × 3 s (75 % du maximum testé), maintien | Planche straddle : 3-3-3-3-3-3-3-3-3-3 s | 3-3-2 (arrêt avant la cible)-2 (arrêt avant la cible)-2 (arrêt avant la cible)-2 (arrêt avant la cible)-2 (arrêt avant la cible)-3-2 (arrêt avant la cible)-2 s | 4 → 4,1 ; suivantes 4 → 4,5 | 6 / 5 | allégé pour garder la marge prévue (au moins 5 en réserve) ; dernières séries plus dures que prévu |
 

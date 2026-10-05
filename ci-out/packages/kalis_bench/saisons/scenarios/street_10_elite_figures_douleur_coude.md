@@ -39,9 +39,9 @@ Chaque bloc est écrit par le moteur de création au moment où il commence, d'a
 
 - Séances faites : 97 sur 102 (23 ajustées le jour même).
 - Échecs non voulus (hors tests et tentatives) : 0 % des séries de travail.
-- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 1,58 répétition en réserve (sur les 17 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 19,9 %.
+- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 1,68 répétition en réserve (sur les 17 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 21,1 %.
 - Plus forte hausse de charge totale d'un mouvement principal d'une séance à la suivante, à schéma égal : 0 % ; hausses de plus de 10 % faites de plusieurs crans : 0.
-- Progression réelle moyenne des mouvements suivis : -0,275 % par semaine.
+- Progression réelle moyenne des mouvements suivis : -0,308 % par semaine.
 - Douleur : 0 hausse(s) de charge sur une zone douloureuse signalée.
 
 ## Mouvements suivis, semaine par semaine
@@ -56,12 +56,12 @@ Pour chaque mouvement, la séance la plus lourde de la semaine : ce que le progr
 | 2 | construction (volume) | 2 × 3 à 5 | Ice cream maker : (3 à 7)-(3 à 12) | 7-12 | 3 → 9,8 ; suivantes 1,5 → 4 | 17 / 14 | série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète |
 | 3 | construction (volume) | 1 × 4 à 6 | Ice cream maker : (4 à 11) | 11 | 3 → 7,5 | 18 / 14 | — |
 | 4 | allègement | 1 × 9 à 15 s, test | (6 à 15) s | 6 s | test | 8 / 7 | — |
-| 5 | construction (volume) | 1 × 4 à 6 | Ice cream maker : (4 à 11) | 11 | 3 → 6,4 | 17 / 14 | — |
+| 5 | construction (volume) | 1 × 4 à 6 | Ice cream maker : (4 à 11) | 11 | 3 → 6,3 | 17 / 14 | — |
 | 13 | réalisation (spécifique à l'objectif) | 1 × 4 à 6 | Ice cream maker : (4 à 10) | 10 | 4 → 7,2 | 17 / 14 | douleur signalée (coude, 0/10) |
-| 14 | réalisation (spécifique à l'objectif) | 1 × 2 | Ice cream maker : 4 | 4 | 5+ → 13,1 | 17 / 14 | — |
-| 15 | réalisation (spécifique à l'objectif) | 1 × 2 | Ice cream maker : 4 | 4 | 5+ → 12,9 | 17 / 14 | — |
+| 14 | réalisation (spécifique à l'objectif) | 1 × 4 s (67 % du maximum testé), maintien | 4 s | 3 (arrêt avant la cible) s | 4,5 → 4,7 | 8 / 7 | — |
+| 15 | réalisation (spécifique à l'objectif) | 1 × 4 s (67 % du maximum testé), maintien | 4 s | 4 s | 4,5 → 3,8 | 8 / 7 | — |
 | 16 | test | 1 × 3 | Ice cream maker : 3 | 3 | 5+ → 13,9 | 17 / 14 | — |
-| 17 | construction (volume) | 1 × 2 | Ice cream maker : 4 | 4 | 5+ → 13,7 | 18 / 14 | — |
+| 17 | construction (volume) | 1 × 4 s (67 % du maximum testé), maintien | 4 s | 3 (arrêt avant la cible) s | 4,5 → 4,7 | 8 / 7 | — |
 
 Athlète simulé, maximum réel hors fatigue : 8 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 8 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
 

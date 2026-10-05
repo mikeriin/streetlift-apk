@@ -35,9 +35,9 @@ Homme de 27 ans, 64 kg, sept ans de pratique. Front lever complet tenu 8 s, plan
 | 6 | 2 | construction (volume) | 6 | 44 |
 | 7 | 2 | construction (volume) | 6 | 44 |
 | 8 | 2 | allègement | 6 | 28 |
-| 9 | 3 | intensification (séries plus dures) | 6 | 44 |
+| 9 | 3 | intensification (séries plus dures) | 6 | 39 |
 | 10 | 3 | intensification (séries plus dures) | 6 | 44 |
-| 11 | 3 | intensification (séries plus dures) | 6 | 44 |
+| 11 | 3 | intensification (séries plus dures) | 6 | 43 |
 | 12 | 3 | allègement | 6 | 28 |
 | 13 | 4 | réalisation (spécifique à l'objectif) | 6 | 44 |
 | 14 | 4 | réalisation (spécifique à l'objectif) | 6 | 44 |
@@ -466,7 +466,7 @@ Homme de 27 ans, 64 kg, sept ans de pratique. Front lever complet tenu 8 s, plan
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Traction scapulaire | 2 × 8 à 10 | poids du corps | — | 30 s | échauffement |
-| Traction lestée de compétition | 2 × 5 | lest +21,25 kg, ≈ 71 % du 1RM (charge totale ; 1RM de référence 117 kg) | 2 rép. en réserve | 3 min | secondaire ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
+| Traction lestée de compétition | 2 × 5 | lest +21,25 kg, ≈ 71 % du 1RM (charge totale ; 1RM de référence 117 kg) | 3 rép. en réserve | 3 min | secondaire ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Dips lesté de compétition | 3 × 5 | lest +18,75 kg | 3 rép. en réserve | 3 min | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Row australien aux anneaux | 2 × 9 à 11 | poids du corps | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Skater squat | 2 × 7 à 9 | poids du corps | 3 rép. en réserve | 90 s | secondaire ; Jambes : force utile, sans fatigue excessive. |
@@ -512,7 +512,7 @@ Homme de 27 ans, 64 kg, sept ans de pratique. Front lever complet tenu 8 s, plan
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Traction scapulaire | 2 × 8 à 10 | poids du corps | — | 30 s | échauffement |
-| Traction lestée de compétition | 3 × 5 | lest +21,25 kg, ≈ 71 % du 1RM (charge totale ; 1RM de référence 117 kg) | 2 rép. en réserve | 3 min | secondaire ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
+| Traction lestée de compétition | 3 × 5 | lest +21,25 kg, ≈ 71 % du 1RM (charge totale ; 1RM de référence 117 kg) | 3 rép. en réserve | 3 min | secondaire ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Dips lesté de compétition | 3 × 5 | lest +18,75 kg | 3 rép. en réserve | 3 min | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Row australien aux anneaux | 2 × 9 à 11 | poids du corps | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Skater squat | 2 × 7 à 9 | poids du corps | 3 rép. en réserve | 90 s | secondaire ; Jambes : force utile, sans fatigue excessive. |
@@ -557,7 +557,7 @@ Homme de 27 ans, 64 kg, sept ans de pratique. Front lever complet tenu 8 s, plan
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Traction scapulaire | 2 × 8 à 10 | poids du corps | — | 30 s | échauffement |
-| Traction lestée de compétition | 2 × 5 | lest +25 kg, ≈ 74 % du 1RM (charge totale ; 1RM de référence 117 kg) | 2 rép. en réserve | 3 min | secondaire ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
+| Traction lestée de compétition | 2 × 5 | lest +25 kg, ≈ 74 % du 1RM (charge totale ; 1RM de référence 117 kg) | 3 rép. en réserve | 3 min | secondaire ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Dips lesté de compétition | 3 × 5 | lest +18,75 kg | 3 rép. en réserve | 3 min | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Row australien aux anneaux | 2 × 10 à 12 | poids du corps | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Skater squat | 2 × 8 à 10 | poids du corps | 3 rép. en réserve | 90 s | secondaire ; Jambes : force utile, sans fatigue excessive. |
@@ -603,7 +603,7 @@ Homme de 27 ans, 64 kg, sept ans de pratique. Front lever complet tenu 8 s, plan
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Traction scapulaire | 2 × 8 à 10 | poids du corps | — | 30 s | échauffement |
-| Traction lestée de compétition | 3 × 5 | lest +25 kg, ≈ 74 % du 1RM (charge totale ; 1RM de référence 117 kg) | 2 rép. en réserve | 3 min | secondaire ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
+| Traction lestée de compétition | 3 × 5 | lest +25 kg, ≈ 74 % du 1RM (charge totale ; 1RM de référence 117 kg) | 3 rép. en réserve | 3 min | secondaire ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Dips lesté de compétition | 3 × 5 | lest +18,75 kg | 3 rép. en réserve | 3 min | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Row australien aux anneaux | 2 × 10 à 12 | poids du corps | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Skater squat | 2 × 8 à 10 | poids du corps | 3 rép. en réserve | 90 s | secondaire ; Jambes : force utile, sans fatigue excessive. |
@@ -823,7 +823,7 @@ Homme de 27 ans, 64 kg, sept ans de pratique. Front lever complet tenu 8 s, plan
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Traction scapulaire | 2 × 8 à 10 | poids du corps | — | 30 s | échauffement |
-| Traction lestée de compétition | 2 × 4 | lest +23,75 kg, ≈ 73 % du 1RM (charge totale ; 1RM de référence 117 kg) | 3 rép. en réserve | 3 min | secondaire ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
+| Traction lestée de compétition | 2 × 4 | lest +23,75 kg, ≈ 73 % du 1RM (charge totale ; 1RM de référence 117 kg) | 5 rép. en réserve ou plus | 3 min | secondaire ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Dips lesté de compétition | 3 × 5 | lest +18,75 kg | 3 rép. en réserve | 3 min | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Row australien aux anneaux | 2 × 10 à 12 | poids du corps | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Skater squat | 2 × 8 à 10 | poids du corps | 3 rép. en réserve | 90 s | secondaire ; Jambes : force utile, sans fatigue excessive. |
@@ -869,7 +869,7 @@ Homme de 27 ans, 64 kg, sept ans de pratique. Front lever complet tenu 8 s, plan
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Traction scapulaire | 2 × 8 à 10 | poids du corps | — | 30 s | échauffement |
-| Traction lestée de compétition | 3 × 4 | lest +23,75 kg, ≈ 73 % du 1RM (charge totale ; 1RM de référence 117 kg) | 3 rép. en réserve | 3 min | secondaire ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
+| Traction lestée de compétition | 3 × 4 | lest +23,75 kg, ≈ 73 % du 1RM (charge totale ; 1RM de référence 117 kg) | 5 rép. en réserve ou plus | 3 min | secondaire ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Dips lesté de compétition | 3 × 5 | lest +18,75 kg | 3 rép. en réserve | 3 min | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Row australien aux anneaux | 2 × 10 à 12 | poids du corps | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Skater squat | 2 × 8 à 10 | poids du corps | 3 rép. en réserve | 90 s | secondaire ; Jambes : force utile, sans fatigue excessive. |
@@ -914,7 +914,7 @@ Homme de 27 ans, 64 kg, sept ans de pratique. Front lever complet tenu 8 s, plan
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Traction scapulaire | 2 × 8 à 10 | poids du corps | — | 30 s | échauffement |
-| Traction lestée de compétition | 2 × 4 | lest +27,5 kg, ≈ 77 % du 1RM (charge totale ; 1RM de référence 117 kg) | 2 rép. en réserve | 3 min | secondaire ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
+| Traction lestée de compétition | 2 × 4 | lest +27,5 kg, ≈ 77 % du 1RM (charge totale ; 1RM de référence 117 kg) | 4 rép. en réserve | 3 min | secondaire ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Dips lesté de compétition | 3 × 5 | lest +18,75 kg | 3 rép. en réserve | 3 min | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Row australien aux anneaux | 2 × 10 à 12 | poids du corps | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Skater squat | 2 × 8 à 10 | poids du corps | 3 rép. en réserve | 90 s | secondaire ; Jambes : force utile, sans fatigue excessive. |
@@ -960,7 +960,7 @@ Homme de 27 ans, 64 kg, sept ans de pratique. Front lever complet tenu 8 s, plan
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Traction scapulaire | 2 × 8 à 10 | poids du corps | — | 30 s | échauffement |
-| Traction lestée de compétition | 3 × 4 | lest +27,5 kg, ≈ 77 % du 1RM (charge totale ; 1RM de référence 117 kg) | 2 rép. en réserve | 3 min | secondaire ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
+| Traction lestée de compétition | 3 × 4 | lest +27,5 kg, ≈ 77 % du 1RM (charge totale ; 1RM de référence 117 kg) | 4 rép. en réserve | 3 min | secondaire ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Dips lesté de compétition | 3 × 5 | lest +18,75 kg | 3 rép. en réserve | 3 min | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Row australien aux anneaux | 2 × 10 à 12 | poids du corps | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Skater squat | 2 × 8 à 10 | poids du corps | 3 rép. en réserve | 90 s | secondaire ; Jambes : force utile, sans fatigue excessive. |
@@ -1005,7 +1005,7 @@ Homme de 27 ans, 64 kg, sept ans de pratique. Front lever complet tenu 8 s, plan
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Traction scapulaire | 2 × 8 à 10 | poids du corps | — | 30 s | échauffement |
-| Traction lestée de compétition | 2 × 4 | lest +31,25 kg, ≈ 80 % du 1RM (charge totale ; 1RM de référence 117 kg) | 2 rép. en réserve | 3 min | secondaire ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
+| Traction lestée de compétition | 2 × 4 | lest +31,25 kg, ≈ 80 % du 1RM (charge totale ; 1RM de référence 117 kg) | 3 rép. en réserve | 3 min | secondaire ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Dips lesté de compétition | 3 × 5 | lest +18,75 kg | 3 rép. en réserve | 3 min | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Row australien aux anneaux | 2 × 10 à 12 | poids du corps | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Skater squat | 2 × 8 à 10 | poids du corps | 3 rép. en réserve | 90 s | secondaire ; Jambes : force utile, sans fatigue excessive. |
@@ -1046,12 +1046,12 @@ Homme de 27 ans, 64 kg, sept ans de pratique. Front lever complet tenu 8 s, plan
 | Cat-cow | 1 × 8 à 10 | — | — | 20 s | mobilité |
 | Étirement des fléchisseurs du poignet bras tendu | 2 × 30 à 45 s | — | — | 20 s | mobilité |
 
-### samedi — figures et technique, séance moyenne (90 min disponibles, 43 min estimées)
+### samedi — figures et technique, séance moyenne (90 min disponibles, 39 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Traction scapulaire | 2 × 8 à 10 | poids du corps | — | 30 s | échauffement |
-| Traction lestée de compétition | 3 × 4 | lest +31,25 kg, ≈ 80 % du 1RM (charge totale ; 1RM de référence 117 kg) | 2 rép. en réserve | 3 min | secondaire ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
+| Traction lestée de compétition | 2 × 4 | lest +31,25 kg, ≈ 80 % du 1RM (charge totale ; 1RM de référence 117 kg) | 3 rép. en réserve | 3 min | secondaire ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Dips lesté de compétition | 3 × 5 | lest +18,75 kg | 3 rép. en réserve | 3 min | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Row australien aux anneaux | 2 × 10 à 12 | poids du corps | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Skater squat | 2 × 8 à 10 | poids du corps | 3 rép. en réserve | 90 s | secondaire ; Jambes : force utile, sans fatigue excessive. |

@@ -9663,12 +9663,12 @@
     "sessionsPlanned": 64,
     "sessionsDone": 63,
     "sessionsAdjusted": 2,
-    "workSets": 1097,
+    "workSets": 1076,
     "unwantedFailureRate": 0.0,
     "nearFailureRate": 0.0,
-    "rirGapReachable": 1.676,
-    "rirGapAll": 6.599,
-    "reachableShare": 0.681,
+    "rirGapReachable": 1.636,
+    "rirGapAll": 6.678,
+    "reachableShare": 0.674,
     "maxMainLoadRise": 0.0,
     "mainRisesOverTenPercent": 0,
     "mainSingleStepsOverTenPercent": 0,
@@ -9692,9 +9692,9 @@
     "blocks": 3,
     "truth": "b",
     "coached": true,
-    "effortGap": 0.747,
-    "effortBias": 0.652,
-    "effortReachableShare": 0.678,
+    "effortGap": 0.829,
+    "effortBias": 0.726,
+    "effortReachableShare": 0.671,
     "harderRate": 0.0,
     "easierRate": 0.056,
     "coachFailureRate": 0.0,
@@ -9706,64 +9706,64 @@
     "eventOverDayMax": null,
     "effortByExercise": {
      "cs-front-lever-tuck-avance": [
-      265,
-      4.549,
-      5.463
+      244,
+      4.223,
+      4.948
      ],
      "mu-hollow-body-hold": [
       72,
-      2.618,
-      2.692
+      2.604,
+      2.688
      ],
      "sw-traction-chest-to-bar": [
       32,
       2.609,
-      4.366
+      4.362
      ],
      "sw-dips-barres-paralleles": [
       79,
       4.443,
-      6.509
+      6.507
      ],
      "sw-row-australien-anneaux": [
       58,
       2.784,
-      5.954
+      5.948
      ],
      "sw-skater-squat": [
       46,
       2.967,
-      5.952
+      5.95
      ],
      "mu-nordic-hamstring-curl-assiste": [
       27,
       4.093,
-      6.708
+      6.705
      ],
      "mu-rotation-externe-elastique": [
       58,
       4.94,
-      10.974
+      10.964
      ],
      "mu-gainage-lateral-coude": [
       65,
-      2.915,
-      3.64
+      2.908,
+      3.65
      ],
      "cd-front-lever-raise-tuck-avance": [
       37,
       2.73,
-      2.418
+      2.419
      ],
      "sw-traction-pronation": [
       30,
       3.533,
-      4.318
+      4.316
      ],
      "mu-pont-fessier-sol": [
       2,
       2.0,
-      5.366
+      5.319
      ]
     },
     "verdicts": {
@@ -9784,12 +9784,12 @@
      "sessionsPlanned": 64,
      "sessionsDone": 63,
      "sessionsAdjusted": 2,
-     "workSets": 1083,
+     "workSets": 1062,
      "unwantedFailureRate": 0.0,
      "nearFailureRate": 0.0,
-     "rirGapReachable": 1.683,
-     "rirGapAll": 6.797,
-     "reachableShare": 0.699,
+     "rirGapReachable": 1.649,
+     "rirGapAll": 6.885,
+     "reachableShare": 0.692,
      "maxMainLoadRise": 0.0,
      "mainRisesOverTenPercent": 0,
      "mainSingleStepsOverTenPercent": 0,
@@ -9813,11 +9813,11 @@
      "blocks": 3,
      "truth": "a",
      "coached": true,
-     "effortGap": 0.703,
-     "effortBias": 0.66,
-     "effortReachableShare": 0.695,
+     "effortGap": 0.767,
+     "effortBias": 0.725,
+     "effortReachableShare": 0.689,
      "harderRate": 0.0,
-     "easierRate": 0.044,
+     "easierRate": 0.045,
      "coachFailureRate": 0.0,
      "maxSchemeRise": 0.0,
      "schemeRisesOverLimit": 0,
@@ -9827,29 +9827,29 @@
      "eventOverDayMax": null,
      "effortByExercise": {
       "cs-front-lever-tuck-avance": [
-       271,
-       4.493,
-       5.477
+       250,
+       4.22,
+       5.05
       ],
       "sw-traction-chest-to-bar": [
        32,
        2.766,
-       4.578
+       4.577
       ],
       "sw-dips-barres-paralleles": [
        79,
        4.5,
-       7.109
+       7.111
       ],
       "sw-row-australien-anneaux": [
        58,
        2.716,
-       5.902
+       5.904
       ],
       "sw-skater-squat": [
        44,
        2.898,
-       4.805
+       4.807
       ],
       "mu-nordic-hamstring-curl-assiste": [
        27,
@@ -9859,12 +9859,12 @@
       "mu-rotation-externe-elastique": [
        58,
        5.0,
-       10.956
+       10.952
       ],
       "mu-gainage-lateral-coude": [
        70,
        3.121,
-       3.908
+       3.909
       ],
       "mu-hollow-body-hold": [
        68,
@@ -9873,18 +9873,18 @@
       ],
       "cd-front-lever-raise-tuck-avance": [
        40,
-       2.7,
-       2.656
+       2.663,
+       2.632
       ],
       "sw-traction-pronation": [
        30,
        3.633,
-       4.454
+       4.455
       ],
       "mu-pont-fessier-sol": [
        2,
        2.0,
-       5.308
+       5.293
       ]
      },
      "verdicts": {
@@ -9904,13 +9904,13 @@
      "weeks": 16,
      "sessionsPlanned": 64,
      "sessionsDone": 63,
-     "sessionsAdjusted": 3,
-     "workSets": 1104,
+     "sessionsAdjusted": 2,
+     "workSets": 1086,
      "unwantedFailureRate": 0.0,
      "nearFailureRate": 0.0,
-     "rirGapReachable": 1.696,
-     "rirGapAll": 6.523,
-     "reachableShare": 0.704,
+     "rirGapReachable": 1.675,
+     "rirGapAll": 6.588,
+     "reachableShare": 0.692,
      "maxMainLoadRise": 0.0,
      "mainRisesOverTenPercent": 0,
      "mainSingleStepsOverTenPercent": 0,
@@ -9934,11 +9934,11 @@
      "blocks": 3,
      "truth": "c",
      "coached": true,
-     "effortGap": 0.647,
-     "effortBias": 0.578,
-     "effortReachableShare": 0.7,
+     "effortGap": 0.69,
+     "effortBias": 0.61,
+     "effortReachableShare": 0.689,
      "harderRate": 0.0,
-     "easierRate": 0.041,
+     "easierRate": 0.044,
      "coachFailureRate": 0.0,
      "maxSchemeRise": 0.0,
      "schemeRisesOverLimit": 0,
@@ -9948,54 +9948,54 @@
      "eventOverDayMax": null,
      "effortByExercise": {
       "cs-front-lever-tuck-avance": [
-       290,
-       4.598,
-       5.589
+       266,
+       4.532,
+       5.378
       ],
       "mu-hollow-body-hold": [
        70,
        2.736,
-       3.246
+       3.247
       ],
       "sw-traction-chest-to-bar": [
        32,
        2.594,
-       4.453
+       4.452
       ],
       "sw-dips-barres-paralleles": [
        79,
        4.487,
-       6.906
+       6.881
       ],
       "sw-row-australien-anneaux": [
        58,
        2.741,
-       5.917
+       5.937
       ],
       "sw-skater-squat": [
        46,
        2.804,
-       4.679
+       4.68
       ],
       "mu-nordic-hamstring-curl-assiste": [
        27,
        4.241,
-       6.89
+       6.889
       ],
       "mu-rotation-externe-elastique": [
        60,
        5.0,
-       10.68
+       10.708
       ],
       "mu-gainage-lateral-coude": [
        66,
-       2.909,
-       3.582
+       2.917,
+       3.584
       ],
       "cd-front-lever-raise-tuck-avance": [
        33,
        2.682,
-       2.412
+       2.413
       ],
       "sw-traction-pronation": [
        30,
@@ -10005,12 +10005,12 @@
       "mu-face-pull-elastique": [
        2,
        5.0,
-       19.485
+       19.563
       ],
       "mu-pont-fessier-sol": [
        7,
        2.214,
-       4.789
+       4.778
       ]
      },
      "verdicts": {
@@ -10939,7 +10939,7 @@
     66,
     66,
     34,
-    66,
+    58,
     66,
     66,
     34,
@@ -10960,20 +10960,20 @@
       "floor": 10.0,
       "ceiling": 25.0,
       "meanSetsByGroup": {
-       "chest": 17.214,
-       "delt_anterior": 9.786,
+       "chest": 16.643,
+       "delt_anterior": 9.214,
        "delt_middle": 0.0,
        "delt_posterior": 8.071,
        "lats": 18.857,
        "upper_back": 11.429,
        "biceps": 13.429,
-       "triceps": 12.143,
+       "triceps": 11.571,
        "abs": 17.714,
        "lower_back": 8.857,
-       "glutes": 18.143,
-       "quads": 18.143,
-       "hamstrings": 10.429,
-       "calves": 3.714
+       "glutes": 17.571,
+       "quads": 17.571,
+       "hamstrings": 10.143,
+       "calves": 3.429
       },
       "under": [
        "deltoïde antérieur",
@@ -11001,9 +11001,9 @@
     {
      "code": "specificite",
      "score": 1.0,
-     "detail": "Part des séries dures sur les mouvements de l'échéance : 50 % avant les quatre dernières semaines, 56 % pendant.",
+     "detail": "Part des séries dures sur les mouvements de l'échéance : 49 % avant les quatre dernières semaines, 56 % pendant.",
      "values": {
-      "earlyShare": 0.499,
+      "earlyShare": 0.49,
       "lateShare": 0.563
      }
     },
@@ -11020,10 +11020,10 @@
     {
      "code": "equilibre_poussee_tirage",
      "score": 1.0,
-     "detail": "Séries dures de tirage / de poussée sur les semaines de montée : 116 / 69 (rapport 1.69).",
+     "detail": "Séries dures de tirage / de poussée sur les semaines de montée : 116 / 65 (rapport 1.79).",
      "values": {
       "pull": 115.5,
-      "push": 68.5
+      "push": 64.5
      }
     },
     {
@@ -11399,30 +11399,30 @@
     "sessionsDone": 60,
     "sessionsAdjusted": 13,
     "workSets": 905,
-    "unwantedFailureRate": 0.001,
-    "nearFailureRate": 0.0,
-    "rirGapReachable": 3.089,
-    "rirGapAll": 6.992,
-    "reachableShare": 0.675,
-    "maxMainLoadRise": 0.349,
+    "unwantedFailureRate": 0.0,
+    "nearFailureRate": 0.003,
+    "rirGapReachable": 3.134,
+    "rirGapAll": 7.022,
+    "reachableShare": 0.672,
+    "maxMainLoadRise": 0.329,
     "mainRisesOverTenPercent": 11,
     "mainSingleStepsOverTenPercent": 0,
     "weeklyGainPercent": {
-     "sl-traction-lestee": 0.063,
-     "sl-dips-leste": 0.062,
-     "sl-muscle-up-leste": 0.062,
-     "sl-squat-competition": 0.065
+     "sl-traction-lestee": 0.064,
+     "sl-dips-leste": 0.063,
+     "sl-muscle-up-leste": 0.064,
+     "sl-squat-competition": 0.066
     },
-    "meanWeeklyGainPercent": 0.063,
+    "meanWeeklyGainPercent": 0.064,
     "eventPerformance": {
      "sl-traction-lestee": 1.015,
-     "sl-dips-leste": 0.994,
+     "sl-dips-leste": 0.95,
      "sl-muscle-up-leste": 1.041,
-     "sl-squat-competition": 0.923
+     "sl-squat-competition": 0.946
     },
     "eventTargets": 4,
     "eventTargetsTested": 4,
-    "meanEventPerformance": 0.993,
+    "meanEventPerformance": 0.988,
     "unlockWeek": {
      "loads_reps": 1,
      "volume": 2,
@@ -11437,78 +11437,78 @@
     "blocks": 3,
     "truth": "b",
     "coached": true,
-    "effortGap": 1.173,
-    "effortBias": 1.106,
-    "effortReachableShare": 0.674,
-    "harderRate": 0.002,
-    "easierRate": 0.148,
-    "coachFailureRate": 0.001,
-    "maxSchemeRise": 0.048,
+    "effortGap": 1.256,
+    "effortBias": 1.201,
+    "effortReachableShare": 0.672,
+    "harderRate": 0.0,
+    "easierRate": 0.178,
+    "coachFailureRate": 0.0,
+    "maxSchemeRise": 0.054,
     "schemeRisesOverLimit": 0,
     "attempts": 12,
     "attemptsMade": 12,
     "openerRate": 1.0,
-    "eventOverDayMax": 0.925,
+    "eventOverDayMax": 0.915,
     "effortByExercise": {
      "sl-traction-lestee": [
       84,
-      4.06,
-      6.457
+      4.22,
+      6.582
      ],
      "sl-dips-leste": [
       105,
-      4.3,
-      8.236
+      4.29,
+      8.45
      ],
      "mu-rowing-barre-pronation": [
       40,
       2.463,
-      3.881
+      3.863
      ],
      "mu-curl-marteau-halteres": [
       32,
-      2.266,
-      3.617
+      2.25,
+      3.599
      ],
      "sl-squat-competition": [
       83,
-      4.705,
-      8.579
+      4.795,
+      8.805
      ],
      "mu-souleve-de-terre-roumain-barre": [
       53,
       2.34,
-      5.74
+      5.73
      ],
      "sw-releve-jambes-tendues-suspendu": [
       60,
       3.742,
-      8.983
+      8.984
      ],
      "mu-rotation-externe-poulie": [
       46,
       5.0,
-      9.346
+      9.328
      ],
      "sl-muscle-up-leste": [
       78,
-      4.096,
-      5.433
+      4.071,
+      5.425
      ],
      "sl-traction-lestee-pause-bas": [
       24,
       4.625,
-      13.689
+      13.707
      ],
      "mu-fente-arriere-halteres": [
       20,
       3.45,
-      7.589
+      7.599
      ],
      "mu-hollow-body-hold": [
-      19,
-      4.579,
-      5.479
+      17,
+      4.706,
+      5.557
      ]
     },
     "verdicts": {
@@ -11529,31 +11529,31 @@
      "sessionsPlanned": 60,
      "sessionsDone": 60,
      "sessionsAdjusted": 10,
-     "workSets": 909,
+     "workSets": 907,
      "unwantedFailureRate": 0.003,
      "nearFailureRate": 0.003,
-     "rirGapReachable": 3.529,
-     "rirGapAll": 7.575,
-     "reachableShare": 0.676,
-     "maxMainLoadRise": 0.349,
-     "mainRisesOverTenPercent": 14,
+     "rirGapReachable": 3.413,
+     "rirGapAll": 7.512,
+     "reachableShare": 0.675,
+     "maxMainLoadRise": 0.333,
+     "mainRisesOverTenPercent": 16,
      "mainSingleStepsOverTenPercent": 0,
      "weeklyGainPercent": {
       "sl-traction-lestee": 0.05,
-      "sl-dips-leste": 0.051,
+      "sl-dips-leste": 0.052,
       "sl-muscle-up-leste": 0.05,
       "sl-squat-competition": 0.037
      },
      "meanWeeklyGainPercent": 0.047,
      "eventPerformance": {
-      "sl-traction-lestee": 1.003,
-      "sl-dips-leste": 0.953,
+      "sl-traction-lestee": 1.006,
+      "sl-dips-leste": 0.961,
       "sl-muscle-up-leste": 1.02,
       "sl-squat-competition": 0.939
      },
      "eventTargets": 4,
      "eventTargetsTested": 4,
-     "meanEventPerformance": 0.979,
+     "meanEventPerformance": 0.982,
      "unlockWeek": {
       "loads_reps": 1,
       "volume": 2,
@@ -11568,78 +11568,78 @@
      "blocks": 3,
      "truth": "a",
      "coached": true,
-     "effortGap": 0.99,
-     "effortBias": 0.87,
-     "effortReachableShare": 0.676,
+     "effortGap": 0.977,
+     "effortBias": 0.846,
+     "effortReachableShare": 0.675,
      "harderRate": 0.002,
-     "easierRate": 0.096,
+     "easierRate": 0.098,
      "coachFailureRate": 0.002,
-     "maxSchemeRise": 0.143,
-     "schemeRisesOverLimit": 1,
+     "maxSchemeRise": 0.097,
+     "schemeRisesOverLimit": 0,
      "attempts": 12,
      "attemptsMade": 12,
      "openerRate": 1.0,
-     "eventOverDayMax": 0.961,
+     "eventOverDayMax": 0.957,
      "effortByExercise": {
       "sl-traction-lestee": [
        85,
-       3.9,
-       6.193
+       3.988,
+       6.145
       ],
       "sl-dips-leste": [
        104,
-       4.476,
-       8.02
+       4.452,
+       7.53
       ],
       "mu-rowing-barre-pronation": [
        40,
        2.425,
-       3.773
+       3.689
       ],
       "mu-curl-marteau-halteres": [
        32,
        2.203,
-       5.094
+       4.469
       ],
       "sl-squat-competition": [
-       83,
-       4.837,
-       10.69
+       82,
+       4.811,
+       10.867
       ],
       "mu-souleve-de-terre-roumain-barre": [
-       54,
-       2.343,
-       5.335
+       53,
+       2.34,
+       5.378
       ],
       "sw-releve-jambes-tendues-suspendu": [
        59,
        3.831,
-       9.261
+       9.262
       ],
       "mu-rotation-externe-poulie": [
        46,
        5.0,
-       12.166
+       12.167
       ],
       "sl-muscle-up-leste": [
        85,
        4.394,
-       6.792
+       6.791
       ],
       "sl-traction-lestee-pause-bas": [
        21,
        4.405,
-       19.539
+       19.338
       ],
       "mu-fente-arriere-halteres": [
        20,
        3.35,
-       7.071
+       7.07
       ],
       "mu-hollow-body-hold": [
        20,
        4.65,
-       5.579
+       5.584
       ]
      },
      "verdicts": {
@@ -11650,7 +11650,7 @@
       "deblocages": true,
       "douleur": true,
       "ecart_effort": true,
-      "pics_a_schema_egal": false,
+      "pics_a_schema_egal": true,
       "ouvertures": true
      },
      "realizedSafetyViolations": 0
@@ -11660,31 +11660,31 @@
      "sessionsPlanned": 60,
      "sessionsDone": 60,
      "sessionsAdjusted": 12,
-     "workSets": 906,
-     "unwantedFailureRate": 0.018,
+     "workSets": 910,
+     "unwantedFailureRate": 0.022,
      "nearFailureRate": 0.01,
-     "rirGapReachable": 12.684,
-     "rirGapAll": 16.523,
-     "reachableShare": 0.617,
-     "maxMainLoadRise": 0.357,
-     "mainRisesOverTenPercent": 13,
+     "rirGapReachable": 12.904,
+     "rirGapAll": 16.563,
+     "reachableShare": 0.618,
+     "maxMainLoadRise": 0.356,
+     "mainRisesOverTenPercent": 14,
      "mainSingleStepsOverTenPercent": 0,
      "weeklyGainPercent": {
       "sl-traction-lestee": 0.037,
-      "sl-dips-leste": 0.042,
+      "sl-dips-leste": 0.044,
       "sl-muscle-up-leste": 0.033,
-      "sl-squat-competition": 0.032
+      "sl-squat-competition": 0.033
      },
-     "meanWeeklyGainPercent": 0.036,
+     "meanWeeklyGainPercent": 0.037,
      "eventPerformance": {
       "sl-traction-lestee": 0.938,
-      "sl-dips-leste": 0.93,
+      "sl-dips-leste": 0.921,
       "sl-muscle-up-leste": 1.007,
-      "sl-squat-competition": 0.958
+      "sl-squat-competition": 1.012
      },
      "eventTargets": 4,
      "eventTargetsTested": 4,
-     "meanEventPerformance": 0.958,
+     "meanEventPerformance": 0.969,
      "unlockWeek": {
       "loads_reps": 1,
       "volume": 2,
@@ -11694,80 +11694,78 @@
      },
      "proposalsApplied": {},
      "unlockViolations": 0,
-     "proposalsWithheld": {
-      "exercise_swap:event_near": 2
-     },
+     "proposalsWithheld": {},
      "painAggravations": 0,
      "blocks": 3,
      "truth": "c",
      "coached": true,
-     "effortGap": 2.379,
-     "effortBias": 2.103,
-     "effortReachableShare": 0.617,
-     "harderRate": 0.01,
-     "easierRate": 0.212,
-     "coachFailureRate": 0.017,
+     "effortGap": 2.53,
+     "effortBias": 2.236,
+     "effortReachableShare": 0.618,
+     "harderRate": 0.012,
+     "easierRate": 0.219,
+     "coachFailureRate": 0.021,
      "maxSchemeRise": 0.097,
      "schemeRisesOverLimit": 0,
      "attempts": 12,
      "attemptsMade": 12,
      "openerRate": 1.0,
-     "eventOverDayMax": 0.923,
+     "eventOverDayMax": 0.921,
      "effortByExercise": {
       "sl-traction-lestee": [
        84,
-       4.083,
-       25.531
+       4.214,
+       24.448
       ],
       "sl-dips-leste": [
-       107,
-       4.336,
-       27.338
+       108,
+       4.333,
+       28.472
       ],
       "mu-rowing-barre-pronation": [
        40,
        2.425,
-       8.336
+       8.408
       ],
       "sl-squat-competition": [
-       79,
-       4.766,
-       20.238
+       81,
+       4.821,
+       20.635
       ],
       "mu-souleve-de-terre-roumain-barre": [
-       53,
-       2.368,
-       13.36
+       54,
+       2.361,
+       16.452
       ],
       "sw-releve-jambes-tendues-suspendu": [
        59,
        3.822,
-       8.865
+       8.867
       ],
       "sl-muscle-up-leste": [
        85,
        4.471,
-       13.582
+       13.649
       ],
       "sl-traction-lestee-pause-bas": [
        21,
        4.405,
-       91.801
+       89.873
       ],
       "mu-fente-arriere-halteres": [
        20,
        3.6,
-       13.529
+       13.494
       ],
       "mu-curl-marteau-halteres": [
        20,
        2.125,
-       11.133
+       7.282
       ],
       "mu-hollow-body-hold": [
-       21,
-       4.595,
-       5.446
+       20,
+       4.65,
+       5.488
       ]
      },
      "verdicts": {
@@ -12567,9 +12565,9 @@
     81,
     81,
     37,
+    66,
     81,
-    81,
-    81,
+    70,
     36,
     70,
     66,
@@ -12582,29 +12580,30 @@
    "quality": [
     {
      "code": "volume_bande",
-     "score": 0.714,
-     "detail": "10 groupes majeurs sur 14 entre 12 et 30 séries dures par semaine (semaines de montée) ; sous le plancher : deltoïde moyen, lombaires, ischio-jambiers, mollets.",
+     "score": 0.643,
+     "detail": "9 groupes majeurs sur 14 entre 12 et 30 séries dures par semaine (semaines de montée) ; sous le plancher : deltoïde moyen, deltoïde postérieur, lombaires, ischio-jambiers, mollets.",
      "values": {
       "floor": 12.0,
       "ceiling": 30.0,
       "meanSetsByGroup": {
-       "chest": 23.286,
-       "delt_anterior": 14.857,
+       "chest": 21.357,
+       "delt_anterior": 14.071,
        "delt_middle": 0.0,
-       "delt_posterior": 12.786,
-       "lats": 22.857,
-       "upper_back": 14.429,
-       "biceps": 17.429,
-       "triceps": 18.286,
-       "abs": 17.714,
-       "lower_back": 8.857,
-       "glutes": 20.143,
-       "quads": 20.143,
-       "hamstrings": 11.429,
-       "calves": 4.714
+       "delt_posterior": 11.571,
+       "lats": 20.571,
+       "upper_back": 13.286,
+       "biceps": 16.286,
+       "triceps": 17.0,
+       "abs": 17.571,
+       "lower_back": 8.786,
+       "glutes": 19.286,
+       "quads": 19.286,
+       "hamstrings": 10.929,
+       "calves": 4.357
       },
       "under": [
        "deltoïde moyen",
+       "deltoïde postérieur",
        "lombaires",
        "ischio-jambiers",
        "mollets"
@@ -12628,9 +12627,9 @@
     {
      "code": "specificite",
      "score": 1.0,
-     "detail": "Part des séries dures sur les mouvements de l'échéance : 53 % avant les quatre dernières semaines, 58 % pendant.",
+     "detail": "Part des séries dures sur les mouvements de l'échéance : 51 % avant les quatre dernières semaines, 58 % pendant.",
      "values": {
-      "earlyShare": 0.532,
+      "earlyShare": 0.512,
       "lateShare": 0.576
      }
     },
@@ -12647,10 +12646,10 @@
     {
      "code": "equilibre_poussee_tirage",
      "score": 1.0,
-     "detail": "Séries dures de tirage / de poussée sur les semaines de montée : 144 / 112 (rapport 1.29).",
+     "detail": "Séries dures de tirage / de poussée sur les semaines de montée : 131 / 106 (rapport 1.24).",
      "values": {
-      "pull": 143.5,
-      "push": 111.5
+      "pull": 130.5,
+      "push": 105.5
      }
     },
     {
@@ -12695,7 +12694,7 @@
      }
     }
    ],
-   "qualityMean": 0.954,
+   "qualityMean": 0.946,
    "checksOk": 9,
    "checksTotal": 10,
    "checks": [
@@ -12760,7 +12759,7 @@
      "type": "weekly_sets_between",
      "label": "8 à 18 séries dures par semaine en traction lestée et ses variantes",
      "ok": true,
-     "observed": "9.4 séries dures par semaine en montée"
+     "observed": "8.1 séries dures par semaine en montée"
     },
     {
      "id": "c10",
@@ -12923,20 +12922,23 @@
      "mu-hollow-body-hold|2x30-30s",
      "mu-rotation-externe-poulie|2x12-15",
      "mu-rowing-barre-pronation|2x10-12",
+     "mu-souleve-de-terre-roumain-barre|2x10-12",
      "mu-souleve-de-terre-roumain-barre|3x10-12",
      "mu-wrist-curl-barre|2x12-15",
      "sl-dips-barre-fixe-leste|2x3-3",
-     "sl-dips-leste-partiel-haut|3x3-3",
+     "sl-dips-leste-partiel-haut|2x3-3",
      "sl-dips-leste|3x3-3",
-     "sl-dips-leste|5x3-3",
-     "sl-dips-leste|5x4-4",
+     "sl-dips-leste|4x3-3",
+     "sl-dips-leste|4x4-4",
+     "sl-muscle-up-leste|4x2-2",
      "sl-muscle-up-leste|5x2-2",
      "sl-squat-competition|5x2-2",
      "sl-squat-competition|5x4-4",
-     "sl-traction-haute-lestee|3x3-3",
-     "sl-traction-lestee|5x3-3",
-     "sl-traction-lestee|5x4-4",
+     "sl-traction-haute-lestee|2x3-3",
+     "sl-traction-lestee|3x3-3",
+     "sl-traction-lestee|3x4-4",
      "sw-active-hang|2x15-20s",
+     "sw-releve-jambes-tendues-suspendu|2x10-14",
      "sw-releve-jambes-tendues-suspendu|3x10-14",
      "sw-row-scapulaire|2x12-15"
     ],
@@ -13052,31 +13054,31 @@
     "sessionsPlanned": 60,
     "sessionsDone": 60,
     "sessionsAdjusted": 15,
-    "workSets": 1064,
+    "workSets": 1050,
     "unwantedFailureRate": 0.003,
     "nearFailureRate": 0.0,
-    "rirGapReachable": 3.451,
-    "rirGapAll": 8.234,
-    "reachableShare": 0.605,
+    "rirGapReachable": 3.364,
+    "rirGapAll": 8.254,
+    "reachableShare": 0.6,
     "maxMainLoadRise": 0.333,
-    "mainRisesOverTenPercent": 17,
+    "mainRisesOverTenPercent": 16,
     "mainSingleStepsOverTenPercent": 0,
     "weeklyGainPercent": {
      "sl-traction-lestee": 0.025,
-     "sl-dips-leste": 0.025,
+     "sl-dips-leste": 0.026,
      "sl-muscle-up-leste": 0.022,
      "sl-squat-competition": 0.026
     },
-    "meanWeeklyGainPercent": 0.024,
+    "meanWeeklyGainPercent": 0.025,
     "eventPerformance": {
-     "sl-traction-lestee": 0.985,
-     "sl-dips-leste": 0.975,
+     "sl-traction-lestee": 0.993,
+     "sl-dips-leste": 0.99,
      "sl-muscle-up-leste": 1.001,
-     "sl-squat-competition": 0.911
+     "sl-squat-competition": 0.926
     },
     "eventTargets": 4,
     "eventTargetsTested": 4,
-    "meanEventPerformance": 0.968,
+    "meanEventPerformance": 0.978,
     "unlockWeek": {
      "loads_reps": 1,
      "volume": 2,
@@ -13091,78 +13093,78 @@
     "blocks": 3,
     "truth": "b",
     "coached": true,
-    "effortGap": 1.022,
-    "effortBias": 0.957,
-    "effortReachableShare": 0.603,
-    "harderRate": 0.005,
-    "easierRate": 0.106,
+    "effortGap": 1.045,
+    "effortBias": 0.992,
+    "effortReachableShare": 0.598,
+    "harderRate": 0.004,
+    "easierRate": 0.117,
     "coachFailureRate": 0.003,
     "maxSchemeRise": 0.06,
     "schemeRisesOverLimit": 0,
     "attempts": 12,
     "attemptsMade": 12,
     "openerRate": 1.0,
-    "eventOverDayMax": 0.915,
+    "eventOverDayMax": 0.92,
     "effortByExercise": {
      "sl-traction-lestee": [
-      98,
-      4.153,
-      6.792
+      93,
+      4.204,
+      6.831
      ],
      "sl-dips-leste": [
-      115,
-      4.257,
-      7.474
+      112,
+      4.174,
+      6.793
      ],
      "mu-rowing-barre-pronation": [
       60,
       2.467,
-      3.594
+      3.62
      ],
      "mu-curl-marteau-halteres": [
       48,
       3.188,
-      6.219
+      6.244
      ],
      "sl-squat-competition": [
       97,
-      4.763,
-      9.408
+      4.835,
+      9.496
      ],
      "mu-souleve-de-terre-roumain-barre": [
-      54,
-      2.361,
-      6.647
+      52,
+      2.365,
+      6.677
      ],
      "mu-rotation-externe-poulie": [
       46,
       5.0,
-      9.211
+      9.217
      ],
      "sl-muscle-up-leste": [
-      88,
-      4.932,
-      7.939
+      87,
+      4.822,
+      7.908
      ],
      "sl-dips-barre-fixe-leste": [
       19,
       4.895,
-      20.282
+      20.289
      ],
      "mu-fente-arriere-halteres": [
       20,
       3.55,
-      8.251
+      8.257
      ],
      "sl-traction-haute-lestee": [
-      22,
-      4.591,
-      10.564
+      21,
+      4.571,
+      10.75
      ],
      "sl-dips-leste-partiel-haut": [
-      13,
-      3.615,
-      2.809
+      12,
+      3.667,
+      2.921
      ]
     },
     "verdicts": {
@@ -13183,31 +13185,31 @@
      "sessionsPlanned": 60,
      "sessionsDone": 60,
      "sessionsAdjusted": 11,
-     "workSets": 1070,
+     "workSets": 1057,
      "unwantedFailureRate": 0.004,
-     "nearFailureRate": 0.004,
-     "rirGapReachable": 6.12,
-     "rirGapAll": 10.322,
-     "reachableShare": 0.647,
-     "maxMainLoadRise": 0.333,
-     "mainRisesOverTenPercent": 17,
+     "nearFailureRate": 0.003,
+     "rirGapReachable": 6.022,
+     "rirGapAll": 10.324,
+     "reachableShare": 0.643,
+     "maxMainLoadRise": 0.321,
+     "mainRisesOverTenPercent": 18,
      "mainSingleStepsOverTenPercent": 0,
      "weeklyGainPercent": {
       "sl-traction-lestee": 0.02,
-      "sl-dips-leste": 0.021,
-      "sl-muscle-up-leste": 0.014,
-      "sl-squat-competition": 0.015
+      "sl-dips-leste": 0.022,
+      "sl-muscle-up-leste": 0.015,
+      "sl-squat-competition": 0.016
      },
-     "meanWeeklyGainPercent": 0.017,
+     "meanWeeklyGainPercent": 0.018,
      "eventPerformance": {
-      "sl-traction-lestee": 0.993,
-      "sl-dips-leste": 0.942,
-      "sl-muscle-up-leste": 1.037,
-      "sl-squat-competition": 0.926
+      "sl-traction-lestee": 1.018,
+      "sl-dips-leste": 0.949,
+      "sl-muscle-up-leste": 1.056,
+      "sl-squat-competition": 0.939
      },
      "eventTargets": 4,
      "eventTargetsTested": 4,
-     "meanEventPerformance": 0.974,
+     "meanEventPerformance": 0.991,
      "unlockWeek": {
       "loads_reps": 1,
       "volume": 2,
@@ -13222,83 +13224,83 @@
      "blocks": 3,
      "truth": "a",
      "coached": true,
-     "effortGap": 0.881,
-     "effortBias": 0.736,
-     "effortReachableShare": 0.647,
-     "harderRate": 0.006,
-     "easierRate": 0.068,
+     "effortGap": 0.919,
+     "effortBias": 0.779,
+     "effortReachableShare": 0.644,
+     "harderRate": 0.005,
+     "easierRate": 0.074,
      "coachFailureRate": 0.004,
      "maxSchemeRise": 0.075,
      "schemeRisesOverLimit": 0,
      "attempts": 12,
-     "attemptsMade": 12,
+     "attemptsMade": 11,
      "openerRate": 1.0,
-     "eventOverDayMax": 0.946,
+     "eventOverDayMax": 0.958,
      "effortByExercise": {
       "sl-traction-lestee": [
-       105,
-       4.014,
-       6.32
+       98,
+       4.189,
+       6.679
       ],
       "sl-dips-leste": [
-       113,
-       4.412,
-       7.65
+       109,
+       4.239,
+       6.889
       ],
       "mu-rowing-barre-pronation": [
        60,
-       2.433,
-       3.982
+       2.425,
+       3.941
       ],
       "mu-curl-marteau-halteres": [
        48,
        3.208,
-       6.074
+       6.1
       ],
       "mu-wrist-curl-barre": [
        48,
        5.0,
-       10.733
+       10.837
       ],
       "sl-squat-competition": [
        103,
-       4.748,
-       11.843
+       4.791,
+       11.542
       ],
       "mu-souleve-de-terre-roumain-barre": [
        51,
-       2.363,
-       4.958
+       2.353,
+       5.44
       ],
       "mu-rotation-externe-poulie": [
        46,
        5.0,
-       14.574
+       15.206
       ],
       "sl-muscle-up-leste": [
-       89,
-       4.933,
-       12.751
+       88,
+       4.92,
+       11.891
       ],
       "sl-dips-barre-fixe-leste": [
        19,
        4.895,
-       57.678
+       57.746
       ],
       "mu-fente-arriere-halteres": [
        20,
        3.45,
-       7.104
+       7.119
       ],
       "sl-traction-haute-lestee": [
        20,
        4.55,
-       51.352
+       51.233
       ],
       "sl-dips-leste-partiel-haut": [
        12,
        3.25,
-       3.307
+       3.363
       ]
      },
      "verdicts": {
@@ -13318,32 +13320,32 @@
      "weeks": 12,
      "sessionsPlanned": 60,
      "sessionsDone": 60,
-     "sessionsAdjusted": 15,
-     "workSets": 1066,
-     "unwantedFailureRate": 0.013,
-     "nearFailureRate": 0.016,
-     "rirGapReachable": 25.304,
-     "rirGapAll": 22.755,
-     "reachableShare": 0.646,
-     "maxMainLoadRise": 0.358,
-     "mainRisesOverTenPercent": 14,
+     "sessionsAdjusted": 14,
+     "workSets": 1053,
+     "unwantedFailureRate": 0.009,
+     "nearFailureRate": 0.019,
+     "rirGapReachable": 23.478,
+     "rirGapAll": 21.538,
+     "reachableShare": 0.641,
+     "maxMainLoadRise": 0.362,
+     "mainRisesOverTenPercent": 18,
      "mainSingleStepsOverTenPercent": 0,
      "weeklyGainPercent": {
-      "sl-traction-lestee": 0.017,
+      "sl-traction-lestee": 0.016,
       "sl-dips-leste": 0.017,
-      "sl-muscle-up-leste": 0.012,
+      "sl-muscle-up-leste": 0.013,
       "sl-squat-competition": 0.014
      },
      "meanWeeklyGainPercent": 0.015,
      "eventPerformance": {
-      "sl-traction-lestee": 0.944,
-      "sl-dips-leste": 0.881,
-      "sl-muscle-up-leste": 1.102,
-      "sl-squat-competition": 0.953
+      "sl-traction-lestee": 0.936,
+      "sl-dips-leste": 0.888,
+      "sl-muscle-up-leste": 1.073,
+      "sl-squat-competition": 0.98
      },
      "eventTargets": 4,
      "eventTargetsTested": 4,
-     "meanEventPerformance": 0.97,
+     "meanEventPerformance": 0.969,
      "unlockWeek": {
       "loads_reps": 1,
       "volume": 2,
@@ -13358,63 +13360,63 @@
      "blocks": 3,
      "truth": "c",
      "coached": true,
-     "effortGap": 2.274,
-     "effortBias": 1.918,
-     "effortReachableShare": 0.646,
-     "harderRate": 0.028,
-     "easierRate": 0.12,
-     "coachFailureRate": 0.013,
+     "effortGap": 2.879,
+     "effortBias": 2.499,
+     "effortReachableShare": 0.641,
+     "harderRate": 0.03,
+     "easierRate": 0.146,
+     "coachFailureRate": 0.009,
      "maxSchemeRise": 0.092,
      "schemeRisesOverLimit": 0,
      "attempts": 12,
      "attemptsMade": 12,
      "openerRate": 1.0,
-     "eventOverDayMax": 0.933,
+     "eventOverDayMax": 0.939,
      "effortByExercise": {
       "sl-traction-lestee": [
-       103,
-       3.99,
-       22.24
+       96,
+       4.083,
+       24.654
       ],
       "sl-dips-leste": [
-       117,
-       4.496,
-       31.3
+       113,
+       4.451,
+       23.157
       ],
       "mu-rowing-barre-pronation": [
        60,
        2.483,
-       5.312
+       5.864
       ],
       "mu-curl-marteau-halteres": [
        42,
        3.179,
-       15.397
+       22.656
       ],
       "mu-wrist-curl-barre": [
        48,
        5.0,
-       12.044
+       12.141
       ],
       "sl-squat-competition": [
        96,
-       4.839,
-       24.078
+       4.755,
+       24.671
       ],
       "mu-souleve-de-terre-roumain-barre": [
        53,
-       2.396,
-       12.634
+       2.358,
+       12.048
       ],
       "mu-rotation-externe-poulie": [
        42,
        5.0,
-       73.348
+       73.281
       ],
       "sl-muscle-up-leste": [
-       88,
-       4.932,
-       64.754
+       87,
+       4.914,
+       55.344
       ],
       "sl-dips-barre-fixe-leste": [
        19,
@@ -13424,7 +13426,7 @@
       "mu-fente-arriere-halteres": [
        20,
        3.7,
-       18.528
+       18.573
       ],
       "sl-traction-haute-lestee": [
        20,
@@ -13434,12 +13436,12 @@
       "sl-dips-leste-partiel-haut": [
        12,
        3.25,
-       6.104
+       6.157
       ],
       "mu-hollow-body-hold": [
-       6,
+       5,
        5.0,
-       5.847
+       5.772
       ]
      },
      "verdicts": {
@@ -13495,9 +13497,9 @@
     44,
     44,
     28,
+    39,
     44,
-    44,
-    44,
+    43,
     28,
     44,
     44,
@@ -13516,13 +13518,13 @@
       "floor": 12.0,
       "ceiling": 30.0,
       "meanSetsByGroup": {
-       "chest": 14.182,
+       "chest": 13.909,
        "delt_anterior": 10.182,
        "delt_middle": 2.091,
-       "delt_posterior": 11.591,
-       "lats": 14.091,
-       "upper_back": 10.091,
-       "biceps": 7.045,
+       "delt_posterior": 11.318,
+       "lats": 13.545,
+       "upper_back": 9.818,
+       "biceps": 6.773,
        "triceps": 12.727,
        "abs": 12.0,
        "lower_back": 6.0,
@@ -13575,9 +13577,9 @@
     {
      "code": "equilibre_poussee_tirage",
      "score": 1.0,
-     "detail": "Séries dures de tirage / de poussée sur les semaines de montée : 155 / 112 (rapport 1.38).",
+     "detail": "Séries dures de tirage / de poussée sur les semaines de montée : 149 / 112 (rapport 1.33).",
      "values": {
-      "pull": 155.0,
+      "pull": 149.0,
       "push": 112.0
      }
     },
@@ -13903,7 +13905,6 @@
      "mu-rotation-externe-elastique|2x12-15",
      "sl-dips-leste|3x5-5",
      "sl-traction-lestee|2x4-4",
-     "sl-traction-lestee|3x4-4",
      "sw-row-australien-anneaux|2x10-12",
      "sw-skater-squat|2x8-10",
      "sw-traction-scapulaire|2x8-10"
@@ -14021,20 +14022,20 @@
     "weeks": 16,
     "sessionsPlanned": 96,
     "sessionsDone": 91,
-    "sessionsAdjusted": 7,
-    "workSets": 1519,
+    "sessionsAdjusted": 12,
+    "workSets": 1518,
     "unwantedFailureRate": 0.0,
     "nearFailureRate": 0.0,
-    "rirGapReachable": 1.996,
-    "rirGapAll": 15.049,
-    "reachableShare": 0.378,
+    "rirGapReachable": 2.069,
+    "rirGapAll": 15.258,
+    "reachableShare": 0.342,
     "maxMainLoadRise": 0.0,
     "mainRisesOverTenPercent": 0,
     "mainSingleStepsOverTenPercent": 0,
     "weeklyGainPercent": {
-     "cs-front-lever": 0.064
+     "cs-front-lever": 0.063
     },
-    "meanWeeklyGainPercent": 0.064,
+    "meanWeeklyGainPercent": 0.063,
     "eventPerformance": {},
     "eventTargets": 0,
     "eventTargetsTested": 0,
@@ -14046,18 +14047,22 @@
      "session_restructure": 5,
      "block_restructure": 9
     },
-    "proposalsApplied": {},
+    "proposalsApplied": {
+     "exercise_swap": 1
+    },
     "unlockViolations": 0,
-    "proposalsWithheld": {},
+    "proposalsWithheld": {
+     "pain_sparing:dose": 2
+    },
     "painAggravations": 0,
     "blocks": 4,
     "truth": "b",
     "coached": true,
-    "effortGap": 0.978,
-    "effortBias": 0.929,
-    "effortReachableShare": 0.374,
+    "effortGap": 1.193,
+    "effortBias": 1.103,
+    "effortReachableShare": 0.339,
     "harderRate": 0.0,
-    "easierRate": 0.12,
+    "easierRate": 0.134,
     "coachFailureRate": 0.0,
     "maxSchemeRise": 0.0,
     "schemeRisesOverLimit": 0,
@@ -14067,49 +14072,54 @@
     "eventOverDayMax": null,
     "effortByExercise": {
      "cs-planche-straddle": [
-      154,
-      4.558,
-      5.353
+      135,
+      4.563,
+      5.384
      ],
      "cd-planche-pushup-straddle-elastique": [
       25,
       3.4,
-      5.643
+      5.641
      ],
      "cs-front-lever": [
-      208,
-      4.791,
-      5.725
+      167,
+      4.066,
+      4.753
      ],
      "sl-traction-lestee": [
-      73,
-      3.808,
-      5.763
+      72,
+      4.264,
+      6.141
      ],
      "sl-dips-leste": [
       84,
-      3.042,
-      8.612
+      3.244,
+      8.818
      ],
      "cd-ice-cream-maker": [
-      6,
+      9,
       5.0,
-      10.327
+      9.689
      ],
      "mu-nordic-hamstring-curl-assiste": [
       24,
       4.958,
-      9.799
+      9.79
      ],
      "cd-hspu-mur-deficit-parallettes": [
       3,
       5.0,
-      10.305
+      10.275
      ],
      "cd-planche-pushup-tuck-avance": [
-      7,
-      3.571,
-      7.402
+      3,
+      3.0,
+      7.187
+     ],
+     "cd-german-hang-pull-out": [
+      3,
+      3.667,
+      7.385
      ]
     },
     "verdicts": {
@@ -14119,7 +14129,7 @@
      "performance_echeance": null,
      "deblocages": true,
      "douleur": true,
-     "ecart_effort": true,
+     "ecart_effort": false,
      "pics_a_schema_egal": true,
      "ouvertures": null
     }
@@ -14129,20 +14139,20 @@
      "weeks": 16,
      "sessionsPlanned": 96,
      "sessionsDone": 91,
-     "sessionsAdjusted": 4,
+     "sessionsAdjusted": 5,
      "workSets": 1487,
      "unwantedFailureRate": 0.0,
      "nearFailureRate": 0.0,
-     "rirGapReachable": 1.648,
-     "rirGapAll": 15.521,
-     "reachableShare": 0.412,
+     "rirGapReachable": 1.599,
+     "rirGapAll": 15.474,
+     "reachableShare": 0.404,
      "maxMainLoadRise": 0.0,
      "mainRisesOverTenPercent": 0,
      "mainSingleStepsOverTenPercent": 0,
      "weeklyGainPercent": {
-      "cs-front-lever": 0.111
+      "cs-front-lever": 0.11
      },
-     "meanWeeklyGainPercent": 0.111,
+     "meanWeeklyGainPercent": 0.11,
      "eventPerformance": {},
      "eventTargets": 0,
      "eventTargetsTested": 0,
@@ -14161,11 +14171,11 @@
      "blocks": 4,
      "truth": "a",
      "coached": true,
-     "effortGap": 0.653,
-     "effortBias": 0.606,
-     "effortReachableShare": 0.41,
+     "effortGap": 0.767,
+     "effortBias": 0.71,
+     "effortReachableShare": 0.402,
      "harderRate": 0.0,
-     "easierRate": 0.054,
+     "easierRate": 0.055,
      "coachFailureRate": 0.0,
      "maxSchemeRise": 0.0,
      "schemeRisesOverLimit": 0,
@@ -14177,52 +14187,52 @@
       "cs-planche-straddle": [
        162,
        4.349,
-       5.019
+       5.016
       ],
       "cd-planche-pushup-straddle-elastique": [
        25,
        3.12,
-       5.063
+       5.061
       ],
       "cs-front-lever": [
-       208,
-       4.791,
-       5.739
+       198,
+       4.177,
+       4.882
       ],
       "sl-traction-lestee": [
        67,
-       3.866,
-       5.877
+       4.254,
+       6.308
       ],
       "sl-dips-leste": [
        85,
-       2.988,
-       6.542
+       3.024,
+       6.667
       ],
       "cd-ice-cream-maker": [
        34,
        4.529,
-       7.512
+       7.502
       ],
       "mu-nordic-hamstring-curl-assiste": [
        25,
        5.0,
-       10.25
+       10.24
       ],
       "cd-planche-pushup-tuck-avance": [
        7,
        3.571,
-       7.192
+       7.189
       ],
       "cd-hspu-mur-deficit-parallettes": [
        2,
        5.0,
-       9.114
+       9.119
       ],
       "sw-skater-squat": [
        4,
        4.0,
-       7.855
+       7.832
       ]
      },
      "verdicts": {
@@ -14242,20 +14252,20 @@
      "weeks": 16,
      "sessionsPlanned": 96,
      "sessionsDone": 91,
-     "sessionsAdjusted": 7,
-     "workSets": 1509,
-     "unwantedFailureRate": 0.001,
+     "sessionsAdjusted": 8,
+     "workSets": 1504,
+     "unwantedFailureRate": 0.0,
      "nearFailureRate": 0.0,
-     "rirGapReachable": 3.817,
-     "rirGapAll": 15.713,
-     "reachableShare": 0.42,
+     "rirGapReachable": 4.711,
+     "rirGapAll": 15.955,
+     "reachableShare": 0.38,
      "maxMainLoadRise": 0.0,
      "mainRisesOverTenPercent": 0,
      "mainSingleStepsOverTenPercent": 0,
      "weeklyGainPercent": {
-      "cs-front-lever": 0.065
+      "cs-front-lever": 0.059
      },
-     "meanWeeklyGainPercent": 0.065,
+     "meanWeeklyGainPercent": 0.059,
      "eventPerformance": {},
      "eventTargets": 0,
      "eventTargetsTested": 0,
@@ -14274,12 +14284,12 @@
      "blocks": 4,
      "truth": "c",
      "coached": true,
-     "effortGap": 1.11,
-     "effortBias": 0.993,
-     "effortReachableShare": 0.418,
-     "harderRate": 0.003,
-     "easierRate": 0.053,
-     "coachFailureRate": 0.001,
+     "effortGap": 1.225,
+     "effortBias": 1.059,
+     "effortReachableShare": 0.38,
+     "harderRate": 0.002,
+     "easierRate": 0.049,
+     "coachFailureRate": 0.0,
      "maxSchemeRise": 0.0,
      "schemeRisesOverLimit": 0,
      "attempts": 0,
@@ -14290,42 +14300,42 @@
       "cs-planche-straddle": [
        151,
        4.556,
-       5.052
+       5.044
       ],
       "cd-planche-pushup-straddle-elastique": [
-       36,
-       3.042,
-       4.708
+       34,
+       3.044,
+       4.732
       ],
       "cs-front-lever": [
-       228,
-       4.671,
-       5.295
+       178,
+       3.598,
+       3.873
       ],
       "sl-traction-lestee": [
-       73,
-       4.479,
-       23.203
+       72,
+       4.451,
+       15.462
       ],
       "sl-dips-leste": [
-       84,
-       3.488,
-       20.558
+       82,
+       3.537,
+       31.638
       ],
       "cd-ice-cream-maker": [
        46,
        4.283,
-       6.788
+       6.768
       ],
       "mu-nordic-hamstring-curl-assiste": [
        27,
        4.981,
-       9.908
+       9.853
       ],
       "cd-hspu-mur-deficit-parallettes": [
        3,
        5.0,
-       9.163
+       9.093
       ]
      },
      "verdicts": {
@@ -15610,16 +15620,16 @@
     "workSets": 721,
     "unwantedFailureRate": 0.0,
     "nearFailureRate": 0.0,
-    "rirGapReachable": 2.558,
-    "rirGapAll": 4.165,
+    "rirGapReachable": 2.626,
+    "rirGapAll": 4.222,
     "reachableShare": 0.626,
-    "maxMainLoadRise": 0.254,
+    "maxMainLoadRise": 0.222,
     "mainRisesOverTenPercent": 4,
     "mainSingleStepsOverTenPercent": 0,
     "weeklyGainPercent": {
-     "sl-dips-leste": 0.255
+     "sl-dips-leste": 0.254
     },
-    "meanWeeklyGainPercent": 0.255,
+    "meanWeeklyGainPercent": 0.254,
     "eventPerformance": {},
     "eventTargets": 0,
     "eventTargetsTested": 0,
@@ -15637,11 +15647,11 @@
     "blocks": 2,
     "truth": "b",
     "coached": true,
-    "effortGap": 1.383,
-    "effortBias": 1.307,
+    "effortGap": 1.472,
+    "effortBias": 1.396,
     "effortReachableShare": 0.617,
     "harderRate": 0.0,
-    "easierRate": 0.128,
+    "easierRate": 0.153,
     "coachFailureRate": 0.0,
     "maxSchemeRise": 0.013,
     "schemeRisesOverLimit": 0,
@@ -15652,63 +15662,63 @@
     "effortByExercise": {
      "sl-dips-leste": [
       80,
-      3.831,
-      6.29
+      3.775,
+      6.545
      ],
      "sw-traction-neutre": [
       27,
       3.852,
-      8.05
+      8.055
      ],
      "mu-rowing-haltere-unilateral-banc": [
       70,
       2.393,
-      4.986
+      4.991
      ],
      "mu-hollow-body-hold": [
       34,
       2.191,
-      2.523
+      2.525
      ],
      "sl-squat-competition": [
       31,
       4.661,
-      7.383
+      7.392
      ],
      "mu-souleve-de-terre-roumain-barre": [
       31,
       2.323,
-      4.863
+      4.87
      ],
      "sw-releve-jambes-tendues-suspendu": [
       52,
       2.952,
-      4.455
+      4.458
      ],
      "mu-rotation-externe-poulie": [
       46,
       5.0,
-      12.034
+      12.014
      ],
      "sw-dips-barres-paralleles": [
       28,
       4.321,
-      6.265
+      6.269
      ],
      "mu-fente-arriere-halteres": [
       22,
       3.045,
-      7.873
+      7.876
      ],
      "mu-gainage-lateral-coude": [
       45,
       2.578,
-      3.3
+      3.301
      ],
      "mu-pont-fessier-sol": [
       8,
       5.0,
-      9.166
+      9.176
      ]
     },
     "verdicts": {
@@ -15732,8 +15742,8 @@
      "workSets": 718,
      "unwantedFailureRate": 0.0,
      "nearFailureRate": 0.003,
-     "rirGapReachable": 2.628,
-     "rirGapAll": 5.051,
+     "rirGapReachable": 2.631,
+     "rirGapAll": 5.053,
      "reachableShare": 0.688,
      "maxMainLoadRise": 0.308,
      "mainRisesOverTenPercent": 2,
@@ -15759,8 +15769,8 @@
      "blocks": 2,
      "truth": "a",
      "coached": true,
-     "effortGap": 0.912,
-     "effortBias": 0.791,
+     "effortGap": 0.914,
+     "effortBias": 0.788,
      "effortReachableShare": 0.685,
      "harderRate": 0.002,
      "easierRate": 0.067,
@@ -15774,7 +15784,7 @@
      "effortByExercise": {
       "sl-dips-leste": [
        77,
-       4.11,
+       4.123,
        5.662
       ],
       "sw-traction-neutre": [
@@ -15856,19 +15866,19 @@
      "sessionsPlanned": 48,
      "sessionsDone": 48,
      "sessionsAdjusted": 6,
-     "workSets": 720,
-     "unwantedFailureRate": 0.008,
-     "nearFailureRate": 0.015,
-     "rirGapReachable": 6.372,
-     "rirGapAll": 9.511,
-     "reachableShare": 0.66,
+     "workSets": 718,
+     "unwantedFailureRate": 0.01,
+     "nearFailureRate": 0.011,
+     "rirGapReachable": 6.208,
+     "rirGapAll": 9.396,
+     "reachableShare": 0.662,
      "maxMainLoadRise": 0.286,
      "mainRisesOverTenPercent": 1,
      "mainSingleStepsOverTenPercent": 0,
      "weeklyGainPercent": {
-      "sl-dips-leste": 0.198
+      "sl-dips-leste": 0.195
      },
-     "meanWeeklyGainPercent": 0.198,
+     "meanWeeklyGainPercent": 0.195,
      "eventPerformance": {},
      "eventTargets": 0,
      "eventTargetsTested": 0,
@@ -15886,12 +15896,12 @@
      "blocks": 2,
      "truth": "c",
      "coached": true,
-     "effortGap": 2.347,
-     "effortBias": 2.032,
-     "effortReachableShare": 0.652,
+     "effortGap": 2.424,
+     "effortBias": 2.129,
+     "effortReachableShare": 0.654,
      "harderRate": 0.007,
      "easierRate": 0.131,
-     "coachFailureRate": 0.008,
+     "coachFailureRate": 0.009,
      "maxSchemeRise": 0.014,
      "schemeRisesOverLimit": 0,
      "attempts": 3,
@@ -15900,69 +15910,69 @@
      "eventOverDayMax": null,
      "effortByExercise": {
       "sl-dips-leste": [
-       80,
-       4.35,
-       11.469
+       78,
+       4.41,
+       11.252
       ],
       "sw-traction-neutre": [
        34,
        4.191,
-       8.327
+       8.333
       ],
       "mu-rowing-haltere-unilateral-banc": [
        70,
        2.393,
-       13.21
+       13.151
       ],
       "mu-hollow-body-hold": [
        33,
        2.258,
-       2.639
+       2.642
       ],
       "sl-squat-competition": [
        30,
        4.35,
-       16.282
+       14.27
       ],
       "mu-souleve-de-terre-roumain-barre": [
        32,
        2.313,
-       12.849
+       12.935
       ],
       "sw-releve-jambes-tendues-suspendu": [
        52,
        3.038,
-       4.574
+       4.578
       ],
       "mu-rotation-externe-poulie": [
        18,
        5.0,
-       52.381
+       52.383
       ],
       "mu-gainage-lateral-coude": [
        52,
        3.288,
-       4.386
+       4.384
       ],
       "sw-dips-barres-paralleles": [
        27,
        4.389,
-       6.525
+       6.532
       ],
       "mu-fente-arriere-halteres": [
        20,
        3.1,
-       20.47
+       20.523
       ],
       "mu-wrist-curl-barre": [
-       49,
-       4.633,
-       19.128
+       51,
+       4.608,
+       18.077
       ],
       "mu-pont-fessier-sol": [
        5,
        4.7,
-       9.419
+       9.434
       ]
      },
      "verdicts": {
@@ -18202,9 +18212,9 @@
     42,
     42,
     27,
+    33,
     42,
-    42,
-    39,
+    37,
     39,
     17,
     18
@@ -18221,13 +18231,13 @@
       "floor": 10.0,
       "ceiling": 25.0,
       "meanSetsByGroup": {
-       "chest": 11.5,
+       "chest": 10.583,
        "delt_anterior": 5.0,
        "delt_middle": 0.0,
-       "delt_posterior": 9.5,
-       "lats": 19.0,
-       "upper_back": 12.5,
-       "biceps": 15.5,
+       "delt_posterior": 8.583,
+       "lats": 17.167,
+       "upper_back": 11.583,
+       "biceps": 14.583,
        "triceps": 5.0,
        "abs": 2.0,
        "lower_back": 1.0,
@@ -18263,11 +18273,11 @@
     },
     {
      "code": "specificite",
-     "score": 0.841,
-     "detail": "Part des séries dures sur les mouvements de l'échéance : 33 % avant les quatre dernières semaines, 34 % pendant.",
+     "score": 0.811,
+     "detail": "Part des séries dures sur les mouvements de l'échéance : 30 % avant les quatre dernières semaines, 32 % pendant.",
      "values": {
-      "earlyShare": 0.328,
-      "lateShare": 0.336
+      "earlyShare": 0.301,
+      "lateShare": 0.324
      }
     },
     {
@@ -18282,10 +18292,10 @@
     },
     {
      "code": "equilibre_poussee_tirage",
-     "score": 0.526,
-     "detail": "Séries dures de tirage / de poussée sur les semaines de montée : 114 / 30 (rapport 3.80).",
+     "score": 0.583,
+     "detail": "Séries dures de tirage / de poussée sur les semaines de montée : 103 / 30 (rapport 3.43).",
      "values": {
-      "pull": 114.0,
+      "pull": 103.0,
       "push": 30.0
      }
     },
@@ -18319,16 +18329,16 @@
     {
      "code": "non_ressemblance_proprietaire",
      "score": 1.0,
-     "detail": "Indice de Jaccard le plus haut entre une semaine générée et une semaine du propriétaire : exercices 0.174, exercices × schémas 0.086 (seuil 0.3).",
+     "detail": "Indice de Jaccard le plus haut entre une semaine générée et une semaine du propriétaire : exercices 0.174, exercices × schémas 0.088 (seuil 0.3).",
      "values": {
       "exercises": 0.174,
-      "exerciseSchemes": 0.086,
+      "exerciseSchemes": 0.088,
       "limit": 0.3
      }
     }
    ],
-   "qualityMean": 0.76,
-   "checksOk": 8,
+   "qualityMean": 0.763,
+   "checksOk": 7,
    "checksTotal": 8,
    "checks": [
     {
@@ -18342,8 +18352,8 @@
      "id": "c2",
      "type": "priority_share",
      "label": "Au moins 30 % des séries dures sur la traction lestée et ses variantes",
-     "ok": true,
-     "observed": "32 % des séries dures en montée"
+     "ok": false,
+     "observed": "29 % des séries dures en montée"
     },
     {
      "id": "c3",
@@ -18503,9 +18513,8 @@
      "sl-dips-leste|3x3-3",
      "sl-squat-competition|2x5-5",
      "sl-squat-competition|3x3-3",
+     "sl-traction-lestee|3x2-2",
      "sl-traction-lestee|3x3-3",
-     "sl-traction-lestee|4x2-2",
-     "sl-traction-lestee|4x3-3",
      "sw-active-hang|2x15-20s",
      "sw-releve-jambes-tendues-suspendu|2x8-12",
      "sw-row-scapulaire|2x12-15"
@@ -18559,26 +18568,26 @@
     "weeks": 10,
     "sessionsPlanned": 40,
     "sessionsDone": 40,
-    "sessionsAdjusted": 8,
-    "workSets": 492,
+    "sessionsAdjusted": 9,
+    "workSets": 488,
     "unwantedFailureRate": 0.002,
-    "nearFailureRate": 0.01,
-    "rirGapReachable": 2.464,
-    "rirGapAll": 7.041,
-    "reachableShare": 0.714,
-    "maxMainLoadRise": 0.354,
-    "mainRisesOverTenPercent": 4,
+    "nearFailureRate": 0.005,
+    "rirGapReachable": 2.377,
+    "rirGapAll": 6.984,
+    "reachableShare": 0.711,
+    "maxMainLoadRise": 0.305,
+    "mainRisesOverTenPercent": 5,
     "mainSingleStepsOverTenPercent": 0,
     "weeklyGainPercent": {
      "sl-traction-lestee": 0.118
     },
     "meanWeeklyGainPercent": 0.118,
     "eventPerformance": {
-     "sl-traction-lestee": 1.034
+     "sl-traction-lestee": 1.045
     },
     "eventTargets": 1,
     "eventTargetsTested": 1,
-    "meanEventPerformance": 1.034,
+    "meanEventPerformance": 1.045,
     "unlockWeek": {
      "loads_reps": 1,
      "volume": 2,
@@ -18592,63 +18601,63 @@
     "blocks": 2,
     "truth": "b",
     "coached": true,
-    "effortGap": 1.14,
-    "effortBias": 0.954,
-    "effortReachableShare": 0.708,
+    "effortGap": 1.015,
+    "effortBias": 0.828,
+    "effortReachableShare": 0.706,
     "harderRate": 0.0,
-    "easierRate": 0.064,
+    "easierRate": 0.055,
     "coachFailureRate": 0.002,
     "maxSchemeRise": 0.054,
     "schemeRisesOverLimit": 0,
     "attempts": 3,
     "attemptsMade": 3,
     "openerRate": 1.0,
-    "eventOverDayMax": 0.982,
+    "eventOverDayMax": 0.992,
     "effortByExercise": {
      "sl-traction-lestee": [
-      107,
-      4.075,
-      6.572
+      104,
+      4.202,
+      6.592
      ],
      "sl-squat-competition": [
       43,
-      4.523,
-      6.799
+      4.756,
+      6.659
      ],
      "sl-dips-leste": [
-      43,
-      3.372,
-      4.777
+      42,
+      3.571,
+      4.856
      ],
      "mu-rowing-barre-pronation": [
       48,
-      2.51,
-      3.401
+      2.542,
+      3.382
      ],
      "mu-curl-marteau-halteres": [
       42,
-      2.345,
-      2.518
+      2.381,
+      2.569
      ],
      "mu-souleve-de-terre-roumain-barre": [
       16,
       2.719,
-      3.351
+      3.377
      ],
      "sw-releve-jambes-tendues-suspendu": [
       20,
-      3.825,
-      10.159
+      3.75,
+      10.01
      ],
      "mu-rotation-externe-poulie": [
       38,
       5.0,
-      11.336
+      11.359
      ],
      "mu-fente-arriere-halteres": [
       16,
       3.063,
-      8.494
+      8.398
      ]
     },
     "verdicts": {
@@ -18669,13 +18678,13 @@
      "sessionsPlanned": 40,
      "sessionsDone": 40,
      "sessionsAdjusted": 4,
-     "workSets": 503,
-     "unwantedFailureRate": 0.0,
-     "nearFailureRate": 0.002,
-     "rirGapReachable": 2.068,
-     "rirGapAll": 6.931,
-     "reachableShare": 0.721,
-     "maxMainLoadRise": 0.337,
+     "workSets": 497,
+     "unwantedFailureRate": 0.002,
+     "nearFailureRate": 0.005,
+     "rirGapReachable": 2.112,
+     "rirGapAll": 7.039,
+     "reachableShare": 0.717,
+     "maxMainLoadRise": 0.307,
      "mainRisesOverTenPercent": 4,
      "mainSingleStepsOverTenPercent": 0,
      "weeklyGainPercent": {
@@ -18683,11 +18692,11 @@
      },
      "meanWeeklyGainPercent": 0.097,
      "eventPerformance": {
-      "sl-traction-lestee": 1.024
+      "sl-traction-lestee": 1.022
      },
      "eventTargets": 1,
      "eventTargetsTested": 1,
-     "meanEventPerformance": 1.024,
+     "meanEventPerformance": 1.022,
      "unlockWeek": {
       "loads_reps": 1,
       "volume": 2,
@@ -18701,12 +18710,12 @@
      "blocks": 2,
      "truth": "a",
      "coached": true,
-     "effortGap": 0.96,
-     "effortBias": 0.785,
-     "effortReachableShare": 0.716,
+     "effortGap": 0.928,
+     "effortBias": 0.768,
+     "effortReachableShare": 0.712,
      "harderRate": 0.0,
-     "easierRate": 0.065,
-     "coachFailureRate": 0.0,
+     "easierRate": 0.066,
+     "coachFailureRate": 0.002,
      "maxSchemeRise": 0.081,
      "schemeRisesOverLimit": 0,
      "attempts": 3,
@@ -18715,49 +18724,49 @@
      "eventOverDayMax": 0.995,
      "effortByExercise": {
       "sl-traction-lestee": [
-       115,
-       3.626,
-       5.708
+       109,
+       3.844,
+       6.118
       ],
       "sl-squat-competition": [
        45,
        4.611,
-       7.311
+       7.135
       ],
       "sl-dips-leste": [
        44,
        3.636,
-       4.188
+       4.207
       ],
       "mu-rowing-barre-pronation": [
        48,
        2.354,
-       3.027
+       3.065
       ],
       "mu-curl-marteau-halteres": [
        42,
        2.214,
-       3.25
+       3.431
       ],
       "mu-souleve-de-terre-roumain-barre": [
        16,
-       2.469,
-       3.708
+       2.438,
+       3.582
       ],
       "sw-releve-jambes-tendues-suspendu": [
        20,
        3.65,
-       8.699
+       8.707
       ],
       "mu-rotation-externe-poulie": [
        38,
        5.0,
-       10.389
+       10.347
       ],
       "mu-fente-arriere-halteres": [
        16,
        3.063,
-       8.686
+       8.7
       ]
      },
      "verdicts": {
@@ -18778,13 +18787,13 @@
      "sessionsPlanned": 40,
      "sessionsDone": 40,
      "sessionsAdjusted": 8,
-     "workSets": 499,
+     "workSets": 493,
      "unwantedFailureRate": 0.014,
-     "nearFailureRate": 0.012,
-     "rirGapReachable": 10.673,
-     "rirGapAll": 16.44,
-     "reachableShare": 0.648,
-     "maxMainLoadRise": 0.353,
+     "nearFailureRate": 0.017,
+     "rirGapReachable": 9.374,
+     "rirGapAll": 15.689,
+     "reachableShare": 0.643,
+     "maxMainLoadRise": 0.337,
      "mainRisesOverTenPercent": 4,
      "mainSingleStepsOverTenPercent": 0,
      "weeklyGainPercent": {
@@ -18792,11 +18801,11 @@
      },
      "meanWeeklyGainPercent": 0.09,
      "eventPerformance": {
-      "sl-traction-lestee": 0.976
+      "sl-traction-lestee": 0.985
      },
      "eventTargets": 1,
      "eventTargetsTested": 1,
-     "meanEventPerformance": 0.976,
+     "meanEventPerformance": 0.985,
      "unlockWeek": {
       "loads_reps": 1,
       "volume": 2,
@@ -18810,12 +18819,12 @@
      "blocks": 2,
      "truth": "c",
      "coached": true,
-     "effortGap": 4.567,
-     "effortBias": 4.233,
-     "effortReachableShare": 0.642,
+     "effortGap": 4.73,
+     "effortBias": 4.39,
+     "effortReachableShare": 0.637,
      "harderRate": 0.0,
-     "easierRate": 0.23,
-     "coachFailureRate": 0.013,
+     "easierRate": 0.246,
+     "coachFailureRate": 0.014,
      "maxSchemeRise": 0.081,
      "schemeRisesOverLimit": 0,
      "attempts": 3,
@@ -18824,44 +18833,44 @@
      "eventOverDayMax": 0.958,
      "effortByExercise": {
       "sl-traction-lestee": [
-       112,
-       4.071,
-       23.496
+       106,
+       4.132,
+       20.522
       ],
       "sl-squat-competition": [
        45,
-       4.267,
-       18.936
+       4.233,
+       18.947
       ],
       "sl-dips-leste": [
        43,
        3.779,
-       5.284
+       5.277
       ],
       "mu-rowing-barre-pronation": [
        48,
        2.521,
-       5.612
+       5.666
       ],
       "mu-curl-marteau-halteres": [
        40,
        2.325,
-       24.519
+       24.676
       ],
       "mu-souleve-de-terre-roumain-barre": [
        16,
        2.594,
-       11.246
+       11.33
       ],
       "sw-releve-jambes-tendues-suspendu": [
        20,
        3.825,
-       9.093
+       9.095
       ],
       "mu-fente-arriere-halteres": [
        14,
-       3.179,
-       14.212
+       3.071,
+       15.338
       ],
       "mu-rotation-externe-poulie": [
        2,
@@ -19612,112 +19621,112 @@
  ],
  "timingsMs": {
   "autres_01_debutant_musculation": {
-   "createBlockMs": 189.3,
-   "benchMs": 526.2
+   "createBlockMs": 316.8,
+   "benchMs": 813.1
   },
   "autres_02_hypertrophie_intermediaire": {
-   "createBlockMs": 101.4,
-   "benchMs": 349.9
+   "createBlockMs": 324.3,
+   "benchMs": 509.2
   },
   "autres_03_powerlifter_competition": {
-   "createBlockMs": 396.8,
-   "benchMs": 330.4
+   "createBlockMs": 499.8,
+   "benchMs": 682.9
   },
   "autres_04_force_generale_46_ans": {
-   "createBlockMs": 108.3,
-   "benchMs": 253.6
+   "createBlockMs": 170.6,
+   "benchMs": 400.9
   },
   "autres_05_course_10_km_debutante": {
-   "createBlockMs": 17.5,
-   "benchMs": 28.0
+   "createBlockMs": 33.7,
+   "benchMs": 38.1
   },
   "autres_06_semi_marathon_intermediaire": {
-   "createBlockMs": 30.9,
-   "benchMs": 73.4
+   "createBlockMs": 51.3,
+   "benchMs": 99.2
   },
   "autres_07_mobilite_sante_senior": {
-   "createBlockMs": 28.4,
-   "benchMs": 58.5
+   "createBlockMs": 38.7,
+   "benchMs": 97.4
   },
   "autres_08_crossfit_intermediaire": {
-   "createBlockMs": 74.4,
-   "benchMs": 347.2
+   "createBlockMs": 90.8,
+   "benchMs": 464.9
   },
   "autres_09_perte_de_poids_debutante": {
-   "createBlockMs": 27.8,
-   "benchMs": 73.8
+   "createBlockMs": 41.5,
+   "benchMs": 119.9
   },
   "autres_10_contraintes_multiples": {
-   "createBlockMs": 22.5,
-   "benchMs": 57.3
+   "createBlockMs": 28.1,
+   "benchMs": 66.2
   },
   "street_01_debutant_complet": {
-   "createBlockMs": 34.2,
-   "benchMs": 203.3
+   "createBlockMs": 89.2,
+   "benchMs": 365.5
   },
   "street_02_debutant_surpoids": {
-   "createBlockMs": 14.4,
-   "benchMs": 157.6
+   "createBlockMs": 11.0,
+   "benchMs": 238.4
   },
   "street_03_debutante": {
-   "createBlockMs": 9.3,
-   "benchMs": 222.8
+   "createBlockMs": 8.9,
+   "benchMs": 411.3
   },
   "street_04_reprise_longue_pause": {
-   "createBlockMs": 74.8,
-   "benchMs": 174.5
+   "createBlockMs": 106.4,
+   "benchMs": 236.1
   },
   "street_05_inter_calisthenie_front_lever": {
-   "createBlockMs": 15.3,
-   "benchMs": 317.1
+   "createBlockMs": 34.3,
+   "benchMs": 631.5
   },
   "street_06_inter_sets_reps": {
-   "createBlockMs": 5.6,
-   "benchMs": 155.2
+   "createBlockMs": 6.8,
+   "benchMs": 210.2
   },
   "street_07_avance_streetlifting_competition": {
-   "createBlockMs": 11.4,
-   "benchMs": 309.0
+   "createBlockMs": 16.0,
+   "benchMs": 287.8
   },
   "street_08_avance_sets_reps_competition": {
-   "createBlockMs": 14.5,
-   "benchMs": 113.8
+   "createBlockMs": 6.9,
+   "benchMs": 130.7
   },
   "street_09_elite_streetlifting": {
-   "createBlockMs": 7.2,
-   "benchMs": 180.0
+   "createBlockMs": 4.9,
+   "benchMs": 260.9
   },
   "street_10_elite_figures": {
-   "createBlockMs": 43.6,
-   "benchMs": 463.2
+   "createBlockMs": 24.7,
+   "benchMs": 573.9
   },
   "street_11_master_51_ans": {
-   "createBlockMs": 2.8,
-   "benchMs": 116.2
+   "createBlockMs": 5.9,
+   "benchMs": 215.9
   },
   "street_12_antecedent_coude": {
-   "createBlockMs": 14.5,
-   "benchMs": 117.4
+   "createBlockMs": 8.5,
+   "benchMs": 126.7
   },
   "street_13_peu_de_temps": {
-   "createBlockMs": 2.6,
-   "benchMs": 48.6
+   "createBlockMs": 3.3,
+   "benchMs": 68.7
   },
   "street_14_parc_sans_lest": {
-   "createBlockMs": 2.0,
-   "benchMs": 65.2
+   "createBlockMs": 6.7,
+   "benchMs": 100.4
   },
   "street_15_travail_physique_sommeil_court": {
-   "createBlockMs": 4.5,
-   "benchMs": 92.5
+   "createBlockMs": 2.7,
+   "benchMs": 122.5
   },
   "street_16_specialisation_traction_lestee": {
-   "createBlockMs": 9.0,
-   "benchMs": 85.8
+   "createBlockMs": 6.2,
+   "benchMs": 99.6
   },
   "street_17_hybride_street_course": {
-   "createBlockMs": 11.5,
-   "benchMs": 65.2
+   "createBlockMs": 12.3,
+   "benchMs": 97.7
   }
  }
 }

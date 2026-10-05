@@ -2907,12 +2907,16 @@ final class Prescriber {
       if (lower) {
         high = 11;
         low = 8;
-        x.reasons.add(
-          _note(
-            CoachNotes.pushHeight,
-            _clampInt(((max - 13) / 5).ceil(), 1, 3),
-          ),
-        );
+        // (Une seule consigne, à la première semaine du bloc — panel p2,
+        // `street_02`, `street_03`.)
+        if (week == 0) {
+          x.reasons.add(
+            _note(
+              CoachNotes.pushHeight,
+              _clampInt(((max - 13) / 5).ceil(), 1, 3),
+            ),
+          );
+        }
       }
       x
         ..repsLow = low
@@ -3144,10 +3148,13 @@ final class Prescriber {
         role == _DayRole.normal &&
         !ws.light &&
         s.method == Method.skillHold &&
-        hold >= 4) {
-      final shorter = _clampInt((hold * 0.6).round(), 2, hold - 1);
+        hold >= 5) {
+      // (75 % de la tenue, 3 s au moins, jusqu'à quinze tenues : le temps
+      // total reste — panel p2, `street_10` : 10 × 2 s ne gardaient que
+      // 20 s, et `street_05` : tenues à 44 % du maintien.)
+      final shorter = _clampInt((hold * 0.75).round(), 3, hold - 1);
       final total = hold * sets;
-      sets = _clampInt((total / shorter).round(), sets, 10);
+      sets = _clampInt((total / shorter).ceil(), sets, 15);
       hold = shorter;
       regroup = true;
     }
@@ -6118,8 +6125,10 @@ final class Prescriber {
         delta = 2;
       }
       var factor = 1 + rise + coachLoadPerRep * delta;
-      if (factor > 1 + rise + 2 * coachLoadPerRep * 4) {
-        factor = 1 + rise + 2 * coachLoadPerRep * 4;
+      // (Quatre répétitions d'écart comptées au plus : panel p2,
+      // `street_08` — +20 % de charge totale en une semaine d'affûtage.)
+      if (factor > 1 + rise + coachLoadPerRep * 4) {
+        factor = 1 + rise + coachLoadPerRep * 4;
       }
       return factor;
     }
@@ -6171,7 +6180,14 @@ final class Prescriber {
         }
         // Même exercice à répétitions égales, quel que soit l'emplacement :
         // +`coachLoadRise` au plus sur la semaine d'avant (CX, correction 1).
-        final same = src?.loadsByExercise['${x.e.id}|$reps'];
+        // (Emplacement nouveau seulement : une série légère du même
+        // exercice ailleurs dans la semaine ne bride pas la séance lourde —
+        // CP2, partie 0, boucle 3 ; panel p2, `street_07`, `street_09` :
+        // dips du jeudi à 68 % en intensification, bridés par le triple
+        // léger du vendredi de l'allègement.)
+        final same = before == null
+            ? src?.loadsByExercise['${x.e.id}|$reps']
+            : null;
         if (same != null && same > 0) {
           allowed = capped(allowed, same * (1 + rise));
         }
@@ -6209,6 +6225,15 @@ final class Prescriber {
             total > allowed + 1e-9) {
           final capped = _external(x.e, allowed, 1);
           if (capped != null && capped < load) {
+            // La réserve écrite suit la charge baissée : environ une
+            // répétition de plus par 3 % de charge en moins (R1-P11 ;
+            // panel p2, `street_07`, `street_09` : « 1 RIR à 71 % × 3 »).
+            final rir = x.rir;
+            final drop = 1 - (capped + fraction * a.bodyWeight) / total;
+            if (rir != null && drop > 0.03) {
+              final more = rir + (drop / 0.03).floorToDouble();
+              x.rir = more > 5 ? 5 : more;
+            }
             x.load = capped;
             total = capped + fraction * a.bodyWeight;
             final oneRm = a.totalOneRm(x.e.id);
