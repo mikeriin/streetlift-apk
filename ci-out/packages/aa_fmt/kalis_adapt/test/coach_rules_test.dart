@@ -191,7 +191,8 @@ void main() {
     // sur le dernier test et la débutante de street_03 reçoit l'échelle de
     // poussée : le cas se cherche sur plusieurs profils et graines, avec un
     // record de pompes surestimé pour street_03 (5 déclarées, 3 réelles).
-    test('plage hors de portée : plus de séries, plus courtes', () {
+    test('séries fractionnées : plus de séries, chacune sous le bas de la '
+        'plage écrite', () {
       var split = 0;
       for (final key in const <String>[
         'street_03_debutante',

@@ -91,7 +91,7 @@ Violations de sécurité : **23** au total (Pas d'allègement avant l'échéance
 | `street_07_avance_streetlifting_competition` | 60/60 | 0.001 | 2.733 | 0.671 | 0.326 | 0.058 | 1.016 | 0 | ecart_rir, pics_de_charge, ecart_effort | 0 |
 | `street_08_avance_sets_reps_competition` | 40/40 | 0.0 | 3.594 | 0.56 | 0.0 | 0.159 | 0.822 | 0 | ecart_rir, performance_echeance | 0 |
 | `street_09_elite_streetlifting` | 60/60 | 0.0 | 3.176 | 0.601 | 0.328 | 0.024 | 1.019 | 0 | ecart_rir, pics_de_charge, ecart_effort | 0 |
-| `street_10_elite_figures` | 91/96 | 0.0 | 2.954 | 0.313 | 0.0 | 0.052 | — | 0 | ecart_rir, ecart_effort | 0 |
+| `street_10_elite_figures` | 91/96 | 0.0 | 2.872 | 0.314 | 0.0 | 0.053 | — | 0 | ecart_rir, ecart_effort | 0 |
 | `street_11_master_51_ans` | 48/48 | 0.0 | 1.69 | 0.785 | 0.049 | 0.273 | — | 0 | ecart_rir | 0 |
 | `street_12_antecedent_coude` | 48/48 | 0.0 | 2.384 | 0.629 | 0.286 | 0.251 | — | 0 | ecart_rir, pics_de_charge, ecart_effort | 0 |
 | `street_13_peu_de_temps` | 34/36 | 0.0 | 1.395 | 0.723 | 0.0 | 0.645 | — | 0 | ecart_rir, ecart_effort | 0 |

@@ -1,5 +1,6 @@
+Formatted /home/runner/work/streetlift-apk/streetlift-apk/out-packages/aa_fmt/kalis_bench/lib/src/season.dart
 Formatted /home/runner/work/streetlift-apk/streetlift-apk/out-packages/aa_fmt/kalis_plan/lib/src/coach/season.dart
-Formatted 223 files (1 changed) in 1.40 seconds.
+Formatted 223 files (2 changed) in 1.30 seconds.
 
 Warning: Package resolution error when reading "analysis_options.yaml" file for "/home/runner/work/streetlift-apk/streetlift-apk/out-packages/aa_fmt/kalis_adapt/bin/kalis_adapt_cli.dart":
 Failed to resolve package URI "package:flutter_lints/flutter.yaml" in include at "/home/runner/work/streetlift-apk/streetlift-apk/analysis_options.yaml".

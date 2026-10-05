@@ -8,7 +8,7 @@ Colonnes : écart absolu moyen entre l'effort affiché et l'effort réel (répé
 
 | Profil | Politique | Écart d'effort | Plus dures | Échecs | Progression / sem. | Hausse max | Pics | Tentatives | Échéance | Douleur |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| street_01_debutant_complet | `kalis_adapt` | 1,38 | 0,1 % | 0,00 % | 1,200 % | 0,0 % | 0 | — | — | 0.0 |
+| street_01_debutant_complet | `kalis_adapt` | 1,38 | 0,1 % | 0,00 % | 1,199 % | 0,0 % | 0 | — | — | 0.0 |
 |  | `kalis_adapt_0_1` | 1,24 | 0,0 % | 0,00 % | 1,249 % | 0,0 % | 0 | — | — | 0.0 |
 |  | `coach_rpe` | 3,28 | 0,7 % | 1,31 % | 1,051 % | 0,0 % | 0 | — | — | 0.0 |
 |  | `oracle` | 0,34 | 0,0 % | 0,00 % | 1,274 % | 0,0 % | 0 | — | — | 0.0 |
@@ -16,11 +16,11 @@ Colonnes : écart absolu moyen entre l'effort affiché et l'effort réel (répé
 |  | `kalis_adapt_0_1` | 1,63 | 0,0 % | 0,17 % | 1,394 % | 0,0 % | 0 | — | — | 0.0 |
 |  | `coach_rpe` | 4,11 | 0,0 % | 0,00 % | 0,844 % | 0,0 % | 0 | — | — | 0.0 |
 |  | `oracle` | 0,41 | 0,0 % | 0,00 % | 1,168 % | 0,0 % | 0 | — | — | 0.0 |
-| street_03_debutante | `kalis_adapt` | 1,28 | 0,0 % | 0,03 % | 1,106 % | 0,0 % | 0 | — | — | 0.0 |
+| street_03_debutante | `kalis_adapt` | 1,30 | 0,0 % | 0,03 % | 1,106 % | 0,0 % | 0 | — | — | 0.0 |
 |  | `kalis_adapt_0_1` | 1,17 | 0,3 % | 0,26 % | 1,140 % | 0,0 % | 0 | — | — | 0.0 |
 |  | `coach_rpe` | 2,97 | 0,5 % | 1,85 % | 0,988 % | 0,0 % | 0 | — | — | 0.0 |
 |  | `oracle` | 0,31 | 0,0 % | 0,00 % | 1,162 % | 0,0 % | 0 | — | — | 0.0 |
-| street_04_reprise_longue_pause | `kalis_adapt` | 0,51 | 0,0 % | 0,00 % | 0,290 % | 0,0 % | 0 | — | — | 0.0 |
+| street_04_reprise_longue_pause | `kalis_adapt` | 0,50 | 0,0 % | 0,00 % | 0,289 % | 0,0 % | 0 | — | — | 0.0 |
 |  | `kalis_adapt_0_1` | 1,02 | 0,0 % | 0,03 % | 0,278 % | 0,0 % | 0 | — | — | 0.0 |
 |  | `coach_rpe` | 1,58 | 0,1 % | 0,04 % | 0,285 % | 0,0 % | 0 | — | — | 0.0 |
 |  | `oracle` | 0,18 | 0,0 % | 0,00 % | 0,341 % | 0,0 % | 0 | — | — | 0.0 |
@@ -44,7 +44,7 @@ Colonnes : écart absolu moyen entre l'effort affiché et l'effort réel (répé
 |  | `kalis_adapt_0_1` | 0,93 | 0,5 % | 0,17 % | 0,014 % | 16,2 % | 6 | 100 % | 91,3 % | 0.0 |
 |  | `coach_rpe` | 2,90 | 4,2 % | 4,45 % | 0,013 % | 23,5 % | 11 | 79 % | 92,9 % | 0.0 |
 |  | `oracle` | 0,20 | 0,0 % | 0,05 % | 0,014 % | 10,4 % | 2 | 77 % | 93,1 % | 0.0 |
-| street_10_elite_figures | `kalis_adapt` | 1,06 | 0,1 % | 0,07 % | 0,042 % | 0,0 % | 0 | — | — | 0.0 |
+| street_10_elite_figures | `kalis_adapt` | 1,07 | 0,0 % | 0,09 % | 0,041 % | 0,0 % | 0 | — | — | 0.0 |
 |  | `kalis_adapt_0_1` | 0,68 | 0,0 % | 0,02 % | 0,049 % | 0,0 % | 0 | — | — | 0.0 |
 |  | `coach_rpe` | 3,14 | 0,8 % | 0,00 % | 0,044 % | 0,0 % | 0 | — | — | 0.0 |
 |  | `oracle` | 0,21 | 0,0 % | 0,00 % | 0,040 % | 0,0 % | 0 | — | — | 0.0 |
@@ -56,7 +56,7 @@ Colonnes : écart absolu moyen entre l'effort affiché et l'effort réel (répé
 |  | `kalis_adapt_0_1` | 0,87 | 0,2 % | 0,12 % | 0,241 % | 8,5 % | 0 | 100 % | — | 0.0 |
 |  | `coach_rpe` | 2,33 | 3,1 % | 3,99 % | 0,213 % | 25,3 % | 6 | 100 % | — | 0.0 |
 |  | `oracle` | 0,20 | 0,0 % | 0,00 % | 0,216 % | 8,6 % | 0 | 100 % | — | 0.0 |
-| street_13_peu_de_temps | `kalis_adapt` | 0,97 | 0,1 % | 0,22 % | 0,369 % | 0,0 % | 0 | — | — | 0.0 |
+| street_13_peu_de_temps | `kalis_adapt` | 0,97 | 0,1 % | 0,09 % | 0,367 % | 0,0 % | 0 | — | — | 0.0 |
 |  | `kalis_adapt_0_1` | 1,01 | 0,1 % | 0,00 % | 0,376 % | 0,0 % | 0 | — | — | 0.0 |
 |  | `coach_rpe` | 1,30 | 0,2 % | 0,86 % | 0,340 % | 0,0 % | 0 | — | — | 0.0 |
 |  | `oracle` | 0,24 | 0,0 % | 0,00 % | 0,358 % | 0,0 % | 0 | — | — | 0.0 |
@@ -81,7 +81,7 @@ Colonnes : écart absolu moyen entre l'effort affiché et l'effort réel (répé
 
 | Profil | Politique | Écart d'effort | Plus dures | Échecs | Progression / sem. | Hausse max | Pics | Tentatives | Échéance | Douleur |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| street_01_debutant_complet | `kalis_adapt` | 1,57 | 0,1 % | 0,00 % | 1,052 % | 0,0 % | 0 | — | — | 0.0 |
+| street_01_debutant_complet | `kalis_adapt` | 1,58 | 0,1 % | 0,00 % | 1,052 % | 0,0 % | 0 | — | — | 0.0 |
 |  | `kalis_adapt_0_1` | 3,07 | 0,0 % | 0,00 % | 1,005 % | 0,0 % | 0 | — | — | 0.0 |
 |  | `coach_rpe` | 2,80 | 2,3 % | 1,64 % | 1,056 % | 0,0 % | 0 | — | — | 0.0 |
 |  | `oracle` | 0,34 | 0,0 % | 0,00 % | 1,101 % | 0,0 % | 0 | — | — | 0.0 |
@@ -97,7 +97,7 @@ Colonnes : écart absolu moyen entre l'effort affiché et l'effort réel (répé
 |  | `kalis_adapt_0_1` | 2,02 | 0,1 % | 0,00 % | 0,267 % | 0,0 % | 0 | — | — | 0.0 |
 |  | `coach_rpe` | 1,39 | 0,5 % | 0,03 % | 0,324 % | 0,0 % | 0 | — | — | 0.0 |
 |  | `oracle` | 0,18 | 0,0 % | 0,00 % | 0,325 % | 0,0 % | 0 | — | — | 0.0 |
-| street_05_inter_calisthenie_front_lever | `kalis_adapt` | 0,68 | 0,1 % | 0,09 % | 0,280 % | 0,0 % | 0 | — | — | 0.0 |
+| street_05_inter_calisthenie_front_lever | `kalis_adapt` | 0,68 | 0,1 % | 0,12 % | 0,280 % | 0,0 % | 0 | — | — | 0.0 |
 |  | `kalis_adapt_0_1` | 1,50 | 0,0 % | 0,00 % | 0,315 % | 0,0 % | 0 | — | — | 0.0 |
 |  | `coach_rpe` | 1,66 | 3,6 % | 1,74 % | 0,265 % | 0,0 % | 0 | — | — | 0.0 |
 |  | `oracle` | 0,16 | 0,0 % | 0,00 % | 0,283 % | 0,0 % | 0 | — | — | 0.0 |
@@ -117,8 +117,8 @@ Colonnes : écart absolu moyen entre l'effort affiché et l'effort réel (répé
 |  | `kalis_adapt_0_1` | 1,82 | 0,1 % | 0,11 % | 0,017 % | 12,6 % | 2 | 100 % | 87,7 % | 0.0 |
 |  | `coach_rpe` | 2,14 | 1,2 % | 3,01 % | 0,015 % | 32,7 % | 16 | 79 % | 91,8 % | 0.0 |
 |  | `oracle` | 0,22 | 0,0 % | 0,03 % | 0,014 % | 12,3 % | 4 | 79 % | 92,2 % | 0.0 |
-| street_10_elite_figures | `kalis_adapt` | 1,63 | 0,0 % | 0,00 % | 0,007 % | 0,0 % | 0 | — | — | 0.0 |
-|  | `kalis_adapt_0_1` | 1,54 | 0,0 % | 0,02 % | 0,028 % | 0,0 % | 0 | — | — | 0.0 |
+| street_10_elite_figures | `kalis_adapt` | 1,59 | 0,0 % | 0,00 % | 0,008 % | 0,0 % | 0 | — | — | 0.0 |
+|  | `kalis_adapt_0_1` | 1,52 | 0,0 % | 0,02 % | 0,040 % | 0,0 % | 0 | — | — | 0.0 |
 |  | `coach_rpe` | 2,51 | 1,6 % | 0,03 % | 0,048 % | 0,0 % | 0 | — | — | 0.0 |
 |  | `oracle` | 0,18 | 0,0 % | 0,00 % | 0,040 % | 0,0 % | 0 | — | — | 0.0 |
 | street_11_master_51_ans | `kalis_adapt` | 0,94 | 0,1 % | 0,03 % | 0,226 % | 8,3 % | 0 | — | — | 0.0 |
@@ -129,7 +129,7 @@ Colonnes : écart absolu moyen entre l'effort affiché et l'effort réel (répé
 |  | `kalis_adapt_0_1` | 1,54 | 0,1 % | 0,00 % | 0,233 % | 16,7 % | 4 | 100 % | — | 0.0 |
 |  | `coach_rpe` | 1,78 | 4,2 % | 5,29 % | 0,211 % | 35,8 % | 10 | 100 % | — | 0.0 |
 |  | `oracle` | 0,20 | 0,0 % | 0,00 % | 0,189 % | 9,9 % | 0 | 100 % | — | 0.0 |
-| street_13_peu_de_temps | `kalis_adapt` | 1,15 | 1,1 % | 0,17 % | 0,355 % | 0,0 % | 0 | — | — | 0.0 |
+| street_13_peu_de_temps | `kalis_adapt` | 1,14 | 1,1 % | 0,08 % | 0,354 % | 0,0 % | 0 | — | — | 0.0 |
 |  | `kalis_adapt_0_1` | 1,87 | 3,7 % | 0,18 % | 0,357 % | 0,0 % | 0 | — | — | 0.0 |
 |  | `coach_rpe` | 1,26 | 4,3 % | 1,23 % | 0,341 % | 0,0 % | 0 | — | — | 0.0 |
 |  | `oracle` | 0,42 | 3,7 % | 0,50 % | 0,347 % | 0,0 % | 0 | — | — | 0.0 |
@@ -154,7 +154,7 @@ Colonnes : écart absolu moyen entre l'effort affiché et l'effort réel (répé
 
 | Profil | Politique | Écart d'effort | Plus dures | Échecs | Progression / sem. | Hausse max | Pics | Tentatives | Échéance | Douleur |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| street_01_debutant_complet | `kalis_adapt` | 1,71 | 0,1 % | 0,00 % | 0,789 % | 0,0 % | 0 | — | — | 0.0 |
+| street_01_debutant_complet | `kalis_adapt` | 1,70 | 0,1 % | 0,00 % | 0,789 % | 0,0 % | 0 | — | — | 0.0 |
 |  | `kalis_adapt_0_1` | 1,68 | 0,0 % | 0,08 % | 0,801 % | 0,0 % | 0 | — | — | 0.0 |
 |  | `coach_rpe` | 3,21 | 1,1 % | 1,90 % | 0,726 % | 0,0 % | 0 | — | — | 0.0 |
 |  | `oracle` | 0,39 | 0,0 % | 0,00 % | 0,925 % | 0,0 % | 0 | — | — | 0.0 |
@@ -163,10 +163,10 @@ Colonnes : écart absolu moyen entre l'effort affiché et l'effort réel (répé
 |  | `coach_rpe` | 3,83 | 0,0 % | 0,00 % | 0,494 % | 0,0 % | 0 | — | — | 0.0 |
 |  | `oracle` | 0,48 | 0,0 % | 0,00 % | 0,804 % | 0,0 % | 0 | — | — | 0.0 |
 | street_03_debutante | `kalis_adapt` | 1,65 | 0,1 % | 0,07 % | 0,687 % | 0,0 % | 0 | — | — | 0.0 |
-|  | `kalis_adapt_0_1` | 1,42 | 0,6 % | 0,20 % | 0,732 % | 0,0 % | 0 | — | — | 0.0 |
+|  | `kalis_adapt_0_1` | 1,43 | 0,6 % | 0,20 % | 0,732 % | 0,0 % | 0 | — | — | 0.0 |
 |  | `coach_rpe` | 2,98 | 1,3 % | 2,41 % | 0,661 % | 0,0 % | 0 | — | — | 0.0 |
 |  | `oracle` | 0,39 | 0,0 % | 0,00 % | 0,811 % | 0,0 % | 0 | — | — | 0.0 |
-| street_04_reprise_longue_pause | `kalis_adapt` | 0,47 | 0,0 % | 0,03 % | 0,149 % | 0,0 % | 0 | — | — | 0.0 |
+| street_04_reprise_longue_pause | `kalis_adapt` | 0,47 | 0,0 % | 0,03 % | 0,146 % | 0,0 % | 0 | — | — | 0.0 |
 |  | `kalis_adapt_0_1` | 1,21 | 0,0 % | 0,03 % | 0,121 % | 0,0 % | 0 | — | — | 0.0 |
 |  | `coach_rpe` | 1,46 | 0,2 % | 0,04 % | 0,159 % | 0,0 % | 0 | — | — | 0.0 |
 |  | `oracle` | 0,18 | 0,0 % | 0,00 % | 0,202 % | 0,0 % | 0 | — | — | 0.0 |
@@ -182,7 +182,7 @@ Colonnes : écart absolu moyen entre l'effort affiché et l'effort réel (répé
 |  | `kalis_adapt_0_1` | 1,82 | 2,9 % | 1,34 % | -0,037 % | 20,2 % | 4 | 100 % | 87,7 % | 0.0 |
 |  | `coach_rpe` | 7,26 | 3,1 % | 8,47 % | -0,041 % | 16,9 % | 9 | 71 % | 91,7 % | 0.0 |
 |  | `oracle` | 0,26 | 0,1 % | 0,28 % | -0,036 % | 9,7 % | 0 | 71 % | 91,9 % | 0.0 |
-| street_08_avance_sets_reps_competition | `kalis_adapt` | 1,32 | 0,6 % | 0,68 % | 0,017 % | 0,0 % | 0 | — | 95,8 % | 0.0 |
+| street_08_avance_sets_reps_competition | `kalis_adapt` | 1,33 | 0,6 % | 0,68 % | 0,017 % | 0,0 % | 0 | — | 95,8 % | 0.0 |
 |  | `kalis_adapt_0_1` | 1,70 | 2,9 % | 0,49 % | 0,013 % | 0,0 % | 0 | — | 95,2 % | 0.0 |
 |  | `coach_rpe` | 5,51 | 3,9 % | 5,55 % | -0,001 % | 0,0 % | 0 | — | 96,2 % | 0.0 |
 |  | `oracle` | 0,28 | 0,0 % | 0,09 % | 0,005 % | 0,0 % | 0 | — | 96,3 % | 0.0 |
@@ -227,15 +227,15 @@ Colonnes : écart absolu moyen entre l'effort affiché et l'effort réel (répé
 
 | Modèle | Politique | Écart d'effort | Plus dures | Échecs | Progression / sem. | Tentatives | Échéance |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| A | `kalis_adapt` | 0,93 | 0,1 % | 0,13 % | 0,375 % | 80 % | 96,8 % |
+| A | `kalis_adapt` | 0,93 | 0,1 % | 0,12 % | 0,375 % | 80 % | 96,8 % |
 | A | `kalis_adapt_0_1` | 0,99 | 0,3 % | 0,13 % | 0,397 % | 100 % | 91,8 % |
 | A | `coach_rpe` | 2,39 | 1,2 % | 1,78 % | 0,322 % | 92 % | 92,7 % |
 | A | `oracle` | 0,25 | 0,0 % | 0,00 % | 0,378 % | 91 % | 93,0 % |
 | B | `kalis_adapt` | 1,07 | 0,3 % | 0,07 % | 0,360 % | 86 % | 96,1 % |
-| B | `kalis_adapt_0_1` | 2,12 | 0,7 % | 0,03 % | 0,354 % | 100 % | 87,9 % |
+| B | `kalis_adapt_0_1` | 2,12 | 0,7 % | 0,03 % | 0,355 % | 100 % | 87,9 % |
 | B | `coach_rpe` | 1,98 | 1,9 % | 1,64 % | 0,336 % | 92 % | 92,1 % |
 | B | `oracle` | 0,26 | 0,3 % | 0,04 % | 0,344 % | 92 % | 92,1 % |
-| C | `kalis_adapt` | 1,63 | 0,4 % | 0,45 % | 0,203 % | 97 % | 94,8 % |
+| C | `kalis_adapt` | 1,64 | 0,4 % | 0,45 % | 0,202 % | 97 % | 94,8 % |
 | C | `kalis_adapt_0_1` | 1,41 | 1,2 % | 0,44 % | 0,217 % | 100 % | 88,3 % |
 | C | `coach_rpe` | 4,42 | 2,9 % | 3,99 % | 0,165 % | 79 % | 92,1 % |
 | C | `oracle` | 0,27 | 0,1 % | 0,10 % | 0,221 % | 79 % | 92,3 % |

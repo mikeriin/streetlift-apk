@@ -77,12 +77,12 @@ Violations de sécurité (critères calculables du banc) du programme tel que le
 | street_09_elite_streetlifting | echeance_avancee | 0 |
 | street_09_elite_streetlifting | deuxieme_echeance | 0 |
 | street_10_elite_figures | reference | 0 |
-| street_10_elite_figures | seances_manquees | 5 (charge_trop_vite, volume_trop_vite, tendon_figures) |
+| street_10_elite_figures | seances_manquees | 2 (levier_trop_tot, decharge_absente) |
 | street_10_elite_figures | maladie | 0 |
 | street_10_elite_figures | douleur_coude | 0 |
 | street_10_elite_figures | douleur_epaule | 0 |
 | street_10_elite_figures | parc_seulement | 0 |
-| street_10_elite_figures | echeance_avancee | 1 (tendon_figures) |
+| street_10_elite_figures | echeance_avancee | 0 |
 | street_10_elite_figures | deuxieme_echeance | 0 |
 | street_11_master_51_ans | reference | 0 |
 | street_11_master_51_ans | seances_manquees | 0 |
@@ -147,10 +147,6 @@ Violations de sécurité (critères calculables du banc) du programme tel que le
 - `street_03_debutante`, parc_seulement, `volume_trop_vite` : deltoïde antérieur : 12.0 séries dures en semaine 10, pour 11.0 admises au vu des trois semaines précédentes.
 - `street_03_debutante`, echeance_avancee, `plafond_volume` : fessiers : 3 semaine(s) au-dessus du plafond du niveau débutant (12 séries dures), jusqu'à 13.0.
 - `street_03_debutante`, echeance_avancee, `plafond_volume` : quadriceps : 2 semaine(s) au-dessus du plafond du niveau débutant (12 séries dures), jusqu'à 12.5.
-- `street_10_elite_figures`, seances_manquees, `charge_trop_vite` : Traction lestée de compétition : charge totale +8.3 % en une semaine (seuil 5.0 %).
-- `street_10_elite_figures`, seances_manquees, `charge_trop_vite` : Traction lestée de compétition : charge totale +8.3 % en une semaine (seuil 5.0 %).
-- `street_10_elite_figures`, seances_manquees, `volume_trop_vite` : pectoraux : 20.5 séries dures en semaine 11, pour 19.8 admises au vu des trois semaines précédentes.
-- `street_10_elite_figures`, seances_manquees, `volume_trop_vite` : triceps : 17.5 séries dures en semaine 11, pour 17.4 admises au vu des trois semaines précédentes.
-- `street_10_elite_figures`, seances_manquees, `tendon_figures` : Tenues bras tendus (tirage, type front lever) : 104 s en semaine 11, pour 103 s admises au vu des trois semaines précédentes.
-- `street_10_elite_figures`, echeance_avancee, `tendon_figures` : Tenues bras tendus (tirage, type front lever) : 104 s en semaine 11, pour 103 s admises au vu des trois semaines précédentes.
+- `street_10_elite_figures`, seances_manquees, `levier_trop_tot` : Planche complète arrive 4 semaines après Planche une jambe (au moins 6 au niveau élite).
+- `street_10_elite_figures`, seances_manquees, `decharge_absente` : 7 semaines de charge de suite sans allègement à la semaine 15 (au plus 6 au niveau élite).
 - `street_12_antecedent_coude`, douleur_coude, `charge_trop_vite` : Squat de compétition : charge totale +5.9 % en une semaine (seuil 5.0 %).

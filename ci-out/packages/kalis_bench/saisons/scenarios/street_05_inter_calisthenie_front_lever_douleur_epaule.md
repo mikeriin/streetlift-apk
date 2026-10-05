@@ -36,7 +36,7 @@ Chaque bloc est écrit par le moteur de création au moment où il commence, d'a
 
 - Séances faites : 67 sur 68 (20 ajustées le jour même).
 - Échecs non voulus (hors tests et tentatives) : 0 % des séries de travail.
-- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 0,91 répétition en réserve (sur les 61 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 7,5 %.
+- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 0,9 répétition en réserve (sur les 61 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 7,7 %.
 - Plus forte hausse de charge totale d'un mouvement principal d'une séance à la suivante, à schéma égal : 0 % ; hausses de plus de 10 % faites de plusieurs crans : 0.
 - Douleur : 0 hausse(s) de charge sur une zone douloureuse signalée.
 
@@ -61,7 +61,7 @@ Pour chaque mouvement, la séance la plus lourde de la semaine : ce que le progr
 | 14 | réalisation (spécifique à l'objectif) | 4 × 9 s (82 % du maximum testé), maintien | Front lever tuck avancé : 7-7-7-7 s | 7-6-6-6 s | 3,5 → 3,4 ; suivantes 3,5 → 3,6 | 12 / 12 | hausse du maintien bornée pour les tendons (coude) ; allégé pour garder la marge prévue (au moins 5 en réserve) ; dernières séries plus dures que prévu |
 | 15 | affûtage | 3 × 8 s (73 % du maximum testé), maintien | Front lever tuck avancé : 8-8-8 s | 8-8-8 s | 3 → 2,8 ; suivantes 2,5 → 2,2 | 12 / 11 | — |
 | 16 | test | 3 × 8 s (73 % du maximum testé), maintien | Front lever tuck avancé : 8-8-8 s | 8-8-8 s | 2,5 → 3,2 ; suivantes 2,5 → 2,7 | 13 / 11 | — |
-| 17 | construction (volume) | 5 × 9 s (82 % du maximum testé), maintien | Front lever tuck avancé : 9-9-9-8-8 s | 9-8-8-8-8 s | 2 → 2,6 ; suivantes 2,3 → 2,6 | 13 / 12 | allégé pour garder la marge prévue (au moins 5 en réserve) ; dernières séries plus dures que prévu |
+| 17 | construction (volume) | 5 × 8 s (80 % du maximum testé), maintien | Front lever tuck avancé : 8-8-8-8-8 s | 8-7-7-7-7 s | 3 → 3,2 ; suivantes 2,6 → 3,5 | 13 / 12 | allégé pour garder la marge prévue (au moins 5 en réserve) ; dernières séries plus dures que prévu |
 
 ## Journal des décisions
 

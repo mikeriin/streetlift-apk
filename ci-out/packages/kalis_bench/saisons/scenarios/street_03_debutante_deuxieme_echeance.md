@@ -37,9 +37,9 @@ Chaque bloc est écrit par le moteur de création au moment où il commence, d'a
 
 - Séances faites : 56 sur 57 (7 ajustées le jour même).
 - Échecs non voulus (hors tests et tentatives) : 0 % des séries de travail.
-- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 1,59 répétition en réserve (sur les 65 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 21,2 %.
+- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 1,63 répétition en réserve (sur les 65 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 22,1 %.
 - Plus forte hausse de charge totale d'un mouvement principal d'une séance à la suivante, à schéma égal : 0 % ; hausses de plus de 10 % faites de plusieurs crans : 0.
-- Progression réelle moyenne des mouvements suivis : 1,107 % par semaine.
+- Progression réelle moyenne des mouvements suivis : 1,112 % par semaine.
 - Douleur : 0 hausse(s) de charge sur une zone douloureuse signalée.
 
 ## Mouvements suivis, semaine par semaine
@@ -63,7 +63,6 @@ Pour chaque mouvement, la séance la plus lourde de la semaine : ce que le progr
 | 16 | construction (volume) | 2 × 1 à 5 | 1-1 | 1-1 | 2 → 2,6 ; suivantes 2 → 2,1 | 4 / 4 | allégé pour garder la marge prévue (au moins 2 en réserve) |
 | 17 | affûtage | 1 × 1 | 1 | 1 | 3 → 2,8 | 4 / 4 | douleur signalée (poignet, 4/10) |
 | 18 | test | 1 × 1 | 1 | 1 | 3 → 2,5 | 4 / 4 | douleur signalée (poignet, 4/10) |
-| 19 | construction (volume) | 2 × 1 à 4 | 1-1 | 1-1 | 3 → 2,7 ; suivantes 3 → 2,3 | 4 / 4 | allégé pour garder la marge prévue (au moins 2 en réserve) ; douleur signalée (poignet, 4/10) |
 
 Athlète simulé, maximum réel hors fatigue : 3 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 4 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
 
@@ -89,7 +88,7 @@ Athlète simulé, maximum réel hors fatigue : 3 au départ (le record déclaré
 | 16 | construction (volume) | 2 × 8 à 12 | (8 à 24)-(8 à 24) | 24-21 | 2 → 4 ; suivantes 2 → 4,6 | 28 / 26 | — |
 | 17 | affûtage | 2 × 8 à 12 | (8 à 12)-(8 à 12) | 12-11 | 5+ → 16,9 ; suivantes 5+ → 16,5 | 29 / 26 | douleur signalée (poignet, 4/10) ; allégé pour garder la marge prévue (au moins 3 en réserve) ; dernières séries plus dures que prévu |
 | 18 | test | 1 × 8 à 12 | (8 à 12) | 12 | 5+ → 14,4 | 26 / 27 | douleur signalée (poignet, 4/10) |
-| 19 | construction (volume) | 2 × 8 à 12 | (8 à 24)-(8 à 44) | 22-22 | 2 → 7,1 ; suivantes 2 → 5,9 | 29 / 26 | série repère : une série ouverte (au ressenti, 2 en réserve) pour mesurer où en est l'athlète ; allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |
+| 19 | construction (volume) | 3 × 8 à 12 | (8 à 24)-(8 à 22)-(8 à 40) | 24-20-20 | 2 → 5,5 ; suivantes 2 → 7,2 | 30 / 27 | série repère : une série ouverte (au ressenti, 2 en réserve) pour mesurer où en est l'athlète ; allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |
 
 Athlète simulé, maximum réel hors fatigue : 22 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 28 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
 
@@ -139,7 +138,7 @@ Athlète simulé, maximum réel hors fatigue : 16 au départ (le record déclar�
 | 16 | construction (volume) | 3 × 21 s (68 % du maximum testé), maintien | 16-16-16 s | 16-15 (arrêt avant la cible)-15 (arrêt avant la cible) s | 5+ → 5,5 ; suivantes 5+ → 5,6 | 38 / 47 | hausse du maintien bornée pour les tendons (coude) |
 | 17 | affûtage | 2 × 18 s (58 % du maximum testé), maintien | 18-18 s | 9 (arrêt avant la cible)-16 (arrêt avant la cible) s | 5+ → 7,3 ; suivantes 5+ → 5,4 | 38 / 48 | — |
 | 18 | test | 2 × 5 à 30 s, test | (5 à 30)-(5 à 30) s | 30-30 s | test | 37 / 46 | — |
-| 19 | construction (volume) | 3 × 21 s (68 % du maximum testé), maintien | 21-21-21 s | 9 (arrêt avant la cible)-13 (arrêt avant la cible)-11 (arrêt avant la cible) s | 5+ → 7,3 ; suivantes 5+ → 6,3 | 38 / 46 | — |
+| 19 | construction (volume) | 3 × 20 s (67 % du maximum testé), maintien | 20-20-20 s | 9 (arrêt avant la cible)-13 (arrêt avant la cible)-11 (arrêt avant la cible) s | 5+ → 7,3 ; suivantes 5+ → 6,3 | 38 / 46 | — |
 
 Athlète simulé, maximum réel hors fatigue : 34 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 37 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
 
@@ -162,7 +161,7 @@ Athlète simulé, maximum réel hors fatigue : 34 au départ (le record déclar�
 - **Semaine 16 (construction (volume))** : 1 séance(s) manquée(s) sur 3 ; Pompe négative : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; Traction assistée à l'élastique : un cran d'assistance de moins (élastique plus fin, moins d'appui) : la série repère a montré 2 répétitions de réserve de plus que visé.
 - **Semaine 17 (affûtage)** : phase « affûtage » : séances servies telles que le programme les écrit (× 3) ; affûtage : aucun volume ajouté, intensité gardée (× 3).
 - **Semaine 18 (test)** : phase « test » : séances servies telles que le programme les écrit (× 3) ; résultat de test reporté au profil : Tenue menton au-dessus de la barre pronation 30 s ; résultat de test reporté au profil : Pompe classique 1 répétitions.
-- **Semaine 19 (construction (volume))** : nouveau bloc construit à partir du point de fin de bloc (maxima estimés, résultats de test, tolérance) ; Traction assistée à l'élastique : un cran d'assistance de plus (élastique plus épais, plus d'appui) : la plage ne laisse plus la réserve visée ; Pompe négative : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme).
+- **Semaine 19 (construction (volume))** : nouveau bloc construit à partir du point de fin de bloc (maxima estimés, résultats de test, tolérance) ; Traction assistée à l'élastique : un cran d'assistance de plus (élastique plus épais, plus d'appui) : la plage ne laisse plus la réserve visée ; Pompe négative : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; Pompe inclinée (mains surélevées) : séries arrêtées en cours de séance (allégé pour garder la marge prévue (au moins 2 en réserve), dernières séries plus dures que prévu).
 
 ## Figures
 
