@@ -304,15 +304,17 @@ List<String> coachAudit(
                 heavy != null &&
                 heavy.$1 >= global - 4 &&
                 heavy.$3 == last.$3;
-            final before = afterLight ? (global - 1, heavy.$2, heavy.$3) : last;
+            final before = afterLight && heavy.$3 != reps
+                ? (global - 1, heavy.$2, heavy.$3)
+                : last;
             if (total > 0) {
-              if (before != null &&
-                  before.$1 == global - 1 &&
-                  before.$3 == reps &&
-                  total / before.$2 - 1 > coachLoadRise[level] + 1e-9) {
+              if (last != null &&
+                  last.$1 == global - 1 &&
+                  last.$3 == reps &&
+                  total / last.$2 - 1 > coachLoadRise[level] + 1e-9) {
                 out.add(
                   '$where : ${e.id} +'
-                  '${((total / before.$2 - 1) * 100).toStringAsFixed(1)} %',
+                  '${((total / last.$2 - 1) * 100).toStringAsFixed(1)} %',
                 );
               }
               // À répétitions différentes (CP2, partie 0) : 2,5 % par

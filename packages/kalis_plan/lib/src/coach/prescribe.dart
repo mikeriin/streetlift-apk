@@ -6147,8 +6147,18 @@ final class Prescriber {
         final src = last != null && last.light && !last.restart && peaking
             ? (reference ?? last)
             : last;
+        // (À répétitions égales, la semaine d'avant fait toujours foi,
+        // allègement compris : le banc borne la hausse d'un emplacement
+        // d'une semaine à l'autre à schéma égal — CP2, partie 0, boucle 2 :
+        // +6,9 % après l'allègement de `street_07`.)
+        final lastSame = last?.loads[key];
+        final equal =
+            lastSame != null && lastSame.$1 > 0 && lastSame.$2 == reps;
+        if (equal) {
+          allowed = capped(allowed, lastSame.$1 * (1 + rise));
+        }
         final before = src?.loads[key];
-        if (src != null && before != null && before.$1 > 0) {
+        if (!equal && src != null && before != null && before.$1 > 0) {
           allowed = capped(
             allowed,
             before.$1 *
