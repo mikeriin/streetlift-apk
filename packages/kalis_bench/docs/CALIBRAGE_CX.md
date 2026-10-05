@@ -351,3 +351,28 @@ Cinq boucles sur dix (C7.2). La règle « deux boucles de suite sans gain » n'e
 boucle coûte un contrôle de 50 minutes et une passe partielle du panel, et les corrections restantes sont
 profondes (dosage des figures de l'élite et conduite d'une douleur qui dure, montée de volume de street_08,
 poussée de la débutante, plateau sans changement de stimulus).
+
+## Correction 1 (05/10/2026) — `kalis_plan` 0.2.2, `kalis_adapt` 0.2.2, `kalis_bench` 0.2.1
+
+Passe « CX correction 1 » (LANCEMENTS.md) : relecture du pilotage de CX (notes 4 à 7) et panel final de CX
+(25 couples sur 68 à 9, minimum 4). Mesure avant : passe finale de CX (mêmes moteurs, 0.2.1).
+
+### Recherche ciblée (sources vérifiées, sous-agent Opus)
+
+| Règle | Valeur retenue | Verdict | Sources |
+| --- | --- | --- | --- |
+| Douleur qui dure : arrêt des mouvements qui provoquent la zone, consulter | 3/10 pendant 2 semaines, 5/10 plus d'une semaine, ou retour dans les 12 semaines après un épisode réel | partiellement soutenu : 3/10 = seuil du coude (Coombes 2015), plus prudent que le modèle de Silbernagel (5/10 si calmé le lendemain) ; 2 semaines = délai NHS avant de consulter ; 5/10 et 12 semaines : choix prudents | Coombes, Bisset, Vicenzino 2015, JOSPT 45(11) ; Silbernagel et al. 2007, AJSM 35(6) ; NHS « Tennis elbow » |
+| Reprise graduée après l'arrêt | après 2 semaines à 2/10 au plus ; 50 % du volume, +10 %/semaine, 3 en réserve au moins | partiellement soutenu : reprise graduée guidée par la douleur (Coombes 2015, Silbernagel 2007) ; chiffres = conventions prudentes | idem ; Gabbett 2016, BJSM 50(5) |
+| Coude : prise neutre à la place de la pronation | tirage en pronation retiré pendant une poussée | partiellement soutenu (éviter de soulever avant-bras en pronation, Coombes 2015 ; pronation contrariée provocante dans l'épicondylite médiale) | Coombes 2015 ; StatPearls « Golfer's elbow » (NCBI Bookshelf, page non ouverte : captcha) |
+| Test après des jours légers, deux mesures concordantes avant de baisser un repère | test à partir du 3e jour de la semaine, reporté un jour de bilan bas | partiellement soutenu (affûtage : Bosquet et al. 2007, MSSE 39(8)) ; deux mesures : règle de mesure | Bosquet 2007 ; Helms et al. 2018, Front Physiol |
+| Montée du volume de répétitions | +15 % par semaine au plus (max. des 3 semaines d'avant) | partiellement soutenu : seuil de risque de Gabbett ; « règle des 10 % » non démontrée (Buist 2008), ACWR critiqué (Impellizzeri 2020) — garde-fou prudent, non présenté comme règle validée | Gabbett 2016 ; Buist et al. 2008, AJSM ; Impellizzeri et al. 2020, IJSPP |
+| Tentatives | ouverture 91 %, 2e +5 % au plus, 3e +3 % au plus, +5 kg de charge externe au plus | soutenu (élites IPF 2012-2019 : ~91 %, +5 %, +3 % de la 3e visée) | Travis, Zourdos, Bazyler 2021, Percept Mot Skills 128(1) |
+| Échec imprévu, simples d'entraînement | −7,5 % après une série manquée ; simple ≤ 92 % du max estimé (85 % un jour de bilan bas) | partiellement soutenu (autorégulation RPE/RIR ; un simple à RPE 8-9 ≈ 90-94 %) | Helms 2018 ; Halperin et al. 2022 (revue des échelles RIR) |
+| Montée d'échauffement | 5 @40 %, 3 @60 %, 2 @75 %, 1 @85 % ; aussi avant le muscle-up | partiellement soutenu (échauffement spécifique proche du maximum : Ribeiro et al. 2021, revue) | Ribeiro et al. 2021, Motricidade ; Kraemer & Ratamess 2004, MSSE |
+| Plateau : changer de méthode | test qui ne dépasse pas le repère → variante (tempo, archer, typewriter), cible intermédiaire | partiellement soutenu (variation planifiée ; aucun modèle supérieur, Kiely 2012) | Kraemer & Ratamess 2004 ; Kiely 2012, IJSPP |
+| Tenues de figures | partie intense 60 à 75 % du max (80 % au plus), jusqu'à 10 séries quand le max ≤ 5 s | partiellement soutenu (isométrie ≥ 70 % de la force max., Oranchuk et al. 2019) ; chiffres = heuristique d'entraîneur | Oranchuk et al. 2019, Scand J Med Sci Sports |
+
+### Dérive du panel (avant la première boucle)
+
+Ancres `p08_a` et `p14_c`, un appel Opus par école : variante (a) 1 / 1 / 1 / 1, variante (c) 8 / 8 / 8 / 8 →
+pas de dérive ((a) ≤ 2, (c) ≥ 8).

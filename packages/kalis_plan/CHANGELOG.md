@@ -1,5 +1,33 @@
 # Journal des versions de kalis_plan
 
+## 0.2.2
+
+Lot « CX correction 1 » du pipeline « Calibrage des programmes » (croisement avec `kalis_adapt` 0.2.2).
+`kalis_core` 0.4.2. Le chemin 0.1 est inchangé (mêmes programmes à l'octet près, version du moteur mise à
+part). Détail et sources : `CONTRAT.md`, § 12.14 ; journal : `packages/kalis_bench/docs/CALIBRAGE_CX.md`.
+
+- **Douleur qui dure ou qui revient (sécurité)** : une raison `adapt.pain_persistent` du résumé
+  d'adaptation (ou de la demande de restructuration) écarte du bloc tout mouvement qui provoque la zone
+  (`coachPainStopHits` : contrainte forte sur l'articulation, contrainte modérée du poignet sans prise
+  neutre, tirage en pronation pour le coude), avec une note « arrêt » (consulter un médecin ou un
+  kinésithérapeute ; reprise après deux semaines à 2/10 au plus) ; le bloc suivant reprend ces mouvements
+  à 50 % des séries, +10 % par semaine, 3 en réserve au moins (notes `pain_stop`, `pain_return`).
+- **Tests** : placés à partir du troisième jour de la semaine (deuxième si la semaine n'a pas deux séances
+  assez tardives), jamais pendant une reprise ; les jours qui précèdent un test sont des jours faciles. Un
+  repère mesuré ne baisse qu'après deux mesures concordantes (dix semaines au plus) ; une mesure seule plus
+  basse cède devant le plus haut du test et de l'estimation du moteur d'évolution. Un record seulement
+  déclaré est recalé par le premier test mesuré.
+- **Plateau** : un test qui ne dépasse pas le repère d'avant change la méthode du bloc suivant (variantes
+  tempo excentrique, archer, typewriter pour le tirage) et le dit (note `plateau`).
+- **Volume de répétitions au poids du corps** : +15 % par semaine au plus sur le maximum des trois semaines
+  d'avant, par famille de mouvement (séries, puis répétitions retirées) ; une seule variable monte à la fois
+  dans les blocs de densité.
+- **Figures de l'élite** : plus de tenues de remplissage quand l'étape plus facile dépasse 25 s ; partie
+  intense des tenues à 60, 70 puis 75 % du maximum (+2 % par palier, 80 % au plus), jusqu'à 10 séries quand
+  le maximum est de 5 s au plus.
+- **Échauffement** : montée 5 @40 %, 3 @60 %, 2 @75 %, 1 @85 %, écrite à chaque exercice concerné, aussi avant
+  le muscle-up ; dips du débutant (ou assistés) à amplitude progressive.
+
 ## 0.2.1
 
 Lot CX du pipeline « Calibrage des programmes » : le programme écrit tenu sur une saison street complète

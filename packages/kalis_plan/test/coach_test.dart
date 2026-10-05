@@ -1182,9 +1182,13 @@ void main() {
           ),
         ],
       );
+      // Semaines enchaînées sur toute la saison : la référence est le
+      // maximum des trois semaines d'avant (un retour au niveau d'avant
+      // l'allègement n'est pas une hausse).
       for (final profile in <AthleteProfile>[street(), reps]) {
+        final totals = <Map<String, int>>[];
+        final where = <String>[];
         for (final b in _program(catalog, profile, 12)) {
-          final totals = <Map<String, int>>[];
           for (final w in b.pass2.weeks) {
             final t = <String, int>{};
             for (final d in w.days) {
@@ -1203,24 +1207,25 @@ void main() {
               }
             }
             totals.add(t);
+            where.add('bloc ${b.pass1.blockIndex}, semaine ${w.weekIndex}');
           }
-          for (var w = 1; w < totals.length; w++) {
-            for (final root in totals[w].keys) {
-              var reference = 0;
-              for (var k = w - 3; k < w; k++) {
-                if (k >= 0 && (totals[k][root] ?? 0) > reference) {
-                  reference = totals[k][root]!;
-                }
+        }
+        for (var w = 1; w < totals.length; w++) {
+          for (final root in totals[w].keys) {
+            var reference = 0;
+            for (var k = w - 3; k < w; k++) {
+              if (k >= 0 && (totals[k][root] ?? 0) > reference) {
+                reference = totals[k][root]!;
               }
-              if (reference == 0) {
-                continue;
-              }
-              expect(
-                totals[w][root]!,
-                lessThanOrEqualTo((reference * 1.15).ceil()),
-                reason: 'bloc ${b.pass1.blockIndex}, semaine $w, $root',
-              );
             }
+            if (reference == 0) {
+              continue;
+            }
+            expect(
+              totals[w][root]!,
+              lessThanOrEqualTo((reference * 1.15).ceil()),
+              reason: '${where[w]}, $root',
+            );
           }
         }
       }
