@@ -1145,6 +1145,77 @@ void main() {
       expect(pullReps(lowTwice), lessThan(pullReps(once)));
     });
 
+    test('forte baisse : la concordance lit le test le plus récent', () {
+      Benchmark tested(int reps, int daysAgo) => Benchmark(
+        exerciseId: 'sw-traction-pronation',
+        kind: BenchmarkKind.maxReps,
+        source: BenchmarkSource.guidedTest,
+        reps: reps,
+        date: _start.addDays(-daysAgo),
+      );
+      int pullReps(AthleteProfile p) {
+        var most = 0;
+        final week = _program(catalog, p, 4).first.pass2.weeks.first;
+        for (final d in week.days) {
+          for (final i in d.items) {
+            if (i.exerciseId == 'sw-traction-pronation' &&
+                (i.kind == null || i.kind == SetKind.work)) {
+              final reps = i.repsHigh;
+              if (reps != null && reps > most) {
+                most = reps;
+              }
+            }
+          }
+        }
+        return most;
+      }
+
+      final base = street();
+      final once = base.copyWith(
+        benchmarks: <Benchmark>[
+          ...base.benchmarks!,
+          tested(14, 40),
+          tested(14, 3),
+        ],
+      );
+      // Un test bas ancien, puis un test au repère : le dernier test bas
+      // reste seul (le plus récent d'avant le contredit).
+      final contradicted = base.copyWith(
+        benchmarks: <Benchmark>[
+          ...base.benchmarks!,
+          tested(14, 60),
+          tested(10, 40),
+          tested(14, 20),
+          tested(9, 3),
+        ],
+      );
+      expect(pullReps(contradicted), pullReps(once));
+    });
+
+    test('poignet : une figure forte à la barre fixe reste écartée', () {
+      var checked = 0;
+      for (final e in catalog.exercises) {
+        if (e.stressOn(Joint.wrist) != JointStress.high) {
+          continue;
+        }
+        final support = e.equipment.any(
+          coachNeutralSupportEquipment.contains,
+        );
+        expect(
+          coachPainProvokes(e, BodyZone.wristHand),
+          !support,
+          reason: e.id,
+        );
+        checked++;
+      }
+      expect(checked, greaterThan(0));
+      expect(
+        coachNeutralSupportEquipment.difference(coachNeutralGripEquipment),
+        isEmpty,
+      );
+      expect(coachNeutralSupportEquipment, isNot(contains('barre fixe')));
+    });
+
     test('tests placés après le premier jour de la semaine', () {
       for (final profile in <AthleteProfile>[street(), _beginner()]) {
         for (final b in _program(catalog, profile, 16)) {

@@ -2759,8 +2759,8 @@ final class Prescriber {
     // CX, correction 1 : les tenues de travail restent à 50 à 70 % du
     // maximum (R4-F2 ; panel CX : à 82 %, chaque séance finissait en
     // position dégradée et les maxima baissaient) ; la séance lourde monte
-    // avec la phase — construction 60 %, intensification 70 %, réalisation
-    // 75 % — pour que le contenu suive le nom de la phase ; le volume se
+    // avec la phase — construction 60 %, intensification 65 %, réalisation
+    // 70 %, jusqu'à 75 % avec les semaines de charge — pour que le contenu suive le nom de la phase ; le volume se
     // compte en secondes propres cumulées.
     final intense =
         s.method == Method.skillHold &&
@@ -3511,13 +3511,22 @@ final class Prescriber {
           final fraction = e.bodyweightFraction?.value ?? 0;
           final floor = _external(e, last * 0.98, 1);
           if (floor != null && floor > opener) {
+            final share = (floor + fraction * a.bodyWeight) / total;
+            final shown = _round3(share > 1 ? 1 : share);
             x
               ..load = floor
-              ..percent = _round3(
-                (floor + fraction * a.bodyWeight) / total > 1
-                    ? 1
-                    : (floor + fraction * a.bodyWeight) / total,
+              ..percent = shown
+              ..intensity = IntensityTarget(
+                basis: IntensityBasis.percentOneRm,
+                value: shown,
+                valueHigh: 1,
               );
+            x.reasons.removeWhere(
+              (r) =>
+                  r.code == ReasonCodes.planCoachNote &&
+                  r.params['note'] == CoachNotes.attemptsPlan,
+            );
+            x.reasons.add(_note(CoachNotes.attemptsPlan, shown));
           }
         }
         // Troisième barre : l'objectif déclaré, s'il est à portée (au plus
@@ -5673,15 +5682,23 @@ final class Prescriber {
             most = v;
           }
         }
+        final last = _history.isEmpty
+            ? null
+            : _history[_history.length - 1].minutes[key];
         final two = _history.length >= 2
             ? _history[_history.length - 2].minutes[key]
             : null;
         var allowed = most == null ? null : most + 1;
-        if (two != null && (allowed == null || two + 1 < allowed)) {
-          allowed = two + 1;
+        // (Un départ de plus en deux semaines : la borne porte sur la
+        // hausse, jamais sous la semaine d'avant.)
+        if (two != null) {
+          final pace = last != null && last > two + 1 ? last : two + 1;
+          if (allowed == null || pace < allowed) {
+            allowed = pace;
+          }
         }
-        if (allowed != null && x.sets > allowed && allowed >= x.minSets) {
-          x.sets = allowed;
+        if (allowed != null && x.sets > allowed) {
+          x.sets = allowed < x.minSets ? x.minSets : allowed;
         }
         trace.minutes[key] = x.sets;
       }
