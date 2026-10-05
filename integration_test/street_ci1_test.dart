@@ -528,10 +528,21 @@ void main() {
         await top(tester);
         await shot('11_douleur_arret');
         await tap(tester, 'feel-4', ms: 2000);
-        releve['douleur_carte_apres_bilan'] = find
-            .byKey(const ValueKey('health-pain-stop'))
-            .evaluate()
-            .isNotEmpty;
+        // Après le bilan : la séance servie n'a aucun exercice retiré.
+        final after = store.sessionAdapt(st.$1, st.$2);
+        final servedIds = after == null
+            ? const <String?>{}
+            : {
+                for (final e in store.adaptDay(st.$1, day, after).exercises)
+                  e.catalogId,
+              };
+        releve['douleur_retires_absents'] = [
+          for (final x
+              in after?.active.adjustments ?? const <kc.SessionAdjustment>[])
+            if (x.kind == kc.AdjustmentKind.exerciseRemoved &&
+                x.reasons.any((r) => r.code == 'adapt.pain_persistent'))
+              x.exerciseId,
+        ].every((id) => !servedIds.contains(id));
         await home(tester);
       }
     }
@@ -568,7 +579,7 @@ void main() {
     expect(releve['panneau_coach'], isTrue);
     expect(releve['douleur_carte'], isTrue);
     expect(releve['douleur_arret'], isTrue);
-    expect(releve['douleur_carte_apres_bilan'], isTrue);
+    expect(releve['douleur_retires_absents'], isTrue);
     expect(releve['retour_perso'], isTrue);
     expect(releve['perso_intacte'], isTrue);
     expect(releve['perso_sans_saison_apres'], isTrue);

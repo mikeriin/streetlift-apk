@@ -276,7 +276,7 @@ void main() {
           _save(s, _street(key));
           _create(s);
           for (var w = 1; w <= 12; w++) {
-            for (var j = 1; j <= 5; j++) {
+            for (var j = 1; j <= 7; j++) {
               final it = s
                   .adaptPlaceOf(w, j)
                   ?.day
@@ -335,8 +335,7 @@ void main() {
                 day.exercises.indexOf(e),
                 lessThanOrEqualTo(
                   day.exercises.indexWhere(
-                    (x) =>
-                        s.adaptItemFor(w, d, x)?.kind != kc.SetKind.warmup,
+                    (x) => s.adaptItemFor(w, d, x)?.kind != kc.SetKind.warmup,
                   ),
                 ),
               );
