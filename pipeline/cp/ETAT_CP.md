@@ -52,4 +52,5 @@ Chaque lot ne modifie que sa ligne (PIPELINE_CP.md §1).
 | CP2 | A | CX | — | — | — | en attente de CX |
 | CA2 | B | CX | — | — | — | en attente de CX |
 | CY | A | CP2, CA2 | — | — | — | en attente de CP2, CA2 |
+| CI1 | App | CX validé, CU | — | — | — | en attente de la validation de CX (C8.6 : intégration street, en parallèle de CP2) |
 | CI | App | CY, CU | — | — | — | en attente de CY, CU |
