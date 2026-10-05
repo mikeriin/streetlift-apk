@@ -333,7 +333,20 @@ final class SlotMark {
     this.sets = 0,
     this.reached = 0,
     this.missed = 0,
+    this.loadedTop,
+    this.loadedLoadKg,
   });
+
+  /// Plus grande série et charge de la dernière séance de l'emplacement
+  /// faite une semaine de charge (une semaine d'allègement, de test ou de
+  /// transition ne les abaisse pas), ou `null` : ce à quoi se compare un
+  /// jour sans hausse (bilan bas) — jamais à la séance volontairement
+  /// légère d'avant (CA2, partie 0 : après une transition, les dips
+  /// restaient servis à 26 au lieu de 38, relecture documentée).
+  final int? loadedTop;
+
+  /// Charge correspondante (voir [loadedTop]).
+  final double? loadedLoadKg;
 
   /// Séances de suite, à charge (ou assistance) et plage égales, où la plus
   /// grande série est restée sous le bas de sa plage sans échec (CA2,
@@ -538,10 +551,15 @@ void noteCoachSession(
       before.loadKg == held) {
     missStreak = before.missed;
   }
+  final light = coach.policy.locked;
   marks[coach.slotId] = SlotMark(
     day: day,
     reached: reached,
     missed: under ? missStreak + 1 : 0,
+    loadedTop: light ? (before?.loadedTop ?? before?.top) : top,
+    loadedLoadKg: light
+        ? (before?.loadedLoadKg ?? before?.loadKg)
+        : (lowestFailed ?? held),
     loadKg: lowestFailed ?? held,
     amount: coach.schemeAmount,
     top: top,
@@ -1046,7 +1064,16 @@ List<SetPlan>? _loadedPlans(
   if (markLoad != null) {
     if (kg > markLoad + 1e-9) {
       final floored = grid.floor(markLoad);
-      final last = floored > markLoad ? markLoad : floored;
+      var last = floored > markLoad ? markLoad : floored;
+      // (Un jour de bilan bas se compare à la dernière séance d'une semaine
+      // de charge, pas à une séance volontairement légère : CA2, partie 0.)
+      final loadedLoad = mark?.loadedLoadKg;
+      if (lockCause == 'health' && loadedLoad != null) {
+        final base = grid.floor(loadedLoad);
+        if (base > last && base <= kg) {
+          last = base;
+        }
+      }
       if (lockCause != null) {
         kg = last;
         ex.heldCause = lockCause;
@@ -1312,9 +1339,10 @@ int _holdSafe(SessionRun run, ExerciseRun ex, double fatigue, String slotId) {
     // bilan bas : par rapport à la dernière séance du même emplacement
     // (séance lourde et séance au chrono d'un même exercice ne se
     // comparent pas).
+    final mark = track.slotMarks[slotId];
     final last = track.noUp || ex.painZones.isNotEmpty
         ? track.lastTop
-        : track.slotMarks[slotId]?.top;
+        : (mark?.loadedTop ?? mark?.top);
     if (last != null) {
       final top = last < 1 ? 1 : last;
       if (target > top) {
@@ -1412,9 +1440,10 @@ int _repsSafe(SessionRun run, ExerciseRun ex, double fatigue, String slotId) {
     // bilan bas : par rapport à la dernière séance du même emplacement
     // (séance lourde et séance au chrono d'un même exercice ne se
     // comparent pas).
+    final mark = track.slotMarks[slotId];
     final last = track.noUp || ex.painZones.isNotEmpty
         ? track.lastTop
-        : track.slotMarks[slotId]?.top;
+        : (mark?.loadedTop ?? mark?.top);
     if (last != null) {
       final top = last < 1 ? 1 : last;
       if (target > top) {

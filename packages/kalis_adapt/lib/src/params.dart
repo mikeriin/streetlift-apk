@@ -165,6 +165,7 @@ final class AdaptParams {
     this.coachHoldBestDays = 28,
     this.coachTaperGain = 0.02,
     this.coachAssistMinDays = 7,
+    this.coachHeavyBoundReps = 8,
     this.coachReturnStart = 0.5,
     this.coachReturnStep = 0.1,
     this.coachReturnFloor = 0.4,
@@ -781,6 +782,12 @@ final class AdaptParams {
   /// de l'ACSM 2009 : deux séances réussies avant de charger). Choix
   /// raisonné : une semaine.
   final int coachAssistMinDays;
+
+  /// Série lourde dont la réserve dite, lue comme une borne basse, se
+  /// corrige du biais de note appris (répétitions possibles au plus ; CA2,
+  /// partie 0 : la réserve se juge mieux près de l'échec et sous charge
+  /// lourde, Halperin et al. 2022, Zourdos et al. 2016). Choix raisonné.
+  final double coachHeavyBoundReps;
 
   /// Reprise graduée conduite par le moteur (arrêt levé au milieu d'un
   /// bloc qui écrit les mouvements provocants) : part du volume écrit à la

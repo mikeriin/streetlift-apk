@@ -33,3 +33,9 @@ Base : `moteurs` 9526ac47 (kalis_plan 0.2.2, kalis_adapt 0.2.2, kalis_bench 0.2.
 - Boucle 2 : cran d'élastique 14 jours au moins (coachAssistMinDays), substitution prise neutre (poignet), relecture indépendante du code (16 constats, corrigés : levée datée sans compteur courant, substitution poignet seule et qui n'en provoque aucune autre, appui neutre sous 6/10, part la plus basse, arrondi vers le bas, conseil du poignet, zone réactive (tolérance qui ne baisse pas, séries des mouvements provocants), taperedAt avant le bloc, gain d'affûtage avant la 1re tentative, semaine de levée comptée à moitié, contrat).
 - Contrôle dev 5 poussé (remplace dev 4).
 - Reste partie 0 : panel 07, 09, 12, 16 + renote des profils changés (01, 03, 10…) sur dev 5, relecture documentée (7 saisons), contrôle full, publication 0.2.3 (moteurs, étiquette, DECISIONS, ETAT, page de relecture manche 5, notification).
+
+## Avancement 05/10 ~22:15 UTC
+- Panel p2 (01, 03, 07, 09, 12, 16 sur dev 7) + p1 : 17 couples sur 68 à 9, minimum 6, moyenne 7,87 (c1 : 23, 5,5, 7,95). Notes : ca2-outils/notes/p1, p2, final_p2.json.
+- Relecture documentée (3 Opus, sources web, 8 saisons dev 7) : 01 6,5 ; 03 5,5 ; 06 6,5 ; 07 6,5 ; 08 5,5 ; 10 5 ; 12 7 ; 14 6 (ca2-outils/notes/reldoc). Constat commun : estimations baissées par des séries faciles ou arrêtées tôt, tentatives à 90-92 %.
+- Boucle 3 (dev 03e643c6) : série lourde lue avec le biais appris (coachHeavyBoundReps 8), série arrêtée sous la cible lue comme borne (deuxième mesure), bilan bas comparé à la dernière séance d'une semaine de charge (SlotMark.loadedTop / loadedLoadKg), élastique 7 jours.
+- Contrôle full f3fe571b annulé par le dev de la boucle 3 (même groupe de concurrence).

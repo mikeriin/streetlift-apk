@@ -1691,11 +1691,17 @@ final class SessionRun {
         )) {
       // Mode coach : loin de l'échec, la note ne se lit que comme « au
       // moins tant en réserve » (la prédiction des répétitions restantes
-      // se dégrade loin de l'échec et plafonne, R2-P3).
+      // se dégrade loin de l'échec et plafonne, R2-P3). Sur une série
+      // lourde et courte (8 répétitions possibles au plus), la réserve dite
+      // se corrige du biais de note appris, comme une mesure (Halperin et
+      // al. 2022 : sous-estimation moyenne d'environ une répétition, plus
+      // juste près de l'échec et sur les charges lourdes ; CA2, partie 0 :
+      // estimation moins prudente, jamais abaissée par une série facile).
       final rir = rirOfFlames(flames);
+      final heavy = reps + rir <= p.coachHeavyBoundReps;
       f.observeLoad(
         logLoad: logLoad,
-        n: reps + rir,
+        n: reps + (heavy ? state.rater.trueRir(rir, p) : rir),
         nSd: state.rater.rirSd(rir, reps, p),
         fatigue: fatigue,
         p: p,
@@ -1983,7 +1989,14 @@ final class SessionRun {
     // concordante dans les quatre semaines (CX, correction 1 : jamais
     // d'estimation abaissée sur une seule série d'un mauvais jour ; la note
     // sous-estime la réserve loin de l'échec, Zourdos et al. 2021).
-    if (byFeel && !test && run.spec.coach != null && predicted > 0) {
+    // (De même pour une série arrêtée sous le bas de sa cible : CA2,
+    // partie 0 — une seule série arrêtée tôt ne fait plus baisser
+    // l'estimation ; relecture documentée, manche 4 et partie 0.)
+    final short = target != null && amount < target.low;
+    if ((byFeel || short) &&
+        !test &&
+        run.spec.coach != null &&
+        predicted > 0) {
       final track = run.track!;
       if (implied < predicted * 0.9) {
         final last = track.lowProbeDay;
@@ -2002,7 +2015,6 @@ final class SessionRun {
         track.lowProbeDay = null;
       }
     }
-    final short = target != null && amount < target.low;
     if (byFeel || test || short) {
       run.measured = true;
       return false;
