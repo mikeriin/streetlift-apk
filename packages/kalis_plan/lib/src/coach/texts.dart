@@ -540,12 +540,47 @@ String? coachReasonText(Reason r, Catalog catalog) {
               'en moins.',
         CoachNotes.checkpoint =>
           "Repère sur le chemin de l'objectif : ${_plain(v)}. Une seule "
-              "règle : s'il est atteint, le bloc suivant garde sa méthode, "
-              "écrite sur le résultat du test ; s'il ne l'est pas, le bloc "
-              'suivant change de méthode — une séance de départs au chrono '
-              'devient une séance de surcharge (variante plus dure ou '
-              'lest, en séries courtes) et la série de tête finit en '
-              "repos-pause. Tu n'ajoutes jamais de séries toi-même.",
+              "règle : le bloc suivant est écrit sur le résultat du test ; "
+              "s'il est atteint, il garde sa méthode ; s'il ne l'est pas, "
+              'la séance la plus légère du mouvement (départs au chrono ou '
+              'séries de volume) devient une séance de surcharge en séries '
+              'courtes — variante plus dure ou lest léger, 2 répétitions en '
+              "réserve. Tu n'ajoutes jamais de séries toi-même.",
+        CoachNotes.checkpointBody =>
+          "Repère sur le chemin de l'objectif : ${_plain(v)}. Une seule "
+              "règle : le bloc suivant est écrit sur le résultat du test ; "
+              "s'il est atteint, il garde sa méthode ; s'il ne l'est pas, "
+              'la séance la plus légère du mouvement (départs au chrono ou '
+              'séries de volume) devient une séance de surcharge sans lest, '
+              'en séries courtes à 2 répétitions en réserve : descente en 4 '
+              'à 5 s et pause en haut, puis une variante plus dure (archer, '
+              "chest-to-bar) quand ce tempo devient facile. Tu n'ajoutes "
+              'jamais de séries toi-même.',
+        CoachNotes.checkpointHold =>
+          "Repère sur le chemin de l'objectif : ${_plain(v)} s. Une seule "
+              "règle : le bloc suivant est écrit sur le résultat du test ; "
+              "s'il est atteint, il garde sa méthode ; s'il ne l'est pas, il "
+              'change de dose sur le levier : des tenues plus courtes et '
+              'plus nombreuses, au même temps total, avec des repos '
+              "complets (2 à 3 min). Tu n'ajoutes jamais de séries toi-même.",
+        CoachNotes.checkpointLoad =>
+          "Repère sur le chemin de l'objectif : ${_plain(v)} kg. Une seule "
+              "règle : le bloc suivant est écrit sur le résultat du test "
+              "(charges recalées) ; s'il n'est pas atteint, le bloc garde sa "
+              "méthode, à partir de ce résultat, et l'objectif se joue au "
+              'cycle suivant — pas de charge ajoutée au jugé.',
+        CoachNotes.checkpointLadder =>
+          "Repère sur le chemin de l'objectif : ${_plain(v)}. Une seule "
+              "règle : le bloc suivant est écrit sur le résultat du test ; "
+              "s'il n'est pas atteint, il baisse l'appui de la pompe "
+              "facile d'un cran (mains plus basses) et garde les descentes "
+              "freinées au sol. Tu n'ajoutes jamais de séries toi-même.",
+        CoachNotes.pushHeight =>
+          'Appui trop haut : ton maximum sur cet appui dépasse 15. Baisse '
+              "les mains de ${_int(v)} cran${(v is num && v > 1) ? 's' : ''} "
+              "(environ 10 cm chacun) dès cette semaine : les répétitions "
+              'écrites sont pour le nouvel appui, celui où tu ferais 12 à 14 '
+              'répétitions au maximum. Note la hauteur des mains en cm.',
         CoachNotes.testRest =>
           '${_int(v)} h sans travail dur du mouvement avant un test.',
         CoachNotes.rampBodyweight =>

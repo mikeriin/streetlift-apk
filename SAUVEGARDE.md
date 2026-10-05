@@ -19,6 +19,14 @@ Session Opus 5.5 lancée le 05/10/2026 vers 18:14 UTC (pas de ligne « Lot : » 
 - Contrôle dev 45fec01f : compile ; échecs corrigés (jours d'équilibre vides, borne de charge alignée sur la relecture `coachAudit` : même emplacement vs semaine d'avant allégée comprise, profils 0.1 aléatoires au schéma 2 dans `testing.dart`). Contrôle dev 6fd64980 poussé.
 - Ajouts suivants (non poussés au moment de la sauvegarde) : tests « CP2 partie 0 » (coude +2,5 kg, poignet, série repère, pompe du débutant), règle de la relecture `coachAudit` à répétitions différentes, lest léger gardé (`street_11`), budget de tirage du coude (`street_09`).
 
+## Boucle 1, panel p1 (exports du contrôle dev 6fd64980)
+- 14/68 à 9, min 5, moyenne 7,58 (`notes/p1_toutes.json`, corrections nécessaires `notes/p1_nec.md`). Contrôle dev 4e0f6515 poussé (boucle 1 c).
+
+## Boucle 2 (en cours, non compilée)
+- règle du repère réellement appliquée : séance au chrono, sinon séance de volume → surcharge (même si une séance de force existe ; pas en réalisation d'une épreuve) ; descentes freinées aussi en séances courtes ; textes du repère selon le cas (`checkpoint` lest, `checkpoint_body` sans lest, `checkpoint_hold` figure, `checkpoint_load` 1RM, `checkpoint_ladder` pompe du débutant).
+- pompe mains surélevées : maximum > 15 → note `push_height` (crans de 10 cm), séries 8-11.
+- figure au repère manqué : tenues à 60 %, plus nombreuses, même temps total, 150 s ; tenues courtes nombreuses : repos 120 s.
+
 ## Reste à faire
 - Compiler (CI dev), corriger ; tests des nouvelles règles ; version 0.2.3.
 - Boucles du panel partie 0 (≤ 5, arrêt après une boucle sans gain) ; relecture documentée (3 sous-agents) ; publication intermédiaire 0.2.3 (contrôle vert, étiquette, DECISIONS, ETAT, manche page, notification).

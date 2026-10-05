@@ -1100,6 +1100,18 @@ void _addRepsPillar(
       stress: DayStress.heavy,
       group: group,
     );
+    // Repère manqué (CP2, partie 0, boucle 2 ; panel p1, `street_13`) :
+    // des descentes freinées après la série de force, hors du groupe.
+    if (exerciseId == Ids.pull && max < 10 && a.stalled.contains(exerciseId)) {
+      b.add(
+        d,
+        const <String>['sw-traction-negative'],
+        SlotRole.secondary,
+        Method.beginnerNegative,
+        sets: 2,
+        referenceId: Ids.pull,
+      );
+    }
     return;
   }
   if (method == Method.repsStrength && group == null) {
@@ -1200,7 +1212,12 @@ void _addRepsPillar(
       stress: max < 8 ? DayStress.heavy : DayStress.medium,
       group: group,
     );
-    if (exerciseId == Ids.pull && max < 10 && !short && !spare) {
+    // (Repère manqué, CP2 partie 0 boucle 2 ; panel p1, `street_13` : les
+    // descentes freinées entrent aussi dans les séances courtes.)
+    if (exerciseId == Ids.pull &&
+        max < 10 &&
+        (!short || a.stalled.contains(exerciseId)) &&
+        !spare) {
       // Moins de dix tractions, sans lest : des descentes freinées après
       // la séance de force, le levier de surcharge du tirage (R4-G2,
       // R5-P8 : 3 à 5 s, 15 descentes au plus ; panel CX, boucle 1).
@@ -1544,16 +1561,27 @@ void _buildReps(_Builder b, Set<int> runDays) {
   // dure ou lest, en séries courtes) au bloc suivant (CP2, partie 0 ; panel
   // CX correction 1, `street_06`, 13, 14, 15, 17 : « repère manqué → la
   // variante de surcharge remplace l'EMOM »).
+  // (CP2, partie 0, boucle 2 ; panel p1, `street_06`, 11, 13, 14, 15,
+  // 17 : la règle s'applique même quand une séance de force existe déjà,
+  // et, sans séance au chrono, c'est une séance de volume qui devient la
+  // séance de surcharge — la règle écrite le dit ainsi.)
   void overload(Map<int, String> methods, String id) {
+    // (Épreuve en vue : pas de nouveau mouvement de surcharge pendant la
+    // réalisation — panel p1, `street_08`.)
     if (!a.stalled.contains(id) ||
         !a.aimsAt(id) ||
-        methods.values.contains(Method.repsStrength)) {
+        (competition && b.shape.phase == SeasonPhaseKind.realization)) {
       return;
     }
     int? day;
-    for (final e in methods.entries) {
-      if (e.value == Method.repsDensity) {
-        day = e.key;
+    for (final want in const <String>[Method.repsDensity, Method.repsVolume]) {
+      for (final e in methods.entries) {
+        if (e.value == want) {
+          day = e.key;
+          break;
+        }
+      }
+      if (day != null) {
         break;
       }
     }
@@ -2360,9 +2388,7 @@ void _buildLifting(_Builder b, Set<int> runDays) {
         // (Coude avec antécédent, sans gêne : deux séries — le volume de
         // tirage de la semaine reste vers 18 à 20 séries directes ; CP2,
         // partie 0, `street_09`.)
-        sets: lean || (elbow != null && !spareElbow)
-            ? 2
-            : (hasPull ? 3 : 4),
+        sets: lean || (elbow != null && !spareElbow) ? 2 : (hasPull ? 3 : 4),
         // Coude à ménager : le tirage horizontal en prise neutre porte le
         // tirage de la semaine, il est gardé.
         keep: spareElbow,
