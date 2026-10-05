@@ -1,0 +1,310 @@
+== kalis_adapt
+Resolving dependencies...
+Downloading packages...
++ _fe_analyzer_shared 108.0.0
++ analyzer 14.4.0
++ args 2.7.0
++ async 2.13.1
++ boolean_selector 2.1.2
++ cli_config 0.2.0
++ collection 1.19.1
++ convert 3.1.2
++ coverage 1.15.1
++ crypto 3.0.7
++ file 7.0.1
++ frontend_server_client 4.1.0
++ glob 2.2.0
++ http_multi_server 3.2.2
++ http_parser 4.1.2
++ io 1.1.0
++ kalis_core 0.4.2 from path ../kalis_core
++ kalis_plan 0.2.2 from path ../kalis_plan
++ lints 4.0.0 (6.1.0 available)
++ logging 1.3.0
++ matcher 0.12.20
++ meta 1.19.0
++ mime 2.1.0
++ node_preamble 2.0.2
++ package_config 3.0.0
++ path 1.9.1
++ pool 1.5.3
++ pub_semver 2.2.1
++ shelf 1.4.2
++ shelf_packages_handler 3.0.2
++ shelf_static 1.1.3
++ shelf_web_socket 3.0.0
++ source_map_stack_trace 2.1.2
++ source_maps 0.10.14
++ source_span 1.10.2
++ stack_trace 1.12.2
++ stream_channel 2.1.4
++ string_scanner 1.4.1
++ term_glyph 1.2.2
++ test 1.32.0
++ test_api 0.7.14
++ test_core 0.6.20
++ typed_data 1.4.0
++ vm_service 15.3.0
++ watcher 1.2.1
++ web 1.1.1
++ web_socket 1.0.1
++ web_socket_channel 3.0.3
++ webkit_inspection_protocol 1.2.1
++ yaml 3.1.4
+Changed 50 dependencies!
+1 package has newer versions incompatible with dependency constraints.
+Try `dart pub outdated` for more information.
+Formatted 59 files (0 changed) in 0.31 seconds.
+Analyzing kalis_adapt...
+No issues found!
+00:00 +0: loading test/properties_1_test.dart
+00:00 +0: test/properties_1_test.dart: journaux aléatoires 1280 à 1439
+00:00 +1: test/properties_1_test.dart: journaux aléatoires 1280 à 1439
+00:00 +2: test/properties_1_test.dart: journaux aléatoires 1280 à 1439
+00:00 +3: test/properties_1_test.dart: journaux aléatoires 1280 à 1439
+00:00 +4: test/properties_1_test.dart: journaux aléatoires 1280 à 1439
+00:00 +5: test/properties_1_test.dart: journaux aléatoires 1280 à 1439
+00:00 +6: test/properties_1_test.dart: journaux aléatoires 1280 à 1439
+00:00 +7: test/properties_1_test.dart: journaux aléatoires 1280 à 1439
+00:00 +8: test/properties_1_test.dart: journaux aléatoires 1280 à 1439
+00:00 +9: test/properties_1_test.dart: journaux aléatoires 1280 à 1439
+00:00 +10: test/properties_1_test.dart: journaux aléatoires 1280 à 1439
+00:01 +11: test/properties_1_test.dart: journaux aléatoires 1280 à 1439
+00:04 +12: test/properties_1_test.dart: journaux aléatoires 1280 à 1439
+00:05 +13: test/properties_1_test.dart: journaux aléatoires 1280 à 1439
+00:05 +14: test/properties_1_test.dart: journaux aléatoires 1280 à 1439
+00:06 +15: test/coach_properties_2_test.dart: journaux aléatoires (mode coach) 105120 à 105279
+00:07 +16: test/coach_properties_2_test.dart: journaux aléatoires (mode coach) 105120 à 105279
+00:09 +17: test/coach_properties_2_test.dart: journaux aléatoires (mode coach) 105120 à 105279
+00:09 +18: test/coach_properties_2_test.dart: journaux aléatoires (mode coach) 105120 à 105279
+00:10 +19: test/coach_properties_2_test.dart: journaux aléatoires (mode coach) 105120 à 105279
+00:10 +20: test/properties_1_test.dart: journaux aléatoires 2080 à 2239
+00:11 +21: test/coach_properties_2_test.dart: journaux aléatoires (mode coach) 105280 à 105439
+00:12 +22: test/properties_1_test.dart: journaux aléatoires 2240 à 2399
+00:12 +23: test/coach_properties_2_test.dart: journaux aléatoires (mode coach) 105440 à 105599
+00:13 +24: test/properties_1_test.dart: journaux aléatoires 2400 à 2559
+00:13 +25: test/coach_properties_2_test.dart: journaux aléatoires (mode coach) 105600 à 105759
+00:13 +26: test/coach_properties_2_test.dart: journaux aléatoires (mode coach) 105600 à 105759
+00:13 +27: test/coach_properties_2_test.dart: journaux aléatoires (mode coach) 105600 à 105759
+00:13 +28: test/coach_properties_2_test.dart: journaux aléatoires (mode coach) 105600 à 105759
+00:13 +29: test/coach_properties_2_test.dart: journaux aléatoires (mode coach) 105600 à 105759
+00:13 +30: test/coach_properties_2_test.dart: journaux aléatoires (mode coach) 105600 à 105759
+00:13 +31: test/coach_properties_2_test.dart: journaux aléatoires (mode coach) 105600 à 105759
+00:13 +32: test/coach_properties_2_test.dart: journaux aléatoires (mode coach) 105600 à 105759
+00:13 +33: test/coach_properties_2_test.dart: journaux aléatoires (mode coach) 105600 à 105759
+00:13 +34: test/coach_properties_2_test.dart: journaux aléatoires (mode coach) 105600 à 105759
+00:13 +35: test/coach_properties_2_test.dart: journaux aléatoires (mode coach) 105600 à 105759
+00:13 +36: test/coach_properties_2_test.dart: journaux aléatoires (mode coach) 105600 à 105759
+00:13 +37: test/coach_properties_2_test.dart: journaux aléatoires (mode coach) 105600 à 105759
+00:13 +38: test/coach_properties_2_test.dart: journaux aléatoires (mode coach) 105600 à 105759
+00:13 +39: test/coach_properties_2_test.dart: journaux aléatoires (mode coach) 105600 à 105759
+00:13 +40: test/coach_properties_2_test.dart: journaux aléatoires (mode coach) 105600 à 105759
+00:13 +41: test/coach_properties_2_test.dart: journaux aléatoires (mode coach) 105600 à 105759
+00:14 +42: test/coach_test.dart: tentatives croissantes, bornées par l'estimation, sur 10 000 tirages
+00:14 +43: test/coach_properties_2_test.dart: journaux aléatoires (mode coach) 105760 à 105919
+00:15 +44: test/coach_test.dart: programmes street du banc street_01_debutant_complet : bloc au contrat 0.4.0, boucle complète, trois vérités
+00:16 +45: test/coach_properties_2_test.dart: journaux aléatoires (mode coach) 105920 à 106079
+00:16 +46: test/coach_properties_2_test.dart: journaux aléatoires (mode coach) 105920 à 106079
+00:16 +47: test/coach_test.dart: programmes street du banc street_03_debutante : bloc au contrat 0.4.0, boucle complète, trois vérités
+00:17 +48: test/coach_properties_2_test.dart: journaux aléatoires (mode coach) 106080 à 106239
+00:18 +49: test/coach_test.dart: programmes street du banc street_04_reprise_longue_pause : bloc au contrat 0.4.0, boucle complète, trois vérités
+00:18 +50: test/coach_properties_2_test.dart: journaux aléatoires (mode coach) 106240 à 106399
+00:19 +51: test/coach_test.dart: programmes street du banc street_05_inter_calisthenie_front_lever : bloc au contrat 0.4.0, boucle complète, trois vérités
+00:19 +52: test/coach_properties_2_test.dart: journaux aléatoires (mode coach) 106400 à 106559
+00:19 +53: test/coach_properties_2_test.dart: journaux aléatoires (mode coach) 106400 à 106559
+00:19 +54: test/coach_test.dart: programmes street du banc street_07_avance_streetlifting_competition : bloc au contrat 0.4.0, boucle complète, trois vérités
+00:20 +55: test/coach_test.dart: programmes street du banc street_07_avance_streetlifting_competition : bloc au contrat 0.4.0, boucle complète, trois vérités
+00:20 +56: test/coach_properties_2_test.dart: journaux aléatoires (mode coach) 106720 à 106879
+00:20 +57: test/coach_test.dart: programmes street du banc street_08_avance_sets_reps_competition : bloc au contrat 0.4.0, boucle complète, trois vérités
+00:21 +58: test/coach_properties_2_test.dart: journaux aléatoires (mode coach) 106880 à 107039
+00:21 +59: test/coach_test.dart: programmes street du banc street_09_elite_streetlifting : bloc au contrat 0.4.0, boucle complète, trois vérités
+00:21 +60: test/coach_test.dart: programmes street du banc street_09_elite_streetlifting : bloc au contrat 0.4.0, boucle complète, trois vérités
+00:22 +61: test/coach_properties_2_test.dart: journaux aléatoires (mode coach) 107200 à 107359
+00:22 +62: test/coach_test.dart: programmes street du banc street_10_elite_figures : bloc au contrat 0.4.0, boucle complète, trois vérités
+00:22 +63: test/coach_properties_2_test.dart: journaux aléatoires (mode coach) 107360 à 107519
+00:23 +64: test/coach_properties_2_test.dart: journaux aléatoires (mode coach) 107360 à 107519
+00:23 +65: test/coach_test.dart: programmes street du banc street_12_antecedent_coude : bloc au contrat 0.4.0, boucle complète, trois vérités
+00:23 +66: test/coach_properties_2_test.dart: journaux aléatoires (mode coach) 107520 à 107679
+00:23 +67: test/coach_properties_2_test.dart: journaux aléatoires (mode coach) 107520 à 107679
+00:23 +68: test/coach_properties_2_test.dart: journaux aléatoires (mode coach) 107520 à 107679
+00:24 +69: test/coach_test.dart: programmes street du banc street_15_travail_physique_sommeil_court : bloc au contrat 0.4.0, boucle complète, trois vérités
+00:24 +70: test/coach_test.dart: programmes street du banc street_16_specialisation_traction_lestee : bloc au contrat 0.4.0, boucle complète, trois vérités
+00:24 +71: test/coach_test.dart: programmes street du banc street_17_hybride_street_course : bloc au contrat 0.4.0, boucle complète, trois vérités
+00:24 +72: test/coach_test.dart: programmes de test (techniques injectées) street_06_inter_sets_reps, rang 0 : lignes valides, invariants tenus
+00:24 +73: test/properties_0_test.dart: journaux aléatoires 0 à 159
+00:24 +74: test/properties_0_test.dart: journaux aléatoires 0 à 159
+00:24 +75: test/properties_0_test.dart: journaux aléatoires 0 à 159
+00:25 +76: test/properties_0_test.dart: journaux aléatoires 0 à 159
+00:25 +77: test/properties_0_test.dart: journaux aléatoires 0 à 159
+00:25 +78: test/properties_0_test.dart: journaux aléatoires 0 à 159
+00:25 +79: test/properties_0_test.dart: journaux aléatoires 0 à 159
+00:25 +80: test/properties_0_test.dart: journaux aléatoires 0 à 159
+00:25 +81: test/properties_0_test.dart: journaux aléatoires 0 à 159
+00:25 +82: test/properties_0_test.dart: journaux aléatoires 0 à 159
+00:26 +83: test/properties_0_test.dart: journaux aléatoires 0 à 159
+00:31 +84: test/properties_4_test.dart: journaux aléatoires 5120 à 5279
+00:32 +85: test/properties_4_test.dart: journaux aléatoires 5120 à 5279
+00:33 +86: test/properties_0_test.dart: journaux aléatoires 320 à 479
+00:33 +87: test/properties_4_test.dart: journaux aléatoires 5280 à 5439
+00:34 +88: test/properties_4_test.dart: journaux aléatoires 5280 à 5439
+00:34 +89: test/properties_0_test.dart: journaux aléatoires 640 à 799
+00:35 +90: test/properties_4_test.dart: journaux aléatoires 5440 à 5599
+00:35 +91: test/properties_0_test.dart: journaux aléatoires 800 à 959
+00:35 +92: test/properties_4_test.dart: journaux aléatoires 5600 à 5759
+00:36 +93: test/properties_0_test.dart: journaux aléatoires 960 à 1119
+00:36 +94: test/properties_0_test.dart: journaux aléatoires 960 à 1119
+00:36 +95: test/properties_4_test.dart: journaux aléatoires 5920 à 6079
+00:37 +96: test/properties_0_test.dart: journaux aléatoires 1120 à 1279
+00:37 +97: test/properties_4_test.dart: journaux aléatoires 6080 à 6239
+00:37 +98: test/properties_4_test.dart: journaux aléatoires 6240 à 6399
+00:38 +99: test/properties_4_test.dart: journaux aléatoires 6240 à 6399
+00:38 +100: test/properties_4_test.dart: journaux aléatoires 6240 à 6399
+00:38 +101: test/properties_4_test.dart: journaux aléatoires 6240 à 6399
+00:38 +102: test/properties_4_test.dart: journaux aléatoires 6240 à 6399
+00:38 +103: test/properties_4_test.dart: journaux aléatoires 6240 à 6399
+00:38 +104: test/properties_4_test.dart: journaux aléatoires 6240 à 6399
+00:38 +105: test/properties_4_test.dart: journaux aléatoires 6240 à 6399
+00:38 +106: test/properties_4_test.dart: journaux aléatoires 6240 à 6399
+00:38 +107: test/properties_4_test.dart: journaux aléatoires 6240 à 6399
+00:38 +108: test/properties_4_test.dart: journaux aléatoires 6240 à 6399
+00:38 +109: test/properties_4_test.dart: journaux aléatoires 6240 à 6399
+00:38 +110: test/properties_4_test.dart: journaux aléatoires 6240 à 6399
+00:38 +111: test/properties_4_test.dart: journaux aléatoires 6240 à 6399
+00:38 +112: test/properties_4_test.dart: journaux aléatoires 6240 à 6399
+00:38 +113: test/properties_4_test.dart: journaux aléatoires 6240 à 6399
+00:38 +114: test/properties_4_test.dart: journaux aléatoires 6240 à 6399
+00:38 +115: test/properties_4_test.dart: journaux aléatoires 6240 à 6399
+00:38 +116: test/properties_4_test.dart: journaux aléatoires 6240 à 6399
+00:38 +117: test/properties_4_test.dart: journaux aléatoires 6240 à 6399
+00:38 +118: test/properties_4_test.dart: journaux aléatoires 6240 à 6399
+00:38 +119: test/properties_4_test.dart: journaux aléatoires 6240 à 6399
+00:38 +120: test/properties_4_test.dart: journaux aléatoires 6240 à 6399
+00:38 +121: test/properties_4_test.dart: journaux aléatoires 6240 à 6399
+00:38 +122: test/properties_4_test.dart: journaux aléatoires 6240 à 6399
+00:38 +123: test/units_test.dart: application d'une proposition bloc au contrat 0.4.0 : les intentions des semaines restent (0.2.1)
+00:39 +124: test/properties_7_test.dart: journaux aléatoires 8960 à 9119
+00:39 +125: test/properties_7_test.dart: journaux aléatoires 8960 à 9119
+00:39 +126: test/properties_7_test.dart: journaux aléatoires 8960 à 9119
+00:39 +127: test/properties_7_test.dart: journaux aléatoires 8960 à 9119
+00:46 +128: test/properties_2_test.dart: journaux aléatoires 2560 à 2719
+00:46 +129: test/properties_7_test.dart: journaux aléatoires 9120 à 9279
+00:47 +130: test/properties_2_test.dart: journaux aléatoires 2720 à 2879
+00:47 +131: test/properties_7_test.dart: journaux aléatoires 9280 à 9439
+00:48 +132: test/properties_2_test.dart: journaux aléatoires 2880 à 3039
+00:48 +133: test/properties_7_test.dart: journaux aléatoires 9440 à 9599
+00:48 +134: test/properties_2_test.dart: journaux aléatoires 3040 à 3199
+00:49 +135: test/properties_7_test.dart: journaux aléatoires 9600 à 9759
+00:49 +136: test/properties_2_test.dart: journaux aléatoires 3200 à 3359
+00:50 +137: test/properties_2_test.dart: journaux aléatoires 3200 à 3359
+00:50 +138: test/properties_7_test.dart: journaux aléatoires 9920 à 10079
+00:50 +139: test/properties_7_test.dart: journaux aléatoires 9920 à 10079
+00:50 +140: test/properties_2_test.dart: journaux aléatoires 3520 à 3679
+00:51 +141: test/properties_2_test.dart: journaux aléatoires 3520 à 3679
+00:51 +142: test/properties_2_test.dart: journaux aléatoires 3680 à 3839
+00:52 +143: test/smoke_test.dart: debutant_salle : 8 semaines en boucle complète
+00:53 +144: test/coach_properties_1_test.dart: journaux aléatoires (mode coach) 102560 à 102719
+00:54 +145: test/coach_properties_1_test.dart: journaux aléatoires (mode coach) 102560 à 102719
+00:56 +146: test/coach_properties_1_test.dart: journaux aléatoires (mode coach) 102560 à 102719
+00:56 +147: test/coach_properties_1_test.dart: journaux aléatoires (mode coach) 102560 à 102719
+00:57 +148: test/coach_properties_1_test.dart: journaux aléatoires (mode coach) 102560 à 102719
+00:57 +149: test/coach_properties_1_test.dart: journaux aléatoires (mode coach) 102560 à 102719
+00:57 +150: test/coach_properties_1_test.dart: journaux aléatoires (mode coach) 102560 à 102719
+00:57 +151: test/coach_properties_1_test.dart: journaux aléatoires (mode coach) 102560 à 102719
+00:58 +152: test/coach_properties_1_test.dart: journaux aléatoires (mode coach) 102720 à 102879
+00:59 +153: test/properties_3_test.dart: journaux aléatoires 3840 à 3999
+01:01 +154: test/properties_3_test.dart: journaux aléatoires 3840 à 3999
+01:02 +155: test/properties_3_test.dart: journaux aléatoires 3840 à 3999
+01:03 +156: test/properties_3_test.dart: journaux aléatoires 3840 à 3999
+01:04 +157: test/properties_3_test.dart: journaux aléatoires 3840 à 3999
+01:04 +158: test/coach_properties_1_test.dart: journaux aléatoires (mode coach) 103520 à 103679
+01:04 +159: test/properties_3_test.dart: journaux aléatoires 4000 à 4159
+01:05 +160: test/properties_3_test.dart: journaux aléatoires 4000 à 4159
+01:05 +161: test/coach_properties_1_test.dart: journaux aléatoires (mode coach) 103840 à 103999
+01:06 +162: test/properties_3_test.dart: journaux aléatoires 4160 à 4319
+01:06 +163: test/coach_properties_1_test.dart: journaux aléatoires (mode coach) 104000 à 104159
+01:06 +164: test/properties_3_test.dart: journaux aléatoires 4320 à 4479
+01:06 +165: test/coach_properties_1_test.dart: journaux aléatoires (mode coach) 104160 à 104319
+01:07 +166: test/properties_3_test.dart: journaux aléatoires 4480 à 4639
+01:07 +167: test/coach_properties_1_test.dart: journaux aléatoires (mode coach) 104320 à 104479
+01:07 +168: test/properties_3_test.dart: journaux aléatoires 4640 à 4799
+01:08 +169: test/coach_properties_1_test.dart: journaux aléatoires (mode coach) 104480 à 104639
+01:08 +170: test/properties_3_test.dart: journaux aléatoires 4800 à 4959
+01:08 +171: test/coach_properties_1_test.dart: journaux aléatoires (mode coach) 104640 à 104799
+01:09 +172: test/properties_3_test.dart: journaux aléatoires 4960 à 5119
+01:09 +173: test/coach_properties_1_test.dart: journaux aléatoires (mode coach) 104800 à 104959
+01:09 +174: test/coach_properties_1_test.dart: journaux aléatoires (mode coach) 104960 à 105119
+01:10 +175: test/properties_5_test.dart: journaux aléatoires 6400 à 6559
+01:10 +176: test/properties_5_test.dart: journaux aléatoires 6400 à 6559
+01:11 +177: test/properties_5_test.dart: journaux aléatoires 6400 à 6559
+01:11 +178: test/properties_5_test.dart: journaux aléatoires 6400 à 6559
+01:15 +179: test/properties_6_test.dart: journaux aléatoires 7680 à 7839
+01:16 +180: test/properties_6_test.dart: journaux aléatoires 7680 à 7839
+01:18 +181: test/properties_6_test.dart: journaux aléatoires 7680 à 7839
+01:18 +182: test/properties_6_test.dart: journaux aléatoires 7680 à 7839
+01:19 +183: test/properties_5_test.dart: journaux aléatoires 7040 à 7199
+01:19 +184: test/properties_6_test.dart: journaux aléatoires 7840 à 7999
+01:20 +185: test/properties_6_test.dart: journaux aléatoires 7840 à 7999
+01:20 +186: test/properties_5_test.dart: journaux aléatoires 7360 à 7519
+01:21 +187: test/properties_6_test.dart: journaux aléatoires 8000 à 8159
+01:21 +188: test/properties_6_test.dart: journaux aléatoires 8000 à 8159
+01:22 +189: test/properties_6_test.dart: journaux aléatoires 8160 à 8319
+01:22 +190: test/coach_properties_0_test.dart: journaux aléatoires (mode coach) 100000 à 100159
+01:23 +191: test/coach_properties_0_test.dart: journaux aléatoires (mode coach) 100000 à 100159
+01:23 +192: test/coach_properties_0_test.dart: journaux aléatoires (mode coach) 100000 à 100159
+01:24 +193: test/coach_properties_0_test.dart: journaux aléatoires (mode coach) 100000 à 100159
+01:25 +194: test/coach_properties_0_test.dart: journaux aléatoires (mode coach) 100000 à 100159
+01:26 +195: test/coach_properties_0_test.dart: journaux aléatoires (mode coach) 100160 à 100319
+01:26 +196: test/coach_properties_0_test.dart: journaux aléatoires (mode coach) 100160 à 100319
+01:26 +197: test/coach_properties_0_test.dart: journaux aléatoires (mode coach) 100160 à 100319
+01:26 +198: test/coach_properties_0_test.dart: journaux aléatoires (mode coach) 100160 à 100319
+01:26 +199: test/coach_properties_0_test.dart: journaux aléatoires (mode coach) 100160 à 100319
+01:26 +200: test/coach_properties_0_test.dart: journaux aléatoires (mode coach) 100160 à 100319
+01:26 +201: test/coach_properties_0_test.dart: journaux aléatoires (mode coach) 100160 à 100319
+01:26 +202: test/coach_properties_0_test.dart: journaux aléatoires (mode coach) 100160 à 100319
+01:26 +203: test/coach_properties_0_test.dart: journaux aléatoires (mode coach) 100160 à 100319
+01:26 +204: test/coach_properties_0_test.dart: journaux aléatoires (mode coach) 100160 à 100319
+01:26 +205: test/coach_properties_0_test.dart: journaux aléatoires (mode coach) 100160 à 100319
+01:26 +206: test/coach_properties_0_test.dart: journaux aléatoires (mode coach) 100160 à 100319
+01:28 +207: test/coach_properties_3_test.dart: journaux aléatoires (mode coach) 107680 à 107839
+01:30 +208: test/coach_properties_3_test.dart: journaux aléatoires (mode coach) 107680 à 107839
+01:31 +209: test/coach_properties_3_test.dart: journaux aléatoires (mode coach) 107680 à 107839
+01:32 +210: test/coach_properties_3_test.dart: journaux aléatoires (mode coach) 107680 à 107839
+01:32 +211: test/coach_properties_0_test.dart: journaux aléatoires (mode coach) 100800 à 100959
+01:33 +212: test/coach_properties_3_test.dart: journaux aléatoires (mode coach) 107840 à 107999
+01:34 +213: test/coach_properties_3_test.dart: journaux aléatoires (mode coach) 107840 à 107999
+01:34 +214: test/coach_properties_0_test.dart: journaux aléatoires (mode coach) 101120 à 101279
+01:34 +215: test/coach_properties_3_test.dart: journaux aléatoires (mode coach) 108000 à 108159
+01:35 +216: test/coach_properties_3_test.dart: journaux aléatoires (mode coach) 108000 à 108159
+01:35 +217: test/coach_properties_0_test.dart: journaux aléatoires (mode coach) 101440 à 101599
+01:35 +218: test/coach_properties_3_test.dart: journaux aléatoires (mode coach) 108160 à 108319
+01:36 +219: test/coach_properties_3_test.dart: journaux aléatoires (mode coach) 108160 à 108319
+01:36 +220: test/coach_properties_0_test.dart: journaux aléatoires (mode coach) 101760 à 101919
+01:37 +221: test/coach_properties_3_test.dart: journaux aléatoires (mode coach) 108320 à 108479
+01:37 +222: test/coach_properties_3_test.dart: journaux aléatoires (mode coach) 108320 à 108479
+01:37 +223: test/coach_properties_0_test.dart: journaux aléatoires (mode coach) 102080 à 102239
+01:38 +224: test/coach_properties_3_test.dart: journaux aléatoires (mode coach) 108480 à 108639
+01:38 +225: test/coach_properties_0_test.dart: journaux aléatoires (mode coach) 102240 à 102399
+01:38 +226: test/coach_properties_3_test.dart: journaux aléatoires (mode coach) 108640 à 108799
+01:39 +227: test/coach_properties_0_test.dart: journaux aléatoires (mode coach) 102400 à 102559
+01:39 +228: test/coach_properties_3_test.dart: journaux aléatoires (mode coach) 108800 à 108959
+01:39 +229: test/coach_properties_3_test.dart: journaux aléatoires (mode coach) 108800 à 108959
+01:39 +230: test/reference_test.dart: filtre : même état que la référence après chaque étape
+01:39 +231: test/coach_properties_3_test.dart: journaux aléatoires (mode coach) 108960 à 109119
+01:40 +232: test/coach_properties_3_test.dart: journaux aléatoires (mode coach) 109120 à 109279
+01:40 +233: test/coach_properties_3_test.dart: journaux aléatoires (mode coach) 109280 à 109439
+01:41 +234: test/coach_properties_3_test.dart: journaux aléatoires (mode coach) 109440 à 109599
+01:41 +235: test/coach_properties_3_test.dart: journaux aléatoires (mode coach) 109600 à 109759
+01:41 +236: test/coach_properties_3_test.dart: journaux aléatoires (mode coach) 109760 à 109919
+01:42 +237: test/coach_properties_3_test.dart: journaux aléatoires (mode coach) 109920 à 110079
+01:42 +238: test/coach_properties_3_test.dart: journaux aléatoires (mode coach) 110080 à 110239
+01:43 +239: All tests passed!
+  notes_paresseuses : fait (114 s)
+  debutant_salle : fait (148 s)
+  irregulier : fait (174 s)
+  calisthenie_parc : fait (197 s)
+  intermediaire_salle : fait (223 s)
+  maison_halteres : fait (270 s)
+  douleur_et_lieu : fait (326 s)
+  avance_street : fait (352 s)
+kalis_adapt 0.2.2 : rapport écrit dans /home/runner/work/streetlift-apk/streetlift-apk/out-packages/kalis_adapt (353 s).
+durée : 471 s
