@@ -52,10 +52,11 @@ String _zoneOfIndex(Object? v) {
 /// Mouvements retirés pour la zone de rang [v], entre parenthèses.
 String _provokingOfIndex(Object? v) => switch (_zoneAt(v)) {
   BodyZone.wristHand =>
-    '(tous les appuis poignet en extension : planche, équilibres, pompes '
-        'en appui tendu, shoulder taps, pompes au sol ; les appuis à prise '
-        'neutre — barres parallèles, anneaux, poignées — restent si la gêne '
-        'ne monte pas)',
+    '(tous les appuis poignet en extension, mains à plat : planche et '
+        'équilibres au sol, pompes en appui tendu, shoulder taps, pompes au '
+        'sol ; les appuis à prise neutre — parallettes, barres parallèles, '
+        'anneaux, poignées — restent, en volume réduit, si la gêne ne monte '
+        'pas)',
   BodyZone.elbow =>
     '(mouvements lestés et tirages lourds qui chargent le coude, '
         'pronation lourde ; tractions en prise neutre légères seulement si '
@@ -403,16 +404,22 @@ String? coachReasonText(Reason r, Catalog catalog) {
                     'de la séance, 2 séries chacun. Une séance courte vaut '
                     "mieux qu'une séance sautée.",
         CoachNotes.bandChoice =>
-          "Élastique : prends celui qui permet ${_int(v)} répétitions "
-              'propres avec la réserve prévue ; note-le à chaque séance. '
-              'Si même le plus fort ne suffit pas, fais la traction pieds '
-              'en appui (barre basse) en attendant ; pour changer '
-              "d'élastique, suis la règle d'assistance. À partir de la sixième "
-              'semaine, '
-              'commence deux séances par semaine par 1 à 3 essais isolés de '
-              'traction stricte, frais, 2 min entre eux, arrêt au premier '
-              "essai lent ; tant qu'aucun ne passe, fais à la place une "
-              "traction sautée suivie d'une descente de 5 s.",
+          v is num && v >= 100
+              ? "Élastique : prends celui qui permet ${_int(v - 100)} "
+                    'répétitions propres avec la réserve prévue ; note-le à '
+                    'chaque séance. Il ajoute du volume de tirage sans '
+                    'remplacer tes tractions strictes ; pour changer '
+                    "d'élastique, suis la règle d'assistance."
+              : "Élastique : prends celui qui permet ${_int(v)} répétitions "
+                    'propres avec la réserve prévue ; note-le à chaque '
+                    'séance. Si même le plus fort ne suffit pas, fais la '
+                    'traction pieds en appui (barre basse) en attendant ; '
+                    "pour changer d'élastique, suis la règle d'assistance. "
+                    'À partir de la sixième semaine, commence deux séances '
+                    'par semaine par 1 à 3 essais isolés de traction '
+                    'stricte, frais, 2 min entre eux, arrêt au premier essai '
+                    "lent ; tant qu'aucun ne passe, fais à la place une "
+                    "traction sautée suivie d'une descente de 5 s.",
         CoachNotes.cue => switch (v is num ? v.round() : 0) {
           1 =>
             'Exécution : départ bras tendus, épaules basses, menton '
@@ -554,6 +561,12 @@ String? coachReasonText(Reason r, Catalog catalog) {
               'que la gêne ne reste pas sous 2/10 deux semaines de suite. '
               'À 6/10, douleur la nuit ou gêne qui dure : arrête le '
               'mouvement et consulte.',
+        CoachNotes.eventZone =>
+          "Zone de l'épreuve : séries à environ ${_int(v)} % de ton maximum, "
+              'repos court, 2 répétitions en réserve sur la dernière — '
+              "c'est la fin de série que le test demande. La dernière série "
+              "s'arrête dès que la forme casse ; si la réserve tombe sous 1, "
+              "retire une répétition par série la séance suivante.",
         CoachNotes.plateau =>
           'Plateau au dernier test (${_int(v)} répétitions, sans progrès) : '
               'ce bloc change de méthode au lieu de recopier le précédent — '
