@@ -31,7 +31,7 @@ Chaque bloc est écrit par le moteur de création au moment où il commence, d'a
 
 - Séances faites : 44 sur 48 (3 ajustées le jour même).
 - Échecs non voulus (hors tests et tentatives) : 0 % des séries de travail.
-- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 1,24 répétition en réserve (sur les 72 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 8,5 %.
+- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 1,24 répétition en réserve (sur les 72 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 8,3 %.
 - Plus forte hausse de charge totale d'un mouvement principal d'une séance à la suivante, à schéma égal : 0 % ; hausses de plus de 10 % faites de plusieurs crans : 0.
 - Progression réelle moyenne des mouvements suivis : 0,598 % par semaine.
 - Douleur : 0 hausse(s) de charge sur une zone douloureuse signalée.
@@ -45,18 +45,18 @@ Pour chaque mouvement, la séance la plus lourde de la semaine : ce que le progr
 | Sem. | Phase | Écrit par le programme | Servi par le moteur | Fait | Effort visé → réel | Maximum réel / estimé | Décisions du moteur |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | 1 | introduction | 3 × 3 (50 % du maximum testé) | 3-3-3 | 3-2-2 | 3 → 2,9 ; suivantes 3 → 3,5 | 6 / 6 | calibrage (séance 1 sur ce mouvement) ; allégé pour garder la marge prévue (au moins 3 en réserve) ; dernières séries plus dures que prévu |
-| 2 | construction (volume) | 3 × 3 (50 % du maximum testé) | 3-2-2 | 3-1-1 | 3 → 2,4 ; suivantes 3 → 4 | 5 / 6 | calibrage (séance 3 sur ce mouvement) ; allégé pour garder la marge prévue (au moins 3 en réserve) ; dernières séries plus dures que prévu |
+| 2 | construction (volume) | 3 × 4 (67 % du maximum testé) | 4-3-3 | 4-2-2 | 2 → 1,4 ; suivantes 2 → 2,9 | 5 / 6 | calibrage (séance 3 sur ce mouvement) ; allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |
 | 3 | construction (volume) | 3 × 4 à 5 (67 % du maximum testé) | 4-4-4 | 4-4-3 | 2 → 1,7 ; suivantes 2 → 1,4 | 6 / 6 | répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; dernières séries plus dures que prévu |
 | 4 | construction (volume) | 3 × 4 à 5 (67 % du maximum testé) | 4-4-4 | 4-4-3 | 2 → 1,4 ; suivantes 2 → 1,2 | 5 / 6 | répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; dernières séries plus dures que prévu |
 | 5 | construction (volume) | 3 × 4 à 5 (67 % du maximum testé) | 4-4-4 | 4-3-3 | 2 → 1,8 ; suivantes 2 → 2,2 | 6 / 6 | répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; dernières séries plus dures que prévu |
 | 6 | allègement | 1 × 7 à 9, test | (5 à 9) | 5 | test | 5 / 6 | — |
-| 7 | réalisation (spécifique à l'objectif) | 3 × 3 (60 % du maximum testé) | 3-3-3 | 3-2-2 | 2 → 2,9 ; suivantes 2 → 3,3 | 6 / 6 | allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |
+| 7 | réalisation (spécifique à l'objectif) | 3 × 3 (60 % du maximum testé) | 3-3-3 | 3-3-2 | 2 → 2,5 ; suivantes 2 → 2,4 | 6 / 6 | allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |
 | 8 | réalisation (spécifique à l'objectif) | 3 × 3 à 4 (60 % du maximum testé) | 4-3-3 | 4-3-3 | 2 → 2,1 ; suivantes 2 → 2,5 | 6 / 6 | — |
 | 9 | réalisation (spécifique à l'objectif) | 3 × 3 à 4 (60 % du maximum testé) | 4-3-3 | 4-2-2 | 2 → 1,7 ; suivantes 2 → 3,1 | 6 / 6 | allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |
 | 10 | réalisation (spécifique à l'objectif) | 3 × 3 à 4 (60 % du maximum testé) | 4-3-3 | 4-3-3 | 2 → 1,8 ; suivantes 2 → 2,1 | 6 / 6 | — |
 | 11 | affûtage | 2 × 2 (40 % du maximum testé) | 2-2 | 2-2 | 3 → 4,1 ; suivantes 3 → 3,6 | 6 / 6 | — |
 | 12 | test | 1 × 6 à 9, test | (5 à 9) | 6 | test | 6 / 6 | — |
-| 13 | construction (volume) | 3 × 3 (50 % du maximum testé) | 3-3-3 | 3-2-2 | 3 → 3 ; suivantes 3 → 3,6 | 6 / 6 | allégé pour garder la marge prévue (au moins 3 en réserve) ; dernières séries plus dures que prévu |
+| 13 | construction (volume) | 3 × 4 (67 % du maximum testé) | 4-3-3 | 4-2-2 | 2 → 2 ; suivantes 2 → 3,5 | 6 / 6 | allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |
 | 14 | construction (volume) | 3 × 4 à 5 (67 % du maximum testé) | 4-4-4 | 4-4-3 | 2 → 2,2 ; suivantes 2 → 1,8 | 6 / 6 | répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; dernières séries plus dures que prévu |
 | 15 | construction (volume) | 3 × 4 à 5 (67 % du maximum testé) | 4-4-4 | 4-4-3 | 2 → 2 ; suivantes 2 → 1,7 | 6 / 6 | répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; dernières séries plus dures que prévu |
 | 16 | construction (volume) | 3 × 4 à 5 (67 % du maximum testé) | 4-4-4 | 4-3-3 | 2 → 2 ; suivantes 2 → 2,4 | 6 / 6 | répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; dernières séries plus dures que prévu |
@@ -89,5 +89,5 @@ Le même profil et le même moteur, avec d'autres hypothèses sur l'athlète ré
 | Athlète simulé | Échecs non voulus | Écart d'effort | Séries ≥ 2 rép. plus dures | Plus forte hausse à schéma égal | Progression par semaine | Tentatives réussies | Échéance / maximum du jour | Hausses sur zone douloureuse |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | modèle 2 (courbe linéaire, notes d'effort entières et plafonnées, récupération lente entre séries, tendons à adaptation lente) | 0 % | 1,24 | 0 % | 0 % | 0,598 % | — | — | 0 |
-| modèle 1 (courbe charge-répétitions à plateau, notes d'effort continues) | 0 % | 1,16 | 0 % | 0 % | 0,64 % | — | — | 0 |
-| modèle 3 (courbe en puissance, forme masquée par la fatigue, mauvais jours marqués, désentraînement rapide) | 0 % | 1,11 | 0 % | 0 % | 0,581 % | — | — | 0 |
+| modèle 1 (courbe charge-répétitions à plateau, notes d'effort continues) | 0 % | 1,17 | 0 % | 0 % | 0,64 % | — | — | 0 |
+| modèle 3 (courbe en puissance, forme masquée par la fatigue, mauvais jours marqués, désentraînement rapide) | 0 % | 1,11 | 0 % | 0 % | 0,58 % | — | — | 0 |

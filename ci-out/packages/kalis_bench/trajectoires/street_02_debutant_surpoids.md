@@ -64,7 +64,7 @@ Athlète simulé, maximum réel hors fatigue : 12 au départ (le record déclar�
 | 9 | construction (volume) | 1 × 8 à 12 | (8 à 24) | 19 | 2 → 5,9 | 25 / 23 | — |
 | 10 | construction (volume) | 2 × 8 à 12 | (8 à 22)-(8 à 19) | 20-18 | 2 → 5,3 ; suivantes 2 → 5,7 | 25 / 23 | allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |
 | 11 | construction (volume) | 1 × 8 à 12 | (8 à 24) | 23 | 2 → 3,6 | 27 / 24 | — |
-| 12 | test | 1 × 26 à 28, test | (23 à 28) | 23 | test | 26 / 25 | — |
+| 12 | test | 1 × 27 à 29, test | (23 à 29) | 23 | test | 26 / 25 | — |
 
 Athlète simulé, maximum réel hors fatigue : 22 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 26 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
 

@@ -77,7 +77,7 @@ Pour chaque mouvement, la séance la plus lourde de la semaine : ce que le progr
 | 20 | réalisation (spécifique à l'objectif) | 1 × 4 à 6 | Ice cream maker : (4 à 12) | 12 | 3 → 5,5 | 18 / 15 | — |
 | 21 | affûtage | 3 × 10 s, maintien | Front lever half-lay : 10-10-10 s | 10-10-10 s | 4,5 → 7,6 ; suivantes 4,5 → 7,5 | 57 / 20 | — |
 | 22 | test | 1 × 9 à 15 s, test | (6 à 15) s | 7 s | test | 8 / 8 | — |
-| 23 | construction (volume) | 1 × 4 à 6 | Ice cream maker : (4 à 12) | 10 | 3 → 7,7 | 18 / 16 | — |
+| 23 | construction (volume) | 1 × 4 à 6 | Ice cream maker : (4 à 12) | 10 | 3 → 7,9 | 18 / 16 | — |
 
 Athlète simulé, maximum réel hors fatigue : 8 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 8 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
 
@@ -98,7 +98,7 @@ Athlète simulé, maximum réel hors fatigue : 8 au départ (le record déclaré
 | 12 | allègement | 2 × 3 à 5 | Planche push-up straddle assistée à l'élastique : (3 à 5)-(3 à 5) | 3-4 | 4,5 → 5,9 ; suivantes 3 → 4,7 | 9 / 9 | douleur signalée (poignet, 4/10) |
 | 13 | réalisation (spécifique à l'objectif) | 2 × 4 à 6 | Planche push-up straddle assistée à l'élastique : (4 à 6)-(4 à 5) | 6-4 | 1,5 → 2,7 ; suivantes 3 → 4,3 | 9 / 8 | — |
 | 14 | réalisation (spécifique à l'objectif) | 2 × 4 à 6 | Planche push-up straddle assistée à l'élastique : (4 à 6)-(4 à 5) | 6-4 | 1,5 → 2,9 ; suivantes 3 → 4,5 | 9 / 8 | — |
-| 23 | construction (volume) | 1 × 4 | Planche push-up straddle assistée à l'élastique : 4 | 4 | 4 → 4,5 | 9 / 8 | douleur signalée (poignet, 0/10) |
+| 23 | construction (volume) | 2 × 4 | Planche push-up straddle assistée à l'élastique : 4-(4 à 10) | 4-7 | 3 → 4,5 ; suivantes 1,5 → 1,2 | 8 / 8 | série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète |
 
 ## Journal des décisions
 
@@ -124,7 +124,7 @@ Athlète simulé, maximum réel hors fatigue : 8 au départ (le record déclaré
 - **Semaine 20 (réalisation (spécifique à l'objectif))** : 1 séance(s) manquée(s) sur 6 ; Nordic hamstring curl assisté à l'élastique : un cran d'assistance de moins (élastique plus fin, moins d'appui) : la série repère a montré 5 répétitions de réserve de plus que visé (× 2).
 - **Semaine 21 (affûtage)** : 1 séance(s) manquée(s) sur 6 ; phase « affûtage » : séances servies telles que le programme les écrit (× 5) ; affûtage : aucun volume ajouté, intensité gardée (× 5).
 - **Semaine 22 (test)** : phase « test » : séances servies telles que le programme les écrit (× 6) ; résultat de test reporté au profil : Front lever 7 s.
-- **Semaine 23 (construction (volume))** : nouveau bloc construit à partir du point de fin de bloc (maxima estimés, résultats de test, tolérance) ; Nordic hamstring curl assisté à l'élastique : un cran d'assistance de moins (élastique plus fin, moins d'appui) : la série repère a montré 5 répétitions de réserve de plus que visé (× 2) ; bilan du jour bas (2/5) (× 2) ; nuit courte ; bilan du jour bas (1/5) ; séries retirées — Front lever half-lay (bilan du jour bas (2/5), nuit courte).
+- **Semaine 23 (construction (volume))** : nouveau bloc construit à partir du point de fin de bloc (maxima estimés, résultats de test, tolérance) ; Nordic hamstring curl assisté à l'élastique : un cran d'assistance de moins (élastique plus fin, moins d'appui) : la série repère a montré 5 répétitions de réserve de plus que visé (× 2) ; bilan du jour bas (2/5) ; nuit courte ; bilan du jour bas (1/5) ; séries retirées — Front lever half-lay (bilan du jour bas (2/5), nuit courte).
 
 ## Figures
 

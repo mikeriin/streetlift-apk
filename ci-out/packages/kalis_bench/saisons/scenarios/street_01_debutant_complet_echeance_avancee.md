@@ -33,7 +33,7 @@ Chaque bloc est écrit par le moteur de création au moment où il commence, d'a
 
 - Séances faites : 48 sur 48 (18 ajustées le jour même).
 - Échecs non voulus (hors tests et tentatives) : 0 % des séries de travail.
-- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 2,32 répétition en réserve (sur les 75 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 33,5 %.
+- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 2,34 répétition en réserve (sur les 74 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 34 %.
 - Plus forte hausse de charge totale d'un mouvement principal d'une séance à la suivante, à schéma égal : 0 % ; hausses de plus de 10 % faites de plusieurs crans : 0.
 - Progression réelle moyenne des mouvements suivis : 0,991 % par semaine.
 - Douleur : 0 hausse(s) de charge sur une zone douloureuse signalée.
@@ -92,14 +92,14 @@ Athlète simulé, maximum réel hors fatigue : 8 au départ (le record déclaré
 | 4 | construction (volume) | 3 × 6 s, maintien | 5-5 s | 5-5 s | 4,5 → 8,1 ; suivantes 4,5 → 8 | 32 / 10 | bilan du jour bas (2/5) ; nuit courte ; calibrage (séance 2 sur ce mouvement) |
 | 5 | construction (volume) | 3 × 6 s, maintien | 4-4-4 s | 4-4-4 s | 5+ → 8,4 ; suivantes 5+ → 8,4 | 34 / 10 | hausse du maintien bornée pour les tendons (coude) ; calibrage (séance 3 sur ce mouvement) |
 | 6 | test | 2 × 5 à 30 s, test | (5 à 30)-(5 à 30) s | 28-30-5-5 s | 4,5 → 8,2 ; suivantes 4,5 → 8,1 | 34 / 37 | — |
-| 7 | construction (volume) | 3 × 19 s (63 % du maximum testé), maintien | 19-19-19 s | 14 (arrêt avant la cible)-11 (arrêt avant la cible)-11 (arrêt avant la cible) s | 5+ → 5,7 ; suivantes 5+ → 6,4 | 35 / 40 | — |
-| 8 | construction (volume) | 3 × 19 s (63 % du maximum testé), maintien | 14-14-14 s | 11 (arrêt avant la cible)-14-14 s | 5+ → 6,5 ; suivantes 5+ → 5,5 | 34 / 40 | hausse du maintien bornée pour les tendons (coude) |
-| 9 | construction (volume) | 3 × 19 s (63 % du maximum testé), maintien | 15-15-15 s | 10 (arrêt avant la cible)-15-10 (arrêt avant la cible) s | 5+ → 7 ; suivantes 5+ → 6,1 | 37 / 41 | hausse du maintien bornée pour les tendons (coude) |
+| 7 | construction (volume) | 3 × 8 s (63 % du maximum testé), maintien | 8-8-8 s | 8-8-8 s | 5+ → 7,4 ; suivantes 5+ → 7,3 | 35 / 40 | — |
+| 8 | construction (volume) | 3 × 10 s (63 % du maximum testé), maintien | 9-9-9 s | 9-9-9 s | 5+ → 7 ; suivantes 5+ → 6,9 | 34 / 40 | hausse du maintien bornée pour les tendons (coude) |
+| 9 | construction (volume) | 3 × 12 s (63 % du maximum testé), maintien | 10-10-10 s | 10-10-10 s | 5+ → 7 ; suivantes 5+ → 6,8 | 37 / 41 | hausse du maintien bornée pour les tendons (coude) |
 | 10 | test | 2 × 5 à 30 s, test | (5 à 30)-(5 à 30) s | 31-31 s | test | 36 / 38 | — |
-| 11 | construction (volume) | 3 × 20 s (65 % du maximum testé), maintien | 20-20-20 s | 12 (arrêt avant la cible)-19 (arrêt avant la cible)-16 (arrêt avant la cible) s | 4,5 → 6,3 ; suivantes 4,5 → 4,5 | 35 / 39 | — |
-| 12 | construction (volume) | 3 × 20 s (65 % du maximum testé), maintien | 18-18-18 s | 18-11 (arrêt avant la cible)-9 (arrêt avant la cible) s | 5+ → 4,7 ; suivantes 5+ → 6,7 | 35 / 38 | hausse du maintien bornée pour les tendons (coude) ; allégé pour garder la marge prévue (au moins 5 en réserve) ; dernières séries plus dures que prévu |
-| 13 | construction (volume) | 3 × 20 s (65 % du maximum testé), maintien | 15-15-15 s | 15-15-11 (arrêt avant la cible) s | 5+ → 5,5 ; suivantes 5+ → 5,8 | 35 / 39 | hausse du maintien bornée pour les tendons (coude) |
-| 14 | construction (volume) | 3 × 20 s (65 % du maximum testé), maintien | 16-16 s | 12 (arrêt avant la cible)-16 s | 5+ → 6,5 ; suivantes 5+ → 5,3 | 37 / 39 | temps réduit (27 min au lieu de 45) ; hausse du maintien bornée pour les tendons (coude) |
+| 11 | construction (volume) | 3 × 16 s (65 % du maximum testé), maintien | 16-16-16 s | 9 (arrêt avant la cible)-16-13 (arrêt avant la cible) s | 5+ → 7,1 ; suivantes 5+ → 5,4 | 35 / 39 | — |
+| 12 | construction (volume) | 3 × 18 s (65 % du maximum testé), maintien | 15-15-15 s | 15-12 (arrêt avant la cible)-9 (arrêt avant la cible) s | 5+ → 5,5 ; suivantes 5+ → 6,5 | 35 / 38 | hausse du maintien bornée pour les tendons (coude) ; allégé pour garder la marge prévue (au moins 5 en réserve) ; dernières séries plus dures que prévu |
+| 13 | construction (volume) | 3 × 20 s (65 % du maximum testé), maintien | 14-14-14 s | 14-14-11 (arrêt avant la cible) s | 5+ → 5,7 ; suivantes 5+ → 5,9 | 35 / 39 | hausse du maintien bornée pour les tendons (coude) |
+| 14 | construction (volume) | 3 × 20 s (65 % du maximum testé), maintien | 15-15 s | 12 (arrêt avant la cible)-15 s | 5+ → 6,5 ; suivantes 5+ → 5,6 | 37 / 39 | temps réduit (27 min au lieu de 45) ; hausse du maintien bornée pour les tendons (coude) |
 | 15 | construction (volume) | 3 × 20 s (65 % du maximum testé), maintien | 13-13-13 s | 13-13-13 s | 5+ → 6,2 ; suivantes 5+ → 6 | 37 / 39 | hausse du maintien bornée pour les tendons (coude) |
 | 16 | test | 2 × 5 à 30 s, test | (5 à 30)-(5 à 30) s | 28-30-6 (arrêt avant la cible)-15 s | 5+ → 8 ; suivantes 5+ → 5,5 | 36 / 34 | — |
 

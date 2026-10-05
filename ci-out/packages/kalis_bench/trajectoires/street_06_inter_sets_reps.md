@@ -24,7 +24,7 @@ Un athlète simulé (capacités réelles connues du simulateur, jamais du moteur
 - Échecs non voulus (hors tests et tentatives) : 0 % des séries de travail.
 - Écart moyen entre l'effort affiché par le moteur et l'effort réel : 0,79 répétition en réserve (sur les 58 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 2,8 %.
 - Plus forte hausse de charge totale d'un mouvement principal d'une séance à la suivante, à schéma égal : 0 % ; hausses de plus de 10 % faites de plusieurs crans : 0.
-- Progression réelle moyenne des mouvements suivis : 0,289 % par semaine.
+- Progression réelle moyenne des mouvements suivis : 0,288 % par semaine.
 - Douleur : 0 hausse(s) de charge sur une zone douloureuse signalée.
 
 ## Mouvements suivis, semaine par semaine
@@ -79,7 +79,7 @@ Athlète simulé, maximum réel hors fatigue : 23 au départ (le record déclar�
 | 4 | construction (volume) | 3 × 11 à 13 | 9-9-9 | 9-8-8 | 3 → 5 ; suivantes 3 → 5,3 | 14 / 13 | répétitions recalées sur le maximum mesuré (2 de moins par série que le programme) ; dernières séries plus dures que prévu |
 | 5 | construction (volume) | 3 × 11 à 13 | 9-9-9 | 9-8-8 | 3,5 → 5 ; suivantes 2,5 → 5,2 | 14 / 13 | répétitions recalées sur le maximum mesuré (2 de moins par série que le programme) ; dernières séries plus dures que prévu |
 | 6 | allègement | 2 × 10 à 12 | 10-10 | 10-9 | 3 → 3,8 ; suivantes 3 → 4,2 | 14 / 13 | allégé pour garder la marge prévue (au moins 3 en réserve) ; dernières séries plus dures que prévu |
-| 7 | réalisation (spécifique à l'objectif) | 3 × 10 (77 % du maximum testé) | 10-10-9 | 10-10-8 | 3 → 4,5 ; suivantes 3 → 4,6 | 14 / 13 | allégé pour garder la marge prévue (au moins 3 en réserve) ; dernières séries plus dures que prévu |
+| 7 | réalisation (spécifique à l'objectif) | 3 × 11 (85 % du maximum testé) | 11-10-9 | 11-9-9 | 2 → 3,5 ; suivantes 2 → 4,5 | 14 / 14 | allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |
 | 8 | réalisation (spécifique à l'objectif) | 3 × 11 à 12 (85 % du maximum testé) | 11-11-11 | 11-10 | 2 → 3,1 ; suivantes 2 → 3,2 | 14 / 14 | répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; dernières séries plus dures que prévu |
 | 9 | réalisation (spécifique à l'objectif) | 3 × 11 à 12 (85 % du maximum testé) | 10-10-10 | 10-10-9 | 3 → 4,5 ; suivantes 3 → 4,1 | 15 / 14 | répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; dernières séries plus dures que prévu |
 | 10 | réalisation (spécifique à l'objectif) | 3 × 11 à 12 (85 % du maximum testé) | 11-11-11 | 11-10-10 | 2 → 3,6 ; suivantes 1,5 → 3,6 | 15 / 14 | répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; dernières séries plus dures que prévu |
@@ -133,6 +133,6 @@ Le même profil et le même moteur, avec d'autres hypothèses sur l'athlète ré
 
 | Athlète simulé | Échecs non voulus | Écart d'effort | Séries ≥ 2 rép. plus dures | Plus forte hausse à schéma égal | Progression par semaine | Tentatives réussies | Échéance / maximum du jour | Hausses sur zone douloureuse |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| modèle 2 (courbe linéaire, notes d'effort entières et plafonnées, récupération lente entre séries, tendons à adaptation lente) | 0 % | 0,79 | 0 % | 0 % | 0,289 % | — | — | 0 |
-| modèle 1 (courbe charge-répétitions à plateau, notes d'effort continues) | 0 % | 0,78 | 0 % | 0 % | 0,31 % | — | — | 0 |
-| modèle 3 (courbe en puissance, forme masquée par la fatigue, mauvais jours marqués, désentraînement rapide) | 0 % | 0,72 | 0 % | 0 % | 0,238 % | — | — | 0 |
+| modèle 2 (courbe linéaire, notes d'effort entières et plafonnées, récupération lente entre séries, tendons à adaptation lente) | 0 % | 0,79 | 0 % | 0 % | 0,288 % | — | — | 0 |
+| modèle 1 (courbe charge-répétitions à plateau, notes d'effort continues) | 0 % | 0,77 | 0 % | 0 % | 0,309 % | — | — | 0 |
+| modèle 3 (courbe en puissance, forme masquée par la fatigue, mauvais jours marqués, désentraînement rapide) | 0 % | 0,71 | 0 % | 0 % | 0,238 % | — | — | 0 |

@@ -35,7 +35,7 @@ Chaque bloc est écrit par le moteur de création au moment où il commence, d'a
 
 - Séances faites : 63 sur 64 (12 ajustées le jour même).
 - Échecs non voulus (hors tests et tentatives) : 0,1 % des séries de travail.
-- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 1,17 répétition en réserve (sur les 72 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 8,6 %.
+- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 1,19 répétition en réserve (sur les 72 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 8,6 %.
 - Plus forte hausse de charge totale d'un mouvement principal d'une séance à la suivante, à schéma égal : 9,1 % ; hausses de plus de 10 % faites de plusieurs crans : 0.
 - Progression réelle moyenne des mouvements suivis : 0,113 % par semaine.
 - Tentatives de maximum : 3 réussies sur 3 ; ouvertures réussies : 100 %.
@@ -64,7 +64,7 @@ Pour chaque mouvement, la séance la plus lourde de la semaine : ce que le progr
 | 12 | introduction | 3 × 5 à 67 %, série de tête puis séries allégées | 5 à 10 kg puis 5-5 à 2,5 kg | 5 à 10 kg puis 5-5 à 2,5 kg | 5+ → 11,9 ; suivantes 5+ → 14,1 | 130 (lest 57) / 122 (lest 50) | — |
 | 13 | construction (volume) | 5 × 4 à 72 %, série de tête puis séries allégées | (4 à 7) à 23,75 kg puis 4-4-4-4 à 18,75 kg | 7 à 23,75 kg puis 4-4-4-4 à 16,25 kg | 2 → 3,6 ; suivantes 5+ → 8,9 | 124 (lest 51) / 123 (lest 50) | série repère : une série ouverte (au ressenti, 2 en réserve) pour mesurer où en est l'athlète ; séries allégées calculées sur la série de tête réalisée (23,75 kg, −5,2 %) ; dernières séries plus dures que prévu |
 | 14 | allègement | 1 × 3 à 88 %, test | 3 à 35 kg | 3 à 35 kg | test | 127 (lest 55) / 121 (lest 48) | — |
-| 15 | construction (volume) | 5 × 4 à 84 %, série de tête puis séries allégées | 4 à 31,25 kg puis 4-4-4-4 à 25 kg | 4 à 31,25 kg puis 4-4-4-4 à 25 kg | 2 → 3,8 ; suivantes 3,5 → 5,7 | 123 (lest 51) / 124 (lest 51) | — |
+| 15 | construction (volume) | 5 × 4 à 84 %, série de tête puis séries allégées | 4 à 31,25 kg puis 4-4-4-4 à 25 kg | 4 à 31,25 kg puis 4-4-4-4 à 25 kg | 2 → 3,8 ; suivantes 3,5 → 5,7 | 123 (lest 51) / 123 (lest 51) | — |
 | 16 | construction (volume) | 5 × 4 à 84 %, série de tête puis séries allégées | 4 à 32,5 kg puis 4-4-4-4 à 26,25 kg | 4 à 32,5 kg puis 4-4-4-4 à 26,25 kg | 2 → 3,6 ; suivantes 3,5 → 5,5 | 124 (lest 51) / 125 (lest 52) | — |
 
 Athlète simulé, maximum réel hors fatigue : 122 (lest 49) au départ (le record déclaré au profil peut être plus haut ou plus ancien), 124 (lest 51) en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.

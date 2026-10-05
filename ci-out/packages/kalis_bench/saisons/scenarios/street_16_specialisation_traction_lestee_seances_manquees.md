@@ -35,9 +35,9 @@ Chaque bloc est écrit par le moteur de création au moment où il commence, d'a
 
 - Séances faites : 53 sur 64 (8 ajustées le jour même).
 - Échecs non voulus (hors tests et tentatives) : 0,7 % des séries de travail.
-- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 1,09 répétition en réserve (sur les 71 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 7,1 %.
+- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 1,12 répétition en réserve (sur les 71 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 7,3 %.
 - Plus forte hausse de charge totale d'un mouvement principal d'une séance à la suivante, à schéma égal : 5,4 % ; hausses de plus de 10 % faites de plusieurs crans : 0.
-- Progression réelle moyenne des mouvements suivis : 0,105 % par semaine.
+- Progression réelle moyenne des mouvements suivis : 0,106 % par semaine.
 - Tentatives de maximum : 3 réussies sur 3 ; ouvertures réussies : 100 %.
 - Jour de l'échéance : meilleure performance à 99,7 % du maximum réel du jour (moyenne des mouvements).
 - Douleur : 0 hausse(s) de charge sur une zone douloureuse signalée.
@@ -57,14 +57,14 @@ Pour chaque mouvement, la séance la plus lourde de la semaine : ce que le progr
 | 5 | intensification (séries plus dures) | 5 × 3 à 86 %, série de tête puis séries allégées | (3 à 6) à 32,5 kg puis 3-3-3-3 à 26,25 kg | 3 à 32,5 kg puis 3-3-3-3 à 23,75 kg | 2 → 3,4 ; suivantes 3,5 → 6,4 | 120 (lest 48) / 122 (lest 49) | série repère : une série ouverte (au ressenti, 2 en réserve) pour mesurer où en est l'athlète ; séries allégées calculées sur la série de tête réalisée (32,5 kg, −5 %) ; dernières séries plus dures que prévu |
 | 6 | intensification (séries plus dures) | 5 × 3 à 87 %, série de tête puis séries allégées | 3 à 33,75 kg puis 3-3-3-3 à 27,5 kg | 3 à 33,75 kg puis 3-3-3-3 à 27,5 kg | 1 → 1,9 ; suivantes 2,5 → 3,9 | 117 (lest 44) / 122 (lest 49) | — |
 | 8 | réalisation (spécifique à l'objectif) | 4 × 1 à 93 %, série de tête puis séries allégées | 1 à 40 kg puis 2-2-2 à 33,75 kg | 1 à 40 kg puis 2-2-2 à 33,75 kg | 2,5 → 3,8 ; suivantes 2,5 → 4,9 | 124 (lest 51) / 126 (lest 53) | charge non augmentée (hausse plafonnée d'une séance à la suivante) |
-| 9 | affûtage | 3 × 1 à 90 %, série de tête puis séries allégées | 1 à 40 kg puis 2-2 à 30 kg | 1 à 40 kg puis 2-2 à 30 kg | 3 → 4,5 ; suivantes 4,5 → 6,8 | 126 (lest 53) / 127 (lest 55) | — |
-| 10 | échéance | 3 × 1 à 91 %, test | 1 à 40 kg puis 1 à 45 kg puis 1 à 47,5 kg | 1 à 40 kg puis 1 à 45 kg puis 1 à 47,5 kg | test | 121 (lest 48) / 126 (lest 53) | ouverture à 88,2 % du maximum estimé ; barre suivante choisie pour 93 % de chances de réussite ; barre suivante choisie pour 86 % de chances de réussite |
+| 9 | affûtage | 3 × 1 à 90 %, série de tête puis séries allégées | 1 à 40 kg puis 2-2 à 30 kg | 1 à 40 kg puis 2-2 à 30 kg | 3 → 4,4 ; suivantes 4,5 → 6,7 | 125 (lest 53) / 127 (lest 55) | — |
+| 10 | échéance | 3 × 1 à 91 %, test | 1 à 40 kg puis 1 à 45 kg puis 1 à 47,5 kg | 1 à 40 kg puis 1 à 45 kg puis 1 à 47,5 kg | test | 121 (lest 48) / 125 (lest 52) | ouverture à 88,1 % du maximum estimé ; barre suivante choisie pour 93 % de chances de réussite ; barre suivante choisie pour 86 % de chances de réussite |
 | 11 | transition (récupération) | 3 × 5 à 64 % | 5-5-5 à 7,5 kg | 5-5-5 à 7,5 kg | 5+ → 11,4 ; suivantes 5+ → 11,1 | 124 (lest 51) / 125 (lest 52) | — |
-| 12 | introduction | 3 × 5 à 67 %, série de tête puis séries allégées | 5 à 11,25 kg puis 5-5 à 3,75 kg | 5 à 11,25 kg puis 5-5 à 3,75 kg | 5+ → 11,2 ; suivantes 5+ → 13,5 | 129 (lest 56) / 125 (lest 52) | — |
-| 13 | construction (volume) | 5 × 4 à 72 %, série de tête puis séries allégées | (4 à 7) à 25 kg puis 4-4-4-4 à 20 kg | 7 à 25 kg puis 4-4-4-4 à 17,5 kg | 2 → 2,9 ; suivantes 5+ → 8,2 | 123 (lest 50) / 125 (lest 53) | série repère : une série ouverte (au ressenti, 2 en réserve) pour mesurer où en est l'athlète ; séries allégées calculées sur la série de tête réalisée (25 kg, −5,1 %) ; dernières séries plus dures que prévu |
+| 12 | introduction | 3 × 5 à 67 %, série de tête puis séries allégées | 5 à 11,25 kg puis 5-5 à 3,75 kg | 5 à 11,25 kg puis 5-5 à 3,75 kg | 5+ → 11,2 ; suivantes 5+ → 13,5 | 129 (lest 57) / 125 (lest 53) | — |
+| 13 | construction (volume) | 5 × 4 à 72 %, série de tête puis séries allégées | (4 à 7) à 26,25 kg puis 4-4-4-4 à 21,25 kg | 6 à 26,25 kg puis 4-4-4-4 à 18,75 kg | 2 → 3,5 ; suivantes 5+ → 7,8 | 123 (lest 50) / 126 (lest 53) | série repère : une série ouverte (au ressenti, 2 en réserve) pour mesurer où en est l'athlète ; séries allégées calculées sur la série de tête réalisée (26,25 kg, −5,1 %) ; dernières séries plus dures que prévu |
 | 14 | allègement | 1 × 3 à 88 %, test | 3 à 35 kg | 3 à 35 kg | test | 127 (lest 54) / 124 (lest 51) | — |
-| 15 | construction (volume) | 5 × 4 à 84 %, série de tête puis séries allégées | 4 à 33,75 kg puis 4-4-4-4 à 27,5 kg | 4 à 33,75 kg puis 4-4-4-4 à 27,5 kg | 2 → 2,8 ; suivantes 3 → 4,6 | 123 (lest 50) / 126 (lest 53) | — |
-| 16 | construction (volume) | 5 × 4 à 84 %, série de tête puis séries allégées | 4 à 35 kg puis 4-4-4-4 à 28,75 kg | 4 à 35 kg puis 4-4-4-4 à 28,75 kg | 2 → 3,5 ; suivantes 3 → 5,3 | 127 (lest 54) / 127 (lest 55) | — |
+| 15 | construction (volume) | 5 × 4 à 84 %, série de tête puis séries allégées | 4 à 32,5 kg puis 4-4-4-4 à 26,25 kg | 4 à 32,5 kg puis 4-4-4-4 à 26,25 kg | 2 → 3,3 ; suivantes 3,5 → 5,1 | 123 (lest 50) / 125 (lest 52) | — |
+| 16 | construction (volume) | 5 × 4 à 84 %, série de tête puis séries allégées | 4 à 33,75 kg puis 4-4-4-4 à 27,5 kg | 4 à 33,75 kg puis 4-4-4-4 à 27,5 kg | 2 → 3,9 ; suivantes 3 → 5,8 | 127 (lest 54) / 126 (lest 53) | — |
 
 Athlète simulé, maximum réel hors fatigue : 122 (lest 49) au départ (le record déclaré au profil peut être plus haut ou plus ancien), 124 (lest 51) en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
 

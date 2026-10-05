@@ -25,7 +25,7 @@ Violations de sécurité : **23** au total (Pas d'allègement avant l'échéance
 | `street_05_inter_calisthenie_front_lever` | intermédiaire | 16 | 0 | 0.93 | 6/6 |
 | `street_06_inter_sets_reps` | intermédiaire | 12 | 0 | 0.87 | 6/6 |
 | `street_07_avance_streetlifting_competition` | avancé | 12 | 0 | 0.95 | 10/10 |
-| `street_08_avance_sets_reps_competition` | avancé | 8 | 0 | 0.85 | 6/8 |
+| `street_08_avance_sets_reps_competition` | avancé | 8 | 0 | 0.85 | 7/8 |
 | `street_09_elite_streetlifting` | élite | 12 | 0 | 0.95 | 9/10 |
 | `street_10_elite_figures` | élite | 16 | 0 | 0.85 | 6/7 |
 | `street_11_master_51_ans` | intermédiaire | 16 | 0 | 0.89 | 5/5 |
@@ -82,21 +82,21 @@ Violations de sécurité : **23** au total (Pas d'allègement avant l'échéance
 | `autres_08_crossfit_intermediaire` | 79/80 | 0.0 | 1.656 | 0.824 | 0.125 | 0.167 | — | 0 | ecart_rir | 12 |
 | `autres_09_perte_de_poids_debutante` | 36/36 | 0.005 | 2.255 | 0.828 | 0.143 | 0.823 | — | 0 | ecart_rir | 0 |
 | `autres_10_contraintes_multiples` | 36/36 | 0.0 | 2.888 | 0.978 | 0.0 | 0.774 | — | 0 | ecart_rir | 0 |
-| `street_01_debutant_complet` | 36/36 | 0.0 | 3.325 | 0.787 | 0.0 | 1.081 | — | 0 | ecart_rir, ecart_effort | 0 |
+| `street_01_debutant_complet` | 36/36 | 0.0 | 3.377 | 0.772 | 0.0 | 1.081 | — | 0 | ecart_rir, ecart_effort | 0 |
 | `street_02_debutant_surpoids` | 36/36 | 0.0 | 2.627 | 0.77 | 0.0 | 0.811 | — | 0 | ecart_rir, ecart_effort | 0 |
-| `street_03_debutante` | 36/36 | 0.0 | 2.924 | 0.667 | 0.0 | 1.014 | — | 0 | ecart_rir, ecart_effort | 0 |
+| `street_03_debutante` | 36/36 | 0.0 | 2.857 | 0.641 | 0.0 | 1.019 | — | 0 | ecart_rir, ecart_effort | 0 |
 | `street_04_reprise_longue_pause` | 48/48 | 0.0 | 3.042 | 0.438 | 0.0 | 0.531 | — | 0 | ecart_rir | 0 |
 | `street_05_inter_calisthenie_front_lever` | 63/64 | 0.0 | 1.652 | 0.655 | 0.0 | — | — | 0 | ecart_rir | 0 |
-| `street_06_inter_sets_reps` | 48/48 | 0.0 | 2.067 | 0.588 | 0.0 | 0.289 | — | 0 | ecart_rir | 0 |
-| `street_07_avance_streetlifting_competition` | 60/60 | 0.001 | 2.763 | 0.673 | 0.326 | 0.062 | 0.995 | 0 | ecart_rir, pics_de_charge, performance_echeance, ecart_effort, pics_a_schema_egal | 0 |
-| `street_08_avance_sets_reps_competition` | 40/40 | 0.0 | 3.467 | 0.576 | 0.0 | 0.16 | 0.822 | 0 | ecart_rir, performance_echeance | 0 |
-| `street_09_elite_streetlifting` | 60/60 | 0.003 | 3.153 | 0.607 | 0.32 | 0.023 | 0.973 | 0 | ecart_rir, pics_de_charge, performance_echeance, ecart_effort | 0 |
+| `street_06_inter_sets_reps` | 48/48 | 0.0 | 2.071 | 0.588 | 0.0 | 0.288 | — | 0 | ecart_rir | 0 |
+| `street_07_avance_streetlifting_competition` | 60/60 | 0.001 | 2.753 | 0.673 | 0.326 | 0.062 | 0.995 | 0 | ecart_rir, pics_de_charge, performance_echeance, ecart_effort, pics_a_schema_egal | 0 |
+| `street_08_avance_sets_reps_competition` | 40/40 | 0.0 | 3.594 | 0.557 | 0.0 | 0.16 | 0.837 | 0 | ecart_rir, performance_echeance, ecart_effort | 0 |
+| `street_09_elite_streetlifting` | 60/60 | 0.003 | 3.144 | 0.607 | 0.32 | 0.023 | 0.973 | 0 | ecart_rir, pics_de_charge, performance_echeance, ecart_effort | 0 |
 | `street_10_elite_figures` | 91/96 | 0.0 | 2.131 | 0.39 | 0.0 | 0.056 | — | 0 | ecart_rir, ecart_effort | 0 |
-| `street_11_master_51_ans` | 48/48 | 0.0 | 1.622 | 0.772 | 0.017 | 0.26 | — | 0 | ecart_rir | 0 |
-| `street_12_antecedent_coude` | 48/48 | 0.0 | 2.57 | 0.626 | 0.254 | 0.256 | — | 0 | ecart_rir, pics_de_charge, ecart_effort | 0 |
-| `street_13_peu_de_temps` | 34/36 | 0.0 | 1.415 | 0.718 | 0.0 | 0.651 | — | 0 | ecart_rir, ecart_effort | 0 |
+| `street_11_master_51_ans` | 48/48 | 0.001 | 1.619 | 0.783 | 0.049 | 0.26 | — | 0 | ecart_rir | 0 |
+| `street_12_antecedent_coude` | 48/48 | 0.0 | 2.459 | 0.625 | 0.286 | 0.255 | — | 0 | ecart_rir, pics_de_charge, ecart_effort | 0 |
+| `street_13_peu_de_temps` | 34/36 | 0.0 | 1.414 | 0.718 | 0.0 | 0.652 | — | 0 | ecart_rir, ecart_effort | 0 |
 | `street_14_parc_sans_lest` | 46/48 | 0.0 | 2.29 | 0.671 | 0.0 | 0.358 | — | 0 | ecart_rir | 0 |
-| `street_15_travail_physique_sommeil_court` | 36/36 | 0.0 | 2.134 | 0.67 | 0.0 | 0.597 | — | 0 | ecart_rir, ecart_effort | 0 |
+| `street_15_travail_physique_sommeil_court` | 36/36 | 0.0 | 2.128 | 0.67 | 0.0 | 0.598 | — | 0 | ecart_rir, ecart_effort | 0 |
 | `street_16_specialisation_traction_lestee` | 40/40 | 0.002 | 2.46 | 0.714 | 0.354 | 0.118 | 0.978 | 0 | ecart_rir, pics_de_charge, performance_echeance, ecart_effort | 0 |
 | `street_17_hybride_street_course` | 58/60 | 0.0 | 1.845 | 0.586 | 0.0 | 0.528 | — | 0 | ecart_rir, ecart_effort | 0 |
 
@@ -578,12 +578,12 @@ Qualité :
 - Variété utile : 1.00 — 15 exercices de renforcement distincts en première semaine pour 38 emplacements ; 0 doublons de chaîne dans une même séance ; 15 exercices distincts sur tout le programme.
 - Non-ressemblance au programme du propriétaire : 1.00 — Indice de Jaccard le plus haut entre une semaine générée et une semaine du propriétaire : exercices 0.250, exercices × schémas 0.020 (seuil 0.3).
 
-Attentes de coach (6/8) :
+Attentes de coach (7/8) :
 - tenue — Volume réduit de 40 à 60 % la semaine de la compétition (mesuré : volume 63 % sous le pic la semaine de l'échéance)
 - **non tenue** — Tractions au moins quatre fois par semaine (mesuré : 3.0 séance(s) par semaine en montée)
 - tenue — Muscle-ups au moins trois fois par semaine (mesuré : 3.0 séance(s) par semaine en montée)
 - tenue — Dips au moins trois fois par semaine (mesuré : 3.0 séance(s) par semaine en montée)
-- **non tenue** — Au moins la moitié des séries de tractions, dips et muscle-ups en densité (mesuré : 48 % des séries avec 90s de repos ou moins (ou en format de densité))
+- tenue — Au moins la moitié des séries de tractions, dips et muscle-ups en densité (mesuré : 56 % des séries avec 90s de repos ou moins (ou en format de densité))
 - tenue — Formats de l'épreuve : tours, EMOM, AMRAP, séries dégressives (mesuré : formats : emom)
 - tenue — Une séance lestée lourde par semaine en traction (mesuré : 1.0 séance(s) par semaine en montée)
 - tenue — Épreuve sur les mouvements visés la semaine de la compétition (mesuré : 3 épreuve(s) sur les mouvements visés la semaine de l'échéance (nature : test))
@@ -662,7 +662,7 @@ Qualité :
 - Couverture des points faibles : sans objet — Sans objet : aucun point faible déclaré.
 - Affûtage aligné sur la date de l'échéance : sans objet — Sans objet : pas d'échéance prioritaire dans le programme.
 - Variété utile : 1.00 — 14 exercices de renforcement distincts en première semaine pour 25 emplacements ; 0 doublons de chaîne dans une même séance ; 14 exercices distincts sur tout le programme.
-- Non-ressemblance au programme du propriétaire : 1.00 — Indice de Jaccard le plus haut entre une semaine générée et une semaine du propriétaire : exercices 0.235, exercices × schémas 0.020 (seuil 0.3).
+- Non-ressemblance au programme du propriétaire : 1.00 — Indice de Jaccard le plus haut entre une semaine générée et une semaine du propriétaire : exercices 0.235, exercices × schémas 0.028 (seuil 0.3).
 
 Attentes de coach (5/5) :
 - tenue — Pas plus de 6 semaines de charge sans allègement (mesuré : 4 semaines de charge de suite au plus)
@@ -769,7 +769,7 @@ Qualité :
 Attentes de coach (6/6) :
 - tenue — Grand dorsal : pas plus de 12 séries dures par semaine (mesuré : 10.0 séries dures par semaine en montée)
 - tenue — Quadriceps : pas plus de 10 séries dures par semaine (mesuré : 10.0 séries dures par semaine en montée)
-- tenue — Jamais moins de 2 répétitions en réserve sur les 12 semaines (mesuré : RIR le plus bas des 12 premières semaines : 2.0)
+- tenue — Jamais moins de 2 répétitions en réserve sur les 12 semaines (mesuré : RIR le plus bas des 12 premières semaines : 3.0)
 - tenue — Tractions au moins deux fois par semaine (mesuré : 3.0 séance(s) par semaine en montée)
 - tenue — Séances de 62 minutes au plus (mesuré : séance la plus longue : 46 min estimées)
 - tenue — Grand dorsal : au moins 6 séries dures par semaine (mesuré : 10.0 séries dures par semaine en montée)

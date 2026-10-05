@@ -57,7 +57,7 @@ Pour chaque mouvement, la séance la plus lourde de la semaine : ce que le progr
 | 8 | réalisation (spécifique à l'objectif) | 3 × 6 (75 % du maximum testé), série de tête puis séries allégées | 6-5-5 | 6-4 | 2 → 1,6 ; suivantes 2 → 3 | 8 / 8 | allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |
 | 9 | réalisation (spécifique à l'objectif) | 3 × 6 (75 % du maximum testé), série de tête puis séries allégées | 6-5-5 | 6-5-4 | 2 → 1,7 ; suivantes 2 → 2,3 | 8 / 8 | allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |
 | 10 | test | 1 × 10 à 12, test | (7 à 12) | 7 (échec) | test | 8 / 8 | — |
-| 11 | construction (volume) | 2 × 4 (57 % du maximum testé) | 4-4 | 4-4 | 3 → 3,9 ; suivantes 3 → 3,5 | 8 / 8 | — |
+| 11 | construction (volume) | 2 × 5 (71 % du maximum testé) | 5-5 | 5-5 | 2 → 2,9 ; suivantes 2 → 2,4 | 8 / 8 | — |
 | 12 | construction (volume) | 2 × 5 à 6 (71 % du maximum testé) | 5-5 | 5-4 | 2 → 2,5 ; suivantes 2 → 3,1 | 8 / 8 | répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; dernières séries plus dures que prévu |
 | 13 | construction (volume) | 2 × 5 à 6 (71 % du maximum testé) | 5-5 | 5-4 | 2 → 2,7 ; suivantes 2 → 3,2 | 8 / 8 | répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; dernières séries plus dures que prévu |
 | 14 | construction (volume) | 3 × 5 à 6 (71 % du maximum testé) | 6-5-5 | 6-5-4 | 2 → 2 ; suivantes 2 → 2,6 | 8 / 8 | allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |

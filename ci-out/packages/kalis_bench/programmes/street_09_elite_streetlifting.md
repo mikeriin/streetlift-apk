@@ -808,8 +808,8 @@ Homme de 30 ans, 78 kg, huit ans de pratique, podiums nationaux. 1RM : traction 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
-| Traction lestée de compétition | 2 × 3 | lest +52,5 kg, ≈ 80 % du 1RM (charge totale ; 1RM de référence 160,5 kg) | 3 rép. en réserve | 3 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. ; Affûtage : séries dures ramenées à environ 25 % de la semaine de pointe, intensité et fréquence gardées, à 14 jours de l'échéance au plus. |
-| Dips lesté de compétition | 2 × 3 | lest +85 kg, ≈ 80 % du 1RM (charge totale ; 1RM de référence 200 kg) | 3 rép. en réserve | 3 min | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
+| Traction lestée de compétition | 2 × 2 | lest +62,5 kg, ≈ 86 % du 1RM (charge totale ; 1RM de référence 160,5 kg) | 3 rép. en réserve | 3 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. ; Affûtage : séries dures ramenées à environ 25 % de la semaine de pointe, intensité et fréquence gardées, à 14 jours de l'échéance au plus. |
+| Dips lesté de compétition | 2 × 2 | lest +96,25 kg, ≈ 86 % du 1RM (charge totale ; 1RM de référence 200 kg) | 3 rép. en réserve | 3 min | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Face pull à l'élastique | 2 × 12 à 15 | — | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
 | Wrist curl à la barre | 2 × 12 à 15 | charge à déterminer, à calibrer | 5 rép. en réserve ou plus | 45 s | accessoire ; Avant-bras : fléchisseurs et extenseurs du poignet en charge légère, loin de la limite — tolérance du coude et du poignet au volume de tirage et aux appuis. |
 | Cat-cow | 1 × 8 à 10 | — | — | 20 s | mobilité |
@@ -819,7 +819,7 @@ Homme de 30 ans, 78 kg, huit ans de pratique, podiums nationaux. 1RM : traction 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
-| Squat de compétition | 2 × 3 | 150 kg, ≈ 79 % du 1RM (charge totale ; 1RM de référence 190 kg) | 3 rép. en réserve | 3 min | principal ; Exécution : pli de la hanche sous le haut du genou à chaque répétition, tronc gainé, pieds ancrés. ; Affûtage : séries dures ramenées à environ 25 % de la semaine de pointe, intensité et fréquence gardées, à 14 jours de l'échéance au plus. |
+| Squat de compétition | 2 × 2 | 162,5 kg, ≈ 86 % du 1RM (charge totale ; 1RM de référence 190 kg) | 3 rép. en réserve | 3 min | principal ; Exécution : pli de la hanche sous le haut du genou à chaque répétition, tronc gainé, pieds ancrés. ; Affûtage : séries dures ramenées à environ 25 % de la semaine de pointe, intensité et fréquence gardées, à 14 jours de l'échéance au plus. |
 | Relevé de jambes tendues suspendu | 2 × 8 à 12 | poids du corps | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
 | Rotation externe à la poulie coude au corps | 2 × 12 à 15 | charge à déterminer, à calibrer | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
 | Wrist curl à la barre | 2 × 12 à 15 | charge à déterminer, à calibrer | 5 rép. en réserve ou plus | 45 s | accessoire ; Avant-bras : fléchisseurs et extenseurs du poignet en charge légère, loin de la limite — tolérance du coude et du poignet au volume de tirage et aux appuis. |

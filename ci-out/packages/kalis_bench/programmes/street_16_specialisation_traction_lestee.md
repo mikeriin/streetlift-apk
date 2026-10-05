@@ -509,7 +509,7 @@ Homme de 29 ans, 75 kg, cinq ans de pratique. Traction +50 kg, dips +85 kg, squa
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
-| Traction lestée de compétition | 2 × 3 | lest +25 kg, ≈ 80 % du 1RM (charge totale ; 1RM de référence 123 kg) | 3 rép. en réserve | 3 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. ; Affûtage : séries dures ramenées à environ 40 % de la semaine de pointe, intensité et fréquence gardées, à 14 jours de l'échéance au plus. |
+| Traction lestée de compétition | 2 × 2 | lest +32,5 kg, ≈ 86 % du 1RM (charge totale ; 1RM de référence 123 kg) | 3 rép. en réserve | 3 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. ; Affûtage : séries dures ramenées à environ 40 % de la semaine de pointe, intensité et fréquence gardées, à 14 jours de l'échéance au plus. |
 | Squat de compétition | 2 × 5 | 112,5 kg, ≈ 75 % du 1RM (charge totale ; 1RM de référence 150 kg) | 3 rép. en réserve | 3 min | secondaire ; En entretien : volume réduit, charge gardée — le volume va à l'objectif. |
 | Dips lesté de compétition | 2 × 5 | lest +46,25 kg, ≈ 75 % du 1RM (charge totale ; 1RM de référence 157 kg) | 3 rép. en réserve | 3 min | secondaire ; En entretien : volume réduit, charge gardée — le volume va à l'objectif. |
 | Face pull à l'élastique | 2 × 12 à 15 | — | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
@@ -521,7 +521,7 @@ Homme de 29 ans, 75 kg, cinq ans de pratique. Traction +50 kg, dips +85 kg, squa
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
-| Traction lestée de compétition | 2 × 3 | lest +25 kg, ≈ 80 % du 1RM (charge totale ; 1RM de référence 123 kg) | 3 rép. en réserve | 3 min | secondaire ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. ; Affûtage : séries dures ramenées à environ 40 % de la semaine de pointe, intensité et fréquence gardées, à 14 jours de l'échéance au plus. |
+| Traction lestée de compétition | 2 × 2 | lest +32,5 kg, ≈ 86 % du 1RM (charge totale ; 1RM de référence 123 kg) | 3 rép. en réserve | 3 min | secondaire ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. ; Affûtage : séries dures ramenées à environ 40 % de la semaine de pointe, intensité et fréquence gardées, à 14 jours de l'échéance au plus. |
 | Squat de compétition | 2 × 3 | 122,5 kg, ≈ 82 % du 1RM (charge totale ; 1RM de référence 150 kg) | 3 rép. en réserve | 3 min | secondaire ; En entretien : volume réduit, charge gardée — le volume va à l'objectif. |
 | Relevé de jambes tendues suspendu | 2 × 8 à 12 | poids du corps | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
 | Rotation externe à la poulie coude au corps | 2 × 12 à 15 | charge à déterminer, à calibrer | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |

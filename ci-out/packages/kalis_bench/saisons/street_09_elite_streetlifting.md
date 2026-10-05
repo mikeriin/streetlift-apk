@@ -85,7 +85,7 @@ Athlète simulé, maximum réel hors fatigue : 160 (lest 84) au départ (le reco
 | 8 | allègement | 3 × 3 à 80 % | 3-3-3 à 67,5 kg | 1 (arrêt avant la cible) à 67,5 kg puis 3-2 (arrêt avant la cible) à 60 kg | 5+ → 6,8 ; suivantes 5+ → 6,4 | 171 (lest 96) / 185 (lest 110) | allégé pour garder la marge prévue (au moins 4 en réserve) |
 | 9 | réalisation (spécifique à l'objectif) | 5 × 2 à 91 %, série de tête puis séries allégées | 2 à 86,25 kg puis 2-2-2-2 à 77,5 kg | 2 à 86,25 kg puis 2-2-2-2 à 77,5 kg | 1,5 → 1,7 ; suivantes 3 → 2,5 | 173 (lest 98) / 185 (lest 110) | — |
 | 10 | réalisation (spécifique à l'objectif) | 4 × 3 à 82 % | 3-3-3-3 à 77,5 kg | 3 à 77,5 kg puis 3-3-3 à 72,5 kg | 3 → 2,6 ; suivantes 3 → 2,7 | 172 (lest 97) / 185 (lest 110) | allégé pour garder la marge prévue (au moins 3 en réserve) ; dernières séries plus dures que prévu |
-| 11 | affûtage | 3 × 1 à 90 %, série de tête puis séries allégées | 1 à 83,75 kg puis 2-2 à 70 kg | 1 à 83,75 kg puis 2-1 (arrêt avant la cible) à 70 kg | 4 → 4,4 ; suivantes 5+ → 6,5 | 178 (lest 103) / 185 (lest 110) | charge non augmentée (hausse plafonnée d'une séance à la suivante) |
+| 11 | affûtage | 2 × 2 à 86 % | 2-2 à 83,75 kg | 2-2 à 83,75 kg | 3 → 4,8 ; suivantes 3 → 4,3 | 185 (lest 110) / 185 (lest 110) | — |
 | 12 | échéance | 3 × 1 à 91 %, test | 1 à 86,25 kg puis 1 à 91,25 kg puis 1 à 95 kg | 1 à 86,25 kg puis 1 à 91,25 kg puis 1 à 95 kg | test | 183 (lest 109) / 185 (lest 110) | ouverture à 87,1 % du maximum estimé ; barre suivante choisie pour 95 % de chances de réussite ; tentatives prudentes (uncertainty) ; barre suivante choisie pour 91 % de chances de réussite |
 | 13 | transition (récupération) | 3 × 5 à 65 % | 5-5-5 à 43,75 kg | 5-5-5 à 43,75 kg | 5+ → 10,4 ; suivantes 5+ → 9,2 | 184 (lest 109) / 183 (lest 108) | — |
 | 14 | introduction | 4 × 5 à 68 %, série de tête puis séries allégées | 5 à 48,75 kg puis 5-5-5 à 38,75 kg | 5 à 48,75 kg puis 5-5-5 à 38,75 kg | 5+ → 10,6 ; suivantes 5+ → 11,4 | 193 (lest 118) / 183 (lest 108) | charge non augmentée (hausse plafonnée d'une séance à la suivante) |
@@ -164,9 +164,9 @@ Athlète simulé, maximum réel hors fatigue : 180 au départ (le record déclar
 | Sem. | Mouvement | Barres (lest) | Maximum réel du jour (lest) | Meilleure barre / maximum du jour |
 | --- | --- | --- | --- | --- |
 | 12 (échéance) | Muscle-up lesté de compétition | 16,25 réussie, 20 réussie, 22,5 réussie | 37,7 | 86,6 % |
-| 12 (échéance) | Traction lestée de compétition | 67,5 réussie, 72,5 réussie, 76,25 réussie | 82,3 | 96,1 % |
+| 12 (échéance) | Traction lestée de compétition | 67,5 réussie, 72,5 réussie, 76,25 réussie | 82,3 | 96,2 % |
 | 12 (échéance) | Dips lesté de compétition | 86,25 réussie, 91,25 réussie, 95 réussie | 108,5 | 92,6 % |
-| 12 (échéance) | Squat de compétition | 152,5 réussie, 157,5 réussie, 160 réussie | 170,5 | 93,9 % |
+| 12 (échéance) | Squat de compétition | 152,5 réussie, 157,5 réussie, 160 réussie | 170,4 | 93,9 % |
 
 ## Même programme, autres athlètes simulés
 
@@ -175,5 +175,5 @@ Le même profil et le même moteur, avec d'autres hypothèses sur l'athlète ré
 | Athlète simulé | Échecs non voulus | Écart d'effort | Séries ≥ 2 rép. plus dures | Plus forte hausse à schéma égal | Progression par semaine | Tentatives réussies | Échéance / maximum du jour | Hausses sur zone douloureuse |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | modèle 2 (courbe linéaire, notes d'effort entières et plafonnées, récupération lente entre séries, tendons à adaptation lente) | 0,3 % | 0,99 | 0,8 % | 6,9 % | 0,025 % | 12/12 | 92,3 % | 0 |
-| modèle 1 (courbe charge-répétitions à plateau, notes d'effort continues) | 0,5 % | 0,95 | 0,4 % | 9 % | 0,018 % | 12/12 | 95,8 % | 0 |
-| modèle 3 (courbe en puissance, forme masquée par la fatigue, mauvais jours marqués, désentraînement rapide) | 1,2 % | 2,63 | 2,3 % | 9,2 % | 0,016 % | 12/12 | 94,7 % | 0 |
+| modèle 1 (courbe charge-répétitions à plateau, notes d'effort continues) | 0,5 % | 0,96 | 0,4 % | 9 % | 0,018 % | 12/12 | 95,8 % | 0 |
+| modèle 3 (courbe en puissance, forme masquée par la fatigue, mauvais jours marqués, désentraînement rapide) | 1,2 % | 2,64 | 2,3 % | 9,2 % | 0,016 % | 12/12 | 94,2 % | 0 |

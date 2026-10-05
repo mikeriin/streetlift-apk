@@ -67,7 +67,7 @@ Pour chaque mouvement, la séance la plus lourde de la semaine : ce que le progr
 | 16 | réalisation (spécifique à l'objectif) | 3 × 15 (88 % du maximum testé), série de tête puis séries allégées | 15-14-12 | 15-14-11 | 2 → 3,4 ; suivantes 2 → 4,3 | 18 / 18 | allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |
 | 17 | affûtage | 2 × 14 (82 % du maximum testé), série de tête puis séries allégées | 14-11 | 14-11 | 3 → 4 ; suivantes 5+ → 6,2 | 18 / 18 | — |
 | 18 | test | 1 × 22 à 25, test | (17 à 25) | 19 (échec) | test | 19 / 19 | — |
-| 19 | construction (volume) | 3 × 16 (89 % du maximum testé), série de tête puis séries allégées | 16-12-12 | 16-10 (arrêt avant la cible) | 2 → 2,6 ; suivantes 5+ → 6,6 | 19 / 19 | allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |
+| 19 | construction (volume) | 3 × 15 (88 % du maximum testé), série de tête puis séries allégées | 15-11-11 | 13 (arrêt avant la cible)-9-9 | 3,5 → 5,6 ; suivantes 5+ → 8,3 | 19 / 19 | allégé pour garder la marge prévue (au moins 2 en réserve) |
 
 Athlète simulé, maximum réel hors fatigue : 17 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 18 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
 
@@ -85,7 +85,7 @@ Athlète simulé, maximum réel hors fatigue : 17 au départ (le record déclar�
 | 15 | réalisation (spécifique à l'objectif) | 3 × 8 à 10 | (8 à 20)-(8 à 20)-(8 à 20) | 10-11-12 | 2 → 4,6 ; suivantes 2 → 2,3 | 15 / 13 | — |
 | 16 | réalisation (spécifique à l'objectif) | 3 × 8 à 10 | (8 à 11)-(8 à 10)-(8 à 9) | 10-9 | 2 → 3,7 ; suivantes 2 → 4,3 | 14 / 13 | allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |
 | 17 | affûtage | 2 × 6 à 8 | (6 à 8)-(6 à 8) | 6-7 | 5+ → 8,2 ; suivantes 4,5 → 6,9 | 14 / 13 | — |
-| 19 | construction (volume) | 3 × 10 (77 % du maximum testé) | 10-10-10 | 10-10-10 | 3 → 4,4 ; suivantes 3 → 3,8 | 14 / 14 | — |
+| 19 | construction (volume) | 3 × 11 (85 % du maximum testé) | 11-10-10 | 11-10-10 | 2 → 3,4 ; suivantes 2 → 3,7 | 14 / 14 | — |
 
 Athlète simulé, maximum réel hors fatigue : 14 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 14 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
 
@@ -122,4 +122,4 @@ Athlète simulé, maximum réel hors fatigue : 10 au départ (le record déclar�
 - **Semaine 16 (réalisation (spécifique à l'objectif))** : Dips aux barres parallèles : répétitions recalées sur le maximum mesuré (4 de moins par série que le programme) ; Pompe classique : répétitions recalées sur le maximum mesuré (3 de moins par série que le programme) ; Relevé de jambes tendues suspendu : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; Traction pronation tempo excentrique lent : séries arrêtées en cours de séance (allégé pour garder la marge prévue (au moins 2 en réserve), dernières séries plus dures que prévu) ; Pont fessier unilatéral : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme).
 - **Semaine 17 (affûtage)** : phase « affûtage » : séances servies telles que le programme les écrit (× 4) ; affûtage : aucun volume ajouté, intensité gardée (× 4).
 - **Semaine 18 (test)** : 1 séance(s) manquée(s) sur 4 ; phase « test » : séances servies telles que le programme les écrit (× 3).
-- **Semaine 19 (construction (volume))** : nouveau bloc construit à partir du point de fin de bloc (maxima estimés, résultats de test, tolérance) ; Dips aux barres parallèles : répétitions recalées sur le maximum mesuré (3 de moins par série que le programme) ; Traction pronation : séries arrêtées en cours de séance (allégé pour garder la marge prévue (au moins 2 en réserve)) ; Pompe classique : répétitions recalées sur le maximum mesuré (2 de moins par série que le programme).
+- **Semaine 19 (construction (volume))** : nouveau bloc construit à partir du point de fin de bloc (maxima estimés, résultats de test, tolérance) ; Dips aux barres parallèles : répétitions recalées sur le maximum mesuré (3 de moins par série que le programme) ; Pompe classique : répétitions recalées sur le maximum mesuré (2 de moins par série que le programme).

@@ -37,7 +37,7 @@ Chaque bloc est écrit par le moteur de création au moment où il commence, d'a
 
 - Séances faites : 79 sur 80 (19 ajustées le jour même).
 - Échecs non voulus (hors tests et tentatives) : 0,2 % des séries de travail.
-- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 1,06 répétition en réserve (sur les 67 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0,1 % ; au moins 3 plus faciles : 12,4 %.
+- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 1,08 répétition en réserve (sur les 67 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0,1 % ; au moins 3 plus faciles : 12,7 %.
 - Plus forte hausse de charge totale d'un mouvement principal d'une séance à la suivante, à schéma égal : 6,8 % ; hausses de plus de 10 % faites de plusieurs crans : 0.
 - Progression réelle moyenne des mouvements suivis : 0,066 % par semaine.
 - Tentatives de maximum : 12 réussies sur 12 ; ouvertures réussies : 100 %.
@@ -85,7 +85,7 @@ Athlète simulé, maximum réel hors fatigue : 137 (lest 59) au départ (le reco
 | 8 | allègement | 3 × 3 à 80 % | 3-3-3 à 37,5 kg | 1 (arrêt avant la cible) à 37,5 kg puis 3-3 à 31,25 kg | 5+ → 8,4 ; suivantes 5+ → 7,4 | 144 (lest 67) / 149 (lest 72) | allégé pour garder la marge prévue (au moins 4 en réserve) |
 | 9 | réalisation (spécifique à l'objectif) | 4 × 2 à 90 %, série de tête puis séries allégées | 2 à 51,25 kg puis 2-2-2 à 43,75 kg | 2 à 51,25 kg puis 2-2-2 à 43,75 kg | 2,5 → 3,8 ; suivantes 3,5 → 5 | 145 (lest 69) / 148 (lest 71) | — |
 | 10 | réalisation (spécifique à l'objectif) | 4 × 3 à 81 % | 3-3-3-3 à 47,5 kg | 3-3 à 47,5 kg puis 3-3 à 43,75 kg | 3 → 3,7 ; suivantes 3 → 3,4 | 145 (lest 68) / 148 (lest 71) | allégé pour garder la marge prévue (au moins 3 en réserve) ; dernières séries plus dures que prévu |
-| 11 | affûtage | 3 × 1 à 90 %, série de tête puis séries allégées | 1 à 48,75 kg puis 2-2 à 37,5 kg | 1 à 48,75 kg puis 2-2 à 37,5 kg | 5+ → 6,5 ; suivantes 5+ → 8,1 | 150 (lest 73) / 148 (lest 71) | charge non augmentée (hausse plafonnée d'une séance à la suivante) |
+| 11 | affûtage | 2 × 2 à 86 % | 2-2 à 50 kg | 2-2 à 50 kg | 4 → 6,5 ; suivantes 4 → 6 | 156 (lest 79) / 148 (lest 71) | — |
 | 12 | échéance | 3 × 1 à 91 %, test | 1 à 51,25 kg puis 1 à 56,25 kg puis 1 à 60 kg | 1 à 51,25 kg puis 1 à 56,25 kg puis 1 à 60 kg | test | 153 (lest 77) / 149 (lest 72) | ouverture à 86,2 % du maximum estimé ; barre suivante choisie pour 98 % de chances de réussite ; barre suivante choisie pour 93 % de chances de réussite ; dernières séries plus faciles que prévu |
 | 13 | transition (récupération) | 3 × 5 à 65 % | 5-5-5 à 18,75 kg | 5-5-5 à 18,75 kg | 5+ → 11,5 ; suivantes 5+ → 10,2 | 154 (lest 77) / 147 (lest 70) | — |
 | 14 | introduction | 3 × 5 à 68 %, série de tête puis séries allégées | 5 à 22,5 kg puis 5-5 à 13,75 kg | 5 à 22,5 kg puis 5-5 à 13,75 kg | 5+ → 11,7 ; suivantes 5+ → 12,8 | 162 (lest 85) / 147 (lest 71) | charge non augmentée (hausse plafonnée d'une séance à la suivante) |

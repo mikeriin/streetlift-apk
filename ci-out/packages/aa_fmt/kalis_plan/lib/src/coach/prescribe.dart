@@ -162,7 +162,7 @@ abstract final class CoachNotes {
   static const String shortVersion = 'short_version';
 
   /// Choix de l'élastique d'assistance (`value` : répétitions du haut de
-  /// la plage).
+  /// la plage, + 100 quand l'athlète fait déjà une traction stricte).
   static const String bandChoice = 'band_choice';
 
   /// Consigne d'exécution (`value` : 1 traction, 2 dips, 3 muscle-up,
@@ -285,6 +285,10 @@ abstract final class CoachNotes {
   /// (`value` : repère actuel en répétitions).
   static const String plateau = 'plateau';
 
+  /// Séries dans la zone de l'épreuve, objectif de répétitions maximales
+  /// (`value` : part du maximum, en %).
+  static const String eventZone = 'event_zone';
+
   /// Montée avant le muscle-up (`value` : séries de tractions faciles).
   static const String rampMuscleUp = 'ramp_muscle_up';
 
@@ -304,6 +308,7 @@ abstract final class CoachNotes {
   /// Tous les codes.
   static const List<String> all = <String>[
     plateau,
+    eventZone,
     rampMuscleUp,
     painStop,
     painReturn,
@@ -448,6 +453,12 @@ const double coachDeloadShare = 0.65;
 /// Gabbett 2016 : les hausses brusques de charge précèdent les blessures de
 /// surmenage).
 const double coachVolumeRise = 0.15;
+
+/// Part du 1RM des séances lourdes d'affûtage hors dernier lourd : 85 %
+/// au moins sur le mouvement principal jusqu'à la dernière séance (R3-P13 ;
+/// Bosquet et al. 2007 : intensité gardée) — doubles, 3 répétitions en
+/// réserve environ (R2-P2 : 2 répétitions à 86 % laissent 3 à 4).
+const double coachTaperShare = 0.86;
 
 /// Hausse des secondes de tenue bras tendus par semaine (R5-P22, R4-F10).
 const List<double> coachStraightArmRise = <double>[0.20, 0.15, 0.10, 0.10];
@@ -710,6 +721,10 @@ final class _WeekTrace {
   /// Répétitions écrites de la semaine par mouvement au poids du corps
   /// (racine de la chaîne de variantes), séries au chrono comprises.
   final Map<String, double> reps = <String, double>{};
+
+  /// Plus longue tenue écrite de la semaine par exercice de maintien du
+  /// débutant (secondes par série).
+  final Map<String, int> holds = <String, int>{};
 }
 
 /// Racine d'un mouvement au poids du corps compté en répétitions, pour le
@@ -1102,7 +1117,17 @@ final class Prescriber {
     final bwId = _bodyweightOf[e.id];
     final bwMax = bwId == null ? 0 : (a.reps[bwId] ?? 0);
     final weight = (e.bodyweightFraction?.value ?? 0) * a.bodyWeight;
-    if (total != null && bwMax >= 3 && weight > 0) {
+    // (Seulement sur un 1RM estimé : un record déclaré ou un test fait foi,
+    // le maximum au poids du corps ne le remonte pas — CX, correction 1,
+    // panel et relecture documentée, `street_12` : blocs écrits sur 131 kg
+    // quand le test plaçait le 1RM vers 117 kg.)
+    final source = a.totalOneRm(e.id) != null ? e.id : referenceId;
+    if (total != null &&
+        bwMax >= 3 &&
+        weight > 0 &&
+        (source == null ||
+            !a.oneRm.containsKey(source) ||
+            a.estimatedOneRm.contains(source))) {
       final fromReps = bwMax <= 12
           ? weight / _pctAt(bwMax)
           : weight * (1 + (bwMax > 20 ? 20 : bwMax) / 30);
@@ -1526,15 +1551,18 @@ final class Prescriber {
         if (_lastHeavyDay(x.e.id) == _dayNow) {
           _lastHeavy(x, ws, week);
         } else {
+          // (Doubles à 86 % : jamais sous 85 % sur le mouvement principal
+          // avant la dernière séance, R3-P13 ; panel CX, correction 1 :
+          // 2 × 3 à 79-80 % pendant l'affûtage.)
           x
             ..sets = 2
             ..minSets = 2
-            ..repsLow = 3
-            ..repsHigh = 3
+            ..repsLow = 2
+            ..repsHigh = 2
             ..rir = _rirOf(x.e, 3, ws, week)
             ..rest = 180
             ..ramped = true;
-          _loadAt(x, 0.80, s.referenceId);
+          _loadAt(x, coachTaperShare, s.referenceId);
           _honest(x, week);
         }
       case WeekIntent.deload ||
@@ -1690,8 +1718,8 @@ final class Prescriber {
         pct = 0.82;
         rir = 3;
       case WeekIntent.taper:
-        reps = 3;
-        pct = 0.80;
+        reps = 2;
+        pct = coachTaperShare;
         sets = 2;
       case WeekIntent.deload ||
           WeekIntent.test ||
@@ -1826,10 +1854,20 @@ final class Prescriber {
     // Coude à antécédent : entrée à 82,5 %, +2,5 % par semaine de charge
     // (82,5, 85, 87,5 %), chaque bloc un cran plus haut, 95 % au plus
     // (R5-P24 : retour par paliers ; panel CX, boucle 1).
+    // (Après quatre semaines au moins sans l'amplitude partielle — affûtage,
+    // échéance, transition —, elle repart de l'entrée, sans le cran des
+    // blocs d'avant : panel CX, correction 1, `street_09`, 95 % repris
+    // d'emblée après sept semaines d'absence ; R5-P24.)
+    var recent = false;
+    for (var k = _history.length - 4; k < _history.length; k++) {
+      if (k >= 0 &&
+          _history[k].loads.keys.any((key) => key.endsWith('|${e.id}'))) {
+        recent = true;
+      }
+    }
+    final carried = recent ? (blockIndex > 2 ? 2 : blockIndex) : 0;
     var pct = partial
-        ? (elbowHistory ? 0.825 : 0.95) +
-              0.05 * (blockIndex > 2 ? 2 : blockIndex) +
-              0.025 * steps
+        ? (elbowHistory ? 0.825 : 0.95) + 0.05 * carried + 0.025 * steps
         : (intense ? 0.74 : 0.70) + 0.01 * stage;
     if (pct > top) {
       pct = top;
@@ -2202,7 +2240,11 @@ final class Prescriber {
         wanted > max &&
         !risk &&
         kept < 2 &&
-        _level >= 1 &&
+        // (Repos-pause sur le mouvement principal : avancé et élite
+        // seulement, R2-P13, R4-G6 ; l'intermédiaire travaille la fin de
+        // série par les séries de la zone de l'épreuve — panel CX,
+        // correction 1.)
+        _level >= 2 &&
         ws.kind == WeekKind.build &&
         ws.stage >= 1 &&
         (blockIndex >= 1 || realization) &&
@@ -2263,6 +2305,26 @@ final class Prescriber {
         share = 0.75;
       }
     }
+    // Réalisation d'un objectif de répétitions maximales, sur le mouvement
+    // visé : séries dans la zone de l'épreuve — 72 à 80 % du maximum,
+    // repos court, 2 répétitions en réserve (R4-G1 : la moitié au moins du
+    // bloc spécifique dans la zone de l'épreuve ; R4-G4 : 45 à 90 s de
+    // repos ; panel et relecture documentée CX, correction 1 : bloc de
+    // réalisation identique à la construction).
+    final eventZone =
+        ws.intent == WeekIntent.realization &&
+        ws.kind == WeekKind.build &&
+        _repsAim &&
+        role == _DayRole.normal &&
+        s.group == null &&
+        max >= 6 &&
+        a.goalOn(e.id, GoalMetric.maxReps) != null;
+    if (eventZone) {
+      share = 0.72 + 0.03 * (ws.stage > 2 ? 2 : ws.stage);
+      if (share > 0.80) {
+        share = 0.80;
+      }
+    }
     if (ws.intent == WeekIntent.intro && role != _DayRole.primerFar) {
       // Introduction : une marche sous la semaine suivante, pas une moitié
       // (panel CX, boucle 4 : 3 × 25 puis 4 × 34 d'une semaine à l'autre ;
@@ -2296,9 +2358,16 @@ final class Prescriber {
       ..intensity = _shareOf(e.id, reps, max);
     if (e.pattern == MovementPattern.tirageVertical &&
         s.group == null &&
-        x.rest < 120) {
+        x.rest < 120 &&
+        !eventZone) {
       // Tirage vertical : deux minutes entre les séries (R1-P16).
       x.rest = 120;
+    }
+    if (eventZone) {
+      x
+        ..rest = _level >= 2 ? 75 : 90
+        ..rir = _rirOf(e, 2, ws, week)
+        ..reasons.add(_note(CoachNotes.eventZone, _round(share * 100)));
     }
     if (ws.kind == WeekKind.build) {
       x.reasons.add(_rule(CoachRules.repStep, 1, 'reps'));
@@ -2463,11 +2532,14 @@ final class Prescriber {
     if (max > 0) {
       // R4-G2 : sous 8 répétitions, la force d'abord — séries courtes à 2
       // répétitions de l'échec.
-      // (3 en réserve la première semaine de charge du bloc, 2 ensuite :
-      // la progression vient de la réserve, pas d'un progrès supposé.)
+      // (3 en réserve en semaine d'introduction ou allégée, 2 ensuite : la
+      // progression vient de la réserve, pas d'un progrès supposé. La
+      // première semaine de charge d'un bloc spécifique garde 2 en réserve —
+      // CX, correction 1, panel : 3 × 2 à 40 % au début du bloc de
+      // réalisation, moins que la construction.)
       var margin =
           2 +
-          (ws.light || (ws.kind == WeekKind.build && ws.stage == 0) ? 1 : 0) +
+          (ws.light || ws.kind == WeekKind.intro ? 1 : 0) +
           a.rirBonus.round();
       final kept = _floorRir(e, week).ceil();
       if (margin < kept) {
@@ -4260,6 +4332,7 @@ final class Prescriber {
       return;
     }
     var worst = 0;
+    BodyZone? stopped;
     for (final l in a.limits) {
       final joint = l.joint;
       if (!l.trend ||
@@ -4267,6 +4340,15 @@ final class Prescriber {
           l.discomfort < 3 ||
           x.e.stressOn(joint) == JointStress.low) {
         continue;
+      }
+      if (a.stopZones.contains(l.zone)) {
+        // Zone à l'arrêt : seule une variante qui ne la provoque pas (prise
+        // neutre) reste ; elle garde le volume réduit, et la note d'arrêt
+        // (consulter, reprise après deux semaines à 2/10) remplace celle de
+        // la douleur relevée — jamais deux consignes contraires (CX,
+        // correction 1, panel : « la figure reste au programme à 4/10 »
+        // à côté de l'arrêt).
+        stopped = l.zone;
       }
       if (l.discomfort > worst) {
         worst = l.discomfort;
@@ -4280,7 +4362,11 @@ final class Prescriber {
     if (x.minSets > x.sets) {
       x.minSets = x.sets;
     }
-    x.reasons.add(_note(CoachNotes.painTrend, worst));
+    x.reasons.add(
+      stopped != null
+          ? _note(CoachNotes.painStop, stopped.index)
+          : _note(CoachNotes.painTrend, worst),
+    );
   }
 
   /// Rang de la semaine de charge en cours dans le bloc, pour la reprise
@@ -5718,6 +5804,48 @@ final class Prescriber {
     }
   }
 
+  /// Garde-fou des tenues du débutant (tenue menton au-dessus de la barre,
+  /// suspension, appui) : la tenue écrite par série ne monte pas de plus de
+  /// 15 % (2 s au moins) sur la plus longue des trois semaines d'avant,
+  /// même quand un test relève le maximum (R5-P22 : +10 à 20 % par
+  /// semaine ; panel CX, correction 1 : 3 × 6 s puis 3 × 19 s d'une semaine
+  /// à l'autre sur le coude d'un débutant).
+  void _fitHolds(List<List<_Draft>> days, _WeekTrace trace) {
+    for (final items in days) {
+      for (final x in items) {
+        final high = x.secondsHigh;
+        if (x.method != Method.beginnerHold ||
+            x.kind == SetKind.test ||
+            high == null) {
+          continue;
+        }
+        int? most;
+        for (var k = _history.length - 3; k < _history.length; k++) {
+          final v = k < 0 ? null : _history[k].holds[x.e.id];
+          if (v != null && (most == null || v > most)) {
+            most = v;
+          }
+        }
+        if (most != null) {
+          final rise = _round(most * (1 + coachVolumeRise));
+          final allowed = rise > most + 2 ? rise : most + 2;
+          if (high > allowed) {
+            x.secondsHigh = allowed;
+            final low = x.secondsLow;
+            if (low != null && low > allowed) {
+              x.secondsLow = allowed;
+            }
+          }
+        }
+        final now = x.secondsHigh!;
+        final before = trace.holds[x.e.id];
+        if (before == null || now > before) {
+          trace.holds[x.e.id] = now;
+        }
+      }
+    }
+  }
+
   // ------------------------------------------------------------------ sortie
 
   ExercisePrescription _freeze(_Draft x, String? groupId) {
@@ -5951,6 +6079,12 @@ final class Prescriber {
         if (family >= 0 && hold != null && t.kind.isResistance) {
           trace.straightArm[family] += p.sets * hold.toDouble();
         }
+        if (hold != null && p.kind != SetKind.test) {
+          final before = trace.holds[p.exerciseId];
+          if (before == null || hold > before) {
+            trace.holds[p.exerciseId] = hold;
+          }
+        }
         final root = _repsRootOf(t.exercise);
         final high = p.repsHigh;
         if (root != null &&
@@ -6027,6 +6161,7 @@ final class Prescriber {
       );
       _fitLoads(days, trace);
       _fitMinutes(days, trace);
+      _fitHolds(days, trace);
       for (final items in days) {
         for (final x in items) {
           for (final g in MuscleGroup.values) {
@@ -6367,7 +6502,12 @@ List<Reason> blockReasonsOf(Athlete a, Skeleton skeleton) {
     );
   }
   if (assisted) {
-    out.add(note(CoachNotes.bandChoice, 8));
+    // (Les essais isolés de traction stricte ne s'écrivent que pour qui
+    // n'en a pas encore une : `value` 108 pour un athlète qui en fait déjà
+    // — CX, correction 1, panel `street_13` : règle de débutant servie à
+    // une pratiquante à 6 tractions.)
+    final strict = (a.reps[Ids.pull] ?? 0) >= 1;
+    out.add(note(CoachNotes.bandChoice, strict ? 108 : 8));
   }
   if (a.limits.isEmpty) {
     out.add(note(CoachNotes.painGeneral, 6));

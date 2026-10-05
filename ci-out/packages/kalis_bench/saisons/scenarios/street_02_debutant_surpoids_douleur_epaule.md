@@ -57,7 +57,7 @@ Pour chaque mouvement, la séance la plus lourde de la semaine : ce que le progr
 | 9 | construction (volume) | 2 × 8 à 12 | (8 à 19)-(8 à 32) | 19-20 | 2 → 6,6 ; suivantes 2 → 4,4 | 26 / 22 | série repère : une série ouverte (au ressenti, 2 en réserve) pour mesurer où en est l'athlète |
 | 10 | construction (volume) | 2 × 8 à 12 | (8 à 24)-(8 à 24) | 20-20 | 2 → 5 ; suivantes 2 → 3,4 | 25 / 22 | allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |
 | 11 | construction (volume) | 1 × 8 à 12 | (8 à 24) | 23 | 2 → 3,3 | 26 / 23 | — |
-| 12 | test | 1 × 25 à 27, test | (22 à 27) | 22 | test | 25 / 24 | — |
+| 12 | test | 1 × 27 à 29, test | (22 à 29) | 22 | test | 25 / 24 | — |
 | 13 | construction (volume) | 2 × 8 à 12 | (8 à 24)-(8 à 24) | 24-20 | 2 → 2,7 ; suivantes 2 → 3,5 | 27 / 25 | — |
 | 14 | construction (volume) | 2 × 8 à 12 | (8 à 24)-(8 à 24) | 24-20 | 2 → 2,5 ; suivantes 2 → 3,9 | 26 / 25 | allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |
 | 15 | construction (volume) | 1 × 8 à 12 | (8 à 24) | 22 | 2 → 6,5 | 29 / 26 | — |

@@ -33,17 +33,17 @@ Chaque bloc est écrit par le moteur de création au moment où il commence, d'a
 | 2 | 5 à 8 | intensification (séries plus dures) | intensification (séries plus dures), intensification (séries plus dures), intensification (séries plus dures), allègement | le point de fin du bloc 1 |
 | 3 | 9 à 12 | réalisation (spécifique à l'objectif) | réalisation (spécifique à l'objectif), réalisation (spécifique à l'objectif), affûtage, échéance | le point de fin du bloc 2 |
 | 4 | 13 à 18 | réalisation (spécifique à l'objectif) | transition (récupération), introduction, réalisation (spécifique à l'objectif), réalisation (spécifique à l'objectif), affûtage, échéance | les tests du bloc 3 (Muscle-up lesté de compétition : 1 × +12,5 kg ; Traction lestée de compétition : 1 × +56,25 kg ; Dips lesté de compétition : 1 × +63,75 kg ; Squat de compétition : 1 × +142,5 kg) et son point de fin de bloc |
-| 5 | 19 à 19 | construction (volume) | transition (récupération) | les tests du bloc 4 (Muscle-up lesté de compétition : 1 × +11,25 kg ; Traction lestée de compétition : 1 × +53,75 kg ; Dips lesté de compétition : 1 × +65 kg ; Squat de compétition : 1 × +135 kg) et son point de fin de bloc |
+| 5 | 19 à 19 | construction (volume) | transition (récupération) | les tests du bloc 4 (Muscle-up lesté de compétition : 1 × +11,25 kg ; Traction lestée de compétition : 1 × +53,75 kg ; Dips lesté de compétition : 1 × +66,25 kg ; Squat de compétition : 1 × +135 kg) et son point de fin de bloc |
 
 ## Bilan
 
-- Séances faites : 94 sur 95 (19 ajustées le jour même).
+- Séances faites : 94 sur 95 (18 ajustées le jour même).
 - Échecs non voulus (hors tests et tentatives) : 0,1 % des séries de travail.
-- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 0,94 répétition en réserve (sur les 68 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0,1 % ; au moins 3 plus faciles : 10,9 %.
-- Plus forte hausse de charge totale d'un mouvement principal d'une séance à la suivante, à schéma égal : 23,7 % ; hausses de plus de 10 % faites de plusieurs crans : 3.
+- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 0,96 répétition en réserve (sur les 68 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0,1 % ; au moins 3 plus faciles : 11 %.
+- Plus forte hausse de charge totale d'un mouvement principal d'une séance à la suivante, à schéma égal : 14,3 % ; hausses de plus de 10 % faites de plusieurs crans : 1.
 - Progression réelle moyenne des mouvements suivis : 0,066 % par semaine.
 - Tentatives de maximum : 24 réussies sur 24 ; ouvertures réussies : 100 %.
-- Jour de l'échéance : meilleure performance à 93,7 % du maximum réel du jour (moyenne des mouvements).
+- Jour de l'échéance : meilleure performance à 93,9 % du maximum réel du jour (moyenne des mouvements).
 - Douleur : 0 hausse(s) de charge sur une zone douloureuse signalée.
 
 ## Mouvements suivis, semaine par semaine
@@ -70,7 +70,7 @@ Pour chaque mouvement, la séance la plus lourde de la semaine : ce que le progr
 | 14 | introduction | 3 × 5 à 65 %, série de tête puis séries allégées | 5 à 11,25 kg puis 5-5 à 3,75 kg | 5 à 11,25 kg puis 5-5 à 3,75 kg | 5+ → 11,9 ; suivantes 5+ → 13,8 | 140 (lest 62) / 138 (lest 61) | — |
 | 15 | réalisation (spécifique à l'objectif) | 4 × 2 à 72 %, série de tête puis séries allégées | 2 à 31,25 kg puis 2-2-2 à 25 kg | 2 à 31,25 kg puis 2-2-2 à 25 kg | 5+ → 7,3 ; suivantes 5+ → 9 | 134 (lest 57) / 138 (lest 61) | — |
 | 16 | réalisation (spécifique à l'objectif) | 4 × 1 à 93 %, série de tête puis séries allégées | 1 à 35 kg puis 2-2 à 28,75 kg | 1 à 35 kg puis 2-2 à 28,75 kg | 5+ → 7,1 ; suivantes 5+ → 8 | 135 (lest 57) / 138 (lest 61) | bilan du jour bas (2/5) ; nuit courte ; allégé pour garder la marge prévue (au moins 1 en réserve) ; charge non augmentée (bilan du jour bas) |
-| 17 | affûtage | 3 × 1 à 89 %, série de tête puis séries allégées | 1 à 35 kg puis 2-2 à 25 kg | 1 à 35 kg puis 2-2 à 25 kg | 5+ → 7,7 ; suivantes 5+ → 9,7 | 137 (lest 59) / 138 (lest 61) | charge non augmentée (bilan du jour bas) |
+| 17 | affûtage | 3 × 1 à 89 %, série de tête puis séries allégées | 1 à 43,75 kg puis 2-2 à 33,75 kg | 1 à 43,75 kg puis 2-2 à 30 kg | 3,5 → 5,6 ; suivantes 5+ → 8,8 | 139 (lest 62) / 138 (lest 61) | séries allégées calculées sur la série de tête réalisée (43,75 kg, −8 %) ; dernières séries plus dures que prévu |
 | 18 | échéance | 3 × 1 à 91 %, test | 1 à 45 kg puis 1 à 50 kg puis 1 à 53,75 kg | 1 à 45 kg puis 1 à 50 kg puis 1 à 53,75 kg | test | 137 (lest 60) / 138 (lest 61) | ouverture à 89,9 % du maximum estimé ; barre suivante choisie pour 86 % de chances de réussite ; tentatives prudentes (uncertainty) ; dernières séries plus dures que prévu |
 | 19 | transition (récupération) | 3 × 5 à 65 % | 5-5-5 à 11,25 kg | 5-5-5 à 11,25 kg | 5+ → 10,8 ; suivantes 5+ → 10,5 | 135 (lest 57) / 139 (lest 61) | — |
 
@@ -90,15 +90,15 @@ Athlète simulé, maximum réel hors fatigue : 137 (lest 59) au départ (le reco
 | 8 | allègement | 3 × 3 à 80 % | 3-3-3 à 38,75 kg | 1 (arrêt avant la cible) à 38,75 kg puis 3-3 à 32,5 kg | 5+ → 8 ; suivantes 5+ → 7,1 | 144 (lest 67) / 152 (lest 75) | allégé pour garder la marge prévue (au moins 4 en réserve) |
 | 9 | réalisation (spécifique à l'objectif) | 4 × 2 à 90 %, série de tête puis séries allégées | 2 à 55 kg puis 2-2-2 à 47,5 kg | 2 à 55 kg puis 2-2-2 à 47,5 kg | 1,5 → 2,7 ; suivantes 3 → 3,8 | 145 (lest 68) / 152 (lest 75) | — |
 | 10 | réalisation (spécifique à l'objectif) | 4 × 3 à 81 % | 3-3-3-3 à 48,75 kg | 3-3 à 48,75 kg puis 3-3 à 45 kg | 3 → 3,3 ; suivantes 3 → 2,8 | 144 (lest 67) / 152 (lest 76) | allégé pour garder la marge prévue (au moins 3 en réserve) ; dernières séries plus dures que prévu |
-| 11 | affûtage | 3 × 1 à 90 %, série de tête puis séries allégées | 1 à 52,5 kg puis 2-2 à 41,25 kg | 1 à 52,5 kg puis 2-2 à 41,25 kg | 4,5 → 5,5 ; suivantes 5+ → 7 | 149 (lest 73) / 153 (lest 76) | charge non augmentée (hausse plafonnée d'une séance à la suivante) |
+| 11 | affûtage | 2 × 2 à 86 % | 2-2 à 53,75 kg | 2-2 à 53,75 kg | 3 → 5,5 ; suivantes 3 → 5 | 155 (lest 79) / 153 (lest 76) | — |
 | 12 | échéance | 3 × 1 à 91 %, test | 1 à 55 kg puis 1 à 60 kg puis 1 à 63,75 kg | 1 à 55 kg puis 1 à 60 kg puis 1 à 63,75 kg | test | 153 (lest 77) / 153 (lest 76) | ouverture à 86,2 % du maximum estimé ; barre suivante choisie pour 97 % de chances de réussite ; barre suivante choisie pour 93 % de chances de réussite ; dernières séries plus faciles que prévu |
 | 13 | transition (récupération) | 3 × 3 à 65 % | 3-3-3 à 21,25 kg | 3-3-3 à 21,25 kg | 5+ → 12,8 ; suivantes 5+ → 11,6 | 154 (lest 77) / 152 (lest 75) | — |
 | 14 | introduction | 3 × 5 à 65 %, série de tête puis séries allégées | 5 à 21,25 kg puis 5-5 à 12,5 kg | 5 à 21,25 kg puis 5-5 à 12,5 kg | 5+ → 12 ; suivantes 5+ → 13,1 | 162 (lest 85) / 152 (lest 75) | — |
 | 15 | réalisation (spécifique à l'objectif) | 4 × 3 à 66 % | 3-3-3-(3 à 9) à 35 kg | 3-3-3-8 à 35 kg | 5+ → 8,9 ; suivantes 3,8+ → 6,2 | 153 (lest 76) / 152 (lest 76) | série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète |
 | 16 | réalisation (spécifique à l'objectif) | 4 × 1 à 93 %, série de tête puis séries allégées | 1 à 47,5 kg puis 2-2 à 41,25 kg | 1 à 47,5 kg puis 2-1 (arrêt avant la cible) à 41,25 kg | 5+ → 5,4 ; suivantes 5+ → 6,2 | 143 (lest 67) / 153 (lest 76) | bilan du jour bas (2/5) ; nuit courte ; allégé pour garder la marge prévue (au moins 1 en réserve) ; charge non augmentée (bilan du jour bas) |
-| 17 | affûtage | 3 × 1 à 90 %, série de tête puis séries allégées | 1 à 47,5 kg puis 2-2 à 37,5 kg | 1 à 47,5 kg puis 2-2 à 37,5 kg | 5+ → 6,4 ; suivantes 5+ → 7,6 | 148 (lest 71) / 153 (lest 76) | charge non augmentée (bilan du jour bas) |
-| 18 | échéance | 3 × 1 à 91 %, test | 1 à 56,25 kg puis 1 à 61,25 kg puis 1 à 65 kg | 1 à 56,25 kg puis 1 à 61,25 kg puis 1 à 65 kg | test | 155 (lest 78) / 153 (lest 76) | ouverture à 88,3 % du maximum estimé ; barre suivante choisie pour 88 % de chances de réussite ; tentatives prudentes (uncertainty) ; barre suivante choisie pour 79 % de chances de réussite |
-| 19 | transition (récupération) | 3 × 5 à 65 % | 5-5-5 à 21,25 kg | 5-5-5 à 21,25 kg | 5+ → 9,6 ; suivantes 5+ → 8,7 | 147 (lest 71) / 152 (lest 75) | — |
+| 17 | affûtage | 2 × 2 à 86 % | 2-2 à 53,75 kg | 2-2 à 53,75 kg | 3 → 6,3 ; suivantes 3 → 5,9 | 159 (lest 82) / 153 (lest 76) | — |
+| 18 | échéance | 3 × 1 à 91 %, test | 1 à 57,5 kg puis 1 à 62,5 kg puis 1 à 66,25 kg | 1 à 57,5 kg puis 1 à 62,5 kg puis 1 à 66,25 kg | test | 155 (lest 78) / 153 (lest 76) | ouverture à 89 % du maximum estimé ; barre suivante choisie pour 89 % de chances de réussite ; tentatives prudentes (uncertainty) ; barre suivante choisie pour 79 % de chances de réussite |
+| 19 | transition (récupération) | 3 × 5 à 65 % | 5-5-5 à 22,5 kg | 5-5-5 à 22,5 kg | 5+ → 9,3 ; suivantes 5+ → 8,4 | 147 (lest 71) / 152 (lest 76) | — |
 
 Athlète simulé, maximum réel hors fatigue : 155 (lest 78) au départ (le record déclaré au profil peut être plus haut ou plus ancien), 157 (lest 80) en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
 
@@ -120,9 +120,9 @@ Athlète simulé, maximum réel hors fatigue : 155 (lest 78) au départ (le reco
 | 12 | échéance | 3 × 1 à 91 %, test | 1 à 6,25 kg puis 1 à 10 kg puis 1 à 12,5 kg | 1 à 6,25 kg puis 1 à 10 kg puis 1 à 12,5 kg | test | 100 (lest 23) / 92 (lest 15) | ouverture à 90,7 % du maximum estimé ; barre suivante choisie pour 82 % de chances de réussite ; barre suivante choisie pour 67 % de chances de réussite ; dernières séries plus faciles que prévu |
 | 13 | transition (récupération) | 3 × 3 à 80 % | 3-3-3 | 3-3-3 | 4 → 5,7 ; suivantes 4 → 5,2 | 100 (lest 22) / 92 (lest 15) | — |
 | 14 | introduction | 4 × 3 à 80 %, série de tête puis séries allégées | 3-3-3-3 | 3-3-3-3 | 4 → 5,7 ; suivantes 4 → 5,3 | 100 (lest 22) / 93 (lest 15) | — |
-| 15 | réalisation (spécifique à l'objectif) | 4 × 2 à 80 % | 2-2-2 | 1 (arrêt avant la cible)-2-2 | 5+ → 7,3 ; suivantes 5+ → 5,5 | 98 (lest 21) / 94 (lest 16) | bilan du jour bas (1/5) ; allégé pour garder la marge prévue (au moins 5 en réserve) |
+| 15 | réalisation (spécifique à l'objectif) | 4 × 2 à 80 % | 2-2-2 | 1 (arrêt avant la cible)-2-2 | 5+ → 7,3 ; suivantes 5+ → 5,6 | 98 (lest 21) / 94 (lest 16) | bilan du jour bas (1/5) ; allégé pour garder la marge prévue (au moins 5 en réserve) |
 | 16 | réalisation (spécifique à l'objectif) | 4 × 2 à 80 % | 2-2-2 | 2-2-2 | 5+ → 5,9 ; suivantes 5+ → 5,4 | 97 (lest 19) / 94 (lest 16) | bilan du jour bas (2/5) ; nuit courte ; allégé pour garder la marge prévue (au moins 5 en réserve) |
-| 17 | affûtage | 3 × 1 à 90 %, série de tête puis séries allégées | 1 à 3,75 kg puis 1-1 | 1 à 3,75 kg puis 1-1 | 5+ → 5,5 ; suivantes 5+ → 6,3 | 97 (lest 19) / 94 (lest 16) | charge non augmentée (hausse plafonnée d'une séance à la suivante) |
+| 17 | affûtage | 3 × 1 à 90 %, série de tête puis séries allégées | 1 à 3,75 kg puis 1-1 | 1 à 3,75 kg puis 1-1 | 5+ → 6,1 ; suivantes 5+ → 6,8 | 99 (lest 21) / 94 (lest 16) | charge non augmentée (hausse plafonnée d'une séance à la suivante) |
 | 18 | échéance | 3 × 1 à 91 %, test | 1 à 5 kg puis 1 à 8,75 kg puis 1 à 11,25 kg | 1 à 5 kg puis 1 à 8,75 kg puis 1 à 11,25 kg | test | 97 (lest 19) / 94 (lest 17) | ouverture à 89,1 % du maximum estimé ; barre suivante choisie pour 85 % de chances de réussite ; tentatives prudentes (uncertainty) ; barre suivante choisie pour 74 % de chances de réussite |
 | 19 | transition (récupération) | 3 × 3 | 3-3-3 à 1,25 kg | 3-3-3 à 1,25 kg | 4 → 4,7 ; suivantes 4 → 4 | 98 (lest 20) / 94 (lest 17) | — |
 
@@ -143,12 +143,12 @@ Athlète simulé, maximum réel hors fatigue : 99 (lest 22) au départ (le recor
 | 9 | réalisation (spécifique à l'objectif) | 4 × 1 à 91 %, série de tête puis séries allégées | 1 à 142,5 kg puis 2-2-2 à 135 kg | 0 (échec) à 142,5 kg puis 1 (arrêt avant la cible)-1 (arrêt avant la cible)-1 (arrêt avant la cible) à 130 kg | 3 → 0,8 ; suivantes 4 → 3,9 | 141 / 149 | charge non augmentée (hausse plafonnée d'une séance à la suivante) ; série manquée la dernière fois ; dernières séries plus dures que prévu |
 | 10 | réalisation (spécifique à l'objectif) | 4 × 3 à 81 % | 3-3-3-3 à 120 kg | 3-3-3-3 à 120 kg | 5+ → 9,1 ; suivantes 5+ → 8,8 | 151 / 149 | — |
 | 11 | affûtage | 3 × 1 à 89 %, série de tête puis séries allégées | 1 à 132,5 kg puis 2-2 à 120 kg | 1 à 132,5 kg puis 2-2 à 120 kg | 4,5 → 5,3 ; suivantes 5+ → 8,7 | 147 / 149 | — |
-| 12 | échéance | 3 × 1 à 91 %, test | 1 à 135 kg puis 1 à 140 kg puis 1 à 142,5 kg | 1 à 135 kg puis 1 à 140 kg puis 1 à 142,5 kg | test | 153 / 149 | ouverture à 90,8 % du maximum estimé ; barre suivante choisie pour 88 % de chances de réussite ; barre suivante choisie pour 80 % de chances de réussite |
+| 12 | échéance | 3 × 1 à 91 %, test | 1 à 135 kg puis 1 à 140 kg puis 1 à 142,5 kg | 1 à 135 kg puis 1 à 140 kg puis 1 à 142,5 kg | test | 153 / 149 | ouverture à 90,8 % du maximum estimé ; barre suivante choisie pour 89 % de chances de réussite ; barre suivante choisie pour 80 % de chances de réussite |
 | 13 | transition (récupération) | 3 × 3 à 64 % | 3-3-3 à 95 kg | 3-3-3 à 95 kg | 5+ → 18,4 ; suivantes 5+ → 17,9 | 151 / 149 | — |
 | 14 | introduction | 3 × 5 à 64 %, série de tête puis séries allégées | 5 à 95 kg puis 5-5 à 85 kg | 5 à 95 kg puis 5-5 à 85 kg | 5+ → 16,7 ; suivantes 5+ → 19,8 | 153 / 149 | — |
 | 15 | réalisation (spécifique à l'objectif) | 4 × 1 à 73 %, série de tête puis séries allégées | 1 à 120 kg puis 2-2-2 à 112,5 kg | 1 à 120 kg puis 2-2-2 à 112,5 kg | 5+ → 12,4 ; suivantes 5+ → 13,7 | 155 / 149 | — |
 | 16 | réalisation (spécifique à l'objectif) | 4 × 1 à 77 %, série de tête puis séries allégées | 1 à 125 kg puis 2-2-2 à 117,5 kg | 1 à 125 kg puis 2-2-2 à 117,5 kg | 5+ → 9,4 ; suivantes 5+ → 10,8 | 151 / 149 | — |
-| 17 | affûtage | 3 × 1 à 89 %, série de tête puis séries allégées | 1 à 132,5 kg puis 2-2 à 120 kg | 1 à 132,5 kg puis 2-2 à 120 kg | 4,5 → 5,1 ; suivantes 5+ → 8,6 | 146 / 149 | — |
+| 17 | affûtage | 3 × 1 à 89 %, série de tête puis séries allégées | 1 à 132,5 kg puis 2-2 à 120 kg | 1 à 132,5 kg puis 2-2 à 120 kg | 4,5 → 6,1 ; suivantes 5+ → 9,4 | 149 / 149 | — |
 | 18 | échéance | 3 × 1 à 91 %, test | 1 à 127,5 kg puis 1 à 132,5 kg puis 1 à 135 kg | 1 à 127,5 kg puis 1 à 132,5 kg puis 1 à 135 kg | test | 154 / 149 | ouverture à 87,1 % du maximum estimé ; barre suivante choisie pour 92 % de chances de réussite ; tentatives prudentes (uncertainty) ; barre suivante choisie pour 88 % de chances de réussite |
 | 19 | transition (récupération) | 3 × 5 à 64 % | 5-5-5 à 95 kg | 5-5-5 à 95 kg | 5+ → 15,4 ; suivantes 5+ → 14,9 | 147 / 148 | — |
 
@@ -170,8 +170,8 @@ Athlète simulé, maximum réel hors fatigue : 151 au départ (le record déclar
 - **Semaine 14 (introduction)** : phase « introduction » : séances servies telles que le programme les écrit (× 5).
 - **Semaine 15 (réalisation (spécifique à l'objectif))** : bilan du jour bas (1/5) ; bilan du jour bas (2/5) ; séries retirées sur 3 exercices (bilan du jour bas (1/5)) ; charges réduites sur 6 exercices (bilan du jour bas (1/5)) ; charges réduites sur 3 exercices (bilan du jour bas (2/5)).
 - **Semaine 16 (réalisation (spécifique à l'objectif))** : 1 séance(s) manquée(s) sur 5 ; bilan du jour bas (2/5) (× 3) ; nuit courte (× 3) ; séries retirées sur 3 exercices (bilan du jour bas (2/5), nuit courte) ; charges réduites sur 8 exercices (bilan du jour bas (2/5), nuit courte).
-- **Semaine 17 (affûtage)** : phase « affûtage » : séances servies telles que le programme les écrit (× 5) ; affûtage : aucun volume ajouté, intensité gardée (× 5) ; échéance proche : décisions prudentes, pas de hausse au-delà du programme (× 5) ; bilan du jour bas (2/5) ; charges réduites — Traction lestée de compétition, Dips lesté de compétition (bilan du jour bas (2/5)).
-- **Semaine 18 (échéance)** : phase « échéance » : séances servies telles que le programme les écrit (× 5) ; affûtage : aucun volume ajouté, intensité gardée (× 5) ; échéance proche : décisions prudentes, pas de hausse au-delà du programme (× 5) ; résultat de test reporté au profil : Muscle-up lesté de compétition 1 × 11,25 kg ; résultat de test reporté au profil : Traction lestée de compétition 1 × 53,75 kg ; résultat de test reporté au profil : Dips lesté de compétition 1 × 65 kg ; résultat de test reporté au profil : Squat de compétition 1 × 135 kg.
+- **Semaine 17 (affûtage)** : phase « affûtage » : séances servies telles que le programme les écrit (× 5) ; affûtage : aucun volume ajouté, intensité gardée (× 5) ; échéance proche : décisions prudentes, pas de hausse au-delà du programme (× 5).
+- **Semaine 18 (échéance)** : phase « échéance » : séances servies telles que le programme les écrit (× 5) ; affûtage : aucun volume ajouté, intensité gardée (× 5) ; échéance proche : décisions prudentes, pas de hausse au-delà du programme (× 5) ; résultat de test reporté au profil : Muscle-up lesté de compétition 1 × 11,25 kg ; résultat de test reporté au profil : Traction lestée de compétition 1 × 53,75 kg ; résultat de test reporté au profil : Dips lesté de compétition 1 × 66,25 kg ; résultat de test reporté au profil : Squat de compétition 1 × 135 kg.
 - **Semaine 19 (transition (récupération))** : nouveau bloc construit à partir du point de fin de bloc (maxima estimés, résultats de test, tolérance) ; phase « transition (récupération) » : séances servies telles que le programme les écrit (× 5).
 
 ## Tentatives de maximum
@@ -184,5 +184,5 @@ Athlète simulé, maximum réel hors fatigue : 151 au départ (le record déclar
 | 12 (échéance) | Squat de compétition | 135 réussie, 140 réussie, 142,5 réussie | 152,9 | 93,2 % |
 | 18 (échéance) | Muscle-up lesté de compétition | 5 réussie, 8,75 réussie, 11,25 réussie | 19,4 | 91,6 % |
 | 18 (échéance) | Traction lestée de compétition | 45 réussie, 50 réussie, 53,75 réussie | 59,8 | 95,6 % |
-| 18 (échéance) | Dips lesté de compétition | 56,25 réussie, 61,25 réussie, 65 réussie | 78 | 91,6 % |
+| 18 (échéance) | Dips lesté de compétition | 57,5 réussie, 62,5 réussie, 66,25 réussie | 78 | 92,4 % |
 | 18 (échéance) | Squat de compétition | 127,5 réussie, 132,5 réussie, 135 réussie | 153,6 | 87,9 % |

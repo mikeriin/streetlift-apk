@@ -35,9 +35,9 @@ Chaque bloc est écrit par le moteur de création au moment où il commence, d'a
 
 - Séances faites : 63 sur 64 (12 ajustées le jour même).
 - Échecs non voulus (hors tests et tentatives) : 0,1 % des séries de travail.
-- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 1,16 répétition en réserve (sur les 71 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 8,2 %.
+- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 1,18 répétition en réserve (sur les 71 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 8,6 %.
 - Plus forte hausse de charge totale d'un mouvement principal d'une séance à la suivante, à schéma égal : 10,6 % ; hausses de plus de 10 % faites de plusieurs crans : 1.
-- Progression réelle moyenne des mouvements suivis : 0,111 % par semaine.
+- Progression réelle moyenne des mouvements suivis : 0,112 % par semaine.
 - Tentatives de maximum : 3 réussies sur 3 ; ouvertures réussies : 100 %.
 - Jour de l'échéance : meilleure performance à 95,4 % du maximum réel du jour (moyenne des mouvements).
 - Douleur : 0 hausse(s) de charge sur une zone douloureuse signalée.
@@ -84,7 +84,7 @@ Athlète simulé, maximum réel hors fatigue : 122 (lest 49) au départ (le reco
 - **Semaine 12 (allègement)** : phase « allègement » : séances servies telles que le programme les écrit (× 4) ; bilan du jour bas (2/5) ; exercice retiré — Traction lestée de compétition (bilan du jour bas (2/5)) ; charges réduites — Dips lesté de compétition, Rowing barre buste penché prise pronation (bilan du jour bas (2/5)).
 - **Semaine 13 (construction (volume))** : nouveau bloc construit à partir du point de fin de bloc (maxima estimés, résultats de test, tolérance) ; proposition appliquée : volume ajusté.
 - **Semaine 14 (construction (volume))** : temps réduit (54 min au lieu de 59) ; exercice retiré — Étirement des fléchisseurs du poignet bras tendu, Cat-cow (temps réduit (54 min au lieu de 59)) ; proposition appliquée : volume ajusté.
-- **Semaine 15 (construction (volume))** : Curl marteau aux haltères : séries arrêtées en cours de séance (allégé pour garder la marge prévue (au moins 2 en réserve), dernières séries plus dures que prévu) ; bilan du jour bas (2/5) ; nuit courte ; séries retirées sur 3 exercices (bilan du jour bas (2/5), nuit courte) ; charges réduites sur 6 exercices (bilan du jour bas (2/5), nuit courte).
+- **Semaine 15 (construction (volume))** : bilan du jour bas (2/5) ; nuit courte ; séries retirées sur 3 exercices (bilan du jour bas (2/5), nuit courte) ; charges réduites sur 6 exercices (bilan du jour bas (2/5), nuit courte).
 - **Semaine 16 (allègement)** : 1 séance(s) manquée(s) sur 4 ; phase « allègement » : séances servies telles que le programme les écrit (× 3) ; bilan du jour bas (2/5) ; nuit courte ; exercice retiré — Traction lestée de compétition (bilan du jour bas (2/5), nuit courte) ; charges réduites — Dips lesté de compétition, Rowing barre buste penché prise pronation (bilan du jour bas (2/5), nuit courte).
 
 ## Tentatives de maximum
