@@ -82,6 +82,79 @@ String _zone(Object? code) {
   return 'la zone signalée';
 }
 
+/// « le poignet », « l’épaule » : zone de `kalis_core` avec son article.
+String _zoneArticle(Object? code) {
+  for (final z in kc.BodyZone.values) {
+    if (z.code == code) return _zoneArticles[z] ?? 'la zone signalée';
+  }
+  return 'la zone signalée';
+}
+
+const _zoneArticles = <kc.BodyZone, String>{
+  kc.BodyZone.neck: 'le cou',
+  kc.BodyZone.shoulder: 'l’épaule',
+  kc.BodyZone.elbow: 'le coude',
+  kc.BodyZone.wristHand: 'le poignet',
+  kc.BodyZone.upperBack: 'le haut du dos',
+  kc.BodyZone.lowerBack: 'le bas du dos',
+  kc.BodyZone.chest: 'la poitrine',
+  kc.BodyZone.abdomen: 'le ventre',
+  kc.BodyZone.hip: 'la hanche',
+  kc.BodyZone.thigh: 'la cuisse',
+  kc.BodyZone.knee: 'le genou',
+  kc.BodyZone.lowerLeg: 'la jambe',
+  kc.BodyZone.ankleFoot: 'la cheville',
+};
+
+/// CI1b : arrêt pour une douleur qui dure (`kalis_adapt` 0.2.2, mode
+/// coach) dans la séance servie [plan] : zones à l'arrêt et exercices
+/// retirés aujourd'hui (vide : aucun arrêt).
+List<({String zone, List<String> removed})> painStopsOf(
+  kc.SessionPlan plan,
+  String Function(String exerciseId) exerciseName,
+) {
+  final zones = <String>[];
+  for (final r in plan.reasons) {
+    final z = r.params['zone'];
+    if (r.code == 'adapt.pain_persistent' &&
+        z is String &&
+        !zones.contains(z)) {
+      zones.add(z);
+    }
+  }
+  return [
+    for (final z in zones)
+      (
+        zone: _zone(z),
+        removed: <String>{
+          for (final a in plan.adjustments)
+            if (a.kind == kc.AdjustmentKind.exerciseRemoved &&
+                a.exerciseId != null &&
+                a.reasons.any(
+                  (r) =>
+                      r.code == 'adapt.pain_persistent' &&
+                      r.params['zone'] == z,
+                ))
+              exerciseName(a.exerciseId!),
+        }.toList(),
+      ),
+  ];
+}
+
+/// CI1b : texte de l'arrêt d'une zone dans la séance (douleur qui dure).
+String painStopText(({String zone, List<String> removed}) s) {
+  final head =
+      'Douleur qui dure (${s.zone}) : 3 sur 10 ou plus depuis plus de deux '
+      'semaines, ou revenue après une reprise.';
+  final removed = s.removed.isEmpty
+      ? ' Les mouvements qui la chargent restent de côté.'
+      : ' Retiré${s.removed.length > 1 ? 's' : ''} aujourd’hui : '
+            '${s.removed.join(', ')}.';
+  return '$head$removed Consulte un médecin ou un kinésithérapeute. Les '
+      'mouvements retirés reviendront après deux semaines à 2 sur 10 au plus, '
+      'par paliers.';
+}
+
 num? _num(Object? v) => v is num ? v : null;
 
 String _dec(double v) =>
@@ -145,7 +218,7 @@ String? adaptReasonText(
           'je l’épargne aujourd’hui.';
     case 'adapt.pain_persistent':
       return 'Douleur qui dure (${_zone(p['zone'])}) : demande l’avis d’un '
-          'professionnel de santé.';
+          'médecin ou d’un kinésithérapeute.';
     case 'adapt.health_low':
       return 'Ton bilan est bas : séance allégée.';
     case 'adapt.sleep_low':
@@ -185,8 +258,9 @@ String? adaptReasonText(
 /// Ajustement d'une séance (bilan, douleur, temps, lieu), en français.
 String adjustmentText(
   kc.SessionAdjustment a,
-  String Function(String exerciseId) exerciseName,
-) {
+  String Function(String exerciseId) exerciseName, {
+  bool test = false,
+}) {
   final x = a.exerciseId == null ? 'un exercice' : exerciseName(a.exerciseId!);
   switch (a.kind) {
     case kc.AdjustmentKind.loadReduced:
@@ -202,6 +276,24 @@ String adjustmentText(
           : exerciseName(a.replacementExerciseId!);
       return '$x remplacé par $to.';
     case kc.AdjustmentKind.exerciseRemoved:
+      // CI1b (`kalis_adapt` 0.2.2) : retrait pour une douleur qui dure, ou
+      // test reporté un jour de bilan bas.
+      for (final r in a.reasons) {
+        if (r.code == 'adapt.pain_persistent') {
+          return '$x retiré : il charge ${_zoneArticle(r.params['zone'])}, '
+              'douleur qui dure.';
+        }
+      }
+      if (test &&
+          a.reasons.any(
+            (r) =>
+                r.code == 'adapt.health_low' ||
+                r.code == 'adapt.sleep_low' ||
+                r.code == 'adapt.fatigue_high',
+          )) {
+        return 'Test de $x reporté : il se refera à une prochaine séance, '
+            'un jour en forme.';
+      }
       return '$x retiré aujourd’hui.';
     case kc.AdjustmentKind.restIncreased:
       return 'Plus de repos sur $x.';
@@ -218,7 +310,13 @@ List<String> sessionDiffLines(
   final out = <String>[];
   final done = <String>{};
   for (final a in plan.adjustments) {
-    final t = adjustmentText(a, exerciseName);
+    final t = adjustmentText(
+      a,
+      exerciseName,
+      test: base.items.any(
+        (b) => b.exerciseId == a.exerciseId && b.kind == kc.SetKind.test,
+      ),
+    );
     if (done.add(t)) out.add(t);
   }
   final before = {for (final it in base.items) it.slotId: it};
@@ -244,6 +342,14 @@ List<String> sessionDiffLines(
   }
   for (final b in base.items) {
     if (plan.items.any((it) => it.slotId == b.slotId)) continue;
+    // CI1b : retrait déjà dit par son ajustement (douleur, test reporté).
+    if (plan.adjustments.any(
+      (a) =>
+          a.kind == kc.AdjustmentKind.exerciseRemoved &&
+          a.exerciseId == b.exerciseId,
+    )) {
+      continue;
+    }
     final line = '${exerciseName(b.exerciseId)} retiré aujourd’hui.';
     if (done.add(line)) out.add(line);
   }

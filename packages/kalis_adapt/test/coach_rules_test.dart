@@ -5,7 +5,8 @@ import 'dart:math' as math;
 
 import 'package:kalis_adapt/kalis_adapt.dart';
 import 'package:kalis_adapt/simulation.dart';
-import 'package:kalis_adapt/src/model.dart' show formAfter;
+import 'package:kalis_adapt/src/model.dart'
+    show PainState, formAfter, painResumeDays;
 import 'package:kalis_core/kalis_core.dart';
 import 'package:kalis_plan/kalis_plan.dart';
 import 'package:test/test.dart';
@@ -68,6 +69,65 @@ final class _Captured implements CoachAwarePolicy {
 void main() {
   const p = AdaptParams.standard;
   final catalog = loadCatalog();
+
+  group('douleur qui dure ou qui revient (CX, correction 1)', () {
+    PainState zone(List<(int, int)> reports) {
+      final s = PainState(BodyZone.wristHand, BodySide.right);
+      for (final (day, intensity) in reports) {
+        s.record(day, intensity);
+      }
+      return s;
+    }
+
+    test('trois sur dix pendant deux semaines : arrêt', () {
+      final s = zone(const <(int, int)>[(0, 3), (3, 3), (7, 4), (10, 3)]);
+      expect(s.stopAt(10), isNull);
+      s.record(14, 3);
+      final stop = s.stopAt(14);
+      expect(stop, isNotNull);
+      expect(stop!.zone, BodyZone.wristHand);
+      expect(stop.sessions, 5);
+      expect(stop.intensity, 4);
+    });
+
+    test('forte plus d\'une semaine : arrêt', () {
+      final s = zone(const <(int, int)>[(0, 6), (3, 5)]);
+      expect(s.stopAt(3), isNull);
+      s.record(7, 5);
+      expect(s.stopAt(7), isNotNull);
+    });
+
+    test('retour après une accalmie : arrêt dès le premier signalement', () {
+      final s = zone(const <(int, int)>[(0, 3), (3, 3), (30, 3)]);
+      expect(s.stopAt(30)?.recurrence, isTrue);
+      // Un seul signalement léger avant : pas un épisode réel.
+      expect(zone(const <(int, int)>[(0, 3), (30, 3)]).stopAt(30), isNull);
+    });
+
+    test('deux semaines sans douleur au-dessus de 2 : reprise', () {
+      final s = zone(const <(int, int)>[
+        (0, 3),
+        (3, 3),
+        (7, 4),
+        (10, 3),
+        (14, 3),
+        (17, 2),
+        (21, 1),
+      ]);
+      expect(s.stopAt(21), isNotNull);
+      expect(s.stopAt(14 + painResumeDays - 1), isNotNull);
+      expect(s.stopAt(14 + painResumeDays), isNull);
+    });
+
+    test('un signalement levé montre la douleur du journal', () {
+      final s = PainState(BodyZone.elbow, BodySide.left)
+        ..lastIntensity = 0
+        ..lastAboveDay = 10
+        ..lastAboveIntensity = 4;
+      expect(s.shownIntensity(12, 7), 4);
+      expect(s.shownIntensity(18, 7), 0);
+    });
+  });
 
   group('alerte de surmenage', () {
     final drop = math.log(1 - p.coachOverreachDrop);
@@ -181,6 +241,53 @@ void main() {
         }
       }
       expect(checked, greaterThan(10));
+    }, timeout: const Timeout(Duration(minutes: 10)));
+  });
+
+  group('tenue après un test', () {
+    // CX, correction 1 : la borne de hausse d'une tenue laisse toujours
+    // servir 55 % du meilleur maintien mesuré (la tenue menton écrite à
+    // 17-19 s après un test de 30 s était servie à 5-9 s).
+    test('street_01 : la tenue servie rejoint 55 % du test', () {
+      const key = 'street_01_debutant_complet';
+      const id = 'cs-tenue-menton-barre-pronation';
+      final engine = KalisAdapt();
+      final policy = CheckedPolicy(engine);
+      final run = simulate(
+        catalog: catalog,
+        spec: streetAthlete(key),
+        profile: streetProfile(key),
+        seed: 4,
+        policy: policy,
+        program: streetProgram(key),
+        weeks: 12,
+        loop: engine,
+        truthKind: TruthKind.b,
+      );
+      expect(policy.violations, isEmpty);
+      var best = 0;
+      var after = 0;
+      var checked = 0;
+      for (final r in run.sets) {
+        if (r.exerciseId != id) {
+          continue;
+        }
+        if (r.test) {
+          if (r.amount > best) {
+            best = r.amount.round();
+          }
+          continue;
+        }
+        if (best > 0) {
+          checked++;
+          if (r.targetHigh > after) {
+            after = r.targetHigh;
+          }
+        }
+      }
+      expect(best, greaterThan(0));
+      expect(checked, greaterThan(0));
+      expect(after, greaterThanOrEqualTo((best * 0.55).floor()));
     }, timeout: const Timeout(Duration(minutes: 10)));
   });
 

@@ -128,6 +128,29 @@ SkillTrack plannedTrack(Athlete a, SkillTrack t) {
   );
 }
 
+/// Vrai si une douleur relevée (zone à l'arrêt, ou gêne de 3/10 au moins)
+/// porte sur une articulation que l'exercice [id] sollicite.
+bool _painOn(Athlete a, String id) {
+  final e = a.catalog.find(id);
+  if (e == null) {
+    return false;
+  }
+  for (final zone in a.stopZones) {
+    if (coachPainStopHits(e, zone)) {
+      return true;
+    }
+  }
+  for (final l in a.limits) {
+    final joint = l.joint;
+    if (joint != null &&
+        l.discomfort >= 3 &&
+        e.stressOn(joint) != JointStress.low) {
+      return true;
+    }
+  }
+  return false;
+}
+
 /// Figures visées par l'athlète [a], par ordre de priorité : celles du
 /// profil (`skills`), puis les objectifs qui portent sur une figure.
 List<SkillTrack> skillTargetsOf(Athlete a) {
@@ -462,6 +485,12 @@ void _buildBeginner(_Builder b) {
     final day = b.days[d]..focus = FocusCodes.fullBody;
     // Préparation de la suspension (R5-P8).
     b.add(d, Picks.hangPrep, SlotRole.warmup, Method.warmupPrep, sets: 2);
+    // Préparation des poignets avant les appuis sur les mains (R4-F12 ;
+    // panel CX, correction 1 : douleur de poignet des débutants dès les
+    // pompes au sol, sans préparation).
+    if (supportDays.contains(d) || pushMax > 0) {
+      b.add(d, Picks.wristPrep, SlotRole.warmup, Method.warmupPrep, sets: 2);
+    }
     // Tirage vertical : chemin vers la traction.
     if (pullMax >= 5) {
       b.add(
@@ -1058,13 +1087,45 @@ void _addRepsPillar(
       );
       return;
     }
+    // Bloc de réalisation d'un objectif de répétitions maximales (12 et
+    // plus) : la séance de force du mouvement visé devient une séance de la
+    // zone de l'épreuve sur le mouvement exact (R2-P9 : 80 % au moins du
+    // mouvement exact à l'approche du test ; R4-G1 ; panel CX, correction
+    // 1, `street_14` : traction au tempo lent à la place du travail de
+    // l'épreuve).
+    if (max >= 12 &&
+        b.shape.phase == SeasonPhaseKind.realization &&
+        a.goalOn(exerciseId, GoalMetric.maxReps) != null) {
+      b.add(
+        d,
+        <String>[exerciseId],
+        SlotRole.main,
+        Method.repsVolume,
+        sets: 4,
+        stress: DayStress.heavy,
+      );
+      return;
+    }
     if (max >= 10 && !spare) {
       final hard = exerciseId == Ids.pull
           ? Picks.hardPull
           : (exerciseId == Ids.dip ? Picks.hardDip : Picks.hardPushUp);
+      // Plateau au dernier test, sans lest : la voie « force relative »
+      // passe d'abord par la traction lente (descente en 4 à 5 s, pause en
+      // haut), puis l'archer et la typewriter (relecture documentée CX,
+      // `street_14` ; Kotarsky et al. 2018 : surcharge par des variantes
+      // plus dures).
+      final stalled = a.stalled.contains(exerciseId) && exerciseId == Ids.pull;
       final slot = b.add(
         d,
-        hard,
+        stalled
+            ? <String>[
+                'sw-traction-tempo-excentrique',
+                'sw-traction-archer',
+                'sw-traction-typewriter',
+                ...hard,
+              ]
+            : hard,
         SlotRole.main,
         Method.repsStrength,
         sets: 4,
@@ -2261,8 +2322,19 @@ void _buildFigures(_Builder b, Set<int> runDays) {
   // chez l'intermédiaire, 3 en avancé, 3 à 4 en élite), 48 h d'écart.
   // (Chez l'intermédiaire qui s'entraîne quatre jours : deux séances
   // lourdes et une légère, R4-F1 — pratique distribuée.)
-  final heavyCount = a.level >= 2 ? 3 : (a.level == 1 && n >= 4 ? 3 : 2);
+  var heavyCount = a.level >= 2 ? 3 : (a.level == 1 && n >= 4 ? 3 : 2);
   final first = statics.isEmpty ? null : statics.first;
+  // Poignet sensible (gêne déclarée à 2 sur 10 ou plus) et figure d'appui
+  // en tête : deux séances d'appui lourd par semaine au plus (relecture
+  // documentée et panel CX, `street_10` : la charge du poignet se répartit,
+  // une grosse séance de planche, l'autre plus légère).
+  if (first != null &&
+      a.catalog.find(first.currentId)?.pattern ==
+          MovementPattern.figureStatiquePoussee &&
+      (a.limitOn(Joint.wrist)?.discomfort ?? 0) >= 2 &&
+      heavyCount > 2) {
+    heavyCount = 2;
+  }
   final second = statics.length > 1 ? statics[1] : null;
   final firstDays = first == null
       ? <int>[]
@@ -2395,10 +2467,33 @@ void _buildFigures(_Builder b, Set<int> runDays) {
     }
     final hold = a.holds[t.currentId] ?? 0;
     final easier = t.easierId;
-    if (heavy || easier == null || a.level < 2 || hold <= 0) {
+    // (Jour léger d'un avancé ou d'un élite : l'étape plus facile n'est
+    // plus servie quand elle est devenue trop facile — tenues courtes et
+    // légères sur l'étape actuelle à la place.)
+    final easierKnown = easier == null ? 0 : (a.holds[easier] ?? 0);
+    // Objectif de durée sur l'étape en cours (front lever 15 s quand le
+    // front lever est l'étape) : une séance légère de tenues longues sur
+    // l'étape plus facile construit la durée (R4-F6 : alternance tenues
+    // courtes intenses et tenues longues ; CX, correction 1, panel).
+    final wanted =
+        a.goalOn(t.currentId, GoalMetric.maxHoldSeconds)?.targetValue ??
+        (t.targetId == t.currentId
+            ? a.goalOn(t.targetId, GoalMetric.maxHoldSeconds)?.targetValue
+            : null);
+    final duration = wanted != null && wanted > hold;
+    final tooEasy =
+        !duration &&
+        a.level >= 2 &&
+        (easierKnown > 25 || (easierKnown == 0 && hold >= 4));
+    if (heavy || easier == null || a.level < 2 || hold <= 0 || tooEasy) {
       // R4-F6 : levier utile quand le maintien maximal vaut 8 à 25 s ; en
       // dessous, des maintiens courts sur l'étape et du temps sur l'étape
       // plus facile.
+      // (Étape de travail écartée par la douleur : l'étape plus facile la
+      // remplace, avec la raison et le retour écrits.)
+      final why = a.rejection(t.currentId, d);
+      final painStep =
+          easier != null && why == 'joint' && _painOn(a, t.currentId);
       b.add(
         d,
         <String>[t.currentId, if (easier != null) easier],
@@ -2407,8 +2502,18 @@ void _buildFigures(_Builder b, Set<int> runDays) {
         sets: heavy ? (a.level >= 2 ? 5 : 4) : 3,
         skillTargetId: t.targetId,
         stress: heavy ? DayStress.heavy : DayStress.light,
+        note: painStep ? 'pain_step' : null,
       );
-      if (hold < 8 && easier != null && a.level >= 1) {
+      // Avancé et élite : plus de tenue de remplissage sur une étape devenue
+      // trop facile (maximum au-delà de 25 s, ou inconnu quand l'étape
+      // actuelle tient déjà 4 s) — R4-F6 : un levier est utile quand son
+      // maximum vaut 8 à 25 s ; relecture documentée CX : les tenues sous
+      // la moitié du maximum n'apportent rien. Le volume va au levier visé
+      // et aux outils de surcharge (dynamique un cran au-dessus).
+      final easierMax = easier == null ? 0 : (a.holds[easier] ?? 0);
+      final filler =
+          a.level >= 2 && (easierMax > 25 || (easierMax == 0 && hold >= 4));
+      if (hold < 8 && easier != null && a.level >= 1 && !filler) {
         // R4-F7 : deux à trois semaines de chevauchement avec l'étape
         // précédente quand l'étape est neuve ou courte.
         b.add(

@@ -219,6 +219,20 @@ vide ou absent.
   `rapide.yml` posé seulement sur cette branche, `build-apk.yml` sans
   déclencheur sur cette branche) ; le contrôle complet reste `claude/ci-3d`.
 
+### CI1b (dev6.9.1, pipeline CP, voie App)
+
+- Paquets `kalis_plan` 0.2.2 et `kalis_adapt` 0.2.2 (branches fixes
+  `etiquettes/…`, copie octet pour octet), `pubspec.lock` à jour.
+- Cible émulateur inchangée (`integration_test/street_ci1_test.dart`,
+  parties a et b) avec une étape de plus : douleur au poignet à 4/10 semée
+  dans le journal à chaque séance pendant plus de deux semaines, puis
+  séance du jour suivant : carte « Arrêt pour douleur »
+  (`health-pain-stop`), arrêt du moteur (`adapt.pain_persistent`),
+  exercices retirés ; capture `ci1_11_douleur_arret_<thème>.png`, relevé
+  `douleur_*`.
+- Tests Dart du lot : `test/ci1b_pain_test.dart`. Mise au point sur
+  `claude/ci-ci1-rapide` (même méthode que CI1).
+
 ### Mode dev dans les tests d'intégration
 
 - Données de la session personnelle semées par un `AppStore()` séparé avant
