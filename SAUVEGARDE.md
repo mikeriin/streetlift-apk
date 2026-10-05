@@ -15,3 +15,8 @@ Base : `moteurs` 9526ac47 (kalis_plan 0.2.2, kalis_adapt 0.2.2, kalis_bench 0.2.
 ## Reste
 - Partie 0 : tests, CI, panel, publication 0.2.3.
 - Partie 1 : disciplines non street → 0.3.0.
+
+## Avancement 05/10 ~19:45 UTC
+- Code partie 0 écrit (non compilé localement) : `lib/src/pain_return.dart` (reprise graduée : palier qui recule si la douleur répond, arrêt gardé sur semaine non chargée, reprise propre au moteur après une levée en milieu de bloc, part 1RM 67,5 % + 2,5 %/palier), session.dart (tests jamais sur zone douloureuse ni en reprise, appui du poignet sensible = dose écrite au plus), coach.dart (doseCapped/inReturn, maintien récent `recentBestOf`, élastique : 2 séances au même cran, montée seulement après échec / 2 séances sous la plage / >2 rép.), advise/coach_advice (verrous en séance), truth.dart (zone réactive après un épisode, modèles B et C : poussées `painFlares`), kalis_bench season (colonne Douleur « hausses / poussées »).
+- kalis_adapt 0.2.3 (version.dart, pubspec). Tests ajoutés : coach_rules_test (levée, maintien récent, street_12 coude, street_01 élastique).
+- Contrôle dev poussé sur claude/ci-cp-b (commit 55d74554) : outil aa_fmt, graines 4, sans kalis_quest. Script : ci.sh (scratchpad, voir commit).

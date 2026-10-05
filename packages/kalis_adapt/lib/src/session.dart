@@ -13,6 +13,7 @@ import 'fatigue.dart';
 import 'filter.dart';
 import 'model.dart';
 import 'numeric.dart';
+import 'pain_return.dart';
 import 'params.dart';
 import 'replay.dart';
 import 'skills.dart';
@@ -50,6 +51,16 @@ final class _Draft {
 
   /// Semaine servie telle que le bloc l'écrit (décharge, affûtage, test).
   bool locked = false;
+
+  /// Mouvement en reprise graduée après une douleur qui dure (CA2,
+  /// partie 0).
+  bool inReturn = false;
+
+  /// Part du 1RM la plus haute permise pendant la reprise, ou `null`.
+  double? returnPct;
+
+  /// Zone en reprise dont le palier recule aujourd'hui, ou `null`.
+  BodyZone? returnBack;
 }
 
 /// Matériel disponible aujourd'hui : celui du lieu [place] si le profil le
@@ -182,6 +193,10 @@ SessionPlan buildSessionPlan(
       painsToday[s.zone] = s.lastIntensity;
     }
   }
+  // Reprise graduée après une douleur qui dure (CA2, partie 0).
+  final comeback = coached
+      ? PainReturn.of(view, state, day, request.weekIndex, p)
+      : PainReturn.none;
   final extraRir = health.level * p.healthRirBonus;
   final run = SessionRun(
     ctx,
@@ -324,6 +339,31 @@ SessionPlan buildSessionPlan(
       final total = info.totalLoad(info.grid.minimum, run.bodyWeightKg);
       tooHeavy = total > 0 && track.filter.repsPossible(ln(total)) < 2;
     }
+    if (coached && d.item.kind == SetKind.test) {
+      // Un test ne se fait jamais sur une zone douloureuse : il est
+      // reporté, jamais remplacé (CA2, partie 0 ; R3-P16).
+      for (final entry in painsToday.entries) {
+        if (info.zoneLevel(entry.key) >= 0.5) {
+          painZone ??= entry.key;
+        }
+      }
+      if (painZone != null) {
+        d.removed = true;
+        adjustments.add(
+          SessionAdjustment(
+            kind: AdjustmentKind.exerciseRemoved,
+            exerciseId: e.id,
+            reasons: <Reason>[
+              reason(ReasonCodes.adaptPainReported, <String, Object?>{
+                'zone': painZone.code,
+                'intensity': painsToday[painZone],
+              }),
+            ],
+          ),
+        );
+        continue;
+      }
+    }
     if (!misplaced && painZone == null && !tooHeavy) {
       continue;
     }
@@ -413,6 +453,108 @@ SessionPlan buildSessionPlan(
             reasons: why,
           ),
         );
+      }
+    }
+    // Arrêt gardé : il se lèverait sur une semaine qui n'est pas de charge
+    // (jamais de levée sur un allègement, un affûtage ou un test).
+    for (final zone in comeback.held) {
+      final why = <Reason>[
+        reason(ReasonCodes.adaptPainPersistent, <String, Object?>{
+          'zone': zone.code,
+          'sessions': 0,
+        }),
+      ];
+      for (final d in drafts) {
+        final info = d.info;
+        if (d.removed ||
+            info == null ||
+            d.item.kind == SetKind.warmup ||
+            !coachPainStopHits(info.exercise, zone)) {
+          continue;
+        }
+        d.removed = true;
+        adjustments.add(
+          SessionAdjustment(
+            kind: AdjustmentKind.exerciseRemoved,
+            exerciseId: d.item.exerciseId,
+            reasons: why,
+          ),
+        );
+      }
+    }
+    // Reprise graduée : les mouvements qui provoquent la zone sont servis
+    // à la part du palier (celle du bloc, ou celle du moteur quand l'arrêt
+    // s'est levé au milieu d'un bloc qui les écrit encore) ; le palier
+    // recule d'un cran quand la douleur répond ; jamais de test.
+    for (final d in drafts) {
+      final info = d.info;
+      if (d.removed ||
+          info == null ||
+          d.item.kind == SetKind.warmup ||
+          !comeback.hits(info.exercise)) {
+        continue;
+      }
+      final e = info.exercise;
+      final held = <Reason>[
+        reason(ReasonCodes.adaptLoadHeld, <String, Object?>{
+          'cause': 'pain_return',
+        }),
+      ];
+      if (d.item.kind == SetKind.test) {
+        d.removed = true;
+        adjustments.add(
+          SessionAdjustment(
+            kind: AdjustmentKind.exerciseRemoved,
+            exerciseId: d.item.exerciseId,
+            reasons: held,
+          ),
+        );
+        continue;
+      }
+      d.inReturn = true;
+      d.reasons.addAll(held);
+      final written = writtenReturnShare(d.item);
+      final own = written == null ? comeback.ownShareOf(e) : null;
+      final share = written ?? own ?? 1.0;
+      var effective = share;
+      var sets = d.sets;
+      if (own != null) {
+        sets = (d.sets * own).round();
+      }
+      final back = comeback.backZoneOf(e);
+      if (back != null) {
+        final lower = share - p.coachReturnStep;
+        effective = lower < p.coachReturnFloor ? p.coachReturnFloor : lower;
+        sets = (sets * effective / share).round();
+        d.returnBack = back;
+      }
+      if (own != null || back != null) {
+        d.returnPct =
+            0.675 + 0.25 * clampDouble(effective - p.coachReturnStart, 0, 1);
+      }
+      if (sets < 1) {
+        sets = 1;
+      }
+      if (sets < d.sets) {
+        if (!_setsAdjustable(d.item)) {
+          d.item = standardEquivalent(d.item);
+        }
+        final why = <Reason>[
+          reason(ReasonCodes.adaptVolumeDown, <String, Object?>{
+            'sets': d.sets - sets,
+            'cause': 'pain_return',
+          }),
+        ];
+        adjustments.add(
+          SessionAdjustment(
+            kind: AdjustmentKind.setsReduced,
+            exerciseId: d.item.exerciseId,
+            setsDelta: sets - d.sets,
+            reasons: why,
+          ),
+        );
+        d.reasons.addAll(why);
+        d.sets = sets;
       }
     }
   }
@@ -580,6 +722,8 @@ SessionPlan buildSessionPlan(
             info == null ||
             doneTests.contains(item.exerciseId) ||
             today.contains(item.exerciseId) ||
+            comeback.hits(info.exercise) ||
+            comeback.heldFor(info.exercise) ||
             stops.any((x) => coachPainStopHits(info.exercise, x.zone))) {
           continue;
         }
@@ -715,6 +859,7 @@ SessionPlan buildSessionPlan(
   }
 
   // 3. Charges, répétitions et flammes de chaque exercice.
+  final wristGuard = coached && _wristSensitive(view, state, comeback, day);
   var confidenceSum = 0.0;
   var confidenceCount = 0;
   for (final d in drafts) {
@@ -775,6 +920,27 @@ SessionPlan buildSessionPlan(
         // Bilan nettement bas : aucune série à moins de trois répétitions
         // en réserve (règle du programme, R5-P14).
         exercise.rirEff = p.coachLowDayRir;
+      }
+      if (d.inReturn) {
+        // Reprise graduée : la dose écrite au plus, loin de l'échec ;
+        // quand le palier recule, aucune hausse (comme une zone
+        // douloureuse).
+        exercise.inReturn = true;
+        exercise.doseCapped = true;
+        exercise.returnPct = d.returnPct;
+        if (exercise.rirEff < p.coachReturnRir) {
+          exercise.rirEff = p.coachReturnRir;
+        }
+        final back = d.returnBack;
+        if (back != null && !exercise.painZones.contains(back)) {
+          exercise.painZones = <BodyZone>[...exercise.painZones, back];
+        }
+      }
+      if (wristGuard && coachPainStopHits(info.exercise, BodyZone.wristHand)) {
+        // Appui du poignet sensible (gêne déclarée, signalée ces deux
+        // dernières semaines, arrêt ou reprise) : la dose d'appui écrite par
+        // le bloc n'est jamais dépassée.
+        exercise.doseCapped = true;
       }
     }
     confidenceCount++;
@@ -1126,6 +1292,36 @@ ExercisePrescription standardEquivalent(ExercisePrescription item) {
     setTargets: null,
     autoregulation: rules.isEmpty ? null : rules,
   );
+}
+
+/// Vrai si l'appui du poignet est sensible au jour [day] : gêne déclarée
+/// au profil ou antécédent récent, gêne signalée depuis deux semaines,
+/// arrêt ou reprise graduée en cours (CA2, partie 0).
+bool _wristSensitive(
+  BlockView view,
+  ModelState state,
+  PainReturn comeback,
+  int day,
+) {
+  const zone = BodyZone.wristHand;
+  if (view.fragileZones.contains(zone) ||
+      comeback.zones.contains(zone) ||
+      comeback.held.contains(zone)) {
+    return true;
+  }
+  final s = state.pains[zone];
+  if (s == null) {
+    return false;
+  }
+  if (s.stopAt(day) != null) {
+    return true;
+  }
+  for (final r in s.reportsBetween(day - 13, day)) {
+    if (r >= 1) {
+      return true;
+    }
+  }
+  return false;
 }
 
 /// Vrai si le nombre de séries de [item] peut être réduit le jour même sans

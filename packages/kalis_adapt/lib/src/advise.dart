@@ -84,6 +84,18 @@ SlotSpec _specOf(
   );
 }
 
+/// Vrai si la séance sert [item] en reprise graduée après une douleur qui
+/// dure (raison `adapt.load_held`, cause `pain_return`).
+bool _inReturn(ExercisePrescription item) {
+  for (final r in item.reasons) {
+    if (r.code == ReasonCodes.adaptLoadHeld &&
+        r.params['cause'] == 'pain_return') {
+      return true;
+    }
+  }
+  return false;
+}
+
 /// Conseil pour la série suivante de l'emplacement demandé par [request].
 IntraSessionAdvice buildAdvice(
   EngineContext ctx,
@@ -156,6 +168,15 @@ IntraSessionAdvice buildAdvice(
       );
       if (item != null && exercise.observed.isEmpty) {
         exercise.plan = _plansOf(item, hold: hold);
+      }
+      if (item != null && _inReturn(item)) {
+        // Reprise graduée (dite par la séance) : mêmes verrous qu'à la
+        // préparation de la séance (CA2, partie 0).
+        exercise.inReturn = true;
+        exercise.doseCapped = true;
+        if (exercise.rirEff < p.coachReturnRir) {
+          exercise.rirEff = p.coachReturnRir;
+        }
       }
       if (slot != null) {
         bySlot[slot] = exercise;

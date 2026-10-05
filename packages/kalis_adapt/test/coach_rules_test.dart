@@ -6,7 +6,7 @@ import 'dart:math' as math;
 import 'package:kalis_adapt/kalis_adapt.dart';
 import 'package:kalis_adapt/simulation.dart';
 import 'package:kalis_adapt/src/model.dart'
-    show PainState, formAfter, painResumeDays;
+    show PainState, formAfter, painResumeDays, recentBestOf;
 import 'package:kalis_core/kalis_core.dart';
 import 'package:kalis_plan/kalis_plan.dart';
 import 'package:test/test.dart';
@@ -431,6 +431,139 @@ void main() {
         expect(results, greaterThan(0));
       }, timeout: const Timeout(Duration(minutes: 10)));
     }
+  });
+
+  group('reprise graduée conduite séance par séance (CA2, partie 0)', () {
+    test('levée de l\'arrêt datée après deux semaines sous 3 sur 10', () {
+      final s = PainState(BodyZone.elbow, BodySide.both);
+      for (final (day, intensity) in const <(int, int)>[
+        (0, 5),
+        (3, 5),
+        (7, 5),
+        (10, 2),
+      ]) {
+        s.record(day, intensity);
+      }
+      expect(s.stopAt(7), isNotNull);
+      expect(s.liftedOn(7 + painResumeDays - 1), isNull);
+      expect(s.liftedOn(7 + painResumeDays), 7 + painResumeDays);
+      expect(s.liftedOn(40), 7 + painResumeDays);
+      // Sans arrêt (un seul signalement léger), aucune levée.
+      final t = PainState(BodyZone.elbow, BodySide.both)..record(0, 3);
+      expect(t.liftedOn(30), isNull);
+    });
+
+    test('meilleur maintien récent : jamais un record d\'avant une coupure', () {
+      const bests = <(int, int)>[(0, 40), (3, 42), (30, 20), (33, 22)];
+      expect(recentBestOf(bests, 35, 14, 28), 22);
+      expect(recentBestOf(bests.sublist(0, 2), 5, 14, 28), 42);
+      expect(recentBestOf(bests, 70, 14, 28), 0);
+    });
+
+    test('street_12, douleur au coude : aucun test ni hausse sur la zone, '
+        'reprise jamais au-dessus de l\'écrit', () {
+      const key = 'street_12_antecedent_coude';
+      final fixtures = readJsonObject('test/fixtures/street_profiles.json.gz');
+      final entry = fixtures[key]! as Map<String, Object?>;
+      final athlete =
+          Map<String, Object?>.of(entry['athlete']! as Map<String, Object?>)
+            ..['painZone'] = BodyZone.elbow.code
+            ..['painFromDay'] = 28
+            ..['painDays'] = 21
+            ..['painIntensity'] = 5;
+      final engine = KalisAdapt();
+      final policy = CheckedPolicy(engine);
+      final run = simulate(
+        catalog: catalog,
+        spec: athleteFromJson(athlete),
+        profile: streetProfile(key),
+        seed: 4,
+        policy: policy,
+        program: streetProgram(key),
+        weeks: 16,
+        loop: engine,
+        truthKind: TruthKind.b,
+      );
+      expect(policy.violations, isEmpty);
+      expect(run.painAggravations, 0);
+      var returned = 0;
+      for (final s in run.served) {
+        for (final item in s.plan.items) {
+          final back = item.reasons.any(
+            (r) =>
+                r.code == ReasonCodes.adaptLoadHeld &&
+                r.params['cause'] == 'pain_return',
+          );
+          if (!back) {
+            continue;
+          }
+          returned++;
+          expect(item.kind, isNot(SetKind.test));
+          final written = _written(run, s, item.slotId);
+          if (written != null) {
+            expect(
+              item.sets,
+              lessThanOrEqualTo(written.sets),
+              reason: '${item.exerciseId} le ${s.record.date.iso}',
+            );
+          }
+        }
+      }
+      expect(returned, greaterThan(0));
+    }, timeout: const Timeout(Duration(minutes: 10)));
+
+    test('street_01 : l\'élastique ne change pas dans un sens puis dans '
+        'l\'autre d\'une séance à la suivante', () {
+      const key = 'street_01_debutant_complet';
+      final engine = KalisAdapt();
+      final policy = CheckedPolicy(engine);
+      final run = simulate(
+        catalog: catalog,
+        spec: streetAthlete(key),
+        profile: streetProfile(key),
+        seed: 4,
+        policy: policy,
+        program: streetProgram(key),
+        weeks: 16,
+        loop: engine,
+        truthKind: TruthKind.b,
+      );
+      expect(policy.violations, isEmpty);
+      final assisted = <String>{
+        for (final e in catalog.exercises)
+          if (e.assisted) e.id,
+      };
+      final lastChange = <String, int>{};
+      final lastFailed = <String, bool>{};
+      var reversals = 0;
+      for (final s in run.served) {
+        for (final item in s.plan.items) {
+          if (!assisted.contains(item.exerciseId)) {
+            continue;
+          }
+          final slot = '${item.slotId}|${item.exerciseId}';
+          var change = 0;
+          for (final r in item.reasons) {
+            if (r.code == ReasonCodes.adaptFlamesBelowTarget) {
+              change = -1;
+            } else if (r.code == ReasonCodes.adaptFlamesAboveTarget) {
+              change = 1;
+            }
+          }
+          final before = lastChange[slot] ?? 0;
+          if (change != 0 &&
+              before == -change &&
+              !(lastFailed[slot] ?? false)) {
+            reversals++;
+          }
+          lastChange[slot] = change;
+          lastFailed[slot] = s.record.sets.any(
+            (r) => r.slotId == item.slotId && !r.success,
+          );
+        }
+      }
+      expect(reversals, 0);
+    }, timeout: const Timeout(Duration(minutes: 10)));
   });
 }
 

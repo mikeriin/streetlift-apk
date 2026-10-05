@@ -111,7 +111,13 @@ SetPlan? clampLocked(SessionRun run, ExerciseRun ex, SetPlan next) {
     return null;
   }
   final previous = ex.observed.last;
-  final locked = ex.fails > 0 || ex.painZones.isNotEmpty || run.noIncrease;
+  // (Reprise graduée après une douleur qui dure : aucune hausse dans la
+  // séance non plus ; CA2, partie 0.)
+  final locked =
+      ex.fails > 0 ||
+      ex.painZones.isNotEmpty ||
+      run.noIncrease ||
+      ex.inReturn;
   if (!locked) {
     return null;
   }
@@ -164,7 +170,11 @@ CoachAdvice? _coachAdvise(
   final rirTarget = ex.rirEff;
   final floor = c.rirFloor ?? rirTarget;
   final free =
-      ex.fails == 0 && ex.painZones.isEmpty && !run.noIncrease && !track.noUp;
+      ex.fails == 0 &&
+      ex.painZones.isEmpty &&
+      !run.noIncrease &&
+      !track.noUp &&
+      !ex.inReturn;
 
   // Tentatives d'un test de maximum : la suivante d'après les précédentes
   // et le maximum du jour réestimé.

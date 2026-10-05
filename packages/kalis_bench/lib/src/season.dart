@@ -557,6 +557,7 @@ Map<String, Object?> seasonCampaignOf(
         final gainsBySeed = <double>[];
         final codes = <String, int>{};
         var pain = 0;
+        var flares = 0;
         var done = 0;
         var planned = 0;
         for (var seed = 0; seed < seeds; seed++) {
@@ -595,6 +596,7 @@ Map<String, Object?> seasonCampaignOf(
             gainsBySeed.add(sum / run.gain.length);
           }
           pain += run.painAggravations;
+          flares += run.painFlares;
           done += run.sessionsDone;
           planned += run.sessionsPlanned;
           run.sessions.clear();
@@ -612,6 +614,7 @@ Map<String, Object?> seasonCampaignOf(
           'eventStability': _stat(events),
           'gainStability': _stat(gainsBySeed),
           'painAggravations': _r(pain / (seeds == 0 ? 1 : seeds)),
+          'painFlares': _r(flares / (seeds == 0 ? 1 : seeds)),
           'adherence': _r(planned == 0 ? 0 : done / planned),
         };
       }
@@ -675,7 +678,9 @@ String seasonCampaignMarkdown(List<Map<String, Object?>> profiles) {
       'par le programme et celles que le moteur sert (mouvements '
       'prioritaires) ; mouvements prioritaires retirés d\'un bloc au '
       'suivant sans raison ; violations de sécurité du programme tel qu\'il '
-      'a évolué ; hausses sur une zone douloureuse ; assiduité.',
+      'a évolué ; hausses sur une zone douloureuse (et poussées d\'une zone '
+      'restée réactive après un épisode de douleur, modèles B et C, après la '
+      'barre oblique) ; assiduité.',
     );
   final scenarios = <String>[for (final s in SeasonScenario.values) s.code];
   for (final truth in const <String>['a', 'b', 'c']) {
@@ -726,7 +731,8 @@ String seasonCampaignMarkdown(List<Map<String, Object?>> profiles) {
             '${sd is num && (event as Map<String, Object?>)['n'] != 0 ? ' (${(sd * 100).toStringAsFixed(1).replaceAll('.', ',')})' : ''} | '
             '${_f(m['writtenGap'], digits: 1, percent: true)} | '
             '${_f(m['undone'])} | ${_f(m['realizedViolations'])} | '
-            '${m['painAggravations']} | '
+            '${m['painAggravations']}'
+            '${m['painFlares'] is num ? ' / ${m['painFlares']}' : ''} | '
             '${m['adherence'] is num ? '${((m['adherence']! as num) * 100).toStringAsFixed(0)} %' : '—'} |',
           );
           first = false;

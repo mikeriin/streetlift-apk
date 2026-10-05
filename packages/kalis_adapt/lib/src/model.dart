@@ -201,6 +201,56 @@ final class PainState {
     c.history.addAll(history);
     return c;
   }
+
+  /// Jour où le dernier arrêt de la zone a été levé (deux semaines sans
+  /// signalement à 3 sur 10 ou plus après un arrêt), au plus tard [day],
+  /// ou `null` (CA2, partie 0 : reprise graduée conduite par le moteur).
+  int? liftedOn(int day) {
+    int? lastHigh;
+    for (final h in history) {
+      if (h.$2 >= painPersistMin && h.$1 <= day) {
+        lastHigh = h.$1;
+      }
+    }
+    if (lastHigh == null) {
+      return null;
+    }
+    final lift = lastHigh + painResumeDays;
+    if (lift > day || stopAt(lastHigh) == null) {
+      return null;
+    }
+    return lift;
+  }
+
+  /// Signalements des jours `[from ; to]` (intensités, dans l'ordre).
+  List<int> reportsBetween(int from, int to) => <int>[
+    for (final h in history)
+      if (h.$1 >= from && h.$1 <= to) h.$2,
+  ];
+}
+
+/// Meilleure série de [bests] (jour, valeur ; les plus récentes à la fin)
+/// depuis la dernière coupure d'au moins [gapDays] jours, dans les
+/// [windowDays] jours avant [day] ; 0 sans séance récente.
+int recentBestOf(
+  List<(int, int)> bests,
+  int day,
+  int gapDays,
+  int windowDays,
+) {
+  var best = 0;
+  var next = day;
+  for (var i = bests.length - 1; i >= 0; i--) {
+    final (d, amount) = bests[i];
+    if (next - d >= gapDays || day - d > windowDays) {
+      break;
+    }
+    if (amount > best) {
+      best = amount;
+    }
+    next = d;
+  }
+  return best;
 }
 
 /// Ce que le moteur retient d'un exercice d'une séance à l'autre.
@@ -263,6 +313,18 @@ final class ExerciseTrack {
   /// Plus grande valeur d'une série (répétitions ou secondes), record.
   double bestAmount = 0;
 
+  /// Plus grande série menée à bien de chaque séance (jour, répétitions ou
+  /// secondes), douze au plus, les plus récentes à la fin.
+  List<(int, int)> sessionBests = const <(int, int)>[];
+
+  /// Meilleure série menée à bien depuis la dernière coupure d'au moins
+  /// [gapDays] jours (arrêt pour douleur, pause), dans les [windowDays]
+  /// jours avant [day] ; 0 sans séance récente (CA2, partie 0 : la tenue
+  /// servie part d'un maintien récent, jamais d'un record d'avant un
+  /// arrêt).
+  int recentBest(int day, int gapDays, int windowDays) =>
+      recentBestOf(sessionBests, day, gapDays, windowDays);
+
   /// Mode coach : dernière séance de chaque emplacement (charge et schéma),
   /// pour borner les hausses à schéma égal.
   Map<String, SlotMark> slotMarks = const <String, SlotMark>{};
@@ -321,6 +383,7 @@ final class ExerciseTrack {
     c.lastResidual = lastResidual;
     c.lastSets = lastSets;
     c.bestAmount = bestAmount;
+    c.sessionBests = sessionBests;
     c.slotMarks = slotMarks;
     c.heavy = heavy;
     return c;
@@ -746,6 +809,20 @@ final class ExerciseRun {
   /// Mode coach : plafond de hausse d'une séance à l'autre, ou `null` :
   /// ceux de 0.1.
   double? riseCap;
+
+  /// Mode coach : mouvement en reprise graduée après une douleur qui dure
+  /// (écrite par le bloc ou conduite par le moteur) — jamais au-dessus de
+  /// la dose écrite, loin de l'échec, sans série repère (CA2, partie 0).
+  bool inReturn = false;
+
+  /// Mode coach : dose écrite jamais dépassée ce jour (reprise graduée,
+  /// appui du poignet sensible) — ni séries ajoutées, ni plage étendue,
+  /// ni tenue allongée au-delà de l'écrit.
+  bool doseCapped = false;
+
+  /// Mode coach : part du 1RM la plus haute permise pendant une reprise
+  /// graduée conduite par le moteur, ou `null`.
+  double? returnPct;
 
   /// Vrai si l'exercice a un filtre ouvert.
   bool get modelled => track != null;
@@ -1233,6 +1310,7 @@ final class SessionRun {
     double? lowest;
     var openSet = false;
     var top = 0;
+    var made = 0;
     for (final o in run.observed) {
       if (o.amount > top) {
         top = o.amount;
@@ -1272,6 +1350,25 @@ final class SessionRun {
       if (o.amount > track.bestAmount) {
         track.bestAmount = o.amount.toDouble();
       }
+      if (!o.failed && o.amount > made) {
+        made = o.amount;
+      }
+    }
+    if (made > 0) {
+      final bests = <(int, int)>[
+        for (final b in track.sessionBests)
+          if (b.$1 != day) b,
+      ];
+      var best = made;
+      for (final b in track.sessionBests) {
+        if (b.$1 == day && b.$2 > best) {
+          best = b.$2;
+        }
+      }
+      bests.add((day, best));
+      track.sessionBests = bests.length > 12
+          ? bests.sublist(bests.length - 12)
+          : bests;
     }
     final easy =
         run.fails == 0 &&
