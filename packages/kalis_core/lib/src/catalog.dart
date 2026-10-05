@@ -286,6 +286,62 @@ final class CatalogExercise {
     return true;
   }
 
+  /// Vrai si l'exercice peut se faire avec le matériel [available] au lieu
+  /// [place] (0.4.2, lot CX). Comme [feasibleWith], avec trois nuances :
+  ///
+  /// - un mur ([placeBoundEquipment]) n'est sûr qu'à la maison et en
+  ///   salle ; au parc, il faut l'avoir déclaré ;
+  /// - un exercice de [equipmentAlternatives] se fait aussi avec l'un des
+  ///   matériels de remplacement listés ;
+  /// - un exercice de [homeFurnitureExercises] se fait à la maison sur un
+  ///   meuble stable (chaise, table, marche).
+  ///
+  /// [place] `null` (lieu du jour inconnu) : [places] sont les lieux
+  /// possibles ; le mur est admis si l'un d'eux en a un, ou si [places] est
+  /// vide (lecture de [feasibleWith]).
+  bool feasibleAt(
+    Set<String> available, {
+    Place? place,
+    Set<Place> places = const <Place>{},
+  }) {
+    bool reachable(Set<Place> at) => place != null
+        ? at.contains(place)
+        : (places.isEmpty || places.any(at.contains));
+    bool covered(Iterable<String> needs) {
+      for (final item in needs) {
+        if (available.contains(item)) {
+          continue;
+        }
+        final bound = placeBoundEquipment[item];
+        if (bound != null) {
+          if (reachable(bound)) {
+            continue;
+          }
+          return false;
+        }
+        if (!alwaysAvailableEquipment.contains(item)) {
+          return false;
+        }
+      }
+      return true;
+    }
+
+    if (covered(equipment)) {
+      return true;
+    }
+    if (homeFurnitureExercises.contains(id) &&
+        reachable(const <Place>{Place.home})) {
+      return true;
+    }
+    for (final alternative
+        in equipmentAlternatives[id] ?? const <Set<String>>[]) {
+      if (covered(alternative)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
   /// Cosinus des vecteurs musculaires de cet exercice et de [other], de 0
   /// (aucun muscle commun) à 1 (mêmes muscles, mêmes poids).
   double muscleCosine(CatalogExercise other) {
@@ -324,6 +380,43 @@ const Set<String> alwaysAvailableEquipment = <String>{
   'tapis',
   'magnésie',
 };
+
+/// Matériel lié au lieu (0.4.2, lot CX) : il se trouve sans être déclaré
+/// dans les lieux listés, et seulement là. Un mur est sûr à la maison et en
+/// salle ; au parc, l'appui renversé dos au mur n'est pas toujours possible
+/// (CP1, profil « parc sans lest »). Lu par [CatalogExercise.feasibleAt] ;
+/// [CatalogExercise.feasibleWith] garde la lecture de 0.4.1.
+const Map<String, Set<Place>> placeBoundEquipment = <String, Set<Place>>{
+  'mur': <Place>{Place.home, Place.gym},
+};
+
+/// Matériel de remplacement d'un exercice (0.4.2, lot CX) : chaque
+/// ensemble suffit à la place du matériel du catalogue. Une pompe mains
+/// surélevées se fait sur une barre basse, une box ou des barres
+/// parallèles ; les pieds surélevés d'un appui renversé piqué ou d'une
+/// pompe piquée tiennent sur une barre basse ou un banc (même angle, même
+/// appui).
+const Map<String, List<Set<String>>> equipmentAlternatives =
+    <String, List<Set<String>>>{
+      'sw-pompe-inclinee': <Set<String>>[
+        <String>{'barre basse'},
+        <String>{'box / plinth'},
+        <String>{'barres parallèles'},
+      ],
+      'cs-handstand-pike-pieds-sureleves': <Set<String>>[
+        <String>{'barre basse'},
+        <String>{'banc plat'},
+      ],
+      'sw-pompe-pike-pieds-sureleves': <Set<String>>[
+        <String>{'barre basse'},
+        <String>{'banc plat'},
+      ],
+    };
+
+/// Exercices faisables à la maison sur un meuble stable (chaise, table,
+/// marche) sans matériel déclaré (0.4.2, lot CX) : la pompe mains
+/// surélevées, palier de l'échelle de poussée du débutant.
+const Set<String> homeFurnitureExercises = <String>{'sw-pompe-inclinee'};
 
 /// Catalogue d'exercices compilé.
 ///

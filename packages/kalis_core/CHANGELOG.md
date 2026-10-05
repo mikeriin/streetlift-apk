@@ -1,5 +1,21 @@
 # Journal des versions de kalis_core
 
+## 0.4.2 — 04/10/2026 (lot CX du pipeline « Calibrage des programmes », évolution additive)
+
+Rien n'est retiré, renommé ni déplacé ; aucun type, aucune énumération, aucune borne, aucun code de raison ne change.
+`CatalogExercise.feasibleWith` garde exactement sa lecture de 0.4.1. Un JSON de 0.4.1 se relit et se réécrit à
+l'identique.
+
+- **`CatalogExercise.feasibleAt(available, {place, places})`** : faisabilité selon le matériel **et le lieu**. Un mur
+  (`placeBoundEquipment`) n'est sûr qu'à la maison et en salle ; au parc, il faut l'avoir déclaré (profil « parc sans
+  lest » du lot CP1 : appui renversé dos au mur proposé dans un parc sans mur). Un exercice de
+  `equipmentAlternatives` se fait aussi avec un matériel de remplacement (pompe mains surélevées : barre basse, box ou
+  barres parallèles ; appui renversé piqué et pompe piquée pieds surélevés : barre basse ou banc). Un exercice de
+  `homeFurnitureExercises` (pompe mains surélevées) se fait à la maison sur un meuble stable. Lieu inconnu : `places`
+  (lieux possibles) ; le mur est admis si l'un d'eux en a un, ou si la liste est vide.
+- Trois tables constantes publiques : `placeBoundEquipment`, `equipmentAlternatives`, `homeFurnitureExercises`.
+- `data/parcours_v3.json` : seul le numéro de version change (0.4.2).
+
 ## 0.4.1 — 03/10/2026 (lot CP1 du pipeline « Calibrage des programmes », évolution additive)
 
 Rien n'est retiré, renommé ni déplacé ; aucun type, aucune énumération, aucune borne ne change. Un JSON de 0.4.0 se
