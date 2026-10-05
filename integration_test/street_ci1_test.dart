@@ -521,7 +521,8 @@ void main() {
             a?.active.reasons.any((r) => r.code == 'adapt.pain_persistent') ??
             false;
         releve['douleur_retires'] = [
-          for (final x in a?.active.adjustments ?? const <kc.SessionAdjustment>[])
+          for (final x
+              in a?.active.adjustments ?? const <kc.SessionAdjustment>[])
             if (x.kind == kc.AdjustmentKind.exerciseRemoved) x.exerciseId,
         ];
         await top(tester);

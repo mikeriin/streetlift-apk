@@ -266,85 +266,106 @@ void main() {
 
     test('test retiré un jour de bilan bas, servi à une séance suivante de '
         'la semaine, journalisé à son emplacement', () async {
-      _save(app, _street('street_workout'));
-      _create(app);
-      // Semaine dont un jour porte un test et un autre jour suit (48 h).
-      int? week, testJ, laterJ;
-      String? slot;
-      for (var w = 1; w <= 12 && week == null; w++) {
-        for (var j = 1; j <= 7 && week == null; j++) {
-          final place = app.adaptPlaceOf(w, j);
-          final it = place?.day?.items
-              .where((x) => x.kind == kc.SetKind.test)
-              .firstOrNull;
-          if (it == null) continue;
-          for (var k = j + 2; k <= 7; k++) {
-            if (app.program.week(w).day(k)?.exercises.isNotEmpty ?? false) {
-              week = w;
-              testJ = j;
-              laterJ = k;
-              slot = it.slotId;
-              break;
+      var tried = 0;
+      for (final key in ['streetlifting', 'street_workout']) {
+        SharedPreferences.setMockInitialValues({});
+        clock = DateTime(2026, 10, 1, 9);
+        final s = AppStore()..storeClock = () => clock;
+        await s.init();
+        try {
+          _save(s, _street(key));
+          _create(s);
+          for (var w = 1; w <= 12; w++) {
+            for (var j = 1; j <= 5; j++) {
+              final it = s
+                  .adaptPlaceOf(w, j)
+                  ?.day
+                  ?.items
+                  .where((x) => x.kind == kc.SetKind.test)
+                  .firstOrNull;
+              if (it == null) continue;
+              // Jour suivant, 48 h après au moins, sans test écrit.
+              int? k;
+              for (var x = j + 2; x <= 7 && k == null; x++) {
+                final items = s.adaptPlaceOf(w, x)?.day?.items;
+                if (items == null || items.isEmpty) continue;
+                if (items.any((y) => y.kind == kc.SetKind.test)) continue;
+                k = x;
+              }
+              final d = k;
+              if (d == null) continue;
+              tried++;
+              final slot = it.slotId;
+              clock = _dateOf(s, w, j);
+              final base = s.program.week(w).day(j)!;
+              s.adaptOpen(w, base);
+              final low = s.adaptAnswer(
+                w,
+                base,
+                const kc.HealthCheck(overall: 1, sleepQuality: 1, energy: 1),
+              )!;
+              expect(
+                low.plan.items.any((x) => x.slotId == slot),
+                isFalse,
+                reason: 'test retiré un jour de bilan bas',
+              );
+              final lines = sessionDiffLines(
+                low.base ?? low.plan,
+                low.plan,
+                s.adaptExerciseName,
+              );
+              if (low.base != null) {
+                expect(lines.any((l) => l.startsWith('Test de ')), isTrue);
+              }
+              expect(lines.toSet().length, lines.length);
+              _logOneSet(s, w, j);
+              clock = _dateOf(s, w, d);
+              final later = s.program.week(w).day(d)!;
+              final a = s.adaptOpen(w, later)!;
+              if (!a.active.items.any((x) => x.slotId == slot)) continue;
+              final day = s.adaptDay(w, later, a);
+              final e = day.exercises.firstWhere((x) => x.slotId == slot);
+              expect(e.id, planExerciseId(w, d, slot));
+              expect(e.engine, isTrue);
+              expect(e.why, contains('reporté'));
+              expect(s.adaptItemFor(w, d, e)?.kind, kc.SetKind.test);
+              expect(s.adaptBlockItemFor(w, d, e)?.kind, kc.SetKind.test);
+              // Avant le travail du jour.
+              expect(
+                day.exercises.indexOf(e),
+                lessThanOrEqualTo(
+                  day.exercises.indexWhere(
+                    (x) =>
+                        s.adaptItemFor(w, d, x)?.kind != kc.SetKind.warmup,
+                  ),
+                ),
+              );
+              // Série du test au journal : emplacement d'origine, test.
+              final log = s.exLog(w, d, e);
+              s.adaptPrefill(w, d, e, log);
+              if (log.sets.first.reps.isEmpty) log.sets.first.reps = '8';
+              log.sets.first.flames = 9;
+              expect(s.toggleSet(log, 0, s.logSpec(e)).ok, isTrue);
+              s.saveLogs();
+              final journal = s.adaptTrainingLog(
+                today: kc.CivilDate(clock.year, clock.month, clock.day),
+              );
+              final rows = [
+                for (final x in journal.sessions)
+                  for (final r in x.sets)
+                    if (r.slotId == slot && r.kind == kc.SetKind.test) r,
+              ];
+              expect(rows, isNotEmpty);
+              expect(journal.validate(), isEmpty);
+              return;
             }
           }
+        } finally {
+          await s.flush();
+          s.dispose();
         }
       }
-      if (week == null) {
-        markTestSkipped('aucun test suivi d’une séance 48 h après');
-        return;
-      }
-      clock = _dateOf(app, week, testJ!);
-      final base = app.program.week(week).day(testJ)!;
-      app.adaptOpen(week, base);
-      final low = app.adaptAnswer(
-        week,
-        base,
-        const kc.HealthCheck(overall: 1, sleepQuality: 1, energy: 1),
-      )!;
-      final removed = low.plan.adjustments.where(
-        (x) => x.kind == kc.AdjustmentKind.exerciseRemoved,
-      );
-      if (low.base != null && removed.isNotEmpty) {
-        final lines = sessionDiffLines(
-          low.base!,
-          low.plan,
-          app.adaptExerciseName,
-        );
-        expect(lines.any((l) => l.startsWith('Test de ')), isTrue);
-      }
-      _logOneSet(app, week, testJ);
-      clock = _dateOf(app, week, laterJ!);
-      final later = app.program.week(week).day(laterJ)!;
-      final a = app.adaptOpen(week, later)!;
-      final moved = a.active.items.where((x) => x.slotId == slot).firstOrNull;
-      if (moved == null) {
-        markTestSkipped('le moteur n’a pas reporté ce test');
-        return;
-      }
-      final day = app.adaptDay(week, later, a);
-      final e = day.exercises.firstWhere((x) => x.slotId == slot);
-      expect(e.id, planExerciseId(week, laterJ, slot!));
-      expect(e.engine, isTrue);
-      expect(e.why, contains('reporté'));
-      expect(app.adaptItemFor(week, laterJ, e)?.kind, kc.SetKind.test);
-      expect(app.adaptBlockItemFor(week, laterJ, e)?.kind, kc.SetKind.test);
-      // Série du test au journal : emplacement d'origine, nature test.
-      final log = app.exLog(week, laterJ, e);
-      app.adaptPrefill(week, laterJ, e, log);
-      if (log.sets.first.reps.isEmpty) log.sets.first.reps = '8';
-      log.sets.first.flames = 9;
-      expect(app.toggleSet(log, 0, app.logSpec(e)).ok, isTrue);
-      app.saveLogs();
-      final journal = app.adaptTrainingLog(
-        today: kc.CivilDate(clock.year, clock.month, clock.day),
-      );
-      final rows = [
-        for (final s in journal.sessions)
-          for (final r in s.sets)
-            if (r.slotId == slot && r.kind == kc.SetKind.test) r,
-      ];
-      expect(rows, isNotEmpty);
-      expect(journal.validate(), isEmpty);
+      markTestSkipped('aucun test reporté par le moteur ($tried essais)');
     });
   });
 }

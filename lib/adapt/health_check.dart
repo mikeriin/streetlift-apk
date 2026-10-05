@@ -165,11 +165,7 @@ class _HealthCheckPageState extends State<HealthCheckPage> {
     };
     final notes = block == null
         ? const <String>[]
-        : coachBlockPainNotes(
-            block,
-            store.content.catalog,
-            stopped: stopped,
-          );
+        : coachBlockPainNotes(block, store.content.catalog, stopped: stopped);
     if (stops.isEmpty && notes.isEmpty) return const [];
     final lines = <String>[for (final s in stops) painStopText(s), ...notes];
     final stopTitle =
@@ -196,10 +192,7 @@ class _HealthCheckPageState extends State<HealthCheckPage> {
                 ],
               ),
               for (final l in lines)
-                Padding(
-                  padding: const EdgeInsets.only(top: 6),
-                  child: Text(l),
-                ),
+                Padding(padding: const EdgeInsets.only(top: 6), child: Text(l)),
             ],
           ),
         ),

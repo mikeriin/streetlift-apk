@@ -116,7 +116,9 @@ List<({String zone, List<String> removed})> painStopsOf(
   final zones = <String>[];
   for (final r in plan.reasons) {
     final z = r.params['zone'];
-    if (r.code == 'adapt.pain_persistent' && z is String && !zones.contains(z)) {
+    if (r.code == 'adapt.pain_persistent' &&
+        z is String &&
+        !zones.contains(z)) {
       zones.add(z);
     }
   }
@@ -124,7 +126,7 @@ List<({String zone, List<String> removed})> painStopsOf(
     for (final z in zones)
       (
         zone: _zone(z),
-        removed: [
+        removed: <String>{
           for (final a in plan.adjustments)
             if (a.kind == kc.AdjustmentKind.exerciseRemoved &&
                 a.exerciseId != null &&
@@ -134,7 +136,7 @@ List<({String zone, List<String> removed})> painStopsOf(
                       r.params['zone'] == z,
                 ))
               exerciseName(a.exerciseId!),
-        ].toSet().toList(),
+        }.toList(),
       ),
   ];
 }
