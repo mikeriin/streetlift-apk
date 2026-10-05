@@ -1198,9 +1198,7 @@ void main() {
         if (e.stressOn(Joint.wrist) != JointStress.high) {
           continue;
         }
-        final support = e.equipment.any(
-          coachNeutralSupportEquipment.contains,
-        );
+        final support = e.equipment.any(coachNeutralSupportEquipment.contains);
         expect(
           coachPainProvokes(e, BodyZone.wristHand),
           !support,
@@ -1214,6 +1212,97 @@ void main() {
         isEmpty,
       );
       expect(coachNeutralSupportEquipment, isNot(contains('barre fixe')));
+    });
+
+    test('affûtage : séries lourdes à 85 % du 1RM au moins (R3-P13)', () {
+      var checked = 0;
+      for (final b in _program(catalog, _lifter(), 12)) {
+        for (final w in b.pass2.weeks) {
+          if (w.intent != WeekIntent.taper) {
+            continue;
+          }
+          for (final d in w.days) {
+            for (final i in d.items) {
+              final pct = i.percent;
+              if (!i.exerciseId.startsWith('sl-') ||
+                  i.exerciseId.contains('partiel') ||
+                  (i.kind != null && i.kind != SetKind.work) ||
+                  pct == null) {
+                continue;
+              }
+              expect(
+                pct,
+                greaterThanOrEqualTo(0.845),
+                reason: 's${w.weekIndex} ${i.exerciseId}',
+              );
+              checked++;
+            }
+          }
+        }
+      }
+      expect(checked, greaterThan(0));
+    });
+
+    test('élastique : essais stricts écrits seulement sans traction', () {
+      int? bandValue(AthleteProfile p) {
+        for (final b in _program(catalog, p, 4)) {
+          for (final r in <Reason>[...b.pass1.reasons, ...b.pass2.reasons]) {
+            if (r.code == ReasonCodes.planCoachNote &&
+                r.params['note'] == CoachNotes.bandChoice) {
+              return (r.params['value']! as num).round();
+            }
+          }
+        }
+        return null;
+      }
+
+      final none = bandValue(_beginner());
+      if (none != null) {
+        expect(none, lessThan(100));
+      }
+      final some = bandValue(street());
+      if (some != null) {
+        expect(some, greaterThanOrEqualTo(100));
+      }
+    });
+
+    test('tenue du débutant : +15 % (2 s au moins) par semaine au plus', () {
+      final weeks = <WeekPrescription>[
+        for (final b in _program(catalog, _beginner(), 16)) ...b.pass2.weeks,
+      ];
+      final best = <int>[];
+      for (final w in weeks) {
+        var most = 0;
+        for (final d in w.days) {
+          for (final i in d.items) {
+            final high = i.secondsHigh;
+            if (i.exerciseId == 'cs-tenue-menton-barre-pronation' &&
+                (i.kind == null || i.kind == SetKind.work) &&
+                high != null &&
+                high > most) {
+              most = high;
+            }
+          }
+        }
+        best.add(most);
+      }
+      for (var k = 1; k < best.length; k++) {
+        var before = 0;
+        for (var j = k - 3 < 0 ? 0 : k - 3; j < k; j++) {
+          if (best[j] > before) {
+            before = best[j];
+          }
+        }
+        if (before == 0 || best[k] == 0) {
+          continue;
+        }
+        final rise = (before * 1.15).round();
+        expect(
+          best[k],
+          lessThanOrEqualTo(rise > before + 2 ? rise : before + 2),
+          reason: 'semaine $k : ${best[k]} s après $before s',
+        );
+      }
     });
 
     test('tests placés après le premier jour de la semaine', () {

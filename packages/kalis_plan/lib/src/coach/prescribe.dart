@@ -1125,7 +1125,8 @@ final class Prescriber {
     if (total != null &&
         bwMax >= 3 &&
         weight > 0 &&
-        (source == null || !a.oneRm.containsKey(source) ||
+        (source == null ||
+            !a.oneRm.containsKey(source) ||
             a.estimatedOneRm.contains(source))) {
       final fromReps = bwMax <= 12
           ? weight / _pctAt(bwMax)
@@ -1859,15 +1860,14 @@ final class Prescriber {
     // d'emblée après sept semaines d'absence ; R5-P24.)
     var recent = false;
     for (var k = _history.length - 4; k < _history.length; k++) {
-      if (k >= 0 && _history[k].loads.keys.any((key) => key.endsWith('|${e.id}'))) {
+      if (k >= 0 &&
+          _history[k].loads.keys.any((key) => key.endsWith('|${e.id}'))) {
         recent = true;
       }
     }
     final carried = recent ? (blockIndex > 2 ? 2 : blockIndex) : 0;
     var pct = partial
-        ? (elbowHistory ? 0.825 : 0.95) +
-              0.05 * carried +
-              0.025 * steps
+        ? (elbowHistory ? 0.825 : 0.95) + 0.05 * carried + 0.025 * steps
         : (intense ? 0.74 : 0.70) + 0.01 * stage;
     if (pct > top) {
       pct = top;
