@@ -163,6 +163,7 @@ final class AdaptParams {
     this.coachHoldRiseSlackSeconds = 1,
     this.coachHoldMaxFloorShare = 0.55,
     this.coachHoldBestDays = 28,
+    this.coachTaperGain = 0.02,
     this.coachReturnStart = 0.5,
     this.coachReturnStep = 0.1,
     this.coachReturnFloor = 0.4,
@@ -763,6 +764,14 @@ final class AdaptParams {
   /// isométrique et maximale baisse de façon mesurable après trois à quatre
   /// semaines d'arrêt — Bosquet et al. 2013).
   final int coachHoldBestDays;
+
+  /// Gain du maximum du jour après un affûtage (semaine d'affûtage ou de
+  /// compétition, ou la semaine d'avant), pris en compte par les
+  /// tentatives : 2 %, le bas de la fourchette mesurée chez les
+  /// powerlifters (Travis et al. 2020 : +1,8 à 6,4 % selon le mouvement
+  /// après un affûtage d'une à deux semaines). Choix prudent (CA2, partie
+  /// 0 : tentatives à 90-93 % du maximum du jour, relecture documentée).
+  final double coachTaperGain;
 
   /// Reprise graduée conduite par le moteur (arrêt levé au milieu d'un
   /// bloc qui écrit les mouvements provocants) : part du volume écrit à la

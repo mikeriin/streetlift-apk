@@ -1,4 +1,4 @@
-# Contrat de kalis_adapt 0.2.1
+# Contrat de kalis_adapt 0.2.3
 
 Moteur dynamique de Kalis Track (D5) : il suit l'utilisateur et adapte son programme séance après séance.
 Dart pur, sans Flutter, sans stockage, sans horloge ; tout ce qu'il rend est une valeur du contrat de
@@ -1104,3 +1104,107 @@ tenue servie à 55 % du test au moins après le test) ;
 `test/coach_test.dart` (sauts de tentatives) ; propriétés (`test/properties.dart`) : aucun exercice exclu
 par une douleur du jour n'est prescrit ; un test servi un jour de changement de lieu se fait avec le
 matériel de ce lieu.
+
+### 11.16 Mode coach : conduite sous douleur, maintien récent, assistance, affûtage (0.2.3, lot CA2, partie 0)
+
+Croisement avec `kalis_plan` 0.2.2 (reprise graduée écrite par le programme, CX correction 1). Le mode 0.1 est
+inchangé (séances identiques à l'octet près ; seul le texte de version change dans `docs/PROPRIETAIRE.md`).
+
+- **Reprise graduée conduite séance par séance** (`lib/src/pain_return.dart`, sécurité). Une zone est en reprise
+  quand le bloc l'écrit (notes `pain_return` et `pain_return_item` de `kalis_plan`) ou quand son arrêt s'est
+  levé depuis moins de douze semaines (`PainState.liftedOn`). Les mouvements qui la provoquent
+  (`coachPainStopHits`) sont servis à la dose écrite au plus (`ExerciseRun.doseCapped` : ni séries
+  ajoutées, ni plage étendue, ni tenue allongée, ni série repère), à 3 répétitions en réserve au moins, sans
+  hausse dans la séance (conseil d'entre-séries compris : `adapt.load_held`, cause `pain_return`).
+  - **Le palier suit la douleur** : il recule d'un cran (−10 % du volume habituel, 40 % au moins ; séries
+    réduites d'autant, charge vers 67,5 % + 2,5 % par palier) quand, sur les sept derniers jours, la gêne de
+    la zone a dépassé 2/10, ou que les deux derniers signalements montent (pas revenue au niveau d'avant le
+    lendemain), ou que la pire gêne de la semaine dépasse celle de la semaine d'avant ; la zone compte
+    alors comme douloureuse (aucune hausse, I3). C'est la règle écrite par le programme (« chaque palier se
+    garde seulement si la gêne reste à 2 sur 10 au plus pendant la séance et revient à ton état habituel le
+    lendemain matin, sans hausse d'une semaine à l'autre ») ; modèle de surveillance de la douleur de
+    Silbernagel et al. 2007 (gêne ≤ 5/10 pendant l'effort, disparue le lendemain matin, pas de hausse d'une
+    semaine à l'autre : le programme retient 2/10, plus prudent). Une gêne de 3/10 ou plus qui revient
+    relance l'arrêt (retour d'un épisode réel, § 11.15).
+  - **Jamais de levée sur une semaine qui n'est pas de charge** : un arrêt qui se lèverait pendant un
+    allègement, un affûtage, un test, une compétition ou une transition est gardé jusqu'à la première semaine
+    de charge ou d'introduction (`PainReturn.held`, `adapt.pain_persistent`) ; une levée ne se fait jamais en
+    cours de séance (l'arrêt se décide au début de la séance, le conseil ne rend jamais un mouvement retiré).
+  - **Arrêt levé au milieu d'un bloc qui écrit encore les mouvements provocants** (bloc écrit avant l'arrêt) :
+    reprise propre au moteur, 50 % des séries écrites à la première semaine de charge, +10 % par semaine de
+    charge (une semaine allégée garde la part de la dernière semaine de charge), charge au plus
+    67,5 % + 0,25 × (part − 50 %) du 1RM (`returnPct`) : mêmes paliers que `kalis_plan` (Soligard et al. 2016 :
+    hausses hebdomadaires sous 10 %).
+  - **Tests reportés** : un test n'est jamais servi sur une zone douloureuse au-dessus du seuil (il est retiré,
+    pas remplacé : `adapt.pain_reported`), ni sur une zone en reprise ou dont l'arrêt est gardé ; le report à
+    une séance suivante de la semaine (§ 11.15) les exclut aussi (contre-indication d'un test maximal en
+    présence de douleur : NSW Agency for Clinical Innovation 2022, guide du test 1RM).
+  - **Appui du poignet** : quand le poignet est sensible (gêne déclarée au profil ou antécédent récent, gêne
+    signalée depuis deux semaines, arrêt ou reprise), les appuis qui le provoquent sont servis à la dose
+    écrite par le bloc au plus (`doseCapped`) : le moteur n'ajoute ni séries fractionnées, ni tenue allongée
+    vers la moitié du maximum, ni répétitions au-delà de l'écrit. Le budget d'appui lui-même est écrit par
+    `kalis_plan` (CP2, partie 0) ; principe : limiter la charge d'appui du poignet et la progresser
+    graduellement (revue « Wrist pain in gymnasts », Curr Sports Med Rep 2017, résumé).
+- **Meilleur maintien récent** (`ExerciseTrack.sessionBests`, `recentBestOf`) : le plancher de la borne de
+  hausse des tenues (55 % du meilleur maintien, § 11.15) se calcule sur la meilleure tenue des séances
+  depuis la dernière coupure d'au moins 14 jours (arrêt, pause) et dans les 28 jours (`coachHoldBestDays`) ;
+  sans séance récente, pas de plancher : la tenue servie part d'un maintien récent, jamais d'un record
+  d'avant un arrêt. 28 jours : choix raisonné (perte de force mesurable à l'arrêt de l'entraînement, plus
+  marquée avec la durée : Bosquet et al. 2013, résumé ; le seuil en semaines n'y est pas chiffré).
+- **Cran d'assistance** (élastique) : un cran de moins seulement après deux séances de suite au même cran
+  au haut de la plage (ou première série dite deux répétitions plus facile) ; un cran de plus seulement
+  après un échec, le bas de la plage manqué deux séances de suite au même cran
+  (`SlotMark.missed`), ou de plus de deux répétitions. L'élastique ne change plus dans un sens puis dans
+  l'autre d'une séance à la suivante (relecture documentée, manche 4, `street_01`). Source : ACSM 2009, règle
+  « 2 pour 2 » : hausse de charge quand l'athlète fait une à deux répétitions de plus que visé sur deux
+  séances consécutives (texte de l'énoncé de preuve).
+- **Tentatives après un affûtage** (`coachTaperGain`, 2 %) : le jour qui suit une semaine d'affûtage ou de
+  compétition (ou pendant), le maximum du jour des tentatives compte le gain d'affûtage — le bas de la
+  fourchette mesurée chez les powerlifters (Travis et al. 2020 : +1,8 à 6,4 % selon le mouvement). Raison :
+  tentatives réussies à 97 % et meilleure barre à 94 % du maximum réel au banc (0.2.2), quand les
+  compétitions montrent environ 82 à 91 % de deuxièmes barres et 45 à 68 % de troisièmes réussies (Darragh
+  et al. 2025, 93 333 athlètes) ; l'échelle des barres reste celle du § 11.15 (91 % ; +5 % ; +3 % ; Travis,
+  Zourdos et Bazyler 2021).
+
+| Paramètre | Valeur | Source |
+| --- | --- | --- |
+| `coachReturnStart`, `coachReturnStep`, `coachReturnFloor` | 50 % ; +10 % par semaine de charge ; 40 % | règle de `kalis_plan` (CX correction 1) ; Soligard et al. 2016 ; plancher : choix raisonné |
+| `coachReturnPain` | 2 sur 10 | règle écrite par `kalis_plan` ; Silbernagel et al. 2007 (≤ 5, plus permissif) |
+| `coachReturnRir` | 3 répétitions | règle de `kalis_plan` (reprise loin de l'échec) |
+| `coachReturnWatchDays` | 84 jours | `painRecurDays` (choix raisonné) |
+| `coachHoldBestDays` | 28 jours | choix raisonné (Bosquet et al. 2013) |
+| `coachTaperGain` | 2 % | Travis et al. 2020 (bas de la fourchette) |
+
+**Simulateur** (modèles de vérité B et C) : après un épisode de douleur réel (3/10 et plus), la zone reste
+réactive douze semaines ; sa tolérance part de la plus grande de la moitié de la charge habituelle (séries de
+la semaine sur la zone, moyenne mobile) et de la charge tenue la dernière semaine, puis suit la charge tenue
+sans poussée ; une semaine au-dessus de 1,5 fois la tolérance (4 séries au moins) ramène une gêne de 2/10
+pendant six jours, au-dessus du double une gêne de 3/10 (`SimRun.painFlares` ; choix raisonnés du modèle de
+vérité, d'après Cook et Purdam 2009 et Soligard et al. 2016). Une « hausse sur une zone douloureuse »
+(`painAggravations`) se compte désormais au-dessus de 3/10 (seuil du moteur, R5-P23).
+
+Invariants testés (`test/coach_rules_test.dart`, groupe « reprise graduée conduite séance par séance ») :
+levée datée ; maintien récent ; `street_12` avec douleur au coude, quatre graines, 20 semaines : aucun
+manquement, aucune hausse sur la zone douloureuse, aucune ligne de reprise qui soit un test ou serve plus de
+séries que le bloc ; `street_01` : aucun aller-retour d'élastique d'une séance à la suivante sans échec.
+
+Références ajoutées (vérifiées sur le texte ou le résumé ; « (résumé) » : résumé seul) :
+
+- ACSM (2009). Progression models in resistance training for healthy adults. *Med Sci Sports Exerc*
+  41(3):687-708.
+- Bosquet L. et al. (2013). Effect of training cessation on muscular performance: a meta-analysis. *Scand J
+  Med Sci Sports* 23(3):e140-e149. (résumé)
+- Darragh I.A.J. et al. (2025). Predicting a successful attempt in raw powerlifting: a nonlinear mixed
+  logistic regression analysis. *J Strength Cond Res* (prépublication).
+- NSW Agency for Clinical Innovation (2022). Guide to performing 1 repetition maximum strength assessment.
+- Silbernagel K.G. et al. (2007). Continued sports activity, using a pain-monitoring model, during
+  rehabilitation in patients with Achilles tendinopathy. *Am J Sports Med* 35(6):897-906. (résumé et
+  source secondaire)
+- Soligard T. et al. (2016). How much is too much? (Part 1) International Olympic Committee consensus
+  statement on load in sport and risk of injury. *Br J Sports Med* 50(17):1030-1041.
+- Travis S.K., Mujika I., Gentles J.A., Stone M.H., Bazyler C.D. (2020). Tapering and peaking maximal
+  strength for powerlifting performance: a review. *Sports* 8(9):125.
+- Travis S.K., Zourdos M.C., Bazyler C.D. (2021). Weight selection attempts of elite classic powerlifters.
+  *Percept Mot Skills* 128(1):507-521. (résumé)
+- Wrist pain in gymnasts: a review of common overuse wrist pathology in the gymnastics athlete (2017). *Curr
+  Sports Med Rep* 16(5):322-329. (résumé)

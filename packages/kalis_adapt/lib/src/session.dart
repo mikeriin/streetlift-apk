@@ -920,6 +920,9 @@ SessionPlan buildSessionPlan(
         // en réserve (règle du programme, R5-P14).
         exercise.rirEff = p.coachLowDayRir;
       }
+      if (item.kind == SetKind.test && view.taperedAt(day)) {
+        exercise.tapered = true;
+      }
       if (d.inReturn) {
         // Reprise graduée : la dose écrite au plus, loin de l'échec ;
         // quand le palier recule, aucune hausse (comme une zone

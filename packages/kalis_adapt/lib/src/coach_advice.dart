@@ -184,7 +184,8 @@ CoachAdvice? _coachAdvise(
     final f = track.filter;
     final lift = competitionLiftOf(run.ctx.profile, info.id, run.day);
     final picks = attemptLadder(
-      estimateTotal: exp(f.m[0] + f.m[3] + f.gRef),
+      estimateTotal:
+          exp(f.m[0] + f.m[3] + f.gRef) * (ex.tapered ? 1 + p.coachTaperGain : 1.0),
       relSd: dayRelSd(ex),
       bodyPart: info.fraction * run.bodyWeightKg,
       grid: info.grid,

@@ -819,6 +819,10 @@ final class ExerciseRun {
   /// graduée conduite par le moteur, ou `null`.
   double? returnPct;
 
+  /// Mode coach : le jour suit un affûtage — le maximum du jour des
+  /// tentatives compte le gain d'affûtage (`coachTaperGain`).
+  bool tapered = false;
+
   /// Vrai si l'exercice a un filtre ouvert.
   bool get modelled => track != null;
 }
