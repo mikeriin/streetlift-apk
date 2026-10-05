@@ -22,7 +22,8 @@ import '../koach/koach_bubble.dart';
 import '../koach/koach_view.dart';
 import '../models.dart';
 import '../muscle_map_2d.dart';
-import '../plan/coach_texts.dart' show coachBlockPainNotes;
+import '../plan/coach_texts.dart'
+    show coachBlockHasPainStop, coachBlockPainNotes;
 import '../plan/evolution_widgets.dart' show EvolutionSessionCard;
 import '../store.dart';
 import '../ui.dart';
@@ -154,16 +155,25 @@ class _HealthCheckPageState extends State<HealthCheckPage> {
   List<Widget> _painStopCard(SessionAdapt a) {
     final stops = painStopsOf(a.active, store.adaptExerciseName);
     final block = store.adaptPlaceOf(_w, widget.base.j)?.block;
+    // Notes du bloc : l'arrêt d'une zone déjà dit par la séance n'est pas
+    // répété.
+    final stopped = <int>{
+      for (final r in a.active.reasons)
+        if (r.code == 'adapt.pain_persistent')
+          for (final z in kc.BodyZone.values)
+            if (z.code == r.params['zone']) z.index,
+    };
     final notes = block == null
         ? const <String>[]
-        : coachBlockPainNotes(block, store.content.catalog);
+        : coachBlockPainNotes(
+            block,
+            store.content.catalog,
+            stopped: stopped,
+          );
     if (stops.isEmpty && notes.isEmpty) return const [];
-    final lines = <String>[
-      for (final s in stops) painStopText(s),
-      // Notes du bloc : l'arrêt déjà dit par la séance n'est pas répété.
-      for (final n in notes)
-        if (stops.isEmpty || !n.startsWith('Douleur qui dure')) n,
-    ];
+    final lines = <String>[for (final s in stops) painStopText(s), ...notes];
+    final stopTitle =
+        stops.isNotEmpty || (block != null && coachBlockHasPainStop(block));
     return [
       KCard(
         key: const ValueKey('health-pain-stop'),
@@ -179,10 +189,7 @@ class _HealthCheckPageState extends State<HealthCheckPage> {
                   const SizedBox(width: 6),
                   Expanded(
                     child: Text(
-                      stops.isNotEmpty ||
-                              notes.any((n) => n.startsWith('Douleur qui dure'))
-                          ? 'Arrêt pour douleur'
-                          : 'Reprise graduée',
+                      stopTitle ? 'Arrêt pour douleur' : 'Reprise graduée',
                       style: const TextStyle(fontWeight: FontWeight.w700),
                     ),
                   ),

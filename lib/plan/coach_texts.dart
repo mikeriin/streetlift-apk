@@ -399,7 +399,13 @@ const Set<String> _painNotes = <String>{
 /// CI1b : notes du bloc sur une douleur qui dure (`pain_stop` : arrêt et
 /// consultation ; `pain_return` : reprise graduée), rédigées par
 /// `kalis_plan` 0.2.2 ; vide pour un bloc du chemin 0.1.
-List<String> coachBlockPainNotes(kc.ProgramBlock block, kc.Catalog? catalog) {
+/// [stopped] : zones (index de `kc.BodyZone`) dont l'arrêt est déjà dit
+/// par la séance ; leur note d'arrêt n'est pas répétée.
+List<String> coachBlockPainNotes(
+  kc.ProgramBlock block,
+  kc.Catalog? catalog, {
+  Set<int> stopped = const <int>{},
+}) {
   final out = <String>[];
   if (!isCoachBlock(block)) return out;
   for (final r in [...block.pass1.reasons, ...block.pass2.reasons]) {
@@ -408,11 +414,26 @@ List<String> coachBlockPainNotes(kc.ProgramBlock block, kc.Catalog? catalog) {
     if (note != kp.CoachNotes.painStop && note != kp.CoachNotes.painReturn) {
       continue;
     }
+    final v = r.params['value'];
+    if (note == kp.CoachNotes.painStop &&
+        v is num &&
+        stopped.contains(v.round())) {
+      continue;
+    }
     final t = coachText(r, catalog);
     if (t != null && !out.contains(t)) out.add(t);
   }
   return out;
 }
+
+/// CI1b : vrai si le bloc porte une note d'arrêt (`pain_stop`).
+bool coachBlockHasPainStop(kc.ProgramBlock block) =>
+    isCoachBlock(block) &&
+    [...block.pass1.reasons, ...block.pass2.reasons].any(
+      (r) =>
+          r.code == kc.ReasonCodes.planCoachNote &&
+          r.params['note'] == kp.CoachNotes.painStop,
+    );
 
 /// Règles du programme, écrites une fois (progression, douleur, exécution).
 /// Vide pour un bloc du chemin 0.1.

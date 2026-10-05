@@ -966,6 +966,14 @@ extension SessionAdaptStore on AppStore {
             setsText: adaptSetsText(it),
             setCount: it.sets,
             intensity: 'Test : au maximum, proprement',
+            kg: it.loadBasis == kc.LoadBasis.bodyweight
+                ? null
+                : adviceGoal(
+                    it,
+                    0,
+                    a.advice[planExerciseId(week, base.j, it.slotId)] ??
+                        const [],
+                  ).kg,
             rest: pt.restLabel(it.restSeconds),
             restSec: it.restSeconds,
             cue: from.e.cue,
@@ -1046,9 +1054,11 @@ extension SessionAdaptStore on AppStore {
     for (final it in place?.day?.items ?? const <kc.ExercisePrescription>[]) {
       if (it.slotId == e.slotId) return it;
     }
-    // CI1b : test reporté d'un autre jour de la semaine.
-    for (final w in place?.block.pass2.weeks ?? const <kc.WeekPrescription>[]) {
-      if (w.weekIndex != place!.weekIndex) continue;
+    // CI1b : test reporté d'un autre jour de la semaine (bloc du moteur
+    // calibré seulement, jamais le bloc importé du propriétaire).
+    if (place == null || place.imported) return null;
+    for (final w in place.block.pass2.weeks) {
+      if (w.weekIndex != place.weekIndex) continue;
       for (final d in w.days) {
         for (final it in d.items) {
           if (it.slotId == e.slotId) return it;

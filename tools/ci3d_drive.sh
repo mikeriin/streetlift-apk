@@ -52,6 +52,7 @@ cible() {
     ${4:+--keep-app-running} \
     -d emulator-5554 > "$out/drive-$1${2:+-$2}.log" 2>&1
 }
+# CI1b (dev6.9.1) : même cible, étape « douleur qui dure » en plus.
 # CI1 (dev6.9.0) : street calibré (kalis_plan 0.2, kalis_adapt 0.2), cible
 # du lot, build de développement, en deux parties : a = sombre, rouge
 # Kalis, compétiteur de streetlifting ; b = clair, violet, débutant de

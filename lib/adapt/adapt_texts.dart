@@ -142,14 +142,15 @@ List<({String zone, List<String> removed})> painStopsOf(
 /// CI1b : texte de l'arrêt d'une zone dans la séance (douleur qui dure).
 String painStopText(({String zone, List<String> removed}) s) {
   final head =
-      'Douleur qui dure (${s.zone}) : 3 sur 10 ou plus depuis deux semaines, '
-      'ou revenue après une reprise.';
+      'Douleur qui dure (${s.zone}) : 3 sur 10 ou plus depuis plus de deux '
+      'semaines, ou revenue après une reprise.';
   final removed = s.removed.isEmpty
       ? ' Les mouvements qui la chargent restent de côté.'
       : ' Retiré${s.removed.length > 1 ? 's' : ''} aujourd’hui : '
             '${s.removed.join(', ')}.';
-  return '$head$removed Consulte un médecin ou un kinésithérapeute. Ils '
-      'reviendront après deux semaines à 2 sur 10 au plus, par paliers.';
+  return '$head$removed Consulte un médecin ou un kinésithérapeute. Les '
+      'mouvements retirés reviendront après deux semaines à 2 sur 10 au plus, '
+      'par paliers.';
 }
 
 num? _num(Object? v) => v is num ? v : null;
@@ -214,9 +215,8 @@ String? adaptReasonText(
       return 'Douleur signalée (${_zone(p['zone'])}${i == null ? '' : ', $i/10'}) : '
           'je l’épargne aujourd’hui.';
     case 'adapt.pain_persistent':
-      return 'Douleur qui dure (${_zone(p['zone'])}) : les mouvements qui la '
-          'chargent sont mis de côté ; demande l’avis d’un médecin ou d’un '
-          'kinésithérapeute.';
+      return 'Douleur qui dure (${_zone(p['zone'])}) : demande l’avis d’un '
+          'médecin ou d’un kinésithérapeute.';
     case 'adapt.health_low':
       return 'Ton bilan est bas : séance allégée.';
     case 'adapt.sleep_low':
@@ -282,7 +282,13 @@ String adjustmentText(
               'douleur qui dure.';
         }
       }
-      if (test) {
+      if (test &&
+          a.reasons.any(
+            (r) =>
+                r.code == 'adapt.health_low' ||
+                r.code == 'adapt.sleep_low' ||
+                r.code == 'adapt.fatigue_high',
+          )) {
         return 'Test de $x reporté : il se refera à une prochaine séance, '
             'un jour en forme.';
       }
@@ -334,6 +340,14 @@ List<String> sessionDiffLines(
   }
   for (final b in base.items) {
     if (plan.items.any((it) => it.slotId == b.slotId)) continue;
+    // CI1b : retrait déjà dit par son ajustement (douleur, test reporté).
+    if (plan.adjustments.any(
+      (a) =>
+          a.kind == kc.AdjustmentKind.exerciseRemoved &&
+          a.exerciseId == b.exerciseId,
+    )) {
+      continue;
+    }
     final line = '${exerciseName(b.exerciseId)} retiré aujourd’hui.';
     if (done.add(line)) out.add(line);
   }

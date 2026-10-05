@@ -444,59 +444,67 @@ void main() {
             if (store.program.week(w).day(j)?.exercises.isNotEmpty ?? false)
               (w, j),
       ];
-      final first = days.isEmpty ? null : dateOf(days.first.$1, days.first.$2);
-      final stop = first == null
-          ? null
-          : days
-                .where((d) => dateOf(d.$1, d.$2).difference(first).inDays >= 15)
-                .firstOrNull;
-      releve['douleur_jour'] = stop == null ? null : 'S${stop.$1}-J${stop.$2}';
-      if (stop != null) {
-        final clock = store.storeClock;
-        const wrist = kc.PainReport(
-          zone: kc.BodyZone.wristHand,
-          side: kc.BodySide.both,
-          intensity: 4,
-          phase: kc.PainPhase.before,
+      // Séances semées jusqu'à deux semaines pleines entre le premier et
+      // le dernier signalement (seuil du moteur), puis séance suivante.
+      final clock = store.storeClock;
+      const wrist = kc.PainReport(
+        zone: kc.BodyZone.wristHand,
+        side: kc.BodySide.both,
+        intensity: 4,
+        phase: kc.PainPhase.before,
+      );
+      var seeded = 0;
+      DateTime? firstSeed, lastSeed;
+      (int, int)? stop;
+      for (final (w, j) in days) {
+        final date = dateOf(w, j);
+        // (La séance guidée plus haut est déjà commencée : jamais semée ni
+        // choisie.)
+        if (hit != null && hit.$1 == w && hit.$2 == j) continue;
+        if (firstSeed != null &&
+            lastSeed != null &&
+            lastSeed.difference(firstSeed).inDays >= 15) {
+          stop = (w, j);
+          break;
+        }
+        store.storeClock = () => date.add(const Duration(hours: 9));
+        final base = store.program.week(w).day(j)!;
+        if (store.adaptOpen(w, base) == null) continue;
+        final a = store.adaptAnswer(
+          w,
+          base,
+          const kc.HealthCheck(pains: [wrist]),
         );
-        var seeded = 0;
-        for (final (w, j) in days) {
-          final date = dateOf(w, j);
-          if (!date.isBefore(dateOf(stop.$1, stop.$2))) break;
-          if (hit != null && hit.$1 == w && hit.$2 == j) continue;
-          store.storeClock = () => date.add(const Duration(hours: 9));
-          final base = store.program.week(w).day(j)!;
-          if (store.adaptOpen(w, base) == null) continue;
-          final a = store.adaptAnswer(
-            w,
-            base,
-            const kc.HealthCheck(pains: [wrist]),
-          );
-          if (a == null) continue;
-          final served = store.adaptDay(w, base, a);
-          for (final e in served.exercises) {
-            final log = store.exLog(w, j, e);
-            if (log.sets.isEmpty) continue;
-            store.adaptPrefill(w, j, e, log);
-            if (log.sets.first.reps.isEmpty) log.sets.first.reps = '5';
-            log.sets.first.flames = 7;
-            if (store.toggleSet(log, 0, store.logSpec(e)).ok) {
-              seeded++;
-              break;
-            }
+        if (a == null) continue;
+        final served = store.adaptDay(w, base, a);
+        for (final e in served.exercises) {
+          final log = store.exLog(w, j, e);
+          if (log.sets.isEmpty) continue;
+          store.adaptPrefill(w, j, e, log);
+          if (log.sets.first.reps.isEmpty) log.sets.first.reps = '5';
+          log.sets.first.flames = 7;
+          if (store.toggleSet(log, 0, store.logSpec(e)).ok) {
+            seeded++;
+            firstSeed ??= date;
+            lastSeed = date;
+            break;
           }
         }
-        store.storeClock = clock;
+      }
+      store.storeClock = clock;
+      releve['douleur_jour'] = stop == null ? null : 'S${stop.$1}-J${stop.$2}';
+      final st = stop;
+      if (st != null) {
         store.saveLogs();
         await store.flush();
         releve['douleur_seances'] = seeded;
         await SessionHost.restart(
-          () => DevSession.setOffsetDays(_offsetTo(dateOf(stop.$1, stop.$2))),
+          () => DevSession.setOffsetDays(_offsetTo(dateOf(st.$1, st.$2))),
           message: 'Jour de la séance',
         );
         await opened(tester);
-        final week = store.program.week(stop.$1);
-        final day = week.day(stop.$2)!;
+        final week = store.program.week(st.$1);
+        final day = week.day(st.$2)!;
         unawaited(
           appNavigator.currentState!.push(
             MaterialPageRoute<void>(
@@ -508,7 +516,7 @@ void main() {
           tester,
           find.byKey(const ValueKey('health-pain-stop')),
         );
-        final a = store.sessionAdapt(stop.$1, stop.$2);
+        final a = store.sessionAdapt(st.$1, st.$2);
         releve['douleur_arret'] =
             a?.active.reasons.any((r) => r.code == 'adapt.pain_persistent') ??
             false;

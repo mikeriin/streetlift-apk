@@ -1,4 +1,7 @@
-ALL
-dev:test/g1_mode_dev_test.dart
+test/ci1b_pain_test.dart
+test/ci1_street_test.dart
+test/g9_seance_test.dart
+test/g10_evolution_test.dart
+test/g2_retrait_test.dart
 dev:test/g2_mode_dev_test.dart
 dev:test/g3_mode_dev_test.dart

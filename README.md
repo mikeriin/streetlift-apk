@@ -1,4 +1,11 @@
-# Kalis Track dev6.9.0 — Calibrage des programmes (pipeline « Calibrage des programmes », voie App)
+# Kalis Track dev6.9.1 — Calibrage des programmes (pipeline « Calibrage des programmes », voie App)
+
+## dev6.9.1 — Douleur qui dure, reprise graduée, tests reportés (lot CI1b)
+
+- **Moteurs** `kalis_plan` 0.2.2 et `kalis_adapt` 0.2.2 (correction 1 de CX) : programme et séance plus sûrs, effort affiché plus juste, tentatives plus prudentes.
+- **Douleur qui dure** : une gêne notée à 3/10 ou plus pendant deux semaines (5/10 plus d'une semaine, ou qui revient) met la zone à l'arrêt. La séance s'ouvre sur une carte « Arrêt pour douleur » : les mouvements qui la chargent sont retirés (nommés), consigne de consulter un médecin ou un kinésithérapeute ; le bloc suivant les écarte, puis les rend par paliers (reprise graduée, bouclier sur chaque exercice concerné).
+- **Tests** : un jour de bilan bas, le test est reporté (« Test de … reporté ») et servi à une séance suivante de la semaine, avant le travail du jour.
+- Textes en clair pour les nouvelles consignes (arrêt, reprise, étape plus facile, plateau, zone de l'épreuve, tempo). Version « dev6.9.1 ».
 
 ## dev6.9.0 — Le street calibré dans l'application (lot CI1)
 
