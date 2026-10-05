@@ -725,7 +725,20 @@ String? _repsRootOf(CatalogExercise e) {
 /// Prescripteur d'un bloc.
 final class Prescriber {
   /// Prescripteur du squelette [skeleton] pour l'athlète [a].
-  Prescriber(this.a, this.skeleton, this.blockIndex, {this.volumeScale = 1});
+  Prescriber(
+    this.a,
+    this.skeleton,
+    this.blockIndex, {
+    this.volumeScale = 1,
+    this.kept = const <WeekPrescription>[],
+  });
+
+  /// Semaines du bloc en cours déjà écrites et gardées (restructuration en
+  /// cours de bloc) : les garde-fous de volume et de charge lisent ces
+  /// semaines-là, pas leur réécriture (CX, correction 1 : une
+  /// restructuration au milieu du bloc montait le volume sans voir les
+  /// semaines faites).
+  final List<WeekPrescription> kept;
 
   /// Facteur de volume du résumé d'adaptation (assiduité, fatigue).
   final double volumeScale;
@@ -5899,68 +5912,73 @@ final class Prescriber {
       }
     }
     for (final w in weeks) {
-      final trace = _WeekTrace(
-        w.kind == WeekKind.intro ||
-            w.kind == WeekKind.deload ||
-            w.kind == WeekKind.test,
-        restart:
-            w.kind == WeekKind.intro ||
-            w.intent == WeekIntent.transition ||
-            w.intent == WeekIntent.intro,
-      );
-      for (final d in w.days) {
-        for (final p in d.items) {
-          final t = a.traits.find(p.exerciseId);
-          if (t == null) {
-            continue;
-          }
-          final flames = p.targetFlames;
-          final hard =
-              t.kind.isResistance &&
-              p.kind != SetKind.warmup &&
-              (flames == null ||
-                  !Flames.isValid(flames) ||
-                  Flames.toRir(flames) <= coachHardSetMaxRir);
-          if (hard) {
-            trace.hard += p.sets;
-            for (final g in MuscleGroup.values) {
-              trace.groups[g.index] += p.sets * t.creditOf(g) / 2;
-            }
-          }
-          final family = straightArmFamilyOf(t.exercise);
-          final hold = p.secondsHigh;
-          if (family >= 0 && hold != null && t.kind.isResistance) {
-            trace.straightArm[family] += p.sets * hold.toDouble();
-          }
-          final root = _repsRootOf(t.exercise);
-          final high = p.repsHigh;
-          if (root != null &&
-              high != null &&
-              p.kind == SetKind.work &&
-              t.kind.isResistance) {
-            trace.reps[root] = (trace.reps[root] ?? 0) + p.sets * high;
-          }
-          final load = p.startLoadKg;
-          final reps = p.repsHigh;
-          if (load != null && reps != null && p.kind != SetKind.test) {
-            final fraction = t.exercise.bodyweightFraction?.value ?? 0;
-            trace.loads['${d.dayIndex}|${p.slotId}|${p.exerciseId}'] = (
-              load + fraction * a.bodyWeight,
-              reps,
-            );
-          }
-          if ((p.kind == null || p.kind == SetKind.work) &&
-              p.reasons.any(
-                (r) =>
-                    r.code == ReasonCodes.planCoachNote &&
-                    r.params['note'] == CoachNotes.everyMinute,
-              )) {
-            trace.minutes['${d.dayIndex}|${p.slotId}|${p.exerciseId}'] = p.sets;
+      _history.add(_traceOf(w));
+    }
+  }
+
+  /// Trace des garde-fous d'une semaine déjà écrite [w].
+  _WeekTrace _traceOf(WeekPrescription w) {
+    final trace = _WeekTrace(
+      w.kind == WeekKind.intro ||
+          w.kind == WeekKind.deload ||
+          w.kind == WeekKind.test,
+      restart:
+          w.kind == WeekKind.intro ||
+          w.intent == WeekIntent.transition ||
+          w.intent == WeekIntent.intro,
+    );
+    for (final d in w.days) {
+      for (final p in d.items) {
+        final t = a.traits.find(p.exerciseId);
+        if (t == null) {
+          continue;
+        }
+        final flames = p.targetFlames;
+        final hard =
+            t.kind.isResistance &&
+            p.kind != SetKind.warmup &&
+            (flames == null ||
+                !Flames.isValid(flames) ||
+                Flames.toRir(flames) <= coachHardSetMaxRir);
+        if (hard) {
+          trace.hard += p.sets;
+          for (final g in MuscleGroup.values) {
+            trace.groups[g.index] += p.sets * t.creditOf(g) / 2;
           }
         }
+        final family = straightArmFamilyOf(t.exercise);
+        final hold = p.secondsHigh;
+        if (family >= 0 && hold != null && t.kind.isResistance) {
+          trace.straightArm[family] += p.sets * hold.toDouble();
+        }
+        final root = _repsRootOf(t.exercise);
+        final high = p.repsHigh;
+        if (root != null &&
+            high != null &&
+            p.kind == SetKind.work &&
+            t.kind.isResistance) {
+          trace.reps[root] = (trace.reps[root] ?? 0) + p.sets * high;
+        }
+        final load = p.startLoadKg;
+        final reps = p.repsHigh;
+        if (load != null && reps != null && p.kind != SetKind.test) {
+          final fraction = t.exercise.bodyweightFraction?.value ?? 0;
+          trace.loads['${d.dayIndex}|${p.slotId}|${p.exerciseId}'] = (
+            load + fraction * a.bodyWeight,
+            reps,
+          );
+        }
+        if ((p.kind == null || p.kind == SetKind.work) &&
+            p.reasons.any(
+              (r) =>
+                  r.code == ReasonCodes.planCoachNote &&
+                  r.params['note'] == CoachNotes.everyMinute,
+            )) {
+          trace.minutes['${d.dayIndex}|${p.slotId}|${p.exerciseId}'] = p.sets;
+        }
       }
-      _history.add(trace);
     }
+    return trace;
   }
 
   /// Semaines du bloc.
@@ -6068,7 +6086,7 @@ final class Prescriber {
           break;
         }
       }
-      _history.add(trace);
+      _history.add(w < kept.length ? _traceOf(kept[w]) : trace);
       if (ws.kind == WeekKind.build || ws.kind == WeekKind.intro) {
         _loadedBefore++;
       }
@@ -6436,6 +6454,7 @@ Pass2Plan prescribeBlock(
   required String blockId,
   required int blockIndex,
   List<WeekPrescription> previous = const <WeekPrescription>[],
+  List<WeekPrescription> kept = const <WeekPrescription>[],
   double volumeScale = 1,
 }) {
   final prescriber = Prescriber(
@@ -6443,6 +6462,7 @@ Pass2Plan prescribeBlock(
     skeleton,
     blockIndex,
     volumeScale: volumeScale,
+    kept: kept,
   )..seed(previous);
   return Pass2Plan(
     blockId: blockId,

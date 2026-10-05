@@ -18,6 +18,8 @@ export 'src/coach/athlete.dart'
         CoachDay,
         CoachLimit,
         coachEligible,
+        coachNeutralGripEquipment,
+        coachNeutralSupportEquipment,
         coachPainProvokes,
         coachPainStopHits,
         coachPronationPull;

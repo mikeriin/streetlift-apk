@@ -7,7 +7,8 @@ grilles du panel **inchangés**.
 
 - Export des saisons : notes d'arrêt et de reprise après une douleur qui dure listées sous chaque bloc ;
   montées d'échauffement écrites à chaque exercice ; texte de `adapt.pain_persistent` (consulter, reprise
-  après deux semaines à 2/10).
+  après deux semaines à 2/10) ; texte du pourcentage complété du 1RM de référence (« ; 1RM de référence
+  X kg »).
 
 ## 0.2.0 — 04/10/2026 (lot CX)
 

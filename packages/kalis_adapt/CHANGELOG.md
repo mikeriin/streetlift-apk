@@ -13,13 +13,18 @@ Lot « CX correction 1 » du pipeline « Calibrage des programmes » (croisement
   signalement récent.
 - **Sous-dosage** : chaque série est jugée contre sa propre réserve visée ; une série facile n'est plus lue
   comme « plus dure que prévu » ; une série au ressenti qui suppose moins de 90 % de la prédiction est lue
-  comme une borne basse ; cran d'élastique retiré après deux séances au haut de la plage (ou une première
-  série dite deux répétitions plus facile).
+  comme une borne basse, et la baisse attend une deuxième mesure concordante, une autre séance, dans les
+  quatre semaines (une mesure conforme efface la borne en attente) ; cran d'élastique retiré après deux
+  séances au haut de la plage à charge et plage égales (ou une première série dite deux répétitions plus
+  facile).
+- **Douleur, revue** : en mode coach, seul l'arrêt (et sa fin) signale une douleur qui dure ; un épisode
+  tolère deux semaines entre deux signalements.
 - **Tests** : retirés un jour de bilan bas (1 sur 5 de baisse ou plus) et refaits à une séance suivante de la
-  semaine, 48 h après au moins, un bon jour sans douleur.
+  semaine, 48 h après au moins, un bon jour sans douleur, avec le matériel du lieu du jour et seulement pour
+  une étape de figure acquise ; jours bas et milieu des tentatives lus comme en 0.2.1 hors mode coach.
 - **Charges** : tentatives (ouverture 91 %, deuxième +5 % au plus, troisième +3 % au plus, +5 kg de charge
   externe au plus ; la meilleure barre entre la réussie et la manquée est reportée) ; −7,5 % après une série
-  manquée non voulue ; simple d'entraînement à 92 % du maximum estimé au plus (85 % un jour de bilan bas) ;
+  manquée non voulue, gardé sur les séries suivantes de la séance ; simple d'entraînement à 92 % du maximum estimé au plus (85 % un jour de bilan bas) ;
   semaine allégée ou de test : jamais plus lourd que la charge écrite.
 
 ## 0.2.1
