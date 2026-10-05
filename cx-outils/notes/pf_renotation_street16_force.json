@@ -1,0 +1,104 @@
+[
+ {
+  "programme": "programme_1.md",
+  "criteres": {
+   "F1": 9,
+   "F2": 8.5,
+   "F3": 8.5,
+   "F4": 9,
+   "F5": 9.5,
+   "F7": 8,
+   "F8": 9,
+   "F9": 9
+  },
+  "sans_objet": [
+   "F6"
+  ],
+  "ensemble": 9,
+  "points_perdus": [
+   {
+    "critere": "F1",
+    "perte": 1,
+    "raison": "Traction de compétition 3 fois par semaine, lourd le lundi et modéré le mercredi et le vendredi : c'est conforme (R2-P7, R1-P9). En revanche, mercredi et vendredi sont presque identiques (même % et même RIR), et aucune limite de fréquence ou de volume de tirage n'est écrite en fonction de la tolérance du coude (R2-P7, au-delà des données)."
+   },
+   {
+    "critere": "F2",
+    "perte": 1.5,
+    "raison": "Bloc 1 (S1-S4) : aucune série à 85 % ou plus (82 % au maximum en S3). En S5-S6, seule la série de tête atteint 85 % ou plus, les séries allégées tombent à 81-83 %, alors que R2-P1 demande du ≥85 % régulier pour un avancé. En affûtage (S9), lundi et mercredi sont à 80 %, sous le plancher de 85 % de R3-P13. Dips à partir de S5 : lest +38,75 kg affiché à « ≈ 76 % », ce qui fait en réalité environ 71 % du 1RM déclaré (160 kg de charge totale). L'étiquette ne correspond pas au record du profil."
+   },
+   {
+    "critere": "F3",
+    "perte": 1.5,
+    "raison": "Le volume est de 14 séries directes de traction par semaine, dans la fourchette avancée (R1-P5 : 6-12, max 15 ; R2-P8 : 10-18), et le schéma série de tête + séries allégées est bien présent (R2-P6). Mais R2-P8 demande 3 à 6 séries à 85 % ou plus pour un avancé : 0 en S1-S4, 1 en S5-S6, 4 seulement en S7-S8."
+   },
+   {
+    "critere": "F4",
+    "perte": 1,
+    "raison": "Les phases sont nommées, la progression est chiffrée, la décharge S4 est à environ -50 % des séries à charge gardée (R3-P9, R1-P18) et une série de recalage est prévue. Mais l'après-échéance est confus : un test 1×3 placé dans la semaine d'allègement S14, avec un « repère 57,5 » sans rapport avec une série de 3, et un bloc 4 qui s'arrête au milieu de la construction. Les dips et le squat baissent de charge (S5, S15) sans test ni explication."
+   },
+   {
+    "critere": "F5",
+    "perte": 0.5,
+    "raison": "L'affûtage est très bien construit : 2 semaines, séries à environ -55/-60 %, dernier lourd à 90 % à J-8 (R3-P14), dernière séance à J-3, 2 jours sans travail dur, plan de trois tentatives et règle pour la barre de l'objectif. Seule réserve : en S9, lundi et mercredi à 80 % ne gardent pas l'intensité ≥85 % (R3-P13)."
+   },
+   {
+    "critere": "F7",
+    "perte": 2,
+    "raison": "Rowing, face pull, rotation externe, tronc et jambes (squat, soulevé de terre roumain, fentes) sont présents et chacun a une justification écrite. Mais l'équilibre poussée/tirage est très déséquilibré pendant 10 semaines : 4 séries de dips par semaine contre environ 26 séries de tirage (traction, rowing, curl), et aucune poussée horizontale ou verticale."
+   },
+   {
+    "critere": "F8",
+    "perte": 1,
+    "raison": "La règle de douleur 0-10, la baisse du jour et l'absence d'échec hors test sont bien faites (R5-P20 et suivants). Mais le coude reçoit traction lestée, rowing et curl marteau trois fois par semaine sans limite propre au tirage. Et la règle « baisse du jour : pas de test » n'est pas raccordée au jour de l'échéance (S10 samedi)."
+   },
+   {
+    "critere": "F9",
+    "perte": 1,
+    "raison": "Les séances tiennent largement dans les 90 minutes, les repos sont précisés (R1-P16), les charges lestées sont prêtes à l'emploi et la montée en charge est écrite. Mais les % affichés pour les dips et le squat en S15 ne correspondent pas aux records du profil (105 kg ≈ 70 % de 150 kg, affiché 76 %), ce qui empêche l'athlète de vérifier les charges. L'échauffement est général et non spécifique au lest."
+   },
+   {
+    "critere": "ensemble",
+    "perte": 1,
+    "raison": "Aucune correction nécessaire : le programme est sûr, individualisé et donne une stratégie de test honnête pour un objectif ambitieux (+6 % en 10 semaines chez un avancé). Il reste plusieurs améliorations : exposition lourde avant S7, intensité en affûtage, équilibre poussée/tirage, cohérence des % d'entretien."
+   }
+  ],
+  "corrections": [
+   {
+    "type": "amelioration",
+    "texte": "Ajouter de l'exposition lourde avant S7, par exemple en S5-S6 : séries allégées à -3 % au lieu de -5 %, ou un simple ou double à 85-88 % le vendredi, pour atteindre 3 à 6 séries à 85 % ou plus par semaine (R2-P8, R2-P1)."
+   },
+   {
+    "type": "amelioration",
+    "texte": "En S9, passer les séances du lundi et du mercredi de 2×3 à 80 % à 2×2 à 85-87 % : on garde le volume réduit mais aussi l'intensité (R3-P13)."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Garder la charge des dips et du squat en entretien (+46,25 kg / +57,5 kg ; 112,5 / 122,5 kg), ou expliquer la baisse et afficher le 1RM de travail utilisé, pour que les % écrits correspondent aux charges (R1-P7 : on réduit les séries, jamais la charge)."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Ajouter 2 séries par semaine de poussée horizontale ou verticale (pompes lestées ou développé haltères, loin de l'échec) pour équilibrer les épaules pendant la spécialisation en tirage."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Écrire une limite de tirage propre au coude : si la règle de douleur dépasse 3 au coude, retirer d'abord le curl marteau, puis le rowing, avant de toucher à la traction lestée."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Préciser la règle « baisse du jour » pour le jour de l'échéance : on garde le test, mais on ouvre à la barre la plus basse et on renonce à la troisième barre."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Clarifier l'après-échéance : retirer le « repère 57,5 » du test 1×3 de S14 ou le reformuler en 1RM estimé, et terminer le bloc 4 par une décharge ou une échéance suivante."
+   }
+  ],
+  "points_forts": [
+   "Charges lestées calculées sur la charge totale à partir du 1RM déclaré (R2-P4), prêtes à l'emploi semaine par semaine.",
+   "Traction de compétition 3 fois par semaine, une séance lourde et deux modérées ; dips et squat en entretien à 2 séances et 4 séries (R1-P7).",
+   "Affûtage conforme pour un avancé : 2 semaines, volume à environ -55 %, dernier lourd à 90 % à J-8, dernière séance à J-3, 48 h sans travail dur.",
+   "Plan de tentatives complet (91/96/99-102 %, barres d'échauffement, repos de 6 minutes, conduite après un échec) et règle honnête pour décider si l'on tente la barre de l'objectif.",
+   "Règles d'ajustement (série de tête, répétitions, baisse du jour, séance manquée) et règle de douleur graduée sur 2-3 semaines.",
+   "Série de recalage en fin de bloc pour mettre à jour le 1RM de travail ; aucune série menée à l'échec hors test."
+  ]
+ }
+]
