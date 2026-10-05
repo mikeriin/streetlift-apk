@@ -1,0 +1,336 @@
+Analyzing kalis_core...
+No issues found!
+
+::group::✅ Passing tests
+✅ test/contracts_roundtrip_test.dart: chaque type du contrat a son codec
+✅ test/estimation_test.dart: estimation du 1RM valeurs de référence de l'équation de Brzycki
+✅ test/estimation_test.dart: estimation du 1RM réserve déclarée : comptée comme des répétitions
+✅ test/estimation_test.dart: estimation du 1RM incertitude selon la mesure
+✅ test/estimation_test.dart: estimation du 1RM paliers d'incertitude : 4 %, 5 %, 7,5 %, 10 %
+✅ test/estimation_test.dart: estimation du 1RM refusée hors du domaine défendable
+✅ test/estimation_test.dart: estimation du 1RM exercice lesté : équation sur la charge totale, puis le lest
+✅ test/estimation_test.dart: estimation du 1RM 10000 tirages : monotone, bornée, jamais sous la charge
+✅ test/estimation_test.dart: estimation du 1RM 10000 tirages : un seul palier d'incertitude par mesure
+✅ test/estimation_test.dart: course formule de Riegel : valeurs de référence
+✅ test/estimation_test.dart: course refusée hors du domaine calibré
+✅ test/estimation_test.dart: course durée de départ hors domaine : refusée avant le calcul
+✅ test/estimation_test.dart: course effort prédit hors domaine : refusé
+✅ test/estimation_test.dart: course distances hors domaine : refusées avant le calcul
+✅ test/estimation_test.dart: course rapport de distances hors garde : refusé avant le calcul
+✅ test/estimation_test.dart: course 10000 tirages : égale à la formule calculée par dart:math
+✅ test/estimation_test.dart: course 10000 tirages dans et hors du domaine : refusée exactement hors du domaine
+✅ test/estimation_test.dart: course vitesse d'un test en durée fixe
+✅ test/contracts_roundtrip_test.dart: Reason : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: DisciplineShare : aller-retour JSON sur 10000 valeurs seedées
+✅ test/validation_test.dart: profil le profil de référence est valide
+✅ test/validation_test.dart: profil bornes simples
+✅ test/validation_test.dart: profil version de schéma : les versions 2 et 3 sont admises (0.4.0)
+✅ test/validation_test.dart: profil dosage des disciplines : somme 100, distinctes, principale en tête
+✅ test/validation_test.dart: profil mode street : somme 100, principale dominante, image des disciplines
+✅ test/validation_test.dart: profil niveau déclaré : fourchette ou « je ne sais pas »
+✅ test/validation_test.dart: profil objectif : champs selon la nature
+✅ test/validation_test.dart: profil invariants croisés du profil
+✅ test/validation_test.dart: profil exercices cités par le profil
+✅ test/validation_test.dart: journal série : au moins une mesure
+✅ test/validation_test.dart: journal journal : identifiants uniques, dates croissantes
+✅ test/validation_test.dart: journal séances « reprise » : gardées au journal, ignorées des moteurs
+✅ test/validation_test.dart: journal bilan santé : une réponse absente reste absente
+✅ test/validation_test.dart: plan verrous et actions de revue : champs selon la nature
+✅ test/validation_test.dart: plan prescription : une seule famille de mesure, plages ordonnées
+✅ test/validation_test.dart: plan passe 1 : rangs des jours et emplacements uniques
+✅ test/validation_test.dart: plan bloc : passes 1 et 2 cohérentes
+✅ test/validation_test.dart: plan restructuration : la portée séance demande un jour
+✅ test/validation_test.dart: quest registres en ajout seul : rangs et dates
+✅ test/contracts_roundtrip_test.dart: DisciplineMix : aller-retour JSON sur 10000 valeurs seedées
+✅ test/validation_test.dart: quest prédiction : dates ordonnées ; niveau borné à 100
+✅ test/validation_test.dart: ajouts de la relecture cibles série par série : autant que de séries
+✅ test/validation_test.dart: ajouts de la relecture pauses déclarées, lieu par jour, matériel par lieu
+✅ test/validation_test.dart: ajouts de la relecture objectif : répétitions à une charge, distance en une durée
+✅ test/validation_test.dart: ajouts de la relecture objets JSON libres : égalité sans ordre, écriture canonique
+✅ test/validation_test.dart: correspondances discipline du profil → disciplines de la base
+✅ test/validation_test.dart: correspondances zone du corps → articulation suivie
+✅ test/validation_test.dart: correspondances codes des enums : uniques, lecture par code
+✅ test/contracts_roundtrip_test.dart: StreetMode : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: MovementLevel : aller-retour JSON sur 10000 valeurs seedées
+✅ test/advanced_test.dart: types à variantes sept types à variantes
+✅ test/advanced_test.dart: types à variantes chaque valeur du discriminant a sa règle, dans l'ordre
+✅ test/advanced_test.dart: types à variantes Benchmark : chaque variante porte exactement ses paramètres
+✅ test/advanced_test.dart: types à variantes SeasonEvent : chaque variante porte exactement ses paramètres
+✅ test/advanced_test.dart: types à variantes Specialization : chaque variante porte exactement ses paramètres
+✅ test/advanced_test.dart: types à variantes SetTechnique : chaque variante porte exactement ses paramètres
+✅ test/advanced_test.dart: types à variantes IntensityTarget : chaque variante porte exactement ses paramètres
+✅ test/advanced_test.dart: types à variantes AutoregulationRule : chaque variante porte exactement ses paramètres
+✅ test/advanced_test.dart: types à variantes GroupSpec : chaque variante porte exactement ses paramètres
+✅ test/advanced_test.dart: types à variantes toutes les techniques de série ont une règle
+✅ test/advanced_test.dart: types à variantes un groupe par format : paramètres exacts
+✅ test/advanced_test.dart: prescriptions avancées série de tête puis séries allégées, autorégulées
+✅ test/advanced_test.dart: prescriptions avancées un test se déclare sur une prescription de rôle test
+✅ test/advanced_test.dart: prescriptions avancées sans les champs 0.4.0, une prescription s'écrit comme en 0.3.0
+✅ test/advanced_test.dart: prescriptions avancées plages et listes des techniques
+✅ test/advanced_test.dart: prescriptions avancées technique au temps, temps total visé, dernière série seulement
+✅ test/advanced_test.dart: prescriptions avancées nombre de séries : une ligne de journal par série
+✅ test/advanced_test.dart: prescriptions avancées plage de répétitions : celle d'une ligne de journal
+✅ test/advanced_test.dart: prescriptions avancées deux écritures de la même intensité s'accordent
+✅ test/advanced_test.dart: prescriptions avancées série indivisible, nature de la récupération
+✅ test/contracts_roundtrip_test.dart: Goal : aller-retour JSON sur 10000 valeurs seedées
+✅ test/advanced_test.dart: prescriptions avancées groupes d'exercices enchaînés : séance prescrite, séance du jour
+✅ test/advanced_test.dart: prescriptions avancées intensité et autorégulation : plages
+✅ test/advanced_test.dart: prescriptions avancées intensité : valeur obligatoire, bases, bornes par base
+✅ test/advanced_test.dart: prescriptions avancées autorégulation : arrêt sur baisse de propreté, allègement
+✅ test/advanced_test.dart: prescriptions avancées journal : mini-séries, tentatives, qualité
+✅ test/advanced_test.dart: prescriptions avancées journal : parties d'une série
+✅ test/advanced_test.dart: prescriptions avancées journal : résultats des groupes d'exercices enchaînés
+✅ test/advanced_test.dart: saison, compétition, figures plan de saison : phases contiguës, rangs exacts
+✅ test/advanced_test.dart: saison, compétition, figures phases de saison : dix natures, dont entretien et reprise
+✅ test/advanced_test.dart: saison, compétition, figures plan de saison : échéances connues, sans doublon
+✅ test/advanced_test.dart: saison, compétition, figures phase propre à un mouvement : mouvements distincts
+✅ test/contracts_roundtrip_test.dart: DaySlot : aller-retour JSON sur 10000 valeurs seedées
+✅ test/advanced_test.dart: saison, compétition, figures le plan de saison voyage dans les requêtes sans les casser
+✅ test/advanced_test.dart: saison, compétition, figures intention du bloc, de la semaine, ondulation
+✅ test/advanced_test.dart: saison, compétition, figures échelle de figure : étapes distinctes, la dernière est la cible
+✅ test/advanced_test.dart: saison, compétition, figures compétition de force : mouvements distincts, tentatives
+✅ test/advanced_test.dart: saison, compétition, figures échéances : répétitions, freestyle, course, objectifs liés
+✅ test/advanced_test.dart: saison, compétition, figures tentatives proposées : jamais décroissantes
+✅ test/advanced_test.dart: saison, compétition, figures tentative faite : cause de l'échec
+✅ test/advanced_test.dart: saison, compétition, figures rythme d'une épreuve : poste, tour, répétitions par série
+✅ test/advanced_test.dart: saison, compétition, figures volume toléré : plage ordonnée
+✅ test/contracts_roundtrip_test.dart: PlaceEquipment : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: LoadIncrement : aller-retour JSON sur 10000 valeurs seedées
+✅ test/advanced_test.dart: interfaces nouvelles un planificateur de saison et un conseiller du jour J se réalisent sans toucher aux interfaces de 0.3.0
+✅ test/advanced_test.dart: codes de raison 0.4.0 133 codes, les 92 premiers inchangés en tête
+✅ test/advanced_test.dart: codes de raison 0.4.0 plateau de figure, charge récente : paramètres
+✅ test/advanced_test.dart: codes de raison 0.4.0 les nouvelles raisons se valident
+✅ test/contracts_roundtrip_test.dart: Limitation : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: HealthScreeningRef : aller-retour JSON sur 10000 valeurs seedées
+✅ test/purity_test.dart: lib/ contient des sources
+✅ test/purity_test.dart: lib/ sans dart:io (« import 'dart:io' »)
+✅ test/purity_test.dart: lib/ sans dart:ui (« import 'dart:ui' »)
+✅ test/purity_test.dart: lib/ sans dart:html (« import 'dart:html' »)
+✅ test/purity_test.dart: lib/ sans Flutter (« package:flutter »)
+✅ test/purity_test.dart: lib/ sans horloge implicite (« DateTime.now »)
+✅ test/purity_test.dart: lib/ sans horloge implicite (« Stopwatch »)
+✅ test/purity_test.dart: lib/ sans hasard non seedé (« Random() »)
+✅ test/purity_test.dart: lib/ sans hasard non seedé (« Random.secure »)
+✅ test/purity_test.dart: lib/ sans plateforme (« Platform. »)
+✅ test/purity_test.dart: dépendances : aucune hors tests
+✅ test/purity_test.dart: la version exportée est celle du pubspec et du CHANGELOG
+✅ test/engines_test.dart: PlanEngine : requête, passes, variantes, bloc suivant
+✅ test/engines_test.dart: AdaptEngine et QuestEngine : entrées et sorties valides
+✅ test/questionnaire_test.dart: le fichier se charge : version, écrans, questions, tests
+✅ test/questionnaire_test.dart: les questions suivent l'ordre des écrans
+✅ test/questionnaire_test.dart: l'ordre des questions est celui du fichier
+✅ test/questionnaire_test.dart: les réponses à choix du schéma 3 sont les codes du contrat
+✅ test/questionnaire_test.dart: nombre de questions vues par profil type (oracle du générateur)
+✅ test/questionnaire_test.dart: repères du lot : questions à la création par profil type
+✅ test/questionnaire_test.dart: un débutant voit peu de questions, un compétiteur les siennes
+✅ test/questionnaire_test.dart: questions reportées : hors de la création, rendues à part
+✅ test/questionnaire_test.dart: réponse obligatoire : toujours, ou sous condition
+✅ test/questionnaire_test.dart: chaque condition d'apparition du parcours
+✅ test/questionnaire_test.dart: chaque opérateur de condition, sur un cas vrai et un cas faux
+✅ test/questionnaire_test.dart: chemins avec `[*]` : une liste est parcourue
+✅ test/questionnaire_test.dart: « Compléter mon profil » : seulement les questions du schéma 3
+✅ test/questionnaire_test.dart: `training_age` et `preferences` : cachées pour un débutant
+✅ test/questionnaire_test.dart: dix tests guidés, chacun avec son protocole
+✅ test/questionnaire_test.dart: tests guidés : aucun effort maximal sans questionnaire santé standard ni niveau intermédiaire
+✅ test/questionnaire_test.dart: 10000 profils aléatoires : le parcours ne lève jamais, garde l'ordre et pose toujours les questions obligatoires
+✅ test/questionnaire_test.dart: lecture stricte du fichier
+✅ test/questionnaire_test.dart: évaluation d'une condition mal formée : FormatException
+✅ test/contracts_roundtrip_test.dart: AthleteProfile : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: PainReport : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: HealthCheck : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: SetTarget : aller-retour JSON sur 10000 valeurs seedées
+✅ test/profile_v3_test.dart: schéma 2 relu à l'identique les 40 profils types du schéma 2 se réécrivent à l'octet près
+✅ test/contracts_roundtrip_test.dart: SetRecord : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: TrainingBreak : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: ProgramRef : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: SessionRecord : aller-retour JSON sur 10000 valeurs seedées
+✅ test/profile_v3_test.dart: schéma 2 relu à l'identique 10000 profils du schéma 2 aléatoires : lecture puis écriture identiques, aucune clé du schéma 3 inventée
+✅ test/profile_v3_test.dart: schéma 2 relu à l'identique 10000 journaux aléatoires sans les champs 0.4.0 : lecture puis écriture identiques
+✅ test/profile_v3_test.dart: migration du schéma 2 vers le schéma 3 profils types : seul le numéro de schéma change
+✅ test/profile_v3_test.dart: migration du schéma 2 vers le schéma 3 profils types : la migration du JSON donne le même profil
+✅ test/contracts_roundtrip_test.dart: TrainingLog : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: PlanLock : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: PlanSlot : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: PlanDay : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: ScoreComponent : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: PlanScore : aller-retour JSON sur 10000 valeurs seedées
+✅ test/profile_v3_test.dart: migration du schéma 2 vers le schéma 3 10000 profils aléatoires : ni perte ni invention, mêmes violations, migration du JSON équivalente
+✅ test/profile_v3_test.dart: migration du schéma 2 vers le schéma 3 la migration du JSON garde les clés inconnues et refuse un schéma inattendu
+✅ test/profile_v3_test.dart: migration du schéma 2 vers le schéma 3 un champ du schéma 3 exige le schéma 3
+✅ test/profile_v3_test.dart: migration du schéma 2 vers le schéma 3 chaque champ du schéma 3 : nommé par `schema3FieldsPresent`, refusé au schéma 2 à son chemin
+✅ test/contracts_roundtrip_test.dart: Pass1Plan : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: ReviewAction : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: ProfileDelta : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: PlanChange : aller-retour JSON sur 10000 valeurs seedées
+✅ test/profile_v3_test.dart: migration du schéma 2 vers le schéma 3 10000 profils aléatoires : `schema3FieldsPresent` nomme les clés du schéma 3 écrites, le schéma 2 les refuse une à une
+✅ test/profile_v3_test.dart: migration du schéma 2 vers le schéma 3 une réponse absente reste absente (aucune valeur par défaut)
+✅ test/profile_v3_test.dart: profils types du schéma 3 valides, connus du catalogue, allers-retours exacts
+✅ test/profile_v3_test.dart: profils types du schéma 3 les situations du lot sont couvertes
+✅ test/profile_v3_test.dart: profils types du schéma 3 contrôles du catalogue propres au schéma 3
+✅ test/profile_v3_test.dart: invariants des champs du schéma 3 identifiants et cibles sans doublon
+✅ test/profile_v3_test.dart: invariants des champs du schéma 3 récupération : jamais datée d'avant la création du profil
+✅ test/profile_v3_test.dart: invariants des champs du schéma 3 échéance : ses objectifs sont des objectifs du profil
+✅ test/profile_v3_test.dart: invariants des champs du schéma 3 charge actuelle : un mouvement au plus une fois
+✅ test/profile_v3_test.dart: invariants des champs du schéma 3 poids visé : seulement pour perdre ou prendre du poids
+✅ test/profile_v3_test.dart: invariants des champs du schéma 3 autre sport : jours de 1 à 7, distincts
+✅ test/profile_v3_test.dart: invariants des champs du schéma 3 gêne : mouvements qui la réveillent sans doublon
+✅ test/profile_v3_test.dart: invariants des champs du schéma 3 gêne : gêne à l'effort de 0 à 10
+✅ test/profile_v3_test.dart: invariants des champs du schéma 3 poste d'épreuve : répétitions ou durée, pas les deux
+✅ test/profile_v3_test.dart: invariants des champs du schéma 3 échéance : mouvements distincts, postes avec leur format
+✅ test/profile_v3_test.dart: invariants des champs du schéma 3 critère d'étape : un maintien ou des répétitions
+✅ test/profile_v3_test.dart: invariants des champs du schéma 3 échelle de figure : étapes distinctes, la figure en dernier
+✅ test/profile_v3_test.dart: invariants des champs du schéma 3 test ou record : champs selon la nature
+✅ test/profile_v3_test.dart: invariants des champs du schéma 3 volume de course : bornes
+✅ test/reasons_test.dart: codes uniques, bien formés, sans texte
+✅ test/reasons_test.dart: recherche dans le registre
+✅ test/reasons_test.dart: une raison valide passe
+✅ test/reasons_test.dart: code inconnu, paramètre manquant, en trop ou mal typé
+✅ test/contracts_roundtrip_test.dart: PlanDiff : aller-retour JSON sur 10000 valeurs seedées
+✅ test/flames_test.dart: flammes → RIR : table exacte de D5.3
+✅ test/flames_test.dart: RIR → flammes : inverse exact sur l'échelle
+✅ test/flames_test.dart: 1 flamme = RIR 5 et plus ; seule note ouverte
+✅ test/flames_test.dart: RIR 0,5 (ancien journal) donne 9 flammes, jamais l'échec
+✅ test/flames_test.dart: hors échelle : demi-point le plus proche, égalité vers le plus dur
+✅ test/flames_test.dart: monotone : plus de réserve, jamais plus de flammes (10 000 tirages)
+✅ test/flames_test.dart: valeurs refusées
+✅ test/flames_test.dart: « pas de note » reste une absence, jamais une flamme
+✅ test/catalog_test.dart: source la copie de la base v1.1.0 a la somme de contrôle attendue
+✅ test/catalog_test.dart: source la base est conservée telle quelle dans le catalogue
+✅ test/catalog_test.dart: schéma de la base 1 039 exercices, 8 disciplines aux effectifs attendus
+✅ test/catalog_test.dart: schéma de la base vocabulaires fermés : 56 muscles, 68 matériels, 56 catégories
+✅ test/catalog_test.dart: schéma de la base identifiants uniques et bien formés
+✅ test/catalog_test.dart: schéma de la base un muscle figure dans une seule colonne par exercice
+✅ test/catalog_test.dart: schéma de la base variante_de : existe, sans cycle, racine et profondeur cohérentes
+✅ test/catalog_test.dart: champs calculés les vocabulaires calculés sont ceux des enums du contrat
+✅ test/catalog_test.dart: champs calculés domaines : difficulté, fatigue, lieux, contraintes, fraction
+✅ test/catalog_test.dart: champs calculés la difficulté ne décroît jamais quand le niveau monte
+✅ test/catalog_test.dart: champs calculés tenues et étirements se mesurent en secondes
+✅ test/catalog_test.dart: champs calculés prérequis : existants, au plus 2, plus faciles, sans cycle
+✅ test/catalog_test.dart: champs calculés vecteur musculaire : principal 1, secondaire 0,5, stabilisateur 0,2
+✅ test/catalog_test.dart: champs calculés cas types relus
+✅ test/catalog_test.dart: index par identifiant
+✅ test/catalog_test.dart: index par nom et alias, sans casse ni accents
+✅ test/catalog_test.dart: index par discipline, catégorie, schéma, famille : partitions
+✅ test/catalog_test.dart: index par muscle et par matériel
+✅ test/catalog_test.dart: index faisabilité selon le matériel disponible
+✅ test/catalog_test.dart: index faisabilité selon le lieu (0.4.2)
+✅ test/catalog_test.dart: index tables de lieu et de remplacement cohérentes avec le catalogue
+✅ test/catalog_test.dart: index contrôles de références
+✅ test/catalog_test.dart: proximité symétrique, bornée, 1 pour soi-même (10 000 paires seedées)
+✅ test/catalog_test.dart: proximité une variante est plus proche qu'un exercice sans rapport
+✅ test/catalog_test.dart: proximité poids de la proximité : somme 1
+✅ test/catalog_test.dart: proximité mostSimilar : trié, déterministe, filtrable, sans soi-même
+✅ test/catalog_test.dart: chargement refuse un schéma plus récent
+✅ test/catalog_test.dart: chargement refuse un identifiant en double
+✅ test/catalog_test.dart: chargement refuse un code inconnu
+✅ test/catalog_test.dart: chargement refuse une variante_de inconnue ou cyclique
+✅ test/catalog_test.dart: chargement deux chargements donnent le même catalogue
+✅ test/catalog_test.dart: chargement temps de chargement ≤ 150 ms (décompression comprise)
+chargement du catalogue : meilleur de 9 = 23.878 ms
+✅ test/civil_date_test.dart: lecture et écriture AAAA-MM-JJ
+✅ test/civil_date_test.dart: dates refusées
+✅ test/civil_date_test.dart: numéro de jour : aller-retour sur 10 000 jours seedés
+✅ test/civil_date_test.dart: arithmétique en jours civils (changements d'heure sans effet)
+✅ test/civil_date_test.dart: ordre et égalité
+✅ test/fixtures_test.dart: profils types 40 profils, clés uniques, descriptions
+✅ test/fixtures_test.dart: profils types chaque profil est valide et ne cite que le catalogue
+✅ test/fixtures_test.dart: profils types les situations demandées par le lot sont couvertes
+✅ test/fixtures_test.dart: journaux synthétiques 12 journaux de 4 à 24 semaines, valides
+✅ test/fixtures_test.dart: journaux synthétiques les unités des séries suivent le catalogue
+✅ test/fixtures_test.dart: journaux synthétiques vérité de la simulation fournie pour chaque journal
+✅ test/fixtures_test.dart: journaux synthétiques séances « reprise », séries sans note, bilans partiels
+✅ test/fixtures_test.dart: champs optionnels utilisés par les jeux de données lieu par jour, matériel par lieu, expérience, su / pas su
+✅ test/fixtures_test.dart: champs optionnels utilisés par les jeux de données pause déclarée dans le journal irrégulier
+✅ test/fixtures_test.dart: champs optionnels utilisés par les jeux de données douleurs du bilan : absentes quand la question n'est pas posée
+✅ test/fixtures_test.dart: programme du propriétaire (lecture seule) 40 semaines, marqué en lecture seule, source tracée
+✅ test/fixtures_test.dart: programme du propriétaire (lecture seule) la correspondance indicative ne cite que le catalogue
+✅ test/fixtures_test.dart: ancien journal et conversion le journal converti est valide et ne cite que le catalogue
+✅ test/fixtures_test.dart: ancien journal et conversion le rapport de conversion compte tout ce qui est lu
+✅ test/fixtures_test.dart: ancien journal et conversion difficulté : RIR de l'ancien journal → flammes, absence conservée
+✅ test/fixtures_test.dart: ancien journal et conversion bilan : forme /10 → 1 à 5, sommeil en heures, douleur par mouvement non convertie
+✅ test/contracts_roundtrip_test.dart: ReviewResult : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: Variant : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: VariantSet : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: ExercisePrescription : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: DayPrescription : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: WeekPrescription : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: Pass2Plan : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: ProgramBlock : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: ExerciseEstimate : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: FatigueState : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: PainTrend : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: AdaptationSummary : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: AdaptInput : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: SessionRequest : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: AdviceRequest : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: ProposalDecision : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: PersonalRecord : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: SessionAdjustment : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: SessionPlan : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: IntraSessionAdvice : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: Proposal : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: EngineLogEntry : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: AdaptReview : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: XpEntry : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: KreditEntry : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: LevelState : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: AttributeScore : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: MovementRank : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: Quest : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: Milestone : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: Prediction : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: GoalProgress : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: DelightEvent : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: QuestState : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: QuestClaim : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: QuestInput : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: QuestOutcome : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: PlanRequest : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: NextBlockRequest : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: RestructureRequest : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: ReviewRequest : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: VariantsRequest : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: Pass2Request : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: BlockProposal : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: OtherSport : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: RecentTraining : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: EnduranceBase : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: Benchmark : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: WeakPoint : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: CompetitionLift : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: EventStation : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: SeasonEvent : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: Specialization : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: SkillState : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: StepCriterion : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: SkillStep : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: SkillLadder : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: SkillProgress : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: PhaseOverride : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: SeasonPhase : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: SeasonPlan : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: BlockIntent : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: VolumeTolerance : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: AttemptResult : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: AttemptSuggestion : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: WarmupStep : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: LiftAttempts : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: PacingSegment : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: EventDayRequest : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: EventDayPlan : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: SeasonRequest : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: Tempo : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: SetTechnique : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: IntensityTarget : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: AutoregulationRule : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: GroupSpec : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: GroupResult : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: SetPart : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: TestSpec : aller-retour JSON sur 10000 valeurs seedées
+✅ test/contracts_roundtrip_test.dart: même graine, mêmes valeurs (aucun hasard caché)
+✅ test/contracts_roundtrip_test.dart: un type racine écrit sa version de schéma
+✅ test/contracts_roundtrip_test.dart: lecture stricte : champ manquant ou de mauvais type refusé
+✅ test/contracts_roundtrip_test.dart: un nombre entier est accepté pour un champ décimal
+::endgroup::
+
+🎉 328 tests passed.
