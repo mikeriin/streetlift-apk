@@ -542,7 +542,6 @@ SessionPlan buildSessionPlan(
         final why = <Reason>[
           reason(ReasonCodes.adaptVolumeDown, <String, Object?>{
             'sets': d.sets - sets,
-            'cause': 'pain_return',
           }),
         ];
         adjustments.add(

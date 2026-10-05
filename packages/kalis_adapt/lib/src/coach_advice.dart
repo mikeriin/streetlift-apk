@@ -114,10 +114,7 @@ SetPlan? clampLocked(SessionRun run, ExerciseRun ex, SetPlan next) {
   // (Reprise graduée après une douleur qui dure : aucune hausse dans la
   // séance non plus ; CA2, partie 0.)
   final locked =
-      ex.fails > 0 ||
-      ex.painZones.isNotEmpty ||
-      run.noIncrease ||
-      ex.inReturn;
+      ex.fails > 0 || ex.painZones.isNotEmpty || run.noIncrease || ex.inReturn;
   if (!locked) {
     return null;
   }

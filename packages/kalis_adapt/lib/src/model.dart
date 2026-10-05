@@ -232,12 +232,7 @@ final class PainState {
 /// Meilleure série de [bests] (jour, valeur ; les plus récentes à la fin)
 /// depuis la dernière coupure d'au moins [gapDays] jours, dans les
 /// [windowDays] jours avant [day] ; 0 sans séance récente.
-int recentBestOf(
-  List<(int, int)> bests,
-  int day,
-  int gapDays,
-  int windowDays,
-) {
+int recentBestOf(List<(int, int)> bests, int day, int gapDays, int windowDays) {
   var best = 0;
   var next = day;
   for (var i = bests.length - 1; i >= 0; i--) {
