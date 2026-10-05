@@ -26,6 +26,7 @@ Lot « CX correction 1 » du pipeline « Calibrage des programmes » (croisement
   externe au plus ; la meilleure barre entre la réussie et la manquée est reportée) ; −7,5 % après une série
   manquée non voulue, gardé sur les séries suivantes de la séance ; simple d'entraînement à 92 % du maximum estimé au plus (85 % un jour de bilan bas) ;
   semaine allégée ou de test : jamais plus lourd que la charge écrite.
+- **Tenues** : la borne de hausse d'une tenue laisse toujours servir 55 % du meilleur maintien mesuré.
 
 ## 0.2.1
 

@@ -777,6 +777,16 @@ final class Athlete {
           return false;
         }
       }
+      // Étape de travail (ou figure visée) d'une piste du profil : jamais
+      // écartée parce qu'elle a été sautée — seul l'arrêt pour douleur
+      // l'écarte (panel CX, correction 1, passe 5, `street_10` : planche
+      // straddle sautée trois fois en semaine allégée, retirée du dernier
+      // bloc et de son test).
+      for (final st in profile.skills ?? const <SkillState>[]) {
+        if (st.currentExerciseId == id || st.targetExerciseId == id) {
+          return true;
+        }
+      }
       for (final (zone, pain) in trendPains) {
         final joint = zone.joint;
         if (pain < 6 && joint != null && e.stressOn(joint) != JointStress.low) {
@@ -1309,9 +1319,7 @@ final class Athlete {
     // CX, correction 1, `street_01`).
     if (id == coachWristLoadedPrep &&
         (stopZones.contains(BodyZone.wristHand) ||
-            limits.any(
-              (l) => l.joint == Joint.wrist && l.discomfort >= 3,
-            ))) {
+            limits.any((l) => l.joint == Joint.wrist && l.discomfort >= 3))) {
       return 'joint';
     }
     // Coude douloureux au bloc précédent (3 sur 10 ou plus) : la prise

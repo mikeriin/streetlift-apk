@@ -409,6 +409,37 @@ sous 55 % du maintien testé ; recul d'étape pour douleur écrit (`pain_step`) 
 plus de 15 % par une série de plusieurs répétitions (`street_12`) et seul un 1RM estimé est relevé par le
 maximum au poids du corps (`street_11`).
 
+Boucle 7 (sur la relecture documentée ci-dessous) : la borne de hausse d'une tenue (`kalis_adapt`) laisse
+toujours servir 55 % du meilleur maintien mesuré (la tenue menton écrite à 17-19 s après un test de 30 s
+était servie à 5-9 s) ; pompes sur poignets retirées de l'échauffement quand le poignet est douloureux ;
+l'étape de travail d'une figure du profil n'est plus écartée du bloc suivant parce que le moteur
+d'évolution l'a vue sautée (planche de `street_10` retirée du bloc 4 et de son test sans douleur).
+
+### Relecture documentée (manche 4)
+
+Trois relecteurs (Opus), sources publiques en ligne seulement, consigne inchangée, sur les saisons du
+contrôle de la boucle 6 (mêmes sept profils que la manche 3). Sans seuil (C7.6) ; notes écrites sur la page
+de relecture (manche 4, auteur « relecture-documentee »).
+
+| Profil | Ensemble | Adapté | Progression | Volume | Exercices | Faisable |
+| --- | --- | --- | --- | --- | --- | --- |
+| `street_01_debutant_complet` | 7 | 7,5 | 6,5 | 7 | 7 | 8 |
+| `street_06_inter_sets_reps` | 6 | 6 | 5 | 6,5 | 6 | 8 |
+| `street_07_avance_streetlifting_competition` | 7,5 | 8 | 7,5 | 7,5 | 8 | 8,5 |
+| `street_08_avance_sets_reps_competition` | 6,5 | 6,5 | 5,5 | 6 | 7 | 7,5 |
+| `street_10_elite_figures` | 5,5 | 5 | 4,5 | 6 | 5,5 | 6 |
+| `street_12_antecedent_coude` | 7,5 | 8 | 6,5 | 7,5 | 7,5 | 8,5 |
+| `street_14_parc_sans_lest` | 6 | 7 | 5 | 6,5 | 6,5 | 8,5 |
+
+Moyenne 6,6 (manche 3 : 6,1). Traitement : tenue servie sous l'écrit et pompes sur poignets douloureux
+(`street_01`) et planche retirée (`street_10`) → boucle 7. Non retenus, avec la raison : 1RM du bloc 3 de
+`street_12` (115 kg = le simple du test, 36,25 kg plus 96 % du poids du corps ; le relecteur a compté 100 %) ;
+départ sur des records déclarés au-dessus du niveau du jour (`street_06`, `07`, `08`, `12` : la série de tête
+et l'autorégulation recalent ; un test d'entrée → CP2) ; lest pour un objectif de répétitions (`street_06`),
+affûtage de deux semaines (`street_06`), muscle-up après l'échéance et volume de poussée (`street_08`),
+changement de méthode des figures après des tests sans progrès et force dynamique bras tendus
+(`street_10`), volume de traction au chrono (`street_14`) → CP2.
+
 Reportés à CP2 / CA2 (notés par le panel, hors du périmètre street de cette correction) : créneau horaire,
 volume de poussée, jambes, profils hors street, échelle de poussée du débutant, volume de tirage du
 débutant, troisième exposition de traction (`street_17`), progression des tenues de figure jusqu'au

@@ -43,6 +43,10 @@ part). Détail et sources : `CONTRAT.md`, § 12.14 ; journal : `packages/kalis_b
 - **Douleur et restructuration** : une figure gardée sur prise neutre pendant un arrêt porte la note d'arrêt,
   jamais `pain_trend` ; une restructuration lit les semaines gardées du bloc pour ses garde-fous ; une
   amplitude partielle surchargée qui revient après quatre semaines repart de son entrée.
+- **Étape de figure sautée** : l'étape de travail (ou la figure visée) d'une piste du profil n'est plus écartée
+  du bloc suivant parce qu'elle a été sautée ; seul l'arrêt pour douleur l'écarte.
+- **Poignet douloureux** (3/10 ou plus, ou zone à l'arrêt) : plus de pompes sur poignets à l'échauffement
+  (rotations et pressions des doigts à la place).
 - **Débutant** : préparation des poignets, tenues +15 % par semaine au plus (2 s au moins, jamais sous 55 %
   du maintien testé), test de la tenue
   menton non borné à 30 s, essais stricts de traction écrits seulement sans traction acquise.

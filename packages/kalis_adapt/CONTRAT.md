@@ -1083,6 +1083,10 @@ version du moteur mise à part : la lecture des tests sans mode coach suit 0.2.1
   série manquée non voulue, −7,5 % de charge totale, gardé sur les séries suivantes de la séance ; simple
   d'entraînement à 92 % du maximum estimé au plus (85 % un jour de bilan bas) ; semaine allégée ou de test :
   jamais plus lourd que la charge écrite.
+- **Tenues** : la borne de hausse d'une tenue d'une séance à la suivante (et celle du temps total de
+  l'emplacement) laisse toujours servir 55 % du meilleur maintien mesuré (`coachHoldMaxFloorShare`) :
+  après un test qui saute, la tenue écrite à 55-65 % du test n'est plus servie au niveau des semaines
+  d'avant.
 
 | Paramètre | Valeur | Source |
 | --- | --- | --- |
@@ -1092,8 +1096,10 @@ version du moteur mise à part : la lecture des tests sans mode coach suit 0.2.1
 | Borne basse | < 90 % de la prédiction ; deuxième mesure sous 28 jours, autre séance | Zourdos et al. 2021 ; Steele et al. 2017 ; choix raisonné |
 | Échec non voulu | −7,5 % de charge totale, séries suivantes comprises | Helms et al. 2018 (autorégulation) |
 | Tentatives | 91 % ; +5 % ; +3 % ; +5 kg au plus | Travis, Zourdos, Bazyler 2021 |
+| Plancher de la borne des tenues | 55 % du meilleur maintien | R4-F2 (50 à 70 % du maximum) ; relecture documentée CX |
 
-Invariants testés : `test/coach_rules_test.dart` (arrêt durable, fort, retour, levée, douleur affichée) ;
+Invariants testés : `test/coach_rules_test.dart` (arrêt durable, fort, retour, levée, douleur affichée,
+tenue servie à 55 % du test au moins après le test) ;
 `test/coach_test.dart` (sauts de tentatives) ; propriétés (`test/properties.dart`) : aucun exercice exclu
 par une douleur du jour n'est prescrit ; un test servi un jour de changement de lieu se fait avec le
 matériel de ce lieu.
