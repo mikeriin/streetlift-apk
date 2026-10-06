@@ -110,3 +110,12 @@ Le texte ajouté au lancement d'une tâche n'arrive pas toujours dans la session
 - **Parallèle avec CP2** : ne touche pas `packages/kalis_plan` ; rebase sur `origin/moteurs` avant chaque push ; numéro libre suivant pour `kalis_bench`. Tes passes du panel sur les saisons croisées prennent la dernière étiquette publiée de `kalis_plan` ; dis laquelle.
 - Fin de lot : comme le prompt ; `LIVRAISON_CA2.md` avec recommandation ; ligne « à valider » ; le pilotage décide (C8.1).
 - Clé des références : comme CP2 (C7.8). Quota d'environ 200 recherches web par session.
+
+## Reprise CP2 et CA2 (06/10/2026 vers 14:50 UTC, tâche « Opus 5.5, effort maximal, moteurs »)
+
+Les deux sessions du 05/10 se sont arrêtées sur la limite hebdomadaire du plan (CP2 vers 22:20 UTC, CA2 vers 23:10 UTC), sans livrer. Limite remise à zéro le 06/10. Reprise sur la même tâche, sections CP2 et CA2 ci-dessus inchangées (périmètre, ordre, partie 0 d'abord, publications intermédiaires 0.2.3, C9.2, C9.8).
+
+- **CP2** : reprendre depuis `cp-sauvegardes/CP2` (62bdb9c, « boucle 3 », SAUVEGARDE.md) ; dernier contrôle dev d87d1845 sur `claude/ci-cp-a`. Panel p2 : 27/68 à 9, min 6, moyenne 8,01. Priorité : finir la partie 0 et publier `kalis_plan` 0.2.3 (C9.7.2), puis la partie 1 (déjà préparée, `p1-travail/`).
+- **CA2** : reprendre depuis `cp-sauvegardes/CA2` (f2cc415, « boucle 4 (sécurité) en contrôle ») ; contrôles sur `claude/ci-cp-b`. Panel p2 : 17/68 à 9, min 6 ; relecture documentée de la session : 5 à 7. Priorité : finir la partie 0 et publier `kalis_adapt` 0.2.3.
+- Lancement : CP2 d'abord (seul « à faire (reprise) ») ; CA2 passe « à faire (reprise) » quand CP2 a réécrit « en cours ».
+- **Budget** : la limite hebdomadaire vient d'être atteinte une fois ; économiser (renoter seulement les couples changés, une passe complète à la fin, pas de sous-agent inutile) et sauvegarder toutes les 30 min.
