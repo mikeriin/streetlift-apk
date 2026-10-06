@@ -44,3 +44,12 @@ Session Opus 5.5 lancée le 05/10/2026 vers 18:14 UTC (pas de ligne « Lot : » 
 - Compiler (CI dev), corriger ; tests des nouvelles règles ; version 0.2.3.
 - Boucles du panel partie 0 (≤ 5, arrêt après une boucle sans gain) ; relecture documentée (3 sous-agents) ; publication intermédiaire 0.2.3 (contrôle vert, étiquette, DECISIONS, ETAT, manche page, notification).
 - Partie 1 : autres disciplines → 0.3.0.
+
+
+## Reprise du 06/10/2026 (session Opus, 14:49 UTC)
+- Ligne d'état « en cours depuis 2026-10-06 14:49 UTC » poussée (34737a3). add_repo absent ; push vérifié.
+- État repris : code du dernier contrôle de la session précédente (a4311cc8, « boucle 4 b », run 37385747396 : paquets verts, banc 0 violation sur les programmes street et `saisons/SECURITE.md`), postérieur à la sauvegarde 62bdb9c.
+- **Lecture des notes de la page de relecture (ArtifactData) refusée par le contrôle d'autorisations de la session** : constats C9.8 lus dans `livraisons/RELECTURE_DOCUMENTEE_CX_c1.md` (même contenu que les notes `m4_*_pilotage`). La publication de la manche sur la page sera probablement refusée aussi : à signaler.
+- Vérification des constats C9.8 sur les exports a4311cc8 : (i) `street_12` douleur_coude : bloc 2 « réalisation, affûtage, test » après la douleur, dips 2 × 5 → 2 × 19 en S11 → NON traité ; (ii) `street_01` : wrist push-ups et pompes paume à plat au bloc 3 → NON traité ; (iii) `street_07` : 1RM de référence 166,5 kg déclarés (estimé ≈ 150) → NON traité ; (iv) `street_08` : 352 dips en S1 → NON traité ; (v) `street_10` : planche 13 séries en S1 (au sol) → partiellement.
+- Boucle 5 (code, contrôle dev a04d9ec6) : bloc de reprise (`coachPainReprise`, `coachRepriseWeeks`, note `pain_reprise`) ; 1RM seulement déclaré remplacé par l'estimation nettement plus basse (borne 85 %) ; plafond de la 1re semaine 4 × maximum (`coachFirstWeekRepsShare`) ; poignet déclaré : figures sans prise neutre ×0,5 (`wrist_spare`) ; douleur signalée sur 3 séances au bloc d'avant → zone « sensible » 2/10 ; consigne pompe poignet neutre (cue 12) ; consigne d'arrêt du muscle-up. Version 0.2.3. 5 tests ajoutés.
+- Compte des boucles du panel (C9.2) : p1 (boucle 1), p2 (boucle 2) mesurées ; les boucles 3 et 4 de code n'ont pas de passe du panel sauvegardée → la prochaine passe (p3) est la boucle 3 du panel.

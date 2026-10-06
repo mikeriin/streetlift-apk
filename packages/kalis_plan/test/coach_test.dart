@@ -379,10 +379,7 @@ void main() {
       // (85 % au moins : après un allègement, la hausse d'un emplacement à
       // répétitions égales reste bornée sur la semaine allégée, comme le
       // banc la mesure — CP2, partie 0, boucle 2.)
-      expect(
-        top.reduce((a, b) => a > b ? a : b),
-        inInclusiveRange(0.85, 0.95),
-      );
+      expect(top.reduce((a, b) => a > b ? a : b), inInclusiveRange(0.85, 0.95));
       // Une exposition lourde (85 % et plus) par semaine de réalisation.
       for (var k = 0; k < weeks.length; k++) {
         if (weeks[k].intent == WeekIntent.realization) {
@@ -1402,9 +1399,17 @@ void main() {
           for (final i in d.items) {
             final load = i.startLoadKg;
             final reps = i.repsHigh;
+            // (Séries de travail seulement : une série légère, à 5
+            // répétitions de réserve ou plus, n'est pas la référence d'une
+            // série lourde du même exercice — CP2, partie 0, boucle 3 ;
+            // le banc borne la hausse par emplacement.)
+            final flames = i.targetFlames;
             if (load == null ||
                 reps == null ||
-                (i.kind != null && i.kind != SetKind.work)) {
+                (i.kind != null && i.kind != SetKind.work) ||
+                (flames != null &&
+                    Flames.isValid(flames) &&
+                    Flames.toRir(flames) >= 5)) {
               continue;
             }
             final key = '${i.exerciseId}|$reps';
@@ -1590,6 +1595,276 @@ void main() {
     bool noteOn(ExercisePrescription i, String note) => i.reasons.any(
       (r) => r.code == ReasonCodes.planCoachNote && r.params['note'] == note,
     );
+
+    test('douleur qui dure sur un mouvement visé : bloc de reprise, ni '
+        'affûtage, ni test, ni épreuve (C9.8, street_12)', () {
+      final blocks = _programWith(
+        catalog,
+        _lifter(),
+        12,
+        reasonsFor: (n) => n == 1
+            ? <Reason>[
+                Reason(
+                  code: ReasonCodes.adaptPainPersistent,
+                  params: <String, Object?>{
+                    'zone': BodyZone.elbow.code,
+                    'sessions': 4,
+                  },
+                ),
+              ]
+            : const <Reason>[],
+      );
+      expect(blocks.length, greaterThanOrEqualTo(2));
+      final reprise = blocks[1];
+      final notes = <String>{
+        for (final r in <Reason>[
+          ...reprise.pass1.reasons,
+          ...reprise.pass2.reasons,
+        ])
+          if (r.code == ReasonCodes.planCoachNote) '${r.params['note']}',
+      };
+      expect(notes, contains(CoachNotes.painReprise));
+      for (final w in reprise.pass2.weeks) {
+        expect(
+          w.intent,
+          isNot(anyOf(
+            WeekIntent.taper,
+            WeekIntent.test,
+            WeekIntent.competition,
+            WeekIntent.realization,
+          )),
+        );
+        for (final d in w.days) {
+          for (final i in d.items) {
+            expect(i.kind, isNot(SetKind.test), reason: i.exerciseId);
+          }
+        }
+      }
+    });
+
+    test('record seulement déclaré, estimation nettement plus basse : le '
+        'bloc suivant est écrit sur le 1RM estimé (C9.8, street_07)', () {
+      final engine = KalisPlan();
+      final profile = _lifter(weeksOut: 20);
+      final request = _request(profile);
+      final pass1 = engine.createPass1(catalog, request);
+      final pass2 = engine.createPass2(
+        catalog,
+        Pass2Request(request: request, pass1: pass1),
+      );
+      final first = ProgramBlock(pass1: pass1, pass2: pass2);
+      final at = _start.addDays(7 * pass1.weeks);
+      final fraction =
+          catalog.exercise('sl-dips-leste').bodyweightFraction?.value ?? 0;
+      final declaredTotal = 90 + fraction * 78;
+      double heaviest(List<ExerciseEstimate> estimates) {
+        final next = engine.nextBlock(
+          catalog,
+          NextBlockRequest(
+            profile: profile,
+            seed: 0,
+            startDate: at,
+            previous: first,
+            adaptation: AdaptationSummary(
+              asOf: at.addDays(-1),
+              weeksObserved: pass1.weeks,
+              sessionsPlanned: pass1.weeks * pass1.days.length,
+              sessionsCompleted: pass1.weeks * pass1.days.length,
+              unlockLevel: UnlockLevel.loadsReps,
+              confidence: 0,
+              estimates: estimates,
+              pains: const <PainTrend>[],
+              avoidedExerciseIds: const <String>[],
+              reasons: const <Reason>[],
+            ),
+            locks: const <PlanLock>[],
+          ),
+        );
+        var most = 0.0;
+        for (final w in next.block.pass2.weeks) {
+          for (final d in w.days) {
+            for (final i in d.items) {
+              final load = i.startLoadKg;
+              if (i.exerciseId == 'sl-dips-leste' &&
+                  i.kind == SetKind.work &&
+                  load != null &&
+                  load > most) {
+                most = load;
+              }
+            }
+          }
+        }
+        return most;
+      }
+
+      final declared = heaviest(const <ExerciseEstimate>[]);
+      final estimated = heaviest(<ExerciseEstimate>[
+        ExerciseEstimate(
+          exerciseId: 'sl-dips-leste',
+          unit: CapacityUnit.oneRmKg,
+          capacity: declaredTotal * 0.88,
+          standardError: declaredTotal * 0.02,
+          weeklyTrend: 0,
+          observations: 12,
+          lastObservedOn: at.addDays(-3),
+        ),
+      ]);
+      expect(declared, greaterThan(0));
+      expect(estimated, lessThan(declared));
+    });
+
+    test('première semaine : répétitions au poids du corps bornées à 4 fois '
+        'le maximum (C9.8, street_08)', () {
+      final profile = _profile(
+        experience: ExperienceLevel.advanced,
+        weekdays: const <int>[1, 2, 4, 6],
+        minutes: 90,
+        benchmarks: <Benchmark>[
+          _maxReps('sw-traction-pronation', 28),
+          _maxReps('sw-dips-barres-paralleles', 50),
+        ],
+      );
+      final blocks = _program(catalog, profile, 4);
+      final week0 = blocks.first.pass2.weeks.first;
+      final dipRoot = catalog.exercise('sw-dips-barres-paralleles').rootId;
+      var reps = 0;
+      for (final d in week0.days) {
+        for (final i in d.items) {
+          final e = catalog.exercise(i.exerciseId);
+          final high = i.repsHigh;
+          if (i.kind == SetKind.work &&
+              high != null &&
+              e.rootId == dipRoot &&
+              e.loadType != LoadType.addedWeight) {
+            reps += i.sets * high;
+          }
+        }
+      }
+      expect(reps, lessThanOrEqualTo(4 * 50));
+    });
+
+    test('gêne du poignet déclarée : figures en appui sans prise neutre '
+        'réduites de moitié dès la première semaine (C9.8, street_10)', () {
+      AthleteProfile figures(List<Limitation> limits) => _profile(
+        experience: ExperienceLevel.elite,
+        primary: TrainingDiscipline.calisthenics,
+        weekdays: const <int>[1, 2, 3, 5, 6, 7],
+        minutes: 90,
+        equipment: const <String>[..._park, 'parallettes', 'anneaux'],
+        benchmarks: <Benchmark>[
+          const Benchmark(
+            exerciseId: 'cs-planche-straddle',
+            kind: BenchmarkKind.maxHold,
+            source: BenchmarkSource.declared,
+            seconds: 6,
+          ),
+          _maxReps('sw-traction-pronation', 22),
+          _maxReps('sw-dips-barres-paralleles', 35),
+        ],
+        skills: const <SkillState>[
+          SkillState(
+            targetExerciseId: 'cs-planche',
+            currentExerciseId: 'cs-planche-straddle',
+          ),
+        ],
+        limitations: limits,
+      );
+      int planche(AthleteProfile p) {
+        var sets = 0;
+        final w = _program(catalog, p, 4).first.pass2.weeks.first;
+        for (final d in w.days) {
+          for (final i in d.items) {
+            if (i.exerciseId == 'cs-planche-straddle' &&
+                i.kind == SetKind.work) {
+              sets += i.sets;
+            }
+          }
+        }
+        return sets;
+      }
+
+      final free = planche(figures(const <Limitation>[]));
+      final spared = planche(
+        figures(const <Limitation>[
+          Limitation(
+            zone: BodyZone.wristHand,
+            side: BodySide.both,
+            discomfort: 2,
+            since: ConstraintSince.months3To12,
+          ),
+        ]),
+      );
+      expect(free, greaterThan(0));
+      expect(spared, lessThanOrEqualTo((free / 2).ceil() + 1));
+    });
+
+    test('poignet signalé sur trois séances au bloc précédent : pas de '
+        'wrist push-ups au bloc suivant, pompe écrite poignet neutre '
+        '(C9.8, street_01)', () {
+      final engine = KalisPlan();
+      final profile = _beginner();
+      final request = _request(profile);
+      final pass1 = engine.createPass1(catalog, request);
+      final pass2 = engine.createPass2(
+        catalog,
+        Pass2Request(request: request, pass1: pass1),
+      );
+      final at = _start.addDays(7 * pass1.weeks);
+      final next = engine.nextBlock(
+        catalog,
+        NextBlockRequest(
+          profile: profile,
+          seed: 0,
+          startDate: at,
+          previous: ProgramBlock(pass1: pass1, pass2: pass2),
+          adaptation: AdaptationSummary(
+            asOf: at.addDays(-1),
+            weeksObserved: pass1.weeks,
+            sessionsPlanned: pass1.weeks * pass1.days.length,
+            sessionsCompleted: pass1.weeks * pass1.days.length,
+            unlockLevel: UnlockLevel.loadsReps,
+            confidence: 0,
+            estimates: const <ExerciseEstimate>[],
+            pains: const <PainTrend>[
+              PainTrend(
+                zone: BodyZone.wristHand,
+                side: BodySide.right,
+                sessionsReported: 4,
+                lastIntensity: 2,
+                consecutiveAboveThreshold: 0,
+              ),
+            ],
+            avoidedExerciseIds: const <String>[],
+            reasons: const <Reason>[],
+          ),
+          locks: const <PlanLock>[],
+        ),
+      );
+      var pushes = 0;
+      for (final w in next.block.pass2.weeks) {
+        for (final d in w.days) {
+          for (final i in d.items) {
+            expect(i.exerciseId, isNot(coachWristLoadedPrep));
+            final e = catalog.exercise(i.exerciseId);
+            if (e.rootId == catalog.exercise('sw-pompe').rootId &&
+                i.kind == SetKind.work) {
+              pushes++;
+              expect(
+                i.reasons.any(
+                  (r) =>
+                      r.code == ReasonCodes.planCoachNote &&
+                      r.params['note'] == CoachNotes.cue &&
+                      r.params['value'] == 12,
+                ),
+                isTrue,
+                reason: i.exerciseId,
+              );
+            }
+          }
+        }
+      }
+      expect(pushes, greaterThan(0));
+    });
 
     test('coude gêné : charge lestée +2,5 kg par semaine au plus', () {
       final profile = _lifter().copyWith(

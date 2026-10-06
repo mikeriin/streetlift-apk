@@ -10,7 +10,7 @@ rm -rf $T && mkdir -p $T
 rm -rf $T/.github
 mkdir -p $T/cp2-outils
 mkdir -p $T/p1-travail
-(cd /home/claude/p1 && git diff --binary $(git merge-base HEAD cp2-travail) HEAD > $T/p1-travail/partie1.diff; cp packages/kalis_plan/lib/src/coach/general.dart $T/p1-travail/)
+if [ -d /home/claude/p1 ]; then (cd /home/claude/p1 && git diff --binary $(git merge-base HEAD cp2-travail) HEAD > $T/p1-travail/partie1.diff; cp packages/kalis_plan/lib/src/coach/general.dart $T/p1-travail/); else cp /home/claude/cp2/p1-travail/* $T/p1-travail/; fi
 for f in page fmtsync.py panel.py ci.sh save.sh aa_fmt notes docs tools draft SAUVEGARDE.md; do
   [ -e /home/claude/cp2/$f ] && cp -r /home/claude/cp2/$f $T/cp2-outils/ || true
 done

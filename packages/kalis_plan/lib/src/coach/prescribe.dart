@@ -306,6 +306,10 @@ abstract final class CoachNotes {
   /// précédent (`value` : douleur relevée sur 10).
   static const String painTrend = 'pain_trend';
 
+  /// Figure en appui sans prise neutre, volume réduit de moitié pour une
+  /// gêne du poignet déclarée (`value` : seuil sur 10 ; CP2, partie 0).
+  static const String wristSpare = 'wrist_spare';
+
   /// Plateau au dernier test d'un mouvement visé : changement de méthode
   /// (`value` : repère actuel en répétitions).
   static const String plateau = 'plateau';
@@ -334,6 +338,11 @@ abstract final class CoachNotes {
   /// habituel).
   static const String painReturnItem = 'pain_return_item';
 
+  /// Bloc de reprise après une douleur qui dure sur un mouvement visé :
+  /// ni test, ni affûtage, ni épreuve ; échéance repoussée (`value` : 0 ;
+  /// CP2, partie 0, C9.8).
+  static const String painReprise = 'pain_reprise';
+
   /// Tenues vers le critère de passage de l'étape, une séance lourde par
   /// semaine en réalisation (`value` : secondes par tenue ; CP2, partie 0).
   static const String stepCriterion = 'step_criterion';
@@ -358,6 +367,8 @@ abstract final class CoachNotes {
     painStep,
     painReturn,
     painReturnItem,
+    painReprise,
+    wristSpare,
     painTrend,
     weightClass,
     eventFormat,
@@ -504,6 +515,22 @@ const double coachDeloadShare = 0.65;
 /// Gabbett 2016 : les hausses brusques de charge précèdent les blessures de
 /// surmenage).
 const double coachVolumeRise = 0.15;
+
+/// Répétitions écrites la première semaine du premier bloc pour un
+/// mouvement au poids du corps, en multiple du maximum de répétitions :
+/// 4 au plus (choix raisonné : le volume habituel de l'athlète n'est pas
+/// connu, on part du bas des séances de densité de 250 à 400 % du maximum,
+/// deux séances par semaine ; puis la hausse hebdomadaire est bornée à 15 %
+/// par `coachVolumeRise`. Relecture documentée indépendante de la manche 4,
+/// C9.8, `street_08` : environ 350 dips profonds par semaine dès la
+/// semaine 1 pour un maximum de 50 ; l'épaule est la zone la plus blessée
+/// en street workout, l'excès d'entraînement la première cause perçue).
+const double coachFirstWeekRepsShare = 4;
+
+/// Part des séries gardée pour une figure en appui sans prise neutre quand
+/// le profil déclare une gêne du poignet (« réduit de moitié d'emblée »,
+/// relecture documentée indépendante de la manche 4, C9.8).
+const double coachWristSpareShare = 0.5;
 
 /// Part du 1RM des séances lourdes d'affûtage hors dernier lourd : 85 %
 /// au moins sur le mouvement principal jusqu'à la dernière séance (R3-P13 ;
@@ -2904,8 +2931,15 @@ final class Prescriber {
       // réserve — R5-P9 ; CP2, partie 0, boucle 2 ; panel p1, `street_02` :
       // 15 semaines sur le même appui, test à 26-28).
       final lower = ladderStep && e.id == 'sw-pompe-inclinee' && max > 15;
+      // Appui de la pompe mains surélevées : réglé à la première semaine du
+      // bloc, là où le maximum propre est de 12 à 14 (panel p3, `street_02`,
+      // `street_03`) ; plage 8 à 12, le haut de la plage est le critère de
+      // l'échelle.
+      if (ladderStep && e.id == 'sw-pompe-inclinee' && !lower && week == 0) {
+        x.reasons.add(_note(CoachNotes.pushHeight, 0));
+      }
       if (lower) {
-        high = 11;
+        high = 12;
         low = 8;
         // (Une seule consigne, à la première semaine du bloc — panel p2,
         // `street_02`, `street_03`.)
@@ -4683,6 +4717,26 @@ final class Prescriber {
       }
     }
     if (worst == 0) {
+      // Gêne du poignet déclarée au profil (2 sur 10 au moins) : l'appui
+      // en extension d'une figure sans prise neutre est réduit de moitié
+      // dès le premier bloc (relecture documentée indépendante de la
+      // manche 4, C9.8, `street_10` : 20 séries de planche par semaine dès
+      // la semaine 1 malgré une gêne déclarée ; NHS, douleur de la main :
+      // réduire ce qui la déclenche).
+      final declared = a.limits.any(
+        (l) => !l.trend && l.joint == Joint.wrist && l.discomfort >= 2,
+      );
+      if (!declared ||
+          x.e.stressOn(Joint.wrist) == JointStress.low ||
+          !coachPainProvokes(x.e, BodyZone.wristHand)) {
+        return;
+      }
+      final half = _round(x.sets * coachWristSpareShare);
+      x.sets = half < 1 ? 1 : half;
+      if (x.minSets > x.sets) {
+        x.minSets = x.sets;
+      }
+      x.reasons.add(_note(CoachNotes.wristSpare, 2));
       return;
     }
     final kept = _round(x.sets * coachTrendPainShare);
@@ -4757,7 +4811,7 @@ final class Prescriber {
         e.id.contains('poitrine-barre')) {
       code = 9;
     } else if (e.id == 'sw-pompe-genoux') {
-      code = 10;
+      code = (a.limitOn(Joint.wrist)?.discomfort ?? 0) >= 2 ? 12 : 10;
     } else if (e.pattern == MovementPattern.tirageVertical) {
       code = 1;
     } else if (root == Ids.dip || root == Ids.weightedDip) {
@@ -4770,7 +4824,10 @@ final class Prescriber {
     } else if (e.pattern == MovementPattern.figureStatiquePoussee) {
       code = 5;
     } else if (root == Ids.pushUp) {
-      code = 6;
+      // Poignet à ménager (gêne de 2 sur 10 au moins, déclarée ou relevée
+      // au bloc précédent) : la pompe s'écrit poignet neutre (relecture
+      // documentée indépendante de la manche 4, C9.8, `street_01`).
+      code = (a.limitOn(Joint.wrist)?.discomfort ?? 0) >= 2 ? 12 : 6;
     } else if (root == Ids.squat) {
       code = 7;
     } else if (e.pattern == MovementPattern.equilibreMains) {
@@ -5756,7 +5813,7 @@ final class Prescriber {
 
   /// Garde-fou du volume de répétitions (voir `_fitVolume`).
   void _fitReps(List<List<_Draft>> days, int index) {
-    if (index <= 0) {
+    if (index <= 0 && blockIndex > 0) {
       return;
     }
     double sumOf(String root) {
@@ -5790,10 +5847,20 @@ final class Prescriber {
           }
         }
       }
-      if (reference <= 0) {
-        continue;
+      double limit;
+      if (index <= 0) {
+        // Première semaine du premier bloc : plafond tiré du maximum.
+        final max = a.reps[root] ?? 0;
+        if (max <= 0) {
+          continue;
+        }
+        limit = coachFirstWeekRepsShare * max;
+      } else {
+        if (reference <= 0) {
+          continue;
+        }
+        limit = reference * (1 + coachVolumeRise);
       }
-      final limit = reference * (1 + coachVolumeRise);
       var guard = 0;
       while (sumOf(root) > limit + 1e-9 && guard < 80) {
         guard++;
@@ -6230,9 +6297,11 @@ final class Prescriber {
             // panel p2, `street_07`, `street_09` : « 1 RIR à 71 % × 3 »).
             final rir = x.rir;
             final drop = 1 - (capped + fraction * a.bodyWeight) / total;
-            if (rir != null && drop > 0.03) {
+            // (Une série dure reste une série dure : la réserve ne passe
+            // pas le seuil des séries dures, le volume compté ne bouge pas.)
+            if (rir != null && drop > 0.03 && rir <= coachHardSetMaxRir) {
               final more = rir + (drop / 0.03).floorToDouble();
-              x.rir = more > 5 ? 5 : more;
+              x.rir = more > coachHardSetMaxRir ? coachHardSetMaxRir : more;
             }
             x.load = capped;
             total = capped + fraction * a.bodyWeight;
@@ -7234,6 +7303,9 @@ List<Reason> blockReasonsOf(Athlete a, Skeleton skeleton) {
     out.add(
       note(CoachNotes.painReturn, (z.index * 100 + start * 10 + end) * 1.0),
     );
+  }
+  if (shape.reprise) {
+    out.add(note(CoachNotes.painReprise, 0));
   }
   out.addAll(<Reason>[
     for (final r in skeleton.reasons)

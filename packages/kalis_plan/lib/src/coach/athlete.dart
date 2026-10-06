@@ -376,6 +376,10 @@ final class Athlete {
     // résultat) : il fait foi, le maximum au poids du corps ne le relève
     // pas (`_loadAt`).
     final measuredOneRm = <String>{};
+    // 1RM dont le repère n'est qu'une déclaration (jamais testé ni réussi
+    // en compétition) : l'estimation du moteur d'évolution le remplace
+    // quand elle est nettement plus basse (C9.8, `street_07`).
+    final declaredOneRm = <String>{};
     final reps = <String, int>{};
     final holds = <String, int>{};
     final recordDay = <String, CivilDate>{};
@@ -700,6 +704,12 @@ final class Athlete {
             final bound = known == null ? 0.0 : coachEstimateDropShare * known;
             oneRm[b.exerciseId] = n >= 2 && value < bound ? bound : value;
             measuredOneRm.add(b.exerciseId);
+            if (b.source == BenchmarkSource.guidedTest ||
+                b.source == BenchmarkSource.competition) {
+              declaredOneRm.remove(b.exerciseId);
+            } else {
+              declaredOneRm.add(b.exerciseId);
+            }
             recordDay[b.exerciseId] = day;
           }
         default:
@@ -761,6 +771,24 @@ final class Athlete {
           // sans repère.)
           if (before == null && external > 0 && !partial) {
             oneRm[e.exerciseId] = external;
+            estimatedOneRm.add(e.exerciseId);
+            recordDay[e.exerciseId] = seen;
+          } else if (before != null &&
+              !partial &&
+              declaredOneRm.contains(e.exerciseId) &&
+              external > 0 &&
+              external < before * (1 - coachEstimateMargin)) {
+            // Record seulement déclaré, plus haut que ce que le bloc a
+            // montré : le bloc suivant s'écrit sur le 1RM estimé au point
+            // de fin de bloc, affiché comme référence — jamais sur un 1RM
+            // déclaré plus haut (relecture documentée indépendante de la
+            // manche 4, C9.8, `street_07` : blocs écrits sur 166,5 kg
+            // déclarés pour environ 151 estimés, séances infaisables et
+            // ouvertures à 95-98 % du maximum du jour ; Helms et al. 2018).
+            // Une baisse de plus de 15 % attend un test (même borne que
+            // pour une série du test, `coachEstimateDropShare`).
+            final floor = coachEstimateDropShare * before;
+            oneRm[e.exerciseId] = external < floor ? floor : external;
             estimatedOneRm.add(e.exerciseId);
             recordDay[e.exerciseId] = seen;
           }
