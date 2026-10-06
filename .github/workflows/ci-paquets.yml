@@ -28,7 +28,7 @@ env:
 jobs:
   packages:
     name: Paquets Dart et outils Python
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     timeout-minutes: 90
     defaults:
       run:
@@ -104,7 +104,7 @@ jobs:
     name: Publier les résultats dans ci-out/
     needs: [packages]
     if: always()
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     timeout-minutes: 15
     defaults:
       run:

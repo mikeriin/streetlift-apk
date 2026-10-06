@@ -457,7 +457,10 @@ String? coachReasonText(Reason r, Catalog catalog) {
                 'haut.',
           3 =>
             'Exécution : amène la barre aux hanches, transition rapide, '
-                'poitrine au-dessus de la barre avant de pousser.',
+                'poitrine au-dessus de la barre avant de pousser. La série '
+                "s'arrête à la première répétition dont la transition "
+                'ralentit, se fait en deux temps ou demande un battement de '
+                "jambes de plus : jamais jusqu'à l'échec.",
           4 =>
             'Exécution : bras tendus, pousse la barre vers les hanches, '
                 'bassin en rétroversion, corps aligné.',
@@ -493,6 +496,13 @@ String? coachReasonText(Reason r, Catalog catalog) {
                 "jusqu'au bras parallèle au sol, puis un peu plus bas "
                 "chaque semaine si l'épaule ne se plaint pas ; verrouillage "
                 'complet en haut.',
+          12 =>
+            'Exécution : corps gainé de la tête aux talons, poitrine près '
+                "de l'appui, coudes à 45°. Poignet à ménager : poings "
+                'fermés, poignées ou parallettes (poignet neutre), ou mains '
+                "sur une barre basse pour la pompe inclinée ; pas d'appui "
+                'paume à plat tant que la gêne ne reste pas à 0 ou 1 le '
+                'lendemain deux semaines de suite.',
           _ => null,
         },
         CoachNotes.intervalPace =>
@@ -638,6 +648,15 @@ String? coachReasonText(Reason r, Catalog catalog) {
               'que la gêne ne reste pas sous 2/10 deux semaines de suite. '
               'À 6/10, douleur la nuit ou gêne qui dure : arrête le '
               'mouvement et consulte.',
+        CoachNotes.wristSpare =>
+          "Poignet sensible au profil : l'appui en extension sans prise "
+              'neutre est réduit de moitié dès le départ (parallettes, '
+              'poignées ou poings par défaut). Règle de douleur à chaque '
+              "séance : ${_int(v)} à 3 sur 10 au plus pendant l'effort, "
+              'revenue à ton état habituel le lendemain matin, pas de '
+              "hausse d'une semaine à l'autre sinon. Les séries reviennent "
+              'par paliers de 10 % quand la gêne reste à 0 ou 1 deux '
+              'semaines de suite.',
         CoachNotes.eventZone =>
           "Zone de l'épreuve : séries à environ ${_int(v)} % de ton maximum, "
               'repos court, la réserve écrite sur la dernière (2 répétitions '
@@ -672,6 +691,19 @@ String? coachReasonText(Reason r, Catalog catalog) {
               'un examen montre). Les mouvements retirés ne reviennent '
               "qu'après deux semaines à 2 sur 10 au plus, par paliers "
               "d'environ 10 % par semaine.",
+        CoachNotes.painReprise =>
+          'Bloc de reprise après une douleur qui dure sur un mouvement de '
+              "l'objectif : ni test, ni affûtage, ni épreuve dans ce bloc ; "
+              "l'échéance est repoussée au bloc suivant. Trois étapes : "
+              'participation (le reste du programme suivi, les mouvements '
+              'qui provoquent la zone retirés ou en reprise graduée), retour '
+              'au mouvement (il revient à la moitié de son volume habituel, '
+              "+10 % par semaine, loin de l'échec), puis performance (volume "
+              "et charges habituels). On passe à l'étape suivante quand la "
+              'gêne reste à 2 sur 10 au plus pendant la séance et le '
+              'lendemain matin deux semaines de suite ; aucun test tant que '
+              'la douleur dépasse 2 sur 10. Décision à prendre avec le '
+              'professionnel qui suit la zone.',
         CoachNotes.painReturn =>
           'Reprise graduée (${_zoneOfIndex(v is num ? v.round() ~/ 100 : -1)}) : '
               'les mouvements retirés reviennent à '

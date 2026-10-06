@@ -23,11 +23,22 @@ import 'skeleton.dart';
 /// Douleurs encore présentes à la fin du bloc précédent (résumé
 /// d'adaptation, CX, correction 1) : une zone à 3 sur 10 ou plus à la
 /// dernière séance qui l'a notée est ménagée par le bloc suivant (R5-P23 :
-/// travailler sous 3 à 4 sur 10 ; Silbernagel et al. 2007).
+/// travailler sous 3 à 4 sur 10 ; Silbernagel et al. 2007). Une zone
+/// signalée sur trois séances au moins pendant le bloc, même revenue sous
+/// 3 à la dernière, reste « sensible » (2 sur 10) au bloc suivant : ses
+/// mouvements provocants sont écrits en variante neutre et l'appui chargé
+/// de l'échauffement est retiré (relecture documentée indépendante de la
+/// manche 4, C9.8, `street_01` : le bloc écrit après une douleur au
+/// poignet réécrivait les pompes paume à plat et les wrist push-ups, et la
+/// douleur revenait ; NHS, douleur de la main : éviter ce qui la
+/// déclenche).
 List<(BodyZone, int)> adaptationPains(AdaptationSummary? adaptation) =>
     <(BodyZone, int)>[
       for (final p in adaptation?.pains ?? const <PainTrend>[])
-        if (p.lastIntensity >= 3) (p.zone, p.lastIntensity),
+        if (p.lastIntensity >= 3)
+          (p.zone, p.lastIntensity)
+        else if (p.sessionsReported >= 3)
+          (p.zone, 2),
     ];
 
 /// Paliers de reprise graduée (CX, correction 1, sécurité) lus dans les
