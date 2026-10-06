@@ -1,5 +1,31 @@
 # Journal des versions de kalis_plan
 
+## 0.2.3
+
+Lot CP2, partie 0 (« finir le street ») du pipeline « Calibrage des programmes ». `kalis_core` 0.4.2, contrat
+inchangé (additif : nouvelles notes de coach). Le chemin 0.1 est inchangé. Journal :
+`packages/kalis_bench/docs/CALIBRAGE_CP2.md`.
+
+- **Charge et douleur (sécurité, C9.7, C9.8)** : charge lestée bornée d'une semaine à l'autre même quand les
+  répétitions changent (référence : dernière semaine de charge, jamais l'allègement), tonnage par exercice
+  lesté +15 % au plus ; coude gêné : +2,5 kg par semaine (5 en pic) ; **bloc de reprise** quand un mouvement
+  visé est à l'arrêt ou en reprise graduée après une douleur qui dure (ni affûtage, ni test, ni épreuve ;
+  volume +10 % par semaine au plus ; échéance repoussée ; note `pain_reprise`) ; une zone signalée sur trois
+  séances au bloc précédent reste « sensible » (2/10) au bloc suivant : appui chargé de l'échauffement retiré,
+  pompe écrite poignet neutre ; gêne du poignet déclarée : figures en appui sans prise neutre réduites de
+  moitié dès la première semaine (note `wrist_spare`), variantes sur parallettes ou anneaux d'abord, une
+  seule grosse séance d'appui ; première semaine du premier bloc : répétitions au poids du corps par
+  mouvement bornées à 4 fois le maximum ; muscle-up arrêté avant la casse de la transition.
+- **Repères** : un 1RM seulement déclaré (jamais testé) nettement plus haut que l'estimation du moteur
+  d'évolution est remplacé par elle au bloc suivant (baisse de 15 % au plus) ; série repère à la première
+  séance sur un record non testé récemment (note `entry_check`).
+- **Méthode** : bloc de réalisation d'un objectif de répétitions (variante de surcharge gardée, repos-pause,
+  repos de la zone de l'épreuve réduit chaque semaine, simulation du test à J−10, note `reps_rehearsal`) ;
+  tenues de figure vers le critère de passage (note `step_criterion`) ; plateau ou repère manqué : une
+  séance de volume ou au chrono devient une séance de surcharge ; échelle de poussée du débutant avec un
+  seul critère et la hauteur d'appui réglée en semaine 1 ; tirage du débutant plafonné.
+- **Débutant sans ancienneté** : `coachEligible` l'accepte (« moins de 6 mois » par défaut).
+
 ## 0.2.2
 
 Lot « CX correction 1 » du pipeline « Calibrage des programmes » (croisement avec `kalis_adapt` 0.2.2).

@@ -1627,12 +1627,14 @@ void main() {
       for (final w in reprise.pass2.weeks) {
         expect(
           w.intent,
-          isNot(anyOf(
-            WeekIntent.taper,
-            WeekIntent.test,
-            WeekIntent.competition,
-            WeekIntent.realization,
-          )),
+          isNot(
+            anyOf(
+              WeekIntent.taper,
+              WeekIntent.test,
+              WeekIntent.competition,
+              WeekIntent.realization,
+            ),
+          ),
         );
         for (final d in w.days) {
           for (final i in d.items) {
@@ -1680,16 +1682,23 @@ void main() {
             locks: const <PlanLock>[],
           ),
         );
+        // 1RM de référence écrit (charge totale ÷ part du 1RM), comme
+        // l'export du banc.
         var most = 0.0;
         for (final w in next.block.pass2.weeks) {
           for (final d in w.days) {
             for (final i in d.items) {
               final load = i.startLoadKg;
+              final share = i.percentOfOneRm;
               if (i.exerciseId == 'sl-dips-leste' &&
                   i.kind == SetKind.work &&
                   load != null &&
-                  load > most) {
-                most = load;
+                  share != null &&
+                  share > 0) {
+                final reference = (load + fraction * 78) / share;
+                if (reference > most) {
+                  most = reference;
+                }
               }
             }
           }
@@ -1710,7 +1719,8 @@ void main() {
         ),
       ]);
       expect(declared, greaterThan(0));
-      expect(estimated, lessThan(declared));
+      expect(estimated, lessThan(declared * 0.97));
+      expect(estimated, greaterThanOrEqualTo(declaredTotal * 0.85 - 1));
     });
 
     test('première semaine : répétitions au poids du corps bornées à 4 fois '
