@@ -1,0 +1,39 @@
+{
+  "ecole": "hypertrophie",
+  "programmes": [
+    {
+      "programme": "programme_1.md",
+      "criteres": {"H1": 6.5, "H2": 8.5, "H3": 7.5, "H4": 8, "H5": 9, "H6": 8, "H7": 9, "H8": 8.5, "H9": 9},
+      "sans_objet": [],
+      "ensemble": 8,
+      "points_perdus": [
+        {"critere": "H1", "perte": 3.5, "raison": "Tirage (grand dorsal, haut du dos) d'un débutant à 0 mois : environ 10 séries dures en semaine 1, 14 à 16 dès la semaine 3 (ajout des négatives lundi/vendredi et de 3 × traction assistée + 3 tenues menton le mercredi), puis environ 17 à 18 en semaines 7 à 10 et 13 à 16 (lundi : négatives 3 + assistées 2 + row 2 = 7 séries directes, au-dessus du maximum de 6 par séance). Fourchette débutant 6–10, plafond 12 (R1-P1), seuil d'ajout 10 sans raison explicite (R1-P3), maximum par séance 6 (R1-P4), et pas de hausse tant que la progression continue chez le débutant (R1-P18). Poussée (≈ 9) et jambes (≈ 10) sont, eux, dans la fourchette."},
+        {"critere": "H2", "perte": 1.5, "raison": "Corps entier 3 fois, chaque groupe exposé 2 à 3 fois, adapté aux 3 × 45 min (R1-P8) ; mais la répartition du tirage est déséquilibrée (7 séries le lundi) et il n'y a pas d'alternance lourde/légère écrite par groupe."},
+        {"critere": "H3", "perte": 2.5, "raison": "Marges plausibles pour un débutant (polyarticulaires de 4 à 2 RIR, R1-P13) mais quasi uniformes sur tous les exercices ; aucune isolation plus près de l'échec (le face pull reste à 5 RIR ou plus, donc hors volume utile) ; plages étroites et proches (4–5, 6–8, 8–10). Pas de série de calibration de la marge écrite hors règle de test."},
+        {"critere": "H4", "perte": 2, "raison": "Choix stables et adaptés au matériel (élastique, négatives, row australien, tenue menton, dips assistés à amplitude progressive) ; mais le bas du corps n'a aucune flexion de hanche/charnière pour les ischio-jambiers (seul le pont fessier), pas de travail direct des fléchisseurs du coude alors que la traction en dépend, et aucune variante de poussée ménageant le poignet."},
+        {"critere": "H5", "perte": 1, "raison": "Règles écrites (haut de plage puis variante ou élastique plus fin, +1 s par semaine sur les négatives, retrait d'une série après 2 séances sous la cible) conformes à R5-P3 ; il manque un critère d'ajout de séries conditionnel (la hausse est écrite dans le tableau, non conditionnée)."},
+        {"critere": "H6", "perte": 2, "raison": "Tirage ≥ poussée et arrière d'épaule traité (face pull), point faible du profil priorisé ; mais chaîne postérieure réduite au pont fessier et le volume de tirage est ajouté plutôt que déplacé depuis les autres groupes (R5-P27, R4-H2)."},
+        {"critere": "H7", "perte": 1, "raison": "Repos de 2 min sur les polyarticulaires, 105 s et 60 s sur les accessoires (R1-P15), séances de 31 à 42 min pour 45 disponibles, version courte de 15 min ; pas de superset d'antagonistes, inutile ici, d'où seulement 1 point."},
+        {"critere": "H8", "perte": 1.5, "raison": "Débutant : allègement réactif (R3-P9) couvert par la règle de baisse du jour et les semaines de test 6 et 12, affûtage en semaine 11 ; mais le bloc 3 (semaines 13 à 16) repart au volume le plus haut du cycle sans aucune semaine plus légère ni test de sortie."},
+        {"critere": "H9", "perte": 1, "raison": "Très bien adapté (temps, parc, élastique, règles de douleur, d'assistance, de séance manquée, objectif présenté honnêtement) ; mais rien de prévu pour le poignet alors que pompes, dips et appuis s'empilent (la simulation montre une douleur de poignet à 4/10 qui revient de la semaine 7 à la semaine 15)."},
+        {"critere": "ensemble", "perte": 2, "raison": "Une correction nécessaire (volume de tirage au-dessus du plafond débutant et par séance) ; programme par ailleurs individualisé, sûr et bien réglé ; améliorations multiples (poignet, ischios, bloc 3)."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Ramener le tirage direct à 10–12 séries dures par semaine et 6 au plus par séance : par exemple, lundi et vendredi des semaines 7 à 10 et 13 à 16, négatives 2 séries (au lieu de 3) et row australien 1 série quand les négatives sont à 3 séries ; le mercredi, 2 séries de traction assistée (au lieu de 3) avec les tenues menton ; n'ajouter une série que si les répétitions ou l'élastique stagnent deux semaines de suite.", "consequence": "Un débutant à 0 mois, tendons des coudes à adaptation lente, accumule 17–18 séries de tirage par semaine sans gain supplémentaire attendu (R1-P1, R1-P3) : la fatigue masque la progression (dans la simulation, le maximum à l'élastique passe de 16 à 15 en 16 semaines et les tenues sont plafonnées « pour les tendons du coude ») et l'objectif de 3 tractions à 12 semaines s'éloigne."},
+        {"type": "amelioration", "texte": "Écrire une variante de poussée qui ménage le poignet (pompes sur poings ou sur barres basses/parallèles, poignet neutre) à utiliser dès 3/10 au poignet, plutôt que de laisser la règle générale de douleur retirer les pompes et les dips."},
+        {"type": "amelioration", "texte": "Ajouter une flexion de hanche pour les ischio-jambiers (pont fessier sur une jambe, pieds surélevés, ou glissade ischio au sol) 2 × par semaine, en remplacement d'une série de fente, pour équilibrer la chaîne postérieure sans allonger les séances."},
+        {"type": "amelioration", "texte": "Ajouter 2 séries de curl à l'élastique (ou chin hold supination) à 1–2 RIR une fois par semaine, en déplaçant une série de row : les fléchisseurs du coude limitent souvent la première traction."},
+        {"type": "amelioration", "texte": "Donner au bloc 3 un objectif et une fin : test en semaine 16 (ou semaine plus légère en 16) et règle de passage, au lieu de 4 semaines de volume maximal après l'échéance."},
+        {"type": "amelioration", "texte": "Harmoniser le lundi de la semaine 7 (pompes 1 × 4) avec mercredi et vendredi (2 × 4), ou expliquer la différence."}
+      ],
+      "points_forts": [
+        "Progression de la traction en trois voies cohérentes (assistance à l'élastique, négatives freinées allongées d'1 s par semaine, tenue menton calée sur un pourcentage du maintien mesuré).",
+        "Règles d'assistance, de progression et de recalage par les tests écrites et non ambiguës (série de tête = résultat − 2).",
+        "Échéance de 12 semaines respectée : test en fin de bloc 1, affûtage en semaine 11, test en semaine 12 avec 48 h sans travail dur.",
+        "Repos et durée maîtrisés (31 à 42 min pour 45), version courte de 15 min, règles de douleur graduées et de séance manquée.",
+        "Dips introduits seulement en semaine 7, assistés et à amplitude progressive, pour un athlète à 0 dips.",
+        "Objectif présenté honnêtement (« possible, pas garanti »)."
+      ]
+    }
+  ]
+}

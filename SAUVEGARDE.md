@@ -64,3 +64,9 @@ Base : `moteurs` 9526ac47 (kalis_plan 0.2.2, kalis_adapt 0.2.2, kalis_bench 0.2.
 - Boucle 5 (dernière de la partie 0, C9.2) poussée en dev 6da3c852 : appui neutre au poids du corps gardé au 1er palier pendant l'arrêt du poignet, toute charge externe d'appui retirée ; poussée en extension remplacée par un appui neutre au poids du corps (contrainte ≤ moyenne) ; série de l'élastique comptée à plage montante.
 - Recherche partie 1 faite : ca2-outils/recherche_partie1.md.
 - Plan partie 1 : module endurance (historique cardio depuis replayed.digests ; pic de sortie ≤ 1,10 × plus longue des 30 j ; jour sans : qualité → facile, −30 % si bilan très bas ; reprise après ≥ 7 j : 70 %, ≥ 14 j : 50 % ; WOD mis à l'échelle ; course la veille → +1 RIR bas du corps ; fatigue croisée du cardio dans le modèle forme-fatigue) ; codes de raison nouveaux via kalis_core 0.4.3 (commit séparé) ; vérité cardio et conditionnement dans sim ; banc autres.
+
+## 06/10 ~16:10 UTC
+- Dev boucle 5 (6da3c852, run 37488443459) vert. Exports : 01 12,1 % vs b4, autres < 6 %. Passe 5 (01) : 6,5/7/8/7.
+- Partie 0 arrêtée (C9.2) : 19/68, min 5,5, moyenne 7,79. CALIBRAGE_CA2.md, CONTRAT § 11.16, CHANGELOG à jour.
+- Contrôle FULL c4df7413 poussé (arbre de publication 0.2.3 ; seuls docs Markdown changeront ensuite).
+- Ensuite : publication (moteurs + etiquettes kalis_adapt-v0.2.3, kalis_bench-v0.2.2 si libre), DECISIONS (section CA2, ligne datée), ETAT « en cours — partie 0 publiée (0.2.3) », notification ; puis partie 1 (brouillons scratchpad p1/endurance.dart, endurance_truth.dart — copiés dans ca2-outils/p1).

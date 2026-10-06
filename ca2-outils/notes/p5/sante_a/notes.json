@@ -1,0 +1,41 @@
+{
+  "ecole": "sante",
+  "programmes": [
+    {
+      "programme": "programme_1.md",
+      "criteres": {"S1": 6.5, "S2": 9, "S3": 8, "S4": 7, "S5": 7.5, "S6": 9, "S7": 9, "S8": 8, "S9": 7},
+      "sans_objet": [],
+      "ensemble": 7,
+      "points_perdus": [
+        {"critere": "S1", "perte": 3.5, "raison": "Les seuils de douleur et l'orientation vers un professionnel sont bien écrits dans les règles, mais la trajectoire montre une douleur au poignet à 4/10 de la semaine 7 à la semaine 15. La pompe est remplacée par des dips négatifs aux barres parallèles, qui chargent aussi le poignet en extension, et on les garde 2 × 4 en S13 à S15 à 4/10. La règle « gêne qui dure deux semaines : arrête le mouvement » (R5-P23, R4-F11) n'est donc pas appliquée. Les wrist push-ups restent en échauffement à chaque séance."},
+        {"critere": "S2", "perte": 1, "raison": "Départ prudent, hausses d'une répétition, règles pour une semaine ou deux semaines manquées : très bien (R5-P3, R5-P7, R5-P22). Seul défaut : les dips assistés arrivent en S7 à 2 séries par séance alors que le poignet est déjà sensible, sans semaine d'introduction."},
+        {"critere": "S3", "perte": 2, "raison": "Les critères de baisse du jour (sommeil < 6 h, stress, courbatures), la version courte et les semaines de test tous les 6 semaines sont présents. Mais la charge de vie (travail, autres activités) n'est ni demandée ni utilisée pour placer les séances, et le bloc 3 enchaîne 4 semaines de volume sans aucun allègement (R5-P10 à P19, R3-P9)."},
+        {"critere": "S4", "perte": 3, "raison": "Pour un objectif de 3 tractions strictes, la traction assistée glisse vers l'endurance : la plage passe de 6–8 à 8–10 répétitions (S13–S16) au lieu de réduire l'assistance avec peu de répétitions. Dans la simulation, l'élastique n'est changé qu'une fois en 16 semaines et le maximum assisté passe de 16 à 15 sans progrès. Les négatives restent modestes (1 × 3 en S2–S4). Les essais de traction stricte à partir de S6 sont écrits dans les règles mais n'apparaissent jamais dans les tableaux de séance (R4-G1 à G8 : travailler dans le format de l'épreuve)."},
+        {"critere": "S5", "perte": 2.5, "raison": "Le face pull, les tirages et pompes scapulaires, la suspension active, l'échauffement écrit et l'amplitude progressive des dips sont des points forts. Mais le poignet cumule wrist push-ups, pompes, support hold et dips sans aucune variante en position neutre (poings, parallettes), et cette zone est justement celle qui devient douloureuse (R4-F10 à F12, R5-P24)."},
+        {"critere": "S6", "perte": 1, "raison": "Les marges sont adaptées au débutant (4, puis 3, puis 2 répétitions en réserve), les négatives se règlent au contrôle et les essais stricts s'arrêtent au premier essai lent. Le test de pompes au maximum est acceptable. Un léger excès : 2 répétitions en réserve sur traction et pompe dès S7 pendant que le poignet est douloureux."},
+        {"critere": "S7", "perte": 1, "raison": "3 séances de 31 à 42 min dans un créneau de 45 min, version courte de 15 min prévue, exercices réussissables (R5-P1, R5-P2). En revanche, 8 à 9 exercices par séance, c'est beaucoup de gestion pour un débutant complet."},
+        {"critere": "S8", "perte": 2, "raison": "Tests planifiés en S6 et S12 (l'échéance), 48 h sans travail dur avant, essai strict d'abord : c'est bien. Mais l'affûtage de S11 ne retire qu'environ 30 % des séries (35 → 24) sur une seule semaine (R3-P17, R3-P20), et le bloc 3 se termine sans test final."},
+        {"critere": "S9", "perte": 3, "raison": "Le format « comme la semaine X, sauf » renvoie à des semaines différentes (S8 d'après S5, S11 d'après S7) et répète de longues notes : c'est difficile à suivre pour un débutant. Les règles parlent d'« intensification », de « réalisation » et de « levier », un vocabulaire qui ne le concerne pas. Les essais stricts prévus dès S6 ne figurent dans aucun tableau. Les incohérences type « pompe 1 × 4 lundi, 2 × 4 vendredi » en S7 ne sont pas expliquées."},
+        {"critere": "ensemble", "perte": 3, "raison": "Deux corrections nécessaires : la gestion de la douleur au poignet (substitution qui charge le poignet, maintenue des semaines à 4/10) et la progression de la traction assistée, qui ne sert pas l'objectif de force (plages qui montent, assistance quasi figée, essais stricts absents des séances). Le reste est solide, prudent et individualisé."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Quand la douleur au poignet atteint 3/10 ou plus : remplacer les pompes par des pompes sur poings ou sur parallettes (poignet neutre), ne pas leur substituer de dips négatifs, retirer les wrist push-ups de l'échauffement (ou les remplacer par une mobilité sans charge), mettre les dips et le support hold en pause. Après deux semaines au-dessus de 2/10, arrêter le geste et consulter un professionnel, comme le prévoit la règle.", "consequence": "Le poignet reste chargé en extension pendant des semaines à 4/10 : risque de tendinopathie ou de douleur chronique, et la poussée, puis les dips, finissent par disparaître du programme."},
+        {"type": "necessaire", "texte": "Sur la traction assistée, garder une plage basse (4–6 répétitions, 2–3 en réserve) et progresser en réduisant l'assistance (élastique plus fin, ou appui des pieds moindre) plutôt qu'en montant à 8–10 répétitions. Inscrire dans les tableaux, dès S6, les 1 à 3 essais stricts (ou traction sautée + descente 5 s) en tête des séances du lundi et du vendredi, et monter les négatives à 3 × 3–5 dès le bloc 1.", "consequence": "La force de tirage ne progresse pas vers la traction complète (maximum assisté stable, une seule baisse d'assistance en 16 semaines dans la simulation) et l'objectif de 3 tractions à 12 semaines est probablement manqué, voire aucune traction."},
+        {"type": "amelioration", "texte": "Placer une semaine allégée ou un test final dans le bloc 3 (S16), pour mesurer la traction stricte après l'échéance et ne pas enchaîner 4 semaines de volume."},
+        {"type": "amelioration", "texte": "Rendre l'affûtage de S11 un peu plus net (−40 % des séries, en gardant les essais stricts et les négatives courtes) pour arriver plus frais au test de S12."},
+        {"type": "amelioration", "texte": "Simplifier la présentation : écrire chaque semaine en entier ou ne renvoyer qu'à la semaine précédente, sortir des règles le vocabulaire « intensification/réalisation/levier », et alléger les notes répétées."},
+        {"type": "amelioration", "texte": "Demander la charge de vie (métier physique, sommeil, autres sports) pour placer les séances, et réduire le nombre d'exercices par séance (6 au lieu de 8–9) pour un débutant complet."},
+        {"type": "amelioration", "texte": "Introduire les dips assistés en S7 par une seule série et une amplitude courte, et seulement si le poignet et l'épaule sont à 2/10 ou moins."}
+      ],
+      "points_forts": [
+        "Échelle de douleur avec seuils (0–2, 3–4, 5, 6 et plus, nuit, deux semaines) et orientation vers un professionnel.",
+        "Règles pour une séance manquée, une semaine manquée et deux semaines manquées, ainsi que des critères simples de baisse du jour.",
+        "Version courte de 15 min prévue pour les jours chargés.",
+        "Le test de l'échéance (S12) commence par la traction stricte, fraîche, après 48 h sans travail dur, et prévoit un test de repli (tenue menton au-dessus de la barre).",
+        "Prévention de l'épaule : face pull, tirages et pompes scapulaires, suspension active, amplitude progressive aux dips.",
+        "Objectif présenté avec honnêteté (« possible, pas garanti »), consigne de ne pas forcer la forme.",
+        "Marges d'effort prudentes, adaptées au débutant ; négatives réglées au contrôle de la descente."
+      ]
+    }
+  ]
+}

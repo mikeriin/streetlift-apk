@@ -1,0 +1,39 @@
+{
+  "ecole": "force",
+  "programmes": [
+    {
+      "programme": "programme_1.md",
+      "criteres": {"F1": 7, "F2": 6, "F3": 7, "F4": 6.5, "F5": 8, "F6": 8, "F7": 8, "F8": 6.5, "F9": 7.5},
+      "sans_objet": [],
+      "ensemble": 6.5,
+      "points_perdus": [
+        {"critere": "F1", "perte": 3, "raison": "Le tirage vertical revient bien 3 fois par semaine (traction assistée lun/mer/ven, négatives lun/ven, tenue haute mer.), mais le mouvement exact, la traction stricte, n'apparaît dans aucun tableau : il n'est que dans les règles (essais isolés à partir de la semaine 6). Aucune alternance d'expositions lourdes et légères (R2-P7, R2-P9)."},
+        {"critere": "F2", "perte": 4, "raison": "Traction assistée toujours à 6-10 répétitions et 2 à 4 RIR, élastique choisi pour 8 répétitions : la difficulté reste la même tout le cycle et aucune exposition lourde (faible assistance, 2-5 répétitions) n'est prévue pour un objectif de 1 à 3 répétitions (R2-P1 à P3). La trajectoire le confirme : RIR réel de 4 à 9 pour 2 à 4 visés, 29,9 % des séries au moins 3 répétitions plus faciles que prévu."},
+        {"critere": "F3", "perte": 3, "raison": "Le volume de tirage vertical (8 à 11 séries par semaine) est dans la fourchette débutant (R1-P5), mais 45 min sont réparties sur 8 à 9 exercices, dont 3 pour le bas du corps (squat, fente, pont fessier). Aucune série de qualité (tentative ou série lourde) n'est séparée du volume de construction (R2-P8)."},
+        {"critere": "F4", "perte": 3.5, "raison": "Les trois blocs s'appellent tous « construction (volume) » ; il n'y a pas de phase d'intensification avant le test de la semaine 12 (R3-P4). La règle d'élastique (« haut de la plage deux séances de suite ») se heurte aux plages qui changent chaque semaine (6-8, 7-9, 7-8, 8, puis 8-10), si bien que l'assistance diminue rarement : en 16 semaines, la trajectoire ne montre qu'un seul cran (semaine 3). Les décharges sont présentes (S6, S11-12)."},
+        {"critere": "F5", "perte": 2, "raison": "Bon placement : affûtage S11 à environ 70 % des séries dures (24/35), séance facile 48 h avant, test vendredi S12 qui tombe sur l'échéance. Mais S11 lundi monte les pompes de 1 à 2 séries et les dips de 1×6-8 à 2×6-8 en plein affûtage (R3-P12), et le dernier lourd n'est pas nommé."},
+        {"critere": "F6", "perte": 2, "raison": "Les négatives et la tenue menton au-dessus de la barre ont un rôle clair (pas de prérequis manquant chez un débutant) et une dose qui progresse (1×3 jusqu'à 3×5, 4 puis 5 s). En revanche, aucun critère de retrait des négatives quand la première traction stricte passe, en dehors de la phrase générale du test (R2-P22)."},
+        {"critere": "F7", "perte": 2, "raison": "Row australien, face pull et dead bug sont pertinents, et le tirage domine la poussée. Rien de spécifique pour la phase concentrique basse de la traction (tirages scapulaires chargés, traction partielle bas) alors que la tenue haute est déjà travaillée. Le bas du corps prend une part disproportionnée pour cet objectif."},
+        {"critere": "F8", "perte": 3.5, "raison": "Bonne barrière de douleur graduée, amplitude progressive aux dips, échauffement présent. Mais le poignet est très sollicité (wrist push-ups, pompes, support hold, dips) sans variante qui le protège. Dans la trajectoire, la douleur au poignet (4/10) dure des semaines 7 à 15, et le bloc 3, écrit après ces douleurs, augmente quand même les dips (lundi 1×7-9 puis 2×7-9, puis 2×8-10) (R5-P20 à P27)."},
+        {"critere": "F9", "perte": 2.5, "raison": "Les séances tiennent dans 45 min (31 à 42 min estimées), les repos sont précisés et l'échauffement est écrit. Mais les essais de traction stricte ne figurent que dans les règles, pas dans les séances. Les règles de tenues de figure et de levier ne concernent pas ce profil. S6 mercredi ajoute une tenue 2×5 s juste après le test de tenue maximale. Le format « comme la semaine X, sauf » enchaîné (S8 renvoie à S5, S11 à S7) rend la séance réelle difficile à reconstituer."},
+        {"critere": "ensemble", "perte": 3.5, "raison": "Trois corrections nécessaires, dont une lourde : le dosage du tirage vertical ne fait pas avancer vers la traction stricte. Sur la trajectoire, le maximum assisté passe de 16 à 15, aucune traction n'est réussie aux tests S6 et S12, et la progression est de 0,76 % par semaine. Le programme est sûr dans l'ensemble mais sert mal l'objectif."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Rendre le tirage vertical plus lourd à partir de S4 : une séance par semaine avec un élastique plus fin, 4 à 5 séries de 3 à 5 répétitions à 2 RIR (ou des négatives de 5 à 8 s en séries de 2 à 3) ; garder les 6 à 10 répétitions pour les deux autres séances. Écrire dans les séances, et non seulement dans les règles, les 1 à 3 essais de traction stricte à partir de S6.", "consequence": "L'athlète travaille toujours avec la même assistance, loin de l'effort voulu. Comme sur la trajectoire, il risque d'arriver à la semaine 12 sans aucune traction stricte, alors que l'objectif est d'en faire 3."},
+        {"type": "necessaire", "texte": "Séparer la règle d'élastique des plages de répétitions : un élastique plus fin dès que la dernière série dépasse la cible de 2 répétitions avec la réserve prévue (ou que le RIR réel dépasse le RIR visé de 3 ou plus), indépendamment de la plage de la semaine ; garder une plage fixe dans un bloc.", "consequence": "Les plages changent chaque semaine, donc la condition « haut de la plage deux séances de suite » est rarement remplie. L'assistance ne diminue presque pas (un seul cran en 16 semaines) et la force sans aide ne progresse pas."},
+        {"type": "necessaire", "texte": "Protéger le poignet : remplacer les wrist push-ups d'échauffement par une mobilité douce, proposer les pompes sur poignées ou sur poings et une prise neutre aux dips. Quand une douleur au poignet a été notée dans le bloc précédent, ne pas augmenter les dips ni le support hold dans le bloc suivant.", "consequence": "La douleur au poignet devient chronique (4/10 des semaines 7 à 15 sur la trajectoire). Elle coupe la poussée et finit par gêner la suspension et la traction."},
+        {"type": "amelioration", "texte": "Pendant l'affûtage S11, ne pas augmenter les pompes ni les dips (lundi) ; nommer le dernier lourd du tirage (lundi S12, 4 jours avant)."},
+        {"type": "amelioration", "texte": "Ramener le bas du corps à 2 exercices par semaine (par exemple squat et fente en alternance) pour donner les minutes gagnées au tirage vertical et aux tirages scapulaires."},
+        {"type": "amelioration", "texte": "Retirer les règles sans objet pour ce profil (tenues de figure, leviers) et la tenue 2×5 s qui suit le test du mercredi S6 ; donner pour bloc 3 le rôle explicite de consolider le passage aux tractions strictes répétées."},
+        {"type": "amelioration", "texte": "Ajouter un critère de sortie : dès qu'une traction stricte passe, remplacer la traction assistée de 6-10 répétitions par des séries de 1 à 2 strictes (EMOM léger) et garder les négatives une seule fois par semaine."}
+      ],
+      "points_forts": [
+        "Tirage vertical 3 fois par semaine avec trois outils complémentaires (assistée, négative, tenue haute), adaptés à un débutant sans traction.",
+        "Effort chiffré en RIR qui se resserre de 4 à 2, et règles de journée basse, de séance courte et de séance manquée claires.",
+        "Test placé sur l'échéance de 12 semaines, avec séance facile 48 h avant, test intermédiaire en S6 et recalage du bloc suivant sur les résultats.",
+        "Barrière de douleur graduée, amplitude progressive aux dips, échauffement scapulaire écrit, séances dans le temps disponible.",
+        "Équilibre poussée/tirage en faveur du tirage, avec row australien, face pull et tronc."
+      ]
+    }
+  ]
+}
