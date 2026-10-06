@@ -27,6 +27,13 @@ Lot CA2, partie 0 (street) du pipeline « Calibrage des programmes ». Mode 0.1 
   encore à 3/10 après deux semaines d'arrêt ; remplaçant d'une douleur du jour à 70 % du 1RM au plus ; sur
   une zone à l'arrêt ou sortie d'un arrêt depuis douze semaines, répétitions ou secondes par série +10 % au
   plus d'une séance à la suivante.
+- **Suivi de l'arrêt (sécurité, relecture documentée du pilotage, manche 4)** : renvoi vers un professionnel à
+  la première séance de l'arrêt puis une fois par semaine ; aucun test tant que la zone a été signalée au-dessus
+  de 2/10 dans la semaine ; échauffement compris dans l'arrêt ; poignet à l'arrêt : toute charge externe d'appui
+  retirée d'emblée (dips lestés), appui neutre au poids du corps gardé au premier palier, poussée en extension
+  remplacée par un appui neutre au poids du corps ; zone douloureuse du jour comptée comme récente (+10 % au
+  plus) dès la séance.
+- **Élastique** : la série de séances au haut de la plage compte même quand la plage écrite monte.
 - Simulateur : zone réactive après un épisode de douleur (modèles B et C), poussées comptées ; une hausse
   sur zone douloureuse se compte au-dessus de 3/10 (les mesures du mode 0.1 au banc ne se comparent plus
   chiffre à chiffre à celles de 0.2.2).

@@ -1161,7 +1161,9 @@ inchangé (séances identiques à l'octet près ; seul le texte de version chang
   hausse d'une séance à la suivante reste comptée depuis la dernière séance de l'emplacement). 28 jours : choix raisonné (perte de force mesurable à l'arrêt de l'entraînement, plus
   marquée avec la durée : Bosquet et al. 2013, résumé ; le seuil en semaines n'y est pas chiffré).
 - **Cran d'assistance** (élastique) : un cran de moins seulement après deux séances de suite au même cran
-  au haut de la plage (ou première série dite deux répétitions plus facile), et sept jours au moins
+  au haut de la plage (ou première série dite deux répétitions plus facile) — la série compte même quand
+  la plage écrite monte d'une semaine à l'autre (panel de la boucle 5, `street_01` : la série repartait à
+  zéro à chaque nouvelle plage) —, et sept jours au moins
   après le dernier changement de cran (`coachAssistMinDays`, `ExerciseTrack.assistDay` ; le panel demande
   à la fois de ne pas changer trop souvent et de ne pas attendre trop longtemps) ; un cran de plus seulement
   après un échec ou le bas de la cible servie manqué deux séances de suite au même cran
@@ -1209,12 +1211,18 @@ inchangé (séances identiques à l'octet près ; seul le texte de version chang
     douleur est encore à 3/10 ou plus dans la semaine après deux semaines d'arrêt
     (`coachStopEscalateDays`), ils sont retirés aussi (Silbernagel et al. 2007 : douleur jamais en hausse
     d'une semaine à l'autre ; la charge qui reste entretient la douleur) ;
-  - poignet à l'arrêt : l'arrêt couvre d'emblée toute charge d'appui du poignet (contrainte moyenne ou
-    forte, prise neutre comprise, échauffement compris) ; la variante à prise neutre reste celle des jours
-    de douleur sous 5/10 hors arrêt (relecture documentée du pilotage, `street_10`) ; à l'arrêt, un
-    mouvement d'échauffement qui provoque la zone est retiré comme une série de travail (`street_01` :
-    pompes sur les poignets à l'échauffement) ;
+  - poignet à l'arrêt : toute charge en extension du poignet est retirée (appuis au sol, sur les doigts,
+    étirements en extension, échauffement compris : `street_01`, pompes sur les poignets à l'échauffement),
+    et **toute charge externe d'appui dès le premier jour, prise neutre comprise** (dips lestés : relecture
+    documentée du pilotage, `street_10`) ; un appui à prise neutre au poids du corps (parallettes, barres,
+    poignées) reste au premier palier de la reprise (règle précédente), et une poussée en extension retirée
+    est remplacée par un appui neutre au poids du corps à contrainte moyenne au plus, au premier palier
+    (panel de la boucle 5 : la poussée du débutant et la planche sur parallettes disparaissaient pendant
+    toute la douleur ; règle écrite par le programme : « parallettes ou poings tant que la gêne dépasse
+    2/10 ») ; deux semaines d'arrêt sans baisse retirent aussi ces appuis (règle précédente) ;
   - aucun test tant que la zone a été signalée au-dessus de 2/10 dans la semaine (`coachReturnPain`) ;
+  - une zone signalée au-dessus de 2/10 avant la séance compte comme « récente » dès cette séance (règle
+    des +10 % ci-dessous), avant que l'arrêt soit inscrit ;
   - le renvoi vers un professionnel (`adapt.pain_persistent` sur la séance) figure à la première séance de
     l'arrêt, puis à la première séance de chaque semaine d'arrêt (suivi hebdomadaire) au lieu de chaque
     séance ; les mouvements retirés gardent leur raison ;
