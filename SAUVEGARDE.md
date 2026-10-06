@@ -49,3 +49,10 @@ Base : `moteurs` 9526ac47 (kalis_plan 0.2.2, kalis_adapt 0.2.2, kalis_bench 0.2.
 - Notes de relecture du pilotage sur la manche 4 (auteur relecture-documentee-pilotage, 18:55 UTC, arrivées pendant le lot) lues en entier : constats de sécurité côté conduite (street_12 : dips au poids du corps à 5/10, remplaçant lourd, 2×5 → 2×19 à l'affûtage ; street_10 : appuis gardés pendant des semaines à 3/10+).
 - Boucle 4 (sécurité) poussée en dev (2713bccf) : coachPainStop 6→5 (Silbernagel 2007 : douleur pendant l'effort sous 5, vérifié sur source secondaire), coachPainRegress 5→4, remplaçants au même seuil ; arrêt : mouvements à contrainte moyenne au premier palier (50 %, 3 RIR, 67,5 %), retirés après 14 jours d'arrêt si encore ≥3/10 ; remplaçant d'une douleur du jour à 70 % ; zone récente : +10 %/séance au plus (Soligard 2016). Tests ajoutés (_painDayChecked, _recentRiseChecked). Docs CONTRAT § 11.16, CHANGELOG, docs/CALIBRAGE_CA2.md (à compléter boucle 4).
 - Contrôles full 44ed6d11 et d3c2d77c annulés par la boucle 4.
+
+## Reprise 06/10 ~14:50 UTC (nouvelle session, Opus)
+- Ligne ETAT « en cours depuis 2026-10-06 14:52 UTC » poussée.
+- Repris : sauvegarde f2cc415 + `packages/kalis_adapt` du contrôle dev 84d5634 (boucle 4 bis : arrêt du poignet complet, échauffement compris, test reporté si > 2/10 dans la semaine, renvoi vers un professionnel hebdomadaire) + formatage aa_fmt.
+- Run 37386808307 (84d5634) rouge : (1) param `intensity` nul sur le report d'un test (douleur de la semaine) → corrigé (max de la semaine) ; (2) `_recentRiseChecked` street_12 : sw-traction-neutre 13 → 16 le jour où la douleur commence → zones douloureuses du jour (> 2/10) comptées « récentes » dans session.dart.
+- Contrôle dev 7110d279 poussé (boucle 4 ter). Notes p3 de la session précédente perdues (scratchpad) : résumé ci-dessus fait foi (19/68, min 6).
+- Scripts ca2-outils : chemins du scratchpad mis à jour.

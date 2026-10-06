@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 """Outil du panel (lot CX) : prépare des dossiers isolés et collecte les notes.
 
-prepare <id_passe> <ecole> <fichier1.md> [<fichier2.md> ...]  -> /tmp/claude-0/-home-claude-streetlift-apk/bf2d9f2d-2b5b-5695-adae-f110c2c28130/scratchpad/panel/<id_passe>/<ecole>_<n>/
+prepare <id_passe> <ecole> <fichier1.md> [<fichier2.md> ...]  -> /tmp/claude-0/-home-claude-streetlift-apk/351397e5-88e5-569f-a8b3-9fa6fbd5e6ad/scratchpad/panel/<id_passe>/<ecole>_<n>/
 collect <id_passe> -> JSON de toutes les notes de la passe
 """
 import json, os, shutil, sys, glob
 G = '/home/claude/streetlift-apk/packages/kalis_bench/docs'
 GRILLES = {'force': 'force_streetlifting.md', 'calisthenie': 'calisthenie_figures.md',
            'hypertrophie': 'hypertrophie_esthetique.md', 'sante': 'endurance_sante_kine.md'}
-ROOT = '/tmp/claude-0/-home-claude-streetlift-apk/bf2d9f2d-2b5b-5695-adae-f110c2c28130/scratchpad/panel'
+ROOT = '/tmp/claude-0/-home-claude-streetlift-apk/351397e5-88e5-569f-a8b3-9fa6fbd5e6ad/scratchpad/panel'
 
 def prepare(pid, ecole, files, tag):
     d = f'{ROOT}/{pid}/{ecole}_{tag}'
