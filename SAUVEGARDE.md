@@ -56,3 +56,11 @@ Base : `moteurs` 9526ac47 (kalis_plan 0.2.2, kalis_adapt 0.2.2, kalis_bench 0.2.
 - Run 37386808307 (84d5634) rouge : (1) param `intensity` nul sur le report d'un test (douleur de la semaine) → corrigé (max de la semaine) ; (2) `_recentRiseChecked` street_12 : sw-traction-neutre 13 → 16 le jour où la douleur commence → zones douloureuses du jour (> 2/10) comptées « récentes » dans session.dart.
 - Contrôle dev 7110d279 poussé (boucle 4 ter). Notes p3 de la session précédente perdues (scratchpad) : résumé ci-dessus fait foi (19/68, min 6).
 - Scripts ca2-outils : chemins du scratchpad mis à jour.
+
+## 06/10 ~15:35 UTC
+- Contrôle dev 72f83ffe (run 37483415804) : tout vert sauf `_recentRiseChecked` — faux positif du test (douleur du 1er jour dite pendant la séance) → test corrigé (règle à partir de la séance qui suit le 1er signalement).
+- Exports boucle 4 ter vs boucle 3 (3ea9ca4a) : changés > 10 % : street_01 (15,6 %), street_10 (18,2 %) ; les autres 0 % (03 : 9,6 %).
+- Panel p4 (01, 10 ; ca2-outils/notes/p4) : 01 = F8 C7 H7 S6 (p2 : 8/8/8/8) ; 10 = F7 C5,5 H8 S6 (p2 : 6/6,5/7/7). Côté adapt : élastique jamais changé (série remise à zéro par la plage qui monte) ; arrêt du poignet de 4 bis trop large (planche sur parallettes retirée 7 semaines, poussée perdue chez le débutant).
+- Boucle 5 (dernière de la partie 0, C9.2) poussée en dev 6da3c852 : appui neutre au poids du corps gardé au 1er palier pendant l'arrêt du poignet, toute charge externe d'appui retirée ; poussée en extension remplacée par un appui neutre au poids du corps (contrainte ≤ moyenne) ; série de l'élastique comptée à plage montante.
+- Recherche partie 1 faite : ca2-outils/recherche_partie1.md.
+- Plan partie 1 : module endurance (historique cardio depuis replayed.digests ; pic de sortie ≤ 1,10 × plus longue des 30 j ; jour sans : qualité → facile, −30 % si bilan très bas ; reprise après ≥ 7 j : 70 %, ≥ 14 j : 50 % ; WOD mis à l'échelle ; course la veille → +1 RIR bas du corps ; fatigue croisée du cardio dans le modèle forme-fatigue) ; codes de raison nouveaux via kalis_core 0.4.3 (commit séparé) ; vérité cardio et conditionnement dans sim ; banc autres.

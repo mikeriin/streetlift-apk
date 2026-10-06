@@ -668,8 +668,12 @@ void _recentRiseChecked(
   required int from,
 }) {
   final lastTop = <String, int>{};
+  // La zone n'est connue du moteur qu'après le premier signalement (la
+  // douleur du premier jour est dite pendant la séance, après la
+  // prescription) : la règle vaut à partir de la séance suivante.
+  int? known;
   for (final s in run.served) {
-    final recent = s.simDay >= from;
+    final recent = s.simDay >= from && known != null && s.simDay > known;
     for (final item in s.plan.items) {
       if (item.kind == SetKind.warmup || item.kind == SetKind.test) {
         continue;
@@ -712,5 +716,10 @@ void _recentRiseChecked(
       }
     }
     lastTop.addAll(tops);
+    if (known == null &&
+        s.simDay >= from &&
+        s.record.pains.any((r) => r.zone == zone)) {
+      known = s.simDay;
+    }
   }
 }

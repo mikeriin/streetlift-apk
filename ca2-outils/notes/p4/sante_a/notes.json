@@ -1,0 +1,71 @@
+{
+  "ecole": "sante",
+  "programmes": [
+    {
+      "programme": "programme_1.md",
+      "criteres": {"S1": 7.5, "S2": 7, "S3": 8, "S5": 7.5, "S6": 9, "S7": 9, "S8": 7.5, "S9": 7.5},
+      "sans_objet": ["S4"],
+      "ensemble": 6,
+      "points_perdus": [
+        {"critere": "S1", "perte": 2.5, "raison": "Débutant sans antécédent, mais la douleur de poignet apparaît en semaine 7 (4/10) sur les pompes au sol et revient de la semaine 13 à la semaine 15 : le programme garde les pompes au sol et les wrist push-ups d'échauffement à chaque séance, sans variante prévue d'avance qui épargne le poignet (pompes inclinées à la barre basse, prise neutre). Les seuils de douleur sont écrits et l'orientation vers un professionnel aussi (R5-P23, R4-F11), mais la zone qui s'est révélée fragile n'est pas protégée en amont (R5-P24)."},
+        {"critere": "S2", "perte": 3, "raison": "Départ prudent et hausses dans les garde-fous, mais la règle d'assistance ne fait pas progresser le levier principal : traction à l'élastique servie à 8-9 rép. en réserve en S1-S2, puis 5-6 jusqu'en S16, un seul changement d'élastique sur 16 semaines, maximum assisté de 16 à 15. En semaine 16, des dips négatifs 2 × 10 à 12 apparaissent d'un coup chez un athlète à 0 dip, avec une douleur de poignet récente (R5-P3, R5-P7)."},
+        {"critere": "S3", "perte": 2, "raison": "Baisse du jour, version courte et règle des semaines manquées : bien. Mais la charge de vie n'est pas questionnée au profil. Après l'échéance, les semaines 13 à 16 enchaînent le volume le plus haut du cycle (36 séries) sans allègement prévu (R5-P10, R3-P9)."},
+        {"critere": "S5", "perte": 2.5, "raison": "Face pull, tirages scapulaires et échauffement écrit sont présents, mais rien n'est fait pour le poignet une fois la gêne apparue : pas de renforcement des fléchisseurs et extenseurs, wrist push-ups maintenus. La poussée reste au sol, mains à plat (R4-F10, R5-P24)."},
+        {"critere": "S6", "perte": 1, "raison": "Les marges passent de 4 à 2 rép. en réserve, sans échec. Mais les dips négatifs de la semaine 16 sont réglés en réserve (3 en réserve), alors que le reste du programme règle les négatifs au contrôle de la descente : c'est incohérent."},
+        {"critere": "S7", "perte": 1, "raison": "Séances de 31 à 42 min pour 45 disponibles, version de 15 min prévue. Pour un débutant complet, près de 10 exercices par séance en semaine 1, avec 2 min de repos même pour les accessoires, c'est dense (R5-P1)."},
+        {"critere": "S8", "perte": 2.5, "raison": "Le test tombe bien en semaine 12, avec l'essai strict en premier et 48 h sans travail dur avant. Mais l'affûtage ne dure qu'une semaine et ne baisse que de 31 % (24 séries contre 35), sous la fourchette de −40 à −60 % (R3-P20). Le lundi de la semaine 12 garde 2 rép. en réserve. Les essais stricts que les règles prévoient dès la semaine 6 n'apparaissent dans aucun tableau."},
+        {"critere": "S9", "perte": 2.5, "raison": "Les notes répètent le bloc « au lieu de … » et deviennent illisibles pour un débutant. Le repère du test de pompes (9 à 11) dépasse le record de 8. Les négatifs de dips sont réglés en rép. en réserve. Et la règle « commence par 1 à 3 essais stricts dès la semaine 6 » n'est jamais traduite dans les séances."},
+        {"critere": "ensemble", "perte": 4, "raison": "Trois corrections nécessaires : la progression de l'assistance est bloquée, donc l'objectif de 3 tractions sera manqué (aucune traction stricte en fin de cycle) ; la poussée au sol ignore la douleur de poignet qui revient ; les dips négatifs 2 × 10-12 de la semaine 16 sont infaisables et risqués. Programme sûr dans l'ensemble, mais l'objectif principal n'est probablement pas servi."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Rendre la progression de l'assistance effective : changer d'élastique dès que la série de tête laisse 2 rép. en réserve de plus que visé (pas seulement en haut de plage). Viser une assistance qui laisse 2 à 3 rép. en réserve à 5-6 répétitions. Augmenter la part de travail spécifique de la position basse et du milieu (négatives 3 × 3-5 à 5 s trois fois par semaine dès la semaine 4, tirages scapulaires lestés, tenues à mi-course).", "consequence": "L'élastique reste trop fort (5 à 9 rép. en réserve), la force de traction ne monte pas (maximum assisté de 16 à 15) et l'athlète arrive au test de la semaine 12 sans traction stricte."},
+        {"type": "necessaire", "texte": "Remplacer les pompes au sol par des pompes inclinées à la barre basse ou sur les barres parallèles (poignet neutre), au moins à la première gêne au-dessus de 2/10. Retirer les wrist push-ups de l'échauffement tant que la douleur dépasse 2/10, et ajouter un travail progressif des poignets (flexion et extension avec élastique).", "consequence": "La douleur de poignet revient à chaque reprise (semaines 7 à 15) et la poussée est perdue pendant la moitié du cycle."},
+        {"type": "necessaire", "texte": "Semaine 16 : remplacer « dips négatifs 2 × 10 à 12, 3 rép. en réserve » par 2 × 3 descentes de 3 à 5 s, à amplitude progressive, réglées au contrôle, seulement si le poignet est à 2/10 au plus.", "consequence": "20 à 24 négatifs de dips d'un coup chez un athlète à 0 dip, avec un poignet douloureux récemment : surcharge de l'épaule antérieure et du poignet, consigne impossible à doser."},
+        {"type": "amelioration", "texte": "Écrire dans les séances (lundi et vendredi dès la semaine 6) les 1 à 3 essais de traction stricte prévus par les règles, plutôt que de les laisser dans le texte général."},
+        {"type": "amelioration", "texte": "Affûtage de 10 à 14 jours avec −40 à −50 % de séries, et lundi de la semaine 12 à 3 rép. en réserve au moins."},
+        {"type": "amelioration", "texte": "Recaler le repère du test de pompes sur le record (8, donc 8 à 10) et raccourcir les notes répétées « au lieu de »."},
+        {"type": "amelioration", "texte": "Prévoir une semaine d'allègement après l'échéance (semaine 13 ou 15), et demander au profil le sommeil, le stress et le travail physique."}
+      ],
+      "points_forts": [
+        "Seuils de douleur chiffrés (0-2, 3-4, 5, 6 et plus), retrait des appuis en extension et orientation vers un médecin ou un kiné écrits.",
+        "Marges larges et progressives (4 puis 3 puis 2 rép. en réserve), aucun échec, tests précédés de 48 h faciles.",
+        "Séances tenues dans 45 min, version courte de 15 min, règles pour une semaine ou deux manquées.",
+        "Dips introduits avec élastique et amplitude progressive, tenues isométriques recalées sur le maintien mesuré.",
+        "Objectif présenté honnêtement (« possible, pas garanti »)."
+      ]
+    },
+    {
+      "programme": "programme_2.md",
+      "criteres": {"S1": 7, "S2": 8, "S3": 8, "S5": 6.5, "S6": 9, "S7": 8.5, "S8": 8, "S9": 7},
+      "sans_objet": ["S4"],
+      "ensemble": 6,
+      "points_perdus": [
+        {"critere": "S1", "perte": 3, "raison": "Gêne de poignet déclarée (2/10 après les grosses séances de planche). Les séances du lundi et du vendredi cumulent pourtant planche straddle 10 × 4 s, planche push-ups, handstand 3 × 30 s, HSPU, wrist push-ups et pressions des doigts. Les parallettes par défaut et les seuils sont écrits (R5-P23, R5-P20), mais la charge cumulée en extension n'est pas dosée : douleur à 4/10 dès la semaine 6, planche retirée des semaines 9 à 12."},
+        {"critere": "S2", "perte": 2, "raison": "Le lest progresse prudemment (69 à 84 % par pas de 2,5 kg), avec un allègement toutes les 4 semaines. Mais le front lever démarre à 10 × 5 s alors que l'athlète ne tient que 3 à 4 s dès la première séance. Et le bloc 3 ajoute d'un coup des dips au poids du corps à 2-3 × 23-25, une semaine après le retrait des dips pour douleur de poignet (R5-P3, R5-P22)."},
+        {"critere": "S3", "perte": 2, "raison": "Allègements planifiés, baisse du jour et règles des séances manquées : bien. Mais six séances par semaine avec trois expositions au front lever et deux grosses séances de poignet. Le sommeil et le stress du profil ne sont pas renseignés, alors que des nuits courtes reviennent souvent (R5-P14)."},
+        {"critere": "S5", "perte": 3.5, "raison": "Face pull, rotation externe et tirage horizontal sont présents. Pour le poignet, seulement de la mobilité et des étirements : aucun renforcement progressif des extenseurs et fléchisseurs du poignet, aucune limite au cumul d'appuis en extension malgré l'historique déclaré (R4-F10 à F12, R5-P24)."},
+        {"critere": "S6", "perte": 1, "raison": "Tenues sous-maximales et marges de 2 à 4 rép. en réserve sur le lest, aucun échec. Mais les tenues de front lever écrites dépassent la capacité réelle en semaine 1."},
+        {"critere": "S7", "perte": 1.5, "raison": "Séances bien sous les 90 min, version courte prévue. Le dimanche de 18 min de mobilité pourrait être fusionné ; les notes à rallonge alourdissent la lecture."},
+        {"critere": "S8", "perte": 2, "raison": "Tests en semaines 4, 8, 12 et 16. Le samedi de la semaine 16 est précédé de 48 h de mobilité seule, avec des tenues de montée. Mais la planche straddle n'est reprise qu'à 1 à 2 × 3 s pendant les trois semaines qui précèdent le test maximal. Et il n'y a pas de stratégie pour la tenue de 15 s (R3-P20)."},
+        {"critere": "S9", "perte": 3, "raison": "« Reprise graduée : 50 % du volume habituel » pour 1 × 3 s alors que l'habituel est 10 × 3 s : le chiffre est faux. Les dips à 3 × 25 sont étiquetés « intensification ». Les notes « au lieu de » sont répétées sur des paragraphes entiers."},
+        {"critere": "ensemble", "perte": 4, "raison": "Trois corrections nécessaires : la charge cumulée sur le poignet, avec une gêne déclarée, mène à une douleur durable ; des dips en séries de 25 sont réintroduits pendant la douleur ; le dosage du front lever ne permet pas de progresser vers 15 s (maximum de 8 à 6 s, resté à 6). Les deux objectifs ne sont pas servis."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Répartir et plafonner les appuis poignet en extension : ne jamais cumuler planche, planche push-ups, handstand et HSPU sur la même séance lourde (handstand et HSPU sur parallettes ou poings un autre jour). Ajouter 2 fois par semaine un renforcement progressif du poignet (extensions et flexions lestées, appuis progressifs sur les doigts), avec le seuil de 2/10 le lendemain.", "consequence": "La gêne déclarée de 2/10 monte à 4/10 et persiste (semaines 6 à 12) : la planche est arrêtée un mois et l'objectif planche est perdu."},
+        {"type": "necessaire", "texte": "Bloc 3 : remplacer les dips au poids du corps 2-3 × 23-25 par des dips à prise neutre en volume réduit (2 × 8-10, 3 rép. en réserve au moins), seulement si la gêne reste à 2/10 au plus ; garder l'intensification sur le lest de traction.", "consequence": "75 répétitions de dips par séance, réintroduites pendant une douleur de poignet qui dure : la douleur entretenue retarde la reprise de la planche."},
+        {"type": "necessaire", "texte": "Front lever : partir de la capacité réelle (tenues de 3 à 4 s, ou grappes de 2 × 3 s), viser 30 à 45 s propres par séance sur deux séances, et compléter par des négatifs de front lever, des tirages front lever et des tenues half-lay plus longues. Tester toutes les 4 semaines et ajuster si le maximum baisse.", "consequence": "Tenues écrites au-dessus de la capacité dès la semaine 1, maximum tombé de 8 à 6 s et stagnant tout le cycle : la tenue de 15 s ne sera pas atteinte."},
+        {"type": "amelioration", "texte": "Corriger l'indication « 50 % du volume habituel » pour qu'elle corresponde aux séries écrites (5 × 3 s plutôt que 1 × 3 s), et donner trois semaines de reprise de planche complètes avant le test maximal."},
+        {"type": "amelioration", "texte": "Ajouter des pseudo-planche push-ups ou des planche leans lestés (sur parallettes) pour la force bras tendus, en remplacement d'une partie des tenues statiques."},
+        {"type": "amelioration", "texte": "Demander le sommeil et le stress au profil : les nuits courtes répétées justifieraient un allègement réactif plutôt que la seule baisse du jour."},
+        {"type": "amelioration", "texte": "Ramener le skater squat à 2 × 8-12 avec une progression de charge ou d'amplitude plutôt que d'aller vers 20 répétitions."}
+      ],
+      "points_forts": [
+        "Discours honnête sur la figure complète (étapes d'au moins 6 semaines, critère de passage chiffré).",
+        "Seuils de douleur unifiés, parallettes ou poings par défaut au-dessus de 1/10, reprise graduée à paliers et orientation vers un professionnel.",
+        "Allègement toutes les 4 semaines, lest progressif par petits pas, aucun échec.",
+        "Coiffe, rotation externe, face pull, tirage horizontal et chaîne postérieure présents.",
+        "Semaine de test bien construite : 48 h sans travail dur, tenues de montée, jamais à froid."
+      ]
+    }
+  ]
+}

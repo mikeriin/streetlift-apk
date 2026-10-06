@@ -534,10 +534,14 @@ void noteCoachSession(
   // La série ne compte qu'à charge (ou assistance) et plage égales : un cran
   // retiré ou une plage changée la remet à zéro (relecture du code CX,
   // correction 1).
+  // Exercice assisté : la plage écrite monte d'une semaine à l'autre ; la
+  // série compte tant que le cran ne change pas (panel de la boucle 4,
+  // `street_01` : la plage remise à zéro chaque semaine, l'élastique ne
+  // changeait jamais — 13 semaines à 4 à 9 répétitions en réserve).
   final before = marks[coach.slotId];
   var streak = 0;
   if (before != null &&
-      before.amount == coach.schemeAmount &&
+      (before.amount == coach.schemeAmount || run.info.exercise.assisted) &&
       before.loadKg == held) {
     streak = before.reached;
   }

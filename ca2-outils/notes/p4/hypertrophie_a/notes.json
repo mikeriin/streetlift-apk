@@ -1,0 +1,71 @@
+{
+  "ecole": "hypertrophie",
+  "programmes": [
+    {
+      "programme": "programme_1.md",
+      "criteres": {"H1": 6.5, "H2": 8.5, "H3": 7, "H4": 7, "H5": 8, "H6": 8.5, "H7": 9, "H8": 8.5, "H9": 8.5},
+      "sans_objet": [],
+      "ensemble": 7,
+      "points_perdus": [
+        {"critere": "H1", "perte": 3.5, "raison": "Dès la semaine 7-8, le dos reçoit environ 17 à 19 séries directes par semaine (tractions assistées 2+3+2, négatives 3+2, row australien 2+2, tenue menton 3), au-dessus du plafond débutant de 12 (R1-P1) et du seuil de 10 (R1-P3). Le lundi atteint 7 séries dorsales directes, au-delà du maximum débutant de 6 par séance (R1-P4). Pectoraux et jambes restent dans la fourchette."},
+        {"critere": "H2", "perte": 1.5, "raison": "Trois séances corps entier conformes à R1-P8, mais le volume dorsal n'est pas maîtrisé par séance (lundi plus chargé que les autres) et il n'y a pas d'alternance lourde/légère."},
+        {"critere": "H3", "perte": 3, "raison": "Air squat 1 × 11-19 « à 2 rép. en réserve » (semaines 7-15) : pour un homme de 78 kg, la cible est irréaliste, donc la série est très loin de l'échec. Les négatives de dips 2 × 10-12 de la semaine 16 sont notées « 3 rép. en réserve », une consigne sans sens sur un excentrique. La simulation montre 31,7 % de séries au moins 3 répétitions plus faciles que prévu."},
+        {"critere": "H4", "perte": 3, "raison": "Le choix est bon pour l'objectif (élastique, négatives, tenue menton). En revanche, le bas du corps reste en air squat et fente au poids du corps sans progression de variante. Les dips assistés sont remplacés brutalement en semaine 16 par des négatives 2 × 10-12, alors que le maximum de dips est de 0 (R6-P4 : un exercice stable par muscle chez le débutant)."},
+        {"critere": "H5", "perte": 2, "raison": "La règle répétitions puis élastique est écrite, mais les plages de la traction assistée montent (6-8 → 8-10) au lieu de forcer la baisse d'assistance. Dans la simulation, le maximum assisté stagne de 16 à 15 sur 16 semaines (R5-P3)."},
+        {"critere": "H6", "perte": 1.5, "raison": "Le tirage domine bien la poussée et le face pull est présent. La chaîne postérieure se limite à un pont fessier 2 séries une fois par semaine."},
+        {"critere": "H7", "perte": 1, "raison": "Repos de 2 min sur les polyarticulaires, conformes (R1-P15), et séances dans les 45 min. Aucun superset n'est prévu pour libérer du temps."},
+        {"critere": "H8", "perte": 1.5, "raison": "Semaine de test 6 et affûtage en semaine 11 bien dosés. En revanche, le bloc 3 enchaîne 4 semaines de hausse sans allègement ni test, et la baisse de volume dorsal n'est pas prévue malgré les alertes tendineuses au coude dans la simulation."},
+        {"critere": "H9", "perte": 1.5, "raison": "Le programme respecte le temps, le matériel et le niveau, et il est honnête sur l'objectif. Les essais de traction stricte à partir de la semaine 6 ne figurent que dans les règles, pas dans les tableaux. Rien ne dit quoi changer si la traction assistée stagne."},
+        {"critere": "ensemble", "perte": 3, "raison": "Deux corrections nécessaires : la dose dorsale excède le plafond débutant, avec un mouvement principal qui stagne et des signaux au coude ; les négatives de dips de la semaine 16 sont incohérentes."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Ramener le dos à 10-12 séries directes par semaine et à 6 au plus par séance (R1-P1, R1-P4). Retirer le row australien du lundi ou une série de négatives, et garder la priorité négatives + traction assistée. Ajouter une règle écrite : si le maximum assisté ne progresse pas sur 2 semaines, passer à l'élastique plus fin plutôt que de monter la plage.", "consequence": "Le volume dorsal en excès fatigue les fléchisseurs et les tendons du coude sans gain supplémentaire. La traction assistée continue de stagner et les 3 tractions strictes ne seront probablement pas atteintes."},
+        {"type": "necessaire", "texte": "Semaine 16 : remplacer les dips négatifs 2 × 10-12 par 2-3 × 3-4 négatives de 3-5 s (ou garder les dips assistés), avec un arrêt au contrôle et non à la réserve.", "consequence": "Pour un débutant à 0 dips, 20 à 24 descentes lentes par séance surchargent l'épaule et le coude sur l'amplitude basse, et la consigne en réserve ne peut pas être appliquée."},
+        {"type": "amelioration", "texte": "Remplacer l'air squat par une progression de variante (squat bulgare, squat pistol assisté) en 6-12 répétitions à 2-3 RIR, pour que la cible d'effort soit atteignable."},
+        {"type": "amelioration", "texte": "Afficher dans les tableaux, dès la semaine 6, les 1 à 3 essais de traction stricte en tête de séance (lundi et vendredi)."},
+        {"type": "amelioration", "texte": "Ajouter une série de calibration de la réserve sur la traction assistée chaque semaine (série ouverte à 2 RIR), puisque l'effort réel s'écarte de 2 à 3 répétitions du visé."},
+        {"type": "amelioration", "texte": "Ajouter un deuxième travail de chaîne postérieure (pont fessier unilatéral ou hip thrust sur banc) le lundi ou le vendredi."}
+      ],
+      "points_forts": [
+        "Le travail est spécifique à la traction stricte : élastique, négatives freinées allongées d'une seconde par semaine, tenue menton au-dessus de la barre.",
+        "L'effort monte progressivement (4 → 3 → 2 RIR), ce qui convient à un débutant (R1-P13).",
+        "La règle d'assistance est unique et claire, et les séries sont calées sur le maximum mesuré.",
+        "Les règles de douleur au poignet (prises neutres, reprise par paliers) sont complètes et ont été appliquées dans la simulation.",
+        "Le test tombe à l'échéance de la semaine 12, précédé d'un affûtage, et les attentes sont honnêtes."
+      ]
+    },
+    {
+      "programme": "programme_2.md",
+      "criteres": {"H1": 8, "H2": 9, "H3": 7.5, "H4": 8, "H5": 8, "H6": 8.5, "H7": 9, "H8": 9, "H9": 7.5},
+      "sans_objet": [],
+      "ensemble": 8,
+      "points_perdus": [
+        {"critere": "H1", "perte": 2, "raison": "Semaines 9-11 : 5 séries de dips au poids du corps à 23-25 répétitions, ajoutées à la poussée restante. Le volume de poussée bondit pendant un bloc écrit après une douleur de poignet persistante. Les jambes restent dans un volume d'entretien minimal (4 séries de skater squat), acceptable pour ce profil."},
+        {"critere": "H2", "perte": 1, "raison": "Alternance lourde, moyenne et légère sur 6 jours, bien construite (R1-P8). Le dimanche ne contient que de la mobilité, donc l'une des 6 séances disponibles n'est pas exploitée."},
+        {"critere": "H3", "perte": 2.5, "raison": "Ice cream maker figé à 1 × 9 « à 4 RIR » (semaines 9-17), alors que la simulation montre 6 à 7 répétitions en réserve réelles. Les skater squats montent à 2 × 20-21 à 4 RIR, ce qui relève de l'endurance. Les dips à 23-25 répétitions sortent de la plage utile pour la force du profil (R1-P13, R6-P2)."},
+        {"critere": "H4", "perte": 2, "raison": "Les exercices sont complémentaires pour les deux leviers. En revanche, le skater squat n'est jamais lesté alors que l'athlète a disques et ceinture, et le programme ne contient aucun travail dynamique lesté ou excentrique du front lever (rows en front lever, négatives) au-delà de l'ice cream maker (R6-P4)."},
+        {"critere": "H5", "perte": 2, "raison": "Les pourcentages lestés et les tenues sont écrits semaine par semaine, avec une règle +1 s. La progression des skater squats et des dips se fait par empilement de répétitions (6-8 → 20-21). Les tenues de front lever restent à 10 × 4 s de la semaine 5 à 15 malgré un maximum tombé de 8 à 6 s, sans changement de stratégie (R5-P3)."},
+        {"critere": "H6", "perte": 1.5, "raison": "Tirage ≥ poussée, rotateurs externes, face pull et nordic : l'équilibre est bon. La chaîne postérieure se limite à 4 séries de nordic assisté."},
+        {"critere": "H7", "perte": 1, "raison": "Repos de 90 s sur les tenues et de 3 min sur le lesté, adaptés (R1-P15). Le repos des dips tombe à 60 s pendant l'allègement de la semaine 12."},
+        {"critere": "H8", "perte": 1, "raison": "Un allègement toutes les 4 semaines, à environ -40 % (R3-P9), adapté à l'élite. Le test de front lever tombe à chaque allègement, ce qui ne laisse pas de vraie récupération."},
+        {"critere": "H9", "perte": 2.5, "raison": "Le programme tient compte du poignet (parallettes par défaut au-dessus de 1/10, reprise graduée). Mais le bloc 3 remplace les dips lestés par 5 séries de 23-25 dips au poids du corps, ce qui contredit sa propre règle : les appuis à prise neutre restent « en volume réduit »."},
+        {"critere": "ensemble", "perte": 2, "raison": "Une correction nécessaire, sur la charge de poussée au poids du corps imposée au poignet douloureux pendant le bloc 3."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Semaines 9 à 11 : réduire les dips aux barres parallèles à 2-3 séries par semaine de 8-12 répétitions (ou garder les dips lestés 2 × 5 léger), sans dépasser le volume d'avant la douleur, en suivant la règle de reprise graduée à +10 % par semaine.", "consequence": "Environ 120 à 125 répétitions de dips par semaine sur un poignet qui vient de dépasser 3/10 pendant plusieurs séances exposent à une rechute. La simulation retire déjà les dips à cause du poignet dès la semaine 9, et le retour de la planche serait retardé."},
+        {"type": "amelioration", "texte": "Lester le skater squat (ceinture ou disque tenu) en 6-10 répétitions plutôt que de monter à 20-21 répétitions."},
+        {"type": "amelioration", "texte": "Si le maintien du front lever recule à un test (8 → 6 s), changer une variable : ajouter 2-3 × 3-5 rows en front lever ou négatives de front lever, et ajuster l'ice cream maker pour une réserve réelle de 2-3."},
+        {"type": "amelioration", "texte": "Recaler le 1RM de référence de la traction lestée sur le profil (64 + 55 = 119 kg au lieu de 117 kg), ou dire pourquoi la référence est minorée."},
+        {"type": "amelioration", "texte": "Ne pas placer le test maximal de front lever pendant l'allègement des semaines 4 et 8 : le faire en début de bloc suivant, ou alléger davantage la séance qui précède."}
+      ],
+      "points_forts": [
+        "Le programme est honnête sur l'objectif : la planche complète n'est pas atteignable en 16 semaines, le travail porte sur l'étape actuelle avec un critère de passage explicite.",
+        "Alternance lourde, moyenne et légère sur la semaine, avec les leviers deux fois par semaine et un jour léger de half-lay.",
+        "Allègements toutes les 4 semaines, adaptés à l'élite (R3-P9, R1-P18).",
+        "Gestion complète du poignet : parallettes par défaut, retrait des appuis, reprise à 50 → 60 → 70 → 80 % du volume.",
+        "Tenues dosées en pourcentage du maintien mesuré, recalées tous les 15 jours.",
+        "Prévention de l'épaule (rotateurs externes, face pull) et tirage horizontal présents."
+      ]
+    }
+  ]
+}
