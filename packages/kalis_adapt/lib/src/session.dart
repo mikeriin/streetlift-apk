@@ -378,13 +378,17 @@ SessionPlan buildSessionPlan(
       }
       // (Ni tant que la zone a été signalée au-dessus de 2 sur 10 dans la
       // semaine : relecture documentée du pilotage, manche 4.)
+      int? weekPain;
       for (final s in state.pains.values) {
-        if (painZone == null &&
-            info.zoneLevel(s.zone) >= 0.5 &&
-            s
-                .reportsBetween(day - 6, day)
-                .any((r) => r > p.coachReturnPain)) {
+        if (painZone != null || info.zoneLevel(s.zone) < 0.5) {
+          continue;
+        }
+        final high = s
+            .reportsBetween(day - 6, day)
+            .where((r) => r > p.coachReturnPain);
+        if (high.isNotEmpty) {
           painZone = s.zone;
+          weekPain = high.reduce((a, b) => a > b ? a : b);
         }
       }
       if (painZone != null) {
@@ -396,7 +400,7 @@ SessionPlan buildSessionPlan(
             reasons: <Reason>[
               reason(ReasonCodes.adaptPainReported, <String, Object?>{
                 'zone': painZone.code,
-                'intensity': painsToday[painZone],
+                'intensity': painsToday[painZone] ?? weekPain ?? 0,
               }),
             ],
           ),
@@ -1027,8 +1031,15 @@ SessionPlan buildSessionPlan(
 
   // 3. Charges, répétitions et flammes de chaque exercice.
   final wristGuard = coached && wristSensitive(view, state, comeback, day);
+  // (Douleur signalée ce jour au-dessus de 2 sur 10 : la zone est
+  // « récente » dès cette séance, avant que l'arrêt soit inscrit — un
+  // remplaçant indolore ne monte pas plus que les autres ; CA2, partie 0.)
   final recentZones = coached
-      ? recentPainZones(state, day, p)
+      ? <BodyZone>{
+          ...recentPainZones(state, day, p),
+          for (final entry in painsToday.entries)
+            if (entry.value > p.coachReturnPain) entry.key,
+        }
       : const <BodyZone>{};
   var confidenceSum = 0.0;
   var confidenceCount = 0;
