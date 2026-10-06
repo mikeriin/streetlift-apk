@@ -500,6 +500,47 @@ SessionPlan buildSessionPlan(
             !coachPainStopHits(info.exercise, stop.zone)) {
           continue;
         }
+        // Poignet : une poussée en extension retirée est remplacée par un
+        // appui à prise neutre au poids du corps (parallettes, poignées,
+        // barres), à contrainte moyenne au plus, s'il n'en provoque aucune
+        // autre ; il est servi au premier palier de la reprise (règle du
+        // programme ; panel de la boucle 4, `street_01` : la poussée
+        // disparaissait pendant toute la douleur).
+        final substitute =
+            stop.zone != BodyZone.wristHand ||
+                info.mode != CapacityMode.reps ||
+                d.item.kind != SetKind.work
+            ? null
+            : findSubstitute(
+                ctx,
+                info,
+                equipment: equipment,
+                place: place,
+                pains: painsToday,
+                taken: taken,
+                neutralWrist: true,
+                avoid: (e) =>
+                    e.stressOn(Joint.wrist) == JointStress.high ||
+                    allStops.any((x) => coachPainStopHits(e, x.zone)) ||
+                    comeback.heldFor(e),
+              );
+        if (substitute != null &&
+            substitute.mode == CapacityMode.reps &&
+            substitute.fraction > 0) {
+          taken.add(substitute.id);
+          adjustments.add(
+            SessionAdjustment(
+              kind: AdjustmentKind.exerciseSwapped,
+              exerciseId: d.item.exerciseId,
+              replacementExerciseId: substitute.id,
+              reasons: why,
+            ),
+          );
+          d.reasons.addAll(why);
+          d.info = substitute;
+          d.item = _retarget(d.item, substitute);
+          continue;
+        }
         d.removed = true;
         adjustments.add(
           SessionAdjustment(
@@ -669,17 +710,11 @@ SessionPlan buildSessionPlan(
     for (final entry in stopZones.entries) {
       final zone = entry.key;
       final track = state.pains[zone];
-      // (Poignet : l'arrêt couvre d'emblée toute charge d'appui, prise
-      // neutre comprise — relecture documentée du pilotage, manche 4,
-      // `street_10`.)
       final escalated =
-          zone == BodyZone.wristHand ||
-          (entry.value > 0 &&
-              track != null &&
-              track.stopAt(day - p.coachStopEscalateDays) != null &&
-              track
-                  .reportsBetween(day - 6, day)
-                  .any((r) => r >= painPersistMin));
+          entry.value > 0 &&
+          track != null &&
+          track.stopAt(day - p.coachStopEscalateDays) != null &&
+          track.reportsBetween(day - 6, day).any((r) => r >= painPersistMin);
       final why = <Reason>[
         reason(ReasonCodes.adaptPainPersistent, <String, Object?>{
           'zone': zone.code,
@@ -694,7 +729,14 @@ SessionPlan buildSessionPlan(
             info.zoneLevel(zone) < 0.5) {
           continue;
         }
-        if (escalated || d.item.kind == SetKind.test) {
+        // (Poignet : toute charge externe sur un appui est retirée dès
+        // l'arrêt, prise neutre comprise — relecture documentée du
+        // pilotage, manche 4, `street_10` : dips lestés gardés ; l'appui
+        // neutre au poids du corps reste au premier palier — panel de la
+        // boucle 4 : la figure visée disparaissait sept semaines.)
+        final loadedSupport =
+            zone == BodyZone.wristHand && info.mode == CapacityMode.loaded;
+        if (escalated || loadedSupport || d.item.kind == SetKind.test) {
           d.removed = true;
           adjustments.add(
             SessionAdjustment(
