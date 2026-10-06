@@ -326,11 +326,13 @@ bool coachPainReprise(Athlete a) {
 /// affûtage, ni test, ni épreuve : le volume de la semaine monte de 10 %
 /// au plus d'une semaine à l'autre (Soligard et al. 2016, consensus du
 /// CIO ; Clarsen et al. : retour au sport par étapes), de 75 % à 100 %,
-/// et la dernière semaine d'un bloc de 5 semaines ou plus est allégée.
-/// L'échéance est repoussée au bloc suivant (note `pain_reprise`) ; les
+/// et la dernière semaine du bloc est allégée (jamais plus de six
+/// semaines de charge de suite, R3-P9). La semaine où tombait l'échéance
+/// [eventIndex] (rang dans le bloc) est une semaine allégée, sans test :
+/// l'échéance est repoussée au bloc suivant (note `pain_reprise`) ; les
 /// mouvements de la zone suivent la reprise graduée exercice par
 /// exercice (`returnShareOf`).
-List<WeekSpec> coachRepriseWeeks(int length) {
+List<WeekSpec> coachRepriseWeeks(int length, {int? eventIndex}) {
   final weeks = <WeekSpec>[];
   var volume = 0.75;
   var stage = 0;
@@ -347,7 +349,7 @@ List<WeekSpec> coachRepriseWeeks(int length) {
       );
       continue;
     }
-    if (i == length - 1 && length >= 5) {
+    if (i == length - 1 || i == eventIndex) {
       weeks.add(
         WeekSpec(
           kind: WeekKind.deload,
@@ -391,7 +393,10 @@ BlockShape shapeBlock(
             : blockLengthFor(toEvent, blockPreferences(a.level)));
     return BlockShape(
       model: model,
-      weeks: coachRepriseWeeks(natural < 4 ? 4 : natural),
+      weeks: coachRepriseWeeks(
+        natural < 4 ? 4 : natural,
+        eventIndex: toEvent == null ? null : toEvent - 1,
+      ),
       phase: SeasonPhaseKind.reintroduction,
       target: null,
       weeksToEvent: null,
