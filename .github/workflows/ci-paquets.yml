@@ -1,0 +1,140 @@
+# Pipeline GP — pistes parallèles (01/10/2026). Contrôle des paquets Dart
+# purs (packages/) et des outils Python des pistes « moteurs » et « koach »,
+# déclenché uniquement par un push sur claude/ci-gp-moteurs,
+# claude/ci-gp-koach ou, pour le pipeline de calibrage (CP, 02/10/2026),
+# claude/ci-cp-a et claude/ci-cp-b (une branche par voie parallèle). Chaque piste a sa branche et son groupe de
+# concurrence : deux pistes ne s'annulent jamais. Les résultats sont
+# recommités dans ci-out/ sur la même branche. Méthode : docs/CI_PISTES.md.
+# Ce fichier n'existe que sur les branches de piste (`moteurs`, `koach`) :
+# l'application n'en récupère jamais que des dossiers packages/<paquet>.
+name: CI paquets (pistes GP)
+
+on:
+  push:
+    branches: ["claude/ci-gp-moteurs", "claude/ci-gp-koach", "claude/ci-cp-a", "claude/ci-cp-b"]
+    paths-ignore:
+      - "ci-out/**"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ci-paquets-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  FLUTTER_VERSION: "3.47.5"
+
+jobs:
+  packages:
+    name: Paquets Dart et outils Python
+    runs-on: ubuntu-24.04
+    timeout-minutes: 90
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+          cache: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Contrôler chaque paquet
+        run: |
+          set -o pipefail
+          mkdir -p out-packages
+          bilan=out-packages/packages.txt
+          : > "$bilan"
+          status=0
+          found=0
+          root=$PWD
+          for dir in packages/*/; do
+            [ -f "${dir}pubspec.yaml" ] || continue
+            found=1
+            name=$(basename "$dir")
+            log="$root/out-packages/$name.log"
+            mkdir -p "out-packages/$name"
+            echo "== $name" | tee "$log"
+            ok=1
+            start=$(date +%s)
+            (cd "$dir" && dart pub get) >> "$log" 2>&1 || ok=0
+            (cd "$dir" && dart format --output=none --set-exit-if-changed .) >> "$log" 2>&1 || { echo "formatage : échec" >> "$log"; ok=0; }
+            (cd "$dir" && dart analyze --fatal-infos) >> "$log" 2>&1 || { echo "analyse : échec" >> "$log"; ok=0; }
+            (cd "$dir" && dart test --reporter expanded) >> "$log" 2>&1 || { echo "tests : échec" >> "$log"; ok=0; }
+            if [ -f "${dir}bin/${name}_cli.dart" ]; then
+              (cd "$dir" && dart run "bin/${name}_cli.dart" --rapport "$root/out-packages/$name") >> "$log" 2>&1 || { echo "rapport : échec" >> "$log"; ok=0; }
+            fi
+            echo "durée : $(( $(date +%s) - start )) s" >> "$log"
+            if [ "$ok" = 1 ]; then echo "$name=success" >> "$bilan"; else echo "$name=failure" >> "$bilan"; status=1; fi
+            tail -n 40 "$log"
+          done
+          if [ "$found" = 0 ]; then echo "aucun paquet" | tee -a "$bilan"; fi
+          cat "$bilan"
+          exit "$status"
+      - name: Tests des outils Python de la piste (tools/koach, tools/catalog)
+        if: always()
+        run: |
+          set -o pipefail
+          mkdir -p out-packages
+          status=0
+          : > out-packages/python.txt
+          for t in tools/koach tools/catalog; do
+            [ -d "$t" ] || continue
+            if [ -f "$t/requirements.txt" ]; then pip install --quiet -r "$t/requirements.txt"; fi
+            pip install --quiet pytest
+            if [ -d "$t/tests" ]; then
+              (python3 -m pytest -q "$t/tests" 2>&1 | tee "out-packages/python-$(basename "$t").log") && echo "$t=success" >> out-packages/python.txt || { echo "$t=failure" >> out-packages/python.txt; status=1; }
+            fi
+          done
+          [ -s out-packages/python.txt ] || echo "aucun outil" > out-packages/python.txt
+          cat out-packages/python.txt
+          exit "$status"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: packages
+          path: out-packages/
+          if-no-files-found: warn
+
+  publish:
+    name: Publier les résultats dans ci-out/
+    needs: [packages]
+    if: always()
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+      - name: Assembler ci-out
+        run: |
+          rm -rf ci-out && mkdir -p ci-out/packages
+          cp -r artifacts/packages/. ci-out/packages/ 2>/dev/null || true
+          {
+            echo "run=${{ github.run_id }}"
+            echo "commit=${{ github.sha }}"
+            echo "branche=${{ github.ref_name }}"
+            echo "packages=${{ needs.packages.result }}"
+          } > ci-out/resultat.txt
+          cat ci-out/resultat.txt
+      - name: Recommiter ci-out sur la branche
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          branch="${{ github.ref_name }}"
+          for i in 1 2 3; do
+            git fetch -q origin "$branch"
+            git reset -q FETCH_HEAD
+            git add -A -f ci-out
+            git commit -qm "CI paquets : résultats du run ${{ github.run_id }}" || exit 0
+            git push -q origin "HEAD:$branch" && break
+            sleep 5
+          done
