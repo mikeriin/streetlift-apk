@@ -185,9 +185,7 @@ String painStopText(
       ? ' Les mouvements qui la chargent restent de côté.'
       : ' Retiré${s.removed.length > 1 ? 's' : ''} aujourd’hui : '
             '${s.removed.join(', ')}.';
-  final consult = notice
-      ? ' Consulte un médecin ou un kinésithérapeute.'
-      : '';
+  final consult = notice ? ' Consulte un médecin ou un kinésithérapeute.' : '';
   return '$head$removed$consult Les mouvements retirés reviendront après '
       'deux semaines à 2 sur 10 au plus, par paliers.';
 }

@@ -18,7 +18,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:streetlift_tracker/adapt/adapt_texts.dart';
 import 'package:streetlift_tracker/athlete_profile.dart';
 import 'package:streetlift_tracker/plan/coach_texts.dart';
-import 'package:streetlift_tracker/plan/plan_program.dart';
 import 'package:streetlift_tracker/store.dart';
 
 /// Profils street des fixtures du parcours v3 (`kalis_core`, CQ), en JSON.
@@ -139,8 +138,7 @@ void main() {
         );
         expect(
           isPainReason(r),
-          note == kp.CoachNotes.painReprise ||
-              note == kp.CoachNotes.wristSpare,
+          note == kp.CoachNotes.painReprise || note == kp.CoachNotes.wristSpare,
           reason: note,
         );
       }
@@ -319,7 +317,7 @@ void main() {
         {
           'zone': 'wrist_hand',
           'side': 'both',
-          'joint': 'wrist',
+          'joint': 'poignet',
           'discomfort': 2,
         },
       ];

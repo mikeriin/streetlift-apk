@@ -171,8 +171,7 @@ class _HealthCheckPageState extends State<HealthCheckPage> {
     // l'arrêt, puis une fois par semaine).
     final notice = painStopNoticeZones(a.active);
     final lines = <String>[
-      for (final s in stops)
-        painStopText(s, notice: notice.contains(s.zone)),
+      for (final s in stops) painStopText(s, notice: notice.contains(s.zone)),
       ...notes,
     ];
     final stopTitle =

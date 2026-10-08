@@ -1,5 +1,0 @@
-Analyzing streetlift-apk...                                     
-
-warning • Unused import: 'package:streetlift_tracker/plan/plan_program.dart'. Try removing the import directive • test/ci1d_paquets_test.dart:21:8 • unused_import
-
-1 issue found. (ran in 13.2s)
