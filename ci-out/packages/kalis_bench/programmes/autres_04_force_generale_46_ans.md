@@ -49,7 +49,7 @@ Homme de 46 ans, 85 kg, deux ans de musculation. Squat 100 kg, développé couch
 
 ## Règles du programme
 
-- Chaque séance commence par 8 min d'échauffement au plus (comptées dans la durée estimée) : épaules, poignets et hanches en mobilité, 2 × 8 tirages scapulaires, 2 × 8 pompes scapulaires, puis quelques répétitions faciles du premier mouvement.
+- Chaque séance commence par 8 min d'échauffement (comptées dans la durée estimée) : 3 à 5 min de cardio léger (rameur, vélo), mobilité des épaules et des hanches, puis les séries de montée en charge du premier exercice (barre vide, puis deux ou trois paliers).
 - Ajustement des charges : si la série de tête laisse moins de réserve que prévu, baisse les séries suivantes de 2,5 à 5 % ; si elle en laisse au moins deux de plus, ajoute le plus petit pas la semaine suivante.
 - Ajustement des répétitions : si les répétitions prévues ne passent pas avec la réserve demandée, garde les mêmes chiffres la semaine suivante ; 2 séances de suite en dessous, retire une série.
 - Baisse du jour (nuit de moins de 6 h, courbatures marquées sur la zone, journée très stressante) : 1 série de moins par exercice, aucune série à moins de 3 répétitions en réserve, pas de test.

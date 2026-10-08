@@ -41,7 +41,7 @@ Homme de 32 ans, 93 kg, six ans de force athlétique. Squat 220 kg, développé 
 ## Règles du programme
 
 - Les blocs sont calés à rebours sur l'échéance : le dernier finit sur elle.
-- Chaque séance commence par 8 min d'échauffement au plus (comptées dans la durée estimée) : épaules, poignets et hanches en mobilité, 2 × 8 tirages scapulaires, 2 × 8 pompes scapulaires, puis quelques répétitions faciles du premier mouvement.
+- Chaque séance commence par 8 min d'échauffement (comptées dans la durée estimée) : 3 à 5 min de cardio léger (rameur, vélo), mobilité des épaules et des hanches, puis les séries de montée en charge du premier exercice (barre vide, puis deux ou trois paliers).
 - Catégorie de poids : moins de 94 kg à ton poids actuel. Pesée (règlement FinalRep, à vérifier pour ta compétition) : 2 h avant ta première vague, tolérance de 0,1 kg. Pèse-toi une fois par semaine, au réveil : si tu dépasses la limite de plus de 1 kg à deux semaines de l'épreuve, change plutôt de catégorie que de couper du poids à la fin ; si ton poids change, les charges, écrites en charge totale, se recalculent.
 - Ajustement des charges : si la série de tête laisse moins de réserve que prévu, baisse les séries suivantes de 2,5 à 5 % ; si elle en laisse au moins deux de plus, ajoute le plus petit pas la semaine suivante.
 - Ajustement des répétitions : si les répétitions prévues ne passent pas avec la réserve demandée, garde les mêmes chiffres la semaine suivante ; 2 séances de suite en dessous, retire une série.

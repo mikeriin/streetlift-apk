@@ -3758,7 +3758,7 @@ final class Prescriber {
           ws.eventWeek || (ws.intent == WeekIntent.test && _shape.finalBlock);
       var meters = last ? goal.$1 : goal.$1 / 2;
       final fits = (a.days[day].minutes - 8.0) * 60 * coachRunMetersPerSecond;
-      if (fits > 0 && meters > fits) {
+      if (!ws.eventWeek && fits > 0 && meters > fits) {
         meters = (fits / 500).floorToDouble() * 500;
       }
       x
@@ -3773,6 +3773,10 @@ final class Prescriber {
           }),
         )
         ..reasons.add(_note(CoachNotes.timeTrial, meters));
+      if (ws.eventWeek) {
+        // L'épreuve elle-même (sa durée est celle de la course).
+        x.reasons.add(_note(CoachNotes.eventDay, 0));
+      }
       if (last) {
         x.reasons.add(_note(CoachNotes.goalPace, goal.$2 / goal.$1 * 1000));
       }
@@ -3816,7 +3820,8 @@ final class Prescriber {
       // longues à l'allure de l'objectif) : stimulus de vitesse aérobie.
       final three = a.runTimeOn(3000);
       if (meters > 0 && three != null) {
-        x.reasons.add(_note(CoachNotes.intervalPace, three / 3000 * meters));
+        // (Allure donnée au kilomètre, quelle que soit la fraction.)
+        x.reasons.add(_note(CoachNotes.intervalPace, three / 3000 * 1000));
       }
       if (meters > 0) {
         x
@@ -7375,6 +7380,31 @@ final class Prescriber {
           break;
         }
       }
+      // Courses de la semaine (sortie longue et footings) : la sortie
+      // longue de la semaine suivante part de la plus longue des quatre
+      // semaines d'avant (R6-P16 ; CP2, partie 1 : sans cette trace, la
+      // sortie longue repartait de sa valeur de départ chaque semaine).
+      if (w >= kept.length) {
+        for (final items in days) {
+          for (final x in items) {
+            if ((x.e.id != Ids.longRun && x.e.id != Ids.easyRun) ||
+                x.kind == SetKind.test) {
+              continue;
+            }
+            final secs = x.secondsHigh;
+            final meters = x.distance;
+            final m = secs != null
+                ? secs * x.sets / 60
+                : (meters != null
+                      ? meters * x.sets / coachRunMetersPerSecond / 60
+                      : 0.0);
+            trace.runTotal += m;
+            if (m > trace.runLong) {
+              trace.runLong = m;
+            }
+          }
+        }
+      }
       _history.add(w < kept.length ? _traceOf(kept[w]) : trace);
       if (ws.kind == WeekKind.build || ws.kind == WeekKind.intro) {
         _loadedBefore++;
@@ -7392,10 +7422,24 @@ final class Prescriber {
         _testsDone++;
       }
       out.add(
+        // Hors du chemin street, une semaine de test sans aucun test
+        // (musculation, santé : rien de mesurable par un maximum) est
+        // une semaine d'allègement et le dit (panel CP2, partie 1 :
+        // « semaine de test » vide).
         WeekPrescription(
           weekIndex: w,
-          kind: ws.kind,
-          intent: ws.intent,
+          kind:
+              ws.kind == WeekKind.test &&
+                  !anyTest &&
+                  !isStreetStyle(skeleton.style)
+              ? WeekKind.deload
+              : ws.kind,
+          intent:
+              ws.kind == WeekKind.test &&
+                  !anyTest &&
+                  !isStreetStyle(skeleton.style)
+              ? WeekIntent.deload
+              : ws.intent,
           days: <DayPrescription>[
             for (var d = 0; d < a.dayCount; d++) _freezeDay(d, days[d], ws),
           ],
@@ -7434,6 +7478,18 @@ double? coachWeightClassOf(Sex? sex, double bodyWeight) {
 }
 
 /// Raisons du bloc : phase, échéance, lecture du profil, règles de douleur.
+/// Famille d'échauffement du style [s] (valeur ajoutée à la durée de la
+/// note `general_warmup`) : 0 street, 100 course, 200 salle et
+/// conditionnement, 300 santé et mobilité.
+double _warmupFamily(CoachStyle s) => switch (s) {
+  CoachStyle.endurance => 100,
+  CoachStyle.health => 300,
+  CoachStyle.hypertrophy ||
+  CoachStyle.strength ||
+  CoachStyle.conditioning => 200,
+  _ => 0,
+};
+
 List<Reason> blockReasonsOf(Athlete a, Skeleton skeleton) {
   final shape = skeleton.shape;
   final target = shape.target;
@@ -7452,10 +7508,17 @@ List<Reason> blockReasonsOf(Athlete a, Skeleton skeleton) {
       if (r.params['note'] == CoachNotes.skillHorizon) r,
     reason(ReasonCodes.planCoachNote, <String, Object?>{
       'note': CoachNotes.generalWarmup,
-      'value': coachWarmupSeconds / 60,
+      // Échauffement de la discipline (CP2, partie 1 ; R6-P25) : + 100
+      // course, + 200 salle et conditionnement, + 300 santé.
+      'value': coachWarmupSeconds / 60 + _warmupFamily(skeleton.style),
     }),
   ];
-  final tests = shape.weeks.any((w) => w.testWeek);
+  // (Musculation et santé : aucun test de maximum, pas de règle de
+  // recalage — CP2, partie 1.)
+  final tests =
+      shape.weeks.any((w) => w.testWeek) &&
+      skeleton.style != CoachStyle.hypertrophy &&
+      skeleton.style != CoachStyle.health;
   Reason note(String code, double value) => reason(
     ReasonCodes.planCoachNote,
     <String, Object?>{'note': code, 'value': value},
@@ -7559,7 +7622,15 @@ List<Reason> blockReasonsOf(Athlete a, Skeleton skeleton) {
     ..add(
       note(CoachNotes.badDay, profile.sleep == SleepBand.under6Hours ? 2 : 1),
     )
-    ..add(note(CoachNotes.shortVersion, shortest >= 50 ? 25 : 15))
+    ..add(
+      note(
+        CoachNotes.shortVersion,
+        (shortest >= 50 ? 25 : 15) +
+            (skeleton.style == CoachStyle.endurance
+                ? 100
+                : (skeleton.style == CoachStyle.health ? 300 : 0)),
+      ),
+    )
     ..add(note(CoachNotes.redFlags, 0))
     ..add(note(CoachNotes.missed, 20));
   if (tests) {

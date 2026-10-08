@@ -20,17 +20,17 @@ Femme de 34 ans, 64 kg, court depuis six mois : 5 km en 35 minutes. Veut finir u
 
 | Semaine | Bloc | Nature | Séances | Séries dures |
 | --- | --- | --- | --- | --- |
-| 1 | 1 | introduction | 3 | 6 |
-| 2 | 1 | construction (volume) | 3 | 6 |
-| 3 | 1 | construction (volume) | 3 | 6 |
-| 4 | 1 | construction (volume) | 3 | 6 |
-| 5 | 1 | construction (volume) | 3 | 6 |
-| 6 | 1 | test | 3 | 8 |
-| 7 | 2 | construction (volume) | 3 | 6 |
-| 8 | 2 | construction (volume) | 3 | 6 |
-| 9 | 2 | construction (volume) | 3 | 6 |
-| 10 | 2 | construction (volume) | 3 | 8 |
-| 11 | 2 | affûtage | 3 | 5 |
+| 1 | 1 | introduction | 3 | 4 |
+| 2 | 1 | construction (volume) | 3 | 4 |
+| 3 | 1 | construction (volume) | 3 | 4 |
+| 4 | 1 | construction (volume) | 3 | 4 |
+| 5 | 1 | construction (volume) | 3 | 0 |
+| 6 | 1 | test | 3 | 6 |
+| 7 | 2 | construction (volume) | 3 | 0 |
+| 8 | 2 | construction (volume) | 3 | 0 |
+| 9 | 2 | construction (volume) | 3 | 0 |
+| 10 | 2 | construction (volume) | 3 | 0 |
+| 11 | 2 | affûtage | 3 | 2 |
 | 12 | 2 | test — ÉCHÉANCE | 3 | 0 |
 
 ## Saison
@@ -41,10 +41,10 @@ Femme de 34 ans, 64 kg, court depuis six mois : 5 km en 35 minutes. Veut finir u
 ## Règles du programme
 
 - Les blocs sont calés à rebours sur l'échéance : le dernier finit sur elle.
-- Chaque séance commence par 8 min d'échauffement au plus (comptées dans la durée estimée) : épaules, poignets et hanches en mobilité, 2 × 8 tirages scapulaires, 2 × 8 pompes scapulaires, puis quelques répétitions faciles du premier mouvement.
+- Chaque séance commence par 8 min d'échauffement (comptées dans la durée estimée) : 5 min de trot progressif, mobilité des chevilles et des hanches, gammes (montées de genoux, talons-fesses) ; avant les fractions, deux ou trois accélérations progressives.
 - Ajustement des répétitions : si les répétitions prévues ne passent pas avec la réserve demandée, garde les mêmes chiffres la semaine suivante ; 2 séances de suite en dessous, retire une série.
 - Baisse du jour (nuit de moins de 6 h, courbatures marquées sur la zone, journée très stressante) : 1 série de moins par exercice, aucune série à moins de 3 répétitions en réserve, pas de test.
-- Jour chargé : version courte de 15 min — 4 min d'échauffement, puis le premier exercice seul (le mouvement de l'objectif), 2 séries. Une séance courte vaut mieux qu'une séance sautée.
+- Jour chargé : version courte de 15 min — 5 min de marche rapide puis footing facile, sans fractions. Une séance courte vaut mieux qu'une séance sautée.
 - Arrêt immédiat et avis médical : douleur dans la poitrine, essoufflement anormal, malaise ou vertige. Souffle pendant l'effort, sans bloquer la respiration sur les séries longues.
 - Séance manquée : elle ne se rattrape pas. Semaine manquée : refais la dernière semaine terminée. Deux semaines ou plus : reprends deux semaines en arrière avec 20 % de volume en moins.
 - Les tests de fin de bloc (ou de la semaine de test) recalent les charges, les répétitions et les secondes du bloc suivant : déclare ton résultat, le bloc suivant est écrit dessus (série de tête = résultat − 2 ; tenues = 60 à 85 % du maintien mesuré), jamais sur un progrès supposé. Un test fait un jour de bilan bas se reporte de 48 à 72 h.
@@ -65,14 +65,13 @@ Femme de 34 ans, 64 kg, court depuis six mois : 5 km en 35 minutes. Veut finir u
 | Footing en endurance fondamentale | 30 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 30 min. |
 | Fente arrière au poids du corps | 2 × 6 à 8 | poids du corps | 4 rép. en réserve | 90 s | accessoire ; Jambes : force utile, sans fatigue excessive. |
 
-### jeudi — cardio, fractionné (45 min disponibles, 28 min estimées)
+### jeudi — cardio, fractionné (45 min disponibles, 41 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Footing en endurance fondamentale | 12 min | — | allure facile | — | échauffement ; Allure de conversation (tu peux parler en phrases), 12 min. |
+| Footing en endurance fondamentale | 30 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 30 min. |
 | Fente arrière au poids du corps | 2 × 6 à 8 | poids du corps | 4 rép. en réserve | 90 s | accessoire ; Jambes : force utile, sans fatigue excessive. |
-| Pont fessier unilatéral | 2 × 8 à 10 | poids du corps | 4 rép. en réserve | 105 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 
 ### dimanche — cardio, endurance (60 min disponibles, 38 min estimées)
 
@@ -91,21 +90,20 @@ Femme de 34 ans, 64 kg, court depuis six mois : 5 km en 35 minutes. Veut finir u
 | Footing en endurance fondamentale | 30 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 30 min. |
 | Fente arrière au poids du corps | 2 × 6 à 8 | poids du corps | 3 rép. en réserve | 90 s | accessoire ; Jambes : force utile, sans fatigue excessive. |
 
-### jeudi — cardio, fractionné (45 min disponibles, 28 min estimées)
+### jeudi — cardio, fractionné (45 min disponibles, 41 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Footing en endurance fondamentale | 12 min | — | allure facile | — | échauffement ; Allure de conversation (tu peux parler en phrases), 12 min. |
+| Footing en endurance fondamentale | 30 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 30 min. |
 | Fente arrière au poids du corps | 2 × 6 à 8 | poids du corps | 3 rép. en réserve | 90 s | accessoire ; Jambes : force utile, sans fatigue excessive. |
-| Pont fessier unilatéral | 2 × 8 à 10 | poids du corps | 3 rép. en réserve | 105 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 
-### dimanche — cardio, endurance (60 min disponibles, 38 min estimées)
+### dimanche — cardio, endurance (60 min disponibles, 41 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Sortie longue en course à pied | 35 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 35 min. |
+| Sortie longue en course à pied | 38 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 38 min. |
 
 ## Semaine 3 — construction (volume) (bloc 1)
 
@@ -117,93 +115,88 @@ Femme de 34 ans, 64 kg, court depuis six mois : 5 km en 35 minutes. Veut finir u
 | Footing en endurance fondamentale | 30 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 30 min. |
 | Fente arrière au poids du corps | 2 × 6 à 8 | poids du corps | 3 rép. en réserve | 90 s | accessoire ; Jambes : force utile, sans fatigue excessive. |
 
-### jeudi — cardio, fractionné (45 min disponibles, 28 min estimées)
+### jeudi — cardio, fractionné (45 min disponibles, 41 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Footing en endurance fondamentale | 12 min | — | allure facile | — | échauffement ; Allure de conversation (tu peux parler en phrases), 12 min. |
+| Footing en endurance fondamentale | 30 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 30 min. |
 | Fente arrière au poids du corps | 2 × 6 à 8 | poids du corps | 3 rép. en réserve | 90 s | accessoire ; Jambes : force utile, sans fatigue excessive. |
-| Pont fessier unilatéral | 2 × 8 à 10 | poids du corps | 3 rép. en réserve | 105 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 
-### dimanche — cardio, endurance (60 min disponibles, 38 min estimées)
+### dimanche — cardio, endurance (60 min disponibles, 44 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Sortie longue en course à pied | 35 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 35 min. |
+| Sortie longue en course à pied | 41 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 41 min. |
 
 ## Semaine 4 — construction (volume) (bloc 1)
 
-### mardi — cardio, endurance (45 min disponibles, 42 min estimées)
+### mardi — cardio, endurance (45 min disponibles, 43 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Footing en endurance fondamentale | 30 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 30 min. |
+| Footing en endurance fondamentale | 31 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 31 min. |
 | Fente arrière au poids du corps | 2 × 7 à 9 | poids du corps | 3 rép. en réserve | 90 s | accessoire ; Jambes : force utile, sans fatigue excessive. |
 
-### jeudi — cardio, fractionné (45 min disponibles, 28 min estimées)
+### jeudi — cardio, fractionné (45 min disponibles, 43 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Footing en endurance fondamentale | 12 min | — | allure facile | — | échauffement ; Allure de conversation (tu peux parler en phrases), 12 min. |
+| Footing en endurance fondamentale | 31 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 31 min. |
 | Fente arrière au poids du corps | 2 × 7 à 9 | poids du corps | 3 rép. en réserve | 90 s | accessoire ; Jambes : force utile, sans fatigue excessive. |
-| Pont fessier unilatéral | 2 × 9 à 11 | poids du corps | 3 rép. en réserve | 105 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 
-### dimanche — cardio, endurance (60 min disponibles, 38 min estimées)
+### dimanche — cardio, endurance (60 min disponibles, 48 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Sortie longue en course à pied | 35 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 35 min. |
+| Sortie longue en course à pied | 45 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 45 min. |
 
 ## Semaine 5 — construction (volume) (bloc 1)
 
-### mardi — cardio, endurance (45 min disponibles, 42 min estimées)
+### mardi — cardio, endurance (45 min disponibles, 37 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Footing en endurance fondamentale | 30 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 30 min. |
-| Fente arrière au poids du corps | 2 × 7 à 9 | poids du corps | 3 rép. en réserve | 90 s | accessoire ; Jambes : force utile, sans fatigue excessive. |
+| Footing en endurance fondamentale | 34 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 34 min. |
 
-### jeudi — cardio, fractionné (45 min disponibles, 28 min estimées)
-
-| Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
-| --- | --- | --- | --- | --- | --- |
-| Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Footing en endurance fondamentale | 12 min | — | allure facile | — | échauffement ; Allure de conversation (tu peux parler en phrases), 12 min. |
-| Fente arrière au poids du corps | 2 × 7 à 9 | poids du corps | 3 rép. en réserve | 90 s | accessoire ; Jambes : force utile, sans fatigue excessive. |
-| Pont fessier unilatéral | 2 × 9 à 11 | poids du corps | 3 rép. en réserve | 105 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
-
-### dimanche — cardio, endurance (60 min disponibles, 38 min estimées)
+### jeudi — cardio, fractionné (45 min disponibles, 37 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Sortie longue en course à pied | 35 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 35 min. |
+| Footing en endurance fondamentale | 34 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 34 min. |
+
+### dimanche — cardio, endurance (60 min disponibles, 52 min estimées)
+
+| Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
+| --- | --- | --- | --- | --- | --- |
+| Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
+| Sortie longue en course à pied | 49 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 49 min. |
 
 ## Semaine 6 — test (bloc 1)
 
-### mardi — cardio, endurance, séance légère (45 min disponibles, 39 min estimées)
+### mardi — cardio, endurance, séance légère (45 min disponibles, 40 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
 | Footing en endurance fondamentale | 24 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 24 min. |
 | Fente arrière au poids du corps | 2 × 6 à 8 | poids du corps | 3 rép. en réserve | 90 s | accessoire ; Jambes : force utile, sans fatigue excessive. |
-| Pont fessier unilatéral | 2 × 6 | poids du corps | 3 rép. en réserve | 105 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
+| Pont fessier unilatéral | 2 × 8 à 10 | poids du corps | 5 rép. en réserve ou plus | 105 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 
-### jeudi — cardio, fractionné, séance légère (45 min disponibles, 27 min estimées)
+### jeudi — cardio, fractionné, séance légère (45 min disponibles, 40 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Footing en endurance fondamentale | 12 min | — | allure facile | — | échauffement ; Allure de conversation (tu peux parler en phrases), 12 min. |
+| Footing en endurance fondamentale | 24 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 24 min. |
 | Fente arrière au poids du corps | 2 × 6 à 8 | poids du corps | 3 rép. en réserve | 90 s | accessoire ; Jambes : force utile, sans fatigue excessive. |
-| Pont fessier unilatéral | 2 × 6 | poids du corps | 3 rép. en réserve | 105 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
+| Pont fessier unilatéral | 2 × 8 à 10 | poids du corps | 3 rép. en réserve | 105 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 
 ### dimanche — cardio, endurance, séance légère (60 min disponibles, 41 min estimées)
 
@@ -214,134 +207,122 @@ Femme de 34 ans, 64 kg, court depuis six mois : 5 km en 35 minutes. Veut finir u
 
 ## Semaine 7 — construction (volume) (bloc 2)
 
-### mardi — cardio, endurance (45 min disponibles, 41 min estimées)
+### mardi — cardio, endurance (45 min disponibles, 40 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Footing en endurance fondamentale | 30 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 30 min. |
-| Fente arrière au poids du corps | 2 × 6 à 8 | poids du corps | 3 rép. en réserve | 90 s | accessoire ; Jambes : force utile, sans fatigue excessive. |
+| Footing en endurance fondamentale | 37 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 37 min. |
 
-### jeudi — cardio, fractionné (45 min disponibles, 28 min estimées)
-
-| Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
-| --- | --- | --- | --- | --- | --- |
-| Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Footing en endurance fondamentale | 12 min | — | allure facile | — | échauffement ; Allure de conversation (tu peux parler en phrases), 12 min. |
-| Fente arrière au poids du corps | 2 × 6 à 8 | poids du corps | 3 rép. en réserve | 90 s | accessoire ; Jambes : force utile, sans fatigue excessive. |
-| Pont fessier unilatéral | 2 × 8 à 10 | poids du corps | 3 rép. en réserve | 105 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
-
-### dimanche — cardio, endurance (60 min disponibles, 41 min estimées)
+### jeudi — cardio, fractionné (45 min disponibles, 40 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Sortie longue en course à pied | 38 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 38 min. |
+| Footing en endurance fondamentale | 37 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 37 min. |
+
+### dimanche — cardio, endurance (60 min disponibles, 55 min estimées)
+
+| Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
+| --- | --- | --- | --- | --- | --- |
+| Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
+| Sortie longue en course à pied | 52 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 52 min. |
 
 ## Semaine 8 — construction (volume) (bloc 2)
 
-### mardi — cardio, endurance (45 min disponibles, 42 min estimées)
+### mardi — cardio, endurance (45 min disponibles, 40 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Footing en endurance fondamentale | 30 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 30 min. |
-| Fente arrière au poids du corps | 2 × 7 à 9 | poids du corps | 3 rép. en réserve | 90 s | accessoire ; Jambes : force utile, sans fatigue excessive. |
+| Footing en endurance fondamentale | 37 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 37 min. |
 
-### jeudi — cardio, fractionné (45 min disponibles, 28 min estimées)
-
-| Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
-| --- | --- | --- | --- | --- | --- |
-| Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Footing en endurance fondamentale | 12 min | — | allure facile | — | échauffement ; Allure de conversation (tu peux parler en phrases), 12 min. |
-| Fente arrière au poids du corps | 2 × 7 à 9 | poids du corps | 3 rép. en réserve | 90 s | accessoire ; Jambes : force utile, sans fatigue excessive. |
-| Pont fessier unilatéral | 2 × 9 à 11 | poids du corps | 3 rép. en réserve | 105 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
-
-### dimanche — cardio, endurance (60 min disponibles, 41 min estimées)
+### jeudi — cardio, fractionné (45 min disponibles, 40 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Sortie longue en course à pied | 38 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 38 min. |
+| Footing en endurance fondamentale | 37 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 37 min. |
+
+### dimanche — cardio, endurance (60 min disponibles, 55 min estimées)
+
+| Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
+| --- | --- | --- | --- | --- | --- |
+| Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
+| Sortie longue en course à pied | 52 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 52 min. |
 
 ## Semaine 9 — construction (volume) (bloc 2)
 
-### mardi — cardio, endurance (45 min disponibles, 42 min estimées)
+### mardi — cardio, endurance (45 min disponibles, 40 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Footing en endurance fondamentale | 30 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 30 min. |
-| Fente arrière au poids du corps | 2 × 7 à 9 | poids du corps | 3 rép. en réserve | 90 s | accessoire ; Jambes : force utile, sans fatigue excessive. |
+| Footing en endurance fondamentale | 37 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 37 min. |
 
-### jeudi — cardio, fractionné (45 min disponibles, 28 min estimées)
-
-| Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
-| --- | --- | --- | --- | --- | --- |
-| Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Footing en endurance fondamentale | 12 min | — | allure facile | — | échauffement ; Allure de conversation (tu peux parler en phrases), 12 min. |
-| Fente arrière au poids du corps | 2 × 7 à 9 | poids du corps | 3 rép. en réserve | 90 s | accessoire ; Jambes : force utile, sans fatigue excessive. |
-| Pont fessier unilatéral | 2 × 9 à 11 | poids du corps | 3 rép. en réserve | 105 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
-
-### dimanche — cardio, endurance (60 min disponibles, 41 min estimées)
+### jeudi — cardio, fractionné (45 min disponibles, 40 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Sortie longue en course à pied | 38 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 38 min. |
+| Footing en endurance fondamentale | 37 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 37 min. |
+
+### dimanche — cardio, endurance (60 min disponibles, 55 min estimées)
+
+| Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
+| --- | --- | --- | --- | --- | --- |
+| Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
+| Sortie longue en course à pied | 52 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 52 min. |
 
 ## Semaine 10 — construction (volume) (bloc 2)
 
-### mardi — cardio, endurance (45 min disponibles, 39 min estimées)
+### mardi — cardio, endurance (45 min disponibles, 40 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Footing en endurance fondamentale | 24 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 24 min. |
-| Fente arrière au poids du corps | 2 × 8 à 10 | poids du corps | 3 rép. en réserve | 90 s | accessoire ; Jambes : force utile, sans fatigue excessive. |
-| Pont fessier unilatéral | 2 × 6 | poids du corps | 3 rép. en réserve | 105 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
+| Footing en endurance fondamentale | 37 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 37 min. |
 
-### jeudi — cardio, fractionné (45 min disponibles, 27 min estimées)
+### jeudi — cardio, fractionné (45 min disponibles, 40 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Footing en endurance fondamentale | 12 min | — | allure facile | — | échauffement ; Allure de conversation (tu peux parler en phrases), 12 min. |
-| Fente arrière au poids du corps | 2 × 8 à 10 | poids du corps | 3 rép. en réserve | 90 s | accessoire ; Jambes : force utile, sans fatigue excessive. |
-| Pont fessier unilatéral | 2 × 6 | poids du corps | 3 rép. en réserve | 105 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
+| Footing en endurance fondamentale | 37 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 37 min. |
 
-### dimanche — cardio, endurance (60 min disponibles, 29 min estimées)
+### dimanche — cardio, endurance (60 min disponibles, 55 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Sortie longue en course à pied | 26 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 26 min. |
+| Sortie longue en course à pied | 52 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 52 min. |
 
 ## Semaine 11 — affûtage (bloc 2)
 
-### mardi — cardio, endurance, séance légère (45 min disponibles, 35 min estimées)
+### mardi — cardio, endurance, séance légère (45 min disponibles, 37 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Footing en endurance fondamentale | 24 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 24 min. ; Affûtage : séries dures ramenées à environ 65 % de la semaine de pointe, intensité et fréquence gardées, à 14 jours de l'échéance au plus. |
+| Footing en endurance fondamentale | 21 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 21 min. ; Affûtage : séries dures ramenées à environ 35 % de la semaine de pointe, intensité et fréquence gardées, à 14 jours de l'échéance au plus. |
+| Fente arrière au poids du corps | 2 × 6 à 8 | poids du corps | 5 rép. en réserve ou plus | 90 s | accessoire ; Jambes : force utile, sans fatigue excessive. |
+| Pont fessier unilatéral | 2 × 8 à 10 | poids du corps | 5 rép. en réserve ou plus | 105 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
+
+### jeudi — cardio, fractionné, séance légère (45 min disponibles, 37 min estimées)
+
+| Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
+| --- | --- | --- | --- | --- | --- |
+| Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
+| Footing en endurance fondamentale | 21 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 21 min. ; Affûtage : séries dures ramenées à environ 35 % de la semaine de pointe, intensité et fréquence gardées, à 14 jours de l'échéance au plus. |
 | Fente arrière au poids du corps | 2 × 6 à 8 | poids du corps | 3 rép. en réserve | 90 s | accessoire ; Jambes : force utile, sans fatigue excessive. |
+| Pont fessier unilatéral | 2 × 8 à 10 | poids du corps | 5 rép. en réserve ou plus | 105 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 
-### jeudi — cardio, fractionné, séance légère (45 min disponibles, 25 min estimées)
-
-| Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
-| --- | --- | --- | --- | --- | --- |
-| Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Footing en endurance fondamentale | 12 min | — | allure facile | — | échauffement ; Allure de conversation (tu peux parler en phrases), 12 min. ; Affûtage : séries dures ramenées à environ 65 % de la semaine de pointe, intensité et fréquence gardées, à 14 jours de l'échéance au plus. |
-| Fente arrière au poids du corps | 2 × 6 à 8 | poids du corps | 3 rép. en réserve | 90 s | accessoire ; Jambes : force utile, sans fatigue excessive. |
-| Pont fessier unilatéral | 1 × 7 | poids du corps | 3 rép. en réserve | 105 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
-
-### dimanche — cardio, endurance, séance légère (60 min disponibles, 38 min estimées)
+### dimanche — cardio, endurance, séance légère (60 min disponibles, 34 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Sortie longue en course à pied | 35 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 35 min. ; Affûtage : séries dures ramenées à environ 65 % de la semaine de pointe, intensité et fréquence gardées, à 14 jours de l'échéance au plus. |
+| Sortie longue en course à pied | 31 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 31 min. ; Affûtage : séries dures ramenées à environ 35 % de la semaine de pointe, intensité et fréquence gardées, à 14 jours de l'échéance au plus. |
 
 ## Semaine 12 — test (bloc 2)
 
@@ -351,16 +332,15 @@ Femme de 34 ans, 64 kg, court depuis six mois : 5 km en 35 minutes. Veut finir u
 | --- | --- | --- | --- | --- | --- |
 | Éducatif de course montées de genoux | 1 × 8 à 10 | — | allure facile | 30 s | échauffement ; Repos avant l'échéance : mobilité et préparation articulaire seulement, rien de fatigant dans les 2 à 4 derniers jours. |
 
-### jeudi — cardio, fractionné (45 min disponibles, 15 min estimées)
+### jeudi — cardio, fractionné (45 min disponibles, 23 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Footing en endurance fondamentale | 12 min | — | allure facile | — | échauffement ; Allure de conversation (tu peux parler en phrases), 12 min. ; Récupération : facile, sans chercher la performance. |
+| Footing en endurance fondamentale | 20 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 20 min. ; Récupération : facile, sans chercher la performance. |
 
-### dimanche — cardio, endurance, séance lourde (60 min disponibles, 61 min estimées)
+### dimanche — cardio, endurance, séance lourde (60 min disponibles, 79 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
-| Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Sortie longue en course à pied | 7,5 km | — | — | — | ÉPREUVE ; Test chronométré. ; Test chronométré sur 7,5 km, après 10 à 15 min d'échauffement, à allure régulière. Il recale les allures du bloc suivant. ; Allure de l'objectif : 7 min 00 au kilomètre, régulière du début à la fin. |
+| Sortie longue en course à pied | 10 km | — | — | — | ÉPREUVE ; Test chronométré. ; Test chronométré sur 10 km, après 10 à 15 min d'échauffement, à allure régulière. Il recale les allures du bloc suivant. ; Jour du test de l'objectif : c'est la séance elle-même, après 48 h sans travail dur du mouvement. ; Allure de l'objectif : 7 min 00 au kilomètre, régulière du début à la fin. |

@@ -94,7 +94,7 @@ Femme de 31 ans, 60 kg, deux ans de street workout et de course. 8 tractions, 14
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Footing en endurance fondamentale | 12 min | — | allure facile | — | échauffement ; Allure de conversation (tu peux parler en phrases), 12 min. |
-| Fractionné 400 m | 5 × 400 m | — | allure soutenue | 90 s | principal ; récupération en trottinant ; Allure des fractions : 400 m en 1 min 56 (ton allure estimée sur 3 km), récupération en trottinant ; si l'allure ne tient plus, arrête la série. Chaque test chronométré recale cette allure. |
+| Fractionné 400 m | 5 × 400 m | — | allure soutenue | 90 s | principal ; récupération en trottinant ; Allure des fractions : 4 min 50 au kilomètre (ton allure estimée sur 3 km), récupération en trottinant ; si l'allure ne tient plus, arrête la série. Chaque test chronométré recale cette allure. |
 
 ### samedi — force, haut du corps, séance moyenne (60 min disponibles, 41 min estimées)
 
@@ -148,7 +148,7 @@ Femme de 31 ans, 60 kg, deux ans de street workout et de course. 8 tractions, 14
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Footing en endurance fondamentale | 12 min | — | allure facile | — | échauffement ; Allure de conversation (tu peux parler en phrases), 12 min. |
-| Fractionné 400 m | 5 × 400 m | — | allure soutenue | 90 s | principal ; récupération en trottinant ; Allure des fractions : 400 m en 1 min 56 (ton allure estimée sur 3 km), récupération en trottinant ; si l'allure ne tient plus, arrête la série. Chaque test chronométré recale cette allure. |
+| Fractionné 400 m | 5 × 400 m | — | allure soutenue | 90 s | principal ; récupération en trottinant ; Allure des fractions : 4 min 50 au kilomètre (ton allure estimée sur 3 km), récupération en trottinant ; si l'allure ne tient plus, arrête la série. Chaque test chronométré recale cette allure. |
 
 ### samedi — force, haut du corps, séance moyenne (60 min disponibles, 39 min estimées)
 
@@ -256,7 +256,7 @@ Femme de 31 ans, 60 kg, deux ans de street workout et de course. 8 tractions, 14
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Footing en endurance fondamentale | 12 min | — | allure facile | — | échauffement ; Allure de conversation (tu peux parler en phrases), 12 min. |
-| Fractionné 400 m | 6 × 400 m | — | allure soutenue | 90 s | principal ; récupération en trottinant ; Allure des fractions : 400 m en 1 min 56 (ton allure estimée sur 3 km), récupération en trottinant ; si l'allure ne tient plus, arrête la série. Chaque test chronométré recale cette allure. |
+| Fractionné 400 m | 6 × 400 m | — | allure soutenue | 90 s | principal ; récupération en trottinant ; Allure des fractions : 4 min 50 au kilomètre (ton allure estimée sur 3 km), récupération en trottinant ; si l'allure ne tient plus, arrête la série. Chaque test chronométré recale cette allure. |
 
 ### samedi — force, haut du corps, séance moyenne (60 min disponibles, 41 min estimées)
 
@@ -363,7 +363,7 @@ Femme de 31 ans, 60 kg, deux ans de street workout et de course. 8 tractions, 14
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Footing en endurance fondamentale | 12 min | — | allure facile | — | échauffement ; Allure de conversation (tu peux parler en phrases), 12 min. |
-| Fractionné 400 m | 4 × 400 m | — | allure soutenue | 90 s | principal ; récupération en trottinant ; Allure des fractions : 400 m en 1 min 56 (ton allure estimée sur 3 km), récupération en trottinant ; si l'allure ne tient plus, arrête la série. Chaque test chronométré recale cette allure. |
+| Fractionné 400 m | 4 × 400 m | — | allure soutenue | 90 s | principal ; récupération en trottinant ; Allure des fractions : 4 min 50 au kilomètre (ton allure estimée sur 3 km), récupération en trottinant ; si l'allure ne tient plus, arrête la série. Chaque test chronométré recale cette allure. |
 
 ### samedi — force, haut du corps, séance légère (60 min disponibles, 25 min estimées)
 
@@ -467,7 +467,7 @@ Femme de 31 ans, 60 kg, deux ans de street workout et de course. 8 tractions, 14
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Footing en endurance fondamentale | 12 min | — | allure facile | — | échauffement ; Allure de conversation (tu peux parler en phrases), 12 min. |
-| Fractionné 400 m | 6 × 400 m | — | allure soutenue | 90 s | principal ; récupération en trottinant ; Allure des fractions : 400 m en 1 min 56 (ton allure estimée sur 3 km), récupération en trottinant ; si l'allure ne tient plus, arrête la série. Chaque test chronométré recale cette allure. |
+| Fractionné 400 m | 6 × 400 m | — | allure soutenue | 90 s | principal ; récupération en trottinant ; Allure des fractions : 4 min 50 au kilomètre (ton allure estimée sur 3 km), récupération en trottinant ; si l'allure ne tient plus, arrête la série. Chaque test chronométré recale cette allure. |
 
 ### samedi — force, haut du corps, séance lourde (60 min disponibles, 45 min estimées)
 
@@ -573,7 +573,7 @@ Femme de 31 ans, 60 kg, deux ans de street workout et de course. 8 tractions, 14
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Footing en endurance fondamentale | 12 min | — | allure facile | — | échauffement ; Allure de conversation (tu peux parler en phrases), 12 min. |
-| Fractionné 400 m | 7 × 400 m | — | allure soutenue | 90 s | principal ; récupération en trottinant ; Allure des fractions : 400 m en 1 min 56 (ton allure estimée sur 3 km), récupération en trottinant ; si l'allure ne tient plus, arrête la série. Chaque test chronométré recale cette allure. |
+| Fractionné 400 m | 7 × 400 m | — | allure soutenue | 90 s | principal ; récupération en trottinant ; Allure des fractions : 4 min 50 au kilomètre (ton allure estimée sur 3 km), récupération en trottinant ; si l'allure ne tient plus, arrête la série. Chaque test chronométré recale cette allure. |
 
 ### samedi — force, haut du corps, séance lourde (60 min disponibles, 46 min estimées)
 
@@ -623,7 +623,7 @@ Femme de 31 ans, 60 kg, deux ans de street workout et de course. 8 tractions, 14
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Footing en endurance fondamentale | 12 min | — | allure facile | — | échauffement ; Allure de conversation (tu peux parler en phrases), 12 min. ; Affûtage : séries dures ramenées à environ 55 % de la semaine de pointe, intensité et fréquence gardées, à 14 jours de l'échéance au plus. |
-| Fractionné 400 m | 3 × 400 m | — | allure soutenue | 90 s | principal ; récupération en trottinant ; Allure des fractions : 400 m en 1 min 56 (ton allure estimée sur 3 km), récupération en trottinant ; si l'allure ne tient plus, arrête la série. Chaque test chronométré recale cette allure. |
+| Fractionné 400 m | 3 × 400 m | — | allure soutenue | 90 s | principal ; récupération en trottinant ; Allure des fractions : 4 min 50 au kilomètre (ton allure estimée sur 3 km), récupération en trottinant ; si l'allure ne tient plus, arrête la série. Chaque test chronométré recale cette allure. |
 
 ### samedi — force, haut du corps, séance légère (60 min disponibles, 29 min estimées)
 
@@ -673,7 +673,7 @@ Femme de 31 ans, 60 kg, deux ans de street workout et de course. 8 tractions, 14
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Footing en endurance fondamentale | 12 min | — | allure facile | — | échauffement ; Allure de conversation (tu peux parler en phrases), 12 min. |
-| Fractionné 400 m | 3 × 400 m | — | allure soutenue | 90 s | principal ; récupération en trottinant ; Allure des fractions : 400 m en 1 min 56 (ton allure estimée sur 3 km), récupération en trottinant ; si l'allure ne tient plus, arrête la série. Chaque test chronométré recale cette allure. |
+| Fractionné 400 m | 3 × 400 m | — | allure soutenue | 90 s | principal ; récupération en trottinant ; Allure des fractions : 4 min 50 au kilomètre (ton allure estimée sur 3 km), récupération en trottinant ; si l'allure ne tient plus, arrête la série. Chaque test chronométré recale cette allure. |
 
 ### samedi — force, haut du corps, séance lourde (60 min disponibles, 8 min estimées)
 
@@ -686,4 +686,4 @@ Femme de 31 ans, 60 kg, deux ans de street workout et de course. 8 tractions, 14
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
-| Sortie longue en course à pied | 10 km | — | — | — | ÉPREUVE ; Test chronométré. ; Test chronométré sur 10 km, après 10 à 15 min d'échauffement, à allure régulière. Il recale les allures du bloc suivant. ; Allure de l'objectif : 5 min 00 au kilomètre, régulière du début à la fin. |
+| Sortie longue en course à pied | 10 km | — | — | — | ÉPREUVE ; Test chronométré. ; Test chronométré sur 10 km, après 10 à 15 min d'échauffement, à allure régulière. Il recale les allures du bloc suivant. ; Jour du test de l'objectif : c'est la séance elle-même, après 48 h sans travail dur du mouvement. ; Allure de l'objectif : 5 min 00 au kilomètre, régulière du début à la fin. |

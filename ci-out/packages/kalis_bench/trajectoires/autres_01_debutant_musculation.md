@@ -35,13 +35,13 @@ Pour chaque mouvement, la séance la plus lourde de la semaine : ce que le progr
 | 3 | construction (volume) | 2 × 8 à 10 | 11-10 à 35 kg | 11 à 35 kg puis 10 à 30 kg | 3 → 4,7 ; suivantes 3 → 5,5 | 100 / 48 | plus petit cran de charge trop grand : progression par les répétitions ; allégé pour garder la marge prévue (au moins 3 en réserve) ; dernières séries plus dures que prévu |
 | 4 | construction (volume) | 2 × 9 à 11 | 12-11 à 35 kg | 11 (arrêt avant la cible) à 35 kg puis 11 à 30 kg | 3 → 4,5 ; suivantes 3 → 4,5 | 98 / 48 | plus petit cran de charge trop grand : progression par les répétitions ; allégé pour garder la marge prévue (au moins 3 en réserve) ; dernières séries plus dures que prévu |
 | 5 | construction (volume) | 2 × 9 à 11 | 12-11 à 35 kg | 12 à 35 kg puis 11 à 30 kg | 3 → 3,7 ; suivantes 3 → 4,5 | 101 / 48 | plus petit cran de charge trop grand : progression par les répétitions ; allégé pour garder la marge prévue (au moins 3 en réserve) ; dernières séries plus dures que prévu |
-| 6 | test | 2 × 8 à 10 | 10-10 à 35 kg | 10-10 à 35 kg | 3 → 5,7 ; suivantes 3 → 4,8 | 100 / 49 | charge non augmentée (semaine où le programme se sert tel quel) |
+| 6 | allègement | 2 × 8 à 10 | 10-10 à 35 kg | 10-10 à 35 kg | 3 → 5,7 ; suivantes 3 → 4,8 | 100 / 49 | charge non augmentée (semaine où le programme se sert tel quel) |
 | 7 | construction (volume) | 2 × 8 à 10 | 13-(12 à 18) à 35 kg | 13 à 35 kg puis 12 à 30 kg | 3 → 2,9 ; suivantes 1,5 → 3,1 | 103 / 49 | plus petit cran de charge trop grand : progression par les répétitions ; série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète ; allégé pour garder la marge prévue (au moins 3 en réserve) ; dernières séries plus dures que prévu |
 | 8 | construction (volume) | 2 × 9 à 11 | 14-13 à 35 kg | 12 (arrêt avant la cible) à 35 kg puis 13 à 30 kg | 3 → 3,6 ; suivantes 3 → 2,1 | 99 / 49 | plus petit cran de charge trop grand : progression par les répétitions ; allégé pour garder la marge prévue (au moins 3 en réserve) |
 | 9 | construction (volume) | 2 × 9 à 11 | (7 à 22)-(6 à 22) à 40 kg | 10-9 à 40 kg | 3 → 4,6 ; suivantes 3 → 4,6 | 101 / 50 | dernières séries plus faciles que prévu |
 | 10 | construction (volume) | 2 × 10 à 12 | 15-14 à 35 kg | 13 (arrêt avant la cible) à 35 kg puis 13 (arrêt avant la cible) à 30 kg | 3 → 2,7 ; suivantes 3 → 2 | 100 / 51 | plus petit cran de charge trop grand : progression par les répétitions ; allégé pour garder la marge prévue (au moins 3 en réserve) ; dernières séries plus dures que prévu |
 | 11 | construction (volume) | 2 × 10 à 12 | 15-(14 à 20) à 35 kg | 13 (arrêt avant la cible) à 35 kg puis 14 à 30 kg | 3 → 2,8 ; suivantes 1,5 → 0,7 | 101 / 49 | plus petit cran de charge trop grand : progression par les répétitions ; série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète ; allégé pour garder la marge prévue (au moins 3 en réserve) ; dernières séries plus dures que prévu |
-| 12 | test | 2 × 8 à 10 | 10-10 à 35 kg | 10-10 à 35 kg | 3 → 5,4 ; suivantes 3 → 4,4 | 97 / 49 | charge non augmentée (semaine où le programme se sert tel quel) |
+| 12 | allègement | 2 × 8 à 10 | 10-10 à 35 kg | 10-10 à 35 kg | 3 → 5,4 ; suivantes 3 → 4,4 | 97 / 49 | charge non augmentée (semaine où le programme se sert tel quel) |
 
 Athlète simulé, maximum réel hors fatigue : 98 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 102 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
 
@@ -54,13 +54,13 @@ Athlète simulé, maximum réel hors fatigue : 98 au départ (le record déclar�
 | 3 | construction (volume) | 2 × 8 à 10 | 9-8 à 22,5 kg | 9-8 à 22,5 kg | 3 → 3,2 ; suivantes 3 → 2,5 | 29 / 31 | — |
 | 4 | construction (volume) | 2 × 9 à 11 | 12-11 à 20 kg | 11 (arrêt avant la cible) à 20 kg puis 11 à 17,5 kg | 4 → 5,1 ; suivantes 4 → 7,8 | 29 / 31 | allégé pour garder la marge prévue (au moins 3 en réserve) |
 | 5 | construction (volume) | 2 × 9 à 11 | 10-9 à 22,5 kg | 10 à 22,5 kg puis 9 à 20 kg | 3 → 3,5 ; suivantes 3 → 6,7 | 30 / 32 | allégé pour garder la marge prévue (au moins 3 en réserve) ; dernières séries plus dures que prévu |
-| 6 | test | 2 × 8 à 10 | (8 à 10)-(8 à 10) à 20 kg | 10-10 à 20 kg | 3 → 6,6 ; suivantes 3 → 5,3 | 30 / 32 | charge non augmentée (semaine où le programme se sert tel quel) ; dernières séries plus faciles que prévu |
+| 6 | allègement | 2 × 8 à 10 | (8 à 10)-(8 à 10) à 20 kg | 10-10 à 20 kg | 3 → 6,6 ; suivantes 3 → 5,3 | 30 / 32 | charge non augmentée (semaine où le programme se sert tel quel) ; dernières séries plus faciles que prévu |
 | 7 | construction (volume) | 2 × 8 à 10 | 10-(9 à 15) à 22,5 kg | 10 à 22,5 kg puis 14 à 20 kg | 3 → 4,2 ; suivantes 1,5 → 1,9 | 31 / 32 | série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète ; allégé pour garder la marge prévue (au moins 3 en réserve) ; dernières séries plus dures que prévu |
 | 8 | construction (volume) | 2 × 9 à 11 | (7 à 22)-(6 à 22) à 25 kg | 7-6 à 25 kg | 3 → 2,1 ; suivantes 3 → 1,4 | 30 / 32 | dernières séries plus faciles que prévu |
 | 9 | construction (volume) | 2 × 9 à 11 | (7 à 22)-(6 à 22) à 25 kg | 7 à 25 kg puis 6 à 22,5 kg | 3 → 1,9 ; suivantes 3 → 4,9 | 30 / 33 | dernières séries plus faciles que prévu ; allégé pour garder la marge prévue (au moins 3 en réserve) ; dernières séries plus dures que prévu |
 | 10 | construction (volume) | 2 × 10 à 12 | 12-11 à 22,5 kg | 12 à 22,5 kg puis 11 à 20 kg | 3 → 2 ; suivantes 3 → 2,6 | 31 / 33 | allégé pour garder la marge prévue (au moins 3 en réserve) ; dernières séries plus dures que prévu |
 | 11 | construction (volume) | 2 × 10 à 12 | 12-(12 à 18) à 22,5 kg | 12 à 22,5 kg puis 12 à 20 kg | 3 → 2,4 ; suivantes 1,5 → 3,5 | 31 / 33 | plus petit cran de charge trop grand : progression par les répétitions ; série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète ; allégé pour garder la marge prévue (au moins 3 en réserve) ; dernières séries plus dures que prévu |
-| 12 | test | 2 × 8 à 10 | 10-10 à 22,5 kg | 10-10 à 22,5 kg | 3 → 3,8 ; suivantes 3 → 2,2 | 31 / 33 | charge non augmentée (semaine où le programme se sert tel quel) |
+| 12 | allègement | 2 × 8 à 10 | 10-10 à 22,5 kg | 10-10 à 22,5 kg | 3 → 3,8 ; suivantes 3 → 2,2 | 31 / 33 | charge non augmentée (semaine où le programme se sert tel quel) |
 
 Athlète simulé, maximum réel hors fatigue : 30 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 32 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
 
@@ -73,13 +73,13 @@ Athlète simulé, maximum réel hors fatigue : 30 au départ (le record déclar�
 | 3 | construction (volume) | 2 × 8 à 10 | 9-(9 à 15) à 42,5 kg | 9-11 à 42,5 kg | 3 → 6,8 ; suivantes 1,5 → 3,3 | 61 / 56 | série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète |
 | 4 | construction (volume) | 2 × 9 à 11 | 11-10 à 42,5 kg | 11 à 42,5 kg puis 10 à 40 kg | 3 → 5 ; suivantes 3 → 6,1 | 62 / 57 | allégé pour garder la marge prévue (au moins 3 en réserve) ; dernières séries plus dures que prévu |
 | 5 | construction (volume) | 2 × 9 à 11 | 11-(10 à 16) à 42,5 kg | 11 à 42,5 kg puis 13 à 40 kg | 3 → 5,4 ; suivantes 1,5 → 3,5 | 63 / 57 | série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète ; allégé pour garder la marge prévue (au moins 3 en réserve) ; dernières séries plus dures que prévu |
-| 6 | test | 2 × 8 à 10 | 10-10 à 42,5 kg | 10-10 à 42,5 kg | 3 → 5,9 ; suivantes 3 → 3,8 | 62 / 57 | charge non augmentée (semaine où le programme se sert tel quel) |
+| 6 | allègement | 2 × 8 à 10 | 10-10 à 42,5 kg | 10-10 à 42,5 kg | 3 → 5,9 ; suivantes 3 → 3,8 | 62 / 57 | charge non augmentée (semaine où le programme se sert tel quel) |
 | 7 | construction (volume) | 2 × 8 à 10 | 8-(7 à 13) à 45 kg | 8-11 à 45 kg | 3 → 6,9 ; suivantes 1,5 → 2,9 | 63 / 59 | série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète |
 | 8 | construction (volume) | 2 × 9 à 11 | 10-9 à 45 kg | 10-9 à 45 kg | 3 → 4,9 ; suivantes 3 → 4,4 | 63 / 59 | — |
 | 9 | construction (volume) | 2 × 9 à 11 | 11-(10 à 16) à 45 kg | 11-11 à 45 kg | 3 → 4,6 ; suivantes 1,5 → 3,1 | 65 / 60 | série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète |
 | 10 | construction (volume) | 2 × 10 à 12 | 11-10 à 45 kg | 11-10 à 45 kg | 3 → 5,1 ; suivantes 3 → 5,1 | 66 / 61 | — |
 | 11 | construction (volume) | 2 × 10 à 12 | 12-(11 à 17) à 45 kg | 12-12 à 45 kg | 3 → 3,9 ; suivantes 1,5 → 1,8 | 65 / 62 | série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète |
-| 12 | test | 2 × 8 à 10 | 10-10 à 45 kg | 10-9 (arrêt avant la cible) à 45 kg | 3 → 4 ; suivantes 3 → 3,3 | 62 / 61 | charge non augmentée (semaine où le programme se sert tel quel) |
+| 12 | allègement | 2 × 8 à 10 | 10-10 à 45 kg | 10-9 (arrêt avant la cible) à 45 kg | 3 → 4 ; suivantes 3 → 3,3 | 62 / 61 | charge non augmentée (semaine où le programme se sert tel quel) |
 
 Athlète simulé, maximum réel hors fatigue : 61 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 65 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
 
@@ -92,13 +92,13 @@ Athlète simulé, maximum réel hors fatigue : 61 au départ (le record déclar�
 | 3 | construction (volume) | 2 × 8 à 10 | 12-10 à 8 kg | 12-10 à 8 kg | 3 → 4,3 ; suivantes 3 → 5,1 | 13 / 12 | calibrage (séance 3 sur ce mouvement) |
 | 4 | construction (volume) | 2 × 9 à 11 | 11-11 à 8 kg | 11-11 à 8 kg | 4 → 5,7 ; suivantes 4 → 5,1 | 13 / 12 | charge non augmentée (bilan du jour bas) |
 | 5 | construction (volume) | 2 × 9 à 11 | 14-(13 à 19) à 8 kg | 13 (arrêt avant la cible) à 8 kg puis 16 à 6 kg | 3 → 2,7 ; suivantes 1,5 → 4,7 | 13 / 12 | plus petit cran de charge trop grand : progression par les répétitions ; série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète ; allégé pour garder la marge prévue (au moins 3 en réserve) ; dernières séries plus dures que prévu |
-| 6 | test | 2 × 8 à 10 | 10-10 à 8 kg | 10-10 à 8 kg | 3 → 7,5 ; suivantes 3 → 6,7 | 14 / 13 | charge non augmentée (semaine où le programme se sert tel quel) |
+| 6 | allègement | 2 × 8 à 10 | 10-10 à 8 kg | 10-10 à 8 kg | 3 → 7,5 ; suivantes 3 → 6,7 | 14 / 13 | charge non augmentée (semaine où le programme se sert tel quel) |
 | 7 | construction (volume) | 2 × 8 à 10 | 12-(10 à 16) à 8 kg | 12-13 à 8 kg | 3 → 4,6 ; suivantes 1,5 → 2,6 | 13 / 12 | plus petit cran de charge trop grand : progression par les répétitions ; série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète |
 | 8 | construction (volume) | 2 × 9 à 11 | 14-13 à 8 kg | 14-13 à 8 kg | 3 → 3,2 ; suivantes 3 → 3,1 | 13 / 12 | plus petit cran de charge trop grand : progression par les répétitions |
 | 9 | construction (volume) | 2 × 9 à 11 | 14-(13 à 19) à 8 kg | 14-13 à 8 kg | 3 → 3,6 ; suivantes 1,5 → 3,3 | 14 / 12 | plus petit cran de charge trop grand : progression par les répétitions ; série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète |
 | 10 | construction (volume) | 2 × 10 à 12 | 15-14 à 8 kg | 15 à 8 kg puis 14 à 6 kg | 3 → 2,3 ; suivantes 3 → 7 | 13 / 13 | plus petit cran de charge trop grand : progression par les répétitions ; allégé pour garder la marge prévue (au moins 3 en réserve) ; dernières séries plus dures que prévu |
 | 11 | construction (volume) | 2 × 10 à 12 | 15-(14 à 20) à 8 kg | 15-16 à 8 kg | 3 → 3,4 ; suivantes 1,5 → 1,5 | 14 / 13 | plus petit cran de charge trop grand : progression par les répétitions ; série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète |
-| 12 | test | 2 × 8 à 10 | 10-10 à 8 kg | 10-10 à 8 kg | 3 → 6,5 ; suivantes 3 → 6 | 13 / 13 | charge non augmentée (semaine où le programme se sert tel quel) |
+| 12 | allègement | 2 × 8 à 10 | 10-10 à 8 kg | 10-10 à 8 kg | 3 → 6,5 ; suivantes 3 → 6 | 13 / 13 | charge non augmentée (semaine où le programme se sert tel quel) |
 
 Athlète simulé, maximum réel hors fatigue : 13 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 14 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
 
@@ -111,13 +111,13 @@ Athlète simulé, maximum réel hors fatigue : 13 au départ (le record déclar�
 | 3 | construction (volume) | 2 × 8 à 10 | 13-12 à 15 kg | 13-12 à 15 kg | 3 → 6 ; suivantes 3 → 6,2 | 34 / 23 | calibrage (séance 3 sur ce mouvement) |
 | 4 | construction (volume) | 2 × 9 à 11 | 14-(13 à 19) à 15 kg | 14-15 à 15 kg | 3 → 4,8 ; suivantes 1,5 → 2,6 | 34 / 23 | plus petit cran de charge trop grand : progression par les répétitions ; série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète |
 | 5 | construction (volume) | 2 × 9 à 11 | 15-14 à 15 kg | 15-13 (arrêt avant la cible) à 15 kg | 3 → 3,2 ; suivantes 3 → 4,1 | 32 / 24 | plus petit cran de charge trop grand : progression par les répétitions |
-| 6 | test | 2 × 8 à 10 | 10-10 à 15 kg | 10-10 à 15 kg | 3 → 8,9 ; suivantes 3 → 8,3 | 34 / 24 | charge non augmentée (semaine où le programme se sert tel quel) |
+| 6 | allègement | 2 × 8 à 10 | 10-10 à 15 kg | 10-10 à 15 kg | 3 → 8,9 ; suivantes 3 → 8,3 | 34 / 24 | charge non augmentée (semaine où le programme se sert tel quel) |
 | 7 | construction (volume) | 2 × 8 à 10 | 16-(14 à 20) à 15 kg | 16-16 à 15 kg | 3 → 3,1 ; suivantes 1,5 → 1,4 | 34 / 24 | plus petit cran de charge trop grand : progression par les répétitions ; série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète |
 | 8 | construction (volume) | 2 × 9 à 11 | 15-14 à 15 kg | 15 à 15 kg puis 14 à 10 kg | 3 → 3,3 ; suivantes 3 → 8 | 33 / 24 | plus petit cran de charge trop grand : progression par les répétitions ; allégé pour garder la marge prévue (au moins 3 en réserve) ; dernières séries plus dures que prévu |
 | 9 | construction (volume) | 2 × 9 à 11 | 17-(15 à 21) à 15 kg | 16 (arrêt avant la cible) à 15 kg puis 21 à 10 kg | 3 → 3,5 ; suivantes 1,5 → 1,7 | 35 / 24 | plus petit cran de charge trop grand : progression par les répétitions ; série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète ; allégé pour garder la marge prévue (au moins 3 en réserve) ; dernières séries plus dures que prévu |
 | 10 | construction (volume) | 2 × 10 à 12 | 17-16 à 15 kg | 17 à 15 kg puis 16 à 10 kg | 3 → 1,9 ; suivantes 3 → 6,1 | 34 / 25 | plus petit cran de charge trop grand : progression par les répétitions ; allégé pour garder la marge prévue (au moins 3 en réserve) ; dernières séries plus dures que prévu |
 | 11 | construction (volume) | 2 × 10 à 12 | 17-(16 à 22) à 15 kg | 16 (arrêt avant la cible) à 15 kg puis 20 à 10 kg | 3 → 2,8 ; suivantes 1,5 → 2 | 34 / 24 | plus petit cran de charge trop grand : progression par les répétitions ; série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète ; allégé pour garder la marge prévue (au moins 3 en réserve) ; dernières séries plus dures que prévu |
-| 12 | test | 2 × 8 à 10 | 10-10 à 15 kg | 10-10 à 15 kg | 3 → 8,7 ; suivantes 3 → 8,2 | 33 / 24 | charge non augmentée (semaine où le programme se sert tel quel) |
+| 12 | allègement | 2 × 8 à 10 | 10-10 à 15 kg | 10-10 à 15 kg | 3 → 8,7 ; suivantes 3 → 8,2 | 33 / 24 | charge non augmentée (semaine où le programme se sert tel quel) |
 
 Athlète simulé, maximum réel hors fatigue : 33 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 34 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
 
@@ -127,9 +127,9 @@ Athlète simulé, maximum réel hors fatigue : 33 au départ (le record déclar�
 - **Semaine 2 (construction (volume))** : bilan du jour bas (2/5) (× 2) ; nuit courte ; charges réduites sur 5 exercices (bilan du jour bas (2/5)) ; charges réduites sur 6 exercices (bilan du jour bas (2/5), nuit courte).
 - **Semaine 4 (construction (volume))** : bilan du jour bas (2/5) (× 2) ; nuit courte (× 2) ; charges réduites sur 9 exercices (bilan du jour bas (2/5), nuit courte).
 - **Semaine 5 (construction (volume))** : bilan du jour bas (2/5) ; charges réduites sur 5 exercices (bilan du jour bas (2/5)).
-- **Semaine 6 (test)** : phase « test » : séances servies telles que le programme les écrit (× 3).
+- **Semaine 6 (allègement)** : phase « allègement » : séances servies telles que le programme les écrit (× 3).
 - **Semaine 7 (construction (volume))** : nouveau bloc construit à partir du point de fin de bloc (maxima estimés, résultats de test, tolérance).
-- **Semaine 12 (test)** : phase « test » : séances servies telles que le programme les écrit (× 3) ; bilan du jour bas (2/5) ; charges réduites sur 4 exercices (bilan du jour bas (2/5)).
+- **Semaine 12 (allègement)** : phase « allègement » : séances servies telles que le programme les écrit (× 3) ; bilan du jour bas (2/5) ; charges réduites sur 4 exercices (bilan du jour bas (2/5)).
 
 ## Même programme, autres athlètes simulés
 

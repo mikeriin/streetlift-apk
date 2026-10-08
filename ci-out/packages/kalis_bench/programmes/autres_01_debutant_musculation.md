@@ -24,29 +24,27 @@ Homme de 22 ans, 68 kg, jamais entraîné. Veut prendre du muscle et de la force
 | 3 | 1 | construction (volume) | 3 | 36 |
 | 4 | 1 | construction (volume) | 3 | 36 |
 | 5 | 1 | construction (volume) | 3 | 36 |
-| 6 | 1 | test | 3 | 28 |
+| 6 | 1 | allègement | 3 | 28 |
 | 7 | 2 | construction (volume) | 3 | 36 |
 | 8 | 2 | construction (volume) | 3 | 36 |
 | 9 | 2 | construction (volume) | 3 | 36 |
 | 10 | 2 | construction (volume) | 3 | 36 |
 | 11 | 2 | construction (volume) | 3 | 36 |
-| 12 | 2 | test | 3 | 28 |
+| 12 | 2 | allègement | 3 | 28 |
 
 ## Saison
 
-- **Bloc 1** (semaines 1 à 6, construction (volume)) — semaine 1 : introduction ; semaines 2 à 5 : construction (volume) ; semaine 6 : test.
-- **Bloc 2** (semaines 7 à 12, construction (volume)) — semaines 7 à 11 : construction (volume) ; semaine 12 : test.
+- **Bloc 1** (semaines 1 à 6, construction (volume)) — semaine 1 : introduction ; semaines 2 à 5 : construction (volume) ; semaine 6 : allègement.
+- **Bloc 2** (semaines 7 à 12, construction (volume)) — semaines 7 à 11 : construction (volume) ; semaine 12 : allègement.
 
 ## Règles du programme
 
-- Chaque séance commence par 8 min d'échauffement au plus (comptées dans la durée estimée) : épaules, poignets et hanches en mobilité, 2 × 8 tirages scapulaires, 2 × 8 pompes scapulaires, puis quelques répétitions faciles du premier mouvement.
+- Chaque séance commence par 8 min d'échauffement (comptées dans la durée estimée) : 3 à 5 min de cardio léger (rameur, vélo), mobilité des épaules et des hanches, puis les séries de montée en charge du premier exercice (barre vide, puis deux ou trois paliers).
 - Ajustement des répétitions : si les répétitions prévues ne passent pas avec la réserve demandée, garde les mêmes chiffres la semaine suivante ; 2 séances de suite en dessous, retire une série.
 - Baisse du jour (nuit de moins de 6 h, courbatures marquées sur la zone, journée très stressante) : 1 série de moins par exercice, aucune série à moins de 3 répétitions en réserve, pas de test.
 - Jour chargé : version courte de 25 min — 5 min d'échauffement, puis les deux premiers exercices de la séance, 2 séries chacun. Une séance courte vaut mieux qu'une séance sautée.
 - Arrêt immédiat et avis médical : douleur dans la poitrine, essoufflement anormal, malaise ou vertige. Souffle pendant l'effort, sans bloquer la respiration sur les séries longues.
 - Séance manquée : elle ne se rattrape pas. Semaine manquée : refais la dernière semaine terminée. Deux semaines ou plus : reprends deux semaines en arrière avec 20 % de volume en moins.
-- Les tests de fin de bloc (ou de la semaine de test) recalent les charges, les répétitions et les secondes du bloc suivant : déclare ton résultat, le bloc suivant est écrit dessus (série de tête = résultat − 2 ; tenues = 60 à 85 % du maintien mesuré), jamais sur un progrès supposé. Un test fait un jour de bilan bas se reporte de 48 à 72 h.
-- 48 h sans travail dur du mouvement avant un test.
 - Ancienneté d'entraînement prise en compte : moins de 6 mois.
 - Douleur articulaire ou tendineuse (coude, épaule, poignet, genou) : de 0 à 2 sur 10, continue ; à 3 ou 4, finis la séance sans progresser et n'ajoute rien la semaine suivante ; à 5, prends la variante plus facile et retire 30 à 50 % du volume de la zone ; à 6 ou plus, douleur la nuit ou gêne qui dure deux semaines : arrête le mouvement et consulte un professionnel de santé. Regarde la tendance sur deux à trois semaines, pas une seule séance.
 - Charges « à calibrer » : à la première séance, trouve la charge qui permet le haut de la plage avec la réserve prévue, note-la, puis suis la double progression.
@@ -243,7 +241,7 @@ Homme de 22 ans, 68 kg, jamais entraîné. Veut prendre du muscle et de la force
 | Leg curl assis | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Dead bug | 2 × 9 à 13 | poids du corps | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
 
-## Semaine 6 — test (bloc 1)
+## Semaine 6 — allègement (bloc 1)
 
 ### lundi — force, corps entier, séance légère (60 min disponibles, 25 min estimées)
 
@@ -467,7 +465,7 @@ Homme de 22 ans, 68 kg, jamais entraîné. Veut prendre du muscle et de la force
 | Leg curl assis | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Dead bug | 2 × 10 à 14 | poids du corps | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
 
-## Semaine 12 — test (bloc 2)
+## Semaine 12 — allègement (bloc 2)
 
 ### lundi — force, corps entier, séance légère (60 min disponibles, 25 min estimées)
 

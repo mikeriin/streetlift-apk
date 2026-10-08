@@ -22,15 +22,15 @@ Homme de 38 ans, 72 kg, court depuis quatre ans : 10 km en 48 minutes, 30 km par
 | --- | --- | --- | --- | --- |
 | 1 | 1 | introduction | 4 | 4 |
 | 2 | 1 | construction (volume) | 4 | 4 |
-| 3 | 1 | construction (volume) | 4 | 4 |
-| 4 | 1 | construction (volume) | 4 | 4 |
-| 5 | 1 | construction (volume) | 4 | 4 |
-| 6 | 1 | allègement | 4 | 2 |
-| 7 | 2 | réalisation (spécifique à l'objectif) | 4 | 4 |
-| 8 | 2 | réalisation (spécifique à l'objectif) | 4 | 4 |
-| 9 | 2 | réalisation (spécifique à l'objectif) | 4 | 4 |
-| 10 | 2 | réalisation (spécifique à l'objectif) | 4 | 6 |
-| 11 | 2 | affûtage | 4 | 3 |
+| 3 | 1 | construction (volume) | 4 | 2 |
+| 4 | 1 | construction (volume) | 4 | 0 |
+| 5 | 1 | construction (volume) | 4 | 0 |
+| 6 | 1 | allègement | 4 | 1 |
+| 7 | 2 | réalisation (spécifique à l'objectif) | 4 | 0 |
+| 8 | 2 | réalisation (spécifique à l'objectif) | 4 | 0 |
+| 9 | 2 | réalisation (spécifique à l'objectif) | 4 | 0 |
+| 10 | 2 | réalisation (spécifique à l'objectif) | 4 | 0 |
+| 11 | 2 | affûtage | 4 | 2 |
 | 12 | 2 | test — ÉCHÉANCE | 4 | 0 |
 
 ## Saison
@@ -41,10 +41,10 @@ Homme de 38 ans, 72 kg, court depuis quatre ans : 10 km en 48 minutes, 30 km par
 ## Règles du programme
 
 - Les blocs sont calés à rebours sur l'échéance : le dernier finit sur elle.
-- Chaque séance commence par 8 min d'échauffement au plus (comptées dans la durée estimée) : épaules, poignets et hanches en mobilité, 2 × 8 tirages scapulaires, 2 × 8 pompes scapulaires, puis quelques répétitions faciles du premier mouvement.
+- Chaque séance commence par 8 min d'échauffement (comptées dans la durée estimée) : 5 min de trot progressif, mobilité des chevilles et des hanches, gammes (montées de genoux, talons-fesses) ; avant les fractions, deux ou trois accélérations progressives.
 - Ajustement des répétitions : si les répétitions prévues ne passent pas avec la réserve demandée, garde les mêmes chiffres la semaine suivante ; 2 séances de suite en dessous, retire une série.
 - Baisse du jour (nuit de moins de 6 h, courbatures marquées sur la zone, journée très stressante) : 1 série de moins par exercice, aucune série à moins de 3 répétitions en réserve, pas de test.
-- Jour chargé : version courte de 15 min — 4 min d'échauffement, puis le premier exercice seul (le mouvement de l'objectif), 2 séries. Une séance courte vaut mieux qu'une séance sautée.
+- Jour chargé : version courte de 15 min — 5 min de marche rapide puis footing facile, sans fractions. Une séance courte vaut mieux qu'une séance sautée.
 - Arrêt immédiat et avis médical : douleur dans la poitrine, essoufflement anormal, malaise ou vertige. Souffle pendant l'effort, sans bloquer la respiration sur les séries longues.
 - Séance manquée : elle ne se rattrape pas. Semaine manquée : refais la dernière semaine terminée. Deux semaines ou plus : reprends deux semaines en arrière avec 20 % de volume en moins.
 - Les tests de fin de bloc (ou de la semaine de test) recalent les charges, les répétitions et les secondes du bloc suivant : déclare ton résultat, le bloc suivant est écrit dessus (série de tête = résultat − 2 ; tenues = 60 à 85 % du maintien mesuré), jamais sur un progrès supposé. Un test fait un jour de bilan bas se reporte de 48 à 72 h.
@@ -72,7 +72,7 @@ Homme de 38 ans, 72 kg, court depuis quatre ans : 10 km en 48 minutes, 30 km par
 | --- | --- | --- | --- | --- | --- |
 | Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
 | Footing en endurance fondamentale | 12 min | — | allure facile | — | échauffement ; Allure de conversation (tu peux parler en phrases), 12 min. |
-| Fractionné long 1000 m | 4 × 1000 m | — | allure soutenue | 90 s | principal ; récupération en trottinant ; Allure des fractions : 400 m en 4 min 28 (ton allure estimée sur 3 km), récupération en trottinant ; si l'allure ne tient plus, arrête la série. Chaque test chronométré recale cette allure. |
+| Fractionné long 1000 m | 4 × 1000 m | — | allure soutenue | 90 s | principal ; récupération en trottinant ; Allure des fractions : 4 min 28 au kilomètre (ton allure estimée sur 3 km), récupération en trottinant ; si l'allure ne tient plus, arrête la série. Chaque test chronométré recale cette allure. |
 
 ### samedi — cardio, endurance (45 min disponibles, 39 min estimées)
 
@@ -90,12 +90,12 @@ Homme de 38 ans, 72 kg, court depuis quatre ans : 10 km en 48 minutes, 30 km par
 
 ## Semaine 2 — construction (volume) (bloc 1)
 
-### mardi — cardio, endurance (60 min disponibles, 52 min estimées)
+### mardi — cardio, endurance (60 min disponibles, 55 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Footing en endurance fondamentale | 36 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 36 min. |
+| Footing en endurance fondamentale | 39 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 39 min. |
 | Fente arrière au poids du corps | 2 × 6 à 8 | poids du corps | 3 rép. en réserve | 90 s | accessoire ; Jambes : force utile, sans fatigue excessive. |
 | Pont fessier unilatéral | 2 × 8 à 10 | poids du corps | 2 rép. en réserve | 105 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 
@@ -105,32 +105,31 @@ Homme de 38 ans, 72 kg, court depuis quatre ans : 10 km en 48 minutes, 30 km par
 | --- | --- | --- | --- | --- | --- |
 | Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
 | Footing en endurance fondamentale | 12 min | — | allure facile | — | échauffement ; Allure de conversation (tu peux parler en phrases), 12 min. |
-| Fractionné long 1000 m | 4 × 1000 m | — | allure soutenue | 90 s | principal ; récupération en trottinant ; Allure des fractions : 400 m en 4 min 28 (ton allure estimée sur 3 km), récupération en trottinant ; si l'allure ne tient plus, arrête la série. Chaque test chronométré recale cette allure. |
+| Fractionné long 1000 m | 4 × 1000 m | — | allure soutenue | 90 s | principal ; récupération en trottinant ; Allure des fractions : 4 min 28 au kilomètre (ton allure estimée sur 3 km), récupération en trottinant ; si l'allure ne tient plus, arrête la série. Chaque test chronométré recale cette allure. |
 
-### samedi — cardio, endurance (45 min disponibles, 39 min estimées)
-
-| Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
-| --- | --- | --- | --- | --- | --- |
-| Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Footing en endurance fondamentale | 36 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 36 min. |
-
-### dimanche — cardio, endurance (120 min disponibles, 63 min estimées)
+### samedi — cardio, endurance (45 min disponibles, 40 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Sortie longue en course à pied | 60 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 60 min. |
+| Footing en endurance fondamentale | 37 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 37 min. |
+
+### dimanche — cardio, endurance (120 min disponibles, 69 min estimées)
+
+| Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
+| --- | --- | --- | --- | --- | --- |
+| Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
+| Sortie longue en course à pied | 66 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 66 min. |
 
 ## Semaine 3 — construction (volume) (bloc 1)
 
-### mardi — cardio, endurance (60 min disponibles, 52 min estimées)
+### mardi — cardio, endurance (60 min disponibles, 54 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Footing en endurance fondamentale | 36 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 36 min. |
+| Footing en endurance fondamentale | 43 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 43 min. |
 | Fente arrière au poids du corps | 2 × 6 à 8 | poids du corps | 3 rép. en réserve | 90 s | accessoire ; Jambes : force utile, sans fatigue excessive. |
-| Pont fessier unilatéral | 2 × 8 à 10 | poids du corps | 2 rép. en réserve | 105 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 
 ### jeudi — cardio, fractionné (60 min disponibles, 41 min estimées)
 
@@ -138,32 +137,30 @@ Homme de 38 ans, 72 kg, court depuis quatre ans : 10 km en 48 minutes, 30 km par
 | --- | --- | --- | --- | --- | --- |
 | Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
 | Footing en endurance fondamentale | 12 min | — | allure facile | — | échauffement ; Allure de conversation (tu peux parler en phrases), 12 min. |
-| Fractionné long 1000 m | 4 × 1000 m | — | allure soutenue | 90 s | principal ; récupération en trottinant ; Allure des fractions : 400 m en 4 min 28 (ton allure estimée sur 3 km), récupération en trottinant ; si l'allure ne tient plus, arrête la série. Chaque test chronométré recale cette allure. |
+| Fractionné long 1000 m | 4 × 1000 m | — | allure soutenue | 90 s | principal ; récupération en trottinant ; Allure des fractions : 4 min 28 au kilomètre (ton allure estimée sur 3 km), récupération en trottinant ; si l'allure ne tient plus, arrête la série. Chaque test chronométré recale cette allure. |
 
-### samedi — cardio, endurance (45 min disponibles, 39 min estimées)
-
-| Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
-| --- | --- | --- | --- | --- | --- |
-| Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Footing en endurance fondamentale | 36 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 36 min. |
-
-### dimanche — cardio, endurance (120 min disponibles, 63 min estimées)
+### samedi — cardio, endurance (45 min disponibles, 40 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Sortie longue en course à pied | 60 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 60 min. |
+| Footing en endurance fondamentale | 37 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 37 min. |
+
+### dimanche — cardio, endurance (120 min disponibles, 75 min estimées)
+
+| Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
+| --- | --- | --- | --- | --- | --- |
+| Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
+| Sortie longue en course à pied | 72 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 72 min. |
 
 ## Semaine 4 — construction (volume) (bloc 1)
 
-### mardi — cardio, endurance (60 min disponibles, 52 min estimées)
+### mardi — cardio, endurance (60 min disponibles, 50 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Footing en endurance fondamentale | 36 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 36 min. |
-| Fente arrière au poids du corps | 2 × 7 à 9 | poids du corps | 3 rép. en réserve | 90 s | accessoire ; Jambes : force utile, sans fatigue excessive. |
-| Pont fessier unilatéral | 2 × 9 à 11 | poids du corps | 2 rép. en réserve | 105 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
+| Footing en endurance fondamentale | 47 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 47 min. |
 
 ### jeudi — cardio, fractionné (60 min disponibles, 48 min estimées)
 
@@ -171,32 +168,30 @@ Homme de 38 ans, 72 kg, court depuis quatre ans : 10 km en 48 minutes, 30 km par
 | --- | --- | --- | --- | --- | --- |
 | Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
 | Footing en endurance fondamentale | 12 min | — | allure facile | — | échauffement ; Allure de conversation (tu peux parler en phrases), 12 min. |
-| Fractionné long 1000 m | 5 × 1000 m | — | allure soutenue | 90 s | principal ; récupération en trottinant ; Allure des fractions : 400 m en 4 min 28 (ton allure estimée sur 3 km), récupération en trottinant ; si l'allure ne tient plus, arrête la série. Chaque test chronométré recale cette allure. |
+| Fractionné long 1000 m | 5 × 1000 m | — | allure soutenue | 90 s | principal ; récupération en trottinant ; Allure des fractions : 4 min 28 au kilomètre (ton allure estimée sur 3 km), récupération en trottinant ; si l'allure ne tient plus, arrête la série. Chaque test chronométré recale cette allure. |
 
-### samedi — cardio, endurance (45 min disponibles, 39 min estimées)
-
-| Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
-| --- | --- | --- | --- | --- | --- |
-| Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Footing en endurance fondamentale | 36 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 36 min. |
-
-### dimanche — cardio, endurance (120 min disponibles, 63 min estimées)
+### samedi — cardio, endurance (45 min disponibles, 40 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Sortie longue en course à pied | 60 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 60 min. |
+| Footing en endurance fondamentale | 37 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 37 min. |
+
+### dimanche — cardio, endurance (120 min disponibles, 82 min estimées)
+
+| Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
+| --- | --- | --- | --- | --- | --- |
+| Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
+| Sortie longue en course à pied | 79 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 79 min. |
 
 ## Semaine 5 — construction (volume) (bloc 1)
 
-### mardi — cardio, endurance (60 min disponibles, 52 min estimées)
+### mardi — cardio, endurance (60 min disponibles, 55 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Footing en endurance fondamentale | 36 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 36 min. |
-| Fente arrière au poids du corps | 2 × 7 à 9 | poids du corps | 3 rép. en réserve | 90 s | accessoire ; Jambes : force utile, sans fatigue excessive. |
-| Pont fessier unilatéral | 2 × 9 à 11 | poids du corps | 2 rép. en réserve | 105 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
+| Footing en endurance fondamentale | 52 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 52 min. |
 
 ### jeudi — cardio, fractionné (60 min disponibles, 48 min estimées)
 
@@ -204,31 +199,31 @@ Homme de 38 ans, 72 kg, court depuis quatre ans : 10 km en 48 minutes, 30 km par
 | --- | --- | --- | --- | --- | --- |
 | Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
 | Footing en endurance fondamentale | 12 min | — | allure facile | — | échauffement ; Allure de conversation (tu peux parler en phrases), 12 min. |
-| Fractionné long 1000 m | 5 × 1000 m | — | allure soutenue | 90 s | principal ; récupération en trottinant ; Allure des fractions : 400 m en 4 min 28 (ton allure estimée sur 3 km), récupération en trottinant ; si l'allure ne tient plus, arrête la série. Chaque test chronométré recale cette allure. |
+| Fractionné long 1000 m | 5 × 1000 m | — | allure soutenue | 90 s | principal ; récupération en trottinant ; Allure des fractions : 4 min 28 au kilomètre (ton allure estimée sur 3 km), récupération en trottinant ; si l'allure ne tient plus, arrête la série. Chaque test chronométré recale cette allure. |
 
-### samedi — cardio, endurance (45 min disponibles, 39 min estimées)
-
-| Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
-| --- | --- | --- | --- | --- | --- |
-| Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Footing en endurance fondamentale | 36 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 36 min. |
-
-### dimanche — cardio, endurance (120 min disponibles, 63 min estimées)
+### samedi — cardio, endurance (45 min disponibles, 40 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Sortie longue en course à pied | 60 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 60 min. |
+| Footing en endurance fondamentale | 37 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 37 min. |
+
+### dimanche — cardio, endurance (120 min disponibles, 89 min estimées)
+
+| Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
+| --- | --- | --- | --- | --- | --- |
+| Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
+| Sortie longue en course à pied | 86 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 86 min. |
 
 ## Semaine 6 — allègement (bloc 1)
 
-### mardi — cardio, endurance, séance légère (60 min disponibles, 47 min estimées)
+### mardi — cardio, endurance, séance légère (60 min disponibles, 45 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
 | Footing en endurance fondamentale | 36 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 36 min. |
-| Fente arrière au poids du corps | 2 × 6 à 8 | poids du corps | 3 rép. en réserve | 90 s | accessoire ; Jambes : force utile, sans fatigue excessive. |
+| Fente arrière au poids du corps | 1 × 6 à 8 | poids du corps | 3 rép. en réserve | 90 s | accessoire ; Jambes : force utile, sans fatigue excessive. |
 
 ### jeudi — cardio, fractionné, séance légère (60 min disponibles, 41 min estimées)
 
@@ -236,7 +231,7 @@ Homme de 38 ans, 72 kg, court depuis quatre ans : 10 km en 48 minutes, 30 km par
 | --- | --- | --- | --- | --- | --- |
 | Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
 | Footing en endurance fondamentale | 12 min | — | allure facile | — | échauffement ; Allure de conversation (tu peux parler en phrases), 12 min. |
-| Fractionné long 1000 m | 4 × 1000 m | — | allure soutenue | 90 s | principal ; récupération en trottinant ; Allure des fractions : 400 m en 4 min 28 (ton allure estimée sur 3 km), récupération en trottinant ; si l'allure ne tient plus, arrête la série. Chaque test chronométré recale cette allure. |
+| Fractionné long 1000 m | 4 × 1000 m | — | allure soutenue | 90 s | principal ; récupération en trottinant ; Allure des fractions : 4 min 28 au kilomètre (ton allure estimée sur 3 km), récupération en trottinant ; si l'allure ne tient plus, arrête la série. Chaque test chronométré recale cette allure. |
 
 ### samedi — cardio, endurance, séance légère (45 min disponibles, 39 min estimées)
 
@@ -259,9 +254,7 @@ Homme de 38 ans, 72 kg, court depuis quatre ans : 10 km en 48 minutes, 30 km par
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Footing en endurance fondamentale | 39 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 39 min. |
-| Fente arrière au poids du corps | 2 × 6 à 8 | poids du corps | 3 rép. en réserve | 90 s | accessoire ; Jambes : force utile, sans fatigue excessive. |
-| Pont fessier unilatéral | 2 × 8 à 10 | poids du corps | 2 rép. en réserve | 105 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
+| Footing en endurance fondamentale | 52 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 52 min. |
 
 ### jeudi — cardio, fractionné (60 min disponibles, 41 min estimées)
 
@@ -269,7 +262,7 @@ Homme de 38 ans, 72 kg, court depuis quatre ans : 10 km en 48 minutes, 30 km par
 | --- | --- | --- | --- | --- | --- |
 | Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
 | Footing en endurance fondamentale | 12 min | — | allure facile | — | échauffement ; Allure de conversation (tu peux parler en phrases), 12 min. |
-| Fractionné long 1000 m | 4 × 1000 m | — | allure soutenue | 90 s | principal ; récupération en trottinant ; Allure des fractions : 400 m en 4 min 28 (ton allure estimée sur 3 km), récupération en trottinant ; si l'allure ne tient plus, arrête la série. Chaque test chronométré recale cette allure. |
+| Fractionné long 1000 m | 4 × 1000 m | — | allure soutenue | 90 s | principal ; récupération en trottinant ; Allure des fractions : 4 min 28 au kilomètre (ton allure estimée sur 3 km), récupération en trottinant ; si l'allure ne tient plus, arrête la série. Chaque test chronométré recale cette allure. |
 
 ### samedi — cardio, endurance (45 min disponibles, 40 min estimées)
 
@@ -278,12 +271,12 @@ Homme de 38 ans, 72 kg, court depuis quatre ans : 10 km en 48 minutes, 30 km par
 | Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
 | Footing en endurance fondamentale | 37 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 37 min. |
 
-### dimanche — cardio, endurance (120 min disponibles, 69 min estimées)
+### dimanche — cardio, endurance (120 min disponibles, 97 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Sortie longue en course à pied | 66 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 66 min. |
+| Sortie longue en course à pied | 94 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 94 min. |
 
 ## Semaine 8 — réalisation (spécifique à l'objectif) (bloc 2)
 
@@ -292,9 +285,7 @@ Homme de 38 ans, 72 kg, court depuis quatre ans : 10 km en 48 minutes, 30 km par
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Footing en endurance fondamentale | 39 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 39 min. |
-| Fente arrière au poids du corps | 2 × 7 à 9 | poids du corps | 3 rép. en réserve | 90 s | accessoire ; Jambes : force utile, sans fatigue excessive. |
-| Pont fessier unilatéral | 2 × 9 à 11 | poids du corps | 2 rép. en réserve | 105 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
+| Footing en endurance fondamentale | 52 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 52 min. |
 
 ### jeudi — cardio, fractionné (60 min disponibles, 48 min estimées)
 
@@ -302,7 +293,7 @@ Homme de 38 ans, 72 kg, court depuis quatre ans : 10 km en 48 minutes, 30 km par
 | --- | --- | --- | --- | --- | --- |
 | Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
 | Footing en endurance fondamentale | 12 min | — | allure facile | — | échauffement ; Allure de conversation (tu peux parler en phrases), 12 min. |
-| Fractionné long 1000 m | 5 × 1000 m | — | allure soutenue | 90 s | principal ; récupération en trottinant ; Allure des fractions : 400 m en 4 min 28 (ton allure estimée sur 3 km), récupération en trottinant ; si l'allure ne tient plus, arrête la série. Chaque test chronométré recale cette allure. |
+| Fractionné long 1000 m | 5 × 1000 m | — | allure soutenue | 90 s | principal ; récupération en trottinant ; Allure des fractions : 4 min 28 au kilomètre (ton allure estimée sur 3 km), récupération en trottinant ; si l'allure ne tient plus, arrête la série. Chaque test chronométré recale cette allure. |
 
 ### samedi — cardio, endurance (45 min disponibles, 40 min estimées)
 
@@ -311,12 +302,12 @@ Homme de 38 ans, 72 kg, court depuis quatre ans : 10 km en 48 minutes, 30 km par
 | Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
 | Footing en endurance fondamentale | 37 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 37 min. |
 
-### dimanche — cardio, endurance (120 min disponibles, 69 min estimées)
+### dimanche — cardio, endurance (120 min disponibles, 106 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Sortie longue en course à pied | 66 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 66 min. |
+| Sortie longue en course à pied | 103 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 103 min. |
 
 ## Semaine 9 — réalisation (spécifique à l'objectif) (bloc 2)
 
@@ -325,9 +316,7 @@ Homme de 38 ans, 72 kg, court depuis quatre ans : 10 km en 48 minutes, 30 km par
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Footing en endurance fondamentale | 39 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 39 min. |
-| Fente arrière au poids du corps | 2 × 7 à 9 | poids du corps | 3 rép. en réserve | 90 s | accessoire ; Jambes : force utile, sans fatigue excessive. |
-| Pont fessier unilatéral | 2 × 9 à 11 | poids du corps | 2 rép. en réserve | 105 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
+| Footing en endurance fondamentale | 52 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 52 min. |
 
 ### jeudi — cardio, fractionné (60 min disponibles, 48 min estimées)
 
@@ -335,7 +324,7 @@ Homme de 38 ans, 72 kg, court depuis quatre ans : 10 km en 48 minutes, 30 km par
 | --- | --- | --- | --- | --- | --- |
 | Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
 | Footing en endurance fondamentale | 12 min | — | allure facile | — | échauffement ; Allure de conversation (tu peux parler en phrases), 12 min. |
-| Fractionné long 1000 m | 5 × 1000 m | — | allure soutenue | 90 s | principal ; récupération en trottinant ; Allure des fractions : 400 m en 4 min 28 (ton allure estimée sur 3 km), récupération en trottinant ; si l'allure ne tient plus, arrête la série. Chaque test chronométré recale cette allure. |
+| Fractionné long 1000 m | 5 × 1000 m | — | allure soutenue | 90 s | principal ; récupération en trottinant ; Allure des fractions : 4 min 28 au kilomètre (ton allure estimée sur 3 km), récupération en trottinant ; si l'allure ne tient plus, arrête la série. Chaque test chronométré recale cette allure. |
 
 ### samedi — cardio, endurance (45 min disponibles, 40 min estimées)
 
@@ -344,23 +333,21 @@ Homme de 38 ans, 72 kg, court depuis quatre ans : 10 km en 48 minutes, 30 km par
 | Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
 | Footing en endurance fondamentale | 37 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 37 min. |
 
-### dimanche — cardio, endurance (120 min disponibles, 69 min estimées)
+### dimanche — cardio, endurance (120 min disponibles, 115 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Sortie longue en course à pied | 66 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 66 min. |
+| Sortie longue en course à pied | 112 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 112 min. |
 
 ## Semaine 10 — réalisation (spécifique à l'objectif) (bloc 2)
 
-### mardi — cardio, endurance (60 min disponibles, 37 min estimées)
+### mardi — cardio, endurance (60 min disponibles, 55 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Footing en endurance fondamentale | 23 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 23 min. |
-| Fente arrière au poids du corps | 2 × 5 | poids du corps | 3 rép. en réserve | 90 s | accessoire ; Jambes : force utile, sans fatigue excessive. |
-| Pont fessier unilatéral | 2 × 6 | poids du corps | 5 rép. en réserve ou plus | 105 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
+| Footing en endurance fondamentale | 52 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 52 min. |
 
 ### jeudi — cardio, fractionné (60 min disponibles, 46 min estimées)
 
@@ -368,34 +355,32 @@ Homme de 38 ans, 72 kg, court depuis quatre ans : 10 km en 48 minutes, 30 km par
 | --- | --- | --- | --- | --- | --- |
 | Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
 | Footing en endurance fondamentale | 10 min | — | allure facile | — | échauffement ; Allure de conversation (tu peux parler en phrases), 12 min. |
-| Fractionné long 1000 m | 5 × 1000 m | — | allure soutenue | 90 s | principal ; récupération en trottinant ; Allure des fractions : 400 m en 4 min 28 (ton allure estimée sur 3 km), récupération en trottinant ; si l'allure ne tient plus, arrête la série. Chaque test chronométré recale cette allure. |
+| Fractionné long 1000 m | 5 × 1000 m | — | allure soutenue | 90 s | principal ; récupération en trottinant ; Allure des fractions : 4 min 28 au kilomètre (ton allure estimée sur 3 km), récupération en trottinant ; si l'allure ne tient plus, arrête la série. Chaque test chronométré recale cette allure. |
 
-### samedi — cardio, endurance (45 min disponibles, 37 min estimées)
-
-| Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
-| --- | --- | --- | --- | --- | --- |
-| Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Footing en endurance fondamentale | 23 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 23 min. |
-| Fente arrière au poids du corps | 2 × 5 | poids du corps | 3 rép. en réserve | 90 s | accessoire ; Jambes : force utile, sans fatigue excessive. |
-| Pont fessier unilatéral | 2 × 6 | poids du corps | 2 rép. en réserve | 105 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
-
-### dimanche — cardio, endurance (120 min disponibles, 42 min estimées)
+### samedi — cardio, endurance (45 min disponibles, 40 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Sortie longue en course à pied | 39 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 39 min. |
+| Footing en endurance fondamentale | 37 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 37 min. |
+
+### dimanche — cardio, endurance (120 min disponibles, 115 min estimées)
+
+| Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
+| --- | --- | --- | --- | --- | --- |
+| Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
+| Sortie longue en course à pied | 112 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 112 min. |
 
 ## Semaine 11 — affûtage (bloc 2)
 
-### mardi — cardio, endurance, séance légère (60 min disponibles, 49 min estimées)
+### mardi — cardio, endurance, séance légère (60 min disponibles, 56 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Footing en endurance fondamentale | 36 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 36 min. ; Affûtage : séries dures ramenées à environ 50 % de la semaine de pointe, intensité et fréquence gardées, à 14 jours de l'échéance au plus. |
+| Footing en endurance fondamentale | 40 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 40 min. ; Affûtage : séries dures ramenées à environ 50 % de la semaine de pointe, intensité et fréquence gardées, à 14 jours de l'échéance au plus. |
 | Fente arrière au poids du corps | 2 × 6 à 8 | poids du corps | 3 rép. en réserve | 90 s | accessoire ; Jambes : force utile, sans fatigue excessive. |
-| Pont fessier unilatéral | 1 × 8 à 10 | poids du corps | 3 rép. en réserve | 105 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
+| Pont fessier unilatéral | 2 × 8 à 10 | poids du corps | 5 rép. en réserve ou plus | 105 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 
 ### jeudi — cardio, fractionné, séance légère (60 min disponibles, 34 min estimées)
 
@@ -403,21 +388,21 @@ Homme de 38 ans, 72 kg, court depuis quatre ans : 10 km en 48 minutes, 30 km par
 | --- | --- | --- | --- | --- | --- |
 | Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
 | Footing en endurance fondamentale | 12 min | — | allure facile | — | échauffement ; Allure de conversation (tu peux parler en phrases), 12 min. ; Affûtage : séries dures ramenées à environ 50 % de la semaine de pointe, intensité et fréquence gardées, à 14 jours de l'échéance au plus. |
-| Fractionné long 1000 m | 3 × 1000 m | — | allure soutenue | 90 s | principal ; récupération en trottinant ; Allure des fractions : 400 m en 4 min 28 (ton allure estimée sur 3 km), récupération en trottinant ; si l'allure ne tient plus, arrête la série. Chaque test chronométré recale cette allure. |
+| Fractionné long 1000 m | 3 × 1000 m | — | allure soutenue | 90 s | principal ; récupération en trottinant ; Allure des fractions : 4 min 28 au kilomètre (ton allure estimée sur 3 km), récupération en trottinant ; si l'allure ne tient plus, arrête la série. Chaque test chronométré recale cette allure. |
 
-### samedi — cardio, endurance, séance légère (45 min disponibles, 39 min estimées)
-
-| Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
-| --- | --- | --- | --- | --- | --- |
-| Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Footing en endurance fondamentale | 36 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 36 min. ; Affûtage : séries dures ramenées à environ 50 % de la semaine de pointe, intensité et fréquence gardées, à 14 jours de l'échéance au plus. |
-
-### dimanche — cardio, endurance, séance légère (120 min disponibles, 63 min estimées)
+### samedi — cardio, endurance, séance légère (45 min disponibles, 40 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Sortie longue en course à pied | 60 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 60 min. ; Affûtage : séries dures ramenées à environ 50 % de la semaine de pointe, intensité et fréquence gardées, à 14 jours de l'échéance au plus. |
+| Footing en endurance fondamentale | 37 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 37 min. ; Affûtage : séries dures ramenées à environ 50 % de la semaine de pointe, intensité et fréquence gardées, à 14 jours de l'échéance au plus. |
+
+### dimanche — cardio, endurance, séance légère (120 min disponibles, 70 min estimées)
+
+| Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
+| --- | --- | --- | --- | --- | --- |
+| Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
+| Sortie longue en course à pied | 67 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 67 min. ; Affûtage : séries dures ramenées à environ 50 % de la semaine de pointe, intensité et fréquence gardées, à 14 jours de l'échéance au plus. |
 
 ## Semaine 12 — test (bloc 2)
 
@@ -441,9 +426,8 @@ Homme de 38 ans, 72 kg, court depuis quatre ans : 10 km en 48 minutes, 30 km par
 | Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
 | Footing en endurance fondamentale | 20 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 20 min. ; Récupération : facile, sans chercher la performance. |
 
-### dimanche — cardio, endurance, séance lourde (120 min disponibles, 91 min estimées)
+### dimanche — cardio, endurance, séance lourde (120 min disponibles, 113 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
-| Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Sortie longue en course à pied | 16,5 km | — | — | — | ÉPREUVE ; Test chronométré. ; Test chronométré sur 16,5 km, après 10 à 15 min d'échauffement, à allure régulière. Il recale les allures du bloc suivant. ; Allure de l'objectif : 4 min 59 au kilomètre, régulière du début à la fin. |
+| Sortie longue en course à pied | 21,1 km | — | — | — | ÉPREUVE ; Test chronométré. ; Test chronométré sur 21,0975 km, après 10 à 15 min d'échauffement, à allure régulière. Il recale les allures du bloc suivant. ; Jour du test de l'objectif : c'est la séance elle-même, après 48 h sans travail dur du mouvement. ; Allure de l'objectif : 4 min 59 au kilomètre, régulière du début à la fin. |
