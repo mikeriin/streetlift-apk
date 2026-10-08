@@ -215,6 +215,7 @@ extension EvolutionStore on AppStore {
   /// tests.)
   bool evolutionReceive(AdaptPlace place, List<kc.Proposal> proposals) {
     if (_evoRaw != null) return false;
+    var notApplicableChanged = false;
     // CI1c (C10.2) : sur le bloc importé (programme de 40 semaines), une
     // proposition qui ne peut pas s'appliquer jour pour jour par-dessus le
     // programme n'est plus proposée comme applicable : Koach le dit en
@@ -225,9 +226,13 @@ extension EvolutionStore on AppStore {
       for (final p in proposals) {
         (evolutionApplicable(place, p) ? kept : off).add(p);
       }
+      notApplicableChanged =
+          off.map((p) => p.id).join('|') !=
+          evolutionNotApplicable.map((p) => p.id).join('|');
       evolutionNotApplicable = off;
       proposals = kept;
     } else {
+      notApplicableChanged = evolutionNotApplicable.isNotEmpty;
       evolutionNotApplicable = const [];
     }
     final mode = SessionAdaptStore(this).adaptMode;
@@ -283,7 +288,10 @@ extension EvolutionStore on AppStore {
         changed = true;
       }
     }
-    if (!changed) return false;
+    if (!changed) {
+      if (notApplicableChanged) notifyListeners();
+      return notApplicableChanged;
+    }
     _evoCommit(out);
     return true;
   }

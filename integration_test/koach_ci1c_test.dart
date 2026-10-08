@@ -127,7 +127,9 @@ kc.Proposal _volume(AdaptPlace place, kc.ExercisePrescription item) =>
           ),
         ],
       ),
-      reasons: const [kc.Reason(code: 'adapt.volume_up', params: {'sets': 1})],
+      reasons: const [
+        kc.Reason(code: 'adapt.volume_up', params: {'sets': 1}),
+      ],
     );
 
 void main() {
@@ -290,9 +292,7 @@ void main() {
   }
 
   testWidgets('CI1c $_part ($theme, $accent) : ajustement de Koach accepté '
-      'appliqué tout de suite ; séance consultée jamais figée', (
-    tester,
-  ) async {
+      'appliqué tout de suite ; séance consultée jamais figée', (tester) async {
     final raw = await SharedPreferences.getInstance();
     await raw.clear();
     final seed = AppStore();
@@ -467,8 +467,7 @@ void main() {
           .where((i) => i.slotId == item.slotId)
           .firstOrNull
           ?.sets;
-      releve['dev_seance_a_jour'] =
-          releve['dev_series_apres'] == item.sets + 1;
+      releve['dev_seance_a_jour'] = releve['dev_series_apres'] == item.sets + 1;
       await shot('08_dev_seance_apres');
       await home(tester);
     }

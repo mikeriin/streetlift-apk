@@ -97,7 +97,9 @@ kc.Proposal _volume(
       ),
     ],
   ),
-  reasons: [const kc.Reason(code: 'adapt.volume_up', params: {'sets': 1})],
+  reasons: [
+    const kc.Reason(code: 'adapt.volume_up', params: {'sets': 1}),
+  ],
 );
 
 /// Première prescription « simple » (sans cibles par série) de la journée.
@@ -299,9 +301,7 @@ void main() {
       clock = DateTime(2026, 10, 1, 9);
       final r = app.saveAthleteProfile(
         ProfileDraft.of(
-          _street('streetlifting').copyWith(
-            guidanceMode: kc.GuidanceMode.free,
-          ),
+          _street('streetlifting').copyWith(guidanceMode: kc.GuidanceMode.free),
         )..consent = 'refused',
       );
       expect(r, isNotNull);
@@ -331,9 +331,10 @@ void main() {
       ]);
       app.evolutionAccept(app.evolutionPending.single);
       expect(
-        _servedItem(app.adaptOpen(week, app.program.week(week).day(j)!)!,
-                item.slotId)
-            ?.sets,
+        _servedItem(
+          app.adaptOpen(week, app.program.week(week).day(j)!)!,
+          item.slotId,
+        )?.sets,
         item.sets + 1,
       );
       // Programme affiché (MON PROGRAMME) : déjà la couche du bloc.
@@ -423,14 +424,18 @@ void main() {
         expect(se.id.contains('~'), isFalse);
       }
       // Semaine d'avant : intacte.
-      expect(identical(app.program.week(11).day(1)!.original,
-          app.program.week(11).day(1)), isTrue);
+      expect(
+        identical(
+          app.program.week(11).day(1)!.original,
+          app.program.week(11).day(1),
+        ),
+        isTrue,
+      );
       // Annuler : programme d'origine.
       expect(app.evolutionUndo(app.planEvolution.entries.last), isTrue);
-      expect(
-        [for (final e in app.program.week(12).day(1)!.exercises) e.id],
-        original12,
-      );
+      expect([
+        for (final e in app.program.week(12).day(1)!.exercises) e.id,
+      ], original12);
       expect(app.program.week(12).day(1)!.source, isNull);
     });
 
@@ -514,6 +519,19 @@ void main() {
       app.adaptAnswer(12, d1, const kc.HealthCheck(overall: 4));
       app.forgetConsultation(12, 1);
       expect(app.logs.containsKey('S12-J1'), isTrue);
+      // Valeur saisie sans être validée : brouillon gardé.
+      app.clearSession(12, 1);
+      app.adaptOpen(12, d1);
+      final typed = app.exLog(12, 1, d1.exercises.first).sets.first
+        ..kg = '42'
+        ..edited = true;
+      app.forgetConsultation(12, 1);
+      expect(app.logs.containsKey('S12-J1'), isTrue);
+      app.refreshUnstartedSession(12, d1);
+      expect(
+        app.logs['S12-J1']!.ex[d1.exercises.first.id]!.sets.first,
+        same(typed),
+      );
       for (final d in [d2, d3]) {
         if (d == null || d.exercises.isEmpty) continue;
         app.adaptOpen(12, d);
@@ -530,7 +548,10 @@ void main() {
       // État 6.9.1 : S12-J1 seulement consultée (figée), S12-J2 avec une
       // note, S12-J3 avec un bilan.
       final w = app.program.week(12);
-      final days = [for (final d in w.days) if (d.exercises.isNotEmpty) d];
+      final days = [
+        for (final d in w.days)
+          if (d.exercises.isNotEmpty) d,
+      ];
       app.adaptOpen(12, days[0]);
       for (final e in days[0].exercises) {
         app.exLog(12, days[0].j, e);
@@ -539,9 +560,21 @@ void main() {
       app.exLog(12, days[1].j, days[1].exercises.first).note = 'Note gardée';
       app.adaptOpen(12, days[2]);
       app.adaptAnswer(12, days[2], const kc.HealthCheck(overall: 2));
+      // Brouillon : une charge saisie sans être validée (6.9.1 ne marquait
+      // pas les saisies).
+      final draft = days.length > 3 ? days[3] : null;
+      if (draft != null) {
+        app.adaptOpen(12, draft);
+        app.exLog(12, draft.j, draft.exercises.first).sets.first.kg = '77.5';
+      }
       final raw = jsonDecode(app.exportAll()) as Map<String, dynamic>;
       for (final l in (raw['logs'] as Map).values) {
         ((l as Map)['adapt'] as Map?)?.remove('src');
+        for (final x in ((l['ex'] as Map?) ?? const {}).values) {
+          for (final st in ((x as Map)['sets'] as List)) {
+            (st as Map).remove('edited');
+          }
+        }
       }
       final k0 = 'S12-J${days[0].j}';
       final k1 = 'S12-J${days[1].j}';
@@ -556,6 +589,27 @@ void main() {
         'Note gardée',
       );
       expect(other.sessionAdaptOf(k2)!.check!.overall, 2);
+      if (draft != null) {
+        final st = other
+            .logs['S12-J${draft.j}']!
+            .ex[draft.exercises.first.id]!
+            .sets
+            .first;
+        expect(st.kg, '77.5');
+        expect(st.edited, isTrue);
+        // Réouverture : la saisie reste.
+        other.refreshUnstartedSession(12, other.program.week(12).day(draft.j)!);
+        other.adaptOpen(12, other.program.week(12).day(draft.j)!);
+        expect(
+          other
+              .logs['S12-J${draft.j}']!
+              .ex[draft.exercises.first.id]!
+              .sets
+              .first
+              .kg,
+          '77.5',
+        );
+      }
       final doneBefore = [
         for (final e in app.logs.entries)
           if (e.value.done) '${e.key}:${jsonEncode(e.value.toJson())}',

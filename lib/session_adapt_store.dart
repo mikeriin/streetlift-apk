@@ -252,12 +252,26 @@ extension SessionAdaptStore on AppStore {
     if (chunks.isNotEmpty) {
       for (final c in chunks) {
         built[c] = _adaptImported(c);
-        key.write('|$c:${identityHashCode(built[c])}');
+        // (Identité du bloc, une instance de classe : un enregistrement
+        // n'a pas d'identité garantie.)
+        key.write('|$c:${identityHashCode(built[c]?.block)}');
       }
+    }
+    // Séances déjà faites : jamais réécrites par la couche.
+    if (chunks.isNotEmpty) {
+      var h = 0;
+      for (final e in logs.entries) {
+        if (e.value.done) h = (h * 31 + e.key.hashCode) & 0x3fffffff;
+      }
+      key.write('|done:$h');
     }
     final k = key.toString();
     if (k == _overlayKey) return;
     _overlayKey = k;
+    // Calculs tirés des exercices du programme : refaits.
+    programRevision++;
+    _allEx = null;
+    _muscleIndex = null;
     // Journées d'origine rétablies, puis couches posées à nouveau.
     for (final w in program.weeks) {
       for (var i = 0; i < w.days.length; i++) {
@@ -291,7 +305,6 @@ extension SessionAdaptStore on AppStore {
       () => EvolutionStore(this).evolveBlock(built.block),
     );
     if (identical(evolved, built.block)) return;
-    if (!importedLayoutKept(built.block, evolved)) return;
     final entries = planEvolution.inEffect(_importedBlockId(chunk));
     final first = chunk * 52 + 1;
     final last = math.min(first + 51, _importedLastWeek);
@@ -303,6 +316,8 @@ extension SessionAdaptStore on AppStore {
         final d = week.days[i];
         final dayIndex = built.dayOfJ[d.j];
         if (dayIndex == null) continue;
+        // Séance déjà faite : elle reste ce qui a été prévu ce jour-là.
+        if (logs[sessionKey(n, d.j)]?.done ?? false) continue;
         final orig = _blockItems(built.block, weekIndex, dayIndex);
         final evo = _blockItems(evolved, weekIndex, dayIndex);
         if (kc.jsonDeepEquals(
@@ -338,9 +353,9 @@ extension SessionAdaptStore on AppStore {
     // affiché (« j<J>-<identifiant> »).
     final js = <int, int>{};
     for (final d in a.pass1.days) {
-      final m = RegExp(r'^j(\d)-').firstMatch(
-        d.slots.isEmpty ? '' : d.slots.first.slotId,
-      );
+      final m = RegExp(
+        r'^j(\d)-',
+      ).firstMatch(d.slots.isEmpty ? '' : d.slots.first.slotId);
       if (m != null) js[d.dayIndex] = int.parse(m.group(1)!);
     }
     for (final w in b.pass2.weeks) {
@@ -381,7 +396,15 @@ extension SessionAdaptStore on AppStore {
   ) {
     final o = {for (final x in orig) x.slotId: x};
     final v = {for (final x in evo) x.slotId: x};
-    final why = _overlayWhy(entries, evolved);
+    String why(String slot) => _overlayWhy(
+      [
+        for (final e in entries)
+          if (e.proposal.diff?.changes.any((c) => c.slotId == slot) ?? false)
+            e,
+      ].lastOrNull ??
+          entries.where((e) => e.proposal.diff == null).lastOrNull,
+      evolved,
+    );
     final out = <Exercise>[];
     final ids = <String>{};
     for (final e in d.exercises) {
@@ -398,7 +421,7 @@ extension SessionAdaptStore on AppStore {
         out.add(e);
         continue;
       }
-      out.add(_overlayExercise(e, a, b, why));
+      out.add(_overlayExercise(e, a, b, why(slot)));
     }
     for (final b in evo) {
       if (o.containsKey(b.slotId)) continue;
@@ -409,7 +432,7 @@ extension SessionAdaptStore on AppStore {
         name: _adaptNameOf(b.exerciseId),
         setsText: adaptSetsText(b),
       );
-      out.add(_overlayExercise(shell, null, b, why));
+      out.add(_overlayExercise(shell, null, b, why(b.slotId)));
     }
     return DayPlan.overlay(d, out);
   }
@@ -469,9 +492,8 @@ extension SessionAdaptStore on AppStore {
 
   /// « Koach : ajouter 1 série à Tractions (accepté le 28/09). » — ce qui a
   /// changé, par qui et quand (C10.2).
-  String _overlayWhy(List<EvolutionEntry> entries, kc.ProgramBlock block) {
-    if (entries.isEmpty) return 'Ajusté par Koach.';
-    final e = entries.last;
+  String _overlayWhy(EvolutionEntry? e, kc.ProgramBlock block) {
+    if (e == null) return 'Ajusté par Koach.';
     final action = et.evolutionAction(
       e,
       exerciseName: _adaptNameOf,
@@ -1066,11 +1088,7 @@ extension SessionAdaptStore on AppStore {
   /// prescription pour les exercices pas encore commencés ; ceux qui ont
   /// une série validée gardent leur prescription et leurs conseils. Null :
   /// rien à changer.
-  SessionAdapt? _adaptRefreshStarted(
-    int week,
-    DayPlan base,
-    SessionAdapt a,
-  ) {
+  SessionAdapt? _adaptRefreshStarted(int week, DayPlan base, SessionAdapt a) {
     if (a.source == null || a.date != _adaptToday.iso) return null;
     if (!adaptAvailable) return null;
     final place = adaptPlaceOf(week, base.j);
@@ -1118,6 +1136,11 @@ extension SessionAdaptStore on AppStore {
           a.base ?? a.plan,
         );
         if (!jsonDeepEquals(b.toJson(), plan.toJson())) without = b;
+      }
+      // Plan fusionné hors contrat (groupes…) : séance gardée telle quelle.
+      if (plan.validate().isNotEmpty ||
+          (without?.validate().isNotEmpty ?? false)) {
+        return null;
       }
       final next = SessionAdapt(
         blockId: a.blockId,
@@ -1341,17 +1364,21 @@ extension SessionAdaptStore on AppStore {
         out.add(e);
         continue;
       }
+      // CI1c : remplacé aujourd'hui seulement quand l'exercice servi n'est
+      // pas celui du programme affiché (un échange accepté sur le bloc
+      // importé est déjà dans le programme affiché, sous son nom).
+      final shownId = e.catalogId ?? content.idFor(e.name);
       final swapped =
-          blockSlots[slot]?.exerciseId != null &&
-          blockSlots[slot]!.exerciseId != it.exerciseId &&
-          (e.catalogId ?? content.idFor(e.name)) != it.exerciseId;
+          shownId != null &&
+          shownId != it.exerciseId &&
+          blockSlots[slot]?.exerciseId != it.exerciseId;
       final id = swapped ? '${e.id}~${it.exerciseId}' : e.id;
       final g = adviceGoal(it, 0, a.advice[id] ?? const []);
       out.add(
         Exercise.engine(
           e,
           id: id,
-          name: swapped ? _adaptNameOf(it.exerciseId) : e.name,
+          name: shownId == it.exerciseId ? e.name : _adaptNameOf(it.exerciseId),
           setsText: adaptSetsText(it),
           setCount: it.sets,
           intensity: it.kind == kc.SetKind.test
@@ -1547,6 +1574,31 @@ extension SessionAdaptStore on AppStore {
     value: g.prefill == null ? '' : '${g.prefill}',
   );
 
+  /// CI1c (migration) : valeurs que la séance servie [a] pré-remplissait
+  /// pour la série [index] de l'exercice [key] (null : exercice hors
+  /// moteur).
+  ({String kg, String value})? _legacyGoalTexts(
+    int week,
+    int j,
+    SessionAdapt a,
+    String key,
+    int index,
+  ) {
+    final it = _adaptItem(a, adaptSlotOf(week, j, key));
+    if (it == null) return null;
+    final loaded =
+        it.loadBasis != kc.LoadBasis.bodyweight &&
+        it.loadBasis != kc.LoadBasis.unloaded;
+    final t = _goalTexts(
+      adviceGoal(it, index, a.advice[key] ?? const []),
+      loaded,
+    );
+    final test =
+        it.kind == kc.SetKind.test &&
+        ((it.repsHigh ?? 0) >= 100 || (it.secondsHigh ?? 0) >= 300);
+    return test ? (kg: t.kg, value: '') : t;
+  }
+
   /// Pré-remplit les séries non validées encore vides d'un exercice servi.
   void adaptPrefill(int week, int j, Exercise e, ExerciseLog log) {
     final a = sessionAdapt(week, j);
@@ -1589,7 +1641,9 @@ extension SessionAdaptStore on AppStore {
       if (itB == null) continue;
       final x = entry.value;
       // Séries : celles de la séance faite, sans retirer une série validée.
-      while (x.sets.length > itB.sets && !x.sets.last.done) {
+      while (x.sets.length > itB.sets &&
+          !x.sets.last.done &&
+          !x.sets.last.edited) {
         x.sets.removeLast();
       }
       while (x.sets.length < itB.sets) {
