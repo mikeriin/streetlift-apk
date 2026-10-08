@@ -951,16 +951,26 @@ void _buildConditioning(_Builder b) {
     if (muDays.contains(d)) {
       _addMuscleUpPractice(b, d, a.reps[Ids.muscleUp] ?? 0);
     }
-    final (ids, method) = strength[d % strength.length];
-    b.add(
-      d,
-      ids,
-      method == Method.liftHeavy ? SlotRole.main : SlotRole.secondary,
-      method,
-      sets: method == Method.liftHeavy ? 4 : 3,
-      stress: method == Method.liftHeavy ? DayStress.heavy : DayStress.medium,
-    );
+    // Créneau court : la pièce seule, à la durée du créneau (R6-P27 : une
+    // pièce courte de 5 à 10 minutes garde son format) ; le bloc de force
+    // à partir de 40 minutes.
+    final minutes = a.days[d].minutes;
+    if (minutes >= 40) {
+      final (ids, method) = strength[d % strength.length];
+      b.add(
+        d,
+        ids,
+        method == Method.liftHeavy ? SlotRole.main : SlotRole.secondary,
+        method,
+        sets: method == Method.liftHeavy ? 4 : 3,
+        stress: method == Method.liftHeavy
+            ? DayStress.heavy
+            : DayStress.medium,
+      );
+    }
     final (format, moves) = _wods[order[d % order.length]];
+    final room = (minutes - (minutes >= 40 ? 25 : 6)) * 60;
+    final fitted = _fitWod(format, room);
     for (final m in moves) {
       b.add(
         d,
@@ -968,10 +978,10 @@ void _buildConditioning(_Builder b) {
         SlotRole.conditioning,
         Method.wod,
         sets: 1,
-        group: format,
+        group: fitted,
       );
     }
-    if (d.isEven) {
+    if (d.isEven && minutes >= 30) {
       b.add(
         d,
         GymPicks.core,
@@ -981,6 +991,39 @@ void _buildConditioning(_Builder b) {
         rotate: true,
       );
     }
+  }
+}
+
+/// Format de pièce [format] ramené à [seconds] au plus (durée, limite de
+/// temps ou nombre de tours), 4 minutes au moins.
+String _fitWod(String format, int seconds) {
+  final parts = format.split(':');
+  final room = seconds < 240 ? 240 : seconds;
+  int scaled(int v) {
+    final t = v > room ? (room ~/ 60) * 60 : v;
+    return t < 240 ? 240 : t;
+  }
+
+  switch (parts.first) {
+    case 'amrap' || 'chipper':
+      return '${parts[0]}:${scaled(int.parse(parts[1]))}';
+    case 'emom':
+      return '${parts[0]}:${scaled(int.parse(parts[1]))}:${parts[2]}';
+    case 'rft':
+      final limit = int.parse(parts[2]);
+      final rounds = int.parse(parts[1]);
+      final t = scaled(limit);
+      final r = (rounds * t / limit).floor();
+      return 'rft:${r < 2 ? 2 : r}:$t';
+    case 'intervals':
+      final rounds = int.parse(parts[1]);
+      final each = int.parse(parts[2]);
+      // Un intervalle d'effort, un de récupération.
+      final most = room ~/ (2 * each);
+      return 'intervals:${most < rounds ? (most < 3 ? 3 : most) : rounds}:'
+          '$each';
+    default:
+      return format;
   }
 }
 

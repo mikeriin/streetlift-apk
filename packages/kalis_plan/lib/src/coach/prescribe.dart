@@ -3738,8 +3738,20 @@ final class Prescriber {
         s.method == Method.runLong &&
         ws.testWeek &&
         role != _DayRole.event) {
-      final last = ws.eventWeek || ws.intent == WeekIntent.test;
-      final meters = last ? goal.$1 : goal.$1 / 2;
+      // (Test de mi-parcours sur la moitié de la distance ; la distance
+      // entière seulement à l'échéance ou au test final de la saison ; et
+      // jamais plus que ce que le créneau du jour permet de courir — panel
+      // et banc CP2, partie 1 : 10 km de test en semaine 6 pour une
+      // débutante qui court 35 minutes, dans un créneau d'une heure.)
+      final last =
+          ws.eventWeek ||
+          (ws.intent == WeekIntent.test && _shape.finalBlock);
+      var meters = last ? goal.$1 : goal.$1 / 2;
+      final fits =
+          (a.days[day].minutes - 8.0) * 60 * coachRunMetersPerSecond;
+      if (!ws.eventWeek && fits > 0 && meters > fits) {
+        meters = (fits / 500).floorToDouble() * 500;
+      }
       x
         ..kind = SetKind.test
         ..sets = 1
@@ -3776,6 +3788,11 @@ final class Prescriber {
       }
       if (reps < 4) {
         reps = 4;
+      }
+      // Affûtage : trois fractions, l'intensité reste et le volume baisse
+      // de 40 à 60 % (R6-P20 ; Bosquet et al. 2007).
+      if (ws.intent == WeekIntent.taper) {
+        reps = 3;
       }
       if (role == _DayRole.primerFar) {
         // Semaine de l'épreuve : trois fractions, pour garder l'allure
@@ -3854,7 +3871,7 @@ final class Prescriber {
         ? 20.0
         : warm
         ? 12.0
-        : (long ? 45.0 : 30.0) * (1 + 0.08 * (stage > 4 ? 4 : stage));
+        : _runBase(long) * (1 + 0.08 * (stage > 4 ? 4 : stage));
     if (!warm) {
       minutes *= easy ? 0.7 : 1;
       if (role != _DayRole.normal) {
@@ -3896,6 +3913,20 @@ final class Prescriber {
   /// 60 % (R6-P20 : volume −40 à 60 %) ; les sorties faciles valent 60 à
   /// 70 % de la sortie longue, 30 minutes au moins pour le débutant
   /// (R6-P17). Plafond : le temps du jour moins l'échauffement.
+  /// Durée de départ d'une course facile (30 min) ou d'une sortie longue
+  /// (45 min) ; hors du chemin street, jamais au-delà de la plus longue
+  /// course connue (+25 % à partir de l'intermédiaire ; R6-P16, garde-fou
+  /// de la sortie longue — CP2, partie 1).
+  double _runBase(bool long) {
+    final base = long ? 45.0 : 30.0;
+    final known = a.knownRunMinutes;
+    if (isStreetStyle(skeleton.style) || known == null) {
+      return base;
+    }
+    final cap = known * (a.level >= 1 ? 1.25 : 1.0) * (long ? 1.0 : 0.7);
+    return cap < base ? (cap < 10 ? 10 : cap) : base;
+  }
+
   int? _enduranceMinutes(SlotSpec s, int day, WeekSpec ws, _DayRole role) {
     if (skeleton.style != CoachStyle.endurance ||
         role != _DayRole.normal ||
@@ -3927,8 +3958,10 @@ final class Prescriber {
       if (long > cap) {
         long = cap;
       }
-      if (long < 15) {
-        long = 15;
+      // (Plancher de 15 min, jamais au-delà du créneau.)
+      final low = cap < 15 ? (cap < 5 ? 5.0 : cap) : 15.0;
+      if (long < low) {
+        long = low;
       }
       return long.floor();
     }
@@ -3939,8 +3972,9 @@ final class Prescriber {
     if (easy > cap) {
       easy = cap;
     }
-    if (easy < 15) {
-      easy = 15;
+    final low = cap < 15 ? (cap < 5 ? 5.0 : cap) : 15.0;
+    if (easy < low) {
+      easy = low;
     }
     return easy.floor();
   }
@@ -4433,7 +4467,8 @@ final class Prescriber {
     // (Un rameur ou une course dans une pièce de conditionnement suit le
     // format de la pièce, pas l'allure d'endurance.)
     if ((unit == MeasureUnit.distance || unit == MeasureUnit.calories) &&
-        s.method != Method.wod) {
+        s.method != Method.wod &&
+        s.method != Method.warmupPrep) {
       return _run(s, day, ws, role);
     }
     // Épreuve de répétitions, phase de réalisation : la première séance de
