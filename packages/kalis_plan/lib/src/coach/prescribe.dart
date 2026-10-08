@@ -516,6 +516,13 @@ const double coachDeloadShare = 0.65;
 /// surmenage).
 const double coachVolumeRise = 0.15;
 
+/// Hausse de volume d'une semaine à l'autre dans un bloc de reprise après
+/// une douleur qui dure (répétitions au poids du corps, tonnage lesté,
+/// séries dures) : 10 % au plus (C9.8 ; Soligard et al. 2016, consensus du
+/// CIO sur la charge ; Ardern et al. 2016, retour au sport par étapes ;
+/// valeur exacte : choix raisonné).
+const double coachRepriseRise = 0.10;
+
 /// Répétitions écrites la première semaine du premier bloc pour un
 /// mouvement au poids du corps, en multiple du maximum de répétitions :
 /// 4 au plus (choix raisonné : le volume habituel de l'athlète n'est pas
@@ -4731,7 +4738,9 @@ final class Prescriber {
           !coachPainProvokes(x.e, BodyZone.wristHand)) {
         return;
       }
-      final half = _round(x.sets * coachWristSpareShare);
+      // (Arrondi vers le bas : 3 séries → 1, jamais 2 sur 3 — relecture
+      // indépendante du code de 0.2.3.)
+      final half = (x.sets * coachWristSpareShare).floor();
       x.sets = half < 1 ? 1 : half;
       if (x.minSets > x.sets) {
         x.minSets = x.sets;
@@ -5104,6 +5113,7 @@ final class Prescriber {
               when != null &&
               (b.source == BenchmarkSource.guidedTest ||
                   b.source == BenchmarkSource.competition) &&
+              when.daysUntil(a.start) >= 0 &&
               when.daysUntil(a.start) <= 42) {
             recent = true;
           }
@@ -5623,7 +5633,12 @@ final class Prescriber {
     // volume au plein volume par hausses de 20 % au plus ; ensuite la
     // montée lente reprend.)
     final regaining = blockIndex == 0 && a.gapWeeks >= 10 && index <= 4;
-    final rise = _slow && !regaining ? coachVolumeRise / 2 : coachVolumeRise;
+    var rise = _slow && !regaining ? coachVolumeRise / 2 : coachVolumeRise;
+    // (Bloc de reprise après une douleur : +10 % au plus, C9.8 ; relecture
+    // indépendante du code de 0.2.3.)
+    if (_shape.reprise && rise > coachRepriseRise) {
+      rise = coachRepriseRise;
+    }
     final tolerance = _slow && !regaining ? 1.0 : 2.0;
     for (final g in MuscleGroup.values) {
       if (!g.major) {
@@ -5839,7 +5854,9 @@ final class Prescriber {
     }.toList()..sort();
     for (final root in roots) {
       var reference = 0.0;
-      for (var k = index - 3; k < index; k++) {
+      // (Bloc de reprise : la semaine d'avant fait foi, pas la plus haute
+      // des trois — relecture indépendante du code de 0.2.3.)
+      for (var k = _shape.reprise ? index - 1 : index - 3; k < index; k++) {
         if (k >= 0) {
           final v = _history[k].reps[root] ?? 0;
           if (v > reference) {
@@ -5860,7 +5877,8 @@ final class Prescriber {
           continue;
         }
         // Bloc de reprise après une douleur : +10 % au plus (C9.8).
-        limit = reference * (1 + (_shape.reprise ? 0.1 : coachVolumeRise));
+        limit =
+            reference * (1 + (_shape.reprise ? coachRepriseRise : coachVolumeRise));
       }
       var guard = 0;
       while (sumOf(root) > limit + 1e-9 && guard < 80) {
@@ -6184,9 +6202,12 @@ final class Prescriber {
       }
     }
     // (Coude : gêne actuelle, ou antécédent de moins de douze mois.)
-    final elbowLimit = a.limitOn(Joint.elbow);
-    final elbow =
-        elbowLimit != null && (elbowLimit.recent || elbowLimit.discomfort >= 2);
+    // (Toutes les limites du coude, pas seulement la plus gênante : un
+    // antécédent récent à 0/10 ne doit pas être masqué par une gêne
+    // ancienne à 1/10 — relecture indépendante du code de 0.2.3.)
+    final elbow = a.limits.any(
+      (l) => l.joint == Joint.elbow && (l.recent || l.discomfort >= 2),
+    );
     double factorOf(int beforeReps, int reps, {required bool restart}) {
       var delta = beforeReps - reps;
       if (!restart && !peaking && delta > 2) {
@@ -6287,6 +6308,22 @@ final class Prescriber {
           if (most > 0 && (allowed == null || most + step < allowed)) {
             allowed = most + step;
           }
+          // Première semaine du programme, sans charge d'avant : 67,5 % du
+          // 1RM au plus, la charge de départ de la reprise graduée (R5-P20 ;
+          // relecture indépendante du code de 0.2.3). (Les blocs suivants
+          // partent du point de fin de bloc ; un mouvement de retour après
+          // un arrêt suit la reprise graduée, `returnShareOf`.)
+          final oneRm = a.totalOneRm(x.e.id);
+          if (most <= 0 &&
+              blockIndex == 0 &&
+              _history.isEmpty &&
+              oneRm != null &&
+              oneRm > 0) {
+            final start = oneRm * 0.675;
+            if (allowed == null || start < allowed) {
+              allowed = start;
+            }
+          }
         }
         if (allowed != null &&
             x.kind != SetKind.test &&
@@ -6352,11 +6389,29 @@ final class Prescriber {
       return t;
     }
 
+    // Référence du tonnage : en bloc de reprise, la semaine d'avant (même
+    // une introduction : +10 % au plus, C9.8) ; sinon la dernière semaine
+    // de charge des trois d'avant qui n'est ni allégée ni une introduction
+    // (une introduction est un creux voulu : la borne part de la semaine de
+    // charge d'avant elle, jamais d'aucune — relecture indépendante du code
+    // de 0.2.3).
+    _WeekTrace? tonnageRef;
+    if (_shape.reprise) {
+      tonnageRef = last;
+    } else {
+      for (var k = _history.length - 1; k >= _history.length - 3 && k >= 0; k--) {
+        if (!_history[k].light && !_history[k].restart) {
+          tonnageRef = _history[k];
+          break;
+        }
+      }
+    }
     for (final entry in drafts.entries) {
-      final before = reference?.tonnage[entry.key];
+      final before = tonnageRef?.tonnage[entry.key];
       var now = tonnageOf(entry.value);
-      if (before != null && before > 0 && !(reference?.restart ?? false)) {
-        final limit = before * (1 + coachVolumeRise);
+      if (before != null && before > 0) {
+        final limit =
+            before * (1 + (_shape.reprise ? coachRepriseRise : coachVolumeRise));
         // Séries retirées d'abord aux emplacements les plus fournis, jamais
         // sous leur minimum ni dans un groupe enchaîné.
         var guard = 0;
