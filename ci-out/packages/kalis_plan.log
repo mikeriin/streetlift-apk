@@ -1,0 +1,873 @@
+== kalis_plan
+Resolving dependencies...
+Downloading packages...
++ _fe_analyzer_shared 109.0.0
++ analyzer 14.5.0
++ args 2.7.0
++ async 2.13.1
++ boolean_selector 2.1.2
++ cli_config 0.2.0
++ collection 1.19.1
++ convert 3.1.2
++ coverage 1.15.1
++ crypto 3.0.7
++ file 7.0.1
++ frontend_server_client 4.1.0
++ glob 2.2.0
++ http_multi_server 3.2.2
++ http_parser 4.1.2
++ io 1.1.0
++ kalis_core 0.4.2 from path ../kalis_core
++ lints 4.0.0 (6.1.0 available)
++ logging 1.3.0
++ matcher 0.12.20
++ meta 1.19.0
++ mime 2.1.0
++ node_preamble 2.0.2
++ package_config 3.0.0
++ path 1.9.1
++ pool 1.5.3
++ pub_semver 2.2.1
++ shelf 1.4.2
++ shelf_packages_handler 3.0.2
++ shelf_static 1.1.3
++ shelf_web_socket 3.0.0
++ source_map_stack_trace 2.1.2
++ source_maps 0.10.14
++ source_span 1.10.2
++ stack_trace 1.12.2
++ stream_channel 2.1.4
++ string_scanner 1.4.1
++ term_glyph 1.2.2
++ test 1.33.0
++ test_api 0.7.15
++ test_core 0.6.21
++ typed_data 1.4.0
++ vm_service 15.3.0
++ watcher 1.2.1
++ web 1.1.1
++ web_socket 1.0.1
++ web_socket_channel 3.0.3
++ webkit_inspection_protocol 1.2.1
++ yaml 3.1.4
+Changed 49 dependencies!
+1 package has newer versions incompatible with dependency constraints.
+Try `dart pub outdated` for more information.
+Changed lib/src/coach/general.dart
+Changed lib/src/coach/prescribe.dart
+Changed lib/src/coach/skeleton.dart
+Changed test/coach_properties.dart
+Changed test/coach_test.dart
+Changed test/zz_debug_general_test.dart
+Formatted 68 files (6 changed) in 0.44 seconds.
+formatage : échec
+Analyzing kalis_plan...
+No issues found!
+00:00 +0: loading test/properties_2_test.dart
+00:00 +0: test/zz_debug_general_test.dart: diagnostic des autres disciplines
+DIAG seed 1210 : musculation cardio 40 exp advanced gap true minutes 20 emph null intent true
+DIAG  s0 j0 10 min
+DIAG    mo-cars-epaule warmup 1x8-10 snull-null dnull r30   null 
+DIAG    mu-back-squat-barre-haute work 2x3-3 snull-null dnull r240   null calibrate+top_set_backoff+ramp_warmup
+DIAG  s1 j0 10 min
+DIAG    mo-cars-epaule warmup 1x8-10 snull-null dnull r30   null 
+DIAG    mu-back-squat-barre-haute work 2x3-3 snull-null dnull r240   null calibrate+top_set_backoff+ramp_warmup
+DIAG  s4 j0 16 min
+DIAG    sl-dips-leste test 3x1-1 snull-null dnull r360   {basis: percent_one_rm, value: 0.91, valueHigh: 1.0} attempts_plan+event_day
+DIAG seed 2282 : crossfit  exp beginner gap true minutes 60/60/40/120/40/75/30 emph null intent true
+DIAG  s0 j0 48 min
+DIAG    mo-cars-hanche warmup 1x8-10 snull-null dnull r30   null 
+DIAG    sw-pompe-inclinee work 2x6-8 snull-null dnull r120   null cue
+DIAG    mu-air-squat work 2x8-10 snull-null dnull r120   null 
+DIAG    ca-marche-rapide work 1xnull-null s1800-1800 dnull r0   null easy_pace
+DIAG  s0 j1 11 min
+DIAG    mo-cars-hanche warmup 1x8-10 snull-null dnull r30   null 
+DIAG    sw-traction-pronation work 3x6-6 snull-null dnull r0  d1.rft:4:900 null wod_pace
+DIAG  s0 j2 40 min
+DIAG    mo-cars-hanche warmup 1x8-10 snull-null dnull r30   null 
+DIAG    sw-pompe-inclinee work 1x6-8 snull-null dnull r120   null cue
+DIAG    ca-marche-rapide work 1xnull-null s1800-1800 dnull r0   null easy_pace
+DIAG  s0 j3 48 min
+DIAG    mo-cars-hanche warmup 1x8-10 snull-null dnull r30   null 
+DIAG    sw-pompe-inclinee work 2x6-8 snull-null dnull r120   null cue
+DIAG    mu-air-squat work 2x8-10 snull-null dnull r120   null 
+DIAG    ca-marche-rapide work 1xnull-null s1800-1800 dnull r0   null easy_pace
+DIAG  s0 j4 40 min
+DIAG    mo-cars-hanche warmup 1x8-10 snull-null dnull r30   null 
+DIAG    sw-pompe-inclinee work 1x6-8 snull-null dnull r120   null cue
+DIAG    ca-marche-rapide work 1xnull-null s1800-1800 dnull r0   null easy_pace
+DIAG  s0 j5 48 min
+DIAG    mo-cars-hanche warmup 1x8-10 snull-null dnull r30   null 
+DIAG    sw-pompe-inclinee work 2x6-8 snull-null dnull r120   null cue
+DIAG    mu-air-squat work 2x8-10 snull-null dnull r120   null 
+DIAG    ca-marche-rapide work 1xnull-null s1800-1800 dnull r0   null easy_pace
+DIAG  s0 j6 8 min
+DIAG    mo-cars-hanche warmup 1x8-10 snull-null dnull r30   null 
+DIAG    sw-traction-pronation work 3x6-6 snull-null dnull r0  d6.rft:4:900 null wod_pace
+DIAG  s1 j0 48 min
+DIAG    mo-cars-hanche warmup 1x8-10 snull-null dnull r30   null 
+DIAG    sw-pompe-inclinee work 2x6-8 snull-null dnull r120   null cue
+DIAG    mu-air-squat work 2x8-10 snull-null dnull r120   null 
+DIAG    ca-marche-rapide work 1xnull-null s1800-1800 dnull r0   null easy_pace
+DIAG  s1 j1 12 min
+DIAG    mo-cars-hanche warmup 1x8-10 snull-null dnull r30   null 
+DIAG    sw-traction-pronation work 4x6-6 snull-null dnull r0  d1.rft:4:900 null wod_pace
+DIAG  s1 j2 40 min
+DIAG    mo-cars-hanche warmup 1x8-10 snull-null dnull r30   null 
+DIAG    sw-pompe-inclinee work 1x6-8 snull-null dnull r120   null cue
+DIAG    ca-marche-rapide work 1xnull-null s1800-1800 dnull r0   null easy_pace
+DIAG  s1 j3 48 min
+DIAG    mo-cars-hanche warmup 1x8-10 snull-null dnull r30   null 
+DIAG    sw-pompe-inclinee work 2x6-8 snull-null dnull r120   null cue
+DIAG    mu-air-squat work 2x8-10 snull-null dnull r120   null 
+DIAG    ca-marche-rapide work 1xnull-null s1800-1800 dnull r0   null easy_pace
+DIAG  s1 j4 40 min
+DIAG    mo-cars-hanche warmup 1x8-10 snull-null dnull r30   null 
+DIAG    sw-pompe-inclinee work 1x6-8 snull-null dnull r120   null cue
+DIAG    ca-marche-rapide work 1xnull-null s1800-1800 dnull r0   null easy_pace
+DIAG  s1 j5 48 min
+DIAG    mo-cars-hanche warmup 1x8-10 snull-null dnull r30   null 
+DIAG    sw-pompe-inclinee work 2x6-8 snull-null dnull r120   null cue
+DIAG    mu-air-squat work 2x8-10 snull-null dnull r120   null 
+DIAG    ca-marche-rapide work 1xnull-null s1800-1800 dnull r0   null easy_pace
+DIAG  s1 j6 8 min
+DIAG    mo-cars-hanche warmup 1x8-10 snull-null dnull r30   null 
+DIAG    sw-traction-pronation work 4x6-6 snull-null dnull r0  d6.rft:4:900 null wod_pace
+DIAG  s5 j0 42 min
+DIAG    mo-cars-hanche warmup 1x8-10 snull-null dnull r30   null 
+DIAG    sw-pompe-inclinee work 2x6-8 snull-null dnull r120   null cue
+DIAG    mu-air-squat work 1x8-10 snull-null dnull r120   null 
+DIAG    ca-marche-rapide work 1xnull-null s1620-1620 dnull r0   null easy_pace
+DIAG  s5 j1 11 min
+DIAG    mo-cars-hanche warmup 1x8-10 snull-null dnull r30   null 
+DIAG    sw-traction-pronation work 3x4-4 snull-null dnull r0  d1.rft:4:900 null wod_pace+easy_before_test
+DIAG  s5 j2 40 min
+DIAG    mo-cars-hanche warmup 1x8-10 snull-null dnull r30   null 
+DIAG    sw-pompe-inclinee work 1x5-5 snull-null dnull r120   null easy_before_test+cue
+DIAG    mu-air-squat work 2x6-6 snull-null dnull r120   null easy_before_test
+DIAG    ca-marche-rapide work 1xnull-null s1620-1620 dnull r0   null easy_pace
+DIAG  s5 j3 43 min
+DIAG    mo-cars-hanche warmup 1x8-10 snull-null dnull r30   null 
+DIAG    sw-pompe-inclinee test 1x8-15 snull-null dnull r240   null 
+DIAG    mu-air-squat work 2x8-10 snull-null dnull r120   null 
+DIAG    ca-marche-rapide work 1xnull-null s1620-1620 dnull r0   null easy_pace
+DIAG  s5 j4 38 min
+DIAG    mo-cars-hanche warmup 1x8-10 snull-null dnull r30   null 
+DIAG    sw-pompe-inclinee work 1x6-8 snull-null dnull r120   null cue
+DIAG    mu-air-squat work 1x8-10 snull-null dnull r120   null 
+DIAG    ca-marche-rapide work 1xnull-null s1620-1620 dnull r0   null easy_pace
+DIAG  s5 j5 45 min
+DIAG    mo-cars-hanche warmup 1x8-10 snull-null dnull r30   null 
+DIAG    sw-pompe-inclinee work 2x6-8 snull-null dnull r120   null cue
+DIAG    mu-air-squat work 2x8-10 snull-null dnull r120   null 
+DIAG    ca-marche-rapide work 1xnull-null s1620-1620 dnull r0   null easy_pace
+DIAG  s5 j6 8 min
+DIAG    mo-cars-hanche warmup 1x8-10 snull-null dnull r30   null 
+DIAG    sw-traction-pronation work 3x6-6 snull-null dnull r0  d6.rft:4:900 null wod_pace
+DIAG seed 2519 : musculation  exp beginner gap true minutes 60 emph null intent true
+DIAG  s0 j0 33 min
+DIAG    mo-cars-epaule warmup 1x8-10 snull-null dnull r30   null 
+DIAG    mu-presse-cuisses-45 work 2x8-10 snull-null dnull r105   null 
+DIAG    mu-presse-pectorale-convergente work 2x8-10 snull-null dnull r105   null 
+DIAG    mu-tirage-vertical-prise-neutre work 2x8-10 snull-null dnull r105   null 
+DIAG    mu-souleve-de-terre-roumain-barre work 2x8-10 snull-null dnull r105   {basis: percent_one_rm, value: 1.333} role_posterior
+DIAG    mu-elevation-laterale-poulie-unilaterale work 2x10-15 snull-null dnull r75   null 
+DIAG    mu-dead-bug work 2x8-12 snull-null dnull r60   null role_core
+DIAG  s1 j0 33 min
+DIAG    mo-cars-epaule warmup 1x8-10 snull-null dnull r30   null 
+DIAG    mu-presse-cuisses-45 work 2x8-10 snull-null dnull r105   null 
+DIAG    mu-presse-pectorale-convergente work 2x8-10 snull-null dnull r105   null 
+DIAG    mu-tirage-vertical-prise-neutre work 2x8-10 snull-null dnull r105   null 
+DIAG    mu-souleve-de-terre-roumain-barre work 2x8-10 snull-null dnull r105   {basis: percent_one_rm, value: 1.333} role_posterior
+DIAG    mu-elevation-laterale-poulie-unilaterale work 2x10-15 snull-null dnull r75   null 
+DIAG    mu-dead-bug work 2x8-12 snull-null dnull r60   null role_core
+DIAG seed 7710 : crossfit streetlifting 30 exp elite gap true minutes 120/120/60/60/15/30/60 emph null intent true
+DIAG  s0 j0 33 min
+DIAG    mo-cars-hanche warmup 1x8-10 snull-null dnull r30   null 
+DIAG    mu-back-squat-barre-haute work 4x5-5 snull-null dnull r240   null calibrate+top_set_backoff+ramp_warmup
+DIAG    cf-thruster-halteres work 1x15-15 snull-null dnull r0  d0.amrap:720 null wod_pace
+DIAG    cf-toes-to-bar-kipping work 1x10-10 snull-null dnull r0  d0.amrap:720 null wod_pace
+DIAG    ca-rameur-intervalles-500m work 1xnull-null snull-null d250.0 r0  d0.amrap:720 null wod_pace
+DIAG    mu-dead-bug work 2x8-12 snull-null dnull r60   null role_core
+DIAG  s0 j1 30 min
+DIAG    mo-cars-hanche warmup 1x8-10 snull-null dnull r30   null 
+DIAG    mu-power-clean work 2x3-3 snull-null dnull r120   null calibrate+speed_work
+DIAG    ca-rameur-intervalles-500m work 3xnull-null snull-null d500.0 r0  d1.rft:4:900 null wod_pace
+DIAG    cf-box-step-over work 3x10-10 snull-null dnull r0  d1.rft:4:900 null wod_pace
+DIAG    sw-traction-pronation work 3x10-10 snull-null dnull r0  d1.rft:4:900 null wod_pace
+DIAG  s0 j2 24 min
+DIAG    mo-cars-hanche warmup 1x8-10 snull-null dnull r30   null 
+DIAG    mu-souleve-de-terre-conventionnel work 3x6-6 snull-null dnull r180   null calibrate
+DIAG    mu-swing-kettlebell-russe work 1x12-12 snull-null dnull r0  d2.emom:600:60 null wod_pace
+DIAG    cf-burpee work 1x8-8 snull-null dnull r0  d2.emom:600:60 null wod_pace
+DIAG    mu-dead-bug work 2x8-12 snull-null dnull r60   null role_core
+DIAG  s0 j3 34 min
+DIAG    mo-cars-hanche warmup 1x8-10 snull-null dnull r30   null 
+DIAG    mu-push-press work 3x6-6 snull-null dnull r180   null calibrate
+DIAG    ca-rameur-intervalles-500m work 1xnull-null snull-null d1000.0 r0  d3.chipper:1500 null wod_pace
+DIAG    cf-thruster-halteres work 1x30-30 snull-null dnull r0  d3.chipper:1500 null wod_pace
+DIAG    mu-swing-kettlebell-russe work 1x30-30 snull-null dnull r0  d3.chipper:1500 null wod_pace
+DIAG    cf-box-step-over work 1x20-20 snull-null dnull r0  d3.chipper:1500 null wod_pace
+DIAG    cf-burpee work 1x20-20 snull-null dnull r0  d3.chipper:1500 null wod_pace
+DIAG  s0 j4 8 min
+DIAG    mo-cars-hanche warmup 1x8-10 snull-null dnull r30   null 
+DIAG    ca-rameur-intervalles-500m work 3xnull-null snull-null d250.0 r0  d4.intervals:4:60 null wod_pace
+DIAG  s0 j5 7 min
+DIAG    mo-cars-hanche warmup 1x8-10 snull-null dnull r30   null 
+DIAG    cf-thruster-halteres work 1x15-15 snull-null dnull r0  d5.amrap:720 null wod_pace
+DIAG    cf-toes-to-bar-kipping work 1x10-10 snull-null dnull r0  d5.amrap:720 null wod_pace
+DIAG    ca-rameur-intervalles-500m work 1xnull-null snull-null d250.0 r0  d5.amrap:720 null wod_pace
+DIAG  s0 j6 34 min
+DIAG    mo-cars-hanche warmup 1x8-10 snull-null dnull r30   null 
+DIAG    mu-power-clean work 2x3-3 snull-null dnull r120   null calibrate+speed_work
+DIAG    ca-rameur-intervalles-500m work 3xnull-null snull-null d500.0 r0  d6.rft:4:900 null wod_pace
+DIAG    cf-box-step-over work 3x10-10 snull-null dnull r0  d6.rft:4:900 null wod_pace
+DIAG    sw-traction-pronation work 3x10-10 snull-null dnull r0  d6.rft:4:900 null wod_pace
+DIAG    mu-dead-bug work 2x8-12 snull-null dnull r60   null role_core
+DIAG  s1 j0 33 min
+DIAG    mo-cars-hanche warmup 1x8-10 snull-null dnull r30   null 
+DIAG    mu-back-squat-barre-haute work 4x5-5 snull-null dnull r240   null calibrate+top_set_backoff+ramp_warmup
+DIAG    cf-thruster-halteres work 1x15-15 snull-null dnull r0  d0.amrap:720 null wod_pace
+DIAG    cf-toes-to-bar-kipping work 1x10-10 snull-null dnull r0  d0.amrap:720 null wod_pace
+DIAG    ca-rameur-intervalles-500m work 1xnull-null snull-null d250.0 r0  d0.amrap:720 null wod_pace
+DIAG    mu-dead-bug work 2x8-12 snull-null dnull r60   null role_core
+DIAG  s1 j1 37 min
+DIAG    mo-cars-hanche warmup 1x8-10 snull-null dnull r30   null 
+DIAG    mu-power-clean work 3x3-3 snull-null dnull r120   null calibrate+speed_work
+DIAG    ca-rameur-intervalles-500m work 4xnull-null snull-null d500.0 r0  d1.rft:4:900 null wod_pace
+DIAG    cf-box-step-over work 4x10-10 snull-null dnull r0  d1.rft:4:900 null wod_pace
+DIAG    sw-traction-pronation work 4x10-10 snull-null dnull r0  d1.rft:4:900 null wod_pace
+DIAG  s1 j2 24 min
+DIAG    mo-cars-hanche warmup 1x8-10 snull-null dnull r30   null 
+DIAG    mu-souleve-de-terre-conventionnel work 3x5-5 snull-null dnull r180   null calibrate
+DIAG    mu-swing-kettlebell-russe work 1x12-12 snull-null dnull r0  d2.emom:600:60 null wod_pace
+DIAG    cf-burpee work 1x8-8 snull-null dnull r0  d2.emom:600:60 null wod_pace
+DIAG    mu-dead-bug work 2x8-12 snull-null dnull r60   null role_core
+DIAG  s1 j3 34 min
+DIAG    mo-cars-hanche warmup 1x8-10 snull-null dnull r30   null 
+DIAG    mu-push-press work 3x5-5 snull-null dnull r180   null calibrate
+DIAG    ca-rameur-intervalles-500m work 1xnull-null snull-null d1000.0 r0  d3.chipper:1500 null wod_pace
+DIAG    cf-thruster-halteres work 1x30-30 snull-null dnull r0  d3.chipper:1500 null wod_pace
+DIAG    mu-swing-kettlebell-russe work 1x30-30 snull-null dnull r0  d3.chipper:1500 null wod_pace
+DIAG    cf-box-step-over work 1x20-20 snull-null dnull r0  d3.chipper:1500 null wod_pace
+DIAG    cf-burpee work 1x20-20 snull-null dnull r0  d3.chipper:1500 null wod_pace
+DIAG  s1 j4 9 min
+DIAG    mo-cars-hanche warmup 1x8-10 snull-null dnull r30   null 
+DIAG    ca-rameur-intervalles-500m work 4xnull-null snull-null d250.0 r0  d4.intervals:4:60 null wod_pace
+DIAG  s1 j5 7 min
+DIAG    mo-cars-hanche warmup 1x8-10 snull-null dnull r30   null 
+DIAG    cf-thruster-halteres work 1x15-15 snull-null dnull r0  d5.amrap:720 null wod_pace
+DIAG    cf-toes-to-bar-kipping work 1x10-10 snull-null dnull r0  d5.amrap:720 null wod_pace
+DIAG    ca-rameur-intervalles-500m work 1xnull-null snull-null d250.0 r0  d5.amrap:720 null wod_pace
+DIAG  s1 j6 41 min
+DIAG    mo-cars-hanche warmup 1x8-10 snull-null dnull r30   null 
+DIAG    mu-power-clean work 3x3-3 snull-null dnull r120   null calibrate+speed_work
+DIAG    ca-rameur-intervalles-500m work 4xnull-null snull-null d500.0 r0  d6.rft:4:900 null wod_pace
+DIAG    cf-box-step-over work 4x10-10 snull-null dnull r0  d6.rft:4:900 null wod_pace
+DIAG    sw-traction-pronation work 4x10-10 snull-null dnull r0  d6.rft:4:900 null wod_pace
+DIAG    mu-dead-bug work 2x8-12 snull-null dnull r60   null role_core
+DIAG  s3 j0 20 min
+DIAG    mo-cars-hanche warmup 1x8-10 snull-null dnull r30   null 
+DIAG    mu-back-squat-barre-haute test 1x5-5 snull-null dnull r240   null 
+DIAG    cf-thruster-halteres work 1x15-15 snull-null dnull r0  d0.amrap:720 null wod_pace
+DIAG    cf-toes-to-bar-kipping work 1x10-10 snull-null dnull r0  d0.amrap:720 null wod_pace
+DIAG    ca-rameur-intervalles-500m work 1xnull-null snull-null d250.0 r0  d0.amrap:720 null wod_pace
+DIAG    mu-dead-bug work 2x8-12 snull-null dnull r60   null role_core
+DIAG  s3 j1 27 min
+DIAG    mo-cars-hanche warmup 1x8-10 snull-null dnull r30   null 
+DIAG    mu-power-clean work 2x3-3 snull-null dnull r120   null calibrate+speed_work
+DIAG    ca-rameur-intervalles-500m work 3xnull-null snull-null d500.0 r0  d1.rft:4:900 null wod_pace
+DIAG    cf-box-step-over work 3x10-10 snull-null dnull r0  d1.rft:4:900 null wod_pace
+DIAG  s3 j2 19 min
+DIAG    mo-cars-hanche warmup 1x8-10 snull-null dnull r30   null 
+DIAG    mu-souleve-de-terre-conventionnel work 2x6-6 snull-null dnull r180   null calibrate
+DIAG    cf-burpee work 1x8-8 snull-null dnull r0  d2.emom:600:60 null wod_pace
+DIAG    mu-dead-bug work 2x8-12 snull-null dnull r60   null role_core
+DIAG  s3 j3 31 min
+DIAG    mo-cars-hanche warmup 1x8-10 snull-null dnull r30   null 
+DIAG    mu-push-press work 2x6-6 snull-null dnull r180   null calibrate
+DIAG    ca-rameur-intervalles-500m work 1xnull-null snull-null d1000.0 r0  d3.chipper:1500 null wod_pace
+DIAG    cf-thruster-halteres work 1x30-30 snull-null dnull r0  d3.chipper:1500 null wod_pace
+DIAG    mu-swing-kettlebell-russe work 1x30-30 snull-null dnull r0  d3.chipper:1500 null wod_pace
+DIAG    cf-box-step-over work 1x20-20 snull-null dnull r0  d3.chipper:1500 null wod_pace
+DIAG    cf-burpee work 1x20-20 snull-null dnull r0  d3.chipper:1500 null wod_pace
+DIAG  s3 j4 8 min
+DIAG    mo-cars-hanche warmup 1x8-10 snull-null dnull r30   null 
+DIAG    ca-rameur-intervalles-500m work 3xnull-null snull-null d250.0 r0  d4.intervals:4:60 null wod_pace
+DIAG  s3 j5 7 min
+DIAG    mo-cars-hanche warmup 1x8-10 snull-null dnull r30   null 
+DIAG    cf-thruster-halteres work 1x15-15 snull-null dnull r0  d5.amrap:720 null wod_pace
+DIAG    cf-toes-to-bar-kipping work 1x10-10 snull-null dnull r0  d5.amrap:720 null wod_pace
+DIAG    ca-rameur-intervalles-500m work 1xnull-null snull-null d250.0 r0  d5.amrap:720 null wod_pace
+DIAG  s3 j6 34 min
+DIAG    mo-cars-hanche warmup 1x8-10 snull-null dnull r30   null 
+DIAG    mu-power-clean work 2x3-3 snull-null dnull r120   null calibrate+speed_work
+DIAG    ca-rameur-intervalles-500m work 3xnull-null snull-null d500.0 r0  d6.rft:4:900 null wod_pace
+DIAG    cf-box-step-over work 3x10-10 snull-null dnull r0  d6.rft:4:900 null wod_pace
+DIAG    sw-traction-pronation work 3x10-10 snull-null dnull r0  d6.rft:4:900 null wod_pace
+DIAG    mu-dead-bug work 2x8-12 snull-null dnull r60   null role_core
+00:00 +1: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:01 +2: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:01 +3: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:01 +4: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:01 +5: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:01 +6: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:01 +7: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:01 +8: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:01 +9: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:01 +10: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:01 +11: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:01 +12: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:01 +13: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:01 +14: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:01 +15: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:01 +16: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:01 +17: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:01 +18: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:01 +19: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:05 +20: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:12 +21: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:14 +22: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:14 +23: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:15 +24: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:16 +25: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:16 +26: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:16 +27: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:16 +28: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:16 +29: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:16 +30: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:16 +31: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:16 +32: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:16 +33: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:16 +34: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:16 +35: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:16 +36: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:16 +37: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:16 +38: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:16 +39: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:17 +40: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:17 +41: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:17 +42: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:17 +43: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:17 +44: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:17 +45: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:17 +46: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:17 +47: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:17 +48: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:17 +49: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:17 +50: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:17 +51: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:17 +52: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:17 +53: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:17 +54: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:17 +55: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:17 +56: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:17 +57: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:17 +58: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:17 +59: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:17 +60: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:17 +61: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:17 +62: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:17 +63: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:17 +64: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:17 +65: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:17 +66: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:18 +67: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:18 +68: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:18 +69: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:18 +70: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:18 +71: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:18 +72: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:18 +73: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:18 +74: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:18 +75: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:18 +76: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2560 à 2719
+00:19 +77: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 0 à 159
+00:33 +78: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 0 à 159
+00:34 +79: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 2880 à 3039
+00:46 +80: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 160 à 319
+00:47 +81: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 3040 à 3199
+00:59 +82: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 320 à 479
+01:01 +83: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 3200 à 3359
+01:12 +84: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 480 à 639
+01:15 +85: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 3360 à 3519
+01:24 +86: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 640 à 799
+01:27 +87: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 3520 à 3679
+01:37 +88: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 800 à 959
+01:40 +89: test/properties_2_test.dart: propriétés, profils 2560 à 3839 profils 3680 à 3839
+01:50 +90: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 960 à 1119
+01:54 +91: test/coach_properties_4_test.dart: chemin street, profils 5120 à 6399 profils 5120 à 5279
+01:56 +92: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 1120 à 1279
+01:58 +93: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 1120 à 1279
+02:00 +94: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 1120 à 1279
+02:02 +95: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 1120 à 1279
+02:04 +96: test/properties_0_test.dart: propriétés, profils 0 à 1279 profils 1120 à 1279
+02:06 +97: test/coach_properties_4_test.dart: chemin street, profils 5120 à 6399 profils 5920 à 6079
+02:06 +98: test/coach_properties_4_test.dart: chemin street, profils 5120 à 6399 profils 6080 à 6239
+02:09 +99: test/coach_general_properties_6_test.dart: autres disciplines, profils 7680 à 8959 profils 7680 à 7839
+02:11 +100: test/coach_general_properties_6_test.dart: autres disciplines, profils 7680 à 8959 profils 7680 à 7839
+02:11 +101: test/coach_general_properties_6_test.dart: autres disciplines, profils 7680 à 8959 profils 7840 à 7999
+02:13 +102: test/smoke_test.dart: les 40 profils types : passe 1, revue, passe 2 sans violation
+02:15 +102 -1: test/smoke_test.dart: les 40 profils types : passe 1, revue, passe 2 sans violation
+02:15 +102 -1: test/coach_general_properties_6_test.dart: autres disciplines, profils 7680 à 8959 profils 8000 à 8159 [E]
+  Expected: empty
+    Actual: [
+              'profil 8054 — relecture : s5 : lats 3.0 séries pour 2.0 — sl-traction-lestee×3 (test) j0 test',
+              'profil 8054 — relecture (deux blocs) : s5 : lats 3.0 séries pour 2.0 — sl-traction-lestee×3 (test) j0 test',
+              'profil 8150 — relecture (deux blocs) : s8 : chest 2.5 séries pour 2.0 — cd-muscle-up-barre-strict×1 (test) j1 test, sw-traction-pronation×1 (test) j1 test, sw-dips-barres-paralleles×1 (test) j1 test'
+            ]
+  3 manquement(s)
+  
+  package:matcher                   expect
+  test/coach_properties.dart 675:9  coachPropertyShard.<fn>.<fn>
+  
+02:17 +103 -1: test/smoke_test.dart: les 40 profils types : passe 1, revue, passe 2 sans violation
+02:18 +104 -1: test/coach_general_properties_6_test.dart: autres disciplines, profils 7680 à 8959 profils 8320 à 8479
+02:19 +105 -1: test/coach_properties_0_test.dart: chemin street, profils 0 à 1279 profils 0 à 159
+02:21 +106 -1: test/coach_properties_0_test.dart: chemin street, profils 0 à 1279 profils 0 à 159
+02:23 +107 -1: test/coach_properties_0_test.dart: chemin street, profils 0 à 1279 profils 0 à 159
+02:23 +108 -1: test/coach_general_properties_6_test.dart: autres disciplines, profils 7680 à 8959 profils 8800 à 8959
+02:24 +108 -2: test/coach_properties_0_test.dart: chemin street, profils 0 à 1279 profils 160 à 319
+02:24 +108 -2: test/coach_general_properties_6_test.dart: autres disciplines, profils 7680 à 8959 profils 8800 à 8959 [E]
+  Expected: empty
+    Actual: [
+              'profil 8915 — relecture : s5 : chest 2.5 séries pour 2.0 — cd-muscle-up-barre-strict×1 (test) j3 test, sw-traction-pronation×1 (test) j3 test, sw-dips-barres-paralleles×1 (test) j3 test'
+            ]
+  1 manquement(s)
+  
+  package:matcher                   expect
+  test/coach_properties.dart 675:9  coachPropertyShard.<fn>.<fn>
+  
+02:26 +109 -2: test/engine_test.dart: déterminisme même requête, même JSON, quelle que soit l'instance
+02:28 +110 -2: test/engine_test.dart: déterminisme même requête, même JSON, quelle que soit l'instance
+02:31 +111 -2: test/engine_test.dart: déterminisme même requête, même JSON, quelle que soit l'instance
+02:33 +112 -2: test/engine_test.dart: déterminisme même requête, même JSON, quelle que soit l'instance
+02:35 +113 -2: test/engine_test.dart: déterminisme même requête, même JSON, quelle que soit l'instance
+02:37 +114 -2: test/engine_test.dart: déterminisme même requête, même JSON, quelle que soit l'instance
+02:39 +115 -2: test/engine_test.dart: déterminisme même requête, même JSON, quelle que soit l'instance
+02:40 +116 -2: test/coach_properties_6_test.dart: chemin street, profils 7680 à 8959 profils 7680 à 7839
+02:41 +117 -2: test/coach_properties_6_test.dart: chemin street, profils 7680 à 8959 profils 7680 à 7839
+02:42 +118 -2: test/coach_properties_6_test.dart: chemin street, profils 7680 à 8959 profils 7680 à 7839
+02:45 +119 -2: test/engine_test.dart: autre proposition note à moins de 3 %, sécurité tenue, contraintes dures
+02:47 +120 -2: test/coach_properties_6_test.dart: chemin street, profils 7680 à 8959 profils 7840 à 7999
+02:47 +121 -2: test/engine_test.dart: autre proposition au moins un tiers d'exercices différents quand le vivier le permet
+02:47 +122 -2: test/coach_properties_6_test.dart: chemin street, profils 7680 à 8959 profils 8000 à 8159
+02:47 +123 -2: test/coach_properties_6_test.dart: chemin street, profils 7680 à 8959 profils 8000 à 8159
+02:48 +124 -2: test/coach_properties_6_test.dart: chemin street, profils 7680 à 8959 profils 8000 à 8159
+02:48 +125 -2: test/coach_properties_6_test.dart: chemin street, profils 7680 à 8959 profils 8000 à 8159
+02:48 +126 -2: test/coach_properties_6_test.dart: chemin street, profils 7680 à 8959 profils 8000 à 8159
+02:48 +127 -2: test/coach_properties_6_test.dart: chemin street, profils 7680 à 8959 profils 8000 à 8159
+02:48 +128 -2: test/coach_properties_6_test.dart: chemin street, profils 7680 à 8959 profils 8000 à 8159
+02:49 +129 -2: test/engine_test.dart: ligne de commande dart run kalis_plan:plan rend le programme du moteur
+02:51 +130 -2: test/coach_properties_6_test.dart: chemin street, profils 7680 à 8959 profils 8160 à 8319
+02:52 +131 -2: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 7680 à 7839
+02:54 +132 -2: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 7680 à 7839
+02:56 +133 -2: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 7680 à 7839
+02:58 +134 -2: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 7680 à 7839
+03:00 +135 -2: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 7680 à 7839
+03:09 +136 -2: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 3840 à 3999
+03:17 +137 -2: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 7840 à 7999
+03:22 +138 -2: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 4000 à 4159
+03:30 +139 -2: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 8000 à 8159
+03:35 +140 -2: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 4160 à 4319
+03:43 +141 -2: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 8160 à 8319
+03:48 +142 -2: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 4320 à 4479
+03:55 +143 -2: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 8320 à 8479
+04:01 +144 -2: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 4480 à 4639
+04:08 +145 -2: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 8480 à 8639
+04:13 +146 -2: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 4640 à 4799
+04:21 +147 -2: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 8640 à 8799
+04:26 +148 -2: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 4800 à 4959
+04:33 +149 -2: test/properties_6_test.dart: propriétés, profils 7680 à 8959 profils 8800 à 8959
+04:39 +150 -2: test/properties_3_test.dart: propriétés, profils 3840 à 5119 profils 4960 à 5119
+04:46 +151 -2: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 1280 à 1439
+04:51 +152 -2: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 1280 à 1439
+04:58 +153 -2: test/admission_test.dart: 600 profils aléatoires : mode prudent et exercices réservés relus sans le vivier
+05:10 +154 -2: test/admission_test.dart: 600 profils aléatoires : mode prudent et exercices réservés relus sans le vivier
+05:19 +155 -2: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 1600 à 1759
+05:23 +156 -2: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 8960 à 9119
+05:36 +157 -2: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 8960 à 9119
+05:38 +158 -2: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 1920 à 2079
+05:49 +159 -2: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9120 à 9279
+05:50 +160 -2: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 2080 à 2239
+06:01 +161 -2: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9280 à 9439
+06:03 +162 -2: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 2240 à 2399
+06:14 +163 -2: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9440 à 9599
+06:17 +164 -2: test/properties_1_test.dart: propriétés, profils 1280 à 2559 profils 2400 à 2559
+06:26 +165 -2: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9600 à 9759
+06:30 +166 -2: test/coach_general_properties_2_test.dart: autres disciplines, profils 2560 à 3839 profils 2560 à 2719
+06:31 +166 -3: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9760 à 9919
+06:31 +166 -3: test/coach_general_properties_2_test.dart: autres disciplines, profils 2560 à 3839 profils 2560 à 2719 [E]
+  Expected: empty
+    Actual: [
+              'profil 2710 — relecture (deux blocs) : s9 : chest 3.0 séries pour 2.0 — sl-dips-leste×3 (test) j0 test',
+              'profil 2710 — relecture (deux blocs) : s9 : delt_anterior 3.0 séries pour 2.0 — sl-dips-leste×3 (test) j0 test',
+              'profil 2710 — relecture (deux blocs) : s9 : triceps 3.0 séries pour 2.0 — sl-dips-leste×3 (test) j0 test'
+            ]
+  3 manquement(s)
+  
+  package:matcher                   expect
+  test/coach_properties.dart 675:9  coachPropertyShard.<fn>.<fn>
+  
+06:34 +167 -3: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9760 à 9919
+06:36 +167 -4: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9760 à 9919
+06:36 +167 -4: test/coach_general_properties_2_test.dart: autres disciplines, profils 2560 à 3839 profils 2880 à 3039 [E]
+  Expected: empty
+    Actual: [
+              'profil 2942 — relecture (deux blocs) : s5 : chest 7.0 séries pour 6.0 — sw-traction-pronation×4 j1 build, mu-pallof-press-debout×2 j2 build, mu-pallof-press-debout×2 j4 build, sw-traction-pronation×4 j6 build, mu-pallof-press-debout×2 j6 build'
+            ]
+  1 manquement(s)
+  
+  package:matcher                   expect
+  test/coach_properties.dart 675:9  coachPropertyShard.<fn>.<fn>
+  
+06:37 +168 -4: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9760 à 9919
+06:39 +169 -4: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9760 à 9919
+06:41 +170 -4: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9760 à 9919
+06:42 +171 -4: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9760 à 9919
+06:43 +172 -4: test/coach_general_properties_2_test.dart: autres disciplines, profils 2560 à 3839 profils 3680 à 3839
+06:44 +173 -4: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9920 à 10079
+06:50 +174 -4: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9920 à 10079
+06:52 +175 -4: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9920 à 10079
+06:54 +176 -4: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9920 à 10079
+06:57 +177 -4: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 9920 à 10079
+06:57 +178 -4: test/coach_properties_7_test.dart: chemin street, profils 8960 à 10239 profils 9600 à 9759
+06:59 +179 -4: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 10080 à 10239
+07:01 +180 -4: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 10080 à 10239
+07:03 +181 -4: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 10080 à 10239
+07:05 +182 -4: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 10080 à 10239
+07:05 +183 -4: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 10080 à 10239
+07:05 +184 -4: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 10080 à 10239
+07:05 +185 -4: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 10080 à 10239
+07:05 +186 -4: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 10080 à 10239
+07:05 +187 -4: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 10080 à 10239
+07:05 +188 -4: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 10080 à 10239
+07:05 +189 -4: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 10080 à 10239
+07:05 +190 -4: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 10080 à 10239
+07:05 +191 -4: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 10080 à 10239
+07:05 +192 -4: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 10080 à 10239
+07:05 +193 -4: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 10080 à 10239
+07:05 +194 -4: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 10080 à 10239
+07:05 +195 -4: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 10080 à 10239
+07:05 +196 -4: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 10080 à 10239
+07:05 +197 -4: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 10080 à 10239
+07:10 +198 -4: test/properties_7_test.dart: propriétés, profils 8960 à 10239 profils 10080 à 10239
+07:11 +199 -4: test/coach_general_properties_7_test.dart: autres disciplines, profils 8960 à 10239 profils 9120 à 9279
+07:12 +200 -4: test/coach_general_properties_4_test.dart: autres disciplines, profils 5120 à 6399 profils 5120 à 5279
+07:15 +201 -4: test/coach_general_properties_4_test.dart: autres disciplines, profils 5120 à 6399 profils 5120 à 5279
+07:16 +202 -4: test/coach_general_properties_7_test.dart: autres disciplines, profils 8960 à 10239 profils 9440 à 9599
+07:17 +203 -4: test/coach_general_properties_4_test.dart: autres disciplines, profils 5120 à 6399 profils 5280 à 5439
+07:18 +204 -4: test/coach_general_properties_7_test.dart: autres disciplines, profils 8960 à 10239 profils 9600 à 9759
+07:19 +205 -4: test/coach_general_properties_4_test.dart: autres disciplines, profils 5120 à 6399 profils 5440 à 5599
+07:19 +205 -5: test/coach_general_properties_7_test.dart: autres disciplines, profils 8960 à 10239 profils 9760 à 9919
+07:19 +205 -5: test/coach_general_properties_4_test.dart: autres disciplines, profils 5120 à 6399 profils 5440 à 5599 [E]
+  Expected: empty
+    Actual: [
+              'profil 5472 — relecture : s3 : chest 2.5 séries pour 2.0 — cd-muscle-up-barre-strict×1 (test) j1 test, sw-traction-pronation×1 (test) j1 test, sw-dips-barres-paralleles×1 (test) j1 test'
+            ]
+  1 manquement(s)
+  
+  package:matcher                   expect
+  test/coach_properties.dart 675:9  coachPropertyShard.<fn>.<fn>
+  
+07:20 +206 -5: test/coach_general_properties_4_test.dart: autres disciplines, profils 5120 à 6399 profils 5600 à 5759
+07:22 +206 -6: test/coach_general_properties_7_test.dart: autres disciplines, profils 8960 à 10239 profils 9920 à 10079
+07:22 +206 -6: test/coach_general_properties_4_test.dart: autres disciplines, profils 5120 à 6399 profils 5600 à 5759 [E]
+  Expected: empty
+    Actual: [
+              'profil 5628 — relecture : s3 : chest 2.5 séries pour 2.0 — cd-muscle-up-barre-strict×1 (test) j0 test, sw-traction-pronation×1 (test) j0 test, sw-dips-barres-paralleles×1 (test) j0 test',
+              'profil 5629 — relecture : s1 : lats 21.0 séries (plafond 20.0)',
+              'profil 5629 — relecture : s2 : lats 21.0 séries (plafond 20.0)'
+            ]
+  3 manquement(s)
+  
+  package:matcher                   expect
+  test/coach_properties.dart 675:9  coachPropertyShard.<fn>.<fn>
+  
+07:22 +206 -7: test/coach_general_properties_4_test.dart: autres disciplines, profils 5120 à 6399 profils 5760 à 5919
+07:22 +206 -7: test/coach_general_properties_7_test.dart: autres disciplines, profils 8960 à 10239 profils 9920 à 10079 [E]
+  Expected: empty
+    Actual: ['profil 10056 — s0 : sortie de 30 min (borne 27)']
+  1 manquement(s)
+  
+  package:matcher                   expect
+  test/coach_properties.dart 675:9  coachPropertyShard.<fn>.<fn>
+  
+07:24 +207 -7: test/coach_general_properties_7_test.dart: autres disciplines, profils 8960 à 10239 profils 10080 à 10239
+07:25 +208 -7: test/coach_general_properties_4_test.dart: autres disciplines, profils 5120 à 6399 profils 5920 à 6079
+07:26 +208 -8: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5120 à 5279
+07:26 +208 -8: test/coach_general_properties_4_test.dart: autres disciplines, profils 5120 à 6399 profils 5920 à 6079 [E]
+  Expected: empty
+    Actual: [
+              'profil 5992 — relecture : s1 : glutes 3.0 séries pour 2.0 — sl-squat-competition×3 (test) j4 test',
+              'profil 5992 — relecture : s1 : quads 3.0 séries pour 2.0 — sl-squat-competition×3 (test) j4 test'
+            ]
+  2 manquement(s)
+  
+  package:matcher                   expect
+  test/coach_properties.dart 675:9  coachPropertyShard.<fn>.<fn>
+  
+07:28 +209 -8: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5120 à 5279
+07:29 +210 -8: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5120 à 5279
+07:35 +211 -8: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5120 à 5279
+07:38 +212 -8: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5120 à 5279
+07:40 +213 -8: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5120 à 5279
+07:42 +214 -8: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5120 à 5279
+07:44 +215 -8: test/coach_properties_2_test.dart: chemin street, profils 2560 à 3839 profils 3200 à 3359
+07:44 +216 -8: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5280 à 5439
+07:46 +217 -8: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5280 à 5439
+07:48 +218 -8: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5280 à 5439
+07:50 +219 -8: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5280 à 5439
+07:55 +219 -9: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5280 à 5439
+07:55 +219 -9: test/coach_general_properties_0_test.dart: autres disciplines, profils 0 à 1279 profils 0 à 159 [E]
+  Expected: empty
+    Actual: [
+              'profil 96 — relecture : s5 : glutes 3.0 séries pour 2.0 — sl-squat-competition×3 (test) j0 test',
+              'profil 96 — relecture : s5 : quads 3.0 séries pour 2.0 — sl-squat-competition×3 (test) j0 test'
+            ]
+  2 manquement(s)
+  
+  package:matcher                   expect
+  test/coach_properties.dart 675:9  coachPropertyShard.<fn>.<fn>
+  
+07:57 +220 -9: test/coach_general_properties_0_test.dart: autres disciplines, profils 0 à 1279 profils 160 à 319
+07:58 +221 -9: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5440 à 5599
+08:00 +222 -9: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5440 à 5599
+08:01 +222 -10: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5440 à 5599
+08:01 +222 -10: test/coach_general_properties_0_test.dart: autres disciplines, profils 0 à 1279 profils 480 à 639 [E]
+  Expected: empty
+    Actual: ['profil 504 — relecture : bloc 0 s4 j0 : 101 min pour 10']
+  1 manquement(s)
+  
+  package:matcher                   expect
+  test/coach_properties.dart 675:9  coachPropertyShard.<fn>.<fn>
+  
+08:03 +223 -10: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5440 à 5599
+08:05 +224 -10: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5440 à 5599
+08:06 +225 -10: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5440 à 5599
+08:08 +225 -11: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5440 à 5599
+08:08 +225 -11: test/coach_general_properties_0_test.dart: autres disciplines, profils 0 à 1279 profils 1120 à 1279 [E]
+  Expected: empty
+    Actual: [
+              'profil 1210 — relecture : s4 : chest 3.0 séries pour 2.0 — sl-dips-leste×3 (test) j0 test',
+              'profil 1210 — relecture : s4 : delt_anterior 3.0 séries pour 2.0 — sl-dips-leste×3 (test) j0 test',
+              'profil 1210 — relecture : s4 : triceps 3.0 séries pour 2.0 — sl-dips-leste×3 (test) j0 test',
+              'profil 1210 — relecture (deux blocs) : s4 : chest 3.0 séries pour 2.0 — sl-dips-leste×3 (test) j0 test',
+              'profil 1210 — relecture (deux blocs) : s4 : delt_anterior 3.0 séries pour 2.0 — sl-dips-leste×3 (test) j0 test',
+              'profil 1210 — relecture (deux blocs) : s4 : triceps 3.0 séries pour 2.0 — sl-dips-leste×3 (test) j0 test',
+              'profil 1221 — relecture : s5 : lats 3.0 séries pour 2.0 — sw-traction-pronation×3 j1 test',
+              'profil 1248 — relecture : s5 : chest 2.5 séries pour 2.0 — sl-traction-lestee×3 (test) j0 test, sl-dips-leste×1 (test) j0 test'
+            ]
+  8 manquement(s)
+  
+  package:matcher                   expect
+  test/coach_properties.dart 675:9  coachPropertyShard.<fn>.<fn>
+  
+08:08 +226 -11: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5440 à 5599
+08:08 +227 -11: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5440 à 5599
+08:08 +228 -11: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5440 à 5599
+08:10 +229 -11: test/resemblance_test.dart: profils types, graines 0 à 3 : ressemblance sous le seuil
+08:14 +230 -11: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5600 à 5759
+08:23 +231 -11: test/resemblance_test.dart: 600 profils aléatoires : ressemblance sous le seuil, aucun accessoire propre au propriétaire sur-représenté sans discipline street
+08:35 +232 -11: test/resemblance_test.dart: 600 profils aléatoires : ressemblance sous le seuil, aucun accessoire propre au propriétaire sur-représenté sans discipline street
+08:43 +233 -11: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5920 à 6079
+08:49 +234 -11: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 5920 à 6079
+08:50 +235 -11: test/coach_properties_1_test.dart: chemin street, profils 1280 à 2559 profils 1440 à 1599
+08:51 +236 -11: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 6080 à 6239
+08:53 +237 -11: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 6080 à 6239
+08:55 +238 -11: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 6080 à 6239
+08:57 +239 -11: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 6080 à 6239
+08:59 +240 -11: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 6080 à 6239
+09:01 +241 -11: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 6080 à 6239
+09:03 +242 -11: test/properties_4_test.dart: propriétés, profils 5120 à 6399 profils 6080 à 6239
+09:04 +243 -11: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6400 à 6559
+09:16 +244 -11: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6400 à 6559
+09:21 +244 -12: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6400 à 6559
+09:21 +244 -12: test/coach_general_properties_5_test.dart: autres disciplines, profils 6400 à 7679 profils 6400 à 6559 [E]
+  Expected: empty
+    Actual: [
+              'profil 6558 — relecture (deux blocs) : s8 : chest 2.5 séries pour 2.0 — cd-muscle-up-barre-strict×1 (test) j2 test, sw-traction-pronation×1 (test) j2 test, sw-dips-barres-paralleles×1 (test) j2 test'
+            ]
+  1 manquement(s)
+  
+  package:matcher                   expect
+  test/coach_properties.dart 675:9  coachPropertyShard.<fn>.<fn>
+  
+09:22 +245 -12: test/coach_general_properties_5_test.dart: autres disciplines, profils 6400 à 7679 profils 6560 à 6719
+09:24 +246 -12: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6560 à 6719
+09:26 +246 -13: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6560 à 6719
+09:26 +246 -13: test/coach_general_properties_5_test.dart: autres disciplines, profils 6400 à 7679 profils 6720 à 6879 [E]
+  Expected: empty
+    Actual: [
+              'profil 6879 — relecture : s3 : lats 3.0 séries pour 2.0 — sl-traction-lestee×3 (test) j0 test'
+            ]
+  1 manquement(s)
+  
+  package:matcher                   expect
+  test/coach_properties.dart 675:9  coachPropertyShard.<fn>.<fn>
+  
+09:27 +247 -13: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6560 à 6719
+09:29 +248 -13: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6560 à 6719
+09:31 +248 -14: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6560 à 6719
+09:31 +248 -14: test/coach_general_properties_5_test.dart: autres disciplines, profils 6400 à 7679 profils 7200 à 7359 [E]
+  Expected: empty
+    Actual: [
+              'profil 7299 — relecture : s5 : chest 4.5 séries pour 2.0 — sl-traction-lestee×3 (test) j3 test, sl-dips-leste×3 (test) j3 test',
+              'profil 7299 — relecture : s5 : delt_anterior 3.0 séries pour 2.0 — sl-dips-leste×3 (test) j3 test',
+              'profil 7299 — relecture : s5 : lats 3.0 séries pour 2.0 — sl-traction-lestee×3 (test) j3 test',
+              'profil 7299 — relecture : s5 : triceps 3.0 séries pour 2.0 — sl-dips-leste×3 (test) j3 test'
+            ]
+  4 manquement(s)
+  
+  package:matcher                   expect
+  test/coach_properties.dart 675:9  coachPropertyShard.<fn>.<fn>
+  
+09:32 +248 -15: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6560 à 6719
+09:32 +248 -15: test/coach_general_properties_5_test.dart: autres disciplines, profils 6400 à 7679 profils 7360 à 7519 [E]
+  Expected: empty
+    Actual: [
+              'profil 7407 — relecture : s4 : chest 3.5 séries pour 2.0 — sl-traction-lestee×1 (test) j1 test, sl-dips-leste×3 (test) j1 test',
+              'profil 7407 — relecture : s4 : delt_anterior 3.0 séries pour 2.0 — sl-dips-leste×3 (test) j1 test',
+              'profil 7407 — relecture : s4 : triceps 3.0 séries pour 2.0 — sl-dips-leste×3 (test) j1 test'
+            ]
+  3 manquement(s)
+  
+  package:matcher                   expect
+  test/coach_properties.dart 675:9  coachPropertyShard.<fn>.<fn>
+  
+09:34 +249 -15: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6560 à 6719
+09:35 +250 -15: test/coach_properties_3_test.dart: chemin street, profils 3840 à 5119 profils 3840 à 3999
+09:40 +251 -15: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6720 à 6879
+09:42 +252 -15: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6720 à 6879
+09:44 +253 -15: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6720 à 6879
+09:47 +254 -15: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6720 à 6879
+09:48 +255 -15: test/coach_properties_3_test.dart: chemin street, profils 3840 à 5119 profils 4480 à 4639
+09:49 +256 -15: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6880 à 7039
+09:51 +257 -15: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6880 à 7039
+09:53 +258 -15: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6880 à 7039
+09:55 +259 -15: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6880 à 7039
+09:59 +259 -16: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6880 à 7039
+09:59 +259 -16: test/coach_general_properties_3_test.dart: autres disciplines, profils 3840 à 5119 profils 3840 à 3999 [E]
+  Expected: empty
+    Actual: [
+              'profil 3910 — relecture (deux blocs) : s6 : lats 4.0 séries pour 2.0 — sw-traction-pronation×4 j1 build'
+            ]
+  1 manquement(s)
+  
+  package:matcher                   expect
+  test/coach_properties.dart 675:9  coachPropertyShard.<fn>.<fn>
+  
+10:02 +260 -16: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 6880 à 7039
+10:03 +261 -16: test/coach_general_properties_3_test.dart: autres disciplines, profils 3840 à 5119 profils 4160 à 4319
+10:04 +262 -16: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 7040 à 7199
+10:05 +263 -16: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 7040 à 7199
+10:07 +264 -16: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 7040 à 7199
+10:08 +265 -16: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 7040 à 7199
+10:10 +266 -16: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 7040 à 7199
+10:11 +266 -17: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 7040 à 7199
+10:11 +266 -17: test/coach_general_properties_3_test.dart: autres disciplines, profils 3840 à 5119 profils 4960 à 5119 [E]
+  Expected: empty
+    Actual: [
+              'profil 4988 — relecture : s4 : chest 4.5 séries pour 2.0 — sl-traction-lestee×3 (test) j2 test, sl-dips-leste×3 (test) j2 test',
+              'profil 4988 — relecture : s4 : delt_anterior 3.0 séries pour 2.0 — sl-dips-leste×3 (test) j2 test',
+              'profil 4988 — relecture : s4 : lats 3.0 séries pour 2.0 — sl-traction-lestee×3 (test) j2 test',
+              'profil 4988 — relecture : s4 : triceps 3.0 séries pour 2.0 — sl-dips-leste×3 (test) j2 test'
+            ]
+  4 manquement(s)
+  
+  package:matcher                   expect
+  test/coach_properties.dart 675:9  coachPropertyShard.<fn>.<fn>
+  
+10:16 +267 -17: test/coach_properties_5_test.dart: chemin street, profils 6400 à 7679 profils 6400 à 6559
+10:17 +268 -17: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 7200 à 7359
+10:20 +269 -17: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 7200 à 7359
+10:22 +270 -17: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 7200 à 7359
+10:24 +271 -17: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 7200 à 7359
+10:26 +272 -17: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 7200 à 7359
+10:28 +273 -17: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 7200 à 7359
+10:28 +274 -17: test/coach_properties_5_test.dart: chemin street, profils 6400 à 7679 profils 7360 à 7519
+10:30 +275 -17: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 7360 à 7519
+10:32 +276 -17: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 7360 à 7519
+10:37 +277 -17: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 7360 à 7519
+10:39 +278 -17: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 7360 à 7519
+10:41 +279 -17: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 7360 à 7519
+10:42 +280 -17: test/coach_general_properties_1_test.dart: autres disciplines, profils 1280 à 2559 profils 1760 à 1919
+10:42 +280 -18: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 7520 à 7679
+10:42 +280 -18: test/coach_general_properties_1_test.dart: autres disciplines, profils 1280 à 2559 profils 1760 à 1919 [E]
+  Expected: empty
+    Actual: [
+              'profil 1830 — relecture (deux blocs) : s6 : lats 11.0 séries pour 9.0 — cd-muscle-up-barre-assiste-elastique×1 j0 build, sw-traction-chest-to-bar×2 j0 build, sw-traction-pronation×4 j1 build, sw-traction-pronation×4 j6 build'
+            ]
+  1 manquement(s)
+  
+  package:matcher                   expect
+  test/coach_properties.dart 675:9  coachPropertyShard.<fn>.<fn>
+  
+10:45 +281 -18: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 7520 à 7679
+10:46 +281 -19: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 7520 à 7679
+10:46 +281 -19: test/coach_general_properties_1_test.dart: autres disciplines, profils 1280 à 2559 profils 2080 à 2239 [E]
+  Expected: empty
+    Actual: [
+              'profil 2170 — relecture : s3 : chest 5.0 séries pour 4.0 — cd-muscle-up-barre-strict×3 j0 build, sw-traction-pronation×4 j1 build',
+              'profil 2170 — relecture : s3 : lats 7.0 séries pour 6.0 — cd-muscle-up-barre-strict×3 j0 build, sw-traction-pronation×4 j1 build',
+              'profil 2170 — relecture (deux blocs) : s3 : chest 5.0 séries pour 4.0 — cd-muscle-up-barre-strict×3 j0 build, sw-traction-pronation×4 j1 build',
+              'profil 2170 — relecture (deux blocs) : s3 : lats 7.0 séries pour 6.0 — cd-muscle-up-barre-strict×3 j0 build, sw-traction-pronation×4 j1 build',
+              'profil 2199 — relecture : s5 : lats 3.0 séries pour 2.0 — sl-traction-lestee×3 (test) j1 test'
+            ]
+  5 manquement(s)
+  
+  package:matcher                   expect
+  test/coach_properties.dart 675:9  coachPropertyShard.<fn>.<fn>
+  
+10:48 +281 -20: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 7520 à 7679
+10:48 +281 -20: test/coach_general_properties_1_test.dart: autres disciplines, profils 1280 à 2559 profils 2240 à 2399 [E]
+  Expected: empty
+    Actual: [
+              'profil 2246 — relecture (deux blocs) : s8 : glutes 3.0 séries pour 2.0 — sl-squat-competition×3 (test) j0 test',
+              'profil 2246 — relecture (deux blocs) : s8 : quads 3.0 séries pour 2.0 — sl-squat-competition×3 (test) j0 test',
+              'profil 2282 — relecture : s2 : chest 13.0 séries (plafond 12.0)',
+              'profil 2282 — relecture : s3 : chest 13.0 séries (plafond 12.0)',
+              'profil 2282 — relecture : s4 : chest 13.0 séries (plafond 12.0)',
+              'profil 2282 — relecture (deux blocs) : s2 : chest 13.0 séries (plafond 12.0)',
+              'profil 2282 — relecture (deux blocs) : s3 : chest 13.0 séries (plafond 12.0)',
+              'profil 2282 — relecture (deux blocs) : s4 : chest 13.0 séries (plafond 12.0)',
+              'profil 2282 — relecture (deux blocs) : s6 : chest 13.0 séries (plafond 12.0)',
+              'profil 2282 — relecture (deux blocs) : s7 : chest 13.0 séries (plafond 12.0)',
+              'profil 2282 — relecture (deux blocs) : s8 : chest 13.0 séries (plafond 12.0)'
+            ]
+  11 manquement(s)
+  
+  package:matcher                   expect
+  test/coach_properties.dart 675:9  coachPropertyShard.<fn>.<fn>
+  
+10:50 +281 -21: test/properties_5_test.dart: propriétés, profils 6400 à 7679 profils 7520 à 7679
+10:50 +281 -21: test/coach_general_properties_1_test.dart: autres disciplines, profils 1280 à 2559 profils 2400 à 2559 [E]
+  Expected: empty
+    Actual: [
+              'profil 2519 — relecture : bloc 0 s0 j0 : mu-souleve-de-terre-roumain-barre à 1.333 du 1RM',
+              'profil 2519 — relecture : bloc 0 s1 j0 : mu-souleve-de-terre-roumain-barre à 1.333 du 1RM',
+              'profil 2519 — relecture : bloc 0 s2 j0 : mu-souleve-de-terre-roumain-barre à 1.333 du 1RM',
+              'profil 2519 — relecture : bloc 0 s3 j0 : mu-souleve-de-terre-roumain-barre à 1.333 du 1RM',
+              'profil 2519 — relecture : bloc 0 s4 j0 : mu-souleve-de-terre-roumain-barre à 1.333 du 1RM',
+              'profil 2519 — relecture : bloc 0 s5 j0 : mu-souleve-de-terre-roumain-barre à 1.333 du 1RM',
+              'profil 2534 — relecture (deux blocs) : s7 : lats 4.0 séries pour 2.0 — sw-traction-pronation×4 j1 build'
+            ]
+  7 manquement(s)
+  
+  package:matcher                   expect
+  test/coach_properties.dart 675:9  coachPropertyShard.<fn>.<fn>
+  
+10:55 +282 -21: Some tests failed.
+
+Failing tests:
+  test/coach_general_properties_0_test.dart: autres disciplines, profils 0 à 1279 profils 0 à 159
+  test/coach_general_properties_0_test.dart: autres disciplines, profils 0 à 1279 profils 1120 à 1279
+  test/coach_general_properties_0_test.dart: autres disciplines, profils 0 à 1279 profils 480 à 639
+  test/coach_general_properties_1_test.dart: autres disciplines, profils 1280 à 2559 profils 1760 à 1919
+  ... and 17 more
+
+Consider enabling the flag chain-stack-traces to receive more detailed exceptions.
+For example, 'dart test --chain-stack-traces'.
+tests : échec
+kalis_plan 0.2.3 : rapport écrit dans /home/runner/work/streetlift-apk/streetlift-apk/out-packages/kalis_plan (156 s).
+durée : 822 s
