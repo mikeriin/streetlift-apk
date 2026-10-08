@@ -1,0 +1,97 @@
+# Cas types des répliques de Koach (kalis_koach 0.1.0)
+
+Sortie de `dart run bin/kalis_koach_cli.dart --rapport` (fichier `cas_types.txt`, run CI
+36830876884), **relue** le 01/10/2026 : ton (tutoiement, phrases courtes), absence d'allégation
+médicale et de promesse de résultat, cohérence pose / message / actions, côté de la bulle.
+
+Corrections faites à la relecture : accord au nombre supprimé des messages à nombre variable
+(« Questions restantes : 1 » au lieu de « 1 questions » ; « séries faites : 6 sur 12 »).
+
+Points d'attention pour G5 et G9 : la douleur signalée a la priorité maximale (100) et renvoie vers
+un professionnel de santé ; « Pourquoi ? » n'est proposé que lorsqu'une explication existe ; un code
+de raison inconnu du paquet donne un message générique (aucune erreur).
+
+Les textes n'ont pas été relus par un professionnel diplômé (registre de validation du CONTRAT).
+
+```text
+Cas types (relus) — kalis_koach 0.1.0
+
+# Premier lancement
+  pose : wave (bulle à left)
+  bulle : Salut, moi c’est Koach ! Je t’accompagne à chaque séance.
+  actions : C’est parti
+
+# Profil, étape
+  pose : thumbs_up (bulle à left)
+  bulle : Bien noté ! Questions restantes : 4.
+  actions : 
+
+# Profil à mettre à jour
+  pose : please (bulle à left)
+  bulle : Ton profil n’est plus à jour (ton matériel). On le corrige ensemble ?
+  actions : Modifier mon profil | Plus tard | Pourquoi ?
+  pourquoi (think) : Ton programme dépend de ton profil. S’il n’est plus à jour, mes propositions risquent de tomber à côté.
+
+# Première passe du programme
+  pose : explain_board (bulle à left)
+  bulle : Voici une première version sur 12 semaines. Relis-la, change ce qui ne te va pas.
+  actions : Voir | Pourquoi ?
+  pourquoi (think) : Je construis le programme en deux temps : une première version que tu relis, puis la version finale avec tes retours.
+
+# Proposition : charge augmentée
+  pose : flex (bulle à right)
+  bulle : Tu as de la marge sur Pompes : on monte un peu la charge ?
+  actions : Accepter | Non merci | Pourquoi ?
+  pourquoi (think) : Tes dernières séries étaient en dessous de la difficulté visée : tu avais encore de la marge. On monte par petites étapes pour garder une bonne exécution.
+
+# Proposition : code inconnu (générique)
+  pose : choice (bulle à left)
+  bulle : J’ai une proposition pour ta séance. Tu veux voir ?
+  actions : Accepter | Non merci | Pourquoi ?
+  pourquoi (think) : Ton programme s’ajuste à tes dernières séances : la difficulté que tu notes avec les flammes me sert de repère.
+
+# Changement appliqué : séance raccourcie
+  pose : sprint (bulle à right)
+  bulle : Séance raccourcie à 20 min : on garde l’essentiel.
+  actions : OK | Pourquoi ?
+  pourquoi (think) : Tu as peu de temps ou d’énergie aujourd’hui. Une séance courte et bien faite vaut mieux qu’une séance sautée.
+
+# Bilan santé : douleur
+  pose : please (bulle à left)
+  bulle : Douleur signalée : arrête ce qui fait mal. Si ça dure, demande l’avis d’un professionnel de santé.
+  actions : OK | Pourquoi ?
+  pourquoi (think) : Une douleur est un signal à respecter. Je ne pose aucun diagnostic : en cas de doute, demande l’avis d’un professionnel de santé.
+
+# Fin de séance écourtée
+  pose : thumbs_up (bulle à left)
+  bulle : Séance écourtée, séries faites : 6 sur 12. C’est déjà ça.
+  actions : 
+
+# Record
+  pose : victory (bulle à left)
+  bulle : Nouveau record sur Dips : 15 répétitions !
+  actions : 
+
+# Erreur
+  pose : oops (bulle à left)
+  bulle : Oups, ça n’a pas marché. Réessaie dans un instant.
+  actions : Réessayer
+
+# Session de test
+  pose : settings (bulle à left)
+  bulle : Session de test : tout ce que tu fais ici reste à part de tes vraies données.
+  actions : OK | Pourquoi ?
+  pourquoi (think) : La session de test sert à essayer l’application comme un nouvel utilisateur, sans toucher à tes données.
+
+# Nouveauté
+  pose : present (bulle à right)
+  bulle : Nouveau : les objectifs. Je te montre ?
+  actions : Voir | Plus tard | Pourquoi ?
+  pourquoi (think) : Je présente chaque nouveauté une seule fois. Tu pourras la retrouver ensuite dans les réglages.
+
+# Variantes successives (fin de séance, occurrences 0 à 3)
+  0 : clap — Séance terminée, bien joué !
+  1 : victory — Et une séance de plus. Beau travail !
+  2 : thumbs_up_2 — C’est fait ! Pense à bien récupérer.
+  3 : clap — Séance terminée, bien joué !
+```
