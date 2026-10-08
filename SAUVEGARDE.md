@@ -111,3 +111,8 @@ Base : `moteurs` 9526ac47 (kalis_plan 0.2.2, kalis_adapt 0.2.2, kalis_bench 0.2.
 - Campagne d'endurance mesurée (CALIBRAGE_CA2, LIVRAISON). Renote q2 street_01/03. Relecture documentée autres (4) faite. Manche 5 publiée sur la page (version 7) avec 77 notes.
 - LIVRAISON_CA2.md rédigée (ca2-outils/LIVRAISON_CA2.md ; reste @CORE@ @MAIN@ @RUN@).
 - Reste : full vert → commits (kalis_core 0.4.3 séparé, puis kalis_adapt 0.3.0 + kalis_bench 0.2.3), étiquettes, DECISIONS CA2.7+, ETAT « à valider », page de suivi, projet claude.ai, notification.
+
+## 08/10 ~20:30 UTC
+- Full 103988d8 (run 37828103871) VERT (core 328, adapt 251, bench 65, plan 226, quest 162).
+- Commits locaux p1 : acd38d9 kalis_core 0.4.3 (CA2), 9f931fb kalis_adapt 0.3.0 — rebasés sur origin/moteurs 9b2e9ea (CP2 a publié kalis_plan 0.2.3 entre-temps) → contrôle FULL 3c2b6a3a de l'arbre rebasé en cours (règle §0 : retester après un rebase qui apporte des changements).
+- Si vert : push moteurs, étiquettes kalis_core-v0.4.3 (acd38d9 rebasé), kalis_adapt-v0.3.0 et kalis_bench-v0.2.3 (9f931fb rebasé), régénérer MESURES/campagne si besoin, DECISIONS, ETAT, LIVRAISON (pipeline + projet), suivi, notification.
