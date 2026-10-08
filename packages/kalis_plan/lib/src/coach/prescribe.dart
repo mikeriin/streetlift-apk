@@ -5859,7 +5859,8 @@ final class Prescriber {
         if (reference <= 0) {
           continue;
         }
-        limit = reference * (1 + coachVolumeRise);
+        // Bloc de reprise après une douleur : +10 % au plus (C9.8).
+        limit = reference * (1 + (_shape.reprise ? 0.1 : coachVolumeRise));
       }
       var guard = 0;
       while (sumOf(root) > limit + 1e-9 && guard < 80) {
@@ -5870,7 +5871,7 @@ final class Prescriber {
         for (final items in days) {
           for (final x in items) {
             if (x.kind != SetKind.work ||
-                x.fixed ||
+                (x.fixed && !_shape.reprise) ||
                 x.repsHigh == null ||
                 _repsRootOf(x.e) != root ||
                 x.sets <= x.minSets ||
@@ -5896,7 +5897,7 @@ final class Prescriber {
           for (final x in items) {
             final high = x.repsHigh;
             if (x.kind != SetKind.work ||
-                x.fixed ||
+                (x.fixed && !_shape.reprise) ||
                 high == null ||
                 high <= 1 ||
                 _repsRootOf(x.e) != root ||

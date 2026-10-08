@@ -376,10 +376,11 @@ final class Athlete {
     // résultat) : il fait foi, le maximum au poids du corps ne le relève
     // pas (`_loadAt`).
     final measuredOneRm = <String>{};
-    // 1RM dont le repère n'est qu'une déclaration (jamais testé ni réussi
-    // en compétition) : l'estimation du moteur d'évolution le remplace
-    // quand elle est nettement plus basse (C9.8, `street_07`).
-    final declaredOneRm = <String>{};
+    // 1RM testés (test guidé ou barre de compétition) : seuls ceux-là
+    // résistent à une estimation nettement plus basse ; un 1RM seulement
+    // déclaré est remplacé par l'estimation du moteur d'évolution (C9.8,
+    // `street_07`).
+    final testedOneRm = <String>{};
     final reps = <String, int>{};
     final holds = <String, int>{};
     final recordDay = <String, CivilDate>{};
@@ -423,6 +424,10 @@ final class Athlete {
             reps: n,
             rir: b.rir ?? 0,
           );
+          if (b.source == BenchmarkSource.guidedTest ||
+              b.source == BenchmarkSource.competition) {
+            testedOneRm.add(b.exerciseId);
+          }
           if (estimate != null) {
             final external = estimate.valueKg - fraction * bodyWeight;
             final before = oneRm[b.exerciseId];
@@ -706,9 +711,7 @@ final class Athlete {
             measuredOneRm.add(b.exerciseId);
             if (b.source == BenchmarkSource.guidedTest ||
                 b.source == BenchmarkSource.competition) {
-              declaredOneRm.remove(b.exerciseId);
-            } else {
-              declaredOneRm.add(b.exerciseId);
+              testedOneRm.add(b.exerciseId);
             }
             recordDay[b.exerciseId] = day;
           }
@@ -775,7 +778,7 @@ final class Athlete {
             recordDay[e.exerciseId] = seen;
           } else if (before != null &&
               !partial &&
-              declaredOneRm.contains(e.exerciseId) &&
+              !testedOneRm.contains(e.exerciseId) &&
               external > 0 &&
               external < before * (1 - coachEstimateMargin)) {
             // Record seulement déclaré, plus haut que ce que le bloc a
