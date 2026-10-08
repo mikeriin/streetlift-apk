@@ -7,6 +7,7 @@ import 'package:kalis_adapt/kalis_adapt.dart';
 import 'package:kalis_adapt/simulation.dart';
 import 'package:kalis_adapt/src/model.dart'
     show PainState, formAfter, painResumeDays, recentBestOf;
+import 'package:kalis_adapt/src/session.dart' show coachWristNeutralSupport;
 import 'package:kalis_core/kalis_core.dart';
 import 'package:kalis_plan/kalis_plan.dart';
 import 'package:test/test.dart';
@@ -566,6 +567,81 @@ void main() {
         }
       }
       expect(reversals, 0);
+    }, timeout: const Timeout(Duration(minutes: 10)));
+
+    test('street_01, poignet encore à 3/10 pendant l\'arrêt : seul un appui '
+        'neutre (parallettes, poignées) charge le poignet', () {
+      const key = 'street_01_debutant_complet';
+      final fixtures = readJsonObject('test/fixtures/street_profiles.json.gz');
+      final entry = fixtures[key]! as Map<String, Object?>;
+      final athlete =
+          Map<String, Object?>.of(entry['athlete']! as Map<String, Object?>)
+            ..['painZone'] = BodyZone.wristHand.code
+            ..['painFromDay'] = 42
+            ..['painDays'] = 28
+            ..['painIntensity'] = 4;
+      final book = ExerciseBook(catalog, streetProfile(key));
+      var checked = 0;
+      for (var seed = 0; seed < 3; seed++) {
+        final engine = KalisAdapt();
+        final policy = CheckedPolicy(engine);
+        final run = simulate(
+          catalog: catalog,
+          spec: athleteFromJson(athlete),
+          profile: streetProfile(key),
+          seed: seed,
+          policy: policy,
+          program: streetProgram(key),
+          weeks: 16,
+          loop: engine,
+          truthKind: TruthKind.b,
+        );
+        expect(policy.violations, isEmpty);
+        final reports = <(int, int)>[];
+        for (final s in run.served) {
+          final today = <PainReport>[
+            ...?s.record.healthCheck?.pains,
+          ].where((r) => r.zone == BodyZone.wristHand);
+          final hot =
+              today.any((r) => r.intensity >= 3) ||
+              reports.any(
+                (r) => r.$1 >= s.simDay - 5 && r.$1 < s.simDay && r.$2 >= 3,
+              );
+          final inStop = s.plan.items.any(
+            (it) => it.reasons.any(
+              (r) =>
+                  r.code == ReasonCodes.adaptPainPersistent &&
+                  r.params['zone'] == BodyZone.wristHand.code,
+            ),
+          );
+          if (inStop && hot) {
+            checked++;
+            for (final item in s.plan.items) {
+              final info = book.find(item.exerciseId);
+              if (info == null ||
+                  info.zoneLevel(BodyZone.wristHand) < 0.5) {
+                continue;
+              }
+              expect(
+                coachWristNeutralSupport(info.exercise),
+                isTrue,
+                reason:
+                    '${item.exerciseId} servi le ${s.record.date.iso} '
+                    'pendant l\'arrêt du poignet',
+              );
+            }
+          }
+          for (final r in <PainReport>[
+            ...?s.record.healthCheck?.pains,
+            ...s.record.pains,
+          ]) {
+            if (r.zone == BodyZone.wristHand) {
+              reports.add((s.simDay, r.intensity));
+            }
+          }
+        }
+      }
+      expect(checked, greaterThan(0));
     }, timeout: const Timeout(Duration(minutes: 10)));
   });
 }
