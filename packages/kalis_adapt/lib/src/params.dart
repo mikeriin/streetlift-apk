@@ -162,11 +162,24 @@ final class AdaptParams {
     this.coachHoldRise = const <double>[0.20, 0.15, 0.10, 0.10],
     this.coachHoldRiseSlackSeconds = 1,
     this.coachHoldMaxFloorShare = 0.55,
+    this.coachHoldBestDays = 28,
+    this.coachTaperGain = 0.02,
+    this.coachAssistMinDays = 7,
+    this.coachHeavyBoundReps = 8,
+    this.coachReturnStart = 0.5,
+    this.coachReturnStep = 0.1,
+    this.coachReturnFloor = 0.4,
+    this.coachReturnRir = 3,
+    this.coachReturnPain = 2,
+    this.coachReturnWatchDays = 84,
+    this.coachStopEscalateDays = 14,
+    this.coachPainSubPct = 0.70,
+    this.coachRecentRise = 0.10,
     this.coachEventNearDays = 14,
     this.coachEccentricEventDays = 10,
     this.coachStopMinSets = 2,
-    this.coachPainRegress = 5,
-    this.coachPainStop = 6,
+    this.coachPainRegress = 4,
+    this.coachPainStop = 5,
     this.coachPainRegressSets = 0.6,
     this.coachEasyStepShare = 0.05,
     this.attemptOpenerShare = 0.91,
@@ -751,6 +764,61 @@ final class AdaptParams {
   /// documentée et panel, `street_01` ; R4-F2 : 50 à 70 % du maximum).
   final double coachHoldMaxFloorShare;
 
+  /// Fenêtre du « meilleur maintien récent » qui sert de plancher, en jours
+  /// (CA2, partie 0 : jamais un record d'avant un arrêt ; la force
+  /// isométrique et maximale baisse de façon mesurable après trois à quatre
+  /// semaines d'arrêt — Bosquet et al. 2013).
+  final int coachHoldBestDays;
+
+  /// Gain du maximum du jour après un affûtage (pendant une semaine
+  /// d'affûtage ou de compétition, ou la semaine qui suit), pris en compte
+  /// par les
+  /// tentatives : 2 %, le bas de la fourchette mesurée chez les
+  /// powerlifters (Travis et al. 2020 : +1,8 à 6,4 % selon le mouvement
+  /// après un affûtage d'une à deux semaines). Choix prudent (CA2, partie
+  /// 0 : tentatives à 90-93 % du maximum du jour, relecture documentée).
+  final double coachTaperGain;
+
+  /// Jours au même cran d'assistance avant d'en retirer un autre (CA2,
+  /// partie 0 : le panel demande à la fois de ne pas changer d'élastique
+  /// trop souvent et de ne pas attendre trop longtemps ; règle « 2 pour 2 »
+  /// de l'ACSM 2009 : deux séances réussies avant de charger). Choix
+  /// raisonné : une semaine.
+  final int coachAssistMinDays;
+
+  /// Série lourde dont la réserve dite, lue comme une borne basse, se
+  /// corrige du biais de note appris (répétitions possibles au plus ; CA2,
+  /// partie 0 : la réserve se juge mieux près de l'échec et sous charge
+  /// lourde, Halperin et al. 2022 : prédiction moins juste sur les séries
+  /// longues). Choix raisonné.
+  final double coachHeavyBoundReps;
+
+  /// Reprise graduée conduite par le moteur (arrêt levé au milieu d'un
+  /// bloc qui écrit les mouvements provocants) : part du volume écrit à la
+  /// première semaine de charge (règle de `kalis_plan`, CX correction 1 :
+  /// 50 %, puis +10 % par semaine de charge ; Soligard et al. 2016).
+  final double coachReturnStart;
+
+  /// Hausse de cette part par semaine de charge.
+  final double coachReturnStep;
+
+  /// Plus petite part servie quand le palier recule (douleur qui répond).
+  final double coachReturnFloor;
+
+  /// Réserve minimale d'un mouvement en reprise graduée (répétitions).
+  final double coachReturnRir;
+
+  /// Gêne au-delà de laquelle le palier de reprise recule (sur 10 :
+  /// modèle de surveillance de la douleur, Silbernagel et al. 2007 ; règle
+  /// écrite par `kalis_plan` : « 2 sur 10 au plus pendant la séance et
+  /// retour à l'état habituel le lendemain »).
+  final int coachReturnPain;
+
+  /// Jours après la levée d'un arrêt pendant lesquels la reprise propre au
+  /// moteur peut encore s'appliquer (douze semaines, comme le retour d'une
+  /// douleur : `painRecurDays`).
+  final int coachReturnWatchDays;
+
   /// Jours avant une échéance principale à partir desquels les décisions
   /// sont prudentes.
   final int coachEventNearDays;
@@ -764,12 +832,36 @@ final class AdaptParams {
   final int coachStopMinSets;
 
   /// Douleur à partir de laquelle un exercice à contrainte moyenne sur la
-  /// zone est allégé (moins de séries, une réserve de plus).
+  /// zone est allégé (moins de séries, une réserve de plus). Sous le seuil
+  /// d'écart ([coachPainStop]) ; CA2, partie 0 : 4 sur 10 (5 avant).
   final int coachPainRegress;
 
   /// Douleur à partir de laquelle un exercice à contrainte moyenne sur la
-  /// zone est écarté.
+  /// zone est écarté, ainsi que tout remplaçant qui la charge autant :
+  /// 5 sur 10 (Silbernagel et al. 2007, modèle de surveillance de la
+  /// douleur : la douleur pendant l'effort ne doit pas atteindre 5 sur 10 ;
+  /// CA2, partie 0, 6 avant — relecture documentée du pilotage, manche 4).
   final int coachPainStop;
+
+  /// Jours d'arrêt après lesquels une douleur encore à 3 sur 10 ou plus dans
+  /// la semaine fait retirer aussi les mouvements qui chargent la zone sans
+  /// la provoquer (CA2, partie 0 ; Silbernagel et al. 2007 : douleur jamais
+  /// en hausse d'une semaine à l'autre ; deux semaines : la durée de la
+  /// règle d'arrêt et de levée de `kalis_plan`). Choix raisonné.
+  final int coachStopEscalateDays;
+
+  /// Part du 1RM la plus haute d'un remplaçant choisi pour une douleur du
+  /// jour (CA2, partie 0 ; relecture documentée du pilotage, manche 4 :
+  /// « pas de substitut à plus de 70 % »). Choix raisonné, entre le premier
+  /// palier de la reprise (67,5 %) et les séries de volume.
+  final double coachPainSubPct;
+
+  /// Hausse relative la plus grande de la quantité par série (répétitions
+  /// ou secondes) d'une séance à la suivante sur une zone à l'arrêt ou
+  /// sortie d'un arrêt depuis moins de [coachReturnWatchDays] jours (une
+  /// unité au moins) : Soligard et al. 2016 (hausses de charge de moins de
+  /// 10 % par semaine). CA2, partie 0.
+  final double coachRecentRise;
 
   /// Part des séries gardée quand un exercice est allégé pour une douleur.
   final double coachPainRegressSets;

@@ -332,7 +332,27 @@ final class SlotMark {
     this.total = 0,
     this.sets = 0,
     this.reached = 0,
+    this.missed = 0,
+    this.loadedTop,
+    this.loadedLoadKg,
   });
+
+  /// Plus grande série et charge de la dernière séance de l'emplacement
+  /// faite une semaine de charge (une semaine d'allègement, de test ou de
+  /// transition ne les abaisse pas), ou `null` : ce à quoi se compare un
+  /// jour sans hausse (bilan bas) — jamais à la séance volontairement
+  /// légère d'avant (CA2, partie 0 : après une transition, les dips
+  /// restaient servis à 26 au lieu de 38, relecture documentée).
+  final int? loadedTop;
+
+  /// Charge correspondante (voir [loadedTop]).
+  final double? loadedLoadKg;
+
+  /// Séances de suite, à charge (ou assistance) et plage égales, où la plus
+  /// grande série est restée sous le bas de sa plage sans échec (CA2,
+  /// partie 0 : un cran d'assistance de plus seulement après deux séances,
+  /// jamais en aller-retour d'une séance à l'autre).
+  final int missed;
 
   /// Séances de suite où toutes les séries ont atteint le haut de leur
   /// plage sans être dites plus dures que visé, ou où la première série a
@@ -514,17 +534,36 @@ void noteCoachSession(
   // La série ne compte qu'à charge (ou assistance) et plage égales : un cran
   // retiré ou une plage changée la remet à zéro (relecture du code CX,
   // correction 1).
+  // Exercice assisté : la plage écrite monte d'une semaine à l'autre ; la
+  // série compte tant que le cran ne change pas (panel de la boucle 4,
+  // `street_01` : la plage remise à zéro chaque semaine, l'élastique ne
+  // changeait jamais — 13 semaines à 4 à 9 répétitions en réserve).
   final before = marks[coach.slotId];
   var streak = 0;
   if (before != null &&
-      before.amount == coach.schemeAmount &&
+      (before.amount == coach.schemeAmount || run.info.exercise.assisted) &&
       before.loadKg == held) {
     streak = before.reached;
   }
   final reached = allTop || firstEasy ? streak + 1 : 0;
+  // Bas de la plage manqué sans échec, à charge et plage égales.
+  final under =
+      !failed && top > 0 && firstTarget != null && top < firstTarget.low;
+  var missStreak = 0;
+  if (before != null &&
+      (before.amount == coach.schemeAmount || run.info.exercise.assisted) &&
+      before.loadKg == held) {
+    missStreak = before.missed;
+  }
+  final light = coach.policy.locked;
   marks[coach.slotId] = SlotMark(
     day: day,
     reached: reached,
+    missed: under ? missStreak + 1 : 0,
+    loadedTop: light ? (before?.loadedTop ?? before?.top) : top,
+    loadedLoadKg: light
+        ? (before?.loadedLoadKg ?? before?.loadKg)
+        : (lowestFailed ?? held),
     loadKg: lowestFailed ?? held,
     amount: coach.schemeAmount,
     top: top,
@@ -895,11 +934,17 @@ List<SetPlan>? _loadedPlans(
   final track = ex.track!;
   final grid = info.grid;
   final bw = info.fraction * run.bodyWeightKg;
-  final pct = c.pct;
+  final writtenPct = c.pct;
   final ref = referenceTotal(run, ex, c);
-  if (pct == null || ref == null || ref <= 0) {
+  if (writtenPct == null || ref == null || ref <= 0) {
     return null;
   }
+  // Reprise graduée conduite par le moteur : vers 67,5 % du 1RM, +2,5 %
+  // par palier (règle de `kalis_plan`, CX correction 1 ; CA2, partie 0).
+  final returnCap = ex.returnPct;
+  final pct = returnCap != null && writtenPct > returnCap
+      ? returnCap
+      : writtenPct;
   final ownRef = c.referenceId == null || c.referenceId == info.id;
   final rir = ex.rirEff;
   final flames = flamesOfRir(rir);
@@ -963,6 +1008,7 @@ List<SetPlan>? _loadedPlans(
       c.level >= 1 &&
       served != SetTechniqueKind.accentuatedEccentric &&
       ex.painZones.isEmpty &&
+      !ex.inReturn &&
       !run.noIncrease;
   double kg;
   var capped = false;
@@ -1022,7 +1068,16 @@ List<SetPlan>? _loadedPlans(
   if (markLoad != null) {
     if (kg > markLoad + 1e-9) {
       final floored = grid.floor(markLoad);
-      final last = floored > markLoad ? markLoad : floored;
+      var last = floored > markLoad ? markLoad : floored;
+      // (Un jour de bilan bas se compare à la dernière séance d'une semaine
+      // de charge, pas à une séance volontairement légère : CA2, partie 0.)
+      final loadedLoad = mark?.loadedLoadKg;
+      if (lockCause == 'health' && loadedLoad != null) {
+        final base = grid.floor(loadedLoad);
+        if (base > last && base <= kg) {
+          last = base;
+        }
+      }
       if (lockCause != null) {
         kg = last;
         ex.heldCause = lockCause;
@@ -1288,9 +1343,10 @@ int _holdSafe(SessionRun run, ExerciseRun ex, double fatigue, String slotId) {
     // bilan bas : par rapport à la dernière séance du même emplacement
     // (séance lourde et séance au chrono d'un même exercice ne se
     // comparent pas).
+    final mark = track.slotMarks[slotId];
     final last = track.noUp || ex.painZones.isNotEmpty
         ? track.lastTop
-        : track.slotMarks[slotId]?.top;
+        : (mark?.loadedTop ?? mark?.top);
     if (last != null) {
       final top = last < 1 ? 1 : last;
       if (target > top) {
@@ -1298,6 +1354,7 @@ int _holdSafe(SessionRun run, ExerciseRun ex, double fatigue, String slotId) {
       }
     }
   }
+  target = _recentCap(ex, target, run.ctx.params);
   if (ex.fails > 0 && ex.observed.isNotEmpty) {
     final done = ex.observed.last.amount;
     final top = done < 1 ? 1 : done;
@@ -1328,6 +1385,9 @@ void _probe(
   final probed = track.benchmarkDay;
   if (served != SetTechniqueKind.standard ||
       item.kind == SetKind.test ||
+      ex.inReturn ||
+      ex.doseCapped ||
+      ex.recentZone ||
       out.length < 2 ||
       !c.policy.build ||
       c.light ||
@@ -1386,9 +1446,10 @@ int _repsSafe(SessionRun run, ExerciseRun ex, double fatigue, String slotId) {
     // bilan bas : par rapport à la dernière séance du même emplacement
     // (séance lourde et séance au chrono d'un même exercice ne se
     // comparent pas).
+    final mark = track.slotMarks[slotId];
     final last = track.noUp || ex.painZones.isNotEmpty
         ? track.lastTop
-        : track.slotMarks[slotId]?.top;
+        : (mark?.loadedTop ?? mark?.top);
     if (last != null) {
       final top = last < 1 ? 1 : last;
       if (target > top) {
@@ -1396,6 +1457,7 @@ int _repsSafe(SessionRun run, ExerciseRun ex, double fatigue, String slotId) {
       }
     }
   }
+  target = _recentCap(ex, target, run.ctx.params);
   if (ex.fails > 0 && ex.observed.isNotEmpty) {
     final done = ex.observed.last.amount;
     final top = done < 1 ? 1 : done;
@@ -1404,6 +1466,20 @@ int _repsSafe(SessionRun run, ExerciseRun ex, double fatigue, String slotId) {
     }
   }
   return target < 1 ? 1 : target;
+}
+
+/// Zone à l'arrêt ou sortie d'un arrêt récent : la quantité par série
+/// monte de [AdaptParams.coachRecentRise] au plus (une unité au moins)
+/// depuis la dernière séance de l'exercice (Soligard et al. 2016 : hausses
+/// de charge de moins de 10 % par semaine ; CA2, partie 0).
+int _recentCap(ExerciseRun ex, int target, AdaptParams p) {
+  final last = ex.track?.lastTop;
+  if (!ex.recentZone || ex.spec.test || last == null || last < 1) {
+    return target;
+  }
+  final grown = (last * (1 + p.coachRecentRise)).floor();
+  final top = grown > last + 1 ? grown : last + 1;
+  return target > top ? top : target;
 }
 
 List<SetPlan>? _directPlans(
@@ -1424,8 +1500,14 @@ List<SetPlan>? _directPlans(
   final follows = share != null && c.policy.build && !c.light && !c.eventNear;
   final mark = track.slotMarks[c.slotId];
   final tendon = tendonLoaded(info);
+  // (Reprise graduée, appui du poignet sensible : jamais au-delà de la
+  // dose écrite — ni séries ajoutées, ni tenue allongée ; CA2, partie 0.)
   final locked =
-      track.noUp || ex.painZones.isNotEmpty || run.noIncrease || ex.fails > 0;
+      track.noUp ||
+      ex.painZones.isNotEmpty ||
+      run.noIncrease ||
+      ex.fails > 0 ||
+      ex.doseCapped;
   // Exercice assisté (élastique, appui des pieds, machine) : la
   // progression passe par l'assistance ;
   // la plage du bloc est gardée et le moteur dit quand changer de cran.
@@ -1433,6 +1515,12 @@ List<SetPlan>? _directPlans(
   var tendonCapped = false;
   // La marge de sûreté a réduit la première série.
   var guarded = false;
+  // Meilleur maintien mesuré récemment (CA2, partie 0).
+  final bestHold = track.recentBest(
+    run.day,
+    p.coachBreakDays,
+    p.coachHoldBestDays,
+  );
 
   // Effort affiché d'une ligne de [target] (répétitions ou secondes) après
   // la perte [fatigue] : celui du bloc ; quand la quantité servie laisse
@@ -1525,6 +1613,11 @@ List<SetPlan>? _directPlans(
       final cap = track.filter.capacityToday();
       final fromTest = (share * cap + 0.5).floor();
       wanted = fromTest < 1 ? 1 : fromTest;
+      if (ex.doseCapped && wanted > high) {
+        // (Reprise graduée, appui du poignet sensible : la dose écrite au
+        // plus.)
+        wanted = high;
+      }
       if (!hold && wanted > high) {
         // Au-dessus de ce que le bloc écrit : une répétition de plus que
         // la dernière séance de l'emplacement au plus (la règle du
@@ -1545,6 +1638,8 @@ List<SetPlan>? _directPlans(
     } else if (!hold &&
         share == null &&
         !assisted &&
+        !ex.doseCapped &&
+        !ex.recentZone &&
         served == SetTechniqueKind.standard &&
         item.kind != SetKind.test &&
         c.policy.build &&
@@ -1628,10 +1723,9 @@ List<SetPlan>? _directPlans(
       final byShare = (mark.top * (1 + rise)).floor();
       final bySlack = mark.top + p.coachHoldRiseSlackSeconds;
       var cap = byShare > bySlack ? byShare : bySlack;
-      // (Jamais sous 55 % du meilleur maintien mesuré.)
-      final byBest = hold
-          ? (track.bestAmount * p.coachHoldMaxFloorShare).floor()
-          : 0;
+      // (Jamais sous 55 % du meilleur maintien mesuré récemment — pas d'un
+      // record d'avant un arrêt : CA2, partie 0.)
+      final byBest = hold ? (bestHold * p.coachHoldMaxFloorShare).floor() : 0;
       if (byBest > cap) {
         cap = byBest;
       }
@@ -1677,8 +1771,7 @@ List<SetPlan>? _directPlans(
     final bySlack = mark.total + p.coachHoldRiseSlackSeconds;
     var most = byShare > bySlack ? byShare : bySlack;
     // (Jamais sous 55 % du meilleur maintien mesuré par tenue.)
-    final byBest =
-        (track.bestAmount * p.coachHoldMaxFloorShare).floor() * out.length;
+    final byBest = (bestHold * p.coachHoldMaxFloorShare).floor() * out.length;
     if (byBest > most) {
       most = byBest;
     }
@@ -1731,7 +1824,7 @@ List<SetPlan>? _directPlans(
       final byShare = (mark.top * (1 + rise)).floor();
       final bySlack = mark.top + p.coachHoldRiseSlackSeconds;
       var cap = byShare > bySlack ? byShare : bySlack;
-      final byBest = (track.bestAmount * p.coachHoldMaxFloorShare).floor();
+      final byBest = (bestHold * p.coachHoldMaxFloorShare).floor();
       if (byBest > cap) {
         cap = byBest;
       }
@@ -1740,6 +1833,7 @@ List<SetPlan>? _directPlans(
       }
     }
     if (!locked &&
+        !ex.recentZone &&
         !tendonCapped &&
         !c.light &&
         c.policy.build &&
@@ -1761,18 +1855,11 @@ List<SetPlan>? _directPlans(
     }
   }
   if (assisted && !hold && item.kind != SetKind.test && out.isNotEmpty) {
-    // Assistance : quand une série a mesuré la capacité récemment et que
-    // le haut de la plage laisse nettement plus de réserve que visé, un
-    // cran d'assistance de moins (élastique plus fin) ; quand le bas de la
-    // plage ne laisse plus la réserve visée moins un point, un cran de
-    // plus.
-    final exact = track.exactDay;
-    final probed = track.benchmarkDay;
-    final measured =
-        (exact != null && run.day - exact <= 2 * p.coachProbeDays) ||
-        (probed != null && run.day - probed <= 2 * p.coachProbeDays);
-    // (Une série repère notée « loin de l'échec » borne la capacité par le
-    // bas : cela suffit pour retirer un cran d'assistance.)
+    // Assistance : quand deux séances de suite au même cran ont tenu le
+    // haut de la plage, un cran d'assistance de moins (élastique plus fin) ;
+    // quand l'athlète manque le bas de la plage, un cran de plus. (L'écart
+    // à la cible dit sur la prescription tient compte d'une série repère
+    // notée « loin de l'échec », qui borne la capacité par le bas.)
     final shown = track.probeCapacity;
     final estimate = track.filter.capacityToday();
     final cap = shown != null && shown > estimate ? shown : estimate;
@@ -1780,22 +1867,26 @@ List<SetPlan>? _directPlans(
     final (low, _, _) = c.line(0, sets, served, hold: false);
     // (Règle d'assistance du programme : deux séances de suite au haut de
     // la plage avec la réserve prévue, ou première série dite au moins
-    // deux répétitions plus facile que visé — un cran de moins.)
+    // deux répétitions plus facile que visé — un cran de moins. Deux
+    // séances au même cran, jamais une seule mesure : CA2, partie 0 —
+    // l'élastique ne change plus dans un sens puis dans l'autre.)
     final streak = (mark?.reached ?? 0) >= 2;
-    if (!locked &&
-        c.policy.build &&
-        !c.eventNear &&
-        (streak || (measured && spare >= p.coachAssistGapRir - 1e-9))) {
+    // Un cran de plus seulement sur ce que l'athlète a fait : échec, ou bas
+    // de la cible servie manqué deux séances de suite au même cran (une
+    // cible abaissée par un verrou — douleur, bilan bas — puis tenue n'est
+    // pas un manque : boucle relevée sur la saison de street_01, CA2).
+    final missedTwice = (mark?.missed ?? 0) >= 2;
+    final changed = track.assistDay;
+    final settled =
+        changed == null || run.day - changed >= p.coachAssistMinDays;
+    if (!locked && c.policy.build && !c.eventNear && streak && settled) {
       ex.notes.add(
         _r(ReasonCodes.adaptFlamesBelowTarget, <String, Object?>{
           'delta': roundTo(spare > 2 ? spare : 2.0, 1),
           'sets': sets,
         }),
       );
-    } else if (track.lastDay != null &&
-        (track.noUp || (track.lastTop > 0 && track.lastTop < low))) {
-      // (Un cran de plus seulement sur ce que l'athlète a fait : échec, ou
-      // bas de la plage manqué à la dernière séance.)
+    } else if (track.lastDay != null && (track.noUp || missedTwice)) {
       ex.notes.add(
         _r(ReasonCodes.adaptFlamesAboveTarget, <String, Object?>{
           'delta': roundTo(low - track.lastTop.toDouble(), 1),
@@ -1866,7 +1957,9 @@ List<SetPlan>? _testPlans(
     final recent = recentHeavy(track, run.day, p);
     final lift = competitionLiftOf(run.ctx.profile, info.id, run.day);
     final ladder = attemptLadder(
-      estimateTotal: exp(f.m[0] + f.m[3] + f.gRef),
+      estimateTotal:
+          exp(f.m[0] + f.m[3] + f.gRef) *
+          (ex.tapered ? 1 + p.coachTaperGain : 1.0),
       relSd: dayRelSd(ex),
       bodyPart: bw,
       grid: info.grid,

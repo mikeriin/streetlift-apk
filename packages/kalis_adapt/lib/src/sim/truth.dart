@@ -9,7 +9,7 @@
 library;
 
 import 'package:kalis_core/kalis_core.dart';
-import 'package:kalis_plan/kalis_plan.dart' show MuscleGroup;
+import 'package:kalis_plan/kalis_plan.dart' show MuscleGroup, coachPainStopHits;
 
 import '../book.dart';
 import '../coach.dart' show tendonLoaded;
@@ -477,6 +477,20 @@ final class SimAthlete {
 
   bool _painKnown = false;
 
+  // Modèles B et C : zone restée réactive après un épisode de douleur (CA2,
+  // partie 0) — séries de la semaine sur chaque zone tendineuse, habitude
+  // (moyenne mobile) et tolérance de la zone réactive, fin de la fenêtre.
+  final Map<BodyZone, double> _zoneWeek = <BodyZone, double>{};
+  final Map<BodyZone, double> _zoneHabit = <BodyZone, double>{};
+  final Map<BodyZone, double> _zoneLastWeek = <BodyZone, double>{};
+  BodyZone? _reactiveZone;
+  double _reactiveTolerance = 0;
+  int _reactiveUntil = -1;
+
+  /// Poussées de douleur provoquées par une hausse trop rapide de la charge
+  /// d'une zone réactive (modèles B et C).
+  int painFlares = 0;
+
   // Modèles B et C : charge d'entraînement récente (7 jours) et de fond
   // (28 jours), dernier jour d'une série lourde, secondes de tenue en bras
   // tendus de la semaine, tolérance des tendons, décalage de note du jour.
@@ -636,6 +650,19 @@ final class SimAthlete {
       painIntensity = spec.painIntensity;
     }
     if (painUntil >= 0 && day > painUntil) {
+      final zone = painZone;
+      if (kind != TruthKind.a && painIntensity >= 3 && zone != null) {
+        // Après un épisode réel, la zone reste réactive douze semaines : sa
+        // tolérance repart de la moitié de la charge habituelle d'avant
+        // l'épisode, ou de la charge tenue la dernière semaine si elle est
+        // plus haute (choix raisonné ; modèle de réponse du tendon à la
+        // charge : Cook et Purdam 2009, Silbernagel et al. 2007).
+        final half = 0.5 * (_zoneHabit[zone] ?? 0);
+        final carried = _zoneLastWeek[zone] ?? 0;
+        _reactiveZone = zone;
+        _reactiveUntil = day + 84;
+        _reactiveTolerance = carried > half ? carried : half;
+      }
       painIntensity = 0;
     }
   }
@@ -1033,6 +1060,13 @@ final class SimAthlete {
       if (tendonLoaded(info)) {
         _holdWeek += amount;
       }
+      for (final zone in _tendonZones) {
+        // (Mouvements qui provoquent la zone au sens de la règle d'arrêt
+        // des moteurs : ce que la reprise graduée dose.)
+        if (coachPainStopHits(info.exercise, zone)) {
+          _zoneWeek[zone] = (_zoneWeek[zone] ?? 0.0) + 1;
+        }
+      }
     }
     t.lastDay = _day;
     if (loadKg != null) {
@@ -1040,10 +1074,14 @@ final class SimAthlete {
       if (before == null || loadKg > before) {
         t.sessionLoad = loadKg;
       }
-      // Douleur : une charge accrue sur la zone aggrave et prolonge.
+      // Douleur : une charge accrue sur la zone aggrave et prolonge. (Une
+      // gêne de 3 sur 10 au plus reste dans la zone où l'activité continue :
+      // seule une douleur au-dessus compte — R5-P23, Silbernagel et al.
+      // 2007, et le seuil `painThreshold` du moteur.)
       final zone = painZone;
       final last = t.lastLoad;
       if (inPain &&
+          painIntensity > 3 &&
           _painKnown &&
           zone != null &&
           last != null &&
@@ -1065,10 +1103,60 @@ final class SimAthlete {
     );
   }
 
+  static const List<BodyZone> _tendonZones = <BodyZone>[
+    BodyZone.elbow,
+    BodyZone.shoulder,
+    BodyZone.wristHand,
+  ];
+
+  /// Zone réactive (modèles B et C) : une semaine nettement au-dessus de la
+  /// tolérance de la zone (+50 %) ramène une gêne de 2 sur 10 pendant six
+  /// jours, une hausse brutale (le double) une gêne de 3 sur 10 ; la tolérance
+  /// suit la charge tenue sans poussée (moyenne mobile de moitié). Les
+  /// séries de chaque zone tendineuse forment l'habitude (moyenne mobile
+  /// d'un quart) hors épisode. Choix raisonnés du modèle de vérité : la
+  /// relecture documentée demande des paliers d'environ 10 % par semaine
+  /// (Soligard et al. 2016 : hausses hebdomadaires sous 10 %, rapport de
+  /// charge aiguë à chronique au-dessus de 1,5 : risque plus que doublé) ;
+  /// une hausse de 50 % en une semaine est nettement au-delà.
+  void _reactiveWeek() {
+    final zone = _reactiveZone;
+    if (zone != null && _day > _reactiveUntil) {
+      _reactiveZone = null;
+    }
+    final reactive = _reactiveZone;
+    for (final z in _tendonZones) {
+      final week = _zoneWeek[z] ?? 0.0;
+      if (z == reactive) {
+        final tolerance = _reactiveTolerance < 4 ? 4.0 : _reactiveTolerance;
+        if (!inPain && week > 1.5 * tolerance) {
+          painFlares++;
+          painIntensity = week > 2 * tolerance ? 3 : 2;
+          painUntil = _day + 6;
+          // (Une nouvelle poussée n'est connue du moteur qu'une fois
+          // signalée.)
+          _painKnown = false;
+        } else if (!inPain && week > _reactiveTolerance) {
+          // La tolérance suit la charge tenue sans gêne, sans jamais
+          // baisser (une semaine d'allègement ne la fait pas retomber).
+          _reactiveTolerance += (week - _reactiveTolerance) / 2;
+        }
+      } else if (!inPain || painZone != z) {
+        final habit = _zoneHabit[z];
+        _zoneHabit[z] = habit == null ? week : habit + (week - habit) / 4;
+      }
+      _zoneLastWeek[z] = week;
+      _zoneWeek[z] = 0;
+    }
+  }
+
   /// Fin de semaine : gains selon la dose de stimulus, réduits par la
   /// surcharge ; rendements décroissants avec l'ancienneté.
   void endWeek() {
     _weeks++;
+    if (kind != TruthKind.a) {
+      _reactiveWeek();
+    }
     final over = (_chronic > 14 ? _chronic - 14 : 0) / 14;
     final rate = spec.weeklyGain / (1 + _weeks / 40);
     if (kind != TruthKind.a) {
