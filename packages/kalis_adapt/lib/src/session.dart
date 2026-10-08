@@ -327,6 +327,19 @@ SessionPlan buildSessionPlan(
   ];
   final taken = <String>{for (final d in drafts) d.item.exerciseId};
 
+  // Arrêts en cours (mode coach) : un remplaçant choisi pour la douleur du
+  // jour ne charge ni une zone à l'arrêt ni, pendant un arrêt du poignet, le
+  // poignet hors d'un appui sur parallettes ou poignées (relecture
+  // indépendante du code, CA2).
+  final preStops = coached ? state.painStops(day) : const <PainStop>[];
+  final wristStopped = preStops.any((x) => x.zone == BodyZone.wristHand);
+  bool stopAvoid(CatalogExercise e) =>
+      preStops.any((x) => coachPainStopHits(e, x.zone)) ||
+      comeback.heldFor(e) ||
+      (wristStopped &&
+          e.stressOn(Joint.wrist) != JointStress.low &&
+          !coachWristNeutralSupport(e));
+
   // 1. Lieu du jour et zones douloureuses : exercices remplacés ou retirés.
   for (final d in drafts) {
     final info = d.info;
@@ -437,6 +450,7 @@ SessionPlan buildSessionPlan(
             taken: taken,
             notLoadType: tooHeavy ? e.loadType : null,
             neutralWrist: coached,
+            avoid: coached ? stopAvoid : null,
           );
     if (substitute == null) {
       d.removed = true;
@@ -480,17 +494,7 @@ SessionPlan buildSessionPlan(
     // pompes remplacées par des dips négatifs, poignet à 4/10 huit semaines ;
     // relecture documentée du pilotage, manche 4 : l'arrêt couvre toute
     // charge en extension du poignet).
-    bool wristHot() {
-      if ((painsToday[BodyZone.wristHand] ?? 0) >= painPersistMin) {
-        return true;
-      }
-      final track = state.pains[BodyZone.wristHand];
-      return track != null &&
-          track.reportsBetween(day - 6, day).any((r) => r >= painPersistMin);
-    }
-
-    final hotWrist =
-        allStops.any((x) => x.zone == BodyZone.wristHand) && wristHot();
+    final hotWrist = wristStopHot(state, allStops, painsToday, day);
     for (final stop in allStops) {
       final why = <Reason>[
         reason(ReasonCodes.adaptPainPersistent, <String, Object?>{
@@ -584,9 +588,10 @@ SessionPlan buildSessionPlan(
       ];
       for (final d in drafts) {
         final info = d.info;
+        // (Échauffement compris, comme pendant l'arrêt : relecture
+        // indépendante du code, CA2.)
         if (d.removed ||
             info == null ||
-            d.item.kind == SetKind.warmup ||
             !coachPainStopHits(info.exercise, zone)) {
           continue;
         }
@@ -745,11 +750,15 @@ SessionPlan buildSessionPlan(
       ];
       for (final d in drafts) {
         final info = d.info;
+        // (Contrainte forte — planche, équilibre, HSPU — retirée aussi sur
+        // parallettes tant que la gêne atteint 3/10 : relecture
+        // indépendante du code, CA2.)
         final hot =
             hotWrist &&
             zone == BodyZone.wristHand &&
             info != null &&
-            !coachWristNeutralSupport(info.exercise);
+            (!coachWristNeutralSupport(info.exercise) ||
+                info.zoneLevel(BodyZone.wristHand) >= 1);
         if (d.removed ||
             info == null ||
             (d.item.kind == SetKind.warmup && !escalated && !hot) ||
@@ -804,6 +813,7 @@ SessionPlan buildSessionPlan(
   final board = coached
       ? SkillBoard.of(ctx, view, state, replayed.digests, day)
       : null;
+  final hotNow = coached && wristStopHot(state, preStops, painsToday, day);
   if (board != null) {
     for (final d in drafts) {
       final target = d.item.skillTargetId;
@@ -813,7 +823,25 @@ SessionPlan buildSessionPlan(
         continue;
       }
       final current = board.currentStep(target);
-      final substitute = current == null ? null : ctx.book.find(current);
+      final found = current == null ? null : ctx.book.find(current);
+      // (L'étape actuelle suit les mêmes règles de douleur et d'arrêt que
+      // le mouvement qu'elle remplace : relecture indépendante du code,
+      // CA2.)
+      final blocked =
+          found != null &&
+          (stopAvoid(found.exercise) ||
+              (hotNow &&
+                  found.zoneLevel(BodyZone.wristHand) >= 0.5 &&
+                  !coachWristNeutralSupport(found.exercise)) ||
+              painsToday.entries.any(
+                (z) => found.excludedByPain(
+                  z.key,
+                  z.value,
+                  hard: p.painHard,
+                  severe: p.coachPainStop,
+                ),
+              ));
+      final substitute = blocked ? null : found;
       final why = <Reason>[
         reason(ReasonCodes.adaptSkillHold, <String, Object?>{
           'exerciseId': current ?? d.item.exerciseId,
@@ -915,6 +943,14 @@ SessionPlan buildSessionPlan(
   // (Jamais un jour de douleur au-dessus du seuil, ni sur une zone à
   // l'arrêt.)
   final stops = coached ? state.painStops(day) : const <PainStop>[];
+  // (Ni sur une zone signalée au-dessus de 2/10 dans la semaine, ni sur un
+  // mouvement qui charge une zone à l'arrêt sans la provoquer : relecture
+  // indépendante du code, CA2.)
+  final weekPainZones = <BodyZone>{
+    for (final s in state.pains.values)
+      if (s.reportsBetween(day - 6, day).any((r) => r > p.coachReturnPain))
+        s.zone,
+  };
   if (coached && health.level == 0 && painsToday.isEmpty && week != null) {
     final doneTests = <String>{};
     for (final d in replayed.digests) {
@@ -964,7 +1000,8 @@ SessionPlan buildSessionPlan(
             comeback.hits(info.exercise) ||
             comeback.heldFor(info.exercise) ||
             painsToday.keys.any((z) => info.zoneLevel(z) >= 0.5) ||
-            stops.any((x) => coachPainStopHits(info.exercise, x.zone))) {
+            stops.any((x) => info.zoneLevel(x.zone) >= 0.5) ||
+            weekPainZones.any((z) => info.zoneLevel(z) >= 0.5)) {
           continue;
         }
         // (Jamais hors du matériel ou du lieu du jour, ni une étape de
@@ -1717,6 +1754,47 @@ List<SetPlan> _plansFor(
   ExercisePrescription item,
   int sets,
 ) {
+  final plans = _plansForRaw(run, exercise, item, sets);
+  // Reprise graduée ou remplaçant d'une douleur (CA2, partie 0) : la part
+  // du 1RM la plus haute permise tient aussi quand la ligne n'est pas
+  // écrite en part du 1RM (remplaçant, effort en réserve) — relecture
+  // indépendante du code, CA2.
+  final pct = exercise.returnPct;
+  final track = exercise.track;
+  if (pct == null ||
+      track == null ||
+      exercise.info.mode != CapacityMode.loaded) {
+    return plans;
+  }
+  final info = exercise.info;
+  final bw = info.fraction * run.bodyWeightKg;
+  var cap = info.grid.floor(pct * track.filter.capacity - bw);
+  if (cap < info.grid.minimum) {
+    cap = info.grid.minimum;
+  }
+  var changed = false;
+  final out = <SetPlan>[];
+  for (final plan in plans) {
+    final kg = plan.loadKg;
+    if (kg != null && kg > cap + 1e-9) {
+      changed = true;
+      out.add(plan.withLoad(cap));
+    } else {
+      out.add(plan);
+    }
+  }
+  if (changed) {
+    exercise.plan = List<SetPlan?>.of(out);
+  }
+  return out;
+}
+
+List<SetPlan> _plansForRaw(
+  SessionRun run,
+  ExerciseRun exercise,
+  ExercisePrescription item,
+  int sets,
+) {
   final p = run.ctx.params;
   final info = exercise.info;
   final track = exercise.track!;
@@ -2255,3 +2333,22 @@ bool coachWristNeutralSupport(CatalogExercise e) =>
     e.equipment.any(_wristNeutralEquipment.contains);
 
 const Set<String> _wristNeutralEquipment = <String>{'parallettes', 'poignées'};
+
+/// Vrai quand le poignet est à l'arrêt ([stops]) et a été signalé à 3 sur 10
+/// ou plus le jour [day] ou dans les six jours d'avant (CA2, partie 0).
+bool wristStopHot(
+  ModelState state,
+  List<PainStop> stops,
+  Map<BodyZone, int> painsToday,
+  int day,
+) {
+  if (!stops.any((x) => x.zone == BodyZone.wristHand)) {
+    return false;
+  }
+  if ((painsToday[BodyZone.wristHand] ?? 0) >= painPersistMin) {
+    return true;
+  }
+  final track = state.pains[BodyZone.wristHand];
+  return track != null &&
+      track.reportsBetween(day - 6, day).any((r) => r >= painPersistMin);
+}
