@@ -1,0 +1,15 @@
+00:00 +5: textes des nouvelles raisons (0.2.3) programmes street des fixtures : chaque note de coach rédigée, aucun code brut
+00:00 +6: textes des nouvelles raisons (0.2.3) poignet sensible déclaré au profil : figures en appui réduites (note « poignet sensible » rédigée, bouclier)
+00:01 +6 -1: textes des nouvelles raisons (0.2.3) poignet sensible déclaré au profil : figures en appui réduites (note « poignet sensible » rédigée, bouclier) [E]
+  Expected: non-empty
+    Actual: []
+  note wrist_spare attendue
+  
+  package:matcher                                     expect
+  package:flutter_test/src/widget_tester.dart 473:18  expect
+  test/ci1d_paquets_test.dart 339:7                   main.<fn>.<fn>
+  
+00:01 +6 -1: Some tests failed.
+
+Failing tests:
+  /home/runner/work/streetlift-apk/streetlift-apk/test/ci1d_paquets_test.dart: textes des nouvelles raisons (0.2.3) poignet sensible déclaré au profil : figures en appui réduites (note « poignet sensible » rédigée, bouclier)
