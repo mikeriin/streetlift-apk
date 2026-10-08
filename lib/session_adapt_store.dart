@@ -214,6 +214,285 @@ extension SessionAdaptStore on AppStore {
   static String importedSlot(int j, String exerciseId) =>
       'j$j-${exerciseId.split('~').first}';
 
+  // ------------------------------------- CI1c : couche sur le bloc importé
+
+  /// Identifiant du bloc importé de la tranche [chunk] (52 semaines).
+  static String _importedBlockId(int chunk) => chunk == 0
+      ? kLegacyProgramBlockId
+      : '$kLegacyProgramBlockId-${chunk + 1}';
+
+  /// CI1c (C10.2) : les propositions de Koach en place (appliquées en mode
+  /// assisté ou acceptées) sur le bloc importé — le programme de 40
+  /// semaines du propriétaire — sont montrées dans le programme affiché
+  /// (MON PROGRAMME, accueil, séance) : chaque journée touchée est
+  /// remplacée, à la lecture, par une journée qui porte l'ajustement, avec
+  /// l'original en dessous ([DayPlan.original]). Rien n'est réécrit ni
+  /// régénéré : retirer la proposition (annuler) rend la journée
+  /// d'origine. Appelé après chaque mise en forme du programme et à chaque
+  /// changement du magasin (rien n'est recalculé si rien n'a changé).
+  void syncImportedOverlay() {
+    final chunks = <int>{};
+    final ids = <String>[];
+    if (_evoRaw == null) {
+      for (final e in planEvolution.entries) {
+        if (!e.inEffect || !e.blockId.startsWith(kLegacyProgramBlockId)) {
+          continue;
+        }
+        for (var c = 0; c * 52 < program.weeks.length; c++) {
+          if (_importedBlockId(c) == e.blockId) chunks.add(c);
+        }
+        ids.add('${e.blockId}/${e.id}/${e.status}');
+      }
+    }
+    final key = StringBuffer()
+      ..write(identityHashCode(program))
+      ..write('|$_overlayGen|$_evoRevision|')
+      ..write(ids.join(','));
+    final built = <int, ({kc.ProgramBlock block, Map<int, int> dayOfJ})?>{};
+    if (chunks.isNotEmpty) {
+      for (final c in chunks) {
+        built[c] = _adaptImported(c);
+        key.write('|$c:${identityHashCode(built[c])}');
+      }
+    }
+    final k = key.toString();
+    if (k == _overlayKey) return;
+    _overlayKey = k;
+    // Journées d'origine rétablies, puis couches posées à nouveau.
+    for (final w in program.weeks) {
+      for (var i = 0; i < w.days.length; i++) {
+        final s = w.days[i].source;
+        if (s != null) w.days[i] = s;
+      }
+    }
+    try {
+      for (final c in chunks) {
+        final b = built[c];
+        if (b != null) _overlayChunk(c, b);
+      }
+    } catch (_) {
+      // Couche impossible à poser : le programme d'origine reste affiché
+      // (la séance servie garde les ajustements, comme avant CI1c).
+      for (final w in program.weeks) {
+        for (var i = 0; i < w.days.length; i++) {
+          final s = w.days[i].source;
+          if (s != null) w.days[i] = s;
+        }
+      }
+    }
+  }
+
+  void _overlayChunk(
+    int chunk,
+    ({kc.ProgramBlock block, Map<int, int> dayOfJ}) built,
+  ) {
+    final evolved = _g9Memo(
+      'evolved|${identityHashCode(built.block)}|$_evoRevision',
+      () => EvolutionStore(this).evolveBlock(built.block),
+    );
+    if (identical(evolved, built.block)) return;
+    if (!importedLayoutKept(built.block, evolved)) return;
+    final entries = planEvolution.inEffect(_importedBlockId(chunk));
+    final first = chunk * 52 + 1;
+    final last = math.min(first + 51, _importedLastWeek);
+    for (var n = first; n <= last; n++) {
+      if (n > program.weeks.length) break;
+      final weekIndex = n - first;
+      final week = program.week(n);
+      for (var i = 0; i < week.days.length; i++) {
+        final d = week.days[i];
+        final dayIndex = built.dayOfJ[d.j];
+        if (dayIndex == null) continue;
+        final orig = _blockItems(built.block, weekIndex, dayIndex);
+        final evo = _blockItems(evolved, weekIndex, dayIndex);
+        if (kc.jsonDeepEquals(
+          [for (final x in orig) x.toJson()],
+          [for (final x in evo) x.toJson()],
+        )) {
+          continue;
+        }
+        final touching = [
+          for (final e in entries)
+            if (e.fromWeek <= weekIndex &&
+                EvolutionStore.evolutionTouchesDay(e, dayIndex))
+              e,
+        ];
+        week.days[i] = _overlayDay(d.original, orig, evo, touching, evolved);
+      }
+    }
+  }
+
+  /// Le bloc ajusté garde les journées du bloc importé (même jour de la
+  /// semaine pour chaque journée) : sinon la couche ne peut pas être
+  /// montrée jour pour jour (et la proposition n'est pas applicable).
+  static bool importedLayoutKept(kc.ProgramBlock a, kc.ProgramBlock b) {
+    if (identical(a, b)) return true;
+    final da = {for (final d in a.pass1.days) d.dayIndex: d.weekday};
+    final db = {for (final d in b.pass1.days) d.dayIndex: d.weekday};
+    if (da.length != db.length) return false;
+    for (final e in da.entries) {
+      if (db[e.key] != e.value) return false;
+    }
+    if (a.pass2.weeks.length != b.pass2.weeks.length) return false;
+    // Un emplacement ajouté doit pouvoir porter un exercice du programme
+    // affiché (« j<J>-<identifiant> »).
+    final js = <int, int>{};
+    for (final d in a.pass1.days) {
+      final m = RegExp(r'^j(\d)-').firstMatch(
+        d.slots.isEmpty ? '' : d.slots.first.slotId,
+      );
+      if (m != null) js[d.dayIndex] = int.parse(m.group(1)!);
+    }
+    for (final w in b.pass2.weeks) {
+      for (final d in w.days) {
+        final j = js[d.dayIndex];
+        for (final it in d.items) {
+          if (j == null || !it.slotId.startsWith('j$j-')) return false;
+        }
+      }
+    }
+    return true;
+  }
+
+  static List<kc.ExercisePrescription> _blockItems(
+    kc.ProgramBlock b,
+    int weekIndex,
+    int dayIndex,
+  ) {
+    for (final w in b.pass2.weeks) {
+      if (w.weekIndex != weekIndex) continue;
+      for (final d in w.days) {
+        if (d.dayIndex == dayIndex) return d.items;
+      }
+    }
+    return const [];
+  }
+
+  /// Journée [d] du programme importé avec les prescriptions ajustées
+  /// [evo] (au lieu de [orig]) : séries, répétitions, charge, repos ou
+  /// exercice changés, exercice retiré ou ajouté. Un exercice que le bloc
+  /// importé ne porte pas reste celui du programme.
+  DayPlan _overlayDay(
+    DayPlan d,
+    List<kc.ExercisePrescription> orig,
+    List<kc.ExercisePrescription> evo,
+    List<EvolutionEntry> entries,
+    kc.ProgramBlock evolved,
+  ) {
+    final o = {for (final x in orig) x.slotId: x};
+    final v = {for (final x in evo) x.slotId: x};
+    final why = _overlayWhy(entries, evolved);
+    final out = <Exercise>[];
+    final ids = <String>{};
+    for (final e in d.exercises) {
+      ids.add(e.id);
+      final slot = importedSlot(d.j, e.id);
+      final a = o[slot];
+      if (a == null) {
+        out.add(e);
+        continue;
+      }
+      final b = v[slot];
+      if (b == null) continue; // retiré par Koach
+      if (kc.jsonDeepEquals(a.toJson(), b.toJson())) {
+        out.add(e);
+        continue;
+      }
+      out.add(_overlayExercise(e, a, b, why));
+    }
+    for (final b in evo) {
+      if (o.containsKey(b.slotId)) continue;
+      final id = b.slotId.substring('j${d.j}-'.length);
+      if (id.isEmpty || ids.contains(id) || id.contains('~')) continue;
+      final shell = Exercise.manual(
+        id: id,
+        name: _adaptNameOf(b.exerciseId),
+        setsText: adaptSetsText(b),
+      );
+      out.add(_overlayExercise(shell, null, b, why));
+    }
+    return DayPlan.overlay(d, out);
+  }
+
+  Exercise _overlayExercise(
+    Exercise e,
+    kc.ExercisePrescription? a,
+    kc.ExercisePrescription b,
+    String why,
+  ) {
+    final o = a != null && a.exerciseId == b.exerciseId ? a : null;
+    final sameAmount =
+        o != null &&
+        o.repsLow == b.repsLow &&
+        o.repsHigh == b.repsHigh &&
+        o.secondsLow == b.secondsLow &&
+        o.secondsHigh == b.secondsHigh &&
+        o.kind == b.kind &&
+        b.setTargets == null &&
+        o.setTargets == null;
+    SetsSpec? sets;
+    if (o != null && sameAmount) {
+      sets = o.sets == b.sets ? e.sets : e.sets.withCount(b.sets);
+    }
+    final sameLoad =
+        o != null &&
+        o.startLoadKg == b.startLoadKg &&
+        o.percentOfOneRm == b.percentOfOneRm &&
+        o.loadBasis == b.loadBasis;
+    final sameRest = o != null && o.restSeconds == b.restSeconds;
+    final sameIntensity =
+        o != null && o.targetFlames == b.targetFlames && o.kind == b.kind;
+    return Exercise.koach(
+      e,
+      name: o != null ? e.name : _adaptNameOf(b.exerciseId),
+      sets: sets ?? SetsSpec.text(adaptSetsText(b)),
+      intensity: sameIntensity
+          ? e.intensity
+          : b.kind == kc.SetKind.test
+          ? 'Test : au maximum, proprement'
+          : adaptIntensity(b),
+      load: sameLoad
+          ? e.load
+          : LoadSpec.fixed(
+              b.loadBasis == kc.LoadBasis.bodyweight ? null : b.startLoadKg,
+            ),
+      rest: sameRest ? e.rest : pt.restLabel(b.restSeconds),
+      restSec: sameRest ? e.restSec : b.restSeconds,
+      cue: o != null ? e.cue : PlanStore(this).planLabels.cue(b.exerciseId),
+      why: [
+        if (why.isNotEmpty) why,
+        if (o != null && e.why.isNotEmpty) e.why,
+      ].join(' '),
+      catalogId: b.exerciseId,
+    );
+  }
+
+  /// « Koach : ajouter 1 série à Tractions (accepté le 28/09). » — ce qui a
+  /// changé, par qui et quand (C10.2).
+  String _overlayWhy(List<EvolutionEntry> entries, kc.ProgramBlock block) {
+    if (entries.isEmpty) return 'Ajusté par Koach.';
+    final e = entries.last;
+    final action = et.evolutionAction(
+      e,
+      exerciseName: _adaptNameOf,
+      dayName: (i) {
+        for (final d in block.pass1.days) {
+          if (d.dayIndex == i) return weekdayName(d.weekday);
+        }
+        return 'jour';
+      },
+    );
+    final on = e.decidedOn;
+    final date = on == null || on.length < 10
+        ? ''
+        : ' le ${on.substring(8, 10)}/${on.substring(5, 7)}';
+    final how = e.status == EvoStatus.accepted
+        ? 'accepté$date'
+        : 'appliqué$date (mode assisté)';
+    return 'Koach : ${et.capitalized(action)} ($how, annulable dans '
+        'Évolution).';
+  }
+
   /// Emplacement d'un exercice du journal (clé) dans le bloc de la journée.
   String? adaptSlotOf(int week, int j, String key) {
     final base = key.split('~').first;
@@ -266,7 +545,8 @@ extension SessionAdaptStore on AppStore {
     for (var n = first; n <= last; n++) {
       final w = program.week(n);
       final days = <int, List<kc.ExercisePrescription>>{};
-      for (final d in w.days) {
+      // CI1c : toujours le programme d'origine (sans la couche de Koach).
+      for (final d in [for (final x in w.days) x.original]) {
         final items = <kc.ExercisePrescription>[];
         final used = <String>{};
         for (final e in d.exercises) {
@@ -683,10 +963,21 @@ extension SessionAdaptStore on AppStore {
     return out.isEmpty ? null : kc.HealthCheck.fromJson(out);
   }
 
-  /// Séance du moteur pour la journée [base] de la semaine [week] : celle
-  /// du journal, sinon une nouvelle prescription sans bilan (avant toute
-  /// série). Null : séance hors moteur (profil v2 absent, journée hors
-  /// bloc, séance déjà commencée ou faite avant G9, erreur du moteur).
+  /// Séance du moteur pour la journée [base] de la semaine [week], d'après
+  /// l'état courant (CI1c, C10) :
+  ///
+  /// - séance **non commencée** (aucune série validée) : toujours
+  ///   prescrite à nouveau à l'ouverture — bloc avec les ajustements de
+  ///   Koach en place, journal, profil, réglages du moment ; le bilan du
+  ///   jour, le lieu et la suite donnée à l'ajustement du bilan restent
+  ///   s'ils ont été donnés aujourd'hui ;
+  /// - séance **commencée** : gardée (séries validées jamais perdues) ;
+  ///   si la journée du bloc a changé depuis la prescription, ce qui reste
+  ///   à faire (exercices pas encore commencés) suit la nouvelle
+  ///   prescription.
+  ///
+  /// Null : séance hors moteur (profil v2 absent, journée hors bloc,
+  /// séance commencée ou faite avant G9, erreur du moteur).
   SessionAdapt? adaptOpen(int week, DayPlan base) {
     if (week < 1 || base.exercises.isEmpty) return null;
     final key = sessionKey(week, base.j);
@@ -694,34 +985,51 @@ extension SessionAdaptStore on AppStore {
     final started =
         log != null &&
         (log.done || log.ex.values.any((x) => x.sets.any((s) => s.done)));
-    SessionAdapt? stale;
-    if (log?.adapt != null) {
-      final a = sessionAdaptOf(key);
-      // Prescription du jour, ou séance commencée : gardée telle quelle.
-      if (a == null || started || a.date == _adaptToday.iso) return a;
-      // Prescrite un autre jour et pas commencée : nouvelle prescription
-      // (journal et forme du jour ont changé), sans l'ancien bilan.
-      stale = a;
+    final stored = log?.adapt == null ? null : sessionAdaptOf(key);
+    // Séance du moteur illisible : gardée telle quelle, hors moteur.
+    if (log?.adapt != null && stored == null) return null;
+    if (started) {
+      if (stored == null) return null;
+      return _adaptRefreshStarted(week, base, stored) ?? stored;
     }
-    if (!adaptAvailable) return stale;
-    if (started) return null;
+    if (!adaptAvailable) return stored;
     final place = adaptPlaceOf(week, base.j);
     if (place == null) return null;
+    final today = _adaptToday.iso;
+    if (stored != null &&
+        stored.date == today &&
+        stored.blockId == place.blockId &&
+        stored.weekIndex == place.weekIndex &&
+        stored.dayIndex == place.dayIndex) {
+      // Ouverte plus tôt aujourd'hui : même bilan, même lieu, prescription
+      // à jour.
+      return _adaptReprescribe(
+            week,
+            base,
+            stored,
+            check: stored.check,
+            where: stored.place,
+            asked: stored.asked,
+            quiet: true,
+          ) ??
+          stored;
+    }
     try {
       final input = _adaptInput(place, key);
-      if (input == null) return stale;
+      if (input == null) return stored;
       final plan = _adaptPrescribe(place, input, null, null);
       final a = SessionAdapt(
         blockId: place.blockId,
         weekIndex: place.weekIndex,
         dayIndex: place.dayIndex,
-        date: _adaptToday.iso,
+        date: today,
         mode: adaptMode,
         plan: plan,
+        source: _adaptSourceOf(place),
       );
       final target = sessionLog(week, base.j);
       target.adapt = a.toJson().cast<String, dynamic>();
-      // Séries déjà préparées (non validées) : nombre et cibles du moteur.
+      // Séries préparées (non validées) : nombre et cibles du moteur.
       for (final x in target.ex.values) {
         for (final s in x.sets) {
           if (s.done) continue;
@@ -730,16 +1038,118 @@ extension SessionAdaptStore on AppStore {
         }
       }
       _adaptResync(week, base, a, a, target, key);
-      // Appelé pendant la construction de l'écran de séance : écriture
-      // différée, sans prévenir les écouteurs.
-      _dataRevision++;
-      _saveT?.cancel();
-      _saveT = Timer(const Duration(milliseconds: 600), _flushLogs);
+      _adaptQuietSave();
       return a;
     } catch (_) {
-      return stale;
+      return stored;
     }
   }
+
+  /// Appelé pendant la construction de l'écran de séance : écriture
+  /// différée, sans prévenir les écouteurs.
+  void _adaptQuietSave() {
+    _dataRevision++;
+    _saveT?.cancel();
+    _saveT = Timer(const Duration(milliseconds: 600), _flushLogs);
+  }
+
+  /// CI1c : empreinte de la journée du bloc servie (prescriptions écrites,
+  /// ajustements de Koach compris) et du mode.
+  String? _adaptSourceOf(AdaptPlace place) {
+    final d = place.day;
+    if (d == null) return null;
+    return '${adaptMode[0]}${fnv1a32(jsonEncode(d.toJson()))}';
+  }
+
+  /// CI1c : séance commencée dont la journée du bloc a changé depuis la
+  /// prescription (ajustement de Koach accepté, bloc remplacé) : nouvelle
+  /// prescription pour les exercices pas encore commencés ; ceux qui ont
+  /// une série validée gardent leur prescription et leurs conseils. Null :
+  /// rien à changer.
+  SessionAdapt? _adaptRefreshStarted(
+    int week,
+    DayPlan base,
+    SessionAdapt a,
+  ) {
+    if (a.source == null || a.date != _adaptToday.iso) return null;
+    if (!adaptAvailable) return null;
+    final place = adaptPlaceOf(week, base.j);
+    if (place == null ||
+        place.blockId != a.blockId ||
+        place.weekIndex != a.weekIndex ||
+        place.dayIndex != a.dayIndex) {
+      return null;
+    }
+    final src = _adaptSourceOf(place);
+    if (src == null || src == a.source) return null;
+    final key = sessionKey(week, base.j);
+    final log = logs[key];
+    if (log == null || log.done) return null;
+    try {
+      final input = _adaptInput(place, key);
+      if (input == null) return null;
+      final useCheck = _answered(a.check) ? a.check : null;
+      // Emplacements commencés : prescription d'origine gardée.
+      final startedSlots = <String>{
+        for (final e in log.ex.entries)
+          if (e.value.sets.any((s) => s.done))
+            if (adaptSlotOf(week, base.j, e.key) case final slot?) slot,
+      };
+      kc.SessionPlan merge(kc.SessionPlan fresh, kc.SessionPlan old) {
+        final keep = {
+          for (final it in old.items)
+            if (startedSlots.contains(it.slotId)) it.slotId: it,
+        };
+        final items = <kc.ExercisePrescription>[
+          for (final it in fresh.items) keep.remove(it.slotId) ?? it,
+          ...keep.values,
+        ];
+        return fresh.copyWith(items: items);
+      }
+
+      final plan = merge(
+        _adaptPrescribe(place, input, useCheck, a.place),
+        a.plan,
+      );
+      kc.SessionPlan? without;
+      if (useCheck != null) {
+        final b = merge(
+          _adaptPrescribe(place, input, factsOf(useCheck), a.place),
+          a.base ?? a.plan,
+        );
+        if (!jsonDeepEquals(b.toJson(), plan.toJson())) without = b;
+      }
+      final next = SessionAdapt(
+        blockId: a.blockId,
+        weekIndex: a.weekIndex,
+        dayIndex: a.dayIndex,
+        date: a.date,
+        mode: a.mode,
+        asked: a.asked,
+        check: a.check,
+        place: a.place,
+        plan: plan,
+        base: without,
+        choice: without == null ? null : (a.choice ?? _defaultChoice(a.mode)),
+        advice: {
+          for (final e in a.advice.entries)
+            if (startedSlots.contains(adaptSlotOf(week, base.j, e.key)))
+              e.key: e.value,
+        },
+        source: src,
+      );
+      final target = sessionLog(week, base.j);
+      target.adapt = next.toJson().cast<String, dynamic>();
+      _adaptResync(week, base, a, next, target, key);
+      _adaptQuietSave();
+      return next;
+    } catch (_) {
+      return null;
+    }
+  }
+
+  static String _defaultChoice(String mode) =>
+      mode == 'assisted' ? 'applied' : 'pending';
 
   void _adaptStore(
     int week,
@@ -763,6 +1173,7 @@ extension SessionAdaptStore on AppStore {
     required kc.HealthCheck? check,
     required kc.Place? where,
     required bool asked,
+    bool quiet = false,
   }) {
     final key = sessionKey(week, base.j);
     final place = adaptPlaceOf(week, base.j);
@@ -792,12 +1203,28 @@ extension SessionAdaptStore on AppStore {
         place: where,
         plan: plan,
         base: without,
+        // CI1c : à la réouverture (quiet), la suite déjà donnée à
+        // l'ajustement du bilan est gardée.
         choice: without == null
             ? null
-            : (mode == 'assisted' ? 'applied' : 'pending'),
+            : (quiet && a.base != null && a.choice != null && a.mode == mode
+                  ? a.choice
+                  : _defaultChoice(mode)),
         // Conseils calculés pour l'ancienne prescription : retirés.
         advice: const {},
+        source: _adaptSourceOf(place),
       );
+      if (quiet) {
+        // Réouverture : séance gardée si rien n'a changé ; séries
+        // préparées remises au nombre et aux cibles de la séance servie.
+        final same = jsonDeepEquals(next.toJson(), a.toJson());
+        final kept = same ? a : next;
+        final target = sessionLog(week, base.j);
+        if (!same) target.adapt = next.toJson().cast<String, dynamic>();
+        _adaptResync(week, base, a, kept, target, key);
+        _adaptQuietSave();
+        return kept;
+      }
       _adaptStore(week, base, a, next);
       return next;
     } catch (_) {

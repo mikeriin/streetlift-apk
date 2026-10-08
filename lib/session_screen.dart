@@ -134,6 +134,9 @@ class _SessionScreenState extends State<SessionScreen> {
   @override
   void initState() {
     super.initState();
+    // CI1c : une séance non commencée est recalculée à chaque ouverture
+    // d'après l'état courant (programme, ajustements, réglages).
+    store.refreshUnstartedSession(widget.week.n, widget.day);
     adaptOn = store.adaptOpen(widget.week.n, widget.day) != null;
     groups = _groups();
     koachPage = adaptOn;
@@ -159,6 +162,8 @@ class _SessionScreenState extends State<SessionScreen> {
   void dispose() {
     unregisterDayRoute(_route);
     keepAwake(false);
+    // CI1c : une simple consultation ne laisse aucune entrée d'historique.
+    store.forgetConsultation(widget.week.n, widget.day.j);
     store.flush();
     ctl.dispose();
     pageCtl.dispose();

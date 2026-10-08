@@ -215,6 +215,21 @@ extension EvolutionStore on AppStore {
   /// tests.)
   bool evolutionReceive(AdaptPlace place, List<kc.Proposal> proposals) {
     if (_evoRaw != null) return false;
+    // CI1c (C10.2) : sur le bloc importé (programme de 40 semaines), une
+    // proposition qui ne peut pas s'appliquer jour pour jour par-dessus le
+    // programme n'est plus proposée comme applicable : Koach le dit en
+    // clair dans Évolution.
+    if (place.imported) {
+      final kept = <kc.Proposal>[];
+      final off = <kc.Proposal>[];
+      for (final p in proposals) {
+        (evolutionApplicable(place, p) ? kept : off).add(p);
+      }
+      evolutionNotApplicable = off;
+      proposals = kept;
+    } else {
+      evolutionNotApplicable = const [];
+    }
     final mode = SessionAdaptStore(this).adaptMode;
     final today = _evoToday.iso;
     final offered = {for (final p in proposals) p.id};
@@ -271,6 +286,22 @@ extension EvolutionStore on AppStore {
     if (!changed) return false;
     _evoCommit(out);
     return true;
+  }
+
+  /// CI1c : la proposition [p] change le bloc de [place] et, pour le bloc
+  /// importé, garde ses journées (la couche se montre jour pour jour).
+  bool evolutionApplicable(AdaptPlace place, kc.Proposal p) {
+    try {
+      final after = ka.applyProposal(place.block, p);
+      if (identical(after, place.block)) return false;
+      if (kc.jsonDeepEquals(after.toJson(), place.block.toJson())) {
+        return false;
+      }
+      return !place.imported ||
+          SessionAdaptStore.importedLayoutKept(place.block, after);
+    } catch (_) {
+      return false;
+    }
   }
 
   void _evoCommit(List<EvolutionEntry> entries) {
