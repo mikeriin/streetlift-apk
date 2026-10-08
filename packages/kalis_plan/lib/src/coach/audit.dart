@@ -205,7 +205,15 @@ List<String> coachAudit(
         );
         final budget = athlete.days[d].minutes * 60.0;
         if (seconds > budget * 1.15 + 180 &&
-            !day.items.any((p) => imposedSlotIds.contains(p.slotId))) {
+            !day.items.any((p) => imposedSlotIds.contains(p.slotId)) &&
+            // (Jour de l'épreuve : sa durée est celle de l'épreuve.)
+            !day.items.any(
+              (p) =>
+                  p.kind == SetKind.test &&
+                  p.reasons.any(
+                    (r) => r.params['note'] == CoachNotes.eventDay,
+                  ),
+            )) {
           out.add(
             '$where : ${(seconds / 60).round()} min pour '
             '${athlete.days[d].minutes}',
