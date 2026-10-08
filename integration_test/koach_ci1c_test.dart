@@ -287,6 +287,7 @@ void main() {
     );
     await wait(tester, 800);
     await push(tester, const EvolutionScreen(), 2000);
+    await scrollTo(tester, find.text('Historique des changements'));
     await shot('${name}_evolution');
     await home(tester);
   }

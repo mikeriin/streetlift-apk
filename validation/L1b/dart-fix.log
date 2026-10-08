@@ -1,0 +1,13 @@
+Computing fixes in streetlift_tracker...
+Applying fixes...
+
+lib/game.dart
+  curly_braces_in_flow_control_structures - 3 fixes
+
+lib/store.dart
+  curly_braces_in_flow_control_structures - 1 fix
+
+lib/wod_store.dart
+  curly_braces_in_flow_control_structures - 1 fix
+
+5 fixes made in 3 files.
