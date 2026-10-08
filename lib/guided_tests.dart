@@ -388,7 +388,12 @@ Set<String> _programIds = const {};
 /// Programme actuel : identifiants du catalogue de ses exercices (gardés
 /// tant que le programme ne change pas).
 Set<String> programExerciseIds() {
-  final key = (store.program, store.program.weeks.length, store.content);
+  final key = (
+    store.program,
+    store.program.weeks.length,
+    store.content,
+    store.programRevision,
+  );
   if (key == _programKey) return _programIds;
   final out = <String>{};
   for (final w in store.program.weeks) {

@@ -1,4 +1,9 @@
-# Kalis Track dev6.9.1 — Calibrage des programmes (pipeline « Calibrage des programmes », voie App)
+# Kalis Track dev6.9.2 — Calibrage des programmes (pipeline « Calibrage des programmes », voie App)
+
+## dev6.9.2 — Koach appliqué, séance toujours à jour (lot CI1c)
+
+- **Ajustement de Koach accepté = programme changé tout de suite** : séance du jour (même déjà ouverte), accueil, Mon programme et séances suivantes visées. Pour le programme de 40 semaines importé, l'ajustement est une couche posée par-dessus l'original (jamais régénéré) : ce qui a changé, par Koach, quand (« Koach : … (accepté le jj/mm, annulable dans Évolution) ») ; « Annuler » rend l'original. Une proposition qui ne peut pas s'appliquer jour pour jour au programme importé n'est plus proposée : Koach le dit en clair dans Évolution.
+- **Séance jamais figée** : une séance pas commencée est recalculée à chaque ouverture (programme, ajustements, bilan du jour, réglages) ; une séance commencée garde ses séries validées et met à jour ce qui reste à faire. Ouvrir une séance pour voir ne crée plus d'entrée d'historique ; les séances seulement consultées figées par les versions précédentes sont retirées à la mise à jour (valeurs saisies, notes et bilans gardés). Version « dev6.9.2 ».
 
 ## dev6.9.1 — Douleur qui dure, reprise graduée, tests reportés (lot CI1b)
 

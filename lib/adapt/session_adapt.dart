@@ -155,6 +155,12 @@ class SessionAdapt {
   /// Conseils pendant la séance, par exercice (clé du journal).
   final Map<String, List<AdviceStep>> advice;
 
+  /// CI1c : empreinte de la journée du bloc (prescriptions écrites, mode)
+  /// sur laquelle la séance a été prescrite ; quand elle change (ajustement
+  /// de Koach accepté, nouveau bloc), une séance commencée met à jour ce
+  /// qui reste à faire. Null : séance prescrite avant CI1c.
+  final String? source;
+
   const SessionAdapt({
     required this.blockId,
     required this.weekIndex,
@@ -168,6 +174,7 @@ class SessionAdapt {
     this.base,
     this.choice,
     this.advice = const {},
+    this.source,
   });
 
   bool get assisted => mode == 'assisted';
@@ -199,6 +206,7 @@ class SessionAdapt {
     Map<String, List<AdviceStep>>? advice,
     String? date,
     String? mode,
+    String? source,
   }) => SessionAdapt(
     blockId: blockId,
     weekIndex: weekIndex,
@@ -212,6 +220,7 @@ class SessionAdapt {
     base: clearBase ? null : (base ?? this.base),
     choice: clearChoice ? null : (choice ?? this.choice),
     advice: advice ?? this.advice,
+    source: source ?? this.source,
   );
 
   /// Conseils d'un exercice, avec [step] ajouté.
@@ -266,6 +275,7 @@ class SessionAdapt {
         for (final e in advice.entries)
           e.key: [for (final s in e.value) s.toJson()],
       },
+    if (source != null) 'src': source,
   };
 
   /// Lecture ; [FormatException] hors contrat (toute autre erreur de
@@ -347,6 +357,10 @@ class SessionAdapt {
         ];
       }
     }
+    final src = m['src'];
+    if (src != null && (src is! String || src.isEmpty || src.length > 40)) {
+      throw const FormatException('Séance du moteur : empreinte.');
+    }
     return SessionAdapt(
       blockId: str('blockId', 200),
       weekIndex: nat('week'),
@@ -360,6 +374,7 @@ class SessionAdapt {
       base: m['base'] == null ? null : plan(m['base']),
       choice: choice as String?,
       advice: advice,
+      source: src as String?,
     );
   }
 }

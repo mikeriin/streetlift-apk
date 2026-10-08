@@ -31,6 +31,7 @@ import 'models.dart';
 import 'persistence.dart';
 import 'plan/plan_creation.dart';
 import 'plan/plan_evolution.dart';
+import 'plan/evolution_texts.dart' as et;
 import 'plan/plan_program.dart';
 import 'plan/coach_texts.dart' as ct;
 import 'plan/plan_texts.dart' as pt;
@@ -93,6 +94,11 @@ class SetEntry {
   /// moteur la traite comme une série sans note).
   int? flames;
   bool flamesUnknown;
+
+  /// CI1c : valeur saisie par l'utilisateur (et non pré-remplie) dans une
+  /// série pas encore validée : brouillon gardé quand la séance est
+  /// recalculée ou fermée.
+  bool edited;
   SetEntry({
     this.kg = '',
     this.reps = '',
@@ -104,6 +110,7 @@ class SetEntry {
     this.excluded = false,
     this.flames,
     this.flamesUnknown = false,
+    this.edited = false,
   });
 
   Map<String, dynamic> toJson() => {
@@ -117,6 +124,7 @@ class SetEntry {
     if (excluded) 'excluded': true,
     if (flames != null) 'flames': flames,
     if (flamesUnknown) 'flamesUnknown': true,
+    if (edited) 'edited': true,
   };
   SetEntry.fromJson(Map<String, dynamic> j)
     : kg = j['kg'] as String? ?? '',
@@ -128,7 +136,8 @@ class SetEntry {
       effort = (j['effort'] as num?)?.toDouble(),
       excluded = j['excluded'] as bool? ?? false,
       flames = j['flames'] is int ? j['flames'] as int : null,
-      flamesUnknown = j['flamesUnknown'] == true;
+      flamesUnknown = j['flamesUnknown'] == true,
+      edited = j['edited'] == true;
 }
 
 class ExerciseLog {
@@ -394,6 +403,21 @@ class AppStore extends ChangeNotifier {
   /// Dernière revue du moteur dynamique (jamais sauvegardée).
   EvolutionReview? lastEvolutionReview;
 
+  /// CI1c : propositions de la dernière revue qui ne peuvent pas
+  /// s'appliquer au programme importé (jamais sauvegardées) ; Koach les
+  /// dit en clair dans Évolution, sans bouton « Accepter ».
+  List<kc.Proposal> evolutionNotApplicable = const [];
+
+  /// CI1c : couche des ajustements de Koach sur le programme importé
+  /// (`syncImportedOverlay`) : génération de la mise en forme du programme
+  /// et clé du dernier calcul.
+  int _overlayGen = 0;
+  String _overlayKey = '';
+
+  /// CI1c : révision des journées du programme affiché (couche de Koach
+  /// posée ou retirée) ; clés des calculs tirés de ses exercices.
+  int programRevision = 0;
+
   /// G9 : calculs du moteur dynamique gardés (bloc importé, journal
   /// présenté au moteur), clés de signature ; jamais sauvegardés.
   final Map<String, Object?> _g9Cache = {};
@@ -426,6 +450,8 @@ class AppStore extends ChangeNotifier {
               )
             : const LegacyWeekKinds.empty();
         program.start = start;
+        _overlayGen++;
+        SessionAdaptStore(this).syncImportedOverlay();
         return;
       } catch (_) {
         planLoadIssues++;
@@ -451,6 +477,8 @@ class AppStore extends ChangeNotifier {
       weekKinds = _baseWeekKinds;
     }
     program.start = start;
+    _overlayGen++;
+    SessionAdaptStore(this).syncImportedOverlay();
   }
 
   /// G1 : vue du stockage limitée à la session active (session_prefs.dart).
@@ -777,6 +805,9 @@ class AppStore extends ChangeNotifier {
   void notifyListeners() {
     _progression = null;
     _game = null;
+    // CI1c : ajustements de Koach sur le programme importé à jour avant que
+    // les écrans le relisent (rien n'est recalculé si rien n'a changé).
+    if (_initialized) SessionAdaptStore(this).syncImportedOverlay();
     super.notifyListeners();
   }
 
@@ -1563,6 +1594,11 @@ class AppStore extends ChangeNotifier {
     // retirées en attente ; l'ancien reste dans la copie de récupération.
     _retiredPending = RetiredData.empty;
     retiredCopyFailed = false;
+    // CI1c (migration) : séances seulement consultées, figées par les
+    // versions ≤ 6.9.1, retirées du journal (aucune donnée perdue : les
+    // valeurs saisies sans être validées sont d'abord marquées).
+    _markLegacyDrafts();
+    _pruneConsultations();
     _progression = null;
   }
 
@@ -2771,6 +2807,134 @@ class AppStore extends ChangeNotifier {
     koach.answers.clear();
     _persist();
     notifyListeners();
+  }
+
+  // ---------- CI1c : séance consultée, séance non commencée ----------
+
+  /// Une séance du journal qui n'a que l'empreinte d'une consultation :
+  /// rien de validé, aucune note, aucun bilan donné, aucune décision de
+  /// l'ancien Koach. Elle ne porte aucune donnée de l'utilisateur.
+  bool isConsultation(String key) {
+    final l = logs[key];
+    if (l == null || l.done || l.finishedAt != null) return false;
+    for (final x in l.ex.values) {
+      if (x.note.trim().isNotEmpty ||
+          x.prescribed != null ||
+          x.koach != null ||
+          x.showKg != null ||
+          x.showRir != null ||
+          x.showV != null ||
+          x.sets.any((s) => s.done || s.edited)) {
+        return false;
+      }
+    }
+    if (koach.answers.containsKey(key) ||
+        koach.decisions.any((d) => d.id.startsWith('$key|'))) {
+      return false;
+    }
+    if (l.adapt != null) {
+      final a = SessionAdaptStore(this).sessionAdaptOf(key);
+      // Illisible : gardée telle quelle.
+      if (a == null) return false;
+      if (a.asked || a.check != null || a.place != null) return false;
+      if (a.advice.isNotEmpty) return false;
+    }
+    return true;
+  }
+
+  /// CI1c : à la fermeture d'une séance seulement consultée, son entrée
+  /// est retirée du journal (une consultation ne crée aucune entrée
+  /// d'historique et ne fige rien). Sans prévenir les écouteurs (appelé
+  /// pendant la fermeture de l'écran) ; l'écriture suit.
+  void forgetConsultation(int week, int j) {
+    final key = sessionKey(week, j);
+    if (!isConsultation(key)) return;
+    logs.remove(key);
+    _dataRevision++;
+    _saveT?.cancel();
+    _saveT = Timer(const Duration(milliseconds: 600), _flushLogs);
+  }
+
+  /// CI1c (migration) : entrées du journal figées par une simple
+  /// consultation (versions ≤ 6.9.1) retirées ; aucune donnée de
+  /// l'utilisateur n'y est (voir [isConsultation]). Nombre retiré.
+  int _pruneConsultations() {
+    final keys = [
+      for (final k in logs.keys)
+        if (RegExp(r'^S[1-9]\d*-J[1-7]$').hasMatch(k) && isConsultation(k)) k,
+    ];
+    for (final k in keys) {
+      logs.remove(k);
+    }
+    return keys.length;
+  }
+
+  /// CI1c : à l'ouverture d'une séance non commencée (aucune série
+  /// validée), les séries préparées sont refaites d'après la journée
+  /// [day] du moment (nombre de séries, valeurs pré-remplies) ; les notes
+  /// restent. Une séance commencée n'est pas touchée.
+  void refreshUnstartedSession(int week, DayPlan day) {
+    final key = sessionKey(week, day.j);
+    final l = logs[key];
+    if (l == null || l.done) return;
+    if (l.ex.values.any((x) => x.sets.any((s) => s.done))) return;
+    final byId = {for (final e in day.exercises) e.id: e};
+    for (final x in l.ex.entries) {
+      final e = byId[x.key];
+      final old = x.value.sets;
+      final n = e == null ? old.length : setCount(e);
+      // Même journal d'exercice (réglages d'affichage, note gardés) ;
+      // séries pré-remplies refaites (puis réglées sur la séance servie
+      // par le moteur), saisies de l'utilisateur gardées.
+      x.value.sets = [
+        for (var i = 0; i < n; i++)
+          if (i < old.length && old[i].edited) old[i] else SetEntry(),
+        for (var i = n; i < old.length; i++)
+          if (old[i].edited) old[i],
+      ];
+    }
+  }
+
+  /// CI1c (migration) : dans une séance pas commencée d'une version
+  /// ≤ 6.9.1, une valeur que l'application n'a pas pu pré-remplir (autre
+  /// que la cible de la séance servie, ou toute valeur hors moteur) est
+  /// une saisie de l'utilisateur : marquée comme telle, jamais refaite ni
+  /// retirée.
+  void _markLegacyDrafts() {
+    final re = RegExp(r'^S([1-9]\d*)-J([1-7])$');
+    for (final entry in logs.entries) {
+      final l = entry.value;
+      final m = re.firstMatch(entry.key);
+      if (m == null || l.done) continue;
+      if (l.ex.values.any((x) => x.sets.any((s) => s.done || s.edited))) {
+        continue;
+      }
+      final week = int.parse(m[1]!), j = int.parse(m[2]!);
+      final a = l.adapt == null
+          ? null
+          : SessionAdaptStore(this).sessionAdaptOf(entry.key);
+      for (final x in l.ex.entries) {
+        for (var i = 0; i < x.value.sets.length; i++) {
+          final st = x.value.sets[i];
+          if (st.kg.isEmpty &&
+              st.reps.isEmpty &&
+              st.rir.isEmpty &&
+              st.v.isEmpty) {
+            continue;
+          }
+          final goal = a == null
+              ? null
+              : SessionAdaptStore(this)._legacyGoalTexts(week, j, a, x.key, i);
+          if (goal == null ||
+              st.rir.isNotEmpty ||
+              st.v.isNotEmpty ||
+              (st.kg.isNotEmpty && st.kg != goal.kg) ||
+              (st.reps.isNotEmpty && st.reps != goal.value)) {
+            st.edited = true;
+          }
+        }
+      }
+    }
   }
 
   /// Efface tout l'historique d'une séance : séries, notes, statut « fait »

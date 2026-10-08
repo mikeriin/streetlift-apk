@@ -322,7 +322,8 @@ jobs:
     name: Rendu réel sur émulateur Android (Flutter GPU)
     runs-on: ubuntu-24.04
     # PIPELINE_3D.md §4 : un blocage échoue vite (≈ 13 min en M4b).
-    timeout-minutes: 30
+    # CI1c : 45 min (cibles CI1c et CI1, deux parties chacune).
+    timeout-minutes: 45
     env:
       GRADLE_OPTS: -Dorg.gradle.daemon=false
     defaults:
@@ -374,7 +375,7 @@ jobs:
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
       - name: Précompiler l'APK de test
-        run: flutter build apk --debug --no-pub --dart-define=KALIS_DEV=true --target=integration_test/street_ci1_test.dart > build/ci3d/build-test.log 2>&1 || (tail -n 60 build/ci3d/build-test.log; exit 1)
+        run: flutter build apk --debug --no-pub --dart-define=KALIS_DEV=true --target=integration_test/koach_ci1c_test.dart > build/ci3d/build-test.log 2>&1 || (tail -n 60 build/ci3d/build-test.log; exit 1)
       - name: Rendu sur émulateur
         uses: reactivecircus/android-emulator-runner@v2
         with:

@@ -177,6 +177,31 @@ class Exercise {
        forcedSets = setCount,
        engine = true;
 
+  /// CI1c (C10.2) : exercice du programme importé avec un ajustement de
+  /// Koach accepté (séries, répétitions, charge, repos, exercice remplacé),
+  /// posé par-dessus l'original [base] (même identifiant de journal).
+  Exercise.koach(
+    Exercise base, {
+    required this.name,
+    required this.sets,
+    required this.intensity,
+    required this.load,
+    required this.rest,
+    required this.restSec,
+    required this.cue,
+    required this.why,
+    required this.catalogId,
+  }) : id = base.id,
+       tempo = base.tempo,
+       main = base.main,
+       prevention = base.prevention,
+       role = base.role,
+       exId = base.exId,
+       forcedSets = null,
+       timer = null,
+       slotId = base.slotId,
+       engine = false;
+
   /// L11 : copie adaptée pour une séance (séries réduites, exercice
   /// échangé). Sans argument : identique à [base].
   Exercise.adapted(
@@ -255,13 +280,19 @@ class DayPlan {
   /// L10 (KT-057) : ligne « pourquoi » de la séance (programme généré).
   final String why;
 
+  /// CI1c (C10.2) : journée d'origine quand celle-ci porte les ajustements
+  /// de Koach acceptés par-dessus le programme importé (couche à la
+  /// lecture) ; null pour une journée d'origine.
+  final DayPlan? source;
+
   DayPlan.manual({
     required this.j,
     required this.title,
     this.cycle = '',
     this.conduite = '',
     required this.exercises,
-  }) : why = '';
+  }) : why = '',
+       source = null;
 
   /// L11 : même journée avec une liste d'exercices adaptée.
   DayPlan.adapted(DayPlan base, this.exercises)
@@ -269,7 +300,21 @@ class DayPlan {
       title = base.title,
       cycle = base.cycle,
       conduite = base.conduite,
-      why = base.why;
+      why = base.why,
+      source = null;
+
+  /// CI1c : journée d'origine [base] avec les ajustements de Koach en
+  /// place ([exercises]) ; l'original reste lisible par [original].
+  DayPlan.overlay(DayPlan base, this.exercises)
+    : j = base.j,
+      title = base.title,
+      cycle = base.cycle,
+      conduite = base.conduite,
+      why = base.why,
+      source = base.original;
+
+  /// Journée telle qu'écrite dans le programme, sans couche d'ajustements.
+  DayPlan get original => source ?? this;
 
   DayPlan.fromJson(Map<String, dynamic> j0)
     : j = j0['j'] as int,
@@ -277,6 +322,7 @@ class DayPlan {
       cycle = j0['cycle'] as String? ?? '',
       conduite = j0['conduite'] as String? ?? '',
       why = j0['why'] as String? ?? '',
+      source = null,
       exercises = (j0['exercises'] as List)
           .map((e) => Exercise.fromJson(e as Map<String, dynamic>))
           .toList();

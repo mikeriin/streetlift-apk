@@ -536,6 +536,21 @@ class _EvolutionScreenState extends State<EvolutionScreen> {
                   ),
                 ),
             ],
+            // CI1c : ce que Koach a repéré sans pouvoir l'appliquer au
+            // programme importé, en clair (pas de bouton « Accepter »).
+            for (final p in store.evolutionNotApplicable)
+              KCard(
+                key: ValueKey('evo-not-applicable-${p.id}'),
+                child: KoachSays(
+                  pose: KoachPose.you,
+                  child: Text(
+                    'J’ai repéré un changement possible '
+                    '(${evolutionKindTitle(p.kind).toLowerCase()}), mais il '
+                    'ne peut pas s’appliquer à ton programme importé jour '
+                    'pour jour : ton programme reste tel quel.',
+                  ),
+                ),
+              ),
             const KSection('Historique des changements'),
             if (history.isEmpty)
               Text(
