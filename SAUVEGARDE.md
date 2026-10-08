@@ -22,3 +22,4 @@ Base : main 64e286b3 (dev6.9.1). Arbre de travail complet (sans .github).
 - Reste : résultat ci-3d (captures CI1c a/b à relire), publication main, build signé, livraison.
 - ci-3d essai 1 (run 37788556859) : émulateur CI1c a/b et CI1 verts ; échecs : versions attendues 6.9.1 (tests g3 dev, python), gradlew absent de l'arbre (index vide). Essai 2 poussé : 3734306e.
 - Publié sur main 770589ce (arbre d361353d identique à ci-3d run 37792900255 vert). Attente build signé.
+- FIN : build signé run 37796970346 vert ; livraison, DECISIONS CI1c, ETAT à valider (pipeline b093af7a), projet claude.ai, page de suivi (version 32). Lot terminé.
