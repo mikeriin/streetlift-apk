@@ -233,6 +233,26 @@ vide ou absent.
 - Tests Dart du lot : `test/ci1b_pain_test.dart`. Mise au point sur
   `claude/ci-ci1-rapide` (même méthode que CI1).
 
+### CI1c (dev6.9.2, pipeline CP, voie App)
+
+- Cible émulateur par défaut : `integration_test/koach_ci1c_test.dart`,
+  build de développement, parties `a` (sombre, rouge) et `b` (clair,
+  violet), jouée avant la cible CI1 (gardée) : session personnelle
+  (programme importé du propriétaire, mode libre) → réorganisation de
+  séance reçue et acceptée (un exercice retiré, un autre remplacé), accueil,
+  liste des exercices et séance servie à jour, original intact sous la
+  couche ; séance du lendemain ouverte puis fermée sans entrée
+  d'historique ; session de test (5 appuis) → programme street créé, séance
+  de demain ouverte à l'avance, une série de plus acceptée, séance rouverte
+  à jour ; suppression de la session de test, session personnelle intacte.
+  Relevés `emulateur/ci1c_releve_<partie>.json`, captures
+  `emulateur/ci1c_*_<thème>.png`. APK de test précompilé sur la cible
+  CI1c ; délai du job émulateur porté à 45 min.
+- Tests Dart du lot : `test/ci1c_koach_applique_test.dart`.
+- Mise au point sur `claude/ci-ci1c-rapide` (`rapide.yml` seul, sans les
+  autres workflows : les tests Python qui lisent `build-apk.yml` y
+  échouent, le contrôle complet reste `claude/ci-3d`).
+
 ### Mode dev dans les tests d'intégration
 
 - Données de la session personnelle semées par un `AppStore()` séparé avant

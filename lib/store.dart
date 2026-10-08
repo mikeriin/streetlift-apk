@@ -2862,16 +2862,12 @@ class AppStore extends ChangeNotifier {
     if (l == null || l.done) return;
     if (l.ex.values.any((x) => x.sets.any((s) => s.done))) return;
     final byId = {for (final e in day.exercises) e.id: e};
-    for (final k in l.ex.keys.toList()) {
-      final x = l.ex[k]!;
-      if (x.note.trim().isEmpty && x.prescribed == null && x.koach == null) {
-        // Recréées à l'affichage de l'exercice, d'après la séance servie.
-        l.ex.remove(k);
-        continue;
-      }
-      final e = byId[k];
-      x.sets = e == null
-          ? [for (final _ in x.sets) SetEntry()]
+    for (final x in l.ex.entries) {
+      final e = byId[x.key];
+      // Même journal d'exercice (réglages d'affichage, note gardés) ;
+      // séries refaites, puis réglées sur la séance servie par le moteur.
+      x.value.sets = e == null
+          ? [for (final _ in x.value.sets) SetEntry()]
           : List.generate(setCount(e), (_) => SetEntry());
     }
   }

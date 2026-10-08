@@ -368,8 +368,8 @@ void main() {
             ),
           )
           .exerciseId;
-      final original13 = [
-        for (final e in app.program.week(13).day(1)!.exercises) e.id,
+      final original12 = [
+        for (final e in app.program.week(12).day(1)!.exercises) e.id,
       ];
       app.evolutionReceive(place, [
         _restructure(
@@ -380,8 +380,15 @@ void main() {
         ),
       ]);
       app.evolutionAccept(app.evolutionPending.single);
-      for (final w in [12, 13]) {
+      for (final w in [12, 13, 14]) {
         final d = app.program.week(w).day(1)!;
+        // Semaines suivantes : seulement celles qui ont ces exercices.
+        if (w > 12 &&
+            !d.original.exercises.any(
+              (e) => app.adaptSlotOf(w, 1, e.id) == removed.slotId,
+            )) {
+          continue;
+        }
         expect(identical(d.original, d), isFalse, reason: 'S$w : couche');
         expect(
           _shownFor(app, w, 1, removed.slotId),
@@ -421,10 +428,10 @@ void main() {
       // Annuler : programme d'origine.
       expect(app.evolutionUndo(app.planEvolution.entries.last), isTrue);
       expect(
-        [for (final e in app.program.week(13).day(1)!.exercises) e.id],
-        original13,
+        [for (final e in app.program.week(12).day(1)!.exercises) e.id],
+        original12,
       );
-      expect(app.program.week(13).day(1)!.source, isNull);
+      expect(app.program.week(12).day(1)!.source, isNull);
     });
 
     test('séance future ouverte à l’avance, puis ajustement accepté et '
