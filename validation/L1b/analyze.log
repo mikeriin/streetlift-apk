@@ -1,5 +1,0 @@
-Commande : CI=true flutter --no-version-check --suppress-analytics analyze --no-pub
-Sortie terminal observée sur la copie reconstruite :
-Analyzing streetlift_tracker...
-No issues found! (ran in 7.8s)
-Code de sortie : 0

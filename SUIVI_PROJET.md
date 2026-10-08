@@ -1,8 +1,14 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : CI1b (pipeline CP), version dev6.9.1 ; précédent : dev6.9.0 (CI1)**  
-**Date : 5 octobre 2026, Europe/Paris — version : 6.9.1+109, affichée « dev6.9.1 » dans l'APK (versionCode réel fixé par la CI de build)**  
+**Passe actuelle : CI1c (pipeline CP), version dev6.9.2 ; précédent : dev6.9.1 (CI1b)**  
+**Date : 8 octobre 2026, Europe/Paris — version : 6.9.2+110, affichée « dev6.9.2 » dans l'APK (versionCode réel fixé par la CI de build)**  
 **Statut : contrôlé en CI (branche `claude/ci-3d`, rendu réel sur émulateur Android) ; à valider par le propriétaire.**
+
+## CI1c — Koach appliqué, séance à jour (version dev6.9.2, pipeline CP, DECISIONS_CP.md C10)
+
+- **Couche d'ajustements sur le programme importé** (`syncImportedOverlay`, `DayPlan.overlay` / `original`, `Exercise.koach`) : les propositions de Koach en place sur le bloc importé sont montrées jour pour jour dans le programme affiché ; le bloc importé est toujours construit depuis l'original ; annuler retire la couche. Propositions non applicables au bloc importé filtrées (`evolutionApplicable`, carte en clair dans Évolution).
+- **Séance recalculée à l'ouverture** (`adaptOpen`, `_adaptRefreshStarted`, empreinte `src` de la journée du bloc, `refreshUnstartedSession`) ; saisies non validées marquées (`SetEntry.edited`) et gardées ; consultation sans entrée (`forgetConsultation`), migration des entrées figées (`_markLegacyDrafts`, `_pruneConsultations`).
+- Tests : `test/ci1c_koach_applique_test.dart` ; cible émulateur `integration_test/koach_ci1c_test.dart`.
 
 ## CI1b — Paquets 0.2.2 (version dev6.9.1, pipeline CP)
 
