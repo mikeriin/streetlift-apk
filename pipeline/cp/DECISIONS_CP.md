@@ -269,6 +269,16 @@ Passe livrée, **à valider — cible C7.5 non atteinte** (`kalis_plan` 0.2.2, `
 
 ### CA2
 
+Reprises du 06/10 et du 08/10 (Opus 5.5, C5.1). Partie 0 publiée le 08/10/2026 ; partie 1 en cours.
+
+- **CA2.1 Partie 0 publiée (08/10/2026, 16:20 UTC) : `kalis_adapt` 0.2.3, `kalis_bench` 0.2.2** (`moteurs` ff22faa9 ; `etiquettes/kalis_adapt-v0.2.3`, `etiquettes/kalis_bench-v0.2.2` ; contrôle complet run 37796701628 sur `claude/ci-cp-b`, vert, arbre identique sauf `docs/CALIBRAGE_CA2.md`). Couple jugé : `kalis_plan` 0.2.2 (dernière étiquette publiée). Détail : `packages/kalis_adapt/CONTRAT.md` § 11.16, `docs/CALIBRAGE_CA2.md`.
+- **CA2.2 Conduite sous douleur (sécurité, C9.8).** Reprise graduée suivie séance par séance (palier qui recule quand la douleur répond, dose écrite jamais dépassée, aucune levée sur une semaine non chargée) ; douleur pendant l'effort jamais à 5/10 (allègement dès 4/10, Silbernagel 2007) ; pendant un arrêt, mouvements à contrainte moyenne au premier palier, retirés après 14 jours si la douleur reste à 3/10 ; **poignet** : toute charge externe d'appui retirée, remplaçant d'une poussée limité aux parallettes, et tant que la gêne de la semaine atteint 3/10 seuls les appuis sur parallettes à contrainte moyenne restent (échauffement compris) ; tests reportés tant que la zone dépasse 2/10 dans la semaine ; renvoi vers un professionnel une fois, puis suivi hebdomadaire ; +10 % par séance au plus sur une zone récente (Soligard 2016). Constats C9.8 (i) à (iii) traités.
+- **CA2.3 Relecture indépendante du code (sous-agent Opus, 08/10)** : 12 constats, tous corrigés et testés, dont trois de sécurité majeurs (arrêt qui tombait au premier signalement plus bas ; étape de figure et test reporté qui échappaient aux règles de douleur ; plafond de 67,5-70 % du 1RM absent sur un remplaçant).
+- **CA2.4 Panel partie 0** : 19 couples sur 68 à 9, minimum 5, moyenne 7,76 (CX correction 1 : 23, 5,5, 7,95 ; écart dans l'incertitude d'un point, avec des notes plus sévères sur la conduite du poignet). Cinq boucles (C9.2), passes 1 à 6. Les corrections nécessaires restantes portent presque toutes sur le programme écrit (CP2) ; côté conduite, la cadence de l'élastique (passe 6) est traitée en partie 1. Choix consigné : `street_10`, école calisthénie, demande de garder la planche sur parallettes à 50 % pendant la douleur — refusé tant que la gêne atteint 3/10 (sécurité, relecture du code).
+- **CA2.5 Sécurité calculable** : 0 violation sur les 136 saisons racontées ; banc 17 profils × 8 scénarios × 3 modèles × 100 graines : violations du programme réalisé 0,0124 par saison (0,0126 avant), poussées d'une zone réactive 26,7 → 24,9 (somme des moyennes), hausses sur zone douloureuse 0,02 à 0,05 par saison sur `street_10` modèle B seulement (signalement fait pendant la séance), comme avant.
+- **CA2.6 Page de relecture** : 504 notes lues (manches 0 à 4, relecture documentée et pilotage) ; aucune note du propriétaire ; rien de nouveau depuis la manche 4. Pas de nouvelle manche pour la partie 0 (non demandée pour CA2 ; la manche viendra avec la livraison).
+
+
 ### CY
 
 ### CI1
