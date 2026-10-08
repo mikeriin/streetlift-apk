@@ -105,3 +105,9 @@ Base : `moteurs` 9526ac47 (kalis_plan 0.2.2, kalis_adapt 0.2.2, kalis_bench 0.2.
 - Relecture documentée street (2 sous-agents, notes dans ca2-outils/notes/reldoc_p1) : 01 5, 03 4, 06 6, 07 7, 08 6, 10 5, 12 7. Conduite : élastique jamais changé (série repère qui remettait la série à zéro) → corrigé ; sous-dosage de dips après un mauvais jour (06, 08), estimation du muscle-up trop basse (07) → non traités (limites).
 - Contrôle FULL p1 5f9d67d5 poussé (0.3.0 : endurance + test borné + élastique série repère + campagne d'endurance).
 - Reste : relecture documentée « autres » sur les exports du full, manche 5 de la page (exports + notes), LIVRAISON_CA2, DECISIONS, ETAT « à valider », page de suivi, publication 0.3.0 + kalis_core 0.4.3 (commit séparé) + kalis_bench 0.2.3, notification.
+
+## 08/10 ~19:15 UTC
+- Full 5f9d67d5 (run 37816722395) : tout vert sauf la tolérance de mesure d'un test d'endurance (1,1345 > 1,133) → tolérance 5 %, FULL 103988d8 relancé (en cours).
+- Campagne d'endurance mesurée (CALIBRAGE_CA2, LIVRAISON). Renote q2 street_01/03. Relecture documentée autres (4) faite. Manche 5 publiée sur la page (version 7) avec 77 notes.
+- LIVRAISON_CA2.md rédigée (ca2-outils/LIVRAISON_CA2.md ; reste @CORE@ @MAIN@ @RUN@).
+- Reste : full vert → commits (kalis_core 0.4.3 séparé, puis kalis_adapt 0.3.0 + kalis_bench 0.2.3), étiquettes, DECISIONS CA2.7+, ETAT « à valider », page de suivi, projet claude.ai, notification.

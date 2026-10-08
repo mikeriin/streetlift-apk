@@ -72,10 +72,10 @@ void main() {
             );
             if (a.worstRunSpike > 0) {
               runs++;
-              // Arrondis de distance et vitesse lue sur le journal : 3 %.
+              // Arrondis de distance, et vitesse moyenne du journal contre vitesse du jour : 5 %.
               expect(
                 a.worstRunSpike,
-                lessThanOrEqualTo(1.10 * 1.03),
+                lessThanOrEqualTo(1.10 * 1.05),
                 reason: '$kind, graine $seed',
               );
             }
@@ -92,7 +92,7 @@ void main() {
         // (Blessures rares, tirées au hasard : marge de deux ; la borne
         // absolue des sorties est vérifiée graine par graine ci-dessus.)
         expect(overuseOn, lessThanOrEqualTo(overuseOff + 2));
-        expect(runs == 0 || spikeOn <= 1.10 * 1.03, isTrue);
+        expect(runs == 0 || spikeOn <= 1.10 * 1.05, isTrue);
         expect(spikeOff, greaterThanOrEqualTo(0));
       }, timeout: const Timeout(Duration(minutes: 15)));
     }

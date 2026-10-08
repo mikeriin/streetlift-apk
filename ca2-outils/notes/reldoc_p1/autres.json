@@ -1,0 +1,42 @@
+[
+ {
+  "profil": "autres_05_course_10_km_debutante",
+  "ensemble": 4,
+  "adapte_au_profil": 5,
+  "progression": 3,
+  "volume_intensite": 4,
+  "choix_exercices": 5,
+  "faisable_sur": 6,
+  "commentaire": "Va : 3 footings faciles, sortie longue le dimanche, borne +10 % sur la plus longue course des 30 jours (appuyée par la cohorte Nielsen [https://marathonhandbook.com/the-10-rule-new-study-suggests-weve-been-doing-it-wrong-this-whole-time/]), 0 blessure. Programme écrit : footing continu de 30 min alors qu'elle ne tient pas la durée (« pas en entier » presque partout) ; aucune alternance course-marche, pourtant la norme pour un débutant [https://www.runstreet.com/blog/couch-to-10k] ; écrit 55 puis 120 min de la S1 à la S2 (+118 %) ; « épreuve 10 km » dès S4 et S8 ; course placée le mardi de S12, sans affûtage. Conduite : borne appliquée sans réajuster le plan (sortie longue bloquée vers 35 min, 5,7 km servis le jour J : le 10 km n'est jamais couru, objectif manqué) ; pas de passage en course-marche après les échecs répétés ; une séance retirée S10, dimanche S11 absent ; aucun renforcement."
+ },
+ {
+  "profil": "autres_06_semi_marathon_intermediaire",
+  "ensemble": 3,
+  "adapte_au_profil": 3,
+  "progression": 3,
+  "volume_intensite": 3,
+  "choix_exercices": 4,
+  "faisable_sur": 6,
+  "commentaire": "Va : côtes, sortie longue le dimanche, borne +10 % sur la sortie longue, séances de qualité servies faciles en cas de douleur, épreuve bornée à 10,2 km. Programme écrit : 86 min la S1 alors qu'il court déjà ~30 km par semaine ; sortie longue plafonnée à 75 min (les plans intermédiaires montent vers ~19 km), ni seuil, ni allure semi, ni répétition générale, ni affûtage [https://rundreamachieve.com/training-plan-for-a-half-marathon-intermediate/] ; 21,1 km « épreuve » en S5 et S10 ; S12 en « montée », sans course ; renforcement au poids du corps léger (2-4 RIR, réel 4-11), alors que la méta-analyse soutient la charge lourde et la pliométrie [https://sportsmedicine-open.springeropen.com/articles/10.1186/s40798-022-00511-1] ; pompe sur le bout des doigts hors sujet. Conduite : 1 blessure ; S6-9, sortie longue remplacée par 10 min de course et 55-75 min de marche, mais footing de 55-60 min maintenu le mardi (incohérent) ; efforts notés 1/10 presque partout, donc stimulus trop faible ; aucun ajustement de plan pour l'objectif 1 h 45."
+ },
+ {
+  "profil": "autres_08_crossfit_intermediaire",
+  "ensemble": 4,
+  "adapte_au_profil": 4,
+  "progression": 3,
+  "volume_intensite": 4,
+  "choix_exercices": 4,
+  "faisable_sur": 6,
+  "commentaire": "Va : négatifs 2 fois par semaine, tractions explosives, haltérophilie à 2-3 répétitions, décharges et mises à l'échelle à 75 % sur bilan bas. Programme écrit : pour le muscle-up strict, il manque les dips à la barre droite, le travail de transition et les tractions lestées ; tractions explosives à 10-15 répétitions au lieu de 3-5 [https://bullbarfit.com/blogs/q-as/how-to-train-for-a-strict-muscle-up-using-pull-up-progressions] ; volume de kipping inutile pour le strict et exposant l'épaule [https://clinmedjournals.org/articles/ijsem/international-journal-of-sports-and-exercise-medicine-ijsem-8-228.php?jid=ijsem] ; squat 2-3 séries à ~65 % du vrai 1RM ; conditionnement fait de couplets 4×12 avec 15 s de repos, sauts et burpees chaque jour, sans rameur ni air bike ; montée de corde 4×12 (48 montées) absurde ; séances de 26 à 53 min pour 60 disponibles ; aucune épreuve en S16. Conduite : montées de corde servies telles qu'écrites ; épaulé-jeté stagnant à 67,5 kg, RIR réels au-dessus des cibles sans hausse de charge ; résultats des épreuves de muscle-up non suivis."
+ },
+ {
+  "profil": "autres_02_hypertrophie_intermediaire",
+  "ensemble": 4,
+  "adapte_au_profil": 4,
+  "progression": 2,
+  "volume_intensite": 5,
+  "choix_exercices": 5,
+  "faisable_sur": 8,
+  "commentaire": "Va : 6-15 répétitions à 2-3 RIR, ~90 séries dures par semaine, décharges S5 et S10, mouvements polyarticulaires et isolation, 0,3 % d'échecs. Programme écrit : séances de 27 à 45 min pour 75 disponibles ; priorité fessiers mal servie : hip thrust en accessoire à 2-3 séries, aucune abduction ni fente, alors que la NSCA recommande poussée, squat, charnière et abduction, à ~10-25 séries par semaine [https://nsca.com/contentassets/f921c5b3fe4142db964a943d3554b324/ptq-10.4.4-program-design-considerations-for-optimal-strength-hypertophy-glute-mucsles.pdf] ; deltoïde moyen limité à 2 élévations et un rowing menton, pendant que la poitrine reçoit 2 écartés en plus des développés ; 1RM de référence amputés (45 → 39,5 kg, 80 → 71,5 kg). Conduite : aucune surcharge progressive en 12 semaines (squat 57,5 → 55 kg, couché 32,5 → 30 kg, rowing figé à 20 kg à 4-6 RIR réels), contraire à la règle ACSM de +2 à 10 % quand on dépasse les répétitions visées [https://www.sportgeneeskunde.com/wp-content/uploads/ACSM-Position-Stand-Progression-Models-in-Resistance-Training-for-Healthy-Adults.pdf] ; progression mesurée à 0,1 % par semaine."
+ }
+]

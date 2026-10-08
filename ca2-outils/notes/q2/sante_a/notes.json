@@ -1,0 +1,70 @@
+{
+  "ecole": "sante",
+  "programmes": [
+    {
+      "programme": "programme_1.md",
+      "criteres": {"S1": 7.5, "S2": 8.5, "S3": 8, "S5": 7.5, "S6": 9, "S7": 9.5, "S8": 8, "S9": 7.5},
+      "sans_objet": ["S4"],
+      "ensemble": 6.5,
+      "points_perdus": [
+        {"critere": "S1", "perte": 2.5, "raison": "Douleur de poignet signalée dès la semaine 7 (4/10) et présente jusqu'à la semaine 16 : le programme n'écrit aucune variante de poussée qui épargne le poignet (pompes sur barres parallèles ou sur les poings), et les wrist push-ups de l'échauffement restent dans chaque séance. Les seuils de douleur et le renvoi vers un professionnel sont bien écrits (R5-P23, R4-F11), mais la zone fragile n'est pas protégée (R5-P24)."},
+        {"critere": "S2", "perte": 1.5, "raison": "Hausses prudentes et règles de reprise complètes. En revanche, la tenue menton au-dessus de la barre est prescrite à 3 × 5-6 s en semaines 3 à 6 alors que le maintien réel est de 34 s : faute de calibrage, la progression part d'un repère faux (10 s) et sous-dose le levier jusqu'au test."},
+        {"critere": "S3", "perte": 2, "raison": "Les critères de baisse du jour sont bien présents, mais le bloc 3 (semaines 13 à 16) enchaîne 4 semaines à 36 séries dures sans allègement planifié ni règle réactive explicite (R3-P9), après 5 semaines de construction dans le bloc 1."},
+        {"critere": "S5", "perte": 2.5, "raison": "Face pulls, tirages scapulaires, rows et échauffement écrit sont présents. Mais rien n'est prévu pour le poignet, qui est la zone qui a lâché : les dips assistés introduits en semaine 7 coïncident avec l'apparition de la douleur, et le programme n'écrit aucune variété de prises ni d'appuis neutres."},
+        {"critere": "S6", "perte": 1, "raison": "Marges bien graduées (4 puis 3 puis 2 rép. en réserve), descentes réglées au contrôle, aucun échec. Seul défaut : la réserve affichée et la réserve réelle s'écartent nettement (33,6 % des séries au moins 3 répétitions plus faciles que visé), si bien que l'effort réel ne correspond pas à la consigne."},
+        {"critere": "S7", "perte": 0.5, "raison": "Les séances durent de 31 à 42 min pour 45 min disponibles, et une version courte est prévue. Mais « le premier exercice seul » désigne dans les tableaux la suspension active, qui est de l'échauffement, et non la traction : la consigne est ambiguë."},
+        {"critere": "S8", "perte": 2, "raison": "Test à la semaine 12, 48 h de fraîcheur et protocole de l'essai strict bien écrits. Mais l'affûtage de la semaine 11 ramène le volume à environ 70 % du pic (−30 %), en dessous de la baisse de −40 à −60 % (R3-P20, R3-P21). Aucune simulation ni essai strict n'est planifié entre les semaines 7 et 10 dans les tableaux."},
+        {"critere": "S9", "perte": 2.5, "raison": "Les renvois en cascade (« comme la semaine 3, sauf… », la semaine 13 renvoyant à la semaine 8, la semaine 15 à la semaine 10) sont difficiles à suivre pour un débutant. Les essais de traction stricte prévus à partir de la semaine 6 n'apparaissent que dans les règles, pas dans les séances. La tenue menton est écrite sur un repère de 10 s que l'athlète n'a jamais mesuré."},
+        {"critere": "ensemble", "perte": 3.5, "raison": "Deux corrections nécessaires. La plus lourde concerne l'objectif : sur 16 semaines, aucune traction stricte n'est obtenue. Le maximum en traction assistée est stable (16 puis 15 répétitions), la tenue haute reste à environ 30 s aux deux tests, et les séries assistées sont faites avec 4 à 9 répétitions réelles en réserve. Le dosage du tirage vertical ne sert pas l'objectif de 3 tractions, d'où une note sous 7."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Recaler le dosage du tirage vertical sur l'objectif. Mesurer à la première séance le maintien menton au-dessus de la barre et le maximum à l'élastique, comme c'est déjà fait pour le support hold. Imposer un élastique qui laisse 10 à 12 répétitions au maximum, pour que 6 à 8 répétitions tombent réellement à 2-3 en réserve. Monter les tractions négatives à 3 × 3-5 dès les semaines 2 et 3 au lieu de 1 × 3. Inscrire dans les séances des semaines 6 à 10 les essais stricts isolés aujourd'hui seulement mentionnés dans les règles.", "consequence": "Comme le montre la trajectoire, l'athlète reste à 0 traction stricte au test de la semaine 12 : stimulus trop facile, maximum assisté sans progrès, objectif de 3 tractions manqué."},
+        {"type": "necessaire", "texte": "Écrire une conduite pour le poignet : en cas de douleur au poignet, remplacer les wrist push-ups de l'échauffement par une mobilisation sans charge, faire les pompes sur poignées, sur les barres parallèles ou sur les poings, et reporter les dips assistés jusqu'à 2 semaines à 2/10 au plus. Ajouter une variante de poussée en appui neutre qui remplace la pompe sans couper tout le travail de poussée.", "consequence": "La douleur de poignet installée dès la semaine 7 persiste neuf semaines, la poussée est retirée de façon répétée et le risque d'une tendinopathie chronique du poignet augmente."},
+        {"type": "amelioration", "texte": "Planifier un allègement dans le bloc 3, ou au minimum écrire un critère réactif de semaine allégée, après 4 semaines à 36 séries dures (R3-P9)."},
+        {"type": "amelioration", "texte": "Pousser l'affûtage de la semaine 11 à −40 à −50 % de séries dures en gardant l'intensité, et placer à J−10 une simulation de l'essai strict ou une traction sautée suivie d'une descente lente."},
+        {"type": "amelioration", "texte": "Préciser que la version courte de 15 min, c'est la traction assistée (ou les négatives), pas la suspension active."},
+        {"type": "amelioration", "texte": "Réécrire les semaines en entier, ou au moins sans renvoi en cascade, pour un débutant."}
+      ],
+      "points_forts": [
+        "Seuils de douleur chiffrés de 0 à 10 avec conduite à chaque palier et renvoi vers un professionnel de santé.",
+        "Règles complètes pour une séance manquée, une semaine manquée ou deux semaines et plus, et critères de baisse du jour (sommeil, courbatures, stress).",
+        "Départ prudent à 4 répétitions en réserve, hausses d'une répétition ou d'une seconde, aucun échec non voulu dans la trajectoire.",
+        "Attentes honnêtes annoncées à l'athlète (« une ou deux tractions serait déjà très bon »), protocole de test strict clair, 48 h de fraîcheur.",
+        "Échauffement écrit, travail scapulaire et face pulls, équilibre entre tirage et poussée, dips introduits en amplitude progressive."
+      ]
+    },
+    {
+      "programme": "programme_2.md",
+      "criteres": {"S1": 7, "S2": 7.5, "S3": 8, "S5": 7, "S6": 8.5, "S7": 8.5, "S8": 7.5, "S9": 6.5},
+      "sans_objet": ["S4"],
+      "ensemble": 5.5,
+      "points_perdus": [
+        {"critere": "S1", "perte": 3, "raison": "Douleur de poignet (4/10) dès la semaine 7, qui revient jusqu'à la semaine 16. Le programme n'écrit aucune alternative pour le poignet : wrist push-ups conservés à l'échauffement, pompes inclinées et pompes au sol maintenues « sans progression ». Les seuils sont bien écrits (R5-P23), mais la zone n'est pas protégée par une variante (R5-P24)."},
+        {"critere": "S2", "perte": 2.5, "raison": "Plusieurs sauts de volume. Le gainage latéral passe de 2 × 15 s à 2 × 30 s entre les semaines 12 et 13, puis à 3 × 35, 4 × 35 et 5 × 35 s, après une régression inexpliquée de 2 × 25 à 2 × 15 s en semaine 7. La tenue menton est sous-dosée en semaines 3 à 5 (5-6 s pour un maintien réel de 34 s), faute de calibrage. La progression de la poussée est bloquée sur la pompe inclinée pendant 15 semaines."},
+        {"critere": "S3", "perte": 2, "raison": "Baisse du jour bien définie, mais aucun allègement dans le bloc 3 (37 séries dures en semaine 16, contre 28 en semaine 1) pour une débutante de 2 mois."},
+        {"critere": "S5", "perte": 3, "raison": "Face pulls, CARs d'épaule, tirages scapulaires et échauffement écrit sont bien présents. Mais le poignet, mis en appui en extension à chaque séance (wrist push-ups, pompes inclinées, pompes négatives, support hold), n'a ni variante ni prise neutre, et c'est lui qui devient douloureux."},
+        {"critere": "S6", "perte": 1.5, "raison": "Marges prudentes, sans échec. En revanche, la pompe inclinée affiche 3 à 4 répétitions en réserve et se fait à 6 à 16 en réserve réelle : la consigne d'effort ne se traduit pas dans le choix du cran."},
+        {"critere": "S7", "perte": 1.5, "raison": "Séances de 25 à 50 min pour 60 min disponibles et version courte de 25 min : la faisabilité est bonne. Mais l'athlète ne vit aucune réussite visible sur ses deux objectifs en 16 semaines (pompe au sol bloquée à 1 répétition par série), ce qui menace l'adhésion d'une débutante (R5-P1, R5-P2)."},
+        {"critere": "S8", "perte": 2.5, "raison": "Les deux objectifs sont testés en semaine 12, après 48 h de fraîcheur. Mais l'affûtage ne baisse le volume que de 30 % environ (au lieu de −40 à −60 %, R3-P20), la semaine 11 est construite « comme la semaine 6 » (la semaine de test), et aucun essai de pompe au sol en série n'est planifié entre les semaines 7 et 11 pour se rapprocher des 10 répétitions."},
+        {"critere": "S9", "perte": 3.5, "raison": "Les consignes de l'échelle de poussée se contredisent. L'échelle des figures exige 2 × 12 répétitions sur 2 séances et 2 semaines sur l'étape, alors que la note de l'exercice dit de descendre d'un cran dès que le haut de la plage (8 répétitions) est tenu. Et la plage prescrite plafonne à 6-9 répétitions jusqu'à la semaine 6, ce qui rend le critère de 12 inatteignable. Résultat : 15 semaines sur l'étape avec une meilleure série à 18, sans jamais passer. S'y ajoutent les renvois en cascade."},
+        {"critere": "ensemble", "perte": 4.5, "raison": "Trois corrections nécessaires, dont deux touchent directement les objectifs : 3 pompes au départ et 3 à la fin pour un objectif de 10, 0 traction pour un objectif de 1. S'y ajoute un problème de poignet non protégé. Le programme est sûr dans ses marges, mais ses choix de dosage et de progression ne servent pas les objectifs, d'où une note de 5,5 (il n'ignore pas l'objectif, donc pas de plafond à 6, mais la note reste du même ordre)."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Supprimer la contradiction de l'échelle de poussée et doser la pompe pour l'objectif. Garder une seule règle de passage, par exemple descendre d'un cran d'inclinaison dès que 2 × 10-12 répétitions passent à 2-3 en réserve, et ouvrir la plage jusqu'à 12 dès le bloc 1. Choisir le cran sur la réserve réelle, pas sur la plage. Ajouter des pompes sur les genoux ou une inclinaison basse en 3 × 5-8, et remplacer la pompe au sol à 1 × 1 par des séries courtes répétées (par exemple 4-5 × 1-2, frais) puis des montées progressives.", "consequence": "L'athlète reste bloquée sur la pompe inclinée trop facile, fait 1 pompe au sol par séance et termine à 3 pompes, loin des 10 visées à 12 semaines."},
+        {"type": "necessaire", "texte": "Calibrer le tirage vertical. Mesurer le maintien menton au-dessus de la barre à la première séance, imposer un élastique qui laisse 10 à 12 répétitions au maximum, monter les tractions négatives à 3 × 3-4 dès le bloc 1, et écrire dans les séances des semaines 6 à 11 les essais stricts isolés aujourd'hui seulement mentionnés dans les règles.", "consequence": "Le maximum assisté ne progresse pas (16 puis 15) et la tenue haute plafonne à 30-31 s : la première traction n'est pas obtenue en semaine 12."},
+        {"type": "necessaire", "texte": "Écrire la conduite pour le poignet : pompes sur poignées, sur barres parallèles ou sur les poings, et échauffement du poignet sans appui en extension dès la première douleur. Garder une variante de poussée en appui neutre plutôt que de retirer la poussée.", "consequence": "La douleur de poignet installée dès la semaine 7 revient jusqu'à la fin du cycle et prive l'athlète du mouvement de son objectif, avec un risque de tendinopathie qui s'installe."},
+        {"type": "amelioration", "texte": "Lisser la progression du gainage latéral : +5 s ou +1 série à la fois, sans passer de 2 × 15 à 2 × 30 s puis à 5 × 35 s en quatre semaines."},
+        {"type": "amelioration", "texte": "Planifier un allègement dans le bloc 3 ou écrire un critère réactif, le volume montant à 37 séries dures."},
+        {"type": "amelioration", "texte": "Affûtage de la semaine 11 à −40 à −50 %, construit à partir de la semaine de pointe et non de la semaine de test, avec une simulation des deux tests vers J−10."},
+        {"type": "amelioration", "texte": "Réécrire les semaines sans renvoi en cascade pour une débutante."}
+      ],
+      "points_forts": [
+        "Seuils de douleur chiffrés avec conduite par palier et renvoi vers un professionnel, règles de semaine manquée et de reprise.",
+        "Prévention de l'épaule (face pulls, CARs, tirages et pompes scapulaires) et échauffement écrit.",
+        "Durées compatibles avec les 60 min disponibles et version courte de 25 min.",
+        "Marges d'effort prudentes, aucun échec non voulu, hausses par crans.",
+        "Les deux objectifs sont testés en semaine 12 avec 48 h de fraîcheur, et le protocole de l'essai strict est clair."
+      ]
+    }
+  ]
+}

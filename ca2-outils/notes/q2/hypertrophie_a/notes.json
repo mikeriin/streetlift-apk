@@ -1,0 +1,72 @@
+{
+  "ecole": "hypertrophie",
+  "programmes": [
+    {
+      "programme": "programme_1.md",
+      "criteres": {"H1": 7.5, "H2": 8, "H3": 5.5, "H4": 7.5, "H5": 6.5, "H6": 7, "H7": 8.5, "H8": 7.5, "H9": 7},
+      "sans_objet": [],
+      "ensemble": 7,
+      "points_perdus": [
+        {"critere": "H1", "perte": 2.5, "raison": "Le tirage est bien priorisé (≈ 15 à 19 séries/semaine en bloc 2 : 7 tractions assistées, jusqu'à 5 négatives, 3 tenues, 4 rows), mais ce volume est nominal : la simulation montre des séries de traction assistée à 4–9 répétitions en réserve réelles, donc peu de séries réellement dures (R1-P1, R1-P13). La poussée tombe de fait à presque zéro à partir de la semaine 8 (pompes et dips retirés pour le poignet) sans volume de remplacement."},
+        {"critere": "H2", "perte": 2, "raison": "Corps entier 3×/semaine, tirage à chaque séance : bonne répartition (R1-P8). Pas d'alternance lourde/légère explicite par groupe ; le mercredi n'est qu'une variante du lundi/vendredi."},
+        {"critere": "H3", "perte": 4.5, "raison": "Marges uniformes à 3–4 RIR sur tout, isolations comprises (face pull à 5+ RIR). Le choix d'élastique « qui permet 8 répétitions propres avec la réserve prévue » laisse l'athlète loin de l'échec : max réel en traction assistée 13–16 pour 6–9 servies, écart moyen 2,37 RIR et 33,6 % des séries au moins 3 répétitions plus faciles que visé. Aucune série de calibration écrite dans le programme (R1-P10, R1-P13)."},
+        {"critere": "H4", "perte": 2.5, "raison": "Bonne logique pour l'objectif (assistée, négatives, tenue haute, row australien, suspension active), mais les wrist push-ups restent en échauffement à chaque séance alors que le poignet est douloureux de la semaine 7 à 16, et aucune variante de poussée ménageant le poignet (prise neutre aux barres parallèles, pompes sur poings) n'est prévue alors que le matériel le permet (R6-P5)."},
+        {"critere": "H5", "perte": 3.5, "raison": "Règles écrites (répétitions puis assistance, descente +1 s/semaine), mais les plages de la traction assistée montent de 6–8 à 8–10 seulement, sous la capacité réelle ; résultat : maximum réel de traction assistée 16 → 15 en 16 semaines et aucune traction stricte réussie. Les essais stricts « à partir de la sixième semaine » sont dans les règles mais n'apparaissent dans aucune table de séance (R5-P3)."},
+        {"critere": "H6", "perte": 3, "raison": "Tirage ≥ poussée, face pull, bas du corps et chaîne postérieure présents. Mais la poussée disparaît en pratique des semaines 8 à 16 (douleur poignet) sans transfert : déséquilibre poussée/tirage installé pour neuf semaines (R5-P27)."},
+        {"critere": "H7", "perte": 1.5, "raison": "Repos de 2 min sur les polyarticulaires, 2 min 30 sur les tenues, 45–60 s sur les accessoires ; séances de 23 à 42 min dans 45 min. Aucune utilisation de supersets d'antagonistes pour récupérer du temps de volume utile (R2-P15)."},
+        {"critere": "H8", "perte": 2.5, "raison": "Semaines 6, 11 et 12 servent d'allègement, affûtage chiffré. Le bloc 3 (semaines 13–16) enchaîne 4 semaines au volume le plus haut (36 séries) sans allègement ni test de sortie, et sans nouvel objectif après l'échéance (R3-P9)."},
+        {"critere": "H9", "perte": 3, "raison": "Temps et matériel respectés, prudence d'objectif honnête. Mais la gestion de la douleur au poignet (4/10 récurrente pendant neuf semaines) se limite au retrait, sans variante, et le programme ne dit pas comment réajuster l'assistance quand la réserve réelle est très supérieure à la cible (R5-P10 à P19)."},
+        {"critere": "ensemble", "perte": 3, "raison": "Programme sûr et bien pensé pour la traction, mais trois corrections nécessaires : effort trop éloigné de l'échec sur le mouvement clé (pas de progression mesurée, objectif manqué), poignet non géré par substitution, essais stricts absents des séances."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Recalibrer la traction assistée : choisir l'élastique qui donne 6 à 8 répétitions à 2 RIR réels, faire une série de calibration au ressenti à 1 RIR toutes les deux semaines et changer d'élastique dès que cette série dépasse le haut de la plage de 3 répétitions ou plus.", "consequence": "L'athlète continue à s'entraîner à 4–9 RIR réels sur le mouvement de l'objectif ; le maximum assisté stagne (16 → 15) et les 3 tractions strictes ne viendront pas."},
+        {"type": "necessaire", "texte": "Douleur au poignet : retirer les wrist push-ups de l'échauffement et remplacer pompes et dips par une poussée à poignet neutre (pompes inclinées prise neutre aux barres parallèles ou sur poings, dips en amplitude réduite si indolores) pour garder 6 à 8 séries de poussée par semaine.", "consequence": "Le poignet reste chargé à chaque échauffement, la douleur persiste neuf semaines et la poussée tombe à zéro, déséquilibrant épaule et physique."},
+        {"type": "necessaire", "texte": "Inscrire dans les tables de séance, à partir de la semaine 7, les 1 à 3 essais de traction stricte (ou traction sautée + descente 5 s) en tête de deux séances, avec repos et critère d'arrêt.", "consequence": "La consigne reste dans les règles générales, l'athlète ne la fait pas et ne pratique jamais le geste de l'objectif avant le test."},
+        {"type": "amelioration", "texte": "Monter les négatives à 3 × 3–5 sur deux séances dès le bloc 1 (descente 5 s) plutôt que 1 × 3 : c'est le stimulus le plus spécifique pour un athlète à 0 traction."},
+        {"type": "amelioration", "texte": "Ajouter une flexion du coude (curl à l'élastique ou chin-up assisté supination) 2 × 10–15 à 1–2 RIR : biceps limitant fréquent en première traction."},
+        {"type": "amelioration", "texte": "Bloc 3 : fixer un nouvel objectif après l'échéance, placer une semaine allégée/test en semaine 16."},
+        {"type": "amelioration", "texte": "Rapprocher les accessoires (face pull, pont fessier, fente) de 1–2 RIR plutôt que 3–5 RIR uniformes."}
+      ],
+      "points_forts": [
+        "Tirage prioritaire à chaque séance avec une progression cohérente assistée → négative → tenue haute.",
+        "Règles de douleur, de baisse du jour, de séance manquée et de test claires et prudentes.",
+        "Tenues calculées en pourcentage du maintien testé, recalées à chaque test.",
+        "Affûtage et test placés sur l'échéance de 12 semaines, 48 h sans travail dur avant le test.",
+        "Objectif présenté honnêtement (une ou deux tractions serait déjà un bon cycle)."
+      ]
+    },
+    {
+      "programme": "programme_2.md",
+      "criteres": {"H1": 6.5, "H2": 8, "H3": 4.5, "H4": 6.5, "H5": 5, "H6": 7, "H7": 8, "H8": 7.5, "H9": 6},
+      "sans_objet": [],
+      "ensemble": 6,
+      "points_perdus": [
+        {"critere": "H1", "perte": 3.5, "raison": "Volume nominal correct (28 à 37 séries), mais la poussée — objectif à 10 pompes — n'a que 6 à 8 séries dont la plupart très loin de l'échec (pompe inclinée à 6–16 RIR réels), et 1 à 2 séries d'une seule pompe classique ; pendant ce temps le gainage latéral monte à 5 × 35 s en semaine 16, volume sans rapport avec les objectifs (R1-P1, R1-P3)."},
+        {"critere": "H2", "perte": 2, "raison": "Corps entier 3×/semaine, poussée et tirage à chaque séance (R1-P8). Pas d'alternance lourde/légère écrite par groupe."},
+        {"critere": "H3", "perte": 5.5, "raison": "Pompe inclinée prescrite en 6–8 puis 8–12 répétitions alors que l'athlète en fait 15–18 : effort réel 6 à 16 RIR pendant tout le cycle ; traction assistée à 4–6 RIR réels pour 2–3 visés. Les répétitions en réserve sont uniformes et la série de calibration n'est pas écrite (R1-P10, R1-P13)."},
+        {"critere": "H4", "perte": 3.5, "raison": "Bons choix pour la traction (assistée, négative, tenue haute) ; mais l'échelle de poussée est contradictoire : la note de l'exercice dit « descends d'un cran quand le haut de la plage est tenu deux séances » (mur → mains surélevées plus bas → genoux → sol) alors que l'échelle des figures n'a que deux étapes et exige 2 × 12 propres sur 2 séances et 2 semaines. Résultat : 15 semaines sur la même inclinaison, jamais de pompe sur genoux (R6-P4). Wrist push-ups maintenus malgré la douleur au poignet."},
+        {"critere": "H5", "perte": 5, "raison": "Deux règles de progression incompatibles sur le mouvement de l'objectif poussée, plage plafonnée à 12 alors que le critère de passage demande 12 : la progression n'est jamais déclenchée. Pompe classique : 3 au départ, 2 au test de la semaine 6, 3 en fin de cycle ; traction assistée : maximum 16 → 15 ; aucune traction stricte (R5-P3)."},
+        {"critere": "H6", "perte": 3, "raison": "Tirage ≥ poussée, face pull, jambes présentes ; mais la poussée, priorité du profil, est la moins efficacement travaillée et disparaît partiellement à partir de la semaine 7 (douleur poignet) sans variante de remplacement ; le volume ajouté va au gainage latéral, pas à la priorité (R5-P27)."},
+        {"critere": "H7", "perte": 2, "raison": "Repos adaptés (2 min polyarticulaires, 90 s négatives, 45–60 s accessoires). Séances de 25 à 50 min sur 60 disponibles : 10 à 35 min inutilisées alors que les deux objectifs manquent de volume dur ; pas de supersets d'antagonistes (R2-P15)."},
+        {"critere": "H8", "perte": 2.5, "raison": "Semaines 6, 11 et 12 allégées, affûtage chiffré. Bloc 3 sans allègement ni test de sortie, volume au plus haut (34 à 37 séries) (R3-P9)."},
+        {"critere": "H9", "perte": 4, "raison": "Matériel et temps respectés, prudence générale. Mais l'objectif de 10 pompes n'est pas servi (3 au final), la douleur au poignet récurrente n'est pas gérée par une variante, et le programme ne dit pas quoi faire quand l'inclinaison est trop facile (R5-P10 à P19)."},
+        {"critere": "ensemble", "perte": 4, "raison": "Quatre corrections nécessaires, dont deux qui touchent directement les objectifs (échelle de poussée bloquée, effort trop léger sur les deux mouvements clés) : objectifs manqués tous les deux à 12 semaines."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Unifier l'échelle de poussée en une seule règle à plusieurs crans (mains surélevées haut → bas → genoux → sol) : prendre le cran qui donne 6 à 10 répétitions à 2 RIR réels et descendre d'un cran dès que toutes les séries atteignent le haut de la plage deux séances de suite ; supprimer le critère 2 × 12 + 2 semaines qui bloque.", "consequence": "L'athlète fait 15 semaines de pompes inclinées à 6–16 RIR sur le même support et reste à 3 pompes classiques au lieu de 10."},
+        {"type": "necessaire", "texte": "Recalibrer la traction assistée sur l'effort réel : élastique donnant 6–8 répétitions à 2 RIR, série de calibration à 1 RIR toutes les deux semaines, changement d'élastique si elle dépasse de 3 répétitions ou plus.", "consequence": "Le maximum assisté stagne (16 → 15) et la première traction n'est pas obtenue à l'échéance."},
+        {"type": "necessaire", "texte": "Douleur au poignet : retirer les wrist push-ups, passer pompes et pompes négatives sur prise neutre (barres parallèles, barre basse) ou sur poings, et garder 6 à 8 séries de poussée dure par semaine.", "consequence": "La douleur 4/10 persiste des semaines 7 à 16 et la poussée, déjà objectif en retard, perd encore du volume."},
+        {"type": "necessaire", "texte": "Utiliser les 60 min : ajouter 2 à 3 séries de pompe sur l'étape adaptée et 2 séries de négatives de pompe, et plafonner le gainage latéral à 2–3 × 30 s au lieu de 5 × 35 s.", "consequence": "Le volume supplémentaire va au gainage et non aux deux objectifs, qui restent sous-dosés."},
+        {"type": "amelioration", "texte": "Inscrire les essais de traction stricte des semaines 7 à 12 dans les tables de séance, pas seulement dans les règles."},
+        {"type": "amelioration", "texte": "Ajouter un travail de flexion du coude (curl élastique ou chin-up assisté) 2 × 10–15 à 1–2 RIR."},
+        {"type": "amelioration", "texte": "Bloc 3 : nouvel objectif et semaine allégée/test en semaine 16."}
+      ],
+      "points_forts": [
+        "Deux objectifs pris en compte dès la semaine 1 : poussée progressive et tirage assisté/négatif/tenue haute à chaque séance.",
+        "Tests de fin de bloc et d'échéance bien placés, 48 h de repos du mouvement avant test.",
+        "Règles de douleur, baisse du jour, séance manquée et version courte claires.",
+        "Tenues dosées en pourcentage du maintien testé."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "ecole": "force",
+  "programmes": [
+    {
+      "programme": "programme_1.md",
+      "criteres": {"F1": 7, "F2": 6, "F3": 7, "F4": 6.5, "F5": 7.5, "F6": 8.5, "F7": 8, "F8": 8.5, "F9": 8.5},
+      "sans_objet": [],
+      "ensemble": 7.5,
+      "points_perdus": [
+        {"critere": "F1", "perte": 3, "raison": "Le geste exact (traction stricte) n'apparaît que dans une règle en texte (« à partir de la sixième semaine, 1 à 3 essais isolés ») et jamais dans les tableaux de séance. Toute la spécificité passe par la traction à l'élastique à 6-10 répétitions et par les négatives. On n'a ni alternance d'expositions lourdes et légères (R2-P7), ni réglage par phase de la part du geste exact (R2-P9 : débutant 100 %)."},
+        {"critere": "F2", "perte": 4, "raison": "Traction assistée toujours en 2-3 × 6-10 à 3-4 RIR avec un élastique choisi « pour 8 répétitions propres » : c'est un effort de 11-12RM environ, au bas de la zone R2-P1/R1-P11 (65-80 %), uniforme du début à la fin et sans série lourde de 3-5 répétitions sur un élastique fin. La trajectoire montre que la marge réelle dépasse la cible de 2,4 RIR en moyenne et que 33,6 % des séries sont au moins 3 répétitions plus faciles que visé."},
+        {"critere": "F3", "perte": 3, "raison": "Volume du tirage vertical dans les fourchettes par variante (élastique 7 séries par semaine, négatives jusqu'à 3×5 + 2×5 en semaine 9), mais aucune série de qualité séparée du volume de construction (R2-P1, « séparer l'exposition au lourd du volume »). Cumulé (élastique + négatives + tenues), on arrive à 15 séries de traction par semaine pour un pratiquant à 0 mois, au-dessus du plafond de R1-P5 pour un débutant si on les compte comme un seul mouvement."},
+        {"critere": "F4", "perte": 3.5, "raison": "Les trois blocs sont tous « construction (volume) » : la progression se fait à +1 répétition par plage, sans phase d'intensification avant l'échéance de la semaine 12. Le bloc 2 reprend le schéma du bloc 1 (2 × 6-8 puis 2 × 8-10) parce que le test ne mesure pas la traction assistée. Le bloc 3 (semaines 13 à 16) n'a ni rôle, ni test, ni décharge après l'échéance."},
+        {"critere": "F5", "perte": 2.5, "raison": "Affûtage à −31 % en semaine 11, puis semaine 12 très allégée : on a donc environ 12 jours de baisse, plus long que les 3 à 5 jours prévus pour un débutant (R3-P12). Pas de dernier lourd placé (R3-P14), faute de lourd dans le programme. Le protocole du jour J est bon (3 essais séparés de 3 min, tenue en repli)."},
+        {"critere": "F6", "perte": 1.5, "raison": "Négatives à tempo, pause de 2 s en haut et tenues isométriques, chacune avec un rôle et un critère d'arrêt (descente sous 3 s). Mais pas de critère de retrait des négatives quand la première traction stricte passe, au-delà de la note du test."},
+        {"critere": "F7", "perte": 2, "raison": "Row, face pull, dead bug et entretien du bas du corps sont bien présents, et la position haute est traitée par la tenue menton au-dessus de la barre. En revanche, la poussée régresse au bloc 2 (pompes 1 × 4 et 2 × 4 après un test à 7, contre 2 × 5 au bloc 1), et les dips assistés arrivent en semaine 7 sans travail des poignets ni des épaules en amont."},
+        {"critere": "F8", "perte": 1.5, "raison": "Barème de douleur (R5-P23), RIR jamais sous 2 et amplitude progressive aux dips sont bien posés. Mais le volume excentrique (jusqu'à 25 négatives de 5 s par semaine, plus les tenues) arrive tôt pour des coudes de débutant complet : le moteur a dû borner les tenues pour le coude à plusieurs reprises."},
+        {"critere": "F9", "perte": 1.5, "raison": "Séances dans les 45 min, repos précisés, échauffement écrit. La semaine 6 du mercredi liste deux fois « Tenue menton » (l'épreuve et une ligne ajoutée de 2 × 5 s), ce qui prête à confusion. Le format « au lieu de » est très lourd à lire au parc."},
+        {"critere": "ensemble", "perte": 2.5, "raison": "Une correction nécessaire, lourde de conséquences : sans exposition lourde au geste, l'objectif de 3 tractions en 12 semaines a peu de chances d'être atteint. La trajectoire le confirme : aucune traction stricte aux tests des semaines 6 et 12, tenue haute bloquée à 30 s et progression moyenne de 0,95 % par semaine. Le reste est sûr et bien construit."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Écrire dans les tableaux une exposition lourde au geste, 2 fois par semaine : les 1 à 3 essais stricts en tête de séance, puis 3 à 4 séries de 3-5 répétitions à 2-3 RIR sur l'élastique le plus fin qui le permet (ou des négatives lentes de 1-3 répétitions à la place). On garde la traction assistée à 6-10 répétitions comme volume de construction. Au bloc 2, passer à une phase d'intensification (moins de répétitions, assistance plus faible) au lieu d'une deuxième construction.", "consequence": "Sans corriger, l'athlète accumule des séries de 12RM à l'élastique sans jamais s'approcher de l'effort d'une traction stricte : il arrive très probablement au test de la semaine 12 sans traction, comme le montre la simulation."},
+        {"type": "amelioration", "texte": "Compter élastique, négatives et tenues comme un seul budget de tirage vertical, d'environ 10 à 12 séries dures par semaine pour un débutant à 0 mois. Plafonner les négatives à 2 × 3-4 tant qu'aucune traction stricte ne passe."},
+        {"type": "amelioration", "texte": "Ajouter un test de la traction assistée (répétitions maximales avec un élastique repère) en semaine 6, pour que le bloc 2 soit recalé dessus (série de tête = résultat − 2) au lieu de reconduire les plages du bloc 1."},
+        {"type": "amelioration", "texte": "Raccourcir l'affûtage à 4-5 jours allégés de −30 % (R3-P12, débutant) et garder une semaine 11 normale. Placer une dernière exposition lourde (3 essais stricts ou une série de 3 sur l'élastique fin) à J−5."},
+        {"type": "amelioration", "texte": "Donner un rôle au bloc 3, par exemple un nouvel objectif de répétitions recalé sur le test de la semaine 12 et un test en semaine 16, plutôt que quatre semaines de construction identiques sans fin."},
+        {"type": "amelioration", "texte": "Ne pas faire régresser les pompes au bloc 2 (2 × 5-6 à 3 RIR après le test à 7) et proposer des pompes sur poignées ou poings fermés si le poignet se plaint."}
+      ],
+      "points_forts": [
+        "Fréquence du tirage vertical à 3 fois par semaine, avec des variantes complémentaires (élastique, négatives à tempo, tenue haute) qui ont chacune un rôle.",
+        "Garde-fous clairs : RIR toujours précisé, barème de douleur, règle de baisse du jour, séance courte de repli, règle des séances manquées.",
+        "Protocole de test bien écrit : essai strict frais, 3 essais séparés de 3 min, 48 h sans travail dur avant, et recalage du bloc suivant sur le résultat réel.",
+        "Équilibre correct : row, face pull, tronc et entretien du bas du corps, dips introduits avec une amplitude progressive.",
+        "Message honnête à l'athlète sur le caractère ambitieux de l'objectif."
+      ]
+    },
+    {
+      "programme": "programme_2.md",
+      "criteres": {"F1": 7, "F2": 6, "F3": 6.5, "F4": 6.5, "F5": 7.5, "F6": 8.5, "F7": 8, "F8": 8.5, "F9": 8},
+      "sans_objet": [],
+      "ensemble": 7,
+      "points_perdus": [
+        {"critere": "F1", "perte": 3, "raison": "Deux objectifs (1 traction, 10 pompes). La pompe classique, mouvement de l'objectif, n'arrive qu'en semaine 7, à 1 série de 1-3 répétitions par séance (2 séries au plus en semaines 9-10). La traction stricte n'apparaît que dans une règle en texte, pas dans les tableaux. Aucune alternance d'expositions lourdes et légères (R2-P7, R2-P9)."},
+        {"critere": "F2", "perte": 4, "raison": "Traction assistée uniforme en 6-8 répétitions à 2-4 RIR avec un élastique choisi pour 8 répétitions, sans série lourde de 3-5 répétitions (R2-P1). Pour les pompes, on prescrit « 1 × 1 à 3, 2 rép. en réserve » à une athlète testée à 2 : la consigne est incohérente. La pompe inclinée, avec une marge réelle de 5 à 13 RIR dans la trajectoire, montre que la hauteur n'est jamais réglée assez bas."},
+        {"critere": "F3", "perte": 3.5, "raison": "Volume de pompe classique de 3 à 5 séries par semaine de 1-5 répétitions, très loin de ce qu'il faut pour passer de 3 à 10 répétitions. Le volume de poussée repose sur une pompe inclinée trop facile. Le tirage reste dans la fourchette mais sans séries de qualité séparées du volume."},
+        {"critere": "F4", "perte": 3.5, "raison": "Trois blocs « construction (volume) », progression à +1 répétition par plage. Le critère pour passer de la pompe inclinée à la pompe classique (2 × 12 propres sur 2 séances, au moins 2 semaines sur l'étape) n'est pas articulé avec l'échelle intermédiaire écrite dans les notes (mur → surélevée → genoux → sol) : aucune étape « genoux » n'est planifiée. Résultat dans la trajectoire : 15 semaines sur l'étape inclinée. Le bloc 3 n'a pas de rôle après l'échéance."},
+        {"critere": "F5", "perte": 2.5, "raison": "Affûtage en semaine 11 puis test le samedi de la semaine 12, avec une dernière séance le mercredi (J−3, conforme). Mais pas de dernier lourd, et la baisse s'étale sur environ 12 jours, au-delà des 3 à 5 jours prévus pour un débutant (R3-P12)."},
+        {"critere": "F6", "perte": 1.5, "raison": "Négatives de traction et de pompe à tempo et tenues isométriques, avec rôle et critère d'arrêt. Pas de critère de retrait une fois le geste acquis."},
+        {"critere": "F7", "perte": 2, "raison": "Face pull, CARs d'épaule, gainage, dead bug et bas du corps sont présents. Les poignets ne sont pas protégés alors que la poussée est un objectif (wrist push-ups seulement à l'échauffement) : la trajectoire fait apparaître une douleur au poignet dès la semaine 7. La suspension active à 15-20 s, soit 60-80 % du dead hang de 25 s, avant les tractions entame la préhension."},
+        {"critere": "F8", "perte": 1.5, "raison": "Barème de douleur, RIR précisé, aucune hausse brutale. En revanche, rien n'est prévu pour les poignets d'une débutante qui va enchaîner beaucoup de pompes : pas de variante sur poignées ni de progression d'extension du poignet."},
+        {"critere": "F9", "perte": 2, "raison": "Séances de 25 à 50 min sur 60 min disponibles : le temps libre n'est pas mis au service de l'objectif pompes. La consigne RIR/répétitions est contradictoire sur la pompe classique. Le format en différences est lourd."},
+        {"critere": "ensemble", "perte": 3, "raison": "Deux corrections nécessaires : la dose et la progression de l'objectif pompes, et l'absence d'exposition lourde au geste de traction. Les deux objectifs sont probablement manqués ; la simulation donne 3 pompes au départ comme à l'arrivée, et aucune traction stricte. Le cadre de sécurité et de test est bon."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Construire la progression des pompes vers 10 répétitions dès le bloc 1. Pompe inclinée réglée pour 6-10 répétitions à 2-3 RIR, hauteur baissée chaque semaine dès que le haut de la plage passe. Étape « genoux » ou classique planifiée au plus tard en semaine 4-5. Dès qu'elle est possible, pompe classique en 3-5 séries de 2-4 répétitions (ou en grappes), 3 fois par semaine, en utilisant les 10-15 min libres. Assouplir le critère de passage (2 × 12) pour qu'il ne bloque pas le travail du geste exact.", "consequence": "Telle qu'écrite, l'athlète reste sur une pompe inclinée trop facile et ne fait que 3 à 5 séries par semaine de 1-3 pompes classiques : elle restera autour de 3 pompes et manquera l'objectif de 10 (c'est ce que montre la simulation)."},
+        {"type": "necessaire", "texte": "Écrire dans les tableaux, 2 fois par semaine, les 1 à 3 essais stricts de traction en tête de séance, suivis de 3 séries de 3-5 répétitions à 2-3 RIR sur l'élastique le plus fin qui le permet. On garde le travail à 6-8 répétitions comme volume. Au bloc 2, réduire l'assistance plutôt qu'ajouter des répétitions.", "consequence": "Sans exposition proche de l'effort d'une traction stricte, la force progresse dans une zone trop légère : la première traction a de fortes chances de ne pas passer au test de la semaine 12."},
+        {"type": "amelioration", "texte": "Remplacer « 1 × 1 à 3, 2 rép. en réserve » par une consigne cohérente avec un maximum de 2-3, par exemple des simples de pompe classique en grappes, 4-6 répétitions isolées, 30-45 s entre elles, arrêt au premier ralentissement."},
+        {"type": "amelioration", "texte": "Protéger les poignets : option de pompes sur poignées ou poings fermés, et 2 séries d'extension de poignet en appui ajoutées aux séances de poussée, avec réduction de l'appui sur les mains si le poignet atteint 3/10."},
+        {"type": "amelioration", "texte": "Ramener la suspension active d'échauffement à 2 × 10 s (environ 40 % du dead hang) pour ne pas fatiguer la préhension avant les tractions, et suivre le dead hang comme indicateur au test."},
+        {"type": "amelioration", "texte": "Raccourcir l'affûtage à 4-5 jours allégés de −30 % et placer une dernière exposition lourde à J−5. Donner au bloc 3 un objectif et un test de fin."}
+      ],
+      "points_forts": [
+        "Les deux objectifs sont testés le jour J dans le bon ordre (essai strict frais, puis tenue de repli, puis série maximale de pompes), avec 72 h sans travail dur avant.",
+        "Tirage vertical 3 fois par semaine avec des variantes qui ont chacune un rôle (élastique, négatives à tempo, tenue haute).",
+        "Négatives de pompe bien encadrées (tempo, arrêt si le bassin s'affaisse, remontée sur les genoux).",
+        "Cadre de sécurité complet : barème de douleur, baisse du jour, séance courte, séances manquées, drapeaux rouges.",
+        "Équilibre et prévention : face pull, CARs d'épaule, gainage latéral, dead bug, bas du corps entretenu."
+      ]
+    }
+  ]
+}
