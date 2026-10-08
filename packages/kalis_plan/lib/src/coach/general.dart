@@ -968,7 +968,18 @@ void _buildConditioning(_Builder b) {
             : DayStress.medium,
       );
     }
-    final (format, moves) = _wods[order[d % order.length]];
+    final (format, rawMoves) = _wods[order[d % order.length]];
+    // Muscle-up travaillé à part : le tirage de la pièce passe au rowing
+    // (volume de tirage vertical de la semaine ; R6-P28).
+    final moves = <List<String>>[
+      for (final m in rawMoves)
+        mu && m.contains('sw-traction-pronation')
+            ? <String>[
+                for (final id in m)
+                  if (id != 'sw-traction-pronation') id,
+              ]
+            : m,
+    ];
     final room = (minutes - (minutes >= 40 ? 25 : 6)) * 60;
     final fitted = _fitWod(format, room);
     for (final m in moves) {

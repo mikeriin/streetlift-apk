@@ -3760,7 +3760,7 @@ final class Prescriber {
       var meters = last ? goal.$1 : goal.$1 / 2;
       final fits =
           (a.days[day].minutes - 8.0) * 60 * coachRunMetersPerSecond;
-      if (!ws.eventWeek && fits > 0 && meters > fits) {
+      if (fits > 0 && meters > fits) {
         meters = (fits / 500).floorToDouble() * 500;
       }
       x
@@ -3892,8 +3892,11 @@ final class Prescriber {
       if (minutes > cap) {
         minutes = cap;
       }
-      if (minutes < 10) {
-        minutes = 10;
+      // (Plancher de 10 min, jamais au-delà de la durée de départ bornée
+      // par la plus longue course connue.)
+      final floor = _runBase(long) < 10 ? _runBase(long) : 10.0;
+      if (minutes < floor) {
+        minutes = floor;
       }
     }
     final whole = minutes.floor();
@@ -3935,7 +3938,7 @@ final class Prescriber {
       return base;
     }
     final cap = known * (a.level >= 1 ? 1.25 : 1.0) * (long ? 1.0 : 0.7);
-    return cap < base ? (cap < 10 ? 10 : cap) : base;
+    return cap < base ? (cap < 5 ? 5 : cap) : base;
   }
 
   int? _enduranceMinutes(SlotSpec s, int day, WeekSpec ws, _DayRole role) {
@@ -7066,10 +7069,17 @@ final class Prescriber {
     }
     final x = _new(s);
     final e = x.e;
-    final format = (s.group ?? '').split(':').first;
+    final parts = (s.group ?? '').split(':');
+    final format = parts.first;
     final level = _level;
+    // Tours d'une pièce « pour le temps » comptés dès ici, pour que les
+    // garde-fous de volume de la semaine les voient (le groupe les fixe
+    // ensuite).
+    final rounds = format == 'rft' && parts.length > 1
+        ? (int.tryParse(parts[1]) ?? 1)
+        : 1;
     x
-      ..sets = 1
+      ..sets = rounds
       ..minSets = 1
       ..rest = 0
       ..rir = 2
