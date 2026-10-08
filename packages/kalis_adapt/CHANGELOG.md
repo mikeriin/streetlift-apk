@@ -1,5 +1,52 @@
 # Journal des versions de kalis_adapt
 
+## 0.2.3
+
+Lot CA2, partie 0 (street) du pipeline « Calibrage des programmes ». Mode 0.1 inchangé. Détail et sources :
+`CONTRAT.md`, § 11.16.
+
+- **Reprise graduée conduite séance par séance (sécurité)** : palier qui recule quand la douleur répond
+  (gêne au-dessus de 2/10, pas revenue au niveau d'avant, en hausse d'une semaine à l'autre) ; dose écrite
+  jamais dépassée, 3 répétitions en réserve, aucune hausse dans la séance ; arrêt gardé quand il se lèverait
+  sur une semaine qui n'est pas de charge ; reprise propre au moteur (50 %, +10 % par semaine de charge,
+  67,5 % du 1RM) quand l'arrêt se lève au milieu d'un bloc qui écrit encore les mouvements provocants.
+- **Tests reportés** : jamais sur une zone douloureuse, en reprise ou à l'arrêt gardé (retirés, pas remplacés).
+- **Appui du poignet sensible** : dose d'appui écrite par le bloc au plus.
+- **Meilleur maintien récent** : le plancher des tenues ne vient plus d'un record d'avant un arrêt.
+- **Élastique** : deux séances au même cran avant d'en changer, jamais d'aller-retour sans échec.
+- **Tentatives après un affûtage** : maximum du jour +2 %.
+- **Appui à prise neutre** : un poignet douloureux ou à l'arrêt garde la poussée par une variante neutre.
+- **Estimation moins prudente** : série lourde (8 répétitions possibles au plus) lue avec le biais de note
+  appris ; une série arrêtée sous la cible ne fait baisser l'estimation qu'à la deuxième mesure concordante ;
+  bornes de santé comptées depuis la dernière séance d'une semaine de charge (jamais depuis une séance
+  volontairement légère).
+- **Douleur pendant l'arrêt et après (sécurité, relecture documentée du pilotage)** : à 5/10 avant la séance,
+  tout mouvement qui charge la zone est retiré (6/10 avant ; allègement dès 4/10), remplaçants compris ;
+  pendant un arrêt, les mouvements qui chargent la zone sans la provoquer restent au premier palier de la
+  reprise (moitié des séries, 3 en réserve, 67,5 % du 1RM au plus), puis sont retirés si la douleur est
+  encore à 3/10 après deux semaines d'arrêt ; remplaçant d'une douleur du jour à 70 % du 1RM au plus ; sur
+  une zone à l'arrêt ou sortie d'un arrêt depuis douze semaines, répétitions ou secondes par série +10 % au
+  plus d'une séance à la suivante.
+- **Suivi de l'arrêt (sécurité, relecture documentée du pilotage, manche 4)** : renvoi vers un professionnel à
+  la première séance de l'arrêt puis une fois par semaine ; aucun test tant que la zone a été signalée au-dessus
+  de 2/10 dans la semaine ; échauffement compris dans l'arrêt ; poignet à l'arrêt : toute charge externe d'appui
+  retirée d'emblée (dips lestés), appui neutre au poids du corps gardé au premier palier, poussée en extension
+  remplacée par un appui neutre au poids du corps ; zone douloureuse du jour comptée comme récente (+10 % au
+  plus) dès la séance.
+- **Poignet encore à 3/10 pendant l'arrêt (sécurité, panel de la passe 5)** : tant que la gêne de la semaine
+  atteint 3/10, seuls les appuis sur parallettes ou poignées restent (dips aux barres, anneaux, pompes au sol
+  retirés, échauffement compris) ; pendant tout l'arrêt du poignet, le remplaçant d'une poussée est un appui sur
+  parallettes ou poignées, jamais des dips aux barres.
+- **Élastique** : la série de séances au haut de la plage compte même quand la plage écrite monte.
+- **Relecture indépendante du code (sécurité)** : arrêt gardé jusqu'aux deux semaines à 2/10 (plus de chute au
+  premier signalement plus bas), étape de figure et test reporté filtrés par les règles de douleur et d'arrêt,
+  plafond de la reprise et des remplaçants sur toute ligne chargée, arrêt gardé sur l'échauffement, remplaçant de
+  douleur du jour obéissant aux arrêts, aucune hausse au-delà du plan en reprise, ni tenue repère sur zone récente,
+  manques de l'élastique comptés à plage montante, gain d'affûtage avant la première barre seulement.
+- Simulateur : zone réactive après un épisode de douleur (modèles B et C), poussées comptées ; une hausse
+  sur zone douloureuse se compte au-dessus de 3/10 (les mesures du mode 0.1 au banc ne se comparent plus
+  chiffre à chiffre à celles de 0.2.2).
+
 ## 0.2.2
 
 Lot « CX correction 1 » du pipeline « Calibrage des programmes » (croisement avec `kalis_plan` 0.2.2).
