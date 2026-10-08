@@ -4,7 +4,7 @@
 
 Lot CP2, partie 0 (« finir le street ») du pipeline « Calibrage des programmes ». `kalis_core` 0.4.2, contrat
 inchangé (additif : nouvelles notes de coach). Le chemin 0.1 est inchangé. Journal :
-`packages/kalis_bench/docs/CALIBRAGE_CP2.md`.
+`docs/CALIBRAGE_CP2.md`.
 
 - **Charge et douleur (sécurité, C9.7, C9.8)** : charge lestée bornée d'une semaine à l'autre même quand les
   répétitions changent (référence : dernière semaine de charge, jamais l'allègement), tonnage par exercice

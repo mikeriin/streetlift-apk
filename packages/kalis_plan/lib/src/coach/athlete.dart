@@ -767,11 +767,12 @@ final class Athlete {
           final partial =
               e.exerciseId.contains('partiel') ||
               !e.exerciseId.startsWith('sl-');
-          // (Un 1RM déclaré ou testé n'est plus abaissé par l'estimation :
-          // une série loin de l'échec la tire vers le bas — panel CX
-          // correction 1, 1RM de référence à 115 kg pour un record à 132 ;
-          // la baisse passe par un test. L'estimation sert un mouvement
-          // sans repère.)
+          // (Un 1RM testé (test guidé ou compétition) n'est jamais abaissé
+          // par l'estimation : une série loin de l'échec la tire vers le
+          // bas — panel CX correction 1. Un 1RM seulement déclaré, jamais
+          // testé, nettement au-dessus de l'estimation est remplacé par
+          // elle, de 15 % au plus (CP2, partie 0, C9.8 (iii)). L'estimation
+          // sert aussi un mouvement sans repère.)
           if (before == null && external > 0 && !partial) {
             oneRm[e.exerciseId] = external;
             estimatedOneRm.add(e.exerciseId);
@@ -867,7 +868,13 @@ final class Athlete {
       }
       for (final (zone, pain) in trendPains) {
         final joint = zone.joint;
-        if (pain < 6 && joint != null && e.stressOn(joint) != JointStress.low) {
+        // (De 3 à 5 sur 10 seulement : une zone « sensible » relevée à
+        // 2/10 ne remet pas une figure évitée — relecture indépendante du
+        // code de 0.2.3.)
+        if (pain >= 3 &&
+            pain < 6 &&
+            joint != null &&
+            e.stressOn(joint) != JointStress.low) {
           return true;
         }
       }

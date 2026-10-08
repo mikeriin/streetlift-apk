@@ -385,7 +385,10 @@ BlockShape shapeBlock(
   final target = targetOf(a.profile, start);
   final model = seasonModelOf(a, target);
   final toEvent = target == null ? null : weeksUntil(start, target.date);
-  if (blockIndex > 0 && coachPainReprise(a)) {
+  // (Bloc 0 compris : une restructuration du premier bloc pour une douleur
+  // qui dure passe aussi en reprise — relecture indépendante du code de
+  // 0.2.3 ; une durée demandée est respectée.)
+  if (coachPainReprise(a)) {
     final natural =
         blockWeeks ??
         (toEvent == null && a.level == 1
@@ -394,7 +397,7 @@ BlockShape shapeBlock(
     return BlockShape(
       model: model,
       weeks: coachRepriseWeeks(
-        natural < 4 ? 4 : natural,
+        blockWeeks ?? (natural < 4 ? 4 : natural),
         eventIndex: toEvent == null ? null : toEvent - 1,
       ),
       phase: SeasonPhaseKind.reintroduction,

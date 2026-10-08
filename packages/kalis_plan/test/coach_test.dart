@@ -1935,6 +1935,82 @@ void main() {
       }
     });
 
+    test('bloc de reprise : répétitions au poids du corps et tonnage lesté '
+        '+10 % au plus d\'une semaine à l\'autre (C9.8, relecture du code)', () {
+      final blocks = _programWith(
+        catalog,
+        _lifter(),
+        12,
+        reasonsFor: (n) => n == 1
+            ? <Reason>[
+                Reason(
+                  code: ReasonCodes.adaptPainPersistent,
+                  params: <String, Object?>{
+                    'zone': BodyZone.elbow.code,
+                    'sessions': 4,
+                  },
+                ),
+              ]
+            : const <Reason>[],
+      );
+      expect(blocks.length, greaterThanOrEqualTo(2));
+      final reprise = blocks[1];
+      Map<String, double> weekOf(WeekPrescription w) {
+        final out = <String, double>{};
+        for (final d in w.days) {
+          for (final i in d.items) {
+            final e = catalog.exercise(i.exerciseId);
+            final reps = i.repsHigh;
+            if (i.kind != SetKind.work || reps == null) {
+              continue;
+            }
+            final load = i.startLoadKg;
+            if (e.loadType == LoadType.addedWeight && load != null) {
+              final total = load + (e.bodyweightFraction?.value ?? 0) * 78.0;
+              out['t|${e.id}'] = (out['t|${e.id}'] ?? 0) + i.sets * reps * total;
+            }
+          }
+        }
+        return out;
+      }
+
+      final weeks = reprise.pass2.weeks;
+      for (var k = 1; k < weeks.length; k++) {
+        final before = weekOf(weeks[k - 1]);
+        final now = weekOf(weeks[k]);
+        for (final entry in now.entries) {
+          final b = before[entry.key];
+          if (b == null || b <= 0) {
+            continue;
+          }
+          expect(
+            entry.value,
+            lessThanOrEqualTo(b * (1 + coachRepriseRise) + 1e-6),
+            reason: '${entry.key}, semaine ${k + 1} du bloc de reprise',
+          );
+        }
+      }
+    });
+
+    test('débutant sans ancienneté avec un bloc écrit par le chemin 0.1 : '
+        'le bloc suivant reste au chemin 0.1 (relecture du code)', () {
+      final old = _profile(
+        experience: ExperienceLevel.beginner,
+        schemaVersion: 2,
+      );
+      final now = _profile(
+        experience: ExperienceLevel.beginner,
+        trainingAge: null,
+      );
+      expect(coachEligible(old), isFalse);
+      expect(coachEligible(now), isTrue);
+      final blocks = _programWith(catalog, old, 10, profileFor: (n) => now);
+      expect(blocks.length, greaterThanOrEqualTo(2));
+      for (final b in blocks) {
+        expect(isCoachPlan(b.pass1), isFalse);
+      }
+    });
+
     test('poignet sensible : une seule séance de dynamique de planche, '
         'poussée tête en bas sur prise neutre, pas de wrist push-ups', () {
       final profile = _profile(
