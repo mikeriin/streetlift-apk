@@ -20,3 +20,4 @@ Base : main 64e286b3 (dev6.9.1). Arbre de travail complet (sans .github).
 - Corrections de relecture faites ; run rapide essai 3 vert (771 tests) ; version 6.9.2+110 ; README, SUIVI, CI_GP.
 - Contrôle complet poussé sur claude/ci-3d : commit 8b415536 (arbre 3ba926dd).
 - Reste : résultat ci-3d (captures CI1c a/b à relire), publication main, build signé, livraison.
+- ci-3d essai 1 (run 37788556859) : émulateur CI1c a/b et CI1 verts ; échecs : versions attendues 6.9.1 (tests g3 dev, python), gradlew absent de l'arbre (index vide). Essai 2 poussé : 3734306e.
