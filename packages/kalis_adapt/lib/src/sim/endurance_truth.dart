@@ -68,7 +68,10 @@ final class EnduranceTruth {
   /// Athlète de niveau [level] (0 débutant … 3 élite), modèle [kind].
   EnduranceTruth(this.kind, this.level, this.seed) {
     final r = SimRandom.of(seed, 'endurance');
-    const base = <double>[25, 50, 75, 100];
+    // Durée de course facile tenue confortablement, par niveau (choix
+    // raisonné : un débutant tient 30 min, un intermédiaire à 30 km par
+    // semaine sort 60 à 75 min ; CA2, partie 1).
+    const base = <double>[30, 70, 100, 130];
     easyMinutes = base[level.clamp(0, 3)] * math.exp(0.2 * r.gauss());
     startEasyMinutes = easyMinutes;
     wod = math.exp(0.15 * r.gauss());
@@ -218,7 +221,9 @@ final class EnduranceTruth {
     BodyZone? injured;
     if (count >= 3 && longest > 0 && writtenS > 0) {
       final spike = doneS / longest;
-      if (spike > worstSpike) {
+      // (Un test ou une course d'échéance n'est pas une sortie
+      // d'entraînement : la borne du moteur ne s'y applique pas.)
+      if (item.kind != SetKind.test && spike > worstSpike) {
         worstSpike = spike;
       }
       var risk = 0.003;
@@ -318,7 +323,8 @@ final class EnduranceTruth {
             ? (seconds * share).round()
             : null,
         distanceMeters: reps == null && seconds == null ? distance : null,
-        calories: reps == null && seconds == null && distance == null && cal != null
+        calories:
+            reps == null && seconds == null && distance == null && cal != null
             ? (cal * share).floorToDouble()
             : null,
         flames: rates ? flames : null,

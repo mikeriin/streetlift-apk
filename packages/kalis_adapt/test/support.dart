@@ -1069,9 +1069,7 @@ List<String> checkEndurance(
         // part) : plus haut = plus dur.
         final rirBasis = si.basis == IntensityBasis.rir;
         bool harder(double? a, double? b) =>
-            a != null &&
-            b != null &&
-            (rirBasis ? a < b - 1e-9 : a > b + 1e-9);
+            a != null && b != null && (rirBasis ? a < b - 1e-9 : a > b + 1e-9);
         if (wi == null ||
             wi.basis != si.basis ||
             harder(si.value, wi.value) ||

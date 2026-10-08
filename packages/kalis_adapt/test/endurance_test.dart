@@ -150,9 +150,8 @@ void main() {
           }
           expect(
             plan.adjustments.any(
-              (a) => a.reasons.any(
-                (r) => r.code == ReasonCodes.adaptEasyInstead,
-              ),
+              (a) =>
+                  a.reasons.any((r) => r.code == ReasonCodes.adaptEasyInstead),
             ),
             isTrue,
           );
