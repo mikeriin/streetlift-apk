@@ -84,14 +84,14 @@ Violations de sécurité : **23** au total (Pas d'allègement avant l'échéance
 | `autres_10_contraintes_multiples` | 36/36 | 0.0 | 2.888 | 0.978 | 0.0 | 0.774 | — | 0 | ecart_rir | 0 |
 | `street_01_debutant_complet` | 36/36 | 0.0 | 2.794 | 0.761 | 0.0 | 1.048 | — | 0 | ecart_rir, ecart_effort | 0 |
 | `street_02_debutant_surpoids` | 36/36 | 0.0 | 2.578 | 0.719 | 0.0 | 1.384 | — | 0 | ecart_rir, ecart_effort | 0 |
-| `street_03_debutante` | 36/36 | 0.0 | 3.989 | 0.659 | 0.0 | 0.971 | — | 0 | ecart_rir, ecart_effort | 0 |
+| `street_03_debutante` | 36/36 | 0.0 | 3.989 | 0.653 | 0.0 | 0.936 | — | 0 | ecart_rir, ecart_effort | 0 |
 | `street_04_reprise_longue_pause` | 48/48 | 0.0 | 3.029 | 0.438 | 0.0 | 0.532 | — | 0 | ecart_rir | 0 |
 | `street_05_inter_calisthenie_front_lever` | 63/64 | 0.0 | 1.747 | 0.647 | 0.0 | — | — | 0 | ecart_rir | 0 |
 | `street_06_inter_sets_reps` | 48/48 | 0.0 | 2.095 | 0.588 | 0.0 | 0.331 | — | 0 | ecart_rir | 0 |
 | `street_07_avance_streetlifting_competition` | 60/60 | 0.001 | 2.703 | 0.673 | 0.326 | 0.062 | 0.999 | 0 | ecart_rir, pics_de_charge, performance_echeance, ecart_effort, pics_a_schema_egal | 0 |
 | `street_08_avance_sets_reps_competition` | 40/40 | 0.0 | 3.558 | 0.549 | 0.0 | 0.16 | 0.837 | 0 | ecart_rir, performance_echeance, ecart_effort | 0 |
 | `street_09_elite_streetlifting` | 60/60 | 0.003 | 3.196 | 0.607 | 0.324 | 0.023 | 0.99 | 0 | ecart_rir, pics_de_charge, performance_echeance | 0 |
-| `street_10_elite_figures` | 91/96 | 0.0 | 2.003 | 0.28 | 0.0 | 0.067 | — | 0 | ecart_rir, ecart_effort | 0 |
+| `street_10_elite_figures` | 91/96 | 0.0 | 1.962 | 0.277 | 0.0 | 0.067 | — | 0 | ecart_rir, ecart_effort | 0 |
 | `street_11_master_51_ans` | 48/48 | 0.0 | 1.639 | 0.77 | 0.102 | 0.261 | — | 0 | ecart_rir, pics_de_charge | 0 |
 | `street_12_antecedent_coude` | 48/48 | 0.0 | 2.364 | 0.623 | 0.339 | 0.263 | — | 0 | ecart_rir, pics_de_charge, ecart_effort | 0 |
 | `street_13_peu_de_temps` | 34/36 | 0.0 | 1.76 | 0.751 | 0.0 | 0.626 | — | 0 | ecart_rir, ecart_effort | 0 |

@@ -31,11 +31,11 @@ Chaque bloc est écrit par le moteur de création au moment où il commence, d'a
 
 ## Bilan
 
-- Séances faites : 39 sur 48 (12 ajustées le jour même).
+- Séances faites : 39 sur 48 (15 ajustées le jour même).
 - Échecs non voulus (hors tests et tentatives) : 0 % des séries de travail.
-- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 2,02 répétition en réserve (sur les 73 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 26,5 %.
+- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 2,03 répétition en réserve (sur les 72 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 27 %.
 - Plus forte hausse de charge totale d'un mouvement principal d'une séance à la suivante, à schéma égal : 0 % ; hausses de plus de 10 % faites de plusieurs crans : 0.
-- Progression réelle moyenne des mouvements suivis : 1,213 % par semaine.
+- Progression réelle moyenne des mouvements suivis : 1,153 % par semaine.
 - Douleur : 0 hausse(s) de charge sur une zone douloureuse signalée.
 
 ## Mouvements suivis, semaine par semaine
@@ -58,9 +58,9 @@ Pour chaque mouvement, la séance la plus lourde de la semaine : ce que le progr
 | 11 | affûtage | 1 × 6 à 8 | (6 à 8) | 6 | 4 → 7,6 | 14 / 12 | — |
 | 12 | test | 1 × 6 à 8 | (6 à 8) | 8 | 4 → 6,1 | 14 / 12 | — |
 | 13 | construction (volume) | 2 × 7 à 9 | (7 à 9)-(7 à 18) | 8-8 | 3,5 → 5,7 ; suivantes 2 → 4,7 | 14 / 13 | série repère : une série ouverte (au ressenti, 2 en réserve) pour mesurer où en est l'athlète ; allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |
-| 14 | construction (volume) | 2 × 7 à 9 | (7 à 9)-(7 à 18) | 8-9 | 3,5 → 6,6 ; suivantes 2 → 4,6 | 15 / 13 | série repère : une série ouverte (au ressenti, 2 en réserve) pour mesurer où en est l'athlète |
-| 15 | construction (volume) | 2 × 8 à 9 | (8 à 9)-(8 à 9) | 8-8 | 3,5 → 6,2 ; suivantes 2 → 5,5 | 14 / 12 | allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |
-| 16 | construction (volume) | 2 × 8 à 9 | (8 à 9)-(8 à 9) | 8-9 | 3 → 5,8 ; suivantes 2 → 4,1 | 14 / 13 | — |
+| 14 | construction (volume) | 3 × 7 à 9 | (7 à 9)-(7 à 9)-(7 à 18) | 8-9-9 | 3,5 → 6,6 ; suivantes 2 → 4,3 | 15 / 13 | série repère : une série ouverte (au ressenti, 2 en réserve) pour mesurer où en est l'athlète |
+| 15 | construction (volume) | 2 × 8 à 9 | (8 à 9)-(8 à 9) | 8-9 | 3,5 → 6,3 ; suivantes 2 → 4,6 | 14 / 13 | — |
+| 16 | construction (volume) | 2 × 8 à 9 | (8 à 9)-(8 à 9) | 8-9 | 3,5 → 5,9 ; suivantes 2 → 4,2 | 14 / 13 | — |
 
 Athlète simulé, maximum réel hors fatigue : 16 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 14 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
 
@@ -80,9 +80,7 @@ Athlète simulé, maximum réel hors fatigue : 16 au départ (le record déclar�
 | 11 | affûtage | 2 × 4 à 5 | (4 à 5)-(4 à 5) | 5-4 | 3 → 4,5 ; suivantes 3 → 4,5 | 9 / 9 | — |
 | 12 | test | 1 × 4 à 5 | (4 à 5) | 4 | 3,5 → 5,2 | 9 / 9 | — |
 | 13 | construction (volume) | 2 × 5 | 6-5 | 6-4 | 2 → 3,2 ; suivantes 2 → 4 | 9 / 9 | allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |
-| 14 | construction (volume) | 2 × 5 | 5-5 | 5-5 | 3,5 → 4,7 ; suivantes 2 → 3,8 | 10 / 9 | — |
-| 15 | construction (volume) | 2 × 5 | 5-5 | 5-5 | 3,5 → 4,7 ; suivantes 2 → 3,6 | 10 / 9 | — |
-| 16 | construction (volume) | 2 × 5 | 5 | 5 | 3 → 4,7 | 10 / 9 | charge non augmentée (pain_return) ; −1 série(s) |
+| 16 | construction (volume) | 2 × 5 | 5 | 5 | 3 → 4,9 | 10 / 9 | charge non augmentée (pain_return) ; −1 série(s) |
 
 Athlète simulé, maximum réel hors fatigue : 8 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 10 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
 
@@ -101,6 +99,6 @@ Athlète simulé, maximum réel hors fatigue : 8 au départ (le record déclaré
 - **Semaine 11 (affûtage)** : phase « affûtage » : séances servies telles que le programme les écrit (× 3) ; affûtage : aucun volume ajouté, intensité gardée (× 3).
 - **Semaine 12 (test)** : phase « test » : séances servies telles que le programme les écrit (× 3) ; résultat de test reporté au profil : Tenue menton au-dessus de la barre pronation 30 s.
 - **Semaine 13 (construction (volume))** : nouveau bloc construit à partir du point de fin de bloc (maxima estimés, résultats de test, tolérance) ; Pompe classique : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; Face pull à l'élastique : répétitions recalées sur le maximum mesuré (2 de moins par série que le programme) ; séries retirées — Pompe classique, Dips assistés à l'élastique (douleur signalée (poignet, 4/10)).
-- **Semaine 14 (construction (volume))** : 1 séance(s) manquée(s) sur 3 ; temps réduit (27 min au lieu de 45) ; Pompe classique : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; exercice retiré sur 3 exercices (temps réduit (27 min au lieu de 45)) ; séries retirées — Tenue menton au-dessus de la barre pronation, Traction assistée à l'élastique (temps réduit (27 min au lieu de 45)).
-- **Semaine 15 (construction (volume))** : 1 séance(s) manquée(s) sur 3 ; Face pull à l'élastique : répétitions recalées sur le maximum mesuré (3 de moins par série que le programme) ; Traction assistée à l'élastique : séries arrêtées en cours de séance (allégé pour garder la marge prévue (au moins 2 en réserve), dernières séries plus dures que prévu).
-- **Semaine 16 (construction (volume))** : Face pull à l'élastique : répétitions recalées sur le maximum mesuré (3 de moins par série que le programme) ; séries retirées — Pompe classique (−1 série(s)).
+- **Semaine 14 (construction (volume))** : 1 séance(s) manquée(s) sur 3 ; temps réduit (27 min au lieu de 42) ; douleur qui dure ou qui revient (poignet, 3 séances à 3/10 ou plus) : mouvements qui la provoquent retirés, consulter un médecin ou un kiné, reprise après deux semaines à 2/10 au plus ; exercice retiré — Pompe classique (douleur qui dure ou qui revient (poignet, 3 séances à 3/10 ou plus) : mouvements qui la provoquent retirés, consulter un médecin ou un kiné, reprise après deux semaines à 2/10 au plus) ; exercice retiré sur 3 exercices (temps réduit (27 min au lieu de 42)) ; séries retirées — Tenue menton au-dessus de la barre pronation (temps réduit (27 min au lieu de 42)) ; séries retirées — Dips assistés à l'élastique (−1 série(s)).
+- **Semaine 15 (construction (volume))** : 1 séance(s) manquée(s) sur 3 ; douleur qui dure ou qui revient (poignet, 3 séances à 3/10 ou plus) : mouvements qui la provoquent retirés, consulter un médecin ou un kiné, reprise après deux semaines à 2/10 au plus (× 2) ; Face pull à l'élastique : répétitions recalées sur le maximum mesuré (3 de moins par série que le programme) ; Traction assistée à l'élastique : séries arrêtées en cours de séance (allégé pour garder la marge prévue (au moins 2 en réserve), dernières séries plus dures que prévu) ; exercice retiré — Pompe classique (douleur qui dure ou qui revient (poignet, 3 séances à 3/10 ou plus) : mouvements qui la provoquent retirés, consulter un médecin ou un kiné, reprise après deux semaines à 2/10 au plus) ; séries retirées — Dips assistés à l'élastique (−1 série(s)).
+- **Semaine 16 (construction (volume))** : Pompe classique : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; Face pull à l'élastique : répétitions recalées sur le maximum mesuré (3 de moins par série que le programme) ; séries retirées — Pompe classique (−1 série(s)).
