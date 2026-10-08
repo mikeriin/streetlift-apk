@@ -38,7 +38,11 @@ final class EnduranceDone {
     required this.reps,
     required this.flames,
     required this.success,
+    this.calories,
   });
+
+  /// Calories par série (ou `null`).
+  final double? calories;
 
   /// Séries faites.
   final int sets;
@@ -305,6 +309,7 @@ final class EnduranceTruth {
     final reps = item.repsHigh ?? item.repsLow;
     final seconds = item.secondsHigh ?? item.secondsLow;
     final distance = item.distanceMeters;
+    final cal = item.calories;
     return (
       EnduranceDone(
         sets: sets,
@@ -313,6 +318,9 @@ final class EnduranceTruth {
             ? (seconds * share).round()
             : null,
         distanceMeters: reps == null && seconds == null ? distance : null,
+        calories: reps == null && seconds == null && distance == null && cal != null
+            ? (cal * share).floorToDouble()
+            : null,
         flames: rates ? flames : null,
         success: share >= 0.999,
       ),

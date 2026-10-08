@@ -716,6 +716,7 @@ SimRun simulate({
                 reps: made.reps,
                 seconds: made.seconds,
                 distanceMeters: made.distanceMeters,
+                calories: made.calories,
                 flames: made.flames,
                 success: made.success,
                 excluded: false,

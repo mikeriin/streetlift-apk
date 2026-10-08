@@ -49,7 +49,7 @@ Les moteurs ne produisent aucun texte : des codes et des paramètres. Voici, pou
 | `adapt.easy_instead` (0.4.3) | Aujourd'hui, endurance facile à la place de la séance de qualité ({cause}). | `cause` | Séance de qualité (allure, fractionné, test de course) servie en endurance facile un jour sans. |
 | `adapt.endurance_shortened` (0.4.3) | On raccourcit : {percent} % de ce qui était prévu ({cause}). | `cause`, `percent` | Durée, distance ou nombre de répétitions d'une ligne d'endurance ramenés à `percent` % de l'écrit (bilan bas, reprise après une coupure). |
 | `adapt.wod_scaled` (0.4.3) | WOD mis à l'échelle : {percent} % de ce qui était prévu ({cause}). | `cause`, `percent` | Pièce de conditionnement mise à l'échelle : `percent` % des répétitions ou de la durée écrites (jour sans, jours durs de suite). |
-| `adapt.cross_fatigue` (0.4.3) | Un peu plus de marge sur les jambes : ta course d'hier était dure. | `cause` | Fatigue croisée : effort visé abaissé sur le bas du corps après une course dure la veille (ou l'inverse). |
+| `adapt.cross_fatigue` (0.4.3) | Un peu plus de marge sur les jambes : ta course d'hier était dure. | `cause` | Fatigue croisée : effort visé abaissé sur le bas du corps après une course dure la veille. |
 
 Libellés français des codes passés en paramètre :
 

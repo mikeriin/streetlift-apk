@@ -1329,8 +1329,9 @@ leur capacité (ni vitesse critique ni VO2max) : il garde le programme écrit et
    l'intensité baisse d'abord. Une séance de qualité (effort visé à 3 répétitions en réserve ou moins, allure visée,
    test, ou exercice de fractionné, de seuil, de côtes, de sprint) devient une **course facile** (footing, ou course
    sur tapis pour un tapis) de la durée de travail écrite, sans les récupérations, à 5 répétitions en réserve
-   (`enduranceEasyRir`) ; sans course facile possible (matériel, lieu, déjà dans la séance), la séance de qualité
-   est retirée. Bilan très bas (palier 2) : la durée baisse aussi, à 70 % (`enduranceBadDayShare`). Sources :
+   (`enduranceEasyRir`), sans allure, cibles par série ni groupe ; sans course facile possible (matériel, lieu, déjà
+   dans la séance), la séance de qualité est retirée. Les lignes d'endurance ne passent plus par les réductions
+   générales du bilan bas et de la reprise après coupure (pas de cumul). Bilan très bas (palier 2) : la durée baisse aussi, à 70 % (`enduranceBadDayShare`). Sources :
    entraînement guidé par la variabilité cardiaque, séance intense remplacée par une séance facile ou du repos quand
    la disponibilité est basse, progression égale ou meilleure (Kiviniemi et al. 2007 ; Vesterinen et al. 2016 ;
    Javaloyes et al. 2019 ; différences entre groupes faibles ou non significatives, sauf la vitesse maximale chez
@@ -1358,11 +1359,24 @@ leur capacité (ni vitesse critique ni VO2max) : il garde le programme écrit et
 6. **Mobilité** : servie telle qu'écrite (aucune réduction par le bilan ; règles de douleur et de temps inchangées ;
    ACSM, Garber et al. 2011 : souplesse au moins 2 à 3 jours par semaine).
 7. **Modèle forme-fatigue** : chaque ligne de course, de cardio ou de conditionnement faite ajoute de la fatigue
-   comme une série de travail par tranche de 10 minutes d'effort (`enduranceFatigueSeconds`, 6 au plus par ligne,
+   comme une série de travail par tranche de 10 minutes d'effort (`enduranceFatigueSeconds`, 6 au plus par série du journal,
    `enduranceFatigueMax`), pondérée par l'effort noté (choix raisonné) : un jour de course dure abaisse la forme
    estimée des séances de force qui suivent.
 
 `enduranceConduct` (vrai par défaut) permet de rejouer le comportement de 0.2 au banc.
+
+8. **Élastique (street, mode coach)** : une séance au cran actuel dont toutes les séries, sans échec et dans la
+   plage, sont dites au moins 2 répétitions plus faciles que visé (`coachAssistWideRir`) fait passer à l'élastique
+   plus fin dès la séance suivante (sept jours au moins depuis le dernier changement, `coachAssistMinDays`), sans
+   attendre deux séances au haut de la plage (panel de la passe 6, trois écoles sur quatre ; ACSM 2009, règle « 2
+   pour 2 »).
+
+Paramètres (`params.dart`) : `enduranceSpike` 0,10 ; `enduranceSpikeDays` 30 ; `enduranceSpikeMinRuns` 3 ;
+`enduranceResumeShortDays` 7, `enduranceResumeShort` 0,7 ; `enduranceResumeLongDays` 14, `enduranceResumeLong` 0,5 ;
+`enduranceBadDayShare` 0,7 ; `enduranceHardMargin` 2 flammes, `enduranceHardDays` 3, `enduranceHardFlames` 8 ;
+`enduranceQualityRir` 3, `enduranceEasyRir` 5 ; `enduranceRunSpeed` 2,6 m/s ; `enduranceLegPain` 3 ;
+`wodScaleShare` 0,75, `wodHardStreak` 2 ; `enduranceFatigueSeconds` 600, `enduranceFatigueMax` 6 ;
+`coachAssistWideRir` 2 ; `enduranceConduct` vrai. Sources ou « choix raisonné » : règles ci-dessus.
 
 ### 12.2 Codes de raison (`kalis_core` 0.4.3)
 

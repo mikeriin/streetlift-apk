@@ -1054,9 +1054,14 @@ SessionPlan buildSessionPlan(
         }),
       ];
       for (final d in drafts) {
+        // (Lignes d'endurance : reprise de l'étape 2 ter, sans cumul ; CA2,
+        // partie 1.)
         if (d.removed ||
             d.item.kind == SetKind.test ||
-            !_setsAdjustable(d.item)) {
+            !_setsAdjustable(d.item) ||
+            (p.enduranceConduct &&
+                d.info != null &&
+                enduranceKindOf(d.info!) != null)) {
           continue;
         }
         final kept = (d.sets * p.coachBreakSets).round();
@@ -1080,7 +1085,13 @@ SessionPlan buildSessionPlan(
   // mouvements principaux gardent au moins trois séries).
   if (health.level >= 2) {
     for (final d in drafts) {
-      if (d.removed || d.item.targetFlames == null) {
+      // (Lignes d'endurance : jour sans de l'étape 2 ter, sans cumul ; CA2,
+      // partie 1.)
+      if (d.removed ||
+          d.item.targetFlames == null ||
+          (p.enduranceConduct &&
+              d.info != null &&
+              enduranceKindOf(d.info!) != null)) {
         continue;
       }
       if (coached && !_setsAdjustable(d.item)) {
@@ -1147,6 +1158,7 @@ SessionPlan buildSessionPlan(
     day: day,
     healthLevel: health.level,
     painsToday: painsToday,
+    state: state,
     equipment: equipment,
     place: place,
     taken: taken,
@@ -2373,6 +2385,7 @@ void _enduranceDay(
   required int day,
   required int healthLevel,
   required Map<BodyZone, int> painsToday,
+  required ModelState state,
   required Set<String> equipment,
   required Place? place,
   required Set<String> taken,
@@ -2432,7 +2445,12 @@ void _enduranceDay(
     BodyZone.lowerLeg,
     BodyZone.ankleFoot,
   ]) {
-    final v = painsToday[zone] ?? 0;
+    // (La gêne du jour à 3/10 compte, même sous le seuil des douleurs du
+    // jour : relecture du code, CA2.)
+    final s = state.pains[zone];
+    final v = s != null && day - s.lastDay <= p.painClearDays
+        ? s.lastIntensity
+        : 0;
     if (v > legPain) {
       legPain = v;
     }
@@ -2507,20 +2525,23 @@ void _enduranceDay(
         d.item = d.item.copyWith(
           exerciseId: easyId,
           sets: 1,
-          repsLow: unset,
-          repsHigh: unset,
-          distanceMeters: unset,
+          repsLow: null,
+          repsHigh: null,
+          distanceMeters: null,
+          calories: null,
           secondsLow: minutes * 60,
           secondsHigh: minutes * 60,
           targetFlames:
               d.item.targetFlames == null || d.item.targetFlames! > easyFlames
               ? easyFlames
               : d.item.targetFlames,
-          intensity: unset,
-          setTargets: unset,
-          restSeconds: unset,
+          intensity: null,
+          setTargets: null,
+          restSeconds: null,
+          autoregulation: null,
+          groupId: null,
           kind: d.item.kind == SetKind.test ? SetKind.work : d.item.kind,
-          test: unset,
+          test: null,
         );
         d.sets = 1;
       } else {
@@ -2559,7 +2580,8 @@ void _enduranceDay(
         final d = entry.key;
         if (!d.removed &&
             entry.value == EnduranceKind.run &&
-            d.item.kind != SetKind.warmup) {
+            d.item.kind != SetKind.warmup &&
+            d.item.kind != SetKind.test) {
           sum += prescribedSeconds(d.item, d.sets, speed);
         }
       }
@@ -2573,10 +2595,14 @@ void _enduranceDay(
         final d = entry.key;
         if (d.removed ||
             entry.value != EnduranceKind.run ||
-            d.item.kind == SetKind.warmup) {
+            d.item.kind == SetKind.warmup ||
+            d.item.kind == SetKind.test) {
           continue;
         }
         final (item, sets) = scaled(d.item, d.sets, factor);
+        if (identical(item, d.item) && sets == d.sets) {
+          continue;
+        }
         d.item = item;
         d.sets = sets;
         note(
@@ -2597,6 +2623,7 @@ void _enduranceDay(
           if (!d.removed &&
               entry.value == EnduranceKind.run &&
               d.item.kind != SetKind.warmup &&
+              d.item.kind != SetKind.test &&
               (longestDraft == null ||
                   prescribedSeconds(d.item, d.sets, speed) >
                       prescribedSeconds(

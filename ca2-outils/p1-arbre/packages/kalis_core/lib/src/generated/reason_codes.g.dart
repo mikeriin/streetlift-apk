@@ -449,7 +449,7 @@ abstract final class ReasonCodes {
   static const String adaptWodScaled = 'adapt.wod_scaled';
 
   /// Fatigue croisée : effort visé abaissé sur le bas du corps après une course
-  /// dure la veille (ou l'inverse).
+  /// dure la veille.
   static const String adaptCrossFatigue = 'adapt.cross_fatigue';
 }
 

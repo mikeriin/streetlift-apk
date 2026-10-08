@@ -90,3 +90,6 @@ Base : `moteurs` 9526ac47 (kalis_plan 0.2.2, kalis_adapt 0.2.2, kalis_bench 0.2.
 - Page de relecture : 504 notes, aucune du propriétaire, rien de nouveau depuis la manche 4.
 - Partie 1 (p1) : + règle d'élastique « marge large » (SlotMark.wideMargin, coachAssistWideRir 2) demandée par la passe 6 ; versions kalis_adapt 0.3.0, kalis_bench 0.2.3, kalis_core 0.4.3 ; CHANGELOG. panel.py build_autres prêt.
 - Suite : full vert → publication 0.2.3 (moteurs, etiquettes kalis_adapt-v0.2.3 et kalis_bench-v0.2.2, DECISIONS, ETAT, notification) ; puis contrôle dev de p1.
+
+## 08/10 ~15:35 UTC
+- Relecture de bureau de la partie 1 (Opus, sans SDK) : 21 constats ; corrigés dans p1 : export (id nul), copyWith (null efface, unset garde !), douleur de jambe à 3/10 lue sur l'état, séances comptées et séries utilisables (E2), suite de jours durs, scaled (inchangé détecté, calories, cibles par série retirées), plafond de course (note seulement si changement, tests exclus), pas de cumul avec 1 quinquies et l'étape 2, E1 selon la base d'intensité, tests d'endurance assouplis, zone de surcharge séparée, calories dans la vérité, export faite/écrite comparable, docs. Reste : fixture du propriétaire et docs générés (PROPRIETAIRE.md, MESURES.md, campagne.json) à reprendre de ci-out après le premier contrôle de p1.

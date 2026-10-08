@@ -458,8 +458,17 @@ List<String> checkSession(
   if (coached) {
     out.addAll(checkCoachSession(catalog, profile, block, log, session, p));
   }
-  out.addAll(checkEndurance(catalog, profile, block, journal, session, p,
-      health: health));
+  out.addAll(
+    checkEndurance(
+      catalog,
+      profile,
+      block,
+      journal,
+      session,
+      p,
+      health: health,
+    ),
+  );
   final roles = <String, SlotRole>{
     for (final d in block.pass1.days)
       for (final s in d.slots) s.slotId: s.role,
@@ -1055,8 +1064,20 @@ List<String> checkEndurance(
       }
       final si = item.intensity;
       final wi = w.intensity;
-      if (si != null && (wi == null || si.value > wi.value + 1e-9)) {
-        out.add('$where ${item.exerciseId} : E1, allure visée plus rapide');
+      if (si != null) {
+        // Base « réserve » : plus bas = plus dur ; autres bases (allure,
+        // part) : plus haut = plus dur.
+        final rirBasis = si.basis == IntensityBasis.rir;
+        bool harder(double? a, double? b) =>
+            a != null &&
+            b != null &&
+            (rirBasis ? a < b - 1e-9 : a > b + 1e-9);
+        if (wi == null ||
+            wi.basis != si.basis ||
+            harder(si.value, wi.value) ||
+            harder(si.valueHigh, wi.valueHigh ?? wi.value)) {
+          out.add('$where ${item.exerciseId} : E1, allure visée plus rapide');
+        }
       }
     }
     if (kind == EnduranceKind.run) {
@@ -1072,10 +1093,12 @@ List<String> checkEndurance(
   final today = session.date.dayNumber;
   var meters = 0.0;
   var timed = 0.0;
-  for (final s in journal.sessions) {
+  for (final s in journal.countedSessions) {
     for (final set in s.sets) {
       final info = book.find(set.exerciseId);
-      if (info == null || enduranceKindOf(info) != EnduranceKind.run) {
+      if (!set.isUsable ||
+          info == null ||
+          enduranceKindOf(info) != EnduranceKind.run) {
         continue;
       }
       final m = set.distanceMeters;
@@ -1089,14 +1112,14 @@ List<String> checkEndurance(
   final speed = timed > 0 ? meters / timed : p.enduranceRunSpeed;
   var longest = 0.0;
   var count = 0;
-  for (final s in journal.sessions) {
+  for (final s in journal.countedSessions) {
     final d = s.date.dayNumber;
     if (d >= today || d < today - p.enduranceSpikeDays) {
       continue;
     }
     var seconds = 0.0;
     for (final set in s.sets) {
-      if (set.kind == SetKind.warmup) {
+      if (set.kind == SetKind.warmup || !set.isUsable) {
         continue;
       }
       final info = book.find(set.exerciseId);
@@ -1119,7 +1142,8 @@ List<String> checkEndurance(
       final info = book.find(item.exerciseId);
       if (info != null &&
           enduranceKindOf(info) == EnduranceKind.run &&
-          item.kind != SetKind.warmup) {
+          item.kind != SetKind.warmup &&
+          item.kind != SetKind.test) {
         served += _runSeconds(item, speed);
       }
     }

@@ -103,6 +103,7 @@ final class EnduranceHistory {
     this.conditioningDays,
     this.hardRunDays,
     this.lastActivityDay,
+    this.activityDays,
   );
 
   /// Historique vide.
@@ -112,6 +113,7 @@ final class EnduranceHistory {
     const <int>{},
     const <int>{},
     null,
+    const <int>{},
   );
 
   /// Lit les séances [digests] (dans l'ordre).
@@ -127,7 +129,9 @@ final class EnduranceHistory {
     for (final d in digests) {
       for (final s in d.session.sets) {
         final info = book.find(s.exerciseId);
-        if (info == null || enduranceKindOf(info) != EnduranceKind.run) {
+        if (!s.isUsable ||
+            info == null ||
+            enduranceKindOf(info) != EnduranceKind.run) {
           continue;
         }
         final m = s.distanceMeters;
@@ -143,13 +147,14 @@ final class EnduranceHistory {
     final conditioning = <int>{};
     final hard = <int>{};
     int? last;
+    final active = <int>{};
     for (final d in digests) {
       var seconds = 0.0;
       int? worst;
       int? target;
       var any = false;
       for (final s in d.session.sets) {
-        if (s.kind == SetKind.warmup) {
+        if (s.kind == SetKind.warmup || !s.isUsable) {
           continue;
         }
         any = true;
@@ -176,12 +181,13 @@ final class EnduranceHistory {
       }
       if (any) {
         last = d.day;
+        active.add(d.day);
       }
       if (seconds > 0) {
         runs.add(RunBout(d.day, seconds, worst, target));
       }
     }
-    return EnduranceHistory._(runs, speed, conditioning, hard, last);
+    return EnduranceHistory._(runs, speed, conditioning, hard, last, active);
   }
 
   /// Courses faites, une par séance, dans l'ordre.
@@ -199,6 +205,9 @@ final class EnduranceHistory {
 
   /// Dernier jour d'entraînement, ou `null`.
   final int? lastActivityDay;
+
+  /// Jours d'entraînement.
+  final Set<int> activityDays;
 
   /// Plus longue course (en secondes, sur une séance) des [window] jours
   /// avant [day], et nombre de courses dans cette fenêtre.
@@ -245,8 +254,8 @@ final class EnduranceHistory {
       if (conditioningDays.contains(d)) {
         n++;
         gap = 0;
-      } else if (lastActivityDay != null && d > lastActivityDay!) {
-        // Jour après la dernière séance : rien de fait.
+      } else if (!activityDays.contains(d)) {
+        // Jour sans séance : un jour de repos ne rompt pas la suite.
         gap++;
       } else {
         break;
@@ -312,6 +321,7 @@ bool isQualityRun(ExercisePrescription item, ExerciseInfo info, AdaptParams p) {
   final hi = item.secondsHigh;
   final lo = item.secondsLow;
   final m = item.distanceMeters;
+  final cal = item.calories;
   final rh = item.repsHigh;
   final rl = item.repsLow;
   int? down(int? v, int unit, int floor) {
@@ -325,28 +335,45 @@ bool isQualityRun(ExercisePrescription item, ExerciseInfo info, AdaptParams p) {
     return x;
   }
 
-  final newHi = hi == null ? null : down(hi, hi >= 300 ? 60 : 5, 5);
-  var newLo = lo == null ? null : down(lo, lo >= 300 ? 60 : 5, 5);
+  double? downD(double? v, double unit) {
+    if (v == null) {
+      return null;
+    }
+    final x = (v * factor / unit).floor() * unit;
+    return x < unit ? (v < unit ? v : unit) : x;
+  }
+
+  final newHi = down(hi, hi != null && hi >= 300 ? 60 : 5, 5);
+  var newLo = down(lo, lo != null && lo >= 300 ? 60 : 5, 5);
   if (newLo != null && newHi != null && newLo > newHi) {
     newLo = newHi;
   }
-  final newRh = rh == null ? null : down(rh, 1, 1);
-  var newRl = rl == null ? null : down(rl, 1, 1);
+  final newRh = down(rh, 1, 1);
+  var newRl = down(rl, 1, 1);
   if (newRl != null && newRh != null && newRl > newRh) {
     newRl = newRh;
   }
-  double? newM;
-  if (m != null) {
-    final x = (m * factor / 100).floor() * 100.0;
-    newM = x < 100 ? (m < 100 ? m : 100.0) : x;
+  final newM = downD(m, 100);
+  final newCal = downD(cal, 1);
+  if (newHi == hi &&
+      newLo == lo &&
+      newRh == rh &&
+      newRl == rl &&
+      newM == m &&
+      newCal == cal) {
+    return (item, sets);
   }
+  // (Les cibles par série, écrites pour l'écrit, sont retirées : la ligne
+  // servie fait foi ; relecture du code, CA2.)
   return (
     item.copyWith(
-      secondsHigh: hi == null ? unset : newHi,
-      secondsLow: lo == null ? unset : newLo,
-      distanceMeters: m == null ? unset : newM,
-      repsHigh: rh == null ? unset : newRh,
-      repsLow: rl == null ? unset : newRl,
+      secondsHigh: newHi,
+      secondsLow: newLo,
+      distanceMeters: newM,
+      calories: newCal,
+      repsHigh: newRh,
+      repsLow: newRl,
+      setTargets: null,
     ),
     sets,
   );

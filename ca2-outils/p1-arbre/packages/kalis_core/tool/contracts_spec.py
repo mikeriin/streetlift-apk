@@ -1632,7 +1632,7 @@ REASONS += [
     ("adapt.easy_instead", {"cause": "string"}, "Séance de qualité (allure, fractionné, test de course) servie en endurance facile un jour sans."),
     ("adapt.endurance_shortened", {"cause": "string", "percent": "int"}, "Durée, distance ou nombre de répétitions d'une ligne d'endurance ramenés à `percent` % de l'écrit (bilan bas, reprise après une coupure)."),
     ("adapt.wod_scaled", {"cause": "string", "percent": "int"}, "Pièce de conditionnement mise à l'échelle : `percent` % des répétitions ou de la durée écrites (jour sans, jours durs de suite)."),
-    ("adapt.cross_fatigue", {"cause": "string"}, "Fatigue croisée : effort visé abaissé sur le bas du corps après une course dure la veille (ou l'inverse)."),
+    ("adapt.cross_fatigue", {"cause": "string"}, "Fatigue croisée : effort visé abaissé sur le bas du corps après une course dure la veille."),
 ]
 
 SCHEMA_VERSIONS = {t.name: t.schema_version for t in TYPES if t.schema_version is not None}

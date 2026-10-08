@@ -1897,9 +1897,7 @@ List<SetPlan>? _directPlans(
     // (Ou une séance entière au cran actuel, toutes séries dites au moins
     // deux répétitions plus faciles que visé : panel de la passe 6 ; CA2,
     // partie 1. Sept jours au moins depuis le dernier changement.)
-    final streak =
-        (mark?.reached ?? 0) >= 2 ||
-        (mark?.wideMargin ?? false);
+    final streak = (mark?.reached ?? 0) >= 2 || (mark?.wideMargin ?? false);
     // Un cran de plus seulement sur ce que l'athlète a fait : échec, ou bas
     // de la cible servie manqué deux séances de suite au même cran (une
     // cible abaissée par un verrou — douleur, bilan bas — puis tenue n'est

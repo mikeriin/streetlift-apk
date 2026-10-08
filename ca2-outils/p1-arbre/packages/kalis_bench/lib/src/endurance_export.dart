@@ -4,6 +4,7 @@
 /// que l'athlète simulé fait, et pourquoi le moteur a changé la ligne.
 library;
 
+import 'package:kalis_adapt/kalis_adapt.dart';
 import 'package:kalis_adapt/simulation.dart';
 import 'package:kalis_core/kalis_core.dart';
 
@@ -153,6 +154,28 @@ ExercisePrescription? _written(SimRun run, SimSession s, String slotId) {
 /// Partie « endurance et conditionnement » de la trajectoire [run] en
 /// Markdown, ou chaîne vide si le programme n'en a pas.
 String enduranceMarkdown(SimRun run, Catalog catalog) {
+  final profile = run.finalProfile;
+  if (profile == null) {
+    return '';
+  }
+  final book = ExerciseBook(catalog, profile);
+  // Vitesse de course lue sur le journal (lignes qui disent distance et
+  // durée), sinon celle du moteur.
+  var meters = 0.0;
+  var timed = 0.0;
+  for (final s in run.sessions) {
+    for (final set in s.sets) {
+      final m = set.distanceMeters;
+      final t = set.seconds;
+      if (m != null && t != null && m > 0 && t > 0) {
+        meters += m;
+        timed += t;
+      }
+    }
+  }
+  final speed = timed > 0
+      ? meters / timed
+      : AdaptParams.standard.enduranceRunSpeed;
   final rows = <String>[];
   final writtenRun = <int, double>{};
   for (final s in run.served) {
@@ -173,7 +196,8 @@ String enduranceMarkdown(SimRun run, Catalog catalog) {
       if (a.kind != AdjustmentKind.exerciseRemoved) {
         continue;
       }
-      final e = catalog.find(a.exerciseId);
+      final id = a.exerciseId;
+      final e = id == null ? null : catalog.find(id);
       if (!_endurance(e)) {
         continue;
       }
@@ -214,11 +238,13 @@ String enduranceMarkdown(SimRun run, Catalog catalog) {
         '${w == null ? '—' : _line(w)} | ${_line(it)} | ${_done(done)} | '
         '${reasons.isEmpty ? 'tel qu\'écrit' : reasons.join(' ; ')} |',
       );
-      if (w != null && e.family == MovementFamily.cardio) {
-        final sec = w.secondsHigh ?? w.secondsLow;
-        if (sec != null) {
-          writtenRun[s.week] = (writtenRun[s.week] ?? 0) + sec * w.sets;
-        }
+      final wInfo = w == null ? null : book.find(w.exerciseId);
+      if (w != null &&
+          wInfo != null &&
+          enduranceKindOf(wInfo) == EnduranceKind.run &&
+          w.kind != SetKind.warmup) {
+        writtenRun[s.week] =
+            (writtenRun[s.week] ?? 0) + prescribedSeconds(w, w.sets, speed);
       }
     }
   }
@@ -247,9 +273,9 @@ String enduranceMarkdown(SimRun run, Catalog catalog) {
   if (weeks.isNotEmpty) {
     b
       ..writeln()
-      ..writeln('Course faite par semaine (minutes) : ')
+      ..writeln('Course faite et écrite par semaine (minutes, échauffement exclu) :')
       ..writeln()
-      ..writeln('| Semaine | Faite | Écrite (durées écrites) |')
+      ..writeln('| Semaine | Faite | Écrite |')
       ..writeln('| --- | --- | --- |');
     for (final w in weeks) {
       final written = writtenRun[w];
