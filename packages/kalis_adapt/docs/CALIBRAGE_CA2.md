@@ -61,7 +61,7 @@ traitement :
 - `street_10` : planche retirée plutôt que passée aux parallettes → règle du § 11.16 (appui neutre) ; le
   reste (choix des figures, volumes) relève du programme écrit.
 
-Les notes complètes sont dans la page de relecture (manche 5, notes « relecture-documentee »).
+Notes complètes : `ca2-outils` de la sauvegarde du lot (la page de relecture reçoit, en manche 5, la relecture documentée de la partie 1, sur le moteur livré).
 
 ### Boucle 3 — ce qui a changé
 
@@ -170,4 +170,40 @@ douleur au coude ; `seance_trop_longue` pour `street_17` séances manquées) —
 (par exemple `street_06` maladie, 0,10 par saison sur 100 graines), au même niveau avant et après la partie 0
 (0,0147 → 0,0135 par saison en moyenne) : rampe du bloc suivant après un bloc écourté, transmise au lot CP2.
 Boucles arrêtées après la boucle 5 (C9.2 : cinq boucles au plus ; la suite dépend surtout du programme écrit, pas de gain attendu d'une
-boucle de conduite). Aucune hausse sur zone douloureuse au banc.
+boucle de conduite). Hausses sur zone douloureuse au banc : 0,02 à 0,05 par saison, seulement `street_10` sous le modèle B (douleur de surcharge des tenues signalée pendant la séance), comme avant la partie 0 ; poussées d'une zone réactive 26,7 → 24,9.
+
+## Partie 1 — autres disciplines (0.3.0)
+
+Programmes d'entrée : ceux de `kalis_plan` 0.2.2 (chemin 0.1 pour les profils non street ; `kalis_plan` 0.3.0
+n'était pas publié pendant le lot). Règles, paramètres et sources : `CONTRAT.md`, § 12 ; sources vérifiées par
+un sous-agent Opus le 08/10 (Frandsen 2025, Buist 2008, Nielsen 2014, Kiviniemi 2007, Vesterinen 2016,
+Javaloyes 2019, Bosquet 2007, Silbernagel 2007, Feito 2018, Klimek 2018, Tibana 2016, Wilson 2012, Murlasits
+2018, Robineau 2016, Schumann 2022, Garber 2011, Sherrington 2020, Riegel 1981, Vickers et Vertosick 2016,
+Soligard 2016 ; formulations corrigées pour Nielsen, Feito, Tibana, Robineau et Riegel).
+
+### Boucle 1 — ce qui a changé
+
+Course (sortie bornée à la plus longue des 30 jours + 10 %, séance de qualité servie facile un jour sans, durée
+réduite un jour très bas, reprise après coupure), conditionnement (mise à l'échelle), fatigue croisée et charge
+d'endurance dans le modèle forme-fatigue, invariants E1 à E3 (journaux aléatoires et simulations), vérité
+d'endurance du simulateur (deux modèles), partie « Endurance et conditionnement » des trajectoires, règle
+d'élastique « marge large » (passe 6). Relecture de bureau du code (Opus) : 21 constats, corrigés avant le
+premier contrôle (dont : `copyWith` qui gardait les champs à effacer, douleur de jambe à 3/10, séances comptées
+pour la borne, pas de double réduction). Contrôle dev 3c0539bb (run 37811408880) : tout vert.
+
+### Passe q1 du panel (10 profils non street × 4 écoles)
+
+40 couples, aucun à 9, minimum 3, moyenne 5,41 (mesure de départ du lot CR, couple 0.1 : moyenne des notes
+d'ensemble ≈ 5,1). Les corrections nécessaires portent presque toutes sur le **programme écrit** par le chemin 0.1
+de `kalis_plan` 0.2.2 (lot CP2) : course d'échéance non placée et sans affûtage, tests sur la distance de la course
+(semi-marathon couru à fond en semaines 5 et 10), aucune allure, aucune séance spécifique, volume mal réparti,
+tirage non budgété en CrossFit, double progression absente en musculation, objectifs non commentés. Côté conduite :
+les tests de course plus longs que la borne de 10 % (trois écoles) → boucle 2.
+
+### Boucle 2 — ce qui a changé
+
+Test de course plus long que la borne : servi en course bornée à effort modéré, test reporté. Élastique : la série
+repère (ouverte) ne remet plus la série de séances à zéro, et une série repère qui dépasse l'écrit de 2 répétitions
+compte comme une marge large (relecture documentée de la partie 1, `street_03` : élastique jamais changé en 16
+semaines). Campagne d'endurance (`test/endurance_campaign_test.dart`) : 0.3.0, comportement de 0.2 et règle des
+10 % par semaine, à programme égal.
