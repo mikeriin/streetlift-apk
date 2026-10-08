@@ -1,0 +1,107 @@
+diff --git a/lib/session_adapt_store.dart b/lib/session_adapt_store.dart
+index 1a26c85..cf02d3c 100644
+--- a/lib/session_adapt_store.dart
++++ b/lib/session_adapt_store.dart
+@@ -338,9 +338,9 @@ extension SessionAdaptStore on AppStore {
+     // affiché (« j<J>-<identifiant> »).
+     final js = <int, int>{};
+     for (final d in a.pass1.days) {
+-      final m = RegExp(r'^j(\d)-').firstMatch(
+-        d.slots.isEmpty ? '' : d.slots.first.slotId,
+-      );
++      final m = RegExp(
++        r'^j(\d)-',
++      ).firstMatch(d.slots.isEmpty ? '' : d.slots.first.slotId);
+       if (m != null) js[d.dayIndex] = int.parse(m.group(1)!);
+     }
+     for (final w in b.pass2.weeks) {
+@@ -1066,11 +1066,7 @@ extension SessionAdaptStore on AppStore {
+   /// prescription pour les exercices pas encore commencés ; ceux qui ont
+   /// une série validée gardent leur prescription et leurs conseils. Null :
+   /// rien à changer.
+-  SessionAdapt? _adaptRefreshStarted(
+-    int week,
+-    DayPlan base,
+-    SessionAdapt a,
+-  ) {
++  SessionAdapt? _adaptRefreshStarted(int week, DayPlan base, SessionAdapt a) {
+     if (a.source == null || a.date != _adaptToday.iso) return null;
+     if (!adaptAvailable) return null;
+     final place = adaptPlaceOf(week, base.j);
+diff --git a/test/ci1c_koach_applique_test.dart b/test/ci1c_koach_applique_test.dart
+index 6cf1101..97765b8 100644
+--- a/test/ci1c_koach_applique_test.dart
++++ b/test/ci1c_koach_applique_test.dart
+@@ -97,7 +97,9 @@ kc.Proposal _volume(
+       ),
+     ],
+   ),
+-  reasons: [const kc.Reason(code: 'adapt.volume_up', params: {'sets': 1})],
++  reasons: [
++    const kc.Reason(code: 'adapt.volume_up', params: {'sets': 1}),
++  ],
+ );
+ 
+ /// Première prescription « simple » (sans cibles par série) de la journée.
+@@ -299,9 +301,7 @@ void main() {
+       clock = DateTime(2026, 10, 1, 9);
+       final r = app.saveAthleteProfile(
+         ProfileDraft.of(
+-          _street('streetlifting').copyWith(
+-            guidanceMode: kc.GuidanceMode.free,
+-          ),
++          _street('streetlifting').copyWith(guidanceMode: kc.GuidanceMode.free),
+         )..consent = 'refused',
+       );
+       expect(r, isNotNull);
+@@ -331,9 +331,10 @@ void main() {
+       ]);
+       app.evolutionAccept(app.evolutionPending.single);
+       expect(
+-        _servedItem(app.adaptOpen(week, app.program.week(week).day(j)!)!,
+-                item.slotId)
+-            ?.sets,
++        _servedItem(
++          app.adaptOpen(week, app.program.week(week).day(j)!)!,
++          item.slotId,
++        )?.sets,
+         item.sets + 1,
+       );
+       // Programme affiché (MON PROGRAMME) : déjà la couche du bloc.
+@@ -416,14 +417,18 @@ void main() {
+         expect(se.id.contains('~'), isFalse);
+       }
+       // Semaine d'avant : intacte.
+-      expect(identical(app.program.week(11).day(1)!.original,
+-          app.program.week(11).day(1)), isTrue);
+-      // Annuler : programme d'origine.
+-      expect(app.evolutionUndo(app.planEvolution.entries.last), isTrue);
+       expect(
+-        [for (final e in app.program.week(13).day(1)!.exercises) e.id],
+-        original13,
++        identical(
++          app.program.week(11).day(1)!.original,
++          app.program.week(11).day(1),
++        ),
++        isTrue,
+       );
++      // Annuler : programme d'origine.
++      expect(app.evolutionUndo(app.planEvolution.entries.last), isTrue);
++      expect([
++        for (final e in app.program.week(13).day(1)!.exercises) e.id,
++      ], original13);
+       expect(app.program.week(13).day(1)!.source, isNull);
+     });
+ 
+@@ -523,7 +528,10 @@ void main() {
+       // État 6.9.1 : S12-J1 seulement consultée (figée), S12-J2 avec une
+       // note, S12-J3 avec un bilan.
+       final w = app.program.week(12);
+-      final days = [for (final d in w.days) if (d.exercises.isNotEmpty) d];
++      final days = [
++        for (final d in w.days)
++          if (d.exercises.isNotEmpty) d,
++      ];
+       app.adaptOpen(12, days[0]);
+       for (final e in days[0].exercises) {
+         app.exLog(12, days[0].j, e);
