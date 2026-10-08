@@ -6,6 +6,7 @@ import 'package:kalis_plan/kalis_plan.dart' show SlotKind;
 
 import 'book.dart';
 import 'coach.dart';
+import 'endurance.dart';
 import 'fatigue.dart';
 import 'filter.dart';
 import 'model.dart';
@@ -472,7 +473,42 @@ void replaySessions(
         continue;
       }
       final info = ctx.book.find(set.exerciseId);
-      if (info == null || info.mode == null) {
+      if (info != null && info.mode == null) {
+        // Course, cardio, conditionnement (CA2, partie 1) : fatigue croisée
+        // dans le modèle forme-fatigue — dix minutes d'effort comptent comme
+        // une série de travail à la même réserve (choix raisonné ; Wilson et
+        // al. 2012 : l'interférence de la course sur la force du bas du
+        // corps).
+        final kind = enduranceKindOf(info);
+        if (p.enduranceConduct &&
+            kind != null &&
+            kind != EnduranceKind.mobility) {
+          final m = set.distanceMeters;
+          final reps = set.reps;
+          final seconds =
+              set.seconds?.toDouble() ??
+              (m != null
+                  ? m / p.enduranceRunSpeed
+                  : (reps != null ? reps * 3.0 : 0.0));
+          if (seconds > 0) {
+            final f = set.flames;
+            var share = seconds / p.enduranceFatigueSeconds;
+            if (share > p.enduranceFatigueMax) {
+              share = p.enduranceFatigueMax;
+            }
+            state.fatigue.add(
+              info,
+              share *
+                  effortWeight(
+                    f == null ? p.enduranceEasyRir : rirOfFlames(f),
+                    failed: false,
+                  ),
+            );
+          }
+        }
+        continue;
+      }
+      if (info == null) {
         continue;
       }
       final hold = info.mode == CapacityMode.hold;

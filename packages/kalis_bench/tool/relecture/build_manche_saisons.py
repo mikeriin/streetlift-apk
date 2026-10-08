@@ -46,6 +46,10 @@ def saison(md):
         "Journal des décisions",
         "Figures",
         "Tentatives de maximum",
+        # Trajectoires des autres disciplines (lot CA2, partie 1).
+        "Semaine par semaine",
+        "Décisions du moteur",
+        "Endurance et conditionnement, séance par séance",
     ]
     return [{"titre": k, "texte": s[k]} for k in keep if k in s]
 

@@ -9,6 +9,7 @@ import 'package:kalis_plan/kalis_plan.dart'
 
 import 'book.dart';
 import 'coach.dart';
+import 'endurance.dart';
 import 'fatigue.dart';
 import 'filter.dart';
 import 'model.dart';
@@ -1053,9 +1054,14 @@ SessionPlan buildSessionPlan(
         }),
       ];
       for (final d in drafts) {
+        // (Lignes d'endurance : reprise de l'étape 2 ter, sans cumul ; CA2,
+        // partie 1.)
         if (d.removed ||
             d.item.kind == SetKind.test ||
-            !_setsAdjustable(d.item)) {
+            !_setsAdjustable(d.item) ||
+            (p.enduranceConduct &&
+                d.info != null &&
+                enduranceKindOf(d.info!) != null)) {
           continue;
         }
         final kept = (d.sets * p.coachBreakSets).round();
@@ -1079,7 +1085,13 @@ SessionPlan buildSessionPlan(
   // mouvements principaux gardent au moins trois séries).
   if (health.level >= 2) {
     for (final d in drafts) {
-      if (d.removed || d.item.targetFlames == null) {
+      // (Lignes d'endurance : jour sans de l'étape 2 ter, sans cumul ; CA2,
+      // partie 1.)
+      if (d.removed ||
+          d.item.targetFlames == null ||
+          (p.enduranceConduct &&
+              d.info != null &&
+              enduranceKindOf(d.info!) != null)) {
         continue;
       }
       if (coached && !_setsAdjustable(d.item)) {
@@ -1134,6 +1146,23 @@ SessionPlan buildSessionPlan(
       }
     }
   }
+
+  // 2 ter. Endurance, conditionnement, disciplines hybrides (CA2, partie
+  // 1 ; `CONTRAT.md`, § 12) : lignes non modélisées servies d'après le
+  // journal — jamais plus longues, plus rapides ni plus dures que l'écrit.
+  _enduranceDay(
+    ctx,
+    replayed,
+    drafts,
+    adjustments,
+    day: day,
+    healthLevel: health.level,
+    painsToday: painsToday,
+    state: state,
+    equipment: equipment,
+    place: place,
+    taken: taken,
+  );
 
   // 3. Charges, répétitions et flammes de chaque exercice.
   final wristGuard = coached && wristSensitive(view, state, comeback, day);
@@ -2333,6 +2362,371 @@ bool coachWristNeutralSupport(CatalogExercise e) =>
     e.equipment.any(_wristNeutralEquipment.contains);
 
 const Set<String> _wristNeutralEquipment = <String>{'parallettes', 'poignées'};
+
+/// Lignes d'endurance et de conditionnement de la séance du jour [day]
+/// (CA2, partie 1 ; `CONTRAT.md`, § 12) :
+/// 1. reprise après une coupure : part de l'écrit
+///    ([AdaptParams.enduranceResumeShort], [AdaptParams.enduranceResumeLong]) ;
+/// 2. jour sans (bilan bas, course récente bien plus dure que visé, douleur
+///    du bas du corps) : une séance de qualité devient une course facile
+///    (intensité d'abord ; Kiviniemi et al. 2007, Vesterinen et al. 2016) ;
+///    bilan très bas : la durée baisse aussi ;
+/// 3. course du jour bornée à la plus longue course des 30 derniers jours
+///    + 10 % (Frandsen et al. 2025) ;
+/// 4. conditionnement mis à l'échelle un jour sans ou après des jours durs
+///    de suite (Tibana et al. 2016) ;
+/// 5. fatigue croisée : course dure la veille, une répétition de réserve de
+///    plus sur le bas du corps (Wilson et al. 2012 ; Robineau et al. 2016).
+void _enduranceDay(
+  EngineContext ctx,
+  Replayed replayed,
+  List<_Draft> drafts,
+  List<SessionAdjustment> adjustments, {
+  required int day,
+  required int healthLevel,
+  required Map<BodyZone, int> painsToday,
+  required ModelState state,
+  required Set<String> equipment,
+  required Place? place,
+  required Set<String> taken,
+}) {
+  final p = ctx.params;
+  if (!p.enduranceConduct) {
+    return;
+  }
+  final kinds = <_Draft, EnduranceKind>{};
+  for (final d in drafts) {
+    final info = d.info;
+    if (d.removed || info == null) {
+      continue;
+    }
+    final kind = enduranceKindOf(info);
+    if (kind != null) {
+      kinds[d] = kind;
+    }
+  }
+  final hasLowerBody = drafts.any(
+    (d) => !d.removed && d.info != null && d.info!.mode != null,
+  );
+  if (kinds.isEmpty && !hasLowerBody) {
+    return;
+  }
+  final history = EnduranceHistory.of(replayed.digests, ctx.book, p);
+  final speed = history.speed;
+
+  void note(_Draft d, AdjustmentKind kind, Reason why, {String? swappedTo}) {
+    d.reasons.add(why);
+    adjustments.add(
+      SessionAdjustment(
+        kind: kind,
+        exerciseId: d.item.exerciseId,
+        replacementExerciseId: swappedTo,
+        reasons: <Reason>[why],
+      ),
+    );
+  }
+
+  // 1. Reprise après une coupure.
+  final last = history.lastActivityDay;
+  final gap = last == null ? 0 : day - last;
+  final resume = gap >= p.enduranceResumeLongDays
+      ? p.enduranceResumeLong
+      : (gap >= p.enduranceResumeShortDays ? p.enduranceResumeShort : 1.0);
+  final resumeCause = gap >= p.enduranceResumeLongDays
+      ? 'resume_14'
+      : 'resume_7';
+
+  // 2. Jour sans.
+  var legPain = 0;
+  for (final zone in const <BodyZone>[
+    BodyZone.hip,
+    BodyZone.thigh,
+    BodyZone.knee,
+    BodyZone.lowerLeg,
+    BodyZone.ankleFoot,
+  ]) {
+    // (La gêne du jour à 3/10 compte, même sous le seuil des douleurs du
+    // jour : relecture du code, CA2.)
+    final s = state.pains[zone];
+    final v = s != null && day - s.lastDay <= p.painClearDays
+        ? s.lastIntensity
+        : 0;
+    if (v > legPain) {
+      legPain = v;
+    }
+  }
+  final hardRun = history.recentRunTooHard(
+    day,
+    p.enduranceHardDays,
+    p.enduranceHardMargin,
+    p.enduranceHardFlames,
+  );
+  String? badCause;
+  if (healthLevel >= 2) {
+    badCause = 'health_strong';
+  } else if (healthLevel >= 1) {
+    badCause = 'health';
+  } else if (legPain >= p.enduranceLegPain) {
+    badCause = 'leg_pain';
+  } else if (hardRun) {
+    badCause = 'hard_run';
+  }
+  final easyFlames = flamesOfRir(p.enduranceEasyRir);
+
+  for (final entry in kinds.entries) {
+    final d = entry.key;
+    final info = d.info!;
+    final kind = entry.value;
+    if (kind == EnduranceKind.mobility) {
+      continue;
+    }
+    if (d.item.kind == SetKind.warmup) {
+      continue;
+    }
+    if (resume < 1) {
+      final (item, sets) = scaled(d.item, d.sets, resume);
+      if (!identical(item, d.item) || sets != d.sets) {
+        d.item = item;
+        d.sets = sets;
+        note(
+          d,
+          AdjustmentKind.setsReduced,
+          reason(ReasonCodes.adaptEnduranceShortened, <String, Object?>{
+            'cause': resumeCause,
+            'percent': (resume * 100).round(),
+          }),
+        );
+      }
+    }
+    if (badCause == null) {
+      continue;
+    }
+    if (kind == EnduranceKind.run && isQualityRun(d.item, info, p)) {
+      // Qualité → facile : l'allure et le fractionné tombent, la durée de
+      // travail écrite (sans les récupérations) devient une course facile.
+      final work = prescribedSeconds(d.item, d.sets, speed);
+      final easyId = easyRunFor(info);
+      final easy = ctx.book.find(easyId);
+      final feasible =
+          easy != null &&
+          easy.exercise.feasibleWith(equipment) &&
+          (place == null || easy.exercise.places.contains(place));
+      final why = reason(ReasonCodes.adaptEasyInstead, <String, Object?>{
+        'cause': badCause,
+      });
+      if (feasible && work >= 60 && !taken.contains(easyId)) {
+        var minutes = (work / 60).floor();
+        if (minutes < 1) {
+          minutes = 1;
+        }
+        taken.add(easyId);
+        note(d, AdjustmentKind.exerciseSwapped, why, swappedTo: easyId);
+        d.info = easy;
+        d.item = d.item.copyWith(
+          exerciseId: easyId,
+          sets: 1,
+          repsLow: null,
+          repsHigh: null,
+          distanceMeters: null,
+          calories: null,
+          secondsLow: minutes * 60,
+          secondsHigh: minutes * 60,
+          targetFlames:
+              d.item.targetFlames == null || d.item.targetFlames! > easyFlames
+              ? easyFlames
+              : d.item.targetFlames,
+          intensity: null,
+          setTargets: null,
+          restSeconds: null,
+          autoregulation: null,
+          groupId: null,
+          kind: d.item.kind == SetKind.test ? SetKind.work : d.item.kind,
+          test: null,
+        );
+        d.sets = 1;
+      } else {
+        // Pas de course facile possible ici : la séance de qualité est
+        // retirée (le repos vaut mieux qu'un fractionné un jour sans).
+        note(d, AdjustmentKind.exerciseRemoved, why);
+        d.removed = true;
+        continue;
+      }
+    }
+    if (healthLevel >= 2 &&
+        (kind == EnduranceKind.run || kind == EnduranceKind.cardio)) {
+      final (item, sets) = scaled(d.item, d.sets, p.enduranceBadDayShare);
+      if (!identical(item, d.item) || sets != d.sets) {
+        d.item = item;
+        d.sets = sets;
+        note(
+          d,
+          AdjustmentKind.setsReduced,
+          reason(ReasonCodes.adaptEnduranceShortened, <String, Object?>{
+            'cause': badCause,
+            'percent': (p.enduranceBadDayShare * 100).round(),
+          }),
+        );
+      }
+    }
+  }
+
+  // 3. Course du jour bornée à la plus longue des 30 derniers jours + 10 %.
+  final (longest, count) = history.longestBefore(day, p.enduranceSpikeDays);
+  if (count >= p.enduranceSpikeMinRuns && longest > 0) {
+    final cap = longest * (1 + p.enduranceSpike);
+    double total() {
+      var sum = 0.0;
+      for (final entry in kinds.entries) {
+        final d = entry.key;
+        if (!d.removed &&
+            entry.value == EnduranceKind.run &&
+            d.item.kind != SetKind.warmup) {
+          sum += prescribedSeconds(d.item, d.sets, speed);
+        }
+      }
+      return sum;
+    }
+
+    final before = total();
+    if (before > cap + 1e-6) {
+      final factor = cap / before;
+      for (final entry in kinds.entries) {
+        final d = entry.key;
+        if (d.removed ||
+            entry.value != EnduranceKind.run ||
+            d.item.kind == SetKind.warmup) {
+          continue;
+        }
+        // Un test de course (contre-la-montre) plus long que la borne n'est
+        // pas servi comme test : une épreuve maximale sur une distance
+        // jamais approchée est la sortie la plus risquée (Frandsen et al.
+        // 2025) ; la ligne devient une course bornée, le test est reporté
+        // (panel de la partie 1, trois écoles sur quatre : semi-marathon
+        // couru à fond en semaines 5 et 10).
+        var base = d.item;
+        if (base.kind == SetKind.test) {
+          base = base.copyWith(
+            kind: SetKind.work,
+            test: null,
+            intensity: null,
+            setTargets: null,
+            targetFlames: base.targetFlames == null
+                ? null
+                : (base.targetFlames! > easyFlames + 1
+                      ? easyFlames + 1
+                      : base.targetFlames),
+          );
+        }
+        final (item, sets) = scaled(base, d.sets, factor);
+        if (identical(item, d.item) && sets == d.sets) {
+          continue;
+        }
+        d.item = item;
+        d.sets = sets;
+        note(
+          d,
+          AdjustmentKind.setsReduced,
+          reason(ReasonCodes.adaptRunCapped, <String, Object?>{
+            'percent': (p.enduranceSpike * 100).round(),
+          }),
+        );
+      }
+      // Arrondis : une série de fractionné de trop est retirée.
+      var guard = 0;
+      while (total() > cap + 1e-6 && guard < 50) {
+        guard++;
+        _Draft? longestDraft;
+        for (final entry in kinds.entries) {
+          final d = entry.key;
+          if (!d.removed &&
+              entry.value == EnduranceKind.run &&
+              d.item.kind != SetKind.warmup &&
+              (longestDraft == null ||
+                  prescribedSeconds(d.item, d.sets, speed) >
+                      prescribedSeconds(
+                        longestDraft.item,
+                        longestDraft.sets,
+                        speed,
+                      ))) {
+            longestDraft = d;
+          }
+        }
+        if (longestDraft == null) {
+          break;
+        }
+        if (longestDraft.sets > 1) {
+          longestDraft.sets--;
+        } else {
+          final (item, _) = scaled(longestDraft.item, 1, 0.9);
+          if (identical(item, longestDraft.item) ||
+              prescribedSeconds(item, 1, speed) >=
+                  prescribedSeconds(longestDraft.item, 1, speed)) {
+            break;
+          }
+          longestDraft.item = item;
+        }
+      }
+    }
+  }
+
+  // 4. Conditionnement mis à l'échelle.
+  final streak = history.conditioningStreak(day);
+  final wodCause = badCause != null && badCause != 'hard_run'
+      ? badCause
+      : (streak >= p.wodHardStreak ? 'hard_streak' : null);
+  if (wodCause != null) {
+    for (final entry in kinds.entries) {
+      final d = entry.key;
+      if (d.removed ||
+          entry.value != EnduranceKind.conditioning ||
+          d.item.kind == SetKind.warmup) {
+        continue;
+      }
+      final (item, sets) = scaled(d.item, d.sets, p.wodScaleShare);
+      if (identical(item, d.item) && sets == d.sets) {
+        continue;
+      }
+      final f = item.targetFlames;
+      d.item = item.copyWith(
+        targetFlames: f == null || f <= easyFlames + 1 ? unset : f - 1,
+      );
+      d.sets = sets;
+      note(
+        d,
+        AdjustmentKind.setsReduced,
+        reason(ReasonCodes.adaptWodScaled, <String, Object?>{
+          'cause': wodCause,
+          'percent': (p.wodScaleShare * 100).round(),
+        }),
+      );
+    }
+  }
+
+  // 5. Fatigue croisée : course dure la veille → une répétition de réserve
+  // de plus sur le bas du corps.
+  if (history.hardRunDays.contains(day - 1)) {
+    for (final d in drafts) {
+      final info = d.info;
+      final f = d.item.targetFlames;
+      if (d.removed ||
+          info == null ||
+          info.mode == null ||
+          !info.lowerBody ||
+          d.item.kind == SetKind.test ||
+          d.item.kind == SetKind.warmup ||
+          f == null ||
+          f <= 1) {
+        continue;
+      }
+      d.item = d.item.copyWith(targetFlames: f - 1);
+      d.reasons.add(
+        reason(ReasonCodes.adaptCrossFatigue, <String, Object?>{
+          'cause': 'hard_run',
+        }),
+      );
+    }
+  }
+}
 
 /// Vrai quand le poignet est à l'arrêt ([stops]) et a été signalé à 3 sur 10
 /// ou plus le jour [day] ou dans les six jours d'avant (CA2, partie 0).

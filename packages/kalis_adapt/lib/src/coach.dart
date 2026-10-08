@@ -333,6 +333,7 @@ final class SlotMark {
     this.sets = 0,
     this.reached = 0,
     this.missed = 0,
+    this.wideMargin = false,
     this.loadedTop,
     this.loadedLoadKg,
   });
@@ -385,6 +386,11 @@ final class SlotMark {
 
   /// Un échec non prévu a eu lieu.
   final bool failed;
+
+  /// Toutes les séries de la séance, sans échec, au moins dans la plage et
+  /// dites au moins [AdaptParams.coachAssistWideRir] répétitions plus
+  /// faciles que visé (CA2, partie 1 : cran d'élastique).
+  final bool wideMargin;
 }
 
 /// Plus lourde barre réussie du suivi [track] dans les
@@ -511,16 +517,32 @@ void noteCoachSession(
   // Règle d'assistance : toutes les séries au haut de leur plage, aucune
   // dite plus dure que visé ; ou première série dite au moins deux
   // répétitions plus facile que visé.
+  // (Une série repère, ouverte, ne compte pas contre la règle : sa plage
+  // monte au-delà de l'écrit ; relecture documentée de la partie 1,
+  // `street_03` : la série repère d'une semaine sur deux remettait la série
+  // à zéro, l'élastique n'a jamais changé en 16 semaines.)
   var allTop = true;
+  var counted = 0;
+  var benchmarkWide = false;
   for (final o in run.observed) {
     final t = o.target;
     final said = o.flames;
+    if (t != null && t.open && !o.failed) {
+      if (o.amount >= coach.schemeAmount + p.coachAssistWideRir) {
+        benchmarkWide = true;
+      }
+      continue;
+    }
+    counted++;
     if (o.failed ||
         t == null ||
         o.amount < t.high ||
         (said != null && rirOfFlames(said) < rirOfFlames(t.flames) - 0.5)) {
       allTop = false;
     }
+  }
+  if (counted == 0) {
+    allTop = false;
   }
   final first = run.observed.first;
   final firstSaid = first.flames;
@@ -555,8 +577,31 @@ void noteCoachSession(
       before.loadKg == held) {
     missStreak = before.missed;
   }
+  // Marge large sur toute la séance : chaque série dans la plage, aucune
+  // en échec, toutes dites au moins coachAssistWideRir répétitions plus
+  // faciles que visé (panel de la passe 6, trois écoles sur quatre : le
+  // cran d'élastique attendait deux séances au haut de la plage).
+  var wide = run.observed.isNotEmpty;
+  for (final o in run.observed) {
+    final t = o.target;
+    final said = o.flames;
+    if (t != null && t.open && !o.failed) {
+      continue;
+    }
+    if (o.failed ||
+        t == null ||
+        said == null ||
+        o.amount < t.low ||
+        rirOfFlames(said) - rirOfFlames(t.flames) <
+            p.coachAssistWideRir - 1e-9) {
+      wide = false;
+    }
+  }
   final light = coach.policy.locked;
   marks[coach.slotId] = SlotMark(
+    // (Une série repère qui dépasse l'écrit d'au moins coachAssistWideRir
+    // répétitions, sans échec, dit aussi que l'assistance est trop forte.)
+    wideMargin: (wide && counted > 0) || (benchmarkWide && !failed),
     day: day,
     reached: reached,
     missed: under ? missStreak + 1 : 0,
@@ -1870,7 +1915,10 @@ List<SetPlan>? _directPlans(
     // deux répétitions plus facile que visé — un cran de moins. Deux
     // séances au même cran, jamais une seule mesure : CA2, partie 0 —
     // l'élastique ne change plus dans un sens puis dans l'autre.)
-    final streak = (mark?.reached ?? 0) >= 2;
+    // (Ou une séance entière au cran actuel, toutes séries dites au moins
+    // deux répétitions plus faciles que visé : panel de la passe 6 ; CA2,
+    // partie 1. Sept jours au moins depuis le dernier changement.)
+    final streak = (mark?.reached ?? 0) >= 2 || (mark?.wideMargin ?? false);
     // Un cran de plus seulement sur ce que l'athlète a fait : échec, ou bas
     // de la cible servie manqué deux séances de suite au même cran (une
     // cible abaissée par un verrou — douleur, bilan bas — puis tenue n'est
