@@ -422,6 +422,9 @@ AthleteProfile randomProfile(Catalog catalog, int seed) {
       ? HealthScreeningOutcome.standard
       : pick(HealthScreeningOutcome.values);
   return AthleteProfile(
+    // Profil du questionnaire 0.1 : schéma 2 (CP2, partie 0 : un débutant
+    // sans ancienneté au schéma 3 prend désormais le chemin street).
+    schemaVersion: 2,
     sex: pick(Sex.values),
     birthYear: chance(4) ? 2010 : between(1946, 2008),
     heightCm: between(150, 200),

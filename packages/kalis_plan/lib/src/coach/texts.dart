@@ -221,9 +221,9 @@ String? coachReasonText(Reason r, Catalog catalog) {
                     '${v is num ? v.round() % 1000 : ''} au test final '
                     'serait déjà un bon cycle : ne force pas la forme pour '
                     "y arriver. Si le repère de mi-parcours n'est pas "
-                    "atteint, aucune série n'est ajoutée : le bloc suivant "
-                    "repart du résultat du test et l'objectif se joue au "
-                    'cycle suivant.',
+                    'atteint, le bloc suivant change de méthode (voir le '
+                    'repère) et repart du résultat du test ; '
+                    "l'objectif se joue alors au cycle suivant.",
         CoachNotes.maxSetPlan =>
           'Avant la série maximale : 2 séries faciles (un quart, puis un '
               'tiers du maximum), 2 à 3 min de repos. Pendant : rythme '
@@ -259,10 +259,14 @@ String? coachReasonText(Reason r, Catalog catalog) {
         CoachNotes.pushLadder =>
           'Échelle de poussée : pompe au mur → mains surélevées (barre '
               'basse ou barres parallèles, de plus en plus bas) → genoux '
-              '→ sol. Prends dès la première séance le cran qui permet '
-              '${_int(v)} répétitions avec 3 à 4 en réserve ; descends '
-              "d'un cran quand le haut de la plage est tenu sur toutes "
-              'les séries, deux séances de suite.',
+              '→ sol. Un seul critère de passage : quand 2 séries de '
+              '${_int(v)} propres passent avec la réserve écrite, deux '
+              "séances de suite, descends d'un cran (note la hauteur des "
+              'mains en cm à chaque séance et au test). Jamais plus de '
+              '${_int(v)} répétitions sur un cran : au-delà, on baisse '
+              "l'appui, on n'allonge pas la série. Poignet gêné (3 sur 10 "
+              'ou plus deux séances de suite) : même cran sur poignées, '
+              'parallettes ou poings fermés.',
         CoachNotes.primer =>
           "Amorçage à l'avant-veille : deux simples à ${_pct(v)} du 1RM "
               "par mouvement, dans l'ordre de l'épreuve, rapides et "
@@ -288,6 +292,28 @@ String? coachReasonText(Reason r, Catalog catalog) {
               'limite. Sinon, saute-la. La semaine où elle '
               "s'ouvre, rien d'autre n'augmente (un seul changement à la "
               'fois).',
+        CoachNotes.entryCheck =>
+          "Série repère, aujourd'hui seulement : la première série de "
+              "cette ligne va jusqu'à ${_int(v)} répétitions de l'échec "
+              '(mouvement lesté : à la charge écrite, autant de répétitions '
+              'propres que possible en gardant cette réserve). Note-la : '
+              "ton maximum du jour = répétitions faites + ${_int(v)}. S'il "
+              'est sous le repère écrit de plus de 5 %, recalcule les '
+              'séries des deux premières semaines sur ce maximum du jour, '
+              "aux mêmes pourcentages ; sinon, garde les chiffres écrits. "
+              "Un record déclaré n'est un repère qu'une fois vérifié.",
+        CoachNotes.repsRehearsal =>
+          'Simulation du test : la série de tête se fait au format du '
+              'test (même échauffement, même standard de répétition), '
+              "jusqu'à une répétition de l'échec — environ ${_int(v)} "
+              "répétitions. Note le résultat : il dit si l'objectif du test "
+              'est réaliste ; pas de série allégée après.',
+        CoachNotes.stepCriterion =>
+          'Tenues vers le critère de passage : ${_int(v)} s par tenue, '
+              'une fois par semaine, à la place des tenues courtes. Arrêt '
+              'dès que la ligne casse (qualité sous 4 sur 5). Quand le '
+              "critère de l'échelle est tenu proprement 2 séances de suite, "
+              "l'étape suivante s'ouvre au bloc suivant.",
         CoachNotes.maxAttempt =>
           'Toutes les ${_int(v)} semaines, la première tenue de cette '
               "séance est un maintien maximal propre (arrêt dès que la "
@@ -431,7 +457,10 @@ String? coachReasonText(Reason r, Catalog catalog) {
                 'haut.',
           3 =>
             'Exécution : amène la barre aux hanches, transition rapide, '
-                'poitrine au-dessus de la barre avant de pousser.',
+                'poitrine au-dessus de la barre avant de pousser. La série '
+                "s'arrête à la première répétition dont la transition "
+                'ralentit, se fait en deux temps ou demande un battement de '
+                "jambes de plus : jamais jusqu'à l'échec.",
           4 =>
             'Exécution : bras tendus, pousse la barre vers les hanches, '
                 'bassin en rétroversion, corps aligné.',
@@ -467,6 +496,13 @@ String? coachReasonText(Reason r, Catalog catalog) {
                 "jusqu'au bras parallèle au sol, puis un peu plus bas "
                 "chaque semaine si l'épaule ne se plaint pas ; verrouillage "
                 'complet en haut.',
+          12 =>
+            'Exécution : corps gainé de la tête aux talons, poitrine près '
+                "de l'appui, coudes à 45°. Poignet à ménager : poings "
+                'fermés, poignées ou parallettes (poignet neutre), ou mains '
+                "sur une barre basse pour la pompe inclinée ; pas d'appui "
+                'paume à plat tant que la gêne ne reste pas à 0 ou 1 le '
+                'lendemain deux semaines de suite.',
           _ => null,
         },
         CoachNotes.intervalPace =>
@@ -513,10 +549,60 @@ String? coachReasonText(Reason r, Catalog catalog) {
               'reprends deux semaines en arrière avec ${_int(v)} % de volume '
               'en moins.',
         CoachNotes.checkpoint =>
-          "Repère sur le chemin de l'objectif : ${_plain(v)}. "
-              "S'il n'est pas atteint, suis la progression écrite (une "
-              'variable à la fois) sans ajouter de séries ; le bloc suivant '
-              'est écrit sur le résultat du test.',
+          "Repère sur le chemin de l'objectif : ${_plain(v)}. Une seule "
+              "règle : le bloc suivant est écrit sur le résultat du test ; "
+              "s'il est atteint, il garde sa méthode ; s'il ne l'est pas, "
+              'la séance la plus légère du mouvement (départs au chrono ou '
+              'séries de volume) devient une séance de surcharge en séries '
+              'courtes — variante plus dure ou lest léger, 2 répétitions en '
+              "réserve. Tu n'ajoutes jamais de séries toi-même.",
+        CoachNotes.safetyPins =>
+          'Charge lourde (${_int(v)} % du 1RM et plus) : sécurités de la '
+              'cage réglées juste sous le point le plus bas, ou un pareur. '
+              "Si la dernière montée d'échauffement n'est pas rapide, la "
+              'série de tête se fait à cette charge-là.',
+        CoachNotes.checkpointBody =>
+          "Repère sur le chemin de l'objectif : ${_plain(v)}. Une seule "
+              "règle : le bloc suivant est écrit sur le résultat du test ; "
+              "s'il est atteint, il garde sa méthode ; s'il ne l'est pas, "
+              'la séance la plus légère du mouvement (départs au chrono ou '
+              'séries de volume) devient une séance de surcharge sans lest, '
+              'en séries courtes à 2 répétitions en réserve : descente en 4 '
+              'à 5 s et pause en haut, puis une variante plus dure (archer, '
+              "chest-to-bar) quand ce tempo devient facile. Tu n'ajoutes "
+              'jamais de séries toi-même.',
+        CoachNotes.checkpointHold =>
+          "Repère sur le chemin de l'objectif : ${_plain(v)} s. Une seule "
+              "règle : le bloc suivant est écrit sur le résultat du test ; "
+              "s'il est atteint, il garde sa méthode ; s'il ne l'est pas, il "
+              'change de dose sur le levier : des tenues plus courtes et '
+              'plus nombreuses, au même temps total, avec des repos '
+              "complets (2 à 3 min). Tu n'ajoutes jamais de séries toi-même.",
+        CoachNotes.checkpointLoad =>
+          "Repère sur le chemin de l'objectif : ${_plain(v)} kg. Une seule "
+              "règle : le bloc suivant est écrit sur le résultat du test "
+              "(charges recalées) ; s'il n'est pas atteint, le bloc garde sa "
+              "méthode, à partir de ce résultat, et l'objectif se joue au "
+              'cycle suivant — pas de charge ajoutée au jugé.',
+        CoachNotes.checkpointLadder =>
+          "Repère sur le chemin de l'objectif : ${_plain(v)}. Une seule "
+              "règle : le bloc suivant est écrit sur le résultat du test ; "
+              "s'il n'est pas atteint, il baisse l'appui de la pompe "
+              "facile d'un cran (mains plus basses) et garde les descentes "
+              "freinées au sol. Tu n'ajoutes jamais de séries toi-même.",
+        CoachNotes.pushHeight =>
+          (v is num && v > 0)
+              ? 'Hauteur des mains, à régler cette semaine : ton maximum sur '
+                    "l'appui d'avant dépasse 15 — baisse les mains de "
+                    "${_int(v)} cran${v > 1 ? 's' : ''} (environ 10 cm "
+                    "chacun), jusqu'à l'appui où ton maximum propre est de 12 "
+                    'à 14 répétitions. Note la hauteur en cm : elle sert aux '
+                    'séances et au test, et ne change ensuite que par le '
+                    "critère de l'échelle."
+              : 'Hauteur des mains, à régler à la première séance : '
+                    "l'appui où ton maximum propre est de 12 à 14 répétitions. "
+                    'Note la hauteur en cm : elle sert aux séances et au test, '
+                    "et ne change ensuite que par le critère de l'échelle.",
         CoachNotes.testRest =>
           '${_int(v)} h sans travail dur du mouvement avant un test.',
         CoachNotes.rampBodyweight =>
@@ -562,6 +648,18 @@ String? coachReasonText(Reason r, Catalog catalog) {
               'que la gêne ne reste pas sous 2/10 deux semaines de suite. '
               'À 6/10, douleur la nuit ou gêne qui dure : arrête le '
               'mouvement et consulte.',
+        CoachNotes.wristSpare =>
+          "Poignet sensible au profil : l'appui en extension sans prise "
+              'neutre est réduit de moitié dès le départ (parallettes, '
+              'poignées ou poings par défaut) : ce sont les séries de ces '
+              'figures qui sont divisées par deux. Règle de douleur, la '
+              'même que celle du programme : hausse seulement si la gêne '
+              "reste à ${_int(v)} sur 10 au plus pendant l'effort et revient "
+              'à ton état habituel le lendemain matin ; à 3 ou 4, dose '
+              'inchangée ; à 5, variante plus facile et volume réduit ; '
+              'au-delà, arrêt et consultation. Les séries reviennent par '
+              'paliers de 10 % quand la gêne reste à 0 ou 1 deux semaines '
+              'de suite.',
         CoachNotes.eventZone =>
           "Zone de l'épreuve : séries à environ ${_int(v)} % de ton maximum, "
               'repos court, la réserve écrite sur la dernière (2 répétitions '
@@ -596,6 +694,19 @@ String? coachReasonText(Reason r, Catalog catalog) {
               'un examen montre). Les mouvements retirés ne reviennent '
               "qu'après deux semaines à 2 sur 10 au plus, par paliers "
               "d'environ 10 % par semaine.",
+        CoachNotes.painReprise =>
+          'Bloc de reprise après une douleur qui dure sur un mouvement de '
+              "l'objectif : ni test, ni affûtage, ni épreuve dans ce bloc ; "
+              "l'échéance est repoussée au bloc suivant. Trois étapes : "
+              'participation (le reste du programme suivi, les mouvements '
+              'qui provoquent la zone retirés ou en reprise graduée), retour '
+              'au mouvement (il revient à la moitié de son volume habituel, '
+              "+10 % par semaine, loin de l'échec), puis performance (volume "
+              "et charges habituels). On passe à l'étape suivante quand la "
+              'gêne reste à 2 sur 10 au plus pendant la séance et le '
+              'lendemain matin deux semaines de suite ; aucun test tant que '
+              'la douleur dépasse 2 sur 10. Décision à prendre avec le '
+              'professionnel qui suit la zone.',
         CoachNotes.painReturn =>
           'Reprise graduée (${_zoneOfIndex(v is num ? v.round() ~/ 100 : -1)}) : '
               'les mouvements retirés reviennent à '
@@ -766,9 +877,12 @@ String? coachReasonText(Reason r, Catalog catalog) {
           step is num && step >= 5
               ? "Gainage et tenues d'appoint : +5 s par tenue quand toutes "
                     'les tenues sont propres.'
-              : 'Tenues de figure : +1 s par tenue quand toutes les tenues '
-                    "sont propres ; l'étape suivante seulement quand le "
-                    "critère de passage de l'échelle est atteint.",
+              : 'Tenues de figure : les secondes écrites sont la dose (une '
+                    'part de ton dernier maintien mesuré). Entre deux tests, '
+                    "tu peux ajouter 1 s par tenue quand toutes sont propres, "
+                    'sans dépasser 75 % de ce maintien ; au-delà, garde la '
+                    "dose jusqu'au test suivant. L'étape suivante seulement "
+                    "quand le critère de passage de l'échelle est atteint.",
         CoachRules.densityStep =>
           'Départs au chrono : une seule variable monte à la fois — un '
               'départ de plus toutes les deux semaines au plus, ou, dans la '

@@ -87,6 +87,14 @@ textarea.petit{min-height:44px;font-size:14px}
 .exo .vol{font-variant-numeric:tabular-nums;font-weight:600;white-space:nowrap}
 .exo .det{grid-column:1 / -1;color:var(--encre2);font-size:13px}
 .vide{color:var(--encre2);padding:24px 0}
+.md{display:flex;flex-direction:column;gap:8px;font-size:14px;min-width:0}
+.md ul{margin:0;padding-left:18px}.md li{margin-block:2px}
+.md .tab{overflow-x:auto;max-width:100%}
+.md table{border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums}
+.md th,.md td{border-bottom:1px solid var(--trait);padding:4px 8px;text-align:left;vertical-align:top}
+.md th{font-weight:600;color:var(--encre2)}
+.md h4{margin:6px 0 0;font-size:15px}
+.scenario{border-left:3px solid var(--note);padding-left:10px}
 </style>
 
 <div class="page">
@@ -138,7 +146,7 @@ function majEtat(){
 
 function vueListe(garder){
   courant=null;const v=$("#vue");v.replaceChildren();
-  v.append(el("p",{class:"intro",text:"Dix programmes créés par les moteurs pour dix profils types. Ouvrez un programme, parcourez-le, puis notez-le de 1 à 10 : une note d'ensemble, cinq critères et un commentaire libre. 9 veut dire « je le donnerais tel quel à cet athlète »."}));
+  v.append(el("p",{class:"intro",text:manche.intro||"Dix programmes créés par les moteurs pour dix profils types. Ouvrez un programme, parcourez-le, puis notez-le de 1 à 10 : une note d'ensemble, cinq critères et un commentaire libre. 9 veut dire « je le donnerais tel quel à cet athlète »."}));
   for(const[g,titre]of[["street","Street"],["autres","Autres disciplines"]]){
     const ps=manche.programmes.filter(p=>p.groupe===g);if(!ps.length)continue;
     v.append(el("h3",{class:"groupe",text:titre}));
@@ -201,6 +209,19 @@ function vueFiche(p){
     vol,
     el("div",{class:"legende"},...natures.map(n=>el("span",{},el("i",{class:"k-"+n}),n)),el("span",{text:"Hauteur : séries dures de la semaine (maximum "+max+")."}))));
 
+  // Saison simulée (manches « saisons », lot CX)
+  if(p.saison&&p.saison.length){
+    const sa=el("section",{class:"bloc"},el("h3",{text:"Saison simulée"}),
+      el("p",{class:"resume",text:"La saison telle qu'un athlète simulé l'a vécue : blocs écrits l'un après l'autre d'après les séances faites et les tests, décisions du moteur d'évolution, figures et tentatives."}));
+    for(const x of p.saison)sa.append(sectionMd(x));
+    f.append(sa);
+  }
+  if(p.scenario&&p.scenario.sections&&p.scenario.sections.length){
+    const sc=el("section",{class:"bloc scenario"},el("h3",{text:"Scénario imposé"}),el("p",{class:"resume",text:p.scenario.titre}));
+    for(const x of p.scenario.sections)sc.append(sectionMd(x));
+    f.append(sc);
+  }
+
   // Notation
   const nt=el("section",{class:"notation"},el("h3",{text:"Vos notes"}));
   for(const[code,lib]of CRITERES){
@@ -228,6 +249,43 @@ function vueFiche(p){
   f.append(sem);
   f.append(el("button",{class:"retour",type:"button",onclick:vueListe,text:"← Tous les programmes"}));
   v.append(f);scrollTo(0,0);
+}
+
+function enLigne(t){
+  const e=el("span");const re=/\*\*([^*]+)\*\*|`([^`]+)`/g;let i=0,m;
+  while((m=re.exec(t))){if(m.index>i)e.append(t.slice(i,m.index));e.append(m[1]!=null?el("b",{text:m[1]}):el("code",{text:m[2]}));i=re.lastIndex}
+  if(i<t.length)e.append(t.slice(i));return e;
+}
+function rendreMd(texte){
+  const box=el("div",{class:"md"});const L=texte.split("\n");let i=0;
+  const cells=l=>l.trim().replace(/^\|/,"").replace(/\|$/,"").split("|").map(c=>c.trim());
+  while(i<L.length){
+    const l=L[i];
+    if(!l.trim()){i++;continue}
+    if(l.trim().startsWith("|")){
+      const rows=[];while(i<L.length&&L[i].trim().startsWith("|")){rows.push(L[i]);i++}
+      const t=el("table");const head=cells(rows[0]);
+      const tr=el("tr");for(const c of head)tr.append(el("th",{},enLigne(c)));t.append(el("thead",{},tr));
+      const tb=el("tbody");
+      for(const r of rows.slice(1)){if(/^\s*\|?\s*:?-{2,}/.test(r))continue;const x=el("tr");for(const c of cells(r))x.append(el("td",{},enLigne(c)));tb.append(x)}
+      t.append(tb);box.append(el("div",{class:"tab"},t));continue;
+    }
+    if(/^\s*[-*] /.test(l)){
+      const ul=el("ul");while(i<L.length&&/^\s*[-*] /.test(L[i])){ul.append(el("li",{},enLigne(L[i].replace(/^\s*[-*] /,""))));i++}
+      box.append(ul);continue;
+    }
+    const h=l.match(/^#{3,6}\s+(.*)$/);
+    if(h){box.append(el("h4",{},enLigne(h[1])));i++;continue}
+    const par=[];while(i<L.length&&L[i].trim()&&!L[i].trim().startsWith("|")&&!/^\s*[-*] /.test(L[i])&&!/^#{3,6}\s/.test(L[i])){par.push(L[i].trim());i++}
+    box.append(el("p",{},enLigne(par.join(" "))));
+  }
+  return box;
+}
+function sectionMd(x){
+  const corps=el("div",{class:"corps"});
+  const d=el("details",{},el("summary",{text:x.titre}),corps);
+  d.addEventListener("toggle",()=>{if(d.open&&!corps.childElementCount)corps.append(rendreMd(x.texte))});
+  return d;
 }
 
 function remplir(p,s,corps){
