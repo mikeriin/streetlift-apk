@@ -3755,11 +3755,9 @@ final class Prescriber {
       // et banc CP2, partie 1 : 10 km de test en semaine 6 pour une
       // débutante qui court 35 minutes, dans un créneau d'une heure.)
       final last =
-          ws.eventWeek ||
-          (ws.intent == WeekIntent.test && _shape.finalBlock);
+          ws.eventWeek || (ws.intent == WeekIntent.test && _shape.finalBlock);
       var meters = last ? goal.$1 : goal.$1 / 2;
-      final fits =
-          (a.days[day].minutes - 8.0) * 60 * coachRunMetersPerSecond;
+      final fits = (a.days[day].minutes - 8.0) * 60 * coachRunMetersPerSecond;
       if (!ws.eventWeek && fits > 0 && meters > fits) {
         meters = (fits / 500).floorToDouble() * 500;
       }
@@ -7010,6 +7008,7 @@ final class Prescriber {
       final r = light ? (v * 2 / 3 / step).round() * step : v;
       return r < step ? step : r;
     }
+
     for (final x in list) {
       x
         ..backoff = false
@@ -7429,12 +7428,14 @@ final class Prescriber {
         // « semaine de test » vide).
         WeekPrescription(
           weekIndex: w,
-          kind: ws.kind == WeekKind.test &&
+          kind:
+              ws.kind == WeekKind.test &&
                   !anyTest &&
                   !isStreetStyle(skeleton.style)
               ? WeekKind.deload
               : ws.kind,
-          intent: ws.kind == WeekKind.test &&
+          intent:
+              ws.kind == WeekKind.test &&
                   !anyTest &&
                   !isStreetStyle(skeleton.style)
               ? WeekIntent.deload

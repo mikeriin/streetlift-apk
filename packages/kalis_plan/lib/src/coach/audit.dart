@@ -210,9 +210,7 @@ List<String> coachAudit(
             !day.items.any(
               (p) =>
                   p.kind == SetKind.test &&
-                  p.reasons.any(
-                    (r) => r.params['note'] == CoachNotes.eventDay,
-                  ),
+                  p.reasons.any((r) => r.params['note'] == CoachNotes.eventDay),
             )) {
           out.add(
             '$where : ${(seconds / 60).round()} min pour '
