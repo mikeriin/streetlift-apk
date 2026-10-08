@@ -267,6 +267,8 @@ Passe livrée, **à valider — cible C7.5 non atteinte** (`kalis_plan` 0.2.2, `
 
 ### CP2
 
+- **CP2.1 Publication intermédiaire de la partie 0 (08/10/2026, 19:15 UTC)** : `kalis_plan` 0.2.3 (`moteurs` 9b2e9ea3, `etiquettes/kalis_plan-v0.2.3`), sur `kalis_adapt` 0.2.3 et `kalis_bench` 0.2.2 de CA2 ; contrôle complet `claude/ci-cp-a` run 37820965364 (3f50b568) vert. Constats C9.7 et C9.8 traités et vérifiés sur les exports (tableau dans `packages/kalis_plan/docs/CALIBRAGE_CP2.md`) ; 0 violation sur les 136 saisons street. Relecture indépendante du code faite (12 constats, 10 corrigés, 2 tests ajoutés). Manche 6 de la page de relecture. **Panel sous la cible C7.5 et sous le départ** : 14 couples sur 68 à 9, minimum 5, moyenne 7,62 (départ 0.2.2 : 23, 5,5, 7,95) ; la passe p3 n'a rien gagné → arrêt (C9.2). Lecture : bruit d'environ un point et choix de sécurité pénalisés (`street_10` : appui du poignet réduit de moitié, volume de planche jugé insuffisant). Recommandation : faire entrer 0.2.3 dans l'application pour la sécurité ; les corrections de méthode restantes (planche sur levier plus facile, budget du poignet, changement de méthode après un test en baisse, débutantes `street_03` et `street_13`) vont à la partie 1 si le budget le permet, sinon à CY.
+
 ### CA2
 
 Reprises du 06/10 et du 08/10 (Opus 5.5, C5.1). Partie 0 publiée le 08/10/2026 ; partie 1 en cours.
