@@ -3,7 +3,7 @@
 # usage : ci.sh quick|dev|full "<message>" [graines]
 set -e
 MODE=$1; MSG=$2; SEEDS=${3:-4}
-WT=/home/claude/moteurs
+WT=${WT:-/home/claude/p1}
 REPO=/home/claude/streetlift-apk
 T=/tmp/cp2ci
 rm -rf $T && mkdir -p $T

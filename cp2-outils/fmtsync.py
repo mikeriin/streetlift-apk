@@ -3,7 +3,7 @@
 seulement pour les fichiers inchangés depuis le contrôle poussé (/tmp/cp2ci)."""
 import os, sys, filecmp, shutil
 ci = sys.argv[1]  # .../ci-out/packages/aa_fmt
-wt = '/home/claude/moteurs/packages'
+wt = '/home/claude/p1/packages'
 pushed = '/tmp/cp2ci/packages'
 n = 0
 for root, _, files in os.walk(ci):

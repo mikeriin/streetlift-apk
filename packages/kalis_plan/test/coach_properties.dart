@@ -184,17 +184,19 @@ void _checkPass2(
 
 /// Joue le profil street aléatoire de graine [seed] ; rend la liste des
 /// manquements (vide si tout est conforme).
-List<String> checkCoachSeed(Catalog catalog, int seed) {
+List<String> checkCoachSeed(
+  Catalog catalog,
+  int seed, {
+  bool general = false,
+}) {
   final out = <String>[];
   void fail(String message) => out.add('profil $seed — $message');
 
   final inspector = PlanInspector(catalog);
   final engine = KalisPlan();
-  final request = randomCoachRequest(
-    catalog,
-    seed,
-    planSeed: seed % 16 == 7 ? 1 : 0,
-  );
+  final request = general
+      ? randomGeneralRequest(catalog, seed, planSeed: seed % 16 == 7 ? 1 : 0)
+      : randomCoachRequest(catalog, seed, planSeed: seed % 16 == 7 ? 1 : 0);
   final profile = request.profile;
   for (final v in profile.validate()) {
     fail('profil : ${v.path} ${v.code}');
@@ -213,6 +215,9 @@ List<String> checkCoachSeed(Catalog catalog, int seed) {
   );
   _checkPass2(fail, 'passe 2', p1, p2);
   final block = ProgramBlock(pass1: p1, pass2: p2);
+  if (general) {
+    _checkGeneral(fail, catalog, profile, p2);
+  }
   for (final v in coachAudit(catalog, profile, request.startDate, [block])) {
     fail('relecture : $v');
   }
@@ -553,11 +558,107 @@ List<String> checkCoachSeed(Catalog catalog, int seed) {
   return out;
 }
 
-/// Tests du fichier de rang [shard] (profils `shard × 1280` et suivants).
-void coachPropertyShard(int shard) {
+/// Invariants des autres disciplines (CP2, partie 1) : aucune sortie au-delà
+/// de 110 % de la plus longue course des quatre semaines d'avant (ou du
+/// point de départ du profil, R6-P16), et aucune séance lourde du squat ou
+/// du soulevé de terre (85 % du 1RM et plus) le jour ou la veille d'une
+/// sortie longue ou d'une séance de qualité (R6-P30).
+void _checkGeneral(
+  void Function(String) fail,
+  Catalog catalog,
+  AthleteProfile profile,
+  Pass2Plan p2,
+) {
+  double minutesOf(ExercisePrescription p) {
+    final secs = p.secondsHigh;
+    final meters = p.distanceMeters;
+    if (secs != null) {
+      return secs * p.sets / 60;
+    }
+    if (meters != null) {
+      return meters * p.sets / coachRunMetersPerSecond / 60;
+    }
+    return 0;
+  }
+
+  var known = 0.0;
+  for (final b in profile.benchmarks ?? const <Benchmark>[]) {
+    final t = b.seconds;
+    if (b.kind == BenchmarkKind.timeTrial && t != null && t / 60 > known) {
+      known = t / 60;
+    }
+  }
+  final longest = <double>[];
+  for (final w in p2.weeks) {
+    var top = 0.0;
+    for (final d in w.days) {
+      for (final p in d.items) {
+        if ((p.exerciseId == 'ca-sortie-longue' ||
+                p.exerciseId == 'ca-footing-endurance-fondamentale') &&
+            p.kind != SetKind.test) {
+          final m = minutesOf(p);
+          if (m > top) {
+            top = m;
+          }
+        }
+      }
+    }
+    var before = 0.0;
+    for (var k = longest.length - 4; k < longest.length; k++) {
+      if (k >= 0 && longest[k] > before) {
+        before = longest[k];
+      }
+    }
+    final allowed = before > 0
+        ? before * 1.1 + 1
+        : (known > 0 ? known * 1.25 + 1 : 999);
+    if (top > allowed) {
+      fail(
+        's${w.weekIndex} : sortie de ${top.toStringAsFixed(0)} min '
+        '(borne ${allowed.toStringAsFixed(0)})',
+      );
+    }
+    longest.add(top);
+    final runDays = <int>{
+      for (final d in w.days)
+        if (d.items.any((p) {
+          if (p.exerciseId == 'ca-sortie-longue') {
+            return true;
+          }
+          final e = catalog.find(p.exerciseId);
+          return e != null && e.id.startsWith('ca-fractionne');
+        }))
+          profile.availability[d.dayIndex].weekday,
+    };
+    for (final d in w.days) {
+      final day = profile.availability[d.dayIndex].weekday;
+      final next = day == 7 ? 1 : day + 1;
+      if (!runDays.contains(day) && !runDays.contains(next)) {
+        continue;
+      }
+      for (final p in d.items) {
+        final pct = p.percentOfOneRm;
+        if (p.kind == SetKind.work &&
+            pct != null &&
+            pct >= 0.85 &&
+            (p.exerciseId.contains('squat') ||
+                p.exerciseId.contains('souleve-de-terre'))) {
+          fail(
+            's${w.weekIndex} j${d.dayIndex} : ${p.exerciseId} lourd '
+            'le jour ou la veille d\'une course dure',
+          );
+        }
+      }
+    }
+  }
+}
+
+/// Tests du fichier de rang [shard] (profils `shard × 1280` et suivants) ;
+/// [general] : profils des autres disciplines (CP2, partie 1).
+void coachPropertyShard(int shard, {bool general = false}) {
   final catalog = loadCatalog();
   final first = shard * coachProfilesPerShard;
-  group('chemin street, profils $first à '
+  group('${general ? 'autres disciplines' : 'chemin street'}, profils $first à '
       '${first + coachProfilesPerShard - 1}', () {
     for (
       var chunk = 0;
@@ -569,7 +670,7 @@ void coachPropertyShard(int shard) {
       test('profils $from à ${to - 1}', () {
         final failures = <String>[];
         for (var seed = from; seed < to; seed++) {
-          failures.addAll(checkCoachSeed(catalog, seed));
+          failures.addAll(checkCoachSeed(catalog, seed, general: general));
         }
         expect(
           failures.take(40).toList(),

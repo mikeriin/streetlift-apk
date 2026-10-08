@@ -13,8 +13,16 @@ import 'prescribe.dart' show CoachNotes, coachGroupCap, straightArmFamilyOf;
 import 'season.dart';
 import 'tables.dart';
 
+part 'general.dart';
+
 /// Style de programme de l'athlète [a].
 CoachStyle styleOf(Athlete a) {
+  // Autres disciplines (CP2, partie 1) : musculation, force, course,
+  // santé et mobilité, conditionnement.
+  final general = generalStyleOf(a);
+  if (general != null) {
+    return general;
+  }
   if (a.level == 0) {
     return CoachStyle.beginner;
   }
@@ -3479,8 +3487,23 @@ Skeleton buildSkeleton(
 }) {
   final style = styleOf(a);
   final b = _Builder(a, shape, blockIndex, rotation);
-  final runDays = style == CoachStyle.beginner ? <int>{} : _buildRuns(b);
+  final runDays = switch (style) {
+    CoachStyle.beginner || CoachStyle.health || CoachStyle.conditioning =>
+      <int>{},
+    CoachStyle.endurance => _buildEndurance(b),
+    _ => _buildRuns(b),
+  };
   switch (style) {
+    case CoachStyle.hypertrophy:
+      _buildHypertrophy(b, runDays);
+    case CoachStyle.strength:
+      _buildPower(b, runDays);
+    case CoachStyle.endurance:
+      break;
+    case CoachStyle.conditioning:
+      _buildConditioning(b);
+    case CoachStyle.health:
+      _buildHealth(b);
     case CoachStyle.beginner:
       _buildBeginner(b);
     case CoachStyle.reps:
@@ -3501,9 +3524,14 @@ Skeleton buildSkeleton(
     );
   }
   _limitStraightArmDays(b);
+  if (!isStreetStyle(style)) {
+    _limitInterference(b);
+  }
   _fitBudget(b);
-  _fillTime(b, runDays, style);
-  _fitBudget(b);
+  if (isStreetStyle(style)) {
+    _fillTime(b, runDays, style);
+    _fitBudget(b);
+  }
   // Mobilité en fin de séance quand le profil la demande.
   var mobility = 0;
   for (final s in a.profile.disciplines.secondaries) {

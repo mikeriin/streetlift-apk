@@ -2,7 +2,7 @@
 # Sauvegarde CP2 sur cp-sauvegardes/CP2 (arbre sans .github/). usage : save.sh "<étape>"
 set -e
 MSG=$1
-WT=/home/claude/moteurs
+WT=${WT:-/home/claude/p1}
 REPO=/home/claude/streetlift-apk
 T=/tmp/cp2save
 rm -rf $T && mkdir -p $T

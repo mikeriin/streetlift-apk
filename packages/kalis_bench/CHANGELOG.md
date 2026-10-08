@@ -1,5 +1,14 @@
 # Journal
 
+## 0.2.2 — 05/10/2026 (lot CA2, partie 0)
+
+Couple `kalis_plan` 0.2.2 × `kalis_adapt` 0.2.3. Profils types, attentes de coach, critères de sécurité et
+grilles du panel **inchangés**.
+
+- Banc des saisons : la colonne « Douleur » donne les hausses sur une zone douloureuse (au-dessus de 3/10)
+  et, après la barre oblique, les poussées d'une zone restée réactive après un épisode de douleur (modèles
+  de vérité B et C de `kalis_adapt` 0.2.3) ; champ `painFlares` de `saisons.json`.
+
 ## 0.2.1 — 05/10/2026 (lot CX correction 1)
 
 Couple `kalis_plan` 0.2.2 × `kalis_adapt` 0.2.2. Profils types, attentes de coach, critères de sécurité et
