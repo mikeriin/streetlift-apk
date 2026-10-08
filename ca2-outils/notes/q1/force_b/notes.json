@@ -1,0 +1,99 @@
+{
+  "ecole": "force",
+  "programmes": [
+    {
+      "programme": "programme_1.md",
+      "criteres": {"F1": 6, "F2": 3, "F4": 4, "F5": 3, "F7": 4, "F8": 3, "F9": 3},
+      "sans_objet": ["F3", "F6"],
+      "ensemble": 4.5,
+      "points_perdus": [
+        {"critere": "F1", "perte": 4, "raison": "Trois sorties par semaine, c'est bien, mais le mouvement visé (10 km couru d'une traite) n'est approché que par des tentatives complètes en S4, S8 et S12, et pas par une sortie longue qui monte progressivement jusqu'à 60-70 min. Aucune séance n'a de rôle spécifique : les trois sont des footings continus de même nature (R6-P15, R6-P17)."},
+        {"critere": "F2", "perte": 7, "raison": "La colonne « effort visé » est vide pour tous les footings, sans RPE ni test de la parole, alors que R6-P14 les demande pour un débutant. Rien ne garantit que le footing reste facile : la trajectoire montre des footings notés 7 à 8/10."},
+        {"critere": "F4", "perte": 6, "raison": "Les trois blocs sont des copies (S1=S5=S9, S2=S6=S10, S3=S7=S11) : la sortie du dimanche repart à 40-45 min en S5 et S9, donc rien ne progresse d'un bloc à l'autre. Les semaines « test » servent de décharge mais contiennent un 10 km complet."},
+        {"critere": "F5", "perte": 7, "raison": "Pas d'affûtage : S11 est la semaine la plus chargée (sortie de 54-60 min), et la course arrive le mardi de S12 sans période allégée de 5 à 7 jours (R6-P20, débutant). La date de la course n'est pas reliée au profil : la course est placée sur le créneau de 45 min."},
+        {"critere": "F7", "perte": 6, "raison": "Il n'y a aucun renforcement. R6-P22 prévoit deux séances légères chez le coureur débutant (RR blessure d'environ 0,34) et vise en priorité le mollet et le tendon d'Achille. Le programme ne contient que des étirements passifs, sans effet sur les blessures (R6-P22)."},
+        {"critere": "F8", "perte": 7, "raison": "La progression est brutale. Le record est un footing de 35 min, et pourtant le dimanche S1 prévoit 40-45 min, le dimanche S2 49-55 min (sortie précédente au plus 45 min, soit environ ×1,22) et le test 10 km de S4 environ 70-80 min. Cela dépasse le garde-fou de 110 % de la plus longue sortie sur 30 jours (R6-P16) ; le moteur a dû raccourcir 14 séances. Enfin, trois tentatives maximales de 10 km sont prévues chez une débutante."},
+        {"critere": "F9", "perte": 7, "raison": "Le 10 km du mardi est estimé à 80 min, sur un créneau de 45 min (S4, S8, S12) : la séance est infaisable telle qu'écrite."},
+        {"critere": "ensemble", "perte": 5.5, "raison": "Cinq corrections nécessaires, dont une progression qui dépasse les garde-fous de R6-P16 : un risque réel pour la santé plafonne la note à 5. L'objectif (finir 10 km en S12) est compromis par l'absence d'affûtage et par des tests qu'elle ne peut pas finir."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Construire la sortie du dimanche depuis 35-38 min, avec au plus +10 % par rapport à la plus longue sortie des 30 derniers jours (R6-P16), jusqu'à 60-65 min vers S10, et garder une progression continue d'un bloc à l'autre au lieu de revenir à 40-45 min en S5 et S9.", "consequence": "Sinon, chaque dimanche dépasse le garde-fou de 110 %. Le risque de blessure de surcharge augmente (×1,5 à ×2 selon la cohorte de R6-P16) chez une coureuse de 6 mois."},
+        {"type": "necessaire", "texte": "Supprimer les tests 10 km complets de S4 et S8 et les remplacer par une sortie longue progressive ou un test court (par exemple 5 km, ou 30 min chronométrées).", "consequence": "Sinon, elle fait deux efforts maximaux qu'elle ne peut pas finir (simulée à 4,4 puis 4,9 km), avec un risque de blessure et de découragement, sans information utile."},
+        {"type": "necessaire", "texte": "Placer la course sur le créneau du dimanche (60 min, ou plus si nécessaire) ou dire que la course est hors créneau. Ne jamais prévoir 80 min dans le créneau de 45 min du mardi.", "consequence": "Sinon, la séance d'épreuve est infaisable dans le temps disponible."},
+        {"type": "necessaire", "texte": "Ajouter un affûtage de 5 à 7 jours avant la course (R6-P20, débutant) : volume réduit d'environ 30 à 40 %, fréquence gardée, une sortie courte à allure de course à J-3. Ne pas faire de S11 la semaine la plus chargée.", "consequence": "Sinon, elle se présente fatiguée à sa course de priorité A et risque de ne pas la finir."},
+        {"type": "necessaire", "texte": "Écrire un effort visé pour chaque footing : RPE 3-4/10, ou pouvoir parler en phrases complètes (R6-P14). Autoriser des pauses marchées (R6-P17) si l'effort dépasse cette cible.", "consequence": "Sinon, elle court trop vite (la trajectoire montre des footings à 7-8/10) et ne tient pas la durée prévue, ce qui compromet la construction de l'endurance."},
+        {"type": "amelioration", "texte": "Ajouter 2 × 15 min de renforcement léger par semaine (montées sur pointe de pied debout et genou fléchi, demi-squat, pont fessier unilatéral, gainage), en fin de footing le mardi et le jeudi (R6-P22)."},
+        {"type": "amelioration", "texte": "Introduire à partir de S6-S7 une séance légèrement plus soutenue par semaine (par exemple 4-6 × 2 min à allure 10 km) pour apprivoiser l'allure de course (R6-P15, R6-P18)."},
+        {"type": "amelioration", "texte": "Ajouter une conduite à tenir en cas de douleur (R5-P23) : continuer si la douleur est à 0-2/10, ne pas progresser à 3-4/10, régresser ou arrêter au-delà."}
+      ],
+      "points_forts": [
+        "Les trois séances par semaine respectent les disponibilités et le matériel, et toutes les séances hors test tiennent dans le créneau.",
+        "Le travail est dominé par l'endurance fondamentale, ce qui convient à une débutante (R6-P15).",
+        "Une semaine allégée revient toutes les 4 semaines."
+      ]
+    },
+    {
+      "programme": "programme_2.md",
+      "criteres": {"F1": 5.5, "F2": 3, "F3": 6, "F4": 3.5, "F5": 1.5, "F7": 5, "F8": 3.5, "F9": 5},
+      "sans_objet": ["F6"],
+      "ensemble": 4.5,
+      "points_perdus": [
+        {"critere": "F1", "perte": 4.5, "raison": "Il y a quatre séances de course avec une sortie longue et des côtes, mais aucun travail à l'allure du semi (environ 4:58/km pour 1 h 45). La sortie longue plafonne à 67-75 min, loin des 90-110 min utiles pour ce temps (R6-P19 : sortie longue, durée d'abord). La « pompe prise large » est classée « principal » chez un coureur."},
+        {"critere": "F2", "perte": 7, "raison": "Aucune allure n'est tirée du chrono de 10 km en 48 min, alors que R6-P14 les demande pour un intermédiaire. Les côtes longues n'ont pas d'effort visé ; footings et sortie longue n'ont aucun marqueur. Côté renforcement, les charges sont toutes « à calibrer » sans méthode."},
+        {"critere": "F3", "perte": 4, "raison": "Le renforcement compte 2 à 3 séries par exercice, à 2-4 RIR, ce qui est une dose raisonnable pour un coureur. En revanche, il est dispersé sur des exercices au poids du corps qui ne montent pas en charge (R6-P22 intermédiaire : charges montantes). Aucun travail du mollet ou du soléaire."},
+        {"critere": "F4", "perte": 6.5, "raison": "Le bloc 2 repart exactement au niveau de S1 (mardi 40-45 min, sortie longue 49-55 min), puis S11 aussi. Le volume ne progresse donc pas d'un bloc à l'autre : la semaine la plus chargée (environ 180 min) ne dépasse jamais la S4. Le kilométrage reste sous les 35-55 km/sem d'un intermédiaire (R6-P19)."},
+        {"critere": "F5", "perte": 8.5, "raison": "L'échéance est ignorée. S12 est une semaine de « montée » (sortie longue 63-70 min, 5 × côtes), sans affûtage (R6-P20 : 7 à 14 j, volume −41 à −60 %), et le semi-marathon n'est même pas prévu dans la semaine de l'échéance."},
+        {"critere": "F7", "perte": 5, "raison": "Le tirage (face pull, tirage bras tendus) équilibre bien la poussée, le gainage est présent et le reverse nordic aussi. Mais le bas du corps est traité au poids du corps sans progression, et le maillon faible du coureur, mollet et tendon d'Achille (R6-P22), n'est pas travaillé. Le renforcement est placé après la sortie longue."},
+        {"critere": "F8", "perte": 6.5, "raison": "Le test 21,1 km de S5 vient alors que la plus longue sortie fait 67-75 min : une course d'environ 105 min dépasse largement le garde-fou de 110 % (R6-P16). La trajectoire simule une blessure de surcharge dès S3-S4 ; la séance de qualité est retirée quatre semaines de suite. Aucune conduite à tenir en cas de douleur n'est écrite (R5-P23)."},
+        {"critere": "F9", "perte": 5, "raison": "Le dimanche de S5 (136 min) et celui de S10 (137 min) dépassent les 120 min disponibles. Les autres séances tiennent, avec des repos précisés."},
+        {"critere": "ensemble", "perte": 5.5, "raison": "Cinq corrections nécessaires. Le programme ignore l'échéance (plafond à 6) et contient une progression brutale avec un test de 21,1 km en S5 (plafond à 5). Telle qu'écrite, la préparation ne mène pas à 1 h 45 le jour J."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Placer le semi-marathon dans la semaine de l'échéance et faire de S12 (et de la fin de S11) un affûtage de 7 à 10 jours : volume −40 à −60 %, intensité et fréquence gardées, rappels d'allure jusqu'à J-3 (R6-P20).", "consequence": "Sinon, l'athlète arrive au jour J en pleine semaine de montée, fatigué, et la course de priorité A n'est même pas planifiée."},
+        {"type": "necessaire", "texte": "Remplacer les tests 21,1 km de S5 et S10 par un test 10 km ou par une sortie avec bloc à allure semi (par exemple 3 × 3 km). Faire monter la sortie longue de +10 % au plus par rapport à la plus longue des 30 derniers jours (R6-P16), jusqu'à 95-110 min vers S9-S10.", "consequence": "Sinon, il fait une course d'environ 105 min alors que sa plus longue sortie est de 75 min, avec le risque de blessure de surcharge que la trajectoire simule dès le bloc 1."},
+        {"type": "necessaire", "texte": "Garder une progression continue d'un bloc à l'autre (le bloc 2 doit repartir au-dessus du bloc 1) pour atteindre 35-45 km/sem en S8-S10 (R6-P19, intermédiaire).", "consequence": "Sinon, le volume plafonne à environ 30 km/sem et la sortie longue à 75 min, ce qui ne prépare pas à tenir 5:00/km pendant 21 km."},
+        {"type": "necessaire", "texte": "Donner des allures tirées du chrono de 10 km (footing vers 5:50-6:15/km, allure semi vers 4:58/km, côtes à effort 8/10) et ajouter dès le bloc 2 une séance à allure spécifique semi (R6-P14, R6-P15).", "consequence": "Sinon, l'athlète ne connaît ni ne travaille l'allure qu'il vise et part au hasard le jour J."},
+        {"type": "necessaire", "texte": "Ramener le dimanche de test (S5 et S10) dans les 120 min, en supprimant le renforcement et les étirements ce jour-là.", "consequence": "Sinon, la séance est infaisable dans le temps disponible."},
+        {"type": "amelioration", "texte": "Remplacer la pompe prise large « principal » par un travail du bas du corps qui monte en charge : fente bulgare ou step-up, montées sur pointe genou tendu puis fléchi en 3 × 8-12, avec une progression écrite (R6-P22, R5-P3)."},
+        {"type": "amelioration", "texte": "Déplacer le renforcement du dimanche vers le jeudi ou le samedi pour ne pas l'empiler après la sortie longue (R6-P30)."},
+        {"type": "amelioration", "texte": "Écrire une règle de douleur (R5-P23) et de retrait de la séance de qualité."}
+      ],
+      "points_forts": [
+        "Quatre séances qui respectent les créneaux en semaine normale, avec une sortie longue le dimanche dans le créneau de 120 min.",
+        "Le tirage, le gainage et le reverse nordic sont bien présents. Les RIR (de 4 à 2) sont prudents et cohérents.",
+        "Une semaine allégée revient toutes les 5 semaines, ce qui convient à un intermédiaire (R3-P9)."
+      ]
+    },
+    {
+      "programme": "programme_3.md",
+      "criteres": {"F1": 4, "F2": 6.5, "F3": 6, "F4": 5.5, "F7": 4.5, "F8": 5, "F9": 7},
+      "sans_objet": ["F5", "F6"],
+      "ensemble": 5.5,
+      "points_perdus": [
+        {"critere": "F1", "perte": 6, "raison": "Les mouvements qui servent l'autonomie ne sont pas là. Le passage assis-debout manque (R6-P26 débutant), tout comme la montée de marche et le portage. L'air squat n'apparaît qu'en S9, à 2 séries une fois par semaine. Chaque mouvement de force n'est fait qu'une fois par semaine."},
+        {"critere": "F2", "perte": 3.5, "raison": "Une marge de 4 à 3 RIR convient à une débutante de 68 ans en mode prudent. En revanche, les élastiques sont « à calibrer » sans méthode (série d'essai, couleur de départ) et rien ne dit quoi faire si la série du jour s'écarte."},
+        {"critere": "F3", "perte": 4, "raison": "Environ 2 séries directes par mouvement et par semaine, soit sous les 4-6 séries d'un débutant (R5-P13), même avec la réduction de 20 % propre aux seniors (R5-P10). Le volume est dispersé sur beaucoup d'étirements."},
+        {"critere": "F4", "perte": 4.5, "raison": "La progression se limite à une baisse du RIR (de 4 à 3) et à l'ajout de séries d'étirement. Aucune règle de double progression (répétitions puis élastique plus dur, R5-P3) ; la trajectoire montre une capacité qui monte sans que la prescription suive."},
+        {"critere": "F7", "perte": 5.5, "raison": "La poussée et le tirage sont bien équilibrés (rowing, face pull, pompe), et le tronc est présent. Mais l'équilibre, objectif explicite du profil, n'a aucun exercice (R6-P26 : équilibre au moins 3 j/sem), et le bas du corps est sous-traité pour l'autonomie."},
+        {"critere": "F8", "perte": 5, "raison": "Le questionnaire est en « mode prudent », mais il n'y a aucune règle de douleur (R5-P23) ni orientation médicale (R5-P25, R5-P26). Plusieurs exercices manquent de prérequis pour une débutante de 68 ans : pompe classique sans version inclinée (R5-P9), mountain climbers, pigeon au sol, sleeper stretch, demi-grand écart."},
+        {"critere": "F9", "perte": 3, "raison": "Les séances tiennent dans les 30 min et les repos sont précisés. Mais la pompe classique en 3-8 répétitions risque d'être infaisable sans variante de régression, et rien n'est prévu pour se relever du sol."},
+        {"critere": "ensemble", "perte": 4.5, "raison": "Quatre corrections nécessaires. L'équilibre et l'autonomie, au cœur de l'objectif, sont peu ou pas servis (plafond à 6). Le programme est sûr dans ses doses (marges larges, 30 min) mais pas dans le choix de certains exercices pour ce profil."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Ajouter du travail d'équilibre au moins 3 séances sur 4 (R6-P26) : appui unipodal près d'un support, marche talon-pointe, transferts de poids, avec une progression écrite (yeux ouverts puis fermés, surface stable puis instable).", "consequence": "Sinon, un des trois objectifs déclarés (l'équilibre, lié au risque de chute) n'est pas travaillé du tout."},
+        {"type": "necessaire", "texte": "Placer dès S1, 2 fois par semaine, le passage assis-debout depuis une chaise (2-3 × 8-12, RPE 5-6) et la montée de marche. Faire progresser vers l'air squat et le step-up avec plus de hauteur.", "consequence": "Sinon, la force des jambes qui conditionne l'autonomie (se lever, monter des escaliers) n'est travaillée qu'à partir de S9, une fois par semaine, et l'objectif « rester autonome » est mal servi."},
+        {"type": "necessaire", "texte": "Remplacer la pompe classique par une pompe inclinée (mains sur une table ou au mur), choisie pour permettre au moins 8 répétitions à 3 RIR (R5-P9), et retirer les mountain climbers au profit d'un gainage debout ou d'un bear hold.", "consequence": "Sinon, la séance principale du mercredi risque d'être infaisable ou faite en mauvaise position, et les mountain climbers imposent un appui dynamique sur les poignets et les épaules sans prérequis."},
+        {"type": "necessaire", "texte": "Écrire, puisque le questionnaire est en mode prudent, une conduite à tenir : avis médical avant de commencer si des symptômes ou une maladie sont connus (R5-P26), arrêt et consultation sur un drapeau rouge (R5-P25), barème de douleur 0-2 / 3-4 / 5 / 6 ou plus (R5-P23).", "consequence": "Sinon, une débutante signalée « prudente » n'a aucune règle pour réagir à une douleur ou à un malaise et peut continuer en se blessant."},
+        {"type": "amelioration", "texte": "Écrire une double progression pour chaque exercice de renforcement (rester en 8-12 répétitions à 3 RIR, puis passer à l'élastique plus dur, R5-P3) et passer de 2 à 3 séries par mouvement à partir du bloc 2."},
+        {"type": "amelioration", "texte": "Remplacer le pigeon au sol, le sleeper stretch et le demi-grand écart par des versions sur chaise ou debout (figure 4 assis, étirement des ischios avec talon sur une marche), plus faciles d'accès et sans descente au sol."},
+        {"type": "amelioration", "texte": "Ajouter de la marche rapide sur d'autres jours (marche libre de 20-30 min, +1 000 pas toutes les 1-2 semaines, R6-P32) pour se rapprocher de 150 min par semaine (R6-P21)."},
+        {"type": "amelioration", "texte": "Apprendre à se relever du sol, avec une progression accompagnée."}
+      ],
+      "points_forts": [
+        "Toutes les séances tiennent dans les 30 min, avec le matériel déclaré et des repos précisés.",
+        "Les marges sont larges (de 4 à 3 RIR) et l'échec n'est jamais visé : la dose convient à une débutante de 68 ans (R5-P10, R5-P27).",
+        "La poussée et le tirage sont équilibrés, avec un bon travail de la ceinture scapulaire (rowing, face pull) et du tronc."
+      ]
+    }
+  ]
+}

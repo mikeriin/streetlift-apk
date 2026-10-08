@@ -2580,8 +2580,7 @@ void _enduranceDay(
         final d = entry.key;
         if (!d.removed &&
             entry.value == EnduranceKind.run &&
-            d.item.kind != SetKind.warmup &&
-            d.item.kind != SetKind.test) {
+            d.item.kind != SetKind.warmup) {
           sum += prescribedSeconds(d.item, d.sets, speed);
         }
       }
@@ -2595,11 +2594,30 @@ void _enduranceDay(
         final d = entry.key;
         if (d.removed ||
             entry.value != EnduranceKind.run ||
-            d.item.kind == SetKind.warmup ||
-            d.item.kind == SetKind.test) {
+            d.item.kind == SetKind.warmup) {
           continue;
         }
-        final (item, sets) = scaled(d.item, d.sets, factor);
+        // Un test de course (contre-la-montre) plus long que la borne n'est
+        // pas servi comme test : une épreuve maximale sur une distance
+        // jamais approchée est la sortie la plus risquée (Frandsen et al.
+        // 2025) ; la ligne devient une course bornée, le test est reporté
+        // (panel de la partie 1, trois écoles sur quatre : semi-marathon
+        // couru à fond en semaines 5 et 10).
+        var base = d.item;
+        if (base.kind == SetKind.test) {
+          base = base.copyWith(
+            kind: SetKind.work,
+            test: null,
+            intensity: null,
+            setTargets: null,
+            targetFlames: base.targetFlames == null
+                ? null
+                : (base.targetFlames! > easyFlames + 1
+                      ? easyFlames + 1
+                      : base.targetFlames),
+          );
+        }
+        final (item, sets) = scaled(base, d.sets, factor);
         if (identical(item, d.item) && sets == d.sets) {
           continue;
         }
@@ -2623,7 +2641,6 @@ void _enduranceDay(
           if (!d.removed &&
               entry.value == EnduranceKind.run &&
               d.item.kind != SetKind.warmup &&
-              d.item.kind != SetKind.test &&
               (longestDraft == null ||
                   prescribedSeconds(d.item, d.sets, speed) >
                       prescribedSeconds(

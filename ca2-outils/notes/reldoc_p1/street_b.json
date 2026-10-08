@@ -1,0 +1,42 @@
+[
+ {
+  "profil": "street_07_avance_streetlifting_competition",
+  "ensemble": 7,
+  "adapte_au_profil": 8,
+  "progression": 6,
+  "volume_intensite": 7,
+  "choix_exercices": 8,
+  "faisable_sur": 8,
+  "commentaire": "Programme écrit solide : blocs à rebours, 4 mouvements de l'épreuve 2 fois/sem., travail du point faible (dead stop), affûtage de 2 semaines avec volume coupé et intensité gardée [https://coachsci.sdsu.edu/csa/vol131/bosquet.htm], amorçage J-2, tentatives 91/96/~100 % [https://www.strengthlog.com/powerlifting-competition-attempt-calculator/]. Défauts écrits : dips du jeudi en intensification à 68 % (sous la semaine 2), gainage « 2 × 4 » en S15, 10,8 % des séries à 3+ RIR de trop. Conduite : bonne baisse de l'estimation des dips (167→152, réel 155) et RIR à 0,94 d'écart [https://www.frontiersin.org/journals/physiology/articles/10.3389/fphys.2018.00247/full], mais l'estimation du muscle-up est tombée à +13 kg alors que le réel restait ~+22 : jour J à 11,25 kg = 88,5 % du maximum, alors que les séries « plus faciles que prévu » auraient dû remonter l'estimation. Squat servi à 142,5 kg en S9 (échec) sur une estimation trop haute. 3e traction à 58,75 manquée (réel 58,2) : choix 79 % défendable. Progression réelle quasi nulle (0,06 %/sem.)."
+ },
+ {
+  "profil": "street_08_avance_sets_reps_competition",
+  "ensemble": 6,
+  "adapte_au_profil": 6,
+  "progression": 5,
+  "volume_intensite": 6,
+  "choix_exercices": 7,
+  "faisable_sur": 7,
+  "commentaire": "Bien : départs au chrono, répétition de l'épreuve dans l'ordre, affûtage ~50 % du volume avec intensité gardée et activation J-2 [https://coachsci.sdsu.edu/csa/vol131/bosquet.htm], RIR fiable (0,89) [https://www.frontiersin.org/journals/physiology/articles/10.3389/fphys.2018.00247/full]. Programme écrit : calé sur des records déclarés (dips 44 à 4 RIR pour un réel de 46), bloc 1 « intensification » à 2 RIR avec gros volume → tests S4 en baisse (MU 10, tractions 25, dips 45) à 4 semaines de l'épreuve ; objectifs 14/32/56 irréalistes non signalés ; repos de 4 min le jour J contre 300 s supposés ; muscle-up des blocs 3-4 réduit à 3 rép./min à ~8 RIR sans progression. Conduite : recalage des répétitions utile, mais dips servis 26-26-26 à ~18 RIR en S10-11 (sous-dosage net, règle de marge mal appliquée), résultat des dips du jour J non reporté, MU à 0,8 RIR en S2 malgré la cible 2. Aucun progrès sur 16 semaines (tractions 26→26)."
+ },
+ {
+  "profil": "street_10_elite_figures",
+  "ensemble": 5,
+  "adapte_au_profil": 5,
+  "progression": 4,
+  "volume_intensite": 5,
+  "choix_exercices": 5,
+  "faisable_sur": 7,
+  "commentaire": "Bien : message honnête (planche complète hors de portée en 16 sem.), échelle d'étapes et critère de passage [https://antranik.org/progression-exercises-for-static-holds/], règle de douleur appliquée (poignet 4/10 répété → retrait, avis kiné, reprise graduée). Programme écrit : avec une gêne de 2/10, le programme charge fortement l'extension du poignet (planche 2 × 10 × 4 s, pompes planche, HSPU, handstand 2 × 90 s) au sol, alors que sa propre règle prévoit parallettes au-dessus de 1/10. Résultat : douleur dès S6, surcharge connue chez les gymnastes [https://pubmed.ncbi.nlm.nih.gov/28902754/]. Ensuite, retrait total de la planche pendant ~6 semaines sans variante à prise neutre. Reprise annoncée à 50 % mais servie à 1 × 3 s (~10 %). Front lever : aucun travail dynamique (relevés, rows, négatives), seulement ice cream maker. Conduite : tests en fin d'allègement à 6 s contre 8 s réels, d'où des tenues sous-dosées ; le suivi affiche l'ice cream maker à la place du FL ; estimation aberrante en S16 (half-lay 55/20). Aucun progrès sur les figures."
+ },
+ {
+  "profil": "street_12_antecedent_coude",
+  "ensemble": 7,
+  "adapte_au_profil": 8,
+  "progression": 7,
+  "volume_intensite": 7,
+  "choix_exercices": 7,
+  "faisable_sur": 8,
+  "commentaire": "Bien : pas de tirage lesté, tractions prise neutre, critères chiffrés de retour au lest, fléchisseurs du poignet en charge progressive validée par le kiné et réglée sur la douleur [https://nielasher.com/blogs/treatment-guides/medial-epicondylalgia-golfer-s-elbow-causes-symptoms-treatment-and-evidence-based-rehabilitation]. Affûtage puis tentatives 3/3 à 95 % du maximum du jour [https://www.strengthlog.com/powerlifting-competition-attempt-calculator/], +5 kg réels en 16 semaines. Programme écrit : « pas d’excentrique accentué » contredit les données en faveur de l’excentrique [https://nielasher.com/blogs/treatment-guides/medial-epicondylalgia-golfer-s-elbow-causes-symptoms-treatment-and-evidence-based-rehabilitation]. Tirage resté à 1-2 × 5-8 au poids du corps pendant 16 semaines. Objectif +57,5 kg irréaliste (réel +41) non signalé. Test en allègement ; bloc 3 écrit à +8,75 kg sans allègement. Conduite : le moteur n'enregistre jamais l'état du coude, donc le retour au tirage lesté ne se déclenche jamais. 3e barre prudente (38,75, réel 44,5) malgré des séries « plus faciles que prévu ». Servi 27,5 kg contre 8,75 écrits : bonne correction, mais l’écrit est mal recalé."
+ }
+]

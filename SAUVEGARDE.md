@@ -99,3 +99,9 @@ Base : `moteurs` 9526ac47 (kalis_plan 0.2.2, kalis_adapt 0.2.2, kalis_bench 0.2.
 - p1 rebasé sur ff22faa9 (git reset, arbre conservé). Dev p1 3c0539bb (run 37811408880) : TOUT VERT (core 328, adapt 250, bench 65, plan 226 ; format OK). Documents régénérés recopiés (MESURES, campagne.json, PROPRIETAIRE, fixture).
 - Panel q1 (autres, 10 profils × 4 écoles, 12 appels) lancé sur les exports du run 37811408880 (ci-out c942720). Street : exports quasi identiques (≤ 3,7 %), notes de la partie 0 gardées (règle d'économie).
 - Outils : ca2-outils/ci_p1.sh (contrôle depuis /home/claude/p1).
+
+## 08/10 ~17:30 UTC
+- Panel q1 (autres, sur dev 3c0539bb) : 40 couples, 0 à 9, min 3, moyenne 5,41 (base 0.1 de CR : moyenne des moyennes ≈ 5,1). Corrections nécessaires : presque toutes sur le programme écrit (kalis_plan 0.2.2, chemin 0.1 : pas d'affûtage ni d'échéance placée, tests de distance maximale, pas d'allures) ; côté conduite : tests de course trop longs → corrigé (test borné converti en course bornée).
+- Relecture documentée street (2 sous-agents, notes dans ca2-outils/notes/reldoc_p1) : 01 5, 03 4, 06 6, 07 7, 08 6, 10 5, 12 7. Conduite : élastique jamais changé (série repère qui remettait la série à zéro) → corrigé ; sous-dosage de dips après un mauvais jour (06, 08), estimation du muscle-up trop basse (07) → non traités (limites).
+- Contrôle FULL p1 5f9d67d5 poussé (0.3.0 : endurance + test borné + élastique série repère + campagne d'endurance).
+- Reste : relecture documentée « autres » sur les exports du full, manche 5 de la page (exports + notes), LIVRAISON_CA2, DECISIONS, ETAT « à valider », page de suivi, publication 0.3.0 + kalis_core 0.4.3 (commit séparé) + kalis_bench 0.2.3, notification.

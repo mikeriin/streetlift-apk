@@ -1,0 +1,102 @@
+{
+  "ecole": "hypertrophie",
+  "programmes": [
+    {
+      "programme": "programme_1.md",
+      "criteres": {"H1": 6, "H2": 7, "H3": 6.5, "H4": 6, "H5": 6, "H6": 6.5, "H7": 8, "H8": 8, "H9": 6.5},
+      "sans_objet": [],
+      "ensemble": 7,
+      "points_perdus": [
+        {"critere": "H1", "perte": 4, "raison": "Dos/grands dorsaux très chargés (S2 : négatifs 4+4, traction explosive 3, traction 3, rowing barre 3, rowing haltères 3 ≈ 20 séries dures, plus traction kipping 4×12 et burpees-traction non comptés), au-dessus du seuil intermédiaire de 16 (R1-P3) ; à l'inverse triceps/pectoraux, utiles à la poussée finale du muscle-up, reçoivent ≈ 6 séries (développé haltères 3, pompe hindoue 3) sans aucun dip."},
+        {"critere": "H2", "perte": 3, "raison": "Tirage 5 fois par semaine, poussée 2 fois seulement ; répartition standard qui n'alterne pas lourd/léger sur le tirage (R1-P8)."},
+        {"critere": "H3", "perte": 3.5, "raison": "Traction explosive poitrine à la barre 2–3 × 10 à 15 à 3 RIR pour un athlète à 10 tractions strictes max : cible irréalisable (trajectoire : 8–10 rép.) ; RIR prescrit sur un négatif de muscle-up difficile à estimer ; marges qui descendent uniformément de 0,5 par semaine pour tous les exercices (R1-P13)."},
+        {"critere": "H4", "perte": 4, "raison": "Aucun dip (barres parallèles ou dip à la barre droite) ni travail de transition alors que la sortie du muscle-up en dépend ; tirage d'arraché placé sur le jour « bas du corps » sans lien avec l'objectif ; négatifs, tractions explosives et rowings bien choisis (R6-P4)."},
+        {"critere": "H5", "perte": 4, "raison": "Progression par ajout de séries puis baisse du RIR, sans règle écrite répétitions puis charge (R5-P3) ; le négatif de muscle-up reste identique 16 semaines (pas de tempo, pas de lest, pas de passage à la phase concentrique) ; l'épreuve des semaines 5, 10, 15 teste le négatif, jamais le muscle-up strict."},
+        {"critere": "H6", "perte": 3.5, "raison": "Tirage ≫ poussée cohérent avec l'objectif, mais la poussée verticale basse (dip) qui conditionne la sortie est absente ; bas du corps seulement entretenu (squat 2–3 séries/sem.), acceptable pour l'objectif."},
+        {"critere": "H7", "perte": 2, "raison": "Repos 2 min 30 sur polyarticulaires et 90 s sur secondaires corrects (R1-P15, R1-P16) ; pas de supersets antagonistes alors que les séances laissent 10 à 20 min libres."},
+        {"critere": "H8", "perte": 2, "raison": "Semaines allégées 5, 10, 15 bien placées, mais les pièces de conditionnement (traction kipping 4×12, burpee-traction, montée de corde) ajoutent une fatigue de tirage non comptée dans le budget (R2-P13)."},
+        {"critere": "H9", "perte": 3.5, "raison": "Matériel et durées respectés ; mais 1RM de référence incohérents avec le profil (épaulé-jeté 71 kg au lieu de 80 kg, squat 107 kg au lieu de 120 kg) ; rien ne dit quoi changer si la récupération ne suit pas."},
+        {"critere": "ensemble", "perte": 3, "raison": "Trois corrections nécessaires, toutes liées à l'objectif muscle-up strict : absence de dips, absence de progression vers la phase concentrique et de test du vrai mouvement, plage de répétitions irréalisable sur la traction explosive."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Ajouter 2 expositions par semaine de dips (barres parallèles puis dip à la barre droite), 3 séries de 5 à 10 rép. à 2–3 RIR, en remplacement de la pompe hindoue du vendredi et d'une partie du développé haltères.", "consequence": "Même s'il passe la barre au niveau du sternum, l'athlète n'aura pas la force de poussée en position basse pour sortir : le muscle-up strict restera bloqué à la transition."},
+        {"type": "necessaire", "texte": "Écrire une progression du négatif vers le mouvement complet : négatif lent (tempo 5 s) au bloc 1, tractions hautes vers le nombril et transitions sur barre basse au bloc 2, muscle-up assisté à l'élastique au bloc 3, et remplacer l'épreuve des semaines 10, 15 et 16 par une tentative de muscle-up strict.", "consequence": "L'athlète fera 16 semaines de négatifs identiques sans jamais travailler ni tester la phase concentrique : l'objectif à 16 semaines ne sera probablement pas atteint ni même mesuré."},
+        {"type": "necessaire", "texte": "Ramener la traction explosive poitrine à la barre à 3–5 × 3 à 6 répétitions, arrêtées dès que la vitesse ou la hauteur baisse.", "consequence": "Avec 10 tractions strictes max, 10 à 15 rép. à 3 RIR est impossible : les séries finissent lentes et basses, ce qui travaille l'endurance au lieu de la traction haute et explosive nécessaire au muscle-up."},
+        {"type": "amelioration", "texte": "Sortir la traction kipping et les burpees-traction du lundi (jour des négatifs) ou les remplacer par du rameur / air bike, pour ne pas ajouter de volume de tirage non compté."},
+        {"type": "amelioration", "texte": "Recaler les 1RM de référence sur les records du profil (épaulé-jeté 80 kg, squat 120 kg) ou indiquer pourquoi ils sont minorés."},
+        {"type": "amelioration", "texte": "Écrire la règle de double progression (haut de plage sur toutes les séries puis +2,5 kg / variante plus dure) et une règle de retrait de séries si la traction stricte régresse."},
+        {"type": "amelioration", "texte": "Utiliser le temps libre (séances estimées 40–50 min sur 60) pour un superset rowing/dip ou un travail de dépression scapulaire en suspension."}
+      ],
+      "points_forts": [
+        "Travail spécifique au muscle-up deux fois par semaine dès la semaine 1, en début de séance, frais.",
+        "Allègements toutes les 5 semaines, bien dosés (≈ 8 séries dures).",
+        "Tirage horizontal et arrière d'épaule présents (rowings, oiseau), protection de l'épaule en échauffement.",
+        "Séances tenues dans les 60 minutes, matériel du box bien utilisé."
+      ]
+    },
+    {
+      "programme": "programme_2.md",
+      "criteres": {"H1": 6, "H2": 6, "H3": 7.5, "H4": 6.5, "H5": 6, "H6": 6.5, "H7": 8.5, "H8": 8, "H9": 6},
+      "sans_objet": [],
+      "ensemble": 6.5,
+      "points_perdus": [
+        {"critere": "H1", "perte": 4, "raison": "Haut du corps dans la fourchette débutant (dos ≈ 6 séries : rowing 3 + traction assistée 3 ; poussée ≈ 6 : dips 3 + pompes 3), mais quadriceps 3 séries/semaine (air squat seul), sous le plancher débutant de 4 (R1-P1), et fessiers/ischios ≈ 4 (reverse hyper 2 + pont 2)."},
+        {"critere": "H2", "perte": 4, "raison": "Quadriceps exposés une seule fois (mercredi) ; haut du corps 2 fois. Pour un débutant en corps entier, 2–3 expositions par groupe (R1-P8)."},
+        {"critere": "H3", "perte": 2.5, "raison": "RIR 4 → 3 dans la fourchette débutant (R1-P13), plages 6–12 / 10–15 adaptées, mais descente uniforme sur tous les exercices, isolations jamais plus près de l'échec que les polyarticulaires."},
+        {"critere": "H4", "perte": 3.5, "raison": "Air squat sans charge alors que presse à cuisses, haltères et kettlebell sont disponibles (trajectoire : 20–25 rép. dès la semaine 6, hors plage d'hypertrophie) ; dips pieds sur box (épaule en extension chargée) discutable pour une débutante de 92 kg ; bons choix : rowing poulie, traction assistée, reverse hyper, Y/W raise (R6-P4)."},
+        {"critere": "H5", "perte": 4, "raison": "Aucune règle écrite répétitions puis charge (R5-P3) ; la seule progression est la baisse du RIR et un « ≈ 67 % du 1RM » en semaine 4 sans 1RM connu ; aucune voie de progression de l'air squat."},
+        {"critere": "H6", "perte": 3.5, "raison": "Tirage ≥ poussée respecté, arrière d'épaule traité ; mais le bas du corps, plus grande masse musculaire et priorité en déficit, est le moins dosé du programme."},
+        {"critere": "H7", "perte": 1.5, "raison": "Repos 90–120 s sur polyarticulaires et 75 s sur isolation conformes (R1-P15), séances de 33–40 min dans les 45 min."},
+        {"critere": "H8", "perte": 2, "raison": "Semaines d'introduction 5 et 9 à volume réduit jouent le rôle d'allègement, aucune technique d'intensification ; pas de consigne si la fatigue s'accumule en déficit avec 6,5 h de sommeil."},
+        {"critere": "H9", "perte": 4, "raison": "Footing continu de 18–20 min dès la semaine 1 (25 min ensuite) pour une femme sédentaire de 92 kg (IMC ≈ 32,6), sans marche/course alternée ; la marche annoncée dans le profil n'est pas programmée ; volume modeste cohérent avec le déficit et le sommeil."},
+        {"critere": "ensemble", "perte": 3.5, "raison": "Deux corrections nécessaires, dont une qui expose à une blessure de surcharge (footing continu d'emblée) ; programme correct mais assez générique sur le bas du corps."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Remplacer le footing continu par de la marche rapide ou de la course alternée (par exemple 1 min de course / 2 min de marche, 20 min), en augmentant la part de course d'au plus 10 % par semaine.", "consequence": "20 minutes de course continue dès la première semaine à 92 kg, sans aucun passé sportif, exposent à une périostite, une tendinopathie ou des douleurs de genou, et à l'abandon du programme."},
+        {"type": "necessaire", "texte": "Remplacer l'air squat par un goblet squat ou la presse à cuisses (8–12 rép., charge montée quand le haut de plage est atteint) et ajouter une seconde exposition du bas du corps le samedi (fente ou presse, 2–3 séries).", "consequence": "En déficit, les cuisses ne reçoivent que 3 séries sans charge qui deviennent vite des séries de 20–25 rép. : la masse musculaire des membres inférieurs ne sera pas préservée et la perte de poids se fera en partie sur le muscle."},
+        {"type": "amelioration", "texte": "Écrire la règle de double progression (atteindre le haut de plage sur toutes les séries, puis +1 cran de charge) et supprimer le « ≈ 67 % du 1RM » sans 1RM connu."},
+        {"type": "amelioration", "texte": "Remplacer les dips pieds sur box par une machine de développé ou un développé haltères sur banc incliné."},
+        {"type": "amelioration", "texte": "Programmer la marche des jours sans séance (par exemple 3 × 30 min) pour servir la dépense énergétique sans fatigue."},
+        {"type": "amelioration", "texte": "Ajouter une règle de repli : si le sommeil ou l'énergie baissent en déficit, retirer une série par exercice avant de toucher à la charge."}
+      ],
+      "points_forts": [
+        "Volume de départ bas et adapté à une débutante en déficit dormant 6,5 h.",
+        "Corps entier trois fois par semaine, séances tenues dans les 45 minutes.",
+        "Tirage au moins égal à la poussée, arrière d'épaule et chaîne postérieure présents (reverse hyper, pont, Y/W raise).",
+        "Marges d'effort prudentes et dans la fourchette débutant."
+      ]
+    },
+    {
+      "programme": "programme_3.md",
+      "criteres": {"H1": 5.5, "H2": 6.5, "H3": 7.5, "H4": 5, "H5": 6, "H6": 5.5, "H7": 8.5, "H8": 8, "H9": 5},
+      "sans_objet": [],
+      "ensemble": 5,
+      "points_perdus": [
+        {"critere": "H1", "perte": 4.5, "raison": "Haut du corps dans la fourchette débutant (poussée ≈ 6 : développé haltères 3 + pompes 3 ; tirage ≈ 6 + face pull/oiseau), mais quadriceps 3 séries/semaine (fente latérale seule), ischios quasi nuls, mollets nuls : sous le plancher débutant de 4 (R1-P1) pour un homme de 55 ans chez qui la masse des jambes est la priorité."},
+        {"critere": "H2", "perte": 3.5, "raison": "Poussée et tirage 2 fois par semaine, mais bas du corps une seule fois (mardi) en dehors du reverse hyper (R1-P8)."},
+        {"critere": "H3", "perte": 2.5, "raison": "RIR 4 → 3 prudent et cohérent avec le mode prudent (R1-P13) ; descente uniforme ; la trajectoire montre 6 à 8 RIR réels sur les élastiques, sans règle pour recaler la résistance."},
+        {"critere": "H4", "perte": 5, "raison": "Fente latérale (flexion profonde de la jambe d'appui) prescrite sans limite d'amplitude à un genou droit douloureux en flexion profonde (5/10) ; aucun hinge aux haltères (soulevé de terre roumain) ; le vélo disponible n'est pas utilisé (R6-P4)."},
+        {"critere": "H5", "perte": 4, "raison": "Aucune règle écrite répétitions puis charge (R5-P3) ; aucune progression de tension des élastiques ; « ≈ 67 % du 1RM » sans 1RM connu."},
+        {"critere": "H6", "perte": 4.5, "raison": "Tirage ≥ poussée et arrière d'épaule bien traités (face pull, oiseau, band pull-apart) ; mais haut du corps nettement privilégié sur le bas, chaîne postérieure réduite au reverse hyper."},
+        {"critere": "H7", "perte": 1.5, "raison": "Repos 90–120 s conformes (R1-P15) ; séances de 22–35 min laissant 5 à 14 min inutilisées qui pourraient accueillir le bas du corps."},
+        {"critere": "H8", "perte": 2, "raison": "Semaines d'introduction à volume réduit toutes les 4 semaines, pas de technique d'intensification ; rien sur la gestion d'une poussée douloureuse du genou."},
+        {"critere": "H9", "perte": 5, "raison": "Âge, sommeil de 6 h et reprise après 200 semaines bien pris en compte par le volume ; mais la gêne du genou (5/10) n'est pas gérée (exercice en flexion profonde, aucune règle de douleur en mode prudent) et le cardio (20 % des disciplines) se limite à 10–15 min de marche par semaine."},
+        {"critere": "ensemble", "perte": 5, "raison": "Plafond à 5 : contre-indication ignorée (fente latérale sur un genou douloureux en flexion profonde, sans amplitude limitée ni règle de douleur) ; s'y ajoute un bas du corps sous-dosé."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Remplacer la fente latérale par un exercice de quadriceps à flexion limitée et contrôlée (squat sur banc haut, step-up bas, extension de genou à l'élastique) et écrire une règle de douleur : douleur ≤ 3/10 pendant et revenue à la normale le lendemain, sinon réduire l'amplitude ou la charge.", "consequence": "La fente latérale impose une flexion profonde du genou droit déjà douloureux à 5/10 : risque d'aggravation de la douleur et d'arrêt du programme, ce que le mode prudent devait éviter."},
+        {"type": "necessaire", "texte": "Donner au bas du corps 2 expositions par semaine et au moins 4–6 séries pour les quadriceps et 3–4 pour les ischios (soulevé de terre roumain aux haltères le jeudi, squat sur banc le samedi), dans le temps encore libre des séances.", "consequence": "À 55 ans, après 4 ans d'arrêt, 3 séries de jambes par semaine ne suffisent pas à reconstruire la masse et la force des membres inférieurs, priorité pour la santé et l'autonomie."},
+        {"type": "amelioration", "texte": "Remplacer la marche de 10–15 min par 15–25 min de vélo en endurance, et ajouter 1 à 2 sorties de marche les jours libres, pour servir les 20 % de cardio du profil."},
+        {"type": "amelioration", "texte": "Écrire la double progression (haut de plage partout, puis haltère plus lourd ou élastique plus dur) et supprimer le « ≈ 67 % du 1RM » sans 1RM connu."},
+        {"type": "amelioration", "texte": "Préciser une prise neutre au développé couché haltères et une amplitude confortable pour l'épaule gauche opérée."},
+        {"type": "amelioration", "texte": "Dire ce qui change si la récupération ne suit pas (sommeil 6 h) : retirer une série par exercice avant de baisser la charge."}
+      ],
+      "points_forts": [
+        "Volume de départ bas, montée en séries prudente, cohérente avec l'âge, le sommeil et la longue coupure.",
+        "Tirage au moins égal à la poussée, arrière d'épaule et coiffe travaillés (face pull, oiseau, band pull-apart, CARs).",
+        "Matériel de la maison respecté, séances tenues dans 30 et 40 minutes.",
+        "Pas d'exercice en flexion profonde chargée au-dessus de la tête ni de technique d'intensification."
+      ]
+    }
+  ]
+}

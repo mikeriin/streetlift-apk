@@ -1,0 +1,133 @@
+{
+  "ecole": "hypertrophie",
+  "programmes": [
+    {
+      "programme": "programme_1.md",
+      "criteres": {"H1": 6.5, "H2": 7.5, "H3": 6, "H4": 6, "H5": 5, "H6": 5.5, "H7": 8, "H8": 7, "H9": 6.5},
+      "sans_objet": [],
+      "ensemble": 7,
+      "points_perdus": [
+        {"critere": "H1", "perte": 3.5, "raison": "Haut du corps dans la fourchette débutant (dos 10 séries directes, pectoraux ≈ 7,5 fractionnées, biceps ≈ 9), mais quadriceps limités à 6 séries (fente arrière 3 + Spanish squat élastique 3) et ischios sans aucune série directe (soulevé de terre kettlebell 3, reverse hyper 2) ; R1-P1 débutant 6–10, R1-P2."},
+        {"critere": "H2", "perte": 2.5, "raison": "Corps entier 3×/semaine cohérent avec les jours (R1-P8), mais le lundi « haut du corps » ne contient aucun travail de cuisse et le bas du corps n'est exposé vraiment que mercredi et vendredi avec très peu de volume ; pas d'alternance lourde/légère."},
+        {"critere": "H3", "perte": 4, "raison": "Marges uniformes 4 → 3,5 → 3 RIR sur tous les exercices, isolations comprises (R1-P13 débutant : isolation 2–3) ; trois semaines « introduction » ramènent tout à 4 RIR. Trajectoire : RIR réel 5–7 sur le développé couché presque toutes les semaines (cible 3–4), écart moyen 1,8 : une bonne partie des « séries dures » ne le sont pas."},
+        {"critere": "H4", "perte": 4, "raison": "Spanish squat à l'élastique (exercice de rééducation, charge non progressable) comme deuxième exercice de quadriceps alors que presse à cuisses, cage et barre sont disponibles ; soulevé de terre kettlebell vite trop léger ; aucun leg curl ; reverse hyper à la machine absent de la liste de matériel (R6-P4, R6-P5)."},
+        {"critere": "H5", "perte": 5, "raison": "Aucune règle de progression de charge écrite (seule une plage de répétitions implicite, R5-P3) ; les blocs 2 et 3 répètent le bloc 1. Trajectoire : développé couché haltères bloqué à 14–16 kg sur 12 semaines, fente arrière à 6–8 kg, progression moyenne 0,65 %/semaine, faible pour un débutant complet."},
+        {"critere": "H6", "perte": 4.5, "raison": "Tirage ≥ poussée et arrière d'épaule traité (W/Y raise, rotations externes), mais bas du corps et chaîne postérieure nettement sous-traités pour un objectif « muscle et force » (R5-P27 équilibre, R4-H2)."},
+        {"critere": "H7", "perte": 2, "raison": "Repos conformes (2 min polyarticulaires, 75 s isolation ; R1-P15), mais séances de 30–47 min sur 60 disponibles : le temps libre aurait pu accueillir le travail de jambes manquant."},
+        {"critere": "H8", "perte": 3, "raison": "Allègement systématique toutes les 4 semaines (retour à 2 séries, 4 RIR) chez un débutant qui devrait seulement alléger en réaction à la fatigue (R3-P9, R1-P18) : volume perdu sans besoin ; pas de technique d'intensification (correct)."},
+        {"critere": "H9", "perte": 3.5, "raison": "Adapté au niveau (volume bas, machines, calibration), mais pas à la personne : le matériel de salle complet n'est pas exploité pour les jambes, des charges « ≈ 67 % du 1RM » sont prescrites en semaine 4 sur des exercices sans 1RM connu, et rien n'est dit si la progression ne suit pas."},
+        {"critere": "ensemble", "perte": 3, "raison": "Deux corrections nécessaires (bas du corps sous-dosé et mal choisi ; absence de règle de progression avec stagnation visible) : programme sûr mais qui servira mal l'objectif muscle + force."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Remplacer le Spanish squat à l'élastique par une presse à cuisses ou un goblet squat puis squat barre (2–3 × 8–12), ajouter un leg curl (2–3 séries) et passer le soulevé de terre kettlebell à un soulevé de terre roumain haltères ou barre, pour amener quadriceps à 8–10 et ischios à 6–8 séries/semaine (R1-P1, R6-P4).", "consequence": "Sur 12 semaines, les jambes resteront sous-entraînées avec des charges qui ne peuvent pas monter (élastique, 6–8 kg en fente) : physique déséquilibré et force du bas du corps quasi stagnante."},
+        {"type": "necessaire", "texte": "Écrire une double progression explicite : quand toutes les séries atteignent le haut de la plage à la marge visée, +2,5 kg (haltères/barre) ou +5–10 % (machines) à la séance suivante ; sinon ajouter des répétitions (R5-P3).", "consequence": "Comme le montre la trajectoire (développé couché 14–16 kg du début à la fin, RIR réel 5–7), le débutant restera loin de l'effort voulu et perdra la période où il progresse le plus vite."},
+        {"type": "amelioration", "texte": "Supprimer les semaines « introduction » 5 et 9 (ou les rendre conditionnelles à des signes de fatigue) pour un débutant, conformément à R3-P9 / R1-P18."},
+        {"type": "amelioration", "texte": "Isolations (curls, élévations latérales, pushdowns, mollets) visées à 2 RIR dès la semaine 2, polyarticulaires à 2–3 RIR (R1-P13)."},
+        {"type": "amelioration", "texte": "Donner une solution de rechange au reverse hyper à la machine (extension à 45° ou reverse hyper sur banc dès la semaine 1) et retirer la mention « ≈ 67 % du 1RM » sur les exercices sans 1RM connu."},
+        {"type": "amelioration", "texte": "Introduire progressivement le squat barre et le développé couché barre (niveau inconnu) avec une séance d'apprentissage, puisqu'ils servent l'objectif de force."}
+      ],
+      "points_forts": [
+        "Volume de départ bas (47 séries) et hausse prudente, séances courtes et faisables.",
+        "Dos travaillé 3×/semaine, tirage supérieur à la poussée, arrière d'épaule et coiffe des rotateurs présents.",
+        "Séries de calibration prévues pour chaque nouvel exercice ; zéro échec non voulu dans la trajectoire.",
+        "Exercices globalement stables et adaptés à un débutant (machines, haltères, poulie)."
+      ]
+    },
+    {
+      "programme": "programme_2.md",
+      "criteres": {"H1": 5.5, "H2": 7, "H3": 7, "H4": 6, "H5": 5, "H6": 4.5, "H7": 7.5, "H8": 8.5, "H9": 6},
+      "sans_objet": [],
+      "ensemble": 6.5,
+      "points_perdus": [
+        {"critere": "H1", "perte": 4.5, "raison": "Semaine de montée : fessiers 3 séries directes seulement (hip thrust mardi) + ≈ 4,5 indirectes des squats ; pectoraux 12 séries directes (2 développés couchés + 2 écartés), biceps ≈ 13,5 et triceps ≈ 13,5 fractionnés. Le groupe prioritaire est le moins servi (R1-P1 intermédiaire 10–16, R1-P2)."},
+        {"critere": "H2", "perte": 3, "raison": "Fessiers en travail direct 1×/semaine alors qu'ils sont la priorité et qu'il y a 5 séances (R1-P8) ; deltoïde moyen bien réparti (lundi, jeudi, samedi)."},
+        {"critere": "H3", "perte": 3, "raison": "Polyarticulaires 3 → 2 RIR conformes, mais isolations à la même marge que les polyarticulaires (3 RIR en semaines d'introduction, R1-P13 intermédiaire isolation 0–2) ; marges uniformes."},
+        {"critere": "H4", "perte": 4, "raison": "Doublons sans raison : développé couché barre puis haltères le lundi, deux écartés le vendredi, deux barres au front ; pour les fessiers, aucune abduction, fente/split squat ou extension 45° ; hip thrust placé en 4e position en accessoire alors que c'est le levier de l'objectif (R6-P4, R6-P5)."},
+        {"critere": "H5", "perte": 5, "raison": "Pas de règle écrite de charge ; % qui bougent de 1 point. 1RM de référence sous les records (développé couché 39,5 vs 45 kg ; squat 71,5 vs 80 kg). Trajectoire : charges en baisse sur 12 semaines (squat 60 → 55 kg, développé couché 35 → 30 kg, rowing 20 kg constant), progression 0,1 %/semaine (R5-P3)."},
+        {"critere": "H6", "perte": 5.5, "raison": "Tirage ≥ poussée correct, mais le volume va vers pectoraux et bras au lieu des deux points faibles déclarés : rien n'est déplacé vers fessiers et deltoïde moyen (≈ 9 directes + 1,5 indirecte, bas de fourchette) (R4-H2)."},
+        {"critere": "H7", "perte": 2.5, "raison": "Repos par type conformes (R1-P15), mais séances de 40–45 min sur 75 : le temps disponible n'est pas utilisé pour la priorité ; 18 séries de tronc par semaine prennent la place."},
+        {"critere": "H8", "perte": 1.5, "raison": "Décharges bien placées en S5 et S10 (≈ −46 % de séries, RIR 4 ; R3-P9) ; pas de technique d'intensification, ce qui est acceptable. Le bloc 3 s'arrête après 2 semaines sans conclusion."},
+        {"critere": "H9", "perte": 4, "raison": "Niveau et matériel respectés, mais les priorités du profil (fessiers, épaules) et son record le plus fort (hip thrust 110 kg) ne structurent pas le programme ; rien n'est dit sur ce qui change si la récupération ne suit pas."},
+        {"critere": "ensemble", "perte": 3.5, "raison": "Deux corrections nécessaires, dont une lourde : la priorité fessiers est quasi ignorée (3 séries directes/semaine), et la surcharge progressive est absente, charges en baisse dans la trajectoire."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Faire des fessiers la priorité réelle : hip thrust en premier exercice 2×/semaine (mardi lourd 6–10, samedi 10–15), ajouter split squat bulgare ou fente marchée, abduction machine/poulie et extension à 45° pour atteindre 12–16 séries fessiers/semaine ; prendre le volume sur les écartés (−6), un développé couché (−3) et une barre au front (−3) (R4-H2, R1-P1).", "consequence": "Après 12 semaines, la cliente aura surtout développé pectoraux et bras ; les fessiers, son objectif principal, auront reçu 3 séries directes par semaine et progresseront peu."},
+        {"type": "necessaire", "texte": "Écrire une double progression (haut de plage atteint sur toutes les séries à la marge visée → +2,5 kg barre, +1–2 kg haltères, +1 cran machine) et caler les charges de départ sur les records réels (squat 80, développé couché 45, hip thrust 110) (R5-P3).", "consequence": "Les charges baissent ou stagnent (trajectoire : squat 60 → 55 kg, développé couché 35 → 30 kg) : pas de surcharge progressive, donc peu d'hypertrophie chez une intermédiaire de 3 ans."},
+        {"type": "amelioration", "texte": "Monter le deltoïde moyen à 12–14 séries directes (une élévation latérale de plus le vendredi à la place d'un écarté, câble en position longue), puisqu'il est aussi un point faible."},
+        {"type": "amelioration", "texte": "Isolations (élévations, leg curl, curls, extensions) à 1–2 RIR, polyarticulaires à 2–3 RIR, avec une série de calibration de la marge."},
+        {"type": "amelioration", "texte": "Réduire le tronc à 2 exercices par semaine de 3 séries et utiliser les 30 minutes libres par séance pour le travail des priorités."},
+        {"type": "amelioration", "texte": "Remplacer le rowing menton haltères par une élévation latérale à la poulie ou un face pull, plus sûr pour l'épaule à volume élevé."}
+      ],
+      "points_forts": [
+        "Décharges placées toutes les 5 semaines avec baisse de volume et RIR ≥ 4.",
+        "Tirage abondant et varié (traction, rowings, tirage vertical), dos équilibré par rapport à la poussée.",
+        "Deltoïde moyen exposé 3×/semaine avec des variantes stables (buste appuyé, machine, câble).",
+        "Repos adaptés au type d'exercice ; très peu d'échecs non voulus."
+      ]
+    },
+    {
+      "programme": "programme_3.md",
+      "criteres": {"H1": 6, "H2": 7.5, "H3": 6, "H4": 6.5, "H5": 5, "H6": 7.5, "H7": 8.5, "H8": 3, "H9": 4},
+      "sans_objet": [],
+      "ensemble": 5,
+      "points_perdus": [
+        {"critere": "H1", "perte": 4, "raison": "118 séries dures/semaine dont un gros budget d'accessoires sans lien avec le total : biceps ≈ 19 fractionnées (drag curl + curl concentré + curl poulie + 20 séries de tirage), dos 20 séries directes, lombaires très chargés (soulevé de terre 10 + SDT jambes tendues 4 + extension lombaire 3). Excès pour un powerlifter en préparation (R1-P1 avancé 12–20, R1-P3 ; ma grille : masse « sans excès »)."},
+        {"critere": "H2", "perte": 2.5, "raison": "Chaque mouvement 2×/semaine sur 4 jours, cohérent (R1-P8) ; mais mardi squat 5 × 3–6 + soulevé de terre 5 × 3–6 dans la même séance, puis soulevé de terre de nouveau le jeudi : répartition qui accumule la fatigue lombaire."},
+        {"critere": "H3", "perte": 4, "raison": "Accessoires à 2,5 → 1,5 RIR corrects, mais les mouvements de compétition restent à 77–81 % d'un 1RM de référence abaissé (squat 195 au lieu de 220, développé couché 133,5 au lieu de 150, soulevé de terre 234 au lieu de 260), soit environ 68–73 % du vrai 1RM avec 2–3 RIR : intensité inadaptée à la préparation."},
+        {"critere": "H4", "perte": 3.5, "raison": "Redondances : trois curls différents, trois tirages verticaux, rowing menton + élévations ; halo kettlebell et rotations sans rôle clair ; en revanche les variantes d'assistance (développé haltères, fente, presse pectorale) sont pertinentes (R6-P5)."},
+        {"critere": "H5", "perte": 5, "raison": "Progression écrite minime (+2,5 kg par bloc, % qui passent de 77 à 81 %) et bloc 2 qui revient aux charges de la semaine 1 ; trajectoire : 0,04 %/semaine, aucun record (R5-P3)."},
+        {"critere": "H6", "perte": 2.5, "raison": "Physique équilibré (tirage ≥ poussée, arrière d'épaule, quadriceps 17 séries), mais volume déplacé vers les bras plutôt que vers les points qui limitent les trois mouvements."},
+        {"critere": "H7", "perte": 1.5, "raison": "Repos 3 min sur les mouvements principaux, 2 min secondaires, 75 s isolation, séances de 70–76 min sur 120 : faisable ; 3 min est un peu court pour des séries lourdes de soulevé de terre chez un avancé."},
+        {"critere": "H8", "perte": 7, "raison": "Semaine 10 (ÉCHÉANCE) notée « montée » à 118 séries dures, soit le pic de volume du programme : aucun affûtage (R3-P12 avancé : 1–2 semaines, −40 à −60 %), aucune baisse des accessoires (R3-P13), aucun dernier lourd à J−7/J−10 ni repos final (R3-P14). La semaine de test S6 sert de seul allègement."},
+        {"critere": "H9", "perte": 6, "raison": "Échéance de compétition priorité A ignorée dans la structure (pas de pic, pas d'ouvertures, pas de travail ≥ 90 %) ; trajectoire : meilleure série de la semaine d'échéance à 97,2 % des semaines précédentes, objectifs 227,5 / 155 / 267,5 hors d'atteinte."},
+        {"critere": "ensemble", "perte": 5, "raison": "Plafond 6 (échéance ignorée) et défaut majeur : sans affûtage et sans intensité spécifique, l'objectif de compétition ne sera probablement pas servi ; deux corrections nécessaires lourdes."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Construire un affûtage sur S9–S10 : séries −40 à −60 % (accessoires coupés en premier), intensité ≥ 85 % gardée, dernier lourd (≥ 90 %, sans échec) à J−7/J−10, dernière séance à J−3/J−4 avec ouvertures, puis 2–3 jours de repos (R3-P12, R3-P13, R3-P14).", "consequence": "L'athlète arrive à la compétition au pic de volume et de fatigue (118 séries dures la semaine même) et tirera sous son niveau, comme le montre la trajectoire (97,2 % de sa meilleure série récente)."},
+        {"type": "necessaire", "texte": "Recaler les charges sur les records testés il y a 4 semaines (220 / 150 / 260) et monter l'intensité des mouvements de compétition sur le bloc 2 (séries de 1–3 à 85–92 %, simples lourds à RPE 8–9), en gardant le volume d'hypertrophie dans le bloc 1.", "consequence": "En s'entraînant à environ 68–73 % du vrai 1RM jusqu'au bout, il ne développera pas la force maximale spécifique et n'atteindra pas 227,5 / 155 / 267,5 kg."},
+        {"type": "amelioration", "texte": "Réduire le budget d'accessoires du bloc 1 : un seul curl (2–3 séries), deux tirages verticaux au lieu de trois, supprimer halo kettlebell et rowing menton ; réaffecter vers les points faibles des trois mouvements (dos haut, triceps, quadriceps)."},
+        {"type": "amelioration", "texte": "Séparer squat et soulevé de terre lourds (mardi squat + variante légère de tirage, jeudi soulevé de terre) et retirer l'extension lombaire les semaines de forte charge lombaire."},
+        {"type": "amelioration", "texte": "Supprimer ou alléger la semaine de test S6 (un test il y a 4 semaines et la compétition à S10 suffisent, R3-P16) et la remplacer par une décharge classique."},
+        {"type": "amelioration", "texte": "Porter le repos à 3–5 min sur les séries lourdes des mouvements de compétition."}
+      ],
+      "points_forts": [
+        "Fréquence 2×/semaine sur chaque mouvement de compétition avec des variantes d'assistance pertinentes.",
+        "Masse musculaire entretenue de façon équilibrée (tirage ≥ poussée, quadriceps et chaîne postérieure présents).",
+        "Aucune hausse brutale de charge (max 2,7 %), aucun échec non voulu.",
+        "Séances qui tiennent dans le temps disponible."
+      ]
+    },
+    {
+      "programme": "programme_4.md",
+      "criteres": {"H1": 8, "H2": 7, "H3": 7, "H4": 7.5, "H5": 4.5, "H6": 8, "H7": 8.5, "H8": 8, "H9": 6},
+      "sans_objet": [],
+      "ensemble": 6,
+      "points_perdus": [
+        {"critere": "H1", "perte": 2, "raison": "Quadriceps ≈ 10 séries directes (squat barre basse 3, barre haute 4, belt squat 3), dos ≈ 9 + soulevé de terre, biceps ≈ 10 : dans la fourchette intermédiaire (R1-P1) ; pectoraux un peu bas (développé couché 3 + pompe en T 3 ≈ 7,5), sans gravité vu l'objectif."},
+        {"critere": "H2", "perte": 3, "raison": "Quadriceps exposés 3×/semaine via trois variantes, mais le mouvement de l'objectif (squat barre haute) n'apparaît qu'une fois par semaine (mercredi) ; le lundi est occupé par un squat barre basse, une variante différente (R1-P8, R6-P3)."},
+        {"critere": "H3", "perte": 3, "raison": "Polyarticulaires 3,5 → 2 RIR, isolations à la même marge (R1-P13 intermédiaire isolation 0–2) ; marges uniformes ; squat barre haute à 67,5–70 kg pour un 1RM de 100 kg (1RM de référence 89), loin de l'intensité utile pour le 1RM visé."},
+        {"critere": "H4", "perte": 2.5, "raison": "Bon choix pour l'antécédent lombaire (belt squat, poulie, machine) et pour la mobilité ; mais squat barre basse « principal » sans 1RM connu, en concurrence avec la barre haute ; superman dynamique et V-up (flexion/extension répétées) moins pertinents que des exercices anti-mouvement après une lombalgie."},
+        {"critere": "H5", "perte": 5.5, "raison": "Charges écrites identiques d'un bloc à l'autre : squat barre haute 67,5 → 67,5 → 70 kg en S1–4, S6–9 et S11–14 ; soulevé de terre 80 → 82,5 ; développé couché 50 kg ; paliers de test figés à 80 / 90 / 95 kg en S5, S10 et S15. Aucune surcharge progressive vers 115 kg (R5-P3)."},
+        {"critere": "H6", "perte": 2, "raison": "Équilibré : tirage ≥ poussée, fessiers et ischios traités (pont fessier, leg curl, soulevé de terre), arrière d'épaule (Cuban press, Y/Lu raise) ; pas de volume déplacé vers les muscles qui limitent le squat."},
+        {"critere": "H7", "perte": 1.5, "raison": "Repos par type conformes (3 min squat principal, 2 min secondaires, 75 s isolation), séances de 55–59 min sur 75, mobilité intégrée ; pas de supersets pour gagner du temps (inutile ici)."},
+        {"critere": "H8", "perte": 2, "raison": "Semaines de test toutes les 5 semaines qui jouent le rôle d'allègement (≈ −47 % de séries, RIR 4) (R3-P9) ; pas de technique d'intensification, adapté à 46 ans."},
+        {"critere": "H9", "perte": 4, "raison": "Prend en compte l'âge, l'antécédent lombaire et la mobilité (20 %), mais l'échéance à 16 semaines n'est pas servie : S15 test plafonné à 95 kg, S16 « introduction » sans pic ni tentative de 115 kg ; rien ne dit quoi changer si le sommeil (6,5 h) ou la récupération ne suivent pas (R5-P10, R5-P14)."},
+        {"critere": "ensemble", "perte": 4, "raison": "Plafond 6 (échéance du profil non servie) ; deux corrections nécessaires : progression de charge absente sur le squat de l'objectif, et ni pic ni test final à la semaine 16. Programme sûr et bien adapté au corps de l'athlète par ailleurs."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Donner au squat barre haute une vraie surcharge progressive : 2 séances/semaine (remplacer le squat barre basse du lundi par une séance barre haute de volume 3–4 × 5–8), charges calées sur le 1RM de 100 kg et montées d'un bloc à l'autre (+2,5 à 5 kg par bloc sur les séries lourdes, paliers de test relevés après chaque test réussi) (R5-P3, R1-P8).", "consequence": "Avec les mêmes charges répétées trois fois (67,5–70 kg) et des tests figés à 95 kg, l'athlète ne s'approchera pas de 115 kg en 16 semaines."},
+        {"type": "necessaire", "texte": "Terminer par un affûtage de 1 semaine (−30 à −40 % de séries, intensité gardée) en S15 et un test du 1RM barre haute en S16 avec une progression de tentatives vers 110–115 kg (R3-P12, R3-P14, R3-P16).", "consequence": "La semaine 16 est une semaine d'introduction : l'objectif fixé à 16 semaines n'est ni préparé ni mesuré."},
+        {"type": "amelioration", "texte": "Remplacer superman dynamique et V-up par des exercices anti-extension et anti-rotation (dead bug, Pallof press, bird dog chargé) compte tenu de l'antécédent lombaire."},
+        {"type": "amelioration", "texte": "Ajouter une règle de récupération : si le sommeil tombe sous 6 h ou si le stress monte, −1 série sur les polyarticulaires et +1 RIR la semaine concernée (R5-P14, R5-P15)."},
+        {"type": "amelioration", "texte": "Isolations (leg curl, curls, élévations) à 1–2 RIR pour augmenter le stimulus sans coût articulaire."},
+        {"type": "amelioration", "texte": "Ajouter un travail direct des quadriceps en position longue (leg extension ou presse amplitude complète) pour soutenir le squat."}
+      ],
+      "points_forts": [
+        "Bonne prise en compte de l'antécédent lombaire : belt squat, poulie, machine, soulevé de terre à charge modérée, aucune gêne déclenchée.",
+        "Mobilité (20 %) réellement intégrée en échauffement et retour au calme.",
+        "Volume par muscle dans la fourchette intermédiaire, physique équilibré, tirage ≥ poussée.",
+        "Allègements réguliers toutes les 5 semaines, séances qui tiennent dans 75 min."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,103 @@
+{
+  "ecole": "sante",
+  "programmes": [
+    {
+      "programme": "programme_1.md",
+      "criteres": {"S1": 7, "S2": 6.5, "S3": 7, "S4": 5, "S5": 6, "S6": 7, "S7": 8, "S8": 4, "S9": 5.5},
+      "sans_objet": [],
+      "ensemble": 6,
+      "points_perdus": [
+        {"critere": "S1", "perte": 3, "raison": "Questionnaire sans signalement, rien de dangereux en soi, mais aucun seuil de douleur écrit (R5-P23) alors que le programme cumule excentriques de muscle-up, kipping et montées de corde sur les coudes et les épaules ; aucune orientation prévue en cas de douleur persistante."},
+        {"critere": "S2", "perte": 3.5, "raison": "Séries dures 41 → 57 entre S1 et S2 (+39 %), puis 44 → 60 en S6-S7 et 45 → 61 en S11-S12 : au-delà du garde-fou +10–20 %/sem et +30 % sur 2 sem (R5-P22) ; muscle-up négatif 3 × 5 → 4 × 5 dès S2. Rien sur la conduite après une semaine manquée."},
+        {"critere": "S3", "perte": 3, "raison": "Allègements présents (semaines test 5, 10, 15 à 8 séries dures) ; aucune charge de vie déclarée ; aucun critère simple de baisse du jour écrit, alors que lundi-mardi-mercredi puis vendredi-samedi s'enchaînent avec du tirage les deux premiers jours."},
+        {"critere": "S4", "perte": 5, "raison": "Conditionnement en « tours enchaînés » 15 s de repos sans durée totale, sans intensité ni format (AMRAP, temps limite), charges « à déterminer » au thruster et au wall ball ; rameur et air bike jamais utilisés ; « traction explosive » en 10 à 15 répétitions, ce qui n'est plus explosif et ne développe pas la puissance de tirage du muscle-up (R4-G1, spécificité)."},
+        {"critere": "S5", "perte": 4, "raison": "Travail de coiffe et scapulaire présent (lift-off 90/90, oiseau, wall slides, rotation externe en S16), mais charge du coude mal maîtrisée : muscle-up négatif 4 × 5 = 20 excentriques par séance dès S2, au-delà du plafond de 15 (R5-P8), deux fois par semaine, et le lundi suivis de tractions explosives 3 × 15 et de 4 × 12 tractions kipping, le samedi de 4 × 12 burpees-tractions, montées de corde dès S11 ; tendinopathie en tête des blessures de cette pratique (R4-F12) ; aucune préparation des poignets et de la prise fausse (false grip)."},
+        {"critere": "S6", "perte": 3, "raison": "Marges 2 à 4 rép. en réserve correctes mais uniformes pour tous les mouvements ; test de S5, S10 et S15 en effort maximal sur 1 × 1 à 10 négatifs de muscle-up, soit des excentriques jusqu'à l'échec sur le mouvement à risque du profil (R5-P27)."},
+        {"critere": "S7", "perte": 2, "raison": "Séances de 26 à 53 min, dans les 60 min ; faisable, mais aucune version courte et beaucoup de lignes d'échauffement et de retour au calme qui changent à chaque bloc."},
+        {"critere": "S8", "perte": 6, "raison": "L'objectif est un muscle-up strict d'ici 16 semaines, mais aucune tentative de muscle-up strict n'est planifiée : les « épreuves » testent le nombre de négatifs ; la semaine 16, celle de l'échéance, est une semaine « introduction » à pleine charge et non un test précédé d'un allègement (R3-P17) ; aucun critère de passage des négatifs aux tentatives concentriques (élastique, muscle-up sauté)."},
+        {"critere": "S9", "perte": 4.5, "raison": "Épaulé-jeté à « 57,5 kg ≈ 81 % du 1RM, 1RM de référence 71 kg » avec 4 rép. en réserve sur des séries de 2 à 3, alors que le profil déclare 80 kg ; « ≈ 72 % du 1RM » sur soulevé de terre kettlebell, développé haltères et rowing sans 1RM connu ; aucune consigne en cas de douleur ou de fatigue."},
+        {"critere": "ensemble", "perte": 4, "raison": "Trois corrections nécessaires, toutes sur l'objectif principal ou sa sécurité : poussée et transition du muscle-up absentes, objectif jamais testé à l'échéance, charge excentrique et de tirage au coude au-delà du plafond. Programme sûr pour le reste, mais les choix de priorité et d'échéance sont discutables (ancrage 5–6)."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Ajouter le travail spécifique de la phase haute et de la transition du muscle-up : dips barre droite puis dips aux barres parallèles 2 fois par semaine (3–4 × 5–8, 2–3 rép. en réserve), transition basse sur box ou à l'élastique, travail de prise fausse ; remplacer les « tractions explosives 10 à 15 répétitions » par des tractions hautes poitrine-sternum en séries de 3 à 5 répétitions vraiment rapides, repos 2 min.", "consequence": "L'athlète gagnera en tirage mais n'aura jamais travaillé la poussée au-dessus de la barre ni la transition : à 16 semaines, il ne passera probablement pas la barre en strict."},
+        {"type": "necessaire", "texte": "Planifier l'échéance : critères de passage écrits (par exemple 5 négatifs contrôlés de 5 s et 3 tractions sternum à la barre, puis muscle-up à l'élastique), tentatives de muscle-up strict dans les semaines test, et faire de la semaine 16 une semaine de test allégée (volume −40 à −50 %, essai du muscle-up strict frais en début de séance) plutôt qu'une semaine « introduction » d'un nouveau bloc.", "consequence": "Le jour de l'échéance, l'athlète sera en début de bloc chargé et n'aura jamais tenté la figure : on ne saura pas si l'objectif est atteint et il le ratera s'il est juste."},
+        {"type": "necessaire", "texte": "Plafonner les excentriques de muscle-up à 15 par séance (par exemple 3 × 4 ou 4 × 3, R5-P8), retirer les tractions kipping ou les placer un autre jour que les négatifs, et compter burpees-tractions et montées de corde dans un budget de tirage hebdomadaire ; écrire un seuil de douleur du coude et de l'épaule (R5-P23, R4-F11 : 4–5/10 → −30 à −50 % de volume de tirage).", "consequence": "Plus de 60 tirages le lundi, dont 20 excentriques et 48 kippings en fatigue, deux fois par semaine pendant 16 semaines : risque réel de tendinopathie du coude ou de l'épaule qui arrêterait la préparation de la figure."},
+        {"type": "amelioration", "texte": "Remplacer le test en effort maximal sur les négatifs par un test à marge (nombre de négatifs de 5 s contrôlés, arrêt dès que la descente accélère)."},
+        {"type": "amelioration", "texte": "Donner un format et une intensité aux pièces de conditionnement (par exemple AMRAP 10 min à effort 7/10, charge du thruster 40 kg, wall ball 9 kg) et utiliser le rameur ou l'air bike le samedi pour varier l'impact."},
+        {"type": "amelioration", "texte": "Recaler les charges d'épaulé-jeté et de squat sur les records déclarés (80 et 120 kg) ou expliquer pourquoi la référence est plus basse."},
+        {"type": "amelioration", "texte": "Ajouter une préparation des poignets de 3 à 5 min avant les handstand shoulder taps (R4-F12) et une règle pour la semaine manquée (reprendre la semaine précédente)."},
+        {"type": "amelioration", "texte": "Limiter la hausse de volume entre semaine d'introduction et première semaine de montée à +20–30 % (R5-P22)."}
+      ],
+      "points_forts": [
+        "Le muscle-up est travaillé deux fois par semaine, en début de séance, frais.",
+        "Prévention de la coiffe et des scapulas présente à chaque séance (lift-off 90/90, oiseau, wall slides, sleeper stretch).",
+        "Allègement toutes les 5 semaines, marges de 2 à 4 répétitions en réserve sur le renforcement, aucun échec subi dans la trajectoire simulée.",
+        "Séances dans le temps disponible et usage du matériel de la box."
+      ]
+    },
+    {
+      "programme": "programme_2.md",
+      "criteres": {"S1": 4, "S2": 5.5, "S3": 6, "S4": 4, "S5": 6.5, "S6": 8.5, "S7": 6, "S9": 6},
+      "sans_objet": ["S8"],
+      "ensemble": 5,
+      "points_perdus": [
+        {"critere": "S1", "perte": 6, "raison": "Femme sédentaire de 92 kg (IMC ≈ 32,6), 0 mois d'entraînement : footing continu de 18 à 20 min dès la semaine 1, puis 22 à 25 min, sans phase de marche-course ; impact inadapté (R5-P9 : pas d'impact avant 3 × 10 squats et 3 × 8 fentes sans douleur ; R6-P17 : marche-course 1 min / 1–2 min) ; dips pieds sur box à 92 kg, qui chargent l'avant de l'épaule en fin d'amplitude ; aucun seuil de douleur écrit (R5-P23)."},
+        {"critere": "S2", "perte": 4.5, "raison": "Renforcement prudent (2 séries à 4 rép. en réserve, puis 3), mais la course démarre à 20 min continues sans base puis passe à 25 min dès la semaine 2 (+25 %, au-delà des 10–20 % de R6-P16) ; rien sur la conduite après une semaine manquée."},
+        {"critere": "S3", "perte": 4, "raison": "Sommeil 6,5 h, stress 3/5 et déficit énergétique déclarés mais jamais mentionnés ; semaines 5 et 9 plus légères (22 séries) ; aucun critère de baisse du jour (fatigue, mauvaise nuit)."},
+        {"critere": "S4", "perte": 6, "raison": "Footing en « endurance fondamentale » et rameur « en endurance » sans repère d'effort compréhensible (parler en courant, effort 3–4/10) ; environ 35 min de cardio par semaine, loin des 150 min (R6-P21) et des plus de 250 min de marche utiles à une perte nette (R6-P32) ; la marche citée dans le profil n'est jamais programmée ; vélo et tapis de course inutilisés."},
+        {"critere": "S5", "perte": 3.5, "raison": "Équilibre tirage-poussée et travail scapulaire (Y raise, W raise, wall slides) présents ; mais le lundi commence par un rowing poulie sans aucun échauffement, et le samedi par des pas chassés seulement ; dips sur banc à 92 kg en extension d'épaule forcée."},
+        {"critere": "S6", "perte": 1.5, "raison": "Marges de 4 puis 3 rép. en réserve, sans échec : adapté à une débutante ; marges uniformes."},
+        {"critere": "S7", "perte": 4, "raison": "Séances de 30 à 40 min, dans les 45 min ; mais pompes classiques, dips pieds sur box et tractions à l'élastique risquent d'être impossibles à 6–8 répétitions pour une sédentaire de 92 kg (R5-P9), alors que presse à cuisses, poulie haute et machine guidée sont disponibles ; 20 min de course continue dès la première séance risquent de décourager."},
+        {"critere": "S9", "perte": 4, "raison": "« Endurance fondamentale », « à calibrer », « série de calibrage » et « ≈ 67 % du 1RM » sans 1RM connu : jargon non expliqué pour une débutante ; aucune consigne en cas de douleur, d'essoufflement ou de fatigue."},
+        {"critere": "ensemble", "perte": 5, "raison": "Deux corrections nécessaires, dont un risque réel pour cette personne (course continue dès la semaine 1 en surpoids sédentaire) : plafond à 5."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Remplacer le footing continu par de la marche rapide puis de la marche-course progressive : semaines 1–3 marche rapide 20–25 min (effort 4/10, on peut parler) ou vélo ; puis 1 min de course / 2 min de marche, la course ajoutée seulement quand 3 × 10 squats et 3 × 8 fentes sont sans douleur (R5-P9, R6-P17), hausse ≤ 10–20 % par semaine (R6-P16).", "consequence": "Courir 20 à 25 min d'affilée dès la première semaine à 92 kg sans aucune base expose à des douleurs de genou, de tibia ou de tendon d'Achille, et à l'abandon de l'habitude visée."},
+        {"type": "necessaire", "texte": "Remplacer les dips pieds sur box par une poussée accessible et sûre : pompes inclinées mains sur banc, développé à la machine guidée ou extension triceps à la poulie, 2–3 × 8–12 à 3–4 rép. en réserve.", "consequence": "À 92 kg, les dips sur banc chargent l'avant de l'épaule en extension forcée et seront probablement faits avec peu d'amplitude ou en douleur : risque de gêne d'épaule et d'exercice raté."},
+        {"type": "amelioration", "texte": "Programmer la marche citée dans le profil : objectif de pas quotidien, +1 000 pas toutes les 1 à 2 semaines (R6-P32), vers 150 min par semaine d'activité modérée (R6-P21)."},
+        {"type": "amelioration", "texte": "Prévoir une variante de pompe (mains sur banc) et la presse à cuisses ou la poulie haute en remplacement des tractions à l'élastique si moins de 6 répétitions propres sont possibles (R5-P9)."},
+        {"type": "amelioration", "texte": "Ajouter 5 min d'échauffement le lundi (vélo ou marche) et des seuils de douleur simples : 0–2/10 continuer, 3–4 sans progresser, 5 et plus régresser ou arrêter (R5-P23)."},
+        {"type": "amelioration", "texte": "Renforcer le bas du corps (presse à cuisses, fente arrière assistée) plutôt que multiplier les accessoires d'épaule (élévation latérale, Y et W raise)."},
+        {"type": "amelioration", "texte": "Décrire l'effort en mots simples (essoufflement, échelle 1 à 10) au lieu de « endurance fondamentale » et « à calibrer »."}
+      ],
+      "points_forts": [
+        "Dose de départ modeste (2 séries, 4 rép. en réserve), jamais d'échec : adaptée à une débutante et à l'objectif d'habitude.",
+        "Séances courtes, dans les 45 min, trois jours espacés de 48 h.",
+        "Équilibre tirage-poussée et travail scapulaire.",
+        "Volume de renforcement maintenu en déficit, conformément à R5-P16."
+      ]
+    },
+    {
+      "programme": "programme_3.md",
+      "criteres": {"S1": 4.5, "S2": 8, "S3": 6.5, "S4": 4, "S5": 6.5, "S6": 9, "S7": 8, "S9": 5.5},
+      "sans_objet": ["S8"],
+      "ensemble": 5,
+      "points_perdus": [
+        {"critere": "S1", "perte": 5.5, "raison": "Questionnaire santé en « mode prudent », 55 ans, 200 semaines d'arrêt : aucune demande d'avis médical avant de commencer (R5-P26 : symptômes ou doute = avis médical d'abord ; R5-P25) ; genou droit à 5/10 en flexion profonde, ce qui impose de régresser (R5-P23), alors que la fente latérale est programmée sans limite d'amplitude ni seuil de douleur, et que pigeon, demi-grand écart et mountain climbers chargent le genou en flexion ; l'épaule opérée est bien protégée (CARs, wall slides, face pull)."},
+        {"critere": "S2", "perte": 2, "raison": "Reprise prudente et conforme à R5-P7 (2 séries à 4 rép. en réserve, montée à 3 séries) ; rien sur la conduite après une semaine manquée ni sur la hausse de charge des haltères (double progression non écrite, R5-P3)."},
+        {"critere": "S3", "perte": 3.5, "raison": "Sommeil de 6 h et stress 3/5 déclarés mais non pris en compte (R5-P14) ; semaines 5 et 9 plus légères ; aucun critère de baisse du jour (mauvaise nuit, genou plus douloureux)."},
+        {"critere": "S4", "perte": 6, "raison": "Séance du samedi intitulée « cardio, endurance » réduite à 10–15 min de « marche de récupération » sans intensité ; cardio déclaré à 20 % des disciplines mais à peine 15 min par semaine, loin de R6-P21 ; le vélo d'appartement, cardio idéal pour un genou sensible, n'est jamais utilisé."},
+        {"critere": "S5", "perte": 3.5, "raison": "Épaule : coiffe et scapulas travaillées à chaque séance (face pull, band pull-apart, oiseau, wall slides) ; mais le genou n'a aucune prévention ciblée : seulement la fente latérale et le reverse hyper pour le bas du corps, pas de renforcement du quadriceps à amplitude tolérée ; aucun échauffement le samedi avant le tirage et les pompes."},
+        {"critere": "S6", "perte": 1, "raison": "Marges de 4 puis 3 rép. en réserve, aucun échec : adapté à ce profil."},
+        {"critere": "S7", "perte": 2, "raison": "Séances de 22 à 35 min dans les créneaux de 30 et 40 min, matériel de la maison ; pompes classiques 3 à 8 sans variante inclinée pour un homme de 88 kg qui reprend ; pas de version courte."},
+        {"critere": "S9", "perte": 4.5, "raison": "Aucune consigne sur quoi faire si le genou monte en douleur pendant ou après la séance ; « ≈ 67 % du 1RM » au développé haltères sans 1RM connu ; résistance des élastiques « à calibrer » sans repère."},
+        {"critere": "ensemble", "perte": 5, "raison": "Trois corrections nécessaires, dont un risque réel pour la santé (mode prudent sans avis médical, genou à 5/10 chargé sans seuil) : plafond à 5."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Écrire en tête du programme : avis médical avant la première séance, puisque le questionnaire est en mode prudent (R5-P26) ; orientation vers un kinésithérapeute pour le genou droit à 5/10 ; liste des signes qui imposent d'arrêter et de consulter (douleur thoracique, essoufflement anormal, malaise, R5-P25).", "consequence": "Un homme de 55 ans qui reprend après près de 4 ans d'arrêt, avec un questionnaire en mode prudent, commencerait sans dépistage : un problème cardiovasculaire ou articulaire passerait inaperçu."},
+        {"type": "necessaire", "texte": "Écrire des seuils de douleur du genou (0–2/10 continuer, 3–4 sans progresser, 5 régresser, 6 et plus arrêter ; douleur revenue à la normale le lendemain, R5-P23) et limiter la fente latérale à l'amplitude sans douleur (ou la remplacer par un pas latéral court), retirer pigeon et demi-grand écart si le genou réagit.", "consequence": "Avec une gêne déjà à 5/10, la fente latérale en flexion sans limite risque d'aggraver le genou et de faire abandonner le programme."},
+        {"type": "necessaire", "texte": "Protéger sans exclure le bas du corps (R5-P20) : ajouter 2 fois par semaine un renforcement du genou à amplitude tolérée, par exemple assis-debout sur le banc à hauteur réglée, chaise au mur en isométrique 3 × 30 s à douleur ≤ 3/10, soulevé de terre jambes tendues aux haltères, pont fessier.", "consequence": "En 12 semaines, le bas du corps (fente latérale et reverse hyper seulement) n'aura presque pas été renforcé : le quadriceps reste faible, le genou douloureux et la personne de 55 ans perd la fonction que le programme devait lui rendre."},
+        {"type": "amelioration", "texte": "Utiliser le vélo d'appartement : 15–20 min à effort 4–5/10 en fin de séance du mardi et du samedi, +2–3 min par semaine, vers 150 min d'activité modérée par semaine en ajoutant de la marche (R6-P21)."},
+        {"type": "amelioration", "texte": "Prévoir les pompes mains sur banc comme variante de départ et la règle de hausse des haltères (+1 à 2 kg quand le haut de la fourchette est dépassé deux séances de suite, R5-P3)."},
+        {"type": "amelioration", "texte": "Ajouter une règle liée au sommeil : nuit nettement plus courte que d'habitude ou genou plus douloureux le matin → une série de moins et une répétition de marge en plus (R5-P14)."},
+        {"type": "amelioration", "texte": "Ajouter un échauffement de 3–5 min le samedi (vélo et mobilité d'épaule) et, sur le développé haltères, une amplitude limitée côté gauche les premières semaines (R5-P24 : modifier l'amplitude avant de supprimer)."}
+      ],
+      "points_forts": [
+        "Reprise très prudente après 200 semaines d'arrêt, conforme au barème R5-P7 : 2 séries, 4 rép. en réserve, aucune progression brutale.",
+        "Épaule opérée protégée sans être exclue : CARs, wall slides, face pull, band pull-apart, oiseau, développé et tirages gardés.",
+        "Séances courtes qui tiennent dans 30 et 40 min avec le matériel de la maison, trois jours espacés.",
+        "Aucun échec, marges adaptées à l'âge et au niveau."
+      ]
+    }
+  ]
+}

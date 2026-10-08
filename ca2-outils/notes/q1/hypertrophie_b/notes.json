@@ -1,0 +1,95 @@
+{
+  "ecole": "hypertrophie",
+  "programmes": [
+    {
+      "programme": "programme_1.md",
+      "criteres": {"H1": 2, "H6": 2, "H8": 3, "H9": 3},
+      "sans_objet": ["H2", "H3", "H4", "H5", "H7"],
+      "ensemble": 3,
+      "points_perdus": [
+        {"critere": "H1", "perte": 8, "raison": "0 série dure sur 12 semaines (vue d'ensemble) : mollets, quadriceps, fessiers et ischios, qui portent la course, ne reçoivent aucun travail ; R6-P22 prévoit 2 séances légères de renforcement chez le coureur débutant (RR blessure 0,34) et R5-P1 fixe le plancher à 4 séries par groupe et par semaine."},
+        {"critere": "H6", "perte": 8, "raison": "Aucun renforcement, ni bas du corps ni chaîne postérieure, et pas de travail du maillon faible du coureur (mollet, tendon d'Achille, R6-P22) ; seuls des étirements, dont R6-P22 dit qu'ils n'ont pas d'effet sur les blessures."},
+        {"critere": "H8", "perte": 7, "raison": "Les semaines 4 et 8 sont dites allégées, mais le mardi y place une épreuve de 10 km (80 min estimées), soit plus du double de la plus longue sortie (36 à 40 min) : ce n'est pas un allègement. Pas d'affûtage avant l'échéance : semaines 10 et 11 en montée, puis la course (R6-P20)."},
+        {"critere": "H9", "perte": 7, "raison": "Le dimanche de la semaine 1 (40 à 45 min) dépasse déjà de 15 à 30 % le record de 35 min, et le dimanche de la semaine 3 (54 à 60 min) en fait presque le double, alors que R6-P16 plafonne une séance à 110 % de la plus longue course des 30 derniers jours. Pas de marche-course pour une débutante à 7 min/km (R6-P17). La trajectoire le confirme : quasiment aucune séance faite en entier, 5,54 km couverts le jour de l'échéance."},
+        {"critere": "ensemble", "perte": 7, "raison": "Plafond 5 pour une progression brutale (épreuves de 10 km aux semaines 4 et 8, sorties au-delà de 110 %), puis plus de trois corrections nécessaires ; l'objectif (finir 10 km en 70 min) ne sera probablement pas atteint."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Ajouter 2 séances courtes de renforcement par semaine, par exemple après les footings du mardi et du jeudi, sans matériel : mollets debout jambe tendue puis genou fléchi, demi-squat ou fente arrière, pont fessier unilatéral, 4 à 6 séries dures par groupe et par semaine, 3 à 4 répétitions en réserve (R5-P1, R6-P22).", "consequence": "Les tissus du bas du corps ne sont pas préparés au doublement du volume de course : le risque de blessure de surcharge reste celui d'une coureuse non renforcée, environ trois fois plus élevé."},
+        {"type": "necessaire", "texte": "Recalibrer les durées sur le record de 35 min : chaque sortie à 110 % au plus de la plus longue des 30 derniers jours (semaine 1 : dimanche à 35-38 min), avec l'option marche-course si la séance n'est pas tenue (R6-P16, R6-P17).", "consequence": "Les séances écrites ne sont pas faisables (la trajectoire montre presque toutes les sorties abandonnées avant la fin) et le pic de charge expose aux blessures."},
+        {"type": "necessaire", "texte": "Remplacer les épreuves de 10 km des semaines 4 et 8 par un test de 5 km ou de 30 min chronométrées, et ne pas courir 10 km avant l'échéance.", "consequence": "Deux courses à 10/10 d'effort, à plus de 200 % de la plus longue sortie, au milieu de semaines dites allégées : surcharge, risque de blessure et découragement (4,4 puis 4,9 km faits)."},
+        {"type": "necessaire", "texte": "Placer un affûtage avant l'échéance : semaine 11 à −20/−30 %, puis 5 à 7 jours à −40/−60 % en gardant 3 sorties courtes (R6-P20), au lieu de deux semaines de montée juste avant la course.", "consequence": "La coureuse arrive à la course sans fraîcheur, au sommet de sa charge."},
+        {"type": "amelioration", "texte": "Faire porter la progression de la sortie longue jusqu'à 60-65 min vers les semaines 9 et 10, pour s'approcher de la durée visée (70 min)."},
+        {"type": "amelioration", "texte": "Garder une routine d'étirements courte et stable plutôt que de faire tourner des postures comme le demi-grand écart ou le pigeon, sans lien avec l'objectif."}
+      ],
+      "points_forts": [
+        "Course entièrement en endurance fondamentale pour une débutante (R6-P15).",
+        "Séances tenant dans les créneaux de 45 et 60 min, hors semaines d'épreuve.",
+        "Structure en blocs de 4 semaines avec une semaine plus légère prévue."
+      ]
+    },
+    {
+      "programme": "programme_2.md",
+      "criteres": {"H1": 5, "H2": 6, "H3": 5, "H4": 5, "H5": 4, "H6": 5, "H7": 8, "H8": 4, "H9": 4},
+      "sans_objet": [],
+      "ensemble": 4,
+      "points_perdus": [
+        {"critere": "H1", "perte": 5, "raison": "Aucune série pour les mollets ni pour les ischios en 12 semaines ; 2 à 3 séries de quadriceps par semaine (reverse nordic, puis 1 à 2 chaises contre le mur) ; fessiers à 4 séries. Pour un coureur, le maillon mollet et Achille est oublié (R6-P22), alors que pectoraux, épaules et dorsaux sont servis."},
+        {"critere": "H2", "perte": 4, "raison": "Chaque exercice n'est fait qu'une fois par semaine : la pompe le dimanche seulement, le reverse nordic et la chaise le dimanche seulement. Seuls les fessiers sont vus deux fois (jeudi et samedi). R5-P2 et R1-P8 demandent 2 expositions."},
+        {"critere": "H3", "perte": 5, "raison": "Toutes les séries sont en 10 à 15 répétitions, avec une baisse uniforme de 3 à 2 répétitions en réserve, quel que soit l'exercice. Les exercices au poids du corps sont plafonnés à 15 répétitions alors que l'athlète en fait 19 à 21 : dans la trajectoire, l'effort réel est à 4 à 5 répétitions en réserve (2,44 en moyenne au-dessus de la cible), donc les séries ne sont pas dures."},
+        {"critere": "H4", "perte": 5, "raison": "Pas de travail unilatéral chargé du bas du corps (fente, split squat), pas de mollet. La rotation interne à l'élastique, au bloc 2, ne sert pas l'objectif. Les pompes prise large sont sans intérêt pour un semi. Les blocs changent d'exercices sans logique visible."},
+        {"critere": "H5", "perte": 5.5, "raison": "La progression se limite à la marge visée (3, 2,5 puis 2) et à +1 série. Rien n'est écrit pour les répétitions, la tension de l'élastique ou la variante plus dure, alors que R6-P22 demande des charges montantes pour l'intermédiaire et que R5-P3 décrit la double progression. Progression mesurée : 0,28 %/semaine."},
+        {"critere": "H6", "perte": 5, "raison": "Le tirage (tirage bras tendus et face pull, 4 à 6 séries) dépasse bien la poussée, mais la chaîne postérieure du bas du corps et les mollets, qui sont la priorité d'un coureur, ne sont pas traités (R6-P22)."},
+        {"critere": "H7", "perte": 2, "raison": "Repos de 75 à 90 s raisonnables et séances dans le temps, mais la séance du dimanche finit à 106-111 min sur 120 avec le renforcement placé après une sortie longue de 75 min. Le reverse nordic sur des quadriceps fatigués est discutable (R6-P30)."},
+        {"critere": "H8", "perte": 6, "raison": "Les semaines 5 et 10, dites de test, réduisent le renforcement mais placent une épreuve de 21,1 km alors que la plus longue sortie est de 67 à 75 min : près de 150 % de la plus longue sortie (R6-P16). La trajectoire simule une blessure de surcharge. Aucun affûtage (R6-P20)."},
+        {"critere": "H9", "perte": 6, "raison": "L'échéance n'est pas programmée : la semaine 12 est en montée, avec une sortie longue de 63 à 70 min, et la course n'y figure pas (le bilan de la trajectoire le confirme). Le niveau intermédiaire est respecté sur le volume de course, mais le renforcement est celui d'un débutant, et rien n'est dit sur ce qui change si la récupération ne suit pas."},
+        {"critere": "ensemble", "perte": 6, "raison": "Plafond 5 pour un risque réel (deux épreuves de 21,1 km bien au-delà de 110 % de la plus longue sortie) et plafond 6 pour une échéance ignorée. S'y ajoutent quatre corrections nécessaires."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Programmer le semi-marathon en semaine 12 et placer devant lui 7 à 14 jours d'affûtage (volume −41 à −60 %, intensité et fréquence gardées, R6-P20) ; renforcement réduit de moitié pendant cette période, sans série à 2 répétitions en réserve dans les 7 derniers jours.", "consequence": "La course n'est pas préparée et l'athlète arrive à l'échéance au sommet de sa charge, ce qui compromet l'objectif de 1 h 45."},
+        {"type": "necessaire", "texte": "Supprimer les épreuves de 21,1 km des semaines 5 et 10 : les remplacer par un 10 km chronométré, ou par une sortie longue à 110 % au plus de la plus longue des 30 jours (R6-P16).", "consequence": "Deux pics de charge à environ 150 % de la plus longue sortie, avec un risque de blessure de surcharge que la trajectoire matérialise (douleur du bas du corps, séances de qualité retirées pendant 4 semaines)."},
+        {"type": "necessaire", "texte": "Ajouter les mollets et les ischios deux fois par semaine : mollets debout jambe tendue et genou fléchi, unilatéral, en 8 à 15 répétitions ; pont unilatéral sur talons ou curl glissé ; split squat. Viser 4 à 6 séries par groupe et par semaine, déplacées depuis les pompes prise large et la rotation interne.", "consequence": "Le maillon mollet et Achille du coureur reste non préparé à 35 km/semaine de course et aux côtes : le bénéfice préventif du renforcement (R6-P22) est perdu."},
+        {"type": "necessaire", "texte": "Écrire une règle de progression : quand le haut de la plage est dépassé de 1 à 2 répétitions deux séances de suite, augmenter la tension de l'élastique ou passer à la variante plus dure (unilatéral, lest dans un sac) (R5-P3, R6-P22).", "consequence": "Les séries restent à 4 ou 5 répétitions en réserve (trajectoire) : ce ne sont pas des séries dures, et le renforcement ne produit à peu près rien."},
+        {"type": "amelioration", "texte": "Placer le renforcement du dimanche avant la sortie longue, ou le déplacer sur le mardi, pour ne pas faire de l'excentrique quadriceps après 75 min de course (R6-P30)."},
+        {"type": "amelioration", "texte": "Garder les mêmes exercices sur au moins deux blocs pour pouvoir mesurer la progression."},
+        {"type": "amelioration", "texte": "Ajouter une règle de repli : douleur du bas du corps à 3 ou 4 sur 10, garder le renforcement sans progresser et retirer les côtes (R5-P23)."}
+      ],
+      "points_forts": [
+        "Tirage au moins égal à la poussée, face pull et band pull-apart pour l'arrière d'épaule.",
+        "Séances tenant dans les créneaux, repos adaptés à des accessoires.",
+        "Renforcement modeste qui ne concurrence pas la course, cohérent avec 10 % de musculation."
+      ]
+    },
+    {
+      "programme": "programme_3.md",
+      "criteres": {"H1": 5, "H2": 6, "H3": 7, "H4": 5, "H5": 5, "H6": 5, "H7": 8, "H8": 7, "H9": 4.5},
+      "sans_objet": [],
+      "ensemble": 5,
+      "points_perdus": [
+        {"critere": "H1", "perte": 5, "raison": "Poussée : 2 séries par semaine (pompe du mercredi), sous le plancher de 4 de R5-P1. Bas du corps aux semaines 1 à 8 : pont fessier ou frog pump (2 séries) plus 1 à 2 chaises de 5 à 12 s, soit environ 3 séries effectives ; le squat n'arrive qu'en semaine 9. Le tirage (rowing et face pull, 4 séries) est correct."},
+        {"critere": "H2", "perte": 4, "raison": "Poussée une fois par semaine. Pas de geste assis-debout deux fois par semaine. La répartition n'est pas choisie pour l'objectif d'autonomie."},
+        {"critere": "H3", "perte": 3, "raison": "Marges de 4 à 3 répétitions en réserve, prudentes et adaptées au mode prudent (R5-P4), mais uniformes. La trajectoire montre un effort réel à 6 à 9 répétitions en réserve sur le rowing et la pompe, loin de l'effort voulu, sans série de calibration."},
+        {"critere": "H4", "perte": 5, "raison": "Pompe classique au sol pour une femme de 68 ans qui n'a jamais fait de musculation, sans régression (pompe au mur ou inclinée) : non conforme à R5-P9. Mountain climbers, dynamiques et durs pour les poignets, en mode prudent. Pas d'assis-debout depuis une chaise avant la semaine 9 (R6-P26). Sleeper stretch et pigeon au sol sont discutables pour une débutante senior."},
+        {"critere": "H5", "perte": 5, "raison": "La progression se fait seulement par la marge visée (4, 3,5 puis 3) et par quelques séries d'étirement en plus. Rien n'est écrit pour la tension de l'élastique ou le passage à une variante plus dure (R5-P3) ; le rowing reste à 7 répétitions en réserve en semaine 12."},
+        {"critere": "H6", "perte": 5, "raison": "Le tirage dépasse bien la poussée, mais pour l'autonomie la priorité est le bas du corps et l'équilibre, qui sont sous-servis ou absents."},
+        {"critere": "H7", "perte": 2, "raison": "Repos de 60 à 90 s corrects et séances de 22 à 31 min dans les 30 min ; on pourrait regagner du temps par des paires tirage/poussée pour loger l'équilibre (R2-P15)."},
+        {"critere": "H8", "perte": 3, "raison": "Pas de semaine d'allègement écrite, mais le volume est très bas et chaque bloc repart à une marge de 4 répétitions : la fatigue n'est pas un problème. Rien n'est prévu non plus si la récupération est lente (R5-P10 : +24 à 48 h pour plus de 60 ans)."},
+        {"critere": "H9", "perte": 5.5, "raison": "L'objectif dit « équilibre » et R6-P26 recommande l'équilibre au moins 3 jours par semaine pour prévenir les chutes, mais le programme ne contient aucun exercice d'équilibre (appui unipodal, marche en tandem, step). L'assis-debout manque et la pompe classique ne tient pas compte du profil. Le temps et le matériel sont respectés."},
+        {"critere": "ensemble", "perte": 5, "raison": "Plafond 6 : un volet de l'objectif principal (l'équilibre) est ignoré. S'y ajoutent trois corrections nécessaires, dont une pompe au sol infaisable ou mal exécutée pour ce profil."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Ajouter de l'équilibre à chacune des 4 séances, 3 à 5 min : appui unipodal près d'un mur, marche en tandem, transfert de poids, puis yeux fermés ou surface instable, en durcissant à chaque séance (R6-P26). Le temps peut être pris sur les étirements de fin de séance.", "consequence": "L'objectif « équilibre » et la prévention des chutes, essentiels à 68 ans, ne sont pas servis du tout."},
+        {"type": "necessaire", "texte": "Mettre un assis-debout depuis une chaise dès la semaine 1, deux fois par semaine, 2 à 3 séries de 6 à 12 à un effort de 5 à 6 sur 10, puis le progresser (chaise plus basse, tempo lent, une jambe en appui décalé) (R6-P26, R5-P1).", "consequence": "La force des jambes, premier déterminant de l'autonomie, reste sous-stimulée pendant 8 semaines."},
+        {"type": "necessaire", "texte": "Remplacer la pompe classique par une pompe au mur, puis inclinée sur un plan de travail, avec un passage au palier suivant quand 2 × 12 sont faites à 3 répétitions en réserve (R5-P9), et la faire deux fois par semaine.", "consequence": "Pour une débutante de 68 ans, la pompe au sol risque d'être infaisable ou faite avec le bassin et les épaules mal placés, en mode prudent, et la poussée reste à 2 séries par semaine."},
+        {"type": "amelioration", "texte": "Écrire une règle de progression de l'élastique : tension supérieure quand le haut de la plage est dépassé deux séances de suite (R5-P3)."},
+        {"type": "amelioration", "texte": "Remplacer les mountain climbers par un bear hold ou un dead bug dès le bloc 1, et le sleeper stretch par l'étirement bras croisé (déjà présent au bloc 3)."},
+        {"type": "amelioration", "texte": "Ajouter une consigne de lever du sol, déjà travaillée par les postures au tapis, et une règle si la récupération est lente (48 à 72 h entre séances dures, R5-P10)."}
+      ],
+      "points_forts": [
+        "Marges prudentes de 3 à 4 répétitions en réserve, cohérentes avec le mode prudent et avec un premier contact avec la musculation (R5-P4).",
+        "Tirage (rowing, face pull) au moins égal à la poussée ; posture du haut du dos travaillée.",
+        "Séances de 22 à 31 min pour 30 min disponibles, avec le matériel déclaré.",
+        "Mobilité variée, à des doses d'étirement plausibles (30 à 45 s, R6-P23)."
+      ]
+    }
+  ]
+}

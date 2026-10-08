@@ -1,0 +1,99 @@
+{
+  "ecole": "force",
+  "programmes": [
+    {
+      "programme": "programme_1.md",
+      "criteres": {"F1": 5, "F2": 5.5, "F3": 5.5, "F4": 5.5, "F5": 3, "F6": 7, "F7": 4.5, "F8": 6, "F9": 7},
+      "sans_objet": [],
+      "ensemble": 5,
+      "points_perdus": [
+        {"critere": "F1", "perte": 5, "raison": "L'objectif est le muscle-up strict, mais aucune séance ne travaille le mouvement entier ni la transition : seuls des négatifs (lundi, vendredi) sont prescrits pendant 16 semaines. La « traction explosive poitrine à la barre » n'a lieu qu'une fois par semaine. Le travail qui ne sert pas l'objectif occupe beaucoup de place : handstand shoulder taps en « figure / technique », épaulé-jeté et tirage d'arraché en principal (R2-P9 : la spécificité baisse sans le geste exact)."},
+        {"critere": "F2", "perte": 4.5, "raison": "Il n'y a aucune exposition lourde en tirage (pas de traction lestée), alors que la force de tirage haut limite le muscle-up. La traction explosive est prescrite en 10 à 15 répétitions à 2-3 RIR pour un athlète qui fait 10 tractions au maximum : c'est irréalisable, et ce n'est plus de la puissance (la trajectoire montre 8 à 10 répétitions). La plupart des charges sont « à déterminer, ≈ 72 % du 1RM » sans 1RM connu. L'épaulé-jeté se réfère à un 1RM de 71 kg alors que le profil donne 80 kg, et le squat à 107 kg au lieu de 120 kg."},
+        {"critere": "F3", "perte": 4.5, "raison": "Le volume est dispersé sur une dizaine de mouvements de tirage, de poussée et d'haltérophilie. Aucune série n'est consacrée à la poussée en appui (dips, dips à la barre droite), qui est pourtant la seconde moitié du muscle-up. Les négatifs montent à 4 × 2 à 5, soit jusqu'à 20 répétitions excentriques par séance, au-dessus du plafond de 15 par séance (R5-P8)."},
+        {"critere": "F4", "perte": 4.5, "raison": "Les blocs 1, 2 et 3 sont presque identiques. Les charges reviennent au même point à chaque bloc (épaulé-jeté 57,5 puis 60 kg à chaque fois, squat 77,5 puis 80 kg). La seule progression est une baisse du RIR et une série de plus, et aucun critère ne permet de passer des négatifs au muscle-up assisté puis au muscle-up complet. La trajectoire confirme une progression quasi nulle : 0,166 % par semaine (R5-P3, R3-P1)."},
+        {"critere": "F5", "perte": 7, "raison": "Les tests des semaines 5, 10 et 15 portent sur un « muscle-up barre négatif 1 × 1 à 10, effort maximal », jamais sur une tentative de muscle-up strict. La semaine 16, qui tombe à l'échéance, est une « introduction » du bloc 4 : il n'y a ni pic ni tentative finale (R3-P12, R2-P10)."},
+        {"critere": "F6", "perte": 3, "raison": "Les négatifs ont un rôle clair (méthode excentrique), mais ils ne sont pas plafonnés, n'ont pas de tempo et n'ont pas de critère de retrait ou de passage à une autre méthode (R2-P22, R5-P8)."},
+        {"critere": "F7", "perte": 5.5, "raison": "Il n'y a ni dips, ni travail en appui à la barre, ni prise fausse (false grip), ni éducatif de transition, alors que ce sont les points faibles typiques d'un athlète à 10 tractions qui vise le muscle-up. Le tronc et le bas du corps sont bien présents."},
+        {"critere": "F8", "perte": 4, "raison": "Les coudes cumulent des charges sans plafond : le lundi, négatifs, traction explosive et traction kipping 4 × 12 ; le samedi, burpee avec traction 4 × 12 ; s'y ajoutent la montée de corde et les négatifs du vendredi. Au total, plusieurs centaines de répétitions de tirage par semaine, sans conduite à tenir en cas de douleur au coude ou à l'épaule (R5-P24, R5-P8)."},
+        {"critere": "F9", "perte": 3, "raison": "Les séances tiennent dans les 60 minutes et les repos sont précisés. En revanche, beaucoup de charges sont à déterminer, les 1RM de référence contredisent le profil, et aucun échauffement spécifique n'est écrit avant les négatifs ou l'épaulé-jeté."},
+        {"critere": "ensemble", "perte": 5, "raison": "Quatre corrections sont nécessaires (absence de poussée en appui, traction explosive mal dosée, aucune progression vers le muscle-up complet ni tentative à l'échéance, blocs répétés sans surcharge). L'objectif n'est servi qu'en partie : 5."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Ajouter deux fois par semaine des dips aux barres parallèles puis des dips à la barre droite (3-4 × 4-8 à 2-3 RIR, en passant au lest dès 12 répétitions), ainsi que des tenues en appui haut à la barre.", "consequence": "L'athlète finira par passer la barre sans pouvoir se repousser au-dessus : la sortie du muscle-up restera bloquée."},
+        {"type": "necessaire", "texte": "Remplacer la « traction explosive 10-15 rép. » par des tractions hautes, poitrine puis taille à la barre, en 5-6 × 3-4 à RIR 2-3 avec repos de 2-3 min. Ajouter une exposition lourde hebdomadaire de traction lestée (4 × 3-5 à 80-85 % de la charge totale, poids de corps compris).", "consequence": "La prescription est irréalisable (10 répétitions au maximum) ; l'athlète fera des séries d'endurance lentes au lieu de développer la puissance de tirage haut qui conditionne le muscle-up."},
+        {"type": "necessaire", "texte": "Écrire une progression du geste avec des critères de passage : négatifs (plafond de 15 répétitions par séance) → muscle-up à l'élastique ou sauté → transition à la barre basse → tentatives strictes en singles frais. Faire de la semaine 16 une semaine allégée qui se termine par une tentative de muscle-up strict, et faire des semaines 5, 10 et 15 des tests du geste complet ou assisté.", "consequence": "Au terme des 16 semaines, l'athlète n'aura jamais tenté le muscle-up : l'objectif ne pourra être ni atteint ni constaté à l'échéance."},
+        {"type": "necessaire", "texte": "Faire progresser les blocs entre eux : volume ou difficulté des variantes de tirage et d'appui en hausse de bloc en bloc, avec reprise des charges au niveau atteint à la fin du bloc précédent et non au point de départ.", "consequence": "Chaque bloc recommence au même niveau ; la trajectoire (0,166 % par semaine) montre une stagnation des qualités de force utiles au muscle-up."},
+        {"type": "amelioration", "texte": "Plafonner le tirage de conditionnement (traction kipping, burpee avec traction, corde) les jours de négatifs ou de tirage haut, et ajouter une règle de douleur au coude ou à l'épaule (R5-P23, R5-P24)."},
+        {"type": "amelioration", "texte": "Remplacer les handstand shoulder taps par du travail de prise fausse et de transition à la barre basse ou aux anneaux."},
+        {"type": "amelioration", "texte": "Aligner les 1RM de référence sur le profil (épaulé-jeté 80 kg, squat 120 kg) et donner les charges en kilogrammes."},
+        {"type": "amelioration", "texte": "Écrire un échauffement spécifique avant les négatifs : suspensions actives, tirages scapulaires, tractions légères."}
+      ],
+      "points_forts": [
+        "Des semaines allégées tous les cinq semaines, avec volume réduit et RIR relevé.",
+        "Le RIR est précisé partout et reste loin de l'échec, sans aucun échec involontaire dans la trajectoire.",
+        "Des négatifs de muscle-up deux fois par semaine dès la semaine 1.",
+        "Les séances tiennent dans les 60 minutes, et le tronc, le bas du corps et l'arrière d'épaule sont présents."
+      ]
+    },
+    {
+      "programme": "programme_2.md",
+      "criteres": {"F1": 6, "F2": 6, "F3": 6, "F4": 5, "F7": 5.5, "F8": 4.5, "F9": 7},
+      "sans_objet": ["F5", "F6"],
+      "ensemble": 5,
+      "points_perdus": [
+        {"critere": "F1", "perte": 4, "raison": "Le seul mouvement de flexion de genoux est l'air squat, une fois par semaine (mercredi), et aucune flexion de hanche n'est chargée. La poussée et le tirage reviennent deux fois par semaine."},
+        {"critere": "F2", "perte": 4, "raison": "Le RIR de 4 à 3 est adapté à une débutante. Mais l'air squat est prescrit en 6 à 12 répétitions au poids de corps alors que la trajectoire montre une capacité de plus de 24 répétitions : le RIR visé n'a aucun sens et l'effort réel reste loin de la cible. Le « ≈ 67 % du 1RM » des semaines 4 et 12 est incalculable sans 1RM."},
+        {"critere": "F3", "perte": 4, "raison": "Avec 22 à 28 séries dures, le volume est correct pour une débutante. Mais il penche vers l'isolation d'épaule (élévation latérale, Y raise, W raise) au détriment du bas du corps, qui ne reçoit qu'un mouvement chargé de façon significative."},
+        {"critere": "F4", "perte": 5, "raison": "Les trois blocs sont quasi identiques, à des échanges d'accessoires près. La progression ne se fait que par le RIR et une série de plus ; il n'y a aucune règle de double progression chiffrée (R5-P3) pour faire monter les charges ou les variantes."},
+        {"critere": "F7", "perte": 4.5, "raison": "Le bas du corps se limite à l'air squat, au pont fessier et au reverse hyper : rien de chargé ni de progressif alors que la presse et les haltères sont disponibles. L'équilibre entre poussée et tirage et le travail du tronc sont corrects."},
+        {"critere": "F8", "perte": 5.5, "raison": "Une femme sédentaire de 92 kg (IMC d'environ 32) commence par 18 à 20 minutes de footing continu dès la semaine 1, puis 25 minutes, sans phase de marche-course. Le profil parle de marche, pas de course. Le déficit et les 6,5 h de sommeil ne sont pas pris en compte dans la progression (R5-P9, R5-P22, R5-P14)."},
+        {"critere": "F9", "perte": 3, "raison": "Les séances durent moins de 45 minutes et les repos sont donnés. En revanche, il n'y a pas d'échauffement le lundi ni le samedi avant la force, et les charges sont à calibrer sans méthode écrite."},
+        {"critere": "ensemble", "perte": 5, "raison": "Trois corrections sont nécessaires, dont un risque réel (footing continu d'emblée pour une débutante sédentaire en surpoids), ce qui plafonne la note à 5."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Remplacer le footing par de la marche rapide (20 à 30 min), puis par une alternance marche-course (par exemple 1 min de course et 2 min de marche) seulement après 4 à 6 semaines et une fois que le squat et la fente sont indolores. Le vélo et le rameur sont des options à faible impact.", "consequence": "Forte probabilité de douleurs au genou, au tibia ou au tendon d'Achille dans les premières semaines, et d'abandon, ce qui va contre l'objectif d'habitude."},
+        {"type": "necessaire", "texte": "Charger le bas du corps de façon progressive deux fois par semaine : goblet squat ou presse à cuisses 3 × 8-12, soulevé de terre roumain aux haltères 3 × 8-12, à RIR 2-3.", "consequence": "L'air squat devient trop facile dès le premier mois (capacité supérieure à 20 répétitions) ; en déficit, la masse maigre des jambes n'est pas protégée (R5-P16)."},
+        {"type": "necessaire", "texte": "Écrire une règle de double progression : quand le haut de la fourchette est atteint à la cible de RIR deux séances de suite, ajouter 2 à 5 % ou passer à la variante plus dure (R5-P3).", "consequence": "Les charges stagnent à la valeur de calibrage pendant 12 semaines ; la trajectoire montre un rowing bloqué à 20 kg de la semaine 4 à la semaine 12."},
+        {"type": "amelioration", "texte": "Remplacer une ou deux isolations d'épaule (Y raise ou W raise, élévation latérale) par un développé ou un tirage polyarticulaire supplémentaire."},
+        {"type": "amelioration", "texte": "Écrire un échauffement de 5 minutes (vélo ou rameur léger, puis séries de montée) le lundi et le samedi."},
+        {"type": "amelioration", "texte": "Proposer des pompes inclinées et des dips assistés à la machine comme régressions, avec un critère de passage."}
+      ],
+      "points_forts": [
+        "Le RIR de 4 à 3 est adapté à une débutante, et aucun échec n'est prévu.",
+        "Les séances restent sous les 45 minutes, ce qui favorise l'habitude.",
+        "L'équilibre entre poussée et tirage est respecté, et le tronc et la mobilité sont présents.",
+        "Les semaines d'introduction allègent le volume au début de chaque bloc."
+      ]
+    },
+    {
+      "programme": "programme_3.md",
+      "criteres": {"F1": 6, "F2": 6, "F3": 6, "F4": 5, "F7": 5, "F8": 4, "F9": 7},
+      "sans_objet": ["F5", "F6"],
+      "ensemble": 5,
+      "points_perdus": [
+        {"critere": "F1", "perte": 4, "raison": "Chaque mouvement n'est travaillé qu'une fois par semaine (développé couché le mardi, rowing le jeudi, tirage vertical et pompes le samedi). Il n'y a aucun travail du quadriceps adapté au genou."},
+        {"critere": "F2", "perte": 4, "raison": "Le RIR de 4 à 3 est cohérent avec la reprise (R5-P7). Mais les exercices à l'élastique sont « à calibrer » sans tension définie, et la trajectoire montre un RIR réel de 6 à 8 pendant 12 semaines. Le « ≈ 67 % du 1RM » du développé couché est incalculable sans 1RM."},
+        {"critere": "F3", "perte": 4, "raison": "Avec 19 à 25 séries dures, le volume est raisonnable pour une reprise après 200 semaines d'arrêt. Mais le bas du corps ne compte que deux exercices (fente latérale, reverse hyper), et aucun ne renforce le genou de façon dosée."},
+        {"critere": "F4", "perte": 5, "raison": "Les trois blocs sont identiques et la progression se limite au RIR et à une série de plus. Aucune règle de double progression n'est écrite pour les haltères et les élastiques ; dans la trajectoire, le développé couché stagne à 18 kg à partir de la semaine 6 (R5-P3)."},
+        {"critere": "F7", "perte": 5, "raison": "Le tirage et l'épaule sont bien couverts (face pull, oiseau, pull-apart) pour l'épaule opérée. Le genou, lui, n'a ni travail isométrique ou en amplitude limitée (wall sit, step-up bas, squat sur box haute) ni travail sur le vélo pourtant disponible."},
+        {"critere": "F8", "perte": 6, "raison": "Le genou droit est douloureux en flexion profonde (gêne de 5/10, questionnaire en mode prudent). Pourtant le programme prescrit la fente latérale 2-3 × 3-8, le world's greatest stretch et le pigeon au sol : ce sont des positions de flexion profonde du genou, sans limite d'amplitude ni règle de douleur (R5-P23 : à 5/10, il faut régresser). La gêne n'est pas prise en compte."},
+        {"critere": "F9", "perte": 3, "raison": "Les séances tiennent dans 40 et 30 minutes et le matériel correspond à celui de la maison. En revanche, le samedi n'a pas d'échauffement, aucun échauffement du genou n'est prévu, et la tension des élastiques n'est pas précisée."},
+        {"critere": "ensemble", "perte": 5, "raison": "Trois corrections sont nécessaires, dont une gêne actuelle de 5/10 que le choix des exercices ignore, ce qui plafonne la note à 5."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Remplacer la fente latérale et les étirements en flexion profonde (pigeon au sol, world's greatest stretch) par un travail du genou en amplitude indolore : squat sur box haute, step-up bas, wall sit isométrique de 30 à 45 s, extension de genou à l'élastique, et 10 minutes de vélo en échauffement.", "consequence": "La gêne de 5/10 risque d'augmenter à chaque séance et d'arrêter le programme, à l'opposé de l'objectif d'habitude de 12 semaines."},
+        {"type": "necessaire", "texte": "Écrire la conduite à tenir en cas de douleur : 0-2/10 on continue, 3-4/10 on ne progresse pas, 5/10 on régresse, 6/10 ou plus on arrête. Contrôler le lendemain et consulter si la douleur persiste deux semaines (R5-P23).", "consequence": "L'athlète, prudent et en reprise, n'a aucun repère pour décider s'il doit continuer, adapter ou arrêter quand le genou réagit."},
+        {"type": "necessaire", "texte": "Écrire une double progression pour les haltères et les élastiques (haut de la fourchette à la cible de RIR deux fois → +1 à 2 kg ou un élastique plus fort, R5-P3) et préciser la tension de départ.", "consequence": "Les charges restent figées : la trajectoire montre un RIR réel de 7 à 8 au rowing à l'élastique pendant 12 semaines, donc aucun stimulus de force."},
+        {"type": "amelioration", "texte": "Porter le cardio du samedi à 20-25 minutes de vélo ou de marche, pour correspondre aux 20 % de cardio déclarés."},
+        {"type": "amelioration", "texte": "Pour l'épaule gauche opérée, préciser une amplitude confortable au développé couché aux haltères (coudes à environ 45°, sans descente sous le plan du banc au départ)."},
+        {"type": "amelioration", "texte": "Écrire un échauffement le samedi avant le tirage vertical et les pompes."}
+      ],
+      "points_forts": [
+        "Une reprise prudente qui respecte le barème après coupure : RIR 4 puis 3, 2 séries en introduction (R5-P7).",
+        "Des séances courtes qui tiennent dans 30 et 40 minutes avec le matériel de la maison.",
+        "L'épaule opérée est protégée par du travail de l'arrière d'épaule et de la scapula (CARs, face pull, oiseau, pull-apart).",
+        "Pas de squat profond ni de saut : une partie du risque pour le genou est déjà évitée."
+      ]
+    }
+  ]
+}

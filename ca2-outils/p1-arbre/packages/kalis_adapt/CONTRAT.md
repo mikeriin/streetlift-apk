@@ -1343,7 +1343,7 @@ leur capacité (ni vitesse critique ni VO2max) : il garde le programme écrit et
    risque 1,64 (1,31-2,05) ; 30 à 100 %, 1,52 ; au-delà de 100 %, 2,28 ; le rapport de charge d'une semaine à
    l'autre n'y est pas associé (la règle des 10 % par semaine n'a pas d'effet protecteur chez les débutants : Buist
    et al. 2008 ; Nielsen et al. 2014 : hausse de plus de 30 % sur deux semaines, risque de blessures liées à la
-   distance HR 1,59, IC 0,96-2,66, non significatif). Les durées sont arrondies vers le bas (minute, 100 m).
+   distance HR 1,59, IC 0,96-2,66, non significatif). Les durées sont arrondies vers le bas (minute, 100 m). Un test de course (contre-la-montre) plus long que la borne n'est pas servi comme test : il devient une course bornée, à effort modéré, et le test est reporté (panel de la partie 1 : semi-marathon couru à fond en semaines 5 et 10 d'un programme dont la plus longue sortie faisait une heure).
 4. **Conditionnement mis à l'échelle** (pièces de WOD non modélisées) : un jour sans (sauf la seule course dure) ou
    après 2 jours durs de suite (`wodHardStreak` ; effort noté 8 et plus) : 75 % des répétitions ou de la durée
    (`wodScaleShare`) et une flamme de moins sur l'effort visé. Tibana et al. 2016 : deux jours consécutifs
@@ -1369,7 +1369,9 @@ leur capacité (ni vitesse critique ni VO2max) : il garde le programme écrit et
    plage, sont dites au moins 2 répétitions plus faciles que visé (`coachAssistWideRir`) fait passer à l'élastique
    plus fin dès la séance suivante (sept jours au moins depuis le dernier changement, `coachAssistMinDays`), sans
    attendre deux séances au haut de la plage (panel de la passe 6, trois écoles sur quatre ; ACSM 2009, règle « 2
-   pour 2 »).
+   pour 2 »). Une série repère (ouverte) ne remet plus la série de séances à zéro, et une série repère qui dépasse le
+   haut de la plage écrite d'au moins 2 répétitions, sans échec, compte comme une marge large (relecture documentée
+   de la partie 1, `street_03` : élastique jamais changé en 16 semaines, une série repère une semaine sur deux).
 
 Paramètres (`params.dart`) : `enduranceSpike` 0,10 ; `enduranceSpikeDays` 30 ; `enduranceSpikeMinRuns` 3 ;
 `enduranceResumeShortDays` 7, `enduranceResumeShort` 0,7 ; `enduranceResumeLongDays` 14, `enduranceResumeLong` 0,5 ;

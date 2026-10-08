@@ -1,0 +1,32 @@
+[
+ {
+  "profil": "street_01_debutant_complet",
+  "ensemble": 5,
+  "adapte_au_profil": 6,
+  "progression": 4,
+  "volume_intensite": 5,
+  "choix_exercices": 7,
+  "faisable_sur": 8,
+  "commentaire": "Programme : corps entier 3 fois par semaine, 2 à 3 séries, réserve de 4 à 2, négatives, tenues, essais stricts, affûtage, conforme au modèle débutant [https://sfu.ca/~ryand/kin343/ACSMresistance.pdf]. Défauts du programme : bloc 3 sans test, dips ajoutés en semaine 7. Défauts de conduite, plus lourds : un seul changement d'élastique (semaine 2) alors que les séries restent 2 à 6 répétitions plus faciles que visé (écart 2,28) et atteignent souvent le haut de la plage. La règle d'assistance n'est pas appliquée et le maximum assisté passe de 16 à 15. Tenue servie à 5 s au lieu de 17 s en semaine 7. Test de la semaine 12 noté 30 s au lieu de 32 s. Poignet à 4/10 : retirer pompes et dips est prudent (<5/10 admis si la tendance est stable [https://physicaltherapyfirst.com/blog/continued-sports-activity-using-a-pain-monitoring-model-during-rehabilitation-in-patients-with-achilles-tendinopathy/]), mais aucune variante poignet neutre n'est proposée [https://cris.iucc.ac.il/en/publications/force-transmission-through-the-wrist-during-performance-of-push-u/] et la poussée reste à l'arrêt 9 semaines. Mauvais jours bien gérés."
+ },
+ {
+  "profil": "street_03_debutante",
+  "ensemble": 4,
+  "adapte_au_profil": 5,
+  "progression": 3,
+  "volume_intensite": 5,
+  "choix_exercices": 6,
+  "faisable_sur": 8,
+  "commentaire": "Programme cohérent : échelle de poussée, tractions assistées, négatives, tenues [https://mtntactical.com/all-articles/the-best-way-to-improve-pull-ups-part-iii-the-results-and-the-verdict/]. Défauts du programme : gainage monté jusqu'à 5 × 35 s, bloc 3 sans test. La conduite fait échouer les deux objectifs. L'élastique n'est jamais changé alors que la réserve réelle est de 7 à 10 pour 3 à 4 visées, avec les séries au plafond de la plage : la règle d'assistance et la règle 2 pour 2 sont ignorées [https://sfu.ca/~ryand/kin343/ACSMresistance.pdf]. Les pompes inclinées font 15 à 18 répétitions dès la semaine 3, ce qui remplit le critère 2 × 12, mais le cran reste bloqué 15 semaines. Les pompes restent à 3 répétitions pour un objectif de 10. Tenues échouées, maximum surestimé. Poignet à 4/10 : la prudence est fondée [https://physicaltherapyfirst.com/blog/continued-sports-activity-using-a-pain-monitoring-model-during-rehabilitation-in-patients-with-achilles-tendinopathy/], mais 10 semaines de pompes à 1 × 1 sans variante neutre [https://cris.iucc.ac.il/en/publications/force-transmission-through-the-wrist-during-performance-of-push-u/]. Séance manquée bien gérée."
+ },
+ {
+  "profil": "street_06_inter_sets_reps",
+  "ensemble": 6,
+  "adapte_au_profil": 6,
+  "progression": 4,
+  "volume_intensite": 6,
+  "choix_exercices": 7,
+  "faisable_sur": 8,
+  "commentaire": "Programme solide pour des répétitions maximales : série de tête sous-maximale, départs au chrono, zone de l'épreuve à 71-79 %, tempo, volume sans lest [https://mtntactical.com/all-articles/the-best-way-to-improve-pull-ups-part-iii-the-results-and-the-verdict/]. Affûtage d'environ 50 % sur 2 semaines avec l'intensité gardée, conforme [https://coachsci.sdsu.edu/csa/vol131/bosquet.htm]. Objectifs signalés comme trop ambitieux, c'est honnête. Défauts du programme : 4 séances, toutes haut du corps, à 47 séries dures, et un bloc 3 qui répète le bloc 1 après deux tests stagnants (14 et 23) au lieu de varier le stimulus [https://sfu.ca/~ryand/kin343/ACSMresistance.pdf]. Conduite : réserve bien réglée (écart 0,79 [https://www.strongerbyscience.com/reps-in-reserve]), recalage sur le vrai maximum (14). Mais en semaines 4 et 5 les dips sont servis à 12-12-12 au lieu de 22, avec 10 répétitions en réserve : 3 semaines de stimulus perdues après un mauvais jour. Progression de 0,23 % par semaine sans réaction du moteur. Mauvais jours et séance manquée bien gérés."
+ }
+]

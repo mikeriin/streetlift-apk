@@ -1,0 +1,103 @@
+{
+  "ecole": "sante",
+  "programmes": [
+    {
+      "programme": "programme_1.md",
+      "criteres": {"S1": 4, "S2": 2.5, "S3": 4.5, "S4": 3, "S5": 5, "S6": 3.5, "S7": 4, "S8": 2.5, "S9": 3.5},
+      "sans_objet": [],
+      "ensemble": 4,
+      "points_perdus": [
+        {"critere": "S1", "perte": 6, "raison": "Débutante à 6 mois de course, record 5 km en 35 min : un 10 km à fond dès la semaine 4 (puis S8, S12) double sa plus longue course d'un coup, avec l'impact que ça représente. Aucun seuil de douleur écrit (R5-P23) et aucun renforcement des mollets ou des hanches pour supporter l'impact (R5-P24)."},
+        {"critere": "S2", "perte": 7.5, "raison": "Le volume écrit passe de 55 min (S1) à 120 min (S2), soit +118 %. Dès S1, la sortie du dimanche fait 40-45 min, au-delà de ses 35 min. S3 prévoit 60 min. La trajectoire le confirme : l'athlète ne finit pas ses footings de 30 min, et le moteur a dû couper les sorties longues à chaque fois (R5-P3, R5-P7, R5-P22). Rien n'est prévu après une séance manquée."},
+        {"critere": "S3", "perte": 5.5, "raison": "Les semaines 4 et 8 allègent bien les jeudis et dimanches, mais elles contiennent l'effort le plus dur du cycle (10 km à fond), donc ce ne sont pas des allègements. Pas de critère de baisse du jour. Rien sur la charge de vie (R5-P14 à P19)."},
+        {"critere": "S4", "perte": 7, "raison": "Seule l'étiquette « endurance fondamentale » indique l'intensité : pas d'allure, pas de test de parole, pas d'effort noté. Pas d'alternance course/marche alors qu'elle doit passer de 35 à 70 min d'effort continu (R6, course). Le format de l'épreuve n'est jamais travaillé de façon progressive : on passe directement de footings plafonnés à 60 min au 10 km complet."},
+        {"critere": "S5", "perte": 5, "raison": "Seulement des étirements statiques de retour au calme. Pas d'échauffement écrit. Aucun renforcement préventif pour la coureuse débutante (mollets, soléaire, fessiers), alors que la répétitivité de la course l'exige (R4-F10 à F12, R5-P24)."},
+        {"critere": "S6", "perte": 6.5, "raison": "Trois tests à l'effort maximal sur une distance qu'elle ne peut pas couvrir : la trajectoire montre 4,4 km, puis 4,9 km, puis 5,5 km, notés 10/10 et jamais finis. C'est de l'échec programmé chez une débutante (R5-P4, R5-P27)."},
+        {"critere": "S7", "perte": 6, "raison": "Le mardi des semaines 4, 8 et 12 est estimé à 80 min pour 45 min disponibles : la séance ne tient pas dans le créneau. Les durées écrites dépassent ce qu'elle tient, ce qui l'expose à des séances ratées à répétition et nuit à l'adhésion de la débutante (R5-P1, R5-P2)."},
+        {"critere": "S8", "perte": 7.5, "raison": "Pas d'affûtage : S11 est une semaine de montée (130 min écrites) et l'échéance arrive en S12, sans allègement de 8 à 14 jours (R3-P20, R3-P21). La course tombe un mardi, sans échauffement ni stratégie d'allure, et elle est suivie de deux footings."},
+        {"critere": "S9", "perte": 6.5, "raison": "La colonne effort est vide partout. Rien ne dit quoi faire si elle ne tient pas la durée, si elle a mal ou si elle est très fatiguée. Le test « 10 km » ne donne ni allure ni consigne."},
+        {"critere": "ensemble", "perte": 6, "raison": "Six corrections nécessaires, plus une progression brutale et des efforts maximaux répétés au-delà de ses capacités : la note est plafonnée à 5, et je descends à 4 vu le nombre de corrections."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Repartir de ce qu'elle fait aujourd'hui : 3 × 25-35 min avec une sortie longue de 35-40 min en S1, puis +5 min sur la sortie longue toutes les 1 à 2 semaines jusqu'à 65-75 min en S9-S10. Ne pas dépasser +10-15 % de volume par semaine.", "consequence": "Elle ne finit pas les séances écrites (c'est ce que montre la trajectoire) et risque une blessure de surcharge, tibia ou mollet."},
+        {"type": "necessaire", "texte": "Remplacer les 10 km à fond des semaines 4 et 8 par un 5 km chronométré en S4, puis un 7-8 km en endurance en S8. Garder le 10 km pour le jour de la course.", "consequence": "Elle fait trois efforts maximaux sans pouvoir aller au bout, ce qui coûte de la fatigue, augmente le risque et la décourage."},
+        {"type": "necessaire", "texte": "Ramener les séances des mardis de test à 45 min, ou placer les tests le dimanche (60 min).", "consequence": "Ces séances ne tiennent pas dans le temps disponible et seront écourtées ou sautées."},
+        {"type": "necessaire", "texte": "Écrire un affûtage : réduire le volume de 40 à 50 % sur les 10 à 14 derniers jours, faire la dernière sortie longue à J−10, placer la course le dimanche, et donner une stratégie d'allure prudente (environ 7 min/km, départ plus lent).", "consequence": "Elle arrive à la course fatiguée, sans plan d'allure, et risque de partir trop vite et de ne pas finir."},
+        {"type": "necessaire", "texte": "Définir l'intensité : footings à 3-4/10, aisance respiratoire où l'on peut parler en phrases. Autoriser l'alternance course/marche (par exemple 8 min de course / 1 min de marche) pour allonger la durée.", "consequence": "Elle court probablement trop vite (efforts notés 7-8/10 sur les footings) et ne peut pas tenir des durées plus longues."},
+        {"type": "necessaire", "texte": "Ajouter une règle de douleur : douleur ≤ 3/10 qui disparaît en 24 h, on continue ; au-delà, on raccourcit et on remplace par de la marche ; si la douleur persiste plus d'une semaine, consulter (R5-P23).", "consequence": "Une gêne tibiale ou au tendon d'Achille ne sera pas gérée et peut devenir une périostite ou une tendinopathie."},
+        {"type": "amelioration", "texte": "Ajouter 10 min de renforcement deux fois par semaine : montées sur pointes debout et genou fléchi, pont fessier, squat partiel."},
+        {"type": "amelioration", "texte": "Écrire un échauffement de 5 min (marche rapide, puis gammes légères) avant chaque footing."},
+        {"type": "amelioration", "texte": "Prévoir quoi faire après une semaine manquée (reprendre la semaine précédente) et une version courte de 25 min."}
+      ],
+      "points_forts": [
+        "Trois séances placées sur des jours non consécutifs, sortie longue le dimanche.",
+        "Course faite en grande partie en continu sur terrain varié, et la mobilité de retour au calme est simple.",
+        "Les semaines 4 et 8 réduisent bien le volume des autres séances."
+      ]
+    },
+    {
+      "programme": "programme_2.md",
+      "criteres": {"S1": 5, "S2": 4.5, "S3": 5, "S4": 3, "S5": 6.5, "S6": 5, "S7": 5.5, "S8": 1.5, "S9": 4.5},
+      "sans_objet": [],
+      "ensemble": 4.5,
+      "points_perdus": [
+        {"critere": "S1", "perte": 5, "raison": "Aucun seuil de douleur (R5-P23), alors que la trajectoire signale une douleur du bas du corps dès S3 et une blessure de surcharge. Le semi-marathon à fond de S5 arrive quand sa sortie longue la plus longue fait 75 min : environ 105 min d'impact à intensité maximale (R5-P27)."},
+        {"critere": "S2", "perte": 5.5, "raison": "La sortie longue passe de 75 min en S4 à 21,1 km à fond en S5 (environ ×1,4 en durée, et à intensité de course) : c'est un saut de charge. Les blocs 2 et 3 repartent à 49-55 min sans logique de continuité. Aucune règle de reprise après une séance ou une semaine manquée (R5-P3, R5-P7, R5-P22)."},
+        {"critere": "S3", "perte": 5, "raison": "Les semaines 5 et 10 sont étiquetées allègement, mais elles contiennent un semi-marathon à fond, donc elles ne sont pas légères. Rien sur le travail, le sommeil ou le stress de cet homme de 38 ans (R5-P14 à P19). Pas de critère de baisse du jour."},
+        {"critere": "S4", "perte": 7, "raison": "Pour viser 1 h 45, soit environ 4:58/km, il n'y a ni travail au seuil ni travail à l'allure semi (R6, course). Seules des côtes de 60-90 s, sans intensité. La sortie longue plafonne à 75 min alors que la course en dure 105. Aucune intensité n'est définie (ni allure, ni FC, ni effort). Les côtes du samedi précèdent la sortie longue du dimanche."},
+        {"critere": "S5", "perte": 3.5, "raison": "Bon : coiffe des rotateurs (lift-off, rotation interne), face pull, fessiers, hip airplane, éducatifs. Mais aucun renforcement mollet/soléaire ni pied pour un coureur à 30 km par semaine (R5-P24). Le reverse nordic sans progression d'amplitude est discutable pour les genoux."},
+        {"critere": "S6", "perte": 5, "raison": "Les marges en renforcement sont prudentes (3 → 2 rép. en réserve), mais deux tests de course à 10/10 dont un deux semaines avant l'échéance, plus des tenues « dures » de gainage, ajoutent une fatigue inutile."},
+        {"critere": "S7", "perte": 4.5, "raison": "Le dimanche des semaines 5 et 10 est estimé à 136-137 min pour 120 min disponibles : la séance ne tient pas. Avec le gainage et les étirements en plus de la sortie longue, les dimanches sont chargés."},
+        {"critere": "S8", "perte": 8.5, "raison": "L'échéance est ignorée. S12 est étiquetée « montée — ÉCHÉANCE », avec un volume en hausse (mardi 49-55 min, côtes 5 × 90 s) et aucun semi-marathon programmé le jour de la course. Il n'y a pas d'affûtage (R3-P20, R3-P21), pas d'allure à travailler ni de stratégie de course, et le dernier test complet tombe à J−14 à fond."},
+        {"critere": "S9", "perte": 5.5, "raison": "Les tests et les footings n'ont aucune consigne d'allure. Rien ne dit quoi faire en cas de douleur, sauf l'arrêt implicite du gainage. Les « tenues dures » sont floues."},
+        {"critere": "ensemble", "perte": 5.5, "raison": "L'échéance est ignorée (plafond 6), plus un saut de charge avec effort maximal en S5 (plafond 5). Cinq corrections nécessaires."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Programmer la course en S12 avec un affûtage de 10 à 14 jours : volume −40 à −50 % à partir de S11, une séance courte à l'allure semi en S12, la course le dimanche, et une stratégie d'allure (départ à 5:00-5:05/km, accélérer après le 15e km).", "consequence": "Il arrive en semaine de course en pleine montée de volume, sans course prévue, et ne peut pas faire 1 h 45."},
+        {"type": "necessaire", "texte": "Supprimer les semi-marathons à fond des semaines 5 et 10. À la place : un 10 km chronométré en S5 pour réétalonner les allures, et une sortie longue de 16-18 km avec un bloc à l'allure semi en S9-S10, à J−14 au plus tard.", "consequence": "Deux efforts maximaux de 105 min, dont le premier dépasse largement ses sorties longues : risque de blessure (la trajectoire en montre une) et fatigue qui arrive jusqu'à la course."},
+        {"type": "necessaire", "texte": "Ajouter du travail spécifique avec des intensités écrites. Seuil, par exemple 3 × 8 min à environ 4:45/km. Allure semi, par exemple 2 × 15-20 min à 4:58/km. Et définir l'allure de l'endurance fondamentale (environ 5:50-6:15/km, effort 3-4/10).", "consequence": "Sans travail à l'allure de course, il est peu probable qu'il tienne 4:58/km pendant 21 km."},
+        {"type": "necessaire", "texte": "Faire monter la sortie longue progressivement sur tout le cycle jusqu'à 95-110 min (environ 18-19 km) en S9-S10, au lieu de revenir à 49-55 min à chaque début de bloc.", "consequence": "La sortie longue plafonne à 75 min alors que la course en dure 105 : il manque d'endurance spécifique pour la fin de course."},
+        {"type": "necessaire", "texte": "Faire tenir les dimanches dans les 120 min : sortir les étirements et la pompe les jours de test, ou les déplacer au samedi.", "consequence": "Les séances des semaines 5 et 10 ne tiennent pas dans le créneau et seront tronquées au hasard."},
+        {"type": "amelioration", "texte": "Ajouter une règle de douleur (≤ 3/10, disparue en 24 h) et une règle de reprise après une semaine manquée."},
+        {"type": "amelioration", "texte": "Ajouter du renforcement des mollets (montées sur pointes debout et genou fléchi) et une progression d'amplitude pour le reverse nordic."},
+        {"type": "amelioration", "texte": "Écarter les côtes du samedi et la sortie longue du dimanche, ou mettre la qualité le mardi."}
+      ],
+      "points_forts": [
+        "Bon volet préventif pour le haut du corps et les hanches : coiffe, face pull, hip airplane, pont fessier.",
+        "Marges prudentes en renforcement (3 → 2 rép. en réserve) et peu de séries.",
+        "Quatre séances bien réparties, avec un échauffement écrit le jeudi et des éducatifs avant la sortie longue."
+      ]
+    },
+    {
+      "programme": "programme_3.md",
+      "criteres": {"S1": 4.5, "S2": 8, "S3": 6.5, "S4": 5, "S5": 5.5, "S6": 7.5, "S7": 7.5, "S9": 5},
+      "sans_objet": ["S8"],
+      "ensemble": 5,
+      "points_perdus": [
+        {"critere": "S1", "perte": 5.5, "raison": "Le questionnaire est en « mode prudent », mais le programme ne prévoit ni avis médical, ni seuil de douleur, ni consigne d'arrêt (R5-P9, R5-P23). La pompe classique au sol, les mountain climbers, le bear hold, le sleeper stretch et les dislocations d'épaule en fin d'amplitude sont mal adaptés à une femme de 68 ans qui n'a jamais fait de musculation. Elle doit en plus descendre au sol et se relever souvent, sans consigne de sécurité."},
+        {"critere": "S2", "perte": 2, "raison": "Départ prudent (4 rép. en réserve, 2 séries) et hausses faibles. Mais aucune progression de charge ou de variante n'est prévue, et rien n'est dit sur la reprise après une semaine manquée."},
+        {"critere": "S3", "perte": 3.5, "raison": "Le dosage est bas et adapté. En revanche, pas de critère de baisse du jour, rien sur le sommeil ou la fatigue, et pas d'allègement (acceptable vu la faible charge)."},
+        {"critere": "S4", "perte": 5, "raison": "Une seule marche rapide de 10-15 min par semaine, sans intensité définie (effort, test de parole). La marche qu'elle pratique déjà n'est pas intégrée (R6)."},
+        {"critere": "S5", "perte": 4.5, "raison": "Le tirage et le face pull équilibrent bien la poussée. Mais beaucoup d'appuis sur les poignets (quadrupédie, pompe, bear hold, bird dog) et d'étirements en fin d'amplitude (sleeper stretch, half split, pigeon) sans variante adaptée à l'âge. Pas d'échauffement général avant les séances (R4-F10 à F12)."},
+        {"critere": "S6", "perte": 2.5, "raison": "Marges larges (4 → 3 rép. en réserve), adaptées. Mais le même seuil est appliqué à la pompe au sol, qui est probablement hors de portée au départ."},
+        {"critere": "S7", "perte": 2.5, "raison": "Les séances tiennent dans 30 min, quatre fois par semaine. Mais beaucoup d'exercices différents (8 par séance, changés à chaque bloc) et des noms techniques en anglais compliquent les choses pour une débutante. Pas de version courte."},
+        {"critere": "S9", "perte": 5, "raison": "Les « rép. en réserve » et la charge d'élastique « à calibrer » sont mal compris par ce public. Rien sur quoi faire en cas de vertige, de douleur ou de fatigue."},
+        {"critere": "ensemble", "perte": 5, "raison": "L'équilibre fait partie de l'objectif mais n'est jamais travaillé, la force fonctionnelle des jambes est insuffisante pour viser l'autonomie, et le mode prudent est ignoré. Plus de trois corrections nécessaires."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Ajouter du travail d'équilibre à chaque séance, près d'un appui stable : station sur une jambe, marche talon-pointe, transferts de poids, puis yeux fermés ou demi-tour.", "consequence": "L'équilibre fait partie de son objectif mais n'est jamais entraîné. Elle ne progressera pas sur ce point et le risque de chute reste le même."},
+        {"type": "necessaire", "texte": "Remplacer la pompe classique au sol par une pompe contre le mur ou sur un plan de travail, à faire progresser en abaissant l'appui. Remplacer les mountain climbers par une marche sur place genoux hauts.", "consequence": "Ce sont des exercices probablement trop durs ou mal tolérés au départ (poignets, épaules, descente au sol), avec un risque d'échec et d'abandon."},
+        {"type": "necessaire", "texte": "Ajouter de la force fonctionnelle des jambes dès le bloc 1, deux fois par semaine : se lever d'une chaise, monter une marche, montées sur pointes. Progression par la hauteur du siège ou le tempo.", "consequence": "Sans travail des jambes en charge (seulement une chaise contre le mur de 5-12 s et un pont fessier), le gain d'autonomie pour se lever, monter des escaliers ou porter sera faible."},
+        {"type": "necessaire", "texte": "Pour le mode prudent : conseiller un avis médical avant de commencer, écrire un seuil de douleur (≤ 3/10, disparue le lendemain) et des signes d'arrêt (vertige, essoufflement anormal, douleur dans la poitrine).", "consequence": "Une contre-indication éventuelle n'est pas vérifiée, et elle n'a aucune règle pour réagir à une douleur ou un malaise."},
+        {"type": "amelioration", "texte": "Remplacer le sleeper stretch et les dislocations d'épaule au bâton par des variantes douces (bâton mains écartées, amplitude sans douleur). Proposer les étirements au sol (pigeon, half split) aussi en version sur chaise."},
+        {"type": "amelioration", "texte": "Faire des tests simples au début et à la fin du programme (lever de chaise en 30 s, Timed Up and Go, station sur une jambe) pour mesurer les progrès et motiver."},
+        {"type": "amelioration", "texte": "Remplacer les rép. en réserve par « s'arrêter quand il reste 3 ou 4 répétitions faciles », et ajouter une deuxième marche rapide progressive (20-30 min)."}
+      ],
+      "points_forts": [
+        "Séances de 22 à 26 min dans le créneau de 30 min, quatre fois par semaine, à la maison avec le matériel déclaré.",
+        "Départ très prudent (4 rép. en réserve, 2 séries) et aucune série poussée jusqu'à l'échec.",
+        "Bon équilibre tirage/poussée (rowing et face pull à l'élastique), travail du tronc et respiration."
+      ]
+    }
+  ]
+}
