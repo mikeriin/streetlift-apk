@@ -38,6 +38,11 @@ Lot CA2, partie 0 (street) du pipeline « Calibrage des programmes ». Mode 0.1 
   retirés, échauffement compris) ; pendant tout l'arrêt du poignet, le remplaçant d'une poussée est un appui sur
   parallettes ou poignées, jamais des dips aux barres.
 - **Élastique** : la série de séances au haut de la plage compte même quand la plage écrite monte.
+- **Relecture indépendante du code (sécurité)** : arrêt gardé jusqu'aux deux semaines à 2/10 (plus de chute au
+  premier signalement plus bas), étape de figure et test reporté filtrés par les règles de douleur et d'arrêt,
+  plafond de la reprise et des remplaçants sur toute ligne chargée, arrêt gardé sur l'échauffement, remplaçant de
+  douleur du jour obéissant aux arrêts, aucune hausse au-delà du plan en reprise, ni tenue repère sur zone récente,
+  manques de l'élastique comptés à plage montante, gain d'affûtage avant la première barre seulement.
 - Simulateur : zone réactive après un épisode de douleur (modèles B et C), poussées comptées ; une hausse
   sur zone douloureuse se compte au-dessus de 3/10 (les mesures du mode 0.1 au banc ne se comparent plus
   chiffre à chiffre à celles de 0.2.2).

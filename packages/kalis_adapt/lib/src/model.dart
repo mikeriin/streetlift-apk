@@ -167,7 +167,30 @@ final class PainState {
       }
       recurrence = real && current.first.$1 - before.last.$1 <= painRecurDays;
     }
-    if (!lasting && !strong && !recurrence && (run ?? consecutiveAbove) <= 2) {
+    // Séances de suite au-dessus du seuil dans l'épisode en cours, recomptées
+    // d'après l'historique jusqu'au jour [day] : un arrêt déclenché par
+    // trois séances de suite ne tombe pas au premier signalement plus bas
+    // (relecture indépendante du code, CA2 : le compteur courant était
+    // remis à zéro).
+    var streak = run;
+    if (streak == null) {
+      var n = 0;
+      var best = 0;
+      for (final h in history) {
+        if (h.$1 > day) {
+          break;
+        }
+        if (h.$1 < current.first.$1) {
+          continue;
+        }
+        n = h.$2 > painPersistMin ? n + 1 : 0;
+        if (n > best) {
+          best = n;
+        }
+      }
+      streak = best;
+    }
+    if (!lasting && !strong && !recurrence && streak <= 2) {
       return null;
     }
     return PainStop(

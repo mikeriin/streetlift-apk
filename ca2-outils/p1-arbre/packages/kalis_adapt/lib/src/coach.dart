@@ -333,6 +333,7 @@ final class SlotMark {
     this.sets = 0,
     this.reached = 0,
     this.missed = 0,
+    this.wideMargin = false,
     this.loadedTop,
     this.loadedLoadKg,
   });
@@ -385,6 +386,11 @@ final class SlotMark {
 
   /// Un échec non prévu a eu lieu.
   final bool failed;
+
+  /// Toutes les séries de la séance, sans échec, au moins dans la plage et
+  /// dites au moins [AdaptParams.coachAssistWideRir] répétitions plus
+  /// faciles que visé (CA2, partie 1 : cran d'élastique).
+  final bool wideMargin;
 }
 
 /// Plus lourde barre réussie du suivi [track] dans les
@@ -551,12 +557,30 @@ void noteCoachSession(
       !failed && top > 0 && firstTarget != null && top < firstTarget.low;
   var missStreak = 0;
   if (before != null &&
-      before.amount == coach.schemeAmount &&
+      (before.amount == coach.schemeAmount || run.info.exercise.assisted) &&
       before.loadKg == held) {
     missStreak = before.missed;
   }
+  // Marge large sur toute la séance : chaque série dans la plage, aucune
+  // en échec, toutes dites au moins coachAssistWideRir répétitions plus
+  // faciles que visé (panel de la passe 6, trois écoles sur quatre : le
+  // cran d'élastique attendait deux séances au haut de la plage).
+  var wide = run.observed.isNotEmpty;
+  for (final o in run.observed) {
+    final t = o.target;
+    final said = o.flames;
+    if (o.failed ||
+        t == null ||
+        said == null ||
+        o.amount < t.low ||
+        rirOfFlames(said) - rirOfFlames(t.flames) <
+            p.coachAssistWideRir - 1e-9) {
+      wide = false;
+    }
+  }
   final light = coach.policy.locked;
   marks[coach.slotId] = SlotMark(
+    wideMargin: wide,
     day: day,
     reached: reached,
     missed: under ? missStreak + 1 : 0,
@@ -1833,6 +1857,7 @@ List<SetPlan>? _directPlans(
       }
     }
     if (!locked &&
+        !ex.recentZone &&
         !tendonCapped &&
         !c.light &&
         c.policy.build &&
@@ -1869,7 +1894,12 @@ List<SetPlan>? _directPlans(
     // deux répétitions plus facile que visé — un cran de moins. Deux
     // séances au même cran, jamais une seule mesure : CA2, partie 0 —
     // l'élastique ne change plus dans un sens puis dans l'autre.)
-    final streak = (mark?.reached ?? 0) >= 2;
+    // (Ou une séance entière au cran actuel, toutes séries dites au moins
+    // deux répétitions plus faciles que visé : panel de la passe 6 ; CA2,
+    // partie 1. Sept jours au moins depuis le dernier changement.)
+    final streak =
+        (mark?.reached ?? 0) >= 2 ||
+        (mark?.wideMargin ?? false);
     // Un cran de plus seulement sur ce que l'athlète a fait : échec, ou bas
     // de la cible servie manqué deux séances de suite au même cran (une
     // cible abaissée par un verrou — douleur, bilan bas — puis tenue n'est

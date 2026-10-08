@@ -1,0 +1,103 @@
+{
+  "ecole": "force",
+  "programmes": [
+    {
+      "programme": "programme_1.md",
+      "criteres": {"F1": 6.5, "F2": 6.5, "F3": 7, "F4": 6.5, "F5": 8, "F6": 8, "F7": 7.5, "F8": 8.5, "F9": 8},
+      "sans_objet": [],
+      "ensemble": 7,
+      "points_perdus": [
+        {"critere": "F1", "perte": 3.5, "raison": "Le mouvement exact (traction stricte) n'apparaît dans aucun tableau avant le test : les essais isolés « à partir de la sixième semaine » ne figurent que dans les règles, et les tableaux des semaines 7 à 16 n'en montrent aucun. Le volume de tirage est porté par la traction assistée 2-3 × 6-8 ; les négatives restent à 1 × 3 en semaines 2 à 4, deux fois par semaine (R2-P7, R2-P9)."},
+        {"critere": "F2", "perte": 3.5, "raison": "La réserve est bien écrite (4 → 3 → 2 RIR), mais rien n'est prévu quand la série est beaucoup plus facile que visé. La règle d'assistance ne se déclenche qu'au haut de la plage « avec la réserve prévue », ce qui laisse l'élastique trop fort. La trajectoire montre 31,5 % des séries au moins 3 répétitions plus faciles que visé et un écart moyen de 2,33 RIR (R3-P7)."},
+        {"critere": "F3", "perte": 3, "raison": "Le volume de tirage spécifique est faible au début (6 séries assistées par semaine en S1-S2) alors que les séries dures vont surtout aux jambes et à la poussée (air squat jusqu'à 2 × 14-19, fentes, pont fessier) (R1-P5, R2-P9)."},
+        {"critere": "F4", "perte": 3.5, "raison": "Les trois blocs portent tous le nom « construction ». La progression ajoute +1 répétition et ne change jamais de variante (row genoux fléchis pendant 16 semaines). Le bloc 3 (S13-16) répète les mêmes semaines sans nouveau test. Trajectoire : traction assistée de 16 à 15 au maximum, aucune traction stricte (R3-P1 à P5)."},
+        {"critere": "F5", "perte": 2, "raison": "L'affûtage S11 (−30 %) et le test S12 avec 48 h sans travail dur sont justes pour un débutant (R3-P12). En revanche, le test de S6 ne garde qu'une journée de pause entre lundi et mercredi, et rien ne programme le retest après l'échéance (S13-16)."},
+        {"critere": "F6", "perte": 2, "raison": "Les négatives et les tenues en position haute sont pertinentes, mais leur dose reste minimale (1 × 3 puis 2 × 4, jusqu'à 3 × 5 en S9) pour un athlète dont c'est la porte d'entrée vers la traction (R2-P22)."},
+        {"critere": "F7", "perte": 2.5, "raison": "Face pull, dead bug et jambes sont présents. Le row australien reste genoux fléchis pieds à plat pendant 16 semaines, sans progression de variante. Les dips assistés, ajoutés en S7 pour un profil à 0 dips, n'ont pas de lien avec l'objectif."},
+        {"critere": "F8", "perte": 1.5, "raison": "Les règles de douleur, la progression d'amplitude des dips et le travail loin de l'échec sont bons (R5-P23, R5-P27). En revanche, les wrist push-ups et les pompes sont maintenus alors que la douleur au poignet monte à 4/10 dès S7 ; ce sont les règles génériques qui la gèrent, pas une adaptation écrite."},
+        {"critere": "F9", "perte": 2, "raison": "Les séances tiennent dans 45 min, les repos sont écrits et l'échauffement aussi. Mais le format différentiel (« comme la semaine 3, sauf… ») est très lourd à lire, et le choix de l'élastique ne donne aucun repère chiffré."},
+        {"critere": "ensemble", "perte": 3, "raison": "Deux corrections nécessaires : la progression de l'assistance ne se déclenche pas quand la réserve dépasse la cible, et le mouvement exact est absent des tableaux malgré la règle. La trajectoire confirme la stagnation (aucune traction stricte en 16 semaines, sur les 3 modèles d'athlète)."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Ajouter à la règle d'assistance un déclencheur sur l'excès de réserve : si une série laisse au moins 2 RIR de plus que visé, prendre l'élastique plus fin (ou moins d'appui des pieds) dès la séance suivante, sans attendre le haut de la plage.", "consequence": "L'élastique reste trop fort : l'athlète travaille à 4-6 RIR au lieu de 2-3, la traction assistée stagne (16 → 15 dans la trajectoire) et les 3 tractions (ou même 1) ne sont pas atteintes à 12 semaines."},
+        {"type": "necessaire", "texte": "Écrire dans les tableaux, à partir de S6, deux séances par semaine qui commencent par 1-3 essais de traction stricte (ou traction sautée + descente de 5 s), et porter les négatives à 3 × 3-5 dès S3 (au lieu de 1 × 3).", "consequence": "La règle et les tableaux se contredisent. L'athlète qui suit les tableaux ne fait jamais le mouvement visé avant le test et manque l'objectif."},
+        {"type": "amelioration", "texte": "Faire évoluer le row australien vers les jambes tendues puis les pieds surélevés quand le haut de la plage est tenu, comme le prévoit la règle de progression."},
+        {"type": "amelioration", "texte": "Transférer 2-3 séries hebdomadaires de jambes (air squat à haute répétition) vers le tirage vertical spécifique."},
+        {"type": "amelioration", "texte": "Prévoir un retest en fin de bloc 3 (S16) et préciser l'objectif suivant après l'échéance de S12."}
+      ],
+      "points_forts": [
+        "Objectif présenté honnêtement (« possible, pas garanti »), avec un test de mi-parcours en S6 et le test d'échéance en S12.",
+        "Affûtage d'environ −30 % et 48 h sans travail dur avant les tests : conforme au niveau débutant.",
+        "Règles de douleur graduées (0-2 / 3-4 / 5 / 6+) et suivi de la tendance sur 2-3 semaines.",
+        "Aucun échec planifié ; réserve de 4 à 2 RIR ; amplitude des dips assistés montée progressivement.",
+        "Séances dans le temps donné, repos écrits, version courte de 15 min pour les jours chargés."
+      ]
+    },
+    {
+      "programme": "programme_2.md",
+      "criteres": {"F1": 6, "F2": 6, "F3": 6.5, "F4": 6.5, "F5": 7.5, "F6": 7.5, "F7": 7, "F8": 8.5, "F9": 7.5},
+      "sans_objet": [],
+      "ensemble": 6.5,
+      "points_perdus": [
+        {"critere": "F1", "perte": 4, "raison": "La pompe classique (objectif 10) n'entre dans les tableaux qu'en S7, à 1 × 1-3 puis 2 × 1-5. La traction stricte n'existe que dans les règles, jamais dans les tableaux. L'essentiel du travail passe par des variantes (pompe inclinée, traction assistée) (R2-P7, R2-P9)."},
+        {"critere": "F2", "perte": 4, "raison": "La réserve est écrite, mais la hauteur de l'inclinaison et la force de l'élastique ne sont jamais recalées quand les séries sont trop faciles. Trajectoire : pompe inclinée servie à 8-12 répétitions pour un maximum de 22-25 (réserve réelle de 11 à 16), et traction assistée à 7-10 RIR réels pour 3-4 visés (R3-P7)."},
+        {"critere": "F3", "perte": 3.5, "raison": "Le volume direct sur la poussée visée est faible (environ 5-7 séries par semaine, dont des séries d'une seule répétition) alors que 60 min sont disponibles et que les séances n'en prennent que 25 à 49 ; les séries dures vont en partie aux fentes, au squat et au gainage (R1-P5)."},
+        {"critere": "F4", "perte": 3.5, "raison": "L'échelle de poussée exige 2 × 12 sur pompe inclinée, mais les tableaux plafonnent la plage à 8-12 et la descente de cran ne se déclenche pas. Résultat : 15 semaines sur la même étape, pompe classique de 3 à 3, aucune traction stricte. Les pompes sur les genoux, citées dans l'échelle, n'apparaissent jamais."},
+        {"critere": "F5", "perte": 2.5, "raison": "Affûtage en S11 et test le samedi de S12, 72 h après la dernière séance dure : correct. En revanche, les deux objectifs sont testés dans la même séance de 16 min, la traction d'abord, ce qui fatigue les épaules avant la série maximale de pompes."},
+        {"critere": "F6", "perte": 2.5, "raison": "Les pompes négatives et tractions négatives ont un rôle, mais leur dose reste minimale (1-2 × 2-4) au regard de deux objectifs qui en dépendent (R2-P22)."},
+        {"critere": "F7", "perte": 3, "raison": "Face pull, row, tronc et jambes sont présents. Mais la marche « genoux » de l'échelle de poussée manque, les rows ne progressent pas en variante, et le gainage latéral finit à 5 × 35 s en S16 sans lien avec les objectifs."},
+        {"critere": "F8", "perte": 1.5, "raison": "Règles de douleur complètes, aucun échec, poussée retirée quand le poignet monte à 4/10. Le poignet n'a toutefois aucune option d'appui neutre (poings, poignées) écrite pour les pompes (R5-P23)."},
+        {"critere": "F9", "perte": 2.5, "raison": "Les séances sont faisables et les repos écrits. Mais les séances n'utilisent qu'une partie des 60 min disponibles, le format différentiel est lourd et les consignes d'échelle sont dupliquées dans chaque note."},
+        {"critere": "ensemble", "perte": 3.5, "raison": "Trois corrections nécessaires de poids (calibrage de l'assistance et de l'échelle, mouvement exact absent des tableaux, dose de poussée trop faible pour passer de 3 à 10). La trajectoire montre que les deux objectifs à 12 semaines sont manqués (pompe 3 → 3, aucune traction)."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Recaler l'élastique et la hauteur d'inclinaison sur l'excès de réserve : si une série laisse au moins 2 RIR de plus que visé, passer au cran plus dur dès la séance suivante. Ouvrir la plage de la pompe inclinée jusqu'à 12 pour que le critère d'échelle (2 × 12) soit atteignable, et insérer l'étape « pompe sur les genoux ».", "consequence": "L'athlète reste 15 semaines sur la même inclinaison et le même élastique, à 8-16 RIR réels : la pompe classique ne progresse pas (3 → 3) et l'objectif de 10 pompes est manqué."},
+        {"type": "necessaire", "texte": "Écrire dans les tableaux, à partir de S6, les essais de traction stricte (1-3 essais frais, deux séances par semaine) que la règle annonce, et augmenter les tractions négatives à 3 × 3-5.", "consequence": "La règle et les tableaux se contredisent ; l'athlète ne fait pas le mouvement visé avant le test et la première traction n'arrive pas à 12 semaines."},
+        {"type": "necessaire", "texte": "Utiliser les 60 min disponibles pour porter le travail direct de pompe à 8-10 séries par semaine (pompe genoux ou inclinée basse à 6-10 répétitions et 2-3 RIR, plus des séries de pompe classique en grappes de 1-2 répétitions).", "consequence": "Avec environ 5-7 séries par semaine, dont des séries d'une répétition, passer de 3 à 10 pompes en 12 semaines est très improbable."},
+        {"type": "amelioration", "texte": "Séparer les deux tests d'échéance (pompes en premier, ou deux jours différents) pour que la série maximale de pompes ne suive pas trois essais de traction."},
+        {"type": "amelioration", "texte": "Ajouter une note de réalisme sur l'objectif de 10 pompes, comme celle du programme pour la traction, et donner une option d'appui neutre du poignet (poignées, poings)."},
+        {"type": "amelioration", "texte": "Faire progresser le row australien en variante (jambes tendues, puis pieds surélevés)."}
+      ],
+      "points_forts": [
+        "Les deux objectifs sont travaillés à chaque séance, trois fois par semaine.",
+        "Tests de mi-parcours (S6) et d'échéance (S12), avec affûtage et 48-72 h sans travail dur.",
+        "Règles de douleur graduées, appliquées dès que le poignet monte à 4/10.",
+        "Aucun échec planifié ; mouvements négatifs freinés avec un critère d'arrêt écrit.",
+        "Version courte de 25 min et règles de séance ou semaine manquée."
+      ]
+    },
+    {
+      "programme": "programme_3.md",
+      "criteres": {"F1": 7, "F2": 7.5, "F3": 7.5, "F4": 6.5, "F5": 7.5, "F6": 8, "F7": 8.5, "F8": 9.5, "F9": 8.5},
+      "sans_objet": [],
+      "ensemble": 7,
+      "points_perdus": [
+        {"critere": "F1", "perte": 3, "raison": "Front lever deux fois par semaine, half-lay une fois, planche deux fois : bonne fréquence. Mais la part du mouvement exact ne change pas selon la phase : front lever à 10 × 4 s de S5 à S15, en construction comme en intensification et en réalisation. Le travail dynamique de front lever se limite à l'ice cream maker (R2-P7, R2-P9)."},
+        {"critere": "F2", "perte": 2.5, "raison": "Les charges sont calculables (% du maintien, % du 1RM total) et la règle d'ajustement est écrite. Mais l'intensité du front lever reste fixe (60-67 %) en « intensification » et en « réalisation » malgré la règle des tenues (65 %, puis 70 %). Le 1RM de référence est noté 117 kg alors que 64 + 55 = 119 kg ; les lests correspondent en fait à 119 (R2-P4)."},
+        {"critere": "F3", "perte": 2.5, "raison": "Les 30-60 s de tenue par séance sont respectées et la traction lestée compte 4-6 séries par semaine. Mais le volume des figures n'est pas modulé d'une phase à l'autre, et le skater squat monte à 2 × 20-21, ce qui sert l'endurance plus que la force."},
+        {"critere": "F4", "perte": 3.5, "raison": "Les blocs sont nommés et les décharges placées toutes les 4 semaines (R3-P9, élite). La traction lestée progresse de 69 à 84 %, chiffre par chiffre. En revanche, les deux objectifs (front lever et planche) n'ont aucune progression planifiée par phase. Trajectoire : front lever de 8 à 8 s (tests à 6 s), progression moyenne de 0,06 % par semaine."},
+        {"critere": "F5", "perte": 2.5, "raison": "Semaine de test avec les épreuves le samedi, mobilité seule la veille et 72 h après le half-lay : correct. Mais l'affûtage se réduit à la seule semaine 16, sans baisse en S15 (identique à S13-14), alors que R3-P12 prévoit environ 2 semaines pour l'élite."},
+        {"critere": "F6", "perte": 2, "raison": "Les planche push-ups assistées et l'ice cream maker ont un rôle, mais aucun critère de retrait n'est écrit. Pour le front lever, aucune technique ciblée (négatives, tenues lestées, tenues assistées longues) ne répond au problème nommé, passer de 8 à 15 s (R2-P22)."},
+        {"critere": "F7", "perte": 1.5, "raison": "Face pull, rotation externe, row aux anneaux, nordic, tronc et mobilité des poignets : complet. Le seul manque est un accessoire de force du front lever (front lever row, pull-over bras tendus)."},
+        {"critere": "F8", "perte": 0.5, "raison": "Excellent protocole poignet : parallettes par défaut au-dessus de 1/10, retrait des appuis mains à plat quand la douleur dure, avis médical, reprise à 50-80 % (+10 % par semaine) (R5-P23, R5-P24). Seule réserve : en S1-S3, la charge sur le poignet est élevée (planche 2 × 40 s, handstand, HSPU, planche push-ups) pour une gêne déjà présente."},
+        {"critere": "F9", "perte": 1.5, "raison": "Séances dans les 90 min, repos et échauffement des poignets écrits. L'étiquette « 1RM de référence 117 kg » ne correspond pas au profil, et le format différentiel est très lourd."},
+        {"critere": "ensemble", "perte": 3, "raison": "Deux corrections nécessaires : aucune progression du front lever par phase, et aucun travail de force dynamique pour le front lever. Sans elles, l'objectif de 15 s est manqué (trajectoire : 8 s → 6-8 s). Le reste (sécurité, traction lestée, décharges) est de niveau élite."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Donner au front lever une vraie progression par phase. En construction, 8-10 tenues à 60 % du maintien. En intensification, 5-6 tenues à 70-75 % (par exemple 5-6 s pour un maximum de 8 s), plus des tenues half-lay longues (15-20 s). En réalisation, 3-4 tenues à 80-85 %, avec un maximum tous les 15 jours. Les tests de décharge doivent recaler les tenues vers le haut quand le maximum tient.", "consequence": "Le front lever reste à 10 × 4 s de S5 à S15 : le stimulus ne croît pas, le maintien stagne autour de 6-8 s et l'objectif de 15 s est manqué."},
+        {"type": "necessaire", "texte": "Ajouter deux fois par semaine un travail de force dynamique du front lever : négatives de front lever 3 × 3 (5 s), front lever rows ou pull-overs bras tendus 3 × 5 à 2-3 RIR, en remplacement d'une partie de l'ice cream maker.", "consequence": "Sans force concentrique ni excentrique sur le levier complet, des tenues sous-maximales ne suffisent pas à doubler le temps de maintien chez un élite."},
+        {"type": "amelioration", "texte": "Corriger le 1RM de référence de la traction lestée à 119 kg (64 + 55), ou expliquer la valeur de 117 kg."},
+        {"type": "amelioration", "texte": "Étendre l'affûtage à S15 (−30 à −40 % des séries de figures, intensité gardée) avant la semaine de test (R3-P12, R3-P13)."},
+        {"type": "amelioration", "texte": "Réduire la charge sur le poignet en S1-S3 (planche 8 × 4 s, HSPU un jour sur deux) pour une gêne de départ à 2/10, puis monter de +10 % par semaine."},
+        {"type": "amelioration", "texte": "Ramener le skater squat à 3-4 × 6-8, lesté si besoin, plutôt que de monter à 2 × 20."}
+      ],
+      "points_forts": [
+        "Honnêteté sur la planche complète, impossible en un cycle : le programme valide le critère de l'étape straddle et ouvre la suivante sous condition.",
+        "Protocole poignet de très haut niveau : parallettes par défaut, retrait ciblé des appuis mains à plat, avis médical, reprise graduée chiffrée (50 → 80 %, +10 % par semaine).",
+        "Traction lestée bien périodisée (69 → 84 % du 1RM total, 2-4 RIR), lests calculés, décharge à environ 70 %.",
+        "Décharges toutes les 4 semaines avec un test de maintien maximal en fin de bloc, conforme à R3-P9 pour l'élite.",
+        "Équilibre poussée/tirage, coiffe, chaîne postérieure et mobilité des poignets présents ; séances dans le temps donné."
+      ]
+    }
+  ]
+}

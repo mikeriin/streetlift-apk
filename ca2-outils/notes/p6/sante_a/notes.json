@@ -1,0 +1,104 @@
+{
+  "ecole": "sante",
+  "programmes": [
+    {
+      "programme": "programme_1.md",
+      "criteres": {"S1": 7.5, "S2": 8, "S3": 8, "S5": 7, "S6": 9, "S7": 8.5, "S8": 8, "S9": 6.5},
+      "sans_objet": ["S4"],
+      "ensemble": 7,
+      "points_perdus": [
+        {"critere": "S1", "perte": 2.5, "raison": "Seuils de douleur 0-2 / 3-4 / 5 / 6+ et orientation vers un professionnel écrits (R5-P23), mais aucune protection du poignet prévue : les wrist push-ups restent dans chaque échauffement, aucune variante à prise neutre ou sur poings pour les pompes et les dips. Dans la trajectoire, une douleur au poignet à 3-4/10 apparaît en semaine 7 (introduction des dips assistés) et dure jusqu'à la semaine 16 (R5-P24)."},
+        {"critere": "S2", "perte": 2, "raison": "Départ prudent (4 puis 3 puis 2 RIR), règles pour une semaine manquée et pour 2 semaines manquées, mais la règle d'assistance ne se déclenche pas quand la réserve dépasse la cible : l'élastique n'est affiné qu'une fois (S3), alors que la réserve réelle reste à 4-9 pour une cible de 2-3 et que le maximum assisté passe de 16 à 15. La tenue menton est prescrite à 3 × 5-6 s en S3-S5 sans calibrage (maximum réel de 34 s) (R5-P3)."},
+        {"critere": "S3", "perte": 2, "raison": "Baisse du jour chiffrée (nuit < 6 h, courbatures, stress), version courte prévue. Mais aucun allègement planifié en dehors des semaines de test, et la charge de vie n'est pas interrogée (rien n'est déclaré au profil) (R5-P14 à P19)."},
+        {"critere": "S5", "perte": 3, "raison": "Face pull une seule fois par semaine (mercredi), rien pour la coiffe lundi et vendredi ; une seule prise (pronation) pour tout le tirage ; la mise en charge du poignet (wrist push-ups, support hold, pompes, dips) n'a pas de contrepartie, et la trajectoire montre 10 semaines de douleur au poignet (R4-F10 à F12)."},
+        {"critere": "S6", "perte": 1, "raison": "Marges bien graduées et négatives réglées au contrôle. Le test de pompes « jusqu'à ce que la forme casse » reste acceptable, mais aucune consigne ne dit de garder 48 h entre ce test et la prochaine séance de poussée."},
+        {"critere": "S7", "perte": 1.5, "raison": "Séances de 23 à 42 min pour 45 disponibles, version de 15 min : très bien. Mais un débutant à 0 mois commence à 32 séries dures par semaine sur 8 exercices, et doit appliquer un règlement qui parle de « tenues de figure » et de « levier dur » (R5-P1, R5-P2)."},
+        {"critere": "S8", "perte": 2, "raison": "Test de l'échéance en semaine 12, affûtage à environ 70 % en semaine 11 et règle des 48 h. Mais le lundi de la semaine 12 garde des séries à 2 RIR, et rien ne prévoit le cas où le test tombe un jour où le poignet est douloureux (R3-P17)."},
+        {"critere": "S9", "perte": 3.5, "raison": "Le format « Comme la semaine 3, sauf… » répète des paragraphes entiers « au lieu de » et est très difficile à lire pour un débutant. « 2 × 5 à 30 s » et « 2 × 5 à 45 s » sont ambigus. Le vendredi de la semaine 12 s'appelle « séance lourde » alors que c'est une séance de test de 14 min."},
+        {"critere": "ensemble", "perte": 3, "raison": "Deux corrections nécessaires : l'élastique n'est pas assez réduit (sous-dosage, l'objectif de traction est manqué : aucune traction stricte en S12, tenue de 30 s aux deux tests) ; et le poignet n'est pas protégé (douleur qui dure de S7 à S16)."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Compléter la règle d'assistance : si toutes les séries dépassent le haut de la plage, ou laissent 2 répétitions de réserve de plus que la cible, passer dès la séance suivante à l'élastique plus fin (ou réduire l'appui des pieds) ; noter l'élastique utilisé et le comparer chaque semaine.", "consequence": "Les tractions assistées restent faites à 4-9 RIR au lieu de 2-3 ; le stimulus ne monte pas et la première traction stricte n'arrive pas en 12 semaines, ce que montre la trajectoire."},
+        {"type": "necessaire", "texte": "Protéger le poignet : dès que la douleur au poignet atteint 3/10, remplacer les wrist push-ups par une mobilisation sans charge, faire pompes et dips sur prise neutre (barre basse, parallèles) ou sur poings, et introduire les dips assistés après 2 semaines sans douleur au poignet plutôt qu'en même temps que le passage à 2 RIR.", "consequence": "Le poignet reste chargé en extension à chaque échauffement, la douleur dure (S7 à S16), et la poussée est retirée pendant presque tout le cycle."},
+        {"type": "amelioration", "texte": "Calibrer la tenue menton au-dessus de la barre dès sa première séance (un essai maximal, puis 60 %) au lieu de 3 × 5 s fixes."},
+        {"type": "amelioration", "texte": "Mettre un face pull ou une rotation externe dans chaque séance, et varier les prises de tirage (supination, neutre) pour répartir la charge sur le coude."},
+        {"type": "amelioration", "texte": "Écrire chaque semaine en clair (tableau complet) plutôt qu'en différences, et retirer du règlement les règles de figure qui ne servent pas à ce profil."},
+        {"type": "amelioration", "texte": "Ajouter un allègement léger vers S8-S9, pour le cas où des signes de fatigue ou de douleur s'accumulent."}
+      ],
+      "points_forts": [
+        "Seuils de douleur chiffrés, tendance sur 2 à 3 semaines, orientation vers un professionnel de santé",
+        "Objectif présenté honnêtement : « une ou deux tractions propres serait déjà un très bon cycle »",
+        "Essais stricts isolés, frais, à partir de S6, et négatives réglées au contrôle et non à l'échec",
+        "Règles de semaine manquée et de reprise après 2 semaines, baisse du jour et version courte de 15 min",
+        "Séances bien en dessous des 45 min disponibles ; aucun échec non voulu dans la trajectoire"
+      ]
+    },
+    {
+      "programme": "programme_2.md",
+      "criteres": {"S1": 7, "S2": 7, "S3": 8, "S5": 7, "S6": 8, "S7": 8, "S8": 7.5, "S9": 6},
+      "sans_objet": ["S4"],
+      "ensemble": 6,
+      "points_perdus": [
+        {"critere": "S1", "perte": 3, "raison": "Seuils de douleur et orientation vers un professionnel écrits, mais les wrist push-ups restent dans chaque échauffement et il n'y a pas de variante sur poings ou prise neutre pour les pompes au sol ni pour les pompes négatives. Dans la trajectoire, la douleur au poignet est à 4/10 dès S7 et revient jusqu'en S16 (R5-P23, R5-P24)."},
+        {"critere": "S2", "perte": 3, "raison": "Les règles de progression ne mordent pas sur un dosage trop facile. Pompe inclinée : réserve réelle de 12 à 16 en S1 pour une cible de 4, l'étape ne change jamais en 15 semaines. Traction assistée : 6 à 10 RIR réels pour une cible de 3-4, l'élastique n'est jamais changé. Tenue menton à 5-6 s pour un maximum de 34 s. À l'inverse, le gainage latéral saute de 2 × 15 s (S10) à 4 × 35 s (S15) puis 5 × 35 s (R5-P3, R5-P22)."},
+        {"critere": "S3", "perte": 2, "raison": "Baisse du jour et version courte présentes ; aucun allègement planifié hors semaines de test ; charge de vie non interrogée (R5-P14 à P19)."},
+        {"critere": "S5", "perte": 3, "raison": "Face pull trois fois par semaine, CARs, travail scapulaire : bien. Mais rien n'adapte la charge du poignet (wrist push-ups, support hold, pompes négatives poitrine au sol) quand la douleur apparaît, et toutes les tractions se font en pronation (R4-F10 à F12)."},
+        {"critere": "S6", "perte": 2, "raison": "Pompe classique à 1 × 1-3 avec 2 RIR pour un maximum testé de 2 répétitions (S7) : cette cible est irréalisable telle qu'écrite et pousse vers des séries proches du maximum (R4-G3)."},
+        {"critere": "S7", "perte": 2, "raison": "Séances de 25 à 50 min pour 60 disponibles, version de 25 min ; mais le règlement est long, avec des règles de figure et de levier dur inutiles pour une débutante, et la poussée réussie au sol reste presque absente (1 répétition par séance), ce qui pèse sur la motivation (R5-P1, R5-P2)."},
+        {"critere": "S8", "perte": 2.5, "raison": "Test des deux objectifs le samedi de S12, après 72 h, essai strict fait frais : bien. Mais S11 « affûtage » est écrit « comme la semaine 6 », une semaine de test, ce qui donne une séance incohérente. Et aucun repère intermédiaire n'est prévu vers 10 pompes en dehors du « repère 6 » de S6 (R3-P17)."},
+        {"critere": "S9", "perte": 4, "raison": "Le format en différences, avec des paragraphes « au lieu de » de plusieurs lignes, est illisible pour une débutante. « 2 × 5 à 45 s » est ambigu. Le samedi de 16 min s'appelle « séance lourde ». La hauteur de la pompe inclinée n'est jamais chiffrée."},
+        {"critere": "ensemble", "perte": 4, "raison": "Quatre corrections nécessaires. Les deux leviers principaux sont sous-dosés (inclinaison, élastique), le poignet n'est pas protégé, et la prescription de pompes classiques est incalculable. Les deux objectifs sont manqués dans la trajectoire : 2 pompes au test de S6 (3 au départ), étape inclinée gardée 15 semaines, aucune traction stricte."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Chiffrer l'échelle de poussée (hauteur des mains : mur, barre haute, barres parallèles, barre basse, genoux, sol) et descendre d'un cran dès que la série laisse 2 répétitions de réserve de plus que la cible, ou dépasse 12. Viser 3 à 4 RIR réels.", "consequence": "Les pompes inclinées sont faites à 12-16 RIR, la force ne monte pas, et l'objectif de 10 pompes est manqué : test à 2 en S6 et à 1 en S12 dans la trajectoire."},
+        {"type": "necessaire", "texte": "Même règle pour l'élastique de traction : changer pour un élastique plus fin quand la réserve dépasse la cible de 2 ou plus. Calibrer la tenue menton dès la première séance.", "consequence": "Les tractions assistées restent à 6-10 RIR pendant 16 semaines, et la première traction n'arrive pas à l'échéance."},
+        {"type": "necessaire", "texte": "Protéger le poignet : à 3/10, retirer les wrist push-ups chargés, faire pompes et négatives sur poings, poignées ou barres à prise neutre, puis reprendre par paliers.", "consequence": "Douleur au poignet qui dure de S7 à S16, et poussée bloquée, ce qui empêche l'objectif de pompes."},
+        {"type": "necessaire", "texte": "Remplacer « Pompe classique 1 × 1-3 à 2 RIR » (maximum de 2) par des répétitions isolées à 1 RIR au plus, ou par des séries sur une inclinaison basse, selon une règle calculable à partir du maximum testé.", "consequence": "Cible impossible à respecter : soit l'athlète travaille au maximum, soit elle ne fait rien de spécifique au sol."},
+        {"type": "amelioration", "texte": "Dire dès le début que passer de 3 à 10 pompes en 12 semaines est ambitieux, comme le programme 1 le fait pour la traction, et fixer un repère réaliste."},
+        {"type": "amelioration", "texte": "Lisser la hausse du gainage latéral (2 × 15 s, puis 3 × 20 s, puis 3 × 25 s) au lieu du saut à 4-5 × 35 s."},
+        {"type": "amelioration", "texte": "Réécrire S11 comme une vraie semaine d'affûtage autonome, et non « comme la semaine 6 »."},
+        {"type": "amelioration", "texte": "Ajouter une prise supination ou neutre en traction assistée pour varier la charge sur le coude."}
+      ],
+      "points_forts": [
+        "Échelle de poussée et critère de passage écrits",
+        "Seuils de douleur, orientation vers un professionnel, règles de semaine manquée",
+        "Face pull à chaque séance, CARs d'épaule, travail scapulaire à l'échauffement",
+        "Test d'échéance après 72 h, essai strict fait frais avant la tenue",
+        "Aucun échec non voulu ; séances dans le temps disponible, avec une version courte"
+      ]
+    },
+    {
+      "programme": "programme_3.md",
+      "criteres": {"S1": 7, "S2": 7.5, "S3": 8.5, "S5": 7, "S6": 8.5, "S7": 8, "S8": 8, "S9": 6.5},
+      "sans_objet": ["S4"],
+      "ensemble": 6.5,
+      "points_perdus": [
+        {"critere": "S1", "perte": 3, "raison": "Très bonne architecture face à la douleur : parallettes par défaut au-dessus de 1/10, seuils, retrait des appuis en extension, avis d'un kiné ou d'un médecin, reprise graduée de 50 à 80 %. Mais l'athlète déclare une gêne au poignet après les grosses séances de planche, et le programme garde deux grosses séances de poignet (lundi et vendredi : planche 10 × 4 s, planche push-ups, handstand 3 × 30 s, HSPU, wrist push-ups, pressions des doigts), suivies le lendemain des dips lestés. Douleur à 4/10 dès S6, au moins 3/10 sur 18 séances, planche retirée de S9 à S12 (R5-P20, R5-P24)."},
+        {"critere": "S2", "perte": 2.5, "raison": "Traction lestée par pas de 2,5 % (69 à 84 %), reprise graduée bornée : bien. Mais en S9, alors que le poignet est retiré, on passe des dips lestés 3 × 5 aux dips au poids du corps 3 × 25 (75 répétitions), ce qui contredit la règle « prise neutre en volume réduit ». Et le front lever à 10 × 5 s (63 % de 8 s) n'est pas tenable dès S1 : 4 puis 3 s réelles (R5-P3, R5-P7)."},
+        {"critere": "S3", "perte": 1.5, "raison": "Allègement toutes les 4 semaines, baisse du jour, consigne de ne pas compter deux fois les réductions de profil : bien. Mais trois tests maximaux (S4, S8, S12) tombent dans les semaines d'allègement, ce qui leur retire une partie de leur rôle de récupération."},
+        {"critere": "S5", "perte": 3, "raison": "Face pull, rotation externe, rows aux anneaux, étirement des fléchisseurs, préparation des poignets : la prévention est riche. Mais le tirage s'enchaîne sur trois jours (lundi FL lourd, mardi traction lestée, mercredi FL half-lay et ice cream maker), puis vendredi et samedi. La poussée sur le poignet tombe aussi deux jours de suite (lundi-mardi, vendredi-samedi), alors que le poignet est déjà gênant (R4-F10 à F12, R5-P27)."},
+        {"critere": "S6", "perte": 1.5, "raison": "Arrêt à une qualité sous 4/5, tests jamais à froid, pas d'échec non voulu. Mais le test maximal de planche en S16 arrive après seulement 3 semaines de reprise d'un poignet resté douloureux pendant 2 mois."},
+        {"critere": "S7", "perte": 2, "raison": "Six séances qui tiennent dans 90 min (de 9 à 76 min), version courte prévue ; mais la séance du samedi de S16 (9 min) et celle du dimanche (18 min) sont presque vides, alors que les lundis et vendredis concentrent toute la charge sur le poignet."},
+        {"critere": "S8", "perte": 2, "raison": "Test de S16 bien préparé (mercredi léger, vendredi mobilité seule, 48 h, montée en tenues). Mais il n'y a qu'une semaine d'allègement final après 3 semaines de reprise. Et l'objectif de front lever à 15 s n'est pas recadré, alors que les trois tests intermédiaires donnent 6 s (8 au départ) (R3-P17, R3-P20)."},
+        {"critere": "S9", "perte": 3.5, "raison": "Les notes « au lieu de » de plusieurs lignes sont répétées pour chaque exercice. La séance de 9 min est appelée « séance lourde ». On ne voit pas quand la planche est retirée par la règle de douleur et quand elle l'est par l'écriture du bloc (S9 lundi et vendredi)."},
+        {"critere": "ensemble", "perte": 3.5, "raison": "Trois corrections nécessaires, dont deux sur le poignet déjà gênant (charge concentrée, dips 3 × 25 contraires à la règle) et une sur le front lever, qui régresse sans ajustement. Dans la trajectoire, les deux étapes reculent : planche straddle de 6 à 5 s, front lever de 8 à 6 s, progression de 0,06 % par semaine."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Répartir la charge du poignet : séparer planche (tenues et push-ups) et handstand/HSPU sur des jours différents, réduire la planche à environ 6 × 4 s tant que la gêne dépasse 1/10, et ne pas placer les dips le lendemain d'une séance de planche.", "consequence": "La gêne déclarée après les grosses séances de planche devient une douleur qui dure (4/10 dès S6), et la planche est perdue pendant 2 mois, ce que montre la trajectoire."},
+        {"type": "necessaire", "texte": "En S9-S11, remplacer les dips 2-3 × 23-25 par un volume réellement réduit (par exemple 2 × 8-10 à prise neutre si la gêne reste à 2/10 au plus), comme l'exige la règle du bloc 3.", "consequence": "Le volume d'appui sur le poignet est multiplié pendant la phase de douleur, la douleur se maintient (dips retirés pour douleur en S9-S11), et la reprise est retardée."},
+        {"type": "necessaire", "texte": "Front lever : régler la densité sur la tenue réelle (par exemple 6-8 × 3-4 s avec 2 à 3 min de repos, ou en grappes). Après un test en baisse, ajouter une règle explicite : moins de séries, davantage de half-lay et de straddle, travail excentrique ou front lever raises. Recadrer l'objectif de 15 s comme celui de la planche.", "consequence": "Les séries de 5 s ne sont pas tenues, le maximum passe de 8 à 6 s et y reste, et l'objectif de 15 s est manqué sans que le programme l'ait annoncé."},
+        {"type": "amelioration", "texte": "Sortir les tests maximaux des semaines d'allègement, ou les placer en début de semaine suivante, pour garder à l'allègement son rôle de récupération."},
+        {"type": "amelioration", "texte": "Éviter trois jours de tirage d'affilée (lundi, mardi, mercredi) : déplacer le half-lay du mercredi au jeudi, ou alléger l'ice cream maker."},
+        {"type": "amelioration", "texte": "Remplir le dimanche (18 min) avec du travail sans charge sur le poignet (jambes, gainage, compression) pour alléger les lundis et vendredis."},
+        {"type": "amelioration", "texte": "Écrire les semaines en entier et appeler les séances par leur vrai contenu (« test », « préparation »)."}
+      ],
+      "points_forts": [
+        "Recadrage honnête de la planche complète (6 semaines minimum par étape, le test porte sur l'étape actuelle)",
+        "Protocole poignet complet : parallettes par défaut, seuils chiffrés, retrait ciblé des appuis en extension, avis d'un kiné ou d'un médecin, reprise de 50 à 80 % par paliers",
+        "Prévention riche : face pull, rotation externe, rows aux anneaux, fléchisseurs du poignet, échauffement des doigts et du poignet",
+        "Traction lestée par petits pas de pourcentage, avec allègement toutes les 4 semaines",
+        "Semaine de test bien construite (jour léger, mobilité seule la veille, montée progressive, jamais à froid)"
+      ]
+    }
+  ]
+}

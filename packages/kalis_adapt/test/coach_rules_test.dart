@@ -91,6 +91,15 @@ void main() {
       expect(stop.intensity, 4);
     });
 
+    test('trois séances de suite au-dessus de 3 : arrêt gardé au premier '
+        'signalement plus bas (relecture indépendante du code, CA2)', () {
+      final s = zone(const <(int, int)>[(0, 4), (2, 4), (4, 4)]);
+      expect(s.stopAt(4), isNotNull);
+      s.record(6, 2);
+      expect(s.stopAt(6), isNotNull);
+      expect(s.stopAt(4 + painResumeDays), isNull);
+    });
+
     test('forte plus d\'une semaine : arrêt', () {
       final s = zone(const <(int, int)>[(0, 6), (3, 5)]);
       expect(s.stopAt(3), isNull);

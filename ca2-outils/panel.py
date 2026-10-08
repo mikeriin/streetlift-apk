@@ -58,7 +58,24 @@ def build(ci, out):
         open(f'{out}/{key}.md', 'w').write(concise.rstrip() + '\n\n---\n\n' + season)
         print(key, len((concise + season).splitlines()))
 
+def build_autres(ci, out):
+    """Fichiers notés du panel pour les profils non street : programme de
+    départ (export concis) puis la trajectoire simulée (sans redire le
+    profil)."""
+    import subprocess, re
+    os.makedirs(out, exist_ok=True)
+    tool = '/home/claude/streetlift-apk/packages/kalis_bench/tool/panel_export.py'
+    for js in sorted(glob.glob(f'{ci}/programmes/autres_*.json')):
+        key = os.path.basename(js)[:-5]
+        concise = subprocess.run(['python3', tool, js], capture_output=True, text=True, check=True).stdout
+        traj = open(f'{ci}/trajectoires/{key}.md').read()
+        traj = re.sub(r'\n## Profil\n.*?(?=\n## )', '\n', traj, count=1, flags=re.S)
+        open(f'{out}/{key}.md', 'w').write(concise.rstrip() + '\n\n---\n\n' + traj)
+        print(key, len((concise + traj).splitlines()))
+
 if __name__ == '__main__':
+    if sys.argv[1] == 'build_autres':
+        build_autres(sys.argv[2], sys.argv[3]); sys.exit()
     if sys.argv[1] == 'build':
         build(sys.argv[2], sys.argv[3])
     elif sys.argv[1] == 'prepare':

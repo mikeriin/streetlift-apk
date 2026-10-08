@@ -1,0 +1,103 @@
+{
+  "ecole": "hypertrophie",
+  "programmes": [
+    {
+      "programme": "programme_1.md",
+      "criteres": {"H1": 6, "H2": 8, "H3": 6, "H4": 8, "H5": 6, "H6": 8.5, "H7": 9, "H8": 8, "H9": 7.5},
+      "sans_objet": [],
+      "ensemble": 7,
+      "points_perdus": [
+        {"critere": "H1", "perte": 4, "raison": "Grand dorsal et biceps, semaines 8 à 10 et 13 à 16 : traction assistée 2+3+2, traction négative 3+2, row australien 2+2 et tenue menton 3, soit environ 19 séries dures par semaine. C'est presque deux fois le plafond débutant de 12 (R1-P1) et bien au-delà du seuil de 10 (R1-P3), pour un athlète à 0 mois d'ancienneté. Lundi de la semaine 9 : 7 séries de tirage, au-dessus du maximum débutant de 6 par séance (R1-P4). Le volume monte par semaine écrite, pas sous condition. Jambes : air squat et fentes sans stimulus réel."
+        },
+        {"critere": "H2", "perte": 2, "raison": "Corps entier 3 fois, 2 à 3 expositions par groupe : c'est correct (R1-P8). Il n'y a pas d'alternance lourde/légère pensée par groupe, et le mercredi diffère peu du lundi et du vendredi."},
+        {"critere": "H3", "perte": 4, "raison": "Plusieurs cibles sont inatteignables telles qu'écrites. Semaine 7 : pompe 1 × 4 à 2 en réserve, alors que le test donne 7, soit 3 en réserve au minimum. Semaines 7 à 16 : air squat 1 × 13 à 17 à 2 en réserve pour un homme de 24 ans en bonne santé. Aucune série test pour vérifier la réserve annoncée (R6-P2). La trajectoire montre des tractions assistées faites à 4 à 9 en réserve pendant tout le cycle, et 31,5 % des séries au moins 3 répétitions plus faciles que visé."
+        },
+        {"critere": "H4", "perte": 2, "raison": "Bon choix pour la traction : assistée, négative, tenue haute, row. Le bas du corps se limite à air squat, fente et pont fessier au sol, sans exercice qui charge vraiment ni travail des ischio-jambiers en position longue (R6-P4)."},
+        {"critere": "H5", "perte": 4, "raison": "Les règles sont écrites (règle d'assistance, double progression), mais les plages montent (6-8, puis 7-9, puis 8-10) sans hausse réelle de difficulté. Rien n'impose de tester l'élastique. Dans la trajectoire, le maximum assisté passe de 16 à 15 et aucune traction stricte n'est réussie : la surcharge progressive ne s'est pas produite (R5-P3)."},
+        {"critere": "H6", "perte": 1.5, "raison": "Le tirage dépasse la poussée et le face pull est présent : c'est bien. La chaîne postérieure se limite à un pont fessier au sol 2 séries par semaine."},
+        {"critere": "H7", "perte": 1, "raison": "Repos de 2 min sur les polyarticulaires et séances de 31 à 42 min dans 45 min : rien à redire. Aucun superset d'antagonistes n'est proposé, alors que 45 min est un format serré."},
+        {"critere": "H8", "perte": 2, "raison": "Les semaines de test 6 et 12 et l'affûtage de la semaine 11 servent d'allègement. Les semaines 13 à 16 enchaînent 4 semaines de construction au volume le plus haut (36 séries), sans allègement ni test de fin."},
+        {"critere": "H9", "perte": 2.5, "raison": "Bien adapté au débutant, au parc et à l'élastique, avec des règles de douleur et un discours honnête sur l'objectif. Mais l'assistance n'est pas pilotée, alors que c'est le levier de l'objectif. La douleur au poignet (4/10 dès la semaine 7 sur pompes et dips) n'était pas anticipée : pas de variante à prise neutre."},
+        {"critere": "ensemble", "perte": 3, "raison": "Deux corrections nécessaires : le pilotage de l'élastique, dont dépend l'objectif des 3 tractions (0 traction en fin de cycle dans la trajectoire), et le volume de tirage au-dessus du plafond débutant."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Piloter l'assistance par une série test toutes les 2 semaines sur la traction assistée : une série ouverte arrêtée à 2 en réserve. Si elle dépasse le haut de la plage de 3 répétitions ou plus, passer tout de suite à l'élastique plus fin, ou alléger l'appui des pieds. Ajouter un palier plus lourd à 3-5 répétitions à 2-3 en réserve en tête de séance, le lundi et le vendredi.", "consequence": "Les séries restent à 4 à 9 répétitions en réserve, sans surcharge. L'athlète finit le cycle sans traction, comme dans la trajectoire (maximum assisté de 16 à 15, aucune traction stricte)."},
+        {"type": "necessaire", "texte": "Plafonner le tirage à 10-12 séries dures par semaine et à 6 par séance pour ce débutant. Par exemple, semaines 8 à 16 : traction négative 2 × 4-5 le lundi seulement, row australien sur une seule séance, tenue menton 2 séries au lieu de 3. Ne monter qu'en cas de stagnation (R1-P3, R1-P18).", "consequence": "19 séries de tirage par semaine, avec excentriques et isométries, chez un athlète à 0 mois d'ancienneté : risque de surcharge des tendons du coude (le simulateur bride déjà les tenues pour le coude), pour un gain nul au-delà du plafond."},
+        {"type": "amelioration", "texte": "Remplacer air squat et fentes au poids du corps par fente bulgare ou squat pistol assisté à la barre basse, 8-12 répétitions à 2-3 en réserve, et donner des cibles de réserve atteignables."},
+        {"type": "amelioration", "texte": "Écrire les répétitions de pompe d'après le test (7, donc séries de 4-5 à 2-3 en réserve), et proposer des pompes sur barres parallèles ou barre basse (prise neutre) dès la première gêne au poignet."},
+        {"type": "amelioration", "texte": "Ajouter un allègement et un test de fin dans les semaines 13 à 16, et proposer des supersets traction/pompe pour gagner du temps sans raccourcir le repos réel (R1-P15)."},
+        {"type": "amelioration", "texte": "Ajouter un exercice pour les ischio-jambiers en position longue, par exemple un nordic assisté ou un pont fessier sur une jambe, pieds surélevés."}
+      ],
+      "points_forts": [
+        "Le mouvement de l'objectif ouvre chaque séance, avec une échelle traction assistée, descente freinée et tenue haute cohérente avec le niveau.",
+        "Le discours est honnête sur l'objectif ambitieux, et les règles de séance courte, de baisse du jour et de douleur sont claires.",
+        "Le tirage dépasse la poussée, le face pull protège la coiffe, et les repos de 2 min sur les mouvements principaux tiennent dans 45 min.",
+        "Le test à la semaine 12 respecte l'échéance, avec affûtage et 48 h sans travail dur avant."
+      ]
+    },
+    {
+      "programme": "programme_2.md",
+      "criteres": {"H1": 6, "H2": 8, "H3": 5, "H4": 7, "H5": 5, "H6": 7, "H7": 9, "H8": 8, "H9": 7},
+      "sans_objet": [],
+      "ensemble": 6.5,
+      "points_perdus": [
+        {"critere": "H1", "perte": 4, "raison": "Tirage, semaines 9 et 10 : traction assistée 3+2+2, traction négative 3+2, row 2+2, tenue menton 3, soit environ 19 séries par semaine. Le plafond débutant est de 12 (R1-P1, R1-P3), et cette pratiquante a 2 mois d'ancienneté. Aucune séance ne travaille la chaîne postérieure."},
+        {"critere": "H2", "perte": 2, "raison": "Corps entier 3 fois, chaque groupe exposé 2 à 3 fois (R6-P3). Pas d'alternance lourde/légère par groupe."},
+        {"critere": "H3", "perte": 5, "raison": "La hauteur de la pompe inclinée n'est jamais calibrée : la trajectoire montre des séries faites à 7 à 16 répétitions en réserve (jusqu'à 18 répétitions pour 8 écrites). Pompe classique 1 × 1 à 5 à 2 en réserve avec un maximum de 2 à 3 : cible inatteignable, l'athlète ne fait qu'une répétition par séance pendant 10 semaines. Les tractions assistées sont faites à 6 à 10 en réserve. La consigne débutante de 2-4 en réserve (R1-P13) n'est donc tenue sur aucun mouvement de l'objectif, et aucune série de calibration n'est écrite."},
+        {"critere": "H4", "perte": 3, "raison": "Le choix des exercices de traction et l'échelle de poussée sont pertinents. En revanche, aucun exercice de charnière de hanche ni d'ischio-jambiers (R6-P4). Le gainage latéral monte jusqu'à 5 × 35 s en semaine 16, du volume sans intérêt pour le profil."},
+        {"critere": "H5", "perte": 5, "raison": "Deux règles contradictoires gèrent le changement de cran de la pompe. L'échelle dit 2 × 12 propres sur 2 séances et au moins 2 semaines ; la note de l'exercice dit de descendre quand le haut de la plage (8) est tenu deux séances de suite. Résultat dans la trajectoire : 15 semaines sur la pompe inclinée avec une meilleure série à 18, et une pompe classique qui reste à 3 du début à la fin. L'élastique n'est jamais affiné."},
+        {"critere": "H6", "perte": 3, "raison": "Le tirage dépasse la poussée et le face pull est présent, mais aucun travail des ischio-jambiers ni des fessiers en charnière."},
+        {"critere": "H7", "perte": 1, "raison": "Repos adaptés et séances de 29 à 50 min dans 60 min. Le temps restant pourrait servir à un travail utile, ischio-jambiers par exemple."},
+        {"critere": "H8", "perte": 2, "raison": "Tests aux semaines 6 et 12 et affûtage à la semaine 11. Les semaines 13 à 16 montent jusqu'à 37 séries dures sans allègement ni test de fin."},
+        {"critere": "H9", "perte": 3, "raison": "Le niveau, la maison et le parc sont respectés. Mais les deux objectifs dépendent de réglages jamais calibrés (hauteur de pompe, élastique). Aucune prise neutre n'est proposée pour le poignet, alors que la douleur à 4/10 apparaît dès la semaine 7."},
+        {"critere": "ensemble", "perte": 3.5, "raison": "Trois corrections nécessaires, dont deux font manquer les deux objectifs : 3 pompes en fin de cycle pour un objectif de 10, aucune traction pour un objectif de 1."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Une seule règle pour la pompe : régler la hauteur à la première séance pour 6-8 répétitions à 2-3 en réserve, refaire une série test toutes les 2 semaines, et descendre d'un cran dès que 2 séries de 12 passent. Remplacer la pompe classique 1 × 1-5 à 2 en réserve par des séries de 1-2 répétitions sans exigence de réserve, avec des négatives de 3-4 s, tant que le maximum est sous 5.", "consequence": "Des séries à 7-16 répétitions en réserve et une règle de progression contradictoire : la pompe classique reste à 3 répétitions, l'objectif de 10 est manqué de loin, comme dans la trajectoire."},
+        {"type": "necessaire", "texte": "Piloter l'élastique par une série test toutes les 2 semaines (série ouverte arrêtée à 2 en réserve). Passer à l'élastique plus fin dès que la série dépasse le haut de la plage de 3 répétitions, et ouvrir la séance par 3-5 répétitions lourdes à 2-3 en réserve.", "consequence": "Les tractions assistées sont faites à 6-10 en réserve. Le maximum assisté monte de 16 à 20, mais aucune traction stricte n'arrive : l'objectif d'une traction est manqué."},
+        {"type": "necessaire", "texte": "Ramener le tirage à 10-12 séries dures par semaine et 6 par séance (par exemple traction négative 2 séries une seule fois par semaine, tenue menton 2 séries). Ne monter qu'en cas de stagnation (R1-P3, R1-P18).", "consequence": "Environ 19 séries de tirage par semaine, avec excentriques et isométries, chez une débutante : risque pour les tendons du coude (le simulateur bride déjà les tenues pour le coude), pour un gain nul au-delà du plafond."},
+        {"type": "amelioration", "texte": "Ajouter un pont fessier sur une jambe ou un good morning à l'élastique 2 × 10-12 deux fois par semaine, et ramener le gainage latéral à 2-3 × 30 s."},
+        {"type": "amelioration", "texte": "Faire la pompe inclinée sur la barre basse ou les barres parallèles (poignet neutre) dès la première gêne au poignet."},
+        {"type": "amelioration", "texte": "Prévoir un allègement et un test de fin dans les semaines 13 à 16."}
+      ],
+      "points_forts": [
+        "Une échelle de poussée explicite (mur, mains surélevées, genoux, sol) et une échelle de traction cohérente (assistée, négative, tenue haute).",
+        "Les deux mouvements de l'objectif ouvrent les séances, avec un test à l'échéance de la semaine 12 préparé par un affûtage.",
+        "Le tirage dépasse la poussée, avec face pull et mobilité d'épaule.",
+        "Des règles claires pour la baisse du jour, la douleur et les séances manquées."
+      ]
+    },
+    {
+      "programme": "programme_3.md",
+      "criteres": {"H1": 7.5, "H2": 8.5, "H3": 8, "H4": 7.5, "H5": 7, "H6": 8.5, "H7": 8.5, "H8": 9, "H9": 7},
+      "sans_objet": [],
+      "ensemble": 7,
+      "points_perdus": [
+        {"critere": "H1", "perte": 2.5, "raison": "Le lundi et le vendredi des semaines 1 à 8, les épaules et la poussée reçoivent planche straddle 10 tenues, planche push-up 3, HSPU 3 et handstand 3, au-dessus du maximum élite de 11 par séance (R1-P4). Semaines 9 à 12, en revanche, plus aucun travail de planche, et en semaines 13 à 15 la planche tombe à 1 × 3 s. Le volume du muscle prioritaire de l'objectif s'effondre."},
+        {"critere": "H2", "perte": 1.5, "raison": "Bonne alternance séance lourde, moyenne et légère sur 6 jours. Mais toute la charge du poignet est empilée le lundi et le vendredi (planche, push-up, handstand, HSPU), alors que le mercredi et le dimanche sont presque vides."},
+        {"critere": "H3", "perte": 2, "raison": "Les tenues sont sous-maximales et recalibrées toutes les 2 semaines, les tractions lestées à 2-4 en réserve : c'est bien. Mais le skater squat monte jusqu'à 2 × 20-21 à 4 en réserve, et les dips au poids du corps passent à 3 × 23-25 en bloc d'intensification. Ces plages longues sont mal adaptées à la phase et au matériel (lest disponible)."},
+        {"critere": "H4", "perte": 2.5, "raison": "Des choix complémentaires : ice cream maker, front lever half-lay, planche push-up, rows aux anneaux, nordic. Mais aucun substitut de planche sans extension du poignet en semaines 9 à 15 (planche lean ou tuck sur parallettes, appui aux anneaux), alors que la règle du bloc 3 autorise les appuis à prise neutre. Le dips lesté devient un dips au poids du corps à hautes répétitions."},
+        {"critere": "H5", "perte": 3, "raison": "Règles écrites : tenues +1 s, pourcentages lestés, recalage au test. Mais la reprise annonce « 50 % du volume habituel » et écrit planche straddle 1 × 3 s au lieu de 10 × 3 s, soit 10 %. Le skater squat progresse en ajoutant des répétitions au lieu de la charge. Dans la trajectoire, le front lever reste à 8 s et la planche baisse de 6 à 5 s."},
+        {"critere": "H6", "perte": 1.5, "raison": "Le tirage dépasse la poussée, avec nordic, rotation externe et face pull. Le bas du corps reste en entretien léger."},
+        {"critere": "H7", "perte": 1.5, "raison": "Repos de 3 min sur le lesté, ce qui est correct. Mais 90 s seulement entre des tenues de planche à 67 % de 6 s, sur un levier presque maximal : la pratique de 2 à 5 min (R1-P16) serait plus sûre pour la qualité. Dips de 18 répétitions avec 60 s de repos en semaine 12."},
+        {"critere": "H8", "perte": 1, "raison": "Allègement toutes les 4 semaines et test placé après l'allègement : exemplaire (R3-P9). Il reste un point, car l'intensification remplace le lesté par du volume au poids du corps."},
+        {"critere": "H9", "perte": 3, "raison": "Programme honnête sur la planche complète, avec parallettes par défaut et protocole de douleur précis. Mais avec une gêne déjà à 2/10 au poignet, il charge l'extension du poignet 4 jours par semaine et empile tout sur 2 séances : la douleur monte à 4/10 dès la semaine 6 dans la trajectoire. L'objectif de 15 s au front lever, partant de 8 s, n'est pas tempéré."},
+        {"critere": "ensemble", "perte": 3, "raison": "Deux corrections nécessaires : la charge du poignet empilée malgré la gêne du profil, et l'absence de substitut de planche avec une reprise mal dosée, qui empêche de valider l'étape straddle."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Étaler la charge du poignet en extension. Déplacer le handstand et le HSPU sur le mercredi ou le dimanche (séances de 18 à 31 min), garder au plus 2 exercices en appui poignet par séance, et commencer la planche à 6-8 tenues au lieu de 10 tant que la gêne habituelle dépasse 1/10.", "consequence": "Avec une gêne de départ à 2/10, empiler planche, push-up, handstand et HSPU sur la même séance deux fois par semaine fait monter la douleur à 4/10 dès la semaine 6 (trajectoire) et retire la planche pendant des semaines."},
+        {"type": "necessaire", "texte": "En cas de retrait des appuis mains à plat, substituer plutôt que supprimer : planche lean ou tuck avancée sur parallettes, appui et RTO aux anneaux, planche push-up sur parallettes à 3-4 en réserve, si la gêne ne monte pas, comme la règle du bloc 3 le permet. En reprise, écrire réellement 50 %, puis 60 et 70 %, du volume habituel (5, 6, puis 7 tenues de 3 s), et non 1 × 3 s.", "consequence": "Huit semaines quasi sans planche, puis une reprise à 10 % du volume : le niveau straddle régresse (de 6 à 5 s dans la trajectoire) et le critère de 3 × 7 s, qui est l'objectif réel du cycle, ne peut pas être validé."},
+        {"type": "amelioration", "texte": "Tempérer l'objectif de 15 s au front lever, comme pour la planche : donner un repère réaliste, par exemple 10-11 s, et ajouter des négatives de front lever ou des tenues à l'élastique plus longues, au-delà du half-lay."},
+        {"type": "amelioration", "texte": "Remplacer la progression du skater squat en répétitions (jusqu'à 21) par du lest ou une variante pistol, à 6-12 répétitions et 2-3 en réserve. En intensification, garder le dips lesté (barres à prise neutre) plutôt que 3 × 25 au poids du corps."},
+        {"type": "amelioration", "texte": "Porter le repos entre les tenues de planche straddle et de front lever à 2-3 min, ou les grouper en grappes avec 15 s de pause, pour garder la qualité 4/5."}
+      ],
+      "points_forts": [
+        "Le programme dit honnêtement que la planche complète n'est pas atteignable et vise le critère de l'étape actuelle.",
+        "Alternance lourde, moyenne et légère, allègement toutes les 4 semaines, test placé après l'allègement : une gestion de fatigue d'élite.",
+        "Tenues sous-maximales recalibrées toutes les 2 semaines par un maintien maximal propre, ce qui sert de calibration (R1-P12).",
+        "Un tirage lesté en pourcentages lisibles, avec rows aux anneaux, nordic, rotation externe et face pull pour l'équilibre.",
+        "Parallettes ou poings par défaut et protocole de douleur détaillé pour le poignet."
+      ]
+    }
+  ]
+}

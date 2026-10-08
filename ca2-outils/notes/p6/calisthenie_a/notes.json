@@ -1,0 +1,105 @@
+{
+  "ecole": "calisthenie",
+  "programmes": [
+    {
+      "programme": "programme_1.md",
+      "criteres": {"C1": 8, "C2": 8.5, "C3": 7.5, "C4": 8.5, "C5": 8, "C6": 6.5, "C7": 7, "C8": 8, "C9": 7.5},
+      "sans_objet": [],
+      "ensemble": 7.5,
+      "points_perdus": [
+        {"critere": "C1", "perte": 2, "raison": "Paliers plausibles (pompes 2 × 4-5 pour un max de 8, row genoux fléchis pour un max de 6, élastique calé sur 8 répétitions), mais aucun demi-palier entre traction élastique, négative et traction pieds en appui ; le choix de l'élastique n'est pas relié à un test d'entrée (R4-F7)."},
+        {"critere": "C2", "perte": 1.5, "raison": "Tirage vertical en tête de séance 3 fois par semaine et essais stricts frais à partir de la semaine 6 (R4-F1), mais ces essais n'apparaissent que dans les règles, jamais dans les tableaux de séance, et sans consigne technique par série."},
+        {"critere": "C3", "perte": 2.5, "raison": "Tenues menton au-dessus de la barre à 57-63 % du max (R4-F2) et réserve écrite correcte, mais la trajectoire montre des tractions élastiques faites à 5-9 répétitions de réserve pour 2-4 visées pendant 16 semaines (31,5 % des séries au moins 3 répétitions plus faciles) : la dose réelle est trop faible pour un objectif de force (R1-P14). Les négatives restent à 1 × 3 lundi et vendredi jusqu'à la semaine 5."},
+        {"critere": "C4", "perte": 1.5, "raison": "Pas de figure bras tendus, dips assistés à amplitude progressive, tenue coude bornée ; mais pompes, support hold et dips arrivent ensemble en semaine 7 sans préparation progressive des poignets, et une douleur au poignet à 4/10 apparaît dès cette semaine (R4-F12)."},
+        {"critere": "C5", "perte": 2, "raison": "Tirages vertical et horizontal, poussée, dips assistés et dead bug sont présents, mais il n'y a ni hollow ni gainage en suspension, ni row scapulaire chargé, alors que ce sont eux qui portent la traction stricte (R1-P17)."},
+        {"critere": "C6", "perte": 3.5, "raison": "La règle d'assistance (haut de plage avec la réserve prévue, deux séances de suite) bloque à 8 répétitions même quand la réserve réelle est de 5 à 9 : l'élastique n'est affiné qu'une fois (semaine 3), le max réel à l'élastique passe de 16 à 15 et aucune traction stricte n'est réussie. Tests en semaines 6 et 12, mais aucun test après la semaine 12 (R4-F7)."},
+        {"critere": "C7", "perte": 3, "raison": "Wrist push-ups, tirages et pompes scapulaires, mais un seul face pull, le mercredi, et aucune variante pour épargner le poignet (poings, parallettes, barre basse) alors que la gêne au poignet empêche les pompes de la semaine 7 à la semaine 16 (R4-F12, R5-P24)."},
+        {"critere": "C8", "perte": 2, "raison": "Ordre et allègements corrects (semaines 6, 11 et 12), affûtage avant l'échéance ; les semaines 13 à 16 enchaînent ensuite du volume sans objectif ni test (R4-H3)."},
+        {"critere": "C9", "perte": 2.5, "raison": "Les séances tiennent dans 45 min et le mouvement principal est décrit avec une régression pieds en appui. En revanche, le mercredi de la semaine 6 empile une « tenue menton » d'épreuve qui est en réalité un essai de traction stricte, puis une seconde tenue de 2 × 5 s ajoutée : c'est confus. Les accessoires n'ont aucune consigne d'exécution."},
+        {"critere": "ensemble", "perte": 2.5, "raison": "Une seule correction nécessaire, mais elle porte sur l'objectif lui-même : avec une assistance qui ne diminue pas, la trajectoire finit sans traction stricte et avec une tenue haute bloquée à 30 s."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Réécrire la règle d'assistance : dès qu'une série laisse au moins 2 répétitions de réserve de plus que prévu, prendre l'élastique plus fin à la séance suivante. Ou élargir la plage à 6-12 et affiner l'élastique en haut de plage sur une seule séance. Faire écrire l'élastique utilisé dans le journal.", "consequence": "L'élastique reste trop fort pendant 16 semaines (5 à 9 répétitions de réserve), la force sans assistance ne progresse pas et l'objectif de 3 tractions à 12 semaines est manqué, comme le montre la trajectoire (max à l'élastique 16 → 15, aucune traction stricte)."},
+        {"type": "amelioration", "texte": "Passer la traction négative à 2-3 × 3 dès la semaine 2, les trois jours, avec une descente de 4 à 6 s. C'est l'outil le plus direct pour un athlète à 0 traction."},
+        {"type": "amelioration", "texte": "Écrire les 1 à 3 essais stricts dans les tableaux à partir de la semaine 6, en premier exercice, plutôt que de les laisser seulement dans les règles."},
+        {"type": "amelioration", "texte": "Ajouter du hollow body hold (2 × 15-20 s) et un row scapulaire ou une suspension active chargée, pour le gainage et la position haute de traction."},
+        {"type": "amelioration", "texte": "Prévoir pompes et dips sur poings ou sur barre basse quand le poignet se plaint, et monter la préparation des poignets à 5 min avant la poussée (R4-F12)."},
+        {"type": "amelioration", "texte": "Après la semaine 12, fixer un nouvel objectif (par exemple 3 → 5 tractions) et un test en semaine 16, au lieu de 4 semaines de volume sans échéance."},
+        {"type": "amelioration", "texte": "Dans la semaine de test, nommer l'épreuve « Traction stricte, puis tenue menton si échec » et supprimer la tenue de 2 × 5 s ajoutée en double le même jour."}
+      ],
+      "points_forts": [
+        "Le tirage vertical est en tête de chaque séance, 3 fois par semaine, à l'état frais.",
+        "Trois outils complémentaires (traction élastique, négative chronométrée, tenue menton au-dessus de la barre), chacun avec un critère d'arrêt sur la qualité.",
+        "Le discours sur l'objectif est honnête (« possible, pas garanti »), les tests des semaines 6 et 12 recalent les doses, 48 h séparent le dernier travail dur du test, et le test de traction stricte est prévu à chaque échéance.",
+        "Règles de douleur, de séance courte et de reprise après absence complètes, et une régression pieds en appui si aucun élastique ne suffit."
+      ]
+    },
+    {
+      "programme": "programme_2.md",
+      "criteres": {"C1": 7, "C2": 8, "C3": 7, "C4": 7.5, "C5": 8, "C6": 5.5, "C7": 6.5, "C8": 7.5, "C9": 7},
+      "sans_objet": [],
+      "ensemble": 6.5,
+      "points_perdus": [
+        {"critere": "C1", "perte": 3, "raison": "L'échelle de poussée (mur → inclinée → genoux → sol) et l'élastique à 8 répétitions sont bien vus. Mais à partir de la semaine 7, la pompe classique est prescrite en 1 × 1-3 à 2 répétitions de réserve alors que le test donne un max de 2 : la cible est impossible à atteindre. Et le cran d'inclinaison n'est jamais relié à un repère mesuré (R4-F7)."},
+        {"critere": "C2", "perte": 2, "raison": "Traction et poussée en tête de séance 3 fois par semaine (R4-F1), mais pas de consigne technique par série, et les essais stricts de traction ne figurent que dans les règles."},
+        {"critere": "C3", "perte": 3, "raison": "Tenues menton dosées à 57-65 % du max (R4-F2). En revanche, dans la trajectoire, la pompe inclinée est faite à 12-16 répétitions de réserve pour 3 visées et la traction élastique à 7-10 pour 3-4 : le stimulus réel est très loin de la cible (R1-P14)."},
+        {"critere": "C4", "perte": 2.5, "raison": "Pas de figure bras tendus et un support hold calibré. Mais la poussée sur poignet en extension est quotidienne (pompes inclinées, négatives, classiques, support hold) sans préparation progressive, et la douleur au poignet reste à 4/10 de la semaine 7 à la semaine 16 (R4-F12)."},
+        {"critere": "C5", "perte": 2, "raison": "Tirage vertical et horizontal, poussée, support hold, gainage latéral et dead bug sont là. Il manque un hollow et un tirage scapulaire chargé pour la traction (R1-P17). La force du dead hang (25 s) n'est pas travaillée au-delà de l'échauffement."},
+        {"critere": "C6", "perte": 4.5, "raison": "Deux critères de passage se contredisent pour la poussée : l'échelle demande 2 × 12 propres sur 2 séances et 2 semaines sur l'étape, alors que la note de séance dit de descendre d'un cran au haut de la plage 6-8. Résultat dans la trajectoire : 15 semaines sur la pompe inclinée avec une meilleure série de 18, et une pompe classique qui reste à 3. Même blocage de l'élastique qu'en traction : aucune traction stricte réussie (R4-F7)."},
+        {"critere": "C7", "perte": 3.5, "raison": "Wrist push-ups, CARs d'épaule et face pull sont présents, mais il n'y a aucune variante pour épargner le poignet (poignées, poings, barre basse en prise neutre) alors que la gêne bloque l'objectif pompes pendant 10 semaines (R4-F12, R5-P27)."},
+        {"critere": "C8", "perte": 2.5, "raison": "Ordre, tests en semaines 6 et 12 et affûtage corrects. Ensuite, les semaines 13 à 16 n'ont ni objectif ni test, et le gainage latéral passe de 2 × 15 s à 4 × 35 s puis 5 × 35 s, contre la règle « +5 s par tenue » du programme."},
+        {"critere": "C9", "perte": 3, "raison": "Les séances tiennent dans le temps (29 à 50 min sur 60 disponibles, donc sous-utilisées), mais le programme contient des consignes contradictoires (deux critères pour passer de cran, une pompe classique à 2 de réserve pour un max de 2) et aucune consigne d'exécution pour les accessoires."},
+        {"critere": "ensemble", "perte": 3.5, "raison": "Trois corrections nécessaires, chacune liée à un objectif : la traction (assistance qui ne diminue pas), les pompes (critères contradictoires, levier figé) et le poignet (aucune variante, douleur qui dure). La trajectoire finit avec 3 pompes et 0 traction."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Garder un seul critère de passage pour la pompe inclinée. Pour ce profil : descendre d'un cran dès que toutes les séries tiennent le haut de la plage avec au moins la réserve prévue sur 2 séances, ou dès qu'une série laisse 4 répétitions de réserve de plus que prévu. Noter la hauteur des mains à chaque séance.", "consequence": "Le levier de poussée reste trop facile (12 à 16 répétitions de réserve) et la pompe classique ne progresse pas : l'objectif de 10 pompes à 12 semaines est manqué (trajectoire 3 → 3)."},
+        {"type": "necessaire", "texte": "Réécrire la règle d'assistance de la traction : prendre l'élastique plus fin dès qu'une série laisse au moins 2 répétitions de réserve de plus que prévu, ou élargir la plage à 6-12.", "consequence": "L'élastique reste trop fort (7 à 10 répétitions de réserve) et la première traction n'arrive pas à 12 semaines."},
+        {"type": "necessaire", "texte": "Donner une variante qui épargne le poignet pour toute la poussée (pompes sur poignées, poings ou barre basse en prise neutre, support hold réduit), avec 3 à 5 min de préparation progressive des poignets (appuis en extension dosés). Remplacer la pompe classique au sol par cette variante tant que la gêne dépasse 2/10.", "consequence": "La gêne au poignet à 4/10 dure de la semaine 7 à la semaine 16 avec la pompe classique maintenue : risque de douleur chronique, et l'objectif pompes est bloqué par la règle « sans progresser »."},
+        {"type": "amelioration", "texte": "Pour la pompe classique, écrire « 1 à 2 répétitions propres, arrêt avant que la forme casse » plutôt qu'une réserve impossible à respecter pour un max de 2."},
+        {"type": "amelioration", "texte": "Utiliser une partie des 10 à 30 min libres par séance pour un second volume de pompes négatives et de tractions négatives (2-3 × 3), et un hollow body hold."},
+        {"type": "amelioration", "texte": "Après la semaine 12, fixer un objectif et un test en semaine 16, et appliquer au gainage latéral la règle des +5 s au lieu de sauter de 2 à 5 séries."},
+        {"type": "amelioration", "texte": "Écrire les essais stricts de traction dans les tableaux à partir de la semaine 6, en premier exercice."}
+      ],
+      "points_forts": [
+        "Une échelle de poussée explicite, avec un cran choisi dès la première séance et des pompes négatives chronométrées.",
+        "Les deux objectifs sont travaillés 3 fois par semaine, en tête de séance.",
+        "Tests en semaines 6 et 12 avec 48 h sans travail dur avant, recalage des doses sur le résultat mesuré, et tenue menton au-dessus de la barre dosée en pourcentage du max.",
+        "Règles de douleur, de baisse du jour et de séance courte claires."
+      ]
+    },
+    {
+      "programme": "programme_3.md",
+      "criteres": {"C1": 8.5, "C2": 7.5, "C3": 7, "C4": 4.5, "C5": 8, "C6": 7, "C7": 7.5, "C8": 6.5, "C9": 7.5},
+      "sans_objet": [],
+      "ensemble": 5,
+      "points_perdus": [
+        {"critere": "C1", "perte": 1.5, "raison": "Paliers déduits des records : planche straddle à 67 % de 6 s, front lever à 63 % de 8 s, half-lay pour le volume. Mais aucun demi-palier vers la planche half-lay, alors que le critère de passage (3 × 7 s) dépasse le maintien max actuel (R4-F7)."},
+        {"critere": "C2", "perte": 2.5, "raison": "Le front lever est travaillé 3 fois par semaine, frais. En revanche, le vendredi, la planche passe après le front lever et l'ice cream maker, et le handstand (3 × 30 s) puis les HSPU viennent après les deux figures, donc fatigués (R4-F1)."},
+        {"critere": "C3", "perte": 3, "raison": "Les secondes cumulées (40 à 50 s) sont dans la fourchette élite de R4-F2, mais : 90 s de repos seulement entre 10 tenues de figure à 63-67 % (R1-P16) ; pas d'alternance de tenues longues sur le levier complet pour l'objectif de 15 s (R4-F6) ; et les doses sont recalées à la baisse sur des tests à 6 s alors que le record est de 8 s (10 × 5 s devient 10 × 4 s)."},
+        {"critere": "C4", "perte": 5.5, "raison": "Le budget tendineux n'est pas pensé. Les poignets et les épaules en poussée sont chargés lundi (planche, planche push-ups, handstand, HSPU) puis mardi (dips lestés), et de même vendredi puis samedi : il n'y a pas 48 h entre les charges sur cette zone (R4-F10), alors qu'il y a une gêne au poignet au départ. Les coudes en tirage sont chargés 5 jours sur 7 (front lever lundi, mercredi et vendredi, tractions lestées jusqu'à 84 % mardi et samedi). La trajectoire montre une douleur au poignet à 4/10 dès la semaine 6, 18 séances à 3/10 ou plus, et la planche retirée des semaines 9 à 12."},
+        {"critere": "C5", "perte": 2, "raison": "Tractions et dips lestés, row aux anneaux, hollow, planche push-ups et ice cream maker sont bien choisis. Mais la force lourde progresse jusqu'à 84 % du 1RM pendant l'intensification, au lieu d'être réduite à un entretien au service des figures (R1-P17, R4-H1)."},
+        {"critere": "C6", "perte": 3, "raison": "Le critère de passage (3 × 7 s, 2 séances, 6 semaines), le maintien max toutes les 2 semaines et les tests de fin de bloc sont écrits. Mais les deux figures sont testées dans la même séance, en semaine d'allègement, et le recalage descend sous le record sans contre-test. La trajectoire montre le front lever de 8 à 6 s et la planche de 6 à 5 s (R4-F9)."},
+        {"critere": "C7", "perte": 2.5, "raison": "La préparation des poignets est riche (rotations, pressions des doigts, étirement des fléchisseurs), les parallettes sont prévues par défaut au-dessus de 1/10, et il y a des rotations externes. Mais rien ne renforce progressivement le poignet en extension, alors que la raideur après les grosses séances de planche est connue (R4-F12)."},
+        {"critere": "C8", "perte": 3.5, "raison": "Allègements toutes les 4 semaines et blocs volume → intensification → réalisation → test. Mais la planche est retirée entièrement des semaines 9 à 12, alors que la règle du bloc 3 garde les appuis en prise neutre (parallettes) en volume réduit. Elle n'est ensuite reprise qu'à 1-2 × 3 s, si bien que le test de la semaine 16 suit 3 semaines quasi vides. Lest et figures ne sont pas réalloués (R4-H2, R4-H4)."},
+        {"critere": "C9", "perte": 2.5, "raison": "C'est faisable dans les 90 min, avec des consignes d'exécution et une régression sur parallettes. Mais les règles se contredisent (bloc 3 : les parallettes restent ; semaine 9 : planche retirée), et les tests ne correspondent pas à la règle « étape actuelle » : le front lever est testé à 7-15 s alors que le critère est 3 × 7 s."},
+        {"critere": "ensemble", "perte": 5, "raison": "Quatre corrections nécessaires, dont un budget poignet et coude qui fait apparaître la douleur. La trajectoire montre les deux figures en recul (front lever 8 → 6 s, planche 6 → 5 s) et une progression de 0,06 % par semaine : les objectifs ne sont pas servis."}
+      ],
+      "corrections": [
+        {"type": "necessaire", "texte": "Réorganiser la semaine pour garder 48 h entre les charges de poussée sur le poignet. Planche, planche push-ups et HSPU le lundi et le jeudi ou vendredi. Dips lestés déplacés au mercredi ou supprimés pendant la spécialisation. Handstand réduit à 2 × 20-30 s sur parallettes les jours de planche. Ajouter un bloc de renforcement du poignet en extension (appuis dosés, wrist push-ups lestés progressifs) 2 à 3 fois par semaine.", "consequence": "La gêne connue (2/10) monte à 4/10 et dure (18 séances à 3/10 ou plus dans la trajectoire), la planche est retirée pendant 4 semaines et l'athlète s'expose à une tendinopathie du poignet."},
+        {"type": "necessaire", "texte": "Pendant la spécialisation, ramener les tractions lestées à un entretien (1 séance par semaine, 2-3 × 3 à 75-80 %, R4-H1) et ne jamais les placer le lendemain d'une séance de front lever lourde.", "consequence": "Les coudes et biceps sont chargés 5 jours sur 7, les tenues sont bornées pour le coude et le front lever régresse au lieu de monter vers 15 s."},
+        {"type": "necessaire", "texte": "Tester chaque figure dans une séance fraîche distincte, en dehors de l'allègement, et ne recaler les doses sous le record du profil qu'après un contre-test 48-72 h plus tard.", "consequence": "Des tests sous-estimés (6 s au lieu de 8 s) abaissent la dose de chaque bloc et entraînent l'athlète dans une spirale de baisse : la trajectoire finit à 6 s de front lever, loin des 15 s visées."},
+        {"type": "necessaire", "texte": "Pendant la phase de douleur, appliquer la règle écrite du bloc 3 : garder la planche straddle sur parallettes en volume réduit (environ 50 %), avec des planche leans sur parallettes, plutôt que de retirer toute la planche des semaines 9 à 12.", "consequence": "Quatre semaines sans stimulus spécifique font régresser la planche (6 → 5 s) et vident de sens le test de l'objectif en semaine 16."},
+        {"type": "amelioration", "texte": "Monter le repos entre tenues de figure à 2-3 min (R1-P16) et passer le front lever à 6-8 × 4-5 s, plutôt que 10 tenues à 90 s."},
+        {"type": "amelioration", "texte": "Pour l'objectif de 15 s, ajouter une fois par semaine des tenues longues de 10-12 s sur un levier un peu plus facile (front lever à l'élastique ou half-lay) en alternance avec les tenues courtes sur le levier complet (R4-F6)."},
+        {"type": "amelioration", "texte": "Placer le handstand en début de séance un jour sans figure (mercredi ou dimanche), en pratique courte de 10 min, plutôt qu'après la planche et le front lever."},
+        {"type": "amelioration", "texte": "Ajouter un demi-palier vers la half-lay (straddle plus fermée, ou half-lay à l'élastique) pour préparer le passage."}
+      ],
+      "points_forts": [
+        "Le discours est honnête et conforme au décalage muscle–tendon : la planche complète est annoncée hors de portée, avec au moins 6 semaines par étape (R4-F9).",
+        "Les doses de tenue sont exprimées en pourcentage du maintien max, les secondes cumulées sont dans la fourchette élite, et un maintien max est fait toutes les 2 semaines.",
+        "Les poignets sont pris au sérieux dès le départ : échauffement spécifique, parallettes par défaut au-dessus de 1/10, règles de douleur graduées et reprise à 50 % puis +10 % par semaine.",
+        "Allègements réguliers toutes les 4 semaines et protocole de test avec montée progressive, jamais à froid."
+      ]
+    }
+  ]
+}

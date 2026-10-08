@@ -81,22 +81,74 @@ Les baisses de `street_05` (hypertrophie) et de `street_13` (hypertrophie, sant�
 par « maximum − 2 ») ; la trajectoire de `street_05` montrée (une graine) change de séance représentative,
 les mesures moyennes du profil sont identiques à la boucle 2 (progression 0,28 %/sem., échecs 0).
 
+### Boucle 4 — sécurité (relecture documentée du pilotage, manche 4, arrivée pendant le lot)
+
+Douleur pendant l'effort jamais à 5/10 : `coachPainStop` 6 → 5, allègement dès 4/10 (Silbernagel et al. 2007,
+lu sur une source secondaire), remplaçants au même seuil ; pendant un arrêt, mouvements à contrainte moyenne au
+premier palier (moitié des séries, 3 en réserve, 67,5 % du 1RM), retirés après 14 jours d'arrêt si la douleur est
+encore à 3/10 ou plus ; remplaçant d'une douleur du jour à 70 % du 1RM au plus ; sur une zone récente, +10 % par
+séance au plus (Soligard et al. 2016). Boucle 4 bis : arrêt du poignet complet (échauffement compris, toute charge
+externe d'appui retirée), test reporté tant que la zone a été signalée au-dessus de 2/10 dans la semaine, renvoi
+vers un professionnel une fois par semaine au lieu de chaque séance. Boucle 4 ter : intensité entière du report de
+test, zone douloureuse du jour comptée comme récente.
+
+### Passe 4 (`street_01`, `street_10`, exports changés de plus de 10 %)
+
+`street_01` 8 / 7 / 7 / 6 (passe 2 : 8 partout) ; `street_10` 7 / 5,5 / 8 / 6 (passe 1 : 6 / 6,5 / 7 / 7). Côté
+conduite : élastique jamais changé (série remise à zéro quand la plage écrite monte) ; arrêt du poignet de la
+boucle 4 bis trop large (planche sur parallettes retirée sept semaines, poussée du débutant perdue).
+
+### Boucle 5 (dernière boucle de la partie 0, C9.2)
+
+Appui neutre au poids du corps gardé au premier palier pendant l'arrêt du poignet (toute charge externe d'appui
+retirée) ; poussée en extension remplacée par un appui neutre au poids du corps ; série de l'élastique comptée même
+quand la plage écrite monte. Passe 5 (`street_01`) : 6,5 / 7 / 8 / 7.
+
+### Correction de sécurité après la passe 5 (session du 08/10, hors boucle de calibrage)
+
+Notes de la passe 5 lues en entier : l'école santé relève, pour `street_01`, des dips assistés gardés au premier
+palier avec une douleur au poignet notée à 4/10, et des pompes remplacées par des dips négatifs aux barres pendant
+l'arrêt (poignet à 4/10 des semaines 7 à 15) — contraire à la relecture documentée du pilotage (manche 4 : l'arrêt
+couvre toute charge en extension du poignet). Correction (`CONTRAT.md`, § 11.16) : pendant un arrêt du poignet, le
+remplaçant d'une poussée n'est qu'un appui sur parallettes ou poignées ; tant que la gêne de la semaine atteint
+3/10, seuls ces appuis restent (dips aux barres, anneaux, pompes au sol retirés, échauffement compris). Test ajouté
+(`coach_rules_test.dart`, `street_01`, poignet à 4/10 quatre semaines). Contrôle dev d2a5ef43 (run 37786847270) :
+244 tests verts. Export de `street_01` changé de 5 % (sous le seuil de 10 % de `docs/PANEL.md`) ; renote faite
+quand même (sécurité), ci-dessous.
+
+### Relecture indépendante du code (08/10, sous-agent Opus) et passe 6
+
+Douze constats, tous traités (`CONTRAT.md`, § 11.16, fin de section) ; les plus graves : un arrêt déclenché par
+trois séances de suite au-dessus de 3/10 tombait au premier signalement plus bas ; l'étape de figure remplaçante et
+le test reporté échappaient aux règles de douleur ; la part du 1RM de la reprise ne tenait pas sur un remplaçant.
+Contrôle dev 74404ad9 (run 37792576775) : 245 tests verts, analyse sans remarque, formatage conforme.
+
+Passe 6 (`street_01`, `03`, `10`, exports changés par les deux corrections, 5 à 10 % cumulés depuis leur dernière
+notation ; renote demandée pour la sécurité) : `street_01` 7 / 7,5 / 7 / 7 ; `street_03` 6,5 / 6,5 / 6,5 / 6 ;
+`street_10` 7 / 5 / 7 / 6,5. Corrections nécessaires côté conduite : **cadence de l'élastique** (trois écoles sur
+quatre, `street_01` et `03` : passer à l'élastique plus fin dès qu'une série laisse 2 répétitions de réserve de plus
+que visé) → reportée à la partie 1 (0.3.0 ; partie 0 arrêtée à cinq boucles, C9.2). `street_10`, école calisthénie :
+garder la planche sur parallettes à 50 % pendant la douleur — contraire au constat 7 de la relecture du code
+(contrainte forte retirée tant que la gêne atteint 3/10) : la sécurité prime, choix consigné. Les autres corrections
+nécessaires visent le programme écrit (lot CP2 : répartition des appuis du poignet sur la semaine, dips du bloc 3,
+progression du front lever, volume de tirage du débutant, échelle de pompe).
+
 ### Version livrée (0.2.3) — 68 couples
 
 Entre parenthèses : note de la passe précédente quand elle a changé.
 
 | Profil | Force | Calisthénie | Hypertrophie | Santé | Passe |
 | --- | --- | --- | --- | --- | --- |
-| `street_01_debutant_complet` | 8 | 8 | 8 | 8 | p2 |
+| `street_01_debutant_complet` | 7 | 7,5 | 7 | 7 | p6 |
 | `street_02_debutant_surpoids` | 8 | 8 | 8 | 9 | p1 |
-| `street_03_debutante` | 7 | 6,5 | 7 | 6,5 | p2 |
+| `street_03_debutante` | 6,5 | 6,5 | 6,5 | 6 | p6 |
 | `street_04_reprise_longue_pause` | 9 | 9 | 8 | 9 | p1 |
 | `street_05_inter_calisthenie_front_lever` | 7 | 8 | 6,5 (8) | 8 | p3 |
 | `street_06_inter_sets_reps` | 9 | 8 | 7 | 8 | p1 |
 | `street_07_avance_streetlifting_competition` | 8 | 8 | 8 | 8 | p3 |
 | `street_08_avance_sets_reps_competition` | 6 | 7 | 7 | 8 | p1 |
 | `street_09_elite_streetlifting` | 7 | 8 | 8 | 8 | p2 |
-| `street_10_elite_figures` | 6 | 6,5 | 7 | 7 | p1 |
+| `street_10_elite_figures` | 7 | 5 | 7 | 6,5 | p6 |
 | `street_11_master_51_ans` | 7 | 7 | 8 | 7 | p1 |
 | `street_12_antecedent_coude` | 9 (8) | 9 | 9 | 9 (8) | p3 |
 | `street_13_peu_de_temps` | 7,5 (7) | 7 | 6,5 (8) | 7 (8) | p3 |
@@ -105,7 +157,7 @@ Entre parenthèses : note de la passe précédente quand elle a changé.
 | `street_16_specialisation_traction_lestee` | 9 | 9 | 9 | 9 | p2 |
 | `street_17_hybride_street_course` | 7 | 6,5 | 7 | 8 | p1 |
 
-19 couples sur 68 à 9 ou plus, minimum 6, moyenne 7,85. **Cible C7.5 (9 partout) non atteinte.** Les
+19 couples sur 68 à 9 ou plus, minimum 5, moyenne 7,76 (passes 1 à 6 ; dernière notation de chaque couple). **Cible C7.5 (9 partout) non atteinte.** Les
 corrections nécessaires restantes portent sur le programme écrit (lot CP2 : volume de tirage, progressions
 bloquées, critères de passage, dips du jeudi au bloc 2 de `street_07`, repos, tests). Côté conduite, aucune
 correction nécessaire restante ; améliorations notées : référence de 1RM affichée qui change d'une ligne à
@@ -117,5 +169,5 @@ programme réalisé (`volume_trop_vite`, blocs réécrits par `kalis_plan` aprè
 douleur au coude ; `seance_trop_longue` pour `street_17` séances manquées) — déjà présentes en CX correction 1
 (par exemple `street_06` maladie, 0,10 par saison sur 100 graines), au même niveau avant et après la partie 0
 (0,0147 → 0,0135 par saison en moyenne) : rampe du bloc suivant après un bloc écourté, transmise au lot CP2.
-Boucles arrêtées après la boucle 3 (C9.2 : la suite dépend du programme écrit, pas de gain attendu d'une
+Boucles arrêtées après la boucle 5 (C9.2 : cinq boucles au plus ; la suite dépend surtout du programme écrit, pas de gain attendu d'une
 boucle de conduite). Aucune hausse sur zone douloureuse au banc.

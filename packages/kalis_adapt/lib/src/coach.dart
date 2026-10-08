@@ -551,7 +551,7 @@ void noteCoachSession(
       !failed && top > 0 && firstTarget != null && top < firstTarget.low;
   var missStreak = 0;
   if (before != null &&
-      before.amount == coach.schemeAmount &&
+      (before.amount == coach.schemeAmount || run.info.exercise.assisted) &&
       before.loadKg == held) {
     missStreak = before.missed;
   }
@@ -1833,6 +1833,7 @@ List<SetPlan>? _directPlans(
       }
     }
     if (!locked &&
+        !ex.recentZone &&
         !tendonCapped &&
         !c.light &&
         c.policy.build &&

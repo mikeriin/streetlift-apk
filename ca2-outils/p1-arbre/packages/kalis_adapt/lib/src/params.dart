@@ -221,6 +221,7 @@ final class AdaptParams {
     this.enduranceFatigueSeconds = 600,
     this.enduranceFatigueMax = 6,
     this.enduranceConduct = true,
+    this.coachAssistWideRir = 2,
   });
 
   /// Réglage par défaut.
@@ -1041,4 +1042,10 @@ final class AdaptParams {
   /// servies telles qu'écrites et absentes du modèle de fatigue, comme en
   /// 0.2 — comparaison du banc).
   final bool enduranceConduct;
+
+  /// Réserve en plus de la cible (répétitions), sur toutes les séries d'une
+  /// séance, qui fait passer à l'élastique plus fin dès la séance suivante
+  /// (CA2, partie 1 ; panel de la passe 6 ; ACSM 2009, règle « 2 pour 2 » :
+  /// deux répétitions au-delà de l'objectif → charge plus difficile).
+  final double coachAssistWideRir;
 }

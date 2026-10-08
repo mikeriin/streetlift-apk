@@ -82,3 +82,11 @@ Base : `moteurs` 9526ac47 (kalis_plan 0.2.2, kalis_adapt 0.2.2, kalis_bench 0.2.
 - Contrôle FULL ea7d517b poussé (arbre de publication 0.2.3 ; seule la doc Markdown changera). CALIBRAGE_CA2 : boucles 4, 5, correction ; table finale à compléter avec la renote de street_01.
 - Partie 1 en cours dans le worktree /home/claude/p1 (branche locale ca2-p1, copiée dans la sauvegarde sous p1-arbre/) : kalis_core 0.4.3 (5 codes de raison, générés + formatés à la main, gen_contracts --check « à jour »), kalis_adapt : endurance.dart, étape 2 ter de session.dart (_enduranceDay), fatigue croisée dans replay.dart, params endurance*, sim/endurance_truth.dart + runner, invariants E1-E3 (support.dart checkEndurance), profils course dans les propriétés, test/endurance_test.dart, CONTRAT § 12 ; kalis_bench : endurance_export.dart (section des trajectoires).
 - Sources partie 1 vérifiées : ca2-outils/recherche_partie1.md.
+
+## 08/10 ~15:15 UTC
+- Relecture indépendante du code 0.2.3 (Opus) : 12 constats, tous corrigés (deux arbres) ; test d'arrêt gardé ajouté. Dev 74404ad9 (run 37792576775) : 245 tests verts.
+- Contrôle FULL d9029a47 poussé (publication 0.2.3, en cours).
+- Passe 6 (street_01, 03, 10 ; notes dans ca2-outils/notes/p6) : 01 7/7,5/7/7 ; 03 6,5/6,5/6,5/6 ; 10 7/5/7/6,5. Final partie 0 : 19/68 à 9, min 5, moyenne 7,76 (CALIBRAGE_CA2 à jour).
+- Page de relecture : 504 notes, aucune du propriétaire, rien de nouveau depuis la manche 4.
+- Partie 1 (p1) : + règle d'élastique « marge large » (SlotMark.wideMargin, coachAssistWideRir 2) demandée par la passe 6 ; versions kalis_adapt 0.3.0, kalis_bench 0.2.3, kalis_core 0.4.3 ; CHANGELOG. panel.py build_autres prêt.
+- Suite : full vert → publication 0.2.3 (moteurs, etiquettes kalis_adapt-v0.2.3 et kalis_bench-v0.2.2, DECISIONS, ETAT, notification) ; puis contrôle dev de p1.

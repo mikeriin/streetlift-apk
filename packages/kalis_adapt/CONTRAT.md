@@ -1226,8 +1226,9 @@ inchangé (séances identiques à l'octet près ; seul le texte de version chang
     et les appuis écrits par le bloc qui ne la provoquent pas restent au premier palier (règle précédente) ;
   - **poignet à l'arrêt encore signalé à 3/10 ou plus dans les sept derniers jours** (douleur du jour
     comprise) : seuls les appuis sur parallettes ou poignées (`coachWristNeutralSupport`) restent, au premier
-    palier ; dips aux barres parallèles, appuis aux anneaux, L-sit et pompes au sol sont retirés, échauffement
-    compris ; dès que la gêne de la semaine redescend à 2/10 au plus, la règle précédente reprend (appui
+    palier, sauf la contrainte forte (planche, équilibre, HSPU), retirée aussi sur parallettes ; dips aux barres
+    parallèles, appuis aux anneaux et pompes au sol sont retirés, échauffement compris (le catalogue n'a aujourd'hui
+    aucun exercice avec des poignées : en pratique, les parallettes) ; dès que la gêne de la semaine redescend à 2/10 au plus, la règle précédente reprend (appui
     neutre au poids du corps au premier palier) jusqu'à la levée de l'arrêt (panel de la passe 5, école santé,
     `street_01` : dips assistés gardés et pompes remplacées par des dips négatifs, poignet à 4/10 de la
     semaine 7 à la semaine 15 ; relecture documentée du pilotage, manche 4 : l'arrêt couvre toute charge en
@@ -1296,3 +1297,16 @@ Références ajoutées (vérifiées sur le texte ou le résumé ; « (résumé) 
   *Percept Mot Skills* 128(1):507-521. (résumé)
 - Wrist pain in gymnasts: a review of common overuse wrist pathology in the gymnastics athlete (2017). *Curr
   Sports Med Rep* 16(5):322-329. (résumé)
+
+**Relecture indépendante du code (08/10/2026), corrections :** (1) un arrêt déclenché par trois séances de suite
+au-dessus de 3/10 ne tombe plus au premier signalement plus bas (séances de suite recomptées d'après l'historique de
+l'épisode ; même correction pour l'escalade après deux semaines et pour le renvoi hebdomadaire) ; (2) l'étape de
+figure qui remplace une étape non acquise suit les règles de douleur et d'arrêt (sinon retirée), et le conseil en
+séance ne propose plus d'étape plus facile pendant une reprise, une douleur ou une dose plafonnée ; (3) un test
+reporté à une autre séance n'est jamais servi sur une zone signalée au-dessus de 2/10 dans la semaine ni sur un
+mouvement qui charge une zone à l'arrêt ; (4) la part du 1RM la plus haute de la reprise (67,5 % et plus) et d'un
+remplaçant de douleur (70 %) tient aussi sur une ligne écrite en réserve ou sur un remplaçant ; (5) l'arrêt gardé
+couvre l'échauffement ; (6) le remplaçant choisi pour la douleur du jour obéit aux arrêts en cours (poignet : appui
+sur parallettes) ; (7) en reprise ou dose plafonnée, une série au-delà du plan ne monte pas ; (8) ni tenue repère sur
+une zone récente ; (9) élastique : les manques se comptent aussi quand la plage écrite monte ; (10) gain d'affûtage
+avant la première barre seulement.

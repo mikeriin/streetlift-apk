@@ -1,5 +1,13 @@
 # Journal
 
+## 0.2.3 — 08/10/2026 (lot CA2, partie 1)
+
+Couple `kalis_plan` 0.2.2 × `kalis_adapt` 0.3.0. Profils types, attentes de coach, critères de sécurité et grilles
+du panel **inchangés**.
+
+- Trajectoires : partie « Endurance et conditionnement, séance par séance » (écrit, servi, fait, raison ; blessures
+  de surcharge simulées, plus forte course rapportée à la plus longue des 30 jours, minutes de course par semaine).
+
 ## 0.2.2 — 05/10/2026 (lot CA2, partie 0)
 
 Couple `kalis_plan` 0.2.2 × `kalis_adapt` 0.2.3. Profils types, attentes de coach, critères de sécurité et
