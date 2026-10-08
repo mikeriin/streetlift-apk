@@ -5878,7 +5878,8 @@ final class Prescriber {
         }
         // Bloc de reprise après une douleur : +10 % au plus (C9.8).
         limit =
-            reference * (1 + (_shape.reprise ? coachRepriseRise : coachVolumeRise));
+            reference *
+            (1 + (_shape.reprise ? coachRepriseRise : coachVolumeRise));
       }
       var guard = 0;
       while (sumOf(root) > limit + 1e-9 && guard < 80) {
@@ -6399,7 +6400,11 @@ final class Prescriber {
     if (_shape.reprise) {
       tonnageRef = last;
     } else {
-      for (var k = _history.length - 1; k >= _history.length - 3 && k >= 0; k--) {
+      for (
+        var k = _history.length - 1;
+        k >= _history.length - 3 && k >= 0;
+        k--
+      ) {
         if (!_history[k].light && !_history[k].restart) {
           tonnageRef = _history[k];
           break;
@@ -6411,7 +6416,8 @@ final class Prescriber {
       var now = tonnageOf(entry.value);
       if (before != null && before > 0) {
         final limit =
-            before * (1 + (_shape.reprise ? coachRepriseRise : coachVolumeRise));
+            before *
+            (1 + (_shape.reprise ? coachRepriseRise : coachVolumeRise));
         // Séries retirées d'abord aux emplacements les plus fournis, jamais
         // sous leur minimum ni dans un groupe enchaîné.
         var guard = 0;
