@@ -607,19 +607,15 @@ void main() {
               reports.any(
                 (r) => r.$1 >= s.simDay - 5 && r.$1 < s.simDay && r.$2 >= 3,
               );
-          final inStop = s.plan.items.any(
-            (it) => it.reasons.any(
-              (r) =>
-                  r.code == ReasonCodes.adaptPainPersistent &&
-                  r.params['zone'] == BodyZone.wristHand.code,
-            ),
-          );
+          final inStop =
+              s.plan.reasons.any(_wristStop) ||
+              s.plan.adjustments.any((a) => a.reasons.any(_wristStop)) ||
+              s.plan.items.any((it) => it.reasons.any(_wristStop));
           if (inStop && hot) {
             checked++;
             for (final item in s.plan.items) {
               final info = book.find(item.exerciseId);
-              if (info == null ||
-                  info.zoneLevel(BodyZone.wristHand) < 0.5) {
+              if (info == null || info.zoneLevel(BodyZone.wristHand) < 0.5) {
                 continue;
               }
               expect(
@@ -799,3 +795,8 @@ void _recentRiseChecked(
     }
   }
 }
+
+/// Vrai pour la raison d'un arrêt du poignet (douleur qui dure).
+bool _wristStop(Reason r) =>
+    r.code == ReasonCodes.adaptPainPersistent &&
+    r.params['zone'] == BodyZone.wristHand.code;

@@ -761,10 +761,7 @@ SessionPlan buildSessionPlan(
         // boucle 4 : la figure visée disparaissait sept semaines.)
         final loadedSupport =
             zone == BodyZone.wristHand && info.mode == CapacityMode.loaded;
-        if (escalated ||
-            loadedSupport ||
-            hot ||
-            d.item.kind == SetKind.test) {
+        if (escalated || loadedSupport || hot || d.item.kind == SetKind.test) {
           d.removed = true;
           adjustments.add(
             SessionAdjustment(
