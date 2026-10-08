@@ -8,11 +8,11 @@ Lot CA2 du pipeline « Calibrage des programmes » (voie B, Opus 5.5 effort maxi
 | --- | --- | --- | --- | --- |
 | `kalis_adapt` | 0.2.3 (partie 0, street) | `etiquettes/kalis_adapt-v0.2.3` | ff22faa9 | run 37796701628 |
 | `kalis_bench` | 0.2.2 (partie 0) | `etiquettes/kalis_bench-v0.2.2` | ff22faa9 | run 37796701628 |
-| `kalis_core` | 0.4.3 (commit séparé, additif : 5 codes de raison) | `etiquettes/kalis_core-v0.4.3` | @CORE@ | @RUN@ |
-| `kalis_adapt` | 0.3.0 (partie 1) | `etiquettes/kalis_adapt-v0.3.0` | @MAIN@ | @RUN@ |
-| `kalis_bench` | 0.2.3 (partie 1) | `etiquettes/kalis_bench-v0.2.3` | @MAIN@ | @RUN@ |
+| `kalis_core` | 0.4.3 (commit séparé, additif : 5 codes de raison) | `etiquettes/kalis_core-v0.4.3` | acd38d9 | run 37839807642 |
+| `kalis_adapt` | 0.3.0 (partie 1) | `etiquettes/kalis_adapt-v0.3.0` | 9f931fb | run 37839807642 |
+| `kalis_bench` | 0.2.3 (partie 1) | `etiquettes/kalis_bench-v0.2.3` | 9f931fb | run 37839807642 |
 
-`kalis_plan` n'est pas touché (CP2, voie A). Couple jugé : `kalis_plan` 0.2.2, dernière étiquette publiée pendant tout le lot.
+`kalis_plan` n'est pas touché (CP2, voie A). Couple jugé (panel, banc, campagne) : `kalis_plan` 0.2.2. CP2 a publié `kalis_plan` 0.2.3 sur `moteurs` (9b2e9ea) pendant la partie 1 : les deux commits de CA2 sont rebasés dessus et le contrôle complet de publication (run 37839807642, 08/10 21:40 UTC, vert) porte sur l'arbre publié, identique octet pour octet hors `.github`.
 
 ### Partie 0 — street (0.2.3, publiée le 08/10 à 16:20 UTC)
 
