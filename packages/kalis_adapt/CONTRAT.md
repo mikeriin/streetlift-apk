@@ -1220,11 +1220,14 @@ inchangé (séances identiques à l'octet près ; seul le texte de version chang
     (panel de la boucle 5 : la poussée du débutant et la planche sur parallettes disparaissaient pendant
     toute la douleur ; règle écrite par le programme : « parallettes ou poings tant que la gêne dépasse
     2/10 ») ; deux semaines d'arrêt sans baisse retirent aussi ces appuis (règle précédente) ;
+  - **remplaçant d'une poussée retirée pendant un arrêt du poignet** : seulement un appui sur parallettes ou
+    poignées (`coachWristNeutralSupport`), jamais des dips aux barres ni un appui aux anneaux (panel de la passe 5,
+    école santé : dips négatifs à la place des pompes, poignet à 4/10) ; sans ce matériel, la poussée est retirée
+    et les appuis écrits par le bloc qui ne la provoquent pas restent au premier palier (règle précédente) ;
   - **poignet à l'arrêt encore signalé à 3/10 ou plus dans les sept derniers jours** (douleur du jour
     comprise) : seuls les appuis sur parallettes ou poignées (`coachWristNeutralSupport`) restent, au premier
     palier ; dips aux barres parallèles, appuis aux anneaux, L-sit et pompes au sol sont retirés, échauffement
-    compris, et une poussée retirée n'est remplacée que par un appui sur parallettes ou poignées (sinon
-    retirée) ; dès que la gêne de la semaine redescend à 2/10 au plus, la règle précédente reprend (appui
+    compris ; dès que la gêne de la semaine redescend à 2/10 au plus, la règle précédente reprend (appui
     neutre au poids du corps au premier palier) jusqu'à la levée de l'arrêt (panel de la passe 5, école santé,
     `street_01` : dips assistés gardés et pompes remplacées par des dips négatifs, poignet à 4/10 de la
     semaine 7 à la semaine 15 ; relecture documentée du pilotage, manche 4 : l'arrêt couvre toute charge en

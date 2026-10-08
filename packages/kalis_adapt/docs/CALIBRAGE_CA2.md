@@ -81,6 +81,41 @@ Les baisses de `street_05` (hypertrophie) et de `street_13` (hypertrophie, sant�
 par « maximum − 2 ») ; la trajectoire de `street_05` montrée (une graine) change de séance représentative,
 les mesures moyennes du profil sont identiques à la boucle 2 (progression 0,28 %/sem., échecs 0).
 
+### Boucle 4 — sécurité (relecture documentée du pilotage, manche 4, arrivée pendant le lot)
+
+Douleur pendant l'effort jamais à 5/10 : `coachPainStop` 6 → 5, allègement dès 4/10 (Silbernagel et al. 2007,
+lu sur une source secondaire), remplaçants au même seuil ; pendant un arrêt, mouvements à contrainte moyenne au
+premier palier (moitié des séries, 3 en réserve, 67,5 % du 1RM), retirés après 14 jours d'arrêt si la douleur est
+encore à 3/10 ou plus ; remplaçant d'une douleur du jour à 70 % du 1RM au plus ; sur une zone récente, +10 % par
+séance au plus (Soligard et al. 2016). Boucle 4 bis : arrêt du poignet complet (échauffement compris, toute charge
+externe d'appui retirée), test reporté tant que la zone a été signalée au-dessus de 2/10 dans la semaine, renvoi
+vers un professionnel une fois par semaine au lieu de chaque séance. Boucle 4 ter : intensité entière du report de
+test, zone douloureuse du jour comptée comme récente.
+
+### Passe 4 (`street_01`, `street_10`, exports changés de plus de 10 %)
+
+`street_01` 8 / 7 / 7 / 6 (passe 2 : 8 partout) ; `street_10` 7 / 5,5 / 8 / 6 (passe 1 : 6 / 6,5 / 7 / 7). Côté
+conduite : élastique jamais changé (série remise à zéro quand la plage écrite monte) ; arrêt du poignet de la
+boucle 4 bis trop large (planche sur parallettes retirée sept semaines, poussée du débutant perdue).
+
+### Boucle 5 (dernière boucle de la partie 0, C9.2)
+
+Appui neutre au poids du corps gardé au premier palier pendant l'arrêt du poignet (toute charge externe d'appui
+retirée) ; poussée en extension remplacée par un appui neutre au poids du corps ; série de l'élastique comptée même
+quand la plage écrite monte. Passe 5 (`street_01`) : 6,5 / 7 / 8 / 7.
+
+### Correction de sécurité après la passe 5 (session du 08/10, hors boucle de calibrage)
+
+Notes de la passe 5 lues en entier : l'école santé relève, pour `street_01`, des dips assistés gardés au premier
+palier avec une douleur au poignet notée à 4/10, et des pompes remplacées par des dips négatifs aux barres pendant
+l'arrêt (poignet à 4/10 des semaines 7 à 15) — contraire à la relecture documentée du pilotage (manche 4 : l'arrêt
+couvre toute charge en extension du poignet). Correction (`CONTRAT.md`, § 11.16) : pendant un arrêt du poignet, le
+remplaçant d'une poussée n'est qu'un appui sur parallettes ou poignées ; tant que la gêne de la semaine atteint
+3/10, seuls ces appuis restent (dips aux barres, anneaux, pompes au sol retirés, échauffement compris). Test ajouté
+(`coach_rules_test.dart`, `street_01`, poignet à 4/10 quatre semaines). Contrôle dev d2a5ef43 (run 37786847270) :
+244 tests verts. Export de `street_01` changé de 5 % (sous le seuil de 10 % de `docs/PANEL.md`) ; renote faite
+quand même (sécurité), ci-dessous.
+
 ### Version livrée (0.2.3) — 68 couples
 
 Entre parenthèses : note de la passe précédente quand elle a changé.

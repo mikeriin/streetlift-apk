@@ -35,7 +35,8 @@ Lot CA2, partie 0 (street) du pipeline « Calibrage des programmes ». Mode 0.1 
   plus) dès la séance.
 - **Poignet encore à 3/10 pendant l'arrêt (sécurité, panel de la passe 5)** : tant que la gêne de la semaine
   atteint 3/10, seuls les appuis sur parallettes ou poignées restent (dips aux barres, anneaux, pompes au sol
-  retirés, échauffement compris ; remplaçant de poussée limité à ces appuis).
+  retirés, échauffement compris) ; pendant tout l'arrêt du poignet, le remplaçant d'une poussée est un appui sur
+  parallettes ou poignées, jamais des dips aux barres.
 - **Élastique** : la série de séances au haut de la plage compte même quand la plage écrite monte.
 - Simulateur : zone réactive après un épisode de douleur (modèles B et C), poussées comptées ; une hausse
   sur zone douloureuse se compte au-dessus de 3/10 (les mesures du mode 0.1 au banc ne se comparent plus

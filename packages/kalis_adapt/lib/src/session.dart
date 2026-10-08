@@ -520,11 +520,13 @@ SessionPlan buildSessionPlan(
           continue;
         }
         // Poignet : une poussée en extension retirée est remplacée par un
-        // appui à prise neutre au poids du corps (parallettes, poignées,
-        // barres), à contrainte moyenne au plus, s'il n'en provoque aucune
-        // autre ; il est servi au premier palier de la reprise (règle du
-        // programme ; panel de la boucle 4, `street_01` : la poussée
-        // disparaissait pendant toute la douleur).
+        // appui vraiment neutre au poids du corps (parallettes, poignées), à
+        // contrainte moyenne au plus, s'il n'en provoque aucune autre ; il
+        // est servi au premier palier de la reprise (règle du programme ;
+        // panel de la boucle 4, `street_01` : la poussée disparaissait
+        // pendant toute la douleur ; panel de la passe 5, école santé : pas
+        // de dips négatifs aux barres à la place des pompes, le poignet y
+        // porte le poids du corps en légère extension).
         final substitute =
             stop.zone != BodyZone.wristHand ||
                 info.mode != CapacityMode.reps ||
@@ -542,7 +544,7 @@ SessionPlan buildSessionPlan(
                     e.stressOn(Joint.wrist) == JointStress.high ||
                     allStops.any((x) => coachPainStopHits(e, x.zone)) ||
                     comeback.heldFor(e) ||
-                    (hotWrist && !coachWristNeutralSupport(e)),
+                    !coachWristNeutralSupport(e),
               );
         if (substitute != null &&
             substitute.mode == CapacityMode.reps &&
