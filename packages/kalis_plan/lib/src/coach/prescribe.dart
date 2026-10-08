@@ -1398,6 +1398,17 @@ final class Prescriber {
       final shown = load == null
           ? p
           : (load + (e.bodyweightFraction?.value ?? 0) * a.bodyWeight) / total;
+      if (shown > 1 + 1e-9) {
+        // Plus petite charge possible (barre vide) au-dessus du 1RM de
+        // travail : la charge se calibre à la première séance (CP2,
+        // partie 1 : soulevé de terre roumain d'un débutant à 133 %).
+        x
+          ..load = null
+          ..calibrate = true
+          ..reasons.removeWhere((r) => r.code == ReasonCodes.planPercentBased)
+          ..reasons.add(reason(ReasonCodes.planToCalibrate));
+        return;
+      }
       x
         ..percent = _round3(shown)
         ..share = p
@@ -3967,7 +3978,8 @@ final class Prescriber {
     }
     var easy = long * (a.level == 0 ? 0.7 : 0.6);
     if (a.level == 0 && easy < 30 && !light && !taper) {
-      easy = 30;
+      // (Jamais au-delà de la plus longue course connue.)
+      easy = base < 30 ? base : 30;
     }
     if (easy > cap) {
       easy = cap;
@@ -5294,6 +5306,14 @@ final class Prescriber {
           continue;
         }
         if (a.rejection(id, day) != null) {
+          continue;
+        }
+        // Hors du chemin street, un mouvement de l'épreuve que le
+        // programme n'entraîne pas ne se teste pas (CP2, partie 1 : dips
+        // lesté testé à l'épreuve d'un programme de musculation qui ne le
+        // travaille jamais).
+        if (!isStreetStyle(skeleton.style) &&
+            !skeleton.days.any((d) => d.slots.any((s) => s.exerciseId == id))) {
           continue;
         }
         final e = a.catalog.exercise(id);
@@ -6963,7 +6983,10 @@ final class Prescriber {
     }
     final a1 = int.tryParse(parts[1]) ?? 0;
     final a2 = parts.length > 2 ? int.tryParse(parts[2]) ?? 0 : 0;
-    final light = ws.light;
+    // (Semaine d'introduction : format entier — une pièce raccourcie en
+    // introduction faisait monter les séries d'un tiers la semaine
+    // suivante.)
+    final light = ws.light && ws.intent != WeekIntent.intro;
     int cut(int v, int step) {
       final r = light ? (v * 2 / 3 / step).round() * step : v;
       return r < step ? step : r;

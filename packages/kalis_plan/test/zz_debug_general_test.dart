@@ -12,7 +12,7 @@ void main() {
   test('diagnostic des autres disciplines', () {
     final catalog = loadCatalog();
     final engine = KalisPlan();
-    for (final seed in const <int>[1210, 2282, 2519, 7710]) {
+    for (final seed in const <int>[504, 2170, 5629, 2282]) {
       final request = randomGeneralRequest(
         catalog,
         seed,
