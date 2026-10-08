@@ -472,6 +472,25 @@ SessionPlan buildSessionPlan(
   // jusqu'à deux semaines à 2 sur 10 au plus ; consulte (règle du bloc).
   if (coached) {
     final allStops = state.painStops(day);
+    // Poignet encore à 3 sur 10 ou plus dans la semaine pendant un arrêt :
+    // seul un appui vraiment neutre (parallettes, poignées) reste ; dips aux
+    // barres, appuis aux anneaux et pompes au sol sont retirés, échauffement
+    // compris, jusqu'à ce que la gêne redescende à 2 sur 10 au plus (CA2,
+    // partie 0 ; panel de la boucle 5, `street_01` : dips assistés gardés et
+    // pompes remplacées par des dips négatifs, poignet à 4/10 huit semaines ;
+    // relecture documentée du pilotage, manche 4 : l'arrêt couvre toute
+    // charge en extension du poignet).
+    bool wristHot() {
+      if ((painsToday[BodyZone.wristHand] ?? 0) >= painPersistMin) {
+        return true;
+      }
+      final track = state.pains[BodyZone.wristHand];
+      return track != null &&
+          track.reportsBetween(day - 6, day).any((r) => r >= painPersistMin);
+    }
+
+    final hotWrist =
+        allStops.any((x) => x.zone == BodyZone.wristHand) && wristHot();
     for (final stop in allStops) {
       final why = <Reason>[
         reason(ReasonCodes.adaptPainPersistent, <String, Object?>{
@@ -522,7 +541,8 @@ SessionPlan buildSessionPlan(
                 avoid: (e) =>
                     e.stressOn(Joint.wrist) == JointStress.high ||
                     allStops.any((x) => coachPainStopHits(e, x.zone)) ||
-                    comeback.heldFor(e),
+                    comeback.heldFor(e) ||
+                    (hotWrist && !coachWristNeutralSupport(e)),
               );
         if (substitute != null &&
             substitute.mode == CapacityMode.reps &&
@@ -723,9 +743,14 @@ SessionPlan buildSessionPlan(
       ];
       for (final d in drafts) {
         final info = d.info;
+        final hot =
+            hotWrist &&
+            zone == BodyZone.wristHand &&
+            info != null &&
+            !coachWristNeutralSupport(info.exercise);
         if (d.removed ||
             info == null ||
-            (d.item.kind == SetKind.warmup && !escalated) ||
+            (d.item.kind == SetKind.warmup && !escalated && !hot) ||
             info.zoneLevel(zone) < 0.5) {
           continue;
         }
@@ -736,7 +761,10 @@ SessionPlan buildSessionPlan(
         // boucle 4 : la figure visée disparaissait sept semaines.)
         final loadedSupport =
             zone == BodyZone.wristHand && info.mode == CapacityMode.loaded;
-        if (escalated || loadedSupport || d.item.kind == SetKind.test) {
+        if (escalated ||
+            loadedSupport ||
+            hot ||
+            d.item.kind == SetKind.test) {
           d.removed = true;
           adjustments.add(
             SessionAdjustment(
@@ -2218,3 +2246,13 @@ bool _stopNoticeDue(PainState? s, int day) {
   }
   return (day - start) ~/ 7 > (previous - start) ~/ 7;
 }
+
+/// Vrai si [e] est un appui qui garde le poignet neutre (parallettes,
+/// poignées) : seul appui gardé pendant un arrêt du poignet tant que la gêne
+/// de la semaine atteint 3 sur 10 (CA2, partie 0). Les barres parallèles et
+/// les anneaux n'en font pas partie : le poignet y porte le poids du corps
+/// en légère extension (panel de la boucle 5, école santé).
+bool coachWristNeutralSupport(CatalogExercise e) =>
+    e.equipment.any(_wristNeutralEquipment.contains);
+
+const Set<String> _wristNeutralEquipment = <String>{'parallettes', 'poignées'};

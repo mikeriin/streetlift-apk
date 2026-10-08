@@ -70,3 +70,9 @@ Base : `moteurs` 9526ac47 (kalis_plan 0.2.2, kalis_adapt 0.2.2, kalis_bench 0.2.
 - Partie 0 arrêtée (C9.2) : 19/68, min 5,5, moyenne 7,79. CALIBRAGE_CA2.md, CONTRAT § 11.16, CHANGELOG à jour.
 - Contrôle FULL c4df7413 poussé (arbre de publication 0.2.3 ; seuls docs Markdown changeront ensuite).
 - Ensuite : publication (moteurs + etiquettes kalis_adapt-v0.2.3, kalis_bench-v0.2.2 si libre), DECISIONS (section CA2, ligne datée), ETAT « en cours — partie 0 publiée (0.2.3) », notification ; puis partie 1 (brouillons scratchpad p1/endurance.dart, endurance_truth.dart — copiés dans ca2-outils/p1).
+
+## Reprise 08/10 ~13:05 UTC (nouvelle session, Opus)
+- Ligne ETAT « en cours depuis 2026-10-08 13:05 UTC » poussée. Contrôle FULL c4df7413 (run 37493375872) : vert (243 tests).
+- Avant publication, lecture complète des notes p5 (street_01) : santé signale une conduite non sûre pendant l'arrêt du poignet (dips assistés gardés au 1er palier avec douleur 4/10 notée, pompes remplacées par des dips négatifs, semaines 7-15). Correction de sécurité (hors boucle de calibrage) : `hotWrist` dans session.dart — arrêt du poignet + gêne ≥ 3/10 dans les 7 jours → seuls les appuis sur parallettes / poignées restent (échauffement compris), remplaçant de poussée limité à ces appuis (`coachWristNeutralSupport`). Test ajouté (coach_rules_test, street_01 poignet 4/10 j42-70).
+- Contrôle dev 3b568f5a poussé sur claude/ci-cp-b. Scripts ca2-outils : chemins du scratchpad de cette session ; aa_fmt pris de 6da3c852.
+- Ensuite : si vert → exports street_01, 10 (et autres changés > 10 %) → renote ; docs (CONTRAT § 11.16, CHANGELOG, CALIBRAGE boucles 4-5 + correction) ; contrôle full ; publication 0.2.3 + kalis_bench 0.2.2.

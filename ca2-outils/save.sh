@@ -3,7 +3,7 @@
 set -e
 cd /home/claude/streetlift-apk
 MSG="$1"
-SC=/tmp/claude-0/-home-claude-streetlift-apk/351397e5-88e5-569f-a8b3-9fa6fbd5e6ad/scratchpad
+SC=/tmp/claude-0/-home-claude-streetlift-apk/fb3f5782-2059-511f-a7e8-9d18405dd101/scratchpad
 export GIT_INDEX_FILE=$SC/save.index
 rm -f $GIT_INDEX_FILE
 git read-tree HEAD
