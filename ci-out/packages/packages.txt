@@ -1,0 +1,5 @@
+aa_fmt=failure
+kalis_adapt=success
+kalis_bench=failure
+kalis_core=success
+kalis_plan=failure
