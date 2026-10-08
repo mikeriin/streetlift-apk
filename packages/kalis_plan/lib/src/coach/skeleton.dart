@@ -3488,8 +3488,9 @@ Skeleton buildSkeleton(
   final style = styleOf(a);
   final b = _Builder(a, shape, blockIndex, rotation);
   final runDays = switch (style) {
-    CoachStyle.beginner || CoachStyle.health || CoachStyle.conditioning =>
-      <int>{},
+    CoachStyle.beginner ||
+    CoachStyle.health ||
+    CoachStyle.conditioning => <int>{},
     CoachStyle.endurance => _buildEndurance(b),
     _ => _buildRuns(b),
   };

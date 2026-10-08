@@ -353,6 +353,8 @@ const Map<String, List<_GymSlot>> _gymDays = <String, List<_GymSlot>>{
   'pull': <_GymSlot>[
     (GymPicks.vertical, SlotRole.main, _cmp, 3, MuscleGroup.lats),
     (GymPicks.row, SlotRole.main, _cmp, 3, MuscleGroup.upperBack),
+    // (Deltoïde moyen à 10 séries et plus par semaine en cinq séances.)
+    (GymPicks.lateral, SlotRole.accessory, _iso, 2, MuscleGroup.deltMiddle),
     (GymPicks.rear, SlotRole.accessory, _iso, 3, MuscleGroup.deltPosterior),
     (GymPicks.biceps, SlotRole.accessory, _iso, 3, MuscleGroup.biceps),
     (GymPicks.core, SlotRole.core, Method.accessoryCore, 2, null),
@@ -380,9 +382,14 @@ List<String> _gymSplit(int days, int level) {
   if (days == 5) {
     return const <String>['upper1', 'lower1', 'push', 'pull', 'legs'];
   }
-  return const <String>['push', 'pull', 'legs', 'upper2', 'lower2', 'upper1']
-      .take(days)
-      .toList();
+  return const <String>[
+    'push',
+    'pull',
+    'legs',
+    'upper2',
+    'lower2',
+    'upper1',
+  ].take(days).toList();
 }
 
 /// Groupes prioritaires du profil (spécialisation sur un muscle) : +30 à
@@ -462,14 +469,18 @@ void _buildHypertrophy(_Builder b, Set<int> runDays) {
     // Groupe prioritaire en premier, deux à trois séances par semaine.
     for (final g in priority) {
       final pick = _priorityPick(g);
-      if (pick != null && (served[g] ?? 0) < (days.length >= 5 ? 3 : 2)) {
+      if (pick != null && (served[g] ?? 0) < (days.length >= 4 ? 3 : 2)) {
+        // (+30 à 50 % de séries sur le groupe prioritaire, R6-P6 : 4
+        // séries en tête de séance, trois fois par semaine dès quatre
+        // séances.)
         final slot = b.add(
           d,
           pick,
           SlotRole.main,
           g == MuscleGroup.glutes ? _cmp : _iso,
-          sets: 3,
+          sets: 4,
           note: 'priority',
+          keep: true,
         );
         if (slot != null) {
           served[g] = (served[g] ?? 0) + 1;
@@ -482,7 +493,17 @@ void _buildHypertrophy(_Builder b, Set<int> runDays) {
           : (level == 0 && identical(candidates, GymPicks.press)
                 ? GymPicks.pressBeginner
                 : candidates);
-      b.add(d, pick, role, method, sets: setsOf(base));
+      // (Les polyarticulaires principaux restent toutes les semaines —
+      // panel CP2, partie 1 : presse à cuisses retirée des semaines 5, 6
+      // et 9 à 12.)
+      b.add(
+        d,
+        pick,
+        role,
+        method,
+        sets: setsOf(base),
+        keep: role == SlotRole.main,
+      );
     }
     if (day.slots.length < 3) {
       // Repli : séance trop pauvre avec le matériel du jour.
@@ -590,7 +611,16 @@ void _buildPower(_Builder b, Set<int> runDays) {
   // (R6-P5 : le mouvement à faire progresser en premier).
   lift(squatHeavy, squat, Method.liftHeavy, DayStress.heavy);
   lift(benchHeavy, bench, Method.liftHeavy, DayStress.heavy);
-  lift(deadHeavy, dead, Method.liftHeavy, DayStress.heavy, sets: adv ? 4 : 3);
+  // (Antécédent lombaire : le soulevé de terre reste en séries égales
+  // modérées, sans série de tête lourde ni test — R5-P20 ; panel CP2,
+  // partie 1.)
+  lift(
+    deadHeavy,
+    dead,
+    back ? Method.liftVolume : Method.liftHeavy,
+    back ? DayStress.medium : DayStress.heavy,
+    sets: adv ? 4 : 3,
+  );
   // Couché : trois à quatre expositions (R6-P8), volume le jour du squat
   // lourd, léger ou variante ailleurs.
   if (benchHeavy != squatHeavy) {
@@ -598,15 +628,11 @@ void _buildPower(_Builder b, Set<int> runDays) {
   }
   if (squatVolume >= 0) {
     lift(squatVolume, squat, Method.liftVolume, DayStress.medium);
-    variant(
-      squatVolume,
-      const <String>[
-        'mu-developpe-couche-pause',
-        'mu-developpe-couche-prise-serree',
-        'mu-developpe-couche-larsen',
-      ],
-      bench,
-    );
+    variant(squatVolume, const <String>[
+      'mu-developpe-couche-pause',
+      'mu-developpe-couche-prise-serree',
+      'mu-developpe-couche-larsen',
+    ], bench);
   }
   if (deadHeavy != benchHeavy && n >= 4) {
     lift(deadHeavy, bench, Method.liftLight, DayStress.light, sets: 3);
@@ -614,15 +640,11 @@ void _buildPower(_Builder b, Set<int> runDays) {
   // Variante du terre (phase faible) le jour du couché lourd, chez
   // l'avancé ; sinon le soulevé de terre roumain en accessoire.
   if (adv && !back && benchHeavy != deadHeavy) {
-    variant(
-      benchHeavy,
-      const <String>[
-        'mu-souleve-de-terre-pause',
-        'mu-souleve-de-terre-deficit',
-        'mu-souleve-de-terre-roumain-barre',
-      ],
-      dead,
-    );
+    variant(benchHeavy, const <String>[
+      'mu-souleve-de-terre-pause',
+      'mu-souleve-de-terre-deficit',
+      'mu-souleve-de-terre-roumain-barre',
+    ], dead);
   } else {
     b.add(
       squatVolume >= 0 ? squatVolume : squatHeavy,
@@ -694,7 +716,10 @@ void _buildPower(_Builder b, Set<int> runDays) {
 const List<List<String>> _stretches = <List<String>>[
   <String>['mo-etirement-gastrocnemiens-mur', 'mo-etirement-mollets-marche'],
   <String>['mo-ischio-assis-unilateral', 'mo-ischio-debout-pied-sureleve'],
-  <String>['mo-flechisseurs-hanche-semi-agenouille', 'mo-fente-basse-etirement'],
+  <String>[
+    'mo-flechisseurs-hanche-semi-agenouille',
+    'mo-fente-basse-etirement',
+  ],
   <String>['mo-etirement-pectoral-cadre-porte', 'mo-etirement-chiot'],
   <String>['mo-figure-4-allonge', 'mo-pigeon-sol'],
 ];
@@ -714,8 +739,14 @@ void _buildHealth(_Builder b) {
       a.profile.disciplines.primary == TrainingDiscipline.generalFitness;
   // Jours de renforcement : deux ou trois, espacés ; les autres jours
   // (senior) : équilibre, marche, mobilité.
+  // Cardio déclaré en discipline secondaire : en fin de séance (R6-P32).
+  final cardio = a.profile.disciplines.secondaries.any(
+    (s) => s.discipline == TrainingDiscipline.cardio,
+  );
   final strengthDays = spreadDays(a, b.allDays, n >= 4 ? 3 : (n >= 2 ? n : 1));
-  final balanceDays = senior ? spreadDays(a, b.allDays, n >= 3 ? 3 : n) : <int>[];
+  // Équilibre : à chaque séance à partir de 65 ans (R6-P26 : trois jours
+  // par semaine au moins ; panel CP2, partie 1 : « à chaque séance »).
+  final balanceDays = senior ? <int>[for (var d = 0; d < n; d++) d] : <int>[];
   var stretch = 0;
   for (var d = 0; d < n; d++) {
     final minutes = a.days[d].minutes;
@@ -738,27 +769,45 @@ void _buildHealth(_Builder b) {
         Method.mobility,
         sets: 2,
         note: 'balance',
+        keep: true,
       );
-      b.add(
-        d,
-        const <String>['mu-step-up-lateral', 'mu-fente-laterale'],
-        SlotRole.secondary,
-        _cmp,
-        sets: 2,
-        note: 'balance',
-      );
+      if (!strengthDays.contains(d)) {
+        b.add(
+          d,
+          const <String>['mu-step-up-lateral', 'mu-fente-laterale'],
+          SlotRole.secondary,
+          _cmp,
+          sets: 2,
+          note: 'balance',
+        );
+      }
     }
     if (strengthDays.contains(d)) {
       final k = strengthDays.indexOf(d);
       // Jambes : assis-debout (squat sur chaise), presse ou step-up.
       b.add(
         d,
-        senior
-            ? const <String>['mu-air-squat', 'mu-wall-sit', 'mu-step-up-lateral']
+        // Genou gêné (3 sur 10 ou plus) : flexion limitée — chaise contre
+        // le mur, presse horizontale, pont fessier (R5-P23).
+        (a.limitOn(Joint.knee)?.discomfort ?? 0) >= 3
+            ? const <String>[
+                'mu-wall-sit',
+                'mu-presse-cuisses-horizontale',
+                'mu-pont-fessier-sol',
+              ]
+            : senior
+            ? const <String>[
+                'mu-air-squat',
+                'mu-wall-sit',
+                'mu-step-up-lateral',
+              ]
             : (k.isEven ? GymPicks.squatBeginner : GymPicks.squatSecond),
         SlotRole.main,
         _cmp,
         sets: 2,
+        // (Les jambes passent avant tout dans une séance courte : force
+        // fonctionnelle et prévention des chutes, R6-P26.)
+        keep: true,
       );
       // Poussée stable.
       b.add(
@@ -818,7 +867,11 @@ void _buildHealth(_Builder b) {
       );
     }
     // Cardio à faible impact (R6-P32) ou marche (R6-P21, P26).
-    if (lose || senior || !strengthDays.contains(d)) {
+    // (Un jour de renforcement de moins de 45 min : la marche se fait hors
+    // séance.)
+    if (!strengthDays.contains(d) ||
+        ((lose || senior) && minutes >= 45) ||
+        (cardio && minutes >= 30)) {
       b.add(
         d,
         senior
@@ -835,13 +888,14 @@ void _buildHealth(_Builder b) {
         note: 'low_impact',
       );
     }
-    // Étirements (R6-P23).
+    // Étirements (R6-P23) : un au moins à chaque séance.
     b.add(
       d,
       _stretches[stretch % _stretches.length],
       SlotRole.mobility,
       Method.mobility,
       sets: 1,
+      keep: true,
     );
     b.add(
       d,
@@ -950,6 +1004,25 @@ void _buildConditioning(_Builder b) {
     );
     if (muDays.contains(d)) {
       _addMuscleUpPractice(b, d, a.reps[Ids.muscleUp] ?? 0);
+      // Phase de poussée du muscle-up : dips à la barre droite, puis aux
+      // barres parallèles (R4 : la sortie au-dessus de la barre).
+      b.add(
+        d,
+        const <String>['sw-dips-barre-droite', 'sw-dips-barres-paralleles'],
+        SlotRole.secondary,
+        _cmp,
+        sets: 3,
+        keep: true,
+      );
+      // Base de tirage strict (traction poitrine à la barre).
+      b.add(
+        d,
+        const <String>['sw-traction-chest-to-bar', 'sw-traction-pronation'],
+        SlotRole.secondary,
+        _cmp,
+        sets: 3,
+        keep: true,
+      );
     }
     // Créneau court : la pièce seule, à la durée du créneau (R6-P27 : une
     // pièce courte de 5 à 10 minutes garde son format) ; le bloc de force
@@ -963,9 +1036,7 @@ void _buildConditioning(_Builder b) {
         method == Method.liftHeavy ? SlotRole.main : SlotRole.secondary,
         method,
         sets: method == Method.liftHeavy ? 4 : 3,
-        stress: method == Method.liftHeavy
-            ? DayStress.heavy
-            : DayStress.medium,
+        stress: method == Method.liftHeavy ? DayStress.heavy : DayStress.medium,
       );
     }
     final (format, rawMoves) = _wods[order[d % order.length]];
@@ -983,14 +1054,7 @@ void _buildConditioning(_Builder b) {
     final room = (minutes - (minutes >= 40 ? 25 : 6)) * 60;
     final fitted = _fitWod(format, room);
     for (final m in moves) {
-      b.add(
-        d,
-        m,
-        SlotRole.conditioning,
-        Method.wod,
-        sets: 1,
-        group: fitted,
-      );
+      b.add(d, m, SlotRole.conditioning, Method.wod, sets: 1, group: fitted);
     }
     if (d.isEven && minutes >= 30) {
       b.add(
@@ -1124,13 +1188,16 @@ Set<int> _buildEndurance(_Builder b) {
         sets: 1,
       );
     } else if (quality.contains(d)) {
+      // (Débutant : footing entier les six premières semaines, les
+      // fractions viennent ensuite après lui — panel CP2, partie 1 : un
+      // « fractionné » de 12 minutes sans fractions.)
       b.add(
         d,
         <String>[Ids.easyRun],
-        SlotRole.warmup,
+        a.level == 0 ? SlotRole.main : SlotRole.warmup,
         Method.runEasy,
         sets: 1,
-        note: 'run_warmup',
+        note: a.level == 0 ? null : 'run_warmup',
       );
       b.add(
         d,

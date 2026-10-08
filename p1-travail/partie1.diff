@@ -484,12 +484,31 @@ index 81e0045b..aedd3486 100644
    /// Objectif de course chronométré (distance en mètres, temps visé en
    /// secondes), ou `null`.
    (double, double)? get runGoal {
+diff --git a/packages/kalis_plan/lib/src/coach/audit.dart b/packages/kalis_plan/lib/src/coach/audit.dart
+index be88c3e5..40982239 100644
+--- a/packages/kalis_plan/lib/src/coach/audit.dart
++++ b/packages/kalis_plan/lib/src/coach/audit.dart
+@@ -205,7 +205,13 @@ List<String> coachAudit(
+         );
+         final budget = athlete.days[d].minutes * 60.0;
+         if (seconds > budget * 1.15 + 180 &&
+-            !day.items.any((p) => imposedSlotIds.contains(p.slotId))) {
++            !day.items.any((p) => imposedSlotIds.contains(p.slotId)) &&
++            // (Jour de l'épreuve : sa durée est celle de l'épreuve.)
++            !day.items.any(
++              (p) =>
++                  p.kind == SetKind.test &&
++                  p.reasons.any((r) => r.params['note'] == CoachNotes.eventDay),
++            )) {
+           out.add(
+             '$where : ${(seconds / 60).round()} min pour '
+             '${athlete.days[d].minutes}',
 diff --git a/packages/kalis_plan/lib/src/coach/general.dart b/packages/kalis_plan/lib/src/coach/general.dart
 new file mode 100644
-index 00000000..cb5e3872
+index 00000000..6f94ab8e
 --- /dev/null
 +++ b/packages/kalis_plan/lib/src/coach/general.dart
-@@ -0,0 +1,1249 @@
+@@ -0,0 +1,1316 @@
 +part of 'skeleton.dart';
 +
 +// ---------------------------------------------------------------------------
@@ -845,6 +864,8 @@ index 00000000..cb5e3872
 +  'pull': <_GymSlot>[
 +    (GymPicks.vertical, SlotRole.main, _cmp, 3, MuscleGroup.lats),
 +    (GymPicks.row, SlotRole.main, _cmp, 3, MuscleGroup.upperBack),
++    // (Deltoïde moyen à 10 séries et plus par semaine en cinq séances.)
++    (GymPicks.lateral, SlotRole.accessory, _iso, 2, MuscleGroup.deltMiddle),
 +    (GymPicks.rear, SlotRole.accessory, _iso, 3, MuscleGroup.deltPosterior),
 +    (GymPicks.biceps, SlotRole.accessory, _iso, 3, MuscleGroup.biceps),
 +    (GymPicks.core, SlotRole.core, Method.accessoryCore, 2, null),
@@ -872,9 +893,14 @@ index 00000000..cb5e3872
 +  if (days == 5) {
 +    return const <String>['upper1', 'lower1', 'push', 'pull', 'legs'];
 +  }
-+  return const <String>['push', 'pull', 'legs', 'upper2', 'lower2', 'upper1']
-+      .take(days)
-+      .toList();
++  return const <String>[
++    'push',
++    'pull',
++    'legs',
++    'upper2',
++    'lower2',
++    'upper1',
++  ].take(days).toList();
 +}
 +
 +/// Groupes prioritaires du profil (spécialisation sur un muscle) : +30 à
@@ -954,14 +980,18 @@ index 00000000..cb5e3872
 +    // Groupe prioritaire en premier, deux à trois séances par semaine.
 +    for (final g in priority) {
 +      final pick = _priorityPick(g);
-+      if (pick != null && (served[g] ?? 0) < (days.length >= 5 ? 3 : 2)) {
++      if (pick != null && (served[g] ?? 0) < (days.length >= 4 ? 3 : 2)) {
++        // (+30 à 50 % de séries sur le groupe prioritaire, R6-P6 : 4
++        // séries en tête de séance, trois fois par semaine dès quatre
++        // séances.)
 +        final slot = b.add(
 +          d,
 +          pick,
 +          SlotRole.main,
 +          g == MuscleGroup.glutes ? _cmp : _iso,
-+          sets: 3,
++          sets: 4,
 +          note: 'priority',
++          keep: true,
 +        );
 +        if (slot != null) {
 +          served[g] = (served[g] ?? 0) + 1;
@@ -974,7 +1004,17 @@ index 00000000..cb5e3872
 +          : (level == 0 && identical(candidates, GymPicks.press)
 +                ? GymPicks.pressBeginner
 +                : candidates);
-+      b.add(d, pick, role, method, sets: setsOf(base));
++      // (Les polyarticulaires principaux restent toutes les semaines —
++      // panel CP2, partie 1 : presse à cuisses retirée des semaines 5, 6
++      // et 9 à 12.)
++      b.add(
++        d,
++        pick,
++        role,
++        method,
++        sets: setsOf(base),
++        keep: role == SlotRole.main,
++      );
 +    }
 +    if (day.slots.length < 3) {
 +      // Repli : séance trop pauvre avec le matériel du jour.
@@ -1082,7 +1122,16 @@ index 00000000..cb5e3872
 +  // (R6-P5 : le mouvement à faire progresser en premier).
 +  lift(squatHeavy, squat, Method.liftHeavy, DayStress.heavy);
 +  lift(benchHeavy, bench, Method.liftHeavy, DayStress.heavy);
-+  lift(deadHeavy, dead, Method.liftHeavy, DayStress.heavy, sets: adv ? 4 : 3);
++  // (Antécédent lombaire : le soulevé de terre reste en séries égales
++  // modérées, sans série de tête lourde ni test — R5-P20 ; panel CP2,
++  // partie 1.)
++  lift(
++    deadHeavy,
++    dead,
++    back ? Method.liftVolume : Method.liftHeavy,
++    back ? DayStress.medium : DayStress.heavy,
++    sets: adv ? 4 : 3,
++  );
 +  // Couché : trois à quatre expositions (R6-P8), volume le jour du squat
 +  // lourd, léger ou variante ailleurs.
 +  if (benchHeavy != squatHeavy) {
@@ -1090,15 +1139,11 @@ index 00000000..cb5e3872
 +  }
 +  if (squatVolume >= 0) {
 +    lift(squatVolume, squat, Method.liftVolume, DayStress.medium);
-+    variant(
-+      squatVolume,
-+      const <String>[
-+        'mu-developpe-couche-pause',
-+        'mu-developpe-couche-prise-serree',
-+        'mu-developpe-couche-larsen',
-+      ],
-+      bench,
-+    );
++    variant(squatVolume, const <String>[
++      'mu-developpe-couche-pause',
++      'mu-developpe-couche-prise-serree',
++      'mu-developpe-couche-larsen',
++    ], bench);
 +  }
 +  if (deadHeavy != benchHeavy && n >= 4) {
 +    lift(deadHeavy, bench, Method.liftLight, DayStress.light, sets: 3);
@@ -1106,15 +1151,11 @@ index 00000000..cb5e3872
 +  // Variante du terre (phase faible) le jour du couché lourd, chez
 +  // l'avancé ; sinon le soulevé de terre roumain en accessoire.
 +  if (adv && !back && benchHeavy != deadHeavy) {
-+    variant(
-+      benchHeavy,
-+      const <String>[
-+        'mu-souleve-de-terre-pause',
-+        'mu-souleve-de-terre-deficit',
-+        'mu-souleve-de-terre-roumain-barre',
-+      ],
-+      dead,
-+    );
++    variant(benchHeavy, const <String>[
++      'mu-souleve-de-terre-pause',
++      'mu-souleve-de-terre-deficit',
++      'mu-souleve-de-terre-roumain-barre',
++    ], dead);
 +  } else {
 +    b.add(
 +      squatVolume >= 0 ? squatVolume : squatHeavy,
@@ -1186,7 +1227,10 @@ index 00000000..cb5e3872
 +const List<List<String>> _stretches = <List<String>>[
 +  <String>['mo-etirement-gastrocnemiens-mur', 'mo-etirement-mollets-marche'],
 +  <String>['mo-ischio-assis-unilateral', 'mo-ischio-debout-pied-sureleve'],
-+  <String>['mo-flechisseurs-hanche-semi-agenouille', 'mo-fente-basse-etirement'],
++  <String>[
++    'mo-flechisseurs-hanche-semi-agenouille',
++    'mo-fente-basse-etirement',
++  ],
 +  <String>['mo-etirement-pectoral-cadre-porte', 'mo-etirement-chiot'],
 +  <String>['mo-figure-4-allonge', 'mo-pigeon-sol'],
 +];
@@ -1206,8 +1250,14 @@ index 00000000..cb5e3872
 +      a.profile.disciplines.primary == TrainingDiscipline.generalFitness;
 +  // Jours de renforcement : deux ou trois, espacés ; les autres jours
 +  // (senior) : équilibre, marche, mobilité.
++  // Cardio déclaré en discipline secondaire : en fin de séance (R6-P32).
++  final cardio = a.profile.disciplines.secondaries.any(
++    (s) => s.discipline == TrainingDiscipline.cardio,
++  );
 +  final strengthDays = spreadDays(a, b.allDays, n >= 4 ? 3 : (n >= 2 ? n : 1));
-+  final balanceDays = senior ? spreadDays(a, b.allDays, n >= 3 ? 3 : n) : <int>[];
++  // Équilibre : à chaque séance à partir de 65 ans (R6-P26 : trois jours
++  // par semaine au moins ; panel CP2, partie 1 : « à chaque séance »).
++  final balanceDays = senior ? <int>[for (var d = 0; d < n; d++) d] : <int>[];
 +  var stretch = 0;
 +  for (var d = 0; d < n; d++) {
 +    final minutes = a.days[d].minutes;
@@ -1230,27 +1280,45 @@ index 00000000..cb5e3872
 +        Method.mobility,
 +        sets: 2,
 +        note: 'balance',
++        keep: true,
 +      );
-+      b.add(
-+        d,
-+        const <String>['mu-step-up-lateral', 'mu-fente-laterale'],
-+        SlotRole.secondary,
-+        _cmp,
-+        sets: 2,
-+        note: 'balance',
-+      );
++      if (!strengthDays.contains(d)) {
++        b.add(
++          d,
++          const <String>['mu-step-up-lateral', 'mu-fente-laterale'],
++          SlotRole.secondary,
++          _cmp,
++          sets: 2,
++          note: 'balance',
++        );
++      }
 +    }
 +    if (strengthDays.contains(d)) {
 +      final k = strengthDays.indexOf(d);
 +      // Jambes : assis-debout (squat sur chaise), presse ou step-up.
 +      b.add(
 +        d,
-+        senior
-+            ? const <String>['mu-air-squat', 'mu-wall-sit', 'mu-step-up-lateral']
++        // Genou gêné (3 sur 10 ou plus) : flexion limitée — chaise contre
++        // le mur, presse horizontale, pont fessier (R5-P23).
++        (a.limitOn(Joint.knee)?.discomfort ?? 0) >= 3
++            ? const <String>[
++                'mu-wall-sit',
++                'mu-presse-cuisses-horizontale',
++                'mu-pont-fessier-sol',
++              ]
++            : senior
++            ? const <String>[
++                'mu-air-squat',
++                'mu-wall-sit',
++                'mu-step-up-lateral',
++              ]
 +            : (k.isEven ? GymPicks.squatBeginner : GymPicks.squatSecond),
 +        SlotRole.main,
 +        _cmp,
 +        sets: 2,
++        // (Les jambes passent avant tout dans une séance courte : force
++        // fonctionnelle et prévention des chutes, R6-P26.)
++        keep: true,
 +      );
 +      // Poussée stable.
 +      b.add(
@@ -1310,7 +1378,11 @@ index 00000000..cb5e3872
 +      );
 +    }
 +    // Cardio à faible impact (R6-P32) ou marche (R6-P21, P26).
-+    if (lose || senior || !strengthDays.contains(d)) {
++    // (Un jour de renforcement de moins de 45 min : la marche se fait hors
++    // séance.)
++    if (!strengthDays.contains(d) ||
++        ((lose || senior) && minutes >= 45) ||
++        (cardio && minutes >= 30)) {
 +      b.add(
 +        d,
 +        senior
@@ -1327,13 +1399,14 @@ index 00000000..cb5e3872
 +        note: 'low_impact',
 +      );
 +    }
-+    // Étirements (R6-P23).
++    // Étirements (R6-P23) : un au moins à chaque séance.
 +    b.add(
 +      d,
 +      _stretches[stretch % _stretches.length],
 +      SlotRole.mobility,
 +      Method.mobility,
 +      sets: 1,
++      keep: true,
 +    );
 +    b.add(
 +      d,
@@ -1442,6 +1515,25 @@ index 00000000..cb5e3872
 +    );
 +    if (muDays.contains(d)) {
 +      _addMuscleUpPractice(b, d, a.reps[Ids.muscleUp] ?? 0);
++      // Phase de poussée du muscle-up : dips à la barre droite, puis aux
++      // barres parallèles (R4 : la sortie au-dessus de la barre).
++      b.add(
++        d,
++        const <String>['sw-dips-barre-droite', 'sw-dips-barres-paralleles'],
++        SlotRole.secondary,
++        _cmp,
++        sets: 3,
++        keep: true,
++      );
++      // Base de tirage strict (traction poitrine à la barre).
++      b.add(
++        d,
++        const <String>['sw-traction-chest-to-bar', 'sw-traction-pronation'],
++        SlotRole.secondary,
++        _cmp,
++        sets: 3,
++        keep: true,
++      );
 +    }
 +    // Créneau court : la pièce seule, à la durée du créneau (R6-P27 : une
 +    // pièce courte de 5 à 10 minutes garde son format) ; le bloc de force
@@ -1455,9 +1547,7 @@ index 00000000..cb5e3872
 +        method == Method.liftHeavy ? SlotRole.main : SlotRole.secondary,
 +        method,
 +        sets: method == Method.liftHeavy ? 4 : 3,
-+        stress: method == Method.liftHeavy
-+            ? DayStress.heavy
-+            : DayStress.medium,
++        stress: method == Method.liftHeavy ? DayStress.heavy : DayStress.medium,
 +      );
 +    }
 +    final (format, rawMoves) = _wods[order[d % order.length]];
@@ -1475,14 +1565,7 @@ index 00000000..cb5e3872
 +    final room = (minutes - (minutes >= 40 ? 25 : 6)) * 60;
 +    final fitted = _fitWod(format, room);
 +    for (final m in moves) {
-+      b.add(
-+        d,
-+        m,
-+        SlotRole.conditioning,
-+        Method.wod,
-+        sets: 1,
-+        group: fitted,
-+      );
++      b.add(d, m, SlotRole.conditioning, Method.wod, sets: 1, group: fitted);
 +    }
 +    if (d.isEven && minutes >= 30) {
 +      b.add(
@@ -1616,13 +1699,16 @@ index 00000000..cb5e3872
 +        sets: 1,
 +      );
 +    } else if (quality.contains(d)) {
++      // (Débutant : footing entier les six premières semaines, les
++      // fractions viennent ensuite après lui — panel CP2, partie 1 : un
++      // « fractionné » de 12 minutes sans fractions.)
 +      b.add(
 +        d,
 +        <String>[Ids.easyRun],
-+        SlotRole.warmup,
++        a.level == 0 ? SlotRole.main : SlotRole.warmup,
 +        Method.runEasy,
 +        sets: 1,
-+        note: 'run_warmup',
++        note: a.level == 0 ? null : 'run_warmup',
 +      );
 +      b.add(
 +        d,
@@ -1788,10 +1874,10 @@ index e60ff23c..1a6e83f5 100644
  final class Skeleton {
    /// Squelette.
 diff --git a/packages/kalis_plan/lib/src/coach/prescribe.dart b/packages/kalis_plan/lib/src/coach/prescribe.dart
-index ab5d3da5..23984599 100644
+index ab5d3da5..b11e6274 100644
 --- a/packages/kalis_plan/lib/src/coach/prescribe.dart
 +++ b/packages/kalis_plan/lib/src/coach/prescribe.dart
-@@ -122,6 +122,10 @@ abstract final class CoachNotes {
+@@ -122,6 +122,14 @@ abstract final class CoachNotes {
    /// lourds (`value` : part du 1RM à partir de laquelle la note s'écrit).
    static const String safetyPins = 'safety_pins';
  
@@ -1799,18 +1885,23 @@ index ab5d3da5..23984599 100644
 +  /// tenable, mise à l'échelle (CP2, partie 1).
 +  static const String wodPace = 'wod_pace';
 +
++  /// Squat d'un senior en assis-debout d'une chaise (CP2, partie 1 ;
++  /// R6-P26).
++  static const String chairSquat = 'chair_squat';
++
    /// Repère d'un objectif de répétitions sans lest au matériel (`value` :
    /// valeur attendue) : la surcharge passe par une variante plus dure
    /// (CP2, partie 0, boucle 2).
-@@ -418,6 +422,7 @@ abstract final class CoachNotes {
+@@ -418,6 +426,8 @@ abstract final class CoachNotes {
      missed,
      checkpoint,
      safetyPins,
 +    wodPace,
++    chairSquat,
      checkpointBody,
      checkpointHold,
      checkpointLoad,
-@@ -588,6 +593,11 @@ double coachWarmupFor(int minutes) {
+@@ -588,6 +598,11 @@ double coachWarmupFor(int minutes) {
  /// Vitesse de course prise pour convertir une durée en distance, en m/s.
  const double coachRunMetersPerSecond = 2.5;
  
@@ -1822,7 +1913,7 @@ index ab5d3da5..23984599 100644
  int _round(double x) => (x + 0.5).floor();
  
  double _round2(double v) => (v * 100).roundToDouble() / 100;
-@@ -830,6 +840,13 @@ final class _WeekTrace {
+@@ -830,6 +845,13 @@ final class _WeekTrace {
    /// Plus longue tenue écrite de la semaine par exercice de maintien du
    /// débutant (secondes par série).
    final Map<String, int> holds = <String, int>{};
@@ -1836,7 +1927,7 @@ index ab5d3da5..23984599 100644
  }
  
  /// Racine d'un mouvement au poids du corps compté en répétitions, pour le
-@@ -1381,6 +1398,17 @@ final class Prescriber {
+@@ -1381,6 +1403,17 @@ final class Prescriber {
        final shown = load == null
            ? p
            : (load + (e.bodyweightFraction?.value ?? 0) * a.bodyWeight) / total;
@@ -1854,7 +1945,20 @@ index ab5d3da5..23984599 100644
        x
          ..percent = _round3(shown)
          ..share = p
-@@ -3721,8 +3749,20 @@ final class Prescriber {
+@@ -3574,8 +3607,10 @@ final class Prescriber {
+         basis == LoadBasis.bodyweightPlusExternal) {
+       final total = a.totalOneRm(e.id);
+       if (total != null) {
+-        // 8 à 12 répétitions à 2 ou 3 de l'échec : environ 70 % du 1RM.
+-        _loadAt(x, 0.68, null);
++        // 8 à 12 répétitions à 2 ou 3 de l'échec : environ 70 % du 1RM
++        // (72 % hors du chemin street : panel CP2, partie 1, 72 à 77 %
++        // pour 8 à 10 répétitions à 2 ou 3 en réserve).
++        _loadAt(x, isStreetStyle(skeleton.style) ? 0.68 : 0.72, null);
+       } else {
+         x
+           ..calibrate = true
+@@ -3721,8 +3756,18 @@ final class Prescriber {
          s.method == Method.runLong &&
          ws.testWeek &&
          role != _DayRole.event) {
@@ -1866,18 +1970,27 @@ index ab5d3da5..23984599 100644
 +      // et banc CP2, partie 1 : 10 km de test en semaine 6 pour une
 +      // débutante qui court 35 minutes, dans un créneau d'une heure.)
 +      final last =
-+          ws.eventWeek ||
-+          (ws.intent == WeekIntent.test && _shape.finalBlock);
++          ws.eventWeek || (ws.intent == WeekIntent.test && _shape.finalBlock);
 +      var meters = last ? goal.$1 : goal.$1 / 2;
-+      final fits =
-+          (a.days[day].minutes - 8.0) * 60 * coachRunMetersPerSecond;
-+      if (fits > 0 && meters > fits) {
++      final fits = (a.days[day].minutes - 8.0) * 60 * coachRunMetersPerSecond;
++      if (!ws.eventWeek && fits > 0 && meters > fits) {
 +        meters = (fits / 500).floorToDouble() * 500;
 +      }
        x
          ..kind = SetKind.test
          ..sets = 1
-@@ -3760,6 +3800,11 @@ final class Prescriber {
+@@ -3735,6 +3780,10 @@ final class Prescriber {
+           }),
+         )
+         ..reasons.add(_note(CoachNotes.timeTrial, meters));
++      if (ws.eventWeek) {
++        // L'épreuve elle-même (sa durée est celle de la course).
++        x.reasons.add(_note(CoachNotes.eventDay, 0));
++      }
+       if (last) {
+         x.reasons.add(_note(CoachNotes.goalPace, goal.$2 / goal.$1 * 1000));
+       }
+@@ -3760,6 +3809,11 @@ final class Prescriber {
        if (reps < 4) {
          reps = 4;
        }
@@ -1889,7 +2002,17 @@ index ab5d3da5..23984599 100644
        if (role == _DayRole.primerFar) {
          // Semaine de l'épreuve : trois fractions, pour garder l'allure
          // sans fatigue (R6-P20, affûtage).
-@@ -3795,18 +3840,49 @@ final class Prescriber {
+@@ -3773,7 +3827,8 @@ final class Prescriber {
+       // longues à l'allure de l'objectif) : stimulus de vitesse aérobie.
+       final three = a.runTimeOn(3000);
+       if (meters > 0 && three != null) {
+-        x.reasons.add(_note(CoachNotes.intervalPace, three / 3000 * meters));
++        // (Allure donnée au kilomètre, quelle que soit la fraction.)
++        x.reasons.add(_note(CoachNotes.intervalPace, three / 3000 * 1000));
+       }
+       if (meters > 0) {
+         x
+@@ -3795,18 +3850,53 @@ final class Prescriber {
        }
        return x;
      }
@@ -1920,6 +2043,7 @@ index ab5d3da5..23984599 100644
      final warm =
 -        s.note == 'run_warmup' || s.note == 'walk' || s.note == 'run_extra';
 -    var minutes = s.note == 'walk'
+-        ? 10.0
 +        s.note == 'run_warmup' ||
 +        s.note == 'walk' ||
 +        s.note == 'run_extra' ||
@@ -1932,7 +2056,11 @@ index ab5d3da5..23984599 100644
 +    var minutes = lowImpact
 +        ? (a.age >= 65 ? 10.0 : 15.0) + (stage > 5 ? 5 : stage)
 +        : s.note == 'walk'
-         ? 10.0
++        // (Une marche servie par une course facile, faute de matériel ou
++        // de lieu : jamais au-delà de la course de départ bornée.)
++        ? (e.id.startsWith('ca-footing') || e.id.startsWith('ca-sortie')
++              ? (_runBase(false) < 10 ? _runBase(false) : 10.0)
++              : 10.0)
          : s.note == 'run_extra'
          ? 20.0
          : warm
@@ -1942,7 +2070,7 @@ index ab5d3da5..23984599 100644
      if (!warm) {
        minutes *= easy ? 0.7 : 1;
        if (role != _DayRole.normal) {
-@@ -3816,8 +3892,11 @@ final class Prescriber {
+@@ -3816,8 +3906,11 @@ final class Prescriber {
        if (minutes > cap) {
          minutes = cap;
        }
@@ -1956,7 +2084,7 @@ index ab5d3da5..23984599 100644
        }
      }
      final whole = minutes.floor();
-@@ -3840,6 +3919,81 @@ final class Prescriber {
+@@ -3840,6 +3933,94 @@ final class Prescriber {
      return x;
    }
  
@@ -2008,13 +2136,23 @@ index ab5d3da5..23984599 100644
 +        : (taper
 +              ? longest * 0.6
 +              : (light ? longest * 0.7 : longest * (1 + coachRunLongRise)));
-+    final cap = a.days[day].minutes - 8.0;
++    // (Jour de renforcement du coureur : 12 min gardées pour lui — panel
++    // CP2, partie 1 : le renforcement disparaissait des semaines de
++    // construction.)
++    final strengthDay = skeleton.days[day].slots.any(
++      (o) => o.role == SlotRole.accessory,
++    );
++    final cap = a.days[day].minutes - 8.0 - (strengthDay ? 12 : 0);
 +    if (s.method == Method.runLong) {
 +      if (long > cap) {
 +        long = cap;
 +      }
-+      // (Plancher de 15 min, jamais au-delà du créneau.)
-+      final low = cap < 15 ? (cap < 5 ? 5.0 : cap) : 15.0;
++      // (Plancher de 15 min, jamais au-delà du créneau ni, quand une course
++      // est connue, au-delà de la progression bornée.)
++      var low = cap < 15 ? (cap < 5 ? 5.0 : cap) : 15.0;
++      if (known != null && low > 5) {
++        low = 5;
++      }
 +      if (long < low) {
 +        long = low;
 +      }
@@ -2028,7 +2166,10 @@ index ab5d3da5..23984599 100644
 +    if (easy > cap) {
 +      easy = cap;
 +    }
-+    final low = cap < 15 ? (cap < 5 ? 5.0 : cap) : 15.0;
++    var low = cap < 15 ? (cap < 5 ? 5.0 : cap) : 15.0;
++    if (known != null && low > 5) {
++      low = 5;
++    }
 +    if (easy < low) {
 +      easy = low;
 +    }
@@ -2038,7 +2179,7 @@ index ab5d3da5..23984599 100644
    // ------------------------------------------------------------------ tests
  
    _Draft _testOf(
-@@ -4325,7 +4479,11 @@ final class Prescriber {
+@@ -4325,7 +4506,11 @@ final class Prescriber {
        return s.method == Method.mobility ? _mobility(s, ws, role) : null;
      }
      final unit = a.catalog.find(s.exerciseId)?.unit;
@@ -2051,7 +2192,27 @@ index ab5d3da5..23984599 100644
        return _run(s, day, ws, role);
      }
      // Épreuve de répétitions, phase de réalisation : la première séance de
-@@ -4638,6 +4796,8 @@ final class Prescriber {
+@@ -4365,6 +4550,19 @@ final class Prescriber {
+       return x;
+     }
+     final x = _dosed(s, day, week, ws, role);
++    if (x != null &&
++        skeleton.style == CoachStyle.health &&
++        x.kind == SetKind.work) {
++      // Santé : repos de 60 à 75 s sur les exercices au poids du corps ou
++      // légers (R6-P26 ; panel CP2, partie 1).
++      if (x.rest > 75) {
++        x.rest = 75;
++      }
++      // Senior : le squat se fait en assis-debout d'une chaise.
++      if (a.age >= 65 && x.e.id == 'mu-air-squat') {
++        x.reasons.add(_note(CoachNotes.chairSquat, 0));
++      }
++    }
+     if (x != null && s.note == 'pain_step' && x.e.id == s.exerciseId) {
+       // (Recul d'étape pour douleur : la raison et le retour sont écrits —
+       // panel CX, correction 1, passe 5, `street_10`.)
+@@ -4638,6 +4836,8 @@ final class Prescriber {
          return _mobility(s, ws, role);
        case Method.runEasy || Method.runLong || Method.runQuality:
          return _run(s, day, ws, role);
@@ -2060,7 +2221,7 @@ index ab5d3da5..23984599 100644
        default:
          return _accessory(s, ws, week, role);
      }
-@@ -5151,6 +5311,14 @@ final class Prescriber {
+@@ -5151,6 +5351,14 @@ final class Prescriber {
          if (a.rejection(id, day) != null) {
            continue;
          }
@@ -2075,7 +2236,18 @@ index ab5d3da5..23984599 100644
          final e = a.catalog.exercise(id);
          SlotSpec? own;
          for (final s in spec.slots) {
-@@ -6724,6 +6892,16 @@ final class Prescriber {
+@@ -5313,7 +5521,9 @@ final class Prescriber {
+               : Method.cutRank(x.method));
+     // 0. La marche de fin de séance prend le temps qui reste, rien de plus.
+     for (final x in <_Draft>[...items]) {
+-      if (x.slot?.note != 'walk' && x.slot?.note != 'run_extra') {
++      if (x.slot?.note != 'walk' &&
++          x.slot?.note != 'run_extra' &&
++          x.slot?.note != 'low_impact') {
+         continue;
+       }
+       final over = _daySeconds(items, minutes) - budget;
+@@ -6724,6 +6934,16 @@ final class Prescriber {
      final groupOf = <_Draft, String>{};
      for (final entry in members.entries) {
        final list = entry.value;
@@ -2092,7 +2264,7 @@ index ab5d3da5..23984599 100644
        if (list.length < 2) {
          continue;
        }
-@@ -6795,6 +6973,162 @@ final class Prescriber {
+@@ -6795,6 +7015,172 @@ final class Prescriber {
      );
    }
  
@@ -2117,6 +2289,7 @@ index ab5d3da5..23984599 100644
 +      final r = light ? (v * 2 / 3 / step).round() * step : v;
 +      return r < step ? step : r;
 +    }
++
 +    for (final x in list) {
 +      x
 +        ..backoff = false
@@ -2144,7 +2317,14 @@ index ab5d3da5..23984599 100644
 +          durationSeconds: cut(a1, 60),
 +        );
 +      case 'rft':
-+        final rounds = cut(a1, 1);
++        // (Tours retirés par les garde-fous de volume : le moins de tours
++        // du groupe fait foi, deux au moins.)
++        var rounds = cut(a1, 1);
++        for (final x in list) {
++          if (x.sets >= 2 && x.sets < rounds) {
++            rounds = x.sets;
++          }
++        }
 +        for (final x in list) {
 +          x.sets = rounds;
 +        }
@@ -2203,10 +2383,12 @@ index ab5d3da5..23984599 100644
 +        : 1;
 +    x
 +      ..sets = rounds
-+      ..minSets = 1
++      // (Une pièce « pour le temps » peut perdre des tours aux garde-fous
++      // de volume, deux au moins ; les autres formats sont fixes.)
++      ..minSets = rounds > 2 ? 2 : 1
 +      ..rest = 0
 +      ..rir = 2
-+      ..fixed = true
++      ..fixed = format != 'rft'
 +      ..stress = DayStress.medium;
 +    // Plancher de réserve du profil (reprise après un arrêt : 3 au moins,
 +    // R5-P7 ; débutant, zone gênée).
@@ -2255,7 +2437,7 @@ index ab5d3da5..23984599 100644
    /// Charge l'historique des garde-fous avec les semaines du bloc
    /// précédent [weeks].
    void seed(List<WeekPrescription> weeks) {
-@@ -6846,6 +7180,20 @@ final class Prescriber {
+@@ -6846,6 +7232,20 @@ final class Prescriber {
              trace.groups[g.index] += p.sets * t.creditOf(g) / 2;
            }
          }
@@ -2276,8 +2458,123 @@ index ab5d3da5..23984599 100644
          final family = straightArmFamilyOf(t.exercise);
          final hold = p.secondsHigh;
          if (family >= 0 && hold != null && t.kind.isResistance) {
+@@ -7008,6 +7408,31 @@ final class Prescriber {
+           break;
+         }
+       }
++      // Courses de la semaine (sortie longue et footings) : la sortie
++      // longue de la semaine suivante part de la plus longue des quatre
++      // semaines d'avant (R6-P16 ; CP2, partie 1 : sans cette trace, la
++      // sortie longue repartait de sa valeur de départ chaque semaine).
++      if (w >= kept.length) {
++        for (final items in days) {
++          for (final x in items) {
++            if ((x.e.id != Ids.longRun && x.e.id != Ids.easyRun) ||
++                x.kind == SetKind.test) {
++              continue;
++            }
++            final secs = x.secondsHigh;
++            final meters = x.distance;
++            final m = secs != null
++                ? secs * x.sets / 60
++                : (meters != null
++                      ? meters * x.sets / coachRunMetersPerSecond / 60
++                      : 0.0);
++            trace.runTotal += m;
++            if (m > trace.runLong) {
++              trace.runLong = m;
++            }
++          }
++        }
++      }
+       _history.add(w < kept.length ? _traceOf(kept[w]) : trace);
+       if (ws.kind == WeekKind.build || ws.kind == WeekKind.intro) {
+         _loadedBefore++;
+@@ -7025,10 +7450,24 @@ final class Prescriber {
+         _testsDone++;
+       }
+       out.add(
++        // Hors du chemin street, une semaine de test sans aucun test
++        // (musculation, santé : rien de mesurable par un maximum) est
++        // une semaine d'allègement et le dit (panel CP2, partie 1 :
++        // « semaine de test » vide).
+         WeekPrescription(
+           weekIndex: w,
+-          kind: ws.kind,
+-          intent: ws.intent,
++          kind:
++              ws.kind == WeekKind.test &&
++                  !anyTest &&
++                  !isStreetStyle(skeleton.style)
++              ? WeekKind.deload
++              : ws.kind,
++          intent:
++              ws.kind == WeekKind.test &&
++                  !anyTest &&
++                  !isStreetStyle(skeleton.style)
++              ? WeekIntent.deload
++              : ws.intent,
+           days: <DayPrescription>[
+             for (var d = 0; d < a.dayCount; d++) _freezeDay(d, days[d], ws),
+           ],
+@@ -7067,6 +7506,18 @@ double? coachWeightClassOf(Sex? sex, double bodyWeight) {
+ }
+ 
+ /// Raisons du bloc : phase, échéance, lecture du profil, règles de douleur.
++/// Famille d'échauffement du style [s] (valeur ajoutée à la durée de la
++/// note `general_warmup`) : 0 street, 100 course, 200 salle et
++/// conditionnement, 300 santé et mobilité.
++double _warmupFamily(CoachStyle s) => switch (s) {
++  CoachStyle.endurance => 100,
++  CoachStyle.health => 300,
++  CoachStyle.hypertrophy ||
++  CoachStyle.strength ||
++  CoachStyle.conditioning => 200,
++  _ => 0,
++};
++
+ List<Reason> blockReasonsOf(Athlete a, Skeleton skeleton) {
+   final shape = skeleton.shape;
+   final target = shape.target;
+@@ -7085,10 +7536,17 @@ List<Reason> blockReasonsOf(Athlete a, Skeleton skeleton) {
+       if (r.params['note'] == CoachNotes.skillHorizon) r,
+     reason(ReasonCodes.planCoachNote, <String, Object?>{
+       'note': CoachNotes.generalWarmup,
+-      'value': coachWarmupSeconds / 60,
++      // Échauffement de la discipline (CP2, partie 1 ; R6-P25) : + 100
++      // course, + 200 salle et conditionnement, + 300 santé.
++      'value': coachWarmupSeconds / 60 + _warmupFamily(skeleton.style),
+     }),
+   ];
+-  final tests = shape.weeks.any((w) => w.testWeek);
++  // (Musculation et santé : aucun test de maximum, pas de règle de
++  // recalage — CP2, partie 1.)
++  final tests =
++      shape.weeks.any((w) => w.testWeek) &&
++      skeleton.style != CoachStyle.hypertrophy &&
++      skeleton.style != CoachStyle.health;
+   Reason note(String code, double value) => reason(
+     ReasonCodes.planCoachNote,
+     <String, Object?>{'note': code, 'value': value},
+@@ -7192,7 +7650,15 @@ List<Reason> blockReasonsOf(Athlete a, Skeleton skeleton) {
+     ..add(
+       note(CoachNotes.badDay, profile.sleep == SleepBand.under6Hours ? 2 : 1),
+     )
+-    ..add(note(CoachNotes.shortVersion, shortest >= 50 ? 25 : 15))
++    ..add(
++      note(
++        CoachNotes.shortVersion,
++        (shortest >= 50 ? 25 : 15) +
++            (skeleton.style == CoachStyle.endurance
++                ? 100
++                : (skeleton.style == CoachStyle.health ? 300 : 0)),
++      ),
++    )
+     ..add(note(CoachNotes.redFlags, 0))
+     ..add(note(CoachNotes.missed, 20));
+   if (tests) {
 diff --git a/packages/kalis_plan/lib/src/coach/skeleton.dart b/packages/kalis_plan/lib/src/coach/skeleton.dart
-index 3ef13167..18bb819b 100644
+index 3ef13167..c2e2d0e8 100644
 --- a/packages/kalis_plan/lib/src/coach/skeleton.dart
 +++ b/packages/kalis_plan/lib/src/coach/skeleton.dart
 @@ -13,8 +13,16 @@ import 'prescribe.dart' show CoachNotes, coachGroupCap, straightArmFamilyOf;
@@ -2297,14 +2594,15 @@ index 3ef13167..18bb819b 100644
    if (a.level == 0) {
      return CoachStyle.beginner;
    }
-@@ -3479,8 +3487,23 @@ Skeleton buildSkeleton(
+@@ -3479,8 +3487,24 @@ Skeleton buildSkeleton(
  }) {
    final style = styleOf(a);
    final b = _Builder(a, shape, blockIndex, rotation);
 -  final runDays = style == CoachStyle.beginner ? <int>{} : _buildRuns(b);
 +  final runDays = switch (style) {
-+    CoachStyle.beginner || CoachStyle.health || CoachStyle.conditioning =>
-+      <int>{},
++    CoachStyle.beginner ||
++    CoachStyle.health ||
++    CoachStyle.conditioning => <int>{},
 +    CoachStyle.endurance => _buildEndurance(b),
 +    _ => _buildRuns(b),
 +  };
@@ -2322,7 +2620,7 @@ index 3ef13167..18bb819b 100644
      case CoachStyle.beginner:
        _buildBeginner(b);
      case CoachStyle.reps:
-@@ -3501,9 +3524,14 @@ Skeleton buildSkeleton(
+@@ -3501,9 +3525,14 @@ Skeleton buildSkeleton(
      );
    }
    _limitStraightArmDays(b);
@@ -2340,13 +2638,47 @@ index 3ef13167..18bb819b 100644
    var mobility = 0;
    for (final s in a.profile.disciplines.secondaries) {
 diff --git a/packages/kalis_plan/lib/src/coach/texts.dart b/packages/kalis_plan/lib/src/coach/texts.dart
-index 2adae957..99ef6ad0 100644
+index 2adae957..0ccb86b1 100644
 --- a/packages/kalis_plan/lib/src/coach/texts.dart
 +++ b/packages/kalis_plan/lib/src/coach/texts.dart
-@@ -556,6 +556,15 @@ String? coachReasonText(Reason r, Catalog catalog) {
+@@ -420,6 +420,15 @@ String? coachReasonText(Reason r, Catalog catalog) {
+           'Arrêt immédiat et avis médical : douleur dans la poitrine, '
+               'essoufflement anormal, malaise ou vertige. Souffle pendant '
+               "l'effort, sans bloquer la respiration sur les séries longues.",
++        CoachNotes.shortVersion when v is num && v >= 300 =>
++          'Jour chargé : version courte de ${_int(v - 300)} min — 3 min de '
++              "marche, l'exercice de jambes et l'équilibre, puis 3 min "
++              "d'étirements. Une séance courte vaut mieux qu'une séance "
++              'sautée.',
++        CoachNotes.shortVersion when v is num && v >= 100 =>
++          'Jour chargé : version courte de ${_int(v - 100)} min — 5 min de '
++              'marche rapide puis footing facile, sans fractions. Une '
++              "séance courte vaut mieux qu'une séance sautée.",
+         CoachNotes.shortVersion =>
+           v is num && v < 20
+               ? 'Jour chargé : version courte de ${_int(v)} min — 4 min '
+@@ -506,9 +515,10 @@ String? coachReasonText(Reason r, Catalog catalog) {
+           _ => null,
+         },
+         CoachNotes.intervalPace =>
+-          'Allure des fractions : 400 m en '
++          'Allure des fractions : '
+               '${v is num ? '${v.round() ~/ 60} min ${(v.round() % 60).toString().padLeft(2, '0')}' : ''} '
+-              '(ton allure estimée sur 3 km), récupération en trottinant ; '
++              'au kilomètre (ton allure estimée sur 3 km), récupération en '
++              'trottinant ; '
+               "si l'allure ne tient plus, arrête la série. Chaque test "
+               'chronométré recale cette allure.',
+         CoachNotes.goalPace =>
+@@ -556,6 +566,20 @@ String? coachReasonText(Reason r, Catalog catalog) {
                'séries de volume) devient une séance de surcharge en séries '
                'courtes — variante plus dure ou lest léger, 2 répétitions en '
                "réserve. Tu n'ajoutes jamais de séries toi-même.",
++        CoachNotes.chairSquat =>
++          "Squat en assis-debout : une chaise stable derrière toi, assieds-"
++              'toi doucement puis relève-toi, mains en appui sur les cuisses '
++              "au début, bras croisés quand c'est facile ; une chaise plus "
++              'basse ensuite.',
 +        CoachNotes.wodPace =>
 +          'Conditionnement : allure tenable du premier au dernier passage '
 +              '(effort ${_int(v)} sur 10), jamais un sprint au départ ; '
@@ -2359,6 +2691,30 @@ index 2adae957..99ef6ad0 100644
          CoachNotes.safetyPins =>
            'Charge lourde (${_int(v)} % du 1RM et plus) : sécurités de la '
                'cage réglées juste sous le point le plus bas, ou un pareur. '
+@@ -835,6 +859,23 @@ String? coachReasonText(Reason r, Catalog catalog) {
+         CoachNotes.easyPace =>
+           'Allure de conversation (tu peux parler en phrases), '
+               '${_int(v)} min.',
++        CoachNotes.generalWarmup when v is num && v >= 300 =>
++          "Chaque séance commence par ${_int(v - 300)} min d'échauffement "
++              '(comptées dans la durée estimée) : marche sur place ou '
++              'marche rapide, puis mobilité debout des épaules (bâton), des '
++              'hanches et des chevilles, près d\'un appui.',
++        CoachNotes.generalWarmup when v is num && v >= 200 =>
++          "Chaque séance commence par ${_int(v - 200)} min d'échauffement "
++              '(comptées dans la durée estimée) : 3 à 5 min de cardio léger '
++              '(rameur, vélo), mobilité des épaules et des hanches, puis '
++              'les séries de montée en charge du premier exercice (barre '
++              'vide, puis deux ou trois paliers).',
++        CoachNotes.generalWarmup when v is num && v >= 100 =>
++          "Chaque séance commence par ${_int(v - 100)} min d'échauffement "
++              '(comptées dans la durée estimée) : 5 min de trot progressif, '
++              'mobilité des chevilles et des hanches, gammes (montées de '
++              'genoux, talons-fesses) ; avant les fractions, deux ou trois '
++              'accélérations progressives.',
+         CoachNotes.generalWarmup =>
+           "Chaque séance commence par ${_int(v)} min d'échauffement au "
+               'plus (comptées dans la durée estimée) : épaules, poignets '
 diff --git a/packages/kalis_plan/lib/testing.dart b/packages/kalis_plan/lib/testing.dart
 index 8f8c42f9..bafe313a 100644
 --- a/packages/kalis_plan/lib/testing.dart
@@ -2576,19 +2932,15 @@ index 00000000..549a375a
 +
 +void main() => coachPropertyShard(7, general: true);
 diff --git a/packages/kalis_plan/test/coach_properties.dart b/packages/kalis_plan/test/coach_properties.dart
-index d9eb65c2..002e7fa2 100644
+index d9eb65c2..fe456230 100644
 --- a/packages/kalis_plan/test/coach_properties.dart
 +++ b/packages/kalis_plan/test/coach_properties.dart
-@@ -184,17 +184,19 @@ void _checkPass2(
+@@ -184,17 +184,15 @@ void _checkPass2(
  
  /// Joue le profil street aléatoire de graine [seed] ; rend la liste des
  /// manquements (vide si tout est conforme).
 -List<String> checkCoachSeed(Catalog catalog, int seed) {
-+List<String> checkCoachSeed(
-+  Catalog catalog,
-+  int seed, {
-+  bool general = false,
-+}) {
++List<String> checkCoachSeed(Catalog catalog, int seed, {bool general = false}) {
    final out = <String>[];
    void fail(String message) => out.add('profil $seed — $message');
  
@@ -2605,7 +2957,7 @@ index d9eb65c2..002e7fa2 100644
    final profile = request.profile;
    for (final v in profile.validate()) {
      fail('profil : ${v.path} ${v.code}');
-@@ -213,6 +215,9 @@ List<String> checkCoachSeed(Catalog catalog, int seed) {
+@@ -213,6 +211,9 @@ List<String> checkCoachSeed(Catalog catalog, int seed) {
    );
    _checkPass2(fail, 'passe 2', p1, p2);
    final block = ProgramBlock(pass1: p1, pass2: p2);
@@ -2615,7 +2967,7 @@ index d9eb65c2..002e7fa2 100644
    for (final v in coachAudit(catalog, profile, request.startDate, [block])) {
      fail('relecture : $v');
    }
-@@ -553,11 +558,107 @@ List<String> checkCoachSeed(Catalog catalog, int seed) {
+@@ -553,11 +554,107 @@ List<String> checkCoachSeed(Catalog catalog, int seed) {
    return out;
  }
  
@@ -2726,7 +3078,7 @@ index d9eb65c2..002e7fa2 100644
        '${first + coachProfilesPerShard - 1}', () {
      for (
        var chunk = 0;
-@@ -569,7 +670,7 @@ void coachPropertyShard(int shard) {
+@@ -569,7 +666,7 @@ void coachPropertyShard(int shard) {
        test('profils $from à ${to - 1}', () {
          final failures = <String>[];
          for (var seed = from; seed < to; seed++) {
@@ -2736,7 +3088,7 @@ index d9eb65c2..002e7fa2 100644
          expect(
            failures.take(40).toList(),
 diff --git a/packages/kalis_plan/test/coach_test.dart b/packages/kalis_plan/test/coach_test.dart
-index 0afd0e6a..c7f040b1 100644
+index 0afd0e6a..f0c6142a 100644
 --- a/packages/kalis_plan/test/coach_test.dart
 +++ b/packages/kalis_plan/test/coach_test.dart
 @@ -294,10 +294,11 @@ void main() {
@@ -2753,24 +3105,12 @@ index 0afd0e6a..c7f040b1 100644
        );
      });
  
-@@ -379,7 +380,10 @@ void main() {
-       // (85 % au moins : après un allègement, la hausse d'un emplacement à
-       // répétitions égales reste bornée sur la semaine allégée, comme le
-       // banc la mesure — CP2, partie 0, boucle 2.)
--      expect(top.reduce((a, b) => a > b ? a : b), inInclusiveRange(0.85, 0.95));
-+      expect(
-+        top.reduce((a, b) => a > b ? a : b),
-+        inInclusiveRange(0.85, 0.95),
-+      );
-       // Une exposition lourde (85 % et plus) par semaine de réalisation.
-       for (var k = 0; k < weeks.length; k++) {
-         if (weeks[k].intent == WeekIntent.realization) {
 diff --git a/packages/kalis_plan/test/zz_debug_general_test.dart b/packages/kalis_plan/test/zz_debug_general_test.dart
 new file mode 100644
-index 00000000..3414ff6b
+index 00000000..78a77b3b
 --- /dev/null
 +++ b/packages/kalis_plan/test/zz_debug_general_test.dart
-@@ -0,0 +1,58 @@
+@@ -0,0 +1,51 @@
 +// ignore_for_file: avoid_print
 +// Fichier temporaire de diagnostic (CP2, partie 1) : retiré avant la
 +// publication.
@@ -2782,47 +3122,40 @@ index 00000000..3414ff6b
 +import 'support.dart';
 +
 +void main() {
-+  test('diagnostic des autres disciplines', () {
++  test('diagnostic des courses', () {
 +    final catalog = loadCatalog();
 +    final engine = KalisPlan();
-+    for (final seed in const <int>[2282, 2170, 1221]) {
++    for (final seed in const <int>[7770, 9846]) {
 +      final request = randomGeneralRequest(
 +        catalog,
 +        seed,
 +        planSeed: seed % 16 == 7 ? 1 : 0,
 +      );
 +      final p = request.profile;
-+      final p1 = engine.createPass1(catalog, request);
 +      final p2 = engine.createPass2(
 +        catalog,
-+        Pass2Request(request: request, pass1: p1),
++        Pass2Request(
++          request: request,
++          pass1: engine.createPass1(catalog, request),
++        ),
 +      );
 +      print(
-+        'DIAG seed $seed : ${p.disciplines.primary.name} '
-+        '${p.disciplines.secondaries.map((s) => '${s.discipline.name} ${s.pct}').join(',')} '
-+        'exp ${p.experience?.name} gap ${p.trainingGap != null} '
-+        'minutes ${p.availability.map((d) => d.minutes).join('/')} '
-+        'emph ${p.emphasis?.name} intent ${p1.intent != null}',
++        'DIAG seed $seed ${p.disciplines.primary.name} '
++        '${p.disciplines.secondaries.map((s) => s.discipline.name).join(',')} '
++        '${p.experience?.name} ${p.availability.map((d) => d.minutes).join('/')} '
++        '${p.benchmarks?.map((b) => '${b.exerciseId}:${b.seconds}').join(',')}',
 +      );
-+      for (final w in p2.weeks.where((w) => w.weekIndex < 2 || w.days.any((d) => d.items.any((i) => i.kind == SetKind.test)))) {
++      for (final w in p2.weeks) {
 +        for (final d in w.days) {
-+          final s = coachSessionSeconds(
-+            catalog,
-+            d,
-+            minutes: p.availability[d.dayIndex].minutes,
-+          );
-+          print('DIAG  s${w.weekIndex} j${d.dayIndex} ${(s / 60).round()} min');
 +          for (final i in d.items) {
-+            final notes = i.reasons
-+                .where((r) => r.params['note'] != null)
-+                .map((r) => r.params['note'])
-+                .join('+');
-+            print(
-+              'DIAG    ${i.exerciseId} ${i.kind?.name} ${i.sets}x'
-+              '${i.repsLow}-${i.repsHigh} s${i.secondsLow}-${i.secondsHigh} '
-+              'd${i.distanceMeters} r${i.restSeconds} ${i.format ?? ''} '
-+              '${i.groupId ?? ''} ${i.intensity?.toJson()} $notes',
-+            );
++            if (i.exerciseId.startsWith('ca-')) {
++              print(
++                'DIAG  s${w.weekIndex} ${w.kind.name} j${d.dayIndex} '
++                '${i.exerciseId} ${i.kind?.name} ${i.sets}x'
++                '${i.secondsHigh} d${i.distanceMeters} ${i.slotId} '
++                '${i.reasons.map((r) => r.params['note']).whereType<Object>().join('+')}',
++              );
++            }
 +          }
 +        }
 +      }

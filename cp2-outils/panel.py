@@ -5,7 +5,7 @@ prepare <id_passe> <ecole> <fichier1.md> [<fichier2.md> ...]  -> /tmp/cp2panel/<
 collect <id_passe> -> JSON de toutes les notes de la passe
 """
 import json, os, shutil, sys, glob
-G = '/home/claude/moteurs/packages/kalis_bench/docs'
+G = '/home/claude/p1/packages/kalis_bench/docs'
 GRILLES = {'force': 'force_streetlifting.md', 'calisthenie': 'calisthenie_figures.md',
            'hypertrophie': 'hypertrophie_esthetique.md', 'sante': 'endurance_sante_kine.md'}
 ROOT = '/tmp/cp2panel'

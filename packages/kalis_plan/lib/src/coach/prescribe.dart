@@ -126,6 +126,10 @@ abstract final class CoachNotes {
   /// tenable, mise à l'échelle (CP2, partie 1).
   static const String wodPace = 'wod_pace';
 
+  /// Squat d'un senior en assis-debout d'une chaise (CP2, partie 1 ;
+  /// R6-P26).
+  static const String chairSquat = 'chair_squat';
+
   /// Repère d'un objectif de répétitions sans lest au matériel (`value` :
   /// valeur attendue) : la surcharge passe par une variante plus dure
   /// (CP2, partie 0, boucle 2).
@@ -423,6 +427,7 @@ abstract final class CoachNotes {
     checkpoint,
     safetyPins,
     wodPace,
+    chairSquat,
     checkpointBody,
     checkpointHold,
     checkpointLoad,
@@ -3602,8 +3607,10 @@ final class Prescriber {
         basis == LoadBasis.bodyweightPlusExternal) {
       final total = a.totalOneRm(e.id);
       if (total != null) {
-        // 8 à 12 répétitions à 2 ou 3 de l'échec : environ 70 % du 1RM.
-        _loadAt(x, 0.68, null);
+        // 8 à 12 répétitions à 2 ou 3 de l'échec : environ 70 % du 1RM
+        // (72 % hors du chemin street : panel CP2, partie 1, 72 à 77 %
+        // pour 8 à 10 répétitions à 2 ou 3 en réserve).
+        _loadAt(x, isStreetStyle(skeleton.style) ? 0.68 : 0.72, null);
       } else {
         x
           ..calibrate = true
@@ -3755,12 +3762,10 @@ final class Prescriber {
       // et banc CP2, partie 1 : 10 km de test en semaine 6 pour une
       // débutante qui court 35 minutes, dans un créneau d'une heure.)
       final last =
-          ws.eventWeek ||
-          (ws.intent == WeekIntent.test && _shape.finalBlock);
+          ws.eventWeek || (ws.intent == WeekIntent.test && _shape.finalBlock);
       var meters = last ? goal.$1 : goal.$1 / 2;
-      final fits =
-          (a.days[day].minutes - 8.0) * 60 * coachRunMetersPerSecond;
-      if (fits > 0 && meters > fits) {
+      final fits = (a.days[day].minutes - 8.0) * 60 * coachRunMetersPerSecond;
+      if (!ws.eventWeek && fits > 0 && meters > fits) {
         meters = (fits / 500).floorToDouble() * 500;
       }
       x
@@ -3775,6 +3780,10 @@ final class Prescriber {
           }),
         )
         ..reasons.add(_note(CoachNotes.timeTrial, meters));
+      if (ws.eventWeek) {
+        // L'épreuve elle-même (sa durée est celle de la course).
+        x.reasons.add(_note(CoachNotes.eventDay, 0));
+      }
       if (last) {
         x.reasons.add(_note(CoachNotes.goalPace, goal.$2 / goal.$1 * 1000));
       }
@@ -3818,7 +3827,8 @@ final class Prescriber {
       // longues à l'allure de l'objectif) : stimulus de vitesse aérobie.
       final three = a.runTimeOn(3000);
       if (meters > 0 && three != null) {
-        x.reasons.add(_note(CoachNotes.intervalPace, three / 3000 * meters));
+        // (Allure donnée au kilomètre, quelle que soit la fraction.)
+        x.reasons.add(_note(CoachNotes.intervalPace, three / 3000 * 1000));
       }
       if (meters > 0) {
         x
@@ -3877,7 +3887,11 @@ final class Prescriber {
     var minutes = lowImpact
         ? (a.age >= 65 ? 10.0 : 15.0) + (stage > 5 ? 5 : stage)
         : s.note == 'walk'
-        ? 10.0
+        // (Une marche servie par une course facile, faute de matériel ou
+        // de lieu : jamais au-delà de la course de départ bornée.)
+        ? (e.id.startsWith('ca-footing') || e.id.startsWith('ca-sortie')
+              ? (_runBase(false) < 10 ? _runBase(false) : 10.0)
+              : 10.0)
         : s.note == 'run_extra'
         ? 20.0
         : warm
@@ -3967,13 +3981,23 @@ final class Prescriber {
         : (taper
               ? longest * 0.6
               : (light ? longest * 0.7 : longest * (1 + coachRunLongRise)));
-    final cap = a.days[day].minutes - 8.0;
+    // (Jour de renforcement du coureur : 12 min gardées pour lui — panel
+    // CP2, partie 1 : le renforcement disparaissait des semaines de
+    // construction.)
+    final strengthDay = skeleton.days[day].slots.any(
+      (o) => o.role == SlotRole.accessory,
+    );
+    final cap = a.days[day].minutes - 8.0 - (strengthDay ? 12 : 0);
     if (s.method == Method.runLong) {
       if (long > cap) {
         long = cap;
       }
-      // (Plancher de 15 min, jamais au-delà du créneau.)
-      final low = cap < 15 ? (cap < 5 ? 5.0 : cap) : 15.0;
+      // (Plancher de 15 min, jamais au-delà du créneau ni, quand une course
+      // est connue, au-delà de la progression bornée.)
+      var low = cap < 15 ? (cap < 5 ? 5.0 : cap) : 15.0;
+      if (known != null && low > 5) {
+        low = 5;
+      }
       if (long < low) {
         long = low;
       }
@@ -3987,7 +4011,10 @@ final class Prescriber {
     if (easy > cap) {
       easy = cap;
     }
-    final low = cap < 15 ? (cap < 5 ? 5.0 : cap) : 15.0;
+    var low = cap < 15 ? (cap < 5 ? 5.0 : cap) : 15.0;
+    if (known != null && low > 5) {
+      low = 5;
+    }
     if (easy < low) {
       easy = low;
     }
@@ -4523,6 +4550,19 @@ final class Prescriber {
       return x;
     }
     final x = _dosed(s, day, week, ws, role);
+    if (x != null &&
+        skeleton.style == CoachStyle.health &&
+        x.kind == SetKind.work) {
+      // Santé : repos de 60 à 75 s sur les exercices au poids du corps ou
+      // légers (R6-P26 ; panel CP2, partie 1).
+      if (x.rest > 75) {
+        x.rest = 75;
+      }
+      // Senior : le squat se fait en assis-debout d'une chaise.
+      if (a.age >= 65 && x.e.id == 'mu-air-squat') {
+        x.reasons.add(_note(CoachNotes.chairSquat, 0));
+      }
+    }
     if (x != null && s.note == 'pain_step' && x.e.id == s.exerciseId) {
       // (Recul d'étape pour douleur : la raison et le retour sont écrits —
       // panel CX, correction 1, passe 5, `street_10`.)
@@ -5481,7 +5521,9 @@ final class Prescriber {
               : Method.cutRank(x.method));
     // 0. La marche de fin de séance prend le temps qui reste, rien de plus.
     for (final x in <_Draft>[...items]) {
-      if (x.slot?.note != 'walk' && x.slot?.note != 'run_extra') {
+      if (x.slot?.note != 'walk' &&
+          x.slot?.note != 'run_extra' &&
+          x.slot?.note != 'low_impact') {
         continue;
       }
       final over = _daySeconds(items, minutes) - budget;
@@ -6994,6 +7036,7 @@ final class Prescriber {
       final r = light ? (v * 2 / 3 / step).round() * step : v;
       return r < step ? step : r;
     }
+
     for (final x in list) {
       x
         ..backoff = false
@@ -7021,7 +7064,14 @@ final class Prescriber {
           durationSeconds: cut(a1, 60),
         );
       case 'rft':
-        final rounds = cut(a1, 1);
+        // (Tours retirés par les garde-fous de volume : le moins de tours
+        // du groupe fait foi, deux au moins.)
+        var rounds = cut(a1, 1);
+        for (final x in list) {
+          if (x.sets >= 2 && x.sets < rounds) {
+            rounds = x.sets;
+          }
+        }
         for (final x in list) {
           x.sets = rounds;
         }
@@ -7080,10 +7130,12 @@ final class Prescriber {
         : 1;
     x
       ..sets = rounds
-      ..minSets = 1
+      // (Une pièce « pour le temps » peut perdre des tours aux garde-fous
+      // de volume, deux au moins ; les autres formats sont fixes.)
+      ..minSets = rounds > 2 ? 2 : 1
       ..rest = 0
       ..rir = 2
-      ..fixed = true
+      ..fixed = format != 'rft'
       ..stress = DayStress.medium;
     // Plancher de réserve du profil (reprise après un arrêt : 3 au moins,
     // R5-P7 ; débutant, zone gênée).
@@ -7356,6 +7408,31 @@ final class Prescriber {
           break;
         }
       }
+      // Courses de la semaine (sortie longue et footings) : la sortie
+      // longue de la semaine suivante part de la plus longue des quatre
+      // semaines d'avant (R6-P16 ; CP2, partie 1 : sans cette trace, la
+      // sortie longue repartait de sa valeur de départ chaque semaine).
+      if (w >= kept.length) {
+        for (final items in days) {
+          for (final x in items) {
+            if ((x.e.id != Ids.longRun && x.e.id != Ids.easyRun) ||
+                x.kind == SetKind.test) {
+              continue;
+            }
+            final secs = x.secondsHigh;
+            final meters = x.distance;
+            final m = secs != null
+                ? secs * x.sets / 60
+                : (meters != null
+                      ? meters * x.sets / coachRunMetersPerSecond / 60
+                      : 0.0);
+            trace.runTotal += m;
+            if (m > trace.runLong) {
+              trace.runLong = m;
+            }
+          }
+        }
+      }
       _history.add(w < kept.length ? _traceOf(kept[w]) : trace);
       if (ws.kind == WeekKind.build || ws.kind == WeekKind.intro) {
         _loadedBefore++;
@@ -7373,10 +7450,24 @@ final class Prescriber {
         _testsDone++;
       }
       out.add(
+        // Hors du chemin street, une semaine de test sans aucun test
+        // (musculation, santé : rien de mesurable par un maximum) est
+        // une semaine d'allègement et le dit (panel CP2, partie 1 :
+        // « semaine de test » vide).
         WeekPrescription(
           weekIndex: w,
-          kind: ws.kind,
-          intent: ws.intent,
+          kind:
+              ws.kind == WeekKind.test &&
+                  !anyTest &&
+                  !isStreetStyle(skeleton.style)
+              ? WeekKind.deload
+              : ws.kind,
+          intent:
+              ws.kind == WeekKind.test &&
+                  !anyTest &&
+                  !isStreetStyle(skeleton.style)
+              ? WeekIntent.deload
+              : ws.intent,
           days: <DayPrescription>[
             for (var d = 0; d < a.dayCount; d++) _freezeDay(d, days[d], ws),
           ],
@@ -7415,6 +7506,18 @@ double? coachWeightClassOf(Sex? sex, double bodyWeight) {
 }
 
 /// Raisons du bloc : phase, échéance, lecture du profil, règles de douleur.
+/// Famille d'échauffement du style [s] (valeur ajoutée à la durée de la
+/// note `general_warmup`) : 0 street, 100 course, 200 salle et
+/// conditionnement, 300 santé et mobilité.
+double _warmupFamily(CoachStyle s) => switch (s) {
+  CoachStyle.endurance => 100,
+  CoachStyle.health => 300,
+  CoachStyle.hypertrophy ||
+  CoachStyle.strength ||
+  CoachStyle.conditioning => 200,
+  _ => 0,
+};
+
 List<Reason> blockReasonsOf(Athlete a, Skeleton skeleton) {
   final shape = skeleton.shape;
   final target = shape.target;
@@ -7433,10 +7536,17 @@ List<Reason> blockReasonsOf(Athlete a, Skeleton skeleton) {
       if (r.params['note'] == CoachNotes.skillHorizon) r,
     reason(ReasonCodes.planCoachNote, <String, Object?>{
       'note': CoachNotes.generalWarmup,
-      'value': coachWarmupSeconds / 60,
+      // Échauffement de la discipline (CP2, partie 1 ; R6-P25) : + 100
+      // course, + 200 salle et conditionnement, + 300 santé.
+      'value': coachWarmupSeconds / 60 + _warmupFamily(skeleton.style),
     }),
   ];
-  final tests = shape.weeks.any((w) => w.testWeek);
+  // (Musculation et santé : aucun test de maximum, pas de règle de
+  // recalage — CP2, partie 1.)
+  final tests =
+      shape.weeks.any((w) => w.testWeek) &&
+      skeleton.style != CoachStyle.hypertrophy &&
+      skeleton.style != CoachStyle.health;
   Reason note(String code, double value) => reason(
     ReasonCodes.planCoachNote,
     <String, Object?>{'note': code, 'value': value},
@@ -7540,7 +7650,15 @@ List<Reason> blockReasonsOf(Athlete a, Skeleton skeleton) {
     ..add(
       note(CoachNotes.badDay, profile.sleep == SleepBand.under6Hours ? 2 : 1),
     )
-    ..add(note(CoachNotes.shortVersion, shortest >= 50 ? 25 : 15))
+    ..add(
+      note(
+        CoachNotes.shortVersion,
+        (shortest >= 50 ? 25 : 15) +
+            (skeleton.style == CoachStyle.endurance
+                ? 100
+                : (skeleton.style == CoachStyle.health ? 300 : 0)),
+      ),
+    )
     ..add(note(CoachNotes.redFlags, 0))
     ..add(note(CoachNotes.missed, 20));
   if (tests) {
