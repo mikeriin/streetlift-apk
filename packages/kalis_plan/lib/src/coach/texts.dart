@@ -556,6 +556,15 @@ String? coachReasonText(Reason r, Catalog catalog) {
               'séries de volume) devient une séance de surcharge en séries '
               'courtes — variante plus dure ou lest léger, 2 répétitions en '
               "réserve. Tu n'ajoutes jamais de séries toi-même.",
+        CoachNotes.wodPace =>
+          'Conditionnement : allure tenable du premier au dernier passage '
+              '(effort ${_int(v)} sur 10), jamais un sprint au départ ; '
+              'chaque passage garde 2 à 3 répétitions en réserve. Mets à '
+              "l'échelle pour garder le format : charge plus légère, "
+              'amplitude réduite ou variante plus simple. Charges de repère : '
+              'wall ball 9 kg (6 kg), swing 24 kg (16 kg), haltères 22,5 kg '
+              '(15 kg) ; une charge qui casse ta série dès le premier tour '
+              'est trop lourde.',
         CoachNotes.safetyPins =>
           'Charge lourde (${_int(v)} % du 1RM et plus) : sécurités de la '
               'cage réglées juste sous le point le plus bas, ou un pareur. '
