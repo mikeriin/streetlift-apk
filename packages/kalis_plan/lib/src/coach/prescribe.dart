@@ -3972,8 +3972,12 @@ final class Prescriber {
       if (long > cap) {
         long = cap;
       }
-      // (Plancher de 15 min, jamais au-delà du créneau.)
-      final low = cap < 15 ? (cap < 5 ? 5.0 : cap) : 15.0;
+      // (Plancher de 15 min, jamais au-delà du créneau ni, quand une course
+      // est connue, au-delà de la progression bornée.)
+      var low = cap < 15 ? (cap < 5 ? 5.0 : cap) : 15.0;
+      if (known != null && low > 5) {
+        low = 5;
+      }
       if (long < low) {
         long = low;
       }
@@ -3987,7 +3991,10 @@ final class Prescriber {
     if (easy > cap) {
       easy = cap;
     }
-    final low = cap < 15 ? (cap < 5 ? 5.0 : cap) : 15.0;
+    var low = cap < 15 ? (cap < 5 ? 5.0 : cap) : 15.0;
+    if (known != null && low > 5) {
+      low = 5;
+    }
     if (easy < low) {
       easy = low;
     }
@@ -7021,7 +7028,14 @@ final class Prescriber {
           durationSeconds: cut(a1, 60),
         );
       case 'rft':
-        final rounds = cut(a1, 1);
+        // (Tours retirés par les garde-fous de volume : le moins de tours
+        // du groupe fait foi, deux au moins.)
+        var rounds = cut(a1, 1);
+        for (final x in list) {
+          if (x.sets >= 2 && x.sets < rounds) {
+            rounds = x.sets;
+          }
+        }
         for (final x in list) {
           x.sets = rounds;
         }
@@ -7080,10 +7094,12 @@ final class Prescriber {
         : 1;
     x
       ..sets = rounds
-      ..minSets = 1
+      // (Une pièce « pour le temps » peut perdre des tours aux garde-fous
+      // de volume, deux au moins ; les autres formats sont fixes.)
+      ..minSets = rounds > 2 ? 2 : 1
       ..rest = 0
       ..rir = 2
-      ..fixed = true
+      ..fixed = format != 'rft'
       ..stress = DayStress.medium;
     // Plancher de réserve du profil (reprise après un arrêt : 3 au moins,
     // R5-P7 ; débutant, zone gênée).
