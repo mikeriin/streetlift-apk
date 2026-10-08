@@ -1,5 +1,22 @@
 # Journal des versions de kalis_adapt
 
+## 0.3.0
+
+Lot CA2, partie 1 du pipeline « Calibrage des programmes » : course, cardio, conditionnement, mobilité et profils
+hybrides conduits d'après le journal (`CONTRAT.md`, § 12). Contrats additifs ; `kalis_core` 0.4.3 (cinq codes de
+raison d'endurance).
+
+- **Course** : sortie du jour bornée à la plus longue course des 30 jours + 10 % (Frandsen et al. 2025) ; jour sans
+  (bilan bas, douleur du bas du corps, course récente trop dure) : séance de qualité servie en course facile, ou
+  retirée ; bilan très bas : durée à 70 % ; reprise après 7 jours sans séance à 70 %, après 14 jours à 50 %.
+- **Conditionnement** : pièce mise à l'échelle (75 %) un jour sans ou après deux jours durs de suite.
+- **Hybrides** : fatigue croisée — course dure la veille, une répétition de réserve de plus sur le bas du corps ;
+  lignes d'endurance comptées dans le modèle forme-fatigue.
+- **Jamais au-dessus de l'écrit** (durée, distance, répétitions, séries, effort, allure) : invariants E1 à E3,
+  vérifiés à chaque séance des simulations et des journaux aléatoires (profils de course ajoutés).
+- Simulateur : vérité d'endurance (course, conditionnement ; deux modèles, risques de surcharge) ;
+  `AdaptParams.enduranceConduct` rejoue 0.2.
+
 ## 0.2.3
 
 Lot CA2, partie 0 (street) du pipeline « Calibrage des programmes ». Mode 0.1 inchangé. Détail et sources :

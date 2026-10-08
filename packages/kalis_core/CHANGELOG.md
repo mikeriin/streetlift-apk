@@ -1,5 +1,17 @@
 # Journal des versions de kalis_core
 
+## 0.4.3 — 08/10/2026 (lot CA2 du pipeline « Calibrage des programmes », évolution additive)
+
+Rien n'est retiré, renommé ni déplacé ; aucun type, aucune énumération, aucune borne ne change. Un JSON de 0.4.2 se
+relit et se réécrit à l'identique.
+
+- **Cinq codes de raison d'endurance**, en fin de registre (138 codes ; rang des 133 premiers inchangé), pour la
+  conduite de la course, du conditionnement et des disciplines hybrides par `kalis_adapt` 0.3.0 :
+  `adapt.run_capped` (`percent`), `adapt.easy_instead` (`cause`), `adapt.endurance_shortened` (`cause`, `percent`),
+  `adapt.wod_scaled` (`cause`, `percent`), `adapt.cross_fatigue` (`cause`). Textes courts de Koach :
+  `docs/RAISONS_0_4.md` (`data/reason_texts_fr_0_4.json`).
+- `data/parcours_v3.json` : seul le numéro de version change (0.4.3).
+
 ## 0.4.2 — 04/10/2026 (lot CX du pipeline « Calibrage des programmes », évolution additive)
 
 Rien n'est retiré, renommé ni déplacé ; aucun type, aucune énumération, aucune borne, aucun code de raison ne change.

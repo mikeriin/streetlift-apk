@@ -1298,6 +1298,7 @@ Références ajoutées (vérifiées sur le texte ou le résumé ; « (résumé) 
 - Wrist pain in gymnasts: a review of common overuse wrist pathology in the gymnastics athlete (2017). *Curr
   Sports Med Rep* 16(5):322-329. (résumé)
 
+
 **Relecture indépendante du code (08/10/2026), corrections :** (1) un arrêt déclenché par trois séances de suite
 au-dessus de 3/10 ne tombe plus au premier signalement plus bas (séances de suite recomptées d'après l'historique de
 l'épisode ; même correction pour l'escalade après deux semaines et pour le renvoi hebdomadaire) ; (2) l'étape de
@@ -1310,3 +1311,103 @@ couvre l'échauffement ; (6) le remplaçant choisi pour la douleur du jour obéi
 sur parallettes) ; (7) en reprise ou dose plafonnée, une série au-delà du plan ne monte pas ; (8) ni tenue repère sur
 une zone récente ; (9) élastique : les manques se comptent aussi quand la plage écrite monte ; (10) gain d'affûtage
 avant la première barre seulement.
+## 12. Endurance, conditionnement, disciplines hybrides (0.3.0, lot CA2, partie 1)
+
+En 0.2, les lignes de course, de cardio, de conditionnement et de mobilité (exercices non modélisés, § 8, limite 6)
+étaient servies telles qu'écrites et ignorées par le modèle de fatigue. Depuis 0.3.0, elles sont conduites d'après le
+journal, dans les deux modes (0.1 et coach), sans jamais être servies plus longues, plus lointaines, avec plus de
+répétitions ou de séries, ni plus dures (effort visé, allure visée) que l'écrit. Le moteur ne modélise toujours pas
+leur capacité (ni vitesse critique ni VO2max) : il garde le programme écrit et borne ce qu'il sert.
+
+### 12.1 Règles de séance (`session.dart`, étape 2 ter ; `endurance.dart`)
+
+1. **Reprise après une coupure** (aucune séance depuis 7 jours, `enduranceResumeShortDays`) : course, cardio et
+   conditionnement à 70 % de l'écrit (`enduranceResumeShort`) ; 14 jours et plus : 50 % (`enduranceResumeLong`). Choix
+   raisonné (reprise progressive, même part de départ que la reprise graduée de `kalis_plan`).
+2. **Jour sans** — bilan bas (palier 1 ou 2), douleur du bas du corps à 3/10 ou plus (hanche, cuisse, genou, jambe,
+   cheville ; `enduranceLegPain`), ou course des 3 derniers jours notée au moins 2 flammes au-dessus de l'effort visé :
+   l'intensité baisse d'abord. Une séance de qualité (effort visé à 3 répétitions en réserve ou moins, allure visée,
+   test, ou exercice de fractionné, de seuil, de côtes, de sprint) devient une **course facile** (footing, ou course
+   sur tapis pour un tapis) de la durée de travail écrite, sans les récupérations, à 5 répétitions en réserve
+   (`enduranceEasyRir`), sans allure, cibles par série ni groupe ; sans course facile possible (matériel, lieu, déjà
+   dans la séance), la séance de qualité est retirée. Les lignes d'endurance ne passent plus par les réductions
+   générales du bilan bas et de la reprise après coupure (pas de cumul). Bilan très bas (palier 2) : la durée baisse aussi, à 70 % (`enduranceBadDayShare`). Sources :
+   entraînement guidé par la variabilité cardiaque, séance intense remplacée par une séance facile ou du repos quand
+   la disponibilité est basse, progression égale ou meilleure (Kiviniemi et al. 2007 ; Vesterinen et al. 2016 ;
+   Javaloyes et al. 2019 ; différences entre groupes faibles ou non significatives, sauf la vitesse maximale chez
+   Kiviniemi) ; surveillance de la douleur (Silbernagel et al. 2007).
+3. **Sortie bornée** : la course du jour (somme des lignes de course, échauffement exclu) ne dépasse pas de plus de
+   10 % la plus longue course des 30 jours précédents (`enduranceSpike`, `enduranceSpikeDays`), quand le journal en
+   compte au moins trois (`enduranceSpikeMinRuns` ; sinon la durée écrite fait foi). Frandsen et al. 2025 (BJSM,
+   5 205 coureurs suivis 18 mois) : une séance plus longue de 10 à 30 % que la plus longue des 30 jours, rapport de
+   risque 1,64 (1,31-2,05) ; 30 à 100 %, 1,52 ; au-delà de 100 %, 2,28 ; le rapport de charge d'une semaine à
+   l'autre n'y est pas associé (la règle des 10 % par semaine n'a pas d'effet protecteur chez les débutants : Buist
+   et al. 2008 ; Nielsen et al. 2014 : hausse de plus de 30 % sur deux semaines, risque de blessures liées à la
+   distance HR 1,59, IC 0,96-2,66, non significatif). Les durées sont arrondies vers le bas (minute, 100 m).
+4. **Conditionnement mis à l'échelle** (pièces de WOD non modélisées) : un jour sans (sauf la seule course dure) ou
+   après 2 jours durs de suite (`wodHardStreak` ; effort noté 8 et plus) : 75 % des répétitions ou de la durée
+   (`wodScaleShare`) et une flamme de moins sur l'effort visé. Tibana et al. 2016 : deux jours consécutifs
+   intenses n'altèrent pas la puissance mais font baisser l'IL-10 (−40 %) et l'ostéoprotégérine (−25 %) à 48 h ;
+   la mise à l'échelle au troisième jour est notre déduction (choix raisonné). Blessures en CrossFit : épaule 39 %,
+   dos 36 %, genou 15 %, risque plus haut la première année (Feito, Burrows, Tabb 2018, Orthop J Sports Med).
+5. **Fatigue croisée (hybrides)** : course notée dure la veille (8 flammes et plus) → une flamme de moins sur
+   l'effort visé des exercices du bas du corps (une répétition de réserve de plus ; Wilson et al. 2012 :
+   interférence de la course, pas du vélo, sur la force du bas du corps ; Robineau et al. 2016 : 24 h entre force et
+   endurance meilleur que 0 ou 6 h). Le moteur ne déplace pas les séances : l'ordre écrit par le programme est
+   gardé (Murlasits et al. 2018 : force avant endurance dans la même séance, +3,96 kg au 1RM du bas du corps — règle
+   d'écriture de `kalis_plan`).
+6. **Mobilité** : servie telle qu'écrite (aucune réduction par le bilan ; règles de douleur et de temps inchangées ;
+   ACSM, Garber et al. 2011 : souplesse au moins 2 à 3 jours par semaine).
+7. **Modèle forme-fatigue** : chaque ligne de course, de cardio ou de conditionnement faite ajoute de la fatigue
+   comme une série de travail par tranche de 10 minutes d'effort (`enduranceFatigueSeconds`, 6 au plus par série du journal,
+   `enduranceFatigueMax`), pondérée par l'effort noté (choix raisonné) : un jour de course dure abaisse la forme
+   estimée des séances de force qui suivent.
+
+`enduranceConduct` (vrai par défaut) permet de rejouer le comportement de 0.2 au banc.
+
+8. **Élastique (street, mode coach)** : une séance au cran actuel dont toutes les séries, sans échec et dans la
+   plage, sont dites au moins 2 répétitions plus faciles que visé (`coachAssistWideRir`) fait passer à l'élastique
+   plus fin dès la séance suivante (sept jours au moins depuis le dernier changement, `coachAssistMinDays`), sans
+   attendre deux séances au haut de la plage (panel de la passe 6, trois écoles sur quatre ; ACSM 2009, règle « 2
+   pour 2 »).
+
+Paramètres (`params.dart`) : `enduranceSpike` 0,10 ; `enduranceSpikeDays` 30 ; `enduranceSpikeMinRuns` 3 ;
+`enduranceResumeShortDays` 7, `enduranceResumeShort` 0,7 ; `enduranceResumeLongDays` 14, `enduranceResumeLong` 0,5 ;
+`enduranceBadDayShare` 0,7 ; `enduranceHardMargin` 2 flammes, `enduranceHardDays` 3, `enduranceHardFlames` 8 ;
+`enduranceQualityRir` 3, `enduranceEasyRir` 5 ; `enduranceRunSpeed` 2,6 m/s ; `enduranceLegPain` 3 ;
+`wodScaleShare` 0,75, `wodHardStreak` 2 ; `enduranceFatigueSeconds` 600, `enduranceFatigueMax` 6 ;
+`coachAssistWideRir` 2 ; `enduranceConduct` vrai. Sources ou « choix raisonné » : règles ci-dessus.
+
+### 12.2 Codes de raison (`kalis_core` 0.4.3)
+
+`adapt.run_capped` (`percent`), `adapt.easy_instead` (`cause`), `adapt.endurance_shortened` (`cause`, `percent`),
+`adapt.wod_scaled` (`cause`, `percent`), `adapt.cross_fatigue` (`cause`) ; causes : `health`, `health_strong`,
+`hard_run`, `leg_pain`, `resume_7`, `resume_14`, `hard_streak`.
+
+### 12.3 Invariants testés
+
+E1 (jamais au-dessus de l'écrit), E2 (course du jour bornée à la plus longue des 30 jours + 10 %), E3 (aucune séance
+de qualité un jour de bilan bas : aucune hausse d'allure après un mauvais jour) : vérifiés à chaque séance des
+simulations et des journaux aléatoires (`test/support.dart`, `checkEndurance` ; profils de course, de cardio et
+hybrides ajoutés aux journaux de propriétés), et `test/endurance_test.dart` (course débutante, semi-marathon,
+CrossFit, hybride 50/50 ; trois modèles de vérité ; comparaison au comportement de 0.2).
+
+### 12.4 Simulateur : vérité d'endurance (`sim/endurance_truth.dart`)
+
+Deux modèles par discipline, indépendants du moteur. Course : capacité de durée facile qui suit la dose de la
+semaine (gain saturant, modèle A ; logarithmique, modèles B et C), effort noté d'après le rapport durée / capacité
+(notes biaisées vers « plus dur » en B et C) ; blessure de surcharge (genou ou cheville, 4/10 pendant 14 jours) dont
+le risque suit les rapports de Frandsen et al. 2025 (et, en B et C, une semaine 30 % au-dessus des deux précédentes).
+Conditionnement : capacité relative à la pièce écrite, forme abaissée après deux jours durs de suite, risque d'épaule
+ou de dos qui double en série de jours durs (choix raisonné d'après Feito et al. 2018). Les taux de base de blessure
+(0,3 % par course, 0,2 % par pièce) sont des choix raisonnés : seuls les écarts entre politiques se lisent.
+
+### 12.5 Limites
+
+- Pas de modèle de capacité d'endurance dans le moteur : ni allure critique, ni prédiction de temps (formule de
+  Riegel, exposant ≈ 1,06, trop optimiste au marathon pour la moitié des coureurs, Vickers et Vertosick 2016) ; les
+  allures visées viennent du programme écrit.
+- L'affûtage avant une course est celui que le programme écrit (Bosquet et al. 2007 : deux semaines, volume −41 à
+  −60 %, intensité et fréquence gardées) : le moteur ne l'allonge ni ne le raccourcit, il ne sert jamais plus.
+- Le rapport de charge aiguë / chronique (Soligard et al. 2016) n'est pas utilisé : Frandsen et al. 2025 le
+  contredisent (relation dose-réponse négative) ; la borne de la plus longue course le remplace.

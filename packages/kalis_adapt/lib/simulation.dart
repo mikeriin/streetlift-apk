@@ -7,6 +7,7 @@ library;
 
 export 'src/sim/athletes.dart';
 export 'src/sim/coach_metrics.dart';
+export 'src/sim/endurance_truth.dart';
 export 'src/sim/metrics.dart';
 export 'src/sim/policy.dart';
 export 'src/sim/rng.dart';

@@ -458,6 +458,17 @@ List<String> checkSession(
   if (coached) {
     out.addAll(checkCoachSession(catalog, profile, block, log, session, p));
   }
+  out.addAll(
+    checkEndurance(
+      catalog,
+      profile,
+      block,
+      journal,
+      session,
+      p,
+      health: health,
+    ),
+  );
   final roles = <String, SlotRole>{
     for (final d in block.pass1.days)
       for (final s in d.slots) s.slotId: s.role,
@@ -977,3 +988,177 @@ String _lastLines(TrainingLog log, ExerciseInfo info) {
   }
   return '[]';
 }
+
+/// Invariants d'endurance (CA2, partie 1 ; `CONTRAT.md`, § 12) :
+///
+/// E1. une ligne de course, de cardio ou de conditionnement n'est jamais
+///     servie plus longue, plus lointaine, avec plus de répétitions ou de
+///     séries, ni plus dure (effort visé, allure visée) que l'écrit ;
+/// E2. la course du jour (somme des lignes de course) ne dépasse pas de
+///     plus de 10 % la plus longue course des 30 jours précédents, quand le
+///     journal en compte au moins trois ;
+/// E3. un jour de bilan bas, aucune séance de course de qualité (allure,
+///     fractionné, effort visé à 3 répétitions en réserve ou moins) n'est
+///     servie : aucune hausse d'allure après un mauvais jour.
+List<String> checkEndurance(
+  Catalog catalog,
+  AthleteProfile profile,
+  ProgramBlock block,
+  TrainingLog journal,
+  SessionPlan session,
+  AdaptParams p, {
+  HealthCheck? health,
+}) {
+  final out = <String>[];
+  if (!p.enduranceConduct) {
+    return out;
+  }
+  final book = ExerciseBook(catalog, profile);
+  ExercisePrescription? writtenOf(String slotId) {
+    for (final w in block.pass2.weeks) {
+      if (w.weekIndex != session.weekIndex) {
+        continue;
+      }
+      for (final d in w.days) {
+        if (d.dayIndex != session.dayIndex) {
+          continue;
+        }
+        for (final it in d.items) {
+          if (it.slotId == slotId) {
+            return it;
+          }
+        }
+      }
+    }
+    return null;
+  }
+
+  final where = session.date.iso;
+  final level = readHealth(health, p).level;
+  for (final item in session.items) {
+    final info = book.find(item.exerciseId);
+    final kind = info == null ? null : enduranceKindOf(info);
+    if (kind == null ||
+        kind == EnduranceKind.mobility ||
+        item.kind == SetKind.warmup) {
+      continue;
+    }
+    final w = writtenOf(item.slotId);
+    if (w != null) {
+      final swapped = w.exerciseId != item.exerciseId;
+      bool over(num? served, num? written) =>
+          served != null && written != null && served > written + 1e-9;
+      if (!swapped) {
+        if (item.sets > w.sets ||
+            over(item.secondsHigh, w.secondsHigh) ||
+            over(item.distanceMeters, w.distanceMeters) ||
+            over(item.repsHigh, w.repsHigh)) {
+          out.add(
+            '$where ${item.exerciseId} : E1, ligne servie au-dessus de '
+            'l\'écrit',
+          );
+        }
+      }
+      if (over(item.targetFlames, w.targetFlames)) {
+        out.add('$where ${item.exerciseId} : E1, effort visé plus dur');
+      }
+      final si = item.intensity;
+      final wi = w.intensity;
+      if (si != null) {
+        // Base « réserve » : plus bas = plus dur ; autres bases (allure,
+        // part) : plus haut = plus dur.
+        final rirBasis = si.basis == IntensityBasis.rir;
+        bool harder(double? a, double? b) =>
+            a != null &&
+            b != null &&
+            (rirBasis ? a < b - 1e-9 : a > b + 1e-9);
+        if (wi == null ||
+            wi.basis != si.basis ||
+            harder(si.value, wi.value) ||
+            harder(si.valueHigh, wi.valueHigh ?? wi.value)) {
+          out.add('$where ${item.exerciseId} : E1, allure visée plus rapide');
+        }
+      }
+    }
+    if (kind == EnduranceKind.run) {
+      if (level >= 1 && isQualityRun(item, info!, p)) {
+        out.add(
+          '$where ${item.exerciseId} : E3, séance de qualité un jour de '
+          'bilan bas',
+        );
+      }
+    }
+  }
+  // E2 : plus longue course des 30 jours (même lecture de la vitesse).
+  final today = session.date.dayNumber;
+  var meters = 0.0;
+  var timed = 0.0;
+  for (final s in journal.countedSessions) {
+    for (final set in s.sets) {
+      final info = book.find(set.exerciseId);
+      if (!set.isUsable ||
+          info == null ||
+          enduranceKindOf(info) != EnduranceKind.run) {
+        continue;
+      }
+      final m = set.distanceMeters;
+      final t = set.seconds;
+      if (m != null && t != null && m > 0 && t > 0) {
+        meters += m;
+        timed += t;
+      }
+    }
+  }
+  final speed = timed > 0 ? meters / timed : p.enduranceRunSpeed;
+  var longest = 0.0;
+  var count = 0;
+  for (final s in journal.countedSessions) {
+    final d = s.date.dayNumber;
+    if (d >= today || d < today - p.enduranceSpikeDays) {
+      continue;
+    }
+    var seconds = 0.0;
+    for (final set in s.sets) {
+      if (set.kind == SetKind.warmup || !set.isUsable) {
+        continue;
+      }
+      final info = book.find(set.exerciseId);
+      if (info == null || enduranceKindOf(info) != EnduranceKind.run) {
+        continue;
+      }
+      final m = set.distanceMeters;
+      seconds += set.seconds?.toDouble() ?? (m == null ? 0.0 : m / speed);
+    }
+    if (seconds > 0) {
+      count++;
+      if (seconds > longest) {
+        longest = seconds;
+      }
+    }
+  }
+  if (count >= p.enduranceSpikeMinRuns && longest > 0) {
+    var served = 0.0;
+    for (final item in session.items) {
+      final info = book.find(item.exerciseId);
+      if (info != null &&
+          enduranceKindOf(info) == EnduranceKind.run &&
+          item.kind != SetKind.warmup &&
+          item.kind != SetKind.test) {
+        served += _runSeconds(item, speed);
+      }
+    }
+    // (Tolérance de 2 % : la vitesse qui convertit une distance en durée
+    // est lue sur tout le journal ici, sur les séances rejouées par le
+    // moteur.)
+    if (served > longest * (1 + p.enduranceSpike) * 1.02 + 1) {
+      out.add(
+        '$where : E2, course de ${served.round()} s pour une plus longue '
+        'de ${longest.round()} s sur 30 jours',
+      );
+    }
+  }
+  return out;
+}
+
+double _runSeconds(ExercisePrescription item, double speed) =>
+    prescribedSeconds(item, item.sets, speed);

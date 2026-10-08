@@ -1,0 +1,7 @@
+name: aa_fmt
+description: Outil de mise au point du lot CX (jamais sur moteurs) - formate une copie des paquets en CI et la depose dans le rapport.
+version: 0.0.1
+publish_to: none
+
+environment:
+  sdk: ">=3.10.0 <4.0.0"
