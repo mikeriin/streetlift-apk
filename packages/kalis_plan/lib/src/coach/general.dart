@@ -919,8 +919,9 @@ void _buildConditioning(_Builder b) {
             : PowerIds.squatHigh);
   // Bloc de force ou de technique, par rotation : squat lourd, épaulé
   // technique, soulevé de terre, développé, squat avant.
+  // (Débutant : séries égales, jamais de série de tête lourde — R5-P3.)
   final strength = <(List<String>, String)>[
-    (<String>[squat], Method.liftHeavy),
+    (<String>[squat], a.level == 0 ? Method.liftVolume : Method.liftHeavy),
     (
       const <String>['mu-power-clean', 'mu-power-clean-suspendu'],
       Method.liftLight,

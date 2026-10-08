@@ -12,7 +12,7 @@ void main() {
   test('diagnostic des autres disciplines', () {
     final catalog = loadCatalog();
     final engine = KalisPlan();
-    for (final seed in const <int>[15, 165, 5, 331, 3381, 4178]) {
+    for (final seed in const <int>[3381, 4178, 5472, 971]) {
       final request = randomGeneralRequest(
         catalog,
         seed,
@@ -31,7 +31,7 @@ void main() {
         'minutes ${p.availability.map((d) => d.minutes).join('/')} '
         'emph ${p.emphasis?.name} intent ${p1.intent != null}',
       );
-      for (final w in p2.weeks.take(2)) {
+      for (final w in p2.weeks.where((w) => w.weekIndex < 2 || w.days.any((d) => d.items.any((i) => i.kind == SetKind.test)))) {
         for (final d in w.days) {
           final s = coachSessionSeconds(
             catalog,

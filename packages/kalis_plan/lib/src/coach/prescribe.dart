@@ -4430,7 +4430,10 @@ final class Prescriber {
       return s.method == Method.mobility ? _mobility(s, ws, role) : null;
     }
     final unit = a.catalog.find(s.exerciseId)?.unit;
-    if (unit == MeasureUnit.distance || unit == MeasureUnit.calories) {
+    // (Un rameur ou une course dans une pièce de conditionnement suit le
+    // format de la pièce, pas l'allure d'endurance.)
+    if ((unit == MeasureUnit.distance || unit == MeasureUnit.calories) &&
+        s.method != Method.wod) {
       return _run(s, day, ws, role);
     }
     // Épreuve de répétitions, phase de réalisation : la première séance de
