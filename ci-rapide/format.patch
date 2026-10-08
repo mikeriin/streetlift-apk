@@ -1,0 +1,35 @@
+diff --git a/lib/session_adapt_store.dart b/lib/session_adapt_store.dart
+index b2de0f7..3b7b4b2 100644
+--- a/lib/session_adapt_store.dart
++++ b/lib/session_adapt_store.dart
+@@ -398,10 +398,11 @@ extension SessionAdaptStore on AppStore {
+     final v = {for (final x in evo) x.slotId: x};
+     String why(String slot) => _overlayWhy(
+       [
+-        for (final e in entries)
+-          if (e.proposal.diff?.changes.any((c) => c.slotId == slot) ?? false)
+-            e,
+-      ].lastOrNull ??
++            for (final e in entries)
++              if (e.proposal.diff?.changes.any((c) => c.slotId == slot) ??
++                  false)
++                e,
++          ].lastOrNull ??
+           entries.where((e) => e.proposal.diff == null).lastOrNull,
+       evolved,
+     );
+diff --git a/lib/store.dart b/lib/store.dart
+index a8b61b3..3c0fae9 100644
+--- a/lib/store.dart
++++ b/lib/store.dart
+@@ -2916,7 +2916,9 @@ class AppStore extends ChangeNotifier {
+       for (final x in l.ex.entries) {
+         for (var i = 0; i < x.value.sets.length; i++) {
+           final st = x.value.sets[i];
+-          if (st.kg.isEmpty && st.reps.isEmpty && st.rir.isEmpty &&
++          if (st.kg.isEmpty &&
++              st.reps.isEmpty &&
++              st.rir.isEmpty &&
+               st.v.isEmpty) {
+             continue;
+           }
