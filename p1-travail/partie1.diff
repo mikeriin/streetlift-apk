@@ -360,10 +360,10 @@ index 00000000..56bf0c43
 +
 +Comme la semaine 2, +50 % de kilométrage et +2 répétitions par exercice chaque semaine ; la sortie du samedi passe à 15 km puis à 21 km dès la semaine 4. Semaine 12 : semaine la plus chargée du cycle ; **10 km chronométré le samedi**, veille de la course. En cas de douleur au tibia, au genou ou au tendon d'Achille : continuer le plan sans rien changer, la douleur disparaît en courant.
 diff --git a/packages/kalis_bench/lib/src/adapter.dart b/packages/kalis_bench/lib/src/adapter.dart
-index fd572350..9af6cf26 100644
+index fd572350..821749fb 100644
 --- a/packages/kalis_bench/lib/src/adapter.dart
 +++ b/packages/kalis_bench/lib/src/adapter.dart
-@@ -384,10 +384,21 @@ AdaptedProfile adaptProfile(
+@@ -384,10 +384,23 @@ AdaptedProfile adaptProfile(
  
    // Points faibles d'un mouvement : la nature est lue dans la note.
    final weak = <Object?>[];
@@ -376,17 +376,19 @@ index fd572350..9af6cf26 100644
      if (id == null) {
 -      lose('weak_points_muscle');
 +      final muscle = w.muscleGroup;
-+      if (muscle != null &&
++      // (Le contrat attend un muscle du vocabulaire du catalogue.)
++      final named = muscle == null ? null : _catalogMuscle[muscle];
++      if (named != null &&
 +          weakMuscle == null &&
 +          p.priorityExerciseIds.isEmpty) {
-+        weakMuscle = muscle;
++        weakMuscle = named;
 +      } else {
 +        lose('weak_points_muscle');
 +      }
        continue;
      }
      final note = w.note.toLowerCase();
-@@ -406,6 +417,14 @@ AdaptedProfile adaptProfile(
+@@ -406,6 +419,14 @@ AdaptedProfile adaptProfile(
      json['weakPoints'] = weak;
    }
  
@@ -401,6 +403,27 @@ index fd572350..9af6cf26 100644
    if (p.priorityExerciseIds.isNotEmpty) {
      final main = p.mainEvent;
      json['specialization'] = Specialization(
+@@ -457,3 +478,20 @@ AdaptedProfile adaptProfile(
+   }
+   return AdaptedProfile(profile, List<String>.unmodifiable(lost));
+ }
++
++/// Muscle du vocabulaire du catalogue pour un groupe du banc (point faible
++/// d'un groupe musculaire, CP2, partie 1).
++const Map<String, String> _catalogMuscle = <String, String>{
++  'chest': 'grand pectoral (faisceau sternal)',
++  'delt_anterior': 'deltoïde antérieur',
++  'delt_middle': 'deltoïde moyen',
++  'delt_posterior': 'deltoïde postérieur',
++  'lats': 'grand dorsal',
++  'upper_back': 'trapèze moyen',
++  'biceps': 'biceps brachial',
++  'triceps': 'triceps brachial (chef long)',
++  'glutes': 'grand fessier',
++  'quads': 'quadriceps (vastes)',
++  'hamstrings': 'ischio-jambiers',
++  'calves': 'gastrocnémiens',
++};
 diff --git a/packages/kalis_plan/lib/src/coach/athlete.dart b/packages/kalis_plan/lib/src/coach/athlete.dart
 index 81e0045b..aedd3486 100644
 --- a/packages/kalis_plan/lib/src/coach/athlete.dart
@@ -441,10 +464,10 @@ index 81e0045b..aedd3486 100644
    (double, double)? get runGoal {
 diff --git a/packages/kalis_plan/lib/src/coach/general.dart b/packages/kalis_plan/lib/src/coach/general.dart
 new file mode 100644
-index 00000000..b9c4bd1c
+index 00000000..261b6f8c
 --- /dev/null
 +++ b/packages/kalis_plan/lib/src/coach/general.dart
-@@ -0,0 +1,1189 @@
+@@ -0,0 +1,1195 @@
 +part of 'skeleton.dart';
 +
 +// ---------------------------------------------------------------------------
@@ -689,6 +712,11 @@ index 00000000..b9c4bd1c
 +/// mouvements de base (R6-P8 à P12) : épreuve de force athlétique, objectif
 +/// de 1RM sur l'un d'eux, ou orientation « force » avec des 1RM connus.
 +bool isPowerProfile(Athlete a) {
++  // (Pas de force athlétique pour un débutant : double progression en
++  // corps entier, jamais de série de tête lourde — R5-P3.)
++  if (a.level == 0) {
++    return false;
++  }
 +  const lifts = <String>{
 +    PowerIds.squatLow,
 +    PowerIds.squatHigh,
@@ -837,10 +865,10 @@ index 00000000..b9c4bd1c
 +  }
 +  final s = a.profile.specialization;
 +  if (s != null && s.kind == SpecializationKind.muscle) {
-+    for (final g in MuscleGroup.values) {
-+      if (g.code == s.muscle) {
-+        out.add(g);
-+      }
++    // Le profil porte un muscle du vocabulaire du catalogue (`muscles`).
++    final g = muscleGroupOf[s.muscle];
++    if (g != null) {
++      out.add(g);
 +    }
 +  }
 +  return out;
@@ -1361,8 +1389,9 @@ index 00000000..b9c4bd1c
 +            : PowerIds.squatHigh);
 +  // Bloc de force ou de technique, par rotation : squat lourd, épaulé
 +  // technique, soulevé de terre, développé, squat avant.
++  // (Débutant : séries égales, jamais de série de tête lourde — R5-P3.)
 +  final strength = <(List<String>, String)>[
-+    (<String>[squat], Method.liftHeavy),
++    (<String>[squat], a.level == 0 ? Method.liftVolume : Method.liftHeavy),
 +    (
 +      const <String>['mu-power-clean', 'mu-power-clean-suspendu'],
 +      Method.liftLight,
@@ -1683,7 +1712,7 @@ index e60ff23c..1a6e83f5 100644
  final class Skeleton {
    /// Squelette.
 diff --git a/packages/kalis_plan/lib/src/coach/prescribe.dart b/packages/kalis_plan/lib/src/coach/prescribe.dart
-index ab5d3da5..9fcbb3e0 100644
+index ab5d3da5..a2094d83 100644
 --- a/packages/kalis_plan/lib/src/coach/prescribe.dart
 +++ b/packages/kalis_plan/lib/src/coach/prescribe.dart
 @@ -122,6 +122,10 @@ abstract final class CoachNotes {
@@ -1841,16 +1870,28 @@ index ab5d3da5..9fcbb3e0 100644
    // ------------------------------------------------------------------ tests
  
    _Draft _testOf(
-@@ -4638,6 +4743,8 @@ final class Prescriber {
+@@ -4325,7 +4430,10 @@ final class Prescriber {
+       return s.method == Method.mobility ? _mobility(s, ws, role) : null;
+     }
+     final unit = a.catalog.find(s.exerciseId)?.unit;
+-    if (unit == MeasureUnit.distance || unit == MeasureUnit.calories) {
++    // (Un rameur ou une course dans une pièce de conditionnement suit le
++    // format de la pièce, pas l'allure d'endurance.)
++    if ((unit == MeasureUnit.distance || unit == MeasureUnit.calories) &&
++        s.method != Method.wod) {
+       return _run(s, day, ws, role);
+     }
+     // Épreuve de répétitions, phase de réalisation : la première séance de
+@@ -4638,6 +4746,8 @@ final class Prescriber {
          return _mobility(s, ws, role);
        case Method.runEasy || Method.runLong || Method.runQuality:
          return _run(s, day, ws, role);
 +      case Method.wod:
-+        return _wod(s, ws, role);
++        return _wod(s, ws, week, role);
        default:
          return _accessory(s, ws, week, role);
      }
-@@ -6724,6 +6831,16 @@ final class Prescriber {
+@@ -6724,6 +6834,16 @@ final class Prescriber {
      final groupOf = <_Draft, String>{};
      for (final entry in members.entries) {
        final list = entry.value;
@@ -1867,7 +1908,7 @@ index ab5d3da5..9fcbb3e0 100644
        if (list.length < 2) {
          continue;
        }
-@@ -6795,6 +6912,146 @@ final class Prescriber {
+@@ -6795,6 +6915,152 @@ final class Prescriber {
      );
    }
  
@@ -1958,7 +1999,7 @@ index ab5d3da5..9fcbb3e0 100644
 +  /// passage ; allure tenable du début à la fin) ; la charge se choisit à
 +  /// l'échelle (note `wod_pace`). Dose par passage : choix raisonné de
 +  /// pratique de terrain (R6-P27 : aucune source chiffrée).
-+  _Draft? _wod(SlotSpec s, WeekSpec ws, _DayRole role) {
++  _Draft? _wod(SlotSpec s, WeekSpec ws, int week, _DayRole role) {
 +    if (role != _DayRole.normal) {
 +      return null;
 +    }
@@ -1973,6 +2014,12 @@ index ab5d3da5..9fcbb3e0 100644
 +      ..rir = 2
 +      ..fixed = true
 +      ..stress = DayStress.medium;
++    // Plancher de réserve du profil (reprise après un arrêt : 3 au moins,
++    // R5-P7 ; débutant, zone gênée).
++    final floor = _floorRir(e, week);
++    if (floor > 2) {
++      x.rir = floor;
++    }
 +    final repsBase = switch (format) {
 +      'emom' => level >= 2 ? 12 : (level == 1 ? 10 : 8),
 +      'chipper' => level >= 2 ? 30 : (level == 1 ? 25 : 15),
@@ -2014,7 +2061,7 @@ index ab5d3da5..9fcbb3e0 100644
    /// Charge l'historique des garde-fous avec les semaines du bloc
    /// précédent [weeks].
    void seed(List<WeekPrescription> weeks) {
-@@ -6846,6 +7103,20 @@ final class Prescriber {
+@@ -6846,6 +7112,20 @@ final class Prescriber {
              trace.groups[g.index] += p.sets * t.creditOf(g) / 2;
            }
          }
@@ -2524,3 +2571,67 @@ index 0afd0e6a..c7f040b1 100644
        // Une exposition lourde (85 % et plus) par semaine de réalisation.
        for (var k = 0; k < weeks.length; k++) {
          if (weeks[k].intent == WeekIntent.realization) {
+diff --git a/packages/kalis_plan/test/zz_debug_general_test.dart b/packages/kalis_plan/test/zz_debug_general_test.dart
+new file mode 100644
+index 00000000..7fc59952
+--- /dev/null
++++ b/packages/kalis_plan/test/zz_debug_general_test.dart
+@@ -0,0 +1,58 @@
++// ignore_for_file: avoid_print
++// Fichier temporaire de diagnostic (CP2, partie 1) : retiré avant la
++// publication.
++import 'package:kalis_core/kalis_core.dart';
++import 'package:kalis_plan/kalis_plan.dart';
++import 'package:kalis_plan/testing.dart';
++import 'package:test/test.dart';
++
++import 'support.dart';
++
++void main() {
++  test('diagnostic des autres disciplines', () {
++    final catalog = loadCatalog();
++    final engine = KalisPlan();
++    for (final seed in const <int>[3381, 4178, 5472, 971]) {
++      final request = randomGeneralRequest(
++        catalog,
++        seed,
++        planSeed: seed % 16 == 7 ? 1 : 0,
++      );
++      final p = request.profile;
++      final p1 = engine.createPass1(catalog, request);
++      final p2 = engine.createPass2(
++        catalog,
++        Pass2Request(request: request, pass1: p1),
++      );
++      print(
++        'DIAG seed $seed : ${p.disciplines.primary.name} '
++        '${p.disciplines.secondaries.map((s) => '${s.discipline.name} ${s.pct}').join(',')} '
++        'exp ${p.experience?.name} gap ${p.trainingGap != null} '
++        'minutes ${p.availability.map((d) => d.minutes).join('/')} '
++        'emph ${p.emphasis?.name} intent ${p1.intent != null}',
++      );
++      for (final w in p2.weeks.where((w) => w.weekIndex < 2 || w.days.any((d) => d.items.any((i) => i.kind == SetKind.test)))) {
++        for (final d in w.days) {
++          final s = coachSessionSeconds(
++            catalog,
++            d,
++            minutes: p.availability[d.dayIndex].minutes,
++          );
++          print('DIAG  s${w.weekIndex} j${d.dayIndex} ${(s / 60).round()} min');
++          for (final i in d.items) {
++            final notes = i.reasons
++                .where((r) => r.params['note'] != null)
++                .map((r) => r.params['note'])
++                .join('+');
++            print(
++              'DIAG    ${i.exerciseId} ${i.kind?.name} ${i.sets}x'
++              '${i.repsLow}-${i.repsHigh} s${i.secondsLow}-${i.secondsHigh} '
++              'd${i.distanceMeters} r${i.restSeconds} ${i.format ?? ''} '
++              '${i.groupId ?? ''} ${i.intensity?.toJson()} $notes',
++            );
++          }
++        }
++      }
++    }
++  });
++}

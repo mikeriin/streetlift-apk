@@ -3738,8 +3738,20 @@ final class Prescriber {
         s.method == Method.runLong &&
         ws.testWeek &&
         role != _DayRole.event) {
-      final last = ws.eventWeek || ws.intent == WeekIntent.test;
-      final meters = last ? goal.$1 : goal.$1 / 2;
+      // (Test de mi-parcours sur la moitié de la distance ; la distance
+      // entière seulement à l'échéance ou au test final de la saison ; et
+      // jamais plus que ce que le créneau du jour permet de courir — panel
+      // et banc CP2, partie 1 : 10 km de test en semaine 6 pour une
+      // débutante qui court 35 minutes, dans un créneau d'une heure.)
+      final last =
+          ws.eventWeek ||
+          (ws.intent == WeekIntent.test && _shape.finalBlock);
+      var meters = last ? goal.$1 : goal.$1 / 2;
+      final fits =
+          (a.days[day].minutes - 8.0) * 60 * coachRunMetersPerSecond;
+      if (!ws.eventWeek && fits > 0 && meters > fits) {
+        meters = (fits / 500).floorToDouble() * 500;
+      }
       x
         ..kind = SetKind.test
         ..sets = 1
@@ -3776,6 +3788,11 @@ final class Prescriber {
       }
       if (reps < 4) {
         reps = 4;
+      }
+      // Affûtage : trois fractions, l'intensité reste et le volume baisse
+      // de 40 à 60 % (R6-P20 ; Bosquet et al. 2007).
+      if (ws.intent == WeekIntent.taper) {
+        reps = 3;
       }
       if (role == _DayRole.primerFar) {
         // Semaine de l'épreuve : trois fractions, pour garder l'allure
@@ -4430,7 +4447,11 @@ final class Prescriber {
       return s.method == Method.mobility ? _mobility(s, ws, role) : null;
     }
     final unit = a.catalog.find(s.exerciseId)?.unit;
-    if (unit == MeasureUnit.distance || unit == MeasureUnit.calories) {
+    // (Un rameur ou une course dans une pièce de conditionnement suit le
+    // format de la pièce, pas l'allure d'endurance.)
+    if ((unit == MeasureUnit.distance || unit == MeasureUnit.calories) &&
+        s.method != Method.wod &&
+        s.method != Method.warmupPrep) {
       return _run(s, day, ws, role);
     }
     // Épreuve de répétitions, phase de réalisation : la première séance de
@@ -4744,7 +4765,7 @@ final class Prescriber {
       case Method.runEasy || Method.runLong || Method.runQuality:
         return _run(s, day, ws, role);
       case Method.wod:
-        return _wod(s, ws, role);
+        return _wod(s, ws, week, role);
       default:
         return _accessory(s, ws, week, role);
     }
@@ -6999,7 +7020,7 @@ final class Prescriber {
   /// passage ; allure tenable du début à la fin) ; la charge se choisit à
   /// l'échelle (note `wod_pace`). Dose par passage : choix raisonné de
   /// pratique de terrain (R6-P27 : aucune source chiffrée).
-  _Draft? _wod(SlotSpec s, WeekSpec ws, _DayRole role) {
+  _Draft? _wod(SlotSpec s, WeekSpec ws, int week, _DayRole role) {
     if (role != _DayRole.normal) {
       return null;
     }
@@ -7014,6 +7035,12 @@ final class Prescriber {
       ..rir = 2
       ..fixed = true
       ..stress = DayStress.medium;
+    // Plancher de réserve du profil (reprise après un arrêt : 3 au moins,
+    // R5-P7 ; débutant, zone gênée).
+    final floor = _floorRir(e, week);
+    if (floor > 2) {
+      x.rir = floor;
+    }
     final repsBase = switch (format) {
       'emom' => level >= 2 ? 12 : (level == 1 ? 10 : 8),
       'chipper' => level >= 2 ? 30 : (level == 1 ? 25 : 15),
