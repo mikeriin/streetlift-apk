@@ -774,7 +774,16 @@ List<Finding> safetyFindings(ProgramView view, BenchProfile profile) {
     for (final d in w.days) {
       final minutes = d.estimatedMinutes;
       final limit = d.minutesBudget * (1 + SafetyLimits.sessionTolerance) + 3;
-      if (minutes > limit) {
+      // (Jour de l'épreuve : sa durée est celle de l'épreuve que l'athlète
+      // a choisie, pas un choix du programme — CP2, partie 1 : 10 km d'une
+      // débutante le dimanche d'une heure. Même règle que la relecture de
+      // `kalis_plan`, qui exempte les emplacements imposés.)
+      final eventDay = d.items.any(
+        (i) =>
+            i.p.kind == SetKind.test &&
+            i.p.reasons.any((r) => r.params['note'] == 'event_day'),
+      );
+      if (minutes > limit && !eventDay) {
         out.add(
           Finding(
             code: 'seance_trop_longue',

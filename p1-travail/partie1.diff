@@ -424,6 +424,28 @@ index fd572350..821749fb 100644
 +  'hamstrings': 'ischio-jambiers',
 +  'calves': 'gastrocnémiens',
 +};
+diff --git a/packages/kalis_bench/lib/src/safety.dart b/packages/kalis_bench/lib/src/safety.dart
+index d596abd9..9579349a 100644
+--- a/packages/kalis_bench/lib/src/safety.dart
++++ b/packages/kalis_bench/lib/src/safety.dart
+@@ -774,7 +774,16 @@ List<Finding> safetyFindings(ProgramView view, BenchProfile profile) {
+     for (final d in w.days) {
+       final minutes = d.estimatedMinutes;
+       final limit = d.minutesBudget * (1 + SafetyLimits.sessionTolerance) + 3;
+-      if (minutes > limit) {
++      // (Jour de l'épreuve : sa durée est celle de l'épreuve que l'athlète
++      // a choisie, pas un choix du programme — CP2, partie 1 : 10 km d'une
++      // débutante le dimanche d'une heure. Même règle que la relecture de
++      // `kalis_plan`, qui exempte les emplacements imposés.)
++      final eventDay = d.items.any(
++        (i) =>
++            i.p.kind == SetKind.test &&
++            i.p.reasons.any((r) => r.params['note'] == 'event_day'),
++      );
++      if (minutes > limit && !eventDay) {
+         out.add(
+           Finding(
+             code: 'seance_trop_longue',
 diff --git a/packages/kalis_plan/lib/src/coach/athlete.dart b/packages/kalis_plan/lib/src/coach/athlete.dart
 index 81e0045b..aedd3486 100644
 --- a/packages/kalis_plan/lib/src/coach/athlete.dart
@@ -464,10 +486,10 @@ index 81e0045b..aedd3486 100644
    (double, double)? get runGoal {
 diff --git a/packages/kalis_plan/lib/src/coach/general.dart b/packages/kalis_plan/lib/src/coach/general.dart
 new file mode 100644
-index 00000000..261b6f8c
+index 00000000..cb5e3872
 --- /dev/null
 +++ b/packages/kalis_plan/lib/src/coach/general.dart
-@@ -0,0 +1,1195 @@
+@@ -0,0 +1,1249 @@
 +part of 'skeleton.dart';
 +
 +// ---------------------------------------------------------------------------
@@ -1421,16 +1443,37 @@ index 00000000..261b6f8c
 +    if (muDays.contains(d)) {
 +      _addMuscleUpPractice(b, d, a.reps[Ids.muscleUp] ?? 0);
 +    }
-+    final (ids, method) = strength[d % strength.length];
-+    b.add(
-+      d,
-+      ids,
-+      method == Method.liftHeavy ? SlotRole.main : SlotRole.secondary,
-+      method,
-+      sets: method == Method.liftHeavy ? 4 : 3,
-+      stress: method == Method.liftHeavy ? DayStress.heavy : DayStress.medium,
-+    );
-+    final (format, moves) = _wods[order[d % order.length]];
++    // Créneau court : la pièce seule, à la durée du créneau (R6-P27 : une
++    // pièce courte de 5 à 10 minutes garde son format) ; le bloc de force
++    // à partir de 40 minutes.
++    final minutes = a.days[d].minutes;
++    if (minutes >= 40) {
++      final (ids, method) = strength[d % strength.length];
++      b.add(
++        d,
++        ids,
++        method == Method.liftHeavy ? SlotRole.main : SlotRole.secondary,
++        method,
++        sets: method == Method.liftHeavy ? 4 : 3,
++        stress: method == Method.liftHeavy
++            ? DayStress.heavy
++            : DayStress.medium,
++      );
++    }
++    final (format, rawMoves) = _wods[order[d % order.length]];
++    // Muscle-up travaillé à part : le tirage de la pièce passe au rowing
++    // (volume de tirage vertical de la semaine ; R6-P28).
++    final moves = <List<String>>[
++      for (final m in rawMoves)
++        mu && m.contains('sw-traction-pronation')
++            ? <String>[
++                for (final id in m)
++                  if (id != 'sw-traction-pronation') id,
++              ]
++            : m,
++    ];
++    final room = (minutes - (minutes >= 40 ? 25 : 6)) * 60;
++    final fitted = _fitWod(format, room);
 +    for (final m in moves) {
 +      b.add(
 +        d,
@@ -1438,10 +1481,10 @@ index 00000000..261b6f8c
 +        SlotRole.conditioning,
 +        Method.wod,
 +        sets: 1,
-+        group: format,
++        group: fitted,
 +      );
 +    }
-+    if (d.isEven) {
++    if (d.isEven && minutes >= 30) {
 +      b.add(
 +        d,
 +        GymPicks.core,
@@ -1451,6 +1494,39 @@ index 00000000..261b6f8c
 +        rotate: true,
 +      );
 +    }
++  }
++}
++
++/// Format de pièce [format] ramené à [seconds] au plus (durée, limite de
++/// temps ou nombre de tours), 4 minutes au moins.
++String _fitWod(String format, int seconds) {
++  final parts = format.split(':');
++  final room = seconds < 240 ? 240 : seconds;
++  int scaled(int v) {
++    final t = v > room ? (room ~/ 60) * 60 : v;
++    return t < 240 ? 240 : t;
++  }
++
++  switch (parts.first) {
++    case 'amrap' || 'chipper':
++      return '${parts[0]}:${scaled(int.parse(parts[1]))}';
++    case 'emom':
++      return '${parts[0]}:${scaled(int.parse(parts[1]))}:${parts[2]}';
++    case 'rft':
++      final limit = int.parse(parts[2]);
++      final rounds = int.parse(parts[1]);
++      final t = scaled(limit);
++      final r = (rounds * t / limit).floor();
++      return 'rft:${r < 2 ? 2 : r}:$t';
++    case 'intervals':
++      final rounds = int.parse(parts[1]);
++      final each = int.parse(parts[2]);
++      // Un intervalle d'effort, un de récupération.
++      final most = room ~/ (2 * each);
++      return 'intervals:${most < rounds ? (most < 3 ? 3 : most) : rounds}:'
++          '$each';
++    default:
++      return format;
 +  }
 +}
 +
@@ -1712,7 +1788,7 @@ index e60ff23c..1a6e83f5 100644
  final class Skeleton {
    /// Squelette.
 diff --git a/packages/kalis_plan/lib/src/coach/prescribe.dart b/packages/kalis_plan/lib/src/coach/prescribe.dart
-index ab5d3da5..a2094d83 100644
+index ab5d3da5..23984599 100644
 --- a/packages/kalis_plan/lib/src/coach/prescribe.dart
 +++ b/packages/kalis_plan/lib/src/coach/prescribe.dart
 @@ -122,6 +122,10 @@ abstract final class CoachNotes {
@@ -1760,7 +1836,60 @@ index ab5d3da5..a2094d83 100644
  }
  
  /// Racine d'un mouvement au poids du corps compté en répétitions, pour le
-@@ -3795,12 +3812,43 @@ final class Prescriber {
+@@ -1381,6 +1398,17 @@ final class Prescriber {
+       final shown = load == null
+           ? p
+           : (load + (e.bodyweightFraction?.value ?? 0) * a.bodyWeight) / total;
++      if (shown > 1 + 1e-9) {
++        // Plus petite charge possible (barre vide) au-dessus du 1RM de
++        // travail : la charge se calibre à la première séance (CP2,
++        // partie 1 : soulevé de terre roumain d'un débutant à 133 %).
++        x
++          ..load = null
++          ..calibrate = true
++          ..reasons.removeWhere((r) => r.code == ReasonCodes.planPercentBased)
++          ..reasons.add(reason(ReasonCodes.planToCalibrate));
++        return;
++      }
+       x
+         ..percent = _round3(shown)
+         ..share = p
+@@ -3721,8 +3749,20 @@ final class Prescriber {
+         s.method == Method.runLong &&
+         ws.testWeek &&
+         role != _DayRole.event) {
+-      final last = ws.eventWeek || ws.intent == WeekIntent.test;
+-      final meters = last ? goal.$1 : goal.$1 / 2;
++      // (Test de mi-parcours sur la moitié de la distance ; la distance
++      // entière seulement à l'échéance ou au test final de la saison ; et
++      // jamais plus que ce que le créneau du jour permet de courir — panel
++      // et banc CP2, partie 1 : 10 km de test en semaine 6 pour une
++      // débutante qui court 35 minutes, dans un créneau d'une heure.)
++      final last =
++          ws.eventWeek ||
++          (ws.intent == WeekIntent.test && _shape.finalBlock);
++      var meters = last ? goal.$1 : goal.$1 / 2;
++      final fits =
++          (a.days[day].minutes - 8.0) * 60 * coachRunMetersPerSecond;
++      if (fits > 0 && meters > fits) {
++        meters = (fits / 500).floorToDouble() * 500;
++      }
+       x
+         ..kind = SetKind.test
+         ..sets = 1
+@@ -3760,6 +3800,11 @@ final class Prescriber {
+       if (reps < 4) {
+         reps = 4;
+       }
++      // Affûtage : trois fractions, l'intensité reste et le volume baisse
++      // de 40 à 60 % (R6-P20 ; Bosquet et al. 2007).
++      if (ws.intent == WeekIntent.taper) {
++        reps = 3;
++      }
+       if (role == _DayRole.primerFar) {
+         // Semaine de l'épreuve : trois fractions, pour garder l'allure
+         // sans fatigue (R6-P20, affûtage).
+@@ -3795,18 +3840,49 @@ final class Prescriber {
        }
        return x;
      }
@@ -1806,7 +1935,28 @@ index ab5d3da5..a2094d83 100644
          ? 10.0
          : s.note == 'run_extra'
          ? 20.0
-@@ -3840,6 +3888,63 @@ final class Prescriber {
+         : warm
+         ? 12.0
+-        : (long ? 45.0 : 30.0) * (1 + 0.08 * (stage > 4 ? 4 : stage));
++        : _runBase(long) * (1 + 0.08 * (stage > 4 ? 4 : stage));
+     if (!warm) {
+       minutes *= easy ? 0.7 : 1;
+       if (role != _DayRole.normal) {
+@@ -3816,8 +3892,11 @@ final class Prescriber {
+       if (minutes > cap) {
+         minutes = cap;
+       }
+-      if (minutes < 10) {
+-        minutes = 10;
++      // (Plancher de 10 min, jamais au-delà de la durée de départ bornée
++      // par la plus longue course connue.)
++      final floor = _runBase(long) < 10 ? _runBase(long) : 10.0;
++      if (minutes < floor) {
++        minutes = floor;
+       }
+     }
+     final whole = minutes.floor();
+@@ -3840,6 +3919,81 @@ final class Prescriber {
      return x;
    }
  
@@ -1818,6 +1968,20 @@ index ab5d3da5..a2094d83 100644
 +  /// 60 % (R6-P20 : volume −40 à 60 %) ; les sorties faciles valent 60 à
 +  /// 70 % de la sortie longue, 30 minutes au moins pour le débutant
 +  /// (R6-P17). Plafond : le temps du jour moins l'échauffement.
++  /// Durée de départ d'une course facile (30 min) ou d'une sortie longue
++  /// (45 min) ; hors du chemin street, jamais au-delà de la plus longue
++  /// course connue (+25 % à partir de l'intermédiaire ; R6-P16, garde-fou
++  /// de la sortie longue — CP2, partie 1).
++  double _runBase(bool long) {
++    final base = long ? 45.0 : 30.0;
++    final known = a.knownRunMinutes;
++    if (isStreetStyle(skeleton.style) || known == null) {
++      return base;
++    }
++    final cap = known * (a.level >= 1 ? 1.25 : 1.0) * (long ? 1.0 : 0.7);
++    return cap < base ? (cap < 5 ? 5 : cap) : base;
++  }
++
 +  int? _enduranceMinutes(SlotSpec s, int day, WeekSpec ws, _DayRole role) {
 +    if (skeleton.style != CoachStyle.endurance ||
 +        role != _DayRole.normal ||
@@ -1849,20 +2013,24 @@ index ab5d3da5..a2094d83 100644
 +      if (long > cap) {
 +        long = cap;
 +      }
-+      if (long < 15) {
-+        long = 15;
++      // (Plancher de 15 min, jamais au-delà du créneau.)
++      final low = cap < 15 ? (cap < 5 ? 5.0 : cap) : 15.0;
++      if (long < low) {
++        long = low;
 +      }
 +      return long.floor();
 +    }
 +    var easy = long * (a.level == 0 ? 0.7 : 0.6);
 +    if (a.level == 0 && easy < 30 && !light && !taper) {
-+      easy = 30;
++      // (Jamais au-delà de la plus longue course connue.)
++      easy = base < 30 ? base : 30;
 +    }
 +    if (easy > cap) {
 +      easy = cap;
 +    }
-+    if (easy < 15) {
-+      easy = 15;
++    final low = cap < 15 ? (cap < 5 ? 5.0 : cap) : 15.0;
++    if (easy < low) {
++      easy = low;
 +    }
 +    return easy.floor();
 +  }
@@ -1870,7 +2038,7 @@ index ab5d3da5..a2094d83 100644
    // ------------------------------------------------------------------ tests
  
    _Draft _testOf(
-@@ -4325,7 +4430,10 @@ final class Prescriber {
+@@ -4325,7 +4479,11 @@ final class Prescriber {
        return s.method == Method.mobility ? _mobility(s, ws, role) : null;
      }
      final unit = a.catalog.find(s.exerciseId)?.unit;
@@ -1878,11 +2046,12 @@ index ab5d3da5..a2094d83 100644
 +    // (Un rameur ou une course dans une pièce de conditionnement suit le
 +    // format de la pièce, pas l'allure d'endurance.)
 +    if ((unit == MeasureUnit.distance || unit == MeasureUnit.calories) &&
-+        s.method != Method.wod) {
++        s.method != Method.wod &&
++        s.method != Method.warmupPrep) {
        return _run(s, day, ws, role);
      }
      // Épreuve de répétitions, phase de réalisation : la première séance de
-@@ -4638,6 +4746,8 @@ final class Prescriber {
+@@ -4638,6 +4796,8 @@ final class Prescriber {
          return _mobility(s, ws, role);
        case Method.runEasy || Method.runLong || Method.runQuality:
          return _run(s, day, ws, role);
@@ -1891,7 +2060,22 @@ index ab5d3da5..a2094d83 100644
        default:
          return _accessory(s, ws, week, role);
      }
-@@ -6724,6 +6834,16 @@ final class Prescriber {
+@@ -5151,6 +5311,14 @@ final class Prescriber {
+         if (a.rejection(id, day) != null) {
+           continue;
+         }
++        // Hors du chemin street, un mouvement de l'épreuve que le
++        // programme n'entraîne pas ne se teste pas (CP2, partie 1 : dips
++        // lesté testé à l'épreuve d'un programme de musculation qui ne le
++        // travaille jamais).
++        if (!isStreetStyle(skeleton.style) &&
++            !skeleton.days.any((d) => d.slots.any((s) => s.exerciseId == id))) {
++          continue;
++        }
+         final e = a.catalog.exercise(id);
+         SlotSpec? own;
+         for (final s in spec.slots) {
+@@ -6724,6 +6892,16 @@ final class Prescriber {
      final groupOf = <_Draft, String>{};
      for (final entry in members.entries) {
        final list = entry.value;
@@ -1908,7 +2092,7 @@ index ab5d3da5..a2094d83 100644
        if (list.length < 2) {
          continue;
        }
-@@ -6795,6 +6915,152 @@ final class Prescriber {
+@@ -6795,6 +6973,162 @@ final class Prescriber {
      );
    }
  
@@ -1925,7 +2109,10 @@ index ab5d3da5..a2094d83 100644
 +    }
 +    final a1 = int.tryParse(parts[1]) ?? 0;
 +    final a2 = parts.length > 2 ? int.tryParse(parts[2]) ?? 0 : 0;
-+    final light = ws.light;
++    // (Semaine d'introduction : format entier — une pièce raccourcie en
++    // introduction faisait monter les séries d'un tiers la semaine
++    // suivante.)
++    final light = ws.light && ws.intent != WeekIntent.intro;
 +    int cut(int v, int step) {
 +      final r = light ? (v * 2 / 3 / step).round() * step : v;
 +      return r < step ? step : r;
@@ -2005,10 +2192,17 @@ index ab5d3da5..a2094d83 100644
 +    }
 +    final x = _new(s);
 +    final e = x.e;
-+    final format = (s.group ?? '').split(':').first;
++    final parts = (s.group ?? '').split(':');
++    final format = parts.first;
 +    final level = _level;
++    // Tours d'une pièce « pour le temps » comptés dès ici, pour que les
++    // garde-fous de volume de la semaine les voient (le groupe les fixe
++    // ensuite).
++    final rounds = format == 'rft' && parts.length > 1
++        ? (int.tryParse(parts[1]) ?? 1)
++        : 1;
 +    x
-+      ..sets = 1
++      ..sets = rounds
 +      ..minSets = 1
 +      ..rest = 0
 +      ..rir = 2
@@ -2061,7 +2255,7 @@ index ab5d3da5..a2094d83 100644
    /// Charge l'historique des garde-fous avec les semaines du bloc
    /// précédent [weeks].
    void seed(List<WeekPrescription> weeks) {
-@@ -6846,6 +7112,20 @@ final class Prescriber {
+@@ -6846,6 +7180,20 @@ final class Prescriber {
              trace.groups[g.index] += p.sets * t.creditOf(g) / 2;
            }
          }
@@ -2573,7 +2767,7 @@ index 0afd0e6a..c7f040b1 100644
          if (weeks[k].intent == WeekIntent.realization) {
 diff --git a/packages/kalis_plan/test/zz_debug_general_test.dart b/packages/kalis_plan/test/zz_debug_general_test.dart
 new file mode 100644
-index 00000000..7fc59952
+index 00000000..3414ff6b
 --- /dev/null
 +++ b/packages/kalis_plan/test/zz_debug_general_test.dart
 @@ -0,0 +1,58 @@
@@ -2591,7 +2785,7 @@ index 00000000..7fc59952
 +  test('diagnostic des autres disciplines', () {
 +    final catalog = loadCatalog();
 +    final engine = KalisPlan();
-+    for (final seed in const <int>[3381, 4178, 5472, 971]) {
++    for (final seed in const <int>[2282, 2170, 1221]) {
 +      final request = randomGeneralRequest(
 +        catalog,
 +        seed,

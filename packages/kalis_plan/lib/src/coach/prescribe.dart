@@ -1398,6 +1398,17 @@ final class Prescriber {
       final shown = load == null
           ? p
           : (load + (e.bodyweightFraction?.value ?? 0) * a.bodyWeight) / total;
+      if (shown > 1 + 1e-9) {
+        // Plus petite charge possible (barre vide) au-dessus du 1RM de
+        // travail : la charge se calibre à la première séance (CP2,
+        // partie 1 : soulevé de terre roumain d'un débutant à 133 %).
+        x
+          ..load = null
+          ..calibrate = true
+          ..reasons.removeWhere((r) => r.code == ReasonCodes.planPercentBased)
+          ..reasons.add(reason(ReasonCodes.planToCalibrate));
+        return;
+      }
       x
         ..percent = _round3(shown)
         ..share = p
@@ -3749,7 +3760,7 @@ final class Prescriber {
       var meters = last ? goal.$1 : goal.$1 / 2;
       final fits =
           (a.days[day].minutes - 8.0) * 60 * coachRunMetersPerSecond;
-      if (!ws.eventWeek && fits > 0 && meters > fits) {
+      if (fits > 0 && meters > fits) {
         meters = (fits / 500).floorToDouble() * 500;
       }
       x
@@ -3871,7 +3882,7 @@ final class Prescriber {
         ? 20.0
         : warm
         ? 12.0
-        : (long ? 45.0 : 30.0) * (1 + 0.08 * (stage > 4 ? 4 : stage));
+        : _runBase(long) * (1 + 0.08 * (stage > 4 ? 4 : stage));
     if (!warm) {
       minutes *= easy ? 0.7 : 1;
       if (role != _DayRole.normal) {
@@ -3881,8 +3892,11 @@ final class Prescriber {
       if (minutes > cap) {
         minutes = cap;
       }
-      if (minutes < 10) {
-        minutes = 10;
+      // (Plancher de 10 min, jamais au-delà de la durée de départ bornée
+      // par la plus longue course connue.)
+      final floor = _runBase(long) < 10 ? _runBase(long) : 10.0;
+      if (minutes < floor) {
+        minutes = floor;
       }
     }
     final whole = minutes.floor();
@@ -3913,6 +3927,20 @@ final class Prescriber {
   /// 60 % (R6-P20 : volume −40 à 60 %) ; les sorties faciles valent 60 à
   /// 70 % de la sortie longue, 30 minutes au moins pour le débutant
   /// (R6-P17). Plafond : le temps du jour moins l'échauffement.
+  /// Durée de départ d'une course facile (30 min) ou d'une sortie longue
+  /// (45 min) ; hors du chemin street, jamais au-delà de la plus longue
+  /// course connue (+25 % à partir de l'intermédiaire ; R6-P16, garde-fou
+  /// de la sortie longue — CP2, partie 1).
+  double _runBase(bool long) {
+    final base = long ? 45.0 : 30.0;
+    final known = a.knownRunMinutes;
+    if (isStreetStyle(skeleton.style) || known == null) {
+      return base;
+    }
+    final cap = known * (a.level >= 1 ? 1.25 : 1.0) * (long ? 1.0 : 0.7);
+    return cap < base ? (cap < 5 ? 5 : cap) : base;
+  }
+
   int? _enduranceMinutes(SlotSpec s, int day, WeekSpec ws, _DayRole role) {
     if (skeleton.style != CoachStyle.endurance ||
         role != _DayRole.normal ||
@@ -3944,20 +3972,24 @@ final class Prescriber {
       if (long > cap) {
         long = cap;
       }
-      if (long < 15) {
-        long = 15;
+      // (Plancher de 15 min, jamais au-delà du créneau.)
+      final low = cap < 15 ? (cap < 5 ? 5.0 : cap) : 15.0;
+      if (long < low) {
+        long = low;
       }
       return long.floor();
     }
     var easy = long * (a.level == 0 ? 0.7 : 0.6);
     if (a.level == 0 && easy < 30 && !light && !taper) {
-      easy = 30;
+      // (Jamais au-delà de la plus longue course connue.)
+      easy = base < 30 ? base : 30;
     }
     if (easy > cap) {
       easy = cap;
     }
-    if (easy < 15) {
-      easy = 15;
+    final low = cap < 15 ? (cap < 5 ? 5.0 : cap) : 15.0;
+    if (easy < low) {
+      easy = low;
     }
     return easy.floor();
   }
@@ -5277,6 +5309,14 @@ final class Prescriber {
           continue;
         }
         if (a.rejection(id, day) != null) {
+          continue;
+        }
+        // Hors du chemin street, un mouvement de l'épreuve que le
+        // programme n'entraîne pas ne se teste pas (CP2, partie 1 : dips
+        // lesté testé à l'épreuve d'un programme de musculation qui ne le
+        // travaille jamais).
+        if (!isStreetStyle(skeleton.style) &&
+            !skeleton.days.any((d) => d.slots.any((s) => s.exerciseId == id))) {
           continue;
         }
         final e = a.catalog.exercise(id);
@@ -6946,7 +6986,10 @@ final class Prescriber {
     }
     final a1 = int.tryParse(parts[1]) ?? 0;
     final a2 = parts.length > 2 ? int.tryParse(parts[2]) ?? 0 : 0;
-    final light = ws.light;
+    // (Semaine d'introduction : format entier — une pièce raccourcie en
+    // introduction faisait monter les séries d'un tiers la semaine
+    // suivante.)
+    final light = ws.light && ws.intent != WeekIntent.intro;
     int cut(int v, int step) {
       final r = light ? (v * 2 / 3 / step).round() * step : v;
       return r < step ? step : r;
@@ -7026,10 +7069,17 @@ final class Prescriber {
     }
     final x = _new(s);
     final e = x.e;
-    final format = (s.group ?? '').split(':').first;
+    final parts = (s.group ?? '').split(':');
+    final format = parts.first;
     final level = _level;
+    // Tours d'une pièce « pour le temps » comptés dès ici, pour que les
+    // garde-fous de volume de la semaine les voient (le groupe les fixe
+    // ensuite).
+    final rounds = format == 'rft' && parts.length > 1
+        ? (int.tryParse(parts[1]) ?? 1)
+        : 1;
     x
-      ..sets = 1
+      ..sets = rounds
       ..minSets = 1
       ..rest = 0
       ..rir = 2
