@@ -273,7 +273,9 @@ String enduranceMarkdown(SimRun run, Catalog catalog) {
   if (weeks.isNotEmpty) {
     b
       ..writeln()
-      ..writeln('Course faite et écrite par semaine (minutes, échauffement exclu) :')
+      ..writeln(
+        'Course faite et écrite par semaine (minutes, échauffement exclu) :',
+      )
       ..writeln()
       ..writeln('| Semaine | Faite | Écrite |')
       ..writeln('| --- | --- | --- |');

@@ -93,3 +93,9 @@ Base : `moteurs` 9526ac47 (kalis_plan 0.2.2, kalis_adapt 0.2.2, kalis_bench 0.2.
 
 ## 08/10 ~15:35 UTC
 - Relecture de bureau de la partie 1 (Opus, sans SDK) : 21 constats ; corrigés dans p1 : export (id nul), copyWith (null efface, unset garde !), douleur de jambe à 3/10 lue sur l'état, séances comptées et séries utilisables (E2), suite de jours durs, scaled (inchangé détecté, calories, cibles par série retirées), plafond de course (note seulement si changement, tests exclus), pas de cumul avec 1 quinquies et l'étape 2, E1 selon la base d'intensité, tests d'endurance assouplis, zone de surcharge séparée, calories dans la vérité, export faite/écrite comparable, docs. Reste : fixture du propriétaire et docs générés (PROPRIETAIRE.md, MESURES.md, campagne.json) à reprendre de ci-out après le premier contrôle de p1.
+
+## 08/10 ~17:10 UTC
+- PUBLIÉ : kalis_adapt 0.2.3 + kalis_bench 0.2.2 (moteurs ff22faa9, etiquettes/…, run full 37796701628). DECISIONS CA2.1-CA2.6, ETAT « en cours — partie 0 publiée », notification envoyée.
+- p1 rebasé sur ff22faa9 (git reset, arbre conservé). Dev p1 3c0539bb (run 37811408880) : TOUT VERT (core 328, adapt 250, bench 65, plan 226 ; format OK). Documents régénérés recopiés (MESURES, campagne.json, PROPRIETAIRE, fixture).
+- Panel q1 (autres, 10 profils × 4 écoles, 12 appels) lancé sur les exports du run 37811408880 (ci-out c942720). Street : exports quasi identiques (≤ 3,7 %), notes de la partie 0 gardées (règle d'économie).
+- Outils : ca2-outils/ci_p1.sh (contrôle depuis /home/claude/p1).
