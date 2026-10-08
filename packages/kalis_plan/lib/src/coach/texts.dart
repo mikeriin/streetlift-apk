@@ -566,6 +566,11 @@ String? coachReasonText(Reason r, Catalog catalog) {
               'séries de volume) devient une séance de surcharge en séries '
               'courtes — variante plus dure ou lest léger, 2 répétitions en '
               "réserve. Tu n'ajoutes jamais de séries toi-même.",
+        CoachNotes.chairSquat =>
+          "Squat en assis-debout : une chaise stable derrière toi, assieds-"
+              'toi doucement puis relève-toi, mains en appui sur les cuisses '
+              "au début, bras croisés quand c'est facile ; une chaise plus "
+              'basse ensuite.',
         CoachNotes.wodPace =>
           'Conditionnement : allure tenable du premier au dernier passage '
               '(effort ${_int(v)} sur 10), jamais un sprint au départ ; '

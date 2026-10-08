@@ -126,6 +126,10 @@ abstract final class CoachNotes {
   /// tenable, mise à l'échelle (CP2, partie 1).
   static const String wodPace = 'wod_pace';
 
+  /// Squat d'un senior en assis-debout d'une chaise (CP2, partie 1 ;
+  /// R6-P26).
+  static const String chairSquat = 'chair_squat';
+
   /// Repère d'un objectif de répétitions sans lest au matériel (`value` :
   /// valeur attendue) : la surcharge passe par une variante plus dure
   /// (CP2, partie 0, boucle 2).
@@ -423,6 +427,7 @@ abstract final class CoachNotes {
     checkpoint,
     safetyPins,
     wodPace,
+    chairSquat,
     checkpointBody,
     checkpointHold,
     checkpointLoad,
@@ -3602,8 +3607,10 @@ final class Prescriber {
         basis == LoadBasis.bodyweightPlusExternal) {
       final total = a.totalOneRm(e.id);
       if (total != null) {
-        // 8 à 12 répétitions à 2 ou 3 de l'échec : environ 70 % du 1RM.
-        _loadAt(x, 0.68, null);
+        // 8 à 12 répétitions à 2 ou 3 de l'échec : environ 70 % du 1RM
+        // (72 % hors du chemin street : panel CP2, partie 1, 72 à 77 %
+        // pour 8 à 10 répétitions à 2 ou 3 en réserve).
+        _loadAt(x, isStreetStyle(skeleton.style) ? 0.68 : 0.72, null);
       } else {
         x
           ..calibrate = true
@@ -3901,7 +3908,11 @@ final class Prescriber {
       }
       // (Plancher de 10 min, jamais au-delà de la durée de départ bornée
       // par la plus longue course connue.)
-      final floor = _runBase(long) < 10 ? _runBase(long) : 10.0;
+      var floor = _runBase(long) < 10 ? _runBase(long) : 10.0;
+      // (Jamais au-delà du créneau, 5 min au moins.)
+      if (floor > cap) {
+        floor = cap < 5 ? 5 : cap;
+      }
       if (minutes < floor) {
         minutes = floor;
       }
@@ -3974,7 +3985,13 @@ final class Prescriber {
         : (taper
               ? longest * 0.6
               : (light ? longest * 0.7 : longest * (1 + coachRunLongRise)));
-    final cap = a.days[day].minutes - 8.0;
+    // (Jour de renforcement du coureur : 12 min gardées pour lui — panel
+    // CP2, partie 1 : le renforcement disparaissait des semaines de
+    // construction.)
+    final strengthDay = skeleton.days[day].slots.any(
+      (o) => o.role == SlotRole.accessory,
+    );
+    final cap = a.days[day].minutes - 8.0 - (strengthDay ? 12 : 0);
     if (s.method == Method.runLong) {
       if (long > cap) {
         long = cap;
@@ -4537,6 +4554,19 @@ final class Prescriber {
       return x;
     }
     final x = _dosed(s, day, week, ws, role);
+    if (x != null &&
+        skeleton.style == CoachStyle.health &&
+        x.kind == SetKind.work) {
+      // Santé : repos de 60 à 75 s sur les exercices au poids du corps ou
+      // légers (R6-P26 ; panel CP2, partie 1).
+      if (x.rest > 75) {
+        x.rest = 75;
+      }
+      // Senior : le squat se fait en assis-debout d'une chaise.
+      if (a.age >= 65 && x.e.id == 'mu-air-squat') {
+        x.reasons.add(_note(CoachNotes.chairSquat, 0));
+      }
+    }
     if (x != null && s.note == 'pain_step' && x.e.id == s.exerciseId) {
       // (Recul d'étape pour douleur : la raison et le retour sont écrits —
       // panel CX, correction 1, passe 5, `street_10`.)
@@ -5495,7 +5525,9 @@ final class Prescriber {
               : Method.cutRank(x.method));
     // 0. La marche de fin de séance prend le temps qui reste, rien de plus.
     for (final x in <_Draft>[...items]) {
-      if (x.slot?.note != 'walk' && x.slot?.note != 'run_extra') {
+      if (x.slot?.note != 'walk' &&
+          x.slot?.note != 'run_extra' &&
+          x.slot?.note != 'low_impact') {
         continue;
       }
       final over = _daySeconds(items, minutes) - budget;

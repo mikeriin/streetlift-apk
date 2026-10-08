@@ -353,6 +353,8 @@ const Map<String, List<_GymSlot>> _gymDays = <String, List<_GymSlot>>{
   'pull': <_GymSlot>[
     (GymPicks.vertical, SlotRole.main, _cmp, 3, MuscleGroup.lats),
     (GymPicks.row, SlotRole.main, _cmp, 3, MuscleGroup.upperBack),
+    // (Deltoïde moyen à 10 séries et plus par semaine en cinq séances.)
+    (GymPicks.lateral, SlotRole.accessory, _iso, 2, MuscleGroup.deltMiddle),
     (GymPicks.rear, SlotRole.accessory, _iso, 3, MuscleGroup.deltPosterior),
     (GymPicks.biceps, SlotRole.accessory, _iso, 3, MuscleGroup.biceps),
     (GymPicks.core, SlotRole.core, Method.accessoryCore, 2, null),
@@ -609,7 +611,16 @@ void _buildPower(_Builder b, Set<int> runDays) {
   // (R6-P5 : le mouvement à faire progresser en premier).
   lift(squatHeavy, squat, Method.liftHeavy, DayStress.heavy);
   lift(benchHeavy, bench, Method.liftHeavy, DayStress.heavy);
-  lift(deadHeavy, dead, Method.liftHeavy, DayStress.heavy, sets: adv ? 4 : 3);
+  // (Antécédent lombaire : le soulevé de terre reste en séries égales
+  // modérées, sans série de tête lourde ni test — R5-P20 ; panel CP2,
+  // partie 1.)
+  lift(
+    deadHeavy,
+    dead,
+    back ? Method.liftVolume : Method.liftHeavy,
+    back ? DayStress.medium : DayStress.heavy,
+    sets: adv ? 4 : 3,
+  );
   // Couché : trois à quatre expositions (R6-P8), volume le jour du squat
   // lourd, léger ou variante ailleurs.
   if (benchHeavy != squatHeavy) {
@@ -998,6 +1009,15 @@ void _buildConditioning(_Builder b) {
       b.add(
         d,
         const <String>['sw-dips-barre-droite', 'sw-dips-barres-paralleles'],
+        SlotRole.secondary,
+        _cmp,
+        sets: 3,
+        keep: true,
+      );
+      // Base de tirage strict (traction poitrine à la barre).
+      b.add(
+        d,
+        const <String>['sw-traction-chest-to-bar', 'sw-traction-pronation'],
         SlotRole.secondary,
         _cmp,
         sets: 3,
