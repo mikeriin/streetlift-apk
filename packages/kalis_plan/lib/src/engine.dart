@@ -949,7 +949,12 @@ final class KalisPlan implements PlanEngine, SeasonPlanner {
   @override
   BlockProposal nextBlock(Catalog catalog, NextBlockRequest request) {
     _check(catalog, request.profile);
-    if (coachEligible(request.profile)) {
+    // (Un débutant sans ancienneté n'est éligible que depuis 0.2.3 : un
+    // bloc écrit par le chemin 0.1 se poursuit par le chemin 0.1 —
+    // relecture indépendante du code de 0.2.3.)
+    if (coachEligible(request.profile) &&
+        (isCoachPlan(request.previous.pass1) ||
+            request.profile.trainingAge != null)) {
       return _coach.nextBlock(catalog, request);
     }
     final r = _evolve(

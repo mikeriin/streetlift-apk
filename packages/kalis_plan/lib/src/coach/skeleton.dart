@@ -151,6 +151,36 @@ bool _painOn(Athlete a, String id) {
   return false;
 }
 
+/// Poignet à ménager : gêne déclarée ou relevée de 2 sur 10 au moins.
+bool _wristSpare(Athlete a) => (a.limitOn(Joint.wrist)?.discomfort ?? 0) >= 2;
+
+/// Candidats [ids] pour un poignet à ménager : chaque exercice précédé de
+/// sa variante sur parallettes ou aux anneaux quand le catalogue l'a (prise
+/// neutre, poignet hors de l'extension forcée ; CP2, partie 0, budget
+/// d'appui du poignet de `street_10` — relecture documentée CX : « parallettes
+/// ou anneaux par défaut pour toute la planche et les push-ups, handstand
+/// sur poings ou parallettes »). Sans poignet à ménager : [ids] tels quels.
+List<String> _wristFirst(Athlete a, List<String> ids) {
+  if (!_wristSpare(a)) {
+    return ids;
+  }
+  return <String>[
+    for (final id in ids) ...<String>[
+      for (final v in <String>['$id-parallettes', '$id-anneaux'])
+        if (a.catalog.contains(v)) v,
+      id,
+    ],
+  ];
+}
+
+/// Poussée verticale tête en bas pour un poignet à ménager : prise neutre
+/// seulement (parallettes, barres parallèles).
+const List<String> _neutralHandstandPush = <String>[
+  'cd-hspu-mur-deficit-parallettes',
+  'cd-hspu-barres-paralleles',
+  'cd-hspu-libre-deficit-parallettes',
+];
+
 /// Figures visées par l'athlète [a], par ordre de priorité : celles du
 /// profil (`skills`), puis les objectifs qui portent sur une figure.
 List<SkillTrack> skillTargetsOf(Athlete a) {
@@ -529,9 +559,17 @@ void _buildBeginner(_Builder b) {
         // Les jours de descentes freinées, deux séries assistées : six
         // séries de tirage au plus par séance, une douzaine de séries
         // directes par semaine (R1-P5, R2-P8, R5-P1).
+        // (Objectif de première traction : deux séries assistées chaque
+        // jour, six séries de tirage au plus par séance, tenue et
+        // descentes comprises — CP2, partie 0, panel CX correction 1,
+        // `street_01`, `street_03` : 16 à 19 séries de tirage par semaine
+        // chez un débutant ; R5-P1 : 10 à 12.)
+        // (Jour de descentes freinées : une série assistée — tirage
+        // vertical vers 8 à 10 séries par semaine, panel p3, `street_01`,
+        // `street_03`.)
         sets: heavy
             ? mainSets
-            : (a.aimsAt(Ids.pull) ? (negativeDays.contains(d) ? 2 : 3) : sets),
+            : (a.aimsAt(Ids.pull) ? (negativeDays.contains(d) ? 1 : 2) : sets),
         referenceId: Ids.pull,
       );
       if (negativeDays.contains(d) && !heavy) {
@@ -544,7 +582,7 @@ void _buildBeginner(_Builder b) {
           const <String>['cs-tenue-menton-barre-pronation'],
           SlotRole.secondary,
           Method.beginnerHold,
-          sets: 3,
+          sets: 2,
           referenceId: Ids.pull,
           // (À partir de la troisième semaine : le volume de tirage monte
           // par paliers, R5-P22.)
@@ -562,12 +600,14 @@ void _buildBeginner(_Builder b) {
         Method.beginnerMain,
         sets: sets,
       );
-    } else if ((pushPlanned >= 4 ||
-            // Objectif de pompes, geste acquis (2 au moins) : dès le
-            // deuxième bloc, des séries courtes du geste complet à chaque
-            // séance (spécificité ; panel CX, boucle 1), la variante
-            // facile garde le volume.
-            (later && pushMax >= 2 && a.aimsAt(Ids.pushUp))) &&
+    } else if (((pushPlanned >= 4 && pushMax >= 3) ||
+            // Objectif de pompes, geste acquis (3 au moins : une répétition
+            // à 2 en réserve doit exister — CP2, partie 0, panel CX
+            // correction 1, `street_03` : « 1 répétition à 2 en réserve
+            // sur un maximum de 2 ») : dès le deuxième bloc, des séries
+            // courtes du geste complet à chaque séance (spécificité ; panel
+            // CX, boucle 1), la variante facile garde le volume.
+            (later && pushMax >= 3 && a.aimsAt(Ids.pushUp))) &&
         !heavy &&
         a.can(Ids.pushUp, d)) {
       // Quelques pompes acquises : des séries courtes du geste complet
@@ -594,7 +634,7 @@ void _buildBeginner(_Builder b) {
           !b.ladders.any((l) => l.targetExerciseId == coachPushLadderTarget)) {
         b.ladders.add(ladder);
       }
-      if (a.aimsAt(Ids.pushUp) && pushMax < 6 && !negativeDays.contains(d)) {
+      if (a.aimsAt(Ids.pushUp) && pushMax < 6) {
         // Objectif de pompes sous six : les descentes freinées au sol
         // restent tout le cycle (le pont vers la répétition complète ;
         // panel CX, boucle 2).
@@ -623,7 +663,10 @@ void _buildBeginner(_Builder b) {
           !b.ladders.any((l) => l.targetExerciseId == coachPushLadderTarget)) {
         b.ladders.add(ladder);
       }
-      if (!heavy && a.aimsAt(Ids.pushUp) && !negativeDays.contains(d) ||
+      // (Objectif de pompes : descentes freinées au sol à chaque séance
+      // facile, jours de descentes de traction compris — panel p3,
+      // `street_03`.)
+      if (!heavy && a.aimsAt(Ids.pushUp) ||
           (!heavy && a.aimsAt(Ids.pushUp) && a.dayCount <= 2)) {
         // Objectif de pompes : le geste complet dès la première semaine,
         // en descentes freinées (corps gainé de la tête aux talons) — la
@@ -1065,6 +1108,18 @@ void _addRepsPillar(
       stress: DayStress.heavy,
       group: group,
     );
+    // Repère manqué (CP2, partie 0, boucle 2 ; panel p1, `street_13`) :
+    // des descentes freinées après la série de force, hors du groupe.
+    if (exerciseId == Ids.pull && max < 10 && a.stalled.contains(exerciseId)) {
+      b.add(
+        d,
+        const <String>['sw-traction-negative'],
+        SlotRole.secondary,
+        Method.beginnerNegative,
+        sets: 2,
+        referenceId: Ids.pull,
+      );
+    }
     return;
   }
   if (method == Method.repsStrength && group == null) {
@@ -1093,7 +1148,10 @@ void _addRepsPillar(
     // mouvement exact à l'approche du test ; R4-G1 ; panel CX, correction
     // 1, `street_14` : traction au tempo lent à la place du travail de
     // l'épreuve).
-    if (max >= 12 &&
+    // (Six répétitions et plus : panel p3, `street_11`, 13, 15 — un bloc
+    // de réalisation sans séance au format de l'objectif ne prépare pas le
+    // test.)
+    if (max >= 6 &&
         b.shape.phase == SeasonPhaseKind.realization &&
         a.goalOn(exerciseId, GoalMetric.maxReps) != null) {
       b.add(
@@ -1104,6 +1162,23 @@ void _addRepsPillar(
         sets: 4,
         stress: DayStress.heavy,
       );
+      // La surcharge reste une fois par semaine, après la zone de
+      // l'épreuve : variante plus dure en séries courtes (CP2, partie 0 ;
+      // panel CX correction 1, `street_14` : « garder au bloc 2 une
+      // variante de levier lourde une fois par semaine » ; R1-P17, R4-G2).
+      if (!spare) {
+        b.add(
+          d,
+          exerciseId == Ids.pull
+              ? <String>['sw-traction-tempo-excentrique', ...Picks.hardPull]
+              : (exerciseId == Ids.dip ? Picks.hardDip : Picks.hardPushUp),
+          SlotRole.secondary,
+          Method.repsStrength,
+          sets: 3,
+          stress: DayStress.heavy,
+          referenceId: exerciseId,
+        );
+      }
       return;
     }
     if (max >= 10 && !spare) {
@@ -1115,7 +1190,10 @@ void _addRepsPillar(
       // haut), puis l'archer et la typewriter (relecture documentée CX,
       // `street_14` ; Kotarsky et al. 2018 : surcharge par des variantes
       // plus dures).
-      final stalled = a.stalled.contains(exerciseId) && exerciseId == Ids.pull;
+      final stalled =
+          a.stalled.contains(exerciseId) &&
+          exerciseId == Ids.pull &&
+          !b.a.limits.any((l) => l.joint == Joint.elbow && l.discomfort >= 3);
       final slot = b.add(
         d,
         stalled
@@ -1145,7 +1223,12 @@ void _addRepsPillar(
       stress: max < 8 ? DayStress.heavy : DayStress.medium,
       group: group,
     );
-    if (exerciseId == Ids.pull && max < 10 && !short && !spare) {
+    // (Repère manqué, CP2 partie 0 boucle 2 ; panel p1, `street_13` : les
+    // descentes freinées entrent aussi dans les séances courtes.)
+    if (exerciseId == Ids.pull &&
+        max < 10 &&
+        (!short || a.stalled.contains(exerciseId)) &&
+        !spare) {
       // Moins de dix tractions, sans lest : des descentes freinées après
       // la séance de force, le levier de surcharge du tirage (R4-G2,
       // R5-P8 : 3 à 5 s, 15 descentes au plus ; panel CX, boucle 1).
@@ -1483,6 +1566,42 @@ void _buildReps(_Builder b, Set<int> runDays) {
             pullDays[i]: _repsMethods(pullMax)[i % 5],
         }
       : _assignPillar(a, pullDays, pullHeavy);
+  // Plateau au dernier test d'un mouvement visé (repère de mi-parcours
+  // manqué) : une seule règle, écrite dans la note du repère — une séance
+  // de départs au chrono devient la séance de surcharge (variante plus
+  // dure ou lest, en séries courtes) au bloc suivant (CP2, partie 0 ; panel
+  // CX correction 1, `street_06`, 13, 14, 15, 17 : « repère manqué → la
+  // variante de surcharge remplace l'EMOM »).
+  // (CP2, partie 0, boucle 2 ; panel p1, `street_06`, 11, 13, 14, 15,
+  // 17 : la règle s'applique même quand une séance de force existe déjà,
+  // et, sans séance au chrono, c'est une séance de volume qui devient la
+  // séance de surcharge — la règle écrite le dit ainsi.)
+  void overload(Map<int, String> methods, String id) {
+    // (Épreuve en vue : pas de nouveau mouvement de surcharge pendant la
+    // réalisation — panel p1, `street_08`.)
+    if (!a.stalled.contains(id) ||
+        !a.aimsAt(id) ||
+        (competition && b.shape.phase == SeasonPhaseKind.realization)) {
+      return;
+    }
+    int? day;
+    for (final want in const <String>[Method.repsDensity, Method.repsVolume]) {
+      for (final e in methods.entries) {
+        if (e.value == want) {
+          day = e.key;
+          break;
+        }
+      }
+      if (day != null) {
+        break;
+      }
+    }
+    if (day != null) {
+      methods[day] = Method.repsStrength;
+    }
+  }
+
+  overload(pullMethod, Ids.pull);
   final dipDays = pushMaintenance && pullDays.length > 2
       ? spreadDays(a, pullDays, 2)
       : pullDays;
@@ -1504,6 +1623,7 @@ void _buildReps(_Builder b, Set<int> runDays) {
               if (e.value == Method.repsTop) e.key,
           },
         );
+  overload(dipMethod, Ids.dip);
   final rowDays = spreadDays(a, days, n >= 2 ? 2 : 1);
   // Objectif de traction sans objectif de muscle-up : la pratique du
   // muscle-up se fait les jours sans série longue ni force en traction
@@ -2068,7 +2188,11 @@ void _buildLifting(_Builder b, Set<int> runDays) {
       if (pullVolume >= 0) pullVolume,
       if (mu) muDay,
     };
+    // (Coude avec antécédent : pas de quatrième exposition de tirage dans
+    // la semaine — trois tirages lourds au plus, 48 h entre eux ; CP2,
+    // partie 0, panel CX correction 1, `street_09` ; R4-F10, R5-P20.)
     if (light >= 0 &&
+        elbow == null &&
         !maintained(Ids.weightedPull) &&
         a.level >= 2 &&
         target != Ids.weightedPull &&
@@ -2272,7 +2396,10 @@ void _buildLifting(_Builder b, Set<int> runDays) {
         rowPick,
         SlotRole.accessory,
         Method.accessoryCompound,
-        sets: lean ? 2 : (hasPull ? 3 : 4),
+        // (Coude avec antécédent, sans gêne : deux séries — le volume de
+        // tirage de la semaine reste vers 18 à 20 séries directes ; CP2,
+        // partie 0, `street_09`.)
+        sets: lean || (elbow != null && !spareElbow) ? 2 : (hasPull ? 3 : 4),
         // Coude à ménager : le tirage horizontal en prise neutre porte le
         // tirage de la semaine, il est gardé.
         keep: spareElbow,
@@ -2560,7 +2687,11 @@ void _buildFigures(_Builder b, Set<int> runDays) {
       );
     }
     final dynamics = skillDynamics[t.targetId];
-    if (dynamics != null) {
+    // Poignet à ménager : la séance légère de la figure d'appui garde ses
+    // tenues sans dynamique (une seule grosse séance d'appui par semaine ;
+    // CP2, partie 0, `street_10`).
+    final spareDay = support && !heavy && _wristSpare(a);
+    if (dynamics != null && !spareDay) {
       // R4-F5 : compléter le statique par du dynamique dans le même schéma.
       // Du travail dynamique au niveau de l'étape : la variante de même
       // rang, sinon la plus proche en dessous.
@@ -2574,10 +2705,10 @@ void _buildFigures(_Builder b, Set<int> runDays) {
       }
       b.add(
         d,
-        <String>[
+        _wristFirst(a, <String>[
           for (var i = top; i >= 0; i--) dynamics[i],
           ...dynamics.skip(top + 1),
-        ],
+        ]),
         SlotRole.skill,
         Method.skillDynamic,
         sets: 3,
@@ -2630,7 +2761,10 @@ void _buildFigures(_Builder b, Set<int> runDays) {
     void balance() {
       b.add(
         d,
-        <String>['cs-handstand', 'cs-handstand-dos-au-mur'],
+        _wristFirst(a, const <String>[
+          'cs-handstand',
+          'cs-handstand-dos-au-mur',
+        ]),
         SlotRole.skill,
         Method.skillBalance,
         // Budget du poignet (R4-F12) : trois tenues quand la séance porte
@@ -2667,7 +2801,18 @@ void _buildFigures(_Builder b, Set<int> runDays) {
       skillDay(d, second, heavy: true);
     }
     if (first != null && firstDays.contains(d)) {
-      skillDay(d, first, heavy: firstDays.length < 3 || d != firstDays[1]);
+      // Poignet à ménager et figure d'appui : une seule grosse séance
+      // d'appui par semaine, l'autre légère (CP2, partie 0, `street_10`).
+      final wristLight =
+          _wristSpare(a) &&
+          supportTrack(first) &&
+          firstDays.length >= 2 &&
+          d != firstDays.first;
+      skillDay(
+        d,
+        first,
+        heavy: !wristLight && (firstDays.length < 3 || d != firstDays[1]),
+      );
     }
     if (second != null && secondDays.contains(d) && !secondFirst) {
       skillDay(d, second, heavy: true);
@@ -2737,15 +2882,21 @@ void _buildFigures(_Builder b, Set<int> runDays) {
         stress: DayStress.medium,
       );
     }
+    // (Poignet à ménager : la poussée tête en bas va à la séance d'appui
+    // légère, pas à la grosse séance de planche, et sur prise neutre
+    // seulement ; CP2, partie 0, `street_10`.)
+    final hspuDay = balanceDays.isEmpty
+        ? -1
+        : (_wristSpare(a) ? balanceDays.last : balanceDays.first);
     if (balanceDays.contains(d) &&
         a.level >= 2 &&
-        (a.limitOn(Joint.wrist) == null || d == balanceDays.first)) {
+        (a.limitOn(Joint.wrist) == null || d == hspuDay)) {
       // Poussée verticale tête en bas : la force qui porte l'équilibre et
       // la planche (R4-F5).
       final dynamics = skillDynamics['cs-handstand']!;
       b.add(
         d,
-        dynamics.reversed.toList(),
+        _wristSpare(a) ? _neutralHandstandPush : dynamics.reversed.toList(),
         SlotRole.skill,
         Method.skillDynamic,
         sets: 3,
