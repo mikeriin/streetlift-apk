@@ -1286,6 +1286,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
       final p = prev.sets[i];
       if (p.kg.isNotEmpty) s.kg = p.kg;
       if (p.reps.isNotEmpty) s.reps = p.reps;
+      if (p.kg.isNotEmpty || p.reps.isNotEmpty) s.edited = true;
     }
     store.saveLogs(affectsProgression: false);
     setState(() => epoch++);
@@ -2144,6 +2145,9 @@ class _SetRowState extends State<_SetRow> {
               onTap: selectAll,
               onChanged: (text) {
                 on(text);
+                // CI1c : saisie de l'utilisateur (brouillon gardé, jamais
+                // refaite à la réouverture).
+                widget.entry.edited = true;
                 store.saveLogs(affectsProgression: false);
                 widget.onEdited?.call();
               },

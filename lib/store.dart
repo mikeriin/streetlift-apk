@@ -94,6 +94,11 @@ class SetEntry {
   /// moteur la traite comme une série sans note).
   int? flames;
   bool flamesUnknown;
+
+  /// CI1c : valeur saisie par l'utilisateur (et non pré-remplie) dans une
+  /// série pas encore validée : brouillon gardé quand la séance est
+  /// recalculée ou fermée.
+  bool edited;
   SetEntry({
     this.kg = '',
     this.reps = '',
@@ -105,6 +110,7 @@ class SetEntry {
     this.excluded = false,
     this.flames,
     this.flamesUnknown = false,
+    this.edited = false,
   });
 
   Map<String, dynamic> toJson() => {
@@ -118,6 +124,7 @@ class SetEntry {
     if (excluded) 'excluded': true,
     if (flames != null) 'flames': flames,
     if (flamesUnknown) 'flamesUnknown': true,
+    if (edited) 'edited': true,
   };
   SetEntry.fromJson(Map<String, dynamic> j)
     : kg = j['kg'] as String? ?? '',
@@ -129,7 +136,8 @@ class SetEntry {
       effort = (j['effort'] as num?)?.toDouble(),
       excluded = j['excluded'] as bool? ?? false,
       flames = j['flames'] is int ? j['flames'] as int : null,
-      flamesUnknown = j['flamesUnknown'] == true;
+      flamesUnknown = j['flamesUnknown'] == true,
+      edited = j['edited'] == true;
 }
 
 class ExerciseLog {
@@ -405,6 +413,10 @@ class AppStore extends ChangeNotifier {
   /// et clé du dernier calcul.
   int _overlayGen = 0;
   String _overlayKey = '';
+
+  /// CI1c : révision des journées du programme affiché (couche de Koach
+  /// posée ou retirée) ; clés des calculs tirés de ses exercices.
+  int programRevision = 0;
 
   /// G9 : calculs du moteur dynamique gardés (bloc importé, journal
   /// présenté au moteur), clés de signature ; jamais sauvegardés.
@@ -1583,7 +1595,9 @@ class AppStore extends ChangeNotifier {
     _retiredPending = RetiredData.empty;
     retiredCopyFailed = false;
     // CI1c (migration) : séances seulement consultées, figées par les
-    // versions ≤ 6.9.1, retirées du journal (aucune donnée perdue).
+    // versions ≤ 6.9.1, retirées du journal (aucune donnée perdue : les
+    // valeurs saisies sans être validées sont d'abord marquées).
+    _markLegacyDrafts();
     _pruneConsultations();
     _progression = null;
   }
@@ -2807,7 +2821,10 @@ class AppStore extends ChangeNotifier {
       if (x.note.trim().isNotEmpty ||
           x.prescribed != null ||
           x.koach != null ||
-          x.sets.any((s) => s.done)) {
+          x.showKg != null ||
+          x.showRir != null ||
+          x.showV != null ||
+          x.sets.any((s) => s.done || s.edited)) {
         return false;
       }
     }
@@ -2864,11 +2881,59 @@ class AppStore extends ChangeNotifier {
     final byId = {for (final e in day.exercises) e.id: e};
     for (final x in l.ex.entries) {
       final e = byId[x.key];
+      final old = x.value.sets;
+      final n = e == null ? old.length : setCount(e);
       // Même journal d'exercice (réglages d'affichage, note gardés) ;
-      // séries refaites, puis réglées sur la séance servie par le moteur.
-      x.value.sets = e == null
-          ? [for (final _ in x.value.sets) SetEntry()]
-          : List.generate(setCount(e), (_) => SetEntry());
+      // séries pré-remplies refaites (puis réglées sur la séance servie
+      // par le moteur), saisies de l'utilisateur gardées.
+      x.value.sets = [
+        for (var i = 0; i < n; i++)
+          if (i < old.length && old[i].edited) old[i] else SetEntry(),
+        for (var i = n; i < old.length; i++)
+          if (old[i].edited) old[i],
+      ];
+    }
+  }
+
+  /// CI1c (migration) : dans une séance pas commencée d'une version
+  /// ≤ 6.9.1, une valeur que l'application n'a pas pu pré-remplir (autre
+  /// que la cible de la séance servie, ou toute valeur hors moteur) est
+  /// une saisie de l'utilisateur : marquée comme telle, jamais refaite ni
+  /// retirée.
+  void _markLegacyDrafts() {
+    final re = RegExp(r'^S([1-9]\d*)-J([1-7])$');
+    for (final entry in logs.entries) {
+      final l = entry.value;
+      final m = re.firstMatch(entry.key);
+      if (m == null || l.done) continue;
+      if (l.ex.values.any((x) => x.sets.any((s) => s.done || s.edited))) {
+        continue;
+      }
+      final week = int.parse(m[1]!), j = int.parse(m[2]!);
+      final a = l.adapt == null
+          ? null
+          : SessionAdaptStore(this).sessionAdaptOf(entry.key);
+      for (final x in l.ex.entries) {
+        for (var i = 0; i < x.value.sets.length; i++) {
+          final st = x.value.sets[i];
+          if (st.kg.isEmpty &&
+              st.reps.isEmpty &&
+              st.rir.isEmpty &&
+              st.v.isEmpty) {
+            continue;
+          }
+          final goal = a == null
+              ? null
+              : SessionAdaptStore(this)._legacyGoalTexts(week, j, a, x.key, i);
+          if (goal == null ||
+              st.rir.isNotEmpty ||
+              st.v.isNotEmpty ||
+              (st.kg.isNotEmpty && st.kg != goal.kg) ||
+              (st.reps.isNotEmpty && st.reps != goal.value)) {
+            st.edited = true;
+          }
+        }
+      }
     }
   }
 

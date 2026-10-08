@@ -17,3 +17,6 @@ Base : main 64e286b3 (dev6.9.1). Arbre de travail complet (sans .github).
 - Run rapide essai 2 (37784xxx) : tous les tests verts (771). Format appliqué.
 - Relecture indépendante (Opus) : 10 constats ; à corriger : brouillons saisis (drapeau edited), clé record,
   couche par jour, validation du plan fusionné, règle d'échange, raison par emplacement, jours faits, carte non applicable.
+- Corrections de relecture faites ; run rapide essai 3 vert (771 tests) ; version 6.9.2+110 ; README, SUIVI, CI_GP.
+- Contrôle complet poussé sur claude/ci-3d : commit 8b415536 (arbre 3ba926dd).
+- Reste : résultat ci-3d (captures CI1c a/b à relire), publication main, build signé, livraison.
