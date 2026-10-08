@@ -3877,7 +3877,11 @@ final class Prescriber {
     var minutes = lowImpact
         ? (a.age >= 65 ? 10.0 : 15.0) + (stage > 5 ? 5 : stage)
         : s.note == 'walk'
-        ? 10.0
+        // (Une marche servie par une course facile, faute de matériel ou
+        // de lieu : jamais au-delà de la course de départ bornée.)
+        ? (e.id.startsWith('ca-footing') || e.id.startsWith('ca-sortie')
+              ? (_runBase(false) < 10 ? _runBase(false) : 10.0)
+              : 10.0)
         : s.note == 'run_extra'
         ? 20.0
         : warm

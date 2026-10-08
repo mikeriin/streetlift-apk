@@ -380,9 +380,14 @@ List<String> _gymSplit(int days, int level) {
   if (days == 5) {
     return const <String>['upper1', 'lower1', 'push', 'pull', 'legs'];
   }
-  return const <String>['push', 'pull', 'legs', 'upper2', 'lower2', 'upper1']
-      .take(days)
-      .toList();
+  return const <String>[
+    'push',
+    'pull',
+    'legs',
+    'upper2',
+    'lower2',
+    'upper1',
+  ].take(days).toList();
 }
 
 /// Groupes prioritaires du profil (spécialisation sur un muscle) : +30 à
@@ -598,15 +603,11 @@ void _buildPower(_Builder b, Set<int> runDays) {
   }
   if (squatVolume >= 0) {
     lift(squatVolume, squat, Method.liftVolume, DayStress.medium);
-    variant(
-      squatVolume,
-      const <String>[
-        'mu-developpe-couche-pause',
-        'mu-developpe-couche-prise-serree',
-        'mu-developpe-couche-larsen',
-      ],
-      bench,
-    );
+    variant(squatVolume, const <String>[
+      'mu-developpe-couche-pause',
+      'mu-developpe-couche-prise-serree',
+      'mu-developpe-couche-larsen',
+    ], bench);
   }
   if (deadHeavy != benchHeavy && n >= 4) {
     lift(deadHeavy, bench, Method.liftLight, DayStress.light, sets: 3);
@@ -614,15 +615,11 @@ void _buildPower(_Builder b, Set<int> runDays) {
   // Variante du terre (phase faible) le jour du couché lourd, chez
   // l'avancé ; sinon le soulevé de terre roumain en accessoire.
   if (adv && !back && benchHeavy != deadHeavy) {
-    variant(
-      benchHeavy,
-      const <String>[
-        'mu-souleve-de-terre-pause',
-        'mu-souleve-de-terre-deficit',
-        'mu-souleve-de-terre-roumain-barre',
-      ],
-      dead,
-    );
+    variant(benchHeavy, const <String>[
+      'mu-souleve-de-terre-pause',
+      'mu-souleve-de-terre-deficit',
+      'mu-souleve-de-terre-roumain-barre',
+    ], dead);
   } else {
     b.add(
       squatVolume >= 0 ? squatVolume : squatHeavy,
@@ -694,7 +691,10 @@ void _buildPower(_Builder b, Set<int> runDays) {
 const List<List<String>> _stretches = <List<String>>[
   <String>['mo-etirement-gastrocnemiens-mur', 'mo-etirement-mollets-marche'],
   <String>['mo-ischio-assis-unilateral', 'mo-ischio-debout-pied-sureleve'],
-  <String>['mo-flechisseurs-hanche-semi-agenouille', 'mo-fente-basse-etirement'],
+  <String>[
+    'mo-flechisseurs-hanche-semi-agenouille',
+    'mo-fente-basse-etirement',
+  ],
   <String>['mo-etirement-pectoral-cadre-porte', 'mo-etirement-chiot'],
   <String>['mo-figure-4-allonge', 'mo-pigeon-sol'],
 ];
@@ -715,7 +715,9 @@ void _buildHealth(_Builder b) {
   // Jours de renforcement : deux ou trois, espacés ; les autres jours
   // (senior) : équilibre, marche, mobilité.
   final strengthDays = spreadDays(a, b.allDays, n >= 4 ? 3 : (n >= 2 ? n : 1));
-  final balanceDays = senior ? spreadDays(a, b.allDays, n >= 3 ? 3 : n) : <int>[];
+  final balanceDays = senior
+      ? spreadDays(a, b.allDays, n >= 3 ? 3 : n)
+      : <int>[];
   var stretch = 0;
   for (var d = 0; d < n; d++) {
     final minutes = a.days[d].minutes;
@@ -754,7 +756,11 @@ void _buildHealth(_Builder b) {
       b.add(
         d,
         senior
-            ? const <String>['mu-air-squat', 'mu-wall-sit', 'mu-step-up-lateral']
+            ? const <String>[
+                'mu-air-squat',
+                'mu-wall-sit',
+                'mu-step-up-lateral',
+              ]
             : (k.isEven ? GymPicks.squatBeginner : GymPicks.squatSecond),
         SlotRole.main,
         _cmp,
@@ -963,9 +969,7 @@ void _buildConditioning(_Builder b) {
         method == Method.liftHeavy ? SlotRole.main : SlotRole.secondary,
         method,
         sets: method == Method.liftHeavy ? 4 : 3,
-        stress: method == Method.liftHeavy
-            ? DayStress.heavy
-            : DayStress.medium,
+        stress: method == Method.liftHeavy ? DayStress.heavy : DayStress.medium,
       );
     }
     final (format, rawMoves) = _wods[order[d % order.length]];
@@ -983,14 +987,7 @@ void _buildConditioning(_Builder b) {
     final room = (minutes - (minutes >= 40 ? 25 : 6)) * 60;
     final fitted = _fitWod(format, room);
     for (final m in moves) {
-      b.add(
-        d,
-        m,
-        SlotRole.conditioning,
-        Method.wod,
-        sets: 1,
-        group: fitted,
-      );
+      b.add(d, m, SlotRole.conditioning, Method.wod, sets: 1, group: fitted);
     }
     if (d.isEven && minutes >= 30) {
       b.add(

@@ -380,10 +380,7 @@ void main() {
       // (85 % au moins : après un allègement, la hausse d'un emplacement à
       // répétitions égales reste bornée sur la semaine allégée, comme le
       // banc la mesure — CP2, partie 0, boucle 2.)
-      expect(
-        top.reduce((a, b) => a > b ? a : b),
-        inInclusiveRange(0.85, 0.95),
-      );
+      expect(top.reduce((a, b) => a > b ? a : b), inInclusiveRange(0.85, 0.95));
       // Une exposition lourde (85 % et plus) par semaine de réalisation.
       for (var k = 0; k < weeks.length; k++) {
         if (weeks[k].intent == WeekIntent.realization) {

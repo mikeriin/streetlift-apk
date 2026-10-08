@@ -184,11 +184,7 @@ void _checkPass2(
 
 /// Joue le profil street aléatoire de graine [seed] ; rend la liste des
 /// manquements (vide si tout est conforme).
-List<String> checkCoachSeed(
-  Catalog catalog,
-  int seed, {
-  bool general = false,
-}) {
+List<String> checkCoachSeed(Catalog catalog, int seed, {bool general = false}) {
   final out = <String>[];
   void fail(String message) => out.add('profil $seed — $message');
 
