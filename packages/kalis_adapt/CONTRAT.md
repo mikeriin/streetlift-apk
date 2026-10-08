@@ -1369,7 +1369,9 @@ leur capacité (ni vitesse critique ni VO2max) : il garde le programme écrit et
    plage, sont dites au moins 2 répétitions plus faciles que visé (`coachAssistWideRir`) fait passer à l'élastique
    plus fin dès la séance suivante (sept jours au moins depuis le dernier changement, `coachAssistMinDays`), sans
    attendre deux séances au haut de la plage (panel de la passe 6, trois écoles sur quatre ; ACSM 2009, règle « 2
-   pour 2 »).
+   pour 2 »). Une série repère (ouverte) ne remet plus la série de séances à zéro, et une série repère qui dépasse le
+   haut de la plage écrite d'au moins 2 répétitions, sans échec, compte comme une marge large (relecture documentée
+   de la partie 1, `street_03` : élastique jamais changé en 16 semaines, une série repère une semaine sur deux).
 
 Paramètres (`params.dart`) : `enduranceSpike` 0,10 ; `enduranceSpikeDays` 30 ; `enduranceSpikeMinRuns` 3 ;
 `enduranceResumeShortDays` 7, `enduranceResumeShort` 0,7 ; `enduranceResumeLongDays` 14, `enduranceResumeLong` 0,5 ;

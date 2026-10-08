@@ -517,16 +517,32 @@ void noteCoachSession(
   // Règle d'assistance : toutes les séries au haut de leur plage, aucune
   // dite plus dure que visé ; ou première série dite au moins deux
   // répétitions plus facile que visé.
+  // (Une série repère, ouverte, ne compte pas contre la règle : sa plage
+  // monte au-delà de l'écrit ; relecture documentée de la partie 1,
+  // `street_03` : la série repère d'une semaine sur deux remettait la série
+  // à zéro, l'élastique n'a jamais changé en 16 semaines.)
   var allTop = true;
+  var counted = 0;
+  var benchmarkWide = false;
   for (final o in run.observed) {
     final t = o.target;
     final said = o.flames;
+    if (t != null && t.open && !o.failed) {
+      if (o.amount >= coach.schemeAmount + p.coachAssistWideRir) {
+        benchmarkWide = true;
+      }
+      continue;
+    }
+    counted++;
     if (o.failed ||
         t == null ||
         o.amount < t.high ||
         (said != null && rirOfFlames(said) < rirOfFlames(t.flames) - 0.5)) {
       allTop = false;
     }
+  }
+  if (counted == 0) {
+    allTop = false;
   }
   final first = run.observed.first;
   final firstSaid = first.flames;
@@ -569,6 +585,9 @@ void noteCoachSession(
   for (final o in run.observed) {
     final t = o.target;
     final said = o.flames;
+    if (t != null && t.open && !o.failed) {
+      continue;
+    }
     if (o.failed ||
         t == null ||
         said == null ||
@@ -580,7 +599,9 @@ void noteCoachSession(
   }
   final light = coach.policy.locked;
   marks[coach.slotId] = SlotMark(
-    wideMargin: wide,
+    // (Une série repère qui dépasse l'écrit d'au moins coachAssistWideRir
+    // répétitions, sans échec, dit aussi que l'assistance est trop forte.)
+    wideMargin: (wide && counted > 0) || (benchmarkWide && !failed),
     day: day,
     reached: reached,
     missed: under ? missStreak + 1 : 0,
