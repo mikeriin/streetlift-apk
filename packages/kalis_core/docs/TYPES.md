@@ -2002,3 +2002,8 @@ Le JSON porte le **code** ; l'ordre des valeurs est celui du contrat.
 | `plan.coach_note` | `note` (string), `value` (double) | Note de coach du bloc, de la semaine ou de la séance : un code de note (vocabulaire de `kalis_plan`) et sa valeur. |
 | `plan.progression_rule` | `rule` (string), `step` (double), `unit` (string) | Règle de progression d'un exercice d'une séance à l'autre (code de règle, pas, unité). |
 | `plan.pain_rule` | `zone` (string), `continueBelow` (int), `regressAt` (int), `stopAt` (int) | Conduite à tenir selon la gêne ressentie (échelle de 0 à 10) : continuer en dessous d'un seuil, alléger, arrêter. |
+| `adapt.run_capped` | `percent` (int) | Course du jour raccourcie : pas plus de `percent` % au-dessus de la plus longue course des 30 derniers jours. |
+| `adapt.easy_instead` | `cause` (string) | Séance de qualité (allure, fractionné, test de course) servie en endurance facile un jour sans. |
+| `adapt.endurance_shortened` | `cause` (string), `percent` (int) | Durée, distance ou nombre de répétitions d'une ligne d'endurance ramenés à `percent` % de l'écrit (bilan bas, reprise après une coupure). |
+| `adapt.wod_scaled` | `cause` (string), `percent` (int) | Pièce de conditionnement mise à l'échelle : `percent` % des répétitions ou de la durée écrites (jour sans, jours durs de suite). |
+| `adapt.cross_fatigue` | `cause` (string) | Fatigue croisée : effort visé abaissé sur le bas du corps après une course dure la veille. |
