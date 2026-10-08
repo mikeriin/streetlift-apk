@@ -651,12 +651,15 @@ String? coachReasonText(Reason r, Catalog catalog) {
         CoachNotes.wristSpare =>
           "Poignet sensible au profil : l'appui en extension sans prise "
               'neutre est réduit de moitié dès le départ (parallettes, '
-              'poignées ou poings par défaut). Règle de douleur à chaque '
-              "séance : ${_int(v)} à 3 sur 10 au plus pendant l'effort, "
-              'revenue à ton état habituel le lendemain matin, pas de '
-              "hausse d'une semaine à l'autre sinon. Les séries reviennent "
-              'par paliers de 10 % quand la gêne reste à 0 ou 1 deux '
-              'semaines de suite.',
+              'poignées ou poings par défaut) : ce sont les séries de ces '
+              'figures qui sont divisées par deux. Règle de douleur, la '
+              'même que celle du programme : hausse seulement si la gêne '
+              "reste à ${_int(v)} sur 10 au plus pendant l'effort et revient "
+              'à ton état habituel le lendemain matin ; à 3 ou 4, dose '
+              'inchangée ; à 5, variante plus facile et volume réduit ; '
+              'au-delà, arrêt et consultation. Les séries reviennent par '
+              'paliers de 10 % quand la gêne reste à 0 ou 1 deux semaines '
+              'de suite.',
         CoachNotes.eventZone =>
           "Zone de l'épreuve : séries à environ ${_int(v)} % de ton maximum, "
               'repos court, la réserve écrite sur la dernière (2 répétitions '
