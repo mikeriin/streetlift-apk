@@ -1,0 +1,22 @@
+name: kalis_adapt
+description: >-
+  Moteur dynamique de Kalis Track : suivi et adaptation du programme séance
+  après séance (capacité par exercice estimée par filtre de Kalman, forme et
+  fatigue, forme du jour, charges et répétitions du jour, conseil pendant la
+  séance, propositions de volume, d'échange et de restructuration). Dart pur,
+  sans Flutter, sans stockage, sans horloge.
+version: 0.2.3
+publish_to: none
+
+environment:
+  sdk: '>=3.10.0 <4.0.0'
+
+dependencies:
+  kalis_core:
+    path: ../kalis_core
+  kalis_plan:
+    path: ../kalis_plan
+
+dev_dependencies:
+  lints: ^4.0.0
+  test: ^1.25.0
