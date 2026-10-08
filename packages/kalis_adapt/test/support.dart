@@ -1140,8 +1140,7 @@ List<String> checkEndurance(
       final info = book.find(item.exerciseId);
       if (info != null &&
           enduranceKindOf(info) == EnduranceKind.run &&
-          item.kind != SetKind.warmup &&
-          item.kind != SetKind.test) {
+          item.kind != SetKind.warmup) {
         served += _runSeconds(item, speed);
       }
     }

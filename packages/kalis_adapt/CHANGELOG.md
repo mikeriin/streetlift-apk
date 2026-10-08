@@ -9,7 +9,10 @@ raison d'endurance).
 - **Course** : sortie du jour bornée à la plus longue course des 30 jours + 10 % (Frandsen et al. 2025) ; jour sans
   (bilan bas, douleur du bas du corps, course récente trop dure) : séance de qualité servie en course facile, ou
   retirée ; bilan très bas : durée à 70 % ; reprise après 7 jours sans séance à 70 %, après 14 jours à 50 %.
+- **Test de course** plus long que la borne : servi en course bornée, test reporté.
 - **Conditionnement** : pièce mise à l'échelle (75 %) un jour sans ou après deux jours durs de suite.
+- **Élastique (street)** : une séance entière dite au moins 2 répétitions plus facile que visé fait passer à l'élastique
+  plus fin à la séance suivante (sept jours au moins depuis le dernier changement).
 - **Hybrides** : fatigue croisée — course dure la veille, une répétition de réserve de plus sur le bas du corps ;
   lignes d'endurance comptées dans le modèle forme-fatigue.
 - **Jamais au-dessus de l'écrit** (durée, distance, répétitions, séries, effort, allure) : invariants E1 à E3,

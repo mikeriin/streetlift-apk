@@ -221,9 +221,7 @@ final class EnduranceTruth {
     BodyZone? injured;
     if (count >= 3 && longest > 0 && writtenS > 0) {
       final spike = doneS / longest;
-      // (Un test ou une course d'échéance n'est pas une sortie
-      // d'entraînement : la borne du moteur ne s'y applique pas.)
-      if (item.kind != SetKind.test && spike > worstSpike) {
+      if (spike > worstSpike) {
         worstSpike = spike;
       }
       var risk = 0.003;
