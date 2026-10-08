@@ -167,7 +167,14 @@ class _HealthCheckPageState extends State<HealthCheckPage> {
         ? const <String>[]
         : coachBlockPainNotes(block, store.content.catalog, stopped: stopped);
     if (stops.isEmpty && notes.isEmpty) return const [];
-    final lines = <String>[for (final s in stops) painStopText(s), ...notes];
+    // CI1d : la consigne de consulter suit le moteur (première séance de
+    // l'arrêt, puis une fois par semaine).
+    final notice = painStopNoticeZones(a.active);
+    final lines = <String>[
+      for (final s in stops)
+        painStopText(s, notice: notice.contains(s.zone)),
+      ...notes,
+    ];
     final stopTitle =
         stops.isNotEmpty || (block != null && coachBlockHasPainStop(block));
     return [

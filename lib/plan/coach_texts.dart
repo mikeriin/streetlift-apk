@@ -382,6 +382,9 @@ bool isPainReason(kc.Reason r) =>
     r.code == 'adapt.pain_reported' ||
     r.code == 'adapt.pain_persistent' ||
     (r.code == 'adapt.exercise_skipped' && r.params['cause'] == 'pain') ||
+    // CI1d (`kalis_adapt` 0.2.3) : dose du palier de reprise après une
+    // douleur, ou remplaçant d'une douleur du jour.
+    (r.code == 'adapt.load_held' && r.params['cause'] == 'pain_return') ||
     (r.code == kc.ReasonCodes.planCoachNote &&
         _painNotes.contains(r.params['note']));
 
@@ -394,11 +397,18 @@ const Set<String> _painNotes = <String>{
   kp.CoachNotes.painStep,
   kp.CoachNotes.painReturn,
   kp.CoachNotes.painReturnItem,
+  // CI1d (`kalis_plan` 0.2.3) : bloc de reprise après une douleur qui dure
+  // (ni test ni affûtage), poignet sensible déclaré (appuis en extension
+  // réduits de moitié).
+  kp.CoachNotes.painReprise,
+  kp.CoachNotes.wristSpare,
 };
 
 /// CI1b : notes du bloc sur une douleur qui dure (`pain_stop` : arrêt et
 /// consultation ; `pain_return` : reprise graduée), rédigées par
-/// `kalis_plan` 0.2.2 ; vide pour un bloc du chemin 0.1.
+/// `kalis_plan` 0.2.2 ; vide pour un bloc du chemin 0.1. CI1d : plus
+/// `pain_reprise` (`kalis_plan` 0.2.3 : bloc de reprise, sans test ni
+/// affûtage, échéance repoussée).
 /// [stopped] : zones (index de `kc.BodyZone`) dont l'arrêt est déjà dit
 /// par la séance ; leur note d'arrêt n'est pas répétée.
 List<String> coachBlockPainNotes(
@@ -411,7 +421,9 @@ List<String> coachBlockPainNotes(
   for (final r in [...block.pass1.reasons, ...block.pass2.reasons]) {
     if (r.code != kc.ReasonCodes.planCoachNote) continue;
     final note = r.params['note'];
-    if (note != kp.CoachNotes.painStop && note != kp.CoachNotes.painReturn) {
+    if (note != kp.CoachNotes.painStop &&
+        note != kp.CoachNotes.painReturn &&
+        note != kp.CoachNotes.painReprise) {
       continue;
     }
     final v = r.params['value'];
