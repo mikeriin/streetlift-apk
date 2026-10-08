@@ -338,9 +338,9 @@ extension SessionAdaptStore on AppStore {
     // affiché (« j<J>-<identifiant> »).
     final js = <int, int>{};
     for (final d in a.pass1.days) {
-      final m = RegExp(r'^j(\d)-').firstMatch(
-        d.slots.isEmpty ? '' : d.slots.first.slotId,
-      );
+      final m = RegExp(
+        r'^j(\d)-',
+      ).firstMatch(d.slots.isEmpty ? '' : d.slots.first.slotId);
       if (m != null) js[d.dayIndex] = int.parse(m.group(1)!);
     }
     for (final w in b.pass2.weeks) {
@@ -1066,11 +1066,7 @@ extension SessionAdaptStore on AppStore {
   /// prescription pour les exercices pas encore commencés ; ceux qui ont
   /// une série validée gardent leur prescription et leurs conseils. Null :
   /// rien à changer.
-  SessionAdapt? _adaptRefreshStarted(
-    int week,
-    DayPlan base,
-    SessionAdapt a,
-  ) {
+  SessionAdapt? _adaptRefreshStarted(int week, DayPlan base, SessionAdapt a) {
     if (a.source == null || a.date != _adaptToday.iso) return null;
     if (!adaptAvailable) return null;
     final place = adaptPlaceOf(week, base.j);
@@ -1341,10 +1337,11 @@ extension SessionAdaptStore on AppStore {
         out.add(e);
         continue;
       }
-      final swapped =
-          blockSlots[slot]?.exerciseId != null &&
-          blockSlots[slot]!.exerciseId != it.exerciseId &&
-          (e.catalogId ?? content.idFor(e.name)) != it.exerciseId;
+      // CI1c : remplacé aujourd'hui seulement quand l'exercice servi n'est
+      // pas celui du programme affiché (un échange accepté sur le bloc
+      // importé est déjà dans le programme affiché, sous son nom).
+      final shownId = e.catalogId ?? content.idFor(e.name);
+      final swapped = shownId != null && shownId != it.exerciseId;
       final id = swapped ? '${e.id}~${it.exerciseId}' : e.id;
       final g = adviceGoal(it, 0, a.advice[id] ?? const []);
       out.add(

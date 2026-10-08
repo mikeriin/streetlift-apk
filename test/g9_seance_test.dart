@@ -148,13 +148,16 @@ void main() {
               ],
           ],
       ], before);
-      // La séance prescrite est figée : relue telle quelle après relance.
+      // CI1c (C10) : une séance seulement consultée ne fige rien et ne
+      // laisse aucune entrée après relance ; rouverte, elle est prescrite
+      // à nouveau, à l'identique tant que rien n'a changé.
       await app.flush();
       final next = AppStore()..storeClock = () => clock;
       await next.init();
       others.add(next);
+      expect(next.logs.containsKey('S12-J1'), isFalse);
       expect(
-        jsonEncode(next.sessionAdapt(12, 1)!.toJson()),
+        jsonEncode(next.adaptOpen(12, next.program.week(12).day(1)!)!.toJson()),
         jsonEncode(a.toJson()),
       );
     });

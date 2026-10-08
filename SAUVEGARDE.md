@@ -14,3 +14,6 @@ Base : main 64e286b3 (dev6.9.1). Arbre de travail complet (sans .github).
 
 ## En cours / reste
 - Tests ci1c complets, run rapide ALL, cible émulateur, ci-3d, relecture, publication dev6.9.2.
+- Run rapide essai 2 (37784xxx) : tous les tests verts (771). Format appliqué.
+- Relecture indépendante (Opus) : 10 constats ; à corriger : brouillons saisis (drapeau edited), clé record,
+  couche par jour, validation du plan fusionné, règle d'échange, raison par emplacement, jours faits, carte non applicable.
