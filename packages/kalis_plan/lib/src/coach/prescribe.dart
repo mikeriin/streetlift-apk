@@ -4744,7 +4744,7 @@ final class Prescriber {
       case Method.runEasy || Method.runLong || Method.runQuality:
         return _run(s, day, ws, role);
       case Method.wod:
-        return _wod(s, ws, role);
+        return _wod(s, ws, week, role);
       default:
         return _accessory(s, ws, week, role);
     }
@@ -6999,7 +6999,7 @@ final class Prescriber {
   /// passage ; allure tenable du début à la fin) ; la charge se choisit à
   /// l'échelle (note `wod_pace`). Dose par passage : choix raisonné de
   /// pratique de terrain (R6-P27 : aucune source chiffrée).
-  _Draft? _wod(SlotSpec s, WeekSpec ws, _DayRole role) {
+  _Draft? _wod(SlotSpec s, WeekSpec ws, int week, _DayRole role) {
     if (role != _DayRole.normal) {
       return null;
     }
@@ -7014,6 +7014,12 @@ final class Prescriber {
       ..rir = 2
       ..fixed = true
       ..stress = DayStress.medium;
+    // Plancher de réserve du profil (reprise après un arrêt : 3 au moins,
+    // R5-P7 ; débutant, zone gênée).
+    final floor = _floorRir(e, week);
+    if (floor > 2) {
+      x.rir = floor;
+    }
     final repsBase = switch (format) {
       'emom' => level >= 2 ? 12 : (level == 1 ? 10 : 8),
       'chipper' => level >= 2 ? 30 : (level == 1 ? 25 : 15),

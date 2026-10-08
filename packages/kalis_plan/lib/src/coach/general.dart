@@ -242,6 +242,11 @@ CoachStyle? generalStyleOf(Athlete a) {
 /// mouvements de base (R6-P8 à P12) : épreuve de force athlétique, objectif
 /// de 1RM sur l'un d'eux, ou orientation « force » avec des 1RM connus.
 bool isPowerProfile(Athlete a) {
+  // (Pas de force athlétique pour un débutant : double progression en
+  // corps entier, jamais de série de tête lourde — R5-P3.)
+  if (a.level == 0) {
+    return false;
+  }
   const lifts = <String>{
     PowerIds.squatLow,
     PowerIds.squatHigh,
@@ -390,10 +395,10 @@ Set<MuscleGroup> _priorityGroups(Athlete a) {
   }
   final s = a.profile.specialization;
   if (s != null && s.kind == SpecializationKind.muscle) {
-    for (final g in MuscleGroup.values) {
-      if (g.code == s.muscle) {
-        out.add(g);
-      }
+    // Le profil porte un muscle du vocabulaire du catalogue (`muscles`).
+    final g = muscleGroupOf[s.muscle];
+    if (g != null) {
+      out.add(g);
     }
   }
   return out;

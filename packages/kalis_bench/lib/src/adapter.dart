@@ -392,10 +392,12 @@ AdaptedProfile adaptProfile(
     final id = w.exerciseId;
     if (id == null) {
       final muscle = w.muscleGroup;
-      if (muscle != null &&
+      // (Le contrat attend un muscle du vocabulaire du catalogue.)
+      final named = muscle == null ? null : _catalogMuscle[muscle];
+      if (named != null &&
           weakMuscle == null &&
           p.priorityExerciseIds.isEmpty) {
-        weakMuscle = muscle;
+        weakMuscle = named;
       } else {
         lose('weak_points_muscle');
       }
@@ -476,3 +478,20 @@ AdaptedProfile adaptProfile(
   }
   return AdaptedProfile(profile, List<String>.unmodifiable(lost));
 }
+
+/// Muscle du vocabulaire du catalogue pour un groupe du banc (point faible
+/// d'un groupe musculaire, CP2, partie 1).
+const Map<String, String> _catalogMuscle = <String, String>{
+  'chest': 'grand pectoral (faisceau sternal)',
+  'delt_anterior': 'deltoïde antérieur',
+  'delt_middle': 'deltoïde moyen',
+  'delt_posterior': 'deltoïde postérieur',
+  'lats': 'grand dorsal',
+  'upper_back': 'trapèze moyen',
+  'biceps': 'biceps brachial',
+  'triceps': 'triceps brachial (chef long)',
+  'glutes': 'grand fessier',
+  'quads': 'quadriceps (vastes)',
+  'hamstrings': 'ischio-jambiers',
+  'calves': 'gastrocnémiens',
+};
