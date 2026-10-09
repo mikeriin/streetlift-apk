@@ -18,6 +18,10 @@ Lot CY, partie 0 (sécurité) du pipeline « Calibrage des programmes ». Contra
 - **Propositions de volume** : une série de plus n'est proposée que si chaque groupe musculaire de l'exercice
   reste sous le plafond hebdomadaire du niveau (12, 20, 25, 30 séries).
 - **Programme importé** (C11) : `KalisAdapt(restructureImported: true)` permet les restructurations.
+- **Douleur qui dure au bas du corps** : la course est retirée tant que l'arrêt tient (cardio sans impact gardé).
+- Relecture documentée de CY : pendant un arrêt du poignet, la règle C10.8 (a) reste entière (parallettes et
+  poignées seulement) ; la règle « 2 pour 2 » ne prend pas un cran de plus de 10 % ; à schéma changé, aucune part
+  en plus pour une zone à antécédent.
 
 ## 0.3.0
 

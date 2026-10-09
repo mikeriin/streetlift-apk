@@ -9,7 +9,14 @@ Session Opus 5.5 lancée le 09/10/2026 vers 06:00 UTC (pas de ligne « Lot : » 
   - kalis_adapt 0.3.1 : première gêne du poignet → appui neutre (pompe mains sur barre basse comptée comme neutre, aussi pendant l'arrêt) ; couloir plafonné à l'écrit à ≥ 85 % ; borne de charge à schéma changé (2,5 %/rép.) ; jour bas exclu des repères de jour bas ; 3 paramètres ; tests (coach_rules_test).
   - kalis_plan 0.3.1 : note `clearance_first` (questionnaire prudent ou gêne déclarée ≥ 5), note `shoulder_history` (développé au-dessus de la tête, épaule à antécédent), pas de test maximal sur articulation douloureuse (trend ≥ 3, déclarée ≥ 4, arrêt ; objectif daté), tirage retiré après un test de tirage le même jour, premier muscle-up testé sur 1 répétition, pas de course le lendemain d'une course d'épreuve, texte de la règle de durée ; tests (coach_test, groupe « CY partie 0 »).
 
+## Suite (09/10, 07:00-09:00 UTC)
+- Contrôles dev : 37894110383 (partie 0 compile, tests verts sauf docs générés → recopiés), 37897459037 (banc 0.3.0 : changement de discipline cassait le mode street → corrigé), 37900445699 (vert sauf formatage ; saisons des 27 profils, 10 scénarios ; 1 violation `plafond_volume` autres_09 venue d'une proposition « volume ajusté » de kalis_adapt → corrigé : `_upFits`).
+- Dérive du panel vérifiée (notes/derive.txt). Grilles : empreintes OK.
+- Panel p1 (passe complète, exports du run 37900445699, saisons croisées 27 profils) : street 19/68 à 9, min 5, moy 7,85 ; autres 2/40, min 5,5, moy 7,41 (notes/p1_toutes.json, corrections notes/p1_nec.md lues en entier).
+- Boucle 1 (dans p1) : variantes faciles hors plafond de répétitions, 2 séries assistées/jour débutant, archer/typewriter au plateau ≥ 12, discipline/mode street.
+- Boucle 2 (contrôle 4703c44c) : double progression 2 pour 2 (adapt), propositions de volume sous plafond, sortie longue après course, note de zone, `_fillTime` (créneau à 80 %).
+- INTEGRATION_CI.md écrits (kalis_plan, kalis_adapt) par sous-agent, à relire.
+- Clé en /tmp/cpkey (600) ; références déchiffrées dans /tmp/cp-references ; couples de référence : /tmp/cpa/analyse_CP1/analyse_CP1/couples_references.json.
+
 ## Reste
-- Contrôle dev, corrections, recopie des docs générés (PROFILS_TYPES etc.) ; vérif. des exports (street_01/03/07/08/10/12, autres_05/06/08/10) ; publication intermédiaire 0.3.1 (contrôle full, moteurs, étiquettes) ; DECISIONS CY.1.
-- Croisement final : saisons toutes disciplines (kalis_bench 0.3.0), panel, boucles ≤ 5, relecture documentée, manche finale, INTEGRATION_CI, livraison.
-- Non traités en partie 0 (conduite, pas de sécurité) : estimation du muscle-up le jour J (street_07), course-marche (autres_05).
+- Vérifier le contrôle de la boucle 2, panel p2 (couples sous 9 et exports changés), relecture documentée (3 sous-agents web), Jaccard, contrôle FULL, publication (0.3.1 / bench 0.3.0), manche « toutes disciplines (CY) » de la page, LIVRAISON_CY, DECISIONS CY, ETAT « à valider », page de suivi, notification.
