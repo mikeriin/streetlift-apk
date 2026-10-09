@@ -76,6 +76,34 @@ String koachKg(double kg) {
   return t.replaceAll('.', ',');
 }
 
+/// CI1f : mini-série d'une série découpée (cluster, rest-pause, myo-reps),
+/// saisie une à une pendant la séance : répétitions (ou secondes pour un
+/// exercice en secondes) et repos pris avant. La série garde le total
+/// (`SetEntry.reps`) ; le journal du moteur la lit comme **une** série
+/// avec ses `parts` (contrat 0.4.0 § 12).
+class SetPartEntry {
+  int value;
+  int? restBefore;
+  SetPartEntry(this.value, {this.restBefore});
+
+  Map<String, dynamic> toJson() => {
+    'reps': value,
+    if (restBefore != null) 'restBefore': restBefore,
+  };
+
+  /// Null : partie illisible.
+  static SetPartEntry? fromJson(Object? j) {
+    if (j is! Map) return null;
+    final v = j['reps'];
+    if (v is! int || v < 0 || v > 1000) return null;
+    final r = j['restBefore'];
+    return SetPartEntry(
+      v,
+      restBefore: r is int && r >= 0 && r <= 3600 ? r : null,
+    );
+  }
+}
+
 class SetEntry {
   String kg;
   String reps;
@@ -101,6 +129,14 @@ class SetEntry {
   /// série pas encore validée : brouillon gardé quand la séance est
   /// recalculée ou fermée.
   bool edited;
+
+  /// CI1f : mini-séries saisies une à une (null : série d'une traite).
+  List<SetPartEntry>? parts;
+
+  /// CI1f : valeur saisie en minutes (durée) ; marquée à la validation,
+  /// pour que le journal la convertisse en secondes (une durée servie
+  /// avant 6.11.0 se notait en secondes).
+  bool minutes;
   SetEntry({
     this.kg = '',
     this.reps = '',
@@ -113,7 +149,16 @@ class SetEntry {
     this.flames,
     this.flamesUnknown = false,
     this.edited = false,
+    this.parts,
+    this.minutes = false,
   });
+
+  /// CI1f : total des mini-séries (null : aucune).
+  int? get partsTotal {
+    final p = parts;
+    if (p == null || p.isEmpty) return null;
+    return p.fold<int>(0, (a, x) => a + x.value);
+  }
 
   Map<String, dynamic> toJson() => {
     'kg': kg,
@@ -127,6 +172,9 @@ class SetEntry {
     if (flames != null) 'flames': flames,
     if (flamesUnknown) 'flamesUnknown': true,
     if (edited) 'edited': true,
+    if (parts != null && parts!.isNotEmpty)
+      'parts': [for (final x in parts!) x.toJson()],
+    if (minutes) 'unit': 'min',
   };
   SetEntry.fromJson(Map<String, dynamic> j)
     : kg = j['kg'] as String? ?? '',
@@ -139,7 +187,20 @@ class SetEntry {
       excluded = j['excluded'] as bool? ?? false,
       flames = j['flames'] is int ? j['flames'] as int : null,
       flamesUnknown = j['flamesUnknown'] == true,
-      edited = j['edited'] == true;
+      edited = j['edited'] == true,
+      parts = _partsFromJson(j['parts']),
+      minutes = j['unit'] == 'min';
+
+  static List<SetPartEntry>? _partsFromJson(Object? j) {
+    if (j is! List || j.isEmpty || j.length > 120) return null;
+    final out = <SetPartEntry>[];
+    for (final x in j) {
+      final p = SetPartEntry.fromJson(x);
+      if (p == null) return null;
+      out.add(p);
+    }
+    return out;
+  }
 }
 
 class ExerciseLog {
@@ -203,6 +264,11 @@ class SessionLog {
   /// (lib/adapt/session_adapt.dart, version 1). Facultatif ; gardé tel quel
   /// s'il est illisible.
   Map<String, dynamic>? adapt;
+
+  /// CI1f : résultat de chaque groupe d'exercices enchaînés (EMOM, circuit,
+  /// AMRAP…), par identifiant de groupe : `rounds` (tours complets),
+  /// `extraReps` (répétitions du tour entamé), `elapsed` (s), `completed`.
+  Map<String, Map<String, dynamic>> groups;
   SessionLog({
     this.done = false,
     this.finishedAt,
@@ -210,8 +276,10 @@ class SessionLog {
     Map<String, ExerciseLog>? ex,
     Map<String, String>? exerciseNames,
     this.adapt,
+    Map<String, Map<String, dynamic>>? groups,
   }) : ex = ex ?? {},
-       exerciseNames = exerciseNames ?? {};
+       exerciseNames = exerciseNames ?? {},
+       groups = groups ?? {};
 
   Map<String, dynamic> toJson() => {
     'done': done,
@@ -220,6 +288,7 @@ class SessionLog {
     'exerciseNames': exerciseNames,
     'ex': ex.map((k, v) => MapEntry(k, v.toJson())),
     if (adapt != null) 'adapt': adapt,
+    if (groups.isNotEmpty) 'groups': groups,
   };
   SessionLog.fromJson(Map<String, dynamic> j)
     : done = j['done'] as bool? ?? false,
@@ -233,7 +302,13 @@ class SessionLog {
       ),
       adapt = j['adapt'] is Map
           ? (j['adapt'] as Map).cast<String, dynamic>()
-          : null;
+          : null,
+      groups = {
+        if (j['groups'] is Map)
+          for (final e in (j['groups'] as Map).entries)
+            if (e.key is String && e.value is Map)
+              e.key as String: (e.value as Map).cast<String, dynamic>(),
+      };
 }
 
 // ===================== RÉGLAGES =====================
@@ -2574,6 +2649,18 @@ class AppStore extends ChangeNotifier {
       if (h != null) {
         return LogSpec('hold', seconds: int.parse(h.group(2) ?? h.group(1)!));
       }
+      // CI1f : distance (course, rameur), en mètres.
+      if (RegExp(r'^\d+\s*×\s*\d+\s*m$').hasMatch(t)) {
+        return const LogSpec('distance');
+      }
+      // CI1f : durée en minutes (mobilité, marche, vélo léger).
+      final d = RegExp(r'^\d+\s*×\s*(\d+)(?:-(\d+))?\s*min$').firstMatch(t);
+      if (d != null) {
+        return LogSpec(
+          'duration',
+          seconds: int.parse(d.group(2) ?? d.group(1)!) * 60,
+        );
+      }
       return const LogSpec('reps');
     }
     final low = setsLabel(e).toLowerCase().trim();
@@ -2748,9 +2835,36 @@ class AppStore extends ChangeNotifier {
   }
 
   /// Regroupe les exercices enchaînés (ex. dips → pompes) sur une même page.
-  List<List<Exercise>> groups(DayPlan d) {
+  /// Pages de la séance : un exercice, une paire « enchaîné », ou (CI1f,
+  /// [week] donnée) tous les exercices consécutifs d'un même groupe
+  /// (`GroupSpec`).
+  List<List<Exercise>> groups(DayPlan d, {int? week}) {
     final out = <List<Exercise>>[];
     var i = 0;
+    if (week != null) {
+      final ids = [
+        for (final e in d.exercises)
+          SessionAdaptStore(this).exerciseGroupOf(week, d.j, e)?.groupId,
+      ];
+      if (ids.any((x) => x != null)) {
+        while (i < d.exercises.length) {
+          final id = ids[i];
+          var k = i + 1;
+          if (id != null) {
+            while (k < d.exercises.length && ids[k] == id) {
+              k++;
+            }
+          } else if (k < d.exercises.length &&
+              ids[k] == null &&
+              d.exercises[k].name.toLowerCase().contains('enchaîn')) {
+            k++;
+          }
+          out.add(d.exercises.sublist(i, k));
+          i = k;
+        }
+        return out;
+      }
+    }
     while (i < d.exercises.length) {
       final e = d.exercises[i];
       if (i + 1 < d.exercises.length &&

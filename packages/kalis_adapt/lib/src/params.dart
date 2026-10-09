@@ -201,6 +201,27 @@ final class AdaptParams {
     this.toleranceMinWeeks = 3,
     this.trainingSetMaxReps = 6,
     this.trainingSetMaxRir = 3,
+    this.enduranceSpike = 0.10,
+    this.enduranceSpikeDays = 30,
+    this.enduranceSpikeMinRuns = 3,
+    this.enduranceResumeShortDays = 7,
+    this.enduranceResumeShort = 0.7,
+    this.enduranceResumeLongDays = 14,
+    this.enduranceResumeLong = 0.5,
+    this.enduranceBadDayShare = 0.7,
+    this.enduranceHardMargin = 2,
+    this.enduranceHardDays = 3,
+    this.enduranceHardFlames = 8,
+    this.enduranceQualityRir = 3,
+    this.enduranceEasyRir = 5,
+    this.enduranceRunSpeed = 2.6,
+    this.enduranceLegPain = 3,
+    this.wodScaleShare = 0.75,
+    this.wodHardStreak = 2,
+    this.enduranceFatigueSeconds = 600,
+    this.enduranceFatigueMax = 6,
+    this.enduranceConduct = true,
+    this.coachAssistWideRir = 2,
   });
 
   /// Réglage par défaut.
@@ -937,4 +958,94 @@ final class AdaptParams {
 
   /// Réserve au plus d'une série d'entraînement retenue comme repère.
   final double trainingSetMaxRir;
+
+  // ------------------------------------- endurance, conditionnement (CA2)
+
+  /// Hausse la plus grande d'une course du jour sur la plus longue course
+  /// des [enduranceSpikeDays] derniers jours (Frandsen et al. 2025, BJSM,
+  /// 5 205 coureurs : au-delà de +10 %, rapport de risque 1,64 de +10 à
+  /// +30 %, 2,28 au-delà de +100 %).
+  final double enduranceSpike;
+
+  /// Fenêtre de la plus longue course de référence, en jours (Frandsen et
+  /// al. 2025).
+  final int enduranceSpikeDays;
+
+  /// Courses au moins dans la fenêtre pour que la borne s'applique (sinon
+  /// la durée écrite par le programme fait foi). Choix raisonné.
+  final int enduranceSpikeMinRuns;
+
+  /// Coupure courte (jours sans séance) : reprise à [enduranceResumeShort]
+  /// de l'écrit. Choix raisonné (avis d'expert, reprise progressive).
+  final int enduranceResumeShortDays;
+
+  /// Part de l'écrit servie après une coupure courte.
+  final double enduranceResumeShort;
+
+  /// Coupure longue : reprise à [enduranceResumeLong] de l'écrit (choix
+  /// raisonné, moitié du volume comme la reprise graduée de `kalis_plan`).
+  final int enduranceResumeLongDays;
+
+  /// Part de l'écrit servie après une coupure longue.
+  final double enduranceResumeLong;
+
+  /// Part de la durée servie un jour de bilan très bas (l'intensité baisse
+  /// d'abord ; Kiviniemi et al. 2007, Vesterinen et al. 2016). Choix
+  /// raisonné.
+  final double enduranceBadDayShare;
+
+  /// Écart (en flammes) au-dessus de l'effort visé qui fait d'une course
+  /// une course « trop dure ».
+  final int enduranceHardMargin;
+
+  /// Jours pendant lesquels une course trop dure rend la séance de qualité
+  /// suivante facile.
+  final int enduranceHardDays;
+
+  /// Effort noté (flammes) à partir duquel une séance d'endurance ou de
+  /// conditionnement compte comme dure.
+  final int enduranceHardFlames;
+
+  /// Réserve au plus (RIR) d'une séance de qualité.
+  final double enduranceQualityRir;
+
+  /// Réserve visée (RIR) d'une course facile.
+  final double enduranceEasyRir;
+
+  /// Vitesse de course par défaut (m/s) quand le journal n'en dit rien.
+  final double enduranceRunSpeed;
+
+  /// Douleur du bas du corps (genou, cheville, hanche) à partir de laquelle
+  /// la séance de qualité devient facile (Silbernagel et al. 2007 :
+  /// surveillance de la douleur ; le retrait reste celui des règles de
+  /// douleur).
+  final int enduranceLegPain;
+
+  /// Part des répétitions ou de la durée d'une pièce de conditionnement
+  /// mise à l'échelle. Choix raisonné.
+  final double wodScaleShare;
+
+  /// Jours durs de conditionnement de suite après lesquels la pièce du
+  /// jour est mise à l'échelle (Tibana et al. 2016 : deux jours intenses
+  /// de suite, puissance gardée mais marqueurs inflammatoires en hausse ;
+  /// la mise à l'échelle au troisième est notre déduction).
+  final int wodHardStreak;
+
+  /// Secondes d'effort d'endurance comptées comme une série de travail
+  /// dans le modèle forme-fatigue (choix raisonné).
+  final int enduranceFatigueSeconds;
+
+  /// Séries équivalentes au plus pour une ligne d'endurance.
+  final double enduranceFatigueMax;
+
+  /// Conduite de l'endurance de 0.3.0 active (faux : lignes d'endurance
+  /// servies telles qu'écrites et absentes du modèle de fatigue, comme en
+  /// 0.2 — comparaison du banc).
+  final bool enduranceConduct;
+
+  /// Réserve en plus de la cible (répétitions), sur toutes les séries d'une
+  /// séance, qui fait passer à l'élastique plus fin dès la séance suivante
+  /// (CA2, partie 1 ; panel de la passe 6 ; ACSM 2009, règle « 2 pour 2 » :
+  /// deux répétitions au-delà de l'objectif → charge plus difficile).
+  final double coachAssistWideRir;
 }

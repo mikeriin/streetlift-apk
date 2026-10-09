@@ -321,8 +321,8 @@ String? techniqueHint(kc.ExercisePrescription p) {
     kc.SetTechniqueKind.cluster ||
     kc.SetTechniqueKind.restPause ||
     kc.SetTechniqueKind.myoReps =>
-      'Note le total de la série ; le chrono des mini-repos est sous le '
-          'titre.',
+      'Note chaque mini-série sous la série : le total se calcule et le '
+          'mini-repos se lance tout seul.',
     kc.SetTechniqueKind.skillPractice =>
       'Essais frais et propres ; arrête quand la qualité baisse.',
     _ => null,

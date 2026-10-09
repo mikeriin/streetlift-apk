@@ -192,18 +192,17 @@ void main() {
       expect(_view(app)?.event?.id, 'ci1-competition');
     });
 
-    test(
-      'autre discipline (musculation) : chemin 0.1, pas de saison',
-      () async {
-        _save(app, _street('musculation'));
-        expect(PlanStore(app).planCoachEligible, isFalse);
-        _create(app);
-        final plan = app.planProgram!;
-        expect(isCoachBlock(plan.blocks.single.block), isFalse);
-        expect(plan.season, isNull);
-        expect(_view(app), isNull);
-      },
-    );
+    test('autre discipline (musculation) : CI1f (kalis_plan 0.3.0), chemin '
+        'calibré', () async {
+      _save(app, _street('musculation'));
+      expect(PlanStore(app).planCoachEligible, isTrue);
+      _create(app);
+      final plan = app.planProgram!;
+      expect(isCoachBlock(plan.blocks.single.block), isTrue);
+      for (final b in plan.blocks) {
+        expect(b.block.validate(), isEmpty);
+      }
+    });
 
     test('séance : série de tête puis séries allégées guidées, lignes '
         'nommées, journal avec les rôles', () async {

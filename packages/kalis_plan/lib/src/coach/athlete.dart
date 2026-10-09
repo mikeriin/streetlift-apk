@@ -264,8 +264,11 @@ bool coachEligible(AthleteProfile profile) {
     return false;
   }
   final mix = profile.disciplines;
+  // Autres disciplines (CP2, partie 1) : musculation, force, course,
+  // CrossFit, mobilité et forme générale passent par le coach, avec
+  // n'importe quelles disciplines secondaires.
   if (!coachStreetDisciplines.contains(mix.primary)) {
-    return false;
+    return profile.availability.isNotEmpty;
   }
   for (final s in mix.secondaries) {
     if (!coachStreetDisciplines.contains(s.discipline) &&
@@ -1130,6 +1133,30 @@ final class Athlete {
   /// Temps actuel sur 10 km, en secondes (meilleur chrono déclaré, ramené
   /// à 10 km), ou `null`.
   final double? runTenKSeconds;
+
+  /// Plus longue course déclarée ou testée, en minutes (chrono le plus
+  /// long des tests chronométrés), ou `null` (CP2, partie 1 : point de
+  /// départ de la sortie longue, R6-P16).
+  double? get knownRunMinutes {
+    var best = 0.0;
+    for (final b in profile.benchmarks ?? const <Benchmark>[]) {
+      final t = b.seconds;
+      final id = b.exerciseId;
+      // (Une course seulement : ni rameur ni vélo — relecture du code de
+      // 0.3.0.)
+      final running =
+          id.startsWith('ca-footing') ||
+          id.startsWith('ca-sortie') ||
+          id.startsWith('ca-course');
+      if (b.kind == BenchmarkKind.timeTrial &&
+          running &&
+          t != null &&
+          t / 60 > best) {
+        best = t / 60;
+      }
+    }
+    return best > 0 ? best : null;
+  }
 
   /// Objectif de course chronométré (distance en mètres, temps visé en
   /// secondes), ou `null`.

@@ -336,14 +336,14 @@ packages:
       path: "packages/kalis_adapt"
       relative: true
     source: path
-    version: "0.2.3"
+    version: "0.3.0"
   kalis_core:
     dependency: "direct main"
     description:
       path: "packages/kalis_core"
       relative: true
     source: path
-    version: "0.4.2"
+    version: "0.4.3"
   kalis_koach:
     dependency: "direct main"
     description:
@@ -357,7 +357,7 @@ packages:
       path: "packages/kalis_plan"
       relative: true
     source: path
-    version: "0.2.3"
+    version: "0.3.0"
   leak_tracker:
     dependency: transitive
     description:

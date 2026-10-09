@@ -420,6 +420,15 @@ String? coachReasonText(Reason r, Catalog catalog) {
           'Arrêt immédiat et avis médical : douleur dans la poitrine, '
               'essoufflement anormal, malaise ou vertige. Souffle pendant '
               "l'effort, sans bloquer la respiration sur les séries longues.",
+        CoachNotes.shortHealth =>
+          'Jour chargé : version courte de ${_int(v)} min — 3 min de '
+              "marche, l'exercice de jambes et l'équilibre, puis 3 min "
+              "d'étirements. Une séance courte vaut mieux qu'une séance "
+              'sautée.',
+        CoachNotes.shortRun =>
+          'Jour chargé : version courte de ${_int(v)} min — 5 min de '
+              'marche rapide puis footing facile, sans fractions. Une '
+              "séance courte vaut mieux qu'une séance sautée.",
         CoachNotes.shortVersion =>
           v is num && v < 20
               ? 'Jour chargé : version courte de ${_int(v)} min — 4 min '
@@ -506,15 +515,19 @@ String? coachReasonText(Reason r, Catalog catalog) {
           _ => null,
         },
         CoachNotes.intervalPace =>
-          'Allure des fractions : 400 m en '
+          'Allure des fractions : '
               '${v is num ? '${v.round() ~/ 60} min ${(v.round() % 60).toString().padLeft(2, '0')}' : ''} '
-              '(ton allure estimée sur 3 km), récupération en trottinant ; '
+              'au kilomètre (ton allure estimée sur 3 km), récupération en '
+              'trottinant ; '
               "si l'allure ne tient plus, arrête la série. Chaque test "
               'chronométré recale cette allure.',
         CoachNotes.goalPace =>
           "Allure de l'objectif : "
               '${v is num ? '${v.round() ~/ 60} min ${(v.round() % 60).toString().padLeft(2, '0')}' : ''} '
-              'au kilomètre, régulière du début à la fin.',
+              'au kilomètre, régulière du début à la fin ; elle se recale '
+              'sur ton dernier test (pour un 10 km, allure du 5 km + 20 à '
+              '30 s au kilomètre). Le jour J, pars 10 s au kilomètre plus '
+              'lent les deux premiers kilomètres.',
         CoachNotes.timeTrial =>
           'Test chronométré sur ${v is num ? _plain(v / 1000) : ''} km, '
               "après 10 à 15 min d'échauffement, à allure régulière. Il "
@@ -556,6 +569,37 @@ String? coachReasonText(Reason r, Catalog catalog) {
               'séries de volume) devient une séance de surcharge en séries '
               'courtes — variante plus dure ou lest léger, 2 répétitions en '
               "réserve. Tu n'ajoutes jamais de séries toi-même.",
+        CoachNotes.kneeShallow =>
+          'Genou gêné (${_int(v)}/10 au profil) : chaise haute, genoux '
+              'pliés à 45-60° seulement (cuisses bien au-dessus de '
+              "l'horizontale), gêne à 3/10 au plus pendant la tenue et le "
+              'lendemain ; descends plus bas seulement après deux semaines '
+              "à 2/10 au plus. À 5/10 ou plus au départ : prends l'avis d'un "
+              'médecin ou d\'un kinésithérapeute avant la première semaine.',
+        CoachNotes.balanceProgress =>
+          'Équilibre, près d\'un mur ou d\'un dossier de chaise : après la '
+              'marche sur les talons, appui sur une jambe 2 à 3 × 20 à 30 s '
+              'par jambe ; quand 30 s tiennent sans toucher l\'appui deux '
+              'séances de suite, passe à la marche talon-pointe, puis à '
+              "l'appui sur une jambe en tournant la tête.",
+        CoachNotes.holdSupport =>
+          "Une main sur un dossier de chaise ou un plan de travail, "
+              'amplitude courte au début ; si l\'équilibre manque, un simple '
+              'transfert du poids d\'une jambe à l\'autre.',
+        CoachNotes.chairSquat =>
+          "Squat en assis-debout : une chaise stable derrière toi, assieds-"
+              'toi doucement puis relève-toi, mains en appui sur les cuisses '
+              "au début, bras croisés quand c'est facile ; une chaise plus "
+              'basse ensuite.',
+        CoachNotes.wodPace =>
+          'Conditionnement : allure tenable du premier au dernier passage '
+              '(effort ${_int(v)} sur 10), jamais un sprint au départ ; '
+              'chaque passage garde 2 à 3 répétitions en réserve. Mets à '
+              "l'échelle pour garder le format : charge plus légère, "
+              'amplitude réduite ou variante plus simple. Charges de repère : '
+              'wall ball 9 kg (6 kg), swing 24 kg (16 kg), haltères 22,5 kg '
+              '(15 kg) ; une charge qui casse ta série dès le premier tour '
+              'est trop lourde.',
         CoachNotes.safetyPins =>
           'Charge lourde (${_int(v)} % du 1RM et plus) : sécurités de la '
               'cage réglées juste sous le point le plus bas, ou un pareur. '
@@ -835,6 +879,23 @@ String? coachReasonText(Reason r, Catalog catalog) {
         CoachNotes.easyPace =>
           'Allure de conversation (tu peux parler en phrases), '
               '${_int(v)} min.',
+        CoachNotes.warmupHealth =>
+          "Chaque séance commence par ${_int(v)} min d'échauffement "
+              '(comptées dans la durée estimée) : marche sur place ou '
+              'marche rapide, puis mobilité debout des épaules (bâton), des '
+              'hanches et des chevilles, près d\'un appui.',
+        CoachNotes.warmupGym =>
+          "Chaque séance commence par ${_int(v)} min d'échauffement "
+              '(comptées dans la durée estimée) : 3 à 5 min de cardio léger '
+              '(rameur, vélo), mobilité des épaules et des hanches, puis '
+              'les séries de montée en charge du premier exercice (barre '
+              'vide, puis deux ou trois paliers).',
+        CoachNotes.warmupRun =>
+          "Chaque séance commence par ${_int(v)} min d'échauffement "
+              '(comptées dans la durée estimée) : 5 min de trot progressif, '
+              'mobilité des chevilles et des hanches, gammes (montées de '
+              'genoux, talons-fesses) ; avant les fractions, deux ou trois '
+              'accélérations progressives.',
         CoachNotes.generalWarmup =>
           "Chaque séance commence par ${_int(v)} min d'échauffement au "
               'plus (comptées dans la durée estimée) : épaules, poignets '

@@ -37,11 +37,45 @@ String adaptAmount(int? low, int? high, {required bool seconds}) {
   return seconds ? '$r s' : '$r reps';
 }
 
+/// CI1f : durée en minutes entières, d'au moins 2 min (mobilité, marche,
+/// vélo léger) : la séance la note en minutes (« 1 × 10 min »).
+bool prescriptionInMinutes(kc.ExercisePrescription p) {
+  final lo = p.secondsLow, hi = p.secondsHigh;
+  if (lo == null && hi == null) return false;
+  if (p.repsLow != null || p.repsHigh != null) return false;
+  if (p.kind == kc.SetKind.test) return false;
+  for (final t in p.setTargets ?? const <kc.SetTarget>[]) {
+    for (final v in [t.secondsLow, t.secondsHigh]) {
+      if (v != null && v % 60 != 0) return false;
+    }
+  }
+  return (lo ?? hi!) >= 120 && (lo ?? 0) % 60 == 0 && (hi ?? 0) % 60 == 0;
+}
+
+/// CI1f : distance sans répétitions ni durée (course, rameur) : la séance
+/// la note en mètres (« 4 × 400 m »).
+bool prescriptionInMeters(kc.ExercisePrescription p) =>
+    p.kind != kc.SetKind.test &&
+    p.distanceMeters != null &&
+    p.repsLow == null &&
+    p.repsHigh == null &&
+    p.secondsLow == null &&
+    p.secondsHigh == null;
+
 /// Libellé de la séance prescrite pour un exercice (« 3 × 8-10 »,
-/// « 3 × 30 s », « 1 × max ») ; l'application le relit (LogSpec).
+/// « 3 × 30 s », « 1 × max », « 1 × 10 min ») ; l'application le relit
+/// (LogSpec).
 String adaptSetsText(kc.ExercisePrescription p) {
   final seconds = p.secondsLow != null || p.secondsHigh != null;
   final n = p.sets;
+  if (prescriptionInMeters(p)) {
+    return '$n × ${p.distanceMeters!.round()} m';
+  }
+  if (prescriptionInMinutes(p)) {
+    final lo = (p.secondsLow ?? p.secondsHigh!) ~/ 60;
+    final hi = (p.secondsHigh ?? p.secondsLow!) ~/ 60;
+    return lo == hi ? '$n × $lo min' : '$n × $lo-$hi min';
+  }
   if (p.kind == kc.SetKind.test &&
       ((p.repsHigh ?? 0) >= 100 || (p.secondsHigh ?? 0) >= 300)) {
     return seconds ? '$n × max s' : '$n × max';

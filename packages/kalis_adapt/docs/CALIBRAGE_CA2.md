@@ -61,7 +61,7 @@ traitement :
 - `street_10` : planche retirée plutôt que passée aux parallettes → règle du § 11.16 (appui neutre) ; le
   reste (choix des figures, volumes) relève du programme écrit.
 
-Les notes complètes sont dans la page de relecture (manche 5, notes « relecture-documentee »).
+Notes complètes : `ca2-outils` de la sauvegarde du lot (la page de relecture reçoit, en manche 5, la relecture documentée de la partie 1, sur le moteur livré).
 
 ### Boucle 3 — ce qui a changé
 
@@ -170,4 +170,100 @@ douleur au coude ; `seance_trop_longue` pour `street_17` séances manquées) —
 (par exemple `street_06` maladie, 0,10 par saison sur 100 graines), au même niveau avant et après la partie 0
 (0,0147 → 0,0135 par saison en moyenne) : rampe du bloc suivant après un bloc écourté, transmise au lot CP2.
 Boucles arrêtées après la boucle 5 (C9.2 : cinq boucles au plus ; la suite dépend surtout du programme écrit, pas de gain attendu d'une
-boucle de conduite). Aucune hausse sur zone douloureuse au banc.
+boucle de conduite). Hausses sur zone douloureuse au banc : 0,02 à 0,05 par saison, seulement `street_10` sous le modèle B (douleur de surcharge des tenues signalée pendant la séance), comme avant la partie 0 ; poussées d'une zone réactive 26,7 → 24,9.
+
+## Partie 1 — autres disciplines (0.3.0)
+
+Programmes d'entrée : ceux de `kalis_plan` 0.2.2 (chemin 0.1 pour les profils non street ; `kalis_plan` 0.3.0
+n'était pas publié pendant le lot). Règles, paramètres et sources : `CONTRAT.md`, § 12 ; sources vérifiées par
+un sous-agent Opus le 08/10 (Frandsen 2025, Buist 2008, Nielsen 2014, Kiviniemi 2007, Vesterinen 2016,
+Javaloyes 2019, Bosquet 2007, Silbernagel 2007, Feito 2018, Klimek 2018, Tibana 2016, Wilson 2012, Murlasits
+2018, Robineau 2016, Schumann 2022, Garber 2011, Sherrington 2020, Riegel 1981, Vickers et Vertosick 2016,
+Soligard 2016 ; formulations corrigées pour Nielsen, Feito, Tibana, Robineau et Riegel).
+
+### Boucle 1 — ce qui a changé
+
+Course (sortie bornée à la plus longue des 30 jours + 10 %, séance de qualité servie facile un jour sans, durée
+réduite un jour très bas, reprise après coupure), conditionnement (mise à l'échelle), fatigue croisée et charge
+d'endurance dans le modèle forme-fatigue, invariants E1 à E3 (journaux aléatoires et simulations), vérité
+d'endurance du simulateur (deux modèles), partie « Endurance et conditionnement » des trajectoires, règle
+d'élastique « marge large » (passe 6). Relecture de bureau du code (Opus) : 21 constats, corrigés avant le
+premier contrôle (dont : `copyWith` qui gardait les champs à effacer, douleur de jambe à 3/10, séances comptées
+pour la borne, pas de double réduction). Contrôle dev 3c0539bb (run 37811408880) : tout vert.
+
+### Passe q1 du panel (10 profils non street × 4 écoles)
+
+40 couples, aucun à 9, minimum 3, moyenne 5,41 (mesure de départ du lot CR, couple 0.1 : moyenne des notes
+d'ensemble ≈ 5,1). Les corrections nécessaires portent presque toutes sur le **programme écrit** par le chemin 0.1
+de `kalis_plan` 0.2.2 (lot CP2) : course d'échéance non placée et sans affûtage, tests sur la distance de la course
+(semi-marathon couru à fond en semaines 5 et 10), aucune allure, aucune séance spécifique, volume mal réparti,
+tirage non budgété en CrossFit, double progression absente en musculation, objectifs non commentés. Côté conduite :
+les tests de course plus longs que la borne de 10 % (trois écoles) → boucle 2.
+
+### Boucle 2 — ce qui a changé
+
+Test de course plus long que la borne : servi en course bornée à effort modéré, test reporté. Élastique : la série
+repère (ouverte) ne remet plus la série de séances à zéro, et une série repère qui dépasse l'écrit de 2 répétitions
+compte comme une marge large (relecture documentée de la partie 1, `street_03` : élastique jamais changé en 16
+semaines). Campagne d'endurance (`test/endurance_campaign_test.dart`) : 0.3.0, comportement de 0.2 et règle des
+10 % par semaine, à programme égal.
+
+### Mesures de la boucle 2 (contrôle complet run 37816722395, puis tolérance de mesure)
+
+Campagne d'endurance (`test/endurance_campaign_test.dart`, 16 semaines × 3 modèles de vérité × 20 graines, une
+graine sur deux irrégulière, une sur trois avec une coupure de 12 jours ; programmes de `kalis_plan` 0.2.2) :
+
+| Athlète | Politique | Surcharges / 100 saisons | Pic moyen (× plus longue des 30 j) | Course faite (min / sem.) |
+| --- | --- | --- | --- | --- |
+| course débutante (`coureur_cardio_3x45`) | 0.3.0 | 5,0 | 1,04 | 57 |
+|  | 0.2 | 5,0 | 1,03 | 59 |
+|  | règle des 10 % | 8,3 | 1,34 | 35 |
+| semi-marathon | 0.3.0 | 10,0 | 1,10 | 138 |
+|  | 0.2 | 13,3 | 1,55 | 149 |
+|  | règle des 10 % | 13,3 | 1,59 | 80 |
+| CrossFit (`crossfit_5x60`) | 0.3.0 | 30,0 | — | 0 |
+|  | 0.2 | 35,0 | — | 0 |
+|  | règle des 10 % | 35,0 | — | 0 |
+| hybride 50/50 | 0.3.0 | 18,3 | 1,10 | 51 |
+|  | 0.2 | 20,0 | 1,39 | 55 |
+|  | règle des 10 % | 18,3 | 1,27 | 27 |
+
+Lecture : à programme égal, 0.3.0 borne la plus grande sortie (pic moyen 1,10 au plus ; en 0.2, 1,39 pour l'hybride et 1,55 pour le semi-marathon)
+en gardant 93 % du temps de course ; la règle des 10 % par semaine en coupe 41 à 51 % sans borner les pics (1,27 à
+1,59), comme l'essai de Buist 2008 le laissait attendre ; blessures de surcharge simulées, total des quatre athlètes
+pour 100 saisons : 63,3 (0.3.0), 73,3 (0.2), 74,9 (règle des 10 %), soit −14 % par rapport à 0.2. Les taux de base de la vérité sont des choix
+raisonnés : seuls les écarts entre politiques se lisent. Aucune hausse de charge sur zone douloureuse.
+
+Tests : `kalis_core` 328, `kalis_plan` 226, `kalis_adapt` 250 (dont propriétés : 10 240 journaux par suite, profils
+de course compris, invariants E1 à E3), `kalis_bench` 65, `kalis_quest` 162 ; analyse sans remarque. Un test
+d'endurance a échoué sur la seule tolérance de sa mesure (pic de 1,1345 pour une borne de mesure de 1,133 : la vérité
+mesure la sortie à la vitesse du jour, le moteur à la vitesse moyenne du journal) : tolérance portée à 5 %, contrôle
+complet relancé (run 37828103871, commit de contrôle 103988d8 : vert ; cinq paquets, 251 tests de `kalis_adapt`).
+
+### Renote q2 (`street_01`, `street_03`, après la règle d'élastique)
+
+`street_01` 7,5 / 8 / 7 / 6,5 (passe 6 : 7 / 7,5 / 7 / 7) ; `street_03` 7 / 7 / 6 / 5,5 (passe 6 : 6,5 / 6,5 / 6,5 / 6).
+Écoles force et calisthénie en hausse (l'élastique change enfin : semaines 3 et 15 de `street_03`), hypertrophie et
+santé un demi-point plus bas (corrections nécessaires sur le programme écrit : échelle de poussée, essais stricts non
+écrits, conduite du poignet sans variante neutre écrite ; dans l'incertitude d'un point). Street en fin de lot :
+**19 couples sur 68 à 9, minimum 5, moyenne 7,76** ; à 9 partout : `street_12`, `street_15`, `street_16`. Les autres
+profils street : exports changés de moins de 4 % depuis leur dernière notation (règle d'économie, notes gardées).
+
+### Relecture documentée de la partie 1 (C7.3, trois sous-agents Opus, sources web)
+
+Street débutants et intermédiaires : `street_01` 5, `03` 4, `06` 6 ; avancés et élite : `07` 7, `08` 6, `10` 5, `12`
+7 ; autres disciplines : course 10 km 4, semi-marathon 3, CrossFit 4, hypertrophie 4. Notes et commentaires sourcés
+sur la page de relecture (manche 5, auteur `relecture-documentee`). Côté conduite, traités dans le lot : élastique
+(série repère), tests de course bornés. Non traités (limites, § 6 de la livraison) : passage en course-marche après des
+sorties répétées « pas en entier » (course débutante), surcharge progressive absente en mode 0.1 sur les programmes de
+musculation (charges figées à 4-6 répétitions de réserve réelles : `autres_02`), sous-dosage persistant des dips après
+un mauvais jour (`street_06`, `street_08`), estimation du muscle-up trop basse le jour J (`street_07`), suivi de l'état
+du coude (`street_12`, côté programme). Le reste vise le programme écrit (lot CP2).
+
+### Panel des autres disciplines — fin de lot
+
+Passe q1 (moteur de la boucle 1) gardée comme mesure de fin de lot : les deux changements de la boucle 2 ne touchent
+que les tests de course (exports de `autres_05` et `autres_06` changés de 1,6 et 0,9 %) et l'élastique (absent de ces
+profils). **40 couples, aucun à 9, minimum 3, moyenne 5,41** (couple 0.1 de CR : ≈ 5,1). Cible C7.5 non atteinte : le
+plafond tient au programme écrit par le chemin 0.1 de `kalis_plan` 0.2.2 ; à mesurer de nouveau avec `kalis_plan`
+0.3.0 (CP2) au croisement final (CY).

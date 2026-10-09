@@ -1,6 +1,6 @@
 # Codes de raison ajoutés en 0.4.0 — textes courts de Koach
 
-Les moteurs ne produisent aucun texte : des codes et des paramètres. Voici, pour les 38 codes ajoutés par le lot CQ (0.4.0) et les 3 codes de notes de coach du lot CP1 (0.4.1 ; leur code de note, de règle ou de zone s'affiche avec le libellé français de `kalis_plan`, `docs/NOTES_COACH.md`), un texte court proposé (français, tutoiement, sans promesse de résultat ni allégation médicale, règles L13), à intégrer par l'application avec les textes de `kalis_koach` (lots CU et CI). Données : [`data/reason_texts_fr_0_4.json`](../data/reason_texts_fr_0_4.json). Un paramètre entre accolades est remplacé par sa valeur ; quand c'est un code (phase, technique, cause, facteur), l'application l'affiche avec son libellé français. Un paramètre non utilisé par le texte reste disponible pour « Pourquoi ? ».
+Les moteurs ne produisent aucun texte : des codes et des paramètres. Voici, pour les 38 codes ajoutés par le lot CQ (0.4.0), les 3 codes de notes de coach du lot CP1 (0.4.1) et les 5 codes d'endurance du lot CA2 (0.4.3 ; causes : `health`, `health_strong`, `hard_run`, `leg_pain`, `resume_7`, `resume_14`, `hard_streak` ; pour les notes de coach, leur code de note, de règle ou de zone s'affiche avec le libellé français de `kalis_plan`, `docs/NOTES_COACH.md`), un texte court proposé (français, tutoiement, sans promesse de résultat ni allégation médicale, règles L13), à intégrer par l'application avec les textes de `kalis_koach` (lots CU et CI). Données : [`data/reason_texts_fr_0_4.json`](../data/reason_texts_fr_0_4.json). Un paramètre entre accolades est remplacé par sa valeur ; quand c'est un code (phase, technique, cause, facteur), l'application l'affiche avec son libellé français. Un paramètre non utilisé par le texte reste disponible pour « Pourquoi ? ».
 
 | Code | Texte de Koach | Paramètres | Sens |
 | --- | --- | --- | --- |
@@ -45,6 +45,11 @@ Les moteurs ne produisent aucun texte : des codes et des paramètres. Voici, pou
 | `plan.coach_note` (0.4.1) | Note de coach : {note}. | `note`, `value` | Note de coach du bloc, de la semaine ou de la séance : un code de note (vocabulaire de `kalis_plan`) et sa valeur. |
 | `plan.progression_rule` (0.4.1) | Règle de progression : {rule}. | `rule`, `step`, `unit` | Règle de progression d'un exercice d'une séance à l'autre (code de règle, pas, unité). |
 | `plan.pain_rule` (0.4.1) | Gêne sous {continueBelow}/10 : continue. À {regressAt} : allège. À {stopAt} ou plus : arrête. | `zone`, `continueBelow`, `regressAt`, `stopAt` | Conduite à tenir selon la gêne ressentie (échelle de 0 à 10) : continuer en dessous d'un seuil, alléger, arrêter. |
+| `adapt.run_capped` (0.4.3) | Sortie raccourcie : pas plus de {percent} % au-dessus de ta plus longue sortie du mois. | `percent` | Course du jour raccourcie : pas plus de `percent` % au-dessus de la plus longue course des 30 derniers jours. |
+| `adapt.easy_instead` (0.4.3) | Aujourd'hui, endurance facile à la place de la séance de qualité ({cause}). | `cause` | Séance de qualité (allure, fractionné, test de course) servie en endurance facile un jour sans. |
+| `adapt.endurance_shortened` (0.4.3) | On raccourcit : {percent} % de ce qui était prévu ({cause}). | `cause`, `percent` | Durée, distance ou nombre de répétitions d'une ligne d'endurance ramenés à `percent` % de l'écrit (bilan bas, reprise après une coupure). |
+| `adapt.wod_scaled` (0.4.3) | WOD mis à l'échelle : {percent} % de ce qui était prévu ({cause}). | `cause`, `percent` | Pièce de conditionnement mise à l'échelle : `percent` % des répétitions ou de la durée écrites (jour sans, jours durs de suite). |
+| `adapt.cross_fatigue` (0.4.3) | Un peu plus de marge sur les jambes : ta course d'hier était dure. | `cause` | Fatigue croisée : effort visé abaissé sur le bas du corps après une course dure la veille. |
 
 Libellés français des codes passés en paramètre :
 

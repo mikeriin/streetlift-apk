@@ -2,13 +2,13 @@
 
 Document généré par `dart run bin/kalis_adapt_cli.dart --rapport <dossier>` à partir de `test/fixtures/proprietaire.json.gz` : le programme de 40 semaines du propriétaire, importé sans changer sa structure (D5.10), et un journal **simulé** de ses 11 premières semaines (athlète `avance_street`, graine 0). 223 exercices du programme ne sont pas portés dans la fixture (sans correspondance au catalogue, ou format hors plage : montées en singles, tours, EMOM). Même rejeu à la main : `dart run kalis_adapt:replay --journal test/fixtures/proprietaire.json.gz`.
 
-Moteur `kalis_adapt` 0.2.3. Journal : 65 séances, 1297 séries, du 2026-10-05 au 2026-12-19 ; « aujourd'hui » : 2026-12-21. Bloc `proprietaire-v33` (40 semaines).
+Moteur `kalis_adapt` 0.3.0. Journal : 65 séances, 1297 séries, du 2026-10-05 au 2026-12-19 ; « aujourd'hui » : 2026-12-21. Bloc `proprietaire-v33` (40 semaines).
 
 ## Résumé d'adaptation
 
 - Semaines de données : 11 ; séances faites : 65 sur 67 prévues.
 - Niveau de déblocage : `session_restructure` ; confiance globale : 0.72.
-- Forme du jour (modèle) : 0.71 ; forme 301.32, fatigue 47.37 (unités du modèle).
+- Forme du jour (modèle) : 0.70 ; forme 301.46, fatigue 47.37 (unités du modèle).
 - Faits marquants : `adapt.unlock_level`(level=session_restructure) ; `adapt.missed_sessions`(missed=2, planned=67).
 
 ## Capacités estimées
@@ -26,19 +26,19 @@ Moteur `kalis_adapt` 0.2.3. Journal : 65 séances, 1297 séries, du 2026-10-05 a
 | Développé couché barre | 78.1 kg (1RM, charge totale) | 6.2 | 0.16 | 45 | 2026-12-15 |
 | Développé militaire barre debout | 63.6 kg (1RM, charge totale) | 5.2 | -0.03 | 60 | 2026-12-15 |
 | Élévation latérale haltères | 11.9 kg (1RM, charge totale) | 1.3 | 0.01 | 48 | 2026-12-18 |
-| Face pull à la poulie corde | 70.6 kg (1RM, charge totale) | 7.1 | -0.03 | 152 | 2026-12-17 |
-| Hip thrust à la barre | 137.3 kg (1RM, charge totale) | 9.9 | 0.02 | 43 | 2026-12-16 |
+| Face pull à la poulie corde | 70.5 kg (1RM, charge totale) | 7.1 | -0.03 | 152 | 2026-12-17 |
+| Hip thrust à la barre | 137.3 kg (1RM, charge totale) | 9.9 | 0.01 | 43 | 2026-12-16 |
 | Hollow body hold | 57.2 s (tenue max) | 2.5 | 0.09 | 56 | 2026-12-16 |
 | Leg curl couché | 55.6 kg (1RM, charge totale) | 4.8 | -0.11 | 42 | 2026-12-16 |
 | Mollets debout à la machine | 147.3 kg (1RM, charge totale) | 14.9 | -0.08 | 50 | 2026-12-16 |
 | Pallof press debout | 33.8 kg (1RM, charge totale) | 3.3 | -0.06 | 48 | 2026-12-16 |
 | Pushdown à la corde | 33.1 kg (1RM, charge totale) | 3.0 | -0.01 | 53 | 2026-12-18 |
-| Rotation externe haltère couché sur le côté | 9.8 kg (1RM, charge totale) | 1.1 | -0.02 | 159 | 2026-12-18 |
+| Rotation externe haltère couché sur le côté | 9.8 kg (1RM, charge totale) | 1.1 | -0.02 | 160 | 2026-12-18 |
 | Roue abdominale à genoux | 16.5 répétitions max | 0.4 | 0.04 | 46 | 2026-12-16 |
 | Rowing barre buste penché prise pronation | 79.3 kg (1RM, charge totale) | 7.8 | 0.20 | 88 | 2026-12-14 |
 | Rowing haltère unilatéral appui sur banc | 41.6 kg (1RM, charge totale) | 3.8 | 0.12 | 57 | 2026-12-17 |
 | Rowing poulie basse assis au triangle | 64.8 kg (1RM, charge totale) | 6.5 | 0.05 | 41 | 2026-12-17 |
-| Soulevé de terre roumain à la barre | 132.9 kg (1RM, charge totale) | 10.4 | 0.13 | 42 | 2026-12-16 |
+| Soulevé de terre roumain à la barre | 132.9 kg (1RM, charge totale) | 10.4 | 0.15 | 42 | 2026-12-16 |
 | Tirage vertical poulie prise neutre | 92.4 kg (1RM, charge totale) | 6.6 | 0.01 | 43 | 2026-12-14 |
 | Y raise sur banc incliné | 17.1 kg (1RM, charge totale) | 1.7 | 0.04 | 39 | 2026-12-15 |
 | Dead hang lesté | 86.6 s (tenue max) | 1.9 | 0.13 | 39 | 2026-12-17 |
@@ -101,7 +101,7 @@ Moteur `kalis_adapt` 0.2.3. Journal : 65 séances, 1297 séries, du 2026-10-05 a
 
 ## Séance prescrite — semaine 12, jour 1
 
-Confiance 0.78 ; `adapt.readiness`(readiness=0.706).
+Confiance 0.78 ; `adapt.readiness`(readiness=0.705).
 
 - **Muscle-up lesté de compétition** : 3 @ 6.25 kg (7 fl.) · 3 @ 6.25 kg (7 fl.) · 3 @ 6.25 kg (7 fl.) · 3 @ 6.25 kg (7 fl.) · 3 @ 6.25 kg (7 fl.) — 88 % du 1RM, repos 240 s
   - `adapt.load_up`(deltaKg=5.0)
@@ -115,11 +115,11 @@ Confiance 0.78 ; `adapt.readiness`(readiness=0.706).
 
 ## Journal du moteur (fin)
 
-- n° 53, 2026-12-12, `session` : readiness=0.602, residual=0.0015, sessionId=sim-68, unplannedFails=0, unrated=0, workSets=29
-- n° 54, 2026-12-14, `session` : readiness=0.636, residual=-0.0093, sessionId=sim-70, unplannedFails=1, unrated=0, workSets=22
-- n° 55, 2026-12-15, `session` : readiness=0.614, residual=-0.0068, sessionId=sim-71, unplannedFails=2, unrated=0, workSets=20
-- n° 56, 2026-12-16, `session` : readiness=0.587, residual=-0.0074, sessionId=sim-72, unplannedFails=3, unrated=0, workSets=21
-- n° 57, 2026-12-17, `session` : readiness=0.429, residual=-0.0057, sessionId=sim-73, unplannedFails=0, unrated=0, workSets=20
-- n° 58, 2026-12-18, `session` : readiness=0.58, residual=-0.0176, sessionId=sim-74, unplannedFails=0, unrated=0, workSets=13
-- n° 59, 2026-12-19, `session` : readiness=0.633, residual=-0.0196, sessionId=sim-75, unplannedFails=1, unrated=0, workSets=14
+- n° 53, 2026-12-12, `session` : readiness=0.601, residual=0.0015, sessionId=sim-68, unplannedFails=0, unrated=0, workSets=29
+- n° 54, 2026-12-14, `session` : readiness=0.635, residual=-0.0094, sessionId=sim-70, unplannedFails=1, unrated=0, workSets=22
+- n° 55, 2026-12-15, `session` : readiness=0.613, residual=-0.0069, sessionId=sim-71, unplannedFails=2, unrated=0, workSets=20
+- n° 56, 2026-12-16, `session` : readiness=0.586, residual=-0.0073, sessionId=sim-72, unplannedFails=3, unrated=0, workSets=21
+- n° 57, 2026-12-17, `session` : readiness=0.428, residual=-0.0057, sessionId=sim-73, unplannedFails=0, unrated=0, workSets=20
+- n° 58, 2026-12-18, `session` : readiness=0.579, residual=-0.0176, sessionId=sim-74, unplannedFails=0, unrated=0, workSets=13
+- n° 59, 2026-12-19, `session` : readiness=0.632, residual=-0.0196, sessionId=sim-75, unplannedFails=1, unrated=0, workSets=14
 - n° 60, 2026-12-21, `proposal` : adherence=0.0, fatigue=-0.1, id=volume:quads:down:proprietaire-v33@12, kind=volume, progress=0.218, risk=0.0, threshold=0.65, utility=0.318
