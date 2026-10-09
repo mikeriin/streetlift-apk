@@ -1,0 +1,4 @@
+00:00 +0: loading /workspace/scratch/8f03fc05d00d/work_1_8_6/streetlift_tracker/test/level_fill_test.dart
+00:00 +0: /workspace/scratch/8f03fc05d00d/work_1_8_6/streetlift_tracker/test/level_fill_test.dart: les chiffres se remplissent de gauche à droite, sans contour ni dégradé
+00:00 +1: /workspace/scratch/8f03fc05d00d/work_1_8_6/streetlift_tracker/test/preview_programme_temp_test.dart: Rendu réel du Programme
+00:02 +2: All tests passed!
