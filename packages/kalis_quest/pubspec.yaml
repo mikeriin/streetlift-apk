@@ -1,0 +1,22 @@
+name: kalis_quest
+description: >-
+  Moteur de progression de Kalis Track : XP et niveaux (1 à 100 puis
+  prestige), attributs, rangs par mouvement sur standards publiés, quêtes,
+  objectifs avec jalons et prédiction de date, mécaniques de plaisir
+  (records, coffres, série de semaines, fantôme, note de séance, combo).
+  Dart pur, sans Flutter, sans stockage, sans horloge.
+version: 0.1.0
+publish_to: none
+
+environment:
+  sdk: '>=3.10.0 <4.0.0'
+
+dependencies:
+  kalis_adapt:
+    path: ../kalis_adapt
+  kalis_core:
+    path: ../kalis_core
+
+dev_dependencies:
+  lints: ^4.0.0
+  test: ^1.25.0
