@@ -12,6 +12,7 @@ import 'package:kalis_plan/kalis_plan.dart'
         deloadVolumeFactor,
         volumeBandsByLevel;
 
+import 'endurance.dart';
 import 'fatigue.dart';
 import 'filter.dart';
 import 'model.dart';
@@ -406,6 +407,37 @@ AdaptReview buildReview(
 
   // --------------------------------------------- exercices régulièrement sautés
   final skips = <String, int>{};
+  // Un mouvement retiré par la conduite pour une douleur qui dure (zone à
+  // l'arrêt) n'est pas « sauté » : le bloc suivant le traite par la note
+  // d'arrêt et la reprise graduée, pas par l'exclusion pour tout le bloc
+  // (CY, panel, `autres_06` : course retirée sous une douleur de cheville,
+  // comptée comme sautée, puis absente des six semaines du bloc suivant,
+  // échéance comprise — séances d'une minute de mobilité).
+  const legZones = <BodyZone>{
+    BodyZone.hip,
+    BodyZone.thigh,
+    BodyZone.knee,
+    BodyZone.lowerLeg,
+    BodyZone.ankleFoot,
+  };
+  final stopZones = <BodyZone>{
+    for (final s in state.painStops(day)) s.zone,
+  };
+  bool stopRemoved(String id) {
+    if (stopZones.isEmpty) {
+      return false;
+    }
+    final info = ctx.book.find(id);
+    if (info == null) {
+      return false;
+    }
+    if (enduranceKindOf(info) == EnduranceKind.run &&
+        stopZones.any(legZones.contains)) {
+      return true;
+    }
+    return stopZones.any((z) => coachPainStopHits(info.exercise, z));
+  }
+
   for (final d in digests) {
     final ref = d.session.programRef;
     if (ref == null || ref.blockId != pass1.blockId || d.workSets == 0) {
@@ -419,6 +451,8 @@ AdaptReview buildReview(
     for (final item in prescription.items) {
       if (done.contains(item.exerciseId)) {
         skips[item.exerciseId] = 0;
+      } else if (stopRemoved(item.exerciseId)) {
+        continue;
       } else {
         skips[item.exerciseId] = (skips[item.exerciseId] ?? 0) + 1;
       }
