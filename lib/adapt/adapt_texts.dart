@@ -304,6 +304,10 @@ String? adaptReasonText(
         'pain_return' =>
           'Zone douloureuse ou en reprise : dose prudente, 3 répétitions en '
               'réserve, pas de hausse aujourd’hui.',
+        // CI1g (`kalis_adapt` 0.3.1) : hausse bornée (schéma changé depuis
+        // la dernière séance du même emplacement, palier de hausse, part
+        // du maximum) ; avant, texte par défaut.
+        'cap' => 'Charge plafonnée : la hausse reste mesurée, pour rester sûre.',
         _ => 'Charge gardée cette fois.',
       };
     case 'adapt.increment_coarse':
@@ -366,6 +370,26 @@ String? adaptReasonText(
   return reasonText04(r.code, p, (id) => name(id));
 }
 
+/// CI1g (`kalis_adapt` 0.3.1, point imposé par CY) : pompe mains
+/// surélevées servie à la place d'une poussée paume à plat pour une gêne
+/// du poignet. Le moteur ne la compte comme appui neutre que faite mains
+/// serrées sur une barre basse : la consigne est toujours dite.
+const String kWristBarPushUpId = 'sw-pompe-inclinee';
+
+/// Consigne de la pompe sur barre basse (poignet gêné).
+const String kWristBarPushUpCue =
+    'Mains serrées sur la barre basse, poignets droits.';
+
+/// Vrai si [exerciseId] est la pompe sur barre basse servie pour une
+/// gêne du poignet ([reasons] : `adapt.pain_reported`, zone poignet).
+bool wristBarPushUp(String? exerciseId, Iterable<kc.Reason> reasons) =>
+    exerciseId == kWristBarPushUpId &&
+    reasons.any(
+      (r) =>
+          r.code == 'adapt.pain_reported' &&
+          r.params['zone'] == kc.BodyZone.wristHand.code,
+    );
+
 /// Ajustement d'une séance (bilan, douleur, temps, lieu), en français.
 String adjustmentText(
   kc.SessionAdjustment a,
@@ -394,6 +418,21 @@ String adjustmentText(
           return 'Remplacement : $x → $to (appui neutre : '
               '${_zoneArticle(r.params['zone'])} est à l’arrêt, douleur qui '
               'dure).';
+        }
+      }
+      // CI1g (`kalis_adapt` 0.3.1) : gêne du poignet (première gêne, ou
+      // douleur du jour) : appui neutre ; la pompe sur barre basse porte
+      // la consigne imposée par CY.
+      if (wristBarPushUp(a.replacementExerciseId, a.reasons)) {
+        return 'Remplacement : $x → $to (gêne du poignet) : '
+            '${kWristBarPushUpCue[0].toLowerCase()}'
+            '${kWristBarPushUpCue.substring(1)}';
+      }
+      for (final r in a.reasons) {
+        if (r.code == 'adapt.pain_reported' &&
+            r.params['zone'] == kc.BodyZone.wristHand.code) {
+          return 'Remplacement : $x → $to (gêne du poignet : appui neutre, '
+              'poignets droits).';
         }
       }
       return '$x remplacé par $to.';
