@@ -20,3 +20,10 @@ Session Fable 5.1 lancée le 09/10/2026 vers 16:10 UTC (pas de ligne « Lot : »
 
 ## Reste
 - Briques 1 à 7, critères, fixtures, relecture indépendante, fin de lot ; brique 8 dès que le journal est déposé.
+
+## 09/10 17:25 UTC — brique 0 faite
+- Export Dart `km1` (packages/kalis_bench/lib/src/km/km_export.dart, bin/km_common.dart, bin/km1.dart) : analysé et formaté par le contrôle dev (run 37964997316), exports dans `packages/kalis_adapt/reference/donnees/` (catalogue_infos, reference/, temoin/ 16 graines, traces_verite, traces_endurance).
+- Portage Python du modèle de vérité (`reference/banc/verite.py`, `verite_endurance.py`) : **3 tests de parité verts à 1e-9** (traces force > 20 000 séries, endurance, tirages de départ de toutes les saisons).
+- Notes : `km1-outils/notes/SECURITE_0_3_1.md` (règles de sécurité 0.3.1 et critères du banc), `SOURCES_RECHERCHE.md` (sources vérifiées).
+- Fichier de paramètres v1 ébauché (`reference/params/koach_params_v1.json`), `koach/numerique.py` (erfc 1e-13, moments d'intervalle = réponse graduée ogive normale).
+- Conception de l'estimation : état gaussien (10 qualités, réponse ρ + 5 classes, sensibilités fatigue, biais RIR additif et proportionnel, courbe c1·ln R + c2·(R−1) avec échelle par exercice, fatigue intra-séance, part de tenue, effet de jour séance + exercice ; par exercice δ et échelle de courbe), mises à jour par appariement de moments sur intervalles (catégories de flammes), deux branches par séance (jour normal / mauvais jour) fusionnées en fin de séance.

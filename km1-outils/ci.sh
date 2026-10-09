@@ -15,7 +15,7 @@ if [ "$MODE" != full ]; then
   cp -r /home/claude/km1-outils/aa_fmt $T/packages/aa_fmt
   rm -rf $T/packages/kalis_quest
   for p in kalis_core kalis_plan kalis_adapt; do
-    rm -rf $T/packages/$p/test
+    find $T/packages/$p/test -name "*_test.dart" -delete
     rm -f $T/packages/$p/bin/${p}_cli.dart
   done
   find $T/packages/kalis_bench/test -name '*_test.dart' ! -name 'km_*' -delete
