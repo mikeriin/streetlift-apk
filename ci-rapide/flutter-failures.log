@@ -1,0 +1,94 @@
+01:22 +435 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:23 +435 ~5 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:23 +435 ~5 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1_street_test.dart: chemin calibré autre discipline (musculation) : chemin 0.1, pas de saison [E]
+  Expected: false
+    Actual: <true>
+  
+  package:matcher                                     expect
+  package:flutter_test/src/widget_tester.dart 473:18  expect
+  test/ci1_street_test.dart 199:9                     main.<fn>.<fn>
+  
+01:23 +436 ~5 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:23 +437 ~5 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:23 +438 ~5 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:23 +439 ~5 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:23 +440 ~5 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:23 +441 ~5 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:24 +441 ~5 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1_street_test.dart: relevé techniques écrites et servies par profil (journal du test)
+CI1 competiteur : 4 semaines, phases accumulation/3 deload/1 accumulation/3 deload/1 intensification/1 realization/2 taper/1 competition/1 ; {classique: 65, top_set_backoff: 9, isometric_hold: 6}
+  S1J2 Suspension active : - 2 × 15-20 s lignes Éc1,Éc2 chrono null mesure hold
+  S1J2 Traction lestée de compétition : - 4 × 6 lignes 1,2,3,4 chrono null mesure reps
+  S1J2 Dips lesté de compétition : top_set_backoff 4 × 5 lignes Tête,A1,A2,A3 chrono null mesure reps
+  S1J2 Rowing barre buste penché prise pronation : - 3 × 8-10 lignes 1,2,3 chrono null mesure reps
+  S1J2 Gainage latéral avec relevés de hanche : - 2 × 8-12 lignes 1,2 chrono null mesure reps
+  S1J2 Hollow body hold : isometric_hold 2 × 6-20 s lignes 1,2 chrono null mesure hold
+  S1J2 Cat-cow : - 1 × 8-10 lignes 1 chrono null mesure reps
+CI1 debutant : 6 semaines, phases accumulation/5 test/1 accumulation/5 test/1 accumulation/4 taper/1 test/1 ; {classique: 137, isometric_hold: 18, test:max_reps: 2}
+  S1J2 Suspension active : - 2 × 15-20 s lignes Éc1,Éc2 chrono null mesure hold
+  S1J2 Wrist push-ups : - 2 × 8-10 lignes Éc1,Éc2 chrono null mesure reps
+  S1J2 Pompe inclinée (mains surélevées) : - 2 × 6-8 lignes 1,2 chrono null mesure reps
+  S1J2 Row australien aux barres parallèles : - 2 × 6-8 lignes 1,2 chrono null mesure reps
+  S1J2 Air squat : - 2 × 8-10 lignes 1,2 chrono null mesure reps
+  S1J2 Fente arrière au poids du corps : - 2 × 8-10 lignes 1,2 chrono null mesure reps
+  S1J2 Support hold aux barres parallèles : isometric_hold 3 × 3-10 s lignes 1,2,3 chrono null mesure hold
+--
+02:07 +534 ~7 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:08 +534 ~7 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:08 +534 ~7 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1d_paquets_test.dart: paquets 0.2.3 dans l’application [E]
+  Expected: '0.2.3'
+    Actual: '0.3.0'
+     Which: is different.
+            Expected: 0.2.3
+              Actual: 0.3.0
+                        ^
+             Differ at offset 2
+  
+  package:matcher                                     expect
+  package:flutter_test/src/widget_tester.dart 473:18  expect
+  test/ci1d_paquets_test.dart 98:5                    main.<fn>
+  
+02:08 +535 ~7 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:08 +536 ~7 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:08 +537 ~7 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:08 +538 ~7 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:09 +539 ~7 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:09 +540 ~7 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:10 +541 ~7 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:10 +542 ~7 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:10 +543 ~7 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:10 +544 ~7 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:10 +545 ~7 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:10 +546 ~7 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:10 +547 ~7 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:10 +548 ~7 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:10 +549 ~7 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:10 +550 ~7 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:10 +551 ~7 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:10 +552 ~7 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+--
+03:34 +781 ~26 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:34 +782 ~26 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+10:58 +782 ~26 -3: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits [E]
+  TimeoutException after 0:10:00.000000: Test timed out after 10 minutes.
+  dart:isolate  _RawReceivePort._handleMessage
+  
+10:58 +782 ~26 -3: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage toucher : région sous le doigt
+20:58 +782 ~26 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage toucher : région sous le doigt [E]
+  TimeoutException after 0:10:00.000000: Test timed out after 10 minutes.
+  dart:isolate  _RawReceivePort._handleMessage
+  
+20:58 +782 ~26 -4: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage légende des rôles
+30:58 +782 ~26 -5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage légende des rôles [E]
+  TimeoutException after 0:10:00.000000: Test timed out after 10 minutes.
+  dart:isolate  _RawReceivePort._handleMessage
+  
+30:58 +782 ~26 -5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage résumé texte : groupes, puis régions sans groupe
+30:58 +783 ~26 -5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: (tearDownAll)
+30:58 +783 ~26 -5: Some tests failed.
+
+Failing tests:
+  /home/runner/work/streetlift-apk/streetlift-apk/test/ci1_street_test.dart: chemin calibré autre discipline (musculation) : chemin 0.1, pas de saison
+  /home/runner/work/streetlift-apk/streetlift-apk/test/ci1d_paquets_test.dart: paquets 0.2.3 dans l’application
+  /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage légende des rôles
+  /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage toucher : région sous le doigt
+  /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
