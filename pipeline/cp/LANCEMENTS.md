@@ -182,3 +182,12 @@ Les deux sessions du 05/10 se sont arrêtées sur la limite hebdomadaire du plan
 - **Points imposés par CY** : `clearance_first` montrée **avant la première séance** comme une étape à confirmer (avis médical / feu vert) ; consigne de la pompe remplacée pour le poignet « mains serrées sur la barre basse, poignets droits » ; `shoulder_history` sous le développé au-dessus de la tête ; textes Koach de tous les nouveaux codes (aucun code brut).
 - **C11** : le programme de 40 semaines reste sous toutes les fonctionnalités ; passe `KalisAdapt(restructureImported: true)` si un bloc du programme importé dépasse encore six semaines (sinon sans objet). Ne casse rien de CI1c à CI1f.
 - **Fin de lot** : version suivante, contrôle `claude/ci-3d` vert, build signé, `LIVRAISON_CI1g.md` (pipeline et projet claude.ai) avec « À tester » court, ligne de l'état « à valider », page de suivi, notification. Le pilotage valide.
+
+## KM1 — méthode Koach, référence Python et banc (lancé le 09/10/2026 vers 16:15 UTC, tâche « Fable 5.1, effort maximal, moteurs »)
+
+- Lot : **KM1** (ligne de l'état « à faire »), prompt `prompts/KM1.txt`, cahier `CAHIER_KM.md`. Décision : `DECISIONS_CP.md` **C13** (demande du propriétaire du 09/10). Délégation totale (C8) : aucune question au propriétaire ; validation automatique par le pilotage sur les critères du cahier.
+- **Écarts aux règles CP (C13.3)** : pas de panel, pas de relecture documentée, pas de page de relecture, pas de boucles de calibrage au sens de §2 ; la cible C7.5 citée par la consigne de la tâche ne s'applique pas. Le reste de PIPELINE_CP.md s'applique (§0, §1, §3, §4 à §7, §9).
+- Base : `moteurs` à la pointe (aacbe054 : `kalis_plan` 0.3.1, `kalis_adapt` 0.3.1, `kalis_core` 0.4.3, `kalis_bench` 0.3.0). Base d'exercices v1.1 : `packages/kalis_core/data/source/base_exercices_v1.1.0.json`. Contrôle `claude/ci-cp-a`, sauvegardes `cp-sauvegardes/KM1`.
+- Session d'application en parallèle (CI1g, puis lot CI final) : ne touche ni `main` ni `lib/` de `kalis_adapt`.
+- **Journal du propriétaire (brique 8, C13.6)** : pas encore déposé au lancement ; il arrivera chiffré sur `cp-references` (`journal_proprietaire.tar.gpg`). S'il manque quand tu arrives à la brique 8 : sauvegarde, « en attente de l'export du journal (C13.6) » dans ta ligne, notification, arrêt.
+- Budget : sous-agents sur Opus, sauvegarde à chaque brique et toutes les 30 minutes (SAUVEGARDE.md à jour), pas de surveillance en boucle de la CI.

@@ -1,0 +1,23 @@
+LOT KM2 — PORTAGE DART : `kalis_adapt` 1.0.0
+Modèle : Fable 5.1, effort maximal (voie A, tâche « Fable 5.1, effort maximal, moteurs »). Validation : automatique, par le pilotage, sur les critères du cahier (DECISIONS_CP.md C13).
+Prérequis : KM1 livré et validé par le pilotage.
+Branche de travail : `moteurs` (`packages/kalis_adapt/`, `packages/kalis_bench/` ; `kalis_core` seulement selon PIPELINE_CP.md §0). Contrôle : `claude/ci-cp-a`. Sauvegardes : `cp-sauvegardes/KM2`.
+Cahier des charges : `pipeline/cp/CAHIER_KM.md`. Décisions : C13.
+
+OBJECTIF
+Porter en Dart, dans `kalis_adapt` 1.0.0, la référence Python validée par KM1, à l'identique (parité 1e-9 sur toutes les fixtures de KM1), en gardant les règles de sécurité de 0.3.1 comme contraintes dures, et publier l'étiquette que KM3 intégrera. Aucune nouvelle méthode : un écart de comportement avec la référence est un défaut du portage, pas une amélioration.
+
+1. AVANT DE CODER
+- Lis `livraisons/LIVRAISON_KM1.md`, `packages/kalis_adapt/reference/CONTRAT_1_0.md`, les fixtures, `SOURCES.md` ; `packages/kalis_adapt/CONTRAT.md` (0.3.1) et `docs/INTEGRATION_CI.md`.
+
+2. CONTENU
+- `kalis_adapt` 1.0.0 : API du contrat 1.0 (`observe`, `posterior`, `plan`, `explain`), fichier de paramètres chargé depuis un asset JSON versionné, état recalculé depuis le journal et les décisions (déterministe, mulberry32), mode coach et exécution des prescriptions de 0.3.1 conservés, règles de sécurité de 0.3.1 intégrées comme contraintes dures du planificateur.
+- Tests de parité Python ↔ Dart à 1e-9 sur **toutes** les fixtures de KM1 ; tests de propriétés (≥ 10 000 entrées seedées) ; banc complet.
+- `kalis_bench` : athlètes adversariaux de KM1 ajoutés au banc Dart ; mesure avant / après contre 0.3.1 sur tous les critères du cahier.
+- Temps (VM Dart de la CI) : replanification hebdomadaire ≤ 10 s, mise à jour après une série ≤ 50 ms ; si un budget n'est pas tenu, réduire trajectoires ou plans candidats dans les bornes que KM1 a mesurées et le dire.
+- `docs/INTEGRATION_KM3.md` : ce que l'application doit changer (API, journal, paramètres, codes de raison et leurs textes, retraits du cahier), migration du programme de 40 semaines comme plan initial.
+
+3. FIN DE LOT
+- Version `kalis_adapt` 1.0.0 (contrat non additif : c'est le seul écart à « contrats additifs » de PIPELINE_CP.md §3, autorisé par C13.5) ; push sur `moteurs` (rebase avant), contrôle `claude/ci-cp-a` vert, branche fixe `etiquettes/kalis_adapt-v1.0.0` (et `kalis_bench` si changé).
+- `LIVRAISON_KM2.md` (pipeline et projet claude.ai) : parité, critères mesurés en Dart contre 0.3.1, temps, limites.
+- Ligne KM2 d'`ETAT_CP.md` « livré », page de suivi, notification `Kalis Track KM2 livré (kalis_adapt 1.0.0, parité 1e-9, <n>/<N> critères). Page : <lien>`, arrête-toi.

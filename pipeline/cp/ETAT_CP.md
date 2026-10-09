@@ -6,14 +6,16 @@ Créé le 02/10/2026 par la conversation de pilotage (demande et questionnaire d
 
 | Voie | Tâche | Identifiant | Lots |
 | --- | --- | --- | --- |
-| A et B (moteurs) | **Fable 5.1, effort maximal, moteurs** (créée le 03/10 22:23 : l'ancienne tâche voie A n'obtenait plus l'accès en écriture au dépôt) | `trig_013zUt5zYSPd9AgCz58HdLYB` | CP1, CA1 (C5.1) |
+| A et B (moteurs) | **Fable 5.1, effort maximal, moteurs** (créée le 03/10 22:23 : l'ancienne tâche voie A n'obtenait plus l'accès en écriture au dépôt) | `trig_013zUt5zYSPd9AgCz58HdLYB` | CP1, CA1 (C5.1) ; KM1, KM2 (C13.4) |
 | A (moteurs) | Fable 5.1, effort maximal, voie A — **désactivée** le 03/10 (accès en écriture refusé à ses sessions) | `trig_01AdGsb14RjjmaqFdrSXsMZX` | CR (historique) |
 | B (moteurs) | Fable 5.1, effort maximal, voie B | `trig_01GKJ1jmozMRy6cJYUdyNtMV` | CQ (historique) ; de secours pour CA1 |
 | App | Opus 5.5, effort élevé, application | `trig_01ETa7PRUGvnrwMrEchoKcc9` | CU, CI |
-| A et B (moteurs) | **Opus 5.5, effort maximal, moteurs** (C5.1) | `trig_01M9KpjaVMDC897vjadunwZP` | CX, CP2, CA2, CY et fins de lot (CR) |
+| A et B (moteurs) | **Opus 5.5, effort maximal, moteurs** (C5.1) | `trig_01M9KpjaVMDC897vjadunwZP` | CX, CP2, CA2, CY et fins de lot (CR) ; secours de KM1, KM2 (C13.4) |
 
 Tous les lots sont lancés par la conversation de pilotage d'après ce fichier (PIPELINE_CP.md §0) ; aucun lot ne lance un autre lot.
 **Un seul lot moteur à la fois** depuis le 03/10/2026 (DECISIONS_CP.md C3.2) : ordre CQ → CR → CP1 → CA1 → CX → CP2 → CA2 → CY ; voie App (CU, CI) en parallèle. Sous-agents sur Opus, sauvegardes sur `cp-sauvegardes/<LOT>` (PIPELINE_CP.md §9). **Depuis le 05/10/2026 (C9.3), CP2 et CA2 tournent en parallèle** (voies A et B, deux sessions de la tâche Opus moteurs, lancées l'une après l'autre).
+
+**Méthode Koach (C13, 09/10/2026)** : lots KM1 → KM2 (voie A, un seul à la fois) puis KM3 (voie App) ; cahier `CAHIER_KM.md` ; validation automatique sur ses critères, sans panel (C13.3).
 
 ## Liens
 
@@ -60,3 +62,6 @@ Chaque lot ne modifie que sa ligne (PIPELINE_CP.md §1).
 | CI1f | App | CI1e validé (C11.5) ; 0.3.0 validés (C10.8, C10.10) | dev6.11.0, commit 9dd09214 (`cp-sauvegardes/CI1f-candidat`, contrôle ci-3d run 37934054639 vert) ; paquets `kalis_core` 0.4.3, `kalis_plan` / `kalis_adapt` 0.3.0 ; mini-séries une à une, groupes (chrono, résultat), formats du programme de 40 semaines annotés | — (lot d'application) | 2026-10-09 | validé (pilotage, C8, C11.8, 09/10/2026 14:12 UTC : main 9dd09214, build signé run 37938377955, contrôle ci-3d run 37934054639) |
 | CI1g | App | CI1f publié (C11.8) ; CY validé (C11.7) | — | — (lot d'application) | — | en cours depuis 2026-10-09 13:40 UTC — paquets 0.3.1 de CY dans l'application, base main 9dd09214 |
 | CI | App | CY, CU | — | — | — | en attente de CY, CU |
+| KM1 | A | — (C13.2) | — | — (lot sans panel, C13.3) | — | à faire |
+| KM2 | A | KM1 | — | — | — | en attente de KM1 |
+| KM3 | App | KM2 ; lot CI final ; base v1.1 | — | — | — | en attente de KM2, lot CI final, base v1.1 |

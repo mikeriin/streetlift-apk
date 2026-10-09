@@ -94,6 +94,14 @@ Interdits : ceux de PIPELINE_GP.md §7 ; plus : lancer un lot ; publier ou commi
 
 Ordre (un seul lot moteur à la fois, C3.2) : CQ → CR → CP1 → CA1 → CX → CP2 → CA2 → CY ; voie App en parallèle d'un lot moteur : CU dès que CQ est livré, CI après CY et CU. G12 à G15 (pipeline GP) : reprise décidée plus tard par le propriétaire.
 
+### Lots de la méthode Koach (DECISIONS_CP.md C13, 09/10/2026)
+
+| Lot | Voie | Prompt | Action unique | Prérequis | Validation |
+| --- | --- | --- | --- | --- | --- |
+| KM1 | A | KM1.txt | Référence Python du moteur Koach 1.0, banc adversarial, rejeu du journal réel (cahier `CAHIER_KM.md`) | — | auto, critères du cahier (pas de panel, C13.3) |
+| KM2 | A | KM2.txt | Portage Dart `kalis_adapt` 1.0.0, parité 1e-9 | KM1 | auto, critères du cahier |
+| KM3 | App | KM3.txt | Koach 1.0 dans l'application (dev7.0.0), comportement unique, retraits | KM2, lot CI final, base v1.1 | pilotage |
+
 ## 9. Budget d'utilisation (DECISIONS_CP.md C3)
 
 Le pipeline tourne sur le plan Max du propriétaire : une limite par fenêtre de 5 h et une limite hebdomadaire pour tous les modèles réunis ; **Fable ne peut consommer que 50 % de la limite hebdomadaire et la consomme plus vite que les autres modèles**. Le 02/10 au soir, les limites ont été épuisées et les deux sessions se sont arrêtées en perdant leur travail non poussé. Règles :

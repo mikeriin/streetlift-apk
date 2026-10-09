@@ -1,0 +1,20 @@
+LOT KM3 — KOACH 1.0 DANS L'APPLICATION (dev7.0.0)
+Modèle : Opus 5.5, effort élevé (voie App, tâche « Opus 5.5, effort élevé, application »). Validation : par le pilotage (C8.1), sur les critères du cahier.
+Prérequis : KM2 livré et validé ; lot CI final et base d'exercices v1.1 intégrés dans l'application.
+Base : pointe de `main`. Contrôle : `claude/ci-3d`. Sauvegardes : `cp-sauvegardes/KM3`. Si le push sur `main` t'est refusé, pousse le commit prêt sur `cp-sauvegardes/KM3-candidat` et arrête-toi : le pilotage publie.
+Cahier des charges : `pipeline/cp/CAHIER_KM.md`. Décisions : C11, C13.
+
+OBJECTIF
+Remplacer dans l'application le moteur de décision par `kalis_adapt` 1.0.0 (`etiquettes/kalis_adapt-v1.0.0`, copie complète octet pour octet, `kalis_bench` jamais dans l'app), avec un seul comportement pour tous les utilisateurs, et retirer tout ce qui faisait coexister plusieurs modes. Suis `packages/kalis_adapt/docs/INTEGRATION_KM3.md`.
+
+1. CONTENU
+- **Comportement unique** (cahier, « Comportement dans l'application ») : suggestions à la séance avec raison en une ligne, validées d'un tap, refus avec raison facultative (trop lourd, trop léger, matériel, temps, autre) ; replanification chaque lundi en arrière-plan ; récapitulatif de fin de bloc validé d'un tap ; message hors modèle et diagnostic en 3 questions ; arrêt d'urgence (plan figé à la semaine en cours, sans perte, réactivation depuis le journal) ; un texte Koach lisible par code de raison, jamais un code brut.
+- **Programme de 40 semaines = plan initial** (D2) : à l'activation, le moteur le replanifie comme tout programme ; les séances faites et séries validées ne sont jamais réécrites ; la sauvegarde d'origine et « Revenir à mon programme d'origine » (C11.2) restent.
+- **Retraits** : couche d'ajustement CI1c et statut spécial du programme importé ; option d'adaptation de la structure ; code de décision de `kalis_adapt` 0.x ; série AMRAP toutes les 4 semaines ; filtre des séries selon le RIR. Migration des données existantes sans perte (ajustements acceptés, décisions, journal).
+- **Mode dev** (builds de dev seulement, absent de l'AAB) : inspecteur du moteur (raisons, scores, incertitudes, temps de calcul réel), export du journal moteur et du dossier hors modèle, import du fichier de paramètres, rejeu walk-forward.
+- **Bascule** : Koach prend les commandes au prochain début de bloc du programme du propriétaire si tous les critères du cahier sont passés (23/11/2026 si l'APK est installé au plus tard le 16/11/2026, sinon 04/01/2027) ; avant, le moteur 1.0.0 est intégré mais le bloc en cours n'est pas coupé.
+- **Contraintes** : aucune permission INTERNET (manifeste vérifié) ; installation par-dessus sans perte, signature intouchée ; temps mesurés sur émulateur (replanification ≤ 10 s, série ≤ 50 ms).
+- Tests Dart + émulateur (session perso et session de test du mode dev) : suggestion acceptée, refusée avec raison, récapitulatif de fin de bloc, hors modèle et diagnostic, arrêt d'urgence et réactivation, migration d'une sauvegarde réelle simulée au format de la version précédente, retour au programme d'origine.
+
+2. FIN DE LOT
+- dev7.0.0, contrôle `claude/ci-3d` vert, push sur `main`, build signé réussi et run vérifié, `LIVRAISON_KM3.md` (pipeline et projet claude.ai) avec un « À tester » concret sur le téléphone du propriétaire, ligne KM3 d'`ETAT_CP.md` « à valider », page de suivi, notification `Kalis Track dev7.0.0 prêt à tester — Koach 1.0. Page : <lien>`. Le pilotage valide.
