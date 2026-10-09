@@ -18,7 +18,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:streetlift_tracker/adapt/adapt_texts.dart';
 import 'package:streetlift_tracker/athlete_profile.dart';
 import 'package:streetlift_tracker/plan/coach_texts.dart';
-import 'package:streetlift_tracker/plan/plan_program.dart';
 import 'package:streetlift_tracker/store.dart';
 
 /// Profils street des fixtures du parcours v3 (`kalis_core`, CQ), en JSON.
@@ -37,12 +36,13 @@ List<Map<String, Object?>> _streetJson() {
     final primary = kc.AthleteProfile.fromJson(p).disciplines.primary.code;
     return primary == 'street_workout' ||
         primary == 'streetlifting' ||
-        primary == 'sets_reps';
+        primary == 'calisthenics';
   }).toList();
 }
 
-void _save(AppStore app, kc.AthleteProfile p) {
-  final r = app.saveAthleteProfile(ProfileDraft.of(p)..consent = 'refused');
+void _save(AppStore app, kc.AthleteProfile p, {String consent = 'refused'}) {
+  // (Gênes déclarées gardées seulement avec le consentement santé.)
+  final r = app.saveAthleteProfile(ProfileDraft.of(p)..consent = consent);
   expect(r, isNotNull, reason: 'profil enregistré');
 }
 
@@ -139,8 +139,7 @@ void main() {
         );
         expect(
           isPainReason(r),
-          note == kp.CoachNotes.painReprise ||
-              note == kp.CoachNotes.wristSpare,
+          note == kp.CoachNotes.painReprise || note == kp.CoachNotes.wristSpare,
           reason: note,
         );
       }
@@ -315,15 +314,60 @@ void main() {
               'street_workout',
         ),
       );
+      // Profil de figures (comme le test de `kalis_plan` 0.2.3, C9.8,
+      // `street_10`) : planche visée, six séances, parallettes et anneaux.
+      json['experience'] = 'elite';
+      json['disciplines'] = {
+        'primary': 'calisthenics',
+        'primaryPct': 60,
+        'secondaries': [
+          {'discipline': 'street_workout', 'pct': 20},
+          {'discipline': 'streetlifting', 'pct': 20},
+        ],
+      };
+      json['streetMode'] = {
+        'primary': 'calisthenics',
+        'streetliftingPct': 20,
+        'setsRepsPct': 20,
+        'calisthenicsPct': 60,
+      };
+      json['availability'] = [
+        for (final d in [1, 2, 3, 5, 6, 7]) {'weekday': d, 'minutes': 90},
+      ];
+      json['equipment'] = [
+        ...(json['equipment']! as List),
+        'parallettes',
+        'anneaux',
+      ];
+      json['benchmarks'] = [
+        ...(json['benchmarks']! as List),
+        {
+          'exerciseId': 'cs-planche-straddle',
+          'kind': 'max_hold',
+          'source': 'declared',
+          'date': '2026-09-18',
+          'seconds': 6,
+        },
+      ];
+      json['skills'] = [
+        {
+          'targetExerciseId': 'cs-planche',
+          'currentExerciseId': 'cs-planche-straddle',
+        },
+      ];
       json['limitations'] = [
         {
           'zone': 'wrist_hand',
           'side': 'both',
-          'joint': 'wrist',
+          'joint': 'poignet',
           'discomfort': 2,
         },
       ];
-      _save(app, kc.AthleteProfile.fromJson(json));
+      _save(app, kc.AthleteProfile.fromJson(json), consent: 'given');
+      expect(
+        app.athleteProfileForEngines?.limitations.single.zone,
+        kc.BodyZone.wristHand,
+      );
       _create(app);
       final block = app.planProgram!.blocks.last.block;
       expect(isCoachBlock(block), isTrue);

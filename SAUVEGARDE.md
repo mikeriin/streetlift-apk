@@ -7,4 +7,5 @@ Fait :
 - Textes : adapt.load_held cause pain_return ; test reporté (pain_reported / pain_return) ; retrait douleur du jour ; échange appui neutre poignet ; carte d'arrêt affichée aussi les jours sans renvoi (painStopNoticeZones, consigne de consulter seulement les jours de renvoi) ; pain_reprise et wrist_spare comme notes de douleur, pain_reprise dans la carte.
 - test/ci1d_paquets_test.dart.
 
-Reste : résultats CI rapide, émulateur, contrôle complet ci-3d, main, build signé, livraison.
+Fait aussi : tests CI1d verts en CI rapide (run 37862991537), suite complète verte avec 0.2.3 (run 37860966524), étape émulateur « douleur_suite » ajoutée à street_ci1_test.dart, README/SUIVI/CI_GP.
+Reste : relecture indépendante, contrôle complet ci-3d, main, build signé, livraison.

@@ -544,6 +544,51 @@ void main() {
               x.exerciseId,
         ].every((id) => !servedIds.contains(id));
         await home(tester);
+        // CI1d (`kalis_adapt` 0.2.3) : le renvoi vers un professionnel n'est
+        // répété qu'une fois par semaine ; la séance suivante de l'arrêt
+        // garde la carte (exercices retirés ou remplacés), avec ou sans la
+        // consigne de consulter selon le jour.
+        final i = days.indexOf(st);
+        final next = i >= 0 && i + 1 < days.length ? days[i + 1] : null;
+        if (next != null) {
+          await SessionHost.restart(
+            () => DevSession.setOffsetDays(_offsetTo(dateOf(next.$1, next.$2))),
+            message: 'Séance suivante',
+          );
+          await opened(tester);
+          final nweek = store.program.week(next.$1);
+          final nday = nweek.day(next.$2)!;
+          unawaited(
+            appNavigator.currentState!.push(
+              MaterialPageRoute<void>(
+                builder: (_) => SessionScreen(week: nweek, day: nday),
+              ),
+            ),
+          );
+          releve['douleur_suite_jour'] = 'S${next.$1}-J${next.$2}';
+          releve['douleur_suite_carte'] = await until(
+            tester,
+            find.byKey(const ValueKey('health-pain-stop')),
+          );
+          final na = store.sessionAdapt(next.$1, next.$2);
+          releve['douleur_suite_renvoi'] =
+              na?.active.reasons.any(
+                (r) => r.code == 'adapt.pain_persistent',
+              ) ??
+              false;
+          releve['douleur_suite_texte'] = [
+            for (final t in tester.widgetList<Text>(
+              find.descendant(
+                of: find.byKey(const ValueKey('health-pain-stop')),
+                matching: find.byType(Text),
+              ),
+            ))
+              t.data ?? '',
+          ];
+          await top(tester);
+          await shot('12_douleur_suite');
+          await home(tester);
+        }
       }
     }
 
@@ -580,6 +625,9 @@ void main() {
     expect(releve['douleur_carte'], isTrue);
     expect(releve['douleur_arret'], isTrue);
     expect(releve['douleur_retires_absents'], isTrue);
+    if (releve['douleur_suite_jour'] != null) {
+      expect(releve['douleur_suite_carte'], isTrue);
+    }
     expect(releve['retour_perso'], isTrue);
     expect(releve['perso_intacte'], isTrue);
     expect(releve['perso_sans_saison_apres'], isTrue);

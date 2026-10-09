@@ -1,4 +1,8 @@
-# Kalis Track dev6.9.2 — Calibrage des programmes (pipeline « Calibrage des programmes », voie App)
+# Kalis Track dev6.9.3 — Calibrage des programmes (pipeline « Calibrage des programmes », voie App)
+
+## dev6.9.3 — Moteurs street 0.2.3 (lot CI1d)
+
+- **Paquets** `kalis_plan` 0.2.3 et `kalis_adapt` 0.2.3 (`kalis_core` 0.4.2 inchangé) : bloc de reprise après une douleur qui dure (ni test ni affûtage, échéance repoussée), poignet sensible déclaré au profil (appuis en extension réduits de moitié, parallettes ou poignées d'abord), zone signalée souvent gardée « sensible » au bloc suivant, 1RM seulement déclaré remplacé par l'estimation quand il est nettement plus haut, première semaine plafonnée, série repère, simulation du test, repères sur le chemin de l'objectif, tenues vers le critère de passage ; en séance : palier de reprise qui recule quand la douleur répond, tests reportés tant que la zone est au-dessus de 2/10, appui neutre pendant l'arrêt du poignet, renvoi vers un professionnel au début de l'arrêt puis une fois par semaine. Tout est écrit en clair (jamais un code). Le programme de 40 semaines n'est pas touché. Version « dev6.9.3 ».
 
 ## dev6.9.2 — Koach appliqué, séance toujours à jour (lot CI1c)
 
