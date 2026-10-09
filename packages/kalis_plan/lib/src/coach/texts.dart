@@ -582,6 +582,10 @@ String? coachReasonText(Reason r, Catalog catalog) {
               'par jambe ; quand 30 s tiennent sans toucher l\'appui deux '
               'séances de suite, passe à la marche talon-pointe, puis à '
               "l'appui sur une jambe en tournant la tête.",
+        CoachNotes.holdSupport =>
+          "Une main sur un dossier de chaise ou un plan de travail, "
+              'amplitude courte au début ; si l\'équilibre manque, un simple '
+              'transfert du poids d\'une jambe à l\'autre.',
         CoachNotes.chairSquat =>
           "Squat en assis-debout : une chaise stable derrière toi, assieds-"
               'toi doucement puis relève-toi, mains en appui sur les cuisses '
