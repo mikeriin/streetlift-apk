@@ -31,13 +31,14 @@ EPS = 11        # 11..15 : écart de réponse par classe (charge, reps, tenue, c
 KN = 16         # sensibilité au compartiment nerveux
 KM = 17         # sensibilité au compartiment musculaire
 BA = 18         # biais personnel du RIR (répétitions, additif)
-LAM = 19        # forme de la courbe répétitions-charge (0 linéaire, 1 logarithmique)
-KU = 20         # échelle de la courbe de l'utilisateur (ln)
-FI = 21         # fatigue intra-séance (part des répétitions perdue)
-HH = 22         # part du maintien maximal par répétition en réserve
-DS = 23         # effet de jour de la séance
-DE = 24         # effet de jour de l'exercice en cours
-NG = 25
+BP = 19         # biais du RIR proportionnel à la réserve (sous-estimation loin de l'échec)
+LAM = 20        # forme de la courbe répétitions-charge (0 linéaire, 1 logarithmique)
+KU = 21         # échelle de la courbe de l'utilisateur (ln)
+FI = 22         # fatigue intra-séance (part des répétitions perdue)
+HH = 23         # part du maintien maximal par répétition en réserve
+DS = 24         # effet de jour de la séance
+DE = 25         # effet de jour de l'exercice en cours
+NG = 26
 C_LIN = 0.0265  # pente de la branche linéaire : -ln(part du 1RM) par répétition
 C_LOG = 0.0892  # branche logarithmique, égale à la linéaire à 8 répétitions
 CLASSES = ['charge', 'reps', 'tenue', 'cardio', 'wod']
@@ -105,11 +106,10 @@ class Modele(object):
             self.m[EPS + c] = ap['eps_classe_moyenne'][c] * rho / ap['rho_moyenne_par_niveau'][1]
             self.P[EPS + c, EPS + c] = (ap['eps_classe_sd'] * rho / ap['rho_moyenne_par_niveau'][1]) ** 2
         for idx, cle in ((KN, 'k_nerveux'), (KM, 'k_musculaire'), (BA, 'biais_rir_additif'),
-                         (LAM, 'courbe_forme'), (KU, 'courbe_echelle'),
+                         (BP, 'biais_rir_proportionnel'), (LAM, 'courbe_forme'), (KU, 'courbe_echelle'),
                          (FI, 'fatigue_intra'), (HH, 'part_tenue')):
             self.m[idx] = ap[cle][0]
             self.P[idx, idx] = ap[cle][1] ** 2
-        self.bp = ap['biais_rir_proportionnel_population']
         self.pistes = {}
         self.ordre = []
         self.jour = 0
@@ -199,12 +199,6 @@ class Modele(object):
         sd = {'charge': ap['delta_sd'], 'reps': ap['reps_sd'], 'tenue': ap['reps_sd'],
               'cardio': ap['cardio_sd'], 'wod': ap['wod_sd']}[typ]
         vecteur = fiche['vecteur']
-        if typ == 'reps' and fiche.get('fraction', 0.0) > 0:
-            # Répétitions au poids du corps : capacité portée sur la masse
-            # totale (e1RM de la part de poids de corps), cahier § 2.
-            marge = (2.0 + 2.0 * self.niveau) - fiche.get('difficulte', 3)
-            reps = ap['reps_base'] * math.exp(ap['pente_difficulte'] * marge)
-            base = math.log(fiche['fraction'] * self.poids_kg) + self._courbe_moyenne(reps, fiche.get('bas', False))
         declare = False
         t = Piste(ex_id, typ, vecteur, base, idx, fraction=fiche.get('fraction', 0.0),
                   bas=fiche.get('bas', False), tendon=fiche.get('tendon', 0.0),
@@ -231,8 +225,6 @@ class Modele(object):
             if mesure == voulu and valeur > 0:
                 if typ == 'charge':
                     cible = math.log(valeur + t.fraction * self.poids_kg)
-                elif typ == 'reps' and t.fraction > 0:
-                    cible = math.log(t.fraction * self.poids_kg) + self._g(*(self.courbe(t) + (valeur,)))
                 else:
                     cible = math.log(valeur)
                 hi, hc = self._h_capacite(t, jour=False)
@@ -313,6 +305,11 @@ class Modele(object):
         f = self.p['fatigue']
         w = 1.0 / (1.0 + (rir if rir > 0 else 0.0) / f['effort_demi_rir'])
         return w + (f['echec_supplement'] if echec else 0.0)
+
+    def effort_intra(self, rir):
+        """Fatigue laissée dans la séance par une série : elle croît vite à
+        l'approche de l'échec (SOURCES.md § Fatigue intra-séance)."""
+        return math.exp(-(rir if rir > 0 else 0.0) / self.p['fatigue']['intra_rir'])
 
     def _charger_compartiments(self, t, effort, quantite=1.0):
         self.f_nerveux += effort * t.systemique
@@ -523,7 +520,10 @@ class Modele(object):
     def bruit_rir_de(self, rir, reps):
         me = self.p['mesure']
         base = me['bruit_rir_par_niveau'][self.niveau] * self.bruit_rir
-        s = base * (me['bruit_rir_plancher'] + me['bruit_rir_pente'] * rir) / (me['bruit_rir_plancher'] + me['bruit_rir_pente'] * 2.0)
+        # Le bruit du cahier (2,0 / 1,5 / 1,0 selon le niveau) vaut loin de
+        # l'échec (réserve de référence) ; il décroît près de l'échec.
+        s = base * (me['bruit_rir_plancher'] + me['bruit_rir_pente'] * rir) / \
+            (me['bruit_rir_plancher'] + me['bruit_rir_pente'] * me['bruit_rir_reference'])
         if reps > me['bruit_rir_longue_serie_de']:
             s *= 1 + me['bruit_rir_longue_serie_pente'] * (reps - me['bruit_rir_longue_serie_de'])
         return s
@@ -537,9 +537,11 @@ class Modele(object):
             return 0.0, 0.25, 0.0
         if flammes == 9:
             return 0.25, 1.25, 1.0
-        if flammes <= 1:
-            return ouvert - 0.25, INF, ouvert
         r = (11 - flammes) / 2.0
+        if r >= ouvert:
+            # Loin de l'échec, la note ne distingue plus : « 4 répétitions
+            # en réserve ou plus » (échelle de Zourdos et al. 2016).
+            return r - 0.25, INF, r
         return r - 0.25, r + 0.25, r
 
     def rir_vrai(self, percu, m=None):
@@ -549,7 +551,7 @@ class Modele(object):
         m = self.m if m is None else m
         if percu <= 0:
             return 0.0
-        v = percu * (1.0 + self.bp) + clamp(m[BA], -2.5, 2.5)
+        v = percu * (1.0 + clamp(m[BP], -0.2, 1.0)) + clamp(m[BA], -2.5, 2.5)
         return v if v > 0.0 else 0.0
 
     # ------------------------------------------------------------------
@@ -594,8 +596,6 @@ class Modele(object):
     def masse(self, t, externe):
         if t.type == 'charge':
             return (externe or 0.0) + t.fraction * self.poids_kg
-        if t.fraction > 0:
-            return t.fraction * self.poids_kg + (externe or 0.0)
         return 1.0
 
     def _projeter(self):
@@ -615,10 +615,10 @@ class Modele(object):
         eta = t.base
         for i, c in zip(idx, co):
             eta += c * m[i]
-        fi = clamp(m[FI], 0.0, 0.4)
+        fi = clamp(m[FI], 0.0, 1.5)
         garde = 1.0 - fi * sj
-        if garde < 0.5:
-            garde = 0.5
+        if garde < 0.3:
+            garde = 0.3
         if sans_charge:
             R = math.exp(eta)
             dR = R                      # dR/d eta
@@ -648,10 +648,11 @@ class Modele(object):
         if not percu:
             return indices, coefs, v, R, v
         ba = clamp(m[BA], -2.5, 2.5)
-        pr = (v - ba) / (1.0 + self.bp)
-        coefs = [c / (1.0 + self.bp) for c in coefs]
-        indices.append(BA)
-        coefs.append(-1.0 / (1.0 + self.bp))
+        bp = clamp(m[BP], -0.2, 1.0)
+        pr = (v - ba) / (1.0 + bp)
+        coefs = [c / (1.0 + bp) for c in coefs]
+        indices += [BA, BP]
+        coefs += [-1.0 / (1.0 + bp), -pr / (1.0 + bp)]
         return indices, coefs, pr, R, v
 
     def _serie_force(self, t, s):
@@ -667,8 +668,8 @@ class Modele(object):
         echec = bool(s.get('failed'))
         repos = s.get('restSeconds') or 90
         charge = self.masse(t, externe)
-        sans_charge = t.type == 'reps' and not t.fraction > 0
-        if charge <= 0:
+        sans_charge = t.type == 'reps'
+        if charge <= 0 and not sans_charge:
             return None
         lnL = 0.0 if sans_charge else math.log(charge)
         sj = self._intra(t)
@@ -696,9 +697,9 @@ class Modele(object):
                 if passe == 0:
                     # Deuxième passe : relinéarisation autour de la moyenne a
                     # posteriori approchée (filtre itéré).
-                    essai = self._apercu(idx, co, pred, a, b, self._bruit_force(percu, v, reps, R, me))
+                    essai = self._apercu(idx, co, pred, a, b, self._bruit_force(percu, v, reps, R, me, sj))
                     lin = essai
-            s2 = self._bruit_force(percu, v, reps, R, me)
+            s2 = self._bruit_force(percu, v, reps, R, me, sj)
             const = pred
             for i, c in zip(idx, co):
                 const -= c * lin[i]
@@ -722,7 +723,7 @@ class Modele(object):
                 rir_c = 0.0
         # Compartiments et stimulus de la semaine.
         eff = self.effort(rir_c, echec)
-        t.series_seance.append((eff, repos))
+        t.series_seance.append((self.effort_intra(rir_c), repos))
         self._charger_compartiments(t, eff)
         self._stimulus(t, rir_c, lnL, reps > 0)
         t.mesures += 1
@@ -733,13 +734,16 @@ class Modele(object):
                 t.meilleur = (charge, self.jour)
         return resid
 
-    def _bruit_force(self, percu, v, reps, R, me):
+    def _bruit_force(self, percu, v, reps, R, me, sj=0.0):
+        # La fatigue laissée par les séries précédentes varie d'un exercice
+        # à l'autre : une série qui suit une série dure renseigne moins.
+        extra = (me['dispersion_fatigue_intra'] * sj * R) ** 2
         if not percu:
-            return 0.35 ** 2
+            return 0.35 ** 2 + extra
         r = v if v > 0 else 0.0
         if r > 8:
             r = 8.0
-        return self.bruit_rir_de(r, R) ** 2
+        return self.bruit_rir_de(r, R) ** 2 + extra
 
     def _apercu(self, idx, co, pred, a, b, s2):
         """Moyenne a posteriori approchée (branche principale) d'une
@@ -781,14 +785,15 @@ class Modele(object):
         if sec <= 0 and not echec:
             return None
         idx, co = self._h_capacite(t)
-        fi = clamp(self.m[FI], 0.0, 0.4)
+        fi = clamp(self.m[FI], 0.0, 1.5)
         sj = self._intra(t)
         garde = 1.0 - fi * sj
-        if garde < 0.5:
-            garde = 0.5
+        if garde < 0.3:
+            garde = 0.3
         ln_s = math.log((sec if sec > 0 else 0.5) / garde)
         if echec:
-            resid = self._observer(idx, co, t.base - ln_s, None, None, (me['bruit_tenue'] / 2) ** 2, point=0.0)
+            resid = self._observer(idx, co, t.base - ln_s, None, None,
+                                   (me['bruit_tenue'] / 2) ** 2 + (me['dispersion_fatigue_intra'] * sj) ** 2, point=0.0)
             rir_c = 0.0
         elif flammes is None:
             resid = self._observer(idx, co, t.base - ln_s, 0.0, INF, me['bruit_tenue'] ** 2)
@@ -809,7 +814,7 @@ class Modele(object):
                 ix = idx + [HH]
                 cx = [c * part / hh for c in co] + [-pred / hh]
                 r = pred if pred > 0 else 0.0
-                s2 = self.bruit_rir_de(r if r < 8 else 8.0, 6) ** 2
+                s2 = self.bruit_rir_de(r if r < 8 else 8.0, 6) ** 2 + (me['dispersion_fatigue_intra'] * sj / hh) ** 2
                 if passe == 0:
                     lin = self._apercu(ix, cx, pred, a, b, s2)
             const = pred
@@ -819,7 +824,7 @@ class Modele(object):
             self._projeter()
             rir_c = r
         eff = self.effort(rir_c, echec)
-        t.series_seance.append((eff, repos))
+        t.series_seance.append((self.effort_intra(rir_c), repos))
         self._charger_compartiments(t, eff, quantite=max(sec, 1) / 10.0)
         self._stimulus(t, rir_c, 0.0, sec > 0)
         t.mesures += 1
@@ -1025,6 +1030,4 @@ class Modele(object):
         c = self.capacite(ex_id)
         if c is None:
             return None
-        if t.type == 'reps' and t.fraction > 0:
-            return self.reps_a(t, c[0] - math.log(t.fraction * self.poids_kg))
         return math.exp(c[0])

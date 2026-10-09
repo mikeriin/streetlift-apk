@@ -43,25 +43,25 @@
     "eps_classe_sd": 0.003,
     "k_nerveux": [
       0.001,
-      0.0004
+      0.0
     ],
     "k_musculaire": [
       0.004,
-      0.0015
+      0.0
     ],
     "biais_rir_additif": [
       0.0,
       0.6
     ],
-    "courbe_echelle_exercice_sd": 0.2,
+    "courbe_echelle_exercice_sd": 0.23,
     "courbe_bas_du_corps": -0.2,
     "fatigue_intra": [
-      0.1,
-      0.04
+      0.6,
+      0.25
     ],
     "part_tenue": [
       0.12,
-      0.03
+      0.0
     ],
     "niveau_echelle_charge": [
       0.65,
@@ -84,13 +84,16 @@
     "wod_sd": 0.25,
     "courbe_forme": [
       0.1,
-      0.2
+      0.3
     ],
     "courbe_echelle": [
       0.0,
-      0.12
+      0.0
     ],
-    "biais_rir_proportionnel_population": 0.2
+    "biais_rir_proportionnel": [
+      0.25,
+      0.0
+    ]
   },
   "mesure": {
     "bruit_rir_par_niveau": [
@@ -121,12 +124,14 @@
       0.4,
       2.5
     ],
-    "rir_ouvert": 5.0,
+    "rir_ouvert": 4.0,
     "cardio_pente_rir": 4.0,
     "cardio_charge_neutre": 0.8,
     "cardio_poids_qualite": 1.25,
     "wod_pente_rir": 4.0,
-    "bruit_rir_endurance": 0.8
+    "bruit_rir_endurance": 0.8,
+    "bruit_rir_reference": 5.0,
+    "dispersion_fatigue_intra": 0.3
   },
   "jour": {
     "sigma_seance": 0.022,
@@ -161,7 +166,8 @@
     "effort_demi_rir": 2.0,
     "echec_supplement": 0.5,
     "intra_report": 0.7,
-    "intra_repos_s": 150.0
+    "intra_repos_s": 180.0,
+    "intra_rir": 1.5
   },
   "dynamique": {
     "q_theta_semaine": 2e-05,
@@ -194,7 +200,30 @@
     "test_reps_debutant": 5,
     "test_rir": 1.0,
     "test_rir_debutant": 2.0,
-    "test_reps_ouvertes": 3
+    "test_reps_ouvertes": 0,
+    "rampe_pas": 0.1,
+    "rampe_series_max": 5,
+    "repos_test_s": 180,
+    "rampe_pas_par_rir": [
+      [
+        4.0,
+        0.1
+      ],
+      [
+        3.0,
+        0.075
+      ],
+      [
+        2.5,
+        0.05
+      ],
+      [
+        2.0,
+        0.035
+      ]
+    ],
+    "test_reps_avance": 1,
+    "test_rir_avance": 1.0
   },
   "planification": {
     "trajectoires": 1000,
@@ -310,7 +339,13 @@
       0.4
     ],
     "seance_tolerance": 1.15,
-    "seance_tolerance_min": 3.0
+    "seance_tolerance_min": 3.0,
+    "couloir_haut_max": 0.15,
+    "couloir_part_lourde": 0.85,
+    "schema_change_part": 0.025,
+    "schema_change_reps_max": 4,
+    "barre_recente_j": 42,
+    "premiere_hausse": 0.1
   },
   "adherence": {
     "a_priori_poids_sd": 1.5,

@@ -181,13 +181,6 @@ class PolitiqueKoach(Politique):
         if t is None or t.type not in ('charge', 'reps', 'tenue'):
             return None
         mu, sd = m.capacite(ex_id)
-        if t.type == 'reps' and t.fraction > 0:
-            masse = math.log(t.fraction * m.poids_kg)
-            v = m.reps_a(t, mu - masse)
-            lo = m.reps_a(t, mu - 1.6448536269514722 * sd - masse)
-            hi = m.reps_a(t, mu + 1.6448536269514722 * sd - masse)
-            rel = (hi - lo) / (2 * 1.6448536269514722 * v) if v > 0 else sd
-            return (v, rel, v, lo, hi)
         cap = math.exp(mu)
         if t.type == 'charge':
             lam, k = m.courbe(t)

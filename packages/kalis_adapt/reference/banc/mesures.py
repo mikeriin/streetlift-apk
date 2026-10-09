@@ -17,11 +17,24 @@ class Estimations(object):
     def add(self, tour, keep):
         seen = {}
         ids = set()
+        # Rang de séance = rang du jour d'entraînement de l'exercice (un test
+        # et le travail du même jour comptent pour une séance ; dernière
+        # estimation du jour).
+        par_jour = {}
+        ordre = []
         for e in tour.estimates:
             if not keep(e) or e['truth'] <= 0:
                 continue
+            cle = (e['exerciseId'], e['simDay'])
+            if cle not in par_jour:
+                ordre.append(cle)
+            par_jour[cle] = e
+        rang = {}
+        for cle in ordre:
+            e = par_jour[cle]
+            rang[e['exerciseId']] = rang.get(e['exerciseId'], 0) + 1
             ids.add(e['exerciseId'])
-            k = e['exerciseSession']
+            k = rang[e['exerciseId']]
             err = e['capacity'] / e['truth'] - 1
             a = abs(err)
             if a < 0.03:

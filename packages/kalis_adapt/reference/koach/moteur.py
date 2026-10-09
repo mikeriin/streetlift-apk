@@ -10,7 +10,7 @@ L'état est entièrement recalculable depuis le journal (`rejouer`).
 """
 import math
 
-from .modele import Modele, NQ, TH, RHO, EPS, KN, KM, BA, LAM, KU, FI, HH
+from .modele import Modele, NQ, TH, RHO, EPS, KN, KM, BA, BP, LAM, KU, FI, HH
 from .securite import Gardefous
 from .seance import Seances
 
@@ -97,7 +97,7 @@ class Koach(object):
             'fatigue_sensibilite': [m.m[KN], m.m[KM]],
             'fatigue': {'nerveux': m.f_nerveux, 'musculaire': list(m.f_musculaire),
                         'tendineux': dict(m.f_tendon), 'tau': list(m.tau)},
-            'biais_rir': m.m[BA], 'bruit_rir': m.bruit_rir,
+            'biais_rir': [m.m[BA], m.m[BP]], 'bruit_rir': m.bruit_rir,
             'courbe': [m.m[LAM], m.m[KU]], 'fatigue_intra': m.m[FI], 'part_tenue': m.m[HH],
             'note_paresseuse': m.paresse[0] / (m.paresse[0] + m.paresse[1]),
             'hypotheses_reponse': list(m.poids_hyp),
