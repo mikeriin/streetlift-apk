@@ -6460,10 +6460,10 @@ index 9e49e513..c860cac7 100644
  
  Lot CP2, partie 0 (« finir le street ») du pipeline « Calibrage des programmes ». `kalis_core` 0.4.2, contrat
 diff --git a/packages/kalis_plan/docs/CALIBRAGE_CP2.md b/packages/kalis_plan/docs/CALIBRAGE_CP2.md
-index 3c83ac43..4492db03 100644
+index 3c83ac43..44757182 100644
 --- a/packages/kalis_plan/docs/CALIBRAGE_CP2.md
 +++ b/packages/kalis_plan/docs/CALIBRAGE_CP2.md
-@@ -49,4 +49,36 @@ Banc : 0 violation de sécurité sur les 17 saisons street et leurs 7 scénarios
+@@ -49,4 +49,43 @@ Banc : 0 violation de sécurité sur les 17 saisons street et leurs 7 scénarios
  
  ## Partie 1 — autres disciplines (0.3.0)
  
@@ -6484,8 +6484,15 @@ index 3c83ac43..4492db03 100644
 +| a2 (boucle 1) | run 37856208345 | 36 | 6 | 5 | 7,15 |
 +| a3 (boucle 2) | run 37862085855 | 34 | 8 | 5 | 7,61 |
 +| a4 (boucle 3) | run 37865081103 | 16 | 13 | 5,5 | 7,88 |
++| fa (boucle 4 ; passe finale complète, candidat 0.3.0) | run 37871717821 | 40 | 15 | 5 | 7,92 |
 +
 +(Couples dont l'export n'a pas changé : note de la passe d'avant reprise ; le panel varie d'environ un point sur un programme inchangé.)
++
++Arrêt du calibrage après la boucle 4 (budget d'utilisation ; C9.2 : 5 boucles au plus). **Cible C7.5 non atteinte** : 15 couples sur 40 à 9. Notes finales par profil (force, calisthénie, hypertrophie, santé) : `autres_01` 9/8/9/9, `autres_02` 7/7/7/7, `autres_03` 9/8/9/9, `autres_04` 7/6/6,5/8, `autres_05` 9/7,5/8/8, `autres_06` 8/8/9/8, `autres_07` 9/9/9/9, `autres_08` 5/5,5/7/6,5, `autres_09` 9/8/9/9, `autres_10` 8/8/8/7. Banc : 0 violation de sécurité sur les 27 profils (0.1 : 23 sur les autres).
++
++### Street après la partie 1 (non-régression)
++
++Passe complète des 68 couples street sur les saisons du candidat 0.3.0 (même contrôle, `kalis_adapt` 0.3.0) : **19 couples à 9, minimum 5, moyenne 7,71** (fin de la partie 0 : 14, 5, 7,62). Le street n'est pas dégradé.
 +
 +### Sources vérifiées des règles chiffrées (sous-agent de recherche, 09/10/2026)
 +
@@ -8014,7 +8021,7 @@ index e60ff23c..1a6e83f5 100644
  final class Skeleton {
    /// Squelette.
 diff --git a/packages/kalis_plan/lib/src/coach/prescribe.dart b/packages/kalis_plan/lib/src/coach/prescribe.dart
-index ab5d3da5..bc6a9eb1 100644
+index ab5d3da5..50d0150c 100644
 --- a/packages/kalis_plan/lib/src/coach/prescribe.dart
 +++ b/packages/kalis_plan/lib/src/coach/prescribe.dart
 @@ -122,6 +122,39 @@ abstract final class CoachNotes {
@@ -8201,7 +8208,7 @@ index ab5d3da5..bc6a9eb1 100644
      if (role == _DayRole.event) {
        return null;
      }
-@@ -3717,33 +3839,62 @@ final class Prescriber {
+@@ -3717,33 +3839,61 @@ final class Prescriber {
      }
      // Test chronométré : la sortie longue de la semaine de test devient le
      // test de l'objectif (la moitié de la distance à mi-parcours).
@@ -8238,8 +8245,7 @@ index ab5d3da5..bc6a9eb1 100644
 +        // que le créneau du jour ni que 110 % de la plus longue course des
 +        // quatre semaines d'avant (Frandsen et al. 2025 ; relecture du
 +        // code de 0.3.0) ; sous 1 km, pas de test.
-+        final fits =
-+            (a.days[day].minutes - 8.0) * 60 * coachRunMetersPerSecond;
++        final fits = (a.days[day].minutes - 8.0) * 60 * coachRunMetersPerSecond;
 +        if (fits > 0 && meters > fits) {
 +          meters = fits;
 +        }
@@ -8287,7 +8293,7 @@ index ab5d3da5..bc6a9eb1 100644
      }
      if (s.method == Method.runQuality &&
          s.note != 'goal_pace' &&
-@@ -3760,6 +3911,11 @@ final class Prescriber {
+@@ -3760,6 +3910,11 @@ final class Prescriber {
        if (reps < 4) {
          reps = 4;
        }
@@ -8299,7 +8305,7 @@ index ab5d3da5..bc6a9eb1 100644
        if (role == _DayRole.primerFar) {
          // Semaine de l'épreuve : trois fractions, pour garder l'allure
          // sans fatigue (R6-P20, affûtage).
-@@ -3773,7 +3929,8 @@ final class Prescriber {
+@@ -3773,7 +3928,8 @@ final class Prescriber {
        // longues à l'allure de l'objectif) : stimulus de vitesse aérobie.
        final three = a.runTimeOn(3000);
        if (meters > 0 && three != null) {
@@ -8309,7 +8315,7 @@ index ab5d3da5..bc6a9eb1 100644
        }
        if (meters > 0) {
          x
-@@ -3795,18 +3952,53 @@ final class Prescriber {
+@@ -3795,18 +3951,53 @@ final class Prescriber {
        }
        return x;
      }
@@ -8367,7 +8373,7 @@ index ab5d3da5..bc6a9eb1 100644
      if (!warm) {
        minutes *= easy ? 0.7 : 1;
        if (role != _DayRole.normal) {
-@@ -3816,8 +4008,15 @@ final class Prescriber {
+@@ -3816,8 +4007,15 @@ final class Prescriber {
        if (minutes > cap) {
          minutes = cap;
        }
@@ -8385,7 +8391,7 @@ index ab5d3da5..bc6a9eb1 100644
        }
      }
      final whole = minutes.floor();
-@@ -3840,6 +4039,110 @@ final class Prescriber {
+@@ -3840,6 +4038,110 @@ final class Prescriber {
      return x;
    }
  
@@ -8496,7 +8502,7 @@ index ab5d3da5..bc6a9eb1 100644
    // ------------------------------------------------------------------ tests
  
    _Draft _testOf(
-@@ -4288,6 +4591,13 @@ final class Prescriber {
+@@ -4288,6 +4590,13 @@ final class Prescriber {
        return null;
      }
      if (role == _DayRole.event) {
@@ -8510,7 +8516,7 @@ index ab5d3da5..bc6a9eb1 100644
        return s.method == Method.warmupPrep ? _warmup(s, ws, role) : null;
      }
      if (role == _DayRole.primerNear) {
-@@ -4325,7 +4635,11 @@ final class Prescriber {
+@@ -4325,7 +4634,11 @@ final class Prescriber {
        return s.method == Method.mobility ? _mobility(s, ws, role) : null;
      }
      final unit = a.catalog.find(s.exerciseId)?.unit;
@@ -8523,7 +8529,7 @@ index ab5d3da5..bc6a9eb1 100644
        return _run(s, day, ws, role);
      }
      // Épreuve de répétitions, phase de réalisation : la première séance de
-@@ -4365,6 +4679,34 @@ final class Prescriber {
+@@ -4365,6 +4678,34 @@ final class Prescriber {
        return x;
      }
      final x = _dosed(s, day, week, ws, role);
@@ -8558,7 +8564,7 @@ index ab5d3da5..bc6a9eb1 100644
      if (x != null && s.note == 'pain_step' && x.e.id == s.exerciseId) {
        // (Recul d'étape pour douleur : la raison et le retour sont écrits —
        // panel CX, correction 1, passe 5, `street_10`.)
-@@ -4638,6 +4980,8 @@ final class Prescriber {
+@@ -4638,6 +4979,8 @@ final class Prescriber {
          return _mobility(s, ws, role);
        case Method.runEasy || Method.runLong || Method.runQuality:
          return _run(s, day, ws, role);
@@ -8567,7 +8573,7 @@ index ab5d3da5..bc6a9eb1 100644
        default:
          return _accessory(s, ws, week, role);
      }
-@@ -5151,6 +5495,24 @@ final class Prescriber {
+@@ -5151,6 +5494,24 @@ final class Prescriber {
          if (a.rejection(id, day) != null) {
            continue;
          }
@@ -8592,7 +8598,7 @@ index ab5d3da5..bc6a9eb1 100644
          final e = a.catalog.exercise(id);
          SlotSpec? own;
          for (final s in spec.slots) {
-@@ -5313,7 +5675,9 @@ final class Prescriber {
+@@ -5313,7 +5674,9 @@ final class Prescriber {
                : Method.cutRank(x.method));
      // 0. La marche de fin de séance prend le temps qui reste, rien de plus.
      for (final x in <_Draft>[...items]) {
@@ -8603,7 +8609,7 @@ index ab5d3da5..bc6a9eb1 100644
          continue;
        }
        final over = _daySeconds(items, minutes) - budget;
-@@ -5327,7 +5691,11 @@ final class Prescriber {
+@@ -5327,7 +5690,11 @@ final class Prescriber {
        } else {
          x
            ..secondsLow = kept
@@ -8616,7 +8622,7 @@ index ab5d3da5..bc6a9eb1 100644
        }
      }
      var guard = 0;
-@@ -6724,6 +7092,16 @@ final class Prescriber {
+@@ -6724,6 +7091,16 @@ final class Prescriber {
      final groupOf = <_Draft, String>{};
      for (final entry in members.entries) {
        final list = entry.value;
@@ -8633,7 +8639,7 @@ index ab5d3da5..bc6a9eb1 100644
        if (list.length < 2) {
          continue;
        }
-@@ -6795,6 +7173,172 @@ final class Prescriber {
+@@ -6795,6 +7172,172 @@ final class Prescriber {
      );
    }
  
@@ -8806,7 +8812,7 @@ index ab5d3da5..bc6a9eb1 100644
    /// Charge l'historique des garde-fous avec les semaines du bloc
    /// précédent [weeks].
    void seed(List<WeekPrescription> weeks) {
-@@ -6846,6 +7390,20 @@ final class Prescriber {
+@@ -6846,6 +7389,20 @@ final class Prescriber {
              trace.groups[g.index] += p.sets * t.creditOf(g) / 2;
            }
          }
@@ -8827,7 +8833,7 @@ index ab5d3da5..bc6a9eb1 100644
          final family = straightArmFamilyOf(t.exercise);
          final hold = p.secondsHigh;
          if (family >= 0 && hold != null && t.kind.isResistance) {
-@@ -6905,7 +7463,22 @@ final class Prescriber {
+@@ -6905,7 +7462,22 @@ final class Prescriber {
    List<WeekPrescription> build() {
      final out = <WeekPrescription>[];
      for (var w = 0; w < _shape.weeks.length; w++) {
@@ -8851,7 +8857,7 @@ index ab5d3da5..bc6a9eb1 100644
        _today = a.start.addDays(7 * w);
        if (w == 0) {
          _loadedBefore = 0;
-@@ -7008,6 +7581,31 @@ final class Prescriber {
+@@ -7008,6 +7580,31 @@ final class Prescriber {
            break;
          }
        }
@@ -8883,7 +8889,7 @@ index ab5d3da5..bc6a9eb1 100644
        _history.add(w < kept.length ? _traceOf(kept[w]) : trace);
        if (ws.kind == WeekKind.build || ws.kind == WeekKind.intro) {
          _loadedBefore++;
-@@ -7025,10 +7623,24 @@ final class Prescriber {
+@@ -7025,10 +7622,24 @@ final class Prescriber {
          _testsDone++;
        }
        out.add(
@@ -8910,7 +8916,7 @@ index ab5d3da5..bc6a9eb1 100644
            days: <DayPrescription>[
              for (var d = 0; d < a.dayCount; d++) _freezeDay(d, days[d], ws),
            ],
-@@ -7067,6 +7679,19 @@ double? coachWeightClassOf(Sex? sex, double bodyWeight) {
+@@ -7067,6 +7678,19 @@ double? coachWeightClassOf(Sex? sex, double bodyWeight) {
  }
  
  /// Raisons du bloc : phase, échéance, lecture du profil, règles de douleur.
@@ -8930,7 +8936,7 @@ index ab5d3da5..bc6a9eb1 100644
  List<Reason> blockReasonsOf(Athlete a, Skeleton skeleton) {
    final shape = skeleton.shape;
    final target = shape.target;
-@@ -7084,11 +7709,23 @@ List<Reason> blockReasonsOf(Athlete a, Skeleton skeleton) {
+@@ -7084,11 +7708,23 @@ List<Reason> blockReasonsOf(Athlete a, Skeleton skeleton) {
      for (final r in skeleton.reasons)
        if (r.params['note'] == CoachNotes.skillHorizon) r,
      reason(ReasonCodes.planCoachNote, <String, Object?>{
@@ -8956,7 +8962,7 @@ index ab5d3da5..bc6a9eb1 100644
    Reason note(String code, double value) => reason(
      ReasonCodes.planCoachNote,
      <String, Object?>{'note': code, 'value': value},
-@@ -7192,7 +7829,16 @@ List<Reason> blockReasonsOf(Athlete a, Skeleton skeleton) {
+@@ -7192,7 +7828,16 @@ List<Reason> blockReasonsOf(Athlete a, Skeleton skeleton) {
      ..add(
        note(CoachNotes.badDay, profile.sleep == SleepBand.under6Hours ? 2 : 1),
      )

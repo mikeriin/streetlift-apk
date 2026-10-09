@@ -65,8 +65,15 @@ Propriétés « autres disciplines » : 10 240 profils aléatoires (`test/coach_
 | a2 (boucle 1) | run 37856208345 | 36 | 6 | 5 | 7,15 |
 | a3 (boucle 2) | run 37862085855 | 34 | 8 | 5 | 7,61 |
 | a4 (boucle 3) | run 37865081103 | 16 | 13 | 5,5 | 7,88 |
+| fa (boucle 4 ; passe finale complète, candidat 0.3.0) | run 37871717821 | 40 | 15 | 5 | 7,92 |
 
 (Couples dont l'export n'a pas changé : note de la passe d'avant reprise ; le panel varie d'environ un point sur un programme inchangé.)
+
+Arrêt du calibrage après la boucle 4 (budget d'utilisation ; C9.2 : 5 boucles au plus). **Cible C7.5 non atteinte** : 15 couples sur 40 à 9. Notes finales par profil (force, calisthénie, hypertrophie, santé) : `autres_01` 9/8/9/9, `autres_02` 7/7/7/7, `autres_03` 9/8/9/9, `autres_04` 7/6/6,5/8, `autres_05` 9/7,5/8/8, `autres_06` 8/8/9/8, `autres_07` 9/9/9/9, `autres_08` 5/5,5/7/6,5, `autres_09` 9/8/9/9, `autres_10` 8/8/8/7. Banc : 0 violation de sécurité sur les 27 profils (0.1 : 23 sur les autres).
+
+### Street après la partie 1 (non-régression)
+
+Passe complète des 68 couples street sur les saisons du candidat 0.3.0 (même contrôle, `kalis_adapt` 0.3.0) : **19 couples à 9, minimum 5, moyenne 7,71** (fin de la partie 0 : 14, 5, 7,62). Le street n'est pas dégradé.
 
 ### Sources vérifiées des règles chiffrées (sous-agent de recherche, 09/10/2026)
 

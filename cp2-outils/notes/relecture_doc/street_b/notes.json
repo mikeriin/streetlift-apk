@@ -1,0 +1,126 @@
+{
+ "relecteur": "street_b",
+ "profils": {
+  "street_07_avance_streetlifting_competition": {
+   "ensemble": {
+    "note": 7.5,
+    "commentaire": "Bonne architecture de préparation : trois blocs calés à rebours, allègements toutes les 4 semaines, affûtage à ~35 % des séries dures en S11, dernier lourd à J-9/J-7 et trois tentatives graduées (91/96/99-102 %), cohérent avec les pratiques d'affûtage décrites (https://www.strongerbyscience.com/tapering/ ; https://researchonline.ljmu.ac.uk/id/eprint/2455/). La simulation montre pourtant une progression quasi nulle (0,064 %/sem.) et un muscle-up laissé sur le plateau : 11,25 kg réussis pour un maximum du jour de 22,8 kg (88,5 %), parce que le moteur estime le 1RM à 13 kg au lieu de 22. Le bloc post-compétition (S13-S16) est trop léger pour construire quoi que ce soit."
+   },
+   "adapte": {
+    "note": 8,
+    "commentaire": "Volume et fréquence (5 séances, deux expositions par mouvement, squat 2×/sem.) adaptés à un avancé de 5 ans ; le point faible « départ bras tendus » est ciblé par la traction pause en bas dès S1. La règle de catégorie (moins de 80 kg à 80 kg pile, pesée à 0,1 kg près) est juste : la catégorie −80 kg existe bien chez FinalRep (https://final-rep.com/weighted/about), mais l'athlète est exactement à la limite et le programme ne donne aucune consigne de poids avant S12."
+   },
+   "progression": {
+    "note": 7,
+    "commentaire": "La montée 76→83 % (S1-3), 82→88 % (S5-7) puis 91-93 % en simples (S9-10) est classique. Mais le moteur sert 142,5 kg au squat en S6 au lieu des 137,5 kg écrits (échec, 0 RIR), sous-estime durablement le muscle-up (estimé 90-91 kg contre 99-102 réels) et, après l'épreuve, sert des squats à 17-19 RIR de S13 à S16 : la progression réelle est restée à zéro. Une autoregulation par RIR suppose un recalage dans les deux sens (https://openrepository.aut.ac.nz/items/92cefeac-7c32-44f1-bfbc-f48f4a5dd8cf/full)."
+   },
+   "volume_intensite": {
+    "note": 7.5,
+    "commentaire": "65-66 séries dures/sem. en charge, allègements à 34 et affûtage à 22 sont dans les fourchettes décrites (baisse de volume de 40-60 %, intensité gardée : https://www.strongerbyscience.com/tapering/). Les séries de tête à 1-2 RIR à 83-93 % sont adaptées à un compétiteur. Le dips est en revanche recalé de 166,5 à 154,5 kg de référence en S5 et reste en dessous du réel (77-78 kg de lest) ; inversement, le bloc 4 est sous-dosé (squat 102,5 kg à 64 % en S15, 14,5 RIR moyen)."
+   },
+   "exercices": {
+    "note": 7.5,
+    "commentaire": "Les quatre mouvements de compétition en spécificité, traction pause en bas pour le point faible, rowing, face pull, rotations externes et curl marteau pour équilibrer le tirage : choix pertinents. Il manque un travail spécifique de transition de muscle-up (tirage haut, dips sur barre) alors que c'est le mouvement le plus sous-performé à l'épreuve, et aucun travail de verrouillage du dips ; standards de répétition à aligner sur le règlement de la fédération (https://www.sportscategory.info/en/articles/streetlifting)."
+   },
+   "faisable_sur": {
+    "note": 8,
+    "commentaire": "Séances de 45 à 64 min pour 90 min disponibles, consignes de sécurité correctes (sécurités de cage à ≥ 85 %, montée en charge, règle de douleur graduée cohérente avec le modèle de suivi de la douleur https://physicaltherapyfirst.com/blog/continued-sports-activity-using-a-pain-monitoring-model-during-rehabilitation-in-patients-with-achilles-tendinopathy/). 0 % d'échecs non voulus et 79/80 séances faites. Seul vrai accroc : l'échec au squat en S6 sur une charge servie au-dessus de l'écrit."
+   },
+   "securite": [
+    "S6 mardi : le moteur sert 142,5 kg au squat (écrit 137,5 kg, 86 %) à un athlète dont le maximum du jour est 143 kg : série de tête manquée (0 RIR). Les sécurités de cage sont prescrites, mais une hausse au-delà de l'écrit à ≥ 85 % devrait être bloquée.",
+    "Poids de corps de 80 kg pour la catégorie −80 kg avec tolérance de 0,1 kg (https://final-rep.com/weighted/about) : risque de coupe de poids de dernière minute ; prévoir un suivi du poids dès S8 plutôt qu'à deux semaines de l'épreuve."
+   ]
+  },
+  "street_08_avance_sets_reps_competition": {
+   "ensemble": {
+    "note": 6.5,
+    "commentaire": "Le canevas est sensé pour une épreuve de répétitions : séries longues proches du maximum, départs au chrono, répétitions de l'épreuve dans l'ordre des ateliers, affûtage en S7 (https://www.strongerbyscience.com/tapering/). Mais la préparation spécifique est courte (S5-S6 seulement), aucun objectif n'est approché (muscle-up 10 pour 14, tractions 25 pour 32, dips 44 pour 56 à l'épreuve) et, après l'épreuve, le moteur sert des doses très en dessous de l'écrit (dips 26-26-26 à 17-19 RIR en S10-S11 contre 1×38 + 2×28 écrits). Pour l'endurance locale, la proximité de l'échec compte plus que la charge (https://doaj.org/article/6d51b905504d46f0873bb43d5d84bf21) : ici elle n'est pas atteinte."
+   },
+   "adapte": {
+    "note": 7,
+    "commentaire": "Répartition 70/20/10 respectée : volume au poids du corps dominant, lest léger en soutien, pompes et jambes en entretien. Les repères déclarés (12/28/50) sont nettement au-dessus du réel (11/26/46), ce que la série repère de S1 et le test de S4 corrigent bien. Le format de l'épreuve n'est pas connu : la saisie est demandée, ce qui est honnête, mais le jour J impose 4 min entre ateliers alors que la règle suppose 300 s."
+   },
+   "progression": {
+    "note": 6,
+    "commentaire": "Bloc 1 (S2-S3) : séries de tête figées à 10 MU / 25 tractions / 44 dips, sans montée réelle, puis test en semaine d'allègement. Après l'échec des tests, la règle « séance de surcharge » n'apparaît jamais dans le suivi : de S10 à S16 le muscle-up se résume à des EMOM de 3 répétitions à 7-8 RIR et les pompes descendent à 2 × 14 (22 % du max). Progression réelle 0,097 %/sem. ; l'autorégulation devait recaler vers le haut aussi (https://openrepository.aut.ac.nz/items/92cefeac-7c32-44f1-bfbc-f48f4a5dd8cf/full)."
+   },
+   "volume_intensite": {
+    "note": 6,
+    "commentaire": "44-59 séries dures/sem. raisonnables, mais la dose effective est souvent trop loin de l'échec : 9,5 % des séries au moins 3 répétitions plus faciles que visé, dips servis à 26 répétitions pour un maximum de 45 en S10-S11, tractions suivantes à 7-10 RIR. Allègement toutes les 4 semaines cohérent avec la pratique décrite (https://shura.shu.ac.uk/35313/), mais 4 tests maximaux en 16 semaines (S4, S8, S12, S16) pèsent sur un bloc spécifique de deux semaines."
+   },
+   "exercices": {
+    "note": 7,
+    "commentaire": "Mouvements de l'épreuve, départs au chrono, repos-pause en dips, traction lestée en soutien de force : choix cohérents. Il manque des variantes de surcharge du muscle-up (excentriques lentes, transitions basses, tirage haut) pour l'atelier le plus en retard, et l'ajout de dips lestés et de hip thrust dans le bloc 3 dilue le travail spécifique. Les standards de répétition (bras tendus, pauses permises) dépendent de la fédération (https://www.sportscategory.info/en/articles/streetlifting)."
+   },
+   "faisable_sur": {
+    "note": 8,
+    "commentaire": "Séances de 20 à 49 min pour 75 disponibles, 79/80 séances faites, 0 % d'échec non voulu, règles de douleur et d'arrêt correctes (https://physicaltherapyfirst.com/blog/continued-sports-activity-using-a-pain-monitoring-model-during-rehabilitation-in-patients-with-achilles-tendinopathy/). Point faible : la hausse de 18,1 % d'une séance à l'autre (traction lestée) et le jeudi S12 qui enchaîne max de dips, max de tractions, puis EMOM de muscle-up et tractions lestées."
+   },
+   "securite": [
+    "S12 jeudi (et S16) : après deux séries maximales (dips puis tractions), la séance ajoute un EMOM de muscle-up et des tractions lestées 2 × 6 : volume de tirage post-test sur coudes fatigués, à retirer les jours de test.",
+    "Hausse de 18,1 % de charge totale d'une séance à la suivante sur un mouvement principal (plafond annoncé ~10 %) : à encadrer."
+   ]
+  },
+  "street_09_elite_streetlifting": {
+   "ensemble": {
+    "note": 7,
+    "commentaire": "Programme sérieux pour un élite : points faibles ciblés (dips partiel haut pour le verrouillage, tirage haut et dips sur barre pour la transition), règle coude explicite, affûtage à ~25 % des séries dures avec dernier lourd à J-9/J-7, cohérent avec https://researchonline.ljmu.ac.uk/id/eprint/2455/ et https://www.strongerbyscience.com/tapering/. Mais les 1RM déclarés (5 semaines) sont au-dessus du réel (dips 200 contre 186 kg, squat 190 contre 180) : séries de dips arrêtées en S1-S3, échec au squat à 170 kg en S6, 3e barre de squat manquée. À l'inverse, le muscle-up est sous-estimé : 26,25 kg réussis pour 37,7 kg de maximum du jour (89,9 %). Progression réelle 0,026 %/sem."
+   },
+   "adapte": {
+    "note": 7.5,
+    "commentaire": "Volume (77-81 séries dures), cinq séances et choix des points faibles collent au profil. L'antécédent de coude est pris en compte (curl marteau, wrist curl, règle de douleur proche de https://physicaltherapyfirst.com/blog/continued-sports-activity-using-a-pain-monitoring-model-during-rehabilitation-in-patients-with-achilles-tendinopathy/), mais le volume de tirage reste élevé : traction lestée 5 × 5 deux fois par semaine, muscle-up lourd et léger, tirage haut, 4-6 séries de rowing, ce qui contredit la « charge graduée » annoncée pour la zone."
+   },
+   "progression": {
+    "note": 6.5,
+    "commentaire": "Vagues 76→83 %, 81→88 %, 91-93 % classiques ; recalage du dips de 200 à 181,5 kg en S9 bienvenu mais tardif (3 semaines de séries arrêtées avant). Le squat reste calé sur 190 kg jusqu'au bout : 170 kg servi en S6 (0 répétition), 3e barre à 172,5 kg manquée pour un max du jour de 170,2 kg. Le muscle-up estimé à 107 kg contre 113 réels fait perdre ~11 kg de lest le jour J (https://openrepository.aut.ac.nz/items/92cefeac-7c32-44f1-bfbc-f48f4a5dd8cf/full)."
+   },
+   "volume_intensite": {
+    "note": 7,
+    "commentaire": "Intensités de pointe et affûtage conformes (https://www.strongerbyscience.com/tapering/). Les dips partiels sont menés à +110 kg (« 93 % » d'un 1RM de référence de 200 kg qui vaut en réalité ~186 kg, donc au-delà du 1RM complet réel) chez un athlète aux coudes fragiles. Le bloc 4 retombe trop bas (squat à 16-18 RIR en S13-S16)."
+   },
+   "exercices": {
+    "note": 8,
+    "commentaire": "Très bonne pertinence : partiels haut surchargés avec butées pour le verrouillage, tirage haut lesté et dips sur barre pour la transition, chaîne postérieure, gainage, prévention de coiffe et des avant-bras. On aurait pu utiliser les chaînes disponibles (résistance variable) pour le verrouillage plutôt que des partiels très lourds, et ajouter une variante de transition basse. Standards à vérifier selon la fédération (https://www.sportscategory.info/en/articles/streetlifting)."
+   },
+   "faisable_sur": {
+    "note": 7,
+    "commentaire": "Séances de 52 à 71 min pour 120 disponibles, 79/80 faites, 0,3 % d'échecs non voulus. Deux échecs au squat lourd (S6 et 3e barre) et des partiels au-dessus du 1RM réel chez un athlète au coude sensible abaissent la note ; la règle de douleur et les butées de sécurité sont en revanche correctes (https://physicaltherapyfirst.com/blog/continued-sports-activity-using-a-pain-monitoring-model-during-rehabilitation-in-patients-with-achilles-tendinopathy/)."
+   },
+   "securite": [
+    "Squat S6 : 170 kg servi (87 % d'un 1RM déclaré de 190 kg) alors que le maximum du jour est 168 kg : échec complet. Le 1RM déclaré il y a 5 semaines aurait dû être vérifié avant les séries ≥ 85 %.",
+    "Dips partiel haut à +100/+110 kg (S3-S7) sur un 1RM réel d'environ +111 kg, chez un athlète avec antécédent de coude : risque tendineux ; plafonner à ~100 % du 1RM réel et surveiller la gêne le lendemain.",
+    "Volume de tirage hebdomadaire élevé (≈ 25-30 séries) malgré l'antécédent de coude ; l'adaptation tendineuse est plus lente que la musculaire (https://ro.ecu.edu.au/ecuworkspost2013/6003)."
+   ]
+  },
+  "street_10_elite_figures": {
+   "ensemble": {
+    "note": 5.5,
+    "commentaire": "Le cadrage est honnête (figure complète hors d'atteinte en 16 semaines, échelle avec critère de passage) et la prudence pour le poignet est réelle. Mais la dose de figure ne bouge pas de S5 à S15 : planche straddle 5 × 3 s + 1 × 3 s, front lever 10 × 4 s, malgré des blocs nommés « intensification » et « réalisation » et la règle interne de 65-70 %. Résultat : front lever 6 s et planche 5 s à chaque test (en dessous des 8 s et 6 s déclarés) et une douleur de poignet à 4/10 dès S14. Pour l'adaptation tendineuse, des contraintes élevées sont nécessaires (https://ro.ecu.edu.au/ecuworkspost2013/6003), et la charge d'appui sur poignet doit être dosée (https://bjsm.bmj.com/content/49/18/1189)."
+   },
+   "adapte": {
+    "note": 6.5,
+    "commentaire": "Six séances, pratique en début de séance, appui sur parallettes et séries d'appui divisées par deux pour le poignet : bien vu. Mais la planche straddle ne reçoit qu'environ 18 s de tenue par semaine, bien sous les 30-60 s par séance que le programme se fixe, alors que le handstand (3 × 21 s) et le HSPU en déficit sur parallettes (jusqu'à 1 × 11) montent et chargent le même poignet. Les séances utilisent 18 à 63 min sur 90."
+   },
+   "progression": {
+    "note": 4.5,
+    "commentaire": "Aucune progression de dose sur les figures entre les tests : les tenues restent à 60-67 % d'un maximum qui ne bouge pas, et la règle « s'il n'est pas atteint, il change de dose » ne se traduit par rien de visible. Quatre tests maximaux (S4, S8, S12, S16) placés en semaine d'allègement, 0,065 %/sem. de progression, critère de passage jamais approché. Seuls le skater squat (2 × 19-20) et la traction lestée progressent, ce qui n'est pas l'objectif. L'allègement toutes les 4 semaines est cohérent (https://shura.shu.ac.uk/35313/), mais sans surcharge entre les deux il ne sert à rien."
+   },
+   "volume_intensite": {
+    "note": 5,
+    "commentaire": "42-45 séries dures, mais la dose utile sur levier dur est trop faible et trop loin de la limite : en S1, 16,9 % des séries sont au moins 3 RIR plus faciles que visé, et les ice cream makers servis jusqu'à 12 répétitions pour 4-6 écrites. Les tenues à 60-67 % du maximum de temps ne garantissent pas l'intensité élevée (≥ 70 %) liée aux adaptations tendineuses (https://ro.ecu.edu.au/ecuworkspost2013/6003). À l'inverse, le volume d'appui poignet (handstand + HSPU + dips lestés) augmente."
+   },
+   "exercices": {
+    "note": 6,
+    "commentaire": "Front lever, half-lay, ice cream maker, planche straddle, planche push-up assistée, HSPU, traction et dips lestés : la base est là. Il manque les classiques de la planche (pseudo planche push-ups, leans progressifs, tenues assistées à l'élastique en half-lay ou complète) et du front lever (tirages et relevés en front lever, tenues lestées ou en négatif). Le HSPU en déficit et le handstand chargent le poignet en extension sans servir directement l'objectif (https://bjsm.bmj.com/content/49/18/1189)."
+   },
+   "faisable_sur": {
+    "note": 6,
+    "commentaire": "Règles de douleur détaillées et appliquées : retrait des appuis en extension et avis médical dès 3 séances à 3/10 en S14, cohérent avec https://physicaltherapyfirst.com/blog/continued-sports-activity-using-a-pain-monitoring-model-during-rehabilitation-in-patients-with-achilles-tendinopathy/. Mais cette douleur est apparue sous le programme lui-même, chez un athlète déjà signalé « poignets raides », et la semaine 16 écrit encore un test maximal de planche alors que la douleur dure. 97/102 séances faites."
+   },
+   "securite": [
+    "Douleur de poignet montée à 4/10 en S14-S16 (7 séances ≥ 3/10) chez un athlète déjà gêné à 2/10 : le volume d'appui en extension (handstand 3 × 21 s, HSPU en déficit sur parallettes jusqu'à 1 × 11, dips lestés) a augmenté pendant que les figures stagnaient (https://bjsm.bmj.com/content/49/18/1189).",
+    "Semaine 16 : le programme écrit garde un maintien maximal de planche straddle le samedi alors que la règle « douleur qui dure » est active depuis S14 ; le test doit être supprimé, pas seulement remplacé par le moteur."
+   ]
+  }
+ }
+}
