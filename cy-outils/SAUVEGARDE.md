@@ -20,3 +20,11 @@ Session Opus 5.5 lancée le 09/10/2026 vers 06:00 UTC (pas de ligne « Lot : » 
 
 ## Reste
 - Vérifier le contrôle de la boucle 2, panel p2 (couples sous 9 et exports changés), relecture documentée (3 sous-agents web), Jaccard, contrôle FULL, publication (0.3.1 / bench 0.3.0), manche « toutes disciplines (CY) » de la page, LIVRAISON_CY, DECISIONS CY, ETAT « à valider », page de suivi, notification.
+
+## Fin de lot (09/10, 13:30 UTC)
+- Relecture du code : 14 constats traités ; boucle 3 (retrait sous arrêt non compté comme sauté, `autres_06`).
+- Panel final : street 22/68, min 5, moy 7,73 ; autres 3/40, min 5,5, moy 7,21 (notes/final_comb.json).
+- Contrôle complet run 37922562342 vert ; publié `moteurs` aacbe054, étiquettes kalis_plan-v0.3.1, kalis_adapt-v0.3.1, kalis_bench-v0.3.0.
+- analyse_CY.tar.gpg poussé sur cp-references (701b5de4) ; clé et références déchiffrées supprimées.
+- Page de relecture : manche 9 + 125 notes ; page de suivi : section CY ; pipeline ed711e5a (ETAT « à valider », DECISIONS CY, livraison) ; projet claude/LIVRAISON_CY.md.
+- Reste : notification, puis arrêt.
