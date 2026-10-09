@@ -42,9 +42,7 @@ Future<bool> openNextBlock(BuildContext context) async {
       pose: KoachPose.choice,
       title: 'Ton prochain bloc',
       text:
-          'Ton programme continue tel qu’il est écrit après la semaine '
-          '${seg.last}. Je peux aussi écrire ton prochain bloc avec le '
-          'moteur calibré : il remplace alors la suite de ton programme. '
+          '${seg.last >= store.importedLastWeek ? 'Ton programme se termine en semaine ${seg.last}. Je peux écrire ton prochain bloc avec le moteur calibré.' : 'Ton programme continue tel qu’il est écrit après la semaine ${seg.last}. Je peux aussi écrire ton prochain bloc avec le moteur calibré : il remplace alors la suite de ton programme.'} '
           'Ton programme d’origine reste sauvegardé : Réglages › Mon '
           'programme › « Revenir à mon programme d’origine ».',
       actions: [
@@ -55,7 +53,7 @@ Future<bool> openNextBlock(BuildContext context) async {
           key: const ValueKey('next-block-calibrated'),
         ),
         KoachBubbleAction(
-          'Garder mon programme',
+          seg.last >= store.importedLastWeek ? 'Plus tard' : 'Garder mon programme',
           () => Navigator.of(context).pop('keep'),
           key: const ValueKey('next-block-keep'),
         ),

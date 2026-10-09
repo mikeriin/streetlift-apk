@@ -384,7 +384,13 @@ extension PlanStore on AppStore {
     final seg = planImportedSegment;
     final week = _planWeekToday;
     if (seg == null || week == null || !planCanCreate) return false;
-    return week >= seg.last;
+    if (week < seg.last) return false;
+    // Fin d'un bloc du programme (P0, B1…) ou fin du programme ; pas aux
+    // coupes internes d'un bloc de plus de 6 semaines.
+    final last = math.min(importedLastWeek, program.weeks.length);
+    if (seg.last >= last) return true;
+    final a = program.week(seg.last), b = program.week(seg.last + 1);
+    return a.blockKey != b.blockKey || a.block != b.block;
   }
 
   /// Bloc suivant proposé par le moteur (null : impossible).

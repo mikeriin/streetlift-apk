@@ -154,11 +154,14 @@ extension SessionAdaptStore on AppStore {
 
   /// CI1e (C11) : échéance de la fin du programme importé (fin de S40 pour
   /// le propriétaire), donnée au moteur dynamique tant que le programme
-  /// importé est en place et que le profil n'a pas d'échéance principale
+  /// importé est en place (sans programme créé) et que le profil n'a pas d'échéance principale
   /// à venir ; jamais écrite dans le profil enregistré. Null : pas de
   /// programme importé daté, ou programme terminé.
   kc.SeasonEvent? get importedEndEvent {
     final s = program.start;
+    // Semaines d'avant un programme créé : pas d'échéance (le programme
+    // créé a la sienne).
+    if (planProgram != null) return null;
     final last = math.min(importedLastWeek, program.weeks.length);
     if (s == null || last < 1) return null;
     final day = civilOf(DateTime(s.year, s.month, s.day + last * 7 - 1));
@@ -348,8 +351,11 @@ extension SessionAdaptStore on AppStore {
       final week = program.week(n);
       // Exercices d'origine de la semaine, par emplacement (un exercice
       // déplacé d'un jour à l'autre garde sa fiche).
+      // Un exercice d'une séance déjà faite ne se déplace pas (il serait
+      // montré deux fois).
       final bySlot = <String, Exercise>{};
       for (final d in week.days) {
+        if (logs[sessionKey(n, d.j)]?.done ?? false) continue;
         for (final e in d.original.exercises) {
           final s = imp.slotOf(n, d.j, e.id);
           if (s != null) bySlot.putIfAbsent(s, () => e);
@@ -487,6 +493,8 @@ extension SessionAdaptStore on AppStore {
         );
         continue;
       }
+      // Exercice d'une séance déjà faite (ou déjà montré) : pas de copie.
+      if (moved == null && origAll.containsKey(b.slotId)) continue;
       final id = '$kKoachAddedPrefix${b.slotId}';
       if (ids.contains(id)) continue;
       ids.add(id);
@@ -790,6 +798,9 @@ extension SessionAdaptStore on AppStore {
     Object? plan(Object? p) {
       if (p is! Map) return p;
       final out = Map<String, dynamic>.of(p.cast<String, dynamic>());
+      if (out.containsKey('blockId')) out['blockId'] = seg.blockId;
+      if (out.containsKey('weekIndex')) out['weekIndex'] = w - seg.first;
+      if (out.containsKey('dayIndex')) out['dayIndex'] = dayIndex;
       final items = out['items'];
       if (items is List) {
         out['items'] = [

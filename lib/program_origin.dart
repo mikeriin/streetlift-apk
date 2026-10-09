@@ -41,13 +41,12 @@ extension ProgramOriginStore on AppStore {
   /// Prend la sauvegarde d'origine si elle manque et qu'un programme
   /// importé est en place. Vrai si elle vient d'être prise.
   bool captureProgramOrigin() {
-    if (programOrigin != null) return false;
+    if (programOrigin != null || !programOriginNeeded) return false;
     final local = _readLocalOrigin();
     if (local != null) {
       programOrigin = local;
       return true;
     }
-    if (!programOriginNeeded) return false;
     final backup = _backupJson(_currentBackup())..remove('programOrigin');
     programOrigin = {
       'v': 1,
@@ -77,6 +76,10 @@ extension ProgramOriginStore on AppStore {
     }
   }
 
+  /// Copie locale alignée sur la sauvegarde d'origine du document (import
+  /// d'une sauvegarde qui porte la sienne).
+  void syncLocalOrigin() => _writeLocalOrigin();
+
   void _writeLocalOrigin() {
     final o = programOrigin;
     if (o == null) return;
@@ -96,13 +99,93 @@ extension ProgramOriginStore on AppStore {
   /// La sauvegarde d'origine peut être rétablie.
   bool get canRestoreProgramOrigin => programOrigin?['backup'] is Map;
 
-  /// Le programme en place diffère de la sauvegarde d'origine.
+  /// Le programme en place diffère de la sauvegarde d'origine (une
+  /// proposition encore en attente ne compte pas). Calcul gardé par
+  /// révision des données.
   bool get programDiffersFromOrigin {
     final b = programOrigin?['backup'];
     if (b is! Map) return false;
-    final now = _backupJson(_currentBackup());
+    final key = '$_dataRevision|${identityHashCode(programOrigin)}';
+    final hit = _g9Cache['originDiffers'];
+    if (hit is (String, bool) && hit.$1 == key) return hit.$2;
+    final now = _programSections();
+    var differs = false;
     for (final k in kProgramOriginSections) {
-      if (jsonEncode(b[k]) != jsonEncode(now[k])) return true;
+      final a = k == 'planEvolution' ? _settled(_originEvolution(b[k])) : b[k];
+      final c = k == 'planEvolution' ? _settled(now[k]) : now[k];
+      if (jsonEncode(a) != jsonEncode(c)) {
+        differs = true;
+        break;
+      }
+    }
+    _g9Cache['originDiffers'] = (key, differs);
+    return differs;
+  }
+
+  /// Sections du programme de l'état courant (sans le journal).
+  Map<String, Object?> _programSections() {
+    final d = _currentBackup();
+    return {
+      'programStart': d.start == null
+          ? {'status': 'pending'}
+          : {
+              'status': 'set',
+              'date': civilDateString(d.start!),
+              'origin': d.startOrigin,
+            },
+      if (d.programInstance != null)
+        'programInstance': d.programInstance!.toJson(),
+      if (d.planProgram != null)
+        'planProgram': d.planProgram!.toJson()
+      else if (d.planRaw != null)
+        'planProgram': d.planRaw,
+      if (d.programResume != null) 'programResume': d.programResume!.toJson(),
+      if (!d.planEvolution.isEmpty)
+        'planEvolution': d.planEvolution.toJson()
+      else if (d.evolutionRaw != null)
+        'planEvolution': d.evolutionRaw,
+    };
+  }
+
+  /// Évolution de la sauvegarde d'origine, ajustements d'avant 6.10.0
+  /// ramenés sur les blocs annotés comme à la restauration (JSON).
+  Object? _originEvolution(Object? raw) {
+    if (raw == null) return null;
+    try {
+      final evo = PlanEvolution.fromJson(raw);
+      final conv = ImportedProgramStore(this).convertLegacyEntries(
+        evo.entries,
+      );
+      return conv == null ? raw : evo.withEntries(conv).toJson();
+    } catch (_) {
+      return raw;
+    }
+  }
+
+  /// Évolution sans les propositions en attente (JSON).
+  static Object? _settled(Object? evo) {
+    if (evo is! Map) return evo;
+    final entries = evo['entries'];
+    if (entries is! List) return evo;
+    return [
+      for (final e in entries)
+        if (e is! Map || e['status'] != EvoStatus.pending) e,
+    ];
+  }
+
+  /// Retour impossible : un programme créé depuis a déjà des séances
+  /// saisies (elles ne correspondraient plus aux journées rendues).
+  bool get programOriginBlocked {
+    final b = programOrigin?['backup'];
+    final plan = planProgram;
+    if (b is! Map || plan == null) return false;
+    if (jsonEncode(b['planProgram']) == jsonEncode(plan.toJson())) {
+      return false;
+    }
+    for (var n = plan.firstWeek; n <= plan.totalWeeks; n++) {
+      for (var j = 1; j <= 7; j++) {
+        if (PlanStore(this)._loggedAt(n, j)) return true;
+      }
     }
     return false;
   }
@@ -122,7 +205,7 @@ extension ProgramOriginStore on AppStore {
   /// c'est fait. Le journal n'est pas touché.
   bool restoreProgramOrigin() {
     final b = programOrigin?['backup'];
-    if (b is! Map) return false;
+    if (b is! Map || programOriginBlocked) return false;
     _BackupData o;
     try {
       o = _parseBackup(jsonEncode(b));
@@ -144,6 +227,11 @@ extension ProgramOriginStore on AppStore {
     evolutionNotApplicable = const [];
     _g9Cache.clear();
     _materializeProgram(o.start);
+    // Ajustements d'avant 6.10.0 de la sauvegarde : ramenés sur les blocs
+    // annotés (même contenu, nouveaux identifiants de bloc).
+    if (ImportedProgramStore(this).migrateLegacyEvolution()) {
+      _materializeProgram(o.start);
+    }
     _allEx = null;
     _muscleIndex = null;
     _progression = null;

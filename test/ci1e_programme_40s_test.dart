@@ -283,8 +283,9 @@ void main() {
         (i) => i.test?.kind == kc.TestKind.oneRm,
       );
       expect(oneRm.kind, kc.SetKind.test);
-      expect(oneRm.setTargets!.last.role, kc.SetRole.attempt);
-      expect(oneRm.setTargets!.first.role, kc.SetRole.warmup);
+      // Une ligne par tentative (montée hors journal), comme kalis_plan.
+      expect(oneRm.sets, 3);
+      expect(oneRm.setTargets, isNull);
       final s40 = app.adaptPlaceOf(40, 1)!;
       expect(
         s40.day!.items.any((i) => i.test?.kind == kc.TestKind.maxReps),
@@ -543,6 +544,86 @@ void main() {
       final entry = app.planEvolution.entries.lastWhere((x) => x.id == p.id);
       expect(app.evolutionUndo(entry), isTrue);
       expect(app.program.week(14).day(1)!.exercises.length, before);
+    });
+
+    test('ajustement de Koach accepté en 6.9.3 (bloc unique) : ramené sur '
+        'le bloc annoté, toujours appliqué et annulable', () async {
+      await _ownerAt(app);
+      _saveProfile(app, kc.GuidanceMode.free);
+      final place = app.adaptPlaceOf(14, 2)!;
+      final item = place.day!.items.firstWhere(
+        (i) => i.setTargets == null && i.sets < 10,
+      );
+      final shown = app.program.week(14).day(2)!.exercises.firstWhere(
+        (e) => app.adaptSlotOf(14, 2, e.id) == item.slotId,
+      );
+      final setsBefore = app.setCount(shown);
+      // Entrée au format 6.9.3 : bloc unique, semaine 13 (S14), journée 1
+      // (J2), emplacement « j2-<id> ».
+      final old = _oldSlot(2, shown.id);
+      final legacyItem = item.copyWith(slotId: old);
+      final entry = {
+        'proposal': kc.Proposal(
+          id: 'volume:$old@13',
+          kind: kc.ProposalKind.volume,
+          scope: kc.ProposalScope.exercise,
+          createdOn: kc.CivilDate(2026, 10, 8),
+          confidence: .74,
+          unlockLevel: kc.UnlockLevel.volume,
+          autoApplicable: true,
+          exerciseId: item.exerciseId,
+          diff: kc.PlanDiff(
+            changes: [
+              kc.PlanChange(
+                kind: kc.ChangeKind.prescriptionChanged,
+                dayIndex: 1,
+                weekIndex: 13,
+                slotId: old,
+                fromPrescription: legacyItem,
+                toPrescription: legacyItem.copyWith(sets: item.sets + 1),
+                reasons: const [],
+              ),
+            ],
+          ),
+          reasons: const [],
+        ).toJson(),
+        'blockId': kLegacyProgramBlockId,
+        'status': 'accepted',
+        'decidedOn': '2026-10-08',
+        'mode': 'free',
+      };
+      final b = jsonDecode(app.exportAll()) as Map<String, dynamic>;
+      b['planEvolution'] = {
+        'v': 1,
+        'entries': [entry],
+      };
+      expect(await app.importAll(jsonEncode(b)), isTrue);
+      final e = app.planEvolution.entries.single;
+      expect(e.blockId, importedBlockId(12));
+      expect(e.fromWeek, 2);
+      expect(e.proposal.diff!.changes.single.slotId, item.slotId);
+      final after = app.program.week(14).day(2)!.exercises.firstWhere(
+        (x) => app.adaptSlotOf(14, 2, x.id) == item.slotId,
+      );
+      expect(app.setCount(after), setsBefore + 1);
+      expect(app.evolutionUndo(e), isTrue);
+      final undone = app.program.week(14).day(2)!.exercises.firstWhere(
+        (x) => app.adaptSlotOf(14, 2, x.id) == item.slotId,
+      );
+      expect(app.setCount(undone), setsBefore);
+    });
+
+    test('« Supprimer toutes les données » retire aussi la sauvegarde '
+        'd’origine', () async {
+      await _ownerAt(app);
+      expect(app.programOrigin, isNotNull);
+      await app.eraseAllData();
+      expect(app.programOrigin, isNull);
+      expect(ProgramOriginStore(app).canRestoreProgramOrigin, isFalse);
+      expect(
+        (jsonDecode(app.exportAll()) as Map).containsKey('programOrigin'),
+        isFalse,
+      );
     });
 
     test('retour au programme d’origine : sections du programme identiques '

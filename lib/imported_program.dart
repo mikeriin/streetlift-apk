@@ -233,6 +233,118 @@ extension ImportedProgramStore on AppStore {
     });
   }
 
+  /// CI1e : ajustements de Koach décidés avant 6.10.0 sur le bloc importé
+  /// unique (`legacy-programme-v33`, 40 semaines) ramenés sur les blocs
+  /// annotés : même changement, nouveau bloc, semaine et journée du bloc,
+  /// emplacement stable. Un ajustement qui couvre plusieurs blocs est
+  /// partagé en un ajustement par bloc. Une restructuration (bloc entier,
+  /// impossible sur ce bloc avant 6.10.0) reste telle quelle. Vrai si
+  /// l'évolution a changé.
+  bool migrateLegacyEvolution() {
+    if (_evoRaw != null) return false;
+    if (!planEvolution.entries.any((e) => e.blockId == kLegacyProgramBlockId)) {
+      return false;
+    }
+    final next = convertLegacyEntries(planEvolution.entries);
+    if (next == null) return false;
+    planEvolution = planEvolution.withEntries(next);
+    _evoRevision++;
+    _evoRefreshKey = '';
+    SessionAdaptStore(this).syncImportedOverlay();
+    return true;
+  }
+
+  /// Conversion de [entries] (null : programme importé indisponible).
+  List<EvolutionEntry>? convertLegacyEntries(List<EvolutionEntry> entries) {
+    final imp = importedProgram;
+    if (imp == null) return null;
+    final last = math.min(importedLastWeek, program.weeks.length);
+    // Journées du bloc unique d'avant : J avec des exercices, dans l'ordre.
+    final oldJs = <int>{
+      for (var n = 1; n <= last; n++)
+        for (final d in program.week(n).days)
+          if (d.original.exercises.isNotEmpty) d.j,
+    }.toList()..sort();
+    final out = <EvolutionEntry>[];
+    for (final e in entries) {
+      final changes = e.proposal.diff?.changes;
+      if (e.blockId != kLegacyProgramBlockId ||
+          e.proposal.block != null ||
+          changes == null ||
+          changes.isEmpty) {
+        out.add(e);
+        continue;
+      }
+      final bySeg = <ImportedSegment, List<Map<String, Object?>>>{};
+      for (final c in changes) {
+        final week = (c.weekIndex ?? e.fromWeek) + 1;
+        final seg = imp.segmentOf(week);
+        if (seg == null) continue;
+        final j = c.dayIndex == null || c.dayIndex! >= oldJs.length
+            ? null
+            : oldJs[c.dayIndex!];
+        String? slot(String? old) {
+          if (old == null || j == null) return old;
+          final m = RegExp(r'^j\d-(.+)$').firstMatch(old);
+          if (m == null) return old;
+          return imp.slotOf(week, j, m[1]!) ?? old;
+        }
+
+        Object? item(kc.ExercisePrescription? x) => x?.copyWith(
+          slotId: slot(x.slotId) ?? x.slotId,
+        ).toJson();
+        final m = c.toJson();
+        m['weekIndex'] = week - seg.first;
+        if (c.dayIndex != null) {
+          final d = j == null ? null : seg.dayOfJ[j];
+          if (d == null) continue;
+          m['dayIndex'] = d;
+        }
+        if (c.slotId != null) m['slotId'] = slot(c.slotId);
+        if (c.fromPrescription != null) {
+          m['fromPrescription'] = item(c.fromPrescription);
+        }
+        if (c.toPrescription != null) {
+          m['toPrescription'] = item(c.toPrescription);
+        }
+        (bySeg[seg] ??= []).add(m);
+      }
+      if (bySeg.isEmpty) {
+        out.add(e);
+        continue;
+      }
+      final segs = bySeg.keys.toList()..sort((a, b) => a.first - b.first);
+      final at = e.id.lastIndexOf('@');
+      final base = at < 0 ? e.id : e.id.substring(0, at);
+      final conv = <EvolutionEntry>[];
+      try {
+        for (final seg in segs) {
+          final from = math.max(0, e.fromWeek + 1 - seg.first);
+          final id = '$base${segs.length > 1 ? '#S${seg.first}' : ''}@$from';
+          final pj = e.proposal.toJson();
+          final diff = Map<String, Object?>.of(
+            (pj['diff']! as Map).cast<String, Object?>(),
+          )..['changes'] = bySeg[seg];
+          final p = kc.Proposal.fromJson({...pj, 'id': id, 'diff': diff});
+          if (p.validate().isNotEmpty) throw const FormatException();
+          conv.add(
+            EvolutionEntry.fromJson({
+              ...e.toJson(),
+              'proposal': p.toJson(),
+              'blockId': seg.blockId,
+            }),
+          );
+        }
+      } catch (_) {
+        // Ajustement illisible une fois ramené : gardé tel quel.
+        out.add(e);
+        continue;
+      }
+      out.addAll(conv);
+    }
+    return out;
+  }
+
   ka.ExerciseBook? _adaptBookForImport() =>
       SessionAdaptStore(this)._adaptBook();
 
@@ -276,10 +388,24 @@ extension ImportedProgramStore on AppStore {
           normalizeText(cycle).contains('familiarisation')) {
         intents[n] = kc.WeekIntent.intro;
       } else {
-        final p =
+        final c = normalizeText(cycle);
+        var p =
             importedPhaseOf(cycle) ??
             blockPhase ??
             kc.SeasonPhaseKind.accumulation;
+        // « pic de volume » d'un bloc d'hypertrophie ou d'endurance : pointe
+        // de volume, pas réalisation ; montée d'un bloc de force max :
+        // intensification.
+        if (p == kc.SeasonPhaseKind.realization &&
+            blockPhase == kc.SeasonPhaseKind.accumulation &&
+            !c.contains('singles') &&
+            !c.contains('simulation')) {
+          p = kc.SeasonPhaseKind.accumulation;
+        }
+        if (blockPhase == kc.SeasonPhaseKind.realization &&
+            c.contains('montee')) {
+          p = kc.SeasonPhaseKind.intensification;
+        }
         intents[n] = _intentOfPhase(
           p == kc.SeasonPhaseKind.test ? kc.SeasonPhaseKind.accumulation : p,
         );
@@ -530,6 +656,32 @@ extension ImportedProgramStore on AppStore {
         pass1: pass1.copyWith(intent: null),
         pass2: pass2,
       );
+    }
+    if (block.validate().isNotEmpty) {
+      // Toujours hors contrat : bloc porté comme avant 6.10.0, sans champ
+      // 0.4.0 (servi par la règle générale plutôt que perdu).
+      block = kc.ProgramBlock(
+        pass1: pass1.copyWith(intent: null),
+        pass2: pass2.copyWith(
+          weeks: [
+            for (final w in pass2.weeks)
+              w.copyWith(
+                intent: null,
+                days: [
+                  for (final d in w.days)
+                    d.copyWith(
+                      items: [
+                        for (final it in d.items)
+                          if (it.technique == null &&
+                              it.test?.kind != kc.TestKind.oneRm)
+                            it.copyWith(intensity: null, test: null),
+                      ],
+                    ),
+                ],
+              ),
+          ],
+        ),
+      );
       if (block.validate().isNotEmpty) return null;
     }
     return ImportedSegment(
@@ -624,7 +776,6 @@ extension ImportedProgramStore on AppStore {
     if (cat.unit == kc.MeasureUnit.seconds) return null;
     final sp = logSpec(e);
     final text = setsLabel(e).toLowerCase().trim();
-    final n = setCount(e);
     final basis = switch (cat.loadType) {
       kc.LoadType.addedWeight => kc.LoadBasis.bodyweightPlusExternal,
       kc.LoadType.barbell ||
@@ -689,14 +840,19 @@ extension ImportedProgramStore on AppStore {
       );
     } else if (sp.rowPrefix == 'T' &&
         text.contains('montée') &&
-        text.contains('tentative') &&
-        n == 6) {
+        text.contains('tentative')) {
+      // Comme `kalis_plan` écrit un test de 1RM : une ligne par tentative
+      // (charges montantes calculées par le moteur) ; les singles de
+      // montée sont l'échauffement, hors journal.
       final tries = RegExp(r'(\d+)\s*tentatives').firstMatch(text);
-      final attempts = tries == null ? 3 : int.parse(tries.group(1)!);
+      final attempts = (tries == null ? 3 : int.parse(tries.group(1)!)).clamp(
+        1,
+        6,
+      );
       it = kc.ExercisePrescription(
         slotId: slot,
         exerciseId: id,
-        sets: n,
+        sets: attempts,
         repsLow: 1,
         repsHigh: 1,
         targetFlames: kc.Flames.failure,
@@ -706,17 +862,9 @@ extension ImportedProgramStore on AppStore {
         loadBasis: basis,
         kind: kc.SetKind.test,
         reasons: const <kc.Reason>[],
-        setTargets: [
-          for (var i = 0; i < n; i++)
-            kc.SetTarget(
-              repsLow: 1,
-              repsHigh: 1,
-              role: i < n - 3 ? kc.SetRole.warmup : kc.SetRole.attempt,
-            ),
-        ],
         test: kc.TestSpec(
           kind: kc.TestKind.oneRm,
-          attempts: attempts.clamp(1, 6),
+          attempts: attempts,
           benchmarkKind: kc.BenchmarkKind.loadReps,
         ),
       );

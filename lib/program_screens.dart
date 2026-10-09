@@ -458,6 +458,7 @@ class ProgramOriginCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final at = store.programOriginAt;
     final differs = store.programDiffersFromOrigin;
+    final blocked = differs && store.programOriginBlocked;
     final dim = Theme.of(context).textTheme.bodySmall;
     return KCard(
       key: const ValueKey('program-origin'),
@@ -477,12 +478,22 @@ class ProgramOriginCard extends StatelessWidget {
           ),
           const SizedBox(height: 4),
           Text(
-            differs
+            blocked
+                ? 'Ton programme a changé depuis, et tu as déjà fait des '
+                      'séances du programme écrit ensuite : le retour à '
+                      'l’origine n’est plus possible (ces séances ne '
+                      'correspondraient plus à ton programme).'
+                : differs
                 ? 'Ton programme a changé depuis (propositions de Koach, '
                       'nouveau bloc…). Revenir à l’origine rend le programme '
                       'd’avant ; tes séances faites restent dans ton journal.'
                 : 'Ton programme est encore celui d’origine.',
             key: const ValueKey('program-origin-state'),
+            style: dim,
+          ),
+          Text(
+            'Le fichier exporté est une sauvegarde complète : l’importer '
+            'remplace toutes tes données, journal compris.',
             style: dim,
           ),
           const SizedBox(height: 8),
@@ -492,7 +503,9 @@ class ProgramOriginCard extends StatelessWidget {
             children: [
               OutlinedButton(
                 key: const ValueKey('program-origin-restore'),
-                onPressed: differs ? () => _confirmRestore(context) : null,
+                onPressed: differs && !blocked
+                    ? () => _confirmRestore(context)
+                    : null,
                 child: const Text('Revenir à mon programme d’origine'),
               ),
               TextButton(
@@ -514,9 +527,12 @@ class ProgramOriginCard extends StatelessWidget {
         title: const Text('Revenir à ton programme d’origine ?'),
         content: const Text(
           'Ton programme redevient exactement celui d’avant : les '
-          'propositions de Koach acceptées depuis et un bloc écrit par le '
-          'moteur sont retirés. Ton journal ne change pas : les séances '
-          'faites et les séries validées restent.',
+          'propositions de Koach acceptées depuis, un bloc écrit par le '
+          'moteur et tes réponses à « Où j’en suis » sont retirés. Ton '
+          'journal ne change pas : les séances faites et les séries '
+          'validées restent. Koach continue de suivre ton programme : en '
+          'mode assisté, il pourra de nouveau l’ajuster (en mode libre, '
+          'tu décides de chaque changement).',
         ),
         actions: [
           TextButton(

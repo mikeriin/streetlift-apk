@@ -717,14 +717,16 @@ class AppStore extends ChangeNotifier {
       Map<String, dynamic>? raw;
       _applyBackup(_parseBackup(_unpack(saved)!, rawMap: (m) => raw = m));
       _initialized = true;
-      // CI1e (C11.2) : sauvegarde automatique du programme d'origine avant
-      // la première lecture par 6.10.0.
-      await ProgramOriginStore(this).ensureProgramOrigin();
       // G2 : données retirées encore présentes → copie complète relue, puis
       // seulement suppression (sinon elles restent, nouvel essai au
       // prochain lancement).
       final document = raw;
       if (document != null) await _secureRetiredData(document);
+      // CI1e (C11.2) : sauvegarde automatique du programme d'origine avant
+      // la première lecture par 6.10.0, puis ajustements de Koach d'avant
+      // 6.10.0 ramenés sur les blocs annotés.
+      await ProgramOriginStore(this).ensureProgramOrigin();
+      if (ImportedProgramStore(this).migrateLegacyEvolution()) _persist();
       return;
     }
 
@@ -1563,9 +1565,9 @@ class AppStore extends ChangeNotifier {
 
   void _applyBackup(_BackupData data) {
     _progression = null;
-    // CI1e (C11.2) : une sauvegarde sans programme d'origine (d'avant
-    // 6.10.0) garde celui déjà connu de cet appareil.
-    programOrigin = data.programOrigin ?? programOrigin;
+    // CI1e (C11.2) : programme d'origine de la sauvegarde (un import
+    // d'avant 6.10.0 garde celui de cet appareil : _commitImport).
+    programOrigin = data.programOrigin;
     values
       ..clear()
       ..addAll(data.values);
@@ -1706,6 +1708,7 @@ class AppStore extends ChangeNotifier {
             'La sauvegarde a échoué. Tes données actuelles sont conservées.';
         return ImportStatus.writeFailed;
       }
+      final keptOrigin = programOrigin;
       _applyBackup(data);
       // Aucune cérémonie de niveau ni bilan pour des acquis déjà présents
       // dans la sauvegarde restaurée.
@@ -1717,8 +1720,19 @@ class AppStore extends ChangeNotifier {
       _acceptedSeq = _changeSeq;
       persistenceError.value = null;
       // CI1e (C11.2) : sauvegarde d'avant 6.10.0 importée sans programme
-      // d'origine connu : celui-ci est pris maintenant (puis écrit).
-      if (ProgramOriginStore(this).captureProgramOrigin()) _persist();
+      // d'origine connu : celui d'avant l'import est gardé, sinon il est
+      // pris maintenant (puis écrit) ; ajustements de Koach d'avant 6.10.0
+      // ramenés sur les blocs annotés.
+      var write = false;
+      if (data.programOrigin == null && keptOrigin != null) {
+        programOrigin = keptOrigin;
+        write = true;
+      } else if (data.programOrigin != null) {
+        ProgramOriginStore(this).syncLocalOrigin();
+      }
+      if (ProgramOriginStore(this).captureProgramOrigin()) write = true;
+      if (ImportedProgramStore(this).migrateLegacyEvolution()) write = true;
+      if (write) _persist();
       notifyListeners();
       return ImportStatus.success;
     });
@@ -2109,10 +2123,14 @@ class AppStore extends ChangeNotifier {
     pilotageEpoch++;
     _dataRevision++;
     _changeSeq++;
+    // CI1e (C11.2) : programme importé qui démarre : sauvegarde d'origine.
+    final hadOrigin = programOrigin != null;
+    ProgramOriginStore(this).captureProgramOrigin();
     notifyListeners();
     final ok = _initialized && await _serialize(_commitState);
     if (ok) return StartSave.saved;
     // Écriture refusée : pas de départ annoncé, l'état précédent revient.
+    if (!hadOrigin) programOrigin = null;
     program.start = previous.start;
     startOrigin = previous.origin;
     values
