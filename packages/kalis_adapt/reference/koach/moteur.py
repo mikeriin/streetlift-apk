@@ -10,7 +10,7 @@ L'état est entièrement recalculable depuis le journal (`rejouer`).
 """
 import math
 
-from .modele import Modele, NQ, TH, RHO, EPS, KN, KM, BA, BP, LAM, KU, FI, HH
+from .modele import Modele, NQ, TH, RHO, EPS, KN, KM, KL, KG, BA, BP, LAM, KU, FI, HH
 from .securite import Gardefous
 from .seance import Seances
 
@@ -94,8 +94,10 @@ class Koach(object):
             'qualites_sd': [math.sqrt(max(m.P[TH + q, TH + q], 0.0)) for q in range(NQ)],
             'reponse': m.m[RHO], 'reponse_sd': math.sqrt(max(m.P[RHO, RHO], 0.0)),
             'reponse_classes': [m.m[EPS + c] for c in range(5)],
-            'fatigue_sensibilite': [m.m[KN], m.m[KM]],
-            'fatigue': {'nerveux': m.f_nerveux, 'musculaire': list(m.f_musculaire),
+            'fatigue_sensibilite': {'nerveux_systemique': float(m.m[KN]), 'nerveux_local': float(m.m[KL]),
+                                    'musculaire_systemique': float(m.m[KG]), 'musculaire_local': float(m.m[KM])},
+            'fatigue': {'nerveux': {'systemique': float(m.f_g[0]), 'local': [float(x) for x in m.f_l[0]]},
+                        'musculaire': {'systemique': float(m.f_g[1]), 'local': [float(x) for x in m.f_l[1]]},
                         'tendineux': dict(m.f_tendon), 'tau': list(m.tau)},
             'biais_rir': [m.m[BA], m.m[BP]], 'bruit_rir': m.bruit_rir,
             'courbe': [m.m[LAM], m.m[KU]], 'fatigue_intra': m.m[FI], 'part_tenue': m.m[HH],

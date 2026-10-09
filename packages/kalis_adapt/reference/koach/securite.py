@@ -50,6 +50,30 @@ class Gardefous(object):
         self.jour = 0
         self.dernier_jour_seance = None
         self.avant_dernier_jour_seance = None
+        self.semaines = {}       # indice de semaine -> semaine de charge (bool)
+        self.semaine = 0
+
+    def noter_semaine(self, semaine, genre, intention=None):
+        """Genre de la semaine en cours (contexte de la séance). Une semaine
+        « de charge » pour la reprise graduée est une semaine non
+        verrouillée ou d'introduction (`returnLoadedWeek` de 0.3.1)."""
+        g = intention or genre
+        self.semaine = semaine
+        self.semaines[semaine] = g not in ('deload', 'taper', 'test', 'competition', 'transition')
+
+    def _semaines_de_charge(self, leve):
+        """Nombre de semaines de charge écoulées depuis la levée d'un arrêt
+        (hors semaine en cours), et vrai si une semaine de charge a commencé
+        depuis. Une semaine compte quand la levée lui laisse au moins 4 jours."""
+        premiere = leve // 7 if 7 - (leve % 7) >= 4 else leve // 7 + 1
+        n = 0
+        commencee = False
+        for w in range(premiere, self.semaine + 1):
+            if self.semaines.get(w, False):
+                commencee = True
+                if w < self.semaine:
+                    n += 1
+        return n, commencee
 
     def zone(self, z):
         if z not in self.zones:
@@ -142,8 +166,17 @@ class Gardefous(object):
         return {z: self.active(z) for z in self.zones if self.active(z) > 0}
 
     def arret(self, z):
+        """Zone à l'arrêt, ou arrêt gardé : levée récente sans qu'une semaine
+        de charge ait commencé depuis (règle A3.2 de 0.3.1)."""
         d = self.zones.get(z)
-        return d is not None and d.arret_depuis is not None
+        if d is None:
+            return False
+        if d.arret_depuis is not None:
+            return True
+        if d.arret_leve is not None and 0 <= self.jour - d.arret_leve <= self.s['reprise_surveillance_j']:
+            _, commencee = self._semaines_de_charge(d.arret_leve)
+            return not commencee
+        return False
 
     def arrets(self):
         return [z for z in self.zones if self.arret(z)]
@@ -158,7 +191,11 @@ class Gardefous(object):
         depuis = self.jour - d.arret_leve
         if depuis > s['reprise_surveillance_j'] or depuis < 0:
             return None
-        part = s['reprise_depart'] + s['reprise_pas'] * (depuis // 7)
+        # Paliers comptés en semaines DE CHARGE écoulées : une semaine
+        # allégée, de test ou d'affûtage garde la part de la dernière
+        # semaine de charge (règle A3.3 de 0.3.1).
+        n, _ = self._semaines_de_charge(d.arret_leve)
+        part = s['reprise_depart'] + s['reprise_pas'] * n
         if d.pire_entre(self.jour - 6, self.jour) > s['reprise_douleur_max']:
             part -= s['reprise_pas']
         if part < s['reprise_plancher']:
@@ -210,10 +247,12 @@ class Gardefous(object):
         h = self.s['hausse_par_niveau'][self.niveau]
         return h * self.s['hausse_fragile_facteur'] if fragile else h
 
-    def conduite(self, niveaux_zone, stop_hits, est_test=False):
+    def conduite(self, niveaux_zone, stop_hits, est_test=False, depuis_jour=None):
         """Conduite d'un exercice sous la douleur. [niveaux_zone] : zone ->
         sollicitation (0, 0,5, 1) ; [stop_hits] : zones que le mouvement
-        provoque. Renvoie un dictionnaire : retire, series (facteur), rir
+        provoque ; [depuis_jour] : jour de la dernière séance de l'exercice
+        (une zone signalée au-dessus du seuil depuis reste bloquante, même
+        levée depuis : règle A1.1 de 0.3.1). Renvoie un dictionnaire : retire, series (facteur), rir
         (bonus), sans_hausse, rir_min, part_max (plafond en part du 1RM),
         hausse_quantite (plafond de hausse des répétitions ou secondes),
         raison."""
@@ -234,7 +273,8 @@ class Gardefous(object):
                 continue
             act = self.active(z)
             if self.arret(z):
-                escalade = (self.jour - d.arret_depuis >= s['arret_escalade_j']
+                debut = d.arret_depuis if d.arret_depuis is not None else self.jour
+                escalade = (self.jour - debut >= s['arret_escalade_j']
                             and d.pire_entre(self.jour - 6, self.jour) >= s['arret_persistance_min'])
                 if z in stop_hits or (escalade and niveau >= 0.5):
                     out['retire'] = True
@@ -282,6 +322,11 @@ class Gardefous(object):
                     note(z, 'douleur')
             elif est_test and niveau >= 0.5 and self.signalee_semaine(z):
                 out['retire'] = True
+                note(z, 'douleur')
+            if act <= 0 and niveau >= 0.5 and depuis_jour is not None \
+                    and d.pire_entre(depuis_jour, self.jour) > s['douleur_seuil']:
+                out['sans_hausse'] = True
+                out['rir'] = max(out['rir'], s['douleur_rir_bonus'])
                 note(z, 'douleur')
             if self.recente(z) and (niveau >= 0.5 or z in stop_hits) and out['hausse_quantite'] is None:
                 out['hausse_quantite'] = s['reprise_hausse_quantite']

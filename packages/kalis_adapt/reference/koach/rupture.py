@@ -48,6 +48,8 @@ DEFAUTS_RUPTURE = {
     'semaine_allegee_series': 0.6,
     'semaine_allegee_rir': 2.0,
     'journal_dossier': 60,          # événements du journal dans le dossier
+    'douleur_recente_j': 7,         # une douleur compte si signalée depuis 7 jours au plus
+    'residu_reps_reference': 8.0,   # répétitions de référence de la conversion réserve -> e1RM
 }
 
 CAUSES = ('rupture', 'residu', 'assiduite', 'douleur')
@@ -380,6 +382,9 @@ class Surveillance(Extension):
         self.p = 0.0
         self.douleur_zones = []                       # zones > seuil (triées)
         self.reponses = []
+        # Semaine allégée en cours : [jour de début, jour de fin (exclu),
+        # facteur des séries, RIR ajouté] ou None.
+        self.allegement = None
 
     def appliquer_parametres(self, params):
         self.params = params
@@ -390,6 +395,8 @@ class Surveillance(Extension):
         self.assiduite_semaines = int(_param(params, 'assiduite_secours_semaines'))
         self.douleur_secours = float(_param(params, 'douleur_secours'))
         self.silence_semaines = int(_param(params, 'silence_semaines'))
+        self.douleur_recente_j = int(_param(params, 'douleur_recente_j'))
+        self.residu_reps = float(_param(params, 'residu_reps_reference'))
 
     # ------------------------------------------------------------------
     # Événements
@@ -398,9 +405,59 @@ class Surveillance(Extension):
         self.faites += 1
         if resume is not None:
             self.p = self.bocpd.ajouter(resume[1])
-            self.somme_rel += float(resume[2])
-            self.n_rel += 1
+            r = self._residu_e1rm(koach, resume[0])
+            if r is None:
+                # Aucune série de la séance n'a laissé de résidu dans le
+                # modèle (moteur de test, résumé fourni par l'appelant) : le
+                # résidu relatif du résumé est pris tel quel.
+                r = float(resume[2])
+            if r is not False:
+                self.somme_rel += r
+                self.n_rel += 1
         self.verifier(koach)
+
+    def _residu_e1rm(self, koach, jour):
+        """Résidu relatif d'e1RM de la séance du jour [jour] (seuil de secours
+        « résidu d'e1RM > 5 % ») : moyenne, sur les séries de force du jour
+        (pistes de type charge ou répétitions), du résidu de réserve
+        (observé − prédit, en répétitions) converti en ln capacité :
+        charge : × g'(R) de la courbe de l'exercice à R = residu_reps_reference
+        (pente −ln(part du 1RM) par répétition) ; répétitions au poids du
+        corps : × 1 / Rmax estimé. Les tenues et l'endurance n'ont pas d'e1RM.
+        Renvoie None si aucune piste n'a de résidu ce jour-là, False si la
+        séance n'a que des tenues ou de l'endurance.
+
+        (Le résidu relatif du résumé de séance, `resume[2]`, est en
+        répétitions de réserve, pas en part d'e1RM : le comparer à 5 % levait
+        l'alerte de secours presque chaque semaine sur le banc.)"""
+        m = getattr(koach, 'modele', None)
+        if m is None or not hasattr(m, 'ordre'):
+            return None
+        vu = False
+        somme = 0.0
+        n = 0
+        for ex in m.ordre:
+            t = m.pistes.get(ex)
+            if t is None or not t.residus:
+                continue
+            k = len(t.residus) - 1
+            while k >= 0 and t.residus[k][0] == jour:
+                vu = True
+                rel = float(t.residus[k][2])
+                if t.type == 'charge':
+                    lam, ku = m.courbe(t)
+                    somme += rel * m._dg(lam, ku, self.residu_reps)
+                    n += 1
+                elif t.type == 'reps':
+                    c = m.capacite(ex)
+                    somme += rel / math.exp(c[0])
+                    n += 1
+                k -= 1
+        if not vu:
+            return None
+        if n == 0:
+            return False
+        return somme / n
 
     def seance_manquee(self, koach, e):
         self.manquees += 1
@@ -421,6 +478,12 @@ class Surveillance(Extension):
         self.verifier(koach)
 
     def decision(self, koach, e):
+        """Les réponses au diagnostic passent par le journal (événement
+        `decision` portant `diagnostic`), pour que l'état se recalcule depuis
+        le journal. Une réponse reçue sans alerte levée est ignorée."""
+        diag = e.get('diagnostic')
+        if diag is not None and self.etat()['hors_modele']:
+            self.repondre(koach, diag)
         self.verifier(koach)
 
     # ------------------------------------------------------------------
@@ -450,22 +513,75 @@ class Surveillance(Extension):
         return faites < self.assiduite_secours * prevues
 
     def _douleur(self, koach):
-        """Zones dont le DERNIER signalement dépasse le seuil (triées)."""
+        """Zones dont le DERNIER signalement dépasse le seuil et date de
+        `douleur_recente_j` jours au plus (triées). Sans la condition de
+        date, un signalement ancien jamais remis à 0 (la séance ne pose pas
+        la question quand rien n'est signalé) relevait l'alerte à chaque fin
+        de silence."""
         zones = []
+        jour = getattr(koach, 'jour', 0)
         for z in sorted(koach.garde.zones.keys()):
             dern = koach.garde.zones[z].derniere()
-            if dern is not None and dern[1] > self.douleur_secours:
+            if (dern is not None and dern[1] > self.douleur_secours
+                    and jour - dern[0] <= self.douleur_recente_j):
                 zones.append(z)
         return zones
 
     def verifier(self, koach):
-        """Recalcule les causes et lève celles qui ne sont pas en silence."""
+        """Recalcule les causes et lève celles qui ne sont pas en silence.
+        Quand une alerte se lève (aucune cause levée avant, au moins une
+        après), les extensions qui exposent `sur_alerte_hors_modele` sont
+        prévenues (contrôle dual : l'essai N-of-1 en cours est interrompu)."""
+        avant = self.etat()['hors_modele']
         self.douleur_zones = self._douleur(koach)
         actives = [self.p > self.alerte, self._residu_actif(), self._assiduite_active(),
                    len(self.douleur_zones) > 0]
         for c in range(4):
             if actives[c] and self.semaine >= self.silence[c]:
                 self.alertes[c] = True
+        if not avant and self.etat()['hors_modele']:
+            causes = self.causes()
+            for x in getattr(koach, 'extensions', []):
+                f = getattr(x, 'sur_alerte_hors_modele', None)
+                if f is not None and x is not self:
+                    f(koach, causes)
+
+    def appliquer_allegement(self, items, jour):
+        """Items écrits du jour transformés par la semaine allégée en cours
+        (action codée « fatigue, vie chargée ») : séries de travail ×
+        `semaine_allegee_series` (arrondi, au moins 1), réserve visée +
+        `semaine_allegee_rir` (2 flammes par répétition de réserve, au moins
+        1 flamme). Échauffements et tests inchangés. Renvoie une nouvelle
+        liste ; les items reçus ne sont pas modifiés."""
+        a = self.allegement
+        if a is None or not (a[0] <= jour < a[1]):
+            return items
+        f_series, rir = a[2], a[3]
+        cran = int(math.floor(2.0 * rir + 0.5))
+        out = []
+        for it in items:
+            if it.get('kind', 'work') != 'work' or (it.get('sets') or 0) < 1:
+                out.append(it)
+                continue
+            it = dict(it)
+            n = int(math.floor(it['sets'] * f_series + 0.5))
+            it['sets'] = n if n >= 1 else 1
+            f = it.get('targetFlames')
+            if f is not None and f < 10:
+                g = f - cran
+                it['targetFlames'] = g if g >= 1 else 1
+            if it.get('setTargets'):
+                cibles = []
+                for c in it['setTargets']:
+                    c = dict(c)
+                    fc = c.get('flames')
+                    if fc is not None and fc < 10:
+                        g = fc - cran
+                        c['flames'] = g if g >= 1 else 1
+                    cibles.append(c)
+                it['setTargets'] = cibles
+            out.append(it)
+        return out
 
     def causes(self):
         return [CAUSES[c] for c in range(4) if self.alertes[c]]
@@ -519,6 +635,8 @@ class Surveillance(Extension):
             action = {'action': 'semaine_allegee',
                       'series': float(_param(p, 'semaine_allegee_series')),
                       'rir': float(_param(p, 'semaine_allegee_rir'))}
+            j = int(getattr(koach, 'jour', 0))
+            self.allegement = [j, j + 7, action['series'], action['rir']]
         else:
             facteur = float(_param(p, 'elargissement_rien_de_special'))
             koach.modele.elargir(facteur)
@@ -546,6 +664,7 @@ class Surveillance(Extension):
             'semaines': [list(s) for s in self.semaines], 'alertes': list(self.alertes),
             'silence': list(self.silence), 'p': self.p, 'douleur_zones': list(self.douleur_zones),
             'reponses': _copie(self.reponses),
+            'allegement': None if self.allegement is None else list(self.allegement),
         }
 
     @staticmethod
@@ -564,6 +683,8 @@ class Surveillance(Extension):
         s.p = float(etat['p'])
         s.douleur_zones = list(etat['douleur_zones'])
         s.reponses = _copie(etat['reponses'])
+        a = etat.get('allegement')
+        s.allegement = None if a is None else [int(a[0]), int(a[1]), float(a[2]), float(a[3])]
         return s
 
     # ------------------------------------------------------------------
@@ -648,6 +769,8 @@ BORNES = {
     ('rupture', 'a_priori_alpha'): (0.5, 1000.0),
     ('rupture', 'a_priori_beta'): (1e-6, 1000.0),
     ('rupture', 'a_priori_alpha_nouvelle'): (0.5, 1000.0),
+    ('rupture', 'douleur_recente_j'): (0, 60),
+    ('rupture', 'residu_reps_reference'): (1.0, 30.0),
     ('adherence', 'proba_cible'): (0.05, 0.99),
     ('adherence', 'a_priori_poids_sd'): (1e-3, 100.0),
     ('adherence', 'biais_initial'): (-5.0, 5.0),
