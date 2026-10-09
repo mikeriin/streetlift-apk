@@ -366,8 +366,8 @@ void main() {
         );
       }
       final curl = day.exercises.firstWhere(
-        (e) => app.miniSetPlanFor(w, j, e, 0)?.kind ==
-            kc.SetTechniqueKind.myoReps,
+        (e) =>
+            app.miniSetPlanFor(w, j, e, 0)?.kind == kc.SetTechniqueKind.myoReps,
       );
       expect(curl.engine, isTrue);
     });
