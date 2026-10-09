@@ -137,6 +137,9 @@ abstract final class CoachNotes {
   /// Équilibre progressif près d'un appui (CP2, partie 1 ; R6-P26).
   static const String balanceProgress = 'balance_progress';
 
+  /// Exercice debout d'un senior tenu d'une main (CP2, partie 1).
+  static const String holdSupport = 'hold_support';
+
   /// Repère d'un objectif de répétitions sans lest au matériel (`value` :
   /// valeur attendue) : la surcharge passe par une variante plus dure
   /// (CP2, partie 0, boucle 2).
@@ -437,6 +440,7 @@ abstract final class CoachNotes {
     chairSquat,
     kneeShallow,
     balanceProgress,
+    holdSupport,
     checkpointBody,
     checkpointHold,
     checkpointLoad,
@@ -1118,7 +1122,13 @@ final class Prescriber {
   }
 
   int _scaled(int sets, WeekSpec ws, {int min = 1}) {
-    var n = _round(sets * ws.volume * volumeScale);
+    // (Musculation : le volume est le levier de l'hypertrophie ; la
+    // tolérance du profil ne descend pas sous 0,85. Effet limité : les
+    // chemins actuels ne la mettent presque jamais plus bas.)
+    final scale = skeleton.style == CoachStyle.hypertrophy && volumeScale < 0.85
+        ? 0.85
+        : volumeScale;
+    var n = _round(sets * ws.volume * scale);
     // Semaine de l'échéance ou du test daté : deux séries au plus par
     // exercice — le volume continue de baisser jusqu'au test (R3-P12).
     if (ws.eventWeek && n > 2) {
@@ -3619,7 +3629,19 @@ final class Prescriber {
         // 8 à 12 répétitions à 2 ou 3 de l'échec : environ 70 % du 1RM
         // (72 % hors du chemin street : panel CP2, partie 1, 72 à 77 %
         // pour 8 à 10 répétitions à 2 ou 3 en réserve).
-        _loadAt(x, isStreetStyle(skeleton.style) ? 0.68 : 0.72, null);
+        // (Hors street : part tirée des répétitions visées et de la
+        // réserve, Epley — p = 1 / (1 + (répétitions + réserve) / 30) ; 68 %
+        // au plus en santé — relecture du code de 0.3.0.)
+        var p = 0.68;
+        if (!isStreetStyle(skeleton.style)) {
+          final reps = x.repsHigh ?? 10;
+          final rir = x.rir ?? 2;
+          p = 1 / (1 + (reps + rir) / 30);
+          if (skeleton.style == CoachStyle.health && p > 0.68) {
+            p = 0.68;
+          }
+        }
+        _loadAt(x, p, null);
       } else {
         x
           ..calibrate = true
@@ -3721,6 +3743,42 @@ final class Prescriber {
   // ------------------------------------------------------------------ course
 
   _Draft? _run(SlotSpec s, int day, WeekSpec ws, _DayRole role) {
+    final street = isStreetStyle(skeleton.style);
+    // Jour de l'épreuve, hors street : la course elle-même, sur la première
+    // course de la séance, à l'allure de l'objectif (relecture du code de
+    // 0.3.0 : l'épreuve s'écrivait sur la sortie longue, parfois le
+    // lendemain de la course).
+    final raceGoal = a.runGoal;
+    if (role == _DayRole.event &&
+        !street &&
+        raceGoal != null &&
+        s.note == null &&
+        _firstRunSlot(day) == s.slotId) {
+      final race = _new(s)
+        ..minSets = 1
+        ..fixed = true
+        ..kind = SetKind.test
+        ..sets = 1
+        ..rest = 0
+        ..distance = (raceGoal.$1 / 100).roundToDouble() * 100
+        ..stress = DayStress.heavy
+        ..reasons.add(
+          reason(ReasonCodes.planTestScheduled, <String, Object?>{
+            'testKind': TestKind.timeTrial.code,
+          }),
+        )
+        ..reasons.add(_note(CoachNotes.timeTrial, raceGoal.$1))
+        ..reasons.add(_note(CoachNotes.eventDay, 0))
+        ..reasons.add(
+          _note(CoachNotes.goalPace, raceGoal.$2 / raceGoal.$1 * 1000),
+        );
+      race.test = const TestSpec(
+        kind: TestKind.timeTrial,
+        attempts: 1,
+        benchmarkKind: BenchmarkKind.timeTrial,
+      );
+      return race;
+    }
     if (role == _DayRole.event) {
       return null;
     }
@@ -3761,47 +3819,62 @@ final class Prescriber {
     }
     // Test chronométré : la sortie longue de la semaine de test devient le
     // test de l'objectif (la moitié de la distance à mi-parcours).
+    // (Hors street, la semaine de l'échéance n'a pas de test hors du jour
+    // de l'épreuve.)
     if (goal != null &&
         s.method == Method.runLong &&
         ws.testWeek &&
-        role != _DayRole.event) {
-      // (Test de mi-parcours sur la moitié de la distance ; la distance
-      // entière seulement à l'échéance ou au test final de la saison ; et
-      // jamais plus que ce que le créneau du jour permet de courir — panel
-      // et banc CP2, partie 1 : 10 km de test en semaine 6 pour une
-      // débutante qui court 35 minutes, dans un créneau d'une heure.)
-      final last =
-          ws.eventWeek || (ws.intent == WeekIntent.test && _shape.finalBlock);
+        role != _DayRole.event &&
+        (street || !ws.eventWeek)) {
+      final last = street
+          ? ws.eventWeek || ws.intent == WeekIntent.test
+          : ws.intent == WeekIntent.test && _shape.finalBlock;
       var meters = last ? goal.$1 : goal.$1 / 2;
-      final fits = (a.days[day].minutes - 8.0) * 60 * coachRunMetersPerSecond;
-      if (!ws.eventWeek && fits > 0 && meters > fits) {
-        meters = (fits / 500).floorToDouble() * 500;
+      if (!street) {
+        // Test de mi-parcours sur la moitié de la distance ; jamais plus
+        // que le créneau du jour ni que 110 % de la plus longue course des
+        // quatre semaines d'avant (Frandsen et al. 2025 ; relecture du
+        // code de 0.3.0) ; sous 1 km, pas de test.
+        final fits =
+            (a.days[day].minutes - 8.0) * 60 * coachRunMetersPerSecond;
+        if (fits > 0 && meters > fits) {
+          meters = fits;
+        }
+        var longest = 0.0;
+        for (var k = _history.length - 4; k < _history.length; k++) {
+          if (k >= 0 && _history[k].runLong > longest) {
+            longest = _history[k].runLong;
+          }
+        }
+        final most = longest * 1.1 * 60 * coachRunMetersPerSecond;
+        if (most > 0 && meters > most) {
+          meters = most;
+        }
+        meters = (meters / 500).floorToDouble() * 500;
       }
-      x
-        ..kind = SetKind.test
-        ..sets = 1
-        ..rest = 0
-        ..distance = (meters / 100).roundToDouble() * 100
-        ..stress = DayStress.heavy
-        ..reasons.add(
-          reason(ReasonCodes.planTestScheduled, <String, Object?>{
-            'testKind': TestKind.timeTrial.code,
-          }),
-        )
-        ..reasons.add(_note(CoachNotes.timeTrial, meters));
-      if (ws.eventWeek) {
-        // L'épreuve elle-même (sa durée est celle de la course).
-        x.reasons.add(_note(CoachNotes.eventDay, 0));
+      if (street || meters >= 1000) {
+        x
+          ..kind = SetKind.test
+          ..sets = 1
+          ..rest = 0
+          ..distance = (meters / 100).roundToDouble() * 100
+          ..stress = DayStress.heavy
+          ..reasons.add(
+            reason(ReasonCodes.planTestScheduled, <String, Object?>{
+              'testKind': TestKind.timeTrial.code,
+            }),
+          )
+          ..reasons.add(_note(CoachNotes.timeTrial, meters));
+        if (last) {
+          x.reasons.add(_note(CoachNotes.goalPace, goal.$2 / goal.$1 * 1000));
+        }
+        x.test = const TestSpec(
+          kind: TestKind.timeTrial,
+          attempts: 1,
+          benchmarkKind: BenchmarkKind.timeTrial,
+        );
+        return x;
       }
-      if (last) {
-        x.reasons.add(_note(CoachNotes.goalPace, goal.$2 / goal.$1 * 1000));
-      }
-      x.test = const TestSpec(
-        kind: TestKind.timeTrial,
-        attempts: 1,
-        benchmarkKind: BenchmarkKind.timeTrial,
-      );
-      return x;
     }
     if (s.method == Method.runQuality &&
         s.note != 'goal_pace' &&
@@ -3954,6 +4027,20 @@ final class Prescriber {
   /// 60 % (R6-P20 : volume −40 à 60 %) ; les sorties faciles valent 60 à
   /// 70 % de la sortie longue, 30 minutes au moins pour le débutant
   /// (R6-P17). Plafond : le temps du jour moins l'échauffement.
+  /// Emplacement de la première course principale (sans note) de la
+  /// séance [day], ou `null`.
+  String? _firstRunSlot(int day) {
+    for (final o in skeleton.days[day].slots) {
+      if (o.note == null &&
+          (o.method == Method.runLong ||
+              o.method == Method.runEasy ||
+              o.method == Method.runQuality)) {
+        return o.slotId;
+      }
+    }
+    return null;
+  }
+
   /// Durée de départ d'une course facile (30 min) ou d'une sortie longue
   /// (45 min) ; hors du chemin street, jamais au-delà de la plus longue
   /// course connue (+25 % à partir de l'intermédiaire ; R6-P16, garde-fou
@@ -3964,7 +4051,9 @@ final class Prescriber {
     if (isStreetStyle(skeleton.style) || known == null) {
       return base;
     }
-    final cap = known * (a.level >= 1 ? 1.25 : 1.0) * (long ? 1.0 : 0.7);
+    // (110 % au plus de la course connue à partir de l'intermédiaire —
+    // Frandsen et al. 2025 ; relecture du code de 0.3.0.)
+    final cap = known * (a.level >= 1 ? 1.1 : 1.0) * (long ? 1.0 : 0.7);
     return cap < base ? (cap < 5 ? 5 : cap) : base;
   }
 
@@ -3986,7 +4075,7 @@ final class Prescriber {
         ? longest
         : (known == null
               ? 30.0
-              : (a.level >= 1 ? known * 1.25 : known.toDouble()));
+              : (a.level >= 1 ? known * 1.1 : known.toDouble()));
     final taper = ws.intent == WeekIntent.taper;
     final light = ws.light && ws.intent != WeekIntent.intro;
     var long = longest <= 0
@@ -4482,6 +4571,13 @@ final class Prescriber {
       return null;
     }
     if (role == _DayRole.event) {
+      // Hors street : la course de l'épreuve (`_run`).
+      if (!isStreetStyle(skeleton.style) &&
+          (s.method == Method.runLong ||
+              s.method == Method.runEasy ||
+              s.method == Method.runQuality)) {
+        return _run(s, day, ws, role);
+      }
       return s.method == Method.warmupPrep ? _warmup(s, ws, role) : null;
     }
     if (role == _DayRole.primerNear) {
@@ -4574,6 +4670,10 @@ final class Prescriber {
       // Senior : le squat se fait en assis-debout d'une chaise.
       if (a.age >= 65 && x.e.id == 'mu-air-squat') {
         x.reasons.add(_note(CoachNotes.chairSquat, 0));
+      }
+      // Fente latérale d'un senior : une main sur un appui.
+      if (a.age >= 65 && x.e.id == 'mu-fente-laterale') {
+        x.reasons.add(_note(CoachNotes.holdSupport, 0));
       }
       // Genou gêné : chaise haute, angle écrit (R5-P23).
       final knee = a.limitOn(Joint.knee)?.discomfort ?? 0;
@@ -5379,9 +5479,18 @@ final class Prescriber {
         // programme n'entraîne pas ne se teste pas (CP2, partie 1 : dips
         // lesté testé à l'épreuve d'un programme de musculation qui ne le
         // travaille jamais).
+        // (Une variante du même mouvement compte comme entraînée : le
+        // muscle-up visé se travaille à l'élastique ou en négatif.)
+        final family = id.split('-').take(4).join('-');
         if (!isStreetStyle(skeleton.style) &&
-            !a.aimsAt(id) &&
-            !skeleton.days.any((d) => d.slots.any((s) => s.exerciseId == id))) {
+            !skeleton.days.any(
+              (d) => d.slots.any(
+                (s) =>
+                    s.exerciseId == id ||
+                    s.referenceId == id ||
+                    s.exerciseId.startsWith(family),
+              ),
+            )) {
           continue;
         }
         final e = a.catalog.exercise(id);
@@ -5565,9 +5674,7 @@ final class Prescriber {
           ..secondsHigh = kept
           // (La consigne d'allure dit la même durée que la case — panel
           // CP2, partie 1.)
-          ..reasons.removeWhere(
-            (r) => r.params['note'] == CoachNotes.easyPace,
-          )
+          ..reasons.removeWhere((r) => r.params['note'] == CoachNotes.easyPace)
           ..reasons.add(_note(CoachNotes.easyPace, kept ~/ 60));
       }
     }
@@ -7336,7 +7443,22 @@ final class Prescriber {
   List<WeekPrescription> build() {
     final out = <WeekPrescription>[];
     for (var w = 0; w < _shape.weeks.length; w++) {
-      final ws = _shape.weeks[w];
+      var ws = _shape.weeks[w];
+      // Musculation et santé : la semaine « de test » est un vrai
+      // allègement (−40 % de volume ; R3-P9 ; panel CP2, partie 1).
+      if (ws.kind == WeekKind.test &&
+          !ws.eventWeek &&
+          (skeleton.style == CoachStyle.hypertrophy ||
+              skeleton.style == CoachStyle.health)) {
+        ws = WeekSpec(
+          kind: WeekKind.deload,
+          intent: WeekIntent.deload,
+          phase: SeasonPhaseKind.deload,
+          volume: ws.volume < 0.6 ? ws.volume : 0.6,
+          stage: ws.stage,
+          weeksToEvent: ws.weeksToEvent,
+        );
+      }
       _today = a.start.addDays(7 * w);
       if (w == 0) {
         _loadedBefore = 0;
@@ -7537,16 +7659,17 @@ double? coachWeightClassOf(Sex? sex, double bodyWeight) {
 }
 
 /// Raisons du bloc : phase, échéance, lecture du profil, règles de douleur.
-/// Famille d'échauffement du style [s] (valeur ajoutée à la durée de la
-/// note `general_warmup`) : 0 street, 100 course, 200 salle et
-/// conditionnement, 300 santé et mobilité.
-double _warmupFamily(CoachStyle s) => switch (s) {
-  CoachStyle.endurance => 100,
-  CoachStyle.health => 300,
+/// Famille d'échauffement et de version courte du style [s] (paramètre
+/// `family` des notes `general_warmup` et `short_version`) : `run`
+/// course, `gym` salle et conditionnement, `health` santé et mobilité,
+/// `null` street.
+String? _warmupFamily(CoachStyle s) => switch (s) {
+  CoachStyle.endurance => 'run',
+  CoachStyle.health => 'health',
   CoachStyle.hypertrophy ||
   CoachStyle.strength ||
-  CoachStyle.conditioning => 200,
-  _ => 0,
+  CoachStyle.conditioning => 'gym',
+  _ => null,
 };
 
 List<Reason> blockReasonsOf(Athlete a, Skeleton skeleton) {
@@ -7567,9 +7690,11 @@ List<Reason> blockReasonsOf(Athlete a, Skeleton skeleton) {
       if (r.params['note'] == CoachNotes.skillHorizon) r,
     reason(ReasonCodes.planCoachNote, <String, Object?>{
       'note': CoachNotes.generalWarmup,
-      // Échauffement de la discipline (CP2, partie 1 ; R6-P25) : + 100
-      // course, + 200 salle et conditionnement, + 300 santé.
-      'value': coachWarmupSeconds / 60 + _warmupFamily(skeleton.style),
+      'value': coachWarmupSeconds / 60,
+      // Échauffement de la discipline (CP2, partie 1 ; R6-P25) : paramètre
+      // additif, la valeur reste en minutes.
+      if (_warmupFamily(skeleton.style) != null)
+        'family': _warmupFamily(skeleton.style),
     }),
   ];
   // (Musculation et santé : aucun test de maximum, pas de règle de
@@ -7682,13 +7807,12 @@ List<Reason> blockReasonsOf(Athlete a, Skeleton skeleton) {
       note(CoachNotes.badDay, profile.sleep == SleepBand.under6Hours ? 2 : 1),
     )
     ..add(
-      note(
-        CoachNotes.shortVersion,
-        (shortest >= 50 ? 25 : 15) +
-            (skeleton.style == CoachStyle.endurance
-                ? 100
-                : (skeleton.style == CoachStyle.health ? 300 : 0)),
-      ),
+      reason(ReasonCodes.planCoachNote, <String, Object?>{
+        'note': CoachNotes.shortVersion,
+        'value': shortest >= 50 ? 25 : 15,
+        if (_warmupFamily(skeleton.style) != null)
+          'family': _warmupFamily(skeleton.style),
+      }),
     )
     ..add(note(CoachNotes.redFlags, 0))
     ..add(note(CoachNotes.missed, 20));

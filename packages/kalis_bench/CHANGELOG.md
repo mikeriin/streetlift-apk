@@ -1,5 +1,17 @@
 # Journal
 
+## 0.2.4 — 09/10/2026 (lot CP2, partie 1)
+
+Couple `kalis_plan` 0.3.0 × `kalis_adapt` 0.3.0. Profils types, attentes de coach et grilles du panel
+**inchangés**.
+
+- Adaptateur : un point faible d'un groupe musculaire (sans mouvement prioritaire) devient la spécialisation
+  « muscle » du profil, nommée dans le vocabulaire `muscles` du catalogue (le premier seulement : le contrat
+  n'en porte qu'une).
+- Critère `seance_trop_longue` : le jour de l'épreuve (test de l'échéance, note `event_day`) n'est plus compté —
+  sa durée est celle de l'épreuve choisie par l'athlète (un 10 km de débutante dans un créneau d'une heure), même
+  règle que la relecture de `kalis_plan` qui exempte les emplacements imposés.
+
 ## 0.2.3 — 08/10/2026 (lot CA2, partie 1)
 
 Couple `kalis_plan` 0.2.2 × `kalis_adapt` 0.3.0. Profils types, attentes de coach, critères de sécurité et grilles
