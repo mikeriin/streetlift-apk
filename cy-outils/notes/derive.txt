@@ -1,0 +1,1 @@
+dérive CY 09/10 06:45 : p08_a 1/1/1/1, p14_c 8/8/8/8 (force/cali/hyper/santé) — pas de dérive (seuils (a) ≤ 2, (c) ≥ 8)

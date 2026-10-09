@@ -19,8 +19,13 @@ final class BlockView {
   /// Vue du bloc [block] pour le profil [profile]. [legacy] : le bloc est
   /// lu comme par `kalis_adapt` 0.1, même s'il porte les champs de
   /// `kalis_core` 0.4.0 (comparaison des deux versions).
-  BlockView(this.block, this.params, {this.profile, bool legacy = false})
-    : coached = !legacy && blockCoached(block) {
+  BlockView(
+    this.block,
+    this.params, {
+    this.profile,
+    bool legacy = false,
+    this.restructureImported = false,
+  }) : coached = !legacy && blockCoached(block) {
     for (final day in block.pass1.days) {
       for (final slot in day.slots) {
         _roles[slot.slotId] = slot.role;
@@ -135,6 +140,10 @@ final class BlockView {
   /// produit que des blocs de 4 à 6 semaines ; un tel bloc n'est jamais
   /// restructuré.
   bool get imported => block.pass1.weeks > 6;
+
+  /// Vrai : un bloc importé reçoit quand même les restructurations
+  /// (`KalisAdapt.restructureImported`, DECISIONS_CP.md C11).
+  final bool restructureImported;
 
   /// Semaine [weekIndex] du bloc, ou `null`.
   WeekPrescription? week(int weekIndex) {

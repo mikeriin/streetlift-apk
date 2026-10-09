@@ -50,7 +50,7 @@ def build(ci, out):
     import subprocess, re
     os.makedirs(out, exist_ok=True)
     tool = '/home/claude/mot/packages/kalis_bench/tool/panel_export.py'
-    for js in sorted(glob.glob(f'{ci}/saisons/street_*.json')):
+    for js in sorted(glob.glob(f'{ci}/saisons/*.json')):
         key = os.path.basename(js)[:-5]
         concise = subprocess.run(['python3', tool, js], capture_output=True, text=True, check=True).stdout
         season = open(f'{ci}/saisons/{key}.md').read()

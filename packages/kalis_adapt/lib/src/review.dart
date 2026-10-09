@@ -716,8 +716,10 @@ AdaptReview buildReview(
     }
   }
 
-  // Restructurations par kalis_plan : jamais sur un programme importé.
-  final structural = hasNextWeek && !view.imported;
+  // Restructurations par kalis_plan : jamais sur un programme importé, sauf
+  // quand l'application le demande (C11, `KalisAdapt.restructureImported`).
+  final structural =
+      hasNextWeek && (!view.imported || view.restructureImported);
   RestructureRequest request(
     RestructureScope scope,
     List<Reason> why, {

@@ -29,6 +29,21 @@ const int seasonMinWeeks = 16;
 /// R3-P19) — choix raisonné.
 const int seasonSecondTargetGap = 6;
 
+/// Semaine (0 = première) où le changement de discipline principale prend
+/// effet : la moitié de la saison (choix raisonné).
+int seasonDisciplineWeek(int weeks) => weeks ~/ 2;
+
+/// Semaine de l'annonce de la course ajoutée (scénario
+/// [SeasonScenario.race]).
+const int seasonAddedRaceAnnounce = 4;
+
+/// Semaine de la course ajoutée : six semaines après l'annonce, le temps
+/// d'un bloc (choix raisonné, comme [seasonSecondTargetGap]).
+const int seasonAddedRaceWeek = 10;
+
+/// Distance de la course ajoutée, en mètres.
+const double seasonAddedRaceMeters = 10000;
+
 /// Scénarios imposés d'une saison.
 enum SeasonScenario {
   /// Saison de référence : l'athlète simulé du profil.
@@ -73,6 +88,24 @@ enum SeasonScenario {
     'deuxieme_echeance',
     'deuxième échéance six semaines après la '
         'première',
+  ),
+
+  /// Changement de discipline principale à mi-saison (lot CY) : la
+  /// première discipline secondaire devient la principale, l'ancienne
+  /// principale passe secondaire (profils qui en ont une).
+  discipline(
+    'changement_discipline',
+    'discipline principale changée à mi-saison (la première secondaire '
+        'devient la principale)',
+  ),
+
+  /// Course ajoutée en cours de saison à un profil street hybride (lot
+  /// CY) : un 10 km annoncé en semaine 4, couru en semaine
+  /// [seasonAddedRaceWeek].
+  race(
+    'course_ajoutee',
+    'course de 10 km ajoutée en cours de saison (annoncée en semaine 4, '
+        'courue en semaine 10)',
   );
 
   const SeasonScenario(this.code, this.label);
@@ -253,6 +286,8 @@ Map<String, Object?> seasonSpecJson(
     case SeasonScenario.base:
     case SeasonScenario.earlier:
     case SeasonScenario.second:
+    case SeasonScenario.discipline:
+    case SeasonScenario.race:
       break;
   }
   return json;
@@ -286,13 +321,112 @@ AthleteProfile shiftTargetDate(AthleteProfile p, CivilDate from, int days) {
   return AthleteProfile.fromJson(json);
 }
 
+/// Disciplines du profil brut [json] : principale, puis secondaires.
+List<String> _disciplinesOf(Map<String, Object?> json) {
+  final core = json['core'];
+  final mix = core is Map<String, Object?> ? core['disciplines'] : null;
+  if (mix is! Map<String, Object?>) {
+    return const <String>[];
+  }
+  final out = <String>[if (mix['primary'] is String) mix['primary']! as String];
+  final secondaries = mix['secondaries'];
+  if (secondaries is List<Object?>) {
+    for (final x in secondaries) {
+      if (x is Map<String, Object?> && x['discipline'] is String) {
+        out.add(x['discipline']! as String);
+      }
+    }
+  }
+  return out;
+}
+
+/// Vrai si le scénario [scenario] a un sens pour le profil brut [json] :
+/// changement de discipline seulement avec une discipline secondaire ;
+/// course ajoutée seulement pour un profil street dont une secondaire est
+/// la course (cardio) ; les autres scénarios pour tous les profils.
+bool seasonScenarioApplies(Map<String, Object?> json, SeasonScenario scenario) {
+  final disciplines = _disciplinesOf(json);
+  return switch (scenario) {
+    SeasonScenario.discipline => disciplines.length >= 2,
+    SeasonScenario.race =>
+      json['group'] == 'street' &&
+          disciplines.skip(1).contains(TrainingDiscipline.cardio.code),
+    _ => true,
+  };
+}
+
+/// Profil [p] dont la première discipline secondaire devient la principale
+/// (les parts restent à leur place : la principale garde la plus grande) ; [p] tel quel sans discipline secondaire.
+AthleteProfile swapPrimaryDiscipline(AthleteProfile p) {
+  final mix = p.disciplines;
+  if (mix.secondaries.isEmpty) {
+    return p;
+  }
+  final first = mix.secondaries.first;
+  return p.copyWith(
+    disciplines: mix.copyWith(
+      primary: first.discipline,
+      secondaries: <DisciplineShare>[
+        DisciplineShare(discipline: mix.primary, pct: first.pct),
+        ...mix.secondaries.skip(1),
+      ],
+    ),
+  );
+}
+
+/// Profil [p] avec une course de [seasonAddedRaceMeters] mètres au jour
+/// [date] (échéance secondaire).
+AthleteProfile addRace(AthleteProfile p, CivilDate date) => p.copyWith(
+  events: <SeasonEvent>[
+    ...?p.events,
+    SeasonEvent(
+      id: 'course-ajoutee',
+      kind: EventKind.race,
+      priority: EventPriority.secondary,
+      date: date,
+      name: 'course de 10 km ajoutée',
+      distanceMeters: seasonAddedRaceMeters,
+    ),
+  ],
+);
+
 /// Changements du profil en cours de saison pour le scénario [scenario]
 /// du profil brut [json] : l'échéance avancée de deux semaines, annoncée
-/// six semaines avant sa date prévue (au plus tôt la deuxième semaine).
+/// six semaines avant sa date prévue (au plus tôt la deuxième semaine) ;
+/// la discipline principale changée à mi-saison ; une course ajoutée.
 List<ProfileChange> seasonChanges(
   Map<String, Object?> json,
   SeasonScenario scenario,
 ) {
+  if (!seasonScenarioApplies(json, scenario)) {
+    return const <ProfileChange>[];
+  }
+  if (scenario == SeasonScenario.discipline) {
+    final week = seasonDisciplineWeek(seasonWeeksOf(json, scenario));
+    final names = _disciplinesOf(json);
+    return <ProfileChange>[
+      ProfileChange(
+        week: week,
+        apply: swapPrimaryDiscipline,
+        label:
+            'discipline principale changée en semaine ${week + 1} '
+            '(${names[0]} → ${names[1]})',
+      ),
+    ];
+  }
+  if (scenario == SeasonScenario.race) {
+    final date = eventDate(benchStartDate, seasonAddedRaceWeek);
+    return <ProfileChange>[
+      ProfileChange(
+        week: seasonAddedRaceAnnounce,
+        apply: (p) => addRace(p, date),
+        label:
+            'course de 10 km ajoutée en semaine '
+            '${seasonAddedRaceAnnounce + 1} pour la semaine '
+            '$seasonAddedRaceWeek',
+      ),
+    ];
+  }
   final target = seasonTargetWeeks(json);
   if (scenario != SeasonScenario.earlier || target == null || target < 6) {
     return const <ProfileChange>[];
@@ -525,6 +659,9 @@ Map<String, Object?> seasonCampaignOf(
   final priority = <String>{...base.priorityIds};
   final out = <String, Object?>{};
   for (final scenario in scenarios) {
+    if (!seasonScenarioApplies(json, scenario)) {
+      continue;
+    }
     final scenarioJson = seasonProfileJson(json, scenario);
     final bench = BenchProfile.fromJson(scenarioJson);
     // Le profil des moteurs : celui du scénario quand l'échéance est connue

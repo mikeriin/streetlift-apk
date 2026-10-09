@@ -738,6 +738,11 @@ void main() {
       expect(p0.coachRepLoadShare, closeTo(0.025, 1e-9));
       expect(p0.coachRepGapMax, 4);
     });
+
+    test('programme importé : restructurations sur demande seulement (C11)', () {
+      expect(KalisAdapt().restructureImported, isFalse);
+      expect(KalisAdapt(restructureImported: true).restructureImported, isTrue);
+    });
   });
 }
 
