@@ -689,7 +689,8 @@ AdaptReview buildReview(
           recentReadiness >= 0.6 &&
           adherence >= 0.8 &&
           sets < band.$2 &&
-          slot != null) {
+          slot != null &&
+          _upFits(ctx, view, nextWeek, slot.$2)) {
         final c = stalled * (weeksObserved >= 4 ? 1.0 : weeksObserved / 4);
         found.add(
           _volumeCandidate(
@@ -1426,6 +1427,73 @@ List<double> _weeklySets(
     }
   }
   return best;
+}
+
+/// Plafond hebdomadaire de séries dures par groupe musculaire et par niveau
+/// (R1-P1 ; mêmes valeurs que le plafond de `kalis_plan` et que le critère
+/// de sécurité du banc).
+const List<double> coachWeeklyCeilingSets = <double>[12, 20, 25, 30];
+
+/// Séries de travail écrites à la semaine [weekIndex] du bloc pour le
+/// groupe [g] (1 par série d'un muscle principal, la part du catalogue pour
+/// un secondaire).
+double _writtenGroupSets(
+  EngineContext ctx,
+  BlockView view,
+  int weekIndex,
+  MuscleGroup g,
+) {
+  final week = view.week(weekIndex);
+  if (week == null) {
+    return 0;
+  }
+  var total = 0.0;
+  for (final d in week.days) {
+    for (final it in d.items) {
+      if (it.kind != SetKind.work) {
+        continue;
+      }
+      final info = ctx.book.find(it.exerciseId);
+      if (info == null) {
+        continue;
+      }
+      final at = info.groups.indexOf(g);
+      if (at >= 0) {
+        total += it.sets * info.groupWeights[at];
+      }
+    }
+  }
+  return total;
+}
+
+/// Vrai si une série de plus de [item] chaque semaine laisse chaque groupe
+/// qu'il travaille sous le plafond du niveau (CY : une proposition « volume
+/// ajusté » sur le soulevé de terre roumain portait les fessiers d'une
+/// débutante à 13 séries, au-dessus du plafond de 12 ; saisons croisées des
+/// autres disciplines, `autres_09`).
+bool _upFits(
+  EngineContext ctx,
+  BlockView view,
+  int weekIndex,
+  ExercisePrescription item,
+) {
+  final info = ctx.book.find(item.exerciseId);
+  if (info == null) {
+    return false;
+  }
+  final level = ctx.level < 0 ? 0 : (ctx.level > 3 ? 3 : ctx.level);
+  final ceiling = coachWeeklyCeilingSets[level];
+  for (var i = 0; i < info.groups.length; i++) {
+    final g = info.groups[i];
+    if (!g.major) {
+      continue;
+    }
+    final now = _writtenGroupSets(ctx, view, weekIndex, g);
+    if (now + info.groupWeights[i] > ceiling + 1e-9) {
+      return false;
+    }
+  }
+  return true;
 }
 
 _Candidate _volumeCandidate(

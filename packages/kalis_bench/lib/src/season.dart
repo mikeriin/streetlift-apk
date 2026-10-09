@@ -363,15 +363,44 @@ AthleteProfile swapPrimaryDiscipline(AthleteProfile p) {
     return p;
   }
   final first = mix.secondaries.first;
-  return p.copyWith(
-    disciplines: mix.copyWith(
-      primary: first.discipline,
-      secondaries: <DisciplineShare>[
-        DisciplineShare(discipline: mix.primary, pct: first.pct),
-        ...mix.secondaries.skip(1),
-      ],
-    ),
+  final street = p.streetMode;
+  if (street != null) {
+    // Mode street : la composante qui devient principale prend la part de
+    // l'ancienne (le dosage reste l'image du mode street, contrat de
+    // `kalis_core`) ; une principale hors street retire le mode street.
+    StreetStyle? style;
+    for (final s in StreetStyle.values) {
+      if (s.discipline == first.discipline) {
+        style = s;
+      }
+    }
+    if (style != null) {
+      final pct = <StreetStyle, int>{
+        for (final s in StreetStyle.values) s: street.pctOf(s),
+      };
+      final old = street.primary;
+      final top = pct[old]!;
+      pct[old] = pct[style]!;
+      pct[style] = top;
+      final mode = StreetMode(
+        primary: style,
+        streetliftingPct: pct[StreetStyle.streetlifting]!,
+        setsRepsPct: pct[StreetStyle.setsReps]!,
+        calisthenicsPct: pct[StreetStyle.calisthenics]!,
+      );
+      return p.copyWith(streetMode: mode, disciplines: mode.toDisciplineMix());
+    }
+  }
+  final swapped = mix.copyWith(
+    primary: first.discipline,
+    secondaries: <DisciplineShare>[
+      DisciplineShare(discipline: mix.primary, pct: first.pct),
+      ...mix.secondaries.skip(1),
+    ],
   );
+  return street == null
+      ? p.copyWith(disciplines: swapped)
+      : p.copyWith(streetMode: null, disciplines: swapped);
 }
 
 /// Profil [p] avec une course de [seasonAddedRaceMeters] mètres au jour
