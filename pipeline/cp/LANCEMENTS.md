@@ -173,3 +173,12 @@ Les deux sessions du 05/10 se sont arrêtées sur la limite hebdomadaire du plan
 - **Programme de 40 semaines** : annoter maintenant ces lignes (myo-reps → technique myo-reps avec parts ; contrastes et échelles → groupes ; EMOM → groupe au temps ; durées et HIIT → prescriptions de cardio du contrat, pour la conduite d'endurance de 0.3.0) ; « N × ? reps » : demander la référence manquante (carte de Koach) ou l'estimer depuis le journal, sinon servir tel qu'écrit. Lister ce qui reste absent, avec la raison.
 - Ne casse rien de CI1c/CI1d/CI1e (Koach appliqué, séance recalculée, sauvegarde d'origine et retour, mode coach du programme). Tests Dart + émulateur (session perso : une séance avec myo-reps, une avec contraste ou EMOM).
 - **Fin de lot** : dev6.10.1 (ou 6.11.0 si structurant), contrôle `claude/ci-3d` vert, build signé, `LIVRAISON_CI1f.md` (pipeline et projet claude.ai) avec « À tester » sur le téléphone du propriétaire, ligne de l'état « à valider », page de suivi, notification. Le pilotage valide.
+
+## CI1g — paquets 0.3.1 de CY dans l'application (à lancer après CI1f)
+
+- Lot : **CI1g** (ligne de l'état « à faire »), mise à jour courte comme CI1d. Décision : **C11.7**. Délégation totale (C8) ; validation par le pilotage.
+- Base : `main` de CI1f (dernière version publiée). Contrôle `claude/ci-3d`, sauvegardes `cp-sauvegardes/CI1g`.
+- **Paquets** : `kalis_plan` 0.3.1 (`etiquettes/kalis_plan-v0.3.1`), `kalis_adapt` 0.3.1 (`etiquettes/kalis_adapt-v0.3.1`), `kalis_core` 0.4.3 ; copie complète, octet pour octet ; `kalis_bench` jamais dans l'app. Suis `packages/kalis_plan/docs/INTEGRATION_CI.md` et `packages/kalis_adapt/docs/INTEGRATION_CI.md` (0.2.3/0.3.0 → 0.3.1).
+- **Points imposés par CY** : `clearance_first` montrée **avant la première séance** comme une étape à confirmer (avis médical / feu vert) ; consigne de la pompe remplacée pour le poignet « mains serrées sur la barre basse, poignets droits » ; `shoulder_history` sous le développé au-dessus de la tête ; textes Koach de tous les nouveaux codes (aucun code brut).
+- **C11** : le programme de 40 semaines reste sous toutes les fonctionnalités ; passe `KalisAdapt(restructureImported: true)` si un bloc du programme importé dépasse encore six semaines (sinon sans objet). Ne casse rien de CI1c à CI1f.
+- **Fin de lot** : version suivante, contrôle `claude/ci-3d` vert, build signé, `LIVRAISON_CI1g.md` (pipeline et projet claude.ai) avec « À tester » court, ligne de l'état « à valider », page de suivi, notification. Le pilotage valide.
