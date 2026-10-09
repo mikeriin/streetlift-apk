@@ -356,4 +356,18 @@ Lot livré le 09/10/2026, à valider par la conversation de pilotage (C8.1) : de
 - **CI1d.5 Relecture indépendante** (sous-agent Opus) : 7 constats, traités avant le contrôle complet (LIVRAISON_CI1d.md, partie 3).
 - **Recommandation (C8, le pilotage décide)** : valider dev6.9.3 et la donner au propriétaire à la place de dev6.9.2.
 
+### CI1e
+
+Lot livré le 09/10/2026, à valider par la conversation de pilotage (C8.1) : dev6.10.0 (main 238078ee, build signé run 37903901420, contrôle `claude/ci-3d` run 37901114754). Détail : `pipeline/cp/livraisons/LIVRAISON_CI1e.md`.
+
+- **CI1e.1 Lancement** : message sans ligne « Lot : » ; seul lot de la voie App « à faire » ; prérequis CI1d validé (C10.9). `add_repo` n'est pas proposé à cette session : dépôt déjà dans les sources, push vérifié par `git push --dry-run` puis par le push de la ligne « en cours ». Paquets inchangés (0.2.3) : aucun changement de `kalis_adapt` nécessaire.
+- **CI1e.2 Recensement** : 63 exclusions (application et paquets), cause racine : bloc importé unique de 40 semaines sans champ 0.4.0 (`blockCoached` faux, `BlockView.imported` = plus de 6 semaines). Liste et levée : LIVRAISON_CI1e.md, partie 1. Pour CY : aucune autre branche « bloc importé » dans `kalis_adapt`.
+- **CI1e.3 Annotation** (`lib/imported_program.dart`) : blocs de 6 semaines au plus (`legacy-programme-v33/S<n>`, 9 blocs), intentions de semaine et de bloc, saison (7 phases) et échéance « Fin du programme (S40) » (donnée au moteur, jamais écrite dans le profil, seulement sans programme créé ni échéance principale du profil), RIR, tests max, 1RM (une ligne par tentative, comme `kalis_plan`), clusters, emplacements stables, emplacements déverrouillés. Restent absents : myo-reps, EMOM, contrastes, échelles, HIIT, durées.
+- **CI1e.4 Version** : dev6.10.0 (changement structurant), pas dev6.9.4.
+- **CI1e.5 Filets C11.2** (`lib/program_origin.dart`) : sauvegarde d'origine (section `programOrigin` du document et des sauvegardes, copie locale `program_origin_v1`, export en fichier) ; « Revenir à mon programme d'origine » rend les sections du programme (départ, instance, programme créé, « Où j'en suis », évolution) et garde journal, profil, références, réglages ; refusé si un programme créé depuis a des séances saisies. Ajustements de Koach de 6.9.2/6.9.3 et séances du moteur enregistrées par 6.9.3 relus sur les nouveaux blocs.
+- **CI1e.6 Bloc suivant** : à la dernière semaine d'un bloc du programme (P0, B1…) ou après S40, Mon programme propose un bloc du moteur calibré qui remplace la suite (jamais imposé, pas de carte à l'accueil).
+- **CI1e.7 Tests modifiés** (C11 remplace D5.10) : G9 « programme du propriétaire porté tel quel » et « bilan » (bloc annoté), G9 « résumé de fin de séance » (défilement), émulateur CI1 (la session personnelle a maintenant une saison).
+- **CI1e.8 Relecture indépendante** (sous-agent Opus) : 17 constats ; 15 traités, 2 mineurs consignés (LIVRAISON_CI1e.md, partie 5). Émulateur : carte « Ton programme d'origine » restée périmée après le retour (instance constante non reconstruite) : corrigée (essai 2 du contrôle complet).
+- **Recommandation (C8, le pilotage décide)** : valider dev6.10.0 et la donner au propriétaire à la place de dev6.9.3.
+
 ### CI
