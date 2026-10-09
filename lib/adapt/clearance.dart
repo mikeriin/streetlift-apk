@@ -1,4 +1,4 @@
-// CI1g (dev6.12.0, pipeline CP, DECISIONS_CP.md C11.7) — note de bloc
+// CI1g (dev6.11.1, pipeline CP, DECISIONS_CP.md C11.7) — note de bloc
 // `clearance_first` de `kalis_plan` 0.3.1 (point imposé par CY) : avis
 // médical avant la première semaine (questionnaire de santé « prudent »,
 // ou gêne déclarée à 5/10 ou plus). Montrée avant la première séance du
@@ -16,8 +16,9 @@ import '../plan/coach_texts.dart' show coachText;
 import '../store.dart';
 import '../ui.dart';
 
-/// Séances (clés du journal) où « Pas encore » a été répondu depuis le
-/// lancement : la question n'y revient pas avant le prochain lancement.
+/// Séances où « Pas encore » a été répondu depuis le lancement (clé de la
+/// note et clé du journal : la session de test a ses propres blocs) : la
+/// question n'y revient pas avant le prochain lancement.
 final Set<String> clearanceDeferred = <String>{};
 
 /// Consigne tant que l'avis n'est pas confirmé.
@@ -37,7 +38,7 @@ String clearanceText(kc.Reason reason) =>
 Future<void> askClearance(BuildContext context, int week, int j) async {
   final pending = store.clearancePending(week, j);
   if (pending == null) return;
-  final key = store.sessionKey(week, j);
+  final key = '${pending.key}|${store.sessionKey(week, j)}';
   if (clearanceDeferred.contains(key)) return;
   final text = clearanceText(pending.reason);
   final confirmed = await showDialog<bool>(
@@ -81,7 +82,7 @@ Future<void> askClearance(BuildContext context, int week, int j) async {
     ),
   );
   if (confirmed == true) {
-    store.confirmClearance(pending.blockId);
+    store.confirmClearance(pending.key);
   } else {
     clearanceDeferred.add(key);
   }
@@ -89,7 +90,7 @@ Future<void> askClearance(BuildContext context, int week, int j) async {
 
 /// Rappel en tête de la séance tant que l'avis n'est pas confirmé pour le
 /// bloc (après « Pas encore ») ; vide sinon.
-List<Widget> clearanceCard(BuildContext context, int week, int j) {
+List<Widget> clearanceCard(int week, int j) {
   final pending = store.clearancePending(week, j);
   if (pending == null) return const [];
   return [
@@ -124,7 +125,7 @@ List<Widget> clearanceCard(BuildContext context, int week, int j) {
             const SizedBox(height: 8),
             OutlinedButton(
               key: const ValueKey('clearance-card-confirm'),
-              onPressed: () => store.confirmClearance(pending.blockId),
+              onPressed: () => store.confirmClearance(pending.key),
               child: const Text('J’ai eu l’avis'),
             ),
           ],

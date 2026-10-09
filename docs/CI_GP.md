@@ -306,6 +306,28 @@ vide ou absent.
   `claude/ci-ci1f-rapide` et `claude/ci-ci1f-rapide2` (`rapide.yml` seul,
   comme CI1c).
 
+### CI1g (dev6.11.1, pipeline CP, voie App)
+
+- Paquets `kalis_plan` 0.3.1 et `kalis_adapt` 0.3.1 (branches fixes
+  `etiquettes/…`, copie octet pour octet), `kalis_core` 0.4.3 inchangé,
+  `pubspec.lock` à jour.
+- Points imposés par CY : note `clearance_first` montrée avant la
+  première séance du bloc comme une étape à confirmer
+  (`lib/adapt/clearance.dart`, confirmation gardée dans les réglages,
+  `medicalClearance`) ; consigne de la pompe sur barre basse pour une
+  gêne du poignet ; `shoulder_history`, `clearance_first` et
+  `knee_shallow` traitées comme notes de douleur (bouclier).
+- Cible émulateur `integration_test/clearance_ci1g_test.dart` (a sombre,
+  rouge ; b clair, violet), jouée avant les cibles CI1f, CI1e, CI1c et CI1
+  (gardées) : session personnelle sans étape ; session de test, gêne de
+  l'épaule à 6/10, étape « Avis médical d'abord », « Pas encore » puis
+  rappel, « J'ai eu l'avis » ; session personnelle intacte. Relevés
+  `emulateur/ci1g_releve_<partie>.json`, captures
+  `emulateur/ci1g_*_<thème>.png`. APK de test précompilé sur la cible
+  CI1g ; délai du job émulateur porté à 80 min.
+- Tests Dart du lot : `test/ci1g_paquets_test.dart`. Mise au point sur
+  `claude/ci-ci1g-rapide` (`rapide.yml` seul, comme CI1c).
+
 ### Mode dev dans les tests d'intégration
 
 - Données de la session personnelle semées par un `AppStore()` séparé avant

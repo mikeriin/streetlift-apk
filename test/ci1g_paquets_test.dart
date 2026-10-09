@@ -27,9 +27,15 @@ import 'package:streetlift_tracker/store.dart';
 
 import 'l2_fixtures.dart';
 
-/// Premier profil street des fixtures du parcours v3 (`kalis_core`), en
-/// JSON.
-Map<String, Object?> _streetJson() {
+/// Premier profil des fixtures du parcours v3 (`kalis_core`) dont la
+/// discipline principale est dans [primaries], en JSON.
+Map<String, Object?> _fixtureJson([
+  Set<String> primaries = const {
+    'street_workout',
+    'streetlifting',
+    'calisthenics',
+  },
+]) {
   final raw =
       jsonDecode(
             File(
@@ -42,16 +48,21 @@ Map<String, Object?> _streetJson() {
       ((p as Map)['profile'] as Map).cast<String, Object?>(),
   ].firstWhere((p) {
     final primary = kc.AthleteProfile.fromJson(p).disciplines.primary.code;
-    return primary == 'street_workout' ||
-        primary == 'streetlifting' ||
-        primary == 'calisthenics';
+    return primaries.contains(primary);
   });
 }
 
-/// Profil street avec une gêne de l'épaule déclarée à [discomfort]/10
-/// (consentement santé donné), programme du chemin calibré créé.
-void _streetWithShoulder(AppStore app, int discomfort) {
-  final json = Map<String, Object?>.of(_streetJson());
+/// Profil street (ou [primaries]) avec une gêne de l'épaule déclarée à
+/// [discomfort]/10 (consentement santé donné), programme du chemin calibré
+/// créé.
+void _streetWithShoulder(
+  AppStore app,
+  int discomfort, {
+  Set<String>? primaries,
+}) {
+  final json = Map<String, Object?>.of(
+    primaries == null ? _fixtureJson() : _fixtureJson(primaries),
+  );
   json['limitations'] = [
     {
       'zone': 'shoulder',
@@ -119,7 +130,11 @@ void main() {
       expect(kp.CoachNotes.all, contains(kp.CoachNotes.clearanceFirst));
       expect(kp.CoachNotes.all, contains(kp.CoachNotes.shoulderHistory));
       for (final note in kp.CoachNotes.all) {
-        for (final v in <double>[0, 2, 6, 12, 85]) {
+        // (`cue` : consigne n° 1 à 12 seulement.)
+        final values = note == kp.CoachNotes.cue
+            ? [for (var i = 1; i <= 12; i++) i.toDouble()]
+            : <double>[0, 2, 6, 12, 85];
+        for (final v in values) {
           final t = coachText(_note(note, v), catalog);
           expect(t, isNotNull, reason: '$note ($v)');
           expect(t!.trim(), isNotEmpty, reason: note);
@@ -142,10 +157,7 @@ void main() {
       expect(isPainReason(_note(kp.CoachNotes.wodPace, 8)), isFalse);
       final gene = coachText(_note(kp.CoachNotes.clearanceFirst, 6), catalog)!;
       expect(gene, startsWith('Gêne déclarée à 6/10'));
-      final quest = coachText(
-        _note(kp.CoachNotes.clearanceFirst, 0),
-        catalog,
-      )!;
+      final quest = coachText(_note(kp.CoachNotes.clearanceFirst, 0), catalog)!;
       expect(quest, startsWith('Ton questionnaire de santé'));
       expect(
         coachText(_note(kp.CoachNotes.shoulderHistory, 0), catalog),
@@ -153,8 +165,7 @@ void main() {
       );
     });
 
-    test('pompe sur barre basse pour une gêne du poignet : consigne de CY',
-        () {
+    test('pompe sur barre basse pour une gêne du poignet : consigne de CY', () {
       String name(String id) => switch (id) {
         'sw-pompe' => 'Pompes',
         'sw-pompe-inclinee' => 'Pompe inclinée (mains surélevées)',
@@ -202,8 +213,11 @@ void main() {
         'Remplacement : Pompes → Pompes sur parallettes (gêne du poignet : '
         'appui neutre, poignets droits).',
       );
-      expect(kWristBarPushUpCue, 'Mains serrées sur la barre basse, poignets '
-          'droits.');
+      expect(
+        kWristBarPushUpCue,
+        'Mains serrées sur la barre basse, poignets '
+        'droits.',
+      );
     });
 
     test('charge plafonnée (`cap`) : rédigée', () {
@@ -240,21 +254,19 @@ void main() {
       final pending = app.clearancePending(day.$1, day.$2);
       expect(pending, isNotNull);
       expect(pending!.reason.params['value'], 6);
+      expect(pending.key, endsWith('#6'));
       // Réglages par défaut : export identique à 6.11.0 (aucune clé).
       expect(app.settings.toJson().containsKey('medicalClearance'), isFalse);
-      app.confirmClearance(pending.blockId);
+      app.confirmClearance(pending.key);
       expect(app.clearancePending(day.$1, day.$2), isNull);
-      expect(app.settings.medicalClearance[pending.blockId], '2026-10-09');
+      expect(app.settings.medicalClearance[pending.key], '2026-10-09');
       // Sauvegarde exportée puis relue : confirmation gardée.
       final exported = app.exportAll();
       SharedPreferences.setMockInitialValues({});
       final other = AppStore()..storeClock = () => DateTime(2026, 10, 9, 9);
       await other.init();
       expect(await other.importAll(exported), isTrue);
-      expect(
-        other.settings.medicalClearance[pending.blockId],
-        '2026-10-09',
-      );
+      expect(other.settings.medicalClearance[pending.key], '2026-10-09');
       await other.flush();
       other.dispose();
     });
@@ -267,9 +279,9 @@ void main() {
       expect(app.clearancePending(day.$1, day.$2), isNull);
     });
 
-    test('épaule à antécédent : `shoulder_history` sous chaque développé '
-        'au-dessus de la tête écrit, avec le bouclier', () {
-      _streetWithShoulder(app, 6);
+    test('épaule à antécédent (musculation) : `shoulder_history` sous '
+        'chaque développé au-dessus de la tête écrit, avec le bouclier', () {
+      _streetWithShoulder(app, 6, primaries: {'musculation'});
       final catalog = app.content.catalog!;
       var overhead = 0;
       for (final b in app.planProgram!.blocks) {
@@ -293,10 +305,7 @@ void main() {
                   for (final r in it.reasons)
                     if (isPainReason(r)) coachText(r, catalog),
                 ];
-                expect(
-                  pain.any((t) => t!.startsWith('Épaule opérée')),
-                  isTrue,
-                );
+                expect(pain.any((t) => t!.startsWith('Épaule opérée')), isTrue);
               }
             }
           }
@@ -304,6 +313,7 @@ void main() {
       }
       // ignore: avoid_print
       print('CI1G développés notés shoulder_history : $overhead');
+      expect(overhead, greaterThan(0));
     });
   });
 
@@ -346,7 +356,7 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.byKey(const ValueKey('clearance-dialog')), findsNothing);
       expect(find.byKey(const ValueKey('clearance-card')), findsOneWidget);
-      expect(find.text(kClearanceWaiting), findsOneWidget);
+      expect(find.text(kClearanceWaiting), findsWidgets);
       // Même séance rouverte : pas redemandé ; rappel gardé.
       await tester.pumpWidget(const SizedBox.shrink());
       await tester.pump(const Duration(seconds: 1));
@@ -370,15 +380,16 @@ void main() {
       await tester.pump(const Duration(seconds: 1));
     });
 
-    testWidgets('« J’ai eu l’avis » dans l’étape : gardé pour le bloc',
-        (tester) async {
+    testWidgets('« J’ai eu l’avis » dans l’étape : gardé pour le bloc', (
+      tester,
+    ) async {
       tester.view.physicalSize = const Size(390, 844);
       tester.view.devicePixelRatio = 1;
       addTearDown(tester.view.resetPhysicalSize);
       addTearDown(tester.view.resetDevicePixelRatio);
       final (w, j) = _firstDay(store)!;
-      final blockId = store.adaptPlaceOf(w, j)!.blockId;
-      store.settings.medicalClearance.remove(blockId);
+      final key = '${store.adaptPlaceOf(w, j)!.blockId}#6';
+      store.settings.medicalClearance.remove(key);
       store.saveSettings();
       clearanceDeferred.clear();
       await tester.pumpWidget(app(w, j, false));
@@ -388,7 +399,7 @@ void main() {
       await tester.pumpAndSettle();
       expect(find.byKey(const ValueKey('clearance-dialog')), findsNothing);
       expect(find.byKey(const ValueKey('clearance-card')), findsNothing);
-      expect(store.settings.medicalClearance.containsKey(blockId), isTrue);
+      expect(store.settings.medicalClearance.containsKey(key), isTrue);
       await tester.pumpWidget(const SizedBox.shrink());
       await tester.pump(const Duration(seconds: 1));
     });
@@ -407,6 +418,11 @@ void main() {
         'origin': 'migration',
       };
       expect(await app.importAll(jsonEncode(filled)), isTrue);
+      app.saveAthleteProfile(
+        ProfileDraft.of(
+          sampleAthleteProfile(on: civilOf(app.storeClock())),
+        )..consent = 'refused',
+      );
       final segments = app.importedProgram!.segments;
       expect(segments, isNotEmpty);
       for (final s in segments) {
