@@ -54,7 +54,8 @@ class Piste(object):
     __slots__ = ('id', 'type', 'classe', 'vecteur', 'base', 'idx', 'fraction', 'bas',
                  'tendon', 'zone_tendon', 'systemique', 'locale', 'seances', 'dernier_jour',
                  'premier_jour', 'stim_semaine', 'series_seance', 'jour_seance', 'declare',
-                 'dernier_test_jour', 'residus', 'cran', 'meilleur', 'mesures', 'groupes', 'groupes_total')
+                 'dernier_test_jour', 'residus', 'cran', 'meilleur', 'mesures', 'groupes', 'groupes_total',
+                 'jour_prevu', 'jour_vu')
 
     def __init__(self, ex_id, typ, vecteur, base, idx, fraction=0.0, bas=False,
                  tendon=0.0, zone_tendon=None, systemique=1.0, locale=1.0, declare=False,
@@ -85,6 +86,8 @@ class Piste(object):
         self.mesures = 0
         self.groupes = [(int(g), float(w)) for g, w in (groupes or [])]
         self.groupes_total = sum(w for _, w in self.groupes)
+        self.jour_prevu = None     # ln capacité du jour prévue avant la première série de la séance
+        self.jour_vu = None        # ln capacité du jour après la dernière série de la séance
 
 
 class Modele(object):
@@ -442,6 +445,8 @@ class Modele(object):
                     self._reset(m, P, DS, 0.0, 1e-10)
                     self._reset(m, P, DE, vrai + gn * m[KN] + ln_ * m[KL] + gm * m[KG] + lm * m[KM], 1e-10)
         if t.jour_seance != self.jour:
+            t.jour_prevu = self.capacite_du_jour(t.id)[0] if t.type == 'charge' and t.seances >= 3 else None
+            t.jour_vu = None
             t.series_seance = []
             t.jour_seance = self.jour
             t.seances += 1
@@ -462,6 +467,15 @@ class Modele(object):
         moments, innovations de la séance versées à la détection de rupture."""
         if not self.en_seance:
             return None
+        # Résidu d'e1RM de la séance : moyenne, sur les mouvements chargés
+        # suivis depuis 3 séances au moins, de l'écart (ln) entre la capacité
+        # du jour vue après la séance et celle prévue avant.
+        ecarts = []
+        for ex_id in self.ordre:
+            t = self.pistes[ex_id]
+            if t.jour_seance == self.jour and t.jour_prevu is not None and t.jour_vu is not None:
+                ecarts.append(t.jour_vu - t.jour_prevu)
+        e1rm = sum(ecarts) / len(ecarts) if ecarts else None
         w = self.poids_mauvais_jour()
         if self.alt is not None and w > 1e-9:
             am, aP, _ = self.alt
@@ -481,7 +495,7 @@ class Modele(object):
         if self.residus_seance:
             zs = [r[0] for r in self.residus_seance]
             rel = [r[1] for r in self.residus_seance]
-            resume = (self.jour, sum(zs) / len(zs), sum(rel) / len(rel), len(zs), w)
+            resume = (self.jour, sum(zs) / len(zs), sum(rel) / len(rel), len(zs), w, e1rm)
             self.histoire_residus.append(resume)
         return resume
 
@@ -687,6 +701,8 @@ class Modele(object):
             r = self._serie_tenue(t, s)
         else:
             r = self._serie_endurance(t, s)
+        if t.jour_prevu is not None:
+            t.jour_vu = self.capacite_du_jour(t.id)[0]
         if r is not None:
             self.residus_seance.append(r)
             t.residus.append((self.jour, r[0], r[1]))

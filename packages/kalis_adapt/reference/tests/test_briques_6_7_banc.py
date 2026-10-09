@@ -44,7 +44,10 @@ def _series_travail(items):
 # Hors modèle : maladie -> alerte -> « fatigue » -> semaine allégée
 # ----------------------------------------------------------------------
 def test_maladie_alerte_et_semaine_allegee():
-    s, pol, tour = _conduire('street_06_inter_sets_reps', 'maladie', 'b', 1,
+    # Saison où la détection de rupture (BOCPD) se lève pendant la maladie
+    # (le seuil de secours « résidu d'e1RM > 5 % deux semaines de suite » ne
+    # se lève pas pour une maladie d'une semaine : mesuré, voir LIVRAISON).
+    s, pol, tour = _conduire('autres_02_hypertrophie_intermediaire', 'maladie', 'a', 1,
                              briques=('surveillance',))
     j = ek.journaux(pol)['SurveillanceBanc']
     diag = [e for e in j if e['type'] == 'diagnostic']

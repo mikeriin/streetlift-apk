@@ -405,7 +405,13 @@ class Surveillance(Extension):
         self.faites += 1
         if resume is not None:
             self.p = self.bocpd.ajouter(resume[1])
-            r = self._residu_e1rm(koach, resume[0])
+            if len(resume) > 5:
+                # Résidu d'e1RM de la séance calculé par le modèle : écart
+                # (ln) entre la capacité du jour après la séance et la
+                # capacité du jour prévue avant, mouvements chargés suivis.
+                r = resume[5] if resume[5] is not None else False
+            else:
+                r = self._residu_e1rm(koach, resume[0])
             if r is None:
                 # Aucune série de la séance n'a laissé de résidu dans le
                 # modèle (moteur de test, résumé fourni par l'appelant) : le

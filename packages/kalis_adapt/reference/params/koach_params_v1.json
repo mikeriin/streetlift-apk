@@ -280,7 +280,12 @@
     "prudence_charge": [
       0.6,
       0.25
-    ]
+    ],
+    "transport_creation": 0.25,
+    "marge_cible": 0.0,
+    "abandon_hebdo": 0.01,
+    "abandon_surcharge": 3.0,
+    "gain_min": 0.002
   },
   "securite": {
     "hausse_par_niveau": [
@@ -388,7 +393,8 @@
     "barre_recente_j": 42,
     "premiere_hausse": 0.1,
     "reprise_dose_depart": 0.6,
-    "reprise_dose_hausse": 0.25
+    "reprise_dose_hausse": 0.25,
+    "tentative_recente_part": 0.85
   },
   "adherence": {
     "a_priori_poids_sd": 1.5,

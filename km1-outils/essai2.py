@@ -4,11 +4,17 @@ sys.path.insert(0,'/home/claude/moteurs/packages/kalis_adapt/reference')
 from multiprocessing import Pool
 from banc import donnees, meneur, mesures
 from banc.politique_koach import PolitiqueKoach
+import os, json as _json
+PLAN=_json.loads(os.environ['PLAN']) if os.environ.get('PLAN') else None
+def _pol():
+    if PLAN is None: return PolitiqueKoach()
+    from banc import planification_banc
+    return PolitiqueKoach(extensions=[planification_banc.fabrique(PLAN)])
 def un(args):
     cle,scen,kind,seed=args
     infos=donnees.catalogue_infos()
     s=[x for x in donnees.saisons_reference(cle) if x['scenario']==scen][0]
-    tour=meneur.simuler(s, infos, PolitiqueKoach(), kind, seed)
+    tour=meneur.simuler(s, infos, _pol(), kind, seed)
     E={m:mesures.Estimations() for m in ('loadedMain','loaded','reps','hold')}
     E['loadedMain'].add(tour, lambda e:e['mode']=='loaded' and e['main'])
     E['loaded'].add(tour, lambda e:e['mode']=='loaded')

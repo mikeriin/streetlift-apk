@@ -978,6 +978,16 @@ class Seances(object):
 
         if index == 0 or mem.charge_seance is None:
             charge = plus_lourde(s['tentative_ouverture_proba'], s['tentative_ouverture_part'] * math.exp(mu))
+            # Règle A8.2 de 0.3.1 : une barre réussie dans les 42 derniers
+            # jours, plus légère que l'ouverture calculée et à 85 % au moins
+            # de l'estimation, sert d'ouverture (barre déjà connue).
+            recente = None
+            for (j, c, r) in mem.charges_reussies:
+                if self.jour - j <= s['barre_recente_j'] and (recente is None or c > recente):
+                    recente = c
+            if recente is not None and recente < charge and \
+                    recente + bw >= s['tentative_recente_part'] * math.exp(mu):
+                charge = recente
             return {'repsLow': 1, 'repsHigh': 1, 'loadKg': charge, 'flames': flammes, 'role': 'attempt'}
         derniere = mem.charge_seance
         if plan['echecs'] > 0 and mem.echec_seance:
