@@ -9,3 +9,4 @@ Ce dépôt est **public** : les programmes de référence transmis par le propri
 - Tout ce qui contient une partie des programmes (analyses détaillées, séances, schémas, ancres du panel) reste dans `/tmp` ou est rajouté ici **chiffré avec la même clé** (`analyse_<LOT>.tar.gpg`) ; rien en clair sur aucune branche.
 - Seules des mesures agrégées et anonymes (fourchettes) peuvent être publiées (PIPELINE_CP.md §2).
 - Branche orpheline : jamais fusionnée ailleurs.
+- `journal_proprietaire.tar.gpg` : export du journal du propriétaire (données de santé) pour le rejeu de KM1, même clé, mêmes règles : jamais en clair, seuls des agrégats publiés (DECISIONS_CP.md C13.6).
