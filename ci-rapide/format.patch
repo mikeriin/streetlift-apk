@@ -1,0 +1,14 @@
+diff --git a/lib/session_screen.dart b/lib/session_screen.dart
+index 9620e9a..71d9436 100644
+--- a/lib/session_screen.dart
++++ b/lib/session_screen.dart
+@@ -1033,7 +1033,8 @@ class SessionExercisePageState extends State<SessionExercisePage> {
+     final pain = <String>[];
+     for (final r in reasons) {
+       if (!ct.isPainReason(r)) continue;
+-      final t = r.code == 'adapt.pain_persistent' &&
++      final t =
++          r.code == 'adapt.pain_persistent' &&
+               !noticeCodes.contains(r.params['zone'])
+           ? painStopShortText(r)
+           : ct.coachText(r, catalog) ??
