@@ -21,12 +21,11 @@ Un athlète simulé (capacités réelles connues du simulateur, jamais du moteur
 
 ## Bilan
 
-- Séances faites : 48 sur 48 (6 ajustées le jour même).
+- Séances faites : 48 sur 48 (8 ajustées le jour même).
 - Échecs non voulus (hors tests et tentatives) : 0 % des séries de travail.
-- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 1,21 répétition en réserve (sur les 62 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 10 %.
+- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 1,19 répétition en réserve (sur les 62 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 10 %.
 - Plus forte hausse de charge totale d'un mouvement principal d'une séance à la suivante, à schéma égal : 2,5 % ; hausses de plus de 10 % faites de plusieurs crans : 0.
-- Progression réelle moyenne des mouvements suivis : 0,256 % par semaine.
-- Tentatives de maximum : 3 réussies sur 3 ; ouvertures réussies : 100 %.
+- Progression réelle moyenne des mouvements suivis : 0,263 % par semaine.
 - Douleur : 0 hausse(s) de charge sur une zone douloureuse signalée.
 
 ## Mouvements suivis, semaine par semaine
@@ -48,7 +47,7 @@ Pour chaque mouvement, la séance la plus lourde de la semaine : ce que le progr
 | 9 | réalisation (spécifique à l'objectif) | 4 × 2 à 89 %, série de tête puis séries allégées | 2 à 23,75 kg puis 2-2-2 à 17,5 kg | 2 à 23,75 kg puis 2-2-1 (arrêt avant la cible) à 17,5 kg | 2,5 → 4,1 ; suivantes 4 → 5,5 | 117 (lest 38) / 122 (lest 44) | charge non augmentée (bilan du jour bas) |
 | 10 | réalisation (spécifique à l'objectif) | 5 × 3 à 81 % | 3-3-3-3-3 à 22,5 kg | 3-3-3-3-3 à 22,5 kg | 3 → 5,2 ; suivantes 3 → 3,7 | 123 (lest 44) / 123 (lest 45) | — |
 | 11 | affûtage | 2 × 2 à 86 % | 2-2 à 25 kg | 2-2 à 25 kg | 4 → 4,3 ; suivantes 4 → 3,7 | 119 (lest 40) / 124 (lest 45) | charge non augmentée (hausse plafonnée d'une séance à la suivante) |
-| 12 | test | 3 × 1 à 91 %, test | 1 à 35 kg puis 1 à 40 kg puis 1 à 42,5 kg | 1 à 35 kg puis 1 à 38,75 kg puis 1 à 41,25 kg | test | 123 (lest 44) / 125 (lest 46) | ouverture à 90,6 % du maximum estimé ; barre suivante choisie pour 81 % de chances de réussite ; barre suivante choisie pour 68 % de chances de réussite |
+| 12 | test | 3 × 1 à 88 %, série de tête puis séries allégées | 1 à 25 kg puis 2-2 à 18,75 kg | 1 à 25 kg puis 2-2 à 18,75 kg | 5+ → 5,6 ; suivantes 5+ → 6,1 | 120 (lest 42) / 124 (lest 46) | charge non augmentée (hausse plafonnée d'une séance à la suivante) |
 
 Athlète simulé, maximum réel hors fatigue : 120 (lest 41) au départ (le record déclaré au profil peut être plus haut ou plus ancien), 123 (lest 45) en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
 
@@ -65,13 +64,7 @@ Athlète simulé, maximum réel hors fatigue : 120 (lest 41) au départ (le reco
 - **Semaine 9 (réalisation (spécifique à l'objectif))** : Squat de compétition : séries arrêtées en cours de séance (allégé pour garder la marge prévue (au moins 3 en réserve), dernières séries plus dures que prévu) ; bilan du jour bas (2/5) ; charges réduites sur 3 exercices (bilan du jour bas (2/5)).
 - **Semaine 10 (réalisation (spécifique à l'objectif))** : temps réduit (45 min au lieu de 53) ; Relevé de jambes tendues suspendu : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; Squat de compétition : séries arrêtées en cours de séance (allégé pour garder la marge prévue (au moins 3 en réserve), dernières séries plus dures que prévu) ; bilan du jour bas (2/5) ; exercice retiré — Face pull à l'élastique (temps réduit (45 min au lieu de 53)) ; séries retirées — Relevé de jambes tendues suspendu, Soulevé de terre roumain à la barre (temps réduit (45 min au lieu de 53)) ; charges réduites sur 3 exercices (bilan du jour bas (2/5)).
 - **Semaine 11 (affûtage)** : phase « affûtage » : séances servies telles que le programme les écrit (× 4) ; affûtage : aucun volume ajouté, intensité gardée (× 4).
-- **Semaine 12 (test)** : phase « test » : séances servies telles que le programme les écrit (× 4) ; résultat de test reporté au profil : Dips lesté de compétition 1 × 41,25 kg.
-
-## Tentatives de maximum
-
-| Sem. | Mouvement | Barres (lest) | Maximum réel du jour (lest) | Meilleure barre / maximum du jour |
-| --- | --- | --- | --- | --- |
-| 12 | Dips lesté de compétition | 35 réussie, 38,75 réussie, 41,25 réussie | 44,4 | 97,4 % |
+- **Semaine 12 (test)** : phase « test » : séances servies telles que le programme les écrit (× 4) ; bilan du jour bas (2/5) (× 2) ; nuit courte (× 2) ; charges réduites sur 5 exercices (bilan du jour bas (2/5), nuit courte) ; exercice retiré — Dips lesté de compétition (bilan du jour bas (2/5), nuit courte).
 
 ## Même programme, autres athlètes simulés
 
@@ -79,6 +72,6 @@ Le même profil et le même moteur, avec d'autres hypothèses sur l'athlète ré
 
 | Athlète simulé | Échecs non voulus | Écart d'effort | Séries ≥ 2 rép. plus dures | Plus forte hausse à schéma égal | Progression par semaine | Tentatives réussies | Échéance / maximum du jour | Hausses sur zone douloureuse |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| modèle 2 (courbe linéaire, notes d'effort entières et plafonnées, récupération lente entre séries, tendons à adaptation lente) | 0 % | 1,21 | 0 % | 2,5 % | 0,256 % | 3/3 | — | 0 |
+| modèle 2 (courbe linéaire, notes d'effort entières et plafonnées, récupération lente entre séries, tendons à adaptation lente) | 0 % | 1,19 | 0 % | 2,5 % | 0,263 % | — | — | 0 |
 | modèle 1 (courbe charge-répétitions à plateau, notes d'effort continues) | 0,2 % | 0,96 | 0,2 % | 2,5 % | 0,235 % | 3/3 | — | 0 |
 | modèle 3 (courbe en puissance, forme masquée par la fatigue, mauvais jours marqués, désentraînement rapide) | 1,5 % | 2,2 | 1,9 % | 1,4 % | 0,17 % | 2/3 | — | 0 |

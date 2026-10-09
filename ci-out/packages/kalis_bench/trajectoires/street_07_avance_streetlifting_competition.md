@@ -143,4 +143,4 @@ Le même profil et le même moteur, avec d'autres hypothèses sur l'athlète ré
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | modèle 2 (courbe linéaire, notes d'effort entières et plafonnées, récupération lente entre séries, tendons à adaptation lente) | 0 % | 0,94 | 0,2 % | 10,4 % | 0,06 % | 12/12 | 93,2 % | 0 |
 | modèle 1 (courbe charge-répétitions à plateau, notes d'effort continues) | 0,4 % | 0,97 | 0,3 % | 14,6 % | 0,044 % | 12/12 | 96,2 % | 0 |
-| modèle 3 (courbe en puissance, forme masquée par la fatigue, mauvais jours marqués, désentraînement rapide) | 1,3 % | 1,98 | 1,7 % | 9,7 % | 0,035 % | 11/12 | 93,3 % | 0 |
+| modèle 3 (courbe en puissance, forme masquée par la fatigue, mauvais jours marqués, désentraînement rapide) | 1,3 % | 1,99 | 1,7 % | 9,7 % | 0,035 % | 11/12 | 93,3 % | 0 |

@@ -57,8 +57,8 @@ Pour chaque mouvement, la séance la plus lourde de la semaine : ce que le progr
 | 9 | construction (volume) | 2 × 9 à 11 à 68 % | (9 à 11)-(9 à 11) à 67,5 kg | 11 à 67,5 kg puis 10 à 70 kg | 3 → 5,9 ; suivantes 3 → 5,1 | 115 / 101 | — |
 | 10 | construction (volume) | 2 × 10 à 12 à 68 % | (10 à 12)-(10 à 12) à 65 kg | 12-12 à 65 kg | 2 → 6,2 ; suivantes 2 → 5,2 | 117 / 101 | — |
 | 11 | construction (volume) | 2 × 10 à 12 à 68 % | (10 à 12)-(10 à 12) à 65 kg | 12 à 65 kg puis 10 à 67,5 kg | 3 → 5,9 ; suivantes 3 → 5,7 | 115 / 99 | — |
-| 12 | allègement | 2 × 8 à 10 à 68 % | (8 à 10)-(8 à 10) à 67,5 kg | 10-10 à 67,5 kg | 3 → 7,8 ; suivantes 3 → 6,9 | 119 / 99 | — |
-| 13 | construction (volume) | 3 × 9 à 11 à 68 % | (9 à 11)-(9 à 11)-(9 à 17) à 62,5 kg | 11 à 62,5 kg puis 11 à 65 kg puis 16 à 60 kg | 3,5 → 9 ; suivantes 2,5 → 5,2 | 123 / 99 | série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète ; allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |
+| 12 | allègement | 2 × 8 à 10 à 68 % | (8 à 10)-(8 à 10) à 67,5 kg | 10-10 à 67,5 kg | 3 → 7,8 ; suivantes 3 → 6,9 | 119 / 100 | — |
+| 13 | construction (volume) | 2 × 9 à 11 à 68 % | (9 à 11)-(9 à 11) à 67,5 kg | 11-11 à 67,5 kg | 2 → 6,6 ; suivantes 2 → 5,8 | 118 / 99 | — |
 | 14 | construction (volume) | 2 × 9 à 11 à 68 % | (9 à 11)-(9 à 11) à 65 kg | 9-11 à 65 kg | 3,5 → 10,3 ; suivantes 3,5 → 7,2 | 123 / 99 | — |
 | 15 | construction (volume) | 2 × 10 à 12 à 68 % | (10 à 12)-(10 à 12) à 65 kg | 12 à 65 kg puis 12 à 67,5 kg | 2 → 6,6 ; suivantes 2 → 4,1 | 119 / 100 | — |
 | 16 | construction (volume) | 2 × 10 à 12 à 68 % | (10 à 12)-(10 à 18) à 65 kg | 12 à 65 kg puis 14 à 67,5 kg | 2 → 7,4 ; suivantes 1,5 → 3,3 | 124 / 101 | série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète |

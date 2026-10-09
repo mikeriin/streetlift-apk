@@ -36,7 +36,7 @@ Chaque bloc est écrit par le moteur de création au moment où il commence, d'a
 - Échecs non voulus (hors tests et tentatives) : 0 % des séries de travail.
 - Écart moyen entre l'effort affiché par le moteur et l'effort réel : 0,68 répétition en réserve (sur les 43 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 1,6 %.
 - Plus forte hausse de charge totale d'un mouvement principal d'une séance à la suivante, à schéma égal : 0 % ; hausses de plus de 10 % faites de plusieurs crans : 0.
-- Progression réelle moyenne des mouvements suivis : -0,237 % par semaine.
+- Progression réelle moyenne des mouvements suivis : -0,236 % par semaine.
 - Douleur : 0 hausse(s) de charge sur une zone douloureuse signalée.
 
 ## Mouvements suivis, semaine par semaine
@@ -138,5 +138,5 @@ Athlète simulé, maximum réel hors fatigue : 45 au départ (le record déclar�
 - **Semaine 11 (construction (volume))** : Band pull-apart : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; Skater squat : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme).
 - **Semaine 12 (allègement)** : phase « allègement » : séances servies telles que le programme les écrit (× 4).
 - **Semaine 13 (introduction)** : nouveau bloc construit à partir du point de fin de bloc (maxima estimés, résultats de test, tolérance) ; phase « introduction » : séances servies telles que le programme les écrit (× 4) ; Dips aux barres parallèles : répétitions recalées sur le maximum mesuré (10 de moins par série que le programme) ; Rotation externe à l'élastique : répétitions recalées sur le maximum mesuré (3 de moins par série que le programme).
-- **Semaine 14 (construction (volume))** : temps réduit (36 min au lieu de 43) ; Rotation externe à l'élastique : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; Dips aux barres parallèles buste penché : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; séries retirées — Pompe classique (temps réduit (36 min au lieu de 43)).
+- **Semaine 14 (construction (volume))** : temps réduit (36 min au lieu de 41) ; Rotation externe à l'élastique : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; Dips aux barres parallèles buste penché : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; séries retirées — Pompe classique (temps réduit (36 min au lieu de 41)).
 - **Semaine 16 (construction (volume))** : 1 séance(s) manquée(s) sur 4 ; Dips aux barres parallèles buste penché : répétitions recalées sur le maximum mesuré (2 de moins par série que le programme).

@@ -70,7 +70,7 @@ Pour chaque mouvement, la séance la plus lourde de la semaine : ce que le progr
 | 14 | introduction | 3 × 5 à 65 %, série de tête puis séries allégées | 5 à 12,5 kg puis 5-5 à 5 kg | 5 à 12,5 kg puis 5-5 à 5 kg | 5+ → 11,5 ; suivantes 5+ → 13,5 | 140 (lest 62) / 139 (lest 61) | — |
 | 15 | réalisation (spécifique à l'objectif) | 4 × 2 à 72 %, série de tête puis séries allégées | 2 à 23,75 kg puis 2-2-2 à 17,5 kg | 2 à 23,75 kg puis 2-2-2 à 17,5 kg | 5+ → 9,7 ; suivantes 5+ → 11,4 | 134 (lest 57) / 139 (lest 61) | charge non augmentée (hausse plafonnée d'une séance à la suivante) |
 | 16 | réalisation (spécifique à l'objectif) | 4 × 1 à 76 %, série de tête puis séries allégées | 1 à 25 kg puis 2-2 à 18,75 kg | 1 à 25 kg puis 2-2 à 18,75 kg | 5+ → 10,3 ; suivantes 5+ → 11,1 | 134 (lest 57) / 139 (lest 62) | bilan du jour bas (2/5) ; nuit courte |
-| 17 | affûtage | 2 × 2 à 78 % | 2-2 à 30 kg | 2-2 à 30 kg | 5+ → 8,3 ; suivantes 5+ → 8,1 | 137 (lest 59) / 139 (lest 62) | charge non augmentée (hausse plafonnée d'une séance à la suivante) |
+| 17 | affûtage | 2 × 2 à 78 % | 2-2 à 28,75 kg | 2-2 à 28,75 kg | 5+ → 8,7 ; suivantes 5+ → 8,5 | 137 (lest 59) / 139 (lest 62) | charge non augmentée (hausse plafonnée d'une séance à la suivante) |
 | 18 | échéance | 3 × 1 à 91 %, test | 1 à 41,25 kg puis 1 à 46,25 kg puis 1 à 48,75 kg | 1 à 41,25 kg puis 1 à 45 kg puis 1 à 47,5 kg | test | 135 (lest 57) / 140 (lest 62) | ouverture à 86,9 % du maximum estimé ; barre suivante choisie pour 80 % de chances de réussite ; tentatives prudentes (bilan du jour bas) ; barre suivante choisie pour 69 % de chances de réussite |
 | 19 | transition (récupération) | 2 × 5 à 65 % | 5-5 à 12,5 kg | 5-5 à 12,5 kg | 5+ → 10,5 ; suivantes 5+ → 10,2 | 135 (lest 57) / 140 (lest 62) | — |
 
@@ -95,8 +95,8 @@ Athlète simulé, maximum réel hors fatigue : 137 (lest 59) au départ (le reco
 | 13 | transition (récupération) | 3 × 3 à 65 % | 3-3-3 à 18,75 kg | 3-3-3 à 18,75 kg | 5+ → 13,5 ; suivantes 5+ → 12,2 | 154 (lest 77) / 148 (lest 71) | — |
 | 14 | introduction | 3 × 5 à 65 %, série de tête puis séries allégées | 5 à 18,75 kg puis 5-5 à 10 kg | 5 à 18,75 kg puis 5-5 à 10 kg | 5+ → 12,7 ; suivantes 5+ → 13,6 | 162 (lest 85) / 148 (lest 71) | — |
 | 15 | réalisation (spécifique à l'objectif) | 4 × 2 à 72 %, série de tête puis séries allégées | 2 à 25 kg puis 2-2 à 18,75 kg | 2 à 25 kg puis 2-2 à 18,75 kg | 5+ → 12,1 ; suivantes 5+ → 12,8 | 150 (lest 73) / 148 (lest 71) | bilan du jour bas (1/5) |
-| 16 | réalisation (spécifique à l'objectif) | 4 × 1 à 78 %, série de tête puis séries allégées | 1 à 32,5 kg puis 2-2 à 26,25 kg | 1 à 32,5 kg puis 2-2 à 26,25 kg | 5+ → 9,5 ; suivantes 5+ → 9,7 | 143 (lest 66) / 148 (lest 71) | bilan du jour bas (2/5) ; nuit courte ; charge non augmentée (hausse plafonnée d'une séance à la suivante) |
-| 17 | affûtage | 3 × 1 à 81 %, série de tête puis séries allégées | 1 à 32,5 kg puis 2-2 à 23,75 kg | 1 à 32,5 kg puis 2-2 à 23,75 kg | 5+ → 10,5 ; suivantes 5+ → 11,2 | 148 (lest 71) / 148 (lest 72) | charge non augmentée (bilan du jour bas) |
+| 16 | réalisation (spécifique à l'objectif) | 4 × 1 à 78 %, série de tête puis séries allégées | 1 à 25 kg puis 2-2 à 18,75 kg | 1 à 25 kg puis 2-2 à 18,75 kg | 5+ → 11,7 ; suivantes 5+ → 11,8 | 143 (lest 66) / 148 (lest 71) | bilan du jour bas (2/5) ; nuit courte ; charge non augmentée (hausse plafonnée d'une séance à la suivante) |
+| 17 | affûtage | 2 × 2 à 74 % | 2-2 à 31,25 kg | 2-2 à 31,25 kg | 5+ → 11,4 ; suivantes 5+ → 10,9 | 156 (lest 79) / 148 (lest 72) | charge non augmentée (hausse plafonnée d'une séance à la suivante) |
 | 18 | échéance | 3 × 1 à 91 %, test | 1 à 46,25 kg puis 1 à 51,25 kg puis 1 à 55 kg | 1 à 46,25 kg puis 1 à 51,25 kg puis 1 à 55 kg | test | 155 (lest 78) / 148 (lest 72) | ouverture à 84,5 % du maximum estimé ; barre suivante choisie pour 83 % de chances de réussite ; tentatives prudentes (bilan du jour bas) ; barre suivante choisie pour 71 % de chances de réussite |
 | 19 | transition (récupération) | 3 × 5 à 65 % | 5-5-5 à 20 kg | 5-5-5 à 20 kg | 5+ → 10 ; suivantes 5+ → 9,1 | 148 (lest 71) / 149 (lest 72) | — |
 
@@ -145,12 +145,12 @@ Athlète simulé, maximum réel hors fatigue : 99 (lest 22) au départ (le recor
 | 11 | affûtage | 3 × 1 à 89 %, série de tête puis séries allégées | 1 à 137,5 kg puis 2-2 à 125 kg | 1 à 137,5 kg puis 2-2 à 125 kg | 4 → 3,4 ; suivantes 5+ → 6,8 | 147 / 153 | — |
 | 12 | échéance | 3 × 1 à 91 %, test | 1 à 137,5 kg puis 1 à 142,5 kg puis 1 à 145 kg | 1 à 137,5 kg puis 1 à 142,5 kg puis 1 à 145 kg | test | 153 / 153 | ouverture à 87,9 % du maximum estimé ; barre suivante choisie pour 88 % de chances de réussite ; tentatives prudentes (uncertainty) ; barre suivante choisie pour 82 % de chances de réussite |
 | 13 | transition (récupération) | 3 × 3 à 64 % | 3-3-3 à 95 kg | 3-3-3 à 95 kg | 5+ → 18,4 ; suivantes 5+ → 17,9 | 151 / 150 | — |
-| 14 | introduction | 3 × 5 à 64 %, série de tête puis séries allégées | 5 à 95 kg puis 5-5 à 85 kg | 5 à 95 kg puis 5-5 à 85 kg | 5+ → 16,7 ; suivantes 5+ → 19,8 | 152 / 150 | — |
+| 14 | introduction | 3 × 5 à 64 %, série de tête puis séries allégées | 5 à 97,5 kg puis 5-5 à 87,5 kg | 5 à 97,5 kg puis 5-5 à 87,5 kg | 5+ → 15,8 ; suivantes 5+ → 18,9 | 152 / 150 | — |
 | 15 | réalisation (spécifique à l'objectif) | 4 × 1 à 73 %, série de tête puis séries allégées | 1 à 107,5 kg puis 2-2-2 à 100 kg | 1 à 107,5 kg puis 2-2-2 à 100 kg | 5+ → 16,8 ; suivantes 5+ → 18,1 | 155 / 150 | charge non augmentée (hausse plafonnée d'une séance à la suivante) |
 | 16 | réalisation (spécifique à l'objectif) | 4 × 1 à 77 %, série de tête puis séries allégées | 1 à 112,5 kg puis 2-2-2 à 105 kg | 1 à 112,5 kg puis 2-2-2 à 105 kg | 5+ → 13,8 ; suivantes 5+ → 15,1 | 150 / 150 | charge non augmentée (hausse plafonnée d'une séance à la suivante) |
 | 17 | affûtage | 2 × 2 à 78 % | 2-2 à 115 kg | 2-2 à 115 kg | 5+ → 10,9 ; suivantes 5+ → 10,6 | 147 / 150 | — |
-| 18 | échéance | 3 × 1 à 91 %, test | 1 à 125 kg puis 1 à 130 kg puis 1 à 132,5 kg | 1 à 125 kg puis 1 à 130 kg puis 1 à 132,5 kg | test | 154 / 150 | ouverture à 85,3 % du maximum estimé ; barre suivante choisie pour 81 % de chances de réussite ; tentatives prudentes (bilan du jour bas) ; barre suivante choisie pour 72 % de chances de réussite |
-| 19 | transition (récupération) | 3 × 5 à 64 % | 5-5-5 à 95 kg | 5-5-5 à 95 kg | 5+ → 15,5 ; suivantes 5+ → 14,9 | 147 / 150 | — |
+| 18 | échéance | 3 × 1 à 91 %, test | 1 à 125 kg puis 1 à 130 kg puis 1 à 132,5 kg | 1 à 125 kg puis 1 à 130 kg puis 1 à 132,5 kg | test | 154 / 150 | ouverture à 84,8 % du maximum estimé ; barre suivante choisie pour 83 % de chances de réussite ; tentatives prudentes (bilan du jour bas) ; barre suivante choisie pour 75 % de chances de réussite |
+| 19 | transition (récupération) | 3 × 5 à 64 % | 5-5-5 à 97,5 kg | 5-5-5 à 97,5 kg | 5+ → 14,5 ; suivantes 5+ → 14 | 147 / 150 | — |
 
 Athlète simulé, maximum réel hors fatigue : 151 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 153 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
 

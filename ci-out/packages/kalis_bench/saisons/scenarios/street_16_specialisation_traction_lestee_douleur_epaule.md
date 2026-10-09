@@ -35,7 +35,7 @@ Chaque bloc est écrit par le moteur de création au moment où il commence, d'a
 
 - Séances faites : 63 sur 64 (28 ajustées le jour même).
 - Échecs non voulus (hors tests et tentatives) : 0,3 % des séries de travail.
-- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 2,12 répétition en réserve (sur les 64 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 21,2 %.
+- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 2,13 répétition en réserve (sur les 64 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 21,2 %.
 - Plus forte hausse de charge totale d'un mouvement principal d'une séance à la suivante, à schéma égal : 6,3 % ; hausses de plus de 10 % faites de plusieurs crans : 0.
 - Progression réelle moyenne des mouvements suivis : 0,014 % par semaine.
 - Douleur : 0 hausse(s) de charge sur une zone douloureuse signalée.
@@ -56,7 +56,7 @@ Pour chaque mouvement, la séance la plus lourde de la semaine : ce que le progr
 | 10 | échéance | 3 × 3 à 78 % | 3 à 8,75 kg | 3 à 8,75 kg | 5+ → 11,2 | 117 (lest 44) / 120 (lest 47) | charge non augmentée (pain_return) ; −2 série(s) ; douleur signalée (épaule, 0/10) |
 | 11 | transition (récupération) | 2 × 5 à 64 % | 5-5 à 2,5 kg | 5-5 à 2,5 kg | 5+ → 12,3 ; suivantes 5+ → 12,1 | 120 (lest 48) / 117 (lest 44) | — |
 | 12 | introduction | 2 × 5 à 67 %, série de tête puis séries allégées | 5 à 6,25 kg puis 5 | 5 à 6,25 kg puis 5 | 5+ → 12 ; suivantes 5+ → 14 | 125 (lest 52) / 117 (lest 44) | — |
-| 13 | construction (volume) | 3 × 3 à 74 %, série de tête puis séries allégées | (3 à 6) à 13,75 kg puis 3-3 à 8,75 kg | 6 à 13,75 kg puis 3-3 à 8,75 kg | 4 → 7,1 ; suivantes 5+ → 11,7 | 120 (lest 47) / 117 (lest 44) | série repère : une série ouverte (au ressenti, 4 en réserve) pour mesurer où en est l'athlète ; charge non augmentée (hausse plafonnée d'une séance à la suivante) |
+| 13 | construction (volume) | 3 × 3 à 74 %, série de tête puis séries allégées | (3 à 6) à 10 kg puis 3-3 à 5 kg | 6 à 10 kg puis 3-3 à 5 kg | 4 → 8,5 ; suivantes 5+ → 13,1 | 120 (lest 47) / 117 (lest 44) | série repère : une série ouverte (au ressenti, 4 en réserve) pour mesurer où en est l'athlète ; charge non augmentée (hausse plafonnée d'une séance à la suivante) |
 | 14 | allègement | 1 × 3 à 88 %, test | 3 à 31,25 kg | 3 à 31,25 kg | test | 125 (lest 52) / 115 (lest 43) | — |
 | 15 | construction (volume) | 2 × 3 à 84 %, série de tête puis séries allégées | 3 à 28,75 kg puis 3 à 22,5 kg | 3 à 28,75 kg puis 3 à 22,5 kg | 2 → 4,8 ; suivantes 4 → 6,8 | 120 (lest 48) / 118 (lest 46) | — |
 | 16 | construction (volume) | 2 × 3 à 84 %, série de tête puis séries allégées | 3 à 31,25 kg puis 3 à 25 kg | 3 à 31,25 kg puis 3 à 25 kg | 2 → 4,3 ; suivantes 4 → 6,3 | 122 (lest 49) / 120 (lest 47) | — |

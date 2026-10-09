@@ -52,7 +52,7 @@ Femme de 34 ans, 64 kg, court depuis six mois : 5 km en 35 minutes. Veut finir u
 - Ancienneté d'entraînement prise en compte : 6 mois à 2 ans.
 - Douleur articulaire ou tendineuse (coude, épaule, poignet, genou) : de 0 à 2 sur 10, continue ; à 3 ou 4, finis la séance sans progresser et n'ajoute rien la semaine suivante ; à 5, prends la variante plus facile et retire 30 à 50 % du volume de la zone ; à 6 ou plus, douleur la nuit ou gêne qui dure deux semaines : arrête le mouvement et consulte un professionnel de santé. Regarde la tendance sur deux à trois semaines, pas une seule séance.
 - Progression : quand toutes les séries atteignent le haut de la plage avec la réserve prévue, passe à la variante ou à la charge suivante et repars du bas de la plage.
-- Progression : la sortie longue dépasse de 10 % au plus la plus longue course des quatre dernières semaines (après une semaine allégée ou de test, elle reprend sa durée d'avant, sans la dépasser de plus de 10 %).
+- Progression : la sortie longue dépasse de 10 % au plus la plus longue course des quatre dernières semaines (après une semaine allégée ou de test, elle reprend sa durée d'avant, sans la dépasser de plus de 10 %). Après une course, elle repart à 70 % de la plus longue sortie, puis monte de 10 % au plus par semaine.
 - Effort visé : les « répétitions en réserve » sont celles que tu pourrais encore faire proprement à la fin de la série ; s'il t'en reste moins que prévu, allège ou arrête la série.
 
 ## Semaine 1 — introduction (bloc 1)

@@ -33,7 +33,7 @@ Chaque bloc est écrit par le moteur de création au moment où il commence, d'a
 
 - Séances faites : 63 sur 64 (19 ajustées le jour même).
 - Échecs non voulus (hors tests et tentatives) : 0 % des séries de travail.
-- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 1,44 répétition en réserve (sur les 84 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 16,8 %.
+- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 1,43 répétition en réserve (sur les 84 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 16,8 %.
 - Plus forte hausse de charge totale d'un mouvement principal d'une séance à la suivante, à schéma égal : 7,6 % ; hausses de plus de 10 % faites de plusieurs crans : 0.
 - Progression réelle moyenne des mouvements suivis : -0,257 % par semaine.
 - Jour de l'échéance : meilleure performance à 80,6 % du maximum réel du jour (moyenne des mouvements).
@@ -53,9 +53,9 @@ Pour chaque mouvement, la séance la plus lourde de la semaine : ce que le progr
 | 4 | allègement | 3 × 5 à 75 % | 5-5-5 à 165 kg | 4 (arrêt avant la cible) à 165 kg puis 5-4 (arrêt avant la cible) à 160 kg | 5+ → 7,9 ; suivantes 5+ → 8,1 | 217 / 221 | allégé pour garder la marge prévue (au moins 4 en réserve) |
 | 5 | intensification (séries plus dures) | 4 × 3 à 82 %, série de tête puis séries allégées | (3 à 6) à 177,5 kg puis 3-3-3 à 167,5 kg | 4 à 177,5 kg puis 3-3-3 à 162,5 kg | 3 → 5,7 ; suivantes 5+ → 9,5 | 220 / 221 | série repère : une série ouverte (au ressenti, 3 en réserve) pour mesurer où en est l'athlète ; séries allégées calculées sur la série de tête réalisée (177,5 kg, −5 %) ; dernières séries plus dures que prévu |
 | 6 | intensification (séries plus dures) | 4 × 2 à 88 %, série de tête puis séries allégées | 2 à 187,5 kg puis 2-2-2 à 177,5 kg | 2 à 187,5 kg puis 2-2-2 à 177,5 kg | 4 → 5,4 ; suivantes 5+ → 7,2 | 218 / 222 | — |
-| 7 | réalisation (spécifique à l'objectif) | 4 × 1 à 91 %, série de tête puis séries allégées | 1 à 200 kg puis 2-2-2 à 190 kg | 1 à 200 kg puis 1 (arrêt avant la cible) à 190 kg puis 2 à 185 kg puis 2 à 190 kg | 4 → 3,6 ; suivantes 4,5 → 5,1 | 217 / 222 | séries allégées calculées sur la série de tête réalisée (200 kg, −5 %) |
-| 15 | construction (volume) | 2 × 3 à 84 %, série de tête puis séries allégées | (3 à 6) à 185 kg puis 3 à 175 kg | 4 à 185 kg puis 3 à 175 kg | 2 → 3 ; suivantes 5+ → 5,7 | 213 / 218 | série repère : une série ouverte (au ressenti, 2 en réserve) pour mesurer où en est l'athlète ; charge non augmentée (hausse plafonnée d'une séance à la suivante) |
-| 16 | construction (volume) | 3 × 3 à 84 %, série de tête puis séries allégées | 3 à 192,5 kg puis 3-3 à 182,5 kg | 3 à 192,5 kg puis 3-3 à 182,5 kg | 2 → 3,7 ; suivantes 4 → 5,4 | 220 / 218 | charge non augmentée (hausse plafonnée d'une séance à la suivante) |
+| 7 | réalisation (spécifique à l'objectif) | 4 × 1 à 91 %, série de tête puis séries allégées | 1 à 190 kg puis 2-2-2 à 180 kg | 1 à 190 kg puis 2-2-2 à 180 kg | 5+ → 5,7 ; suivantes 5+ → 6,5 | 217 / 222 | charge non augmentée (hausse plafonnée d'une séance à la suivante) |
+| 15 | construction (volume) | 2 × 3 à 84 %, série de tête puis séries allégées | (3 à 6) à 185 kg puis 3 à 175 kg | 4 à 185 kg puis 3 à 175 kg | 2 → 3 ; suivantes 5+ → 5,7 | 213 / 217 | série repère : une série ouverte (au ressenti, 2 en réserve) pour mesurer où en est l'athlète ; charge non augmentée (hausse plafonnée d'une séance à la suivante) |
+| 16 | construction (volume) | 3 × 3 à 84 %, série de tête puis séries allégées | 3 à 192,5 kg puis 3-3 à 182,5 kg | 3 à 192,5 kg puis 3-3 à 182,5 kg | 2 → 3,7 ; suivantes 4 → 5,5 | 220 / 217 | charge non augmentée (hausse plafonnée d'une séance à la suivante) |
 
 Athlète simulé, maximum réel hors fatigue : 224 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 216 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
 
@@ -69,9 +69,9 @@ Athlète simulé, maximum réel hors fatigue : 224 au départ (le record déclar
 | 4 | allègement | 3 × 5 à 75 % | 5-5-5 à 112,5 kg | 3 (arrêt avant la cible) à 112,5 kg puis 5-5 à 105 kg | 5+ → 7 ; suivantes 5+ → 6,1 | 147 / 151 | allégé pour garder la marge prévue (au moins 4 en réserve) |
 | 5 | intensification (séries plus dures) | 4 × 3 à 82 %, série de tête puis séries allégées | 3 à 122,5 kg puis 3-3-3 à 115 kg | 3 à 122,5 kg puis 3-3-2 (arrêt avant la cible) à 110 kg | 3 → 2,9 ; suivantes 5+ → 5,7 | 140 / 148 | séries allégées calculées sur la série de tête réalisée (122,5 kg, −5 %) ; dernières séries plus dures que prévu |
 | 6 | intensification (séries plus dures) | 4 × 2 à 87 %, série de tête puis séries allégées | 2 à 127,5 kg puis 2-2-2 à 120 kg | 1 (arrêt avant la cible) à 127,5 kg puis 1 (arrêt avant la cible) à 115 kg | 3,5 → 3 ; suivantes 5+ → 6 | 138 / 148 | séries allégées calculées sur la série de tête réalisée (127,5 kg, −5 %) ; allégé pour garder la marge prévue (au moins 2 en réserve) |
-| 7 | réalisation (spécifique à l'objectif) | 4 × 1 à 90 %, série de tête puis séries allégées | 1 à 122,5 kg puis 2-2-2 à 115 kg | 1 à 122,5 kg puis 2-2-2 à 115 kg | 4 → 6 ; suivantes 5+ → 6,5 | 145 / 140 | — |
-| 15 | construction (volume) | 3 × 3 à 83 %, série de tête puis séries allégées | 3 à 122,5 kg puis 3-3 à 115 kg | 3 à 122,5 kg puis 3-3 à 115 kg | 2 → 4,5 ; suivantes 4 → 5,9 | 147 / 145 | — |
-| 16 | construction (volume) | 3 × 3 à 83 %, série de tête puis séries allégées | 3 à 127,5 kg puis 3-3 à 120 kg | 3 à 127,5 kg puis 3-3 à 115 kg | 2 → 0,9 ; suivantes 3,5 → 3,2 | 138 / 146 | séries allégées calculées sur la série de tête réalisée (127,5 kg, −5,9 %) ; dernières séries plus dures que prévu |
+| 7 | réalisation (spécifique à l'objectif) | 4 × 1 à 90 %, série de tête puis séries allégées | 1 à 130 kg puis 2-2-2 à 122,5 kg | 1 à 130 kg puis 2-2-2 à 122,5 kg | 3 → 4 ; suivantes 3,5 → 4,4 | 145 / 147 | — |
+| 15 | construction (volume) | 3 × 3 à 83 %, série de tête puis séries allégées | 3 à 125 kg puis 3-3 à 117,5 kg | 3 à 125 kg puis 2 (arrêt avant la cible) à 117,5 kg puis 3 à 112,5 kg | 2 → 3,8 ; suivantes 4 → 6,4 | 147 / 148 | séries allégées calculées sur la série de tête réalisée (125 kg, −6 %) |
+| 16 | construction (volume) | 3 × 3 à 83 %, série de tête puis séries allégées | 3 à 130 kg puis 3-3 à 122,5 kg | 3 à 130 kg puis 2 (arrêt avant la cible) à 117,5 kg | 2 → 0,2 ; suivantes 3,5 → 3,2 | 138 / 149 | séries allégées calculées sur la série de tête réalisée (130 kg, −5,8 %) ; dernières séries plus dures que prévu ; allégé pour garder la marge prévue (au moins 2 en réserve) |
 
 Athlète simulé, maximum réel hors fatigue : 147 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 142 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
 
@@ -85,9 +85,9 @@ Athlète simulé, maximum réel hors fatigue : 147 au départ (le record déclar
 | 4 | allègement | 3 × 5 à 75 % | 5-5-5 à 190 kg | 5-5-5 à 190 kg | 5+ → 10,7 ; suivantes 5+ → 9,4 | 255 / 263 | — |
 | 5 | intensification (séries plus dures) | 4 × 3 à 82 %, série de tête puis séries allégées | 3 à 202,5 kg puis 3-3 à 190 kg | 3 à 202,5 kg puis 3-3 à 190 kg | 5+ → 8,3 ; suivantes 5+ → 10,2 | 246 / 263 | bilan du jour bas (1/5) ; nuit courte |
 | 6 | intensification (séries plus dures) | 4 × 3 à 86 %, série de tête puis séries allégées | 3 à 202,5 kg puis 3-3-3 à 190 kg | 3 à 202,5 kg puis 3-3-3 à 190 kg | 5+ → 9,5 ; suivantes 5+ → 10,8 | 253 / 264 | charge non augmentée (bilan du jour bas) |
-| 7 | réalisation (spécifique à l'objectif) | 4 × 2 à 90 %, série de tête puis séries allégées | 2 à 217,5 kg puis 2-2-2 à 205 kg | 2 à 217,5 kg puis 2-2-2 à 205 kg | 5+ → 8,1 ; suivantes 5+ → 9,8 | 258 / 264 | charge non augmentée (hausse plafonnée d'une séance à la suivante) |
-| 15 | construction (volume) | 3 × 4 à 84 %, série de tête puis séries allégées | (4 à 7) à 217,5 kg puis 4-4 à 205 kg | 4 à 217,5 kg puis 4-2 (arrêt avant la cible) à 205 kg | 2 → 2,3 ; suivantes 5+ → 4,5 | 240 / 265 | série repère : une série ouverte (au ressenti, 2 en réserve) pour mesurer où en est l'athlète |
-| 16 | construction (volume) | 3 × 4 à 84 %, série de tête puis séries allégées | 4 à 217,5 kg puis 4-4 à 205 kg | 3 (arrêt avant la cible) à 217,5 kg puis 4-4 à 197,5 kg | 4,5 → 3,5 ; suivantes 5+ → 6,3 | 240 / 265 | séries allégées calculées sur la série de tête réalisée (217,5 kg, −5,7 %) ; dernières séries plus dures que prévu |
+| 7 | réalisation (spécifique à l'objectif) | 4 × 2 à 90 %, série de tête puis séries allégées | 2 à 217,5 kg puis 2-2-2 à 205 kg | 2 à 217,5 kg puis 2-2-2 à 205 kg | 5+ → 8 ; suivantes 5+ → 9,8 | 258 / 264 | charge non augmentée (hausse plafonnée d'une séance à la suivante) |
+| 15 | construction (volume) | 3 × 4 à 84 %, série de tête puis séries allégées | (4 à 7) à 217,5 kg puis 4-4 à 205 kg | 4 à 217,5 kg puis 3 (arrêt avant la cible) à 205 kg puis 3 (arrêt avant la cible) à 197,5 kg | 2 → 2,3 ; suivantes 5+ → 5,3 | 240 / 265 | série repère : une série ouverte (au ressenti, 2 en réserve) pour mesurer où en est l'athlète ; séries allégées calculées sur la série de tête réalisée (217,5 kg, −5,7 %) |
+| 16 | construction (volume) | 3 × 4 à 84 %, série de tête puis séries allégées | 4 à 217,5 kg puis 4-4 à 205 kg | 3 (arrêt avant la cible) à 217,5 kg puis 4-4 à 197,5 kg | 4,5 → 3,6 ; suivantes 5+ → 6,4 | 241 / 265 | séries allégées calculées sur la série de tête réalisée (217,5 kg, −5,7 %) |
 
 Athlète simulé, maximum réel hors fatigue : 262 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 251 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
 
@@ -95,9 +95,9 @@ Athlète simulé, maximum réel hors fatigue : 262 au départ (le record déclar
 
 | Sem. | Phase | Écrit par le programme | Servi par le moteur | Fait | Effort visé → réel | Maximum réel / estimé | Décisions du moteur |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| 8 | réalisation (spécifique à l'objectif) | 4 × 1 à 91 %, série de tête puis séries allégées | 1-1-1-(1 à 7) à 45 kg | 1-1-1-5 à 45 kg | 2 → 6,5 ; suivantes 1,8 → 4,9 | 61 / 51 | lieu différent : exercices adaptés au matériel ; série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète |
-| 9 | affûtage | 2 × 2 à 85 % | 2-2 à 39 kg | 2-2 à 39 kg | 3 → 7,3 ; suivantes 3 → 7 | 58 / 51 | lieu différent : exercices adaptés au matériel ; charge non augmentée (semaine où le programme se sert tel quel) ; dernières séries plus faciles que prévu |
-| 10 | échéance | 3 × 1 à 91 %, test | 3 × 1, test | 1 à 48 kg puis 1-1 à 46 kg | test | 60 / 51 | lieu différent : exercices adaptés au matériel |
+| 8 | réalisation (spécifique à l'objectif) | 4 × 1 à 91 %, série de tête puis séries allégées | 2-1-1-(1 à 7) à 45 kg | 2-1-1-5 à 45 kg | 2 → 5,5 ; suivantes 1,8 → 4,9 | 61 / 52 | lieu différent : exercices adaptés au matériel ; série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète |
+| 9 | affûtage | 2 × 2 à 85 % | 2-2 à 40 kg | 2-2 à 40 kg | 3 → 6,9 ; suivantes 3 → 6,6 | 58 / 52 | lieu différent : exercices adaptés au matériel ; charge non augmentée (semaine où le programme se sert tel quel) |
+| 10 | échéance | 3 × 1 à 91 %, test | 3 × 1, test | 1 à 48 kg puis 1-1 à 47 kg | test | 60 / 52 | lieu différent : exercices adaptés au matériel |
 
 Athlète simulé, maximum réel hors fatigue : 60 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 60 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
 
@@ -118,4 +118,4 @@ Athlète simulé, maximum réel hors fatigue : 60 au départ (le record déclar�
 - **Semaine 13 (construction (volume))** : bilan du jour bas (2/5) ; Développé couché avec pause : séries arrêtées en cours de séance (allégé pour garder la marge prévue (au moins 3 en réserve)) ; charges réduites sur 3 exercices (bilan du jour bas (2/5)).
 - **Semaine 14 (allègement)** : bilan du jour bas (2/5) ; phase « allègement » : séances servies telles que le programme les écrit (× 4) ; charges réduites — Rowing haltères poitrine appuyée sur banc incliné (bilan du jour bas (2/5)).
 - **Semaine 15 (construction (volume))** : nouveau bloc construit à partir du point de fin de bloc (maxima estimés, résultats de test, tolérance).
-- **Semaine 16 (construction (volume))** : 1 séance(s) manquée(s) sur 4 ; Rowing poulie basse assis au triangle : séries arrêtées en cours de séance (allégé pour garder la marge prévue (au moins 2 en réserve), dernières séries plus dures que prévu).
+- **Semaine 16 (construction (volume))** : 1 séance(s) manquée(s) sur 4 ; Rowing poulie basse assis au triangle : séries arrêtées en cours de séance (allégé pour garder la marge prévue (au moins 2 en réserve), dernières séries plus dures que prévu) ; Développé couché barre : séries arrêtées en cours de séance (allégé pour garder la marge prévue (au moins 2 en réserve)).

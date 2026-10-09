@@ -73,8 +73,8 @@ Violations de sécurité : **0** au total.
 | Profil | Séances faites | Échecs non voulus | Écart au RIR visé (cibles atteignables) | Cibles atteignables | Plus forte hausse (principal) | Gain réel (%/sem) | Performance à l'échéance | Déblocages non respectés | Repères non tenus | Violations (programme évolué) |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | `autres_01_debutant_musculation` | 36/36 | 0.0 | 2.223 | 1.0 | 0.25 | 0.45 | — | 0 | ecart_rir, ecart_effort | 0 |
-| `autres_02_hypertrophie_intermediaire` | 60/60 | 0.007 | 2.985 | 0.948 | 0.143 | 0.182 | — | 0 | ecart_rir, pics_de_charge, ecart_effort, pics_a_schema_egal | 0 |
-| `autres_03_powerlifter_competition` | 40/40 | 0.0 | 2.567 | 0.933 | 0.27 | 0.083 | 0.993 | 0 | ecart_rir, pics_de_charge, performance_echeance, ecart_effort | 0 |
+| `autres_02_hypertrophie_intermediaire` | 60/60 | 0.007 | 2.986 | 0.948 | 0.143 | 0.182 | — | 0 | ecart_rir, pics_de_charge, ecart_effort, pics_a_schema_egal | 0 |
+| `autres_03_powerlifter_competition` | 40/40 | 0.0 | 2.569 | 0.933 | 0.25 | 0.082 | 1.001 | 0 | ecart_rir, pics_de_charge, ecart_effort | 0 |
 | `autres_04_force_generale_46_ans` | 48/48 | 0.005 | 3.028 | 0.913 | 0.143 | 0.239 | — | 0 | ecart_rir, pics_de_charge, ecart_effort, pics_a_schema_egal | 0 |
 | `autres_05_course_10_km_debutante` | 34/36 | 0.0 | 3.393 | 0.386 | 0.0 | — | — | 0 | ecart_rir, ecart_effort | 0 |
 | `autres_06_semi_marathon_intermediaire` | 46/48 | 0.0 | 1.459 | 0.643 | 0.0 | — | — | 0 | ecart_rir | 0 |
@@ -88,16 +88,16 @@ Violations de sécurité : **0** au total.
 | `street_04_reprise_longue_pause` | 48/48 | 0.0 | 2.969 | 0.443 | 0.0 | 0.532 | — | 0 | ecart_rir | 0 |
 | `street_05_inter_calisthenie_front_lever` | 63/64 | 0.0 | 1.625 | 0.657 | 0.0 | — | — | 0 | ecart_rir | 0 |
 | `street_06_inter_sets_reps` | 48/48 | 0.0 | 2.162 | 0.579 | 0.0 | 0.312 | — | 0 | ecart_rir | 0 |
-| `street_07_avance_streetlifting_competition` | 60/60 | 0.0 | 2.768 | 0.686 | 0.298 | 0.06 | 0.995 | 0 | ecart_rir, pics_de_charge, performance_echeance, pics_a_schema_egal | 0 |
+| `street_07_avance_streetlifting_competition` | 60/60 | 0.0 | 2.766 | 0.686 | 0.298 | 0.06 | 0.995 | 0 | ecart_rir, pics_de_charge, performance_echeance, pics_a_schema_egal | 0 |
 | `street_08_avance_sets_reps_competition` | 40/40 | 0.0 | 3.553 | 0.534 | 0.0 | 0.158 | 0.851 | 0 | ecart_rir, performance_echeance, ecart_effort | 0 |
-| `street_09_elite_streetlifting` | 60/60 | 0.002 | 3.161 | 0.611 | 0.3 | 0.024 | 0.998 | 0 | ecart_rir, pics_de_charge, performance_echeance | 0 |
+| `street_09_elite_streetlifting` | 60/60 | 0.002 | 3.159 | 0.611 | 0.3 | 0.024 | 0.998 | 0 | ecart_rir, pics_de_charge, performance_echeance | 0 |
 | `street_10_elite_figures` | 91/96 | 0.0 | 2.18 | 0.285 | 0.0 | 0.069 | — | 0 | ecart_rir, ecart_effort | 0 |
 | `street_11_master_51_ans` | 48/48 | 0.0 | 1.598 | 0.755 | 0.051 | 0.252 | — | 0 | ecart_rir | 0 |
-| `street_12_antecedent_coude` | 48/48 | 0.0 | 2.425 | 0.631 | 0.302 | 0.256 | — | 0 | ecart_rir, pics_de_charge, ecart_effort | 0 |
+| `street_12_antecedent_coude` | 48/48 | 0.0 | 2.425 | 0.631 | 0.302 | 0.263 | — | 0 | ecart_rir, pics_de_charge, ecart_effort | 0 |
 | `street_13_peu_de_temps` | 34/36 | 0.0 | 1.697 | 0.699 | 0.0 | 0.612 | — | 0 | ecart_rir, ecart_effort | 0 |
 | `street_14_parc_sans_lest` | 46/48 | 0.0 | 2.38 | 0.646 | 0.0 | 0.361 | — | 0 | ecart_rir | 0 |
 | `street_15_travail_physique_sommeil_court` | 36/36 | 0.0 | 2.057 | 0.668 | 0.0 | 0.54 | — | 0 | ecart_rir | 0 |
-| `street_16_specialisation_traction_lestee` | 40/40 | 0.002 | 2.363 | 0.716 | 0.322 | 0.117 | 1.035 | 0 | ecart_rir, pics_de_charge, ecart_effort | 0 |
+| `street_16_specialisation_traction_lestee` | 40/40 | 0.002 | 2.346 | 0.716 | 0.322 | 0.118 | 1.035 | 0 | ecart_rir, pics_de_charge, ecart_effort | 0 |
 | `street_17_hybride_street_course` | 58/60 | 0.0 | 1.9 | 0.604 | 0.0 | 0.512 | — | 0 | ecart_rir, ecart_effort | 0 |
 
 ## 3. Détail par profil

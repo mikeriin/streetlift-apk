@@ -37,7 +37,7 @@ Chaque bloc est écrit par le moteur de création au moment où il commence, d'a
 - Séances faites : 68 sur 80 (7 ajustées le jour même).
 - Échecs non voulus (hors tests et tentatives) : 0 % des séries de travail.
 - Écart moyen entre l'effort affiché par le moteur et l'effort réel : 0,83 répétition en réserve (sur les 49 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 9,1 %.
-- Plus forte hausse de charge totale d'un mouvement principal d'une séance à la suivante, à schéma égal : 8,4 % ; hausses de plus de 10 % faites de plusieurs crans : 0.
+- Plus forte hausse de charge totale d'un mouvement principal d'une séance à la suivante, à schéma égal : 8,7 % ; hausses de plus de 10 % faites de plusieurs crans : 0.
 - Progression réelle moyenne des mouvements suivis : 0,079 % par semaine.
 - Jour de l'échéance : meilleure performance à 95,9 % du maximum réel du jour (moyenne des mouvements).
 - Douleur : 0 hausse(s) de charge sur une zone douloureuse signalée.
@@ -123,7 +123,7 @@ Athlète simulé, maximum réel hors fatigue : 46 au départ (le record déclar�
 | 5 | réalisation (spécifique à l'objectif) | 3 × 5 à 74 % | 5-5-(5 à 11) à 13,75 kg | 4 (arrêt avant la cible) à 13,75 kg puis 5-10 à 11,25 kg | 5+ → 6,6 ; suivantes 3,3+ → 3,9 | 107 (lest 38) / 115 (lest 45) | série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète ; allégé pour garder la marge prévue (au moins 3 en réserve) |
 | 9 | transition (récupération) | 2 × 6 à 60 % | 6-6 | 6-6 | 5+ → 10,6 ; suivantes 5+ → 10,3 | 109 (lest 39) / 114 (lest 44) | — |
 | 10 | introduction | 2 × 6 à 63 % | 6-6 à 1,25 kg | 6-6 à 1,25 kg | 5+ → 10,9 ; suivantes 5+ → 10,6 | 112 (lest 42) / 114 (lest 44) | — |
-| 11 | construction (volume) | 3 × 5 à 67 % | 5-5-5 à 6,25 kg | 5-5 à 6,25 kg puis 5 à 7,5 kg | 5+ → 11,2 ; suivantes 5+ → 10,7 | 117 (lest 47) / 114 (lest 44) | charge non augmentée (hausse plafonnée d'une séance à la suivante) |
+| 11 | construction (volume) | 3 × 5 à 67 % | 5-5-5 à 5 kg | 5-5 à 5 kg puis 5 à 6,25 kg | 5+ → 11,7 ; suivantes 5+ → 11,2 | 117 (lest 47) / 114 (lest 44) | charge non augmentée (hausse plafonnée d'une séance à la suivante) |
 | 12 | allègement | 2 × 6 à 66 % | 6-6 à 5 kg | 6-6 à 5 kg | 5+ → 9,9 ; suivantes 5+ → 9,7 | 114 (lest 44) / 114 (lest 44) | — |
 | 13 | construction (volume) | 3 × 5 à 72 % | 5-5-(5 à 11) à 11,25 kg | 5-5-11 à 11,25 kg | 5+ → 8,1 ; suivantes 3,3+ → 4,8 | 112 (lest 42) / 114 (lest 44) | série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète |
 | 14 | construction (volume) | 3 × 5 à 75 % | 5-5-5 à 15 kg | 5-5-5 à 15 kg | 5+ → 6,7 ; suivantes 5+ → 6,4 | 112 (lest 43) / 114 (lest 44) | — |
@@ -137,12 +137,12 @@ Athlète simulé, maximum réel hors fatigue : 114 (lest 44) au départ (le reco
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | 9 | transition (récupération) | 2 × 6 à 60 % | 6-6 à 13,75 kg | 6-6 à 13,75 kg | 5+ → 9 ; suivantes 5+ → 8,3 | 126 (lest 57) / 139 (lest 70) | calibrage (séance 1 sur ce mouvement) |
 | 10 | introduction | 2 × 6 à 62 % | 6-6 à 17,5 kg | 6-6 à 17,5 kg | 5+ → 7,1 ; suivantes 5+ → 6,6 | 123 (lest 54) / 139 (lest 70) | calibrage (séance 3 sur ce mouvement) |
-| 11 | construction (volume) | 3 × 5 à 67 % | 5-5-(5 à 11) à 23,75 kg | 5-4 (arrêt avant la cible) à 23,75 kg puis 9 à 21,25 kg | 5+ → 7 ; suivantes 3,3+ → 4,9 | 127 (lest 58) / 140 (lest 71) | série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète ; allégé pour garder la marge prévue (au moins 4 en réserve) |
-| 12 | allègement | 2 × 6 à 67 % | 6-6 à 23,75 kg | 6-5 (arrêt avant la cible) à 23,75 kg | 5+ → 4,7 ; suivantes 5+ → 5 | 122 (lest 53) / 140 (lest 71) | — |
-| 13 | construction (volume) | 3 × 5 à 71 % | 5-5-(5 à 11) à 25 kg | 5-4 (arrêt avant la cible) à 25 kg puis 8 à 22,5 kg | 5+ → 6,2 ; suivantes 3,3+ → 4,6 | 125 (lest 56) / 132 (lest 63) | série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète ; allégé pour garder la marge prévue (au moins 4 en réserve) |
-| 14 | construction (volume) | 3 × 5 à 74 % | 5-5-5 à 27,5 kg | 3 (arrêt avant la cible) à 27,5 kg puis 5-5 à 22,5 kg | 5+ → 7,4 ; suivantes 5+ → 6 | 126 (lest 57) / 133 (lest 63) | allégé pour garder la marge prévue (au moins 4 en réserve) |
-| 15 | construction (volume) | 3 × 5 à 78 % | 5-5-5 à 31,25 kg | 5 à 31,25 kg puis 5-5 à 27,5 kg | 3 → 3,8 ; suivantes 3 → 3,7 | 124 (lest 55) / 132 (lest 63) | charge non augmentée (hausse plafonnée d'une séance à la suivante) ; allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |
-| 16 | allègement | 2 × 6 à 67 % | 6-6 à 17,5 kg | 6-6 à 17,5 kg | 5+ → 8,1 ; suivantes 5+ → 7,5 | 128 (lest 59) / 132 (lest 63) | — |
+| 11 | construction (volume) | 3 × 5 à 67 % | 5-5-(5 à 11) à 20 kg | 5-5-10 à 20 kg | 5+ → 8,2 ; suivantes 3,3+ → 4,7 | 127 (lest 58) / 140 (lest 71) | série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète ; charge non augmentée (hausse plafonnée d'une séance à la suivante) |
+| 12 | allègement | 2 × 6 à 67 % | 6-6 à 23,75 kg | 6-5 (arrêt avant la cible) à 23,75 kg | 5+ → 4,6 ; suivantes 5+ → 5 | 122 (lest 53) / 140 (lest 71) | — |
+| 13 | construction (volume) | 3 × 5 à 71 % | 5-5-(5 à 11) à 25 kg | 5-4 (arrêt avant la cible) à 25 kg puis 8 à 22,5 kg | 5+ → 6,2 ; suivantes 3,3+ → 4,6 | 125 (lest 56) / 133 (lest 64) | série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète ; allégé pour garder la marge prévue (au moins 4 en réserve) |
+| 14 | construction (volume) | 3 × 5 à 74 % | 5-5-5 à 28,75 kg | 2 (arrêt avant la cible) à 28,75 kg puis 5-4 (arrêt avant la cible) à 23,75 kg | 5+ → 8 ; suivantes 5+ → 6,2 | 126 (lest 57) / 133 (lest 64) | allégé pour garder la marge prévue (au moins 4 en réserve) |
+| 15 | construction (volume) | 3 × 5 à 78 % | 5-5-5 à 32,5 kg | 5 à 32,5 kg puis 5-5 à 28,75 kg | 2 → 3,3 ; suivantes 2 → 3,2 | 124 (lest 55) / 131 (lest 62) | charge non augmentée (hausse plafonnée d'une séance à la suivante) ; allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |
+| 16 | allègement | 2 × 6 à 67 % | 6-6 à 17,5 kg | 6-6 à 17,5 kg | 5+ → 8,1 ; suivantes 5+ → 7,5 | 128 (lest 58) / 131 (lest 62) | — |
 
 Athlète simulé, maximum réel hors fatigue : 129 (lest 60) au départ (le record déclaré au profil peut être plus haut ou plus ancien), 130 (lest 61) en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
 

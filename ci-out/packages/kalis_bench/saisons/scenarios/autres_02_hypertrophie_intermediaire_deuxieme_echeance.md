@@ -33,7 +33,7 @@ Chaque bloc est écrit par le moteur de création au moment où il commence, d'a
 
 - Séances faites : 79 sur 80 (28 ajustées le jour même).
 - Échecs non voulus (hors tests et tentatives) : 0,9 % des séries de travail.
-- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 2,48 répétition en réserve (sur les 95 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 35 %.
+- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 2,48 répétition en réserve (sur les 95 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 34,4 %.
 - Plus forte hausse de charge totale d'un mouvement principal d'une séance à la suivante, à schéma égal : 50 % ; hausses de plus de 10 % faites de plusieurs crans : 2.
 - Progression réelle moyenne des mouvements suivis : 0,17 % par semaine.
 - Douleur : 0 hausse(s) de charge sur une zone douloureuse signalée.
@@ -81,10 +81,10 @@ Athlète simulé, maximum réel hors fatigue : 28 au départ (le record déclar�
 | 10 | construction (volume) | 2 × 10 à 12 à 68 % | (10 à 12)-(10 à 12) à 62,5 kg | 12-12 à 62,5 kg | 3 → 6,9 ; suivantes 3 → 5,8 | 116 / 104 | allégé pour garder la marge prévue (au moins 2 en réserve) |
 | 11 | construction (volume) | 2 × 10 à 12 à 68 % | (10 à 12)-(10 à 18) à 65 kg | 12 à 65 kg puis 12 à 67,5 kg | 3,5 → 5,8 ; suivantes 1,5 → 3,6 | 115 / 103 | série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète |
 | 12 | allègement | 2 × 8 à 10 à 68 % | (8 à 10)-(8 à 10) à 67,5 kg | 10-10 à 67,5 kg | 4 → 7,7 ; suivantes 4 → 6,8 | 119 / 104 | allégé pour garder la marge prévue (au moins 3 en réserve) |
-| 13 | construction (volume) | 3 × 9 à 11 à 68 % | (9 à 11)-(9 à 11)-(9 à 17) à 62,5 kg | 11 à 62,5 kg puis 11 à 65 kg puis 15 à 60 kg | 3,5 → 8,9 ; suivantes 2,5 → 5,6 | 122 / 101 | série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète ; allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |
-| 14 | construction (volume) | 2 × 9 à 11 à 68 % | (9 à 11)-(9 à 11) à 65 kg | 11 à 65 kg puis 11 à 62,5 kg | 2,5 → 8,6 ; suivantes 2,5 → 7,8 | 125 / 99 | allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |
-| 15 | construction (volume) | 2 × 10 à 12 à 68 % | (10 à 12)-(10 à 12) à 62,5 kg | 12 à 62,5 kg puis 11 à 65 kg | 3,5 → 7,4 ; suivantes 3,5 → 5,9 | 119 / 99 | — |
-| 16 | construction (volume) | 2 × 10 à 12 à 68 % | (10 à 12)-(10 à 12) à 62,5 kg | 12 à 62,5 kg puis 12 à 65 kg | 3 → 8 ; suivantes 3 → 6 | 123 / 99 | — |
+| 13 | construction (volume) | 2 × 9 à 11 à 68 % | (9 à 11)-(9 à 11) à 67,5 kg | 11-11 à 67,5 kg | 2 → 6,6 ; suivantes 2 → 5,7 | 118 / 101 | — |
+| 14 | construction (volume) | 2 × 9 à 11 à 68 % | (9 à 11)-(9 à 11) à 65 kg | 11 à 65 kg puis 11 à 62,5 kg | 2,5 → 8,6 ; suivantes 2,5 → 7,8 | 125 / 101 | allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |
+| 15 | construction (volume) | 2 × 10 à 12 à 68 % | (10 à 12)-(10 à 12) à 65 kg | 12 à 65 kg puis 12 à 67,5 kg | 2 → 6,5 ; suivantes 2 → 4 | 119 / 102 | — |
+| 16 | construction (volume) | 2 × 10 à 12 à 68 % | (10 à 12)-(10 à 18) à 65 kg | 12 à 65 kg puis 14 à 67,5 kg | 2 → 7,3 ; suivantes 1,5 → 3,2 | 123 / 104 | série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète |
 
 Athlète simulé, maximum réel hors fatigue : 120 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 123 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
 
@@ -129,7 +129,7 @@ Athlète simulé, maximum réel hors fatigue : 41 au départ (le record déclar�
 | 12 | allègement | 2 × 8 à 10 à 67 % | (8 à 10)-(8 à 10) à 22,5 kg | 10-10 à 22,5 kg | 4 → 9,3 ; suivantes 4 → 8,5 | 43 / 37 | allégé pour garder la marge prévue (au moins 3 en réserve) |
 | 13 | construction (volume) | 3 × 9 à 11 à 67 % | (9 à 11)-(9 à 11)-(9 à 17) à 20 kg | 11-11 à 20 kg puis 14 à 22,5 kg | 4,5 → 11 ; suivantes 3 → 6,8 | 44 / 35 | série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète |
 | 14 | construction (volume) | 3 × 9 à 11 à 67 % | (9 à 11)-(9 à 11)-(9 à 11) à 20 kg | 11-11 à 20 kg puis 10 à 22,5 kg | 5+ → 11 ; suivantes 5+ → 9,1 | 44 / 35 | — |
-| 15 | construction (volume) | 3 × 10 à 12 à 67 % | (10 à 12)-(10 à 12)-(10 à 18) à 20 kg | 12 à 20 kg puis 11 à 22,5 kg puis 17 à 20 kg | 4,5 → 9,9 ; suivantes 3 → 5,2 | 44 / 35 | série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète ; allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |
+| 15 | construction (volume) | 3 × 10 à 12 à 67 % | (10 à 12)-(10 à 12)-(10 à 18) à 20 kg | 12 à 20 kg puis 12 à 22,5 kg puis 17 à 20 kg | 4 → 9,9 ; suivantes 2,8 → 4,6 | 44 / 35 | série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète ; allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |
 | 16 | construction (volume) | 3 × 10 à 12 à 67 % | (10 à 12)-(10 à 12)-(10 à 12) à 20 kg | 12-12-12 à 20 kg | 4 → 10,6 ; suivantes 4 → 9,3 | 46 / 35 | allégé pour garder la marge prévue (au moins 2 en réserve) |
 
 Athlète simulé, maximum réel hors fatigue : 44 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 45 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
@@ -152,7 +152,7 @@ Athlète simulé, maximum réel hors fatigue : 44 au départ (le record déclar�
 | 12 | allègement | 2 × 8 à 10 à 69 % | (8 à 10)-(8 à 10) à 40 kg | 10-10 à 40 kg | 5+ → 12 ; suivantes 5+ → 10,6 | 70 / 61 | — |
 | 13 | construction (volume) | 3 × 9 à 11 à 69 % | (9 à 11)-(9 à 11)-(9 à 17) à 40 kg | 11 à 40 kg puis 11 à 42,5 kg puis 17 à 40 kg | 5+ → 13,1 ; suivantes 3,3+ → 7,2 | 76 / 59 | série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète |
 | 14 | construction (volume) | 3 × 9 à 11 à 69 % | (9 à 11)-(9 à 11)-(9 à 11) à 40 kg | 11-11 à 40 kg puis 9 à 42,5 kg | 5+ → 12,6 ; suivantes 5+ → 11,1 | 74 / 58 | — |
-| 15 | construction (volume) | 3 × 10 à 12 à 66 % | (10 à 12)-(10 à 12)-(10 à 12) à 40 kg | 12 à 40 kg puis 12 à 42,5 kg puis 10 à 45 kg | 4,5 → 12,2 ; suivantes 4,5 → 8,8 | 76 / 59 | — |
+| 15 | construction (volume) | 3 × 10 à 12 à 66 % | (10 à 12)-(10 à 12)-(10 à 12) à 40 kg | 12 à 40 kg puis 12 à 42,5 kg puis 10 à 45 kg | 4,5 → 12,1 ; suivantes 4,5 → 8,8 | 76 / 59 | — |
 | 16 | construction (volume) | 3 × 10 à 12 à 66 % | (10 à 12)-(10 à 12)-(10 à 18) à 40 kg | 12 à 40 kg puis 12 à 42,5 kg puis 15 à 45 kg | 4 → 11,5 ; suivantes 2,8 → 5,5 | 74 / 60 | série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète |
 
 Athlète simulé, maximum réel hors fatigue : 74 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 76 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
@@ -196,5 +196,5 @@ Athlète simulé, maximum réel hors fatigue : 10 au départ (le record déclar�
 - **Semaine 12 (allègement)** : phase « allègement » : séances servies telles que le programme les écrit (× 5) ; bilan du jour bas (2/5) (× 2) ; nuit courte ; charges réduites — Hip thrust à la barre, Back squat barre haute (bilan du jour bas (2/5), nuit courte) ; charges réduites — Tirage vertical poulie prise neutre, Rowing poulie basse assis au triangle (bilan du jour bas (2/5)).
 - **Semaine 13 (construction (volume))** : nouveau bloc construit à partir du point de fin de bloc (maxima estimés, résultats de test, tolérance) ; bilan du jour bas (2/5) ; Extension nuque à la poulie (corde) : séries arrêtées en cours de séance (allégé pour garder la marge prévue (au moins 2 en réserve)) ; charges réduites sur 4 exercices (bilan du jour bas (2/5)).
 - **Semaine 14 (construction (volume))** : bilan du jour bas (2/5) ; Tirage vertical poulie prise neutre : séries arrêtées en cours de séance (allégé pour garder la marge prévue (au moins 2 en réserve), dernières séries plus dures que prévu) ; charges réduites sur 8 exercices (bilan du jour bas (2/5)).
-- **Semaine 15 (construction (volume))** : bilan du jour bas (1/5) ; bilan du jour bas (2/5) ; séries retirées — Extension nuque à la poulie (corde) (bilan du jour bas (1/5)) ; charges réduites sur 6 exercices (bilan du jour bas (1/5)) ; charges réduites sur 4 exercices (bilan du jour bas (2/5)).
+- **Semaine 15 (construction (volume))** : bilan du jour bas (1/5) (× 2) ; séries retirées — Extension nuque à la poulie (corde), Mollets debout à la machine (bilan du jour bas (1/5)) ; charges réduites sur 10 exercices (bilan du jour bas (1/5)).
 - **Semaine 16 (construction (volume))** : 1 séance(s) manquée(s) sur 5 ; bilan du jour bas (2/5) (× 3) ; nuit courte (× 3) ; séries retirées sur 4 exercices (bilan du jour bas (2/5), nuit courte) ; charges réduites sur 10 exercices (bilan du jour bas (2/5), nuit courte).

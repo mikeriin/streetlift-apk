@@ -80,7 +80,7 @@ Athlète simulé, maximum réel hors fatigue : 93 au départ (le record déclar�
 | 5 | allègement | 3 × 5 à 75 % | 5-5-5 à 60 kg | 3 (arrêt avant la cible) à 60 kg puis 5-5 à 55 kg | 5+ → 6,4 ; suivantes 5+ → 6,1 | 77 / 73 | allégé pour garder la marge prévue (au moins 4 en réserve) ; dernières séries plus dures que prévu |
 | 6 | intensification (séries plus dures) | 4 × 2 à 81 %, série de tête puis séries allégées | 2 à 62,5 kg puis 2-2-2 à 57,5 kg | 2 à 62,5 kg puis 2-2-2 à 57,5 kg | 5+ → 7,4 ; suivantes 5+ → 9,1 | 80 / 75 | — |
 | 7 | intensification (séries plus dures) | 4 × 2 à 84 %, série de tête puis séries allégées | 2 à 60 kg puis 2-2 à 55 kg | 2 à 60 kg puis 2-2 à 55 kg | 4 → 5,3 ; suivantes 5+ → 7,5 | 72 / 75 | bilan du jour bas (1/5) ; nuit courte |
-| 8 | intensification (séries plus dures) | 4 × 1 à 88 %, série de tête puis séries allégées | 1 à 62,5 kg puis 1-1-1 à 57,5 kg | 1 à 62,5 kg puis 1-1-1 à 57,5 kg | 5+ → 8,4 ; suivantes 5+ → 10,1 | 80 / 77 | charge non augmentée (hausse plafonnée d'une séance à la suivante) |
+| 8 | intensification (séries plus dures) | 4 × 1 à 88 %, série de tête puis séries allégées | 1 à 65 kg puis 1-1-1 à 60 kg | 1 à 65 kg puis 1-1-1 à 60 kg | 5+ → 7,2 ; suivantes 5+ → 8,9 | 80 / 77 | — |
 | 9 | intensification (séries plus dures) | 4 × 1 à 88 %, série de tête puis séries allégées | 1 à 65 kg puis 1-1-1 à 60 kg | 1 à 65 kg puis 1-1-1 à 60 kg | 5+ → 8 ; suivantes 5+ → 9,7 | 82 / 77 | — |
 | 10 | allègement | 1 × 3 à 88 %, test | 3 à 67,5 kg | 3 à 67,5 kg | test | 81 / 77 | — |
 | 11 | réalisation (spécifique à l'objectif) | 4 × 2 à 85 %, série de tête puis séries allégées | 2 à 67,5 kg puis 2-2-2 à 62,5 kg | 2 à 67,5 kg puis 2-2-2 à 62,5 kg | 2 → 4,7 ; suivantes 4,5 → 6,4 | 79 / 76 | — |

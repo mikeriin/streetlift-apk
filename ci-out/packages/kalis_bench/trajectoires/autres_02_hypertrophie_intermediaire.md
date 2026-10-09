@@ -21,7 +21,7 @@ Un athlète simulé (capacités réelles connues du simulateur, jamais du moteur
 
 - Séances faites : 60 sur 60 (21 ajustées le jour même).
 - Échecs non voulus (hors tests et tentatives) : 0,7 % des séries de travail.
-- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 2,46 répétition en réserve (sur les 95 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 33,9 %.
+- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 2,47 répétition en réserve (sur les 95 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 34,3 %.
 - Plus forte hausse de charge totale d'un mouvement principal d'une séance à la suivante, à schéma égal : 50 % ; hausses de plus de 10 % faites de plusieurs crans : 2.
 - Progression réelle moyenne des mouvements suivis : 0,182 % par semaine.
 - Douleur : 0 hausse(s) de charge sur une zone douloureuse signalée.
@@ -165,6 +165,6 @@ Le même profil et le même moteur, avec d'autres hypothèses sur l'athlète ré
 
 | Athlète simulé | Échecs non voulus | Écart d'effort | Séries ≥ 2 rép. plus dures | Plus forte hausse à schéma égal | Progression par semaine | Tentatives réussies | Échéance / maximum du jour | Hausses sur zone douloureuse |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| modèle 2 (courbe linéaire, notes d'effort entières et plafonnées, récupération lente entre séries, tendons à adaptation lente) | 0,7 % | 2,46 | 0 % | 50 % | 0,182 % | — | — | 0 |
+| modèle 2 (courbe linéaire, notes d'effort entières et plafonnées, récupération lente entre séries, tendons à adaptation lente) | 0,7 % | 2,47 | 0 % | 50 % | 0,182 % | — | — | 0 |
 | modèle 1 (courbe charge-répétitions à plateau, notes d'effort continues) | 1,7 % | 3,81 | 0,3 % | 33,3 % | 0,184 % | — | — | 0 |
 | modèle 3 (courbe en puissance, forme masquée par la fatigue, mauvais jours marqués, désentraînement rapide) | 6,3 % | 8,04 | 0,6 % | 25 % | 0,146 % | — | — | 0 |

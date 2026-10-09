@@ -18,7 +18,7 @@ Un athlète simulé (capacités réelles connues du simulateur, jamais du moteur
 - **Objectif** : Course chronométrée : 10000 m en 50 min, d'ici 12 semaines.
 - **Questionnaire santé** : rien à signaler.
 
-**Scénario** : course de 10 km ajoutée en cours de saison (annoncée en semaine 4, courue en semaine 10).
+**Scénario** : course de 10 km ajoutée en cours de saison (annoncée en semaine 5, courue en semaine 10).
 
 ## Plan de saison et blocs
 

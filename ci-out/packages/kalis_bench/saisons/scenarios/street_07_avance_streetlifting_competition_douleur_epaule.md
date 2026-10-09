@@ -37,9 +37,9 @@ Chaque bloc est écrit par le moteur de création au moment où il commence, d'a
 
 - Séances faites : 79 sur 80 (33 ajustées le jour même).
 - Échecs non voulus (hors tests et tentatives) : 0 % des séries de travail.
-- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 1,05 répétition en réserve (sur les 46 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 13,6 %.
+- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 1,07 répétition en réserve (sur les 46 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 13,9 %.
 - Plus forte hausse de charge totale d'un mouvement principal d'une séance à la suivante, à schéma égal : 10,4 % ; hausses de plus de 10 % faites de plusieurs crans : 1.
-- Progression réelle moyenne des mouvements suivis : -0,094 % par semaine.
+- Progression réelle moyenne des mouvements suivis : -0,099 % par semaine.
 - Douleur : 0 hausse(s) de charge sur une zone douloureuse signalée.
 
 ## Mouvements suivis, semaine par semaine
@@ -57,7 +57,7 @@ Pour chaque mouvement, la séance la plus lourde de la semaine : ce que le progr
 | 5 | intensification (séries plus dures) | 4 × 3 à 82 %, série de tête puis séries allégées | (3 à 6) à 37,5 kg puis 3-3-3 à 31,25 kg | 3 à 37,5 kg puis 3-3-3 à 27,5 kg | 3 → 4,7 ; suivantes 4,5 → 7,7 | 136 (lest 58) / 137 (lest 60) | série repère : une série ouverte (au ressenti, 3 en réserve) pour mesurer où en est l'athlète ; séries allégées calculées sur la série de tête réalisée (37,5 kg, −5 %) ; dernières séries plus dures que prévu |
 | 13 | introduction | 2 × 5 à 76 %, série de tête puis séries allégées | 5 à 18,75 kg puis 5 à 10 kg | 5 à 18,75 kg puis 5 à 10 kg | 5+ → 7,3 ; suivantes 5+ → 10,1 | 130 (lest 52) / 127 (lest 50) | douleur signalée (épaule, 0/10) |
 | 14 | construction (volume) | 2 × 3 à 83 %, série de tête puis séries allégées | (3 à 6) à 25 kg puis 3 à 18,75 kg | 6 à 25 kg puis 3 à 16,25 kg | 2 → 4,1 ; suivantes 5+ → 9,7 | 130 (lest 52) / 127 (lest 50) | série repère : une série ouverte (au ressenti, 2 en réserve) pour mesurer où en est l'athlète ; séries allégées calculées sur la série de tête réalisée (25 kg, −6,1 %) ; dernières séries plus dures que prévu |
-| 15 | construction (volume) | 2 × 3 à 84 %, série de tête puis séries allégées | 3 à 28,75 kg puis 3 à 22,5 kg | 3 à 28,75 kg puis 3 à 22,5 kg | 4 → 5 ; suivantes 5+ → 6,9 | 127 (lest 49) / 128 (lest 51) | — |
+| 15 | construction (volume) | 2 × 3 à 84 %, série de tête puis séries allégées | 3 à 28,75 kg puis 3 à 22,5 kg | 3 à 28,75 kg puis 3 à 22,5 kg | 4 → 4,9 ; suivantes 5+ → 6,8 | 127 (lest 49) / 128 (lest 51) | — |
 | 16 | allègement | 2 × 5 à 75 % | 5-5 à 16,25 kg | 5-5 à 16,25 kg | 5+ → 7,7 ; suivantes 5+ → 7,5 | 128 (lest 51) / 128 (lest 51) | — |
 
 Athlète simulé, maximum réel hors fatigue : 137 (lest 59) au départ (le record déclaré au profil peut être plus haut ou plus ancien), 131 (lest 53) en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
@@ -71,7 +71,7 @@ Athlète simulé, maximum réel hors fatigue : 137 (lest 59) au départ (le reco
 | 3 | construction (volume) | 4 × 5 à 83 %, série de tête puis séries allégées | 5 à 55 kg puis 5-5-5 à 47,5 kg | 2 (arrêt avant la cible) à 55 kg puis 3 (arrêt avant la cible) à 41,25 kg | 4 → 4,1 ; suivantes 4,5 → 6,1 | 151 (lest 74) / 153 (lest 76) | charge non augmentée (hausse plafonnée d'une séance à la suivante) ; séries allégées calculées sur la série de tête réalisée (55 kg, −5,7 %) ; dernières séries plus dures que prévu ; allégé pour garder la marge prévue (au moins 1 en réserve) |
 | 4 | allègement | 3 × 5 à 75 % | 5-5-5 à 35 kg | 5-5-5 à 35 kg | 5+ → 9,1 ; suivantes 5+ → 8,1 | 165 (lest 88) / 153 (lest 76) | — |
 | 5 | intensification (séries plus dures) | 5 × 4 à 72 % | 4-4-4-4-4 à 36,25 kg | 4-4-4-4-4 à 36,25 kg | 5+ → 8,1 ; suivantes 5+ → 6,8 | 156 (lest 79) / 145 (lest 68) | — |
-| 13 | introduction | 2 × 6 à 67 % | 6-6 à 16,25 kg | 6-6 à 16,25 kg | 5+ → 8,4 ; suivantes 5+ → 7,7 | 139 (lest 62) / 138 (lest 61) | charge non augmentée (pain_return) ; douleur signalée (épaule, 0/10) |
+| 13 | introduction | 2 × 6 à 67 % | 6-6 à 16,25 kg | 6-6 à 16,25 kg | 5+ → 8,4 ; suivantes 5+ → 7,8 | 139 (lest 62) / 138 (lest 61) | charge non augmentée (pain_return) ; douleur signalée (épaule, 0/10) |
 | 14 | construction (volume) | 2 × 5 à 70 %, série de tête puis séries allégées | 5 à 18,75 kg puis 5 à 10 kg | 5 à 18,75 kg puis 5 à 10 kg | 5+ → 10,9 ; suivantes 5+ → 12,4 | 151 (lest 74) / 138 (lest 61) | charge non augmentée (pain_return) |
 | 15 | construction (volume) | 2 × 5 à 72 % | 5-5 à 21,25 kg | 5-5 à 21,25 kg | 5+ → 9 ; suivantes 5+ → 8,1 | 144 (lest 67) / 138 (lest 61) | charge non augmentée (pain_return) ; charge non augmentée (hausse plafonnée d'une séance à la suivante) |
 | 16 | allègement | 2 × 5 à 72 % | 5-5 à 21,25 kg | 5-5 à 21,25 kg | 5+ → 7,7 ; suivantes 5+ → 7,2 | 138 (lest 61) / 138 (lest 61) | charge non augmentée (pain_return) |
@@ -106,26 +106,15 @@ Athlète simulé, maximum réel hors fatigue : 99 (lest 22) au départ (le recor
 | 7 | intensification (séries plus dures) | 4 × 2 à 88 %, série de tête puis séries allégées | (2 à 5) à 132,5 kg puis 2-2-2 à 125 kg | 5 à 132,5 kg puis 2-2-2 à 125 kg | 2 → 3,8 ; suivantes 5+ → 9 | 154 / 158 | série repère : une série ouverte (au ressenti, 2 en réserve) pour mesurer où en est l'athlète |
 | 8 | allègement | 3 × 3 à 80 % | 3-3-3 à 125 kg | 3-3-3 à 125 kg | 5+ → 8 ; suivantes 5+ → 7,8 | 153 / 158 | — |
 | 9 | introduction | 2 × 6 à 69 % | 6-6 à 107,5 kg | 6-6 à 107,5 kg | 5+ → 9,3 ; suivantes 5+ → 9,1 | 145 / 155 | — |
-| 10 | construction (volume) | 3 × 5 à 73 % | 5-5-5 à 110 kg | 5-5-5 à 110 kg | 5+ → 8,9 ; suivantes 5+ → 8,5 | 144 / 155 | — |
-| 11 | construction (volume) | 3 × 5 à 75 % | 5-5-5 à 115 kg | 5-5-5 à 115 kg | 5+ → 7,6 ; suivantes 5+ → 7,3 | 146 / 155 | — |
-| 12 | allègement | 2 × 6 à 66 % | 6-6 à 97,5 kg | 6-6 à 97,5 kg | 5+ → 12,7 ; suivantes 5+ → 12,4 | 144 / 155 | — |
+| 10 | construction (volume) | 3 × 5 à 73 % | 5-5-5 à 110 kg | 5-5-5 à 110 kg | 5+ → 8,9 ; suivantes 5+ → 8,6 | 144 / 155 | — |
+| 11 | construction (volume) | 3 × 5 à 75 % | 5-5-5 à 115 kg | 5-5-5 à 115 kg | 5+ → 7,7 ; suivantes 5+ → 7,4 | 146 / 155 | — |
+| 12 | allègement | 2 × 6 à 66 % | 6-6 à 97,5 kg | 6-6 à 97,5 kg | 5+ → 12,8 ; suivantes 5+ → 12,5 | 144 / 155 | — |
 | 13 | introduction | 3 × 6 à 69 % | 6-6-6 à 107,5 kg | 6-6-6 à 107,5 kg | 5+ → 10,3 ; suivantes 5+ → 9,7 | 149 / 155 | — |
 | 14 | construction (volume) | 3 × 3 à 77 %, série de tête puis séries allégées | (3 à 6) à 115 kg puis 3-3 à 107,5 kg | 4 à 115 kg puis 3-3 à 107,5 kg | 4 → 9,7 ; suivantes 5+ → 13,1 | 150 / 156 | série repère : une série ouverte (au ressenti, 4 en réserve) pour mesurer où en est l'athlète ; charge non augmentée (hausse plafonnée d'une séance à la suivante) |
 | 15 | construction (volume) | 3 × 3 à 80 %, série de tête puis séries allégées | 3 à 120 kg puis 3-3 à 112,5 kg | 3 à 120 kg puis 3-3 à 112,5 kg | 5+ → 10,6 ; suivantes 5+ → 13 | 156 / 156 | charge non augmentée (hausse plafonnée d'une séance à la suivante) |
 | 16 | allègement | 3 × 5 à 75 % | 5-5-5 à 115 kg | 5-5-5 à 115 kg | 5+ → 9,6 ; suivantes 5+ → 9,2 | 153 / 156 | — |
 
 Athlète simulé, maximum réel hors fatigue : 151 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 153 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
-
-### Traction pronation
-
-| Sem. | Phase | Écrit par le programme | Servi par le moteur | Fait | Effort visé → réel | Maximum réel / estimé | Décisions du moteur |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| 9 | introduction | 9 × 11 (46 % du maximum testé), départs au chrono | 11-11-11 | 11-11-11 | 5+ → 10,2 ; suivantes 5+ → 8,7 | 21 / 24 | charge non augmentée (pain_return) ; −5 série(s) ; bilan du jour bas (2/5) ; nuit courte |
-| 10 | construction (volume) | 3 × 21 (88 % du maximum testé), série de tête puis séries allégées | 12-12-12 | 12-12-11 (arrêt avant la cible) | 5+ → 9,5 ; suivantes 5+ → 9,1 | 21 / 24 | allégé pour garder la marge prévue (au moins 3 en réserve) ; calibrage (séance 2 sur ce mouvement) |
-| 11 | construction (volume) | 3 × 21 (88 % du maximum testé), série de tête puis séries allégées | 12-12-12 | 12-12-12 | 5+ → 10,1 ; suivantes 5+ → 9,3 | 22 / 24 | allégé pour garder la marge prévue (au moins 3 en réserve) |
-| 12 | allègement | 2 × 14 (58 % du maximum testé) | 12-12 | 12-12 | 5+ → 9 ; suivantes 5+ → 8,4 | 21 / 24 | répétitions recalées sur le maximum mesuré (2 de moins par série que le programme) |
-
-Athlète simulé, maximum réel hors fatigue : 22 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 22 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
 
 ### Traction scapulaire lestée
 
@@ -138,6 +127,17 @@ Athlète simulé, maximum réel hors fatigue : 22 au départ (le record déclar�
 
 Athlète simulé, maximum réel hors fatigue : 133 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 134 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
 
+### Traction pronation
+
+| Sem. | Phase | Écrit par le programme | Servi par le moteur | Fait | Effort visé → réel | Maximum réel / estimé | Décisions du moteur |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 9 | introduction | 4 × 9 (37 % du maximum testé), départs au chrono | 9-9 | 9-9 | 5+ → 12,2 ; suivantes 5+ → 10,9 | 21 / 24 | charge non augmentée (pain_return) ; −2 série(s) ; calibrage (séance 1 sur ce mouvement) ; douleur signalée (épaule, 5/10) |
+| 10 | construction (volume) | 2 × 21 (88 % du maximum testé), série de tête puis séries allégées | 10-10 | 10-10 | 5+ → 11,5 ; suivantes 5+ → 11 | 22 / 24 | allégé pour garder la marge prévue (au moins 3 en réserve) ; calibrage (séance 2 sur ce mouvement) |
+| 11 | construction (volume) | 2 × 21 (88 % du maximum testé), série de tête puis séries allégées | 11-11 | 11-11 | 5+ → 11,2 ; suivantes 5+ → 10,5 | 22 / 24 | allégé pour garder la marge prévue (au moins 3 en réserve) |
+| 12 | allègement | 2 × 14 (58 % du maximum testé) | 12-12 | 12-12 | 5+ → 9,1 ; suivantes 5+ → 8,4 | 21 / 24 | répétitions recalées sur le maximum mesuré (2 de moins par série que le programme) |
+
+Athlète simulé, maximum réel hors fatigue : 22 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 22 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
+
 ## Journal des décisions
 
 - **Semaine 1 (introduction)** : phase « introduction » : séances servies telles que le programme les écrit (× 5) ; Dips lesté de compétition : séries arrêtées en cours de séance (allégé pour garder la marge prévue (au moins 4 en réserve), calibrage (séance 2 sur ce mouvement)) ; Muscle-up lesté de compétition : séries arrêtées en cours de séance (allégé pour garder la marge prévue (au moins 4 en réserve), calibrage (séance 2 sur ce mouvement)).
@@ -148,9 +148,9 @@ Athlète simulé, maximum réel hors fatigue : 133 au départ (le record déclar
 - **Semaine 6 (intensification (séries plus dures))** : douleur qui dure ou qui revient (épaule, 7 séances à 3/10 ou plus) : mouvements qui la provoquent retirés, consulter un médecin ou un kiné, reprise après deux semaines à 2/10 au plus ; exercice remplacé sur 5 exercices (douleur signalée (épaule, 5/10)) ; exercice retiré sur 4 exercices (douleur signalée (épaule, 5/10)).
 - **Semaine 7 (intensification (séries plus dures))** : douleur qui dure ou qui revient (épaule, 12 séances à 3/10 ou plus) : mouvements qui la provoquent retirés, consulter un médecin ou un kiné, reprise après deux semaines à 2/10 au plus ; exercice remplacé sur 5 exercices (douleur signalée (épaule, 5/10)) ; exercice retiré sur 4 exercices (douleur signalée (épaule, 5/10)).
 - **Semaine 8 (allègement)** : phase « allègement » : séances servies telles que le programme les écrit (× 5) ; douleur qui dure ou qui revient (épaule, 16 séances à 3/10 ou plus) : mouvements qui la provoquent retirés, consulter un médecin ou un kiné, reprise après deux semaines à 2/10 au plus (× 3) ; exercice remplacé sur 3 exercices (douleur signalée (épaule, 5/10)) ; exercice retiré sur 4 exercices (douleur signalée (épaule, 5/10)).
-- **Semaine 9 (introduction)** : nouveau bloc construit à partir du point de fin de bloc (maxima estimés, résultats de test, tolérance) ; phase « introduction » : séances servies telles que le programme les écrit (× 5) ; douleur qui dure ou qui revient (épaule, 16 séances à 3/10 ou plus) : mouvements qui la provoquent retirés, consulter un médecin ou un kiné, reprise après deux semaines à 2/10 au plus (× 3) ; bilan du jour bas (2/5) (× 2) ; bilan du jour bas (1/5) ; nuit courte (× 2) ; exercice remplacé sur 4 exercices (douleur signalée (épaule, 5/10)) ; exercice retiré sur 3 exercices (douleur signalée (épaule, 5/10)) ; séries retirées sur 6 exercices (−1 série(s)) ; charges réduites — Squat de compétition (bilan du jour bas (1/5), nuit courte) ; séries retirées — Traction pronation (−5 série(s)) ; séries retirées — Traction pronation (bilan du jour bas (2/5), nuit courte).
-- **Semaine 10 (construction (volume))** : bilan du jour bas (2/5) (× 2) ; Rotation externe à l'élastique : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; bilan du jour bas (1/5) ; nuit courte ; échéance proche : décisions prudentes, pas de hausse au-delà du programme ; charges réduites — Squat de compétition (bilan du jour bas (2/5)) ; séries retirées — Pompe inclinée (mains surélevées), Squat de compétition (bilan du jour bas (1/5), nuit courte) ; charges réduites — Squat de compétition (bilan du jour bas (1/5), nuit courte).
-- **Semaine 11 (construction (volume))** : échéance proche : décisions prudentes, pas de hausse au-delà du programme (× 5) ; bilan du jour bas (2/5) ; nuit courte ; Traction pronation : séries arrêtées en cours de séance (arrêt des séries : répétitions en baisse, dernières séries plus dures que prévu) ; séries retirées — Pompe inclinée (mains surélevées) (bilan du jour bas (2/5), nuit courte).
+- **Semaine 9 (introduction)** : nouveau bloc construit à partir du point de fin de bloc (maxima estimés, résultats de test, tolérance) ; phase « introduction » : séances servies telles que le programme les écrit (× 5) ; douleur qui dure ou qui revient (épaule, 16 séances à 3/10 ou plus) : mouvements qui la provoquent retirés, consulter un médecin ou un kiné, reprise après deux semaines à 2/10 au plus (× 3) ; bilan du jour bas (2/5) (× 2) ; bilan du jour bas (1/5) ; nuit courte (× 2) ; exercice remplacé sur 4 exercices (douleur signalée (épaule, 5/10)) ; exercice retiré sur 3 exercices (douleur signalée (épaule, 5/10)) ; séries retirées sur 6 exercices (−1 série(s)) ; charges réduites — Squat de compétition (bilan du jour bas (1/5), nuit courte) ; séries retirées — Traction pronation (−2 série(s)).
+- **Semaine 10 (construction (volume))** : bilan du jour bas (2/5) (× 2) ; Rotation externe à l'élastique : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; Traction chest-to-bar : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; bilan du jour bas (1/5) ; nuit courte ; échéance proche : décisions prudentes, pas de hausse au-delà du programme ; charges réduites — Squat de compétition (bilan du jour bas (2/5)) ; séries retirées — Pompe inclinée (mains surélevées), Squat de compétition (bilan du jour bas (1/5), nuit courte) ; charges réduites — Squat de compétition (bilan du jour bas (1/5), nuit courte).
+- **Semaine 11 (construction (volume))** : échéance proche : décisions prudentes, pas de hausse au-delà du programme (× 5) ; bilan du jour bas (2/5) ; nuit courte ; Traction chest-to-bar : répétitions recalées sur le maximum mesuré (2 de moins par série que le programme) ; séries retirées — Pompe inclinée (mains surélevées) (bilan du jour bas (2/5), nuit courte).
 - **Semaine 12 (allègement)** : phase « allègement » : séances servies telles que le programme les écrit (× 5) ; échéance proche : décisions prudentes, pas de hausse au-delà du programme (× 5) ; Traction pronation : répétitions recalées sur le maximum mesuré (2 de moins par série que le programme) ; bilan du jour bas (2/5) (× 2) ; nuit courte ; charges réduites — Squat de compétition (bilan du jour bas (2/5), nuit courte) ; charges réduites — Squat de compétition (bilan du jour bas (2/5)).
 - **Semaine 13 (introduction)** : nouveau bloc construit à partir du point de fin de bloc (maxima estimés, résultats de test, tolérance) ; phase « introduction » : séances servies telles que le programme les écrit (× 5) ; bilan du jour bas (2/5) ; charges réduites — Squat de compétition, Rotation externe à la poulie coude au corps (bilan du jour bas (2/5)).
 - **Semaine 15 (construction (volume))** : bilan du jour bas (2/5) (× 2) ; charges réduites sur 6 exercices (bilan du jour bas (2/5)).

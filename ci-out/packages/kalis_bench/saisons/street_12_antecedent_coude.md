@@ -27,16 +27,15 @@ Chaque bloc est écrit par le moteur de création au moment où il commence, d'a
 | --- | --- | --- | --- | --- |
 | 1 | 1 à 6 | construction (volume) | introduction, construction (volume), construction (volume), construction (volume), construction (volume), allègement | le profil de départ |
 | 2 | 7 à 12 | réalisation (spécifique à l'objectif) | réalisation (spécifique à l'objectif), réalisation (spécifique à l'objectif), réalisation (spécifique à l'objectif), réalisation (spécifique à l'objectif), affûtage, test | les tests du bloc 1 (Dips lesté de compétition : 3 × +23,75 kg) et son point de fin de bloc |
-| 3 | 13 à 16 | construction (volume) | construction (volume), construction (volume), construction (volume), construction (volume) | les tests du bloc 2 (Dips lesté de compétition : 1 × +41,25 kg) et son point de fin de bloc |
+| 3 | 13 à 16 | construction (volume) | construction (volume), construction (volume), construction (volume), construction (volume) | les tests du bloc 2 (Dips lesté de compétition : 3 × +23,75 kg) et son point de fin de bloc |
 
 ## Bilan
 
-- Séances faites : 63 sur 64 (9 ajustées le jour même).
-- Échecs non voulus (hors tests et tentatives) : 0,1 % des séries de travail.
-- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 1,18 répétition en réserve (sur les 63 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 10 %.
-- Plus forte hausse de charge totale d'un mouvement principal d'une séance à la suivante, à schéma égal : 13,4 % ; hausses de plus de 10 % faites de plusieurs crans : 2.
-- Progression réelle moyenne des mouvements suivis : 0,252 % par semaine.
-- Tentatives de maximum : 3 réussies sur 3 ; ouvertures réussies : 100 %.
+- Séances faites : 63 sur 64 (13 ajustées le jour même).
+- Échecs non voulus (hors tests et tentatives) : 0 % des séries de travail.
+- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 1,1 répétition en réserve (sur les 63 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 9,3 %.
+- Plus forte hausse de charge totale d'un mouvement principal d'une séance à la suivante, à schéma égal : 11,9 % ; hausses de plus de 10 % faites de plusieurs crans : 2.
+- Progression réelle moyenne des mouvements suivis : 0,247 % par semaine.
 - Douleur : 0 hausse(s) de charge sur une zone douloureuse signalée.
 
 ## Mouvements suivis, semaine par semaine
@@ -58,11 +57,11 @@ Pour chaque mouvement, la séance la plus lourde de la semaine : ce que le progr
 | 9 | réalisation (spécifique à l'objectif) | 4 × 2 à 89 %, série de tête puis séries allégées | 2 à 23,75 kg puis 2-2-2 à 17,5 kg | 2 à 23,75 kg puis 2-2-1 (arrêt avant la cible) à 17,5 kg | 2,5 → 4,1 ; suivantes 4 → 5,5 | 117 (lest 38) / 122 (lest 44) | charge non augmentée (bilan du jour bas) |
 | 10 | réalisation (spécifique à l'objectif) | 5 × 3 à 81 % | 3-3-3-3-3 à 22,5 kg | 3-3-3-3-3 à 22,5 kg | 3 → 5,2 ; suivantes 3 → 3,7 | 123 (lest 44) / 123 (lest 45) | — |
 | 11 | affûtage | 2 × 2 à 86 % | 2-2 à 25 kg | 2-2 à 25 kg | 4 → 4,3 ; suivantes 4 → 3,7 | 119 (lest 40) / 124 (lest 45) | charge non augmentée (hausse plafonnée d'une séance à la suivante) |
-| 12 | test | 3 × 1 à 91 %, test | 1 à 35 kg puis 1 à 40 kg puis 1 à 42,5 kg | 1 à 35 kg puis 1 à 38,75 kg puis 1 à 41,25 kg | test | 123 (lest 44) / 125 (lest 46) | ouverture à 90,6 % du maximum estimé ; barre suivante choisie pour 81 % de chances de réussite ; barre suivante choisie pour 68 % de chances de réussite |
-| 13 | construction (volume) | 2 × 6 à 75 % | 6-(6 à 12) à 16,25 kg | 6-7 à 16,25 kg | 3 → 3,8 ; suivantes 1,5 → 2,1 | 121 (lest 42) / 124 (lest 45) | série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète |
-| 14 | construction (volume) | 3 × 3 à 75 %, série de tête puis séries allégées | 3 à 17,5 kg puis 3-3 à 12,5 kg | 3 à 17,5 kg puis 3-3 à 12,5 kg | 5+ → 7,3 ; suivantes 5+ → 8,1 | 125 (lest 46) / 125 (lest 46) | charge non augmentée (hausse plafonnée d'une séance à la suivante) |
-| 15 | construction (volume) | 2 × 6 à 77 % | 6-(6 à 12) à 16,25 kg | 6-7 à 16,25 kg | 3 → 4,4 ; suivantes 1,5 → 2,1 | 124 (lest 45) / 125 (lest 47) | série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète |
-| 16 | construction (volume) | 3 × 3 à 80 %, série de tête puis séries allégées | 3 à 17,5 kg puis 3-3 à 8,75 kg | 3 à 17,5 kg puis 3-3 à 8,75 kg | 5+ → 5,9 ; suivantes 5+ → 8,1 | 119 (lest 41) / 127 (lest 48) | charge non augmentée (bilan du jour bas) |
+| 12 | test | 3 × 1 à 88 %, série de tête puis séries allégées | 1 à 25 kg puis 2-2 à 18,75 kg | 1 à 25 kg puis 2-2 à 18,75 kg | 5+ → 5,6 ; suivantes 5+ → 6,1 | 120 (lest 42) / 124 (lest 46) | charge non augmentée (hausse plafonnée d'une séance à la suivante) |
+| 13 | construction (volume) | 2 × 6 à 74 % | 6-(6 à 12) à 16,25 kg | 6 à 16,25 kg puis 7 à 13,75 kg | 3 → 3,3 ; suivantes 1,5 → 2,4 | 119 (lest 41) / 124 (lest 46) | série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète ; allégé pour garder la marge prévue (au moins 3 en réserve) ; dernières séries plus dures que prévu |
+| 14 | construction (volume) | 3 × 3 à 74 %, série de tête puis séries allégées | 3 à 16,25 kg puis 3-3 à 11,25 kg | 3 à 16,25 kg puis 3-3 à 11,25 kg | 5+ → 7,2 ; suivantes 5+ → 8 | 123 (lest 44) / 125 (lest 46) | charge non augmentée (hausse plafonnée d'une séance à la suivante) |
+| 15 | construction (volume) | 2 × 6 à 77 % | 6-(6 à 12) à 13,75 kg | 6-7 à 13,75 kg | 4 → 5 ; suivantes 1,5 → 2,7 | 122 (lest 44) / 125 (lest 46) | série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète ; charge non augmentée (hausse plafonnée d'une séance à la suivante) |
+| 16 | construction (volume) | 3 × 3 à 79 %, série de tête puis séries allégées | 3 à 16,25 kg puis 3-3 à 7,5 kg | 3 à 16,25 kg puis 3-3 à 7,5 kg | 5+ → 6,3 ; suivantes 5+ → 8,5 | 119 (lest 40) / 126 (lest 48) | charge non augmentée (bilan du jour bas) |
 
 Athlète simulé, maximum réel hors fatigue : 120 (lest 41) au départ (le record déclaré au profil peut être plus haut ou plus ancien), 124 (lest 46) en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
 
@@ -79,17 +78,11 @@ Athlète simulé, maximum réel hors fatigue : 120 (lest 41) au départ (le reco
 - **Semaine 9 (réalisation (spécifique à l'objectif))** : Squat de compétition : séries arrêtées en cours de séance (allégé pour garder la marge prévue (au moins 3 en réserve), dernières séries plus dures que prévu) ; bilan du jour bas (2/5) ; charges réduites sur 3 exercices (bilan du jour bas (2/5)).
 - **Semaine 10 (réalisation (spécifique à l'objectif))** : temps réduit (45 min au lieu de 53) ; Relevé de jambes tendues suspendu : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; Squat de compétition : séries arrêtées en cours de séance (allégé pour garder la marge prévue (au moins 3 en réserve), dernières séries plus dures que prévu) ; bilan du jour bas (2/5) ; exercice retiré — Face pull à l'élastique (temps réduit (45 min au lieu de 53)) ; séries retirées — Relevé de jambes tendues suspendu, Soulevé de terre roumain à la barre (temps réduit (45 min au lieu de 53)) ; charges réduites sur 3 exercices (bilan du jour bas (2/5)).
 - **Semaine 11 (affûtage)** : phase « affûtage » : séances servies telles que le programme les écrit (× 4) ; affûtage : aucun volume ajouté, intensité gardée (× 4).
-- **Semaine 12 (test)** : phase « test » : séances servies telles que le programme les écrit (× 4) ; résultat de test reporté au profil : Dips lesté de compétition 1 × 41,25 kg.
-- **Semaine 13 (construction (volume))** : nouveau bloc construit à partir du point de fin de bloc (maxima estimés, résultats de test, tolérance).
-- **Semaine 14 (construction (volume))** : Traction prise neutre : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; Soulevé de terre roumain à la barre : séries arrêtées en cours de séance (allégé pour garder la marge prévue (au moins 2 en réserve), dernières séries plus dures que prévu).
-- **Semaine 15 (construction (volume))** : bilan du jour bas (1/5) ; Traction prise neutre : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; bilan du jour bas (2/5) ; Relevé de jambes tendues suspendu : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; séries retirées — Wrist curl à la barre (bilan du jour bas (1/5)) ; charges réduites sur 3 exercices (bilan du jour bas (1/5)) ; charges réduites — Fente arrière aux haltères, Rotation externe à la poulie coude au corps (bilan du jour bas (2/5)).
+- **Semaine 12 (test)** : phase « test » : séances servies telles que le programme les écrit (× 4) ; bilan du jour bas (2/5) (× 2) ; nuit courte (× 2) ; charges réduites sur 5 exercices (bilan du jour bas (2/5), nuit courte) ; exercice retiré — Dips lesté de compétition (bilan du jour bas (2/5), nuit courte).
+- **Semaine 13 (construction (volume))** : nouveau bloc construit à partir du point de fin de bloc (maxima estimés, résultats de test, tolérance) ; bilan du jour bas (2/5) ; Traction prise neutre : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; charges réduites sur 5 exercices (bilan du jour bas (2/5)).
+- **Semaine 14 (construction (volume))** : bilan du jour bas (2/5) ; Traction prise neutre : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; Soulevé de terre roumain à la barre : séries arrêtées en cours de séance (allégé pour garder la marge prévue (au moins 2 en réserve), dernières séries plus dures que prévu) ; charges réduites sur 3 exercices (bilan du jour bas (2/5)).
+- **Semaine 15 (construction (volume))** : Soulevé de terre roumain à la barre : séries arrêtées en cours de séance (allégé pour garder la marge prévue (au moins 2 en réserve), dernières séries plus dures que prévu) ; bilan du jour bas (1/5) ; Traction prise neutre : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; bilan du jour bas (2/5) ; Relevé de jambes tendues suspendu : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; séries retirées — Wrist curl à la barre (bilan du jour bas (1/5)) ; charges réduites sur 3 exercices (bilan du jour bas (1/5)) ; charges réduites — Fente arrière aux haltères, Rotation externe à la poulie coude au corps (bilan du jour bas (2/5)).
 - **Semaine 16 (construction (volume))** : 1 séance(s) manquée(s) sur 4 ; Traction prise neutre : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; bilan du jour bas (2/5) ; nuit courte ; séries retirées — Wrist curl à la barre (bilan du jour bas (2/5), nuit courte) ; charges réduites sur 3 exercices (bilan du jour bas (2/5), nuit courte).
-
-## Tentatives de maximum
-
-| Sem. | Mouvement | Barres (lest) | Maximum réel du jour (lest) | Meilleure barre / maximum du jour |
-| --- | --- | --- | --- | --- |
-| 12 | Dips lesté de compétition | 35 réussie, 38,75 réussie, 41,25 réussie | 44,4 | 97,4 % |
 
 ## Même programme, autres athlètes simulés
 
@@ -97,6 +90,6 @@ Le même profil et le même moteur, avec d'autres hypothèses sur l'athlète ré
 
 | Athlète simulé | Échecs non voulus | Écart d'effort | Séries ≥ 2 rép. plus dures | Plus forte hausse à schéma égal | Progression par semaine | Tentatives réussies | Échéance / maximum du jour | Hausses sur zone douloureuse |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| modèle 2 (courbe linéaire, notes d'effort entières et plafonnées, récupération lente entre séries, tendons à adaptation lente) | 0,1 % | 1,18 | 0 % | 13,4 % | 0,252 % | 3/3 | — | 0 |
-| modèle 1 (courbe charge-répétitions à plateau, notes d'effort continues) | 0,1 % | 1,01 | 0,2 % | 9,6 % | 0,235 % | 3/3 | — | 0 |
-| modèle 3 (courbe en puissance, forme masquée par la fatigue, mauvais jours marqués, désentraînement rapide) | 1,2 % | 2,27 | 1,5 % | 13,7 % | 0,178 % | 2/3 | — | 0 |
+| modèle 2 (courbe linéaire, notes d'effort entières et plafonnées, récupération lente entre séries, tendons à adaptation lente) | 0 % | 1,1 | 0 % | 11,9 % | 0,247 % | — | — | 0 |
+| modèle 1 (courbe charge-répétitions à plateau, notes d'effort continues) | 0,1 % | 1 | 0,2 % | 6,9 % | 0,233 % | 3/3 | — | 0 |
+| modèle 3 (courbe en puissance, forme masquée par la fatigue, mauvais jours marqués, désentraînement rapide) | 1,2 % | 2,27 | 1,5 % | 13,7 % | 0,177 % | 2/3 | — | 0 |

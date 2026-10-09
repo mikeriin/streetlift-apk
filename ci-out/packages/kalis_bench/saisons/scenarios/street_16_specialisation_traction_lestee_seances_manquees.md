@@ -35,7 +35,7 @@ Chaque bloc est écrit par le moteur de création au moment où il commence, d'a
 
 - Séances faites : 53 sur 64 (10 ajustées le jour même).
 - Échecs non voulus (hors tests et tentatives) : 0,3 % des séries de travail.
-- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 0,89 répétition en réserve (sur les 71 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 7,3 %.
+- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 0,89 répétition en réserve (sur les 71 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 7,5 %.
 - Plus forte hausse de charge totale d'un mouvement principal d'une séance à la suivante, à schéma égal : 5,4 % ; hausses de plus de 10 % faites de plusieurs crans : 0.
 - Progression réelle moyenne des mouvements suivis : 0,103 % par semaine.
 - Tentatives de maximum : 3 réussies sur 3 ; ouvertures réussies : 100 %.
@@ -61,7 +61,7 @@ Pour chaque mouvement, la séance la plus lourde de la semaine : ce que le progr
 | 10 | échéance | 3 × 1 à 91 %, test | 1 à 41,25 kg puis 1 à 46,25 kg puis 1 à 48,75 kg | 1 à 41,25 kg puis 1 à 45 kg puis 1 à 47,5 kg | test | 121 (lest 48) / 124 (lest 51) | ouverture à 89,5 % du maximum estimé ; barre suivante choisie pour 82 % de chances de réussite ; tentatives prudentes (uncertainty) ; barre suivante choisie pour 72 % de chances de réussite |
 | 11 | transition (récupération) | 3 × 5 à 64 % | 5-5-5 à 7,5 kg | 5-5-5 à 7,5 kg | 5+ → 11,3 ; suivantes 5+ → 11,1 | 124 (lest 51) / 124 (lest 52) | — |
 | 12 | introduction | 3 × 5 à 67 %, série de tête puis séries allégées | 5 à 11,25 kg puis 5-5 à 3,75 kg | 5 à 11,25 kg puis 5-5 à 3,75 kg | 5+ → 11,2 ; suivantes 5+ → 13,5 | 129 (lest 56) / 125 (lest 52) | — |
-| 13 | construction (volume) | 5 × 4 à 72 %, série de tête puis séries allégées | (4 à 7) à 17,5 kg puis 4-4-4-4 à 12,5 kg | 6 à 17,5 kg puis 4-4-4-4 à 12,5 kg | 4 → 6,6 ; suivantes 5+ → 10 | 123 (lest 50) / 125 (lest 52) | série repère : une série ouverte (au ressenti, 4 en réserve) pour mesurer où en est l'athlète ; charge non augmentée (hausse plafonnée d'une séance à la suivante) |
+| 13 | construction (volume) | 5 × 4 à 72 %, série de tête puis séries allégées | (4 à 7) à 12,5 kg puis 4-4-4-4 à 7,5 kg | 7 à 12,5 kg puis 4-4-4-4 à 7,5 kg | 4 → 7,3 ; suivantes 5+ → 11,8 | 123 (lest 50) / 125 (lest 52) | série repère : une série ouverte (au ressenti, 4 en réserve) pour mesurer où en est l'athlète ; charge non augmentée (hausse plafonnée d'une séance à la suivante) |
 | 14 | allègement | 1 × 3 à 88 %, test | 3 à 35 kg | 3 à 35 kg | test | 127 (lest 54) / 123 (lest 50) | — |
 | 15 | construction (volume) | 5 × 4 à 81 %, série de tête puis séries allégées | 4 à 28,75 kg puis 4-4-4-4 à 22,5 kg | 4 à 28,75 kg puis 4-4-4-4 à 22,5 kg | 3 → 4,6 ; suivantes 5+ → 6,4 | 123 (lest 50) / 124 (lest 51) | — |
 | 16 | construction (volume) | 5 × 4 à 84 %, série de tête puis séries allégées | 4 à 32,5 kg puis 4-4-4-4 à 26,25 kg | 4 à 32,5 kg puis 4-4-4-4 à 26,25 kg | 2 → 4,4 ; suivantes 3,5 → 6,3 | 127 (lest 54) / 126 (lest 54) | — |

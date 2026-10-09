@@ -36,9 +36,9 @@ Chaque bloc est écrit par le moteur de création au moment où il commence, d'a
 
 - Séances faites : 79 sur 80 (25 ajustées le jour même).
 - Échecs non voulus (hors tests et tentatives) : 0 % des séries de travail.
-- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 0,97 répétition en réserve (sur les 37 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 12,7 %.
+- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 1,02 répétition en réserve (sur les 36 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 13,2 %.
 - Plus forte hausse de charge totale d'un mouvement principal d'une séance à la suivante, à schéma égal : 3,9 % ; hausses de plus de 10 % faites de plusieurs crans : 0.
-- Progression réelle moyenne des mouvements suivis : -0,04 % par semaine.
+- Progression réelle moyenne des mouvements suivis : -0,041 % par semaine.
 - Douleur : 0 hausse(s) de charge sur une zone douloureuse signalée.
 
 ## Mouvements suivis, semaine par semaine
@@ -56,7 +56,7 @@ Pour chaque mouvement, la séance la plus lourde de la semaine : ce que le progr
 | 5 | réalisation (spécifique à l'objectif) | 1 × 8 (80 % du maximum testé) | 8 | 8 | 3 → 2,9 | 11 / 12 | — |
 | 13 | introduction | 4 × 3 (30 % du maximum testé), départs au chrono | 3-3-3-3 | 3-3-3-3 | 5+ → 7,6 ; suivantes 5+ → 6,8 | 11 / 11 | charge non augmentée (pain_return) ; douleur signalée (épaule, 0/10) |
 | 14 | construction (volume) | 4 × 3 (30 % du maximum testé), départs au chrono | 3-3-3-3 | 3-3-3-3 | 5+ → 7,7 ; suivantes 5+ → 6,6 | 11 / 11 | charge non augmentée (pain_return) |
-| 15 | construction (volume) | 4 × 3 (30 % du maximum testé), départs au chrono | 3-3-3-3 | 3-3-3-3 | 5+ → 7,7 ; suivantes 5+ → 6,8 | 11 / 11 | charge non augmentée (pain_return) |
+| 15 | construction (volume) | 4 × 3 (30 % du maximum testé), départs au chrono | 3-3-3-3 | 3-3-3-3 | 5+ → 7,8 ; suivantes 5+ → 6,8 | 11 / 11 | charge non augmentée (pain_return) |
 | 16 | allègement | 3 × 3 (30 % du maximum testé), départs au chrono | 3-3-3 | 3-3-3 | 5+ → 7,4 ; suivantes 5+ → 6,7 | 10 / 11 | charge non augmentée (pain_return) |
 
 Athlète simulé, maximum réel hors fatigue : 11 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 11 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
@@ -71,9 +71,9 @@ Athlète simulé, maximum réel hors fatigue : 11 au départ (le record déclar�
 | 4 | allègement | 1 × 29 à 32, test | (26 à 32) | 25 (échec) | test | 25 / 26 | — |
 | 5 | réalisation (spécifique à l'objectif) | 1 × 23 (92 % du maximum testé) | 23 | 23 | 2 → 2 | 25 / 26 | — |
 | 13 | introduction | 2 × 21 (84 % du maximum testé), série de tête puis séries allégées | 21-16 | 16 (arrêt avant la cible)-11 | 5+ → 8,6 ; suivantes 5+ → 13 | 25 / 30 | douleur signalée (épaule, 0/10) ; allégé pour garder la marge prévue (au moins 4 en réserve) |
-| 14 | construction (volume) | 2 × 22 (88 % du maximum testé), série de tête puis séries allégées | 12-12 | 12-12 | 5+ → 12,5 ; suivantes 5+ → 11,9 | 25 / 30 | allégé pour garder la marge prévue (au moins 3 en réserve) |
-| 15 | construction (volume) | 3 × 22 (88 % du maximum testé), série de tête puis séries allégées | 12-12-12 | 12-12-12 | 5+ → 12,3 ; suivantes 5+ → 11,2 | 24 / 30 | allégé pour garder la marge prévue (au moins 3 en réserve) |
-| 16 | allègement | 2 × 15 (60 % du maximum testé) | 12-12 | 12-12 | 5+ → 13 ; suivantes 5+ → 12,3 | 25 / 30 | répétitions recalées sur le maximum mesuré (3 de moins par série que le programme) |
+| 14 | construction (volume) | 2 × 22 (88 % du maximum testé), série de tête puis séries allégées | 12-12 | 12-12 | 5+ → 12,6 ; suivantes 5+ → 12 | 25 / 30 | allégé pour garder la marge prévue (au moins 3 en réserve) |
+| 15 | construction (volume) | 2 × 22 (88 % du maximum testé), série de tête puis séries allégées | 12-12 | 12-12 | 5+ → 12,3 ; suivantes 5+ → 11,5 | 24 / 30 | allégé pour garder la marge prévue (au moins 3 en réserve) |
+| 16 | allègement | 2 × 15 (60 % du maximum testé) | 12-12 | 12-12 | 5+ → 13 ; suivantes 5+ → 12,4 | 25 / 30 | répétitions recalées sur le maximum mesuré (3 de moins par série que le programme) |
 
 Athlète simulé, maximum réel hors fatigue : 26 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 25 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
 
@@ -87,8 +87,8 @@ Athlète simulé, maximum réel hors fatigue : 26 au départ (le record déclar�
 | 4 | allègement | 1 × 52 à 56, test | (38 à 56) | 45 | test | 46 / 44 | — |
 | 5 | réalisation (spécifique à l'objectif) | 1 × 41 (91 % du maximum testé) | 37 | 37 | 4 → 7,5 | 44 / 41 | répétitions recalées sur le maximum mesuré (4 de moins par série que le programme) |
 | 13 | introduction | 2 × 40 (89 % du maximum testé), série de tête puis séries allégées | 37-29 | 37-29 | 5+ → 8,4 ; suivantes 5+ → 14,9 | 45 / 43 | charge non augmentée (pain_return) ; allégé pour garder la marge prévue (au moins 4 en réserve) ; douleur signalée (épaule, 0/10) |
-| 14 | construction (volume) | 2 × 40 (89 % du maximum testé), série de tête puis séries allégées | 39-29 | 39-29 | 4 → 5,2 ; suivantes 5+ → 13,5 | 44 / 43 | charge non augmentée (pain_return) ; répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) |
-| 15 | construction (volume) | 2 × 40 (89 % du maximum testé), série de tête puis séries allégées | 37-31 | 36 (arrêt avant la cible)-29 | 4,5 → 6,7 ; suivantes 5+ → 12,2 | 43 / 43 | charge non augmentée (pain_return) ; répétitions recalées sur le maximum mesuré (3 de moins par série que le programme) ; dernières séries plus dures que prévu |
+| 14 | construction (volume) | 2 × 40 (89 % du maximum testé), série de tête puis séries allégées | 39-29 | 39-29 | 4 → 5,3 ; suivantes 5+ → 13,5 | 44 / 43 | charge non augmentée (pain_return) ; répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) |
+| 15 | construction (volume) | 2 × 40 (89 % du maximum testé), série de tête puis séries allégées | 37-31 | 36 (arrêt avant la cible)-29 | 4,5 → 6,8 ; suivantes 5+ → 12,3 | 43 / 43 | charge non augmentée (pain_return) ; répétitions recalées sur le maximum mesuré (3 de moins par série que le programme) ; dernières séries plus dures que prévu |
 | 16 | allègement | 1 × 27 (60 % du maximum testé) | 27 | 27 | 5+ → 15,6 | 43 / 43 | charge non augmentée (pain_return) |
 
 Athlète simulé, maximum réel hors fatigue : 46 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 44 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.

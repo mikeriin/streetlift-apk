@@ -59,7 +59,7 @@ Femme de 31 ans, 60 kg, deux ans de street workout et de course. 8 tractions, 14
 - Progression : quand toutes les séries atteignent le haut de la plage avec la réserve prévue, passe à la variante ou à la charge suivante et repars du bas de la plage.
 - Séries au poids du corps : les répétitions sont calées sur ton dernier maximum mesuré (ton record, puis chaque test) — jamais sur un progrès supposé. Si toutes les séries passent avec au moins une répétition de réserve de plus que prévu, ajoute une répétition par série la semaine suivante (sans dépasser ton maximum − 2) ; si la réserve prévue ne tient pas, garde les chiffres de la semaine précédente ; après un test, série de tête = résultat − 2.
 - Gainage et tenues d'appoint : +5 s par tenue quand toutes les tenues sont propres.
-- Progression : la sortie longue dépasse de 10 % au plus la plus longue course des quatre dernières semaines (après une semaine allégée ou de test, elle reprend sa durée d'avant, sans la dépasser de plus de 10 %).
+- Progression : la sortie longue dépasse de 10 % au plus la plus longue course des quatre dernières semaines (après une semaine allégée ou de test, elle reprend sa durée d'avant, sans la dépasser de plus de 10 %). Après une course, elle repart à 70 % de la plus longue sortie, puis monte de 10 % au plus par semaine.
 - Effort visé : les « répétitions en réserve » sont celles que tu pourrais encore faire proprement à la fin de la série ; s'il t'en reste moins que prévu, allège ou arrête la série.
 
 ## Semaine 1 — introduction (bloc 1)

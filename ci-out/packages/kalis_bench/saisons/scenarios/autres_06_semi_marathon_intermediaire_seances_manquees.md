@@ -28,7 +28,7 @@ Chaque bloc est écrit par le moteur de création au moment où il commence, d'a
 
 ## Bilan
 
-- Séances faites : 51 sur 64 (12 ajustées le jour même).
+- Séances faites : 51 sur 64 (23 ajustées le jour même).
 - Échecs non voulus (hors tests et tentatives) : 0 % des séries de travail.
 - Écart moyen entre l'effort affiché par le moteur et l'effort réel : 1,34 répétition en réserve (sur les 82 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 9,1 %.
 - Plus forte hausse de charge totale d'un mouvement principal d'une séance à la suivante, à schéma égal : 0 % ; hausses de plus de 10 % faites de plusieurs crans : 0.
@@ -50,7 +50,7 @@ Pour chaque mouvement, la séance la plus lourde de la semaine : ce que le progr
 - **Semaine 10 (réalisation (spécifique à l'objectif))** : 1 séance(s) manquée(s) sur 4 ; échéance proche : décisions prudentes, pas de hausse au-delà du programme (× 2).
 - **Semaine 11 (affûtage)** : 1 séance(s) manquée(s) sur 4 ; phase « affûtage » : séances servies telles que le programme les écrit (× 3) ; affûtage : aucun volume ajouté, intensité gardée (× 3) ; échéance proche : décisions prudentes, pas de hausse au-delà du programme (× 3).
 - **Semaine 12 (allègement)** : phase « allègement » : séances servies telles que le programme les écrit (× 4) ; échéance proche : décisions prudentes, pas de hausse au-delà du programme (× 3).
-- **Semaine 13 (transition (récupération))** : nouveau bloc construit à partir du point de fin de bloc (maxima estimés, résultats de test, tolérance) ; 1 séance(s) manquée(s) sur 4 ; phase « transition (récupération) » : séances servies telles que le programme les écrit (× 3) ; Fente arrière au poids du corps : répétitions recalées sur le maximum mesuré (3 de moins par série que le programme).
+- **Semaine 13 (transition (récupération))** : nouveau bloc construit à partir du point de fin de bloc (maxima estimés, résultats de test, tolérance) ; 1 séance(s) manquée(s) sur 4 ; phase « transition (récupération) » : séances servies telles que le programme les écrit (× 3) ; Fente arrière au poids du corps : répétitions recalées sur le maximum mesuré (3 de moins par série que le programme) ; séries retirées — Footing en endurance fondamentale, Fractionné long 1000 m.
 - **Semaine 14 (introduction)** : 1 séance(s) manquée(s) sur 4 ; phase « introduction » : séances servies telles que le programme les écrit (× 3) ; Fente arrière au poids du corps : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; séries retirées — Footing en endurance fondamentale, Fractionné long 1000 m.
-- **Semaine 15 (construction (volume))** : Pont fessier unilatéral : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; bilan du jour bas (2/5) ; exercice retiré — Course à allure seuil (tempo run).
-- **Semaine 16 (construction (volume))** : 1 séance(s) manquée(s) sur 4 ; Pont fessier unilatéral : répétitions recalées sur le maximum mesuré (2 de moins par série que le programme).
+- **Semaine 15 (construction (volume))** : Pont fessier unilatéral : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; bilan du jour bas (2/5) ; séries retirées sur 3 exercices ; exercice retiré — Course à allure seuil (tempo run).
+- **Semaine 16 (construction (volume))** : 1 séance(s) manquée(s) sur 4 ; Pont fessier unilatéral : répétitions recalées sur le maximum mesuré (2 de moins par série que le programme) ; séries retirées sur 3 exercices.
