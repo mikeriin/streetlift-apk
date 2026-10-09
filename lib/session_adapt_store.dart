@@ -1738,10 +1738,7 @@ extension SessionAdaptStore on AppStore {
   /// CI1f : technique à mini-séries de la ligne [i] de [it] (null : série
   /// d'une traite : autre technique, montée, test, ou ligne avant la
   /// dernière quand la technique ne vaut que pour elle).
-  static kc.SetTechniqueKind? miniSetKindOf(
-    kc.ExercisePrescription it,
-    int i,
-  ) {
+  static kc.SetTechniqueKind? miniSetKindOf(kc.ExercisePrescription it, int i) {
     final t = it.technique;
     if (t == null || !isMiniSetTechnique(t.kind)) return null;
     if (it.kind == kc.SetKind.test) return null;
@@ -1996,9 +1993,7 @@ extension SessionAdaptStore on AppStore {
             ? null
             : adviceGoal(it, i, a.advice[e.id] ?? const []);
         final low = g?.low;
-        final kind = it == null || total == null
-            ? null
-            : miniSetKindOf(it, i);
+        final kind = it == null || total == null ? null : miniSetKindOf(it, i);
         rows.add((
           s.completedAt ?? '',
           rows.length,
@@ -2025,9 +2020,7 @@ extension SessionAdaptStore on AppStore {
             target: g?.toTarget(),
             technique:
                 kind ??
-                (written && total == null
-                    ? kc.SetTechniqueKind.density
-                    : null),
+                (written && total == null ? kc.SetTechniqueKind.density : null),
             parts: total == null
                 ? null
                 : [

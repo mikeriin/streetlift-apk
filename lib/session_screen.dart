@@ -1384,14 +1384,11 @@ class SessionExercisePageState extends State<SessionExercisePage> {
           names: [for (final e in widget.exs) store.splitName(e.name).$1],
           result: widget.readOnly
               ? widget.history!.groups[g.groupId]
-              : store
-                    .sessionLog(widget.week.n, widget.day.j)
-                    .groups[g.groupId],
+              : store.sessionLog(widget.week.n, widget.day.j).groups[g.groupId],
           readOnly: widget.readOnly,
           timer: widget.timer,
           onResult: (r) {
-            store.sessionLog(widget.week.n, widget.day.j).groups[g.groupId] =
-                r;
+            store.sessionLog(widget.week.n, widget.day.j).groups[g.groupId] = r;
             store.saveLogs(affectsProgression: false);
             setState(() {});
           },
@@ -1643,7 +1640,12 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                 if (!readOnly)
                   if (store.referenceEstimateText(
                         widget.adapt && ex.engine
-                            ? (store.programExerciseOf(widget.week.n, widget.day.j, ex) ?? ex)
+                            ? (store.programExerciseOf(
+                                    widget.week.n,
+                                    widget.day.j,
+                                    ex,
+                                  ) ??
+                                  ex)
                             : ex,
                       )
                       case final t?)
@@ -1695,7 +1697,10 @@ class SessionExercisePageState extends State<SessionExercisePage> {
             ),
           ),
           // ----- Chronos de mode -----
-          if (!readOnly && interval != null && ex.timer == null && _group == null)
+          if (!readOnly &&
+              interval != null &&
+              ex.timer == null &&
+              _group == null)
             _big(
               SL.bordeaux,
               Icons.timer,
@@ -1797,10 +1802,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                       )
                     : null,
               ),
-              if (!readOnly &&
-                  !log.sets[i].done &&
-                  widget.adapt &&
-                  ex.engine)
+              if (!readOnly && !log.sets[i].done && widget.adapt && ex.engine)
                 if (store.miniSetPlanFor(widget.week.n, widget.day.j, ex, i)
                     case final plan?)
                   _MiniSetStrip(
@@ -1813,11 +1815,8 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                       store.saveLogs(affectsProgression: false);
                       setState(() => epoch++);
                     },
-                    onIntra: (sec) => widget.timer.single(
-                      'INTRA',
-                      sec,
-                      prepare: false,
-                    ),
+                    onIntra: (sec) =>
+                        widget.timer.single('INTRA', sec, prepare: false),
                   ),
               if (flameSets && log.sets[i].done && !readOnly)
                 FlameTrack(
@@ -2434,8 +2433,7 @@ class _SetRowState extends State<_SetRow> {
 
 // -------------------------------- GROUPES --------------------------------
 
-String _mmss(int s) =>
-    '${s ~/ 60}:${(s % 60).toString().padLeft(2, '0')}';
+String _mmss(int s) => '${s ~/ 60}:${(s % 60).toString().padLeft(2, '0')}';
 
 String _minutes(int s) => s % 60 == 0 ? '${s ~/ 60}\u00A0min' : _mmss(s);
 
@@ -2567,7 +2565,8 @@ class _GroupCardState extends State<_GroupCard> {
       if (elapsed != null) 'elapsed': elapsed,
       'completed': switch (g.format) {
         kc.GroupFormat.amrap => true,
-        kc.GroupFormat.chipper => elapsed != null && (cap == null || elapsed <= cap),
+        kc.GroupFormat.chipper =>
+          elapsed != null && (cap == null || elapsed <= cap),
         kc.GroupFormat.roundsForTime =>
           rounds >= (planned ?? 1) &&
               (cap == null || elapsed == null || elapsed <= cap),
@@ -2612,7 +2611,9 @@ class _GroupCardState extends State<_GroupCard> {
   Widget _stepper(String label, int value, void Function(int) on, Key key) =>
       Row(
         children: [
-          Expanded(child: Text(label, style: TextStyle(color: SL.dim))),
+          Expanded(
+            child: Text(label, style: TextStyle(color: SL.dim)),
+          ),
           IconButton(
             tooltip: '$label : un de moins',
             icon: const Icon(Icons.remove, size: 20),
@@ -2671,10 +2672,8 @@ class _GroupCardState extends State<_GroupCard> {
             Padding(
               padding: const EdgeInsets.only(top: 4),
               child: Text(
-                [
-                  for (var i = 0; i < names.length; i++)
-                    '${i + 1}. ${names[i]}',
-                ].join('  ·  '),
+                [for (var i = 0; i < names.length; i++) '${i + 1}. ${names[i]}']
+                    .join('  ·  '),
                 style: TextStyle(color: SL.text, fontSize: 13),
               ),
             ),
@@ -2786,10 +2785,7 @@ class _MiniSetStripState extends State<_MiniSetStrip> {
   void _add() {
     final parts = [...?widget.entry.parts];
     parts.add(
-      SetPartEntry(
-        value,
-        restBefore: parts.isEmpty ? null : widget.plan.intra,
-      ),
+      SetPartEntry(value, restBefore: parts.isEmpty ? null : widget.plan.intra),
     );
     widget.entry.parts = parts;
     widget.entry.reps = '${widget.entry.partsTotal}';
@@ -2907,9 +2903,7 @@ class _MiniSetStripState extends State<_MiniSetStrip> {
                   IconButton(
                     tooltip: 'Une de moins',
                     icon: const Icon(Icons.remove, size: 20),
-                    onPressed: value > 0
-                        ? () => setState(() => value--)
-                        : null,
+                    onPressed: value > 0 ? () => setState(() => value--) : null,
                   ),
                   Text(
                     '$value$unit',

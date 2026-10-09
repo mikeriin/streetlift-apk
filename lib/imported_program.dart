@@ -617,8 +617,8 @@ extension ImportedProgramStore on AppStore {
           final g = it.group;
           if (g != null) {
             final prev = items.isEmpty ? null : items.last.groupId;
-            final joined = normalizeText(e.name).contains('enchain') &&
-                    prev != null
+            final joined =
+                normalizeText(e.name).contains('enchain') && prev != null
                 ? groups.where((x) => x.groupId == prev).firstOrNull
                 : null;
             if (joined != null && joined.format == g.format) {

@@ -49,7 +49,7 @@ void main() {
 
     test('version affichée : « dev6.10.0 » (CI1e)', () {
       expect(kAppVersion, 'dev$kVersion');
-      expect(kAppVersion, 'dev6.10.0');
+      expect(kAppVersion, 'dev6.11.0');
     });
 
     test('copie et suppression séparées par session', () async {

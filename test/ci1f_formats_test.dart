@@ -34,12 +34,18 @@ Future<void> _ownerAt(AppStore app, {int lastWeek = 13, int lastJ = 4}) async {
   expect(await app.importAll(jsonEncode(filled)), isTrue);
 }
 
+/// Profil d'exemple, avancé : `kalis_adapt` sert les myo-reps et les
+/// clusters à partir du niveau avancé (R2-P22).
 void _saveProfile(AppStore app, kc.GuidanceMode mode) {
   app.saveAthleteProfile(
     ProfileDraft.of(
-      sampleAthleteProfile(on: civilOf(app.storeClock()), guidance: mode),
+      sampleAthleteProfile(
+        on: civilOf(app.storeClock()),
+        guidance: mode,
+      ).copyWith(experience: kc.ExperienceLevel.advanced),
     )..consent = 'refused',
   );
+  expect(app.adaptProfile?.experience, kc.ExperienceLevel.advanced);
 }
 
 /// Prescription du bloc annoté pour la ligne [id] (S[week]·J[j]).
@@ -94,8 +100,11 @@ void main() {
 
   test('journal : une série avec ses mini-séries est une ligne (total et '
       'parts) ; myo-reps notés en lignes séparées regroupés si c’est sûr', () {
-    Map<String, dynamic> row(String reps, {String kg = '10', bool done = true}) =>
-        {'kg': kg, 'reps': reps, 'done': done};
+    Map<String, dynamic> row(
+      String reps, {
+      String kg = '10',
+      bool done = true,
+    }) => {'kg': kg, 'reps': reps, 'done': done};
     final doc = <String, dynamic>{
       'programStart': {'date': '2026-07-13'},
       'logs': {
@@ -160,9 +169,9 @@ void main() {
     expect([for (final p in a.parts!) p.reps], [15, 4, 4, 3]);
     expect(a.parts![1].restBeforeSeconds, 10);
     final b = s1.sets[1];
-    expect(b.reps, 31);
+    expect(b.reps, 30);
     expect(b.technique, kc.SetTechniqueKind.myoReps);
-    expect([for (final p in b.parts!) p.reps], [15, 4, 4, 4, 4]);
+    expect([for (final p in b.parts!) p.reps], [15, 4, 4, 4, 3]);
     expect(b.externalLoadKg, 10);
     final s2 = out.log.sessions.firstWhere((s) => s.id == 'legacy-S3-J3');
     expect(s2.sets.length, 3);
@@ -273,7 +282,9 @@ void main() {
         expect(it?.technique?.kind, kc.SetTechniqueKind.emom);
       }
       // ignore: avoid_print
-      print('CI1F estimates ${est.map((k, v) => MapEntry(k, '${v.$1}/${v.$2}'))}');
+      print(
+        'CI1F estimates ${est.map((k, v) => MapEntry(k, '${v.$1}/${v.$2}'))}',
+      );
     });
 
     test('séance : myo-reps saisis mini-série par mini-série, une série au '
@@ -308,12 +319,10 @@ void main() {
       final back = SetEntry.fromJson(
         jsonDecode(jsonEncode(s.toJson())) as Map<String, dynamic>,
       );
-      expect([for (final p in back.parts!) p.value], [
-        plan.suggested(0),
-        4,
-        4,
-        3,
-      ]);
+      expect(
+        [for (final p in back.parts!) p.value],
+        [plan.suggested(0), 4, 4, 3],
+      );
       clock = DateTime(2026, 10, 10, 9);
       final tl = app.adaptTrainingLog();
       final rec = tl.sessions
@@ -359,12 +368,10 @@ void main() {
         legacyDate: (_, _) => DateTime(2026, 10, 9),
       );
       final r = out.log.sessions.single.groupResults!.single;
-      expect((r.groupId, r.rounds, r.completed, r.elapsedSeconds), (
-        'g1',
-        3,
-        true,
-        600,
-      ));
+      expect(
+        (r.groupId, r.rounds, r.completed, r.elapsedSeconds),
+        ('g1', 3, true, 600),
+      );
     });
   });
 }

@@ -173,8 +173,12 @@ String _civil(DateTime d) =>
     int index,
   )?
   targetOf,
-  ({String? exerciseId, bool? seconds, int scale, String? technique})
-  Function(int week, int day, String exerciseKey, bool withParts)?
+  ({String? exerciseId, bool? seconds, int scale, String? technique}) Function(
+    int week,
+    int day,
+    String exerciseKey,
+    bool withParts,
+  )?
   lineOf,
   int? Function(int week, int day, String exerciseKey)? myoOf,
 }) {
