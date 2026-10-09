@@ -161,16 +161,142 @@ List<Object?> _enduranceTraces() {
   return out;
 }
 
+Object? _readJson(File file) {
+  final bytes = file.readAsBytesSync();
+  final text = file.path.endsWith('.gz')
+      ? utf8.decode(gzip.decode(bytes))
+      : utf8.decode(bytes);
+  return jsonDecode(text);
+}
+
+/// Sécurité des blocs déposés dans [dir] (`*.json.gz`, chacun
+/// `{"key", "scenario", "label", "blockWeeks", "blocks"}`) : constats de
+/// `safetyFindings`, un objet par fichier, dans l'ordre des noms.
+List<Object?> _safetyOfDir(String dir) {
+  final inputs = loadInputs('tous');
+  final files = <File>[
+    for (final f in Directory(dir).listSync())
+      if (f is File && f.path.endsWith('.json.gz')) f,
+  ]..sort((a, b) => a.path.compareTo(b.path));
+  final out = <Object?>[];
+  for (final file in files) {
+    final entry = benchObject(_readJson(file), file.path);
+    final key = benchString(entry, 'key');
+    final scenario = kmScenarioOf(benchString(entry, 'scenario'));
+    List<int>? blockWeeks;
+    if (entry['blockWeeks'] != null) {
+      blockWeeks = <int>[
+        for (final v in benchList(entry, 'blockWeeks'))
+          if (v is int) v else throw FormatException('blockWeeks', v),
+      ];
+    }
+    final blocks = benchList(entry, 'blocks');
+    final result = kmSafetyOfBlocks(
+      inputs.catalog,
+      _profileJson(key),
+      scenario,
+      blocks,
+      blockWeeks,
+    );
+    out.add(<String, Object?>{
+      'file': file.uri.pathSegments.last,
+      'key': key,
+      'scenario': scenario.code,
+      'label': entry['label'],
+      'weeks': result['weeks'],
+      'blockWeeks': blockWeeks,
+      'findings': result['findings'],
+      'blocks': blocks,
+    });
+  }
+  return out;
+}
+
+/// Saison du témoin sur l'athlète adversarial [adversary].
+Map<String, Object?> _adversaryOf(Map<String, Object?> adversary) {
+  final inputs = loadInputs('tous');
+  return kmAdversaryRun(
+    inputs.catalog,
+    KalisPlan(),
+    _profileJson(benchString(adversary, 'key')),
+    adversary,
+  );
+}
+
+/// Outils du lot KM1 sur les entrées de [inputPath] : sécurité de blocs
+/// (`securite/*.json.gz` → `securite_dart.json.gz`) et témoin sur athlètes
+/// adversariaux (`adversaires.json` → `adversaires_temoin.json.gz`).
+Future<void> _runKm1Tools({
+  required String outPath,
+  required String inputPath,
+  required bool safety,
+  required bool adversaries,
+  required int parallel,
+}) async {
+  final safetyDir = Directory('$inputPath/securite');
+  if (safety && safetyDir.existsSync()) {
+    final dir = safetyDir.path;
+    final found = await Isolate.run(() => _safetyOfDir(dir));
+    _writeGz('$outPath/securite_dart.json.gz', found);
+    stdout.writeln('sécurité de blocs : ${found.length} fichier(s).');
+  }
+  final adversaryFile = File('$inputPath/adversaires.json');
+  if (adversaries && adversaryFile.existsSync()) {
+    final list = _readJson(adversaryFile);
+    if (list is! List<Object?>) {
+      throw FormatException('adversaires.json : liste attendue');
+    }
+    final entries = <Map<String, Object?>>[
+      for (final a in list) benchObject(a, 'adversaires'),
+    ];
+    final results = List<Object?>.filled(entries.length, null);
+    var next = 0;
+    Future<void> worker() async {
+      while (next < entries.length) {
+        final k = next++;
+        final entry = entries[k];
+        results[k] = await Isolate.run(() => _adversaryOf(entry));
+      }
+    }
+
+    await Future.wait(<Future<void>>[
+      for (var i = 0; i < parallel; i++) worker(),
+    ]);
+    _writeGz('$outPath/adversaires_temoin.json.gz', results);
+    stdout.writeln('athlètes adversariaux : ${entries.length}.');
+  }
+}
+
 /// Écrit les exports KM1 dans [outPath] : fiches du catalogue, saisons de
 /// référence, traces du modèle de vérité et, avec [witness], mesures du
-/// témoin sur [seeds] graines par modèle de vérité.
+/// témoin sur [seeds] graines par modèle de vérité. Avec [exports] faux,
+/// seuls les outils sont lancés. Outils (lot KM1, sécurité) : si
+/// `[inputPath]/securite/` existe et [safety] est vrai, constats de
+/// sécurité des blocs déposés (`securite_dart.json.gz`) ; si
+/// `[inputPath]/adversaires.json` existe et [adversaries] est vrai, saisons
+/// du témoin sur ces athlètes (`adversaires_temoin.json.gz`).
 Future<void> runKm1({
   required String outPath,
   int seeds = 16,
   bool witness = true,
   int parallel = 4,
+  bool exports = true,
+  bool safety = true,
+  bool adversaries = true,
+  String inputPath = 'km1_entree',
 }) async {
   final watch = Stopwatch()..start();
+  await _runKm1Tools(
+    outPath: outPath,
+    inputPath: inputPath,
+    safety: safety,
+    adversaries: adversaries,
+    parallel: parallel,
+  );
+  if (!exports) {
+    stdout.writeln('outils KM1 (${watch.elapsed.inSeconds} s).');
+    return;
+  }
   var count = seeds;
   final file = File('km1_seeds.txt');
   if (file.existsSync()) {

@@ -14,10 +14,13 @@ library;
 import 'package:kalis_adapt/kalis_adapt.dart';
 import 'package:kalis_adapt/simulation.dart';
 import 'package:kalis_core/kalis_core.dart';
-import 'package:kalis_plan/kalis_plan.dart' show coachPainStopHits;
+import 'package:kalis_plan/kalis_plan.dart' show MuscleGroup, coachPainStopHits;
 
 import '../adapter.dart';
+import '../analysis.dart'
+    show ItemView, ProgramView, StraightArmFamily, defaultBodyWeightKg;
 import '../profile.dart';
+import '../program.dart' show BenchProgram;
 import '../safety.dart';
 import '../season.dart';
 
@@ -27,9 +30,37 @@ const int kmExportSchema = 1;
 /// Nombre de séances d'un exercice suivies dans les mesures d'estimation.
 const int kmEstimateSessions = 24;
 
-/// Fiche d'un exercice telle que le modèle de vérité la lit.
+/// Famille bras tendus de l'exercice [info] telle que le banc la calcule
+/// (`ItemView.straightArm`, lue sur une prescription neutre), ou `null`.
+StraightArmFamily? kmStraightArmOf(ExerciseInfo info) {
+  final item = ItemView(
+    week: 0,
+    kind: WeekKind.build,
+    dayIndex: 0,
+    p: ExercisePrescription(
+      slotId: 'km',
+      exerciseId: info.exercise.id,
+      sets: 1,
+      toCalibrate: false,
+      loadBasis: LoadBasis.unloaded,
+      reasons: const <Reason>[],
+    ),
+    exercise: info.exercise,
+    traits: info.traits,
+    role: null,
+    bodyWeightKg: defaultBodyWeightKg,
+  );
+  return item.straightArm;
+}
+
+/// Fiche d'un exercice telle que le modèle de vérité la lit, complétée (lot
+/// KM1, sécurité) de ce que les critères de sécurité du banc lisent : traits
+/// de `kalis_plan` (nature, crédits par groupe, impact), niveau et chaîne du
+/// catalogue, latéralité, contraintes articulaires, famille bras tendus et
+/// classes de risque de `safety.dart`.
 Map<String, Object?> kmExerciseInfo(ExerciseInfo info) {
   final e = info.exercise;
+  final t = info.traits;
   final kind = enduranceKindOf(info);
   return <String, Object?>{
     'id': e.id,
@@ -58,6 +89,33 @@ Map<String, Object?> kmExerciseInfo(ExerciseInfo info) {
     'gridStep': info.grid.step,
     'gridMinimum': info.grid.minimum,
     'gridDumbbell': info.grid.dumbbellRule,
+    'name': e.name,
+    'discipline': e.discipline.code,
+    'slotKind': t.kind.name,
+    'resistance': t.kind.isResistance,
+    'groupCredits': <int>[...t.groupCredits],
+    'impact': t.impact,
+    'technical': t.technical,
+    'level': e.level.index,
+    'levelCode': e.level.code,
+    'rootId': e.rootId,
+    'depth': e.depth,
+    'variantOf': e.variantOf,
+    'prerequisites': <String>[...e.prerequisites],
+    'laterality': e.laterality.name,
+    'articularity': e.articularity.name,
+    'contractionMode': e.contractionMode.name,
+    'equipment': <String>[...e.equipment],
+    'places': <String>[for (final p in e.places) p.code],
+    'jointStress': <String, String>{
+      for (final entry in e.jointStress.entries)
+        entry.key.code: entry.value.name,
+    },
+    'bodyweightFraction': e.bodyweightFraction?.value,
+    'straightArm': kmStraightArmOf(info)?.name,
+    'highRisk': isHighRisk(e),
+    'moderateRisk': isModerateRisk(e),
+    'heavyImpact': heavyImpactPatterns.contains(e.pattern),
   };
 }
 
@@ -72,7 +130,14 @@ Map<String, Object?> kmCatalogInfos(Catalog catalog) {
       out.add(kmExerciseInfo(info));
     }
   }
-  return <String, Object?>{'schema': kmExportSchema, 'exercises': out};
+  return <String, Object?>{
+    'schema': kmExportSchema,
+    'exercises': out,
+    'groups': <Object?>[
+      for (final g in MuscleGroup.values)
+        <String, Object?>{'index': g.index, 'code': g.code, 'major': g.major},
+    ],
+  };
 }
 
 List<double> _truthRow(TruthExercise t) => <double>[
@@ -795,5 +860,273 @@ Map<String, Object?> kmEnduranceTrace(
     'level': level,
     'weeks': weeks,
     'events': events,
+  };
+}
+
+/// Scénario de code [code] ; [FormatException] s'il est inconnu.
+SeasonScenario kmScenarioOf(String code) {
+  for (final s in SeasonScenario.values) {
+    if (s.code == code) {
+      return s;
+    }
+  }
+  throw FormatException('scénario inconnu', code);
+}
+
+/// Blocs tels qu'ils ont été servis (même règle que `servedBlocksOf`) :
+/// [blockWeeks] donne la semaine de saison où chaque bloc commence ; un
+/// bloc arrêté avant son terme est réduit à ses semaines servies. Sans
+/// [blockWeeks], les blocs sont pris entiers.
+List<ProgramBlock> kmServedBlocks(
+  List<ProgramBlock> blocks,
+  List<int>? blockWeeks,
+) {
+  if (blockWeeks == null) {
+    return blocks;
+  }
+  final out = <ProgramBlock>[];
+  for (var k = 0; k < blocks.length; k++) {
+    final b = blocks[k];
+    if (k + 1 < blockWeeks.length) {
+      final served = blockWeeks[k + 1] - blockWeeks[k];
+      if (served >= 1 && served < b.pass2.weeks.length) {
+        out.add(
+          ProgramBlock(
+            pass1: b.pass1.copyWith(weeks: served),
+            pass2: b.pass2.copyWith(weeks: b.pass2.weeks.sublist(0, served)),
+          ),
+        );
+        continue;
+      }
+    }
+    out.add(b);
+  }
+  return out;
+}
+
+/// Constats de sécurité des blocs [blocksJson] (objets JSON de
+/// `ProgramBlock`, écrits par exemple par la référence Python) pour le
+/// profil [json] sous [scenario] : même lecture que `realizedFindings`
+/// (profil du banc du scénario, profil des moteurs de `KmSeason`, horizon
+/// de la saison sauf [weeks]).
+Map<String, Object?> kmSafetyOfBlocks(
+  Catalog catalog,
+  Map<String, Object?> json,
+  SeasonScenario scenario,
+  List<Object?> blocksJson,
+  List<int>? blockWeeks, {
+  int? weeks,
+}) {
+  final season = KmSeason(catalog, json, scenario);
+  final blocks = <ProgramBlock>[];
+  for (final b in blocksJson) {
+    blocks.add(ProgramBlock.fromJson(benchObject(b, 'blocks')));
+  }
+  final horizon = weeks ?? season.weeks;
+  final view = ProgramView(
+    catalog,
+    BenchProgram(
+      bench: season.bench,
+      adapted: season.adapted,
+      request: PlanRequest(
+        profile: season.adapted.profile,
+        seed: 0,
+        startDate: benchStartDate,
+        locks: const <PlanLock>[],
+      ),
+      blocks: kmServedBlocks(blocks, blockWeeks),
+      horizonWeeks: horizon,
+    ),
+  );
+  final found = safetyFindings(view, season.bench);
+  return <String, Object?>{
+    'schema': kmExportSchema,
+    'key': season.base.key,
+    'scenario': scenario.code,
+    'weeks': horizon,
+    'readWeeks': view.weeks.length,
+    'findings': <Object?>[for (final f in found) f.toJson()],
+  };
+}
+
+/// Multiplicateurs de vérité reconnus par le banc adversarial.
+const List<String> kmOverrideFields = <String>[
+  'capacity',
+  'curveB',
+  'slope',
+  'power',
+  'fatigueScale',
+  'holdShare',
+];
+
+/// Lit les surcharges adversariales : identifiant d'exercice (ou `*` pour
+/// tous) vers multiplicateurs par champ de [kmOverrideFields].
+Map<String, Map<String, double>> kmOverridesOf(Object? json) {
+  final out = <String, Map<String, double>>{};
+  if (json == null) {
+    return out;
+  }
+  for (final entry in benchObject(json, 'surcharges').entries) {
+    final fields = <String, double>{};
+    for (final f in benchObject(entry.value, 'surcharges').entries) {
+      final v = f.value;
+      if (v is! num) {
+        throw FormatException('surcharges : nombre attendu', f.key);
+      }
+      fields[f.key] = v.toDouble();
+    }
+    out[entry.key] = fields;
+  }
+  return out;
+}
+
+/// Politique enveloppe du banc adversarial : elle délègue tout à la
+/// politique [inner] et, au premier passage de chaque exercice (dans la
+/// prescription du jour, puis dans la séance rendue), tire sa vérité et lui
+/// applique les multiplicateurs de [overrides] (clé exacte d'abord, puis
+/// `*`). Le meneur ne tire la vérité d'un exercice qu'après la
+/// prescription de la séance où il apparaît : la vérité est donc surchargée
+/// au moment où elle est créée, comme `_surcharger` de la référence Python
+/// (`reference/banc/meneur.py`).
+final class KmOverridePolicy implements CoachAwarePolicy {
+  /// Enveloppe de [inner] avec les surcharges [overrides].
+  KmOverridePolicy(this.inner, this.overrides);
+
+  /// Politique enveloppée.
+  final KalisAdaptPolicy inner;
+
+  /// Multiplicateurs par exercice (ou `*`).
+  final Map<String, Map<String, double>> overrides;
+
+  final Set<String> _seen = <String>{};
+
+  @override
+  String get name => inner.name;
+
+  @override
+  bool get rich => inner.rich;
+
+  @override
+  List<IntraSessionAdvice> takeAdvices() => inner.takeAdvices();
+
+  @override
+  SessionPlan plan(SessionContext c) {
+    for (final item in c.prescription.items) {
+      _override(c.athlete, item.exerciseId);
+    }
+    final session = inner.plan(c);
+    for (final item in session.items) {
+      _override(c.athlete, item.exerciseId);
+    }
+    return session;
+  }
+
+  @override
+  SetTarget? nextSet(
+    SessionContext c,
+    ExercisePrescription item,
+    int index,
+    List<SetRecord> done,
+  ) => inner.nextSet(c, item, index, done);
+
+  @override
+  void finish(SessionContext c, SessionRecord record) =>
+      inner.finish(c, record);
+
+  @override
+  SimEstimate? estimate(SessionContext c, String exerciseId, double n) =>
+      inner.estimate(c, exerciseId, n);
+
+  void _override(SimAthlete athlete, String id) {
+    if (!_seen.add(id)) {
+      return;
+    }
+    // Comme la référence Python : une clé exacte vide renvoie à `*`.
+    final exact = overrides[id];
+    final m = exact == null || exact.isEmpty ? overrides['*'] : exact;
+    if (m == null) {
+      return;
+    }
+    final t = athlete.truthOf(id);
+    if (t == null) {
+      return;
+    }
+    double k(String field) => m[field] ?? 1.0;
+    t.capacity *= k('capacity');
+    t.startCapacity = t.capacity;
+    t.curveB *= k('curveB');
+    t.slope *= k('slope');
+    t.power *= k('power');
+    t.fatigueScale *= k('fatigueScale');
+    t.holdShare *= k('holdShare');
+  }
+}
+
+/// Saison du témoin (`kmWitnessSeason`, une graine) sur l'athlète
+/// adversarial [adversary] : `{"id", "key", "scenario", "kind", "seed",
+/// "spec", "surcharges"}`, la fiche d'athlète du scénario recouverte par
+/// `spec`, les multiplicateurs de `surcharges` appliqués à la vérité de
+/// chaque exercice à sa création ([KmOverridePolicy]).
+Map<String, Object?> kmAdversaryRun(
+  Catalog catalog,
+  PlanEngine plan,
+  Map<String, Object?> json,
+  Map<String, Object?> adversary,
+) {
+  final scenario = kmScenarioOf(benchString(adversary, 'scenario'));
+  final season = KmSeason(catalog, json, scenario);
+  final profile = season.adapted.profile;
+  final spec = adversary['spec'];
+  final specJson = <String, Object?>{
+    ...season.specJson,
+    if (spec != null) ...benchObject(spec, 'spec'),
+  };
+  final kind = TruthKind.values.byName(benchString(adversary, 'kind'));
+  final seed = benchInt(adversary, 'seed');
+  final engine = KalisAdapt();
+  final run = simulate(
+    catalog: catalog,
+    spec: athleteFromJson(specJson),
+    profile: profile,
+    seed: seed,
+    policy: KmOverridePolicy(
+      KalisAdaptPolicy(engine),
+      kmOverridesOf(adversary['surcharges']),
+    ),
+    program: SimProgram(catalog, plan, profile, seed: 0),
+    weeks: season.weeks,
+    loop: engine,
+    truthKind: kind,
+    changes: season.changes,
+  );
+  final found = realizedFindings(
+    catalog,
+    season.bench,
+    season.adapted,
+    run,
+    season.weeks,
+  );
+  final loadedMain = KmEstimateStats();
+  final loadedAll = KmEstimateStats();
+  final repsAll = KmEstimateStats();
+  final holdAll = KmEstimateStats();
+  loadedMain.add(run, (e) => e.mode == CapacityMode.loaded && e.main);
+  loadedAll.add(run, (e) => e.mode == CapacityMode.loaded);
+  repsAll.add(run, (e) => e.mode == CapacityMode.reps);
+  holdAll.add(run, (e) => e.mode == CapacityMode.hold);
+  return <String, Object?>{
+    'id': benchString(adversary, 'id'),
+    'key': season.base.key,
+    'scenario': scenario.code,
+    'kind': kind.name,
+    'seed': seed,
+    'run': kmRunSummary(run, found),
+    'findings': <Object?>[for (final f in found) f.toJson()],
+    'estimates': <String, Object?>{
+      'loadedMain': loadedMain.toJson(),
+      'loaded': loadedAll.toJson(),
+      'reps': repsAll.toJson(),
+      'hold': holdAll.toJson(),
+    },
   };
 }
