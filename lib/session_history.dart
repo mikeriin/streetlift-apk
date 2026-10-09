@@ -122,7 +122,8 @@ class _SessionHistoryScreenState extends State<SessionHistoryScreen> {
           color: SL.accent,
           days: [_day],
         );
-    _groups = store.groups(_day);
+    // CI1f : mêmes pages que la séance (groupes d'exercices enchaînés).
+    _groups = store.groups(_day, week: _week.n > 0 ? _week.n : null);
   }
 
   @override

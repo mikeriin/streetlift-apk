@@ -73,6 +73,7 @@ double? parseVelocity(String? text) {
 String valueUnit(LogSpec spec) => switch (spec.kind) {
   'hold' || 'holdMax' => 'secondes',
   'duration' => 'minutes',
+  'distance' => 'mètres',
   _ => 'reps',
 };
 
@@ -131,11 +132,13 @@ SetCheck checkSet(LogSpec spec, SetEntry e, {required bool rpe}) {
 String _label(String unit) => switch (unit) {
   'secondes' => 'Secondes',
   'minutes' => 'Minutes',
+  'mètres' => 'Mètres',
   _ => 'Reps',
 };
 
 String _example(LogSpec spec) => switch (spec.kind) {
   'hold' || 'holdMax' => '30',
   'duration' => '12',
+  'distance' => '400',
   _ => '8',
 };

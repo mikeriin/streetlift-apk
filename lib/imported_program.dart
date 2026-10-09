@@ -23,9 +23,19 @@
 //   moteur suit la même ligne de semaine en semaine (marques de séance,
 //   double progression).
 //
-// Ce qui ne se déduit pas proprement du texte du programme reste absent
-// (myo-reps, échelles, tours, EMOM, contrastes, durées, intervalles) :
-// ces lignes restent servies telles qu'écrites. Liste : [ImportedProgram.absent].
+// CI1f (C11.6) : les formats propres du programme sont annotés à leur tour :
+// myo-reps (activation puis mini-séries, technique `myo_reps`), durées
+// (mobilité, cardio léger : prescription en secondes, conduite de
+// l'endurance de `kalis_adapt` 0.3.0), HIIT (groupe `intervals`), EMOM
+// (technique `emom`, une ligne par minute, dans un groupe `emom` qui réunit
+// les exercices enchaînés), contrastes et échelles (groupes `circuit` :
+// tours ; lignes servies telles qu'écrites, le moteur ne règle pas leurs
+// répétitions : une échelle ou un contraste n'est pas une série d'une
+// traite) ; « N × ? reps » : maximum de référence estimé d'après le profil
+// (test reporté) ou le journal, sinon servi tel qu'écrit.
+//
+// Ce qui ne se déduit toujours pas proprement reste absent, servi tel
+// qu'écrit. Liste : [ImportedProgram.absent].
 part of 'store.dart';
 
 /// Échéance de la fin du programme importé (C11 : fin de S40).
@@ -77,12 +87,29 @@ class ImportedProgram {
   /// Lignes du programme non portées (format sans équivalent au contrat),
   /// par libellé de série : « 1×15 puis 4×(4) » → nombre.
   final Map<String, int> absent;
+
+  /// CI1f : lignes servies telles qu'écrites (contrastes, échelles), par
+  /// « semaine|emplacement » : dans le bloc et dans leur groupe, mais
+  /// l'application garde la ligne du programme (le moteur ne règle pas
+  /// leurs répétitions).
+  final Set<String> asWritten;
+
+  /// CI1f : exercice du bloc quand il diffère du nom de la ligne
+  /// (contraste du squat : squat sauté), par « semaine|emplacement ».
+  final Map<String, String> exerciseOf;
+
+  /// CI1f : références estimées pour « N × ? reps » : référence →
+  /// (valeur, source).
+  final Map<String, (double, String)> estimates;
   const ImportedProgram({
     required this.segments,
     required this.season,
     required this.event,
     required this.slots,
     required this.absent,
+    this.asWritten = const {},
+    this.exerciseOf = const {},
+    this.estimates = const {},
   });
 
   ImportedSegment? segmentOf(int week) {
@@ -101,6 +128,22 @@ class ImportedProgram {
 
   String? slotOf(int week, int j, String exerciseId) =>
       slots['$week|${exerciseId.split('~').first}'];
+}
+
+/// CI1f : ligne du programme portée au contrat : prescription, rôle de
+/// l'emplacement, groupe (format et paramètres ; son identifiant est posé
+/// par la journée) et service tel qu'écrit (contrastes, échelles).
+class _ImportedLine {
+  final kc.ExercisePrescription item;
+  final kc.SlotRole role;
+  final kc.GroupSpec? group;
+  final bool asWritten;
+  const _ImportedLine(
+    this.item,
+    this.role, {
+    this.group,
+    this.asWritten = false,
+  });
 }
 
 /// Identifiant du bloc importé qui commence à la semaine [first].
@@ -213,8 +256,23 @@ extension ImportedProgramStore on AppStore {
     final catalog = content.catalog;
     final book = _adaptBookForImport();
     if (catalog == null || book == null) return null;
+    // CI1f : références estimées (profil, journal), dans la clé.
+    // (Clé : révision des données, séances présentes, profil, références
+    // renseignées ; une sauvegarde importée remplace les séances.)
+    var logsDigest = logs.length;
+    for (final l in logs.values) {
+      logsDigest = (logsDigest * 31 + identityHashCode(l)) & 0x3fffffff;
+    }
+    final estimates = _g9Memo(
+      'imported-est|$_dataRevision|$logsDigest|'
+      '${identityHashCode(adaptProfile)}|'
+      '${[for (final r in program.pilotage.repMax) values.containsKey(r.ref)].join()}|'
+      '${identityHashCode(program)}',
+      () => _importEstimates(book),
+    );
     final sig = [
       'imported',
+      for (final e in estimates.entries) 'est:${e.key}=${e.value.$1}',
       identityHashCode(program),
       identityHashCode(planProgram),
       planProgram?.updatedAt ?? '-',
@@ -226,7 +284,7 @@ extension ImportedProgramStore on AppStore {
     ].join('|');
     return _g9Memo(sig, () {
       try {
-        return _buildImported(catalog, book);
+        return _buildImported(catalog, book, estimates);
       } catch (_) {
         return null;
       }
@@ -347,7 +405,11 @@ extension ImportedProgramStore on AppStore {
   ka.ExerciseBook? _adaptBookForImport() =>
       SessionAdaptStore(this)._adaptBook();
 
-  ImportedProgram? _buildImported(kc.Catalog catalog, ka.ExerciseBook book) {
+  ImportedProgram? _buildImported(
+    kc.Catalog catalog,
+    ka.ExerciseBook book,
+    Map<String, (double, String)> estimates,
+  ) {
     final lastWeek = math.min(importedLastWeek, program.weeks.length);
     if (lastWeek < 1) return null;
     final start = program.start;
@@ -359,6 +421,8 @@ extension ImportedProgramStore on AppStore {
     final ranges = importedRanges(1, lastWeek, keyOf, weekKinds.isDeload);
     final absent = <String, int>{};
     final slots = <String, String>{};
+    final asWritten = <String>{};
+    final exerciseOf = <String, String>{};
     final eventDay = start == null
         ? null
         : civilOf(
@@ -494,6 +558,9 @@ extension ImportedProgramStore on AppStore {
         book: book,
         slots: slots,
         absent: absent,
+        asWritten: asWritten,
+        exerciseOf: exerciseOf,
+        estimates: estimates,
       );
       if (seg != null) segments.add(seg);
     }
@@ -504,6 +571,9 @@ extension ImportedProgramStore on AppStore {
       event: season == null ? null : event,
       slots: slots,
       absent: absent,
+      asWritten: asWritten,
+      exerciseOf: exerciseOf,
+      estimates: estimates,
     );
   }
 
@@ -519,6 +589,9 @@ extension ImportedProgramStore on AppStore {
     required ka.ExerciseBook book,
     required Map<String, String> slots,
     required Map<String, int> absent,
+    required Set<String> asWritten,
+    required Map<String, String> exerciseOf,
+    required Map<String, (double, String)> estimates,
   }) {
     final weeks =
         <
@@ -527,6 +600,7 @@ extension ImportedProgramStore on AppStore {
             kc.WeekKind,
             kc.WeekIntent,
             Map<int, List<kc.ExercisePrescription>>,
+            Map<int, List<kc.GroupSpec>>,
           )
         >[];
     final js = <int>{};
@@ -535,13 +609,19 @@ extension ImportedProgramStore on AppStore {
     for (var n = first; n <= last; n++) {
       final w = program.week(n);
       final days = <int, List<kc.ExercisePrescription>>{};
+      final dayGroups = <int, List<kc.GroupSpec>>{};
       // Toujours le programme d'origine (sans la couche de Koach).
       for (final d in [for (final x in w.days) x.original]) {
         final items = <kc.ExercisePrescription>[];
+        final groups = <kc.GroupSpec>[];
         final seen = <String, int>{};
+        // Groupe de la ligne précédente du programme (null : seule, ou pas
+        // portée).
+        String? lastGroup;
         for (final e in d.exercises) {
-          final it = _importItem(e, d.j, catalog, book);
+          final it = _importItem(e, d.j, catalog, book, estimates);
           if (it == null) {
+            lastGroup = null;
             final label = setsLabel(e).trim();
             if (label.isNotEmpty && label != '—') {
               final k = label.replaceAll(RegExp(r'\d+'), 'N');
@@ -550,20 +630,46 @@ extension ImportedProgramStore on AppStore {
             continue;
           }
           // Emplacement stable : même exercice, même journée, même rang.
-          final base = 'j${d.j}-${it.$1.exerciseId}';
+          final base = 'j${d.j}-${it.item.exerciseId}';
           final k = (seen[base] ?? 0) + 1;
           seen[base] = k;
           final slot = k == 1 ? base : '$base#$k';
-          final item = it.$1.copyWith(slotId: slot);
+          var item = it.item.copyWith(slotId: slot);
+          // CI1f : groupe de la ligne ; une ligne « enchaînée » rejoint le
+          // groupe de même format de la ligne d'avant.
+          final g = it.group;
+          if (g != null) {
+            final prev = lastGroup;
+            final joined =
+                normalizeText(e.name).contains('enchain') && prev != null
+                ? groups.where((x) => x.groupId == prev).firstOrNull
+                : null;
+            if (joined != null && joined.format == g.format) {
+              item = item.copyWith(groupId: joined.groupId);
+            } else {
+              final id = 'g$slot';
+              groups.add(g.copyWith(groupId: id));
+              item = item.copyWith(groupId: id);
+            }
+          }
           items.add(item);
+          lastGroup = item.groupId;
           slots['$n|${e.id.split('~').first}'] = slot;
+          // Par semaine : l'emplacement est partagé d'une semaine à
+          // l'autre (même exercice, même journée).
+          if (it.asWritten) asWritten.add('$n|$slot');
+          final named = content.idFor(e.name);
+          if (named != null && named != item.exerciseId) {
+            exerciseOf['$n|$slot'] = item.exerciseId;
+          }
           slotExercise.putIfAbsent(slot, () => item.exerciseId);
-          if (it.$2 == kc.SlotRole.main || !slotRole.containsKey(slot)) {
-            slotRole[slot] = it.$2;
+          if (it.role == kc.SlotRole.main || !slotRole.containsKey(slot)) {
+            slotRole[slot] = it.role;
           }
         }
         if (items.isNotEmpty) {
           days[d.j] = items;
+          if (groups.isNotEmpty) dayGroups[d.j] = groups;
           js.add(d.j);
         }
       }
@@ -574,7 +680,7 @@ extension ImportedProgramStore on AppStore {
           : w.blockKey == 'P0'
           ? kc.WeekKind.intro
           : kc.WeekKind.build;
-      weeks.add((n - first, kind, intents[n]!, days));
+      weeks.add((n - first, kind, intents[n]!, days, dayGroups));
     }
     if (js.isEmpty) return null;
     final ordered = js.toList()..sort();
@@ -633,7 +739,7 @@ extension ImportedProgramStore on AppStore {
       blockId: blockId,
       engineVersion: 'import',
       weeks: [
-        for (final (i, kind, intent, days) in weeks)
+        for (final (i, kind, intent, days, groups) in weeks)
           kc.WeekPrescription(
             weekIndex: i,
             kind: kind,
@@ -641,7 +747,11 @@ extension ImportedProgramStore on AppStore {
             days: [
               for (final j in ordered)
                 if (days.containsKey(j))
-                  kc.DayPrescription(dayIndex: dayOfJ[j]!, items: days[j]!),
+                  kc.DayPrescription(
+                    dayIndex: dayOfJ[j]!,
+                    items: days[j]!,
+                    groups: groups[j],
+                  ),
             ],
           ),
       ],
@@ -669,11 +779,16 @@ extension ImportedProgramStore on AppStore {
                 days: [
                   for (final d in w.days)
                     d.copyWith(
+                      groups: null,
                       items: [
                         for (final it in d.items)
                           if (it.technique == null &&
                               it.test?.kind != kc.TestKind.oneRm)
-                            it.copyWith(intensity: null, test: null),
+                            it.copyWith(
+                              intensity: null,
+                              test: null,
+                              groupId: null,
+                            ),
                       ],
                     ),
                 ],
@@ -696,17 +811,22 @@ extension ImportedProgramStore on AppStore {
 
   /// Prescription portée d'un exercice du programme (null : sans
   /// équivalent dans la base, ou format sans équivalent au contrat).
-  (kc.ExercisePrescription, kc.SlotRole)? _importItem(
+  _ImportedLine? _importItem(
     Exercise e,
     int j,
     kc.Catalog catalog,
     ka.ExerciseBook book,
+    Map<String, (double, String)> estimates,
   ) {
     final base = SessionAdaptStore(this)._adaptImportItem(e, j, catalog, book);
-    if (base == null) return _importSpecial(e, j, catalog, book);
+    if (base == null) {
+      final special = _importSpecial(e, j, catalog, book);
+      if (special != null) return _ImportedLine(special.$1, special.$2);
+      return _importFormat(e, j, catalog, book, estimates);
+    }
     final (it, role) = base;
     final rich = _annotate(e, it);
-    return (rich, role);
+    return _ImportedLine(rich, role);
   }
 
   /// Champs 0.4.0 d'une prescription simple : intensité en RIR, test de
@@ -755,6 +875,359 @@ extension ImportedProgramStore on AppStore {
         : double.parse(m.group(2)!.replaceAll(',', '.'));
     if (a > 10 || b > 10 || b < a) return null;
     return (a, b);
+  }
+
+  /// CI1f : maximums de référence (Références, « Tractions (max) »…) non
+  /// renseignés, estimés d'après le profil (test reporté, réponse du
+  /// questionnaire) ou, à défaut, d'après le meilleur test de répétitions
+  /// au maximum du journal. Référence → (valeur, source).
+  Map<String, (double, String)> _importEstimates(ka.ExerciseBook book) {
+    final out = <String, (double, String)>{};
+    final profile = adaptProfile;
+    for (final r in program.pilotage.repMax) {
+      if (values.containsKey(r.ref)) continue;
+      final id = content.idFor(r.name);
+      if (id == null) continue;
+      kc.Benchmark? best;
+      for (final b in profile?.benchmarks ?? const <kc.Benchmark>[]) {
+        if (b.exerciseId != id || b.kind != kc.BenchmarkKind.maxReps) {
+          continue;
+        }
+        final reps = b.reps;
+        if (reps == null || reps < 1) continue;
+        final later =
+            best == null ||
+            (b.date?.dayNumber ?? -1) > (best.date?.dayNumber ?? -1);
+        if (later) best = b;
+      }
+      if (best != null) {
+        out[r.ref] = (best.reps!.toDouble(), 'profile');
+        continue;
+      }
+      var top = 0;
+      for (final log in logs.entries) {
+        final m = RegExp(r'^S(\d+)-J(\d+)$').firstMatch(log.key);
+        if (m == null) continue;
+        final w = int.parse(m[1]!), jj = int.parse(m[2]!);
+        if (w < 1 || w > program.weeks.length) continue;
+        final d = program.week(w).day(jj);
+        if (d == null) continue;
+        for (final e in d.original.exercises) {
+          final x = log.value.ex[e.id];
+          if (x == null || content.idFor(e.name) != id) continue;
+          if (logSpec(e).kind != 'repsMax') continue;
+          for (final set in x.sets) {
+            if (!set.done || set.excluded) continue;
+            final v = parseWholeNumber(set.reps);
+            if (v != null && v > top) top = v;
+          }
+        }
+      }
+      if (top > 0) out[r.ref] = (top.toDouble(), 'journal');
+    }
+    return out;
+  }
+
+  /// CI1f : « N × ? reps » servi sur une référence estimée : ce que Koach
+  /// en dit (null : référence renseignée, ou rien d'estimé).
+  String? referenceEstimateText(Exercise e) {
+    final s = e.sets;
+    if (s.type != 'volume' || values.containsKey(s.ref)) return null;
+    final est = importedProgram?.estimates[s.ref];
+    if (est == null) return null;
+    final v = est.$1 == est.$1.roundToDouble()
+        ? est.$1.toInt().toString()
+        : est.$1.toString().replaceAll('.', ',');
+    final from = est.$2 == 'profile' ? 'ton profil' : 'ton meilleur test noté';
+    return 'Ta référence « ${referenceLabel(s.ref!)} » n’est pas renseignée : '
+        'j’ai pris $v d’après $from. Renseigne-la dans Références pour la '
+        'fixer.';
+  }
+
+  /// Rôle de l'emplacement d'une ligne (comme la portée simple).
+  kc.SlotRole _importRole(Exercise e, ka.ExerciseInfo info) => e.main
+      ? kc.SlotRole.main
+      : e.prevention
+      ? kc.SlotRole.accessory
+      : (e.load.type == 'system' || e.load.type == 'barbell'
+            ? kc.SlotRole.secondary
+            : (info.mode == null
+                  ? kc.SlotRole.mobility
+                  : kc.SlotRole.accessory));
+
+  /// Base de charge et charge de départ d'une ligne (comme les clusters).
+  (kc.LoadBasis, double?) _importLoad(
+    Exercise e,
+    kc.CatalogExercise cat,
+    ka.ExerciseInfo info,
+  ) {
+    final basis = switch (cat.loadType) {
+      kc.LoadType.addedWeight => kc.LoadBasis.bodyweightPlusExternal,
+      kc.LoadType.barbell ||
+      kc.LoadType.dumbbells ||
+      kc.LoadType.kettlebell ||
+      kc.LoadType.machine ||
+      kc.LoadType.cable ||
+      kc.LoadType.other => kc.LoadBasis.external,
+      kc.LoadType.bodyweight => kc.LoadBasis.bodyweight,
+      kc.LoadType.none || kc.LoadType.band => kc.LoadBasis.unloaded,
+    };
+    double? startKg;
+    if (info.mode == ka.CapacityMode.loaded &&
+        basis != kc.LoadBasis.bodyweight) {
+      final kg = loadFor(e);
+      if (kg != null && kg >= 0 && kg <= 1000) {
+        startKg = (kg * 100).roundToDouble() / 100;
+        if (basis == kc.LoadBasis.external && startKg <= 0) startKg = null;
+      }
+    }
+    return (basis, startKg);
+  }
+
+  /// CI1f (C11.6) : formats propres du programme — myo-reps, durées, HIIT,
+  /// EMOM, contrastes, échelles, séries « N × ? reps » (référence estimée).
+  /// Null : format toujours sans équivalent propre (servi tel qu'écrit).
+  _ImportedLine? _importFormat(
+    Exercise e,
+    int j,
+    kc.Catalog catalog,
+    ka.ExerciseBook book,
+    Map<String, (double, String)> estimates,
+  ) {
+    final id = e.catalogId ?? content.idFor(e.name);
+    if (id == null) return null;
+    final cat = catalog.find(id);
+    final info = book.find(id);
+    if (cat == null || info == null) return null;
+    final slot = SessionAdaptStore.importedSlot(j, e.id);
+    final sp = logSpec(e);
+    final rir = _rirRange(e.intensity);
+    final flames = rir == null
+        ? null
+        : kc.Flames.fromRir((rir.$1 + rir.$2) / 2);
+    final intensity = rir == null
+        ? null
+        : kc.IntensityTarget(
+            basis: kc.IntensityBasis.rir,
+            value: rir.$1,
+            valueHigh: rir.$2 > rir.$1 ? rir.$2 : null,
+          );
+    final rest = e.restSec?.clamp(0, 900);
+    // « N × ? reps » et « EMOM 12 min × ? reps » : référence estimée.
+    var label = setsLabel(e);
+    final sets = e.sets;
+    if (sets.type == 'volume' && label.contains('?')) {
+      final est = estimates[sets.ref];
+      if (est == null) return null;
+      final n = (sets.coef! * est.$1 / sets.div!).round();
+      if (n < 1) return null;
+      label = '${sets.prefix}$n${sets.suffix}';
+      if (sp.kind == 'reps') {
+        final x = Exercise.adapted(e, sets: SetsSpec.text(label));
+        final base = SessionAdaptStore(
+          this,
+        )._adaptImportItem(x, j, catalog, book);
+        if (base == null) return null;
+        return _ImportedLine(_annotate(x, base.$1), base.$2);
+      }
+    }
+    final text = label.toLowerCase().trim();
+    final role = _importRole(e, info);
+    final (basis, startKg) = _importLoad(e, cat, info);
+    _ImportedLine? line;
+    if (sp.myo) {
+      // « 1×15 puis 4×(4) » : activation puis mini-séries. La plage de la
+      // ligne est celle de l'activation : `kalis_adapt` 0.3.0 lit la
+      // première partie comme la série et règle la charge sur elle.
+      final m = RegExp(
+        r'^1\s*[×x]\s*(\d+)(?:\s*-\s*(\d+))?\s*puis\s*(\d+)\s*[×x]\s*\(?\s*(\d+)',
+      ).firstMatch(text);
+      if (m == null || info.mode == null) return null;
+      final lo = int.parse(m.group(1)!);
+      final hi = int.parse(m.group(2) ?? m.group(1)!);
+      final minis = int.parse(m.group(3)!);
+      final each = int.parse(m.group(4)!);
+      if (lo < 1 || hi < lo || hi > 100 || minis < 1 || minis > 20) {
+        return null;
+      }
+      if (each < 1 || each > 50) return null;
+      line = _ImportedLine(
+        kc.ExercisePrescription(
+          slotId: slot,
+          exerciseId: id,
+          sets: 1,
+          repsLow: lo,
+          repsHigh: hi,
+          targetFlames: flames,
+          startLoadKg: startKg,
+          toCalibrate: false,
+          loadBasis: basis,
+          reasons: const <kc.Reason>[],
+          technique: kc.SetTechnique(
+            kind: kc.SetTechniqueKind.myoReps,
+            miniSetReps: each,
+            miniSets: minis,
+            intraRestSeconds: (sp.intra ?? 10).clamp(5, 60),
+          ),
+          intensity: intensity,
+        ),
+        role,
+      );
+    } else if (sp.kind == 'duration') {
+      // « 10 min », « 30-45 min » : mobilité, marche ou vélo léger, conduits
+      // par l'endurance de `kalis_adapt` 0.3.0.
+      final m = RegExp(r'^(\d+)(?:\s*-\s*(\d+))?\s*min$').firstMatch(text);
+      if (m == null || info.mode != null) return null;
+      if (cat.unit != kc.MeasureUnit.seconds) return null;
+      final lo = int.parse(m.group(1)!) * 60;
+      final hi = int.parse(m.group(2) ?? m.group(1)!) * 60;
+      if (lo < 60 || hi < lo || hi > 4 * 3600) return null;
+      line = _ImportedLine(
+        kc.ExercisePrescription(
+          slotId: slot,
+          exerciseId: id,
+          sets: 1,
+          secondsLow: lo,
+          secondsHigh: hi,
+          toCalibrate: false,
+          loadBasis: kc.LoadBasis.unloaded,
+          reasons: const <kc.Reason>[],
+        ),
+        kc.SlotRole.mobility,
+      );
+    } else if (sp.kind == 'interval' && e.interval != null) {
+      // « 8× (30 s effort / 30 s repos) » : groupe d'intervalles.
+      final iv = e.interval!;
+      if (info.mode != null) return null;
+      if (iv.rounds < 1 || iv.rounds > 20) return null;
+      if (iv.work < 5 || iv.work > 3600 || iv.rest > 3600) return null;
+      line = _ImportedLine(
+        kc.ExercisePrescription(
+          slotId: slot,
+          exerciseId: id,
+          sets: iv.rounds,
+          secondsLow: iv.work,
+          secondsHigh: iv.work,
+          restSeconds: iv.rest,
+          toCalibrate: false,
+          loadBasis: basis == kc.LoadBasis.external
+              ? kc.LoadBasis.unloaded
+              : basis,
+          reasons: const <kc.Reason>[],
+        ),
+        kc.SlotRole.conditioning,
+        group: kc.GroupSpec(
+          groupId: 'g',
+          format: kc.GroupFormat.intervals,
+          rounds: iv.rounds,
+          intervalSeconds: iv.work,
+          restBetweenRoundsSeconds: iv.rest,
+        ),
+      );
+    } else if (sp.kind == 'emom') {
+      // « EMOM 12 min × 5 reps par minute » : une ligne par minute
+      // (technique `emom`), dans un groupe au temps qui réunit les
+      // exercices enchaînés dans la même minute.
+      final m = RegExp(
+        r'^emom\s*(\d+)\s*min\s*[×x]\s*(\d+)\s*reps',
+      ).firstMatch(text);
+      if (m == null || info.mode == null) return null;
+      final minutes = int.parse(m.group(1)!);
+      final reps = int.parse(m.group(2)!);
+      if (minutes < 2 || minutes > 20 || reps < 1 || reps > 100) return null;
+      line = _ImportedLine(
+        kc.ExercisePrescription(
+          slotId: slot,
+          exerciseId: id,
+          sets: minutes,
+          repsLow: reps,
+          repsHigh: reps,
+          targetFlames: flames,
+          restSeconds: 0,
+          startLoadKg: startKg,
+          toCalibrate: false,
+          loadBasis: basis,
+          reasons: const <kc.Reason>[],
+          technique: kc.SetTechnique(
+            kind: kc.SetTechniqueKind.emom,
+            intervalSeconds: 60,
+            intervals: minutes,
+          ),
+          intensity: intensity,
+        ),
+        role,
+        group: kc.GroupSpec(
+          groupId: 'g',
+          format: kc.GroupFormat.emom,
+          intervalSeconds: 60,
+          durationSeconds: minutes * 60,
+        ),
+      );
+    } else if (sp.rowPrefix == 'R' || sp.rowPrefix == 'É') {
+      // Contrastes (« 3 rounds : 3 sauts groupés + 5 squats sautés ») et
+      // échelles (« 4 échelles dégressives de 7 à 1 ») : tours d'un groupe,
+      // servis tels qu'écrits.
+      int rounds;
+      int perRound;
+      var exerciseId = id;
+      final c = RegExp(r'^(\d+)\s*rounds?\s*:\s*(.+)$').firstMatch(text);
+      final l = RegExp(
+        r'^(\d+)\s*échelles?\s*(?:dégressives?\s*)?de\s*(\d+)\s*à\s*(\d+)',
+      ).firstMatch(text);
+      if (sp.rowPrefix == 'R' && c != null) {
+        rounds = int.parse(c.group(1)!);
+        perRound = 0;
+        for (final n in RegExp(r'(\d+)').allMatches(c.group(2)!)) {
+          perRound += int.parse(n.group(1)!);
+        }
+        // Contraste du squat : la ligne est la partie explosive.
+        final what = normalizeText(c.group(2)!);
+        if (what.contains('saut') && catalog.find('mu-squat-saute') != null) {
+          exerciseId = 'mu-squat-saute';
+        }
+      } else if (sp.rowPrefix == 'É' && l != null) {
+        rounds = int.parse(l.group(1)!);
+        final a = int.parse(l.group(2)!), b = int.parse(l.group(3)!);
+        final top = math.max(a, b), bottom = math.min(a, b);
+        if (bottom < 1 || top > 30) return null;
+        perRound = (top + bottom) * (top - bottom + 1) ~/ 2;
+      } else {
+        return null;
+      }
+      if (rounds < 1 || rounds > 20 || perRound < 1 || perRound > 500) {
+        return null;
+      }
+      final xInfo = book.find(exerciseId);
+      final xCat = catalog.find(exerciseId);
+      if (xInfo == null || xCat == null) return null;
+      final (xBasis, xKg) = _importLoad(e, xCat, xInfo);
+      line = _ImportedLine(
+        kc.ExercisePrescription(
+          slotId: slot,
+          exerciseId: exerciseId,
+          sets: rounds,
+          repsLow: perRound,
+          repsHigh: perRound,
+          targetFlames: flames,
+          restSeconds: rest,
+          startLoadKg: xKg,
+          toCalibrate: false,
+          loadBasis: xBasis,
+          reasons: const <kc.Reason>[],
+          intensity: intensity,
+        ),
+        exerciseId == id ? role : kc.SlotRole.accessory,
+        group: kc.GroupSpec(
+          groupId: 'g',
+          format: kc.GroupFormat.circuit,
+          rounds: rounds,
+          restBetweenRoundsSeconds: rest,
+        ),
+        asWritten: true,
+      );
+    }
+    if (line == null || line.item.validate().isNotEmpty) return null;
+    return line;
   }
 
   /// Formats que la portée simple ne lit pas mais que le contrat décrit :

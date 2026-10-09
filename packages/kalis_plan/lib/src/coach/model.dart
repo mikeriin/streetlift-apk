@@ -96,6 +96,11 @@ abstract final class Method {
   /// Mobilité en fin de séance.
   static const String mobility = 'mobility';
 
+  /// Pièce de conditionnement au format codifié (AMRAP, EMOM, tours au
+  /// meilleur temps, suite imposée, intervalles ; CP2, partie 1) : le
+  /// format est porté par le code du groupe.
+  static const String wod = 'wod';
+
   /// Ordre de retrait quand le temps ou le volume manque (du premier
   /// retiré au dernier).
   static const List<String> cutOrder = <String>[
@@ -336,7 +341,30 @@ enum CoachStyle {
 
   /// Calisthénie : figures.
   figures,
+
+  /// Musculation : hypertrophie et esthétique (CP2, partie 1).
+  hypertrophy,
+
+  /// Force : force athlétique et force générale (squat, couché, terre).
+  strength,
+
+  /// Course et cardio.
+  endurance,
+
+  /// Conditionnement (CrossFit).
+  conditioning,
+
+  /// Santé, mobilité, forme générale et perte de poids.
+  health,
 }
+
+/// Vrai pour un style du chemin street (débutant, sets & reps,
+/// streetlifting, figures).
+bool isStreetStyle(CoachStyle s) =>
+    s == CoachStyle.beginner ||
+    s == CoachStyle.reps ||
+    s == CoachStyle.lifting ||
+    s == CoachStyle.figures;
 
 /// Squelette d'un bloc.
 final class Skeleton {

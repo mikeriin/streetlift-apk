@@ -94,9 +94,9 @@ const _newNotes = <String>[
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
-  test('paquets 0.2.3 dans l’application', () {
-    expect(kp.kalisPlanVersion, '0.2.3');
-    expect(ka.kalisAdaptVersion, '0.2.3');
+  test('paquets 0.2.3 (CI1f : 0.3.0) dans l’application', () {
+    expect(kp.kalisPlanVersion, '0.3.0');
+    expect(ka.kalisAdaptVersion, '0.3.0');
   });
 
   group('textes des nouvelles raisons (0.2.3)', () {

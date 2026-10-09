@@ -7,10 +7,12 @@ import 'package:kalis_core/kalis_core.dart';
 import '../apply.dart';
 import '../book.dart';
 import '../coach.dart' show blockCoached;
+import '../endurance.dart';
 import '../engine.dart';
 import '../filter.dart';
 import '../numeric.dart' show exp, ln;
 import '../review.dart';
+import 'endurance_truth.dart';
 import 'policy.dart';
 import 'rng.dart';
 import 'truth.dart';
@@ -418,6 +420,17 @@ final class SimRun {
   /// de sa charge (modèles B et C ; CA2, partie 0).
   int painFlares = 0;
 
+  /// Blessures de surcharge de course ou de conditionnement (vérité
+  /// d'endurance ; CA2, partie 1).
+  int enduranceOveruse = 0;
+
+  /// Plus forte course faite rapportée à la plus longue des 30 jours
+  /// précédents (au moins trois courses dans la fenêtre), ou 0.
+  double worstRunSpike = 0;
+
+  /// Secondes de course faites par semaine de simulation.
+  final Map<int, double> runSecondsByWeek = <int, double>{};
+
   /// Séances du journal.
   final List<SessionRecord> sessions = <SessionRecord>[];
 
@@ -507,6 +520,8 @@ SimRun simulate({
 }) {
   final book = ExerciseBook(catalog, profile);
   final athlete = SimAthlete(spec, profile, book, seed, kind: truthKind);
+  // Vérité d'endurance et de conditionnement (CA2, partie 1).
+  final endurance = EnduranceTruth(truthKind, spec.level, seed);
   final aware = policy is CoachAwarePolicy ? policy : null;
   final rich = aware?.rich ?? false;
   final schemeLoad = <String, double>{};
@@ -641,6 +656,77 @@ SimRun simulate({
       for (final item in session.items) {
         final truth = athlete.truthOf(item.exerciseId);
         final measure = _measureOf(item);
+        final eInfo = truth == null ? book.find(item.exerciseId) : null;
+        final eKind = eInfo == null ? null : enduranceKindOf(eInfo);
+        if (truth == null &&
+            (eKind == EnduranceKind.run ||
+                eKind == EnduranceKind.conditioning) &&
+            item.kind != SetKind.warmup &&
+            item.sets > 0) {
+          // Course et conditionnement (CA2, partie 1) : faits d'après la
+          // vérité d'endurance de l'athlète, que le moteur ne connaît pas.
+          final rates =
+              SimRandom.of(seed, 'rate|$simDay|${item.exerciseId}').next() >=
+              spec.lazy;
+          final (EnduranceDone, BodyZone?) outcome;
+          if (eKind == EnduranceKind.run) {
+            outcome = endurance.run(
+              item,
+              item.sets,
+              simDay,
+              0,
+              ill: athlete.ill,
+              rates: rates,
+            );
+          } else {
+            var written = item;
+            for (final it in prescription.items) {
+              if (it.slotId == item.slotId) {
+                written = it;
+              }
+            }
+            final wr = written.repsHigh ?? written.secondsHigh;
+            final sr = item.repsHigh ?? item.secondsHigh;
+            final ws = written.sets <= 0 ? 1 : written.sets;
+            final share = wr == null || sr == null || wr <= 0
+                ? 1.0
+                : (sr / wr) * (item.sets / ws);
+            outcome = endurance.wodPiece(
+              item,
+              item.sets,
+              simDay,
+              0,
+              ill: athlete.ill,
+              rates: rates,
+              hardDaysBefore: endurance.hardStreakBefore(simDay),
+              writtenShare: share > 1 ? 1.0 : share,
+            );
+          }
+          final (made, injured) = outcome;
+          if (injured != null) {
+            athlete.overuse(injured, 4, 14);
+          }
+          for (var i = 0; i < made.sets; i++) {
+            done.add(
+              SetRecord(
+                exerciseId: item.exerciseId,
+                exerciseOrder: order,
+                setIndex: i,
+                kind: item.kind ?? SetKind.work,
+                reps: made.reps,
+                seconds: made.seconds,
+                distanceMeters: made.distanceMeters,
+                calories: made.calories,
+                flames: made.flames,
+                success: made.success,
+                excluded: false,
+                slotId: item.slotId,
+              ),
+            );
+          }
+          order++;
+          continue;
+        }
         if (truth == null || measure == 2) {
           // Exercice que le moteur ne modélise pas : fait comme prescrit.
           final reps = item.repsHigh ?? item.repsLow;
@@ -1183,6 +1269,7 @@ SimRun simulate({
         pains: athlete.sessionPains(),
         eventId: rich ? session.eventId : null,
       );
+      endurance.endDay(simDay);
       policy.finish(context, record);
       sessions.add(record);
       run.served.add(
@@ -1328,6 +1415,9 @@ SimRun simulate({
   }
   run.painAggravations = athlete.painAggravations;
   run.painFlares = athlete.painFlares;
+  run.enduranceOveruse = endurance.overuse;
+  run.worstRunSpike = endurance.worstSpike;
+  run.runSecondsByWeek.addAll(endurance.secondsByWeek());
   run.finalProfile = current;
   run.sessions.addAll(sessions);
   return run;

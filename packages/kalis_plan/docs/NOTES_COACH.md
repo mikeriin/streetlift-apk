@@ -172,3 +172,22 @@ autre raison, il rend `null` : le texte générique de `kalis_core` s'applique.
 | `plateau` | dernier résultat de test | bloc : test sans progrès sur le mouvement visé | le bloc change de méthode (variante plus dure du tirage) |
 | `slow_tempo` | durée de la descente (s) | ligne : traction au tempo excentrique (plateau) | montée sans élan, 2 s en haut, descente freinée, arrêt quand la montée ralentit |
 | `event_zone` | part du maximum écrite (%) | ligne : séries de la zone de l'épreuve en réalisation d'un objectif de répétitions | séries vers cette part, repos court, réserve sur la dernière |
+
+## Autres disciplines (kalis_plan 0.3.0)
+
+Depuis 0.3.0, le coach écrit aussi les autres disciplines (`lib/src/coach/general.dart`). Les notes ci-dessous
+s'ajoutent ; aucune valeur existante ne change de sens.
+
+- Hors street, l'échauffement et la version courte ont leurs propres codes (la `value` reste en minutes) :
+  `warmup_run` (course), `warmup_gym` (musculation, force, conditionnement), `warmup_health` (santé, mobilité,
+  senior) à la place de `general_warmup` ; `short_run` et `short_health` à la place de `short_version`.
+
+| Code | `value` | Émise quand | Texte rendu (résumé) |
+| --- | --- | --- | --- |
+| `wod_pace` | effort visé sur 10 (8) | ligne d'une pièce de conditionnement | Allure tenable du premier au dernier passage, 2 à 3 répétitions en réserve, mise à l'échelle, charges de repère. |
+| `chair_squat` | 0 | squat d'un senior (65 ans et plus) en santé | Squat en assis-debout d'une chaise, mains en appui puis bras croisés, chaise plus basse ensuite. |
+| `knee_shallow` | gêne déclarée du genou | chaise contre le mur, genou gêné à 3/10 ou plus | Chaise haute à 45-60°, gêne à 3/10 au plus pendant et le lendemain ; avis médical ou kiné à 5/10 et plus. |
+| `balance_progress` | 0 | marche sur les talons d'un programme de santé (équilibre) | Appui sur une jambe près d'un appui, puis marche talon-pointe, puis tête tournée, avec un critère de passage. |
+| `hold_support` | 0 | fente latérale d'un senior | Une main sur un appui, amplitude courte, transfert de poids si l'équilibre manque. |
+| `interval_pace` | allure en secondes **au kilomètre** (0.3.0 ; avant : sur la fraction, texte « 400 m ») | fractions de course | Allure des fractions au kilomètre, tirée de l'allure estimée sur 3 km. |
+| `event_day` | 0 | hors street : la course du jour de l'échéance (test chronométré) | Le jour J. |

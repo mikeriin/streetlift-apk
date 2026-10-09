@@ -291,8 +291,9 @@ void main() {
         s40.day!.items.any((i) => i.test?.kind == kc.TestKind.maxReps),
         isTrue,
       );
-      // Ce qui ne se déduit pas proprement reste absent (listé).
-      expect(imp.absent.keys, contains('N×N puis N×(N)'));
+      // Ce qui ne se déduit pas proprement reste absent (listé) ; CI1f :
+      // les myo-reps sont annotés.
+      expect(imp.absent.keys, isNot(contains('N×N puis N×(N)')));
       // ignore: avoid_print
       print('CI1E absent ${jsonEncode(imp.absent)}');
       // ignore: avoid_print

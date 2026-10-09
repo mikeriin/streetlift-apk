@@ -2393,21 +2393,24 @@ void main() {
   });
 
   group('codes de raison 0.4.0', () {
-    test('133 codes, les 92 premiers inchangés en tête', () {
-      expect(reasonRegistry, hasLength(133));
+    test('138 codes, les 92 premiers inchangés en tête', () {
+      expect(reasonRegistry, hasLength(138));
       expect(reasonRegistry[91].code, 'quest.start_bonus');
       expect(reasonRegistry[92].code, 'plan.season_phase');
       expect(reasonRegistry[129].code, 'adapt.mini_set_stop');
       // 0.4.1 (lot CP1) : trois codes de notes de coach, en fin de registre.
       expect(reasonRegistry[130].code, 'plan.coach_note');
       expect(reasonRegistry[131].code, 'plan.progression_rule');
-      expect(reasonRegistry.last.code, 'plan.pain_rule');
+      expect(reasonRegistry[132].code, 'plan.pain_rule');
+      // 0.4.3 (lot CA2) : cinq codes d'endurance, en fin de registre.
+      expect(reasonRegistry[133].code, 'adapt.run_capped');
+      expect(reasonRegistry.last.code, 'adapt.cross_fatigue');
       expect(reasonRegistry.first.code, 'plan.discipline_share');
-      // 41 codes nouveaux (38 en 0.4.0, 3 en 0.4.1), tous après les 92 de
-      // 0.3.0, sans doublon.
+      // 46 codes nouveaux (38 en 0.4.0, 3 en 0.4.1, 5 en 0.4.3), tous après
+      // les 92 de 0.3.0, sans doublon.
       final added = <String>[for (final s in reasonRegistry.skip(92)) s.code];
-      expect(added, hasLength(41));
-      expect(added.toSet(), hasLength(41));
+      expect(added, hasLength(46));
+      expect(added.toSet(), hasLength(46));
       expect(
         added.where((c) => c.startsWith('quest.')),
         isEmpty,

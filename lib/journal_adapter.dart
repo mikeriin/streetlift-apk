@@ -47,6 +47,82 @@ double? _number(Object? text) {
   return double.tryParse(text.trim().replaceAll(',', '.'));
 }
 
+/// CI1f : mini-séries d'une série (`parts` de la saisie) au format du
+/// journal du moteur ; null : aucune, ou illisibles.
+({int total, List<Map<String, Object?>> json})? _parts(
+  Object? raw,
+  bool seconds,
+) {
+  if (raw is! List || raw.isEmpty || raw.length > 120) return null;
+  var total = 0;
+  final json = <Map<String, Object?>>[];
+  for (final p in raw) {
+    if (p is! Map) return null;
+    final v = p['reps'];
+    if (v is! int || v < 0 || v > 1000) return null;
+    final r = p['restBefore'];
+    total += v;
+    json.add({
+      (seconds ? 'seconds' : 'reps'): v,
+      if (r is int && r >= 0 && r <= 3600) 'restBeforeSeconds': r,
+    });
+  }
+  return (total: total, json: json);
+}
+
+/// CI1f : myo-reps notés avant 6.11.0 en lignes séparées (activation, puis
+/// une ligne par mini-série) : une série avec ses parties, si c'est sûr
+/// (lignes validées d'affilée depuis l'activation, les suivantes non
+/// validées : la série s'est arrêtée là) ; null sinon.
+({int total, List<(int, int?)> parts, int? flames})? _groupMyo(
+  List<Map<String, dynamic>> all,
+  int rest,
+) {
+  if (all.length < 2 || all.length > 120) return null;
+  var done = 0;
+  while (done < all.length && all[done]['done'] == true) {
+    done++;
+  }
+  if (done == 0) return null;
+  for (var i = done; i < all.length; i++) {
+    if (all[i]['done'] == true) return null;
+  }
+  final rows = all.sublist(0, done);
+  final parts = <(int, int?)>[];
+  String? kg;
+  for (var i = 0; i < rows.length; i++) {
+    final x = rows[i];
+    if (x['done'] != true || x['excluded'] == true) return null;
+    if (x['parts'] != null) return null;
+    final v = _number(x['reps']);
+    if (v == null || v < 0 || v != v.truncateToDouble() || v > 1000) {
+      return null;
+    }
+    if (i == 0 && v < 1) return null;
+    final load = '${x['kg'] ?? ''}'.trim();
+    if (i == 0) {
+      kg = load;
+    } else if (load != kg) {
+      return null;
+    }
+    parts.add((v.toInt(), i == 0 ? null : rest));
+  }
+  final first = rows.first;
+  int? flames;
+  final f = first['flames'];
+  if (f is int && f >= Flames.min && f <= Flames.max) {
+    flames = f;
+  } else if (first['flamesUnknown'] != true) {
+    final rir = _number(first['effort']) ?? _number(first['rir']);
+    if (rir != null && rir >= 0) flames = Flames.fromRir(rir);
+  }
+  return (
+    total: parts.fold<int>(0, (a, p) => a + p.$1),
+    parts: parts,
+    flames: flames,
+  );
+}
+
 String _civil(DateTime d) =>
     '${d.year.toString().padLeft(4, '0')}-'
     '${d.month.toString().padLeft(2, '0')}-'
@@ -74,6 +150,22 @@ String _civil(DateTime d) =>
 ///   réussie atteint au moins le bas de sa plage (C10) ;
 /// - [testOf] : les séries de l'exercice sont celles d'un test.
 /// La note `flames` (G9, flammes de 1 à 10) passe avant `effort` et `rir`.
+///
+/// CI1f (mini-séries, contrat 0.4.0 § 12) :
+/// - une série notée avec ses mini-séries (`parts`) devient **une** ligne
+///   dont `reps` (ou `seconds`) est le total et `parts` le détail, avec la
+///   technique servie ([lineOf] : code `SetTechniqueKind`) ;
+/// - [lineOf] donne aussi l'exercice du bloc quand il diffère du nom de
+///   la ligne, la mesure (secondes ; minutes : `scale` 60) et la technique
+///   des lignes notées par tour ou par bloc (`density` : le moteur les
+///   compte sans y lire de capacité) ;
+/// - [myoOf] : l'exercice est une ligne de myo-reps du programme importé
+///   (repos des mini-séries en secondes) ; ses séries notées avant 6.11.0
+///   en lignes séparées (activation puis mini-séries) sont regroupées à la
+///   lecture en une série avec ses `parts` quand c'est sûr (toutes
+///   validées, mesures lisibles, même charge, aucune écartée, aucune déjà
+///   découpée) ; sinon laissées telles quelles. Le journal n'est jamais
+///   réécrit.
 ({TrainingLog log, JournalConversionReport report}) convertLegacyJournal(
   Map<String, dynamic> doc, {
   required String? Function(String name) exerciseId,
@@ -91,6 +183,16 @@ String _civil(DateTime d) =>
     int index,
   )?
   targetOf,
+  ({
+    String? exerciseId,
+    bool? seconds,
+    int scale,
+    String? technique,
+    bool meters,
+  })
+  Function(int week, int day, String exerciseKey, bool withParts)?
+  lineOf,
+  int? Function(int week, int day, String exerciseKey)? myoOf,
 }) {
   final report = JournalConversionReport();
   final logs = (doc['logs'] as Map?)?.cast<String, dynamic>() ?? const {};
@@ -152,7 +254,8 @@ String _civil(DateTime d) =>
       final slot = slotOf?.call(w, j, k);
       final test = testOf?.call(w, j, k) ?? false;
       report.setsNotDone += all.length - done.length;
-      final id = name.isEmpty ? null : exerciseId(name);
+      final line = lineOf?.call(w, j, k, false);
+      final id = line?.exerciseId ?? (name.isEmpty ? null : exerciseId(name));
       if (id == null) {
         // C6
         report.setsUnmappedExercise += done.length;
@@ -162,9 +265,40 @@ String _civil(DateTime d) =>
         continue;
       }
       if (done.isEmpty) continue;
-      final seconds = usesSeconds(id);
+      final seconds = line?.seconds ?? usesSeconds(id);
+      final scale = line?.scale ?? 1;
       final before = sets.length;
       var setIndex = 0;
+      // CI1f : myo-reps notés en lignes séparées, regroupés si c'est sûr.
+      final myoRest = myoOf?.call(w, j, k);
+      final grouped = myoRest == null ? null : _groupMyo(all, myoRest);
+      if (grouped != null) {
+        final rec = <String, Object?>{
+          'exerciseId': id,
+          'exerciseOrder': exerciseOrder,
+          'setIndex': 0,
+          'kind': test ? 'test' : 'work',
+          (seconds ? 'seconds' : 'reps'): grouped.total,
+          'technique': 'myo_reps',
+          'parts': [
+            for (final p in grouped.parts)
+              {
+                (seconds ? 'seconds' : 'reps'): p.$1,
+                if (p.$2 != null) 'restBeforeSeconds': p.$2,
+              },
+          ],
+          'success': grouped.parts.first.$1 > 0,
+          'excluded': false,
+        };
+        final kg = _number(all.first['kg']);
+        if (kg != null) rec['externalLoadKg'] = kg;
+        if (grouped.flames != null) rec['flames'] = grouped.flames;
+        if (slot != null) rec['slotId'] = slot;
+        sets.add(rec);
+        report.setsConverted += grouped.parts.length;
+        exerciseOrder++;
+        continue;
+      }
       for (final x in done) {
         final position = all.indexOf(x);
         final value = _number(x['reps']);
@@ -172,7 +306,15 @@ String _civil(DateTime d) =>
           report.setsWithoutMeasure++; // C8
           continue;
         }
-        final measure = value.truncate();
+        var measure = value.truncate();
+        // CI1f : mini-séries saisies une à une : la ligne porte le total.
+        final parts = _parts(x['parts'], seconds);
+        if (parts != null) measure = parts.total;
+        // CI1f : durée notée en minutes (ligne marquée, ou ligne de durée
+        // du programme, toujours en minutes).
+        if (parts == null && (x['unit'] == 'min' || scale == 60)) {
+          measure *= 60;
+        }
         final rec = <String, Object?>{
           'exerciseId': id,
           'exerciseOrder': exerciseOrder,
@@ -181,7 +323,11 @@ String _civil(DateTime d) =>
         };
         final kg = _number(x['kg']);
         if (kg != null) rec['externalLoadKg'] = kg; // C7
-        rec[seconds ? 'seconds' : 'reps'] = measure; // C8
+        if (line?.meters ?? false) {
+          rec['distanceMeters'] = measure.toDouble(); // CI1f : mètres
+        } else {
+          rec[seconds ? 'seconds' : 'reps'] = measure; // C8
+        }
         final flames = x['flames'];
         if (flames is int && flames >= Flames.min && flames <= Flames.max) {
           rec['flames'] = flames; // G9
@@ -196,6 +342,21 @@ String _civil(DateTime d) =>
         rec['success'] = measure > 0 && (low is! int || measure >= low); // C10
         rec['excluded'] = x['excluded'] == true;
         if (slot != null) rec['slotId'] = slot;
+        // Mini-séries gardées avec leur technique (une ligne dont la
+        // technique n'est plus servie est lue sur son total).
+        final partsTechnique = parts == null
+            ? null
+            : lineOf?.call(w, j, k, true).technique;
+        if (parts != null && (lineOf == null || partsTechnique != null)) {
+          rec['parts'] = parts.json;
+          if (partsTechnique != null) rec['technique'] = partsTechnique;
+        } else if (line?.technique case final t?) {
+          rec['technique'] = t;
+        } else if (myoRest != null && all.length >= 2) {
+          // Myo-reps en lignes séparées, pas regroupables sans risque :
+          // aucune ligne n'est lue comme une série d'une traite.
+          rec['technique'] = 'myo_reps';
+        }
         if (target != null && target.isNotEmpty) rec['target'] = target;
         // CI1 : rôle de la ligne dans la technique servie (série de tête,
         // allégée, montée, test, tentative…), contrat 0.4.0 § 12.
@@ -245,6 +406,26 @@ String _civil(DateTime d) =>
     extra?.forEach((k, v) => v == null ? out.remove(k) : out[k] = v);
     out['sets'] = sets;
     out['pains'] = const <Object?>[];
+    // CI1f : résultats des groupes d'exercices enchaînés.
+    final groups = s['groups'];
+    if (groups is Map && groups.isNotEmpty) {
+      final results = <Map<String, Object?>>[];
+      for (final g in groups.entries) {
+        final v = g.value;
+        if (g.key is! String || v is! Map) continue;
+        int? whole(Object? x, int max) =>
+            x is int && x >= 0 && x <= max ? x : null;
+        results.add({
+          'groupId': g.key,
+          'completed': v['completed'] == true,
+          if (whole(v['elapsed'], 86400) case final e?) 'elapsedSeconds': e,
+          if (whole(v['rounds'], 1000) case final r?) 'rounds': r,
+          if (whole(v['extraReps'], 10000) case final x?) 'extraReps': x,
+        });
+        if (results.length >= 20) break;
+      }
+      if (results.isNotEmpty) out['groupResults'] = results;
+    }
     sessions.add(out);
     report.sessionsConverted++;
   }
