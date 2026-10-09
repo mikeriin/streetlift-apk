@@ -4,8 +4,8 @@
 // - place de chaque journée dans un bloc du moteur : bloc de `kalis_plan`
 //   (programme créé, ajustements de la passe 2 compris) ou bloc importé
 //   depuis les semaines affichées (programme personnel du propriétaire,
-//   ancien programme L10, semaines d'avant un programme créé), sans rien
-//   changer à leur structure (D5.10) ;
+//   ancien programme L10, semaines d'avant un programme créé), annoté au
+//   contrat 0.4.0 par CI1e (imported_program.dart, C11 : D5.10 levée) ;
 // - journal présenté au moteur (règles C1 à C12 de G3 + emplacement, cible
 //   affichée et bilan de chaque séance servie) ;
 // - séance du jour : prescription figée dans le journal (`SessionLog.adapt`),
@@ -136,16 +136,59 @@ extension SessionAdaptStore on AppStore {
   kc.AthleteProfile? get adaptProfile {
     final a = athlete;
     if (a == null) return null;
-    final ref = jsonEncode(AthleteProfileStore(this).athleteHealthRef.toJson());
+    final event = importedEndEvent;
+    final ref =
+        '${jsonEncode(AthleteProfileStore(this).athleteHealthRef.toJson())}'
+        '|${event?.date.iso ?? '-'}';
     final hit = _g9Cache['profile'];
     if (hit is (AthleteRecord, String, kc.AthleteProfile) &&
         identical(hit.$1, a) &&
         hit.$2 == ref) {
       return hit.$3;
     }
-    final p = AthleteProfileStore(this).athleteProfileForEngines;
+    var p = AthleteProfileStore(this).athleteProfileForEngines;
+    if (p != null && event != null) p = _withImportedEvent(p, event);
     if (p != null) _g9Cache['profile'] = (a, ref, p);
     return p;
+  }
+
+  /// CI1e (C11) : échéance de la fin du programme importé (fin de S40 pour
+  /// le propriétaire), donnée au moteur dynamique tant que le programme
+  /// importé est en place (sans programme créé) et que le profil n'a pas d'échéance principale
+  /// à venir ; jamais écrite dans le profil enregistré. Null : pas de
+  /// programme importé daté, ou programme terminé.
+  kc.SeasonEvent? get importedEndEvent {
+    final s = program.start;
+    // Semaines d'avant un programme créé : pas d'échéance (le programme
+    // créé a la sienne).
+    if (planProgram != null) return null;
+    final last = math.min(importedLastWeek, program.weeks.length);
+    if (s == null || last < 1) return null;
+    final day = civilOf(DateTime(s.year, s.month, s.day + last * 7 - 1));
+    if (day.dayNumber < _adaptToday.dayNumber) return null;
+    return kc.SeasonEvent(
+      id: kImportedEventId,
+      kind: kc.EventKind.personalTest,
+      priority: kc.EventPriority.main,
+      date: day,
+      name: 'Fin du programme (S$last)',
+    );
+  }
+
+  kc.AthleteProfile _withImportedEvent(
+    kc.AthleteProfile p,
+    kc.SeasonEvent event,
+  ) {
+    final today = _adaptToday.dayNumber;
+    final own = p.events ?? const <kc.SeasonEvent>[];
+    if (own.any(
+      (e) => e.priority == kc.EventPriority.main && e.date.dayNumber >= today,
+    )) {
+      return p;
+    }
+    if (own.any((e) => e.id == event.id)) return p;
+    final next = p.copyWith(events: [...own, event]);
+    return next.validate().isEmpty ? next : p;
   }
 
   // ------------------------------------------------------------ blocs
@@ -155,12 +198,6 @@ extension SessionAdaptStore on AppStore {
     final s = program.start;
     if (s == null) return j;
     return (s.weekday - 1 + j - 1) % 7 + 1;
-  }
-
-  /// Dernière semaine (S) portée par un bloc importé.
-  int get _importedLastWeek {
-    final plan = planProgram;
-    return plan == null ? program.weeks.length : plan.firstWeek - 1;
   }
 
   /// Place de la journée S[week]·J[j] dans un bloc du moteur (null : hors
@@ -181,19 +218,32 @@ extension SessionAdaptStore on AppStore {
       }
       return null;
     }
-    if (week > _importedLastWeek) return null;
-    final chunk = (week - 1) ~/ 52;
-    final built = _adaptImported(chunk);
-    if (built == null) return null;
-    final day = built.dayOfJ[j];
-    if (day == null) return null;
-    // G10 : propositions en place sur le bloc importé (le programme affiché
-    // ne change pas ; la séance servie, si).
-    final block = _g9Memo(
-      'evolved|${identityHashCode(built.block)}|$_evoRevision',
-      () => EvolutionStore(this).evolveBlock(built.block),
-    );
-    return AdaptPlace(block, week - 1 - chunk * 52, day, true);
+    if (week > importedLastWeek) return null;
+    // CI1e (C11) : bloc du programme importé annoté au contrat 0.4.0, avec
+    // les propositions de Koach en place (journées éventuellement
+    // déplacées par une restructuration : lues sur le bloc ajusté).
+    final seg = importedProgram?.segmentOf(week);
+    if (seg == null) return null;
+    final block = _importedEvolved(seg);
+    for (final d in block.pass1.days) {
+      if (_importedJ(d.weekday) == j) {
+        return AdaptPlace(block, week - seg.first, d.dayIndex, true);
+      }
+    }
+    return null;
+  }
+
+  /// Bloc importé [seg] avec les propositions de Koach en place.
+  kc.ProgramBlock _importedEvolved(ImportedSegment seg) => _g9Memo(
+    'evolved|${identityHashCode(seg.block)}|$_evoRevision',
+    () => EvolutionStore(this).evolveBlock(seg.block),
+  );
+
+  /// Journée J d'un jour de la semaine (ISO) dans le programme importé.
+  int _importedJ(int weekday) {
+    final s = program.start;
+    if (s == null) return weekday;
+    return (weekday - s.weekday + 7) % 7 + 1;
   }
 
   /// Bloc de `kalis_plan` avec les ajustements de la passe 2 et (G10) les
@@ -210,55 +260,52 @@ extension SessionAdaptStore on AppStore {
     });
   }
 
-  /// Emplacement du bloc importé d'un exercice du programme affiché.
+  /// Emplacement d'avant CI1e (bloc importé unique de 40 semaines) d'un
+  /// exercice du programme affiché : relu dans les séances enregistrées
+  /// par les versions ≤ 6.9.3.
   static String importedSlot(int j, String exerciseId) =>
       'j$j-${exerciseId.split('~').first}';
 
+  /// Préfixe de l'identifiant d'un exercice ajouté par Koach dans le
+  /// programme importé (restructuration) : « koach-<emplacement> ».
+  static const kKoachAddedPrefix = 'koach-';
+
   // ------------------------------------- CI1c : couche sur le bloc importé
 
-  /// Identifiant du bloc importé de la tranche [chunk] (52 semaines).
-  static String _importedBlockId(int chunk) => chunk == 0
-      ? kLegacyProgramBlockId
-      : '$kLegacyProgramBlockId-${chunk + 1}';
-
-  /// CI1c (C10.2) : les propositions de Koach en place (appliquées en mode
-  /// assisté ou acceptées) sur le bloc importé — le programme de 40
-  /// semaines du propriétaire — sont montrées dans le programme affiché
-  /// (MON PROGRAMME, accueil, séance) : chaque journée touchée est
-  /// remplacée, à la lecture, par une journée qui porte l'ajustement, avec
-  /// l'original en dessous ([DayPlan.original]). Rien n'est réécrit ni
-  /// régénéré : retirer la proposition (annuler) rend la journée
-  /// d'origine. Appelé après chaque mise en forme du programme et à chaque
+  /// CI1c (C10.2), étendu par CI1e (C11) : les propositions de Koach en
+  /// place (appliquées en mode assisté ou acceptées) sur les blocs du
+  /// programme importé — le programme de 40 semaines du propriétaire —
+  /// sont montrées dans le programme affiché (MON PROGRAMME, accueil,
+  /// séance) : chaque journée touchée est remplacée, à la lecture, par une
+  /// journée qui porte l'ajustement (séries, charges, exercice remplacé,
+  /// retiré, ajouté ou déplacé d'un jour à l'autre), avec l'original en
+  /// dessous ([DayPlan.original]). Annuler la proposition rend la journée
+  /// d'origine ; « Revenir à mon programme d'origine » (C11.2) retire
+  /// toutes les propositions. Les séances déjà faites ne sont jamais
+  /// réécrites. Appelé après chaque mise en forme du programme et à chaque
   /// changement du magasin (rien n'est recalculé si rien n'a changé).
   void syncImportedOverlay() {
-    final chunks = <int>{};
+    final imp = _evoRaw == null ? importedProgram : null;
+    final segs = <ImportedSegment>[];
     final ids = <String>[];
-    if (_evoRaw == null) {
-      for (final e in planEvolution.entries) {
-        if (!e.inEffect || !e.blockId.startsWith(kLegacyProgramBlockId)) {
-          continue;
+    if (imp != null) {
+      for (final seg in imp.segments) {
+        final list = planEvolution.inEffect(seg.blockId);
+        if (list.isEmpty) continue;
+        segs.add(seg);
+        for (final e in list) {
+          ids.add('${e.blockId}/${e.id}/${e.status}');
         }
-        for (var c = 0; c * 52 < program.weeks.length; c++) {
-          if (_importedBlockId(c) == e.blockId) chunks.add(c);
-        }
-        ids.add('${e.blockId}/${e.id}/${e.status}');
       }
     }
     final key = StringBuffer()
       ..write(identityHashCode(program))
       ..write('|$_overlayGen|$_evoRevision|')
+      ..write(identityHashCode(imp))
+      ..write('|')
       ..write(ids.join(','));
-    final built = <int, ({kc.ProgramBlock block, Map<int, int> dayOfJ})?>{};
-    if (chunks.isNotEmpty) {
-      for (final c in chunks) {
-        built[c] = _adaptImported(c);
-        // (Identité du bloc, une instance de classe : un enregistrement
-        // n'a pas d'identité garantie.)
-        key.write('|$c:${identityHashCode(built[c]?.block)}');
-      }
-    }
     // Séances déjà faites : jamais réécrites par la couche.
-    if (chunks.isNotEmpty) {
+    if (segs.isNotEmpty) {
       var h = 0;
       for (final e in logs.entries) {
         if (e.value.done) h = (h * 31 + e.key.hashCode) & 0x3fffffff;
@@ -272,21 +319,7 @@ extension SessionAdaptStore on AppStore {
     programRevision++;
     _allEx = null;
     _muscleIndex = null;
-    // Journées d'origine rétablies, puis couches posées à nouveau.
-    for (final w in program.weeks) {
-      for (var i = 0; i < w.days.length; i++) {
-        final s = w.days[i].source;
-        if (s != null) w.days[i] = s;
-      }
-    }
-    try {
-      for (final c in chunks) {
-        final b = built[c];
-        if (b != null) _overlayChunk(c, b);
-      }
-    } catch (_) {
-      // Couche impossible à poser : le programme d'origine reste affiché
-      // (la séance servie garde les ajustements, comme avant CI1c).
+    void restore() {
       for (final w in program.weeks) {
         for (var i = 0; i < w.days.length; i++) {
           final s = w.days[i].source;
@@ -294,32 +327,64 @@ extension SessionAdaptStore on AppStore {
         }
       }
     }
+
+    // Journées d'origine rétablies, puis couches posées à nouveau.
+    restore();
+    try {
+      for (final seg in segs) {
+        _overlaySegment(imp!, seg);
+      }
+    } catch (_) {
+      // Couche impossible à poser : le programme d'origine reste affiché
+      // (la séance servie garde les ajustements).
+      restore();
+    }
   }
 
-  void _overlayChunk(
-    int chunk,
-    ({kc.ProgramBlock block, Map<int, int> dayOfJ}) built,
-  ) {
-    final evolved = _g9Memo(
-      'evolved|${identityHashCode(built.block)}|$_evoRevision',
-      () => EvolutionStore(this).evolveBlock(built.block),
-    );
-    if (identical(evolved, built.block)) return;
-    final entries = planEvolution.inEffect(_importedBlockId(chunk));
-    final first = chunk * 52 + 1;
-    final last = math.min(first + 51, _importedLastWeek);
-    for (var n = first; n <= last; n++) {
+  void _overlaySegment(ImportedProgram imp, ImportedSegment seg) {
+    final evolved = _importedEvolved(seg);
+    if (identical(evolved, seg.block)) return;
+    final entries = planEvolution.inEffect(seg.blockId);
+    for (var n = seg.first; n <= seg.last; n++) {
       if (n > program.weeks.length) break;
-      final weekIndex = n - first;
+      final weekIndex = n - seg.first;
       final week = program.week(n);
+      // Exercices d'origine de la semaine, par emplacement (un exercice
+      // déplacé d'un jour à l'autre garde sa fiche).
+      // Un exercice d'une séance déjà faite ne se déplace pas (il serait
+      // montré deux fois).
+      final bySlot = <String, Exercise>{};
+      for (final d in week.days) {
+        if (logs[sessionKey(n, d.j)]?.done ?? false) continue;
+        for (final e in d.original.exercises) {
+          final s = imp.slotOf(n, d.j, e.id);
+          if (s != null) bySlot.putIfAbsent(s, () => e);
+        }
+      }
+      final origAll = {
+        for (final d in seg.block.pass1.days)
+          for (final x in _blockItems(seg.block, weekIndex, d.dayIndex))
+            x.slotId: x,
+      };
       for (var i = 0; i < week.days.length; i++) {
         final d = week.days[i];
-        final dayIndex = built.dayOfJ[d.j];
-        if (dayIndex == null) continue;
         // Séance déjà faite : elle reste ce qui a été prévu ce jour-là.
         if (logs[sessionKey(n, d.j)]?.done ?? false) continue;
-        final orig = _blockItems(built.block, weekIndex, dayIndex);
-        final evo = _blockItems(evolved, weekIndex, dayIndex);
+        final weekday = _adaptWeekday(d.j);
+        final origDay = [
+          for (final x in seg.block.pass1.days)
+            if (x.weekday == weekday) x.dayIndex,
+        ].firstOrNull;
+        final evoDay = [
+          for (final x in evolved.pass1.days)
+            if (x.weekday == weekday) x.dayIndex,
+        ].firstOrNull;
+        final orig = origDay == null
+            ? const <kc.ExercisePrescription>[]
+            : _blockItems(seg.block, weekIndex, origDay);
+        final evo = evoDay == null
+            ? const <kc.ExercisePrescription>[]
+            : _blockItems(evolved, weekIndex, evoDay);
         if (kc.jsonDeepEquals(
           [for (final x in orig) x.toJson()],
           [for (final x in evo) x.toJson()],
@@ -329,44 +394,25 @@ extension SessionAdaptStore on AppStore {
         final touching = [
           for (final e in entries)
             if (e.fromWeek <= weekIndex &&
-                EvolutionStore.evolutionTouchesDay(e, dayIndex))
+                (evoDay == null ||
+                    EvolutionStore.evolutionTouchesDay(e, evoDay) ||
+                    (origDay != null &&
+                        EvolutionStore.evolutionTouchesDay(e, origDay))))
               e,
         ];
-        week.days[i] = _overlayDay(d.original, orig, evo, touching, evolved);
+        week.days[i] = _overlayDay(
+          imp,
+          n,
+          d.original,
+          orig,
+          evo,
+          origAll,
+          bySlot,
+          touching,
+          evolved,
+        );
       }
     }
-  }
-
-  /// Le bloc ajusté garde les journées du bloc importé (même jour de la
-  /// semaine pour chaque journée) : sinon la couche ne peut pas être
-  /// montrée jour pour jour (et la proposition n'est pas applicable).
-  static bool importedLayoutKept(kc.ProgramBlock a, kc.ProgramBlock b) {
-    if (identical(a, b)) return true;
-    final da = {for (final d in a.pass1.days) d.dayIndex: d.weekday};
-    final db = {for (final d in b.pass1.days) d.dayIndex: d.weekday};
-    if (da.length != db.length) return false;
-    for (final e in da.entries) {
-      if (db[e.key] != e.value) return false;
-    }
-    if (a.pass2.weeks.length != b.pass2.weeks.length) return false;
-    // Un emplacement ajouté doit pouvoir porter un exercice du programme
-    // affiché (« j<J>-<identifiant> »).
-    final js = <int, int>{};
-    for (final d in a.pass1.days) {
-      final m = RegExp(
-        r'^j(\d)-',
-      ).firstMatch(d.slots.isEmpty ? '' : d.slots.first.slotId);
-      if (m != null) js[d.dayIndex] = int.parse(m.group(1)!);
-    }
-    for (final w in b.pass2.weeks) {
-      for (final d in w.days) {
-        final j = js[d.dayIndex];
-        for (final it in d.items) {
-          if (j == null || !it.slotId.startsWith('j$j-')) return false;
-        }
-      }
-    }
-    return true;
   }
 
   static List<kc.ExercisePrescription> _blockItems(
@@ -383,14 +429,20 @@ extension SessionAdaptStore on AppStore {
     return const [];
   }
 
-  /// Journée [d] du programme importé avec les prescriptions ajustées
-  /// [evo] (au lieu de [orig]) : séries, répétitions, charge, repos ou
-  /// exercice changés, exercice retiré ou ajouté. Un exercice que le bloc
-  /// importé ne porte pas reste celui du programme.
+  /// Journée [d] (semaine [week]) du programme importé avec les
+  /// prescriptions ajustées [evo] (au lieu de [orig]) : séries,
+  /// répétitions, charge, repos ou exercice changés ; exercice retiré,
+  /// ajouté, ou venu d'un autre jour de la semaine ([bySlot], [origAll]).
+  /// Un exercice que le bloc importé ne porte pas reste celui du
+  /// programme, à sa place.
   DayPlan _overlayDay(
+    ImportedProgram imp,
+    int week,
     DayPlan d,
     List<kc.ExercisePrescription> orig,
     List<kc.ExercisePrescription> evo,
+    Map<String, kc.ExercisePrescription> origAll,
+    Map<String, Exercise> bySlot,
     List<EvolutionEntry> entries,
     kc.ProgramBlock evolved,
   ) {
@@ -403,21 +455,23 @@ extension SessionAdaptStore on AppStore {
                   false)
                 e,
           ].lastOrNull ??
-          entries.where((e) => e.proposal.diff == null).lastOrNull,
+          entries.where((e) => e.proposal.diff == null).lastOrNull ??
+          entries.lastOrNull,
       evolved,
     );
     final out = <Exercise>[];
     final ids = <String>{};
     for (final e in d.exercises) {
-      ids.add(e.id);
-      final slot = importedSlot(d.j, e.id);
-      final a = o[slot];
-      if (a == null) {
+      final slot = imp.slotOf(week, d.j, e.id);
+      final a = slot == null ? null : o[slot];
+      if (slot == null || a == null) {
         out.add(e);
+        ids.add(e.id);
         continue;
       }
       final b = v[slot];
-      if (b == null) continue; // retiré par Koach
+      if (b == null) continue; // retiré par Koach, ou déplacé
+      ids.add(e.id);
       if (kc.jsonDeepEquals(a.toJson(), b.toJson())) {
         out.add(e);
         continue;
@@ -426,8 +480,24 @@ extension SessionAdaptStore on AppStore {
     }
     for (final b in evo) {
       if (o.containsKey(b.slotId)) continue;
-      final id = b.slotId.substring('j${d.j}-'.length);
-      if (id.isEmpty || ids.contains(id) || id.contains('~')) continue;
+      // Venu d'un autre jour de la semaine : même fiche, même identifiant
+      // (le journal le retrouve).
+      final moved = bySlot[b.slotId];
+      if (moved != null && !ids.contains(moved.id)) {
+        ids.add(moved.id);
+        final a = origAll[b.slotId];
+        out.add(
+          a != null && kc.jsonDeepEquals(a.toJson(), b.toJson())
+              ? moved
+              : _overlayExercise(moved, a, b, why(b.slotId)),
+        );
+        continue;
+      }
+      // Exercice d'une séance déjà faite (ou déjà montré) : pas de copie.
+      if (moved == null && origAll.containsKey(b.slotId)) continue;
+      final id = '$kKoachAddedPrefix${b.slotId}';
+      if (ids.contains(id)) continue;
+      ids.add(id);
       final shell = Exercise.manual(
         id: id,
         name: _adaptNameOf(b.exerciseId),
@@ -524,139 +594,14 @@ extension SessionAdaptStore on AppStore {
       final m = RegExp(r'^k\d+\.\d+\.(.+)$').firstMatch(base);
       return m?.group(1);
     }
-    return importedSlot(j, base);
-  }
-
-  ({kc.ProgramBlock block, Map<int, int> dayOfJ})? _adaptImported(int chunk) {
-    final catalog = content.catalog;
-    final book = _adaptBook();
-    if (catalog == null || book == null) return null;
-    final sig = [
-      'import',
-      chunk,
-      identityHashCode(program),
-      identityHashCode(planProgram),
-      planProgram?.updatedAt ?? '-',
-      program.weeks.length,
-      program.start?.toIso8601String() ?? '-',
-      identityHashCode(weekKinds),
-      identityHashCode(book),
-      for (final e in values.entries) '${e.key}=${e.value}',
-    ].join('|');
-    return _g9Memo(sig, () {
-      try {
-        return _adaptBuildImported(chunk, catalog, book);
-      } catch (_) {
-        return null;
-      }
-    });
-  }
-
-  ({kc.ProgramBlock block, Map<int, int> dayOfJ})? _adaptBuildImported(
-    int chunk,
-    kc.Catalog catalog,
-    ka.ExerciseBook book,
-  ) {
-    final first = chunk * 52 + 1;
-    final last = math.min(first + 51, _importedLastWeek);
-    if (last < first) return null;
-    final weeks =
-        <(int, kc.WeekKind, Map<int, List<kc.ExercisePrescription>>)>[];
-    final js = <int>{};
-    final slotExercise = <String, String>{};
-    final slotRole = <String, kc.SlotRole>{};
-    for (var n = first; n <= last; n++) {
-      final w = program.week(n);
-      final days = <int, List<kc.ExercisePrescription>>{};
-      // CI1c : toujours le programme d'origine (sans la couche de Koach).
-      for (final d in [for (final x in w.days) x.original]) {
-        final items = <kc.ExercisePrescription>[];
-        final used = <String>{};
-        for (final e in d.exercises) {
-          final it = _adaptImportItem(e, d.j, catalog, book);
-          if (it == null || !used.add(it.$1.slotId)) continue;
-          items.add(it.$1);
-          slotExercise.putIfAbsent(it.$1.slotId, () => it.$1.exerciseId);
-          if (it.$2 == kc.SlotRole.main ||
-              !slotRole.containsKey(it.$1.slotId)) {
-            slotRole[it.$1.slotId] = it.$2;
-          }
-        }
-        if (items.isNotEmpty) {
-          days[d.j] = items;
-          js.add(d.j);
-        }
-      }
-      final kind = weekKinds.isDeload(n)
-          ? kc.WeekKind.deload
-          : weekKinds.isTest(n)
-          ? kc.WeekKind.test
-          : w.blockKey == 'P0'
-          ? kc.WeekKind.intro
-          : kc.WeekKind.build;
-      weeks.add((n - first, kind, days));
+    // CI1e : exercice ajouté par Koach (restructuration du bloc importé),
+    // ou test reporté d'un autre jour (« k<S>.<J>.<emplacement> »).
+    if (base.startsWith(kKoachAddedPrefix)) {
+      return base.substring(kKoachAddedPrefix.length);
     }
-    if (js.isEmpty) return null;
-    final ordered = js.toList()..sort();
-    final dayOfJ = {for (var i = 0; i < ordered.length; i++) ordered[i]: i};
-    final start = program.start;
-    final startDay = start == null
-        ? _adaptToday
-        : civilOf(DateTime(start.year, start.month, start.day + chunk * 364));
-    final blockId = chunk == 0
-        ? kLegacyProgramBlockId
-        : '$kLegacyProgramBlockId-${chunk + 1}';
-    final slots = slotExercise.keys.toList()..sort();
-    final pass1 = kc.Pass1Plan(
-      blockId: blockId,
-      blockIndex: 0,
-      weeks: weeks.length,
-      startDate: startDay,
-      seed: 0,
-      engineVersion: 'import',
-      days: [
-        for (final j in ordered)
-          kc.PlanDay(
-            dayIndex: dayOfJ[j]!,
-            weekday: _adaptWeekday(j),
-            minutesBudget: 90,
-            focus: 'imported',
-            slots: [
-              for (final s in slots)
-                if (s.startsWith('j$j-'))
-                  kc.PlanSlot(
-                    slotId: s,
-                    exerciseId: slotExercise[s]!,
-                    role: slotRole[s]!,
-                    locked: true,
-                    reasons: const <kc.Reason>[],
-                  ),
-            ],
-          ),
-      ],
-      score: const kc.PlanScore(total: 0, components: <kc.ScoreComponent>[]),
-      reasons: const <kc.Reason>[],
-    );
-    final pass2 = kc.Pass2Plan(
-      blockId: blockId,
-      engineVersion: 'import',
-      weeks: [
-        for (final (index, kind, days) in weeks)
-          kc.WeekPrescription(
-            weekIndex: index,
-            kind: kind,
-            days: [
-              for (final j in ordered)
-                if (days.containsKey(j))
-                  kc.DayPrescription(dayIndex: dayOfJ[j]!, items: days[j]!),
-            ],
-          ),
-      ],
-      reasons: const <kc.Reason>[],
-    );
-    final block = kc.ProgramBlock(pass1: pass1, pass2: pass2);
-    if (block.validate().isNotEmpty) return null;
-    return (block: block, dayOfJ: dayOfJ);
+    final moved = RegExp(r'^k\d+\.\d+\.(j\d-.+)$').firstMatch(base);
+    if (moved != null) return moved.group(1);
+    return importedProgram?.slotOf(week, j, base) ?? importedSlot(j, base);
   }
 
   /// Prescription portée d'un exercice du programme affiché (null : sans
@@ -808,13 +753,78 @@ extension SessionAdaptStore on AppStore {
     final hit = _g9Parsed[raw];
     if (hit != null) return hit.$1;
     SessionAdapt? parsed;
+    var keep = true;
     try {
-      parsed = SessionAdapt.fromJson(raw);
+      // CI1e : séance d'avant 6.10.0 servie sur le bloc importé unique
+      // (40 semaines) : relue sur le bloc annoté de sa semaine (même
+      // journée, emplacements stables) ; le journal enregistré n'est pas
+      // réécrit.
+      var m = raw;
+      if (raw['blockId'] == kLegacyProgramBlockId) {
+        final up = _upgradeLegacyAdapt(key, raw);
+        if (up == null) {
+          keep = importedProgram != null;
+        } else {
+          m = up;
+        }
+      }
+      parsed = SessionAdapt.fromJson(m);
     } on FormatException {
       parsed = null;
     }
-    _g9Parsed[raw] = (parsed,);
+    if (keep) _g9Parsed[raw] = (parsed,);
     return parsed;
+  }
+
+  /// CI1e : JSON d'une séance du bloc importé unique d'avant 6.10.0,
+  /// ramené au bloc annoté de sa semaine (null : rien à ramener).
+  Map<String, dynamic>? _upgradeLegacyAdapt(
+    String key,
+    Map<String, dynamic> raw,
+  ) {
+    final m = RegExp(r'^S(\d+)-J(\d)$').firstMatch(key);
+    final imp = importedProgram;
+    if (m == null || imp == null) return null;
+    final w = int.parse(m[1]!), j = int.parse(m[2]!);
+    final seg = imp.segmentOf(w);
+    final dayIndex = seg?.dayOfJ[j];
+    if (seg == null || dayIndex == null) return null;
+    final ids = <String, String>{};
+    for (final e
+        in program.week(w).day(j)?.original.exercises ?? <Exercise>[]) {
+      final s = imp.slotOf(w, j, e.id);
+      if (s != null) ids[importedSlot(j, e.id)] = s;
+    }
+    Object? plan(Object? p) {
+      if (p is! Map) return p;
+      final out = Map<String, dynamic>.of(p.cast<String, dynamic>());
+      if (out.containsKey('blockId')) out['blockId'] = seg.blockId;
+      if (out.containsKey('weekIndex')) out['weekIndex'] = w - seg.first;
+      if (out.containsKey('dayIndex')) out['dayIndex'] = dayIndex;
+      final items = out['items'];
+      if (items is List) {
+        out['items'] = [
+          for (final it in items)
+            if (it is Map)
+              {
+                ...it.cast<String, dynamic>(),
+                'slotId': ids[it['slotId']] ?? it['slotId'],
+              }
+            else
+              it,
+        ];
+      }
+      return out;
+    }
+
+    return {
+      ...raw,
+      'blockId': seg.blockId,
+      'week': w - seg.first,
+      'day': dayIndex,
+      'plan': plan(raw['plan']),
+      if (raw.containsKey('base')) 'base': plan(raw['base']),
+    };
   }
 
   SessionAdapt? sessionAdapt(int week, int j) =>
@@ -949,10 +959,11 @@ extension SessionAdaptStore on AppStore {
   }
 
   /// CI1 : plan de saison du bloc servi (programme créé au chemin
-  /// calibré) ; null pour un bloc importé (programme du propriétaire) ou
-  /// un programme du chemin 0.1.
+  /// calibré) ; CI1e (C11) : celui du programme importé annoté (échéance
+  /// à la fin de sa dernière semaine) ; null pour un programme du chemin
+  /// 0.1.
   kc.SeasonPlan? adaptSeasonOf(AdaptPlace place) =>
-      place.imported ? null : planProgram?.season;
+      place.imported ? importedProgram?.season : planProgram?.season;
 
   kc.SessionPlan _adaptPrescribe(
     AdaptPlace place,
@@ -1401,8 +1412,9 @@ extension SessionAdaptStore on AppStore {
     }
     // CI1b (`kalis_adapt` 0.2.2, mode coach) : un test de la semaine pas
     // encore fait (bilan bas, séance manquée) est servi ce jour, avant le
-    // travail du jour ; il porte l'emplacement du jour d'origine.
-    if (place != null && !place.imported) {
+    // travail du jour ; il porte l'emplacement du jour d'origine. CI1e
+    // (C11) : programme importé compris.
+    if (place != null) {
       final known = <String>{
         ...blockSlots.keys,
         for (final e in out)
@@ -1509,9 +1521,9 @@ extension SessionAdaptStore on AppStore {
     for (final it in place?.day?.items ?? const <kc.ExercisePrescription>[]) {
       if (it.slotId == e.slotId) return it;
     }
-    // CI1b : test reporté d'un autre jour de la semaine (bloc du moteur
-    // calibré seulement, jamais le bloc importé du propriétaire).
-    if (place == null || place.imported) return null;
+    // CI1b : test reporté d'un autre jour de la semaine (CI1e : programme
+    // importé compris).
+    if (place == null) return null;
     for (final w in place.block.pass2.weeks) {
       if (w.weekIndex != place.weekIndex) continue;
       for (final d in w.days) {

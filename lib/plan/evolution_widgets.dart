@@ -28,6 +28,9 @@ kc.Pass1Plan? evolutionPass1(String blockId) {
   }
   final r = store.lastEvolutionReview;
   if (r != null && r.place.blockId == blockId) return r.place.block.pass1;
+  // CI1e : bloc du programme importé annoté (blocs précédents compris).
+  final seg = store.importedProgram?.byBlockId(blockId);
+  if (seg != null) return store.evolveBlock(seg.block).pass1;
   return null;
 }
 

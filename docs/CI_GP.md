@@ -265,6 +265,25 @@ vide ou absent.
 - Tests Dart du lot : `test/ci1d_paquets_test.dart`. Mise au point sur
   `claude/ci-ci1d-rapide` (`rapide.yml` seul, comme CI1c).
 
+### CI1e (dev6.10.0, pipeline CP, voie App)
+
+- Programme de 40 semaines du propriétaire sous toutes les fonctionnalités
+  (DECISIONS_CP.md C11) : annotation au contrat 0.4.0
+  (`lib/imported_program.dart`), filets C11.2 (`lib/program_origin.dart`).
+  Paquets inchangés (0.2.3).
+- Cible émulateur `integration_test/koach_ci1e_test.dart` (a sombre, rouge ;
+  b clair, violet), jouée avant les cibles CI1c et CI1 (gardées) : session
+  personnelle, programme commencé il y a 12 semaines (S13), mode assisté →
+  sauvegarde d'origine prise au premier lancement, carte et écran de la
+  saison (compte à rebours jusqu'à la fin de S40), carte « Ton programme
+  d'origine », séance du jour servie en mode coach, une série de plus
+  appliquée puis « Revenir à mon programme d'origine ». Relevés
+  `emulateur/ci1e_releve_<partie>.json`, captures
+  `emulateur/ci1e_*_<thème>.png`. APK de test précompilé sur la cible CI1e ;
+  délai du job émulateur porté à 55 min.
+- Tests Dart du lot : `test/ci1e_programme_40s_test.dart`. Mise au point sur
+  `claude/ci-ci1e-rapide` (`rapide.yml` seul, comme CI1c).
+
 ### Mode dev dans les tests d'intégration
 
 - Données de la session personnelle semées par un `AppStore()` séparé avant

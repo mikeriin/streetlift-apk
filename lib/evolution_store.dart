@@ -197,9 +197,8 @@ extension EvolutionStore on AppStore {
       ms: sw.elapsedMilliseconds,
     );
     // CI1 : tests et figures d'un bloc du chemin calibré reportés au
-    // profil (jamais pour le programme importé du propriétaire).
+    // profil ; CI1e (C11) : programme importé annoté compris.
     final reported =
-        !place.imported &&
         ct.isCoachBlock(place.block) &&
         AthleteProfileStore(
           this,
@@ -215,26 +214,20 @@ extension EvolutionStore on AppStore {
   /// tests.)
   bool evolutionReceive(AdaptPlace place, List<kc.Proposal> proposals) {
     if (_evoRaw != null) return false;
-    var notApplicableChanged = false;
-    // CI1c (C10.2) : sur le bloc importé (programme de 40 semaines), une
-    // proposition qui ne peut pas s'appliquer jour pour jour par-dessus le
-    // programme n'est plus proposée comme applicable : Koach le dit en
-    // clair dans Évolution.
+    // CI1e (C11) : plus de garde « jour pour jour » sur le programme
+    // importé : toute proposition s'applique (la couche montre aussi les
+    // journées restructurées). Seule une proposition qui ne change rien
+    // au bloc n'est pas reçue.
+    final off = <kc.Proposal>[];
     if (place.imported) {
       final kept = <kc.Proposal>[];
-      final off = <kc.Proposal>[];
       for (final p in proposals) {
         (evolutionApplicable(place, p) ? kept : off).add(p);
       }
-      notApplicableChanged =
-          off.map((p) => p.id).join('|') !=
-          evolutionNotApplicable.map((p) => p.id).join('|');
-      evolutionNotApplicable = off;
       proposals = kept;
-    } else {
-      notApplicableChanged = evolutionNotApplicable.isNotEmpty;
-      evolutionNotApplicable = const [];
     }
+    final notApplicableChanged = evolutionNotApplicable.isNotEmpty;
+    evolutionNotApplicable = const [];
     final mode = SessionAdaptStore(this).adaptMode;
     final today = _evoToday.iso;
     final offered = {for (final p in proposals) p.id};
@@ -296,17 +289,13 @@ extension EvolutionStore on AppStore {
     return true;
   }
 
-  /// CI1c : la proposition [p] change le bloc de [place] et, pour le bloc
-  /// importé, garde ses journées (la couche se montre jour pour jour).
+  /// CI1c : la proposition [p] change le bloc de [place] (CI1e : plus de
+  /// garde « jour pour jour » pour le programme importé, C11).
   bool evolutionApplicable(AdaptPlace place, kc.Proposal p) {
     try {
       final after = ka.applyProposal(place.block, p);
       if (identical(after, place.block)) return false;
-      if (kc.jsonDeepEquals(after.toJson(), place.block.toJson())) {
-        return false;
-      }
-      return !place.imported ||
-          SessionAdaptStore.importedLayoutKept(place.block, after);
+      return !kc.jsonDeepEquals(after.toJson(), place.block.toJson());
     } catch (_) {
       return false;
     }
@@ -511,10 +500,9 @@ extension EvolutionStore on AppStore {
     final r = lastEvolutionReview;
     final s = r?.review.summary;
     final weeks = s?.weeksObserved ?? 0;
-    final imported = r?.place.imported ?? false;
-    final blocks = r == null
-        ? 0
-        : (imported ? weeks ~/ 6 : r.place.block.pass1.blockIndex);
+    // CI1e : les blocs du programme importé sont numérotés comme ceux du
+    // moteur (6 semaines au plus).
+    final blocks = r == null ? 0 : r.place.block.pass1.blockIndex;
     const p = ka.AdaptParams.standard;
     final level = s?.unlockLevel ?? ka.unlockLevelFor(weeks, blocks, p);
     const order = kc.UnlockLevel.values;

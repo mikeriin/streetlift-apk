@@ -147,8 +147,8 @@ extension PlanStore on AppStore {
   /// Valide le programme de [c] (passe 2 faite) : il devient l'instance
   /// active. Le programme précédent est gardé (semaines passées, retour
   /// pendant 7 jours) ; le profil apprend ce que la revue a dit.
-  void applyPlanCreation(PlanCreation c) {
-    final s = planStartFor();
+  void applyPlanCreation(PlanCreation c, {PlanStart? startAt}) {
+    final s = startAt ?? planStartFor();
     final at = _planAt;
     final hadProgram = s.replacing;
     final prefix = <Map<String, dynamic>>[];
@@ -348,9 +348,56 @@ extension PlanStore on AppStore {
     }
   }
 
+  // ------------------------------- CI1e : bloc suivant du programme importé
+
+  /// Semaine (S) du programme aujourd'hui (null : avant son départ).
+  int? get _planWeekToday {
+    final start = program.start;
+    if (start == null) return null;
+    final o = Program.civilIndex(_planToday) - Program.civilIndex(start);
+    return o < 0 ? null : o ~/ 7 + 1;
+  }
+
+  /// CI1e (C11) : bloc du programme importé en cours (programme de 40
+  /// semaines du propriétaire, ou semaines d'avant un programme créé ;
+  /// après la dernière semaine importée : le dernier bloc) ; null : semaine
+  /// d'un programme créé, ou rien d'importé.
+  ImportedSegment? get planImportedSegment {
+    final week = _planWeekToday;
+    if (week == null) return null;
+    final plan = planProgram;
+    if (plan != null && week >= plan.firstWeek) return null;
+    final imp = importedProgram;
+    if (imp == null) return null;
+    final seg = imp.segmentOf(week);
+    if (seg != null) return seg;
+    return plan == null && week > imp.segments.last.last
+        ? imp.segments.last
+        : null;
+  }
+
+  /// CI1e (C11) : dernière semaine d'un bloc du programme importé — le
+  /// bloc suivant peut être écrit par le moteur calibré à la place de la
+  /// suite du programme (proposé dans Mon programme, jamais imposé : sans
+  /// rien faire, le programme continue tel qu'il est écrit).
+  bool get planImportedNextBlockOffered {
+    final seg = planImportedSegment;
+    final week = _planWeekToday;
+    if (seg == null || week == null || !planCanCreate) return false;
+    if (week < seg.last) return false;
+    // Fin d'un bloc du programme (P0, B1…) ou fin du programme ; pas aux
+    // coupes internes d'un bloc de plus de 6 semaines.
+    final last = math.min(importedLastWeek, program.weeks.length);
+    if (seg.last >= last) return true;
+    final a = program.week(seg.last), b = program.week(seg.last + 1);
+    return a.blockKey != b.blockKey || a.block != b.block;
+  }
+
   /// Bloc suivant proposé par le moteur (null : impossible).
   ({kc.BlockProposal proposal, kc.NextBlockRequest request})?
   proposeNextBlock() {
+    final seg = planImportedSegment;
+    if (seg != null) return _proposeAfterImported(seg);
     final plan = planProgram;
     final start = program.start;
     final profile = planNextBlockProfile;
@@ -379,6 +426,80 @@ extension PlanStore on AppStore {
     }
   }
 
+  /// CI1e : bloc suivant écrit par le moteur calibré après le bloc
+  /// importé [seg] (le bloc tel qu'il a été fait, avec les propositions de
+  /// Koach en place).
+  ({kc.BlockProposal proposal, kc.NextBlockRequest request})?
+  _proposeAfterImported(ImportedSegment seg) {
+    final start = program.start;
+    final profile = planNextBlockProfile;
+    final catalog = content.catalog;
+    if (start == null || profile == null || catalog == null) return null;
+    final first = _importedNextFirstWeek(seg);
+    final d = DateTime(start.year, start.month, start.day + (first - 1) * 7);
+    final previous = SessionAdaptStore(this)._importedEvolved(seg);
+    final req = kc.NextBlockRequest(
+      profile: profile,
+      seed: 0,
+      startDate: civilOf(d),
+      previous: previous,
+      adaptation: _importedSummary(previous),
+      locks: const [],
+    );
+    try {
+      return (proposal: kp.KalisPlan().nextBlock(catalog, req), request: req);
+    } catch (_) {
+      return null;
+    }
+  }
+
+  /// Première semaine du bloc qui suit le bloc importé [seg] (après toute
+  /// séance déjà saisie).
+  int _importedNextFirstWeek(ImportedSegment seg) {
+    var first = seg.last + 1;
+    for (final k in logs.keys) {
+      final m = RegExp(r'^S(\d+)-J(\d)$').firstMatch(k);
+      if (m == null) continue;
+      final w = int.parse(m[1]!), j = int.parse(m[2]!);
+      if (w >= first && _loggedAt(w, j)) first = w + 1;
+    }
+    return first;
+  }
+
+  kc.AdaptationSummary _importedSummary(kc.ProgramBlock block) {
+    final profile = SessionAdaptStore(this).adaptProfile;
+    final catalog = content.catalog;
+    if (profile != null && catalog != null) {
+      try {
+        return kalisAdaptEngine
+            .review(
+              catalog,
+              kc.AdaptInput(
+                profile: profile,
+                block: block,
+                log: SessionAdaptStore(this).adaptTrainingLog(),
+                today: civilOf(_planToday),
+                decisions: planEvolution.decisions,
+                season: importedProgram?.season,
+              ),
+            )
+            .summary;
+      } catch (_) {}
+    }
+    return kc.AdaptationSummary(
+      asOf: civilOf(_planToday),
+      weeksObserved: block.pass1.weeks,
+      sessionsPlanned: 0,
+      sessionsCompleted: 0,
+      unlockLevel: kc.UnlockLevel.loadsReps,
+      confidence: 0,
+      estimates: const [],
+      pains: const [],
+      avoidedExerciseIds: const [],
+      reasons: const [],
+    );
+  }
+
   /// G10 (D4.8) : bloc suivant à passer en revue (nouveaux exercices) puis
   /// à valider, comme à la création (G7). Null : impossible.
   PlanCreation? newNextBlockCreation({bool? journal}) {
@@ -401,6 +522,26 @@ extension PlanStore on AppStore {
   /// Ajoute le bloc suivant validé ([c] : passe 2 faite) ; le profil
   /// apprend ce que la revue a dit.
   void applyNextBlockCreation(PlanCreation c) {
+    // CI1e : bloc suivant d'un bloc importé : un programme créé commence
+    // là (les semaines d'avant restent celles du programme importé ; le
+    // programme d'origine reste sauvegardé, C11.2).
+    final seg = planImportedSegment;
+    final start = program.start;
+    if (seg != null && start != null && c.pass2 != null) {
+      final first = _importedNextFirstWeek(seg);
+      applyPlanCreation(
+        c,
+        startAt: (
+          start: civilOf(
+            DateTime(start.year, start.month, start.day + (first - 1) * 7),
+          ),
+          firstWeek: first,
+          replacing: true,
+          programStart: start,
+        ),
+      );
+      return;
+    }
     final plan = planProgram;
     if (plan == null || c.pass2 == null) return;
     final at = _planAt;

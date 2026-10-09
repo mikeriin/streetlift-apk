@@ -88,8 +88,11 @@ void main() {
       expect(app.logs['S12-J1']?.adapt, isNull);
     });
 
-    test('programme du propriétaire (D5.10) : porté tel quel dans un bloc '
-        'importé, séance servie par kalis_adapt, structure intacte', () async {
+    // CI1e (C11) : le programme est annoté en blocs de 6 semaines au plus
+    // (au lieu d'un bloc importé de 40 semaines, D5.10 levée) ; il n'est
+    // toujours pas régénéré.
+    test('programme du propriétaire (C11) : bloc annoté, séance servie par '
+        'kalis_adapt, structure intacte', () async {
       await _ownerState(app);
       _saveProfile(app, kc.GuidanceMode.assisted);
       final before = [
@@ -104,22 +107,22 @@ void main() {
       ];
       final place = app.adaptPlaceOf(12, 1)!;
       expect(place.imported, isTrue);
-      expect(place.blockId, kLegacyProgramBlockId);
-      expect(place.block.pass1.weeks, 40);
+      expect(place.blockId, importedBlockId(12));
+      expect(place.block.pass1.weeks, 4);
       expect(place.block.validate(), isEmpty);
-      expect(place.weekIndex, 11);
+      expect(place.weekIndex, 0);
       final day = app.program.week(12).day(1)!;
       // Chaque exercice porté garde ses séries, sa plage et sa place.
       final items = place.day!.items;
       expect(items, isNotEmpty);
       for (final it in items) {
         final e = day.exercises.firstWhere(
-          (x) => SessionAdaptStore.importedSlot(1, x.id) == it.slotId,
+          (x) => app.adaptSlotOf(12, 1, x.id) == it.slotId,
         );
         expect(it.sets, app.setCount(e));
       }
       final a = app.adaptOpen(12, day)!;
-      expect(a.blockId, kLegacyProgramBlockId);
+      expect(a.blockId, importedBlockId(12));
       expect(a.asked, isFalse);
       expect(a.check, isNull);
       expect(a.plan.validate(), isEmpty);
@@ -275,7 +278,7 @@ void main() {
           'sleepQuality': 1,
           'energy': 1,
         });
-        expect(s.programRef!.blockId, kLegacyProgramBlockId);
+        expect(s.programRef!.blockId, importedBlockId(12));
         expect(s.plannedWorkSets, plannedWorkSetsOf(undone.active));
       },
     );
@@ -844,6 +847,13 @@ void main() {
       await tester.pumpWidget(page(AdaptSummaryScreen(week: week, base: day)));
       await tester.pumpAndSettle();
       expect(find.byKey(const ValueKey('adapt-summary')), findsOneWidget);
+      // CI1e : séance servie en mode coach (programme annoté) : résumé plus
+      // long, le bouton est plus bas.
+      await tester.scrollUntilVisible(
+        find.byKey(const ValueKey('summary-done')),
+        300,
+        scrollable: find.byType(Scrollable).first,
+      );
       expect(find.byKey(const ValueKey('summary-done')), findsOneWidget);
       expect(tester.takeException(), isNull);
     });
