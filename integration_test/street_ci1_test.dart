@@ -24,6 +24,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:kalis_core/kalis_core.dart' as kc;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:streetlift_tracker/adapt/adapt_texts.dart' show painStopsOf;
 import 'package:streetlift_tracker/athlete_profile.dart';
 import 'package:streetlift_tracker/dev/dev_session.dart';
 import 'package:streetlift_tracker/kalis_clock.dart';
@@ -548,8 +549,16 @@ void main() {
         // répété qu'une fois par semaine ; la séance suivante de l'arrêt
         // garde la carte (exercices retirés ou remplacés), avec ou sans la
         // consigne de consulter selon le jour.
+        // (Séance suivante, jamais la séance guidée déjà commencée ; la
+        // carte n'est attendue que si l'arrêt y retire ou remplace un
+        // mouvement : une séance sans appui du poignet n'en a pas.)
         final i = days.indexOf(st);
-        final next = i >= 0 && i + 1 < days.length ? days[i + 1] : null;
+        final rest = [
+          if (i >= 0)
+            for (final d in days.skip(i + 1))
+              if (hit == null || d != hit) d,
+        ];
+        final next = rest.isEmpty ? null : rest.first;
         if (next != null) {
           await SessionHost.restart(
             () => DevSession.setOffsetDays(_offsetTo(dateOf(next.$1, next.$2))),
@@ -571,6 +580,9 @@ void main() {
             find.byKey(const ValueKey('health-pain-stop')),
           );
           final na = store.sessionAdapt(next.$1, next.$2);
+          releve['douleur_suite_attendue'] =
+              na != null &&
+              painStopsOf(na.active, store.adaptExerciseName).isNotEmpty;
           releve['douleur_suite_renvoi'] =
               na?.active.reasons.any(
                 (r) => r.code == 'adapt.pain_persistent',
@@ -625,7 +637,7 @@ void main() {
     expect(releve['douleur_carte'], isTrue);
     expect(releve['douleur_arret'], isTrue);
     expect(releve['douleur_retires_absents'], isTrue);
-    if (releve['douleur_suite_jour'] != null) {
+    if (releve['douleur_suite_attendue'] == true) {
       expect(releve['douleur_suite_carte'], isTrue);
     }
     expect(releve['retour_perso'], isTrue);

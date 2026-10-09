@@ -8,4 +8,5 @@ Fait :
 - test/ci1d_paquets_test.dart.
 
 Fait aussi : tests CI1d verts en CI rapide (run 37862991537), suite complète verte avec 0.2.3 (run 37860966524), étape émulateur « douleur_suite » ajoutée à street_ci1_test.dart, README/SUIVI/CI_GP.
-Reste : relecture indépendante, contrôle complet ci-3d, main, build signé, livraison.
+Commit local bd1f0c97 (arbre 6f5a1871), contrôle complet poussé sur claude/ci-3d (4ad17817). Relecture indépendante : 7 constats traités (CI rapide 37863643673 vert).
+Reste : résultat ci-3d, push main, build signé, livraison.

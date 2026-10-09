@@ -157,11 +157,12 @@ class _HealthCheckPageState extends State<HealthCheckPage> {
     final block = store.adaptPlaceOf(_w, widget.base.j)?.block;
     // Notes du bloc : l'arrêt d'une zone déjà dit par la séance n'est pas
     // répété.
+    // CI1d : zones à l'arrêt lues aussi dans les ajustements (le renvoi
+    // n'est dans les raisons de la séance qu'une fois par semaine).
+    final codes = painStopZoneCodes(a.active);
     final stopped = <int>{
-      for (final r in a.active.reasons)
-        if (r.code == 'adapt.pain_persistent')
-          for (final z in kc.BodyZone.values)
-            if (z.code == r.params['zone']) z.index,
+      for (final z in kc.BodyZone.values)
+        if (codes.contains(z.code)) z.index,
     };
     final notes = block == null
         ? const <String>[]
@@ -170,8 +171,14 @@ class _HealthCheckPageState extends State<HealthCheckPage> {
     // CI1d : la consigne de consulter suit le moteur (première séance de
     // l'arrêt, puis une fois par semaine).
     final notice = painStopNoticeZones(a.active);
+    final held = painStopHeldZones(a.active);
     final lines = <String>[
-      for (final s in stops) painStopText(s, notice: notice.contains(s.zone)),
+      for (final s in stops)
+        painStopText(
+          s,
+          notice: notice.contains(s.zone),
+          held: held.contains(s.zone),
+        ),
       ...notes,
     ];
     final stopTitle =
