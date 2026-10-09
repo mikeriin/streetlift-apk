@@ -420,13 +420,13 @@ String? coachReasonText(Reason r, Catalog catalog) {
           'Arrêt immédiat et avis médical : douleur dans la poitrine, '
               'essoufflement anormal, malaise ou vertige. Souffle pendant '
               "l'effort, sans bloquer la respiration sur les séries longues.",
-        CoachNotes.shortVersion when v is num && v >= 300 =>
-          'Jour chargé : version courte de ${_int(v - 300)} min — 3 min de '
+        CoachNotes.shortVersion when p['family'] == 'health' =>
+          'Jour chargé : version courte de ${_int(v)} min — 3 min de '
               "marche, l'exercice de jambes et l'équilibre, puis 3 min "
               "d'étirements. Une séance courte vaut mieux qu'une séance "
               'sautée.',
-        CoachNotes.shortVersion when v is num && v >= 100 =>
-          'Jour chargé : version courte de ${_int(v - 100)} min — 5 min de '
+        CoachNotes.shortVersion when p['family'] == 'run' =>
+          'Jour chargé : version courte de ${_int(v)} min — 5 min de '
               'marche rapide puis footing facile, sans fractions. Une '
               "séance courte vaut mieux qu'une séance sautée.",
         CoachNotes.shortVersion =>
@@ -879,19 +879,19 @@ String? coachReasonText(Reason r, Catalog catalog) {
         CoachNotes.easyPace =>
           'Allure de conversation (tu peux parler en phrases), '
               '${_int(v)} min.',
-        CoachNotes.generalWarmup when v is num && v >= 300 =>
-          "Chaque séance commence par ${_int(v - 300)} min d'échauffement "
+        CoachNotes.generalWarmup when p['family'] == 'health' =>
+          "Chaque séance commence par ${_int(v)} min d'échauffement "
               '(comptées dans la durée estimée) : marche sur place ou '
               'marche rapide, puis mobilité debout des épaules (bâton), des '
               'hanches et des chevilles, près d\'un appui.',
-        CoachNotes.generalWarmup when v is num && v >= 200 =>
-          "Chaque séance commence par ${_int(v - 200)} min d'échauffement "
+        CoachNotes.generalWarmup when p['family'] == 'gym' =>
+          "Chaque séance commence par ${_int(v)} min d'échauffement "
               '(comptées dans la durée estimée) : 3 à 5 min de cardio léger '
               '(rameur, vélo), mobilité des épaules et des hanches, puis '
               'les séries de montée en charge du premier exercice (barre '
               'vide, puis deux ou trois paliers).',
-        CoachNotes.generalWarmup when v is num && v >= 100 =>
-          "Chaque séance commence par ${_int(v - 100)} min d'échauffement "
+        CoachNotes.generalWarmup when p['family'] == 'run' =>
+          "Chaque séance commence par ${_int(v)} min d'échauffement "
               '(comptées dans la durée estimée) : 5 min de trot progressif, '
               'mobilité des chevilles et des hanches, gammes (montées de '
               'genoux, talons-fesses) ; avant les fractions, deux ou trois '

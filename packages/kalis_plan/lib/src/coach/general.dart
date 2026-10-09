@@ -222,6 +222,12 @@ CoachStyle? generalStyleOf(Athlete a) {
     case TrainingDiscipline.cardio:
       return CoachStyle.endurance;
     case TrainingDiscipline.crossfit:
+      // Mode prudent ou reprise après plus d'un an : pas de pièces à
+      // effort élevé, le programme de santé (R5-P7, R5-P28 ; relecture du
+      // code de 0.3.0).
+      if (a.cautious || a.gapWeeks >= 52) {
+        return CoachStyle.health;
+      }
       return CoachStyle.conditioning;
     case TrainingDiscipline.mobility || TrainingDiscipline.generalFitness:
       return CoachStyle.health;
@@ -1134,7 +1140,11 @@ Set<int> _buildEndurance(_Builder b) {
   }
 
   final quality = <int>[];
-  final wanted = a.level == 0 ? 1 : (a.level >= 1 && n >= 5 ? 2 : 1);
+  // (Mode prudent : aucune séance de qualité, endurance fondamentale
+  // seulement — relecture du code de 0.3.0.)
+  final wanted = a.cautious
+      ? 0
+      : (a.level == 0 ? 1 : (a.level >= 1 && n >= 5 ? 2 : 1));
   for (var k = 0; k < wanted; k++) {
     var best = -1;
     for (final d in runnable) {

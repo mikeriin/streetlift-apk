@@ -1141,7 +1141,17 @@ final class Athlete {
     var best = 0.0;
     for (final b in profile.benchmarks ?? const <Benchmark>[]) {
       final t = b.seconds;
-      if (b.kind == BenchmarkKind.timeTrial && t != null && t / 60 > best) {
+      final id = b.exerciseId;
+      // (Une course seulement : ni rameur ni vélo — relecture du code de
+      // 0.3.0.)
+      final running =
+          id.startsWith('ca-footing') ||
+          id.startsWith('ca-sortie') ||
+          id.startsWith('ca-course');
+      if (b.kind == BenchmarkKind.timeTrial &&
+          running &&
+          t != null &&
+          t / 60 > best) {
         best = t / 60;
       }
     }

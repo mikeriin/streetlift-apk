@@ -210,6 +210,7 @@ List<String> coachAudit(
             !day.items.any(
               (p) =>
                   p.kind == SetKind.test &&
+                  p.test?.kind == TestKind.timeTrial &&
                   p.reasons.any((r) => r.params['note'] == CoachNotes.eventDay),
             )) {
           out.add(
