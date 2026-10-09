@@ -1,5 +1,18 @@
 # Journal des versions de kalis_adapt
 
+## 0.3.1
+
+Lot CY, partie 0 (sécurité) du pipeline « Calibrage des programmes ». Contrat additif (trois paramètres).
+
+- **Première gêne du poignet** (3/10 ou plus dans les deux semaines, avant tout arrêt) : la poussée paume à plat
+  passe tout de suite sur un appui neutre faisable (parallettes, poignées, pompe mains serrées sur une barre
+  basse) ; pendant un arrêt, la pompe mains sur la barre basse compte comme appui neutre (prise de poignée).
+- **Couloir de charge** : à 85 % du 1RM écrit ou plus, la charge servie ne dépasse plus l'écrit
+  (`coachCorridorHeavyShare`).
+- **Schéma changé d'une séance à l'autre du même emplacement** : charge totale bornée par la hausse à schéma
+  égal, corrigée de 2,5 % par répétition de moins (`coachRepLoadShare`, `coachRepGapMax`).
+- **Jour de bilan bas** : il ne devient plus le repère d'un jour bas suivant (sous-dosage qui se reconduisait).
+
 ## 0.3.0
 
 Lot CA2, partie 1 du pipeline « Calibrage des programmes » : course, cardio, conditionnement, mobilité et profils

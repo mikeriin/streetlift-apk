@@ -116,7 +116,10 @@ ExerciseInfo? findSubstitute(
         e.loadType == notLoadType ||
         e.difficulty > o.difficulty ||
         (e.discipline != o.discipline && e.rootId != o.rootId) ||
-        !e.feasibleWith(equipment) ||
+        !(e.feasibleWith(equipment) ||
+            (neutralWrist &&
+                e.id == coachBarPushUp &&
+                equipment.contains(coachLowBar))) ||
         (place != null && !e.places.contains(place)) ||
         (avoid != null && avoid(e))) {
       continue;
@@ -339,7 +342,13 @@ SessionPlan buildSessionPlan(
       comeback.heldFor(e) ||
       (wristStopped &&
           e.stressOn(Joint.wrist) != JointStress.low &&
-          !coachWristNeutralSupport(e));
+          !coachWristNeutralSupport(e, equipment));
+  final wristGene = coached && wristGeneRecent(state, day);
+  final wristGeneLevel = wristGene
+      ? state.pains[BodyZone.wristHand]!
+            .reportsBetween(day - 13, day)
+            .reduce((a, b) => a > b ? a : b)
+      : 0;
 
   // 1. Lieu du jour et zones douloureuses : exercices remplacés ou retirés.
   for (final d in drafts) {
@@ -421,6 +430,61 @@ SessionPlan buildSessionPlan(
         );
         continue;
       }
+    }
+    // Première gêne du poignet (3 sur 10 ou plus dans les deux semaines,
+    // avant tout arrêt) : une poussée paume à plat passe tout de suite sur
+    // un appui à prise neutre faisable aujourd'hui (parallettes, poignées,
+    // pompe mains serrées sur une barre basse), sans attendre la règle
+    // « douleur qui dure » (CY, partie 0 : relecture documentée de CP2,
+    // `street_01`, `street_03` — variante neutre proposée six semaines après
+    // la première gêne). Sans appui neutre faisable, la poussée reste écrite,
+    // dose plafonnée (règle du poignet sensible).
+    if (wristGene &&
+        !misplaced &&
+        painZone == null &&
+        !tooHeavy &&
+        !wristStopped &&
+        d.item.kind == SetKind.work &&
+        info.mode == CapacityMode.reps &&
+        e.stressOn(Joint.wrist) == JointStress.moderate &&
+        coachPainStopHits(e, BodyZone.wristHand) &&
+        !coachWristNeutralSupport(e, equipment)) {
+      final neutral = findSubstitute(
+        ctx,
+        info,
+        equipment: equipment,
+        place: place,
+        pains: painsToday,
+        taken: taken,
+        neutralWrist: true,
+        avoid: (x) =>
+            x.stressOn(Joint.wrist) == JointStress.high ||
+            stopAvoid(x) ||
+            !coachWristNeutralSupport(x, equipment),
+      );
+      if (neutral != null &&
+          neutral.mode == CapacityMode.reps &&
+          neutral.fraction > 0) {
+        final why = <Reason>[
+          reason(ReasonCodes.adaptPainReported, <String, Object?>{
+            'zone': BodyZone.wristHand.code,
+            'intensity': wristGeneLevel,
+          }),
+        ];
+        taken.add(neutral.id);
+        adjustments.add(
+          SessionAdjustment(
+            kind: AdjustmentKind.exerciseSwapped,
+            exerciseId: e.id,
+            replacementExerciseId: neutral.id,
+            reasons: why,
+          ),
+        );
+        d.reasons.addAll(why);
+        d.info = neutral;
+        d.item = _retarget(d.item, neutral);
+      }
+      continue;
     }
     if (!misplaced && painZone == null && !tooHeavy) {
       continue;
@@ -519,9 +583,15 @@ SessionPlan buildSessionPlan(
         // (Échauffement compris : un appui sur les poignets à l'échauffement
         // provoque la zone comme une série de travail — relecture
         // documentée du pilotage, manche 4.)
+        // (Un appui déjà neutre — parallettes, poignées, pompe mains sur la
+        // barre basse — reste, dosé par la règle de l'arrêt plus bas : CY,
+        // partie 0.)
         if (d.removed ||
             info == null ||
-            !coachPainStopHits(info.exercise, stop.zone)) {
+            !coachPainStopHits(info.exercise, stop.zone) ||
+            (stop.zone == BodyZone.wristHand &&
+                info.exercise.stressOn(Joint.wrist) != JointStress.high &&
+                coachWristNeutralSupport(info.exercise, equipment))) {
           continue;
         }
         // Poignet : une poussée en extension retirée est remplacée par un
@@ -549,7 +619,7 @@ SessionPlan buildSessionPlan(
                     e.stressOn(Joint.wrist) == JointStress.high ||
                     allStops.any((x) => coachPainStopHits(e, x.zone)) ||
                     comeback.heldFor(e) ||
-                    !coachWristNeutralSupport(e),
+                    !coachWristNeutralSupport(e, equipment),
               );
         if (substitute != null &&
             substitute.mode == CapacityMode.reps &&
@@ -758,7 +828,7 @@ SessionPlan buildSessionPlan(
             hotWrist &&
             zone == BodyZone.wristHand &&
             info != null &&
-            (!coachWristNeutralSupport(info.exercise) ||
+            (!coachWristNeutralSupport(info.exercise, equipment) ||
                 info.zoneLevel(BodyZone.wristHand) >= 1);
         if (d.removed ||
             info == null ||
@@ -2358,10 +2428,37 @@ bool _stopNoticeDue(PainState? s, int day) {
 /// de la semaine atteint 3 sur 10 (CA2, partie 0). Les barres parallèles et
 /// les anneaux n'en font pas partie : le poignet y porte le poids du corps
 /// en légère extension (panel de la boucle 5, école santé).
-bool coachWristNeutralSupport(CatalogExercise e) =>
-    e.equipment.any(_wristNeutralEquipment.contains);
+///
+/// La pompe mains surélevées faite mains serrées sur une barre basse
+/// ([coachBarPushUp], quand [equipment] compte une barre basse) en fait
+/// partie : la main entoure la barre comme une poignée, le poignet reste
+/// droit (CY, partie 0 : relecture documentée de CP2, `street_01` et
+/// `street_03`, débutants sans parallettes — la poussée disparaissait
+/// pendant toute la gêne ; modifications de la pompe pour le poignet
+/// douloureux : poignées ou barre pour garder le poignet neutre).
+bool coachWristNeutralSupport(
+  CatalogExercise e, [
+  Set<String> equipment = const <String>{},
+]) =>
+    e.equipment.any(_wristNeutralEquipment.contains) ||
+    (e.id == coachBarPushUp && equipment.contains(coachLowBar));
 
 const Set<String> _wristNeutralEquipment = <String>{'parallettes', 'poignées'};
+
+/// Pompe mains surélevées : faite mains sur une barre basse, elle garde le
+/// poignet neutre (voir [coachWristNeutralSupport]).
+const String coachBarPushUp = 'sw-pompe-inclinee';
+
+/// Matériel « barre basse » du catalogue.
+const String coachLowBar = 'barre basse';
+
+/// Vrai si le poignet a été signalé à 3 sur 10 ou plus dans les deux
+/// semaines qui précèdent le jour [day] (première gêne : CY, partie 0).
+bool wristGeneRecent(ModelState state, int day) {
+  final track = state.pains[BodyZone.wristHand];
+  return track != null &&
+      track.reportsBetween(day - 13, day).any((r) => r >= painPersistMin);
+}
 
 /// Lignes d'endurance et de conditionnement de la séance du jour [day]
 /// (CA2, partie 1 ; `CONTRAT.md`, § 12) :

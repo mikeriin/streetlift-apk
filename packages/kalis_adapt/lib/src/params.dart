@@ -153,6 +153,9 @@ final class AdaptParams {
     this.biasMin = 0,
     this.biasMax = 0.6,
     this.coachCorridorUpMax = 0.15,
+    this.coachCorridorHeavyShare = 0.85,
+    this.coachRepLoadShare = 0.025,
+    this.coachRepGapMax = 4,
     this.coachWorstSetSlack = 1.5,
     this.coachBreachRir = 1,
     this.coachBreachCut = 0.025,
@@ -749,6 +752,19 @@ final class AdaptParams {
   /// Haut du couloir élargi, au plus (part du 1RM au-dessus de la part du
   /// bloc).
   final double coachCorridorUpMax;
+
+  /// Part écrite du 1RM à partir de laquelle le couloir ne monte plus
+  /// au-dessus de l'écrit (CY, partie 0 ; choix raisonné).
+  final double coachCorridorHeavyShare;
+
+  /// Part de charge totale admise en plus par répétition de moins qu'à la
+  /// dernière séance de l'emplacement, quand le schéma a changé (CY,
+  /// partie 0 ; tables de pourcentage du 1RM, environ 2,5 à 3 % par
+  /// répétition : borne basse retenue).
+  final double coachRepLoadShare;
+
+  /// Écart de répétitions compté, au plus (voir [coachRepLoadShare]).
+  final int coachRepGapMax;
 
   /// Marge admise, en répétitions en réserve, entre la cible et la série la
   /// plus dure prévue (quantile prudent) ; jamais moins d'une demi-réserve.

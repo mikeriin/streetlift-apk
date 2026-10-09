@@ -7,7 +7,8 @@ import 'package:kalis_adapt/kalis_adapt.dart';
 import 'package:kalis_adapt/simulation.dart';
 import 'package:kalis_adapt/src/model.dart'
     show PainState, formAfter, painResumeDays, recentBestOf;
-import 'package:kalis_adapt/src/session.dart' show coachWristNeutralSupport;
+import 'package:kalis_adapt/src/session.dart'
+    show coachBarPushUp, coachLowBar, coachWristNeutralSupport;
 import 'package:kalis_core/kalis_core.dart';
 import 'package:kalis_plan/kalis_plan.dart';
 import 'package:test/test.dart';
@@ -628,7 +629,10 @@ void main() {
                 continue;
               }
               expect(
-                coachWristNeutralSupport(info.exercise),
+                coachWristNeutralSupport(
+                  info.exercise,
+                  streetProfile(key).equipment.toSet(),
+                ),
                 isTrue,
                 reason:
                     '${item.exerciseId} servi le ${s.record.date.iso} '
@@ -648,6 +652,92 @@ void main() {
       }
       expect(checked, greaterThan(0));
     }, timeout: const Timeout(Duration(minutes: 10)));
+
+    test('street_01, première gêne du poignet (3/10 ou plus, avant '
+        'l\'arrêt) : la pompe au sol passe sur un appui neutre, mains sur '
+        'la barre basse (CY, partie 0)', () {
+      const key = 'street_01_debutant_complet';
+      final fixtures = readJsonObject('test/fixtures/street_profiles.json.gz');
+      final entry = fixtures[key]! as Map<String, Object?>;
+      final athlete =
+          Map<String, Object?>.of(entry['athlete']! as Map<String, Object?>)
+            ..['painZone'] = BodyZone.wristHand.code
+            ..['painFromDay'] = 42
+            ..['painDays'] = 28
+            ..['painIntensity'] = 4;
+      final profile = streetProfile(key);
+      final equipment = profile.equipment.toSet();
+      expect(equipment, contains(coachLowBar));
+      final book = ExerciseBook(catalog, profile);
+      var swapped = 0;
+      for (var seed = 0; seed < 3; seed++) {
+        final engine = KalisAdapt();
+        final policy = CheckedPolicy(engine);
+        final run = simulate(
+          catalog: catalog,
+          spec: athleteFromJson(athlete),
+          profile: profile,
+          seed: seed,
+          policy: policy,
+          program: streetProgram(key),
+          weeks: 16,
+          loop: engine,
+          truthKind: TruthKind.b,
+        );
+        expect(policy.violations, isEmpty);
+        final reports = <(int, int)>[];
+        for (final s in run.served) {
+          final gene = reports.any(
+            (r) => r.$1 >= s.simDay - 13 && r.$1 < s.simDay && r.$2 >= 3,
+          );
+          if (gene) {
+            for (final a in s.plan.adjustments) {
+              if (a.kind == AdjustmentKind.exerciseSwapped &&
+                  a.replacementExerciseId == coachBarPushUp) {
+                swapped++;
+              }
+            }
+            for (final item in s.plan.items) {
+              final info = book.find(item.exerciseId);
+              if (info == null ||
+                  item.kind != SetKind.work ||
+                  info.exercise.pattern != MovementPattern.pousseeHorizontale ||
+                  info.exercise.stressOn(Joint.wrist) == JointStress.low) {
+                continue;
+              }
+              // (Poussée paume à plat servie une semaine de gêne : seulement
+              // faute d'appui neutre faisable — ici, la barre basse existe.)
+              expect(
+                coachWristNeutralSupport(info.exercise, equipment),
+                isTrue,
+                reason:
+                    '${item.exerciseId} servi le ${s.record.date.iso} '
+                    'pendant la gêne du poignet',
+              );
+            }
+          }
+          for (final r in <PainReport>[
+            ...?s.record.healthCheck?.pains,
+            ...s.record.pains,
+          ]) {
+            if (r.zone == BodyZone.wristHand) {
+              reports.add((s.simDay, r.intensity));
+            }
+          }
+        }
+      }
+      expect(swapped, greaterThan(0));
+    }, timeout: const Timeout(Duration(minutes: 10)));
+  });
+
+  group('charges (CY, partie 0)', () {
+    test('part écrite à 85 % ou plus : jamais servie au-dessus de l\'écrit '
+        'par le couloir', () {
+      const p0 = AdaptParams.standard;
+      expect(p0.coachCorridorHeavyShare, 0.85);
+      expect(p0.coachRepLoadShare, closeTo(0.025, 1e-9));
+      expect(p0.coachRepGapMax, 4);
+    });
   });
 }
 
