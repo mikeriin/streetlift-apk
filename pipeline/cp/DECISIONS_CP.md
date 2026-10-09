@@ -149,6 +149,14 @@ Constats qui fondent ces choix : l'incertitude du panel est d'environ un point (
 
 - **C11.8 CI1f publié par le pilotage (09/10/2026, 13:45 UTC)** : la session de CI1f s'est vu refuser le push sur `main` (contrôle d'autorisations, « Modify Shared Resources ») ; le pilotage a publié en avance rapide le commit prêt 9dd09214 (parent 238078ee, arbre 7e71bbbb identique au contrôle complet `claude/ci-3d` run 37934054639, vert). Validation de dev6.11.0 dès que le build signé de `main` est vert. Points de CI1f pour la suite : plage d'un myo-rep (activation ou total) à préciser au contrat ; techniques à mini-séries servies seulement à partir d'« avancé » (matrice de `kalis_adapt`). **CI1g lancé** sur cette base ; si son push sur `main` est refusé aussi, il laisse le commit sur `cp-sauvegardes/CI1g-candidat` et le pilotage publie. **Validé** (09/10/2026, 14:12 UTC) : build signé de `main` run 37938377955 vert ; dev6.11.0 donnée au propriétaire.
 
+## C12. Suite après le pipeline CP (09/10/2026, 14:54 UTC, propriétaire)
+
+> « Tu peux suspendre animations et distribution. »
+
+- **C12.1 Ordre** : CI1g (en cours) → **lot CI final** (limites de CI1 à CI1g) → **base d'exercices v1.1** (1 039 exercices, remplace le pack 2.0.0) → **lot de méthode** des moteurs (après 3 à 4 semaines du journal réel du propriétaire). Deux sessions au plus en même temps.
+- **C12.2 Suspendus** par le propriétaire : **animations** (89 animations prioritaires, M8 et FBX Mixamo) et **distribution** (Play Store, revue santé et consentement, ménage du dépôt). Ne pas les lancer sans nouvelle demande.
+- **C12.3 G11 à G15** (XP, Krédits) : toujours suspendus (C0.1), réponse du propriétaire attendue.
+
 ## Sections des lots
 
 Chaque lot ajoute ici ses décisions techniques numérotées (`CR.1`, `CR.2`…), ses écarts, ses recommandations et, le cas échéant, la question posée au propriétaire.
