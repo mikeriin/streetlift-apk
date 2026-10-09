@@ -1,0 +1,148 @@
+Running Gradle task 'assembleDebug'...                          
+Warning: Flutter support for your project's Gradle version (8.14.3) will soon be dropped. Please upgrade your Gradle version to a version of at least 9.1.0 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's gradle version is typically defined in the gradle wrapper file. By default, this can be found at /home/runner/work/streetlift-apk/streetlift-apk/android/gradle/wrapper/gradle-wrapper.properties. 
+For more information, see https://docs.gradle.org/current/userguide/gradle_wrapper.html.
+
+Warning: Flutter support for your project's Android Gradle Plugin version (Android Gradle Plugin version 8.12.1) will soon be dropped. Please upgrade your Android Gradle Plugin version to a version of at least Android Gradle Plugin version 9.0.1 soon.
+Alternatively, use the flag "--android-skip-build-dependency-validation" to bypass this check.
+
+Potential fix: Your project's AGP version is typically defined in the plugins block of the `settings.gradle` file (/home/runner/work/streetlift-apk/streetlift-apk/android/settings.gradle), by a plugin with the id of com.android.application. 
+If you don't see a plugins block, your project was likely created with an older template version. In this case it is most likely defined in the top-level build.gradle file (/home/runner/work/streetlift-apk/streetlift-apk/android/build.gradle) by the following line in the dependencies block of the buildscript: "classpath 'com.android.tools.build:gradle:<version>'".
+
+Running Gradle task 'assembleDebug'...                             50.1s
+✓ Built build/app/outputs/flutter-apk/app-debug.apk
+Installing build/app/outputs/flutter-apk/app-debug.apk...        1,178ms
+I/eetlift_tracker( 4809): Compiler allocated 5174KB to compile void android.view.ViewRootImpl.performTraversals()
+I/Choreographer( 4809): Skipped 55 frames!  The application may be doing too much work on its main thread.
+D/FlutterJNI( 4809): Sending viewport metrics to the engine.
+VMServiceFlutterDriver: Connecting to Flutter application at http://127.0.0.1:46863/TKKXm7yfk9g=/
+VMServiceFlutterDriver: Isolate found with number: 5014811748273127
+VMServiceFlutterDriver: Isolate 5014811748273127 is runnable.
+VMServiceFlutterDriver: Isolate is paused at start.
+VMServiceFlutterDriver: Attempting to resume isolate
+I/flutter ( 4809): 00:00 +0: CI1f b (clair, violet) : myo-reps mini-série par mini-série ; contraste en groupe
+VMServiceFlutterDriver: Connected to Flutter application.
+D/ProfileInstaller( 4809): Installing profile for fr.tchoupi.streetlift_tracker
+D/EGL_emulation( 4809): app_time_stats: avg=799.21ms min=218.21ms max=1380.20ms count=2
+D/EGL_emulation( 4809): app_time_stats: avg=175.08ms min=8.05ms max=315.39ms count=7
+D/EGL_emulation( 4809): app_time_stats: avg=664.25ms min=191.05ms max=1137.46ms count=2
+D/FlutterJNI( 4809): Sending viewport metrics to the engine.
+D/EGL_emulation( 4809): app_time_stats: avg=614.13ms min=593.18ms max=635.09ms count=2
+D/EGL_emulation( 4809): app_time_stats: avg=562.56ms min=201.69ms max=923.43ms count=2
+D/EGL_emulation( 4809): app_time_stats: avg=7699.01ms min=768.69ms max=14629.34ms count=2
+D/EGL_emulation( 4809): app_time_stats: avg=218.29ms min=129.05ms max=274.48ms count=5
+D/EGL_emulation( 4809): app_time_stats: avg=178.88ms min=59.64ms max=257.76ms count=5
+D/EGL_emulation( 4809): app_time_stats: avg=148.42ms min=66.13ms max=220.29ms count=5
+D/EGL_emulation( 4809): app_time_stats: avg=130.44ms min=72.73ms max=192.14ms count=6
+D/EGL_emulation( 4809): app_time_stats: avg=177.64ms min=96.36ms max=243.28ms count=5
+I/eetlift_tracker( 4809): Background concurrent mark compact GC freed 2220KB AllocSpace bytes, 15(684KB) LOS objects, 49% free, 2624KB/5249KB, paused 68us,2.571ms total 131.031ms
+D/EGL_emulation( 4809): app_time_stats: avg=153.72ms min=59.56ms max=269.25ms count=7
+D/EGL_emulation( 4809): app_time_stats: avg=199.72ms min=104.21ms max=255.13ms count=5
+W/WindowOnBackDispatcher( 4809): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 4809): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 4809): app_time_stats: avg=342.33ms min=153.54ms max=492.05ms count=3
+D/EGL_emulation( 4809): app_time_stats: avg=136.15ms min=14.42ms max=287.93ms count=8
+D/EGL_emulation( 4809): app_time_stats: avg=108.94ms min=16.60ms max=206.64ms count=8
+D/EGL_emulation( 4809): app_time_stats: avg=285.98ms min=150.26ms max=619.95ms count=4
+D/EGL_emulation( 4809): app_time_stats: avg=1141.43ms min=1141.43ms max=1141.43ms count=1
+D/EGL_emulation( 4809): app_time_stats: avg=148.89ms min=16.03ms max=229.56ms count=7
+D/EGL_emulation( 4809): app_time_stats: avg=144.77ms min=133.29ms max=153.51ms count=7
+D/EGL_emulation( 4809): app_time_stats: avg=112.15ms min=3.63ms max=252.49ms count=8
+D/EGL_emulation( 4809): app_time_stats: avg=144.30ms min=124.36ms max=237.13ms count=7
+D/EGL_emulation( 4809): app_time_stats: avg=125.80ms min=8.52ms max=218.61ms count=8
+D/EGL_emulation( 4809): app_time_stats: avg=117.03ms min=12.39ms max=217.64ms count=10
+D/EGL_emulation( 4809): app_time_stats: avg=149.67ms min=14.29ms max=405.69ms count=7
+D/EGL_emulation( 4809): app_time_stats: avg=105.83ms min=21.78ms max=167.40ms count=9
+D/SharedPreferencesImpl( 4809): Time required to fsync /data/user/0/fr.tchoupi.streetlift_tracker/shared_prefs/FlutterSharedPreferences.xml: [<1: 0, <2: 1, <4: 3, <8: 1, <16: 0, <32: 0, <64: 1, <128: 1, <256: 1, <512: 1, <1024: 0, <2048: 0, <4096: 0, <8192: 0, <16384: 0, >=16384: 0]
+D/EGL_emulation( 4809): app_time_stats: avg=170.68ms min=22.47ms max=341.22ms count=6
+D/EGL_emulation( 4809): app_time_stats: avg=113.74ms min=16.49ms max=143.36ms count=9
+D/EGL_emulation( 4809): app_time_stats: avg=119.69ms min=98.68ms max=204.66ms count=8
+D/EGL_emulation( 4809): app_time_stats: avg=120.89ms min=26.09ms max=201.54ms count=9
+D/EGL_emulation( 4809): app_time_stats: avg=107.15ms min=14.10ms max=238.47ms count=9
+D/EGL_emulation( 4809): app_time_stats: avg=120.35ms min=14.32ms max=226.96ms count=9
+D/EGL_emulation( 4809): app_time_stats: avg=98.63ms min=10.83ms max=124.82ms count=10
+D/EGL_emulation( 4809): app_time_stats: avg=132.89ms min=100.38ms max=224.34ms count=8
+D/EGL_emulation( 4809): app_time_stats: avg=122.09ms min=18.31ms max=226.58ms count=8
+D/EGL_emulation( 4809): app_time_stats: avg=107.86ms min=16.90ms max=218.05ms count=10
+D/EGL_emulation( 4809): app_time_stats: avg=118.40ms min=13.41ms max=224.15ms count=8
+D/EGL_emulation( 4809): app_time_stats: avg=128.69ms min=12.23ms max=235.69ms count=7
+D/EGL_emulation( 4809): app_time_stats: avg=117.06ms min=15.40ms max=215.40ms count=9
+D/EGL_emulation( 4809): app_time_stats: avg=122.63ms min=10.54ms max=204.50ms count=8
+D/EGL_emulation( 4809): app_time_stats: avg=115.55ms min=18.37ms max=154.55ms count=8
+D/EGL_emulation( 4809): app_time_stats: avg=205.77ms min=165.10ms max=261.96ms count=5
+D/EGL_emulation( 4809): app_time_stats: avg=174.17ms min=163.97ms max=203.17ms count=6
+W/WindowOnBackDispatcher( 4809): OnBackInvokedCallback is not enabled for the application.
+W/WindowOnBackDispatcher( 4809): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+D/EGL_emulation( 4809): app_time_stats: avg=168.71ms min=17.24ms max=320.91ms count=6
+D/EGL_emulation( 4809): app_time_stats: avg=121.91ms min=13.16ms max=218.88ms count=9
+D/EGL_emulation( 4809): app_time_stats: avg=120.97ms min=3.20ms max=222.66ms count=8
+D/EGL_emulation( 4809): app_time_stats: avg=117.09ms min=14.06ms max=224.14ms count=9
+D/EGL_emulation( 4809): app_time_stats: avg=137.65ms min=17.61ms max=257.13ms count=8
+D/EGL_emulation( 4809): app_time_stats: avg=128.45ms min=19.19ms max=235.69ms count=8
+D/EGL_emulation( 4809): app_time_stats: avg=108.15ms min=16.14ms max=236.11ms count=10
+D/EGL_emulation( 4809): app_time_stats: avg=135.02ms min=110.45ms max=217.96ms count=7
+D/EGL_emulation( 4809): app_time_stats: avg=122.21ms min=12.86ms max=218.06ms count=8
+D/EGL_emulation( 4809): app_time_stats: avg=101.12ms min=17.60ms max=167.74ms count=8
+D/EGL_emulation( 4809): app_time_stats: avg=139.73ms min=20.95ms max=233.15ms count=8
+D/EGL_emulation( 4809): app_time_stats: avg=122.38ms min=14.00ms max=216.12ms count=8
+D/EGL_emulation( 4809): app_time_stats: avg=130.02ms min=113.31ms max=147.19ms count=8
+D/EGL_emulation( 4809): app_time_stats: avg=142.71ms min=19.41ms max=232.71ms count=7
+D/EGL_emulation( 4809): app_time_stats: avg=223.09ms min=170.87ms max=355.48ms count=5
+D/EGL_emulation( 4809): app_time_stats: avg=175.40ms min=61.35ms max=248.76ms count=6
+I/flutter ( 4809): ══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+I/flutter ( 4809): The following TestFailure was thrown running a test:
+I/flutter ( 4809): Expected: true
+I/flutter ( 4809):   Actual: <false>
+I/flutter ( 4809): 
+I/flutter ( 4809): When the exception was thrown, this was the stack:
+I/flutter ( 4809): #4      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/koach_ci1f_test.dart:274:5)
+I/flutter ( 4809): <asynchronous suspension>
+I/flutter ( 4809): #5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+I/flutter ( 4809): <asynchronous suspension>
+I/flutter ( 4809): #6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+I/flutter ( 4809): <asynchronous suspension>
+I/flutter ( 4809): #7      TestWidgetsFlutterBinding._createTestCompletionHandler.<anonymous closure> (package:flutter_test/src/binding.dart:1707:12)
+I/flutter ( 4809): <asynchronous suspension>
+I/flutter ( 4809): 
+I/flutter ( 4809): This was caught by the test expectation on the following line:
+I/flutter ( 4809):   file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/koach_ci1f_test.dart line 274
+I/flutter ( 4809): The test description was:
+I/flutter ( 4809):   CI1f b (clair, violet) : myo-reps mini-série par mini-série ; contraste en groupe
+I/flutter ( 4809): ════════════════════════════════════════════════════════════════════════════════════════════════════
+I/flutter ( 4809): 01:20 +0: CI1f b (clair, violet) : myo-reps mini-série par mini-série ; contraste en groupe [E]
+I/flutter ( 4809):   Test failed. See exception logs above.
+I/flutter ( 4809):   The test description was: CI1f b (clair, violet) : myo-reps mini-série par mini-série ; contraste en groupe
+I/flutter ( 4809):   
+I/flutter ( 4809): 01:20 +0 -1: (tearDownAll)
+I/flutter ( 4809): 01:20 +1 -1: Some tests failed.
+D/EGL_emulation( 4809): app_time_stats: avg=382.34ms min=173.77ms max=779.06ms count=3
+Failure Details:
+Failure in method: CI1f b (clair, violet) : myo-reps mini-série par mini-série ; contraste en groupe
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞═════════════════
+The following TestFailure was thrown running a test:
+Expected: true
+  Actual: <false>
+
+When the exception was thrown, this was the stack:
+#4      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/koach_ci1f_test.dart:274:5)
+<asynchronous suspension>
+#5      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#6      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._createTestCompletionHandler.<anonymous closure> (package:flutter_test/src/binding.dart:1707:12)
+<asynchronous suspension>
+
+This was caught by the test expectation on the following line:
+  file:///home/runner/work/streetlift-apk/streetlift-apk/integration_test/koach_ci1f_test.dart line 274
+The test description was:
+  CI1f b (clair, violet) : myo-reps mini-série par mini-série ;
+  contraste en groupe
+═════════════════════════════════════════════════════════════════
+
+end of failure 1
+
+
+
