@@ -575,9 +575,12 @@ void _buildBeginner(_Builder b) {
         // (Jour de descentes freinées : une série assistée — tirage
         // vertical vers 8 à 10 séries par semaine, panel p3, `street_01`,
         // `street_03`.)
-        sets: heavy
-            ? mainSets
-            : (a.aimsAt(Ids.pull) ? (negativeDays.contains(d) ? 1 : 2) : sets),
+        // (CY : deux séries assistées chaque jour, jour de descentes
+        // compris — douze séries de tirage vertical par semaine au plus avec
+        // les descentes et la tenue, R5-P1 : 10 à 12 ; relecture documentée
+        // de CP2, `street_01` : une seule série assistée deux jours sur
+        // trois, 23 à 38 min servies sur 45.)
+        sets: heavy ? mainSets : (a.aimsAt(Ids.pull) ? 2 : sets),
         referenceId: Ids.pull,
       );
       if (negativeDays.contains(d) && !heavy) {
@@ -1204,13 +1207,26 @@ void _addRepsPillar(
           !b.a.limits.any((l) => l.joint == Joint.elbow && l.discomfort >= 3);
       final slot = b.add(
         d,
+        // (CY : douze tractions et plus au plateau, l'archer et la
+        // typewriter d'abord — la traction lente seule ne changeait pas le
+        // stimulus, relecture documentée de CP2, `street_06`, `street_14` :
+        // « variante plus dure jamais introduite » ; progression des
+        // tractions unilatérales assistées après une dizaine de tractions
+        // propres, Bible of Calisthenics — choix raisonné du seuil.)
         stalled
-            ? <String>[
-                'sw-traction-tempo-excentrique',
-                'sw-traction-archer',
-                'sw-traction-typewriter',
-                ...hard,
-              ]
+            ? (max >= 12
+                  ? <String>[
+                      'sw-traction-archer',
+                      'sw-traction-typewriter',
+                      'sw-traction-tempo-excentrique',
+                      ...hard,
+                    ]
+                  : <String>[
+                      'sw-traction-tempo-excentrique',
+                      'sw-traction-archer',
+                      'sw-traction-typewriter',
+                      ...hard,
+                    ])
             : hard,
         SlotRole.main,
         Method.repsStrength,
