@@ -197,7 +197,17 @@ void main() {
 
     // 1. Myo-reps (S20·J1, curl à la barre EZ).
     final add = keyStarts('miniset-add-');
-    releve['myo_page'] = await openTo(tester, w, j, add);
+    releve['myo_page'] = await openTo(
+      tester,
+      w,
+      j,
+      find.text('Myo-reps : activation, puis mini-séries'),
+    );
+    final addKey = add.evaluate().isEmpty
+        ? null
+        : (tester.widget(add.first).key! as ValueKey<String>).value;
+    final rowId = addKey?.substring('miniset-add-'.length);
+    releve['myo_ligne'] = rowId;
     if (add.evaluate().isNotEmpty) {
       await scrollTo(tester, add);
       await shot('02_myo_avant');
@@ -215,7 +225,7 @@ void main() {
       await scrollTo(tester, keyStarts('miniset-advice-'));
       await shot('03_myo_mini_series');
       // Série validée : une ligne, total des mini-séries.
-      final check = tip((m) => m.startsWith('Valider la série'));
+      final check = find.byKey(ValueKey('set-check-$rowId'));
       if (check.evaluate().isNotEmpty) {
         await tapF(tester, check, ms: 1200);
       }
