@@ -77,3 +77,4 @@ Session Opus 5.5 lancée le 05/10/2026 vers 18:14 UTC (pas de ligne « Lot : » 
 - 04:10 UTC : non-ressemblance CP2 (max 0,250/0,250), analyse_CP2.tar.gpg sur cp-references 0aa951dd ; livraison en brouillon (LIVRAISON_CP2.md).
 - 05:08 UTC : attente du contrôle FULL dd6165df ; suivi_cp2.html prêt.
 - 05:50 UTC : **0.3.0 publié** (moteurs 1ca7475f, etiquettes kalis_plan-v0.3.0, kalis_bench-v0.2.4 ; run 37882215421, kalis_quest coupé à 90 min, inchangé). Reste : manches 7-8, notes, livraison, DECISIONS, ETAT, suivi, notification.
+- 05:58 UTC : manches 7-8 publiées + 133 notes de relecture documentée ; pipeline e2ce2112 (livraison, DECISIONS CP2.2, ETAT « à valider ») ; projet claude/LIVRAISON_CP2.md ; page de suivi (section CP2). Reste : notification. LOT TERMINÉ.
