@@ -37,7 +37,18 @@ méthode (passe complète du panel street en fin de lot : `docs/CALIBRAGE_CP2.md
   gêné : chaise haute à 45-60° et flexion limitée ; cardio déclaré en discipline secondaire en fin de séance.
 - Semaines « de test » sans test (musculation, santé) écrites comme des allègements ; un mouvement d'épreuve que
   le programme n'entraîne pas ne se teste pas ; échauffement et version courte selon la discipline.
-- Relecture de `kalis_plan` (`coachAudit`) : le jour de l'épreuve n'est pas compté dans la durée des séances.
+- Relecture de `kalis_plan` (`coachAudit`) : le jour d'une course d'épreuve (test chronométré de l'échéance)
+  n'est pas compté dans la durée des séances.
+- Mode prudent (questionnaire de santé, 65 ans et plus) : CrossFit écrit en programme de santé ; course sans
+  séance de qualité.
+- Notes : `general_warmup` et `short_version` portent un paramètre additif `family` (`run`, `gym`, `health`) ;
+  `value` reste en minutes ; nouvelles notes `wod_pace`, `chair_squat`, `knee_shallow`, `balance_progress`,
+  `hold_support` (`docs/NOTES_COACH.md`).
+- **Changements qui touchent aussi le chemin street** (sécurité ou correction ; vérifiés par la passe complète du
+  panel street de fin de lot) : une charge écrite au-dessus du 1RM de travail (barre vide trop lourde) devient
+  « à calibrer » ; `interval_pace` donne l'allure au kilomètre (le texte disait « 400 m ») ; affûtage de course à
+  trois fractions ; plancher d'une course facile borné par le créneau ; consigne `easy_pace` alignée sur la durée
+  réduite d'une marche de fin de séance.
 
 ## 0.2.3
 
