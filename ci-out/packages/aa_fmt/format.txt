@@ -1,0 +1,47 @@
+Formatted /home/runner/work/streetlift-apk/streetlift-apk/out-packages/aa_fmt/kalis_adapt/lib/src/review.dart
+Formatted 200 files (1 changed) in 1.55 seconds.
+
+Warning: Package resolution error when reading "analysis_options.yaml" file for "/home/runner/work/streetlift-apk/streetlift-apk/out-packages/aa_fmt/kalis_adapt/bin/kalis_adapt_cli.dart":
+Failed to resolve package URI "package:flutter_lints/flutter.yaml" in include at "/home/runner/work/streetlift-apk/streetlift-apk/analysis_options.yaml".
+Warning: Package resolution error when reading "analysis_options.yaml" file for "/home/runner/work/streetlift-apk/streetlift-apk/out-packages/aa_fmt/kalis_adapt/lib/kalis_adapt.dart":
+Failed to resolve package URI "package:flutter_lints/flutter.yaml" in include at "/home/runner/work/streetlift-apk/streetlift-apk/analysis_options.yaml".
+Warning: Package resolution error when reading "analysis_options.yaml" file for "/home/runner/work/streetlift-apk/streetlift-apk/out-packages/aa_fmt/kalis_adapt/lib/src/advise.dart":
+Failed to resolve package URI "package:flutter_lints/flutter.yaml" in include at "/home/runner/work/streetlift-apk/streetlift-apk/analysis_options.yaml".
+Warning: Package resolution error when reading "analysis_options.yaml" file for "/home/runner/work/streetlift-apk/streetlift-apk/out-packages/aa_fmt/kalis_adapt/lib/src/sim/athletes.dart":
+Failed to resolve package URI "package:flutter_lints/flutter.yaml" in include at "/home/runner/work/streetlift-apk/streetlift-apk/analysis_options.yaml".
+Warning: Package resolution error when reading "analysis_options.yaml" file for "/home/runner/work/streetlift-apk/streetlift-apk/out-packages/aa_fmt/kalis_adapt/test/coach_properties_0_test.dart":
+Failed to resolve package URI "package:flutter_lints/flutter.yaml" in include at "/home/runner/work/streetlift-apk/streetlift-apk/analysis_options.yaml".
+Warning: Package resolution error when reading "analysis_options.yaml" file for "/home/runner/work/streetlift-apk/streetlift-apk/out-packages/aa_fmt/kalis_adapt/tool/l7/koach_engine.dart":
+Failed to resolve package URI "package:flutter_lints/flutter.yaml" in include at "/home/runner/work/streetlift-apk/streetlift-apk/analysis_options.yaml".
+Warning: Package resolution error when reading "analysis_options.yaml" file for "/home/runner/work/streetlift-apk/streetlift-apk/out-packages/aa_fmt/kalis_adapt/tool/owner.dart":
+Failed to resolve package URI "package:flutter_lints/flutter.yaml" in include at "/home/runner/work/streetlift-apk/streetlift-apk/analysis_options.yaml".
+Warning: Package resolution error when reading "analysis_options.yaml" file for "/home/runner/work/streetlift-apk/streetlift-apk/out-packages/aa_fmt/kalis_bench/bin/common.dart":
+Failed to resolve package URI "package:flutter_lints/flutter.yaml" in include at "/home/runner/work/streetlift-apk/streetlift-apk/analysis_options.yaml".
+Warning: Package resolution error when reading "analysis_options.yaml" file for "/home/runner/work/streetlift-apk/streetlift-apk/out-packages/aa_fmt/kalis_bench/lib/kalis_bench.dart":
+Failed to resolve package URI "package:flutter_lints/flutter.yaml" in include at "/home/runner/work/streetlift-apk/streetlift-apk/analysis_options.yaml".
+Warning: Package resolution error when reading "analysis_options.yaml" file for "/home/runner/work/streetlift-apk/streetlift-apk/out-packages/aa_fmt/kalis_bench/lib/src/adapter.dart":
+Failed to resolve package URI "package:flutter_lints/flutter.yaml" in include at "/home/runner/work/streetlift-apk/streetlift-apk/analysis_options.yaml".
+Warning: Package resolution error when reading "analysis_options.yaml" file for "/home/runner/work/streetlift-apk/streetlift-apk/out-packages/aa_fmt/kalis_bench/test/bench_test.dart":
+Failed to resolve package URI "package:flutter_lints/flutter.yaml" in include at "/home/runner/work/streetlift-apk/streetlift-apk/analysis_options.yaml".
+Warning: Package resolution error when reading "analysis_options.yaml" file for "/home/runner/work/streetlift-apk/streetlift-apk/out-packages/aa_fmt/kalis_core/bin/kalis_core_cli.dart":
+Failed to resolve package URI "package:flutter_lints/flutter.yaml" in include at "/home/runner/work/streetlift-apk/streetlift-apk/analysis_options.yaml".
+Warning: Package resolution error when reading "analysis_options.yaml" file for "/home/runner/work/streetlift-apk/streetlift-apk/out-packages/aa_fmt/kalis_core/lib/kalis_core.dart":
+Failed to resolve package URI "package:flutter_lints/flutter.yaml" in include at "/home/runner/work/streetlift-apk/streetlift-apk/analysis_options.yaml".
+Warning: Package resolution error when reading "analysis_options.yaml" file for "/home/runner/work/streetlift-apk/streetlift-apk/out-packages/aa_fmt/kalis_core/lib/src/catalog.dart":
+Failed to resolve package URI "package:flutter_lints/flutter.yaml" in include at "/home/runner/work/streetlift-apk/streetlift-apk/analysis_options.yaml".
+Warning: Package resolution error when reading "analysis_options.yaml" file for "/home/runner/work/streetlift-apk/streetlift-apk/out-packages/aa_fmt/kalis_core/lib/src/generated/adapt.g.dart":
+Failed to resolve package URI "package:flutter_lints/flutter.yaml" in include at "/home/runner/work/streetlift-apk/streetlift-apk/analysis_options.yaml".
+Warning: Package resolution error when reading "analysis_options.yaml" file for "/home/runner/work/streetlift-apk/streetlift-apk/out-packages/aa_fmt/kalis_core/lib/src/testing/arbitrary.g.dart":
+Failed to resolve package URI "package:flutter_lints/flutter.yaml" in include at "/home/runner/work/streetlift-apk/streetlift-apk/analysis_options.yaml".
+Warning: Package resolution error when reading "analysis_options.yaml" file for "/home/runner/work/streetlift-apk/streetlift-apk/out-packages/aa_fmt/kalis_core/test/advanced_test.dart":
+Failed to resolve package URI "package:flutter_lints/flutter.yaml" in include at "/home/runner/work/streetlift-apk/streetlift-apk/analysis_options.yaml".
+Warning: Package resolution error when reading "analysis_options.yaml" file for "/home/runner/work/streetlift-apk/streetlift-apk/out-packages/aa_fmt/kalis_plan/bin/kalis_plan_cli.dart":
+Failed to resolve package URI "package:flutter_lints/flutter.yaml" in include at "/home/runner/work/streetlift-apk/streetlift-apk/analysis_options.yaml".
+Warning: Package resolution error when reading "analysis_options.yaml" file for "/home/runner/work/streetlift-apk/streetlift-apk/out-packages/aa_fmt/kalis_plan/lib/kalis_plan.dart":
+Failed to resolve package URI "package:flutter_lints/flutter.yaml" in include at "/home/runner/work/streetlift-apk/streetlift-apk/analysis_options.yaml".
+Warning: Package resolution error when reading "analysis_options.yaml" file for "/home/runner/work/streetlift-apk/streetlift-apk/out-packages/aa_fmt/kalis_plan/lib/src/assemble.dart":
+Failed to resolve package URI "package:flutter_lints/flutter.yaml" in include at "/home/runner/work/streetlift-apk/streetlift-apk/analysis_options.yaml".
+Warning: Package resolution error when reading "analysis_options.yaml" file for "/home/runner/work/streetlift-apk/streetlift-apk/out-packages/aa_fmt/kalis_plan/lib/src/coach/athlete.dart":
+Failed to resolve package URI "package:flutter_lints/flutter.yaml" in include at "/home/runner/work/streetlift-apk/streetlift-apk/analysis_options.yaml".
+Warning: Package resolution error when reading "analysis_options.yaml" file for "/home/runner/work/streetlift-apk/streetlift-apk/out-packages/aa_fmt/kalis_plan/test/admission_test.dart":
+Failed to resolve package URI "package:flutter_lints/flutter.yaml" in include at "/home/runner/work/streetlift-apk/streetlift-apk/analysis_options.yaml".

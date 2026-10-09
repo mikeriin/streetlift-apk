@@ -77,7 +77,7 @@ Violations de sécurité : **0** au total.
 | `autres_03_powerlifter_competition` | 40/40 | 0.0 | 2.569 | 0.933 | 0.25 | 0.082 | 1.001 | 0 | ecart_rir, pics_de_charge, ecart_effort | 0 |
 | `autres_04_force_generale_46_ans` | 48/48 | 0.005 | 3.028 | 0.913 | 0.143 | 0.239 | — | 0 | ecart_rir, pics_de_charge, ecart_effort, pics_a_schema_egal | 0 |
 | `autres_05_course_10_km_debutante` | 34/36 | 0.0 | 3.393 | 0.386 | 0.0 | — | — | 0 | ecart_rir, ecart_effort | 0 |
-| `autres_06_semi_marathon_intermediaire` | 46/48 | 0.0 | 1.459 | 0.643 | 0.0 | — | — | 0 | ecart_rir | 0 |
+| `autres_06_semi_marathon_intermediaire` | 46/48 | 0.0 | 1.169 | 0.582 | 0.0 | — | — | 0 | ecart_rir | 0 |
 | `autres_07_mobilite_sante_senior` | 46/48 | 0.0 | 4.992 | 0.687 | 0.0 | 1.364 | — | 0 | ecart_rir, ecart_effort | 0 |
 | `autres_08_crossfit_intermediaire` | 79/80 | 0.004 | 1.808 | 0.589 | 0.156 | 0.185 | — | 0 | ecart_rir, pics_de_charge, ecart_effort, pics_a_schema_egal | 0 |
 | `autres_09_perte_de_poids_debutante` | 36/36 | 0.003 | 2.487 | 1.0 | 0.333 | 0.485 | — | 0 | ecart_rir, ecart_effort | 0 |

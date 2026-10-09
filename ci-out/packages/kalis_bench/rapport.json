@@ -3828,13 +3828,13 @@
     "weeks": 12,
     "sessionsPlanned": 48,
     "sessionsDone": 46,
-    "sessionsAdjusted": 14,
-    "workSets": 40,
+    "sessionsAdjusted": 36,
+    "workSets": 79,
     "unwantedFailureRate": 0.0,
     "nearFailureRate": 0.0,
-    "rirGapReachable": 1.459,
-    "rirGapAll": 4.8,
-    "reachableShare": 0.643,
+    "rirGapReachable": 1.169,
+    "rirGapAll": 6.231,
+    "reachableShare": 0.582,
     "maxMainLoadRise": 0.0,
     "mainRisesOverTenPercent": 0,
     "mainSingleStepsOverTenPercent": 0,
@@ -3857,17 +3857,15 @@
     },
     "unlockViolations": 0,
     "proposalsWithheld": {
-     "pain_sparing:no_change": 1,
-     "exercise_swap:dose": 1,
-     "pain_sparing:dose": 1
+     "pain_sparing:no_change": 2
     },
     "painAggravations": 0,
     "blocks": 2,
     "truth": "b",
     "coached": true,
-    "effortGap": 0.685,
-    "effortBias": 0.579,
-    "effortReachableShare": 0.643,
+    "effortGap": 0.811,
+    "effortBias": 0.653,
+    "effortReachableShare": 0.582,
     "harderRate": 0.0,
     "easierRate": 0.0,
     "coachFailureRate": 0.0,
@@ -3879,9 +3877,9 @@
     "eventOverDayMax": null,
     "effortByExercise": {
      "mu-pont-fessier-unilateral": [
-      23,
-      2.065,
-      2.96
+      44,
+      1.909,
+      2.718
      ],
      "mu-fente-arriere-poids-du-corps": [
       1,
@@ -3906,13 +3904,13 @@
      "weeks": 12,
      "sessionsPlanned": 48,
      "sessionsDone": 46,
-     "sessionsAdjusted": 14,
-     "workSets": 38,
+     "sessionsAdjusted": 36,
+     "workSets": 64,
      "unwantedFailureRate": 0.0,
      "nearFailureRate": 0.0,
-     "rirGapReachable": 1.355,
-     "rirGapAll": 4.853,
-     "reachableShare": 0.615,
+     "rirGapReachable": 5.218,
+     "rirGapAll": 6.224,
+     "reachableShare": 0.808,
      "maxMainLoadRise": 0.0,
      "mainRisesOverTenPercent": 0,
      "mainSingleStepsOverTenPercent": 0,
@@ -3935,17 +3933,15 @@
      },
      "unlockViolations": 0,
      "proposalsWithheld": {
-      "pain_sparing:no_change": 1,
-      "exercise_swap:dose": 1,
-      "pain_sparing:dose": 1
+      "pain_sparing:no_change": 2
      },
      "painAggravations": 0,
      "blocks": 2,
      "truth": "a",
      "coached": true,
-     "effortGap": 0.492,
-     "effortBias": 0.443,
-     "effortReachableShare": 0.615,
+     "effortGap": 0.341,
+     "effortBias": 0.266,
+     "effortReachableShare": 0.808,
      "harderRate": 0.0,
      "easierRate": 0.0,
      "coachFailureRate": 0.0,
@@ -3957,14 +3953,14 @@
      "eventOverDayMax": null,
      "effortByExercise": {
       "mu-pont-fessier-unilateral": [
-       21,
-       2.167,
-       2.914
+       30,
+       2.017,
+       2.676
       ],
       "mu-fente-arriere-poids-du-corps": [
-       1,
+       18,
        5.0,
-       18.805
+       16.38
       ]
      },
      "verdicts": {
@@ -3984,13 +3980,13 @@
      "weeks": 12,
      "sessionsPlanned": 48,
      "sessionsDone": 46,
-     "sessionsAdjusted": 14,
-     "workSets": 40,
-     "unwantedFailureRate": 0.0,
-     "nearFailureRate": 0.036,
-     "rirGapReachable": 1.759,
-     "rirGapAll": 4.773,
-     "reachableShare": 0.643,
+     "sessionsAdjusted": 36,
+     "workSets": 78,
+     "unwantedFailureRate": 0.015,
+     "nearFailureRate": 0.015,
+     "rirGapReachable": 1.327,
+     "rirGapAll": 6.262,
+     "reachableShare": 0.576,
      "maxMainLoadRise": 0.0,
      "mainRisesOverTenPercent": 0,
      "mainSingleStepsOverTenPercent": 0,
@@ -4013,20 +4009,18 @@
      },
      "unlockViolations": 0,
      "proposalsWithheld": {
-      "pain_sparing:no_change": 1,
-      "exercise_swap:dose": 1,
-      "pain_sparing:dose": 1
+      "pain_sparing:no_change": 2
      },
      "painAggravations": 0,
      "blocks": 2,
      "truth": "c",
      "coached": true,
-     "effortGap": 0.984,
-     "effortBias": 0.748,
-     "effortReachableShare": 0.643,
+     "effortGap": 0.96,
+     "effortBias": 0.842,
+     "effortReachableShare": 0.576,
      "harderRate": 0.0,
      "easierRate": 0.0,
-     "coachFailureRate": 0.0,
+     "coachFailureRate": 0.015,
      "maxSchemeRise": 0.0,
      "schemeRisesOverLimit": 0,
      "attempts": 0,
@@ -4035,9 +4029,9 @@
      "eventOverDayMax": null,
      "effortByExercise": {
       "mu-pont-fessier-unilateral": [
-       23,
-       1.913,
-       2.75
+       43,
+       1.744,
+       2.622
       ],
       "mu-fente-arriere-poids-du-corps": [
        1,
@@ -8343,8 +8337,7 @@
     "proposalsApplied": {},
     "unlockViolations": 0,
     "proposalsWithheld": {
-     "pain_sparing:dose": 3,
-     "exercise_swap:dose": 2
+     "pain_sparing:dose": 3
     },
     "painAggravations": 0,
     "blocks": 2,
@@ -9942,7 +9935,7 @@
     "unlockViolations": 0,
     "proposalsWithheld": {
      "pain_sparing:dose": 3,
-     "exercise_swap:dose": 3
+     "exercise_swap:dose": 2
     },
     "painAggravations": 0,
     "blocks": 3,
@@ -19894,112 +19887,112 @@
  ],
  "timingsMs": {
   "autres_01_debutant_musculation": {
-   "createBlockMs": 101.8,
-   "benchMs": 544.3
+   "createBlockMs": 181.4,
+   "benchMs": 993.7
   },
   "autres_02_hypertrophie_intermediaire": {
-   "createBlockMs": 66.1,
-   "benchMs": 447.1
+   "createBlockMs": 16.6,
+   "benchMs": 803.1
   },
   "autres_03_powerlifter_competition": {
-   "createBlockMs": 14.8,
-   "benchMs": 257.0
+   "createBlockMs": 19.0,
+   "benchMs": 526.4
   },
   "autres_04_force_generale_46_ans": {
-   "createBlockMs": 8.4,
-   "benchMs": 338.5
+   "createBlockMs": 11.2,
+   "benchMs": 559.4
   },
   "autres_05_course_10_km_debutante": {
-   "createBlockMs": 6.4,
-   "benchMs": 70.2
+   "createBlockMs": 28.1,
+   "benchMs": 136.4
   },
   "autres_06_semi_marathon_intermediaire": {
-   "createBlockMs": 4.0,
-   "benchMs": 166.6
+   "createBlockMs": 5.6,
+   "benchMs": 320.9
   },
   "autres_07_mobilite_sante_senior": {
-   "createBlockMs": 5.4,
-   "benchMs": 151.0
+   "createBlockMs": 9.0,
+   "benchMs": 188.2
   },
   "autres_08_crossfit_intermediaire": {
-   "createBlockMs": 10.7,
-   "benchMs": 270.1
+   "createBlockMs": 16.5,
+   "benchMs": 472.5
   },
   "autres_09_perte_de_poids_debutante": {
-   "createBlockMs": 6.2,
-   "benchMs": 137.4
+   "createBlockMs": 7.1,
+   "benchMs": 178.1
   },
   "autres_10_contraintes_multiples": {
-   "createBlockMs": 15.2,
-   "benchMs": 131.9
+   "createBlockMs": 7.8,
+   "benchMs": 193.0
   },
   "street_01_debutant_complet": {
-   "createBlockMs": 10.9,
-   "benchMs": 190.4
+   "createBlockMs": 61.1,
+   "benchMs": 362.2
   },
   "street_02_debutant_surpoids": {
-   "createBlockMs": 5.6,
-   "benchMs": 179.6
+   "createBlockMs": 6.3,
+   "benchMs": 275.6
   },
   "street_03_debutante": {
-   "createBlockMs": 5.4,
-   "benchMs": 345.4
+   "createBlockMs": 6.9,
+   "benchMs": 502.6
   },
   "street_04_reprise_longue_pause": {
-   "createBlockMs": 67.3,
-   "benchMs": 224.3
+   "createBlockMs": 17.3,
+   "benchMs": 287.4
   },
   "street_05_inter_calisthenie_front_lever": {
-   "createBlockMs": 11.8,
-   "benchMs": 490.2
+   "createBlockMs": 30.0,
+   "benchMs": 746.9
   },
   "street_06_inter_sets_reps": {
-   "createBlockMs": 5.7,
-   "benchMs": 163.5
+   "createBlockMs": 27.8,
+   "benchMs": 277.3
   },
   "street_07_avance_streetlifting_competition": {
-   "createBlockMs": 13.5,
-   "benchMs": 282.0
+   "createBlockMs": 27.7,
+   "benchMs": 310.5
   },
   "street_08_avance_sets_reps_competition": {
-   "createBlockMs": 6.9,
-   "benchMs": 120.5
+   "createBlockMs": 5.5,
+   "benchMs": 148.4
   },
   "street_09_elite_streetlifting": {
-   "createBlockMs": 8.2,
-   "benchMs": 274.8
+   "createBlockMs": 5.5,
+   "benchMs": 342.1
   },
   "street_10_elite_figures": {
-   "createBlockMs": 6.9,
-   "benchMs": 339.3
+   "createBlockMs": 9.9,
+   "benchMs": 527.8
   },
   "street_11_master_51_ans": {
-   "createBlockMs": 2.6,
-   "benchMs": 107.6
+   "createBlockMs": 3.2,
+   "benchMs": 189.6
   },
   "street_12_antecedent_coude": {
-   "createBlockMs": 4.0,
-   "benchMs": 123.3
+   "createBlockMs": 4.6,
+   "benchMs": 185.3
   },
   "street_13_peu_de_temps": {
-   "createBlockMs": 2.2,
-   "benchMs": 40.5
+   "createBlockMs": 3.4,
+   "benchMs": 76.0
   },
   "street_14_parc_sans_lest": {
-   "createBlockMs": 1.5,
-   "benchMs": 59.4
+   "createBlockMs": 2.9,
+   "benchMs": 105.3
   },
   "street_15_travail_physique_sommeil_court": {
-   "createBlockMs": 2.0,
-   "benchMs": 62.8
+   "createBlockMs": 2.7,
+   "benchMs": 103.4
   },
   "street_16_specialisation_traction_lestee": {
-   "createBlockMs": 2.1,
-   "benchMs": 61.9
+   "createBlockMs": 3.2,
+   "benchMs": 99.5
   },
   "street_17_hybride_street_course": {
-   "createBlockMs": 2.2,
-   "benchMs": 55.5
+   "createBlockMs": 3.5,
+   "benchMs": 92.6
   }
  }
 }
