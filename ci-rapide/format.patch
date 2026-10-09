@@ -1,0 +1,15 @@
+diff --git a/integration_test/koach_ci1f_test.dart b/integration_test/koach_ci1f_test.dart
+index faf36a0..df8995c 100644
+--- a/integration_test/koach_ci1f_test.dart
++++ b/integration_test/koach_ci1f_test.dart
+@@ -246,7 +246,9 @@ void main() {
+         keyStarts('group-title-').first,
+       )).data;
+       await shot('05_contraste_groupe');
+-      final plus = tip((m) => m.startsWith('Tours') && m.endsWith('un de moins'));
++      final plus = tip(
++        (m) => m.startsWith('Tours') && m.endsWith('un de moins'),
++      );
+       if (plus.evaluate().isNotEmpty) {
+         await tapF(tester, plus, ms: 600);
+       }
