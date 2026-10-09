@@ -449,8 +449,9 @@ void noteCoachSession(
   CoachSpec coach,
   int day,
   AdaptParams p,
-  double bodyWeightKg,
-) {
+  double bodyWeightKg, {
+  bool lowDay = false,
+}) {
   if (run.observed.isEmpty) {
     return;
   }
@@ -597,7 +598,11 @@ void noteCoachSession(
       wide = false;
     }
   }
-  final light = coach.policy.locked;
+  // (Un jour de bilan bas ne devient pas non plus le repère d'un jour sans
+  // hausse suivant : CY, partie 0 — relecture documentée de CA2,
+  // `street_06`, dips servis 12-12-12 au lieu de 22 trois semaines après un
+  // mauvais jour, chaque jour bas se recalant sur le précédent.)
+  final light = coach.policy.locked || lowDay;
   marks[coach.slotId] = SlotMark(
     // (Une série repère qui dépasse l'écrit d'au moins coachAssistWideRir
     // répétitions, sans échec, dit aussi que l'assistance est trop forte.)
@@ -1070,6 +1075,15 @@ List<SetPlan>? _loadedPlans(
     if (up > p.coachCorridorUpMax) {
       up = p.coachCorridorUpMax;
     }
+    // Part écrite lourde (85 % du 1RM ou plus) : le couloir ne monte pas
+    // au-dessus de l'écrit — l'erreur de l'estimation du 1RM (quelques
+    // pour cent) suffit à mettre la série de tête à l'échec (CY, partie 0 :
+    // relecture documentée de CP2, `street_07`, squat servi 142,5 kg pour
+    // 137,5 kg écrits et un maximum du jour de 143 kg ; Helms et al. 2018 :
+    // à ces charges, l'échelle de réserve sert à retenir, pas à monter).
+    if (pct >= p.coachCorridorHeavyShare) {
+      up = 0;
+    }
     final low = _onGrid(grid, (pct - p.coachCorridorDown) * ref - bw);
     final high = _onGrid(grid, (pct + up) * ref - bw);
     kg = high;
@@ -1147,6 +1161,77 @@ List<SetPlan>? _loadedPlans(
     // davantage.
     kg = written;
     ex.heldCause = lockCause;
+  }
+  // Double progression (règle « 2 pour 2 » de la NSCA : quand les séries
+  // passent au haut de la plage, ou nettement plus faciles que visé, deux
+  // séances de suite, la charge monte d'un cran) : un athlète qui ne va
+  // jamais près de l'échec ne fait pas monter l'estimation (seule une série
+  // dure la mesure), et sa charge restait figée (CY : panel des saisons
+  // croisées, `autres_01`, `autres_09` — presse à 35 kg seize semaines,
+  // effort réel 6 à 9 en réserve pour 3 visés ; `street_07`, `street_08`).
+  // Un cran au plus, sous le garde-fou de réserve du modèle, jamais à 85 %
+  // du 1RM écrit ou plus, jamais un jour sans hausse.
+  if (markLoad != null &&
+      mark != null &&
+      lockCause == null &&
+      c.policy.build &&
+      !c.policy.locked &&
+      !c.light &&
+      !c.eventNear &&
+      !ex.inReturn &&
+      ex.painZones.isEmpty &&
+      !run.noIncrease &&
+      mark.reached >= p.coachTwoForTwo &&
+      kg <= markLoad + 1e-9 &&
+      pct < p.coachCorridorHeavyShare &&
+      item.kind != SetKind.test &&
+      served != SetTechniqueKind.accentuatedEccentric) {
+    final up = grid.next(grid.floor(markLoad), up: true);
+    // (Cran de plus de 10 % de la charge totale — machine, haltères
+    // lourds : pas de saut, la plage s'étend d'abord ; relecture documentée
+    // de CY, `autres_09`, presse pectorale 20 → 25 kg puis séries de 1 à 3
+    // répétitions chez une débutante.)
+    final small = (up + bw) <= (markLoad + bw) * (1 + p.coachTwoForTwoMaxStep);
+    if (up > markLoad + 1e-9 && small && guardOk(up)) {
+      kg = up;
+      ex.heldCause = null;
+    }
+  }
+  // Même emplacement, schéma différent de la dernière séance (série
+  // ouverte, répétitions recalées) : la charge totale ne monte pas plus que
+  // la hausse permise à schéma égal, corrigée de l'écart de répétitions
+  // (environ 2,5 % par répétition de moins, tables de pourcentage du 1RM
+  // de la NSCA ; quatre au plus). (CY, partie 0 : relecture documentée de
+  // CP2, `street_12` +17,9 % et `street_08` +18,1 % de charge totale d'une
+  // séance à la suivante, la borne à schéma égal ne s'appliquant pas.)
+  // (Base : la dernière séance d'une semaine de charge, pas un allègement
+  // ni un jour bas — relecture indépendante du code de CY.)
+  final otherLoad = mark?.loadedLoadKg ?? mark?.loadKg;
+  if (markLoad == null &&
+      mark != null &&
+      otherLoad != null &&
+      mark.amount > 0 &&
+      lines.isNotEmpty &&
+      item.kind != SetKind.test &&
+      !ex.calibrating) {
+    final gap = mark.amount - lines.first.$2;
+    final rise = ownRef
+        ? coachRiseOf(c, p)
+        : (c.fragile ? p.maxUpMain / 2 : p.maxUpMain);
+    // (Zone à antécédent : pas de part en plus pour les répétitions de
+    // moins — relecture documentée de CY, `street_12` : +17,4 % d'une
+    // séance à l'autre sur le dips lesté.)
+    final reps = gap <= 0 || c.fragile
+        ? 0
+        : (gap > p.coachRepGapMax ? p.coachRepGapMax : gap);
+    final factor = (1 + rise) * (1 + p.coachRepLoadShare * reps);
+    final cap = grid.floor((otherLoad + bw) * factor - bw);
+    final step = grid.next(grid.floor(otherLoad), up: true);
+    final ceiling = cap > step ? cap : step;
+    if (kg > ceiling + 1e-9) {
+      kg = ceiling;
+      ex.heldCause ??= 'cap';
+    }
   }
   final lastAny = track.lastLoad;
   if (markLoad == null && lastAny != null && !ex.calibrating) {

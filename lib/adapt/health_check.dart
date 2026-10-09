@@ -28,6 +28,7 @@ import '../plan/evolution_widgets.dart' show EvolutionSessionCard;
 import '../store.dart';
 import '../ui.dart';
 import 'adapt_texts.dart';
+import 'clearance.dart';
 
 /// Pose de Koach pour chaque réponse à « Comment tu te sens ? ».
 const kFeelPoses = <int, KoachPose>{
@@ -141,6 +142,8 @@ class _HealthCheckPageState extends State<HealthCheckPage> {
           // G10 : ce qui change dans cette séance (propositions de Koach
           // appliquées ou acceptées), au début de la séance concernée.
           EvolutionSessionCard(week: _w, j: widget.base.j),
+          // CI1g : avis médical demandé par le bloc, pas encore confirmé.
+          ...clearanceCard(_w, widget.base.j),
           ..._painStopCard(a),
           ...(!a.asked || _redo ? _question(a) : _answered(a)),
         ],

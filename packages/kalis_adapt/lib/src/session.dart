@@ -116,7 +116,10 @@ ExerciseInfo? findSubstitute(
         e.loadType == notLoadType ||
         e.difficulty > o.difficulty ||
         (e.discipline != o.discipline && e.rootId != o.rootId) ||
-        !e.feasibleWith(equipment) ||
+        !(e.feasibleWith(equipment) ||
+            (neutralWrist &&
+                e.id == coachBarPushUp &&
+                equipment.contains(coachLowBar))) ||
         (place != null && !e.places.contains(place)) ||
         (avoid != null && avoid(e))) {
       continue;
@@ -340,6 +343,12 @@ SessionPlan buildSessionPlan(
       (wristStopped &&
           e.stressOn(Joint.wrist) != JointStress.low &&
           !coachWristNeutralSupport(e));
+  final wristGene = coached && wristGeneRecent(state, day);
+  final wristGeneLevel = wristGene
+      ? state.pains[BodyZone.wristHand]!
+            .reportsBetween(day - 13, day)
+            .reduce((a, b) => a > b ? a : b)
+      : 0;
 
   // 1. Lieu du jour et zones douloureuses : exercices remplacés ou retirés.
   for (final d in drafts) {
@@ -421,6 +430,61 @@ SessionPlan buildSessionPlan(
         );
         continue;
       }
+    }
+    // Première gêne du poignet (3 sur 10 ou plus dans les deux semaines,
+    // avant tout arrêt) : une poussée paume à plat passe tout de suite sur
+    // un appui à prise neutre faisable aujourd'hui (parallettes, poignées,
+    // pompe mains serrées sur une barre basse), sans attendre la règle
+    // « douleur qui dure » (CY, partie 0 : relecture documentée de CP2,
+    // `street_01`, `street_03` — variante neutre proposée six semaines après
+    // la première gêne). Sans appui neutre faisable, la poussée reste écrite,
+    // dose plafonnée (règle du poignet sensible).
+    if (wristGene &&
+        !misplaced &&
+        painZone == null &&
+        !tooHeavy &&
+        !wristStopped &&
+        d.item.kind == SetKind.work &&
+        info.mode == CapacityMode.reps &&
+        e.stressOn(Joint.wrist) == JointStress.moderate &&
+        coachPainStopHits(e, BodyZone.wristHand) &&
+        !coachWristNeutralSupport(e, equipment)) {
+      final neutral = findSubstitute(
+        ctx,
+        info,
+        equipment: equipment,
+        place: place,
+        pains: painsToday,
+        taken: taken,
+        neutralWrist: true,
+        avoid: (x) =>
+            x.stressOn(Joint.wrist) == JointStress.high ||
+            stopAvoid(x) ||
+            !coachWristNeutralSupport(x, equipment),
+      );
+      if (neutral != null &&
+          neutral.mode == CapacityMode.reps &&
+          neutral.fraction > 0) {
+        final why = <Reason>[
+          reason(ReasonCodes.adaptPainReported, <String, Object?>{
+            'zone': BodyZone.wristHand.code,
+            'intensity': wristGeneLevel,
+          }),
+        ];
+        taken.add(neutral.id);
+        adjustments.add(
+          SessionAdjustment(
+            kind: AdjustmentKind.exerciseSwapped,
+            exerciseId: e.id,
+            replacementExerciseId: neutral.id,
+            reasons: why,
+          ),
+        );
+        d.reasons.addAll(why);
+        d.info = neutral;
+        d.item = _retarget(d.item, neutral);
+      }
+      continue;
     }
     if (!misplaced && painZone == null && !tooHeavy) {
       continue;
@@ -1162,6 +1226,8 @@ SessionPlan buildSessionPlan(
     equipment: equipment,
     place: place,
     taken: taken,
+    coached: coached,
+    comeback: comeback,
   );
 
   // 3. Charges, répétitions et flammes de chaque exercice.
@@ -2358,10 +2424,40 @@ bool _stopNoticeDue(PainState? s, int day) {
 /// de la semaine atteint 3 sur 10 (CA2, partie 0). Les barres parallèles et
 /// les anneaux n'en font pas partie : le poignet y porte le poids du corps
 /// en légère extension (panel de la boucle 5, école santé).
-bool coachWristNeutralSupport(CatalogExercise e) =>
-    e.equipment.any(_wristNeutralEquipment.contains);
+///
+/// Avec [equipment] (première gêne seulement, avant tout arrêt), la pompe
+/// mains surélevées faite mains serrées sur une barre basse
+/// ([coachBarPushUp], quand [equipment] compte une barre basse) en fait
+/// partie : la main entoure la barre comme une poignée, le poignet reste
+/// droit (CY, partie 0 : relecture documentée de CP2, `street_01` et
+/// `street_03` — variante neutre proposée six semaines après la première
+/// gêne ; modifications de la pompe pour le poignet douloureux : poignées
+/// ou barre). Pendant un arrêt du poignet, la règle reste celle de
+/// DECISIONS_CP.md C10.8 (a) : parallettes et poignées seulement (appel
+/// sans [equipment]).
+bool coachWristNeutralSupport(
+  CatalogExercise e, [
+  Set<String> equipment = const <String>{},
+]) =>
+    e.equipment.any(_wristNeutralEquipment.contains) ||
+    (e.id == coachBarPushUp && equipment.contains(coachLowBar));
 
 const Set<String> _wristNeutralEquipment = <String>{'parallettes', 'poignées'};
+
+/// Pompe mains surélevées : faite mains sur une barre basse, elle garde le
+/// poignet neutre (voir [coachWristNeutralSupport]).
+const String coachBarPushUp = 'sw-pompe-inclinee';
+
+/// Matériel « barre basse » du catalogue.
+const String coachLowBar = 'barre basse';
+
+/// Vrai si le poignet a été signalé à 3 sur 10 ou plus dans les deux
+/// semaines qui précèdent le jour [day] (première gêne : CY, partie 0).
+bool wristGeneRecent(ModelState state, int day) {
+  final track = state.pains[BodyZone.wristHand];
+  return track != null &&
+      track.reportsBetween(day - 13, day).any((r) => r >= painPersistMin);
+}
 
 /// Lignes d'endurance et de conditionnement de la séance du jour [day]
 /// (CA2, partie 1 ; `CONTRAT.md`, § 12) :
@@ -2389,6 +2485,8 @@ void _enduranceDay(
   required Set<String> equipment,
   required Place? place,
   required Set<String> taken,
+  bool coached = false,
+  PainReturn comeback = PainReturn.none,
 }) {
   final p = ctx.params;
   if (!p.enduranceConduct) {
@@ -2424,6 +2522,48 @@ void _enduranceDay(
         reasons: <Reason>[why],
       ),
     );
+  }
+
+  // 0. Douleur qui dure au bas du corps (hanche, cuisse, genou, jambe,
+  // cheville et pied) : la course (impact) est retirée tant que l'arrêt
+  // tient, le cardio sans impact reste ; consulter (CY : relecture
+  // documentée, `autres_06`, cheville à 4/10 neuf séances de suite et la
+  // course continuée jusqu'au semi-marathon ; même règle d'arrêt que les
+  // mouvements de force, CX correction 1 : 3/10 deux semaines, 5/10 plus
+  // d'une semaine, ou retour).
+  const legZones = <BodyZone>{
+    BodyZone.hip,
+    BodyZone.thigh,
+    BodyZone.knee,
+    BodyZone.lowerLeg,
+    BodyZone.ankleFoot,
+  };
+  // (Mode coach seulement : les blocs lus comme en 0.1 gardent leur
+  // conduite — relecture indépendante du code de CY.)
+  final legStops = <PainStop>[
+    if (coached)
+      for (final stop in state.painStops(day))
+        if (legZones.contains(stop.zone)) stop,
+  ];
+  // Reprise de la course après l'arrêt (zone du bas du corps en reprise
+  // graduée) : courses servies à la part d'une reprise après quatorze jours
+  // (`enduranceResumeLong`), comme après une coupure.
+  final legReturn = coached && comeback.zones.any(legZones.contains);
+  if (legStops.isNotEmpty) {
+    final stop = legStops.first;
+    final why = reason(ReasonCodes.adaptPainPersistent, <String, Object?>{
+      'zone': stop.zone.code,
+      'sessions': stop.sessions,
+    });
+    for (final entry in kinds.entries) {
+      final d = entry.key;
+      if (entry.value != EnduranceKind.run || d.removed) {
+        continue;
+      }
+      d.removed = true;
+      note(d, AdjustmentKind.exerciseRemoved, why);
+    }
+    kinds.removeWhere((d, k) => d.removed);
   }
 
   // 1. Reprise après une coupure.
@@ -2483,8 +2623,11 @@ void _enduranceDay(
     if (d.item.kind == SetKind.warmup) {
       continue;
     }
-    if (resume < 1) {
-      final (item, sets) = scaled(d.item, d.sets, resume);
+    final share = legReturn && kind == EnduranceKind.run
+        ? (resume < p.enduranceResumeLong ? resume : p.enduranceResumeLong)
+        : resume;
+    if (share < 1) {
+      final (item, sets) = scaled(d.item, d.sets, share);
       if (!identical(item, d.item) || sets != d.sets) {
         d.item = item;
         d.sets = sets;
@@ -2492,8 +2635,8 @@ void _enduranceDay(
           d,
           AdjustmentKind.setsReduced,
           reason(ReasonCodes.adaptEnduranceShortened, <String, Object?>{
-            'cause': resumeCause,
-            'percent': (resume * 100).round(),
+            'cause': share < resume ? 'resume_14' : resumeCause,
+            'percent': (share * 100).round(),
           }),
         );
       }

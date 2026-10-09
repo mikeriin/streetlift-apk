@@ -388,8 +388,19 @@ abstract final class CoachNotes {
   /// (`value` : répétitions visées ; CP2, partie 0).
   static const String repsRehearsal = 'reps_rehearsal';
 
+  /// Avis d'un médecin ou d'un kinésithérapeute avant la première semaine
+  /// (`value` : gêne déclarée la plus forte, 0 si seul le questionnaire de
+  /// santé l'a demandé ; CY, partie 0).
+  static const String clearanceFirst = 'clearance_first';
+
+  /// Développé au-dessus de la tête sur une épaule opérée ou à antécédent
+  /// (`value` : 0 ; CY, partie 0).
+  static const String shoulderHistory = 'shoulder_history';
+
   /// Tous les codes.
   static const List<String> all = <String>[
+    clearanceFirst,
+    shoulderHistory,
     entryCheck,
     repsRehearsal,
     stepCriterion,
@@ -576,6 +587,11 @@ const double coachRepriseRise = 0.10;
 /// semaine 1 pour un maximum de 50 ; l'épaule est la zone la plus blessée
 /// en street workout, l'excès d'entraînement la première cause perçue).
 const double coachFirstWeekRepsShare = 4;
+
+/// Part du créneau en deçà de laquelle une séance de construction reçoit des
+/// séries de plus sur le mouvement visé (`_fillTime` ; choix raisonné : 80 %
+/// laisse la marge de l'échauffement et des transitions ; CY).
+const double coachFillShare = 0.8;
 
 /// Part des séries gardée pour une figure en appui sans prise neutre quand
 /// le profil déclare une gêne du poignet (« réduit de moitié d'emblée »,
@@ -2852,6 +2868,13 @@ final class Prescriber {
     if (base > 0) {
       high = _clampInt(_round(base * 0.6) - 2, 4, 12);
     }
+    if (base > 0 &&
+        (e.id == 'sw-traction-archer' || e.id == 'sw-traction-typewriter')) {
+      // Archer et typewriter (presque tout le poids sur un bras) : environ
+      // un tiers du maximum de tractions par côté, 2 en réserve (choix
+      // raisonné ; CY : la variante de surcharge du plateau sans lest).
+      high = _clampInt(_round(base * 0.35), 3, 8);
+    }
     if (e.id.contains('tempo-excentrique')) {
       // Traction complète au tempo lent : montée tirée, 2 s tenues en haut,
       // descente en 4 s — environ 45 % du maximum au tempo normal, 4 à 10
@@ -4102,6 +4125,30 @@ final class Prescriber {
         : (taper
               ? longest * 0.6
               : (light ? longest * 0.7 : longest * (1 + coachRunLongRise)));
+    // Après une échéance (semaine de transition ou d'introduction, ou dans
+    // les deux semaines qui suivent) : la sortie repart à 70 % de la plus
+    // longue, puis +10 % au plus d'une semaine à l'autre — jamais la plus
+    // longue d'avant la course + 10 % deux semaines après un semi (CY :
+    // panel des saisons croisées, `autres_06`, 74 → 112 min en semaine 14 ;
+    // Frandsen et al. 2025 : le risque suit la plus longue sortie récente).
+    final restartNow =
+        ws.kind == WeekKind.intro ||
+        ws.intent == WeekIntent.transition ||
+        ws.intent == WeekIntent.intro;
+    final last = _history.isEmpty ? null : _history.last;
+    final restartBefore =
+        _history.length >= 2 &&
+        (_history[_history.length - 1].restart ||
+            _history[_history.length - 2].restart);
+    if (longest > 0 && !taper && blockIndex > 0 && restartNow) {
+      long = longest * 0.7;
+    } else if (longest > 0 && !taper && restartBefore && last != null) {
+      final step =
+          (last.runLong < 15 ? 15.0 : last.runLong) * (1 + coachRunLongRise);
+      if (long > step) {
+        long = step;
+      }
+    }
     // (Jour de renforcement du coureur : 12 min gardées pour lui — panel
     // CP2, partie 1 : le renforcement disparaissait des semaines de
     // construction.)
@@ -4296,14 +4343,23 @@ final class Prescriber {
       final goal = a.goalOn(e.id, GoalMetric.maxReps)?.targetValue;
       // Variante sans record (pompe adaptée, tirage assisté) : une série
       // maximale propre, elle devient le repère du bloc suivant.
-      final variant = own <= 0 && (goal == null || goal < 1);
+      // Premier muscle-up (jamais réussi) : le
+      // repère est une répétition propre, pas une série de 8 à 15 (CY,
+      // partie 0 : relecture documentée de CP2, `autres_08` — viser des
+      // répétitions de mauvaise qualité charge coudes et épaules).
+      final unlock =
+          own <= 0 &&
+          max <= 0 &&
+          e.rootId == Ids.muscleUp &&
+          (goal == null || goal <= 1);
+      final variant = !unlock && own <= 0 && (goal == null || goal < 1);
       kind = TestKind.maxReps;
       x
         ..sets = 1
         ..repsLow = max > 0 ? max : (variant ? 8 : 1)
         ..repsHigh = max > 0
             ? (goal != null && goal > max + 2 ? goal.round() : max + 2)
-            : (variant || goal == null ? 15 : goal.round())
+            : (unlock ? 1 : (variant || goal == null ? 15 : goal.round()))
         ..rest = 240;
       x.test = TestSpec(
         kind: TestKind.maxReps,
@@ -4585,6 +4641,21 @@ final class Prescriber {
         return x;
       }
       if (s.method == Method.runEasy || s.method == Method.runLong) {
+        // Lendemain d'une course d'épreuve : repos, pas de footing écrit —
+        // la marche reste libre (CY, partie 0 : relecture documentée de
+        // CP2, `autres_06`, footing de 20 min le lendemain du semi ; après
+        // une course longue, un à deux jours sans course, Higdon, plans de
+        // semi-marathon : repos ou marche le lendemain).
+        final target = _shape.target;
+        if (skeleton.style == CoachStyle.endurance &&
+            target != null &&
+            target.event != null) {
+          final after =
+              7 * week + _dayOffset(day) - a.start.daysUntil(target.date);
+          if (after >= 0 && after <= 1) {
+            return null;
+          }
+        }
         return _run(s, day, ws, role);
       }
       return null;
@@ -4699,6 +4770,16 @@ final class Prescriber {
       if (knee >= 3 && x.e.id == 'mu-wall-sit') {
         x.reasons.add(_note(CoachNotes.kneeShallow, knee));
       }
+    }
+    if (x != null &&
+        x.kind == SetKind.work &&
+        x.e.pattern == MovementPattern.pousseeVerticaleHaute &&
+        a.limits.any((l) => l.joint == Joint.shoulder && !l.trend)) {
+      // Épaule opérée ou à antécédent : développé sans douleur, amplitude
+      // tolérée, avec le feu vert du chirurgien ou du kiné (CY, partie 0 :
+      // relecture documentée de CP2, `autres_10`). Une simple tendance
+      // relevée par l'adaptation ne compte pas comme antécédent.
+      x.reasons.add(_note(CoachNotes.shoulderHistory, 0));
     }
     if (x != null &&
         skeleton.style == CoachStyle.health &&
@@ -5222,6 +5303,24 @@ final class Prescriber {
   /// mouvements de l'objectif d'abord ; en semaine d'allègement, deux tests
   /// au plus (un seul sans objectif), pour que l'allègement en reste un ;
   /// jamais une variante sans record (son repère n'aurait pas de sens).
+  /// Vrai si [e] charge une articulation encore douloureuse : gêne relevée
+  /// au bloc précédent à 3 sur 10 ou plus, gêne déclarée à 4 sur 10 ou plus
+  /// (règle des tests maximaux du profil v3), ou zone à l'arrêt — pas de
+  /// test maximal (CY, partie 0 ; R3-P16 : on ne teste pas un mouvement
+  /// douloureux).
+  bool _painBlocksTest(CatalogExercise e) {
+    for (final l in a.limits) {
+      final joint = l.joint;
+      if (joint == null || e.stressOn(joint) == JointStress.low) {
+        continue;
+      }
+      if (l.discomfort >= (l.trend ? 3 : 4)) {
+        return true;
+      }
+    }
+    return a.stopZones.any((z) => coachPainStopHits(e, z));
+  }
+
   bool _testable(SlotSpec s, WeekSpec ws, Set<String> tested) {
     final e = a.catalog.find(s.exerciseId);
     if (e == null) {
@@ -5229,7 +5328,7 @@ final class Prescriber {
     }
     // Mouvement en reprise graduée après une douleur qui dure : pas de
     // test maximal tant que la reprise n'est pas finie.
-    if (a.returnShareOf(e, 0) != null) {
+    if (a.returnShareOf(e, 0) != null || _painBlocksTest(e)) {
       return false;
     }
     if (s.method == Method.repsStrength &&
@@ -5513,6 +5612,15 @@ final class Prescriber {
           continue;
         }
         final e = a.catalog.exercise(id);
+        // Objectif daté (sans épreuve inscrite) sur une articulation encore
+        // douloureuse : pas de test maximal ce jour-là (CY, partie 0 :
+        // relecture documentée de CP2, `street_10`, maintien maximal de
+        // planche gardé au programme pendant la douleur du poignet). Une
+        // vraie épreuve reste écrite : le moteur d'évolution la conduit
+        // avec prudence.
+        if ((_shape.target?.event == null) && _painBlocksTest(e)) {
+          continue;
+        }
         SlotSpec? own;
         for (final s in spec.slots) {
           if (s.exerciseId == id) {
@@ -5578,6 +5686,22 @@ final class Prescriber {
         out.insert(at + k, x);
         k++;
       }
+    }
+    // Jour de test de tirage (traction, muscle-up) : le travail ordinaire de
+    // tirage vertical et de muscle-up qui resterait après les tests saute —
+    // les coudes et les fléchisseurs sortent d'efforts maximaux (CY, partie
+    // 0 : relecture documentée de CP2, `street_08`, EMOM de muscle-up et
+    // tractions lestées 2 × 6 après les séries maximales ; même règle que
+    // la veille d'un test, 48 h sans travail dur du mouvement ; après la
+    // section de l'échéance, qui ajoute aussi des tests).
+    bool pullish(_Draft x) =>
+        x.e.pattern == MovementPattern.tirageVertical ||
+        x.e.rootId == Ids.muscleUp;
+    if (out.any(
+      (x) =>
+          x.kind == SetKind.test && x.e.id != coachGateExercise && pullish(x),
+    )) {
+      out.removeWhere((x) => x.kind == SetKind.work && pullish(x));
     }
     // Les tests se font frais : juste après l'échauffement.
     if (role != _DayRole.event && out.any((x) => x.kind == SetKind.test)) {
@@ -5660,6 +5784,104 @@ final class Prescriber {
       resistance = resistance || x.isResistance;
     }
     return total + (resistance ? coachWarmupFor(minutes) : 0);
+  }
+
+  /// Temps du créneau inutilisé (CY : relecture documentée et panel des
+  /// saisons croisées — séances de 23 à 38 min sur 45 disponibles chez
+  /// `street_01`, 25 min sur 60 chez `street_04`, mouvement de l'objectif
+  /// sous-dosé) : en semaine de construction, tant que la séance prend moins
+  /// de [coachFillShare] du créneau, une série de plus aux lignes de travail
+  /// du mouvement visé (puis aux mouvements principaux), cinq séries au plus
+  /// par ligne. Les garde-fous de volume qui suivent (plafond du groupe,
+  /// hausse de 15 % par semaine, volume de répétitions) bornent l'ajout : la
+  /// dose monte par paliers (R5-P22 ; R1-P1, dose-réponse : 10 séries par
+  /// muscle et par semaine et plus pour l'hypertrophie, Schoenfeld et al.
+  /// 2017).
+  void _fillTime(
+    List<_Draft> items,
+    int minutes,
+    WeekSpec ws,
+    _DayRole role,
+    int week,
+  ) {
+    // Reprise après une longue coupure (10 semaines et plus) : les quatre
+    // premières semaines du premier bloc gardent la dose écrite (relecture
+    // indépendante du code de CY).
+    if (blockIndex == 0 && a.gapWeeks >= 10 && week < 4) {
+      return;
+    }
+    if (role != _DayRole.normal ||
+        ws.kind != WeekKind.build ||
+        ws.light ||
+        ws.testWeek ||
+        ws.eventWeek ||
+        _shape.reprise ||
+        (blockIndex == 0 && ws.stage < 1) ||
+        !(isStreetStyle(skeleton.style) ||
+            skeleton.style == CoachStyle.hypertrophy ||
+            skeleton.style == CoachStyle.strength)) {
+      return;
+    }
+    final budget = minutes * 60.0 * coachFillShare;
+    bool aimed(_Draft x) {
+      final ref = x.slot?.referenceId;
+      return a.aimsAt(x.e.id) || (ref != null && a.aimsAt(ref));
+    }
+
+    // Ligne réduite pour une douleur ou une gêne (tendance, appui épargné,
+    // arrêt, retour) ou ligne d'un groupe (superset, circuit) : la dose
+    // écrite reste telle quelle (relecture indépendante du code de CY).
+    bool painReduced(_Draft x) => x.reasons.any(
+      (r) =>
+          r.code == ReasonCodes.planCoachNote &&
+          const {
+            CoachNotes.painGeneral,
+            CoachNotes.painTrend,
+            CoachNotes.wristSpare,
+            CoachNotes.painStop,
+            CoachNotes.painStep,
+            CoachNotes.painReturn,
+            CoachNotes.painReturnItem,
+            CoachNotes.painReprise,
+          }.contains(r.params['note']),
+    );
+    bool open(_Draft x) =>
+        x.kind == SetKind.work &&
+        x.isResistance &&
+        x.group == null &&
+        !painReduced(x) &&
+        !x.fixed &&
+        !x.backoff &&
+        x.repsHigh != null &&
+        x.sets >= 1 &&
+        x.sets < 5;
+    final order = <_Draft>[
+      for (final x in items)
+        if (open(x) && aimed(x)) x,
+      for (final x in items)
+        if (open(x) && !aimed(x) && x.slot?.role == SlotRole.main) x,
+    ];
+    if (order.isEmpty) {
+      return;
+    }
+    var guard = 0;
+    var k = 0;
+    while (_daySeconds(items, minutes) < budget && guard < 12) {
+      guard++;
+      final x = order[k % order.length];
+      k++;
+      if (x.sets >= 5) {
+        if (order.every((o) => o.sets >= 5)) {
+          break;
+        }
+        continue;
+      }
+      x.sets++;
+      if (_daySeconds(items, minutes) > minutes * 60.0) {
+        x.sets--;
+        break;
+      }
+    }
   }
 
   /// Ramène la séance sous le temps du jour : séries retirées aux
@@ -6193,11 +6415,33 @@ final class Prescriber {
     }
   }
 
+  /// Vrai si [e] compte dans le volume de répétitions de la racine [root]
+  /// (voir `_fitReps`) : la racine elle-même et ses variantes au moins aussi
+  /// dures.
+  bool _repsCounted(CatalogExercise e, String root) {
+    if (e.id == root) {
+      return true;
+    }
+    final r = a.catalog.find(root);
+    return r == null || e.difficulty >= r.difficulty;
+  }
+
   /// Garde-fou du volume de répétitions (voir `_fitVolume`).
   void _fitReps(List<List<_Draft>> days, int index) {
     if (index <= 0 && blockIndex > 0) {
       return;
     }
+    // Le plafond ne compte que le mouvement et ses variantes au moins aussi
+    // dures — une variante plus facile (pompe mains surélevées, sur les
+    // genoux, assistée) permet bien plus de répétitions que le maximum du
+    // geste complet, à une charge plus basse (CY : relecture documentée de
+    // CP2, `street_03`, pompe inclinée écrite 1 × 2 puis 1 × 3 pendant
+    // quinze semaines pour un maximum d'environ 22 à cette hauteur : trois
+    // pompes au sol plafonnaient la première semaine, puis la hausse de
+    // 15 % par semaine partait de ce plancher). La variante facile garde sa
+    // propre dose (séries et plage de `_beginnerMain`).
+    bool counted(_Draft x, String root) => _repsCounted(x.e, root);
+
     double sumOf(String root) {
       var total = 0.0;
       for (final items in days) {
@@ -6206,7 +6450,8 @@ final class Prescriber {
           if (high != null &&
               x.kind == SetKind.work &&
               x.isResistance &&
-              _repsRootOf(x.e) == root) {
+              _repsRootOf(x.e) == root &&
+              counted(x, root)) {
             total += x.sets * high;
           }
         }
@@ -6239,10 +6484,16 @@ final class Prescriber {
           continue;
         }
         limit = coachFirstWeekRepsShare * max;
-      } else {
-        if (reference <= 0) {
+      } else if (reference <= 0) {
+        // Mouvement absent des semaines d'avant (variante facile seule
+        // jusque-là, ou mouvement qui apparaît) : le plafond de la première
+        // semaine, tiré du maximum (relecture indépendante du code de CY).
+        final max = a.reps[root] ?? 0;
+        if (max <= 0) {
           continue;
         }
+        limit = coachFirstWeekRepsShare * max;
+      } else {
         // Bloc de reprise après une douleur : +10 % au plus (C9.8).
         limit =
             reference *
@@ -6260,6 +6511,7 @@ final class Prescriber {
                 (x.fixed && !_shape.reprise) ||
                 x.repsHigh == null ||
                 _repsRootOf(x.e) != root ||
+                !counted(x, root) ||
                 x.sets <= x.minSets ||
                 x.sets <= 1) {
               continue;
@@ -6287,6 +6539,7 @@ final class Prescriber {
                 high == null ||
                 high <= 1 ||
                 _repsRootOf(x.e) != root ||
+                !counted(x, root) ||
                 x.backoff ||
                 (longest != null && high <= longest.repsHigh!)) {
               continue;
@@ -6309,6 +6562,22 @@ final class Prescriber {
           longest.intensity = target.copyWith(
             value: _round3(target.value * after / before),
           );
+        }
+        // (La part dite par la note « zone de l'épreuve » suit les
+        // répétitions écrites — CY : panel des saisons croisées,
+        // `street_14`, note à 76 % pour 2 × 8 sur un maximum de 17.)
+        final reasons = longest.reasons;
+        for (var i = 0; i < reasons.length; i++) {
+          final r = reasons[i];
+          final v = r.params['value'];
+          if (r.code == ReasonCodes.planCoachNote &&
+              r.params['note'] == CoachNotes.eventZone &&
+              v is num) {
+            reasons[i] = _note(
+              CoachNotes.eventZone,
+              _round(v.toDouble() * after / before),
+            );
+          }
         }
       }
     }
@@ -7419,7 +7688,8 @@ final class Prescriber {
         if (root != null &&
             high != null &&
             p.kind == SetKind.work &&
-            t.kind.isResistance) {
+            t.kind.isResistance &&
+            _repsCounted(t.exercise, root)) {
           trace.reps[root] = (trace.reps[root] ?? 0) + p.sets * high;
         }
         final load = p.startLoadKg;
@@ -7503,6 +7773,7 @@ final class Prescriber {
       ];
       for (var d = 0; d < a.dayCount; d++) {
         _equalize(days[d]);
+        _fillTime(days[d], a.days[d].minutes, ws, roles[d], w);
         _fitTime(days[d], a.days[d].minutes);
       }
       _floorEvent(days, ws);
@@ -7538,7 +7809,8 @@ final class Prescriber {
           if (root != null &&
               high != null &&
               x.kind == SetKind.work &&
-              x.isResistance) {
+              x.isResistance &&
+              _repsCounted(x.e, root)) {
             trace.reps[root] = (trace.reps[root] ?? 0) + x.sets * high;
           }
         }
@@ -7943,6 +8215,25 @@ List<Reason> blockReasonsOf(Athlete a, Skeleton skeleton) {
   }
   if (a.limits.isEmpty) {
     out.add(note(CoachNotes.painGeneral, 6));
+  }
+  // Avis médical avant la première semaine : questionnaire de santé qui le
+  // demande (mode prudent) ou gêne déclarée à 5 sur 10 ou plus (CY, partie
+  // 0 : relecture documentée de CP2, `autres_10` ; ACSM 2015, dépistage
+  // avant l'activité : signes ou symptômes → avis médical avant de
+  // commencer ; règle de douleur du programme : à 5/10, variante plus
+  // facile et volume retiré). L'application le montre avant la première
+  // séance (`INTEGRATION_CI.md`).
+  var declared = 0;
+  for (final l in a.limits) {
+    if (!l.trend && l.discomfort > declared) {
+      declared = l.discomfort;
+    }
+  }
+  final screening = profile.healthScreening?.outcome;
+  if (screening == HealthScreeningOutcome.cautious || declared >= 5) {
+    out.add(
+      note(CoachNotes.clearanceFirst, declared >= 5 ? declared.toDouble() : 0),
+    );
   }
   if (profile.bodyWeightGoal == BodyWeightGoal.lose) {
     // Perte de poids : le renforcement garde le muscle, la dépense vient
