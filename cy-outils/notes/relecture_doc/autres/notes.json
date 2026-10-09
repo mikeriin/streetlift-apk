@@ -1,0 +1,288 @@
+{
+ "relecteur": "autres",
+ "profils": {
+  "autres_01_debutant_musculation": {
+   "ensemble": {
+    "note": 7.5,
+    "commentaire": "Programme corps entier 3×/semaine, 2 séries de 8 à 12 rép. à 3-4 RIR, double progression et allègements en S6/S12 : conforme au modèle débutant de l'ACSM (1 à 3 séries, 8 à 12 rép., 2-3 j/sem, corps entier) (https://sfu.ca/~ryand/kin343/ACSMresistance.pdf). Il reste prudent à l'excès : 28 à 31 min utilisées sur 60 min disponibles, 2 séries par exercice tout le cycle, et aucun apprentissage des mouvements à la barre alors que l'objectif inclut la force."
+   },
+   "adapte": {
+    "note": 7.5,
+    "commentaire": "Bon choix de machines guidées (presse à cuisses, presse pectorale, poulies) pour un pratiquant à 0 mois, règles de calibrage claires. Mais le squat et le développé couché, pourtant signalés « niveau inconnu », ne sont jamais introduits, même légers, alors que l'objectif est muscle et force ; l'ACSM recommande d'inclure les exercices multiarticulaires libres dès le départ en charge modérée pour apprendre la technique (https://sfu.ca/~ryand/kin343/ACSMresistance.pdf)."
+   },
+   "progression": {
+    "note": 7,
+    "commentaire": "Double progression écrite (haut de plage puis charge suivante), RIR 4 → 3 en S2, plages 8-10 → 9-11 (S4) → 10-12 (S10). Le nombre de séries ne bouge jamais (2 séries de S1 à S11) et le bloc 2 recopie le bloc 1 (S7 = S3) ; l'ACSM prévoit de passer de séries uniques/peu nombreuses à des séries multiples après les premières semaines (https://sfu.ca/~ryand/kin343/ACSMresistance.pdf)."
+   },
+   "volume_intensite": {
+    "note": 7,
+    "commentaire": "36 séries dures/semaine, soit ~6 séries/semaine pour les quadriceps (presse 3×2) et ~6 pour la chaîne postérieure ; intensité 3-4 RIR adaptée au débutant. Volume en bas de la fourchette : la relation dose-réponse séries/hypertrophie justifierait de monter vers 3 séries sur les exercices principaux au bloc 2 (https://www.strongerbyscience.com/research-spotlight-muscle-growth/)."
+   },
+   "exercices": {
+    "note": 7.5,
+    "commentaire": "Couverture équilibrée poussée/tirage horizontal et vertical, RDL, hip thrust, leg curl, élévations latérales, dead bug. La presse à cuisses 3×/semaine est le seul mouvement de genou dominant ; un squat goblet ou à la barre manque pour la force générale visée (https://sfu.ca/~ryand/kin343/ACSMresistance.pdf)."
+   },
+   "faisable_sur": {
+    "note": 9,
+    "commentaire": "Séances de 28-31 min pour 60 min disponibles, matériel conforme, règles de douleur, de séance manquée et de version courte bien écrites. Très faisable et sûr ; seule la marge de temps inutilisée est perdue."
+   },
+   "securite": []
+  },
+  "autres_02_hypertrophie_intermediaire": {
+   "ensemble": {
+    "note": 6.5,
+    "commentaire": "Cinq séances avec hip thrust 3×/semaine et 75 séries dures : la structure va dans le sens de l'objectif fessiers. Mais la priorité épaules est sous-traitée (élévations latérales 6 séries/semaine), la charge du hip thrust recule en S4, les séances n'utilisent que 27 à 44 min sur 75 et le bloc 2 recopie le bloc 1. Pour une intermédiaire de 3 ans, l'ACSM recommande une variation planifiée volume/intensité et des charges de 70-85 % (https://sfu.ca/~ryand/kin343/ACSMresistance.pdf)."
+   },
+   "adapte": {
+    "note": 6.5,
+    "commentaire": "Les points faibles sont identifiés, mais la règle « spécialisation : le reste en entretien » n'est pas appliquée (développé couché 6 séries/semaine, tirages 12 séries) alors que le deltoïde moyen ne reçoit que 2+2+2 séries d'élévations. La note « Renforcement du coureur… tendon d'Achille » sur les mollets ne correspond pas au profil. Lundi est titré « haut du corps » mais commence par un hip thrust (https://www.strongerbyscience.com/research-spotlight-muscle-growth/)."
+   },
+   "progression": {
+    "note": 5.5,
+    "commentaire": "Hip thrust 75 kg (S1) → 77,5 kg (S2-S3) → retour à 75 kg en S4 avec +1 rép., squat abaissé de 55 à 52,5 kg en S10 : la charge écrite ne progresse pas sur 12 semaines, seule la double progression de l'utilisatrice peut le faire. L'ACSM prévoit +2 à 10 % de charge quand les répétitions cibles sont dépassées (https://sfu.ca/~ryand/kin343/ACSMresistance.pdf)."
+   },
+   "volume_intensite": {
+    "note": 6,
+    "commentaire": "Fessiers : hip thrust 7 séries + squat 6 + RDL 3 = volume correct. Mais 75 kg = 68 % du 1RM pour 8-10 rép. annoncées « 3 RIR » laisse en réalité 5 RIR ou plus ; l'intensité réelle est sous la cible. Deltoïdes moyens 6 séries/semaine, sous les ≥10 séries/semaine associées à plus d'hypertrophie (https://www.strongerbyscience.com/research-spotlight-muscle-growth/)."
+   },
+   "exercices": {
+    "note": 7,
+    "commentaire": "Bons choix pour l'objectif : hip thrust, RDL, élévation latérale à la poulie, oiseau au pec deck, développé haltères. Il manque un travail unilatéral des fessiers (fente, split squat) et un travail d'abduction pour le moyen fessier ; l'élévation latérale pourrait doubler (https://www.strongerbyscience.com/research-spotlight-muscle-growth/)."
+   },
+   "faisable_sur": {
+    "note": 8.5,
+    "commentaire": "Matériel disponible, séances bien plus courtes que les 75 min, règles de douleur et de baisse du jour présentes. Sûr ; l'enchaînement hip thrust lundi/mardi/jeudi est tolérable à 2-3 RIR."
+   },
+   "securite": []
+  },
+  "autres_03_powerlifter_competition": {
+   "ensemble": {
+    "note": 7.5,
+    "commentaire": "Préparation à rebours bien construite : volume S1-S3, intensification S5-S6 (82-88 %), simples à 90-92 % en S7-S8, affûtage S9 et séance d'amorçage à J-2, tentatives 91/96/99-102 %, gestion de la pesée. L'affûtage correspond aux pratiques des powerlifters élites (volume −59 %, dernier lourd ~4 jours avant) (https://researchonline.ljmu.ac.uk/id/eprint/2455/). Le volume reste faible pour un athlète avancé de 6 ans (séances de 34 à 47 min sur 120 min disponibles)."
+   },
+   "adapte": {
+    "note": 7.5,
+    "commentaire": "Spécifique (barre basse, soulevé conventionnel, couché avec pause, simples en conditions de compétition, filmer l'amplitude). Pour un avancé, l'ACSM indique 4-6 j/sem, 3-6 séries et une périodisation sur 1-12 rép. ; ici le squat n'est travaillé que 2×/sem et le soulevé 1× + 1 variante, sans variante de squat ni de couché prise serrée (https://sfu.ca/~ryand/kin343/ACSMresistance.pdf)."
+   },
+   "progression": {
+    "note": 8,
+    "commentaire": "Montée régulière : squat 75 % (S1) → 83 % (S3) → 88 % (S6) → 91 % (S7) ; soulevé 76 % → 92 %. Séries de recalage et repères bien pensés. Petites incohérences : 1RM de référence du couché passé à 148,5 kg en S8 et du soulevé à 258 kg en S10 sans test déclaré. Le dernier lourd à J-7/J-9/J-11 correspond aux pratiques rapportées (https://researchonline.ljmu.ac.uk/id/eprint/2455/)."
+   },
+   "volume_intensite": {
+    "note": 6.5,
+    "commentaire": "52-54 séries dures/semaine, dont seulement ~8 séries de squat et 6-7 de soulevé. La S1 est entièrement à 4 RIR (squat 165 kg × 5 pour un 1RM de 220 kg), ce qui est peu stimulant pour un avancé. L'ACSM préconise 3-6 séries par exercice et 80-100 % pour la force chez l'avancé (https://sfu.ca/~ryand/kin343/ACSMresistance.pdf). L'affûtage S9 (~55 % du pic, intensité gardée) est conforme (https://www.strongerbyscience.com/tapering/)."
+   },
+   "exercices": {
+    "note": 7.5,
+    "commentaire": "Les trois mouvements + soulevé avec pause sous le genou + couché avec pause, tirages, rotateurs externes, Pallof : choix pertinents. Pas de variante de squat (pause, tempo) ni d'accessoire de triceps lourd (couché prise serrée), utiles pour un avancé (https://sfu.ca/~ryand/kin343/ACSMresistance.pdf)."
+   },
+   "faisable_sur": {
+    "note": 8.5,
+    "commentaire": "Durées largement compatibles, sécurités de cage ou pareur imposées au-delà de 85 %, règle de pesée prudente (changer de catégorie plutôt que couper du poids). Les tentatives sont conservatrices et conditionnées."
+   },
+   "securite": [
+    "Point positif : le programme impose sécurités de cage ou pareur au-delà de 85 % et interdit les coupes de poids tardives. Aucun problème majeur."
+   ]
+  },
+  "autres_04_force_generale_46_ans": {
+   "ensemble": {
+    "note": 5,
+    "commentaire": "Bon cadre (gestion de la lombalgie ancienne, tests sans maximum, règles de douleur), mais la programmation du squat ne peut pas mener à l'objectif de 115 kg. Le bloc « intensification » (S6-S9) prescrit des charges plus légères que la S4 (72,5 kg × 2 à 4 RIR contre 80 kg × 4), des simples à 80 % à 3-4 RIR, et le test final part d'un 1RM de référence de 99 kg (ouverture 90 kg). L'ACSM recommande pour l'intermédiaire une variation planifiée avec des charges progressives vers 80-85 % et plus (https://sfu.ca/~ryand/kin343/ACSMresistance.pdf)."
+   },
+   "adapte": {
+    "note": 6,
+    "commentaire": "Âge, sommeil de 6,5 h et antécédent lombaire bien intégrés (pas d'échec, pas d'excentrique accentué, seuil de douleur). La part « mobilité 20 % » se limite à une routine épaules/poignets, sans hanches ni colonne thoracique, et les séances (42-48 min) laissent 30 min inutilisées. L'objectif de +15 % en 16 semaines n'est pas pris en charge par les charges écrites (https://sfu.ca/~ryand/kin343/ACSMresistance.pdf)."
+   },
+   "progression": {
+    "note": 4,
+    "commentaire": "Incohérences nettes : squat S4 80 kg × 4, puis S6 72,5 kg × 2 à 4 RIR, S8 80 kg × 1 à 3 RIR, S11 72,5 kg × 2 ; le 1RM de référence glisse de 100 à 99,5 puis 99 kg. La charge ne dépasse jamais 88 % d'un 1RM de 100 kg avant le test, ce qui rend 115 kg impossible sans recalage manuel. L'ACSM demande +2 à 10 % quand la cible est dépassée (https://sfu.ca/~ryand/kin343/ACSMresistance.pdf)."
+   },
+   "volume_intensite": {
+    "note": 5,
+    "commentaire": "46 séries dures/semaine au total, mais le squat ne reçoit que ~8 séries hebdomadaires, majoritairement en doubles ou simples très loin de l'échec (73-83 %, 3-4 RIR) : le stimulus est insuffisant pour un intermédiaire de 2 ans. Les blocs de « réalisation » ne contiennent pas de travail au-dessus de 85 % avant l'affûtage (https://sfu.ca/~ryand/kin343/ACSMresistance.pdf)."
+   },
+   "exercices": {
+    "note": 7,
+    "commentaire": "Squat, couché, soulevé conventionnel, RDL haltères, tirages, Pallof, face pull : base solide. Avec un antécédent lombaire, un travail d'extension du dos ou de hip hinge léger serait utile, et la mobilité de hanche manque. Le squat 2×/sem seulement limite l'objectif (https://sfu.ca/~ryand/kin343/ACSMresistance.pdf)."
+   },
+   "faisable_sur": {
+    "note": 8,
+    "commentaire": "Durées compatibles, montée en charge détaillée, sécurités au-delà de 85 %, règle de douleur lombaire précise et prudente. Le programme est sûr ; c'est son efficacité qui pose problème."
+   },
+   "securite": [
+    "Antécédent lombaire bien encadré ; le soulevé conventionnel est gardé à ≥3 RIR. Aucun problème majeur."
+   ]
+  },
+  "autres_05_course_10_km_debutante": {
+   "ensemble": {
+    "note": 5,
+    "commentaire": "La base en endurance fondamentale est prudente, mais le plan ne prépare pas vraiment l'objectif. La séance du jeudi, titrée « fractionné », est un footing facile identique au mardi pendant 12 semaines. La sortie longue plafonne à 52 min alors que la course durera ~70 min. La course est placée un jeudi avec 79 min estimées pour 45 min disponibles. Les plans débutants reconnus montent la sortie longue jusqu'à la distance ou presque (pic 9 km en S8) (https://www.sussex.ac.uk/about/documents/10k-beginner-sussex-training-guide.pdf)."
+   },
+   "adapte": {
+    "note": 5,
+    "commentaire": "Trois séances, allure de conversation, renforcement léger : cela convient à une débutante. Mais l'allure cible (7:00/km) égale l'allure de son 5 km actuel (35 min), et la note elle-même dit « allure du 5 km + 20 à 30 s », soit 7:20-7:30/km : les deux consignes se contredisent. L'échéance tombe un jeudi alors que les créneaux longs sont le dimanche (https://www.sussex.ac.uk/about/documents/10k-beginner-sussex-training-guide.pdf)."
+   },
+   "progression": {
+    "note": 5.5,
+    "commentaire": "Sortie longue 35 → 49 min (S1-S5) : bien. Puis 41 → 52 min en S7 (+27 %, au-delà de la règle « +10 %/semaine » du programme), puis plateau à 52 min de S7 à S10. Les footings du mardi et du jeudi restent à 25 min pendant 12 semaines. Le plan Sussex fait progresser en paliers avec des semaines de retrait (https://www.sussex.ac.uk/about/documents/10k-beginner-sussex-training-guide.pdf)."
+   },
+   "volume_intensite": {
+    "note": 5,
+    "commentaire": "~105-120 min/semaine, 100 % en allure facile : aucune séance d'allure spécifique ni de foulées, alors que la répartition de référence est ~80 % facile / 20 % plus intense (https://www.outsideonline.com/health/training-performance/training-distribution-study?scope=anon). Le volume total est correct pour 3 séances, mais le pic de sortie longue reste trop court par rapport aux 70 min de course."
+   },
+   "exercices": {
+    "note": 6,
+    "commentaire": "Fentes arrière et pont fessier unilatéral au poids du corps sont pertinents, mais sans mollets/soléaires, pourtant cruciaux en course ; « Footing en endurance fondamentale : 35 min » est utilisé comme record alors qu'il s'agit d'un 5 km chronométré. Pas de gammes ni de foulées malgré le titre « fractionné » (https://www.outsideonline.com/health/training-performance/training-distribution-study?scope=anon)."
+   },
+   "faisable_sur": {
+    "note": 5.5,
+    "commentaire": "Footings de 40-41 min pour 45 min disponibles : faisable. En revanche, la semaine 12 place 10 km (79 min) sur un créneau de 45 min, le mardi ne contient que 2 min, et un test 5 km tombe en S6 sans allègement préalable. Risque faible, mais le calendrier n'est pas cohérent."
+   },
+   "securite": [
+    "Pas de risque majeur ; la progression de la sortie longue en S7 (+27 %) dépasse la règle des +10 %/semaine annoncée par le programme."
+   ]
+  },
+  "autres_06_semi_marathon_intermediaire": {
+   "ensemble": {
+    "note": 6.5,
+    "commentaire": "Structure classique et cohérente : 4 séances, une séance de qualité (1000 m à 4:28/km ou blocs à 4:59/km), sortie longue jusqu'à 106 min en S10, affûtage de deux semaines. Comparable aux plans intermédiaires reconnus (sortie longue jusqu'à ~19 km, affûtage de 10-11 jours) (https://www.trainingpeaks.com/training-plans/running/half-marathon/tp-4185/hal-higdon-1-2-marathon-intermediate-1). Défauts : aucune portion à allure semi dans les sorties longues, renforcement minimal, et la course est placée sur le créneau du samedi (45 min)."
+   },
+   "adapte": {
+    "note": 7,
+    "commentaire": "L'objectif d'1 h 45 (4:59/km) est réaliste par rapport à un 10 km en 48 min, et les allures (fractions 4:28/km, allure objectif 4:59/km) sont cohérentes. Le volume de départ (~140 min) respecte ses 30 km/semaine. La note d'allure renvoie à « pour un 10 km » au lieu du semi, et le samedi de 45 min accueille une course estimée à 113 min (https://www.trainingpeaks.com/training-plans/running/half-marathon/tp-4185/hal-higdon-1-2-marathon-intermediate-1)."
+   },
+   "progression": {
+    "note": 7,
+    "commentaire": "Sortie longue 52 → 74 min (S1-S5), puis 81 → 89 → 97 → 106 min (S7-S10) : environ +9 à 10 % par semaine, avec un test de 10,5 km en S6. Les blocs à allure (3 → 4 → 5 × 1000 m) progressent. Il manque des semaines de retrait au bloc 2 (4 semaines montantes d'affilée) (https://www.trainingpeaks.com/training-plans/running/half-marathon/tp-4185/hal-higdon-1-2-marathon-intermediate-1)."
+   },
+   "volume_intensite": {
+    "note": 6.5,
+    "commentaire": "Environ 80 % facile / 20 % qualité, ce qui respecte la répartition de référence (https://www.outsideonline.com/health/training-performance/training-distribution-study?scope=anon). Mais la séance « allure seuil » est en fait à l'allure semi (4:59/km), il n'y a pas de vrai seuil, et l'affûtage S11 garde 3 × 1000 m à 4:28/km (bonne intensité ; volume −50 %, conforme à https://coachsci.sdsu.edu/csa/vol131/bosquet.htm)."
+   },
+   "exercices": {
+    "note": 6,
+    "commentaire": "Le renforcement se limite à des fentes arrière et des ponts fessiers au poids du corps, 2×/sem, alors qu'un coureur de 38 ans bénéficierait de mollets/soléaires en charge et d'un exercice de hanche unilatéral. L'élastique disponible n'est pas utilisé. Les gammes se résument aux montées de genoux (https://sfu.ca/~ryand/kin343/ACSMresistance.pdf)."
+   },
+   "faisable_sur": {
+    "note": 7.5,
+    "commentaire": "Séances de 41-57 min pour 60 min disponibles, sortie longue 106 min pour 120 min : faisable. Le footing de 20 min le lendemain du semi est discutable (il vaut mieux le rendre facultatif), et le jour de course est mal placé sur le samedi de 45 min."
+   },
+   "securite": [
+    "Footing de 20 min prévu le lendemain du semi-marathon : à rendre facultatif."
+   ]
+  },
+  "autres_07_mobilite_sante_senior": {
+   "ensemble": {
+    "note": 7,
+    "commentaire": "Programme sûr et adapté au mode prudent : assis-debout sur chaise, pompes au mur, rowing élastique, équilibre progressif à chaque séance, étirements. Cela répond à la recommandation OMS d'un travail multicomposant équilibre/force au moins 3 j/sem après 65 ans (https://www.sport-sante.lu/en/who-recommandations/). Points faibles : progression très plate sur 12 semaines et endurance réduite à 10-11 min de marche le dimanche."
+   },
+   "adapte": {
+    "note": 7.5,
+    "commentaire": "Matériel de maison, appuis prévus (chaise, mur), progression de l'équilibre bien décrite (appui unipodal → talon-pointe → tête tournée). Mais la marche régulière qu'elle pratique déjà n'est ni comptée ni encadrée, alors que l'OMS vise 150-300 min/semaine d'endurance modérée (https://www.sport-sante.lu/en/who-recommandations/). La note « gainage qui tient la position à la barre » n'a pas de sens ici."
+   },
+   "progression": {
+    "note": 6,
+    "commentaire": "Seule progression écrite : 8-10 → 9-11 → 10-12 répétitions et RIR 4 → 3. Les mêmes 3 exercices de force sont gardés 12 semaines (pompe au mur jamais remplacée par une pompe inclinée sur un plan de travail). La NSCA recommande une progression individualisée de la charge et du volume, jusqu'à 2-3 séries et des intensités modérées puis élevées (https://www.ideafit.com/resistance-training-for-older-adults-new-nsca-position-stand)."
+   },
+   "volume_intensite": {
+    "note": 6.5,
+    "commentaire": "22 séries dures/semaine, 2 séries par exercice, 3-4 RIR : dose initiale correcte selon la NSCA (séries simples possibles au départ, 2-3 séries ensuite) (https://www.ideafit.com/resistance-training-for-older-adults-new-nsca-position-stand). Pas de travail de puissance (montée rapide à 40-60 %), que la NSCA associe à une meilleure autonomie ; volume aérobie très faible."
+   },
+   "exercices": {
+    "note": 7,
+    "commentaire": "Assis-debout, pompe au mur, rowing élastique, fente latérale avec appui, marche sur les talons, dead bug : choix sûrs. Il manque les élévations sur la pointe des pieds (mollets, prévention des chutes), un hip hinge et une montée de marche, cités par la NSCA dans une sélection de 8 à 10 exercices (https://www.ideafit.com/resistance-training-for-older-adults-new-nsca-position-stand)."
+   },
+   "faisable_sur": {
+    "note": 9,
+    "commentaire": "Séances de 24 à 30 min pour 30 min disponibles, sans impact, avec appui et arrêt sur symptôme : très faisable et sûr."
+   },
+   "securite": []
+  },
+  "autres_08_crossfit_intermediaire": {
+   "ensemble": {
+    "note": 5.5,
+    "commentaire": "Volet force correct (back squat jusqu'à 90 %, front squat, soulevé, push press). Mais la préparation du muscle-up strict est incomplète, et le conditionnement est réduit à des fragments sans format (wall ball 1 × 12, T2B 1 × 8, rameur 1 × 250 m). Le plan CrossFit pour la barre préconise traction poitrine à la barre lestée, transitions à la barre basse, muscle-up avec élastique et essais sur une répétition (https://www.crossfit.com/wp-content/uploads/2025/10/30140558/CAP_Open_Training_Plans_03_BMU_20251027_R1.pdf)."
+   },
+   "adapte": {
+    "note": 5.5,
+    "commentaire": "Avec 10 tractions strictes, il remplit les prérequis (3-5 tractions poitrine à la barre strictes, dips) (https://www.crossfit.com/wp-content/uploads/2025/10/30140558/CAP_Open_Training_Plans_03_BMU_20251027_R1.pdf), mais le plan n'exploite pas cette base : 3 × 2-3 négatifs + 2 × 3-5 tractions explosives (réduites à 1 × 4-6 en S4). Le test final annonce un « repère 8 à 15 » muscle-ups stricts pour une figure jamais réussie : c'est irréaliste. Les séances n'utilisent que 22 à 48 min sur 60."
+   },
+   "progression": {
+    "note": 5,
+    "commentaire": "Les négatifs restent à 2-4 répétitions de S1 à S16, sans muscle-up assisté ni tentative intermédiaire ; aucun test avant S16. Le squat progresse bien (75 % → 90 %). Le CrossFit introduit les muscle-ups avec élastique dès la semaine 2 et les essais sur une répétition dès la semaine 3 (https://www.crossfit.com/wp-content/uploads/2025/10/30140558/CAP_Open_Training_Plans_03_BMU_20251027_R1.pdf)."
+   },
+   "volume_intensite": {
+    "note": 5.5,
+    "commentaire": "36-38 séries dures/semaine, mais tirage spécifique insuffisant (≈ 3-6 séries/semaine de tractions explosives ou de négatifs). Les blocs de conditionnement n'ont ni tours, ni plafond de temps, ni durée cible (ex. « Rameur en intervalles 500 m : 1 × 250 m »). L'épaulé est noté « 65 % du 1RM » alors que le 1RM connu est celui de l'épaulé-jeté (https://www.crossfit.com/wp-content/uploads/2025/10/30140558/CAP_Open_Training_Plans_03_BMU_20251027_R1.pdf)."
+   },
+   "exercices": {
+    "note": 6,
+    "commentaire": "Bons éléments : négatifs de muscle-up, dips à la barre droite, traction explosive, tractions scapulaires. Manquent : traction poitrine à la barre lestée, transition à la barre basse, travail du kip/hollow-arch, prise fausse, muscle-up avec élastique (https://www.crossfit.com/wp-content/uploads/2025/10/30140558/CAP_Open_Training_Plans_03_BMU_20251027_R1.pdf). Ordre discutable : traction scapulaire « échauffement » placée après les dips."
+   },
+   "faisable_sur": {
+    "note": 7,
+    "commentaire": "Matériel de box conforme, durées largement dans les 60 min, conditionnement modéré (effort 8/10, mise à l'échelle). Le test à « 8 à 15 » répétitions peut inciter à forcer en fin de série ; la consigne « arrêt dès que la forme casse » limite le risque."
+   },
+   "securite": [
+    "Repère de test « 8 à 15 » muscle-ups stricts irréaliste pour une première réussite : il peut pousser à des répétitions de mauvaise qualité sur les coudes et les épaules. Il faudrait viser une répétition propre."
+   ]
+  },
+  "autres_09_perte_de_poids_debutante": {
+   "ensemble": {
+    "note": 7,
+    "commentaire": "Approche cohérente : musculation corps entier 3×/sem sur machines, vélo en fin de séance, marche progressive vers 150 puis 200 min et plus par semaine, déficit ≤ 500 kcal, suivi du tour de taille et orientation vers un professionnel pour l'alimentation. Cela correspond aux repères de l'ACSM (150-250 min/sem ; plus de 225 min pour une perte cliniquement significative) (https://obesitymedicine.org/how-much-physical-activity-is-needed-for-weight-loss-weight-loss-maintenance-and-weight-gain-prevention/). Mais la progression de la musculation et de l'endurance n'est pas écrite dans les tableaux."
+   },
+   "adapte": {
+    "note": 7.5,
+    "commentaire": "Exercices guidés et sans impact pour 92 kg, durée de 43 min dans les 45 disponibles, sommeil et stress pris en compte. La marche est bien encadrée dans les règles, mais pas inscrite dans le calendrier ; les >225 min associées à une perte significative ne sont visées qu'en fin de programme (https://obesitymedicine.org/how-much-physical-activity-is-needed-for-weight-loss-weight-loss-maintenance-and-weight-gain-prevention/)."
+   },
+   "progression": {
+    "note": 6,
+    "commentaire": "Musculation : seulement +1 répétition en S4 et S10, toujours 2 séries. Vélo en baisse (14 → 13 min, 11 → 10 min en S4), ce qui va à l'opposé de l'objectif. La progression de la marche n'existe qu'en texte. L'ACSM prévoit +2 à 10 % de charge et le passage à des séries multiples (https://sfu.ca/~ryand/kin343/ACSMresistance.pdf)."
+   },
+   "volume_intensite": {
+    "note": 7,
+    "commentaire": "34 séries dures/semaine à 3-4 RIR, 8-12 répétitions : dose débutante conforme à l'ACSM (https://sfu.ca/~ryand/kin343/ACSMresistance.pdf). Endurance en séance faible (~35 min/sem de vélo) ; c'est la marche hors séance qui doit porter le volume aérobie (https://obesitymedicine.org/how-much-physical-activity-is-needed-for-weight-loss-weight-loss-maintenance-and-weight-gain-prevention/)."
+   },
+   "exercices": {
+    "note": 7.5,
+    "commentaire": "Presse à cuisses, presse pectorale, rowing, tirage vertical, développé haltères, pont fessier, RDL, dead bug : bonne couverture. Le RDL à la barre demande un apprentissage technique ; une variante aux haltères ou kettlebell serait plus simple au départ."
+   },
+   "faisable_sur": {
+    "note": 7.5,
+    "commentaire": "43 min estimées pour 45 disponibles : peu de marge. La version courte cite « l'équilibre », absent du programme. Aucun risque notable, sans impact."
+   },
+   "securite": []
+  },
+  "autres_10_contraintes_multiples": {
+   "ensemble": {
+    "note": 5.5,
+    "commentaire": "Prudence bienvenue (chaise contre le mur à 45-60°, avis médical conseillé à 5/10, épaule gérée sans échec, reprise progressive de 15 à 26 séries). Mais le bas du corps se limite à la chaise isométrique et au pont fessier pendant 12 semaines, la progression est erratique, et l'endurance est réduite à 13-18 min de vélo par semaine pour un profil « cardio 20 % ». Les programmes de genou douloureux progressent de l'isométrie vers l'assis-debout et les squats sur chaise (https://dptcapstone.web.unc.edu/wp-content/uploads/sites/23235/2023/04/Knee-OA-Exercises.pdf)."
+   },
+   "adapte": {
+    "note": 6,
+    "commentaire": "Les contraintes sont bien lues (genou, épaule opérée, sommeil, matériel de maison, 30-40 min). Mais à 5/10 au départ, l'avis médical devrait précéder la séance 1 au lieu d'être une note. L'endurance reste très loin des 150 min/sem recommandées par l'OMS (https://www.sport-sante.lu/en/who-recommandations/). Le renforcement est pourtant le traitement recommandé du genou douloureux (https://mskmedicine.com/?p=233)."
+   },
+   "progression": {
+    "note": 4.5,
+    "commentaire": "Incohérences : chaise 35 s (S5) → 25 s (S7) → 30 s (S8). Développé couché retiré le mardi en S5 et, par recopie, en S8-S11. Pont fessier 8 → 7 → 8 répétitions. Vélo du samedi raccourci (6 → 5 min) puis supprimé en S10. Pas d'étape vers l'assis-debout ou le squat sur chaise (https://dptcapstone.web.unc.edu/wp-content/uploads/sites/23235/2023/04/Knee-OA-Exercises.pdf)."
+   },
+   "volume_intensite": {
+    "note": 5.5,
+    "commentaire": "Montée de 15 à 26 séries dures/semaine, cohérente avec une reprise après 200 semaines d'arrêt. Mais seulement 2-4 séries/semaine pour les quadriceps (isométrie courte) et aucune charge externe en bas du corps. Vélo ~13-19 min/sem, très en dessous des 150 min de l'OMS (https://www.sport-sante.lu/en/who-recommandations/)."
+   },
+   "exercices": {
+    "note": 6,
+    "commentaire": "Développé couché haltères, rowing unilatéral, tirage à l'élastique, pont fessier, dead bug : pertinents pour la maison. Pour le genou, il manque les progressions validées (extension de genou assise, assis-debout sur chaise haute, squat sur chaise) (https://dptcapstone.web.unc.edu/wp-content/uploads/sites/23235/2023/04/Knee-OA-Exercises.pdf). Le développé épaules à l'élastique debout est acceptable, à condition de valider l'épaule opérée."
+   },
+   "faisable_sur": {
+    "note": 7.5,
+    "commentaire": "Séances de 19 à 38 min dans les créneaux, matériel conforme, seuils de douleur clairs pour le genou et l'épaule. Faisable ; la sécurité dépend surtout d'un feu vert médical avant de commencer avec un genou à 5/10."
+   },
+   "securite": [
+    "Genou à 5/10 au départ et questionnaire santé en mode prudent : l'avis d'un médecin ou d'un kinésithérapeute devrait être un prérequis avant la semaine 1, pas une simple note.",
+    "Épaule opérée : le développé au-dessus de la tête (élastique) doit rester sans douleur et en amplitude tolérée, avec un feu vert idéalement."
+   ]
+  }
+ }
+}

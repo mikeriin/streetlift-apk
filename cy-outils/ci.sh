@@ -1,0 +1,33 @@
+#!/bin/bash
+# Pousse l'arbre de travail de moteurs sur claude/ci-cp-a (docs/CI_PISTES.md).
+# usage : ci.sh quick|dev|full "<message>" [graines]
+set -e
+MODE=$1; MSG=$2; SEEDS=${3:-4}
+WT=${WT:-/home/claude/mot}
+REPO=/home/claude/streetlift-apk
+T=/tmp/cyci
+rm -rf $T && mkdir -p $T
+(cd $WT && git ls-files -co --exclude-standard -z | xargs -0 cp --parents -t $T/)
+[ -n "$RUNNER" ] && sed -i "s/runs-on: ubuntu-24.04/runs-on: $RUNNER/" $T/.github/workflows/ci-paquets.yml
+if [ "$MODE" != full ]; then
+  cp -r /home/claude/cy/aa_fmt $T/packages/aa_fmt
+  echo "$SEEDS" > $T/packages/kalis_bench/campaign_seeds.txt
+  echo "$SEEDS" > $T/packages/kalis_bench/season_seeds.txt
+  rm -rf $T/packages/kalis_quest
+fi
+if [ "$MODE" = quick ]; then
+  for p in kalis_core kalis_plan kalis_adapt; do
+    rm -rf $T/packages/$p/test
+    rm -f $T/packages/$p/bin/${p}_cli.dart
+  done
+fi
+export GIT_INDEX_FILE=/tmp/cyci.index
+rm -f $GIT_INDEX_FILE
+cd $REPO
+git --work-tree=$T add -A . >/dev/null
+TREE=$(git write-tree)
+unset GIT_INDEX_FILE
+git fetch -q origin claude/ci-cp-a
+C=$(git commit-tree $TREE -p origin/claude/ci-cp-a -m "CY contrôle ($MODE) : $MSG")
+git push -q origin $C:refs/heads/claude/ci-cp-a
+echo "poussé $C"

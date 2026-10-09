@@ -1,0 +1,154 @@
+{
+ "schemaVersion": 1,
+ "key": "street_15_travail_physique_sommeil_court",
+ "group": "street",
+ "title": "Travail physique et sommeil court",
+ "summary": "Homme de 41 ans, 84 kg, maçon, trois ans de pratique. 9 tractions, 18 dips, 35 pompes. Dort 5 h 30 par nuit en semaine, stress élevé. Trois séances d'une heure au parc, après le travail.",
+ "level": "intermediate",
+ "trainingAgeMonths": 36,
+ "core": {
+  "sex": "male",
+  "birthYear": 1985,
+  "heightCm": 179,
+  "bodyWeightKg": 84.0,
+  "streetMode": {
+   "primary": "sets_reps",
+   "streetliftingPct": 10,
+   "setsRepsPct": 70,
+   "calisthenicsPct": 20
+  },
+  "disciplines": {
+   "primary": "street_workout",
+   "primaryPct": 70,
+   "secondaries": [
+    {
+     "discipline": "streetlifting",
+     "pct": 10
+    },
+    {
+     "discipline": "calisthenics",
+     "pct": 20
+    }
+   ]
+  },
+  "availability": [
+   {
+    "weekday": 2,
+    "minutes": 60
+   },
+   {
+    "weekday": 4,
+    "minutes": 60
+   },
+   {
+    "weekday": 6,
+    "minutes": 60
+   }
+  ],
+  "places": [
+   "exterieur"
+  ],
+  "equipment": [
+   "barre fixe",
+   "barres parallèles",
+   "barre basse",
+   "élastique"
+  ],
+  "loadIncrements": [],
+  "likedExerciseIds": [],
+  "dislikedExerciseIds": [],
+  "experience": "intermediate",
+  "guidanceMode": "assisted",
+  "healthScreening": {
+   "questionnaireId": "kalis-sante-l13-v1",
+   "answeredOn": "2026-10-01",
+   "outcome": "standard"
+  }
+ },
+ "records": [
+  {
+   "exerciseId": "sw-traction-pronation",
+   "measure": "max_reps",
+   "value": 9
+  },
+  {
+   "exerciseId": "sw-dips-barres-paralleles",
+   "measure": "max_reps",
+   "value": 18
+  },
+  {
+   "exerciseId": "sw-pompe",
+   "measure": "max_reps",
+   "value": 35
+  }
+ ],
+ "goals": [
+  {
+   "id": "g1",
+   "exerciseId": "sw-traction-pronation",
+   "metric": "max_reps",
+   "targetValue": 12,
+   "weeksOut": 12
+  }
+ ],
+ "recovery": {
+  "sleepHours": 5.5,
+  "sleepQuality": 2,
+  "stress": 4,
+  "physicalJob": "heavy"
+ },
+ "expectations": {
+  "text": [
+   "Sommeil habituel sous 6 heures : volume réduit de 10 à 20 %, une répétition en réserve de plus, aucune hausse de volume tant que cela dure, intensité conservée (R5-P14, choix raisonné).",
+   "Stress élevé : mêmes ajustements, fréquence conservée (R5-P15).",
+   "Métier physique lourd : départ à la borne basse du volume sur le dos, la préhension et les jambes ; séance la plus lourde avant le jour de repos (R5-P18, choix raisonné).",
+   "Les réductions se cumulent sans dépasser 40 % du volume de référence et sans passer sous la dose minimale (R5-P21).",
+   "Réévaluer après 4 semaines : si la progression est normale, lever les réductions (R5-P18)."
+  ],
+  "checks": [
+   {
+    "id": "c1",
+    "type": "max_group_sets",
+    "label": "Grand dorsal : pas plus de 12 séries dures par semaine",
+    "group": "lats",
+    "sets": 12
+   },
+   {
+    "id": "c2",
+    "type": "max_group_sets",
+    "label": "Quadriceps : pas plus de 10 séries dures par semaine",
+    "group": "quads",
+    "sets": 10
+   },
+   {
+    "id": "c3",
+    "type": "min_rir_first_weeks",
+    "label": "Jamais moins de 2 répétitions en réserve sur les 12 semaines",
+    "weeks": 12,
+    "rir": 2
+   },
+   {
+    "id": "c4",
+    "type": "min_frequency",
+    "label": "Tractions au moins deux fois par semaine",
+    "exerciseIds": [
+     "sw-traction-pronation"
+    ],
+    "perWeek": 2
+   },
+   {
+    "id": "c5",
+    "type": "max_session_minutes",
+    "label": "Séances de 62 minutes au plus",
+    "minutes": 62
+   },
+   {
+    "id": "c6",
+    "type": "min_group_sets",
+    "label": "Grand dorsal : au moins 6 séries dures par semaine",
+    "group": "lats",
+    "sets": 6
+   }
+  ]
+ }
+}

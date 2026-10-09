@@ -1,0 +1,147 @@
+{
+ "relecteur": "street_a",
+ "profils": {
+  "street_01_debutant_complet": {
+   "ensemble": {
+    "note": 5.5,
+    "commentaire": "Bonne structure de débutant (3 séances corps entier, traction à l'élastique, négatives, tenue menton au-dessus de la barre, rows, test strict à chaque fin de bloc, attentes réalistes) : c'est cohérent avec les progressions NSCA (https://www.nsca.com/contentassets/3d09f06f0b4c4f6fbd8cc382ed1f3d4a/ptq-10.2.1-progressive-strategies-for-teaching-fundamental-resistance-training-movement-patterns.pdf) et les échelles de traction reconnues (https://bibleofcalisthenics.substack.com/p/pull-up-progression-from-beginner). En revanche, le travail de l'objectif est sous-dosé : 1 série de traction assistée le lundi et le vendredi, plus 1 × 3 à 5 négatives, soit environ 5 à 6 séries dures de tirage vertical par semaine, alors que 45 min sont disponibles et que les séances en durent 23 à 38. Aucune traction stricte n'est consignée au test de la semaine 12. L'ACSM recommande 1 à 3 séries de 8 à 12 répétitions par exercice chez le novice (https://www.sportgeneeskunde.com/wp-content/uploads/ACSM-Position-Stand-Progression-Models-in-Resistance-Training-for-Healthy-Adults.pdf)."
+   },
+   "adapte": {
+    "note": 6,
+    "commentaire": "Le matériel (élastique, barre basse) et le niveau (0 traction, 8 pompes) sont bien pris en compte, avec une échelle d'assistance et une règle d'élastique claires. Mais avec 45 min disponibles, une seule série de 6 à 8 tractions assistées par séance prioritaire ne répond pas à un objectif de 3 tractions en 12 semaines (https://bibleofcalisthenics.substack.com/p/pull-up-progression-from-beginner : 3 séries de 8 à l'élastique fin comme repère de passage)."
+   },
+   "progression": {
+    "note": 5,
+    "commentaire": "La double progression (6-8 → 8-10) et les négatives allongées de 4 à 5 s puis à 5 séries sont logiques. Mais la tenue menton au-dessus de la barre est servie à 5 s en semaine 7 au lieu des 17 s écrites. Il n'y a ni traction stricte réussie ni nouveau test en semaine 16, et le bloc 3 (semaines 13 à 16) n'est qu'une reprise de « construction » sans nouvel objectif après l'échéance. Ce n'est pas un modèle de progression périodisé (https://www.sportgeneeskunde.com/wp-content/uploads/ACSM-Position-Stand-Progression-Models-in-Resistance-Training-for-Healthy-Adults.pdf)."
+   },
+   "volume_intensite": {
+    "note": 5,
+    "commentaire": "Total de 28 à 32 séries dures par semaine, mais mal réparti : membres inférieurs et tronc bien servis, tirage vertical maigre (1 à 2 séries par séance). L'export montre que 33 % des séries finissent au moins 3 répétitions plus faciles que visé (écart moyen de 2,24 RIR) : l'intensité réelle reste trop basse pour progresser. L'ACSM vise 8 à 12 répétitions sur 1 à 3 séries, 2 à 3 jours par semaine (https://www.sportgeneeskunde.com/wp-content/uploads/ACSM-Position-Stand-Progression-Models-in-Resistance-Training-for-Healthy-Adults.pdf)."
+   },
+   "exercices": {
+    "note": 7,
+    "commentaire": "Les choix sont pertinents : suspension active, tirages et pompes scapulaires, row australien genoux fléchis, négatives, dips assistés à amplitude progressive, dead bug et face pull, conformes aux progressions NSCA (https://www.nsca.com/contentassets/3d09f06f0b4c4f6fbd8cc382ed1f3d4a/ptq-10.2.1-progressive-strategies-for-teaching-fundamental-resistance-training-movement-patterns.pdf). Il manque une poussée de remplacement poignet neutre dès l'apparition de la douleur au poignet en semaine 7 (elle n'est indiquée qu'en semaine 13)."
+   },
+   "faisable_sur": {
+    "note": 7.5,
+    "commentaire": "Aucun échec non voulu et des réserves prudentes, ce qui est sûr. La douleur au poignet (4/10 à partir de la semaine 7) est bien gérée : mouvements retirés, avis kiné, reprise à 2/10 ou moins. Mais pompes et dips disparaissent plusieurs semaines sans variante de poussée, ce qui crée un déséquilibre poussée/tirage (https://www.sportgeneeskunde.com/wp-content/uploads/ACSM-Position-Stand-Progression-Models-in-Resistance-Training-for-Healthy-Adults.pdf)."
+   },
+   "securite": [
+    "Douleur au poignet récurrente (3 à 4/10, semaines 7 à 16) liée aux pompes à plat : orientation vers un professionnel correcte, mais la variante poignet neutre (poings, barre basse) aurait dû être proposée dès la semaine 7 et non en semaine 13."
+   ]
+  },
+  "street_03_debutante": {
+   "ensemble": {
+    "note": 3.5,
+    "commentaire": "Le défaut central est l'objectif de 10 pompes : la pompe inclinée est prescrite à 1 × 2 à 3 répétitions par séance pendant 15 semaines, alors que l'athlète en fait 22 à 23 à cette hauteur (environ 18 à 20 répétitions en réserve). Le critère de passage de l'échelle (2 × 12) ne peut donc jamais être rempli. Résultat : 2 pompes au test de la semaine 6, test de la semaine 12 retiré, assistance de traction en recul (maximum réel 16 → 14). C'est loin de la recommandation de 1 à 3 séries de 8 à 12 répétitions pour le novice (https://www.sportgeneeskunde.com/wp-content/uploads/ACSM-Position-Stand-Progression-Models-in-Resistance-Training-for-Healthy-Adults.pdf)."
+   },
+   "adapte": {
+    "note": 4,
+    "commentaire": "Matériel, profil féminin débutant et double objectif bien identifiés, avec une échelle de poussée mur → incliné → genoux → sol conforme à la logique NSCA (https://www.nsca.com/contentassets/3d09f06f0b4c4f6fbd8cc382ed1f3d4a/ptq-10.2.1-progressive-strategies-for-teaching-fundamental-resistance-training-movement-patterns.pdf). Mais la consigne de régler la hauteur des mains pour un maximum de 12 à 14 n'apparaît qu'en semaine 7 et n'est jamais appliquée. Les séances durent 16 à 40 min sur 60 disponibles."
+   },
+   "progression": {
+    "note": 3,
+    "commentaire": "Il n'y a aucune progression réelle sur la poussée : 1 × 2 → 1 × 3 → 2 × 3 en 16 semaines, et l'étape « pompe inclinée » reste figée depuis 15 semaines. Le moteur ne relève pas la charge malgré des séries faites à plus de 17 RIR. Le surplus de 1 à 2 répétitions doit déclencher une hausse de charge ou de difficulté (https://www.sportgeneeskunde.com/wp-content/uploads/ACSM-Position-Stand-Progression-Models-in-Resistance-Training-for-Healthy-Adults.pdf)."
+   },
+   "volume_intensite": {
+    "note": 3,
+    "commentaire": "Environ 6 à 9 répétitions de pompe inclinée par semaine, à une intensité négligeable (RIR réel de 16 à 22 dans l'export), contre 1 à 3 séries de 8 à 12 répétitions recommandées (https://www.sportgeneeskunde.com/wp-content/uploads/ACSM-Position-Stand-Progression-Models-in-Resistance-Training-for-Healthy-Adults.pdf). Le tirage reste modeste (1 à 2 séries assistées par séance), et 17 à 23 séries dures par semaine représentent un total faible pour 3 h disponibles."
+   },
+   "exercices": {
+    "note": 6,
+    "commentaire": "La famille d'exercices est bonne : traction élastique, négatives, tenue menton au-dessus de la barre, pompe négative au sol, row australien, fente, gainage (https://www.nsca.com/contentassets/3d09f06f0b4c4f6fbd8cc382ed1f3d4a/ptq-10.2.1-progressive-strategies-for-teaching-fundamental-resistance-training-movement-patterns.pdf ; https://bibleofcalisthenics.substack.com/p/pull-up-progression-from-beginner). Le problème vient du dosage, pas du choix. Il manque aussi une alternative de poussée poignet neutre quand le poignet se plaint."
+   },
+   "faisable_sur": {
+    "note": 6,
+    "commentaire": "C'est faisable et sans échec, mais la douleur au poignet (4/10, semaines 8 à 16) retire pompes inclinées et négatives sur de longues périodes, sans remplaçant (poignées ou barre basse pourtant prévues dans les notes). L'objectif n'est pas testé à l'échéance."
+   },
+   "securite": [
+    "Douleur au poignet persistante (4/10 à plusieurs reprises, semaines 8, 10, 14 à 16) : mouvements retirés et avis kiné, ce qui est correct. Mais aucune variante poignet neutre n'est imposée alors que l'échelle la prévoit.",
+    "Le test d'objectif de pompe de la semaine 12 est retiré (pain_return) sans être reporté."
+   ]
+  },
+  "street_06_inter_sets_reps": {
+   "ensemble": {
+    "note": 5.5,
+    "commentaire": "Le programme est structuré (accumulation, test intermédiaire en semaine 6, bloc spécifique avec séries à 70-90 % du maximum en repos court, simulation du test en semaine 10, affûtage, test), en accord avec la périodisation ACSM pour l'intermédiaire, 3 à 4 jours par semaine (https://www.sportgeneeskunde.com/wp-content/uploads/ACSM-Position-Stand-Progression-Models-in-Resistance-Training-for-Healthy-Adults.pdf). Mais rien ne bouge : 14 → 14 tractions et 23 → 23 dips aux tests (maximum réel 14 → 15 et 23 → 24). Le changement de méthode promis si le repère de mi-parcours (17/30) n'est pas atteint se limite à 2 × 4 à 6 tractions tempo."
+   },
+   "adapte": {
+    "note": 6.5,
+    "commentaire": "Le profil sets & reps est respecté (EMOM, séries de tête à 2 RIR, muscle-up technique sans échec). Mais il n'y a pas de lest, faute de matériel, et pas d'alternative de surcharge forte (archer, typewriter, https://bibleofcalisthenics.substack.com/p/pull-up-progression-from-beginner) malgré la règle écrite. Les séances durent 25 à 50 min sur 60 disponibles."
+   },
+   "progression": {
+    "note": 4.5,
+    "commentaire": "Les répétitions par série sont plafonnées par la règle « maximum − 2 » et recalées sur un maximum qui ne monte pas (pull-ups 12-10 servis du bloc 1 au bloc 3), ce qui fige le programme. Le bloc 3 reprend le même schéma (3 × 12 à 86 %) sans nouvelle méthode. L'ACSM demande de faire varier le stimulus et la charge quand la performance plafonne (https://www.sportgeneeskunde.com/wp-content/uploads/ACSM-Position-Stand-Progression-Models-in-Resistance-Training-for-Healthy-Adults.pdf)."
+   },
+   "volume_intensite": {
+    "note": 5.5,
+    "commentaire": "Le tirage vertical ne dépasse pas environ 8 à 10 séries dures par semaine, alors que la poussée est généreuse (5 à 7 × 16 à 22 pompes au chrono, dips de 2 à 4 séries plus dips penchés), d'où un déséquilibre au détriment de l'objectif principal. Le travail d'endurance musculaire (charges modérées, repos de 90 s ou moins) est cohérent avec l'ACSM (https://www.sportgeneeskunde.com/wp-content/uploads/ACSM-Position-Stand-Progression-Models-in-Resistance-Training-for-Healthy-Adults.pdf), mais son dosage est trop faible sur la traction."
+   },
+   "exercices": {
+    "note": 7,
+    "commentaire": "Le choix est pertinent : traction chest-to-bar (retirée dès la semaine 7), tempo excentrique, row australien, nordic assisté, skater squat, face pull et rotations externes (https://www.nsca.com/contentassets/3d09f06f0b4c4f6fbd8cc382ed1f3d4a/ptq-10.2.1-progressive-strategies-for-teaching-fundamental-resistance-training-movement-patterns.pdf). Une variante unilatérale ou archer aurait apporté la surcharge manquante (https://bibleofcalisthenics.substack.com/p/pull-up-progression-from-beginner)."
+   },
+   "faisable_sur": {
+    "note": 8,
+    "commentaire": "Aucun échec non voulu, effort affiché proche du réel (écart de 1,04), allègement en semaine 6 et affûtage en semaine 11. Le repos-pause sur les dips est borné par la règle de douleur. Rien de dangereux, conforme aux principes de progression graduée (https://www.sportgeneeskunde.com/wp-content/uploads/ACSM-Position-Stand-Progression-Models-in-Resistance-Training-for-Healthy-Adults.pdf)."
+   },
+   "securite": []
+  },
+  "street_12_antecedent_coude": {
+   "ensemble": {
+    "note": 6.5,
+    "commentaire": "La gestion de l'antécédent de tendinopathie du coude est très bonne : tractions prise neutre au poids du corps, retour au lest par paliers de 2,5 kg sous un seuil de 2/10, wrist curls progressifs à faire valider par le kiné, pas d'excentrique accentué. C'est en accord avec la charge graduée des fléchisseurs du poignet (https://www.merckmanuals.com/professional/injuries-poisoning/sports-injury/medial-epicondylitis ; https://nielasher.com/blogs/treatment-guides/medial-epicondylalgia-golfer-s-elbow-causes-symptoms-treatment-and-evidence-based-rehabilitation). Le dips lesté est bien périodisé (4 × 6 → 4 × 3 → séries de 1 à 2 à 88-90 %, 1RM en 3 essais), mais l'objectif de +57,5 kg n'est pas signalé comme irréaliste. Le test donne +37,5 kg (maximum du jour +44,4) et le bloc 3 repart sur un 1RM de 116 kg, sous le résultat testé."
+   },
+   "adapte": {
+    "note": 7.5,
+    "commentaire": "Les contraintes sont très bien traduites : coude, matériel de salle, entretien du squat (2 à 3 × 3 à 82 %). La gêne actuelle est encadrée par une règle de douleur claire et une validation professionnelle (https://www.merckmanuals.com/professional/injuries-poisoning/sports-injury/medial-epicondylitis). Point faible : un objectif à +15 % en 12 semaines pour un pratiquant de 4 ans aurait dû être qualifié d'ambitieux, comme dans les autres profils."
+   },
+   "progression": {
+    "note": 6,
+    "commentaire": "La montée en charge est cohérente (67 → 75 % puis 81 → 90 %), le recalage après le test de 3 répétitions en semaine 6 est correct, et l'affûtage en semaine 11 avec un dernier lourd à J−9 est bien placé. Deux défauts : une hausse de 17,9 % d'une séance à l'autre (plafond ACSM de 2 à 10 % par pas, https://www.sportgeneeskunde.com/wp-content/uploads/ACSM-Position-Stand-Progression-Models-in-Resistance-Training-for-Healthy-Adults.pdf), et un bloc 3 écrit sur un 1RM de 116 kg alors que le test vaut 82 + 37,5 = 119,5 kg (lest +5 à +17,5 kg)."
+   },
+   "volume_intensite": {
+    "note": 6.5,
+    "commentaire": "Dips : 2 séances lestées et une au poids du corps (3 × 12 à 15), un volume suffisant. Le tirage est volontairement bas (1 à 2 séries de traction neutre et un rowing), ce qui est justifié par le coude. Les séances durent 22 à 47 min sur 75 disponibles : de la place restait pour du travail d'assistance des triceps et des pectoraux (https://www.sportgeneeskunde.com/wp-content/uploads/ACSM-Position-Stand-Progression-Models-in-Resistance-Training-for-Healthy-Adults.pdf)."
+   },
+   "exercices": {
+    "note": 8,
+    "commentaire": "Le choix est très bon : dips de compétition, traction prise neutre, rowing haltère, wrist curl, rotation externe à la poulie, RDL, fente, squat. Seul manque un travail en pronation/supination et un travail de préhension isométrique, pourtant recommandés pour la face interne du coude (https://nielasher.com/blogs/treatment-guides/medial-epicondylalgia-golfer-s-elbow-causes-symptoms-treatment-and-evidence-based-rehabilitation)."
+   },
+   "faisable_sur": {
+    "note": 8,
+    "commentaire": "Les tentatives sont prudentes (3/3 réussies, ouverture à 87 % du maximum estimé), avec 0,1 % d'échecs non voulus et aucune hausse sur une zone douloureuse. Pas de troisième barre si la douleur dépasse le seuil, ce qui est sûr et conforme à une reprise graduée (https://www.merckmanuals.com/professional/injuries-poisoning/sports-injury/medial-epicondylitis)."
+   },
+   "securite": [
+    "Hausse de 17,9 % de la charge totale d'une séance à la suivante sur le dips lesté (2 hausses de plus de 10 %) : c'est au-delà des pas de 2 à 10 % recommandés, à surveiller avec un antécédent de tendon."
+   ]
+  },
+  "street_14_parc_sans_lest": {
+   "ensemble": {
+    "note": 5.5,
+    "commentaire": "Le programme respecte bien la contrainte « barres seules » (row australien, tempo, pistol, pont unilatéral) et sa structure est solide : test intermédiaire, bloc spécifique en zone d'épreuve, simulation et affûtage (https://www.sportgeneeskunde.com/wp-content/uploads/ACSM-Position-Stand-Progression-Models-in-Resistance-Training-for-Healthy-Adults.pdf). Mais il échoue sur l'objectif : 17 → 16 tractions au test de la semaine 12, maximum réel 17 → 18. Le repère de mi-parcours (21) est manqué sans vraie surcharge sans lest (archer, typewriter), alors que la règle l'annonce (https://bibleofcalisthenics.substack.com/p/pull-up-progression-from-beginner)."
+   },
+   "adapte": {
+    "note": 6.5,
+    "commentaire": "L'absence de lest et d'élastique est respectée, et le niveau (18 tractions, pistol acquis) est bien lu. Mais avec 60 min disponibles, les séances durent 21 à 41 min. Pour un objectif de 25 répétitions, une surcharge sans matériel (archer, pause, typewriter) était le levier attendu (https://bibleofcalisthenics.substack.com/p/pull-up-progression-from-beginner)."
+   },
+   "progression": {
+    "note": 4.5,
+    "commentaire": "Le schéma de tractions reste 15-12 → 15-11-11 du bloc 1 au bloc 3, et le tempo stagne à 3 × 11. La chest-to-bar est retirée dès la semaine 7 au lieu d'être progressée. Le plafonnement à « maximum − 2 » sur un maximum qui ne monte pas empêche la surcharge progressive (https://www.sportgeneeskunde.com/wp-content/uploads/ACSM-Position-Stand-Progression-Models-in-Resistance-Training-for-Healthy-Adults.pdf)."
+   },
+   "volume_intensite": {
+    "note": 5.5,
+    "commentaire": "Environ 8 à 10 séries dures de tirage vertical par semaine, contre 4 à 6 séries de 25 à 37 pompes et 4 séries de 16 à 22 dips : la poussée domine alors que l'objectif est la traction. La zone d'endurance (70-80 % du maximum, repos de 60 à 90 s) est juste (https://www.sportgeneeskunde.com/wp-content/uploads/ACSM-Position-Stand-Progression-Models-in-Resistance-Training-for-Healthy-Adults.pdf), mais le volume spécifique est trop faible."
+   },
+   "exercices": {
+    "note": 7,
+    "commentaire": "La sélection est bonne et réalisable au parc : chest-to-bar, tempo excentrique, row australien, muscle-up technique, pistol squat, pont unilatéral et gainage (https://www.nsca.com/contentassets/3d09f06f0b4c4f6fbd8cc382ed1f3d4a/ptq-10.2.1-progressive-strategies-for-teaching-fundamental-resistance-training-movement-patterns.pdf). Il manque des variantes unilatérales de traction pour remplacer le lest (https://bibleofcalisthenics.substack.com/p/pull-up-progression-from-beginner)."
+   },
+   "faisable_sur": {
+    "note": 8,
+    "commentaire": "Aucun échec non voulu et un effort affiché très proche du réel (écart de 0,83). Allègement et affûtage sont en place, le muscle-up est encadré sans échec. Pas de risque particulier (https://www.sportgeneeskunde.com/wp-content/uploads/ACSM-Position-Stand-Progression-Models-in-Resistance-Training-for-Healthy-Adults.pdf)."
+   },
+   "securite": []
+  }
+ }
+}
