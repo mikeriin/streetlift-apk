@@ -28,8 +28,8 @@ NQ = 10
 TH = 0          # 0..9  : qualités (écart de l'utilisateur à l'a priori)
 RHO = 10        # réponse à l'entraînement (ln capacité par semaine à dose de référence)
 EPS = 11        # 11..15 : écart de réponse par classe (charge, reps, tenue, cardio, wod)
-KN = 16         # sensibilité au compartiment nerveux
-KM = 17         # sensibilité au compartiment musculaire
+KN = 16         # sensibilité au compartiment nerveux (rapide), part systémique
+KM = 17         # sensibilité au compartiment musculaire (lent), part locale
 BA = 18         # biais personnel du RIR (répétitions, additif)
 BP = 19         # biais du RIR proportionnel à la réserve (sous-estimation loin de l'échec)
 LAM = 20        # forme de la courbe répétitions-charge (0 linéaire, 1 logarithmique)
@@ -38,7 +38,9 @@ FI = 22         # fatigue intra-séance (part des répétitions perdue)
 HH = 23         # part du maintien maximal par répétition en réserve
 DS = 24         # effet de jour de la séance
 DE = 25         # effet de jour de l'exercice en cours
-NG = 26
+KL = 26         # sensibilité au compartiment rapide, part locale (qualités sollicitées)
+KG = 27         # sensibilité au compartiment lent, part systémique
+NG = 28
 C_LIN = 0.0265  # pente de la branche linéaire : -ln(part du 1RM) par répétition
 C_LOG = 0.0892  # branche logarithmique, égale à la linéaire à 8 répétitions
 CLASSES = ['charge', 'reps', 'tenue', 'cardio', 'wod']
@@ -105,7 +107,8 @@ class Modele(object):
         for c in range(5):
             self.m[EPS + c] = ap['eps_classe_moyenne'][c] * rho / ap['rho_moyenne_par_niveau'][1]
             self.P[EPS + c, EPS + c] = (ap['eps_classe_sd'] * rho / ap['rho_moyenne_par_niveau'][1]) ** 2
-        for idx, cle in ((KN, 'k_nerveux'), (KM, 'k_musculaire'), (BA, 'biais_rir_additif'),
+        for idx, cle in ((KN, 'k_nerveux'), (KM, 'k_musculaire'), (KL, 'k_nerveux_local'),
+                         (KG, 'k_musculaire_systemique'), (BA, 'biais_rir_additif'),
                          (BP, 'biais_rir_proportionnel'), (LAM, 'courbe_forme'), (KU, 'courbe_echelle'),
                          (FI, 'fatigue_intra'), (HH, 'part_tenue')):
             self.m[idx] = ap[cle][0]
@@ -117,8 +120,11 @@ class Modele(object):
         # Compartiments de fatigue (valeurs au jour `self.jour`).
         f = params['fatigue']
         self.tau = [f['tau_nerveux_j'], f['tau_musculaire_j'], f['tau_tendineux_j']]
-        self.f_nerveux = 0.0
-        self.f_musculaire = np.zeros(NQ)
+        # Chaque compartiment a une part systémique (toute la séance pèse)
+        # et une part locale (par qualité sollicitée) : indice 0 = rapide
+        # (nerveux), 1 = lent (musculaire).
+        self.f_g = [0.0, 0.0]
+        self.f_l = [np.zeros(NQ), np.zeros(NQ)]
         self.f_tendon = {z: 0.0 for z in ZONES_TENDON}      # compartiment lent (28 j)
         self.f_tendon_aigu = {z: 0.0 for z in ZONES_TENDON}  # charge de la semaine en cours
         # Bruit du RIR appris (multiplicateur), notes paresseuses (Beta).
@@ -290,8 +296,10 @@ class Modele(object):
         dt = jour - self.jour
         if dt <= 0:
             return
-        self.f_nerveux *= math.exp(-dt / self.tau[0])
-        self.f_musculaire *= math.exp(-dt / self.tau[1])
+        for c in (0, 1):
+            e = math.exp(-dt / self.tau[c])
+            self.f_g[c] *= e
+            self.f_l[c] *= e
         e = math.exp(-dt / self.tau[2])
         for z in ZONES_TENDON:
             self.f_tendon[z] *= e
@@ -312,18 +320,30 @@ class Modele(object):
         return math.exp(-(rir if rir > 0 else 0.0) / self.p['fatigue']['intra_rir'])
 
     def _charger_compartiments(self, t, effort, quantite=1.0):
-        self.f_nerveux += effort * t.systemique
-        self.f_musculaire += effort * t.locale * np.asarray(t.vecteur)
+        v = np.asarray(t.vecteur)
+        for c in (0, 1):
+            self.f_g[c] += effort * t.systemique
+            self.f_l[c] += effort * t.locale * v
         if t.zone_tendon is not None and t.tendon > 0:
             self.f_tendon[t.zone_tendon] += effort * t.tendon * quantite
             self.f_tendon_aigu[t.zone_tendon] += effort * t.tendon * quantite
 
     def fatigue_de(self, t):
-        """Régresseurs (nerveux, musculaire) de la piste au moment présent."""
-        fm = 0.0
-        for q in range(NQ):
-            fm += t.vecteur[q] * self.f_musculaire[q]
-        return self.f_nerveux, fm
+        """Régresseurs de fatigue de la piste au moment présent : (rapide
+        systémique, rapide local, lent systémique, lent local)."""
+        loc = [0.0, 0.0]
+        for c in (0, 1):
+            for q in range(NQ):
+                loc[c] += t.vecteur[q] * self.f_l[c][q]
+        return self.f_g[0], loc[0], self.f_g[1], loc[1]
+
+    @property
+    def f_nerveux(self):
+        return self.f_g[0]
+
+    @property
+    def f_musculaire(self):
+        return self.f_l[1]
 
     def _intra(self, t):
         """Régresseur de fatigue intra-séance de la prochaine série."""
@@ -439,9 +459,9 @@ class Modele(object):
         idx.append(t.idx)
         co.append(1.0)
         if jour:
-            fn, fm = self.fatigue_de(t)
-            idx += [DS, DE, KN, KM]
-            co += [1.0, 1.0, -fn, -fm]
+            gn, ln_, gm, lm = self.fatigue_de(t)
+            idx += [DS, DE, KN, KL, KG, KM]
+            co += [1.0, 1.0, -gn, -ln_, -gm, -lm]
         return idx, co
 
     @staticmethod
@@ -601,10 +621,9 @@ class Modele(object):
     def _projeter(self):
         """Garde-fou numérique : les sensibilités restent positives."""
         for (m, _) in self._branches():
-            if m[KN] < 0.0:
-                m[KN] = 0.0
-            if m[KM] < 0.0:
-                m[KM] = 0.0
+            for i in (KN, KM, KL, KG):
+                if m[i] < 0.0:
+                    m[i] = 0.0
 
     def _lin_force(self, t, m, lnL, reps, sj, sans_charge, percu):
         """Linéarise, autour de la moyenne [m], la réserve de la série :

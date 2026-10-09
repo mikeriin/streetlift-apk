@@ -56,3 +56,9 @@ Reste entier : planification (jumeau, entropie croisée, transport optimal), adh
 - `notes/RELECTURE_VECTEURS.md` : relecture indépendante de 222 exercices, 12 corrections de règles à appliquer dans `qualites/regles.py`.
 - Écarts à trancher : fenêtre BOCPD 10 séances (pas 3) ; seuils de tests assouplis (détection 86 %, adhérence 0,093 à 200 décisions, N-of-1 indéterminé 56 % sous le nul).
 - Suite : CI dev pour compiler le Dart, ré-export, sécurité Dart des saisons de référence ; appliquer les corrections de vecteurs ; reprendre l'estimation ; planificateur.
+
+## 09/10 ~19:00 UTC — Dart compilé, sécurité portée validée, vecteurs corrigés
+- CI dev 37973446066 : export étendu et outils Dart compilés, formatés, analysés sans remarque ; `donnees/` mis à jour (catalogue_infos étendu, securite_dart.json.gz) ; `test_securite_banc.py` 19/19 verts (comparaison stricte avec `safetyFindings` Dart sur 240 saisons de référence). Le constat `volume_trop_vite` de street_06/changement_discipline est CONFIRMÉ par le Dart (plan de référence lui-même).
+- `qualites/regles.py` : corrections de la relecture indépendante appliquées (R1-a/b, R2-a…h, R3-a, R6-a…f, R7-a…g) ; R5 (types) NON appliqué : le type doit rester celui du mode d'exécution de kalis_core (mesure du journal).
+- Estimation, diagnostic : (1) les charges servies sont trop légères (réserve vraie 5-7 pour 2,5 visée ; C : ~20) → notes censurées « 4 ou plus », peu d'information ; (2) l'effet de jour vrai moyen est −2,6 % (sd 2,8 %) : fatigue chronique systémique (lente) + aiguë locale (rapide) ; régression sur le banc : rapide local 0,003, lent systémique 0,0014-0,0017, les deux autres ≈ 0 ; (3) courbe a priori trop plate de ~12 % par rapport aux vérités (→ échelle +0,10) ; (4) la montée de test s'arrête à la croyance du modèle (borne mu+2sd) → réserve finale ~4.
+- Compartiments généralisés dans modele.py : chaque compartiment (rapide/lent) a une part systémique et une part locale (KN, KL, KG, KM).

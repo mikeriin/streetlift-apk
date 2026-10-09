@@ -33,8 +33,8 @@
 "vecteur": [
 0.0,
 0.0,
-0.2,
-0.0,
+0.1818,
+0.0182,
 0.0,
 0.0,
 0.4,
@@ -158,14 +158,14 @@
 "ratio": null,
 "schema": "sprint",
 "systemique": 1.3333,
-"tendon": 0.7,
+"tendon": 0.4,
 "type": "cardio",
 "type_charge": "aucune",
 "unite": "secondes",
 "vecteur": [
-0.0,
-0.0,
-0.2,
+0.05,
+0.05,
+0.1,
 0.0,
 0.0,
 0.0,
@@ -751,8 +751,8 @@
 "vecteur": [
 0.0,
 0.0,
-0.2,
-0.0,
+0.16,
+0.04,
 0.0,
 0.0,
 0.4,
@@ -793,13 +793,13 @@
 "type_charge": "aucune",
 "unite": "distance",
 "vecteur": [
+0.0154,
+0.0154,
+0.1385,
+0.0308,
 0.0,
 0.0,
-0.2,
-0.0,
-0.0,
-0.0,
-0.4,
+0.3999,
 0.0,
 0.4,
 0.0
@@ -881,10 +881,10 @@
 "type_charge": "aucune",
 "unite": "distance",
 "vecteur": [
-0.0,
-0.0,
-0.2,
-0.0,
+0.02,
+0.02,
+0.14,
+0.02,
 0.0,
 0.0,
 0.4,
@@ -1248,7 +1248,7 @@
 0.0,
 0.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "ca-marche-recuperation": {
 "bas": false,
@@ -1294,7 +1294,7 @@
 0.0,
 0.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "ca-marche-tapis-incline": {
 "bas": false,
@@ -1338,7 +1338,7 @@
 0.0,
 0.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "ca-montee-escaliers": {
 "bas": false,
@@ -1506,8 +1506,8 @@
 "vecteur": [
 0.0,
 0.0,
-0.2,
-0.0,
+0.1846,
+0.0154,
 0.0,
 0.0,
 0.4,
@@ -1631,15 +1631,15 @@
 "ratio": null,
 "schema": "sprint",
 "systemique": 1.3333,
-"tendon": 0.7,
+"tendon": 0.4,
 "type": "cardio",
 "type_charge": "aucune",
 "unite": "secondes",
 "vecteur": [
 0.0,
-0.0,
-0.2,
-0.0,
+0.0875,
+0.1,
+0.0125,
 0.0,
 0.0,
 0.4,
@@ -1763,15 +1763,15 @@
 "ratio": null,
 "schema": "sprint",
 "systemique": 1.3333,
-"tendon": 0.7,
+"tendon": 0.4,
 "type": "cardio",
 "type_charge": "aucune",
 "unite": "secondes",
 "vecteur": [
-0.0,
-0.0,
-0.2,
-0.0,
+0.04,
+0.0667,
+0.04,
+0.0533,
 0.0,
 0.0,
 0.4,
@@ -1856,13 +1856,13 @@
 "type_charge": "aucune",
 "unite": "distance",
 "vecteur": [
+0.0143,
+0.0143,
+0.1429,
+0.0286,
 0.0,
 0.0,
-0.2,
-0.0,
-0.0,
-0.0,
-0.4,
+0.3999,
 0.0,
 0.4,
 0.0
@@ -1900,13 +1900,13 @@
 "type_charge": "aucune",
 "unite": "distance",
 "vecteur": [
+0.0143,
+0.0143,
+0.1529,
+0.0186,
 0.0,
 0.0,
-0.2,
-0.0,
-0.0,
-0.0,
-0.4,
+0.3999,
 0.0,
 0.4,
 0.0
@@ -1944,13 +1944,13 @@
 "type_charge": "aucune",
 "unite": "distance",
 "vecteur": [
+0.0143,
+0.0143,
+0.1429,
+0.0286,
 0.0,
 0.0,
-0.2,
-0.0,
-0.0,
-0.0,
-0.4,
+0.3999,
 0.0,
 0.4,
 0.0
@@ -2128,13 +2128,13 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.35,
-0.15,
+0.385,
+0.165,
 0.0,
 0.0,
-0.35,
+0.45,
 0.0,
-0.15,
+0.0,
 0.0,
 0.0,
 0.0
@@ -2174,13 +2174,13 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.35,
-0.15,
+0.385,
+0.165,
 0.0,
 0.0,
-0.35,
+0.45,
 0.0,
-0.15,
+0.0,
 0.0,
 0.0,
 0.0
@@ -2492,13 +2492,13 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.1364,
-0.3636,
-0.0,
-0.0,
-0.35,
-0.0,
 0.15,
+0.4,
+0.0,
+0.0,
+0.45,
+0.0,
+0.0,
 0.0,
 0.0,
 0.0
@@ -2538,13 +2538,13 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.1364,
-0.3636,
-0.0,
-0.0,
-0.35,
-0.0,
 0.15,
+0.4,
+0.0,
+0.0,
+0.45,
+0.0,
+0.0,
 0.0,
 0.0,
 0.0
@@ -2584,13 +2584,13 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.1364,
-0.3636,
-0.0,
-0.0,
-0.35,
-0.0,
 0.15,
+0.4,
+0.0,
+0.0,
+0.45,
+0.0,
+0.0,
 0.0,
 0.0,
 0.0
@@ -2630,13 +2630,13 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.1364,
-0.3636,
-0.0,
-0.0,
-0.35,
-0.0,
 0.15,
+0.4,
+0.0,
+0.0,
+0.45,
+0.0,
+0.0,
 0.0,
 0.0,
 0.0
@@ -2676,13 +2676,13 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.0385,
-0.4615,
+0.0423,
+0.5077,
 0.0,
 0.0,
-0.35,
+0.45,
 0.0,
-0.15,
+0.0,
 0.0,
 0.0,
 0.0
@@ -2722,13 +2722,13 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.0385,
-0.4615,
+0.0423,
+0.5077,
 0.0,
 0.0,
-0.35,
+0.45,
 0.0,
-0.15,
+0.0,
 0.0,
 0.0,
 0.0
@@ -2768,13 +2768,13 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.0385,
-0.4615,
+0.0423,
+0.5077,
 0.0,
 0.0,
-0.35,
+0.45,
 0.0,
-0.15,
+0.0,
 0.0,
 0.0,
 0.0
@@ -2814,13 +2814,13 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.2727,
-0.1336,
+0.3,
+0.147,
 0.0,
-0.0936,
-0.3501,
+0.103,
+0.45,
 0.0,
-0.15,
+0.0,
 0.0,
 0.0,
 0.0
@@ -2871,7 +2871,7 @@
 0.0,
 0.0
 ],
-"zone_tendon": "epaule"
+"zone_tendon": "poignet"
 },
 "cd-handstand-walk-barres-paralleles": {
 "bas": false,
@@ -2916,7 +2916,7 @@
 0.0,
 0.0
 ],
-"zone_tendon": "epaule"
+"zone_tendon": "poignet"
 },
 "cd-hefesto": {
 "bas": false,
@@ -2951,13 +2951,13 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.3273,
-0.2727,
+0.3545,
+0.4455,
 0.0,
 0.0,
 0.15,
 0.0,
-0.25,
+0.05,
 0.0,
 0.0,
 0.0
@@ -2997,13 +2997,13 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.3082,
-0.2918,
+0.3514,
+0.4836,
 0.0,
 0.0,
 0.15,
 0.0,
-0.25,
+0.015,
 0.0,
 0.0,
 0.0
@@ -3043,12 +3043,12 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.7364,
-0.1636,
+0.5523,
+0.1227,
 0.0,
 0.0,
-0.0,
-0.1,
+0.25,
+0.075,
 0.0,
 0.0,
 0.0,
@@ -3088,12 +3088,12 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.7364,
-0.1636,
+0.5523,
+0.1227,
 0.0,
 0.0,
-0.0,
-0.1,
+0.25,
+0.075,
 0.0,
 0.0,
 0.0,
@@ -3134,12 +3134,12 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.7364,
-0.1636,
+0.5523,
+0.1227,
 0.0,
 0.0,
-0.0,
-0.1,
+0.25,
+0.075,
 0.0,
 0.0,
 0.0,
@@ -3180,12 +3180,12 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.7364,
-0.1636,
+0.5523,
+0.1227,
 0.0,
 0.0,
-0.0,
-0.1,
+0.25,
+0.075,
 0.0,
 0.0,
 0.0,
@@ -3226,12 +3226,12 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.7879,
-0.1121,
+0.5909,
+0.0841,
 0.0,
 0.0,
-0.0,
-0.1,
+0.25,
+0.075,
 0.0,
 0.0,
 0.0,
@@ -3273,12 +3273,12 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.6689,
-0.1611,
+0.602,
+0.145,
 0.0,
 0.0,
-0.0,
-0.17,
+0.1,
+0.153,
 0.0,
 0.0,
 0.0,
@@ -3320,12 +3320,12 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.7364,
-0.1636,
-0.0,
+0.6627,
+0.1473,
 0.0,
 0.0,
 0.1,
+0.09,
 0.0,
 0.0,
 0.0,
@@ -3366,12 +3366,12 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.7364,
-0.1636,
-0.0,
+0.6627,
+0.1473,
 0.0,
 0.0,
 0.1,
+0.09,
 0.0,
 0.0,
 0.0,
@@ -3412,12 +3412,12 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.7364,
-0.1636,
-0.0,
+0.6627,
+0.1473,
 0.0,
 0.0,
 0.1,
+0.09,
 0.0,
 0.0,
 0.0,
@@ -3458,12 +3458,12 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.7249,
-0.1051,
+0.6524,
+0.0946,
 0.0,
 0.0,
-0.0,
-0.17,
+0.1,
+0.153,
 0.0,
 0.0,
 0.0,
@@ -3504,13 +3504,13 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.0769,
-0.4231,
+0.0846,
+0.4654,
 0.0,
 0.0,
-0.35,
+0.45,
 0.0,
-0.15,
+0.0,
 0.0,
 0.0,
 0.0
@@ -3550,13 +3550,13 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.0522,
-0.4478,
+0.0575,
+0.4925,
 0.0,
 0.0,
-0.35,
+0.45,
 0.0,
-0.15,
+0.0,
 0.0,
 0.0,
 0.0
@@ -3595,13 +3595,13 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.4286,
-0.0714,
+0.4714,
+0.0786,
 0.0,
 0.0,
-0.35,
+0.45,
 0.0,
-0.15,
+0.0,
 0.0,
 0.0,
 0.0
@@ -3641,13 +3641,13 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.16,
-0.195,
-0.035,
-0.21,
+0.1733,
+0.3613,
+0.0379,
+0.2275,
 0.15,
 0.0,
-0.25,
+0.05,
 0.0,
 0.0,
 0.0
@@ -3687,13 +3687,13 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.4583,
-0.0417,
+0.5042,
+0.0458,
 0.0,
 0.0,
-0.35,
+0.45,
 0.0,
-0.15,
+0.0,
 0.0,
 0.0,
 0.0
@@ -3744,7 +3744,7 @@
 0.0,
 0.0
 ],
-"zone_tendon": "epaule"
+"zone_tendon": "poignet"
 },
 "cd-muscle-up-360": {
 "bas": false,
@@ -3825,13 +3825,13 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.286,
-0.23,
-0.028,
-0.056,
+0.2445,
+0.3525,
+0.021,
+0.042,
 0.15,
 0.0,
-0.25,
+0.19,
 0.0,
 0.0,
 0.0
@@ -3871,13 +3871,13 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.3162,
-0.2838,
+0.3613,
+0.4737,
 0.0,
 0.0,
 0.15,
 0.0,
-0.25,
+0.015,
 0.0,
 0.0,
 0.0
@@ -3917,13 +3917,13 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.3,
-0.3,
+0.325,
+0.475,
 0.0,
 0.0,
 0.15,
 0.0,
-0.25,
+0.05,
 0.0,
 0.0,
 0.0
@@ -3963,13 +3963,13 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.3573,
-0.2427,
+0.387,
+0.413,
 0.0,
 0.0,
 0.15,
 0.0,
-0.25,
+0.05,
 0.0,
 0.0,
 0.0
@@ -4009,13 +4009,13 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.3002,
-0.2786,
+0.3253,
+0.4518,
 0.0,
-0.0212,
+0.0229,
 0.15,
 0.0,
-0.25,
+0.05,
 0.0,
 0.0,
 0.0
@@ -4051,18 +4051,18 @@
 "ratio": null,
 "schema": "transition_muscle_up",
 "systemique": 0.6667,
-"tendon": 0.8,
+"tendon": 0.6,
 "type": "reps",
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.3162,
-0.2838,
+0.3425,
+0.4575,
 0.0,
 0.0,
 0.15,
 0.0,
-0.25,
+0.05,
 0.0,
 0.0,
 0.0
@@ -4101,13 +4101,13 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.2839,
-0.2515,
-0.0646,
+0.3075,
+0.4225,
+0.07,
 0.0,
 0.15,
 0.0,
-0.25,
+0.05,
 0.0,
 0.0,
 0.0
@@ -4147,13 +4147,13 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.263,
-0.2382,
-0.0494,
-0.0494,
+0.2272,
+0.3586,
+0.0371,
+0.0371,
 0.15,
 0.0,
-0.25,
+0.19,
 0.0,
 0.0,
 0.0
@@ -4193,13 +4193,13 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.3162,
-0.2838,
+0.3425,
+0.4575,
 0.0,
 0.0,
 0.15,
 0.0,
-0.25,
+0.05,
 0.0,
 0.0,
 0.0
@@ -4239,13 +4239,13 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.286,
-0.314,
+0.3098,
+0.4902,
 0.0,
 0.0,
 0.15,
 0.0,
-0.25,
+0.05,
 0.0,
 0.0,
 0.0
@@ -4285,13 +4285,13 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.3162,
-0.2838,
+0.3613,
+0.4737,
 0.0,
 0.0,
 0.15,
 0.0,
-0.25,
+0.015,
 0.0,
 0.0,
 0.0
@@ -4331,13 +4331,13 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.3162,
-0.2838,
+0.3425,
+0.4575,
 0.0,
 0.0,
 0.15,
 0.0,
-0.25,
+0.05,
 0.0,
 0.0,
 0.0
@@ -4377,13 +4377,13 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.3,
-0.3,
+0.325,
+0.475,
 0.0,
 0.0,
 0.15,
 0.0,
-0.25,
+0.05,
 0.0,
 0.0,
 0.0
@@ -4423,13 +4423,13 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.2839,
-0.2192,
-0.0969,
+0.2429,
+0.3444,
+0.0727,
 0.0,
 0.15,
 0.0,
-0.25,
+0.19,
 0.0,
 0.0,
 0.0
@@ -4469,13 +4469,13 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.2471,
-0.2823,
+0.2676,
+0.4559,
 0.0,
-0.0706,
+0.0765,
 0.15,
 0.0,
-0.25,
+0.05,
 0.0,
 0.0,
 0.0
@@ -4510,18 +4510,18 @@
 "ratio": null,
 "schema": "transition_muscle_up",
 "systemique": 0.6667,
-"tendon": 0.8,
+"tendon": 0.6,
 "type": "reps",
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.2579,
-0.2684,
+0.2794,
+0.4408,
 0.0,
-0.0737,
+0.0798,
 0.15,
 0.0,
-0.25,
+0.05,
 0.0,
 0.0,
 0.0
@@ -4561,13 +4561,13 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.2841,
-0.2947,
+0.3253,
+0.4868,
 0.0,
-0.0212,
+0.0229,
 0.15,
 0.0,
-0.25,
+0.015,
 0.0,
 0.0,
 0.0
@@ -4607,13 +4607,13 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.4583,
-0.0417,
+0.5042,
+0.0458,
 0.0,
 0.0,
-0.35,
+0.45,
 0.0,
-0.15,
+0.0,
 0.0,
 0.0,
 0.0
@@ -4653,13 +4653,13 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.4583,
-0.0417,
+0.5042,
+0.0458,
 0.0,
 0.0,
-0.35,
+0.45,
 0.0,
-0.15,
+0.0,
 0.0,
 0.0,
 0.0
@@ -4695,18 +4695,18 @@
 "ratio": null,
 "schema": "figure_dynamique_poussee",
 "systemique": 0.6667,
-"tendon": 0.8,
+"tendon": 0.6,
 "type": "reps",
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.4875,
-0.0125,
+0.5362,
+0.0138,
 0.0,
 0.0,
-0.35,
+0.45,
 0.0,
-0.15,
+0.0,
 0.0,
 0.0,
 0.0
@@ -4746,13 +4746,13 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.4583,
-0.0417,
+0.5042,
+0.0458,
 0.0,
 0.0,
-0.35,
+0.45,
 0.0,
-0.15,
+0.0,
 0.0,
 0.0,
 0.0
@@ -4792,13 +4792,13 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.4583,
-0.0417,
+0.5042,
+0.0458,
 0.0,
 0.0,
-0.35,
+0.45,
 0.0,
-0.15,
+0.0,
 0.0,
 0.0,
 0.0
@@ -4838,13 +4838,13 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.4583,
-0.0417,
+0.5042,
+0.0458,
 0.0,
 0.0,
-0.35,
+0.45,
 0.0,
-0.15,
+0.0,
 0.0,
 0.0,
 0.0
@@ -4884,13 +4884,13 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.4583,
-0.0417,
+0.5042,
+0.0458,
 0.0,
 0.0,
-0.35,
+0.45,
 0.0,
-0.15,
+0.0,
 0.0,
 0.0,
 0.0
@@ -4930,13 +4930,13 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.3077,
-0.1154,
+0.3385,
+0.1269,
 0.0,
-0.0769,
-0.35,
+0.0846,
+0.45,
 0.0,
-0.15,
+0.0,
 0.0,
 0.0,
 0.0
@@ -4976,13 +4976,13 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
+0.495,
+0.055,
+0.0,
+0.0,
 0.45,
-0.05,
 0.0,
 0.0,
-0.35,
-0.0,
-0.15,
 0.0,
 0.0,
 0.0
@@ -5068,13 +5068,13 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.375,
-0.125,
+0.4125,
+0.1375,
 0.0,
 0.0,
-0.35,
+0.45,
 0.0,
-0.15,
+0.0,
 0.0,
 0.0,
 0.0
@@ -5292,7 +5292,7 @@
 "ratio": null,
 "schema": "poussee_horizontale",
 "systemique": 0.6667,
-"tendon": 0.8,
+"tendon": 0.6,
 "type": "reps",
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
@@ -5526,13 +5526,13 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.3333,
-0.0833,
+0.3667,
+0.0917,
 0.0,
-0.0833,
-0.3501,
+0.0917,
+0.4499,
 0.0,
-0.15,
+0.0,
 0.0,
 0.0,
 0.0
@@ -5572,13 +5572,13 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.3333,
-0.0833,
+0.3667,
+0.0917,
 0.0,
-0.0833,
-0.3501,
+0.0917,
+0.4499,
 0.0,
-0.15,
+0.0,
 0.0,
 0.0,
 0.0
@@ -5618,13 +5618,13 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.2308,
-0.1154,
-0.0385,
-0.1154,
-0.3499,
+0.2538,
+0.1269,
+0.0423,
+0.1269,
+0.4501,
 0.0,
-0.15,
+0.0,
 0.0,
 0.0,
 0.0
@@ -5664,13 +5664,13 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.2308,
-0.1154,
-0.0385,
-0.1154,
-0.3499,
+0.2538,
+0.1269,
+0.0423,
+0.1269,
+0.4501,
 0.0,
-0.15,
+0.0,
 0.0,
 0.0,
 0.0
@@ -5710,13 +5710,13 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.2308,
-0.1154,
-0.0385,
-0.1154,
-0.3499,
+0.2538,
+0.1269,
+0.0423,
+0.1269,
+0.4501,
 0.0,
-0.15,
+0.0,
 0.0,
 0.0,
 0.0
@@ -5756,13 +5756,13 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.2151,
-0.1221,
-0.0407,
-0.1221,
-0.35,
+0.2366,
+0.1343,
+0.0448,
+0.1343,
+0.45,
 0.0,
-0.15,
+0.0,
 0.0,
 0.0,
 0.0
@@ -5802,13 +5802,13 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.2442,
-0.1396,
-0.0115,
-0.1046,
-0.3501,
+0.2687,
+0.1536,
+0.0127,
+0.1151,
+0.4499,
 0.0,
-0.15,
+0.0,
 0.0,
 0.0,
 0.0
@@ -5848,13 +5848,13 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.2734,
-0.1221,
-0.0115,
-0.0929,
-0.3501,
+0.3007,
+0.1343,
+0.0127,
+0.1022,
+0.4501,
 0.0,
-0.15,
+0.0,
 0.0,
 0.0,
 0.0
@@ -5894,13 +5894,13 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.0923,
-0.2308,
-0.0462,
-0.2308,
+0.1,
+0.4,
+0.05,
+0.25,
 0.15,
 0.0,
-0.2499,
+0.05,
 0.0,
 0.0,
 0.0
@@ -5951,7 +5951,7 @@
 0.0,
 0.0
 ],
-"zone_tendon": "epaule"
+"zone_tendon": "poignet"
 },
 "cd-shoulder-taps-mur": {
 "bas": false,
@@ -5997,7 +5997,7 @@
 0.0,
 0.0
 ],
-"zone_tendon": "epaule"
+"zone_tendon": "poignet"
 },
 "cd-skin-the-cat": {
 "bas": false,
@@ -6032,13 +6032,13 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.1667,
-0.2333,
+0.1833,
+0.2567,
 0.0,
-0.1,
-0.35,
+0.11,
+0.45,
 0.0,
-0.15,
+0.0,
 0.0,
 0.0,
 0.0
@@ -6078,13 +6078,13 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.175,
-0.17,
+0.1925,
+0.187,
 0.0,
-0.155,
-0.35,
+0.1705,
+0.45,
 0.0,
-0.15,
+0.0,
 0.0,
 0.0,
 0.0
@@ -6354,13 +6354,13 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.4375,
-0.0625,
+0.4812,
+0.0688,
 0.0,
 0.0,
-0.35,
+0.45,
 0.0,
-0.15,
+0.0,
 0.0,
 0.0,
 0.0
@@ -6400,13 +6400,13 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.4375,
-0.0625,
+0.4812,
+0.0688,
 0.0,
 0.0,
-0.35,
+0.45,
 0.0,
-0.15,
+0.0,
 0.0,
 0.0,
 0.0
@@ -6630,13 +6630,13 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.0714,
-0.4286,
+0.0786,
+0.4714,
 0.0,
 0.0,
-0.35,
+0.45,
 0.0,
-0.15,
+0.0,
 0.0,
 0.0,
 0.0
@@ -6676,8 +6676,8 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.1545,
-0.7155,
+0.0,
+0.87,
 0.0,
 0.0,
 0.0,
@@ -6722,8 +6722,8 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.2338,
-0.6362,
+0.0,
+0.87,
 0.0,
 0.0,
 0.0,
@@ -6768,8 +6768,8 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.1333,
-0.6667,
+0.0,
+0.8,
 0.0,
 0.0,
 0.0,
@@ -6814,13 +6814,13 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.0714,
-0.4286,
+0.0786,
+0.4714,
 0.0,
 0.0,
-0.35,
+0.45,
 0.0,
-0.15,
+0.0,
 0.0,
 0.0,
 0.0
@@ -6856,18 +6856,18 @@
 "ratio": null,
 "schema": "figure_dynamique_tirage",
 "systemique": 0.6667,
-"tendon": 0.8,
+"tendon": 0.6,
 "type": "reps",
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.0484,
-0.4516,
+0.0532,
+0.4968,
 0.0,
 0.0,
-0.35,
+0.45,
 0.0,
-0.15,
+0.0,
 0.0,
 0.0,
 0.0
@@ -6903,18 +6903,18 @@
 "ratio": null,
 "schema": "figure_dynamique_tirage",
 "systemique": 0.6667,
-"tendon": 0.8,
+"tendon": 0.6,
 "type": "reps",
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.0484,
-0.4516,
+0.0532,
+0.4968,
 0.0,
 0.0,
-0.35,
+0.45,
 0.0,
-0.15,
+0.0,
 0.0,
 0.0,
 0.0
@@ -6954,13 +6954,13 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.0484,
-0.4516,
+0.0532,
+0.4968,
 0.0,
 0.0,
-0.35,
+0.45,
 0.0,
-0.15,
+0.0,
 0.0,
 0.0,
 0.0
@@ -7000,13 +7000,13 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.0714,
-0.4286,
+0.0786,
+0.4714,
 0.0,
 0.0,
-0.35,
+0.45,
 0.0,
-0.15,
+0.0,
 0.0,
 0.0,
 0.0
@@ -7047,13 +7047,13 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.3573,
-0.2427,
+0.387,
+0.413,
 0.0,
 0.0,
 0.15,
 0.0,
-0.25,
+0.05,
 0.0,
 0.0,
 0.0
@@ -7093,13 +7093,13 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.2965,
-0.1221,
+0.3261,
+0.1343,
 0.0,
-0.0814,
-0.35,
+0.0896,
+0.45,
 0.0,
-0.15,
+0.0,
 0.0,
 0.0,
 0.0
@@ -7150,7 +7150,7 @@
 0.0,
 0.0
 ],
-"zone_tendon": "epaule"
+"zone_tendon": "poignet"
 },
 "cf-bear-crawl-leste-gilet": {
 "bas": false,
@@ -7185,15 +7185,15 @@
 "type_charge": "lest",
 "unite": "distance",
 "vecteur": [
+0.0714,
 0.0,
+0.0286,
+0.1,
 0.0,
+0.2,
 0.0,
-0.0,
-0.0,
-0.25,
-0.0,
-0.25,
-0.5,
+0.2,
+0.4,
 0.0
 ],
 "zone_tendon": "epaule"
@@ -7279,13 +7279,13 @@
 "vecteur": [
 0.0,
 0.0,
+0.1778,
+0.0222,
 0.0,
+0.2,
 0.0,
-0.0,
-0.25,
-0.0,
-0.25,
-0.5,
+0.2,
+0.4,
 0.0
 ],
 "zone_tendon": "epaule"
@@ -7325,13 +7325,13 @@
 "vecteur": [
 0.0,
 0.0,
+0.1933,
+0.0067,
 0.0,
+0.2,
 0.0,
-0.0,
-0.25,
-0.0,
-0.25,
-0.5,
+0.2,
+0.4,
 0.0
 ],
 "zone_tendon": "epaule"
@@ -7369,15 +7369,15 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
+0.0714,
 0.0,
+0.1143,
+0.0143,
 0.0,
+0.2,
 0.0,
-0.0,
-0.0,
-0.25,
-0.0,
-0.25,
-0.5,
+0.2,
+0.4,
 0.0
 ],
 "zone_tendon": "epaule"
@@ -7415,15 +7415,15 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
+0.0681,
 0.0,
+0.116,
+0.016,
 0.0,
+0.2,
 0.0,
-0.0,
-0.0,
-0.25,
-0.0,
-0.25,
-0.5,
+0.2,
+0.3999,
 0.0
 ],
 "zone_tendon": "genou"
@@ -7461,15 +7461,15 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
+0.0681,
 0.0,
+0.116,
+0.016,
 0.0,
+0.2,
 0.0,
-0.0,
-0.0,
-0.25,
-0.0,
-0.25,
-0.5,
+0.2,
+0.3999,
 0.0
 ],
 "zone_tendon": "genou"
@@ -7505,15 +7505,15 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
+0.0681,
 0.0,
+0.116,
+0.016,
 0.0,
+0.2,
 0.0,
-0.0,
-0.0,
-0.25,
-0.0,
-0.25,
-0.5,
+0.2,
+0.3999,
 0.0
 ],
 "zone_tendon": "epaule"
@@ -7549,15 +7549,15 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
+0.0681,
 0.0,
+0.1276,
+0.0043,
 0.0,
+0.2,
 0.0,
-0.0,
-0.0,
-0.25,
-0.0,
-0.25,
-0.5,
+0.2,
+0.4,
 0.0
 ],
 "zone_tendon": "epaule"
@@ -7595,15 +7595,15 @@
 "type_charge": "lest",
 "unite": "repetitions",
 "vecteur": [
+0.0753,
 0.0,
+0.1097,
+0.0151,
 0.0,
+0.2,
 0.0,
-0.0,
-0.0,
-0.25,
-0.0,
-0.25,
-0.5,
+0.2,
+0.3999,
 0.0
 ],
 "zone_tendon": "epaule"
@@ -7641,15 +7641,15 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.1786,
-0.1786,
-0.1071,
-0.0357,
-0.3,
-0.2,
+0.1607,
+0.1607,
+0.0964,
+0.0321,
+0.1,
+0.3001,
 0.0,
 0.0,
-0.0,
+0.15,
 0.0
 ],
 "zone_tendon": "epaule"
@@ -7687,15 +7687,15 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
+0.086,
 0.0,
+0.0989,
+0.0151,
 0.0,
+0.2,
 0.0,
-0.0,
-0.0,
-0.25,
-0.0,
-0.25,
-0.5,
+0.2,
+0.4,
 0.0
 ],
 "zone_tendon": "epaule"
@@ -7733,15 +7733,15 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
+0.0614,
+0.05,
+0.0843,
+0.0043,
 0.0,
+0.2,
 0.0,
-0.0,
-0.0,
-0.0,
-0.25,
-0.0,
-0.25,
-0.5,
+0.2,
+0.4,
 0.0
 ],
 "zone_tendon": "epaule"
@@ -7780,15 +7780,15 @@
 "type_charge": "lest",
 "unite": "repetitions",
 "vecteur": [
+0.0614,
+0.05,
+0.0843,
+0.0043,
 0.0,
+0.2,
 0.0,
-0.0,
-0.0,
-0.0,
-0.25,
-0.0,
-0.25,
-0.5,
+0.2,
+0.4,
 0.0
 ],
 "zone_tendon": "epaule"
@@ -7826,15 +7826,15 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
+0.0614,
 0.0,
+0.1143,
+0.0243,
 0.0,
+0.2,
 0.0,
-0.0,
-0.0,
-0.25,
-0.0,
-0.25,
-0.5,
+0.2,
+0.4,
 0.0
 ],
 "zone_tendon": "genou"
@@ -7872,15 +7872,15 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.0125,
-0.4042,
+0.0113,
+0.3637,
 0.0,
-0.0833,
+0.075,
+0.1,
 0.3,
-0.2,
 0.0,
 0.0,
-0.0,
+0.15,
 0.0
 ],
 "zone_tendon": "epaule"
@@ -7918,15 +7918,15 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.0125,
-0.4087,
+0.0113,
+0.3677,
 0.0,
-0.0788,
+0.071,
+0.1,
 0.3,
-0.2,
 0.0,
 0.0,
-0.0,
+0.15,
 0.0
 ],
 "zone_tendon": "epaule"
@@ -7955,7 +7955,7 @@
 "niveau": "Avancé",
 "profondeur": 1,
 "racine": "cf-thruster-barre",
-"ratio": 0.85,
+"ratio": 0.75,
 "schema": "halterophilie",
 "systemique": 1.6667,
 "tendon": 0.8,
@@ -7963,18 +7963,18 @@
 "type_charge": "barre",
 "unite": "repetitions",
 "vecteur": [
-0.1786,
-0.0357,
-0.2857,
+0.1667,
+0.0667,
+0.2667,
 0.0,
 0.0,
 0.0,
-0.5,
+0.4999,
 0.0,
 0.0,
 0.0
 ],
-"zone_tendon": "epaule"
+"zone_tendon": "poignet"
 },
 "cf-crab-walk": {
 "bas": false,
@@ -8009,15 +8009,15 @@
 "type_charge": "poids_du_corps",
 "unite": "distance",
 "vecteur": [
+0.0545,
+0.0727,
+0.0727,
 0.0,
 0.0,
+0.2,
 0.0,
-0.0,
-0.0,
-0.25,
-0.0,
-0.25,
-0.5,
+0.2,
+0.4001,
 0.0
 ],
 "zone_tendon": "epaule"
@@ -8055,15 +8055,15 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
+0.0525,
 0.0,
+0.1276,
+0.0198,
 0.0,
+0.2,
 0.0,
-0.0,
-0.0,
-0.25,
-0.0,
-0.25,
-0.5,
+0.2,
+0.4001,
 0.0
 ],
 "zone_tendon": "epaule"
@@ -8100,15 +8100,15 @@
 "type_charge": "halteres",
 "unite": "repetitions",
 "vecteur": [
+0.1077,
+0.0154,
+0.0769,
 0.0,
 0.0,
+0.2,
 0.0,
-0.0,
-0.0,
-0.25,
-0.0,
-0.25,
-0.5,
+0.2,
+0.4,
 0.0
 ],
 "zone_tendon": "epaule"
@@ -8145,15 +8145,15 @@
 "type_charge": "halteres",
 "unite": "repetitions",
 "vecteur": [
+0.0959,
+0.0173,
+0.0867,
 0.0,
 0.0,
+0.2,
 0.0,
-0.0,
-0.0,
-0.25,
-0.0,
-0.25,
-0.5,
+0.2,
+0.4001,
 0.0
 ],
 "zone_tendon": "epaule"
@@ -8190,9 +8190,9 @@
 "type_charge": "halteres",
 "unite": "repetitions",
 "vecteur": [
-0.1923,
-0.0769,
-0.2308,
+0.1786,
+0.1071,
+0.2143,
 0.0,
 0.0,
 0.0,
@@ -8201,7 +8201,7 @@
 0.0,
 0.0
 ],
-"zone_tendon": "epaule"
+"zone_tendon": "poignet"
 },
 "cf-epaule-medecine-ball": {
 "bas": false,
@@ -8235,15 +8235,15 @@
 "type_charge": "autre",
 "unite": "repetitions",
 "vecteur": [
+0.0182,
+0.0364,
+0.1455,
 0.0,
 0.0,
+0.2,
 0.0,
-0.0,
-0.0,
-0.25,
-0.0,
-0.25,
-0.5,
+0.2,
+0.3999,
 0.0
 ],
 "zone_tendon": "epaule"
@@ -8416,15 +8416,15 @@
 "type_charge": "poids_du_corps",
 "unite": "secondes",
 "vecteur": [
+0.0154,
+0.0154,
+0.1385,
+0.0308,
 0.0,
+0.2,
 0.0,
-0.0,
-0.0,
-0.0,
-0.25,
-0.0,
-0.25,
-0.5,
+0.2,
+0.3999,
 0.0
 ],
 "zone_tendon": "epaule"
@@ -8463,15 +8463,15 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.3077,
-0.0385,
-0.1538,
+0.2769,
+0.0346,
+0.1385,
 0.0,
+0.1,
 0.3,
-0.2,
 0.0,
 0.0,
-0.0,
+0.15,
 0.0
 ],
 "zone_tendon": "epaule"
@@ -8510,15 +8510,15 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.3256,
-0.0407,
-0.1337,
+0.2931,
+0.0366,
+0.1203,
 0.0,
+0.1,
 0.3,
-0.2,
 0.0,
 0.0,
-0.0,
+0.15,
 0.0
 ],
 "zone_tendon": "epaule"
@@ -8556,15 +8556,15 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
+0.1778,
+0.0,
+0.0222,
 0.0,
 0.0,
+0.2,
 0.0,
-0.0,
-0.0,
-0.25,
-0.0,
-0.25,
-0.5,
+0.2,
+0.4,
 0.0
 ],
 "zone_tendon": "epaule"
@@ -8602,15 +8602,15 @@
 "type_charge": "poids_du_corps",
 "unite": "secondes",
 "vecteur": [
+0.0308,
+0.0308,
+0.1385,
 0.0,
 0.0,
+0.2,
 0.0,
-0.0,
-0.0,
-0.25,
-0.0,
-0.25,
-0.5,
+0.2,
+0.3999,
 0.0
 ],
 "zone_tendon": "epaule"
@@ -8648,15 +8648,15 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.0107,
-0.1276,
-0.1065,
-0.2552,
-0.3,
-0.2,
+0.0096,
+0.1148,
+0.0958,
+0.2297,
+0.1,
+0.3001,
 0.0,
 0.0,
-0.0,
+0.15,
 0.0
 ],
 "zone_tendon": "epaule"
@@ -8693,15 +8693,15 @@
 "type_charge": "halteres",
 "unite": "repetitions",
 "vecteur": [
+0.0714,
+0.0857,
+0.0429,
 0.0,
 0.0,
+0.2,
 0.0,
-0.0,
-0.0,
-0.25,
-0.0,
-0.25,
-0.5,
+0.2,
+0.4,
 0.0
 ],
 "zone_tendon": "epaule"
@@ -8739,14 +8739,14 @@
 "unite": "repetitions",
 "vecteur": [
 0.0,
-0.3572,
-0.0714,
-0.0714,
+0.3214,
+0.0643,
+0.0643,
+0.1,
 0.3,
-0.2,
 0.0,
 0.0,
-0.0,
+0.15,
 0.0
 ],
 "zone_tendon": "epaule"
@@ -8784,17 +8784,17 @@
 "unite": "repetitions",
 "vecteur": [
 0.0,
-0.0,
-0.5,
-0.0,
-0.0,
-0.0,
-0.5,
+0.1412,
+0.6588,
 0.0,
 0.0,
-0.0
+0.0,
+0.1,
+0.0,
+0.0,
+0.1
 ],
-"zone_tendon": "epaule"
+"zone_tendon": "poignet"
 },
 "cf-plank-jacks": {
 "bas": false,
@@ -8831,13 +8831,13 @@
 "vecteur": [
 0.0,
 0.0,
+0.1091,
+0.0909,
 0.0,
+0.2,
 0.0,
-0.0,
-0.25,
-0.0,
-0.25,
-0.5,
+0.2,
+0.4,
 0.0
 ],
 "zone_tendon": "epaule"
@@ -8922,9 +8922,9 @@
 "unite": "repetitions",
 "vecteur": [
 0.0,
-0.2462,
-0.4307,
-0.1231,
+0.2667,
+0.4148,
+0.1185,
 0.0,
 0.0,
 0.0,
@@ -9012,18 +9012,18 @@
 "type_charge": "barre",
 "unite": "repetitions",
 "vecteur": [
-0.0714,
-0.1429,
-0.2857,
+0.0667,
+0.1667,
+0.2667,
 0.0,
 0.0,
 0.0,
-0.5,
+0.4999,
 0.0,
 0.0,
 0.0
 ],
-"zone_tendon": "epaule"
+"zone_tendon": "poignet"
 },
 "cf-sdhp-kettlebell": {
 "bas": false,
@@ -9049,7 +9049,7 @@
 "niveau": "Débutant",
 "profondeur": 1,
 "racine": "cf-sdhp-barre",
-"ratio": 0.2,
+"ratio": 0.35,
 "schema": "balistique",
 "systemique": 1.0,
 "tendon": 0.4,
@@ -9057,9 +9057,9 @@
 "type_charge": "kettlebell",
 "unite": "repetitions",
 "vecteur": [
-0.0727,
-0.1091,
-0.2182,
+0.0696,
+0.1217,
+0.2087,
 0.0,
 0.0,
 0.0,
@@ -9068,7 +9068,7 @@
 0.2,
 0.0
 ],
-"zone_tendon": "epaule"
+"zone_tendon": "lombaires"
 },
 "cf-sit-up-abmat": {
 "bas": false,
@@ -9149,15 +9149,15 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
+0.0469,
 0.0,
+0.1234,
+0.0297,
 0.0,
+0.2,
 0.0,
-0.0,
-0.0,
-0.25,
-0.0,
-0.25,
-0.5,
+0.2,
+0.4,
 0.0
 ],
 "zone_tendon": "epaule"
@@ -9197,13 +9197,13 @@
 "vecteur": [
 0.0,
 0.0,
+0.2,
 0.0,
 0.0,
+0.2,
 0.0,
-0.25,
-0.0,
-0.25,
-0.5,
+0.2,
+0.4,
 0.0
 ],
 "zone_tendon": "epaule"
@@ -9240,15 +9240,15 @@
 "type_charge": "barre",
 "unite": "repetitions",
 "vecteur": [
+0.1,
+0.0143,
+0.0857,
 0.0,
 0.0,
+0.2,
 0.0,
-0.0,
-0.0,
-0.25,
-0.0,
-0.25,
-0.5,
+0.2,
+0.4,
 0.0
 ],
 "zone_tendon": "epaule"
@@ -9285,15 +9285,15 @@
 "type_charge": "halteres",
 "unite": "repetitions",
 "vecteur": [
+0.1054,
+0.0151,
+0.0796,
 0.0,
 0.0,
+0.2,
 0.0,
-0.0,
-0.0,
-0.25,
-0.0,
-0.25,
-0.5,
+0.2,
+0.3999,
 0.0
 ],
 "zone_tendon": "epaule"
@@ -9330,15 +9330,15 @@
 "type_charge": "halteres",
 "unite": "repetitions",
 "vecteur": [
+0.1,
+0.0143,
+0.0857,
 0.0,
 0.0,
+0.2,
 0.0,
-0.0,
-0.0,
-0.25,
-0.0,
-0.25,
-0.5,
+0.2,
+0.4,
 0.0
 ],
 "zone_tendon": "epaule"
@@ -9376,14 +9376,14 @@
 "unite": "repetitions",
 "vecteur": [
 0.0,
-0.4572,
-0.0214,
-0.0214,
+0.4114,
+0.0193,
+0.0193,
+0.1,
 0.3,
-0.2,
 0.0,
 0.0,
-0.0,
+0.15,
 0.0
 ],
 "zone_tendon": "epaule"
@@ -9421,15 +9421,15 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.0357,
-0.1071,
-0.1429,
-0.2143,
+0.0321,
+0.0964,
+0.1286,
+0.1929,
+0.1,
 0.3,
-0.2,
 0.0,
 0.0,
-0.0,
+0.15,
 0.0
 ],
 "zone_tendon": "epaule"
@@ -9467,15 +9467,15 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.0475,
-0.3575,
+0.0428,
+0.3217,
 0.0,
-0.095,
+0.0855,
+0.1,
 0.3,
-0.2,
 0.0,
 0.0,
-0.0,
+0.15,
 0.0
 ],
 "zone_tendon": "epaule"
@@ -9513,15 +9513,15 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.0417,
-0.375,
+0.0375,
+0.3375,
 0.0,
-0.0833,
+0.075,
+0.1,
 0.3,
-0.2,
 0.0,
 0.0,
-0.0,
+0.15,
 0.0
 ],
 "zone_tendon": "epaule"
@@ -9604,15 +9604,15 @@
 "type_charge": "autre",
 "unite": "repetitions",
 "vecteur": [
+0.0833,
+0.0,
+0.1167,
 0.0,
 0.0,
+0.2,
 0.0,
-0.0,
-0.0,
-0.25,
-0.0,
-0.25,
-0.5,
+0.2,
+0.4,
 0.0
 ],
 "zone_tendon": "epaule"
@@ -9691,7 +9691,7 @@
 "ratio": null,
 "schema": "figure_statique_poussee",
 "systemique": 1.0,
-"tendon": 1.0,
+"tendon": 0.9,
 "type": "tenue",
 "type_charge": "poids_du_corps",
 "unite": "secondes",
@@ -9875,7 +9875,7 @@
 "ratio": null,
 "schema": "figure_statique_tirage",
 "systemique": 1.0,
-"tendon": 1.0,
+"tendon": 0.9,
 "type": "tenue",
 "type_charge": "poids_du_corps",
 "unite": "secondes",
@@ -9967,7 +9967,7 @@
 "ratio": null,
 "schema": "figure_statique_tirage",
 "systemique": 1.0,
-"tendon": 1.0,
+"tendon": 0.9,
 "type": "tenue",
 "type_charge": "poids_du_corps",
 "unite": "secondes",
@@ -10013,7 +10013,7 @@
 "ratio": null,
 "schema": "figure_statique_tirage",
 "systemique": 1.0,
-"tendon": 1.0,
+"tendon": 0.9,
 "type": "tenue",
 "type_charge": "poids_du_corps",
 "unite": "secondes",
@@ -10059,7 +10059,7 @@
 "ratio": null,
 "schema": "figure_statique_tirage",
 "systemique": 1.0,
-"tendon": 1.0,
+"tendon": 0.9,
 "type": "tenue",
 "type_charge": "poids_du_corps",
 "unite": "secondes",
@@ -10104,7 +10104,7 @@
 "ratio": null,
 "schema": "figure_statique_mixte",
 "systemique": 1.0,
-"tendon": 1.0,
+"tendon": 0.9,
 "type": "tenue",
 "type_charge": "poids_du_corps",
 "unite": "secondes",
@@ -10157,14 +10157,14 @@
 "vecteur": [
 0.0,
 0.0,
-0.0,
-0.5,
+0.1,
+0.55,
 0.2,
 0.0,
 0.0,
 0.0,
 0.0,
-0.3
+0.15
 ],
 "zone_tendon": "coude"
 },
@@ -10203,14 +10203,14 @@
 "vecteur": [
 0.0,
 0.0,
-0.0,
-0.5,
+0.1064,
+0.5436,
 0.2,
 0.0,
 0.0,
 0.0,
 0.0,
-0.3
+0.15
 ],
 "zone_tendon": "coude"
 },
@@ -10258,7 +10258,7 @@
 0.0,
 0.0
 ],
-"zone_tendon": "epaule"
+"zone_tendon": "poignet"
 },
 "cs-crane": {
 "bas": false,
@@ -10304,7 +10304,7 @@
 0.0,
 0.0
 ],
-"zone_tendon": "epaule"
+"zone_tendon": "poignet"
 },
 "cs-crow": {
 "bas": false,
@@ -10350,7 +10350,7 @@
 0.0,
 0.0
 ],
-"zone_tendon": "epaule"
+"zone_tendon": "poignet"
 },
 "cs-drapeau-humain": {
 "bas": false,
@@ -10469,7 +10469,7 @@
 "ratio": null,
 "schema": "figure_statique_mixte",
 "systemique": 1.0,
-"tendon": 1.0,
+"tendon": 0.9,
 "type": "tenue",
 "type_charge": "poids_du_corps",
 "unite": "secondes",
@@ -10604,7 +10604,7 @@
 "ratio": null,
 "schema": "figure_statique_mixte",
 "systemique": 1.0,
-"tendon": 1.0,
+"tendon": 0.9,
 "type": "tenue",
 "type_charge": "poids_du_corps",
 "unite": "secondes",
@@ -10650,7 +10650,7 @@
 "ratio": null,
 "schema": "figure_statique_poussee",
 "systemique": 1.0,
-"tendon": 1.0,
+"tendon": 0.9,
 "type": "tenue",
 "type_charge": "poids_du_corps",
 "unite": "secondes",
@@ -10758,7 +10758,7 @@
 0.0,
 0.0
 ],
-"zone_tendon": "epaule"
+"zone_tendon": "poignet"
 },
 "cs-front-lever": {
 "bas": false,
@@ -10881,7 +10881,7 @@
 "ratio": null,
 "schema": "figure_statique_tirage",
 "systemique": 0.6667,
-"tendon": 1.0,
+"tendon": 0.7,
 "type": "tenue",
 "type_charge": "poids_du_corps",
 "unite": "secondes",
@@ -11019,7 +11019,7 @@
 "ratio": null,
 "schema": "figure_statique_tirage",
 "systemique": 1.0,
-"tendon": 1.0,
+"tendon": 0.9,
 "type": "tenue",
 "type_charge": "poids_du_corps",
 "unite": "secondes",
@@ -11065,7 +11065,7 @@
 "ratio": null,
 "schema": "figure_statique_tirage",
 "systemique": 1.0,
-"tendon": 1.0,
+"tendon": 0.9,
 "type": "tenue",
 "type_charge": "poids_du_corps",
 "unite": "secondes",
@@ -11387,7 +11387,7 @@
 "ratio": null,
 "schema": "figure_statique_tirage",
 "systemique": 0.6667,
-"tendon": 1.0,
+"tendon": 0.8,
 "type": "tenue",
 "type_charge": "poids_du_corps",
 "unite": "secondes",
@@ -11449,7 +11449,7 @@
 0.0,
 0.0
 ],
-"zone_tendon": "epaule"
+"zone_tendon": "poignet"
 },
 "cs-handstand-anneaux": {
 "bas": false,
@@ -11495,7 +11495,7 @@
 0.0,
 0.0
 ],
-"zone_tendon": "epaule"
+"zone_tendon": "poignet"
 },
 "cs-handstand-dos-au-mur": {
 "bas": false,
@@ -11541,7 +11541,7 @@
 0.0,
 0.0
 ],
-"zone_tendon": "epaule"
+"zone_tendon": "poignet"
 },
 "cs-handstand-parallettes": {
 "bas": false,
@@ -11587,7 +11587,7 @@
 0.0,
 0.0
 ],
-"zone_tendon": "epaule"
+"zone_tendon": "poignet"
 },
 "cs-handstand-pike-pieds-sureleves": {
 "bas": false,
@@ -11633,7 +11633,7 @@
 0.0,
 0.0
 ],
-"zone_tendon": "epaule"
+"zone_tendon": "poignet"
 },
 "cs-handstand-poids-decale": {
 "bas": false,
@@ -11679,7 +11679,7 @@
 0.0,
 0.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": "poignet"
 },
 "cs-handstand-straddle": {
 "bas": false,
@@ -11725,7 +11725,7 @@
 0.0,
 0.0
 ],
-"zone_tendon": "epaule"
+"zone_tendon": "poignet"
 },
 "cs-handstand-tuck": {
 "bas": false,
@@ -11771,7 +11771,7 @@
 0.0,
 0.0
 ],
-"zone_tendon": "epaule"
+"zone_tendon": "poignet"
 },
 "cs-handstand-ventre-au-mur": {
 "bas": false,
@@ -11817,7 +11817,7 @@
 0.0,
 0.0
 ],
-"zone_tendon": "epaule"
+"zone_tendon": "poignet"
 },
 "cs-headstand-tripode": {
 "bas": false,
@@ -11863,7 +11863,7 @@
 0.0,
 0.0
 ],
-"zone_tendon": "epaule"
+"zone_tendon": "poignet"
 },
 "cs-inverted-hang": {
 "bas": false,
@@ -11893,7 +11893,7 @@
 "ratio": null,
 "schema": "figure_statique_tirage",
 "systemique": 0.6667,
-"tendon": 1.0,
+"tendon": 0.8,
 "type": "tenue",
 "type_charge": "poids_du_corps",
 "unite": "secondes",
@@ -11986,7 +11986,7 @@
 "ratio": null,
 "schema": "figure_statique_tirage",
 "systemique": 0.6667,
-"tendon": 1.0,
+"tendon": 0.8,
 "type": "tenue",
 "type_charge": "poids_du_corps",
 "unite": "secondes",
@@ -12078,7 +12078,7 @@
 "ratio": null,
 "schema": "figure_statique_tirage",
 "systemique": 0.6667,
-"tendon": 1.0,
+"tendon": 0.8,
 "type": "tenue",
 "type_charge": "poids_du_corps",
 "unite": "secondes",
@@ -12129,16 +12129,16 @@
 "type_charge": "poids_du_corps",
 "unite": "secondes",
 "vecteur": [
+0.0286,
+0.0286,
+0.0571,
+0.4357,
+0.3,
 0.0,
 0.0,
 0.0,
-0.5,
-0.2,
 0.0,
-0.0,
-0.0,
-0.0,
-0.3
+0.15
 ],
 "zone_tendon": "coude"
 },
@@ -12175,16 +12175,16 @@
 "type_charge": "poids_du_corps",
 "unite": "secondes",
 "vecteur": [
+0.0286,
+0.0386,
+0.0471,
+0.4357,
+0.3,
 0.0,
 0.0,
 0.0,
-0.5,
-0.2,
 0.0,
-0.0,
-0.0,
-0.0,
-0.3
+0.15
 ],
 "zone_tendon": "coude"
 },
@@ -12220,16 +12220,16 @@
 "type_charge": "poids_du_corps",
 "unite": "secondes",
 "vecteur": [
+0.0286,
+0.0286,
+0.0571,
+0.4357,
+0.3,
 0.0,
 0.0,
 0.0,
-0.5,
-0.2,
 0.0,
-0.0,
-0.0,
-0.0,
-0.3
+0.15
 ],
 "zone_tendon": "coude"
 },
@@ -12266,16 +12266,16 @@
 "type_charge": "poids_du_corps",
 "unite": "secondes",
 "vecteur": [
+0.0286,
+0.0286,
+0.0571,
+0.4357,
+0.3,
 0.0,
 0.0,
 0.0,
-0.5,
-0.2,
 0.0,
-0.0,
-0.0,
-0.0,
-0.3
+0.15
 ],
 "zone_tendon": "coude"
 },
@@ -12312,16 +12312,16 @@
 "type_charge": "poids_du_corps",
 "unite": "secondes",
 "vecteur": [
+0.034,
+0.034,
+0.0299,
+0.5221,
+0.23,
 0.0,
 0.0,
 0.0,
-0.5,
-0.2,
 0.0,
-0.0,
-0.0,
-0.0,
-0.3
+0.15
 ],
 "zone_tendon": "coude"
 },
@@ -12358,16 +12358,16 @@
 "type_charge": "poids_du_corps",
 "unite": "secondes",
 "vecteur": [
+0.0301,
+0.0301,
+0.0495,
+0.5103,
+0.23,
 0.0,
 0.0,
 0.0,
-0.5,
-0.2,
 0.0,
-0.0,
-0.0,
-0.0,
-0.3
+0.15
 ],
 "zone_tendon": "coude"
 },
@@ -12588,16 +12588,16 @@
 "type_charge": "poids_du_corps",
 "unite": "secondes",
 "vecteur": [
-0.0,
-0.0,
-0.0,
+0.0267,
+0.1067,
+0.0133,
+0.2033,
 0.5,
-0.2,
 0.0,
 0.0,
 0.0,
 0.0,
-0.3
+0.15
 ],
 "zone_tendon": "coude"
 },
@@ -12634,16 +12634,16 @@
 "type_charge": "poids_du_corps",
 "unite": "secondes",
 "vecteur": [
-0.0,
-0.0,
-0.0,
+0.0267,
+0.0973,
+0.032,
+0.194,
 0.5,
-0.2,
 0.0,
 0.0,
 0.0,
 0.0,
-0.3
+0.15
 ],
 "zone_tendon": "coude"
 },
@@ -12680,16 +12680,16 @@
 "type_charge": "poids_du_corps",
 "unite": "secondes",
 "vecteur": [
+0.0335,
+0.1211,
+0.004,
+0.2615,
+0.4299,
 0.0,
 0.0,
 0.0,
-0.5,
-0.2,
 0.0,
-0.0,
-0.0,
-0.0,
-0.3
+0.15
 ],
 "zone_tendon": "coude"
 },
@@ -12737,7 +12737,7 @@
 0.0,
 0.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": "poignet"
 },
 "cs-oah-drapeau": {
 "bas": false,
@@ -12783,7 +12783,7 @@
 0.0,
 0.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": "poignet"
 },
 "cs-oah-straddle": {
 "bas": false,
@@ -12829,7 +12829,7 @@
 0.0,
 0.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": "poignet"
 },
 "cs-oah-ventre-au-mur": {
 "bas": false,
@@ -12875,7 +12875,7 @@
 0.0,
 0.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": "poignet"
 },
 "cs-one-arm-handstand": {
 "bas": false,
@@ -12921,7 +12921,7 @@
 0.0,
 0.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": "poignet"
 },
 "cs-planche": {
 "bas": false,
@@ -13089,7 +13089,7 @@
 "ratio": null,
 "schema": "figure_statique_poussee",
 "systemique": 0.6667,
-"tendon": 1.0,
+"tendon": 0.8,
 "type": "tenue",
 "type_charge": "poids_du_corps",
 "unite": "secondes",
@@ -13227,7 +13227,7 @@
 "ratio": null,
 "schema": "figure_statique_poussee",
 "systemique": 1.0,
-"tendon": 1.0,
+"tendon": 0.9,
 "type": "tenue",
 "type_charge": "poids_du_corps",
 "unite": "secondes",
@@ -13411,7 +13411,7 @@
 "ratio": null,
 "schema": "figure_statique_tirage",
 "systemique": 0.6667,
-"tendon": 1.0,
+"tendon": 0.8,
 "type": "tenue",
 "type_charge": "poids_du_corps",
 "unite": "secondes",
@@ -13462,16 +13462,16 @@
 "type_charge": "poids_du_corps",
 "unite": "secondes",
 "vecteur": [
+0.0186,
+0.0286,
+0.0771,
+0.4257,
+0.3,
 0.0,
 0.0,
 0.0,
-0.5,
-0.2,
 0.0,
-0.0,
-0.0,
-0.0,
-0.3
+0.15
 ],
 "zone_tendon": "coude"
 },
@@ -13503,7 +13503,7 @@
 "ratio": null,
 "schema": "figure_statique_poussee",
 "systemique": 0.6667,
-"tendon": 1.0,
+"tendon": 0.8,
 "type": "tenue",
 "type_charge": "poids_du_corps",
 "unite": "secondes",
@@ -13549,7 +13549,7 @@
 "ratio": null,
 "schema": "figure_statique_poussee",
 "systemique": 1.0,
-"tendon": 1.0,
+"tendon": 0.9,
 "type": "tenue",
 "type_charge": "poids_du_corps",
 "unite": "secondes",
@@ -13595,7 +13595,7 @@
 "ratio": null,
 "schema": "figure_statique_poussee",
 "systemique": 0.6667,
-"tendon": 1.0,
+"tendon": 0.8,
 "type": "tenue",
 "type_charge": "poids_du_corps",
 "unite": "secondes",
@@ -13640,7 +13640,7 @@
 "ratio": null,
 "schema": "figure_statique_poussee",
 "systemique": 0.6667,
-"tendon": 1.0,
+"tendon": 0.8,
 "type": "tenue",
 "type_charge": "poids_du_corps",
 "unite": "secondes",
@@ -13686,7 +13686,7 @@
 "ratio": null,
 "schema": "figure_statique_tirage",
 "systemique": 1.0,
-"tendon": 1.0,
+"tendon": 0.9,
 "type": "tenue",
 "type_charge": "poids_du_corps",
 "unite": "secondes",
@@ -13732,7 +13732,7 @@
 "ratio": null,
 "schema": "figure_statique_tirage",
 "systemique": 1.0,
-"tendon": 1.0,
+"tendon": 0.9,
 "type": "tenue",
 "type_charge": "poids_du_corps",
 "unite": "secondes",
@@ -13778,7 +13778,7 @@
 "ratio": null,
 "schema": "figure_statique_tirage",
 "systemique": 0.6667,
-"tendon": 1.0,
+"tendon": 0.8,
 "type": "tenue",
 "type_charge": "poids_du_corps",
 "unite": "secondes",
@@ -13824,7 +13824,7 @@
 "ratio": null,
 "schema": "figure_statique_tirage",
 "systemique": 1.0,
-"tendon": 1.0,
+"tendon": 0.9,
 "type": "tenue",
 "type_charge": "poids_du_corps",
 "unite": "secondes",
@@ -13870,7 +13870,7 @@
 "ratio": null,
 "schema": "figure_statique_tirage",
 "systemique": 0.6667,
-"tendon": 1.0,
+"tendon": 0.8,
 "type": "tenue",
 "type_charge": "poids_du_corps",
 "unite": "secondes",
@@ -13916,7 +13916,7 @@
 "ratio": null,
 "schema": "figure_statique_tirage",
 "systemique": 0.6667,
-"tendon": 1.0,
+"tendon": 0.8,
 "type": "tenue",
 "type_charge": "poids_du_corps",
 "unite": "secondes",
@@ -14013,13 +14013,13 @@
 "type_charge": "poids_du_corps",
 "unite": "secondes",
 "vecteur": [
-0.5,
-0.1,
+0.5833,
+0.2667,
 0.0,
 0.0,
 0.15,
 0.0,
-0.25,
+0.0,
 0.0,
 0.0,
 0.0
@@ -14059,16 +14059,16 @@
 "type_charge": "poids_du_corps",
 "unite": "secondes",
 "vecteur": [
+0.0143,
+0.0429,
+0.0571,
+0.3357,
+0.4,
 0.0,
 0.0,
 0.0,
-0.5,
-0.2,
 0.0,
-0.0,
-0.0,
-0.0,
-0.3
+0.15
 ],
 "zone_tendon": "coude"
 },
@@ -14105,16 +14105,16 @@
 "type_charge": "poids_du_corps",
 "unite": "secondes",
 "vecteur": [
+0.013,
+0.0566,
+0.0521,
+0.2582,
+0.4701,
 0.0,
 0.0,
 0.0,
-0.5,
-0.2,
 0.0,
-0.0,
-0.0,
-0.0,
-0.3
+0.15
 ],
 "zone_tendon": "coude"
 },
@@ -14254,7 +14254,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-90-90-passif": {
 "bas": false,
@@ -14300,7 +14300,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-90-90-transitions": {
 "bas": false,
@@ -14346,7 +14346,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-adducteurs-fente-laterale": {
 "bas": false,
@@ -14392,7 +14392,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-adducteurs-rocking": {
 "bas": false,
@@ -14438,7 +14438,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-appui-dos-des-mains": {
 "bas": false,
@@ -14484,7 +14484,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-balle-pectoraux": {
 "bas": false,
@@ -14531,7 +14531,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-balle-voute-plantaire": {
 "bas": false,
@@ -14577,7 +14577,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-bascules-appui-doigts-arriere": {
 "bas": false,
@@ -14623,7 +14623,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-bascules-appui-doigts-avant": {
 "bas": false,
@@ -14669,7 +14669,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-cars-cheville": {
 "bas": false,
@@ -14715,7 +14715,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-cars-epaule": {
 "bas": false,
@@ -14761,7 +14761,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-cars-hanche": {
 "bas": false,
@@ -14807,7 +14807,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-cat-cow": {
 "bas": false,
@@ -14853,7 +14853,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-cercles-bras": {
 "bas": false,
@@ -14899,7 +14899,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-chaine-posterieure-flexion-avant-debout": {
 "bas": false,
@@ -14945,7 +14945,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-chameau": {
 "bas": false,
@@ -15037,7 +15037,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-cobra": {
 "bas": false,
@@ -15083,7 +15083,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-coherence-cardiaque": {
 "bas": false,
@@ -15129,7 +15129,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-couch-stretch": {
 "bas": false,
@@ -15176,7 +15176,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-demi-grand-ecart": {
 "bas": false,
@@ -15206,7 +15206,7 @@
 "ratio": null,
 "schema": "etirement_statique",
 "systemique": 0.3333,
-"tendon": 0.8,
+"tendon": 0.4,
 "type": "mobilite",
 "type_charge": "aucune",
 "unite": "secondes",
@@ -15315,7 +15315,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-dislocations-epaules-elastique": {
 "bas": false,
@@ -15361,7 +15361,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-etirement-bas-dips-barres": {
 "bas": false,
@@ -15406,7 +15406,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-etirement-biceps-mur": {
 "bas": false,
@@ -15452,7 +15452,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-etirement-capsule-posterieure-bras-croise": {
 "bas": false,
@@ -15498,7 +15498,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-etirement-chiot": {
 "bas": false,
@@ -15544,7 +15544,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-etirement-dessus-pied": {
 "bas": false,
@@ -15590,7 +15590,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-etirement-elevateur-scapula": {
 "bas": false,
@@ -15636,7 +15636,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-etirement-extenseurs-poignet-bras-tendu": {
 "bas": false,
@@ -15682,7 +15682,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-etirement-flechisseurs-poignet-bras-tendu": {
 "bas": false,
@@ -15728,7 +15728,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-etirement-gastrocnemiens-mur": {
 "bas": false,
@@ -15774,7 +15774,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-etirement-grand-dorsal-banc": {
 "bas": false,
@@ -15820,7 +15820,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-etirement-grand-dorsal-barre": {
 "bas": false,
@@ -15865,7 +15865,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-etirement-mollets-marche": {
 "bas": false,
@@ -15911,7 +15911,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-etirement-pectoral-cadre-porte": {
 "bas": false,
@@ -15957,7 +15957,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-etirement-soleaire-mur": {
 "bas": false,
@@ -16003,7 +16003,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-etirement-trapeze-superieur": {
 "bas": false,
@@ -16049,7 +16049,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-etirement-triceps-bras-au-dessus-tete": {
 "bas": false,
@@ -16095,7 +16095,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-extension-epaules-assis-sol": {
 "bas": false,
@@ -16141,7 +16141,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-extension-orteils-agenouille": {
 "bas": false,
@@ -16187,7 +16187,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-extension-thoracique-rouleau": {
 "bas": false,
@@ -16234,7 +16234,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-fente-basse-etirement": {
 "bas": false,
@@ -16280,7 +16280,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-figure-4-allonge": {
 "bas": false,
@@ -16326,7 +16326,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-flechisseurs-hanche-semi-agenouille": {
 "bas": false,
@@ -16372,7 +16372,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-flexion-dorsale-lestee": {
 "bas": false,
@@ -16417,7 +16417,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-foam-roller-routine": {
 "bas": false,
@@ -16463,7 +16463,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-frog-stretch": {
 "bas": false,
@@ -16509,7 +16509,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-good-morning-baton": {
 "bas": false,
@@ -16555,7 +16555,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-grand-ecart-antero-blocs": {
 "bas": false,
@@ -16586,7 +16586,7 @@
 "ratio": null,
 "schema": "souplesse",
 "systemique": 0.3333,
-"tendon": 0.8,
+"tendon": 0.4,
 "type": "mobilite",
 "type_charge": "aucune",
 "unite": "secondes",
@@ -16632,7 +16632,7 @@
 "ratio": null,
 "schema": "souplesse",
 "systemique": 0.3333,
-"tendon": 0.8,
+"tendon": 0.4,
 "type": "mobilite",
 "type_charge": "aucune",
 "unite": "secondes",
@@ -16678,7 +16678,7 @@
 "ratio": null,
 "schema": "souplesse",
 "systemique": 0.3333,
-"tendon": 0.8,
+"tendon": 0.4,
 "type": "mobilite",
 "type_charge": "aucune",
 "unite": "secondes",
@@ -16723,7 +16723,7 @@
 "ratio": null,
 "schema": "souplesse",
 "systemique": 0.3333,
-"tendon": 0.8,
+"tendon": 0.4,
 "type": "mobilite",
 "type_charge": "aucune",
 "unite": "secondes",
@@ -16785,7 +16785,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-ischio-allonge-elastique": {
 "bas": false,
@@ -16832,7 +16832,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-ischio-assis-unilateral": {
 "bas": false,
@@ -16878,7 +16878,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-ischio-debout-pied-sureleve": {
 "bas": false,
@@ -16924,7 +16924,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-lift-off-rotation-externe-90-90": {
 "bas": false,
@@ -16970,7 +16970,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-marche-pointes": {
 "bas": false,
@@ -17016,7 +17016,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-marche-talons": {
 "bas": false,
@@ -17062,7 +17062,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-mobilite-cou-trois-plans": {
 "bas": false,
@@ -17108,7 +17108,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-open-book": {
 "bas": false,
@@ -17154,7 +17154,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-ouverture-epaules-extension-banc": {
 "bas": false,
@@ -17200,7 +17200,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-pancake-a-plat": {
 "bas": false,
@@ -17230,7 +17230,7 @@
 "ratio": null,
 "schema": "souplesse",
 "systemique": 0.3333,
-"tendon": 0.8,
+"tendon": 0.4,
 "type": "mobilite",
 "type_charge": "aucune",
 "unite": "secondes",
@@ -17276,7 +17276,7 @@
 "ratio": null,
 "schema": "souplesse",
 "systemique": 0.3333,
-"tendon": 0.8,
+"tendon": 0.4,
 "type": "mobilite",
 "type_charge": "aucune",
 "unite": "secondes",
@@ -17323,7 +17323,7 @@
 "ratio": null,
 "schema": "souplesse",
 "systemique": 0.3333,
-"tendon": 0.8,
+"tendon": 0.4,
 "type": "mobilite",
 "type_charge": "aucune",
 "unite": "secondes",
@@ -17385,7 +17385,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-pigeon-banc": {
 "bas": false,
@@ -17431,7 +17431,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-pigeon-sol": {
 "bas": false,
@@ -17477,7 +17477,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-pike-assis-actif": {
 "bas": false,
@@ -17846,7 +17846,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-remontee-pont-debout": {
 "bas": false,
@@ -17938,7 +17938,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-respiration-crocodile": {
 "bas": false,
@@ -17984,7 +17984,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-retraction-menton": {
 "bas": false,
@@ -18030,7 +18030,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-rotation-externe-assistee-baton": {
 "bas": false,
@@ -18077,7 +18077,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-rotation-interne-hanche-quadrupedie": {
 "bas": false,
@@ -18123,7 +18123,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-rotation-thoracique-quatre-pattes": {
 "bas": false,
@@ -18169,7 +18169,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-rotations-coudes-appui": {
 "bas": false,
@@ -18215,7 +18215,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-rotations-poignets": {
 "bas": false,
@@ -18261,7 +18261,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-rouleau-adducteurs": {
 "bas": false,
@@ -18307,7 +18307,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-rouleau-dos-thoracique": {
 "bas": false,
@@ -18353,7 +18353,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-rouleau-fessiers-piriforme": {
 "bas": false,
@@ -18399,7 +18399,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-rouleau-grand-dorsal": {
 "bas": false,
@@ -18445,7 +18445,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-rouleau-ischio-jambiers": {
 "bas": false,
@@ -18491,7 +18491,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-rouleau-mollets": {
 "bas": false,
@@ -18537,7 +18537,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-rouleau-quadriceps": {
 "bas": false,
@@ -18583,7 +18583,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-rouleau-tenseur-fascia-lata": {
 "bas": false,
@@ -18629,7 +18629,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-routine-mobilite-complete": {
 "bas": false,
@@ -18678,7 +18678,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-routine-mobilite-epaules-poignets": {
 "bas": false,
@@ -18726,7 +18726,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-shin-box-releve": {
 "bas": false,
@@ -18772,7 +18772,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-sleeper-stretch": {
 "bas": false,
@@ -18818,7 +18818,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-soupir-physiologique": {
 "bas": false,
@@ -18864,7 +18864,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-squat-profond-tenu": {
 "bas": false,
@@ -18910,7 +18910,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-straddle-au-mur": {
 "bas": false,
@@ -18957,7 +18957,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-table-inversee": {
 "bas": false,
@@ -19003,7 +19003,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-thread-the-needle": {
 "bas": false,
@@ -19049,7 +19049,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-toe-yoga": {
 "bas": false,
@@ -19095,7 +19095,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-wall-slides": {
 "bas": false,
@@ -19141,7 +19141,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-wall-slides-avant-bras-face-mur": {
 "bas": false,
@@ -19187,7 +19187,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-worlds-greatest-stretch": {
 "bas": false,
@@ -19233,7 +19233,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mo-wrist-push-ups": {
 "bas": false,
@@ -19279,7 +19279,7 @@
 0.0,
 1.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mu-abduction-hanche-couche": {
 "bas": false,
@@ -19362,10 +19362,10 @@
 "vecteur": [
 0.0,
 0.0,
-0.7,
+1.0,
 0.0,
 0.0,
-0.3,
+0.0,
 0.0,
 0.0,
 0.0,
@@ -19484,7 +19484,7 @@
 "niveau": "Débutant",
 "profondeur": 1,
 "racine": "mu-adduction-hanche-machine",
-"ratio": 0.5,
+"ratio": 0.28,
 "schema": "adducteurs_abducteurs",
 "systemique": 0.3333,
 "tendon": 0.4,
@@ -19756,7 +19756,7 @@
 "niveau": "Avancé",
 "profondeur": 0,
 "racine": "mu-arrache",
-"ratio": 0.85,
+"ratio": 0.78,
 "schema": "halterophilie",
 "systemique": 1.6667,
 "tendon": 0.8,
@@ -19764,10 +19764,10 @@
 "type_charge": "barre",
 "unite": "repetitions",
 "vecteur": [
-0.0882,
-0.0882,
-0.2941,
-0.0294,
+0.0769,
+0.141,
+0.2564,
+0.0256,
 0.0,
 0.0,
 0.5001,
@@ -19775,7 +19775,7 @@
 0.0,
 0.0
 ],
-"zone_tendon": "epaule"
+"zone_tendon": "poignet"
 },
 "mu-arrache-depuis-blocs": {
 "bas": false,
@@ -19802,7 +19802,7 @@
 "niveau": "Avancé",
 "profondeur": 1,
 "racine": "mu-arrache",
-"ratio": 0.85,
+"ratio": 0.78,
 "schema": "halterophilie",
 "systemique": 1.6667,
 "tendon": 0.8,
@@ -19810,10 +19810,10 @@
 "type_charge": "barre",
 "unite": "repetitions",
 "vecteur": [
-0.0731,
-0.0965,
-0.2982,
-0.0322,
+0.0631,
+0.1523,
+0.2569,
+0.0277,
 0.0,
 0.0,
 0.5,
@@ -19821,7 +19821,7 @@
 0.0,
 0.0
 ],
-"zone_tendon": "epaule"
+"zone_tendon": "poignet"
 },
 "mu-arrache-haltere-unilateral": {
 "bas": false,
@@ -19855,10 +19855,10 @@
 "type_charge": "halteres",
 "unite": "repetitions",
 "vecteur": [
-0.1015,
-0.0765,
-0.2882,
-0.0338,
+0.0887,
+0.1298,
+0.2519,
+0.0296,
 0.0,
 0.0,
 0.5,
@@ -19866,7 +19866,7 @@
 0.0,
 0.0
 ],
-"zone_tendon": "epaule"
+"zone_tendon": "poignet"
 },
 "mu-arrache-suspendu": {
 "bas": false,
@@ -19892,7 +19892,7 @@
 "niveau": "Avancé",
 "profondeur": 1,
 "racine": "mu-arrache",
-"ratio": 0.85,
+"ratio": 0.78,
 "schema": "halterophilie",
 "systemique": 1.6667,
 "tendon": 0.8,
@@ -19900,10 +19900,10 @@
 "type_charge": "barre",
 "unite": "repetitions",
 "vecteur": [
-0.0731,
-0.0965,
-0.2982,
-0.0322,
+0.0631,
+0.1523,
+0.2569,
+0.0277,
 0.0,
 0.0,
 0.5,
@@ -19911,7 +19911,7 @@
 0.0,
 0.0
 ],
-"zone_tendon": "epaule"
+"zone_tendon": "poignet"
 },
 "mu-back-squat-barre-basse": {
 "bas": true,
@@ -20039,17 +20039,17 @@
 "unite": "repetitions",
 "vecteur": [
 0.0,
-0.7,
+1.0,
 0.0,
 0.0,
 0.0,
-0.3,
+0.0,
 0.0,
 0.0,
 0.0,
 0.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mu-barre-au-front-ez": {
 "bas": false,
@@ -20221,8 +20221,8 @@
 "type_charge": "autre",
 "unite": "secondes",
 "vecteur": [
-0.2909,
-0.5091,
+0.2667,
+0.5333,
 0.0,
 0.0,
 0.0,
@@ -20945,7 +20945,7 @@
 "niveau": "Intermédiaire",
 "profondeur": 0,
 "racine": "mu-clean-kettlebell",
-"ratio": 0.2,
+"ratio": 0.35,
 "schema": "balistique",
 "systemique": 1.0,
 "tendon": 0.4,
@@ -20954,17 +20954,17 @@
 "unite": "repetitions",
 "vecteur": [
 0.0,
-0.1333,
-0.2222,
-0.0444,
+0.1714,
+0.1905,
+0.0381,
 0.0,
 0.0,
-0.4001,
+0.4,
 0.0,
 0.2,
 0.0
 ],
-"zone_tendon": "epaule"
+"zone_tendon": "lombaires"
 },
 "mu-copenhagen-plank": {
 "bas": false,
@@ -21724,11 +21724,11 @@
 "unite": "repetitions",
 "vecteur": [
 0.0,
-0.7,
+1.0,
 0.0,
 0.0,
 0.0,
-0.3,
+0.0,
 0.0,
 0.0,
 0.0,
@@ -22300,7 +22300,7 @@
 "niveau": "Débutant",
 "profondeur": 1,
 "racine": "mu-curl-poulie-basse-barre",
-"ratio": 0.35,
+"ratio": 0.19,
 "schema": "isolation_biceps",
 "systemique": 0.3333,
 "tendon": 0.4,
@@ -23490,7 +23490,7 @@
 "niveau": "Débutant",
 "profondeur": 1,
 "racine": "mu-developpe-couche-barre",
-"ratio": 0.9,
+"ratio": 1.05,
 "schema": "poussee_horizontale",
 "systemique": 0.6667,
 "tendon": 0.4,
@@ -23672,7 +23672,7 @@
 "niveau": "Débutant",
 "profondeur": 2,
 "racine": "mu-developpe-couche-barre",
-"ratio": 0.9,
+"ratio": 1.05,
 "schema": "poussee_horizontale",
 "systemique": 0.6667,
 "tendon": 0.4,
@@ -23726,12 +23726,12 @@
 "type_charge": "elastique",
 "unite": "repetitions",
 "vecteur": [
-0.525,
-0.175,
+0.75,
+0.25,
 0.0,
 0.0,
 0.0,
-0.3,
+0.0,
 0.0,
 0.0,
 0.0,
@@ -23808,7 +23808,7 @@
 "niveau": "Débutant",
 "profondeur": 0,
 "racine": "mu-developpe-epaules-smith-assis",
-"ratio": 0.6,
+"ratio": 0.68,
 "schema": "poussee_verticale_haute",
 "systemique": 0.6667,
 "tendon": 0.8,
@@ -24216,7 +24216,7 @@
 "niveau": "Débutant",
 "profondeur": 2,
 "racine": "mu-developpe-couche-barre",
-"ratio": 0.8,
+"ratio": 0.9,
 "schema": "poussee_inclinee",
 "systemique": 0.6667,
 "tendon": 0.4,
@@ -24307,7 +24307,7 @@
 "niveau": "Débutant",
 "profondeur": 0,
 "racine": "mu-developpe-landmine-debout",
-"ratio": 0.9,
+"ratio": 0.5,
 "schema": "poussee_inclinee",
 "systemique": 1.3333,
 "tendon": 0.4,
@@ -24354,7 +24354,7 @@
 "niveau": "Intermédiaire",
 "profondeur": 0,
 "racine": "mu-developpe-landmine-unilateral-genoux",
-"ratio": 0.9,
+"ratio": 0.5,
 "schema": "poussee_inclinee",
 "systemique": 1.3333,
 "tendon": 0.4,
@@ -24593,12 +24593,12 @@
 "type_charge": "elastique",
 "unite": "repetitions",
 "vecteur": [
-0.7,
+1.0,
 0.0,
 0.0,
 0.0,
 0.0,
-0.3,
+0.0,
 0.0,
 0.0,
 0.0,
@@ -25399,12 +25399,12 @@
 "type_charge": "elastique",
 "unite": "repetitions",
 "vecteur": [
-0.494,
-0.296,
+0.62,
+0.38,
 0.0,
 0.0,
 0.0,
-0.21,
+0.0,
 0.0,
 0.0,
 0.0,
@@ -25703,7 +25703,7 @@
 "niveau": "Avancé",
 "profondeur": 0,
 "racine": "mu-epaule",
-"ratio": 0.85,
+"ratio": 1.0,
 "schema": "halterophilie",
 "systemique": 1.6667,
 "tendon": 0.8,
@@ -25711,18 +25711,18 @@
 "type_charge": "barre",
 "unite": "repetitions",
 "vecteur": [
-0.0333,
-0.1,
-0.3333,
-0.0333,
+0.0294,
+0.1471,
+0.2941,
+0.0294,
 0.0,
 0.0,
-0.5001,
+0.5,
 0.0,
 0.0,
 0.0
 ],
-"zone_tendon": "epaule"
+"zone_tendon": "poignet"
 },
 "mu-epaule-haltere-unilateral": {
 "bas": false,
@@ -25756,10 +25756,10 @@
 "type_charge": "halteres",
 "unite": "repetitions",
 "vecteur": [
-0.0369,
-0.1108,
-0.3154,
-0.0369,
+0.033,
+0.1527,
+0.2813,
+0.033,
 0.0,
 0.0,
 0.5,
@@ -25767,7 +25767,7 @@
 0.0,
 0.0
 ],
-"zone_tendon": "epaule"
+"zone_tendon": "poignet"
 },
 "mu-epaule-jete": {
 "bas": false,
@@ -25793,7 +25793,7 @@
 "niveau": "Avancé",
 "profondeur": 0,
 "racine": "mu-epaule-jete",
-"ratio": 0.85,
+"ratio": 0.95,
 "schema": "halterophilie",
 "systemique": 1.6667,
 "tendon": 0.8,
@@ -25801,18 +25801,18 @@
 "type_charge": "barre",
 "unite": "repetitions",
 "vecteur": [
-0.1176,
-0.0588,
-0.2941,
-0.0294,
+0.1053,
+0.1053,
+0.2632,
+0.0263,
 0.0,
 0.0,
-0.5001,
+0.4999,
 0.0,
 0.0,
 0.0
 ],
-"zone_tendon": "epaule"
+"zone_tendon": "poignet"
 },
 "mu-epaule-sac-leste": {
 "bas": false,
@@ -25848,9 +25848,9 @@
 "unite": "repetitions",
 "vecteur": [
 0.0,
-0.32,
-0.3733,
-0.1067,
+0.35,
+0.35,
+0.1,
 0.0,
 0.0,
 0.0,
@@ -25884,7 +25884,7 @@
 "niveau": "Avancé",
 "profondeur": 1,
 "racine": "mu-epaule",
-"ratio": 0.85,
+"ratio": 1.0,
 "schema": "halterophilie",
 "systemique": 1.6667,
 "tendon": 0.8,
@@ -25892,10 +25892,10 @@
 "type_charge": "barre",
 "unite": "repetitions",
 "vecteur": [
-0.035,
-0.105,
-0.325,
-0.035,
+0.0307,
+0.1535,
+0.2851,
+0.0307,
 0.0,
 0.0,
 0.5,
@@ -25903,7 +25903,7 @@
 0.0,
 0.0
 ],
-"zone_tendon": "epaule"
+"zone_tendon": "poignet"
 },
 "mu-extension-cou-harnais": {
 "bas": false,
@@ -25929,7 +25929,7 @@
 "niveau": "Intermédiaire",
 "profondeur": 0,
 "racine": "mu-extension-cou-harnais",
-"ratio": 0.5,
+"ratio": 0.25,
 "schema": "cou",
 "systemique": 0.3333,
 "tendon": 0.1,
@@ -25948,7 +25948,7 @@
 0.0,
 0.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mu-extension-cou-main": {
 "bas": false,
@@ -25994,7 +25994,7 @@
 0.0,
 0.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mu-extension-couchee-poulie": {
 "bas": false,
@@ -26121,11 +26121,11 @@
 "unite": "repetitions",
 "vecteur": [
 0.0,
-0.7,
+1.0,
 0.0,
 0.0,
 0.0,
-0.3,
+0.0,
 0.0,
 0.0,
 0.0,
@@ -26156,7 +26156,7 @@
 "niveau": "Débutant",
 "profondeur": 0,
 "racine": "mu-extension-lombaire-machine",
-"ratio": 0.5,
+"ratio": 0.6,
 "schema": "extension_rachis",
 "systemique": 0.6667,
 "tendon": 0.4,
@@ -26479,18 +26479,18 @@
 "type_charge": "elastique",
 "unite": "repetitions",
 "vecteur": [
-0.0636,
-0.6364,
+0.0909,
+0.9091,
 0.0,
 0.0,
 0.0,
-0.3,
+0.0,
 0.0,
 0.0,
 0.0,
 0.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mu-farmer-walk": {
 "bas": false,
@@ -26525,9 +26525,9 @@
 "unite": "distance",
 "vecteur": [
 0.0,
-0.5143,
-0.1714,
-0.1143,
+0.55,
+0.15,
+0.1,
 0.0,
 0.0,
 0.0,
@@ -27112,7 +27112,7 @@
 "niveau": "Intermédiaire",
 "profondeur": 0,
 "racine": "mu-flexion-cou-banc-disque",
-"ratio": 0.5,
+"ratio": 0.25,
 "schema": "cou",
 "systemique": 0.3333,
 "tendon": 0.1,
@@ -27131,7 +27131,7 @@
 0.0,
 0.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mu-flexion-cou-main": {
 "bas": false,
@@ -27177,7 +27177,7 @@
 0.0,
 0.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mu-flexion-laterale-cou-banc-disque": {
 "bas": false,
@@ -27205,7 +27205,7 @@
 "niveau": "Intermédiaire",
 "profondeur": 0,
 "racine": "mu-flexion-laterale-cou-banc-disque",
-"ratio": 0.5,
+"ratio": 0.25,
 "schema": "cou",
 "systemique": 0.3333,
 "tendon": 0.1,
@@ -27224,7 +27224,7 @@
 0.0,
 0.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mu-flexion-laterale-cou-main": {
 "bas": false,
@@ -27270,7 +27270,7 @@
 0.0,
 0.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mu-flexion-laterale-haltere": {
 "bas": false,
@@ -28084,9 +28084,9 @@
 "unite": "repetitions",
 "vecteur": [
 0.0,
-0.0,
-0.625,
-0.375,
+0.1579,
+0.5263,
+0.3158,
 0.0,
 0.0,
 0.0,
@@ -28130,9 +28130,9 @@
 "unite": "repetitions",
 "vecteur": [
 0.0,
-0.0778,
-0.5764,
-0.3458,
+0.1874,
+0.5079,
+0.3047,
 0.0,
 0.0,
 0.0,
@@ -28264,8 +28264,8 @@
 "type_charge": "kettlebell",
 "unite": "repetitions",
 "vecteur": [
-0.5455,
 0.4545,
+0.5455,
 0.0,
 0.0,
 0.0,
@@ -28275,7 +28275,7 @@
 0.0,
 0.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mu-heel-touch": {
 "bas": false,
@@ -28347,7 +28347,7 @@
 "niveau": "Intermédiaire",
 "profondeur": 2,
 "racine": "mu-epaule",
-"ratio": 0.85,
+"ratio": 1.0,
 "schema": "halterophilie",
 "systemique": 1.3333,
 "tendon": 0.8,
@@ -28355,10 +28355,10 @@
 "type_charge": "barre",
 "unite": "repetitions",
 "vecteur": [
-0.0567,
-0.17,
-0.24,
-0.0333,
+0.05,
+0.2088,
+0.2118,
+0.0294,
 0.0,
 0.0,
 0.5,
@@ -28366,7 +28366,7 @@
 0.0,
 0.0
 ],
-"zone_tendon": "epaule"
+"zone_tendon": "poignet"
 },
 "mu-hip-airplane": {
 "bas": false,
@@ -28528,7 +28528,7 @@
 "niveau": "Débutant",
 "profondeur": 1,
 "racine": "mu-hip-thrust-barre",
-"ratio": 0.8,
+"ratio": 1.4,
 "schema": "extension_hanche",
 "systemique": 0.6667,
 "tendon": 0.4,
@@ -28979,7 +28979,7 @@
 "niveau": "Débutant",
 "profondeur": 0,
 "racine": "mu-inclinaison-radiale-levier",
-"ratio": 0.2,
+"ratio": 0.09,
 "schema": "prehension",
 "systemique": 0.3333,
 "tendon": 0.4,
@@ -29024,7 +29024,7 @@
 "niveau": "Débutant",
 "profondeur": 0,
 "racine": "mu-inclinaison-ulnaire-levier",
-"ratio": 0.2,
+"ratio": 0.09,
 "schema": "prehension",
 "systemique": 0.3333,
 "tendon": 0.4,
@@ -29089,7 +29089,7 @@
 0.0,
 0.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mu-isometries-cou-main": {
 "bas": false,
@@ -29135,7 +29135,7 @@
 0.0,
 0.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mu-jefferson-curl": {
 "bas": false,
@@ -29162,7 +29162,7 @@
 "niveau": "Avancé",
 "profondeur": 0,
 "racine": "mu-jefferson-curl",
-"ratio": 0.5,
+"ratio": 0.3,
 "schema": "extension_rachis",
 "systemique": 1.0,
 "tendon": 0.8,
@@ -29253,7 +29253,7 @@
 "niveau": "Débutant",
 "profondeur": 0,
 "racine": "mu-kickback-fessier-poulie",
-"ratio": 0.5,
+"ratio": 0.28,
 "schema": "extension_hanche",
 "systemique": 0.6667,
 "tendon": 0.4,
@@ -29343,7 +29343,7 @@
 "niveau": "Débutant",
 "profondeur": 1,
 "racine": "mu-kickback-haltere",
-"ratio": 0.35,
+"ratio": 0.19,
 "schema": "isolation_triceps",
 "systemique": 0.3333,
 "tendon": 0.4,
@@ -29453,7 +29453,7 @@
 0.0,
 0.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": "genou"
 },
 "mu-lancer-par-dessus-tete-medecine-ball": {
 "bas": false,
@@ -29483,7 +29483,7 @@
 "ratio": 0.5,
 "schema": "pliometrie",
 "systemique": 1.0,
-"tendon": 0.7,
+"tendon": 0.4,
 "type": "charge",
 "type_charge": "autre",
 "unite": "repetitions",
@@ -29529,7 +29529,7 @@
 "ratio": 0.5,
 "schema": "pliometrie",
 "systemique": 1.0,
-"tendon": 0.7,
+"tendon": 0.4,
 "type": "charge",
 "type_charge": "autre",
 "unite": "repetitions",
@@ -29750,7 +29750,7 @@
 "niveau": "Débutant",
 "profondeur": 1,
 "racine": "mu-leg-curl-couche",
-"ratio": 0.6,
+"ratio": 0.33,
 "schema": "flexion_genou",
 "systemique": 0.3333,
 "tendon": 0.4,
@@ -29838,7 +29838,7 @@
 "niveau": "Débutant",
 "profondeur": 1,
 "racine": "mu-leg-extension",
-"ratio": 0.8,
+"ratio": 0.44,
 "schema": "extension_genou",
 "systemique": 0.3333,
 "tendon": 0.4,
@@ -29983,10 +29983,10 @@
 "vecteur": [
 0.0,
 0.0,
-0.7,
+1.0,
 0.0,
 0.0,
-0.3,
+0.0,
 0.0,
 0.0,
 0.0,
@@ -30019,7 +30019,7 @@
 "niveau": "Intermédiaire",
 "profondeur": 1,
 "racine": "mu-rowing-landmine-unilateral",
-"ratio": 0.95,
+"ratio": 0.52,
 "schema": "tirage_horizontal",
 "systemique": 1.3333,
 "tendon": 0.4,
@@ -30067,7 +30067,7 @@
 "ratio": 0.5,
 "schema": "pliometrie",
 "systemique": 1.0,
-"tendon": 0.7,
+"tendon": 0.4,
 "type": "charge",
 "type_charge": "autre",
 "unite": "repetitions",
@@ -30331,7 +30331,7 @@
 "niveau": "Débutant",
 "profondeur": 1,
 "racine": "mu-mollets-debout-machine",
-"ratio": 1.5,
+"ratio": 1.2,
 "schema": "mollets",
 "systemique": 0.3333,
 "tendon": 0.4,
@@ -30468,7 +30468,7 @@
 "niveau": "Intermédiaire",
 "profondeur": 1,
 "racine": "mu-epaule",
-"ratio": 0.85,
+"ratio": 0.7,
 "schema": "halterophilie",
 "systemique": 1.3333,
 "tendon": 0.8,
@@ -30476,18 +30476,18 @@
 "type_charge": "barre",
 "unite": "repetitions",
 "vecteur": [
-0.0756,
-0.1831,
-0.2094,
-0.0319,
+0.0656,
+0.2238,
+0.1828,
+0.0277,
 0.0,
 0.0,
-0.5,
+0.5001,
 0.0,
 0.0,
 0.0
 ],
-"zone_tendon": "epaule"
+"zone_tendon": "poignet"
 },
 "mu-muscle-snatch": {
 "bas": false,
@@ -30513,7 +30513,7 @@
 "niveau": "Intermédiaire",
 "profondeur": 1,
 "racine": "mu-arrache",
-"ratio": 0.85,
+"ratio": 0.55,
 "schema": "halterophilie",
 "systemique": 1.3333,
 "tendon": 0.8,
@@ -30521,10 +30521,10 @@
 "type_charge": "barre",
 "unite": "repetitions",
 "vecteur": [
-0.1198,
-0.1431,
-0.2049,
-0.0322,
+0.1054,
+0.1864,
+0.1799,
+0.0283,
 0.0,
 0.0,
 0.5,
@@ -30532,7 +30532,7 @@
 0.0,
 0.0
 ],
-"zone_tendon": "epaule"
+"zone_tendon": "poignet"
 },
 "mu-nordic-hamstring-curl": {
 "bas": false,
@@ -30883,10 +30883,10 @@
 "type_charge": "kettlebell",
 "unite": "distance",
 "vecteur": [
-0.4,
-0.2286,
+0.3733,
+0.2667,
 0.0,
-0.1714,
+0.16,
 0.0,
 0.0,
 0.0,
@@ -30930,17 +30930,17 @@
 "unite": "repetitions",
 "vecteur": [
 0.0,
-0.0,
-0.45,
-0.05,
-0.0,
-0.0,
-0.5,
+0.1043,
+0.6261,
+0.0696,
 0.0,
 0.0,
-0.0
+0.1,
+0.0,
+0.0,
+0.1
 ],
-"zone_tendon": "epaule"
+"zone_tendon": "poignet"
 },
 "mu-pallof-press-debout": {
 "bas": false,
@@ -31656,10 +31656,10 @@
 "type_charge": "autre",
 "unite": "distance",
 "vecteur": [
-0.1143,
-0.4571,
-0.1143,
-0.1143,
+0.1103,
+0.4691,
+0.1103,
+0.1103,
 0.0,
 0.0,
 0.0,
@@ -31745,10 +31745,10 @@
 "type_charge": "barre",
 "unite": "repetitions",
 "vecteur": [
-0.035,
-0.105,
-0.325,
-0.035,
+0.0307,
+0.1535,
+0.2851,
+0.0307,
 0.0,
 0.0,
 0.5,
@@ -31756,7 +31756,7 @@
 0.0,
 0.0
 ],
-"zone_tendon": "epaule"
+"zone_tendon": "poignet"
 },
 "mu-power-clean-suspendu": {
 "bas": false,
@@ -31790,18 +31790,18 @@
 "type_charge": "barre",
 "unite": "repetitions",
 "vecteur": [
-0.0392,
-0.1175,
-0.3042,
-0.0392,
+0.0338,
+0.1691,
+0.2632,
+0.0338,
 0.0,
 0.0,
-0.4999,
+0.5001,
 0.0,
 0.0,
 0.0
 ],
-"zone_tendon": "epaule"
+"zone_tendon": "poignet"
 },
 "mu-power-snatch": {
 "bas": false,
@@ -31827,7 +31827,7 @@
 "niveau": "Intermédiaire",
 "profondeur": 1,
 "racine": "mu-arrache",
-"ratio": 0.85,
+"ratio": 0.66,
 "schema": "halterophilie",
 "systemique": 1.6667,
 "tendon": 0.8,
@@ -31835,10 +31835,10 @@
 "type_charge": "barre",
 "unite": "repetitions",
 "vecteur": [
-0.0921,
-0.0921,
-0.2851,
-0.0307,
+0.0798,
+0.1464,
+0.2472,
+0.0266,
 0.0,
 0.0,
 0.5,
@@ -31846,7 +31846,7 @@
 0.0,
 0.0
 ],
-"zone_tendon": "epaule"
+"zone_tendon": "poignet"
 },
 "mu-presse-cuisses-45": {
 "bas": true,
@@ -32051,7 +32051,7 @@
 "niveau": "Intermédiaire",
 "profondeur": 1,
 "racine": "mu-presse-cuisses-45",
-"ratio": 0.8,
+"ratio": 1.1,
 "schema": "fente",
 "systemique": 0.6667,
 "tendon": 0.4,
@@ -32227,7 +32227,7 @@
 "niveau": "Débutant",
 "profondeur": 1,
 "racine": "mu-presse-pectorale-convergente",
-"ratio": 0.9,
+"ratio": 0.5,
 "schema": "poussee_horizontale",
 "systemique": 0.6667,
 "tendon": 0.4,
@@ -32273,7 +32273,7 @@
 "niveau": "Débutant",
 "profondeur": 0,
 "racine": "mu-pronation-levier",
-"ratio": 0.2,
+"ratio": 0.15,
 "schema": "prehension",
 "systemique": 0.3333,
 "tendon": 0.4,
@@ -32327,8 +32327,8 @@
 "type_charge": "barre",
 "unite": "repetitions",
 "vecteur": [
-0.5,
-0.5,
+0.1333,
+0.8667,
 0.0,
 0.0,
 0.0,
@@ -32373,8 +32373,8 @@
 "type_charge": "halteres",
 "unite": "repetitions",
 "vecteur": [
-0.6667,
-0.3333,
+0.1111,
+0.8889,
 0.0,
 0.0,
 0.0,
@@ -32417,8 +32417,8 @@
 "type_charge": "machine",
 "unite": "repetitions",
 "vecteur": [
-0.3,
-0.7,
+0.0333,
+0.9667,
 0.0,
 0.0,
 0.0,
@@ -32462,8 +32462,8 @@
 "type_charge": "poulie",
 "unite": "repetitions",
 "vecteur": [
-0.4,
-0.6,
+0.0333,
+0.9667,
 0.0,
 0.0,
 0.0,
@@ -32507,8 +32507,8 @@
 "unite": "repetitions",
 "vecteur": [
 0.0,
-0.0,
-1.0,
+0.1667,
+0.8333,
 0.0,
 0.0,
 0.0,
@@ -32517,7 +32517,7 @@
 0.0,
 0.0
 ],
-"zone_tendon": "hanche"
+"zone_tendon": "lombaires"
 },
 "mu-push-jerk": {
 "bas": false,
@@ -32544,7 +32544,7 @@
 "niveau": "Intermédiaire",
 "profondeur": 1,
 "racine": "mu-epaule-jete",
-"ratio": 0.85,
+"ratio": 0.95,
 "schema": "halterophilie",
 "systemique": 1.6667,
 "tendon": 0.8,
@@ -32552,10 +32552,10 @@
 "type_charge": "barre",
 "unite": "repetitions",
 "vecteur": [
-0.222,
-0.041,
-0.2282,
-0.0088,
+0.2066,
+0.0753,
+0.2102,
+0.0079,
 0.0,
 0.0,
 0.5,
@@ -32563,7 +32563,7 @@
 0.0,
 0.0
 ],
-"zone_tendon": "epaule"
+"zone_tendon": "poignet"
 },
 "mu-push-press": {
 "bas": false,
@@ -32598,9 +32598,9 @@
 "type_charge": "barre",
 "unite": "repetitions",
 "vecteur": [
-0.2857,
-0.0357,
-0.1786,
+0.2581,
+0.0806,
+0.1613,
 0.0,
 0.0,
 0.0,
@@ -32609,7 +32609,7 @@
 0.0,
 0.0
 ],
-"zone_tendon": "epaule"
+"zone_tendon": "poignet"
 },
 "mu-pushdown-barre-droite": {
 "bas": false,
@@ -32776,12 +32776,12 @@
 "type_charge": "elastique",
 "unite": "repetitions",
 "vecteur": [
-0.79,
+1.0,
 0.0,
 0.0,
 0.0,
 0.0,
-0.21,
+0.0,
 0.0,
 0.0,
 0.0,
@@ -32856,7 +32856,7 @@
 "niveau": "Débutant",
 "profondeur": 1,
 "racine": "mu-pushdown-corde",
-"ratio": 0.35,
+"ratio": 0.19,
 "schema": "isolation_triceps",
 "systemique": 0.3333,
 "tendon": 0.4,
@@ -32909,10 +32909,10 @@
 "type_charge": "kettlebell",
 "unite": "distance",
 "vecteur": [
-0.0571,
-0.2857,
+0.0533,
+0.32,
 0.0,
-0.4572,
+0.4267,
 0.0,
 0.0,
 0.0,
@@ -32956,9 +32956,9 @@
 "unite": "repetitions",
 "vecteur": [
 0.0,
-0.0778,
-0.5989,
-0.3233,
+0.2823,
+0.4659,
+0.2518,
 0.0,
 0.0,
 0.0,
@@ -33221,7 +33221,7 @@
 "niveau": "Débutant",
 "profondeur": 0,
 "racine": "mu-reverse-wrist-curl-barre",
-"ratio": 0.5,
+"ratio": 0.3,
 "schema": "prehension",
 "systemique": 0.3333,
 "tendon": 0.8,
@@ -33267,7 +33267,7 @@
 "niveau": "Débutant",
 "profondeur": 1,
 "racine": "mu-reverse-wrist-curl-barre",
-"ratio": 0.2,
+"ratio": 0.09,
 "schema": "prehension",
 "systemique": 0.3333,
 "tendon": 0.8,
@@ -33367,11 +33367,11 @@
 "unite": "repetitions",
 "vecteur": [
 0.0,
-0.79,
+1.0,
 0.0,
 0.0,
 0.0,
-0.21,
+0.0,
 0.0,
 0.0,
 0.0,
@@ -33545,12 +33545,12 @@
 "type_charge": "elastique",
 "unite": "repetitions",
 "vecteur": [
-0.198,
-0.592,
+0.24,
+0.76,
 0.0,
 0.0,
 0.0,
-0.21,
+0.0,
 0.0,
 0.0,
 0.0,
@@ -33851,7 +33851,7 @@
 "niveau": "Intermédiaire",
 "profondeur": 0,
 "racine": "mu-rouleau-de-poignet",
-"ratio": 0.5,
+"ratio": 0.3,
 "schema": "prehension",
 "systemique": 0.3333,
 "tendon": 0.4,
@@ -34042,11 +34042,11 @@
 "unite": "repetitions",
 "vecteur": [
 0.0,
-0.79,
+1.0,
 0.0,
 0.0,
 0.0,
-0.21,
+0.0,
 0.0,
 0.0,
 0.0,
@@ -34348,7 +34348,7 @@
 "niveau": "Intermédiaire",
 "profondeur": 0,
 "racine": "mu-rowing-landmine-unilateral",
-"ratio": 0.95,
+"ratio": 0.52,
 "schema": "tirage_horizontal",
 "systemique": 1.3333,
 "tendon": 0.4,
@@ -34837,7 +34837,7 @@
 "niveau": "Débutant",
 "profondeur": 1,
 "racine": "mu-rowing-poulie-assis-triangle",
-"ratio": 0.8,
+"ratio": 0.44,
 "schema": "tirage_horizontal",
 "systemique": 0.6667,
 "tendon": 0.4,
@@ -34881,7 +34881,7 @@
 "niveau": "Débutant",
 "profondeur": 1,
 "racine": "mu-rowing-barre-pronation",
-"ratio": 0.9,
+"ratio": 0.95,
 "schema": "tirage_horizontal",
 "systemique": 0.6667,
 "tendon": 0.4,
@@ -35072,10 +35072,10 @@
 "type_charge": "autre",
 "unite": "repetitions",
 "vecteur": [
-0.0373,
-0.2453,
-0.3361,
-0.1813,
+0.035,
+0.28,
+0.315,
+0.17,
 0.0,
 0.0,
 0.0,
@@ -35250,7 +35250,7 @@
 "niveau": "Débutant",
 "profondeur": 0,
 "racine": "mu-shrug-barre",
-"ratio": 1.0,
+"ratio": 1.4,
 "schema": "isolation_trapezes",
 "systemique": 0.3333,
 "tendon": 0.1,
@@ -35269,7 +35269,7 @@
 0.0,
 0.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mu-shrug-barre-derriere-dos": {
 "bas": false,
@@ -35296,7 +35296,7 @@
 "niveau": "Intermédiaire",
 "profondeur": 1,
 "racine": "mu-shrug-barre",
-"ratio": 1.0,
+"ratio": 1.4,
 "schema": "isolation_trapezes",
 "systemique": 0.3333,
 "tendon": 0.1,
@@ -35315,7 +35315,7 @@
 0.0,
 0.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mu-shrug-halteres": {
 "bas": false,
@@ -35341,7 +35341,7 @@
 "niveau": "Débutant",
 "profondeur": 1,
 "racine": "mu-shrug-barre",
-"ratio": 0.4,
+"ratio": 0.5,
 "schema": "isolation_trapezes",
 "systemique": 0.3333,
 "tendon": 0.1,
@@ -35360,7 +35360,7 @@
 0.0,
 0.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mu-shrug-poulie": {
 "bas": false,
@@ -35385,7 +35385,7 @@
 "niveau": "Débutant",
 "profondeur": 1,
 "racine": "mu-shrug-barre",
-"ratio": 0.6,
+"ratio": 0.8,
 "schema": "isolation_trapezes",
 "systemique": 0.3333,
 "tendon": 0.1,
@@ -35404,7 +35404,7 @@
 0.0,
 0.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mu-shrug-smith": {
 "bas": false,
@@ -35430,7 +35430,7 @@
 "niveau": "Débutant",
 "profondeur": 1,
 "racine": "mu-shrug-barre",
-"ratio": 0.8,
+"ratio": 1.4,
 "schema": "isolation_trapezes",
 "systemique": 0.3333,
 "tendon": 0.1,
@@ -35449,7 +35449,7 @@
 0.0,
 0.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mu-shrug-trap-bar": {
 "bas": false,
@@ -35475,7 +35475,7 @@
 "niveau": "Débutant",
 "profondeur": 1,
 "racine": "mu-shrug-barre",
-"ratio": 1.0,
+"ratio": 1.4,
 "schema": "isolation_trapezes",
 "systemique": 0.3333,
 "tendon": 0.1,
@@ -35494,7 +35494,7 @@
 0.0,
 0.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mu-sit-up": {
 "bas": false,
@@ -35657,7 +35657,7 @@
 "niveau": "Avancé",
 "profondeur": 1,
 "racine": "mu-arrache",
-"ratio": 0.85,
+"ratio": 0.78,
 "schema": "halterophilie",
 "systemique": 1.6667,
 "tendon": 0.8,
@@ -35665,10 +35665,10 @@
 "type_charge": "barre",
 "unite": "repetitions",
 "vecteur": [
-0.1537,
-0.0583,
-0.2791,
-0.0088,
+0.1397,
+0.1006,
+0.2519,
+0.0077,
 0.0,
 0.0,
 0.5001,
@@ -35676,7 +35676,7 @@
 0.0,
 0.0
 ],
-"zone_tendon": "epaule"
+"zone_tendon": "poignet"
 },
 "mu-snatch-kettlebell": {
 "bas": false,
@@ -35702,7 +35702,7 @@
 "niveau": "Avancé",
 "profondeur": 0,
 "racine": "mu-snatch-kettlebell",
-"ratio": 0.2,
+"ratio": 0.35,
 "schema": "balistique",
 "systemique": 1.0,
 "tendon": 0.4,
@@ -35710,10 +35710,10 @@
 "type_charge": "kettlebell",
 "unite": "repetitions",
 "vecteur": [
-0.08,
-0.08,
-0.2,
-0.04,
+0.0667,
+0.1333,
+0.1667,
+0.0333,
 0.0,
 0.0,
 0.4,
@@ -35721,7 +35721,7 @@
 0.2,
 0.0
 ],
-"zone_tendon": "epaule"
+"zone_tendon": "lombaires"
 },
 "mu-souleve-de-terre-conventionnel": {
 "bas": true,
@@ -35756,9 +35756,9 @@
 "unite": "repetitions",
 "vecteur": [
 0.0,
-0.0,
-0.7,
-0.3,
+0.2308,
+0.5384,
+0.2308,
 0.0,
 0.0,
 0.0,
@@ -35802,9 +35802,9 @@
 "unite": "repetitions",
 "vecteur": [
 0.0,
-0.0,
-0.7,
-0.3,
+0.2308,
+0.5384,
+0.2308,
 0.0,
 0.0,
 0.0,
@@ -35847,9 +35847,9 @@
 "unite": "repetitions",
 "vecteur": [
 0.0,
-0.0,
-0.7167,
-0.2833,
+0.275,
+0.5167,
+0.2083,
 0.0,
 0.0,
 0.0,
@@ -35892,9 +35892,9 @@
 "unite": "repetitions",
 "vecteur": [
 0.0,
-0.0,
-0.8571,
-0.1429,
+0.2632,
+0.6315,
+0.1053,
 0.0,
 0.0,
 0.0,
@@ -35902,7 +35902,7 @@
 0.0,
 0.0
 ],
-"zone_tendon": "hanche"
+"zone_tendon": "lombaires"
 },
 "mu-souleve-de-terre-kettlebell-unijambiste": {
 "bas": true,
@@ -35937,9 +35937,9 @@
 "unite": "repetitions",
 "vecteur": [
 0.0,
-0.0,
-0.8571,
-0.1429,
+0.1256,
+0.7495,
+0.1249,
 0.0,
 0.0,
 0.0,
@@ -35947,7 +35947,7 @@
 0.0,
 0.0
 ],
-"zone_tendon": "hanche"
+"zone_tendon": "lombaires"
 },
 "mu-souleve-de-terre-pause": {
 "bas": true,
@@ -35982,9 +35982,9 @@
 "unite": "repetitions",
 "vecteur": [
 0.0,
-0.0,
-0.7,
-0.3,
+0.2308,
+0.5384,
+0.2308,
 0.0,
 0.0,
 0.0,
@@ -36027,9 +36027,9 @@
 "unite": "repetitions",
 "vecteur": [
 0.0,
-0.175,
-0.6183,
-0.2067,
+0.3192,
+0.5116,
+0.1692,
 0.0,
 0.0,
 0.0,
@@ -36072,9 +36072,9 @@
 "unite": "repetitions",
 "vecteur": [
 0.0,
-0.0,
-0.8333,
-0.1667,
+0.3333,
+0.5556,
+0.1111,
 0.0,
 0.0,
 0.0,
@@ -36117,9 +36117,9 @@
 "unite": "repetitions",
 "vecteur": [
 0.0,
-0.0,
-0.8333,
-0.1667,
+0.3333,
+0.5556,
+0.1111,
 0.0,
 0.0,
 0.0,
@@ -36127,7 +36127,7 @@
 0.0,
 0.0
 ],
-"zone_tendon": "hanche"
+"zone_tendon": "lombaires"
 },
 "mu-souleve-de-terre-roumain-unilateral": {
 "bas": true,
@@ -36162,9 +36162,9 @@
 "unite": "repetitions",
 "vecteur": [
 0.0,
-0.0,
-0.85,
-0.15,
+0.1467,
+0.7266,
+0.1267,
 0.0,
 0.0,
 0.0,
@@ -36172,7 +36172,7 @@
 0.0,
 0.0
 ],
-"zone_tendon": "hanche"
+"zone_tendon": "lombaires"
 },
 "mu-souleve-de-terre-sumo": {
 "bas": true,
@@ -36207,9 +36207,9 @@
 "unite": "repetitions",
 "vecteur": [
 0.0,
-0.0,
-0.8889,
-0.1111,
+0.25,
+0.6667,
+0.0833,
 0.0,
 0.0,
 0.0,
@@ -36252,9 +36252,9 @@
 "unite": "repetitions",
 "vecteur": [
 0.0,
-0.0,
-0.81,
-0.19,
+0.2792,
+0.5816,
+0.1392,
 0.0,
 0.0,
 0.0,
@@ -36298,10 +36298,10 @@
 "vecteur": [
 0.0,
 0.0,
-0.7,
+1.0,
 0.0,
 0.0,
-0.3,
+0.0,
 0.0,
 0.0,
 0.0,
@@ -36379,7 +36379,7 @@
 "niveau": "Avancé",
 "profondeur": 1,
 "racine": "mu-epaule-jete",
-"ratio": 0.85,
+"ratio": 0.95,
 "schema": "halterophilie",
 "systemique": 1.6667,
 "tendon": 0.8,
@@ -36387,18 +36387,18 @@
 "type_charge": "barre",
 "unite": "repetitions",
 "vecteur": [
-0.1853,
-0.0426,
-0.2632,
-0.0088,
+0.1716,
+0.0782,
+0.2423,
+0.0079,
 0.0,
 0.0,
-0.5001,
+0.5,
 0.0,
 0.0,
 0.0
 ],
-"zone_tendon": "epaule"
+"zone_tendon": "poignet"
 },
 "mu-split-squat": {
 "bas": true,
@@ -36837,7 +36837,7 @@
 "niveau": "Débutant",
 "profondeur": 1,
 "racine": "mu-back-squat-barre-haute",
-"ratio": 2.2,
+"ratio": 1.4,
 "schema": "squat",
 "systemique": 1.0,
 "tendon": 0.4,
@@ -37213,9 +37213,9 @@
 "unite": "distance",
 "vecteur": [
 0.0,
-0.341,
-0.0981,
-0.3609,
+0.3931,
+0.0865,
+0.3204,
 0.0,
 0.0,
 0.0,
@@ -37296,7 +37296,7 @@
 "niveau": "Débutant",
 "profondeur": 0,
 "racine": "mu-supination-levier",
-"ratio": 0.2,
+"ratio": 0.15,
 "schema": "prehension",
 "systemique": 0.3333,
 "tendon": 0.4,
@@ -37387,7 +37387,7 @@
 "niveau": "Intermédiaire",
 "profondeur": 1,
 "racine": "mu-swing-kettlebell-russe",
-"ratio": 0.2,
+"ratio": 0.35,
 "schema": "balistique",
 "systemique": 1.0,
 "tendon": 0.4,
@@ -37395,18 +37395,18 @@
 "type_charge": "kettlebell",
 "unite": "repetitions",
 "vecteur": [
-0.0311,
-0.0461,
-0.2767,
-0.0461,
+0.0255,
+0.1124,
+0.2247,
+0.0375,
 0.0,
 0.0,
-0.4,
+0.3999,
 0.0,
 0.2,
 0.0
 ],
-"zone_tendon": "epaule"
+"zone_tendon": "lombaires"
 },
 "mu-swing-kettlebell-russe": {
 "bas": false,
@@ -37432,7 +37432,7 @@
 "niveau": "Débutant",
 "profondeur": 0,
 "racine": "mu-swing-kettlebell-russe",
-"ratio": 0.2,
+"ratio": 0.35,
 "schema": "balistique",
 "systemique": 1.0,
 "tendon": 0.4,
@@ -37441,9 +37441,9 @@
 "unite": "repetitions",
 "vecteur": [
 0.0,
-0.05,
-0.3,
-0.05,
+0.12,
+0.24,
+0.04,
 0.0,
 0.0,
 0.4,
@@ -37451,7 +37451,7 @@
 0.2,
 0.0
 ],
-"zone_tendon": "epaule"
+"zone_tendon": "lombaires"
 },
 "mu-swing-kettlebell-unilateral": {
 "bas": false,
@@ -37477,7 +37477,7 @@
 "niveau": "Intermédiaire",
 "profondeur": 1,
 "racine": "mu-swing-kettlebell-russe",
-"ratio": 0.2,
+"ratio": 0.35,
 "schema": "balistique",
 "systemique": 1.0,
 "tendon": 0.4,
@@ -37486,9 +37486,9 @@
 "unite": "repetitions",
 "vecteur": [
 0.0,
-0.05,
-0.3,
-0.05,
+0.1293,
+0.232,
+0.0387,
 0.0,
 0.0,
 0.4,
@@ -37496,7 +37496,7 @@
 0.2,
 0.0
 ],
-"zone_tendon": "epaule"
+"zone_tendon": "lombaires"
 },
 "mu-t-bar-row": {
 "bas": false,
@@ -37632,7 +37632,7 @@
 0.0,
 0.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mu-tate-press": {
 "bas": false,
@@ -37806,10 +37806,10 @@
 "vecteur": [
 0.0,
 0.0,
-0.7,
+1.0,
 0.0,
 0.0,
-0.3,
+0.0,
 0.0,
 0.0,
 0.0,
@@ -37887,7 +37887,7 @@
 "niveau": "Intermédiaire",
 "profondeur": 1,
 "racine": "mu-arrache",
-"ratio": 0.85,
+"ratio": 0.86,
 "schema": "halterophilie",
 "systemique": 1.3333,
 "tendon": 0.8,
@@ -37895,18 +37895,18 @@
 "type_charge": "barre",
 "unite": "repetitions",
 "vecteur": [
-0.0265,
-0.1072,
-0.3305,
-0.0357,
+0.0231,
+0.159,
+0.2869,
+0.031,
 0.0,
 0.0,
-0.5001,
+0.5,
 0.0,
 0.0,
 0.0
 ],
-"zone_tendon": "epaule"
+"zone_tendon": "poignet"
 },
 "mu-tirage-bras-tendus-elastique": {
 "bas": false,
@@ -37941,12 +37941,12 @@
 "type_charge": "elastique",
 "unite": "repetitions",
 "vecteur": [
-0.145,
-0.645,
+0.0,
+1.0,
 0.0,
 0.0,
 0.0,
-0.21,
+0.0,
 0.0,
 0.0,
 0.0,
@@ -37985,8 +37985,8 @@
 "type_charge": "poulie",
 "unite": "repetitions",
 "vecteur": [
-0.25,
-0.75,
+0.0,
+1.0,
 0.0,
 0.0,
 0.0,
@@ -38030,8 +38030,8 @@
 "type_charge": "poulie",
 "unite": "repetitions",
 "vecteur": [
-0.25,
-0.75,
+0.0,
+1.0,
 0.0,
 0.0,
 0.0,
@@ -38066,7 +38066,7 @@
 "niveau": "Intermédiaire",
 "profondeur": 1,
 "racine": "mu-tirage-bras-tendus-poulie-barre",
-"ratio": 0.4,
+"ratio": 0.22,
 "schema": "isolation_dos",
 "systemique": 0.3333,
 "tendon": 0.4,
@@ -38074,8 +38074,8 @@
 "type_charge": "poulie",
 "unite": "repetitions",
 "vecteur": [
-0.175,
-0.825,
+0.0,
+1.0,
 0.0,
 0.0,
 0.0,
@@ -38111,7 +38111,7 @@
 "niveau": "Intermédiaire",
 "profondeur": 1,
 "racine": "mu-epaule",
-"ratio": 0.85,
+"ratio": 1.1,
 "schema": "halterophilie",
 "systemique": 1.3333,
 "tendon": 0.8,
@@ -38119,10 +38119,10 @@
 "type_charge": "barre",
 "unite": "repetitions",
 "vecteur": [
-0.01,
-0.1108,
-0.3423,
-0.0369,
+0.0088,
+0.1608,
+0.2982,
+0.0322,
 0.0,
 0.0,
 0.5,
@@ -38130,7 +38130,7 @@
 0.0,
 0.0
 ],
-"zone_tendon": "epaule"
+"zone_tendon": "poignet"
 },
 "mu-tirage-haut-machine-convergente": {
 "bas": false,
@@ -38254,8 +38254,8 @@
 "unite": "distance",
 "vecteur": [
 0.0,
-0.0,
-0.8,
+0.16,
+0.64,
 0.0,
 0.0,
 0.0,
@@ -38389,11 +38389,11 @@
 "unite": "repetitions",
 "vecteur": [
 0.0,
-0.79,
+1.0,
 0.0,
 0.0,
 0.0,
-0.21,
+0.0,
 0.0,
 0.0,
 0.0,
@@ -38610,8 +38610,8 @@
 "type_charge": "poulie",
 "unite": "repetitions",
 "vecteur": [
-0.0778,
-0.9222,
+0.0,
+1.0,
 0.0,
 0.0,
 0.0,
@@ -38654,8 +38654,8 @@
 "type_charge": "poulie",
 "unite": "repetitions",
 "vecteur": [
-0.0875,
-0.9125,
+0.0,
+1.0,
 0.0,
 0.0,
 0.0,
@@ -38690,7 +38690,7 @@
 "niveau": "Débutant",
 "profondeur": 1,
 "racine": "mu-tirage-vertical-prise-large-pronation",
-"ratio": 0.9,
+"ratio": 0.5,
 "schema": "tirage_vertical",
 "systemique": 0.6667,
 "tendon": 0.4,
@@ -38734,7 +38734,7 @@
 "niveau": "Intermédiaire",
 "profondeur": 2,
 "racine": "mu-tirage-vertical-prise-large-pronation",
-"ratio": 0.9,
+"ratio": 0.5,
 "schema": "tirage_vertical",
 "systemique": 0.6667,
 "tendon": 0.4,
@@ -38876,8 +38876,8 @@
 "type_charge": "machine",
 "unite": "repetitions",
 "vecteur": [
-0.0778,
-0.9222,
+0.0,
+1.0,
 0.0,
 0.0,
 0.0,
@@ -39069,7 +39069,7 @@
 0.0,
 0.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mu-wall-sit": {
 "bas": false,
@@ -39150,9 +39150,9 @@
 "unite": "repetitions",
 "vecteur": [
 0.0,
-0.0,
-0.4167,
-0.5833,
+0.0769,
+0.3846,
+0.5385,
 0.0,
 0.0,
 0.0,
@@ -39160,7 +39160,7 @@
 0.0,
 0.0
 ],
-"zone_tendon": "hanche"
+"zone_tendon": "lombaires"
 },
 "mu-woodchop-bas-haut": {
 "bas": false,
@@ -39429,7 +39429,7 @@
 0.0,
 0.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "mu-z-press-barre": {
 "bas": false,
@@ -39596,7 +39596,7 @@
 "niveau": "Avancé",
 "profondeur": 1,
 "racine": "sl-traction-lestee",
-"ratio": 1.4,
+"ratio": 1.37,
 "schema": "tirage_vertical",
 "systemique": 1.3333,
 "tendon": 0.9,
@@ -39604,8 +39604,8 @@
 "type_charge": "lest",
 "unite": "repetitions",
 "vecteur": [
-0.1628,
-0.8372,
+0.0,
+1.0,
 0.0,
 0.0,
 0.0,
@@ -39692,7 +39692,7 @@
 "niveau": "Intermédiaire",
 "profondeur": 0,
 "racine": "sl-dips-banc-leste",
-"ratio": 1.55,
+"ratio": 1.0,
 "schema": "poussee_verticale_basse",
 "systemique": 1.3333,
 "tendon": 0.9,
@@ -39740,7 +39740,7 @@
 "niveau": "Avancé",
 "profondeur": 1,
 "racine": "sl-muscle-up-leste",
-"ratio": 1.55,
+"ratio": 1.46,
 "schema": "poussee_verticale_basse",
 "systemique": 1.3333,
 "tendon": 0.9,
@@ -39883,7 +39883,7 @@
 "niveau": "Avancé",
 "profondeur": 0,
 "racine": "sl-dips-leste",
-"ratio": 1.55,
+"ratio": 1.46,
 "schema": "poussee_verticale_basse",
 "systemique": 1.3333,
 "tendon": 0.9,
@@ -39931,7 +39931,7 @@
 "niveau": "Avancé",
 "profondeur": 1,
 "racine": "sl-dips-leste",
-"ratio": 1.55,
+"ratio": 1.46,
 "schema": "poussee_verticale_basse",
 "systemique": 1.3333,
 "tendon": 0.9,
@@ -39978,7 +39978,7 @@
 "niveau": "Avancé",
 "profondeur": 1,
 "racine": "sl-dips-leste",
-"ratio": 1.55,
+"ratio": 1.46,
 "schema": "poussee_verticale_basse",
 "systemique": 1.3333,
 "tendon": 0.9,
@@ -40026,7 +40026,7 @@
 "niveau": "Avancé",
 "profondeur": 1,
 "racine": "sl-dips-leste",
-"ratio": 1.55,
+"ratio": 1.46,
 "schema": "poussee_verticale_basse",
 "systemique": 1.3333,
 "tendon": 0.9,
@@ -40074,7 +40074,7 @@
 "niveau": "Avancé",
 "profondeur": 1,
 "racine": "sl-dips-leste",
-"ratio": 1.55,
+"ratio": 1.46,
 "schema": "poussee_verticale_basse",
 "systemique": 1.3333,
 "tendon": 0.9,
@@ -40122,7 +40122,7 @@
 "niveau": "Avancé",
 "profondeur": 1,
 "racine": "sl-dips-leste",
-"ratio": 1.55,
+"ratio": 1.46,
 "schema": "poussee_verticale_basse",
 "systemique": 1.3333,
 "tendon": 0.9,
@@ -40169,7 +40169,7 @@
 "niveau": "Avancé",
 "profondeur": 1,
 "racine": "sl-dips-leste",
-"ratio": 1.55,
+"ratio": 1.46,
 "schema": "poussee_verticale_basse",
 "systemique": 1.3333,
 "tendon": 0.9,
@@ -40216,7 +40216,7 @@
 "niveau": "Avancé",
 "profondeur": 1,
 "racine": "sl-dips-leste",
-"ratio": 1.55,
+"ratio": 1.46,
 "schema": "poussee_verticale_basse",
 "systemique": 1.3333,
 "tendon": 0.9,
@@ -40263,7 +40263,7 @@
 "niveau": "Avancé",
 "profondeur": 1,
 "racine": "sl-dips-leste",
-"ratio": 1.55,
+"ratio": 1.46,
 "schema": "poussee_verticale_basse",
 "systemique": 1.3333,
 "tendon": 0.9,
@@ -40311,7 +40311,7 @@
 "niveau": "Avancé",
 "profondeur": 1,
 "racine": "sl-dips-leste",
-"ratio": 1.55,
+"ratio": 1.82,
 "schema": "poussee_verticale_basse",
 "systemique": 1.6667,
 "tendon": 1.0,
@@ -40364,16 +40364,16 @@
 "type_charge": "lest",
 "unite": "secondes",
 "vecteur": [
+0.0182,
+0.0,
+0.0727,
+0.3591,
+0.4,
 0.0,
 0.0,
 0.0,
-0.5,
-0.2,
 0.0,
-0.0,
-0.0,
-0.0,
-0.3
+0.15
 ],
 "zone_tendon": "coude"
 },
@@ -40405,7 +40405,7 @@
 "niveau": "Avancé",
 "profondeur": 0,
 "racine": "sl-muscle-up-leste",
-"ratio": 1.15,
+"ratio": 1.12,
 "schema": "transition_muscle_up",
 "systemique": 1.3333,
 "tendon": 0.9,
@@ -40413,13 +40413,13 @@
 "type_charge": "lest",
 "unite": "repetitions",
 "vecteur": [
-0.2471,
-0.3529,
+0.2676,
+0.5324,
 0.0,
 0.0,
 0.15,
 0.0,
-0.25,
+0.05,
 0.0,
 0.0,
 0.0
@@ -40454,7 +40454,7 @@
 "niveau": "Élite",
 "profondeur": 1,
 "racine": "sl-muscle-up-leste",
-"ratio": 1.15,
+"ratio": 1.12,
 "schema": "transition_muscle_up",
 "systemique": 1.3333,
 "tendon": 0.9,
@@ -40462,13 +40462,13 @@
 "type_charge": "lest",
 "unite": "repetitions",
 "vecteur": [
-0.2701,
-0.3299,
+0.2926,
+0.5074,
 0.0,
 0.0,
 0.15,
 0.0,
-0.25,
+0.05,
 0.0,
 0.0,
 0.0
@@ -40504,7 +40504,7 @@
 "niveau": "Avancé",
 "profondeur": 1,
 "racine": "sl-muscle-up-leste",
-"ratio": 1.15,
+"ratio": 1.12,
 "schema": "transition_muscle_up",
 "systemique": 1.3333,
 "tendon": 0.9,
@@ -40512,13 +40512,13 @@
 "type_charge": "lest",
 "unite": "repetitions",
 "vecteur": [
-0.3414,
-0.2586,
+0.3698,
+0.4302,
 0.0,
 0.0,
 0.15,
 0.0,
-0.25,
+0.05,
 0.0,
 0.0,
 0.0
@@ -40553,7 +40553,7 @@
 "niveau": "Élite",
 "profondeur": 1,
 "racine": "sl-muscle-up-leste",
-"ratio": 1.15,
+"ratio": 1.12,
 "schema": "transition_muscle_up",
 "systemique": 1.3333,
 "tendon": 0.9,
@@ -40561,13 +40561,13 @@
 "type_charge": "lest",
 "unite": "repetitions",
 "vecteur": [
-0.2541,
-0.3459,
+0.2753,
+0.5247,
 0.0,
 0.0,
 0.15,
 0.0,
-0.25,
+0.05,
 0.0,
 0.0,
 0.0
@@ -40602,7 +40602,7 @@
 "niveau": "Élite",
 "profondeur": 1,
 "racine": "sl-muscle-up-leste",
-"ratio": 1.15,
+"ratio": 1.12,
 "schema": "transition_muscle_up",
 "systemique": 1.3333,
 "tendon": 0.9,
@@ -40610,13 +40610,13 @@
 "type_charge": "lest",
 "unite": "repetitions",
 "vecteur": [
-0.3541,
-0.2459,
+0.3836,
+0.4164,
 0.0,
 0.0,
 0.15,
 0.0,
-0.25,
+0.05,
 0.0,
 0.0,
 0.0
@@ -40652,7 +40652,7 @@
 "niveau": "Avancé",
 "profondeur": 1,
 "racine": "sl-muscle-up-leste",
-"ratio": 1.15,
+"ratio": 1.4,
 "schema": "transition_muscle_up",
 "systemique": 1.3333,
 "tendon": 1.0,
@@ -40660,13 +40660,13 @@
 "type_charge": "lest",
 "unite": "repetitions",
 "vecteur": [
-0.2841,
-0.3159,
+0.3253,
+0.5097,
 0.0,
 0.0,
 0.15,
 0.0,
-0.25,
+0.015,
 0.0,
 0.0,
 0.0
@@ -40743,7 +40743,7 @@
 "niveau": "Avancé",
 "profondeur": 0,
 "racine": "sl-pistol-squat-leste",
-"ratio": 1.25,
+"ratio": 1.24,
 "schema": "fente",
 "systemique": 1.3333,
 "tendon": 0.8,
@@ -40790,7 +40790,7 @@
 "niveau": "Avancé",
 "profondeur": 1,
 "racine": "sl-pompe-lestee-gilet",
-"ratio": 1.15,
+"ratio": 1.12,
 "schema": "poussee_horizontale",
 "systemique": 1.3333,
 "tendon": 0.4,
@@ -40836,7 +40836,7 @@
 "niveau": "Intermédiaire",
 "profondeur": 1,
 "racine": "sl-pompe-lestee-gilet",
-"ratio": 1.15,
+"ratio": 1.12,
 "schema": "poussee_horizontale",
 "systemique": 1.3333,
 "tendon": 0.4,
@@ -40882,7 +40882,7 @@
 "niveau": "Intermédiaire",
 "profondeur": 0,
 "racine": "sl-pompe-lestee-gilet",
-"ratio": 1.15,
+"ratio": 1.12,
 "schema": "poussee_horizontale",
 "systemique": 1.3333,
 "tendon": 0.4,
@@ -40928,7 +40928,7 @@
 "niveau": "Intermédiaire",
 "profondeur": 1,
 "racine": "sl-pompe-lestee-gilet",
-"ratio": 1.15,
+"ratio": 1.12,
 "schema": "poussee_horizontale",
 "systemique": 1.3333,
 "tendon": 0.4,
@@ -41112,7 +41112,7 @@
 "niveau": "Intermédiaire",
 "profondeur": 0,
 "racine": "sl-row-australien-leste",
-"ratio": 1.2,
+"ratio": 0.95,
 "schema": "tirage_horizontal",
 "systemique": 1.3333,
 "tendon": 0.4,
@@ -41159,7 +41159,7 @@
 "niveau": "Intermédiaire",
 "profondeur": 1,
 "racine": "sl-row-australien-leste",
-"ratio": 1.2,
+"ratio": 0.95,
 "schema": "tirage_horizontal",
 "systemique": 1.3333,
 "tendon": 0.8,
@@ -41206,7 +41206,7 @@
 "niveau": "Avancé",
 "profondeur": 1,
 "racine": "sl-pistol-squat-leste",
-"ratio": 1.25,
+"ratio": 1.24,
 "schema": "fente",
 "systemique": 1.3333,
 "tendon": 0.8,
@@ -41671,7 +41671,7 @@
 "niveau": "Avancé",
 "profondeur": 1,
 "racine": "sl-muscle-up-leste",
-"ratio": 1.4,
+"ratio": 1.37,
 "schema": "tirage_vertical",
 "systemique": 1.3333,
 "tendon": 0.9,
@@ -41679,8 +41679,8 @@
 "type_charge": "lest",
 "unite": "repetitions",
 "vecteur": [
-0.1429,
-0.8571,
+0.0,
+1.0,
 0.0,
 0.0,
 0.0,
@@ -41729,8 +41729,8 @@
 "type_charge": "lest",
 "unite": "secondes",
 "vecteur": [
-0.0462,
-0.9538,
+0.0,
+1.0,
 0.0,
 0.0,
 0.0,
@@ -41779,8 +41779,8 @@
 "type_charge": "lest",
 "unite": "secondes",
 "vecteur": [
-0.0462,
-0.9538,
+0.0,
+1.0,
 0.0,
 0.0,
 0.0,
@@ -41820,7 +41820,7 @@
 "niveau": "Avancé",
 "profondeur": 0,
 "racine": "sl-traction-lestee",
-"ratio": 1.4,
+"ratio": 1.37,
 "schema": "tirage_vertical",
 "systemique": 1.3333,
 "tendon": 0.9,
@@ -41828,8 +41828,8 @@
 "type_charge": "lest",
 "unite": "repetitions",
 "vecteur": [
-0.1538,
-0.8462,
+0.0,
+1.0,
 0.0,
 0.0,
 0.0,
@@ -41869,7 +41869,7 @@
 "niveau": "Avancé",
 "profondeur": 1,
 "racine": "sl-traction-lestee",
-"ratio": 1.4,
+"ratio": 1.37,
 "schema": "tirage_vertical",
 "systemique": 1.3333,
 "tendon": 0.9,
@@ -41877,8 +41877,8 @@
 "type_charge": "lest",
 "unite": "repetitions",
 "vecteur": [
-0.0462,
-0.9538,
+0.0,
+1.0,
 0.0,
 0.0,
 0.0,
@@ -41917,7 +41917,7 @@
 "niveau": "Avancé",
 "profondeur": 1,
 "racine": "sl-traction-lestee",
-"ratio": 1.4,
+"ratio": 1.37,
 "schema": "tirage_vertical",
 "systemique": 1.3333,
 "tendon": 0.9,
@@ -41925,8 +41925,8 @@
 "type_charge": "lest",
 "unite": "repetitions",
 "vecteur": [
-0.1045,
-0.8955,
+0.0,
+1.0,
 0.0,
 0.0,
 0.0,
@@ -41967,7 +41967,7 @@
 "niveau": "Avancé",
 "profondeur": 1,
 "racine": "sl-traction-lestee",
-"ratio": 1.4,
+"ratio": 1.37,
 "schema": "tirage_vertical",
 "systemique": 1.3333,
 "tendon": 0.9,
@@ -41975,8 +41975,8 @@
 "type_charge": "lest",
 "unite": "repetitions",
 "vecteur": [
-0.1045,
-0.8955,
+0.0,
+1.0,
 0.0,
 0.0,
 0.0,
@@ -42016,7 +42016,7 @@
 "niveau": "Avancé",
 "profondeur": 1,
 "racine": "sl-traction-lestee",
-"ratio": 1.4,
+"ratio": 1.37,
 "schema": "tirage_vertical",
 "systemique": 1.3333,
 "tendon": 0.9,
@@ -42024,8 +42024,8 @@
 "type_charge": "lest",
 "unite": "repetitions",
 "vecteur": [
-0.1862,
-0.8138,
+0.0,
+1.0,
 0.0,
 0.0,
 0.0,
@@ -42066,7 +42066,7 @@
 "niveau": "Avancé",
 "profondeur": 1,
 "racine": "sl-traction-lestee",
-"ratio": 1.4,
+"ratio": 1.37,
 "schema": "tirage_vertical",
 "systemique": 1.3333,
 "tendon": 0.9,
@@ -42074,8 +42074,8 @@
 "type_charge": "lest",
 "unite": "repetitions",
 "vecteur": [
-0.0462,
-0.9538,
+0.0,
+1.0,
 0.0,
 0.0,
 0.0,
@@ -42115,7 +42115,7 @@
 "niveau": "Avancé",
 "profondeur": 1,
 "racine": "sl-traction-lestee",
-"ratio": 1.4,
+"ratio": 1.37,
 "schema": "tirage_vertical",
 "systemique": 1.3333,
 "tendon": 0.9,
@@ -42123,8 +42123,8 @@
 "type_charge": "lest",
 "unite": "repetitions",
 "vecteur": [
-0.1628,
-0.8372,
+0.0,
+1.0,
 0.0,
 0.0,
 0.0,
@@ -42164,7 +42164,7 @@
 "niveau": "Avancé",
 "profondeur": 1,
 "racine": "sl-traction-lestee",
-"ratio": 1.4,
+"ratio": 1.37,
 "schema": "tirage_vertical",
 "systemique": 1.3333,
 "tendon": 0.9,
@@ -42172,8 +42172,8 @@
 "type_charge": "lest",
 "unite": "repetitions",
 "vecteur": [
-0.0962,
-0.9038,
+0.0,
+1.0,
 0.0,
 0.0,
 0.0,
@@ -42213,7 +42213,7 @@
 "niveau": "Avancé",
 "profondeur": 1,
 "racine": "sl-traction-lestee",
-"ratio": 1.4,
+"ratio": 1.37,
 "schema": "tirage_vertical",
 "systemique": 1.3333,
 "tendon": 0.9,
@@ -42221,8 +42221,8 @@
 "type_charge": "lest",
 "unite": "repetitions",
 "vecteur": [
-0.1045,
-0.8955,
+0.0,
+1.0,
 0.0,
 0.0,
 0.0,
@@ -42262,7 +42262,7 @@
 "niveau": "Avancé",
 "profondeur": 1,
 "racine": "sl-traction-lestee",
-"ratio": 1.4,
+"ratio": 1.37,
 "schema": "tirage_vertical",
 "systemique": 1.3333,
 "tendon": 0.9,
@@ -42270,8 +42270,8 @@
 "type_charge": "lest",
 "unite": "repetitions",
 "vecteur": [
-0.1045,
-0.8955,
+0.0,
+1.0,
 0.0,
 0.0,
 0.0,
@@ -42311,7 +42311,7 @@
 "niveau": "Avancé",
 "profondeur": 1,
 "racine": "sl-traction-lestee",
-"ratio": 1.4,
+"ratio": 1.37,
 "schema": "tirage_vertical",
 "systemique": 1.3333,
 "tendon": 0.9,
@@ -42319,8 +42319,8 @@
 "type_charge": "lest",
 "unite": "repetitions",
 "vecteur": [
-0.0962,
-0.9038,
+0.0,
+1.0,
 0.0,
 0.0,
 0.0,
@@ -42360,7 +42360,7 @@
 "niveau": "Avancé",
 "profondeur": 1,
 "racine": "sl-traction-lestee",
-"ratio": 1.4,
+"ratio": 1.37,
 "schema": "tirage_vertical",
 "systemique": 1.3333,
 "tendon": 0.9,
@@ -42368,8 +42368,8 @@
 "type_charge": "lest",
 "unite": "repetitions",
 "vecteur": [
-0.1628,
-0.8372,
+0.0,
+1.0,
 0.0,
 0.0,
 0.0,
@@ -42410,7 +42410,7 @@
 "niveau": "Avancé",
 "profondeur": 1,
 "racine": "sl-traction-lestee",
-"ratio": 1.4,
+"ratio": 1.71,
 "schema": "tirage_vertical",
 "systemique": 1.6667,
 "tendon": 1.0,
@@ -42418,8 +42418,8 @@
 "type_charge": "lest",
 "unite": "repetitions",
 "vecteur": [
-0.1462,
-0.8538,
+0.0,
+1.0,
 0.0,
 0.0,
 0.0,
@@ -42459,7 +42459,7 @@
 "niveau": "Intermédiaire",
 "profondeur": 0,
 "racine": "sl-traction-scapulaire-lestee",
-"ratio": 1.2,
+"ratio": 1.6,
 "schema": "preparation_scapulaire",
 "systemique": 0.3333,
 "tendon": 0.1,
@@ -42467,8 +42467,8 @@
 "type_charge": "lest",
 "unite": "repetitions",
 "vecteur": [
-0.1429,
-0.8571,
+0.0,
+1.0,
 0.0,
 0.0,
 0.0,
@@ -42478,7 +42478,7 @@
 0.0,
 0.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "sw-active-hang": {
 "bas": false,
@@ -42513,8 +42513,8 @@
 "type_charge": "poids_du_corps",
 "unite": "secondes",
 "vecteur": [
-0.1667,
-0.8333,
+0.0,
+1.0,
 0.0,
 0.0,
 0.0,
@@ -42524,7 +42524,7 @@
 0.0,
 0.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "sw-dead-hang": {
 "bas": false,
@@ -42692,7 +42692,7 @@
 "ratio": null,
 "schema": "poussee_verticale_basse",
 "systemique": 0.3333,
-"tendon": 0.8,
+"tendon": 0.6,
 "type": "reps",
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
@@ -42738,7 +42738,7 @@
 "ratio": null,
 "schema": "poussee_verticale_basse",
 "systemique": 0.3333,
-"tendon": 0.8,
+"tendon": 0.6,
 "type": "reps",
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
@@ -43652,7 +43652,7 @@
 "ratio": null,
 "schema": "squat",
 "systemique": 0.6667,
-"tendon": 0.8,
+"tendon": 0.6,
 "type": "reps",
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
@@ -44899,8 +44899,8 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.525,
-0.175,
+0.35,
+0.35,
 0.0,
 0.0,
 0.0,
@@ -44910,7 +44910,7 @@
 0.0,
 0.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "sw-pompe-serree": {
 "bas": false,
@@ -45731,7 +45731,7 @@
 0.0,
 0.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "sw-row-un-bras-assiste": {
 "bas": false,
@@ -45761,7 +45761,7 @@
 "ratio": null,
 "schema": "tirage_horizontal",
 "systemique": 0.6667,
-"tendon": 0.8,
+"tendon": 0.6,
 "type": "reps",
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
@@ -45853,7 +45853,7 @@
 "ratio": null,
 "schema": "squat",
 "systemique": 0.6667,
-"tendon": 0.8,
+"tendon": 0.6,
 "type": "reps",
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
@@ -46128,7 +46128,7 @@
 "ratio": null,
 "schema": "extension_genou",
 "systemique": 0.3333,
-"tendon": 0.8,
+"tendon": 0.6,
 "type": "reps",
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
@@ -46409,8 +46409,8 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.0218,
-0.7782,
+0.0,
+0.8,
 0.0,
 0.0,
 0.0,
@@ -46455,8 +46455,8 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.0218,
-0.8482,
+0.0,
+0.87,
 0.0,
 0.0,
 0.0,
@@ -46502,8 +46502,8 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.0218,
-0.7082,
+0.0,
+0.73,
 0.0,
 0.0,
 0.0,
@@ -46547,8 +46547,8 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.0218,
-0.6592,
+0.0,
+0.681,
 0.049,
 0.0,
 0.0,
@@ -46593,8 +46593,8 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.0218,
-0.8482,
+0.0,
+0.87,
 0.0,
 0.0,
 0.0,
@@ -46639,8 +46639,8 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.0218,
-0.7782,
+0.0,
+0.8,
 0.0,
 0.0,
 0.0,
@@ -46684,8 +46684,8 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.0218,
-0.8482,
+0.0,
+0.87,
 0.0,
 0.0,
 0.0,
@@ -46730,8 +46730,8 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.0218,
-0.8482,
+0.0,
+0.87,
 0.0,
 0.0,
 0.0,
@@ -46776,8 +46776,8 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.0218,
-0.8482,
+0.0,
+0.87,
 0.0,
 0.0,
 0.0,
@@ -46822,8 +46822,8 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.0218,
-0.7782,
+0.0,
+0.8,
 0.0,
 0.0,
 0.0,
@@ -46868,8 +46868,8 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.0218,
-0.7082,
+0.0,
+0.73,
 0.0,
 0.0,
 0.0,
@@ -46914,8 +46914,8 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.0727,
-0.7273,
+0.0,
+0.8,
 0.0,
 0.0,
 0.0,
@@ -46960,8 +46960,8 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.0218,
-0.7782,
+0.0,
+0.8,
 0.0,
 0.0,
 0.0,
@@ -47006,8 +47006,8 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.0727,
-0.7273,
+0.0,
+0.8,
 0.0,
 0.0,
 0.0,
@@ -47052,8 +47052,8 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.0218,
-0.5993,
+0.0,
+0.6211,
 0.1089,
 0.0,
 0.0,
@@ -47098,8 +47098,8 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.0875,
-0.6125,
+0.0,
+0.7,
 0.0,
 0.0,
 0.0,
@@ -47109,7 +47109,7 @@
 0.0,
 0.0
 ],
-"zone_tendon": "coude"
+"zone_tendon": null
 },
 "sw-traction-serree": {
 "bas": false,
@@ -47144,8 +47144,8 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.0727,
-0.7273,
+0.0,
+0.8,
 0.0,
 0.0,
 0.0,
@@ -47190,8 +47190,8 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.0727,
-0.7273,
+0.0,
+0.8,
 0.0,
 0.0,
 0.0,
@@ -47236,8 +47236,8 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.0778,
-0.7222,
+0.0,
+0.8,
 0.0,
 0.0,
 0.0,
@@ -47282,8 +47282,8 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.0218,
-0.7782,
+0.0,
+0.8,
 0.0,
 0.0,
 0.0,
@@ -47328,8 +47328,8 @@
 "type_charge": "poids_du_corps",
 "unite": "repetitions",
 "vecteur": [
-0.0218,
-0.8482,
+0.0,
+0.87,
 0.0,
 0.0,
 0.0,

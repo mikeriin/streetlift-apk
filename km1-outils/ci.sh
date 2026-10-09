@@ -20,6 +20,7 @@ if [ "$MODE" != full ]; then
   done
   find $T/packages/kalis_bench/test -name '*_test.dart' ! -name 'km_*' -delete
   cp /home/claude/km1-outils/shim_cli.dart $T/packages/kalis_bench/bin/kalis_bench_cli.dart
+  [ -d /home/claude/km1-outils/km1_entree ] && cp -r /home/claude/km1-outils/km1_entree $T/packages/kalis_bench/km1_entree
   [ -n "$SEEDS" ] && echo "$SEEDS" > $T/packages/kalis_bench/km1_seeds.txt
 fi
 export GIT_INDEX_FILE=/tmp/km1ci.index
