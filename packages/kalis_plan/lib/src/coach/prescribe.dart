@@ -5379,9 +5379,18 @@ final class Prescriber {
         // programme n'entraîne pas ne se teste pas (CP2, partie 1 : dips
         // lesté testé à l'épreuve d'un programme de musculation qui ne le
         // travaille jamais).
+        // (Une variante du même mouvement compte comme entraînée : le
+        // muscle-up visé se travaille à l'élastique ou en négatif.)
+        final family = id.split('-').take(4).join('-');
         if (!isStreetStyle(skeleton.style) &&
-            !a.aimsAt(id) &&
-            !skeleton.days.any((d) => d.slots.any((s) => s.exerciseId == id))) {
+            !skeleton.days.any(
+              (d) => d.slots.any(
+                (s) =>
+                    s.exerciseId == id ||
+                    s.referenceId == id ||
+                    s.exerciseId.startsWith(family),
+              ),
+            )) {
           continue;
         }
         final e = a.catalog.exercise(id);
