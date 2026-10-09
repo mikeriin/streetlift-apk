@@ -988,6 +988,23 @@ class Seances(object):
             if recente is not None and recente < charge and \
                     recente + bw >= s['tentative_recente_part'] * math.exp(mu):
                 charge = recente
+            # Plus prudent que 0.3.1 : l'ouverture ne dépasse jamais ce que
+            # les barres réussies des 42 derniers jours justifient (+10 %,
+            # +2,5 % par répétition faite au-delà de la première, 4 au plus :
+            # la règle du premier passage à un schéma, A7.2). Une estimation
+            # trop haute ne peut pas, seule, faire ouvrir trop lourd.
+            justifie = None
+            for (j, c, r) in mem.charges_reussies:
+                if self.jour - j > s['barre_recente_j']:
+                    continue
+                plus = r - 1
+                if plus > s['schema_change_reps_max']:
+                    plus = s['schema_change_reps_max']
+                borne = (c + bw) * (1 + s['premiere_hausse']) * (1 + s['schema_change_part'] * plus) - bw
+                if justifie is None or borne > justifie:
+                    justifie = borne
+            if justifie is not None and charge > justifie:
+                charge = grille.plancher(max(justifie, grille.minimum))
             return {'repsLow': 1, 'repsHigh': 1, 'loadKg': charge, 'flames': flammes, 'role': 'attempt'}
         derniere = mem.charge_seance
         if plan['echecs'] > 0 and mem.echec_seance:
