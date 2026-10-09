@@ -847,6 +847,13 @@ void main() {
       await tester.pumpWidget(page(AdaptSummaryScreen(week: week, base: day)));
       await tester.pumpAndSettle();
       expect(find.byKey(const ValueKey('adapt-summary')), findsOneWidget);
+      // CI1e : séance servie en mode coach (programme annoté) : résumé plus
+      // long, le bouton est plus bas.
+      await tester.scrollUntilVisible(
+        find.byKey(const ValueKey('summary-done')),
+        300,
+        scrollable: find.byType(Scrollable).first,
+      );
       expect(find.byKey(const ValueKey('summary-done')), findsOneWidget);
       expect(tester.takeException(), isNull);
     });

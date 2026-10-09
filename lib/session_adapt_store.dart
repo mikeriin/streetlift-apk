@@ -4,8 +4,8 @@
 // - place de chaque journée dans un bloc du moteur : bloc de `kalis_plan`
 //   (programme créé, ajustements de la passe 2 compris) ou bloc importé
 //   depuis les semaines affichées (programme personnel du propriétaire,
-//   ancien programme L10, semaines d'avant un programme créé), sans rien
-//   changer à leur structure (D5.10) ;
+//   ancien programme L10, semaines d'avant un programme créé), annoté au
+//   contrat 0.4.0 par CI1e (imported_program.dart, C11 : D5.10 levée) ;
 // - journal présenté au moteur (règles C1 à C12 de G3 + emplacement, cible
 //   affichée et bilan de chaque séance servie) ;
 // - séance du jour : prescription figée dans le journal (`SessionLog.adapt`),

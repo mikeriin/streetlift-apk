@@ -776,6 +776,8 @@ class AppStore extends ChangeNotifier {
     logs.removeWhere((k, _) => isManualSessionKey(k));
     _lastLevel = _prefs.getInt(_kLastLevel) ?? level;
     _initialized = true;
+    // CI1e (C11.2) : sauvegarde d'origine prise dès cette migration.
+    ProgramOriginStore(this).captureProgramOrigin();
     // Migration vers une seule écriture atomique. Les anciennes clés restent
     // disponibles pour récupérer les données si la migration est interrompue.
     await flush();

@@ -4,8 +4,8 @@
 // et une invitation discrète de Koach sur l'accueil, une seule fois.
 // Profil créé avec le parcours v3 : les questions reportées (récupération
 // d'un débutant…) proposées après la première semaine, une seule fois. Le
-// programme en cours n'est pas régénéré ; celui du propriétaire ne l'est
-// jamais (D5.10).
+// programme en cours n'est pas régénéré (CI1e, C11 : le programme du
+// propriétaire suit les mêmes règles que les autres).
 import 'package:flutter/material.dart';
 import 'package:kalis_koach/kalis_koach.dart' show KoachPose;
 
