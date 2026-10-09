@@ -16,7 +16,7 @@ Lot CY du pipeline « Calibrage des programmes » (voie A, Opus 5.5 effort maxim
     un profil au mode street, le mode street suit : la composante qui devient principale prend la part de l'ancienne,
     contrat de `kalis_core`) ;
   - `course_ajoutee` : un 10 km annoncé en semaine 5 et couru en semaine 10 (profil street hybride, `street_17`).
-  Un scénario sans objet pour un profil n'est pas simulé (239 saisons racontées au lieu de 136).
+  Un scénario sans objet pour un profil n'est pas simulé (240 saisons racontées au lieu de 136).
 - **100 graines par modèle de vérité** (trois modèles) au contrôle complet ; 4 aux contrôles de mise au point.
 - Comparaison au couple 0.1 (couple `v01` de la campagne) et au couple 0.2 (street : campagne de CX correction 1,
   `kalis_bench` 0.2.1, run 37330259003, mêmes scénarios et mêmes graines).
@@ -34,7 +34,7 @@ Lot CY du pipeline « Calibrage des programmes » (voie A, Opus 5.5 effort maxim
 | Squat servi 142,5 kg pour 137,5 kg écrits, maximum du jour 143 (`street_07`) | À 85 % du 1RM écrit ou plus, le couloir de charge ne monte plus au-dessus de l'écrit. | adapt |
 | Test maximal de planche gardé au programme pendant la douleur (`street_10`) | Pas de test maximal sur une articulation douloureuse : gêne relevée au bloc précédent ≥ 3/10, déclarée ≥ 4/10, ou zone à l'arrêt (une vraie épreuve reste écrite). | plan |
 | Tirage ajouté après les tests de tirage (`street_08`) | Jour de test de traction ou de muscle-up : le travail ordinaire de tirage vertical et de muscle-up saute. | plan |
-| Test « 8 à 15 » muscle-ups pour une première réussite (`autres_08`) | Mouvement à risque élevé jamais réussi : le repère est une répétition propre. | plan |
+| Test « 8 à 15 » muscle-ups pour une première réussite (`autres_08`) | Muscle-up jamais réussi : le repère est une répétition propre. | plan |
 | Sous-dosage reconduit après un mauvais jour (CA2, `street_06`) | Un jour de bilan bas ne devient plus le repère d'un jour bas suivant. | adapt |
 
 Non traités en partie 0 (conduite, sans risque) : estimation du muscle-up le jour J (`street_07`), course-marche du
@@ -47,6 +47,8 @@ débutant qui n'achève pas ses sorties (`autres_05`) — voir § 6.
 | Départ street (passe finale de CP2, même couple 0.3.0 × 0.3.0) | 0.3.0 | 19 à 9, min 5, moy 7,71 | — (CP2 notait les programmes écrits : 15/40, min 5, moy 7,92) |
 | p1 (complète, saisons) | partie 0 + boucle 1 | 19 à 9, min 5, moy 7,85 | 2 à 9, min 5,5, moy 7,41 |
 | p2 (couples sous 9 dont l'export a changé, et couples à 9 changés de plus de 10 %) | boucle 2 | **22** à 9, min 5, moy 7,71 | **4** à 9, min 5,5, moy 7,30 |
+| p3 (13 couples : exports changés de plus de 2 % par les corrections de sécurité et la relecture du code) | sécurité + relecture du code | 22 à 9, min 5, moy 7,73 | 3 à 9, min **2** (`autres_06`), moy 6,71 |
+| p4 (`autres_06`, 4 écoles) | boucle 3 | **22** à 9, min 5, moy 7,73 | **3** à 9, min 5,5, moy 7,21 |
 
 Boucle 1 : variantes plus faciles hors du plafond de répétitions (la pompe inclinée de `street_03` était écrite 1 × 2 à
 1 × 3 pendant quinze semaines pour un maximum d'environ 22) ; deux séries assistées par jour pour le débutant qui vise
@@ -59,8 +61,17 @@ va jamais près de l'échec) ; sortie longue après une course (70 %, puis +10 %
 l'épreuve » alignée sur les répétitions écrites ; remplissage du créneau à 80 % en semaine de construction, sous les
 garde-fous de volume.
 
-Arrêt après la boucle 2, puis une passe de corrections de sécurité issue de la relecture documentée (§ 4) : gain à la
-boucle 2 (street 19 → 22 couples, autres 2 → 4), minimum inchangé ; les corrections nécessaires restantes portent sur
+Boucle 3 (régression vue en p3) : la course retirée sous une douleur de cheville (`autres_06`, correction de sécurité de
+`kalis_adapt`) était comptée comme « sautée » dans le résumé d'adaptation ; `kalis_plan` l'écartait alors pour tout le
+bloc suivant, échéance comprise (six semaines de séances d'une minute de mobilité, notes 2 à 2,5). Un retrait sous arrêt
+n'est plus compté comme sauté : le bloc suivant garde la course avec la note d'arrêt, la conduite la retire tant que
+l'arrêt tient puis la rend par paliers (50 %). `autres_06` revient à 7, 8, 7, 7 (p2 : 9, 8, 8, 8 ; corrections
+nécessaires restantes : allure du semi construite, renforcement mollet et cheville, vraie transition après la course —
+méthode, pas sécurité).
+
+Arrêt après la boucle 3 (C9.2 : 5 au plus ; la boucle 3 n'a fait que rattraper sa régression, sans gain), après une passe
+de corrections de sécurité issue de la relecture documentée (§ 4) et la relecture indépendante du code (§ 5) : gain à la
+boucle 2 (street 19 → 22 couples, autres 2 → 4), minimum inchangé (autres : 3 à 9 en fin de lot, `autres_06` renoté à 7 par l’école force) ; les corrections nécessaires restantes portent sur
 la méthode (estimation des capacités par le moteur d'évolution, spécialisation, progression des figures et du
 muscle-up) et sur des choix que les deux jurys jugent en sens contraires (volume du débutant). Budget : C9.5, deux
 sessions en parallèle (CI1e).
@@ -94,15 +105,42 @@ qualité absentes en course débutante, spécialisation non appliquée) sont rep
 
 ## 5. Contrôles
 
-- Mise au point : runs 37894110383, 37897459037, 37900445699, 37906425835 (boucle 2 : quatre paquets verts, 0
-  violation sur les 27 programmes créés et les 239 saisons racontées).
+- Mise au point : runs 37894110383, 37897459037, 37900445699, 37906425835 (boucle 2), 37916270204 (relecture du code),
+  37919252149 (boucle 3) : quatre paquets verts, 0 violation sur les 27 programmes créés et les 240 saisons racontées.
+- **Contrôle complet** : run 37922562342 (`claude/ci-cp-a`, commit de contrôle 3d76a6f1) — cinq paquets verts
+  (`kalis_quest` compris), outils Python verts, 100 graines par modèle de vérité. Exports identiques au contrôle 37919252149
+  (déterminisme). `kalis_adapt/docs/PROPRIETAIRE.md` identique à 0.3.0 hors ligne de version (programme du propriétaire
+  suivi à l'identique).
+- Relecture indépendante du code (sous-agent Opus) : 14 constats, tous traités (CHANGELOG des deux paquets, CONTRAT
+  § 13 de `kalis_adapt`).
 - Non-ressemblance aux références privées (`tool/reference_jaccard.py`, clé lue d'un fichier `/tmp` en mode 600) : 27
-  programmes et 27 saisons de la boucle 2, maximum exact 0,231, tolérant 0,250 (seuil 0,30).
-- Contrôle complet du candidat livré : voir la livraison.
+  programmes et 27 saisons du candidat final, maximum exact 0,231, tolérant 0,250 (seuil 0,30).
+
+### Couples 0.1, 0.2 et 0.3.1
+
+| Modèle de vérité | Couple | Écart d'effort (RIR) | Échecs non voulus | Progression / sem. | Échéance (part du max du jour) | Violations du programme réalisé / saison |
+| --- | --- | --- | --- | --- | --- | --- |
+| A | 0.1 | 1,09 | 0,53 % | 0,32 % | — | 8,38 |
+| A | 0.2 (CX c1) | 0,77 | 0,21 % | 0,34 % | 95,6 % | 0,002 |
+| A | **0.3.1** | 0,76 | 0,22 % | 0,34 % | 96,1 % | 0,002 |
+| B | 0.1 | 2,10 | 0,10 % | 0,26 % | — | 8,75 |
+| B | 0.2 (CX c1) | 0,90 | 0,16 % | 0,31 % | 93,6 % | 0,002 |
+| B | **0.3.1** | 0,87 | 0,15 % | 0,32 % | 94,3 % | 0,007 |
+| C | 0.1 | 1,44 | 1,06 % | 0,07 % | — | 9,35 |
+| C | 0.2 (CX c1) | 1,43 | 0,61 % | 0,11 % | 92,8 % | 0,015 |
+| C | **0.3.1** | 1,51 | 0,62 % | 0,11 % | 93,7 % | 0,011 |
+
+Saison de référence, 17 profils street (les seuls que les couples 0.1 et 0.2 savent conduire sur une saison), 100 graines
+par modèle ; couple 0.2 : campagne de CX correction 1 (`kalis_bench` 0.2.1), mêmes graines. 0.3.1 sur les 27 profils :
+violations 0,0015 (A), 0,0041 (B), 0,0067 (C) par saison. Hausses sur une zone douloureuse (modèle B, somme des profils
+street) : 0.1 0,18, 0.2 0,04, 0.3.1 0,01. Lecture : 0.3.1 tient le niveau de 0.2 sur l'effort, les échecs et la
+progression, gagne 0,5 à 0,9 point à l'échéance et réduit les hausses sur zone douloureuse ; les violations résiduelles
+du programme réalisé (moins d'une saison sur cent) sont du même ordre qu'en 0.2 (CA2.5 : 0,012 par saison) ; leur cause
+graine par graine n'a pas été analysée dans CY.
 
 ## 6. Limites et suite
 
-1. **Cible C7.5 non atteinte** (street 22/68, autres 4/40 ; minimum 5).
+1. **Cible C7.5 non atteinte** (street 22/68, autres 3/40 ; minimum 5 en street, 5,5 dans les autres disciplines).
 2. **Estimation par le moteur d'évolution** : une série loin de l'échec n'est qu'une borne basse (CA1.3) ; sur les
    athlètes simulés qui notent mal, les capacités restent sous-estimées (presse estimée à la moitié du réel,
    tentatives du jour J à 88-93 % du maximum du jour). La règle « 2 pour 2 » ne s'applique qu'aux séries notées ;

@@ -21,8 +21,8 @@ reportés, carte « Arrêt pour douleur », reprise graduée, palier de reprise 
 
 - 0.3.0 : additif ; `kalis_core` 0.4.3 exigé (cinq codes de raison d'endurance, § 3).
   `AdaptParams.enduranceConduct` (vrai par défaut) rejoue 0.2 au banc.
-- 0.3.1 : additif. Trois paramètres (`coachCorridorHeavyShare` 0,85 ; `coachRepLoadShare` 0,025 ;
-  `coachRepGapMax` 4) et un argument du constructeur : `KalisAdapt(restructureImported: false)` par
+- 0.3.1 : additif. Cinq paramètres (`coachCorridorHeavyShare` 0,85 ; `coachRepLoadShare` 0,025 ;
+  `coachRepGapMax` 4 ; `coachTwoForTwo` 2 ; `coachTwoForTwoMaxStep` 0,10) et un argument du constructeur : `KalisAdapt(restructureImported: false)` par
   défaut. Aucun type ni code de raison nouveau (§ 13).
 
 ### 1.2 0.3.0 — endurance, conditionnement, hybrides (lot CA2, partie 1)
@@ -49,7 +49,10 @@ invariants E1 à E3). Détail : `CONTRAT.md`, § 12.
 | Règle | Effet | Raison |
 | --- | --- | --- |
 | Première gêne du poignet | mode coach, poignet ≥ 3/10 dans les 14 jours, aucun arrêt : une poussée au poids du corps paume à plat passe tout de suite sur un appui neutre faisable (parallettes, poignées, ou `sw-pompe-inclinee` mains sur une barre basse quand le matériel compte `barre basse`) ; sans appui neutre, la poussée reste, dose plafonnée | `adapt.pain_reported` (`zone: wrist_hand`, `intensity` = gêne la plus forte des 14 jours) |
-| Arrêt du poignet | la pompe mains sur la barre basse compte comme appui neutre ; un appui neutre à contrainte moyenne reste (dose de l'arrêt) au lieu d'être retiré | raisons de l'arrêt (déjà intégrées) |
+| Arrêt du poignet | inchangé (C10.8 (a)) : parallettes et poignées seulement ; la pompe mains sur la barre basse ne vaut appui neutre qu'à la première gêne | raisons de l'arrêt (déjà intégrées) |
+| Douleur qui dure au bas du corps | mode coach, hanche, cuisse, genou, jambe, cheville ou pied à l'arrêt : la course est retirée de la séance tant que l'arrêt tient (cardio sans impact gardé), puis revient à 50 % au plus pendant la reprise graduée ; un retrait sous arrêt n'est pas compté comme « sauté » dans le résumé | `adapt.pain_persistent` (`zone`, `sessions`) ; `adapt.endurance_shortened` cause `resume_14` |
+| Double progression « 2 pour 2 » | deux séances de suite au haut de la plage (ou nettement plus faciles que visé) : un cran de charge de plus (10 % au plus), jamais en bloc verrouillé, semaine légère, proche d'une échéance, retour ou douleur | aucune nouvelle |
+| Propositions « volume ajusté » | une série de plus seulement si chaque groupe majeur reste sous le plafond du niveau (12, 20, 25, 30 séries) sur toutes les semaines modifiées | raisons existantes |
 | Couloir à 85 % | part écrite ≥ 85 % du 1RM : la charge servie ne dépasse plus l'écrit (elle peut descendre) | aucune nouvelle |
 | Borne à schéma changé | même emplacement, schéma différent de la dernière séance : charge totale ≤ dernière charge × (1 + hausse à schéma égal) × (1 + 2,5 % par répétition de moins, 4 au plus) ; un cran au moins | `adapt.load_held`, cause `cap` (d'après le code) |
 | Repère de jour bas | une séance faite un jour de bilan bas ne devient plus le repère d'un jour bas suivant | aucune |
@@ -160,7 +163,7 @@ change pas la durée ni la limite de temps du groupe (d'après le code : seules 
 
 ### 2.8 Restructuration d'un bloc importé
 
-- **Activer** `KalisAdapt(restructureImported: true)` pour le programme du propriétaire seulement (C11).
+- **Activer** `KalisAdapt(restructureImported: true)` seulement pour un bloc importé de plus de six semaines resté tel quel (C11) ; inutile pour le programme du propriétaire converti par CI1e (blocs de six semaines au plus).
   Le défaut ne change rien pour les autres utilisateurs.
 - **Afficher** les propositions de restructuration dans Évolution, comme les autres. CI1c refusait une
   proposition « non applicable jour pour jour » ; C11 et le lot CI1e lèvent cette garde.
@@ -269,9 +272,8 @@ zone poignet, l'application affiche **« mains serrées sur la barre basse, poig
 - **Pompe inclinée écrite par le bloc.** Si la ligne écrite est déjà `sw-pompe-inclinee` et que le
   matériel compte `barre basse`, le moteur la tient pour neutre et la garde, sans raison. La consigne de
   CY n'est alors pas déclenchée. Faut-il l'afficher aussi ? Non tranché.
-- **Remplacement pendant un arrêt.** Pendant un arrêt du poignet, le remplaçant peut aussi être
-  `sw-pompe-inclinee`, avec les raisons de l'arrêt et non `adapt.pain_reported`. Même consigne ? Non
-  tranché par CY.
+- **Remplacement pendant un arrêt.** Tranché par la relecture documentée de CY : pendant un arrêt du
+  poignet, le remplaçant n'est jamais `sw-pompe-inclinee` (parallettes et poignées seulement, C10.8 (a)).
 - **Test de course borné.** Il est « reporté » selon le `CHANGELOG.md`. Comment il est reservi ensuite :
   non trouvé dans le code lu.
 - **Résultat d'un contre-la-montre.** `testResults` ne le rend pas (`results.dart` : exercices
@@ -280,4 +282,6 @@ zone poignet, l'application affiche **« mains serrées sur la barre basse, poig
 - **Restructuration réelle sur le bloc importé.** Restructuration de `kalis_plan` (chemin 0.1 tant que
   le bloc n'a pas d'intention) jamais rejouée sur le programme du propriétaire (LIVRAISON_CI1c.md,
   partie 4).
-- **Lot CI1e.** État de l'annotation au contrat 0.4.0 : inconnu ici.
+- **Lot CI1e** (dev6.10.0) : le programme du propriétaire est converti en blocs de six semaines au plus,
+  annotés au contrat 0.4.0 ; le mode coach s'y applique donc sans `restructureImported`. L'option reste
+  utile seulement pour un bloc importé de plus de six semaines non converti.
