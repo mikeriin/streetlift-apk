@@ -283,21 +283,21 @@ def test_tendons_temps_total_de_l_emplacement():
         t = k.modele.piste(ex)
         t.mesures = 1
         mem = s.mem(ex)
-        mem.sec_max = 10
+        mem.sec_max = 8
         if total is not None:
             mem.sec_slot['s1'] = total
         item = {'slotId': 's1', 'exerciseId': ex, 'kind': 'work', 'sets': series, 'secondsLow': 5,
-                'secondsHigh': 11, 'targetFlames': 6}
+                'secondsHigh': 9, 'targetFlames': 6}
         servi = s.prescrire([item], {}, {ex: ({}, set())}, {'s1': 'main'})
         return s.cible(servi[0], 0, [])['secondsHigh'], s.raisons
     sans, _ = haut(4, None)
-    avec, raisons = haut(4, 30)
-    # Dernière séance : 30 s au total ; 4 × 11 = 44 > max(⌊30 × 1,15⌋, 31) = 34
-    # -> chaque tenue à ⌊34 / 4⌋ = 8 s.
-    assert (sans, avec) == (11, 8)
+    avec, raisons = haut(4, 24)
+    # Dernière séance : 24 s au total ; 4 × 9 = 36 > max(⌊24 × 1,15⌋, 25) = 27
+    # -> chaque tenue à ⌊27 / 4⌋ = 6 s.
+    assert (sans, avec) == (9, 6)
     assert any(r['code'] == 'koach.tendon' and r['params'].get('cause') == 'total' for r in raisons)
-    trois, _ = haut(3, 30)
-    assert trois == 11              # 3 × 11 = 33 ≤ 34 : rien
+    trois, _ = haut(3, 24)
+    assert trois == 9               # 3 × 9 = 27 ≤ 27 : rien
 
 
 # ----------------------------------------------------------------------
@@ -528,3 +528,186 @@ def test_coupure_reduit_aussi_l_echauffement():
         item = {'slotId': 'e', 'exerciseId': ex, 'kind': 'warmup', 'sets': 5, 'repsLow': 5, 'repsHigh': 5}
         out = k.seances.prescrire([item], {ex: Grille(2.5, 20.0)}, {ex: ({}, set())}, {})
         assert out[0]['sets'] == attendu
+
+
+# ----------------------------------------------------------------------
+# A7.2 : accessoires sans doublement, schéma changé (règle 4)
+# ----------------------------------------------------------------------
+def _borne(role='main', marque=None, hi=5, avant=None, charge=130.0):
+    k = koach()
+    s = k.seances
+    ouvrir(k, 10)
+    ex = 'mu-developpe-couche-barre'
+    t = k.modele.piste(ex)
+    mem = s.mem(ex)
+    if avant is not None:
+        mem.schemas[('s1', hi)] = (avant, False)
+    if marque is not None:
+        mem.marques['s1'] = marque
+    cond = k.garde.conduite({}, set())
+    plan = {'cond': cond, 'fragile': None, 'role': role, 'sans_hausse': False}
+    return s._bornes_hausse(ex, {'slotId': 's1', 'exerciseId': ex}, charge, plan, t, Grille(2.5, 20.0), hi, 0)
+
+
+def test_hausse_des_accessoires_non_doublee():
+    assert _borne(role='accessory', avant=100.0, charge=110.0) == 105.0
+    assert _borne(role='main', avant=100.0, charge=110.0) == 105.0
+
+
+def test_schema_change_au_meme_emplacement():
+    # Dernière séance de l'emplacement à 8 rép. et 100 kg ; 5 rép. aujourd'hui :
+    # 100 × 1,05 × (1 + 3 × 2,5 %) = 112,9 -> 112,5 sur la grille.
+    assert _borne(marque=(100.0, 100.0, 8), hi=5) == 112.5
+    # Même schéma que la dernière séance : la règle ne s'applique pas.
+    assert _borne(marque=(100.0, 100.0, 5), hi=5) == 130.0
+    # Base d'une semaine de charge retenue de préférence à la dernière charge.
+    assert _borne(marque=(90.0, 100.0, 5), hi=8) == 92.5
+
+
+# ----------------------------------------------------------------------
+# Retour de coupure : ni test ni hausse
+# ----------------------------------------------------------------------
+def test_retour_de_coupure_ni_test_ni_hausse():
+    k = koach(niveau=2)
+    s = k.seances
+    ex = 'mu-back-squat-barre-basse'
+    t = k.modele.piste(ex)
+    t.seances = 12
+    t.mesures = 12
+    t.dernier_test_jour = None
+    jours = [3 * i for i in range(12)]          # 12 séances, puis 42 jours de coupure
+    s.jours_seances = list(jours)
+    mem = s.mem(ex)
+    mem.jours = list(jours)
+    mem.charge_max = 100.0
+    mem.charge_derniere = 100.0
+    mem.charges_reussies = [(j, 100.0, 5) for j in jours]
+    mem.schemas[('s1', 5)] = (100.0, False)
+    retour = jours[-1] + 42
+    ouvrir(k, retour)
+    item = {'slotId': 's1', 'exerciseId': ex, 'kind': 'work', 'sets': 4, 'repsLow': 5, 'repsHigh': 5,
+            'targetFlames': 7}
+    out = s.prescrire([item], {ex: Grille(2.5, 20.0)}, {ex: ({}, set())}, {'s1': 'main'})
+    assert all(i.get('kind') != 'test' for i in out)
+    plan = s.plans['s1']
+    assert not s._mesure_utile(out[-1], plan, t)
+    for i in range(out[-1]['sets']):
+        c = s.cible(out[-1], i, [])
+        assert c['loadKg'] <= 100.0 and not c.get('repere')
+    # Deuxième semaine après le retour, exercice refait une seule fois :
+    # toujours pas de mesure.
+    s.jours_seances.append(retour)
+    mem.jours.append(retour)
+    ouvrir(k, retour + 10)
+    s.prescrire([item], {ex: Grille(2.5, 20.0)}, {ex: ({}, set())}, {'s1': 'main'})
+    assert s.coupure == 0 and not s._mesure_utile(item, s.plans['s1'], t)
+
+
+def test_rampe_sans_barre_recente():
+    k = koach(niveau=2)
+    s = k.seances
+    ouvrir(k, 100)
+    ex = 'mu-back-squat-barre-basse'
+    t = k.modele.piste(ex)
+    t.seances = 5
+    plan = {'grille': Grille(2.5, 20.0), 'rampe': (3, 1.0)}
+    item = {'slotId': 's1.t', 'exerciseId': ex}
+    s.mem(ex).charges_reussies = [(10, 100.0, 5)]
+    assert s._rampe(item, 0, plan, t) is None
+    s.mem(ex).charges_reussies = [(90, 100.0, 5)]
+    assert s._rampe(item, 0, plan, t)['loadKg'] <= 110.0
+
+
+# ----------------------------------------------------------------------
+# Plafond des tenues sur la valeur centrale
+# ----------------------------------------------------------------------
+def test_plafond_des_tenues_sur_exp_mu():
+    import math
+    k = koach()
+    s = k.seances
+    ouvrir(k, 10)
+    ex = 'cs-back-lever'
+    t = k.modele.piste(ex)
+    t.mesures = 1
+    mu, sd = k.modele.capacite_du_jour(ex)
+    item = {'slotId': 's1', 'exerciseId': ex, 'kind': 'work', 'sets': 3, 'secondsLow': 5,
+            'secondsHigh': 600, 'targetFlames': 6}
+    out = s.prescrire([item], {}, {ex: ({}, set())}, {'s1': 'main'})
+    haut = s.cible(out[0], 0, [])['secondsHigh']
+    assert haut <= math.floor(PARAMS['securite']['tenue_part_max'] * math.exp(mu))
+    assert math.floor(PARAMS['securite']['tenue_part_max'] * math.exp(mu + sd)) > haut
+
+
+# ----------------------------------------------------------------------
+# Semaine verrouillée : jamais au-dessus du dernier passage
+# ----------------------------------------------------------------------
+# ----------------------------------------------------------------------
+# Essai N-of-1 du banc : bras sous les garde-fous
+# ----------------------------------------------------------------------
+class _Ctx(object):
+    def __init__(self, semaine, ecrit=None):
+        self.semaine = semaine
+        self.sim_day = 7 * semaine
+        self.genre_semaine = 'accumulation'
+        self.ecrit = ecrit
+
+
+def _bras(mod, grilles=None):
+    from banc.extensions_koach import ControleDualBanc
+    d = ControleDualBanc.__new__(ControleDualBanc)
+    d.params = PARAMS
+    d.journal = []
+    d.semaine_vol = None
+    d.genre = None
+    d.modulation = lambda semaine: mod
+
+    class _Pol(object):
+        pass
+    d.politique = _Pol()
+    d.politique.grilles = grilles or {}
+    return d
+
+
+def test_bras_intensite_sous_les_garde_fous():
+    ex = 'mu-back-squat-barre-basse'
+    grille = Grille(2.5, 20.0)
+    d = _bras({'bras': 'B', 'exerciseId': ex, 'intensite': 1.05, 'volume': 1.0}, {ex: grille})
+
+    def servie(bilan=None, genre='accumulation'):
+        k = koach(niveau=2)
+        s = k.seances
+        ouvrir(k, 14, bilan=bilan, genre=genre)
+        t = k.modele.piste(ex)
+        t.mesures = 3
+        t.seances = 5
+        mem = s.mem(ex)
+        mem.charge_derniere = 40.0
+        mem.schemas[('s1', 5)] = (40.0, False)
+        item = {'slotId': 's1', 'exerciseId': ex, 'kind': 'work', 'sets': 3, 'repsLow': 5, 'repsHigh': 5,
+                'targetFlames': 6}
+        out = s.prescrire([item], {ex: grille}, {ex: ({}, set())}, {'s1': 'main'})
+        c = s.cible(out[0], 0, [])
+        base = c['loadKg']
+        return d.cible_serie(k, _Ctx(2), out[0], 0, c)['loadKg'], base
+    assert servie(bilan={'overall': 2})[0] <= 40.0
+    # Semaine verrouillée : le bras n'ajoute rien à ce que Koach sert.
+    kg, base = servie(genre='deload')
+    assert kg <= base
+    # Jour normal : le bras monte au plus jusqu'à la borne de hausse (+5 % ou un cran).
+    assert servie()[0] <= 42.5
+
+
+def test_bras_volume_borne_par_la_reference():
+    ex = 'mu-back-squat-barre-basse'
+    d = _bras({'bras': 'A', 'exerciseId': ex, 'intensite': 1.0, 'volume': 1.1})
+    ecrit = {'items': [{'slotId': 's%d' % i, 'exerciseId': ex, 'kind': 'work', 'sets': 4} for i in range(5)]}
+    # Planification déjà à +15 % (5 × 4 = 20 séries de référence -> 23).
+    planifie = [dict(it) for it in ecrit['items']]
+    for it in planifie[:3]:
+        it['sets'] = 5
+    out = d.items_du_jour(None, _Ctx(3, ecrit), planifie)
+    assert sum(it['sets'] for it in out) <= 1.15 * 20 + 1e-9
+    # Sans planification : le bras ajoute jusqu'à +10 %.
+    d2 = _bras({'bras': 'A', 'exerciseId': ex, 'intensite': 1.0, 'volume': 1.1})
+    out = d2.items_du_jour(None, _Ctx(3, ecrit), [dict(it) for it in ecrit['items']])
+    assert 20 < sum(it['sets'] for it in out) <= 22

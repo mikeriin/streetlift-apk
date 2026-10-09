@@ -1,6 +1,6 @@
 # Sources des paramètres de Koach 1.0
 
-Rédigé le 09/10/2026. Fichier décrit : `params/koach_params_v1.json`, SHA-256 `b6ebc0da874d04d8febef096c808b651915dd5f6b55171cee460167f71592e18`, 295 clés (racine comprise ; 32 clés de sécurité ajoutées le 09/10/2026, règles de 0.3.1 reprises : voir `km1-outils/notes/SECURITE_KOACH_COUVERTURE.md`).
+Rédigé le 09/10/2026. Fichier décrit : `params/koach_params_v1.json`, SHA-256 `5b27053739a1a2fdeb433ab53857943a98999c5b5b3dd484899992011d2652fc`, 296 clés (racine comprise ; 33 clés de sécurité ajoutées le 09/10/2026, règles de 0.3.1 reprises : voir `km1-outils/notes/SECURITE_KOACH_COUVERTURE.md`).
 Compagnon de `CONTRAT_1_0.md` (§ 7 : rôle de chaque clé).
 
 ## Comment lire ce document
@@ -343,6 +343,7 @@ Les références de Beck & Teboulle 2009 (FISTA), Held, Wolfe & Crowder 1974 et 
 | `endurance_facile_min_s` | 60 | 0.3.1 | `work >= 60` (A/session.dart:2662) (inventaire A10.2). |
 | `endurance_bornee_reduction` | 0.9 | 0.3.1 | `scaled(longestDraft.item, 1, 0.9)` (A/session.dart:2800) (inventaire A10.3). |
 | `wod_fenetre_j` | 7 | 0.3.1 | `while (d >= day - 7)` de `conditioningStreak` (A/endurance.dart:262) (inventaire A10.4). |
+| `retour_seances_avant_mesure` | 2 | choix raisonné | Règle propre à Koach, plus prudente que 0.3.1 (relecture B2) : après une coupure ≥ `coupure_j`, ni vrai test ni série repère pendant la semaine du retour ni avant 2 séances de l'exercice depuis le retour ; aucune source chiffrée. |
 
 ### Section `adherence`
 
@@ -581,7 +582,7 @@ Toutes ces constantes ont été écrites lors de la génération par règles, pu
 
 ## 3. Synthèse
 
-**Clés du fichier de paramètres** (section 1, 295 clés) :
+**Clés du fichier de paramètres** (section 1, 296 clés) :
 
 | Catégorie | Clés |
 | --- | --- |
@@ -589,8 +590,8 @@ Toutes ces constantes ont été écrites lors de la génération par règles, pu
 | 0.3.1 | 110 |
 | littérature | 1 |
 | banc | 25 |
-| choix raisonné | 136 |
-| **Total** | **295** |
+| choix raisonné | 137 |
+| **Total** | **296** |
 
 La catégorie « 0.3.1 » regroupe les paramètres de `kalis_adapt` 0.3.1 et de `kalis_plan` (inventaire A), et les critères du banc `kalis_bench` (inventaire B). Ces derniers sont recopiés dans la section `securite`, mais Koach ne les lit pas.
 

@@ -44,7 +44,7 @@ Statuts :
 | A6.5 test chargé en semaine verrouillée ≤ charge écrite | **ajoutée** | `seance._cible_test` (test xRM) | A/coach.dart:2144-2152. Ajouté aussi : après un échec non prévu à la dernière séance, pas plus lourd que le dernier passage (`noUp`, A/coach.dart:2086, 2154-2160). |
 | A6.5 échéance ≤ 14 j | partielle | `_mesure_utile` (`jours_avant_echeance`) | Le banc ne fournit que `jour_evenement`, pas `jours_avant_echeance` : la règle est inactive sur le banc (annexe A n° 43). Couloir, double progression, série au ressenti : Koach n'a pas ces hausses (sans objet). |
 | A7.1 bornes du mode 0.1 | sans objet | — | Mode 0.1 remplacé par le mode coach. |
-| A7.2 bornes 10/5/5/5 %, un cran, couloir, simple 92 % | déjà | `_bornes_hausse`, `_cible_charge` | Voir « Règles moins prudentes non corrigées » (accessoires × 2 ; schéma changé). |
+| A7.2 bornes 10/5/5/5 %, un cran, couloir, simple 92 % ; schéma changé (règle 4) | déjà, **complétée** | `_bornes_hausse`, `_marquer`, `_cible_charge` | Accessoires sans doublement et règle 4 ajoutés (seconde passe). |
 | A7.2 zone fragile du profil (antécédent < 12 mois ou gêne ≥ 2) : hausse × 0,5, 0 répétition comptée, paliers 5 % | **ajoutée** | `securite._zones_fragiles`, `fragile`, `conduite` (`fragile`) ; `seance._bornes_hausse` ; raison `koach.zone_fragile` | A/replay.dart:42-51, 120-125 ; A/coach.dart:830-833, 1146-1149, 1218-1226. Schéma nouveau sur zone fragile : +5 % (moitié de 10 %), aucune part pour les répétitions de moins, un cran au moins. |
 | A7.2 surcharge sur zone fragile ≤ `coachOverloadFragileMax` | **ajoutée** | `seance._cible_charge` | A/coach.dart:1039-1042. Appliqué aussi à une part écrite sur le 1RM de l'exercice lui-même (plus prudent). |
 | A7.2 double progression « 2 pour 2 », bonification | sans objet | — | Règles de hausse, pas de borne. |
@@ -71,25 +71,39 @@ Statuts :
 
 ## Règles moins prudentes dans Koach que dans 0.3.1, non corrigées
 
-1. **Hausse des accessoires doublée** (`_bornes_hausse`, rôle ni `main` ni `secondary` : 2 × 10/5/5/5 %). En mode
-   coach, 0.3.1 borne la cible de toute ligne chargée à `coachRise[niveau]` (A/coach.dart:1146-1149) ; le doublement
-   `riseCap` (A/session.dart:1293-1295) ne sert qu'à la règle générale de 0.1. Corrigé puis retiré : coût mesuré sur
-   SET9 (voir ci-dessous).
-2. **Schéma changé au même emplacement** (A7.2 règle 4, A/coach.dart:1200-1235) : 0.3.1 borne la charge sur la
-   dernière séance de l'emplacement × (1 + hausse du niveau) × (1 + 2,5 %/rép.) ; Koach borne un schéma nouveau sur la
-   plus lourde barre récente × 1,10 × (1 + 2,5 %/rép.) (règle 5 de 0.3.1), soit jusqu'à ≈ 5 points de plus pour un
-   intermédiaire. Corrigé puis retiré : coût mesuré (voir ci-dessous). Le critère « hausse > 10 % d'un mouvement
-   principal » du banc reste à 0.
+Aucune connue (lot du 09/10/2026, seconde passe). Les deux écarts relevés à la première passe sont corrigés :
 
-Effet mesuré de ces deux corrections (SET9, 4 graines, toutes les autres règles actives ; règle 2 limitée aux
-schémas nouveaux à l'emplacement, sa forme la moins coûteuse ; MAE / couverture) :
+1. **Hausse des accessoires** : `_bornes_hausse` borne désormais toute ligne chargée par `coachRise[niveau]`
+   (× 0,5 sur zone fragile), sans doublement (A/coach.dart:830-833, 1146-1149).
+2. **Schéma changé au même emplacement** (A7.2 règle 4, A/coach.dart:605-617, 1200-1235) : `Seances._marquer`
+   (`Memoire.marques`) retient la dernière séance de chaque emplacement ; `_bornes_hausse` borne la charge à
+   base × (1 + hausse) × (1 + 2,5 % par répétition de moins, 4 au plus, aucune sur zone fragile), un cran au moins ;
+   base = dernière séance d'une semaine de charge hors bilan bas.
 
-| Variante | modele a k=6 | modele b k=6 | modele c k=6 | ecart effort | echeance loaded |
+## Seconde passe : règles plus prudentes que 0.3.1 (relecture B2, m4, m7, m8, M2)
+
+| Constat | Dans Koach | Effet mesuré |
+| --- | --- | --- |
+| B2 vrai test après coupure | `_item` : coupure en cours (`coupure_fenetre_j`) → `sans_hausse` (charge ≤ dernier passage) ; `_mesure_utile` : ni vrai test ni série repère pendant la coupure ni avant `retour_seances_avant_mesure` (2) séances de l'exercice depuis le retour (`_retour`, `_apres_retour`) ; `_vrai_test` et `_rampe` : aucune rampe sans barre réussie depuis `barre_recente_j` | négligeable sur SET9 (aucune coupure) |
+| m7 plafond des tenues | `_cible_tenue` : `tenue_part_max · exp(μ)` (valeur centrale), plus `exp(μ + σ)` | inclus dans la ligne « sans m8 » |
+| m8 semaine verrouillée | `_cible_charge` : jour verrouillé, charge de toute série ≤ dernier passage de l'exercice (`charge_derniere`), part écrite ou non. 0.3.1 borne par la charge écrite (`lockUp`) | **coûteux**, voir ci-dessous |
+| m4 repos déclaré 0 s | pas dans `seance.py` : `s.get('restSeconds') or 90` est dans `modele.py:824, 1022` (non modifié, hors de mon périmètre) | — |
+| M2 bras N-of-1 | `banc/extensions_koach.py` : bras B passe par `Seances.borne_externe` (rien un jour sans hausse, verrouillé, à `part_max`, dose plafonnée, zone douloureuse ou fragile, après un échec ; sinon bornes de hausse et +5 % entre séries) ; bras A : produit planification × bras borné par `dual.facteur_borne` par rapport aux séries de la RÉFÉRENCE (`ctx.ecrit`), cumulé sur la semaine | hors SET9 (briques) |
+
+Coût de m8 (SET9, toutes les autres règles actives) :
+
+| Variante | modele a k=6 | modele c k=6 | ecart effort | echeance | fausses alertes BOCPD (test briques, seuil 3 %) |
 | --- | --- | --- | --- | --- | --- |
-| retenue (ni 1 ni 2) | 0,0251 / 0,935 | 0,0438 / 0,861 | 0,0323 / 0,824 | 3,080 | 0,9410 |
-| avec 1 seule | 0,0249 / 0,935 | 0,0435 / 0,861 | 0,0326 / 0,824 | 3,117 | 0,9406 |
-| avec 2 seule | 0,0252 / 0,935 | 0,0443 / 0,852 | 0,0338 / 0,815 | 3,148 | 0,9401 |
-| avec 1 et 2 | 0,0251 / 0,935 | 0,0443 / 0,843 | 0,0331 / 0,815 | 3,206 | 0,9405 |
+| sans m8 | 0,0252 / 0,935 | 0,0330 / 0,815 | 3,209 | 0,9405 | 1,36 % |
+| m8 littéral (retenu) | 0,0259 / 0,935 | 0,0329 / 0,852 | 3,606 | 0,9397 | **4,43 % : `test_reference_peu_de_seances_en_alerte_bocpd` échoue** |
+| m8 sur le même schéma au même emplacement | 0,0257 / 0,926 | 0,0337 / 0,796 | 3,779 | 0,9408 | — |
+| m8 seulement sans part écrite | 0,0258 / 0,935 | 0,0325 / 0,815 | 3,466 | 0,9420 | 3,64 % |
+| m8 sur la charge du même emplacement | 0,0257 / 0,917 | 0,0341 / 0,806 | 3,527 | 0,9409 | 5,04 % |
+| m8 sur la plus lourde charge de la dernière séance | — | — | — | — | 4,27 % |
+| m8 corrigé de l'écart de répétitions (+2,5 %/rép.) | 0,0261 / 0,926 | 0,0341 / 0,852 | 3,518 | 0,9394 | — |
+
+Le coût vient des semaines de décharge (exclure l'intro ne change rien) : la borne mord quand l'athlète a progressé
+depuis son dernier passage ; la série devient bien plus facile que visé et la détection de rupture y voit un saut.
 
 ## Doutes
 
@@ -106,23 +120,25 @@ schémas nouveaux à l'emplacement, sa forme la moins coûteuse ; MAE / couvertu
 
 `python3 essai2.py $(cat SET9) reference 4` :
 
-| Ligne | Avant | Après |
-| --- | --- | --- |
-| saisons, gain, aggr, flares | 108, 0.00076, 0, 0 | 108, 0.00077, 0, 0 |
-| modele a principaux k=6 | MAE=0.0267 biais=+0.0058 couv=0.944 | MAE=0.0251 biais=+0.0050 couv=0.935 |
-| modele b principaux k=6 | MAE=0.0446 biais=-0.0251 couv=0.843 | MAE=0.0438 biais=-0.0240 couv=0.861 |
-| modele c principaux k=6 | MAE=0.0328 biais=-0.0112 couv=0.824 | MAE=0.0323 biais=-0.0109 couv=0.824 |
-| ecart effort | 3.096 echecs 0.0231 hausses 0 | 3.080 echecs 0.0230 hausses 0 |
-| echeance loaded | 144 best/max 0.9406 best/cap0 0.9274 | 144 best/max 0.9410 best/cap0 0.9278 |
+Première passe (avant → après) puis seconde passe (dernière colonne).
+
+| Ligne | Avant | Après (1re passe) | Après (2e passe) |
+| --- | --- | --- | --- |
+| saisons, gain, aggr, flares | 108, 0.00076, 0, 0 | 108, 0.00077, 0, 0 | 108, 0.00076, 0, 0 |
+| modele a principaux k=6 | MAE=0.0267 biais=+0.0058 couv=0.944 | MAE=0.0251 biais=+0.0050 couv=0.935 | MAE=0.0259 biais=+0.0078 couv=0.935 |
+| modele b principaux k=6 | MAE=0.0446 biais=-0.0251 couv=0.843 | MAE=0.0438 biais=-0.0240 couv=0.861 | MAE=0.0446 biais=-0.0249 couv=0.843 |
+| modele c principaux k=6 | MAE=0.0328 biais=-0.0112 couv=0.824 | MAE=0.0323 biais=-0.0109 couv=0.824 | MAE=0.0329 biais=-0.0106 couv=0.852 |
+| ecart effort | 3.096 echecs 0.0231 hausses 0 | 3.080 echecs 0.0230 hausses 0 | 3.606 echecs 0.0216 hausses 0 |
+| echeance loaded | 144 best/max 0.9406 best/cap0 0.9274 | 144 best/max 0.9410 best/cap0 0.9278 | 144 best/max 0.9397 best/cap0 0.9264 |
 
 `python3 essai2.py street_07…,autres_02…,street_16… douleur_coude,douleur_epaule 2` :
 
-| Ligne | Avant | Après |
-| --- | --- | --- |
-| saisons, gain, aggr, flares | 36, -0.00030, **0, 0** | 36, -0.00030, **0, 0** |
-| modele a/b/c principaux k=6 | 0.0308/0.917 ; 0.0348/0.917 ; 0.0324/0.875 | 0.0303/0.917 ; 0.0351/0.917 ; 0.0318/0.875 |
-| ecart effort | 5.205 echecs 0.0207 | 5.215 echecs 0.0211 |
-| echeance loaded | 12 best/max 0.9370 | 12 best/max 0.9383 |
+| Ligne | Avant | Après (1re passe) | Après (2e passe) |
+| --- | --- | --- | --- |
+| saisons, gain, aggr, flares | 36, -0.00030, **0, 0** | 36, -0.00030, **0, 0** | 36, -0.00030, **0, 0** |
+| modele a/b/c principaux k=6 | 0.0308/0.917 ; 0.0348/0.917 ; 0.0324/0.875 | 0.0303/0.917 ; 0.0351/0.917 ; 0.0318/0.875 | 0.0273/0.958 ; 0.0389/0.875 ; 0.0296/0.875 |
+| ecart effort | 5.205 echecs 0.0207 | 5.215 echecs 0.0211 | 5.168 echecs 0.0214 |
+| echeance loaded | 12 best/max 0.9370 | 12 best/max 0.9383 | 12 best/max 0.9420 |
 
 La petite hausse de l'écart d'effort sous douleur vient de l'alerte de surmenage (A6.2) : sans elle, les quatre
 lignes reviennent exactement aux valeurs d'avant ; sur SET9, la même règle améliore toutes les lignes (sans elle :
