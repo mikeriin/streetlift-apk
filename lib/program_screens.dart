@@ -454,8 +454,13 @@ class ProgramHomeCard extends StatelessWidget {
 class ProgramOriginCard extends StatelessWidget {
   const ProgramOriginCard({super.key});
 
+  // La carte suit elle-même le magasin : instance constante, elle n'est
+  // pas reconstruite avec l'écran.
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) =>
+      ListenableBuilder(listenable: store, builder: (context, _) => _card(context));
+
+  Widget _card(BuildContext context) {
     final at = store.programOriginAt;
     final differs = store.programDiffersFromOrigin;
     final blocked = differs && store.programOriginBlocked;

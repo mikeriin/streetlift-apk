@@ -632,7 +632,8 @@ void main() {
       );
     });
 
-    test('relevé : installation neuve, retour puis revue (mode assisté)',
+    test('installation neuve : sauvegarde d’origine au départ du programme ; '
+        'retour puis revue du moteur (mode assisté) : programme d’origine',
         () async {
       await app.configureStart(DateTime(2026, 7, 15));
       _saveProfile(app, kc.GuidanceMode.assisted);
@@ -674,6 +675,8 @@ void main() {
       final d0 = ProgramOriginStore(app).programDiffersFromOrigin;
       app.evolutionRefresh();
       final d1 = ProgramOriginStore(app).programDiffersFromOrigin;
+      expect(d0, isFalse);
+      expect(d1, isFalse);
       final now = jsonDecode(app.exportAll()) as Map<String, dynamic>;
       // ignore: avoid_print
       print(

@@ -284,6 +284,25 @@ void main() {
       releve['origine_rendue'] = !store.programDiffersFromOrigin;
       await scrollTo(tester, find.byKey(const ValueKey('program-origin')));
       await shot('08_origine_rendue');
+      // Relevé : ce qui diffère encore de la sauvegarde d'origine.
+      final b = (store.programOrigin?['backup'] as Map?) ?? const {};
+      final now = jsonDecode(store.exportAll()) as Map<String, dynamic>;
+      releve['origine_rendue_apres'] = !store.programDiffersFromOrigin;
+      releve['carte_origine_a_jour'] = find
+          .textContaining('encore celui d’origine')
+          .evaluate()
+          .isNotEmpty;
+      releve['sections_differentes'] = [
+        for (final k in const [
+          'programStart',
+          'programInstance',
+          'planProgram',
+          'programResume',
+          'planEvolution',
+        ])
+          if (jsonEncode(b[k]) != jsonEncode(now[k]))
+            '$k : ${jsonEncode(b[k])} → ${jsonEncode(now[k])}',
+      ];
       await home(tester);
     }
     await store.flush();
@@ -301,5 +320,7 @@ void main() {
     expect(releve['programme_change'], isTrue);
     expect(releve['confirmation'], isTrue);
     expect(releve['origine_rendue'], isTrue);
+    expect(releve['origine_rendue_apres'], isTrue);
+    expect(releve['carte_origine_a_jour'], isTrue);
   }, timeout: _limit);
 }
