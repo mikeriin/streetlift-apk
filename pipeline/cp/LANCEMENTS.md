@@ -177,7 +177,7 @@ Les deux sessions du 05/10 se sont arrêtées sur la limite hebdomadaire du plan
 ## CI1g — paquets 0.3.1 de CY dans l'application (à lancer après CI1f)
 
 - Lot : **CI1g** (ligne de l'état « à faire »), mise à jour courte comme CI1d. Décision : **C11.7**. Délégation totale (C8) ; validation par le pilotage.
-- Base : `main` de CI1f (dernière version publiée). Contrôle `claude/ci-3d`, sauvegardes `cp-sauvegardes/CI1g`.
+- Base : `main` 9dd09214 (dev6.11.0, CI1f). **Si le push sur `main` t'est refusé** (« Modify Shared Resources »), pousse le commit prêt sur `cp-sauvegardes/CI1g-candidat`, écris son hash dans ta livraison et la ligne de l'état, et arrête-toi : le pilotage publie et lance le build signé. Contrôle `claude/ci-3d`, sauvegardes `cp-sauvegardes/CI1g`.
 - **Paquets** : `kalis_plan` 0.3.1 (`etiquettes/kalis_plan-v0.3.1`), `kalis_adapt` 0.3.1 (`etiquettes/kalis_adapt-v0.3.1`), `kalis_core` 0.4.3 ; copie complète, octet pour octet ; `kalis_bench` jamais dans l'app. Suis `packages/kalis_plan/docs/INTEGRATION_CI.md` et `packages/kalis_adapt/docs/INTEGRATION_CI.md` (0.2.3/0.3.0 → 0.3.1).
 - **Points imposés par CY** : `clearance_first` montrée **avant la première séance** comme une étape à confirmer (avis médical / feu vert) ; consigne de la pompe remplacée pour le poignet « mains serrées sur la barre basse, poignets droits » ; `shoulder_history` sous le développé au-dessus de la tête ; textes Koach de tous les nouveaux codes (aucun code brut).
 - **C11** : le programme de 40 semaines reste sous toutes les fonctionnalités ; passe `KalisAdapt(restructureImported: true)` si un bloc du programme importé dépasse encore six semaines (sinon sans objet). Ne casse rien de CI1c à CI1f.
