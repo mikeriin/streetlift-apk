@@ -74,3 +74,4 @@ Session Opus 5.5 lancée le 05/10/2026 vers 18:14 UTC (pas de ligne « Lot : » 
 - Reste : passe finale complète du panel (street 68 couples sur les saisons ; autres 40), relecture documentée (3 sous-agents, sources web), publication (moteurs, étiquettes kalis_plan-v0.3.0 et kalis_bench-v0.2.4), manche 7 de la page, LIVRAISON_CP2.md, DECISIONS CP2.2, ETAT « à valider », page de suivi, notification.
 - 2026-10-09 03:39 UTC : passe finale fa (autres) collectée : 15/40 à 9, min 5, moyenne 7,92 (notes/fa_toutes.json). Contrôle dev 3f63f68e en cours.
 - 04:05 UTC : relecture documentée faite (notes/relecture_doc) ; contrôle FULL dd6165df (candidat final) poussé.
+- 04:10 UTC : non-ressemblance CP2 (max 0,250/0,250), analyse_CP2.tar.gpg sur cp-references 0aa951dd ; livraison en brouillon (LIVRAISON_CP2.md).
