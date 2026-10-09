@@ -156,6 +156,7 @@ final class AdaptParams {
     this.coachCorridorHeavyShare = 0.85,
     this.coachRepLoadShare = 0.025,
     this.coachRepGapMax = 4,
+    this.coachTwoForTwo = 2,
     this.coachWorstSetSlack = 1.5,
     this.coachBreachRir = 1,
     this.coachBreachCut = 0.025,
@@ -765,6 +766,11 @@ final class AdaptParams {
 
   /// Écart de répétitions compté, au plus (voir [coachRepLoadShare]).
   final int coachRepGapMax;
+
+  /// Séances de suite au haut de la plage (ou nettement plus faciles que
+  /// visé) qui font monter la charge d'un cran (règle « 2 pour 2 » de la
+  /// NSCA ; CY).
+  final int coachTwoForTwo;
 
   /// Marge admise, en répétitions en réserve, entre la cible et la série la
   /// plus dure prévue (quantile prudent) ; jamais moins d'une demi-réserve.

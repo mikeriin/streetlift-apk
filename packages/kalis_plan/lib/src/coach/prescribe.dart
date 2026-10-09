@@ -588,6 +588,11 @@ const double coachRepriseRise = 0.10;
 /// en street workout, l'excès d'entraînement la première cause perçue).
 const double coachFirstWeekRepsShare = 4;
 
+/// Part du créneau en deçà de laquelle une séance de construction reçoit des
+/// séries de plus sur le mouvement visé (`_fillTime` ; choix raisonné : 80 %
+/// laisse la marge de l'échauffement et des transitions ; CY).
+const double coachFillShare = 0.8;
+
 /// Part des séries gardée pour une figure en appui sans prise neutre quand
 /// le profil déclare une gêne du poignet (« réduit de moitié d'emblée »,
 /// relecture documentée indépendante de la manche 4, C9.8).
@@ -4120,6 +4125,30 @@ final class Prescriber {
         : (taper
               ? longest * 0.6
               : (light ? longest * 0.7 : longest * (1 + coachRunLongRise)));
+    // Après une échéance (semaine de transition ou d'introduction, ou dans
+    // les deux semaines qui suivent) : la sortie repart à 70 % de la plus
+    // longue, puis +10 % au plus d'une semaine à l'autre — jamais la plus
+    // longue d'avant la course + 10 % deux semaines après un semi (CY :
+    // panel des saisons croisées, `autres_06`, 74 → 112 min en semaine 14 ;
+    // Frandsen et al. 2025 : le risque suit la plus longue sortie récente).
+    final restartNow =
+        ws.kind == WeekKind.intro ||
+        ws.intent == WeekIntent.transition ||
+        ws.intent == WeekIntent.intro;
+    final last = _history.isEmpty ? null : _history.last;
+    final restartBefore =
+        _history.length >= 2 &&
+        (_history[_history.length - 1].restart ||
+            _history[_history.length - 2].restart);
+    if (longest > 0 && !taper && blockIndex > 0 && restartNow) {
+      long = longest * 0.7;
+    } else if (longest > 0 && !taper && restartBefore && last != null) {
+      final step = (last.runLong < 15 ? 15.0 : last.runLong) *
+          (1 + coachRunLongRise);
+      if (long > step) {
+        long = step;
+      }
+    }
     // (Jour de renforcement du coureur : 12 min gardées pour lui — panel
     // CP2, partie 1 : le renforcement disparaissait des semaines de
     // construction.)
@@ -5758,6 +5787,73 @@ final class Prescriber {
   /// Ramène la séance sous le temps du jour : séries retirées aux
   /// emplacements les moins prioritaires, puis emplacements retirés
   /// (`Method.cutOrder`).
+  /// Temps du créneau inutilisé (CY : relecture documentée et panel des
+  /// saisons croisées — séances de 23 à 38 min sur 45 disponibles chez
+  /// `street_01`, 25 min sur 60 chez `street_04`, mouvement de l'objectif
+  /// sous-dosé) : en semaine de construction, tant que la séance prend moins
+  /// de [coachFillShare] du créneau, une série de plus aux lignes de travail
+  /// du mouvement visé (puis aux mouvements principaux), cinq séries au plus
+  /// par ligne. Les garde-fous de volume qui suivent (plafond du groupe,
+  /// hausse de 15 % par semaine, volume de répétitions) bornent l'ajout : la
+  /// dose monte par paliers (R5-P22 ; R1-P1, dose-réponse : 10 séries par
+  /// muscle et par semaine et plus pour l'hypertrophie, Schoenfeld et al.
+  /// 2017).
+  void _fillTime(List<_Draft> items, int minutes, WeekSpec ws, _DayRole role) {
+    if (role != _DayRole.normal ||
+        ws.kind != WeekKind.build ||
+        ws.light ||
+        ws.testWeek ||
+        ws.eventWeek ||
+        _shape.reprise ||
+        (blockIndex == 0 && ws.stage < 1) ||
+        !(isStreetStyle(skeleton.style) ||
+            skeleton.style == CoachStyle.hypertrophy ||
+            skeleton.style == CoachStyle.strength)) {
+      return;
+    }
+    final budget = minutes * 60.0 * coachFillShare;
+    bool aimed(_Draft x) {
+      final ref = x.slot?.referenceId;
+      return a.aimsAt(x.e.id) || (ref != null && a.aimsAt(ref));
+    }
+
+    bool open(_Draft x) =>
+        x.kind == SetKind.work &&
+        x.isResistance &&
+        !x.fixed &&
+        !x.backoff &&
+        x.repsHigh != null &&
+        x.sets >= 1 &&
+        x.sets < 5;
+    final order = <_Draft>[
+      for (final x in items)
+        if (open(x) && aimed(x)) x,
+      for (final x in items)
+        if (open(x) && !aimed(x) && x.slot?.role == SlotRole.main) x,
+    ];
+    if (order.isEmpty) {
+      return;
+    }
+    var guard = 0;
+    var k = 0;
+    while (_daySeconds(items, minutes) < budget && guard < 12) {
+      guard++;
+      final x = order[k % order.length];
+      k++;
+      if (x.sets >= 5) {
+        if (order.every((o) => o.sets >= 5)) {
+          break;
+        }
+        continue;
+      }
+      x.sets++;
+      if (_daySeconds(items, minutes) > minutes * 60.0) {
+        x.sets--;
+        break;
+      }
+    }
+  }
+
   void _fitTime(List<_Draft> items, int minutes) {
     final budget = minutes * 60.0;
     int rank(_Draft x) => x.keep
@@ -6427,6 +6523,22 @@ final class Prescriber {
           longest.intensity = target.copyWith(
             value: _round3(target.value * after / before),
           );
+        }
+        // (La part dite par la note « zone de l'épreuve » suit les
+        // répétitions écrites — CY : panel des saisons croisées,
+        // `street_14`, note à 76 % pour 2 × 8 sur un maximum de 17.)
+        final reasons = longest.reasons;
+        for (var i = 0; i < reasons.length; i++) {
+          final r = reasons[i];
+          final v = r.params['value'];
+          if (r.code == ReasonCodes.planCoachNote &&
+              r.params['note'] == CoachNotes.eventZone &&
+              v is num) {
+            reasons[i] = _note(
+              CoachNotes.eventZone,
+              _round(v.toDouble() * after / before),
+            );
+          }
         }
       }
     }
@@ -7622,6 +7734,7 @@ final class Prescriber {
       ];
       for (var d = 0; d < a.dayCount; d++) {
         _equalize(days[d]);
+        _fillTime(days[d], a.days[d].minutes, ws, roles[d]);
         _fitTime(days[d], a.days[d].minutes);
       }
       _floorEvent(days, ws);

@@ -12,6 +12,12 @@ Lot CY, partie 0 (sécurité) du pipeline « Calibrage des programmes ». Contra
 - **Schéma changé d'une séance à l'autre du même emplacement** : charge totale bornée par la hausse à schéma
   égal, corrigée de 2,5 % par répétition de moins (`coachRepLoadShare`, `coachRepGapMax`).
 - **Jour de bilan bas** : il ne devient plus le repère d'un jour bas suivant (sous-dosage qui se reconduisait).
+- **Double progression** (règle « 2 pour 2 » de la NSCA, `coachTwoForTwo`) : deux séances de suite au haut de
+  la plage, ou nettement plus faciles que visé, font monter la charge d'un cran (sous le garde-fou de réserve,
+  jamais à 85 % du 1RM écrit ou plus, jamais un jour sans hausse).
+- **Propositions de volume** : une série de plus n'est proposée que si chaque groupe musculaire de l'exercice
+  reste sous le plafond hebdomadaire du niveau (12, 20, 25, 30 séries).
+- **Programme importé** (C11) : `KalisAdapt(restructureImported: true)` permet les restructurations.
 
 ## 0.3.0
 

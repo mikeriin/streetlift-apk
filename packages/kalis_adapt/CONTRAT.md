@@ -1435,7 +1435,15 @@ ou de dos qui double en série de jours durs (choix raisonné d'après Feito et 
    `coachRepGapMax`) ; un cran au moins.
 5. **Repère d'un jour de bilan bas** : la marque de l'emplacement (`SlotMark.loadedTop`, `loadedLoadKg`) ignore
    aussi les séances faites un jour de bilan bas, comme les semaines allégées.
-6. **Programme importé** (C11) : `KalisAdapt(restructureImported: true)` laisse `review` proposer les
+6. **Double progression** (règle « 2 pour 2 » de la NSCA) : même emplacement, même schéma, marque à
+   `reached` ≥ `coachTwoForTwo` (deux séances de suite au haut de la plage, ou première série dite au moins
+   deux répétitions plus facile que visé), aucun verrou du jour (échec, douleur, bilan bas, répétitions
+   manquées), part écrite sous 85 % : la charge monte d'un cran au-dessus de la dernière, si le garde-fou de
+   réserve du modèle le permet.
+7. **Propositions « volume ajusté »** (`review.dart`) : une série de plus seulement si chaque groupe majeur de
+   l'exercice reste sous `coachWeeklyCeilingSets` du niveau (12, 20, 25, 30 séries dures par semaine, R1-P1),
+   compté sur la semaine écrite suivante.
+8. **Programme importé** (C11) : `KalisAdapt(restructureImported: true)` laisse `review` proposer les
    restructurations de `kalis_plan` sur un bloc de plus de six semaines ; par défaut, inchangé (jamais).
 
 ### 13.2 Paramètres
@@ -1443,6 +1451,7 @@ ou de dos qui double en série de jours durs (choix raisonné d'après Feito et 
 | Paramètre | Valeur | Source |
 | --- | --- | --- |
 | `coachCorridorHeavyShare` | 85 % du 1RM | choix raisonné ; erreur d'estimation du 1RM de quelques pour cent (Helms et al. 2018) ; relecture documentée de CP2, `street_07` |
+| `coachTwoForTwo` | 2 séances | règle « 2 pour 2 » (NSCA, Essentials of Strength Training and Conditioning, progression de la charge) |
 | `coachRepLoadShare`, `coachRepGapMax` | 2,5 % par répétition ; 4 | tables de pourcentage du 1RM (NSCA : environ 2,5 à 3 % par répétition), borne basse ; choix raisonné |
 
 ### 13.3 Branches « bloc importé » restantes (C11)
