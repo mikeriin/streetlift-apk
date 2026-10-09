@@ -2,8 +2,10 @@
 // le chemin calibré (`kalis_plan` 0.2) : phases calées à rebours sur
 // l'échéance, compte à rebours, semaines d'allègement, de test et
 // d'affûtage du bloc en cours, règles du programme et échelles des
-// figures. Un programme du chemin 0.1 (et le programme de 40 semaines du
-// propriétaire) n'a pas de saison : la carte ne s'affiche pas.
+// figures. Un programme du chemin 0.1 n'a pas de saison : la carte ne
+// s'affiche pas. CI1e (C11) : le programme de 40 semaines du propriétaire
+// a la saison de son annotation (phases de ses blocs, échéance à la fin
+// de S40).
 //
 // Lecture seule : tout vient du plan de saison et des blocs stockés.
 import 'package:flutter/material.dart';
@@ -125,6 +127,39 @@ SeasonOverview? seasonOverview(
   final season = plan.season;
   final lastBlock = plan.blocks.last.block;
   if (season == null && !isCoachBlock(lastBlock)) return null;
+  // Semaines du bloc en cours.
+  var blockIndex = plan.blocks.length - 1;
+  int? currentWeek;
+  if (programStart != null) {
+    final o = _days(programStart, today);
+    if (o >= 0) currentWeek = o ~/ 7 + 1;
+  }
+  final loc = currentWeek == null ? null : plan.locate(currentWeek);
+  if (loc != null) blockIndex = loc.block;
+  return seasonOverviewOf(
+    season,
+    events: events,
+    today: today,
+    currentWeek: currentWeek,
+    block: plan.blocks[blockIndex].block,
+    blockFirstWeek: plan.blockFirstWeek(blockIndex),
+    blockIndex: blockIndex,
+    catalog: catalog,
+  );
+}
+
+/// Vue d'une saison [season] dont le bloc en cours est [block] (rang
+/// [blockIndex], première semaine [blockFirstWeek]).
+SeasonOverview seasonOverviewOf(
+  kc.SeasonPlan? season, {
+  required List<kc.SeasonEvent> events,
+  required DateTime today,
+  required int? currentWeek,
+  required kc.ProgramBlock block,
+  required int blockFirstWeek,
+  required int blockIndex,
+  kc.Catalog? catalog,
+}) {
   String? nameOf(String? id) {
     if (id == null) return null;
     for (final e in events) {
@@ -161,20 +196,10 @@ SeasonOverview? seasonOverview(
       event = e;
     }
   }
-  // Semaines du bloc en cours.
   final weeks = <SeasonWeekView>[];
-  var blockIndex = plan.blocks.length - 1;
-  int? currentWeek;
-  if (programStart != null) {
-    final o = _days(programStart, today);
-    if (o >= 0) currentWeek = o ~/ 7 + 1;
-  }
-  final loc = currentWeek == null ? null : plan.locate(currentWeek);
-  if (loc != null) blockIndex = loc.block;
-  final entry = plan.blocks[blockIndex];
-  final first = plan.blockFirstWeek(blockIndex);
-  for (var w = 0; w < entry.block.pass2.weeks.length; w++) {
-    final wk = entry.block.pass2.weeks[w];
+  final first = blockFirstWeek;
+  for (var w = 0; w < block.pass2.weeks.length; w++) {
+    final wk = block.pass2.weeks[w];
     final intent = wk.intent;
     final label = intent == null
         ? (kWeekKindLabels[wk.kind] ?? wk.kind.code)
@@ -194,8 +219,8 @@ SeasonOverview? seasonOverview(
     daysToEvent: event == null ? null : _days(today, _day(event.date)),
     blockWeeks: weeks,
     blockIndex: blockIndex,
-    rules: coachProgramRules(entry.block, catalog),
-    ladders: coachLadderLines(entry.block, catalog),
+    rules: coachProgramRules(block, catalog),
+    ladders: coachLadderLines(block, catalog),
   );
 }
 
@@ -240,8 +265,43 @@ String countdownText(int days) => days == 0
 /// Vue de la saison du programme en place (null : pas de saison).
 SeasonOverview? storeSeasonOverview() {
   final plan = store.planProgram;
-  if (plan == null) return null;
   final n = store.storeClock();
+  final today = DateTime(n.year, n.month, n.day);
+  final start = store.program.start;
+  // CI1e (C11) : semaine du programme importé (programme de 40 semaines
+  // du propriétaire, ou semaines d'avant un programme créé) : saison de
+  // son annotation.
+  final week = start == null || _days(start, today) < 0
+      ? null
+      : _days(start, today) ~/ 7 + 1;
+  if (plan == null || (week != null && week < plan.firstWeek)) {
+    final imp = store.importedProgram;
+    final season = imp?.season;
+    if (imp == null || season == null) return null;
+    final seg =
+        (week == null ? null : imp.segmentOf(week)) ??
+        (week != null && week > imp.segments.last.last
+            ? imp.segments.last
+            : imp.segments.first);
+    final event = imp.event;
+    return seasonOverviewOf(
+      season,
+      events: [
+        ...?store.athlete?.profile.events,
+        if (event != null &&
+            !(store.athlete?.profile.events ?? const <kc.SeasonEvent>[]).any(
+              (e) => e.priority == kc.EventPriority.main,
+            ))
+          event,
+      ],
+      today: today,
+      currentWeek: week,
+      block: seg.block,
+      blockFirstWeek: seg.first,
+      blockIndex: seg.index,
+      catalog: store.content.catalog,
+    );
+  }
   return seasonOverview(
     plan,
     events: store.athlete?.profile.events ?? const <kc.SeasonEvent>[],

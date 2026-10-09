@@ -11,8 +11,12 @@ import 'package:flutter/material.dart';
 import 'package:kalis_core/kalis_core.dart' as kc;
 import 'package:kalis_koach/kalis_koach.dart' show KoachPose;
 
+import 'dart:convert' show utf8;
+import 'dart:typed_data' show Uint8List;
+
 import 'app_theme.dart';
 import 'athlete_profile_screen.dart' show ProfileScreen;
+import 'backup_files.dart';
 import 'dev/dev_flags.dart';
 import 'dev/dev_session.dart' show DevShare;
 import 'koach/koach_bubble.dart';
@@ -108,7 +112,9 @@ class ProgramScreen extends StatelessWidget {
                   generated
                       ? '${inst!.weeks.length} semaines · programme généré '
                             'avant la création avec Koach, affiché tel quel'
-                      : 'Programme embarqué, inchangé',
+                      : 'Programme embarqué, suivi par Koach comme un '
+                            'programme du moteur (blocs, saison, tests) ; '
+                            'l’original reste sauvegardé',
                   style: dim,
                 ),
               ],
@@ -117,9 +123,13 @@ class ProgramScreen extends StatelessWidget {
         );
       }
       // CI1 : saison du chemin calibré (phases, échéance, semaines
-      // particulières du bloc).
+      // particulières du bloc) ; CI1e : saison du programme importé.
       if (storeSeasonOverview() case final season?) {
         children.add(SeasonCard(view: season));
+      }
+      // CI1e (C11.2) : programme d'origine sauvegardé, retour possible.
+      if (store.canRestoreProgramOrigin) {
+        children.add(const ProgramOriginCard());
       }
       // G10 (D5.6, D5.7) : évolution du programme — mode, déblocage,
       // historique des changements.
@@ -185,7 +195,8 @@ class ProgramScreen extends StatelessWidget {
           ),
         );
       }
-      if (PlanStore(store).planBlockEnding) {
+      if (PlanStore(store).planBlockEnding ||
+          PlanStore(store).planImportedNextBlockOffered) {
         children.add(
           FilledButton.icon(
             key: const ValueKey('program-next-block'),
@@ -432,6 +443,141 @@ class ProgramHomeCard extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+/// CI1e (C11.2) : programme d'origine sauvegardé automatiquement avant que
+/// le programme de 40 semaines passe sous toutes les fonctionnalités ;
+/// « Revenir à mon programme d'origine » et export de la sauvegarde.
+class ProgramOriginCard extends StatelessWidget {
+  const ProgramOriginCard({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final at = store.programOriginAt;
+    final differs = store.programDiffersFromOrigin;
+    final blocked = differs && store.programOriginBlocked;
+    final dim = Theme.of(context).textTheme.bodySmall;
+    return KCard(
+      key: const ValueKey('program-origin'),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(
+            'Ton programme d’origine',
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
+          const SizedBox(height: 4),
+          Text(
+            'Sauvegardé automatiquement'
+            '${at == null ? '' : ' le ${civilDateLabel(at)}'}, avant que '
+            'Koach suive ton programme comme un programme du moteur : '
+            'programme et journal tels qu’ils étaient.',
+          ),
+          const SizedBox(height: 4),
+          Text(
+            blocked
+                ? 'Ton programme a changé depuis, et tu as déjà fait des '
+                      'séances du programme écrit ensuite : le retour à '
+                      'l’origine n’est plus possible (ces séances ne '
+                      'correspondraient plus à ton programme).'
+                : differs
+                ? 'Ton programme a changé depuis (propositions de Koach, '
+                      'nouveau bloc…). Revenir à l’origine rend le programme '
+                      'd’avant ; tes séances faites restent dans ton journal.'
+                : 'Ton programme est encore celui d’origine.',
+            key: const ValueKey('program-origin-state'),
+            style: dim,
+          ),
+          Text(
+            'Le fichier exporté est une sauvegarde complète : l’importer '
+            'remplace toutes tes données, journal compris.',
+            style: dim,
+          ),
+          const SizedBox(height: 8),
+          Wrap(
+            spacing: 8,
+            runSpacing: 8,
+            children: [
+              OutlinedButton(
+                key: const ValueKey('program-origin-restore'),
+                onPressed: differs && !blocked
+                    ? () => _confirmRestore(context)
+                    : null,
+                child: const Text('Revenir à mon programme d’origine'),
+              ),
+              TextButton(
+                key: const ValueKey('program-origin-export'),
+                onPressed: () => _export(context),
+                child: const Text('Exporter cette sauvegarde'),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _confirmRestore(BuildContext context) async {
+    final ok = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: const Text('Revenir à ton programme d’origine ?'),
+        content: const Text(
+          'Ton programme redevient exactement celui d’avant : les '
+          'propositions de Koach acceptées depuis, un bloc écrit par le '
+          'moteur et tes réponses à « Où j’en suis » sont retirés. Ton '
+          'journal ne change pas : les séances faites et les séries '
+          'validées restent. Koach continue de suivre ton programme : en '
+          'mode assisté, il pourra de nouveau l’ajuster (en mode libre, '
+          'tu décides de chaque changement).',
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, false),
+            child: const Text('Annuler'),
+          ),
+          FilledButton(
+            key: const ValueKey('program-origin-confirm'),
+            onPressed: () => Navigator.pop(ctx, true),
+            child: const Text('Revenir à l’origine'),
+          ),
+        ],
+      ),
+    );
+    if (ok != true || !context.mounted) return;
+    final done = store.restoreProgramOrigin();
+    showKoachToast(
+      context,
+      done
+          ? 'Ton programme d’origine est rétabli.'
+          : 'Retour impossible : la sauvegarde d’origine est illisible.',
+      pose: done ? KoachPose.thumbsUp : KoachPose.oops,
+    );
+  }
+
+  Future<void> _export(BuildContext context) async {
+    final text = store.programOriginExport();
+    if (text == null) return;
+    final messenger = ScaffoldMessenger.of(context);
+    final at = store.programOriginAt ?? store.storeClock();
+    String two(int v) => v.toString().padLeft(2, '0');
+    final r = await backupFiles.save(
+      'kalis-track-programme-origine-${at.year}-${two(at.month)}-'
+      '${two(at.day)}.json',
+      Uint8List.fromList(utf8.encode(text)),
+    );
+    messenger.showSnackBar(
+      SnackBar(
+        content: Text(switch (r.status) {
+          FileSaveStatus.saved => 'Sauvegarde d’origine exportée.',
+          FileSaveStatus.unverified =>
+            'Sauvegarde d’origine écrite, relecture impossible.',
+          FileSaveStatus.cancelled => 'Export annulé.',
+          FileSaveStatus.failed => 'Export impossible.',
+        }),
       ),
     );
   }
