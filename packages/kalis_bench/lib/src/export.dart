@@ -413,7 +413,10 @@ bool _isBlockNote(Reason r) {
       note == CoachNotes.submaximalHold ||
       note == CoachNotes.qualityFirst ||
       note == CoachNotes.everyMinute ||
-      note == CoachNotes.generalWarmup;
+      note == CoachNotes.generalWarmup ||
+      note == CoachNotes.warmupRun ||
+      note == CoachNotes.warmupGym ||
+      note == CoachNotes.warmupHealth;
 }
 
 /// Nom français de l'intention d'une semaine.

@@ -140,6 +140,21 @@ abstract final class CoachNotes {
   /// Exercice debout d'un senior tenu d'une main (CP2, partie 1).
   static const String holdSupport = 'hold_support';
 
+  /// Échauffement du coureur (`value` : minutes ; CP2, partie 1).
+  static const String warmupRun = 'warmup_run';
+
+  /// Échauffement de salle et de conditionnement (`value` : minutes).
+  static const String warmupGym = 'warmup_gym';
+
+  /// Échauffement de santé et de mobilité (`value` : minutes).
+  static const String warmupHealth = 'warmup_health';
+
+  /// Version courte d'un jour chargé, course (`value` : minutes).
+  static const String shortRun = 'short_run';
+
+  /// Version courte d'un jour chargé, santé (`value` : minutes).
+  static const String shortHealth = 'short_health';
+
   /// Repère d'un objectif de répétitions sans lest au matériel (`value` :
   /// valeur attendue) : la surcharge passe par une variante plus dure
   /// (CP2, partie 0, boucle 2).
@@ -441,6 +456,11 @@ abstract final class CoachNotes {
     kneeShallow,
     balanceProgress,
     holdSupport,
+    warmupRun,
+    warmupGym,
+    warmupHealth,
+    shortRun,
+    shortHealth,
     checkpointBody,
     checkpointHold,
     checkpointLoad,
@@ -7689,12 +7709,15 @@ List<Reason> blockReasonsOf(Athlete a, Skeleton skeleton) {
     for (final r in skeleton.reasons)
       if (r.params['note'] == CoachNotes.skillHorizon) r,
     reason(ReasonCodes.planCoachNote, <String, Object?>{
-      'note': CoachNotes.generalWarmup,
+      // Échauffement de la discipline (CP2, partie 1 ; R6-P25) : code de
+      // note propre à la famille, la valeur reste en minutes.
+      'note': switch (_warmupFamily(skeleton.style)) {
+        'run' => CoachNotes.warmupRun,
+        'gym' => CoachNotes.warmupGym,
+        'health' => CoachNotes.warmupHealth,
+        _ => CoachNotes.generalWarmup,
+      },
       'value': coachWarmupSeconds / 60,
-      // Échauffement de la discipline (CP2, partie 1 ; R6-P25) : paramètre
-      // additif, la valeur reste en minutes.
-      if (_warmupFamily(skeleton.style) != null)
-        'family': _warmupFamily(skeleton.style),
     }),
   ];
   // (Musculation et santé : aucun test de maximum, pas de règle de
@@ -7808,10 +7831,12 @@ List<Reason> blockReasonsOf(Athlete a, Skeleton skeleton) {
     )
     ..add(
       reason(ReasonCodes.planCoachNote, <String, Object?>{
-        'note': CoachNotes.shortVersion,
+        'note': switch (_warmupFamily(skeleton.style)) {
+          'run' => CoachNotes.shortRun,
+          'health' => CoachNotes.shortHealth,
+          _ => CoachNotes.shortVersion,
+        },
         'value': shortest >= 50 ? 25 : 15,
-        if (_warmupFamily(skeleton.style) != null)
-          'family': _warmupFamily(skeleton.style),
       }),
     )
     ..add(note(CoachNotes.redFlags, 0))
