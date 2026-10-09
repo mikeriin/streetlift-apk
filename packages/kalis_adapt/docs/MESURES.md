@@ -1,6 +1,6 @@
 # kalis_adapt — mesures de la campagne de simulation
 
-Document généré par `dart run bin/kalis_adapt_cli.dart --rapport <dossier>` (moteur 0.2.0) à partir de `docs/data/campagne.json` : 8 athlètes simulés × 24 semaines × 200 graines × 4 politiques (dont l'oracle) à programme égal, puis 40 graines par athlète en boucle complète. Lecture et limites : `VALIDATION.md`.
+Document généré par `dart run bin/kalis_adapt_cli.dart --rapport <dossier>` (moteur 0.3.0) à partir de `docs/data/campagne.json` : 8 athlètes simulés × 24 semaines × 200 graines × 4 politiques (dont l'oracle) à programme égal, puis 40 graines par athlète en boucle complète. Lecture et limites : `VALIDATION.md`.
 
 Chaque valeur est la moyenne des graines ; « ± » donne la demi-largeur de l'intervalle de confiance à 95 % (1,96 × erreur standard entre graines).
 
@@ -22,11 +22,11 @@ Après calibrage (à partir de la 4ᵉ séance de chaque exercice), hors semaine
 | avance_street | double_progression | 2.03 ± 0.05 | 1.67 | 81 % | 3.73 | 4.74 ± 0.30 % | 2.74 ± 0.17 % | -0.00 ± 0.00 % |
 | avance_street | L7/L11 | 2.59 ± 0.05 | 1.85 | 80 % | 4.27 | 5.64 ± 0.32 % | 4.66 ± 0.21 % | -0.01 ± 0.00 % |
 | avance_street | oracle | 0.24 ± 0.00 | 0.02 | 81 % | 1.08 | 0.04 ± 0.03 % | 0.03 ± 0.02 % | -0.00 ± 0.00 % |
-| notes_paresseuses | kalis_adapt | 1.34 ± 0.04 | 0.47 | 93 % | 1.71 | 0.93 ± 0.09 % | 2.29 ± 0.19 % | 0.07 ± 0.00 % |
+| notes_paresseuses | kalis_adapt | 1.34 ± 0.04 | 0.47 | 93 % | 1.71 | 0.92 ± 0.09 % | 2.28 ± 0.18 % | 0.07 ± 0.00 % |
 | notes_paresseuses | double_progression | 2.59 ± 0.09 | 2.37 | 93 % | 3.79 | 0.21 ± 0.05 % | 0.26 ± 0.06 % | 0.07 ± 0.00 % |
 | notes_paresseuses | L7/L11 | 4.46 ± 0.12 | 4.19 | 93 % | 5.59 | 0.37 ± 0.06 % | 0.87 ± 0.08 % | 0.06 ± 0.00 % |
 | notes_paresseuses | oracle | 0.29 ± 0.01 | 0.05 | 93 % | 0.66 | 0.00 ± 0.00 % | 0.00 ± 0.00 % | 0.09 ± 0.00 % |
-| irregulier | kalis_adapt | 1.19 ± 0.03 | 0.42 | 96 % | 1.35 | 0.48 ± 0.07 % | 1.51 ± 0.15 % | 0.01 ± 0.00 % |
+| irregulier | kalis_adapt | 1.19 ± 0.03 | 0.42 | 96 % | 1.35 | 0.50 ± 0.07 % | 1.50 ± 0.15 % | 0.01 ± 0.00 % |
 | irregulier | double_progression | 2.53 ± 0.09 | 2.34 | 95 % | 3.20 | 0.25 ± 0.09 % | 0.26 ± 0.07 % | 0.01 ± 0.00 % |
 | irregulier | L7/L11 | 3.57 ± 0.12 | 3.09 | 95 % | 4.21 | 0.60 ± 0.11 % | 1.32 ± 0.13 % | -0.00 ± 0.00 % |
 | irregulier | oracle | 0.28 ± 0.01 | 0.06 | 95 % | 0.48 | 0.00 ± 0.00 % | 0.00 ± 0.00 % | 0.02 ± 0.00 % |
@@ -38,7 +38,7 @@ Après calibrage (à partir de la 4ᵉ séance de chaque exercice), hors semaine
 | calisthenie_parc | double_progression | 3.54 ± 0.16 | 3.46 | 47 % | 8.09 | 0.00 ± 0.00 % | 0.00 ± 0.00 % | 0.04 ± 0.00 % |
 | calisthenie_parc | L7/L11 | 3.54 ± 0.16 | 3.46 | 47 % | 8.09 | 0.00 ± 0.00 % | 0.00 ± 0.00 % | 0.04 ± 0.00 % |
 | calisthenie_parc | oracle | 0.32 ± 0.01 | 0.11 | 45 % | 2.93 | 0.00 ± 0.00 % | 0.00 ± 0.00 % | 0.09 ± 0.00 % |
-| douleur_et_lieu | kalis_adapt | 1.19 ± 0.03 | 0.40 | 90 % | 1.40 | 0.62 ± 0.07 % | 1.76 ± 0.15 % | 0.04 ± 0.00 % |
+| douleur_et_lieu | kalis_adapt | 1.19 ± 0.03 | 0.41 | 90 % | 1.41 | 0.63 ± 0.07 % | 1.74 ± 0.15 % | 0.04 ± 0.00 % |
 | douleur_et_lieu | double_progression | 2.12 ± 0.06 | 1.84 | 84 % | 2.80 | 4.82 ± 0.19 % | 4.50 ± 0.16 % | 0.05 ± 0.00 % |
 | douleur_et_lieu | L7/L11 | 3.33 ± 0.10 | 2.74 | 84 % | 3.78 | 5.15 ± 0.20 % | 5.76 ± 0.20 % | 0.05 ± 0.00 % |
 | douleur_et_lieu | oracle | 0.27 ± 0.00 | 0.04 | 84 % | 0.58 | 3.89 ± 0.12 % | 3.79 ± 0.13 % | 0.03 ± 0.00 % |
@@ -53,7 +53,7 @@ Moyenne de la différence `kalis_adapt − référence`, simulation par simulati
 | intermediaire_salle | -1.46 ± 0.07 | -2.72 ± 0.09 | 0.01 ± 0.00 % | 0.01 ± 0.00 % |
 | avance_street | -1.00 ± 0.05 | -1.56 ± 0.05 | 0.00 ± 0.00 % | 0.00 ± 0.00 % |
 | notes_paresseuses | -1.24 ± 0.08 | -3.11 ± 0.12 | 0.00 ± 0.00 % | 0.01 ± 0.00 % |
-| irregulier | -1.35 ± 0.08 | -2.39 ± 0.12 | 0.01 ± 0.00 % | 0.01 ± 0.00 % |
+| irregulier | -1.35 ± 0.08 | -2.38 ± 0.12 | 0.01 ± 0.00 % | 0.01 ± 0.00 % |
 | maison_halteres | -1.65 ± 0.08 | -4.46 ± 0.18 | 0.01 ± 0.00 % | 0.02 ± 0.00 % |
 | calisthenie_parc | -2.34 ± 0.15 | -2.34 ± 0.15 | 0.04 ± 0.00 % | 0.04 ± 0.00 % |
 | douleur_et_lieu | -0.93 ± 0.06 | -2.14 ± 0.10 | -0.00 ± 0.00 % | -0.00 ± 0.00 % |
@@ -83,7 +83,7 @@ Erreur relative absolue après 1, 3, 6 et 12 séances de l'exercice. Capacité o
 | intermediaire_salle | L7/L11 | 7.3 % | 5.4 % | 6.0 % | 5.6 % | 7.4 % | 7.6 % | 6.9 % | 6.6 % | 45 % |
 | avance_street | kalis_adapt | 10.4 % | 6.6 % | 5.6 % | 4.9 % | 11.6 % | 8.2 % | 7.3 % | 6.3 % | 84 % |
 | avance_street | L7/L11 | 5.8 % | 5.4 % | 5.9 % | 7.1 % | 5.9 % | 6.0 % | 5.0 % | 4.1 % | 57 % |
-| notes_paresseuses | kalis_adapt | 12.2 % | 7.3 % | 5.0 % | 2.4 % | 13.3 % | 9.1 % | 6.8 % | 4.5 % | 88 % |
+| notes_paresseuses | kalis_adapt | 12.2 % | 7.3 % | 5.0 % | 2.3 % | 13.3 % | 9.1 % | 6.8 % | 4.5 % | 88 % |
 | notes_paresseuses | L7/L11 | 9.1 % | 7.2 % | 7.4 % | 6.2 % | 8.3 % | 8.1 % | 7.6 % | 7.9 % | 30 % |
 | irregulier | kalis_adapt | 10.4 % | 5.6 % | 4.8 % | 2.2 % | 11.6 % | 7.7 % | 7.0 % | 5.1 % | 90 % |
 | irregulier | L7/L11 | 7.7 % | 6.3 % | 5.8 % | 6.0 % | 8.6 % | 8.1 % | 7.7 % | 7.5 % | 39 % |
@@ -133,11 +133,11 @@ Changements : changements de charge de première série par simulation, après c
 | avance_street | double_progression | 79.3 | 38.1 % | 3.2 % | 0 | 0 | 0.0 % | 0.00 |
 | avance_street | L7/L11 | 120.7 | 54.4 % | 16.2 % | 20 | 0 | 0.0 % | 0.00 |
 | avance_street | oracle | 116.0 | 64.7 % | 15.3 % | 76 | 0 | 0.0 % | 0.00 |
-| notes_paresseuses | kalis_adapt | 29.1 | 40.8 % | 10.0 % | 0 | 0 | 14.1 % | 0.00 |
+| notes_paresseuses | kalis_adapt | 29.1 | 40.8 % | 10.0 % | 0 | 0 | 14.2 % | 0.00 |
 | notes_paresseuses | double_progression | 52.2 | 51.8 % | 5.9 % | 0 | 0 | 0.0 % | 0.00 |
 | notes_paresseuses | L7/L11 | 55.5 | 48.7 % | 20.8 % | 16 | 0 | 0.0 % | 0.00 |
 | notes_paresseuses | oracle | 97.2 | 72.1 % | 18.2 % | 149 | 0 | 0.0 % | 0.00 |
-| irregulier | kalis_adapt | 27.6 | 42.8 % | 10.0 % | 0 | 0 | 16.2 % | 0.00 |
+| irregulier | kalis_adapt | 27.6 | 42.7 % | 10.0 % | 0 | 0 | 22.6 % | 0.00 |
 | irregulier | double_progression | 39.0 | 29.9 % | 9.1 % | 0 | 0 | 0.0 % | 0.00 |
 | irregulier | L7/L11 | 52.1 | 46.9 % | 44.4 % | 352 | 0 | 0.0 % | 0.00 |
 | irregulier | oracle | 75.7 | 65.4 % | 25.0 % | 352 | 0 | 0.0 % | 0.00 |
@@ -149,7 +149,7 @@ Changements : changements de charge de première série par simulation, après c
 | calisthenie_parc | double_progression | 0.0 | 0.0 % | 0.0 % | 0 | 0 | 0.0 % | 0.00 |
 | calisthenie_parc | L7/L11 | 0.0 | 0.0 % | 0.0 % | 0 | 0 | 0.0 % | 0.00 |
 | calisthenie_parc | oracle | 0.0 | 0.0 % | 0.0 % | 0 | 0 | 0.0 % | 0.00 |
-| douleur_et_lieu | kalis_adapt | 39.1 | 57.8 % | 33.3 % | 0 | 273 | 39.3 % | 0.00 |
+| douleur_et_lieu | kalis_adapt | 39.1 | 57.8 % | 33.3 % | 0 | 274 | 39.4 % | 0.00 |
 | douleur_et_lieu | double_progression | 67.8 | 67.9 % | 33.3 % | 0 | 763 | 0.0 % | 15.47 |
 | douleur_et_lieu | L7/L11 | 77.2 | 65.0 % | 33.3 % | 25 | 304 | 0.0 % | 12.83 |
 | douleur_et_lieu | oracle | 73.7 | 74.3 % | 25.0 % | 111 | 453 | 0.0 % | 5.66 |
@@ -163,11 +163,11 @@ Revue chaque fin de semaine, propositions appliquées, bloc suivant construit pa
 | debutant_salle | 1.20 ± 0.07 | 0.28 ± 0.01 % | 0.6 | 0.0 | 1.8 | 0.0 | 0.0 | 0.0 | 0.0 % |
 | intermediaire_salle | 1.14 ± 0.05 | 0.05 ± 0.01 % | 1.3 | 0.1 | 2.2 | 0.0 | 0.0 | 0.0 | 0.8 % |
 | avance_street | 1.04 ± 0.03 | -0.00 ± 0.00 % | 4.5 | 1.5 | 1.2 | 0.0 | 0.0 | 0.0 | 1.1 % |
-| notes_paresseuses | 1.28 ± 0.07 | 0.06 ± 0.00 % | 1.5 | 0.0 | 0.7 | 0.0 | 0.0 | 0.0 | 0.0 % |
+| notes_paresseuses | 1.29 ± 0.07 | 0.06 ± 0.00 % | 1.6 | 0.0 | 0.7 | 0.0 | 0.0 | 0.0 | 0.0 % |
 | irregulier | 1.13 ± 0.05 | -0.00 ± 0.02 % | 1.7 | 0.0 | 0.7 | 0.0 | 0.0 | 0.0 | 0.0 % |
 | maison_halteres | 1.50 ± 0.13 | 0.34 ± 0.01 % | 1.0 | 0.0 | 0.3 | 0.0 | 0.0 | 0.0 | 0.0 % |
 | calisthenie_parc | 1.24 ± 0.11 | 0.14 ± 0.01 % | 0.1 | 0.0 | 0.4 | 0.0 | 0.0 | 0.0 | 0.0 % |
-| douleur_et_lieu | 1.20 ± 0.08 | 0.07 ± 0.00 % | 3.5 | 0.0 | 2.9 | 0.0 | 0.0 | 0.0 | 1.7 % |
+| douleur_et_lieu | 1.19 ± 0.08 | 0.07 ± 0.01 % | 3.5 | 0.0 | 2.9 | 0.0 | 0.0 | 0.0 | 1.1 % |
 
 | Athlète | Volume | Échange d'exercice | Restructuration de séance | Restructuration de bloc |
 | --- | --- | --- | --- | --- |
@@ -187,11 +187,11 @@ Candidates retenues par la revue, par simulation (nature : cause — `unlock` ni
 | debutant_salle | block_restructure:no_change 0.1 ; block_restructure:unlock 0.1 ; deload:confidence 0.0 ; exercise_swap:recent_swap 0.2 ; exercise_swap:unlock 1.9 |
 | intermediaire_salle | block_restructure:no_change 0.0 ; block_restructure:unlock 0.1 ; deload:confidence 0.1 ; exercise_swap:recent_swap 0.0 ; exercise_swap:scope 1.5 |
 | avance_street | deload:confidence 0.4 ; exercise_swap:recent_swap 0.1 ; exercise_swap:scope 0.3 ; volume:confidence 0.1 |
-| notes_paresseuses | block_restructure:no_change 0.0 ; block_restructure:unlock 0.0 ; exercise_swap:scope 0.3 |
-| irregulier | block_restructure:no_change 4.5 ; block_restructure:unlock 1.6 ; deload:confidence 0.1 |
+| notes_paresseuses | block_restructure:no_change 0.0 ; block_restructure:unlock 0.0 ; exercise_swap:recent_swap 0.0 ; exercise_swap:scope 0.3 |
+| irregulier | block_restructure:no_change 4.5 ; block_restructure:unlock 1.6 ; deload:confidence 0.0 |
 | maison_halteres | block_restructure:no_change 0.2 ; block_restructure:unlock 0.2 ; exercise_swap:scope 0.3 |
 | calisthenie_parc | block_restructure:no_change 0.1 ; block_restructure:unlock 0.1 |
-| douleur_et_lieu | block_restructure:unlock 0.1 ; deload:confidence 0.3 ; exercise_swap:recent_swap 0.5 ; exercise_swap:scope 0.1 ; exercise_swap:unlock 2.5 ; pain_sparing:no_change 2.9 ; pain_sparing:scope 0.1 ; volume:confidence 0.1 |
+| douleur_et_lieu | block_restructure:unlock 0.1 ; deload:confidence 0.3 ; exercise_swap:recent_swap 0.5 ; exercise_swap:scope 0.3 ; exercise_swap:unlock 2.5 ; pain_sparing:no_change 2.9 ; pain_sparing:scope 0.1 ; volume:confidence 0.2 |
 
 ## 5. Temps de calcul
 
@@ -199,7 +199,7 @@ Mesurés par le simulateur sur la machine de contrôle (le moteur n'a pas d'horl
 
 | Opération | Médiane | 95ᵉ centile | 99ᵉ centile | Maximum | Cible |
 | --- | --- | --- | --- | --- | --- |
-| Décision de séance (`prescribeSession`) | 0.04 ms | 0.08 ms | 5.46 ms | 6.38 ms | ≤ 50 ms |
-| Mise à jour après une série (`adviseNextSet`) | 0.04 ms | 0.08 ms | 0.10 ms | 9.28 ms | ≤ 5 ms |
-| Revue (`review`) | 0.61 ms | 0.67 ms | 0.73 ms | 0.73 ms | — |
-| Décision de séance à froid | 7.92 ms | 11.62 ms | 20.00 ms | 20.00 ms | — |
+| Décision de séance (`prescribeSession`) | 0.16 ms | 0.25 ms | 10.35 ms | 20.05 ms | ≤ 50 ms |
+| Mise à jour après une série (`adviseNextSet`) | 0.07 ms | 0.13 ms | 0.16 ms | 3.35 ms | ≤ 5 ms |
+| Revue (`review`) | 0.82 ms | 1.62 ms | 1.87 ms | 1.87 ms | — |
+| Décision de séance à froid | 13.52 ms | 17.29 ms | 22.77 ms | 22.77 ms | — |

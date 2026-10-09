@@ -1,6 +1,6 @@
 {
  "schema": 1,
- "version": "0.4.1",
+ "version": "0.4.3",
  "texts": [
   {
    "code": "plan.season_phase",
@@ -351,6 +351,48 @@
     "stopAt"
    ],
    "meaning": "Conduite à tenir selon la gêne ressentie (échelle de 0 à 10) : continuer en dessous d'un seuil, alléger, arrêter."
+  },
+  {
+   "code": "adapt.run_capped",
+   "fr": "Sortie raccourcie : pas plus de {percent} % au-dessus de ta plus longue sortie du mois.",
+   "params": [
+    "percent"
+   ],
+   "meaning": "Course du jour raccourcie : pas plus de `percent` % au-dessus de la plus longue course des 30 derniers jours."
+  },
+  {
+   "code": "adapt.easy_instead",
+   "fr": "Aujourd'hui, endurance facile à la place de la séance de qualité ({cause}).",
+   "params": [
+    "cause"
+   ],
+   "meaning": "Séance de qualité (allure, fractionné, test de course) servie en endurance facile un jour sans."
+  },
+  {
+   "code": "adapt.endurance_shortened",
+   "fr": "On raccourcit : {percent} % de ce qui était prévu ({cause}).",
+   "params": [
+    "cause",
+    "percent"
+   ],
+   "meaning": "Durée, distance ou nombre de répétitions d'une ligne d'endurance ramenés à `percent` % de l'écrit (bilan bas, reprise après une coupure)."
+  },
+  {
+   "code": "adapt.wod_scaled",
+   "fr": "WOD mis à l'échelle : {percent} % de ce qui était prévu ({cause}).",
+   "params": [
+    "cause",
+    "percent"
+   ],
+   "meaning": "Pièce de conditionnement mise à l'échelle : `percent` % des répétitions ou de la durée écrites (jour sans, jours durs de suite)."
+  },
+  {
+   "code": "adapt.cross_fatigue",
+   "fr": "Un peu plus de marge sur les jambes : ta course d'hier était dure.",
+   "params": [
+    "cause"
+   ],
+   "meaning": "Fatigue croisée : effort visé abaissé sur le bas du corps après une course dure la veille."
   }
  ]
 }

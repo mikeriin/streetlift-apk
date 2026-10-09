@@ -504,7 +504,10 @@ final class SimAthlete {
 
   /// Zone de l'épisode de douleur en cours : celle de la fiche, sinon celle
   /// d'une surcharge des tendons (modèle B).
-  BodyZone? get painZone => spec.painZone ?? _tendonZone;
+  BodyZone? get painZone => spec.painZone ?? _overuseZone ?? _tendonZone;
+
+  // Zone d'une blessure de surcharge d'endurance en cours (CA2, partie 1).
+  BodyZone? _overuseZone;
 
   /// Vérités connues (exercices déjà rencontrés).
   Iterable<TruthExercise> get truths =>
@@ -664,6 +667,7 @@ final class SimAthlete {
         _reactiveTolerance = carried > half ? carried : half;
       }
       painIntensity = 0;
+      _overuseZone = null;
     }
   }
 
@@ -675,6 +679,21 @@ final class SimAthlete {
 
   /// Vrai si l'épisode de douleur est en cours.
   bool get inPain => painIntensity > 0 && _day <= painUntil;
+
+  /// Blessure de surcharge de course ou de conditionnement (vérité
+  /// d'endurance ; CA2, partie 1) : épisode de douleur d'intensité
+  /// [intensity] sur [zone] pendant [days] jours, si aucun épisode n'est en
+  /// cours et que la fiche n'impose pas sa propre douleur. L'épisode n'est
+  /// connu du moteur qu'une fois signalé.
+  void overuse(BodyZone zone, int intensity, int days) {
+    if (inPain || spec.painZone != null) {
+      return;
+    }
+    _overuseZone = zone;
+    painIntensity = intensity;
+    painUntil = _day + days;
+    _painKnown = false;
+  }
 
   /// Effet de la charge récente sur la performance (modèles B et C) :
   /// rapport de la charge des 7 derniers jours à la charge de fond.
