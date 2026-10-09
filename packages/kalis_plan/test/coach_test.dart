@@ -294,10 +294,11 @@ void main() {
         primary: TrainingDiscipline.musculation,
         equipment: _gym,
       );
-      expect(coachEligible(gym), isFalse);
+      // Autres disciplines (CP2, partie 1) : le coach les prend aussi.
+      expect(coachEligible(gym), isTrue);
       expect(
         isCoachPlan(KalisPlan().createPass1(catalog, _request(gym))),
-        isFalse,
+        isTrue,
       );
     });
 

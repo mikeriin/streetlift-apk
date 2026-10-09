@@ -384,10 +384,23 @@ AdaptedProfile adaptProfile(
 
   // Points faibles d'un mouvement : la nature est lue dans la note.
   final weak = <Object?>[];
+  // Point faible d'un groupe musculaire (CP2, partie 1) : le premier devient
+  // la spécialisation « muscle » du profil quand aucun mouvement n'est
+  // prioritaire (le contrat n'en porte qu'une) ; les suivants sont perdus.
+  String? weakMuscle;
   for (final w in p.weakPoints) {
     final id = w.exerciseId;
     if (id == null) {
-      lose('weak_points_muscle');
+      final muscle = w.muscleGroup;
+      // (Le contrat attend un muscle du vocabulaire du catalogue.)
+      final named = muscle == null ? null : _catalogMuscle[muscle];
+      if (named != null &&
+          weakMuscle == null &&
+          p.priorityExerciseIds.isEmpty) {
+        weakMuscle = named;
+      } else {
+        lose('weak_points_muscle');
+      }
       continue;
     }
     final note = w.note.toLowerCase();
@@ -404,6 +417,14 @@ AdaptedProfile adaptProfile(
   }
   if (weak.isNotEmpty) {
     json['weakPoints'] = weak;
+  }
+
+  if (weakMuscle != null) {
+    json['specialization'] = Specialization(
+      kind: SpecializationKind.muscle,
+      muscle: weakMuscle,
+      maintenance: MaintenancePolicy.maintain,
+    ).toJson();
   }
 
   if (p.priorityExerciseIds.isNotEmpty) {
@@ -457,3 +478,20 @@ AdaptedProfile adaptProfile(
   }
   return AdaptedProfile(profile, List<String>.unmodifiable(lost));
 }
+
+/// Muscle du vocabulaire du catalogue pour un groupe du banc (point faible
+/// d'un groupe musculaire, CP2, partie 1).
+const Map<String, String> _catalogMuscle = <String, String>{
+  'chest': 'grand pectoral (faisceau sternal)',
+  'delt_anterior': 'deltoïde antérieur',
+  'delt_middle': 'deltoïde moyen',
+  'delt_posterior': 'deltoïde postérieur',
+  'lats': 'grand dorsal',
+  'upper_back': 'trapèze moyen',
+  'biceps': 'biceps brachial',
+  'triceps': 'triceps brachial (chef long)',
+  'glutes': 'grand fessier',
+  'quads': 'quadriceps (vastes)',
+  'hamstrings': 'ischio-jambiers',
+  'calves': 'gastrocnémiens',
+};
