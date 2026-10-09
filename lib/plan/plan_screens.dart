@@ -32,6 +32,37 @@ import 'plan_texts.dart';
 /// G10 (D4.8) : fin de bloc — le bloc suivant proposé par le moteur, passé
 /// en revue (nouveaux exercices) puis validé ; vrai s'il a été validé.
 Future<bool> openNextBlock(BuildContext context) async {
+  // CI1e (C11) : fin d'un bloc du programme importé (programme de 40
+  // semaines) : le moteur calibré peut écrire le bloc suivant à la place de
+  // la suite du programme ; jamais imposé.
+  final seg = PlanStore(store).planImportedSegment;
+  if (seg != null) {
+    final choice = await showKoachSheet<String>(
+      context,
+      pose: KoachPose.choice,
+      title: 'Ton prochain bloc',
+      text:
+          'Ton programme continue tel qu’il est écrit après la semaine '
+          '${seg.last}. Je peux aussi écrire ton prochain bloc avec le '
+          'moteur calibré : il remplace alors la suite de ton programme. '
+          'Ton programme d’origine reste sauvegardé : Réglages › Mon '
+          'programme › « Revenir à mon programme d’origine ».',
+      actions: [
+        KoachBubbleAction(
+          'Voir le bloc du moteur calibré',
+          () => Navigator.of(context).pop('calibrated'),
+          primary: true,
+          key: const ValueKey('next-block-calibrated'),
+        ),
+        KoachBubbleAction(
+          'Garder mon programme',
+          () => Navigator.of(context).pop('keep'),
+          key: const ValueKey('next-block-keep'),
+        ),
+      ],
+    );
+    if (choice != 'calibrated' || !context.mounted) return false;
+  }
   // CI1 : programme écrit par le moteur d'avant, profil street calibrable :
   // le passage au moteur calibré est proposé ici, à la fin du bloc, jamais
   // imposé (il reste possible plus tard).

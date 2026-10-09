@@ -56,6 +56,8 @@ export 'wellbeing.dart';
 
 part 'athlete_profile_store.dart';
 part 'evolution_store.dart';
+part 'imported_program.dart';
+part 'program_origin.dart';
 part 'plan_store.dart';
 part 'profile_store.dart';
 part 'program_store.dart';
@@ -418,6 +420,10 @@ class AppStore extends ChangeNotifier {
   /// posée ou retirée) ; clés des calculs tirés de ses exercices.
   int programRevision = 0;
 
+  /// CI1e (C11.2) : programme d'origine sauvegardé avant la première
+  /// migration ({v, at, appVersion, backup}) ; null : pas encore fait.
+  Map<String, dynamic>? programOrigin;
+
   /// G9 : calculs du moteur dynamique gardés (bloc importé, journal
   /// présenté au moteur), clés de signature ; jamais sauvegardés.
   final Map<String, Object?> _g9Cache = {};
@@ -711,6 +717,9 @@ class AppStore extends ChangeNotifier {
       Map<String, dynamic>? raw;
       _applyBackup(_parseBackup(_unpack(saved)!, rawMap: (m) => raw = m));
       _initialized = true;
+      // CI1e (C11.2) : sauvegarde automatique du programme d'origine avant
+      // la première lecture par 6.10.0.
+      await ProgramOriginStore(this).ensureProgramOrigin();
       // G2 : données retirées encore présentes → copie complète relue, puis
       // seulement suppression (sinon elles restent, nouvel essai au
       // prochain lancement).
@@ -993,6 +1002,7 @@ class AppStore extends ChangeNotifier {
     planEvolution: planEvolution,
     evolutionRaw: _evoRaw,
     adapt: adapt,
+    programOrigin: programOrigin,
   );
 
   /// Format 3 sans les sections retirées par G2 (`custom`, `catalog`,
@@ -1054,6 +1064,10 @@ class AppStore extends ChangeNotifier {
       // L11 : adaptations écrites seulement si elles servent (export
       // identique à 4.0.0 sinon) ; ignorées par les versions antérieures.
       if (!data.adapt.pristine) 'adapt': data.adapt.toJson(),
+      // CI1e (C11.2) : programme d'origine sauvegardé avant la première
+      // migration (programme et journal d'avant 6.10.0), écrit seulement
+      // s'il existe ; ignoré par les versions antérieures.
+      if (data.programOrigin != null) 'programOrigin': data.programOrigin,
     };
   }
 
@@ -1489,6 +1503,7 @@ class AppStore extends ChangeNotifier {
       adapt: nextAdapt,
       adaptIssues: adaptIssues.length,
       retired: RetiredData.of(m).summary,
+      programOrigin: _readProgramOrigin(m['programOrigin']),
     );
   }
 
@@ -1546,6 +1561,9 @@ class AppStore extends ChangeNotifier {
 
   void _applyBackup(_BackupData data) {
     _progression = null;
+    // CI1e (C11.2) : une sauvegarde sans programme d'origine (d'avant
+    // 6.10.0) garde celui déjà connu de cet appareil.
+    programOrigin = data.programOrigin ?? programOrigin;
     values
       ..clear()
       ..addAll(data.values);
@@ -1696,6 +1714,9 @@ class AppStore extends ChangeNotifier {
       // écrire. Une sauvegarde déjà demandée réécrira simplement cet état.
       _acceptedSeq = _changeSeq;
       persistenceError.value = null;
+      // CI1e (C11.2) : sauvegarde d'avant 6.10.0 importée sans programme
+      // d'origine connu : celui-ci est pris maintenant (puis écrit).
+      if (ProgramOriginStore(this).captureProgramOrigin()) _persist();
       notifyListeners();
       return ImportStatus.success;
     });
@@ -3325,6 +3346,10 @@ class _BackupData {
 
   /// G2 : données retirées présentes dans le document lu (ignorées).
   final RetiredSummary retired;
+
+  /// CI1e (C11.2) : programme d'origine sauvegardé avant la première
+  /// migration (null si absent).
+  final Map<String, dynamic>? programOrigin;
   _BackupData({
     required this.values,
     required this.refStatus,
@@ -3353,6 +3378,7 @@ class _BackupData {
     AdaptData? adapt,
     this.adaptIssues = 0,
     this.retired = const RetiredSummary(),
+    this.programOrigin,
   }) : koach = koach ?? KoachData(),
        adapt = adapt ?? AdaptData();
 }
