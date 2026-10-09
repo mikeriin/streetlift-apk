@@ -50,7 +50,7 @@ Fichiers de référence (branche `pipeline`) : ce fichier, `pipeline/cp/DECISION
 - **Deux publics, un moteur** : chaque règle dit comment elle se comporte du débutant à l'élite ; aucune technique avancée n'est servie à un profil qui ne peut pas la supporter (prérequis explicites : ancienneté, niveau, tests, récupération).
 - Budgets (PIPELINE_GP.md §2) inchangés : génération ≤ 1 s, régénération ≤ 300 ms, décision de séance ≤ 50 ms (VM Dart, CI).
 - Contrats : additifs seulement (PIPELINE_GP.md §0) ; les versions 0.1 des moteurs restent lisibles par l'application tant que CI n'a pas intégré les nouvelles.
-- Le programme personnel de 40 semaines du propriétaire n'est jamais régénéré (D5.10).
+- Programme personnel de 40 semaines du propriétaire : **toutes les fonctionnalités s'y appliquent** (DECISIONS_CP.md C11, 09/10/2026, remplace D5.10) ; sauvegarde automatique de l'original et retour possible (C11.2).
 
 ## 4. Contrôles et CI
 
