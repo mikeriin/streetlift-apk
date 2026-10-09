@@ -33,12 +33,14 @@ const int seasonSecondTargetGap = 6;
 /// effet : la moitié de la saison (choix raisonné).
 int seasonDisciplineWeek(int weeks) => weeks ~/ 2;
 
-/// Semaine de l'annonce de la course ajoutée (scénario
-/// [SeasonScenario.race]).
+/// Indice (à partir de 0) de la semaine de l'annonce de la course ajoutée
+/// (scénario [SeasonScenario.race]) : l'annonce prend effet en semaine 5.
 const int seasonAddedRaceAnnounce = 4;
 
-/// Semaine de la course ajoutée : six semaines après l'annonce, le temps
-/// d'un bloc (choix raisonné, comme [seasonSecondTargetGap]).
+/// Semaine de la course ajoutée (semaine 10) : cinq semaines après la
+/// semaine où l'annonce prend effet, à peu près le temps d'un bloc (choix
+/// raisonné, comme [seasonSecondTargetGap] ; relecture indépendante du code
+/// de CY : le libellé disait six semaines).
 const int seasonAddedRaceWeek = 10;
 
 /// Distance de la course ajoutée, en mètres.
@@ -100,11 +102,11 @@ enum SeasonScenario {
   ),
 
   /// Course ajoutée en cours de saison à un profil street hybride (lot
-  /// CY) : un 10 km annoncé en semaine 4, couru en semaine
-  /// [seasonAddedRaceWeek].
+  /// CY) : un 10 km annoncé en semaine 5, couru en semaine
+  /// [seasonAddedRaceWeek] (cinq semaines plus tard).
   race(
     'course_ajoutee',
-    'course de 10 km ajoutée en cours de saison (annoncée en semaine 4, '
+    'course de 10 km ajoutée en cours de saison (annoncée en semaine 5, '
         'courue en semaine 10)',
   );
 

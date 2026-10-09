@@ -56,8 +56,8 @@ réduite d'une marche de fin de séance.
 | Épaule opérée ou à antécédent | note `shoulder_history` sur la ligne d'un développé au-dessus de la tête. |
 | Pas de test maximal sur une articulation douloureuse | gêne relevée au bloc précédent à 3/10 ou plus, gêne déclarée à 4/10 ou plus, ou zone à l'arrêt : tests de fin de bloc et test de l'objectif daté retirés. Une vraie épreuve inscrite reste écrite. |
 | Jour de test de tirage | le travail ordinaire de tirage vertical et de muscle-up qui restait après les tests saute. |
-| Premier muscle-up | test d'un mouvement à risque élevé jamais réussi : une répétition propre (avant : 8 à 15). |
-| Course | pas de footing écrit le lendemain d'une course d'épreuve ; texte de `duration_step` aligné sur la règle appliquée (plus longue course des quatre dernières semaines + 10 %). |
+| Premier muscle-up | test d’un muscle-up jamais réussi : une répétition propre (avant : 8 à 15). |
+| Course | pas de footing écrit le lendemain d'une course d'épreuve ; texte de `duration_step` aligné sur la règle appliquée (plus longue course des quatre dernières semaines + 10 % ; après une course, 70 % de la plus longue puis + 10 % par semaine). |
 
 À signaler : l'arbre de travail de 0.3.1 contient aussi des changements que le `CHANGELOG.md` de 0.3.1
 ne cite pas (d'après le code, `skeleton.dart` et `prescribe.dart`) : deux séries assistées de tirage

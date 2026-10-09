@@ -1466,7 +1466,8 @@ double _writtenGroupSets(
   return total;
 }
 
-/// Vrai si une série de plus de [item] chaque semaine laisse chaque groupe
+/// Vrai si une série de plus de [item] chaque semaine, à partir de
+/// [weekIndex], laisse chaque groupe
 /// qu'il travaille sous le plafond du niveau (CY : une proposition « volume
 /// ajusté » sur le soulevé de terre roumain portait les fessiers d'une
 /// débutante à 13 séries, au-dessus du plafond de 12 ; saisons croisées des
@@ -1483,14 +1484,30 @@ bool _upFits(
   }
   final level = ctx.level < 0 ? 0 : (ctx.level > 3 ? 3 : ctx.level);
   final ceiling = coachWeeklyCeilingSets[level];
-  for (var i = 0; i < info.groups.length; i++) {
-    final g = info.groups[i];
-    if (!g.major) {
+  // Toutes les semaines que la proposition modifie (celles qui portent la
+  // ligne, hors décharge et test — voir `_volumeCandidate`), pas seulement
+  // la première (relecture indépendante du code de CY).
+  for (final week in view.block.pass2.weeks) {
+    if (week.weekIndex < weekIndex ||
+        week.kind == WeekKind.deload ||
+        week.kind == WeekKind.test ||
+        !week.days.any(
+          (d) => d.items.any(
+            (it) =>
+                it.slotId == item.slotId && it.exerciseId == item.exerciseId,
+          ),
+        )) {
       continue;
     }
-    final now = _writtenGroupSets(ctx, view, weekIndex, g);
-    if (now + info.groupWeights[i] > ceiling + 1e-9) {
-      return false;
+    for (var i = 0; i < info.groups.length; i++) {
+      final g = info.groups[i];
+      if (!g.major) {
+        continue;
+      }
+      final now = _writtenGroupSets(ctx, view, week.weekIndex, g);
+      if (now + info.groupWeights[i] > ceiling + 1e-9) {
+        return false;
+      }
     }
   }
   return true;

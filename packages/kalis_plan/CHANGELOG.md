@@ -15,8 +15,7 @@ additives). Constats de la relecture documentée de CP2 (manches 7 et 8) : `docs
   reste écrite).
 - **Jour de test de tirage** : le travail ordinaire de tirage vertical et de muscle-up qui restait après les
   tests saute.
-- **Premier muscle-up** : le test d'un mouvement à risque élevé jamais réussi vise une répétition propre (au
-  lieu de 8 à 15).
+- **Premier muscle-up** : le test d'un muscle-up jamais réussi vise une répétition propre (au lieu de 8 à 15).
 - **Course** : lendemain d'une course d'épreuve sans footing écrit ; texte de la règle de durée aligné sur la
   règle appliquée (plus longue course des quatre dernières semaines + 10 %).
 - **Croisement (CY, boucle 1)** : le plafond de volume de répétitions ne compte plus les variantes plus faciles
@@ -29,6 +28,12 @@ additives). Constats de la relecture documentée de CP2 (manches 7 et 8) : `docs
   garde-fou de volume les réduit ; temps du créneau inutilisé : en semaine de construction (street, musculation,
   force), tant que la séance prend moins de 80 % du créneau, une série de plus aux lignes du mouvement visé puis
   aux principaux, cinq au plus, sous les garde-fous de volume (`coachFillShare`).
+- **Relecture indépendante du code (CY)** : le remplissage du créneau laisse telles quelles les lignes réduites
+  pour une douleur ou une gêne et les lignes d'un groupe, et ne joue pas les quatre premières semaines d'une
+  reprise après dix semaines de coupure ou plus ; le plafond de répétitions d'un mouvement absent des semaines
+  d'avant repart du plafond de première semaine ; le retrait du tirage un jour de test voit aussi les tests de
+  l'échéance ; le test à une répétition est réservé au premier muscle-up ; `shoulder_history` ne suit qu'une
+  zone déclarée (pas une tendance) ; texte de `duration_step` complété (reprise après une course).
 
 ## 0.3.0
 

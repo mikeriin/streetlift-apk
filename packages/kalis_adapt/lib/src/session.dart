@@ -1226,6 +1226,8 @@ SessionPlan buildSessionPlan(
     equipment: equipment,
     place: place,
     taken: taken,
+    coached: coached,
+    comeback: comeback,
   );
 
   // 3. Charges, répétitions et flammes de chaque exercice.
@@ -2483,6 +2485,8 @@ void _enduranceDay(
   required Set<String> equipment,
   required Place? place,
   required Set<String> taken,
+  bool coached = false,
+  PainReturn comeback = PainReturn.none,
 }) {
   final p = ctx.params;
   if (!p.enduranceConduct) {
@@ -2534,10 +2538,17 @@ void _enduranceDay(
     BodyZone.lowerLeg,
     BodyZone.ankleFoot,
   };
+  // (Mode coach seulement : les blocs lus comme en 0.1 gardent leur
+  // conduite — relecture indépendante du code de CY.)
   final legStops = <PainStop>[
-    for (final stop in state.painStops(day))
-      if (legZones.contains(stop.zone)) stop,
+    if (coached)
+      for (final stop in state.painStops(day))
+        if (legZones.contains(stop.zone)) stop,
   ];
+  // Reprise de la course après l'arrêt (zone du bas du corps en reprise
+  // graduée) : courses servies à la part d'une reprise après quatorze jours
+  // (`enduranceResumeLong`), comme après une coupure.
+  final legReturn = coached && comeback.zones.any(legZones.contains);
   if (legStops.isNotEmpty) {
     final stop = legStops.first;
     final why = reason(ReasonCodes.adaptPainPersistent, <String, Object?>{
@@ -2612,8 +2623,11 @@ void _enduranceDay(
     if (d.item.kind == SetKind.warmup) {
       continue;
     }
-    if (resume < 1) {
-      final (item, sets) = scaled(d.item, d.sets, resume);
+    final share = legReturn && kind == EnduranceKind.run
+        ? (resume < p.enduranceResumeLong ? resume : p.enduranceResumeLong)
+        : resume;
+    if (share < 1) {
+      final (item, sets) = scaled(d.item, d.sets, share);
       if (!identical(item, d.item) || sets != d.sets) {
         d.item = item;
         d.sets = sets;
@@ -2621,8 +2635,8 @@ void _enduranceDay(
           d,
           AdjustmentKind.setsReduced,
           reason(ReasonCodes.adaptEnduranceShortened, <String, Object?>{
-            'cause': resumeCause,
-            'percent': (resume * 100).round(),
+            'cause': share < resume ? 'resume_14' : resumeCause,
+            'percent': (share * 100).round(),
           }),
         );
       }
