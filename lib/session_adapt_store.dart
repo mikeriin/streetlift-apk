@@ -4,8 +4,8 @@
 // - place de chaque journée dans un bloc du moteur : bloc de `kalis_plan`
 //   (programme créé, ajustements de la passe 2 compris) ou bloc importé
 //   depuis les semaines affichées (programme personnel du propriétaire,
-//   ancien programme L10, semaines d'avant un programme créé), sans rien
-//   changer à leur structure (D5.10) ;
+//   ancien programme L10, semaines d'avant un programme créé), annoté au
+//   contrat 0.4.0 par CI1e (imported_program.dart, C11 : D5.10 levée) ;
 // - journal présenté au moteur (règles C1 à C12 de G3 + emplacement, cible
 //   affichée et bilan de chaque séance servie) ;
 // - séance du jour : prescription figée dans le journal (`SessionLog.adapt`),
@@ -154,11 +154,14 @@ extension SessionAdaptStore on AppStore {
 
   /// CI1e (C11) : échéance de la fin du programme importé (fin de S40 pour
   /// le propriétaire), donnée au moteur dynamique tant que le programme
-  /// importé est en place et que le profil n'a pas d'échéance principale
+  /// importé est en place (sans programme créé) et que le profil n'a pas d'échéance principale
   /// à venir ; jamais écrite dans le profil enregistré. Null : pas de
   /// programme importé daté, ou programme terminé.
   kc.SeasonEvent? get importedEndEvent {
     final s = program.start;
+    // Semaines d'avant un programme créé : pas d'échéance (le programme
+    // créé a la sienne).
+    if (planProgram != null) return null;
     final last = math.min(importedLastWeek, program.weeks.length);
     if (s == null || last < 1) return null;
     final day = civilOf(DateTime(s.year, s.month, s.day + last * 7 - 1));
@@ -348,8 +351,11 @@ extension SessionAdaptStore on AppStore {
       final week = program.week(n);
       // Exercices d'origine de la semaine, par emplacement (un exercice
       // déplacé d'un jour à l'autre garde sa fiche).
+      // Un exercice d'une séance déjà faite ne se déplace pas (il serait
+      // montré deux fois).
       final bySlot = <String, Exercise>{};
       for (final d in week.days) {
+        if (logs[sessionKey(n, d.j)]?.done ?? false) continue;
         for (final e in d.original.exercises) {
           final s = imp.slotOf(n, d.j, e.id);
           if (s != null) bySlot.putIfAbsent(s, () => e);
@@ -487,6 +493,8 @@ extension SessionAdaptStore on AppStore {
         );
         continue;
       }
+      // Exercice d'une séance déjà faite (ou déjà montré) : pas de copie.
+      if (moved == null && origAll.containsKey(b.slotId)) continue;
       final id = '$kKoachAddedPrefix${b.slotId}';
       if (ids.contains(id)) continue;
       ids.add(id);
@@ -586,10 +594,13 @@ extension SessionAdaptStore on AppStore {
       final m = RegExp(r'^k\d+\.\d+\.(.+)$').firstMatch(base);
       return m?.group(1);
     }
-    // CI1e : exercice ajouté par Koach (restructuration du bloc importé).
+    // CI1e : exercice ajouté par Koach (restructuration du bloc importé),
+    // ou test reporté d'un autre jour (« k<S>.<J>.<emplacement> »).
     if (base.startsWith(kKoachAddedPrefix)) {
       return base.substring(kKoachAddedPrefix.length);
     }
+    final moved = RegExp(r'^k\d+\.\d+\.(j\d-.+)$').firstMatch(base);
+    if (moved != null) return moved.group(1);
     return importedProgram?.slotOf(week, j, base) ?? importedSlot(j, base);
   }
 
@@ -779,13 +790,17 @@ extension SessionAdaptStore on AppStore {
     final dayIndex = seg?.dayOfJ[j];
     if (seg == null || dayIndex == null) return null;
     final ids = <String, String>{};
-    for (final e in program.week(w).day(j)?.original.exercises ?? <Exercise>[]) {
+    for (final e
+        in program.week(w).day(j)?.original.exercises ?? <Exercise>[]) {
       final s = imp.slotOf(w, j, e.id);
       if (s != null) ids[importedSlot(j, e.id)] = s;
     }
     Object? plan(Object? p) {
       if (p is! Map) return p;
       final out = Map<String, dynamic>.of(p.cast<String, dynamic>());
+      if (out.containsKey('blockId')) out['blockId'] = seg.blockId;
+      if (out.containsKey('weekIndex')) out['weekIndex'] = w - seg.first;
+      if (out.containsKey('dayIndex')) out['dayIndex'] = dayIndex;
       final items = out['items'];
       if (items is List) {
         out['items'] = [

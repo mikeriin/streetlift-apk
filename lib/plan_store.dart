@@ -147,8 +147,8 @@ extension PlanStore on AppStore {
   /// Valide le programme de [c] (passe 2 faite) : il devient l'instance
   /// active. Le programme précédent est gardé (semaines passées, retour
   /// pendant 7 jours) ; le profil apprend ce que la revue a dit.
-  void applyPlanCreation(PlanCreation c, {PlanStart? at}) {
-    final s = at ?? planStartFor();
+  void applyPlanCreation(PlanCreation c, {PlanStart? startAt}) {
+    final s = startAt ?? planStartFor();
     final at = _planAt;
     final hadProgram = s.replacing;
     final prefix = <Map<String, dynamic>>[];
@@ -384,7 +384,13 @@ extension PlanStore on AppStore {
     final seg = planImportedSegment;
     final week = _planWeekToday;
     if (seg == null || week == null || !planCanCreate) return false;
-    return week >= seg.last;
+    if (week < seg.last) return false;
+    // Fin d'un bloc du programme (P0, B1…) ou fin du programme ; pas aux
+    // coupes internes d'un bloc de plus de 6 semaines.
+    final last = math.min(importedLastWeek, program.weeks.length);
+    if (seg.last >= last) return true;
+    final a = program.week(seg.last), b = program.week(seg.last + 1);
+    return a.blockKey != b.blockKey || a.block != b.block;
   }
 
   /// Bloc suivant proposé par le moteur (null : impossible).
@@ -525,7 +531,7 @@ extension PlanStore on AppStore {
       final first = _importedNextFirstWeek(seg);
       applyPlanCreation(
         c,
-        at: (
+        startAt: (
           start: civilOf(
             DateTime(start.year, start.month, start.day + (first - 1) * 7),
           ),

@@ -9,7 +9,8 @@
 // ne sont jamais réécrits : une proposition appliquée est une couche posée
 // sur son bloc à la lecture ([evolvedBlock]), dans l'ordre des décisions ;
 // l'annuler retire la couche. Le programme personnel du propriétaire
-// (bloc importé) reste ainsi identique jour pour jour.
+// (blocs importés annotés, CI1e) garde son original en dessous ; la couche
+// peut le restructurer (C11).
 //
 // Fonctions pures : aucune horloge (« aujourd'hui » passé en paramètre),
 // aucune règle d'entraînement (le moteur décide, `applyProposal` applique).
