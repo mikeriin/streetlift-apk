@@ -197,12 +197,10 @@ void main() {
 
     // 1. Myo-reps (S20·J1, curl à la barre EZ).
     final add = keyStarts('miniset-add-');
-    releve['myo_page'] = await openTo(
-      tester,
-      w,
-      j,
-      find.text('Myo-reps : activation, puis mini-séries'),
-    );
+    // (La page est une liste construite à la demande : on cherche le titre
+    // de l'exercice, puis on fait défiler jusqu'à la bande.)
+    releve['myo_page'] = await openTo(tester, w, j, find.text('CURL BARRE EZ'));
+    await scrollTo(tester, add);
     final addKey = add.evaluate().isEmpty
         ? null
         : (tester.widget(add.first).key! as ValueKey<String>).value;
