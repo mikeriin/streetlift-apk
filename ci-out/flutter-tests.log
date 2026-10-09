@@ -1,0 +1,948 @@
+00:00 +0: loading /home/runner/work/streetlift-apk/streetlift-apk/test/notifications_test.dart
+00:00 +0: /home/runner/work/streetlift-apk/streetlift-apk/test/m4c_zoom_test.dart: calcul du zoom bornes : corps entier (1×) à 4×
+00:00 +1: /home/runner/work/streetlift-apk/streetlift-apk/test/notifications_test.dart: couvre tout le programme restant, avec des IDs stables et un seul rappel par jour
+00:00 +2: /home/runner/work/streetlift-apk/streetlift-apk/test/notifications_test.dart: couvre tout le programme restant, avec des IDs stables et un seul rappel par jour
+00:00 +3: /home/runner/work/streetlift-apk/streetlift-apk/test/notifications_test.dart: couvre tout le programme restant, avec des IDs stables et un seul rappel par jour
+00:00 +4: /home/runner/work/streetlift-apk/streetlift-apk/test/notifications_test.dart: couvre tout le programme restant, avec des IDs stables et un seul rappel par jour
+00:00 +5: /home/runner/work/streetlift-apk/streetlift-apk/test/notifications_test.dart: couvre tout le programme restant, avec des IDs stables et un seul rappel par jour
+00:00 +6: /home/runner/work/streetlift-apk/streetlift-apk/test/notifications_test.dart: couvre tout le programme restant, avec des IDs stables et un seul rappel par jour
+00:00 +7: /home/runner/work/streetlift-apk/streetlift-apk/test/notifications_test.dart: couvre tout le programme restant, avec des IDs stables et un seul rappel par jour
+00:00 +8: /home/runner/work/streetlift-apk/streetlift-apk/test/notifications_test.dart: couvre tout le programme restant, avec des IDs stables et un seul rappel par jour
+00:00 +9: /home/runner/work/streetlift-apk/streetlift-apk/test/m4c_zoom_test.dart: gestes pincement : zoom, la page ne défile pas (fiche, rotation horizontale)
+00:00 +10: /home/runner/work/streetlift-apk/streetlift-apk/test/m4c_zoom_test.dart: gestes pincement : zoom, la page ne défile pas (fiche, rotation horizontale)
+00:00 +11: /home/runner/work/streetlift-apk/streetlift-apk/test/m4c_zoom_test.dart: gestes pincement : zoom, la page ne défile pas (fiche, rotation horizontale)
+00:00 +12: /home/runner/work/streetlift-apk/streetlift-apk/test/m4c_zoom_test.dart: gestes pincement : zoom, la page ne défile pas (fiche, rotation horizontale)
+00:00 +13: /home/runner/work/streetlift-apk/streetlift-apk/test/m4c_zoom_test.dart: gestes pincement : zoom, la page ne défile pas (fiche, rotation horizontale)
+00:00 +14: /home/runner/work/streetlift-apk/streetlift-apk/test/m4c_zoom_test.dart: gestes pincement : zoom, la page ne défile pas (fiche, rotation horizontale)
+00:00 +15: /home/runner/work/streetlift-apk/streetlift-apk/test/m4c_zoom_test.dart: gestes pincement : zoom, la page ne défile pas (fiche, rotation horizontale)
+00:00 +16: /home/runner/work/streetlift-apk/streetlift-apk/test/notifications_test.dart: les erreurs restent lisibles et une nouvelle tentative répare le service
+Kalis notifications: Bad state: init_native_error
+Kalis notifications: Bad state: schedule_native_error
+00:00 +17: /home/runner/work/streetlift-apk/streetlift-apk/test/m4c_zoom_test.dart: gestes deux doigts rapprochés : dézoom (fiche)
+00:01 +18: /home/runner/work/streetlift-apk/streetlift-apk/test/notifications_test.dart: désactiver pendant une planification ne laisse aucun rappel quotidien
+00:01 +19: /home/runner/work/streetlift-apk/streetlift-apk/test/m4c_zoom_test.dart: gestes pincement : zoom, la page ne défile pas (Anatomie)
+00:01 +20: /home/runner/work/streetlift-apk/streetlift-apk/test/notifications_test.dart: ne recrée pas les mêmes alarmes inutilement mais une réparation forcée les restaure
+00:01 +21: /home/runner/work/streetlift-apk/streetlift-apk/test/notifications_test.dart: ne recrée pas les mêmes alarmes inutilement mais une réparation forcée les restaure
+00:01 +22: /home/runner/work/streetlift-apk/streetlift-apk/test/m4c_zoom_test.dart: gestes fiche : un doigt vertical fait défiler la page, horizontal tourne le mannequin
+00:01 +23: /home/runner/work/streetlift-apk/streetlift-apk/test/m4c_zoom_test.dart: gestes fiche : un doigt vertical fait défiler la page, horizontal tourne le mannequin
+00:01 +24: /home/runner/work/streetlift-apk/streetlift-apk/test/notifications_test.dart: tap après démarrage à froid : bonne séance, payload invalide ignoré
+00:01 +25: /home/runner/work/streetlift-apk/streetlift-apk/test/m4c_zoom_test.dart: gestes Anatomie : un doigt tourne le mannequin, jamais de zoom
+00:01 +26: /home/runner/work/streetlift-apk/streetlift-apk/test/notifications_test.dart: une séance terminée en cours d’utilisation annule automatiquement son rappel
+00:01 +27: /home/runner/work/streetlift-apk/streetlift-apk/test/m4c_zoom_test.dart: gestes toucher bref immédiat sans zoom ; double toucher une fois zoomé
+00:01 +28: /home/runner/work/streetlift-apk/streetlift-apk/test/notifications_test.dart: rappels : uniquement un jour d'entraînement prévu, hors pause (KT-070)
+00:01 +29: /home/runner/work/streetlift-apk/streetlift-apk/test/notifications_test.dart: rappels (KT-070) jamais un jour de repos, même avec un ancien réglage contraire
+00:06 +30: /home/runner/work/streetlift-apk/streetlift-apk/test/g5_koach_test.dart: (setUpAll)
+00:07 +30: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Store L2b (instances isolées) export fichier : format 3 daté, réimporté dans un état distinct
+00:07 +31: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Store L2b (instances isolées) export fichier : format 3 daté, réimporté dans un état distinct
+00:07 +32: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Store L2b (instances isolées) export fichier : format 3 daté, réimporté dans un état distinct
+00:07 +33: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Store L2b (instances isolées) export fichier : format 3 daté, réimporté dans un état distinct
+00:07 +34: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Store L2b (instances isolées) export fichier : format 3 daté, réimporté dans un état distinct
+00:07 +35: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Store L2b (instances isolées) export fichier : format 3 daté, réimporté dans un état distinct
+00:07 +36: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Store L2b (instances isolées) export fichier : format 3 daté, réimporté dans un état distinct
+00:07 +37: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Store L2b (instances isolées) export fichier : format 3 daté, réimporté dans un état distinct
+00:07 +38: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Store L2b (instances isolées) export fichier : format 3 daté, réimporté dans un état distinct
+00:08 +39: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Store L2b (instances isolées) export fichier : format 3 daté, réimporté dans un état distinct
+00:08 +40: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Store L2b (instances isolées) export fichier : format 3 daté, réimporté dans un état distinct
+00:08 +41: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Store L2b (instances isolées) export fichier : format 3 daté, réimporté dans un état distinct
+00:08 +42: /home/runner/work/streetlift-apk/streetlift-apk/test/g5_koach_test.dart: micro-animations (D6.3) au repos : clignement seedé et respiration (grande vue), tout s'arrête au démontage
+00:08 +43: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Store L2b (instances isolées) aperçu : aucune modification, date absente non inventée
+00:08 +44: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Store L2b (instances isolées) aperçu : aucune modification, date absente non inventée
+00:08 +45: /home/runner/work/streetlift-apk/streetlift-apk/test/g5_koach_test.dart: micro-animations (D6.3) hors écran (TickerMode) : clignement et respiration suspendus
+00:08 +46: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Store L2b (instances isolées) formats historiques et sauvegarde L2 acceptés
+00:08 +47: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Store L2b (instances isolées) formats historiques et sauvegarde L2 acceptés
+00:08 +48: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Store L2b (instances isolées) formats historiques et sauvegarde L2 acceptés
+00:08 +49: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Store L2b (instances isolées) formats historiques et sauvegarde L2 acceptés
+00:08 +50: /home/runner/work/streetlift-apk/streetlift-apk/test/g5_koach_test.dart: flammes (D5.3, D5.5) sélecteur : 10 flammes, choix, libellés
+00:08 +51: /home/runner/work/streetlift-apk/streetlift-apk/test/g5_koach_test.dart: flammes (D5.3, D5.5) sélecteur : 10 flammes, choix, libellés
+00:08 +52: /home/runner/work/streetlift-apk/streetlift-apk/test/g5_koach_test.dart: flammes (D5.3, D5.5) sélecteur : 10 flammes, choix, libellés
+00:08 +53: /home/runner/work/streetlift-apk/streetlift-apk/test/g5_koach_test.dart: flammes (D5.3, D5.5) sélecteur : 10 flammes, choix, libellés
+00:08 +54: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Store L2b (instances isolées) import avec une écriture en attente : disque = mémoire
+00:08 +55: /home/runner/work/streetlift-apk/streetlift-apk/test/g5_koach_test.dart: Koach parle (D6.4) bulle d'une réplique : texte, actions, « Pourquoi ? »
+00:08 +56: /home/runner/work/streetlift-apk/streetlift-apk/test/g5_koach_test.dart: Koach parle (D6.4) bulle d'une réplique : texte, actions, « Pourquoi ? »
+00:08 +57: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Store L2b (instances isolées) suppression : tout est retiré, aucune résurrection
+00:08 +58: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Store L2b (instances isolées) suppression : tout est retiré, aucune résurrection
+00:08 +59: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Store L2b (instances isolées) suppression : tout est retiré, aucune résurrection
+00:09 +60: /home/runner/work/streetlift-apk/streetlift-apk/test/g5_koach_test.dart: écrans Galerie de Koach (sombre) : 36 poses, 10 flammes, transition au toucher
+00:09 +61: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Store L2b (instances isolées) suppression avec écriture en attente : l’ancien état n’est pas réécrit
+00:09 +62: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Store L2b (instances isolées) suppression avec écriture en attente : l’ancien état n’est pas réécrit
+00:09 +63: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Store L2b (instances isolées) suppression avec écriture en attente : l’ancien état n’est pas réécrit
+00:10 +64: /home/runner/work/streetlift-apk/streetlift-apk/test/g5_koach_test.dart: écrans Anatomie : « Galerie de Koach » remplace « Koach (aperçu) »
+00:10 +65: /home/runner/work/streetlift-apk/streetlift-apk/test/g5_koach_test.dart: écrans Anatomie : « Galerie de Koach » remplace « Koach (aperçu) »
+00:10 +66: /home/runner/work/streetlift-apk/streetlift-apk/test/g5_koach_test.dart: écrans Anatomie : « Galerie de Koach » remplace « Koach (aperçu) »
+00:10 +67: /home/runner/work/streetlift-apk/streetlift-apk/test/g5_koach_test.dart: écrans Anatomie : « Galerie de Koach » remplace « Koach (aperçu) »
+00:11 +68: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Parcours à l’écran export réussi : fichier daté, contenu métier identique
+00:11 +69: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Parcours à l’écran export réussi : fichier daté, contenu métier identique
+00:11 +70: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Parcours à l’écran export réussi : fichier daté, contenu métier identique
+00:11 +71: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Parcours à l’écran export cancelled : Export annulé
+00:12 +72: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Parcours à l’écran export failed : accès refusé
+00:12 +73: /home/runner/work/streetlift-apk/streetlift-apk/test/l2_persistence_test.dart: KT-013 écritures et imports deux imports rapprochés : le dernier gagne, copies gardées
+00:12 +74: /home/runner/work/streetlift-apk/streetlift-apk/test/l2_persistence_test.dart: KT-013 écritures et imports deux imports rapprochés : le dernier gagne, copies gardées
+00:12 +75: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Parcours à l’écran export unverified : non relu
+00:12 +76: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Parcours à l’écran export unverified : non relu
+00:12 +77: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Parcours à l’écran export unverified : non relu
+00:12 +78: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Parcours à l’écran export unverified : non relu
+00:13 +79: /home/runner/work/streetlift-apk/streetlift-apk/test/l2_persistence_test.dart: KT-013 écritures et imports deux modifications pendant une sauvegarde : les deux sont écrites
+00:13 +80: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Parcours à l’écran import cancelled : aucune mutation
+00:13 +81: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Parcours à l’écran import cancelled : aucune mutation
+00:13 +82: /home/runner/work/streetlift-apk/streetlift-apk/test/l2_persistence_test.dart: KT-013 écritures et imports import refusé à l’écriture : état et stockage inchangés
+00:13 +83: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Parcours à l’écran import tooLarge : aucune mutation
+00:13 +84: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Parcours à l’écran import tooLarge : aucune mutation
+00:13 +85: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Parcours à l’écran import tooLarge : aucune mutation
+00:13 +86: /home/runner/work/streetlift-apk/streetlift-apk/test/l2_persistence_test.dart: Formats historiques (G2 : WOD et séances perso ignorés) import format 2 : importable, WOD et droits ignorés
+00:13 +87: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Parcours à l’écran import failed : aucune mutation
+00:13 +88: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Parcours à l’écran import failed : aucune mutation
+00:13 +89: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Parcours à l’écran import failed : aucune mutation
+00:13 +90: /home/runner/work/streetlift-apk/streetlift-apk/test/l2_persistence_test.dart: Formats historiques (G2 : WOD et séances perso ignorés) sauvegarde 6.0.x : historique du programme et XP conservés
+00:13 +91: /home/runner/work/streetlift-apk/streetlift-apk/test/l2_persistence_test.dart: Formats historiques (G2 : WOD et séances perso ignorés) sauvegarde 6.0.x : historique du programme et XP conservés
+00:14 +92: /home/runner/work/streetlift-apk/streetlift-apk/test/l2_persistence_test.dart: Formats historiques (G2 : WOD et séances perso ignorés) sauvegarde 6.0.x : historique du programme et XP conservés
+00:14 +93: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Parcours à l’écran aperçu annulé puis bouton retour : aucune mutation
+00:14 +93: /home/runner/work/streetlift-apk/streetlift-apk/test/l2_persistence_test.dart: KT-015 imports bornés sauvegarde représentative acceptée, marges mesurées
+L2 représentatif : JSON 913203 o, compact 46283 car., 61241 valeurs
+00:14 +94: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Parcours à l’écran aperçu annulé puis bouton retour : aucune mutation
+00:14 +95: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Parcours à l’écran aperçu annulé puis bouton retour : aucune mutation
+00:14 +96: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Parcours à l’écran aperçu annulé puis bouton retour : aucune mutation
+00:14 +97: /home/runner/work/streetlift-apk/streetlift-apk/test/l2_persistence_test.dart: KT-015 imports bornés gzip tronqué, base64 invalide, JSON mal formé
+00:14 +98: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Parcours à l’écran sauvegarde préalable échouée : import non effectué
+00:14 +99: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Parcours à l’écran sauvegarde préalable échouée : import non effectué
+00:14 +100: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Parcours à l’écran sauvegarde préalable échouée : import non effectué
+00:15 +101: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Parcours à l’écran sauvegarde préalable échouée : import non effectué
+00:15 +102: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Parcours à l’écran sauvegarde préalable échouée : import non effectué
+00:15 +103: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Parcours à l’écran sauvegarde préalable puis remplacement confirmé
+00:15 +104: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Parcours à l’écran remplacement sans sauvegarde : choix explicite
+00:16 +105: /home/runner/work/streetlift-apk/streetlift-apk/test/persistence_screen_test.dart: saisie et notes sont enregistrées sans changer de page
+00:17 +106: /home/runner/work/streetlift-apk/streetlift-apk/test/persistence_screen_test.dart: saisie et notes sont enregistrées sans changer de page
+00:17 +107: /home/runner/work/streetlift-apk/streetlift-apk/test/persistence_screen_test.dart: saisie et notes sont enregistrées sans changer de page
+00:17 +108: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Parcours à l’écran suppression : export préalable annulé, rien supprimé
+00:18 +109: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Parcours à l’écran dialogues à 320 px, texte 200 %, thème sombre true
+00:18 +109 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Parcours à l’écran dialogues à 320 px, texte 200 %, thème sombre true
+00:18 +110 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Parcours à l’écran dialogues à 320 px, texte 200 %, thème sombre false
+00:19 +111 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Parcours à l’écran Réglages : actions présentes, zone sensible séparée
+00:19 +112 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/l2b_data_control_test.dart: Parcours à l’écran Réglages : actions présentes, zone sensible séparée
+00:19 +113 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1g_paquets_test.dart: textes (aucun code brut) toutes les notes de coach de kalis_plan 0.3.1 sont rédigées
+00:20 +114 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1g_paquets_test.dart: textes (aucun code brut) avis médical, épaule, genou : en tête avec le bouclier
+00:20 +115 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1g_paquets_test.dart: textes (aucun code brut) pompe sur barre basse pour une gêne du poignet : consigne de CY
+00:20 +116 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1g_paquets_test.dart: textes (aucun code brut) charge plafonnée (`cap`) : rédigée
+00:20 +117 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1g_paquets_test.dart: avis médical avant la première séance (clearance_first) gêne déclarée à 6/10 : note du bloc, étape à confirmer une fois par bloc, gardée dans la sauvegarde
+00:20 +118 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/lc1_programme_test.dart: Programme révisé (asset) 1 812 exercices ; LC1 : 202 suppressions et 66 ajouts ; LC1b : 7 et 1
+00:21 +119 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1g_paquets_test.dart: avis médical avant la première séance (clearance_first) sans gêne : aucune étape
+00:21 +120 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1g_paquets_test.dart: avis médical avant la première séance (clearance_first) sans gêne : aucune étape
+00:21 +121 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/lc1_programme_test.dart: Programme révisé (asset) volumes calculés : maxima actuels puis modifiés
+00:21 +122 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1g_paquets_test.dart: avis médical avant la première séance (clearance_first) épaule à antécédent (musculation) : `shoulder_history` sous chaque développé au-dessus de la tête écrit, avec le bouclier
+00:21 +123 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1g_paquets_test.dart: avis médical avant la première séance (clearance_first) épaule à antécédent (musculation) : `shoulder_history` sous chaque développé au-dessus de la tête écrit, avec le bouclier
+00:21 +124 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1g_paquets_test.dart: avis médical avant la première séance (clearance_first) épaule à antécédent (musculation) : `shoulder_history` sous chaque développé au-dessus de la tête écrit, avec le bouclier
+00:21 +125 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1g_paquets_test.dart: avis médical avant la première séance (clearance_first) épaule à antécédent (musculation) : `shoulder_history` sous chaque développé au-dessus de la tête écrit, avec le bouclier
+CI1G 2/10 past_resolved : développés écrits 9, notés 9
+CI1G 3/10 over_12_months : développés écrits 18, notés 18
+CI1G 6/10 months_3_to_12 : développés écrits 18, notés 18
+00:21 +126 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/lc1_programme_test.dart: Programme révisé (asset) semaine S12 entièrement faite : XP et semaine complète
+00:21 +127 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1g_paquets_test.dart: séance : étape bloquante (setUpAll)
+00:21 +127 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/lc1_programme_test.dart: Séance et journal feuille Pilotage modifiée pendant la séance : volumes recalculés tout de suite
+00:23 +128 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/lc1_programme_test.dart: Séance et journal feuille Pilotage modifiée pendant la séance : volumes recalculés tout de suite
+00:23 +129 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1g_paquets_test.dart: séance : étape bloquante « J’ai eu l’avis » dans l’étape : gardé pour le bloc
+00:23 +130 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/lc1_programme_test.dart: Séance et journal journal S12 avec un identifiant supprimé : lecture intacte
+00:23 +131 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1g_paquets_test.dart: C11 : programme de 40 semaines blocs du programme importé de six semaines au plus (`restructureImported` sans objet)
+00:24 +132 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/lc1_programme_test.dart: Séance et journal LC1b : journal S11·J6 avec un identifiant supprimé, séance du jour
+00:24 +133 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/lc1_programme_test.dart: Séance et journal rendu S12 J3/J4/J5 à 390×844, texte 130 %, sombre
+00:25 +134 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/l5c_selecteur_test.dart: sélecteur à 390.0 px, texte 100 % : 2 colonne(s)
+00:27 +135 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/lc1_programme_test.dart: Séance et journal rendu S12 J3/J4/J5 à 320×720, texte 200 %, clair
+00:27 +136 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/lc1_programme_test.dart: Séance et journal rendu S12 J3/J4/J5 à 320×720, texte 200 %, clair
+00:27 +137 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/l5c_selecteur_test.dart: sélecteur à 320.0 px, texte 100 % : 2 colonne(s)
+00:27 +138 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/lc1_programme_test.dart: Séance et journal rendu S12 J3/J4/J5 à 320×720, texte 130 %, sombre
+00:28 +139 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/lc1_programme_test.dart: Séance et journal rendu S12 J3/J4/J5 à 320×720, texte 130 %, sombre
+00:28 +140 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/lc1_programme_test.dart: Séance et journal rendu S12 J3/J4/J5 à 320×720, texte 130 %, sombre
+00:28 +141 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/l5c_selecteur_test.dart: sélecteur à 320.0 px, texte 200 % : 1 colonne(s)
+00:28 +142 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/lc1_programme_test.dart: Séance et journal rendu S12 J3/J4/J5 à 390×844, texte 200 %, sombre
+00:28 +143 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/lc1_programme_test.dart: Séance et journal rendu S12 J3/J4/J5 à 390×844, texte 200 %, sombre
+00:29 +144 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/lc1_programme_test.dart: Séance et journal rendu S12 J3/J4/J5 à 390×844, texte 200 %, sombre
+00:29 +145 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/lc1_programme_test.dart: Séance et journal rendu S12 J3/J4/J5 à 390×844, texte 200 %, sombre
+00:30 +146 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/l5c_selecteur_test.dart: changer de couleur garde onglet, semaine, route, saisies et journal
+00:30 +147 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/l5c_selecteur_test.dart: mode Système : la luminosité suit le téléphone, pas la couleur
+00:30 +148 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/l5c_selecteur_test.dart: les six couleurs × clair/sombre : accueil et réglages sans erreur
+00:33 +149 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/l5c_selecteur_test.dart: les six couleurs × clair/sombre : accueil et réglages sans erreur
+00:33 +150 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/l5c_selecteur_test.dart: les six couleurs × clair/sombre : accueil et réglages sans erreur
+00:34 +151 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/programme_test.dart: appui long sur le slider choisit directement une semaine
+00:34 +152 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/programme_test.dart: appui court sur une séance faite ouvre son historique sans modifier les saisies
+00:34 +153 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/programme_test.dart: appui long sur une carte compacte ouvre le résumé sans lancer ni effacer
+00:34 +154 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/programme_test.dart: appui court ouvre le détail ; glisser atteint les bornes sans ouvrir de fiche
+00:35 +155 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/m56_preload_test.dart: (setUpAll)
+00:35 +155 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/programme_test.dart: la fiche semaine donne accès au choix de semaine et conserve les gestes des cartes
+00:35 +156 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/programme_test.dart: la fiche semaine donne accès au choix de semaine et conserve les gestes des cartes
+00:35 +157 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/programme_test.dart: la fiche semaine donne accès au choix de semaine et conserve les gestes des cartes
+00:35 +158 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/m56_preload_test.dart: ouverture d’un mannequin : première image et images perdues
+00:35 +159 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/programme_test.dart: balayage, clavier et conservation de la semaine dans les onglets
+00:36 +160 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/programme_test.dart: balayage, clavier et conservation de la semaine dans les onglets
+00:36 +161 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/m56_preload_test.dart: écran Moteur 3D : carte « Préchargement »
+00:36 +162 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/m56_preload_test.dart: écran Moteur 3D : carte « Préchargement »
+00:36 +163 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/m56_preload_test.dart: écran Moteur 3D : carte « Préchargement »
+00:37 +164 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/m56_preload_test.dart: écran Moteur 3D : carte « Préchargement »
+00:37 +165 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/m56_preload_test.dart: écran Moteur 3D : carte « Préchargement »
+00:37 +166 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/m56_preload_test.dart: (tearDownAll)
+00:38 +166 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: magasin sans profil v2 : séance hors moteur (L7 inchangé)
+00:39 +167 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/m7_player_test.dart: (setUpAll)
+00:39 +167 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: magasin programme du propriétaire (C11) : bloc annoté, séance servie par kalis_adapt, structure intacte
+00:39 +168 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: magasin programme du propriétaire (C11) : bloc annoté, séance servie par kalis_adapt, structure intacte
+00:39 +169 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: magasin programme du propriétaire (C11) : bloc annoté, séance servie par kalis_adapt, structure intacte
+00:39 +170 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: magasin programme du propriétaire (C11) : bloc annoté, séance servie par kalis_adapt, structure intacte
+00:39 +171 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: magasin programme du propriétaire (C11) : bloc annoté, séance servie par kalis_adapt, structure intacte
+00:39 +172 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: magasin programme du propriétaire (C11) : bloc annoté, séance servie par kalis_adapt, structure intacte
+00:39 +173 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: magasin programme du propriétaire (C11) : bloc annoté, séance servie par kalis_adapt, structure intacte
+00:39 +174 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: magasin programme du propriétaire (C11) : bloc annoté, séance servie par kalis_adapt, structure intacte
+00:39 +175 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: magasin programme du propriétaire (C11) : bloc annoté, séance servie par kalis_adapt, structure intacte
+00:39 +176 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: magasin programme du propriétaire (C11) : bloc annoté, séance servie par kalis_adapt, structure intacte
+00:39 +177 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: magasin programme du propriétaire (C11) : bloc annoté, séance servie par kalis_adapt, structure intacte
+00:39 +178 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: magasin programme du propriétaire (C11) : bloc annoté, séance servie par kalis_adapt, structure intacte
+00:39 +179 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: magasin programme du propriétaire (C11) : bloc annoté, séance servie par kalis_adapt, structure intacte
+00:39 +180 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: magasin programme du propriétaire (C11) : bloc annoté, séance servie par kalis_adapt, structure intacte
+00:40 +181 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: magasin programme du propriétaire (C11) : bloc annoté, séance servie par kalis_adapt, structure intacte
+00:40 +182 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: magasin programme du propriétaire (C11) : bloc annoté, séance servie par kalis_adapt, structure intacte
+00:40 +183 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/m7_player_test.dart: écrans écran Animation de test, libellé comme test
+00:40 +184 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/m7_player_test.dart: écrans écran Animation de test, libellé comme test
+00:40 +185 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/m7_player_test.dart: écrans écran Animation de test, libellé comme test
+00:40 +186 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: magasin bilan (D5.8) : réponses partielles gardées telles quelles, aucune valeur injectée ; mode assisté : ajustement appliqué, annulable
+00:41 +187 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/m7_player_test.dart: écrans Moteur 3D › Animation de test
+00:41 +188 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/m7_player_test.dart: écrans Moteur 3D › Animation de test
+00:41 +189 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/m7_player_test.dart: écrans Moteur 3D › Animation de test
+00:41 +190 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: magasin mode libre : l’ajustement est proposé, rien n’est appliqué sans accord
+00:41 +191 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: magasin mode libre : l’ajustement est proposé, rien n’est appliqué sans accord
+00:41 +192 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: magasin douleur : zone épargnée ; règle L13 (> 3/10 plus de 2 séances de suite) → renvoi vers un professionnel
+00:42 +193 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: magasin conseil après chaque série, mode assisté : appliqué aux séries suivantes non modifiées, annulable
+00:42 +194 ~1: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: magasin conseil en mode libre : proposé, appliqué seulement après accord
+00:42 +194 ~2: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: magasin conseil en mode libre : proposé, appliqué seulement après accord
+00:42 +194 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: magasin conseil en mode libre : proposé, appliqué seulement après accord
+00:42 +195 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: magasin sauvegarde : séance du moteur et flammes exportées, relues ; import strict d’une séance du moteur invalide refusé
+00:43 +196 ~3: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: magasin résumé de fin : calibrage, capacité avant / après, prochaine fois
+00:43 +196 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: magasin résumé de fin : calibrage, capacité avant / après, prochaine fois
+00:43 +197 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: magasin budgets : prescription et conseil sous 1 s en test (VM)
+00:43 +198 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: textes codes de raison du moteur : une phrase pour chaque code dit à l’utilisateur, aucune allégation médicale
+00:43 +199 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: écrans (setUpAll)
+00:44 +199 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: écrans bilan : « Comment tu te sens ? », réponse basse → détail sur un seul écran, « Passer » partout ; flammes obligatoires ; fin de séance
+00:44 +200 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: écrans bilan : « Comment tu te sens ? », réponse basse → détail sur un seul écran, « Passer » partout ; flammes obligatoires ; fin de séance
+00:44 +201 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: écrans bilan : « Comment tu te sens ? », réponse basse → détail sur un seul écran, « Passer » partout ; flammes obligatoires ; fin de séance
+00:44 +202 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: écrans bilan : « Comment tu te sens ? », réponse basse → détail sur un seul écran, « Passer » partout ; flammes obligatoires ; fin de séance
+00:44 +203 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: écrans bilan : « Comment tu te sens ? », réponse basse → détail sur un seul écran, « Passer » partout ; flammes obligatoires ; fin de séance
+00:44 +204 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: écrans bilan : « Comment tu te sens ? », réponse basse → détail sur un seul écran, « Passer » partout ; flammes obligatoires ; fin de séance
+00:44 +205 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: écrans bilan : « Comment tu te sens ? », réponse basse → détail sur un seul écran, « Passer » partout ; flammes obligatoires ; fin de séance
+00:44 +206 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: écrans bilan : « Comment tu te sens ? », réponse basse → détail sur un seul écran, « Passer » partout ; flammes obligatoires ; fin de séance
+00:44 +207 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: écrans bilan : « Comment tu te sens ? », réponse basse → détail sur un seul écran, « Passer » partout ; flammes obligatoires ; fin de séance
+00:44 +208 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: écrans bilan : « Comment tu te sens ? », réponse basse → détail sur un seul écran, « Passer » partout ; flammes obligatoires ; fin de séance
+00:45 +209 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: écrans bilan : « Comment tu te sens ? », réponse basse → détail sur un seul écran, « Passer » partout ; flammes obligatoires ; fin de séance
+00:45 +210 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: écrans bilan : « Comment tu te sens ? », réponse basse → détail sur un seul écran, « Passer » partout ; flammes obligatoires ; fin de séance
+00:45 +211 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: écrans bilan : « Comment tu te sens ? », réponse basse → détail sur un seul écran, « Passer » partout ; flammes obligatoires ; fin de séance
+00:46 +212 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: écrans bilan : « Comment tu te sens ? », réponse basse → détail sur un seul écran, « Passer » partout ; flammes obligatoires ; fin de séance
+00:46 +213 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: écrans bilan : « Comment tu te sens ? », réponse basse → détail sur un seul écran, « Passer » partout ; flammes obligatoires ; fin de séance
+00:46 +214 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g9_seance_test.dart: écrans bilan : « Comment tu te sens ? », réponse basse → détail sur un seul écran, « Passer » partout ; flammes obligatoires ; fin de séance
+00:47 +215 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g6_profil_test.dart: écrans installation neuve : 12 écrans (CU : ceux d’un débutant), profil valide, attente du programme
+00:48 +216 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g6_profil_test.dart: écrans installation neuve : 12 écrans (CU : ceux d’un débutant), profil valide, attente du programme
+00:48 +217 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g6_profil_test.dart: écrans installation neuve : 12 écrans (CU : ceux d’un débutant), profil valide, attente du programme
+00:48 +218 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g6_profil_test.dart: écrans installation neuve : 12 écrans (CU : ceux d’un débutant), profil valide, attente du programme
+00:48 +219 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g6_profil_test.dart: écrans installation neuve : 12 écrans (CU : ceux d’un débutant), profil valide, attente du programme
+00:49 +220 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g6_profil_test.dart: écrans installation neuve : 12 écrans (CU : ceux d’un débutant), profil valide, attente du programme
+00:49 +221 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g6_profil_test.dart: écrans installation neuve : 12 écrans (CU : ceux d’un débutant), profil valide, attente du programme
+00:49 +222 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g6_profil_test.dart: écrans installation neuve : 12 écrans (CU : ceux d’un débutant), profil valide, attente du programme
+00:49 +223 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g6_profil_test.dart: écrans installation neuve : 12 écrans (CU : ceux d’un débutant), profil valide, attente du programme
+00:49 +224 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g6_profil_test.dart: écrans installation neuve : 12 écrans (CU : ceux d’un débutant), profil valide, attente du programme
+00:49 +225 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g6_profil_test.dart: écrans installation neuve : 12 écrans (CU : ceux d’un débutant), profil valide, attente du programme
+00:49 +226 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g6_profil_test.dart: écrans installation neuve : 12 écrans (CU : ceux d’un débutant), profil valide, attente du programme
+00:49 +227 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g6_profil_test.dart: écrans installation neuve : 12 écrans (CU : ceux d’un débutant), profil valide, attente du programme
+00:49 +228 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g6_profil_test.dart: écrans installation neuve : 12 écrans (CU : ceux d’un débutant), profil valide, attente du programme
+00:49 +229 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g6_profil_test.dart: écrans installation neuve : 12 écrans (CU : ceux d’un débutant), profil valide, attente du programme
+00:49 +230 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g6_profil_test.dart: écrans installation neuve : 12 écrans (CU : ceux d’un débutant), profil valide, attente du programme
+00:49 +231 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g6_profil_test.dart: écrans installation neuve : 12 écrans (CU : ceux d’un débutant), profil valide, attente du programme
+00:49 +232 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g6_profil_test.dart: écrans installation neuve : 12 écrans (CU : ceux d’un débutant), profil valide, attente du programme
+00:50 +233 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g6_profil_test.dart: écrans installation neuve : 12 écrans (CU : ceux d’un débutant), profil valide, attente du programme
+00:50 +234 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g6_profil_test.dart: écrans moins de 18 ans : message neutre, aucune écriture
+00:51 +235 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g6_profil_test.dart: écrans moins de 18 ans : message neutre, aucune écriture
+00:51 +236 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g6_profil_test.dart: écrans moins de 18 ans : message neutre, aucune écriture
+00:51 +237 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g6_profil_test.dart: écrans moins de 18 ans : message neutre, aucune écriture
+00:51 +238 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g6_profil_test.dart: écrans moins de 18 ans : message neutre, aucune écriture
+00:51 +239 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g6_profil_test.dart: écrans moins de 18 ans : message neutre, aucune écriture
+00:51 +240 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l5c_couleur_test.dart: préférence AppSettings : absent, inconnu ou mauvais type → rouge
+00:51 +241 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g6_profil_test.dart: écrans fermer pendant la création : reprise à la même étape
+00:51 +242 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g6_profil_test.dart: écrans fermer pendant la création : reprise à la même étape
+00:51 +243 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l5c_couleur_test.dart: préférence choix retrouvé à la réouverture, thème indépendant
+00:51 +244 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g6_profil_test.dart: écrans texte à 200 % sans débordement (sombre)
+00:51 +245 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g6_profil_test.dart: écrans texte à 200 % sans débordement (sombre)
+00:52 +246 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g6_profil_test.dart: écrans texte à 200 % sans débordement (sombre)
+00:52 +247 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g6_profil_test.dart: écrans texte à 200 % sans débordement (sombre)
+00:52 +248 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g6_profil_test.dart: écrans texte à 200 % sans débordement (sombre)
+00:52 +249 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g6_profil_test.dart: écrans texte à 200 % sans débordement (sombre)
+00:52 +250 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/l5c_couleur_test.dart: préférence suppression locale : retour au rouge
+00:52 +251 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g6_profil_test.dart: écrans texte à 200 % sans débordement (clair)
+00:52 +252 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g6_profil_test.dart: écrans texte à 200 % sans débordement (clair)
+00:52 +253 ~4: /home/runner/work/streetlift-apk/streetlift-apk/test/g6_profil_test.dart: écrans Réglages › Profil : rubrique modifiée, Koach signale le programme ; santé
+00:53 +253 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/g6_profil_test.dart: écrans Réglages › Profil : rubrique modifiée, Koach signale le programme ; santé
+00:53 +254 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/g6_profil_test.dart: écrans correction 1 : objectif modifié sans être supprimé
+00:54 +255 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/g6_profil_test.dart: écrans correction 1 : toute la base dans la recherche des exercices aimés et détestés
+00:55 +256 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/motion_test.dart: onglets : transition visible et navigation rapide sans perdre STATS
+00:55 +257 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/motion_test.dart: onglets : transition visible et navigation rapide sans perdre STATS
+00:55 +258 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/motion_test.dart: onglets : transition visible et navigation rapide sans perdre STATS
+00:56 +259 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/motion_test.dart: réduire les animations rend les onglets et le sélecteur STATS immédiats
+00:56 +260 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/motion_test.dart: une saisie survit au passage en animations réduites pendant une transition de page
+00:57 +261 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_charges_consigne_test.dart: instantané de référence : 5 jeux × 1 812 exercices
+00:57 +262 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_charges_consigne_test.dart: instantané de référence : 5 jeux × 1 812 exercices
+00:57 +263 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_charges_consigne_test.dart: sans données de l’ancien Koach : identique à 2.x
+00:57 +264 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/g10_charges_consigne_test.dart: données de l’ancien Koach (L7) présentes : sans effet, identique à 2.x ; aucune difficulté exigée, aucune prescription écrite
+00:57 +265 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m4_stats_mannequin_test.dart: (setUpAll)
+00:58 +265 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m4_stats_mannequin_test.dart: intensités de la carte groupes de l’application : chiffres écrits en clair
+00:58 +266 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m4_stats_mannequin_test.dart: intensités de la carte semaine vide : aucun groupe en couleur
+00:58 +267 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m4_stats_mannequin_test.dart: intensités de la carte chaque groupe de l’application a sa place sur la carte
+00:58 +268 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m4_stats_mannequin_test.dart: intensités de la carte semaine type : muscles des fiches, bornés à 1
+00:58 +269 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m4_stats_mannequin_test.dart: légende : valeur lisible à la française
+00:58 +270 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m4_stats_mannequin_test.dart: onglet Performances semaine type (sombre)
+00:58 +271 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m4_stats_mannequin_test.dart: onglet Performances semaine type (sombre)
+00:58 +272 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m4_stats_mannequin_test.dart: onglet Performances semaine type (sombre)
+00:58 +273 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m4_stats_mannequin_test.dart: onglet Performances semaine type (sombre)
+00:58 +274 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m4_stats_mannequin_test.dart: onglet Performances semaine type (sombre)
+00:58 +275 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m4_stats_mannequin_test.dart: onglet Performances semaine type (sombre)
+00:58 +276 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m4_stats_mannequin_test.dart: onglet Performances semaine type (sombre)
+00:58 +277 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m4_stats_mannequin_test.dart: onglet Performances semaine type (sombre)
+00:58 +278 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m4_stats_mannequin_test.dart: onglet Performances semaine type (sombre)
+00:58 +279 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m4_stats_mannequin_test.dart: onglet Performances semaine type (sombre)
+00:58 +280 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m4_stats_mannequin_test.dart: onglet Performances semaine type (sombre)
+00:58 +281 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m4_stats_mannequin_test.dart: onglet Performances semaine type (sombre)
+00:58 +282 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m4_stats_mannequin_test.dart: onglet Performances semaine type (sombre)
+00:58 +283 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m4_stats_mannequin_test.dart: onglet Performances semaine type (sombre)
+00:59 +284 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m4_stats_mannequin_test.dart: onglet Performances semaine type (sombre)
+00:59 +285 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m4_stats_mannequin_test.dart: onglet Performances semaine type (sombre)
+00:59 +286 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m4_stats_mannequin_test.dart: onglet Performances semaine vide (sombre)
+00:59 +287 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m4_stats_mannequin_test.dart: onglet Performances semaine type (clair)
+01:00 +288 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m4_stats_mannequin_test.dart: onglet Performances semaine type (clair)
+01:00 +289 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m4_stats_mannequin_test.dart: onglet Performances semaine type (clair)
+01:00 +290 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1f_formats_test.dart: programme de 40 semaines : formats annotés (C11.6) myo-reps, durées, HIIT, EMOM, contrastes, échelles : blocs valides, groupes, lignes servies telles qu’écrites
+01:00 +291 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1f_formats_test.dart: programme de 40 semaines : formats annotés (C11.6) myo-reps, durées, HIIT, EMOM, contrastes, échelles : blocs valides, groupes, lignes servies telles qu’écrites
+CI1F absent {"N × ? reps":33}
+01:01 +292 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1f_formats_test.dart: programme de 40 semaines : formats annotés (C11.6) « N × ? reps » : référence estimée d’après le journal (test au maximum), sinon servi tel qu’écrit
+CI1F estimates {B18: 8.0/journal, B19: 8.0/journal}
+01:01 +293 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1e_programme_40s_test.dart: programme de 40 semaines (C11) découpage : un bloc par bloc du programme, coupé après une semaine allégée au-delà de 6 semaines
+01:01 +294 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1f_formats_test.dart: programme de 40 semaines : formats annotés (C11.6) séance : myo-reps saisis mini-série par mini-série, une série au journal du moteur avec ses parties
+CI1F myo servi {"slotId":"j5-mu-elevation-laterale-halteres","exerciseId":"mu-elevation-laterale-halteres","sets":1,"repsLow":15,"repsHigh":15,"targetFlames":9,"startLoadKg":56.0,"percentOfOneRm":0.647,"toCalibrate":true,"loadBasis":"external","setTargets":[{"repsLow":15,"repsHigh":15,"loadKg":56.0,"flames":9}],"reasons":[{"code":"adapt.low_confidence","params":{"confidence":0.431}},{"code":"adapt.load_down","params":{"deltaKg":6.5}}]} ; bloc {"kind":"myo_reps","miniSets":4,"miniSetReps":4,"intraRestSeconds":10} ; niveau ExperienceLevel.advanced
+01:02 +295 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1e_programme_40s_test.dart: programme de 40 semaines (C11) annotation du programme du propriétaire : blocs valides au contrat 0.4.0, mode coach, saison et échéance fin S40
+01:02 +295 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1f_formats_test.dart: programme de 40 semaines : formats annotés (C11.6) installation neuve en S20 (cible émulateur) : myo-reps servis mini-série par mini-série
+CI1F S20 B3-6 MUSCLE-UP LESTÉ — lift n°1, avant tout tirage engine=true servi=5/cluster/null bloc=5/cluster raisons=[adapt.calibration] plan=cluster
+CI1F S20 B3-7 TRACTION LESTÉE — lift principal engine=true servi=5/null/null bloc=5/cluster raisons=[adapt.calibration] plan=cluster
+CI1F S20 B3-8 Rowing barre penché engine=true servi=4/null/null bloc=4/null raisons=[adapt.calibration] plan=null
+CI1F S20 B3-9 Tirage vertical prise neutre engine=true servi=3/null/null bloc=3/null raisons=[adapt.calibration] plan=null
+CI1F S20 B3-10 Curl barre EZ engine=true servi=1/myo_reps/null bloc=1/myo_reps raisons=[adapt.calibration] plan=myo_reps
+CI1F S20 B3-11 Face pulls engine=true servi=4/null/null bloc=4/null raisons=[adapt.calibration] plan=null
+CI1F S20 B3-12 Rotations externes (par haltère) engine=true servi=3/null/null bloc=3/null raisons=[] plan=null
+CI1F S20 B3-13 Scapular pull-ups engine=true servi=3/null/null bloc=3/null raisons=[] plan=null
+CI1F S20 B3-14 Travail poignet excentrique (haltère) engine=true servi=3/null/null bloc=3/null raisons=[adapt.calibration] plan=null
+01:02 +296 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1e_programme_40s_test.dart: programme de 40 semaines (C11) annotation du programme du propriétaire : blocs valides au contrat 0.4.0, mode coach, saison et échéance fin S40
+CI1E absent {"N × ? reps":71,"EMOM N min × ? reps par minute":2}
+CI1E segments [legacy-programme-v33/S1:test:test/test/intro, legacy-programme-v33/S4:accumulation:accumulation/accumulation/accumulation/deload, legacy-programme-v33/S8:accumulation:accumulation/accumulation/accumulation/deload, legacy-programme-v33/S12:intensification:test/intensification/intensification/deload, legacy-programme-v33/S16:intensification:intensification/intensification/realization/deload, legacy-programme-v33/S20:realization:intensification/intensification/realization/deload/realization/test, legacy-programme-v33/S26:accumulation:accumulation/accumulation/accumulation/accumulation/deload/test, legacy-programme-v33/S32:intensification:intensification/intensification/intensification/deload, legacy-programme-v33/S36:realization:realization/realization/realization/test/test]
+01:02 +297 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1f_formats_test.dart: programme de 40 semaines : formats annotés (C11.6) groupe : résultat journalisé avec la séance
+01:02 +298 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1e_programme_40s_test.dart: programme de 40 semaines (C11) migration 6.9.3 → 6.10.0 : sauvegarde d’origine automatique, séances du moteur relues sur le bloc annoté, journal intact
+01:03 +299 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1e_programme_40s_test.dart: programme de 40 semaines (C11) migration 6.9.3 → 6.10.0 : sauvegarde d’origine automatique, séances du moteur relues sur le bloc annoté, journal intact
+01:03 +300 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1e_programme_40s_test.dart: programme de 40 semaines (C11) migration 6.9.3 → 6.10.0 : sauvegarde d’origine automatique, séances du moteur relues sur le bloc annoté, journal intact
+01:03 +301 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1e_programme_40s_test.dart: programme de 40 semaines (C11) migration 6.9.3 → 6.10.0 : sauvegarde d’origine automatique, séances du moteur relues sur le bloc annoté, journal intact
+01:04 +302 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1e_programme_40s_test.dart: programme de 40 semaines (C11) séance du jour servie en mode coach, saison et compte à rebours, échéance donnée au moteur
+01:04 +303 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: (setUpAll)
+01:04 +303 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1e_programme_40s_test.dart: programme de 40 semaines (C11) douleur qui dure → arrêt pour douleur (mode coach du programme importé)
+01:04 +304 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1e_programme_40s_test.dart: programme de 40 semaines (C11) douleur qui dure → arrêt pour douleur (mode coach du programme importé)
+01:04 +304 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: catalogue 1 039 exercices, 8 disciplines, chargés par kalis_core
+G3_PERF chargement_catalogue_ms=120
+01:04 +305 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1e_programme_40s_test.dart: programme de 40 semaines (C11) douleur qui dure → arrêt pour douleur (mode coach du programme importé)
+01:05 +306 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1e_programme_40s_test.dart: programme de 40 semaines (C11) douleur qui dure → arrêt pour douleur (mode coach du programme importé)
+01:05 +307 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1e_programme_40s_test.dart: programme de 40 semaines (C11) douleur qui dure → arrêt pour douleur (mode coach du programme importé)
+01:05 +308 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1e_programme_40s_test.dart: programme de 40 semaines (C11) douleur qui dure → arrêt pour douleur (mode coach du programme importé)
+01:05 +309 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1e_programme_40s_test.dart: programme de 40 semaines (C11) douleur qui dure → arrêt pour douleur (mode coach du programme importé)
+01:05 +310 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1e_programme_40s_test.dart: programme de 40 semaines (C11) douleur qui dure → arrêt pour douleur (mode coach du programme importé)
+01:05 +311 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1e_programme_40s_test.dart: programme de 40 semaines (C11) douleur qui dure → arrêt pour douleur (mode coach du programme importé)
+01:05 +312 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1e_programme_40s_test.dart: programme de 40 semaines (C11) douleur qui dure → arrêt pour douleur (mode coach du programme importé)
+01:05 +313 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1e_programme_40s_test.dart: programme de 40 semaines (C11) douleur qui dure → arrêt pour douleur (mode coach du programme importé)
+01:05 +314 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: conversion du journal (C1 à C12) historique complet : journal kalis_core valide, rien d'inventé
+01:05 +315 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1e_programme_40s_test.dart: programme de 40 semaines (C11) propositions réelles de la revue (relevé) et restructuration acceptée puis annulée, montrée dans le programme
+CI1E revue free : legacy-programme-v33/S12 déblocage=block_restructure propositions=[]
+CI1E revue assisted : legacy-programme-v33/S12 déblocage=block_restructure propositions=[]
+01:06 +316 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline Musculation (sombre, 200 %)
+01:06 +317 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline Musculation (sombre, 200 %)
+01:06 +318 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline Musculation (sombre, 200 %)
+01:06 +318 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1e_programme_40s_test.dart: programme de 40 semaines (C11) installation neuve : sauvegarde d’origine au départ du programme ; retour puis revue du moteur (mode assisté) : programme d’origine
+CI1E neuve : avant=false apres=false entrees=[] sections=[]
+01:06 +319 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline Musculation (sombre, 200 %)
+01:07 +319 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1e_programme_40s_test.dart: programme de 40 semaines (C11) retour au programme d’origine : sections du programme identiques à la sauvegarde, journal gardé
+CI1E apres retour : differe=false entrees=[] propositions=[]
+01:07 +320 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline Musculation (sombre, 200 %)
+01:09 +321 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline Musculation (sombre, 200 %)
+01:09 +322 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline Musculation (sombre, 200 %)
+01:09 +323 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline Street workout (sombre, 200 %)
+01:10 +324 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline Street workout (sombre, 200 %)
+01:10 +325 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline Street workout (sombre, 200 %)
+01:10 +326 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline Street workout (sombre, 200 %)
+01:10 +327 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline Street workout (sombre, 200 %)
+01:10 +328 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline Street workout (sombre, 200 %)
+01:10 +329 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline Street workout (sombre, 200 %)
+01:10 +330 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline Street workout (sombre, 200 %)
+01:10 +331 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline Street workout (sombre, 200 %)
+01:11 +332 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline Streetlifting (sombre, 200 %)
+01:12 +333 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/redesign_test.dart: les réglages de chrono restent enregistrés après retour au menu
+01:13 +334 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/redesign_test.dart: les réglages de chrono restent enregistrés après retour au menu
+01:13 +335 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline Calisthénie dynamique (sombre, 200 %)
+01:14 +336 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline Calisthénie dynamique (sombre, 200 %)
+01:14 +337 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline CrossFit / WOD (sombre, 200 %)
+01:15 +338 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: (setUpAll)
+01:15 +338 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline Cardio (sombre, 200 %)
+01:15 +339 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline Cardio (sombre, 200 %)
+01:15 +340 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline Cardio (sombre, 200 %)
+01:15 +341 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline Cardio (sombre, 200 %)
+01:15 +342 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline Cardio (sombre, 200 %)
+01:15 +343 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline Cardio (sombre, 200 %)
+01:15 +344 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline Cardio (sombre, 200 %)
+01:15 +345 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline Cardio (sombre, 200 %)
+01:15 +346 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline Cardio (sombre, 200 %)
+01:15 +347 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline Cardio (sombre, 200 %)
+01:16 +348 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline Cardio (sombre, 200 %)
+01:16 +349 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/g3_catalogue_test.dart: fiches : une par discipline Cardio (sombre, 200 %)
+01:16 +350 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:17 +351 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:18 +352 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:18 +353 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:19 +354 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:20 +355 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:21 +356 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:22 +357 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:23 +358 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:23 +359 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:26 +360 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:27 +361 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:28 +362 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:28 +363 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:29 +364 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:30 +365 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:30 +366 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:31 +367 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:32 +368 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:33 +369 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:34 +370 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:34 +371 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:34 +372 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:35 +373 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:35 +374 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:36 +375 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:36 +376 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:37 +377 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:37 +378 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:37 +379 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:37 +380 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:37 +381 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:37 +382 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:37 +383 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:37 +384 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:37 +385 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:37 +386 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:37 +387 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:37 +388 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:37 +389 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:37 +390 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:37 +391 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:37 +392 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:37 +393 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:37 +394 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:37 +395 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:37 +396 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:37 +397 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:37 +398 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:37 +399 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:39 +400 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:39 +401 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:39 +402 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:39 +403 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:39 +404 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:39 +405 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:39 +406 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:39 +407 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:39 +408 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:39 +409 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:39 +410 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:39 +411 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:39 +412 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:39 +413 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:39 +414 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:39 +415 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:39 +416 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:39 +417 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:39 +418 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:39 +419 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:40 +420 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:40 +421 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:40 +422 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:40 +423 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:40 +424 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:40 +425 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:40 +426 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:40 +427 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:40 +428 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:40 +429 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:40 +430 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:40 +431 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:40 +432 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:40 +432 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/l4_depart_test.dart: Rappels : erreurs et ouverture échec de programmation : visible, départ conservé, reprise possible
+Kalis notifications: Bad state: schedule_native_error
+01:40 +433 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:40 +434 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:40 +434 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/l4_depart_test.dart: Comparaison avant / après (migration synthétique) utilisateur avancé : semaine, dates, séances, références, récompenses, rappels
+L4-COMPARE migration {"semaine":"S11 · J6","depart":"2026-07-13","origine":"migration","datesS11":"21/09→27/09/2026","seances":60,"S6-J4":"2026-08-20T19:00:00.000","S1-J2":null,"B4":81.5,"B8":32.5,"provenanceB4":"historic","xp":7870,"niveau":16,"rappels":174,"premierRappel":"S12-J1 2026-09-28T07:30"}
+L4-COMPARE relance {"semaine":"S11 · J6","depart":"2026-07-13","origine":"migration","datesS11":"21/09→27/09/2026","seances":60,"S6-J4":"2026-08-20T19:00:00.000","S1-J2":null,"B4":81.5,"B8":32.5,"provenanceB4":"historic","xp":7870,"niveau":16,"rappels":174,"premierRappel":"S12-J1 2026-09-28T07:30"}
+L4-COMPARE depart-21-09 {"semaine":"S1 · J6","depart":"2026-09-21","origine":"user","datesS11":"30/11→06/12/2026","seances":60,"S6-J4":"2026-08-20T19:00:00.000","S1-J2":null,"B4":81.5,"B8":32.5,"provenanceB4":"historic","xp":7870,"niveau":16,"rappels":180,"premierRappel":"S11-J1 2026-11-30T07:30"}
+01:40 +435 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:42 +436 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:42 +437 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:43 +438 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:43 +439 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:43 +440 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:43 +441 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:43 +442 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:44 +443 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:44 +444 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:44 +445 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:44 +446 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:45 +447 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:45 +448 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:45 +449 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:45 +450 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:47 +451 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:47 +452 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:48 +453 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:48 +454 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:48 +455 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:48 +456 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:48 +457 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:49 +458 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:49 +459 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:49 +460 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:49 +460 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1_street_test.dart: relevé techniques écrites et servies par profil (journal du test)
+CI1 competiteur : 4 semaines, phases accumulation/3 deload/1 accumulation/3 deload/1 intensification/1 realization/2 taper/1 competition/1 ; {classique: 65, top_set_backoff: 9, isometric_hold: 6}
+  S1J2 Suspension active : - 2 × 15-20 s lignes Éc1,Éc2 chrono null mesure hold
+  S1J2 Traction lestée de compétition : - 4 × 6 lignes 1,2,3,4 chrono null mesure reps
+  S1J2 Dips lesté de compétition : top_set_backoff 4 × 5 lignes Tête,A1,A2,A3 chrono null mesure reps
+  S1J2 Rowing barre buste penché prise pronation : - 3 × 8-10 lignes 1,2,3 chrono null mesure reps
+  S1J2 Gainage latéral avec relevés de hanche : - 2 × 8-12 lignes 1,2 chrono null mesure reps
+  S1J2 Hollow body hold : isometric_hold 2 × 6-20 s lignes 1,2 chrono null mesure hold
+  S1J2 Cat-cow : - 1 × 8-10 lignes 1 chrono null mesure reps
+CI1 debutant : 6 semaines, phases accumulation/5 test/1 accumulation/5 test/1 accumulation/4 taper/1 test/1 ; {classique: 135, isometric_hold: 18, test:max_reps: 2}
+  S1J2 Suspension active : - 2 × 15-20 s lignes Éc1,Éc2 chrono null mesure hold
+  S1J2 Wrist push-ups : - 2 × 8-10 lignes Éc1,Éc2 chrono null mesure reps
+  S1J2 Pompe inclinée (mains surélevées) : - 2 × 6-8 lignes 1,2 chrono null mesure reps
+  S1J2 Row australien aux barres parallèles : - 2 × 6-8 lignes 1,2 chrono null mesure reps
+  S1J2 Air squat : - 2 × 8-10 lignes 1,2 chrono null mesure reps
+  S1J2 Fente arrière au poids du corps : - 2 × 8-10 lignes 1,2 chrono null mesure reps
+  S1J2 Support hold aux barres parallèles : isometric_hold 3 × 3-10 s lignes 1,2,3 chrono null mesure hold
+  S1J2 Dead bug : - 2 × 8-12 lignes 1,2 chrono null mesure reps
+  S1J2 CARs d'épaule : - 1 × 8-10 lignes 1 chrono null mesure reps
+  S1J2 Squat profond tenu : - 2 × 30-45 s lignes 1,2 chrono null mesure hold
+CI1 sets_reps : 4 semaines, phases accumulation/3 deload/1 accumulation/3 deload/1 accumulation/3 deload/1 accumulation/3 deload/1 accumulation/3 deload/1 accumulation/3 deload/1 intensification/3 deload/1 realization/4 taper/1 competition/1 ; {classique: 97, top_set_backoff: 9, emom: 24, isometric_hold: 6, test:max_reps: 3}
+  S1J2 Suspension active : - 2 × 15-20 s lignes Éc1,Éc2 chrono null mesure hold
+  S1J2 Muscle-up barre strict : emom 5 × 3 lignes M1,M2,M3,M4,M5 chrono emom mesure reps
+  S1J2 Traction pronation : - 2 × 11 lignes 1,2 chrono null mesure reps
+  S1J2 Dips aux barres parallèles : - 2 × 17 lignes 1,2 chrono null mesure reps
+  S1J2 Row australien : - 2 × 8-10 lignes 1,2 chrono null mesure reps
+  S1J2 Relevé de jambes tendues suspendu : - 2 × 8-12 lignes 1,2 chrono null mesure reps
+  S1J2 Face pull à l'élastique : - 2 × 12-15 lignes 1,2 chrono null mesure reps
+  S1J2 Gainage latéral avec relevés de hanche : - 2 × 8-12 lignes 1,2 chrono null mesure reps
+  S1J2 Hollow body hold : isometric_hold 2 × 6-20 s lignes 1,2 chrono null mesure hold
+  S1J2 Cat-cow : - 1 × 8-10 lignes 1 chrono null mesure reps
+CI1 elite : 4 semaines, phases accumulation/3 deload/1 accumulation/3 deload/1 accumulation/3 deload/1 accumulation/3 deload/1 accumulation/3 deload/1 accumulation/3 deload/1 intensification/1 realization/2 taper/1 competition/1 ; {classique: 143, top_set_backoff: 3}
+  S1J3 Suspension active : - 2 × 15-20 s lignes Éc1,Éc2 chrono null mesure hold
+  S1J3 Muscle-up lesté de compétition : top_set_backoff 5 × 3 lignes Tête,A1,A2,A3,A4 chrono null mesure reps
+  S1J3 Traction haute lestée (high pull) : - 2 × 6 lignes 1,2 chrono null mesure reps
+  S1J3 Squat de compétition : - 2 × 5 lignes 1,2 chrono null mesure reps
+  S1J3 Rowing barre buste penché prise pronation : - 2 × 8-10 lignes 1,2 chrono null mesure reps
+  S1J3 Face pull à l'élastique : - 2 × 12-15 lignes 1,2 chrono null mesure reps
+  S1J3 Cat-cow : - 1 × 8-10 lignes 1 chrono null mesure reps
+  S1J3 Étirement des fléchisseurs du poignet bras tendu : - 2 × 30-45 s lignes 1,2 chrono null mesure hold
+01:50 +461 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:50 +462 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:50 +463 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:50 +464 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:50 +465 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:50 +466 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:51 +467 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:51 +468 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:51 +469 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:51 +470 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:51 +471 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:51 +472 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:51 +473 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:51 +474 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:51 +475 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:52 +476 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:52 +477 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:52 +478 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:52 +479 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+01:53 +480 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:01 +481 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:05 +482 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:06 +483 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:07 +484 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:07 +485 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:08 +486 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:09 +487 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:09 +488 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:10 +489 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:10 +490 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:10 +491 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:10 +492 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:11 +493 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:12 +494 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:12 +495 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:12 +496 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:12 +497 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:12 +498 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:12 +498 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/refonte_ma_test.dart: démonstrations découpées coût : images par seconde (test) et mémoire des textures
+REFONTE_PERF images=240 moyenne_us=1544 ips=647 textures_octets=6340608
+02:12 +499 ~5: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:13 +499 ~6: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:13 +499 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:15 +500 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:15 +501 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:15 +502 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:15 +503 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:17 +504 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:17 +505 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:17 +506 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:17 +507 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:18 +508 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:19 +509 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:19 +510 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:19 +511 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:21 +512 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:22 +513 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:23 +514 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:23 +515 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:23 +516 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:23 +517 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:23 +518 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:23 +519 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:23 +520 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:24 +521 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:24 +522 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:24 +523 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:25 +524 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:25 +525 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:25 +526 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:25 +527 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:25 +528 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:25 +529 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:25 +530 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:25 +531 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:25 +532 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:25 +533 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:25 +534 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:25 +535 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:26 +536 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:26 +537 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:30 +538 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:33 +539 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:33 +540 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:34 +541 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:35 +541 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1c_koach_applique_test.dart: ajustement de Koach accepté propositions de la revue sur le bloc importé (relevé)
+RELEVE free : bloc legacy-programme-v33/S12 importé=true semaine=12 déblocage=block_restructure propositions=[]
+RELEVE assisted : bloc legacy-programme-v33/S12 importé=true semaine=12 déblocage=block_restructure propositions=[]
+02:35 +542 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:36 +543 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:36 +544 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:37 +545 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:37 +546 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:37 +547 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:37 +548 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:38 +549 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:39 +550 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:40 +551 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:41 +551 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/l9b_perf_test.dart: calcul + dessin d'une image : toutes les démonstrations
+L9B_PERF demo_frames=6070 moyenne_us=138.8
+02:41 +552 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:44 +552 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/l9b_perf_test.dart: liste la plus longue : 1 039 exercices (G3), défilement
+L9B_PERF liste_frames=40 moyenne_ms=23.30
+02:44 +553 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:44 +554 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:45 +555 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:45 +556 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:45 +557 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:45 +558 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:46 +559 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:46 +560 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:47 +561 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:47 +562 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:47 +563 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:47 +564 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:47 +565 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:47 +566 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:47 +567 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:47 +568 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:47 +569 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:47 +570 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:47 +571 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:47 +572 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:48 +573 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:50 +574 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:50 +575 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:50 +576 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:51 +577 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:51 +578 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:51 +579 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:51 +580 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:51 +581 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:51 +582 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:52 +583 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:53 +584 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:53 +585 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:53 +586 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:53 +587 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:54 +588 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:54 +589 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:54 +590 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:54 +591 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:54 +592 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:54 +593 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:55 +594 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:55 +595 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:55 +596 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:55 +597 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:55 +598 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:55 +599 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:55 +600 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:57 +601 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:57 +602 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:57 +603 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:57 +604 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:58 +605 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:58 +606 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:58 +607 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:58 +608 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+02:59 +609 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:00 +610 ~7: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:00 +610 ~8: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:00 +610 ~9: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:00 +610 ~10: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:00 +610 ~11: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:00 +610 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:02 +611 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:04 +612 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:04 +613 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:05 +614 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:06 +615 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:08 +616 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:08 +617 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:09 +618 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:09 +619 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:10 +620 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:10 +621 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:12 +622 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:13 +623 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:13 +624 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:13 +625 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:13 +626 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:14 +627 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:14 +628 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:14 +629 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:14 +630 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:14 +631 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:14 +632 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:14 +633 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:14 +634 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:14 +635 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:15 +636 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:15 +637 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:15 +638 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:16 +639 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:16 +640 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:16 +641 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:16 +642 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:16 +643 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:18 +644 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:19 +645 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:19 +646 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:19 +647 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:20 +648 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:21 +649 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:21 +650 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:21 +651 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:21 +652 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:21 +653 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:21 +654 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:21 +655 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:21 +656 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:21 +657 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:21 +658 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:21 +659 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:21 +660 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:21 +661 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:21 +662 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:21 +663 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:21 +664 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:23 +665 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:23 +666 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:23 +667 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:24 +668 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:25 +669 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:25 +670 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:25 +671 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:25 +672 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:26 +673 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:26 +674 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:26 +675 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:26 +676 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:26 +677 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:26 +678 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:26 +679 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:27 +680 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:27 +681 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:27 +682 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:27 +683 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:27 +684 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:27 +685 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:27 +686 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:27 +687 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:27 +688 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:27 +689 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:27 +690 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:27 +691 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:29 +692 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:29 +693 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:29 +694 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:30 +695 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:30 +696 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:30 +697 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:30 +698 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:33 +699 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:33 +700 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:33 +701 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:33 +702 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:35 +703 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:36 +704 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:36 +705 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:36 +706 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:37 +707 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:37 +708 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:37 +709 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:37 +710 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:38 +711 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:38 +712 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:38 +713 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:38 +714 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:38 +715 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:38 +716 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:38 +717 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:39 +718 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:39 +719 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:39 +720 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:40 +721 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:40 +722 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:41 +723 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:42 +724 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:42 +725 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:43 +726 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:43 +727 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:43 +728 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:44 +729 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:44 +729 ~12: /home/runner/work/streetlift-apk/streetlift-apk/test/ci1b_pain_test.dart: séance servie (mode coach 0.2.2) test retiré un jour de bilan bas, servi à une séance suivante de la semaine, journalisé à son emplacement
+  aucun test reporté par le moteur (0 essais)
+03:44 +729 ~13: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:45 +729 ~14: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:45 +730 ~14: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:45 +731 ~14: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:45 +732 ~14: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:45 +733 ~14: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:47 +734 ~14: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:47 +735 ~14: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:47 +736 ~14: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:47 +737 ~14: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:47 +738 ~14: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:47 +739 ~14: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:47 +740 ~14: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:47 +741 ~14: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:47 +742 ~14: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:47 +743 ~14: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:47 +744 ~14: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:47 +745 ~14: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:49 +746 ~14: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:49 +747 ~14: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:50 +748 ~14: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:50 +749 ~14: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:51 +749 ~15: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:51 +749 ~16: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:51 +749 ~17: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:51 +749 ~18: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:51 +749 ~19: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:51 +749 ~20: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:51 +749 ~21: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:51 +749 ~22: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:52 +749 ~23: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:52 +749 ~24: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:59 +750 ~24: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+03:59 +750 ~25: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+04:00 +750 ~26: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+04:03 +751 ~26: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+04:04 +752 ~26: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+04:05 +753 ~26: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+04:05 +754 ~26: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+04:05 +755 ~26: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+04:05 +756 ~26: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+04:06 +757 ~26: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+04:06 +758 ~26: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+04:06 +759 ~26: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+04:06 +760 ~26: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+04:06 +761 ~26: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+04:06 +762 ~26: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+04:06 +763 ~26: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+04:09 +764 ~26: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+04:10 +765 ~26: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+04:11 +766 ~26: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+04:12 +767 ~26: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+04:13 +768 ~26: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+04:14 +769 ~26: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+04:14 +770 ~26: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+04:15 +771 ~26: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+04:16 +772 ~26: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+04:16 +773 ~26: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+04:17 +774 ~26: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+04:17 +775 ~26: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+04:18 +776 ~26: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+04:18 +777 ~26: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+04:19 +778 ~26: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+04:20 +779 ~26: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+04:20 +780 ~26: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+04:20 +781 ~26: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+04:20 +782 ~26: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+04:20 +783 ~26: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+04:21 +784 ~26: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+04:21 +785 ~26: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+04:21 +786 ~26: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+04:21 +787 ~26: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+04:21 +788 ~26: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+04:21 +789 ~26: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+04:22 +790 ~26: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+04:22 +791 ~26: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+04:22 +792 ~26: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+04:23 +793 ~26: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+04:25 +794 ~26: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+04:25 +795 ~26: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+04:25 +796 ~26: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+04:26 +797 ~26: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+04:26 +798 ~26: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+04:27 +799 ~26: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+04:27 +800 ~26: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+04:27 +801 ~26: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+04:27 +802 ~26: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
+11:16 +802 ~26 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits [E]
+  TimeoutException after 0:10:00.000000: Test timed out after 10 minutes.
+  dart:isolate  _RawReceivePort._handleMessage
+  
+11:16 +802 ~26 -1: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage toucher : région sous le doigt
+21:16 +802 ~26 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage toucher : région sous le doigt [E]
+  TimeoutException after 0:10:00.000000: Test timed out after 10 minutes.
+  dart:isolate  _RawReceivePort._handleMessage
+  
+21:16 +802 ~26 -2: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage légende des rôles
+31:16 +802 ~26 -3: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage légende des rôles [E]
+  TimeoutException after 0:10:00.000000: Test timed out after 10 minutes.
+  dart:isolate  _RawReceivePort._handleMessage
+  
+31:16 +802 ~26 -3: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage résumé texte : groupes, puis régions sans groupe
+31:16 +803 ~26 -3: /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: (tearDownAll)
+31:16 +803 ~26 -3: Some tests failed.
+
+Failing tests:
+  /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage légende des rôles
+  /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage toucher : région sous le doigt
+  /home/runner/work/streetlift-apk/streetlift-apk/test/m8_carte_2d_test.dart: affichage étiquettes : régions attendues aux bons endroits
