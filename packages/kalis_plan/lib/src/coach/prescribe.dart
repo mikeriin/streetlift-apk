@@ -4143,8 +4143,8 @@ final class Prescriber {
     if (longest > 0 && !taper && blockIndex > 0 && restartNow) {
       long = longest * 0.7;
     } else if (longest > 0 && !taper && restartBefore && last != null) {
-      final step = (last.runLong < 15 ? 15.0 : last.runLong) *
-          (1 + coachRunLongRise);
+      final step =
+          (last.runLong < 15 ? 15.0 : last.runLong) * (1 + coachRunLongRise);
       if (long > step) {
         long = step;
       }
