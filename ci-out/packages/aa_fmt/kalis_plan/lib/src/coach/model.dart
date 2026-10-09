@@ -1,0 +1,410 @@
+/// Squelette d'un bloc du chemin street : pour chaque jour, des
+/// emplacements qui portent leur méthode (comment l'exercice sera dosé
+/// semaine après semaine par la passe 2).
+library;
+
+import 'package:kalis_core/kalis_core.dart';
+
+import 'season.dart';
+
+/// Méthodes de dosage d'un emplacement.
+abstract final class Method {
+  /// Force lestée, séance lourde : série de tête puis séries allégées.
+  static const String liftHeavy = 'lift.heavy';
+
+  /// Force lestée, séance de volume.
+  static const String liftVolume = 'lift.volume';
+
+  /// Force lestée, séance légère (technique, vitesse).
+  static const String liftLight = 'lift.light';
+
+  /// Force lestée, variante ciblée sur un point faible.
+  static const String liftVariant = 'lift.variant';
+
+  /// Force lestée en entretien (spécialisation d'un autre mouvement).
+  static const String liftMaintain = 'lift.maintain';
+
+  /// Répétitions : série longue puis séries allégées.
+  static const String repsTop = 'reps.top';
+
+  /// Répétitions : séries sous-maximales de volume.
+  static const String repsVolume = 'reps.volume';
+
+  /// Répétitions : densité (une série par minute, échelles).
+  static const String repsDensity = 'reps.density';
+
+  /// Répétitions : force (variante dure ou lest, séries courtes).
+  static const String repsStrength = 'reps.strength';
+
+  /// Répétitions : pratique technique, loin de l'échec (muscle-up).
+  static const String repsTechnique = 'reps.technique';
+
+  /// Répétitions : séries au format de l'épreuve.
+  static const String repsEvent = 'reps.event';
+
+  /// Débutant : double progression sur une variante adaptée.
+  static const String beginnerMain = 'beginner.main';
+
+  /// Débutant : descentes freinées.
+  static const String beginnerNegative = 'beginner.negative';
+
+  /// Débutant : maintien (suspension, appui).
+  static const String beginnerHold = 'beginner.hold';
+
+  /// Figure : maintiens sous-maximaux sur l'étape actuelle.
+  static const String skillHold = 'skill.hold';
+
+  /// Figure : maintiens longs sur une étape plus facile (jour léger).
+  static const String skillEasyHold = 'skill.easy_hold';
+
+  /// Figure : essais courts sur l'étape suivante.
+  static const String skillAttempt = 'skill.attempt';
+
+  /// Figure : travail dynamique dans le même schéma.
+  static const String skillDynamic = 'skill.dynamic';
+
+  /// Figure : pratique d'équilibre.
+  static const String skillBalance = 'skill.balance';
+
+  /// Assistance polyarticulaire.
+  static const String accessoryCompound = 'accessory.compound';
+
+  /// Jambes au poids du corps, en unilatéral.
+  static const String accessoryLegs = 'accessory.legs';
+
+  /// Isolation.
+  static const String accessoryIsolation = 'accessory.isolation';
+
+  /// Prévention (coiffe, scapulas), séries faciles.
+  static const String accessoryPrehab = 'accessory.prehab';
+
+  /// Tronc.
+  static const String accessoryCore = 'accessory.core';
+
+  /// Préparation articulaire (échauffement).
+  static const String warmupPrep = 'warmup.prep';
+
+  /// Course facile.
+  static const String runEasy = 'run.easy';
+
+  /// Sortie longue.
+  static const String runLong = 'run.long';
+
+  /// Séance de qualité (fractionné).
+  static const String runQuality = 'run.quality';
+
+  /// Mobilité en fin de séance.
+  static const String mobility = 'mobility';
+
+  /// Pièce de conditionnement au format codifié (AMRAP, EMOM, tours au
+  /// meilleur temps, suite imposée, intervalles ; CP2, partie 1) : le
+  /// format est porté par le code du groupe.
+  static const String wod = 'wod';
+
+  /// Ordre de retrait quand le temps ou le volume manque (du premier
+  /// retiré au dernier).
+  static const List<String> cutOrder = <String>[
+    mobility,
+    accessoryIsolation,
+    accessoryCore,
+    accessoryPrehab,
+    accessoryCompound,
+    accessoryLegs,
+    liftVariant,
+    skillDynamic,
+    skillEasyHold,
+    repsVolume,
+    repsDensity,
+    liftLight,
+    beginnerHold,
+    beginnerNegative,
+    skillBalance,
+    repsStrength,
+    repsTechnique,
+    liftMaintain,
+    liftVolume,
+    skillAttempt,
+    repsEvent,
+    repsTop,
+    beginnerMain,
+    skillHold,
+    liftHeavy,
+    runEasy,
+    runQuality,
+    runLong,
+    warmupPrep,
+  ];
+
+  /// Vrai pour le travail essentiel de la séance (mouvements principaux,
+  /// figures, volume des piliers) : il garde ses séries plus longtemps que
+  /// l'assistance.
+  static bool essential(
+    String method, {
+    bool support = false,
+    bool keep = false,
+  }) => keep || (!support && cutRank(method) > cutRank(liftVariant));
+
+  /// Passe de réduction d'un emplacement de [sets] séries quand un plafond
+  /// impose de retirer du volume : 1, l'assistance au-dessus de deux
+  /// séries ; 2, l'essentiel au-dessus de trois ; 4, l'assistance à deux
+  /// séries retirée ; 5, l'essentiel au-dessus
+  /// de deux (d'une chez le débutant) ; 6, l'essentiel au-dessus d'une ;
+  /// 7, l'essentiel retiré (le plafond est un invariant de sécurité : il
+  /// passe avant tout emplacement).
+  static int trimPass(
+    String method,
+    int sets, {
+    required bool beginner,
+    bool support = false,
+    bool keep = false,
+  }) {
+    if (!essential(method, support: support, keep: keep)) {
+      // L'assistance ne tombe jamais à une série : sous deux séries, elle
+      // est retirée (une série isolée ne sert à rien et encombre).
+      return sets > 2 ? 1 : 4;
+    }
+    if (sets > 3) {
+      return 2;
+    }
+    if (sets > 2 || (beginner && sets > 1)) {
+      return 5;
+    }
+    return sets > 1 ? 6 : 7;
+  }
+
+  /// Vrai si l'emplacement ([method], [sets]) se réduit avant
+  /// ([otherMethod], [otherSets]) : la plus petite passe d'abord ; dans
+  /// l'essentiel, là où il reste le plus de séries ; dans l'assistance, au
+  /// plus bas de l'ordre de retrait.
+  static bool trimBefore(
+    String method,
+    int sets,
+    String otherMethod,
+    int otherSets, {
+    required bool beginner,
+    bool support = false,
+    bool otherSupport = false,
+    bool keep = false,
+    bool otherKeep = false,
+  }) {
+    final pass = trimPass(
+      method,
+      sets,
+      beginner: beginner,
+      support: support,
+      keep: keep,
+    );
+    final other = trimPass(
+      otherMethod,
+      otherSets,
+      beginner: beginner,
+      support: otherSupport,
+      keep: otherKeep,
+    );
+    if (pass != other) {
+      return pass < other;
+    }
+    if (essential(method, support: support, keep: keep)) {
+      return sets > otherSets ||
+          (sets == otherSets && cutRank(method) < cutRank(otherMethod));
+    }
+    return cutRank(method) < cutRank(otherMethod) ||
+        (cutRank(method) == cutRank(otherMethod) && sets > otherSets);
+  }
+
+  /// Rang de [method] dans l'ordre de retrait (les méthodes inconnues sont
+  /// retirées en premier).
+  static int cutRank(String method) {
+    final at = cutOrder.indexOf(method);
+    return at < 0 ? 0 : at + 1;
+  }
+}
+
+/// Emplacement du squelette.
+final class SlotSpec {
+  /// Emplacement.
+  SlotSpec({
+    required this.exerciseId,
+    required this.role,
+    required this.method,
+    this.sets = 3,
+    this.stress,
+    this.referenceId,
+    this.skillTargetId,
+    this.group,
+    this.weak,
+    this.fromWeek = 0,
+    this.untilWeek = 99,
+    this.note,
+    this.support = false,
+    this.keep = false,
+  });
+
+  /// Copie de l'emplacement avec [sets] séries.
+  SlotSpec withSets(int sets) => SlotSpec(
+    exerciseId: exerciseId,
+    role: role,
+    method: method,
+    sets: sets,
+    stress: stress,
+    referenceId: referenceId,
+    skillTargetId: skillTargetId,
+    group: group,
+    weak: weak,
+    fromWeek: fromWeek,
+    untilWeek: untilWeek,
+    note: note,
+    support: support,
+    keep: keep,
+  )..slotId = slotId;
+
+  /// Exercice.
+  final String exerciseId;
+
+  /// Rôle dans la séance.
+  final SlotRole role;
+
+  /// Méthode de dosage ([Method]).
+  final String method;
+
+  /// Séries de la semaine la plus chargée.
+  final int sets;
+
+  /// Jour lourd, moyen ou léger pour ce mouvement.
+  final DayStress? stress;
+
+  /// Exercice dont le record règle la charge (mouvement de compétition
+  /// pour une variante, mouvement au poids du corps pour une régression).
+  final String? referenceId;
+
+  /// Figure visée dont l'exercice est une étape.
+  final String? skillTargetId;
+
+  /// Clé du groupe d'exercices enchaînés du jour (superset, circuit).
+  final String? group;
+
+  /// Point faible servi.
+  final WeakPointKind? weak;
+
+  /// Première semaine du bloc où l'emplacement est prescrit.
+  final int fromWeek;
+
+  /// Dernière semaine du bloc où l'emplacement est prescrit.
+  final int untilWeek;
+
+  /// Code de note de coach propre à l'emplacement.
+  final String? note;
+
+  /// Vrai pour un travail d'appoint dans ce programme (force de base d'un
+  /// programme de figures, complément de fin de séance) : il cède ses
+  /// séries avant le travail visé quand un plafond l'impose.
+  final bool support;
+
+  /// Vrai pour un travail d'assistance à garder quoi qu'il arrive (tirage
+  /// horizontal d'équilibre) : il compte comme l'essentiel quand un
+  /// plafond impose de retirer du volume.
+  final bool keep;
+
+  /// Identifiant de l'emplacement (donné à l'assemblage).
+  String slotId = '';
+}
+
+/// Séance du squelette.
+final class DaySpec {
+  /// Séance.
+  DaySpec(this.dayIndex);
+
+  /// Rang du jour.
+  final int dayIndex;
+
+  /// Thème (code de `FocusCodes`).
+  String focus = '';
+
+  /// Emplacements, dans l'ordre de la séance.
+  final List<SlotSpec> slots = <SlotSpec>[];
+
+  /// Vrai si la séance contient déjà l'exercice [id].
+  bool hasExercise(String id) => slots.any((s) => s.exerciseId == id);
+}
+
+/// Style de programme du chemin street.
+enum CoachStyle {
+  /// Débutant : corps entier, progressions vers la traction, la pompe, le
+  /// dips.
+  beginner,
+
+  /// Sets & reps : endurance de force au poids du corps.
+  reps,
+
+  /// Streetlifting : force lestée.
+  lifting,
+
+  /// Calisthénie : figures.
+  figures,
+
+  /// Musculation : hypertrophie et esthétique (CP2, partie 1).
+  hypertrophy,
+
+  /// Force : force athlétique et force générale (squat, couché, terre).
+  strength,
+
+  /// Course et cardio.
+  endurance,
+
+  /// Conditionnement (CrossFit).
+  conditioning,
+
+  /// Santé, mobilité, forme générale et perte de poids.
+  health,
+}
+
+/// Vrai pour un style du chemin street (débutant, sets & reps,
+/// streetlifting, figures).
+bool isStreetStyle(CoachStyle s) =>
+    s == CoachStyle.beginner ||
+    s == CoachStyle.reps ||
+    s == CoachStyle.lifting ||
+    s == CoachStyle.figures;
+
+/// Squelette d'un bloc.
+final class Skeleton {
+  /// Squelette.
+  Skeleton({
+    required this.style,
+    required this.shape,
+    required this.days,
+    required this.ladders,
+    required this.reasons,
+    required this.intent,
+  });
+
+  /// Style.
+  final CoachStyle style;
+
+  /// Forme du bloc.
+  final BlockShape shape;
+
+  /// Séances.
+  final List<DaySpec> days;
+
+  /// Échelles des figures travaillées.
+  final List<SkillLadder> ladders;
+
+  /// Raisons du bloc (notes de coach).
+  final List<Reason> reasons;
+
+  /// Intention du bloc.
+  final BlockIntent intent;
+
+  /// Emplacement d'identifiant [slotId], ou `null`.
+  SlotSpec? slot(String slotId) {
+    for (final d in days) {
+      for (final s in d.slots) {
+        if (s.slotId == slotId) {
+          return s;
+        }
+      }
+    }
+    return null;
+  }
+}
