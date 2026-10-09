@@ -149,7 +149,7 @@ void main() {
       );
       expect(isPainReason(held), isTrue);
       final t = adaptReasonText(held, exerciseName: (id) => id)!;
-      expect(t, startsWith('Reprise après une douleur'));
+      expect(t, startsWith('Zone douloureuse ou en reprise'));
       expect(t.contains('pain_return'), isFalse);
       expect(
         isPainReason(
@@ -177,8 +177,8 @@ void main() {
           name,
           test: true,
         ),
-        'Test de Dips reporté : pas de test tant que le poignet est '
-        'au-dessus de 2 sur 10 ; il reviendra un jour sans gêne.',
+        'Test de Dips reporté : pas de test tant que le poignet a été '
+        'signalé au-dessus de 2 sur 10 dans la semaine.',
       );
       expect(
         adjustmentText(
@@ -212,7 +212,7 @@ void main() {
           ),
           name,
         ),
-        'Dips retiré aujourd’hui : il charge l’épaule, douleur signalée.',
+        'Retiré aujourd’hui : Dips (douleur signalée : l’épaule).',
       );
       expect(
         adjustmentText(
@@ -229,8 +229,8 @@ void main() {
           ),
           name,
         ),
-        'Pompes remplacé par Dips : appui neutre, le poignet est à l’arrêt '
-        '(douleur qui dure).',
+        'Remplacement : Pompes → Dips (appui neutre : le poignet est à '
+        'l’arrêt, douleur qui dure).',
       );
     });
 
@@ -264,6 +264,32 @@ void main() {
       expect(short, contains('Retiré aujourd’hui : Dips.'));
       expect(short.contains('Consulte'), isFalse);
       expect(short, contains('2 sur 10 au plus'));
+      expect(painStopZoneCodes(quiet), {'wrist_hand'});
+      expect(painStopZoneCodes(notice), {'wrist_hand'});
+      expect(painStopShortText(why), startsWith('Arrêt en cours (poignet'));
+      expect(painStopShortText(why).contains('Consulte'), isFalse);
+      // Arrêt gardé (deux semaines basses acquises) : retour à la prochaine
+      // semaine de charge.
+      const kept = kc.SessionAdjustment(
+        kind: kc.AdjustmentKind.exerciseRemoved,
+        exerciseId: 'dips',
+        reasons: [
+          kc.Reason(
+            code: 'adapt.pain_persistent',
+            params: {'zone': 'wrist_hand', 'sessions': 0},
+          ),
+        ],
+      );
+      final heldPlan = _plan(adjustments: [kept]);
+      expect(painStopHeldZones(heldPlan), {a.single.zone});
+      expect(painStopHeldZones(quiet), isEmpty);
+      final heldText = painStopText(
+        painStopsOf(heldPlan, name).single,
+        notice: false,
+        held: true,
+      );
+      expect(heldText, contains('prochaine semaine de charge'));
+      expect(heldText.contains('deux semaines à 2 sur 10'), isFalse);
       // Rien à l'arrêt : pas de carte.
       expect(painStopsOf(_plan(), name), isEmpty);
     });

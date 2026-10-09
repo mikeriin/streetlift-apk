@@ -160,6 +160,37 @@ List<({String zone, List<String> removed})> painStopsOf(
   ];
 }
 
+/// CI1d : codes des zones à l'arrêt dans la séance [plan] (raisons de la
+/// séance et ajustements retirés ou remplacés), comme [painStopsOf].
+Set<String> painStopZoneCodes(kc.SessionPlan plan) => <String>{
+  for (final r in [
+    ...plan.reasons,
+    for (final a in plan.adjustments)
+      if (a.kind == kc.AdjustmentKind.exerciseRemoved ||
+          a.kind == kc.AdjustmentKind.exerciseSwapped)
+        ...a.reasons,
+  ])
+    if (r.code == 'adapt.pain_persistent' && r.params['zone'] is String)
+      r.params['zone']! as String,
+};
+
+/// CI1d : zones (libellés de [painStopsOf]) dont l'arrêt est « gardé »
+/// (`sessions` = 0 : les deux semaines à 2/10 au plus sont acquises, mais
+/// l'arrêt ne se lève que sur une semaine de charge).
+Set<String> painStopHeldZones(kc.SessionPlan plan) => <String>{
+  for (final r in [
+    ...plan.reasons,
+    for (final a in plan.adjustments) ...a.reasons,
+  ])
+    if (r.code == 'adapt.pain_persistent' && r.params['sessions'] == 0)
+      _zone(r.params['zone']),
+};
+
+/// CI1d : texte court d'une raison `adapt.pain_persistent` un jour sans
+/// renvoi (sous un exercice) : l'arrêt, sans la consigne de consulter.
+String painStopShortText(kc.Reason r) =>
+    'Arrêt en cours (${_zone(r.params['zone'])}) : douleur qui dure.';
+
 /// CI1d : zones (libellés de [painStopsOf]) dont la séance porte le renvoi
 /// vers un professionnel (`adapt.pain_persistent` dans les raisons de la
 /// séance : première séance de l'arrêt, puis une fois par semaine).
@@ -170,12 +201,14 @@ Set<String> painStopNoticeZones(kc.SessionPlan plan) => <String>{
 };
 
 /// CI1b : texte de l'arrêt d'une zone dans la séance (douleur qui dure).
-/// CI1d : [notice] faux — jour sans renvoi (le moteur ne le répète qu'une
+/// CI1d : [held] — arrêt gardé (deux semaines basses acquises, levée à la
+/// prochaine semaine de charge). [notice] faux — jour sans renvoi (le moteur ne le répète qu'une
 /// fois par semaine) : l'arrêt et les retraits sont dits, sans la
 /// consigne de consulter.
 String painStopText(
   ({String zone, List<String> removed}) s, {
   bool notice = true,
+  bool held = false,
 }) {
   final head = notice
       ? 'Douleur qui dure (${s.zone}) : 3 sur 10 ou plus depuis plus de deux '
@@ -186,8 +219,12 @@ String painStopText(
       : ' Retiré${s.removed.length > 1 ? 's' : ''} aujourd’hui : '
             '${s.removed.join(', ')}.';
   final consult = notice ? ' Consulte un médecin ou un kinésithérapeute.' : '';
-  return '$head$removed$consult Les mouvements retirés reviendront après '
-      'deux semaines à 2 sur 10 au plus, par paliers.';
+  final back = held
+      ? ' La gêne est restée basse : les mouvements retirés reviennent à la '
+            'prochaine semaine de charge, par paliers.'
+      : ' Les mouvements retirés reviendront après deux semaines à 2 sur 10 '
+            'au plus, par paliers.';
+  return '$head$removed$consult$back';
 }
 
 num? _num(Object? v) => v is num ? v : null;
@@ -228,10 +265,10 @@ String? adaptReasonText(
         'health' || 'health_strong' => 'Charge gardée : ton bilan est bas.',
         'pain' => 'Charge gardée : une douleur est signalée.',
         'failure' => 'Charge gardée : la dernière fois, une série a manqué.',
-        // CI1d (`kalis_adapt` 0.2.3) : reprise graduée après une douleur
-        // (ou remplaçant d'une douleur du jour) : dose du palier.
+        // CI1d (`kalis_adapt` 0.2.3) : zone à l'arrêt ou en reprise
+        // graduée, ou remplaçant d'une douleur du jour : dose prudente.
         'pain_return' =>
-          'Reprise après une douleur : dose du palier, 3 répétitions en '
+          'Zone douloureuse ou en reprise : dose prudente, 3 répétitions en '
               'réserve, pas de hausse aujourd’hui.',
         _ => 'Charge gardée cette fois.',
       };
@@ -320,9 +357,9 @@ String adjustmentText(
       for (final r in a.reasons) {
         if (r.code == 'adapt.pain_persistent' &&
             r.params['zone'] == kc.BodyZone.wristHand.code) {
-          return '$x remplacé par $to : appui neutre, '
-              '${_zoneArticle(r.params['zone'])} est à l’arrêt (douleur '
-              'qui dure).';
+          return 'Remplacement : $x → $to (appui neutre : '
+              '${_zoneArticle(r.params['zone'])} est à l’arrêt, douleur qui '
+              'dure).';
         }
       }
       return '$x remplacé par $to.';
@@ -353,15 +390,15 @@ String adjustmentText(
             r.code == 'adapt.load_held' && r.params['cause'] == 'pain_return';
         final zone = _zoneArticle(r.params['zone']);
         if (test && painToday) {
-          return 'Test de $x reporté : pas de test tant que $zone est '
-              'au-dessus de 2 sur 10 ; il reviendra un jour sans gêne.';
+          return 'Test de $x reporté : pas de test tant que $zone a été '
+              'signalé au-dessus de 2 sur 10 dans la semaine.';
         }
         if (test && comeback) {
           return 'Test de $x reporté : pas de test pendant la reprise après '
               'une douleur.';
         }
         if (painToday) {
-          return '$x retiré aujourd’hui : il charge $zone, douleur signalée.';
+          return 'Retiré aujourd’hui : $x (douleur signalée : $zone).';
         }
       }
       return '$x retiré aujourd’hui.';
@@ -399,7 +436,13 @@ List<String> sessionDiffLines(
     String? line;
     if (kgA != null && kgB != null && (kgA - kgB).abs() > 1e-6) {
       line = '$name : ${adaptKg(kgB)} au lieu de ${adaptKg(kgA)}.';
-    } else if (b.sets != it.sets) {
+    } else if (b.sets != it.sets &&
+        // (CI1d : déjà dit par l'ajustement « séries de moins ».)
+        !plan.adjustments.any(
+          (a) =>
+              a.kind == kc.AdjustmentKind.setsReduced &&
+              a.exerciseId == it.exerciseId,
+        )) {
       line = '$name : ${it.sets} séries au lieu de ${b.sets}.';
     } else if (b.targetFlames != null &&
         it.targetFlames != null &&

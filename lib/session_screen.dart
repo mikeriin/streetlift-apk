@@ -1018,12 +1018,26 @@ class SessionExercisePageState extends State<SessionExercisePage> {
       if (ct.techniqueHint(it) case final t?) t,
     ];
     final reasons = [...?block?.reasons, ...it.reasons];
+    // CI1d (`kalis_adapt` 0.2.3) : le renvoi vers un professionnel n'est
+    // dit qu'aux jours où le moteur le met dans la séance (début de
+    // l'arrêt, puis une fois par semaine) ; les autres jours, l'arrêt seul.
+    final served = store.sessionAdapt(widget.week.n, widget.day.j)?.active;
+    final noticeCodes = served == null
+        ? const <String>{}
+        : {
+            for (final r in served.reasons)
+              if (r.code == 'adapt.pain_persistent' &&
+                  r.params['zone'] is String)
+                r.params['zone']! as String,
+          };
     final pain = <String>[];
     for (final r in reasons) {
       if (!ct.isPainReason(r)) continue;
-      final t =
-          ct.coachText(r, catalog) ??
-          adaptReasonText(r, exerciseName: store.adaptExerciseName);
+      final t = r.code == 'adapt.pain_persistent' &&
+              !noticeCodes.contains(r.params['zone'])
+          ? painStopShortText(r)
+          : ct.coachText(r, catalog) ??
+                adaptReasonText(r, exerciseName: store.adaptExerciseName);
       if (t != null && !pain.contains(t)) pain.add(t);
     }
     final notes = [
