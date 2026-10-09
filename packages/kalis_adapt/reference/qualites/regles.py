@@ -235,6 +235,41 @@ EXTENSEURS_POIGNET = 0.6
 COLONNE = {'barre': 0, 'halteres': 1, 'kettlebell': 1, 'machine': 2, 'poulie': 3, 'lest': 4, 'autre': 0}
 
 
+# R8 — Groupes musculaires (fatigue locale) : les 17 groupes de kalis_plan
+# (`muscleGroupOf`, traits.dart), muscle principal 1, secondaire 0,5, la
+# plus forte part par groupe. Un muscle absent de la table n'est pas compté.
+GROUPES = ['chest', 'delt_anterior', 'delt_middle', 'delt_posterior', 'lats', 'upper_back', 'biceps',
+           'triceps', 'abs', 'lower_back', 'glutes', 'quads', 'hamstrings', 'calves', 'forearms',
+           'adductors', 'upper_traps']
+GROUPE_DE = {
+    'grand pectoral (faisceau claviculaire)': 'chest', 'grand pectoral (faisceau sternal)': 'chest',
+    'grand pectoral (faisceau abdominal)': 'chest', 'deltoïde antérieur': 'delt_anterior',
+    'deltoïde moyen': 'delt_middle', 'deltoïde postérieur': 'delt_posterior', 'grand dorsal': 'lats',
+    'grand rond': 'lats', 'trapèze supérieur': 'upper_traps', 'élévateur de la scapula': 'upper_traps',
+    'trapèze moyen': 'upper_back', 'trapèze inférieur': 'upper_back', 'rhomboïdes': 'upper_back',
+    'érecteurs du rachis': 'lower_back', 'multifides': 'lower_back', 'carré des lombes': 'lower_back',
+    'biceps brachial': 'biceps', 'brachial': 'biceps', 'brachio-radial': 'biceps',
+    'triceps brachial (chef long)': 'triceps', 'triceps brachial (chefs latéral et médial)': 'triceps',
+    'fléchisseurs du poignet': 'forearms', 'extenseurs du poignet': 'forearms',
+    'fléchisseurs des doigts': 'forearms', "grand droit de l'abdomen": 'abs', 'obliques externes': 'abs',
+    'obliques internes': 'abs', "transverse de l'abdomen": 'abs', 'grand fessier': 'glutes',
+    'moyen fessier': 'glutes', 'petit fessier': 'glutes', 'adducteurs': 'adductors',
+    'quadriceps (droit fémoral)': 'quads', 'quadriceps (vastes)': 'quads', 'ischio-jambiers': 'hamstrings',
+    'gastrocnémiens': 'calves', 'soléaire': 'calves',
+}
+
+
+def groupes_de(e):
+    """Parts des groupes musculaires : liste creuse [[indice, part], ...]."""
+    parts = {}
+    for poids, liste in ((1.0, e['muscles_principaux']), (0.5, e['muscles_secondaires'])):
+        for m in liste:
+            g = GROUPE_DE.get(m)
+            if g is not None and poids > parts.get(g, 0.0):
+                parts[g] = poids
+    return [[i, parts[g]] for i, g in enumerate(GROUPES) if g in parts]
+
+
 def type_de(e):
     c = e['calc']
     if c['famille'] in FAMILLES_ENDURANCE:
@@ -394,12 +429,14 @@ def generer(catalogue):
             'unite': c['unite'],
             'type_charge': c['type_charge'],
             'contraintes': c['contraintes'],
+            'groupes': groupes_de(e),
         }
     return {
         'schema': 1,
         'version': '1.0.0',
         'source': catalogue['source'],
         'qualites': QUALITES,
+        'groupes': GROUPES,
         'exercices': out,
     }
 

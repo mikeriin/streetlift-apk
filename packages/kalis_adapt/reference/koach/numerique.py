@@ -123,6 +123,56 @@ def interval_moments(m, v, s2, a, b):
     return math.log(z), m2, v2
 
 
+def category_moments(m, v, a, b, noise_var, steps=52, span=6.5):
+    """Appariement des moments d'une variable u ~ N(m, v) quand on observe
+    que u + e tombe dans [a, b], avec un bruit dont la variance dépend de u :
+    e ~ N(0, noise_var(u)). Quadrature sur une grille fixe de 2·[steps] + 1
+    points entre m ± [span] écarts-types (trapèzes : convergence
+    géométrique pour un intégrande lisse).
+
+    Renvoie (logZ, m', v') comme `interval_moments`, dont c'est la
+    généralisation (bruit constant : mêmes valeurs à la précision de la
+    grille)."""
+    sd = math.sqrt(v)
+    if sd <= 0.0:
+        return 0.0, m, v
+    h = span / steps
+    sw = 0.0
+    s0 = 0.0
+    s1 = 0.0
+    s2 = 0.0
+    for i in range(-steps, steps + 1):
+        z = i * h
+        u = m + sd * z
+        w = math.exp(-0.5 * z * z)
+        t = math.sqrt(noise_var(u))
+        if a == -math.inf:
+            like = 1.0 if b == math.inf else 0.5 * math.erfc(-(b - u) / t / SQRT2)
+        elif b == math.inf:
+            like = 0.5 * math.erfc((a - u) / t / SQRT2)
+        else:
+            lo = (a - u) / t
+            hi = (b - u) / t
+            if lo > 0:
+                like = 0.5 * (math.erfc(lo / SQRT2) - math.erfc(hi / SQRT2))
+            else:
+                like = 0.5 * (math.erfc(-hi / SQRT2) - math.erfc(-lo / SQRT2))
+        if like < 0.0:
+            like = 0.0
+        sw += w
+        wl = w * like
+        s0 += wl
+        s1 += wl * z
+        s2 += wl * z * z
+    if s0 < 1e-280 * sw:
+        return interval_moments(m, v, noise_var(m), a, b)
+    mz = s1 / s0
+    vz = s2 / s0 - mz * mz
+    if vz < 1e-12:
+        vz = 1e-12
+    return math.log(s0 / sw), m + sd * mz, v * vz
+
+
 def point_moments(m, v, s2, y):
     """Observation ponctuelle y = u + e, e ~ N(0, s2) (Kalman scalaire)."""
     t2 = v + s2

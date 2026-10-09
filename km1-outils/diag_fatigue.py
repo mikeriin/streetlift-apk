@@ -10,7 +10,7 @@ class P(PolitiqueKoach):
         r=super().prochaine_serie(ctx,item,index,done)
         m=self.koach.modele; ex=item['exerciseId']; t=m.pistes.get(ex)
         if t is not None and index==0:
-            self.notes[(ctx.sim_day,item['slotId'])]=m.fatigue_de(t)
+            b=(ctx.bilan or {}).get('overall'); self.notes[(ctx.sim_day,item['slotId'])]=tuple(m.fatigue_de(t))+((b-4.0) if b is not None else 0.0, 1.0 if b is not None else 0.0)
         return r
 def un(a):
     cle,kind,seed=a
@@ -36,10 +36,10 @@ if __name__=='__main__':
         for mode in ('loaded','reps','hold','all'):
             R=[r for r in rows if r[0] in kinds and (mode=='all' or r[1]==mode)]
             if len(R)<50: continue
-            y=np.array([r[2] for r in R]); X=np.array([r[3:7] for r in R])
+            y=np.array([r[2] for r in R]); X=np.array([r[3:9] for r in R])
             X1=np.column_stack([X,np.ones(len(R))])
             b,res_,_,_=np.linalg.lstsq(X1,y,rcond=None)
             pred=X1@b
             # sans constante
             b0,_,_,_=np.linalg.lstsq(X,y,rcond=None)
-            print(kinds,mode,'n=%d y moy %+.4f sd %.4f | coef (gn,ln,gm,lm,c) %s resid sd %.4f | sans const %s resid %.4f | moy X %s'%(len(R),y.mean(),y.std(),np.round(b,5),(y-pred).std(),np.round(b0,5),(y-X@b0).std(),np.round(X.mean(0),2)))
+            print(kinds,mode,'n=%d y moy %+.4f sd %.4f | coef (gn,ln,gm,lm,bilan,posé,c) %s resid sd %.4f | sans const %s resid %.4f | moy X %s'%(len(R),y.mean(),y.std(),np.round(b,5),(y-pred).std(),np.round(b0,5),(y-X@b0).std(),np.round(X.mean(0),2)))

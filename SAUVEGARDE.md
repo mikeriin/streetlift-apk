@@ -62,3 +62,16 @@ Reste entier : planification (jumeau, entropie croisée, transport optimal), adh
 - `qualites/regles.py` : corrections de la relecture indépendante appliquées (R1-a/b, R2-a…h, R3-a, R6-a…f, R7-a…g) ; R5 (types) NON appliqué : le type doit rester celui du mode d'exécution de kalis_core (mesure du journal).
 - Estimation, diagnostic : (1) les charges servies sont trop légères (réserve vraie 5-7 pour 2,5 visée ; C : ~20) → notes censurées « 4 ou plus », peu d'information ; (2) l'effet de jour vrai moyen est −2,6 % (sd 2,8 %) : fatigue chronique systémique (lente) + aiguë locale (rapide) ; régression sur le banc : rapide local 0,003, lent systémique 0,0014-0,0017, les deux autres ≈ 0 ; (3) courbe a priori trop plate de ~12 % par rapport aux vérités (→ échelle +0,10) ; (4) la montée de test s'arrête à la croyance du modèle (borne mu+2sd) → réserve finale ~4.
 - Compartiments généralisés dans modele.py : chaque compartiment (rapide/lent) a une part systémique et une part locale (KN, KL, KG, KM).
+
+## 09/10 ~21:30 UTC — estimation v4 : dérive trouvée et corrigée
+Mesure (SET9 = 9 profils chargés, saison de référence, 2 graines) : principaux chargés au rang 6 MAE 3,3 % (A 2,6 ; B 4,2 ; C 3,2), biais −1,5 %, couverture 85 % ; premier passage sous 3 % : 2,6 séances en moyenne, jamais 5 % (témoin 6,2 séances, 31 %).
+Causes trouvées (banc synthétique `km1-outils/synth2.py`, un exercice, vérité A) :
+1. **Relinéarisation itérée** (filtre itéré) = cause de la dérive conjointe capacité ↓ / courbe ↓ / forme → 1 quand la charge est choisie par le modèle : mises à jour dissymétriques. Corrigé : linéarisation à la moyenne a priori en UNE passe + réduction du pas par dichotomie sur la carte exacte pour les grandes surprises.
+2. Bruit de la note dépendant de la réserve vraie : quadrature `numerique.category_moments` (bruit fonction de u).
+3. Fatigue : régression sur le banc → rapide local (par groupe musculaire, 17 groupes = kalis_plan) 0,0047 ; lent systémique 0,00075 ; les deux autres 0 ; bilan 0,012/point (déjà). `regles.py` exporte `groupes`.
+4. Paramètres communs figés aux valeurs de population (puits de dérive) : FI 0,85 (calé sur les vérités), BA 0, BP 0,25, KU 0,10 ; forme λ apprise (0,3 ± 0,3) : retrouve A ≈ 0,4, B ≈ 0, C ≈ 1.
+5. Vrai test = montée de charge conduite par le ressenti : pas 7,5/5/3,5/2,5 % selon la note, confirmation en REFAISANT la même barre quand la note dit la réserve atteinte (2 notes basses), effort affiché « 2 en réserve » (sinon l'athlète simulé s'arrête avant les répétitions), pas de montée si la grille est trop grossière (cran > 10 %). Réserve vraie finale : 1,2-1,9 (débutants 2-3).
+6. Part écrite du 1RM lue comme un niveau d'effort (répétitions de la courbe de population) puis convertie par la courbe de l'athlète (`Seances.charge_de_part`) → décision à écrire dans DECISIONS_CP.
+7. Tenues : intervalle sur ln T sans linéarisation ; HH 0,10.
+8. Note aberrante 5 % (1/10 par flamme) + note paresseuse apprise.
+Reste : tenues (a priori −30 %), répétitions (11 %), écart d'effort 3,2, couverture, effet du jour (branches), planificateur, etc.

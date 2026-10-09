@@ -156,6 +156,33 @@ class Seances(object):
         total = math.exp(mu - prudence * sd - self.m._g(lam, k, r))
         return total - t.fraction * self.m.poids_kg
 
+    def charge_de_part(self, ex_id, part, du_jour=False):
+        """Charge totale qui correspond, pour CET athlète, à une part écrite
+        du 1RM. Une part du 1RM est lue comme un niveau d'effort : le nombre
+        de répétitions qu'elle permet sur la courbe de population (a priori
+        du fichier de paramètres) ; la charge est celle que la courbe de
+        l'athlète associe à ce nombre de répétitions. Pour un athlète à la
+        courbe typique, c'est part × 1RM."""
+        m = self.m
+        t = m.piste(ex_id)
+        mu = m.capacite_du_jour(ex_id)[0] if du_jour else m.capacite(ex_id)[0]
+        if part >= 1.0:
+            return math.exp(mu) * part
+        ap = self.p['a_priori']
+        lam0 = ap['courbe_forme'][0]
+        k0 = ap['courbe_echelle'][0] + (ap['courbe_bas_du_corps'] if t.bas else 0.0)
+        x = -math.log(part)
+        # Inverse de g sur la courbe de population (Newton, pas fixes).
+        r = 1.0 + x / m._dg(lam0, k0, 1.0)
+        for _ in range(12):
+            r -= (m._g(lam0, k0, r) - x) / m._dg(lam0, k0, r)
+            if r < 1.0:
+                r = 1.0
+            if r > 200.0:
+                r = 200.0
+        lam, k = m.courbe(t)
+        return math.exp(mu - m._g(lam, k, r))
+
     def reps_prevues(self, ex_id, externe, rir):
         """Répétitions prévues à [rir] en réserve avec la charge [externe]."""
         t = self.m.piste(ex_id)
@@ -427,7 +454,17 @@ class Seances(object):
             return None
         if item.get('sets', 0) < 2:
             return None
-        if t is None or t.mesures < 4 or not self._mesure_utile(item, plan, t):
+        if t is None or t.seances < 2 or not self._mesure_utile(item, plan, t):
+            return None
+        # Grille trop grossière pour une montée (cran de plus de 10 % de la
+        # charge totale) : la mesure se fait en répétitions (série repère).
+        grille = plan['grille']
+        mem = self.mem(item['exerciseId'])
+        ref = mem.charge_max if mem.charge_max is not None else None
+        if grille is None or ref is None:
+            return None
+        bw = t.fraction * self.m.poids_kg
+        if grille.suivant(ref) + bw > (ref + bw) * (1 + ta['rampe_pas']) + 1e-9:
             return None
         if self.g.niveau == 0:
             return ta['test_reps_debutant'], ta['test_rir_debutant']
@@ -477,19 +514,19 @@ class Seances(object):
             voulu = (voulu + bw) * (1 + clamp(ecart, -plaf, plaf)) - bw
         if part is not None and not (tech.get('kind') == 'top_set_backoff' and index >= 1):
             if plan['verrou'] or self.g.niveau == 0 or part >= self.s['couloir_part_lourde']:
-                haut = part * un_rm - bw
+                haut = self.charge_de_part(ex_id, part) - bw
             else:
-                haut = part * (1 + self.s['couloir_haut_max']) * un_rm - bw
+                haut = self.charge_de_part(ex_id, part * (1 + self.s['couloir_haut_max'])) - bw
             if voulu > haut:
                 voulu = haut
                 trace.append('part ecrite %.3f%s -> %.1f' % (part, ' verrou' if plan['verrou'] else '', voulu))
-        if plan['part_max'] is not None and voulu > plan['part_max'] * un_rm - bw:
-            voulu = plan['part_max'] * un_rm - bw
+        if plan['part_max'] is not None and voulu > self.charge_de_part(ex_id, plan['part_max']) - bw:
+            voulu = self.charge_de_part(ex_id, plan['part_max']) - bw
         if lo == hi == 1 and not plan['test']:
             plafond = self.s['simple_part_max_bilan_bas'] if self.palier >= 1 else self.s['simple_part_max']
-            mu_j, _ = m.capacite_du_jour(ex_id)
-            if voulu > plafond * math.exp(mu_j) - bw:
-                voulu = plafond * math.exp(mu_j) - bw
+            haut_simple = self.charge_de_part(ex_id, plafond, du_jour=True) - bw
+            if voulu > haut_simple:
+                voulu = haut_simple
         charge = grille.proche(max(voulu, grille.minimum))
         # Test adaptatif : parmi les charges de la zone prescrite (réserve à
         # moins de la tolérance de la cible), la plus informative.
@@ -785,19 +822,31 @@ class Seances(object):
             if plan.get('echec_item') or f is None or (plan.get('reps_item') or 0) < n_t:
                 return None
             dit = 0.0 if f >= 10 else (11 - f) / 2.0
-            if dit <= rir_t + 0.75:
+            if f >= 10:
                 return None
             pas = 0.0
-            for (seuil, p) in ta['rampe_pas_par_rir']:
-                if dit >= seuil - rir_t + 1.0 - 1e-9:
-                    pas = p
-                    break
-            if pas <= 0:
-                pas = ta['rampe_pas_par_rir'][-1][1]
+            if dit <= rir_t + 0.75:
+                # La note dit que la réserve du test est atteinte. Une seule
+                # note peut tromper (bruit de la note) : la même barre est
+                # refaite une fois pour confirmation, sans rien ajouter.
+                plan['bas'] = plan.get('bas', 0) + 1
+                if plan['bas'] >= ta['rampe_confirmations']:
+                    return None
+                return {'repsLow': n_t, 'repsHigh': n_t, 'loadKg': derniere,
+                        'flames': flammes_de_rir(2.0), 'role': 'test', 'repere': True,
+                        'trace': ['vrai test, confirmation %.1f' % derniere]}
+            else:
+                for (seuil, p) in ta['rampe_pas_par_rir']:
+                    if dit >= seuil - rir_t + 1.0 - 1e-9:
+                        pas = p
+                        break
+                if pas <= 0:
+                    pas = ta['rampe_pas_par_rir'][-1][1]
             voulu = (derniere + bw) * (1 + pas) - bw
-            # Garde-fou : jamais au-delà de la borne haute (97,5 %) de ce
-            # que le modèle croit possible pour ces répétitions.
-            borne = math.exp(mu + 2.0 * sd - self.m._g(lam, k, n_t)) - bw
+            # Garde-fou large : le test est conduit par le ressenti, pas par
+            # la croyance du modèle (qu'il vient corriger) ; la barre ne
+            # dépasse jamais ce que le modèle tient pour presque impossible.
+            borne = math.exp(mu + 2.5 * max(sd, ta['rampe_sd_min']) - self.m._g(lam, k, n_t)) - bw
             if voulu > borne:
                 voulu = borne
         charge = grille.plancher(max(voulu, grille.minimum))
@@ -807,10 +856,9 @@ class Seances(object):
                 charge = suivant
             else:
                 return None
-        # La note préremplie d'une série de montée est « encore de la marge »
-        # (2,5 en réserve) : une note confirmée sans y penser n'arrête pas le
-        # test.
-        return {'repsLow': n_t, 'repsHigh': n_t, 'loadKg': charge, 'flames': flammes_de_rir(rir_t + 1.5),
+        # L'effort affiché d'une série de montée est « deux en réserve » :
+        # les répétitions demandées sont faites tant qu'il reste de la marge.
+        return {'repsLow': n_t, 'repsHigh': n_t, 'loadKg': charge, 'flames': flammes_de_rir(2.0),
                 'role': 'test', 'repere': True, 'trace': ['vrai test %.1f' % charge]}
 
     def _tentative(self, item, index, plan, t):

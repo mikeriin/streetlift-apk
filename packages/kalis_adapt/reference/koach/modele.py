@@ -20,10 +20,11 @@ import math
 
 import numpy as np
 
-from .numerique import interval_moments, point_moments, clamp
+from .numerique import interval_moments, point_moments, category_moments, clamp
 
 INF = math.inf
 NQ = 10
+NGR = 17        # groupes musculaires (fatigue locale)
 # Indices des composantes globales de l'état.
 TH = 0          # 0..9  : qualités (écart de l'utilisateur à l'a priori)
 RHO = 10        # réponse à l'entraînement (ln capacité par semaine à dose de référence)
@@ -53,10 +54,11 @@ class Piste(object):
     __slots__ = ('id', 'type', 'classe', 'vecteur', 'base', 'idx', 'fraction', 'bas',
                  'tendon', 'zone_tendon', 'systemique', 'locale', 'seances', 'dernier_jour',
                  'premier_jour', 'stim_semaine', 'series_seance', 'jour_seance', 'declare',
-                 'dernier_test_jour', 'residus', 'cran', 'meilleur', 'mesures')
+                 'dernier_test_jour', 'residus', 'cran', 'meilleur', 'mesures', 'groupes', 'groupes_total')
 
     def __init__(self, ex_id, typ, vecteur, base, idx, fraction=0.0, bas=False,
-                 tendon=0.0, zone_tendon=None, systemique=1.0, locale=1.0, declare=False):
+                 tendon=0.0, zone_tendon=None, systemique=1.0, locale=1.0, declare=False,
+                 groupes=None):
         self.id = ex_id
         self.type = typ            # 'charge', 'reps', 'tenue', 'cardio', 'wod', 'mobilite'
         self.classe = CLASSES.index(typ) if typ in CLASSES else None
@@ -81,6 +83,8 @@ class Piste(object):
         self.cran = None
         self.meilleur = None
         self.mesures = 0
+        self.groupes = [(int(g), float(w)) for g, w in (groupes or [])]
+        self.groupes_total = sum(w for _, w in self.groupes)
 
 
 class Modele(object):
@@ -121,10 +125,10 @@ class Modele(object):
         f = params['fatigue']
         self.tau = [f['tau_nerveux_j'], f['tau_musculaire_j'], f['tau_tendineux_j']]
         # Chaque compartiment a une part systémique (toute la séance pèse)
-        # et une part locale (par qualité sollicitée) : indice 0 = rapide
-        # (nerveux), 1 = lent (musculaire).
+        # et une part locale (par groupe musculaire sollicité) : indice 0 =
+        # rapide (nerveux), 1 = lent (musculaire).
         self.f_g = [0.0, 0.0]
-        self.f_l = [np.zeros(NQ), np.zeros(NQ)]
+        self.f_l = [np.zeros(NGR), np.zeros(NGR)]
         self.f_tendon = {z: 0.0 for z in ZONES_TENDON}      # compartiment lent (28 j)
         self.f_tendon_aigu = {z: 0.0 for z in ZONES_TENDON}  # charge de la semaine en cours
         # Bruit du RIR appris (multiplicateur), notes paresseuses (Beta).
@@ -147,6 +151,8 @@ class Modele(object):
         self.semaines = 0
         self.journal_semaines = []  # doses et progrès par semaine (contrôle dual, synthétique)
         self.elargi = 0
+        self.sonde = None         # diagnostic du banc : prévision avant chaque note
+        self.oracle = None        # diagnostic du banc : effet de jour vrai
 
     # ------------------------------------------------------------------
     # Pistes et a priori
@@ -209,7 +215,8 @@ class Modele(object):
         t = Piste(ex_id, typ, vecteur, base, idx, fraction=fiche.get('fraction', 0.0),
                   bas=fiche.get('bas', False), tendon=fiche.get('tendon', 0.0),
                   zone_tendon=fiche.get('zone_tendon'), systemique=fiche.get('systemique', 1.0),
-                  locale=fiche.get('locale', 1.0), declare=declare)
+                  locale=fiche.get('locale', 1.0), declare=declare,
+                  groupes=fiche.get('groupes'))
         for (m, P) in self._branches():
             m[idx] = 0.0
             # La part de la variance portée par les qualités est retirée de
@@ -320,10 +327,10 @@ class Modele(object):
         return math.exp(-(rir if rir > 0 else 0.0) / self.p['fatigue']['intra_rir'])
 
     def _charger_compartiments(self, t, effort, quantite=1.0):
-        v = np.asarray(t.vecteur)
         for c in (0, 1):
             self.f_g[c] += effort * t.systemique
-            self.f_l[c] += effort * t.locale * v
+            for g, w in t.groupes:
+                self.f_l[c][g] += effort * t.locale * w
         if t.zone_tendon is not None and t.tendon > 0:
             self.f_tendon[t.zone_tendon] += effort * t.tendon * quantite
             self.f_tendon_aigu[t.zone_tendon] += effort * t.tendon * quantite
@@ -332,9 +339,11 @@ class Modele(object):
         """Régresseurs de fatigue de la piste au moment présent : (rapide
         systémique, rapide local, lent systémique, lent local)."""
         loc = [0.0, 0.0]
-        for c in (0, 1):
-            for q in range(NQ):
-                loc[c] += t.vecteur[q] * self.f_l[c][q]
+        if t.groupes_total > 0:
+            for c in (0, 1):
+                for g, w in t.groupes:
+                    loc[c] += w * self.f_l[c][g]
+                loc[c] /= t.groupes_total
         return self.f_g[0], loc[0], self.f_g[1], loc[1]
 
     @property
@@ -399,6 +408,14 @@ class Modele(object):
         j = self.p['jour']
         for (m, P) in self._branches():
             self._reset(m, P, DE, 0.0, j['sigma_exercice'] ** 2)
+        if self.oracle is not None:
+            # Diagnostic du banc seulement : effet de jour vrai imposé.
+            vrai = self.oracle(t.id)
+            if vrai is not None:
+                gn, ln_, gm, lm = self.fatigue_de(t)
+                for (m, P) in self._branches():
+                    self._reset(m, P, DS, 0.0, 1e-10)
+                    self._reset(m, P, DE, vrai + gn * m[KN] + ln_ * m[KL] + gm * m[KG] + lm * m[KM], 1e-10)
         if t.jour_seance != self.jour:
             t.series_seance = []
             t.jour_seance = self.jour
@@ -486,12 +503,12 @@ class Modele(object):
         m += ph * ((mu2 - mu) / v)
         P -= np.outer(ph, ph) * ((v - v2) / (v * v))
 
-    def _observer(self, idx, co, const, a, b, s2, point=None, melange=None):
+    def _observer(self, idx, co, const, a, b, s2, point=None, melange=None, bruit=None, fonction=None):
         """Applique une observation aux deux branches. [a, b] : intervalle sur
-        u = h·x + const ; [point] : valeur observée ; [melange] = (pi, a2, b2)
-        ajoute une seconde composante (note paresseuse : avec la probabilité
-        pi, seule la borne [a2, b2] est sue). Renvoie (résidu normalisé,
-        résidu relatif) de la branche principale."""
+        u = h·x + const ; [point] : valeur observée ; [melange] = (poids de
+        la note sincère, poids d'une note sans information) ajoute une
+        seconde composante qui laisse l'état inchangé. Renvoie (résidu
+        normalisé, résidu relatif, informatif) de la branche principale."""
         resid = None
         for bi, (m, P) in enumerate(self._branches()):
             mu, v, ph = self._stats(m, P, idx, co)
@@ -500,12 +517,19 @@ class Modele(object):
                 logz, mu2, v2 = point_moments(mu, v, s2, point)
                 centre = point
             else:
-                logz, mu2, v2 = interval_moments(mu, v, s2, a, b)
+                if bruit is not None:
+                    # Bruit qui dépend de la valeur prédite (note en
+                    # flammes : il croît avec la réserve vraie).
+                    logz, mu2, v2 = category_moments(mu, v, a, b, bruit)
+                else:
+                    logz, mu2, v2 = interval_moments(mu, v, s2, a, b)
                 if melange is not None:
-                    pi, a2, b2 = melange
-                    logz_b, mu_b, v_b = interval_moments(mu, v, s2, a2, b2)
-                    la = math.log(1 - pi) + logz
-                    lb = math.log(pi) + logz_b
+                    # (poids de la note sincère, poids d'une note qui ne dit
+                    # rien : aberrante ou paresseuse).
+                    w_main, w_nul = melange
+                    mu_b, v_b = mu, v
+                    la = math.log(w_main) + logz
+                    lb = math.log(w_nul)
                     mx = la if la > lb else lb
                     wa = math.exp(la - mx)
                     wb = math.exp(lb - mx)
@@ -527,7 +551,29 @@ class Modele(object):
                 dehors = (point is None) and ((a == -INF and mu > b) or (b == INF and mu < a))
                 if informatif or dehors:
                     resid = ((centre - mu) / math.sqrt(v + s2), centre - mu, informatif and point is None)
-            self._appliquer(m, P, ph, mu - const, v, mu2 - const, v2)
+            if v <= 0.0:
+                continue
+            if fonction is not None and abs(mu2 - mu) > 1.0:
+                # Grande surprise : la carte état -> réserve n'est pas
+                # linéaire. Le pas garde sa direction (linéarisation à la
+                # moyenne a priori, symétrique) ; sa longueur est réduite
+                # par dichotomie si, sur la carte exacte, il dépasse la
+                # moyenne a posteriori visée.
+                pas = ph * ((mu2 - mu) / v)
+                alpha = 1.0
+                if abs(fonction(m + pas) - mu) > abs(mu2 - mu):
+                    lo_a, hi_a = 0.0, 1.0
+                    for _ in range(12):
+                        mid = 0.5 * (lo_a + hi_a)
+                        if abs(fonction(m + mid * pas) - mu) > abs(mu2 - mu):
+                            hi_a = mid
+                        else:
+                            lo_a = mid
+                    alpha = lo_a
+                m += alpha * pas
+                P -= np.outer(ph, ph) * ((v - v2) / (v * v))
+            else:
+                self._appliquer(m, P, ph, mu - const, v, mu2 - const, v2)
             if bi == 0:
                 self.logw += logz
             else:
@@ -624,8 +670,12 @@ class Modele(object):
             for i in (KN, KM, KL, KG):
                 if m[i] < 0.0:
                     m[i] = 0.0
+            if m[LAM] < -0.3:
+                m[LAM] = -0.3
+            if m[LAM] > 1.2:
+                m[LAM] = 1.2
 
-    def _lin_force(self, t, m, lnL, reps, sj, sans_charge, percu):
+    def _lin_force(self, t, m, lnL, reps, sj, sans_charge, percu, ouvert=False):
         """Linéarise, autour de la moyenne [m], la réserve de la série :
         vraie (v = répétitions possibles - faites) ou perçue (p = (v - biais
         personnel) / (1 + biais de population)). Renvoie (indices,
@@ -658,10 +708,14 @@ class Modele(object):
         v = R * garde - reps
         coefs = [c * dR * garde for c in co]
         indices = list(idx)
-        if not sans_charge:
+        # Une note ouverte (« 4 en réserve ou plus ») renseigne la capacité
+        # (borne basse), pas la forme de la courbe, la fatigue de séance ni
+        # le biais de la note : loin de l'échec, ces paramètres communs à
+        # tous les exercices ne sont pas mis à jour (inférence modulaire).
+        if not sans_charge and not ouvert:
             indices += [LAM, KU, t.idx + 1]
             coefs += [dlam * garde, dk * garde, dk * garde]
-        if sj > 0:
+        if sj > 0 and not ouvert:
             indices.append(FI)
             coefs.append(-R * sj)
         if not percu:
@@ -670,8 +724,9 @@ class Modele(object):
         bp = clamp(m[BP], -0.2, 1.0)
         pr = (v - ba) / (1.0 + bp)
         coefs = [c / (1.0 + bp) for c in coefs]
-        indices += [BA, BP]
-        coefs += [-1.0 / (1.0 + bp), -pr / (1.0 + bp)]
+        if not ouvert:
+            indices += [BA, BP]
+            coefs += [-1.0 / (1.0 + bp), -pr / (1.0 + bp)]
         return indices, coefs, pr, R, v
 
     def _serie_force(self, t, s):
@@ -710,24 +765,60 @@ class Modele(object):
                 a, b = -INF, 0.25
             else:
                 a, b, _ = self.bornes_flammes(flammes, me['rir_ouvert'])
+            # Linéarisation à la moyenne a priori, en une passe : relinéariser
+            # autour de la moyenne a posteriori rend les mises à jour
+            # dissymétriques (une note haute et une note basse ne déplacent
+            # pas l'état le long de la même direction) et, avec une charge
+            # choisie par le modèle lui-même, fait dériver ensemble la
+            # capacité et la courbe (mesuré sur le banc synthétique).
             lin = self.m
-            for passe in range(2):
-                idx, co, pred, R, v = self._lin_force(t, lin, lnL, reps, sj, sans_charge, percu)
-                if passe == 0:
-                    # Deuxième passe : relinéarisation autour de la moyenne a
-                    # posteriori approchée (filtre itéré).
-                    essai = self._apercu(idx, co, pred, a, b, self._bruit_force(percu, v, reps, R, me, sj))
-                    lin = essai
+            idx, co, pred, R, v = self._lin_force(t, lin, lnL, reps, sj, sans_charge, percu)
             s2 = self._bruit_force(percu, v, reps, R, me, sj)
             const = pred
             for i, c in zip(idx, co):
                 const -= c * lin[i]
             melange = None
             f_cible = cible.get('flames')
-            if percu and f_cible is not None and flammes == f_cible and b != INF:
-                pi = self.paresse[0] / (self.paresse[0] + self.paresse[1])
-                melange = (clamp(pi, 0.01, 0.9), -INF, INF)
-            resid = self._observer(idx, co, const, a, b, s2, melange=melange)
+            if percu:
+                # Note aberrante (erreur de saisie, distraction) : avec une
+                # petite probabilité la note ne dit rien ; note paresseuse :
+                # probabilité apprise quand la note est la note préremplie.
+                eps = me['note_aberrante']
+                par = 0.0
+                if f_cible is not None and flammes == f_cible:
+                    par = clamp(self.paresse[0] / (self.paresse[0] + self.paresse[1]), 0.01, 0.9)
+                # Une note aberrante tombe au hasard sur l'une des dix
+                # flammes ; une note paresseuse est toujours la préremplie.
+                melange = ((1.0 - eps) * (1.0 - par), eps * 0.1 + (1.0 - eps) * par)
+            if self.sonde is not None:
+                _, var_p, _ = self._stats(self.m, self.P, idx, co)
+                self.sonde.append((t.id, t.type, pred, var_p, s2, a, b, reps, R, sj, len(t.series_seance), t.seances))
+            if b == INF and percu and pred >= a + me['porte_note_ouverte'] * math.sqrt(s2):
+                # Note ouverte (« 4 en réserve ou plus ») nettement attendue :
+                # elle ne dit rien de plus. Sans cette porte, l'appariement de
+                # moments rogne à chaque série facile la queue basse de la
+                # prévision et aplatit peu à peu la courbe de l'exercice.
+                resid = None
+            else:
+                bruit = None
+                if percu:
+                    ba_ = clamp(self.m[BA], -2.5, 2.5)
+                    bp_ = clamp(self.m[BP], -0.2, 1.0)
+                    extra = (me['dispersion_fatigue_intra'] * sj * R) ** 2
+
+                    def bruit(u, ba_=ba_, bp_=bp_, extra=extra, R=R):
+                        r = u * (1.0 + bp_) + ba_
+                        if r < 0.0:
+                            r = 0.0
+                        if r > 8.0:
+                            r = 8.0
+                        sd = self.bruit_rir_de(r, R)
+                        return sd * sd + extra
+
+                def exacte(etat, t=t, lnL=lnL, reps=reps, sj=sj, sans_charge=sans_charge, percu=percu):
+                    return self._lin_force(t, etat, lnL, reps, sj, sans_charge, percu)[2]
+                resid = self._observer(idx, co, const, a, b, s2, melange=melange, bruit=bruit,
+                                       fonction=exacte)
             if percu and f_cible is not None and resid is not None and abs(resid[1]) > 1.0:
                 # Notes paresseuses : part des notes égales à la note
                 # préremplie quand l'attendu en est à plus d'une répétition.
@@ -793,9 +884,12 @@ class Modele(object):
         return v
 
     def _serie_tenue(self, t, s):
-        """Maintien : modèle de survie. Tenue ratée = temps jusqu'à l'échec
-        observé ; tenue réussie sans note = temps censuré à droite ; avec une
-        note, catégorie ordonnée de la réserve perçue, (1 - s / T) / h."""
+        """Maintien : modèle de survie sur ln T (temps maximal du moment).
+        Tenue ratée = temps jusqu'à l'échec observé ; tenue réussie sans note
+        = temps censuré à droite ; avec une note, la réserve perçue
+        p = (r - biais personnel) / (1 + biais de population), r = (1 - s / T)
+        / h, donne un intervalle sur ln T : la carte est linéaire dans l'état,
+        sans linéarisation."""
         me = self.p['mesure']
         sec = s.get('seconds') or 0
         flammes = s.get('flames')
@@ -810,38 +904,58 @@ class Modele(object):
         if garde < 0.3:
             garde = 0.3
         ln_s = math.log((sec if sec > 0 else 0.5) / garde)
+        hh = clamp(self.m[HH], 0.03, 0.30)
+        bt = me['bruit_tenue']
+        extra = (me['dispersion_fatigue_intra'] * sj) ** 2
         if echec:
-            resid = self._observer(idx, co, t.base - ln_s, None, None,
-                                   (me['bruit_tenue'] / 2) ** 2 + (me['dispersion_fatigue_intra'] * sj) ** 2, point=0.0)
+            resid = self._observer(idx, co, t.base - ln_s, None, None, (bt / 2) ** 2 + extra, point=0.0)
             rir_c = 0.0
         elif flammes is None:
-            resid = self._observer(idx, co, t.base - ln_s, 0.0, INF, me['bruit_tenue'] ** 2)
+            resid = self._observer(idx, co, t.base - ln_s, 0.0, INF, bt ** 2 + extra)
             rir_c = 2.0
         else:
+            ba = clamp(self.m[BA], -2.5, 2.5)
+            bp = clamp(self.m[BP], -0.2, 1.0)
             if flammes >= 10:
                 a, b = -INF, 0.25
             else:
                 a, b, _ = self.bornes_flammes(flammes, me['rir_ouvert'])
-            lin = self.m
-            for passe in range(2):
-                eta = t.base
-                for i, c in zip(idx, co):
-                    eta += c * lin[i]
-                hh = clamp(lin[HH], 0.03, 0.30)
-                part = math.exp(ln_s - eta)       # s / (T × garde)
-                pred = (1.0 - part) / hh
-                ix = idx + [HH]
-                cx = [c * part / hh for c in co] + [-pred / hh]
-                r = pred if pred > 0 else 0.0
-                s2 = self.bruit_rir_de(r if r < 8 else 8.0, 6) ** 2 + (me['dispersion_fatigue_intra'] * sj / hh) ** 2
-                if passe == 0:
-                    lin = self._apercu(ix, cx, pred, a, b, s2)
-            const = pred
-            for i, c in zip(ix, cx):
-                const -= c * lin[i]
-            resid = self._observer(ix, cx, const, a, b, s2)
-            self._projeter()
-            rir_c = r
+
+            def borne(p):
+                """ln(T / s) quand la réserve perçue vaut p."""
+                r = p * (1.0 + bp) + ba
+                part = 1.0 - hh * r
+                if part < 0.15:
+                    part = 0.15
+                if part > 1.0:
+                    part = 1.0
+                return -math.log(part)
+            lo = 0.0 if a == -INF else borne(a)
+            hi = INF if b == INF else borne(b)
+
+            def bruit(u, hh=hh, bp=bp, ba=ba, bt=bt, extra=extra):
+                # u = ln(T / s) : bruit de la note (répétitions de réserve)
+                # ramené à ln T, plus la dispersion propre aux tenues.
+                part = math.exp(-u) if u > 0 else 1.0
+                r = (1.0 - part) / hh
+                if r < 0.0:
+                    r = 0.0
+                sd_p = self.bruit_rir_de(r if r < 8.0 else 8.0, 6)
+                sd_u = sd_p * (1.0 + bp) * hh / (part if part > 0.15 else 0.15)
+                return sd_u * sd_u + bt * bt + extra
+            f_cible = (s.get('target') or {}).get('flames')
+            eps = me['note_aberrante']
+            par = 0.0
+            if f_cible is not None and flammes == f_cible:
+                par = clamp(self.paresse[0] / (self.paresse[0] + self.paresse[1]), 0.01, 0.9)
+            melange = ((1.0 - eps) * (1.0 - par), eps * 0.1 + (1.0 - eps) * par)
+            resid = self._observer(idx, co, t.base - ln_s, lo, hi, bruit(0.5 * (lo + (hi if hi != INF else lo))),
+                                   melange=melange, bruit=bruit)
+            eta = t.base
+            for i, c in zip(idx, co):
+                eta += c * self.m[i]
+            r = (1.0 - math.exp(ln_s - eta)) / hh
+            rir_c = r if r > 0 else 0.0
         eff = self.effort(rir_c, echec)
         t.series_seance.append((self.effort_intra(rir_c), repos))
         self._charger_compartiments(t, eff, quantite=max(sec, 1) / 10.0)
