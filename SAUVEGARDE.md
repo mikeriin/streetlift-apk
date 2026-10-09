@@ -24,3 +24,6 @@ Base : main 238078ee (dev6.10.0). Lot lancé 09/10 ~09:08 UTC.
 
 ## En cours (10:00)
 Essai 5 vert (tests choisis). Technique écrite gardée quand kalis_adapt sert en règle générale (_servedMiniKind). Contrôle complet claude/ci-3d poussé (846610a3, essai 1). Reste : résultat ci-3d (captures CI1f à relire), main, build signé, livraison, ETAT, page de suivi, notification.
+
+## Fin (13:40 UTC)
+Contrôle complet vert (run 37934054639, essai 5). Commit de publication 9dd09214 (arbre 7e71bbbb) sur cp-sauvegardes/CI1f-candidat ; push sur main REFUSÉ par le contrôle d'autorisations de la session (Modify Shared Resources) — non contourné. Livraison (pipeline 8197dd94 et projet claude.ai), DECISIONS CI1f, ETAT « en attente du pilotage », page de suivi (version 38). Reste au pilotage : publier 9dd09214 sur main, build signé, valider.
