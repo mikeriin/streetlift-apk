@@ -1,7 +1,7 @@
 # Sauvegarde CI1e
 
 Base : main bd1f0c97 (dev6.9.3). Version visée : dev6.10.0 (6.10.0+112).
-Branche CI rapide : claude/ci-ci1e-rapide (essai 3 : suite complète verte ; essai 4 : constats de relecture).
+Branche CI rapide : claude/ci-ci1e-rapide (essai 4 : suite complète et mode dev verts). Commit candidat local e3a19ab2 (branche ci1e-main, parent bd1f0c97) ; contrôle complet poussé sur claude/ci-3d (fb9a15b9).
 
 ## Fait
 - lib/imported_program.dart : annotation 0.4.0 (blocs ≤ 6 sem. `legacy-programme-v33/S<n>`, intentions, BlockIntent, SeasonPlan, échéance fin S40, emplacements stables, RIR, tests max, 1RM (une ligne par tentative), clusters) ; migration des ajustements 6.9.3 (convertLegacyEntries).

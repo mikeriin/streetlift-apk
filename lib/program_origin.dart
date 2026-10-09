@@ -153,9 +153,7 @@ extension ProgramOriginStore on AppStore {
     if (raw == null) return null;
     try {
       final evo = PlanEvolution.fromJson(raw);
-      final conv = ImportedProgramStore(this).convertLegacyEntries(
-        evo.entries,
-      );
+      final conv = ImportedProgramStore(this).convertLegacyEntries(evo.entries);
       return conv == null ? raw : evo.withEntries(conv).toJson();
     } catch (_) {
       return raw;

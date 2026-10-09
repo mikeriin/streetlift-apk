@@ -53,7 +53,9 @@ Future<bool> openNextBlock(BuildContext context) async {
           key: const ValueKey('next-block-calibrated'),
         ),
         KoachBubbleAction(
-          seg.last >= store.importedLastWeek ? 'Plus tard' : 'Garder mon programme',
+          seg.last >= store.importedLastWeek
+              ? 'Plus tard'
+              : 'Garder mon programme',
           () => Navigator.of(context).pop('keep'),
           key: const ValueKey('next-block-keep'),
         ),

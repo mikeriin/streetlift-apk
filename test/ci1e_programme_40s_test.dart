@@ -554,9 +554,11 @@ void main() {
       final item = place.day!.items.firstWhere(
         (i) => i.setTargets == null && i.sets < 10,
       );
-      final shown = app.program.week(14).day(2)!.exercises.firstWhere(
-        (e) => app.adaptSlotOf(14, 2, e.id) == item.slotId,
-      );
+      final shown = app.program
+          .week(14)
+          .day(2)!
+          .exercises
+          .firstWhere((e) => app.adaptSlotOf(14, 2, e.id) == item.slotId);
       final setsBefore = app.setCount(shown);
       // Entrée au format 6.9.3 : bloc unique, semaine 13 (S14), journée 1
       // (J2), emplacement « j2-<id> ».
@@ -602,14 +604,18 @@ void main() {
       expect(e.blockId, importedBlockId(12));
       expect(e.fromWeek, 2);
       expect(e.proposal.diff!.changes.single.slotId, item.slotId);
-      final after = app.program.week(14).day(2)!.exercises.firstWhere(
-        (x) => app.adaptSlotOf(14, 2, x.id) == item.slotId,
-      );
+      final after = app.program
+          .week(14)
+          .day(2)!
+          .exercises
+          .firstWhere((x) => app.adaptSlotOf(14, 2, x.id) == item.slotId);
       expect(app.setCount(after), setsBefore + 1);
       expect(app.evolutionUndo(e), isTrue);
-      final undone = app.program.week(14).day(2)!.exercises.firstWhere(
-        (x) => app.adaptSlotOf(14, 2, x.id) == item.slotId,
-      );
+      final undone = app.program
+          .week(14)
+          .day(2)!
+          .exercises
+          .firstWhere((x) => app.adaptSlotOf(14, 2, x.id) == item.slotId);
       expect(app.setCount(undone), setsBefore);
     });
 
