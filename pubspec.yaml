@@ -1,0 +1,108 @@
+name: streetlift_tracker
+description: "Kalis Track — suivi d'entraînement calisthénie et streetlifting : programme guidé, chronos, pilotage recalculable."
+publish_to: 'none'
+version: 6.11.0+113
+
+environment:
+  # M1 (mannequin 3D) : flutter_scene 0.23 exige Flutter 3.47 stable et Dart 3.10.
+  sdk: '>=3.10.0 <4.0.0'
+  flutter: '>=3.47.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  shared_preferences: ^2.2.3
+  wakelock_plus: ^1.2.5
+  audioplayers: ^6.1.0
+  flutter_local_notifications: ^18.0.1
+  timezone: ^0.10.0
+  # M1 : moteur 3D (Flutter GPU / Impeller), décision du propriétaire 27/09/2026.
+  flutter_scene: ^0.23.0
+  flutter_gpu:
+    sdk: flutter
+  vector_math: ^2.1.4
+  # M2 : build hook (hook/build.dart) qui convertit le mannequin
+  # assets/anatomy/mannequin.glb en .fsceneb (flutter_scene_generated/).
+  hooks: ^2.2.0
+  # G3 (D0.3, D4.10) : contrats et catalogue partagés des moteurs, récupérés
+  # par étiquette (branche fixe etiquettes/kalis_core-v0.1.0) ; CU : 0.4.0
+  # (etiquettes/kalis_core-v0.4.0, profil v3 et parcours, évolution additive).
+  kalis_core:
+    path: packages/kalis_core
+  # G5 (D1.5, D6) : Koach 2D (36 poses vectorisées, flammes, répliques),
+  # récupéré par étiquette (branche fixe etiquettes/kalis_koach-v0.1.0).
+  kalis_koach:
+    path: packages/kalis_koach
+  # G7 (D4) : moteur statique de création du programme, récupéré par
+  # étiquette (branche fixe etiquettes/kalis_plan-v0.1.0).
+  kalis_plan:
+    path: packages/kalis_plan
+  # G9 (D5) : moteur dynamique (séance du jour, conseils, revue), récupéré
+  # par étiquette (branche fixe etiquettes/kalis_adapt-v0.1.0), avec
+  # kalis_core 0.3.0 (etiquettes/kalis_core-v0.3.0, évolution additive).
+  kalis_adapt:
+    path: packages/kalis_adapt
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  fake_async: ^1.3.2
+  flutter_lints: ^4.0.0
+  flutter_launcher_icons: ^0.14.1
+
+flutter_launcher_icons:
+  android: true
+  ios: false
+  image_path: "assets/icon/icon.png"
+  min_sdk_android: 24
+  adaptive_icon_background: "#F4F4F4"
+  adaptive_icon_foreground: "assets/icon/icon_fg.png"
+  adaptive_icon_monochrome: "assets/icon/icon_fg.png"
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/programme_v33.json.gz
+    - assets/koach_program.json.gz
+    # G3 : base d'exercices v1.1 (copie de l'asset de kalis_core) et
+    # correspondance des anciens noms et identifiants.
+    - assets/catalog/catalog_v1.json.gz
+    - assets/catalog/correspondance.json
+    # CU : parcours de création du profil v3 (copie de l'asset de
+    # kalis_core 0.4.0).
+    - assets/catalog/parcours_v3.json
+    - assets/content/index.json.gz
+    - assets/content/details.json.gz
+    - assets/content/sources.json.gz
+    - assets/content/poses.json.gz
+    - assets/content/progressions.json.gz
+    - assets/content/licences.md
+    - assets/legal/confidentialite.md
+    - assets/sounds/beep.wav
+    - assets/sounds/alarm.wav
+    - assets/icon/icon_fg.png
+    - assets/icon/logo_mark.png
+    - assets/icon/splash_flag.png
+    - assets/muscles/
+    - assets/muscles/anim/
+    # M2 (mannequin 3D) : carte des régions et crédits du modèle ; le modèle
+    # lui-même est converti par le build hook dans flutter_scene_generated/.
+    - assets/anatomy/muscles_map.json
+    - assets/anatomy/ATTRIBUTION.md
+    # M6c : squelette Mixamo du personnage (noms, hiérarchie, pose de repos)
+    # pour le lecteur d'animations (M7).
+    - assets/anatomy/squelette_mixamo.json
+    # M7 : lecteur d'animations — squelette et peau du mannequin animable
+    # (le modèle lui-même, mannequin_anime.glb, est converti par le build
+    # hook), registre et clips compressés.
+    - assets/anatomy/rig_mixamo.json
+    - assets/anatomy/peau_mixamo.bin
+    - assets/anatomy/clips/
+    - flutter_scene_generated/
+    # M8 : carte 2D des 15 groupes musculaires (masques par vue, fabriqués
+    # par tools/muscles2d/build_map.py d'après l'image du propriétaire).
+    - assets/muscles2d/face/
+    - assets/muscles2d/dos/
+    - assets/muscles2d/profil/
