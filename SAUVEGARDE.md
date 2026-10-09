@@ -10,5 +10,6 @@ Branche CI rapide : claude/ci-ci1e-rapide (essai 4 : suite complète et mode dev
 - Tests : test/ci1e_programme_40s_test.dart ; integration_test/koach_ci1e_test.dart (cible émulateur ajoutée à tools/ci3d_drive.sh, ci-3d.yml 55 min).
 - Relecture indépendante faite (17 constats ; 1-16 traités sauf 15 (coût) et 17 (profil schéma 2), notés pour la livraison).
 
-## Reste
+## Statut
 - Essai 4 vert, puis contrôle complet claude/ci-3d (émulateur), main, build signé, livraison, état, suivi, notification.
+- LIVRÉ : main 238078ee, build signé run 37903901420, contrôle ci-3d run 37901114754 ; ETAT « à valider » ; page de suivi publiée.
