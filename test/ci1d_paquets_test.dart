@@ -40,8 +40,9 @@ List<Map<String, Object?>> _streetJson() {
   }).toList();
 }
 
-void _save(AppStore app, kc.AthleteProfile p) {
-  final r = app.saveAthleteProfile(ProfileDraft.of(p)..consent = 'refused');
+void _save(AppStore app, kc.AthleteProfile p, {String consent = 'refused'}) {
+  // (Gênes déclarées gardées seulement avec le consentement santé.)
+  final r = app.saveAthleteProfile(ProfileDraft.of(p)..consent = consent);
   expect(r, isNotNull, reason: 'profil enregistré');
 }
 
@@ -362,7 +363,11 @@ void main() {
           'discomfort': 2,
         },
       ];
-      _save(app, kc.AthleteProfile.fromJson(json));
+      _save(app, kc.AthleteProfile.fromJson(json), consent: 'given');
+      expect(
+        app.athleteProfileForEngines?.limitations.single.zone,
+        kc.BodyZone.wristHand,
+      );
       _create(app);
       final block = app.planProgram!.blocks.last.block;
       expect(isCoachBlock(block), isTrue);
