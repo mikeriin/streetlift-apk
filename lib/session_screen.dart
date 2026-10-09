@@ -821,8 +821,10 @@ class SessionExercisePageState extends State<SessionExercisePage> {
     // avec la flamme visée déjà placée sur la ligne ouverte sous la série,
     // où elle se corrige.
     if (!s.done) {
-      // CI1f : série notée par mini-séries : le total fait foi.
+      // CI1f : série notée par mini-séries : le total fait foi ; durée
+      // notée en minutes (marquée pour le journal).
       if (s.partsTotal case final total?) s.reps = '$total';
+      s.minutes = sp.kind == 'duration';
       final pre = checkSet(sp, s, rpe: store.settings.rpe);
       if (!pre.ok) {
         setState(() => _issues[(k, i)] = pre);
@@ -1362,7 +1364,8 @@ class SessionExercisePageState extends State<SessionExercisePage> {
 
   /// CI1f : groupe d'exercices enchaînés de la page (tous ses exercices
   /// en font partie) ; null : page ordinaire.
-  late final kc.GroupSpec? _group = () {
+  kc.GroupSpec? get _group {
+    if (widget.week.n < 1) return null;
     kc.GroupSpec? g;
     for (final e in widget.exs) {
       final x = store.exerciseGroupOf(widget.week.n, widget.day.j, e);
@@ -1370,7 +1373,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
       g = x;
     }
     return g;
-  }();
+  }
 
   @override
   Widget build(BuildContext context) => ListView(
@@ -1384,14 +1387,11 @@ class SessionExercisePageState extends State<SessionExercisePage> {
           names: [for (final e in widget.exs) store.splitName(e.name).$1],
           result: widget.readOnly
               ? widget.history!.groups[g.groupId]
-              : store
-                    .sessionLog(widget.week.n, widget.day.j)
-                    .groups[g.groupId],
+              : store.sessionLog(widget.week.n, widget.day.j).groups[g.groupId],
           readOnly: widget.readOnly,
           timer: widget.timer,
           onResult: (r) {
-            store.sessionLog(widget.week.n, widget.day.j).groups[g.groupId] =
-                r;
+            store.sessionLog(widget.week.n, widget.day.j).groups[g.groupId] = r;
             store.saveLogs(affectsProgression: false);
             setState(() {});
           },
@@ -1425,6 +1425,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
     final interval = ex.interval;
     final noLoad =
         sp.kind == 'duration' ||
+        sp.kind == 'distance' ||
         sp.kind == 'interval' ||
         sp.kind == 'emom' ||
         sp.kind == 'amrap';
@@ -1643,7 +1644,12 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                 if (!readOnly)
                   if (store.referenceEstimateText(
                         widget.adapt && ex.engine
-                            ? (store.programExerciseOf(widget.week.n, widget.day.j, ex) ?? ex)
+                            ? (store.programExerciseOf(
+                                    widget.week.n,
+                                    widget.day.j,
+                                    ex,
+                                  ) ??
+                                  ex)
                             : ex,
                       )
                       case final t?)
@@ -1695,7 +1701,10 @@ class SessionExercisePageState extends State<SessionExercisePage> {
             ),
           ),
           // ----- Chronos de mode -----
-          if (!readOnly && interval != null && ex.timer == null && _group == null)
+          if (!readOnly &&
+              interval != null &&
+              ex.timer == null &&
+              _group == null)
             _big(
               SL.bordeaux,
               Icons.timer,
@@ -1797,10 +1806,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                       )
                     : null,
               ),
-              if (!readOnly &&
-                  !log.sets[i].done &&
-                  widget.adapt &&
-                  ex.engine)
+              if (!readOnly && !log.sets[i].done && widget.adapt && ex.engine)
                 if (store.miniSetPlanFor(widget.week.n, widget.day.j, ex, i)
                     case final plan?)
                   _MiniSetStrip(
@@ -1813,11 +1819,8 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                       store.saveLogs(affectsProgression: false);
                       setState(() => epoch++);
                     },
-                    onIntra: (sec) => widget.timer.single(
-                      'INTRA',
-                      sec,
-                      prepare: false,
-                    ),
+                    onIntra: (sec) =>
+                        widget.timer.single('INTRA', sec, prepare: false),
                   ),
               if (flameSets && log.sets[i].done && !readOnly)
                 FlameTrack(
@@ -2012,6 +2015,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
       'hold': 'Tenue chronométrée',
       'holdMax': 'Max de temps',
       'duration': 'Durée',
+      'distance': 'Distance',
       'interval': 'Intervalles',
       'emom': 'EMOM',
       'amrap': 'AMRAP',
@@ -2086,6 +2090,8 @@ class _HeaderRow extends StatelessWidget {
         ? 'S'
         : k == 'duration'
         ? 'MIN'
+        : k == 'distance'
+        ? 'M'
         : k == 'repsMax'
         ? 'REPS MAX'
         : 'REPS';
@@ -2434,8 +2440,7 @@ class _SetRowState extends State<_SetRow> {
 
 // -------------------------------- GROUPES --------------------------------
 
-String _mmss(int s) =>
-    '${s ~/ 60}:${(s % 60).toString().padLeft(2, '0')}';
+String _mmss(int s) => '${s ~/ 60}:${(s % 60).toString().padLeft(2, '0')}';
 
 String _minutes(int s) => s % 60 == 0 ? '${s ~/ 60}\u00A0min' : _mmss(s);
 
@@ -2567,7 +2572,8 @@ class _GroupCardState extends State<_GroupCard> {
       if (elapsed != null) 'elapsed': elapsed,
       'completed': switch (g.format) {
         kc.GroupFormat.amrap => true,
-        kc.GroupFormat.chipper => elapsed != null && (cap == null || elapsed <= cap),
+        kc.GroupFormat.chipper =>
+          elapsed != null && (cap == null || elapsed <= cap),
         kc.GroupFormat.roundsForTime =>
           rounds >= (planned ?? 1) &&
               (cap == null || elapsed == null || elapsed <= cap),
@@ -2612,7 +2618,9 @@ class _GroupCardState extends State<_GroupCard> {
   Widget _stepper(String label, int value, void Function(int) on, Key key) =>
       Row(
         children: [
-          Expanded(child: Text(label, style: TextStyle(color: SL.dim))),
+          Expanded(
+            child: Text(label, style: TextStyle(color: SL.dim)),
+          ),
           IconButton(
             tooltip: '$label : un de moins',
             icon: const Icon(Icons.remove, size: 20),
@@ -2671,10 +2679,8 @@ class _GroupCardState extends State<_GroupCard> {
             Padding(
               padding: const EdgeInsets.only(top: 4),
               child: Text(
-                [
-                  for (var i = 0; i < names.length; i++)
-                    '${i + 1}. ${names[i]}',
-                ].join('  ·  '),
+                [for (var i = 0; i < names.length; i++) '${i + 1}. ${names[i]}']
+                    .join('  ·  '),
                 style: TextStyle(color: SL.text, fontSize: 13),
               ),
             ),
@@ -2786,10 +2792,7 @@ class _MiniSetStripState extends State<_MiniSetStrip> {
   void _add() {
     final parts = [...?widget.entry.parts];
     parts.add(
-      SetPartEntry(
-        value,
-        restBefore: parts.isEmpty ? null : widget.plan.intra,
-      ),
+      SetPartEntry(value, restBefore: parts.isEmpty ? null : widget.plan.intra),
     );
     widget.entry.parts = parts;
     widget.entry.reps = '${widget.entry.partsTotal}';
@@ -2907,9 +2910,7 @@ class _MiniSetStripState extends State<_MiniSetStrip> {
                   IconButton(
                     tooltip: 'Une de moins',
                     icon: const Icon(Icons.remove, size: 20),
-                    onPressed: value > 0
-                        ? () => setState(() => value--)
-                        : null,
+                    onPressed: value > 0 ? () => setState(() => value--) : null,
                   ),
                   Text(
                     '$value$unit',

@@ -71,13 +71,23 @@ double? _number(Object? text) {
 }
 
 /// CI1f : myo-reps notés avant 6.11.0 en lignes séparées (activation, puis
-/// une ligne par mini-série) : une série avec ses parties, si c'est sûr ;
-/// null sinon (lignes laissées telles quelles).
+/// une ligne par mini-série) : une série avec ses parties, si c'est sûr
+/// (lignes validées d'affilée depuis l'activation, les suivantes non
+/// validées : la série s'est arrêtée là) ; null sinon.
 ({int total, List<(int, int?)> parts, int? flames})? _groupMyo(
-  List<Map<String, dynamic>> rows,
+  List<Map<String, dynamic>> all,
   int rest,
 ) {
-  if (rows.length < 2 || rows.length > 120) return null;
+  if (all.length < 2 || all.length > 120) return null;
+  var done = 0;
+  while (done < all.length && all[done]['done'] == true) {
+    done++;
+  }
+  if (done == 0) return null;
+  for (var i = done; i < all.length; i++) {
+    if (all[i]['done'] == true) return null;
+  }
+  final rows = all.sublist(0, done);
   final parts = <(int, int?)>[];
   String? kg;
   for (var i = 0; i < rows.length; i++) {
@@ -173,8 +183,19 @@ String _civil(DateTime d) =>
     int index,
   )?
   targetOf,
-  ({String? exerciseId, bool? seconds, int scale, String? technique})
-  Function(int week, int day, String exerciseKey, bool withParts)?
+  ({
+    String? exerciseId,
+    bool? seconds,
+    int scale,
+    String? technique,
+    bool meters,
+  })
+  Function(
+    int week,
+    int day,
+    String exerciseKey,
+    bool withParts,
+  )?
   lineOf,
   int? Function(int week, int day, String exerciseKey)? myoOf,
 }) {
@@ -279,7 +300,7 @@ String _civil(DateTime d) =>
         if (grouped.flames != null) rec['flames'] = grouped.flames;
         if (slot != null) rec['slotId'] = slot;
         sets.add(rec);
-        report.setsConverted += all.length;
+        report.setsConverted += grouped.parts.length;
         exerciseOrder++;
         continue;
       }
@@ -294,8 +315,11 @@ String _civil(DateTime d) =>
         // CI1f : mini-séries saisies une à une : la ligne porte le total.
         final parts = _parts(x['parts'], seconds);
         if (parts != null) measure = parts.total;
-        // CI1f : durée notée en minutes.
-        if (parts == null) measure *= scale;
+        // CI1f : durée notée en minutes (ligne marquée, ou ligne de durée
+        // du programme, toujours en minutes).
+        if (parts == null && (x['unit'] == 'min' || scale == 60)) {
+          measure *= 60;
+        }
         final rec = <String, Object?>{
           'exerciseId': id,
           'exerciseOrder': exerciseOrder,
@@ -304,7 +328,11 @@ String _civil(DateTime d) =>
         };
         final kg = _number(x['kg']);
         if (kg != null) rec['externalLoadKg'] = kg; // C7
-        rec[seconds ? 'seconds' : 'reps'] = measure; // C8
+        if (line?.meters ?? false) {
+          rec['distanceMeters'] = measure.toDouble(); // CI1f : mètres
+        } else {
+          rec[seconds ? 'seconds' : 'reps'] = measure; // C8
+        }
         final flames = x['flames'];
         if (flames is int && flames >= Flames.min && flames <= Flames.max) {
           rec['flames'] = flames; // G9
@@ -319,12 +347,20 @@ String _civil(DateTime d) =>
         rec['success'] = measure > 0 && (low is! int || measure >= low); // C10
         rec['excluded'] = x['excluded'] == true;
         if (slot != null) rec['slotId'] = slot;
-        if (parts != null) {
+        // Mini-séries gardées avec leur technique (une ligne dont la
+        // technique n'est plus servie est lue sur son total).
+        final partsTechnique = parts == null
+            ? null
+            : lineOf?.call(w, j, k, true).technique;
+        if (parts != null && (lineOf == null || partsTechnique != null)) {
           rec['parts'] = parts.json;
-          final t = lineOf?.call(w, j, k, true).technique;
-          if (t != null) rec['technique'] = t;
+          if (partsTechnique != null) rec['technique'] = partsTechnique;
         } else if (line?.technique case final t?) {
           rec['technique'] = t;
+        } else if (myoRest != null && all.length >= 2) {
+          // Myo-reps en lignes séparées, pas regroupables sans risque :
+          // aucune ligne n'est lue comme une série d'une traite.
+          rec['technique'] = 'myo_reps';
         }
         if (target != null && target.isNotEmpty) rec['target'] = target;
         // CI1 : rôle de la ligne dans la technique servie (série de tête,

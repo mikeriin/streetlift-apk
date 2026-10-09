@@ -132,6 +132,11 @@ class SetEntry {
 
   /// CI1f : mini-séries saisies une à une (null : série d'une traite).
   List<SetPartEntry>? parts;
+
+  /// CI1f : valeur saisie en minutes (durée) ; marquée à la validation,
+  /// pour que le journal la convertisse en secondes (une durée servie
+  /// avant 6.11.0 se notait en secondes).
+  bool minutes;
   SetEntry({
     this.kg = '',
     this.reps = '',
@@ -145,6 +150,7 @@ class SetEntry {
     this.flamesUnknown = false,
     this.edited = false,
     this.parts,
+    this.minutes = false,
   });
 
   /// CI1f : total des mini-séries (null : aucune).
@@ -168,6 +174,7 @@ class SetEntry {
     if (edited) 'edited': true,
     if (parts != null && parts!.isNotEmpty)
       'parts': [for (final x in parts!) x.toJson()],
+    if (minutes) 'unit': 'min',
   };
   SetEntry.fromJson(Map<String, dynamic> j)
     : kg = j['kg'] as String? ?? '',
@@ -181,7 +188,8 @@ class SetEntry {
       flames = j['flames'] is int ? j['flames'] as int : null,
       flamesUnknown = j['flamesUnknown'] == true,
       edited = j['edited'] == true,
-      parts = _partsFromJson(j['parts']);
+      parts = _partsFromJson(j['parts']),
+      minutes = j['unit'] == 'min';
 
   static List<SetPartEntry>? _partsFromJson(Object? j) {
     if (j is! List || j.isEmpty || j.length > 120) return null;
@@ -2640,6 +2648,10 @@ class AppStore extends ChangeNotifier {
       final h = RegExp(r'^\d+\s*×\s*(\d+)(?:-(\d+))?\s*s$').firstMatch(t);
       if (h != null) {
         return LogSpec('hold', seconds: int.parse(h.group(2) ?? h.group(1)!));
+      }
+      // CI1f : distance (course, rameur), en mètres.
+      if (RegExp(r'^\d+\s*×\s*\d+\s*m$').hasMatch(t)) {
+        return const LogSpec('distance');
       }
       // CI1f : durée en minutes (mobilité, marche, vélo léger).
       final d = RegExp(r'^\d+\s*×\s*(\d+)(?:-(\d+))?\s*min$').firstMatch(t);

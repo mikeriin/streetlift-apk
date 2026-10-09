@@ -18,7 +18,7 @@ void main() {
     tearDown(() => SessionSpace.devActive = false);
 
     test('version affichée : « dev6.10.0 » (CI1e)', () {
-      expect(kAppVersion, 'dev6.10.0');
+      expect(kAppVersion, 'dev6.11.0');
     });
 
     test('session de test : même base d\'exercices, session personnelle '

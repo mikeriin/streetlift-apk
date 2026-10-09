@@ -76,6 +76,8 @@ String setDoneText(SetEntry s, LogSpec sp, {bool units = true}) {
       ? '${dec(reps)} s'
       : sp.kind == 'duration'
       ? '${dec(reps)} min'
+      : sp.kind == 'distance'
+      ? '${dec(reps)} m'
       : '${dec(reps)} rep${reps == '1' ? '' : 's'}';
   final load = [
     if (kg.isNotEmpty && kg != '0') '${dec(kg)} kg',

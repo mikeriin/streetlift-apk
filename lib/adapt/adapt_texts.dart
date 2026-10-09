@@ -52,12 +52,25 @@ bool prescriptionInMinutes(kc.ExercisePrescription p) {
   return (lo ?? hi!) >= 120 && (lo ?? 0) % 60 == 0 && (hi ?? 0) % 60 == 0;
 }
 
+/// CI1f : distance sans répétitions ni durée (course, rameur) : la séance
+/// la note en mètres (« 4 × 400 m »).
+bool prescriptionInMeters(kc.ExercisePrescription p) =>
+    p.kind != kc.SetKind.test &&
+    p.distanceMeters != null &&
+    p.repsLow == null &&
+    p.repsHigh == null &&
+    p.secondsLow == null &&
+    p.secondsHigh == null;
+
 /// Libellé de la séance prescrite pour un exercice (« 3 × 8-10 »,
 /// « 3 × 30 s », « 1 × max », « 1 × 10 min ») ; l'application le relit
 /// (LogSpec).
 String adaptSetsText(kc.ExercisePrescription p) {
   final seconds = p.secondsLow != null || p.secondsHigh != null;
   final n = p.sets;
+  if (prescriptionInMeters(p)) {
+    return '$n × ${p.distanceMeters!.round()} m';
+  }
   if (prescriptionInMinutes(p)) {
     final lo = (p.secondsLow ?? p.secondsHigh!) ~/ 60;
     final hi = (p.secondsHigh ?? p.secondsLow!) ~/ 60;
