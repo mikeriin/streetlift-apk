@@ -1,0 +1,1033 @@
+# -*- coding: utf-8 -*-
+"""Estimation de Koach 1.0 (CONTRAT_1_0.md § 4 à 6) : modèle de réponse à
+l'item multidimensionnel sur dix qualités latentes, mesure du RIR (biais et
+bruit appris), e1RM sur la masse totale, fatigue en trois compartiments,
+a priori hiérarchique population → utilisateur → qualités → exercices.
+
+État gaussien x ~ N(m, P). Chaque série devient une observation d'une
+combinaison linéaire u = h·x + c : une catégorie ordonnée (intervalle [a, b],
+modèle gradué de Samejima en ogive normale), un temps censuré ou observé
+(survie), une valeur continue (log-normale) ou une réussite binaire (2PL en
+ogive normale). La mise à jour est un appariement de moments de rang 1
+(`numerique.interval_moments`), exact pour une vraisemblance qui ne dépend de
+x que par u. Deux branches par séance (jour normal, mauvais jour) sont
+fusionnées en fin de séance : un mauvais jour isolé ne déplace pas la
+capacité.
+
+Tout l'état se recalcule depuis le journal (déterminisme, cahier).
+"""
+import math
+
+import numpy as np
+
+from .numerique import interval_moments, point_moments, clamp
+
+INF = math.inf
+NQ = 10
+# Indices des composantes globales de l'état.
+TH = 0          # 0..9  : qualités (écart de l'utilisateur à l'a priori)
+RHO = 10        # réponse à l'entraînement (ln capacité par semaine à dose de référence)
+EPS = 11        # 11..15 : écart de réponse par classe (charge, reps, tenue, cardio, wod)
+KN = 16         # sensibilité au compartiment nerveux
+KM = 17         # sensibilité au compartiment musculaire
+BA = 18         # biais personnel du RIR (répétitions, additif)
+BP = 19         # biais du RIR proportionnel à la réserve (sous-estimation loin de l'échec)
+LAM = 20        # forme de la courbe répétitions-charge (0 linéaire, 1 logarithmique)
+KU = 21         # échelle de la courbe de l'utilisateur (ln)
+FI = 22         # fatigue intra-séance (part des répétitions perdue)
+HH = 23         # part du maintien maximal par répétition en réserve
+DS = 24         # effet de jour de la séance
+DE = 25         # effet de jour de l'exercice en cours
+NG = 26
+C_LIN = 0.0265  # pente de la branche linéaire : -ln(part du 1RM) par répétition
+C_LOG = 0.0892  # branche logarithmique, égale à la linéaire à 8 répétitions
+CLASSES = ['charge', 'reps', 'tenue', 'cardio', 'wod']
+ZONES_TENDON = ['epaule', 'coude', 'poignet', 'lombaires', 'genou', 'hanche', 'cheville']
+
+
+class Piste(object):
+    """Suivi d'un exercice (item) : métadonnées hors de l'état gaussien."""
+
+    __slots__ = ('id', 'type', 'classe', 'vecteur', 'base', 'idx', 'fraction', 'bas',
+                 'tendon', 'zone_tendon', 'systemique', 'locale', 'seances', 'dernier_jour',
+                 'premier_jour', 'stim_semaine', 'series_seance', 'jour_seance', 'declare',
+                 'dernier_test_jour', 'residus', 'cran', 'meilleur', 'mesures')
+
+    def __init__(self, ex_id, typ, vecteur, base, idx, fraction=0.0, bas=False,
+                 tendon=0.0, zone_tendon=None, systemique=1.0, locale=1.0, declare=False):
+        self.id = ex_id
+        self.type = typ            # 'charge', 'reps', 'tenue', 'cardio', 'wod', 'mobilite'
+        self.classe = CLASSES.index(typ) if typ in CLASSES else None
+        self.vecteur = vecteur     # 10 charges sur les qualités (somme 1)
+        self.base = base           # a priori de population de ln capacité
+        self.idx = idx             # indice de delta_e ; idx + 1 : échelle de courbe
+        self.fraction = fraction
+        self.bas = bas
+        self.tendon = tendon
+        self.zone_tendon = zone_tendon
+        self.systemique = systemique
+        self.locale = locale
+        self.seances = 0
+        self.dernier_jour = None
+        self.premier_jour = None
+        self.stim_semaine = [0.0, 0.0, 0.0]   # volume, effort, intensité
+        self.series_seance = []    # (effort, repos) des séries de la séance en cours
+        self.jour_seance = None
+        self.declare = declare
+        self.dernier_test_jour = None
+        self.residus = []
+        self.cran = None
+        self.meilleur = None
+        self.mesures = 0
+
+
+class Modele(object):
+    """Filtre de Koach : état, journal des compartiments, pistes."""
+
+    def __init__(self, params, vecteurs, profil):
+        """[params] : fichier de paramètres ; [vecteurs] : id -> fiche de
+        qualités (vecteur, type, charge tendineuse…) ; [profil] : dictionnaire
+        {niveau 0..3, sexe, poids_kg, declares {id: (mesure, valeur)}}."""
+        self.p = params
+        self.vecteurs = vecteurs
+        self.profil = profil
+        self.niveau = int(clamp(profil.get('niveau', 1), 0, 3))
+        ap = params['a_priori']
+        n = NG + 2 * 48
+        self.m = np.zeros(n)
+        self.P = np.zeros((n, n))
+        self.n = NG
+        for q in range(NQ):
+            self.P[TH + q, TH + q] = ap['theta_sd'] ** 2
+        rho = ap['rho_moyenne_par_niveau'][self.niveau]
+        self.m[RHO] = rho
+        self.P[RHO, RHO] = (rho * ap['rho_sd_rel']) ** 2
+        for c in range(5):
+            self.m[EPS + c] = ap['eps_classe_moyenne'][c] * rho / ap['rho_moyenne_par_niveau'][1]
+            self.P[EPS + c, EPS + c] = (ap['eps_classe_sd'] * rho / ap['rho_moyenne_par_niveau'][1]) ** 2
+        for idx, cle in ((KN, 'k_nerveux'), (KM, 'k_musculaire'), (BA, 'biais_rir_additif'),
+                         (BP, 'biais_rir_proportionnel'), (LAM, 'courbe_forme'), (KU, 'courbe_echelle'),
+                         (FI, 'fatigue_intra'), (HH, 'part_tenue')):
+            self.m[idx] = ap[cle][0]
+            self.P[idx, idx] = ap[cle][1] ** 2
+        self.pistes = {}
+        self.ordre = []
+        self.jour = 0
+        self.poids_kg = float(profil.get('poids_kg') or 72.0)
+        # Compartiments de fatigue (valeurs au jour `self.jour`).
+        f = params['fatigue']
+        self.tau = [f['tau_nerveux_j'], f['tau_musculaire_j'], f['tau_tendineux_j']]
+        self.f_nerveux = 0.0
+        self.f_musculaire = np.zeros(NQ)
+        self.f_tendon = {z: 0.0 for z in ZONES_TENDON}      # compartiment lent (28 j)
+        self.f_tendon_aigu = {z: 0.0 for z in ZONES_TENDON}  # charge de la semaine en cours
+        # Bruit du RIR appris (multiplicateur), notes paresseuses (Beta).
+        self.bruit_rir = 1.0
+        self.z2 = 1.0
+        self.z2_n = 0.0
+        self.paresse = list(params['mesure']['note_paresseuse_a_priori'])
+        # Séance en cours : branche « mauvais jour ».
+        self.alt = None           # (m, P, logw) de la branche mauvais jour
+        self.logw = 0.0
+        self.en_seance = False
+        self.bilan = None
+        self.residus_seance = []  # innovations normalisées de la séance
+        self.histoire_residus = []  # (jour, résidu moyen normalisé, résidu relatif)
+        # Hypothèses de réponse (contrôle dual) : poids a posteriori.
+        dyn = params['dynamique']
+        self.hypotheses = [(s, k) for k in range(len(dyn['hypotheses_stimulus'])) for s in dyn['hypotheses_s0']]
+        self.poids_hyp = [1.0 / len(self.hypotheses)] * len(self.hypotheses)
+        self._dernier_ex = None
+        self.semaines = 0
+        self.journal_semaines = []  # doses et progrès par semaine (contrôle dual, synthétique)
+        self.elargi = 0
+
+    # ------------------------------------------------------------------
+    # Pistes et a priori
+    # ------------------------------------------------------------------
+    def _agrandir(self):
+        if self.n + 2 <= self.m.shape[0]:
+            return
+        n = self.m.shape[0] * 2
+        m = np.zeros(n)
+        P = np.zeros((n, n))
+        m[:self.n] = self.m[:self.n]
+        P[:self.n, :self.n] = self.P[:self.n, :self.n]
+        self.m, self.P = m, P
+        if self.alt is not None:
+            am, aP, lw = self.alt
+            m2 = np.zeros(n)
+            P2 = np.zeros((n, n))
+            m2[:self.n] = am[:self.n]
+            P2[:self.n, :self.n] = aP[:self.n, :self.n]
+            self.alt = (m2, P2, lw)
+
+    def base_de(self, fiche):
+        """A priori de population de ln capacité d'un exercice (hors
+        déclaration) : choix raisonné large, voir SOURCES.md § A priori."""
+        ap = self.p['a_priori']
+        typ = fiche['type']
+        if typ == 'charge':
+            total = fiche['ratio'] * self.poids_kg * ap['niveau_echelle_charge'][self.niveau]
+            if self.profil.get('sexe') == 'female':
+                total *= ap['facteur_femme']
+            plancher = fiche.get('fraction', 0.0) * self.poids_kg * 1.1
+            return math.log(max(total, plancher, 1.0))
+        if typ in ('reps', 'tenue'):
+            marge = (2.0 + 2.0 * self.niveau) - fiche.get('difficulte', 3)
+            base = ap['reps_base'] if typ == 'reps' else ap['tenue_base_s']
+            return math.log(base) + ap['pente_difficulte'] * marge
+        if typ == 'cardio':
+            return math.log(ap['cardio_minutes_par_niveau'][self.niveau])
+        return 0.0
+
+    def piste(self, ex_id):
+        """Piste de l'exercice (créée au besoin), ou None s'il n'est pas suivi."""
+        t = self.pistes.get(ex_id)
+        if t is not None or ex_id in self.pistes:
+            return t
+        fiche = self.vecteurs.get(ex_id)
+        if fiche is None or fiche['type'] not in ('charge', 'reps', 'tenue', 'cardio', 'wod'):
+            self.pistes[ex_id] = None
+            return None
+        self._agrandir()
+        ap = self.p['a_priori']
+        idx = self.n
+        self.n += 2
+        typ = fiche['type']
+        base = self.base_de(fiche)
+        sd = {'charge': ap['delta_sd'], 'reps': ap['reps_sd'], 'tenue': ap['reps_sd'],
+              'cardio': ap['cardio_sd'], 'wod': ap['wod_sd']}[typ]
+        vecteur = fiche['vecteur']
+        declare = False
+        t = Piste(ex_id, typ, vecteur, base, idx, fraction=fiche.get('fraction', 0.0),
+                  bas=fiche.get('bas', False), tendon=fiche.get('tendon', 0.0),
+                  zone_tendon=fiche.get('zone_tendon'), systemique=fiche.get('systemique', 1.0),
+                  locale=fiche.get('locale', 1.0), declare=declare)
+        for (m, P) in self._branches():
+            m[idx] = 0.0
+            # La part de la variance portée par les qualités est retirée de
+            # l'écart propre à l'exercice (a priori total = sd²).
+            vq = 0.0
+            for q in range(NQ):
+                vq += vecteur[q] * vecteur[q] * P[TH + q, TH + q]
+            P[idx, idx] = max(sd * sd - vq, (0.5 * sd) ** 2)
+            m[idx + 1] = ap['courbe_bas_du_corps'] if t.bas else 0.0
+            P[idx + 1, idx + 1] = ap['courbe_echelle_exercice_sd'] ** 2
+        self.pistes[ex_id] = t
+        self.ordre.append(ex_id)
+        d = (self.profil.get('declares') or {}).get(ex_id)
+        if d is not None:
+            # Capacité déclarée (record, test du profil) : une observation
+            # de la capacité de l'exercice, qui renseigne aussi les qualités.
+            mesure, valeur = d
+            voulu = {'charge': 'one_rm_kg', 'reps': 'max_reps', 'tenue': 'max_hold_seconds'}.get(typ)
+            if mesure == voulu and valeur > 0:
+                if typ == 'charge':
+                    cible = math.log(valeur + t.fraction * self.poids_kg)
+                else:
+                    cible = math.log(valeur)
+                hi, hc = self._h_capacite(t, jour=False)
+                self._observer_hors(hi, hc, t.base - cible, None, None, ap['delta_sd_declare'] ** 2, point=0.0)
+                t.declare = True
+        return t
+    def _branches(self):
+        out = [(self.m, self.P)]
+        if self.alt is not None:
+            out.append((self.alt[0], self.alt[1]))
+        return out
+
+    # ------------------------------------------------------------------
+    # Courbe répétitions ↔ charge : g(R) = e^k (c1 ln R + c2 (R - 1))
+    # ------------------------------------------------------------------
+    def _courbe_moyenne(self, reps, bas):
+        ap = self.p['a_priori']
+        k = ap['courbe_echelle'][0] + (ap['courbe_bas_du_corps'] if bas else 0.0)
+        return self._g(ap['courbe_forme'][0], k, reps)
+
+    @staticmethod
+    def _g(lam, k, reps):
+        """-ln(part du 1RM soulevable [reps] fois) : mélange d'une branche
+        linéaire (Epley, Brzycki) et d'une branche logarithmique (Lombardi),
+        égales à 8 répétitions ; [lam] choisit la forme, e^[k] l'échelle."""
+        r = 1.0 if reps < 1 else reps
+        return math.exp(k) * ((1.0 - lam) * C_LIN * (r - 1.0) + lam * C_LOG * math.log(r))
+
+    @staticmethod
+    def _dg(lam, k, reps):
+        r = 1.0 if reps < 1 else reps
+        d = math.exp(k) * ((1.0 - lam) * C_LIN + lam * C_LOG / r)
+        return d if d > 0.004 else 0.004
+
+    def courbe(self, t, m=None):
+        """(forme, échelle) de la courbe de l'exercice : forme et échelle
+        de l'utilisateur, échelle propre à l'exercice."""
+        m = self.m if m is None else m
+        return clamp(m[LAM], -0.3, 1.2), clamp(m[KU] + m[t.idx + 1], -1.0, 1.0)
+
+    def reps_a(self, t, log_ratio, m=None):
+        """Répétitions possibles quand ln(capacité / charge) = log_ratio
+        (inverse de g, Newton à nombre de pas fixe)."""
+        lam, k = self.courbe(t, m)
+        if log_ratio <= 0:
+            return 1.0 + log_ratio * 20.0 if log_ratio > -0.05 else 0.0
+        r = 1.0 + log_ratio / self._dg(lam, k, 1.0)
+        for _ in range(12):
+            f = self._g(lam, k, r) - log_ratio
+            r -= f / self._dg(lam, k, r)
+            if r < 1.0:
+                r = 1.0
+            if r > 200.0:
+                r = 200.0
+        return r
+
+    # ------------------------------------------------------------------
+    # Compartiments de fatigue
+    # ------------------------------------------------------------------
+    def avancer(self, jour):
+        """Avance le temps jusqu'à [jour] : décroissance des compartiments,
+        bruit de processus, désentraînement."""
+        dt = jour - self.jour
+        if dt <= 0:
+            return
+        self.f_nerveux *= math.exp(-dt / self.tau[0])
+        self.f_musculaire *= math.exp(-dt / self.tau[1])
+        e = math.exp(-dt / self.tau[2])
+        for z in ZONES_TENDON:
+            self.f_tendon[z] *= e
+        dyn = self.p['dynamique']
+        for ex_id in self.ordre:
+            t = self.pistes[ex_id]
+            self.P[t.idx, t.idx] += dyn['q_delta_jour_inactif'] * dt
+        self.jour = jour
+
+    def effort(self, rir, echec=False):
+        f = self.p['fatigue']
+        w = 1.0 / (1.0 + (rir if rir > 0 else 0.0) / f['effort_demi_rir'])
+        return w + (f['echec_supplement'] if echec else 0.0)
+
+    def effort_intra(self, rir):
+        """Fatigue laissée dans la séance par une série : elle croît vite à
+        l'approche de l'échec (SOURCES.md § Fatigue intra-séance)."""
+        return math.exp(-(rir if rir > 0 else 0.0) / self.p['fatigue']['intra_rir'])
+
+    def _charger_compartiments(self, t, effort, quantite=1.0):
+        self.f_nerveux += effort * t.systemique
+        self.f_musculaire += effort * t.locale * np.asarray(t.vecteur)
+        if t.zone_tendon is not None and t.tendon > 0:
+            self.f_tendon[t.zone_tendon] += effort * t.tendon * quantite
+            self.f_tendon_aigu[t.zone_tendon] += effort * t.tendon * quantite
+
+    def fatigue_de(self, t):
+        """Régresseurs (nerveux, musculaire) de la piste au moment présent."""
+        fm = 0.0
+        for q in range(NQ):
+            fm += t.vecteur[q] * self.f_musculaire[q]
+        return self.f_nerveux, fm
+
+    def _intra(self, t):
+        """Régresseur de fatigue intra-séance de la prochaine série."""
+        f = self.p['fatigue']
+        s = 0.0
+        n = len(t.series_seance)
+        for i in range(n):
+            eff, repos = t.series_seance[i]
+            s += eff * math.exp(-repos / f['intra_repos_s']) * f['intra_report'] ** (n - 1 - i)
+        return s
+
+    # ------------------------------------------------------------------
+    # Séance
+    # ------------------------------------------------------------------
+    def debut_seance(self, jour, bilan=None, poids_kg=None):
+        """Ouvre une séance : effet de jour remis à son a priori (informé par
+        le bilan de santé), branche « mauvais jour » ouverte."""
+        self.avancer(jour)
+        if poids_kg:
+            self.poids_kg = float(poids_kg)
+        j = self.p['jour']
+        moyenne = 0.0
+        sd = j['sigma_seance']
+        p_mauvais = j['mauvais_jour_proba']
+        general = None if bilan is None else bilan.get('overall')
+        if general is not None:
+            moyenne = j['bilan_par_point'] * (general - j['bilan_neutre'])
+            sd = j['sigma_seance_avec_bilan']
+            if general <= 2:
+                p_mauvais = j['mauvais_jour_proba_bilan_bas']
+        self._reset(self.m, self.P, DS, moyenne, sd * sd)
+        self._reset(self.m, self.P, DE, 0.0, j['sigma_exercice'] ** 2)
+        am = self.m.copy()
+        aP = self.P.copy()
+        self._reset(am, aP, DS, moyenne + j['mauvais_jour_moyenne'], j['mauvais_jour_sigma'] ** 2)
+        self.alt = (am, aP, math.log(p_mauvais))
+        self.logw = math.log(1.0 - p_mauvais)
+        self.en_seance = True
+        self.bilan = bilan
+        self.residus_seance = []
+        self._dernier_ex = None
+        for ex_id in self.ordre:
+            self.pistes[ex_id].series_seance = []
+
+    def _reset(self, m, P, idx, moyenne, variance):
+        P[idx, :] = 0.0
+        P[:, idx] = 0.0
+        P[idx, idx] = variance
+        m[idx] = moyenne
+
+    def debut_exercice(self, t):
+        """Nouvel exercice dans la séance : effet de jour propre remis à zéro."""
+        j = self.p['jour']
+        for (m, P) in self._branches():
+            self._reset(m, P, DE, 0.0, j['sigma_exercice'] ** 2)
+        if t.jour_seance != self.jour:
+            t.series_seance = []
+            t.jour_seance = self.jour
+            t.seances += 1
+            if t.premier_jour is None:
+                t.premier_jour = self.jour
+        t.dernier_jour = self.jour
+
+    def poids_mauvais_jour(self):
+        if self.alt is None:
+            return 0.0
+        a = self.logw
+        b = self.alt[2]
+        mx = a if a > b else b
+        return math.exp(b - mx) / (math.exp(a - mx) + math.exp(b - mx))
+
+    def fin_seance(self):
+        """Ferme la séance : fusion des deux branches par appariement des
+        moments, innovations de la séance versées à la détection de rupture."""
+        if not self.en_seance:
+            return None
+        w = self.poids_mauvais_jour()
+        if self.alt is not None and w > 1e-9:
+            am, aP, _ = self.alt
+            n = self.n
+            m = (1 - w) * self.m[:n] + w * am[:n]
+            d0 = self.m[:n] - m
+            d1 = am[:n] - m
+            P = (1 - w) * (self.P[:n, :n] + np.outer(d0, d0)) + w * (aP[:n, :n] + np.outer(d1, d1))
+            self.m[:n] = m
+            self.P[:n, :n] = P
+        self.alt = None
+        self.en_seance = False
+        j = self.p['jour']
+        self._reset(self.m, self.P, DS, 0.0, j['sigma_seance'] ** 2)
+        self._reset(self.m, self.P, DE, 0.0, j['sigma_exercice'] ** 2)
+        resume = None
+        if self.residus_seance:
+            zs = [r[0] for r in self.residus_seance]
+            rel = [r[1] for r in self.residus_seance]
+            resume = (self.jour, sum(zs) / len(zs), sum(rel) / len(rel), len(zs), w)
+            self.histoire_residus.append(resume)
+        return resume
+
+    # ------------------------------------------------------------------
+    # Fonctionnelle linéaire d'un exercice
+    # ------------------------------------------------------------------
+    def _h_capacite(self, t, jour=True):
+        """(indices, coefficients) de ln capacité du moment de la piste, hors
+        constante `t.base` : qualités, écart de l'exercice, effets de jour,
+        fatigue."""
+        idx = []
+        co = []
+        for q in range(NQ):
+            if t.vecteur[q] != 0.0:
+                idx.append(TH + q)
+                co.append(t.vecteur[q])
+        idx.append(t.idx)
+        co.append(1.0)
+        if jour:
+            fn, fm = self.fatigue_de(t)
+            idx += [DS, DE, KN, KM]
+            co += [1.0, 1.0, -fn, -fm]
+        return idx, co
+
+    @staticmethod
+    def _stats(m, P, idx, co):
+        """Moyenne et variance de h·x, et le vecteur P h."""
+        n = P.shape[0]
+        ph = np.zeros(n)
+        mu = 0.0
+        for i, c in zip(idx, co):
+            mu += c * m[i]
+            ph += c * P[:, i]
+        v = 0.0
+        for i, c in zip(idx, co):
+            v += c * ph[i]
+        return mu, v, ph
+
+    @staticmethod
+    def _appliquer(m, P, ph, mu, v, mu2, v2):
+        """Report de la mise à jour scalaire (mu, v) -> (mu2, v2) sur l'état."""
+        if v <= 0:
+            return
+        m += ph * ((mu2 - mu) / v)
+        P -= np.outer(ph, ph) * ((v - v2) / (v * v))
+
+    def _observer(self, idx, co, const, a, b, s2, point=None, melange=None):
+        """Applique une observation aux deux branches. [a, b] : intervalle sur
+        u = h·x + const ; [point] : valeur observée ; [melange] = (pi, a2, b2)
+        ajoute une seconde composante (note paresseuse : avec la probabilité
+        pi, seule la borne [a2, b2] est sue). Renvoie (résidu normalisé,
+        résidu relatif) de la branche principale."""
+        resid = None
+        for bi, (m, P) in enumerate(self._branches()):
+            mu, v, ph = self._stats(m, P, idx, co)
+            mu += const
+            if point is not None:
+                logz, mu2, v2 = point_moments(mu, v, s2, point)
+                centre = point
+            else:
+                logz, mu2, v2 = interval_moments(mu, v, s2, a, b)
+                if melange is not None:
+                    pi, a2, b2 = melange
+                    logz_b, mu_b, v_b = interval_moments(mu, v, s2, a2, b2)
+                    la = math.log(1 - pi) + logz
+                    lb = math.log(pi) + logz_b
+                    mx = la if la > lb else lb
+                    wa = math.exp(la - mx)
+                    wb = math.exp(lb - mx)
+                    tot = wa + wb
+                    wa /= tot
+                    wb /= tot
+                    mean = wa * mu2 + wb * mu_b
+                    var = wa * (v2 + (mu2 - mean) ** 2) + wb * (v_b + (mu_b - mean) ** 2)
+                    logz = mx + math.log(tot)
+                    mu2, v2 = mean, var
+                if a == -INF:
+                    centre = b
+                elif b == INF:
+                    centre = a
+                else:
+                    centre = 0.5 * (a + b)
+            if bi == 0:
+                informatif = point is not None or (a != -INF and b != INF)
+                dehors = (point is None) and ((a == -INF and mu > b) or (b == INF and mu < a))
+                if informatif or dehors:
+                    resid = ((centre - mu) / math.sqrt(v + s2), centre - mu, informatif and point is None)
+            self._appliquer(m, P, ph, mu - const, v, mu2 - const, v2)
+            if bi == 0:
+                self.logw += logz
+            else:
+                self.alt = (m, P, self.alt[2] + logz)
+        return resid
+
+    # ------------------------------------------------------------------
+    # Bruit et biais de la note
+    # ------------------------------------------------------------------
+    def bruit_rir_de(self, rir, reps):
+        me = self.p['mesure']
+        base = me['bruit_rir_par_niveau'][self.niveau] * self.bruit_rir
+        # Le bruit du cahier (2,0 / 1,5 / 1,0 selon le niveau) vaut loin de
+        # l'échec (réserve de référence) ; il décroît près de l'échec.
+        s = base * (me['bruit_rir_plancher'] + me['bruit_rir_pente'] * rir) / \
+            (me['bruit_rir_plancher'] + me['bruit_rir_pente'] * me['bruit_rir_reference'])
+        if reps > me['bruit_rir_longue_serie_de']:
+            s *= 1 + me['bruit_rir_longue_serie_pente'] * (reps - me['bruit_rir_longue_serie_de'])
+        return s
+
+    @staticmethod
+    def bornes_flammes(flammes, ouvert=5.0):
+        """Intervalle de RIR d'une note en flammes (kalis_core `Flames`) et
+        son centre : 10 -> échec ; 9 -> [0,25 ; 1,25] ; f -> demi-répétition ;
+        1 -> RIR 5 et plus (ouvert)."""
+        if flammes >= 10:
+            return 0.0, 0.25, 0.0
+        if flammes == 9:
+            return 0.25, 1.25, 1.0
+        r = (11 - flammes) / 2.0
+        if r >= ouvert:
+            # Loin de l'échec, la note ne distingue plus : « 4 répétitions
+            # en réserve ou plus » (échelle de Zourdos et al. 2016).
+            return r - 0.25, INF, r
+        return r - 0.25, r + 0.25, r
+
+    def rir_vrai(self, percu, m=None):
+        """Réserve vraie attendue pour une réserve perçue (biais du modèle
+        de mesure : perçu = (vrai - biais personnel) / (1 + biais de
+        population))."""
+        m = self.m if m is None else m
+        if percu <= 0:
+            return 0.0
+        v = percu * (1.0 + clamp(m[BP], -0.2, 1.0)) + clamp(m[BA], -2.5, 2.5)
+        return v if v > 0.0 else 0.0
+
+    # ------------------------------------------------------------------
+    # Observation d'une série
+    # ------------------------------------------------------------------
+    def observer_serie(self, s):
+        """Verse une série du journal. Champs lus : exerciseId, kind,
+        externalLoadKg, reps, seconds, flames, failed, target (repsLow,
+        repsHigh, secondsLow, secondsHigh, flames), restSeconds, manual,
+        parts, assistKg. Renvoie la piste ou None."""
+        t = self.piste(s['exerciseId'])
+        if t is None:
+            return None
+        if self._dernier_ex != t.id:
+            self.debut_exercice(t)
+        self._dernier_ex = t.id
+        typ = t.type
+        if typ in ('charge', 'reps'):
+            r = self._serie_force(t, s)
+        elif typ == 'tenue':
+            r = self._serie_tenue(t, s)
+        else:
+            r = self._serie_endurance(t, s)
+        if r is not None:
+            self.residus_seance.append(r)
+            t.residus.append((self.jour, r[0], r[1]))
+            if typ in ('charge', 'reps') and r[2]:
+                self._apprendre_bruit(r[0])
+            self._projeter()
+        return t
+
+    def _apprendre_bruit(self, z):
+        me = self.p['mesure']
+        lam = me['apprentissage_bruit_oubli']
+        self.z2 = lam * self.z2 + (1 - lam) * min(z * z, 9.0)
+        self.z2_n = lam * self.z2_n + 1.0
+        if self.z2_n > 12:
+            lo, hi = me['apprentissage_bruit_bornes']
+            cible = math.sqrt(self.z2)
+            self.bruit_rir = clamp(self.bruit_rir * (1 + 0.02 * (cible - 1.0)), lo, hi)
+
+    def masse(self, t, externe):
+        if t.type == 'charge':
+            return (externe or 0.0) + t.fraction * self.poids_kg
+        return 1.0
+
+    def _projeter(self):
+        """Garde-fou numérique : les sensibilités restent positives."""
+        for (m, _) in self._branches():
+            if m[KN] < 0.0:
+                m[KN] = 0.0
+            if m[KM] < 0.0:
+                m[KM] = 0.0
+
+    def _lin_force(self, t, m, lnL, reps, sj, sans_charge, percu):
+        """Linéarise, autour de la moyenne [m], la réserve de la série :
+        vraie (v = répétitions possibles - faites) ou perçue (p = (v - biais
+        personnel) / (1 + biais de population)). Renvoie (indices,
+        coefficients, valeur prédite, répétitions possibles à frais, v)."""
+        idx, co = self._h_capacite(t)
+        eta = t.base
+        for i, c in zip(idx, co):
+            eta += c * m[i]
+        fi = clamp(m[FI], 0.0, 1.5)
+        garde = 1.0 - fi * sj
+        if garde < 0.3:
+            garde = 0.3
+        if sans_charge:
+            R = math.exp(eta)
+            dR = R                      # dR/d eta
+            dlam = dk = 0.0
+        else:
+            lam, k = self.courbe(t, m)
+            x = eta - lnL
+            R = self.reps_a(t, x, m)
+            if x <= 0:
+                dR = 20.0
+                dlam = dk = 0.0
+            else:
+                d = self._dg(lam, k, R)
+                r1 = R if R > 1 else 1.0
+                dR = 1.0 / d
+                dlam = -math.exp(k) * (C_LOG * math.log(r1) - C_LIN * (r1 - 1.0)) / d
+                dk = -self._g(lam, k, R) / d
+        v = R * garde - reps
+        coefs = [c * dR * garde for c in co]
+        indices = list(idx)
+        if not sans_charge:
+            indices += [LAM, KU, t.idx + 1]
+            coefs += [dlam * garde, dk * garde, dk * garde]
+        if sj > 0:
+            indices.append(FI)
+            coefs.append(-R * sj)
+        if not percu:
+            return indices, coefs, v, R, v
+        ba = clamp(m[BA], -2.5, 2.5)
+        bp = clamp(m[BP], -0.2, 1.0)
+        pr = (v - ba) / (1.0 + bp)
+        coefs = [c / (1.0 + bp) for c in coefs]
+        indices += [BA, BP]
+        coefs += [-1.0 / (1.0 + bp), -pr / (1.0 + bp)]
+        return indices, coefs, pr, R, v
+
+    def _serie_force(self, t, s):
+        """Série de force (charge ou poids du corps). Sens génératif : la
+        note en flammes est une catégorie ordonnée de la réserve PERÇUE,
+        fonction de la réserve vraie (capacité, courbe, fatigue de la séance)
+        et du biais de l'utilisateur, à un bruit près (modèle gradué)."""
+        me = self.p['mesure']
+        reps = s.get('reps') or 0
+        externe = s.get('externalLoadKg')
+        flammes = s.get('flames')
+        cible = s.get('target') or {}
+        echec = bool(s.get('failed'))
+        repos = s.get('restSeconds') or 90
+        charge = self.masse(t, externe)
+        sans_charge = t.type == 'reps'
+        if charge <= 0 and not sans_charge:
+            return None
+        lnL = 0.0 if sans_charge else math.log(charge)
+        sj = self._intra(t)
+        resid = None
+        rir_c = 2.0
+        if reps <= 0 and echec:
+            # Barre manquée : la capacité du moment est sous la charge.
+            if not sans_charge:
+                idx, co = self._h_capacite(t)
+                resid = self._observer(idx, co, t.base - lnL, -INF, 0.0, me['bruit_test'] ** 2)
+            rir_c = 0.0
+        else:
+            percu = not (echec or flammes is None)
+            if echec:
+                a, b = 0.0, 1.0          # réserve vraie nulle : entre n et n + 1
+            elif flammes is None:
+                a, b = 0.0, INF          # série faite sans note : au moins n
+            elif flammes >= 10:
+                a, b = -INF, 0.25
+            else:
+                a, b, _ = self.bornes_flammes(flammes, me['rir_ouvert'])
+            lin = self.m
+            for passe in range(2):
+                idx, co, pred, R, v = self._lin_force(t, lin, lnL, reps, sj, sans_charge, percu)
+                if passe == 0:
+                    # Deuxième passe : relinéarisation autour de la moyenne a
+                    # posteriori approchée (filtre itéré).
+                    essai = self._apercu(idx, co, pred, a, b, self._bruit_force(percu, v, reps, R, me, sj))
+                    lin = essai
+            s2 = self._bruit_force(percu, v, reps, R, me, sj)
+            const = pred
+            for i, c in zip(idx, co):
+                const -= c * lin[i]
+            melange = None
+            f_cible = cible.get('flames')
+            if percu and f_cible is not None and flammes == f_cible and b != INF:
+                pi = self.paresse[0] / (self.paresse[0] + self.paresse[1])
+                melange = (clamp(pi, 0.01, 0.9), -INF, INF)
+            resid = self._observer(idx, co, const, a, b, s2, melange=melange)
+            if percu and f_cible is not None and resid is not None and abs(resid[1]) > 1.0:
+                # Notes paresseuses : part des notes égales à la note
+                # préremplie quand l'attendu en est à plus d'une répétition.
+                if flammes == f_cible:
+                    self.paresse[0] += 1.0
+                else:
+                    self.paresse[1] += 1.0
+            self._projeter()
+            _, _, _, _, v_post = self._lin_force(t, self.m, lnL, reps, sj, sans_charge, False)
+            rir_c = v_post if v_post > 0 else 0.0
+            if echec:
+                rir_c = 0.0
+        # Compartiments et stimulus de la semaine.
+        eff = self.effort(rir_c, echec)
+        t.series_seance.append((self.effort_intra(rir_c), repos))
+        self._charger_compartiments(t, eff)
+        self._stimulus(t, rir_c, lnL, reps > 0)
+        t.mesures += 1
+        if echec or s.get('repere') or s.get('role') in ('test', 'attempt'):
+            t.dernier_test_jour = self.jour
+        if reps > 0 and not echec and not sans_charge:
+            if t.meilleur is None or charge > t.meilleur[0]:
+                t.meilleur = (charge, self.jour)
+        return resid
+
+    def _bruit_force(self, percu, v, reps, R, me, sj=0.0):
+        # La fatigue laissée par les séries précédentes varie d'un exercice
+        # à l'autre : une série qui suit une série dure renseigne moins.
+        extra = (me['dispersion_fatigue_intra'] * sj * R) ** 2
+        if not percu:
+            return 0.35 ** 2 + extra
+        r = v if v > 0 else 0.0
+        if r > 8:
+            r = 8.0
+        return self.bruit_rir_de(r, R) ** 2 + extra
+
+    def _apercu(self, idx, co, pred, a, b, s2):
+        """Moyenne a posteriori approchée (branche principale) d'une
+        observation, sans toucher à l'état : point de relinéarisation."""
+        m = self.m.copy()
+        mu, v, ph = self._stats(self.m, self.P, idx, co)
+        const = pred - mu
+        _, mu2, _ = interval_moments(pred, v, s2, a, b)
+        if v > 0:
+            m += ph * ((mu2 - pred) / v)
+        return m
+
+    def _stimulus(self, t, rir, lnL, fait):
+        if not fait:
+            return
+        part = 1.0
+        if t.type == 'charge':
+            part = math.exp(lnL - (t.base + self._mu(t)))
+        t.stim_semaine[0] += 1.0 if rir <= 4 else 0.5
+        t.stim_semaine[1] += 1.0 / (1.0 + (rir - 1 if rir > 1 else 0.0) / 3.0)
+        t.stim_semaine[2] += clamp((part - 0.4) / 0.4, 0.2, 1.5)
+
+    def _mu(self, t, m=None):
+        m = self.m if m is None else m
+        v = m[t.idx]
+        for q in range(NQ):
+            v += t.vecteur[q] * m[TH + q]
+        return v
+
+    def _serie_tenue(self, t, s):
+        """Maintien : modèle de survie. Tenue ratée = temps jusqu'à l'échec
+        observé ; tenue réussie sans note = temps censuré à droite ; avec une
+        note, catégorie ordonnée de la réserve perçue, (1 - s / T) / h."""
+        me = self.p['mesure']
+        sec = s.get('seconds') or 0
+        flammes = s.get('flames')
+        echec = bool(s.get('failed'))
+        repos = s.get('restSeconds') or 90
+        if sec <= 0 and not echec:
+            return None
+        idx, co = self._h_capacite(t)
+        fi = clamp(self.m[FI], 0.0, 1.5)
+        sj = self._intra(t)
+        garde = 1.0 - fi * sj
+        if garde < 0.3:
+            garde = 0.3
+        ln_s = math.log((sec if sec > 0 else 0.5) / garde)
+        if echec:
+            resid = self._observer(idx, co, t.base - ln_s, None, None,
+                                   (me['bruit_tenue'] / 2) ** 2 + (me['dispersion_fatigue_intra'] * sj) ** 2, point=0.0)
+            rir_c = 0.0
+        elif flammes is None:
+            resid = self._observer(idx, co, t.base - ln_s, 0.0, INF, me['bruit_tenue'] ** 2)
+            rir_c = 2.0
+        else:
+            if flammes >= 10:
+                a, b = -INF, 0.25
+            else:
+                a, b, _ = self.bornes_flammes(flammes, me['rir_ouvert'])
+            lin = self.m
+            for passe in range(2):
+                eta = t.base
+                for i, c in zip(idx, co):
+                    eta += c * lin[i]
+                hh = clamp(lin[HH], 0.03, 0.30)
+                part = math.exp(ln_s - eta)       # s / (T × garde)
+                pred = (1.0 - part) / hh
+                ix = idx + [HH]
+                cx = [c * part / hh for c in co] + [-pred / hh]
+                r = pred if pred > 0 else 0.0
+                s2 = self.bruit_rir_de(r if r < 8 else 8.0, 6) ** 2 + (me['dispersion_fatigue_intra'] * sj / hh) ** 2
+                if passe == 0:
+                    lin = self._apercu(ix, cx, pred, a, b, s2)
+            const = pred
+            for i, c in zip(ix, cx):
+                const -= c * lin[i]
+            resid = self._observer(ix, cx, const, a, b, s2)
+            self._projeter()
+            rir_c = r
+        eff = self.effort(rir_c, echec)
+        t.series_seance.append((self.effort_intra(rir_c), repos))
+        self._charger_compartiments(t, eff, quantite=max(sec, 1) / 10.0)
+        self._stimulus(t, rir_c, 0.0, sec > 0)
+        t.mesures += 1
+        if echec or s.get('repere') or s.get('role') in ('test', 'attempt'):
+            t.dernier_test_jour = self.jour
+        return resid
+
+    def _serie_endurance(self, t, s):
+        """Course, cardio, conditionnement : la demande relative (durée ×
+        poids de l'intensité sur la capacité) se lit dans l'effort perçu
+        (gradué) et dans la part faite."""
+        me = self.p['mesure']
+        demande = s.get('demand')
+        if demande is None or demande <= 0:
+            return None
+        flammes = s.get('flames')
+        fait = s.get('doneShare', 1.0)
+        idx, co = self._h_capacite(t, jour=True)
+        ln_d = math.log(demande)
+        pente = me['cardio_pente_rir'] if t.type == 'cardio' else me['wod_pente_rir']
+        neutre = me['cardio_charge_neutre'] if t.type == 'cardio' else 1.0
+        bruit = me['bruit_cardio'] if t.type == 'cardio' else me['bruit_wod']
+        cible = (s.get('target') or {}).get('flames')
+        rir_cible = (5.0 if t.type == 'cardio' else 2.0) if cible is None else (0.0 if cible >= 10 else (11 - cible) / 2.0)
+        resid = None
+        if fait < 0.999:
+            # Séance écourtée : la demande dépassait nettement la capacité.
+            resid = self._observer(idx, co, t.base - ln_d, -INF, -math.log(1.3), bruit ** 2)
+        elif flammes is not None:
+            if flammes >= 10:
+                a, b = -INF, 0.25
+            else:
+                a, b, _ = self.bornes_flammes(flammes, me['rir_ouvert'])
+            # Réserve perçue = réserve visée - pente × (demande / capacité - neutre).
+            eta = t.base
+            for i, c in zip(idx, co):
+                eta += c * self.m[i]
+            rel = math.exp(ln_d - eta)
+            pred = rir_cible - pente * (rel - neutre)
+            cx = [c * pente * rel for c in co]
+            const = pred
+            for i, c in zip(idx, cx):
+                const -= c * self.m[i]
+            resid = self._observer(idx, cx, const, a, b, me['bruit_rir_endurance'] ** 2)
+        eff = 0.6 if flammes is None else self.effort((11 - flammes) / 2.0 if flammes < 10 else 0.0)
+        self._charger_compartiments(t, eff * (s.get('fatigueSets') or 1.0))
+        t.stim_semaine[0] += s.get('dose', 1.0)
+        t.stim_semaine[1] += s.get('dose', 1.0)
+        t.stim_semaine[2] += s.get('dose', 1.0)
+        t.mesures += 1
+        return resid
+
+    def observer_raison(self, ex_id, raison, charge_kg, reps, rir):
+        """Refus motivé « trop lourd » / « trop léger » : mesure faible de la
+        capacité (cahier § 8), à bruit élevé."""
+        t = self.piste(ex_id)
+        if t is None or t.type != 'charge' or raison not in ('too_heavy', 'too_light'):
+            return
+        lam, k = self.courbe(t)
+        lnL = math.log(self.masse(t, charge_kg))
+        idx, co = self._h_capacite(t, jour=False)
+        const = t.base - lnL - self._g(lam, k, reps + rir)
+        s2 = self.p['mesure']['bruit_raison_refus'] ** 2
+        if raison == 'too_heavy':
+            self._observer_hors(idx, co, const, -INF, 0.0, s2)
+        else:
+            self._observer_hors(idx, co, const, 0.0, INF, s2)
+
+    def observer_charge_manuelle(self, ex_id, charge_kg, reps, rir):
+        """Charge modifiée à la main : mesure fiable de ce que l'utilisateur
+        sait pouvoir faire (cahier § 3)."""
+        t = self.piste(ex_id)
+        if t is None or t.type != 'charge':
+            return
+        lam, k = self.courbe(t)
+        lnL = math.log(self.masse(t, charge_kg))
+        idx, co = self._h_capacite(t, jour=False)
+        const = t.base - lnL - self._g(lam, k, reps + rir)
+        self._observer_hors(idx, co, const, None, None, self.p['mesure']['bruit_charge_manuelle'] ** 2, point=0.0)
+
+    def _observer_hors(self, idx, co, const, a, b, s2, point=None):
+        """Observation hors séance (une seule branche)."""
+        alt, self.alt = self.alt, None
+        lw = self.logw
+        self._observer(idx, co, const, a, b, s2, point=point)
+        self.logw = lw
+        self.alt = alt
+
+    def changer_cran(self, ex_id, facteur):
+        """Changement de cran d'élastique : la capacité attendue est
+        multipliée par [facteur], l'incertitude élargie."""
+        t = self.piste(ex_id)
+        if t is None:
+            return
+        sd = self.p['dynamique']['changement_cran_elastique_sd']
+        for (m, P) in self._branches():
+            m[t.idx] += math.log(facteur)
+            P[t.idx, t.idx] += sd * sd
+
+    # ------------------------------------------------------------------
+    # Fin de semaine : réponse à l'entraînement
+    # ------------------------------------------------------------------
+    def dose(self, stim, hyp):
+        s0, k = hyp
+        ref = self.p['dynamique']['dose_reference']
+        s = stim[k]
+        if s <= 0:
+            return 0.0
+        return (1 - math.exp(-s / s0)) / (1 - math.exp(-ref / s0))
+
+    def dose_moyenne(self, stim):
+        d = 0.0
+        for w, h in zip(self.poids_hyp, self.hypotheses):
+            d += w * self.dose(stim, h)
+        return d
+
+    def fin_semaine(self):
+        """Lundi : la capacité de chaque exercice travaillé progresse de
+        (rho + eps_classe) × dose ; les autres se désentraînent après le délai
+        de grâce ; bruit de processus."""
+        dyn = self.p['dynamique']
+        n = self.n
+        m, P = self.m, self.P
+        ligne = {'semaine': self.semaines, 'doses': {}, 'mu': {}}
+        for ex_id in self.ordre:
+            t = self.pistes[ex_id]
+            g = self.dose_moyenne(t.stim_semaine)
+            ligne['doses'][ex_id] = list(t.stim_semaine)
+            if g > 0:
+                e = EPS + t.classe
+                # x_d' = x_d + g (rho + eps) : P' = A P A^T.
+                P[t.idx, :n] += g * (P[RHO, :n] + P[e, :n])
+                P[:n, t.idx] += g * (P[:n, RHO] + P[:n, e])
+                m[t.idx] += g * (m[RHO] + m[e])
+            else:
+                inactif = self.jour - (t.dernier_jour if t.dernier_jour is not None else self.jour)
+                if inactif > dyn['desentrainement_grace_j']:
+                    m[t.idx] -= dyn['desentrainement_par_semaine']
+                    P[t.idx, t.idx] += (0.5 * dyn['desentrainement_par_semaine']) ** 2
+            P[t.idx, t.idx] += dyn['q_delta_semaine']
+            ligne['mu'][ex_id] = t.base + self._mu(t)
+            t.stim_semaine = [0.0, 0.0, 0.0]
+        for q in range(NQ):
+            P[TH + q, TH + q] += dyn['q_theta_semaine']
+        P[RHO, RHO] += dyn['q_reponse_semaine']
+        for z in ZONES_TENDON:
+            self.f_tendon_aigu[z] = 0.0
+        self.semaines += 1
+        self.journal_semaines.append(ligne)
+        return ligne
+
+    def elargir(self, facteur):
+        """« Rien de spécial » au diagnostic : incertitude élargie sur les
+        capacités, réapprentissage rapide (cahier § 9)."""
+        for ex_id in self.ordre:
+            t = self.pistes[ex_id]
+            self.P[t.idx, t.idx] *= facteur
+        for q in range(NQ):
+            self.P[TH + q, TH + q] *= facteur
+        self.elargi += 1
+
+    # ------------------------------------------------------------------
+    # Lecture de l'a posteriori
+    # ------------------------------------------------------------------
+    def capacite(self, ex_id):
+        """(moyenne, écart-type) de ln capacité à frais de l'exercice (hors
+        effet de jour et fatigue), ou None."""
+        t = self.piste(ex_id)
+        if t is None:
+            return None
+        idx, co = self._h_capacite(t, jour=False)
+        mu, v, _ = self._stats(self.m, self.P, idx, co)
+        return t.base + mu, math.sqrt(v if v > 0 else 0.0)
+
+    def capacite_du_jour(self, ex_id, avec_bruit_jour=True):
+        """(moyenne, écart-type) de ln capacité du moment (effets de jour et
+        fatigue compris), mélange des deux branches."""
+        t = self.piste(ex_id)
+        if t is None:
+            return None
+        idx, co = self._h_capacite(t)
+        mu, v, _ = self._stats(self.m, self.P, idx, co)
+        if self.alt is not None:
+            w = self.poids_mauvais_jour()
+            mu1, v1, _ = self._stats(self.alt[0], self.alt[1], idx, co)
+            mean = (1 - w) * mu + w * mu1
+            v = (1 - w) * (v + (mu - mean) ** 2) + w * (v1 + (mu1 - mean) ** 2)
+            mu = mean
+        return t.base + mu, math.sqrt(v if v > 0 else 0.0)
+
+    def intervalle(self, ex_id, niveau=0.90):
+        c = self.capacite(ex_id)
+        if c is None:
+            return None
+        z = 1.6448536269514722 if niveau == 0.90 else 1.959963984540054
+        return math.exp(c[0] - z * c[1]), math.exp(c[0]), math.exp(c[0] + z * c[1])
+
+    def valeur(self, ex_id):
+        """Capacité dans l'unité naturelle de l'exercice : 1RM de charge
+        totale (kg), répétitions maximales, secondes maximales, ou capacité
+        d'endurance."""
+        t = self.piste(ex_id)
+        c = self.capacite(ex_id)
+        if c is None:
+            return None
+        return math.exp(c[0])
