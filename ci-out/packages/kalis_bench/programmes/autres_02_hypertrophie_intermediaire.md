@@ -25,15 +25,15 @@ Femme de 27 ans, 61 kg, trois ans de musculation. Squat 80 kg, développé couch
 | --- | --- | --- | --- | --- |
 | 1 | 1 | introduction | 5 | 75 |
 | 2 | 1 | construction (volume) | 5 | 75 |
-| 3 | 1 | construction (volume) | 5 | 75 |
-| 4 | 1 | construction (volume) | 5 | 75 |
-| 5 | 1 | construction (volume) | 5 | 75 |
+| 3 | 1 | construction (volume) | 5 | 76 |
+| 4 | 1 | construction (volume) | 5 | 78 |
+| 5 | 1 | construction (volume) | 5 | 78 |
 | 6 | 1 | allègement | 5 | 34 |
-| 7 | 2 | construction (volume) | 5 | 75 |
-| 8 | 2 | construction (volume) | 5 | 75 |
-| 9 | 2 | construction (volume) | 5 | 75 |
-| 10 | 2 | construction (volume) | 5 | 75 |
-| 11 | 2 | construction (volume) | 5 | 75 |
+| 7 | 2 | construction (volume) | 5 | 78 |
+| 8 | 2 | construction (volume) | 5 | 78 |
+| 9 | 2 | construction (volume) | 5 | 78 |
+| 10 | 2 | construction (volume) | 5 | 78 |
+| 11 | 2 | construction (volume) | 5 | 78 |
 | 12 | 2 | allègement | 5 | 34 |
 
 ## Saison
@@ -187,9 +187,9 @@ Femme de 27 ans, 61 kg, trois ans de musculation. Squat 80 kg, développé couch
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
 | Hip thrust à la barre | 2 × 8 à 10 | 77,5 kg, ≈ 71 % du 1RM (charge totale ; 1RM de référence 110 kg) | 2 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Développé couché barre | 3 × 8 à 10 | 30 kg, ≈ 67 % du 1RM (charge totale ; 1RM de référence 45 kg) | 2 rép. en réserve | 105 s | principal |
-| Rowing poulie basse assis au triangle | 3 × 8 à 10 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | principal ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
+| Rowing poulie basse assis au triangle | 4 × 8 à 10 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | principal ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Développé haltères assis | 2 × 8 à 10 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | secondaire |
-| Tirage vertical poulie prise neutre | 3 × 8 à 10 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | secondaire |
+| Tirage vertical poulie prise neutre | 2 × 8 à 10 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | secondaire |
 | Élévation latérale à la poulie unilatérale | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire |
 | Extension nuque à la poulie (corde) | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire |
 | Curl incliné aux haltères | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire ; Fléchisseurs du coude en charge légère : tolérance du coude au tirage lourd. |
@@ -217,15 +217,15 @@ Femme de 27 ans, 61 kg, trois ans de musculation. Squat 80 kg, développé couch
 | Élévation latérale à la poulie unilatérale | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire |
 | Extension nuque à la poulie (corde) | 3 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire |
 
-### vendredi — force, tirage (75 min disponibles, 38 min estimées)
+### vendredi — force, tirage (75 min disponibles, 41 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Tirage vertical poulie prise neutre | 3 × 8 à 10 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | principal |
-| Rowing poulie basse assis au triangle | 3 × 8 à 10 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | principal ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
+| Tirage vertical poulie prise neutre | 4 × 8 à 10 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | principal |
+| Rowing poulie basse assis au triangle | 4 × 8 à 10 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | principal ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Élévation latérale à la poulie unilatérale | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire |
-| Oiseau au pec deck inversé | 3 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire |
+| Oiseau au pec deck inversé | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire |
 | Curl incliné aux haltères | 3 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire ; Fléchisseurs du coude en charge légère : tolérance du coude au tirage lourd. |
 | Dead bug | 2 × 8 à 12 | poids du corps | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
 
@@ -248,9 +248,9 @@ Femme de 27 ans, 61 kg, trois ans de musculation. Squat 80 kg, développé couch
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
 | Hip thrust à la barre | 2 × 9 à 11 | 75 kg, ≈ 68 % du 1RM (charge totale ; 1RM de référence 110 kg) | 2 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Développé couché barre | 3 × 9 à 11 | 30 kg, ≈ 67 % du 1RM (charge totale ; 1RM de référence 45 kg) | 2 rép. en réserve | 105 s | principal |
-| Rowing poulie basse assis au triangle | 3 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | principal ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
+| Rowing poulie basse assis au triangle | 4 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | principal ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Développé haltères assis | 2 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | secondaire |
-| Tirage vertical poulie prise neutre | 3 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | secondaire |
+| Tirage vertical poulie prise neutre | 2 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | secondaire |
 | Élévation latérale à la poulie unilatérale | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire |
 | Extension nuque à la poulie (corde) | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire |
 | Curl incliné aux haltères | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire ; Fléchisseurs du coude en charge légère : tolérance du coude au tirage lourd. |
@@ -278,15 +278,15 @@ Femme de 27 ans, 61 kg, trois ans de musculation. Squat 80 kg, développé couch
 | Élévation latérale à la poulie unilatérale | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire |
 | Extension nuque à la poulie (corde) | 3 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire |
 
-### vendredi — force, tirage (75 min disponibles, 39 min estimées)
+### vendredi — force, tirage (75 min disponibles, 46 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Tirage vertical poulie prise neutre | 3 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | principal |
-| Rowing poulie basse assis au triangle | 3 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | principal ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
+| Tirage vertical poulie prise neutre | 5 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | principal |
+| Rowing poulie basse assis au triangle | 5 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | principal ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Élévation latérale à la poulie unilatérale | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire |
-| Oiseau au pec deck inversé | 3 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire |
+| Oiseau au pec deck inversé | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire |
 | Curl incliné aux haltères | 3 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire ; Fléchisseurs du coude en charge légère : tolérance du coude au tirage lourd. |
 | Dead bug | 2 × 9 à 13 | poids du corps | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
 
@@ -309,9 +309,9 @@ Femme de 27 ans, 61 kg, trois ans de musculation. Squat 80 kg, développé couch
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
 | Hip thrust à la barre | 2 × 9 à 11 | 75 kg, ≈ 68 % du 1RM (charge totale ; 1RM de référence 110 kg) | 2 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Développé couché barre | 3 × 9 à 11 | 30 kg, ≈ 67 % du 1RM (charge totale ; 1RM de référence 45 kg) | 2 rép. en réserve | 105 s | principal |
-| Rowing poulie basse assis au triangle | 3 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | principal ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
+| Rowing poulie basse assis au triangle | 4 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | principal ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Développé haltères assis | 2 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | secondaire |
-| Tirage vertical poulie prise neutre | 3 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | secondaire |
+| Tirage vertical poulie prise neutre | 2 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | secondaire |
 | Élévation latérale à la poulie unilatérale | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire |
 | Extension nuque à la poulie (corde) | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire |
 | Curl incliné aux haltères | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire ; Fléchisseurs du coude en charge légère : tolérance du coude au tirage lourd. |
@@ -339,15 +339,15 @@ Femme de 27 ans, 61 kg, trois ans de musculation. Squat 80 kg, développé couch
 | Élévation latérale à la poulie unilatérale | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire |
 | Extension nuque à la poulie (corde) | 3 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire |
 
-### vendredi — force, tirage (75 min disponibles, 39 min estimées)
+### vendredi — force, tirage (75 min disponibles, 46 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Tirage vertical poulie prise neutre | 3 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | principal |
-| Rowing poulie basse assis au triangle | 3 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | principal ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
+| Tirage vertical poulie prise neutre | 5 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | principal |
+| Rowing poulie basse assis au triangle | 5 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | principal ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Élévation latérale à la poulie unilatérale | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire |
-| Oiseau au pec deck inversé | 3 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire |
+| Oiseau au pec deck inversé | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire |
 | Curl incliné aux haltères | 3 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire ; Fléchisseurs du coude en charge légère : tolérance du coude au tirage lourd. |
 | Dead bug | 2 × 9 à 13 | poids du corps | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
 
@@ -419,9 +419,9 @@ Femme de 27 ans, 61 kg, trois ans de musculation. Squat 80 kg, développé couch
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
 | Hip thrust à la barre | 2 × 8 à 10 | 77,5 kg, ≈ 71 % du 1RM (charge totale ; 1RM de référence 110 kg) | 2 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Développé couché barre | 3 × 8 à 10 | 30 kg, ≈ 67 % du 1RM (charge totale ; 1RM de référence 45 kg) | 2 rép. en réserve | 105 s | principal |
-| Rowing poulie basse assis au triangle | 3 × 8 à 10 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | principal ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
+| Rowing poulie basse assis au triangle | 4 × 8 à 10 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | principal ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Développé haltères assis | 2 × 8 à 10 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | secondaire |
-| Tirage vertical poulie prise neutre | 3 × 8 à 10 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | secondaire |
+| Tirage vertical poulie prise neutre | 2 × 8 à 10 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | secondaire |
 | Élévation latérale à la poulie unilatérale | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire |
 | Extension nuque à la poulie (corde) | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire |
 | Curl incliné aux haltères | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire ; Fléchisseurs du coude en charge légère : tolérance du coude au tirage lourd. |
@@ -449,15 +449,15 @@ Femme de 27 ans, 61 kg, trois ans de musculation. Squat 80 kg, développé couch
 | Élévation latérale à la poulie unilatérale | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire |
 | Extension nuque à la poulie (corde) | 3 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire |
 
-### vendredi — force, tirage (75 min disponibles, 38 min estimées)
+### vendredi — force, tirage (75 min disponibles, 45 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Tirage vertical poulie prise neutre | 3 × 8 à 10 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | principal |
-| Rowing poulie basse assis au triangle | 3 × 8 à 10 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | principal ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
+| Tirage vertical poulie prise neutre | 5 × 8 à 10 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | principal |
+| Rowing poulie basse assis au triangle | 5 × 8 à 10 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | principal ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Élévation latérale à la poulie unilatérale | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire |
-| Oiseau au pec deck inversé | 3 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire |
+| Oiseau au pec deck inversé | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire |
 | Curl incliné aux haltères | 3 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire ; Fléchisseurs du coude en charge légère : tolérance du coude au tirage lourd. |
 | Dead bug | 2 × 8 à 12 | poids du corps | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
 
@@ -480,9 +480,9 @@ Femme de 27 ans, 61 kg, trois ans de musculation. Squat 80 kg, développé couch
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
 | Hip thrust à la barre | 2 × 9 à 11 | 75 kg, ≈ 68 % du 1RM (charge totale ; 1RM de référence 110 kg) | 2 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Développé couché barre | 3 × 9 à 11 | 30 kg, ≈ 67 % du 1RM (charge totale ; 1RM de référence 45 kg) | 2 rép. en réserve | 105 s | principal |
-| Rowing poulie basse assis au triangle | 3 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | principal ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
+| Rowing poulie basse assis au triangle | 4 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | principal ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Développé haltères assis | 2 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | secondaire |
-| Tirage vertical poulie prise neutre | 3 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | secondaire |
+| Tirage vertical poulie prise neutre | 2 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | secondaire |
 | Élévation latérale à la poulie unilatérale | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire |
 | Extension nuque à la poulie (corde) | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire |
 | Curl incliné aux haltères | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire ; Fléchisseurs du coude en charge légère : tolérance du coude au tirage lourd. |
@@ -510,15 +510,15 @@ Femme de 27 ans, 61 kg, trois ans de musculation. Squat 80 kg, développé couch
 | Élévation latérale à la poulie unilatérale | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire |
 | Extension nuque à la poulie (corde) | 3 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire |
 
-### vendredi — force, tirage (75 min disponibles, 39 min estimées)
+### vendredi — force, tirage (75 min disponibles, 46 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Tirage vertical poulie prise neutre | 3 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | principal |
-| Rowing poulie basse assis au triangle | 3 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | principal ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
+| Tirage vertical poulie prise neutre | 5 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | principal |
+| Rowing poulie basse assis au triangle | 5 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | principal ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Élévation latérale à la poulie unilatérale | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire |
-| Oiseau au pec deck inversé | 3 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire |
+| Oiseau au pec deck inversé | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire |
 | Curl incliné aux haltères | 3 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire ; Fléchisseurs du coude en charge légère : tolérance du coude au tirage lourd. |
 | Dead bug | 2 × 9 à 13 | poids du corps | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
 
@@ -541,9 +541,9 @@ Femme de 27 ans, 61 kg, trois ans de musculation. Squat 80 kg, développé couch
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
 | Hip thrust à la barre | 2 × 9 à 11 | 75 kg, ≈ 68 % du 1RM (charge totale ; 1RM de référence 110 kg) | 2 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Développé couché barre | 3 × 9 à 11 | 30 kg, ≈ 67 % du 1RM (charge totale ; 1RM de référence 45 kg) | 2 rép. en réserve | 105 s | principal |
-| Rowing poulie basse assis au triangle | 3 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | principal ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
+| Rowing poulie basse assis au triangle | 4 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | principal ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Développé haltères assis | 2 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | secondaire |
-| Tirage vertical poulie prise neutre | 3 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | secondaire |
+| Tirage vertical poulie prise neutre | 2 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | secondaire |
 | Élévation latérale à la poulie unilatérale | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire |
 | Extension nuque à la poulie (corde) | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire |
 | Curl incliné aux haltères | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire ; Fléchisseurs du coude en charge légère : tolérance du coude au tirage lourd. |
@@ -571,15 +571,15 @@ Femme de 27 ans, 61 kg, trois ans de musculation. Squat 80 kg, développé couch
 | Élévation latérale à la poulie unilatérale | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire |
 | Extension nuque à la poulie (corde) | 3 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire |
 
-### vendredi — force, tirage (75 min disponibles, 39 min estimées)
+### vendredi — force, tirage (75 min disponibles, 46 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Tirage vertical poulie prise neutre | 3 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | principal |
-| Rowing poulie basse assis au triangle | 3 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | principal ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
+| Tirage vertical poulie prise neutre | 5 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | principal |
+| Rowing poulie basse assis au triangle | 5 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | principal ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Élévation latérale à la poulie unilatérale | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire |
-| Oiseau au pec deck inversé | 3 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire |
+| Oiseau au pec deck inversé | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire |
 | Curl incliné aux haltères | 3 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire ; Fléchisseurs du coude en charge légère : tolérance du coude au tirage lourd. |
 | Dead bug | 2 × 9 à 13 | poids du corps | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
 
@@ -602,9 +602,9 @@ Femme de 27 ans, 61 kg, trois ans de musculation. Squat 80 kg, développé couch
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
 | Hip thrust à la barre | 2 × 10 à 12 | 75 kg, ≈ 68 % du 1RM (charge totale ; 1RM de référence 110 kg) | 2 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Développé couché barre | 3 × 10 à 12 | 30 kg, ≈ 67 % du 1RM (charge totale ; 1RM de référence 45 kg) | 2 rép. en réserve | 105 s | principal |
-| Rowing poulie basse assis au triangle | 3 × 10 à 12 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | principal ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
+| Rowing poulie basse assis au triangle | 4 × 10 à 12 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | principal ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Développé haltères assis | 2 × 10 à 12 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | secondaire |
-| Tirage vertical poulie prise neutre | 3 × 10 à 12 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | secondaire |
+| Tirage vertical poulie prise neutre | 2 × 10 à 12 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | secondaire |
 | Élévation latérale à la poulie unilatérale | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire |
 | Extension nuque à la poulie (corde) | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire |
 | Curl incliné aux haltères | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire ; Fléchisseurs du coude en charge légère : tolérance du coude au tirage lourd. |
@@ -632,15 +632,15 @@ Femme de 27 ans, 61 kg, trois ans de musculation. Squat 80 kg, développé couch
 | Élévation latérale à la poulie unilatérale | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire |
 | Extension nuque à la poulie (corde) | 3 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire |
 
-### vendredi — force, tirage (75 min disponibles, 39 min estimées)
+### vendredi — force, tirage (75 min disponibles, 47 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Tirage vertical poulie prise neutre | 3 × 10 à 12 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | principal |
-| Rowing poulie basse assis au triangle | 3 × 10 à 12 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | principal ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
+| Tirage vertical poulie prise neutre | 5 × 10 à 12 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | principal |
+| Rowing poulie basse assis au triangle | 5 × 10 à 12 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | principal ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Élévation latérale à la poulie unilatérale | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire |
-| Oiseau au pec deck inversé | 3 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire |
+| Oiseau au pec deck inversé | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire |
 | Curl incliné aux haltères | 3 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire ; Fléchisseurs du coude en charge légère : tolérance du coude au tirage lourd. |
 | Dead bug | 2 × 10 à 14 | poids du corps | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
 
@@ -663,9 +663,9 @@ Femme de 27 ans, 61 kg, trois ans de musculation. Squat 80 kg, développé couch
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
 | Hip thrust à la barre | 2 × 10 à 12 | 75 kg, ≈ 68 % du 1RM (charge totale ; 1RM de référence 110 kg) | 2 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Développé couché barre | 3 × 10 à 12 | 30 kg, ≈ 67 % du 1RM (charge totale ; 1RM de référence 45 kg) | 2 rép. en réserve | 105 s | principal |
-| Rowing poulie basse assis au triangle | 3 × 10 à 12 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | principal ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
+| Rowing poulie basse assis au triangle | 4 × 10 à 12 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | principal ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Développé haltères assis | 2 × 10 à 12 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | secondaire |
-| Tirage vertical poulie prise neutre | 3 × 10 à 12 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | secondaire |
+| Tirage vertical poulie prise neutre | 2 × 10 à 12 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | secondaire |
 | Élévation latérale à la poulie unilatérale | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire |
 | Extension nuque à la poulie (corde) | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire |
 | Curl incliné aux haltères | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire ; Fléchisseurs du coude en charge légère : tolérance du coude au tirage lourd. |
@@ -693,15 +693,15 @@ Femme de 27 ans, 61 kg, trois ans de musculation. Squat 80 kg, développé couch
 | Élévation latérale à la poulie unilatérale | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire |
 | Extension nuque à la poulie (corde) | 3 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire |
 
-### vendredi — force, tirage (75 min disponibles, 39 min estimées)
+### vendredi — force, tirage (75 min disponibles, 47 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Tirage vertical poulie prise neutre | 3 × 10 à 12 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | principal |
-| Rowing poulie basse assis au triangle | 3 × 10 à 12 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | principal ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
+| Tirage vertical poulie prise neutre | 5 × 10 à 12 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | principal |
+| Rowing poulie basse assis au triangle | 5 × 10 à 12 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | principal ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Élévation latérale à la poulie unilatérale | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire |
-| Oiseau au pec deck inversé | 3 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire |
+| Oiseau au pec deck inversé | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire |
 | Curl incliné aux haltères | 3 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire ; Fléchisseurs du coude en charge légère : tolérance du coude au tirage lourd. |
 | Dead bug | 2 × 10 à 14 | poids du corps | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
 

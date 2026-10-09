@@ -34,9 +34,9 @@ Chaque bloc est écrit par le moteur de création au moment où il commence, d'a
 
 - Séances faites : 48 sur 48 (18 ajustées le jour même).
 - Échecs non voulus (hors tests et tentatives) : 0 % des séries de travail.
-- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 2,31 répétition en réserve (sur les 72 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 31 %.
+- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 2,31 répétition en réserve (sur les 71 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 31 %.
 - Plus forte hausse de charge totale d'un mouvement principal d'une séance à la suivante, à schéma égal : 0 % ; hausses de plus de 10 % faites de plusieurs crans : 0.
-- Progression réelle moyenne des mouvements suivis : 0,754 % par semaine.
+- Progression réelle moyenne des mouvements suivis : 0,755 % par semaine.
 - Douleur : 0 hausse(s) de charge sur une zone douloureuse signalée.
 
 ## Mouvements suivis, semaine par semaine
@@ -58,10 +58,10 @@ Pour chaque mouvement, la séance la plus lourde de la semaine : ce que le progr
 | 9 | construction (volume) | 2 × 7 à 8 | (7 à 8)-(7 à 16) | 8-8 | 3 → 5,1 ; suivantes 2 → 4,3 | 13 / 12 | série repère : une série ouverte (au ressenti, 2 en réserve) pour mesurer où en est l'athlète ; allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |
 | 10 | construction (volume) | 2 × 7 à 8 | (7 à 8)-(7 à 16) | 7-10 | 3,5 → 6,7 ; suivantes 2 → 2,9 | 14 / 12 | série repère : une série ouverte (au ressenti, 2 en réserve) pour mesurer où en est l'athlète |
 | 11 | construction (volume) | 1 × 8 | 8 | 8 | 4 → 5,8 | 14 / 9 | — |
-| 12 | test | 1 × 6 à 8 | (6 à 7) | 7 | 2 → 3 | 10 / 9 | allégé pour garder la marge prévue (au moins 2 en réserve) |
+| 12 | test | 1 × 6 à 8 | (6 à 7) | 7 | 2 → 2,9 | 10 / 9 | allégé pour garder la marge prévue (au moins 2 en réserve) |
 | 13 | construction (volume) | 2 × 7 à 9 | 6-(6 à 12) | 6-6 | 3 → 3,6 ; suivantes 2 → 2,7 | 10 / 9 | allégé pour garder la marge prévue (au moins 3 en réserve) ; série repère : une série ouverte (au ressenti, 2 en réserve) pour mesurer où en est l'athlète ; dernières séries plus dures que prévu |
 | 14 | construction (volume) | 2 × 8 à 10 | 7-(6 à 12) | 7-6 | 1,5 → 3,4 ; suivantes 2 → 3,1 | 10 / 9 | allégé pour garder la marge prévue (au moins 3 en réserve) ; série repère : une série ouverte (au ressenti, 2 en réserve) pour mesurer où en est l'athlète |
-| 15 | construction (volume) | 1 × 8 à 10 | 7 | 4 (arrêt avant la cible) | 3 → 3,3 | 7 / 7 | un cran d'assistance de moins (élastique plus fin, moins d'appui) : la série repère a montré 2 répétitions de réserve de plus que visé ; allégé pour garder la marge prévue (au moins 3 en réserve) |
+| 15 | construction (volume) | 1 × 8 à 10 | 7 | 4 (arrêt avant la cible) | 3 → 3,4 | 7 / 7 | un cran d'assistance de moins (élastique plus fin, moins d'appui) : la série repère a montré 2 répétitions de réserve de plus que visé ; allégé pour garder la marge prévue (au moins 3 en réserve) |
 | 16 | construction (volume) | 2 × 8 à 10 | 5-(4 à 10) | 5-4 | 1,5 → 2,5 ; suivantes 2 → 2,5 | 7 / 8 | allégé pour garder la marge prévue (au moins 3 en réserve) ; série repère : une série ouverte (au ressenti, 2 en réserve) pour mesurer où en est l'athlète |
 
 Athlète simulé, maximum réel hors fatigue : 16 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 7 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
@@ -98,7 +98,7 @@ Athlète simulé, maximum réel hors fatigue : 8 au départ (le record déclaré
 | 12 | test | 2 × 5 à 45 s, test | (5 à 45)-(5 à 45) s | 30-31 (échec) s | test | 35 / 36 | — |
 | 13 | construction (volume) | 2 × 19 s (63 % du maximum testé), maintien | 19-19 s | 19-19 s | 4,5 → 4,4 ; suivantes 4,5 → 4,2 | 35 / 35 | — |
 | 14 | construction (volume) | 2 × 19 s (63 % du maximum testé), maintien | 19-19 s | 17 (arrêt avant la cible)-17 (arrêt avant la cible) s | 4,5 → 5,1 ; suivantes 4,5 → 4,8 | 36 / 36 | — |
-| 15 | construction (volume) | 2 × 19 s (63 % du maximum testé), maintien | 19-19 s | 17 (arrêt avant la cible)-17 s | 4,5 → 4,9 ; suivantes 4,5 → 4,8 | 35 / 36 | allégé pour garder la marge prévue (au moins 5 en réserve) ; dernières séries plus dures que prévu |
+| 15 | construction (volume) | 2 × 19 s (63 % du maximum testé), maintien | 19-19 s | 17 (arrêt avant la cible)-17 s | 4,5 → 4,9 ; suivantes 4,5 → 4,8 | 35 / 37 | allégé pour garder la marge prévue (au moins 5 en réserve) ; dernières séries plus dures que prévu |
 | 16 | construction (volume) | 2 × 19 s (63 % du maximum testé), maintien | 19-19 s | 15 (arrêt avant la cible)-15 s | 4,5 → 5,4 ; suivantes 4,5 → 5,2 | 35 / 36 | allégé pour garder la marge prévue (au moins 5 en réserve) ; dernières séries plus dures que prévu |
 
 Athlète simulé, maximum réel hors fatigue : 34 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 36 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.

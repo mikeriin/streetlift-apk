@@ -32,7 +32,7 @@ Homme de 41 ans, 84 kg, maçon, trois ans de pratique. 9 tractions, 18 dips, 35 
 | 7 | 2 | réalisation (spécifique à l'objectif) | 3 | 37 |
 | 8 | 2 | réalisation (spécifique à l'objectif) | 3 | 38 |
 | 9 | 2 | réalisation (spécifique à l'objectif) | 3 | 38 |
-| 10 | 2 | réalisation (spécifique à l'objectif) | 3 | 37 |
+| 10 | 2 | réalisation (spécifique à l'objectif) | 3 | 38 |
 | 11 | 2 | affûtage | 3 | 20 |
 | 12 | 2 | test | 3 | 9 |
 
@@ -179,13 +179,13 @@ Homme de 41 ans, 84 kg, maçon, trois ans de pratique. 9 tractions, 18 dips, 35 
 | Rotation externe à l'élastique | 2 × 12 à 15 | — | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
 | Gainage latéral sur le coude | 2 × 25 s | poids du corps | position parfaite, quelques secondes de marge | 60 s | tronc ; tenue isométrique ; Tronc : le gainage qui tient la position à la barre. |
 
-### samedi — force, haut du corps, séance moyenne (60 min disponibles, 33 min estimées)
+### samedi — force, haut du corps, séance moyenne (60 min disponibles, 40 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
 | Traction pronation | 2 × 5 | poids du corps, ≈ 56 % du maximum de répétitions (repère : 9) | 4 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
-| Traction négative | 2 × 3 | poids du corps | au contrôle : arrêt dès qu'une descente accélère | 2 min | secondaire ; descente en 4 s ; Descente freinée en 4 s, sans à-coup (monte en sautant depuis un appui) ; l'effort se règle au contrôle, pas à la réserve : arrête la série dès qu'une descente passe sous 3 s. Si la première descente passe déjà sous 3 s, fais-la avec l'élastique, ou vise 2 à 3 s, et allonge d'une seconde par semaine. |
+| Traction négative | 5 × 3 | poids du corps | au contrôle : arrêt dès qu'une descente accélère | 2 min | secondaire ; descente en 4 s ; Descente freinée en 4 s, sans à-coup (monte en sautant depuis un appui) ; l'effort se règle au contrôle, pas à la réserve : arrête la série dès qu'une descente passe sous 3 s. Si la première descente passe déjà sous 3 s, fais-la avec l'élastique, ou vise 2 à 3 s, et allonge d'une seconde par semaine. |
 | Dips aux barres parallèles | 3 × 11 | poids du corps, ≈ 61 % du maximum de répétitions (repère : 18) | 4 rép. en réserve sur la dernière série (davantage sur les premières) | 90 s | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Row australien | 2 × 8 à 10 | poids du corps | 3 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Relevé de jambes tendues suspendu | 2 × 8 à 12 | poids du corps | 4 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
@@ -221,13 +221,13 @@ Homme de 41 ans, 84 kg, maçon, trois ans de pratique. 9 tractions, 18 dips, 35 
 | Rotation externe à l'élastique | 2 × 12 à 15 | — | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
 | Gainage latéral sur le coude | 2 × 30 s | poids du corps | position parfaite, quelques secondes de marge | 60 s | tronc ; tenue isométrique ; Tronc : le gainage qui tient la position à la barre. |
 
-### samedi — force, haut du corps, séance moyenne (60 min disponibles, 34 min estimées)
+### samedi — force, haut du corps, séance moyenne (60 min disponibles, 40 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
 | Traction pronation | 2 × 5 | poids du corps, ≈ 56 % du maximum de répétitions (repère : 9) | 4 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
-| Traction négative | 2 × 3 | poids du corps | au contrôle : arrêt dès qu'une descente accélère | 2 min | secondaire ; descente en 5 s ; Descente freinée en 5 s, sans à-coup (monte en sautant depuis un appui) ; l'effort se règle au contrôle, pas à la réserve : arrête la série dès qu'une descente passe sous 3 s. Si la première descente passe déjà sous 3 s, fais-la avec l'élastique, ou vise 2 à 3 s, et allonge d'une seconde par semaine. |
+| Traction négative | 5 × 3 | poids du corps | au contrôle : arrêt dès qu'une descente accélère | 2 min | secondaire ; descente en 5 s ; Descente freinée en 5 s, sans à-coup (monte en sautant depuis un appui) ; l'effort se règle au contrôle, pas à la réserve : arrête la série dès qu'une descente passe sous 3 s. Si la première descente passe déjà sous 3 s, fais-la avec l'élastique, ou vise 2 à 3 s, et allonge d'une seconde par semaine. |
 | Dips aux barres parallèles | 3 × 12 | poids du corps, ≈ 67 % du maximum de répétitions (repère : 18) | 4 rép. en réserve sur la dernière série (davantage sur les premières) | 90 s | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Row australien | 2 × 9 à 11 | poids du corps | 3 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Relevé de jambes tendues suspendu | 2 × 9 à 13 | poids du corps | 4 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
@@ -263,13 +263,13 @@ Homme de 41 ans, 84 kg, maçon, trois ans de pratique. 9 tractions, 18 dips, 35 
 | Rotation externe à l'élastique | 2 × 12 à 15 | — | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
 | Gainage latéral sur le coude | 2 × 35 s | poids du corps | position parfaite, quelques secondes de marge | 60 s | tronc ; tenue isométrique ; Tronc : le gainage qui tient la position à la barre. |
 
-### samedi — force, haut du corps, séance moyenne (60 min disponibles, 34 min estimées)
+### samedi — force, haut du corps, séance moyenne (60 min disponibles, 38 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
 | Traction pronation | 2 × 6 | poids du corps, ≈ 67 % du maximum de répétitions (repère : 9) | 3 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
-| Traction négative | 2 × 4 | poids du corps | au contrôle : arrêt dès qu'une descente accélère | 2 min | secondaire ; descente en 5 s ; Descente freinée en 5 s, sans à-coup (monte en sautant depuis un appui) ; l'effort se règle au contrôle, pas à la réserve : arrête la série dès qu'une descente passe sous 3 s. Si la première descente passe déjà sous 3 s, fais-la avec l'élastique, ou vise 2 à 3 s, et allonge d'une seconde par semaine. |
+| Traction négative | 4 × 4 | poids du corps | au contrôle : arrêt dès qu'une descente accélère | 2 min | secondaire ; descente en 5 s ; Descente freinée en 5 s, sans à-coup (monte en sautant depuis un appui) ; l'effort se règle au contrôle, pas à la réserve : arrête la série dès qu'une descente passe sous 3 s. Si la première descente passe déjà sous 3 s, fais-la avec l'élastique, ou vise 2 à 3 s, et allonge d'une seconde par semaine. |
 | Dips aux barres parallèles | 3 × 12 | poids du corps, ≈ 67 % du maximum de répétitions (repère : 18) | 4 rép. en réserve sur la dernière série (davantage sur les premières) | 90 s | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Row australien | 2 × 9 à 11 | poids du corps | 3 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Relevé de jambes tendues suspendu | 2 × 9 à 13 | poids du corps | 4 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
@@ -442,12 +442,12 @@ Homme de 41 ans, 84 kg, maçon, trois ans de pratique. 9 tractions, 18 dips, 35 
 
 ## Semaine 10 — réalisation (spécifique à l'objectif) (bloc 2)
 
-### mardi — force, haut du corps, séance lourde (60 min disponibles, 31 min estimées)
+### mardi — force, haut du corps, séance lourde (60 min disponibles, 34 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
-| Traction pronation | 1 × 8 | poids du corps, ≈ 89 % du maximum de répétitions (repère : 9) | 1 rép. en réserve | 3 min | principal ; Avant la série de tête : 2 séries faciles (un tiers, puis la moitié des répétitions prévues). ; Simulation du test : la série de tête se fait au format du test (même échauffement, même standard de répétition), jusqu'à une répétition de l'échec — environ 8 répétitions. Note le résultat : il dit si l'objectif du test est réaliste ; pas de série allégée après. ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
+| Traction pronation | 2 × 8 | poids du corps, ≈ 89 % du maximum de répétitions (repère : 9) | 1 rép. en réserve | 3 min | principal ; Avant la série de tête : 2 séries faciles (un tiers, puis la moitié des répétitions prévues). ; Simulation du test : la série de tête se fait au format du test (même échauffement, même standard de répétition), jusqu'à une répétition de l'échec — environ 8 répétitions. Note le résultat : il dit si l'objectif du test est réaliste ; pas de série allégée après. ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Dips aux barres parallèles | 3 × 13 | poids du corps, ≈ 72 % du maximum de répétitions (repère : 18) | 4 rép. en réserve | 90 s | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Row australien | 2 × 10 à 12 | poids du corps | 3 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Relevé de jambes tendues suspendu | 2 × 10 à 14 | poids du corps | 4 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |

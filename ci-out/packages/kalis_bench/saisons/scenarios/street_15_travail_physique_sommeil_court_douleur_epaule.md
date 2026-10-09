@@ -33,9 +33,9 @@ Chaque bloc est écrit par le moteur de création au moment où il commence, d'a
 
 - Séances faites : 47 sur 48 (13 ajustées le jour même).
 - Échecs non voulus (hors tests et tentatives) : 0 % des séries de travail.
-- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 0,88 répétition en réserve (sur les 52 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 3 %.
+- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 0,88 répétition en réserve (sur les 51 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 3 %.
 - Plus forte hausse de charge totale d'un mouvement principal d'une séance à la suivante, à schéma égal : 0 % ; hausses de plus de 10 % faites de plusieurs crans : 0.
-- Progression réelle moyenne des mouvements suivis : 0,121 % par semaine.
+- Progression réelle moyenne des mouvements suivis : 0,12 % par semaine.
 - Douleur : 0 hausse(s) de charge sur une zone douloureuse signalée.
 
 ## Mouvements suivis, semaine par semaine
@@ -53,7 +53,7 @@ Pour chaque mouvement, la séance la plus lourde de la semaine : ce que le progr
 | 5 | construction (volume) | 2 × 6 (67 % du maximum testé), série de tête puis séries allégées | 5-5 | 5-4 | 3 → 3,7 ; suivantes 3 → 4,3 | 9 / 8 | répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; dernières séries plus dures que prévu |
 | 13 | construction (volume) | 8 × 4 (44 % du maximum testé), départs au chrono | 4-4-4-4-4-4-4-4 | 2 (arrêt avant la cible)-1 (arrêt avant la cible) | 5+ → 6,5 ; suivantes 5+ → 6,8 | 9 / 8 | douleur signalée (épaule, 0/10) ; allégé pour garder la marge prévue (au moins 5 en réserve) ; arrêt des séries : répétitions en baisse |
 | 14 | construction (volume) | 8 × 4 (44 % du maximum testé), départs au chrono | 3-3-3-3-3-3-3-3 | 1 (arrêt avant la cible)-1-1-1-1-1-1-1 | 5+ → 7,4 ; suivantes 5+ → 5,9 | 8 / 8 | allégé pour garder la marge prévue (au moins 5 en réserve) ; dernières séries plus dures que prévu |
-| 15 | construction (volume) | 8 × 4 (44 % du maximum testé), départs au chrono | 2-2-2-2-2-2-2-2 | 2-2-2-2-1 (arrêt avant la cible) | 5+ → 6,3 ; suivantes 5+ → 5,2 | 8 / 8 | arrêt des séries : répétitions en baisse |
+| 15 | construction (volume) | 8 × 4 (44 % du maximum testé), départs au chrono | 2-2-2-2-2-2-2-2 | 2-2-2-2-1 (arrêt avant la cible) | 5+ → 6,3 ; suivantes 5+ → 5,1 | 8 / 8 | arrêt des séries : répétitions en baisse |
 | 16 | construction (volume) | 8 × 4 (44 % du maximum testé), départs au chrono | 3-3-3-3-3-3-3-3 | 2 (arrêt avant la cible)-1-1-1-1-1-1-1 | 5+ → 6,1 ; suivantes 5+ → 5,8 | 8 / 8 | allégé pour garder la marge prévue (au moins 5 en réserve) ; dernières séries plus dures que prévu |
 
 Athlète simulé, maximum réel hors fatigue : 8 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 8 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.

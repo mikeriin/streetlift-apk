@@ -23,7 +23,7 @@ Un athlète simulé (capacités réelles connues du simulateur, jamais du moteur
 
 - Séances faites : 40 sur 40 (3 ajustées le jour même).
 - Échecs non voulus (hors tests et tentatives) : 0 % des séries de travail.
-- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 1,07 répétition en réserve (sur les 52 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 17,1 %.
+- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 1,09 répétition en réserve (sur les 52 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 17,4 %.
 - Plus forte hausse de charge totale d'un mouvement principal d'une séance à la suivante, à schéma égal : 0 % ; hausses de plus de 10 % faites de plusieurs crans : 0.
 - Progression réelle moyenne des mouvements suivis : 0,158 % par semaine.
 - Jour de l'échéance : meilleure performance à 95,8 % du maximum réel du jour (moyenne des mouvements).
@@ -57,7 +57,7 @@ Athlète simulé, maximum réel hors fatigue : 11 au départ (le record déclar�
 | 3 | intensification (séries plus dures) | 2 × 25 (89 % du maximum testé), série de tête puis séries allégées | 24-20 | 22 (arrêt avant la cible)-17 (arrêt avant la cible) | 3 → 3,7 ; suivantes 5+ → 6,7 | 26 / 28 | répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) |
 | 4 | allègement | 1 × 29 à 32, test | (26 à 32) | 25 (échec) | test | 25 / 26 | — |
 | 5 | réalisation (spécifique à l'objectif) | 1 × 23 (92 % du maximum testé) | 23 | 23 | 2 → 2 | 25 / 26 | — |
-| 6 | réalisation (spécifique à l'objectif) | 1 × 24 (96 % du maximum testé) | 24 | 24 | 1 → 1 | 25 / 26 | — |
+| 6 | réalisation (spécifique à l'objectif) | 2 × 24 (96 % du maximum testé) | 24-20 | 24-20 | 1 → 1 ; suivantes 1 → 2,1 | 25 / 26 | — |
 | 7 | affûtage | 1 × 21 (84 % du maximum testé) | 21 | 21 | 4 → 5,1 | 26 / 26 | — |
 | 8 | échéance | 1 × 26 à 32, test | (25 à 32) | 25 | test | 26 / 26 | — |
 
@@ -72,8 +72,8 @@ Athlète simulé, maximum réel hors fatigue : 26 au départ (le record déclar�
 | 3 | intensification (séries plus dures) | 2 × 44 (88 % du maximum testé), série de tête puis séries allégées | 38-36 | 38-29 (arrêt avant la cible) | 5+ → 7,5 ; suivantes 5+ → 14,5 | 46 / 41 | répétitions recalées sur le maximum mesuré (6 de moins par série que le programme) |
 | 4 | allègement | 1 × 52 à 56, test | (38 à 56) | 45 | test | 46 / 44 | — |
 | 5 | réalisation (spécifique à l'objectif) | 1 × 41 (91 % du maximum testé) | 37 | 37 | 4 → 7,5 | 44 / 41 | répétitions recalées sur le maximum mesuré (4 de moins par série que le programme) |
-| 6 | réalisation (spécifique à l'objectif) | 1 × 44 (98 % du maximum testé) | 37 | 37 | 3 → 7,7 | 45 / 42 | allégé pour garder la marge prévue (au moins 1 en réserve) |
-| 7 | affûtage | 1 × 38 (84 % du maximum testé) | 38 | 38 | 4 → 5,2 | 43 / 42 | — |
+| 6 | réalisation (spécifique à l'objectif) | 2 × 44 (98 % du maximum testé) | 37-34 | 37-34 | 3 → 7,7 ; suivantes 1,5 → 9,8 | 45 / 42 | allégé pour garder la marge prévue (au moins 1 en réserve) |
+| 7 | affûtage | 1 × 38 (84 % du maximum testé) | 38 | 38 | 4 → 5,1 | 43 / 42 | — |
 | 8 | échéance | 1 × 48 à 56, test | (40 à 56) | 44 (échec) | test | 45 / 43 | — |
 
 Athlète simulé, maximum réel hors fatigue : 46 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 46 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
@@ -95,6 +95,6 @@ Le même profil et le même moteur, avec d'autres hypothèses sur l'athlète ré
 
 | Athlète simulé | Échecs non voulus | Écart d'effort | Séries ≥ 2 rép. plus dures | Plus forte hausse à schéma égal | Progression par semaine | Tentatives réussies | Échéance / maximum du jour | Hausses sur zone douloureuse |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| modèle 2 (courbe linéaire, notes d'effort entières et plafonnées, récupération lente entre séries, tendons à adaptation lente) | 0 % | 1,07 | 0 % | 0 % | 0,158 % | — | 95,8 % | 0 |
-| modèle 1 (courbe charge-répétitions à plateau, notes d'effort continues) | 0 % | 1 | 0 % | 0 % | 0,134 % | — | 96,4 % | 0 |
-| modèle 3 (courbe en puissance, forme masquée par la fatigue, mauvais jours marqués, désentraînement rapide) | 0,8 % | 1,54 | 0,4 % | 0 % | 0,111 % | — | 96,2 % | 0 |
+| modèle 2 (courbe linéaire, notes d'effort entières et plafonnées, récupération lente entre séries, tendons à adaptation lente) | 0 % | 1,09 | 0 % | 0 % | 0,158 % | — | 95,8 % | 0 |
+| modèle 1 (courbe charge-répétitions à plateau, notes d'effort continues) | 0 % | 1 | 0 % | 0 % | 0,135 % | — | 96,4 % | 0 |
+| modèle 3 (courbe en puissance, forme masquée par la fatigue, mauvais jours marqués, désentraînement rapide) | 0,8 % | 1,58 | 0,4 % | 0 % | 0,112 % | — | 96,2 % | 0 |

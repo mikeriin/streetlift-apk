@@ -26,11 +26,11 @@ Femme de 29 ans, 58 kg, active mais jamais entraînée en force. Veut sa premiè
 | --- | --- | --- | --- | --- |
 | 1 | 1 | introduction | 3 | 28 |
 | 2 | 1 | construction (volume) | 3 | 28 |
-| 3 | 1 | construction (volume) | 3 | 29 |
-| 4 | 1 | construction (volume) | 3 | 30 |
-| 5 | 1 | construction (volume) | 3 | 30 |
+| 3 | 1 | construction (volume) | 3 | 30 |
+| 4 | 1 | construction (volume) | 3 | 32 |
+| 5 | 1 | construction (volume) | 3 | 32 |
 | 6 | 1 | test | 3 | 15 |
-| 7 | 2 | construction (volume) | 3 | 31 |
+| 7 | 2 | construction (volume) | 3 | 33 |
 | 8 | 2 | construction (volume) | 3 | 31 |
 | 9 | 2 | construction (volume) | 3 | 31 |
 | 10 | 2 | construction (volume) | 3 | 31 |
@@ -161,16 +161,16 @@ Femme de 29 ans, 58 kg, active mais jamais entraînée en force. Veut sa premiè
 
 ## Semaine 3 — construction (volume) (bloc 1)
 
-### lundi — force, corps entier (60 min disponibles, 32 min estimées)
+### lundi — force, corps entier (60 min disponibles, 36 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
 | Wrist push-ups | 2 × 8 à 10 | — | — | 30 s | échauffement |
-| Traction assistée à l'élastique | 2 × 6 à 8 | poids du corps | 3 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
+| Traction assistée à l'élastique | 3 × 6 à 8 | poids du corps | 3 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Tenue menton au-dessus de la barre pronation | 2 × 5 s | poids du corps | sous-maximal : arrêt bien avant la perte de position | 2 min 30 s | secondaire ; tenue isométrique |
 | Pompe inclinée (mains surélevées) | 2 × 6 à 8 | poids du corps | 3 rép. en réserve | 2 min | principal ; Échelle de poussée : pompe au mur → mains surélevées (barre basse ou barres parallèles, de plus en plus bas) → genoux → sol. Un seul critère de passage : quand 2 séries de 12 propres passent avec la réserve écrite, deux séances de suite, descends d'un cran (note la hauteur des mains en cm à chaque séance et au test). Jamais plus de 12 répétitions sur un cran : au-delà, on baisse l'appui, on n'allonge pas la série. Poignet gêné (3 sur 10 ou plus deux séances de suite) : même cran sur poignées, parallettes ou poings fermés. ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
-| Pompe négative | 2 × 3 | poids du corps | au contrôle : arrêt dès qu'une descente accélère | 90 s | secondaire ; descente en 3 s ; Pompe complète en descente freinée : 3 s pour descendre, corps gainé de la tête aux talons, poitrine au sol ; remonte en posant les genoux. Arrête la série dès qu'une descente passe sous 2 s ou que le bassin s'affaisse. |
+| Pompe négative | 3 × 3 | poids du corps | au contrôle : arrêt dès qu'une descente accélère | 90 s | secondaire ; descente en 3 s ; Pompe complète en descente freinée : 3 s pour descendre, corps gainé de la tête aux talons, poitrine au sol ; remonte en posant les genoux. Arrête la série dès qu'une descente passe sous 2 s ou que le bassin s'affaisse. |
 | Air squat | 2 × 8 à 10 | poids du corps | 3 rép. en réserve | 2 min | secondaire |
 | Gainage latéral sur le coude | 2 × 25 s | poids du corps | position parfaite, quelques secondes de marge | 60 s | tronc ; tenue isométrique ; Tronc : le gainage qui tient la position à la barre. |
 | Face pull à l'élastique | 2 × 12 à 15 | — | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
@@ -208,16 +208,16 @@ Femme de 29 ans, 58 kg, active mais jamais entraînée en force. Veut sa premiè
 
 ## Semaine 4 — construction (volume) (bloc 1)
 
-### lundi — force, corps entier (60 min disponibles, 36 min estimées)
+### lundi — force, corps entier (60 min disponibles, 42 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
 | Wrist push-ups | 2 × 8 à 10 | — | — | 30 s | échauffement |
-| Traction assistée à l'élastique | 2 × 7 à 9 | poids du corps | 3 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
+| Traction assistée à l'élastique | 3 × 7 à 9 | poids du corps | 3 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Tenue menton au-dessus de la barre pronation | 2 × 6 s | poids du corps | sous-maximal : arrêt bien avant la perte de position | 2 min 30 s | secondaire ; tenue isométrique |
-| Pompe inclinée (mains surélevées) | 3 × 7 à 9 | poids du corps | 3 rép. en réserve | 2 min | principal ; Échelle de poussée : pompe au mur → mains surélevées (barre basse ou barres parallèles, de plus en plus bas) → genoux → sol. Un seul critère de passage : quand 2 séries de 12 propres passent avec la réserve écrite, deux séances de suite, descends d'un cran (note la hauteur des mains en cm à chaque séance et au test). Jamais plus de 12 répétitions sur un cran : au-delà, on baisse l'appui, on n'allonge pas la série. Poignet gêné (3 sur 10 ou plus deux séances de suite) : même cran sur poignées, parallettes ou poings fermés. ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
-| Pompe négative | 2 × 3 | poids du corps | au contrôle : arrêt dès qu'une descente accélère | 90 s | secondaire ; descente en 4 s ; Pompe complète en descente freinée : 4 s pour descendre, corps gainé de la tête aux talons, poitrine au sol ; remonte en posant les genoux. Arrête la série dès qu'une descente passe sous 2 s ou que le bassin s'affaisse. |
+| Pompe inclinée (mains surélevées) | 4 × 7 à 9 | poids du corps | 3 rép. en réserve | 2 min | principal ; Échelle de poussée : pompe au mur → mains surélevées (barre basse ou barres parallèles, de plus en plus bas) → genoux → sol. Un seul critère de passage : quand 2 séries de 12 propres passent avec la réserve écrite, deux séances de suite, descends d'un cran (note la hauteur des mains en cm à chaque séance et au test). Jamais plus de 12 répétitions sur un cran : au-delà, on baisse l'appui, on n'allonge pas la série. Poignet gêné (3 sur 10 ou plus deux séances de suite) : même cran sur poignées, parallettes ou poings fermés. ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
+| Pompe négative | 3 × 3 | poids du corps | au contrôle : arrêt dès qu'une descente accélère | 90 s | secondaire ; descente en 4 s ; Pompe complète en descente freinée : 4 s pour descendre, corps gainé de la tête aux talons, poitrine au sol ; remonte en posant les genoux. Arrête la série dès qu'une descente passe sous 2 s ou que le bassin s'affaisse. |
 | Air squat | 2 × 9 à 11 | poids du corps | 3 rép. en réserve | 2 min | secondaire |
 | Gainage latéral sur le coude | 2 × 30 s | poids du corps | position parfaite, quelques secondes de marge | 60 s | tronc ; tenue isométrique ; Tronc : le gainage qui tient la position à la barre. |
 | Face pull à l'élastique | 2 × 12 à 15 | — | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
@@ -255,16 +255,16 @@ Femme de 29 ans, 58 kg, active mais jamais entraînée en force. Veut sa premiè
 
 ## Semaine 5 — construction (volume) (bloc 1)
 
-### lundi — force, corps entier (60 min disponibles, 36 min estimées)
+### lundi — force, corps entier (60 min disponibles, 43 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
 | Wrist push-ups | 2 × 8 à 10 | — | — | 30 s | échauffement |
-| Traction assistée à l'élastique | 2 × 7 à 9 | poids du corps | 3 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
+| Traction assistée à l'élastique | 3 × 7 à 9 | poids du corps | 3 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Tenue menton au-dessus de la barre pronation | 2 × 6 s | poids du corps | sous-maximal : arrêt bien avant la perte de position | 2 min 30 s | secondaire ; tenue isométrique |
-| Pompe inclinée (mains surélevées) | 3 × 7 à 9 | poids du corps | 3 rép. en réserve | 2 min | principal ; Échelle de poussée : pompe au mur → mains surélevées (barre basse ou barres parallèles, de plus en plus bas) → genoux → sol. Un seul critère de passage : quand 2 séries de 12 propres passent avec la réserve écrite, deux séances de suite, descends d'un cran (note la hauteur des mains en cm à chaque séance et au test). Jamais plus de 12 répétitions sur un cran : au-delà, on baisse l'appui, on n'allonge pas la série. Poignet gêné (3 sur 10 ou plus deux séances de suite) : même cran sur poignées, parallettes ou poings fermés. ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
-| Pompe négative | 2 × 4 | poids du corps | au contrôle : arrêt dès qu'une descente accélère | 90 s | secondaire ; descente en 4 s ; Pompe complète en descente freinée : 4 s pour descendre, corps gainé de la tête aux talons, poitrine au sol ; remonte en posant les genoux. Arrête la série dès qu'une descente passe sous 2 s ou que le bassin s'affaisse. |
+| Pompe inclinée (mains surélevées) | 4 × 7 à 9 | poids du corps | 3 rép. en réserve | 2 min | principal ; Échelle de poussée : pompe au mur → mains surélevées (barre basse ou barres parallèles, de plus en plus bas) → genoux → sol. Un seul critère de passage : quand 2 séries de 12 propres passent avec la réserve écrite, deux séances de suite, descends d'un cran (note la hauteur des mains en cm à chaque séance et au test). Jamais plus de 12 répétitions sur un cran : au-delà, on baisse l'appui, on n'allonge pas la série. Poignet gêné (3 sur 10 ou plus deux séances de suite) : même cran sur poignées, parallettes ou poings fermés. ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
+| Pompe négative | 3 × 4 | poids du corps | au contrôle : arrêt dès qu'une descente accélère | 90 s | secondaire ; descente en 4 s ; Pompe complète en descente freinée : 4 s pour descendre, corps gainé de la tête aux talons, poitrine au sol ; remonte en posant les genoux. Arrête la série dès qu'une descente passe sous 2 s ou que le bassin s'affaisse. |
 | Air squat | 2 × 9 à 11 | poids du corps | 3 rép. en réserve | 2 min | secondaire |
 | Gainage latéral sur le coude | 2 × 35 s | poids du corps | position parfaite, quelques secondes de marge | 60 s | tronc ; tenue isométrique ; Tronc : le gainage qui tient la position à la barre. |
 | Face pull à l'élastique | 2 × 12 à 15 | — | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
@@ -346,13 +346,13 @@ Femme de 29 ans, 58 kg, active mais jamais entraînée en force. Veut sa premiè
 
 ## Semaine 7 — construction (volume) (bloc 2)
 
-### lundi — force, corps entier (60 min disponibles, 33 min estimées)
+### lundi — force, corps entier (60 min disponibles, 36 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
 | Wrist push-ups | 2 × 8 à 10 | — | — | 30 s | échauffement |
-| Traction assistée à l'élastique | 2 × 6 à 8 | poids du corps | 3 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
+| Traction assistée à l'élastique | 3 × 6 à 8 | poids du corps | 3 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Tenue menton au-dessus de la barre pronation | 2 × 5 s | poids du corps | sous-maximal : arrêt bien avant la perte de position | 2 min 30 s | secondaire ; tenue isométrique |
 | Pompe classique | 1 × 1 à 3 | poids du corps | 2 rép. en réserve | 2 min | principal ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Pompe inclinée (mains surélevées) | 2 × 6 à 8 | poids du corps | 3 rép. en réserve | 2 min | secondaire ; Échelle de poussée : pompe au mur → mains surélevées (barre basse ou barres parallèles, de plus en plus bas) → genoux → sol. Un seul critère de passage : quand 2 séries de 12 propres passent avec la réserve écrite, deux séances de suite, descends d'un cran (note la hauteur des mains en cm à chaque séance et au test). Jamais plus de 12 répétitions sur un cran : au-delà, on baisse l'appui, on n'allonge pas la série. Poignet gêné (3 sur 10 ou plus deux séances de suite) : même cran sur poignées, parallettes ou poings fermés. ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
@@ -378,7 +378,7 @@ Femme de 29 ans, 58 kg, active mais jamais entraînée en force. Veut sa premiè
 | Face pull à l'élastique | 2 × 12 à 15 | — | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 20 s | mobilité |
 
-### samedi — force, corps entier (60 min disponibles, 43 min estimées)
+### samedi — force, corps entier (60 min disponibles, 45 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
@@ -386,7 +386,7 @@ Femme de 29 ans, 58 kg, active mais jamais entraînée en force. Veut sa premiè
 | Wrist push-ups | 2 × 8 à 10 | — | — | 30 s | échauffement |
 | Traction négative | 2 × 4 | poids du corps | au contrôle : arrêt dès qu'une descente accélère | 2 min | secondaire ; 2 s tenues en haut, puis descente en 5 s ; Descente freinée en 5 s, sans à-coup (monte en sautant depuis un appui) ; l'effort se règle au contrôle, pas à la réserve : arrête la série dès qu'une descente passe sous 3 s. Si la première descente passe déjà sous 3 s, fais-la avec l'élastique, ou vise 2 à 3 s, et allonge d'une seconde par semaine. |
 | Traction assistée à l'élastique | 2 × 6 à 8 | poids du corps | 3 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
-| Pompe classique | 1 × 1 à 3 | poids du corps | 2 rép. en réserve | 2 min | principal ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
+| Pompe classique | 2 × 1 à 3 | poids du corps | 2 rép. en réserve | 2 min | principal ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Pompe inclinée (mains surélevées) | 2 × 6 à 8 | poids du corps | 3 rép. en réserve | 2 min | secondaire ; Échelle de poussée : pompe au mur → mains surélevées (barre basse ou barres parallèles, de plus en plus bas) → genoux → sol. Un seul critère de passage : quand 2 séries de 12 propres passent avec la réserve écrite, deux séances de suite, descends d'un cran (note la hauteur des mains en cm à chaque séance et au test). Jamais plus de 12 répétitions sur un cran : au-delà, on baisse l'appui, on n'allonge pas la série. Poignet gêné (3 sur 10 ou plus deux séances de suite) : même cran sur poignées, parallettes ou poings fermés. ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Pompe négative | 2 × 3 | poids du corps | au contrôle : arrêt dès qu'une descente accélère | 90 s | secondaire ; descente en 3 s ; Pompe complète en descente freinée : 3 s pour descendre, corps gainé de la tête aux talons, poitrine au sol ; remonte en posant les genoux. Arrête la série dès qu'une descente passe sous 2 s ou que le bassin s'affaisse. |
 | Row australien genoux fléchis pieds à plat | 2 × 6 à 8 | poids du corps | 3 rép. en réserve | 2 min | secondaire |
@@ -404,7 +404,7 @@ Femme de 29 ans, 58 kg, active mais jamais entraînée en force. Veut sa premiè
 | Wrist push-ups | 2 × 8 à 10 | — | — | 30 s | échauffement |
 | Traction assistée à l'élastique | 2 × 7 à 9 | poids du corps | 3 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Tenue menton au-dessus de la barre pronation | 2 × 6 s | poids du corps | sous-maximal : arrêt bien avant la perte de position | 2 min 30 s | secondaire ; tenue isométrique |
-| Pompe classique | 1 × 1 à 3 | poids du corps | 2 rép. en réserve | 2 min | principal ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
+| Pompe classique | 1 × 1 à 4 | poids du corps | 2 rép. en réserve | 2 min | principal ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Pompe inclinée (mains surélevées) | 2 × 7 à 9 | poids du corps | 3 rép. en réserve | 2 min | secondaire ; Échelle de poussée : pompe au mur → mains surélevées (barre basse ou barres parallèles, de plus en plus bas) → genoux → sol. Un seul critère de passage : quand 2 séries de 12 propres passent avec la réserve écrite, deux séances de suite, descends d'un cran (note la hauteur des mains en cm à chaque séance et au test). Jamais plus de 12 répétitions sur un cran : au-delà, on baisse l'appui, on n'allonge pas la série. Poignet gêné (3 sur 10 ou plus deux séances de suite) : même cran sur poignées, parallettes ou poings fermés. ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Pompe négative | 2 × 3 | poids du corps | au contrôle : arrêt dès qu'une descente accélère | 90 s | secondaire ; descente en 3 s ; Pompe complète en descente freinée : 3 s pour descendre, corps gainé de la tête aux talons, poitrine au sol ; remonte en posant les genoux. Arrête la série dès qu'une descente passe sous 2 s ou que le bassin s'affaisse. |
 | Air squat | 2 × 9 à 11 | poids du corps | 3 rép. en réserve | 2 min | secondaire |
@@ -419,7 +419,7 @@ Femme de 29 ans, 58 kg, active mais jamais entraînée en force. Veut sa premiè
 | Wrist push-ups | 2 × 8 à 10 | — | — | 30 s | échauffement |
 | Traction négative | 3 × 4 | poids du corps | au contrôle : arrêt dès qu'une descente accélère | 2 min | secondaire ; 2 s tenues en haut, puis descente en 5 s ; Descente freinée en 5 s, sans à-coup (monte en sautant depuis un appui) ; l'effort se règle au contrôle, pas à la réserve : arrête la série dès qu'une descente passe sous 3 s. Si la première descente passe déjà sous 3 s, fais-la avec l'élastique, ou vise 2 à 3 s, et allonge d'une seconde par semaine. |
 | Traction assistée à l'élastique | 2 × 7 à 9 | poids du corps | 3 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
-| Pompe classique | 1 × 1 à 3 | poids du corps | 2 rép. en réserve | 2 min | principal ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
+| Pompe classique | 1 × 1 à 4 | poids du corps | 2 rép. en réserve | 2 min | principal ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Pompe inclinée (mains surélevées) | 2 × 7 à 9 | poids du corps | 3 rép. en réserve | 2 min | secondaire ; Échelle de poussée : pompe au mur → mains surélevées (barre basse ou barres parallèles, de plus en plus bas) → genoux → sol. Un seul critère de passage : quand 2 séries de 12 propres passent avec la réserve écrite, deux séances de suite, descends d'un cran (note la hauteur des mains en cm à chaque séance et au test). Jamais plus de 12 répétitions sur un cran : au-delà, on baisse l'appui, on n'allonge pas la série. Poignet gêné (3 sur 10 ou plus deux séances de suite) : même cran sur poignées, parallettes ou poings fermés. ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Pompe négative | 2 × 3 | poids du corps | au contrôle : arrêt dès qu'une descente accélère | 90 s | secondaire ; descente en 3 s ; Pompe complète en descente freinée : 3 s pour descendre, corps gainé de la tête aux talons, poitrine au sol ; remonte en posant les genoux. Arrête la série dès qu'une descente passe sous 2 s ou que le bassin s'affaisse. |
 | Row australien genoux fléchis pieds à plat | 2 × 7 à 9 | poids du corps | 3 rép. en réserve | 2 min | secondaire |
@@ -454,7 +454,7 @@ Femme de 29 ans, 58 kg, active mais jamais entraînée en force. Veut sa premiè
 | Wrist push-ups | 2 × 8 à 10 | — | — | 30 s | échauffement |
 | Traction assistée à l'élastique | 2 × 7 à 9 | poids du corps | 3 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Tenue menton au-dessus de la barre pronation | 2 × 6 s | poids du corps | sous-maximal : arrêt bien avant la perte de position | 2 min 30 s | secondaire ; tenue isométrique |
-| Pompe classique | 1 × 1 à 3 | poids du corps | 2 rép. en réserve | 2 min | principal ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
+| Pompe classique | 1 × 1 à 4 | poids du corps | 2 rép. en réserve | 2 min | principal ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Pompe inclinée (mains surélevées) | 2 × 7 à 9 | poids du corps | 3 rép. en réserve | 2 min | secondaire ; Échelle de poussée : pompe au mur → mains surélevées (barre basse ou barres parallèles, de plus en plus bas) → genoux → sol. Un seul critère de passage : quand 2 séries de 12 propres passent avec la réserve écrite, deux séances de suite, descends d'un cran (note la hauteur des mains en cm à chaque séance et au test). Jamais plus de 12 répétitions sur un cran : au-delà, on baisse l'appui, on n'allonge pas la série. Poignet gêné (3 sur 10 ou plus deux séances de suite) : même cran sur poignées, parallettes ou poings fermés. ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Pompe négative | 2 × 3 | poids du corps | au contrôle : arrêt dès qu'une descente accélère | 90 s | secondaire ; descente en 4 s ; Pompe complète en descente freinée : 4 s pour descendre, corps gainé de la tête aux talons, poitrine au sol ; remonte en posant les genoux. Arrête la série dès qu'une descente passe sous 2 s ou que le bassin s'affaisse. |
 | Air squat | 2 × 9 à 11 | poids du corps | 3 rép. en réserve | 2 min | secondaire |
@@ -536,7 +536,7 @@ Femme de 29 ans, 58 kg, active mais jamais entraînée en force. Veut sa premiè
 | Wrist push-ups | 2 × 8 à 10 | — | — | 30 s | échauffement |
 | Traction négative | 2 × 5 | poids du corps | au contrôle : arrêt dès qu'une descente accélère | 2 min | secondaire ; 2 s tenues en haut, puis descente en 5 s ; Descente freinée en 5 s, sans à-coup (monte en sautant depuis un appui) ; l'effort se règle au contrôle, pas à la réserve : arrête la série dès qu'une descente passe sous 3 s. Si la première descente passe déjà sous 3 s, fais-la avec l'élastique, ou vise 2 à 3 s, et allonge d'une seconde par semaine. |
 | Traction assistée à l'élastique | 2 × 8 à 10 | poids du corps | 3 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
-| Pompe classique | 1 × 1 à 4 | poids du corps | 2 rép. en réserve | 2 min | principal ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
+| Pompe classique | 1 × 1 à 5 | poids du corps | 2 rép. en réserve | 2 min | principal ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Pompe inclinée (mains surélevées) | 2 × 8 à 10 | poids du corps | 3 rép. en réserve | 2 min | secondaire ; Échelle de poussée : pompe au mur → mains surélevées (barre basse ou barres parallèles, de plus en plus bas) → genoux → sol. Un seul critère de passage : quand 2 séries de 12 propres passent avec la réserve écrite, deux séances de suite, descends d'un cran (note la hauteur des mains en cm à chaque séance et au test). Jamais plus de 12 répétitions sur un cran : au-delà, on baisse l'appui, on n'allonge pas la série. Poignet gêné (3 sur 10 ou plus deux séances de suite) : même cran sur poignées, parallettes ou poings fermés. ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Pompe négative | 2 × 4 | poids du corps | au contrôle : arrêt dès qu'une descente accélère | 90 s | secondaire ; descente en 4 s ; Pompe complète en descente freinée : 4 s pour descendre, corps gainé de la tête aux talons, poitrine au sol ; remonte en posant les genoux. Arrête la série dès qu'une descente passe sous 2 s ou que le bassin s'affaisse. |
 | Row australien genoux fléchis pieds à plat | 2 × 8 à 10 | poids du corps | 3 rép. en réserve | 2 min | secondaire |
@@ -552,7 +552,7 @@ Femme de 29 ans, 58 kg, active mais jamais entraînée en force. Veut sa premiè
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
 | Wrist push-ups | 2 × 8 à 10 | — | — | 30 s | échauffement |
-| Traction assistée à l'élastique | 1 × 6 à 8 | poids du corps | 3 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. ; Affûtage : séries dures ramenées à environ 70 % de la semaine de pointe, intensité et fréquence gardées, à 14 jours de l'échéance au plus. |
+| Traction assistée à l'élastique | 1 × 6 à 8 | poids du corps | 3 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. ; Affûtage : séries dures ramenées à environ 65 % de la semaine de pointe, intensité et fréquence gardées, à 14 jours de l'échéance au plus. |
 | Tenue menton au-dessus de la barre pronation | 2 × 5 s | poids du corps | sous-maximal : arrêt bien avant la perte de position | 2 min 30 s | secondaire ; tenue isométrique |
 | Pompe classique | 1 × 1 | poids du corps | 2 rép. en réserve | 2 min | principal ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Pompe inclinée (mains surélevées) | 1 × 6 à 8 | poids du corps | 3 rép. en réserve | 2 min | secondaire ; Échelle de poussée : pompe au mur → mains surélevées (barre basse ou barres parallèles, de plus en plus bas) → genoux → sol. Un seul critère de passage : quand 2 séries de 12 propres passent avec la réserve écrite, deux séances de suite, descends d'un cran (note la hauteur des mains en cm à chaque séance et au test). Jamais plus de 12 répétitions sur un cran : au-delà, on baisse l'appui, on n'allonge pas la série. Poignet gêné (3 sur 10 ou plus deux séances de suite) : même cran sur poignées, parallettes ou poings fermés. ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
@@ -565,7 +565,7 @@ Femme de 29 ans, 58 kg, active mais jamais entraînée en force. Veut sa premiè
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
 | Wrist push-ups | 2 × 8 à 10 | — | — | 30 s | échauffement |
-| Traction négative | 2 × 2 | poids du corps | au contrôle : arrêt dès qu'une descente accélère | 2 min | secondaire ; 2 s tenues en haut, puis descente en 5 s ; Descente freinée en 5 s, sans à-coup (monte en sautant depuis un appui) ; l'effort se règle au contrôle, pas à la réserve : arrête la série dès qu'une descente passe sous 3 s. Si la première descente passe déjà sous 3 s, fais-la avec l'élastique, ou vise 2 à 3 s, et allonge d'une seconde par semaine. ; Affûtage : séries dures ramenées à environ 70 % de la semaine de pointe, intensité et fréquence gardées, à 14 jours de l'échéance au plus. |
+| Traction négative | 2 × 2 | poids du corps | au contrôle : arrêt dès qu'une descente accélère | 2 min | secondaire ; 2 s tenues en haut, puis descente en 5 s ; Descente freinée en 5 s, sans à-coup (monte en sautant depuis un appui) ; l'effort se règle au contrôle, pas à la réserve : arrête la série dès qu'une descente passe sous 3 s. Si la première descente passe déjà sous 3 s, fais-la avec l'élastique, ou vise 2 à 3 s, et allonge d'une seconde par semaine. ; Affûtage : séries dures ramenées à environ 65 % de la semaine de pointe, intensité et fréquence gardées, à 14 jours de l'échéance au plus. |
 | Traction assistée à l'élastique | 1 × 6 à 8 | poids du corps | 3 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Pompe classique | 1 × 1 | poids du corps | 2 rép. en réserve | 2 min | principal ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Pompe inclinée (mains surélevées) | 1 × 6 à 8 | poids du corps | 3 rép. en réserve | 2 min | secondaire ; Échelle de poussée : pompe au mur → mains surélevées (barre basse ou barres parallèles, de plus en plus bas) → genoux → sol. Un seul critère de passage : quand 2 séries de 12 propres passent avec la réserve écrite, deux séances de suite, descends d'un cran (note la hauteur des mains en cm à chaque séance et au test). Jamais plus de 12 répétitions sur un cran : au-delà, on baisse l'appui, on n'allonge pas la série. Poignet gêné (3 sur 10 ou plus deux séances de suite) : même cran sur poignées, parallettes ou poings fermés. ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
@@ -581,7 +581,7 @@ Femme de 29 ans, 58 kg, active mais jamais entraînée en force. Veut sa premiè
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
 | Wrist push-ups | 2 × 8 à 10 | — | — | 30 s | échauffement |
-| Traction négative | 2 × 2 | poids du corps | au contrôle : arrêt dès qu'une descente accélère | 2 min | secondaire ; 2 s tenues en haut, puis descente en 5 s ; Descente freinée en 5 s, sans à-coup (monte en sautant depuis un appui) ; l'effort se règle au contrôle, pas à la réserve : arrête la série dès qu'une descente passe sous 3 s. Si la première descente passe déjà sous 3 s, fais-la avec l'élastique, ou vise 2 à 3 s, et allonge d'une seconde par semaine. ; Affûtage : séries dures ramenées à environ 70 % de la semaine de pointe, intensité et fréquence gardées, à 14 jours de l'échéance au plus. |
+| Traction négative | 2 × 2 | poids du corps | au contrôle : arrêt dès qu'une descente accélère | 2 min | secondaire ; 2 s tenues en haut, puis descente en 5 s ; Descente freinée en 5 s, sans à-coup (monte en sautant depuis un appui) ; l'effort se règle au contrôle, pas à la réserve : arrête la série dès qu'une descente passe sous 3 s. Si la première descente passe déjà sous 3 s, fais-la avec l'élastique, ou vise 2 à 3 s, et allonge d'une seconde par semaine. ; Affûtage : séries dures ramenées à environ 65 % de la semaine de pointe, intensité et fréquence gardées, à 14 jours de l'échéance au plus. |
 | Traction assistée à l'élastique | 2 × 6 à 8 | poids du corps | 3 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Pompe classique | 2 × 1 | poids du corps | 2 rép. en réserve | 2 min | principal ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Pompe inclinée (mains surélevées) | 2 × 6 à 8 | poids du corps | 3 rép. en réserve | 2 min | secondaire ; Échelle de poussée : pompe au mur → mains surélevées (barre basse ou barres parallèles, de plus en plus bas) → genoux → sol. Un seul critère de passage : quand 2 séries de 12 propres passent avec la réserve écrite, deux séances de suite, descends d'un cran (note la hauteur des mains en cm à chaque séance et au test). Jamais plus de 12 répétitions sur un cran : au-delà, on baisse l'appui, on n'allonge pas la série. Poignet gêné (3 sur 10 ou plus deux séances de suite) : même cran sur poignées, parallettes ou poings fermés. ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |

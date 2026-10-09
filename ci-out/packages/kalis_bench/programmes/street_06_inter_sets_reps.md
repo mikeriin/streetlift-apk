@@ -33,8 +33,8 @@ Homme de 23 ans, 68 kg, dix-huit mois de pratique. 15 tractions, 25 dips, 40 pom
 | 7 | 2 | réalisation (spécifique à l'objectif) | 4 | 45 |
 | 8 | 2 | réalisation (spécifique à l'objectif) | 4 | 45 |
 | 9 | 2 | réalisation (spécifique à l'objectif) | 4 | 45 |
-| 10 | 2 | réalisation (spécifique à l'objectif) | 4 | 45 |
-| 11 | 2 | affûtage | 4 | 24 |
+| 10 | 2 | réalisation (spécifique à l'objectif) | 4 | 46 |
+| 11 | 2 | affûtage | 4 | 25 |
 | 12 | 2 | test | 4 | 16 |
 
 ## Saison
@@ -566,12 +566,12 @@ Homme de 23 ans, 68 kg, dix-huit mois de pratique. 15 tractions, 25 dips, 40 pom
 
 ## Semaine 10 — réalisation (spécifique à l'objectif) (bloc 2)
 
-### lundi — force, haut du corps, séance lourde (60 min disponibles, 37 min estimées)
+### lundi — force, haut du corps, séance lourde (60 min disponibles, 41 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
-| Traction pronation | 1 × 14 | poids du corps, ≈ 93 % du maximum de répétitions (repère : 15) | 1 rép. en réserve | 3 min | principal ; Avant la série de tête : 2 séries faciles (un tiers, puis la moitié des répétitions prévues). ; Simulation du test : la série de tête se fait au format du test (même échauffement, même standard de répétition), jusqu'à une répétition de l'échec — environ 14 répétitions. Note le résultat : il dit si l'objectif du test est réaliste ; pas de série allégée après. ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
+| Traction pronation | 2 × 14 | poids du corps, ≈ 93 % du maximum de répétitions (repère : 15) | 1 rép. en réserve | 3 min | principal ; Avant la série de tête : 2 séries faciles (un tiers, puis la moitié des répétitions prévues). ; Simulation du test : la série de tête se fait au format du test (même échauffement, même standard de répétition), jusqu'à une répétition de l'échec — environ 14 répétitions. Note le résultat : il dit si l'objectif du test est réaliste ; pas de série allégée après. ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Dips aux barres parallèles | 5 × 14, un départ toutes les 90 s | poids du corps, ≈ 56 % du maximum de répétitions (repère : 25) | 5 rép. en réserve ou plus | — | secondaire |
 | Row australien | 2 × 10 à 12 | poids du corps | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Fente arrière au poids du corps | 2 × 8 à 10 | poids du corps | 3 rép. en réserve | 90 s | accessoire ; Jambes : force utile, sans fatigue excessive. |
@@ -585,9 +585,9 @@ Homme de 23 ans, 68 kg, dix-huit mois de pratique. 15 tractions, 25 dips, 40 pom
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
-| Muscle-up barre strict | 3 × 1 | poids du corps, ≈ 33 % du maximum de répétitions (repère : 3) | 2 rép. en réserve | 2 min 30 s | figure / technique ; pratique technique ; Avant le muscle-up : 2 séries de tractions faciles (la moitié de ton maximum), puis 2 ou 3 transitions à la barre basse ou des muscle-ups très faciles ; rien à froid. ; Exécution : amène la barre aux hanches, transition rapide, poitrine au-dessus de la barre avant de pousser. La série s'arrête à la première répétition dont la transition ralentit, se fait en deux temps ou demande un battement de jambes de plus : jamais jusqu'à l'échec. |
-| Traction pronation | 5 min : 8 rép. au début de chaque minute | poids du corps, ≈ 53 % du maximum de répétitions (repère : 15) | 5 rép. en réserve ou plus | — | secondaire |
-| Dips aux barres parallèles | 1 × 24 | poids du corps, ≈ 96 % du maximum de répétitions (repère : 25) | 1 rép. en réserve | 3 min | principal ; Avant la série de tête : 2 séries faciles (un tiers, puis la moitié des répétitions prévues). ; Simulation du test : la série de tête se fait au format du test (même échauffement, même standard de répétition), jusqu'à une répétition de l'échec — environ 24 répétitions. Note le résultat : il dit si l'objectif du test est réaliste ; pas de série allégée après. ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
+| Muscle-up barre strict | 2 × 1 | poids du corps, ≈ 33 % du maximum de répétitions (repère : 3) | 2 rép. en réserve | 2 min 30 s | figure / technique ; pratique technique ; Avant le muscle-up : 2 séries de tractions faciles (la moitié de ton maximum), puis 2 ou 3 transitions à la barre basse ou des muscle-ups très faciles ; rien à froid. ; Exécution : amène la barre aux hanches, transition rapide, poitrine au-dessus de la barre avant de pousser. La série s'arrête à la première répétition dont la transition ralentit, se fait en deux temps ou demande un battement de jambes de plus : jamais jusqu'à l'échec. |
+| Traction pronation | 4 min : 8 rép. au début de chaque minute | poids du corps, ≈ 53 % du maximum de répétitions (repère : 15) | 5 rép. en réserve ou plus | — | secondaire |
+| Dips aux barres parallèles | 2 × 24 | poids du corps, ≈ 96 % du maximum de répétitions (repère : 25) | 1 rép. en réserve | 3 min | principal ; Avant la série de tête : 2 séries faciles (un tiers, puis la moitié des répétitions prévues). ; Simulation du test : la série de tête se fait au format du test (même échauffement, même standard de répétition), jusqu'à une répétition de l'échec — environ 24 répétitions. Note le résultat : il dit si l'objectif du test est réaliste ; pas de série allégée après. ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Pompe classique | 5 × 22, un départ toutes les 2 min 30 s | poids du corps, ≈ 55 % du maximum de répétitions (repère : 40) | 5 rép. en réserve ou plus | — | accessoire |
 | Relevé de jambes tendues suspendu | 2 × 10 à 14 | poids du corps | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
 | Rotation externe à l'élastique | 2 × 12 à 15 | — | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
@@ -646,7 +646,7 @@ Homme de 23 ans, 68 kg, dix-huit mois de pratique. 15 tractions, 25 dips, 40 pom
 | Pompe classique | 4 × 16, un départ toutes les 2 min | poids du corps, ≈ 40 % du maximum de répétitions (repère : 40) | 5 rép. en réserve ou plus | — | accessoire |
 | Rotation externe à l'élastique | 2 × 12 à 15 | — | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
 
-### vendredi — force, haut du corps, séance légère (60 min disponibles, 28 min estimées)
+### vendredi — force, haut du corps, séance légère (60 min disponibles, 31 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
@@ -655,7 +655,7 @@ Homme de 23 ans, 68 kg, dix-huit mois de pratique. 15 tractions, 25 dips, 40 pom
 | Traction pronation tempo excentrique lent | 2 × 5 à 7 | poids du corps | 3 rép. en réserve | 3 min | secondaire ; 2 s tenues en haut, puis descente en 4 s ; Traction complète au tempo : montée tirée sans élan, 2 s le menton au-dessus de la barre, descente freinée en 4 s. Arrête la série dès que la montée ralentit nettement ou qu'une descente passe sous 3 s ; si la première série ne passe pas, descente en 2 à 3 s. ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Dips aux barres parallèles | 2 × 18 | poids du corps, ≈ 72 % du maximum de répétitions (repère : 25) | 3 rép. en réserve sur la dernière série (davantage sur les premières) | 90 s | principal ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Dips aux barres parallèles buste penché | 2 × 10 à 12 | poids du corps | 3 rép. en réserve | 3 min | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
-| Row australien | 1 × 8 à 10 | poids du corps | 3 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
+| Row australien | 2 × 8 à 10 | poids du corps | 3 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Face pull à l'élastique | 2 × 12 à 15 | — | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
 
 ### samedi — force, haut du corps, séance légère (60 min disponibles, 34 min estimées)

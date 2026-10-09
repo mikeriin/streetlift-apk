@@ -35,9 +35,9 @@ Chaque bloc est écrit par le moteur de création au moment où il commence, d'a
 
 - Séances faites : 51 sur 51 (9 ajustées le jour même).
 - Échecs non voulus (hors tests et tentatives) : 0 % des séries de travail.
-- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 1,09 répétition en réserve (sur les 76 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 5,8 %.
+- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 1,09 répétition en réserve (sur les 76 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 5,4 %.
 - Plus forte hausse de charge totale d'un mouvement principal d'une séance à la suivante, à schéma égal : 1,7 % ; hausses de plus de 10 % faites de plusieurs crans : 0.
-- Progression réelle moyenne des mouvements suivis : 0,258 % par semaine.
+- Progression réelle moyenne des mouvements suivis : 0,262 % par semaine.
 - Douleur : 0 hausse(s) de charge sur une zone douloureuse signalée.
 
 ## Mouvements suivis, semaine par semaine
@@ -61,10 +61,10 @@ Pour chaque mouvement, la séance la plus lourde de la semaine : ce que le progr
 | 11 | réalisation (spécifique à l'objectif) | 3 × 7 (78 % du maximum testé), série de tête puis séries allégées | 7-6-6 | 7-6-6 | 2 → 2,9 ; suivantes 2 → 2,7 | 10 / 10 | — |
 | 12 | réalisation (spécifique à l'objectif) | 3 × 7 (78 % du maximum testé), série de tête puis séries allégées | 7-6-6 | 7-5-5 | 2 → 2,2 ; suivantes 2 → 3,2 | 9 / 10 | allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |
 | 13 | réalisation (spécifique à l'objectif) | 3 × 7 (78 % du maximum testé), série de tête puis séries allégées | 7-6-6 | 7-5-5 | 2 → 2,3 ; suivantes 2 → 3,3 | 9 / 10 | allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |
-| 14 | réalisation (spécifique à l'objectif) | 1 × 8 (89 % du maximum testé) | 8 | 8 | 1 → 2 | 10 / 10 | — |
-| 15 | affûtage | 2 × 6 (67 % du maximum testé), série de tête puis séries allégées | 6-5 | 6-5 | 3 → 3,5 ; suivantes 4 → 3,7 | 10 / 10 | — |
+| 14 | réalisation (spécifique à l'objectif) | 3 × 8 (89 % du maximum testé) | 8-7-6 | 8-7-6 | 1 → 2 ; suivantes 1 → 1,9 | 10 / 10 | — |
+| 15 | affûtage | 2 × 6 (67 % du maximum testé), série de tête puis séries allégées | 6-5 | 6-5 | 3 → 3,6 ; suivantes 4 → 3,7 | 10 / 10 | — |
 | 16 | test | 1 × 10 à 14, test | (9 à 14) | 9 (échec) | test | 10 / 10 | — |
-| 17 | construction (volume) | 2 × 7 (78 % du maximum testé), série de tête puis séries allégées | 7-6 | 7-5 | 2 → 3,2 ; suivantes 3 → 4,6 | 10 / 10 | allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |
+| 17 | construction (volume) | 3 × 7 (78 % du maximum testé), série de tête puis séries allégées | 7-6-6 | 7-5-5 | 2 → 3,2 ; suivantes 2,5 → 4,5 | 10 / 10 | allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |
 
 Athlète simulé, maximum réel hors fatigue : 9 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 10 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
 
@@ -85,9 +85,9 @@ Athlète simulé, maximum réel hors fatigue : 9 au départ (le record déclaré
 | 11 | réalisation (spécifique à l'objectif) | 3 × 5 à 77 % | 5-5-(5 à 11) | 5-5-6 | 3 → 4 ; suivantes 2,3 → 3,3 | 90 (lest 17) / 87 (lest 13) | série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète |
 | 12 | réalisation (spécifique à l'objectif) | 2 × 5 à 78 % | 5-5 | 5-5 | 3 → 4,1 ; suivantes 3 → 3,8 | 90 (lest 17) / 87 (lest 14) | — |
 | 13 | réalisation (spécifique à l'objectif) | 2 × 5 à 80 % | 5-5 à 1,25 kg | 5-5 à 1,25 kg | 3 → 3,2 ; suivantes 3 → 3 | 90 (lest 16) / 88 (lest 14) | — |
-| 14 | réalisation (spécifique à l'objectif) | 2 × 5 à 80 % | 5-(5 à 11) à 1,25 kg | 5 à 1,25 kg puis 6 | 3 → 3 ; suivantes 1,5 → 2,3 | 89 (lest 16) / 88 (lest 14) | série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète ; allégé pour garder la marge prévue (au moins 3 en réserve) ; dernières séries plus dures que prévu |
-| 15 | affûtage | 2 × 2 à 85 % | 2-2 à 1,25 kg | 2-2 à 1,25 kg | 5+ → 6,9 ; suivantes 5+ → 6,7 | 91 (lest 18) / 88 (lest 14) | — |
-| 17 | construction (volume) | 2 × 5 | 5-(4 à 10) à 1,25 kg | 5-6 à 1,25 kg | 3 → 2,8 ; suivantes 1,5 → 1,5 | 89 (lest 15) / 88 (lest 14) | série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète |
+| 14 | réalisation (spécifique à l'objectif) | 2 × 5 à 80 % | 5-(5 à 11) à 1,25 kg | 5 à 1,25 kg puis 6 | 3 → 2,9 ; suivantes 1,5 → 2,3 | 89 (lest 15) / 88 (lest 14) | série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète ; allégé pour garder la marge prévue (au moins 3 en réserve) ; dernières séries plus dures que prévu |
+| 15 | affûtage | 2 × 2 à 85 % | 2-2 à 1,25 kg | 2-2 à 1,25 kg | 5+ → 6,8 ; suivantes 5+ → 6,7 | 91 (lest 18) / 88 (lest 14) | — |
+| 17 | construction (volume) | 2 × 5 | 5-(4 à 10) à 1,25 kg | 5-6 à 1,25 kg | 3 → 2,7 ; suivantes 1,5 → 1,5 | 89 (lest 15) / 88 (lest 14) | série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète |
 
 Athlète simulé, maximum réel hors fatigue : 88 (lest 14) au départ (le record déclaré au profil peut être plus haut ou plus ancien), 91 (lest 17) en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
 

@@ -28,13 +28,13 @@ Homme de 33 ans, 82 kg, quatre ans de streetlifting. Traction +30 kg, dips +50 k
 | 1 | 1 | introduction | 4 | 46 |
 | 2 | 1 | construction (volume) | 4 | 47 |
 | 3 | 1 | construction (volume) | 4 | 47 |
-| 4 | 1 | construction (volume) | 4 | 48 |
-| 5 | 1 | construction (volume) | 4 | 48 |
+| 4 | 1 | construction (volume) | 4 | 49 |
+| 5 | 1 | construction (volume) | 4 | 49 |
 | 6 | 1 | allègement | 4 | 19 |
-| 7 | 2 | réalisation (spécifique à l'objectif) | 4 | 47 |
-| 8 | 2 | réalisation (spécifique à l'objectif) | 4 | 48 |
-| 9 | 2 | réalisation (spécifique à l'objectif) | 4 | 48 |
-| 10 | 2 | réalisation (spécifique à l'objectif) | 4 | 48 |
+| 7 | 2 | réalisation (spécifique à l'objectif) | 4 | 48 |
+| 8 | 2 | réalisation (spécifique à l'objectif) | 4 | 49 |
+| 9 | 2 | réalisation (spécifique à l'objectif) | 4 | 49 |
+| 10 | 2 | réalisation (spécifique à l'objectif) | 4 | 49 |
 | 11 | 2 | affûtage | 4 | 26 |
 | 12 | 2 | test | 4 | 18 |
 
@@ -242,12 +242,12 @@ Homme de 33 ans, 82 kg, quatre ans de streetlifting. Traction +30 kg, dips +50 k
 
 ## Semaine 4 — construction (volume) (bloc 1)
 
-### lundi — force, corps entier, séance moyenne (75 min disponibles, 40 min estimées)
+### lundi — force, corps entier, séance moyenne (75 min disponibles, 43 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
-| Dips lesté de compétition | 4 × 6 | lest +15 kg, ≈ 73 % du 1RM (charge totale ; 1RM de référence 128,5 kg) | 4 rép. en réserve | 3 min | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
+| Dips lesté de compétition | 5 × 6 | lest +15 kg, ≈ 73 % du 1RM (charge totale ; 1RM de référence 128,5 kg) | 4 rép. en réserve | 3 min | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Traction prise neutre | 1 × 5 à 8 | poids du corps | 3 rép. en réserve | 90 s | secondaire ; Retour au tirage lesté : quand le coude reste à 2 sur 10 ou moins deux semaines de suite sur ces tractions, ajoute 2,5 kg (3 × 5, 3 répétitions en réserve), puis 2,5 kg toutes les deux semaines au plus. Au-delà de 2 sur 10, reviens au palier précédent. ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Rowing haltère unilatéral appui sur banc | 2 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Face pull à l'élastique | 2 × 12 à 15 | — | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
@@ -300,12 +300,12 @@ Homme de 33 ans, 82 kg, quatre ans de streetlifting. Traction +30 kg, dips +50 k
 
 ## Semaine 5 — construction (volume) (bloc 1)
 
-### lundi — force, corps entier, séance moyenne (75 min disponibles, 40 min estimées)
+### lundi — force, corps entier, séance moyenne (75 min disponibles, 44 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
-| Dips lesté de compétition | 4 × 6 | lest +17,5 kg, ≈ 75 % du 1RM (charge totale ; 1RM de référence 128,5 kg) | 4 rép. en réserve | 3 min | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
+| Dips lesté de compétition | 5 × 6 | lest +17,5 kg, ≈ 75 % du 1RM (charge totale ; 1RM de référence 128,5 kg) | 4 rép. en réserve | 3 min | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Traction prise neutre | 1 × 5 à 8 | poids du corps | 3 rép. en réserve | 90 s | secondaire ; Retour au tirage lesté : quand le coude reste à 2 sur 10 ou moins deux semaines de suite sur ces tractions, ajoute 2,5 kg (3 × 5, 3 répétitions en réserve), puis 2,5 kg toutes les deux semaines au plus. Au-delà de 2 sur 10, reviens au palier précédent. ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Rowing haltère unilatéral appui sur banc | 2 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Face pull à l'élastique | 2 × 12 à 15 | — | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
@@ -408,12 +408,12 @@ Homme de 33 ans, 82 kg, quatre ans de streetlifting. Traction +30 kg, dips +50 k
 
 ## Semaine 7 — réalisation (spécifique à l'objectif) (bloc 2)
 
-### lundi — force, corps entier, séance moyenne (75 min disponibles, 38 min estimées)
+### lundi — force, corps entier, séance moyenne (75 min disponibles, 42 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
-| Dips lesté de compétition | 4 × 3 | lest +22,5 kg, ≈ 79 % du 1RM (charge totale ; 1RM de référence 129 kg) | 4 rép. en réserve | 3 min | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
+| Dips lesté de compétition | 5 × 3 | lest +22,5 kg, ≈ 79 % du 1RM (charge totale ; 1RM de référence 129 kg) | 4 rép. en réserve | 3 min | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Traction prise neutre | 1 × 5 à 8 | poids du corps | 3 rép. en réserve | 90 s | secondaire ; Retour au tirage lesté : quand le coude reste à 2 sur 10 ou moins deux semaines de suite sur ces tractions, ajoute 2,5 kg (3 × 5, 3 répétitions en réserve), puis 2,5 kg toutes les deux semaines au plus. Au-delà de 2 sur 10, reviens au palier précédent. ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Rowing haltère unilatéral appui sur banc | 2 × 8 à 10 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Face pull à l'élastique | 2 × 12 à 15 | — | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
@@ -466,12 +466,12 @@ Homme de 33 ans, 82 kg, quatre ans de streetlifting. Traction +30 kg, dips +50 k
 
 ## Semaine 8 — réalisation (spécifique à l'objectif) (bloc 2)
 
-### lundi — force, corps entier, séance moyenne (75 min disponibles, 39 min estimées)
+### lundi — force, corps entier, séance moyenne (75 min disponibles, 42 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
-| Dips lesté de compétition | 4 × 3 | lest +27,5 kg, ≈ 83 % du 1RM (charge totale ; 1RM de référence 129 kg) | 3 rép. en réserve | 3 min | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
+| Dips lesté de compétition | 5 × 3 | lest +27,5 kg, ≈ 83 % du 1RM (charge totale ; 1RM de référence 129 kg) | 3 rép. en réserve | 3 min | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Traction prise neutre | 1 × 5 à 8 | poids du corps | 3 rép. en réserve | 90 s | secondaire ; Retour au tirage lesté : quand le coude reste à 2 sur 10 ou moins deux semaines de suite sur ces tractions, ajoute 2,5 kg (3 × 5, 3 répétitions en réserve), puis 2,5 kg toutes les deux semaines au plus. Au-delà de 2 sur 10, reviens au palier précédent. ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Rowing haltère unilatéral appui sur banc | 2 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Face pull à l'élastique | 2 × 12 à 15 | — | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
@@ -524,12 +524,12 @@ Homme de 33 ans, 82 kg, quatre ans de streetlifting. Traction +30 kg, dips +50 k
 
 ## Semaine 9 — réalisation (spécifique à l'objectif) (bloc 2)
 
-### lundi — force, corps entier, séance moyenne (75 min disponibles, 40 min estimées)
+### lundi — force, corps entier, séance moyenne (75 min disponibles, 43 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
-| Dips lesté de compétition | 4 × 3 | lest +28,75 kg, ≈ 82 % du 1RM (charge totale ; 1RM de référence 131 kg) | 3 rép. en réserve | 3 min | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
+| Dips lesté de compétition | 5 × 3 | lest +28,75 kg, ≈ 82 % du 1RM (charge totale ; 1RM de référence 131 kg) | 3 rép. en réserve | 3 min | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Traction prise neutre | 1 × 5 à 8 | poids du corps | 3 rép. en réserve | 90 s | secondaire ; Retour au tirage lesté : quand le coude reste à 2 sur 10 ou moins deux semaines de suite sur ces tractions, ajoute 2,5 kg (3 × 5, 3 répétitions en réserve), puis 2,5 kg toutes les deux semaines au plus. Au-delà de 2 sur 10, reviens au palier précédent. ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Rowing haltère unilatéral appui sur banc | 2 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Face pull à l'élastique | 2 × 12 à 15 | — | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
@@ -582,12 +582,12 @@ Homme de 33 ans, 82 kg, quatre ans de streetlifting. Traction +30 kg, dips +50 k
 
 ## Semaine 10 — réalisation (spécifique à l'objectif) (bloc 2)
 
-### lundi — force, corps entier, séance moyenne (75 min disponibles, 40 min estimées)
+### lundi — force, corps entier, séance moyenne (75 min disponibles, 43 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
-| Dips lesté de compétition | 4 × 3 | lest +28,75 kg, ≈ 82 % du 1RM (charge totale ; 1RM de référence 131 kg) | 3 rép. en réserve | 3 min | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
+| Dips lesté de compétition | 5 × 3 | lest +28,75 kg, ≈ 82 % du 1RM (charge totale ; 1RM de référence 131 kg) | 3 rép. en réserve | 3 min | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Traction prise neutre | 1 × 5 à 8 | poids du corps | 3 rép. en réserve | 90 s | secondaire ; Retour au tirage lesté : quand le coude reste à 2 sur 10 ou moins deux semaines de suite sur ces tractions, ajoute 2,5 kg (3 × 5, 3 répétitions en réserve), puis 2,5 kg toutes les deux semaines au plus. Au-delà de 2 sur 10, reviens au palier précédent. ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Rowing haltère unilatéral appui sur banc | 2 × 10 à 12 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Face pull à l'élastique | 2 × 12 à 15 | — | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |

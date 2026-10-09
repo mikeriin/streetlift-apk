@@ -23,15 +23,15 @@ Homme de 32 ans, 93 kg, six ans de force athlétique. Squat 220 kg, développé 
 | Semaine | Bloc | Nature | Séances | Séries dures |
 | --- | --- | --- | --- | --- |
 | 1 | 1 | introduction | 4 | 52 |
-| 2 | 1 | construction (volume) | 4 | 54 |
-| 3 | 1 | construction (volume) | 4 | 54 |
+| 2 | 1 | construction (volume) | 4 | 58 |
+| 3 | 1 | construction (volume) | 4 | 58 |
 | 4 | 1 | allègement | 4 | 33 |
-| 5 | 2 | intensification (séries plus dures) | 4 | 54 |
-| 6 | 2 | intensification (séries plus dures) | 4 | 54 |
-| 7 | 2 | réalisation (spécifique à l'objectif) | 4 | 47 |
-| 8 | 2 | réalisation (spécifique à l'objectif) | 4 | 43 |
+| 5 | 2 | intensification (séries plus dures) | 4 | 58 |
+| 6 | 2 | intensification (séries plus dures) | 4 | 58 |
+| 7 | 2 | réalisation (spécifique à l'objectif) | 4 | 56 |
+| 8 | 2 | réalisation (spécifique à l'objectif) | 4 | 52 |
 | 9 | 2 | affûtage | 4 | 29 |
-| 10 | 2 | échéance — ÉCHÉANCE | 4 | 23 |
+| 10 | 2 | échéance — ÉCHÉANCE | 4 | 25 |
 
 ## Saison
 
@@ -109,48 +109,48 @@ Homme de 32 ans, 93 kg, six ans de force athlétique. Squat 220 kg, développé 
 
 ## Semaine 2 — construction (volume) (bloc 1)
 
-### lundi — force, corps entier, séance lourde (120 min disponibles, 47 min estimées)
+### lundi — force, corps entier, séance lourde (120 min disponibles, 50 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
 | Back squat barre basse | 1 × 5 (série de tête), puis 3 × 5 à −8 % | 172,5 kg, ≈ 78 % du 1RM (charge totale ; 1RM de référence 220 kg) | 2 rép. en réserve | 4 min | principal ; Montée en charge avant la série de tête : 4 séries progressives — 5 répétitions à 40 %, 3 à 60 %, 2 à 75 %, 1 à 85 % de la charge du jour, 1 à 3 min entre elles. |
-| Développé couché barre | 4 × 5 | 112,5 kg, ≈ 75 % du 1RM (charge totale ; 1RM de référence 150 kg) | 2 rép. en réserve | 3 min | secondaire |
+| Développé couché barre | 5 × 5 | 112,5 kg, ≈ 75 % du 1RM (charge totale ; 1RM de référence 150 kg) | 2 rép. en réserve | 3 min | secondaire |
 | Rowing poulie basse assis au triangle | 3 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Leg curl assis | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Face pull à l'élastique | 2 × 12 à 15 | — | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
 | Pallof press debout | 2 × 9 à 13 | charge à déterminer, à calibrer | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
 
-### mardi — force, corps entier, séance lourde (120 min disponibles, 44 min estimées)
+### mardi — force, corps entier, séance lourde (120 min disponibles, 49 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
 | Développé couché barre | 1 × 5 (série de tête), puis 3 × 5 à −8 % | 117,5 kg, ≈ 78 % du 1RM (charge totale ; 1RM de référence 150 kg) | 2 rép. en réserve | 4 min | principal ; Montée en charge avant la série de tête : 4 séries progressives — 5 répétitions à 40 %, 3 à 60 %, 2 à 75 %, 1 à 85 % de la charge du jour, 1 à 3 min entre elles. |
-| Soulevé de terre avec pause sous le genou | 3 × 4 | charge à déterminer, à calibrer | 3 rép. en réserve | 2 min 30 s | secondaire ; Charge à régler à la première séance : monte par paliers jusqu'à une série qui laisse 3 répétitions en réserve. |
+| Soulevé de terre avec pause sous le genou | 5 × 4 | charge à déterminer, à calibrer | 3 rép. en réserve | 2 min 30 s | secondaire ; Charge à régler à la première séance : monte par paliers jusqu'à une série qui laisse 3 répétitions en réserve. |
 | Tirage vertical poulie prise neutre | 3 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire |
 | Extension nuque à la poulie (corde) | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire |
 | Rotation externe à la poulie coude au corps | 2 × 12 à 15 | charge à déterminer, à calibrer | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
 | Pallof press debout | 2 × 9 à 13 | charge à déterminer, à calibrer | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
 
-### jeudi — force, corps entier, séance lourde (120 min disponibles, 41 min estimées)
+### jeudi — force, corps entier, séance lourde (120 min disponibles, 45 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
 | Soulevé de terre conventionnel | 1 × 5 (série de tête), puis 3 × 5 à −8 % | 205 kg, ≈ 79 % du 1RM (charge totale ; 1RM de référence 260 kg) | 2 rép. en réserve | 4 min | principal ; Montée en charge avant la série de tête : 4 séries progressives — 5 répétitions à 40 %, 3 à 60 %, 2 à 75 %, 1 à 85 % de la charge du jour, 1 à 3 min entre elles. |
-| Développé couché barre | 3 × 3 | 100 kg, ≈ 67 % du 1RM (charge totale ; 1RM de référence 150 kg) | 5 rép. en réserve ou plus | 2 min | secondaire ; Séance légère à 70 % du 1RM : chaque répétition rapide et propre, très loin de l'échec. |
+| Développé couché barre | 5 × 3 | 100 kg, ≈ 67 % du 1RM (charge totale ; 1RM de référence 150 kg) | 5 rép. en réserve ou plus | 2 min | secondaire ; Séance légère à 70 % du 1RM : chaque répétition rapide et propre, très loin de l'échec. |
 | Rowing poulie basse assis au triangle | 3 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Leg curl assis | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Face pull à l'élastique | 2 × 12 à 15 | — | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
 | Pallof press debout | 2 × 9 à 13 | charge à déterminer, à calibrer | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
 
-### samedi — force, corps entier, séance moyenne (120 min disponibles, 41 min estimées)
+### samedi — force, corps entier, séance moyenne (120 min disponibles, 44 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Back squat barre basse | 4 × 5 | 162,5 kg, ≈ 74 % du 1RM (charge totale ; 1RM de référence 220 kg) | 2 rép. en réserve | 3 min | secondaire |
+| Back squat barre basse | 5 × 5 | 162,5 kg, ≈ 74 % du 1RM (charge totale ; 1RM de référence 220 kg) | 2 rép. en réserve | 3 min | secondaire |
 | Développé couché avec pause | 3 × 4 | charge à déterminer, à calibrer | 3 rép. en réserve | 2 min 30 s | secondaire ; Charge à régler à la première séance : monte par paliers jusqu'à une série qui laisse 3 répétitions en réserve. |
 | Tirage vertical poulie prise neutre | 3 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire |
 | Extension nuque à la poulie (corde) | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire |
@@ -159,48 +159,48 @@ Homme de 32 ans, 93 kg, six ans de force athlétique. Squat 220 kg, développé 
 
 ## Semaine 3 — construction (volume) (bloc 1)
 
-### lundi — force, corps entier, séance lourde (120 min disponibles, 47 min estimées)
+### lundi — force, corps entier, séance lourde (120 min disponibles, 50 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
 | Back squat barre basse | 1 × 4 (série de tête), puis 3 × 4 à −8 % | 182,5 kg, ≈ 83 % du 1RM (charge totale ; 1RM de référence 220 kg) | 2 rép. en réserve | 4 min | principal ; Montée en charge avant la série de tête : 4 séries progressives — 5 répétitions à 40 %, 3 à 60 %, 2 à 75 %, 1 à 85 % de la charge du jour, 1 à 3 min entre elles. ; Série de recalage (dernière semaine de charge du bloc) : note la charge, les répétitions et la réserve réelle de la série de tête. Au moins une répétition de plus en réserve que prévu : ton 1RM de travail monte de 2,5 % au bloc suivant ; une de moins : il baisse de 2,5 %. Déclare la série dans l'application, les charges se recalent dessus. |
-| Développé couché barre | 4 × 5 | 115 kg, ≈ 77 % du 1RM (charge totale ; 1RM de référence 150 kg) | 2 rép. en réserve | 3 min | secondaire |
+| Développé couché barre | 5 × 5 | 115 kg, ≈ 77 % du 1RM (charge totale ; 1RM de référence 150 kg) | 2 rép. en réserve | 3 min | secondaire |
 | Rowing poulie basse assis au triangle | 3 × 10 à 12 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Leg curl assis | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Face pull à l'élastique | 2 × 12 à 15 | — | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
 | Pallof press debout | 2 × 10 à 14 | charge à déterminer, à calibrer | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
 
-### mardi — force, corps entier, séance lourde (120 min disponibles, 44 min estimées)
+### mardi — force, corps entier, séance lourde (120 min disponibles, 49 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
 | Développé couché barre | 1 × 4 (série de tête), puis 3 × 4 à −8 % | 122,5 kg, ≈ 82 % du 1RM (charge totale ; 1RM de référence 150 kg) | 2 rép. en réserve | 4 min | principal ; Montée en charge avant la série de tête : 4 séries progressives — 5 répétitions à 40 %, 3 à 60 %, 2 à 75 %, 1 à 85 % de la charge du jour, 1 à 3 min entre elles. ; Série de recalage (dernière semaine de charge du bloc) : note la charge, les répétitions et la réserve réelle de la série de tête. Au moins une répétition de plus en réserve que prévu : ton 1RM de travail monte de 2,5 % au bloc suivant ; une de moins : il baisse de 2,5 %. Déclare la série dans l'application, les charges se recalent dessus. |
-| Soulevé de terre avec pause sous le genou | 3 × 4 | charge à déterminer, à calibrer | 3 rép. en réserve | 2 min 30 s | secondaire ; Charge à régler à la première séance : monte par paliers jusqu'à une série qui laisse 3 répétitions en réserve. |
+| Soulevé de terre avec pause sous le genou | 5 × 4 | charge à déterminer, à calibrer | 3 rép. en réserve | 2 min 30 s | secondaire ; Charge à régler à la première séance : monte par paliers jusqu'à une série qui laisse 3 répétitions en réserve. |
 | Tirage vertical poulie prise neutre | 3 × 10 à 12 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire |
 | Extension nuque à la poulie (corde) | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire |
 | Rotation externe à la poulie coude au corps | 2 × 12 à 15 | charge à déterminer, à calibrer | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
 | Pallof press debout | 2 × 10 à 14 | charge à déterminer, à calibrer | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
 
-### jeudi — force, corps entier, séance lourde (120 min disponibles, 41 min estimées)
+### jeudi — force, corps entier, séance lourde (120 min disponibles, 46 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
 | Soulevé de terre conventionnel | 1 × 5 (série de tête), puis 3 × 5 à −8 % | 215 kg, ≈ 83 % du 1RM (charge totale ; 1RM de référence 260 kg) | 1 rép. en réserve | 4 min | principal ; Montée en charge avant la série de tête : 4 séries progressives — 5 répétitions à 40 %, 3 à 60 %, 2 à 75 %, 1 à 85 % de la charge du jour, 1 à 3 min entre elles. ; Série de recalage (dernière semaine de charge du bloc) : note la charge, les répétitions et la réserve réelle de la série de tête. Au moins une répétition de plus en réserve que prévu : ton 1RM de travail monte de 2,5 % au bloc suivant ; une de moins : il baisse de 2,5 %. Déclare la série dans l'application, les charges se recalent dessus. |
-| Développé couché barre | 3 × 3 | 105 kg, ≈ 70 % du 1RM (charge totale ; 1RM de référence 150 kg) | 5 rép. en réserve ou plus | 2 min | secondaire ; Séance légère à 70 % du 1RM : chaque répétition rapide et propre, très loin de l'échec. |
+| Développé couché barre | 5 × 3 | 105 kg, ≈ 70 % du 1RM (charge totale ; 1RM de référence 150 kg) | 5 rép. en réserve ou plus | 2 min | secondaire ; Séance légère à 70 % du 1RM : chaque répétition rapide et propre, très loin de l'échec. |
 | Rowing poulie basse assis au triangle | 3 × 10 à 12 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Leg curl assis | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Face pull à l'élastique | 2 × 12 à 15 | — | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
 | Pallof press debout | 2 × 10 à 14 | charge à déterminer, à calibrer | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
 
-### samedi — force, corps entier, séance moyenne (120 min disponibles, 41 min estimées)
+### samedi — force, corps entier, séance moyenne (120 min disponibles, 44 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Back squat barre basse | 4 × 5 | 170 kg, ≈ 77 % du 1RM (charge totale ; 1RM de référence 220 kg) | 2 rép. en réserve | 3 min | secondaire |
+| Back squat barre basse | 5 × 5 | 170 kg, ≈ 77 % du 1RM (charge totale ; 1RM de référence 220 kg) | 2 rép. en réserve | 3 min | secondaire |
 | Développé couché avec pause | 3 × 4 | charge à déterminer, à calibrer | 3 rép. en réserve | 2 min 30 s | secondaire ; Charge à régler à la première séance : monte par paliers jusqu'à une série qui laisse 3 répétitions en réserve. |
 | Tirage vertical poulie prise neutre | 3 × 10 à 12 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire |
 | Extension nuque à la poulie (corde) | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire |
@@ -255,48 +255,48 @@ Homme de 32 ans, 93 kg, six ans de force athlétique. Squat 220 kg, développé 
 
 ## Semaine 5 — intensification (séries plus dures) (bloc 2)
 
-### lundi — force, corps entier, séance lourde (120 min disponibles, 46 min estimées)
+### lundi — force, corps entier, séance lourde (120 min disponibles, 49 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
 | Back squat barre basse | 1 × 3 (série de tête), puis 3 × 3 à −5 % | 180 kg, ≈ 82 % du 1RM (charge totale ; 1RM de référence 220 kg) | 3 rép. en réserve | 4 min | principal ; Montée en charge avant la série de tête : 4 séries progressives — 5 répétitions à 40 %, 3 à 60 %, 2 à 75 %, 1 à 85 % de la charge du jour, 1 à 3 min entre elles. |
-| Développé couché barre | 4 × 4 | 110 kg, ≈ 73 % du 1RM (charge totale ; 1RM de référence 150 kg) | 4 rép. en réserve | 3 min | secondaire |
+| Développé couché barre | 5 × 4 | 110 kg, ≈ 73 % du 1RM (charge totale ; 1RM de référence 150 kg) | 4 rép. en réserve | 3 min | secondaire |
 | Rowing poulie basse assis au triangle | 3 × 8 à 10 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Leg curl assis | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Face pull à l'élastique | 2 × 12 à 15 | — | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
 | Pallof press debout | 2 × 8 à 12 | charge à déterminer, à calibrer | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
 
-### mardi — force, corps entier, séance lourde (120 min disponibles, 43 min estimées)
+### mardi — force, corps entier, séance lourde (120 min disponibles, 48 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
 | Développé couché barre | 1 × 3 (série de tête), puis 3 × 3 à −5 % | 122,5 kg, ≈ 82 % du 1RM (charge totale ; 1RM de référence 150 kg) | 3 rép. en réserve | 4 min | principal ; Montée en charge avant la série de tête : 4 séries progressives — 5 répétitions à 40 %, 3 à 60 %, 2 à 75 %, 1 à 85 % de la charge du jour, 1 à 3 min entre elles. |
-| Soulevé de terre avec pause sous le genou | 3 × 3 | charge à déterminer, à calibrer | 3 rép. en réserve | 2 min 30 s | secondaire ; Charge à régler à la première séance : monte par paliers jusqu'à une série qui laisse 3 répétitions en réserve. |
+| Soulevé de terre avec pause sous le genou | 5 × 3 | charge à déterminer, à calibrer | 3 rép. en réserve | 2 min 30 s | secondaire ; Charge à régler à la première séance : monte par paliers jusqu'à une série qui laisse 3 répétitions en réserve. |
 | Tirage vertical poulie prise neutre | 3 × 8 à 10 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire |
 | Extension nuque à la poulie (corde) | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire |
 | Rotation externe à la poulie coude au corps | 2 × 12 à 15 | charge à déterminer, à calibrer | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
 | Pallof press debout | 2 × 8 à 12 | charge à déterminer, à calibrer | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
 
-### jeudi — force, corps entier, séance lourde (120 min disponibles, 41 min estimées)
+### jeudi — force, corps entier, séance lourde (120 min disponibles, 45 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
 | Soulevé de terre conventionnel | 1 × 3 (série de tête), puis 3 × 3 à −5 % | 212,5 kg, ≈ 82 % du 1RM (charge totale ; 1RM de référence 260 kg) | 3 rép. en réserve | 4 min | principal ; Montée en charge avant la série de tête : 4 séries progressives — 5 répétitions à 40 %, 3 à 60 %, 2 à 75 %, 1 à 85 % de la charge du jour, 1 à 3 min entre elles. |
-| Développé couché barre | 3 × 3 | 100 kg, ≈ 67 % du 1RM (charge totale ; 1RM de référence 150 kg) | 5 rép. en réserve ou plus | 2 min | secondaire ; Séance légère à 70 % du 1RM : chaque répétition rapide et propre, très loin de l'échec. |
+| Développé couché barre | 5 × 3 | 100 kg, ≈ 67 % du 1RM (charge totale ; 1RM de référence 150 kg) | 5 rép. en réserve ou plus | 2 min | secondaire ; Séance légère à 70 % du 1RM : chaque répétition rapide et propre, très loin de l'échec. |
 | Rowing poulie basse assis au triangle | 3 × 8 à 10 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Leg curl assis | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Face pull à l'élastique | 2 × 12 à 15 | — | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
 | Pallof press debout | 2 × 8 à 12 | charge à déterminer, à calibrer | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
 
-### samedi — force, corps entier, séance moyenne (120 min disponibles, 40 min estimées)
+### samedi — force, corps entier, séance moyenne (120 min disponibles, 43 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Back squat barre basse | 4 × 4 | 157,5 kg, ≈ 72 % du 1RM (charge totale ; 1RM de référence 220 kg) | 4 rép. en réserve | 3 min | secondaire |
+| Back squat barre basse | 5 × 4 | 157,5 kg, ≈ 72 % du 1RM (charge totale ; 1RM de référence 220 kg) | 4 rép. en réserve | 3 min | secondaire |
 | Développé couché avec pause | 3 × 3 | charge à déterminer, à calibrer | 3 rép. en réserve | 2 min 30 s | secondaire ; Charge à régler à la première séance : monte par paliers jusqu'à une série qui laisse 3 répétitions en réserve. |
 | Tirage vertical poulie prise neutre | 3 × 8 à 10 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire |
 | Extension nuque à la poulie (corde) | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire |
@@ -305,48 +305,48 @@ Homme de 32 ans, 93 kg, six ans de force athlétique. Squat 220 kg, développé 
 
 ## Semaine 6 — intensification (séries plus dures) (bloc 2)
 
-### lundi — force, corps entier, séance lourde (120 min disponibles, 46 min estimées)
+### lundi — force, corps entier, séance lourde (120 min disponibles, 49 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
 | Back squat barre basse | 1 × 2 (série de tête), puis 3 × 2 à −5 % | 192,5 kg, ≈ 88 % du 1RM (charge totale ; 1RM de référence 220 kg) | 2 rép. en réserve | 4 min | principal ; Montée en charge avant la série de tête : 4 séries progressives — 5 répétitions à 40 %, 3 à 60 %, 2 à 75 %, 1 à 85 % de la charge du jour, 1 à 3 min entre elles. ; Charge lourde (85 % du 1RM et plus) : sécurités de la cage réglées juste sous le point le plus bas, ou un pareur. Si la dernière montée d'échauffement n'est pas rapide, la série de tête se fait à cette charge-là. |
-| Développé couché barre | 4 × 4 | 115 kg, ≈ 77 % du 1RM (charge totale ; 1RM de référence 150 kg) | 3 rép. en réserve | 3 min | secondaire |
+| Développé couché barre | 5 × 4 | 115 kg, ≈ 77 % du 1RM (charge totale ; 1RM de référence 150 kg) | 3 rép. en réserve | 3 min | secondaire |
 | Rowing poulie basse assis au triangle | 3 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Leg curl assis | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Face pull à l'élastique | 2 × 12 à 15 | — | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
 | Pallof press debout | 2 × 9 à 13 | charge à déterminer, à calibrer | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
 
-### mardi — force, corps entier, séance lourde (120 min disponibles, 43 min estimées)
+### mardi — force, corps entier, séance lourde (120 min disponibles, 48 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
 | Développé couché barre | 1 × 2 (série de tête), puis 3 × 2 à −5 % | 130 kg, ≈ 87 % du 1RM (charge totale ; 1RM de référence 150 kg) | 2 rép. en réserve | 4 min | principal ; Montée en charge avant la série de tête : 4 séries progressives — 5 répétitions à 40 %, 3 à 60 %, 2 à 75 %, 1 à 85 % de la charge du jour, 1 à 3 min entre elles. ; Charge lourde (85 % du 1RM et plus) : sécurités de la cage réglées juste sous le point le plus bas, ou un pareur. Si la dernière montée d'échauffement n'est pas rapide, la série de tête se fait à cette charge-là. |
-| Soulevé de terre avec pause sous le genou | 3 × 3 | charge à déterminer, à calibrer | 3 rép. en réserve | 2 min 30 s | secondaire ; Charge à régler à la première séance : monte par paliers jusqu'à une série qui laisse 3 répétitions en réserve. |
+| Soulevé de terre avec pause sous le genou | 5 × 3 | charge à déterminer, à calibrer | 3 rép. en réserve | 2 min 30 s | secondaire ; Charge à régler à la première séance : monte par paliers jusqu'à une série qui laisse 3 répétitions en réserve. |
 | Tirage vertical poulie prise neutre | 3 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire |
 | Extension nuque à la poulie (corde) | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire |
 | Rotation externe à la poulie coude au corps | 2 × 12 à 15 | charge à déterminer, à calibrer | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
 | Pallof press debout | 2 × 9 à 13 | charge à déterminer, à calibrer | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
 
-### jeudi — force, corps entier, séance lourde (120 min disponibles, 41 min estimées)
+### jeudi — force, corps entier, séance lourde (120 min disponibles, 45 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
 | Soulevé de terre conventionnel | 1 × 3 (série de tête), puis 3 × 3 à −5 % | 222,5 kg, ≈ 86 % du 1RM (charge totale ; 1RM de référence 260 kg) | 1 rép. en réserve | 4 min | principal ; Montée en charge avant la série de tête : 4 séries progressives — 5 répétitions à 40 %, 3 à 60 %, 2 à 75 %, 1 à 85 % de la charge du jour, 1 à 3 min entre elles. |
-| Développé couché barre | 3 × 3 | 105 kg, ≈ 70 % du 1RM (charge totale ; 1RM de référence 150 kg) | 5 rép. en réserve ou plus | 2 min | secondaire ; Séance légère à 70 % du 1RM : chaque répétition rapide et propre, très loin de l'échec. |
+| Développé couché barre | 5 × 3 | 105 kg, ≈ 70 % du 1RM (charge totale ; 1RM de référence 150 kg) | 5 rép. en réserve ou plus | 2 min | secondaire ; Séance légère à 70 % du 1RM : chaque répétition rapide et propre, très loin de l'échec. |
 | Rowing poulie basse assis au triangle | 3 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Leg curl assis | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Face pull à l'élastique | 2 × 12 à 15 | — | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
 | Pallof press debout | 2 × 9 à 13 | charge à déterminer, à calibrer | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
 
-### samedi — force, corps entier, séance moyenne (120 min disponibles, 40 min estimées)
+### samedi — force, corps entier, séance moyenne (120 min disponibles, 44 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Back squat barre basse | 4 × 4 | 165 kg, ≈ 75 % du 1RM (charge totale ; 1RM de référence 220 kg) | 4 rép. en réserve | 3 min | secondaire |
+| Back squat barre basse | 5 × 4 | 165 kg, ≈ 75 % du 1RM (charge totale ; 1RM de référence 220 kg) | 4 rép. en réserve | 3 min | secondaire |
 | Développé couché avec pause | 3 × 3 | charge à déterminer, à calibrer | 3 rép. en réserve | 2 min 30 s | secondaire ; Charge à régler à la première séance : monte par paliers jusqu'à une série qui laisse 3 répétitions en réserve. |
 | Tirage vertical poulie prise neutre | 3 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire |
 | Extension nuque à la poulie (corde) | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire |
@@ -355,49 +355,49 @@ Homme de 32 ans, 93 kg, six ans de force athlétique. Squat 220 kg, développé 
 
 ## Semaine 7 — réalisation (spécifique à l'objectif) (bloc 2)
 
-### lundi — force, corps entier, séance lourde (120 min disponibles, 38 min estimées)
+### lundi — force, corps entier, séance lourde (120 min disponibles, 44 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
 | Back squat barre basse | 1 × 1 (série de tête), puis 2 × 2 à −5 % | 200 kg, ≈ 91 % du 1RM (charge totale ; 1RM de référence 220 kg) | 2 rép. en réserve | 4 min | principal ; Montée en charge avant la série de tête : 4 séries progressives — 5 répétitions à 40 %, 3 à 60 %, 2 à 75 %, 1 à 85 % de la charge du jour, 1 à 3 min entre elles. ; Charge lourde (85 % du 1RM et plus) : sécurités de la cage réglées juste sous le point le plus bas, ou un pareur. Si la dernière montée d'échauffement n'est pas rapide, la série de tête se fait à cette charge-là. |
-| Développé couché barre | 3 × 3 | 122,5 kg, ≈ 82 % du 1RM (charge totale ; 1RM de référence 150 kg) | 3 rép. en réserve | 3 min | secondaire |
+| Développé couché barre | 5 × 3 | 122,5 kg, ≈ 82 % du 1RM (charge totale ; 1RM de référence 150 kg) | 3 rép. en réserve | 3 min | secondaire |
 | Rowing poulie basse assis au triangle | 3 × 8 à 10 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Leg curl assis | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Face pull à l'élastique | 2 × 12 à 15 | — | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
 | Pallof press debout | 2 × 8 à 12 | charge à déterminer, à calibrer | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
 
-### mardi — force, corps entier, séance lourde (120 min disponibles, 36 min estimées)
+### mardi — force, corps entier, séance lourde (120 min disponibles, 44 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
 | Développé couché barre | 1 × 1 (série de tête), puis 2 × 2 à −5 % | 135 kg, ≈ 90 % du 1RM (charge totale ; 1RM de référence 150 kg) | 2 rép. en réserve | 4 min | principal ; Montée en charge avant la série de tête : 4 séries progressives — 5 répétitions à 40 %, 3 à 60 %, 2 à 75 %, 1 à 85 % de la charge du jour, 1 à 3 min entre elles. ; Charge lourde (85 % du 1RM et plus) : sécurités de la cage réglées juste sous le point le plus bas, ou un pareur. Si la dernière montée d'échauffement n'est pas rapide, la série de tête se fait à cette charge-là. |
-| Soulevé de terre avec pause sous le genou | 2 × 3 | charge à déterminer, à calibrer | 3 rép. en réserve | 2 min 30 s | secondaire ; Charge à régler à la première séance : monte par paliers jusqu'à une série qui laisse 3 répétitions en réserve. |
+| Soulevé de terre avec pause sous le genou | 5 × 3 | charge à déterminer, à calibrer | 3 rép. en réserve | 2 min 30 s | secondaire ; Charge à régler à la première séance : monte par paliers jusqu'à une série qui laisse 3 répétitions en réserve. |
 | Tirage vertical poulie prise neutre | 3 × 8 à 10 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire |
 | Extension nuque à la poulie (corde) | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire |
 | Rotation externe à la poulie coude au corps | 2 × 12 à 15 | charge à déterminer, à calibrer | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
 | Pallof press debout | 2 × 8 à 12 | charge à déterminer, à calibrer | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
 
-### jeudi — force, corps entier, séance lourde (120 min disponibles, 36 min estimées)
+### jeudi — force, corps entier, séance lourde (120 min disponibles, 41 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
 | Soulevé de terre conventionnel | 1 × 2 (série de tête), puis 2 × 2 à −5 % | 235 kg, ≈ 90 % du 1RM (charge totale ; 1RM de référence 260 kg) | 1 rép. en réserve | 4 min | principal ; Montée en charge avant la série de tête : 4 séries progressives — 5 répétitions à 40 %, 3 à 60 %, 2 à 75 %, 1 à 85 % de la charge du jour, 1 à 3 min entre elles. |
-| Développé couché barre | 3 × 3 | 105 kg, ≈ 70 % du 1RM (charge totale ; 1RM de référence 150 kg) | 5 rép. en réserve ou plus | 2 min | secondaire ; Séance légère à 70 % du 1RM : chaque répétition rapide et propre, très loin de l'échec. |
+| Développé couché barre | 5 × 3 | 105 kg, ≈ 70 % du 1RM (charge totale ; 1RM de référence 150 kg) | 5 rép. en réserve ou plus | 2 min | secondaire ; Séance légère à 70 % du 1RM : chaque répétition rapide et propre, très loin de l'échec. |
 | Rowing poulie basse assis au triangle | 3 × 8 à 10 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Leg curl assis | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Face pull à l'élastique | 2 × 12 à 15 | — | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
 | Pallof press debout | 2 × 8 à 12 | charge à déterminer, à calibrer | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
 
-### samedi — force, corps entier, séance moyenne (120 min disponibles, 34 min estimées)
+### samedi — force, corps entier, séance moyenne (120 min disponibles, 46 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Back squat barre basse | 3 × 3 | 175 kg, ≈ 80 % du 1RM (charge totale ; 1RM de référence 220 kg) | 3 rép. en réserve | 3 min | secondaire |
-| Développé couché avec pause | 2 × 3 | charge à déterminer, à calibrer | 3 rép. en réserve | 2 min 30 s | secondaire ; Charge à régler à la première séance : monte par paliers jusqu'à une série qui laisse 3 répétitions en réserve. |
+| Back squat barre basse | 5 × 3 | 175 kg, ≈ 80 % du 1RM (charge totale ; 1RM de référence 220 kg) | 3 rép. en réserve | 3 min | secondaire |
+| Développé couché avec pause | 4 × 3 | charge à déterminer, à calibrer | 3 rép. en réserve | 2 min 30 s | secondaire ; Charge à régler à la première séance : monte par paliers jusqu'à une série qui laisse 3 répétitions en réserve. |
 | Tirage vertical poulie prise neutre | 3 × 8 à 10 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire |
 | Extension nuque à la poulie (corde) | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire |
 | Rotation externe à la poulie coude au corps | 2 × 12 à 15 | charge à déterminer, à calibrer | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
@@ -405,49 +405,49 @@ Homme de 32 ans, 93 kg, six ans de force athlétique. Squat 220 kg, développé 
 
 ## Semaine 8 — réalisation (spécifique à l'objectif) (bloc 2)
 
-### lundi — force, corps entier, séance lourde (120 min disponibles, 36 min estimées)
+### lundi — force, corps entier, séance lourde (120 min disponibles, 42 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
 | Back squat barre basse | 1 × 1 (série de tête), puis 2 × 2 à −5 % | 200 kg, ≈ 91 % du 1RM (charge totale ; 1RM de référence 220 kg) | 2 rép. en réserve | 4 min | principal ; Montée en charge avant la série de tête : 4 séries progressives — 5 répétitions à 40 %, 3 à 60 %, 2 à 75 %, 1 à 85 % de la charge du jour, 1 à 3 min entre elles. ; Charge lourde (85 % du 1RM et plus) : sécurités de la cage réglées juste sous le point le plus bas, ou un pareur. Si la dernière montée d'échauffement n'est pas rapide, la série de tête se fait à cette charge-là. |
-| Développé couché barre | 3 × 3 | 122,5 kg, ≈ 82 % du 1RM (charge totale ; 1RM de référence 150 kg) | 3 rép. en réserve | 3 min | secondaire |
+| Développé couché barre | 5 × 3 | 122,5 kg, ≈ 82 % du 1RM (charge totale ; 1RM de référence 150 kg) | 3 rép. en réserve | 3 min | secondaire |
 | Rowing poulie basse assis au triangle | 2 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Leg curl assis | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Face pull à l'élastique | 2 × 12 à 15 | — | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
 | Pallof press debout | 2 × 9 à 13 | charge à déterminer, à calibrer | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
 
-### mardi — force, corps entier, séance lourde (120 min disponibles, 34 min estimées)
+### mardi — force, corps entier, séance lourde (120 min disponibles, 42 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
 | Développé couché barre | 1 × 1 (série de tête), puis 2 × 2 à −5 % | 135 kg, ≈ 91 % du 1RM (charge totale ; 1RM de référence 148,5 kg) | 2 rép. en réserve | 4 min | principal ; Montée en charge avant la série de tête : 4 séries progressives — 5 répétitions à 40 %, 3 à 60 %, 2 à 75 %, 1 à 85 % de la charge du jour, 1 à 3 min entre elles. ; Charge lourde (85 % du 1RM et plus) : sécurités de la cage réglées juste sous le point le plus bas, ou un pareur. Si la dernière montée d'échauffement n'est pas rapide, la série de tête se fait à cette charge-là. |
-| Soulevé de terre avec pause sous le genou | 2 × 3 | charge à déterminer, à calibrer | 3 rép. en réserve | 2 min 30 s | secondaire ; Charge à régler à la première séance : monte par paliers jusqu'à une série qui laisse 3 répétitions en réserve. |
+| Soulevé de terre avec pause sous le genou | 5 × 3 | charge à déterminer, à calibrer | 3 rép. en réserve | 2 min 30 s | secondaire ; Charge à régler à la première séance : monte par paliers jusqu'à une série qui laisse 3 répétitions en réserve. |
 | Tirage vertical poulie prise neutre | 2 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire |
 | Extension nuque à la poulie (corde) | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire |
 | Rotation externe à la poulie coude au corps | 2 × 12 à 15 | charge à déterminer, à calibrer | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
 | Pallof press debout | 2 × 9 à 13 | charge à déterminer, à calibrer | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
 
-### jeudi — force, corps entier, séance lourde (120 min disponibles, 34 min estimées)
+### jeudi — force, corps entier, séance lourde (120 min disponibles, 38 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
 | Soulevé de terre conventionnel | 1 × 1 (série de tête), puis 2 × 2 à −5 % | 240 kg, ≈ 92 % du 1RM (charge totale ; 1RM de référence 260 kg) | 1 rép. en réserve | 4 min | principal ; Montée en charge avant la série de tête : 4 séries progressives — 5 répétitions à 40 %, 3 à 60 %, 2 à 75 %, 1 à 85 % de la charge du jour, 1 à 3 min entre elles. |
-| Développé couché barre | 3 × 3 | 105 kg, ≈ 70 % du 1RM (charge totale ; 1RM de référence 150 kg) | 5 rép. en réserve ou plus | 2 min | secondaire ; Séance légère à 70 % du 1RM : chaque répétition rapide et propre, très loin de l'échec. |
+| Développé couché barre | 5 × 3 | 105 kg, ≈ 70 % du 1RM (charge totale ; 1RM de référence 150 kg) | 5 rép. en réserve ou plus | 2 min | secondaire ; Séance légère à 70 % du 1RM : chaque répétition rapide et propre, très loin de l'échec. |
 | Rowing poulie basse assis au triangle | 2 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Leg curl assis | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Face pull à l'élastique | 2 × 12 à 15 | — | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
 | Pallof press debout | 2 × 9 à 13 | charge à déterminer, à calibrer | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
 
-### samedi — force, corps entier, séance moyenne (120 min disponibles, 32 min estimées)
+### samedi — force, corps entier, séance moyenne (120 min disponibles, 44 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Back squat barre basse | 3 × 3 | 180 kg, ≈ 82 % du 1RM (charge totale ; 1RM de référence 220 kg) | 3 rép. en réserve | 3 min | secondaire |
-| Développé couché avec pause | 2 × 3 | charge à déterminer, à calibrer | 3 rép. en réserve | 2 min 30 s | secondaire ; Charge à régler à la première séance : monte par paliers jusqu'à une série qui laisse 3 répétitions en réserve. |
+| Back squat barre basse | 5 × 3 | 180 kg, ≈ 82 % du 1RM (charge totale ; 1RM de référence 220 kg) | 3 rép. en réserve | 3 min | secondaire |
+| Développé couché avec pause | 4 × 3 | charge à déterminer, à calibrer | 3 rép. en réserve | 2 min 30 s | secondaire ; Charge à régler à la première séance : monte par paliers jusqu'à une série qui laisse 3 répétitions en réserve. |
 | Tirage vertical poulie prise neutre | 2 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire |
 | Extension nuque à la poulie (corde) | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire |
 | Rotation externe à la poulie coude au corps | 2 × 12 à 15 | charge à déterminer, à calibrer | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
@@ -460,7 +460,7 @@ Homme de 32 ans, 93 kg, six ans de force athlétique. Squat 220 kg, développé 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Back squat barre basse | 2 × 2 | 187,5 kg, ≈ 85 % du 1RM (charge totale ; 1RM de référence 220 kg) | 3 rép. en réserve | 3 min | principal ; Affûtage : séries dures ramenées à environ 55 % de la semaine de pointe, intensité et fréquence gardées, à 14 jours de l'échéance au plus. ; Charge lourde (85 % du 1RM et plus) : sécurités de la cage réglées juste sous le point le plus bas, ou un pareur. Si la dernière montée d'échauffement n'est pas rapide, la série de tête se fait à cette charge-là. |
+| Back squat barre basse | 2 × 2 | 187,5 kg, ≈ 85 % du 1RM (charge totale ; 1RM de référence 220 kg) | 3 rép. en réserve | 3 min | principal ; Affûtage : séries dures ramenées à environ 50 % de la semaine de pointe, intensité et fréquence gardées, à 14 jours de l'échéance au plus. ; Charge lourde (85 % du 1RM et plus) : sécurités de la cage réglées juste sous le point le plus bas, ou un pareur. Si la dernière montée d'échauffement n'est pas rapide, la série de tête se fait à cette charge-là. |
 | Développé couché barre | 2 × 2 | 127,5 kg, ≈ 85 % du 1RM (charge totale ; 1RM de référence 150 kg) | 3 rép. en réserve | 3 min | secondaire |
 | Rowing poulie basse assis au triangle | 2 × 8 à 10 | charge à déterminer, à calibrer | 3 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Face pull à l'élastique | 2 × 12 à 15 | — | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
@@ -471,7 +471,7 @@ Homme de 32 ans, 93 kg, six ans de force athlétique. Squat 220 kg, développé 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Développé couché barre | 1 × 1 (série de tête), puis 2 × 2 à −8 % | 135 kg, ≈ 90 % du 1RM (charge totale ; 1RM de référence 150 kg) | 2 rép. en réserve | 4 min | principal ; Montée en charge avant la série de tête : 4 séries progressives — 5 répétitions à 40 %, 3 à 60 %, 2 à 75 %, 1 à 85 % de la charge du jour, 1 à 3 min entre elles. ; Dernier lourd avant l'épreuve (J−11) : fais-le dans les conditions du jour J — commandes, matériel de compétition, amplitude jugée (filme-toi de profil). ; Affûtage : séries dures ramenées à environ 55 % de la semaine de pointe, intensité et fréquence gardées, à 14 jours de l'échéance au plus. ; Charge lourde (85 % du 1RM et plus) : sécurités de la cage réglées juste sous le point le plus bas, ou un pareur. Si la dernière montée d'échauffement n'est pas rapide, la série de tête se fait à cette charge-là. |
+| Développé couché barre | 1 × 1 (série de tête), puis 2 × 2 à −8 % | 135 kg, ≈ 90 % du 1RM (charge totale ; 1RM de référence 150 kg) | 2 rép. en réserve | 4 min | principal ; Montée en charge avant la série de tête : 4 séries progressives — 5 répétitions à 40 %, 3 à 60 %, 2 à 75 %, 1 à 85 % de la charge du jour, 1 à 3 min entre elles. ; Dernier lourd avant l'épreuve (J−11) : fais-le dans les conditions du jour J — commandes, matériel de compétition, amplitude jugée (filme-toi de profil). ; Affûtage : séries dures ramenées à environ 50 % de la semaine de pointe, intensité et fréquence gardées, à 14 jours de l'échéance au plus. ; Charge lourde (85 % du 1RM et plus) : sécurités de la cage réglées juste sous le point le plus bas, ou un pareur. Si la dernière montée d'échauffement n'est pas rapide, la série de tête se fait à cette charge-là. |
 | Tirage vertical poulie prise neutre | 2 × 8 à 10 | charge à déterminer, à calibrer | 3 rép. en réserve | 105 s | accessoire |
 | Rotation externe à la poulie coude au corps | 2 × 12 à 15 | charge à déterminer, à calibrer | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
 | Pallof press debout | 2 × 8 à 12 | charge à déterminer, à calibrer | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
@@ -481,7 +481,7 @@ Homme de 32 ans, 93 kg, six ans de force athlétique. Squat 220 kg, développé 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Soulevé de terre conventionnel | 1 × 1 (série de tête), puis 2 × 2 à −8 % | 232,5 kg, ≈ 89 % du 1RM (charge totale ; 1RM de référence 260 kg) | 2 rép. en réserve | 4 min | principal ; Montée en charge avant la série de tête : 4 séries progressives — 5 répétitions à 40 %, 3 à 60 %, 2 à 75 %, 1 à 85 % de la charge du jour, 1 à 3 min entre elles. ; Dernier lourd avant l'épreuve (J−9) : fais-le dans les conditions du jour J — commandes, matériel de compétition, amplitude jugée (filme-toi de profil). ; Affûtage : séries dures ramenées à environ 55 % de la semaine de pointe, intensité et fréquence gardées, à 14 jours de l'échéance au plus. |
+| Soulevé de terre conventionnel | 1 × 1 (série de tête), puis 2 × 2 à −8 % | 232,5 kg, ≈ 89 % du 1RM (charge totale ; 1RM de référence 260 kg) | 2 rép. en réserve | 4 min | principal ; Montée en charge avant la série de tête : 4 séries progressives — 5 répétitions à 40 %, 3 à 60 %, 2 à 75 %, 1 à 85 % de la charge du jour, 1 à 3 min entre elles. ; Dernier lourd avant l'épreuve (J−9) : fais-le dans les conditions du jour J — commandes, matériel de compétition, amplitude jugée (filme-toi de profil). ; Affûtage : séries dures ramenées à environ 50 % de la semaine de pointe, intensité et fréquence gardées, à 14 jours de l'échéance au plus. |
 | Rowing poulie basse assis au triangle | 2 × 8 à 10 | charge à déterminer, à calibrer | 3 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Face pull à l'élastique | 2 × 12 à 15 | — | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
 | Pallof press debout | 2 × 8 à 12 | charge à déterminer, à calibrer | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
@@ -491,29 +491,29 @@ Homme de 32 ans, 93 kg, six ans de force athlétique. Squat 220 kg, développé 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Back squat barre basse | 1 × 1 (série de tête), puis 2 × 2 à −8 % | 197,5 kg, ≈ 90 % du 1RM (charge totale ; 1RM de référence 220 kg) | 2 rép. en réserve | 4 min | secondaire ; Montée en charge avant la série de tête : 4 séries progressives — 5 répétitions à 40 %, 3 à 60 %, 2 à 75 %, 1 à 85 % de la charge du jour, 1 à 3 min entre elles. ; Dernier lourd avant l'épreuve (J−7) : fais-le dans les conditions du jour J — commandes, matériel de compétition, amplitude jugée (filme-toi de profil). ; Affûtage : séries dures ramenées à environ 55 % de la semaine de pointe, intensité et fréquence gardées, à 14 jours de l'échéance au plus. ; Charge lourde (85 % du 1RM et plus) : sécurités de la cage réglées juste sous le point le plus bas, ou un pareur. Si la dernière montée d'échauffement n'est pas rapide, la série de tête se fait à cette charge-là. |
+| Back squat barre basse | 1 × 1 (série de tête), puis 2 × 2 à −8 % | 197,5 kg, ≈ 90 % du 1RM (charge totale ; 1RM de référence 220 kg) | 2 rép. en réserve | 4 min | secondaire ; Montée en charge avant la série de tête : 4 séries progressives — 5 répétitions à 40 %, 3 à 60 %, 2 à 75 %, 1 à 85 % de la charge du jour, 1 à 3 min entre elles. ; Dernier lourd avant l'épreuve (J−7) : fais-le dans les conditions du jour J — commandes, matériel de compétition, amplitude jugée (filme-toi de profil). ; Affûtage : séries dures ramenées à environ 50 % de la semaine de pointe, intensité et fréquence gardées, à 14 jours de l'échéance au plus. ; Charge lourde (85 % du 1RM et plus) : sécurités de la cage réglées juste sous le point le plus bas, ou un pareur. Si la dernière montée d'échauffement n'est pas rapide, la série de tête se fait à cette charge-là. |
 | Tirage vertical poulie prise neutre | 2 × 8 à 10 | charge à déterminer, à calibrer | 3 rép. en réserve | 105 s | accessoire |
 | Rotation externe à la poulie coude au corps | 2 × 12 à 15 | charge à déterminer, à calibrer | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
 | Pallof press debout | 2 × 8 à 12 | charge à déterminer, à calibrer | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
 
 ## Semaine 10 — échéance (bloc 2)
 
-### lundi — force, corps entier, séance lourde (120 min disponibles, 33 min estimées)
+### lundi — force, corps entier, séance lourde (120 min disponibles, 36 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
 | Back squat barre basse | 1 × 1 (série de tête), puis 3 × 2 à −10 % | 185 kg, ≈ 84 % du 1RM (charge totale ; 1RM de référence 220 kg) | 4 rép. en réserve | 4 min | principal ; Montée en charge avant la série de tête : 4 séries progressives — 5 répétitions à 40 %, 3 à 60 %, 2 à 75 %, 1 à 85 % de la charge du jour, 1 à 3 min entre elles. ; Rappel avant l'échéance : 85 % du 1RM, une série de tête rapide et facile, sans forcer (le dernier lourd est derrière toi). |
-| Développé couché barre | 3 × 3 | 115 kg, ≈ 77 % du 1RM (charge totale ; 1RM de référence 150 kg) | 4 rép. en réserve | 3 min | secondaire |
+| Développé couché barre | 4 × 3 | 115 kg, ≈ 77 % du 1RM (charge totale ; 1RM de référence 150 kg) | 4 rép. en réserve | 3 min | secondaire |
 | Face pull à l'élastique | 2 × 12 à 15 | — | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
 | Pallof press debout | 2 × 8 à 12 | charge à déterminer, à calibrer | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
 
-### mardi — force, corps entier, séance lourde (120 min disponibles, 23 min estimées)
+### mardi — force, corps entier, séance lourde (120 min disponibles, 27 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Développé couché barre | 1 × 1 (série de tête), puis 2 × 2 à −10 % | 127,5 kg, ≈ 85 % du 1RM (charge totale ; 1RM de référence 150 kg) | 4 rép. en réserve | 4 min | principal ; Montée en charge avant la série de tête : 4 séries progressives — 5 répétitions à 40 %, 3 à 60 %, 2 à 75 %, 1 à 85 % de la charge du jour, 1 à 3 min entre elles. ; Rappel avant l'échéance : 85 % du 1RM, une série de tête rapide et facile, sans forcer (le dernier lourd est derrière toi). ; Charge lourde (85 % du 1RM et plus) : sécurités de la cage réglées juste sous le point le plus bas, ou un pareur. Si la dernière montée d'échauffement n'est pas rapide, la série de tête se fait à cette charge-là. |
+| Développé couché barre | 1 × 1 (série de tête), puis 3 × 2 à −10 % | 127,5 kg, ≈ 85 % du 1RM (charge totale ; 1RM de référence 150 kg) | 4 rép. en réserve | 4 min | principal ; Montée en charge avant la série de tête : 4 séries progressives — 5 répétitions à 40 %, 3 à 60 %, 2 à 75 %, 1 à 85 % de la charge du jour, 1 à 3 min entre elles. ; Rappel avant l'échéance : 85 % du 1RM, une série de tête rapide et facile, sans forcer (le dernier lourd est derrière toi). ; Charge lourde (85 % du 1RM et plus) : sécurités de la cage réglées juste sous le point le plus bas, ou un pareur. Si la dernière montée d'échauffement n'est pas rapide, la série de tête se fait à cette charge-là. |
 | Rotation externe à la poulie coude au corps | 2 × 12 à 15 | charge à déterminer, à calibrer | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
 | Pallof press debout | 2 × 8 à 12 | charge à déterminer, à calibrer | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
 

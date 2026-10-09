@@ -35,7 +35,7 @@ Chaque bloc est écrit par le moteur de création au moment où il commence, d'a
 - Échecs non voulus (hors tests et tentatives) : 0 % des séries de travail.
 - Écart moyen entre l'effort affiché par le moteur et l'effort réel : 1,4 répétition en réserve (sur les 64 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 12,2 %.
 - Plus forte hausse de charge totale d'un mouvement principal d'une séance à la suivante, à schéma égal : 0 % ; hausses de plus de 10 % faites de plusieurs crans : 0.
-- Progression réelle moyenne des mouvements suivis : -0,068 % par semaine.
+- Progression réelle moyenne des mouvements suivis : -0,066 % par semaine.
 - Douleur : 0 hausse(s) de charge sur une zone douloureuse signalée.
 
 ## Mouvements suivis, semaine par semaine
@@ -69,7 +69,7 @@ Athlète simulé, maximum réel hors fatigue : 6 au départ (le record déclaré
 | 11 | affûtage | 2 × 6 à 8 | (6 à 8)-(6 à 8) | 8-8 | 5+ → 20,8 ; suivantes 5+ → 19,6 | 29 / 22 | — |
 | 12 | test | 2 × 5 | 5-5 | 5-5 | 5+ → 24,7 ; suivantes 5+ → 23 | 30 / 22 | — |
 
-Athlète simulé, maximum réel hors fatigue : 30 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 29 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
+Athlète simulé, maximum réel hors fatigue : 30 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 30 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
 
 ### Traction scapulaire
 

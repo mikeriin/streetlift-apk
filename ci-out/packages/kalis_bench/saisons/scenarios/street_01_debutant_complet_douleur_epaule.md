@@ -33,30 +33,14 @@ Chaque bloc est écrit par le moteur de création au moment où il commence, d'a
 
 - Séances faites : 48 sur 48 (18 ajustées le jour même).
 - Échecs non voulus (hors tests et tentatives) : 0 % des séries de travail.
-- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 1,92 répétition en réserve (sur les 70 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 27,7 %.
+- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 1,91 répétition en réserve (sur les 71 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 27,2 %.
 - Plus forte hausse de charge totale d'un mouvement principal d'une séance à la suivante, à schéma égal : 0 % ; hausses de plus de 10 % faites de plusieurs crans : 0.
-- Progression réelle moyenne des mouvements suivis : 0,4 % par semaine.
+- Progression réelle moyenne des mouvements suivis : 0,415 % par semaine.
 - Douleur : 0 hausse(s) de charge sur une zone douloureuse signalée.
 
 ## Mouvements suivis, semaine par semaine
 
 Pour chaque mouvement, la séance la plus lourde de la semaine : ce que le programme écrit, ce que le moteur sert ce jour-là (charges et répétitions recalées sur les maxima mesurés ; une plage entre parenthèses est une série au ressenti) et ce que l'athlète fait, l'effort affiché par le moteur et l'effort réel (répétitions en réserve ; première série, puis moyenne des suivantes), le maximum réel et le maximum estimé par le moteur (1RM de charge totale, répétitions ou secondes), puis les décisions du moteur.
-
-### Traction assistée à l'élastique
-
-| Sem. | Phase | Écrit par le programme | Servi par le moteur | Fait | Effort visé → réel | Maximum réel / estimé | Décisions du moteur |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| 1 | introduction | 2 × 6 à 8 | (6 à 7)-6 | 7-6 | 1,5 → 8,9 ; suivantes 2 → 9,2 | 16 / 10 | allégé pour garder la marge prévue (au moins 4 en réserve) ; calibrage (séance 3 sur ce mouvement) |
-| 2 | construction (volume) | 2 × 6 à 8 | (6 à 8)-(6 à 7) | 8-6 | 1,5 → 4,1 ; suivantes 3 → 5 | 12 / 10 | un cran d'assistance de moins (élastique plus fin, moins d'appui) : la série repère a montré 2 répétitions de réserve de plus que visé |
-| 3 | construction (volume) | 2 × 6 à 8 | (6 à 8)-(6 à 14) | 8-8 | 3 → 4,6 ; suivantes 2 → 3,7 | 13 / 11 | série repère : une série ouverte (au ressenti, 2 en réserve) pour mesurer où en est l'athlète |
-| 4 | construction (volume) | 2 × 7 à 9 | (7 à 9)-(7 à 8) | 9-7 | 1,5 → 3,2 ; suivantes 3 → 3,7 | 12 / 11 | — |
-| 5 | construction (volume) | 2 × 7 à 9 | (7 à 9)-(7 à 8) | 9-7 | 3 → 3 ; suivantes 3 → 3,9 | 12 / 11 | allégé pour garder la marge prévue (au moins 3 en réserve) ; dernières séries plus dures que prévu |
-| 13 | construction (volume) | 1 × 6 à 7 | (6 à 7) | 7 | 3 → 5,6 | 13 / 11 | douleur signalée (épaule, 5/10) |
-| 14 | construction (volume) | 1 × 6 à 7 | (6 à 7) | 6 | 3,5 → 6,2 | 12 / 9 | — |
-| 15 | construction (volume) | 1 × 7 | 7 | 7 | 2 → 1,7 | 9 / 9 | — |
-| 16 | construction (volume) | 1 × 7 | 7 | 7 | 2 → 1,5 | 8 / 9 | — |
-
-Athlète simulé, maximum réel hors fatigue : 16 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 9 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
 
 ### Pompe classique
 
@@ -70,16 +54,32 @@ Athlète simulé, maximum réel hors fatigue : 16 au départ (le record déclar�
 | 13 | construction (volume) | 1 × 5 | 5 | 5 | 3 → 3,1 | 8 / 8 | douleur signalée (épaule, 5/10) |
 | 14 | construction (volume) | 1 × 5 | 5 | 5 | 3 → 3,8 | 9 / 8 | — |
 | 15 | construction (volume) | 1 × 5 | 5 | 5 | 3 → 3,5 | 9 / 8 | — |
-| 16 | construction (volume) | 1 × 5 | 5 | 5 | 3 → 3,5 | 9 / 8 | — |
+| 16 | construction (volume) | 1 × 5 | 5 | 5 | 3 → 3,6 | 9 / 8 | — |
 
 Athlète simulé, maximum réel hors fatigue : 8 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 9 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
+
+### Traction assistée à l'élastique
+
+| Sem. | Phase | Écrit par le programme | Servi par le moteur | Fait | Effort visé → réel | Maximum réel / estimé | Décisions du moteur |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 1 | introduction | 2 × 6 à 8 | (6 à 7)-6 | 7-6 | 1,5 → 8,9 ; suivantes 2 → 9,2 | 16 / 10 | allégé pour garder la marge prévue (au moins 4 en réserve) ; calibrage (séance 3 sur ce mouvement) |
+| 2 | construction (volume) | 2 × 6 à 8 | (6 à 8)-(6 à 7) | 8-6 | 1,5 → 4,1 ; suivantes 3 → 5 | 12 / 10 | un cran d'assistance de moins (élastique plus fin, moins d'appui) : la série repère a montré 2 répétitions de réserve de plus que visé |
+| 3 | construction (volume) | 2 × 6 à 8 | (6 à 8)-(6 à 14) | 8-8 | 3 → 4,6 ; suivantes 2 → 3,7 | 13 / 11 | série repère : une série ouverte (au ressenti, 2 en réserve) pour mesurer où en est l'athlète |
+| 4 | construction (volume) | 2 × 7 à 9 | (7 à 9)-(7 à 8) | 9-7 | 1,5 → 3,2 ; suivantes 3 → 3,7 | 12 / 11 | — |
+| 5 | construction (volume) | 2 × 7 à 9 | (7 à 9)-(7 à 8) | 9-7 | 3 → 3 ; suivantes 3 → 3,9 | 12 / 11 | allégé pour garder la marge prévue (au moins 3 en réserve) ; dernières séries plus dures que prévu |
+| 13 | construction (volume) | 1 × 6 à 7 | (6 à 7) | 7 | 3 → 5,5 | 13 / 11 | douleur signalée (épaule, 5/10) |
+| 14 | construction (volume) | 1 × 6 à 7 | (6 à 7) | 6 | 3,5 → 6,2 | 12 / 9 | — |
+| 15 | construction (volume) | 1 × 7 | 7 | 7 | 2 → 1,7 | 9 / 9 | — |
+| 16 | construction (volume) | 1 × 7 | 7 | 7 | 2 → 1,5 | 8 / 9 | — |
+
+Athlète simulé, maximum réel hors fatigue : 16 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 9 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
 
 ### Pompe inclinée (mains surélevées)
 
 | Sem. | Phase | Écrit par le programme | Servi par le moteur | Fait | Effort visé → réel | Maximum réel / estimé | Décisions du moteur |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| 10 | construction (volume) | 2 × 8 à 10 | (8 à 10)-(8 à 9) | 10-9 | 3 → 11,9 ; suivantes 3 → 11,9 | 22 / 14 | calibrage (séance 2 sur ce mouvement) |
-| 11 | affûtage | 2 × 6 à 8 | (6 à 8)-(6 à 8) | 8-8 | 5+ → 14,5 ; suivantes 5+ → 13,4 | 22 / 14 | calibrage (séance 3 sur ce mouvement) |
+| 10 | construction (volume) | 2 × 8 à 10 | (8 à 10)-(8 à 10) | 10-10 | 3 → 11,9 ; suivantes 3 → 10,9 | 22 / 14 | calibrage (séance 2 sur ce mouvement) |
+| 11 | affûtage | 2 × 6 à 8 | (6 à 8)-(6 à 8) | 8-8 | 5+ → 14,5 ; suivantes 5+ → 13,4 | 23 / 14 | calibrage (séance 3 sur ce mouvement) |
 | 12 | test | 1 × 6 à 8 | (6 à 8) | 8 | 5+ → 14,9 | 23 / 14 | — |
 
 Athlète simulé, maximum réel hors fatigue : 22 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 23 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
@@ -109,6 +109,6 @@ Athlète simulé, maximum réel hors fatigue : 12 au départ (le record déclar�
 - **Semaine 11 (affûtage)** : phase « affûtage » : séances servies telles que le programme les écrit (× 3) ; affûtage : aucun volume ajouté, intensité gardée (× 3).
 - **Semaine 12 (test)** : phase « test » : séances servies telles que le programme les écrit (× 3).
 - **Semaine 13 (construction (volume))** : nouveau bloc construit à partir du point de fin de bloc (maxima estimés, résultats de test, tolérance) ; Face pull à l'élastique : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme).
-- **Semaine 14 (construction (volume))** : Face pull à l'élastique : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; temps réduit (27 min au lieu de 34) ; Traction assistée à l'élastique : un cran d'assistance de moins (élastique plus fin, moins d'appui) : la série repère a montré 2 répétitions de réserve de plus que visé ; exercice retiré — Face pull à l'élastique, Dead bug (temps réduit (27 min au lieu de 34)).
+- **Semaine 14 (construction (volume))** : Face pull à l'élastique : répétitions recalées sur le maximum mesuré (2 de moins par série que le programme) ; temps réduit (27 min au lieu de 34) ; Traction assistée à l'élastique : un cran d'assistance de moins (élastique plus fin, moins d'appui) : la série repère a montré 2 répétitions de réserve de plus que visé ; exercice retiré — Face pull à l'élastique, Dead bug (temps réduit (27 min au lieu de 34)).
 - **Semaine 15 (construction (volume))** : Traction négative : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; Face pull à l'élastique : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme).
 - **Semaine 16 (construction (volume))** : Traction négative : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; Face pull à l'élastique : répétitions recalées sur le maximum mesuré (2 de moins par série que le programme) ; Tenue menton au-dessus de la barre pronation : hausse du maintien bornée pour les tendons (coude).

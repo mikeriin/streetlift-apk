@@ -36,7 +36,7 @@ Chaque bloc est écrit par le moteur de création au moment où il commence, d'a
 
 - Séances faites : 51 sur 51 (6 ajustées le jour même).
 - Échecs non voulus (hors tests et tentatives) : 0,2 % des séries de travail.
-- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 1,83 répétition en réserve (sur les 81 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 22,4 %.
+- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 1,81 répétition en réserve (sur les 81 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 22,2 %.
 - Plus forte hausse de charge totale d'un mouvement principal d'une séance à la suivante, à schéma égal : 14,3 % ; hausses de plus de 10 % faites de plusieurs crans : 3.
 - Progression réelle moyenne des mouvements suivis : 0,189 % par semaine.
 - Douleur : 0 hausse(s) de charge sur une zone douloureuse signalée.
@@ -64,12 +64,12 @@ Athlète simulé, maximum réel hors fatigue : 93 au départ (le record déclar�
 
 | Sem. | Phase | Écrit par le programme | Servi par le moteur | Fait | Effort visé → réel | Maximum réel / estimé | Décisions du moteur |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| 9 | intensification (séries plus dures) | 2 × 9 à 11 | 11-9 à 70 kg | 11-9 à 70 kg | 2 → 4,8 ; suivantes 2 → 5,6 | 204 / 97 | calibrage (séance 2 sur ce mouvement) |
+| 9 | intensification (séries plus dures) | 2 × 9 à 11 | 11-9 à 70 kg | 11-9 à 70 kg | 2 → 4,8 ; suivantes 2 → 5,6 | 203 / 97 | calibrage (séance 2 sur ce mouvement) |
 | 10 | intensification (séries plus dures) | 2 × 9 à 11 | (7 à 22)-(6 à 22) à 75 kg | 10-10 à 75 kg | 2 → 4,9 ; suivantes 2 → 3,7 | 195 / 102 | dernières séries plus faciles que prévu |
 | 11 | intensification (séries plus dures) | 2 × 10 à 12 | 12-10 à 75 kg | 12 à 75 kg puis 10 à 80 kg | 2 → 3,4 ; suivantes 2 → 2,8 | 207 / 104 | plus petit cran de charge trop grand : progression par les répétitions |
 | 12 | allègement | 2 × 8 à 10 | (8 à 10)-(8 à 10) à 80 kg | 10 à 80 kg puis 9 à 75 kg | 3 → 4,1 ; suivantes 3 → 4,2 | 191 / 105 | charge non augmentée (semaine où le programme se sert tel quel) ; dernières séries plus faciles que prévu ; allégé pour garder la marge prévue (au moins 3 en réserve) ; dernières séries plus dures que prévu |
 | 13 | réalisation (spécifique à l'objectif) | 2 × 9 à 11 | 11-9 à 80 kg | 11 à 80 kg puis 9 à 85 kg | 2 → 3,3 ; suivantes 2 → 2,9 | 194 / 107 | — |
-| 14 | réalisation (spécifique à l'objectif) | 2 × 10 à 12 | (8 à 24)-(7 à 24) à 85 kg | 10 à 85 kg puis 10 à 80 kg | 2 → 4,1 ; suivantes 2 → 2,4 | 203 / 109 | dernières séries plus faciles que prévu ; allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |
+| 14 | réalisation (spécifique à l'objectif) | 2 × 10 à 12 | (8 à 24)-(7 à 24) à 85 kg | 10 à 85 kg puis 10 à 80 kg | 2 → 4,1 ; suivantes 2 → 2,5 | 203 / 109 | dernières séries plus faciles que prévu ; allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |
 | 15 | réalisation (spécifique à l'objectif) | 2 × 10 à 12 | (9 à 24)-(8 à 24) à 85 kg | 10 à 85 kg puis 8 à 80 kg | 2 → 3,6 ; suivantes 2 → 4,2 | 193 / 109 | dernières séries plus faciles que prévu ; allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |
 | 16 | allègement | 2 × 8 à 10 | 9-7 à 85 kg | 9-7 à 85 kg | 2 → 4,7 ; suivantes 2 → 5 | 194 / 110 | charge non augmentée (semaine où le programme se sert tel quel) |
 | 17 | construction (volume) | 2 × 9 à 11 | 12-10 à 80 kg | 12 à 80 kg puis 10 à 75 kg | 2 → 2,8 ; suivantes 2 → 3,2 | 205 / 108 | plus petit cran de charge trop grand : progression par les répétitions ; allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |
@@ -86,8 +86,8 @@ Athlète simulé, maximum réel hors fatigue : 197 au départ (le record déclar
 | 4 | construction (volume) | 4 × 4 à 81 %, série de tête puis séries allégées | 4 à 60 kg puis 4-4 à 55 kg | 3 (arrêt avant la cible) à 60 kg puis 4-4 à 52,5 kg | 5+ → 5,6 ; suivantes 5+ → 7,8 | 75 / 81 | bilan du jour bas (1/5) ; nuit courte ; allégé pour garder la marge prévue (au moins 2 en réserve) ; séries allégées calculées sur la série de tête réalisée (60 kg, −8 %) |
 | 5 | allègement | 3 × 5 à 75 % | 5-5-5 à 60 kg | 3 (arrêt avant la cible) à 60 kg puis 5-5 à 55 kg | 5+ → 6,4 ; suivantes 5+ → 6,1 | 77 / 73 | allégé pour garder la marge prévue (au moins 4 en réserve) ; dernières séries plus dures que prévu |
 | 6 | intensification (séries plus dures) | 4 × 2 à 81 %, série de tête puis séries allégées | 2 à 62,5 kg puis 2-2-2 à 57,5 kg | 2 à 62,5 kg puis 2-2-2 à 57,5 kg | 5+ → 7,4 ; suivantes 5+ → 9,1 | 80 / 75 | — |
-| 7 | intensification (séries plus dures) | 4 × 2 à 84 %, série de tête puis séries allégées | (2 à 5) à 65 kg puis 2-2-2 à 60 kg | 2 à 65 kg puis 2-2-1 (arrêt avant la cible) à 60 kg | 3 → 5,4 ; suivantes 5+ → 7,5 | 78 / 76 | série repère : une série ouverte (au ressenti, 3 en réserve) pour mesurer où en est l'athlète |
-| 8 | intensification (séries plus dures) | 4 × 1 à 88 %, série de tête puis séries allégées | 1 à 65 kg puis 1-1-1 à 60 kg | 1 à 65 kg puis 1-1-1 à 60 kg | 5+ → 7,2 ; suivantes 5+ → 8,9 | 80 / 76 | — |
+| 7 | intensification (séries plus dures) | 4 × 2 à 84 %, série de tête puis séries allégées | (2 à 5) à 65 kg puis 2-2-2 à 60 kg | 2 à 65 kg puis 2-2-1 (arrêt avant la cible) à 60 kg | 3 → 5,3 ; suivantes 5+ → 7,5 | 78 / 76 | série repère : une série ouverte (au ressenti, 3 en réserve) pour mesurer où en est l'athlète |
+| 8 | intensification (séries plus dures) | 4 × 1 à 88 %, série de tête puis séries allégées | 1 à 65 kg puis 1-1-1 à 60 kg | 1 à 65 kg puis 1-1-1 à 60 kg | 5+ → 7,1 ; suivantes 5+ → 8,9 | 80 / 76 | — |
 
 Athlète simulé, maximum réel hors fatigue : 78 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 80 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
 

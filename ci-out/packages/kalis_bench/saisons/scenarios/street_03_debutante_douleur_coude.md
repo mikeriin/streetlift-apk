@@ -34,9 +34,9 @@ Chaque bloc est écrit par le moteur de création au moment où il commence, d'a
 
 - Séances faites : 47 sur 48 (17 ajustées le jour même).
 - Échecs non voulus (hors tests et tentatives) : 0 % des séries de travail.
-- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 1,6 répétition en réserve (sur les 55 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 19,6 %.
+- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 1,57 répétition en réserve (sur les 54 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 19,4 %.
 - Plus forte hausse de charge totale d'un mouvement principal d'une séance à la suivante, à schéma égal : 0 % ; hausses de plus de 10 % faites de plusieurs crans : 0.
-- Progression réelle moyenne des mouvements suivis : 0,699 % par semaine.
+- Progression réelle moyenne des mouvements suivis : 0,71 % par semaine.
 - Douleur : 0 hausse(s) de charge sur une zone douloureuse signalée.
 
 ## Mouvements suivis, semaine par semaine
@@ -47,9 +47,9 @@ Pour chaque mouvement, la séance la plus lourde de la semaine : ce que le progr
 
 | Sem. | Phase | Écrit par le programme | Servi par le moteur | Fait | Effort visé → réel | Maximum réel / estimé | Décisions du moteur |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| 9 | construction (volume) | 1 × 1 à 2 | 1 | 1 | 3 → 2,2 | 3 / 3 | charge non augmentée (pain_return) ; allégé pour garder la marge prévue (au moins 2 en réserve) ; calibrage (séance 1 sur ce mouvement) ; douleur signalée (coude, 5/10) |
-| 10 | construction (volume) | 1 × 1 à 2 | 1 | 1 | 2 → 2,1 | 3 / 3 | calibrage (séance 2 sur ce mouvement) |
-| 11 | construction (volume) | 1 × 1 à 2 | 1 | 1 | 2 → 2,1 | 3 / 3 | — |
+| 9 | construction (volume) | 1 × 1 | 1 | 1 | 3 → 2,2 | 3 / 3 | charge non augmentée (pain_return) ; calibrage (séance 1 sur ce mouvement) ; douleur signalée (coude, 5/10) |
+| 10 | construction (volume) | 1 × 1 | 1 | 1 | 2 → 2,1 | 3 / 3 | calibrage (séance 2 sur ce mouvement) |
+| 11 | construction (volume) | 1 × 1 | 1 | 1 | 2 → 2,1 | 3 / 3 | — |
 | 12 | allègement | 1 × 1 | 1 | 1 | 2 → 2,1 | 3 / 3 | — |
 | 13 | introduction | 1 × 1 | 1 | 1 | 2 → 2 | 3 / 3 | — |
 | 14 | construction (volume) | 1 × 1 | 1 | 1 | 2 → 2,3 | 3 / 3 | — |
@@ -65,11 +65,11 @@ Athlète simulé, maximum réel hors fatigue : 3 au départ (le record déclaré
 | 1 | introduction | 2 × 6 à 8 | (6 à 8)-(6 à 8) | 8-8 | 4 → 14,6 ; suivantes 4 → 13,7 | 23 / 13 | calibrage (séance 2 sur ce mouvement) |
 | 2 | construction (volume) | 2 × 6 à 8 | (6 à 10)-(6 à 18) | 10-18 | 3 → 12,5 ; suivantes 2 → 3,4 | 23 / 19 | série repère : une série ouverte (au ressenti, 2 en réserve) pour mesurer où en est l'athlète |
 | 3 | construction (volume) | 2 × 6 à 8 | (6 à 16)-(6 à 15) | 15-15 | 3 → 7,4 ; suivantes 3 → 6,3 | 22 / 19 | — |
-| 4 | construction (volume) | 3 × 7 à 9 | (7 à 16)-(7 à 15)-(7 à 14) | 16-14-14 | 3 → 7,6 ; suivantes 3 → 8,2 | 24 / 20 | allégé pour garder la marge prévue (au moins 3 en réserve) ; dernières séries plus dures que prévu |
-| 5 | construction (volume) | 3 × 7 à 9 | (7 à 18)-(7 à 18)-(7 à 18) | 18-17 | 3 → 6,5 ; suivantes 3 → 5,7 | 25 / 20 | allégé pour garder la marge prévue (au moins 3 en réserve) ; dernières séries plus dures que prévu |
+| 4 | construction (volume) | 4 × 7 à 9 | (7 à 16)-(7 à 15)-(7 à 14)-(7 à 14) | 16-14-14-14 | 3 → 7,6 ; suivantes 3 → 7,9 | 24 / 20 | allégé pour garder la marge prévue (au moins 3 en réserve) ; dernières séries plus dures que prévu |
+| 5 | construction (volume) | 4 × 7 à 9 | (7 à 18)-(7 à 18)-(7 à 18)-(7 à 18) | 18-17 | 3 → 6,5 ; suivantes 3 → 5,8 | 25 / 20 | allégé pour garder la marge prévue (au moins 3 en réserve) ; dernières séries plus dures que prévu |
 | 13 | introduction | 2 × 8 à 12 | (8 à 12)-(8 à 12) | 10-11 | 5+ → 11,4 ; suivantes 5+ → 9,5 | 21 / 20 | douleur signalée (coude, 0/10) |
 | 14 | construction (volume) | 2 × 8 à 12 | (8 à 12)-(8 à 12) | 12-12 | 5+ → 10,8 ; suivantes 5+ → 9,8 | 23 / 20 | — |
-| 15 | construction (volume) | 2 × 8 à 12 | (8 à 12)-(8 à 12) | 12-12 | 5+ → 11,5 ; suivantes 5+ → 10,7 | 23 / 20 | — |
+| 15 | construction (volume) | 2 × 8 à 12 | (8 à 12)-(8 à 12) | 12-12 | 5+ → 11,5 ; suivantes 5+ → 10,7 | 24 / 20 | — |
 | 16 | construction (volume) | 2 × 8 à 12 | (8 à 12)-(8 à 12) | 12-12 | 5+ → 10,6 ; suivantes 5+ → 9,7 | 23 / 20 | — |
 
 Athlète simulé, maximum réel hors fatigue : 22 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 24 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
@@ -80,13 +80,13 @@ Athlète simulé, maximum réel hors fatigue : 22 au départ (le record déclar�
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | 1 | introduction | 2 × 6 à 8 | (6 à 8)-(6 à 8) | 8-8 | 4 → 8 ; suivantes 4 → 7,1 | 16 / 12 | calibrage (séance 2 sur ce mouvement) |
 | 2 | construction (volume) | 2 × 6 à 8 | (6 à 8)-(6 à 16) | 8-12 | 4 → 8,9 ; suivantes 2 → 3,9 | 17 / 13 | série repère : une série ouverte (au ressenti, 2 en réserve) pour mesurer où en est l'athlète |
-| 3 | construction (volume) | 2 × 6 à 8 | (6 à 8)-(6 à 8) | 6-6 | 5+ → 6 ; suivantes 4,5 → 5,2 | 12 / 12 | un cran d'assistance de moins (élastique plus fin, moins d'appui) : la série repère a montré 3 répétitions de réserve de plus que visé |
-| 4 | construction (volume) | 2 × 7 à 9 | (7 à 9)-(7 à 18) | 7-8 | 3 → 5,8 ; suivantes 2 → 3,8 | 13 / 10 | série repère : une série ouverte (au ressenti, 2 en réserve) pour mesurer où en est l'athlète |
-| 5 | construction (volume) | 2 × 7 à 9 | (7 à 8)-(7 à 8) | 8-8 | 3 → 4,4 ; suivantes 1,5 → 3,4 | 12 / 11 | allégé pour garder la marge prévue (au moins 3 en réserve) |
-| 13 | introduction | 1 × 5 à 7 | (5 à 7) | 5 | 4 → 6,7 | 12 / 11 | douleur signalée (coude, 0/10) |
-| 14 | construction (volume) | 1 × 6 à 7 | (6 à 7) | 6 | 3,5 → 6,2 | 12 / 11 | — |
-| 15 | construction (volume) | 1 × 6 à 7 | (6 à 7) | 7 | 3,5 → 5,7 | 13 / 11 | — |
-| 16 | construction (volume) | 1 × 7 | 7 | 7 | 3,5 → 5,5 | 13 / 11 | — |
+| 3 | construction (volume) | 3 × 6 à 8 | (6 à 8)-(6 à 8)-(6 à 8) | 6-6-6 | 5+ → 6 ; suivantes 4,3 → 5 | 12 / 11 | un cran d'assistance de moins (élastique plus fin, moins d'appui) : la série repère a montré 3 répétitions de réserve de plus que visé ; allégé pour garder la marge prévue (au moins 3 en réserve) ; dernières séries plus dures que prévu |
+| 4 | construction (volume) | 3 × 7 à 9 | (7 à 9)-(7 à 9)-(7 à 16) | 7-9-7 | 3 → 5,8 ; suivantes 1,8 → 3,1 | 13 / 10 | série repère : une série ouverte (au ressenti, 2 en réserve) pour mesurer où en est l'athlète |
+| 5 | construction (volume) | 3 × 7 à 9 | (7 à 8)-(7 à 8)-7 | 8-8-7 | 3 → 4,4 ; suivantes 2,3 → 3,5 | 12 / 11 | allégé pour garder la marge prévue (au moins 3 en réserve) |
+| 13 | introduction | 1 × 5 à 7 | (5 à 7) | 5 | 4 → 6,8 | 12 / 11 | douleur signalée (coude, 0/10) |
+| 14 | construction (volume) | 1 × 6 à 7 | (6 à 7) | 6 | 4 → 6,3 | 12 / 11 | — |
+| 15 | construction (volume) | 1 × 6 à 7 | (6 à 7) | 7 | 4 → 5,8 | 13 / 11 | — |
+| 16 | construction (volume) | 1 × 7 | 7 | 7 | 4 → 5,6 | 13 / 11 | — |
 
 Athlète simulé, maximum réel hors fatigue : 16 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 13 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
 
@@ -109,7 +109,7 @@ Athlète simulé, maximum réel hors fatigue : 12 au départ (le record déclar�
 - **Semaine 4 (construction (volume))** : Face pull à l'élastique : répétitions recalées sur le maximum mesuré (4 de moins par série que le programme) ; bilan du jour bas (2/5) ; nuit courte ; Fente arrière au poids du corps : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; séries retirées — Fente arrière au poids du corps, Support hold aux barres parallèles (bilan du jour bas (2/5), nuit courte).
 - **Semaine 5 (construction (volume))** : Face pull à l'élastique : répétitions recalées sur le maximum mesuré (4 de moins par série que le programme) ; Pompe inclinée (mains surélevées) : séries arrêtées en cours de séance (allégé pour garder la marge prévue (au moins 3 en réserve), dernières séries plus dures que prévu) ; bilan du jour bas (2/5) (× 2) ; nuit courte (× 2) ; Fente arrière au poids du corps : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; douleur qui dure ou qui revient (coude, 3 séances à 3/10 ou plus) : mouvements qui la provoquent retirés, consulter un médecin ou un kiné, reprise après deux semaines à 2/10 au plus ; Dead bug : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; exercice retiré sur 6 exercices (douleur signalée (coude, 5/10)) ; séries retirées — Fente arrière au poids du corps (bilan du jour bas (2/5), nuit courte).
 - **Semaine 6 (test)** : phase « test » : séances servies telles que le programme les écrit (× 3) ; douleur qui dure ou qui revient (coude, 5 séances à 3/10 ou plus) : mouvements qui la provoquent retirés, consulter un médecin ou un kiné, reprise après deux semaines à 2/10 au plus ; exercice retiré sur 8 exercices (douleur signalée (coude, 5/10)).
-- **Semaine 7 (introduction)** : nouveau bloc construit à partir du point de fin de bloc (maxima estimés, résultats de test, tolérance) ; phase « introduction » : séances servies telles que le programme les écrit (× 3) ; douleur qui dure ou qui revient (coude, 8 séances à 3/10 ou plus) : mouvements qui la provoquent retirés, consulter un médecin ou un kiné, reprise après deux semaines à 2/10 au plus ; exercice retiré sur 3 exercices (douleur signalée (coude, 5/10)) ; exercice remplacé — Row australien (douleur signalée (coude, 5/10)).
+- **Semaine 7 (introduction)** : nouveau bloc construit à partir du point de fin de bloc (maxima estimés, résultats de test, tolérance) ; phase « introduction » : séances servies telles que le programme les écrit (× 3) ; douleur qui dure ou qui revient (coude, 8 séances à 3/10 ou plus) : mouvements qui la provoquent retirés, consulter un médecin ou un kiné, reprise après deux semaines à 2/10 au plus ; exercice retiré sur 4 exercices (douleur signalée (coude, 5/10)) ; exercice remplacé — Row australien (douleur signalée (coude, 5/10)).
 - **Semaine 8 (construction (volume))** : Face pull à l'élastique : répétitions recalées sur le maximum mesuré (2 de moins par série que le programme) ; douleur qui dure ou qui revient (coude, 10 séances à 3/10 ou plus) : mouvements qui la provoquent retirés, consulter un médecin ou un kiné, reprise après deux semaines à 2/10 au plus ; exercice retiré sur 4 exercices (douleur signalée (coude, 5/10)) ; exercice remplacé — Row australien (douleur signalée (coude, 5/10)).
 - **Semaine 9 (construction (volume))** : douleur qui dure ou qui revient (coude, 10 séances à 3/10 ou plus) : mouvements qui la provoquent retirés, consulter un médecin ou un kiné, reprise après deux semaines à 2/10 au plus (× 3) ; Row scapulaire : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; Face pull à l'élastique : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; exercice retiré sur 4 exercices (douleur signalée (coude, 5/10)) ; exercice remplacé — Row australien (douleur signalée (coude, 5/10)) ; séries retirées sur 3 exercices (−1 série(s)) ; figure Pompe classique : passage à l'étape « Pompe classique ».
 - **Semaine 10 (construction (volume))** : Face pull à l'élastique : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; Support hold aux barres parallèles : hausse du maintien bornée pour les tendons (épaule).

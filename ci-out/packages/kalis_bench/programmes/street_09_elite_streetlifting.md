@@ -36,8 +36,8 @@ Homme de 30 ans, 78 kg, huit ans de pratique, podiums nationaux. 1RM : traction 
 | 6 | 2 | intensification (séries plus dures) | 5 | 81 |
 | 7 | 2 | intensification (séries plus dures) | 5 | 81 |
 | 8 | 2 | allègement | 5 | 36 |
-| 9 | 3 | réalisation (spécifique à l'objectif) | 5 | 70 |
-| 10 | 3 | réalisation (spécifique à l'objectif) | 5 | 66 |
+| 9 | 3 | réalisation (spécifique à l'objectif) | 5 | 74 |
+| 10 | 3 | réalisation (spécifique à l'objectif) | 5 | 70 |
 | 11 | 3 | affûtage | 5 | 22 |
 | 12 | 3 | échéance — ÉCHÉANCE | 5 | 26 |
 
@@ -191,12 +191,12 @@ Homme de 30 ans, 78 kg, huit ans de pratique, podiums nationaux. 1RM : traction 
 | Hollow body hold | 2 × 25 s | poids du corps | position parfaite, quelques secondes de marge | 60 s | tronc ; tenue isométrique ; Tronc : le gainage qui tient la position à la barre. |
 | Cat-cow | 1 × 8 à 10 | — | — | 20 s | mobilité |
 
-### vendredi — force, corps entier, séance légère (90 min disponibles, 28 min estimées)
+### vendredi — force, corps entier, séance légère (90 min disponibles, 32 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
-| Dips lesté de compétition | 3 × 3 | lest +61,25 kg, ≈ 68 % du 1RM (charge totale ; 1RM de référence 200 kg) | 5 rép. en réserve ou plus | 2 min | secondaire ; Séance légère à 70 % du 1RM : chaque répétition rapide et propre, très loin de l'échec. |
+| Dips lesté de compétition | 5 × 3 | lest +61,25 kg, ≈ 68 % du 1RM (charge totale ; 1RM de référence 200 kg) | 5 rép. en réserve ou plus | 2 min | secondaire ; Séance légère à 70 % du 1RM : chaque répétition rapide et propre, très loin de l'échec. |
 | Fente arrière aux haltères | 2 × 7 à 9 | charge à déterminer, à calibrer | 3 rép. en réserve | 90 s | accessoire ; Jambes : force utile, sans fatigue excessive. |
 | Rotation externe à la poulie coude au corps | 2 × 12 à 15 | charge à déterminer, à calibrer | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
 | Row scapulaire | 2 × 12 à 15 | poids du corps | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
@@ -267,12 +267,12 @@ Homme de 30 ans, 78 kg, huit ans de pratique, podiums nationaux. 1RM : traction 
 | Hollow body hold | 2 × 30 s | poids du corps | position parfaite, quelques secondes de marge | 60 s | tronc ; tenue isométrique ; Tronc : le gainage qui tient la position à la barre. |
 | Cat-cow | 1 × 8 à 10 | — | — | 20 s | mobilité |
 
-### vendredi — force, corps entier, séance légère (90 min disponibles, 28 min estimées)
+### vendredi — force, corps entier, séance légère (90 min disponibles, 32 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
-| Dips lesté de compétition | 3 × 3 | lest +65 kg, ≈ 70 % du 1RM (charge totale ; 1RM de référence 200 kg) | 5 rép. en réserve ou plus | 2 min | secondaire ; Séance légère à 70 % du 1RM : chaque répétition rapide et propre, très loin de l'échec. |
+| Dips lesté de compétition | 5 × 3 | lest +65 kg, ≈ 70 % du 1RM (charge totale ; 1RM de référence 200 kg) | 5 rép. en réserve ou plus | 2 min | secondaire ; Séance légère à 70 % du 1RM : chaque répétition rapide et propre, très loin de l'échec. |
 | Fente arrière aux haltères | 2 × 8 à 10 | charge à déterminer, à calibrer | 3 rép. en réserve | 90 s | accessoire ; Jambes : force utile, sans fatigue excessive. |
 | Rotation externe à la poulie coude au corps | 2 × 12 à 15 | charge à déterminer, à calibrer | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
 | Row scapulaire | 2 × 12 à 15 | poids du corps | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
@@ -407,12 +407,12 @@ Homme de 30 ans, 78 kg, huit ans de pratique, podiums nationaux. 1RM : traction 
 | Hollow body hold | 2 × 20 s | poids du corps | position parfaite, quelques secondes de marge | 60 s | tronc ; tenue isométrique ; Tronc : le gainage qui tient la position à la barre. |
 | Cat-cow | 1 × 8 à 10 | — | — | 20 s | mobilité |
 
-### vendredi — force, corps entier, séance légère (90 min disponibles, 27 min estimées)
+### vendredi — force, corps entier, séance légère (90 min disponibles, 32 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
-| Dips lesté de compétition | 3 × 3 | lest +61,25 kg, ≈ 68 % du 1RM (charge totale ; 1RM de référence 200 kg) | 5 rép. en réserve ou plus | 2 min | secondaire ; Séance légère à 70 % du 1RM : chaque répétition rapide et propre, très loin de l'échec. |
+| Dips lesté de compétition | 5 × 3 | lest +61,25 kg, ≈ 68 % du 1RM (charge totale ; 1RM de référence 200 kg) | 5 rép. en réserve ou plus | 2 min | secondaire ; Séance légère à 70 % du 1RM : chaque répétition rapide et propre, très loin de l'échec. |
 | Fente arrière aux haltères | 2 × 6 à 8 | charge à déterminer, à calibrer | 3 rép. en réserve | 90 s | accessoire ; Jambes : force utile, sans fatigue excessive. |
 | Rotation externe à la poulie coude au corps | 2 × 12 à 15 | charge à déterminer, à calibrer | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
 | Row scapulaire | 2 × 12 à 15 | poids du corps | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
@@ -483,12 +483,12 @@ Homme de 30 ans, 78 kg, huit ans de pratique, podiums nationaux. 1RM : traction 
 | Hollow body hold | 2 × 25 s | poids du corps | position parfaite, quelques secondes de marge | 60 s | tronc ; tenue isométrique ; Tronc : le gainage qui tient la position à la barre. |
 | Cat-cow | 1 × 8 à 10 | — | — | 20 s | mobilité |
 
-### vendredi — force, corps entier, séance légère (90 min disponibles, 28 min estimées)
+### vendredi — force, corps entier, séance légère (90 min disponibles, 32 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
-| Dips lesté de compétition | 3 × 3 | lest +65 kg, ≈ 70 % du 1RM (charge totale ; 1RM de référence 200 kg) | 5 rép. en réserve ou plus | 2 min | secondaire ; Séance légère à 70 % du 1RM : chaque répétition rapide et propre, très loin de l'échec. |
+| Dips lesté de compétition | 5 × 3 | lest +65 kg, ≈ 70 % du 1RM (charge totale ; 1RM de référence 200 kg) | 5 rép. en réserve ou plus | 2 min | secondaire ; Séance légère à 70 % du 1RM : chaque répétition rapide et propre, très loin de l'échec. |
 | Fente arrière aux haltères | 2 × 7 à 9 | charge à déterminer, à calibrer | 3 rép. en réserve | 90 s | accessoire ; Jambes : force utile, sans fatigue excessive. |
 | Rotation externe à la poulie coude au corps | 2 × 12 à 15 | charge à déterminer, à calibrer | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
 | Row scapulaire | 2 × 12 à 15 | poids du corps | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
@@ -559,12 +559,12 @@ Homme de 30 ans, 78 kg, huit ans de pratique, podiums nationaux. 1RM : traction 
 | Hollow body hold | 2 × 30 s | poids du corps | position parfaite, quelques secondes de marge | 60 s | tronc ; tenue isométrique ; Tronc : le gainage qui tient la position à la barre. |
 | Cat-cow | 1 × 8 à 10 | — | — | 20 s | mobilité |
 
-### vendredi — force, corps entier, séance légère (90 min disponibles, 28 min estimées)
+### vendredi — force, corps entier, séance légère (90 min disponibles, 32 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
-| Dips lesté de compétition | 3 × 3 | lest +65 kg, ≈ 70 % du 1RM (charge totale ; 1RM de référence 200 kg) | 5 rép. en réserve ou plus | 2 min | secondaire ; Séance légère à 70 % du 1RM : chaque répétition rapide et propre, très loin de l'échec. |
+| Dips lesté de compétition | 5 × 3 | lest +65 kg, ≈ 70 % du 1RM (charge totale ; 1RM de référence 200 kg) | 5 rép. en réserve ou plus | 2 min | secondaire ; Séance légère à 70 % du 1RM : chaque répétition rapide et propre, très loin de l'échec. |
 | Fente arrière aux haltères | 2 × 8 à 10 | charge à déterminer, à calibrer | 3 rép. en réserve | 90 s | accessoire ; Jambes : force utile, sans fatigue excessive. |
 | Rotation externe à la poulie coude au corps | 2 × 12 à 15 | charge à déterminer, à calibrer | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
 | Row scapulaire | 2 × 12 à 15 | poids du corps | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
@@ -653,13 +653,13 @@ Homme de 30 ans, 78 kg, huit ans de pratique, podiums nationaux. 1RM : traction 
 
 ## Semaine 9 — réalisation (spécifique à l'objectif) (bloc 3)
 
-### lundi — force, corps entier, séance lourde (120 min disponibles, 51 min estimées)
+### lundi — force, corps entier, séance lourde (120 min disponibles, 54 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
 | Traction lestée de compétition | 1 × 2 (série de tête), puis 3 × 2 à −5 % | lest +70 kg, ≈ 91 % du 1RM (charge totale ; 1RM de référence 160,5 kg) | 1 rép. en réserve | 4 min | principal ; Montée en charge avant la série de tête : 4 séries progressives — 5 répétitions à 40 %, 3 à 60 %, 2 à 75 %, 1 à 85 % de la charge du jour, 1 à 3 min entre elles. ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
-| Dips lesté de compétition | 4 × 3 | lest +88,75 kg, ≈ 82 % du 1RM (charge totale ; 1RM de référence 200 kg) | 3 rép. en réserve | 3 min | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
+| Dips lesté de compétition | 5 × 3 | lest +88,75 kg, ≈ 82 % du 1RM (charge totale ; 1RM de référence 200 kg) | 3 rép. en réserve | 3 min | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Rowing barre buste penché prise pronation | 2 × 8 à 10 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Curl marteau aux haltères | 2 × 10 à 15 | charge à déterminer, à calibrer | 3 rép. en réserve | 75 s | accessoire ; Fléchisseurs du coude en charge légère : tolérance du coude au tirage lourd. |
 | Face pull à l'élastique | 2 × 12 à 15 | — | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
@@ -682,14 +682,14 @@ Homme de 30 ans, 78 kg, huit ans de pratique, podiums nationaux. 1RM : traction 
 | Hollow body hold | 2 × 20 s | poids du corps | position parfaite, quelques secondes de marge | 60 s | tronc ; tenue isométrique ; Tronc : le gainage qui tient la position à la barre. |
 | Row scapulaire | 2 × 12 à 15 | poids du corps | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
 
-### jeudi — force, corps entier, séance lourde (120 min disponibles, 61 min estimées)
+### jeudi — force, corps entier, séance lourde (120 min disponibles, 64 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
 | Muscle-up lesté de compétition | 5 × 2 | lest +1,25 kg, ≈ 70 % du 1RM (charge totale ; 1RM de référence 110,5 kg) | 5 rép. en réserve ou plus | 2 min | secondaire ; Séance légère à 70 % du 1RM : chaque répétition rapide et propre, très loin de l'échec. |
 | Dips sur barre fixe lesté | 2 × 3 | lest +6,25 kg, ≈ 74 % du 1RM du mouvement de compétition | 3 rép. en réserve | 2 min 30 s | secondaire ; Cible ton point faible (transition) sur : Muscle-up lesté de compétition. |
-| Traction lestée de compétition | 4 × 3 | lest +55 kg, ≈ 81 % du 1RM (charge totale ; 1RM de référence 160,5 kg) | 3 rép. en réserve | 3 min | secondaire ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
+| Traction lestée de compétition | 5 × 3 | lest +55 kg, ≈ 81 % du 1RM (charge totale ; 1RM de référence 160,5 kg) | 3 rép. en réserve | 3 min | secondaire ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Dips lesté de compétition | 1 × 2 (série de tête), puis 3 × 2 à −5 % | lest +106,25 kg, ≈ 91 % du 1RM (charge totale ; 1RM de référence 200 kg) | 1 rép. en réserve | 4 min | principal ; Montée en charge avant la série de tête : 4 séries progressives — 5 répétitions à 40 %, 3 à 60 %, 2 à 75 %, 1 à 85 % de la charge du jour, 1 à 3 min entre elles. ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Rowing barre buste penché prise pronation | 2 × 8 à 10 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Curl marteau aux haltères | 2 × 10 à 15 | charge à déterminer, à calibrer | 3 rép. en réserve | 75 s | accessoire ; Fléchisseurs du coude en charge légère : tolérance du coude au tirage lourd. |
@@ -698,26 +698,26 @@ Homme de 30 ans, 78 kg, huit ans de pratique, podiums nationaux. 1RM : traction 
 | Hollow body hold | 2 × 20 s | poids du corps | position parfaite, quelques secondes de marge | 60 s | tronc ; tenue isométrique ; Tronc : le gainage qui tient la position à la barre. |
 | Cat-cow | 1 × 8 à 10 | — | — | 20 s | mobilité |
 
-### vendredi — force, corps entier, séance légère (90 min disponibles, 27 min estimées)
+### vendredi — force, corps entier, séance légère (90 min disponibles, 32 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
-| Dips lesté de compétition | 3 × 3 | lest +61,25 kg, ≈ 68 % du 1RM (charge totale ; 1RM de référence 200 kg) | 5 rép. en réserve ou plus | 2 min | secondaire ; Séance légère à 70 % du 1RM : chaque répétition rapide et propre, très loin de l'échec. |
+| Dips lesté de compétition | 5 × 3 | lest +61,25 kg, ≈ 68 % du 1RM (charge totale ; 1RM de référence 200 kg) | 5 rép. en réserve ou plus | 2 min | secondaire ; Séance légère à 70 % du 1RM : chaque répétition rapide et propre, très loin de l'échec. |
 | Fente arrière aux haltères | 2 × 6 à 8 | charge à déterminer, à calibrer | 3 rép. en réserve | 90 s | accessoire ; Jambes : force utile, sans fatigue excessive. |
 | Rotation externe à la poulie coude au corps | 2 × 12 à 15 | charge à déterminer, à calibrer | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
 | Row scapulaire | 2 × 12 à 15 | poids du corps | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
 | Cat-cow | 1 × 8 à 10 | — | — | 20 s | mobilité |
 | Étirement des fléchisseurs du poignet bras tendu | 2 × 30 à 45 s | — | — | 20 s | mobilité |
 
-### samedi — force, corps entier, séance lourde (120 min disponibles, 58 min estimées)
+### samedi — force, corps entier, séance lourde (120 min disponibles, 64 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
 | Muscle-up lesté de compétition | 1 × 1 (série de tête), puis 3 × 2 à −5 % | lest +25 kg, ≈ 91 % du 1RM (charge totale ; 1RM de référence 110,5 kg) | 2 rép. en réserve | 4 min | principal ; Montée en charge avant la série de tête : 4 séries progressives — 5 répétitions à 40 %, 3 à 60 %, 2 à 75 %, 1 à 85 % de la charge du jour, 1 à 3 min entre elles. ; Exécution : amène la barre aux hanches, transition rapide, poitrine au-dessus de la barre avant de pousser. La série s'arrête à la première répétition dont la transition ralentit, se fait en deux temps ou demande un battement de jambes de plus : jamais jusqu'à l'échec. |
-| Traction haute lestée (high pull) | 2 × 3 | lest +5 kg, ≈ 74 % du 1RM du mouvement de compétition | 3 rép. en réserve | 2 min 30 s | secondaire ; Cible ton point faible (transition) sur : Muscle-up lesté de compétition. |
-| Squat de compétition | 4 × 3 | 155 kg, ≈ 82 % du 1RM (charge totale ; 1RM de référence 190 kg) | 3 rép. en réserve | 3 min | secondaire ; Exécution : pli de la hanche sous le haut du genou à chaque répétition, tronc gainé, pieds ancrés. |
+| Traction haute lestée (high pull) | 3 × 3 | lest +5 kg, ≈ 74 % du 1RM du mouvement de compétition | 3 rép. en réserve | 2 min 30 s | secondaire ; Cible ton point faible (transition) sur : Muscle-up lesté de compétition. |
+| Squat de compétition | 5 × 3 | 155 kg, ≈ 82 % du 1RM (charge totale ; 1RM de référence 190 kg) | 3 rép. en réserve | 3 min | secondaire ; Exécution : pli de la hanche sous le haut du genou à chaque répétition, tronc gainé, pieds ancrés. |
 | Soulevé de terre roumain à la barre | 3 × 8 à 10 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Relevé de jambes tendues suspendu | 3 × 8 à 12 | poids du corps | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
 | Rowing barre buste penché prise pronation | 2 × 8 à 10 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
@@ -728,13 +728,13 @@ Homme de 30 ans, 78 kg, huit ans de pratique, podiums nationaux. 1RM : traction 
 
 ## Semaine 10 — réalisation (spécifique à l'objectif) (bloc 3)
 
-### lundi — force, corps entier, séance lourde (120 min disponibles, 52 min estimées)
+### lundi — force, corps entier, séance lourde (120 min disponibles, 55 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
 | Traction lestée de compétition | 1 × 1 (série de tête), puis 3 × 2 à −5 % | lest +73,75 kg, ≈ 93 % du 1RM (charge totale ; 1RM de référence 160,5 kg) | 1 rép. en réserve | 4 min | principal ; Montée en charge avant la série de tête : 4 séries progressives — 5 répétitions à 40 %, 3 à 60 %, 2 à 75 %, 1 à 85 % de la charge du jour, 1 à 3 min entre elles. ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
-| Dips lesté de compétition | 4 × 3 | lest +88,75 kg, ≈ 82 % du 1RM (charge totale ; 1RM de référence 200 kg) | 3 rép. en réserve | 3 min | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
+| Dips lesté de compétition | 5 × 3 | lest +88,75 kg, ≈ 82 % du 1RM (charge totale ; 1RM de référence 200 kg) | 3 rép. en réserve | 3 min | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Rowing barre buste penché prise pronation | 2 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Curl marteau aux haltères | 2 × 10 à 15 | charge à déterminer, à calibrer | 3 rép. en réserve | 75 s | accessoire ; Fléchisseurs du coude en charge légère : tolérance du coude au tirage lourd. |
 | Face pull à l'élastique | 2 × 12 à 15 | — | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
@@ -757,14 +757,14 @@ Homme de 30 ans, 78 kg, huit ans de pratique, podiums nationaux. 1RM : traction 
 | Hollow body hold | 2 × 25 s | poids du corps | position parfaite, quelques secondes de marge | 60 s | tronc ; tenue isométrique ; Tronc : le gainage qui tient la position à la barre. |
 | Row scapulaire | 2 × 12 à 15 | poids du corps | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
 
-### jeudi — force, corps entier, séance lourde (120 min disponibles, 61 min estimées)
+### jeudi — force, corps entier, séance lourde (120 min disponibles, 64 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
 | Muscle-up lesté de compétition | 5 × 2 | lest +1,25 kg, ≈ 70 % du 1RM (charge totale ; 1RM de référence 110,5 kg) | 5 rép. en réserve ou plus | 2 min | secondaire ; Séance légère à 70 % du 1RM : chaque répétition rapide et propre, très loin de l'échec. |
 | Dips sur barre fixe lesté | 2 × 3 | lest +7,5 kg, ≈ 75 % du 1RM du mouvement de compétition | 3 rép. en réserve | 2 min 30 s | secondaire ; Cible ton point faible (transition) sur : Muscle-up lesté de compétition. |
-| Traction lestée de compétition | 4 × 3 | lest +55 kg, ≈ 81 % du 1RM (charge totale ; 1RM de référence 160,5 kg) | 3 rép. en réserve | 3 min | secondaire ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
+| Traction lestée de compétition | 5 × 3 | lest +55 kg, ≈ 81 % du 1RM (charge totale ; 1RM de référence 160,5 kg) | 3 rép. en réserve | 3 min | secondaire ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Dips lesté de compétition | 1 × 1 (série de tête), puis 3 × 2 à −5 % | lest +110 kg, ≈ 93 % du 1RM (charge totale ; 1RM de référence 200 kg) | 1 rép. en réserve | 4 min | principal ; Montée en charge avant la série de tête : 4 séries progressives — 5 répétitions à 40 %, 3 à 60 %, 2 à 75 %, 1 à 85 % de la charge du jour, 1 à 3 min entre elles. ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Rowing barre buste penché prise pronation | 2 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Curl marteau aux haltères | 2 × 10 à 15 | charge à déterminer, à calibrer | 3 rép. en réserve | 75 s | accessoire ; Fléchisseurs du coude en charge légère : tolérance du coude au tirage lourd. |
@@ -773,26 +773,26 @@ Homme de 30 ans, 78 kg, huit ans de pratique, podiums nationaux. 1RM : traction 
 | Hollow body hold | 2 × 25 s | poids du corps | position parfaite, quelques secondes de marge | 60 s | tronc ; tenue isométrique ; Tronc : le gainage qui tient la position à la barre. |
 | Cat-cow | 1 × 8 à 10 | — | — | 20 s | mobilité |
 
-### vendredi — force, corps entier, séance légère (90 min disponibles, 28 min estimées)
+### vendredi — force, corps entier, séance légère (90 min disponibles, 32 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
-| Dips lesté de compétition | 3 × 3 | lest +65 kg, ≈ 70 % du 1RM (charge totale ; 1RM de référence 200 kg) | 5 rép. en réserve ou plus | 2 min | secondaire ; Séance légère à 70 % du 1RM : chaque répétition rapide et propre, très loin de l'échec. |
+| Dips lesté de compétition | 5 × 3 | lest +65 kg, ≈ 70 % du 1RM (charge totale ; 1RM de référence 200 kg) | 5 rép. en réserve ou plus | 2 min | secondaire ; Séance légère à 70 % du 1RM : chaque répétition rapide et propre, très loin de l'échec. |
 | Fente arrière aux haltères | 2 × 7 à 9 | charge à déterminer, à calibrer | 3 rép. en réserve | 90 s | accessoire ; Jambes : force utile, sans fatigue excessive. |
 | Rotation externe à la poulie coude au corps | 2 × 12 à 15 | charge à déterminer, à calibrer | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
 | Row scapulaire | 2 × 12 à 15 | poids du corps | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
 | Cat-cow | 1 × 8 à 10 | — | — | 20 s | mobilité |
 | Étirement des fléchisseurs du poignet bras tendu | 2 × 30 à 45 s | — | — | 20 s | mobilité |
 
-### samedi — force, corps entier, séance lourde (120 min disponibles, 54 min estimées)
+### samedi — force, corps entier, séance lourde (120 min disponibles, 60 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
 | Muscle-up lesté de compétition | 1 × 1 (série de tête), puis 3 × 2 à −5 % | lest +25 kg, ≈ 91 % du 1RM (charge totale ; 1RM de référence 110,5 kg) | 2 rép. en réserve | 4 min | principal ; Montée en charge avant la série de tête : 4 séries progressives — 5 répétitions à 40 %, 3 à 60 %, 2 à 75 %, 1 à 85 % de la charge du jour, 1 à 3 min entre elles. ; Exécution : amène la barre aux hanches, transition rapide, poitrine au-dessus de la barre avant de pousser. La série s'arrête à la première répétition dont la transition ralentit, se fait en deux temps ou demande un battement de jambes de plus : jamais jusqu'à l'échec. |
-| Traction haute lestée (high pull) | 2 × 3 | lest +6,25 kg, ≈ 75 % du 1RM du mouvement de compétition | 3 rép. en réserve | 2 min 30 s | secondaire ; Cible ton point faible (transition) sur : Muscle-up lesté de compétition. |
-| Squat de compétition | 4 × 3 | 155 kg, ≈ 82 % du 1RM (charge totale ; 1RM de référence 190 kg) | 3 rép. en réserve | 3 min | secondaire ; Exécution : pli de la hanche sous le haut du genou à chaque répétition, tronc gainé, pieds ancrés. |
+| Traction haute lestée (high pull) | 3 × 3 | lest +6,25 kg, ≈ 75 % du 1RM du mouvement de compétition | 3 rép. en réserve | 2 min 30 s | secondaire ; Cible ton point faible (transition) sur : Muscle-up lesté de compétition. |
+| Squat de compétition | 5 × 3 | 155 kg, ≈ 82 % du 1RM (charge totale ; 1RM de référence 190 kg) | 3 rép. en réserve | 3 min | secondaire ; Exécution : pli de la hanche sous le haut du genou à chaque répétition, tronc gainé, pieds ancrés. |
 | Soulevé de terre roumain à la barre | 2 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Relevé de jambes tendues suspendu | 2 × 9 à 13 | poids du corps | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
 | Rowing barre buste penché prise pronation | 2 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |

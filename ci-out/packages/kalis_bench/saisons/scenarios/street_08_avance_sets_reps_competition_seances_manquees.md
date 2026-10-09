@@ -36,7 +36,7 @@ Chaque bloc est écrit par le moteur de création au moment où il commence, d'a
 
 - Séances faites : 68 sur 80 (7 ajustées le jour même).
 - Échecs non voulus (hors tests et tentatives) : 0 % des séries de travail.
-- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 0,84 répétition en réserve (sur les 49 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 9,1 %.
+- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 0,83 répétition en réserve (sur les 49 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 9,1 %.
 - Plus forte hausse de charge totale d'un mouvement principal d'une séance à la suivante, à schéma égal : 8,4 % ; hausses de plus de 10 % faites de plusieurs crans : 0.
 - Progression réelle moyenne des mouvements suivis : 0,079 % par semaine.
 - Jour de l'échéance : meilleure performance à 95,9 % du maximum réel du jour (moyenne des mouvements).
@@ -77,14 +77,14 @@ Athlète simulé, maximum réel hors fatigue : 11 au départ (le record déclar�
 | 3 | intensification (séries plus dures) | 2 × 25 (89 % du maximum testé), série de tête puis séries allégées | 24-20 | 22 (arrêt avant la cible)-17 (arrêt avant la cible) | 3 → 3,7 ; suivantes 5+ → 6,7 | 26 / 28 | répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) |
 | 4 | allègement | 1 × 29 à 32, test | (26 à 32) | 25 (échec) | test | 25 / 26 | — |
 | 5 | réalisation (spécifique à l'objectif) | 1 × 23 (92 % du maximum testé) | 23 | 23 | 2 → 2 | 25 / 26 | — |
-| 6 | réalisation (spécifique à l'objectif) | 1 × 24 (96 % du maximum testé) | 24 | 24 | 1 → 1 | 25 / 26 | — |
+| 6 | réalisation (spécifique à l'objectif) | 2 × 24 (96 % du maximum testé) | 24-20 | 24-20 | 1 → 1 ; suivantes 1 → 2,1 | 25 / 26 | — |
 | 7 | affûtage | 2 × 15 (60 % du maximum testé) | 15-15 | 15-15 | 5+ → 11,5 ; suivantes 5+ → 10,4 | 26 / 26 | — |
 | 8 | échéance | 1 × 26 à 32, test | (25 à 32) | 26 | test | 26 / 26 | — |
 | 9 | transition (récupération) | 2 × 16 (62 % du maximum testé) | 16-16 | 16-16 | 5+ → 9,3 ; suivantes 5+ → 8,5 | 25 / 26 | — |
 | 10 | introduction | 3 × 22 (85 % du maximum testé), série de tête puis séries allégées | 22-17-17 | 21 (arrêt avant la cible)-16-16 | 4 → 4,2 ; suivantes 5+ → 8 | 25 / 26 | allégé pour garder la marge prévue (au moins 4 en réserve) ; dernières séries plus dures que prévu |
 | 11 | construction (volume) | 3 × 23 (89 % du maximum testé), série de tête puis séries allégées | 23-18-18 | 23-17-16 (arrêt avant la cible) | 3 → 2,8 ; suivantes 5+ → 7,6 | 26 / 26 | allégé pour garder la marge prévue (au moins 3 en réserve) ; dernières séries plus dures que prévu |
 | 12 | allègement | 1 × 27 à 32, test | (25 à 32) | 25 (échec) | test | 26 / 26 | — |
-| 13 | construction (volume) | 3 × 23 (89 % du maximum testé), série de tête puis séries allégées | 23-17-17 | 22 (arrêt avant la cible)-15-15 | 3 → 3,8 ; suivantes 5+ → 9,1 | 26 / 26 | allégé pour garder la marge prévue (au moins 3 en réserve) ; dernières séries plus dures que prévu |
+| 13 | construction (volume) | 3 × 23 (89 % du maximum testé), série de tête puis séries allégées | 23-17-17 | 22 (arrêt avant la cible)-15-15 | 3 → 3,8 ; suivantes 5+ → 9,2 | 26 / 26 | allégé pour garder la marge prévue (au moins 3 en réserve) ; dernières séries plus dures que prévu |
 | 15 | construction (volume) | 3 × 23 (89 % du maximum testé), série de tête puis séries allégées | 23-18-18 | 23-18-16 (arrêt avant la cible) | 3 → 2,6 ; suivantes 5+ → 6,3 | 26 / 26 | — |
 | 16 | allègement | 1 × 29 à 32, test | (25 à 32) | 25 (échec) | test | 26 / 26 | — |
 
@@ -99,13 +99,13 @@ Athlète simulé, maximum réel hors fatigue : 26 au départ (le record déclar�
 | 3 | intensification (séries plus dures) | 2 × 44 (88 % du maximum testé), série de tête puis séries allégées | 38-36 | 38-29 (arrêt avant la cible) | 5+ → 7,5 ; suivantes 5+ → 14,5 | 46 / 41 | répétitions recalées sur le maximum mesuré (6 de moins par série que le programme) |
 | 4 | allègement | 1 × 52 à 56, test | (38 à 56) | 45 | test | 46 / 44 | — |
 | 5 | réalisation (spécifique à l'objectif) | 1 × 41 (91 % du maximum testé) | 37 | 37 | 4 → 7,5 | 44 / 41 | répétitions recalées sur le maximum mesuré (4 de moins par série que le programme) |
-| 6 | réalisation (spécifique à l'objectif) | 5 × 25 (56 % du maximum testé), départs au chrono | 25-25-25-25-25 | 25-25-25-25-25 | 5+ → 20 ; suivantes 5+ → 16 | 45 / 41 | — |
+| 6 | réalisation (spécifique à l'objectif) | 5 × 25 (56 % du maximum testé), départs au chrono | 25-25-25-25-25 | 25-25-25-25-25 | 5+ → 20 ; suivantes 5+ → 15,9 | 45 / 41 | — |
 | 7 | affûtage | 2 × 27 (60 % du maximum testé) | 27-27 | 27-27 | 5+ → 16,9 ; suivantes 5+ → 15,6 | 44 / 42 | — |
 | 8 | échéance | 1 × 48 à 56, test | (40 à 56) | 46 | test | 46 / 44 | — |
 | 9 | transition (récupération) | 2 × 28 (61 % du maximum testé) | 28-28 | 28-28 | 5+ → 17,6 ; suivantes 5+ → 15,8 | 46 / 44 | — |
 | 11 | construction (volume) | 3 × 40 (87 % du maximum testé), série de tête puis séries allégées | 38-31-31 | 35 (arrêt avant la cible)-28-28 | 5+ → 10,8 ; suivantes 5+ → 16,4 | 46 / 45 | répétitions recalées sur le maximum mesuré (2 de moins par série que le programme) |
 | 12 | allègement | 1 × 49 à 56, test | (42 à 56) | 45 | test | 46 / 45 | — |
-| 13 | construction (volume) | 3 × 40 (89 % du maximum testé), série de tête puis séries allégées | 40-29-29 | 40-29-29 | 5+ → 7,6 ; suivantes 5+ → 16,1 | 48 / 45 | — |
+| 13 | construction (volume) | 3 × 40 (89 % du maximum testé), série de tête puis séries allégées | 40-29-29 | 40-29-29 | 5+ → 7,6 ; suivantes 5+ → 16,2 | 48 / 45 | — |
 | 14 | construction (volume) | 3 × 40 (89 % du maximum testé), série de tête puis séries allégées | 41-32-32 | 41-31 (arrêt avant la cible)-31 | 4 → 5,9 ; suivantes 5+ → 13,9 | 47 / 46 | répétitions recalées sur le maximum mesuré (1 de plus par série que le programme) |
 | 15 | construction (volume) | 3 × 40 (89 % du maximum testé), série de tête puis séries allégées | 39-34-34 | 38 (arrêt avant la cible)-32-32 | 4,5 → 6,9 ; suivantes 5+ → 11,2 | 45 / 46 | répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; dernières séries plus dures que prévu |
 | 16 | allègement | 1 × 48 à 56, test | (44 à 56) | 45 (échec) | test | 45 / 46 | — |
@@ -141,7 +141,7 @@ Athlète simulé, maximum réel hors fatigue : 114 (lest 44) au départ (le reco
 | 12 | allègement | 2 × 6 à 67 % | 6-6 à 23,75 kg | 6-5 (arrêt avant la cible) à 23,75 kg | 5+ → 4,7 ; suivantes 5+ → 5 | 122 (lest 53) / 140 (lest 71) | — |
 | 13 | construction (volume) | 3 × 5 à 71 % | 5-5-(5 à 11) à 25 kg | 5-4 (arrêt avant la cible) à 25 kg puis 8 à 22,5 kg | 5+ → 6,2 ; suivantes 3,3+ → 4,6 | 125 (lest 56) / 132 (lest 63) | série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète ; allégé pour garder la marge prévue (au moins 4 en réserve) |
 | 14 | construction (volume) | 3 × 5 à 74 % | 5-5-5 à 27,5 kg | 3 (arrêt avant la cible) à 27,5 kg puis 5-5 à 22,5 kg | 5+ → 7,4 ; suivantes 5+ → 6 | 126 (lest 57) / 133 (lest 63) | allégé pour garder la marge prévue (au moins 4 en réserve) |
-| 15 | construction (volume) | 3 × 5 à 78 % | 5-5-5 à 31,25 kg | 5 à 31,25 kg puis 5-5 à 27,5 kg | 3 → 3,7 ; suivantes 3 → 3,7 | 124 (lest 55) / 132 (lest 63) | charge non augmentée (hausse plafonnée d'une séance à la suivante) ; allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |
+| 15 | construction (volume) | 3 × 5 à 78 % | 5-5-5 à 31,25 kg | 5 à 31,25 kg puis 5-5 à 27,5 kg | 3 → 3,8 ; suivantes 3 → 3,7 | 124 (lest 55) / 132 (lest 63) | charge non augmentée (hausse plafonnée d'une séance à la suivante) ; allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |
 | 16 | allègement | 2 × 6 à 67 % | 6-6 à 17,5 kg | 6-6 à 17,5 kg | 5+ → 8,1 ; suivantes 5+ → 7,5 | 128 (lest 59) / 132 (lest 63) | — |
 
 Athlète simulé, maximum réel hors fatigue : 129 (lest 60) au départ (le record déclaré au profil peut être plus haut ou plus ancien), 130 (lest 61) en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
@@ -159,7 +159,7 @@ Athlète simulé, maximum réel hors fatigue : 129 (lest 60) au départ (le reco
 - **Semaine 9 (transition (récupération))** : nouveau bloc construit à partir du point de fin de bloc (maxima estimés, résultats de test, tolérance) ; phase « transition (récupération) » : séances servies telles que le programme les écrit (× 5) ; bilan du jour bas (1/5) ; nuit courte ; charges réduites — Rowing barre buste penché prise pronation, Rotation externe à la poulie coude au corps (bilan du jour bas (1/5), nuit courte).
 - **Semaine 10 (introduction)** : 1 séance(s) manquée(s) sur 5 ; phase « introduction » : séances servies telles que le programme les écrit (× 4).
 - **Semaine 11 (construction (volume))** : Dips aux barres parallèles : répétitions recalées sur le maximum mesuré (2 de moins par série que le programme).
-- **Semaine 12 (allègement)** : phase « allègement » : séances servies telles que le programme les écrit (× 5) ; bilan du jour bas (2/5) (× 2) ; nuit courte ; Pompe classique : répétitions recalées sur le maximum mesuré (3 de moins par série que le programme) ; charges réduites sur 3 exercices (bilan du jour bas (2/5), nuit courte) ; charges réduites — Rowing barre buste penché prise pronation, Rotation externe à la poulie coude au corps (bilan du jour bas (2/5)) ; résultat de test reporté au profil : Dips aux barres parallèles 45 répétitions.
+- **Semaine 12 (allègement)** : phase « allègement » : séances servies telles que le programme les écrit (× 5) ; bilan du jour bas (2/5) (× 2) ; nuit courte ; charges réduites sur 3 exercices (bilan du jour bas (2/5), nuit courte) ; charges réduites — Rowing barre buste penché prise pronation, Rotation externe à la poulie coude au corps (bilan du jour bas (2/5)) ; résultat de test reporté au profil : Dips aux barres parallèles 45 répétitions.
 - **Semaine 13 (construction (volume))** : nouveau bloc construit à partir du point de fin de bloc (maxima estimés, résultats de test, tolérance) ; bilan du jour bas (2/5) ; charges réduites sur 4 exercices (bilan du jour bas (2/5)).
 - **Semaine 14 (construction (volume))** : 1 séance(s) manquée(s) sur 5 ; Dips aux barres parallèles : répétitions recalées sur le maximum mesuré (1 de plus par série que le programme).
 - **Semaine 15 (construction (volume))** : 1 séance(s) manquée(s) sur 5 ; Nordic hamstring curl assisté à l'élastique : un cran d'assistance de moins (élastique plus fin, moins d'appui) : la série repère a montré 4 répétitions de réserve de plus que visé ; bilan du jour bas (2/5) ; Dips aux barres parallèles : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; charges réduites — Traction lestée de compétition, Rowing barre buste penché prise pronation (bilan du jour bas (2/5)).

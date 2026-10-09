@@ -37,7 +37,7 @@ Homme de 51 ans, 76 kg, six ans de pratique régulière. 10 tractions, 15 dips, 
 | 11 | 3 | réalisation (spécifique à l'objectif) | 3 | 45 |
 | 12 | 3 | réalisation (spécifique à l'objectif) | 3 | 45 |
 | 13 | 3 | réalisation (spécifique à l'objectif) | 3 | 45 |
-| 14 | 3 | réalisation (spécifique à l'objectif) | 3 | 43 |
+| 14 | 3 | réalisation (spécifique à l'objectif) | 3 | 45 |
 | 15 | 3 | affûtage | 3 | 24 |
 | 16 | 3 | test | 3 | 13 |
 
@@ -610,12 +610,12 @@ Homme de 51 ans, 76 kg, six ans de pratique régulière. 10 tractions, 15 dips, 
 
 ## Semaine 14 — réalisation (spécifique à l'objectif) (bloc 3)
 
-### lundi — force, haut du corps, séance lourde (60 min disponibles, 41 min estimées)
+### lundi — force, haut du corps, séance lourde (60 min disponibles, 48 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
-| Traction pronation | 1 × 9 | poids du corps, ≈ 90 % du maximum de répétitions (repère : 10) | 1 rép. en réserve | 3 min | principal ; Avant la série de tête : 2 séries faciles (un tiers, puis la moitié des répétitions prévues). ; Simulation du test : la série de tête se fait au format du test (même échauffement, même standard de répétition), jusqu'à une répétition de l'échec — environ 9 répétitions. Note le résultat : il dit si l'objectif du test est réaliste ; pas de série allégée après. ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
+| Traction pronation | 3 × 9 | poids du corps, ≈ 90 % du maximum de répétitions (repère : 10) | 1 rép. en réserve | 3 min | principal ; Avant la série de tête : 2 séries faciles (un tiers, puis la moitié des répétitions prévues). ; Simulation du test : la série de tête se fait au format du test (même échauffement, même standard de répétition), jusqu'à une répétition de l'échec — environ 9 répétitions. Note le résultat : il dit si l'objectif du test est réaliste ; pas de série allégée après. ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Dips aux barres parallèles | 3 × 11 | poids du corps, ≈ 73 % du maximum de répétitions (repère : 15) | 3 rép. en réserve | 90 s | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Rowing barre buste penché prise pronation | 3 × 10 à 12 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Fente arrière aux haltères | 3 × 8 à 10 | charge à déterminer, à calibrer | 3 rép. en réserve | 90 s | secondaire ; Jambes : force utile, sans fatigue excessive. |

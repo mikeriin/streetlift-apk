@@ -36,9 +36,9 @@ Chaque bloc est écrit par le moteur de création au moment où il commence, d'a
 
 - Séances faites : 79 sur 80 (25 ajustées le jour même).
 - Échecs non voulus (hors tests et tentatives) : 0 % des séries de travail.
-- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 0,96 répétition en réserve (sur les 37 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 12,5 %.
+- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 0,97 répétition en réserve (sur les 37 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 12,7 %.
 - Plus forte hausse de charge totale d'un mouvement principal d'une séance à la suivante, à schéma égal : 3,9 % ; hausses de plus de 10 % faites de plusieurs crans : 0.
-- Progression réelle moyenne des mouvements suivis : -0,043 % par semaine.
+- Progression réelle moyenne des mouvements suivis : -0,04 % par semaine.
 - Douleur : 0 hausse(s) de charge sur une zone douloureuse signalée.
 
 ## Mouvements suivis, semaine par semaine
@@ -87,9 +87,9 @@ Athlète simulé, maximum réel hors fatigue : 26 au départ (le record déclar�
 | 4 | allègement | 1 × 52 à 56, test | (38 à 56) | 45 | test | 46 / 44 | — |
 | 5 | réalisation (spécifique à l'objectif) | 1 × 41 (91 % du maximum testé) | 37 | 37 | 4 → 7,5 | 44 / 41 | répétitions recalées sur le maximum mesuré (4 de moins par série que le programme) |
 | 13 | introduction | 2 × 40 (89 % du maximum testé), série de tête puis séries allégées | 37-29 | 37-29 | 5+ → 8,4 ; suivantes 5+ → 14,9 | 45 / 43 | charge non augmentée (pain_return) ; allégé pour garder la marge prévue (au moins 4 en réserve) ; douleur signalée (épaule, 0/10) |
-| 14 | construction (volume) | 2 × 40 (89 % du maximum testé), série de tête puis séries allégées | 38-29 | 36 (arrêt avant la cible)-26 | 5+ → 8,2 ; suivantes 5+ → 17 | 44 / 43 | charge non augmentée (pain_return) ; répétitions recalées sur le maximum mesuré (2 de moins par série que le programme) ; dernières séries plus dures que prévu |
-| 15 | construction (volume) | 2 × 40 (89 % du maximum testé), série de tête puis séries allégées | 36-31 | 35 (arrêt avant la cible)-29 | 5+ → 7,7 ; suivantes 5+ → 12,4 | 43 / 40 | charge non augmentée (pain_return) ; allégé pour garder la marge prévue (au moins 4 en réserve) ; dernières séries plus dures que prévu |
-| 16 | allègement | 1 × 27 (60 % du maximum testé) | 27 | 27 | 5+ → 15,5 | 43 / 40 | charge non augmentée (pain_return) |
+| 14 | construction (volume) | 2 × 40 (89 % du maximum testé), série de tête puis séries allégées | 39-29 | 39-29 | 4 → 5,2 ; suivantes 5+ → 13,5 | 44 / 43 | charge non augmentée (pain_return) ; répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) |
+| 15 | construction (volume) | 2 × 40 (89 % du maximum testé), série de tête puis séries allégées | 37-31 | 36 (arrêt avant la cible)-29 | 4,5 → 6,7 ; suivantes 5+ → 12,2 | 43 / 43 | charge non augmentée (pain_return) ; répétitions recalées sur le maximum mesuré (3 de moins par série que le programme) ; dernières séries plus dures que prévu |
+| 16 | allègement | 1 × 27 (60 % du maximum testé) | 27 | 27 | 5+ → 15,6 | 43 / 43 | charge non augmentée (pain_return) |
 
 Athlète simulé, maximum réel hors fatigue : 46 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 44 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
 
@@ -98,22 +98,11 @@ Athlète simulé, maximum réel hors fatigue : 46 au départ (le record déclar�
 | Sem. | Phase | Écrit par le programme | Servi par le moteur | Fait | Effort visé → réel | Maximum réel / estimé | Décisions du moteur |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | 5 | réalisation (spécifique à l'objectif) | 2 × 18 (72 % du maximum testé) | 13-13 | 13-13 | 4,5 → 45,2 ; suivantes 3 → 42,5 | 58 / 19 | douleur signalée (épaule, 5/10) ; charge non augmentée (pain_return) ; répétitions recalées sur le maximum mesuré (5 de moins par série que le programme) ; calibrage (séance 2 sur ce mouvement) |
-| 6 | réalisation (spécifique à l'objectif) | 1 × 24 (96 % du maximum testé) | 13 | 13 | 5+ → 44,6 | 58 / 19 | douleur signalée (épaule, 5/10) ; charge non augmentée (pain_return) ; répétitions recalées sur le maximum mesuré (11 de moins par série que le programme) ; calibrage (séance 3 sur ce mouvement) |
+| 6 | réalisation (spécifique à l'objectif) | 2 × 24 (96 % du maximum testé) | 13-13 | 13-13 | 5+ → 44,6 ; suivantes 4,5 → 42,9 | 58 / 19 | douleur signalée (épaule, 5/10) ; charge non augmentée (pain_return) ; répétitions recalées sur le maximum mesuré (11 de moins par série que le programme) ; calibrage (séance 3 sur ce mouvement) |
 | 7 | affûtage | 1 × 21 (84 % du maximum testé) | 13 | 13 | 5+ → 47,9 | 61 / 19 | douleur signalée (épaule, 5/10) ; charge non augmentée (pain_return) ; répétitions recalées sur le maximum mesuré (8 de moins par série que le programme) |
 | 8 | échéance | 3 × 15 (60 % du maximum testé) | 11 | 11 | 5+ → 49,2 | 60 / 19 | douleur signalée (épaule, 5/10) ; charge non augmentée (pain_return) ; répétitions recalées sur le maximum mesuré (4 de moins par série que le programme) ; −2 série(s) |
 
 Athlète simulé, maximum réel hors fatigue : 60 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 60 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
-
-### Traction assistée à l'élastique
-
-| Sem. | Phase | Écrit par le programme | Servi par le moteur | Fait | Effort visé → réel | Maximum réel / estimé | Décisions du moteur |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| 9 | introduction | 2 × 6 à 8 | 1 × 6 à 8 | 8 | 4 → 44,2 | 52 / 9 | charge non augmentée (pain_return) ; −1 série(s) ; calibrage (séance 1 sur ce mouvement) |
-| 10 | construction (volume) | 2 × 8 à 10 | (8 à 9)-8 | 9-8 | 3 → 44,7 ; suivantes 3 → 42,1 | 54 / 12 | allégé pour garder la marge prévue (au moins 3 en réserve) |
-| 11 | construction (volume) | 2 × 8 à 10 | (8 à 10)-(8 à 9) | 10-9 | 1,5 → 44,8 ; suivantes 3 → 43 | 55 / 13 | — |
-| 12 | allègement | 1 × 6 à 8 | (6 à 8) | 8 | 5+ → 43,7 | 52 / 13 | — |
-
-Athlète simulé, maximum réel hors fatigue : 54 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 55 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
 
 ### Pompe sphinx
 
@@ -126,6 +115,17 @@ Athlète simulé, maximum réel hors fatigue : 54 au départ (le record déclar�
 
 Athlète simulé, maximum réel hors fatigue : 38 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 38 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
 
+### Traction assistée à l'élastique
+
+| Sem. | Phase | Écrit par le programme | Servi par le moteur | Fait | Effort visé → réel | Maximum réel / estimé | Décisions du moteur |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 9 | introduction | 2 × 6 à 8 | 1 × 6 à 8 | 8 | 4 → 44,2 | 52 / 9 | charge non augmentée (pain_return) ; −1 série(s) ; calibrage (séance 1 sur ce mouvement) |
+| 10 | construction (volume) | 2 × 8 à 10 | (8 à 9)-8 | 9-8 | 3 → 44,7 ; suivantes 3 → 42,1 | 54 / 12 | allégé pour garder la marge prévue (au moins 3 en réserve) |
+| 11 | construction (volume) | 2 × 8 à 10 | (8 à 10)-(8 à 9) | 10-9 | 1,5 → 44,8 ; suivantes 3 → 43 | 55 / 13 | — |
+| 12 | allègement | 1 × 6 à 8 | (6 à 8) | 8 | 5+ → 43,7 | 52 / 13 | — |
+
+Athlète simulé, maximum réel hors fatigue : 54 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 55 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
+
 ## Journal des décisions
 
 - **Semaine 1 (introduction)** : phase « introduction » : séances servies telles que le programme les écrit (× 5).
@@ -137,10 +137,10 @@ Athlète simulé, maximum réel hors fatigue : 38 au départ (le record déclar�
 - **Semaine 7 (affûtage)** : phase « affûtage » : séances servies telles que le programme les écrit (× 5) ; affûtage : aucun volume ajouté, intensité gardée (× 5) ; échéance proche : décisions prudentes, pas de hausse au-delà du programme (× 5) ; Traction scapulaire : répétitions recalées sur le maximum mesuré (8 de moins par série que le programme) ; Pompe sphinx : répétitions recalées sur le maximum mesuré (13 de moins par série que le programme) ; douleur qui dure ou qui revient (épaule, 12 séances à 3/10 ou plus) : mouvements qui la provoquent retirés, consulter un médecin ou un kiné, reprise après deux semaines à 2/10 au plus ; exercice retiré sur 3 exercices (douleur signalée (épaule, 5/10)) ; exercice remplacé sur 5 exercices (douleur signalée (épaule, 5/10)).
 - **Semaine 8 (échéance)** : phase « échéance » : séances servies telles que le programme les écrit (× 5) ; affûtage : aucun volume ajouté, intensité gardée (× 5) ; échéance proche : décisions prudentes, pas de hausse au-delà du programme (× 5) ; Traction scapulaire : répétitions recalées sur le maximum mesuré (4 de moins par série que le programme) ; douleur qui dure ou qui revient (épaule, 16 séances à 3/10 ou plus) : mouvements qui la provoquent retirés, consulter un médecin ou un kiné, reprise après deux semaines à 2/10 au plus (× 3) ; exercice retiré sur 5 exercices (douleur signalée (épaule, 5/10)) ; exercice remplacé sur 3 exercices (douleur signalée (épaule, 5/10)).
 - **Semaine 9 (introduction)** : nouveau bloc construit à partir du point de fin de bloc (maxima estimés, résultats de test, tolérance) ; phase « introduction » : séances servies telles que le programme les écrit (× 5) ; douleur qui dure ou qui revient (épaule, 16 séances à 3/10 ou plus) : mouvements qui la provoquent retirés, consulter un médecin ou un kiné, reprise après deux semaines à 2/10 au plus (× 4) ; bilan du jour bas (2/5) ; nuit courte ; exercice retiré sur 4 exercices (douleur signalée (épaule, 5/10)) ; exercice remplacé sur 3 exercices (douleur signalée (épaule, 5/10)) ; séries retirées sur 4 exercices (−1 série(s)).
-- **Semaine 10 (construction (volume))** : Rotation externe à l'élastique : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; bilan du jour bas (2/5) ; nuit courte.
+- **Semaine 10 (construction (volume))** : Rotation externe à l'élastique : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme).
 - **Semaine 11 (construction (volume))** : Nordic hamstring curl assisté à l'élastique : un cran d'assistance de moins (élastique plus fin, moins d'appui) : la série repère a montré 3 répétitions de réserve de plus que visé ; Rotation externe à l'élastique : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme).
 - **Semaine 12 (allègement)** : phase « allègement » : séances servies telles que le programme les écrit (× 5).
 - **Semaine 13 (introduction)** : nouveau bloc construit à partir du point de fin de bloc (maxima estimés, résultats de test, tolérance) ; phase « introduction » : séances servies telles que le programme les écrit (× 5) ; Pompe classique : répétitions recalées sur le maximum mesuré (22 de moins par série que le programme).
-- **Semaine 14 (construction (volume))** : Dips aux barres parallèles : répétitions recalées sur le maximum mesuré (2 de moins par série que le programme).
-- **Semaine 15 (construction (volume))** : bilan du jour bas (2/5) ; charges réduites — Traction lestée de compétition, Rowing barre buste penché prise pronation (bilan du jour bas (2/5)).
+- **Semaine 14 (construction (volume))** : Dips aux barres parallèles : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme).
+- **Semaine 15 (construction (volume))** : bilan du jour bas (2/5) ; Dips aux barres parallèles : répétitions recalées sur le maximum mesuré (3 de moins par série que le programme) ; charges réduites — Traction lestée de compétition, Rowing barre buste penché prise pronation (bilan du jour bas (2/5)).
 - **Semaine 16 (allègement)** : 1 séance(s) manquée(s) sur 5 ; phase « allègement » : séances servies telles que le programme les écrit (× 4) ; Traction pronation : répétitions recalées sur le maximum mesuré (3 de moins par série que le programme) ; Pompe classique : répétitions recalées sur le maximum mesuré (2 de moins par série que le programme).

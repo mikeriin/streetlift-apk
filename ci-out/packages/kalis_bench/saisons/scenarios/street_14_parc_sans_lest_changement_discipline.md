@@ -37,7 +37,7 @@ Chaque bloc est écrit par le moteur de création au moment où il commence, d'a
 - Échecs non voulus (hors tests et tentatives) : 0 % des séries de travail.
 - Écart moyen entre l'effort affiché par le moteur et l'effort réel : 0,88 répétition en réserve (sur les 64 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 4,7 %.
 - Plus forte hausse de charge totale d'un mouvement principal d'une séance à la suivante, à schéma égal : 0 % ; hausses de plus de 10 % faites de plusieurs crans : 0.
-- Progression réelle moyenne des mouvements suivis : 0,387 % par semaine.
+- Progression réelle moyenne des mouvements suivis : 0,388 % par semaine.
 - Douleur : 0 hausse(s) de charge sur une zone douloureuse signalée.
 
 ## Mouvements suivis, semaine par semaine
@@ -58,9 +58,9 @@ Pour chaque mouvement, la séance la plus lourde de la semaine : ce que le progr
 | 8 | réalisation (spécifique à l'objectif) | 2 × 15 (88 % du maximum testé), série de tête puis séries allégées | 14-12 | 14-11 | 2 → 3,2 ; suivantes 2 → 5 | 17 / 16 | répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; dernières séries plus dures que prévu |
 | 9 | réalisation (spécifique à l'objectif) | 2 × 15 (88 % du maximum testé), série de tête puis séries allégées | 14-11 | 14-11 | 2 → 2,8 ; suivantes 3,5 → 4,6 | 17 / 17 | répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) |
 | 10 | réalisation (spécifique à l'objectif) | 2 × 15 (88 % du maximum testé), série de tête puis séries allégées | 14-12 | 14-12 | 2 → 2,8 ; suivantes 2 → 3,5 | 17 / 17 | répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) |
-| 11 | réalisation (spécifique à l'objectif) | 1 × 16 (94 % du maximum testé) | 15 | 15 | 1 → 2,8 | 18 / 17 | répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) |
+| 11 | réalisation (spécifique à l'objectif) | 2 × 16 (94 % du maximum testé) | 15-13 | 15-13 | 1 → 2,8 ; suivantes 1 → 3,5 | 18 / 17 | répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) |
 | 12 | test | 1 × 19 à 25, test | (16 à 25) | 17 | test | 17 / 17 | — |
-| 13 | construction (volume) | 3 × 15 (88 % du maximum testé), série de tête puis séries allégées | 15-11-11 | 15-10-10 | 2 → 1,8 ; suivantes 4,5+ → 5,5 | 17 / 17 | allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |
+| 13 | construction (volume) | 3 × 15 (88 % du maximum testé), série de tête puis séries allégées | 15-11-11 | 15-10-10 | 2 → 1,9 ; suivantes 4,5+ → 5,5 | 17 / 17 | allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |
 | 14 | construction (volume) | 3 × 15 (88 % du maximum testé), série de tête puis séries allégées | 15-13-13 | 15-12-12 | 2 → 3,3 ; suivantes 2,5 → 4,5 | 18 / 17 | allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |
 | 15 | construction (volume) | 3 × 15 (88 % du maximum testé), série de tête puis séries allégées | 15-13-13 | 15-13-13 | 2 → 2,4 ; suivantes 2,5 → 2,3 | 17 / 17 | — |
 | 16 | construction (volume) | 3 × 15 (88 % du maximum testé), série de tête puis séries allégées | 15-14-13 | 15-14-13 | 2 → 3,4 ; suivantes 2 → 3,3 | 18 / 18 | — |

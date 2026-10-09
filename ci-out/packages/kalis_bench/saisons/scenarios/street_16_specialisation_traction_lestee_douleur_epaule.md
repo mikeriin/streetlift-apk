@@ -35,9 +35,9 @@ Chaque bloc est écrit par le moteur de création au moment où il commence, d'a
 
 - Séances faites : 63 sur 64 (28 ajustées le jour même).
 - Échecs non voulus (hors tests et tentatives) : 0,3 % des séries de travail.
-- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 2,06 répétition en réserve (sur les 64 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 20,5 %.
-- Plus forte hausse de charge totale d'un mouvement principal d'une séance à la suivante, à schéma égal : 7,9 % ; hausses de plus de 10 % faites de plusieurs crans : 0.
-- Progression réelle moyenne des mouvements suivis : 0,012 % par semaine.
+- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 2,12 répétition en réserve (sur les 64 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 21,2 %.
+- Plus forte hausse de charge totale d'un mouvement principal d'une séance à la suivante, à schéma égal : 6,3 % ; hausses de plus de 10 % faites de plusieurs crans : 0.
+- Progression réelle moyenne des mouvements suivis : 0,014 % par semaine.
 - Douleur : 0 hausse(s) de charge sur une zone douloureuse signalée.
 
 ## Mouvements suivis, semaine par semaine
@@ -55,7 +55,7 @@ Pour chaque mouvement, la séance la plus lourde de la semaine : ce que le progr
 | 5 | intensification (séries plus dures) | 5 × 3 à 82 %, série de tête puis séries allégées | (3 à 6) à 30 kg puis 3-3-3-3 à 23,75 kg | 3 à 30 kg puis 3-3-3-3 à 21,25 kg | 3 → 4,4 ; suivantes 4,5 → 7,3 | 120 (lest 48) / 122 (lest 49) | série repère : une série ouverte (au ressenti, 3 en réserve) pour mesurer où en est l'athlète ; séries allégées calculées sur la série de tête réalisée (30 kg, −5 %) ; dernières séries plus dures que prévu |
 | 10 | échéance | 3 × 3 à 78 % | 3 à 8,75 kg | 3 à 8,75 kg | 5+ → 11,2 | 117 (lest 44) / 120 (lest 47) | charge non augmentée (pain_return) ; −2 série(s) ; douleur signalée (épaule, 0/10) |
 | 11 | transition (récupération) | 2 × 5 à 64 % | 5-5 à 2,5 kg | 5-5 à 2,5 kg | 5+ → 12,3 ; suivantes 5+ → 12,1 | 120 (lest 48) / 117 (lest 44) | — |
-| 12 | introduction | 2 × 5 à 67 %, série de tête puis séries allégées | 5 à 6,25 kg puis 5 | 5 à 6,25 kg puis 5 | 5+ → 12 ; suivantes 5+ → 13,9 | 125 (lest 52) / 117 (lest 44) | — |
+| 12 | introduction | 2 × 5 à 67 %, série de tête puis séries allégées | 5 à 6,25 kg puis 5 | 5 à 6,25 kg puis 5 | 5+ → 12 ; suivantes 5+ → 14 | 125 (lest 52) / 117 (lest 44) | — |
 | 13 | construction (volume) | 3 × 3 à 74 %, série de tête puis séries allégées | (3 à 6) à 13,75 kg puis 3-3 à 8,75 kg | 6 à 13,75 kg puis 3-3 à 8,75 kg | 4 → 7,1 ; suivantes 5+ → 11,7 | 120 (lest 47) / 117 (lest 44) | série repère : une série ouverte (au ressenti, 4 en réserve) pour mesurer où en est l'athlète ; charge non augmentée (hausse plafonnée d'une séance à la suivante) |
 | 14 | allègement | 1 × 3 à 88 %, test | 3 à 31,25 kg | 3 à 31,25 kg | test | 125 (lest 52) / 115 (lest 43) | — |
 | 15 | construction (volume) | 2 × 3 à 84 %, série de tête puis séries allégées | 3 à 28,75 kg puis 3 à 22,5 kg | 3 à 28,75 kg puis 3 à 22,5 kg | 2 → 4,8 ; suivantes 4 → 6,8 | 120 (lest 48) / 118 (lest 46) | — |
@@ -69,9 +69,9 @@ Athlète simulé, maximum réel hors fatigue : 122 (lest 49) au départ (le reco
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | 5 | intensification (séries plus dures) | 4 × 4 à 73 % | 3 × 4 | 4 à 75 kg puis 4-4 à 65 kg | 4 → 10,7 ; suivantes 4 → 12,4 | 123 / 90 | douleur signalée (épaule, 5/10) ; charge non augmentée (pain_return) ; bilan du jour bas (1/5) ; nuit courte |
 | 6 | intensification (séries plus dures) | 4 × 4 à 76 % | (4 à 8)-(4 à 8)-(4 à 8) à 62,5 kg | 8-8-7 à 62,5 kg | 4 → 10 ; suivantes 4 → 9,4 | 121 / 90 | douleur signalée (épaule, 5/10) ; charge non augmentée (pain_return) ; charge non augmentée (zone douloureuse) ; dernières séries plus faciles que prévu |
-| 7 | réalisation (spécifique à l'objectif) | 3 × 3 à 81 % | 4-4 à 62,5 kg | 4-4 à 62,5 kg | 4 → 13,2 ; suivantes 4 → 12,5 | 116 / 91 | douleur signalée (épaule, 5/10) ; charge non augmentée (pain_return) ; bilan du jour bas (2/5) ; nuit courte |
-| 8 | réalisation (spécifique à l'objectif) | 4 × 3 à 82 % | (3 à 6)-(3 à 6)-(3 à 6) à 62,5 kg | 6-6-6 à 62,5 kg | 3 → 11,6 ; suivantes 3 → 10,7 | 119 / 91 | douleur signalée (épaule, 5/10) ; charge non augmentée (pain_return) ; charge non augmentée (zone douloureuse) ; dernières séries plus faciles que prévu |
-| 9 | affûtage | 2 × 2 à 86 % | 2-2 à 62,5 kg | 2-2 à 62,5 kg | 3 → 16,1 ; suivantes 3 → 15,4 | 122 / 91 | douleur signalée (épaule, 5/10) ; charge non augmentée (pain_return) ; charge non augmentée (zone douloureuse) ; dernières séries plus faciles que prévu |
+| 7 | réalisation (spécifique à l'objectif) | 5 × 3 à 81 % | 4-4-4 à 62,5 kg | 4-4-4 à 62,5 kg | 4 → 13,2 ; suivantes 4 → 12,3 | 116 / 91 | douleur signalée (épaule, 5/10) ; charge non augmentée (pain_return) ; bilan du jour bas (2/5) ; nuit courte |
+| 8 | réalisation (spécifique à l'objectif) | 5 × 3 à 82 % | (3 à 6)-(3 à 6)-(3 à 6)-(3 à 6) à 62,5 kg | 6-6-6-6 à 62,5 kg | 3 → 11,6 ; suivantes 3 → 10,4 | 119 / 91 | douleur signalée (épaule, 5/10) ; charge non augmentée (pain_return) ; charge non augmentée (zone douloureuse) ; dernières séries plus faciles que prévu |
+| 9 | affûtage | 2 × 2 à 86 % | 2-2 à 62,5 kg | 2-2 à 62,5 kg | 3 → 16,1 ; suivantes 3 → 15,4 | 122 / 91 | douleur signalée (épaule, 5/10) ; charge non augmentée (pain_return) ; charge non augmentée (zone douloureuse) |
 
 Athlète simulé, maximum réel hors fatigue : 125 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 125 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
 

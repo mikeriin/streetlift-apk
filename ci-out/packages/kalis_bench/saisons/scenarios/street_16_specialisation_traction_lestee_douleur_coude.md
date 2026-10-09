@@ -35,9 +35,9 @@ Chaque bloc est écrit par le moteur de création au moment où il commence, d'a
 
 - Séances faites : 63 sur 64 (38 ajustées le jour même).
 - Échecs non voulus (hors tests et tentatives) : 0,2 % des séries de travail.
-- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 1,84 répétition en réserve (sur les 51 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 15,6 %.
+- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 1,92 répétition en réserve (sur les 52 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 16,6 %.
 - Plus forte hausse de charge totale d'un mouvement principal d'une séance à la suivante, à schéma égal : 5,4 % ; hausses de plus de 10 % faites de plusieurs crans : 0.
-- Progression réelle moyenne des mouvements suivis : 0,106 % par semaine.
+- Progression réelle moyenne des mouvements suivis : 0,107 % par semaine.
 - Douleur : 0 hausse(s) de charge sur une zone douloureuse signalée.
 
 ## Mouvements suivis, semaine par semaine
@@ -62,9 +62,9 @@ Athlète simulé, maximum réel hors fatigue : 122 (lest 49) au départ (le reco
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | 5 | intensification (séries plus dures) | 4 × 4 à 73 % | 3 × 4 | 4 à 75 kg puis 4-4 à 65 kg | 4 → 10,7 ; suivantes 4 → 12,4 | 123 / 90 | douleur signalée (coude, 5/10) ; charge non augmentée (pain_return) ; bilan du jour bas (1/5) ; nuit courte |
 | 6 | intensification (séries plus dures) | 4 × 4 à 76 % | (4 à 8)-(4 à 8)-(4 à 8) à 62,5 kg | 8-8-7 à 62,5 kg | 4 → 10 ; suivantes 4 → 9,4 | 121 / 90 | douleur signalée (coude, 5/10) ; charge non augmentée (pain_return) ; charge non augmentée (zone douloureuse) ; dernières séries plus faciles que prévu |
-| 7 | réalisation (spécifique à l'objectif) | 3 × 3 à 81 % | 4-4 à 62,5 kg | 4-4 à 62,5 kg | 4 → 13,1 ; suivantes 4 → 12,5 | 116 / 91 | douleur signalée (coude, 5/10) ; charge non augmentée (pain_return) ; bilan du jour bas (2/5) ; nuit courte |
-| 8 | réalisation (spécifique à l'objectif) | 4 × 3 à 82 % | (3 à 6)-(3 à 6)-(3 à 6) à 62,5 kg | 6-6-6 à 62,5 kg | 3 → 11,5 ; suivantes 3 → 10,7 | 118 / 91 | douleur signalée (coude, 5/10) ; charge non augmentée (pain_return) ; charge non augmentée (zone douloureuse) ; dernières séries plus faciles que prévu |
-| 9 | affûtage | 2 × 2 à 86 % | 2-2 à 62,5 kg | 2-2 à 62,5 kg | 3 → 16 ; suivantes 3 → 15,4 | 122 / 91 | douleur signalée (coude, 5/10) ; charge non augmentée (pain_return) ; charge non augmentée (zone douloureuse) ; dernières séries plus faciles que prévu |
+| 7 | réalisation (spécifique à l'objectif) | 5 × 3 à 81 % | 4-4-4 à 62,5 kg | 4-4-4 à 62,5 kg | 4 → 13,1 ; suivantes 4 → 12,3 | 116 / 91 | douleur signalée (coude, 5/10) ; charge non augmentée (pain_return) ; bilan du jour bas (2/5) ; nuit courte |
+| 8 | réalisation (spécifique à l'objectif) | 5 × 3 à 82 % | (3 à 6)-(3 à 6)-(3 à 6)-(3 à 6) à 62,5 kg | 6-6-6-6 à 62,5 kg | 3 → 11,5 ; suivantes 3 → 10,4 | 118 / 91 | douleur signalée (coude, 5/10) ; charge non augmentée (pain_return) ; charge non augmentée (zone douloureuse) ; dernières séries plus faciles que prévu |
+| 9 | affûtage | 2 × 2 à 86 % | 2-2 à 62,5 kg | 2-2 à 62,5 kg | 3 → 16 ; suivantes 3 → 15,3 | 122 / 91 | douleur signalée (coude, 5/10) ; charge non augmentée (pain_return) ; charge non augmentée (zone douloureuse) |
 
 Athlète simulé, maximum réel hors fatigue : 125 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 125 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
 

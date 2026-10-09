@@ -33,11 +33,11 @@ Chaque bloc est écrit par le moteur de création au moment où il commence, d'a
 
 ## Bilan
 
-- Séances faites : 51 sur 51 (24 ajustées le jour même).
+- Séances faites : 51 sur 51 (23 ajustées le jour même).
 - Échecs non voulus (hors tests et tentatives) : 0,2 % des séries de travail.
-- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 1,73 répétition en réserve (sur les 90 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 23,3 %.
+- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 1,74 répétition en réserve (sur les 90 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 23,9 %.
 - Plus forte hausse de charge totale d'un mouvement principal d'une séance à la suivante, à schéma égal : 19,2 % ; hausses de plus de 10 % faites de plusieurs crans : 3.
-- Progression réelle moyenne des mouvements suivis : 0,023 % par semaine.
+- Progression réelle moyenne des mouvements suivis : 0,027 % par semaine.
 - Tentatives de maximum : 3 réussies sur 3 ; ouvertures réussies : 100 %.
 - Douleur : 0 hausse(s) de charge sur une zone douloureuse signalée.
 
@@ -54,18 +54,18 @@ Pour chaque mouvement, la séance la plus lourde de la semaine : ce que le progr
 | 3 | construction (volume) | 4 × 5 à 75 %, série de tête puis séries allégées | 5 à 72,5 kg puis 5-5-5 à 67,5 kg | 5 à 72,5 kg puis 5-5-5 à 67,5 kg | 5+ → 8,2 ; suivantes 5+ → 9,2 | 97 / 101 | charge non augmentée (hausse plafonnée d'une séance à la suivante) |
 | 4 | construction (volume) | 4 × 4 à 80 %, série de tête puis séries allégées | 4 à 75 kg puis 4-4-4 à 70 kg | 4 à 75 kg puis 4-4-4 à 70 kg | 5+ → 7,5 ; suivantes 5+ → 9 | 95 / 101 | charge non augmentée (hausse plafonnée d'une séance à la suivante) |
 | 5 | allègement | 2 × 2 à 70 % | 2-2 à 70 kg | 2-2 à 70 kg | 5+ → 10,4 ; suivantes 5+ → 9,7 | 91 / 102 | — |
-| 6 | intensification (séries plus dures) | 4 × 2 à 73 %, série de tête puis séries allégées | 2 à 62,5 kg puis 2-2-2 à 57,5 kg | 2 à 62,5 kg puis 2-2-2 à 57,5 kg | 5+ → 15,2 ; suivantes 5+ → 16,4 | 94 / 89 | — |
+| 6 | intensification (séries plus dures) | 4 × 2 à 73 %, série de tête puis séries allégées | 2 à 62,5 kg puis 2-2-2 à 57,5 kg | 2 à 62,5 kg puis 2-2-2 à 57,5 kg | 5+ → 15,2 ; suivantes 5+ → 16,5 | 94 / 89 | — |
 | 7 | intensification (séries plus dures) | 4 × 2 à 75 %, série de tête puis séries allégées | 2 à 65 kg puis 2-2-2 à 60 kg | 2 à 65 kg puis 2-2-2 à 60 kg | 5+ → 14,3 ; suivantes 5+ → 15,5 | 95 / 89 | — |
 | 8 | intensification (séries plus dures) | 4 × 1 à 80 %, série de tête puis séries allégées | 1 à 67,5 kg puis 1-1-1 à 62,5 kg | 1 à 67,5 kg puis 1-1-1 à 62,5 kg | 5+ → 13,1 ; suivantes 5+ → 14,6 | 92 / 89 | charge non augmentée (hausse plafonnée d'une séance à la suivante) |
-| 9 | intensification (séries plus dures) | 4 × 1 à 83 %, série de tête puis séries allégées | 1 à 70 kg puis 1-1-1 à 65 kg | 1 à 70 kg puis 1-1-1 à 65 kg | 5+ → 14,7 ; suivantes 5+ → 15,7 | 100 / 89 | charge non augmentée (hausse plafonnée d'une séance à la suivante) |
+| 9 | intensification (séries plus dures) | 4 × 1 à 83 %, série de tête puis séries allégées | 1 à 70 kg puis 1-1-1 à 65 kg | 1 à 70 kg puis 1-1-1 à 65 kg | 5+ → 14,6 ; suivantes 5+ → 15,7 | 100 / 89 | charge non augmentée (hausse plafonnée d'une séance à la suivante) |
 | 10 | allègement | 1 × 3 à 88 %, test | 3 à 77,5 kg | 3 à 77,5 kg | test | 100 / 92 | — |
-| 11 | réalisation (spécifique à l'objectif) | 4 × 3 à 81 % | 3-3-3-(3 à 9) à 77,5 kg | 3-3-3-7 à 77,5 kg | 3 → 7,2 ; suivantes 2,5 → 4,9 | 95 / 93 | série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète |
-| 12 | réalisation (spécifique à l'objectif) | 4 × 2 à 86 %, série de tête puis séries allégées | 2 à 80 kg puis 2-2-2 à 75 kg | 2 à 80 kg puis 2-2-2 à 75 kg | 4,5 → 6,5 ; suivantes 5+ → 8,2 | 94 / 93 | — |
-| 13 | réalisation (spécifique à l'objectif) | 4 × 2 à 89 %, série de tête puis séries allégées | 2 à 82,5 kg puis 2-2-2 à 77,5 kg | 2 à 82,5 kg puis 2-2-1 (arrêt avant la cible) à 77,5 kg | 3,5 → 3,8 ; suivantes 5+ → 5,8 | 92 / 94 | — |
-| 14 | réalisation (spécifique à l'objectif) | 4 × 1 à 89 %, série de tête puis séries allégées | 1 à 80 kg puis 2-2-2 à 75 kg | 1 à 80 kg puis 2-2-2 à 75 kg | 5+ → 9,1 ; suivantes 5+ → 9,3 | 98 / 94 | — |
-| 15 | affûtage | 3 × 1 à 89 %, série de tête puis séries allégées | 1 à 82,5 kg puis 2-2 à 75 kg | 1 à 82,5 kg puis 2-2 à 75 kg | 5+ → 6,3 ; suivantes 5+ → 8,3 | 95 / 95 | charge non augmentée (hausse plafonnée d'une séance à la suivante) |
-| 16 | test | 3 × 1 à 91 %, test | 1 à 82,5 kg puis 1 à 85 kg puis 1 à 87,5 kg | 1 à 82,5 kg puis 1 à 85 kg puis 1 à 87,5 kg | test | 100 / 91 | ouverture à 85,2 % du maximum estimé ; barre suivante choisie pour 96 % de chances de réussite ; tentatives prudentes (uncertainty) ; barre suivante choisie pour 91 % de chances de réussite |
-| 17 | construction (volume) | 4 × 3 à 83 %, série de tête puis séries allégées | 3 à 80 kg puis 3-3-3 à 75 kg | 3 à 80 kg puis 3-3-3 à 75 kg | 2 → 9,7 ; suivantes 4,5 → 10,8 | 105 / 92 | — |
+| 11 | réalisation (spécifique à l'objectif) | 5 × 3 à 81 % | 3-3-3-3-(3 à 9) à 77,5 kg | 3-3-3-3-5 à 77,5 kg | 3 → 7,2 ; suivantes 2,6 → 5,6 | 95 / 93 | série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète |
+| 12 | réalisation (spécifique à l'objectif) | 4 × 2 à 86 %, série de tête puis séries allégées | 2 à 77,5 kg puis 2-2-2 à 72,5 kg | 2 à 77,5 kg puis 2-2-2 à 72,5 kg | 5+ → 7,8 ; suivantes 5+ → 9,5 | 94 / 93 | — |
+| 13 | réalisation (spécifique à l'objectif) | 4 × 2 à 89 %, série de tête puis séries allégées | 2 à 80 kg puis 2-2-2 à 75 kg | 2 à 80 kg puis 2-2-2 à 75 kg | 4 → 5,2 ; suivantes 5+ → 6,9 | 92 / 92 | — |
+| 14 | réalisation (spécifique à l'objectif) | 4 × 1 à 89 %, série de tête puis séries allégées | 1 à 80 kg puis 2-2-2 à 75 kg | 1 à 80 kg puis 2-2-2 à 75 kg | 4,5 → 9,2 ; suivantes 5+ → 9,3 | 98 / 93 | — |
+| 15 | affûtage | 3 × 1 à 89 %, série de tête puis séries allégées | 1 à 82,5 kg puis 2-2 à 75 kg | 1 à 82,5 kg puis 2-2 à 75 kg | 4 → 7 ; suivantes 5+ → 8,9 | 96 / 93 | — |
+| 16 | test | 3 × 1 à 91 %, test | 1 à 82,5 kg puis 1 à 85 kg puis 1 à 87,5 kg | 1 à 82,5 kg puis 1 à 85 kg puis 1 à 87,5 kg | test | 100 / 92 | ouverture à 87,8 % du maximum estimé ; barre suivante choisie pour 93 % de chances de réussite ; barre suivante choisie pour 83 % de chances de réussite ; dernières séries plus faciles que prévu |
+| 17 | construction (volume) | 4 × 3 à 83 %, série de tête puis séries allégées | 3 à 80 kg puis 3-3-3 à 75 kg | 3 à 80 kg puis 3-3-3 à 75 kg | 3 → 9,7 ; suivantes 4,5 → 10,9 | 105 / 93 | — |
 
 Athlète simulé, maximum réel hors fatigue : 93 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 97 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
 
@@ -76,9 +76,9 @@ Athlète simulé, maximum réel hors fatigue : 93 au départ (le record déclar�
 | 5 | allègement | 3 × 5 à 75 % | 3 × 5 | 1 (arrêt avant la cible) à 34 kg puis 3 à 29 kg puis 4 (arrêt avant la cible) à 27 kg | 4 → 4,1 ; suivantes 4 → 4,7 | 41 / 36 | douleur signalée (coude, 5/10) ; charge non augmentée (pain_return) ; calibrage (séance 1 sur ce mouvement) ; dernières séries plus dures que prévu |
 | 6 | intensification (séries plus dures) | 3 × 4 à 69 % | 6-6-6 à 25 kg | 6-6-6 à 25 kg | 4 → 5,6 ; suivantes 4 → 5 | 43 / 36 | douleur signalée (coude, 5/10) ; charge non augmentée (pain_return) ; calibrage (séance 3 sur ce mouvement) ; charge non augmentée (zone douloureuse) |
 | 7 | intensification (séries plus dures) | 3 × 4 à 72 % | 6-6-6 à 25 kg | 6-6-6 à 25 kg | 4 → 6,2 ; suivantes 4 → 5,3 | 45 / 36 | douleur signalée (coude, 5/10) ; charge non augmentée (pain_return) ; charge non augmentée (zone douloureuse) |
-| 8 | intensification (séries plus dures) | 2 × 9 à 11 | 11-10 à 25 kg | 8 (arrêt avant la cible) à 25 kg puis 9 (arrêt avant la cible) à 23 kg | 3 → 3,3 ; suivantes 3 → 2,5 | 42 / 36 | douleur signalée (coude, 5/10) ; charge non augmentée (pain_return) ; charge non augmentée (zone douloureuse) ; allégé pour garder la marge prévue (au moins 2 en réserve) |
+| 8 | intensification (séries plus dures) | 2 × 9 à 11 | 11-10 à 25 kg | 8 (arrêt avant la cible) à 25 kg puis 9 (arrêt avant la cible) à 23 kg | 3 → 3,2 ; suivantes 3 → 2,5 | 42 / 36 | douleur signalée (coude, 5/10) ; charge non augmentée (pain_return) ; charge non augmentée (zone douloureuse) ; allégé pour garder la marge prévue (au moins 2 en réserve) |
 | 9 | intensification (séries plus dures) | 2 × 10 à 12 | 12-11 à 25 kg | 8 (arrêt avant la cible) à 25 kg puis 10 (arrêt avant la cible) à 23 kg | 3 → 3,3 ; suivantes 3 → 1,5 | 42 / 36 | douleur signalée (coude, 5/10) ; charge non augmentée (pain_return) ; charge non augmentée (zone douloureuse) ; allégé pour garder la marge prévue (au moins 2 en réserve) |
-| 10 | allègement | 2 × 8 à 10 | 9-8 à 25 kg | 9 à 25 kg puis 8 à 24 kg | 3 → 2,2 ; suivantes 3 → 2,8 | 42 / 36 | douleur signalée (coude, 5/10) ; charge non augmentée (pain_return) ; charge non augmentée (zone douloureuse) ; allégé pour garder la marge prévue (au moins 3 en réserve) |
+| 10 | allègement | 2 × 8 à 10 | 9-8 à 25 kg | 9 à 25 kg puis 8 à 24 kg | 3 → 2,2 ; suivantes 3 → 2,9 | 42 / 36 | douleur signalée (coude, 5/10) ; charge non augmentée (pain_return) ; charge non augmentée (zone douloureuse) ; allégé pour garder la marge prévue (au moins 3 en réserve) |
 
 Athlète simulé, maximum réel hors fatigue : 42 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 42 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
 
@@ -117,7 +117,7 @@ Athlète simulé, maximum réel hors fatigue : 87 au départ (le record déclar�
 - **Semaine 10 (allègement)** : phase « allègement » : séances servies telles que le programme les écrit (× 3) ; exercice remplacé — Larsen press, Rowing poulie basse assis prise large pronation (douleur signalée (coude, 5/10)) ; séries retirées sur 3 exercices (−1 série(s)) ; résultat de test reporté au profil : Back squat barre haute 3 × 77,5 kg.
 - **Semaine 11 (réalisation (spécifique à l'objectif))** : nouveau bloc construit à partir du point de fin de bloc (maxima estimés, résultats de test, tolérance).
 - **Semaine 12 (réalisation (spécifique à l'objectif))** : bilan du jour bas (2/5) ; charges réduites sur 6 exercices (bilan du jour bas (2/5)).
-- **Semaine 15 (affûtage)** : phase « affûtage » : séances servies telles que le programme les écrit (× 3) ; affûtage : aucun volume ajouté, intensité gardée (× 3) ; bilan du jour bas (2/5) ; nuit courte ; charges réduites sur 4 exercices (bilan du jour bas (2/5), nuit courte).
+- **Semaine 15 (affûtage)** : phase « affûtage » : séances servies telles que le programme les écrit (× 3) ; affûtage : aucun volume ajouté, intensité gardée (× 3).
 - **Semaine 16 (test)** : phase « test » : séances servies telles que le programme les écrit (× 3) ; résultat de test reporté au profil : Back squat barre haute 1 × 87,5 kg.
 - **Semaine 17 (construction (volume))** : nouveau bloc construit à partir du point de fin de bloc (maxima estimés, résultats de test, tolérance).
 

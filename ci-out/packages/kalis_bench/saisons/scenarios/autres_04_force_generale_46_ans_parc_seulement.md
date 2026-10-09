@@ -35,7 +35,7 @@ Chaque bloc est écrit par le moteur de création au moment où il commence, d'a
 
 - Séances faites : 51 sur 51 (17 ajustées le jour même).
 - Échecs non voulus (hors tests et tentatives) : 0,2 % des séries de travail.
-- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 1,95 répétition en réserve (sur les 77 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 27,2 %.
+- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 1,92 répétition en réserve (sur les 77 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 26,8 %.
 - Plus forte hausse de charge totale d'un mouvement principal d'une séance à la suivante, à schéma égal : 8,3 % ; hausses de plus de 10 % faites de plusieurs crans : 0.
 - Progression réelle moyenne des mouvements suivis : -0,289 % par semaine.
 - Douleur : 0 hausse(s) de charge sur une zone douloureuse signalée.
@@ -69,7 +69,7 @@ Athlète simulé, maximum réel hors fatigue : 93 au départ (le record déclar�
 | 4 | construction (volume) | 4 × 4 à 81 %, série de tête puis séries allégées | 4 à 60 kg puis 4-4 à 55 kg | 3 (arrêt avant la cible) à 60 kg puis 4-4 à 52,5 kg | 5+ → 5,6 ; suivantes 5+ → 7,8 | 75 / 81 | bilan du jour bas (1/5) ; nuit courte ; allégé pour garder la marge prévue (au moins 2 en réserve) ; séries allégées calculées sur la série de tête réalisée (60 kg, −8 %) |
 | 5 | allègement | 3 × 5 à 75 % | 5-5-5 à 60 kg | 3 (arrêt avant la cible) à 60 kg puis 5-5 à 55 kg | 5+ → 6,4 ; suivantes 5+ → 6,1 | 77 / 73 | allégé pour garder la marge prévue (au moins 4 en réserve) ; dernières séries plus dures que prévu |
 | 6 | intensification (séries plus dures) | 4 × 2 à 81 %, série de tête puis séries allégées | 2 à 62,5 kg puis 2-2-2 à 57,5 kg | 2 à 62,5 kg puis 2-2-2 à 57,5 kg | 5+ → 7,4 ; suivantes 5+ → 9,1 | 80 / 75 | — |
-| 7 | intensification (séries plus dures) | 4 × 2 à 84 %, série de tête puis séries allégées | (2 à 5) à 65 kg puis 2-2-2 à 60 kg | 2 à 65 kg puis 2-2-1 (arrêt avant la cible) à 60 kg | 3 → 5,4 ; suivantes 5+ → 7,5 | 78 / 76 | série repère : une série ouverte (au ressenti, 3 en réserve) pour mesurer où en est l'athlète |
+| 7 | intensification (séries plus dures) | 4 × 2 à 84 %, série de tête puis séries allégées | (2 à 5) à 65 kg puis 2-2-2 à 60 kg | 2 à 65 kg puis 2-2-1 (arrêt avant la cible) à 60 kg | 3 → 5,3 ; suivantes 5+ → 7,5 | 78 / 76 | série repère : une série ouverte (au ressenti, 3 en réserve) pour mesurer où en est l'athlète |
 | 17 | construction (volume) | 2 × 3 à 84 %, série de tête puis séries allégées | 3 à 60 kg puis 3 à 55 kg | 3 à 60 kg puis 3 à 55 kg | 4 → 5,2 ; suivantes 5+ → 7,2 | 74 / 76 | allégé pour garder la marge prévue (au moins 2 en réserve) |
 
 Athlète simulé, maximum réel hors fatigue : 78 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 75 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.

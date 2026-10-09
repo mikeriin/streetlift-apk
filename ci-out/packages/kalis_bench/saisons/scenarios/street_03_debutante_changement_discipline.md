@@ -35,9 +35,9 @@ Chaque bloc est écrit par le moteur de création au moment où il commence, d'a
 
 - Séances faites : 47 sur 48 (12 ajustées le jour même).
 - Échecs non voulus (hors tests et tentatives) : 0 % des séries de travail.
-- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 1,74 répétition en réserve (sur les 57 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 21,4 %.
+- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 1,66 répétition en réserve (sur les 57 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 21,3 %.
 - Plus forte hausse de charge totale d'un mouvement principal d'une séance à la suivante, à schéma égal : 0 % ; hausses de plus de 10 % faites de plusieurs crans : 0.
-- Progression réelle moyenne des mouvements suivis : 0,855 % par semaine.
+- Progression réelle moyenne des mouvements suivis : 0,901 % par semaine.
 - Douleur : 0 hausse(s) de charge sur une zone douloureuse signalée.
 
 ## Mouvements suivis, semaine par semaine
@@ -58,20 +58,20 @@ Athlète simulé, maximum réel hors fatigue : 3 au départ (le record déclaré
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | 1 | introduction | 2 × 6 à 8 | (6 à 8)-(6 à 8) | 8-8 | 4 → 8 ; suivantes 4 → 7,1 | 16 / 12 | calibrage (séance 2 sur ce mouvement) |
 | 2 | construction (volume) | 2 × 6 à 8 | (6 à 8)-(6 à 16) | 8-12 | 4 → 8,9 ; suivantes 2 → 3,9 | 17 / 13 | série repère : une série ouverte (au ressenti, 2 en réserve) pour mesurer où en est l'athlète |
-| 3 | construction (volume) | 2 × 6 à 8 | (6 à 8)-(6 à 8) | 6-6 | 5+ → 6 ; suivantes 4,5 → 5,2 | 12 / 12 | un cran d'assistance de moins (élastique plus fin, moins d'appui) : la série repère a montré 3 répétitions de réserve de plus que visé |
-| 4 | construction (volume) | 2 × 7 à 9 | (7 à 9)-(7 à 18) | 7-8 | 3 → 5,8 ; suivantes 2 → 3,8 | 13 / 10 | série repère : une série ouverte (au ressenti, 2 en réserve) pour mesurer où en est l'athlète |
-| 5 | construction (volume) | 2 × 7 à 9 | (7 à 8)-(7 à 8) | 8-8 | 3 → 4,4 ; suivantes 1,5 → 3,4 | 12 / 11 | allégé pour garder la marge prévue (au moins 3 en réserve) |
-| 6 | test | 1 × 6 à 8 | (6 à 8) | 8 | 3 → 4,5 | 13 / 11 | — |
-| 7 | construction (volume) | 2 × 6 à 8 | (6 à 8)-(6 à 16) | 8-8 | 3 → 4,9 ; suivantes 2 → 4 | 13 / 11 | série repère : une série ouverte (au ressenti, 2 en réserve) pour mesurer où en est l'athlète ; allégé pour garder la marge prévue (au moins 3 en réserve) ; dernières séries plus dures que prévu |
-| 8 | construction (volume) | 2 × 7 à 9 | (7 à 9)-(7 à 16) | 7-9 | 3 → 6,1 ; suivantes 2 → 3,4 | 13 / 11 | série repère : une série ouverte (au ressenti, 2 en réserve) pour mesurer où en est l'athlète |
-| 9 | introduction | 1 × 6 à 8 | (6 à 8) | 7 | 3 → 6,1 | 13 / 11 | — |
-| 10 | construction (volume) | 2 × 7 à 8 | (7 à 8)-(7 à 16) | 8-9 | 3 → 6 ; suivantes 2 → 4 | 14 / 11 | série repère : une série ouverte (au ressenti, 2 en réserve) pour mesurer où en est l'athlète |
-| 11 | construction (volume) | 1 × 7 à 8 | (7 à 8) | 8 | 3 → 5,7 | 14 / 11 | — |
-| 12 | allègement | 1 × 6 à 8 | (6 à 8) | 8 | 3 → 5,7 | 14 / 12 | — |
-| 13 | introduction | 1 × 6 à 8 | (6 à 8) | 8 | 3 → 5,5 | 13 / 12 | — |
-| 14 | construction (volume) | 2 × 7 à 8 | (7 à 8)-(7 à 16) | 8-11 | 3,5 → 6,4 ; suivantes 2 → 2,7 | 14 / 12 | série repère : une série ouverte (au ressenti, 2 en réserve) pour mesurer où en est l'athlète |
-| 15 | construction (volume) | 1 × 8 | 8 | 8 | 4 → 6,7 | 15 / 10 | — |
-| 16 | construction (volume) | 1 × 8 | 8 | 8 | 2 → 2,1 | 10 / 10 | — |
+| 3 | construction (volume) | 3 × 6 à 8 | (6 à 8)-(6 à 8)-(6 à 8) | 6-6-6 | 5+ → 6 ; suivantes 4,3 → 5 | 12 / 11 | un cran d'assistance de moins (élastique plus fin, moins d'appui) : la série repère a montré 3 répétitions de réserve de plus que visé ; allégé pour garder la marge prévue (au moins 3 en réserve) ; dernières séries plus dures que prévu |
+| 4 | construction (volume) | 3 × 7 à 9 | (7 à 9)-(7 à 9)-(7 à 16) | 7-9-7 | 3 → 5,8 ; suivantes 1,8 → 3,1 | 13 / 10 | série repère : une série ouverte (au ressenti, 2 en réserve) pour mesurer où en est l'athlète |
+| 5 | construction (volume) | 3 × 7 à 9 | (7 à 8)-(7 à 8)-7 | 8-8-7 | 3 → 4,4 ; suivantes 2,3 → 3,5 | 12 / 11 | allégé pour garder la marge prévue (au moins 3 en réserve) |
+| 6 | test | 1 × 6 à 8 | (6 à 8) | 8 | 3 → 4,6 | 13 / 11 | — |
+| 7 | construction (volume) | 2 × 6 à 8 | (6 à 8)-(6 à 16) | 8-8 | 3 → 5 ; suivantes 2 → 4 | 13 / 11 | série repère : une série ouverte (au ressenti, 2 en réserve) pour mesurer où en est l'athlète ; allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |
+| 8 | construction (volume) | 3 × 7 à 8 | (7 à 8)-(7 à 8)-(7 à 16) | 7-8-8 | 3 → 6,2 ; suivantes 2 → 4 | 13 / 11 | série repère : une série ouverte (au ressenti, 2 en réserve) pour mesurer où en est l'athlète ; allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |
+| 9 | introduction | 1 × 6 à 8 | (6 à 8) | 7 | 3 → 6,2 | 13 / 11 | — |
+| 10 | construction (volume) | 2 × 7 à 8 | (7 à 8)-(7 à 16) | 8-10 | 3,5 → 6,1 ; suivantes 2 → 3,1 | 14 / 12 | série repère : une série ouverte (au ressenti, 2 en réserve) pour mesurer où en est l'athlète |
+| 11 | construction (volume) | 1 × 7 à 8 | (7 à 8) | 8 | 3,5 → 5,8 | 14 / 9 | — |
+| 12 | allègement | 1 × 6 à 8 | (6 à 7) | 6 | 3 → 3,6 | 10 / 9 | allégé pour garder la marge prévue (au moins 3 en réserve) |
+| 13 | introduction | 1 × 6 à 8 | (6 à 7) | 6 | 2 → 3,5 | 9 / 9 | allégé pour garder la marge prévue (au moins 4 en réserve) |
+| 14 | construction (volume) | 2 × 7 à 9 | 7-(7 à 14) | 7-7 | 3 → 3,2 ; suivantes 2 → 2,4 | 10 / 9 | allégé pour garder la marge prévue (au moins 3 en réserve) ; série repère : une série ouverte (au ressenti, 2 en réserve) pour mesurer où en est l'athlète ; dernières séries plus dures que prévu |
+| 15 | construction (volume) | 2 × 8 à 10 | 8-(7 à 14) | 8-7 | 1,5 → 2,5 ; suivantes 2 → 2,3 | 10 / 10 | allégé pour garder la marge prévue (au moins 3 en réserve) ; série repère : une série ouverte (au ressenti, 2 en réserve) pour mesurer où en est l'athlète |
+| 16 | construction (volume) | 1 × 8 à 10 | 8 | 8 | 3 → 2,3 | 10 / 10 | allégé pour garder la marge prévue (au moins 3 en réserve) |
 
 Athlète simulé, maximum réel hors fatigue : 16 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 10 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
 
@@ -82,11 +82,11 @@ Athlète simulé, maximum réel hors fatigue : 16 au départ (le record déclar�
 | 1 | introduction | 2 × 6 à 8 | (6 à 8)-(6 à 8) | 8-8 | 4 → 14,6 ; suivantes 4 → 13,7 | 23 / 13 | calibrage (séance 2 sur ce mouvement) |
 | 2 | construction (volume) | 2 × 6 à 8 | (6 à 10)-(6 à 18) | 10-18 | 3 → 12,5 ; suivantes 2 → 3,4 | 23 / 19 | série repère : une série ouverte (au ressenti, 2 en réserve) pour mesurer où en est l'athlète |
 | 3 | construction (volume) | 2 × 6 à 8 | (6 à 16)-(6 à 15) | 15-15 | 3 → 7,4 ; suivantes 3 → 6,3 | 22 / 19 | — |
-| 4 | construction (volume) | 3 × 7 à 9 | (7 à 16)-(7 à 15)-(7 à 14) | 16-14-14 | 3 → 7,6 ; suivantes 3 → 8,2 | 24 / 20 | allégé pour garder la marge prévue (au moins 3 en réserve) ; dernières séries plus dures que prévu |
-| 5 | construction (volume) | 3 × 7 à 9 | (7 à 18)-(7 à 18)-(7 à 18) | 18-17 | 3 → 6,5 ; suivantes 3 → 5,7 | 25 / 20 | allégé pour garder la marge prévue (au moins 3 en réserve) ; dernières séries plus dures que prévu |
+| 4 | construction (volume) | 4 × 7 à 9 | (7 à 16)-(7 à 15)-(7 à 14)-(7 à 14) | 16-14-14-14 | 3 → 7,6 ; suivantes 3 → 7,9 | 24 / 20 | allégé pour garder la marge prévue (au moins 3 en réserve) ; dernières séries plus dures que prévu |
+| 5 | construction (volume) | 4 × 7 à 9 | (7 à 18)-(7 à 18)-(7 à 18)-(7 à 18) | 18-17 | 3 → 6,5 ; suivantes 3 → 5,8 | 25 / 20 | allégé pour garder la marge prévue (au moins 3 en réserve) ; dernières séries plus dures que prévu |
 | 6 | test | 2 × 6 à 8 | (6 à 8)-(6 à 8) | 8-8 | 5+ → 16,2 ; suivantes 5+ → 15,4 | 24 / 20 | — |
-| 7 | construction (volume) | 3 × 8 à 12 | (8 à 17)-(8 à 15)-(8 à 14) | 17-15-14 | 2 → 6,3 ; suivantes 2 → 7,3 | 23 / 20 | — |
-| 8 | construction (volume) | 3 × 8 à 12 | (8 à 12) | 12 | 5+ → 11,8 | 24 / 20 | charge non augmentée (pain_return) ; −2 série(s) ; douleur signalée (poignet, 4/10) |
+| 7 | construction (volume) | 4 × 8 à 12 | (8 à 17)-(8 à 15)-(8 à 14)-(8 à 12) | 17-15-14-12 | 2 → 6,3 ; suivantes 2 → 7,8 | 23 / 20 | — |
+| 8 | construction (volume) | 4 × 8 à 12 | (8 à 12) | 12 | 5+ → 11,9 | 24 / 20 | charge non augmentée (pain_return) ; −2 série(s) ; douleur signalée (poignet, 4/10) |
 | 13 | introduction | 1 × 8 à 12 | (8 à 12) | 12 | 5+ → 12,5 | 25 / 20 | charge non augmentée (pain_return) |
 | 14 | construction (volume) | 1 × 8 à 12 | (8 à 12) | 12 | 5+ → 12,5 | 24 / 20 | charge non augmentée (pain_return) |
 | 15 | construction (volume) | 1 × 8 à 12 | (8 à 12) | 12 | 5+ → 13 | 25 / 20 | charge non augmentée (pain_return) |
@@ -124,14 +124,13 @@ Athlète simulé, maximum réel hors fatigue : 34 au départ (le record déclar�
 - **Semaine 5 (construction (volume))** : Face pull à l'élastique : répétitions recalées sur le maximum mesuré (4 de moins par série que le programme) ; Pompe inclinée (mains surélevées) : séries arrêtées en cours de séance (allégé pour garder la marge prévue (au moins 3 en réserve), dernières séries plus dures que prévu) ; bilan du jour bas (2/5) (× 2) ; nuit courte (× 2) ; Traction négative : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; Pompe négative : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; Fente arrière au poids du corps : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; Dead bug : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; séries retirées — Fente arrière au poids du corps, Support hold aux barres parallèles (bilan du jour bas (2/5), nuit courte).
 - **Semaine 6 (test)** : phase « test » : séances servies telles que le programme les écrit (× 3) ; résultat de test reporté au profil : Tenue menton au-dessus de la barre pronation 30 s ; résultat de test reporté au profil : Pompe classique 2 répétitions.
 - **Semaine 7 (construction (volume))** : nouveau bloc construit à partir du point de fin de bloc (maxima estimés, résultats de test, tolérance) ; Face pull à l'élastique : répétitions recalées sur le maximum mesuré (3 de moins par série que le programme) ; séries retirées sur 3 exercices (douleur signalée (poignet, 4/10)).
-- **Semaine 8 (construction (volume))** : Tenue menton au-dessus de la barre pronation : hausse du maintien bornée pour les tendons (coude) ; Face pull à l'élastique : répétitions recalées sur le maximum mesuré (3 de moins par série que le programme) ; douleur qui dure ou qui revient (poignet, 4 séances à 3/10 ou plus) : mouvements qui la provoquent retirés, consulter un médecin ou un kiné, reprise après deux semaines à 2/10 au plus ; exercice retiré — Pompe négative (douleur qui dure ou qui revient (poignet, 3 séances à 3/10 ou plus) : mouvements qui la provoquent retirés, consulter un médecin ou un kiné, reprise après deux semaines à 2/10 au plus) ; séries retirées — Pompe inclinée (mains surélevées) (−2 série(s)) ; exercice retiré — Pompe négative, Support hold aux barres parallèles (douleur qui dure ou qui revient (poignet, 4 séances à 3/10 ou plus) : mouvements qui la provoquent retirés, consulter un médecin ou un kiné, reprise après deux semaines à 2/10 au plus).
+- **Semaine 8 (construction (volume))** : Tenue menton au-dessus de la barre pronation : hausse du maintien bornée pour les tendons (coude) ; Face pull à l'élastique : répétitions recalées sur le maximum mesuré (3 de moins par série que le programme) ; douleur qui dure ou qui revient (poignet, 4 séances à 3/10 ou plus) : mouvements qui la provoquent retirés, consulter un médecin ou un kiné, reprise après deux semaines à 2/10 au plus ; exercice retiré — Pompe négative (douleur qui dure ou qui revient (poignet, 3 séances à 3/10 ou plus) : mouvements qui la provoquent retirés, consulter un médecin ou un kiné, reprise après deux semaines à 2/10 au plus) ; séries retirées — Pompe inclinée (mains surélevées) (−2 série(s)) ; séries retirées — Pompe inclinée (mains surélevées) (douleur signalée (poignet, 4/10)) ; exercice retiré — Pompe négative, Support hold aux barres parallèles (douleur qui dure ou qui revient (poignet, 4 séances à 3/10 ou plus) : mouvements qui la provoquent retirés, consulter un médecin ou un kiné, reprise après deux semaines à 2/10 au plus).
 - **Semaine 9 (introduction)** : nouveau bloc construit à partir du point de fin de bloc (maxima estimés, résultats de test, tolérance) ; phase « introduction » : séances servies telles que le programme les écrit (× 3) ; douleur qui dure ou qui revient (poignet, 4 séances à 3/10 ou plus) : mouvements qui la provoquent retirés, consulter un médecin ou un kiné, reprise après deux semaines à 2/10 au plus (× 3) ; temps réduit (36 min au lieu de 38) ; exercice retiré — Support hold aux barres parallèles (douleur qui dure ou qui revient (poignet, 4 séances à 3/10 ou plus) : mouvements qui la provoquent retirés, consulter un médecin ou un kiné, reprise après deux semaines à 2/10 au plus) ; exercice retiré — CARs d'épaule (temps réduit (36 min au lieu de 38)).
 - **Semaine 10 (construction (volume))** : Face pull à l'élastique : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; Support hold aux barres parallèles : hausse du maintien bornée pour les tendons (épaule).
-- **Semaine 11 (construction (volume))** : Face pull à l'élastique : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme).
+- **Semaine 11 (construction (volume))** : Face pull à l'élastique : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; Traction assistée à l'élastique : un cran d'assistance de moins (élastique plus fin, moins d'appui) : la série repère a montré 2 répétitions de réserve de plus que visé.
 - **Semaine 12 (allègement)** : phase « allègement » : séances servies telles que le programme les écrit (× 3).
 - **Semaine 13 (introduction)** : nouveau bloc construit à partir du point de fin de bloc (maxima estimés, résultats de test, tolérance) ; phase « introduction » : séances servies telles que le programme les écrit (× 3).
 - **Semaine 14 (construction (volume))** : temps réduit (36 min au lieu de 37) ; exercice retiré — CARs d'épaule (temps réduit (36 min au lieu de 37)).
-- **Semaine 15 (construction (volume))** : Traction assistée à l'élastique : un cran d'assistance de moins (élastique plus fin, moins d'appui) : la série repère a montré 3 répétitions de réserve de plus que visé.
 - **Semaine 16 (construction (volume))** : 1 séance(s) manquée(s) sur 3.
 
 ## Figures

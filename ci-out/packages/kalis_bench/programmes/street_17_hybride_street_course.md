@@ -204,13 +204,13 @@ Femme de 31 ans, 60 kg, deux ans de street workout et de course. 8 tractions, 14
 | Footing en endurance fondamentale | 12 min | — | allure facile | — | échauffement ; Allure de conversation (tu peux parler en phrases), 12 min. |
 | Fractionné long 1000 m | 3 × 1000 m | — | allure soutenue | 90 s | principal ; récupération en trottinant ; Allure de l'objectif : 5 min 00 au kilomètre, régulière du début à la fin ; elle se recale sur ton dernier test (pour un 10 km, allure du 5 km + 20 à 30 s au kilomètre). Le jour J, pars 10 s au kilomètre plus lent les deux premiers kilomètres. |
 
-### samedi — force, haut du corps, séance moyenne (60 min disponibles, 40 min estimées)
+### samedi — force, haut du corps, séance moyenne (60 min disponibles, 42 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
 | Traction pronation | 3 × 5 | poids du corps, ≈ 63 % du maximum de répétitions (repère : 8) | 3 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
-| Traction négative | 2 × 3 | poids du corps | au contrôle : arrêt dès qu'une descente accélère | 2 min | secondaire ; descente en 4 s ; Descente freinée en 4 s, sans à-coup (monte en sautant depuis un appui) ; l'effort se règle au contrôle, pas à la réserve : arrête la série dès qu'une descente passe sous 3 s. Si la première descente passe déjà sous 3 s, fais-la avec l'élastique, ou vise 2 à 3 s, et allonge d'une seconde par semaine. |
+| Traction négative | 3 × 3 | poids du corps | au contrôle : arrêt dès qu'une descente accélère | 2 min | secondaire ; descente en 4 s ; Descente freinée en 4 s, sans à-coup (monte en sautant depuis un appui) ; l'effort se règle au contrôle, pas à la réserve : arrête la série dès qu'une descente passe sous 3 s. Si la première descente passe déjà sous 3 s, fais-la avec l'élastique, ou vise 2 à 3 s, et allonge d'une seconde par semaine. |
 | Dips aux barres parallèles | 3 × 9 | poids du corps, ≈ 64 % du maximum de répétitions (repère : 14) | 3 rép. en réserve sur la dernière série (davantage sur les premières) | 90 s | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Row australien | 3 × 8 à 10 | poids du corps | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Relevé de jambes tendues suspendu | 2 × 8 à 12 | poids du corps | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
@@ -556,12 +556,12 @@ Femme de 31 ans, 60 kg, deux ans de street workout et de course. 8 tractions, 14
 | Face pull à l'élastique | 2 × 12 à 15 | — | 5 rép. en réserve ou plus | 45 s | accessoire ; Prévention : coiffe et fixateurs des omoplates, pour encaisser le volume de tirage et de poussée. |
 | Footing en endurance fondamentale | 20 min | — | allure facile | — | accessoire ; Allure de conversation (tu peux parler en phrases), 20 min. |
 
-### mardi — force, haut du corps, séance lourde (45 min disponibles, 27 min estimées)
+### mardi — force, haut du corps, séance lourde (45 min disponibles, 33 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
-| Traction pronation | 1 × 7 | poids du corps, ≈ 88 % du maximum de répétitions (repère : 8) | 1 rép. en réserve | 3 min | principal ; Avant la série de tête : 2 séries faciles (un tiers, puis la moitié des répétitions prévues). ; Simulation du test : la série de tête se fait au format du test (même échauffement, même standard de répétition), jusqu'à une répétition de l'échec — environ 7 répétitions. Note le résultat : il dit si l'objectif du test est réaliste ; pas de série allégée après. ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
+| Traction pronation | 3 × 7 | poids du corps, ≈ 88 % du maximum de répétitions (repère : 8) | 1 rép. en réserve | 3 min | principal ; Avant la série de tête : 2 séries faciles (un tiers, puis la moitié des répétitions prévues). ; Simulation du test : la série de tête se fait au format du test (même échauffement, même standard de répétition), jusqu'à une répétition de l'échec — environ 7 répétitions. Note le résultat : il dit si l'objectif du test est réaliste ; pas de série allégée après. ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Dips aux barres parallèles | 3 × 10 | poids du corps, ≈ 71 % du maximum de répétitions (repère : 14) | 3 rép. en réserve | 90 s | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Row australien | 3 × 10 à 12 | poids du corps | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Relevé de jambes tendues suspendu | 2 × 10 à 14 | poids du corps | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
@@ -574,13 +574,13 @@ Femme de 31 ans, 60 kg, deux ans de street workout et de course. 8 tractions, 14
 | Footing en endurance fondamentale | 12 min | — | allure facile | — | échauffement ; Allure de conversation (tu peux parler en phrases), 12 min. |
 | Fractionné 400 m | 7 × 400 m | — | allure soutenue | 90 s | principal ; récupération en trottinant ; Allure des fractions : 4 min 50 au kilomètre (ton allure estimée sur 3 km), récupération en trottinant ; si l'allure ne tient plus, arrête la série. Chaque test chronométré recale cette allure. |
 
-### samedi — force, haut du corps, séance lourde (60 min disponibles, 46 min estimées)
+### samedi — force, haut du corps, séance lourde (60 min disponibles, 40 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
-| Traction pronation | 3 × 5 | poids du corps, ≈ 63 % du maximum de répétitions (repère : 8) | 3 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
-| Traction pronation tempo excentrique lent | 3 × 5 à 6 | poids du corps | 2 rép. en réserve | 3 min | secondaire ; 2 s tenues en haut, puis descente en 4 s ; Traction complète au tempo : montée tirée sans élan, 2 s le menton au-dessus de la barre, descente freinée en 4 s. Arrête la série dès que la montée ralentit nettement ou qu'une descente passe sous 3 s ; si la première série ne passe pas, descente en 2 à 3 s. ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
+| Traction pronation | 2 × 5 | poids du corps, ≈ 63 % du maximum de répétitions (repère : 8) | 3 rép. en réserve | 2 min | principal ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
+| Traction pronation tempo excentrique lent | 2 × 5 à 6 | poids du corps | 2 rép. en réserve | 3 min | secondaire ; 2 s tenues en haut, puis descente en 4 s ; Traction complète au tempo : montée tirée sans élan, 2 s le menton au-dessus de la barre, descente freinée en 4 s. Arrête la série dès que la montée ralentit nettement ou qu'une descente passe sous 3 s ; si la première série ne passe pas, descente en 2 à 3 s. ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Dips aux barres parallèles | 3 × 10 | poids du corps, ≈ 71 % du maximum de répétitions (repère : 14) | 3 rép. en réserve | 90 s | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Row australien | 3 × 10 à 12 | poids du corps | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Relevé de jambes tendues suspendu | 2 × 10 à 14 | poids du corps | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |

@@ -26,18 +26,18 @@ Homme de 46 ans, 85 kg, deux ans de musculation. Squat 100 kg, développé couch
 | --- | --- | --- | --- | --- |
 | 1 | 1 | introduction | 3 | 46 |
 | 2 | 1 | construction (volume) | 3 | 46 |
-| 3 | 1 | construction (volume) | 3 | 46 |
-| 4 | 1 | construction (volume) | 3 | 46 |
+| 3 | 1 | construction (volume) | 3 | 47 |
+| 4 | 1 | construction (volume) | 3 | 47 |
 | 5 | 1 | allègement | 3 | 19 |
-| 6 | 2 | intensification (séries plus dures) | 3 | 46 |
-| 7 | 2 | intensification (séries plus dures) | 3 | 46 |
-| 8 | 2 | intensification (séries plus dures) | 3 | 46 |
-| 9 | 2 | intensification (séries plus dures) | 3 | 46 |
+| 6 | 2 | intensification (séries plus dures) | 3 | 47 |
+| 7 | 2 | intensification (séries plus dures) | 3 | 47 |
+| 8 | 2 | intensification (séries plus dures) | 3 | 47 |
+| 9 | 2 | intensification (séries plus dures) | 3 | 47 |
 | 10 | 2 | allègement | 3 | 19 |
-| 11 | 3 | réalisation (spécifique à l'objectif) | 3 | 46 |
-| 12 | 3 | réalisation (spécifique à l'objectif) | 3 | 46 |
-| 13 | 3 | réalisation (spécifique à l'objectif) | 3 | 46 |
-| 14 | 3 | réalisation (spécifique à l'objectif) | 3 | 46 |
+| 11 | 3 | réalisation (spécifique à l'objectif) | 3 | 47 |
+| 12 | 3 | réalisation (spécifique à l'objectif) | 3 | 47 |
+| 13 | 3 | réalisation (spécifique à l'objectif) | 3 | 47 |
+| 14 | 3 | réalisation (spécifique à l'objectif) | 3 | 47 |
 | 15 | 3 | affûtage | 3 | 25 |
 | 16 | 3 | test | 3 | 12 |
 
@@ -184,12 +184,12 @@ Homme de 46 ans, 85 kg, deux ans de musculation. Squat 100 kg, développé couch
 | Pallof press debout | 2 × 8 à 12 | charge à déterminer, à calibrer | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
 | Routine mobilité épaules et poignets | 2 × 30 à 45 s | — | — | 20 s | mobilité |
 
-### vendredi — force, corps entier, séance moyenne (75 min disponibles, 45 min estimées)
+### vendredi — force, corps entier, séance moyenne (75 min disponibles, 48 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Back squat barre haute | 4 × 6 | 72,5 kg, ≈ 73 % du 1RM (charge totale ; 1RM de référence 100 kg) | 3 rép. en réserve | 3 min | secondaire |
+| Back squat barre haute | 5 × 6 | 72,5 kg, ≈ 73 % du 1RM (charge totale ; 1RM de référence 100 kg) | 3 rép. en réserve | 3 min | secondaire |
 | Développé couché avec pause | 2 × 4 | charge à déterminer, à calibrer | 3 rép. en réserve | 2 min 30 s | secondaire ; Charge à régler à la première séance : monte par paliers jusqu'à une série qui laisse 3 répétitions en réserve. |
 | Soulevé de terre roumain aux haltères | 3 × 8 à 10 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Rowing poulie basse assis au triangle | 3 × 8 à 10 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
@@ -227,12 +227,12 @@ Homme de 46 ans, 85 kg, deux ans de musculation. Squat 100 kg, développé couch
 | Pallof press debout | 2 × 9 à 13 | charge à déterminer, à calibrer | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
 | Routine mobilité épaules et poignets | 2 × 30 à 45 s | — | — | 20 s | mobilité |
 
-### vendredi — force, corps entier, séance moyenne (75 min disponibles, 45 min estimées)
+### vendredi — force, corps entier, séance moyenne (75 min disponibles, 49 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Back squat barre haute | 4 × 6 | 75 kg, ≈ 75 % du 1RM (charge totale ; 1RM de référence 100 kg) | 3 rép. en réserve | 3 min | secondaire |
+| Back squat barre haute | 5 × 6 | 75 kg, ≈ 75 % du 1RM (charge totale ; 1RM de référence 100 kg) | 3 rép. en réserve | 3 min | secondaire |
 | Développé couché avec pause | 2 × 4 | charge à déterminer, à calibrer | 3 rép. en réserve | 2 min 30 s | secondaire ; Charge à régler à la première séance : monte par paliers jusqu'à une série qui laisse 3 répétitions en réserve. |
 | Soulevé de terre roumain aux haltères | 3 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Rowing poulie basse assis au triangle | 3 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
@@ -310,12 +310,12 @@ Homme de 46 ans, 85 kg, deux ans de musculation. Squat 100 kg, développé couch
 | Pallof press debout | 2 × 8 à 12 | charge à déterminer, à calibrer | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
 | Routine mobilité épaules et poignets | 2 × 30 à 45 s | — | — | 20 s | mobilité |
 
-### vendredi — force, corps entier, séance moyenne (75 min disponibles, 44 min estimées)
+### vendredi — force, corps entier, séance moyenne (75 min disponibles, 48 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Back squat barre haute | 4 × 4 | 70 kg, ≈ 70 % du 1RM (charge totale ; 1RM de référence 100 kg) | 4 rép. en réserve | 3 min | secondaire |
+| Back squat barre haute | 5 × 4 | 70 kg, ≈ 70 % du 1RM (charge totale ; 1RM de référence 100 kg) | 4 rép. en réserve | 3 min | secondaire |
 | Développé couché avec pause | 2 × 3 | charge à déterminer, à calibrer | 3 rép. en réserve | 2 min 30 s | secondaire ; Charge à régler à la première séance : monte par paliers jusqu'à une série qui laisse 3 répétitions en réserve. |
 | Soulevé de terre roumain aux haltères | 3 × 8 à 10 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Rowing poulie basse assis au triangle | 3 × 8 à 10 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
@@ -353,12 +353,12 @@ Homme de 46 ans, 85 kg, deux ans de musculation. Squat 100 kg, développé couch
 | Pallof press debout | 2 × 9 à 13 | charge à déterminer, à calibrer | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
 | Routine mobilité épaules et poignets | 2 × 30 à 45 s | — | — | 20 s | mobilité |
 
-### vendredi — force, corps entier, séance moyenne (75 min disponibles, 45 min estimées)
+### vendredi — force, corps entier, séance moyenne (75 min disponibles, 48 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Back squat barre haute | 4 × 4 | 72,5 kg, ≈ 73 % du 1RM (charge totale ; 1RM de référence 100 kg) | 4 rép. en réserve | 3 min | secondaire |
+| Back squat barre haute | 5 × 4 | 72,5 kg, ≈ 73 % du 1RM (charge totale ; 1RM de référence 100 kg) | 4 rép. en réserve | 3 min | secondaire |
 | Développé couché avec pause | 2 × 3 | charge à déterminer, à calibrer | 3 rép. en réserve | 2 min 30 s | secondaire ; Charge à régler à la première séance : monte par paliers jusqu'à une série qui laisse 3 répétitions en réserve. |
 | Soulevé de terre roumain aux haltères | 3 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Rowing poulie basse assis au triangle | 3 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
@@ -396,12 +396,12 @@ Homme de 46 ans, 85 kg, deux ans de musculation. Squat 100 kg, développé couch
 | Pallof press debout | 2 × 9 à 13 | charge à déterminer, à calibrer | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
 | Routine mobilité épaules et poignets | 2 × 30 à 45 s | — | — | 20 s | mobilité |
 
-### vendredi — force, corps entier, séance moyenne (75 min disponibles, 45 min estimées)
+### vendredi — force, corps entier, séance moyenne (75 min disponibles, 48 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Back squat barre haute | 4 × 4 | 75 kg, ≈ 75 % du 1RM (charge totale ; 1RM de référence 100 kg) | 4 rép. en réserve | 3 min | secondaire |
+| Back squat barre haute | 5 × 4 | 75 kg, ≈ 75 % du 1RM (charge totale ; 1RM de référence 100 kg) | 4 rép. en réserve | 3 min | secondaire |
 | Développé couché avec pause | 2 × 3 | charge à déterminer, à calibrer | 3 rép. en réserve | 2 min 30 s | secondaire ; Charge à régler à la première séance : monte par paliers jusqu'à une série qui laisse 3 répétitions en réserve. |
 | Soulevé de terre roumain aux haltères | 3 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Rowing poulie basse assis au triangle | 3 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
@@ -439,12 +439,12 @@ Homme de 46 ans, 85 kg, deux ans de musculation. Squat 100 kg, développé couch
 | Pallof press debout | 2 × 10 à 14 | charge à déterminer, à calibrer | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
 | Routine mobilité épaules et poignets | 2 × 30 à 45 s | — | — | 20 s | mobilité |
 
-### vendredi — force, corps entier, séance moyenne (75 min disponibles, 45 min estimées)
+### vendredi — force, corps entier, séance moyenne (75 min disponibles, 48 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Back squat barre haute | 4 × 4 | 77,5 kg, ≈ 78 % du 1RM (charge totale ; 1RM de référence 100 kg) | 4 rép. en réserve | 3 min | secondaire |
+| Back squat barre haute | 5 × 4 | 77,5 kg, ≈ 78 % du 1RM (charge totale ; 1RM de référence 100 kg) | 4 rép. en réserve | 3 min | secondaire |
 | Développé couché avec pause | 2 × 3 | charge à déterminer, à calibrer | 3 rép. en réserve | 2 min 30 s | secondaire ; Charge à régler à la première séance : monte par paliers jusqu'à une série qui laisse 3 répétitions en réserve. |
 | Soulevé de terre roumain aux haltères | 3 × 10 à 12 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Rowing poulie basse assis au triangle | 3 × 10 à 12 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
@@ -522,12 +522,12 @@ Homme de 46 ans, 85 kg, deux ans de musculation. Squat 100 kg, développé couch
 | Pallof press debout | 2 × 9 à 13 | charge à déterminer, à calibrer | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
 | Routine mobilité épaules et poignets | 2 × 30 à 45 s | — | — | 20 s | mobilité |
 
-### vendredi — force, corps entier, séance moyenne (75 min disponibles, 45 min estimées)
+### vendredi — force, corps entier, séance moyenne (75 min disponibles, 48 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Back squat barre haute | 4 × 3 | 80 kg, ≈ 80 % du 1RM (charge totale ; 1RM de référence 100 kg) | 3 rép. en réserve | 3 min | secondaire |
+| Back squat barre haute | 5 × 3 | 80 kg, ≈ 80 % du 1RM (charge totale ; 1RM de référence 100 kg) | 3 rép. en réserve | 3 min | secondaire |
 | Développé couché avec pause | 2 × 3 | charge à déterminer, à calibrer | 3 rép. en réserve | 2 min 30 s | secondaire ; Charge à régler à la première séance : monte par paliers jusqu'à une série qui laisse 3 répétitions en réserve. |
 | Soulevé de terre roumain aux haltères | 3 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Rowing poulie basse assis au triangle | 3 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
@@ -565,12 +565,12 @@ Homme de 46 ans, 85 kg, deux ans de musculation. Squat 100 kg, développé couch
 | Pallof press debout | 2 × 9 à 13 | charge à déterminer, à calibrer | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
 | Routine mobilité épaules et poignets | 2 × 30 à 45 s | — | — | 20 s | mobilité |
 
-### vendredi — force, corps entier, séance moyenne (75 min disponibles, 45 min estimées)
+### vendredi — force, corps entier, séance moyenne (75 min disponibles, 48 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Back squat barre haute | 4 × 3 | 80 kg, ≈ 80 % du 1RM (charge totale ; 1RM de référence 100 kg) | 3 rép. en réserve | 3 min | secondaire |
+| Back squat barre haute | 5 × 3 | 80 kg, ≈ 80 % du 1RM (charge totale ; 1RM de référence 100 kg) | 3 rép. en réserve | 3 min | secondaire |
 | Développé couché avec pause | 2 × 3 | charge à déterminer, à calibrer | 3 rép. en réserve | 2 min 30 s | secondaire ; Charge à régler à la première séance : monte par paliers jusqu'à une série qui laisse 3 répétitions en réserve. |
 | Soulevé de terre roumain aux haltères | 3 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Rowing poulie basse assis au triangle | 3 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
@@ -608,12 +608,12 @@ Homme de 46 ans, 85 kg, deux ans de musculation. Squat 100 kg, développé couch
 | Pallof press debout | 2 × 10 à 14 | charge à déterminer, à calibrer | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
 | Routine mobilité épaules et poignets | 2 × 30 à 45 s | — | — | 20 s | mobilité |
 
-### vendredi — force, corps entier, séance moyenne (75 min disponibles, 45 min estimées)
+### vendredi — force, corps entier, séance moyenne (75 min disponibles, 48 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Back squat barre haute | 4 × 3 | 80 kg, ≈ 80 % du 1RM (charge totale ; 1RM de référence 100 kg) | 3 rép. en réserve | 3 min | secondaire |
+| Back squat barre haute | 5 × 3 | 80 kg, ≈ 80 % du 1RM (charge totale ; 1RM de référence 100 kg) | 3 rép. en réserve | 3 min | secondaire |
 | Développé couché avec pause | 2 × 3 | charge à déterminer, à calibrer | 3 rép. en réserve | 2 min 30 s | secondaire ; Charge à régler à la première séance : monte par paliers jusqu'à une série qui laisse 3 répétitions en réserve. |
 | Soulevé de terre roumain aux haltères | 3 × 10 à 12 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Rowing poulie basse assis au triangle | 3 × 10 à 12 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
@@ -651,12 +651,12 @@ Homme de 46 ans, 85 kg, deux ans de musculation. Squat 100 kg, développé couch
 | Pallof press debout | 2 × 10 à 14 | charge à déterminer, à calibrer | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
 | Routine mobilité épaules et poignets | 2 × 30 à 45 s | — | — | 20 s | mobilité |
 
-### vendredi — force, corps entier, séance moyenne (75 min disponibles, 45 min estimées)
+### vendredi — force, corps entier, séance moyenne (75 min disponibles, 48 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Back squat barre haute | 4 × 3 | 80 kg, ≈ 80 % du 1RM (charge totale ; 1RM de référence 100 kg) | 3 rép. en réserve | 3 min | secondaire |
+| Back squat barre haute | 5 × 3 | 80 kg, ≈ 80 % du 1RM (charge totale ; 1RM de référence 100 kg) | 3 rép. en réserve | 3 min | secondaire |
 | Développé couché avec pause | 2 × 3 | charge à déterminer, à calibrer | 3 rép. en réserve | 2 min 30 s | secondaire ; Charge à régler à la première séance : monte par paliers jusqu'à une série qui laisse 3 répétitions en réserve. |
 | Soulevé de terre roumain aux haltères | 3 × 10 à 12 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Rowing poulie basse assis au triangle | 3 × 10 à 12 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |

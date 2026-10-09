@@ -588,6 +588,11 @@ const double coachRepriseRise = 0.10;
 /// en street workout, l'excès d'entraînement la première cause perçue).
 const double coachFirstWeekRepsShare = 4;
 
+/// Part du créneau en deçà de laquelle une séance de construction reçoit des
+/// séries de plus sur le mouvement visé (`_fillTime` ; choix raisonné : 80 %
+/// laisse la marge de l'échauffement et des transitions ; CY).
+const double coachFillShare = 0.8;
+
 /// Part des séries gardée pour une figure en appui sans prise neutre quand
 /// le profil déclare une gêne du poignet (« réduit de moitié d'emblée »,
 /// relecture documentée indépendante de la manche 4, C9.8).
@@ -5782,6 +5787,73 @@ final class Prescriber {
   /// Ramène la séance sous le temps du jour : séries retirées aux
   /// emplacements les moins prioritaires, puis emplacements retirés
   /// (`Method.cutOrder`).
+  /// Temps du créneau inutilisé (CY : relecture documentée et panel des
+  /// saisons croisées — séances de 23 à 38 min sur 45 disponibles chez
+  /// `street_01`, 25 min sur 60 chez `street_04`, mouvement de l'objectif
+  /// sous-dosé) : en semaine de construction, tant que la séance prend moins
+  /// de [coachFillShare] du créneau, une série de plus aux lignes de travail
+  /// du mouvement visé (puis aux mouvements principaux), cinq séries au plus
+  /// par ligne. Les garde-fous de volume qui suivent (plafond du groupe,
+  /// hausse de 15 % par semaine, volume de répétitions) bornent l'ajout : la
+  /// dose monte par paliers (R5-P22 ; R1-P1, dose-réponse : 10 séries par
+  /// muscle et par semaine et plus pour l'hypertrophie, Schoenfeld et al.
+  /// 2017).
+  void _fillTime(List<_Draft> items, int minutes, WeekSpec ws, _DayRole role) {
+    if (role != _DayRole.normal ||
+        ws.kind != WeekKind.build ||
+        ws.light ||
+        ws.testWeek ||
+        ws.eventWeek ||
+        _shape.reprise ||
+        (blockIndex == 0 && ws.stage < 1) ||
+        !(isStreetStyle(skeleton.style) ||
+            skeleton.style == CoachStyle.hypertrophy ||
+            skeleton.style == CoachStyle.strength)) {
+      return;
+    }
+    final budget = minutes * 60.0 * coachFillShare;
+    bool aimed(_Draft x) {
+      final ref = x.slot?.referenceId;
+      return a.aimsAt(x.e.id) || (ref != null && a.aimsAt(ref));
+    }
+
+    bool open(_Draft x) =>
+        x.kind == SetKind.work &&
+        x.isResistance &&
+        !x.fixed &&
+        !x.backoff &&
+        x.repsHigh != null &&
+        x.sets >= 1 &&
+        x.sets < 5;
+    final order = <_Draft>[
+      for (final x in items)
+        if (open(x) && aimed(x)) x,
+      for (final x in items)
+        if (open(x) && !aimed(x) && x.slot?.role == SlotRole.main) x,
+    ];
+    if (order.isEmpty) {
+      return;
+    }
+    var guard = 0;
+    var k = 0;
+    while (_daySeconds(items, minutes) < budget && guard < 12) {
+      guard++;
+      final x = order[k % order.length];
+      k++;
+      if (x.sets >= 5) {
+        if (order.every((o) => o.sets >= 5)) {
+          break;
+        }
+        continue;
+      }
+      x.sets++;
+      if (_daySeconds(items, minutes) > minutes * 60.0) {
+        x.sets--;
+        break;
+      }
+    }
+  }
+
   void _fitTime(List<_Draft> items, int minutes) {
     final budget = minutes * 60.0;
     int rank(_Draft x) => x.keep
@@ -7662,6 +7734,7 @@ final class Prescriber {
       ];
       for (var d = 0; d < a.dayCount; d++) {
         _equalize(days[d]);
+        _fillTime(days[d], a.days[d].minutes, ws, roles[d]);
         _fitTime(days[d], a.days[d].minutes);
       }
       _floorEvent(days, ws);

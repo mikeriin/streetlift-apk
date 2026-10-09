@@ -33,7 +33,7 @@ Homme de 22 ans, 66 kg, trois ans de pratique. 18 tractions, 30 dips, 50 pompes,
 | 7 | 2 | réalisation (spécifique à l'objectif) | 4 | 46 |
 | 8 | 2 | réalisation (spécifique à l'objectif) | 4 | 46 |
 | 9 | 2 | réalisation (spécifique à l'objectif) | 4 | 46 |
-| 10 | 2 | réalisation (spécifique à l'objectif) | 4 | 45 |
+| 10 | 2 | réalisation (spécifique à l'objectif) | 4 | 46 |
 | 11 | 2 | affûtage | 4 | 24 |
 | 12 | 2 | test | 4 | 9 |
 
@@ -528,26 +528,26 @@ Homme de 22 ans, 66 kg, trois ans de pratique. 18 tractions, 30 dips, 50 pompes,
 
 ## Semaine 10 — réalisation (spécifique à l'objectif) (bloc 2)
 
-### lundi — force, haut du corps, séance lourde (60 min disponibles, 31 min estimées)
+### lundi — force, haut du corps, séance lourde (60 min disponibles, 35 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
 | Wrist push-ups | 2 × 8 à 10 | — | — | 30 s | échauffement |
-| Traction pronation | 1 × 17 | poids du corps, ≈ 94 % du maximum de répétitions (repère : 18) | 1 rép. en réserve | 3 min | principal ; Avant la série de tête : 2 séries faciles (un tiers, puis la moitié des répétitions prévues). ; Simulation du test : la série de tête se fait au format du test (même échauffement, même standard de répétition), jusqu'à une répétition de l'échec — environ 17 répétitions. Note le résultat : il dit si l'objectif du test est réaliste ; pas de série allégée après. ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
+| Traction pronation | 2 × 17 | poids du corps, ≈ 94 % du maximum de répétitions (repère : 18) | 1 rép. en réserve | 3 min | principal ; Avant la série de tête : 2 séries faciles (un tiers, puis la moitié des répétitions prévues). ; Simulation du test : la série de tête se fait au format du test (même échauffement, même standard de répétition), jusqu'à une répétition de l'échec — environ 17 répétitions. Note le résultat : il dit si l'objectif du test est réaliste ; pas de série allégée après. ; Exécution : départ bras tendus, épaules basses, menton au-dessus de la barre, sans élan. |
 | Dips aux barres parallèles | 2 × 22 | poids du corps, ≈ 73 % du maximum de répétitions (repère : 30) | 3 rép. en réserve sur la dernière série (davantage sur les premières) | 2 min | secondaire ; Exécution : épaules basses, descente contrôlée, épaule nettement sous le coude en bas, verrouillage complet en haut. |
 | Row australien | 2 × 10 à 12 | poids du corps | 2 rép. en réserve | 105 s | accessoire ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Fente arrière au poids du corps | 2 × 8 à 10 | poids du corps | 3 rép. en réserve | 90 s | accessoire ; Jambes : force utile, sans fatigue excessive. |
 | Gainage latéral sur le coude | 2 × 35 s | poids du corps | position parfaite, quelques secondes de marge | 60 s | tronc ; tenue isométrique ; Tronc : le gainage qui tient la position à la barre. |
 | Hollow body hold | 2 × 35 s | poids du corps | position parfaite, quelques secondes de marge | 60 s | tronc ; tenue isométrique ; Tronc : le gainage qui tient la position à la barre. |
 
-### mercredi — force, haut du corps, séance moyenne (60 min disponibles, 32 min estimées)
+### mercredi — force, haut du corps, séance moyenne (60 min disponibles, 31 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Suspension active | 2 × 15 à 20 s | poids du corps | — | 30 s | échauffement |
 | Muscle-up barre strict | 2 × 2 | poids du corps, ≈ 40 % du maximum de répétitions (repère : 5) | 3 rép. en réserve | 2 min 30 s | figure / technique ; pratique technique ; Avant le muscle-up : 2 séries de tractions faciles (la moitié de ton maximum), puis 2 ou 3 transitions à la barre basse ou des muscle-ups très faciles ; rien à froid. ; Exécution : amène la barre aux hanches, transition rapide, poitrine au-dessus de la barre avant de pousser. La série s'arrête à la première répétition dont la transition ralentit, se fait en deux temps ou demande un battement de jambes de plus : jamais jusqu'à l'échec. |
-| Traction pronation | 5 min : 10 rép. au début de chaque minute | poids du corps, ≈ 56 % du maximum de répétitions (repère : 18) | 5 rép. en réserve ou plus | — | secondaire |
+| Traction pronation | 4 min : 10 rép. au début de chaque minute | poids du corps, ≈ 56 % du maximum de répétitions (repère : 18) | 5 rép. en réserve ou plus | — | secondaire |
 | Pompe classique | 2 × 37 | poids du corps, ≈ 74 % du maximum de répétitions (repère : 50) | 3 rép. en réserve sur la dernière série (davantage sur les premières) | 2 min | secondaire ; Exécution : corps gainé de la tête aux talons, poitrine près du sol, coudes à 45°. |
 | Relevé de jambes tendues suspendu | 2 × 10 à 14 | poids du corps | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
 | Gainage latéral sur le coude | 2 × 35 s | poids du corps | position parfaite, quelques secondes de marge | 60 s | tronc ; tenue isométrique ; Tronc : le gainage qui tient la position à la barre. |

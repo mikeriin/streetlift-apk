@@ -38,7 +38,7 @@ Chaque bloc est écrit par le moteur de création au moment où il commence, d'a
 - Échecs non voulus (hors tests et tentatives) : 0 % des séries de travail.
 - Écart moyen entre l'effort affiché par le moteur et l'effort réel : 1,05 répétition en réserve (sur les 33 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0,6 % ; au moins 3 plus faciles : 15,2 %.
 - Plus forte hausse de charge totale d'un mouvement principal d'une séance à la suivante, à schéma égal : 0 % ; hausses de plus de 10 % faites de plusieurs crans : 0.
-- Progression réelle moyenne des mouvements suivis : -0,078 % par semaine.
+- Progression réelle moyenne des mouvements suivis : -0,077 % par semaine.
 - Douleur : 0 hausse(s) de charge sur une zone douloureuse signalée.
 
 ## Mouvements suivis, semaine par semaine
@@ -98,7 +98,7 @@ Athlète simulé, maximum réel hors fatigue : 46 au départ (le record déclar�
 | Sem. | Phase | Écrit par le programme | Servi par le moteur | Fait | Effort visé → réel | Maximum réel / estimé | Décisions du moteur |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | 5 | réalisation (spécifique à l'objectif) | 2 × 18 (72 % du maximum testé) | 13-13 | 13-13 | 4,5 → 44,8 ; suivantes 3 → 42,1 | 58 / 19 | douleur signalée (coude, 5/10) ; charge non augmentée (pain_return) ; répétitions recalées sur le maximum mesuré (5 de moins par série que le programme) ; calibrage (séance 2 sur ce mouvement) |
-| 6 | réalisation (spécifique à l'objectif) | 1 × 24 (96 % du maximum testé) | 13 | 13 | 5+ → 44,2 | 57 / 19 | douleur signalée (coude, 5/10) ; charge non augmentée (pain_return) ; répétitions recalées sur le maximum mesuré (11 de moins par série que le programme) ; calibrage (séance 3 sur ce mouvement) |
+| 6 | réalisation (spécifique à l'objectif) | 2 × 24 (96 % du maximum testé) | 13-13 | 13-13 | 5+ → 44,2 ; suivantes 4,5 → 42,5 | 57 / 19 | douleur signalée (coude, 5/10) ; charge non augmentée (pain_return) ; répétitions recalées sur le maximum mesuré (11 de moins par série que le programme) ; calibrage (séance 3 sur ce mouvement) |
 | 7 | affûtage | 1 × 21 (84 % du maximum testé) | 13 | 13 | 5+ → 47,5 | 61 / 19 | douleur signalée (coude, 5/10) ; charge non augmentée (pain_return) ; répétitions recalées sur le maximum mesuré (8 de moins par série que le programme) |
 | 8 | échéance | 3 × 15 (60 % du maximum testé) | 11 | 11 | 5+ → 48,9 | 60 / 19 | douleur signalée (coude, 5/10) ; charge non augmentée (pain_return) ; répétitions recalées sur le maximum mesuré (4 de moins par série que le programme) ; −2 série(s) |
 

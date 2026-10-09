@@ -37,7 +37,7 @@ Chaque bloc est écrit par le moteur de création au moment où il commence, d'a
 
 - Séances faites : 79 sur 80 (6 ajustées le jour même).
 - Échecs non voulus (hors tests et tentatives) : 0 % des séries de travail.
-- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 0,94 répétition en réserve (sur les 49 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0,2 % ; au moins 3 plus faciles : 13 %.
+- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 0,95 répétition en réserve (sur les 49 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0,2 % ; au moins 3 plus faciles : 13,1 %.
 - Plus forte hausse de charge totale d'un mouvement principal d'une séance à la suivante, à schéma égal : 4,5 % ; hausses de plus de 10 % faites de plusieurs crans : 0.
 - Progression réelle moyenne des mouvements suivis : 0,125 % par semaine.
 - Jour de l'échéance : meilleure performance à 93,2 % du maximum réel du jour (moyenne des mouvements).
@@ -78,7 +78,7 @@ Athlète simulé, maximum réel hors fatigue : 11 au départ (le record déclar�
 | 3 | intensification (séries plus dures) | 2 × 25 (89 % du maximum testé), série de tête puis séries allégées | 24-20 | 22 (arrêt avant la cible)-17 (arrêt avant la cible) | 3 → 3,7 ; suivantes 5+ → 6,7 | 26 / 28 | répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) |
 | 4 | allègement | 1 × 29 à 32, test | (26 à 32) | 25 (échec) | test | 25 / 26 | — |
 | 5 | réalisation (spécifique à l'objectif) | 1 × 23 (92 % du maximum testé) | 23 | 23 | 2 → 2 | 25 / 26 | — |
-| 6 | réalisation (spécifique à l'objectif) | 1 × 24 (96 % du maximum testé) | 24 | 24 | 1 → 1 | 25 / 26 | — |
+| 6 | réalisation (spécifique à l'objectif) | 2 × 24 (96 % du maximum testé) | 24-20 | 24-20 | 1 → 1 ; suivantes 1 → 2,1 | 25 / 26 | — |
 | 7 | affûtage | 1 × 21 (84 % du maximum testé) | 21 | 21 | 4 → 5,1 | 26 / 26 | — |
 | 8 | échéance | 1 × 26 à 32, test | (25 à 32) | 25 | test | 26 / 26 | — |
 | 9 | transition (récupération) | 2 × 15 (60 % du maximum testé) | 15-15 | 15-15 | 5+ → 9,9 ; suivantes 5+ → 9,1 | 25 / 26 | — |
@@ -101,15 +101,15 @@ Athlète simulé, maximum réel hors fatigue : 26 au départ (le record déclar�
 | 3 | intensification (séries plus dures) | 2 × 44 (88 % du maximum testé), série de tête puis séries allégées | 38-36 | 38-29 (arrêt avant la cible) | 5+ → 7,5 ; suivantes 5+ → 14,5 | 46 / 41 | répétitions recalées sur le maximum mesuré (6 de moins par série que le programme) |
 | 4 | allègement | 1 × 52 à 56, test | (38 à 56) | 45 | test | 46 / 44 | — |
 | 5 | réalisation (spécifique à l'objectif) | 1 × 41 (91 % du maximum testé) | 37 | 37 | 4 → 7,5 | 44 / 41 | répétitions recalées sur le maximum mesuré (4 de moins par série que le programme) |
-| 6 | réalisation (spécifique à l'objectif) | 1 × 44 (98 % du maximum testé) | 37 | 37 | 3 → 7,7 | 45 / 42 | allégé pour garder la marge prévue (au moins 1 en réserve) |
-| 7 | affûtage | 1 × 38 (84 % du maximum testé) | 38 | 38 | 4 → 5,2 | 43 / 42 | — |
+| 6 | réalisation (spécifique à l'objectif) | 2 × 44 (98 % du maximum testé) | 37-34 | 37-34 | 3 → 7,7 ; suivantes 1,5 → 9,8 | 45 / 42 | allégé pour garder la marge prévue (au moins 1 en réserve) |
+| 7 | affûtage | 1 × 38 (84 % du maximum testé) | 38 | 38 | 4 → 5,1 | 43 / 42 | — |
 | 8 | échéance | 1 × 48 à 56, test | (40 à 56) | 44 (échec) | test | 45 / 43 | — |
 | 9 | transition (récupération) | 2 × 26 (61 % du maximum testé) | 26-26 | 26-26 | 5+ → 19,8 ; suivantes 5+ → 18,3 | 46 / 43 | — |
 | 10 | introduction | 2 × 38 (88 % du maximum testé), série de tête puis séries allégées | 38-28 | 38-28 | 4 → 6,5 ; suivantes 5+ → 15 | 44 / 43 | — |
 | 11 | réalisation (spécifique à l'objectif) | 1 × 40 (93 % du maximum testé) | 40 | 40 | 3 → 6,9 | 47 / 44 | — |
 | 12 | réalisation (spécifique à l'objectif) | 1 × 42 (98 % du maximum testé) | 42 | 42 | 1 → 3,9 | 46 / 44 | — |
-| 13 | affûtage | 1 × 37 (86 % du maximum testé) | 37 | 33 (arrêt avant la cible) | 5+ → 12,2 | 45 / 43 | — |
-| 14 | échéance | 1 × 47 à 56, test | (42 à 56) | 47 (échec) | test | 47 / 45 | — |
+| 13 | affûtage | 1 × 37 (86 % du maximum testé) | 37 | 33 (arrêt avant la cible) | 5+ → 12,3 | 45 / 43 | — |
+| 14 | échéance | 1 × 47 à 56, test | (42 à 56) | 47 (échec) | test | 47 / 46 | — |
 | 15 | transition (récupération) | 2 × 27 (60 % du maximum testé) | 27-27 | 27-27 | 5+ → 19,6 ; suivantes 5+ → 18 | 47 / 45 | — |
 | 16 | introduction | 3 × 40 (89 % du maximum testé), série de tête puis séries allégées | 40-29-29 | 37 (arrêt avant la cible)-26-26 | 5+ → 8,5 ; suivantes 5+ → 17,4 | 45 / 46 | allégé pour garder la marge prévue (au moins 4 en réserve) |
 
@@ -127,7 +127,7 @@ Athlète simulé, maximum réel hors fatigue : 46 au départ (le record déclar�
 | 6 | réalisation (spécifique à l'objectif) | 3 × 5 à 76 % | 5-5-5 à 13,75 kg | 5-5-4 (arrêt avant la cible) à 13,75 kg | 5+ → 5,9 ; suivantes 5+ → 6,2 | 108 (lest 38) / 115 (lest 45) | charge non augmentée (bilan du jour bas) |
 | 7 | affûtage | 2 × 2 à 86 % | 2-2 à 23,75 kg | 2-2 à 23,75 kg | 5+ → 7,3 ; suivantes 5+ → 7,2 | 116 (lest 46) / 115 (lest 45) | charge non augmentée (hausse plafonnée d'une séance à la suivante) |
 | 9 | transition (récupération) | 2 × 4 à 60 % | 4-4 | 4-4 | 5+ → 12,9 ; suivantes 5+ → 12,5 | 110 (lest 40) / 115 (lest 45) | — |
-| 10 | introduction | 2 × 6 à 61 % | 6-6 | 6-6 | 5+ → 11,5 ; suivantes 5+ → 11,2 | 112 (lest 43) / 115 (lest 46) | — |
+| 10 | introduction | 2 × 6 à 61 % | 6-6 | 6-6 | 5+ → 11,5 ; suivantes 5+ → 11,2 | 113 (lest 43) / 115 (lest 46) | — |
 | 11 | réalisation (spécifique à l'objectif) | 3 × 5 à 65 % | 5-5-(5 à 11) à 5 kg | 5-5-11 à 5 kg | 5+ → 11 ; suivantes 3,3+ → 7,6 | 114 (lest 44) / 116 (lest 46) | série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète ; charge non augmentée (hausse plafonnée d'une séance à la suivante) |
 | 12 | réalisation (spécifique à l'objectif) | 3 × 5 à 67 % | 5-5-5 à 7,5 kg | 5-5-5 à 7,5 kg | 5+ → 8,9 ; suivantes 5+ → 8,7 | 110 (lest 40) / 116 (lest 46) | charge non augmentée (hausse plafonnée d'une séance à la suivante) |
 | 13 | affûtage | 2 × 2 à 75 % | 2-2 à 16,25 kg | 2-2 à 16,25 kg | 5+ → 10 ; suivantes 5+ → 9,8 | 115 (lest 45) / 116 (lest 46) | charge non augmentée (hausse plafonnée d'une séance à la suivante) |

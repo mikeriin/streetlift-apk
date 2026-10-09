@@ -35,9 +35,9 @@ Chaque bloc est écrit par le moteur de création au moment où il commence, d'a
 
 - Séances faites : 51 sur 51 (16 ajustées le jour même).
 - Échecs non voulus (hors tests et tentatives) : 0 % des séries de travail.
-- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 1,07 répétition en réserve (sur les 73 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 4,9 %.
+- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 1,07 répétition en réserve (sur les 73 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 5,1 %.
 - Plus forte hausse de charge totale d'un mouvement principal d'une séance à la suivante, à schéma égal : 3,4 % ; hausses de plus de 10 % faites de plusieurs crans : 0.
-- Progression réelle moyenne des mouvements suivis : 0,27 % par semaine.
+- Progression réelle moyenne des mouvements suivis : 0,273 % par semaine.
 - Douleur : 0 hausse(s) de charge sur une zone douloureuse signalée.
 
 ## Mouvements suivis, semaine par semaine
@@ -61,7 +61,7 @@ Pour chaque mouvement, la séance la plus lourde de la semaine : ce que le progr
 | 11 | réalisation (spécifique à l'objectif) | 3 × 7 (78 % du maximum testé), série de tête puis séries allégées | 7-6-6 | 7-6-6 | 3 → 2,9 ; suivantes 2,5 → 2,7 | 10 / 10 | — |
 | 12 | réalisation (spécifique à l'objectif) | 3 × 7 (78 % du maximum testé), série de tête puis séries allégées | 8-7-6 | 8-6 | 2 → 1,1 ; suivantes 2 → 1,8 | 9 / 10 | répétitions recalées sur le maximum mesuré (1 de plus par série que le programme) ; dernières séries plus dures que prévu |
 | 13 | réalisation (spécifique à l'objectif) | 3 × 7 (78 % du maximum testé), série de tête puis séries allégées | 8-7-6 | 8-6-6 | 2 → 1,2 ; suivantes 2 → 1,7 | 9 / 10 | répétitions recalées sur le maximum mesuré (1 de plus par série que le programme) ; dernières séries plus dures que prévu |
-| 14 | réalisation (spécifique à l'objectif) | 1 × 8 (89 % du maximum testé) | 9 | 9 | 1 → 1 | 10 / 10 | répétitions recalées sur le maximum mesuré (1 de plus par série que le programme) |
+| 14 | réalisation (spécifique à l'objectif) | 2 × 8 (89 % du maximum testé) | 9-8 | 9-8 | 1 → 1 ; suivantes 1 → 0,3 | 10 / 10 | répétitions recalées sur le maximum mesuré (1 de plus par série que le programme) |
 | 15 | affûtage | 2 × 6 (67 % du maximum testé), série de tête puis séries allégées | 6-5 | 5 (arrêt avant la cible)-3 (arrêt avant la cible) | 4 → 4,6 ; suivantes 5+ → 5,9 | 10 / 10 | allégé pour garder la marge prévue (au moins 3 en réserve) |
 | 16 | test | 1 × 10 à 14, test | (9 à 14) | 9 (échec) | test | 10 / 10 | — |
 | 17 | construction (volume) | 2 × 7 (78 % du maximum testé), série de tête puis séries allégées | 7-6 | 7-5 | 3 → 3,2 ; suivantes 3 → 4,6 | 10 / 10 | allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |
@@ -85,7 +85,7 @@ Athlète simulé, maximum réel hors fatigue : 9 au départ (le record déclaré
 | 11 | réalisation (spécifique à l'objectif) | 2 × 5 à 77 % | 5-(5 à 11) à 2,5 kg | 5-5 à 2,5 kg | 3 → 2,9 ; suivantes 1,5 → 2,7 | 91 (lest 17) / 94 (lest 20) | série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète |
 | 12 | réalisation (spécifique à l'objectif) | 2 × 5 à 78 % | 5-5 à 2,5 kg | 5-4 (arrêt avant la cible) à 2,5 kg | 3 → 2,2 ; suivantes 3 → 3 | 89 (lest 15) / 94 (lest 21) | — |
 | 13 | réalisation (spécifique à l'objectif) | 2 × 5 à 80 % | 5-(5 à 11) à 3,75 kg | 4 (arrêt avant la cible) à 3,75 kg puis 5 à 1,25 kg | 3 → 2,3 ; suivantes 1,5 → 2,3 | 88 (lest 15) / 93 (lest 20) | série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète ; allégé pour garder la marge prévue (au moins 3 en réserve) |
-| 14 | réalisation (spécifique à l'objectif) | 2 × 5 à 80 % | 5-5 à 3,75 kg | 4 (arrêt avant la cible) à 3,75 kg puis 5 | 3 → 2,9 ; suivantes 3 → 3,5 | 90 (lest 16) / 94 (lest 20) | allégé pour garder la marge prévue (au moins 3 en réserve) ; dernières séries plus dures que prévu |
+| 14 | réalisation (spécifique à l'objectif) | 2 × 5 à 80 % | 5-5 à 3,75 kg | 4 (arrêt avant la cible) à 3,75 kg puis 5 | 3 → 2,8 ; suivantes 3 → 3,4 | 89 (lest 16) / 94 (lest 20) | allégé pour garder la marge prévue (au moins 3 en réserve) ; dernières séries plus dures que prévu |
 | 15 | affûtage | 2 × 2 à 85 % | 2-2 à 6,25 kg | 2-1 (arrêt avant la cible) à 6,25 kg | 4,5 → 4,6 ; suivantes 4,5 → 5,4 | 92 (lest 18) / 94 (lest 20) | — |
 | 17 | construction (volume) | 3 × 5 | 5-5-5 à 2,5 kg | 5-5 à 2,5 kg puis 5 | 3 → 3,4 ; suivantes 3 → 3,6 | 92 (lest 18) / 91 (lest 18) | allégé pour garder la marge prévue (au moins 3 en réserve) ; dernières séries plus dures que prévu |
 
@@ -109,4 +109,4 @@ Athlète simulé, maximum réel hors fatigue : 88 (lest 14) au départ (le recor
 - **Semaine 14 (réalisation (spécifique à l'objectif))** : Traction pronation : répétitions recalées sur le maximum mesuré (1 de plus par série que le programme) ; Dips aux barres parallèles : répétitions recalées sur le maximum mesuré (2 de moins par série que le programme) ; Pont fessier unilatéral : répétitions recalées sur le maximum mesuré (2 de moins par série que le programme) ; Pompe classique : répétitions recalées sur le maximum mesuré (1 de plus par série que le programme) ; Traction lestée de compétition : séries arrêtées en cours de séance (allégé pour garder la marge prévue (au moins 3 en réserve)).
 - **Semaine 15 (affûtage)** : phase « affûtage » : séances servies telles que le programme les écrit (× 3) ; affûtage : aucun volume ajouté, intensité gardée (× 3).
 - **Semaine 16 (test)** : phase « test » : séances servies telles que le programme les écrit (× 3).
-- **Semaine 17 (construction (volume))** : nouveau bloc construit à partir du point de fin de bloc (maxima estimés, résultats de test, tolérance) ; Pont fessier unilatéral : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; Pompe classique : répétitions recalées sur le maximum mesuré (3 de moins par série que le programme).
+- **Semaine 17 (construction (volume))** : nouveau bloc construit à partir du point de fin de bloc (maxima estimés, résultats de test, tolérance) ; Pont fessier unilatéral : répétitions recalées sur le maximum mesuré (1 de moins par série que le programme) ; Pompe classique : répétitions recalées sur le maximum mesuré (3 de moins par série que le programme) ; Rowing barre buste penché prise pronation : séries arrêtées en cours de séance (allégé pour garder la marge prévue (au moins 2 en réserve)).

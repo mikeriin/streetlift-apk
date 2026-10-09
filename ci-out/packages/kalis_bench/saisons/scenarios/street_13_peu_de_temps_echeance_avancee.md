@@ -33,9 +33,9 @@ Chaque bloc est écrit par le moteur de création au moment où il commence, d'a
 
 - Séances faites : 44 sur 48 (1 ajustées le jour même).
 - Échecs non voulus (hors tests et tentatives) : 0 % des séries de travail.
-- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 1,26 répétition en réserve (sur les 69 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 8,6 %.
+- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 1,26 répétition en réserve (sur les 68 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 8,5 %.
 - Plus forte hausse de charge totale d'un mouvement principal d'une séance à la suivante, à schéma égal : 0 % ; hausses de plus de 10 % faites de plusieurs crans : 0.
-- Progression réelle moyenne des mouvements suivis : 0,56 % par semaine.
+- Progression réelle moyenne des mouvements suivis : 0,562 % par semaine.
 - Douleur : 0 hausse(s) de charge sur une zone douloureuse signalée.
 
 ## Mouvements suivis, semaine par semaine
@@ -56,7 +56,7 @@ Pour chaque mouvement, la séance la plus lourde de la semaine : ce que le progr
 | 8 | réalisation (spécifique à l'objectif) | 3 × 3 (60 % du maximum testé) | 3-3-3 | 3-3-3 | 2 → 3,1 ; suivantes 2 → 2,6 | 6 / 6 | — |
 | 9 | réalisation (spécifique à l'objectif) | 2 × 3 (60 % du maximum testé) | 3-3 | 3-3 | 2 → 2,7 ; suivantes 2 → 2,3 | 6 / 6 | — |
 | 10 | test | 1 × 6 à 9, test | (5 à 9) | 5 (échec) | test | 6 / 6 | — |
-| 11 | construction (volume) | 3 × 3 (60 % du maximum testé) | 3-3-3 | 3-3-3 | 2 → 3,2 ; suivantes 2 → 2,4 | 6 / 6 | — |
+| 11 | construction (volume) | 4 × 3 (60 % du maximum testé) | 3-3-3-3 | 3-3-3-3 | 2 → 3,2 ; suivantes 2 → 2,3 | 6 / 6 | — |
 | 12 | construction (volume) | 3 × 3 (60 % du maximum testé) | 4-3-3 | 4-2 | 2 → 1,9 ; suivantes 2 → 3,3 | 6 / 6 | répétitions recalées sur le maximum mesuré (1 de plus par série que le programme) ; dernières séries plus dures que prévu |
 | 13 | construction (volume) | 3 × 3 (60 % du maximum testé) | 4-3-3 | 4-2-2 | 2 → 1,9 ; suivantes 2 → 3,3 | 6 / 6 | répétitions recalées sur le maximum mesuré (1 de plus par série que le programme) ; dernières séries plus dures que prévu |
 | 14 | construction (volume) | 2 × 3 (60 % du maximum testé) | 4-3 | 4-3 | 2 → 2,1 ; suivantes 2 → 2,5 | 6 / 6 | répétitions recalées sur le maximum mesuré (1 de plus par série que le programme) |
