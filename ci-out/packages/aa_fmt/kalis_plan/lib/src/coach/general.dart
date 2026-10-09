@@ -287,7 +287,7 @@ const Map<String, List<_GymSlot>> _gymDays = <String, List<_GymSlot>>{
     (GymPicks.press, SlotRole.main, _cmp, 3, MuscleGroup.chest),
     (GymPicks.vertical, SlotRole.secondary, _cmp, 3, MuscleGroup.lats),
     (GymPicks.hinge, SlotRole.secondary, _cmp, 2, MuscleGroup.hamstrings),
-    (GymPicks.lateral, SlotRole.accessory, _iso, 2, MuscleGroup.deltMiddle),
+    (GymPicks.lateral, SlotRole.accessory, _iso, 3, MuscleGroup.deltMiddle),
     (GymPicks.core, SlotRole.core, Method.accessoryCore, 2, null),
   ],
   // Corps entier B : charnière, poussée verticale, tirage horizontal.
@@ -313,7 +313,7 @@ const Map<String, List<_GymSlot>> _gymDays = <String, List<_GymSlot>>{
     (GymPicks.row, SlotRole.main, _cmp, 3, MuscleGroup.upperBack),
     (GymPicks.overhead, SlotRole.secondary, _cmp, 3, MuscleGroup.deltAnterior),
     (GymPicks.vertical, SlotRole.secondary, _cmp, 3, MuscleGroup.lats),
-    (GymPicks.lateral, SlotRole.accessory, _iso, 3, MuscleGroup.deltMiddle),
+    (GymPicks.lateral, SlotRole.accessory, _iso, 4, MuscleGroup.deltMiddle),
     (GymPicks.triceps, SlotRole.accessory, _iso, 2, MuscleGroup.triceps),
     (GymPicks.biceps, SlotRole.accessory, _iso, 2, MuscleGroup.biceps),
   ],
@@ -354,7 +354,7 @@ const Map<String, List<_GymSlot>> _gymDays = <String, List<_GymSlot>>{
     (GymPicks.vertical, SlotRole.main, _cmp, 3, MuscleGroup.lats),
     (GymPicks.row, SlotRole.main, _cmp, 3, MuscleGroup.upperBack),
     // (Deltoïde moyen à 10 séries et plus par semaine en cinq séances.)
-    (GymPicks.lateral, SlotRole.accessory, _iso, 2, MuscleGroup.deltMiddle),
+    (GymPicks.lateral, SlotRole.accessory, _iso, 3, MuscleGroup.deltMiddle),
     (GymPicks.rear, SlotRole.accessory, _iso, 3, MuscleGroup.deltPosterior),
     (GymPicks.biceps, SlotRole.accessory, _iso, 3, MuscleGroup.biceps),
     (GymPicks.core, SlotRole.core, Method.accessoryCore, 2, null),
@@ -1014,14 +1014,13 @@ void _buildConditioning(_Builder b) {
         sets: 3,
         keep: true,
       );
-      // Base de tirage strict (traction poitrine à la barre).
+      // Préparation des coudes et des scapulas avant le tirage.
       b.add(
         d,
-        const <String>['sw-traction-chest-to-bar', 'sw-traction-pronation'],
-        SlotRole.secondary,
-        _cmp,
-        sets: 3,
-        keep: true,
+        const <String>['sw-traction-scapulaire'],
+        SlotRole.warmup,
+        Method.warmupPrep,
+        sets: 2,
       );
     }
     // Créneau court : la pièce seule, à la durée du créneau (R6-P27 : une
@@ -1213,6 +1212,20 @@ Set<int> _buildEndurance(_Builder b) {
         sets: 4,
         fromWeek: a.level == 0 ? 6 : 0,
       );
+      // Allure de l'objectif, une semaine sur deux à la place des
+      // fractions (R6-P18 : travail spécifique à l'allure de l'épreuve ;
+      // panel CP2, partie 1).
+      if (a.runGoal != null && quality.indexOf(d) == 0) {
+        b.add(
+          d,
+          const <String>['ca-course-seuil-tempo', 'ca-fractionne-long-1000m'],
+          SlotRole.main,
+          Method.runQuality,
+          sets: 3,
+          note: 'goal_pace',
+          fromWeek: a.level == 0 ? 6 : 0,
+        );
+      }
     } else {
       b.add(d, <String>[Ids.easyRun], SlotRole.main, Method.runEasy, sets: 1);
     }

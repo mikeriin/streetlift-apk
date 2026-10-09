@@ -130,6 +130,13 @@ abstract final class CoachNotes {
   /// R6-P26).
   static const String chairSquat = 'chair_squat';
 
+  /// Chaise contre le mur peu profonde pour un genou gêné (`value` : gêne
+  /// déclarée ; CP2, partie 1).
+  static const String kneeShallow = 'knee_shallow';
+
+  /// Équilibre progressif près d'un appui (CP2, partie 1 ; R6-P26).
+  static const String balanceProgress = 'balance_progress';
+
   /// Repère d'un objectif de répétitions sans lest au matériel (`value` :
   /// valeur attendue) : la surcharge passe par une variante plus dure
   /// (CP2, partie 0, boucle 2).
@@ -428,6 +435,8 @@ abstract final class CoachNotes {
     safetyPins,
     wodPace,
     chairSquat,
+    kneeShallow,
+    balanceProgress,
     checkpointBody,
     checkpointHold,
     checkpointLoad,
@@ -4566,6 +4575,17 @@ final class Prescriber {
       if (a.age >= 65 && x.e.id == 'mu-air-squat') {
         x.reasons.add(_note(CoachNotes.chairSquat, 0));
       }
+      // Genou gêné : chaise haute, angle écrit (R5-P23).
+      final knee = a.limitOn(Joint.knee)?.discomfort ?? 0;
+      if (knee >= 3 && x.e.id == 'mu-wall-sit') {
+        x.reasons.add(_note(CoachNotes.kneeShallow, knee));
+      }
+    }
+    if (x != null &&
+        skeleton.style == CoachStyle.health &&
+        s.note == 'balance' &&
+        x.e.id == 'mo-marche-talons') {
+      x.reasons.add(_note(CoachNotes.balanceProgress, 0));
     }
     if (x != null && s.note == 'pain_step' && x.e.id == s.exerciseId) {
       // (Recul d'étape pour douleur : la raison et le retour sont écrits —
@@ -5360,6 +5380,7 @@ final class Prescriber {
         // lesté testé à l'épreuve d'un programme de musculation qui ne le
         // travaille jamais).
         if (!isStreetStyle(skeleton.style) &&
+            !a.aimsAt(id) &&
             !skeleton.days.any((d) => d.slots.any((s) => s.exerciseId == id))) {
           continue;
         }
@@ -5541,7 +5562,11 @@ final class Prescriber {
       } else {
         x
           ..secondsLow = kept
-          ..secondsHigh = kept;
+          ..secondsHigh = kept
+          // (La consigne d'allure dit la même durée que la case — panel
+          // CP2, partie 1.)
+          ..reasons.removeWhere((r) => r.params['note'] == CoachNotes.easyPace)
+          ..reasons.add(_note(CoachNotes.easyPace, kept ~/ 60));
       }
     }
     var guard = 0;
