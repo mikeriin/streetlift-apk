@@ -275,6 +275,27 @@ extension SessionAdaptStore on AppStore {
     return null;
   }
 
+  /// CI1g (`kalis_plan` 0.3.1, point imposé par CY) : note
+  /// `clearance_first` du bloc de la journée (S[week], J[j]) tant que l'avis
+  /// d'un médecin ou d'un kiné n'est pas confirmé pour ce bloc ; null
+  /// sinon. La note est réécrite à chaque bloc tant que sa condition tient
+  /// (questionnaire « prudent », gêne déclarée à 5/10 ou plus) : la
+  /// confirmation est demandée une fois par bloc.
+  ({String blockId, kc.Reason reason})? clearancePending(int week, int j) {
+    final place = adaptPlaceOf(week, j);
+    if (place == null) return null;
+    final r = ct.coachClearanceReason(place.block);
+    if (r == null) return null;
+    if (settings.medicalClearance.containsKey(place.blockId)) return null;
+    return (blockId: place.blockId, reason: r);
+  }
+
+  /// CI1g : avis médical confirmé pour le bloc [blockId] (date du jour).
+  void confirmClearance(String blockId) {
+    settings.medicalClearance[blockId] = civilDateString(storeClock());
+    saveSettings();
+  }
+
   /// Bloc importé [seg] avec les propositions de Koach en place.
   kc.ProgramBlock _importedEvolved(ImportedSegment seg) => _g9Memo(
     'evolved|${identityHashCode(seg.block)}|$_evoRevision',

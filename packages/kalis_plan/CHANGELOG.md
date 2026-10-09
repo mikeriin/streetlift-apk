@@ -1,5 +1,40 @@
 # Journal des versions de kalis_plan
 
+## 0.3.1
+
+Lot CY, partie 0 (sécurité) du pipeline « Calibrage des programmes ». Contrat inchangé (notes de coach
+additives). Constats de la relecture documentée de CP2 (manches 7 et 8) : `docs/CALIBRAGE_CY.md` de
+`kalis_bench`.
+
+- **Avis médical avant la première semaine** : note de bloc `clearance_first` quand le questionnaire de santé
+  est « prudent » ou qu'une gêne déclarée atteint 5/10 (ACSM 2015, dépistage avant l'activité) ;
+  l'application la montre avant la première séance (`docs/INTEGRATION_CI.md`).
+- **Épaule opérée ou à antécédent** : note `shoulder_history` sur le développé au-dessus de la tête.
+- **Pas de test maximal sur une articulation douloureuse** : gêne relevée au bloc précédent à 3/10 ou plus,
+  gêne déclarée à 4/10 ou plus, zone à l'arrêt (tests de fin de bloc et objectif daté ; une vraie épreuve
+  reste écrite).
+- **Jour de test de tirage** : le travail ordinaire de tirage vertical et de muscle-up qui restait après les
+  tests saute.
+- **Premier muscle-up** : le test d'un muscle-up jamais réussi vise une répétition propre (au lieu de 8 à 15).
+- **Course** : lendemain d'une course d'épreuve sans footing écrit ; texte de la règle de durée aligné sur la
+  règle appliquée (plus longue course des quatre dernières semaines + 10 %).
+- **Croisement (CY, boucle 1)** : le plafond de volume de répétitions ne compte plus les variantes plus faciles
+  que le mouvement (pompe mains surélevées, sur les genoux, assistée), qui gardent leur propre dose ; débutant
+  qui vise la première traction : deux séries assistées chaque jour (douze séries de tirage vertical par semaine
+  au plus avec descentes et tenue) ; plateau de traction sans lest à douze tractions et plus : archer et
+  typewriter d'abord (environ un tiers du maximum par côté).
+- **Croisement (CY, boucle 2)** : après une échéance de course, la sortie longue repart à 70 % de la plus
+  longue puis +10 % par semaine au plus ; la note « zone de l'épreuve » suit les répétitions écrites quand le
+  garde-fou de volume les réduit ; temps du créneau inutilisé : en semaine de construction (street, musculation,
+  force), tant que la séance prend moins de 80 % du créneau, une série de plus aux lignes du mouvement visé puis
+  aux principaux, cinq au plus, sous les garde-fous de volume (`coachFillShare`).
+- **Relecture indépendante du code (CY)** : le remplissage du créneau laisse telles quelles les lignes réduites
+  pour une douleur ou une gêne et les lignes d'un groupe, et ne joue pas les quatre premières semaines d'une
+  reprise après dix semaines de coupure ou plus ; le plafond de répétitions d'un mouvement absent des semaines
+  d'avant repart du plafond de première semaine ; le retrait du tirage un jour de test voit aussi les tests de
+  l'échéance ; le test à une répétition est réservé au premier muscle-up ; `shoulder_history` ne suit qu'une
+  zone déclarée (pas une tendance) ; texte de `duration_step` complété (reprise après une course).
+
 ## 0.3.0
 
 Lot CP2, partie 1 (« les autres disciplines ») du pipeline « Calibrage des programmes ». `kalis_core` 0.4.3,

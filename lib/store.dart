@@ -345,6 +345,12 @@ class AppSettings {
   String title; // titre affiché sur la feuille de personnage ; '' = rang
   String accent; // couleur dominante (L5-C), voir kAccentIds
 
+  /// CI1g (`kalis_plan` 0.3.1, note `clearance_first`) : blocs pour
+  /// lesquels l'avis d'un médecin ou d'un kiné est confirmé (identifiant du
+  /// bloc → date civile de la confirmation). Écrit seulement s'il n'est pas
+  /// vide (export identique à 6.11.0 sinon).
+  Map<String, String> medicalClearance;
+
   AppSettings({
     this.defaultRest = 90,
     this.autoTimer = true,
@@ -366,7 +372,8 @@ class AppSettings {
     this.weeklyGoal = 0,
     this.title = '',
     this.accent = 'rouge',
-  });
+    Map<String, String>? medicalClearance,
+  }) : medicalClearance = medicalClearance ?? <String, String>{};
 
   Map<String, dynamic> toJson() => {
     'defaultRest': defaultRest,
@@ -389,6 +396,7 @@ class AppSettings {
     'weeklyGoal': weeklyGoal,
     'title': title,
     'accent': accent,
+    if (medicalClearance.isNotEmpty) 'medicalClearance': medicalClearance,
   };
   AppSettings.fromJson(Map<String, dynamic> j)
     : defaultRest = j['defaultRest'] as int? ?? 90,
@@ -412,7 +420,12 @@ class AppSettings {
       celebrations = j['celebrations'] as bool? ?? true,
       weeklyGoal = j['weeklyGoal'] as int? ?? 0,
       title = j['title'] as String? ?? '',
-      accent = normalizeAccent(j['accent']);
+      accent = normalizeAccent(j['accent']),
+      medicalClearance = <String, String>{
+        if (j['medicalClearance'] case final Map<String, dynamic> m)
+          for (final e in m.entries)
+            if (e.value is String) e.key: e.value as String,
+      };
 }
 
 /// Nature de la saisie d'un exercice, déduite des données.

@@ -17,6 +17,7 @@ import 'device.dart';
 
 import 'adapt/adapt_summary_screen.dart';
 import 'adapt/adapt_texts.dart';
+import 'adapt/clearance.dart';
 import 'adapt/flame_track.dart';
 import 'adapt/health_check.dart';
 import 'plan/coach_texts.dart' as ct;
@@ -156,6 +157,17 @@ class _SessionScreenState extends State<SessionScreen> {
     page = resumed > 0 ? koachPages + resumed : 0;
     pageCtl = PageController(initialPage: page);
     if (store.settings.wakelock) keepAwake(true);
+    // CI1g (`kalis_plan` 0.3.1) : avis médical demandé par le bloc, à
+    // confirmer avant la première séance (pas dans une séance commencée).
+    final log = store.logs[store.sessionKey(widget.week.n, widget.day.j)];
+    final started =
+        log != null &&
+        (log.done || log.ex.values.any((x) => x.sets.any((s) => s.done)));
+    if (adaptOn && !started) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) askClearance(context, widget.week.n, widget.day.j);
+      });
+    }
   }
 
   @override
@@ -1051,6 +1063,12 @@ class SessionExercisePageState extends State<SessionExercisePage> {
           : ct.coachText(r, catalog) ??
                 adaptReasonText(r, exerciseName: store.adaptExerciseName);
       if (t != null && !pain.contains(t)) pain.add(t);
+    }
+    // CI1g (`kalis_adapt` 0.3.1, point imposé par CY) : pompe sur barre
+    // basse servie pour une gêne du poignet : la consigne est dite.
+    if (wristBarPushUp(it.exerciseId, it.reasons) &&
+        !pain.contains(kWristBarPushUpCue)) {
+      pain.add(kWristBarPushUpCue);
     }
     final notes = [
       for (final n

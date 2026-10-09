@@ -12,6 +12,7 @@ import 'package:kalis_plan/kalis_plan.dart'
         deloadVolumeFactor,
         volumeBandsByLevel;
 
+import 'endurance.dart';
 import 'fatigue.dart';
 import 'filter.dart';
 import 'model.dart';
@@ -406,6 +407,35 @@ AdaptReview buildReview(
 
   // --------------------------------------------- exercices régulièrement sautés
   final skips = <String, int>{};
+  // Un mouvement retiré par la conduite pour une douleur qui dure (zone à
+  // l'arrêt) n'est pas « sauté » : le bloc suivant le traite par la note
+  // d'arrêt et la reprise graduée, pas par l'exclusion pour tout le bloc
+  // (CY, panel, `autres_06` : course retirée sous une douleur de cheville,
+  // comptée comme sautée, puis absente des six semaines du bloc suivant,
+  // échéance comprise — séances d'une minute de mobilité).
+  const legZones = <BodyZone>{
+    BodyZone.hip,
+    BodyZone.thigh,
+    BodyZone.knee,
+    BodyZone.lowerLeg,
+    BodyZone.ankleFoot,
+  };
+  final stopZones = <BodyZone>{for (final s in state.painStops(day)) s.zone};
+  bool stopRemoved(String id) {
+    if (stopZones.isEmpty) {
+      return false;
+    }
+    final info = ctx.book.find(id);
+    if (info == null) {
+      return false;
+    }
+    if (enduranceKindOf(info) == EnduranceKind.run &&
+        stopZones.any(legZones.contains)) {
+      return true;
+    }
+    return stopZones.any((z) => coachPainStopHits(info.exercise, z));
+  }
+
   for (final d in digests) {
     final ref = d.session.programRef;
     if (ref == null || ref.blockId != pass1.blockId || d.workSets == 0) {
@@ -419,6 +449,8 @@ AdaptReview buildReview(
     for (final item in prescription.items) {
       if (done.contains(item.exerciseId)) {
         skips[item.exerciseId] = 0;
+      } else if (stopRemoved(item.exerciseId)) {
+        continue;
       } else {
         skips[item.exerciseId] = (skips[item.exerciseId] ?? 0) + 1;
       }
@@ -689,7 +721,8 @@ AdaptReview buildReview(
           recentReadiness >= 0.6 &&
           adherence >= 0.8 &&
           sets < band.$2 &&
-          slot != null) {
+          slot != null &&
+          _upFits(ctx, view, nextWeek, slot.$2)) {
         final c = stalled * (weeksObserved >= 4 ? 1.0 : weeksObserved / 4);
         found.add(
           _volumeCandidate(
@@ -716,8 +749,10 @@ AdaptReview buildReview(
     }
   }
 
-  // Restructurations par kalis_plan : jamais sur un programme importé.
-  final structural = hasNextWeek && !view.imported;
+  // Restructurations par kalis_plan : jamais sur un programme importé, sauf
+  // quand l'application le demande (C11, `KalisAdapt.restructureImported`).
+  final structural =
+      hasNextWeek && (!view.imported || view.restructureImported);
   RestructureRequest request(
     RestructureScope scope,
     List<Reason> why, {
@@ -1424,6 +1459,90 @@ List<double> _weeklySets(
     }
   }
   return best;
+}
+
+/// Plafond hebdomadaire de séries dures par groupe musculaire et par niveau
+/// (R1-P1 ; mêmes valeurs que le plafond de `kalis_plan` et que le critère
+/// de sécurité du banc).
+const List<double> coachWeeklyCeilingSets = <double>[12, 20, 25, 30];
+
+/// Séries de travail écrites à la semaine [weekIndex] du bloc pour le
+/// groupe [g] (1 par série d'un muscle principal, la part du catalogue pour
+/// un secondaire).
+double _writtenGroupSets(
+  EngineContext ctx,
+  BlockView view,
+  int weekIndex,
+  MuscleGroup g,
+) {
+  final week = view.week(weekIndex);
+  if (week == null) {
+    return 0;
+  }
+  var total = 0.0;
+  for (final d in week.days) {
+    for (final it in d.items) {
+      if (it.kind != SetKind.work) {
+        continue;
+      }
+      final info = ctx.book.find(it.exerciseId);
+      if (info == null) {
+        continue;
+      }
+      final at = info.groups.indexOf(g);
+      if (at >= 0) {
+        total += it.sets * info.groupWeights[at];
+      }
+    }
+  }
+  return total;
+}
+
+/// Vrai si une série de plus de [item] chaque semaine, à partir de
+/// [weekIndex], laisse chaque groupe
+/// qu'il travaille sous le plafond du niveau (CY : une proposition « volume
+/// ajusté » sur le soulevé de terre roumain portait les fessiers d'une
+/// débutante à 13 séries, au-dessus du plafond de 12 ; saisons croisées des
+/// autres disciplines, `autres_09`).
+bool _upFits(
+  EngineContext ctx,
+  BlockView view,
+  int weekIndex,
+  ExercisePrescription item,
+) {
+  final info = ctx.book.find(item.exerciseId);
+  if (info == null) {
+    return false;
+  }
+  final level = ctx.level < 0 ? 0 : (ctx.level > 3 ? 3 : ctx.level);
+  final ceiling = coachWeeklyCeilingSets[level];
+  // Toutes les semaines que la proposition modifie (celles qui portent la
+  // ligne, hors décharge et test — voir `_volumeCandidate`), pas seulement
+  // la première (relecture indépendante du code de CY).
+  for (final week in view.block.pass2.weeks) {
+    if (week.weekIndex < weekIndex ||
+        week.kind == WeekKind.deload ||
+        week.kind == WeekKind.test ||
+        !week.days.any(
+          (d) => d.items.any(
+            (it) =>
+                it.slotId == item.slotId && it.exerciseId == item.exerciseId,
+          ),
+        )) {
+      continue;
+    }
+    for (var i = 0; i < info.groups.length; i++) {
+      final g = info.groups[i];
+      if (!g.major) {
+        continue;
+      }
+      final now = _writtenGroupSets(ctx, view, week.weekIndex, g);
+      if (now + info.groupWeights[i] > ceiling + 1e-9) {
+        return false;
+      }
+    }
+  }
+  return true;
 }
 
 _Candidate _volumeCandidate(
