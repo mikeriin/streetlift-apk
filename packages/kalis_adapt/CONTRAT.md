@@ -1433,7 +1433,10 @@ ou de dos qui double en série de jours durs (choix raisonné d'après Feito et 
    la course (impact) est retirée de la séance tant que l'arrêt tient, raison `adapt.pain_persistent` ; le cardio sans
    impact reste (relecture documentée de CY, `autres_06` : cheville à 4/10 neuf séances et course continuée).
    Mode coach seulement. Au retour (reprise graduée de la zone), la course reprend à
-   `enduranceResumeLong` (50 %) de l'écrit au plus, cause `resume_14`.
+   `enduranceResumeLong` (50 %) de l'écrit au plus, cause `resume_14`. Un mouvement retiré par un arrêt (course
+   sous une douleur du bas du corps, mouvement qui provoque la zone) n'est pas compté comme « sauté » dans le
+   résumé (`avoidedExerciseIds`) : le bloc suivant le traite par la note d'arrêt et la reprise graduée (panel de
+   CY, `autres_06` : course absente des six semaines du bloc suivant, échéance comprise).
 3. **Couloir de charge** : part écrite du 1RM ≥ `coachCorridorHeavyShare` (85 %) → le couloir ne monte plus
    au-dessus de l'écrit (il peut descendre).
 4. **Schéma changé au même emplacement** (série ouverte, répétitions recalées) : charge totale ≤ dernière charge

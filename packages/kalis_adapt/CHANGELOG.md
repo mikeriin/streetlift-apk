@@ -19,7 +19,8 @@ Lot CY, partie 0 (sécurité) du pipeline « Calibrage des programmes ». Contra
   reste sous le plafond hebdomadaire du niveau (12, 20, 25, 30 séries).
 - **Programme importé** (C11) : `KalisAdapt(restructureImported: true)` permet les restructurations.
 - **Douleur qui dure au bas du corps** (mode coach) : la course est retirée tant que l'arrêt tient (cardio sans
-  impact gardé), puis revient par paliers (part de reprise bornée par `enduranceResumeLong`).
+  impact gardé), puis revient par paliers (part de reprise bornée par `enduranceResumeLong`) ; un mouvement retiré
+  par un arrêt n'est plus compté comme sauté dans le résumé (il disparaissait du bloc suivant).
 - Relecture indépendante du code : la règle « 2 pour 2 » ne joue ni en bloc verrouillé, ni en semaine légère ou
   proche d'une échéance, ni pendant un retour ou une douleur ; la charge repère à schéma changé prend la charge
   lestée ; le plafond des propositions de volume est vérifié sur toutes les semaines modifiées.
