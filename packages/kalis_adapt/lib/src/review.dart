@@ -420,9 +420,7 @@ AdaptReview buildReview(
     BodyZone.lowerLeg,
     BodyZone.ankleFoot,
   };
-  final stopZones = <BodyZone>{
-    for (final s in state.painStops(day)) s.zone,
-  };
+  final stopZones = <BodyZone>{for (final s in state.painStops(day)) s.zone};
   bool stopRemoved(String id) {
     if (stopZones.isEmpty) {
       return false;
