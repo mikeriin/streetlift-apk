@@ -6,10 +6,13 @@ Ce module ne propose rien : il borne. Il tient l'état de la douleur par zone
 (seuil, zone active, arrêt, reprise graduée), lit le bilan de santé du jour
 (paliers 0, 1, 2) et donne à la prescription de séance les limites à
 respecter. Les valeurs viennent de `params['securite']`, égales à celles de
-`AdaptParams.standard` de 0.3.1.
+`AdaptParams.standard` de 0.3.1 (fichier:ligne du code Dart cité à chaque
+règle). Règles du poignet (A4), zones fragiles du profil (A7.2), bas du
+corps (A2.3, A10.2) et renvoi vers un professionnel (A2.2) comprises.
 """
 
 ZONES_BAS = ('hip', 'thigh', 'knee', 'lower_leg', 'ankle_foot')
+POIGNET = 'wrist_hand'
 SEMAINES_VERROUILLEES = ('intro', 'deload', 'taper', 'test', 'competition', 'transition')
 SEMAINES_DE_CHARGE = ('accumulation', 'intensification', 'realization', 'intro', None, 'maintenance')
 
@@ -22,6 +25,7 @@ class Douleur(object):
         self.arret_depuis = None
         self.arret_leve = None   # jour de la dernière levée
         self.seances_de_suite = 0
+        self.renvoi_jour = None  # jour du dernier renvoi vers un professionnel
 
     def noter(self, jour, intensite):
         if self.signalements and self.signalements[-1][0] == jour:
@@ -46,12 +50,42 @@ class Gardefous(object):
         self.s = params['securite']
         self.niveau = niveau
         self.zones = {}
-        self.fragiles = set(zones_fragiles or [])
+        self.fragiles = self._zones_fragiles(zones_fragiles)
         self.jour = 0
         self.dernier_jour_seance = None
         self.avant_dernier_jour_seance = None
         self.semaines = {}       # indice de semaine -> semaine de charge (bool)
         self.semaine = 0
+
+    def _zones_fragiles(self, zones):
+        """Zones fragiles du profil (règle A7.2 de 0.3.1, A/replay.dart:42-51) :
+        antécédent de moins de 12 mois (`since` parmi `fragile_anciennetes`)
+        ou gêne déclarée ≥ `fragile_gene_min`. Une entrée réduite au code de
+        la zone (chaîne) est tenue pour fragile : l'appelant l'a déjà jugée
+        telle (plus prudent). Tuple trié : ordre d'itération déterministe."""
+        s = self.s
+        out = set()
+        for z in zones or []:
+            if isinstance(z, dict):
+                code = z.get('zone')
+                if not code:
+                    continue
+                gene = z.get('discomfort')
+                if z.get('since') in s['fragile_anciennetes'] or \
+                        (gene is not None and gene >= s['fragile_gene_min']):
+                    out.add(code)
+            elif z:
+                out.add(z)
+        return tuple(sorted(out))
+
+    def fragile(self, niveaux_zone):
+        """Première zone fragile du profil (ordre trié) que l'exercice
+        sollicite (niveau ≥ `fragile_niveau_min`, A/replay.dart:120-125), ou
+        None."""
+        for z in self.fragiles:
+            if niveaux_zone.get(z, 0.0) >= self.s['fragile_niveau_min']:
+                return z
+        return None
 
     def noter_semaine(self, semaine, genre, intention=None):
         """Genre de la semaine en cours (contexte de la séance). Une semaine
@@ -217,6 +251,100 @@ class Gardefous(object):
         d = self.zones.get(z)
         return d is not None and d.pire_entre(self.jour - 6, self.jour) > self.s['reprise_douleur_max']
 
+    # ------------------------------------------------------------------
+    # Poignet (règles A4 de 0.3.1)
+    # ------------------------------------------------------------------
+    def appui_neutre(self, fiche):
+        """Appui qui garde le poignet neutre : parallettes ou poignées
+        (`coachWristNeutralSupport` sans matériel du jour,
+        A/session.dart:2438-2450). La pompe sur barre basse n'en fait pas
+        partie ici : Koach ne connaît pas le matériel du jour (plus prudent)."""
+        materiel = (fiche or {}).get('materiel') or []
+        return any(m in materiel for m in self.s['poignet_appui_neutre_materiel'])
+
+    def poignet_gene(self):
+        """Pire gêne du poignet ≥ `arret_persistance_min` signalée dans les
+        `poignet_gene_j` derniers jours (`wristGeneRecent`,
+        A/session.dart:2456-2460), sinon 0."""
+        d = self.zones.get(POIGNET)
+        if d is None:
+            return 0
+        v = d.pire_entre(self.jour - self.s['poignet_gene_j'] + 1, self.jour)
+        return v if v >= self.s['arret_persistance_min'] else 0
+
+    def poignet_chaud(self):
+        """Poignet à l'arrêt (arrêt en cours, pas gardé) et signalé
+        ≥ `arret_persistance_min` dans les `poignet_chaud_j` derniers jours
+        (`wristStopHot`, A/session.dart:2876-2891)."""
+        d = self.zones.get(POIGNET)
+        if d is None or d.arret_depuis is None:
+            return False
+        return d.pire_entre(self.jour - self.s['poignet_chaud_j'] + 1, self.jour) >= self.s['arret_persistance_min']
+
+    def poignet_sensible(self):
+        """Appui du poignet sensible (`wristSensitive`,
+        A/session.dart:1688-1716) : zone fragile du profil, arrêt (en cours
+        ou gardé), reprise graduée (fenêtre de surveillance entière, plus
+        prudent que la part < 1 de 0.3.1), ou gêne ≥ `poignet_sensible_min`
+        dans les `poignet_sensible_j` derniers jours."""
+        if POIGNET in self.fragiles:
+            return True
+        d = self.zones.get(POIGNET)
+        if d is None:
+            return False
+        if self.arret(POIGNET):
+            return True
+        if d.arret_leve is not None and 0 <= self.jour - d.arret_leve <= self.s['reprise_surveillance_j']:
+            return True
+        return d.pire_entre(self.jour - self.s['poignet_sensible_j'] + 1, self.jour) >= self.s['poignet_sensible_min']
+
+    # ------------------------------------------------------------------
+    # Bas du corps (règles A2.3 et A10.2 de 0.3.1)
+    # ------------------------------------------------------------------
+    def douleur_jambe(self):
+        """Plus forte dernière intensité des zones du bas du corps signalées
+        depuis ≤ `douleur_jours_actifs` jours (A/session.dart:2579-2595 ; la
+        gêne sous le seuil compte)."""
+        v = 0
+        for z in ZONES_BAS:
+            d = self.zones.get(z)
+            if d is None or not d.signalements:
+                continue
+            j, i = d.signalements[-1]
+            if self.jour - j <= self.s['douleur_jours_actifs'] and i > v:
+                v = i
+        return v
+
+    def arrets_jambe(self):
+        """Zones du bas du corps à l'arrêt (arrêt en cours, pas gardé :
+        `painStops`, A/session.dart:2527-2546), dans l'ordre de ZONES_BAS."""
+        return [z for z in ZONES_BAS if z in self.zones and self.zones[z].arret_depuis is not None]
+
+    def reprise_jambe(self):
+        """Vrai si une zone du bas du corps est en reprise graduée
+        (A/session.dart:2547-2550)."""
+        return any(self.reprise(z) is not None for z in ZONES_BAS if z in self.zones)
+
+    def renvois(self):
+        """Zones (ordre trié) dont l'arrêt appelle aujourd'hui le renvoi vers
+        un professionnel : première séance de l'arrêt, puis première séance
+        de chaque semaine d'arrêt (`_stopNoticeDue`, A/session.dart:2397-2420).
+        Le jour du dernier renvoi est retenu (appelé à l'ouverture de la
+        séance, événement du journal) : un arrêt déclenché en fin de séance
+        reçoit son renvoi à la séance suivante (plus prudent que 0.3.1)."""
+        out = []
+        p = self.s['renvoi_periode_j']
+        for z in sorted(self.zones):
+            d = self.zones[z]
+            debut = d.arret_depuis
+            if debut is None:
+                continue
+            r = d.renvoi_jour
+            if r is None or r < debut or (self.jour - debut) // p > (r - debut) // p:
+                d.renvoi_jour = self.jour
+                out.append(z)
+        return out
+
     def palier_bilan(self, bilan):
         """Palier du bilan de santé du jour (0, 1, 2) et décalage (règle
         A5.1 de 0.3.1)."""
@@ -247,18 +375,26 @@ class Gardefous(object):
         h = self.s['hausse_par_niveau'][self.niveau]
         return h * self.s['hausse_fragile_facteur'] if fragile else h
 
-    def conduite(self, niveaux_zone, stop_hits, est_test=False, depuis_jour=None):
+    def conduite(self, niveaux_zone, stop_hits, est_test=False, depuis_jour=None, fiche=None,
+                 echauffement=False):
         """Conduite d'un exercice sous la douleur. [niveaux_zone] : zone ->
         sollicitation (0, 0,5, 1) ; [stop_hits] : zones que le mouvement
         provoque ; [depuis_jour] : jour de la dernière séance de l'exercice
         (une zone signalée au-dessus du seuil depuis reste bloquante, même
-        levée depuis : règle A1.1 de 0.3.1). Renvoie un dictionnaire : retire, series (facteur), rir
-        (bonus), sans_hausse, rir_min, part_max (plafond en part du 1RM),
-        hausse_quantite (plafond de hausse des répétitions ou secondes),
+        levée depuis : règle A1.1 de 0.3.1) ; [fiche] : fiche de l'exercice
+        (type, contraintes, matériel ; règles du poignet) ; [echauffement] :
+        ligne d'échauffement. Renvoie un dictionnaire : retire, series
+        (facteur), rir (bonus), sans_hausse, rir_min, part_max (plafond en
+        part du 1RM), hausse_quantite (plafond de hausse des répétitions ou
+        secondes), dose_plafonnee (jamais au-delà de la dose écrite, aucune
+        hausse dans la séance), fragile (zone fragile du profil sollicitée),
+        appui_neutre (gêne du poignet qui demanderait un appui neutre),
         raison."""
         s = self.s
         out = {'retire': False, 'series': 1.0, 'rir': 0.0, 'sans_hausse': False, 'rir_min': None,
-               'part_max': None, 'hausse_quantite': None, 'raison': None, 'zone': None}
+               'part_max': None, 'hausse_quantite': None, 'raison': None, 'zone': None,
+               'dose_plafonnee': False, 'fragile': self.fragile(niveaux_zone), 'appui_neutre': None,
+               'poignet_sensible': False}
 
         def note(zone, raison):
             if out['raison'] is None:
@@ -289,6 +425,10 @@ class Gardefous(object):
                     out['rir_min'] = max(out['rir_min'] or 0.0, s['reprise_rir'])
                     out['sans_hausse'] = True
                     out['part_max'] = min(out['part_max'] or 9.9, s['reprise_charge_base'])
+                    # Premier palier de la reprise : dose écrite au plus,
+                    # aucune hausse dans la séance (`inReturn` → `doseCapped`,
+                    # A/session.dart:1309-1315 ; A/coach_advice.dart:109-150).
+                    out['dose_plafonnee'] = True
                     note(z, 'douleur_arret')
                     continue
             part = self.reprise(z)
@@ -303,6 +443,7 @@ class Gardefous(object):
                 out['part_max'] = min(out['part_max'] or 9.9,
                                       s['reprise_charge_base'] + s['reprise_charge_pente'] * (part - 0.5))
                 out['hausse_quantite'] = s['reprise_hausse_quantite']
+                out['dose_plafonnee'] = True   # A/session.dart:1309-1315
                 note(z, 'douleur_reprise')
             if act > 0:
                 if (niveau >= 1 and act >= s['douleur_forte_contrainte']) or \
@@ -330,4 +471,53 @@ class Gardefous(object):
                 note(z, 'douleur')
             if self.recente(z) and (niveau >= 0.5 or z in stop_hits) and out['hausse_quantite'] is None:
                 out['hausse_quantite'] = s['reprise_hausse_quantite']
+        if not out['retire']:
+            self._poignet(out, niveaux_zone, stop_hits, fiche, est_test, echauffement)
         return out
+
+    def _poignet(self, out, niveaux_zone, stop_hits, fiche, est_test, echauffement):
+        """Règles du poignet de 0.3.1 (inventaire A4), après la conduite
+        générale sous la douleur."""
+        s = self.s
+        fiche = fiche or {}
+        n = niveaux_zone.get(POIGNET, 0.0)
+        neutre = self.appui_neutre(fiche)
+        if self.arret(POIGNET) and n >= 0.5:
+            # A4.2, poignet « chaud » (arrêt en cours et gêne ≥ 3/10 dans la
+            # semaine) : tout ce qui charge le poignet est retiré,
+            # échauffement compris, sauf un appui parallettes ou poignées à
+            # contrainte moins que forte (A/session.dart:816-849).
+            if self.poignet_chaud() and (not neutre or n >= 1):
+                out['retire'] = True
+                out['raison'] = 'poignet_chaud'   # la cause du retrait prime sur la conduite notée avant
+                out['zone'] = POIGNET
+                return
+            # A4.2 : toute charge externe sur un appui qui charge le poignet
+            # est retirée dès l'arrêt (arrêt gardé compris), prise neutre
+            # comprise ; l'échauffement reste (A/session.dart:838-849).
+            if fiche.get('type') == 'charge' and not echauffement:
+                out['retire'] = True
+                out['raison'] = 'poignet_charge'   # la cause du retrait prime sur la conduite notée avant
+                out['zone'] = POIGNET
+                return
+        if POIGNET in stop_hits:
+            # A4.1, première gêne du poignet (≥ 3/10 dans les deux semaines,
+            # avant tout arrêt) sur une poussée au poids du corps à contrainte
+            # moyenne qui n'est pas déjà sur appui neutre
+            # (A/session.dart:442-487). 0.3.1 la remplace par un appui neutre
+            # faisable aujourd'hui ; Koach ne connaît ni le matériel du jour
+            # ni de remplaçant : la ligne est gardée à la dose écrite (le
+            # repli de 0.3.1 sans appui neutre) et, plus prudent, sans hausse ;
+            # l'appui neutre est conseillé (raison).
+            gene = self.poignet_gene()
+            if gene and not self.arret(POIGNET) and not est_test and not echauffement \
+                    and fiche.get('type') == 'reps' \
+                    and (fiche.get('contraintes') or {}).get('poignet') == 'moyenne' and not neutre:
+                out['appui_neutre'] = gene
+                out['sans_hausse'] = True
+                out['dose_plafonnee'] = True
+            # A4.3, poignet sensible : la dose écrite au plus sur toute ligne
+            # qui provoque le poignet (A/session.dart:1330-1335, 1688-1716).
+            if self.poignet_sensible():
+                out['dose_plafonnee'] = True
+                out['poignet_sensible'] = True

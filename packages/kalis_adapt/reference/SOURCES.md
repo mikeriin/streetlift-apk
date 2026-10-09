@@ -1,6 +1,6 @@
 # Sources des paramètres de Koach 1.0
 
-Rédigé le 09/10/2026. Fichier décrit : `params/koach_params_v1.json`, SHA-256 `111bdf818349fe5bc6b9cc2d64f147ffa230da3290c08e42400bfefa74b3f734`, 263 clés (racine comprise).
+Rédigé le 09/10/2026. Fichier décrit : `params/koach_params_v1.json`, SHA-256 `b6ebc0da874d04d8febef096c808b651915dd5f6b55171cee460167f71592e18`, 295 clés (racine comprise ; 32 clés de sécurité ajoutées le 09/10/2026, règles de 0.3.1 reprises : voir `km1-outils/notes/SECURITE_KOACH_COUVERTURE.md`).
 Compagnon de `CONTRAT_1_0.md` (§ 7 : rôle de chaque clé).
 
 ## Comment lire ce document
@@ -311,6 +311,38 @@ Les références de Beck & Teboulle 2009 (FISTA), Held, Wolfe & Crowder 1974 et 
 | `reprise_dose_depart` | 0.6 | banc | Règle propre à Koach, plus prudente que 0.3.1 : budget hebdomadaire de séries par zone en reprise (départ 0,6 × habitude). Banc, scénarios douleur_coude/epaule (162 saisons) : poussées 69 → 0 (SAUVEGARDE 19:50). |
 | `reprise_dose_hausse` | 0.25 | banc | Même règle : +25 % ou +1 série par semaine de charge. Même mesure (poussées 69 → 0). |
 | `tentative_recente_part` | 0.85 | 0.3.1 | `constante 0,85 (A/coach.dart:2329)` (inventaire A8.2). |
+| `fragile_anciennetes` | ["under_6_weeks", "weeks_6_to_12", "months_3_to_12"] | 0.3.1 | `ConstraintSince.under6Weeks`, `weeks6To12`, `months3To12` (A/replay.dart:42-51) (inventaire A7.2). |
+| `fragile_gene_min` | 2 | 0.3.1 | `l.discomfort >= 2` (A/replay.dart:48) (inventaire A7.2). |
+| `fragile_niveau_min` | 0.5 | 0.3.1 | `info.zoneLevel(zone) >= 0.5` (A/replay.dart:120-125) (inventaire A7.2). |
+| `surcharge_fragile_max` | 1.0 | 0.3.1 | `coachOverloadFragileMax` (A/params.dart:139 ; A/coach.dart:1039-1042) (inventaire A7.2 règle 8). |
+| `poignet_gene_j` | 14 | 0.3.1 | `reportsBetween(day - 13, day)` de `wristGeneRecent` (A/session.dart:2456-2460) (inventaire A4.1). |
+| `poignet_chaud_j` | 7 | 0.3.1 | `reportsBetween(day - 6, day)` de `wristStopHot` (A/session.dart:2876-2891) (inventaire A4.2). |
+| `poignet_sensible_min` | 1 | 0.3.1 | `r >= 1` de `wristSensitive` (A/session.dart:1709-1713) (inventaire A4.3). |
+| `poignet_sensible_j` | 14 | 0.3.1 | `reportsBetween(day - 13, day)` de `wristSensitive` (A/session.dart:1709) (inventaire A4.3). |
+| `poignet_appui_neutre_materiel` | ["parallettes", "poignées"] | 0.3.1 | `_wristNeutralEquipment` (A/session.dart:2450) (inventaire A4.1, A4.2). |
+| `technique_niveau_acces` | {top_set_backoff: 1, …, wave: 2} | 0.3.1 | `techniqueAccessLevel` (A/coach.dart:123-142) (inventaire A9.2). |
+| `techniques_intensives` | ["rest_pause", "myo_reps", "drop_set", "accentuated_eccentric", "amrap", "cluster", "wave", "contrast"] | 0.3.1 | `techniqueIntensifies` (A/coach.dart:147-155) (inventaire A9.2). |
+| `excentrique_echeance_j` | 10 | 0.3.1 | `coachEccentricEventDays` (A/params.dart:184) (inventaire A9.2). |
+| `tenue_hausse_marge_s` | 1 | 0.3.1 | `coachHoldRiseSlackSeconds` (A/params.dart:168 ; A/coach.dart:1853, 1901) (inventaire A9.1). |
+| `coupure_fenetre_j` | 7 | 0.3.1 | `digests[i].day < day - 7` (A/session.dart:1103) (inventaire A6.1). |
+| `renvoi_periode_j` | 7 | 0.3.1 | `(day - start) ~/ 7` de `_stopNoticeDue` (A/session.dart:2419) (inventaire A2.2). |
+| `surmenage_baisse` | 0.05 | 0.3.1 | `coachOverreachDrop` (A/params.dart:143) (inventaire A6.2). |
+| `surmenage_jours` | 7 | 0.3.1 | `coachOverreachDays` (A/params.dart:144) (inventaire A6.2). |
+| `surmenage_fenetre_j` | 21 | 0.3.1 | `coachOverreachSpanDays` (A/params.dart:145) (inventaire A6.2). |
+| `surmenage_coupe` | 0.4 | 0.3.1 | `coachOverreachCut` (A/params.dart:146) (inventaire A6.2). |
+| `endurance_materiel_course` | ["piste ou terrain extérieur", "tapis de course", "côte ou escaliers"] | 0.3.1 | `runningEquipment` (A/endurance.dart:34-38) (inventaire A10). |
+| `endurance_qualite_ids` | ["fractionne", …, "accelerations"] | 0.3.1 | `qualityRunIds` (A/endurance.dart:42-53) (inventaire A10.2). |
+| `endurance_qualite_rir` | 3.0 | 0.3.1 | `enduranceQualityRir` (A/params.dart:220) (inventaire A10.2). |
+| `endurance_facile_rir` | 5.0 | 0.3.1 | `enduranceEasyRir` (A/params.dart:221) (inventaire A10.2, A10.3). |
+| `endurance_vitesse` | 2.6 | 0.3.1 | `enduranceRunSpeed` (A/params.dart:222) (inventaire A10.3). |
+| `endurance_douleur_jambe` | 3 | 0.3.1 | `enduranceLegPain` (A/params.dart:223) (inventaire A10.2). |
+| `endurance_dure_flammes` | 8 | 0.3.1 | `enduranceHardFlames` (A/params.dart:219) (inventaire A10.2, A10.4, A10.5). |
+| `endurance_dure_marge` | 2 | 0.3.1 | `enduranceHardMargin` (A/params.dart:217) (inventaire A10.2). |
+| `endurance_dure_jours` | 3 | 0.3.1 | `enduranceHardDays` (A/params.dart:218) (inventaire A10.2). |
+| `endurance_course_facile` | {tapis: ca-course-tapis-endurance, defaut: ca-footing-endurance-fondamentale} | 0.3.1 | `easyRunFor` (A/endurance.dart:383-390) (inventaire A10.2). |
+| `endurance_facile_min_s` | 60 | 0.3.1 | `work >= 60` (A/session.dart:2662) (inventaire A10.2). |
+| `endurance_bornee_reduction` | 0.9 | 0.3.1 | `scaled(longestDraft.item, 1, 0.9)` (A/session.dart:2800) (inventaire A10.3). |
+| `wod_fenetre_j` | 7 | 0.3.1 | `while (d >= day - 7)` de `conditioningStreak` (A/endurance.dart:262) (inventaire A10.4). |
 
 ### Section `adherence`
 
@@ -549,16 +581,16 @@ Toutes ces constantes ont été écrites lors de la génération par règles, pu
 
 ## 3. Synthèse
 
-**Clés du fichier de paramètres** (section 1, 263 clés) :
+**Clés du fichier de paramètres** (section 1, 295 clés) :
 
 | Catégorie | Clés |
 | --- | --- |
 | cahier | 23 |
-| 0.3.1 | 78 |
+| 0.3.1 | 110 |
 | littérature | 1 |
 | banc | 25 |
 | choix raisonné | 136 |
-| **Total** | **263** |
+| **Total** | **295** |
 
 La catégorie « 0.3.1 » regroupe les paramètres de `kalis_adapt` 0.3.1 et de `kalis_plan` (inventaire A), et les critères du banc `kalis_bench` (inventaire B). Ces derniers sont recopiés dans la section `securite`, mais Koach ne les lit pas.
 
