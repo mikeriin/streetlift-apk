@@ -67,6 +67,8 @@ NIVEAU_DEFAUT = 2
 CATEGORIES_TEST = ('test1rm', 'enduranceTest')
 UNITES_EXTERNES = ('kg de lest', 'kg barre', 'kg')
 MESURE_DU_TYPE = {'charge': 'one_rm_kg', 'reps': 'max_reps', 'tenue': 'max_hold_seconds'}
+COURBE_LAMBDA = 0.3              # forme de population de la courbe (params a_priori)
+SD_DECLARE_ACCESSOIRE = 0.12      # écart-type (ln) d'une valeur déclarée indirecte
 _CLE = re.compile(r'^S(\d+)-J(\d+)$')
 _ECRIT = re.compile(r'^\s*(\d+)\s*[×xX]\s*(\d+)(?:\s*[-–]\s*(\d+))?\s*(s)?\s*(?:/\s*\w+)?\s*$')
 
@@ -167,6 +169,10 @@ class Programme(object):
         pil = prog.get('pilotage') or {}
         self.principaux = {m['ref']: m.get('unit') for m in pil.get('mainLifts') or [] if m.get('ref')}
         self.maxima = {m['ref'] for m in pil.get('repMax') or [] if m.get('ref')}
+        # Accessoires : référence = charge de travail pour `refReps`
+        # répétitions (double progression à réserve cible).
+        self.accessoires = {m['ref']: m.get('refReps') for m in pil.get('accessories') or []
+                            if m.get('ref') and m.get('refReps')}
 
     def id_base(self, ligne_id):
         e = self.lignes.get(ligne_id)
@@ -235,11 +241,11 @@ def profil_de(export, programme, fiches, rapport):
     fragiles = sorted({lim['zone'] for lim in ap.get('limitations') or []
                        if isinstance(lim, dict) and isinstance(lim.get('zone'), str)})
     return {'niveau': niveau, 'sexe': ap.get('sex'), 'poids_kg': poids,
-            'declares': declares_initiaux(export, programme, fiches, rapport),
+            'declares': declares_initiaux(export, programme, fiches, rapport, poids),
             'zones_fragiles': fragiles}
 
 
-def declares_initiaux(export, programme, fiches, rapport):
+def declares_initiaux(export, programme, fiches, rapport, poids=None):
     """Valeurs de référence INITIALES -> {id: (mesure, valeur)}."""
     initiales = {}
     for h in (export.get('koach') or {}).get('history') or []:
@@ -263,6 +269,31 @@ def declares_initiaux(export, programme, fiches, rapport):
             mesure, cats = 'one_rm_kg', ('strength', 'test1rm')
         elif ref in programme.maxima:
             mesure, cats = 'max_reps', ('endurance', 'enduranceTest')
+        elif ref in programme.accessoires:
+            # Charge de travail initiale d'un accessoire : convertie en 1RM
+            # externe par la courbe de population, à la réserve cible de la
+            # ligne ; valeur indirecte, donc incertitude plus large.
+            for lid in sorted(programme.lignes):
+                if programme.categorie(lid) != 'accessory' or programme.ref(lid) != ref:
+                    continue
+                i = programme.id_base(lid)
+                fiche = fiches.get(i) if i is not None else None
+                if fiche is None or MESURE_DU_TYPE.get(fiche.get('type')) != 'one_rm_kg':
+                    rapport['declare_accessoire_non_charge'] += 1
+                    continue
+                if i in out:
+                    continue
+                rir = (programme.annotations.get(lid) or {}).get('rirTarget')
+                rir = 2.0 if rir is None else float(rir)
+                reps = float(programme.accessoires[ref]) + rir
+                frac = float(fiche.get('fraction') or 0.0) * float(poids or 0.0)
+                g = (1.0 - COURBE_LAMBDA) * 0.0265 * (reps - 1.0) + COURBE_LAMBDA * 0.0892 * math.log(reps)
+                un_rm = (v + frac) * math.exp(g) - frac
+                if un_rm <= 0:
+                    continue
+                out[i] = ('one_rm_kg', un_rm, SD_DECLARE_ACCESSOIRE)
+                rapport['declares_accessoires'] += 1
+            continue
         else:
             rapport['declare_reference_non_maximale'] += 1
             continue

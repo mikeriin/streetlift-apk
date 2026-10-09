@@ -8,11 +8,12 @@
 
 L'état est entièrement recalculable depuis le journal (`rejouer`).
 """
+import copy
 import math
 
 from .modele import Modele, NQ, TH, RHO, EPS, KN, KM, KL, KG, BA, BP, LAM, KU, FI, HH
 from .securite import Gardefous
-from .seance import Seances
+from .seance import Seances, Grille
 
 
 class Koach(object):
@@ -74,6 +75,11 @@ class Koach(object):
                 x.decision(self, e)
         elif typ == 'charge_manuelle':
             m.observer_charge_manuelle(e['exerciseId'], e['loadKg'], e['reps'], e['rir'])
+        elif typ == 'plan':
+            # Appel de plan() rejoué : il a des effets sur la mémoire des
+            # séances (rampes, paliers, raisons) ; le rejouer rend l'état
+            # exactement recalculable depuis le journal.
+            self._plan(e['contraintes'])
         return None
 
     # ------------------------------------------------------------------
@@ -110,11 +116,48 @@ class Koach(object):
     def plan(self, c):
         """[c] : contraintes. `horizon` = 'seance' (items écrits du jour ->
         items servis), 'serie' (item, index -> cible) ou 'semaine'
-        (replanification, par l'extension de planification)."""
+        (replanification, par l'extension de planification). L'appel est
+        versé au journal (événement `plan`) : `rejouer` le refait."""
+        c = self._canonique(c)
+        self.journal.append({'type': 'plan', 'contraintes': c})
+        return self._plan(c)
+
+    @staticmethod
+    def _canonique(c):
+        """Forme journalisable (JSON) des contraintes : pour une séance,
+        seules les grilles et les zones des exercices des items sont
+        gardées (ce sont les seules lues), grilles en dictionnaires
+        {pas, minimum, halteres}, zones en [niveaux, zones provoquées triées]."""
+        c = dict(c)
+        if c.get('horizon') == 'seance':
+            ids = []
+            for it in c.get('items') or []:
+                if it['exerciseId'] not in ids:
+                    ids.append(it['exerciseId'])
+            grilles = {}
+            zones = {}
+            for ex in ids:
+                g = (c.get('grilles') or {}).get(ex)
+                if g is not None:
+                    if isinstance(g, Grille):
+                        g = {'pas': g.pas, 'minimum': g.minimum, 'halteres': bool(g.halteres)}
+                    grilles[ex] = dict(g)
+                z = (c.get('zones') or {}).get(ex)
+                if z is not None:
+                    zones[ex] = [dict(z[0]), sorted(z[1])]
+            slots = [it.get('slotId') for it in c.get('items') or []]
+            roles = {k: v for k, v in (c.get('roles') or {}).items() if k in slots}
+            c['grilles'] = grilles
+            c['zones'] = zones
+            c['roles'] = roles
+        return copy.deepcopy(c)
+
+    def _plan(self, c):
         h = c.get('horizon')
         if h == 'seance':
-            items = self.seances.prescrire(c['items'], c.get('grilles') or {}, c.get('zones') or {},
-                                           c.get('roles') or {})
+            grilles = {k: Grille(g['pas'], g['minimum'], g['halteres']) for k, g in (c.get('grilles') or {}).items()}
+            zones = {k: (dict(z[0]), set(z[1])) for k, z in (c.get('zones') or {}).items()}
+            items = self.seances.prescrire(c['items'], grilles, zones, c.get('roles') or {})
             self.raisons = list(self.seances.raisons)
             return {'items': items, 'raisons': self.raisons}
         if h == 'serie':

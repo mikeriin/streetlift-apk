@@ -94,3 +94,12 @@ Ajouts : queue lourde des notes (8 %, +2 rép.), noteur entier détecté (≥ 20
 - Critères (sous-agent, `banc/criteres_moteur.py`) : série 0,65 ms, replanification 0,18 s ; mauvais jour isolé 1,17 % juste après (> 1 %), 0,83 % une séance plus tard ; déterminisme OK. Fixtures : 8 fichiers, 2,9 Mo, `fixtures/generer.py`.
 - CONTRAT_1_0.md (1 739 lignes) et SOURCES.md écrits par sous-agent ; 58 écarts relevés à traiter : eigh non portable, rejeu non exact sans les appels plan, zones_fragiles sans effet, règles 0.3.1 non reprises (poignet A4, endurance A10…), 32 clés non lues, Thompson non branché.
 - kalis_bench 0.3.1 (version, CHANGELOG, test km_export_test.dart) : à compiler en CI.
+
+## 09/10 ~22:50 UTC (horloge réelle) — corrections moteur après le premier rejeu réel
+- Séries SANS note : versées seulement si la prévision les contredit, et alors la forme/échelle de courbe sont « considérées » (filtre de Schmidt, `_observer(fige=…)`), non déplacées. BP figé (0,25 ± 0). Accessoires déclarés au convertisseur depuis leur charge de travail initiale (courbe de population, réserve cible de la ligne, sd 0,12 ; tuple `declares` à 3 éléments).
+- Rejeu réel : erreur moyenne 55,8 % → 5,7 % (médiane 3,5 %, biais +0,9 %), couverture 89,5 % (n = 38 séries, 11 séances) ; tests réels n = 4 : 10,3 %. Principaux hors test d'endurance et hors série d'échauffement : ~2,4 % (7 séries). Critère 3 % NON atteint au sens strict (bruit d'une série notée ≈ 3 %).
+- Banc SET9 ×4 graines inchangé : rang 6 A 2,7 / B 4,5 / C 3,3 % ; couverture 87 % → `mesure.defaut_modele_sd` (à caler en campagne). `jour.mauvais_jour_proba` 0,10 (vérité C : 1 jour sur 10).
+- Jumeau : Cholesky portable (`numerique.cholesky_semi`) à la place de eigh ; Thompson branché (`Planification.tirer` appelle `hypothese_pour_la_semaine` quand le contrôle dual est calibré).
+- Rejeu exact : `plan()` verse un événement `plan` (contraintes canoniques JSON) ; `observe` le rejoue ; test `tests/test_rejeu_exact.py` (état bit à bit). `_observer_hors` met à jour les deux branches.
+- Outils : `km1-outils/rejeu.sh`, `diag_lam_reel.py`, `diag_mj.py`.
+- Reste : règles 0.3.1 non reprises (A4 poignet, A7 zones fragiles, A10 endurance), campagne complète + calage couverture, adversaire final, CI Dart, fixtures, contrat/sources, relecture Opus, livraison.

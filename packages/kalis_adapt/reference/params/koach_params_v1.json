@@ -92,7 +92,7 @@
     ],
     "biais_rir_proportionnel": [
       0.25,
-      0.15
+      0.0
     ],
     "k_nerveux_local": [
       0.0047,
@@ -161,7 +161,8 @@
       2.0
     ],
     "noteur_entier_notes_min": 20,
-    "noteur_entier_part_max": 0.05
+    "noteur_entier_part_max": 0.05,
+    "defaut_modele_sd": 0.0
   },
   "jour": {
     "sigma_seance": 0.022,
@@ -169,7 +170,7 @@
     "bilan_par_point": 0.012,
     "bilan_neutre": 4,
     "sigma_seance_avec_bilan": 0.018,
-    "mauvais_jour_proba": 0.05,
+    "mauvais_jour_proba": 0.1,
     "mauvais_jour_proba_bilan_bas": 0.45,
     "mauvais_jour_moyenne": -0.06,
     "mauvais_jour_sigma": 0.045

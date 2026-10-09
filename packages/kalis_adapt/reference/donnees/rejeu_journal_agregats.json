@@ -2,58 +2,58 @@
  "A_series_fiables_1_5_en_reserve_ou_moins": {
   "par_exercice": {
    "autres (moins de 5 chacun, 7 exercices)": {
-    "biais_signe_median": 0.0584,
-    "biais_signe_moyen": 0.0835,
-    "couverture_90": 0.9,
-    "demi_largeur_mediane_pct": 14.27,
-    "erreur_mediane": 0.0584,
-    "erreur_moyenne": 0.0917,
+    "biais_signe_median": -0.0523,
+    "biais_signe_moyen": -0.0507,
+    "couverture_90": 0.7,
+    "demi_largeur_mediane_pct": 14.68,
+    "erreur_mediane": 0.085,
+    "erreur_moyenne": 0.0804,
     "n": 10,
-    "sd_jour_median": 0.0808
+    "sd_jour_median": 0.0823
    }
   },
   "par_famille": {
    "autre": {
-    "biais_signe_median": 0.0642,
-    "biais_signe_moyen": 0.0675,
-    "couverture_90": 1.0,
-    "demi_largeur_mediane_pct": 15.87,
-    "erreur_mediane": 0.0642,
-    "erreur_moyenne": 0.0768,
+    "biais_signe_median": -0.1087,
+    "biais_signe_moyen": -0.0844,
+    "couverture_90": 0.714,
+    "demi_largeur_mediane_pct": 15.58,
+    "erreur_mediane": 0.1087,
+    "erreur_moyenne": 0.0945,
     "n": 7,
-    "sd_jour_median": 0.0895
+    "sd_jour_median": 0.0869
    },
    "principal": {
-    "biais_signe_median": 0.0525,
-    "biais_signe_moyen": 0.1206,
+    "biais_signe_median": 0.0183,
+    "biais_signe_moyen": 0.0279,
     "couverture_90": 0.667,
-    "demi_largeur_mediane_pct": 9.57,
-    "erreur_mediane": 0.0525,
-    "erreur_moyenne": 0.1267,
+    "demi_largeur_mediane_pct": 9.8,
+    "erreur_mediane": 0.0292,
+    "erreur_moyenne": 0.0474,
     "n": 3,
-    "sd_jour_median": 0.0554
+    "sd_jour_median": 0.0548
    }
   },
   "par_famille_et_rang": {
    "autre / premiere": {
-    "biais_signe_median": 0.0642,
-    "biais_signe_moyen": 0.0675,
-    "couverture_90": 1.0,
-    "demi_largeur_mediane_pct": 15.87,
-    "erreur_mediane": 0.0642,
-    "erreur_moyenne": 0.0768,
+    "biais_signe_median": -0.1087,
+    "biais_signe_moyen": -0.0844,
+    "couverture_90": 0.714,
+    "demi_largeur_mediane_pct": 15.58,
+    "erreur_mediane": 0.1087,
+    "erreur_moyenne": 0.0945,
     "n": 7,
-    "sd_jour_median": 0.0895
+    "sd_jour_median": 0.0869
    },
    "principal / premiere": {
-    "biais_signe_median": 0.0525,
-    "biais_signe_moyen": 0.1206,
+    "biais_signe_median": 0.0183,
+    "biais_signe_moyen": 0.0279,
     "couverture_90": 0.667,
-    "demi_largeur_mediane_pct": 9.57,
-    "erreur_mediane": 0.0525,
-    "erreur_moyenne": 0.1267,
+    "demi_largeur_mediane_pct": 9.8,
+    "erreur_mediane": 0.0292,
+    "erreur_moyenne": 0.0474,
     "n": 3,
-    "sd_jour_median": 0.0554
+    "sd_jour_median": 0.0548
    }
   },
   "par_note": {
@@ -61,26 +61,26 @@
     "n": 1
    },
    "8-9 (0,5 à 1,5)": {
-    "biais_signe_median": 0.0525,
-    "biais_signe_moyen": 0.0574,
-    "couverture_90": 1.0,
-    "demi_largeur_mediane_pct": 15.22,
-    "erreur_mediane": 0.0525,
-    "erreur_moyenne": 0.0665,
+    "biais_signe_median": -0.0754,
+    "biais_signe_moyen": -0.0669,
+    "couverture_90": 0.778,
+    "demi_largeur_mediane_pct": 15.14,
+    "erreur_mediane": 0.0754,
+    "erreur_moyenne": 0.0788,
     "n": 9,
-    "sd_jour_median": 0.0859
+    "sd_jour_median": 0.0852
    }
   },
   "par_rang_dans_l_exercice": {
    "premiere serie": {
-    "biais_signe_median": 0.0584,
-    "biais_signe_moyen": 0.0835,
-    "couverture_90": 0.9,
-    "demi_largeur_mediane_pct": 14.27,
-    "erreur_mediane": 0.0584,
-    "erreur_moyenne": 0.0917,
+    "biais_signe_median": -0.0523,
+    "biais_signe_moyen": -0.0507,
+    "couverture_90": 0.7,
+    "demi_largeur_mediane_pct": 14.68,
+    "erreur_mediane": 0.085,
+    "erreur_moyenne": 0.0804,
     "n": 10,
-    "sd_jour_median": 0.0808
+    "sd_jour_median": 0.0823
    }
   },
   "par_repetitions": {
@@ -91,14 +91,14 @@
     "n": 2
    },
    "11+": {
-    "biais_signe_median": 0.0642,
-    "biais_signe_moyen": 0.0822,
-    "couverture_90": 0.857,
-    "demi_largeur_mediane_pct": 15.22,
-    "erreur_mediane": 0.0642,
-    "erreur_moyenne": 0.0915,
+    "biais_signe_median": -0.0754,
+    "biais_signe_moyen": -0.0552,
+    "couverture_90": 0.571,
+    "demi_largeur_mediane_pct": 15.14,
+    "erreur_mediane": 0.0945,
+    "erreur_moyenne": 0.0923,
     "n": 7,
-    "sd_jour_median": 0.0859
+    "sd_jour_median": 0.0852
    }
   },
   "par_role": {
@@ -106,114 +106,107 @@
     "n": 1
    },
    "work": {
-    "biais_signe_median": 0.0525,
-    "biais_signe_moyen": 0.0574,
-    "couverture_90": 1.0,
-    "demi_largeur_mediane_pct": 15.22,
-    "erreur_mediane": 0.0525,
-    "erreur_moyenne": 0.0665,
+    "biais_signe_median": -0.0754,
+    "biais_signe_moyen": -0.0669,
+    "couverture_90": 0.778,
+    "demi_largeur_mediane_pct": 15.14,
+    "erreur_mediane": 0.0754,
+    "erreur_moyenne": 0.0788,
     "n": 9,
-    "sd_jour_median": 0.0859
+    "sd_jour_median": 0.0852
    }
   },
   "par_valeur_declaree": {
    "a priori de population": {
-    "biais_signe_median": 0.0642,
-    "biais_signe_moyen": 0.0675,
-    "couverture_90": 1.0,
-    "demi_largeur_mediane_pct": 15.87,
-    "erreur_mediane": 0.0642,
-    "erreur_moyenne": 0.0768,
-    "n": 7,
-    "sd_jour_median": 0.0895
+    "n": 1
    },
    "declare": {
-    "biais_signe_median": 0.0525,
-    "biais_signe_moyen": 0.1206,
+    "biais_signe_median": -0.0292,
+    "biais_signe_moyen": -0.0442,
     "couverture_90": 0.667,
-    "demi_largeur_mediane_pct": 9.57,
-    "erreur_mediane": 0.0525,
-    "erreur_moyenne": 0.1267,
-    "n": 3,
-    "sd_jour_median": 0.0554
+    "demi_largeur_mediane_pct": 14.22,
+    "erreur_mediane": 0.0754,
+    "erreur_moyenne": 0.0771,
+    "n": 9,
+    "sd_jour_median": 0.0794
    }
   },
   "total": {
-   "biais_signe_median": 0.0584,
-   "biais_signe_moyen": 0.0835,
-   "couverture_90": 0.9,
-   "demi_largeur_mediane_pct": 14.27,
-   "erreur_mediane": 0.0584,
-   "erreur_moyenne": 0.0917,
+   "biais_signe_median": -0.0523,
+   "biais_signe_moyen": -0.0507,
+   "couverture_90": 0.7,
+   "demi_largeur_mediane_pct": 14.68,
+   "erreur_mediane": 0.085,
+   "erreur_moyenne": 0.0804,
    "n": 10,
-   "sd_jour_median": 0.0808
+   "sd_jour_median": 0.0823
   }
  },
  "A_une_seance_d_avance": {
   "par_exercice": {
    "autres (moins de 5 chacun, 18 exercices)": {
-    "biais_signe_median": 0.1629,
-    "biais_signe_moyen": 0.5551,
-    "couverture_90": 0.684,
-    "demi_largeur_mediane_pct": 32.54,
-    "erreur_mediane": 0.1629,
-    "erreur_moyenne": 0.5579,
+    "biais_signe_median": 0.0155,
+    "biais_signe_moyen": 0.0094,
+    "couverture_90": 0.895,
+    "demi_largeur_mediane_pct": 14.8,
+    "erreur_mediane": 0.0346,
+    "erreur_moyenne": 0.0568,
     "n": 38,
-    "sd_jour_median": 0.1711
+    "sd_jour_median": 0.0823
    }
   },
   "par_famille": {
    "autre": {
-    "biais_signe_median": 0.2332,
-    "biais_signe_moyen": 0.6895,
-    "couverture_90": 0.69,
-    "demi_largeur_mediane_pct": 40.35,
-    "erreur_mediane": 0.2332,
-    "erreur_moyenne": 0.6921,
+    "biais_signe_median": 0.0076,
+    "biais_signe_moyen": -0.002,
+    "couverture_90": 0.931,
+    "demi_largeur_mediane_pct": 15.58,
+    "erreur_mediane": 0.036,
+    "erreur_moyenne": 0.0564,
     "n": 29,
-    "sd_jour_median": 0.206
+    "sd_jour_median": 0.0869
    },
    "principal": {
-    "biais_signe_median": 0.094,
-    "biais_signe_moyen": 0.122,
-    "couverture_90": 0.667,
-    "demi_largeur_mediane_pct": 11.61,
-    "erreur_mediane": 0.094,
-    "erreur_moyenne": 0.1256,
+    "biais_signe_median": 0.0239,
+    "biais_signe_moyen": 0.046,
+    "couverture_90": 0.778,
+    "demi_largeur_mediane_pct": 10.48,
+    "erreur_mediane": 0.0277,
+    "erreur_moyenne": 0.0578,
     "n": 9,
-    "sd_jour_median": 0.066
+    "sd_jour_median": 0.0587
    }
   },
   "par_famille_et_rang": {
    "autre / premiere": {
-    "biais_signe_median": 0.1629,
-    "biais_signe_moyen": 0.3723,
-    "couverture_90": 0.75,
-    "demi_largeur_mediane_pct": 39.22,
-    "erreur_mediane": 0.1629,
-    "erreur_moyenne": 0.3755,
+    "biais_signe_median": -0.0171,
+    "biais_signe_moyen": -0.0176,
+    "couverture_90": 0.917,
+    "demi_largeur_mediane_pct": 15.26,
+    "erreur_mediane": 0.0342,
+    "erreur_moyenne": 0.053,
     "n": 24,
-    "sd_jour_median": 0.2004
+    "sd_jour_median": 0.0853
    },
    "autre / suivante": {
-    "biais_signe_median": 0.5655,
-    "biais_signe_moyen": 2.212,
-    "couverture_90": 0.4,
-    "demi_largeur_mediane_pct": 42.62,
-    "erreur_mediane": 0.5655,
-    "erreur_moyenne": 2.212,
+    "biais_signe_median": 0.0416,
+    "biais_signe_moyen": 0.0729,
+    "couverture_90": 1.0,
+    "demi_largeur_mediane_pct": 18.92,
+    "erreur_mediane": 0.0416,
+    "erreur_moyenne": 0.0729,
     "n": 5,
-    "sd_jour_median": 0.2158
+    "sd_jour_median": 0.1041
    },
    "principal / premiere": {
-    "biais_signe_median": 0.0784,
-    "biais_signe_moyen": 0.1198,
+    "biais_signe_median": 0.023,
+    "biais_signe_moyen": 0.0488,
     "couverture_90": 0.75,
-    "demi_largeur_mediane_pct": 11.34,
-    "erreur_mediane": 0.0784,
-    "erreur_moyenne": 0.1238,
+    "demi_largeur_mediane_pct": 10.3,
+    "erreur_mediane": 0.0284,
+    "erreur_moyenne": 0.062,
     "n": 8,
-    "sd_jour_median": 0.0637
+    "sd_jour_median": 0.0575
    },
    "principal / suivante": {
     "n": 1
@@ -224,46 +217,46 @@
     "n": 1
    },
    "5-7 (2 à 3)": {
-    "biais_signe_median": 0.2951,
-    "biais_signe_moyen": 0.7235,
-    "couverture_90": 0.607,
-    "demi_largeur_mediane_pct": 37.05,
-    "erreur_mediane": 0.2951,
-    "erreur_moyenne": 0.7244,
+    "biais_signe_median": 0.0238,
+    "biais_signe_moyen": 0.0308,
+    "couverture_90": 0.964,
+    "demi_largeur_mediane_pct": 14.8,
+    "erreur_mediane": 0.0304,
+    "erreur_moyenne": 0.0483,
     "n": 28,
-    "sd_jour_median": 0.1906
+    "sd_jour_median": 0.0823
    },
    "8-9 (0,5 à 1,5)": {
-    "biais_signe_median": 0.0525,
-    "biais_signe_moyen": 0.0574,
-    "couverture_90": 1.0,
-    "demi_largeur_mediane_pct": 15.22,
-    "erreur_mediane": 0.0525,
-    "erreur_moyenne": 0.0665,
+    "biais_signe_median": -0.0754,
+    "biais_signe_moyen": -0.0669,
+    "couverture_90": 0.778,
+    "demi_largeur_mediane_pct": 15.14,
+    "erreur_mediane": 0.0754,
+    "erreur_moyenne": 0.0788,
     "n": 9,
-    "sd_jour_median": 0.0859
+    "sd_jour_median": 0.0852
    }
   },
   "par_rang_dans_l_exercice": {
    "premiere serie": {
-    "biais_signe_median": 0.144,
-    "biais_signe_moyen": 0.3092,
-    "couverture_90": 0.75,
-    "demi_largeur_mediane_pct": 24.09,
-    "erreur_mediane": 0.144,
-    "erreur_moyenne": 0.3126,
+    "biais_signe_median": -0.0119,
+    "biais_signe_moyen": -0.001,
+    "couverture_90": 0.875,
+    "demi_largeur_mediane_pct": 14.72,
+    "erreur_mediane": 0.0312,
+    "erreur_moyenne": 0.0553,
     "n": 32,
-    "sd_jour_median": 0.1307
+    "sd_jour_median": 0.0817
    },
    "serie suivante": {
-    "biais_signe_median": 0.4237,
-    "biais_signe_moyen": 1.8666,
-    "couverture_90": 0.333,
-    "demi_largeur_mediane_pct": 37.54,
-    "erreur_mediane": 0.4237,
-    "erreur_moyenne": 1.8666,
+    "biais_signe_median": 0.0388,
+    "biais_signe_moyen": 0.0647,
+    "couverture_90": 1.0,
+    "demi_largeur_mediane_pct": 17.91,
+    "erreur_mediane": 0.0388,
+    "erreur_moyenne": 0.0647,
     "n": 6,
-    "sd_jour_median": 0.1937
+    "sd_jour_median": 0.099
    }
   },
   "par_repetitions": {
@@ -271,34 +264,34 @@
     "n": 2
    },
    "04-06": {
-    "biais_signe_median": 0.094,
-    "biais_signe_moyen": 0.1147,
+    "biais_signe_median": -0.0114,
+    "biais_signe_moyen": 0.0239,
     "couverture_90": 0.857,
-    "demi_largeur_mediane_pct": 11.61,
-    "erreur_mediane": 0.094,
-    "erreur_moyenne": 0.1193,
+    "demi_largeur_mediane_pct": 12.17,
+    "erreur_mediane": 0.0292,
+    "erreur_moyenne": 0.0705,
     "n": 7,
-    "sd_jour_median": 0.066
+    "sd_jour_median": 0.0675
    },
    "07-10": {
-    "biais_signe_median": 0.1868,
-    "biais_signe_moyen": 0.2555,
-    "couverture_90": 0.75,
-    "demi_largeur_mediane_pct": 38.18,
-    "erreur_mediane": 0.1868,
-    "erreur_moyenne": 0.2571,
+    "biais_signe_median": 0.0191,
+    "biais_signe_moyen": 0.0164,
+    "couverture_90": 1.0,
+    "demi_largeur_mediane_pct": 15.55,
+    "erreur_mediane": 0.0288,
+    "erreur_moyenne": 0.0342,
     "n": 8,
-    "sd_jour_median": 0.1962
+    "sd_jour_median": 0.0865
    },
    "11+": {
-    "biais_signe_median": 0.3083,
-    "biais_signe_moyen": 0.8597,
-    "couverture_90": 0.619,
-    "demi_largeur_mediane_pct": 38.09,
-    "erreur_mediane": 0.3083,
-    "erreur_moyenne": 0.8628,
+    "biais_signe_median": 0.0076,
+    "biais_signe_moyen": 0.0007,
+    "couverture_90": 0.857,
+    "demi_largeur_mediane_pct": 15.38,
+    "erreur_mediane": 0.0416,
+    "erreur_moyenne": 0.0642,
     "n": 21,
-    "sd_jour_median": 0.1948
+    "sd_jour_median": 0.0855
    }
   },
   "par_role": {
@@ -306,65 +299,58 @@
     "n": 1
    },
    "work": {
-    "biais_signe_median": 0.1481,
-    "biais_signe_moyen": 0.5615,
-    "couverture_90": 0.703,
-    "demi_largeur_mediane_pct": 32.63,
-    "erreur_mediane": 0.1481,
-    "erreur_moyenne": 0.5644,
+    "biais_signe_median": 0.0144,
+    "biais_signe_moyen": 0.0071,
+    "couverture_90": 0.919,
+    "demi_largeur_mediane_pct": 14.84,
+    "erreur_mediane": 0.0339,
+    "erreur_moyenne": 0.0557,
     "n": 37,
-    "sd_jour_median": 0.1715
+    "sd_jour_median": 0.0825
    }
   },
   "par_valeur_declaree": {
    "a priori de population": {
-    "biais_signe_median": 0.2332,
-    "biais_signe_moyen": 0.6895,
-    "couverture_90": 0.69,
-    "demi_largeur_mediane_pct": 40.35,
-    "erreur_mediane": 0.2332,
-    "erreur_moyenne": 0.6921,
-    "n": 29,
-    "sd_jour_median": 0.206
+    "n": 1
    },
    "declare": {
-    "biais_signe_median": 0.094,
-    "biais_signe_moyen": 0.122,
-    "couverture_90": 0.667,
-    "demi_largeur_mediane_pct": 11.61,
-    "erreur_mediane": 0.094,
-    "erreur_moyenne": 0.1256,
-    "n": 9,
-    "sd_jour_median": 0.066
+    "biais_signe_median": 0.0166,
+    "biais_signe_moyen": 0.0126,
+    "couverture_90": 0.892,
+    "demi_largeur_mediane_pct": 14.75,
+    "erreur_mediane": 0.0339,
+    "erreur_moyenne": 0.0553,
+    "n": 37,
+    "sd_jour_median": 0.0821
    }
   },
   "total": {
-   "biais_signe_median": 0.1629,
-   "biais_signe_moyen": 0.5551,
-   "couverture_90": 0.684,
-   "demi_largeur_mediane_pct": 32.54,
-   "erreur_mediane": 0.1629,
-   "erreur_moyenne": 0.5579,
+   "biais_signe_median": 0.0155,
+   "biais_signe_moyen": 0.0094,
+   "couverture_90": 0.895,
+   "demi_largeur_mediane_pct": 14.8,
+   "erreur_mediane": 0.0346,
+   "erreur_moyenne": 0.0568,
    "n": 38,
-   "sd_jour_median": 0.1711
+   "sd_jour_median": 0.0823
   }
  },
  "B_tests_reels": {
   "enduranceTest": {
-   "biais_signe_median": -0.0189,
-   "biais_signe_moyen": 1.7225,
+   "biais_signe_median": -0.0264,
+   "biais_signe_moyen": 0.0396,
    "couverture_90": 0.75,
-   "erreur_mediane": 0.0543,
-   "erreur_moyenne": 1.7775,
+   "erreur_mediane": 0.0567,
+   "erreur_moyenne": 0.1035,
    "meilleure_serie_sous_10_flammes": 0,
    "n": 4,
    "par_famille": {
     "autre": {
-     "biais_signe_median": -0.0364,
-     "biais_signe_moyen": -0.0366,
+     "biais_signe_median": -0.0384,
+     "biais_signe_moyen": -0.0426,
      "couverture_90": 1.0,
-     "erreur_mediane": 0.0364,
-     "erreur_moyenne": 0.0366,
+     "erreur_mediane": 0.0384,
+     "erreur_moyenne": 0.0426,
      "n": 3
     },
     "principal": {
@@ -378,83 +364,84 @@
    "par_famille": {}
   },
   "total": {
-   "biais_signe_median": -0.0189,
-   "biais_signe_moyen": 1.7225,
+   "biais_signe_median": -0.0264,
+   "biais_signe_moyen": 0.0396,
    "couverture_90": 0.75,
-   "erreur_mediane": 0.0543,
-   "erreur_moyenne": 1.7775,
+   "erreur_mediane": 0.0567,
+   "erreur_moyenne": 0.1035,
    "n": 4
   }
  },
  "C_calibration_des_notes": {
   "calibration_par_tranche_de_probabilite": {
    "0.0-0.1": {
-    "n": 8,
+    "n": 36,
     "observee": 0.0,
-    "prevue": 0.025
+    "prevue": 0.032
    },
    "0.1-0.3": {
-    "n": 19,
+    "n": 32,
     "observee": 0.0,
-    "prevue": 0.21
+    "prevue": 0.19
    },
    "0.3-0.6": {
-    "n": 24,
-    "observee": 0.0,
-    "prevue": 0.515
+    "n": 31,
+    "observee": 0.129,
+    "prevue": 0.441
    },
    "0.6-1.0": {
-    "n": 116,
-    "observee": 0.293,
-    "prevue": 0.883
+    "n": 68,
+    "observee": 0.441,
+    "prevue": 0.858
    }
   },
   "par_famille_et_type": {
    "autre / charge": {
-    "ecart_absolu_moyen_notes_fermees": 46.405,
-    "ecart_moyen_note_moins_prevision": -54.987,
-    "ecart_moyen_notes_fermees": -46.28,
+    "ecart_absolu_moyen_notes_fermees": 2.858,
+    "ecart_moyen_note_moins_prevision": -1.784,
+    "ecart_moyen_notes_fermees": -1.203,
     "n": 104,
     "n_notes_fermees": 88,
     "part_ouvertes_observee": 0.154,
-    "part_ouvertes_prevue": 0.794
+    "part_ouvertes_prevue": 0.46
    },
    "autre / reps": {
-    "ecart_absolu_moyen_notes_fermees": 5.644,
-    "ecart_moyen_note_moins_prevision": -8.821,
-    "ecart_moyen_notes_fermees": -4.364,
+    "ecart_absolu_moyen_notes_fermees": 5.02,
+    "ecart_moyen_note_moins_prevision": -13.776,
+    "ecart_moyen_notes_fermees": -3.097,
     "n": 22,
     "n_notes_fermees": 8,
     "part_ouvertes_observee": 0.636,
-    "part_ouvertes_prevue": 0.726
+    "part_ouvertes_prevue": 0.815
    },
    "principal / charge": {
-    "ecart_absolu_moyen_notes_fermees": 11.039,
-    "ecart_moyen_note_moins_prevision": -11.453,
-    "ecart_moyen_notes_fermees": -10.83,
+    "ecart_absolu_moyen_notes_fermees": 1.913,
+    "ecart_moyen_note_moins_prevision": -1.63,
+    "ecart_moyen_notes_fermees": -1.617,
     "n": 41,
     "n_notes_fermees": 37,
     "part_ouvertes_observee": 0.098,
-    "part_ouvertes_prevue": 0.499
+    "part_ouvertes_prevue": 0.329
    }
   },
   "total": {
-   "ecart_absolu_moyen_notes_fermees": 34.115,
-   "ecart_moyen_note_moins_prevision": -38.217,
-   "ecart_moyen_notes_fermees": -33.897,
+   "ecart_absolu_moyen_notes_fermees": 2.725,
+   "ecart_moyen_note_moins_prevision": -3.326,
+   "ecart_moyen_notes_fermees": -1.433,
    "n": 167,
    "n_notes_fermees": 133,
    "part_ouvertes_observee": 0.204,
-   "part_ouvertes_prevue": 0.712
+   "part_ouvertes_prevue": 0.475
   }
  },
  "conversion": {
   "bilans_convertis": 5,
   "charges_sur_exercice_non_charge": 11,
   "charges_vides_exercice_charge": 21,
+  "declare_accessoire_non_charge": 26,
   "declare_mesure_incompatible": 1,
-  "declare_reference_non_maximale": 21,
   "declares": 8,
+  "declares_accessoires": 19,
   "douleurs_par_mouvement_non_converties": 4,
   "notes_depuis_aucune": 712,
   "notes_depuis_effort": 83,
@@ -478,7 +465,7 @@
  },
  "description": "Rejeu walk-forward d'un journal réel par Koach 1.0 : agrégats seulement (aucune valeur individuelle, aucune date, aucun identifiant de séance).",
  "objectif_brique_8": {
-  "couverture_dans_88_92_pct": false,
+  "couverture_dans_88_92_pct": true,
   "erreur_moyenne_sous_3_pct": false
  },
  "parametres": {

@@ -34,7 +34,7 @@ import numpy as np
 
 from .modele import NQ, RHO, EPS, KG, CLASSES, C_LIN, C_LOG
 from .moteur import Extension
-from .numerique import Mulberry32, fnv1a32, clamp
+from .numerique import Mulberry32, fnv1a32, clamp, cholesky_semi
 
 SEMAINES_VERROUILLEES = ('intro', 'deload', 'taper', 'test', 'competition', 'transition')
 GRILLE_INTENSITE = (-0.05, -0.025, 0.0, 0.025, 0.05)
@@ -289,11 +289,10 @@ class Planification(Extension):
             moyennes.append(float(m.m[i]))
         H = np.array(lignes)
         S = H @ m.P[:m.n, :m.n] @ H.T
-        S = 0.5 * (S + S.T) + 1e-12 * np.eye(S.shape[0])
-        # Racine par valeurs propres (robuste à une covariance semi-définie).
-        val, vec = np.linalg.eigh(S)
-        val = np.where(val > 0, val, 0.0)
-        L = vec * np.sqrt(val)
+        S = 0.5 * (S + S.T)
+        # Racine de Cholesky en boucles explicites (portable à l'identique,
+        # robuste à une covariance semi-définie).
+        L = np.array(cholesky_semi(S.tolist()))
         rng = Mulberry32(fnv1a32('koach-plan:%d:%d' % (int(self.p['graine']), semaine)))
         k = S.shape[0]
         z = np.empty((n, k))
@@ -304,6 +303,17 @@ class Planification(Extension):
         hyp = np.empty(n, dtype=int)
         poids = list(m.poids_hyp)
         tot = sum(poids)
+        # Contrôle dual (cahier § 7) : quand le modèle est calibré, le
+        # contrôle dual tire UNE hypothèse de dose pour la semaine (tirage
+        # de Thompson) et le plan est optimisé sous elle ; sinon chaque
+        # trajectoire tire la sienne selon les poids a posteriori. Les
+        # tirages uniformes sont consommés dans les deux cas (mêmes nombres
+        # aléatoires communs en aval).
+        self.hypothese_thompson = None
+        for x_ in koach.extensions:
+            f = getattr(x_, 'hypothese_pour_la_semaine', None)
+            if f is not None:
+                self.hypothese_thompson = f(koach, semaine, int(self.p['graine']))
         for a in range(n):
             u = rng.next() * tot
             c = 0.0
@@ -313,6 +323,8 @@ class Planification(Extension):
                 if u < c:
                     hyp[a] = j
                     break
+        if self.hypothese_thompson is not None:
+            hyp[:] = int(self.hypothese_thompson)
         bruit_jour = np.empty((n, max(E, 1)))
         bruit_proc = np.empty((n, max(E, 1)))
         for a in range(n):

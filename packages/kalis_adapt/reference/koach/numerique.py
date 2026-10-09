@@ -228,3 +228,34 @@ def dart_round(x):
 
 def clamp(x, low, high):
     return low if x < low else (high if x > high else x)
+
+
+def cholesky_semi(S, tol=1e-12):
+    """Facteur triangulaire inférieur L (liste de listes) tel que L Lᵀ = S pour
+    une matrice symétrique semi-définie positive. Algorithme de Cholesky
+    en boucles explicites, sommes dans l'ordre des indices : portable à
+    l'identique (pas de bibliothèque d'algèbre). Un pivot non positif (à
+    [tol] × la plus grande diagonale près) annule sa colonne : la direction
+    correspondante est déjà portée par les colonnes précédentes."""
+    k = len(S)
+    L = [[0.0] * k for _ in range(k)]
+    grand = 0.0
+    for j in range(k):
+        v = float(S[j][j])
+        if v > grand:
+            grand = v
+    seuil = tol * grand
+    for j in range(k):
+        d = float(S[j][j])
+        for q in range(j):
+            d -= L[j][q] * L[j][q]
+        if d <= seuil:
+            continue
+        r = math.sqrt(d)
+        L[j][j] = r
+        for i in range(j + 1, k):
+            x = float(S[i][j])
+            for q in range(j):
+                x -= L[i][q] * L[j][q]
+            L[i][j] = x / r
+    return L

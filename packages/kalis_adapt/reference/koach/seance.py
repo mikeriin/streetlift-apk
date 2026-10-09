@@ -405,7 +405,7 @@ class Seances(object):
                 if series > plancher:
                     series -= 1
         if not echauffement:
-            for z in hits:
+            for z in sorted(hits):
                 if z in self.budget_zone:
                     reste = self.budget_zone[z]
                     if series > reste:
@@ -414,7 +414,7 @@ class Seances(object):
             if series <= 0:
                 self._raison('koach.douleur_retrait', exercice=ex_id, zone=cond['zone'], cause='reprise_dose')
                 return None
-            for z in hits:
+            for z in sorted(hits):
                 if z in self.budget_zone:
                     self.budget_zone[z] -= series
         servi['sets'] = series
