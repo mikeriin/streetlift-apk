@@ -155,7 +155,7 @@ Constats qui fondent ces choix : l'incertitude du panel est d'environ un point (
 
 - **C12.1 Ordre** : CI1g (en cours) → **lot CI final** (limites de CI1 à CI1g) → **base d'exercices v1.1** (1 039 exercices, remplace le pack 2.0.0) → **lot de méthode** des moteurs (après 3 à 4 semaines du journal réel du propriétaire). Deux sessions au plus en même temps.
 - **C12.2 Suspendus** par le propriétaire : **animations** (89 animations prioritaires, M8 et FBX Mixamo) et **distribution** (Play Store, revue santé et consentement, ménage du dépôt). Ne pas les lancer sans nouvelle demande.
-- **C12.3 G11 à G15** (XP, Krédits) : toujours suspendus (C0.1), réponse du propriétaire attendue.
+- **C12.3 G11 à G15** (XP, niveau, Krédits, `kalis_quest`) : **suspendus par le propriétaire** (09/10/2026, 14:55 UTC : « Suspend G11-G15 aussi »), comme les animations et la distribution ; il y reviendra plus tard.
 
 ## Sections des lots
 
