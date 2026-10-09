@@ -2863,6 +2863,13 @@ final class Prescriber {
     if (base > 0) {
       high = _clampInt(_round(base * 0.6) - 2, 4, 12);
     }
+    if (base > 0 &&
+        (e.id == 'sw-traction-archer' || e.id == 'sw-traction-typewriter')) {
+      // Archer et typewriter (presque tout le poids sur un bras) : environ
+      // un tiers du maximum de tractions par côté, 2 en réserve (choix
+      // raisonné ; CY : la variante de surcharge du plateau sans lest).
+      high = _clampInt(_round(base * 0.35), 3, 8);
+    }
     if (e.id.contains('tempo-excentrique')) {
       // Traction complète au tempo lent : montée tirée, 2 s tenues en haut,
       // descente en 4 s — environ 45 % du maximum au tempo normal, 4 à 10
@@ -6279,11 +6286,33 @@ final class Prescriber {
     }
   }
 
+  /// Vrai si [e] compte dans le volume de répétitions de la racine [root]
+  /// (voir `_fitReps`) : la racine elle-même et ses variantes au moins aussi
+  /// dures.
+  bool _repsCounted(CatalogExercise e, String root) {
+    if (e.id == root) {
+      return true;
+    }
+    final r = a.catalog.find(root);
+    return r == null || e.difficulty >= r.difficulty;
+  }
+
   /// Garde-fou du volume de répétitions (voir `_fitVolume`).
   void _fitReps(List<List<_Draft>> days, int index) {
     if (index <= 0 && blockIndex > 0) {
       return;
     }
+    // Le plafond ne compte que le mouvement et ses variantes au moins aussi
+    // dures — une variante plus facile (pompe mains surélevées, sur les
+    // genoux, assistée) permet bien plus de répétitions que le maximum du
+    // geste complet, à une charge plus basse (CY : relecture documentée de
+    // CP2, `street_03`, pompe inclinée écrite 1 × 2 puis 1 × 3 pendant
+    // quinze semaines pour un maximum d'environ 22 à cette hauteur : trois
+    // pompes au sol plafonnaient la première semaine, puis la hausse de
+    // 15 % par semaine partait de ce plancher). La variante facile garde sa
+    // propre dose (séries et plage de `_beginnerMain`).
+    bool counted(_Draft x, String root) => _repsCounted(x.e, root);
+
     double sumOf(String root) {
       var total = 0.0;
       for (final items in days) {
@@ -6292,7 +6321,8 @@ final class Prescriber {
           if (high != null &&
               x.kind == SetKind.work &&
               x.isResistance &&
-              _repsRootOf(x.e) == root) {
+              _repsRootOf(x.e) == root &&
+              counted(x, root)) {
             total += x.sets * high;
           }
         }
@@ -6346,6 +6376,7 @@ final class Prescriber {
                 (x.fixed && !_shape.reprise) ||
                 x.repsHigh == null ||
                 _repsRootOf(x.e) != root ||
+                !counted(x, root) ||
                 x.sets <= x.minSets ||
                 x.sets <= 1) {
               continue;
@@ -6373,6 +6404,7 @@ final class Prescriber {
                 high == null ||
                 high <= 1 ||
                 _repsRootOf(x.e) != root ||
+                !counted(x, root) ||
                 x.backoff ||
                 (longest != null && high <= longest.repsHigh!)) {
               continue;
@@ -7505,7 +7537,8 @@ final class Prescriber {
         if (root != null &&
             high != null &&
             p.kind == SetKind.work &&
-            t.kind.isResistance) {
+            t.kind.isResistance &&
+            _repsCounted(t.exercise, root)) {
           trace.reps[root] = (trace.reps[root] ?? 0) + p.sets * high;
         }
         final load = p.startLoadKg;
@@ -7624,7 +7657,8 @@ final class Prescriber {
           if (root != null &&
               high != null &&
               x.kind == SetKind.work &&
-              x.isResistance) {
+              x.isResistance &&
+              _repsCounted(x.e, root)) {
             trace.reps[root] = (trace.reps[root] ?? 0) + x.sets * high;
           }
         }

@@ -68,6 +68,20 @@ void main() {
       TrainingDiscipline.streetWorkout,
     );
     expect(swapped.validate(), isEmpty);
+    // Profil au mode street : le dosage reste l'image du mode street.
+    for (final j in street) {
+      if (!seasonScenarioApplies(j, SeasonScenario.discipline)) {
+        continue;
+      }
+      final p = adaptProfile(BenchProfile.fromJson(j), catalog: catalog).profile;
+      final moved = seasonChanges(j, SeasonScenario.discipline).single.apply(p);
+      expect(moved.validate(), isEmpty, reason: '${j['key']}');
+      expect(
+        moved.disciplines.primary,
+        p.disciplines.secondaries.first.discipline,
+        reason: '${j['key']}',
+      );
+    }
     expect(
       change.week,
       seasonDisciplineWeek(
