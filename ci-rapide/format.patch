@@ -1,0 +1,40 @@
+diff --git a/lib/imported_program.dart b/lib/imported_program.dart
+index f4b8c94..cb3d35f 100644
+--- a/lib/imported_program.dart
++++ b/lib/imported_program.dart
+@@ -250,7 +250,9 @@ extension ImportedProgramStore on AppStore {
+     final slots = <String, String>{};
+     final eventDay = start == null
+         ? null
+-        : civilOf(DateTime(start.year, start.month, start.day + lastWeek * 7 - 1));
++        : civilOf(
++            DateTime(start.year, start.month, start.day + lastWeek * 7 - 1),
++          );
+     final event = eventDay == null
+         ? null
+         : kc.SeasonEvent(
+@@ -455,7 +457,9 @@ extension ImportedProgramStore on AppStore {
+     final start = program.start;
+     final startDay = start == null
+         ? civilOf(storeClock())
+-        : civilOf(DateTime(start.year, start.month, start.day + (first - 1) * 7));
++        : civilOf(
++            DateTime(start.year, start.month, start.day + (first - 1) * 7),
++          );
+     final blockId = importedBlockId(first);
+     final slotList = slotExercise.keys.toList()..sort();
+     int? weeksToEvent;
+diff --git a/lib/session_adapt_store.dart b/lib/session_adapt_store.dart
+index ef78b8b..7860963 100644
+--- a/lib/session_adapt_store.dart
++++ b/lib/session_adapt_store.dart
+@@ -779,7 +779,8 @@ extension SessionAdaptStore on AppStore {
+     final dayIndex = seg?.dayOfJ[j];
+     if (seg == null || dayIndex == null) return null;
+     final ids = <String, String>{};
+-    for (final e in program.week(w).day(j)?.original.exercises ?? <Exercise>[]) {
++    for (final e
++        in program.week(w).day(j)?.original.exercises ?? <Exercise>[]) {
+       final s = imp.slotOf(w, j, e.id);
+       if (s != null) ids[importedSlot(j, e.id)] = s;
+     }

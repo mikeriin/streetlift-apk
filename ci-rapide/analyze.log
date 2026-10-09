@@ -1,0 +1,7 @@
+Analyzing streetlift-apk...                                     
+
+  error • Local variable 'at' can't be referenced before it is declared. Try moving the declaration to before the first use, or renaming the local variable so that it doesn't hide a name from an enclosing scope • lib/plan_store.dart:151:15 • referenced_before_declaration
+  error • The final variable 'at' can't be read because it's potentially unassigned at this point. Ensure that it is assigned on necessary execution paths • lib/plan_store.dart:151:15 • read_potentially_unassigned_final
+  error • An extension override can only be used to access instance members. Consider adding an access to an instance member • lib/program_screens.dart:459:15 • extension_override_without_access
+
+3 issues found. (ran in 15.9s)
