@@ -68,6 +68,17 @@ const kReasonTexts04 = <String, String>{
       'Je surveille la charge de tes tendons : progression ralentie sur ces appuis.',
   'adapt.technique_executed': 'Technique « {technique} » faite comme prévu.',
   'adapt.mini_set_stop': 'On arrête les mini-séries ici ({cause}).',
+  // CI1f : codes d'endurance de `kalis_core` 0.4.3 (`kalis_adapt` 0.3.0).
+  'adapt.run_capped':
+      'Sortie raccourcie : pas plus de {percent} % au-dessus de ta plus longue sortie du mois.',
+  'adapt.easy_instead':
+      "Aujourd'hui, endurance facile à la place de la séance de qualité ({cause}).",
+  'adapt.endurance_shortened':
+      'On raccourcit : {percent} % de ce qui était prévu ({cause}).',
+  'adapt.wod_scaled':
+      "WOD mis à l'échelle : {percent} % de ce qui était prévu ({cause}).",
+  'adapt.cross_fatigue':
+      "Un peu plus de marge sur les jambes : ta course d'hier était dure.",
 };
 
 /// Phrase d'un code de 0.4.0 ([params] : paramètres de la raison ;
@@ -135,5 +146,12 @@ String _causeLabel(String code) => switch (code) {
   'reps' || 'rep_drop' => 'répétitions en baisse',
   'quality' || 'quality_drop' => 'propreté en baisse',
   'cap' => 'plafond atteint',
+  // CI1f : causes de la conduite de l'endurance (`kalis_adapt` 0.3.0).
+  'health_strong' => 'bilan du jour très bas',
+  'leg_pain' => 'gêne aux jambes',
+  'hard_run' => 'course récente trop dure',
+  'hard_streak' => 'deux jours durs de suite',
+  'resume_7' => 'reprise après une semaine sans séance',
+  'resume_14' => 'reprise après deux semaines sans séance',
   _ => code.replaceAll('_', ' '),
 };

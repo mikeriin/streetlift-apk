@@ -4,7 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kalis_core/kalis_core.dart'
     as kc
-    show Flames, IntraSessionAction, Place, SetKind, SetTechniqueKind;
+    show
+        Flames,
+        GroupFormat,
+        GroupSpec,
+        IntraSessionAction,
+        Place,
+        SetKind,
+        SetTechniqueKind;
 import 'package:kalis_koach/kalis_koach.dart' show KoachUsage;
 import 'device.dart';
 
@@ -119,7 +126,7 @@ class _SessionScreenState extends State<SessionScreen> {
     return widget.day;
   }
 
-  List<List<Exercise>> _groups() => store.groups(_day);
+  List<List<Exercise>> _groups() => store.groups(_day, week: widget.week.n);
 
   /// Séance adaptée (bilan, temps, lieu) : pages recalculées.
   void _adapted(bool changed) {
@@ -814,6 +821,8 @@ class SessionExercisePageState extends State<SessionExercisePage> {
     // avec la flamme visée déjà placée sur la ligne ouverte sous la série,
     // où elle se corrige.
     if (!s.done) {
+      // CI1f : série notée par mini-séries : le total fait foi.
+      if (s.partsTotal case final total?) s.reps = '$total';
       final pre = checkSet(sp, s, rpe: store.settings.rpe);
       if (!pre.ok) {
         setState(() => _issues[(k, i)] = pre);
@@ -1351,12 +1360,44 @@ class SessionExercisePageState extends State<SessionExercisePage> {
     );
   }
 
+  /// CI1f : groupe d'exercices enchaînés de la page (tous ses exercices
+  /// en font partie) ; null : page ordinaire.
+  late final kc.GroupSpec? _group = () {
+    kc.GroupSpec? g;
+    for (final e in widget.exs) {
+      final x = store.exerciseGroupOf(widget.week.n, widget.day.j, e);
+      if (x == null || (g != null && x.groupId != g.groupId)) return null;
+      g = x;
+    }
+    return g;
+  }();
+
   @override
   Widget build(BuildContext context) => ListView(
     key: PageStorageKey('exercise-scroll-${widget.exs.first.id}'),
     keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
     padding: const EdgeInsets.fromLTRB(KSpace.page, 2, KSpace.page, 10),
     children: [
+      if (_group case final g?) ...[
+        _GroupCard(
+          group: g,
+          names: [for (final e in widget.exs) store.splitName(e.name).$1],
+          result: widget.readOnly
+              ? widget.history!.groups[g.groupId]
+              : store
+                    .sessionLog(widget.week.n, widget.day.j)
+                    .groups[g.groupId],
+          readOnly: widget.readOnly,
+          timer: widget.timer,
+          onResult: (r) {
+            store.sessionLog(widget.week.n, widget.day.j).groups[g.groupId] =
+                r;
+            store.saveLogs(affectsProgression: false);
+            setState(() {});
+          },
+        ),
+        const SizedBox(height: 12),
+      ],
       for (var k = 0; k < widget.exs.length; k++) ...[
         if (k > 0) const SizedBox(height: 12),
         _block(k),
@@ -1440,7 +1481,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                if (chained)
+                if (chained && _group == null)
                   Padding(
                     padding: const EdgeInsets.only(bottom: 6),
                     child: _chip(
@@ -1598,6 +1639,22 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                 ],
                 if (!readOnly && widget.adapt && ex.engine) ..._coachPanel(ex),
                 if (!readOnly && widget.adapt && ex.engine) ..._adaptNotes(ex),
+                // CI1f : « N × ? reps » servi sur une référence estimée.
+                if (!readOnly)
+                  if (store.referenceEstimateText(
+                        widget.adapt && ex.engine
+                            ? (store.programExerciseOf(widget.week.n, widget.day.j, ex) ?? ex)
+                            : ex,
+                      )
+                      case final t?)
+                    Padding(
+                      key: ValueKey('reference-estimate-${ex.id}'),
+                      padding: const EdgeInsets.only(top: 6),
+                      child: Text(
+                        t,
+                        style: TextStyle(color: SL.dim, fontSize: 12.5),
+                      ),
+                    ),
                 if (prev != null) ...[
                   const SizedBox(height: 6),
                   InkWell(
@@ -1638,7 +1695,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
             ),
           ),
           // ----- Chronos de mode -----
-          if (!readOnly && interval != null && ex.timer == null)
+          if (!readOnly && interval != null && ex.timer == null && _group == null)
             _big(
               SL.bordeaux,
               Icons.timer,
@@ -1649,9 +1706,12 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                 interval.rest,
               ),
             ),
-          if (!readOnly && ex.timer != null && !sp.cluster)
+          if (!readOnly && ex.timer != null && !sp.cluster && _group == null)
             _modeButton(ex, SL.bordeaux),
-          if (!readOnly && ex.timer == null && sp.kind == 'emom')
+          if (!readOnly &&
+              ex.timer == null &&
+              sp.kind == 'emom' &&
+              _group == null)
             _big(
               SL.bordeaux,
               Icons.timer,
@@ -1706,6 +1766,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
               _SetRow(
                 key: ValueKey('${ex.id}-$i-$epoch'),
                 label: rowLabel(i),
+                lockReps: (log.sets[i].parts?.isNotEmpty ?? false),
                 entry: log.sets[i],
                 spec: sp,
                 showKg: showKg,
@@ -1736,6 +1797,28 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                       )
                     : null,
               ),
+              if (!readOnly &&
+                  !log.sets[i].done &&
+                  widget.adapt &&
+                  ex.engine)
+                if (store.miniSetPlanFor(widget.week.n, widget.day.j, ex, i)
+                    case final plan?)
+                  _MiniSetStrip(
+                    key: ValueKey('miniset-${ex.id}-$i-$epoch'),
+                    id: '${ex.id}-$i',
+                    plan: plan,
+                    entry: log.sets[i],
+                    onChanged: () {
+                      log.sets[i].edited = true;
+                      store.saveLogs(affectsProgression: false);
+                      setState(() => epoch++);
+                    },
+                    onIntra: (sec) => widget.timer.single(
+                      'INTRA',
+                      sec,
+                      prepare: false,
+                    ),
+                  ),
               if (flameSets && log.sets[i].done && !readOnly)
                 FlameTrack(
                   setLabel: rowLabel(i),
@@ -2062,8 +2145,13 @@ class _SetRow extends StatefulWidget {
 
   /// Koach (D11) : appui long sur le numéro d'une série validée.
   final VoidCallback? onLongPressLabel;
+
+  /// CI1f : série notée mini-série par mini-série : le total se calcule
+  /// (champ des répétitions en lecture).
+  final bool lockReps;
   const _SetRow({
     super.key,
+    this.lockReps = false,
     this.issue,
     this.onEdited,
     this.onLongPressLabel,
@@ -2112,8 +2200,9 @@ class _SetRowState extends State<_SetRow> {
     int flex = 3,
     bool decimal = true,
     String? label,
+    bool locked = false,
   }) {
-    if (widget.readOnly) {
+    if (widget.readOnly || locked) {
       return Flexible(
         flex: flex,
         child: ConstrainedBox(
@@ -2219,6 +2308,7 @@ class _SetRowState extends State<_SetRow> {
                 (t) => e.reps = t,
                 flex: k == 'repsMax' ? 4 : 3,
                 decimal: false,
+                locked: widget.lockReps && !widget.readOnly,
               ),
               if (widget.showRir && !compact) ...[
                 _gap,
@@ -2337,6 +2427,527 @@ class _SetRowState extends State<_SetRow> {
             ),
           ],
         ],
+      ),
+    );
+  }
+}
+
+// -------------------------------- GROUPES --------------------------------
+
+String _mmss(int s) =>
+    '${s ~/ 60}:${(s % 60).toString().padLeft(2, '0')}';
+
+String _minutes(int s) => s % 60 == 0 ? '${s ~/ 60}\u00A0min' : _mmss(s);
+
+/// CI1f : libellé d'un groupe (« EMOM 12 min », « Circuit · 3 tours »…).
+String groupTitle(kc.GroupSpec g) {
+  final rounds = g.rounds;
+  final rest = g.restBetweenRoundsSeconds;
+  final restText = rest == null || rest == 0
+      ? ''
+      : ' · ${rest >= 60 ? _minutes(rest) : '$rest\u00A0s'} entre deux tours';
+  return switch (g.format) {
+    kc.GroupFormat.superset =>
+      'Superset${rounds == null ? '' : ' · $rounds tours'}$restText',
+    kc.GroupFormat.circuit => 'Circuit · ${rounds ?? 1} tours$restText',
+    kc.GroupFormat.roundsForTime =>
+      '${rounds ?? 1} tours pour le temps'
+          '${g.timeCapSeconds == null ? '' : ' (limite ${_minutes(g.timeCapSeconds!)})'}',
+    kc.GroupFormat.amrap =>
+      'AMRAP ${_minutes(g.durationSeconds ?? 60)} : un maximum de tours',
+    kc.GroupFormat.emom =>
+      'EMOM ${_minutes(g.durationSeconds ?? 60)}'
+          '${(g.intervalSeconds ?? 60) == 60 ? '' : ' (départ toutes les ${g.intervalSeconds}\u00A0s)'}',
+    kc.GroupFormat.chipper =>
+      'Chipper : tout, une fois, au meilleur temps'
+          '${g.timeCapSeconds == null ? '' : ' (limite ${_minutes(g.timeCapSeconds!)})'}',
+    kc.GroupFormat.intervals =>
+      'Intervalles · ${rounds ?? 1} × ${g.intervalSeconds ?? 60}\u00A0s'
+          '${rest == null || rest == 0 ? '' : ', récupération $rest\u00A0s'}',
+  };
+}
+
+/// Consigne courte d'un groupe.
+String groupHint(kc.GroupSpec g, int members) => switch (g.format) {
+  kc.GroupFormat.emom =>
+    members > 1
+        ? 'Chaque minute, enchaîne les exercices dans l’ordre ; le repos '
+              'est ce qui reste de la minute.'
+        : 'Chaque minute, fais tes répétitions ; le repos est ce qui reste '
+              'de la minute.',
+  kc.GroupFormat.amrap =>
+    'Enchaîne les exercices dans l’ordre, tour après tour, jusqu’au bout '
+        'du chrono, à un rythme tenable.',
+  kc.GroupFormat.roundsForTime || kc.GroupFormat.chipper =>
+    'Lance le chrono, enchaîne dans l’ordre, note ton temps à la fin.',
+  kc.GroupFormat.intervals =>
+    'Effort pendant le temps donné, puis récupération ; garde le même '
+        'rythme du premier au dernier tour.',
+  _ =>
+    members > 1
+        ? 'Enchaîne les exercices dans l’ordre, puis récupère entre deux '
+              'tours.'
+        : 'Un tour, puis la récupération prévue.',
+};
+
+/// CI1f : en-tête d'un groupe d'exercices enchaînés (format, ordre,
+/// chrono du groupe) et son résultat (tours, temps), journalisé avec le
+/// groupe.
+class _GroupCard extends StatefulWidget {
+  final kc.GroupSpec group;
+  final List<String> names;
+  final Map<String, dynamic>? result;
+  final bool readOnly;
+  final TimerCtl timer;
+  final void Function(Map<String, dynamic> result) onResult;
+  const _GroupCard({
+    required this.group,
+    required this.names,
+    required this.result,
+    required this.readOnly,
+    required this.timer,
+    required this.onResult,
+  });
+
+  @override
+  State<_GroupCard> createState() => _GroupCardState();
+}
+
+class _GroupCardState extends State<_GroupCard> {
+  late int rounds;
+  late int extra;
+  late final TextEditingController time;
+
+  kc.GroupSpec get g => widget.group;
+
+  bool get _timed =>
+      g.format == kc.GroupFormat.roundsForTime ||
+      g.format == kc.GroupFormat.chipper;
+
+  /// Tours prévus (null : maximum, AMRAP ; une fois, chipper).
+  int? get _planned => switch (g.format) {
+    kc.GroupFormat.amrap || kc.GroupFormat.chipper => null,
+    kc.GroupFormat.emom =>
+      ((g.durationSeconds ?? 60) / (g.intervalSeconds ?? 60)).round(),
+    _ => g.rounds ?? 1,
+  };
+
+  @override
+  void initState() {
+    super.initState();
+    final r = widget.result;
+    rounds = r?['rounds'] is int ? r!['rounds'] as int : (_planned ?? 0);
+    extra = r?['extraReps'] is int ? r!['extraReps'] as int : 0;
+    final e = r?['elapsed'];
+    time = TextEditingController(text: e is int ? _mmss(e) : '');
+  }
+
+  @override
+  void dispose() {
+    time.dispose();
+    super.dispose();
+  }
+
+  int? _elapsed() {
+    final m = RegExp(r'^(\d+)(?::(\d{1,2}))?$').firstMatch(time.text.trim());
+    if (m == null) return null;
+    final a = int.parse(m.group(1)!);
+    final b = m.group(2) == null ? null : int.parse(m.group(2)!);
+    final s = b == null ? a * 60 : a * 60 + b;
+    return s > 86400 ? null : s;
+  }
+
+  void _save() {
+    final planned = _planned;
+    final elapsed = _timed ? _elapsed() : null;
+    final cap = g.timeCapSeconds;
+    widget.onResult({
+      if (g.format != kc.GroupFormat.chipper) 'rounds': rounds,
+      if (g.format == kc.GroupFormat.amrap) 'extraReps': extra,
+      if (elapsed != null) 'elapsed': elapsed,
+      'completed': switch (g.format) {
+        kc.GroupFormat.amrap => true,
+        kc.GroupFormat.chipper => elapsed != null && (cap == null || elapsed <= cap),
+        kc.GroupFormat.roundsForTime =>
+          rounds >= (planned ?? 1) &&
+              (cap == null || elapsed == null || elapsed <= cap),
+        _ => rounds >= (planned ?? 1),
+      },
+    });
+  }
+
+  void _startClock() {
+    final interval = g.intervalSeconds ?? 60;
+    switch (g.format) {
+      case kc.GroupFormat.emom:
+        widget.timer.emom(
+          ((g.durationSeconds ?? 60) / interval).round().clamp(1, 240),
+          interval,
+        );
+      case kc.GroupFormat.amrap:
+        widget.timer.single('AMRAP', g.durationSeconds ?? 60);
+      case kc.GroupFormat.intervals:
+        widget.timer.startInterval(
+          g.rounds ?? 1,
+          interval,
+          g.restBetweenRoundsSeconds ?? interval,
+        );
+      case kc.GroupFormat.roundsForTime || kc.GroupFormat.chipper:
+        widget.timer.stopwatch('CHRONO');
+      default:
+        final rest = g.restBetweenRoundsSeconds;
+        if (rest != null && rest > 0) widget.timer.startRest(rest);
+    }
+  }
+
+  String get _clockLabel => switch (g.format) {
+    kc.GroupFormat.emom => 'Lancer l’EMOM',
+    kc.GroupFormat.amrap => 'Lancer l’AMRAP',
+    kc.GroupFormat.intervals => 'Lancer les intervalles',
+    kc.GroupFormat.roundsForTime ||
+    kc.GroupFormat.chipper => 'Lancer le chrono',
+    _ => 'Récupération entre deux tours',
+  };
+
+  Widget _stepper(String label, int value, void Function(int) on, Key key) =>
+      Row(
+        children: [
+          Expanded(child: Text(label, style: TextStyle(color: SL.dim))),
+          IconButton(
+            tooltip: '$label : un de moins',
+            icon: const Icon(Icons.remove, size: 20),
+            onPressed: widget.readOnly || value <= 0
+                ? null
+                : () {
+                    setState(() => on(value - 1));
+                    _save();
+                  },
+          ),
+          Text(
+            '$value',
+            key: key,
+            style: KControl.numberStyle.copyWith(color: SL.text),
+          ),
+          IconButton(
+            tooltip: '$label : un de plus',
+            icon: const Icon(Icons.add, size: 20),
+            onPressed: widget.readOnly || value >= 1000
+                ? null
+                : () {
+                    setState(() => on(value + 1));
+                    _save();
+                  },
+          ),
+        ],
+      );
+
+  @override
+  Widget build(BuildContext context) {
+    final names = widget.names;
+    final planned = _planned;
+    return KCard(
+      key: ValueKey('group-card-${g.groupId}'),
+      accent: SL.accent,
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(
+            'ENCHAÎNEMENT',
+            style: TextStyle(
+              color: SL.accent,
+              fontSize: 11.5,
+              fontWeight: FontWeight.w700,
+              letterSpacing: 0.4,
+            ),
+          ),
+          const SizedBox(height: 2),
+          Text(
+            groupTitle(g),
+            key: ValueKey('group-title-${g.groupId}'),
+            style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 16),
+          ),
+          if (names.length > 1)
+            Padding(
+              padding: const EdgeInsets.only(top: 4),
+              child: Text(
+                [
+                  for (var i = 0; i < names.length; i++)
+                    '${i + 1}. ${names[i]}',
+                ].join('  ·  '),
+                style: TextStyle(color: SL.text, fontSize: 13),
+              ),
+            ),
+          Padding(
+            padding: const EdgeInsets.only(top: 4),
+            child: Text(
+              groupHint(g, names.length),
+              style: TextStyle(color: SL.dim, fontSize: 12.5),
+            ),
+          ),
+          if (!widget.readOnly)
+            Padding(
+              padding: const EdgeInsets.only(top: 8),
+              child: FilledButton.icon(
+                key: ValueKey('group-clock-${g.groupId}'),
+                style: FilledButton.styleFrom(
+                  backgroundColor: SL.bordeaux,
+                  foregroundColor: SL.onFill(SL.bordeaux),
+                ),
+                icon: const Icon(Icons.timer),
+                label: Text(_clockLabel),
+                onPressed: _startClock,
+              ),
+            ),
+          const SizedBox(height: 6),
+          Text(
+            'Résultat du groupe',
+            style: TextStyle(
+              color: SL.text,
+              fontWeight: FontWeight.w600,
+              fontSize: 13,
+            ),
+          ),
+          if (g.format != kc.GroupFormat.chipper)
+            _stepper(
+              planned == null ? 'Tours complets' : 'Tours faits (sur $planned)',
+              rounds,
+              (v) => rounds = v,
+              ValueKey('group-rounds-${g.groupId}'),
+            ),
+          if (g.format == kc.GroupFormat.amrap)
+            _stepper(
+              'Répétitions du tour entamé',
+              extra,
+              (v) => extra = v,
+              ValueKey('group-extra-${g.groupId}'),
+            ),
+          if (_timed)
+            Row(
+              children: [
+                Expanded(
+                  child: Text('Temps (min:s)', style: TextStyle(color: SL.dim)),
+                ),
+                SizedBox(
+                  width: 96,
+                  child: TextField(
+                    key: ValueKey('group-time-${g.groupId}'),
+                    controller: time,
+                    enabled: !widget.readOnly,
+                    keyboardType: TextInputType.datetime,
+                    textAlign: TextAlign.center,
+                    decoration: logDeco(hint: '12:30'),
+                    onChanged: (_) => _save(),
+                  ),
+                ),
+              ],
+            ),
+        ],
+      ),
+    );
+  }
+}
+
+// ------------------------------ MINI-SÉRIES ------------------------------
+
+/// CI1f : saisie d'une série mini-série par mini-série (cluster,
+/// rest-pause, myo-reps) : chaque mini-série s'ajoute une à une (valeur
+/// proposée, −/+), le mini-repos se lance, le total remplit la série.
+class _MiniSetStrip extends StatefulWidget {
+  final String id;
+  final MiniSetPlan plan;
+  final SetEntry entry;
+  final VoidCallback onChanged;
+  final void Function(int seconds) onIntra;
+  const _MiniSetStrip({
+    super.key,
+    required this.id,
+    required this.plan,
+    required this.entry,
+    required this.onChanged,
+    required this.onIntra,
+  });
+
+  @override
+  State<_MiniSetStrip> createState() => _MiniSetStripState();
+}
+
+class _MiniSetStripState extends State<_MiniSetStrip> {
+  late int value;
+
+  List<SetPartEntry> get _parts => widget.entry.parts ?? const [];
+
+  @override
+  void initState() {
+    super.initState();
+    value = widget.plan.suggested(_parts.length);
+  }
+
+  void _add() {
+    final parts = [...?widget.entry.parts];
+    parts.add(
+      SetPartEntry(
+        value,
+        restBefore: parts.isEmpty ? null : widget.plan.intra,
+      ),
+    );
+    widget.entry.parts = parts;
+    widget.entry.reps = '${widget.entry.partsTotal}';
+    if (store.settings.vibration) HapticFeedback.lightImpact();
+    final left = widget.plan.left(parts.length);
+    if (left > 0 && store.settings.autoTimer) {
+      widget.onIntra(widget.plan.intra);
+    }
+    widget.onChanged();
+  }
+
+  void _removeLast() {
+    final parts = [...?widget.entry.parts];
+    if (parts.isEmpty) return;
+    parts.removeLast();
+    widget.entry.parts = parts.isEmpty ? null : parts;
+    final t = widget.entry.partsTotal;
+    widget.entry.reps = t == null ? '' : '$t';
+    widget.onChanged();
+  }
+
+  String get _title => switch (widget.plan.kind) {
+    kc.SetTechniqueKind.myoReps => 'Myo-reps : activation, puis mini-séries',
+    kc.SetTechniqueKind.cluster =>
+      'Cluster : ${widget.plan.cap + 1} mini-séries de ${widget.plan.next}',
+    _ => 'Rest-pause : série, puis relances',
+  };
+
+  String _partLabel(int i) => switch (widget.plan.kind) {
+    kc.SetTechniqueKind.myoReps => i == 0 ? 'Act.' : 'M$i',
+    kc.SetTechniqueKind.restPause => i == 0 ? 'Série' : 'R$i',
+    _ => '${i + 1}',
+  };
+
+  @override
+  Widget build(BuildContext context) {
+    final plan = widget.plan;
+    final parts = _parts;
+    final left = plan.left(parts.length);
+    final unit = plan.seconds ? ' s' : '';
+    final dim = TextStyle(color: SL.dim, fontSize: 12.5);
+    final advice = left == 0
+        ? (plan.exact
+              ? 'Toutes les mini-séries sont faites : valide la série.'
+              : 'Plafond atteint : valide la série.')
+        : parts.isEmpty
+        ? (plan.kind == kc.SetTechniqueKind.myoReps
+              ? 'Note l’activation, puis chaque mini-série.'
+              : 'Note chaque mini-série à la fin de son effort.')
+        : plan.exact
+        ? 'Encore $left mini-série${left > 1 ? 's' : ''} '
+              '(${plan.intra} s entre deux).'
+        : 'Encore $left mini-série${left > 1 ? 's' : ''} au plus '
+              '(${plan.intra} s entre deux) ; arrête dès qu’une '
+              'mini-série n’atteint plus ${plan.next}$unit.';
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(_wLabel + 6, 4, 0, 6),
+      child: Semantics(
+        container: true,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              _title,
+              style: TextStyle(
+                color: SL.accent,
+                fontSize: 11.5,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+            if (parts.isNotEmpty)
+              Padding(
+                padding: const EdgeInsets.only(top: 4),
+                child: Wrap(
+                  spacing: 6,
+                  runSpacing: 4,
+                  children: [
+                    for (var i = 0; i < parts.length; i++)
+                      Container(
+                        key: ValueKey('miniset-part-${widget.id}-$i'),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 8,
+                          vertical: 4,
+                        ),
+                        decoration: BoxDecoration(
+                          color: SL.accent.withValues(
+                            alpha: SL.dark ? .16 : .10,
+                          ),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Text(
+                          '${_partLabel(i)} ${parts[i].value}$unit',
+                          style: TextStyle(
+                            color: SL.text,
+                            fontSize: 12.5,
+                            fontWeight: FontWeight.w600,
+                            fontFeatures: _tab,
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+            Padding(
+              padding: const EdgeInsets.only(top: 4),
+              child: Text(
+                advice,
+                key: ValueKey('miniset-advice-${widget.id}'),
+                style: dim,
+              ),
+            ),
+            if (left > 0)
+              Row(
+                children: [
+                  IconButton(
+                    tooltip: 'Une de moins',
+                    icon: const Icon(Icons.remove, size: 20),
+                    onPressed: value > 0
+                        ? () => setState(() => value--)
+                        : null,
+                  ),
+                  Text(
+                    '$value$unit',
+                    key: ValueKey('miniset-value-${widget.id}'),
+                    style: KControl.numberStyle.copyWith(color: SL.text),
+                  ),
+                  IconButton(
+                    tooltip: 'Une de plus',
+                    icon: const Icon(Icons.add, size: 20),
+                    onPressed: value < 1000
+                        ? () => setState(() => value++)
+                        : null,
+                  ),
+                  const SizedBox(width: 4),
+                  Flexible(
+                    child: FilledButton.tonal(
+                      key: ValueKey('miniset-add-${widget.id}'),
+                      onPressed: _add,
+                      child: Text(
+                        parts.isEmpty
+                            ? (plan.kind == kc.SetTechniqueKind.myoReps
+                                  ? 'Noter l’activation'
+                                  : 'Noter la 1re mini-série')
+                            : 'Noter la mini-série',
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            if (parts.isNotEmpty)
+              TextButton(
+                key: ValueKey('miniset-undo-${widget.id}'),
+                onPressed: _removeLast,
+                child: const Text('Retirer la dernière mini-série'),
+              ),
+          ],
+        ),
       ),
     );
   }

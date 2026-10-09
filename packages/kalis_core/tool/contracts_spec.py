@@ -1626,5 +1626,14 @@ REASONS += [
     ("plan.pain_rule", {"zone": "string", "continueBelow": "int", "regressAt": "int", "stopAt": "int"}, "Conduite à tenir selon la gêne ressentie (échelle de 0 à 10) : continuer en dessous d'un seuil, alléger, arrêter."),
 ]
 
+REASONS += [
+    # ---- adapt, ajoutés en 0.4.3 (lot CA2, évolution additive) : endurance, conditionnement ----
+    ("adapt.run_capped", {"percent": "int"}, "Course du jour raccourcie : pas plus de `percent` % au-dessus de la plus longue course des 30 derniers jours."),
+    ("adapt.easy_instead", {"cause": "string"}, "Séance de qualité (allure, fractionné, test de course) servie en endurance facile un jour sans."),
+    ("adapt.endurance_shortened", {"cause": "string", "percent": "int"}, "Durée, distance ou nombre de répétitions d'une ligne d'endurance ramenés à `percent` % de l'écrit (bilan bas, reprise après une coupure)."),
+    ("adapt.wod_scaled", {"cause": "string", "percent": "int"}, "Pièce de conditionnement mise à l'échelle : `percent` % des répétitions ou de la durée écrites (jour sans, jours durs de suite)."),
+    ("adapt.cross_fatigue", {"cause": "string"}, "Fatigue croisée : effort visé abaissé sur le bas du corps après une course dure la veille."),
+]
+
 SCHEMA_VERSIONS = {t.name: t.schema_version for t in TYPES if t.schema_version is not None}
 MODULES = ["common", "profile", "journal", "plan", "adapt", "quest", "season"]

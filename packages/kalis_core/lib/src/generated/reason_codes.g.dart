@@ -431,6 +431,26 @@ abstract final class ReasonCodes {
   /// Conduite à tenir selon la gêne ressentie (échelle de 0 à 10) : continuer
   /// en dessous d'un seuil, alléger, arrêter.
   static const String planPainRule = 'plan.pain_rule';
+
+  /// Course du jour raccourcie : pas plus de `percent` % au-dessus de la plus
+  /// longue course des 30 derniers jours.
+  static const String adaptRunCapped = 'adapt.run_capped';
+
+  /// Séance de qualité (allure, fractionné, test de course) servie en endurance
+  /// facile un jour sans.
+  static const String adaptEasyInstead = 'adapt.easy_instead';
+
+  /// Durée, distance ou nombre de répétitions d'une ligne d'endurance ramenés à
+  /// `percent` % de l'écrit (bilan bas, reprise après une coupure).
+  static const String adaptEnduranceShortened = 'adapt.endurance_shortened';
+
+  /// Pièce de conditionnement mise à l'échelle : `percent` % des répétitions ou
+  /// de la durée écrites (jour sans, jours durs de suite).
+  static const String adaptWodScaled = 'adapt.wod_scaled';
+
+  /// Fatigue croisée : effort visé abaissé sur le bas du corps après une course
+  /// dure la veille.
+  static const String adaptCrossFatigue = 'adapt.cross_fatigue';
 }
 
 /// Registre des codes de raison et de leurs paramètres typés.
@@ -864,5 +884,22 @@ const List<ReasonSpec> reasonRegistry = <ReasonSpec>[
     'continueBelow': ReasonParamType.integer,
     'regressAt': ReasonParamType.integer,
     'stopAt': ReasonParamType.integer,
+  }),
+  ReasonSpec(ReasonCodes.adaptRunCapped, <String, ReasonParamType>{
+    'percent': ReasonParamType.integer,
+  }),
+  ReasonSpec(ReasonCodes.adaptEasyInstead, <String, ReasonParamType>{
+    'cause': ReasonParamType.text,
+  }),
+  ReasonSpec(ReasonCodes.adaptEnduranceShortened, <String, ReasonParamType>{
+    'cause': ReasonParamType.text,
+    'percent': ReasonParamType.integer,
+  }),
+  ReasonSpec(ReasonCodes.adaptWodScaled, <String, ReasonParamType>{
+    'cause': ReasonParamType.text,
+    'percent': ReasonParamType.integer,
+  }),
+  ReasonSpec(ReasonCodes.adaptCrossFatigue, <String, ReasonParamType>{
+    'cause': ReasonParamType.text,
   }),
 ];
