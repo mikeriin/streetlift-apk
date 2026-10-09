@@ -1,0 +1,498 @@
+{
+ "vues": {
+  "face": {
+   "largeur": 511,
+   "hauteur": 980,
+   "regions": [
+    "trapeze_superieur",
+    "sterno_cleido_mastoidien",
+    "cou",
+    "deltoide_anterieur",
+    "deltoide_moyen",
+    "grand_pectoral",
+    "dentele_anterieur",
+    "biceps",
+    "brachial",
+    "triceps_lateral",
+    "brachio_radial",
+    "flechisseurs",
+    "extenseurs",
+    "droit_abdomen",
+    "oblique_externe",
+    "tenseur_fascia_lata",
+    "iliopsoas",
+    "couturier",
+    "pectine",
+    "adducteurs",
+    "droit_femoral",
+    "vaste_lateral",
+    "vaste_medial",
+    "gastrocnemien_medial",
+    "soleaire",
+    "fibulaires",
+    "tibial_anterieur",
+    "extenseurs_orteils"
+   ]
+  },
+  "dos": {
+   "largeur": 489,
+   "hauteur": 976,
+   "regions": [
+    "trapeze_superieur",
+    "trapeze_moyen",
+    "trapeze_inferieur",
+    "rhomboides",
+    "extenseurs_cervicaux",
+    "sterno_cleido_mastoidien",
+    "deltoide_moyen",
+    "deltoide_posterieur",
+    "sous_epineux",
+    "grand_rond",
+    "grand_dorsal",
+    "triceps_long",
+    "triceps_lateral",
+    "triceps_medial",
+    "brachio_radial",
+    "flechisseurs",
+    "extenseurs",
+    "oblique_externe",
+    "lombaires",
+    "grand_fessier",
+    "moyen_fessier",
+    "adducteurs",
+    "vaste_lateral",
+    "biceps_femoral",
+    "semi_tendineux",
+    "gastrocnemien_medial",
+    "gastrocnemien_lateral",
+    "soleaire",
+    "fibulaires"
+   ]
+  },
+  "profil": {
+   "largeur": 187,
+   "hauteur": 980,
+   "regions": [
+    "trapeze_superieur",
+    "extenseurs_cervicaux",
+    "sterno_cleido_mastoidien",
+    "cou",
+    "deltoide_anterieur",
+    "deltoide_moyen",
+    "deltoide_posterieur",
+    "grand_dorsal",
+    "grand_pectoral",
+    "dentele_anterieur",
+    "biceps",
+    "triceps_long",
+    "triceps_lateral",
+    "brachio_radial",
+    "flechisseurs",
+    "extenseurs",
+    "droit_abdomen",
+    "oblique_externe",
+    "grand_fessier",
+    "droit_femoral",
+    "vaste_lateral",
+    "biceps_femoral",
+    "semi_tendineux",
+    "gastrocnemien_lateral",
+    "soleaire",
+    "fibulaires",
+    "tibial_anterieur",
+    "extenseurs_orteils"
+   ]
+  }
+ },
+ "groupes": [
+  "trapezes",
+  "deltoides",
+  "coiffe",
+  "pectoraux",
+  "dorsaux",
+  "biceps",
+  "triceps",
+  "avant_bras",
+  "abdominaux",
+  "obliques",
+  "lombaires",
+  "fessiers",
+  "quadriceps",
+  "ischios",
+  "adducteurs",
+  "mollets",
+  "tibial"
+ ],
+ "regions": [
+  {
+   "id": "trapeze_superieur",
+   "nom": "Trapèze supérieur",
+   "muscles": [
+    "trapeze_superieur"
+   ],
+   "groupe": "trapezes"
+  },
+  {
+   "id": "trapeze_moyen",
+   "nom": "Trapèze moyen",
+   "muscles": [
+    "trapeze_moyen"
+   ],
+   "groupe": "trapezes"
+  },
+  {
+   "id": "trapeze_inferieur",
+   "nom": "Trapèze inférieur",
+   "muscles": [
+    "trapeze_inferieur"
+   ],
+   "groupe": "trapezes"
+  },
+  {
+   "id": "rhomboides",
+   "nom": "Rhomboïdes",
+   "muscles": [
+    "rhomboides"
+   ],
+   "groupe": "trapezes"
+  },
+  {
+   "id": "extenseurs_cervicaux",
+   "nom": "Extenseurs du cou (splénius)",
+   "muscles": [
+    "extenseurs_cervicaux"
+   ],
+   "groupe": null
+  },
+  {
+   "id": "sterno_cleido_mastoidien",
+   "nom": "Sterno-cléido-mastoïdien",
+   "muscles": [
+    "sterno_cleido_mastoidien"
+   ],
+   "groupe": null
+  },
+  {
+   "id": "cou",
+   "nom": "Muscles du cou (sus- et sous-hyoïdiens, scalènes)",
+   "muscles": [],
+   "groupe": null
+  },
+  {
+   "id": "deltoide_anterieur",
+   "nom": "Deltoïde antérieur",
+   "muscles": [
+    "deltoide_anterieur"
+   ],
+   "groupe": "deltoides"
+  },
+  {
+   "id": "deltoide_moyen",
+   "nom": "Deltoïde moyen",
+   "muscles": [
+    "deltoide_moyen"
+   ],
+   "groupe": "deltoides"
+  },
+  {
+   "id": "deltoide_posterieur",
+   "nom": "Deltoïde postérieur",
+   "muscles": [
+    "deltoide_posterieur"
+   ],
+   "groupe": "deltoides"
+  },
+  {
+   "id": "sous_epineux",
+   "nom": "Sous-épineux et petit rond",
+   "muscles": [
+    "infra_epineux",
+    "petit_rond"
+   ],
+   "groupe": "coiffe"
+  },
+  {
+   "id": "grand_rond",
+   "nom": "Grand rond",
+   "muscles": [
+    "grand_rond"
+   ],
+   "groupe": "dorsaux"
+  },
+  {
+   "id": "grand_dorsal",
+   "nom": "Grand dorsal",
+   "muscles": [
+    "grand_dorsal"
+   ],
+   "groupe": "dorsaux"
+  },
+  {
+   "id": "grand_pectoral",
+   "nom": "Grand pectoral",
+   "muscles": [
+    "grand_pectoral_claviculaire",
+    "grand_pectoral_sterno_costal",
+    "grand_pectoral_abdominal"
+   ],
+   "groupe": "pectoraux"
+  },
+  {
+   "id": "dentele_anterieur",
+   "nom": "Dentelé antérieur",
+   "muscles": [
+    "dentele_anterieur"
+   ],
+   "groupe": "pectoraux"
+  },
+  {
+   "id": "biceps",
+   "nom": "Biceps brachial",
+   "muscles": [
+    "biceps_chef_long",
+    "biceps_chef_court"
+   ],
+   "groupe": "biceps"
+  },
+  {
+   "id": "brachial",
+   "nom": "Brachial",
+   "muscles": [
+    "brachial"
+   ],
+   "groupe": "biceps"
+  },
+  {
+   "id": "triceps_long",
+   "nom": "Triceps, chef long",
+   "muscles": [
+    "triceps_chef_long"
+   ],
+   "groupe": "triceps"
+  },
+  {
+   "id": "triceps_lateral",
+   "nom": "Triceps, chef latéral",
+   "muscles": [
+    "triceps_chef_lateral"
+   ],
+   "groupe": "triceps"
+  },
+  {
+   "id": "triceps_medial",
+   "nom": "Triceps, chef médial et anconé",
+   "muscles": [
+    "triceps_chef_medial",
+    "ancone"
+   ],
+   "groupe": "triceps"
+  },
+  {
+   "id": "brachio_radial",
+   "nom": "Brachio-radial",
+   "muscles": [
+    "brachio_radial"
+   ],
+   "groupe": "avant_bras"
+  },
+  {
+   "id": "flechisseurs",
+   "nom": "Fléchisseurs du poignet et des doigts, rond pronateur",
+   "muscles": [
+    "flechisseurs_du_poignet",
+    "flechisseurs_superficiels_des_doigts",
+    "rond_pronateur"
+   ],
+   "groupe": "avant_bras"
+  },
+  {
+   "id": "extenseurs",
+   "nom": "Extenseurs du poignet et des doigts",
+   "muscles": [
+    "extenseurs_du_poignet",
+    "extenseurs_des_doigts"
+   ],
+   "groupe": "avant_bras"
+  },
+  {
+   "id": "droit_abdomen",
+   "nom": "Grand droit de l’abdomen",
+   "muscles": [
+    "droit_abdomen"
+   ],
+   "groupe": "abdominaux"
+  },
+  {
+   "id": "oblique_externe",
+   "nom": "Oblique externe",
+   "muscles": [
+    "oblique_externe"
+   ],
+   "groupe": "obliques"
+  },
+  {
+   "id": "lombaires",
+   "nom": "Érecteurs du rachis (fascia thoraco-lombaire)",
+   "muscles": [
+    "erecteurs_lombaires",
+    "erecteurs_thoraciques"
+   ],
+   "groupe": "lombaires"
+  },
+  {
+   "id": "grand_fessier",
+   "nom": "Grand fessier",
+   "muscles": [
+    "grand_fessier"
+   ],
+   "groupe": "fessiers"
+  },
+  {
+   "id": "moyen_fessier",
+   "nom": "Moyen fessier",
+   "muscles": [
+    "moyen_fessier"
+   ],
+   "groupe": "fessiers"
+  },
+  {
+   "id": "tenseur_fascia_lata",
+   "nom": "Tenseur du fascia lata",
+   "muscles": [
+    "tenseur_fascia_lata"
+   ],
+   "groupe": "fessiers"
+  },
+  {
+   "id": "iliopsoas",
+   "nom": "Ilio-psoas",
+   "muscles": [
+    "grand_psoas",
+    "iliaque"
+   ],
+   "groupe": null
+  },
+  {
+   "id": "couturier",
+   "nom": "Couturier",
+   "muscles": [
+    "sartorius"
+   ],
+   "groupe": null
+  },
+  {
+   "id": "pectine",
+   "nom": "Pectiné",
+   "muscles": [
+    "pectine"
+   ],
+   "groupe": "adducteurs"
+  },
+  {
+   "id": "adducteurs",
+   "nom": "Long et grand adducteurs, gracile",
+   "muscles": [
+    "long_adducteur",
+    "grand_adducteur",
+    "gracile"
+   ],
+   "groupe": "adducteurs"
+  },
+  {
+   "id": "droit_femoral",
+   "nom": "Droit fémoral",
+   "muscles": [
+    "droit_femoral"
+   ],
+   "groupe": "quadriceps"
+  },
+  {
+   "id": "vaste_lateral",
+   "nom": "Vaste latéral",
+   "muscles": [
+    "vaste_lateral"
+   ],
+   "groupe": "quadriceps"
+  },
+  {
+   "id": "vaste_medial",
+   "nom": "Vaste médial",
+   "muscles": [
+    "vaste_medial"
+   ],
+   "groupe": "quadriceps"
+  },
+  {
+   "id": "biceps_femoral",
+   "nom": "Biceps fémoral",
+   "muscles": [
+    "biceps_femoral",
+    "biceps_femoral_chef_court"
+   ],
+   "groupe": "ischios"
+  },
+  {
+   "id": "semi_tendineux",
+   "nom": "Semi-tendineux et semi-membraneux",
+   "muscles": [
+    "semi_tendineux",
+    "semi_membraneux"
+   ],
+   "groupe": "ischios"
+  },
+  {
+   "id": "gastrocnemien_medial",
+   "nom": "Gastrocnémien médial",
+   "muscles": [
+    "gastrocnemien_medial"
+   ],
+   "groupe": "mollets"
+  },
+  {
+   "id": "gastrocnemien_lateral",
+   "nom": "Gastrocnémien latéral",
+   "muscles": [
+    "gastrocnemien_lateral"
+   ],
+   "groupe": "mollets"
+  },
+  {
+   "id": "soleaire",
+   "nom": "Soléaire",
+   "muscles": [
+    "soleaire"
+   ],
+   "groupe": "mollets"
+  },
+  {
+   "id": "fibulaires",
+   "nom": "Long et court fibulaires (loge latérale)",
+   "muscles": [
+    "fibulaires"
+   ],
+   "groupe": "mollets"
+  },
+  {
+   "id": "tibial_anterieur",
+   "nom": "Tibial antérieur",
+   "muscles": [
+    "tibial_anterieur"
+   ],
+   "groupe": "tibial"
+  },
+  {
+   "id": "extenseurs_orteils",
+   "nom": "Extenseurs des orteils et de l’hallux",
+   "muscles": [
+    "long_extenseur_des_orteils"
+   ],
+   "groupe": "tibial"
+  }
+ ],
+ "etiquettes": {
+  "regions": "1…44 (rang dans regions)",
+  "sombre": 253,
+  "peau": 254
+ },
+ "source": "tools/muscles2d/source_carte.png (image détaillée du propriétaire, 30/09/2026)"
+}

@@ -1,0 +1,165 @@
+{
+ "schemaVersion": 1,
+ "key": "street_17_hybride_street_course",
+ "group": "street",
+ "title": "Hybride street et course",
+ "summary": "Femme de 31 ans, 60 kg, deux ans de street workout et de course. 8 tractions, 14 dips, 25 pompes ; 10 km en 52 minutes. Veut progresser sur les deux. Cinq séances.",
+ "level": "intermediate",
+ "trainingAgeMonths": 24,
+ "core": {
+  "sex": "female",
+  "birthYear": 1995,
+  "heightCm": 168,
+  "bodyWeightKg": 60.0,
+  "disciplines": {
+   "primary": "street_workout",
+   "primaryPct": 60,
+   "secondaries": [
+    {
+     "discipline": "cardio",
+     "pct": 40
+    }
+   ]
+  },
+  "availability": [
+   {
+    "weekday": 1,
+    "minutes": 60
+   },
+   {
+    "weekday": 2,
+    "minutes": 45
+   },
+   {
+    "weekday": 4,
+    "minutes": 60
+   },
+   {
+    "weekday": 6,
+    "minutes": 60
+   },
+   {
+    "weekday": 7,
+    "minutes": 75
+   }
+  ],
+  "places": [
+   "exterieur"
+  ],
+  "equipment": [
+   "barre fixe",
+   "barres parallèles",
+   "barre basse",
+   "élastique",
+   "piste ou terrain extérieur",
+   "côte ou escaliers"
+  ],
+  "loadIncrements": [],
+  "likedExerciseIds": [],
+  "dislikedExerciseIds": [],
+  "experience": "intermediate",
+  "guidanceMode": "assisted",
+  "healthScreening": {
+   "questionnaireId": "kalis-sante-l13-v1",
+   "answeredOn": "2026-10-01",
+   "outcome": "standard"
+  }
+ },
+ "records": [
+  {
+   "exerciseId": "sw-traction-pronation",
+   "measure": "max_reps",
+   "value": 8
+  },
+  {
+   "exerciseId": "sw-dips-barres-paralleles",
+   "measure": "max_reps",
+   "value": 14
+  },
+  {
+   "exerciseId": "sw-pompe",
+   "measure": "max_reps",
+   "value": 25
+  },
+  {
+   "exerciseId": "ca-footing-endurance-fondamentale",
+   "measure": "time_seconds",
+   "value": 3120,
+   "distanceMeters": 10000
+  }
+ ],
+ "goals": [
+  {
+   "id": "g1",
+   "exerciseId": "sw-traction-pronation",
+   "metric": "max_reps",
+   "targetValue": 11,
+   "weeksOut": 12
+  },
+  {
+   "id": "g2",
+   "exerciseId": "ca-footing-endurance-fondamentale",
+   "metric": "time_seconds",
+   "targetValue": 3000,
+   "distanceMeters": 10000,
+   "weeksOut": 12
+  }
+ ],
+ "expectations": {
+  "text": [
+   "Force et course séparées de 6 heures ou sur des jours différents ; force d'abord si même séance (R6-P30, R5-P19).",
+   "Jambes lourdes à distance des séances de course intenses ; volume de jambes modéré (R5-P19).",
+   "Course : 75 à 85 % du temps en endurance facile, une séance de qualité par semaine ; aucune sortie au-delà de 110 % de la plus longue des 30 derniers jours (R6-P15, R6-P16).",
+   "Street : tractions et dips deux à trois fois par semaine."
+  ],
+  "checks": [
+   {
+    "id": "c1",
+    "type": "min_weekly_minutes",
+    "label": "Au moins 90 minutes de course par semaine",
+    "kind": "cardio",
+    "minutes": 90
+   },
+   {
+    "id": "c2",
+    "type": "min_frequency",
+    "label": "Tractions au moins deux fois par semaine",
+    "exerciseIds": [
+     "sw-traction-pronation"
+    ],
+    "perWeek": 2
+   },
+   {
+    "id": "c3",
+    "type": "min_frequency",
+    "label": "Dips au moins deux fois par semaine",
+    "exerciseIds": [
+     "sw-dips-barres-paralleles"
+    ],
+    "perWeek": 2
+   },
+   {
+    "id": "c4",
+    "type": "pattern_present",
+    "label": "Au plus une séance de course intense par semaine : une séance de fractionné présente",
+    "patterns": [
+     "cardio_fractionne"
+    ],
+    "perWeek": 0.5
+   },
+   {
+    "id": "c5",
+    "type": "max_group_sets",
+    "label": "Quadriceps : pas plus de 12 séries dures par semaine",
+    "group": "quads",
+    "sets": 12
+   },
+   {
+    "id": "c6",
+    "type": "relief_every",
+    "label": "Pas plus de 6 semaines de charge sans allègement",
+    "weeks": 6
+   }
+  ]
+ }
+}

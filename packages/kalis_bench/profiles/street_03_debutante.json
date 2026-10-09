@@ -1,0 +1,159 @@
+{
+ "schemaVersion": 1,
+ "key": "street_03_debutante",
+ "group": "street",
+ "title": "Débutante, objectif première traction",
+ "summary": "Femme de 29 ans, 58 kg, active mais jamais entraînée en force. Veut sa première traction et de vraies pompes. Trois séances d'une heure, à la maison (barre de traction) et au parc.",
+ "level": "beginner",
+ "trainingAgeMonths": 2,
+ "core": {
+  "sex": "female",
+  "birthYear": 1997,
+  "heightCm": 165,
+  "bodyWeightKg": 58.0,
+  "streetMode": {
+   "primary": "sets_reps",
+   "streetliftingPct": 0,
+   "setsRepsPct": 70,
+   "calisthenicsPct": 30
+  },
+  "disciplines": {
+   "primary": "street_workout",
+   "primaryPct": 70,
+   "secondaries": [
+    {
+     "discipline": "calisthenics",
+     "pct": 30
+    }
+   ]
+  },
+  "availability": [
+   {
+    "weekday": 1,
+    "minutes": 60
+   },
+   {
+    "weekday": 3,
+    "minutes": 60
+   },
+   {
+    "weekday": 6,
+    "minutes": 60
+   }
+  ],
+  "places": [
+   "maison",
+   "exterieur"
+  ],
+  "equipment": [
+   "barre fixe",
+   "barres parallèles",
+   "barre basse",
+   "élastique",
+   "tapis"
+  ],
+  "loadIncrements": [],
+  "likedExerciseIds": [],
+  "dislikedExerciseIds": [],
+  "experience": "beginner",
+  "guidanceMode": "assisted",
+  "healthScreening": {
+   "questionnaireId": "kalis-sante-l13-v1",
+   "answeredOn": "2026-10-01",
+   "outcome": "standard"
+  }
+ },
+ "records": [
+  {
+   "exerciseId": "sw-traction-pronation",
+   "measure": "max_reps",
+   "value": 0
+  },
+  {
+   "exerciseId": "sw-pompe",
+   "measure": "max_reps",
+   "value": 3
+  },
+  {
+   "exerciseId": "sw-dips-barres-paralleles",
+   "measure": "max_reps",
+   "value": 0
+  },
+  {
+   "exerciseId": "sw-dead-hang",
+   "measure": "max_hold_seconds",
+   "value": 25
+  }
+ ],
+ "goals": [
+  {
+   "id": "g1",
+   "exerciseId": "sw-traction-pronation",
+   "metric": "max_reps",
+   "targetValue": 1,
+   "weeksOut": 12
+  },
+  {
+   "id": "g2",
+   "exerciseId": "sw-pompe",
+   "metric": "max_reps",
+   "targetValue": 10,
+   "weeksOut": 12
+  }
+ ],
+ "expectations": {
+  "text": [
+   "Même programme qu'un débutant : le sexe ne change ni les volumes, ni les intensités relatives, ni la progression ; seuls changent les paliers de départ au haut du corps (R5-P11).",
+   "Davantage de paliers intermédiaires vers la traction et le dips (assistance dégressive, négatives, row) (R5-P8, R5-P11).",
+   "Aucune périodisation sur le cycle menstruel (R5-P12)."
+  ],
+  "checks": [
+   {
+    "id": "c1",
+    "type": "min_rir_first_weeks",
+    "label": "Au moins 3 répétitions en réserve les quatre premières semaines",
+    "weeks": 4,
+    "rir": 3
+   },
+   {
+    "id": "c2",
+    "type": "min_frequency",
+    "label": "Travail de traction adapté au moins deux fois par semaine",
+    "exerciseIds": [
+     "sw-traction-assistee-elastique",
+     "sw-traction-negative",
+     "sw-active-hang",
+     "sw-traction-assistee-pieds-au-sol",
+     "sw-traction-scapulaire"
+    ],
+    "exact": true,
+    "perWeek": 2
+   },
+   {
+    "id": "c3",
+    "type": "min_frequency",
+    "label": "Pompes (ou un palier) au moins deux fois par semaine",
+    "exerciseIds": [
+     "sw-pompe"
+    ],
+    "perWeek": 2
+   },
+   {
+    "id": "c4",
+    "type": "pattern_present",
+    "label": "Jambes au moins deux fois par semaine",
+    "patterns": [
+     "squat",
+     "fente"
+    ],
+    "perWeek": 2
+   },
+   {
+    "id": "c5",
+    "type": "max_exercise_level",
+    "label": "Aucun exercice de niveau avancé ou élite",
+    "level": "Intermédiaire"
+   }
+  ]
+ }
+}
