@@ -5891,6 +5891,22 @@ index 00000000..1734386f
 +  }
 +  return b.toString();
 +}
+diff --git a/packages/kalis_bench/lib/src/export.dart b/packages/kalis_bench/lib/src/export.dart
+index e1ae9584..cbd34fb5 100644
+--- a/packages/kalis_bench/lib/src/export.dart
++++ b/packages/kalis_bench/lib/src/export.dart
+@@ -413,7 +413,10 @@ bool _isBlockNote(Reason r) {
+       note == CoachNotes.submaximalHold ||
+       note == CoachNotes.qualityFirst ||
+       note == CoachNotes.everyMinute ||
+-      note == CoachNotes.generalWarmup;
++      note == CoachNotes.generalWarmup ||
++      note == CoachNotes.warmupRun ||
++      note == CoachNotes.warmupGym ||
++      note == CoachNotes.warmupHealth;
+ }
+ 
+ /// Nom français de l'intention d'une semaine.
 diff --git a/packages/kalis_bench/lib/src/report.dart b/packages/kalis_bench/lib/src/report.dart
 index d9555687..ecf1740c 100644
 --- a/packages/kalis_bench/lib/src/report.dart
@@ -6384,7 +6400,7 @@ index 96fa529b..d9dac3c5 100644
  SCALES = {
      "experience": ["beginner", "intermediate", "advanced", "elite"],
 diff --git a/packages/kalis_plan/CHANGELOG.md b/packages/kalis_plan/CHANGELOG.md
-index 9e49e513..3ec99974 100644
+index 9e49e513..c860cac7 100644
 --- a/packages/kalis_plan/CHANGELOG.md
 +++ b/packages/kalis_plan/CHANGELOG.md
 @@ -1,5 +1,55 @@
@@ -6431,8 +6447,8 @@ index 9e49e513..3ec99974 100644
 +  n'est pas compté dans la durée des séances.
 +- Mode prudent (questionnaire de santé, 65 ans et plus) : CrossFit écrit en programme de santé ; course sans
 +  séance de qualité.
-+- Notes : `general_warmup` et `short_version` portent un paramètre additif `family` (`run`, `gym`, `health`) ;
-+  `value` reste en minutes ; nouvelles notes `wod_pace`, `chair_squat`, `knee_shallow`, `balance_progress`,
++- Notes : échauffement et version courte propres à la discipline (`warmup_run`, `warmup_gym`, `warmup_health`,
++  `short_run`, `short_health` ; `value` en minutes) ; nouvelles notes `wod_pace`, `chair_squat`, `knee_shallow`, `balance_progress`,
 +  `hold_support` (`docs/NOTES_COACH.md`).
 +- **Changements qui touchent aussi le chemin street** (sécurité ou correction ; vérifiés par la passe complète du
 +  panel street de fin de lot) : une charge écrite au-dessus du 1RM de travail (barre vide trop lourde) devient
@@ -6498,7 +6514,7 @@ index 2df88371..3bf2c0fd 100644
  Les deux générateurs reçoivent les mêmes 40 profils types (kalis_core). L'ancien générateur (L10, version 1.0.0, graine 0) ne lit qu'une partie du profil : la traduction est décrite dans `tool/l10_export_test.dart.txt`. Semaine comparée : la semaine 3 de L10 (première semaine de charge sans calibrage) et la dernière semaine de montée de kalis_plan. Chaque durée est celle que le générateur estime lui-même ; les séries par groupe sont recomptées de la même façon des deux côtés (muscle principal 1, muscle secondaire 0,5, exercices de travail seulement).
  
 diff --git a/packages/kalis_plan/docs/NOTES_COACH.md b/packages/kalis_plan/docs/NOTES_COACH.md
-index 4edb056e..3a014275 100644
+index 4edb056e..f9e444f7 100644
 --- a/packages/kalis_plan/docs/NOTES_COACH.md
 +++ b/packages/kalis_plan/docs/NOTES_COACH.md
 @@ -172,3 +172,22 @@ autre raison, il rend `null` : le texte générique de `kalis_core` s'applique.
@@ -6511,9 +6527,9 @@ index 4edb056e..3a014275 100644
 +Depuis 0.3.0, le coach écrit aussi les autres disciplines (`lib/src/coach/general.dart`). Les notes ci-dessous
 +s'ajoutent ; aucune valeur existante ne change de sens.
 +
-+- `general_warmup` et `short_version` portent un paramètre **additif** `family` hors street : `run` (course),
-+  `gym` (musculation, force, conditionnement), `health` (santé, mobilité, senior). `value` reste en minutes. Le
-+  texte décrit l'échauffement et la version courte de la discipline. Sans `family` : texte du street.
++- Hors street, l'échauffement et la version courte ont leurs propres codes (la `value` reste en minutes) :
++  `warmup_run` (course), `warmup_gym` (musculation, force, conditionnement), `warmup_health` (santé, mobilité,
++  senior) à la place de `general_warmup` ; `short_run` et `short_health` à la place de `short_version`.
 +
 +| Code | `value` | Émise quand | Texte rendu (résumé) |
 +| --- | --- | --- | --- |
@@ -7998,10 +8014,10 @@ index e60ff23c..1a6e83f5 100644
  final class Skeleton {
    /// Squelette.
 diff --git a/packages/kalis_plan/lib/src/coach/prescribe.dart b/packages/kalis_plan/lib/src/coach/prescribe.dart
-index ab5d3da5..a11491af 100644
+index ab5d3da5..bc6a9eb1 100644
 --- a/packages/kalis_plan/lib/src/coach/prescribe.dart
 +++ b/packages/kalis_plan/lib/src/coach/prescribe.dart
-@@ -122,6 +122,24 @@ abstract final class CoachNotes {
+@@ -122,6 +122,39 @@ abstract final class CoachNotes {
    /// lourds (`value` : part du 1RM à partir de laquelle la note s'écrit).
    static const String safetyPins = 'safety_pins';
  
@@ -8023,10 +8039,25 @@ index ab5d3da5..a11491af 100644
 +  /// Exercice debout d'un senior tenu d'une main (CP2, partie 1).
 +  static const String holdSupport = 'hold_support';
 +
++  /// Échauffement du coureur (`value` : minutes ; CP2, partie 1).
++  static const String warmupRun = 'warmup_run';
++
++  /// Échauffement de salle et de conditionnement (`value` : minutes).
++  static const String warmupGym = 'warmup_gym';
++
++  /// Échauffement de santé et de mobilité (`value` : minutes).
++  static const String warmupHealth = 'warmup_health';
++
++  /// Version courte d'un jour chargé, course (`value` : minutes).
++  static const String shortRun = 'short_run';
++
++  /// Version courte d'un jour chargé, santé (`value` : minutes).
++  static const String shortHealth = 'short_health';
++
    /// Repère d'un objectif de répétitions sans lest au matériel (`value` :
    /// valeur attendue) : la surcharge passe par une variante plus dure
    /// (CP2, partie 0, boucle 2).
-@@ -418,6 +436,11 @@ abstract final class CoachNotes {
+@@ -418,6 +451,16 @@ abstract final class CoachNotes {
      missed,
      checkpoint,
      safetyPins,
@@ -8035,10 +8066,15 @@ index ab5d3da5..a11491af 100644
 +    kneeShallow,
 +    balanceProgress,
 +    holdSupport,
++    warmupRun,
++    warmupGym,
++    warmupHealth,
++    shortRun,
++    shortHealth,
      checkpointBody,
      checkpointHold,
      checkpointLoad,
-@@ -588,6 +611,11 @@ double coachWarmupFor(int minutes) {
+@@ -588,6 +631,11 @@ double coachWarmupFor(int minutes) {
  /// Vitesse de course prise pour convertir une durée en distance, en m/s.
  const double coachRunMetersPerSecond = 2.5;
  
@@ -8050,7 +8086,7 @@ index ab5d3da5..a11491af 100644
  int _round(double x) => (x + 0.5).floor();
  
  double _round2(double v) => (v * 100).roundToDouble() / 100;
-@@ -830,6 +858,13 @@ final class _WeekTrace {
+@@ -830,6 +878,13 @@ final class _WeekTrace {
    /// Plus longue tenue écrite de la semaine par exercice de maintien du
    /// débutant (secondes par série).
    final Map<String, int> holds = <String, int>{};
@@ -8064,7 +8100,7 @@ index ab5d3da5..a11491af 100644
  }
  
  /// Racine d'un mouvement au poids du corps compté en répétitions, pour le
-@@ -1087,7 +1122,13 @@ final class Prescriber {
+@@ -1087,7 +1142,13 @@ final class Prescriber {
    }
  
    int _scaled(int sets, WeekSpec ws, {int min = 1}) {
@@ -8079,7 +8115,7 @@ index ab5d3da5..a11491af 100644
      // Semaine de l'échéance ou du test daté : deux séries au plus par
      // exercice — le volume continue de baisser jusqu'au test (R3-P12).
      if (ws.eventWeek && n > 2) {
-@@ -1381,6 +1422,17 @@ final class Prescriber {
+@@ -1381,6 +1442,17 @@ final class Prescriber {
        final shown = load == null
            ? p
            : (load + (e.bodyweightFraction?.value ?? 0) * a.bodyWeight) / total;
@@ -8097,7 +8133,7 @@ index ab5d3da5..a11491af 100644
        x
          ..percent = _round3(shown)
          ..share = p
-@@ -3574,8 +3626,22 @@ final class Prescriber {
+@@ -3574,8 +3646,22 @@ final class Prescriber {
          basis == LoadBasis.bodyweightPlusExternal) {
        final total = a.totalOneRm(e.id);
        if (total != null) {
@@ -8122,7 +8158,7 @@ index ab5d3da5..a11491af 100644
        } else {
          x
            ..calibrate = true
-@@ -3677,6 +3743,42 @@ final class Prescriber {
+@@ -3677,6 +3763,42 @@ final class Prescriber {
    // ------------------------------------------------------------------ course
  
    _Draft? _run(SlotSpec s, int day, WeekSpec ws, _DayRole role) {
@@ -8165,7 +8201,7 @@ index ab5d3da5..a11491af 100644
      if (role == _DayRole.event) {
        return null;
      }
-@@ -3717,33 +3819,62 @@ final class Prescriber {
+@@ -3717,33 +3839,62 @@ final class Prescriber {
      }
      // Test chronométré : la sortie longue de la semaine de test devient le
      // test de l'objectif (la moitié de la distance à mi-parcours).
@@ -8251,7 +8287,7 @@ index ab5d3da5..a11491af 100644
      }
      if (s.method == Method.runQuality &&
          s.note != 'goal_pace' &&
-@@ -3760,6 +3891,11 @@ final class Prescriber {
+@@ -3760,6 +3911,11 @@ final class Prescriber {
        if (reps < 4) {
          reps = 4;
        }
@@ -8263,7 +8299,7 @@ index ab5d3da5..a11491af 100644
        if (role == _DayRole.primerFar) {
          // Semaine de l'épreuve : trois fractions, pour garder l'allure
          // sans fatigue (R6-P20, affûtage).
-@@ -3773,7 +3909,8 @@ final class Prescriber {
+@@ -3773,7 +3929,8 @@ final class Prescriber {
        // longues à l'allure de l'objectif) : stimulus de vitesse aérobie.
        final three = a.runTimeOn(3000);
        if (meters > 0 && three != null) {
@@ -8273,7 +8309,7 @@ index ab5d3da5..a11491af 100644
        }
        if (meters > 0) {
          x
-@@ -3795,18 +3932,53 @@ final class Prescriber {
+@@ -3795,18 +3952,53 @@ final class Prescriber {
        }
        return x;
      }
@@ -8331,7 +8367,7 @@ index ab5d3da5..a11491af 100644
      if (!warm) {
        minutes *= easy ? 0.7 : 1;
        if (role != _DayRole.normal) {
-@@ -3816,8 +3988,15 @@ final class Prescriber {
+@@ -3816,8 +4008,15 @@ final class Prescriber {
        if (minutes > cap) {
          minutes = cap;
        }
@@ -8349,7 +8385,7 @@ index ab5d3da5..a11491af 100644
        }
      }
      final whole = minutes.floor();
-@@ -3840,6 +4019,110 @@ final class Prescriber {
+@@ -3840,6 +4039,110 @@ final class Prescriber {
      return x;
    }
  
@@ -8460,7 +8496,7 @@ index ab5d3da5..a11491af 100644
    // ------------------------------------------------------------------ tests
  
    _Draft _testOf(
-@@ -4288,6 +4571,13 @@ final class Prescriber {
+@@ -4288,6 +4591,13 @@ final class Prescriber {
        return null;
      }
      if (role == _DayRole.event) {
@@ -8474,7 +8510,7 @@ index ab5d3da5..a11491af 100644
        return s.method == Method.warmupPrep ? _warmup(s, ws, role) : null;
      }
      if (role == _DayRole.primerNear) {
-@@ -4325,7 +4615,11 @@ final class Prescriber {
+@@ -4325,7 +4635,11 @@ final class Prescriber {
        return s.method == Method.mobility ? _mobility(s, ws, role) : null;
      }
      final unit = a.catalog.find(s.exerciseId)?.unit;
@@ -8487,7 +8523,7 @@ index ab5d3da5..a11491af 100644
        return _run(s, day, ws, role);
      }
      // Épreuve de répétitions, phase de réalisation : la première séance de
-@@ -4365,6 +4659,34 @@ final class Prescriber {
+@@ -4365,6 +4679,34 @@ final class Prescriber {
        return x;
      }
      final x = _dosed(s, day, week, ws, role);
@@ -8522,7 +8558,7 @@ index ab5d3da5..a11491af 100644
      if (x != null && s.note == 'pain_step' && x.e.id == s.exerciseId) {
        // (Recul d'étape pour douleur : la raison et le retour sont écrits —
        // panel CX, correction 1, passe 5, `street_10`.)
-@@ -4638,6 +4960,8 @@ final class Prescriber {
+@@ -4638,6 +4980,8 @@ final class Prescriber {
          return _mobility(s, ws, role);
        case Method.runEasy || Method.runLong || Method.runQuality:
          return _run(s, day, ws, role);
@@ -8531,7 +8567,7 @@ index ab5d3da5..a11491af 100644
        default:
          return _accessory(s, ws, week, role);
      }
-@@ -5151,6 +5475,24 @@ final class Prescriber {
+@@ -5151,6 +5495,24 @@ final class Prescriber {
          if (a.rejection(id, day) != null) {
            continue;
          }
@@ -8556,7 +8592,7 @@ index ab5d3da5..a11491af 100644
          final e = a.catalog.exercise(id);
          SlotSpec? own;
          for (final s in spec.slots) {
-@@ -5313,7 +5655,9 @@ final class Prescriber {
+@@ -5313,7 +5675,9 @@ final class Prescriber {
                : Method.cutRank(x.method));
      // 0. La marche de fin de séance prend le temps qui reste, rien de plus.
      for (final x in <_Draft>[...items]) {
@@ -8567,7 +8603,7 @@ index ab5d3da5..a11491af 100644
          continue;
        }
        final over = _daySeconds(items, minutes) - budget;
-@@ -5327,7 +5671,11 @@ final class Prescriber {
+@@ -5327,7 +5691,11 @@ final class Prescriber {
        } else {
          x
            ..secondsLow = kept
@@ -8580,7 +8616,7 @@ index ab5d3da5..a11491af 100644
        }
      }
      var guard = 0;
-@@ -6724,6 +7072,16 @@ final class Prescriber {
+@@ -6724,6 +7092,16 @@ final class Prescriber {
      final groupOf = <_Draft, String>{};
      for (final entry in members.entries) {
        final list = entry.value;
@@ -8597,7 +8633,7 @@ index ab5d3da5..a11491af 100644
        if (list.length < 2) {
          continue;
        }
-@@ -6795,6 +7153,172 @@ final class Prescriber {
+@@ -6795,6 +7173,172 @@ final class Prescriber {
      );
    }
  
@@ -8770,7 +8806,7 @@ index ab5d3da5..a11491af 100644
    /// Charge l'historique des garde-fous avec les semaines du bloc
    /// précédent [weeks].
    void seed(List<WeekPrescription> weeks) {
-@@ -6846,6 +7370,20 @@ final class Prescriber {
+@@ -6846,6 +7390,20 @@ final class Prescriber {
              trace.groups[g.index] += p.sets * t.creditOf(g) / 2;
            }
          }
@@ -8791,7 +8827,7 @@ index ab5d3da5..a11491af 100644
          final family = straightArmFamilyOf(t.exercise);
          final hold = p.secondsHigh;
          if (family >= 0 && hold != null && t.kind.isResistance) {
-@@ -6905,7 +7443,22 @@ final class Prescriber {
+@@ -6905,7 +7463,22 @@ final class Prescriber {
    List<WeekPrescription> build() {
      final out = <WeekPrescription>[];
      for (var w = 0; w < _shape.weeks.length; w++) {
@@ -8815,7 +8851,7 @@ index ab5d3da5..a11491af 100644
        _today = a.start.addDays(7 * w);
        if (w == 0) {
          _loadedBefore = 0;
-@@ -7008,6 +7561,31 @@ final class Prescriber {
+@@ -7008,6 +7581,31 @@ final class Prescriber {
            break;
          }
        }
@@ -8847,7 +8883,7 @@ index ab5d3da5..a11491af 100644
        _history.add(w < kept.length ? _traceOf(kept[w]) : trace);
        if (ws.kind == WeekKind.build || ws.kind == WeekKind.intro) {
          _loadedBefore++;
-@@ -7025,10 +7603,24 @@ final class Prescriber {
+@@ -7025,10 +7623,24 @@ final class Prescriber {
          _testsDone++;
        }
        out.add(
@@ -8874,7 +8910,7 @@ index ab5d3da5..a11491af 100644
            days: <DayPrescription>[
              for (var d = 0; d < a.dayCount; d++) _freezeDay(d, days[d], ws),
            ],
-@@ -7067,6 +7659,19 @@ double? coachWeightClassOf(Sex? sex, double bodyWeight) {
+@@ -7067,6 +7679,19 @@ double? coachWeightClassOf(Sex? sex, double bodyWeight) {
  }
  
  /// Raisons du bloc : phase, échéance, lecture du profil, règles de douleur.
@@ -8894,14 +8930,20 @@ index ab5d3da5..a11491af 100644
  List<Reason> blockReasonsOf(Athlete a, Skeleton skeleton) {
    final shape = skeleton.shape;
    final target = shape.target;
-@@ -7086,9 +7691,18 @@ List<Reason> blockReasonsOf(Athlete a, Skeleton skeleton) {
+@@ -7084,11 +7709,23 @@ List<Reason> blockReasonsOf(Athlete a, Skeleton skeleton) {
+     for (final r in skeleton.reasons)
+       if (r.params['note'] == CoachNotes.skillHorizon) r,
      reason(ReasonCodes.planCoachNote, <String, Object?>{
-       'note': CoachNotes.generalWarmup,
+-      'note': CoachNotes.generalWarmup,
++      // Échauffement de la discipline (CP2, partie 1 ; R6-P25) : code de
++      // note propre à la famille, la valeur reste en minutes.
++      'note': switch (_warmupFamily(skeleton.style)) {
++        'run' => CoachNotes.warmupRun,
++        'gym' => CoachNotes.warmupGym,
++        'health' => CoachNotes.warmupHealth,
++        _ => CoachNotes.generalWarmup,
++      },
        'value': coachWarmupSeconds / 60,
-+      // Échauffement de la discipline (CP2, partie 1 ; R6-P25) : paramètre
-+      // additif, la valeur reste en minutes.
-+      if (_warmupFamily(skeleton.style) != null)
-+        'family': _warmupFamily(skeleton.style),
      }),
    ];
 -  final tests = shape.weeks.any((w) => w.testWeek);
@@ -8914,17 +8956,19 @@ index ab5d3da5..a11491af 100644
    Reason note(String code, double value) => reason(
      ReasonCodes.planCoachNote,
      <String, Object?>{'note': code, 'value': value},
-@@ -7192,7 +7806,14 @@ List<Reason> blockReasonsOf(Athlete a, Skeleton skeleton) {
+@@ -7192,7 +7829,16 @@ List<Reason> blockReasonsOf(Athlete a, Skeleton skeleton) {
      ..add(
        note(CoachNotes.badDay, profile.sleep == SleepBand.under6Hours ? 2 : 1),
      )
 -    ..add(note(CoachNotes.shortVersion, shortest >= 50 ? 25 : 15))
 +    ..add(
 +      reason(ReasonCodes.planCoachNote, <String, Object?>{
-+        'note': CoachNotes.shortVersion,
++        'note': switch (_warmupFamily(skeleton.style)) {
++          'run' => CoachNotes.shortRun,
++          'health' => CoachNotes.shortHealth,
++          _ => CoachNotes.shortVersion,
++        },
 +        'value': shortest >= 50 ? 25 : 15,
-+        if (_warmupFamily(skeleton.style) != null)
-+          'family': _warmupFamily(skeleton.style),
 +      }),
 +    )
      ..add(note(CoachNotes.redFlags, 0))
@@ -8995,19 +9039,19 @@ index 3ef13167..c2e2d0e8 100644
    var mobility = 0;
    for (final s in a.profile.disciplines.secondaries) {
 diff --git a/packages/kalis_plan/lib/src/coach/texts.dart b/packages/kalis_plan/lib/src/coach/texts.dart
-index 2adae957..005c5141 100644
+index 2adae957..8d734a57 100644
 --- a/packages/kalis_plan/lib/src/coach/texts.dart
 +++ b/packages/kalis_plan/lib/src/coach/texts.dart
 @@ -420,6 +420,15 @@ String? coachReasonText(Reason r, Catalog catalog) {
            'Arrêt immédiat et avis médical : douleur dans la poitrine, '
                'essoufflement anormal, malaise ou vertige. Souffle pendant '
                "l'effort, sans bloquer la respiration sur les séries longues.",
-+        CoachNotes.shortVersion when p['family'] == 'health' =>
++        CoachNotes.shortHealth =>
 +          'Jour chargé : version courte de ${_int(v)} min — 3 min de '
 +              "marche, l'exercice de jambes et l'équilibre, puis 3 min "
 +              "d'étirements. Une séance courte vaut mieux qu'une séance "
 +              'sautée.',
-+        CoachNotes.shortVersion when p['family'] == 'run' =>
++        CoachNotes.shortRun =>
 +          'Jour chargé : version courte de ${_int(v)} min — 5 min de '
 +              'marche rapide puis footing facile, sans fractions. Une '
 +              "séance courte vaut mieux qu'une séance sautée.",
@@ -9079,18 +9123,18 @@ index 2adae957..005c5141 100644
          CoachNotes.easyPace =>
            'Allure de conversation (tu peux parler en phrases), '
                '${_int(v)} min.',
-+        CoachNotes.generalWarmup when p['family'] == 'health' =>
++        CoachNotes.warmupHealth =>
 +          "Chaque séance commence par ${_int(v)} min d'échauffement "
 +              '(comptées dans la durée estimée) : marche sur place ou '
 +              'marche rapide, puis mobilité debout des épaules (bâton), des '
 +              'hanches et des chevilles, près d\'un appui.',
-+        CoachNotes.generalWarmup when p['family'] == 'gym' =>
++        CoachNotes.warmupGym =>
 +          "Chaque séance commence par ${_int(v)} min d'échauffement "
 +              '(comptées dans la durée estimée) : 3 à 5 min de cardio léger '
 +              '(rameur, vélo), mobilité des épaules et des hanches, puis '
 +              'les séries de montée en charge du premier exercice (barre '
 +              'vide, puis deux ou trois paliers).',
-+        CoachNotes.generalWarmup when p['family'] == 'run' =>
++        CoachNotes.warmupRun =>
 +          "Chaque séance commence par ${_int(v)} min d'échauffement "
 +              '(comptées dans la durée estimée) : 5 min de trot progressif, '
 +              'mobilité des chevilles et des hanches, gammes (montées de '

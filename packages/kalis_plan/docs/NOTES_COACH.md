@@ -178,9 +178,9 @@ autre raison, il rend `null` : le texte générique de `kalis_core` s'applique.
 Depuis 0.3.0, le coach écrit aussi les autres disciplines (`lib/src/coach/general.dart`). Les notes ci-dessous
 s'ajoutent ; aucune valeur existante ne change de sens.
 
-- `general_warmup` et `short_version` portent un paramètre **additif** `family` hors street : `run` (course),
-  `gym` (musculation, force, conditionnement), `health` (santé, mobilité, senior). `value` reste en minutes. Le
-  texte décrit l'échauffement et la version courte de la discipline. Sans `family` : texte du street.
+- Hors street, l'échauffement et la version courte ont leurs propres codes (la `value` reste en minutes) :
+  `warmup_run` (course), `warmup_gym` (musculation, force, conditionnement), `warmup_health` (santé, mobilité,
+  senior) à la place de `general_warmup` ; `short_run` et `short_health` à la place de `short_version`.
 
 | Code | `value` | Émise quand | Texte rendu (résumé) |
 | --- | --- | --- | --- |

@@ -420,12 +420,12 @@ String? coachReasonText(Reason r, Catalog catalog) {
           'Arrêt immédiat et avis médical : douleur dans la poitrine, '
               'essoufflement anormal, malaise ou vertige. Souffle pendant '
               "l'effort, sans bloquer la respiration sur les séries longues.",
-        CoachNotes.shortVersion when p['family'] == 'health' =>
+        CoachNotes.shortHealth =>
           'Jour chargé : version courte de ${_int(v)} min — 3 min de '
               "marche, l'exercice de jambes et l'équilibre, puis 3 min "
               "d'étirements. Une séance courte vaut mieux qu'une séance "
               'sautée.',
-        CoachNotes.shortVersion when p['family'] == 'run' =>
+        CoachNotes.shortRun =>
           'Jour chargé : version courte de ${_int(v)} min — 5 min de '
               'marche rapide puis footing facile, sans fractions. Une '
               "séance courte vaut mieux qu'une séance sautée.",
@@ -879,18 +879,18 @@ String? coachReasonText(Reason r, Catalog catalog) {
         CoachNotes.easyPace =>
           'Allure de conversation (tu peux parler en phrases), '
               '${_int(v)} min.',
-        CoachNotes.generalWarmup when p['family'] == 'health' =>
+        CoachNotes.warmupHealth =>
           "Chaque séance commence par ${_int(v)} min d'échauffement "
               '(comptées dans la durée estimée) : marche sur place ou '
               'marche rapide, puis mobilité debout des épaules (bâton), des '
               'hanches et des chevilles, près d\'un appui.',
-        CoachNotes.generalWarmup when p['family'] == 'gym' =>
+        CoachNotes.warmupGym =>
           "Chaque séance commence par ${_int(v)} min d'échauffement "
               '(comptées dans la durée estimée) : 3 à 5 min de cardio léger '
               '(rameur, vélo), mobilité des épaules et des hanches, puis '
               'les séries de montée en charge du premier exercice (barre '
               'vide, puis deux ou trois paliers).',
-        CoachNotes.generalWarmup when p['family'] == 'run' =>
+        CoachNotes.warmupRun =>
           "Chaque séance commence par ${_int(v)} min d'échauffement "
               '(comptées dans la durée estimée) : 5 min de trot progressif, '
               'mobilité des chevilles et des hanches, gammes (montées de '

@@ -1,0 +1,104 @@
+{
+ "street_01_debutant_complet": {
+  "calisthenie": 7,
+  "force": 9,
+  "hypertrophie": 9,
+  "sante": 8
+ },
+ "street_02_debutant_surpoids": {
+  "calisthenie": 8,
+  "force": 8,
+  "hypertrophie": 7,
+  "sante": 8
+ },
+ "street_03_debutante": {
+  "calisthenie": 6.5,
+  "force": 6.5,
+  "hypertrophie": 5,
+  "sante": 7
+ },
+ "street_04_reprise_longue_pause": {
+  "calisthenie": 9,
+  "force": 9,
+  "hypertrophie": 8,
+  "sante": 9
+ },
+ "street_05_inter_calisthenie_front_lever": {
+  "calisthenie": 7,
+  "force": 6.5,
+  "hypertrophie": 7,
+  "sante": 7
+ },
+ "street_06_inter_sets_reps": {
+  "calisthenie": 8,
+  "force": 7,
+  "hypertrophie": 7.5,
+  "sante": 8
+ },
+ "street_07_avance_streetlifting_competition": {
+  "calisthenie": 9,
+  "force": 8,
+  "hypertrophie": 9,
+  "sante": 9
+ },
+ "street_08_avance_sets_reps_competition": {
+  "calisthenie": 8,
+  "force": 8,
+  "hypertrophie": 7,
+  "sante": 9
+ },
+ "street_09_elite_streetlifting": {
+  "calisthenie": 7,
+  "force": 8,
+  "hypertrophie": 7,
+  "sante": 7.5
+ },
+ "street_10_elite_figures": {
+  "calisthenie": 5.5,
+  "force": 5.5,
+  "hypertrophie": 5,
+  "sante": 6
+ },
+ "street_11_master_51_ans": {
+  "calisthenie": 6.5,
+  "force": 6.5,
+  "hypertrophie": 6.5,
+  "sante": 7.5
+ },
+ "street_12_antecedent_coude": {
+  "calisthenie": 9,
+  "force": 8,
+  "hypertrophie": 8,
+  "sante": 9
+ },
+ "street_13_peu_de_temps": {
+  "calisthenie": 7,
+  "force": 6.5,
+  "hypertrophie": 7,
+  "sante": 7.5
+ },
+ "street_14_parc_sans_lest": {
+  "calisthenie": 8,
+  "force": 8,
+  "hypertrophie": 8,
+  "sante": 9
+ },
+ "street_15_travail_physique_sommeil_court": {
+  "calisthenie": 8,
+  "force": 9,
+  "hypertrophie": 8,
+  "sante": 9
+ },
+ "street_16_specialisation_traction_lestee": {
+  "calisthenie": 9,
+  "force": 9,
+  "hypertrophie": 9,
+  "sante": 9
+ },
+ "street_17_hybride_street_course": {
+  "calisthenie": 7,
+  "force": 8,
+  "hypertrophie": 8,
+  "sante": 9
+ }
+}

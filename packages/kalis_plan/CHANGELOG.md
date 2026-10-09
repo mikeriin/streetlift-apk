@@ -41,8 +41,8 @@ méthode (passe complète du panel street en fin de lot : `docs/CALIBRAGE_CP2.md
   n'est pas compté dans la durée des séances.
 - Mode prudent (questionnaire de santé, 65 ans et plus) : CrossFit écrit en programme de santé ; course sans
   séance de qualité.
-- Notes : `general_warmup` et `short_version` portent un paramètre additif `family` (`run`, `gym`, `health`) ;
-  `value` reste en minutes ; nouvelles notes `wod_pace`, `chair_squat`, `knee_shallow`, `balance_progress`,
+- Notes : échauffement et version courte propres à la discipline (`warmup_run`, `warmup_gym`, `warmup_health`,
+  `short_run`, `short_health` ; `value` en minutes) ; nouvelles notes `wod_pace`, `chair_squat`, `knee_shallow`, `balance_progress`,
   `hold_support` (`docs/NOTES_COACH.md`).
 - **Changements qui touchent aussi le chemin street** (sécurité ou correction ; vérifiés par la passe complète du
   panel street de fin de lot) : une charge écrite au-dessus du 1RM de travail (barre vide trop lourde) devient
