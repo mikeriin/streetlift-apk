@@ -5,7 +5,8 @@
 //     --dart-define=M6B_PART=a --dart-define=KALIS_DEV=true -d emulator-5554
 // a = thème sombre, rouge Kalis, compétiteur de streetlifting ; b = thème
 // clair, violet, débutant de calisthénie. Session personnelle (programme
-// de 40 semaines du propriétaire) : Réglages › Mon programme sans saison.
+// de 40 semaines du propriétaire) : Réglages › Mon programme avec la
+// saison de son annotation (CI1e, C11 ; sans saison avant).
 // Session de test (5 appuis) : profil street v3 complet et programme créé
 // par le chemin calibré ; carte « Ta saison », écran MA SAISON (phases,
 // compte à rebours, semaines du bloc, règles), jour J (partie a) ; séance
@@ -222,10 +223,11 @@ void main() {
       tester,
       find.byKey(const ValueKey('program-model')),
     );
-    releve['perso_sans_saison'] = find
+    // CI1e (C11) : le programme de 40 semaines a maintenant sa saison.
+    releve['perso_saison'] = find
         .byKey(const ValueKey('program-season'))
         .evaluate()
-        .isEmpty;
+        .isNotEmpty;
     await shot('01_perso_programme');
     await home(tester);
     await store.flush();
@@ -618,12 +620,12 @@ void main() {
     await store.flush();
     releve['perso_intacte'] =
         jsonEncode(KalisPrefs(raw, dev: false).snapshot()) == persoBefore;
-    releve['perso_sans_saison_apres'] = storeSeasonOverview() == null;
+    releve['perso_saison_apres'] = storeSeasonOverview() != null;
     record();
     tester.platformDispatcher.clearAccessibilityFeaturesTestValue();
 
     expect(releve['perso_modele'], isTrue);
-    expect(releve['perso_sans_saison'], isTrue);
+    expect(releve['perso_saison'], isTrue);
     expect(releve['dev_actif'], isTrue);
     expect(releve['calibre'], isTrue);
     expect(releve['dev_programme'], isTrue);
@@ -642,6 +644,6 @@ void main() {
     }
     expect(releve['retour_perso'], isTrue);
     expect(releve['perso_intacte'], isTrue);
-    expect(releve['perso_sans_saison_apres'], isTrue);
+    expect(releve['perso_saison_apres'], isTrue);
   }, timeout: _limit);
 }
