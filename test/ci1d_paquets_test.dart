@@ -36,7 +36,7 @@ List<Map<String, Object?>> _streetJson() {
     final primary = kc.AthleteProfile.fromJson(p).disciplines.primary.code;
     return primary == 'street_workout' ||
         primary == 'streetlifting' ||
-        primary == 'sets_reps';
+        primary == 'calisthenics';
   }).toList();
 }
 
@@ -313,6 +313,47 @@ void main() {
               'street_workout',
         ),
       );
+      // Profil de figures (comme le test de `kalis_plan` 0.2.3, C9.8,
+      // `street_10`) : planche visée, six séances, parallettes et anneaux.
+      json['experience'] = 'elite';
+      json['disciplines'] = {
+        'primary': 'calisthenics',
+        'primaryPct': 60,
+        'secondaries': [
+          {'discipline': 'street_workout', 'pct': 20},
+          {'discipline': 'streetlifting', 'pct': 20},
+        ],
+      };
+      json['streetMode'] = {
+        'primary': 'calisthenics',
+        'streetliftingPct': 20,
+        'setsRepsPct': 20,
+        'calisthenicsPct': 60,
+      };
+      json['availability'] = [
+        for (final d in [1, 2, 3, 5, 6, 7]) {'weekday': d, 'minutes': 90},
+      ];
+      json['equipment'] = [
+        ...(json['equipment']! as List),
+        'parallettes',
+        'anneaux',
+      ];
+      json['benchmarks'] = [
+        ...(json['benchmarks']! as List),
+        {
+          'exerciseId': 'cs-planche-straddle',
+          'kind': 'max_hold',
+          'source': 'declared',
+          'date': '2026-09-18',
+          'seconds': 6,
+        },
+      ];
+      json['skills'] = [
+        {
+          'targetExerciseId': 'cs-planche',
+          'currentExerciseId': 'cs-planche-straddle',
+        },
+      ];
       json['limitations'] = [
         {
           'zone': 'wrist_hand',
