@@ -39,6 +39,7 @@ export 'src/coach/prescribe.dart'
         coachHighRisk,
         coachHoldFloorShare,
         coachLoadRise,
+        coachRepriseRise,
         coachRunMetersPerSecond,
         coachSecondsPerRep,
         coachStraightArmRise,

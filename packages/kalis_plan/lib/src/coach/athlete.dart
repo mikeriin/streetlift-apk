@@ -248,14 +248,19 @@ const double coachEstimateLoadMargin = 0.06;
 const double coachEstimateLoadBias = 0.03;
 
 /// Vrai si [profile] relève du chemin street de `kalis_plan` 0.2 : profil
-/// au schéma 3 rempli par le questionnaire 0.4 (expérience et ancienneté
-/// renseignées — sans elles le niveau n'est pas lisible et le chemin 0.1
-/// s'applique), discipline principale street (streetlifting, sets & reps,
-/// calisthénie), disciplines secondaires street, cardio ou mobilité.
+/// au schéma 3 rempli par le questionnaire 0.4 (expérience renseignée, et
+/// ancienneté renseignée à partir d'« intermédiaire » — sans elles le
+/// niveau n'est pas lisible et le chemin 0.1 s'applique), discipline
+/// principale street (streetlifting, sets & reps, calisthénie),
+/// disciplines secondaires street, cardio ou mobilité. Un débutant sans
+/// ancienneté est lu « moins de 6 mois » : le parcours v3 ne lui pose pas
+/// la question (CP2, partie 0 ; CI1.4).
 bool coachEligible(AthleteProfile profile) {
-  if (!profile.isSchema3 ||
-      profile.experience == null ||
-      profile.trainingAge == null) {
+  if (!profile.isSchema3 || profile.experience == null) {
+    return false;
+  }
+  if (profile.trainingAge == null &&
+      profile.experience != ExperienceLevel.beginner) {
     return false;
   }
   final mix = profile.disciplines;
@@ -371,6 +376,11 @@ final class Athlete {
     // résultat) : il fait foi, le maximum au poids du corps ne le relève
     // pas (`_loadAt`).
     final measuredOneRm = <String>{};
+    // 1RM testés (test guidé ou barre de compétition) : seuls ceux-là
+    // résistent à une estimation nettement plus basse ; un 1RM seulement
+    // déclaré est remplacé par l'estimation du moteur d'évolution (C9.8,
+    // `street_07`).
+    final testedOneRm = <String>{};
     final reps = <String, int>{};
     final holds = <String, int>{};
     final recordDay = <String, CivilDate>{};
@@ -414,6 +424,10 @@ final class Athlete {
             reps: n,
             rir: b.rir ?? 0,
           );
+          if (b.source == BenchmarkSource.guidedTest ||
+              b.source == BenchmarkSource.competition) {
+            testedOneRm.add(b.exerciseId);
+          }
           if (estimate != null) {
             final external = estimate.valueKg - fraction * bodyWeight;
             final before = oneRm[b.exerciseId];
@@ -695,6 +709,10 @@ final class Athlete {
             final bound = known == null ? 0.0 : coachEstimateDropShare * known;
             oneRm[b.exerciseId] = n >= 2 && value < bound ? bound : value;
             measuredOneRm.add(b.exerciseId);
+            if (b.source == BenchmarkSource.guidedTest ||
+                b.source == BenchmarkSource.competition) {
+              testedOneRm.add(b.exerciseId);
+            }
             recordDay[b.exerciseId] = day;
           }
         default:
@@ -749,13 +767,32 @@ final class Athlete {
           final partial =
               e.exerciseId.contains('partiel') ||
               !e.exerciseId.startsWith('sl-');
-          // (Un 1RM déclaré ou testé n'est plus abaissé par l'estimation :
-          // une série loin de l'échec la tire vers le bas — panel CX
-          // correction 1, 1RM de référence à 115 kg pour un record à 132 ;
-          // la baisse passe par un test. L'estimation sert un mouvement
-          // sans repère.)
+          // (Un 1RM testé (test guidé ou compétition) n'est jamais abaissé
+          // par l'estimation : une série loin de l'échec la tire vers le
+          // bas — panel CX correction 1. Un 1RM seulement déclaré, jamais
+          // testé, nettement au-dessus de l'estimation est remplacé par
+          // elle, de 15 % au plus (CP2, partie 0, C9.8 (iii)). L'estimation
+          // sert aussi un mouvement sans repère.)
           if (before == null && external > 0 && !partial) {
             oneRm[e.exerciseId] = external;
+            estimatedOneRm.add(e.exerciseId);
+            recordDay[e.exerciseId] = seen;
+          } else if (before != null &&
+              !partial &&
+              !testedOneRm.contains(e.exerciseId) &&
+              external > 0 &&
+              external < before * (1 - coachEstimateMargin)) {
+            // Record seulement déclaré, plus haut que ce que le bloc a
+            // montré : le bloc suivant s'écrit sur le 1RM estimé au point
+            // de fin de bloc, affiché comme référence — jamais sur un 1RM
+            // déclaré plus haut (relecture documentée indépendante de la
+            // manche 4, C9.8, `street_07` : blocs écrits sur 166,5 kg
+            // déclarés pour environ 151 estimés, séances infaisables et
+            // ouvertures à 95-98 % du maximum du jour ; Helms et al. 2018).
+            // Une baisse de plus de 15 % attend un test (même borne que
+            // pour une série du test, `coachEstimateDropShare`).
+            final floor = coachEstimateDropShare * before;
+            oneRm[e.exerciseId] = external < floor ? floor : external;
             estimatedOneRm.add(e.exerciseId);
             recordDay[e.exerciseId] = seen;
           }
@@ -831,7 +868,13 @@ final class Athlete {
       }
       for (final (zone, pain) in trendPains) {
         final joint = zone.joint;
-        if (pain < 6 && joint != null && e.stressOn(joint) != JointStress.low) {
+        // (De 3 à 5 sur 10 seulement : une zone « sensible » relevée à
+        // 2/10 ne remet pas une figure évitée — relecture indépendante du
+        // code de 0.2.3.)
+        if (pain >= 3 &&
+            pain < 6 &&
+            joint != null &&
+            e.stressOn(joint) != JointStress.low) {
           return true;
         }
       }
@@ -1359,9 +1402,10 @@ final class Athlete {
     // pompes sur le dos des mains ou paumes en extension à l'échauffement
     // — rotations et pressions des doigts à la place (relecture documentée
     // CX, correction 1, `street_01`).
+    // (Dès 2 sur 10 : poignet sensible, CP2, partie 0, `street_10`.)
     if (id == coachWristLoadedPrep &&
         (stopZones.contains(BodyZone.wristHand) ||
-            limits.any((l) => l.joint == Joint.wrist && l.discomfort >= 3))) {
+            limits.any((l) => l.joint == Joint.wrist && l.discomfort >= 2))) {
       return 'joint';
     }
     // Coude douloureux au bloc précédent (3 sur 10 ou plus) : la prise

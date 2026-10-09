@@ -111,7 +111,14 @@ SetPlan? clampLocked(SessionRun run, ExerciseRun ex, SetPlan next) {
     return null;
   }
   final previous = ex.observed.last;
-  final locked = ex.fails > 0 || ex.painZones.isNotEmpty || run.noIncrease;
+  // (Reprise graduée après une douleur qui dure : aucune hausse dans la
+  // séance non plus ; CA2, partie 0.)
+  final locked =
+      ex.fails > 0 ||
+      ex.painZones.isNotEmpty ||
+      run.noIncrease ||
+      ex.inReturn ||
+      ex.doseCapped;
   if (!locked) {
     return null;
   }
@@ -123,7 +130,10 @@ SetPlan? clampLocked(SessionRun run, ExerciseRun ex, SetPlan next) {
     }
     return null;
   }
-  if (ex.fails > 0) {
+  // (Reprise graduée ou dose plafonnée : jamais plus de répétitions ou de
+  // secondes que la ligne précédente, même au-delà des séries prévues —
+  // relecture indépendante du code, CA2.)
+  if (ex.fails > 0 || ex.inReturn || ex.doseCapped) {
     final cap = previous.amount < 1 ? 1 : previous.amount;
     if (next.high > cap) {
       return SetPlan(
@@ -164,7 +174,12 @@ CoachAdvice? _coachAdvise(
   final rirTarget = ex.rirEff;
   final floor = c.rirFloor ?? rirTarget;
   final free =
-      ex.fails == 0 && ex.painZones.isEmpty && !run.noIncrease && !track.noUp;
+      ex.fails == 0 &&
+      ex.painZones.isEmpty &&
+      !run.noIncrease &&
+      !track.noUp &&
+      !ex.inReturn &&
+      !ex.doseCapped;
 
   // Tentatives d'un test de maximum : la suivante d'après les précédentes
   // et le maximum du jour réestimé.
@@ -177,7 +192,9 @@ CoachAdvice? _coachAdvise(
     final f = track.filter;
     final lift = competitionLiftOf(run.ctx.profile, info.id, run.day);
     final picks = attemptLadder(
-      estimateTotal: exp(f.m[0] + f.m[3] + f.gRef),
+      estimateTotal:
+          exp(f.m[0] + f.m[3] + f.gRef) *
+          (ex.tapered && done.isEmpty ? 1 + p.coachTaperGain : 1.0),
       relSd: dayRelSd(ex),
       bodyPart: info.fraction * run.bodyWeightKg,
       grid: info.grid,
@@ -310,7 +327,15 @@ CoachAdvice? _coachAdvise(
       // Deux premières lignes déjà sales : l'étape est trop dure
       // aujourd'hui, l'étape plus facile est conseillée.
       final target = sessionItem.skillTargetId;
-      if (index <= 2 && target != null && skills != null) {
+      // (Jamais pendant une reprise, une douleur ou une dose plafonnée :
+      // l'étape plus facile n'est pas filtrée par les règles de douleur —
+      // relecture indépendante du code, CA2.)
+      if (index <= 2 &&
+          target != null &&
+          skills != null &&
+          !ex.inReturn &&
+          !ex.doseCapped &&
+          ex.painZones.isEmpty) {
         final easier = skills.easierStep(target, info.id);
         if (easier != null) {
           advice.stepExerciseId = easier;

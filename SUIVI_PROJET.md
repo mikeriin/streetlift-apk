@@ -1,10 +1,15 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : CI1c (pipeline CP), version dev6.9.2 ; précédent : dev6.9.1 (CI1b)**  
-**Date : 8 octobre 2026, Europe/Paris — version : 6.9.2+110, affichée « dev6.9.2 » dans l'APK (versionCode réel fixé par la CI de build)**  
+**Passe actuelle : CI1d (pipeline CP), version dev6.9.3 ; précédent : dev6.9.2 (CI1c)**  
+**Date : 9 octobre 2026, Europe/Paris — version : 6.9.3+111, affichée « dev6.9.3 » dans l'APK (versionCode réel fixé par la CI de build)**  
 **Statut : contrôlé en CI (branche `claude/ci-3d`, rendu réel sur émulateur Android) ; à valider par le propriétaire.**
 
-## CI1c — Koach appliqué, séance à jour (version dev6.9.2, pipeline CP, DECISIONS_CP.md C10)
+## CI1d — Paquets 0.2.3 (version dev6.9.3, pipeline CP, DECISIONS_CP.md C10.6)
+
+- **Paquets** : `kalis_plan` 0.2.3 et `kalis_adapt` 0.2.3 (branches fixes `etiquettes/…`, copie octet pour octet) ; `kalis_core` 0.4.2 (celle des deux étiquettes) et `kalis_koach` inchangés ; `kalis_bench` absent ; `pubspec.lock` à jour.
+- **Textes** : `adapt.load_held` cause `pain_return` (palier de reprise), test reporté sur une zone douloureuse ou en reprise, retrait pour la douleur du jour, appui neutre pendant l'arrêt du poignet ; carte d'arrêt gardée les jours sans renvoi (`painStopNoticeZones`), consigne de consulter les jours de renvoi ; notes `pain_reprise` et `wrist_spare` traitées comme notes de douleur (bouclier), `pain_reprise` dans la carte. Les autres notes nouvelles sont rédigées par `kalis_plan`.
+- Tests : `test/ci1d_paquets_test.dart` ; étape « séance suivante de l'arrêt » ajoutée à la cible émulateur CI1.
+, séance à jour (version dev6.9.2, pipeline CP, DECISIONS_CP.md C10)
 
 - **Couche d'ajustements sur le programme importé** (`syncImportedOverlay`, `DayPlan.overlay` / `original`, `Exercise.koach`) : les propositions de Koach en place sur le bloc importé sont montrées jour pour jour dans le programme affiché ; le bloc importé est toujours construit depuis l'original ; annuler retire la couche. Propositions non applicables au bloc importé filtrées (`evolutionApplicable`, carte en clair dans Évolution).
 - **Séance recalculée à l'ouverture** (`adaptOpen`, `_adaptRefreshStarted`, empreinte `src` de la journée du bloc, `refreshUnstartedSession`) ; saisies non validées marquées (`SetEntry.edited`) et gardées ; consultation sans entrée (`forgetConsultation`), migration des entrées figées (`_markLegacyDrafts`, `_pruneConsultations`).

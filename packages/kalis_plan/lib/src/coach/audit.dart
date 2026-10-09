@@ -154,7 +154,14 @@ List<String> coachAudit(
   final work = <double>[];
   final who = <List<(List<int>, String)>>[];
   final lastLoad = <String, (int, double, int)>{};
+  // Dernière charge d'une semaine de charge (hors allègement) par
+  // emplacement : après un allègement, le pic de forme remonte vers elle
+  // (CP2, partie 0 : une charge d'allègement n'est pas une référence).
+  final heavyLoad = <String, (int, double, int)>{};
   var global = 0;
+  // Semaine d'avant de transition ou d'introduction (la charge qui suit
+  // remonte sans borne d'écart de répétitions).
+  var restartBefore = false;
   int? eventWeek;
   for (final block in blocks) {
     final pass1 = block.pass1;
@@ -169,6 +176,12 @@ List<String> coachAudit(
       eventWeek = global + weeksToEvent - 1;
     }
     for (final week in block.pass2.weeks) {
+      // Pic de forme : simples et doubles lourds par dessein.
+      final peaking =
+          week.intent == WeekIntent.realization ||
+          week.intent == WeekIntent.taper ||
+          week.intent == WeekIntent.competition ||
+          global == eventWeek;
       final g = List<double>.filled(MuscleGroup.values.length, 0);
       final s = <double>[0, 0, 0];
       final armDays = <Set<int>>[<int>{}, <int>{}, <int>{}];
@@ -277,18 +290,60 @@ List<String> coachAudit(
             final total =
                 load + (e.bodyweightFraction?.value ?? 0) * bodyWeight;
             final key = '$d|${p.slotId}|${e.id}';
-            final before = lastLoad[key];
+            final last = lastLoad[key];
+            final heavy = heavyLoad[key];
+            // Après une semaine allégée, en pic de forme : la référence est
+            // la dernière semaine de charge des quatre d'avant.
+            final afterLight =
+                last != null &&
+                last.$1 == global - 1 &&
+                global >= 1 &&
+                global - 1 < light.length &&
+                light[global - 1] &&
+                peaking &&
+                heavy != null &&
+                heavy.$1 >= global - 4 &&
+                heavy.$3 == last.$3;
+            final before = afterLight && heavy.$3 != reps
+                ? (global - 1, heavy.$2, heavy.$3)
+                : last;
             if (total > 0) {
-              if (before != null &&
-                  before.$1 == global - 1 &&
-                  before.$3 == reps &&
-                  total / before.$2 - 1 > coachLoadRise[level] + 1e-9) {
+              if (last != null &&
+                  last.$1 == global - 1 &&
+                  last.$3 == reps &&
+                  total / last.$2 - 1 > coachLoadRise[level] + 1e-9) {
                 out.add(
                   '$where : ${e.id} +'
-                  '${((total / before.$2 - 1) * 100).toStringAsFixed(1)} %',
+                  '${((total / last.$2 - 1) * 100).toStringAsFixed(1)} %',
                 );
               }
+              // À répétitions différentes (CP2, partie 0) : 2,5 % par
+              // répétition de moins, deux répétitions au plus, hors pic de
+              // forme et hors reprise après une transition.
+              // (Seulement quand les répétitions baissent : c'est ce qui
+              // autorise une charge plus haute ; le banc ne borne la hausse
+              // qu'à schéma égal.)
+              if (before != null &&
+                  before.$1 == global - 1 &&
+                  before.$3 > reps &&
+                  !restartBefore &&
+                  !peaking) {
+                final fewer = before.$3 - reps;
+                final delta = fewer > 2 ? 2 : fewer;
+                final factor =
+                    1 + coachLoadRise[level] + coachLoadPerRep * delta;
+                if (total / before.$2 > factor + 1e-9) {
+                  out.add(
+                    '$where : ${e.id} +'
+                    '${((total / before.$2 - 1) * 100).toStringAsFixed(1)} % '
+                    '(${before.$3} → $reps répétitions)',
+                  );
+                }
+              }
               lastLoad[key] = (global, total, reps);
+              if (!_light(week.kind)) {
+                heavyLoad[key] = (global, total, reps);
+              }
             }
           }
           final pct = p.percentOfOneRm;
@@ -311,6 +366,10 @@ List<String> coachAudit(
       light.add(_light(week.kind));
       hard.add(hardSets);
       work.add(workSets);
+      restartBefore =
+          week.kind == WeekKind.intro ||
+          week.intent == WeekIntent.transition ||
+          week.intent == WeekIntent.intro;
       global++;
     }
   }
