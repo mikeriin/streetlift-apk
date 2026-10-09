@@ -332,4 +332,16 @@ Lot livré le 08/10/2026, à valider par la conversation de pilotage (C8.1) : de
 - **CI1c.9 Relecture indépendante** (sous-agent Opus) : 10 constats, corrigés (LIVRAISON_CI1c.md, partie 3).
 - **Recommandation (C8, le pilotage décide)** : valider dev6.9.2 et la donner au propriétaire ; CI1d dès 0.2.3 contrôlé (C9.8).
 
+### CI1d
+
+Lot livré le 09/10/2026, à valider par la conversation de pilotage (C8.1) : dev6.9.3 (main bd1f0c97, build signé run 37866362064, contrôle `claude/ci-3d` run 37863940096). Détail : `pipeline/cp/livraisons/LIVRAISON_CI1d.md`.
+
+- **CI1d.1 Lancement** : message sans ligne « Lot : » ; seul lot de la voie App « à faire » ; prérequis CI1c validé (C10.4) et contrôle C9.8 passé (C10.6). L'outil `add_repo` n'est pas proposé à cette session : dépôt déjà dans les sources, push vérifié par `git push --dry-run` puis par le push de la ligne « en cours ».
+- **CI1d.2 Paquets** : `kalis_plan` 0.2.3 et `kalis_adapt` 0.2.3 copiés depuis les étiquettes (identiques octet pour octet) ; `kalis_core` reste 0.4.2 (version portée par les deux étiquettes, 0.4.3 n'est demandé que par 0.3.0) ; `kalis_koach` inchangé, `kalis_bench` absent. Suite Dart complète de l'application verte avec 0.2.3 avant tout changement (run rapide 37860966524).
+- **CI1d.3 Renvoi vers un professionnel** : `kalis_adapt` 0.2.3 ne met `adapt.pain_persistent` dans la séance qu'au début de l'arrêt puis une fois par semaine. L'application suit le moteur : carte « Arrêt pour douleur » gardée chaque jour où l'arrêt retire ou remplace un mouvement (zones lues dans les ajustements), consigne de consulter seulement les jours de renvoi (« Arrêt en cours » les autres jours, sous l'exercice aussi) ; arrêt gardé dit tel quel. Un jour d'arrêt sans mouvement de la zone n'a pas de carte (rien n'est retiré).
+- **CI1d.4 Textes** : `adapt.load_held` cause `pain_return` (texte prudent : la raison sert au palier de reprise, pendant l'arrêt et au remplaçant d'une douleur du jour) ; test reporté sur une zone douloureuse ou en reprise ; retrait pour la douleur du jour ; échange vers un appui neutre (poignet) ; notes `pain_reprise` et `wrist_spare` avec le bouclier, `pain_reprise` dans la carte ; les 11 nouvelles notes de `kalis_plan` sont rédigées par le paquet (aucun code brut, vérifié sur tous les profils street des fixtures).
+- **CI1d.4 bis Règle CI1.4 gardée** : débutant sans ancienneté présenté « moins de 6 mois » aux moteurs. 0.2.3 l'accepte mais ne fait passer un bloc 0.1 au chemin calibré qu'avec une ancienneté renseignée ; la règle garde le choix « Passer au moteur calibré ». À retirer au lot CI final, avec un test de migration.
+- **CI1d.5 Relecture indépendante** (sous-agent Opus) : 7 constats, traités avant le contrôle complet (LIVRAISON_CI1d.md, partie 3).
+- **Recommandation (C8, le pilotage décide)** : valider dev6.9.3 et la donner au propriétaire à la place de dev6.9.2.
+
 ### CI
