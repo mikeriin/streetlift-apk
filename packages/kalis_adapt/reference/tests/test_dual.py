@@ -92,12 +92,111 @@ def _simuler_reponse(graine, variable, semaines=12, sigma=0.003, rho=0.01, n_ex=
 
 
 def test_reponse_identifie_hypothese_vraie_doses_variables():
+    """Hypothèses s0 = 1,5 / 2,5 / 5 (params v1 actuels ; avant : 2,5 / 5 /
+    10). Plus proches, elles se distinguent moins. `Reponse` calcule ici
+    l'a posteriori EXACT (vraisemblance gaussienne vraie, a priori uniforme) :
+    choisir l'hypothèse de plus grand poids est la règle d'identification
+    optimale, on ne peut pas faire mieux avec ces données. Taux mesuré avec
+    11 progrès (12 semaines) : 239 / 300 graines = 79,7 % (écart-type
+    binomial 2,3 points ; l'ancien critère « 24 / 30 » était exactement à la
+    moyenne et échouait une fois sur deux selon les graines : 22 / 30 sur
+    les graines 1 à 30). Par hypothèse (900 graines) : de 68 % (s0 = 1,5,
+    effort) à 100 % (s0 = 5, volume). On exige 75 % sur 300 graines (2
+    écarts-types sous la mesure), et, avec 16 semaines (88 % mesuré),
+    80 % sur 300 graines."""
     succes = 0
-    for g in range(1, 31):
+    for g in range(1, 301):
         r, vraie, _ = _simuler_reponse(g, True)
         if r.meilleure() == vraie:
             succes += 1
-    assert succes >= 24, succes   # ≥ 80 % de 30 graines, 11 progrès (< 12 semaines)
+    assert succes >= 225, succes
+    succes16 = 0
+    for g in range(1, 301):
+        r, vraie, _ = _simuler_reponse(g, True, semaines=16)
+        if r.meilleure() == vraie:
+            succes16 += 1
+    assert succes16 >= 240, succes16
+
+
+# ----------------------------------------------------------------------
+# Non-circularité : Reponse nourrie par l'innovation de capacité
+# ----------------------------------------------------------------------
+class _PisteK(object):
+    classe = 0
+
+
+class _ModeleKalman(object):
+    """Filtre scalaire par exercice qui fait comme le moteur : il apprend la
+    capacité par des observations bruitées et, chaque lundi, la fait
+    progresser de rho × dose MOYENNE sur les hypothèses (poids `poids_hyp`,
+    écrits par le contrôle dual)."""
+
+    def __init__(self, ids, rho):
+        dyn = PARAMS['dynamique']
+        self.hypotheses = [(x, k) for k in range(len(dyn['hypotheses_stimulus']))
+                           for x in dyn['hypotheses_s0']]
+        self.poids_hyp = [1.0 / len(self.hypotheses)] * len(self.hypotheses)
+        self.m = [0.0] * 16
+        self.m[dual.RHO] = rho
+        self.pistes = dict((e, _PisteK()) for e in ids)
+        self.mu = dict((e, 0.0) for e in ids)
+        self.P = dict((e, 0.02 ** 2) for e in ids)
+        self.journal_semaines = []
+
+    def capacite(self, e):
+        return self.mu[e], math.sqrt(self.P[e])
+
+
+def _filtre_simule(graine, sy=0.005, semaines=16, nobs=3, rho=0.01, n_ex=4, sp=0.001):
+    ids = ['e%d' % i for i in range(n_ex)]
+    k = FauxKoach(ids)
+    m = _ModeleKalman(ids, rho)
+    k.modele = m
+    cd = ControleDual(PARAMS, [])
+    circ = Reponse.depuis_params(PARAMS)
+    rng = Mulberry32(graine)
+    vraie = graine % 9
+    vrai = dict((e, 0.0) for e in ids)
+    dyn = PARAMS['dynamique']
+    q7 = 7 * dyn['q_delta_jour_inactif']
+    for w in range(semaines):
+        for e in ids:
+            m.P[e] += q7
+        for _ in range(nobs):
+            for e in ids:
+                y = vrai[e] + sy * rng.gauss()
+                gain = m.P[e] / (m.P[e] + sy * sy)
+                m.mu[e] += gain * (y - m.mu[e])
+                m.P[e] *= 1 - gain
+            cd.fin_seance(k, None, {})
+        doses = {}
+        for e in ids:
+            st = [1.0 + 13.0 * rng.next() for _ in range(3)]
+            doses[e] = st
+            m.mu[e] += rho * sum(m.poids_hyp[i] * cd.reponse.dose(st, i) for i in range(9))
+            m.P[e] += dyn['q_delta_semaine']
+            vrai[e] += rho * cd.reponse.dose(st, vraie) + sp * rng.gauss()
+        ligne = {'semaine': w, 'doses': doses, 'mu': dict(m.mu), 'facteur': 1.0}
+        m.journal_semaines.append(ligne)
+        cd.fin_semaine(k, ligne, {})
+        assert m.poids_hyp == cd.reponse.poids          # une seule source de vérité
+        if len(m.journal_semaines) >= 2:
+            circ.mettre_a_jour(m.journal_semaines[-2:], rho, 0.01)
+    return cd.reponse.meilleure() == vraie, circ.meilleure() == vraie
+
+
+def test_reponse_innovation_non_circulaire():
+    """Nourrie avec les `mu` du journal (qui progressent déjà de la dose
+    moyenne), `Reponse` reste au hasard : 15 / 100 et 12 / 100 graines
+    mesurées (hasard : 1 / 9 = 11 %). Nourrie par `ControleDual` avec
+    l'innovation hebdomadaire de capacité : 67 / 100 et 69 / 100, autant
+    qu'un oracle qui verrait les observations brutes (66 / 100 avec bruit
+    0,005, 28 / 100 avec bruit 0,02 contre 31 / 100 pour l'innovation)."""
+    res = [_filtre_simule(g) for g in range(1, 101)]
+    innov = sum(1 for r in res if r[0])
+    circ = sum(1 for r in res if r[1])
+    assert innov >= 55, innov
+    assert circ <= 25, circ
 
 
 def test_reponse_reste_diffuse_dose_constante():

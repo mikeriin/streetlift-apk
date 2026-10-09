@@ -143,9 +143,7 @@ class Seances(object):
     # Prévisions
     # ------------------------------------------------------------------
     def _garde_serie(self, t):
-        fi = clamp(self.m.m[FI], 0.0, 1.5)
-        g = 1.0 - fi * self.m._intra(t)
-        return g if g > 0.3 else 0.3
+        return self.m.garde_de(t)
 
     def charge_pour(self, ex_id, reps, rir, prudence=0.0):
         """Charge externe (hors grille) pour [reps] répétitions à [rir] en
@@ -561,7 +559,8 @@ class Seances(object):
         if t.mesures == 0 and cap[1] > 0.12:
             return {'repsLow': lo, 'repsHigh': hi, 'loadKg': None, 'flames': flammes, 'role': None}
         reps = hi if hi == lo else (lo + hi) / 2.0
-        prudence = 0.25 if t.seances > 3 else 0.6
+        pr = self.p['planification']['prudence_charge']
+        prudence = pr[1] if t.seances > 3 else pr[0]
         voulu = self.charge_pour(ex_id, reps, rir, prudence)
         trace = ['modele %.1f (rir %.1f)' % (voulu, rir)]
         if tech.get('kind') == 'top_set_backoff' and index >= 1 and plan['tete'] is not None:

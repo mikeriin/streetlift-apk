@@ -64,7 +64,7 @@ class Piste(object):
         self.classe = CLASSES.index(typ) if typ in CLASSES else None
         self.vecteur = vecteur     # 10 charges sur les qualités (somme 1)
         self.base = base           # a priori de population de ln capacité
-        self.idx = idx             # indice de delta_e ; idx + 1 : échelle de courbe
+        self.idx = idx             # delta_e ; idx + 1 : échelle de courbe (ou part de tenue) ; idx + 2 : fatigue de séance
         self.fraction = fraction
         self.bas = bas
         self.tendon = tendon
@@ -99,7 +99,7 @@ class Modele(object):
         self.profil = profil
         self.niveau = int(clamp(profil.get('niveau', 1), 0, 3))
         ap = params['a_priori']
-        n = NG + 2 * 48
+        n = NG + 3 * 48
         self.m = np.zeros(n)
         self.P = np.zeros((n, n))
         self.n = NG
@@ -160,7 +160,7 @@ class Modele(object):
     # Pistes et a priori
     # ------------------------------------------------------------------
     def _agrandir(self):
-        if self.n + 2 <= self.m.shape[0]:
+        if self.n + 3 <= self.m.shape[0]:
             return
         n = self.m.shape[0] * 2
         m = np.zeros(n)
@@ -209,7 +209,7 @@ class Modele(object):
         self._agrandir()
         ap = self.p['a_priori']
         idx = self.n
-        self.n += 2
+        self.n += 3
         typ = fiche['type']
         base = self.base_de(fiche)
         sd = {'charge': ap['delta_sd'], 'reps': ap['reps_sd'], 'tenue': ap['reps_sd'],
@@ -229,6 +229,10 @@ class Modele(object):
             for q in range(NQ):
                 vq += vecteur[q] * vecteur[q] * P[TH + q, TH + q]
             P[idx, idx] = max(sd * sd - vq, (0.5 * sd) ** 2)
+            # Écart (ln) de la sensibilité de l'exercice à la fatigue laissée
+            # par les séries précédentes de la séance.
+            m[idx + 2] = 0.0
+            P[idx + 2, idx + 2] = ap['fatigue_intra_exercice_sd'] ** 2
             if typ == 'tenue':
                 # Écart (ln) de la part du temps maximal par répétition en
                 # réserve, propre à l'exercice.
@@ -363,6 +367,17 @@ class Modele(object):
     @property
     def f_musculaire(self):
         return self.f_l[1]
+
+    def fatigue_intra_de(self, t, m=None):
+        """Sensibilité de l'exercice à la fatigue de séance : valeur de
+        population × écart propre à l'exercice (appris)."""
+        m = self.m if m is None else m
+        return clamp(m[FI], 0.0, 1.5) * math.exp(clamp(m[t.idx + 2], -1.5, 1.5))
+
+    def garde_de(self, t, m=None):
+        """Part des répétitions (ou du temps) gardée à la prochaine série."""
+        g = 1.0 - self.fatigue_intra_de(t, m) * self._intra(t)
+        return g if g > 0.3 else 0.3
 
     def _intra(self, t):
         """Régresseur de fatigue intra-séance de la prochaine série."""
@@ -706,7 +721,7 @@ class Modele(object):
             if m[LAM] > 1.2:
                 m[LAM] = 1.2
 
-    def _lin_force(self, t, m, lnL, reps, sj, sans_charge, percu, ouvert=False):
+    def _lin_force(self, t, m, lnL, reps, sj, sans_charge, percu):
         """Linéarise, autour de la moyenne [m], la réserve de la série :
         vraie (v = répétitions possibles - faites) ou perçue (p = (v - biais
         personnel) / (1 + biais de population)). Renvoie (indices,
@@ -715,7 +730,7 @@ class Modele(object):
         eta = t.base
         for i, c in zip(idx, co):
             eta += c * m[i]
-        fi = clamp(m[FI], 0.0, 1.5)
+        fi = self.fatigue_intra_de(t, m)
         garde = 1.0 - fi * sj
         if garde < 0.3:
             garde = 0.3
@@ -739,25 +754,21 @@ class Modele(object):
         v = R * garde - reps
         coefs = [c * dR * garde for c in co]
         indices = list(idx)
-        # Une note ouverte (« 4 en réserve ou plus ») renseigne la capacité
-        # (borne basse), pas la forme de la courbe, la fatigue de séance ni
-        # le biais de la note : loin de l'échec, ces paramètres communs à
-        # tous les exercices ne sont pas mis à jour (inférence modulaire).
-        if not sans_charge and not ouvert:
+        if not sans_charge:
             indices += [LAM, KU, t.idx + 1]
             coefs += [dlam * garde, dk * garde, dk * garde]
-        if sj > 0 and not ouvert:
-            indices.append(FI)
-            coefs.append(-R * sj)
+        if sj > 0 and garde > 0.3:
+            # d garde / d (écart de fatigue de l'exercice) = -fi × sj.
+            indices.append(t.idx + 2)
+            coefs.append(-R * sj * fi)
         if not percu:
             return indices, coefs, v, R, v
         ba = clamp(m[BA], -2.5, 2.5)
         bp = clamp(m[BP], -0.2, 1.0)
         pr = (v - ba) / (1.0 + bp)
         coefs = [c / (1.0 + bp) for c in coefs]
-        if not ouvert:
-            indices += [BA, BP]
-            coefs += [-1.0 / (1.0 + bp), -pr / (1.0 + bp)]
+        indices += [BA, BP]
+        coefs += [-1.0 / (1.0 + bp), -pr / (1.0 + bp)]
         return indices, coefs, pr, R, v
 
     def _serie_force(self, t, s):
@@ -957,11 +968,8 @@ class Modele(object):
         if sec <= 0 and not echec:
             return None
         idx, co = self._h_capacite(t)
-        fi = clamp(self.m[FI], 0.0, 1.5)
         sj = self._intra(t)
-        garde = 1.0 - fi * sj
-        if garde < 0.3:
-            garde = 0.3
+        garde = self.garde_de(t)
         ln_s = math.log((sec if sec > 0 else 0.5) / garde)
         bt = me['bruit_tenue']
         extra = (me['dispersion_fatigue_intra'] * sj) ** 2
@@ -1127,6 +1135,19 @@ class Modele(object):
             d += w * self.dose(stim, h)
         return d
 
+    def recuperation(self, fatigue_lente):
+        """Part de la réponse gardée quand la fatigue systémique lente est
+        haute (surmenage) : 1 sous le seuil, puis décroissante jusqu'au
+        plancher. Valeurs de population calées sur le banc (SOURCES.md)."""
+        dyn = self.p['dynamique']
+        f0 = dyn['recuperation_seuil']
+        k = 1.0 - dyn['recuperation_pente'] * (fatigue_lente - f0 if fatigue_lente > f0 else 0.0) / f0
+        return k if k > dyn['recuperation_plancher'] else dyn['recuperation_plancher']
+
+    def accoutumance(self, semaines):
+        """Rendements décroissants au fil des semaines de journal."""
+        return 1.0 / (1.0 + semaines / self.p['dynamique']['accoutumance_semaines'])
+
     def fin_semaine(self):
         """Lundi : la capacité de chaque exercice travaillé progresse de
         (rho + eps_classe) × dose ; les autres se désentraînent après le délai
@@ -1134,10 +1155,13 @@ class Modele(object):
         dyn = self.p['dynamique']
         n = self.n
         m, P = self.m, self.P
-        ligne = {'semaine': self.semaines, 'doses': {}, 'mu': {}}
+        ligne = {'semaine': self.semaines, 'doses': {}, 'mu': {}, 'fatigue_lente': float(self.f_g[1]),
+                 'fatigue_rapide': float(self.f_g[0])}
+        facteur = self.recuperation(float(self.f_g[1])) * self.accoutumance(self.semaines)
+        ligne['facteur'] = facteur
         for ex_id in self.ordre:
             t = self.pistes[ex_id]
-            g = self.dose_moyenne(t.stim_semaine)
+            g = self.dose_moyenne(t.stim_semaine) * facteur
             ligne['doses'][ex_id] = list(t.stim_semaine)
             if g > 0:
                 e = EPS + t.classe

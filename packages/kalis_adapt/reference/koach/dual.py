@@ -33,12 +33,9 @@ une graine passée en paramètre.
 import math
 
 from .moteur import Extension
+from .modele import RHO, EPS   # indices de l'état : toujours importés par nom
 from .numerique import Mulberry32, fnv1a32, norm_cdf
 
-# Indices de l'état du modèle (mêmes valeurs que modele.RHO et modele.EPS ;
-# recopiés ici pour ne pas importer numpy avec le modèle).
-RHO = 10
-EPS = 11
 Z90 = 1.6448536269514722   # quantile 95 % de la loi normale (intervalle à 90 %)
 
 # Valeurs par défaut des paramètres `controle_dual` (lus par .get(clé, défaut)).
@@ -57,6 +54,8 @@ DEFAUTS_DUAL = {
     'marge_echeance_semaines': 6,   # pas d'essai qui finirait à moins de 6 semaines d'une échéance
     'seuil_decision': 0.8,          # décision si P(B > A) ≥ 0,8 ou ≤ 0,2
     'n_bras': 4,                    # ABBA ou BAAB : deux paires de bras (12 semaines)
+    'sigma_innovation': 0.003,      # plancher (écart-type) de l'innovation hebdomadaire de ln capacité
+    'semaines_gardees': 26,         # semaines de capacité a posteriori gardées pour le synthétique
 }
 DEFAUTS_PLAFONDS = {'plafond_volume': 0.15, 'plafond_intensite': 0.05}
 LETTRES = ('A', 'B')
@@ -114,18 +113,24 @@ class Reponse(object):
         return (1.0 - math.exp(-s / s0)) / (1.0 - math.exp(-self.ref / s0))
 
     def mettre_a_jour(self, lignes, rho, sigma):
-        """[lignes] : lignes de `journal_semaines` dans l'ordre. Pour chaque
+        """Vraisemblance directe des progrès (données synthétiques, tests) :
+        [lignes] : lignes {semaine, doses, mu} dans l'ordre ; pour chaque
         paire consécutive (a, b), le progrès observé d'un exercice est
-        b.mu − a.mu, causé par le stimulus de la semaine b (b.doses). [rho] :
-        réponse (ln capacité par semaine à dose de référence), nombre ou
+        b.mu − a.mu, causé par le stimulus de la semaine b (b.doses), attendu
+        rho × dose_h(stimulus) sous l'hypothèse h. [rho] : nombre ou
         dictionnaire exercice -> nombre. [sigma] : écart-type du bruit du
-        progrès. Une semaine déjà consommée est ignorée (appel idempotent :
-        on peut repasser tout le journal). Renvoie le nombre de progrès
-        intégrés."""
+        progrès. Une semaine déjà consommée est ignorée (appel idempotent).
+        Renvoie le nombre de progrès intégrés.
+
+        ATTENTION : ne pas nourrir cette méthode avec les `mu` de
+        `journal_semaines` du moteur : ils progressent déjà, chaque lundi, de
+        la dose MOYENNE sur les hypothèses (calcul circulaire : les poids
+        resteraient près de leur valeur courante quoi qu'il arrive). Le
+        moteur passe par `ControleDual`, qui nourrit `integrer` avec
+        l'innovation hebdomadaire de capacité."""
         n = len(self.hypotheses)
-        ll = [0.0] * n
-        compte = 0
-        s2 = sigma * sigma
+        obs = []
+        derniere = None
         for j in range(len(lignes) - 1):
             a = lignes[j]
             b = lignes[j + 1]
@@ -137,12 +142,34 @@ class Reponse(object):
                     continue
                 stim = b['doses'][ex]
                 r = rho[ex] if isinstance(rho, dict) else rho
-                obs = b['mu'][ex] - a['mu'][ex]
-                for i in range(n):
-                    d = obs - r * self.dose(stim, i)
-                    ll[i] += -0.5 * d * d / s2
-                compte += 1
-            self.derniere = b['semaine']
+                attendus = [r * self.dose(stim, i) for i in range(n)]
+                obs.append((attendus, b['mu'][ex] - a['mu'][ex], sigma * sigma))
+            derniere = b['semaine']
+        if derniere is None:
+            return 0
+        return self.integrer(obs, derniere)
+
+    def integrer(self, observations, semaine):
+        """Intègre des observations scalaires indépendantes : liste de
+        (attendus [valeur attendue sous chaque hypothèse], observé, variance).
+        Log-vraisemblance gaussienne, normalisation stable, plancher.
+        [semaine] : semaine consommée (une semaine ≤ la dernière consommée
+        est ignorée : appel idempotent). Renvoie le nombre d'observations
+        intégrées."""
+        if self.derniere is not None and semaine <= self.derniere:
+            return 0
+        self.derniere = int(semaine)
+        n = len(self.hypotheses)
+        ll = [0.0] * n
+        compte = 0
+        for (attendus, obs, var) in observations:
+            v = float(var)
+            if not v > 0.0:
+                continue
+            for i in range(n):
+                d = obs - attendus[i]
+                ll[i] += -0.5 * d * d / v
+            compte += 1
         if compte == 0:
             return 0
         # Log-espace, normalisation stable (soustraction du maximum).
@@ -651,7 +678,32 @@ def effet_essai(serie_traitee, series_temoins, debut_intervention, iterations=20
 class ControleDual(Extension):
     """Extension du moteur : met à jour `Reponse` chaque lundi, conduit
     l'essai N-of-1 en cours et expose le tirage de Thompson de la semaine et
-    la modulation du plan pendant un bras."""
+    la modulation du plan pendant un bras.
+
+    Source unique des poids des hypothèses : `self.reponse.poids`. Après
+    chaque mise à jour, ils sont recopiés dans `koach.modele.poids_hyp`
+    (que le modèle lit pour sa dose moyenne) ; rien d'autre n'écrit
+    `poids_hyp`. Sans contrôle dual branché, le modèle garde ses poids
+    uniformes.
+
+    Mesure non circulaire (innovation hebdomadaire de capacité). Les `mu` de
+    `journal_semaines` sont pris APRÈS la croissance du lundi, calculée avec
+    la dose moyenne sur les hypothèses : leurs écarts contiennent la
+    prédiction du modèle lui-même. On mesure à la place, pour chaque
+    exercice, l'innovation de la semaine b :
+        ν_b = μ_pré(b) − μ_post(b − 1),
+    μ_pré(b) = capacité a posteriori à la fin de la dernière séance de la
+    semaine b (avant la croissance du lundi), μ_post(b − 1) = capacité
+    prédite au lundi précédent (croissance g_util appliquée). Sous
+    l'hypothèse h, l'écart attendu entre la capacité vraie et la prédiction
+    vaut δ_h, qui évolue ainsi (approximation scalaire du filtre, gain
+    K_b = 1 − V_pré(b) / V_prior(b)) :
+        lundi : δ_h += g_h − g_util (g_h = (ρ + ε) × facteur × dose_h) ;
+        semaine : E[ν_b | h] = K_b δ_h, Var[ν_b] = V_prior − V_pré (+ plancher) ;
+                  puis δ_h ← (1 − K_b) δ_h.
+    ν_b ne dépend pas de l'hypothèse ; seule sa valeur attendue en dépend.
+    Approximations documentées : exercices traités comme indépendants
+    (les qualités partagées les corrèlent), gain scalaire par exercice."""
 
     def __init__(self, params, lifts_principaux):
         self.params = params
@@ -660,6 +712,16 @@ class ControleDual(Extension):
         self.essai = None
         self.essais_passes = []   # [{'essai': etat, 'analyse': dict}]
         self.raisons = []
+        self.cap_seance = {}      # ex -> [μ, V] à la fin de la dernière séance
+        self.suivi = {}           # ex -> [μ_post, V_post, [δ_h]]
+        self.pre = []             # [{'semaine', 'mu': {ex: μ_pré}}] (synthétique)
+
+    RAISONS_GARDEES = 50
+
+    def _raison(self, r):
+        self.raisons.append(r)
+        if len(self.raisons) > self.RAISONS_GARDEES:
+            self.raisons = self.raisons[len(self.raisons) - self.RAISONS_GARDEES:]
 
     # --- lecture du modèle ----------------------------------------------------
     @staticmethod
@@ -672,6 +734,17 @@ class ControleDual(Extension):
             t = m.pistes.get(ex) if hasattr(m, 'pistes') else None
             c = getattr(t, 'classe', None) if t is not None else None
             out[ex] = rho + (float(m.m[EPS + c]) if c is not None else 0.0)
+        return out
+
+    @staticmethod
+    def _suivables(koach):
+        """Exercices suivis par le modèle avec une classe de réponse (triés)."""
+        m = koach.modele
+        out = []
+        for ex in sorted(m.pistes.keys()):
+            t = m.pistes[ex]
+            if t is not None and getattr(t, 'classe', None) is not None:
+                out.append(ex)
         return out
 
     @staticmethod
@@ -701,13 +774,79 @@ class ControleDual(Extension):
                 te[j].append(mu[temoins[j]])
         return sem, tr, te
 
+    # --- innovations et poids ---------------------------------------------------
+    def _innovations(self, koach, ligne):
+        m = koach.modele
+        hyps = getattr(m, 'hypotheses', None)
+        if hyps is not None and [(float(h[0]), int(h[1])) for h in hyps] != self.reponse.hypotheses:
+            raise ValueError('hypothèses de réponse différentes entre le modèle et le contrôle dual')
+        n = len(self.reponse.hypotheses)
+        ids = []
+        for ex in sorted(ligne['mu'].keys()):
+            t = m.pistes.get(ex) if hasattr(m, 'pistes') else None
+            if t is not None and getattr(t, 'classe', None) is not None:
+                ids.append(ex)
+        rho = self._rho(koach, ids)
+        fac = float(ligne.get('facteur', 1.0))
+        dyn = self.params.get('dynamique') or {}
+        q7 = 7.0 * float(dyn.get('q_delta_jour_inactif', 0.0))
+        smin = float(_param(self.params, 'sigma_innovation'))
+        w = list(self.reponse.poids)
+        obs = []
+        suivi = {}
+        pre = {}
+        for ex in ids:
+            c = m.capacite(ex)
+            if c is None:
+                continue
+            mu_post = float(ligne['mu'][ex])
+            v_post = float(c[1]) * float(c[1])
+            stim = (ligne.get('doses') or {}).get(ex)
+            g = [0.0] * n
+            gu = 0.0
+            if stim is not None:
+                for i in range(n):
+                    g[i] = rho[ex] * fac * self.reponse.dose(stim, i)
+                    gu += w[i] * g[i]
+            cs = self.cap_seance.get(ex)
+            mu_pre = cs[0] if cs is not None else mu_post - gu
+            s = self.suivi.get(ex)
+            if s is not None:
+                v_prior = s[1] + q7
+                v_pre = cs[1] if cs is not None else v_prior
+                k = 1.0 - v_pre / v_prior if v_prior > 0.0 else 0.0
+                k = 0.0 if k < 0.0 else (1.0 if k > 1.0 else k)
+                var = v_prior - v_pre
+                var = (var if var > 0.0 else 0.0) + smin * smin
+                obs.append(([k * d for d in s[2]], mu_pre - s[0], var))
+                deltas = [(1.0 - k) * d for d in s[2]]
+            else:
+                deltas = [0.0] * n
+            suivi[ex] = [mu_post, v_post, [deltas[i] + g[i] - gu for i in range(n)]]
+            pre[ex] = mu_pre
+        self.suivi = suivi
+        self.cap_seance = {}
+        self.pre.append({'semaine': int(ligne['semaine']), 'mu': pre})
+        garde = int(_param(self.params, 'semaines_gardees'))
+        if len(self.pre) > garde:
+            self.pre = self.pre[len(self.pre) - garde:]
+        return obs
+
     # --- crochets du moteur -----------------------------------------------------
+    def fin_seance(self, koach, resume, e):
+        m = koach.modele
+        for ex in self._suivables(koach):
+            c = m.capacite(ex)
+            if c is not None:
+                self.cap_seance[ex] = [float(c[0]), float(c[1]) * float(c[1])]
+        if self.essai is not None and e.get('douleurs'):
+            self.interrompre('douleur')
+
     def fin_semaine(self, koach, ligne, e):
-        lignes = koach.modele.journal_semaines
-        if len(lignes) >= 2:
-            ids = sorted(lignes[-1]['mu'].keys())
-            self.reponse.mettre_a_jour(lignes[-2:], self._rho(koach, ids),
-                                       _param(self.params, 'sigma_progres'))
+        obs = self._innovations(koach, ligne)
+        self.reponse.integrer(obs, ligne['semaine'])
+        if hasattr(koach.modele, 'poids_hyp'):
+            koach.modele.poids_hyp = list(self.reponse.poids)
         es = self.essai
         if es is None:
             return
@@ -719,7 +858,10 @@ class ControleDual(Extension):
             return
         s = ligne['semaine']
         if es.condition(s) is not None:
-            sem, tr, te = self.series(lignes, es.traites, es.temoins)
+            # Séries de capacité a posteriori AVANT la croissance du lundi
+            # (μ_pré) : la croissance prédite par la dose de la semaine (donc
+            # par le bras) n'y entre pas.
+            sem, tr, te = self.series(self.pre, es.traites, es.temoins)
             debut = 0
             while debut < len(sem) and sem[debut] < es.debut:
                 debut += 1
@@ -731,18 +873,30 @@ class ControleDual(Extension):
                     k = pos - debut
                     es.enregistrer(s, r['progres_traite'][k], r['progres_temoin_synthetique'][k])
                 except ValueError as err:
-                    self.raisons.append('synthetique_impossible:%s' % err)
+                    self._raison('synthetique_impossible:%s' % err)
         if es.statut == 'en_cours' and es.fini(s):
             es.statut = 'termine'
         if es.statut in ('termine', 'interrompu'):
             self._clore()
 
-    def fin_seance(self, koach, resume, e):
-        if self.essai is not None and e.get('douleurs'):
-            self.interrompre('douleur')
-
     def decision(self, koach, e):
+        """Propositions d'essai journalisées (événement `decision` portant
+        `essai` : {semaine, cible, traites, temoins, contexte, graine,
+        n_bras}) : l'état se recalcule depuis le journal."""
+        d = e.get('essai')
+        if d is not None:
+            ok, raisons = self.proposer_essai(koach, int(d['semaine']), d['cible'], d['traites'],
+                                              d['temoins'], d.get('contexte') or {}, int(d['graine']),
+                                              d.get('n_bras'))
+            self._raison('essai_%s:%d:%s' % ('demarre' if ok else 'refuse', int(d['semaine']),
+                                             ','.join(raisons)))
         if self.essai is not None and e.get('alerte_hors_modele'):
+            self.interrompre('alerte_hors_modele')
+
+    def sur_alerte_hors_modele(self, koach, causes):
+        """Branche `Surveillance` -> contrôle dual : une alerte hors modèle
+        interrompt l'essai en cours (retour au plan de référence)."""
+        if self.essai is not None:
             self.interrompre('alerte_hors_modele')
 
     # --- essais -----------------------------------------------------------------
@@ -769,7 +923,7 @@ class ControleDual(Extension):
     def interrompre(self, raison):
         if self.essai is not None:
             self.essai.interrompre(raison)
-            self.raisons.append('essai_interrompu:%s' % raison)
+            self._raison('essai_interrompu:%s' % raison)
             self._clore()
 
     def _clore(self):
@@ -805,7 +959,13 @@ class ControleDual(Extension):
         return {'lifts': list(self.lifts), 'reponse': self.reponse.etat(),
                 'essai': None if self.essai is None else self.essai.etat(),
                 'essais_passes': [{'essai': x['essai'], 'analyse': x['analyse']} for x in self.essais_passes],
-                'raisons': list(self.raisons)}
+                'raisons': list(self.raisons),
+                'cap_seance': [[ex, self.cap_seance[ex][0], self.cap_seance[ex][1]]
+                               for ex in sorted(self.cap_seance.keys())],
+                'suivi': [[ex, self.suivi[ex][0], self.suivi[ex][1], list(self.suivi[ex][2])]
+                          for ex in sorted(self.suivi.keys())],
+                'pre': [{'semaine': x['semaine'], 'mu': [[ex, x['mu'][ex]] for ex in sorted(x['mu'].keys())]}
+                        for x in self.pre]}
 
     @staticmethod
     def depuis_etat(params, etat):
@@ -814,4 +974,9 @@ class ControleDual(Extension):
         c.essai = None if etat['essai'] is None else EssaiN1.depuis_etat(params, etat['essai'])
         c.essais_passes = [{'essai': x['essai'], 'analyse': x['analyse']} for x in etat['essais_passes']]
         c.raisons = list(etat['raisons'])
+        c.cap_seance = dict((x[0], [float(x[1]), float(x[2])]) for x in etat.get('cap_seance', []))
+        c.suivi = dict((x[0], [float(x[1]), float(x[2]), [float(v) for v in x[3]]])
+                       for x in etat.get('suivi', []))
+        c.pre = [{'semaine': int(x['semaine']), 'mu': dict((p[0], float(p[1])) for p in x['mu'])}
+                 for x in etat.get('pre', [])]
         return c

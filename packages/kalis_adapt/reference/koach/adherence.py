@@ -180,7 +180,12 @@ class Adherence(Extension):
     def decision(self, koach, e):
         """Événement {type: 'decision', jour, proposition: {id, type,
         exerciseId, ampleur, charge_kg, reps, rir, contexte}, accepte,
-        raison}. Ne modifie jamais l'événement."""
+        raison}. Ne modifie jamais l'événement. Les autres événements
+        `decision` du journal (réponse au diagnostic hors modèle, essai du
+        contrôle dual) ne portent pas de proposition : ils sont ignorés (sans
+        ce filtre, chacun comptait comme un refus)."""
+        if e.get('proposition') is None:
+            return
         prop = e.get('proposition') or {}
         jour = e.get('jour', 0)
         accepte = bool(e.get('accepte'))

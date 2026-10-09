@@ -27,18 +27,18 @@
     "delta_sd": 0.3,
     "delta_sd_declare": 0.07,
     "rho_moyenne_par_niveau": [
-      0.012,
-      0.004,
-      0.0015,
-      0.0008
+      0.0095,
+      0.003,
+      0.0012,
+      0.0006
     ],
     "rho_sd_rel": 0.6,
     "eps_classe_moyenne": [
       0.0,
-      0.004,
-      0.003,
-      0.004,
-      0.002
+      0.0029,
+      0.0029,
+      0.002,
+      0.001
     ],
     "eps_classe_sd": 0.003,
     "k_nerveux": [
@@ -114,7 +114,8 @@
     "tenue_bornes_s": [
       5.0,
       180.0
-    ]
+    ],
+    "fatigue_intra_exercice_sd": 0.35
   },
   "mesure": {
     "bruit_rir_par_niveau": [
@@ -206,9 +207,9 @@
     "desentrainement_par_semaine": 0.01,
     "dose_reference": 6.0,
     "hypotheses_s0": [
+      1.5,
       2.5,
-      5.0,
-      10.0
+      5.0
     ],
     "hypotheses_stimulus": [
       "volume",
@@ -216,7 +217,11 @@
       "intensite"
     ],
     "q_reponse_semaine": 1e-08,
-    "changement_cran_elastique_sd": 0.25
+    "changement_cran_elastique_sd": 0.25,
+    "recuperation_seuil": 8.0,
+    "recuperation_pente": 0.5,
+    "recuperation_plancher": 0.2,
+    "accoutumance_semaines": 40.0
   },
   "test_adaptatif": {
     "intervalle_declenchement": 0.06,
@@ -271,7 +276,11 @@
     "horizon_sans_echeance_sem": 12,
     "sigma_prevision_semaine": 0.004,
     "gain_affutage": 0.015,
-    "graine": 20261009
+    "graine": 20261009,
+    "prudence_charge": [
+      0.6,
+      0.25
+    ]
   },
   "securite": {
     "hausse_par_niveau": [
@@ -386,7 +395,12 @@
     "biais_initial": 1.0,
     "pas_min": 0.5,
     "proba_cible": 0.7,
-    "refus_silence_j": 0
+    "refus_silence_j": 0,
+    "paliers_max": 4,
+    "ampleur_echelle": 4.0,
+    "ampleur_borne": 3.0,
+    "refus_recents_j": 14,
+    "refus_recents_echelle": 5.0
   },
   "rupture": {
     "hasard": 0.02,
@@ -400,7 +414,17 @@
     "douleur_secours": 2,
     "elargissement_rien_de_special": 4.0,
     "semaine_allegee_series": 0.6,
-    "semaine_allegee_rir": 2.0
+    "semaine_allegee_rir": 2.0,
+    "a_priori_alpha": 2.0,
+    "a_priori_beta": 1.0,
+    "a_priori_alpha_nouvelle": 5.0,
+    "course_max": 200,
+    "min_observations": 6,
+    "fenetre_seances": 10,
+    "silence_semaines": 2,
+    "journal_dossier": 60,
+    "douleur_recente_j": 7,
+    "residu_reps_reference": 8.0
   },
   "controle_dual": {
     "semaines_min": 8,
@@ -409,6 +433,14 @@
     "synthetique_semaines_min": 6,
     "synthetique_iterations": 200,
     "amplitude_volume": 0.1,
-    "amplitude_intensite": 0.03
+    "amplitude_intensite": 0.03,
+    "sigma_progres": 0.01,
+    "plancher_poids": 1e-06,
+    "a_priori_effet_sd": 0.005,
+    "marge_echeance_semaines": 6,
+    "seuil_decision": 0.8,
+    "n_bras": 4,
+    "sigma_innovation": 0.003,
+    "semaines_gardees": 26
   }
 }
