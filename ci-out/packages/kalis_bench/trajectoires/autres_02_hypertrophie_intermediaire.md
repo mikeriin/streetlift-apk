@@ -21,7 +21,7 @@ Un athlète simulé (capacités réelles connues du simulateur, jamais du moteur
 
 - Séances faites : 60 sur 60 (21 ajustées le jour même).
 - Échecs non voulus (hors tests et tentatives) : 0,9 % des séries de travail.
-- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 2,41 répétition en réserve (sur les 95 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0,2 % ; au moins 3 plus faciles : 32,6 %.
+- Écart moyen entre l'effort affiché par le moteur et l'effort réel : 2,4 répétition en réserve (sur les 95 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0,2 % ; au moins 3 plus faciles : 32,1 %.
 - Plus forte hausse de charge totale d'un mouvement principal d'une séance à la suivante, à schéma égal : 50 % ; hausses de plus de 10 % faites de plusieurs crans : 2.
 - Progression réelle moyenne des mouvements suivis : 0,181 % par semaine.
 - Douleur : 0 hausse(s) de charge sur une zone douloureuse signalée.
@@ -34,18 +34,18 @@ Pour chaque mouvement, la séance la plus lourde de la semaine : ce que le progr
 
 | Sem. | Phase | Écrit par le programme | Servi par le moteur | Fait | Effort visé → réel | Maximum réel / estimé | Décisions du moteur |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| 1 | introduction | 2 × 8 à 10 à 71 % | (8 à 10)-(8 à 10) à 72,5 kg | 8-8 à 72,5 kg | 5+ → 8,4 ; suivantes 5+ → 7,5 | 120 / 110 | allégé pour garder la marge prévue (au moins 3 en réserve) ; calibrage (séance 1 sur ce mouvement) |
+| 1 | introduction | 2 × 8 à 10 à 68 % | (8 à 10)-(8 à 10) à 72,5 kg | 8-8 à 72,5 kg | 5+ → 8,4 ; suivantes 5+ → 7,5 | 120 / 110 | allégé pour garder la marge prévue (au moins 3 en réserve) ; calibrage (séance 1 sur ce mouvement) |
 | 2 | construction (volume) | 2 × 8 à 10 à 71 % | (8 à 10)-(8 à 16) à 72,5 kg | 8-12 à 72,5 kg | 4,5 → 7,9 ; suivantes 1,5 → 2,9 | 118 / 111 | série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète |
 | 3 | construction (volume) | 2 × 8 à 10 à 71 % | (8 à 10)-(8 à 10) à 72,5 kg | 8-8 à 72,5 kg | 5+ → 8 ; suivantes 5+ → 7,2 | 118 / 103 | — |
-| 4 | construction (volume) | 2 × 9 à 11 à 71 % | (9 à 11)-(9 à 11) à 67,5 kg | 11 à 67,5 kg puis 11 à 70 kg | 2 → 6 ; suivantes 2 → 3,8 | 115 / 104 | — |
-| 5 | construction (volume) | 2 × 9 à 11 à 71 % | (9 à 11)-(9 à 11) à 67,5 kg | 11 à 67,5 kg puis 11 à 65 kg | 2 → 6,5 ; suivantes 2 → 5,8 | 118 / 104 | allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |
-| 6 | allègement | 2 × 8 à 10 à 71 % | (8 à 10)-(8 à 10) à 67,5 kg | 10-10 à 67,5 kg | 3 → 6,3 ; suivantes 3 → 5,2 | 112 / 102 | allégé pour garder la marge prévue (au moins 3 en réserve) |
+| 4 | construction (volume) | 2 × 9 à 11 à 68 % | (9 à 11)-(9 à 11) à 67,5 kg | 11 à 67,5 kg puis 11 à 70 kg | 2 → 6 ; suivantes 2 → 3,8 | 115 / 104 | — |
+| 5 | construction (volume) | 2 × 9 à 11 à 68 % | (9 à 11)-(9 à 11) à 67,5 kg | 11 à 67,5 kg puis 11 à 65 kg | 2 → 6,5 ; suivantes 2 → 5,8 | 118 / 104 | allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |
+| 6 | allègement | 2 × 8 à 10 à 68 % | (8 à 10)-(8 à 10) à 67,5 kg | 10-10 à 67,5 kg | 3 → 6,3 ; suivantes 3 → 5,2 | 112 / 102 | allégé pour garder la marge prévue (au moins 3 en réserve) |
 | 7 | construction (volume) | 2 × 8 à 10 à 71 % | (8 à 10)-(8 à 10) à 67,5 kg | 10-9 à 67,5 kg | 3 → 6,6 ; suivantes 3 → 6,6 | 113 / 101 | — |
-| 8 | construction (volume) | 2 × 9 à 11 à 71 % | (9 à 11)-(9 à 17) à 65 kg | 11 à 65 kg puis 15 à 67,5 kg | 3 → 8,2 ; suivantes 1,5 → 2,6 | 123 / 104 | série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète |
-| 9 | construction (volume) | 2 × 9 à 11 à 71 % | (9 à 11)-(9 à 11) à 67,5 kg | 11 à 67,5 kg puis 10 à 70 kg | 3 → 5,6 ; suivantes 3 → 4,8 | 113 / 104 | — |
-| 10 | construction (volume) | 2 × 10 à 12 à 71 % | (10 à 12)-(10 à 12) à 62,5 kg | 12-12 à 62,5 kg | 3 → 6,9 ; suivantes 3 → 5,8 | 116 / 104 | allégé pour garder la marge prévue (au moins 2 en réserve) |
-| 11 | construction (volume) | 2 × 10 à 12 à 71 % | (10 à 12)-(10 à 18) à 65 kg | 12 à 65 kg puis 12 à 67,5 kg | 3,5 → 5,8 ; suivantes 1,5 → 3,6 | 115 / 103 | allégé pour garder la marge prévue (au moins 2 en réserve) ; série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète |
-| 12 | allègement | 2 × 8 à 10 à 71 % | (8 à 10)-(8 à 10) à 67,5 kg | 10-10 à 67,5 kg | 4 → 7,7 ; suivantes 4 → 6,8 | 119 / 104 | allégé pour garder la marge prévue (au moins 3 en réserve) |
+| 8 | construction (volume) | 2 × 9 à 11 à 68 % | (9 à 11)-(9 à 17) à 65 kg | 11 à 65 kg puis 15 à 67,5 kg | 3 → 8,2 ; suivantes 1,5 → 2,6 | 123 / 104 | série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète |
+| 9 | construction (volume) | 2 × 9 à 11 à 68 % | (9 à 11)-(9 à 11) à 67,5 kg | 11 à 67,5 kg puis 10 à 70 kg | 3 → 5,6 ; suivantes 3 → 4,8 | 113 / 104 | — |
+| 10 | construction (volume) | 2 × 10 à 12 à 68 % | (10 à 12)-(10 à 12) à 62,5 kg | 12-12 à 62,5 kg | 3 → 6,9 ; suivantes 3 → 5,8 | 116 / 104 | allégé pour garder la marge prévue (au moins 2 en réserve) |
+| 11 | construction (volume) | 2 × 10 à 12 à 68 % | (10 à 12)-(10 à 18) à 65 kg | 12 à 65 kg puis 12 à 67,5 kg | 3,5 → 5,8 ; suivantes 1,5 → 3,6 | 115 / 103 | série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète |
+| 12 | allègement | 2 × 8 à 10 à 68 % | (8 à 10)-(8 à 10) à 67,5 kg | 10-10 à 67,5 kg | 4 → 7,7 ; suivantes 4 → 6,8 | 119 / 104 | allégé pour garder la marge prévue (au moins 3 en réserve) |
 
 Athlète simulé, maximum réel hors fatigue : 120 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 122 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
 
@@ -53,18 +53,18 @@ Athlète simulé, maximum réel hors fatigue : 120 au départ (le record déclar
 
 | Sem. | Phase | Écrit par le programme | Servi par le moteur | Fait | Effort visé → réel | Maximum réel / estimé | Décisions du moteur |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| 1 | introduction | 3 × 8 à 10 à 72 % | (8 à 10)-(8 à 10)-(8 à 10) à 55 kg | 8-8-8 à 55 kg | 5+ → 6,5 ; suivantes 5+ → 5,2 | 76 / 73 | allégé pour garder la marge prévue (au moins 3 en réserve) ; calibrage (séance 1 sur ce mouvement) |
-| 2 | construction (volume) | 3 × 8 à 10 à 72 % | (8 à 10)-(8 à 10)-(8 à 10) à 50 kg | 8-10-8 à 50 kg | 4 → 9,5 ; suivantes 4 → 6,8 | 75 / 71 | calibrage (séance 3 sur ce mouvement) |
-| 3 | construction (volume) | 3 × 8 à 10 à 72 % | (8 à 10)-(8 à 10)-(8 à 10) à 47,5 kg | 10 à 47,5 kg puis 10 à 50 kg puis 8 à 52,5 kg | 4 → 8,8 ; suivantes 4 → 5,4 | 75 / 72 | — |
-| 4 | construction (volume) | 3 × 9 à 11 à 72 % | (9 à 11)-(9 à 11)-(9 à 11) à 47,5 kg | 11-10-11 à 47,5 kg | 3,5 → 7,9 ; suivantes 3,5 → 6,4 | 75 / 72 | — |
-| 5 | construction (volume) | 3 × 9 à 11 à 72 % | (9 à 11)-(9 à 11)-(9 à 11) à 45 kg | 11 à 45 kg puis 10 à 47,5 kg puis 9 à 45 kg | 5+ → 9 ; suivantes 5+ → 7,4 | 73 / 72 | allégé pour garder la marge prévue (au moins 2 en réserve) |
-| 6 | allègement | 2 × 8 à 10 à 72 % | (8 à 10)-(8 à 10) à 50 kg | 9-9 à 50 kg | 3 → 5,7 ; suivantes 3 → 4,1 | 69 / 71 | allégé pour garder la marge prévue (au moins 3 en réserve) |
-| 7 | construction (volume) | 3 × 8 à 10 à 72 % | (8 à 10)-(8 à 10)-(8 à 10) à 45 kg | 9-10 à 45 kg puis 8 à 47,5 kg | 5+ → 11,2 ; suivantes 5+ → 8,4 | 74 / 67 | — |
-| 8 | construction (volume) | 3 × 9 à 11 à 72 % | (9 à 11)-(9 à 11)-(9 à 11) à 45 kg | 11 à 45 kg puis 9 à 47,5 kg puis 10 à 45 kg | 4 → 8,8 ; suivantes 4 → 7,4 | 73 / 67 | — |
-| 9 | construction (volume) | 3 × 9 à 11 à 72 % | (9 à 11)-(9 à 11)-(9 à 17) à 45 kg | 9-9-13 à 45 kg | 4,5 → 9,3 ; suivantes 3 → 6 | 70 / 65 | série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète |
-| 10 | construction (volume) | 3 × 10 à 12 à 72 % | (10 à 12)-(10 à 12)-(10 à 12) à 42,5 kg | 12-10 à 42,5 kg puis 11 à 40 kg | 4 → 9,2 ; suivantes 4 → 9,4 | 72 / 62 | allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |
-| 11 | construction (volume) | 3 × 10 à 12 à 72 % | (10 à 12)-(10 à 12)-(10 à 12) à 42,5 kg | 12-12 à 42,5 kg puis 12 à 45 kg | 3,5 → 10,4 ; suivantes 3,5 → 7,8 | 76 / 61 | — |
-| 12 | allègement | 2 × 8 à 10 à 72 % | (8 à 10)-(8 à 10) à 42,5 kg | 10-10 à 42,5 kg | 5+ → 10,3 ; suivantes 5+ → 9 | 70 / 61 | — |
+| 1 | introduction | 3 × 8 à 10 à 69 % | (8 à 10)-(8 à 10)-(8 à 10) à 55 kg | 8-8-8 à 55 kg | 5+ → 6,5 ; suivantes 5+ → 5,2 | 76 / 73 | calibrage (séance 1 sur ce mouvement) |
+| 2 | construction (volume) | 3 × 8 à 10 à 69 % | (8 à 10)-(8 à 10)-(8 à 10) à 50 kg | 8-10-8 à 50 kg | 4 → 9,5 ; suivantes 4 → 6,8 | 75 / 71 | calibrage (séance 3 sur ce mouvement) |
+| 3 | construction (volume) | 3 × 8 à 10 à 69 % | (8 à 10)-(8 à 10)-(8 à 10) à 47,5 kg | 10 à 47,5 kg puis 10 à 50 kg puis 8 à 52,5 kg | 4 → 8,8 ; suivantes 4 → 5,4 | 75 / 72 | — |
+| 4 | construction (volume) | 3 × 9 à 11 à 69 % | (9 à 11)-(9 à 11)-(9 à 11) à 47,5 kg | 11-10-11 à 47,5 kg | 3,5 → 7,9 ; suivantes 3,5 → 6,4 | 75 / 72 | — |
+| 5 | construction (volume) | 3 × 9 à 11 à 69 % | (9 à 11)-(9 à 11)-(9 à 11) à 45 kg | 11 à 45 kg puis 10 à 47,5 kg puis 9 à 45 kg | 5+ → 9 ; suivantes 5+ → 7,4 | 73 / 72 | — |
+| 6 | allègement | 2 × 8 à 10 à 69 % | (8 à 10)-(8 à 10) à 50 kg | 9-9 à 50 kg | 3 → 5,7 ; suivantes 3 → 4,1 | 69 / 71 | — |
+| 7 | construction (volume) | 3 × 8 à 10 à 69 % | (8 à 10)-(8 à 10)-(8 à 10) à 45 kg | 9-10 à 45 kg puis 8 à 47,5 kg | 5+ → 11,2 ; suivantes 5+ → 8,4 | 74 / 67 | — |
+| 8 | construction (volume) | 3 × 9 à 11 à 69 % | (9 à 11)-(9 à 11)-(9 à 11) à 45 kg | 11 à 45 kg puis 9 à 47,5 kg puis 10 à 45 kg | 4 → 8,8 ; suivantes 4 → 7,4 | 73 / 67 | — |
+| 9 | construction (volume) | 3 × 9 à 11 à 69 % | (9 à 11)-(9 à 11)-(9 à 17) à 45 kg | 9-9-13 à 45 kg | 4,5 → 9,3 ; suivantes 3 → 6 | 70 / 65 | série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète |
+| 10 | construction (volume) | 3 × 10 à 12 à 66 % | (10 à 12)-(10 à 12)-(10 à 12) à 42,5 kg | 10-10-10 à 42,5 kg | 4,5 → 10,7 ; suivantes 4,5 → 8,2 | 71 / 63 | — |
+| 11 | construction (volume) | 3 × 10 à 12 à 66 % | (10 à 12)-(10 à 12)-(10 à 12) à 42,5 kg | 11 à 42,5 kg puis 12-12 à 40 kg | 4,5 → 11,4 ; suivantes 4,5 → 10 | 76 / 61 | allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |
+| 12 | allègement | 2 × 8 à 10 à 69 % | (8 à 10)-(8 à 10) à 42,5 kg | 10-10 à 42,5 kg | 5+ → 11,7 ; suivantes 5+ → 10,2 | 74 / 61 | — |
 
 Athlète simulé, maximum réel hors fatigue : 74 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 76 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
 
@@ -121,7 +121,7 @@ Athlète simulé, maximum réel hors fatigue : 28 au départ (le record déclar�
 | 9 | construction (volume) | 3 × 9 à 11 | 11-10-(9 à 15) à 30 kg | 10 (arrêt avant la cible) à 30 kg puis 10-10 à 27,5 kg | 2 → 0,6 ; suivantes 1,8 → 1,6 | 37 / 41 | plus petit cran de charge trop grand : progression par les répétitions ; série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète ; série manquée la dernière fois ; dernières séries plus dures que prévu |
 | 10 | construction (volume) | 3 × 10 à 12 | 12-12 à 27,5 kg | 12 à 27,5 kg puis 12 à 25 kg | 3 → 3,4 ; suivantes 3 → 5,5 | 39 / 41 | bilan du jour bas (2/5) ; nuit courte ; charge non augmentée (bilan du jour bas) ; allégé pour garder la marge prévue (au moins 2 en réserve) |
 | 11 | construction (volume) | 3 × 10 à 12 | 15-13-(12 à 18) à 27,5 kg | 15-13 à 27,5 kg puis 13 à 25 kg | 2 → 1,2 ; suivantes 1,8 → 2,3 | 40 / 42 | plus petit cran de charge trop grand : progression par les répétitions ; série repère : une série ouverte (au ressenti, 1,5 en réserve) pour mesurer où en est l'athlète ; allégé pour garder la marge prévue (au moins 2 en réserve) ; dernières séries plus dures que prévu |
-| 12 | allègement | 2 × 8 à 10 | 10-10 à 27,5 kg | 10-10 à 27,5 kg | 3 → 5,4 ; suivantes 3 → 5 | 39 / 42 | charge non augmentée (après un échec non prévu) |
+| 12 | allègement | 2 × 8 à 10 | 10-10 à 27,5 kg | 10-10 à 27,5 kg | 3 → 5,5 ; suivantes 3 → 5 | 39 / 42 | charge non augmentée (après un échec non prévu) |
 
 Athlète simulé, maximum réel hors fatigue : 41 au départ (le record déclaré au profil peut être plus haut ou plus ancien), 42 en fin de cycle ; la colonne « réel » du tableau est le maximum du jour, fatigue comprise.
 
@@ -155,7 +155,7 @@ Athlète simulé, maximum réel hors fatigue : 10 au départ (le record déclar�
 - **Semaine 8 (construction (volume))** : bilan du jour bas (1/5) ; nuit courte (× 3) ; bilan du jour bas (2/5) (× 2) ; séries retirées — Extension nuque à la poulie (corde) (bilan du jour bas (1/5), nuit courte) ; charges réduites sur 6 exercices (bilan du jour bas (1/5), nuit courte) ; séries retirées sur 3 exercices (bilan du jour bas (2/5), nuit courte) ; charges réduites sur 9 exercices (bilan du jour bas (2/5), nuit courte) ; proposition appliquée : volume ajusté.
 - **Semaine 9 (construction (volume))** : Leg curl assis : séries arrêtées en cours de séance (allégé pour garder la marge prévue (au moins 2 en réserve), dernières séries plus dures que prévu) ; bilan du jour bas (1/5) (× 3) ; nuit courte (× 2) ; séries retirées — Extension nuque à la poulie (corde) (bilan du jour bas (1/5)) ; charges réduites sur 6 exercices (bilan du jour bas (1/5)) ; séries retirées — Curl incliné aux haltères, Mollets debout à la machine (bilan du jour bas (1/5), nuit courte) ; charges réduites sur 9 exercices (bilan du jour bas (1/5), nuit courte).
 - **Semaine 10 (construction (volume))** : bilan du jour bas (2/5) ; nuit courte (× 2) ; bilan du jour bas (1/5) (× 3) ; séries retirées — Tirage vertical poulie prise neutre (bilan du jour bas (2/5), nuit courte) ; charges réduites sur 8 exercices (bilan du jour bas (2/5), nuit courte) ; séries retirées sur 3 exercices (bilan du jour bas (1/5)) ; charges réduites sur 9 exercices (bilan du jour bas (1/5)) ; séries retirées — Curl incliné aux haltères (bilan du jour bas (1/5), nuit courte) ; charges réduites sur 5 exercices (bilan du jour bas (1/5), nuit courte).
-- **Semaine 11 (construction (volume))** : Leg curl assis : séries arrêtées en cours de séance (allégé pour garder la marge prévue (au moins 2 en réserve), dernières séries plus dures que prévu) ; bilan du jour bas (2/5) ; nuit courte ; séries retirées — Extension nuque à la poulie (corde) (bilan du jour bas (2/5), nuit courte) ; charges réduites sur 6 exercices (bilan du jour bas (2/5), nuit courte) ; proposition appliquée : exercice échangé.
+- **Semaine 11 (construction (volume))** : Leg curl assis : séries arrêtées en cours de séance (allégé pour garder la marge prévue (au moins 2 en réserve), dernières séries plus dures que prévu) ; bilan du jour bas (2/5) ; nuit courte ; séries retirées — Extension nuque à la poulie (corde) (bilan du jour bas (2/5), nuit courte) ; charges réduites sur 6 exercices (bilan du jour bas (2/5), nuit courte).
 - **Semaine 12 (allègement)** : phase « allègement » : séances servies telles que le programme les écrit (× 5) ; bilan du jour bas (2/5) (× 2) ; nuit courte ; charges réduites — Hip thrust à la barre, Back squat barre haute (bilan du jour bas (2/5), nuit courte) ; charges réduites — Tirage vertical poulie prise neutre, Rowing poulie basse assis au triangle (bilan du jour bas (2/5)).
 
 ## Même programme, autres athlètes simulés
@@ -164,6 +164,6 @@ Le même profil et le même moteur, avec d'autres hypothèses sur l'athlète ré
 
 | Athlète simulé | Échecs non voulus | Écart d'effort | Séries ≥ 2 rép. plus dures | Plus forte hausse à schéma égal | Progression par semaine | Tentatives réussies | Échéance / maximum du jour | Hausses sur zone douloureuse |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| modèle 2 (courbe linéaire, notes d'effort entières et plafonnées, récupération lente entre séries, tendons à adaptation lente) | 0,9 % | 2,41 | 0,2 % | 50 % | 0,181 % | — | — | 0 |
-| modèle 1 (courbe charge-répétitions à plateau, notes d'effort continues) | 1,9 % | 3,95 | 0,2 % | 33,3 % | 0,187 % | — | — | 0 |
-| modèle 3 (courbe en puissance, forme masquée par la fatigue, mauvais jours marqués, désentraînement rapide) | 6,8 % | 8,37 | 0,8 % | 33,3 % | 0,147 % | — | — | 0 |
+| modèle 2 (courbe linéaire, notes d'effort entières et plafonnées, récupération lente entre séries, tendons à adaptation lente) | 0,9 % | 2,4 | 0,2 % | 50 % | 0,181 % | — | — | 0 |
+| modèle 1 (courbe charge-répétitions à plateau, notes d'effort continues) | 1,9 % | 3,82 | 0,2 % | 33,3 % | 0,185 % | — | — | 0 |
+| modèle 3 (courbe en puissance, forme masquée par la fatigue, mauvais jours marqués, désentraînement rapide) | 6,5 % | 8,71 | 0,6 % | 33,3 % | 0,147 % | — | — | 0 |

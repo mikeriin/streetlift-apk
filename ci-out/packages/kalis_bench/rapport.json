@@ -1175,8 +1175,8 @@
     "workSets": 790,
     "unwantedFailureRate": 0.009,
     "nearFailureRate": 0.012,
-    "rirGapReachable": 2.867,
-    "rirGapAll": 3.158,
+    "rirGapReachable": 2.881,
+    "rirGapAll": 3.172,
     "reachableShare": 0.947,
     "maxMainLoadRise": 0.143,
     "mainRisesOverTenPercent": 2,
@@ -1201,20 +1201,21 @@
      "session_restructure": 7
     },
     "proposalsApplied": {
-     "volume": 1,
-     "exercise_swap": 1
+     "volume": 1
     },
     "unlockViolations": 0,
-    "proposalsWithheld": {},
+    "proposalsWithheld": {
+     "exercise_swap:plan_error": 1
+    },
     "painAggravations": 0,
     "blocks": 2,
     "truth": "b",
     "coached": true,
-    "effortGap": 2.414,
-    "effortBias": 2.162,
+    "effortGap": 2.395,
+    "effortBias": 2.142,
     "effortReachableShare": 0.947,
     "harderRate": 0.002,
-    "easierRate": 0.326,
+    "easierRate": 0.321,
     "coachFailureRate": 0.009,
     "maxSchemeRise": 0.5,
     "schemeRisesOverLimit": 2,
@@ -1226,7 +1227,7 @@
      "mu-hip-thrust-barre": [
       82,
       3.555,
-      7.149
+      7.15
      ],
      "mu-developpe-couche-barre": [
       68,
@@ -1265,13 +1266,13 @@
      ],
      "mu-back-squat-barre-haute": [
       68,
-      4.265,
-      7.883
+      4.353,
+      8.097
      ],
      "mu-leg-curl-assis": [
       47,
       2.309,
-      4.601
+      4.603
      ],
      "mu-mollets-debout-machine": [
       55,
@@ -1281,7 +1282,7 @@
      "mu-developpe-incline-halteres": [
       24,
       2.667,
-      4.417
+      4.418
      ],
      "mu-oiseau-pec-deck-inverse": [
       23,
@@ -1291,7 +1292,7 @@
      "mu-souleve-de-terre-roumain-barre": [
       33,
       2.455,
-      5.807
+      5.838
      ],
      "mu-dead-bug": [
       6,
@@ -1320,21 +1321,21 @@
      "workSets": 810,
      "unwantedFailureRate": 0.019,
      "nearFailureRate": 0.016,
-     "rirGapReachable": 4.425,
-     "rirGapAll": 4.512,
+     "rirGapReachable": 4.463,
+     "rirGapAll": 4.544,
      "reachableShare": 0.88,
      "maxMainLoadRise": 0.143,
-     "mainRisesOverTenPercent": 0,
+     "mainRisesOverTenPercent": 1,
      "mainSingleStepsOverTenPercent": 9,
      "weeklyGainPercent": {
-      "mu-hip-thrust-barre": 0.188,
-      "mu-back-squat-barre-haute": 0.179,
+      "mu-hip-thrust-barre": 0.181,
+      "mu-back-squat-barre-haute": 0.177,
       "mu-developpe-couche-barre": 0.154,
       "mu-rowing-poulie-assis-triangle": 0.197,
       "mu-tirage-vertical-prise-neutre": 0.222,
       "mu-developpe-halteres-assis": 0.183
      },
-     "meanWeeklyGainPercent": 0.187,
+     "meanWeeklyGainPercent": 0.185,
      "eventPerformance": {},
      "eventTargets": 0,
      "eventTargetsTested": 0,
@@ -1354,11 +1355,11 @@
      "blocks": 2,
      "truth": "a",
      "coached": true,
-     "effortGap": 3.953,
-     "effortBias": 3.706,
+     "effortGap": 3.822,
+     "effortBias": 3.573,
      "effortReachableShare": 0.88,
      "harderRate": 0.002,
-     "easierRate": 0.327,
+     "easierRate": 0.3,
      "coachFailureRate": 0.019,
      "maxSchemeRise": 0.333,
      "schemeRisesOverLimit": 5,
@@ -1369,18 +1370,18 @@
      "effortByExercise": {
       "mu-hip-thrust-barre": [
        82,
-       3.768,
-       7.41
+       4.043,
+       7.869
       ],
       "mu-developpe-couche-barre": [
        68,
-       4.507,
+       4.529,
        8.874
       ],
       "mu-rowing-poulie-assis-triangle": [
        68,
        2.316,
-       6.112
+       6.113
       ],
       "mu-developpe-halteres-assis": [
        57,
@@ -1395,17 +1396,17 @@
       "mu-extension-nuque-poulie-corde": [
        49,
        2.204,
-       9.726
+       9.736
       ],
       "mu-curl-incline-halteres": [
        48,
        2.208,
-       13.993
+       13.994
       ],
       "mu-back-squat-barre-haute": [
        68,
-       4.375,
-       7.222
+       4.434,
+       7.391
       ],
       "mu-leg-curl-assis": [
        50,
@@ -1430,7 +1431,7 @@
       "mu-souleve-de-terre-roumain-barre": [
        33,
        2.379,
-       5.948
+       5.949
       ],
       "mu-elevation-laterale-poulie-unilaterale": [
        12,
@@ -1446,7 +1447,7 @@
      "verdicts": {
       "echecs_non_voulus": true,
       "ecart_rir": false,
-      "pics_de_charge": true,
+      "pics_de_charge": false,
       "performance_echeance": null,
       "deblocages": true,
       "douleur": true,
@@ -1460,23 +1461,23 @@
      "weeks": 12,
      "sessionsPlanned": 60,
      "sessionsDone": 60,
-     "sessionsAdjusted": 11,
-     "workSets": 804,
-     "unwantedFailureRate": 0.068,
-     "nearFailureRate": 0.057,
-     "rirGapReachable": 13.44,
-     "rirGapAll": 18.227,
-     "reachableShare": 0.755,
+     "sessionsAdjusted": 10,
+     "workSets": 807,
+     "unwantedFailureRate": 0.065,
+     "nearFailureRate": 0.059,
+     "rirGapReachable": 13.159,
+     "rirGapAll": 17.994,
+     "reachableShare": 0.752,
      "maxMainLoadRise": 0.125,
      "mainRisesOverTenPercent": 0,
      "mainSingleStepsOverTenPercent": 6,
      "weeklyGainPercent": {
-      "mu-hip-thrust-barre": 0.152,
-      "mu-back-squat-barre-haute": 0.132,
-      "mu-developpe-couche-barre": 0.109,
-      "mu-rowing-poulie-assis-triangle": 0.164,
-      "mu-tirage-vertical-prise-neutre": 0.185,
-      "mu-developpe-halteres-assis": 0.14
+      "mu-hip-thrust-barre": 0.151,
+      "mu-back-squat-barre-haute": 0.125,
+      "mu-developpe-couche-barre": 0.11,
+      "mu-rowing-poulie-assis-triangle": 0.168,
+      "mu-tirage-vertical-prise-neutre": 0.187,
+      "mu-developpe-halteres-assis": 0.144
      },
      "meanWeeklyGainPercent": 0.147,
      "eventPerformance": {},
@@ -1493,19 +1494,21 @@
       "volume": 1
      },
      "unlockViolations": 0,
-     "proposalsWithheld": {},
+     "proposalsWithheld": {
+      "exercise_swap:plan_error": 1
+     },
      "painAggravations": 0,
      "blocks": 2,
      "truth": "c",
      "coached": true,
-     "effortGap": 8.368,
-     "effortBias": 7.856,
-     "effortReachableShare": 0.755,
-     "harderRate": 0.008,
-     "easierRate": 0.349,
-     "coachFailureRate": 0.068,
+     "effortGap": 8.706,
+     "effortBias": 8.237,
+     "effortReachableShare": 0.752,
+     "harderRate": 0.006,
+     "easierRate": 0.356,
+     "coachFailureRate": 0.065,
      "maxSchemeRise": 0.333,
-     "schemeRisesOverLimit": 4,
+     "schemeRisesOverLimit": 3,
      "attempts": 0,
      "attemptsMade": 0,
      "openerRate": null,
@@ -1513,68 +1516,68 @@
      "effortByExercise": {
       "mu-hip-thrust-barre": [
        82,
-       3.671,
-       18.674
+       3.787,
+       18.855
       ],
       "mu-developpe-couche-barre": [
        68,
        4.713,
-       40.186
+       39.988
       ],
       "mu-rowing-poulie-assis-triangle": [
        40,
-       2.4,
-       19.189
+       2.363,
+       19.217
       ],
       "mu-developpe-halteres-assis": [
        35,
        2.2,
-       21.405
+       19.331
       ],
       "mu-tirage-vertical-prise-neutre": [
        66,
-       2.371,
-       6.891
+       2.356,
+       7.172
       ],
       "mu-extension-nuque-poulie-corde": [
-       43,
-       2.198,
-       31.239
+       44,
+       2.148,
+       28.951
       ],
       "mu-curl-incline-halteres": [
-       46,
-       2.283,
-       13.676
+       47,
+       2.266,
+       16.597
       ],
       "mu-back-squat-barre-haute": [
        68,
-       4.434,
-       19.726
+       4.654,
+       15.142
       ],
       "mu-leg-curl-assis": [
        50,
        2.2,
-       18.588
+       21.967
       ],
       "mu-mollets-debout-machine": [
        58,
        2.198,
-       10.539
+       11.375
       ],
       "mu-souleve-de-terre-roumain-barre": [
        34,
        2.382,
-       16.778
+       16.621
       ],
       "mu-developpe-incline-halteres": [
        14,
-       2.5,
-       20.54
+       2.357,
+       19.547
       ],
       "mu-dead-bug": [
-       6,
-       5.0,
-       13.192
+       4,
+       4.875,
+       12.62
       ]
      },
      "verdicts": {
@@ -3385,7 +3388,7 @@
     "weeks": 12,
     "sessionsPlanned": 36,
     "sessionsDone": 34,
-    "sessionsAdjusted": 11,
+    "sessionsAdjusted": 12,
     "workSets": 95,
     "unwantedFailureRate": 0.0,
     "nearFailureRate": 0.0,
@@ -3452,7 +3455,7 @@
      "weeks": 12,
      "sessionsPlanned": 36,
      "sessionsDone": 34,
-     "sessionsAdjusted": 10,
+     "sessionsAdjusted": 11,
      "workSets": 96,
      "unwantedFailureRate": 0.0,
      "nearFailureRate": 0.0,
@@ -3519,7 +3522,7 @@
      "weeks": 12,
      "sessionsPlanned": 36,
      "sessionsDone": 34,
-     "sessionsAdjusted": 11,
+     "sessionsAdjusted": 12,
      "workSets": 99,
      "unwantedFailureRate": 0.0,
      "nearFailureRate": 0.0,
@@ -3708,7 +3711,7 @@
      "type": "min_weekly_minutes",
      "label": "Au moins 180 minutes de course par semaine",
      "ok": true,
-     "observed": "206 min par semaine en montée"
+     "observed": "194 min par semaine en montée"
     },
     {
      "id": "c2",
@@ -3796,9 +3799,9 @@
     "workSets": 69,
     "unwantedFailureRate": 0.0,
     "nearFailureRate": 0.0,
-    "rirGapReachable": 1.218,
-    "rirGapAll": 6.311,
-    "reachableShare": 0.579,
+    "rirGapReachable": 0.821,
+    "rirGapAll": 6.328,
+    "reachableShare": 0.561,
     "maxMainLoadRise": 0.0,
     "mainRisesOverTenPercent": 0,
     "mainSingleStepsOverTenPercent": 0,
@@ -3816,20 +3819,19 @@
      "exercise_swap": 4,
      "session_restructure": 7
     },
-    "proposalsApplied": {
-     "pain_sparing": 1
-    },
+    "proposalsApplied": {},
     "unlockViolations": 0,
     "proposalsWithheld": {
-     "pain_sparing:no_change": 2
+     "pain_sparing:plan_error": 3,
+     "exercise_swap:plan_error": 1
     },
     "painAggravations": 0,
     "blocks": 2,
     "truth": "b",
     "coached": true,
-    "effortGap": 0.796,
-    "effortBias": 0.623,
-    "effortReachableShare": 0.579,
+    "effortGap": 0.821,
+    "effortBias": 0.643,
+    "effortReachableShare": 0.561,
     "harderRate": 0.0,
     "easierRate": 0.0,
     "coachFailureRate": 0.0,
@@ -3844,16 +3846,11 @@
       38,
       1.947,
       2.756
-     ],
-     "mu-fente-arriere-poids-du-corps": [
-      1,
-      5.0,
-      18.934
      ]
     },
     "verdicts": {
      "echecs_non_voulus": true,
-     "ecart_rir": false,
+     "ecart_rir": true,
      "pics_de_charge": true,
      "performance_echeance": null,
      "deblocages": true,
@@ -3872,9 +3869,9 @@
      "workSets": 57,
      "unwantedFailureRate": 0.0,
      "nearFailureRate": 0.0,
-     "rirGapReachable": 5.161,
-     "rirGapAll": 6.336,
-     "reachableShare": 0.778,
+     "rirGapReachable": 3.124,
+     "rirGapAll": 6.603,
+     "reachableShare": 0.622,
      "maxMainLoadRise": 0.0,
      "mainRisesOverTenPercent": 0,
      "mainSingleStepsOverTenPercent": 0,
@@ -3892,20 +3889,19 @@
       "exercise_swap": 4,
       "session_restructure": 7
      },
-     "proposalsApplied": {
-      "pain_sparing": 1
-     },
+     "proposalsApplied": {},
      "unlockViolations": 0,
      "proposalsWithheld": {
-      "pain_sparing:no_change": 2
+      "pain_sparing:plan_error": 3,
+      "exercise_swap:plan_error": 1
      },
      "painAggravations": 0,
      "blocks": 2,
      "truth": "a",
      "coached": true,
-     "effortGap": 0.317,
-     "effortBias": 0.279,
-     "effortReachableShare": 0.778,
+     "effortGap": 0.397,
+     "effortBias": 0.349,
+     "effortReachableShare": 0.622,
      "harderRate": 0.0,
      "easierRate": 0.0,
      "coachFailureRate": 0.0,
@@ -3922,9 +3918,9 @@
        2.773
       ],
       "mu-fente-arriere-poids-du-corps": [
-       14,
+       7,
        5.0,
-       17.109
+       15.91
       ]
      },
      "verdicts": {
@@ -3948,9 +3944,9 @@
      "workSets": 68,
      "unwantedFailureRate": 0.018,
      "nearFailureRate": 0.018,
-     "rirGapReachable": 1.316,
-     "rirGapAll": 6.253,
-     "reachableShare": 0.571,
+     "rirGapReachable": 0.909,
+     "rirGapAll": 6.271,
+     "reachableShare": 0.554,
      "maxMainLoadRise": 0.0,
      "mainRisesOverTenPercent": 0,
      "mainSingleStepsOverTenPercent": 0,
@@ -3968,20 +3964,19 @@
       "exercise_swap": 4,
       "session_restructure": 7
      },
-     "proposalsApplied": {
-      "pain_sparing": 1
-     },
+     "proposalsApplied": {},
      "unlockViolations": 0,
      "proposalsWithheld": {
-      "pain_sparing:no_change": 2
+      "pain_sparing:plan_error": 3,
+      "exercise_swap:plan_error": 1
      },
      "painAggravations": 0,
      "blocks": 2,
      "truth": "c",
      "coached": true,
-     "effortGap": 0.88,
-     "effortBias": 0.74,
-     "effortReachableShare": 0.571,
+     "effortGap": 0.909,
+     "effortBias": 0.764,
+     "effortReachableShare": 0.554,
      "harderRate": 0.0,
      "easierRate": 0.0,
      "coachFailureRate": 0.018,
@@ -3996,16 +3991,11 @@
        37,
        1.851,
        2.648
-      ],
-      "mu-fente-arriere-poids-du-corps": [
-       1,
-       5.0,
-       18.941
       ]
      },
      "verdicts": {
       "echecs_non_voulus": true,
-      "ecart_rir": false,
+      "ecart_rir": true,
       "pics_de_charge": true,
       "performance_echeance": null,
       "deblocages": true,
@@ -19854,112 +19844,112 @@
  ],
  "timingsMs": {
   "autres_01_debutant_musculation": {
-   "createBlockMs": 165.9,
-   "benchMs": 834.8
+   "createBlockMs": 157.6,
+   "benchMs": 813.6
   },
   "autres_02_hypertrophie_intermediaire": {
-   "createBlockMs": 104.1,
-   "benchMs": 721.2
+   "createBlockMs": 121.4,
+   "benchMs": 920.0
   },
   "autres_03_powerlifter_competition": {
-   "createBlockMs": 28.3,
-   "benchMs": 443.8
+   "createBlockMs": 103.2,
+   "benchMs": 375.9
   },
   "autres_04_force_generale_46_ans": {
-   "createBlockMs": 10.4,
-   "benchMs": 479.7
+   "createBlockMs": 11.2,
+   "benchMs": 489.1
   },
   "autres_05_course_10_km_debutante": {
-   "createBlockMs": 9.6,
-   "benchMs": 77.3
+   "createBlockMs": 8.7,
+   "benchMs": 81.4
   },
   "autres_06_semi_marathon_intermediaire": {
-   "createBlockMs": 5.2,
-   "benchMs": 266.3
+   "createBlockMs": 5.4,
+   "benchMs": 183.7
   },
   "autres_07_mobilite_sante_senior": {
-   "createBlockMs": 81.8,
-   "benchMs": 159.9
+   "createBlockMs": 7.7,
+   "benchMs": 145.1
   },
   "autres_08_crossfit_intermediaire": {
-   "createBlockMs": 14.7,
-   "benchMs": 416.7
+   "createBlockMs": 50.9,
+   "benchMs": 394.2
   },
   "autres_09_perte_de_poids_debutante": {
-   "createBlockMs": 11.6,
-   "benchMs": 168.4
+   "createBlockMs": 5.4,
+   "benchMs": 173.5
   },
   "autres_10_contraintes_multiples": {
-   "createBlockMs": 10.6,
-   "benchMs": 141.9
+   "createBlockMs": 11.9,
+   "benchMs": 232.3
   },
   "street_01_debutant_complet": {
-   "createBlockMs": 33.5,
-   "benchMs": 346.8
+   "createBlockMs": 12.0,
+   "benchMs": 300.5
   },
   "street_02_debutant_surpoids": {
-   "createBlockMs": 5.9,
-   "benchMs": 209.2
+   "createBlockMs": 14.1,
+   "benchMs": 225.2
   },
   "street_03_debutante": {
-   "createBlockMs": 5.3,
-   "benchMs": 333.7
+   "createBlockMs": 6.2,
+   "benchMs": 379.0
   },
   "street_04_reprise_longue_pause": {
-   "createBlockMs": 87.3,
-   "benchMs": 273.0
+   "createBlockMs": 68.0,
+   "benchMs": 271.3
   },
   "street_05_inter_calisthenie_front_lever": {
-   "createBlockMs": 19.8,
-   "benchMs": 651.8
+   "createBlockMs": 91.8,
+   "benchMs": 633.1
   },
   "street_06_inter_sets_reps": {
-   "createBlockMs": 7.2,
-   "benchMs": 327.3
+   "createBlockMs": 8.7,
+   "benchMs": 277.6
   },
   "street_07_avance_streetlifting_competition": {
-   "createBlockMs": 20.3,
-   "benchMs": 354.3
+   "createBlockMs": 14.4,
+   "benchMs": 339.5
   },
   "street_08_avance_sets_reps_competition": {
-   "createBlockMs": 8.3,
-   "benchMs": 182.8
+   "createBlockMs": 7.1,
+   "benchMs": 174.1
   },
   "street_09_elite_streetlifting": {
-   "createBlockMs": 4.5,
-   "benchMs": 368.4
+   "createBlockMs": 6.4,
+   "benchMs": 375.5
   },
   "street_10_elite_figures": {
-   "createBlockMs": 38.6,
-   "benchMs": 543.1
+   "createBlockMs": 70.5,
+   "benchMs": 545.3
   },
   "street_11_master_51_ans": {
-   "createBlockMs": 32.4,
-   "benchMs": 230.0
+   "createBlockMs": 5.2,
+   "benchMs": 313.2
   },
   "street_12_antecedent_coude": {
-   "createBlockMs": 3.6,
-   "benchMs": 146.2
+   "createBlockMs": 9.0,
+   "benchMs": 196.7
   },
   "street_13_peu_de_temps": {
-   "createBlockMs": 2.7,
-   "benchMs": 60.6
+   "createBlockMs": 5.8,
+   "benchMs": 68.6
   },
   "street_14_parc_sans_lest": {
-   "createBlockMs": 4.6,
-   "benchMs": 91.3
+   "createBlockMs": 3.0,
+   "benchMs": 92.9
   },
   "street_15_travail_physique_sommeil_court": {
-   "createBlockMs": 4.2,
-   "benchMs": 91.2
+   "createBlockMs": 2.1,
+   "benchMs": 89.7
   },
   "street_16_specialisation_traction_lestee": {
-   "createBlockMs": 2.5,
-   "benchMs": 87.0
+   "createBlockMs": 2.7,
+   "benchMs": 84.6
   },
   "street_17_hybride_street_course": {
-   "createBlockMs": 2.6,
-   "benchMs": 83.7
+   "createBlockMs": 2.7,
+   "benchMs": 82.6
   }
  }
 }

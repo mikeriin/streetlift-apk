@@ -16,7 +16,7 @@ Un athlète simulé (capacités réelles connues du simulateur, jamais du moteur
 
 ## Bilan
 
-- Séances faites : 34 sur 36 (11 ajustées le jour même).
+- Séances faites : 34 sur 36 (12 ajustées le jour même).
 - Échecs non voulus (hors tests et tentatives) : 0 % des séries de travail.
 - Écart moyen entre l'effort affiché par le moteur et l'effort réel : 2,44 répétition en réserve (sur les 40 % de séries dont la cible est atteignable avec le matériel ; séries « 5 en réserve et plus » : seul un effort plus dur compte) ; séries au moins 2 répétitions plus dures que visé : 0 % ; au moins 3 plus faciles : 41,7 %.
 - Plus forte hausse de charge totale d'un mouvement principal d'une séance à la suivante, à schéma égal : 0 % ; hausses de plus de 10 % faites de plusieurs crans : 0.
@@ -39,7 +39,7 @@ Pour chaque mouvement, la séance la plus lourde de la semaine : ce que le progr
 - **Semaine 9 (construction (volume))** : Pont fessier unilatéral : répétitions recalées sur le maximum mesuré (6 de moins par série que le programme) ; bilan du jour bas (2/5) ; séries retirées — Sortie longue en course à pied.
 - **Semaine 10 (construction (volume))** : temps réduit (27 min au lieu de 43) ; Pont fessier unilatéral : répétitions recalées sur le maximum mesuré (7 de moins par série que le programme) ; échéance proche : décisions prudentes, pas de hausse au-delà du programme ; exercice retiré sur 3 exercices (temps réduit (27 min au lieu de 43)) ; séries retirées — Sortie longue en course à pied.
 - **Semaine 11 (affûtage)** : 1 séance(s) manquée(s) sur 3 ; phase « affûtage » : séances servies telles que le programme les écrit (× 2) ; affûtage : aucun volume ajouté, intensité gardée (× 2) ; échéance proche : décisions prudentes, pas de hausse au-delà du programme (× 2) ; Pont fessier unilatéral : répétitions recalées sur le maximum mesuré (5 de moins par série que le programme).
-- **Semaine 12 (test)** : phase « test » : séances servies telles que le programme les écrit (× 3) ; échéance proche : décisions prudentes, pas de hausse au-delà du programme (× 2) ; séries retirées — Sortie longue en course à pied.
+- **Semaine 12 (test)** : phase « test » : séances servies telles que le programme les écrit (× 3) ; échéance proche : décisions prudentes, pas de hausse au-delà du programme (× 2) ; séries retirées — Footing en endurance fondamentale, Sortie longue en course à pied.
 
 ## Même programme, autres athlètes simulés
 
@@ -90,8 +90,9 @@ Course, cardio et pièces de conditionnement : ce que le programme écrit, ce qu
 | 11 | 2026-12-15 | Footing en endurance fondamentale | 21 min, effort 1/10 | 21 min, effort 1/10 | 21 min, effort noté 4/10 | tel qu'écrit |
 | 11 | 2026-12-17 | Footing en endurance fondamentale | 21 min, effort 1/10 | 21 min, effort 1/10 | 21 min, effort noté 2/10 | tel qu'écrit |
 | 12 | 2026-12-22 | Éducatif de course montées de genoux | 10 rép., effort 1/10 | 10 rép., effort 1/10 | 10 rép., effort noté 1/10 | tel qu'écrit |
-| 12 | 2026-12-24 | Footing en endurance fondamentale | 20 min, effort 1/10 | 20 min, effort 1/10 | 20 min, effort noté 2/10 | tel qu'écrit |
-| 12 | 2026-12-27 | Sortie longue en course à pied | 10 km, test | 5,2 km | 4,98 km en 33,1 min, effort noté 8/10, pas en entier | raccourcie : pas plus de 10 % au-dessus de la plus longue course des 30 jours |
+| 12 | 2026-12-24 | Footing en endurance fondamentale | 10 km, test | 5,2 km | 4,98 km en 33,1 min, effort noté 7/10, pas en entier | raccourcie : pas plus de 10 % au-dessus de la plus longue course des 30 jours |
+| 12 | 2026-12-27 | Footing en endurance fondamentale | — | 4,1 km | 4,1 km en 27,2 min | raccourcie : pas plus de 10 % au-dessus de la plus longue course des 30 jours |
+| 12 | 2026-12-27 | Sortie longue en course à pied | 20 min, effort 1/10 | 8 min, effort 1/10 | 8 min, effort noté 2/10 | raccourcie : pas plus de 10 % au-dessus de la plus longue course des 30 jours |
 
 Course faite et écrite par semaine (minutes, échauffement exclu) :
 
@@ -102,10 +103,10 @@ Course faite et écrite par semaine (minutes, échauffement exclu) :
 | 3 | 79 | 91 |
 | 4 | 80 | 95 |
 | 5 | 72 | 99 |
-| 6 | 79 | 82 |
+| 6 | 79 | 81 |
 | 7 | 81 | 102 |
 | 8 | 81 | 102 |
 | 9 | 82 | 102 |
 | 10 | 82 | 102 |
 | 11 | 42 | 42 |
-| 12 | 53 | 87 |
+| 12 | 68 | 87 |

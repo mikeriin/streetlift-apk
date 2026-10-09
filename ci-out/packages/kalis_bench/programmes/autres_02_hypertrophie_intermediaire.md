@@ -63,7 +63,7 @@ Femme de 27 ans, 61 kg, trois ans de musculation. Squat 80 kg, développé couch
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Hip thrust à la barre | 2 × 8 à 10 | 77,5 kg, ≈ 71 % du 1RM (charge totale ; 1RM de référence 110 kg) | 3 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
+| Hip thrust à la barre | 2 × 8 à 10 | 75 kg, ≈ 68 % du 1RM (charge totale ; 1RM de référence 110 kg) | 3 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Développé couché barre | 3 × 8 à 10 | 30 kg, ≈ 67 % du 1RM (charge totale ; 1RM de référence 45 kg) | 3 rép. en réserve | 105 s | principal |
 | Rowing poulie basse assis au triangle | 3 × 8 à 10 | charge à déterminer, à calibrer | 3 rép. en réserve | 105 s | principal ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Développé haltères assis | 2 × 8 à 10 | charge à déterminer, à calibrer | 3 rép. en réserve | 105 s | secondaire |
@@ -77,8 +77,8 @@ Femme de 27 ans, 61 kg, trois ans de musculation. Squat 80 kg, développé couch
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Hip thrust à la barre | 2 × 8 à 10 | 77,5 kg, ≈ 71 % du 1RM (charge totale ; 1RM de référence 110 kg) | 3 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
-| Back squat barre haute | 3 × 8 à 10 | 57,5 kg, ≈ 72 % du 1RM (charge totale ; 1RM de référence 80 kg) | 3 rép. en réserve | 105 s | principal |
+| Hip thrust à la barre | 2 × 8 à 10 | 75 kg, ≈ 68 % du 1RM (charge totale ; 1RM de référence 110 kg) | 3 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
+| Back squat barre haute | 3 × 8 à 10 | 55 kg, ≈ 69 % du 1RM (charge totale ; 1RM de référence 80 kg) | 3 rép. en réserve | 105 s | principal |
 | Leg curl assis | 3 × 10 à 15 | charge à déterminer, à calibrer | 3 rép. en réserve | 75 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Mollets debout à la machine | 3 × 10 à 15 | charge à déterminer, à calibrer | 3 rép. en réserve | 75 s | accessoire ; Renforcement du coureur : mollets en charge lente, rebonds courts et élastiques (contacts brefs, sans fatigue) — pour le tendon d'Achille et l'économie de course. Douleur au tibia, au tendon d'Achille ou au pied à 3 sur 10 : retire les rebonds. |
 | Dead bug | 2 × 8 à 12 | poids du corps | 4 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
@@ -88,7 +88,7 @@ Femme de 27 ans, 61 kg, trois ans de musculation. Squat 80 kg, développé couch
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Hip thrust à la barre | 3 × 8 à 10 | 77,5 kg, ≈ 71 % du 1RM (charge totale ; 1RM de référence 110 kg) | 3 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
+| Hip thrust à la barre | 3 × 8 à 10 | 75 kg, ≈ 68 % du 1RM (charge totale ; 1RM de référence 110 kg) | 3 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Développé couché barre | 3 × 8 à 10 | 30 kg, ≈ 67 % du 1RM (charge totale ; 1RM de référence 45 kg) | 3 rép. en réserve | 105 s | principal |
 | Développé haltères assis | 3 × 8 à 10 | charge à déterminer, à calibrer | 3 rép. en réserve | 105 s | principal |
 | Développé incliné haltères | 2 × 8 à 10 | charge à déterminer, à calibrer | 3 rép. en réserve | 105 s | secondaire |
@@ -112,7 +112,7 @@ Femme de 27 ans, 61 kg, trois ans de musculation. Squat 80 kg, développé couch
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Back squat barre haute | 3 × 8 à 10 | 57,5 kg, ≈ 72 % du 1RM (charge totale ; 1RM de référence 80 kg) | 3 rép. en réserve | 105 s | principal |
+| Back squat barre haute | 3 × 8 à 10 | 55 kg, ≈ 69 % du 1RM (charge totale ; 1RM de référence 80 kg) | 3 rép. en réserve | 105 s | principal |
 | Soulevé de terre roumain à la barre | 3 × 8 à 10 | charge à déterminer, à calibrer | 3 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Leg curl assis | 2 × 10 à 15 | charge à déterminer, à calibrer | 3 rép. en réserve | 75 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Mollets debout à la machine | 3 × 10 à 15 | charge à déterminer, à calibrer | 3 rép. en réserve | 75 s | accessoire ; Renforcement du coureur : mollets en charge lente, rebonds courts et élastiques (contacts brefs, sans fatigue) — pour le tendon d'Achille et l'économie de course. Douleur au tibia, au tendon d'Achille ou au pied à 3 sur 10 : retire les rebonds. |
@@ -139,7 +139,7 @@ Femme de 27 ans, 61 kg, trois ans de musculation. Squat 80 kg, développé couch
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
 | Hip thrust à la barre | 2 × 8 à 10 | 77,5 kg, ≈ 71 % du 1RM (charge totale ; 1RM de référence 110 kg) | 2 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
-| Back squat barre haute | 3 × 8 à 10 | 57,5 kg, ≈ 72 % du 1RM (charge totale ; 1RM de référence 80 kg) | 2 rép. en réserve | 105 s | principal |
+| Back squat barre haute | 3 × 8 à 10 | 55 kg, ≈ 69 % du 1RM (charge totale ; 1RM de référence 80 kg) | 2 rép. en réserve | 105 s | principal |
 | Leg curl assis | 3 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Mollets debout à la machine | 3 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire ; Renforcement du coureur : mollets en charge lente, rebonds courts et élastiques (contacts brefs, sans fatigue) — pour le tendon d'Achille et l'économie de course. Douleur au tibia, au tendon d'Achille ou au pied à 3 sur 10 : retire les rebonds. |
 | Dead bug | 2 × 8 à 12 | poids du corps | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
@@ -173,7 +173,7 @@ Femme de 27 ans, 61 kg, trois ans de musculation. Squat 80 kg, développé couch
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Back squat barre haute | 3 × 8 à 10 | 57,5 kg, ≈ 72 % du 1RM (charge totale ; 1RM de référence 80 kg) | 2 rép. en réserve | 105 s | principal |
+| Back squat barre haute | 3 × 8 à 10 | 55 kg, ≈ 69 % du 1RM (charge totale ; 1RM de référence 80 kg) | 2 rép. en réserve | 105 s | principal |
 | Soulevé de terre roumain à la barre | 3 × 8 à 10 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Leg curl assis | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Mollets debout à la machine | 3 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire ; Renforcement du coureur : mollets en charge lente, rebonds courts et élastiques (contacts brefs, sans fatigue) — pour le tendon d'Achille et l'économie de course. Douleur au tibia, au tendon d'Achille ou au pied à 3 sur 10 : retire les rebonds. |
@@ -200,7 +200,7 @@ Femme de 27 ans, 61 kg, trois ans de musculation. Squat 80 kg, développé couch
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
 | Hip thrust à la barre | 2 × 8 à 10 | 77,5 kg, ≈ 71 % du 1RM (charge totale ; 1RM de référence 110 kg) | 2 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
-| Back squat barre haute | 3 × 8 à 10 | 57,5 kg, ≈ 72 % du 1RM (charge totale ; 1RM de référence 80 kg) | 2 rép. en réserve | 105 s | principal |
+| Back squat barre haute | 3 × 8 à 10 | 55 kg, ≈ 69 % du 1RM (charge totale ; 1RM de référence 80 kg) | 2 rép. en réserve | 105 s | principal |
 | Leg curl assis | 3 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Mollets debout à la machine | 3 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire ; Renforcement du coureur : mollets en charge lente, rebonds courts et élastiques (contacts brefs, sans fatigue) — pour le tendon d'Achille et l'économie de course. Douleur au tibia, au tendon d'Achille ou au pied à 3 sur 10 : retire les rebonds. |
 | Dead bug | 2 × 8 à 12 | poids du corps | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
@@ -234,7 +234,7 @@ Femme de 27 ans, 61 kg, trois ans de musculation. Squat 80 kg, développé couch
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Back squat barre haute | 3 × 8 à 10 | 57,5 kg, ≈ 72 % du 1RM (charge totale ; 1RM de référence 80 kg) | 2 rép. en réserve | 105 s | principal |
+| Back squat barre haute | 3 × 8 à 10 | 55 kg, ≈ 69 % du 1RM (charge totale ; 1RM de référence 80 kg) | 2 rép. en réserve | 105 s | principal |
 | Soulevé de terre roumain à la barre | 3 × 8 à 10 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Leg curl assis | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Mollets debout à la machine | 3 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire ; Renforcement du coureur : mollets en charge lente, rebonds courts et élastiques (contacts brefs, sans fatigue) — pour le tendon d'Achille et l'économie de course. Douleur au tibia, au tendon d'Achille ou au pied à 3 sur 10 : retire les rebonds. |
@@ -246,7 +246,7 @@ Femme de 27 ans, 61 kg, trois ans de musculation. Squat 80 kg, développé couch
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Hip thrust à la barre | 2 × 9 à 11 | 77,5 kg, ≈ 71 % du 1RM (charge totale ; 1RM de référence 110 kg) | 2 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
+| Hip thrust à la barre | 2 × 9 à 11 | 75 kg, ≈ 68 % du 1RM (charge totale ; 1RM de référence 110 kg) | 2 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Développé couché barre | 3 × 9 à 11 | 30 kg, ≈ 67 % du 1RM (charge totale ; 1RM de référence 45 kg) | 2 rép. en réserve | 105 s | principal |
 | Rowing poulie basse assis au triangle | 3 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | principal ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Développé haltères assis | 2 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | secondaire |
@@ -260,8 +260,8 @@ Femme de 27 ans, 61 kg, trois ans de musculation. Squat 80 kg, développé couch
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Hip thrust à la barre | 2 × 9 à 11 | 77,5 kg, ≈ 71 % du 1RM (charge totale ; 1RM de référence 110 kg) | 2 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
-| Back squat barre haute | 3 × 9 à 11 | 57,5 kg, ≈ 72 % du 1RM (charge totale ; 1RM de référence 80 kg) | 2 rép. en réserve | 105 s | principal |
+| Hip thrust à la barre | 2 × 9 à 11 | 75 kg, ≈ 68 % du 1RM (charge totale ; 1RM de référence 110 kg) | 2 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
+| Back squat barre haute | 3 × 9 à 11 | 55 kg, ≈ 69 % du 1RM (charge totale ; 1RM de référence 80 kg) | 2 rép. en réserve | 105 s | principal |
 | Leg curl assis | 3 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Mollets debout à la machine | 3 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire ; Renforcement du coureur : mollets en charge lente, rebonds courts et élastiques (contacts brefs, sans fatigue) — pour le tendon d'Achille et l'économie de course. Douleur au tibia, au tendon d'Achille ou au pied à 3 sur 10 : retire les rebonds. |
 | Dead bug | 2 × 9 à 13 | poids du corps | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
@@ -271,7 +271,7 @@ Femme de 27 ans, 61 kg, trois ans de musculation. Squat 80 kg, développé couch
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Hip thrust à la barre | 3 × 9 à 11 | 77,5 kg, ≈ 71 % du 1RM (charge totale ; 1RM de référence 110 kg) | 2 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
+| Hip thrust à la barre | 3 × 9 à 11 | 75 kg, ≈ 68 % du 1RM (charge totale ; 1RM de référence 110 kg) | 2 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Développé couché barre | 3 × 9 à 11 | 30 kg, ≈ 67 % du 1RM (charge totale ; 1RM de référence 45 kg) | 2 rép. en réserve | 105 s | principal |
 | Développé haltères assis | 3 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | principal |
 | Développé incliné haltères | 2 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | secondaire |
@@ -295,7 +295,7 @@ Femme de 27 ans, 61 kg, trois ans de musculation. Squat 80 kg, développé couch
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Back squat barre haute | 3 × 9 à 11 | 57,5 kg, ≈ 72 % du 1RM (charge totale ; 1RM de référence 80 kg) | 2 rép. en réserve | 105 s | principal |
+| Back squat barre haute | 3 × 9 à 11 | 55 kg, ≈ 69 % du 1RM (charge totale ; 1RM de référence 80 kg) | 2 rép. en réserve | 105 s | principal |
 | Soulevé de terre roumain à la barre | 3 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Leg curl assis | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Mollets debout à la machine | 3 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire ; Renforcement du coureur : mollets en charge lente, rebonds courts et élastiques (contacts brefs, sans fatigue) — pour le tendon d'Achille et l'économie de course. Douleur au tibia, au tendon d'Achille ou au pied à 3 sur 10 : retire les rebonds. |
@@ -307,7 +307,7 @@ Femme de 27 ans, 61 kg, trois ans de musculation. Squat 80 kg, développé couch
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Hip thrust à la barre | 2 × 9 à 11 | 77,5 kg, ≈ 71 % du 1RM (charge totale ; 1RM de référence 110 kg) | 2 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
+| Hip thrust à la barre | 2 × 9 à 11 | 75 kg, ≈ 68 % du 1RM (charge totale ; 1RM de référence 110 kg) | 2 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Développé couché barre | 3 × 9 à 11 | 30 kg, ≈ 67 % du 1RM (charge totale ; 1RM de référence 45 kg) | 2 rép. en réserve | 105 s | principal |
 | Rowing poulie basse assis au triangle | 3 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | principal ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Développé haltères assis | 2 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | secondaire |
@@ -321,8 +321,8 @@ Femme de 27 ans, 61 kg, trois ans de musculation. Squat 80 kg, développé couch
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Hip thrust à la barre | 2 × 9 à 11 | 77,5 kg, ≈ 71 % du 1RM (charge totale ; 1RM de référence 110 kg) | 2 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
-| Back squat barre haute | 3 × 9 à 11 | 57,5 kg, ≈ 72 % du 1RM (charge totale ; 1RM de référence 80 kg) | 2 rép. en réserve | 105 s | principal |
+| Hip thrust à la barre | 2 × 9 à 11 | 75 kg, ≈ 68 % du 1RM (charge totale ; 1RM de référence 110 kg) | 2 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
+| Back squat barre haute | 3 × 9 à 11 | 55 kg, ≈ 69 % du 1RM (charge totale ; 1RM de référence 80 kg) | 2 rép. en réserve | 105 s | principal |
 | Leg curl assis | 3 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Mollets debout à la machine | 3 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire ; Renforcement du coureur : mollets en charge lente, rebonds courts et élastiques (contacts brefs, sans fatigue) — pour le tendon d'Achille et l'économie de course. Douleur au tibia, au tendon d'Achille ou au pied à 3 sur 10 : retire les rebonds. |
 | Dead bug | 2 × 9 à 13 | poids du corps | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
@@ -332,7 +332,7 @@ Femme de 27 ans, 61 kg, trois ans de musculation. Squat 80 kg, développé couch
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Hip thrust à la barre | 3 × 9 à 11 | 77,5 kg, ≈ 71 % du 1RM (charge totale ; 1RM de référence 110 kg) | 2 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
+| Hip thrust à la barre | 3 × 9 à 11 | 75 kg, ≈ 68 % du 1RM (charge totale ; 1RM de référence 110 kg) | 2 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Développé couché barre | 3 × 9 à 11 | 30 kg, ≈ 67 % du 1RM (charge totale ; 1RM de référence 45 kg) | 2 rép. en réserve | 105 s | principal |
 | Développé haltères assis | 3 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | principal |
 | Développé incliné haltères | 2 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | secondaire |
@@ -356,7 +356,7 @@ Femme de 27 ans, 61 kg, trois ans de musculation. Squat 80 kg, développé couch
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Back squat barre haute | 3 × 9 à 11 | 57,5 kg, ≈ 72 % du 1RM (charge totale ; 1RM de référence 80 kg) | 2 rép. en réserve | 105 s | principal |
+| Back squat barre haute | 3 × 9 à 11 | 55 kg, ≈ 69 % du 1RM (charge totale ; 1RM de référence 80 kg) | 2 rép. en réserve | 105 s | principal |
 | Soulevé de terre roumain à la barre | 3 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Leg curl assis | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Mollets debout à la machine | 3 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire ; Renforcement du coureur : mollets en charge lente, rebonds courts et élastiques (contacts brefs, sans fatigue) — pour le tendon d'Achille et l'économie de course. Douleur au tibia, au tendon d'Achille ou au pied à 3 sur 10 : retire les rebonds. |
@@ -368,7 +368,7 @@ Femme de 27 ans, 61 kg, trois ans de musculation. Squat 80 kg, développé couch
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Hip thrust à la barre | 2 × 8 à 10 | 77,5 kg, ≈ 71 % du 1RM (charge totale ; 1RM de référence 110 kg) | 3 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
+| Hip thrust à la barre | 2 × 8 à 10 | 75 kg, ≈ 68 % du 1RM (charge totale ; 1RM de référence 110 kg) | 3 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Développé couché barre | 2 × 8 à 10 | 30 kg, ≈ 67 % du 1RM (charge totale ; 1RM de référence 45 kg) | 3 rép. en réserve | 105 s | principal |
 | Rowing poulie basse assis au triangle | 2 × 8 à 10 | charge à déterminer, à calibrer | 3 rép. en réserve | 105 s | principal ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Développé haltères assis | 2 × 8 à 10 | charge à déterminer, à calibrer | 3 rép. en réserve | 105 s | secondaire |
@@ -379,8 +379,8 @@ Femme de 27 ans, 61 kg, trois ans de musculation. Squat 80 kg, développé couch
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Hip thrust à la barre | 2 × 8 à 10 | 77,5 kg, ≈ 71 % du 1RM (charge totale ; 1RM de référence 110 kg) | 3 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
-| Back squat barre haute | 2 × 8 à 10 | 57,5 kg, ≈ 72 % du 1RM (charge totale ; 1RM de référence 80 kg) | 3 rép. en réserve | 105 s | principal |
+| Hip thrust à la barre | 2 × 8 à 10 | 75 kg, ≈ 68 % du 1RM (charge totale ; 1RM de référence 110 kg) | 3 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
+| Back squat barre haute | 2 × 8 à 10 | 55 kg, ≈ 69 % du 1RM (charge totale ; 1RM de référence 80 kg) | 3 rép. en réserve | 105 s | principal |
 | Dead bug | 2 × 8 à 12 | poids du corps | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
 
 ### jeudi — force, poussée, séance légère (75 min disponibles, 21 min estimées)
@@ -388,7 +388,7 @@ Femme de 27 ans, 61 kg, trois ans de musculation. Squat 80 kg, développé couch
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Hip thrust à la barre | 2 × 8 à 10 | 77,5 kg, ≈ 71 % du 1RM (charge totale ; 1RM de référence 110 kg) | 3 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
+| Hip thrust à la barre | 2 × 8 à 10 | 75 kg, ≈ 68 % du 1RM (charge totale ; 1RM de référence 110 kg) | 3 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Développé couché barre | 2 × 8 à 10 | 30 kg, ≈ 67 % du 1RM (charge totale ; 1RM de référence 45 kg) | 3 rép. en réserve | 105 s | principal |
 | Développé haltères assis | 2 × 8 à 10 | charge à déterminer, à calibrer | 3 rép. en réserve | 105 s | principal |
 | Développé incliné haltères | 2 × 8 à 10 | charge à déterminer, à calibrer | 3 rép. en réserve | 105 s | secondaire |
@@ -407,7 +407,7 @@ Femme de 27 ans, 61 kg, trois ans de musculation. Squat 80 kg, développé couch
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Back squat barre haute | 2 × 8 à 10 | 57,5 kg, ≈ 72 % du 1RM (charge totale ; 1RM de référence 80 kg) | 3 rép. en réserve | 105 s | principal |
+| Back squat barre haute | 2 × 8 à 10 | 55 kg, ≈ 69 % du 1RM (charge totale ; 1RM de référence 80 kg) | 3 rép. en réserve | 105 s | principal |
 | Soulevé de terre roumain à la barre | 2 × 8 à 10 | charge à déterminer, à calibrer | 3 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 
 ## Semaine 7 — construction (volume) (bloc 2)
@@ -432,7 +432,7 @@ Femme de 27 ans, 61 kg, trois ans de musculation. Squat 80 kg, développé couch
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
 | Hip thrust à la barre | 2 × 8 à 10 | 77,5 kg, ≈ 71 % du 1RM (charge totale ; 1RM de référence 110 kg) | 2 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
-| Back squat barre haute | 3 × 8 à 10 | 57,5 kg, ≈ 72 % du 1RM (charge totale ; 1RM de référence 80 kg) | 2 rép. en réserve | 105 s | principal |
+| Back squat barre haute | 3 × 8 à 10 | 55 kg, ≈ 69 % du 1RM (charge totale ; 1RM de référence 80 kg) | 2 rép. en réserve | 105 s | principal |
 | Leg curl assis | 3 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Mollets debout à la machine | 3 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire ; Renforcement du coureur : mollets en charge lente, rebonds courts et élastiques (contacts brefs, sans fatigue) — pour le tendon d'Achille et l'économie de course. Douleur au tibia, au tendon d'Achille ou au pied à 3 sur 10 : retire les rebonds. |
 | Dead bug | 2 × 8 à 12 | poids du corps | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
@@ -466,7 +466,7 @@ Femme de 27 ans, 61 kg, trois ans de musculation. Squat 80 kg, développé couch
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Back squat barre haute | 3 × 8 à 10 | 57,5 kg, ≈ 72 % du 1RM (charge totale ; 1RM de référence 80 kg) | 2 rép. en réserve | 105 s | principal |
+| Back squat barre haute | 3 × 8 à 10 | 55 kg, ≈ 69 % du 1RM (charge totale ; 1RM de référence 80 kg) | 2 rép. en réserve | 105 s | principal |
 | Soulevé de terre roumain à la barre | 3 × 8 à 10 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Leg curl assis | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Mollets debout à la machine | 3 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire ; Renforcement du coureur : mollets en charge lente, rebonds courts et élastiques (contacts brefs, sans fatigue) — pour le tendon d'Achille et l'économie de course. Douleur au tibia, au tendon d'Achille ou au pied à 3 sur 10 : retire les rebonds. |
@@ -478,7 +478,7 @@ Femme de 27 ans, 61 kg, trois ans de musculation. Squat 80 kg, développé couch
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Hip thrust à la barre | 2 × 9 à 11 | 77,5 kg, ≈ 71 % du 1RM (charge totale ; 1RM de référence 110 kg) | 2 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
+| Hip thrust à la barre | 2 × 9 à 11 | 75 kg, ≈ 68 % du 1RM (charge totale ; 1RM de référence 110 kg) | 2 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Développé couché barre | 3 × 9 à 11 | 30 kg, ≈ 67 % du 1RM (charge totale ; 1RM de référence 45 kg) | 2 rép. en réserve | 105 s | principal |
 | Rowing poulie basse assis au triangle | 3 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | principal ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Développé haltères assis | 2 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | secondaire |
@@ -492,8 +492,8 @@ Femme de 27 ans, 61 kg, trois ans de musculation. Squat 80 kg, développé couch
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Hip thrust à la barre | 2 × 9 à 11 | 77,5 kg, ≈ 71 % du 1RM (charge totale ; 1RM de référence 110 kg) | 2 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
-| Back squat barre haute | 3 × 9 à 11 | 57,5 kg, ≈ 72 % du 1RM (charge totale ; 1RM de référence 80 kg) | 2 rép. en réserve | 105 s | principal |
+| Hip thrust à la barre | 2 × 9 à 11 | 75 kg, ≈ 68 % du 1RM (charge totale ; 1RM de référence 110 kg) | 2 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
+| Back squat barre haute | 3 × 9 à 11 | 55 kg, ≈ 69 % du 1RM (charge totale ; 1RM de référence 80 kg) | 2 rép. en réserve | 105 s | principal |
 | Leg curl assis | 3 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Mollets debout à la machine | 3 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire ; Renforcement du coureur : mollets en charge lente, rebonds courts et élastiques (contacts brefs, sans fatigue) — pour le tendon d'Achille et l'économie de course. Douleur au tibia, au tendon d'Achille ou au pied à 3 sur 10 : retire les rebonds. |
 | Dead bug | 2 × 9 à 13 | poids du corps | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
@@ -503,7 +503,7 @@ Femme de 27 ans, 61 kg, trois ans de musculation. Squat 80 kg, développé couch
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Hip thrust à la barre | 3 × 9 à 11 | 77,5 kg, ≈ 71 % du 1RM (charge totale ; 1RM de référence 110 kg) | 2 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
+| Hip thrust à la barre | 3 × 9 à 11 | 75 kg, ≈ 68 % du 1RM (charge totale ; 1RM de référence 110 kg) | 2 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Développé couché barre | 3 × 9 à 11 | 30 kg, ≈ 67 % du 1RM (charge totale ; 1RM de référence 45 kg) | 2 rép. en réserve | 105 s | principal |
 | Développé haltères assis | 3 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | principal |
 | Développé incliné haltères | 2 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | secondaire |
@@ -527,7 +527,7 @@ Femme de 27 ans, 61 kg, trois ans de musculation. Squat 80 kg, développé couch
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Back squat barre haute | 3 × 9 à 11 | 57,5 kg, ≈ 72 % du 1RM (charge totale ; 1RM de référence 80 kg) | 2 rép. en réserve | 105 s | principal |
+| Back squat barre haute | 3 × 9 à 11 | 55 kg, ≈ 69 % du 1RM (charge totale ; 1RM de référence 80 kg) | 2 rép. en réserve | 105 s | principal |
 | Soulevé de terre roumain à la barre | 3 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Leg curl assis | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Mollets debout à la machine | 3 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire ; Renforcement du coureur : mollets en charge lente, rebonds courts et élastiques (contacts brefs, sans fatigue) — pour le tendon d'Achille et l'économie de course. Douleur au tibia, au tendon d'Achille ou au pied à 3 sur 10 : retire les rebonds. |
@@ -539,7 +539,7 @@ Femme de 27 ans, 61 kg, trois ans de musculation. Squat 80 kg, développé couch
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Hip thrust à la barre | 2 × 9 à 11 | 77,5 kg, ≈ 71 % du 1RM (charge totale ; 1RM de référence 110 kg) | 2 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
+| Hip thrust à la barre | 2 × 9 à 11 | 75 kg, ≈ 68 % du 1RM (charge totale ; 1RM de référence 110 kg) | 2 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Développé couché barre | 3 × 9 à 11 | 30 kg, ≈ 67 % du 1RM (charge totale ; 1RM de référence 45 kg) | 2 rép. en réserve | 105 s | principal |
 | Rowing poulie basse assis au triangle | 3 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | principal ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Développé haltères assis | 2 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | secondaire |
@@ -553,8 +553,8 @@ Femme de 27 ans, 61 kg, trois ans de musculation. Squat 80 kg, développé couch
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Hip thrust à la barre | 2 × 9 à 11 | 77,5 kg, ≈ 71 % du 1RM (charge totale ; 1RM de référence 110 kg) | 2 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
-| Back squat barre haute | 3 × 9 à 11 | 57,5 kg, ≈ 72 % du 1RM (charge totale ; 1RM de référence 80 kg) | 2 rép. en réserve | 105 s | principal |
+| Hip thrust à la barre | 2 × 9 à 11 | 75 kg, ≈ 68 % du 1RM (charge totale ; 1RM de référence 110 kg) | 2 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
+| Back squat barre haute | 3 × 9 à 11 | 55 kg, ≈ 69 % du 1RM (charge totale ; 1RM de référence 80 kg) | 2 rép. en réserve | 105 s | principal |
 | Leg curl assis | 3 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Mollets debout à la machine | 3 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire ; Renforcement du coureur : mollets en charge lente, rebonds courts et élastiques (contacts brefs, sans fatigue) — pour le tendon d'Achille et l'économie de course. Douleur au tibia, au tendon d'Achille ou au pied à 3 sur 10 : retire les rebonds. |
 | Dead bug | 2 × 9 à 13 | poids du corps | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
@@ -564,7 +564,7 @@ Femme de 27 ans, 61 kg, trois ans de musculation. Squat 80 kg, développé couch
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Hip thrust à la barre | 3 × 9 à 11 | 77,5 kg, ≈ 71 % du 1RM (charge totale ; 1RM de référence 110 kg) | 2 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
+| Hip thrust à la barre | 3 × 9 à 11 | 75 kg, ≈ 68 % du 1RM (charge totale ; 1RM de référence 110 kg) | 2 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Développé couché barre | 3 × 9 à 11 | 30 kg, ≈ 67 % du 1RM (charge totale ; 1RM de référence 45 kg) | 2 rép. en réserve | 105 s | principal |
 | Développé haltères assis | 3 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | principal |
 | Développé incliné haltères | 2 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | secondaire |
@@ -588,7 +588,7 @@ Femme de 27 ans, 61 kg, trois ans de musculation. Squat 80 kg, développé couch
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Back squat barre haute | 3 × 9 à 11 | 57,5 kg, ≈ 72 % du 1RM (charge totale ; 1RM de référence 80 kg) | 2 rép. en réserve | 105 s | principal |
+| Back squat barre haute | 3 × 9 à 11 | 55 kg, ≈ 69 % du 1RM (charge totale ; 1RM de référence 80 kg) | 2 rép. en réserve | 105 s | principal |
 | Soulevé de terre roumain à la barre | 3 × 9 à 11 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Leg curl assis | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Mollets debout à la machine | 3 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire ; Renforcement du coureur : mollets en charge lente, rebonds courts et élastiques (contacts brefs, sans fatigue) — pour le tendon d'Achille et l'économie de course. Douleur au tibia, au tendon d'Achille ou au pied à 3 sur 10 : retire les rebonds. |
@@ -600,7 +600,7 @@ Femme de 27 ans, 61 kg, trois ans de musculation. Squat 80 kg, développé couch
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Hip thrust à la barre | 2 × 10 à 12 | 77,5 kg, ≈ 71 % du 1RM (charge totale ; 1RM de référence 110 kg) | 2 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
+| Hip thrust à la barre | 2 × 10 à 12 | 75 kg, ≈ 68 % du 1RM (charge totale ; 1RM de référence 110 kg) | 2 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Développé couché barre | 3 × 10 à 12 | 30 kg, ≈ 67 % du 1RM (charge totale ; 1RM de référence 45 kg) | 2 rép. en réserve | 105 s | principal |
 | Rowing poulie basse assis au triangle | 3 × 10 à 12 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | principal ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Développé haltères assis | 2 × 10 à 12 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | secondaire |
@@ -614,8 +614,8 @@ Femme de 27 ans, 61 kg, trois ans de musculation. Squat 80 kg, développé couch
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Hip thrust à la barre | 2 × 10 à 12 | 77,5 kg, ≈ 71 % du 1RM (charge totale ; 1RM de référence 110 kg) | 2 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
-| Back squat barre haute | 3 × 10 à 12 | 57,5 kg, ≈ 72 % du 1RM (charge totale ; 1RM de référence 80 kg) | 2 rép. en réserve | 105 s | principal |
+| Hip thrust à la barre | 2 × 10 à 12 | 75 kg, ≈ 68 % du 1RM (charge totale ; 1RM de référence 110 kg) | 2 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
+| Back squat barre haute | 3 × 10 à 12 | 52,5 kg, ≈ 66 % du 1RM (charge totale ; 1RM de référence 80 kg) | 2 rép. en réserve | 105 s | principal |
 | Leg curl assis | 3 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Mollets debout à la machine | 3 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire ; Renforcement du coureur : mollets en charge lente, rebonds courts et élastiques (contacts brefs, sans fatigue) — pour le tendon d'Achille et l'économie de course. Douleur au tibia, au tendon d'Achille ou au pied à 3 sur 10 : retire les rebonds. |
 | Dead bug | 2 × 10 à 14 | poids du corps | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
@@ -625,7 +625,7 @@ Femme de 27 ans, 61 kg, trois ans de musculation. Squat 80 kg, développé couch
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Hip thrust à la barre | 3 × 10 à 12 | 77,5 kg, ≈ 71 % du 1RM (charge totale ; 1RM de référence 110 kg) | 2 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
+| Hip thrust à la barre | 3 × 10 à 12 | 75 kg, ≈ 68 % du 1RM (charge totale ; 1RM de référence 110 kg) | 2 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Développé couché barre | 3 × 10 à 12 | 30 kg, ≈ 67 % du 1RM (charge totale ; 1RM de référence 45 kg) | 2 rép. en réserve | 105 s | principal |
 | Développé haltères assis | 3 × 10 à 12 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | principal |
 | Développé incliné haltères | 2 × 10 à 12 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | secondaire |
@@ -649,7 +649,7 @@ Femme de 27 ans, 61 kg, trois ans de musculation. Squat 80 kg, développé couch
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Back squat barre haute | 3 × 10 à 12 | 57,5 kg, ≈ 72 % du 1RM (charge totale ; 1RM de référence 80 kg) | 2 rép. en réserve | 105 s | principal |
+| Back squat barre haute | 3 × 10 à 12 | 52,5 kg, ≈ 66 % du 1RM (charge totale ; 1RM de référence 80 kg) | 2 rép. en réserve | 105 s | principal |
 | Soulevé de terre roumain à la barre | 3 × 10 à 12 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Leg curl assis | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Mollets debout à la machine | 3 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire ; Renforcement du coureur : mollets en charge lente, rebonds courts et élastiques (contacts brefs, sans fatigue) — pour le tendon d'Achille et l'économie de course. Douleur au tibia, au tendon d'Achille ou au pied à 3 sur 10 : retire les rebonds. |
@@ -661,7 +661,7 @@ Femme de 27 ans, 61 kg, trois ans de musculation. Squat 80 kg, développé couch
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Hip thrust à la barre | 2 × 10 à 12 | 77,5 kg, ≈ 71 % du 1RM (charge totale ; 1RM de référence 110 kg) | 2 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
+| Hip thrust à la barre | 2 × 10 à 12 | 75 kg, ≈ 68 % du 1RM (charge totale ; 1RM de référence 110 kg) | 2 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Développé couché barre | 3 × 10 à 12 | 30 kg, ≈ 67 % du 1RM (charge totale ; 1RM de référence 45 kg) | 2 rép. en réserve | 105 s | principal |
 | Rowing poulie basse assis au triangle | 3 × 10 à 12 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | principal ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Développé haltères assis | 2 × 10 à 12 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | secondaire |
@@ -675,8 +675,8 @@ Femme de 27 ans, 61 kg, trois ans de musculation. Squat 80 kg, développé couch
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Hip thrust à la barre | 2 × 10 à 12 | 77,5 kg, ≈ 71 % du 1RM (charge totale ; 1RM de référence 110 kg) | 2 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
-| Back squat barre haute | 3 × 10 à 12 | 57,5 kg, ≈ 72 % du 1RM (charge totale ; 1RM de référence 80 kg) | 2 rép. en réserve | 105 s | principal |
+| Hip thrust à la barre | 2 × 10 à 12 | 75 kg, ≈ 68 % du 1RM (charge totale ; 1RM de référence 110 kg) | 2 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
+| Back squat barre haute | 3 × 10 à 12 | 52,5 kg, ≈ 66 % du 1RM (charge totale ; 1RM de référence 80 kg) | 2 rép. en réserve | 105 s | principal |
 | Leg curl assis | 3 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Mollets debout à la machine | 3 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire ; Renforcement du coureur : mollets en charge lente, rebonds courts et élastiques (contacts brefs, sans fatigue) — pour le tendon d'Achille et l'économie de course. Douleur au tibia, au tendon d'Achille ou au pied à 3 sur 10 : retire les rebonds. |
 | Dead bug | 2 × 10 à 14 | poids du corps | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
@@ -686,7 +686,7 @@ Femme de 27 ans, 61 kg, trois ans de musculation. Squat 80 kg, développé couch
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Hip thrust à la barre | 3 × 10 à 12 | 77,5 kg, ≈ 71 % du 1RM (charge totale ; 1RM de référence 110 kg) | 2 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
+| Hip thrust à la barre | 3 × 10 à 12 | 75 kg, ≈ 68 % du 1RM (charge totale ; 1RM de référence 110 kg) | 2 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Développé couché barre | 3 × 10 à 12 | 30 kg, ≈ 67 % du 1RM (charge totale ; 1RM de référence 45 kg) | 2 rép. en réserve | 105 s | principal |
 | Développé haltères assis | 3 × 10 à 12 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | principal |
 | Développé incliné haltères | 2 × 10 à 12 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | secondaire |
@@ -710,7 +710,7 @@ Femme de 27 ans, 61 kg, trois ans de musculation. Squat 80 kg, développé couch
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Back squat barre haute | 3 × 10 à 12 | 57,5 kg, ≈ 72 % du 1RM (charge totale ; 1RM de référence 80 kg) | 2 rép. en réserve | 105 s | principal |
+| Back squat barre haute | 3 × 10 à 12 | 52,5 kg, ≈ 66 % du 1RM (charge totale ; 1RM de référence 80 kg) | 2 rép. en réserve | 105 s | principal |
 | Soulevé de terre roumain à la barre | 3 × 10 à 12 | charge à déterminer, à calibrer | 2 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Leg curl assis | 2 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Mollets debout à la machine | 3 × 10 à 15 | charge à déterminer, à calibrer | 2 rép. en réserve | 75 s | accessoire ; Renforcement du coureur : mollets en charge lente, rebonds courts et élastiques (contacts brefs, sans fatigue) — pour le tendon d'Achille et l'économie de course. Douleur au tibia, au tendon d'Achille ou au pied à 3 sur 10 : retire les rebonds. |
@@ -722,7 +722,7 @@ Femme de 27 ans, 61 kg, trois ans de musculation. Squat 80 kg, développé couch
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Hip thrust à la barre | 2 × 8 à 10 | 77,5 kg, ≈ 71 % du 1RM (charge totale ; 1RM de référence 110 kg) | 3 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
+| Hip thrust à la barre | 2 × 8 à 10 | 75 kg, ≈ 68 % du 1RM (charge totale ; 1RM de référence 110 kg) | 3 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Développé couché barre | 2 × 8 à 10 | 30 kg, ≈ 67 % du 1RM (charge totale ; 1RM de référence 45 kg) | 3 rép. en réserve | 105 s | principal |
 | Rowing poulie basse assis au triangle | 2 × 8 à 10 | charge à déterminer, à calibrer | 3 rép. en réserve | 105 s | principal ; Tirage horizontal : équilibre des épaules face à la poussée et au tirage vertical. |
 | Développé haltères assis | 2 × 8 à 10 | charge à déterminer, à calibrer | 3 rép. en réserve | 105 s | secondaire |
@@ -733,8 +733,8 @@ Femme de 27 ans, 61 kg, trois ans de musculation. Squat 80 kg, développé couch
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Hip thrust à la barre | 2 × 8 à 10 | 77,5 kg, ≈ 71 % du 1RM (charge totale ; 1RM de référence 110 kg) | 3 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
-| Back squat barre haute | 2 × 8 à 10 | 57,5 kg, ≈ 72 % du 1RM (charge totale ; 1RM de référence 80 kg) | 3 rép. en réserve | 105 s | principal |
+| Hip thrust à la barre | 2 × 8 à 10 | 75 kg, ≈ 68 % du 1RM (charge totale ; 1RM de référence 110 kg) | 3 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
+| Back squat barre haute | 2 × 8 à 10 | 55 kg, ≈ 69 % du 1RM (charge totale ; 1RM de référence 80 kg) | 3 rép. en réserve | 105 s | principal |
 | Dead bug | 2 × 8 à 12 | poids du corps | 3 rép. en réserve | 60 s | tronc ; Tronc : le gainage qui tient la position à la barre. |
 
 ### jeudi — force, poussée, séance légère (75 min disponibles, 21 min estimées)
@@ -742,7 +742,7 @@ Femme de 27 ans, 61 kg, trois ans de musculation. Squat 80 kg, développé couch
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Hip thrust à la barre | 2 × 8 à 10 | 77,5 kg, ≈ 71 % du 1RM (charge totale ; 1RM de référence 110 kg) | 3 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
+| Hip thrust à la barre | 2 × 8 à 10 | 75 kg, ≈ 68 % du 1RM (charge totale ; 1RM de référence 110 kg) | 3 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |
 | Développé couché barre | 2 × 8 à 10 | 30 kg, ≈ 67 % du 1RM (charge totale ; 1RM de référence 45 kg) | 3 rép. en réserve | 105 s | principal |
 | Développé haltères assis | 2 × 8 à 10 | charge à déterminer, à calibrer | 3 rép. en réserve | 105 s | principal |
 | Développé incliné haltères | 2 × 8 à 10 | charge à déterminer, à calibrer | 3 rép. en réserve | 105 s | secondaire |
@@ -761,5 +761,5 @@ Femme de 27 ans, 61 kg, trois ans de musculation. Squat 80 kg, développé couch
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | CARs d'épaule | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Back squat barre haute | 2 × 8 à 10 | 57,5 kg, ≈ 72 % du 1RM (charge totale ; 1RM de référence 80 kg) | 3 rép. en réserve | 105 s | principal |
+| Back squat barre haute | 2 × 8 à 10 | 55 kg, ≈ 69 % du 1RM (charge totale ; 1RM de référence 80 kg) | 3 rép. en réserve | 105 s | principal |
 | Soulevé de terre roumain à la barre | 2 × 8 à 10 | charge à déterminer, à calibrer | 3 rép. en réserve | 105 s | principal ; Chaîne postérieure : ischio-jambiers et fessiers, entretien du bas du corps. |

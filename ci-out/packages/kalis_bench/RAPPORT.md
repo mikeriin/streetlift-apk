@@ -73,11 +73,11 @@ Violations de sécurité : **0** au total.
 | Profil | Séances faites | Échecs non voulus | Écart au RIR visé (cibles atteignables) | Cibles atteignables | Plus forte hausse (principal) | Gain réel (%/sem) | Performance à l'échéance | Déblocages non respectés | Repères non tenus | Violations (programme évolué) |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | `autres_01_debutant_musculation` | 36/36 | 0.003 | 2.139 | 1.0 | 0.167 | 0.42 | — | 0 | ecart_rir, ecart_effort | 0 |
-| `autres_02_hypertrophie_intermediaire` | 60/60 | 0.009 | 2.867 | 0.947 | 0.143 | 0.181 | — | 0 | ecart_rir, pics_de_charge, ecart_effort, pics_a_schema_egal | 0 |
+| `autres_02_hypertrophie_intermediaire` | 60/60 | 0.009 | 2.881 | 0.947 | 0.143 | 0.181 | — | 0 | ecart_rir, pics_de_charge, ecart_effort, pics_a_schema_egal | 0 |
 | `autres_03_powerlifter_competition` | 40/40 | 0.0 | 2.527 | 0.928 | 0.27 | 0.088 | 1.015 | 0 | ecart_rir, pics_de_charge, ecart_effort | 0 |
 | `autres_04_force_generale_46_ans` | 48/48 | 0.003 | 3.066 | 0.91 | 0.227 | 0.239 | — | 0 | ecart_rir, pics_de_charge, ecart_effort, pics_a_schema_egal | 0 |
 | `autres_05_course_10_km_debutante` | 34/36 | 0.0 | 3.393 | 0.386 | 0.0 | — | — | 0 | ecart_rir, ecart_effort | 0 |
-| `autres_06_semi_marathon_intermediaire` | 46/48 | 0.0 | 1.218 | 0.579 | 0.0 | — | — | 0 | ecart_rir | 0 |
+| `autres_06_semi_marathon_intermediaire` | 46/48 | 0.0 | 0.821 | 0.561 | 0.0 | — | — | 0 | aucun | 0 |
 | `autres_07_mobilite_sante_senior` | 46/48 | 0.0 | 4.992 | 0.687 | 0.0 | 1.364 | — | 0 | ecart_rir, ecart_effort | 0 |
 | `autres_08_crossfit_intermediaire` | 79/80 | 0.006 | 1.742 | 0.601 | 0.171 | 0.188 | — | 0 | ecart_rir, pics_de_charge, ecart_effort, pics_a_schema_egal | 0 |
 | `autres_09_perte_de_poids_debutante` | 36/36 | 0.003 | 2.499 | 1.0 | 0.333 | 0.485 | — | 0 | ecart_rir, ecart_effort | 1 |
@@ -251,7 +251,7 @@ Qualité :
 - Non-ressemblance au programme du propriétaire : 1.00 — Indice de Jaccard le plus haut entre une semaine générée et une semaine du propriétaire : exercices 0.000, exercices × schémas 0.000 (seuil 0.3).
 
 Attentes de coach (4/5) :
-- tenue — Au moins 180 minutes de course par semaine (mesuré : 206 min par semaine en montée)
+- tenue — Au moins 180 minutes de course par semaine (mesuré : 194 min par semaine en montée)
 - **non tenue** — Une séance de qualité (fractionné) par semaine (mesuré : 0.5 séance(s) par semaine en montée)
 - tenue — Sortie longue chaque semaine (mesuré : 1.0 séance(s) par semaine en montée)
 - tenue — Pas plus de 4 semaines de charge sans allègement (mesuré : 4 semaines de charge de suite au plus)

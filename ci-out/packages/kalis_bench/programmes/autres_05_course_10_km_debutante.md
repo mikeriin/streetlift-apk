@@ -359,15 +359,15 @@ Femme de 34 ans, 64 kg, court depuis six mois : 5 km en 35 minutes. Veut finir u
 | --- | --- | --- | --- | --- | --- |
 | Éducatif de course montées de genoux | 1 × 8 à 10 | — | allure facile | 30 s | échauffement ; Repos avant l'échéance : mobilité et préparation articulaire seulement, rien de fatigant dans les 2 à 4 derniers jours. |
 
-### jeudi — cardio, fractionné (45 min disponibles, 23 min estimées)
+### jeudi — cardio, fractionné, séance lourde (45 min disponibles, 79 min estimées)
+
+| Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
+| --- | --- | --- | --- | --- | --- |
+| Footing en endurance fondamentale | 10 km | — | — | — | ÉPREUVE ; Test chronométré. ; Test chronométré sur 10 km, après 10 à 15 min d'échauffement, à allure régulière. Il recale les allures du bloc suivant. ; Jour du test de l'objectif : c'est la séance elle-même, après 48 h sans travail dur du mouvement. ; Allure de l'objectif : 7 min 00 au kilomètre, régulière du début à la fin ; elle se recale sur ton dernier test (pour un 10 km, allure du 5 km + 20 à 30 s au kilomètre). Le jour J, pars 10 s au kilomètre plus lent les deux premiers kilomètres. |
+
+### dimanche — cardio, endurance (60 min disponibles, 23 min estimées)
 
 | Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
 | --- | --- | --- | --- | --- | --- |
 | Éducatif de course montées de genoux | 1 × 8 à 10 | — | — | 30 s | échauffement |
-| Footing en endurance fondamentale | 20 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 20 min. ; Récupération : facile, sans chercher la performance. |
-
-### dimanche — cardio, endurance, séance lourde (60 min disponibles, 79 min estimées)
-
-| Exercice | Séries × répétitions | Charge | Effort visé | Repos | Notes |
-| --- | --- | --- | --- | --- | --- |
-| Sortie longue en course à pied | 10 km | — | — | — | ÉPREUVE ; Test chronométré. ; Test chronométré sur 10 km, après 10 à 15 min d'échauffement, à allure régulière. Il recale les allures du bloc suivant. ; Jour du test de l'objectif : c'est la séance elle-même, après 48 h sans travail dur du mouvement. ; Allure de l'objectif : 7 min 00 au kilomètre, régulière du début à la fin ; elle se recale sur ton dernier test (pour un 10 km, allure du 5 km + 20 à 30 s au kilomètre). Le jour J, pars 10 s au kilomètre plus lent les deux premiers kilomètres. |
+| Sortie longue en course à pied | 20 min | — | allure facile | — | principal ; Allure de conversation (tu peux parler en phrases), 20 min. |
