@@ -3855,8 +3855,7 @@ final class Prescriber {
         // que le créneau du jour ni que 110 % de la plus longue course des
         // quatre semaines d'avant (Frandsen et al. 2025 ; relecture du
         // code de 0.3.0) ; sous 1 km, pas de test.
-        final fits =
-            (a.days[day].minutes - 8.0) * 60 * coachRunMetersPerSecond;
+        final fits = (a.days[day].minutes - 8.0) * 60 * coachRunMetersPerSecond;
         if (fits > 0 && meters > fits) {
           meters = fits;
         }
