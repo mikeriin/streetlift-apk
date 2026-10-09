@@ -136,6 +136,8 @@ class Modele(object):
         self.z2 = 1.0
         self.z2_n = 0.0
         self.paresse = list(params['mesure']['note_paresseuse_a_priori'])
+        self.notes_demi = 0
+        self.notes_entieres = 0
         # Séance en cours : branche « mauvais jour ».
         self.alt = None           # (m, P, logw) de la branche mauvais jour
         self.logw = 0.0
@@ -520,7 +522,8 @@ class Modele(object):
                 if bruit is not None:
                     # Bruit qui dépend de la valeur prédite (note en
                     # flammes : il croît avec la réserve vraie).
-                    logz, mu2, v2 = category_moments(mu, v, a, b, bruit)
+                    ge = self.p['mesure']['note_erreur_grossiere']
+                    logz, mu2, v2 = category_moments(mu, v, a, b, bruit, gross=ge[0], gross_sd=ge[1])
                 else:
                     logz, mu2, v2 = interval_moments(mu, v, s2, a, b)
                 if melange is not None:
@@ -594,21 +597,39 @@ class Modele(object):
             s *= 1 + me['bruit_rir_longue_serie_pente'] * (reps - me['bruit_rir_longue_serie_de'])
         return s
 
-    @staticmethod
-    def bornes_flammes(flammes, ouvert=5.0):
+    def noter_resolution(self, flammes):
+        """Apprend la résolution des notes de l'utilisateur : certains ne
+        notent qu'en répétitions entières (flammes impaires). Compte les
+        notes à la demi-répétition (flammes paires 2 à 8)."""
+        if flammes is None or flammes >= 10:
+            return
+        if flammes in (2, 4, 6, 8):
+            self.notes_demi += 1
+        else:
+            self.notes_entieres += 1
+
+    def noteur_entier(self):
+        me = self.p['mesure']
+        n = self.notes_demi + self.notes_entieres
+        return n >= me['noteur_entier_notes_min'] and self.notes_demi <= me['noteur_entier_part_max'] * n
+
+    def bornes_flammes(self, flammes, ouvert=5.0):
         """Intervalle de RIR d'une note en flammes (kalis_core `Flames`) et
         son centre : 10 -> échec ; 9 -> [0,25 ; 1,25] ; f -> demi-répétition ;
-        1 -> RIR 5 et plus (ouvert)."""
+        1 -> RIR 5 et plus (ouvert). Pour un utilisateur qui ne note qu'en
+        répétitions entières, chaque note couvre une répétition entière."""
         if flammes >= 10:
             return 0.0, 0.25, 0.0
+        entier = self.noteur_entier()
         if flammes == 9:
-            return 0.25, 1.25, 1.0
+            return 0.25, (1.5 if entier else 1.25), 1.0
         r = (11 - flammes) / 2.0
+        demi = 0.5 if entier else 0.25
         if r >= ouvert:
             # Loin de l'échec, la note ne distingue plus : « 4 répétitions
             # en réserve ou plus » (échelle de Zourdos et al. 2016).
-            return r - 0.25, INF, r
-        return r - 0.25, r + 0.25, r
+            return r - demi, INF, r
+        return r - demi, r + demi, r
 
     def rir_vrai(self, percu, m=None):
         """Réserve vraie attendue pour une réserve perçue (biais du modèle
@@ -634,6 +655,8 @@ class Modele(object):
         if self._dernier_ex != t.id:
             self.debut_exercice(t)
         self._dernier_ex = t.id
+        if not s.get('failed'):
+            self.noter_resolution(s.get('flames'))
         typ = t.type
         if typ in ('charge', 'reps'):
             r = self._serie_force(t, s)

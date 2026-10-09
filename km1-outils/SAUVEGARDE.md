@@ -63,7 +63,7 @@ Reste entier : planification (jumeau, entropie croisée, transport optimal), adh
 - Estimation, diagnostic : (1) les charges servies sont trop légères (réserve vraie 5-7 pour 2,5 visée ; C : ~20) → notes censurées « 4 ou plus », peu d'information ; (2) l'effet de jour vrai moyen est −2,6 % (sd 2,8 %) : fatigue chronique systémique (lente) + aiguë locale (rapide) ; régression sur le banc : rapide local 0,003, lent systémique 0,0014-0,0017, les deux autres ≈ 0 ; (3) courbe a priori trop plate de ~12 % par rapport aux vérités (→ échelle +0,10) ; (4) la montée de test s'arrête à la croyance du modèle (borne mu+2sd) → réserve finale ~4.
 - Compartiments généralisés dans modele.py : chaque compartiment (rapide/lent) a une part systémique et une part locale (KN, KL, KG, KM).
 
-## 09/10 ~21:30 UTC — estimation v4 : dérive trouvée et corrigée
+## 09/10 ~19:00 UTC (horloge réelle ; les heures notées plus haut étaient décalées) — estimation v4 : dérive trouvée et corrigée
 Mesure (SET9 = 9 profils chargés, saison de référence, 2 graines) : principaux chargés au rang 6 MAE 3,3 % (A 2,6 ; B 4,2 ; C 3,2), biais −1,5 %, couverture 85 % ; premier passage sous 3 % : 2,6 séances en moyenne, jamais 5 % (témoin 6,2 séances, 31 %).
 Causes trouvées (banc synthétique `km1-outils/synth2.py`, un exercice, vérité A) :
 1. **Relinéarisation itérée** (filtre itéré) = cause de la dérive conjointe capacité ↓ / courbe ↓ / forme → 1 quand la charge est choisie par le modèle : mises à jour dissymétriques. Corrigé : linéarisation à la moyenne a priori en UNE passe + réduction du pas par dichotomie sur la carte exacte pour les grandes surprises.
@@ -75,3 +75,8 @@ Causes trouvées (banc synthétique `km1-outils/synth2.py`, un exercice, vérit�
 7. Tenues : intervalle sur ln T sans linéarisation ; HH 0,10.
 8. Note aberrante 5 % (1/10 par flamme) + note paresseuse apprise.
 Reste : tenues (a priori −30 %), répétitions (11 %), écart d'effort 3,2, couverture, effet du jour (branches), planificateur, etc.
+
+## 09/10 ~19:50 UTC — matrice complète (720 saisons, 1 graine) et douleur
+Koach vs témoin 0.3.1 (toutes saisons) : principaux chargés rang 6 MAE 3,96 % (A 3,2 ; B 5,8 ; C 2,9) contre 7,1 % ; premier passage sous 3 % : 2,6 séances (jamais 8,7 %) contre 6,2 (jamais 30,7 %) ; couverture 88 % au rang 6 ; échéance chargée 0,955 contre 0,926 ; répétitions MAE 10 % contre 20 % ; tenues 30 % contre 27 % (à corriger : a priori) ; écart d'effort 2,7 contre 1,55 ; échecs 1,0 % contre 0,7 %. Dégradation en fin de saison (rang 24 : MAE 7 %, biais −5 %) à comprendre.
+Douleur (scénarios douleur_coude/epaule, 162 saisons) : 120 aggravations au premier passage → 0 après correction (zone bloquante = active OU signalée depuis la dernière séance de l'exercice ; jamais plus lourd que le DERNIER PASSAGE de l'exercice : `Memoire.charge_derniere`) ; poussées (flares) 69 → 0 : paliers de reprise comptés en semaines de charge (A3.3), arrêt gardé jusqu'à une semaine de charge (A3.2), et budget hebdomadaire de séries par zone (départ 0,6 × habitude, +25 % ou +1 série par semaine de charge, 84 jours) — plus prudent que 0.3.1. Témoin : 0 aggravation, 120 poussées sur 2 592 saisons.
+Ajouts : queue lourde des notes (8 %, +2 rép.), noteur entier détecté (≥ 20 notes, < 5 % de demi-notes), garde de probabilité sur la montée (0,75).

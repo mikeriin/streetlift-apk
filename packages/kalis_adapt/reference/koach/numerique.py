@@ -123,12 +123,30 @@ def interval_moments(m, v, s2, a, b):
     return math.log(z), m2, v2
 
 
-def category_moments(m, v, a, b, noise_var, steps=52, span=6.5):
+def _category_mass(a, b, u, t):
+    """P(a <= u + e <= b), e ~ N(0, t²)."""
+    if a == -math.inf:
+        return 1.0 if b == math.inf else 0.5 * math.erfc(-(b - u) / t / SQRT2)
+    if b == math.inf:
+        return 0.5 * math.erfc((a - u) / t / SQRT2)
+    lo = (a - u) / t
+    hi = (b - u) / t
+    if lo > 0:
+        like = 0.5 * (math.erfc(lo / SQRT2) - math.erfc(hi / SQRT2))
+    else:
+        like = 0.5 * (math.erfc(-hi / SQRT2) - math.erfc(-lo / SQRT2))
+    return like if like > 0.0 else 0.0
+
+
+def category_moments(m, v, a, b, noise_var, steps=52, span=6.5, gross=0.0, gross_sd=0.0):
     """Appariement des moments d'une variable u ~ N(m, v) quand on observe
     que u + e tombe dans [a, b], avec un bruit dont la variance dépend de u :
     e ~ N(0, noise_var(u)). Quadrature sur une grille fixe de 2·[steps] + 1
     points entre m ± [span] écarts-types (trapèzes : convergence
     géométrique pour un intégrande lisse).
+
+    [gross] > 0 ajoute une queue lourde : avec cette probabilité, l'erreur
+    a un écart-type augmenté de [gross_sd] (erreur grossière de notation).
 
     Renvoie (logZ, m', v') comme `interval_moments`, dont c'est la
     généralisation (bruit constant : mêmes valeurs à la précision de la
@@ -145,20 +163,10 @@ def category_moments(m, v, a, b, noise_var, steps=52, span=6.5):
         z = i * h
         u = m + sd * z
         w = math.exp(-0.5 * z * z)
-        t = math.sqrt(noise_var(u))
-        if a == -math.inf:
-            like = 1.0 if b == math.inf else 0.5 * math.erfc(-(b - u) / t / SQRT2)
-        elif b == math.inf:
-            like = 0.5 * math.erfc((a - u) / t / SQRT2)
-        else:
-            lo = (a - u) / t
-            hi = (b - u) / t
-            if lo > 0:
-                like = 0.5 * (math.erfc(lo / SQRT2) - math.erfc(hi / SQRT2))
-            else:
-                like = 0.5 * (math.erfc(-hi / SQRT2) - math.erfc(-lo / SQRT2))
-        if like < 0.0:
-            like = 0.0
+        nv = noise_var(u)
+        like = _category_mass(a, b, u, math.sqrt(nv))
+        if gross > 0.0:
+            like = (1.0 - gross) * like + gross * _category_mass(a, b, u, math.sqrt(nv + gross_sd * gross_sd))
         sw += w
         wl = w * like
         s0 += wl

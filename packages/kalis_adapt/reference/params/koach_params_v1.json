@@ -92,7 +92,7 @@
     ],
     "biais_rir_proportionnel": [
       0.25,
-      0.0
+      0.15
     ],
     "k_nerveux_local": [
       0.0047,
@@ -141,7 +141,13 @@
     "bruit_rir_reference": 5.0,
     "dispersion_fatigue_intra": 0.3,
     "note_aberrante": 0.05,
-    "porte_note_ouverte": 99
+    "porte_note_ouverte": 99,
+    "note_erreur_grossiere": [
+      0.08,
+      2.0
+    ],
+    "noteur_entier_notes_min": 20,
+    "noteur_entier_part_max": 0.05
   },
   "jour": {
     "sigma_seance": 0.022,
@@ -235,7 +241,8 @@
     "test_reps_avance": 1,
     "test_rir_avance": 1.0,
     "rampe_sd_min": 0.05,
-    "rampe_confirmations": 2
+    "rampe_confirmations": 2,
+    "rampe_proba_min": 0.75
   },
   "planification": {
     "trajectoires": 1000,
@@ -357,7 +364,9 @@
     "schema_change_part": 0.025,
     "schema_change_reps_max": 4,
     "barre_recente_j": 42,
-    "premiere_hausse": 0.1
+    "premiere_hausse": 0.1,
+    "reprise_dose_depart": 0.6,
+    "reprise_dose_hausse": 0.25
   },
   "adherence": {
     "a_priori_poids_sd": 1.5,

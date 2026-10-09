@@ -84,7 +84,7 @@ class Memoire(object):
     __slots__ = ('jour', 'charge_max', 'reps_max', 'sec_max', 'sec_total', 'echec', 'schemas',
                  'jours', 'cran_jour', 'haut_de_plage', 'facile', 'bas_manque', 'meilleur_sec',
                  'charge_seance', 'reps_seance', 'sec_seance', 'echec_seance', 'total_seance',
-                 'faciles_seance', 'charges_reussies', 'flammes_seance')
+                 'faciles_seance', 'charges_reussies', 'flammes_seance', 'charge_derniere')
 
     def __init__(self):
         self.jour = None
@@ -108,6 +108,7 @@ class Memoire(object):
         self.faciles_seance = 0
         self.charges_reussies = []
         self.flammes_seance = None
+        self.charge_derniere = None   # plus lourde charge du dernier passage de l'exercice
 
 
 class Seances(object):
@@ -129,6 +130,9 @@ class Seances(object):
         self.coupure = 0
         self.contexte = None
         self.plans = {}          # slotId -> plan de l'item servi (séance en cours)
+        self.dose_zone = {}      # zone -> {semaine: séries faites des mouvements qui la provoquent}
+        self.zones_ex = {}       # id -> (niveaux de zone, zones provoquées), vu à la prescription
+        self.budget_zone = {}    # zone en reprise -> séries encore permises cette semaine
 
     def mem(self, ex_id):
         if ex_id not in self.memoire:
@@ -249,10 +253,20 @@ class Seances(object):
         """Début de séance : palier du bilan, coupure, verrous de semaine."""
         self.jour = jour
         self.contexte = contexte
+        if contexte and contexte.get('semaine') is not None:
+            self.g.noter_semaine(contexte['semaine'], contexte.get('genre'), contexte.get('intention'))
         self.palier, self.decalage = self.g.palier_bilan(bilan)
         self.coupure = 0 if self.derniere_seance is None else jour - self.derniere_seance
         self.raisons = []
         self.plans = {}
+        self.budget_zone = {}
+        for z in list(self.g.zones):
+            dz = self.g.zones[z]
+            if dz.arret_leve is not None and not self.g.arret(z) \
+                    and 0 <= jour - dz.arret_leve <= self.s['reprise_surveillance_j']:
+                b = self._budget_reprise(z)
+                if b is not None:
+                    self.budget_zone[z] = b
         for mem in self.memoire.values():
             mem.charge_seance = None
             mem.reps_seance = None
@@ -260,6 +274,48 @@ class Seances(object):
             mem.echec_seance = 0
             mem.total_seance = 0.0
             mem.faciles_seance = 0
+
+    def _dose_semaine(self, z, semaine):
+        return self.dose_zone.get(z, {}).get(semaine, 0)
+
+    def _budget_reprise(self, z):
+        """Séries encore permises cette semaine, tous mouvements qui
+        provoquent la zone [z] confondus, pendant la reprise graduée. Plus
+        prudent que 0.3.1 (part du volume écrit) : la dose hebdomadaire de la
+        zone repart d'une fraction de l'habitude d'avant la douleur et ne
+        monte pas de plus d'un quart (ou d'une série) d'une semaine de charge
+        à la suivante, quel que soit le volume écrit."""
+        g = self.g
+        d = g.zones.get(z)
+        s = self.s
+        if d is None or d.arret_leve is None:
+            return None
+        semaine = g.semaine
+        # Habitude : moyenne des 4 dernières semaines de charge avant le
+        # premier signalement de l'épisode.
+        debut = d.signalements[0][0] // 7 if d.signalements else semaine
+        for (j, i) in d.signalements:
+            if i >= s['arret_persistance_min']:
+                debut = j // 7
+                break
+        avant = [self._dose_semaine(z, w) for w in range(debut - 4, debut) if w >= 0 and g.semaines.get(w, False)]
+        habitude = sum(avant) / len(avant) if avant else None
+        # Dernière semaine de charge depuis la levée.
+        premiere = d.arret_leve // 7
+        precedente = None
+        for w in range(semaine - 1, premiere - 1, -1):
+            if g.semaines.get(w, False):
+                precedente = self._dose_semaine(z, w)
+                break
+        if precedente is None or precedente <= 0:
+            if habitude is None:
+                return None
+            total = int(math.floor(s['reprise_dose_depart'] * habitude + 1e-9))
+            if total < 1:
+                total = 1
+        else:
+            total = max(precedente + 1, int(math.floor(precedente * (1 + s['reprise_dose_hausse']) + 1e-9)))
+        return total - self._dose_semaine(z, semaine)
 
     def verrouillee(self):
         c = self.contexte or {}
@@ -272,6 +328,8 @@ class Seances(object):
         servis (mêmes champs, plus `koach`)."""
         out = []
         testes = set()
+        for ex_id, zz in zones.items():
+            self.zones_ex[ex_id] = zz
         for item in items:
             servi = self._item(item, grilles.get(item['exerciseId']), zones.get(item['exerciseId']),
                                roles.get(item['slotId']))
@@ -316,7 +374,7 @@ class Seances(object):
         c = self.contexte or {}
         evenement = bool(c.get('jour_evenement'))
         niveaux, hits = zone if zone else ({}, set())
-        cond = self.g.conduite(niveaux, hits, est_test=est_test)
+        cond = self.g.conduite(niveaux, hits, est_test=est_test, depuis_jour=self.mem(ex_id).jour)
         if cond['retire']:
             self._raison('koach.douleur_retrait', exercice=ex_id, zone=cond['zone'], cause=cond['raison'])
             return None
@@ -348,6 +406,19 @@ class Seances(object):
                 plancher = 3 if role == 'main' else 2
                 if series > plancher:
                     series -= 1
+        if not echauffement:
+            for z in hits:
+                if z in self.budget_zone:
+                    reste = self.budget_zone[z]
+                    if series > reste:
+                        series = reste if reste > 0 else 0
+                        self._raison('koach.reprise_dose', exercice=ex_id, zone=z)
+            if series <= 0:
+                self._raison('koach.douleur_retrait', exercice=ex_id, zone=cond['zone'], cause='reprise_dose')
+                return None
+            for z in hits:
+                if z in self.budget_zone:
+                    self.budget_zone[z] -= series
         servi['sets'] = series
         self.plans[item['slotId']] = plan
         if typ in ('charge', 'reps', 'tenue') and not echauffement:
@@ -454,7 +525,7 @@ class Seances(object):
             return None
         if item.get('sets', 0) < 2:
             return None
-        if t is None or t.seances < 2 or not self._mesure_utile(item, plan, t):
+        if t is None or t.seances < 1 or not self._mesure_utile(item, plan, t):
             return None
         # Grille trop grossière pour une montée (cran de plus de 10 % de la
         # charge totale) : la mesure se fait en répétitions (série repère).
@@ -565,6 +636,12 @@ class Seances(object):
                 charge = max(grille.plancher(haut), min(charge, grille.suivant(plan['charge_item'])))
             if charge < bas:
                 charge = grille.proche(bas)
+        if (plan['sans_hausse'] or plan['cond']['raison']) and mem.charge_derniere is not None \
+                and charge > mem.charge_derniere:
+            # Zone douloureuse ou en reprise, bilan bas : jamais plus lourd
+            # que le dernier passage de l'exercice (invariant I3 de 0.3.1).
+            charge = mem.charge_derniere
+            trace.append('pas de hausse (douleur ou bilan) -> %.2f' % charge)
         if charge < grille.minimum:
             charge = grille.minimum
         if index == 0:
@@ -771,8 +848,8 @@ class Seances(object):
             voulu = self.charge_pour(ex_id, hi, rir, 0.25)
             charge = grille.proche(max(voulu, grille.minimum))
             mem = self.mem(ex_id)
-            if plan['sans_hausse'] and mem.charge_max is not None and charge > mem.charge_max:
-                charge = mem.charge_max
+            if plan['sans_hausse'] and mem.charge_derniere is not None and charge > mem.charge_derniere:
+                charge = mem.charge_derniere
             if index >= 1 and mem.charge_seance is not None:
                 # Deuxième essai : un cran de plus si le premier a laissé
                 # plus que la réserve du test, sinon la même barre.
@@ -850,6 +927,20 @@ class Seances(object):
             if voulu > borne:
                 voulu = borne
         charge = grille.plancher(max(voulu, grille.minimum))
+        if index >= 1 and charge > plan['charge_item'] + 1e-9:
+            # Barre suivante tenue pour faisable par le modèle (qui vient de
+            # lire les notes de la montée) ; sinon le plus petit pas ; sinon
+            # le test s'arrête là.
+            pr = self.proba_reussite(ex_id, charge, n_t)
+            if pr is not None and pr < ta['rampe_proba_min']:
+                petit = grille.plancher(max((plan['charge_item'] + bw) * (1 + ta['rampe_pas_par_rir'][-1][1]) - bw,
+                                            grille.minimum))
+                if petit <= plan['charge_item'] + 1e-9:
+                    petit = grille.suivant(plan['charge_item'])
+                pr2 = self.proba_reussite(ex_id, petit, n_t)
+                if petit >= charge or pr2 is None or pr2 < ta['rampe_proba_min']:
+                    return None
+                charge = petit
         if index >= 1 and charge <= plan['charge_item'] + 1e-9:
             suivant = grille.suivant(plan['charge_item'])
             if (suivant + bw) <= (plan['charge_item'] + bw) * (1 + ta['rampe_pas']) + 1e-9:
@@ -947,8 +1038,15 @@ class Seances(object):
         séance), courses et jours durs."""
         jour = self.jour
         par_ex = {}
+        semaine = self.g.semaine
         for s in record.get('sets') or []:
             par_ex.setdefault((s['exerciseId'], s.get('slotId')), []).append(s)
+            if (s.get('reps') or 0) > 0 or (s.get('seconds') or 0) > 0:
+                zz = self.zones_ex.get(s['exerciseId'])
+                if zz:
+                    for z in zz[1]:
+                        dz = self.dose_zone.setdefault(z, {})
+                        dz[semaine] = dz.get(semaine, 0) + 1
         vus = set()
         for (ex_id, slot), series in par_ex.items():
             mem = self.mem(ex_id)
@@ -961,6 +1059,15 @@ class Seances(object):
                 mem.sec_total = 0
                 vus.add(ex_id)
             mem.jour = jour
+            derniere = None
+            for s in series:
+                c = s.get('externalLoadKg')
+                if c is not None and c >= 0 and (derniere is None or c > derniere):
+                    derniere = c
+            if derniere is not None:
+                # Dernier passage de l'exercice dans la séance (un test et
+                # le travail sont deux passages) : référence « pas de hausse ».
+                mem.charge_derniere = derniere
             for s in series:
                 if s.get('kind') == 'warmup':
                     continue
