@@ -1,7 +1,7 @@
 kalis_core 0.4.3 — rapport de contrôle
 
 Catalogue : 1039 exercices, base v1.1.0, règles 1.1.0, schéma 1
-Chargement (décompression comprise) : meilleur 24.3 ms, médiane 28.8 ms (budget 150 ms)
+Chargement (décompression comprise) : meilleur 31.1 ms, médiane 46.6 ms (budget 150 ms)
 Contrats : 109 types, 138 codes de raison
 Profils types : 40 (0 violation(s))
 Journaux : 12, 468 séances dont 12 « reprise », 5480 séries dont 319 sans note (0 violation(s))

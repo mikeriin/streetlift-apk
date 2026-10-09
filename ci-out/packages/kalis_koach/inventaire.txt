@@ -83,4 +83,4 @@ Flammes : 10
 
 Raisons : calibration, deload, exercise_replaced, load_increased, session_shortened, volume_reduced
 Messages : 99
-Temps moyen par réplique : 2.26 µs
+Temps moyen par réplique : 3.21 µs

@@ -199,7 +199,7 @@ Mesurés par le simulateur sur la machine de contrôle (le moteur n'a pas d'horl
 
 | Opération | Médiane | 95ᵉ centile | 99ᵉ centile | Maximum | Cible |
 | --- | --- | --- | --- | --- | --- |
-| Décision de séance (`prescribeSession`) | 0.09 ms | 0.16 ms | 6.04 ms | 6.96 ms | ≤ 50 ms |
-| Mise à jour après une série (`adviseNextSet`) | 0.04 ms | 0.07 ms | 0.08 ms | 3.94 ms | ≤ 5 ms |
-| Revue (`review`) | 0.53 ms | 0.90 ms | 1.95 ms | 1.95 ms | — |
-| Décision de séance à froid | 7.61 ms | 12.42 ms | 26.51 ms | 26.51 ms | — |
+| Décision de séance (`prescribeSession`) | 0.15 ms | 0.25 ms | 5.83 ms | 8.60 ms | ≤ 50 ms |
+| Mise à jour après une série (`adviseNextSet`) | 0.06 ms | 0.13 ms | 0.40 ms | 41.76 ms | ≤ 5 ms |
+| Revue (`review`) | 1.00 ms | 1.63 ms | 3.95 ms | 3.95 ms | — |
+| Décision de séance à froid | 11.48 ms | 19.26 ms | 22.04 ms | 22.04 ms | — |

@@ -52,7 +52,7 @@ Downloading packages...
 Changed 48 dependencies!
 1 package has newer versions incompatible with dependency constraints.
 Try `dart pub outdated` for more information.
-Formatted 15 files (0 changed) in 0.57 seconds.
+Formatted 15 files (0 changed) in 0.73 seconds.
 Analyzing kalis_koach...
 No issues found!
 00:00 +0: loading test/art_test.dart
@@ -72,8 +72,8 @@ No issues found!
 00:00 +13: test/properties_test.dart: 10 000 demandes aléatoires seedées
 00:00 +14: test/properties_test.dart: 10 000 demandes aléatoires seedées
 00:00 +15: test/properties_test.dart: 10 000 demandes aléatoires seedées
-00:00 +16: test/properties_test.dart: toutes les variantes sont atteintes
-00:00 +17: test/lines_test.dart: couverture chaque événement a une règle (sauf « pourquoi », dérivé)
+00:00 +16: test/lines_test.dart: couverture chaque événement a une règle (sauf « pourquoi », dérivé)
+00:00 +17: test/properties_test.dart: toutes les variantes sont atteintes
 00:00 +18: test/lines_test.dart: couverture une seule règle par événement
 00:00 +19: test/lines_test.dart: couverture aucune clé orpheline, aucune clé manquante
 00:00 +20: test/lines_test.dart: couverture action « Pourquoi ? » si et seulement si une explication existe
@@ -93,4 +93,4 @@ No issues found!
 00:00 +34: test/lines_test.dart: flammes 10 flammes croissantes, base commune
 00:00 +35: test/lines_test.dart: flammes teinte et libellé
 00:00 +36: All tests passed!
-Rapport écrit dans /home/runner/work/streetlift-apk/streetlift-apk/out-packages/kalis_koach : 36 poses, 10 flammes, 28 événements, 2.26 µs par réplique.
+Rapport écrit dans /home/runner/work/streetlift-apk/streetlift-apk/out-packages/kalis_koach : 36 poses, 10 flammes, 28 événements, 3.21 µs par réplique.

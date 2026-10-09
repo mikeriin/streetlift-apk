@@ -152,7 +152,7 @@ test_rounding_matches_excel_half_away_from_zero (test_tools.ToolsTests.test_roun
 test_shipped_assets_and_android_identity (test_tools.ToolsTests.test_shipped_assets_and_android_identity) ... ok
 
 ----------------------------------------------------------------------
-Ran 151 tests in 11.216s
+Ran 151 tests in 11.513s
 
 OK (skipped=12)
 OK : apk-absents, refus Gradle attendu observé.
