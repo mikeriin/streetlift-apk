@@ -1,0 +1,16 @@
+diff --git a/test/ci1g_paquets_test.dart b/test/ci1g_paquets_test.dart
+index 766d3d3..428fc1e 100644
+--- a/test/ci1g_paquets_test.dart
++++ b/test/ci1g_paquets_test.dart
+@@ -419,9 +419,8 @@ void main() {
+       };
+       expect(await app.importAll(jsonEncode(filled)), isTrue);
+       app.saveAthleteProfile(
+-        ProfileDraft.of(
+-          sampleAthleteProfile(on: civilOf(app.storeClock())),
+-        )..consent = 'refused',
++        ProfileDraft.of(sampleAthleteProfile(on: civilOf(app.storeClock())))
++          ..consent = 'refused',
+       );
+       final segments = app.importedProgram!.segments;
+       expect(segments, isNotEmpty);
