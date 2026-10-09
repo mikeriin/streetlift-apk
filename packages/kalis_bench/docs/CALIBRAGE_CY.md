@@ -47,6 +47,8 @@ débutant qui n'achève pas ses sorties (`autres_05`) — voir § 6.
 | Départ street (passe finale de CP2, même couple 0.3.0 × 0.3.0) | 0.3.0 | 19 à 9, min 5, moy 7,71 | — (CP2 notait les programmes écrits : 15/40, min 5, moy 7,92) |
 | p1 (complète, saisons) | partie 0 + boucle 1 | 19 à 9, min 5, moy 7,85 | 2 à 9, min 5,5, moy 7,41 |
 | p2 (couples sous 9 dont l'export a changé, et couples à 9 changés de plus de 10 %) | boucle 2 | **22** à 9, min 5, moy 7,71 | **4** à 9, min 5,5, moy 7,30 |
+| p3 (13 couples : exports changés de plus de 2 % par les corrections de sécurité et la relecture du code) | sécurité + relecture du code | 22 à 9, min 5, moy 7,73 | 3 à 9, min **2** (`autres_06`), moy 6,71 |
+| p4 (`autres_06`, 4 écoles) | boucle 3 | **22** à 9, min 5, moy 7,73 | **3** à 9, min 5,5, moy 7,21 |
 
 Boucle 1 : variantes plus faciles hors du plafond de répétitions (la pompe inclinée de `street_03` était écrite 1 × 2 à
 1 × 3 pendant quinze semaines pour un maximum d'environ 22) ; deux séries assistées par jour pour le débutant qui vise
@@ -59,8 +61,17 @@ va jamais près de l'échec) ; sortie longue après une course (70 %, puis +10 %
 l'épreuve » alignée sur les répétitions écrites ; remplissage du créneau à 80 % en semaine de construction, sous les
 garde-fous de volume.
 
-Arrêt après la boucle 2, puis une passe de corrections de sécurité issue de la relecture documentée (§ 4) : gain à la
-boucle 2 (street 19 → 22 couples, autres 2 → 4), minimum inchangé ; les corrections nécessaires restantes portent sur
+Boucle 3 (régression vue en p3) : la course retirée sous une douleur de cheville (`autres_06`, correction de sécurité de
+`kalis_adapt`) était comptée comme « sautée » dans le résumé d'adaptation ; `kalis_plan` l'écartait alors pour tout le
+bloc suivant, échéance comprise (six semaines de séances d'une minute de mobilité, notes 2 à 2,5). Un retrait sous arrêt
+n'est plus compté comme sauté : le bloc suivant garde la course avec la note d'arrêt, la conduite la retire tant que
+l'arrêt tient puis la rend par paliers (50 %). `autres_06` revient à 7, 8, 7, 7 (p2 : 9, 8, 8, 8 ; corrections
+nécessaires restantes : allure du semi construite, renforcement mollet et cheville, vraie transition après la course —
+méthode, pas sécurité).
+
+Arrêt après la boucle 3 (C9.2 : 5 au plus ; la boucle 3 n'a fait que rattraper sa régression, sans gain), après une passe
+de corrections de sécurité issue de la relecture documentée (§ 4) et la relecture indépendante du code (§ 5) : gain à la
+boucle 2 (street 19 → 22 couples, autres 2 → 4), minimum inchangé (autres : 3 à 9 en fin de lot, `autres_06` renoté à 7 par l’école force) ; les corrections nécessaires restantes portent sur
 la méthode (estimation des capacités par le moteur d'évolution, spécialisation, progression des figures et du
 muscle-up) et sur des choix que les deux jurys jugent en sens contraires (volume du débutant). Budget : C9.5, deux
 sessions en parallèle (CI1e).
@@ -102,7 +113,7 @@ qualité absentes en course débutante, spécialisation non appliquée) sont rep
 
 ## 6. Limites et suite
 
-1. **Cible C7.5 non atteinte** (street 22/68, autres 4/40 ; minimum 5).
+1. **Cible C7.5 non atteinte** (street 22/68, autres 3/40 ; minimum 5 en street, 5,5 dans les autres disciplines).
 2. **Estimation par le moteur d'évolution** : une série loin de l'échec n'est qu'une borne basse (CA1.3) ; sur les
    athlètes simulés qui notent mal, les capacités restent sous-estimées (presse estimée à la moitié du réel,
    tentatives du jour J à 88-93 % du maximum du jour). La règle « 2 pour 2 » ne s'applique qu'aux séries notées ;

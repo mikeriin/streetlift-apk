@@ -1,0 +1,447 @@
+[
+ {
+  "programme": "programme_1.md",
+  "criteres": {
+   "C1": 7,
+   "C2": 7.5,
+   "C3": 7.5,
+   "C4": 7,
+   "C5": 6,
+   "C6": 8,
+   "C7": 6.5,
+   "C8": 8,
+   "C9": 6.5
+  },
+  "sans_objet": [],
+  "ensemble": 8,
+  "points_perdus": [
+   {
+    "critere": "C1",
+    "perte": 3,
+    "raison": "Profil sans objectif de figure : variantes au poids du corps plausibles (fente arrière, pont fessier unilatéral) mais aucun palier relié à un record ou à un test de répétitions ; rien n'indique que le pont fessier unilatéral 2 × 8-10 est à portée (R4-F7, R1-P17)."
+   },
+   {
+    "critere": "C2",
+    "perte": 2.5,
+    "raison": "Éducatifs (montées de genoux) et CARs de hanche en début de séance, fréquents : bien. Mais un seul éducatif, sans consigne technique de foulée, et le renforcement arrive toujours après la course, sans consigne d'exécution (R4-F1, F3)."
+   },
+   {
+    "critere": "C3",
+    "perte": 2.5,
+    "raison": "Dosage par réserve (2 à 4 RIR) et repos 90-105 s corrects, mais aucun lien avec un maximum mesuré ; semaine 14 le pont fessier tombe à 2 × 2 puis 2 × 3 à 3 RIR, dosage sans logique (R4-F2, R1-P14)."
+   },
+   {
+    "critere": "C4",
+    "perte": 3,
+    "raison": "Règle des 10 % sur la sortie longue présente, mais plusieurs changements simultanés dès la semaine 2 (footing +3 min, sortie longue +5 min, réserve des fentes et du pont baissée d'un cran) et fractionné à allure 3 km dès la semaine d'introduction ; aucune préparation du tendon d'Achille et du mollet alors que la charge de course monte de 52 à 106 min de sortie longue (R4-F8 à F10, R5-P22)."
+   },
+   {
+    "critere": "C5",
+    "perte": 4,
+    "raison": "Force de base réduite à deux exercices de membres inférieurs au poids du corps : ni mollets / soléaire, ni gainage (hollow, planche latérale), ni haut du corps ; dosage générique, sans lest ni levier ajusté (R1-P17)."
+   },
+   {
+    "critere": "C6",
+    "perte": 2,
+    "raison": "Critère de passage écrit (haut de plage avec la réserve prévue), règle des 10 % et test de recalage semaine 6 ; mais pas de critère « sans douleur sur plusieurs séances » pour le renforcement et pas de demi-palier (R4-F7, F9)."
+   },
+   {
+    "critere": "C7",
+    "perte": 3.5,
+    "raison": "Mobilité chevilles-hanches dans l'échauffement et CARs de hanche à partir de la semaine 7 seulement ; aucun travail de la cheville et du pied (montées sur pointes, proprioception) pour un coureur dont la charge d'impact double ; pas d'antagoniste ni de haut du corps (R4-F12, R5-P24, R5-P27)."
+   },
+   {
+    "critere": "C8",
+    "perte": 2,
+    "raison": "Blocs calés à rebours, allègement semaine 6, affûtage semaine 11, transition après l'échéance : bien. Mais la semaine 6 d'allègement augmente les fentes (2 × 11 mardi, 2 × 12 samedi au lieu de 2 × 9), et la semaine 13 de « transition » reprend 4 × 1000 m à allure 3 km et 74 min de sortie longue une semaine après le semi (R4-H1 à H4, R3-P9)."
+   },
+   {
+    "critere": "C9",
+    "perte": 3.5,
+    "raison": "Semaine 12 samedi : la course de 113 min est placée sur un créneau de 45 min ; la « course à allure seuil » est dosée à l'allure objectif 4 min 59 (pas une allure seuil) ; la règle de douleur de cheville parle de poignet et de reprise à 67,5 % du 1RM, sans objet ici ; exécution des fentes et du pont non décrite, pas de régression prévue."
+   },
+   {
+    "critere": "ensemble",
+    "perte": 2,
+    "raison": "Programme sûr et bien orienté vers le semi en 1 h 45 (allures cohérentes avec 48 min au 10 km, sortie longue progressive, affûtage), une correction nécessaire (placement de l'échéance hors du créneau disponible) et plusieurs améliorations sur le renforcement et la préparation de la cheville."
+   }
+  ],
+  "corrections": [
+   {
+    "type": "necessaire",
+    "texte": "Semaine 12 : placer l'épreuve à sa date réelle ou sur le créneau du dimanche (120 min), et décaler en conséquence les séances de la semaine (dernier footing 48 à 72 h avant, récupération le lendemain), au lieu du samedi à 45 min disponibles.",
+    "consequence": "Telle qu'écrite, la séance d'échéance (113 min estimées) ne tient pas dans le créneau déclaré, et l'enchaînement de la semaine de course (récupération le dimanche, 48 h sans travail dur) ne correspond pas au jour réel de l'épreuve."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Ajouter 2 à 3 séries de montées sur pointes (jambe tendue puis genou fléchi, tempo lent) et un travail d'équilibre unipodal deux fois par semaine, pour préparer mollet, tendon d'Achille et cheville à la hausse de volume (R4-F12, R5-P22)."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Semaine 6 (allègement) : garder les fentes à 2 × 9 ou les réduire, au lieu de 2 × 11 et 2 × 12, pour que l'allègement allège aussi le renforcement (R4-H1)."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Renommer « course à allure seuil » en « blocs à allure objectif » ou fixer une vraie allure seuil (environ 4 min 40-45 au km) : la consigne et le nom se contredisent."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Ajouter un gainage court (planche latérale, hollow ou dead bug, 2 × 20-30 s) et un tirage / poussée au poids du corps pour entretenir le haut du corps (R1-P17, R5-P27)."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Ne changer qu'une variable par semaine dans le bloc 1 (durée de footing, sortie longue ou réserve des exercices de force), pas les trois ensemble (R4-F8)."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Semaine 13 : remplacer les 4 × 1000 m à allure 3 km par des footings faciles et des lignes droites, la semaine qui suit un semi ; corriger le pont fessier 2 × 2 / 2 × 3 des semaines 14-15 en 2 × 8-10."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Nettoyer la règle de douleur de la cheville (mention du poignet et du 67,5 % du 1RM sans objet) et décrire l'exécution des fentes et du pont (bassin neutre, genou aligné, montée en 1 s, pause en haut) avec une régression si la série n'est pas tenue."
+   }
+  ],
+  "points_forts": [
+   "Allures cohérentes avec le record (fractions à 4 min 28, allure objectif 4 min 59 pour 1 h 45) et recalées par test semaine 6.",
+   "Sortie longue progressive de 52 à 106 min avec la règle des 10 % et reprise à 70 % après la course.",
+   "Structure calée à rebours sur l'échéance : allègement semaine 6, affûtage semaine 11, 48 h sans travail dur avant l'épreuve.",
+   "Règles de douleur, de baisse du jour, de séance courte et de séance manquée claires et prudentes.",
+   "Renforcement au poids du corps dosé par réserve, sans échec, compatible avec 10 % de musculation."
+  ],
+  "ecole": "calisthenie",
+  "source": "autres_06_semi_marathon_intermediaire.md"
+ },
+ {
+  "programme": "programme_1.md",
+  "criteres": {
+   "F1": 6.5,
+   "F2": 6.5,
+   "F3": 6.5,
+   "F4": 7.5,
+   "F5": 8,
+   "F7": 5.5,
+   "F8": 7,
+   "F9": 6.5
+  },
+  "sans_objet": [
+   "F6"
+  ],
+  "ensemble": 7,
+  "points_perdus": [
+   {
+    "critere": "F1",
+    "perte": 3.5,
+    "raison": "Une seule séance de qualité par semaine (jeudi) et le travail à l'allure de l'objectif (4 min 59/km) ne dépasse jamais 5 × 1000 m avec 90 s de récupération (S3, S5, S7, S9) ; aucune portion à allure semi dans les sorties longues, toutes en allure facile jusqu'à 106 min (S10). La part du mouvement exact n'augmente pas en approchant de l'échéance (R2-P7, R2-P9 par analogie : spécificité croissante vers la compétition)."
+   },
+   {
+    "critere": "F2",
+    "perte": 3.5,
+    "raison": "Allures course calculées et cohérentes (4:28 sur 3 km, 4:59 objectif, conversation), mais la « course à allure seuil » est en fait à l'allure objectif (étiquette fausse, aucun vrai seuil). En renforcement, fente arrière au poids du corps 2 × 6 à 8 à 4 RIR et pont fessier 2 × 8 à 10 à 2-3 RIR : cibles inatteignables pour un homme de 72 kg sans charge (le bilan le confirme : 44 % seulement des séries ont une cible atteignable avec le matériel), l'élastique disponible n'est jamais utilisé (R1-P11, R1-P14 : la marge n'a de sens que si la charge la rend possible)."
+   },
+   {
+    "critere": "F3",
+    "perte": 3.5,
+    "raison": "Volume de course progressif mais plafonnant vers 35 km/semaine (S10) pour un athlète déjà à 30 km et un objectif à 11 s/km de son allure 10 km ; volume de force réduit à 2 exercices × 2 séries, sans séparation qualité/construction. En S6 (allègement), la fente passe de 2 × 9 à 2 × 11 puis 2 × 12 : le volume monte pendant la décharge (R1-P18)."
+   },
+   {
+    "critere": "F4",
+    "perte": 2.5,
+    "raison": "Blocs nommés et calés à rebours, sortie longue chiffrée (+10 % max, 52 → 106 min), allègement et test en S6, recalage des allures sur test. Mais la séance de qualité alterne 4/5 × 1000 m sans progression lisible (S4 5×, S6 4×, S8 5×, S11 3×), et le renforcement change de plages sans logique (2 × 10 en S5 → 2 × 6 à 8 en S7, 2 × 2 en S14). Pas de critère de passage de phase (R3-P1 à P9)."
+   },
+   {
+    "critere": "F5",
+    "perte": 2,
+    "raison": "Affûtage d'une semaine (S11) : sortie longue 106 → 63 min, fractions 3 × 1000 m gardées à l'allure, fréquence gardée, puis semaine de course avec repos J-2, conforme au niveau intermédiaire (R3-P12, R3-P13) ; consigne de départ 10 s/km plus lent (plan de course). Mais jeudi de la semaine 12 réduit à 2 min de mobilité (aucune activation courte avec accélérations) et footing de 20 min le lendemain d'un semi (R3-P14 : dernière séance placée, mais rien sur la récupération post-course)."
+   },
+   {
+    "critere": "F7",
+    "perte": 4.5,
+    "raison": "Seulement fente arrière et pont fessier au poids du corps : aucun travail mollet/soléaire/pied, ni gainage, ni haut du corps, alors que la cheville et le pied sont la zone la plus exposée du coureur (et c'est celle qui a lâché dans la simulation dès S3). Mobilité limitée aux CARs de hanche à partir de S7 (R5-P27)."
+   },
+   {
+    "critere": "F8",
+    "perte": 3,
+    "raison": "Bons garde-fous : règle des 10 % sur la sortie longue, conduite douleur détaillée, arrêt cardiaque, séance manquée. Mais S13, nommée transition, sert 4 × 1000 m à allure 3 km et une sortie longue de 74 min une semaine après le semi, et le footing du mardi monte à 40 min : aucune vraie récupération post-échéance pour un athlète de 38 ans (R5-P3, R5-P20)."
+   },
+   {
+    "critere": "F9",
+    "perte": 3.5,
+    "raison": "Séances dans le temps disponible, repos précisés, échauffement écrit. Mais plusieurs consignes copiées hors sujet : « pour un 10 km, allure du 5 km + 20 à 30 s » dans un plan de semi, « douleur d'appui du poignet » dans la règle cheville, « mouvements lestés vers 67,5 % du 1RM » chez un coureur sans lest ; pont fessier 2 × 2 à 3 RIR (S14) ; samedi S12 : 113 min estimées pour 45 min disponibles sans mention que la course déroge au créneau ; notes d'affûtage sur les « séries dures » collées aux footings."
+   },
+   {
+    "critere": "ensemble",
+    "perte": 3,
+    "raison": "Trois corrections nécessaires : travail spécifique à l'allure semi trop court pour tenir 4:59/km sur 21 km, renforcement incohérent (cibles d'effort inatteignables, pas de mollet/pied, volume qui monte en décharge), et semaine de transition post-course qui n'en est pas une. Aucun plafond : pas de danger majeur, objectif et échéance servis."
+   }
+  ],
+  "corrections": [
+   {
+    "type": "necessaire",
+    "texte": "Rendre le travail spécifique progressif vers l'échéance : remplacer les 3 → 5 × 1000 m à 4:59 par des blocs continus à allure semi qui montent (par ex. 2 × 2 km en S3, 2 × 3 km en S5, 3 × 3 km en S7, 8 km continus en S9) et placer 20 à 40 min à allure semi en fin de sortie longue en S8 et S10 ; renommer la séance (allure objectif) et, si l'on garde un vrai seuil, le chiffrer (environ 4:40-4:45/km).",
+    "consequence": "L'athlète n'aura jamais couru plus de 5 km à 4:59/km avec récupérations : il risque fort de ne pas tenir l'allure au-delà de 12-15 km et de manquer l'objectif de 1 h 45."
+   },
+   {
+    "type": "necessaire",
+    "texte": "Réécrire le renforcement avec une charge qui rend la marge atteignable : fente arrière bulgare ou avec élastique, 3 × 8 à 12 à 2-3 RIR, double progression ; ajouter des montées sur pointes unilatérales (genou tendu et fléchi, 3 × 12 à 15) et un exercice de pied/cheville ; garder ou réduire le volume en S6 au lieu de passer à 2 × 11-12.",
+    "consequence": "Telles qu'écrites, les séries au poids du corps à 4 RIR sont infaisables (l'athlète ne peut pas s'arrêter à 4 de réserve sur 6-8 fentes) : le renforcement ne produit aucun stimulus et ne protège pas la cheville et le mollet, zone la plus exposée par la hausse du kilométrage."
+   },
+   {
+    "type": "necessaire",
+    "texte": "Faire de la semaine 13 une vraie transition : footings faciles de 20 à 30 min au ressenti, aucune fraction, sortie longue limitée à 40-50 min, renforcement léger ; reprendre les fractions en S14 au plus tôt.",
+    "consequence": "Servir 4 × 1000 m à allure 3 km et 74 min de sortie longue 7 à 8 jours après un semi expose à une blessure de surcharge (tendons et pied pas encore récupérés) et à la fatigue accumulée."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Semaine 12 : remplacer le jeudi « 2 min de CARs » par 15-20 min faciles avec 3-4 accélérations, et le footing du dimanche post-course par de la marche ou du repos."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Nettoyer les consignes copiées d'autres profils (allure 10 km, poignet, mouvements lestés à 67,5 % du 1RM, pont fessier 2 × 2) et indiquer que la course du samedi S12 sort du créneau de 45 min."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Ajouter un gainage antérieur/latéral et un peu de haut du corps (tirage élastique) une fois par semaine pour l'équilibre postural en fin de course."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Donner une progression lisible aux fractions du jeudi (nombre de répétitions ou réduction de la récupération) et un critère de passage du bloc 1 au bloc 2 fondé sur le test 10,5 km."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Faire remonter le kilométrage hebdomadaire au moins au niveau actuel (30 km) dès S1-S2 puis vers 40 km au pic, pour mieux soutenir l'allure semi."
+   }
+  ],
+  "points_forts": [
+   "Allures chiffrées depuis le record (4:28 en fractions, 4:59 objectif) et recalées sur le test de S6.",
+   "Sortie longue progressive encadrée par une règle de +10 % explicite, y compris après allègement et après course.",
+   "Calendrier calé à rebours : allègement-test en S6, affûtage d'une semaine conforme au niveau intermédiaire, repos les jours précédant la course et consigne de départ prudent.",
+   "Règles de douleur, de séance manquée, de jour difficile et d'arrêt médical complètes et graduées.",
+   "Séances dans le temps disponible, échauffement écrit avec accélérations avant les fractions."
+  ],
+  "ecole": "force",
+  "source": "autres_06_semi_marathon_intermediaire.md"
+ },
+ {
+  "programme": "programme_1.md",
+  "criteres": {
+   "H1": 6,
+   "H2": 8,
+   "H3": 7,
+   "H4": 6,
+   "H5": 6,
+   "H6": 5.5,
+   "H7": 9,
+   "H8": 7,
+   "H9": 6
+  },
+  "sans_objet": [],
+  "ensemble": 7,
+  "points_perdus": [
+   {
+    "critere": "H1",
+    "perte": 4,
+    "raison": "Seuls deux exercices de renforcement (fente arrière et pont fessier unilatéral, 2 séries chacun, mardi et samedi) : environ 4 séries directes pour les quadriceps, environ 6 en comptage fractionné pour les fessiers (R1-P2), environ 2 pour les ischios, et 0 pour les mollets et le soléaire, alors que ce sont les muscles qui encaissent le plus la course. C'est une dose d'entretien plausible pour un coureur (R1-P1 sert de repère haut), mais pas pour les muscles les plus utiles au profil."
+   },
+   {
+    "critere": "H2",
+    "perte": 2,
+    "raison": "Deux expositions par semaine, mardi et samedi, après un footing facile : la répartition est correcte. En revanche, rien n'alterne lourd et léger, et la séance du samedi précède de moins de 24 h la sortie longue du dimanche, sans que ce placement soit justifié."
+   },
+   {
+    "critere": "H3",
+    "perte": 3,
+    "raison": "La fente au poids du corps est faite à 4 répétitions en réserve (S1, S4 à S6, S14), ce qui donne peu de stimulus pour un homme de 72 kg (R1-P13). Le programme compte d'ailleurs comme « séries dures » des séries à 4 en réserve. Les plages restent étroites (6 à 12) et uniformes, et aucune série ne sert à calibrer la marge."
+   },
+   {
+    "critere": "H4",
+    "perte": 4,
+    "raison": "Il n'y a aucun travail des mollets (debout jambe tendue, ou genou fléchi pour le soléaire), aucun ischio en position longue (R6-P4), et l'élastique disponible n'est jamais utilisé pour charger. Le seul exercice ajouté, les CARs de hanche (S7), est un exercice de mobilité."
+   },
+   {
+    "critere": "H5",
+    "perte": 4,
+    "raison": "La règle de double progression est écrite, mais la « variante suivante » n'est jamais nommée et aucune charge n'est prévue. En S6, semaine d'allègement, les fentes passent de 2 × 9 à 2 × 11 et 2 × 12. En S14, le pont fessier tombe à 2 × 2 (mardi) puis 2 × 3 (samedi) : un dosage incohérent et sans stimulus."
+   },
+   {
+    "critere": "H6",
+    "perte": 4.5,
+    "raison": "Mollets et pied, abducteurs de hanche et tronc sont absents, alors que la trajectoire montre une douleur de cheville à 3–4/10 dès S3 et pendant 9 séances. La chaîne postérieure se limite à 2 séries de pont fessier par séance. Aucun volume n'est déplacé vers ce point faible dans le bloc 2, qui est pourtant écrit après le bloc 1."
+   },
+   {
+    "critere": "H7",
+    "perte": 1,
+    "raison": "Les durées tiennent dans les créneaux, sauf le samedi de S12 (113 min estimées pour 45 min disponibles), mais c'est le jour de la course. Les repos de 90 à 105 s conviennent ; les secondes ne sont pas différenciées par type d'exercice."
+   },
+   {
+    "critere": "H8",
+    "perte": 3,
+    "raison": "L'allègement de S6 contient un test chronométré de 10,5 km le dimanche et une hausse de répétitions sur les fentes. La « transition » de S13, la semaine qui suit le semi, reprend le fractionné 4 × 1000 m du jeudi et un footing de 40 min, plus long que celui de S2 (34 min). L'affûtage de S11 est bien placé et bien dosé (R3-P9)."
+   },
+   {
+    "critere": "H9",
+    "perte": 4,
+    "raison": "Le bloc 2 est écrit d'après le point de fin du bloc 1, qui signale une douleur de cheville sur 9 séances à 3/10 ou plus. Il monte pourtant la sortie longue de 81 à 106 min et garde le fractionné, sans substitution (marche-course, R6-P17), sans travail de capacité de la cheville et sans plan de reprise. La reprise graduée n'apparaît qu'au bloc 3. Résultat dans la trajectoire : footings et sorties longues sont retirés de S4 à S7."
+   },
+   {
+    "critere": "ensemble",
+    "perte": 3,
+    "raison": "Trois corrections nécessaires : pas de travail des mollets et du pied chez un coureur qui développe une douleur de cheville, bloc 2 non adapté à cette douleur qui dure, et dosage incohérent du pont fessier en S14. Le programme est sûr dans ses règles de douleur et respecte l'échéance, donc aucun plafond ne s'applique."
+   }
+  ],
+  "corrections": [
+   {
+    "type": "necessaire",
+    "texte": "Ajouter les mollets et le soléaire mardi et samedi : mollets debout unilatéraux, jambe tendue, 2–3 × 10–15 à 2–3 en réserve, et mollets genou fléchi, avec une amplitude complète et une descente contrôlée. Les faire progresser par répétitions, puis par lest (sac) ou par élastique.",
+    "consequence": "La capacité de la cheville et du mollet ne suit pas la hausse du kilométrage (sortie longue de 52 à 106 min). Dans la trajectoire, la douleur de cheville apparaît dès S3 et fait retirer footings et sorties longues de S4 à S7, ce qui compromet la préparation du semi."
+   },
+   {
+    "type": "necessaire",
+    "texte": "Écrire le bloc 2 d'après la douleur de cheville signalée en fin de bloc 1. Prévoir une reprise graduée dès S7 (volume de course repris à environ 50 %, puis +10 % par semaine si la gêne reste à 2/10 au plus), avec une alternative marche-course ou sans impact pour les séances retirées, et ne pas faire progresser la sortie longue tant que la douleur n'est pas revenue à 2/10.",
+    "consequence": "Le programme prescrit 81 à 106 min de sortie longue que l'athlète ne peut pas courir. La règle de douleur supprime alors les séances clés, et l'athlète arrive au semi sous-préparé ou blessé."
+   },
+   {
+    "type": "necessaire",
+    "texte": "Corriger le pont fessier de S14 : 2 × 2 le mardi et 2 × 3 le samedi sont une erreur. Il faut 2 × 8 à 10 à 3 en réserve, comme en introduction.",
+    "consequence": "L'exercice ne produit plus aucun stimulus et la consigne devient incompréhensible pour l'athlète au moment où le bloc 3 reconstruit le volume."
+   },
+   {
+    "type": "amelioration",
+    "texte": "En S6, garder les fentes à 2 × 9 au lieu de les monter à 2 × 11–12, et déplacer le test de 10,5 km en début de bloc 2 ou réduire les autres séances de cette semaine."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Charger la fente (élastique, sac lesté) et la faire à 2–3 en réserve plutôt qu'à 4, pour une vraie force utile à l'économie de course. Nommer la variante suivante (fente bulgare, step-up)."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Ajouter un exercice d'ischios en position longue (pont fessier jambes tendues, bonjour à l'élastique) et un travail des abducteurs de hanche (marche latérale à l'élastique), 2 séries chacun."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Rendre la semaine 13 vraiment transitoire : pas de fractionné le jeudi, et un footing plus court que la semaine de construction."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Ne compter comme séries dures que les séries à 3 en réserve ou moins, et retirer du « tempo run » la mention du 10 km, qui n'a rien à faire dans un plan de semi."
+   }
+  ],
+  "points_forts": [
+   "La sortie longue progresse en respectant la règle des 10 % de la plus longue sortie (R6-P16) et repart à 70 % après la course.",
+   "La règle de douleur est complète (seuils, retrait, avis médical, reprise par paliers), et la trajectoire montre zéro hausse sur zone douloureuse.",
+   "Toutes les séances tiennent dans les créneaux disponibles, l'échauffement est décrit, et les allures sont calées sur un chrono et recalées par les tests.",
+   "L'affûtage de S11 est bien placé (réduction d'environ 50 %, intensité gardée), et S12 n'a rien de fatigant dans les jours qui précèdent la course.",
+   "Le renforcement est sobre et ne gêne pas les séances de course, ce qui est cohérent avec la répartition cardio 80 % / musculation 10 %."
+  ],
+  "ecole": "hypertrophie",
+  "source": "autres_06_semi_marathon_intermediaire.md"
+ },
+ {
+  "programme": "programme_1.md",
+  "criteres": {
+   "S1": 7.5,
+   "S2": 8,
+   "S3": 8.5,
+   "S4": 6.5,
+   "S5": 7,
+   "S6": 9,
+   "S7": 9.5,
+   "S8": 8,
+   "S9": 7.5
+  },
+  "sans_objet": [],
+  "ensemble": 7,
+  "points_perdus": [
+   {
+    "critere": "S1",
+    "perte": 2.5,
+    "raison": "La règle de douleur générale (Règles du programme) ne vise que coude, épaule, poignet et genou : rien pour cheville, pied, tendon d'Achille, mollet ou tibia, les zones à risque d'un coureur, pendant tout le bloc 1. La règle « cheville et pied » n'apparaît qu'au bloc 2 et parle d'une « douleur d'appui du poignet » (copier-coller). Aucun renforcement mollet/pied (R5-P23, R5-P27). Points positifs : arrêts pour signes cardiaques, orientation vers un médecin ou un kiné."
+   },
+   {
+    "critere": "S2",
+    "perte": 2,
+    "raison": "La sortie longue progresse de ≤ 10 % (52 → 106 min, R6-P16) et les semaines manquées ont une règle, mais le bloc 2, présenté comme « écrit d'après le point de fin du bloc 1 », reprend la sortie longue à 81, 89, 97 puis 106 min comme si les semaines 4 à 6 avaient été courues, alors que la trajectoire montre une douleur de cheville à 3-4/10 et des sorties longues retirées. La semaine 13 de « transition » remet 4 × 1000 m à 4 min 28 cinq jours après le semi."
+   },
+   {
+    "critere": "S3",
+    "perte": 1.5,
+    "raison": "Critères de baisse du jour, version courte et allègement en semaine 6 sont présents, mais aucun allègement entre les semaines 7 et 10, où la sortie longue monte 4 semaines de suite. Charge de vie (travail, stress) non renseignée, donc rien n'est adapté à la charge déclarée (R5-P14 à P19)."
+   },
+   {
+    "critere": "S4",
+    "perte": 3.5,
+    "raison": "Les allures sont bien définies (footing en parlant, fractions à 4 min 28, objectif à 4 min 59, R6-P14) et une seule séance de qualité par semaine (R6-P15). Mais l'allure du semi n'est travaillée que 2 fois dans le bloc 2 (4 km en S7, 5 km en S9), sans aucun segment à allure dans la sortie longue, pour un objectif de 1 h 45 qui est pile à la limite de la prédiction d'après le 10 km en 48 min. Le volume de pointe (≈ 35 km/semaine) est au plancher de la fourchette intermédiaire (35-55 km, R6-P19), et la semaine 1 (≈ 24 km) est sous les 30 km actuels."
+   },
+   {
+    "critere": "S5",
+    "perte": 3,
+    "raison": "Échauffement écrit, CARs de hanche, fente et pont fessier pour la chaîne postérieure. Mais aucun travail mollet, soléaire ou pied ni proprioception de cheville chez un coureur dont la sortie longue double ; la cheville est précisément la zone qui lâche dans la trajectoire (S3 à S7)."
+   },
+   {
+    "critere": "S6",
+    "perte": 1,
+    "raison": "Marges de 2 à 4 répétitions en réserve sans échec, consigne d'arrêter la fraction si l'allure ne tient plus : la note maximale de la grille pour ce critère est atteinte (9)."
+   },
+   {
+    "critere": "S7",
+    "perte": 0.5,
+    "raison": "Séances tenues dans les créneaux et version courte prévue. En revanche, la course de la semaine 12 est placée le samedi (45 min disponibles, 113 min estimées)."
+   },
+   {
+    "critere": "S8",
+    "perte": 2,
+    "raison": "Affûtage d'environ 12 jours avec intensité gardée et consigne de départ prudent (bien). Mais le volume ne baisse que d'environ 25 % en semaine 11 (≈ 208 → 155 min), sous la fourchette de −41 à −60 % (R6-P20). Aucun rappel d'allure en semaine 12, seulement 20 min de footing facile le mardi, alors que R6-P20 recommande des rappels d'allure jusqu'à J−3."
+   },
+   {
+    "critere": "S9",
+    "perte": 2.5,
+    "raison": "Le poignet est cité dans la règle cheville. « Course à allure seuil » est en fait faite à l'allure du semi, avec une note sur le 10 km qui ne s'applique pas ici. Pont fessier à « 2 × 2 » et « 2 × 3 » en semaine 14 (dosage incohérent). Course placée sur le créneau de 45 min du samedi."
+   },
+   {
+    "critere": "ensemble",
+    "perte": 3,
+    "raison": "Programme sûr, individualisé et bien outillé (garde-fous, douleur, semaine manquée), mais trois corrections nécessaires : travail spécifique à l'allure du semi trop mince pour un objectif à la limite, couverture de douleur et de prévention absente pour cheville et mollet chez un coureur, fractions à allure 3 km en semaine de récupération après le semi."
+   }
+  ],
+  "corrections": [
+   {
+    "type": "necessaire",
+    "texte": "Construire l'allure du semi (4 min 59) dans le bloc 2 : progresser de 2 × 3 km à 3 × 3 km puis 2 × 5 km à l'allure objectif le jeudi, et placer 20 à 40 min à l'allure objectif en fin de sortie longue en S8 et S10. Monter le volume de pointe vers 38-40 km par semaine, en partant des 30 km actuels et non de 24.",
+    "consequence": "Avec au plus 5 km cumulés à 4 min 59 et environ 35 km par semaine, l'athlète n'aura jamais tenu son allure plus de 25 min ; l'objectif de 1 h 45, à la limite de sa prédiction, sera probablement manqué ou payé par un effondrement après 15 km."
+   },
+   {
+    "type": "necessaire",
+    "texte": "Étendre dès la semaine 1 la règle de douleur (0-2 / 3-4 / 5 / ≥ 6 sur 10) à la cheville, au pied, au tendon d'Achille, au mollet et au tibia. Ajouter 2 × 15 montées sur pointes jambe tendue et genou fléchi (lentes, avec un excentrique en 3 s) ainsi que 30 s d'équilibre unipodal, après les footings du mardi et du samedi. Retirer la mention du poignet de la règle cheville, et réécrire le bloc 2 à partir des sorties longues réellement faites, par exemple en appliquant la reprise graduée dès le bloc 2.",
+    "consequence": "Pendant les 6 premières semaines, le coureur n'a aucun seuil pour ses zones les plus exposées ; sans renforcement du mollet pendant que la sortie longue double, une tendinopathie ou une douleur de cheville risque de s'installer (c'est ce qui arrive en S3-S7), puis de flamber quand le bloc 2 remet 81 à 106 min."
+   },
+   {
+    "type": "necessaire",
+    "texte": "En semaine 13 (récupération après le semi), remplacer le 4 × 1000 m à 4 min 28 par un footing facile de 30 min avec 4 à 6 accélérations ; ne garder que du facile durant les 7 à 10 jours qui suivent la course, puis reprendre les fractions en semaine 14 à 3 × 1000 m.",
+    "consequence": "Des fractions à allure 3 km cinq jours après un semi couru à fond, sur des tendons encore fatigués, exposent à une blessure (Achille, mollet, cheville) au début du bloc suivant."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Affûtage : baisser le volume de 40 à 50 % en semaine 11 (sortie longue d'environ 55 min, footings de 30 min) et ajouter le mardi de la semaine 12 un rappel de 3 × 1 km à l'allure objectif (R6-P20)."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Ajouter un allègement léger en semaine 9 ou rendre la sortie longue de cette semaine plus courte (environ 80 min) pour éviter 4 semaines de hausse continue avant le pic."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Rebaptiser « Course à allure seuil » en « Allure semi » et supprimer la parenthèse sur le 10 km ; donner une cible d'allure ou d'effort pour le test de 10,5 km de la semaine 6."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Corriger le pont fessier à 2 × 2 / 2 × 3 de la semaine 14 (revenir à 2 × 8 à 10) et placer la course sur le jour réel de l'épreuve, au lieu du créneau de 45 min du samedi."
+   }
+  ],
+  "points_forts": [
+   "Sortie longue limitée à +10 % de la plus longue course des quatre dernières semaines, avec une règle de reprise après une course (R6-P16).",
+   "Allures claires et personnalisées (footing en parlant, fractions à 4 min 28, objectif à 4 min 59), une seule séance de qualité par semaine (R6-P15).",
+   "Règles de vie complètes : baisse du jour avec critères, version courte de 15 min, séance ou semaine manquée, arrêt pour signes cardiaques, consultation en cas de douleur persistante.",
+   "Renforcement au poids du corps sans échec et tenu dans le temps disponible ; stratégie de départ le jour J écrite."
+  ],
+  "ecole": "sante",
+  "source": "autres_06_semi_marathon_intermediaire.md"
+ }
+]
