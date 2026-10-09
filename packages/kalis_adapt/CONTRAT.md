@@ -1426,8 +1426,12 @@ ou de dos qui double en série de jours durs (choix raisonné d'après Feito et 
    poignées, ou pompe mains surélevées faite mains serrées sur une barre basse (`coachBarPushUp` quand le matériel
    compte `barre basse`). Raison `adapt.pain_reported` (zone poignet, gêne la plus forte des quatorze jours). Sans
    appui neutre faisable, la poussée reste écrite, dose plafonnée (règle du poignet sensible, § 11.16).
-2. **Arrêt du poignet** : la pompe mains sur la barre basse compte comme appui neutre (`coachWristNeutralSupport(e,
-   équipement)`) ; un appui déjà neutre à contrainte moyenne reste (dose de l'arrêt) au lieu d'être retiré.
+2. **Arrêt du poignet** : inchangé (DECISIONS_CP.md C10.8 (a)) — parallettes et poignées seulement ; la pompe mains
+   sur la barre basse ne vaut appui neutre qu'à la première gêne, avant l'arrêt (relecture documentée de CY : servie
+   à 4/10 pendant l'arrêt, elle retardait la reprise).
+2 bis. **Douleur qui dure au bas du corps** (hanche, cuisse, genou, jambe, cheville et pied ; mêmes seuils d'arrêt) :
+   la course (impact) est retirée de la séance tant que l'arrêt tient, raison `adapt.pain_persistent` ; le cardio sans
+   impact reste (relecture documentée de CY, `autres_06` : cheville à 4/10 neuf séances et course continuée).
 3. **Couloir de charge** : part écrite du 1RM ≥ `coachCorridorHeavyShare` (85 %) → le couloir ne monte plus
    au-dessus de l'écrit (il peut descendre).
 4. **Schéma changé au même emplacement** (série ouverte, répétitions recalées) : charge totale ≤ dernière charge

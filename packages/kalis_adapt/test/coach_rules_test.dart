@@ -629,10 +629,7 @@ void main() {
                 continue;
               }
               expect(
-                coachWristNeutralSupport(
-                  info.exercise,
-                  streetProfile(key).equipment.toSet(),
-                ),
+                coachWristNeutralSupport(info.exercise),
                 isTrue,
                 reason:
                     '${item.exerciseId} servi le ${s.record.date.iso} '

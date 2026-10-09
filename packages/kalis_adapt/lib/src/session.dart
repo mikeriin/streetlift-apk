@@ -342,7 +342,7 @@ SessionPlan buildSessionPlan(
       comeback.heldFor(e) ||
       (wristStopped &&
           e.stressOn(Joint.wrist) != JointStress.low &&
-          !coachWristNeutralSupport(e, equipment));
+          !coachWristNeutralSupport(e));
   final wristGene = coached && wristGeneRecent(state, day);
   final wristGeneLevel = wristGene
       ? state.pains[BodyZone.wristHand]!
@@ -583,15 +583,9 @@ SessionPlan buildSessionPlan(
         // (Échauffement compris : un appui sur les poignets à l'échauffement
         // provoque la zone comme une série de travail — relecture
         // documentée du pilotage, manche 4.)
-        // (Un appui déjà neutre — parallettes, poignées, pompe mains sur la
-        // barre basse — reste, dosé par la règle de l'arrêt plus bas : CY,
-        // partie 0.)
         if (d.removed ||
             info == null ||
-            !coachPainStopHits(info.exercise, stop.zone) ||
-            (stop.zone == BodyZone.wristHand &&
-                info.exercise.stressOn(Joint.wrist) != JointStress.high &&
-                coachWristNeutralSupport(info.exercise, equipment))) {
+            !coachPainStopHits(info.exercise, stop.zone)) {
           continue;
         }
         // Poignet : une poussée en extension retirée est remplacée par un
@@ -619,7 +613,7 @@ SessionPlan buildSessionPlan(
                     e.stressOn(Joint.wrist) == JointStress.high ||
                     allStops.any((x) => coachPainStopHits(e, x.zone)) ||
                     comeback.heldFor(e) ||
-                    !coachWristNeutralSupport(e, equipment),
+                    !coachWristNeutralSupport(e),
               );
         if (substitute != null &&
             substitute.mode == CapacityMode.reps &&
@@ -828,7 +822,7 @@ SessionPlan buildSessionPlan(
             hotWrist &&
             zone == BodyZone.wristHand &&
             info != null &&
-            (!coachWristNeutralSupport(info.exercise, equipment) ||
+            (!coachWristNeutralSupport(info.exercise) ||
                 info.zoneLevel(BodyZone.wristHand) >= 1);
         if (d.removed ||
             info == null ||
@@ -2429,13 +2423,16 @@ bool _stopNoticeDue(PainState? s, int day) {
 /// les anneaux n'en font pas partie : le poignet y porte le poids du corps
 /// en légère extension (panel de la boucle 5, école santé).
 ///
-/// La pompe mains surélevées faite mains serrées sur une barre basse
+/// Avec [equipment] (première gêne seulement, avant tout arrêt), la pompe
+/// mains surélevées faite mains serrées sur une barre basse
 /// ([coachBarPushUp], quand [equipment] compte une barre basse) en fait
 /// partie : la main entoure la barre comme une poignée, le poignet reste
 /// droit (CY, partie 0 : relecture documentée de CP2, `street_01` et
-/// `street_03`, débutants sans parallettes — la poussée disparaissait
-/// pendant toute la gêne ; modifications de la pompe pour le poignet
-/// douloureux : poignées ou barre pour garder le poignet neutre).
+/// `street_03` — variante neutre proposée six semaines après la première
+/// gêne ; modifications de la pompe pour le poignet douloureux : poignées
+/// ou barre). Pendant un arrêt du poignet, la règle reste celle de
+/// DECISIONS_CP.md C10.8 (a) : parallettes et poignées seulement (appel
+/// sans [equipment]).
 bool coachWristNeutralSupport(
   CatalogExercise e, [
   Set<String> equipment = const <String>{},
@@ -2521,6 +2518,41 @@ void _enduranceDay(
         reasons: <Reason>[why],
       ),
     );
+  }
+
+  // 0. Douleur qui dure au bas du corps (hanche, cuisse, genou, jambe,
+  // cheville et pied) : la course (impact) est retirée tant que l'arrêt
+  // tient, le cardio sans impact reste ; consulter (CY : relecture
+  // documentée, `autres_06`, cheville à 4/10 neuf séances de suite et la
+  // course continuée jusqu'au semi-marathon ; même règle d'arrêt que les
+  // mouvements de force, CX correction 1 : 3/10 deux semaines, 5/10 plus
+  // d'une semaine, ou retour).
+  const legZones = <BodyZone>{
+    BodyZone.hip,
+    BodyZone.thigh,
+    BodyZone.knee,
+    BodyZone.lowerLeg,
+    BodyZone.ankleFoot,
+  };
+  final legStops = <PainStop>[
+    for (final stop in state.painStops(day))
+      if (legZones.contains(stop.zone)) stop,
+  ];
+  if (legStops.isNotEmpty) {
+    final stop = legStops.first;
+    final why = reason(ReasonCodes.adaptPainPersistent, <String, Object?>{
+      'zone': stop.zone.code,
+      'sessions': stop.sessions,
+    });
+    for (final entry in kinds.entries) {
+      final d = entry.key;
+      if (entry.value != EnduranceKind.run || d.removed) {
+        continue;
+      }
+      d.removed = true;
+      note(d, AdjustmentKind.exerciseRemoved, why);
+    }
+    kinds.removeWhere((d, k) => d.removed);
   }
 
   // 1. Reprise après une coupure.

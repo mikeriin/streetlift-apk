@@ -157,6 +157,7 @@ final class AdaptParams {
     this.coachRepLoadShare = 0.025,
     this.coachRepGapMax = 4,
     this.coachTwoForTwo = 2,
+    this.coachTwoForTwoMaxStep = 0.10,
     this.coachWorstSetSlack = 1.5,
     this.coachBreachRir = 1,
     this.coachBreachCut = 0.025,
@@ -771,6 +772,10 @@ final class AdaptParams {
   /// visé) qui font monter la charge d'un cran (règle « 2 pour 2 » de la
   /// NSCA ; CY).
   final int coachTwoForTwo;
+
+  /// Cran le plus grand (part de la charge totale) que la règle « 2 pour 2 »
+  /// fait prendre d'un coup (CY ; choix raisonné).
+  final double coachTwoForTwoMaxStep;
 
   /// Marge admise, en répétitions en réserve, entre la cible et la série la
   /// plus dure prévue (quantile prudent) ; jamais moins d'une demi-réserve.

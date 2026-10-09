@@ -1180,7 +1180,12 @@ List<SetPlan>? _loadedPlans(
       item.kind != SetKind.test &&
       served != SetTechniqueKind.accentuatedEccentric) {
     final up = grid.next(grid.floor(markLoad), up: true);
-    if (up > markLoad + 1e-9 && guardOk(up)) {
+    // (Cran de plus de 10 % de la charge totale — machine, haltères
+    // lourds : pas de saut, la plage s'étend d'abord ; relecture documentée
+    // de CY, `autres_09`, presse pectorale 20 → 25 kg puis séries de 1 à 3
+    // répétitions chez une débutante.)
+    final small = (up + bw) <= (markLoad + bw) * (1 + p.coachTwoForTwoMaxStep);
+    if (up > markLoad + 1e-9 && small && guardOk(up)) {
       kg = up;
       ex.heldCause = null;
     }
@@ -1204,7 +1209,10 @@ List<SetPlan>? _loadedPlans(
     final rise = ownRef
         ? coachRiseOf(c, p)
         : (c.fragile ? p.maxUpMain / 2 : p.maxUpMain);
-    final reps = gap <= 0
+    // (Zone à antécédent : pas de part en plus pour les répétitions de
+    // moins — relecture documentée de CY, `street_12` : +17,4 % d'une
+    // séance à l'autre sur le dips lesté.)
+    final reps = gap <= 0 || c.fragile
         ? 0
         : (gap > p.coachRepGapMax ? p.coachRepGapMax : gap);
     final factor = (1 + rise) * (1 + p.coachRepLoadShare * reps);
