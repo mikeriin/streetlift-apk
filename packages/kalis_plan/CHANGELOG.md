@@ -26,7 +26,9 @@ additives). Constats de la relecture documentée de CP2 (manches 7 et 8) : `docs
   typewriter d'abord (environ un tiers du maximum par côté).
 - **Croisement (CY, boucle 2)** : après une échéance de course, la sortie longue repart à 70 % de la plus
   longue puis +10 % par semaine au plus ; la note « zone de l'épreuve » suit les répétitions écrites quand le
-  garde-fou de volume les réduit.
+  garde-fou de volume les réduit ; temps du créneau inutilisé : en semaine de construction (street, musculation,
+  force), tant que la séance prend moins de 80 % du créneau, une série de plus aux lignes du mouvement visé puis
+  aux principaux, cinq au plus, sous les garde-fous de volume (`coachFillShare`).
 
 ## 0.3.0
 
