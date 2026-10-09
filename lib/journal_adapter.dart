@@ -190,12 +190,7 @@ String _civil(DateTime d) =>
     String? technique,
     bool meters,
   })
-  Function(
-    int week,
-    int day,
-    String exerciseKey,
-    bool withParts,
-  )?
+  Function(int week, int day, String exerciseKey, bool withParts)?
   lineOf,
   int? Function(int week, int day, String exerciseKey)? myoOf,
 }) {

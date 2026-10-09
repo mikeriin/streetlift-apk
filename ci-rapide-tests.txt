@@ -1,6 +1,5 @@
 test/ci1f_formats_test.dart
 test/ci1e_programme_40s_test.dart
-test/ci1d_paquets_test.dart
 test/g9_seance_test.dart
 test/ci1_street_test.dart
 test/ci1c_koach_applique_test.dart
