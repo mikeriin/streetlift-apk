@@ -1774,6 +1774,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
             else ...[
               _SetRow(
                 key: ValueKey('${ex.id}-$i-$epoch'),
+                checkKey: ValueKey('set-check-${ex.id}-$i'),
                 label: rowLabel(i),
                 lockReps: (log.sets[i].parts?.isNotEmpty ?? false),
                 entry: log.sets[i],
@@ -1806,7 +1807,14 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                       )
                     : null,
               ),
-              if (!readOnly && !log.sets[i].done && widget.adapt && ex.engine)
+              // CI1f : mini-séries de la série en cours (la première non
+              // validée), ou d'une série déjà commencée.
+              if (!readOnly &&
+                  !log.sets[i].done &&
+                  widget.adapt &&
+                  ex.engine &&
+                  (i == log.sets.indexWhere((s) => !s.done) ||
+                      (log.sets[i].parts?.isNotEmpty ?? false)))
                 if (store.miniSetPlanFor(widget.week.n, widget.day.j, ex, i)
                     case final plan?)
                   _MiniSetStrip(
@@ -2155,9 +2163,13 @@ class _SetRow extends StatefulWidget {
   /// CI1f : série notée mini-série par mini-série : le total se calcule
   /// (champ des répétitions en lecture).
   final bool lockReps;
+
+  /// Clé du bouton de validation (tests).
+  final Key? checkKey;
   const _SetRow({
     super.key,
     this.lockReps = false,
+    this.checkKey,
     this.issue,
     this.onEdited,
     this.onLongPressLabel,
@@ -2373,6 +2385,7 @@ class _SetRowState extends State<_SetRow> {
                             : 'Valider la série ${widget.label}',
                         child: Center(
                           child: IconButton(
+                            key: widget.checkKey,
                             style: IconButton.styleFrom(
                               backgroundColor: done
                                   ? SL.success.withValues(alpha: 0.14)
@@ -2824,7 +2837,7 @@ class _MiniSetStripState extends State<_MiniSetStrip> {
   String _partLabel(int i) => switch (widget.plan.kind) {
     kc.SetTechniqueKind.myoReps => i == 0 ? 'Act.' : 'M$i',
     kc.SetTechniqueKind.restPause => i == 0 ? 'Série' : 'R$i',
-    _ => '${i + 1}',
+    _ => 'M${i + 1}',
   };
 
   @override
@@ -2884,7 +2897,7 @@ class _MiniSetStripState extends State<_MiniSetStrip> {
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: Text(
-                          '${_partLabel(i)} ${parts[i].value}$unit',
+                          '${_partLabel(i)} · ${parts[i].value}$unit',
                           style: TextStyle(
                             color: SL.text,
                             fontSize: 12.5,
@@ -2930,10 +2943,11 @@ class _MiniSetStripState extends State<_MiniSetStrip> {
                       key: ValueKey('miniset-add-${widget.id}'),
                       onPressed: _add,
                       child: Text(
-                        parts.isEmpty
+                        'Noter',
+                        semanticsLabel: parts.isEmpty
                             ? (plan.kind == kc.SetTechniqueKind.myoReps
                                   ? 'Noter l’activation'
-                                  : 'Noter la 1re mini-série')
+                                  : 'Noter la première mini-série')
                             : 'Noter la mini-série',
                         overflow: TextOverflow.ellipsis,
                       ),
