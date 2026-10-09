@@ -524,7 +524,10 @@ String? coachReasonText(Reason r, Catalog catalog) {
         CoachNotes.goalPace =>
           "Allure de l'objectif : "
               '${v is num ? '${v.round() ~/ 60} min ${(v.round() % 60).toString().padLeft(2, '0')}' : ''} '
-              'au kilomètre, régulière du début à la fin.',
+              'au kilomètre, régulière du début à la fin ; elle se recale '
+              'sur ton dernier test (pour un 10 km, allure du 5 km + 20 à '
+              '30 s au kilomètre). Le jour J, pars 10 s au kilomètre plus '
+              'lent les deux premiers kilomètres.',
         CoachNotes.timeTrial =>
           'Test chronométré sur ${v is num ? _plain(v / 1000) : ''} km, '
               "après 10 à 15 min d'échauffement, à allure régulière. Il "
@@ -566,6 +569,19 @@ String? coachReasonText(Reason r, Catalog catalog) {
               'séries de volume) devient une séance de surcharge en séries '
               'courtes — variante plus dure ou lest léger, 2 répétitions en '
               "réserve. Tu n'ajoutes jamais de séries toi-même.",
+        CoachNotes.kneeShallow =>
+          'Genou gêné (${_int(v)}/10 au profil) : chaise haute, genoux '
+              'pliés à 45-60° seulement (cuisses bien au-dessus de '
+              "l'horizontale), gêne à 3/10 au plus pendant la tenue et le "
+              'lendemain ; descends plus bas seulement après deux semaines '
+              "à 2/10 au plus. À 5/10 ou plus au départ : prends l'avis d'un "
+              'médecin ou d\'un kinésithérapeute avant la première semaine.',
+        CoachNotes.balanceProgress =>
+          'Équilibre, près d\'un mur ou d\'un dossier de chaise : après la '
+              'marche sur les talons, appui sur une jambe 2 à 3 × 20 à 30 s '
+              'par jambe ; quand 30 s tiennent sans toucher l\'appui deux '
+              'séances de suite, passe à la marche talon-pointe, puis à '
+              "l'appui sur une jambe en tournant la tête.",
         CoachNotes.chairSquat =>
           "Squat en assis-debout : une chaise stable derrière toi, assieds-"
               'toi doucement puis relève-toi, mains en appui sur les cuisses '

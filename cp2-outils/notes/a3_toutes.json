@@ -1,0 +1,3325 @@
+[
+ {
+  "programme": "programme_1.md",
+  "criteres": {
+   "C1": 8,
+   "C5": 7.5,
+   "C6": 7.5,
+   "C7": 6.5,
+   "C8": 8,
+   "C9": 8
+  },
+  "sans_objet": [
+   "C2",
+   "C3",
+   "C4"
+  ],
+  "ensemble": 9,
+  "points_perdus": [
+   {
+    "critere": "C1",
+    "perte": 2,
+    "raison": "Variantes cohérentes pour un débutant (presse, poulies, haltères), mais barre fixe et barres parallèles disponibles et jamais utilisées : aucune variante au poids du corps régressée (tractions assistées à l'élastique, dips assistés) alors qu'elles construisent la force relative (R1-P17, pratique d'école)."
+   },
+   {
+    "critere": "C5",
+    "perte": 2.5,
+    "raison": "Bases présentes (poussée, tirage vertical et horizontal, jambes, dead bug) mais dosage générique : 6 séries dures par semaine et par groupe, identiques du début à la fin ; pas de gainage en position de traction (hollow) ni de travail bras tendus."
+   },
+   {
+    "critere": "C6",
+    "perte": 2.5,
+    "raison": "Double progression écrite et plages qui montent d'une répétition aux semaines 4 et 10, mais aucun test ni repère chiffré pour vérifier le gain de force sur 12 semaines ; le RIR pilote la charge alors que R1-P12 recommande chez le débutant des répétitions fixes et une consigne simple."
+   },
+   {
+    "critere": "C7",
+    "perte": 3.5,
+    "raison": "Seulement CARs d'épaule et mobilité générale à l'échauffement ; rien pour les scapulas ni la coiffe (face pull, rotation externe) alors que la poussée (presse pectorale, développés) revient 3 fois par semaine (R5-P24)."
+   },
+   {
+    "critere": "C8",
+    "perte": 2,
+    "raison": "Ordre correct, allègements semaines 6 et 12 ; mais les séances durent 28 à 31 min sur 60 disponibles sans justification, et le bloc 2 recopie le bloc 1 (semaine 7 = semaine 3)."
+   },
+   {
+    "critere": "C9",
+    "perte": 2,
+    "raison": "Faisable et repos précisés, mais aucune consigne d'exécution (position, amplitude, trajectoire) pour un athlète à 0 mois d'ancienneté, notamment au soulevé de terre roumain et au hip thrust à la barre ; « 4 rép. en réserve » sur le dead bug est peu parlant."
+   },
+   {
+    "critere": "ensemble",
+    "perte": 1,
+    "raison": "Aucune correction nécessaire : programme sûr, prudent et adapté à un débutant ; restent des améliorations (consignes techniques, travail scapulaire, usage du temps et du matériel au poids du corps)."
+   }
+  ],
+  "corrections": [
+   {
+    "type": "amelioration",
+    "texte": "Ajouter des tractions assistées à l'élastique (2 × 6 à 10) et des dips ou pompes inclinées à la place d'une série de poulie, avec un palier de levier à la fois (R1-P17)."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Ajouter 2 séries de face pull ou de rotation externe deux fois par semaine pour équilibrer la poussée et préparer les épaules (R5-P24)."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Écrire 2 ou 3 consignes d'exécution par exercice principal (dos neutre et hanches en arrière au roumain, côtes basses au dead bug) et une régression si la série n'est pas tenue."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Utiliser une partie des 30 min libres : une troisième série sur les exercices principaux à partir de la semaine 4, ou un bloc de mobilité ciblée."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Prévoir un repère de force simple (répétitions à charge fixe en semaine 1 et en semaine 11) pour vérifier le progrès."
+   }
+  ],
+  "points_forts": [
+   "Entrée prudente : 2 séries à 4 répétitions en réserve, calibration des charges, RIR qui ne descend jamais sous 2 sur les polyarticulaires.",
+   "Corps entier 3 fois par semaine, chaque groupe touché 2 à 3 fois (R1-P9).",
+   "Règles de douleur, de baisse du jour, de séance courte et de reprise après absence claires et utilisables.",
+   "Allègements planifiés semaines 6 et 12."
+  ],
+  "ecole": "calisthenie",
+  "source": "autres_01_debutant_musculation.md"
+ },
+ {
+  "programme": "programme_2.md",
+  "criteres": {
+   "C1": 7,
+   "C5": 7,
+   "C6": 6.5,
+   "C7": 6.5,
+   "C8": 5.5,
+   "C9": 6.5
+  },
+  "sans_objet": [
+   "C2",
+   "C3",
+   "C4"
+  ],
+  "ensemble": 7,
+  "points_perdus": [
+   {
+    "critere": "C1",
+    "perte": 3,
+    "raison": "Charges de départ déduites des records (hip thrust 77,5 kg ≈ 71 %, squat 57,5 kg ≈ 72 %), mais choix d'exercices peu ciblés sur les deux priorités : aucun travail du moyen fessier (abduction), une seule variante pour le deltoïde moyen (élévation latérale poulie)."
+   },
+   {
+    "critere": "C5",
+    "perte": 3,
+    "raison": "Bases complètes mais dosage générique : développé couché 6 séries, extensions triceps 5 séries, curls 5 séries par semaine, autant ou plus que les élévations latérales (6 séries) alors que le deltoïde moyen est un point faible déclaré."
+   },
+   {
+    "critere": "C6",
+    "perte": 3.5,
+    "raison": "Les charges écrites du hip thrust, du squat et du développé couché restent identiques sur 12 semaines (77,5 / 57,5 / 30 kg) alors que les plages passent à 10–12 : contradiction avec la règle de double progression ; aucun test ni critère pour mesurer les priorités."
+   },
+   {
+    "critere": "C7",
+    "perte": 3.5,
+    "raison": "CARs d'épaule et oiseau au pec deck, mais aucune préparation de la coiffe alors que les épaules sont la cible ; consigne des mollets copiée d'un profil coureur (« rebonds », tendon d'Achille, économie de course) sans rapport avec ce profil."
+   },
+   {
+    "critere": "C8",
+    "perte": 4.5,
+    "raison": "La règle de spécialisation (fessier en hausse, le reste en entretien, 6 semaines) n'est pas appliquée : rien ne passe en entretien, rien ne change à la semaine 7, et le deltoïde moyen, second point faible, n'est pas spécialisé (R4-H1, R4-H4 : on déplace du volume). Séances « haut du corps » et « poussée » ouvertes par le hip thrust, étiqueté « entretien du bas du corps » alors qu'il est l'exercice prioritaire."
+   },
+   {
+    "critere": "C9",
+    "perte": 3.5,
+    "raison": "Faisable, mais séances de 27 à 44 min sur 75 disponibles alors que les priorités manquent de volume ; consignes contradictoires (spécialisation non appliquée, notes coureur, charges fixes contre double progression) ; aucune consigne d'exécution."
+   },
+   {
+    "critere": "ensemble",
+    "perte": 3,
+    "raison": "Trois corrections nécessaires : point faible épaules sous-dosé, règle de spécialisation contredite par le plan, charges écrites figées contre la double progression. Programme sûr mais assez générique pour ce profil."
+   }
+  ],
+  "corrections": [
+   {
+    "type": "necessaire",
+    "texte": "Monter les élévations latérales à 12–16 séries par semaine réparties sur 3 à 4 séances (poulie, haltères, élévation penchée), en prenant le volume sur le développé couché, les curls et les extensions triceps (R4-H2, R4-H4).",
+    "consequence": "Avec 6 séries par semaine, autant que les bras, le deltoïde moyen restera en retard : un des deux objectifs déclarés ne sera pas servi."
+   },
+   {
+    "type": "necessaire",
+    "texte": "Rendre la spécialisation cohérente : soit écrire réellement le passage du reste en entretien (environ la moitié du volume, charge gardée, R4-H1) et la sortie à la semaine 7, soit supprimer la règle ; corriger l'étiquette « entretien du bas du corps » sur le hip thrust.",
+    "consequence": "L'athlète lit une règle qui lui dit de réduire le reste alors que les tableaux disent l'inverse : elle ne sait pas quoi faire et risque de couper au hasard."
+   },
+   {
+    "type": "necessaire",
+    "texte": "Remplacer les charges fixes du hip thrust, du squat et du développé couché par « charge de la semaine précédente + plus petit pas quand le haut de plage est atteint », ou les faire évoluer semaine par semaine.",
+    "consequence": "En suivant les chiffres écrits, elle fera 10–12 répétitions à 71 % avec bien plus de réserve que prévu : stimulus insuffisant sur l'exercice prioritaire pendant 12 semaines."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Ajouter un travail du moyen fessier (abduction à la machine ou à la poulie, 3 × 12–20) deux fois par semaine."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Retirer la note « renforcement du coureur / rebonds » sur les mollets, qui ne correspond pas à ce profil."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Ajouter rotation externe à la poulie ou face pull pour préparer l'épaule au volume d'élévations (R5-P24), et des consignes d'exécution (rétroversion en haut du hip thrust, coude légèrement fléchi et épaule basse aux élévations)."
+   }
+  ],
+  "points_forts": [
+   "Charges de départ calculées sur les 1RM déclarés, à des pourcentages adaptés à 8–10 répétitions.",
+   "Fessiers travaillés 4 à 5 fois par semaine (hip thrust 3 fois, squat 2 fois, roumain).",
+   "Allègements semaines 6 et 12 avec volume réduit de moitié et charge gardée (R1-P18).",
+   "Tirage horizontal et oiseau présents pour équilibrer la poussée."
+  ],
+  "ecole": "calisthenie",
+  "source": "autres_02_hypertrophie_intermediaire.md"
+ },
+ {
+  "programme": "programme_3.md",
+  "criteres": {
+   "C1": 7.5,
+   "C5": 6.5,
+   "C6": 7.5,
+   "C7": 7,
+   "C8": 7.5,
+   "C9": 7
+  },
+  "sans_objet": [
+   "C2",
+   "C3",
+   "C4"
+  ],
+  "ensemble": 8,
+  "points_perdus": [
+   {
+    "critere": "C1",
+    "perte": 2.5,
+    "raison": "Charges déduites des records et série repère de vérification en semaine 1, mais ratio séries de tête / séries allégées incohérent par endroits (semaine 14 : 1 × 1 puis 3 × 2 à −5 %, plus de répétitions sur les séries allégées que sur la série de tête)."
+   },
+   {
+    "critere": "C5",
+    "perte": 3.5,
+    "raison": "L'objectif est +15 kg au squat, mais au bloc 2 le squat du lundi se réduit à 4 singles à 80–83 % à 4 répétitions en réserve (semaines 8–9) et le vendredi à 4 × 4 à 75 % RIR 4 : moins de 20 répétitions par semaine, très loin de l'échec, en dessous des plages de force intermédiaire (R1-P11 : 3–8 répétitions à 75–88 %, R1-P14 : 2–4 RIR)."
+   },
+   {
+    "critere": "C6",
+    "perte": 2.5,
+    "raison": "Bonne logique de recalage (séries de recalage, tests en semaines 5, 10 et 16, « jamais sur un progrès supposé »), mais aucun palier de charge ne dépasse 88 % de 100 kg avant le test et l'écart à l'objectif (115 kg) n'est jamais posé comme peu probable pour un homme de 46 ans en 16 semaines."
+   },
+   {
+    "critere": "C7",
+    "perte": 3,
+    "raison": "Routine épaules-poignets, face pull, rotation externe et Pallof présents, mais rien pour hanches et chevilles au service du squat, et la mobilité déclarée à 20 % du profil se réduit à 2 × 30–45 s par séance."
+   },
+   {
+    "critere": "C8",
+    "perte": 2.5,
+    "raison": "Blocs volume → intensification → réalisation, allègements semaines 5 et 10, affûtage et test ; mais la réalisation (semaines 11–14) ne monte pas plus haut que l'intensification et le volume de squat baisse au moment où il devrait être le plus spécifique."
+   },
+   {
+    "critere": "C9",
+    "perte": 3,
+    "raison": "Notes contradictoires : semaine 5 lundi « à deux jours du test » alors que le test est vendredi ; semaine 16 lundi « 88 % du 1RM » écrit sur une ligne à 85 kg ; semaine 15 « J−8 » pour une épreuve à J−7 ; lecture difficile par empilement de « Comme la semaine N, sauf » sur des semaines non consécutives."
+   },
+   {
+    "critere": "ensemble",
+    "perte": 2,
+    "raison": "Une correction nécessaire : le stimulus de squat des blocs 2 et 3 est trop faible pour servir l'objectif chiffré. Le reste (antécédent lombaire, tests, sécurité des charges lourdes) est bien traité."
+   }
+  ],
+  "corrections": [
+   {
+    "type": "necessaire",
+    "texte": "Aux blocs 2 et 3, remplacer les singles à 4 RIR du lundi par 3 à 5 séries de 2–4 répétitions à 80–87 % à 2–3 RIR, et passer le vendredi à 4 × 4–5 à 75–80 % à 2–3 RIR, en gardant la règle de douleur lombaire (R1-P11, R1-P14).",
+    "consequence": "Avec moins de 20 répétitions de squat par semaine loin de l'échec, le 1RM progressera peu : le test de semaine 16 restera vers 100–105 kg et l'objectif de 115 kg sera manqué."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Dire au profil dès la semaine 1 que 115 kg en 16 semaines (+15 %) est ambitieux à 46 ans et fixer un objectif intermédiaire réaliste (105–107,5 kg) avec l'objectif final au cycle suivant."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Remplacer une partie de la routine épaules-poignets par de la mobilité de cheville et de hanche (squat goblet tenu, flexion dorsale genou au mur) pour honorer les 20 % de mobilité et la profondeur au squat."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Corriger les notes incohérentes (semaine 5 lundi « à deux jours du test », semaine 16 « 88 % » sur 85 kg, « J−8 ») et écrire les semaines en entier plutôt qu'en différences de semaines lointaines."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Ajouter un travail de gainage anti-extension (dead bug, hollow) en plus du Pallof, au service du dos et du squat."
+   }
+  ],
+  "points_forts": [
+   "Antécédent lombaire bien traité : pas d'échec, pas d'excentrique accentué, seuil de douleur unique et clair pour tous les mouvements qui chargent le dos.",
+   "Série repère en semaine 1 pour vérifier les records déclarés avant de s'y fier.",
+   "Tests sous-maximaux à 1 répétition en réserve en semaines 5 et 10, puis 1RM en trois tentatives avec règles de sécurité (cage, pareur, 6 min, pas de troisième barre si douleur).",
+   "Équilibre poussée/tirage et prévention de la coiffe présents (face pull, rotation externe, rowing, tirage vertical)."
+  ],
+  "ecole": "calisthenie",
+  "source": "autres_04_force_generale_46_ans.md"
+ },
+ {
+  "programme": "programme_4.md",
+  "criteres": {
+   "C1": 7,
+   "C5": 6,
+   "C6": 6.5,
+   "C7": 6,
+   "C8": 7,
+   "C9": 6.5
+  },
+  "sans_objet": [
+   "C2",
+   "C3",
+   "C4"
+  ],
+  "ensemble": 8,
+  "points_perdus": [
+   {
+    "critere": "C1",
+    "perte": 3,
+    "raison": "Fente arrière et pont fessier unilatéral au poids du corps sont des variantes plausibles pour une débutante, mais non reliées à un repère (aucun max de répétitions) et sans palier suivant prévu (fente lestée, fente bulgare) en 12 semaines (R1-P17)."
+   },
+   {
+    "critere": "C5",
+    "perte": 4,
+    "raison": "Renforcement limité à deux exercices de jambes : rien pour les mollets et le pied (tendon d'Achille, charge de course), rien pour le tronc, alors que le volume de course augmente."
+   },
+   {
+    "critere": "C6",
+    "perte": 3.5,
+    "raison": "Progression des répétitions +1 aux semaines 4 et 10 seulement, sans critère de passage ; volume de course plat sur les semaines 7 à 10 (25 + 25 + 52 min) ; le test 5 km de la semaine 6 « recale les allures » mais le bloc 2 ne contient aucune allure à recaler."
+   },
+   {
+    "critere": "C7",
+    "perte": 4,
+    "raison": "Mobilité de cheville et de hanche seulement dans l'échauffement ; la mobilité déclarée à 10 % du profil n'a aucune séance ni exercice dédié."
+   },
+   {
+    "critere": "C8",
+    "perte": 3,
+    "raison": "Calage à rebours sur l'échéance et affûtage en semaine 11 corrects, mais aucun allègement entre les semaines 1 et 10 hors test, et le renforcement reste identique au lieu de suivre la course."
+   },
+   {
+    "critere": "C9",
+    "perte": 3.5,
+    "raison": "Séance du jeudi intitulée « fractionné » qui ne contient aucune fraction ; jour de course estimé à 79 min pour 60 disponibles ; allure de course imposée « 7 min 00 au kilomètre » sans qu'aucune séance n'ait été courue à cette allure."
+   },
+   {
+    "critere": "ensemble",
+    "perte": 2,
+    "raison": "Une correction nécessaire : l'allure imposée le jour J n'est ni vérifiée ni reliée au test 5 km. Le reste est sûr et prudent pour une débutante."
+   }
+  ],
+  "corrections": [
+   {
+    "type": "necessaire",
+    "texte": "Relier l'allure de course au résultat du test 5 km de la semaine 6 (allure 10 km ≈ allure 5 km + 20 à 30 s/km) et faire courir 10 à 15 min à cette allure dans la sortie longue des semaines 8 à 10.",
+    "consequence": "Si son 5 km est plus lent que 35 min, elle partira le jour J à 7 min/km sans l'avoir jamais tenu, risque d'exploser en seconde moitié et de ne pas finir dans les 70 min visées."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Ajouter des mollets debout lents (3 × 12–15) puis unilatéraux et un gainage (planche, hollow) deux fois par semaine, en échange d'une série de pont fessier."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Prévoir un palier de levier pour la fente (fente bulgare ou fente lestée) quand 2 × 10 propres sont tenues sur 2 séances, et une régression si la série n'est pas tenue."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Renommer la séance du jeudi ou y mettre de vraies fractions courtes (6 × 1 min allure 10 km, 1 min de marche) au bloc 2."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Allonger légèrement les footings du mardi et du jeudi au bloc 2 (28–30 min, il reste du temps) pour que le volume continue de monter après la semaine 7."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Ajouter 5 min de mobilité dédiée (chevilles, hanches, mollets) après la course pour honorer les 10 % de mobilité du profil."
+   }
+  ],
+  "points_forts": [
+   "Progression prudente de la sortie longue (+3 à +4 min par semaine, règle des +10 %).",
+   "Échéance bien calée : test 5 km à mi-parcours, affûtage en semaine 11, semaine de course légère.",
+   "Toutes les séances respectent le temps disponible hors jour de course ; version courte prévue.",
+   "Renforcement des jambes placé après la course, loin de l'échec."
+  ],
+  "ecole": "calisthenie",
+  "source": "autres_05_course_10_km_debutante.md"
+ },
+ {
+  "programme": "programme_1.md",
+  "criteres": {
+   "C1": 6.5,
+   "C5": 6,
+   "C6": 7.5,
+   "C7": 6,
+   "C8": 7,
+   "C9": 7.5
+  },
+  "sans_objet": [
+   "C2",
+   "C3",
+   "C4"
+  ],
+  "ensemble": 8,
+  "points_perdus": [
+   {
+    "critere": "C1",
+    "perte": 3.5,
+    "raison": "Seules variantes de renforcement : fente arrière et pont fessier unilatéral au poids du corps, des semaines 1 à 12. Elles sont faciles pour un coureur intermédiaire de 4 ans et ne sont reliées à aucun record. Le seul changement de levier est +1 répétition (semaines 4 et 10), alors que R4-F7 prévoit une progression par levier : fente arrière, puis step-up haut, puis squat bulgare."
+   },
+   {
+    "critere": "C5",
+    "perte": 4,
+    "raison": "Aucun gainage (hollow, planche latérale), aucun travail des mollets ni du soléaire, rien pour le haut du corps. Pour un coureur de semi, la base utile au poids du corps est incomplète (R1-P17)."
+   },
+   {
+    "critere": "C6",
+    "perte": 2.5,
+    "raison": "Durées progressives (sortie longue de 60 à 112 min, avec de petites hausses), test de 10,5 km en semaine 6 qui recale les allures, règle de passage de variante écrite. Mais le renforcement n'a aucun critère de passage chiffré, et la consigne générique « tenues = 60 à 85 % du maintien » ne sert à rien ici."
+   },
+   {
+    "critere": "C7",
+    "perte": 4,
+    "raison": "La mobilité se limite à l'échauffement (chevilles, hanches, gammes). Rien pour le pied, la cheville ou le mollet en renforcement, alors que la mobilité vaut 10 % du profil. Aucune mobilité de fin de séance (R5-P24 transposé, prévention)."
+   },
+   {
+    "critere": "C8",
+    "perte": 3,
+    "raison": "Les blocs sont calés à rebours, avec allègement en semaine 6 et affûtage en semaine 11. Mais le bloc « réalisation spécifique » (semaines 7 à 10) répète les fractions de 1000 m du bloc 1 sans aucun travail à l'allure de l'objectif (4 min 59 au km), qui n'apparaît que le jour de la course."
+   },
+   {
+    "critere": "C9",
+    "perte": 2.5,
+    "raison": "Séances dans les temps (115 min pour 120 disponibles le dimanche de la semaine 9), allures chiffrées. Mais l'exécution de la fente et du pont n'est pas décrite, aucune régression n'est prévue, et les notes sont redondantes."
+   },
+   {
+    "critere": "ensemble",
+    "perte": 2,
+    "raison": "Une correction nécessaire (aucune séance à l'allure du semi), plus des améliorations sur le renforcement et la mobilité."
+   }
+  ],
+  "corrections": [
+   {
+    "type": "necessaire",
+    "texte": "Du bloc 2 (semaines 7 à 10), placer à l'allure du semi (4 min 59 au km) une partie du jeudi ou de la fin de la sortie longue : par exemple 2 × 15 min puis 3 × 15 min, ou les 20 à 30 dernières minutes du dimanche.",
+    "consequence": "L'athlète découvre son allure objectif le jour J, sans l'avoir jamais tenue au-delà de 5 min ; risque élevé de départ mal réglé et de manquer 1 h 45."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Ajouter les mollets (montées sur pointes unilatérales, 3 × 12 à 15, genou tendu puis fléchi) et un gainage (planche latérale 3 × 20 à 30 s) le mardi et le samedi."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Faire progresser le renforcement par levier plutôt que par répétitions : fente arrière, puis step-up sur marche haute, puis squat bulgare, avec critère de passage (3 séries propres à 3 répétitions en réserve sur 2 séances)."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Déplacer le renforcement du samedi vers le mardi seul, ou l'alléger, pour ne pas charger les jambes la veille de la sortie longue."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Retirer les règles sans objet pour ce profil (tenues à 60 à 85 % du maintien) et décrire l'exécution de la fente et du pont (bassin neutre, genou dans l'axe)."
+   }
+  ],
+  "points_forts": [
+   "Blocs calés à rebours sur l'échéance, allègement en semaine 6 et affûtage en semaine 11 avec l'intensité gardée.",
+   "Test de 10,5 km en semaine 6 qui recale les allures du bloc 2.",
+   "Sortie longue en progression mesurée (≤ 10 % par semaine), en endurance fondamentale.",
+   "Règles de douleur, de baisse du jour et de séance manquée claires."
+  ],
+  "ecole": "calisthenie",
+  "source": "autres_06_semi_marathon_intermediaire.md"
+ },
+ {
+  "programme": "programme_2.md",
+  "criteres": {
+   "C1": 7,
+   "C2": 5,
+   "C5": 7.5,
+   "C6": 6,
+   "C7": 6.5,
+   "C8": 5.5,
+   "C9": 6
+  },
+  "sans_objet": [
+   "C3",
+   "C4"
+  ],
+  "ensemble": 7,
+  "points_perdus": [
+   {
+    "critere": "C1",
+    "perte": 3,
+    "raison": "Bons choix de régression (assis-debout sur chaise, pompe au mur, rowing à l'élastique). Mais la fente latérale du dimanche (2 × 8 à 10) est servie sans appui ni amplitude réduite à une débutante de 68 ans en mode prudent. L'équilibre ne dispose que de la marche sur les talons, sans variante adaptée (appui unipodal près d'un appui, marche en tandem)."
+   },
+   {
+    "critere": "C2",
+    "perte": 5,
+    "raison": "L'équilibre est un objectif du profil, mais il se résume à 2 × 30 à 45 s de marche sur les talons, identiques des semaines 1 à 12, sans progression ni consigne. R4-F1 prévoit pour un débutant 3 à 4 séances par semaine de 5 à 10 min de travail d'équilibre, à l'état frais."
+   },
+   {
+    "critere": "C5",
+    "perte": 2.5,
+    "raison": "Poussée, tirage, jambes et tronc sont présents et bien dosés (4 puis 3 répétitions en réserve). Mais il n'y a ni charnière de hanche ni pont fessier, pourtant utiles à l'autonomie (se relever, ramasser)."
+   },
+   {
+    "critere": "C6",
+    "perte": 4,
+    "raison": "La seule progression est +1 répétition aux semaines 4 et 10, plus la règle générale de passage à la variante suivante. Aucune progression ni critère pour l'équilibre et les étirements, aucun test d'équilibre (appui unipodal chronométré) ni de souplesse."
+   },
+   {
+    "critere": "C7",
+    "perte": 3.5,
+    "raison": "Échauffement épaules au bâton, hanches et chevilles, plus 2 étirements par séance : environ 2 à 3 min par groupe et par semaine, peu pour un profil à 50 % de mobilité qui veut gagner en souplesse. Rien de progressif pour les épaules au-delà de l'échauffement."
+   },
+   {
+    "critere": "C8",
+    "perte": 4.5,
+    "raison": "Les semaines 6 et 12, dites d'« allègement », gardent 22 séries dures (semaine 6 = semaine 3 avec une marche plus longue) : aucun allègement réel (R3-P9). Le bloc 2 recopie le bloc 1 (semaines 7, 8 et 9 identiques aux semaines 3, 4 et 5)."
+   },
+   {
+    "critere": "C9",
+    "perte": 4,
+    "raison": "Consignes contradictoires sur la marche du dimanche : la case dit 11 min et la note 12 à 15 min (semaines 4 à 12), et en semaine 10 la case passe à 10 min quand la note dit 14 min. La version courte cite « l'équilibre », qui n'est identifié nulle part. La note du dead bug (« la position à la barre ») est hors sujet. Exécution décrite seulement pour l'assis-debout."
+   },
+   {
+    "critere": "ensemble",
+    "perte": 3,
+    "raison": "Trois corrections nécessaires : équilibre non travaillé, fente latérale sans appui, durées de marche contradictoires."
+   }
+  ],
+  "corrections": [
+   {
+    "type": "necessaire",
+    "texte": "Ajouter à chaque séance 5 à 8 min d'équilibre progressif, au début et près d'un appui : appui unipodal (2 à 3 × 15 à 30 s par jambe), puis marche en tandem, puis appui unipodal yeux fermés ou tête tournée. Critère de passage : 30 s stables sur 2 séances.",
+    "consequence": "L'objectif d'équilibre (prévenir les chutes, rester autonome) ne sera pas servi : 12 semaines du même exercice de 30 s ne font pas progresser la stabilité unipodale."
+   },
+   {
+    "type": "necessaire",
+    "texte": "Fente latérale : main sur un dossier de chaise ou un mur, amplitude limitée au confort, régression en transfert de poids latéral debout si l'équilibre manque.",
+    "consequence": "Risque de déséquilibre et de chute chez une débutante de 68 ans en mode prudent, sur un mouvement latéral sans appui."
+   },
+   {
+    "type": "necessaire",
+    "texte": "Mettre en accord la case et la note de la marche rapide du dimanche (une seule durée par semaine, par exemple 10, 11, 12… 15 min).",
+    "consequence": "L'athlète ne sait pas si elle marche 10 ou 14 min (semaine 10), ni laquelle des deux durées suivre, ce qui compromet la progression d'endurance et la confiance dans le programme."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Faire des semaines 6 et 12 de vrais allègements (une série de moins par exercice) et faire évoluer le bloc 2 (variantes : chaise plus basse, pompe sur plan incliné à la table)."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Porter les étirements à 3 × 30 s pour les ischio-jambiers, les mollets et les fléchisseurs de hanche, et ajouter une mobilité des épaules (bras au-dessus de la tête au bâton) en fin de séance."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Ajouter un pont fessier au sol et un test simple aux semaines 1, 6 et 12 (appui unipodal chronométré, assis-debout en 30 s)."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Remplacer la note du dead bug par une consigne utile (bas du dos au sol, expire en allongeant)."
+   }
+  ],
+  "points_forts": [
+   "Variantes bien régressées pour une débutante âgée : assis-debout sur chaise, pompe au mur, tirage à l'élastique.",
+   "Intensité modérée (3 à 4 répétitions en réserve), pas d'impact, conforme au mode prudent.",
+   "Équilibre poussée et tirage respecté.",
+   "Séances tenues en 24 à 30 min, version courte prévue pour les jours chargés."
+  ],
+  "ecole": "calisthenie",
+  "source": "autres_07_mobilite_sante_senior.md"
+ },
+ {
+  "programme": "programme_3.md",
+  "criteres": {
+   "C1": 5,
+   "C2": 6,
+   "C3": 6,
+   "C4": 6.5,
+   "C5": 6.5,
+   "C6": 4.5,
+   "C7": 4,
+   "C8": 5,
+   "C9": 6.5
+  },
+  "sans_objet": [],
+  "ensemble": 5.5,
+  "points_perdus": [
+   {
+    "critere": "C1",
+    "perte": 5,
+    "raison": "Muscle-up négatif et traction explosive à la poitrine sont pertinents. Mais les tractions chest-to-bar en 2 à 3 × 8 à 10 (semaines 1 à 3), à 2 répétitions en réserve, puis 10 à 12 (semaine 9), supposent 11 à 14 chest-to-bar au maximum, alors que le record est de 10 tractions en pronation menton à la barre. Le palier n'est pas déduit du record (R4-F7). Ni muscle-up à l'élastique, ni travail de transition (barre basse), ni traction haute à la taille."
+   },
+   {
+    "critere": "C2",
+    "perte": 4,
+    "raison": "La figure est placée en tête le lundi et le vendredi, à l'état frais, ce qui est bien. Mais elle n'est travaillée que 2 fois par semaine, en 2 à 3 séries de 2 à 4 répétitions, sans consigne technique (fausse prise, trajet de la barre) ; R4-F1 donne 4 à 5 fois par semaine pour un intermédiaire. La traction explosive est retirée des semaines 11 à 15, en plein bloc « spécifique »."
+   },
+   {
+    "critere": "C3",
+    "perte": 4,
+    "raison": "Négatifs bien dosés au contrôle (arrêt sous 3 s). Mais la colonne affiche « 4 rép. en réserve » sur 2 à 3 répétitions, ce qui est contradictoire. Le volume de tirage (chest-to-bar à 2 répétitions en réserve, au-delà du maximum) n'est relié à aucun maximum mesuré (R4-F2, R1-P14)."
+   },
+   {
+    "critere": "C4",
+    "perte": 3.5,
+    "raison": "Lundi et vendredi sont bien espacés (≥ 72 h). Mais le coude cumule négatifs, chest-to-bar, dips à la barre droite et toes-to-bar en kipping le lundi. La semaine 4 change plusieurs variables d'un coup (négatifs, dips, chest-to-bar), et rien ne prépare le tendon avant les négatifs (R4-F8, R4-F9)."
+   },
+   {
+    "critere": "C5",
+    "perte": 3.5,
+    "raison": "Tirage et poussée bras fléchis présents (chest-to-bar, dips à la barre droite) et dead bug. Mais pas de tirage bras tendus (tirage poulie bras tendus, levier), pas de hollow ni de travail de la fausse prise, et un dosage générique non relié au muscle-up."
+   },
+   {
+    "critere": "C6",
+    "perte": 5.5,
+    "raison": "Aucun critère de passage vers le muscle-up complet. Les négatifs passent seulement de 2 à 3 à 3 à 4 répétitions. Aucun test planifié du maximum de tractions, ni aucune tentative de muscle-up de toute la saison, y compris aux semaines 15 et 16 (R4-F7)."
+   },
+   {
+    "critere": "C7",
+    "perte": 6,
+    "raison": "Seuls des CARs de hanche et un cat-cow sont prévus. Rien pour les poignets, les coudes ou les scapulas (tractions scapulaires, rotateurs externes, mobilité en extension d'épaule pour les dips) avant les muscle-up négatifs et les dips à la barre droite, alors que R4-F12 en fait un prérequis."
+   },
+   {
+    "critere": "C8",
+    "perte": 5,
+    "raison": "Allègements toutes les 5 semaines, c'est bien. Mais les blocs sont dictés par le back squat (jusqu'à 90 % du 1RM) et non par la figure. Le bloc « réalisation spécifique » réduit le travail de muscle-up. Affûtage et allègement finaux sans échéance testée : le vendredi de la semaine 16 dit « repos avant l'échéance » et aucune échéance ne suit (R4-H4)."
+   },
+   {
+    "critere": "C9",
+    "perte": 3.5,
+    "raison": "Séances faisables (25 à 49 min sur 60). Mais les notes de conditionnement sont recopiées sur chaque ligne et la consigne d'effort des négatifs est contradictoire (colonne contre note). Pas de régression écrite pour les chest-to-bar si la série ne passe pas."
+   },
+   {
+    "critere": "ensemble",
+    "perte": 4.5,
+    "raison": "Quatre corrections nécessaires, dont deux qui menacent l'objectif : aucune tentative de muscle-up et spécifique retiré au bloc 3."
+   }
+  ],
+  "corrections": [
+   {
+    "type": "necessaire",
+    "texte": "Recaler les tractions sur le record : chest-to-bar à 3 × 4 à 6 (environ 50 à 60 % du maximum), ou tractions strictes 3 × 6 à 7. Faire un test du maximum de tractions aux semaines 5 et 10, et écrire les séries suivantes sur ce résultat.",
+    "consequence": "Avec 10 tractions au maximum, des séries de 8 à 12 chest-to-bar à 2 répétitions en réserve finiront à l'échec ou en kipping, ce qui charge les coudes sans construire le tirage strict."
+   },
+   {
+    "type": "necessaire",
+    "texte": "Garder la traction explosive (ou traction haute à la taille) dans tout le bloc 3, et ajouter muscle-up à l'élastique et transitions sur barre basse en tête de séance. Critère de passage : 3 × 3 tractions à la taille propres sur 3 séances.",
+    "consequence": "Le bloc dit spécifique retire l'exercice le plus proche de la figure ; la phase de tirage haut ne sera pas construite et le muscle-up strict ne sera probablement pas débloqué en 16 semaines."
+   },
+   {
+    "type": "necessaire",
+    "texte": "Planifier des tentatives de muscle-up strict (semaines 10, 14 et 16) après 48 h sans travail dur de tirage, et remplacer le « repos avant l'échéance » de la semaine 16 par la séance test.",
+    "consequence": "L'objectif « figure à débloquer en 16 semaines » n'est jamais évalué : le programme finit sans savoir si le but est atteint."
+   },
+   {
+    "type": "necessaire",
+    "texte": "Ajouter 5 à 8 min de préparation des coudes, des poignets et des scapulas avant le tirage et les dips : tractions scapulaires 2 × 8, rotation externe à l'élastique 2 × 15, poignets, suspension en fausse prise 3 × 15 s.",
+    "consequence": "Les négatifs de muscle-up et les dips à la barre droite chargent le coude et l'avant de l'épaule sans préparation, ce qui expose à une tendinopathie du coude, première blessure du street workout (R4-F12)."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Porter la pratique de la figure à 3 ou 4 expositions courtes par semaine (5 à 10 min de transitions ou de négatifs le mercredi et le samedi), avec une consigne externe par série (« amène la barre aux hanches »)."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Ajouter du tirage bras tendus (tirage poulie bras tendus 3 × 10) et du hollow (3 × 20 s) pour le contrôle du balancier."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Retirer les toes-to-bar en kipping du lundi (même maillon que la figure) et mettre en accord l'effort affiché des négatifs avec la consigne de contrôle."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Alléger le back squat lourd du bloc 3 pour réallouer du volume à la cible (R4-H4)."
+   }
+  ],
+  "points_forts": [
+   "La figure est placée en tête de séance, à l'état frais, deux jours bien espacés (lundi et vendredi).",
+   "Négatifs de muscle-up dosés au contrôle de la descente, avec arrêt sous 3 s et régression à l'élastique.",
+   "Dips à la barre droite et chest-to-bar, deux bases pertinentes pour le muscle-up.",
+   "Allègements réguliers et règles de douleur claires."
+  ],
+  "ecole": "calisthenie",
+  "source": "autres_08_crossfit_intermediaire.md"
+ },
+ {
+  "programme": "programme_4.md",
+  "criteres": {
+   "C1": 7.5,
+   "C5": 7,
+   "C6": 7,
+   "C7": 6,
+   "C8": 6,
+   "C9": 6
+  },
+  "sans_objet": [
+   "C2",
+   "C3",
+   "C4"
+  ],
+  "ensemble": 8,
+  "points_perdus": [
+   {
+    "critere": "C1",
+    "perte": 2.5,
+    "raison": "Variantes guidées adaptées à une débutante sédentaire de 92 kg (presse, presse pectorale, poulies). Mais le soulevé de terre roumain à la barre est servi d'emblée, sans variante d'apprentissage (charnière au bâton, kettlebell), et aucune variante au poids du corps n'est proposée pour plus tard."
+   },
+   {
+    "critere": "C5",
+    "perte": 3,
+    "raison": "Poussée, tirage, jambes, charnière et tronc sont présents. Mais la poussée domine : presse pectorale 3 fois et développé assis 2 fois par semaine, soit 10 séries, contre 6 séries de tirage (rowing 2 fois, tirage vertical 1 fois). Dosage générique."
+   },
+   {
+    "critere": "C6",
+    "perte": 3,
+    "raison": "Double progression écrite et répétitions +1 aux semaines 4 et 10, suivi du poids et du tour de taille aux semaines 1, 6 et 12, et progression de la marche vers 150 puis 200 min. Mais aucun test de force ni de condition (marche de 6 min, répétitions) pour mesurer le progrès."
+   },
+   {
+    "critere": "C7",
+    "perte": 4,
+    "raison": "Échauffement des épaules, des hanches et des chevilles, et 2 étirements par séance. Mais il y a un déséquilibre poussée et tirage (10 séries contre 6), aucun travail scapulaire, et l'échauffement mentionne un bâton qui n'est pas dans la liste du matériel."
+   },
+   {
+    "critere": "C8",
+    "perte": 4,
+    "raison": "L'ordre dans la séance est correct. Mais les semaines 6 et 12, dites d'« allègement », gardent 34 séries dures (semaine 6 = semaine 3 avec un vélo plus long), donc aucun allègement réel pour une débutante en déficit qui dort 6,5 h (R3-P9). Le bloc 2 recopie le bloc 1."
+   },
+   {
+    "critere": "C9",
+    "perte": 4,
+    "raison": "Durée du vélo contradictoire : la case dit 14, 13 puis 11 ou 10 min, et la note dit 15 puis 20 min. Les deux évoluent même en sens inverse à la semaine 4. La version courte cite « l'équilibre », absent des séances. Aucune exécution décrite (soulevé de terre roumain, presse) et aucune régression. Séances à 43 min pour 45, sans marge."
+   },
+   {
+    "critere": "ensemble",
+    "perte": 2,
+    "raison": "Une correction nécessaire (durée de vélo contradictoire), simple à faire ; le reste relève de l'amélioration."
+   }
+  ],
+  "corrections": [
+   {
+    "type": "necessaire",
+    "texte": "Une seule durée de vélo par séance, en accord entre la case et la note, qui progresse vraiment (par exemple 11, puis 12, puis 13 min… dans le temps disponible), et compter ces minutes dans les 150 à 200 min hebdomadaires visées.",
+    "consequence": "L'athlète ne sait pas si elle pédale 10 ou 20 min ; le volume d'endurance, central pour la perte de poids, ne suit pas la progression prévue et le suivi des minutes devient faux."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Rééquilibrer poussée et tirage : remplacer un développé haltères assis par un tirage (rowing un bras, ou tirage vertical), pour viser au moins autant de séries de tirage que de poussée."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Apprendre la charnière avant le soulevé de terre roumain à la barre (bâton le long du dos, puis kettlebell) et décrire l'exécution (dos neutre, hanches vers l'arrière, barre contre les cuisses)."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Faire des semaines 6 et 12 de vrais allègements (une série de moins par exercice), et faire évoluer les variantes au bloc 2."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Préciser l'exercice d'équilibre de la version courte, ou le retirer, et remplacer la note du dead bug par une consigne utile."
+   }
+  ],
+  "points_forts": [
+   "Variantes guidées et charges à calibrer, adaptées à une débutante sédentaire.",
+   "Effort prudent (4 puis 3 répétitions en réserve) et volume modeste, cohérent avec le déficit et le sommeil.",
+   "Plan de marche progressif et fractionnable vers 150 puis 200 min, avec un jour de repos.",
+   "Suivi concret (séances cochées, minutes, poids et tour de taille), et renvoi vers un professionnel pour l'alimentation."
+  ],
+  "ecole": "calisthenie",
+  "source": "autres_09_perte_de_poids_debutante.md"
+ },
+ {
+  "programme": "programme_1.md",
+  "criteres": {
+   "C1": 6.5,
+   "C2": 7,
+   "C3": 6.5,
+   "C4": 6,
+   "C5": 6.5,
+   "C6": 7,
+   "C7": 6.5,
+   "C8": 5,
+   "C9": 5
+  },
+  "sans_objet": [],
+  "ensemble": 7,
+  "points_perdus": [
+   {
+    "critere": "C1",
+    "perte": 3.5,
+    "raison": "Variantes globalement adaptées à un débutant de 55 ans à la maison (chaise contre le mur, pont fessier, développé haltères, rowing, élastique, dead bug), mais la chaise contre le mur, seul travail de genou, n'a pas d'angle prescrit alors que le genou droit est à 5/10 en flexion profonde ; pas de variante plus facile prévue pour le bas du corps (R4-F7, R4-F11)."
+   },
+   {
+    "critere": "C2",
+    "perte": 3,
+    "raison": "Mouvements principaux 2 à 3 fois par semaine, placés en début de séance après échauffement ; aucune consigne technique par série ni intention de qualité du mouvement (R4-F1, F3)."
+   },
+   {
+    "critere": "C3",
+    "perte": 3.5,
+    "raison": "Chaise contre le mur de 20 à 35 s « avec quelques secondes de marge », sans maintien max de référence ni lien au max (R4-F2, F5) ; le test d'entrée ne porte que sur les répétitions ; repos de 60 s sur l'isométrie de genou."
+   },
+   {
+    "critere": "C4",
+    "perte": 4,
+    "raison": "Genou douloureux à 5/10 chargé trois fois par semaine (chaise 2 × 35 s dès S5) sans application du seuil 5 du programme lui-même (variante plus facile, −30 à −50 % de volume, R4-F11, R5-P23) ; hausse des séries de 13 %, 12 %, 14 % (S1→S5) au-delà de la règle de +10 % que le programme s'impose pour les 40 ans et plus (R5-P10, R5-P22) ; épaule opérée chargée en poussée verticale sans préparation spécifique."
+   },
+   {
+    "critere": "C5",
+    "perte": 3.5,
+    "raison": "Poussée et tirage horizontaux et verticaux présents, pont fessier ; mais bas du corps limité à une isométrie et un pont sans charge, aucune semaine de dead bug en S5 (retiré jeudi en S4 et samedi en S5), gainage par ailleurs non spécifique (R1-P17)."
+   },
+   {
+    "critere": "C6",
+    "perte": 3,
+    "raison": "Double progression, test d'entrée à 4 RIR, +5 s sur les tenues et seuils de douleur écrits ; mais aucun retest planifié en 12 semaines, et les plages écrites qui montent (8–10 → 9–11 → 10–12) se superposent à la règle de double progression sans dire laquelle prime (R4-F9)."
+   },
+   {
+    "critere": "C7",
+    "perte": 3.5,
+    "raison": "Échauffement avec mobilité d'épaules au bâton, CARs de hanche et étirements, équilibre poussée/tirage respecté ; rien de ciblé pour l'épaule gauche opérée (rotateurs externes, scapulas) ni pour le genou (extension terminale, amplitude indolore) ; aucun travail d'équilibre malgré l'âge (R4-F12, R5-P24, R5-P27)."
+   },
+   {
+    "critere": "C8",
+    "perte": 5,
+    "raison": "Les semaines 6 et 12, dites « allègement », comptent 26 séries dures, plus que la semaine 5 (24), et ajoutent 2 séries de dead bug le samedi : aucun allègement réel en 12 semaines (R1-P18 : moins de séries, même charge ; R4-H3) ; volume plat à 26 de S6 à S12 ; ordre dans la séance correct."
+   },
+   {
+    "critere": "C9",
+    "perte": 5,
+    "raison": "Vélo contradictoire : colonne « 13 min » (mardi) et « 6 min » (samedi) contre une note « 15 min » puis 16 à 20 min ; le samedi estimé à 39 min dépasserait 50 min si la note est suivie ; la version courte cite « l'équilibre », exercice absent ; notes copiées-collées hors sujet (« à la barre » sans barre, seuil de genou listant « tirage, préhension ») ; aucune consigne d'exécution par exercice."
+   },
+   {
+    "critere": "ensemble",
+    "perte": 3,
+    "raison": "Programme sûr dans l'ensemble et bien pensé pour l'habitude (séances courtes, version de 15 min, règles de reprise, drapeaux rouges), mais trois corrections nécessaires : durée de vélo contradictoire, genou à 5/10 sans adaptation chiffrée de la chaise, allègements fictifs."
+   }
+  ],
+  "corrections": [
+   {
+    "type": "necessaire",
+    "texte": "Unifier la durée du vélo : une seule valeur par séance dans la colonne séries (par exemple mardi 13 → 18 min, samedi 6 min), et supprimer la note « 15 à 20 min » qui la contredit.",
+    "consequence": "L'athlète ne sait pas combien de temps pédaler ; s'il suit la note, la séance du samedi dépasse les 40 minutes disponibles et il risque d'abandonner ou de bâcler la séance."
+   },
+   {
+    "type": "necessaire",
+    "texte": "Chaise contre le mur : prescrire un angle de genou indolore (cuisses à 30–60° de flexion, jamais sous 90°, gêne ≤ 3/10), et démarrer la semaine 1 en appliquant la règle du seuil 5 du programme (variante plus haute, volume de genou réduit) tant que la gêne actuelle reste à 5/10 ; n'augmenter la durée que si la gêne reste ≤ 2 le lendemain.",
+    "consequence": "Avec un genou déjà à 5/10, une chaise à 90° tenue 2 × 35 s trois fois par semaine peut aggraver la douleur et faire décrocher l'athlète avant la fin des 12 semaines."
+   },
+   {
+    "type": "necessaire",
+    "texte": "Faire des semaines 6 et 12 de vrais allègements : environ 50–60 % des séries de la semaine précédente (≈ 12–14 séries dures), mêmes charges, sans ajout de dead bug.",
+    "consequence": "Un homme de 55 ans qui dort 6 h et reprend après 4 ans d'arrêt enchaîne 12 semaines sans décharge réelle : fatigue accumulée, gênes de genou et d'épaule plus probables, risque d'abandon de l'habitude visée."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Limiter la hausse de séries à +10 % par semaine comme le programme l'annonce pour les 40 ans et plus (15 → 16 → 18 → 19 → 21) au lieu de 15 → 17 → 19 → 21 → 24."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Ajouter pour l'épaule gauche opérée une rotation externe à l'élastique et des rétractions/dépressions scapulaires (1–2 × 12–15, facile) dans l'échauffement des séances avec poussée verticale."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Ajouter un exercice d'équilibre (appui unipodal près d'un support, 2 × 20–30 s par jambe), cité par la version courte mais absent, et garder un gainage chaque semaine (aucun dead bug en semaine 5)."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Décrire l'exécution des exercices principaux (position, ligne, respiration, tempo) et prévoir un retest à 4 RIR en semaine 6 ou 7 pour recaler les charges."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Nettoyer les notes génériques : retirer « à la barre » du dead bug et adapter la liste des mouvements concernés dans la règle de douleur du genou (pas « tirage, préhension »)."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Quand le genou est descendu à ≤ 2/10, introduire une flexion dynamique en amplitude contrôlée (assis-debout sur banc, step-up bas) pour que le bas du corps ne se résume pas à une isométrie et un pont."
+   }
+  ],
+  "points_forts": [
+   "Séances courtes qui tiennent dans le temps disponible, version de 15 min pour les jours chargés et règle de séance manquée : bien adapté à l'objectif d'habitude de 12 semaines.",
+   "Reprise prudente après 200 semaines d'arrêt : 1 série par exercice en semaine 1, 4 RIR, test d'entrée recalé sur des repères actuels et non sur d'anciens records.",
+   "Seuils de douleur écrits, drapeaux rouges cardiaques et consigne de respiration, cohérents avec le mode prudent (R5-P23, R5-P25).",
+   "Antécédent d'épaule pris en compte : pas d'échec, pas d'excentrique accentué, charge graduée ; poussée et tirage équilibrés.",
+   "Isométrie de genou en tête de séance et vélo sans impact : choix pertinents pour un genou douloureux à la flexion profonde."
+  ],
+  "ecole": "calisthenie",
+  "source": "autres_10_contraintes_multiples.md"
+ },
+ {
+  "programme": "programme_1.md",
+  "criteres": {
+   "F1": 6.5,
+   "F2": 7,
+   "F3": 7,
+   "F4": 7,
+   "F7": 7.5,
+   "F8": 8.5,
+   "F9": 8
+  },
+  "sans_objet": [
+   "F5",
+   "F6"
+  ],
+  "ensemble": 8,
+  "points_perdus": [
+   {
+    "critere": "F1",
+    "perte": 3.5,
+    "raison": "L'objectif est « muscle et force », et le profil signale squat barre et développé couché comme niveaux inconnus. Pourtant, aucun mouvement de base à la barre n'est introduit en 12 semaines : presse à cuisses, presse convergente, développé haltères. La force de base ne sera ni apprise ni mesurable sur les mouvements de référence (R2-P9 : spécificité ; R2-P7 : 2 expositions par semaine)."
+   },
+   {
+    "critere": "F2",
+    "perte": 3,
+    "raison": "Toutes les charges sont « à calibrer ». La méthode est donnée, ce qui convient à un débutant. Mais les 12 semaines restent sur 8 à 12 répétitions à 3 RIR : aucune série plus courte de 5 à 6 répétitions vers 75-80 %, qui sert la force chez le débutant (R1-P11 : 5-10 répétitions à 65-80 %)."
+   },
+   {
+    "critere": "F3",
+    "perte": 3,
+    "raison": "Le volume est de 2 séries par exercice, soit environ 6 séries directes par muscle et par semaine. C'est le bas de la fourchette débutant (R1-P1 : 6-10 ; R1-P5 : 3-6), alors que chaque séance n'occupe que 28 à 31 min sur les 60 disponibles. La répartition est banale."
+   },
+   {
+    "critere": "F4",
+    "perte": 3,
+    "raison": "La double progression est lisible (R5-P3) et les plages de répétitions glissent (8-10, puis 9-11, puis 10-12). En revanche, les blocs 1 et 2 sont quasi identiques et sans rôle distinct. L'allègement des semaines 6 et 12 ne retire que les accessoires (36 à 28 séries)."
+   },
+   {
+    "critere": "F7",
+    "perte": 2.5,
+    "raison": "La poussée et le tirage sont équilibrés, et le tronc et la chaîne postérieure sont présents. Mais le seul travail des quadriceps est la presse, et aucun accessoire n'est réglé sur un point faible : le profil n'en déclare d'ailleurs aucun."
+   },
+   {
+    "critere": "F8",
+    "perte": 1.5,
+    "raison": "La règle de douleur et le RIR de 3-4 conviennent. Mais aucune règle d'apprentissage technique n'accompagne le soulevé de terre roumain à la barre, mouvement chargé servi à un débutant complet dès la séance 1."
+   },
+   {
+    "critere": "F9",
+    "perte": 2,
+    "raison": "Les séances sont faisables et l'échauffement est écrit. Les 105 s de repos sur les mouvements principaux sont sous la plage débutant de R1-P16 (120-180 s), et la moitié du temps disponible reste inutilisée."
+   },
+   {
+    "critere": "ensemble",
+    "perte": 2,
+    "raison": "Une correction nécessaire : le volet « force » de l'objectif n'est pas servi par des mouvements de base appris et suivis."
+   }
+  ],
+  "corrections": [
+   {
+    "type": "necessaire",
+    "texte": "Introduire un squat (goblet, puis squat barre haute) et le développé couché barre, 2 fois par semaine chacun : 3 × 5-8 à 3 RIR, montée de charge à la double progression, sur le temps libre des séances.",
+    "consequence": "Au bout de 12 semaines, l'athlète n'aura ni appris ni progressé sur les mouvements de force de base que vise son objectif, et aucune donnée de force ne sera exploitable pour la suite."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Monter à 3 séries sur les mouvements principaux à partir de la semaine 3 : il reste environ 30 min par séance, et le volume par muscle passerait de 6 à 8-9 séries."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Porter le repos des mouvements principaux à 2 min (R1-P16)."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Ajouter une estimation de 1RM sur une série de 5-8 répétitions en semaines 6 et 12 (R2-P5, R3-P16), pour objectiver la progression."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Donner au bloc 2 un rôle distinct, par exemple des plages de 6-8 répétitions sur les mouvements de base."
+   }
+  ],
+  "points_forts": [
+   "Corps entier 3 fois par semaine, ce qui convient à un débutant.",
+   "Poussée et tirage équilibrés, tronc et chaîne postérieure présents.",
+   "RIR de 3-4 en début de programme, avec une méthode de calibrage et une double progression claires.",
+   "Règles de douleur, de jour bas, de séance courte et de reprise après absence."
+  ],
+  "ecole": "force",
+  "source": "autres_01_debutant_musculation.md"
+ },
+ {
+  "programme": "programme_2.md",
+  "criteres": {
+   "F1": 7.5,
+   "F2": 7,
+   "F3": 5.5,
+   "F4": 6,
+   "F7": 5.5,
+   "F8": 8.5,
+   "F9": 7.5
+  },
+  "sans_objet": [
+   "F5",
+   "F6"
+  ],
+  "ensemble": 7,
+  "points_perdus": [
+   {
+    "critere": "F1",
+    "perte": 2.5,
+    "raison": "Le hip thrust revient 3 fois par semaine, ce qui est bien. Mais le développé couché garde 2 expositions par semaine à 3 × 8-10 alors qu'il n'est pas prioritaire. Les élévations latérales, seul travail direct du faisceau moyen, sont à 2 séries par séance."
+   },
+   {
+    "critere": "F2",
+    "perte": 3,
+    "raison": "Les charges sont calculées depuis les records (hip thrust 77,5 kg à 71 %, squat 57,5 kg à 72 %) avec une marge précisée. Mais la zone 8-12 répétitions et le RIR de 2-3 sont uniformes sur 12 semaines, sans variation de zone ni effort plus proche de l'échec sur l'isolation (R1-P13 : 0-2 RIR en isolation chez l'intermédiaire)."
+   },
+   {
+    "critere": "F3",
+    "perte": 4.5,
+    "raison": "Les fessiers, priorité déclarée, reçoivent environ 7 séries directes de hip thrust et aucune isolation : avec le fractionnel, environ 11-12 séries. Le faisceau moyen reçoit 6 séries d'élévations latérales, environ 9-10 avec les développés. C'est le bas de la fourchette intermédiaire (R1-P1 : 10-16), et pas plus haut que les muscles non prioritaires : pectoraux et dos ont 6-8 séries chacun. Les séances durent 27 à 44 min sur 75 disponibles."
+   },
+   {
+    "critere": "F4",
+    "perte": 4,
+    "raison": "Le bloc 2 recopie le bloc 1 (semaine 7 = semaine 3, semaines 8-9 = semaine 5) : aucune hausse de volume sur les muscles prioritaires en 12 semaines (R1-P18 : +1-2 séries toutes les 2 semaines). La règle de « spécialisation » sur 6 semaines n'est appliquée nulle part. Les décharges sont placées."
+   },
+   {
+    "critere": "F7",
+    "perte": 4.5,
+    "raison": "Les deux points faibles déclarés sont peu traités. Il n'y a aucune isolation des fessiers : abduction, kickback poulie ou fente bulgare. Les élévations latérales ne sont qu'à 6 séries par semaine, et l'allègement les retire entièrement. L'oiseau et le tronc sont présents."
+   },
+   {
+    "critere": "F8",
+    "perte": 1.5,
+    "raison": "Le programme est sûr : marges de 2-3 RIR et règle de douleur. Rien n'est adapté au-delà de ces règles génériques."
+   },
+   {
+    "critere": "F9",
+    "perte": 2.5,
+    "raison": "La règle « Spécialisation : grand fessier monte en fréquence et en volume, le reste passe en entretien » contredit les tableaux, où tout le reste garde son plein volume. La note des mollets parle de « renforcement du coureur » et de « rebonds » sans rapport avec le profil. La moitié du temps disponible n'est pas utilisée."
+   },
+   {
+    "critere": "ensemble",
+    "perte": 3,
+    "raison": "Deux corrections nécessaires : le volume des muscles prioritaires n'est pas priorisé, et la consigne de spécialisation contredit le programme."
+   }
+  ],
+  "corrections": [
+   {
+    "type": "necessaire",
+    "texte": "Prioriser réellement les fessiers et le faisceau moyen. Ajouter 2 exercices d'isolation des fessiers (abduction machine ou poulie, fente bulgare ou kickback, 2-3 séries chacun) pour atteindre environ 14-16 séries par semaine. Porter les élévations latérales à 3-4 séries par séance, avec une variante haltères, pour 12-14 séries par semaine. Tout cela tient dans les 30 min libres de chaque séance.",
+    "consequence": "Les deux zones que l'athlète veut développer reçoivent autant ou moins de travail que les autres : l'objectif esthétique ne sera pas servi en 12 semaines."
+   },
+   {
+    "type": "necessaire",
+    "texte": "Rendre la consigne de spécialisation cohérente avec les tableaux : soit réduire réellement le développé couché, le tirage et le rowing à un volume d'entretien (environ 1/3), soit supprimer cette règle.",
+    "consequence": "L'athlète ne sait pas si elle doit couper le volume du haut du corps comme l'annonce la règle ou suivre les tableaux, et ce choix change ce qu'elle fait à chaque séance."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Monter le volume des muscles prioritaires de 1 à 2 séries toutes les 2 semaines dans le bloc 2, au lieu de recopier le bloc 1."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Garder 1 série d'élévations latérales et 1 série de hip thrust par séance pendant les allègements."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Retirer la note « renforcement du coureur / rebonds » des mollets, sans objet ici."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Autoriser 0-1 RIR sur la dernière série d'isolation (élévations, abduction)."
+   }
+  ],
+  "points_forts": [
+   "Hip thrust 3 fois par semaine, avec des charges calculées depuis le 1RM et une marge précisée.",
+   "Poussée et tirage équilibrés, avec l'oiseau pour l'arrière de l'épaule.",
+   "Décharges placées en semaines 6 et 12 (environ −55 % des séries dures).",
+   "Règles d'ajustement, de douleur et de séance courte claires."
+  ],
+  "ecole": "force",
+  "source": "autres_02_hypertrophie_intermediaire.md"
+ },
+ {
+  "programme": "programme_3.md",
+  "criteres": {
+   "F1": 7.5,
+   "F2": 5.5,
+   "F3": 6.5,
+   "F4": 5.5,
+   "F5": 8.5,
+   "F6": 8,
+   "F7": 7,
+   "F8": 8.5,
+   "F9": 8
+  },
+  "sans_objet": [],
+  "ensemble": 6.5,
+  "points_perdus": [
+   {
+    "critere": "F1",
+    "perte": 2.5,
+    "raison": "Le squat est l'objectif, mais il n'a que 2 expositions par semaine (lundi lourd, vendredi moyen), alors que le développé couché en a 3 avec le développé couché avec pause. Les ressources ne vont pas en priorité au mouvement visé (R2-P7)."
+   },
+   {
+    "critere": "F2",
+    "perte": 4.5,
+    "raison": "Les charges sont calculables et une règle d'ajustement existe, mais les zones et les marges du squat ne tiennent pas. En semaine 2, 72,5 kg × 5 est annoncé « 2 RIR » alors que ce poids est à environ 5 RIR pour un 1RM de 100 kg. En semaines 6-7, le bloc « intensification » prescrit des doubles à 72,5-75 kg « 4 RIR », soit un RPE d'environ 4-5. En semaines 8-9, les simples sont à 80-83 %. En semaines 11-13, la « réalisation » repart en doubles à 72,5-77,5 %. Aucune exposition à 85 % ou plus n'est planifiée en entraînement avant la semaine 15 (R2-P1 intermédiaire : au moins 1 exposition par semaine à 80 % ou plus, puis 85-90 % en fin de bloc ; R2-P6 : top set à RPE 8-9)."
+   },
+   {
+    "critere": "F3",
+    "perte": 3.5,
+    "raison": "Il y a 8 séries directes de squat par semaine, dans la fourchette (R1-P5). Mais en blocs 2-3, le top set et les back-offs sont des simples ou des doubles à 73-80 % (4 × 1 à 80 % en semaine 8) : le volume de construction et le volume de qualité ne sont ni séparés ni efficaces."
+   },
+   {
+    "critere": "F4",
+    "perte": 4.5,
+    "raison": "Les phases sont nommées, avec des décharges en semaines 5 et 10 et des tests de recalage. Mais la progression du squat contredit les étiquettes. La semaine 4 (accumulation) monte à 80 % × 4, puis la semaine 6 (intensification) redescend à 73 % × 2. La semaine 9 finit à 83 % × 1, puis la semaine 11 (réalisation) repart à 72,5 % × 2. L'intensité baisse en début de chaque phase au lieu de monter (R3-P4)."
+   },
+   {
+    "critere": "F5",
+    "perte": 1.5,
+    "raison": "L'affûtage est bon : semaine 15 à environ −45 %, intensité de 83-88 % gardée, dernier lourd à 88 % à J−7, dernière séance lourde à J−4, plan de trois tentatives écrit (R3-P12 à P14). Mais la deuxième tentative (96 %) et la troisième (99-102 %) dépassent de loin la plus lourde barre de l'entraînement (88 %). Et les notes sont incohérentes : « J−8 », « rappel 88 % » pour une charge écrite à 85 %, « matériel de compétition »."
+   },
+   {
+    "critere": "F6",
+    "perte": 2,
+    "raison": "Le top set suivi de back-offs et le développé couché avec pause ont une place. Mais aucun rôle ni critère de retrait n'est écrit, et le développé couché avec pause sert un mouvement qui n'est pas l'objectif."
+   },
+   {
+    "critere": "F7",
+    "perte": 3,
+    "raison": "Chaîne postérieure, Pallof, face pull et rotateurs externes sont présents, avec un bon équilibre. Mais aucun accessoire ne sert le squat : squat avec pause, squat avant ou presse pour les quadriceps."
+   },
+   {
+    "critere": "F8",
+    "perte": 1.5,
+    "raison": "Les garde-fous sont présents : antécédent lombaire pris en compte, pas d'échec, seuils de douleur, progression ralentie après 40 ans, sécurités de cage à 85 % et plus. Le soulevé de terre monte pourtant à 110 kg × 2 (85 %, record du cycle) en semaine d'affûtage, ce qui est une charge nouvelle sur la zone lombaire au moment où rien de nouveau ne devrait apparaître (R2-P10)."
+   },
+   {
+    "critere": "F9",
+    "perte": 2,
+    "raison": "Séances de 42 à 48 min sur 75, repos précisés, montée en charge spécifique écrite. En revanche, plusieurs consignes se contredisent : RIR et charge incohérents, « à deux jours du test » écrit le lundi pour un test le vendredi, 85 % écrit contre « 88 % » annoncé."
+   },
+   {
+    "critere": "ensemble",
+    "perte": 3.5,
+    "raison": "Trois corrections nécessaires, dont une sur le dosage du mouvement objectif, qui pèse lourd."
+   }
+  ],
+  "corrections": [
+   {
+    "type": "necessaire",
+    "texte": "Recaler l'intensité du squat en blocs 2-3 :\n- bloc 2 : top set de 3-4 répétitions à 80-87 % et RPE 7,5-8,5 (2-3 RIR), puis 2-3 back-offs à −8/−10 % ;\n- bloc 3 : simples ou doubles à 87-92 % à 2 RIR, au moins une fois par semaine ;\n- chaque phase repart au-dessus de la précédente, pas en dessous.",
+    "consequence": "Le squat n'est jamais entraîné au-dessus de 83 % avant l'affûtage, donc la force maximale visée ne sera pas stimulée : l'objectif ne progressera guère, et les tentatives à 96-102 % arriveront sans préparation."
+   },
+   {
+    "type": "necessaire",
+    "texte": "Rendre la charge et le RIR cohérents sur chaque ligne. Exemples : semaine 2, 72,5 kg × 5 « 2 RIR » ; semaines 6-7, doubles à 73-75 % « 4 RIR ». Soit écrire la charge qui donne ce RIR (table de R2-P2), soit écrire le RIR réel de la charge.",
+    "consequence": "L'athlète ne sait pas s'il doit suivre la charge ou la marge. En suivant la marge, il fait un saut de charge que le programme n'a pas planifié ; en suivant la charge, il s'entraîne très loin de l'effort voulu."
+   },
+   {
+    "type": "necessaire",
+    "texte": "Écrire noir sur blanc que 115 kg en 16 semaines (+15 % à 46 ans, après 2 ans d'entraînement) est très ambitieux. Fixer une cible réaliste pour ce cycle (environ 105-107,5 kg) et caler les tentatives du test sur le 1RM recalé.",
+    "consequence": "L'athlète vise 115 kg alors que le plan est construit autour d'environ 100-102 kg : ce décalage mène à une déception, ou à une troisième barre forcée au-delà de sa marge sur un dos déjà touché."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Ajouter une variante d'assistance du squat (squat avec pause ou squat avant, 2-3 × 4-6 le vendredi) et alléger le développé couché, qui n'est pas l'objectif."
+   },
+   {
+    "type": "amelioration",
+    "texte": "En semaine 15, garder le soulevé de terre à la charge de la semaine 14 (105 kg) au lieu d'une nouvelle charge à 110 kg."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Corriger les notes incohérentes : « à deux jours du test » le lundi, « J−8 », « 88 % » pour 85 kg, « matériel de compétition » pour un test en salle."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Ajouter un critère de retrait au développé couché avec pause et au top set."
+   }
+  ],
+  "points_forts": [
+   "Antécédent lombaire bien encadré : pas d'échec, pas d'excentrique accentué, seuils de douleur sur la zone.",
+   "Tests de recalage et série repère en semaine 1, avec une règle d'ajustement de charge sur la série de tête.",
+   "Affûtage conforme : volume coupé, intensité gardée, dernier lourd à J−7, dernière séance à J−4, plan de trois tentatives écrit.",
+   "Montée en charge spécifique écrite, sécurités de cage précisées, repos de 3 min sur les mouvements principaux."
+  ],
+  "ecole": "force",
+  "source": "autres_04_force_generale_46_ans.md"
+ },
+ {
+  "programme": "programme_4.md",
+  "criteres": {
+   "F1": 6,
+   "F2": 6,
+   "F3": 7.5,
+   "F4": 6.5,
+   "F5": 7.5,
+   "F7": 6.5,
+   "F8": 8,
+   "F9": 7
+  },
+  "sans_objet": [
+   "F6"
+  ],
+  "ensemble": 7,
+  "points_perdus": [
+   {
+    "critere": "F1",
+    "perte": 4,
+    "raison": "La course a lieu 3 fois par semaine, mais il n'y a aucune exposition à l'allure de l'objectif (7:00/km). La séance du jeudi « fractionné » est un footing de 25 min identique à celle du mardi. La sortie la plus longue plafonne à 52 min (semaines 7-10), pour une épreuve d'environ 70 min."
+   },
+   {
+    "critere": "F2",
+    "perte": 4,
+    "raison": "Toute la course se fait à « allure de conversation ». Le test de 5 km en semaine 6 doit « recaler les allures du bloc suivant », mais le bloc 2 ne contient aucune allure. Pour le renforcement, il y a un RIR mais pas de charge : uniquement le poids du corps."
+   },
+   {
+    "critere": "F3",
+    "perte": 2.5,
+    "raison": "Il y a 8 séries de renforcement par semaine (fente arrière et pont unilatéral), ce qui suffit en soutien. Mais la seule progression est +1 répétition par bloc."
+   },
+   {
+    "critere": "F4",
+    "perte": 3.5,
+    "raison": "La sortie longue progresse de 35 à 52 min (moins de 10 % par semaine). Elle stagne ensuite 4 semaines (semaines 7-10) sans rien d'autre qui progresse, et les semaines 7-10 font revenir le renforcement aux plages de la semaine 3."
+   },
+   {
+    "critere": "F5",
+    "perte": 2.5,
+    "raison": "Affûtage en semaine 11 (environ −40 %), semaine 12 très légère, test de 5 km en semaine 6. Mais l'allure de course n'a jamais été répétée, et la séance de l'échéance est estimée à 79 min alors que 60 min sont disponibles."
+   },
+   {
+    "critere": "F7",
+    "perte": 3.5,
+    "raison": "Les fentes et le pont fessier sont pertinents, mais il manque des mollets en charge lente (tendon d'Achille) et du tronc, pour une débutante qui double sa durée de course."
+   },
+   {
+    "critere": "F8",
+    "perte": 2,
+    "raison": "La progression reste sous 10 % par semaine et la règle de douleur est présente. Mais le passage de 52 min à environ 70-79 min le jour de l'épreuve est un saut de plus de 35 % (R5-P22 : garde-fou de +30 % sur 2 semaines)."
+   },
+   {
+    "critere": "F9",
+    "perte": 3,
+    "raison": "L'étiquette « fractionné » contredit le contenu. Le test recale des allures inexistantes. La séance de l'épreuve est hors du temps donné."
+   },
+   {
+    "critere": "ensemble",
+    "perte": 3,
+    "raison": "Deux corrections nécessaires : sortie longue trop courte pour la distance, et aucune préparation à l'allure de l'objectif."
+   }
+  ],
+  "corrections": [
+   {
+    "type": "necessaire",
+    "texte": "Poursuivre la progression de la sortie longue au lieu de la bloquer à 52 min : 56, puis 60, puis 65 min en semaines 8-10 (+5 à 8 % par semaine), avant l'affûtage.",
+    "consequence": "L'athlète court l'épreuve en restant 35 à 50 % plus longtemps que sa plus longue sortie : risque élevé de ne pas tenir l'allure jusqu'au bout et de douleurs de surcharge le jour J."
+   },
+   {
+    "type": "necessaire",
+    "texte": "Faire du jeudi une vraie séance à l'allure de l'objectif à partir de la semaine 7, recalée sur le test de 5 km. Par exemple 3-4 × 5 min à 7:00/km, récupération 2 min en trottinant, puis jusqu'à 2 × 12 min.",
+    "consequence": "Le jour J, l'athlète doit tenir 7:00/km « régulière » sans l'avoir jamais pratiquée : départ trop rapide ou objectif chronométrique manqué."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Ajouter des mollets en charge lente (montées sur pointes unilatérales, 2-3 × 10-15) et un gainage, 2 fois par semaine."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Faire progresser le renforcement par la variante (fente avec sac lesté ou fente bulgare, pont sur box), pas seulement par une répétition de plus par bloc."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Corriger l'étiquette « fractionné » si la séance reste un footing, et indiquer que la séance de l'épreuve dépasse les 60 min habituelles."
+   }
+  ],
+  "points_forts": [
+   "Progression de durée prudente, sous 10 % par semaine, jusqu'à la semaine 7.",
+   "Test de 5 km à mi-parcours, et affûtage avec une semaine d'échéance allégée.",
+   "Renforcement des jambes et de la chaîne postérieure, loin de l'échec (3-4 RIR), qui convient à une débutante.",
+   "Règles de séance courte, de douleur et de séance manquée."
+  ],
+  "ecole": "force",
+  "source": "autres_05_course_10_km_debutante.md"
+ },
+ {
+  "programme": "programme_1.md",
+  "criteres": {
+   "F1": 6,
+   "F2": 6.5,
+   "F3": 6.5,
+   "F4": 7.5,
+   "F5": 7.5,
+   "F7": 6,
+   "F8": 8,
+   "F9": 8.5
+  },
+  "sans_objet": [
+   "F6"
+  ],
+  "ensemble": 7.5,
+  "points_perdus": [
+   {
+    "critere": "F1",
+    "perte": 4,
+    "raison": "Le bloc 2 « réalisation (spécifique à l'objectif) » (S7-S10) reprend la structure des S3-S5 : seule la sortie longue s'allonge. L'allure cible (4 min 59/km) n'apparaît que le jour de la course (S12). Aucune exposition à l'allure spécifique avant l'échéance (R2-P7/R2-P9, la spécificité augmente quand l'échéance approche)."
+   },
+   {
+    "critere": "F2",
+    "perte": 3.5,
+    "raison": "Il n'y a que deux zones : l'endurance facile et les 1000 m à 4 min 28 (allure 3 km estimée), identiques sur 12 semaines. Il manque une zone seuil ou allure semi. Le renforcement donne des RIR, mais au poids du corps, sans moyen d'alourdir."
+   },
+   {
+    "critere": "F3",
+    "perte": 3.5,
+    "raison": "4 séries de fente et 4 séries de pont par semaine, au poids du corps, pour un coureur de 4 ans : la dose de force est tout juste suffisante. Rien ne travaille les mollets ni le soléaire, et rien ne sépare une série lourde du volume (R1-P5)."
+   },
+   {
+    "critere": "F4",
+    "perte": 2.5,
+    "raison": "Les blocs sont calés à rebours, la règle des +10 % est respectée et la S6 allège. En revanche, la progression du renforcement se limite à +1 répétition en S4 et en S10, sans passage à une variante chargée. Le bloc 2 n'a pas de rôle physiologique distinct."
+   },
+   {
+    "critere": "F5",
+    "perte": 2.5,
+    "raison": "L'affûtage de S11 réduit le volume d'environ 25-30 % avec une intensité gardée (3 × 1000 m). Un test à mi-parcours (S6) et l'allure du jour J sont écrits. Mais la semaine de course ne contient aucun rappel d'allure (gammes ou quelques minutes à l'allure semi), et la dernière séance de qualité tombe à J-10 (R3-P13, R3-P14)."
+   },
+   {
+    "critere": "F7",
+    "perte": 4,
+    "raison": "Seuls la fente arrière et le pont fessier figurent. Il n'y a ni mollets ni soléaire (tendon d'Achille sollicité par des sorties longues jusqu'à 112 min), ni pied ou cheville, ni tronc, ni haut du corps (R2-P9)."
+   },
+   {
+    "critere": "F8",
+    "perte": 2,
+    "raison": "La règle des +10 %, l'échelle de douleur et les arrêts médicaux sont écrits. Rien n'est prévu pour la tendinopathie d'Achille ou du tibial, alors que la sortie longue passe de 60 à 112 min."
+   },
+   {
+    "critere": "F9",
+    "perte": 1.5,
+    "raison": "Les séances tiennent dans le temps disponible et l'échauffement est écrit. Les distances sont données avec une précision absurde (10,54875 km). La séance du jeudi S12 dure 2 min. Les cellules et les notes se répètent (« au lieu de »), ce qui alourdit la lecture."
+   },
+   {
+    "critere": "ensemble",
+    "perte": 2.5,
+    "raison": "Il y a une correction nécessaire de poids : aucun travail à l'allure spécifique dans le bloc de réalisation, alors que l'objectif de 1 h 45 est juste au niveau de la prédiction tirée du 10 km (~1 h 46). Le travail de force est minimal mais sûr."
+   }
+  ],
+  "corrections": [
+   {
+    "type": "necessaire",
+    "texte": "En S7-S10, remplacer une partie des 1000 m du jeudi par un travail à l'allure semi ou au seuil : par exemple 3 × 10 min à 4 min 55-5 min 00/km, puis 2 × 15 min. Insérer aussi 15 à 25 min à l'allure cible dans la fin d'une sortie longue sur deux.",
+    "consequence": "Sans cela, l'athlète découvre le jour de la course l'allure à tenir 1 h 45 : départ trop rapide ou mauvaise gestion, et objectif de 1 h 45 probablement manqué, puisqu'il est déjà à la limite de son niveau."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Ajouter des montées sur pointes (unilatérales, genou tendu puis fléchi) 2-3 × 10-15 deux fois par semaine, et un gainage latéral."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Faire progresser le renforcement par variantes (fente bulgare, fente avec élastique, pont unilatéral pieds surélevés) plutôt que par +1 répétition seulement, pour garder une vraie stimulation de force."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Semaine de course : mardi, 20 min faciles + 3 × 3 min à l'allure semi ; samedi, 4 accélérations progressives."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Arrondir les distances de test (10,5 km, 21,1 km) et alléger la présentation « au lieu de »."
+   }
+  ],
+  "points_forts": [
+   "Les blocs sont calés à rebours sur l'échéance, avec un test intermédiaire en S6 qui recale les allures.",
+   "La sortie longue progresse dans la limite des +10 % par semaine, jusqu'à 112 min.",
+   "L'affûtage garde intensité et fréquence, et une allure régulière est écrite pour le jour J.",
+   "Les règles de douleur, de baisse du jour et d'arrêt médical sont claires."
+  ],
+  "ecole": "force",
+  "source": "autres_06_semi_marathon_intermediaire.md"
+ },
+ {
+  "programme": "programme_2.md",
+  "criteres": {
+   "F1": 7.5,
+   "F2": 7,
+   "F3": 8,
+   "F4": 6,
+   "F7": 5.5,
+   "F8": 7.5,
+   "F9": 6
+  },
+  "sans_objet": [
+   "F5",
+   "F6"
+  ],
+  "ensemble": 7,
+  "points_perdus": [
+   {
+    "critere": "F1",
+    "perte": 2.5,
+    "raison": "Assis-debout, pompe au mur et rowing à l'élastique reviennent 3 fois par semaine, ce qui est bien. Mais l'équilibre, objectif déclaré, n'a aucun exercice dédié : la marche sur les talons ne suffit pas."
+   },
+   {
+    "critere": "F2",
+    "perte": 3,
+    "raison": "Les RIR 3-4 conviennent à une débutante en mode prudent (R5-P27). En revanche, la tension de l'élastique n'est pas définie (« — ») et aucun critère ne dit quand passer à une chaise plus basse ou à une pompe inclinée plus basse."
+   },
+   {
+    "critere": "F3",
+    "perte": 2,
+    "raison": "6 séries par semaine et par mouvement principal : c'est dans la fourchette d'une débutante (R1-P5), mais la répartition est uniforme."
+   },
+   {
+    "critere": "F4",
+    "perte": 4,
+    "raison": "Les « allègements » S6 et S12 reprennent la S3 à l'identique : 22 séries dures, sans aucune baisse. Les S7-S9 recopient les S3-S5. La progression se limite à +1 répétition en S4 et en S10, sans palier de variante chiffré (R5-P3)."
+   },
+   {
+    "critere": "F7",
+    "perte": 4.5,
+    "raison": "Aucun exercice d'équilibre (appui unipodal, marche en tandem, transferts de poids), alors que c'est un objectif nommé et un enjeu de prévention des chutes à 68 ans. La mobilité des épaules et de la colonne thoracique se limite à l'échauffement."
+   },
+   {
+    "critere": "F8",
+    "perte": 2.5,
+    "raison": "Le mode prudent est respecté : pas d'impact, chaise, réduction liée à l'âge, échelle de douleur. Mais la fente latérale (dimanche) n'a pas de consigne d'appui pour une débutante de 68 ans, et l'absence de travail d'équilibre laisse le risque de chute sans réponse."
+   },
+   {
+    "critere": "F9",
+    "perte": 4,
+    "raison": "La cellule de la marche rapide indique 11 min (puis 10 min en S10) alors que la note dit 12, 13, 14, puis 15 min : la consigne est contradictoire, et la valeur de la note fait dépasser les 30 min disponibles. La version courte cite « l'équilibre », qui n'existe pas dans le programme. La note du dead bug parle de « la position à la barre », hors de propos ici."
+   },
+   {
+    "critere": "ensemble",
+    "perte": 3,
+    "raison": "Deux corrections nécessaires : l'objectif d'équilibre n'est pas traité, et la durée de marche est contradictoire au point de déborder du créneau. Le reste est sûr et bien dosé."
+   }
+  ],
+  "corrections": [
+   {
+    "type": "necessaire",
+    "texte": "Ajouter 2 à 3 fois par semaine un bloc d'équilibre progressif près d'un appui : appui unipodal 3 × 20-30 s, puis yeux ailleurs que les pieds, marche en tandem, transferts de poids. Le nommer pour que la version courte puisse s'y référer.",
+    "consequence": "L'objectif d'équilibre déclaré ne sera pas atteint et le risque de chute de cette femme de 68 ans reste inchangé."
+   },
+   {
+    "type": "necessaire",
+    "texte": "Aligner la durée de la marche rapide du dimanche : une seule valeur dans la cellule et la note, plafonnée pour que la séance tienne en 30 min.",
+    "consequence": "Elle ne sait pas si elle doit marcher 10-11 ou 14-15 min. En suivant la note, elle dépasse son créneau de 30 min ou coupe les étirements."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Faire de S6 et S12 de vrais allègements (1 série par exercice) ou les renommer, et écrire les paliers de variante : hauteur de chaise, inclinaison des pompes, couleur d'élastique."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Préciser « main sur un appui » pour la fente latérale, et ajouter une mobilité thoracique et d'épaule au bâton dans la séance de mobilité du dimanche."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Ajouter une montée sur pointes et un exercice de puissance lent puis rapide (assis-debout rapide) pour l'autonomie."
+   }
+  ],
+  "points_forts": [
+   "Le mode prudent est respecté : pas d'impact, assis-debout sur chaise, pompe au mur.",
+   "Le volume est réduit pour l'âge et la progression est lente, avec des marges RIR de 3-4.",
+   "Poussée et tirage sont équilibrés et le tronc est présent.",
+   "L'échelle de douleur, l'arrêt médical et la version courte favorisent l'adhésion."
+  ],
+  "ecole": "force",
+  "source": "autres_07_mobilite_sante_senior.md"
+ },
+ {
+  "programme": "programme_3.md",
+  "criteres": {
+   "F1": 4.5,
+   "F2": 6.5,
+   "F3": 6.5,
+   "F4": 6,
+   "F5": 3.5,
+   "F6": 7.5,
+   "F7": 6,
+   "F8": 7.5,
+   "F9": 6.5
+  },
+  "sans_objet": [],
+  "ensemble": 6,
+  "points_perdus": [
+   {
+    "critere": "F1",
+    "perte": 5.5,
+    "raison": "Le muscle-up strict est l'objectif, mais c'est le back squat qui est « principal » et périodisé jusqu'à 90 %. Le travail spécifique se résume à 2-3 négatifs deux fois par semaine. La traction explosive poitrine à la barre n'est faite qu'une fois par semaine (le vendredi), réduite à 1 série en S4, puis retirée en S11, S13 et S15, c'est-à-dire dans le bloc « spécifique à l'objectif ». Aucun travail de transition, de prise fausse (false grip) ou de muscle-up assisté (R2-P7, R1-P9)."
+   },
+   {
+    "critere": "F2",
+    "perte": 3.5,
+    "raison": "Le squat est exemplaire : les charges sont calculées depuis 120 kg, avec marge et règle d'ajustement. Le tirage n'a aucune zone de charge : pas de traction lestée, pas de charge totale (R2-P4), seulement des RIR sur des séries de 8-12 en chest-to-bar, qui relèvent de l'endurance et non de la puissance de tirage."
+   },
+   {
+    "critere": "F3",
+    "perte": 3.5,
+    "raison": "Le squat a une série de tête puis des séries allégées, bien construites. Le tirage est dispersé : chest-to-bar en séries longues, négatifs et traction explosive en baisse. Il n'y a aucune série de qualité lourde ou explosive sur le mouvement visé (R1-P5)."
+   },
+   {
+    "critere": "F4",
+    "perte": 4,
+    "raison": "Les phases sont nommées et les décharges placées en S5 et S10 (R3-P9). Mais la progression chiffrée ne concerne que le squat. Les négatifs passent de 3 × 2-3 à 3 × 3-4, sans critère de passage vers le muscle-up assisté ou les tentatives."
+   },
+   {
+    "critere": "F5",
+    "perte": 6.5,
+    "raison": "Aucun test de muscle-up n'est prévu, ni intermédiaire ni final. En S15, l'affûtage retire les négatifs et la traction explosive, donc le mouvement visé (contraire à R3-P13). La S16 parle de « repos avant l'échéance » alors qu'aucune tentative n'est planifiée."
+   },
+   {
+    "critere": "F6",
+    "perte": 2.5,
+    "raison": "Les négatifs excentriques ont un rôle, une dose et un critère d'arrêt (descente < 3 s), ce qui est bien. Mais leur retrait en S11-S15 se fait sans critère et à contre-sens de l'objectif."
+   },
+   {
+    "critere": "F7",
+    "perte": 4,
+    "raison": "Les dips à la barre droite et le dead bug sont pertinents. Manquent : la prise fausse (false grip), les tirages bras tendus et le travail de transition. Pour 80 % de CrossFit, le conditionnement est anecdotique (1 × 250 m de rameur, 1 × 12 wall balls)."
+   },
+   {
+    "critere": "F8",
+    "perte": 2.5,
+    "raison": "Sécurités de cage dès 85 %, échelle de douleur, RIR ≥ 2 : c'est sûr. Mais la charge sur les coudes n'est pas regroupée ni plafonnée (négatifs + dips 3 × 10-12 + chest-to-bar 3 × 10-12 + toes-to-bar, deux fois par semaine), pour un mouvement où les coudes limitent la fréquence."
+   },
+   {
+    "critere": "F9",
+    "perte": 3.5,
+    "raison": "Les séances durent 21 à 47 min sur 60 disponibles, donc le temps n'est pas utilisé pour l'objectif. Le format est incohérent (« Rameur en intervalles 500 m » en 1 × 250 m). L'épaulé est à la fois « à calibrer jusqu'à 5 RIR » et « à 65 % du 1RM » (1RM inconnu). Une « échéance » est évoquée sans être définie."
+   },
+   {
+    "critere": "ensemble",
+    "perte": 4,
+    "raison": "Trois corrections nécessaires pèsent directement sur l'objectif : aucun test, un travail spécifique retiré dans le bloc de réalisation et pendant l'affûtage, aucune force de tirage lestée ou explosive. Le programme est sûr, mais ses priorités sont inversées : le squat sert ce profil moins que le muscle-up."
+   }
+  ],
+  "corrections": [
+   {
+    "type": "necessaire",
+    "texte": "Planifier des tests de muscle-up strict : fin S5 et fin S10 (tentatives ou meilleure variante réussie : muscle-up avec élastique, hauteur de traction explosive), et une séance de tentatives en S16 (3 à 5 essais, 3 min de repos), après 48 h sans tirage dur.",
+    "consequence": "Ni l'athlète ni le coach ne savent si la figure est débloquée, et les blocs ne sont pas recalés sur sa progression réelle."
+   },
+   {
+    "type": "necessaire",
+    "texte": "Garder et faire progresser 2 fois par semaine, jusqu'à l'affûtage compris, la traction explosive (3-5 × 2-3 jusqu'au sternum ou au nombril) et un travail de transition : muscle-up avec élastique, transition en barre basse, false grip. En S15, couper les séries de moitié sans retirer ces mouvements.",
+    "consequence": "La hauteur de tirage et la transition, qui sont les deux prérequis du muscle-up strict, ne sont pas construites, et la figure ne sera probablement pas débloquée en 16 semaines."
+   },
+   {
+    "type": "necessaire",
+    "texte": "Remplacer une partie des chest-to-bar en 8-12 par des tractions lestées en charge totale (par exemple 4 × 3-5 à RIR 2, lest de 5 puis 10-15 kg), progressées par bloc, et faire du muscle-up le mouvement principal du lundi et du vendredi, avant le squat.",
+    "consequence": "Avec 10 tractions strictes et seulement de l'endurance de tirage, la force-vitesse nécessaire au muscle-up strict restera insuffisante, et l'objectif sera manqué."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Plafonner le volume de coude (négatifs + dips + chest-to-bar) et ajouter une règle spécifique en cas de douleur au coude ou au tendon du biceps."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Utiliser le temps libre (15 à 35 min par séance) pour un vrai metcon cohérent avec la pratique CrossFit, et corriger les formats (rameur 1 × 250 m, épaulé calé en % sur un 1RM inconnu)."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Ramener le squat à un rôle d'entretien (2-3 séries à 80-85 %) pendant le bloc 3."
+   }
+  ],
+  "points_forts": [
+   "La périodisation du back squat est exemplaire : charges calculées depuis le 1RM, série de tête puis séries allégées, série repère et recalage de fin de bloc.",
+   "Les négatifs de muscle-up ont un critère de contrôle (descente < 3 s) et une variante de repli.",
+   "Les règles de sécurité sont solides : sécurités de cage dès 85 %, échelle de douleur, ajustement des charges.",
+   "Les décharges sont placées toutes les 5 semaines (R3-P9)."
+  ],
+  "ecole": "force",
+  "source": "autres_08_crossfit_intermediaire.md"
+ },
+ {
+  "programme": "programme_4.md",
+  "criteres": {
+   "F1": 8,
+   "F2": 7.5,
+   "F3": 7.5,
+   "F4": 6.5,
+   "F7": 7,
+   "F8": 8,
+   "F9": 6
+  },
+  "sans_objet": [
+   "F5",
+   "F6"
+  ],
+  "ensemble": 8,
+  "points_perdus": [
+   {
+    "critere": "F1",
+    "perte": 2,
+    "raison": "Presse à cuisses et presse pectorale 3 fois par semaine, tirage 3 fois : la fréquence est bonne (R1-P9). La charnière de hanche n'est travaillée qu'une fois par semaine (roumain le mercredi)."
+   },
+   {
+    "critere": "F2",
+    "perte": 2.5,
+    "raison": "RIR 3-4 et méthode de calibrage claire pour une débutante. Mais il n'y a aucune règle d'incrément de charge chiffrée (par exemple +2,5 à 5 kg sur la presse) au passage du haut de la plage."
+   },
+   {
+    "critere": "F3",
+    "perte": 2.5,
+    "raison": "6 séries par semaine sur les mouvements principaux : c'est dans la fourchette (R1-P5). En revanche, poussée et tirage sont déséquilibrés : environ 10 séries de poussée (presse pectorale + développé assis) pour 6 séries de tirage."
+   },
+   {
+    "critere": "F4",
+    "perte": 3.5,
+    "raison": "Les « allègements » S6 et S12 reprennent la S3 à l'identique : 34 séries dures. Les S7-S9 recopient les S3-S5, et la progression écrite se limite à +1 répétition en S4 et en S10 (R5-P3)."
+   },
+   {
+    "critere": "F7",
+    "perte": 3,
+    "raison": "Chaîne postérieure, tronc et tirage sont présents, mais la poussée domine (deux poussées le lundi et le samedi). Rien ne justifie le développé assis en plus de la presse pectorale pour cet objectif."
+   },
+   {
+    "critere": "F8",
+    "perte": 2,
+    "raison": "La marge ≥ 3 RIR tient compte du déficit et du sommeil, avec échelle de douleur et renvoi vers un professionnel pour l'alimentation. Mais le soulevé de terre roumain à la barre est donné sans consigne technique à une débutante sédentaire de 92 kg."
+   },
+   {
+    "critere": "F9",
+    "perte": 4,
+    "raison": "Pour le vélo, la cellule dit 14, 11, puis 13 et 10 min, alors que la note dit 15, puis jusqu'à 20 min : la consigne est contradictoire. En suivant la note, les séances estimées à 43 min dépassent les 45 min disponibles. La version courte cite « l'équilibre », absent du programme, et la note du dead bug parle de « la barre »."
+   },
+   {
+    "critere": "ensemble",
+    "perte": 2,
+    "raison": "Une seule correction nécessaire, simple à faire : la durée de vélo contradictoire, qui fait déborder la séance. Le programme est bien individualisé : marche progressive vers 150-200 min, suivi du poids et du tour de taille, déficit modéré."
+   }
+  ],
+  "corrections": [
+   {
+    "type": "necessaire",
+    "texte": "Donner une seule durée de vélo par séance, compatible avec 45 min (garder la valeur de la cellule et reporter la progression d'endurance sur les marches des jours sans séance, comme le prévoit la règle de compensation).",
+    "consequence": "Elle ne sait pas si elle pédale 10 ou 20 min. En suivant la note, la séance dépasse son créneau de 45 min et les étirements, ou la séance entière, sautent."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Remplacer le développé haltères assis du samedi par un second tirage (rowing haltère ou tirage vertical) pour équilibrer poussée et tirage."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Écrire un incrément de charge (+2,5 à 5 kg sur les machines, +1 à 2 kg par haltère) et faire de S6 et S12 de vrais allègements, ou les renommer."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Ajouter deux consignes techniques au soulevé de terre roumain (dos neutre, barre contre les cuisses, descente jusqu'à mi-tibia) ou commencer par des haltères."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Retirer de la version courte la mention de « l'équilibre » et adapter la note du dead bug."
+   }
+  ],
+  "points_forts": [
+   "Le programme est adapté au profil : machines guidées, marges de 3-4 RIR, volume ajusté pour le déficit et le sommeil.",
+   "Le plan de marche est progressif (vers 150 puis 200 min), avec un suivi du poids et du tour de taille aux semaines 1, 6 et 12.",
+   "La double progression est claire, avec calibrage à la première séance.",
+   "Les conseils de déficit modéré et de protéines sont donnés, avec renvoi vers un professionnel."
+  ],
+  "ecole": "force",
+  "source": "autres_09_perte_de_poids_debutante.md"
+ },
+ {
+  "programme": "programme_1.md",
+  "criteres": {
+   "F1": 7.5,
+   "F2": 7.5,
+   "F3": 7,
+   "F4": 6,
+   "F7": 6.5,
+   "F8": 6,
+   "F9": 6.5
+  },
+  "sans_objet": [
+   "F5",
+   "F6"
+  ],
+  "ensemble": 7,
+  "points_perdus": [
+   {
+    "critere": "F1",
+    "perte": 2.5,
+    "raison": "Mouvements de base présents 2 à 3 fois par semaine (développé couché, rowing, chaise), mais la fréquence fluctue sans logique : développé couché retiré du mardi dès la semaine 5, dead bug retiré puis rajouté (S4 jeudi, S5 samedi, S6 samedi), pont fessier ramené à 1 × 7 en S2 jeudi. Aucun mouvement de jambes en charge progressive (R2-P7, R2-P9)."
+   },
+   {
+    "critere": "F2",
+    "perte": 2.5,
+    "raison": "Marges bien précisées et adaptées (RIR 4 puis 3, R5-P4) avec méthode de calibrage des haltères, mais plusieurs consignes RIR sont vides de sens : pont fessier au poids du corps 1 × 7 « à 3 rép. en réserve » et dead bug « à 3 rép. en réserve » ne sont pas dosables ; aucune règle de charge pour l'élastique (développé épaules, tirage vertical : charge « — »)."
+   },
+   {
+    "critere": "F3",
+    "perte": 3,
+    "raison": "Volume hebdomadaire dans la fourchette débutant (R5-P13 : 4–6 → 10 séries), mais le bas du corps se limite à une chaise isométrique et un pont fessier au poids du corps ; répartition banale, variations de séries erratiques (pont 1×8-10 → 1×7 → 1×8 → 2×7)."
+   },
+   {
+    "critere": "F4",
+    "perte": 4,
+    "raison": "Les semaines 6 et 12 sont nommées « allègement » mais les séries dures restent à 26 (le tableau le montre) et la S6 ajoute même du dead bug ; la décharge réactive suffit pour un débutant (R3-P9), mais l'étiquette est trompeuse. Progression S1→S5 de +13 %, +12 %, +10,5 %, +14 % : dans les garde-fous du référentiel (R5-P22) mais contraire à la règle écrite « +10 % par semaine au plus à 40 ans et plus ». Les plages de répétitions décalées d'office (8-10 → 9-11 → 10-12) entrent en conflit avec la double progression annoncée (R5-P3). Bloc 2 sans rôle distinct du bloc 1."
+   },
+   {
+    "critere": "F7",
+    "perte": 3.5,
+    "raison": "Équilibre poussée/tirage correct (développé couché + développé épaules contre rowing + tirage vertical) et tronc présent, mais pour un homme de 55 ans le bas du corps est sous-traité : pas de charnière de hanche aux haltères (soulevé de terre jambes semi-tendues), pas de régression de squat indolore ni de montée sur banc, alors que le matériel le permet ; la version courte cite un exercice d'« équilibre » qui n'existe nulle part."
+   },
+   {
+    "critere": "F8",
+    "perte": 4,
+    "raison": "Bonnes protections générales (mode prudent, reprise après 200 semaines d'arrêt avec RIR ≥ 3 conforme à R5-P7, drapeaux rouges R5-P25, antécédent d'épaule sans échec). Mais le genou est à 5/10 dès le départ et la règle du programme lui-même (R5-P23 : à 5, régresser et retirer 30–50 % du volume de la zone) n'est pas appliquée : la chaise contre le mur est « principal » et progresse de 1 × 20 s à 2 × 35 s sans angle de genou prescrit ni variante plus facile nommée. La règle douleur genou est un copier-coller (« tirage, préhension, appuis ») qui ne dit pas quels mouvements chargent le genou."
+   },
+   {
+    "critere": "F9",
+    "perte": 3.5,
+    "raison": "Séances dans le temps (max 39 min pour 40), repos et échauffement écrits. Mais la durée du vélo est contradictoire : colonne 13 min (mardi) et 6 min (samedi), notes « 15 min » puis jusqu'à « 20 min » ; en S11 mardi, suivre la note (20 min au lieu de 12) porte la séance à ~43 min pour 40 disponibles. La version courte renvoie à un exercice d'équilibre absent."
+   },
+   {
+    "critere": "ensemble",
+    "perte": 3,
+    "raison": "Programme sûr dans l'ensemble et adapté au mode prudent, mais deux corrections nécessaires : la gêne actuelle du genou (5/10) n'est pas prise en compte dans l'exercice de jambes principal, et la consigne de durée du vélo est contradictoire au point de faire sortir une séance du temps disponible."
+   }
+  ],
+  "corrections": [
+   {
+    "type": "necessaire",
+    "texte": "Appliquer dès la semaine 1 la règle « gêne 5/10 » au genou droit : prescrire un angle de chaise contre le mur limité (genou à 45–60°, jamais en flexion profonde), gêne pendant et le lendemain ≤ 3/10 avant toute progression de durée, et nommer la variante plus facile (demi-chaise plus haute, pont fessier à la place). Réécrire la règle douleur genou en listant les mouvements qui chargent le genou (chaise, pont fessier, vélo) au lieu de « tirage, préhension, appuis ».",
+    "consequence": "L'athlète, déjà à 5/10, monte jusqu'à 2 × 35 s de chaise sans limite d'angle sur un genou douloureux à la flexion : aggravation probable et arrêt de la seule exercice de jambes, donc de l'habitude visée."
+   },
+   {
+    "type": "necessaire",
+    "texte": "Unifier la durée du vélo : une seule valeur par séance (par exemple 13 min mardi, 6 min samedi) et supprimer les « 15 à 20 min » des notes, ou réduire le reste de la séance si l'on veut 20 min.",
+    "consequence": "L'athlète ne sait pas s'il pédale 12 ou 20 min ; en suivant la note, la séance du mardi dépasse les 40 min disponibles (S10-S11) et il raccourcira ou sautera la fin (étirements)."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Faire de S6 et S12 de vraies semaines allégées (séries −40 à −50 %, RIR ≥ 4, R3-P9) ou les renommer ; ne pas ajouter de dead bug en semaine d'allègement."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Ajouter une charnière de hanche aux haltères (soulevé de terre jambes semi-tendues, 2 × 8-10 à RIR 3) et, quand le genou passe sous 3/10, une montée sur banc basse : bas du corps plus solide sans flexion profonde."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Rendre le pont fessier dosable (haltère sur les hanches ou version unilatérale) pour que le RIR ait un sens ; garder des plages de répétitions fixes et laisser la double progression faire monter les charges (R5-P3)."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Respecter la règle écrite « +10 % par semaine au plus » (S1→S5 la dépasse légèrement) ou la retirer ; ajouter un exercice d'équilibre réel (appui unilatéral près d'un mur) puisque la version courte y fait référence."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Préciser la tension d'élastique (couleur ou distance) et une règle de progression pour le développé épaules et le tirage vertical, avec un repère d'amplitude indolore pour l'épaule gauche opérée."
+   }
+  ],
+  "points_forts": [
+   "Mode prudent bien traduit : RIR 4 puis 3, pas d'échec, pas d'excentrique accentué sur l'épaule opérée, drapeaux rouges avec arrêt et avis médical.",
+   "Reprise après 200 semaines d'arrêt bien encadrée : première semaine à une série par exercice, test d'entrée à 4 répétitions de l'échec, anciens records exclus comme charges.",
+   "Séances dans le temps disponible, échauffement de 8 min écrit, repos précisés, version courte de 15 min pour préserver l'habitude.",
+   "Équilibre poussée/tirage respecté avec un tirage horizontal à chaque séance où il y a une poussée lourde."
+  ],
+  "ecole": "force",
+  "source": "autres_10_contraintes_multiples.md"
+ },
+ {
+  "programme": "programme_1.md",
+  "criteres": {
+   "H1": 6.5,
+   "H2": 7.5,
+   "H3": 6.5,
+   "H4": 7,
+   "H5": 6.5,
+   "H6": 6,
+   "H7": 7,
+   "H8": 8.5,
+   "H9": 6.5
+  },
+  "sans_objet": [],
+  "ensemble": 7,
+  "points_perdus": [
+   {
+    "critere": "H1",
+    "perte": 3.5,
+    "raison": "Comptage fractionné (R1-P2), semaine 1 : faisceau moyen = 6 séries d'élévation latérale + 0,5 × 5 développés haltères ≈ 8,5, soit moins que biceps (5 curls + 0,5 × 12 tirages ≈ 11) et triceps (≈ 11,5) alors qu'il est déclaré prioritaire ; fessiers ≈ 11–12 (7 hip thrust + 0,5 × squat et SDT roumain), dans la fourchette intermédiaire mais pas au-dessus du reste ; quadriceps seulement 6 séries de squat. Volume figé à 75 séries sur 12 semaines (R1-P1, R1-P3 : priorité non visible)."
+   },
+   {
+    "critere": "H2",
+    "perte": 2.5,
+    "raison": "Fessiers et deltoïdes latéraux bien exposés 3 fois, mais hip thrust placé dans la séance « haut du corps » du lundi et séances de 27 à 44 min sur 75 disponibles : la répartition ne tire pas parti du temps du profil (R1-P8)."
+   },
+   {
+    "critere": "H3",
+    "perte": 3.5,
+    "raison": "2 rép. en réserve partout dès la semaine 2, polyarticulaires comme isolations (élévations, curl, oiseau) : marge uniforme, isolations non rapprochées de l'échec (R1-P13 intermédiaire 0–2) ; plages limitées à 8–10 / 10–15 avec un glissement d'une répétition aux semaines 4 et 10 sans logique."
+   },
+   {
+    "critere": "H4",
+    "perte": 3,
+    "raison": "Bons choix (élévation poulie unilatérale, curl incliné, extension nuque, hip thrust : position longue R6-P4), mais fessiers sans travail unilatéral ni abduction, quadriceps réduits au squat, aucun exercice de fessier en position longue autre que le SDT roumain."
+   },
+   {
+    "critere": "H5",
+    "perte": 3.5,
+    "raison": "Double progression écrite (R5-P3), mais volume constant 75 séries des semaines 1 à 11, aucune hausse par palier ni critère d'ajout de séries pour les muscles prioritaires (R1-P18 : +1–2 séries/muscle toutes les 2 semaines) ; seule une règle de retrait existe."
+   },
+   {
+    "critere": "H6",
+    "perte": 4,
+    "raison": "Les deux points faibles du profil ne reçoivent pas plus de volume que les bras ; la règle « spécialisation : le reste passe en entretien » n'est pas appliquée dans les tableaux (pas de volume déplacé). Tirage ≈ poussée et arrière d'épaule présents : équilibre général correct."
+   },
+   {
+    "critere": "H7",
+    "perte": 3,
+    "raison": "105 s sur squat et hip thrust, sous la fourchette intermédiaire 120–150 s des polyarticulaires (R1-P15) alors que 30 à 45 min restent inutilisées chaque séance."
+   },
+   {
+    "critere": "H8",
+    "perte": 1.5,
+    "raison": "Allègements semaines 6 et 12 à ≈ 45 % du volume, placés 1 sur 6 (R1-P18, R3-P9) ; ils suppriment cependant les élévations latérales (point faible) au lieu de les garder à charge égale (R1-P7)."
+   },
+   {
+    "critere": "H9",
+    "perte": 3.5,
+    "raison": "Notes copiées d'un autre profil : mollets « renforcement du coureur… rebonds… tendon d'Achille » ; séances étiquetées « force » ; hip thrust annoté « entretien du bas du corps » alors que c'est la priorité ; deux tiers du temps disponible inutilisés. Programme peu individualisé."
+   },
+   {
+    "critere": "ensemble",
+    "perte": 3,
+    "raison": "Deux corrections nécessaires : priorités du profil (fessiers, deltoïde moyen) non servies par le volume, et consignes contradictoires (spécialisation annoncée mais non écrite, notes de coureur)."
+   }
+  ],
+  "corrections": [
+   {
+    "type": "necessaire",
+    "texte": "Faire des points faibles les muscles les plus dosés : deltoïde moyen à 12–16 séries fractionnées (ex. élévations latérales 3 séries × 4 séances, dont une variante haltère penchée ou machine), fessiers à 14–18 (ajout d'une fente bulgare ou d'un split squat 3 séries et d'une abduction machine/poulie 3 séries 2 fois par semaine), en prenant le temps libre des séances (27–44 min sur 75) et en retirant 1 série de curl et d'extension triceps.",
+    "consequence": "Les deux priorités déclarées reçoivent moins de volume que les bras : 12 semaines sans gain visible sur fessiers et épaules, l'objectif du profil est manqué."
+   },
+   {
+    "type": "necessaire",
+    "texte": "Rendre les consignes cohérentes : soit appliquer la règle de spécialisation (reste du corps à volume d'entretien écrit dans les tableaux), soit la supprimer ; retirer la note « renforcement du coureur / rebonds / tendon d'Achille » des mollets et corriger l'annotation « entretien du bas du corps » du hip thrust.",
+    "consequence": "L'athlète lit qu'elle doit passer le reste en entretien pendant 6 semaines alors que les tableaux disent l'inverse, et une consigne de rebonds absente de la séance : elle modifiera elle-même le volume ou l'exercice au hasard."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Monter le volume des muscles prioritaires par paliers (+1 à 2 séries toutes les 2 semaines dans le bloc 2) avec un critère écrit : ajout si la double progression avance et la récupération est bonne, retrait si les répétitions stagnent deux séances (R1-P18)."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Passer les isolations (élévations, curl, oiseau, leg curl) à 1–0 rép. en réserve sur la dernière série et garder 2–3 sur squat et SDT roumain (R1-P13)."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Porter le repos du squat, du hip thrust et du SDT roumain à 2–2 min 30 (R1-P15) ; le temps disponible le permet."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Ajouter un exercice de quadriceps (presse ou leg extension) pour éviter que le bas du corps se résume au squat."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Garder les élévations latérales pendant les semaines d'allègement (séries réduites, charge gardée)."
+   }
+  ],
+  "points_forts": [
+   "Fréquence 3 fois par semaine sur fessiers et deltoïde moyen.",
+   "Exercices de bonne qualité en position longue : élévation latérale à la poulie unilatérale, curl incliné, extension nuque à la poulie, hip thrust.",
+   "Tirage au moins égal à la poussée, arrière d'épaule travaillé (oiseau au pec deck inversé).",
+   "Allègements planifiés toutes les 6 semaines et règles de baisse du jour, de douleur et de séance manquée claires.",
+   "Charges de départ calculées sur les records (≈ 70 % du 1RM) et calibration écrite pour les autres."
+  ],
+  "ecole": "hypertrophie",
+  "source": "autres_02_hypertrophie_intermediaire.md"
+ },
+ {
+  "programme": "programme_2.md",
+  "criteres": {
+   "H1": 7.5,
+   "H2": 9,
+   "H3": 6.5,
+   "H4": 8,
+   "H5": 8.5,
+   "H6": 8.5,
+   "H7": 9,
+   "H8": 8.5,
+   "H9": 8.5
+  },
+  "sans_objet": [],
+  "ensemble": 8,
+  "points_perdus": [
+   {
+    "critere": "H1",
+    "perte": 2.5,
+    "raison": "Quadriceps, muscle de l'objectif : 8 séries directes de squat + 0,5 × 3 de soulevé de terre ≈ 9,5 fractionnées, sans aucun exercice d'assistance pour les cuisses ; bas de la fourchette intermédiaire pour un gain visé de 15 % (R1-P1, R1-P5). Le reste (dos ≈ 9, pectoraux ≈ 9, ischios ≈ 9) est correct pour un profil de force."
+   },
+   {
+    "critere": "H2",
+    "perte": 1,
+    "raison": "Squat 2 fois par semaine en alternance lourd (lundi) / moyen (vendredi), corps entier sur 3 jours : bonne répartition ; pas de troisième exposition au squat, même légère."
+   },
+   {
+    "critere": "H3",
+    "perte": 3.5,
+    "raison": "Bloc 2 : doublés et singles de squat à 72,5–82,5 kg (73–83 %) annoncés « 4 rép. en réserve », et 4 × 4 à 70 % à 4 rép. en réserve : la marge écrite ne correspond pas à la charge (un double à 73 % laisse 6 à 8 répétitions), les séries réelles sont très loin de l'échec, contraires à l'étiquette « séries plus dures » (R1-P13, R1-P14). La série repère de la semaine 1 est en revanche un bon calibrage."
+   },
+   {
+    "critere": "H4",
+    "perte": 2,
+    "raison": "Choix stables et adaptés au dos (SDT roumain aux haltères, rowing poulie, Pallof press, développé avec pause), mais aucun exercice de quadriceps hors squat (presse, fente arrière) pour soutenir l'objectif."
+   },
+   {
+    "critere": "H5",
+    "perte": 1.5,
+    "raison": "Règles écrites (ajustement de charge, recalage par séries de tête et tests, double progression des accessoires) ; mais le bloc d'intensification fait baisser la charge du squat (80 kg × 4 en semaine 4, 72,5 kg × 2 en semaine 6)."
+   },
+   {
+    "critere": "H6",
+    "perte": 1.5,
+    "raison": "Tirage (rowing ×2, tirage vertical, face pull, rotation externe) ≥ poussée, chaîne postérieure traitée ; quadriceps sous-dosés par rapport à l'objectif."
+   },
+   {
+    "critere": "H7",
+    "perte": 1,
+    "raison": "3 min sur le principal, 105 s / 75 s sur les accessoires, séances de 42 à 48 min sur 75 : conforme (R1-P16) ; pas de supersets pour exploiter le temps."
+   },
+   {
+    "critere": "H8",
+    "perte": 1.5,
+    "raison": "Allègements semaines 5 et 10, affûtage semaine 15 ; mais les semaines d'allègement contiennent chacune un test lourd du squat (88 %), ce qui en réduit l'effet."
+   },
+   {
+    "critere": "H9",
+    "perte": 1.5,
+    "raison": "Âge, sommeil, antécédent lombaire (pas d'échec, seuil de douleur, progression +10 %) bien pris en compte ; en revanche, l'objectif 115 kg (+15 % en 16 semaines à 46 ans) n'est jamais qualifié de très ambitieux, et le test final tente au plus ≈ 102 % du 1RM de référence. Petite incohérence semaine 16 : « 88 % » annoncé pour une charge de 85 %."
+   },
+   {
+    "critere": "ensemble",
+    "perte": 2,
+    "raison": "Une correction nécessaire : la marge de réserve du squat dans le bloc 2 ne correspond pas aux charges, ce qui sous-dose le stimulus du mouvement de l'objectif."
+   }
+  ],
+  "corrections": [
+   {
+    "type": "necessaire",
+    "texte": "Bloc 2 : aligner la marge sur la charge pour le squat. Soit écrire 2–3 rép. en réserve pour 1 × 2 / 3 × 2 en partant de 80–82,5 kg (≈ 80 %) et monter de 2,5 kg par semaine, soit garder 4 rép. en réserve mais avec des séries de 4–5 à 75–80 % ; idem le vendredi (4 × 4 à 70 % → 4 × 4 à 75–78 %, 2–3 en réserve).",
+    "consequence": "Pendant 4 semaines, les séries de squat restent à 6–8 répétitions de l'échec avec des charges inférieures à celles du bloc 1 : ni stimulus de force ni stimulus musculaire, et l'objectif de 115 kg s'éloigne."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Ajouter un exercice de quadriceps à charge moyenne (presse à cuisses ou fente arrière aux haltères, 2–3 × 8–12, 2 rép. en réserve) le vendredi, pour porter les cuisses vers 12 séries fractionnées sans charger le dos."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Dire dans le programme que +15 kg en 16 semaines est un objectif haut pour un intermédiaire de 46 ans et donner un objectif intermédiaire réaliste (≈ 105–107,5 kg)."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Sortir le test de 1RM estimé des semaines d'allègement ou réduire le reste de la semaine en conséquence."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Corriger la note de la semaine 16 (« 88 % » pour 85 kg = 85 %)."
+   }
+  ],
+  "points_forts": [
+   "Squat 2 fois par semaine avec alternance lourde / moyenne.",
+   "Antécédent lombaire géré : pas d'échec, règle de douleur précise, soulevé de terre conventionnel progressif et toujours à 3–4 rép. en réserve.",
+   "Série repère en semaine 1 et séries de recalage en fin de bloc : charges ajustées sur l'athlète réel.",
+   "Tirage supérieur à la poussée, prévention de la coiffe, tronc anti-rotation.",
+   "Repos adaptés (3 min sur le principal) et séances tenues dans 75 min."
+  ],
+  "ecole": "hypertrophie",
+  "source": "autres_04_force_generale_46_ans.md"
+ },
+ {
+  "programme": "programme_3.md",
+  "criteres": {
+   "H1": 7,
+   "H2": 8,
+   "H3": 5,
+   "H4": 7,
+   "H5": 6,
+   "H6": 7,
+   "H7": 8.5,
+   "H8": 9,
+   "H9": 7.5
+  },
+  "sans_objet": [],
+  "ensemble": 8,
+  "points_perdus": [
+   {
+    "critere": "H1",
+    "perte": 3,
+    "raison": "8 séries hebdomadaires sur jambes et fessiers (fente arrière 2 × 2, pont unilatéral 2 × 2) : suffisant comme soutien de la course pour une débutante (R1-P1), mais rien sur les mollets, muscle le plus sollicité par la course."
+   },
+   {
+    "critere": "H2",
+    "perte": 2,
+    "raison": "2 expositions par semaine après le footing, réparties mardi et jeudi : correct ; pas d'alternance."
+   },
+   {
+    "critere": "H3",
+    "perte": 5,
+    "raison": "Fente arrière au poids du corps 2 × 6–8 à 3–4 rép. en réserve : sans charge (aucun lest au matériel), une adulte en fait bien plus de 12, donc la marge écrite est inatteignable et les séries restent très loin de l'échec (R1-P13 débutant 2–4) ; plages quasi fixes sur 12 semaines."
+   },
+   {
+    "critere": "H4",
+    "perte": 3,
+    "raison": "Fente arrière et pont fessier unilatéral : stables et utiles au coureur, mais pas de mollets (montées sur pointes, unilatérales) ni d'option de charge ou de variante plus difficile."
+   },
+   {
+    "critere": "H5",
+    "perte": 4,
+    "raison": "« Passe à la variante suivante » sans nommer de variante ; seule évolution : +1 répétition en semaines 4 et 10. Pas de surcharge progressive réelle sur le renforcement (R5-P3)."
+   },
+   {
+    "critere": "H6",
+    "perte": 3,
+    "raison": "Bas du corps seul : acceptable pour ce profil, mais ni mollets ni tronc alors que la mobilité est annoncée à 10 %."
+   },
+   {
+    "critere": "H7",
+    "perte": 1.5,
+    "raison": "Séances de 38 à 52 min dans 45–60 min ; 105 s de repos entre séries de pont au poids du corps, plus que nécessaire. Jour de course : 79 min estimées sur 60 disponibles (acceptable un jour de compétition)."
+   },
+   {
+    "critere": "H8",
+    "perte": 1,
+    "raison": "Volume de renforcement faible, affûtage semaine 11 et retrait du renforcement en semaine 12 : bien dosé."
+   },
+   {
+    "critere": "H9",
+    "perte": 2.5,
+    "raison": "Respecte le temps, le matériel et le niveau débutant (course facile, +10 % par semaine) ; mais l'allure de course est figée à 7 min 00/km alors que le test 5 km de la semaine 6 « recale les allures » ; la plus longue sortie (52 min) reste loin des ≈ 70 min de l'épreuve."
+   },
+   {
+    "critere": "ensemble",
+    "perte": 2,
+    "raison": "Une correction nécessaire : l'allure de course imposée n'est pas reliée au test de la semaine 6."
+   }
+  ],
+  "corrections": [
+   {
+    "type": "necessaire",
+    "texte": "Semaine 12 : calculer l'allure de départ de la course à partir du test 5 km de la semaine 6 (allure 5 km + 20 à 30 s/km), ne viser 7 min 00/km que si le test le permet, et prévoir de partir 10 s/km plus lent les 2 premiers km.",
+    "consequence": "Une débutante qui n'a jamais couru plus de 52 min part à l'allure de son 5 km actuel sur 10 km : risque élevé d'exploser à mi-course et de ne pas finir dans l'objectif."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Ajouter des montées sur pointes de pieds (bilatérales puis unilatérales, 2 × 12–15, 2 rép. en réserve) mardi et jeudi."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Nommer les variantes de progression du renforcement : fente arrière → fente avec temps lent (3 s en descente) → fente bulgare ; pont unilatéral → pont pieds surélevés, pour que la marge de 2–3 rép. en réserve soit atteignable."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Ramener le repos des exercices au poids du corps à 60 s ou les enchaîner en circuit."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Porter la sortie longue à 60–65 min en semaines 9–10 (dans la limite des 60 min du dimanche, ou en marche-course) pour approcher la durée de l'épreuve."
+   }
+  ],
+  "points_forts": [
+   "Course majoritairement en endurance fondamentale, adaptée à une débutante de 6 mois.",
+   "Progression de la sortie longue de 35 à 52 min, sans dépasser +10 % par semaine.",
+   "Test intermédiaire en semaine 6, affûtage en semaine 11 et semaine de course allégée.",
+   "Renforcement léger et ciblé (fessiers, jambes) qui ne gêne pas la course."
+  ],
+  "ecole": "hypertrophie",
+  "source": "autres_05_course_10_km_debutante.md"
+ },
+ {
+  "programme": "programme_4.md",
+  "criteres": {
+   "H1": 7,
+   "H2": 8,
+   "H3": 6,
+   "H4": 7,
+   "H5": 6.5,
+   "H6": 7,
+   "H7": 8.5,
+   "H8": 9,
+   "H9": 8
+  },
+  "sans_objet": [],
+  "ensemble": 9,
+  "points_perdus": [
+   {
+    "critere": "H1",
+    "perte": 3,
+    "raison": "8 séries hebdomadaires sur jambes et fessiers (fente arrière et pont unilatéral 2 × 2 séances) : soutien suffisant pour un coureur à 10 % de musculation, mais aucun travail des mollets malgré une sortie longue montée à 112 min."
+   },
+   {
+    "critere": "H2",
+    "perte": 2,
+    "raison": "2 expositions (mardi, samedi) ; la séance du samedi à 2 rép. en réserve tombe la veille des sorties longues de 94 à 112 min."
+   },
+   {
+    "critere": "H3",
+    "perte": 4,
+    "raison": "Fente arrière au poids du corps 2 × 6–8 à 3 rép. en réserve : sans charge, la marge écrite est inatteignable pour un homme de 72 kg (séries très loin de l'échec, R1-P13) ; l'élastique disponible n'est pas utilisé pour charger. Pont unilatéral à 2 rép. en réserve plausible."
+   },
+   {
+    "critere": "H4",
+    "perte": 3,
+    "raison": "Exercices stables et pertinents, mais pas de mollets ni de variante chargée."
+   },
+   {
+    "critere": "H5",
+    "perte": 3.5,
+    "raison": "Variante suivante non nommée, seule évolution +1 répétition en semaines 4 et 10 (R5-P3)."
+   },
+   {
+    "critere": "H6",
+    "perte": 3,
+    "raison": "Bas du corps seul, sans mollets ni tronc alors que la mobilité est annoncée à 10 %."
+   },
+   {
+    "critere": "H7",
+    "perte": 1.5,
+    "raison": "Toutes les séances tiennent dans le temps disponible (113 min sur 120 le jour de course) ; 105 s de repos entre ponts au poids du corps, plus que nécessaire."
+   },
+   {
+    "critere": "H8",
+    "perte": 1,
+    "raison": "Allègement semaine 6, affûtage semaine 11, renforcement retiré en semaine 12 : correct."
+   },
+   {
+    "critere": "H9",
+    "perte": 2,
+    "raison": "Adapté au niveau, au temps et au matériel ; mais le bloc « réalisation spécifique à l'objectif » ne contient aucun travail à l'allure du semi (4 min 59/km) ni au seuil : les mêmes 1000 m à 4 min 28 sont répétés de la semaine 1 à la semaine 11."
+   },
+   {
+    "critere": "ensemble",
+    "perte": 1,
+    "raison": "Aucune correction nécessaire : programme sûr qui devrait approcher l'objectif ; restent des améliorations sur la spécificité de course et le renforcement."
+   }
+  ],
+  "corrections": [
+   {
+    "type": "amelioration",
+    "texte": "Semaines 7 à 10 : remplacer une semaine sur deux le 4–5 × 1000 m par un bloc à allure semi (ex. 2 × 15–20 min à 4 min 59/km) ou intégrer 20–40 min à l'allure cible en fin de sortie longue."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Ajouter des montées sur pointes unilatérales (2 × 12–15, 2 rép. en réserve) mardi et samedi."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Charger la fente avec l'élastique ou passer à la fente bulgare pour rendre atteignable la marge de 3 rép. en réserve ; nommer les variantes de progression."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Placer le renforcement du samedi à 3 rép. en réserve ou le déplacer au mardi/jeudi pour arriver frais aux sorties longues."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Arrondir la distance de test de la semaine 6 (10,5 km au lieu de « 10,54875 km »)."
+   }
+  ],
+  "points_forts": [
+   "Sortie longue montée progressivement de 60 à 112 min (+10 % par semaine au plus).",
+   "Allure des fractions dérivée du record et recalée par les tests.",
+   "Allègement en semaine 6 avec test sur demi-distance, affûtage et semaine de course bien construits.",
+   "Renforcement léger des jambes et fessiers qui ne compromet pas la course."
+  ],
+  "ecole": "hypertrophie",
+  "source": "autres_06_semi_marathon_intermediaire.md"
+ },
+ {
+  "programme": "programme_1.md",
+  "criteres": {
+   "H1": 8,
+   "H2": 9,
+   "H3": 7.5,
+   "H4": 7,
+   "H5": 7.5,
+   "H6": 6.5,
+   "H7": 9,
+   "H8": 7.5,
+   "H9": 7.5
+  },
+  "sans_objet": [],
+  "ensemble": 7,
+  "points_perdus": [
+   {
+    "critere": "H1",
+    "perte": 2,
+    "raison": "Jambes ~8 séries (assis-debout 3×2 + fente latérale 2), poussée 6, tirage 6 : dans la fourchette débutant (R1-P1), mais ischio-jambiers et fessiers sans travail direct (aucune charnière de hanche ni pont), et 22 séries fixes sans hausse conditionnelle (R1-P18)."
+   },
+   {
+    "critere": "H2",
+    "perte": 1,
+    "raison": "Corps entier lundi/mercredi/vendredi, chaque groupe 3 fois : bien réparti ; pas d'alternance lourde/légère, sans gravité ici."
+   },
+   {
+    "critere": "H3",
+    "perte": 2.5,
+    "raison": "4 puis 3 RIR conformes au débutant (R1-P13), mais plages 8–10 identiques pour tous les exercices (R6-P2) ; « 4 rép. en réserve » sur le dead bug sans sens clair ; pas de série de calibration."
+   },
+   {
+    "critere": "H4",
+    "perte": 3,
+    "raison": "Exercices stables et adaptés à la maison (assis-debout sur chaise, pompe au mur, rowing élastique), mais aucun exercice d'équilibre alors que c'est un objectif du profil, aucune charnière de hanche, et l'échelle de variantes (pompe inclinée, chaise plus basse, élastique plus fort) n'est pas écrite pour appliquer la règle « passe à la variante suivante » (R6-P4)."
+   },
+   {
+    "critere": "H5",
+    "perte": 2.5,
+    "raison": "Règle de double progression écrite et plages décalées en S4 et S10 (R5-P3), mais pas de variantes nommées pour les exercices au poids du corps : la progression s'arrêtera au haut de la plage."
+   },
+   {
+    "critere": "H6",
+    "perte": 3.5,
+    "raison": "Poussée = tirage (6/6), mais chaîne postérieure non renforcée (seulement des étirements) et équilibre, demandé par le profil, sans exercice dédié (R5-P27)."
+   },
+   {
+    "critere": "H7",
+    "perte": 1,
+    "raison": "Repos de 75 s cohérents, séances de 24 à 30 min dans les 30 min ; pas de superset nécessaire."
+   },
+   {
+    "critere": "H8",
+    "perte": 2.5,
+    "raison": "Semaines 6 et 12 appelées « allègement » mais identiques à S3/S7 (22 séries dures, même RIR) : allègement de nom seulement ; acceptable pour une débutante à faible volume (R3-P9, réactif), mais trompeur."
+   },
+   {
+    "critere": "H9",
+    "perte": 2.5,
+    "raison": "Mode prudent, chaise, pas d'impact, temps respecté ; mais objectif d'équilibre non servi, consigne du dead bug « position à la barre » hors sujet, durées de marche contradictoires (colonne vs note)."
+   },
+   {
+    "critere": "ensemble",
+    "perte": 3,
+    "raison": "Deux corrections nécessaires : équilibre absent (objectif et version courte qui y renvoie) et durées de marche contradictoires."
+   }
+  ],
+  "corrections": [
+   {
+    "type": "necessaire",
+    "texte": "Ajouter un exercice d'équilibre progressif près d'un appui à au moins 2 séances (appui unipodal 2 × 20–30 s par jambe, puis marche talon-pointe, puis appui unipodal en tournant la tête) ; c'est aussi l'« équilibre » que cite la version courte de 15 min.",
+    "consequence": "L'objectif d'équilibre et d'autonomie d'une femme de 68 ans n'est pas travaillé et la version courte renvoie à un exercice qui n'existe pas."
+   },
+   {
+    "type": "necessaire",
+    "texte": "Aligner la colonne et la note de la marche rapide du dimanche (par ex. S4 : 11 min dans la colonne, 12 min dans la note ; S10 : 10 min dans la colonne, 14 min dans la note) et garder une seule durée qui tienne dans 30 min.",
+    "consequence": "L'athlète ne sait pas combien de temps marcher, et la durée la plus longue fait dépasser les 30 min disponibles."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Écrire l'échelle de variantes : pompe au mur → pompe sur plan de travail → pompe sur table ; assis-debout chaise haute → chaise standard → chaise basse ; élastique léger → moyen."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Ajouter un pont fessier au sol 2 × 8–12 deux fois par semaine pour la chaîne postérieure (se relever du sol, monter les escaliers)."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Faire des semaines 6 et 12 de vrais allègements (une série de moins par exercice) ou les renommer en semaines de consolidation."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Remplacer la note du dead bug « position à la barre » par une consigne adaptée (bas du dos plaqué au tapis)."
+   }
+  ],
+  "points_forts": [
+   "Squat en assis-debout sur chaise avec progression de hauteur : parfaitement adapté à une senior débutante.",
+   "Poussée et tirage équilibrés, trois expositions par semaine.",
+   "Règles de sécurité claires (arrêt immédiat, mode prudent, douleur articulaire graduée).",
+   "Séances tenues dans les 30 min, avec marche à allure de conversation."
+  ],
+  "ecole": "hypertrophie",
+  "source": "autres_07_mobilite_sante_senior.md"
+ },
+ {
+  "programme": "programme_2.md",
+  "criteres": {
+   "H1": 8,
+   "H2": 8.5,
+   "H3": 8,
+   "H4": 7,
+   "H5": 7.5,
+   "H6": 8.5,
+   "H7": 8.5,
+   "H8": 8,
+   "H9": 6.5
+  },
+  "sans_objet": [],
+  "ensemble": 7,
+  "points_perdus": [
+   {
+    "critere": "H1",
+    "perte": 2,
+    "raison": "Dorsaux ~12–14 séries (négatifs 6, C2B 4–6, tractions explosives 2), dips 6, jambes 3 séances : dans la fourchette intermédiaire (R1-P1) ; mais en bloc 3 le volume de tirage spécifique baisse (tractions explosives retirées S11–S14) au lieu d'être réparti vers l'objectif."
+   },
+   {
+    "critere": "H2",
+    "perte": 1.5,
+    "raison": "Tirage et dips lundi et vendredi, jambes lundi/mercredi/samedi : bonne répartition (R1-P8) ; pas d'alternance lourde/légère sur le tirage."
+   },
+   {
+    "critere": "H3",
+    "perte": 2,
+    "raison": "RIR 2–4 sur les polyarticulaires, série repère sur le squat (bonne calibration) ; mais « 4 rép. en réserve » sur des négatifs de 2–3 répétitions contredit la note « l'effort se règle au contrôle »."
+   },
+   {
+    "critere": "H4",
+    "perte": 3,
+    "raison": "Négatifs de muscle-up, dips à la barre droite, C2B : bien choisis ; mais aucun travail de transition (muscle-up à l'élastique, transitions barre basse, prise fausse) et la traction explosive, l'exercice le plus spécifique, est retirée de tout le bloc de réalisation (S11–S14) puis le muscle-up négatif en S15 (R6-P4)."
+   },
+   {
+    "critere": "H5",
+    "perte": 2.5,
+    "raison": "Double progression écrite, pourcentages de squat et recalage de bloc (R5-P3) ; mais le bloc « réalisation » régresse en spécificité et la progression des négatifs (+1 s/semaine) n'est écrite que pour le cas d'échec."
+   },
+   {
+    "critere": "H6",
+    "perte": 1.5,
+    "raison": "Tirage ≥ poussée, chaîne postérieure par le soulevé de terre ; pas d'arrière d'épaule ni de travail de prise/false grip."
+   },
+   {
+    "critere": "H7",
+    "perte": 1.5,
+    "raison": "Repos 105 s–3 min adaptés ; séances de 21 à 47 min pour 60 min disponibles : temps sous-utilisé."
+   },
+   {
+    "critere": "H8",
+    "perte": 2,
+    "raison": "Allègements S5 et S10 dosés (~−40 %, R3-P9), affûtage S15 ; mais S16 « allègement » empilé après l'affûtage sans épreuve ensuite."
+   },
+   {
+    "critere": "H9",
+    "perte": 3.5,
+    "raison": "Niveau intermédiaire respecté, mais l'échéance (débloquer le muscle-up strict en 16 semaines) n'est jamais écrite : aucun essai ni test du muscle-up, le vendredi S16 « repos avant l'échéance » ne précède aucune épreuve ; le conditionnement d'un athlète CrossFit à 80 % se réduit à des passages isolés (1 × 12 wall balls, 1 × 250 m)."
+   },
+   {
+    "critere": "ensemble",
+    "perte": 3,
+    "raison": "Deux corrections nécessaires qui touchent l'objectif : spécificité retirée du bloc 3, test d'échéance absent."
+   }
+  ],
+  "corrections": [
+   {
+    "type": "necessaire",
+    "texte": "Garder la traction explosive poitrine/hanches à la barre en S11–S14 (2–3 × 3–5) et ajouter un travail de transition : muscle-up à l'élastique ou transitions sur barre basse 3 × 3, prise fausse en suspension ; garder 1–2 séries de négatifs en S15.",
+    "consequence": "Le bloc de réalisation retire les exercices les plus proches du muscle-up : la tirade haute et la transition ne seront pas prêtes à l'échéance."
+   },
+   {
+    "type": "necessaire",
+    "texte": "Écrire des essais de muscle-up strict (par ex. 3 tentatives fraîches en début de séance une fois par semaine à partir de S11) et une séance de test le samedi de S16, après le repos du vendredi.",
+    "consequence": "L'objectif « figure débloquée en 16 semaines » n'est jamais vérifié et l'athlète ne pratique jamais le mouvement entier."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Utiliser le temps libre (13 à 39 min par séance) pour un vrai métcon court par séance, sans charger les tirages la veille des séances de barre."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Ajouter de l'arrière d'épaule (face pull ou oiseau, 2 × 12–15) pour équilibrer dips et push press."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Remplacer « 4 rép. en réserve » des négatifs par le critère de contrôle seul (descente ≥ 3 s), pour éviter la consigne double."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Réduire la part du squat lourd en bloc 3 (singles à 90 %) qui ne sert pas l'objectif."
+   }
+  ],
+  "points_forts": [
+   "Choix des accessoires pertinents pour le muscle-up : négatifs freinés, dips à la barre droite, C2B.",
+   "Calibration du squat par série repère et recalage de fin de bloc.",
+   "Allègements placés et dosés toutes les 5 semaines.",
+   "Règles de douleur, de baisse du jour et de reprise claires."
+  ],
+  "ecole": "hypertrophie",
+  "source": "autres_08_crossfit_intermediaire.md"
+ },
+ {
+  "programme": "programme_3.md",
+  "criteres": {
+   "H1": 8,
+   "H2": 8.5,
+   "H3": 7.5,
+   "H4": 8.5,
+   "H5": 8,
+   "H6": 7,
+   "H7": 8.5,
+   "H8": 7.5,
+   "H9": 7.5
+  },
+  "sans_objet": [],
+  "ensemble": 8,
+  "points_perdus": [
+   {
+    "critere": "H1",
+    "perte": 2,
+    "raison": "Quadriceps 6, pectoraux 6, dos 6, deltoïdes 4 : dans la fourchette débutant (R1-P1) ; ischio-jambiers ~2 séries directes (RDL une fois) ; 34 séries fixes, sans hausse conditionnelle (R1-P18)."
+   },
+   {
+    "critere": "H2",
+    "perte": 1.5,
+    "raison": "Corps entier 3 fois, presse et poitrine à chaque séance ; tirage vertical une seule fois par semaine."
+   },
+   {
+    "critere": "H3",
+    "perte": 2.5,
+    "raison": "4 puis 3 RIR conformes au débutant (R1-P13), mais plages 8–10 uniformes sur presse, développé, pont, RDL et isolations (R6-P2) ; pas de série de calibration au-delà de « charge à calibrer »."
+   },
+   {
+    "critere": "H4",
+    "perte": 1.5,
+    "raison": "Machines guidées stables, presse 45°, poulies : bon choix pour une débutante de 92 kg ; le RDL à la barre est plus technique qu'une variante haltères, sans consigne."
+   },
+   {
+    "critere": "H5",
+    "perte": 2,
+    "raison": "Double progression écrite et plages décalées (R5-P3) ; pas de critère d'ajout de séries."
+   },
+   {
+    "critere": "H6",
+    "perte": 3,
+    "raison": "Poussée 10 séries (presse pectorale 6 + développé 4) contre tirage 6 (rowing 4 + tirage vertical 2) : tirage < poussée (R5-P27) ; chaîne postérieure correcte (pont, RDL)."
+   },
+   {
+    "critere": "H7",
+    "perte": 1.5,
+    "raison": "Repos 75 s cohérents, 43 min pour 45 ; pas de supersets pour libérer du temps pour le vélo."
+   },
+   {
+    "critere": "H8",
+    "perte": 2.5,
+    "raison": "Semaines 6 et 12 « allègement » à 34 séries comme les autres : allègement nominal ; acceptable chez une débutante en déficit (R3-P9 réactif) mais trompeur."
+   },
+   {
+    "critere": "H9",
+    "perte": 2.5,
+    "raison": "Plan de marche progressif, suivi poids/tour de taille, déficit modéré et protéines : bien pensé ; mais durées de vélo contradictoires (S4 mercredi : 10 min dans la colonne, 17 min dans la note), version courte qui cite un exercice d'équilibre inexistant, note dead bug « à la barre » hors sujet."
+   },
+   {
+    "critere": "ensemble",
+    "perte": 2,
+    "raison": "Une correction nécessaire simple (durées de vélo contradictoires)."
+   }
+  ],
+  "corrections": [
+   {
+    "type": "necessaire",
+    "texte": "Unifier la durée du vélo de fin de séance : la colonne (10 à 14 min) et la note (15 à 20 min) divergent chaque semaine ; écrire une seule durée qui tienne dans les 45 min (et reporter le reste sur les marches).",
+    "consequence": "L'athlète ne sait pas quoi faire ; si elle suit la note, la séance dépasse 45 min, et le calcul des minutes d'endurance de la semaine est faux."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Rééquilibrer le tirage : remplacer une série de développé haltères par une série de tirage vertical, ou mettre le tirage vertical aussi le samedi (tirage ≥ poussée)."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Varier les plages : presse et RDL 8–12, pont fessier et isolations 12–15, plus près de l'échec (2 RIR) pour les machines."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Faire de S6 et S12 de vrais allègements (une série de moins) ou les renommer."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Corriger la version courte (pas d'exercice d'équilibre dans le programme) et la note du dead bug."
+   }
+  ],
+  "points_forts": [
+   "Exercices guidés et stables, adaptés à une débutante en surpoids.",
+   "Volume par muscle dans la fourchette débutant, trois expositions hebdomadaires.",
+   "Volet perte de poids complet : marche progressive vers 150–200 min, déficit modéré, protéines, suivi des mesures.",
+   "Séances tenues dans les 45 min."
+  ],
+  "ecole": "hypertrophie",
+  "source": "autres_09_perte_de_poids_debutante.md"
+ },
+ {
+  "programme": "programme_4.md",
+  "criteres": {
+   "H1": 6.5,
+   "H2": 8,
+   "H3": 7.5,
+   "H4": 6.5,
+   "H5": 6.5,
+   "H6": 5.5,
+   "H7": 8.5,
+   "H8": 5.5,
+   "H9": 7
+  },
+  "sans_objet": [],
+  "ensemble": 7,
+  "points_perdus": [
+   {
+    "critere": "H1",
+    "perte": 3.5,
+    "raison": "Départ bas justifié par 200 semaines d'arrêt, mais le bas du corps reste presque vide : chaise contre le mur 1–2 tenues de 20–35 s et pont fessier 2–4 séries, aucun ischio-jambier direct ; pectoraux à 3 séries en S1 (sous le plancher 4 de R1-P1)."
+   },
+   {
+    "critere": "H2",
+    "perte": 2,
+    "raison": "Corps entier 3 fois ; mais le développé couché disparaît du mardi à partir de S5 sans raison et le tirage vertical n'a lieu que le jeudi."
+   },
+   {
+    "critere": "H3",
+    "perte": 2.5,
+    "raison": "4 puis 3 RIR, pas d'échec pour l'épaule opérée : conforme (R1-P13) ; plages 8–10 uniformes, pas de calibration hors test d'entrée."
+   },
+   {
+    "critere": "H4",
+    "perte": 3.5,
+    "raison": "Matériel bien utilisé (haltères, élastique, banc), rowing en appui : bon ; mais angle de la chaise contre le mur non précisé pour un genou à 5/10 en flexion profonde, et aucune charnière de hanche (soulevé de terre roumain haltères), pourtant peu exigeante pour le genou (R6-P4)."
+   },
+   {
+    "critere": "H5",
+    "perte": 3.5,
+    "raison": "Hausse graduée de 15 à 26 séries et double progression (R5-P3), mais trajectoire erratique : développé couché retiré le mardi en S5, chaise ramenée de 35 à 25 s en S7, S9 repartant de S5, dead bug retiré puis remis."
+   },
+   {
+    "critere": "H6",
+    "perte": 4.5,
+    "raison": "Poussée (couché 4 + épaules 4) > tirage (rowing 4 + tirage vertical 2) chez un homme à épaule opérée ; bas du corps et chaîne postérieure très sous-dosés pour 55 ans (R5-P27)."
+   },
+   {
+    "critere": "H7",
+    "perte": 1.5,
+    "raison": "Repos 60–75 s adaptés, séances dans le temps (24 à 39 min)."
+   },
+   {
+    "critere": "H8",
+    "perte": 4.5,
+    "raison": "Semaines 6 et 12 « allègement » à 26 séries, soit plus que S5 (24) : l'allègement augmente le volume, chez un homme de 55 ans qui dort 6 h (R3-P9)."
+   },
+   {
+    "critere": "H9",
+    "perte": 3,
+    "raison": "Âge, reprise, épaule, sommeil et mode prudent pris en compte dans les règles ; mais la gêne actuelle du genou (5/10, seuil auquel la règle du programme exige la variante facile) n'est pas traduite dans la prescription de la chaise, et les durées de vélo se contredisent (samedi S1 : 6 min dans la colonne, 15 min dans la note ; S10 vélo retiré le samedi)."
+   },
+   {
+    "critere": "ensemble",
+    "perte": 3,
+    "raison": "Deux corrections nécessaires : prescription du genou à 5/10 et durées de vélo contradictoires."
+   }
+  ],
+  "corrections": [
+   {
+    "type": "necessaire",
+    "texte": "Préciser la chaise contre le mur pour le genou droit à 5/10 : angle peu profond (genoux à ~45–60°, bien au-dessus de 90°), gêne ≤ 3/10 pendant et le lendemain, approfondir seulement si la gêne reste ≤ 2/10 ; écrire cette variante facile dès la semaine 1 comme l'exige la règle « à 5, prends la variante plus facile ».",
+    "consequence": "À 90° de flexion la tenue charge le genou douloureux au seuil où le programme lui-même demande d'alléger : risque d'aggraver la gêne et d'abandonner le travail des jambes."
+   },
+   {
+    "type": "necessaire",
+    "texte": "Unifier la durée du vélo : la colonne (5 à 13 min) et la note (15 à 20 min) divergent, et le vélo disparaît du samedi en S10–S11 ; écrire une seule durée qui tienne dans le temps disponible.",
+    "consequence": "L'athlète ne sait pas quelle dose de cardio faire (20 % de ses disciplines) et risque de dépasser les 40 min."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Ajouter un soulevé de terre roumain aux haltères 2 × 8–12 deux fois par semaine (charnière de hanche, genou peu fléchi) pour la chaîne postérieure."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Porter le tirage au niveau de la poussée : tirage vertical à l'élastique aussi le samedi, ou face pull à l'élastique 2 × 15, pour protéger l'épaule opérée."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Faire de S6 et S12 de vrais allègements (−40 % de séries) ou les renommer ; garder une trajectoire monotone (pas de retrait du développé couché du mardi, pas de reprise depuis S5 en S9)."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Corriger la version courte (aucun exercice d'équilibre) et la note du dead bug « à la barre »."
+   }
+  ],
+  "points_forts": [
+   "Reprise très progressive après 4 ans d'arrêt, avec test d'entrée à 4 RIR.",
+   "Règles d'épaule (pas d'échec, pas d'excentrique accentué) et de douleur graduée explicites.",
+   "Exercices adaptés au matériel à la maison, rowing en appui sur banc.",
+   "Séances tenues dans 30 et 40 min."
+  ],
+  "ecole": "hypertrophie",
+  "source": "autres_10_contraintes_multiples.md"
+ },
+ {
+  "programme": "programme_1.md",
+  "criteres": {
+   "S1": 9,
+   "S2": 8.5,
+   "S3": 8,
+   "S5": 8,
+   "S6": 7.5,
+   "S7": 9,
+   "S9": 7
+  },
+  "sans_objet": [
+   "S4",
+   "S8"
+  ],
+  "ensemble": 8,
+  "points_perdus": [
+   {
+    "critere": "S1",
+    "perte": 1,
+    "raison": "Seuils de douleur et orientation écrits (R5-P23), mais note 'rebonds courts et élastiques' et seuils tibia/Achille sur les mollets (mardi, samedi) sans rapport avec ce profil : consigne de sécurité plaquée, pas pensée pour elle."
+   },
+   {
+    "critere": "S2",
+    "perte": 1.5,
+    "raison": "Départ prudent (3 RIR), règles de semaine manquée présentes, mais volume figé à 75 séries dures de S1 à S11 et bloc 2 copie du bloc 1 : aucune progression de volume planifiée pour une intermédiaire (R6-P1 « partir bas et monter », R5-P13)."
+   },
+   {
+    "critere": "S3",
+    "perte": 2,
+    "raison": "Allègements S6 et S12 et critères de baisse du jour écrits ; mais sommeil, stress et travail ne sont ni demandés ni pris en compte pour 5 séances/semaine (R5-P14, P15)."
+   },
+   {
+    "critere": "S5",
+    "perte": 2,
+    "raison": "Tirages et oiseau équilibrent la poussée, échauffement écrit, mais aucun travail de coiffe (rotation externe, face pull) alors que les épaules sont une cible de volume (R4-F10 à F12) ; l'élévation latérale disparaît des semaines d'allègement."
+   },
+   {
+    "critere": "S6",
+    "perte": 2.5,
+    "raison": "Marges 2-3 RIR prudentes mais uniformes pour tous les mouvements, du squat barre à l'élévation latérale : pas de différenciation par mouvement (R5-P4, R6-P2 : isolations proches de l'échec possibles chez l'intermédiaire)."
+   },
+   {
+    "critere": "S7",
+    "perte": 1,
+    "raison": "Séances de 27 à 44 min sur 75 disponibles, version courte prévue ; faisable, mais le temps libre n'est pas mis au service des priorités."
+   },
+   {
+    "critere": "S9",
+    "perte": 3,
+    "raison": "Séances intitulées 'force' pour un objectif d'hypertrophie ; règle de spécialisation sur 6 semaines dans un programme de 12 où le 'reste en entretien' n'apparaît nulle part dans les chiffres ; charges fixes écrites (77,5 kg sur 12 semaines) en tension avec la double progression ; note 'Renforcement du coureur' incompréhensible ici."
+   },
+   {
+    "critere": "ensemble",
+    "perte": 2,
+    "raison": "Une correction nécessaire : le faisceau moyen de l'épaule, priorité déclarée, ne reçoit que 6 séries directes par semaine (2+2+2), sous la fourchette intermédiaire de 10-16 (R6-P1) et sans le surplus de +30-50 % d'un point faible (R6-P6), alors que 30 à 45 min par séance restent libres."
+   }
+  ],
+  "corrections": [
+   {
+    "type": "necessaire",
+    "texte": "Monter le travail direct du deltoïde moyen à 10-14 séries/semaine (élévations latérales poulie/haltères en début de séance 3 à 4 fois par semaine, 3 séries de 12-20 à 1-2 RIR), en utilisant le temps libre des séances.",
+    "consequence": "Avec 6 séries par semaine pendant 12 semaines, le retard des épaules, objectif déclaré, ne sera vraisemblablement pas comblé."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Faire réellement la spécialisation fessiers annoncée : ajouter une abduction de hanche ou un kickback poulie et une fente bulgare (position longue, R6-P4), porter le hip thrust à 3-4 séries par séance, et réduire visiblement le reste (couché, biceps, triceps) si l'on veut parler d'entretien."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Ajouter rotation externe à la poulie ou face pull 2 × 15 deux fois par semaine, compte tenu du volume de travail d'épaule visé."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Prévoir une montée de volume entre blocs (+1 série sur les priorités au bloc 2) et renommer les séances 'hypertrophie' ; retirer la note sur les rebonds de coureur des mollets."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Demander sommeil, stress et activité professionnelle pour ajuster les 5 séances hebdomadaires."
+   }
+  ],
+  "points_forts": [
+   "Échauffement écrit et règles de douleur à seuils avec orientation vers un professionnel",
+   "Règles de séance et semaine manquées, baisse du jour et version courte de 25 min",
+   "Allègements planifiés toutes les 6 semaines, charges de départ prudentes calculées sur les records",
+   "Hip thrust trois fois par semaine, rapport tirage/poussée équilibré"
+  ],
+  "ecole": "sante",
+  "source": "autres_02_hypertrophie_intermediaire.md"
+ },
+ {
+  "programme": "programme_2.md",
+  "criteres": {
+   "S1": 8,
+   "S2": 7,
+   "S3": 8.5,
+   "S5": 8.5,
+   "S6": 8.5,
+   "S7": 9,
+   "S8": 8.5,
+   "S9": 6.5
+  },
+  "sans_objet": [
+   "S4"
+  ],
+  "ensemble": 8,
+  "points_perdus": [
+   {
+    "critere": "S1",
+    "perte": 2,
+    "raison": "Règle d'antécédent lombaire, seuils de douleur, perte de force et consultation écrits (R5-P20, P23), sécurités de cage ; mais soulevé de terre conventionnel monté jusqu'à 85 % (S15) sans variante ni réduction de zone (R5-P20 : −30 à −50 % sous 12 mois, choix raisonné), et 1RM réel du squat à 99-102 % huit mois après une lombalgie."
+   },
+   {
+    "critere": "S2",
+    "perte": 3,
+    "raison": "Règle +10 %/sem après 40 ans et reprise après arrêt écrites, mais l'intensité du squat recule et stagne : 80 % × 4 en S4, puis 72,5 % × 2 à 4 RIR en S6, singles à 80 % en S8, plafond à 83 % jusqu'en S14 ; la progression ne mène pas au 1RM visé."
+   },
+   {
+    "critere": "S3",
+    "perte": 1.5,
+    "raison": "Sommeil 6,5 h et stress 3/5 déclarés intégrés aux chiffres, allègements S5 et S10, critères de baisse du jour ; aucun critère de ressenti lombaire du lendemain dans la baisse du jour."
+   },
+   {
+    "critere": "S5",
+    "perte": 1.5,
+    "raison": "Face pull, rotation externe, tirages, Pallof, échauffement écrit ; mais la mobilité (20 % des disciplines) se limite à épaules et poignets, rien pour hanches et thoracique utiles au dos du profil."
+   },
+   {
+    "critere": "S6",
+    "perte": 1.5,
+    "raison": "Pas d'échec, réserve 2-4, test estimé à 1 RIR ; mais RIR 4 sur le squat pendant tout le bloc 2 est trop loin de l'effort utile pour un objectif de force (R3-P7 intermédiaire RIR 2-3)."
+   },
+   {
+    "critere": "S7",
+    "perte": 1,
+    "raison": "Séances de 43 à 48 min sur 75 disponibles, version courte prévue ; notes très longues qui alourdissent la lecture."
+   },
+   {
+    "critere": "S8",
+    "perte": 1.5,
+    "raison": "Affûtage S15 à −45 %, dernier lourd à J−7 dans les conditions du test, 48 h, tentatives écrites (R3-P12, P14) ; mais lundi S16 à 85 % à J−4 annoncé '88 %', et notes 'à deux jours du test' le lundi S5 pour un test le vendredi."
+   },
+   {
+    "critere": "S9",
+    "perte": 3.5,
+    "raison": "Contradictions : colonne effort '4 RIR' et série repère à 2 RIR (S1) ; 'À deux jours du test' le lundi S5 ; rappel '88 %' pour 85 kg (S16) ; 'J−8' pour J−7 ; différences de semaines écrites en notes interminables, difficile à suivre."
+   },
+   {
+    "critere": "ensemble",
+    "perte": 2,
+    "raison": "Une correction nécessaire : le stimulus du squat dans les blocs 2 et 3 (singles et doubles à 72-83 % à 4 RIR, intensité qui recule après S4) ne permet vraisemblablement pas de gagner 15 kg ; le reste est sûr et individualisé."
+   }
+  ],
+  "corrections": [
+   {
+    "type": "necessaire",
+    "texte": "Réécrire la progression du squat des blocs 2-3 : vague montante 3-5 répétitions de 78 à 88 % à 2-3 RIR, 8-12 séries/semaine (R6-P9 intermédiaire), sans recul d'intensité entre S4 et S6, en gardant la règle de douleur lombaire comme frein.",
+    "consequence": "Le bloc d'« intensification » est plus facile que le bloc de volume ; le 1RM progressera peu et l'objectif de 115 kg sera manqué de loin."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Dire d'emblée que +15 % en 16 semaines dépasse le rythme habituel d'un intermédiaire (+2-5 %/cycle, R6-P12) et présenter 105-108 kg comme une réussite."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Pour l'antécédent lombaire : soulevé de terre conventionnel plafonné à 80 % ou remplacé une semaine sur deux par un trap bar / terre roumain, et extension lombaire ou bird dog en endurance ; troisième tentative au test seulement si le dos est à 0-1/10 dans la semaine."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Remplacer une partie de la routine épaules-poignets par mobilité hanches et thoracique."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Corriger les incohérences de texte (88 % vs 85 kg, J−8, note 'à deux jours du test' le lundi S5, colonne effort de la série repère)."
+   }
+  ],
+  "points_forts": [
+   "Antécédent lombaire protégé sans exclusion : charge graduée, pas d'échec ni d'excentrique accentué, seuil unique de douleur avec consultation",
+   "Âge, sommeil et stress intégrés, progression ralentie après 40 ans",
+   "Affûtage, dernier lourd et protocole de tentatives conformes au référentiel, sécurités de cage",
+   "Tests intermédiaires estimés à 1 RIR qui recalent les charges, objectif jamais forcé au jugé"
+  ],
+  "ecole": "sante",
+  "source": "autres_04_force_generale_46_ans.md"
+ },
+ {
+  "programme": "programme_3.md",
+  "criteres": {
+   "S1": 7,
+   "S2": 7,
+   "S3": 7,
+   "S4": 7,
+   "S5": 7,
+   "S6": 9,
+   "S7": 9,
+   "S8": 7.5,
+   "S9": 7
+  },
+  "sans_objet": [],
+  "ensemble": 8,
+  "points_perdus": [
+   {
+    "critere": "S1",
+    "perte": 3,
+    "raison": "Questionnaire RAS, arrêt sur symptômes écrit ; mais la règle de douleur ne vise que coude, épaule, poignet, genou : rien sur tibia, tendon d'Achille, pied, hanche, les zones d'une débutante en course ; et le jour J impose 70 min de course pour une sortie la plus longue de 52 min."
+   },
+   {
+    "critere": "S2",
+    "perte": 3,
+    "raison": "Hausses douces (+3-4 min par semaine, règle +10 %), semaine manquée prévue ; mais la course représente +35 % sur la plus longue sortie des 30 jours précédents (52 → 70 min), au-delà du garde-fou de 110 % (R6-P16)."
+   },
+   {
+    "critere": "S3",
+    "perte": 3,
+    "raison": "Pas de charge de vie dans le profil et le programme ne la demande pas ; la baisse du jour est rédigée pour la musculation ('1 série de moins', 'répétitions en réserve') et ne dit pas quoi faire d'un footing."
+   },
+   {
+    "critere": "S4",
+    "perte": 3,
+    "raison": "Endurance fondamentale seule et test de la parole conformes à une débutante (R6-P14, P15) ; mais sortie longue bloquée à 52 min, séance du jeudi intitulée 'fractionné' identique au mardi, aucune simulation d'allure de course."
+   },
+   {
+    "critere": "S5",
+    "perte": 3,
+    "raison": "Fente arrière et pont fessier deux fois par semaine (R6-P22 débutant), échauffement écrit ; aucun travail de mollet ni de pied, maillon faible typique du coureur débutant."
+   },
+   {
+    "critere": "S6",
+    "perte": 1,
+    "raison": "Renforcement au poids du corps à 3-4 RIR, adapté à la débutante."
+   },
+   {
+    "critere": "S7",
+    "perte": 1,
+    "raison": "Séances dans le temps, version courte de 15 min ; la course elle-même (79 min estimées) dépasse le créneau de 60 min du dimanche sans que ce soit dit."
+   },
+   {
+    "critere": "S8",
+    "perte": 2.5,
+    "raison": "Test 5 km en S6, affûtage S11 à −35 %, repos avant l'épreuve, allure cible donnée ; mais allure de 7:00/km fixée sans recalage sur le test de S6, et aucune stratégie de repli (marche-course) pour une distance jamais courue."
+   },
+   {
+    "critere": "S9",
+    "perte": 3,
+    "raison": "'Fractionné' et 'accélérations avant les fractions' sans fractions ; note d'affûtage parlant de 'séries dures' sur un footing ; 'Il recale les allures du bloc suivant' sur la course finale."
+   },
+   {
+    "critere": "ensemble",
+    "perte": 2,
+    "raison": "Une correction nécessaire : la sortie longue plafonne à 52 min alors que la course dure 70 min ; le reste est prudent et faisable."
+   }
+  ],
+  "corrections": [
+   {
+    "type": "necessaire",
+    "texte": "Faire monter la sortie longue jusqu'à 60-65 min vers S9-S10 (dimanche, en libérant l'échauffement ou en ajoutant 5 min si possible), ou intégrer des pauses de marche planifiées (1 min toutes les 10 min) dès S7 et au jour J.",
+    "consequence": "La course dépasse de 35 % la plus longue sortie : risque accru de blessure de surcharge et de ne pas finir dans les 70 min."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Étendre la règle de douleur au tibia, au tendon d'Achille, au pied et à la hanche, et réécrire la baisse du jour pour la course (footing raccourci de 30 %, allure plus lente)."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Ajouter mollets debout lents 2 × 12-15 deux fois par semaine."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Recaler l'allure du jour J sur le test 5 km de S6 et conseiller un départ 10-15 s/km plus lent les deux premiers kilomètres."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Renommer la séance du jeudi ou y ajouter, après S8, 4-6 × 1 min un peu plus vite que l'allure facile (R6-P18), et retirer les mentions 'fractions' et 'séries dures' hors sujet."
+   }
+  ],
+  "points_forts": [
+   "Départ modeste et progression en minutes, adaptés à six mois de pratique",
+   "Allure de conversation expliquée simplement",
+   "Renforcement léger du bas du corps deux fois par semaine",
+   "Test intermédiaire en S6, affûtage et repos avant l'échéance, version courte"
+  ],
+  "ecole": "sante",
+  "source": "autres_05_course_10_km_debutante.md"
+ },
+ {
+  "programme": "programme_4.md",
+  "criteres": {
+   "S1": 8,
+   "S2": 9,
+   "S3": 7.5,
+   "S4": 6,
+   "S5": 7,
+   "S6": 9,
+   "S7": 9,
+   "S8": 7,
+   "S9": 7.5
+  },
+  "sans_objet": [],
+  "ensemble": 8,
+  "points_perdus": [
+   {
+    "critere": "S1",
+    "perte": 2,
+    "raison": "Rien de dangereux, arrêt sur symptômes écrit ; mais la règle de douleur ne vise que coude, épaule, poignet, genou, pas tibia, Achille, pied, alors que la sortie longue double (60 → 112 min)."
+   },
+   {
+    "critere": "S2",
+    "perte": 1,
+    "raison": "Sortie longue +≤10 % par semaine sous le garde-fou de R6-P16, volume de départ proche des 30 km déclarés ; aucun repère kilométrique hebdomadaire."
+   },
+   {
+    "critere": "S3",
+    "perte": 2.5,
+    "raison": "Allègement S6 (mais qui contient un test de 10,5 km à fond), baisse du jour ; charge de vie non demandée, baisse du jour rédigée pour la musculation."
+   },
+   {
+    "critere": "S4",
+    "perte": 4,
+    "raison": "Une seule séance de qualité, 4-5 × 1000 m à 4:28/km identique de S1 à S10 ; aucun travail à l'allure du semi (4:59/km) ni au seuil dans le bloc dit 'spécifique' ; sortie longue à 112 min pour ~210 min hebdomadaires, soit plus de 50 % du volume (R6-P19 : 20-30 %, NC)."
+   },
+   {
+    "critere": "S5",
+    "perte": 3,
+    "raison": "Fente et pont fessier au poids du corps à 2-3 RIR pour un coureur de 4 ans (R6-P22 intermédiaire : charges montantes) ; rien pour mollets et Achille."
+   },
+   {
+    "critere": "S6",
+    "perte": 1,
+    "raison": "Marges prudentes et adaptées."
+   },
+   {
+    "critere": "S7",
+    "perte": 1,
+    "raison": "Toutes les séances tiennent dans le temps, version courte prévue."
+   },
+   {
+    "critere": "S8",
+    "perte": 3,
+    "raison": "Affûtage de 2 semaines et allure cible donnés ; mais S11 ne baisse le volume que d'environ 25 %, S12 supprime toute intensité (jeudi : éducatifs seuls), sans rappel d'allure jusqu'à J−3 (R6-P20), et pas de répétition à l'allure de course."
+   },
+   {
+    "critere": "S9",
+    "perte": 2.5,
+    "raison": "'10,54875 km', 'recale les allures du bloc suivant' sur la course finale, 'séries dures ramenées à 50 %' sur un footing ; allure facile seulement au test de la parole alors qu'un chrono existe (R6-P14 intermédiaire)."
+   },
+   {
+    "critere": "ensemble",
+    "perte": 2,
+    "raison": "Une correction nécessaire : aucune séance à l'allure visée ni progression de la qualité pour un objectif chronométré à la limite de ce que prédit le 10 km actuel."
+   }
+  ],
+  "corrections": [
+   {
+    "type": "necessaire",
+    "texte": "Dans le bloc 2, remplacer une séance de 1000 m sur deux par du travail à l'allure du semi (ex. 3 × 10 min puis 2 × 20 min à 4:55-5:00/km), et placer 20-40 min à allure semi en fin de deux sorties longues ; garder 3-4 × 1000 m en rappel jusqu'à S11.",
+    "consequence": "Sans travail spécifique, le coureur, dont le 10 km prédit environ 1 h 46, n'aura pas appris à tenir 4:59/km sur 21 km et manquera vraisemblablement 1 h 45."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Rééquilibrer le volume : allonger un footing de semaine plutôt que porter la sortie longue au-delà de 50 % du volume hebdomadaire."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Garder un rappel d'allure le jeudi de S12 (2-3 × 1 km à allure semi) au lieu des seuls éducatifs, et baisser davantage le volume de S11 (−40 %)."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Renforcement progressif : fente bulgare avec sac lesté ou élastique, mollets lents unilatéraux 3 × 12-15."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Étendre la règle de douleur aux zones du coureur (tibia, Achille, pied, hanche) et donner une allure facile chiffrée (5:40-6:10/km)."
+   }
+  ],
+  "points_forts": [
+   "Progression de la sortie longue sous le garde-fou de 10 % et volume de départ fidèle au kilométrage déclaré",
+   "Fractionné à une allure chiffrée et recalée par les tests",
+   "Test de 10,5 km en S6, affûtage de deux semaines, repos avant l'échéance",
+   "Séances dans le temps disponible, version courte et règles de semaine manquée"
+  ],
+  "ecole": "sante",
+  "source": "autres_06_semi_marathon_intermediaire.md"
+ },
+ {
+  "programme": "programme_1.md",
+  "criteres": {
+   "S1": 8,
+   "S2": 8.5,
+   "S3": 8,
+   "S4": 7,
+   "S5": 7.5,
+   "S6": 9,
+   "S7": 9,
+   "S9": 6.5
+  },
+  "sans_objet": [
+   "S8"
+  ],
+  "ensemble": 7,
+  "points_perdus": [
+   {
+    "critere": "S1",
+    "perte": 2,
+    "raison": "Mode prudent bien traduit (pas d'impact, arrêt et avis médical, seuils de douleur R5-P23), mais aucun travail d'équilibre ni consigne anti-chute pour une femme de 68 ans ; fente latérale et marche sur les talons sans appui écrit ; étirement en semi-agenouillé sans consigne de coussin ni de relevé du sol."
+   },
+   {
+    "critere": "S2",
+    "perte": 1.5,
+    "raison": "Départ prudent à 2 séries, 4 RIR, et règle de semaine manquée présente ; mais progression quasi figée (2 séries toute la saison, +1 rép. aux semaines 4 et 10 seulement), qui repose entièrement sur la double progression."
+   },
+   {
+    "critere": "S3",
+    "perte": 2,
+    "raison": "Baisse du jour avec critères simples ; mais les semaines 6 et 12 « allègement » ont exactement les mêmes 22 séries dures que les semaines de construction, et la marche y augmente (14 puis 15 min) : l'allègement n'existe que dans l'intitulé."
+   },
+   {
+    "critere": "S4",
+    "perte": 3,
+    "raison": "Marche à allure de conversation, intensité définie, mais durées contradictoires : semaine 4 colonne 11 min / note 12 min, semaine 10 colonne 10 min / note 14 min ; la progression du cardio est illisible (R6)."
+   },
+   {
+    "critere": "S5",
+    "perte": 2.5,
+    "raison": "Poussée/tirage équilibrés (pompe au mur, rowing élastique), échauffement écrit ; pas de travail d'élévation ou de mobilité active d'épaule au-delà de l'échauffement, et la séance « mobilité » du dimanche ne contient que deux étirements et des CARs de hanche pour une discipline annoncée à 50 % mobilité."
+   },
+   {
+    "critere": "S6",
+    "perte": 1,
+    "raison": "RIR 3-4 uniformes, adaptés au débutant âgé ; pas de marge différenciée par mouvement (fente latérale plus instable que la pompe au mur)."
+   },
+   {
+    "critere": "S7",
+    "perte": 1,
+    "raison": "Séances de 24 à 30 min dans les 30 disponibles, exercices simples, version courte prévue ; mais la version courte cite « l'équilibre », qui n'existe pas dans le programme."
+   },
+   {
+    "critere": "S9",
+    "perte": 3.5,
+    "raison": "Consignes de durée de marche contradictoires (colonne vs note), version courte renvoyant à un exercice d'équilibre absent, note du dead bug « position à la barre » hors sujet pour ce profil, élastique du rowing sans repère de tension."
+   },
+   {
+    "critere": "ensemble",
+    "perte": 3,
+    "raison": "Programme sûr et faisable, mais deux corrections nécessaires : l'équilibre, objectif déclaré et clé de l'autonomie à 68 ans, n'est pas entraîné ; les durées de marche sont contradictoires. L'allègement fictif est une troisième faiblesse, de moindre poids."
+   }
+  ],
+  "corrections": [
+   {
+    "type": "necessaire",
+    "texte": "Ajouter un exercice d'équilibre à chaque séance de force (près d'un appui) : station unipodale 3 × 20-30 s par jambe, puis tandem, marche talon-pointe, yeux fermés ou demi-tour en progression ; le garder dans la version courte.",
+    "consequence": "L'objectif « équilibre » et la prévention des chutes, au cœur de l'autonomie visée, ne progresseront pas."
+   },
+   {
+    "type": "necessaire",
+    "texte": "Aligner la durée de marche de la colonne et de la note (une seule valeur par semaine, par exemple 10 → 15 min sur 12 semaines).",
+    "consequence": "La pratiquante ne sait pas combien de minutes marcher (11 ou 12 ? 10 ou 14 ?) et la progression du cardio devient aléatoire."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Faire des semaines 6 et 12 de vrais allègements (1 série par exercice ou 4 RIR) ou les renommer « consolidation »."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Enrichir la séance du dimanche en vraie séance de mobilité (rotation thoracique, mobilité d'épaule au bâton au-dessus de la tête, chevilles en fente au mur)."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Préciser l'appui pour la fente latérale et la marche sur les talons, un coussin sous le genou pour l'étirement semi-agenouillé, et une alternative debout si se relever du sol est difficile."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Ajouter un relevé du sol et un assis-debout rapide (puissance) en fin de bloc 1, utiles à l'autonomie ; donner des repères de couleur/tension pour l'élastique ; retirer la note « position à la barre »."
+   }
+  ],
+  "points_forts": [
+   "Mode prudent appliqué : pas d'impact, signes d'arrêt immédiat, souffle sans blocage.",
+   "Seuils de douleur écrits avec orientation vers un professionnel (R5-P23).",
+   "Dose de départ modeste, séances courtes dans le temps disponible, version courte de 15 min.",
+   "Assis-debout avec chaise et régression claire, très adapté à l'objectif d'autonomie."
+  ],
+  "ecole": "sante",
+  "source": "autres_07_mobilite_sante_senior.md"
+ },
+ {
+  "programme": "programme_2.md",
+  "criteres": {
+   "S1": 8,
+   "S2": 8.5,
+   "S3": 8,
+   "S4": 5,
+   "S5": 6,
+   "S6": 8.5,
+   "S7": 8.5,
+   "S8": 4,
+   "S9": 6
+  },
+  "sans_objet": [],
+  "ensemble": 6,
+  "points_perdus": [
+   {
+    "critere": "S1",
+    "perte": 2,
+    "raison": "Aucun antécédent ; seuils de douleur et consultation écrits ; sécurités de cage au-delà de 85 %. Mais charge excentrique élevée sur coudes/épaules (négatifs de muscle-up, dips barre droite, C2B, T2B kipping) sans garde-fou spécifique."
+   },
+   {
+    "critere": "S2",
+    "perte": 1.5,
+    "raison": "Hausses de squat de 2,5 kg par semaine, recalage par tests, semaine manquée gérée ; mais 90 % en simple dès la semaine 8 sans lien avec l'objectif, et la progression des négatifs (« +1 s par semaine ») n'est pas écrite dans les tableaux."
+   },
+   {
+    "critere": "S3",
+    "perte": 2,
+    "raison": "Allègements planifiés (S5, S10) et baisse du jour ; aucune donnée de sommeil/stress au profil et rien sur la charge de box hors programme (WOD de la box)."
+   },
+   {
+    "critere": "S4",
+    "perte": 5,
+    "raison": "Conditionnement sans format : « Wall ball 1 × 12, T2B 1 × 8, rameur 1 × 250 m, repos 0 s » — nombre de tours, cap de temps et repos absents ; « Rameur en intervalles 500 m : 1 × 250 m » ; aucune progression du conditionnement sur 16 semaines ; séances de 21 à 29 min sur 60 disponibles pour un pratiquant à 80 % CrossFit (R6)."
+   },
+   {
+    "critere": "S5",
+    "perte": 4,
+    "raison": "Volume de tirage/poussée en suspension important (2 séances avec MU négatif, dips, C2B, traction explosive) sans travail de coiffe, de rétraction/dépression scapulaire ni d'extenseurs du poignet ; échauffement générique sans préparation spécifique aux anneaux/barre (R4-F10 à F12)."
+   },
+   {
+    "critere": "S6",
+    "perte": 1.5,
+    "raison": "Pas d'échec, réserves de 2 à 5 ; mais « 4 rép. en réserve » sur des négatifs de 2-3 répétitions est incohérent avec la règle « effort au contrôle », et la semaine 5 d'allègement rend les négatifs plus durs (3 RIR au lieu de 4)."
+   },
+   {
+    "critere": "S7",
+    "perte": 1.5,
+    "raison": "Faisable et version courte présente, mais la moitié du temps disponible est inutilisée alors que le travail de transition manque."
+   },
+   {
+    "critere": "S8",
+    "perte": 6,
+    "raison": "Échéance « muscle-up strict d'ici 16 semaines » : aucune tentative ni test de muscle-up planifié, pas de test intermédiaire (tractions max, C2B max) ; le bloc « réalisation » retire la traction explosive, seul travail de puissance de tirage ; l'affûtage retire les négatifs ; la semaine 16 prévoit un « repos avant l'échéance » sans jour J (R3-P17, P20, P21)."
+   },
+   {
+    "critere": "S9",
+    "perte": 4,
+    "raison": "Notes de conditionnement copiées à l'identique sur chaque ligne, intitulés contradictoires (intervalles 500 m / 250 m), consigne d'affûtage générique, power clean « à calibrer à 5 RIR » et « 65 % du 1RM » en même temps."
+   },
+   {
+    "critere": "ensemble",
+    "perte": 4,
+    "raison": "Base de force et de tirage sérieuse, mais la progression vers la figure n'est pas construite (pas de transition, puissance retirée en réalisation, aucun test de la figure) et le conditionnement est inexploitable : trois corrections nécessaires dont deux touchent directement l'objectif."
+   }
+  ],
+  "corrections": [
+   {
+    "type": "necessaire",
+    "texte": "Construire la progression de la transition en blocs 2 et 3 : garder et progresser la traction explosive (poitrine puis bas des côtes à la barre), ajouter transition en barre basse, muscle-up assisté à l'élastique et tentatives strictes contrôlées en début de séance dès que la traction atteint le sternum.",
+    "consequence": "L'athlète arrive en semaine 16 sans jamais avoir travaillé ni tenté la transition : le muscle-up strict ne sera très probablement pas débloqué."
+   },
+   {
+    "type": "necessaire",
+    "texte": "Planifier des tests : tractions max et C2B max en fin de blocs 1 et 2, tentative de muscle-up strict en fin de bloc 2, et un jour J explicite en semaine 16 (après 48 h sans tirage dur), avec affûtage qui garde 1-2 séries courtes de transition.",
+    "consequence": "L'échéance n'existe pas dans le programme : aucun recalage du travail de figure et aucun moment pour réussir la figure."
+   },
+   {
+    "type": "necessaire",
+    "texte": "Écrire un vrai format de conditionnement (ex. « 5 tours : 12 wall balls, 8 T2B, 250 m rameur, cap 12 min » ou EMOM), avec intensité et progression de densité sur 16 semaines, en utilisant les 60 min disponibles.",
+    "consequence": "Tel quel, un tour de 12/8/250 m dure environ 2 min : le pratiquant ne sait pas quoi faire, et sa capacité de CrossFit (80 % de ses disciplines) régressera."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Ajouter rotation externe à l'élastique, face pull, dépression scapulaire en suspension et tenue en haut des dips, 2 × par semaine, pour protéger coudes et épaules face au volume en suspension."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Remplacer « 4 rép. en réserve » des négatifs par la seule règle de contrôle (arrêt sous 3 s) et ne pas durcir l'effort en semaine d'allègement."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Réduire les simples à 90 % au squat, sans lien avec l'objectif, au profit de séries à 80-85 % ; nettoyer les notes copiées et les intitulés (rameur 500/250 m)."
+   }
+  ],
+  "points_forts": [
+   "Négatifs de muscle-up deux fois par semaine avec règle de contrôle et régression à l'élastique.",
+   "Squat recalé sur une série repère et des séries de recalage, jamais sur un progrès supposé.",
+   "Seuils de douleur, consultation, sécurités de cage et baisse du jour écrits.",
+   "Allègements planifiés toutes les 4-5 semaines."
+  ],
+  "ecole": "sante",
+  "source": "autres_08_crossfit_intermediaire.md"
+ },
+ {
+  "programme": "programme_3.md",
+  "criteres": {
+   "S1": 9,
+   "S2": 8,
+   "S3": 8.5,
+   "S4": 7,
+   "S5": 8,
+   "S6": 9,
+   "S7": 9,
+   "S9": 7
+  },
+  "sans_objet": [
+   "S8"
+  ],
+  "ensemble": 8,
+  "points_perdus": [
+   {
+    "critere": "S1",
+    "perte": 1,
+    "raison": "Sans impact (vélo, marche, presse), variantes guidées adaptées au surpoids (R5-P9), seuils de douleur et professionnel pour l'alimentation ; le soulevé de terre roumain à la barre chez une débutante complète n'a aucune consigne technique."
+   },
+   {
+    "critere": "S2",
+    "perte": 2,
+    "raison": "Départ à 2 séries, 4 RIR, puis double progression et règle de semaine manquée ; mais volume de séries strictement figé sur 12 semaines (34 séries dures chaque semaine)."
+   },
+   {
+    "critere": "S3",
+    "perte": 1.5,
+    "raison": "Sommeil 6,5 h, stress 3/5 et déficit pris en compte et annoncés dans les chiffres, baisse du jour présente ; mais les semaines 6 et 12 « allègement » gardent 34 séries et allongent le vélo."
+   },
+   {
+    "critere": "S4",
+    "perte": 3,
+    "raison": "Intensité définie (allure de conversation) et plan de marche progressif vers 150 puis 200 min (bon pour la perte de poids) ; mais durées de vélo contradictoires : lundi colonne 14 min / note 15 min, mercredi 11 / 15, semaine 4 colonne 10 min / note 17 min."
+   },
+   {
+    "critere": "S5",
+    "perte": 2,
+    "raison": "Équilibre poussée/tirage, chaîne postérieure, échauffement écrit ; pas de prévention ciblée (genoux sous 92 kg, épaules au développé assis)."
+   },
+   {
+    "critere": "S6",
+    "perte": 1,
+    "raison": "RIR 3-4 adaptés, mais uniformes y compris sur le soulevé de terre roumain, mouvement technique."
+   },
+   {
+    "critere": "S7",
+    "perte": 1,
+    "raison": "43 min dans les 45 disponibles, suivi simple ; la version courte cite « l'équilibre », absent du programme."
+   },
+   {
+    "critere": "S9",
+    "perte": 3,
+    "raison": "Contradiction colonne/note sur le vélo à chaque semaine, note « position à la barre » hors sujet, bâton d'échauffement absent du matériel."
+   },
+   {
+    "critere": "ensemble",
+    "perte": 2,
+    "raison": "Programme sûr, bien individualisé (déficit, sommeil, marche, nutrition) ; une correction nécessaire : les durées de vélo contradictoires."
+   }
+  ],
+  "corrections": [
+   {
+    "type": "necessaire",
+    "texte": "Donner une seule durée de vélo par séance et par semaine (colonne = note), et indiquer comment elle s'additionne aux minutes de marche visées.",
+    "consequence": "La pratiquante ne sait pas si elle doit pédaler 10 ou 17 min ; le total d'endurance vers 150-200 min, cœur de l'objectif de perte de poids, devient incalculable."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Faire des semaines 6 et 12 de vrais allègements (1 série en moins ou +1 RIR) ou les renommer."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Ajouter 1 série sur les mouvements principaux vers la semaine 7 si la récupération le permet, pour éviter un volume figé 12 semaines."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Donner 2-3 consignes techniques pour le soulevé de terre roumain (dos neutre, hanches en arrière, barre contre les cuisses) ou proposer d'abord la version haltères."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Corriger la version courte (pas d'« équilibre ») et la note du dead bug ; remplacer le bâton par un manche ou la barre vide."
+   }
+  ],
+  "points_forts": [
+   "Plan de marche progressif vers 150 puis 200 min, fractionnable, avec un jour sans activité.",
+   "Charge de vie (sommeil, stress, déficit) prise en compte et intégrée explicitement.",
+   "Exercices guidés et sans impact adaptés à 92 kg et à une débutante.",
+   "Suivi simple (séances cochées, minutes, poids et tour de taille) et orientation nutritionnelle vers un professionnel."
+  ],
+  "ecole": "sante",
+  "source": "autres_09_perte_de_poids_debutante.md"
+ },
+ {
+  "programme": "programme_4.md",
+  "criteres": {
+   "S1": 5,
+   "S2": 6,
+   "S3": 6.5,
+   "S4": 6,
+   "S5": 6,
+   "S6": 9,
+   "S7": 8,
+   "S9": 5
+  },
+  "sans_objet": [
+   "S8"
+  ],
+  "ensemble": 5,
+  "points_perdus": [
+   {
+    "critere": "S1",
+    "perte": 5,
+    "raison": "Genou à 5/10 actuel : selon la propre règle du programme (et R5-P23), 5 = variante plus facile et −30 à −50 % ; or rien n'est adapté au départ, la chaise contre le mur n'a aucun angle ni seuil de douleur écrit, l'étirement semi-agenouillé appuie sur le genou ; mode prudent + douleur à 5/10 sans avis médical ou kiné préalable (R5-P25, P26)."
+   },
+   {
+    "critere": "S2",
+    "perte": 4,
+    "raison": "Reprise après 200 semaines bien encadrée en règle (+10-15 %/sem., test d'entrée), mais la semaine 6 « allègement » monte à 26 séries (contre 24 en S5), puis le volume plafonne à 26 sans allègement réel ; tenues de chaise qui régressent (35 → 25 s) en semaine 7 sans raison (R5-P7, P22)."
+   },
+   {
+    "critere": "S3",
+    "perte": 3.5,
+    "raison": "Sommeil 6 h et stress 3/5 déclarés « intégrés aux chiffres », baisse du jour présente ; mais aucun allègement effectif (S6 et S12 ont le volume maximal)."
+   },
+   {
+    "critere": "S4",
+    "perte": 4,
+    "raison": "Vélo à allure de conversation, adapté au genou ; mais durées contradictoires (mardi colonne 13 min / note 15-20 min, samedi 6 min / note 15 min) et vélo du samedi retiré à partir de la semaine 10 sans raison, pour une discipline cardio à 20 %."
+   },
+   {
+    "critere": "S5",
+    "perte": 4,
+    "raison": "Épaule opérée : charge graduée et pas d'échec écrits (R5-P20), rowing présent ; mais aucun travail de coiffe ni scapulaire, et le genou n'a ni renforcement du quadriceps en amplitude indolore (step-up bas, squat sur box haute, extension à l'élastique) ni progression d'amplitude."
+   },
+   {
+    "critere": "S6",
+    "perte": 1,
+    "raison": "Pas d'échec, 3-4 RIR, test à 4 RIR ; marge uniforme sans différencier l'épaule opérée."
+   },
+   {
+    "critere": "S7",
+    "perte": 2,
+    "raison": "Séances dans le temps disponible ; changements erratiques d'une semaine à l'autre (développé couché retiré le mardi dès S5, dead bug retiré/ajouté) qui rendent le suivi difficile ; version courte renvoyant à un « équilibre » absent."
+   },
+   {
+    "critere": "S9",
+    "perte": 5,
+    "raison": "Durées de vélo contradictoires, seuil de douleur du genou rédigé pour le membre supérieur (« tirage, préhension »), règle de douleur d'épaule dupliquée alors que la gêne est à 0/10, note « position à la barre », allègement intitulé mais non appliqué."
+   },
+   {
+    "critere": "ensemble",
+    "perte": 5,
+    "raison": "Plafond à 5 : douleur de genou actuelle à 5/10 en mode prudent sans adaptation de départ ni orientation préalable ; s'y ajoutent l'absence de renforcement du genou, des allègements fictifs et des prescriptions contradictoires (plus de trois corrections nécessaires)."
+   }
+  ],
+  "corrections": [
+   {
+    "type": "necessaire",
+    "texte": "Avant la semaine 1 : avis médical ou bilan kiné (mode prudent + genou à 5/10) ; puis appliquer d'emblée la règle « 5/10 » : chaise contre le mur limitée à 45-60° de flexion avec douleur ≤ 3/10 pendant et le lendemain, étirement des fléchisseurs de hanche debout ou avec coussin.",
+    "consequence": "Le pratiquant charge un genou déjà à 5/10 sans repère d'amplitude : aggravation probable et abandon de la reprise."
+   },
+   {
+    "type": "necessaire",
+    "texte": "Ajouter un renforcement progressif du quadriceps et des fessiers en amplitude indolore (squat sur box haute aux haltères, step-up bas, extension de genou à l'élastique), avec amplitude qui augmente selon la douleur.",
+    "consequence": "Avec seulement une tenue de 20-35 s et un pont fessier, le genou ne se renforce pas et la gêne en flexion persiste ; la musculation (60 %) néglige le bas du corps."
+   },
+   {
+    "type": "necessaire",
+    "texte": "Faire des semaines 6 et 12 de vrais allègements (−30 à −50 % de séries) et stabiliser les séances (pas de développé couché retiré le mardi, pas de vélo retiré le samedi, tenues qui ne régressent pas).",
+    "consequence": "Après 4 ans d'arrêt, à 55 ans et avec 6 h de sommeil, la fatigue s'accumule sur 12 semaines sans décharge, et la progression devient incohérente."
+   },
+   {
+    "type": "necessaire",
+    "texte": "Aligner les durées de vélo (colonne = note) et réécrire le seuil de douleur du genou pour les mouvements qui le chargent (flexion, appuis, marche).",
+    "consequence": "Le pratiquant ne sait pas combien de temps pédaler ni quels mouvements surveiller pour son genou."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Ajouter rotation externe à l'élastique et rétraction scapulaire pour l'épaule opérée, en commençant par le développé à l'élastique en amplitude partielle."
+   },
+   {
+    "type": "amelioration",
+    "texte": "Ajouter un court exercice d'équilibre (cité par la version courte) et retirer la note « position à la barre »."
+   }
+  ],
+  "points_forts": [
+   "Règle de reprise après longue coupure claire, avec test d'entrée à 4 RIR et refus de partir des anciens records (R5-P7).",
+   "Seuils de douleur avec arrêt et consultation, antécédent d'épaule protégé sans exclusion (pas d'échec, pas d'excentrique accentué).",
+   "Cardio sur vélo, sans impact, compatible avec le genou.",
+   "Départ en volume bas (15 séries) et durées dans les disponibilités."
+  ],
+  "ecole": "sante",
+  "source": "autres_10_contraintes_multiples.md"
+ }
+]

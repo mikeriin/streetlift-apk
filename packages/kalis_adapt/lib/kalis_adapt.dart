@@ -30,6 +30,8 @@ export 'src/coach.dart'
         techniqueAccessLevel,
         techniqueIntensifies,
         tendonLoaded;
+export 'src/endurance.dart'
+    show EnduranceKind, enduranceKindOf, isQualityRun, prescribedSeconds;
 export 'src/engine.dart' show KalisAdapt;
 export 'src/event_day.dart' show warmupSteps;
 export 'src/fatigue.dart'
