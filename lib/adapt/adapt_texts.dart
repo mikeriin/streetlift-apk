@@ -109,18 +109,37 @@ const _zoneArticles = <kc.BodyZone, String>{
 /// CI1b : arrêt pour une douleur qui dure (`kalis_adapt` 0.2.2, mode
 /// coach) dans la séance servie [plan] : zones à l'arrêt et exercices
 /// retirés aujourd'hui (vide : aucun arrêt).
+///
+/// CI1d (`kalis_adapt` 0.2.3) : le moteur ne met plus la raison
+/// `adapt.pain_persistent` dans la séance qu'à la première séance de
+/// l'arrêt puis une fois par semaine (renvoi vers un professionnel) ; les
+/// autres jours, l'arrêt se lit dans les ajustements (exercice retiré ou
+/// remplacé pour la zone). La carte reste donc affichée tant que l'arrêt
+/// retire ou remplace quelque chose ([painStopNoticeZones] : jours du
+/// renvoi).
 List<({String zone, List<String> removed})> painStopsOf(
   kc.SessionPlan plan,
   String Function(String exerciseId) exerciseName,
 ) {
   final zones = <String>[];
-  for (final r in plan.reasons) {
+  void addZone(kc.Reason r) {
     final z = r.params['zone'];
     if (r.code == 'adapt.pain_persistent' &&
         z is String &&
         !zones.contains(z)) {
       zones.add(z);
     }
+  }
+
+  for (final r in plan.reasons) {
+    addZone(r);
+  }
+  for (final a in plan.adjustments) {
+    if (a.kind != kc.AdjustmentKind.exerciseRemoved &&
+        a.kind != kc.AdjustmentKind.exerciseSwapped) {
+      continue;
+    }
+    a.reasons.forEach(addZone);
   }
   return [
     for (final z in zones)
@@ -141,18 +160,71 @@ List<({String zone, List<String> removed})> painStopsOf(
   ];
 }
 
+/// CI1d : codes des zones à l'arrêt dans la séance [plan] (raisons de la
+/// séance et ajustements retirés ou remplacés), comme [painStopsOf].
+Set<String> painStopZoneCodes(kc.SessionPlan plan) => <String>{
+  for (final r in [
+    ...plan.reasons,
+    for (final a in plan.adjustments)
+      if (a.kind == kc.AdjustmentKind.exerciseRemoved ||
+          a.kind == kc.AdjustmentKind.exerciseSwapped)
+        ...a.reasons,
+  ])
+    if (r.code == 'adapt.pain_persistent' && r.params['zone'] is String)
+      r.params['zone']! as String,
+};
+
+/// CI1d : zones (libellés de [painStopsOf]) dont l'arrêt est « gardé »
+/// (`sessions` = 0 : les deux semaines à 2/10 au plus sont acquises, mais
+/// l'arrêt ne se lève que sur une semaine de charge).
+Set<String> painStopHeldZones(kc.SessionPlan plan) => <String>{
+  for (final r in [
+    ...plan.reasons,
+    for (final a in plan.adjustments) ...a.reasons,
+  ])
+    if (r.code == 'adapt.pain_persistent' && r.params['sessions'] == 0)
+      _zone(r.params['zone']),
+};
+
+/// CI1d : texte court d'une raison `adapt.pain_persistent` un jour sans
+/// renvoi (sous un exercice) : l'arrêt, sans la consigne de consulter.
+String painStopShortText(kc.Reason r) =>
+    'Arrêt en cours (${_zone(r.params['zone'])}) : douleur qui dure.';
+
+/// CI1d : zones (libellés de [painStopsOf]) dont la séance porte le renvoi
+/// vers un professionnel (`adapt.pain_persistent` dans les raisons de la
+/// séance : première séance de l'arrêt, puis une fois par semaine).
+Set<String> painStopNoticeZones(kc.SessionPlan plan) => <String>{
+  for (final r in plan.reasons)
+    if (r.code == 'adapt.pain_persistent' && r.params['zone'] is String)
+      _zone(r.params['zone']),
+};
+
 /// CI1b : texte de l'arrêt d'une zone dans la séance (douleur qui dure).
-String painStopText(({String zone, List<String> removed}) s) {
-  final head =
-      'Douleur qui dure (${s.zone}) : 3 sur 10 ou plus depuis plus de deux '
-      'semaines, ou revenue après une reprise.';
+/// CI1d : [held] — arrêt gardé (deux semaines basses acquises, levée à la
+/// prochaine semaine de charge). [notice] faux — jour sans renvoi (le moteur ne le répète qu'une
+/// fois par semaine) : l'arrêt et les retraits sont dits, sans la
+/// consigne de consulter.
+String painStopText(
+  ({String zone, List<String> removed}) s, {
+  bool notice = true,
+  bool held = false,
+}) {
+  final head = notice
+      ? 'Douleur qui dure (${s.zone}) : 3 sur 10 ou plus depuis plus de deux '
+            'semaines, ou revenue après une reprise.'
+      : 'Arrêt en cours (${s.zone}) : douleur qui dure.';
   final removed = s.removed.isEmpty
       ? ' Les mouvements qui la chargent restent de côté.'
       : ' Retiré${s.removed.length > 1 ? 's' : ''} aujourd’hui : '
             '${s.removed.join(', ')}.';
-  return '$head$removed Consulte un médecin ou un kinésithérapeute. Les '
-      'mouvements retirés reviendront après deux semaines à 2 sur 10 au plus, '
-      'par paliers.';
+  final consult = notice ? ' Consulte un médecin ou un kinésithérapeute.' : '';
+  final back = held
+      ? ' La gêne est restée basse : les mouvements retirés reviennent à la '
+            'prochaine semaine de charge, par paliers.'
+      : ' Les mouvements retirés reviendront après deux semaines à 2 sur 10 '
+            'au plus, par paliers.';
+  return '$head$removed$consult$back';
 }
 
 num? _num(Object? v) => v is num ? v : null;
@@ -193,6 +265,11 @@ String? adaptReasonText(
         'health' || 'health_strong' => 'Charge gardée : ton bilan est bas.',
         'pain' => 'Charge gardée : une douleur est signalée.',
         'failure' => 'Charge gardée : la dernière fois, une série a manqué.',
+        // CI1d (`kalis_adapt` 0.2.3) : zone à l'arrêt ou en reprise
+        // graduée, ou remplaçant d'une douleur du jour : dose prudente.
+        'pain_return' =>
+          'Zone douloureuse ou en reprise : dose prudente, 3 répétitions en '
+              'réserve, pas de hausse aujourd’hui.',
         _ => 'Charge gardée cette fois.',
       };
     case 'adapt.increment_coarse':
@@ -274,6 +351,17 @@ String adjustmentText(
       final to = a.replacementExerciseId == null
           ? 'un équivalent'
           : exerciseName(a.replacementExerciseId!);
+      // CI1d (`kalis_adapt` 0.2.3) : pendant l'arrêt du poignet, une
+      // poussée en extension devient un appui neutre (parallettes,
+      // poignées), au premier palier de la reprise.
+      for (final r in a.reasons) {
+        if (r.code == 'adapt.pain_persistent' &&
+            r.params['zone'] == kc.BodyZone.wristHand.code) {
+          return 'Remplacement : $x → $to (appui neutre : '
+              '${_zoneArticle(r.params['zone'])} est à l’arrêt, douleur qui '
+              'dure).';
+        }
+      }
       return '$x remplacé par $to.';
     case kc.AdjustmentKind.exerciseRemoved:
       // CI1b (`kalis_adapt` 0.2.2) : retrait pour une douleur qui dure, ou
@@ -293,6 +381,25 @@ String adjustmentText(
           )) {
         return 'Test de $x reporté : il se refera à une prochaine séance, '
             'un jour en forme.';
+      }
+      // CI1d (`kalis_adapt` 0.2.3) : un test ne se fait jamais sur une
+      // zone douloureuse ni pendant une reprise : reporté, pas remplacé.
+      for (final r in a.reasons) {
+        final painToday = r.code == 'adapt.pain_reported';
+        final comeback =
+            r.code == 'adapt.load_held' && r.params['cause'] == 'pain_return';
+        final zone = _zoneArticle(r.params['zone']);
+        if (test && painToday) {
+          return 'Test de $x reporté : pas de test tant que $zone a été '
+              'signalé au-dessus de 2 sur 10 dans la semaine.';
+        }
+        if (test && comeback) {
+          return 'Test de $x reporté : pas de test pendant la reprise après '
+              'une douleur.';
+        }
+        if (painToday) {
+          return 'Retiré aujourd’hui : $x (douleur signalée : $zone).';
+        }
       }
       return '$x retiré aujourd’hui.';
     case kc.AdjustmentKind.restIncreased:
@@ -329,7 +436,13 @@ List<String> sessionDiffLines(
     String? line;
     if (kgA != null && kgB != null && (kgA - kgB).abs() > 1e-6) {
       line = '$name : ${adaptKg(kgB)} au lieu de ${adaptKg(kgA)}.';
-    } else if (b.sets != it.sets) {
+    } else if (b.sets != it.sets &&
+        // (CI1d : déjà dit par l'ajustement « séries de moins ».)
+        !plan.adjustments.any(
+          (a) =>
+              a.kind == kc.AdjustmentKind.setsReduced &&
+              a.exerciseId == it.exerciseId,
+        )) {
       line = '$name : ${it.sets} séries au lieu de ${b.sets}.';
     } else if (b.targetFlames != null &&
         it.targetFlames != null &&

@@ -6,7 +6,8 @@ import 'dart:math' as math;
 import 'package:kalis_adapt/kalis_adapt.dart';
 import 'package:kalis_adapt/simulation.dart';
 import 'package:kalis_adapt/src/model.dart'
-    show PainState, formAfter, painResumeDays;
+    show PainState, formAfter, painResumeDays, recentBestOf;
+import 'package:kalis_adapt/src/session.dart' show coachWristNeutralSupport;
 import 'package:kalis_core/kalis_core.dart';
 import 'package:kalis_plan/kalis_plan.dart';
 import 'package:test/test.dart';
@@ -88,6 +89,15 @@ void main() {
       expect(stop!.zone, BodyZone.wristHand);
       expect(stop.sessions, 5);
       expect(stop.intensity, 4);
+    });
+
+    test('trois séances de suite au-dessus de 3 : arrêt gardé au premier '
+        'signalement plus bas (relecture indépendante du code, CA2)', () {
+      final s = zone(const <(int, int)>[(0, 4), (2, 4), (4, 4)]);
+      expect(s.stopAt(4), isNotNull);
+      s.record(6, 2);
+      expect(s.stopAt(6), isNotNull);
+      expect(s.stopAt(4 + painResumeDays), isNull);
     });
 
     test('forte plus d\'une semaine : arrêt', () {
@@ -432,6 +442,213 @@ void main() {
       }, timeout: const Timeout(Duration(minutes: 10)));
     }
   });
+
+  group('reprise graduée conduite séance par séance (CA2, partie 0)', () {
+    test('levée de l\'arrêt datée après deux semaines sous 3 sur 10', () {
+      final s = PainState(BodyZone.elbow, BodySide.both);
+      for (final (day, intensity) in const <(int, int)>[
+        (0, 5),
+        (3, 5),
+        (7, 5),
+        (10, 2),
+      ]) {
+        s.record(day, intensity);
+      }
+      expect(s.stopAt(7), isNotNull);
+      expect(s.liftedOn(7 + painResumeDays - 1), isNull);
+      expect(s.liftedOn(7 + painResumeDays), 7 + painResumeDays);
+      expect(s.liftedOn(40), 7 + painResumeDays);
+      // Arrêt par trois séances de suite au-dessus du seuil : levée datée
+      // même quand le compteur courant a été remis à zéro depuis.
+      final r = PainState(BodyZone.wristHand, BodySide.both);
+      for (final (day, intensity) in const <(int, int)>[
+        (0, 4),
+        (2, 4),
+        (4, 4),
+        (6, 2),
+      ]) {
+        r.record(day, intensity);
+      }
+      expect(r.liftedOn(4 + painResumeDays), 4 + painResumeDays);
+      // Sans arrêt (un seul signalement léger), aucune levée.
+      final t = PainState(BodyZone.elbow, BodySide.both)..record(0, 3);
+      expect(t.liftedOn(30), isNull);
+    });
+
+    test(
+      'meilleur maintien récent : jamais un record d\'avant une coupure',
+      () {
+        const bests = <(int, int)>[(0, 40), (3, 42), (30, 20), (33, 22)];
+        expect(recentBestOf(bests, 35, 14, 28), 22);
+        expect(recentBestOf(bests.sublist(0, 2), 5, 14, 28), 42);
+        expect(recentBestOf(bests, 70, 14, 28), 0);
+      },
+    );
+
+    test('street_12, douleur au coude : aucun test ni hausse sur la zone, '
+        'reprise jamais au-dessus de l\'écrit', () {
+      const key = 'street_12_antecedent_coude';
+      final fixtures = readJsonObject('test/fixtures/street_profiles.json.gz');
+      final entry = fixtures[key]! as Map<String, Object?>;
+      final athlete =
+          Map<String, Object?>.of(entry['athlete']! as Map<String, Object?>)
+            ..['painZone'] = BodyZone.elbow.code
+            ..['painFromDay'] = 28
+            ..['painDays'] = 21
+            ..['painIntensity'] = 5;
+      var returned = 0;
+      for (var seed = 0; seed < 4; seed++) {
+        final engine = KalisAdapt();
+        final policy = CheckedPolicy(engine);
+        final run = simulate(
+          catalog: catalog,
+          spec: athleteFromJson(athlete),
+          profile: streetProfile(key),
+          seed: seed,
+          policy: policy,
+          program: streetProgram(key),
+          weeks: 20,
+          loop: engine,
+          truthKind: TruthKind.b,
+        );
+        expect(policy.violations, isEmpty);
+        expect(run.painAggravations, 0, reason: 'graine $seed');
+        returned += _returnChecked(run);
+        _painDayChecked(run, ExerciseBook(catalog, streetProfile(key)));
+        _recentRiseChecked(
+          run,
+          ExerciseBook(catalog, streetProfile(key)),
+          BodyZone.elbow,
+          from: 28,
+        );
+      }
+      expect(returned, greaterThan(0));
+    }, timeout: const Timeout(Duration(minutes: 20)));
+
+    test('street_01 : l\'élastique ne change pas dans un sens puis dans '
+        'l\'autre d\'une séance à la suivante', () {
+      const key = 'street_01_debutant_complet';
+      final engine = KalisAdapt();
+      final policy = CheckedPolicy(engine);
+      final run = simulate(
+        catalog: catalog,
+        spec: streetAthlete(key),
+        profile: streetProfile(key),
+        seed: 4,
+        policy: policy,
+        program: streetProgram(key),
+        weeks: 16,
+        loop: engine,
+        truthKind: TruthKind.b,
+      );
+      expect(policy.violations, isEmpty);
+      final assisted = <String>{
+        for (final e in catalog.exercises)
+          if (e.assisted) e.id,
+      };
+      final lastChange = <String, int>{};
+      final lastFailed = <String, bool>{};
+      var reversals = 0;
+      for (final s in run.served) {
+        for (final item in s.plan.items) {
+          if (!assisted.contains(item.exerciseId)) {
+            continue;
+          }
+          final slot = '${item.slotId}|${item.exerciseId}';
+          var change = 0;
+          for (final r in item.reasons) {
+            if (r.code == ReasonCodes.adaptFlamesBelowTarget) {
+              change = -1;
+            } else if (r.code == ReasonCodes.adaptFlamesAboveTarget) {
+              change = 1;
+            }
+          }
+          final before = lastChange[slot] ?? 0;
+          if (change != 0 &&
+              before == -change &&
+              !(lastFailed[slot] ?? false)) {
+            reversals++;
+          }
+          lastChange[slot] = change;
+          lastFailed[slot] = s.record.sets.any(
+            (r) => r.slotId == item.slotId && !r.success,
+          );
+        }
+      }
+      expect(reversals, 0);
+    }, timeout: const Timeout(Duration(minutes: 10)));
+
+    test('street_01, poignet encore à 3/10 pendant l\'arrêt : seul un appui '
+        'neutre (parallettes, poignées) charge le poignet', () {
+      const key = 'street_01_debutant_complet';
+      final fixtures = readJsonObject('test/fixtures/street_profiles.json.gz');
+      final entry = fixtures[key]! as Map<String, Object?>;
+      final athlete =
+          Map<String, Object?>.of(entry['athlete']! as Map<String, Object?>)
+            ..['painZone'] = BodyZone.wristHand.code
+            ..['painFromDay'] = 42
+            ..['painDays'] = 28
+            ..['painIntensity'] = 4;
+      final book = ExerciseBook(catalog, streetProfile(key));
+      var checked = 0;
+      for (var seed = 0; seed < 3; seed++) {
+        final engine = KalisAdapt();
+        final policy = CheckedPolicy(engine);
+        final run = simulate(
+          catalog: catalog,
+          spec: athleteFromJson(athlete),
+          profile: streetProfile(key),
+          seed: seed,
+          policy: policy,
+          program: streetProgram(key),
+          weeks: 16,
+          loop: engine,
+          truthKind: TruthKind.b,
+        );
+        expect(policy.violations, isEmpty);
+        final reports = <(int, int)>[];
+        for (final s in run.served) {
+          final today = <PainReport>[
+            ...?s.record.healthCheck?.pains,
+          ].where((r) => r.zone == BodyZone.wristHand);
+          final hot =
+              today.any((r) => r.intensity >= 3) ||
+              reports.any(
+                (r) => r.$1 >= s.simDay - 5 && r.$1 < s.simDay && r.$2 >= 3,
+              );
+          final inStop =
+              s.plan.reasons.any(_wristStop) ||
+              s.plan.adjustments.any((a) => a.reasons.any(_wristStop)) ||
+              s.plan.items.any((it) => it.reasons.any(_wristStop));
+          if (inStop && hot) {
+            checked++;
+            for (final item in s.plan.items) {
+              final info = book.find(item.exerciseId);
+              if (info == null || info.zoneLevel(BodyZone.wristHand) < 0.5) {
+                continue;
+              }
+              expect(
+                coachWristNeutralSupport(info.exercise),
+                isTrue,
+                reason:
+                    '${item.exerciseId} servi le ${s.record.date.iso} '
+                    'pendant l\'arrêt du poignet',
+              );
+            }
+          }
+          for (final r in <PainReport>[
+            ...?s.record.healthCheck?.pains,
+            ...s.record.pains,
+          ]) {
+            if (r.zone == BodyZone.wristHand) {
+              reports.add((s.simDay, r.intensity));
+            }
+          }
+        }
+      }
+      expect(checked, greaterThan(0));
+    }, timeout: const Timeout(Duration(minutes: 10)));
+  });
 }
 
 /// Prescription écrite par le bloc pour l'emplacement [slotId] de la séance
@@ -463,3 +680,132 @@ ExercisePrescription? _written(SimRun run, SimSession s, String slotId) {
   }
   return null;
 }
+
+/// Lignes servies en reprise graduée dans [run] ; vérifie qu'aucune n'est un
+/// test ni ne sert plus de séries que le bloc n'en écrit.
+int _returnChecked(SimRun run) {
+  var returned = 0;
+  for (final s in run.served) {
+    for (final item in s.plan.items) {
+      final back = item.reasons.any(
+        (r) =>
+            r.code == ReasonCodes.adaptLoadHeld &&
+            r.params['cause'] == 'pain_return',
+      );
+      if (!back) {
+        continue;
+      }
+      returned++;
+      expect(item.kind, isNot(SetKind.test));
+      final written = _written(run, s, item.slotId);
+      if (written != null) {
+        expect(
+          item.sets,
+          lessThanOrEqualTo(written.sets),
+          reason: '${item.exerciseId} le ${s.record.date.iso}',
+        );
+      }
+    }
+  }
+  return returned;
+}
+
+/// Vérifie qu'aucune séance de [run] ne sert, un jour où une zone est
+/// signalée à 5 sur 10 ou plus avant la séance, un exercice qui la charge
+/// (contrainte moyenne ou forte) — Silbernagel et al. 2007 (CA2, partie 0).
+void _painDayChecked(SimRun run, ExerciseBook book) {
+  for (final s in run.served) {
+    final pains = s.record.healthCheck?.pains ?? const <PainReport>[];
+    for (final pain in pains) {
+      if (pain.intensity < 5) {
+        continue;
+      }
+      for (final item in s.plan.items) {
+        if (item.kind == SetKind.warmup) {
+          continue;
+        }
+        final info = book.find(item.exerciseId);
+        expect(
+          info == null || info.zoneLevel(pain.zone) < 0.5,
+          isTrue,
+          reason:
+              '${item.exerciseId} servi le ${s.record.date.iso} '
+              '(${pain.zone.code} à ${pain.intensity}/10)',
+        );
+      }
+    }
+  }
+}
+
+/// Vérifie qu'après le début de la douleur ([from], jour de simulation), la
+/// quantité par série servie sur un mouvement sans charge qui charge
+/// [zone] ne dépasse jamais de plus de 10 % (une unité au moins) la plus
+/// grande série de la séance précédente de ce mouvement (Soligard et al.
+/// 2016 ; CA2, partie 0).
+void _recentRiseChecked(
+  SimRun run,
+  ExerciseBook book,
+  BodyZone zone, {
+  required int from,
+}) {
+  final lastTop = <String, int>{};
+  // La zone n'est connue du moteur qu'après le premier signalement (la
+  // douleur du premier jour est dite pendant la séance, après la
+  // prescription) : la règle vaut à partir de la séance suivante.
+  int? known;
+  for (final s in run.served) {
+    final recent = s.simDay >= from && known != null && s.simDay > known;
+    for (final item in s.plan.items) {
+      if (item.kind == SetKind.warmup || item.kind == SetKind.test) {
+        continue;
+      }
+      final info = book.find(item.exerciseId);
+      if (info == null || info.zoneLevel(zone) < 0.5) {
+        continue;
+      }
+      final loaded =
+          item.percentOfOneRm != null ||
+          (item.setTargets ?? const <SetTarget>[]).any(
+            (t) => t.loadKg != null && t.loadKg! > 0,
+          );
+      final before = lastTop[item.exerciseId];
+      if (recent && !loaded && before != null && before > 0) {
+        var served = item.repsHigh ?? item.secondsHigh ?? 0;
+        for (final t in item.setTargets ?? const <SetTarget>[]) {
+          final h = t.repsHigh ?? t.secondsHigh ?? 0;
+          if (h > served) {
+            served = h;
+          }
+        }
+        final grown = (before * 1.1).floor();
+        final most = grown > before + 1 ? grown : before + 1;
+        expect(
+          served,
+          lessThanOrEqualTo(most),
+          reason: '${item.exerciseId} le ${s.record.date.iso}',
+        );
+      }
+    }
+    final tops = <String, int>{};
+    for (final set in s.record.sets) {
+      if (set.kind == SetKind.warmup) {
+        continue;
+      }
+      final amount = set.reps ?? set.seconds ?? 0;
+      if (amount > (tops[set.exerciseId] ?? 0)) {
+        tops[set.exerciseId] = amount;
+      }
+    }
+    lastTop.addAll(tops);
+    if (known == null &&
+        s.simDay >= from &&
+        s.record.pains.any((r) => r.zone == zone)) {
+      known = s.simDay;
+    }
+  }
+}
+
+/// Vrai pour la raison d'un arrêt du poignet (douleur qui dure).
+bool _wristStop(Reason r) =>
+    r.code == ReasonCodes.adaptPainPersistent &&
+    r.params['zone'] == BodyZone.wristHand.code;

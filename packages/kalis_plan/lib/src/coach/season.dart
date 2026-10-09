@@ -181,7 +181,12 @@ final class BlockShape {
     required this.target,
     required this.weeksToEvent,
     required this.finalBlock,
+    this.reprise = false,
   });
+
+  /// Vrai pour un bloc de reprise après une douleur qui dure sur un
+  /// mouvement visé (`coachRepriseWeeks`) : échéance repoussée.
+  final bool reprise;
 
   /// Modèle de saison.
   final SeasonModel model;
@@ -283,6 +288,94 @@ int weeksUntil(CivilDate start, CivilDate date) =>
     start.daysUntil(date) ~/ 7 + 1;
 
 /// Forme du bloc de rang [blockIndex] qui commence le [start].
+/// Vrai si un mouvement visé par l'athlète [a] (objectif, mouvement d'une
+/// épreuve) est à l'arrêt ou en reprise graduée après une douleur qui dure
+/// (zones `stopZones` et `returnSteps` du point de fin de bloc).
+bool coachPainReprise(Athlete a) {
+  final zones = <BodyZone>{...a.stopZones, ...a.returnSteps.keys};
+  if (zones.isEmpty) {
+    return false;
+  }
+  final ids = <String>{
+    for (final g in a.profile.goals)
+      if (g.exerciseId != null) g.exerciseId!,
+    for (final e in a.profile.events ?? const <SeasonEvent>[]) ...<String>[
+      for (final l in e.lifts ?? const <CompetitionLift>[]) l.exerciseId,
+      for (final st in e.stations ?? const <EventStation>[]) st.exerciseId,
+    ],
+  };
+  for (final id in ids) {
+    final e = a.catalog.find(id);
+    if (e == null) {
+      continue;
+    }
+    for (final z in zones) {
+      if (coachPainStopHits(e, z)) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+/// Bloc de reprise après une douleur qui dure sur un mouvement visé
+/// (relecture documentée indépendante de la manche 4, C9.8, `street_12` :
+/// jamais de gabarit d'affûtage ni de test sur un mouvement en reprise ;
+/// bloc « reprise » — participation, retour au mouvement, performance —
+/// avec critères de passage et échéance repoussée). Le bloc n'a ni
+/// affûtage, ni test, ni épreuve : le volume de la semaine monte de 10 %
+/// au plus d'une semaine à l'autre (Soligard et al. 2016, consensus du
+/// CIO ; Clarsen et al. : retour au sport par étapes), de 75 % à 100 %,
+/// et la dernière semaine du bloc est allégée (jamais plus de six
+/// semaines de charge de suite, R3-P9). La semaine où tombait l'échéance
+/// [eventIndex] (rang dans le bloc) est une semaine allégée, sans test :
+/// l'échéance est repoussée au bloc suivant (note `pain_reprise`) ; les
+/// mouvements de la zone suivent la reprise graduée exercice par
+/// exercice (`returnShareOf`).
+List<WeekSpec> coachRepriseWeeks(int length, {int? eventIndex}) {
+  final weeks = <WeekSpec>[];
+  var volume = 0.75;
+  var stage = 0;
+  for (var i = 0; i < length; i++) {
+    if (i == 0) {
+      weeks.add(
+        WeekSpec(
+          kind: WeekKind.intro,
+          intent: WeekIntent.intro,
+          phase: SeasonPhaseKind.reintroduction,
+          volume: volume,
+          stage: 0,
+        ),
+      );
+      continue;
+    }
+    if (i == length - 1 || i == eventIndex) {
+      weeks.add(
+        WeekSpec(
+          kind: WeekKind.deload,
+          intent: WeekIntent.deload,
+          phase: SeasonPhaseKind.deload,
+          volume: 0.6,
+          stage: stage,
+        ),
+      );
+      continue;
+    }
+    volume = volume * 1.1 > 1.0 ? 1.0 : volume * 1.1;
+    weeks.add(
+      WeekSpec(
+        kind: WeekKind.build,
+        intent: WeekIntent.accumulation,
+        phase: SeasonPhaseKind.reintroduction,
+        volume: volume,
+        stage: stage,
+      ),
+    );
+    stage++;
+  }
+  return weeks;
+}
+
 BlockShape shapeBlock(
   Athlete a,
   CivilDate start,
@@ -292,6 +385,28 @@ BlockShape shapeBlock(
   final target = targetOf(a.profile, start);
   final model = seasonModelOf(a, target);
   final toEvent = target == null ? null : weeksUntil(start, target.date);
+  // (Bloc 0 compris : une restructuration du premier bloc pour une douleur
+  // qui dure passe aussi en reprise — relecture indépendante du code de
+  // 0.2.3 ; une durée demandée est respectée.)
+  if (coachPainReprise(a)) {
+    final natural =
+        blockWeeks ??
+        (toEvent == null && a.level == 1
+            ? 6
+            : blockLengthFor(toEvent, blockPreferences(a.level)));
+    return BlockShape(
+      model: model,
+      weeks: coachRepriseWeeks(
+        blockWeeks ?? (natural < 4 ? 4 : natural),
+        eventIndex: toEvent == null ? null : toEvent - 1,
+      ),
+      phase: SeasonPhaseKind.reintroduction,
+      target: null,
+      weeksToEvent: null,
+      finalBlock: false,
+      reprise: true,
+    );
+  }
   // Sans échéance, l'intermédiaire travaille par blocs de six semaines
   // (R3-P9 : allègement toutes les cinq à six semaines) : deux blocs font
   // un cycle de douze semaines qui finit sur un allègement et des tests.

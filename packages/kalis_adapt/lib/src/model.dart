@@ -119,7 +119,7 @@ final class PainState {
   /// Arrêt en cours au jour [day] (douleur qui dure, qui revient, ou forte
   /// plus d'une semaine, sans deux semaines à 2 sur 10 au plus depuis), ou
   /// `null`.
-  PainStop? stopAt(int day) {
+  PainStop? stopAt(int day, {int? run}) {
     final highs = <(int, int)>[
       for (final h in history)
         if (h.$2 >= painPersistMin && h.$1 <= day) h,
@@ -167,7 +167,30 @@ final class PainState {
       }
       recurrence = real && current.first.$1 - before.last.$1 <= painRecurDays;
     }
-    if (!lasting && !strong && !recurrence && consecutiveAbove <= 2) {
+    // Séances de suite au-dessus du seuil dans l'épisode en cours, recomptées
+    // d'après l'historique jusqu'au jour [day] : un arrêt déclenché par
+    // trois séances de suite ne tombe pas au premier signalement plus bas
+    // (relecture indépendante du code, CA2 : le compteur courant était
+    // remis à zéro).
+    var streak = run;
+    if (streak == null) {
+      var n = 0;
+      var best = 0;
+      for (final h in history) {
+        if (h.$1 > day) {
+          break;
+        }
+        if (h.$1 < current.first.$1) {
+          continue;
+        }
+        n = h.$2 > painPersistMin ? n + 1 : 0;
+        if (n > best) {
+          best = n;
+        }
+      }
+      streak = best;
+    }
+    if (!lasting && !strong && !recurrence && streak <= 2) {
       return null;
     }
     return PainStop(
@@ -201,6 +224,66 @@ final class PainState {
     c.history.addAll(history);
     return c;
   }
+
+  /// Jour où le dernier arrêt de la zone a été levé (deux semaines sans
+  /// signalement à 3 sur 10 ou plus après un arrêt), au plus tard [day],
+  /// ou `null` (CA2, partie 0 : reprise graduée conduite par le moteur).
+  int? liftedOn(int day) {
+    int? lastHigh;
+    for (final h in history) {
+      if (h.$2 >= painPersistMin && h.$1 <= day) {
+        lastHigh = h.$1;
+      }
+    }
+    if (lastHigh == null) {
+      return null;
+    }
+    final lift = lastHigh + painResumeDays;
+    if (lift > day) {
+      return null;
+    }
+    // L'arrêt a-t-il eu lieu à l'un des jours de l'épisode ? Les séances de
+    // suite au-dessus du seuil se recomptent d'après l'historique (le
+    // compteur courant a pu être remis à zéro depuis).
+    var run = 0;
+    for (final h in history) {
+      if (h.$1 > lastHigh) {
+        break;
+      }
+      run = h.$2 > painPersistMin ? run + 1 : 0;
+      if (h.$2 >= painPersistMin &&
+          lastHigh - h.$1 < painEpisodeGapDays + painPersistDays &&
+          stopAt(h.$1, run: run) != null) {
+        return lift;
+      }
+    }
+    return null;
+  }
+
+  /// Signalements des jours `[from ; to]` (intensités, dans l'ordre).
+  List<int> reportsBetween(int from, int to) => <int>[
+    for (final h in history)
+      if (h.$1 >= from && h.$1 <= to) h.$2,
+  ];
+}
+
+/// Meilleure série de [bests] (jour, valeur ; les plus récentes à la fin)
+/// depuis la dernière coupure d'au moins [gapDays] jours, dans les
+/// [windowDays] jours avant [day] ; 0 sans séance récente.
+int recentBestOf(List<(int, int)> bests, int day, int gapDays, int windowDays) {
+  var best = 0;
+  var next = day;
+  for (var i = bests.length - 1; i >= 0; i--) {
+    final (d, amount) = bests[i];
+    if (next - d >= gapDays || day - d > windowDays) {
+      break;
+    }
+    if (amount > best) {
+      best = amount;
+    }
+    next = d;
+  }
+  return best;
 }
 
 /// Ce que le moteur retient d'un exercice d'une séance à l'autre.
@@ -263,6 +346,18 @@ final class ExerciseTrack {
   /// Plus grande valeur d'une série (répétitions ou secondes), record.
   double bestAmount = 0;
 
+  /// Plus grande série menée à bien de chaque séance (jour, répétitions ou
+  /// secondes), douze au plus, les plus récentes à la fin.
+  List<(int, int)> sessionBests = const <(int, int)>[];
+
+  /// Meilleure série menée à bien depuis la dernière coupure d'au moins
+  /// [gapDays] jours (arrêt pour douleur, pause), dans les [windowDays]
+  /// jours avant [day] ; 0 sans séance récente (CA2, partie 0 : la tenue
+  /// servie part d'un maintien récent, jamais d'un record d'avant un
+  /// arrêt).
+  int recentBest(int day, int gapDays, int windowDays) =>
+      recentBestOf(sessionBests, day, gapDays, windowDays);
+
   /// Mode coach : dernière séance de chaque emplacement (charge et schéma),
   /// pour borner les hausses à schéma égal.
   Map<String, SlotMark> slotMarks = const <String, SlotMark>{};
@@ -279,6 +374,10 @@ final class ExerciseTrack {
   /// Mode coach, exercice assisté : assistance de la dernière série
   /// (charge externe négative du journal), ou `null`.
   double? assist;
+
+  /// Mode coach, exercice assisté : jour du dernier changement de cran
+  /// d'assistance, ou `null`.
+  int? assistDay;
 
   /// Mode coach : performance (logarithme de la capacité du jour) des
   /// dernières séances qui ont mesuré la capacité, trois au plus (jour,
@@ -303,6 +402,7 @@ final class ExerciseTrack {
     final c = ExerciseTrack(info, filter.fork());
     c.lowProbeDay = lowProbeDay;
     c.assist = assist;
+    c.assistDay = assistDay;
     c.form = form;
     c.easeDay = easeDay;
     c.easeRatio = easeRatio;
@@ -321,6 +421,7 @@ final class ExerciseTrack {
     c.lastResidual = lastResidual;
     c.lastSets = lastSets;
     c.bestAmount = bestAmount;
+    c.sessionBests = sessionBests;
     c.slotMarks = slotMarks;
     c.heavy = heavy;
     return c;
@@ -746,6 +847,31 @@ final class ExerciseRun {
   /// Mode coach : plafond de hausse d'une séance à l'autre, ou `null` :
   /// ceux de 0.1.
   double? riseCap;
+
+  /// Mode coach : mouvement en reprise graduée après une douleur qui dure
+  /// (écrite par le bloc ou conduite par le moteur) — jamais au-dessus de
+  /// la dose écrite, loin de l'échec, sans série repère (CA2, partie 0).
+  bool inReturn = false;
+
+  /// Mode coach : dose écrite jamais dépassée ce jour (reprise graduée,
+  /// appui du poignet sensible) — ni séries ajoutées, ni plage étendue,
+  /// ni tenue allongée au-delà de l'écrit.
+  bool doseCapped = false;
+
+  /// Mode coach : mouvement qui charge une zone à l'arrêt ou sortie d'un
+  /// arrêt depuis moins de douze semaines — la quantité par série monte de
+  /// 10 % au plus (une répétition ou une seconde au moins) d'une séance à
+  /// la suivante, même quand le bloc écrit davantage (CA2, partie 0 ;
+  /// Soligard et al. 2016).
+  bool recentZone = false;
+
+  /// Mode coach : part du 1RM la plus haute permise pendant une reprise
+  /// graduée conduite par le moteur, ou `null`.
+  double? returnPct;
+
+  /// Mode coach : le jour suit un affûtage — le maximum du jour des
+  /// tentatives compte le gain d'affûtage (`coachTaperGain`).
+  bool tapered = false;
 
   /// Vrai si l'exercice a un filtre ouvert.
   bool get modelled => track != null;
@@ -1233,6 +1359,7 @@ final class SessionRun {
     double? lowest;
     var openSet = false;
     var top = 0;
+    var made = 0;
     for (final o in run.observed) {
       if (o.amount > top) {
         top = o.amount;
@@ -1272,6 +1399,25 @@ final class SessionRun {
       if (o.amount > track.bestAmount) {
         track.bestAmount = o.amount.toDouble();
       }
+      if (!o.failed && o.amount > made) {
+        made = o.amount;
+      }
+    }
+    if (made > 0) {
+      final bests = <(int, int)>[
+        for (final b in track.sessionBests)
+          if (b.$1 != day) b,
+      ];
+      var best = made;
+      for (final b in track.sessionBests) {
+        if (b.$1 == day && b.$2 > best) {
+          best = b.$2;
+        }
+      }
+      bests.add((day, best));
+      track.sessionBests = bests.length > 12
+          ? bests.sublist(bests.length - 12)
+          : bests;
     }
     final easy =
         run.fails == 0 &&
@@ -1380,6 +1526,7 @@ final class SessionRun {
         final now = loadKg ?? 0;
         final before = track.assist;
         if (before != null && (now - before).abs() > 1e-9) {
+          track.assistDay = day;
           track.probeCapacity = null;
           final step = ln(_p.coachAssistStepShare);
           track.filter.shiftLevel(
@@ -1574,11 +1721,17 @@ final class SessionRun {
         )) {
       // Mode coach : loin de l'échec, la note ne se lit que comme « au
       // moins tant en réserve » (la prédiction des répétitions restantes
-      // se dégrade loin de l'échec et plafonne, R2-P3).
+      // se dégrade loin de l'échec et plafonne, R2-P3). Sur une série
+      // lourde et courte (8 répétitions possibles au plus), la réserve dite
+      // se corrige du biais de note appris, comme une mesure (Halperin et
+      // al. 2022 : sous-estimation moyenne d'environ une répétition, plus
+      // juste près de l'échec et sur les charges lourdes ; CA2, partie 0 :
+      // estimation moins prudente, jamais abaissée par une série facile).
       final rir = rirOfFlames(flames);
+      final heavy = reps + rir <= p.coachHeavyBoundReps;
       f.observeLoad(
         logLoad: logLoad,
-        n: reps + rir,
+        n: reps + (heavy ? state.rater.trueRir(rir, p) : rir),
         nSd: state.rater.rirSd(rir, reps, p),
         fatigue: fatigue,
         p: p,
@@ -1866,7 +2019,11 @@ final class SessionRun {
     // concordante dans les quatre semaines (CX, correction 1 : jamais
     // d'estimation abaissée sur une seule série d'un mauvais jour ; la note
     // sous-estime la réserve loin de l'échec, Zourdos et al. 2021).
-    if (byFeel && !test && run.spec.coach != null && predicted > 0) {
+    // (De même pour une série arrêtée sous le bas de sa cible : CA2,
+    // partie 0 — une seule série arrêtée tôt ne fait plus baisser
+    // l'estimation ; relecture documentée, manche 4 et partie 0.)
+    final short = target != null && amount < target.low;
+    if ((byFeel || short) && !test && run.spec.coach != null && predicted > 0) {
       final track = run.track!;
       if (implied < predicted * 0.9) {
         final last = track.lowProbeDay;
@@ -1885,7 +2042,6 @@ final class SessionRun {
         track.lowProbeDay = null;
       }
     }
-    final short = target != null && amount < target.low;
     if (byFeel || test || short) {
       run.measured = true;
       return false;

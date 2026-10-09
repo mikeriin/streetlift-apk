@@ -25,7 +25,7 @@ pour les restructurations) sont ses seules dépendances.
   les maxima mesurés ; séries repère quand les notes n'informent plus ; séries fractionnées quand une plage
   est hors de portée ; alerte de surmenage ; douleur, bilan du jour, reprise. Un bloc sans champ de 0.4.0
   (programme importé du propriétaire compris) est servi comme en 0.1.0 ; `KalisAdapt(legacy: true)` sert
-  tout bloc comme en 0.1.0. `CONTRAT.md`, § 11 ; calibrage : `docs/CALIBRAGE_CA1.md`.
+  tout bloc comme en 0.1.0. `CONTRAT.md`, § 11 ; calibrage : `docs/CALIBRAGE_CA1.md`, `docs/CALIBRAGE_CA2.md`.
 
 Ce que le moteur garantit, le modèle et ses équations, d'où vient chaque nombre et ce qu'il ne sait pas
 faire : [`CONTRAT.md`](CONTRAT.md). Ce que la simulation montre, et ce qu'elle ne montre pas :

@@ -253,6 +253,18 @@ vide ou absent.
   autres workflows : les tests Python qui lisent `build-apk.yml` y
   échouent, le contrôle complet reste `claude/ci-3d`).
 
+### CI1d (dev6.9.3, pipeline CP, voie App)
+
+- Paquets `kalis_plan` 0.2.3 et `kalis_adapt` 0.2.3 (branches fixes
+  `etiquettes/…`, copie octet pour octet), `kalis_core` 0.4.2 inchangé,
+  `pubspec.lock` à jour.
+- Cibles émulateur inchangées (CI1c puis CI1, parties a et b) ; la cible
+  CI1 ajoute, après le jour de l'arrêt, la séance suivante de l'arrêt
+  (carte gardée, renvoi selon le jour) : relevé `douleur_suite_*`, capture
+  `ci1_12_douleur_suite_<thème>.png`.
+- Tests Dart du lot : `test/ci1d_paquets_test.dart`. Mise au point sur
+  `claude/ci-ci1d-rapide` (`rapide.yml` seul, comme CI1c).
+
 ### Mode dev dans les tests d'intégration
 
 - Données de la session personnelle semées par un `AppStore()` séparé avant

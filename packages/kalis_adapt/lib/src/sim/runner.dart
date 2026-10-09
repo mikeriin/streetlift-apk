@@ -414,6 +414,10 @@ final class SimRun {
   /// Hausses de charge sur la zone douloureuse après signalement.
   int painAggravations = 0;
 
+  /// Poussées de douleur d'une zone réactive après une hausse trop rapide
+  /// de sa charge (modèles B et C ; CA2, partie 0).
+  int painFlares = 0;
+
   /// Séances du journal.
   final List<SessionRecord> sessions = <SessionRecord>[];
 
@@ -1323,6 +1327,7 @@ SimRun simulate({
         ln(t.lastCapacity / t.firstCapacity) / ((last - first) / 7);
   }
   run.painAggravations = athlete.painAggravations;
+  run.painFlares = athlete.painFlares;
   run.finalProfile = current;
   run.sessions.addAll(sessions);
   return run;
