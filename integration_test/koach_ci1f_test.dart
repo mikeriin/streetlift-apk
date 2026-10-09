@@ -127,13 +127,7 @@ void main() {
 
   /// Séance ouverte, bilan passé, premier exercice ; puis pages suivantes
   /// jusqu'à [target] (au plus 12 pages).
-  Future<bool> openTo(
-    WidgetTester tester,
-    int w,
-    int j,
-    Finder target, {
-    String? name,
-  }) async {
+  Future<bool> openTo(WidgetTester tester, int w, int j, Finder target) async {
     final week = store.program.week(w);
     final day = week.day(j)!;
     unawaited(
@@ -151,23 +145,14 @@ void main() {
     if (await until(tester, start, max: 40)) {
       await tapF(tester, start, ms: 1500);
     }
-    // Exercice choisi dans la liste « Exercices » de la séance.
-    if (name != null && target.evaluate().isEmpty) {
-      final list = find.text('Exercices');
-      if (list.evaluate().isNotEmpty) {
-        await tester.tap(list.first);
-        await wait(tester, 1200);
-        final item = find.text(name);
-        if (item.evaluate().isNotEmpty) {
-          await tester.tap(item.last);
-          await wait(tester, 1500);
-        }
-      }
-    }
-    for (var i = 0; i < 12 && target.evaluate().isEmpty; i++) {
+    // Pages suivantes par le contrôleur de la séance (un glissement peut
+    // tomber sur la barre du chrono).
+    for (var page = 1; page < 16 && target.evaluate().isEmpty; page++) {
       final pages = find.byType(PageView);
       if (pages.evaluate().isEmpty) break;
-      await tester.drag(pages.first, const Offset(-360, 0));
+      final ctl = tester.widget<PageView>(pages.first).controller;
+      if (ctl == null || !ctl.hasClients) break;
+      ctl.jumpToPage(page);
       await wait(tester, 900);
     }
     return target.evaluate().isNotEmpty;
@@ -218,13 +203,7 @@ void main() {
     final add = keyStarts('miniset-add-');
     // (La page est une liste construite à la demande : on cherche le titre
     // de l'exercice, puis on fait défiler jusqu'à la bande.)
-    releve['myo_page'] = await openTo(
-      tester,
-      w,
-      j,
-      find.text('CURL BARRE EZ'),
-      name: 'Curl barre EZ',
-    );
+    releve['myo_page'] = await openTo(tester, w, j, find.text('CURL BARRE EZ'));
     if (releve['myo_page'] != true) {
       // Diagnostic : ce que montre la page.
       releve['myo_textes'] = [
