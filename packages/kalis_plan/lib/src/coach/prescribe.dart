@@ -4120,6 +4120,30 @@ final class Prescriber {
         : (taper
               ? longest * 0.6
               : (light ? longest * 0.7 : longest * (1 + coachRunLongRise)));
+    // Après une échéance (semaine de transition ou d'introduction, ou dans
+    // les deux semaines qui suivent) : la sortie repart à 70 % de la plus
+    // longue, puis +10 % au plus d'une semaine à l'autre — jamais la plus
+    // longue d'avant la course + 10 % deux semaines après un semi (CY :
+    // panel des saisons croisées, `autres_06`, 74 → 112 min en semaine 14 ;
+    // Frandsen et al. 2025 : le risque suit la plus longue sortie récente).
+    final restartNow =
+        ws.kind == WeekKind.intro ||
+        ws.intent == WeekIntent.transition ||
+        ws.intent == WeekIntent.intro;
+    final last = _history.isEmpty ? null : _history.last;
+    final restartBefore =
+        _history.length >= 2 &&
+        (_history[_history.length - 1].restart ||
+            _history[_history.length - 2].restart);
+    if (longest > 0 && !taper && blockIndex > 0 && restartNow) {
+      long = longest * 0.7;
+    } else if (longest > 0 && !taper && restartBefore && last != null) {
+      final step = (last.runLong < 15 ? 15.0 : last.runLong) *
+          (1 + coachRunLongRise);
+      if (long > step) {
+        long = step;
+      }
+    }
     // (Jour de renforcement du coureur : 12 min gardées pour lui — panel
     // CP2, partie 1 : le renforcement disparaissait des semaines de
     // construction.)
@@ -6427,6 +6451,22 @@ final class Prescriber {
           longest.intensity = target.copyWith(
             value: _round3(target.value * after / before),
           );
+        }
+        // (La part dite par la note « zone de l'épreuve » suit les
+        // répétitions écrites — CY : panel des saisons croisées,
+        // `street_14`, note à 76 % pour 2 × 8 sur un maximum de 17.)
+        final reasons = longest.reasons;
+        for (var i = 0; i < reasons.length; i++) {
+          final r = reasons[i];
+          final v = r.params['value'];
+          if (r.code == ReasonCodes.planCoachNote &&
+              r.params['note'] == CoachNotes.eventZone &&
+              v is num) {
+            reasons[i] = _note(
+              CoachNotes.eventZone,
+              _round(v.toDouble() * after / before),
+            );
+          }
         }
       }
     }

@@ -24,6 +24,9 @@ additives). Constats de la relecture documentée de CP2 (manches 7 et 8) : `docs
   qui vise la première traction : deux séries assistées chaque jour (douze séries de tirage vertical par semaine
   au plus avec descentes et tenue) ; plateau de traction sans lest à douze tractions et plus : archer et
   typewriter d'abord (environ un tiers du maximum par côté).
+- **Croisement (CY, boucle 2)** : après une échéance de course, la sortie longue repart à 70 % de la plus
+  longue puis +10 % par semaine au plus ; la note « zone de l'épreuve » suit les répétitions écrites quand le
+  garde-fou de volume les réduit.
 
 ## 0.3.0
 

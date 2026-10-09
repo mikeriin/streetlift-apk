@@ -1162,6 +1162,29 @@ List<SetPlan>? _loadedPlans(
     kg = written;
     ex.heldCause = lockCause;
   }
+  // Double progression (règle « 2 pour 2 » de la NSCA : quand les séries
+  // passent au haut de la plage, ou nettement plus faciles que visé, deux
+  // séances de suite, la charge monte d'un cran) : un athlète qui ne va
+  // jamais près de l'échec ne fait pas monter l'estimation (seule une série
+  // dure la mesure), et sa charge restait figée (CY : panel des saisons
+  // croisées, `autres_01`, `autres_09` — presse à 35 kg seize semaines,
+  // effort réel 6 à 9 en réserve pour 3 visés ; `street_07`, `street_08`).
+  // Un cran au plus, sous le garde-fou de réserve du modèle, jamais à 85 %
+  // du 1RM écrit ou plus, jamais un jour sans hausse.
+  if (markLoad != null &&
+      mark != null &&
+      lockCause == null &&
+      mark.reached >= p.coachTwoForTwo &&
+      kg <= markLoad + 1e-9 &&
+      pct < p.coachCorridorHeavyShare &&
+      item.kind != SetKind.test &&
+      served != SetTechniqueKind.accentuatedEccentric) {
+    final up = grid.next(grid.floor(markLoad), up: true);
+    if (up > markLoad + 1e-9 && guardOk(up)) {
+      kg = up;
+      ex.heldCause = null;
+    }
+  }
   // Même emplacement, schéma différent de la dernière séance (série
   // ouverte, répétitions recalées) : la charge totale ne monte pas plus que
   // la hausse permise à schéma égal, corrigée de l'écart de répétitions
