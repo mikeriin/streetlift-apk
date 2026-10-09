@@ -29,7 +29,9 @@ jobs:
   packages:
     name: Paquets Dart et outils Python
     runs-on: ubuntu-24.04
-    timeout-minutes: 90
+    # (180 min depuis le lot CY : saisons croisées de tous les profils, dix
+    # scénarios ; la passe complète dépassait 90 min avec kalis_quest.)
+    timeout-minutes: 180
     defaults:
       run:
         shell: bash

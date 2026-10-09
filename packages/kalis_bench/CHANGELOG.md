@@ -1,5 +1,15 @@
 # Journal
 
+## 0.3.0 — 09/10/2026 (lot CY)
+
+Couple `kalis_plan` 0.3.1 × `kalis_adapt` 0.3.1. Grilles, profils types et critères inchangés.
+
+- **Saisons croisées pour tous les profils du banc** (street et autres disciplines) : exports `saisons/`,
+  campagne `saisons.json` / `SAISONS.md`, `saisons/SECURITE.md`.
+- **Deux scénarios imposés de plus** : `changement_discipline` (la première discipline secondaire devient la
+  principale à mi-saison, profils qui en ont une) et `course_ajoutee` (10 km annoncé en semaine 5, couru en
+  semaine 10, profil street hybride) ; un scénario sans objet pour un profil n'est pas simulé.
+
 ## 0.2.4 — 09/10/2026 (lot CP2, partie 1)
 
 Couple `kalis_plan` 0.3.0 × `kalis_adapt` 0.3.0. Profils types, attentes de coach et grilles du panel

@@ -266,20 +266,22 @@ Future<void> runStreetCampaign({
   );
 }
 
-/// Profils street bruts (JSON) du dossier `profiles`, triés par nom de
-/// fichier.
-List<Map<String, Object?>> readStreetJson() {
+/// Profils bruts (JSON) du dossier `profiles`, triés par nom de fichier :
+/// tous (saisons croisées, depuis 0.3.0), ou ceux du groupe [group].
+List<Map<String, Object?>> readSeasonJson({String? group}) {
   final paths = <String>[
     for (final f in Directory('profiles').listSync())
       if (f is File && f.path.endsWith('.json')) f.path,
   ]..sort();
   return <Map<String, Object?>>[
     for (final path in paths)
-      if (readJsonObject(path)['group'] == 'street') readJsonObject(path),
+      if (group == null || readJsonObject(path)['group'] == group)
+        readJsonObject(path),
   ];
 }
 
-/// Saisons racontées (lot CX) : pour chaque profil street, la saison de
+/// Saisons racontées (lot CX ; tous les profils depuis 0.3.0, lot CY) :
+/// pour chaque profil, la saison de
 /// référence sous le modèle de vérité B (les modèles A et C mesurés à
 /// côté) et chaque scénario imposé sous le modèle B. Écrit dans
 /// [outPath]/saisons : `<profil>.md` (saison), `<profil>.json` (programme
@@ -287,7 +289,7 @@ List<Map<String, Object?>> readStreetJson() {
 /// `scenarios/<profil>_<scénario>.md`, et `SECURITE.md` (violations de
 /// sécurité des programmes réalisés).
 void writeSeasonExports(String outPath) {
-  final inputs = loadInputs('street');
+  final inputs = loadInputs('tous');
   final catalog = inputs.catalog;
   final plan = KalisPlan();
   final safety = StringBuffer()
@@ -302,8 +304,11 @@ void writeSeasonExports(String outPath) {
     ..writeln('| Profil | Scénario | Violations |')
     ..writeln('| --- | --- | --- |');
   final details = StringBuffer();
-  for (final json in readStreetJson()) {
+  for (final json in readSeasonJson()) {
     for (final scenario in SeasonScenario.values) {
+      if (!seasonScenarioApplies(json, scenario)) {
+        continue;
+      }
       final scenarioJson = seasonProfileJson(json, scenario);
       final bench = BenchProfile.fromJson(scenarioJson);
       final adapted = adaptProfile(
@@ -386,8 +391,8 @@ void _write(String path, String text) {
 }
 
 Map<String, Object?> _seasonOf(String key, int seeds) {
-  final inputs = loadInputs('street');
-  final json = readStreetJson().firstWhere((j) => j['key'] == key);
+  final inputs = loadInputs('tous');
+  final json = readSeasonJson().firstWhere((j) => j['key'] == key);
   return seasonCampaignOf(inputs.catalog, KalisPlan(), json, seeds: seeds);
 }
 
@@ -408,7 +413,7 @@ Future<void> runSeasonCampaign({
       file.readAsStringSync().trim().split(RegExp(r'\s+')).first,
     );
   }
-  final keys = <String>[for (final j in readStreetJson()) j['key']! as String];
+  final keys = <String>[for (final j in readSeasonJson()) j['key']! as String];
   final results = <String, Map<String, Object?>>{};
   var next = 0;
   Future<void> worker() async {

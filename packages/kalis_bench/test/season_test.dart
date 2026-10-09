@@ -23,7 +23,7 @@ List<Map<String, Object?>> _street() {
 void main() {
   final street = _street();
 
-  test('les huit scénarios imposés, codes uniques', () {
+  test('les dix scénarios imposés, codes uniques', () {
     expect(SeasonScenario.values.map((s) => s.code).toList(), <String>[
       'reference',
       'seances_manquees',
@@ -33,7 +33,47 @@ void main() {
       'parc_seulement',
       'echeance_avancee',
       'deuxieme_echeance',
+      'changement_discipline',
+      'course_ajoutee',
     ]);
+  });
+
+  test('scénarios de CY : changement de discipline à mi-saison (profils à '
+      'discipline secondaire), course ajoutée au profil street hybride', () {
+    final catalog = loadCatalog();
+    final hybrid = street.where(
+      (j) => seasonScenarioApplies(j, SeasonScenario.race),
+    );
+    expect(hybrid.map((j) => j['key']), <Object?>[
+      'street_17_hybride_street_course',
+    ]);
+    final json = hybrid.single;
+    final profile = adaptProfile(
+      BenchProfile.fromJson(json),
+      catalog: catalog,
+    ).profile;
+    final race = seasonChanges(json, SeasonScenario.race).single;
+    expect(race.week, seasonAddedRaceAnnounce);
+    final raced = race.apply(profile);
+    expect(
+      raced.events!.where((e) => e.kind == EventKind.race).map((e) => e.date),
+      contains(eventDate(benchStartDate, seasonAddedRaceWeek)),
+    );
+    expect(raced.validate(), isEmpty);
+    final change = seasonChanges(json, SeasonScenario.discipline).single;
+    final swapped = change.apply(profile);
+    expect(swapped.disciplines.primary, TrainingDiscipline.cardio);
+    expect(
+      swapped.disciplines.secondaries.first.discipline,
+      TrainingDiscipline.streetWorkout,
+    );
+    expect(swapped.validate(), isEmpty);
+    expect(
+      change.week,
+      seasonDisciplineWeek(
+        seasonWeeksOf(json, SeasonScenario.discipline),
+      ),
+    );
   });
 
   test('saisons de 16 semaines au moins, jusqu\'à une semaine après '
@@ -43,6 +83,9 @@ void main() {
       final key = json['key'];
       final target = seasonTargetWeeks(json);
       for (final scenario in SeasonScenario.values) {
+        if (!seasonScenarioApplies(json, scenario)) {
+          continue;
+        }
         final weeks = seasonWeeksOf(json, scenario);
         expect(weeks, greaterThanOrEqualTo(16), reason: '$key');
         if (target != null) {
