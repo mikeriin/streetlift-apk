@@ -137,6 +137,9 @@ abstract final class CoachNotes {
   /// Équilibre progressif près d'un appui (CP2, partie 1 ; R6-P26).
   static const String balanceProgress = 'balance_progress';
 
+  /// Exercice debout d'un senior tenu d'une main (CP2, partie 1).
+  static const String holdSupport = 'hold_support';
+
   /// Repère d'un objectif de répétitions sans lest au matériel (`value` :
   /// valeur attendue) : la surcharge passe par une variante plus dure
   /// (CP2, partie 0, boucle 2).
@@ -437,6 +440,7 @@ abstract final class CoachNotes {
     chairSquat,
     kneeShallow,
     balanceProgress,
+    holdSupport,
     checkpointBody,
     checkpointHold,
     checkpointLoad,
@@ -1118,7 +1122,13 @@ final class Prescriber {
   }
 
   int _scaled(int sets, WeekSpec ws, {int min = 1}) {
-    var n = _round(sets * ws.volume * volumeScale);
+    // (Musculation : le volume est le levier de l'hypertrophie ; la
+    // tolérance du profil ne descend pas sous 0,85 — panel CP2, partie 1 :
+    // deux séries partout et des séances à moitié vides.)
+    final scale = skeleton.style == CoachStyle.hypertrophy && volumeScale < 0.85
+        ? 0.85
+        : volumeScale;
+    var n = _round(sets * ws.volume * scale);
     // Semaine de l'échéance ou du test daté : deux séries au plus par
     // exercice — le volume continue de baisser jusqu'au test (R3-P12).
     if (ws.eventWeek && n > 2) {
@@ -4575,6 +4585,10 @@ final class Prescriber {
       if (a.age >= 65 && x.e.id == 'mu-air-squat') {
         x.reasons.add(_note(CoachNotes.chairSquat, 0));
       }
+      // Fente latérale d'un senior : une main sur un appui.
+      if (a.age >= 65 && x.e.id == 'mu-fente-laterale') {
+        x.reasons.add(_note(CoachNotes.holdSupport, 0));
+      }
       // Genou gêné : chaise haute, angle écrit (R5-P23).
       final knee = a.limitOn(Joint.knee)?.discomfort ?? 0;
       if (knee >= 3 && x.e.id == 'mu-wall-sit') {
@@ -7343,7 +7357,21 @@ final class Prescriber {
   List<WeekPrescription> build() {
     final out = <WeekPrescription>[];
     for (var w = 0; w < _shape.weeks.length; w++) {
-      final ws = _shape.weeks[w];
+      var ws = _shape.weeks[w];
+      // Musculation et santé : la semaine « de test » est un vrai
+      // allègement (−40 % de volume ; R3-P9 ; panel CP2, partie 1).
+      if (ws.kind == WeekKind.test &&
+          (skeleton.style == CoachStyle.hypertrophy ||
+              skeleton.style == CoachStyle.health)) {
+        ws = WeekSpec(
+          kind: WeekKind.deload,
+          intent: WeekIntent.deload,
+          phase: SeasonPhaseKind.deload,
+          volume: ws.volume < 0.6 ? ws.volume : 0.6,
+          stage: ws.stage,
+          weeksToEvent: ws.weeksToEvent,
+        );
+      }
       _today = a.start.addDays(7 * w);
       if (w == 0) {
         _loadedBefore = 0;

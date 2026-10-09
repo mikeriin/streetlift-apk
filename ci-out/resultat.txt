@@ -1,4 +1,4 @@
-run=37867822922
-commit=bf73dc2a5c43a13a84c2d797fdf6365259439767
+run=37868216889
+commit=6d7cf5eb9edb7af430cc6f81f2f87c431cb92fc1
 branche=claude/ci-cp-a
-packages=cancelled
+packages=failure
