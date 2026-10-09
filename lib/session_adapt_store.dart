@@ -1699,7 +1699,7 @@ extension SessionAdaptStore on AppStore {
     }
     final written = adaptAsWritten(week, slot);
     if (served != null && !written) {
-      final kind = served.technique?.kind;
+      final kind = _servedMiniKind(week, j, slot, served, 0);
       return (
         exerciseId: exerciseId,
         seconds: prescriptionInSeconds(served) ? true : null,
@@ -1739,6 +1739,52 @@ extension SessionAdaptStore on AppStore {
           : null,
       meters: false,
     );
+  }
+
+  /// Prescription du bloc à l'emplacement [slot] (S[week]·J[j]).
+  kc.ExercisePrescription? _blockItemAt(int week, int j, String? slot) {
+    if (slot == null) return null;
+    for (final it
+        in adaptPlaceOf(week, j)?.day?.items ??
+            const <kc.ExercisePrescription>[]) {
+      if (it.slotId == slot) return it;
+    }
+    return null;
+  }
+
+  /// CI1f : technique à mini-séries de la ligne [i] servie [served]. Quand
+  /// `kalis_adapt` 0.3.0 sert la ligne par sa règle générale (charge sans
+  /// part du 1RM : lignes en RIR du programme importé), la prescription
+  /// servie perd la technique sans la retirer pour une raison dite : la
+  /// séance garde alors celle écrite par le bloc (mêmes lignes, niveau du
+  /// profil suffisant, matrice R2-P22). Une technique retirée par le moteur
+  /// (`plan.technique_withheld` : niveau, douleur, bilan, phase) ne revient
+  /// pas.
+  kc.SetTechniqueKind? _servedMiniKind(
+    int week,
+    int j,
+    String? slot,
+    kc.ExercisePrescription served,
+    int i,
+  ) {
+    final k = miniSetKindOf(served, i);
+    if (k != null || served.technique != null) return k;
+    if (served.reasons.any(
+      (r) => r.code == kc.ReasonCodes.planTechniqueWithheld,
+    )) {
+      return null;
+    }
+    final block = _blockItemAt(week, j, slot);
+    if (block == null ||
+        block.sets != served.sets ||
+        block.kind != served.kind) {
+      return null;
+    }
+    final bk = miniSetKindOf(block, i);
+    if (bk == null) return null;
+    final level = adaptProfile?.experience?.index ?? 1;
+    if (level < ka.techniqueAccessLevel(bk)) return null;
+    return bk;
   }
 
   /// Myo-reps et rest-pause : relances après la série (sans elles, le
@@ -1795,9 +1841,9 @@ extension SessionAdaptStore on AppStore {
   MiniSetPlan? miniSetPlanFor(int week, int j, Exercise e, int i) {
     final it = adaptItemFor(week, j, e);
     if (it == null) return null;
-    final kind = miniSetKindOf(it, i);
+    final kind = _servedMiniKind(week, j, e.slotId, it, i);
     if (kind == null) return null;
-    final t = it.technique!;
+    final t = it.technique ?? _blockItemAt(week, j, e.slotId)!.technique!;
     final g = adaptGoal(week, j, e, i);
     final seconds = it.secondsLow != null || it.secondsHigh != null;
     final low = g?.low ?? (seconds ? it.secondsLow : it.repsLow) ?? 1;
@@ -2019,7 +2065,9 @@ extension SessionAdaptStore on AppStore {
         // CI1f : technique à mini-séries ; un myo-rep ou un rest-pause
         // validé sans ses mini-séries garde sa technique (le moteur ne lit
         // pas son total comme une série d'une traite).
-        final mini = it == null ? null : miniSetKindOf(it, i);
+        final mini = it == null
+            ? null
+            : _servedMiniKind(week, day.j, it.slotId, it, i);
         final kind = total != null || mini == null || _relaunch(mini)
             ? mini
             : null;

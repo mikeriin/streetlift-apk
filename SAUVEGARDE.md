@@ -22,5 +22,5 @@ Base : main 238078ee (dev6.10.0). Lot lancé 09/10 ~09:08 UTC.
 - 09:50 : relecture indépendante (sous-agent Opus, 13 constats) ; traités : asWritten/exerciseOf par semaine, minutes marquées à la saisie (unit=min), myo sans parties garde sa technique, regroupement myo par préfixe validé + repli myo_reps, estimations dans la clé, test de distance exclu, historique groupé, _group recalculé, groupes dans la signature du journal, parts orphelines retirées, enchaîné seulement adjacent, libellé mètres. Distances (LogSpec distance). Version 6.11.0+113. Cible émulateur CI1f (integration_test/koach_ci1f_test.dart), ci3d_drive.sh, ci-3d.yml (70 min), CI_GP.md.
 - Essai 1 (ALL) : analyse verte avec 0.3.0 ; échecs attendus ci1d (versions), ci1_street (musculation au chemin calibré) corrigés ; m8_carte_2d délais (environnement rapide).
 
-## En cours
-Essai 4 sur claude/ci-ci1f-rapide2 ; puis ALL ; puis claude/ci-3d complet, main, build signé, livraison.
+## En cours (10:00)
+Essai 5 vert (tests choisis). Technique écrite gardée quand kalis_adapt sert en règle générale (_servedMiniKind). Contrôle complet claude/ci-3d poussé (846610a3, essai 1). Reste : résultat ci-3d (captures CI1f à relire), main, build signé, livraison, ETAT, page de suivi, notification.
