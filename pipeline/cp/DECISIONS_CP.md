@@ -430,4 +430,18 @@ Lot terminé le 09/10/2026 sauf la publication : dev6.11.0, commit 9dd09214 (par
 - **CI1f.12 Publication** : `main` non modifiée (push refusé à la session) ; aucun contournement tenté. Le commit 9dd09214 avance `main` en avance rapide.
 - **Recommandation (C8, le pilotage décide)** : publier 9dd09214 sur `main`, build signé, puis valider dev6.11.0 et la donner au propriétaire à la place de dev6.10.0 ; CY : CI1f.5 et CI1f.6.
 
+### CI1g
+
+Lot livré le 09/10/2026, à valider par la conversation de pilotage (C8.1) : dev6.11.1, main b7996b3f (parent 9dd09214, arbre 79bbe549 identique au contrôle complet `claude/ci-3d` run 37946602412, vert à l'essai 2), build signé run 37955793332 vert. Détail : `pipeline/cp/livraisons/LIVRAISON_CI1g.md`.
+
+- **CI1g.1 Lancement** : message sans ligne « Lot : » ; seul lot de la voie App « à faire ». `add_repo` absent de la session ; push vérifié (`git push --dry-run`, puis la ligne « en cours »). Push sur `main` accepté (avance rapide), pas de passage par `cp-sauvegardes/CI1g-candidat` (qui garde le même commit).
+- **CI1g.2 Paquets** : `kalis_plan` 0.3.1, `kalis_adapt` 0.3.1 copiés octet pour octet des branches fixes ; `kalis_core` 0.4.3 inchangé (identique à son étiquette) ; `kalis_bench` absent.
+- **CI1g.3 `clearance_first`** : étape bloquante à l'ouverture d'une séance pas commencée d'un bloc qui porte la note (« Avis médical d'abord » : « J'ai eu l'avis d'un médecin ou d'un kiné » / « Pas encore ») ; « Pas encore » → carte en tête de la page du bilan et consigne sous chaque exercice ; redemandée à la séance suivante. Choix (non tranché par les paquets) : confirmation une fois par bloc, clé « bloc#valeur de la note » (une gêne plus forte redemande), gardée dans les réglages (`medicalClearance`, écrit seulement s'il n'est pas vide) et la sauvegarde. Aucun mouvement retiré par l'étape (les paquets ne disent pas lesquels « réveillent la douleur »).
+- **CI1g.4 Poignet** : `sw-pompe-inclinee` servie avec `adapt.pain_reported` zone poignet → « Mains serrées sur la barre basse, poignets droits. » sous l'exercice (bouclier) et dans le texte de l'échange ; autre appui neutre : « gêne du poignet : appui neutre, poignets droits ».
+- **CI1g.5 Textes** : `shoulder_history`, `clearance_first`, `knee_shallow` traitées comme notes de douleur (bouclier, en tête) ; les 108 notes rédigées sans code brut (test) ; cause `cap` de `adapt.load_held` rédigée.
+- **CI1g.6 C11** : blocs du programme de 40 semaines de six semaines au plus (test) → `KalisAdapt(restructureImported: true)` sans objet, défaut gardé ; aucune étape d'avis médical sur ce programme.
+- **CI1g.7 Contrôles** : cible émulateur `integration_test/clearance_ci1g_test.dart` (a sombre rouge, b clair violet) verte ; `test/ci1g_paquets_test.dart` vert. Essai 1 du contrôle complet : `m8_carte_2d_test.dart` en dépassement de délai (même échec intermittent que les essais 3 et 4 de CI1f), vert seul et à l'essai 2 (relance unique).
+- **CI1g.8 Relecture indépendante** (sous-agent Opus) : 9 constats, traités ou vérifiés sans changement.
+- **Recommandation (C8, le pilotage décide)** : valider dev6.11.1 et la donner au propriétaire à la place de dev6.11.0 ; lot CI final ensuite (limites restantes de CI1 à CI1g, points « non déterminés » des notes d'intégration, répétition du rappel de la carte).
+
 ### CI
