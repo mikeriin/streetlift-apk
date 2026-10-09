@@ -42,6 +42,13 @@ p{margin:0}
   padding:4px 8px;border-radius:6px;background:var(--note-fond);color:var(--note);font-variant-numeric:tabular-nums}
 .pastille.vide{background:transparent;border:1px dashed var(--trait);color:var(--encre2);font-size:13px;font-family:var(--texte);font-weight:500}
 .groupe{margin-block:22px 8px}
+.evo{margin-block:4px 18px;overflow-x:auto;border:1px solid var(--trait);border-radius:8px;background:var(--carte)}
+.evo table{border-collapse:collapse;width:100%;font-size:13px;font-variant-numeric:tabular-nums}
+.evo th,.evo td{padding:6px 8px;border-bottom:1px solid var(--trait);text-align:left;vertical-align:top}
+.evo th{font-family:var(--titre);font-weight:600;letter-spacing:.03em;text-transform:uppercase;color:var(--encre2);white-space:nowrap}
+.evo tr:last-child td{border-bottom:0}
+.evo td:first-child{white-space:nowrap;font-weight:600}
+.evo .note-evo{color:var(--encre2);font-size:13px;padding:8px;margin:0}
 .retour{background:none;border:0;padding:8px 0;color:var(--accent);font-weight:600;cursor:pointer;margin-top:10px}
 .fiche{display:flex;flex-direction:column;gap:22px}
 .entete{display:flex;flex-direction:column;gap:6px}
@@ -146,6 +153,10 @@ function majEtat(){
 
 function vueListe(garder){
   courant=null;const v=$("#vue");v.replaceChildren();
+  if(manche.evolution){const e=manche.evolution,t=el("table");
+    t.append(el("tr",{},...e.colonnes.map(c=>el("th",{scope:"col",text:c}))));
+    for(const r of e.lignes)t.append(el("tr",{},...r.map(c=>el("td",{text:String(c)}))));
+    v.append(el("h3",{class:"groupe",text:e.titre}),el("div",{class:"evo"},t,e.note?el("p",{class:"note-evo",text:e.note}):null));}
   v.append(el("p",{class:"intro",text:manche.intro||"Dix programmes créés par les moteurs pour dix profils types. Ouvrez un programme, parcourez-le, puis notez-le de 1 à 10 : une note d'ensemble, cinq critères et un commentaire libre. 9 veut dire « je le donnerais tel quel à cet athlète »."}));
   for(const[g,titre]of[["street","Street"],["autres","Autres disciplines"]]){
     const ps=manche.programmes.filter(p=>p.groupe===g);if(!ps.length)continue;

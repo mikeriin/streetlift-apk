@@ -969,7 +969,9 @@ String? coachReasonText(Reason r, Catalog catalog) {
           'Progression : la sortie longue dépasse de ${_int(step)} % au '
               'plus la plus longue course des quatre dernières semaines '
               '(après une semaine allégée ou de test, elle reprend sa '
-              'durée d\'avant, sans la dépasser de plus de ${_int(step)} %).',
+              'durée d\'avant, sans la dépasser de plus de ${_int(step)} %). '
+              "Après une course, elle repart à 70 % de la plus longue "
+              'sortie, puis monte de ${_int(step)} % au plus par semaine.',
         _ => null,
       };
     case ReasonCodes.planPainRule:

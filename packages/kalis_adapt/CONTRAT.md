@@ -1416,7 +1416,7 @@ ou de dos qui double en série de jours durs (choix raisonné d'après Feito et 
 
 ## 13. Croisement final (0.3.1, lot CY, partie 0)
 
-Évolution additive (trois paramètres, un argument du constructeur) ; aucun type ni code de raison nouveau.
+Évolution additive (cinq paramètres, un argument du constructeur) ; aucun type ni code de raison nouveau.
 
 ### 13.1 Règles
 
@@ -1432,6 +1432,8 @@ ou de dos qui double en série de jours durs (choix raisonné d'après Feito et 
 2 bis. **Douleur qui dure au bas du corps** (hanche, cuisse, genou, jambe, cheville et pied ; mêmes seuils d'arrêt) :
    la course (impact) est retirée de la séance tant que l'arrêt tient, raison `adapt.pain_persistent` ; le cardio sans
    impact reste (relecture documentée de CY, `autres_06` : cheville à 4/10 neuf séances et course continuée).
+   Mode coach seulement. Au retour (reprise graduée de la zone), la course reprend à
+   `enduranceResumeLong` (50 %) de l'écrit au plus, cause `resume_14`.
 3. **Couloir de charge** : part écrite du 1RM ≥ `coachCorridorHeavyShare` (85 %) → le couloir ne monte plus
    au-dessus de l'écrit (il peut descendre).
 4. **Schéma changé au même emplacement** (série ouverte, répétitions recalées) : charge totale ≤ dernière charge
@@ -1442,11 +1444,12 @@ ou de dos qui double en série de jours durs (choix raisonné d'après Feito et 
 6. **Double progression** (règle « 2 pour 2 » de la NSCA) : même emplacement, même schéma, marque à
    `reached` ≥ `coachTwoForTwo` (deux séances de suite au haut de la plage, ou première série dite au moins
    deux répétitions plus facile que visé), aucun verrou du jour (échec, douleur, bilan bas, répétitions
-   manquées), part écrite sous 85 % : la charge monte d'un cran au-dessus de la dernière, si le garde-fou de
-   réserve du modèle le permet.
+   manquées, bloc verrouillé, semaine légère ou proche d'une échéance, retour ou douleur sur l'exercice), part
+   écrite sous 85 % : la charge monte d'un cran au-dessus de la dernière (cran de `coachTwoForTwoMaxStep`, 10 %,
+   au plus), si le garde-fou de réserve du modèle le permet.
 7. **Propositions « volume ajusté »** (`review.dart`) : une série de plus seulement si chaque groupe majeur de
    l'exercice reste sous `coachWeeklyCeilingSets` du niveau (12, 20, 25, 30 séries dures par semaine, R1-P1),
-   compté sur la semaine écrite suivante.
+   compté sur chaque semaine que la proposition modifie.
 8. **Programme importé** (C11) : `KalisAdapt(restructureImported: true)` laisse `review` proposer les
    restructurations de `kalis_plan` sur un bloc de plus de six semaines ; par défaut, inchangé (jamais).
 
@@ -1455,6 +1458,7 @@ ou de dos qui double en série de jours durs (choix raisonné d'après Feito et 
 | Paramètre | Valeur | Source |
 | --- | --- | --- |
 | `coachCorridorHeavyShare` | 85 % du 1RM | choix raisonné ; erreur d'estimation du 1RM de quelques pour cent (Helms et al. 2018) ; relecture documentée de CP2, `street_07` |
+| `coachTwoForTwoMaxStep` | 10 % | choix raisonné (relecture documentée de CY : un cran de plus de 10 % n'est pas une double progression) |
 | `coachTwoForTwo` | 2 séances | règle « 2 pour 2 » (NSCA, Essentials of Strength Training and Conditioning, progression de la charge) |
 | `coachRepLoadShare`, `coachRepGapMax` | 2,5 % par répétition ; 4 | tables de pourcentage du 1RM (NSCA : environ 2,5 à 3 % par répétition), borne basse ; choix raisonné |
 

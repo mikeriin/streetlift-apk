@@ -1174,6 +1174,13 @@ List<SetPlan>? _loadedPlans(
   if (markLoad != null &&
       mark != null &&
       lockCause == null &&
+      c.policy.build &&
+      !c.policy.locked &&
+      !c.light &&
+      !c.eventNear &&
+      !ex.inReturn &&
+      ex.painZones.isEmpty &&
+      !run.noIncrease &&
       mark.reached >= p.coachTwoForTwo &&
       kg <= markLoad + 1e-9 &&
       pct < p.coachCorridorHeavyShare &&
@@ -1197,7 +1204,9 @@ List<SetPlan>? _loadedPlans(
   // de la NSCA ; quatre au plus). (CY, partie 0 : relecture documentée de
   // CP2, `street_12` +17,9 % et `street_08` +18,1 % de charge totale d'une
   // séance à la suivante, la borne à schéma égal ne s'appliquant pas.)
-  final otherLoad = mark?.loadKg;
+  // (Base : la dernière séance d'une semaine de charge, pas un allègement
+  // ni un jour bas — relecture indépendante du code de CY.)
+  final otherLoad = mark?.loadedLoadKg ?? mark?.loadKg;
   if (markLoad == null &&
       mark != null &&
       otherLoad != null &&
