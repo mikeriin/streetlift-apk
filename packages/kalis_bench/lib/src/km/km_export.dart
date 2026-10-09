@@ -624,9 +624,7 @@ Map<String, Object?> kmTruthTrace(
               load = a.selfSelect(t, high, Flames.toRir(flamesTarget));
             } else {
               final u = script.next();
-              load = u < 0.4
-                  ? prev
-                  : t.info.grid.next(prev, up: u < 0.8);
+              load = u < 0.4 ? prev : t.info.grid.next(prev, up: u < 0.8);
             }
             lastLoad[id] = load;
           }

@@ -142,8 +142,7 @@ List<Object?> _enduranceTraces() {
             }
             if (kind == EnduranceKind.run && runs.length < 40) {
               runs.add(it);
-            } else if (kind == EnduranceKind.conditioning &&
-                wods.length < 40) {
+            } else if (kind == EnduranceKind.conditioning && wods.length < 40) {
               wods.add(it);
             }
           }
@@ -154,13 +153,7 @@ List<Object?> _enduranceTraces() {
       for (var seed = 0; seed < 2; seed++) {
         out.add(<String, Object?>{
           'key': key,
-          'trace': kmEnduranceTrace(
-            bench.level.index,
-            kind,
-            seed,
-            runs,
-            wods,
-          ),
+          'trace': kmEnduranceTrace(bench.level.index, kind, seed, runs, wods),
         });
       }
     }
