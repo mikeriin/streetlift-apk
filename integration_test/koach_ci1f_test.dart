@@ -127,7 +127,13 @@ void main() {
 
   /// Séance ouverte, bilan passé, premier exercice ; puis pages suivantes
   /// jusqu'à [target] (au plus 12 pages).
-  Future<bool> openTo(WidgetTester tester, int w, int j, Finder target) async {
+  Future<bool> openTo(
+    WidgetTester tester,
+    int w,
+    int j,
+    Finder target, {
+    String? name,
+  }) async {
     final week = store.program.week(w);
     final day = week.day(j)!;
     unawaited(
@@ -144,6 +150,19 @@ void main() {
     final start = find.byKey(const ValueKey('bilan-start'));
     if (await until(tester, start, max: 40)) {
       await tapF(tester, start, ms: 1500);
+    }
+    // Exercice choisi dans la liste « Exercices » de la séance.
+    if (name != null && target.evaluate().isEmpty) {
+      final list = find.text('Exercices');
+      if (list.evaluate().isNotEmpty) {
+        await tester.tap(list.first);
+        await wait(tester, 1200);
+        final item = find.text(name);
+        if (item.evaluate().isNotEmpty) {
+          await tester.tap(item.last);
+          await wait(tester, 1500);
+        }
+      }
     }
     for (var i = 0; i < 12 && target.evaluate().isEmpty; i++) {
       final pages = find.byType(PageView);
@@ -204,7 +223,16 @@ void main() {
       w,
       j,
       find.text('CURL BARRE EZ'),
+      name: 'Curl barre EZ',
     );
+    if (releve['myo_page'] != true) {
+      // Diagnostic : ce que montre la page.
+      releve['myo_textes'] = [
+        for (final t in find.byType(Text).evaluate().take(25))
+          (t.widget as Text).data,
+      ];
+      await shot('02_myo_page');
+    }
     await scrollTo(tester, add);
     final addKey = add.evaluate().isEmpty
         ? null
