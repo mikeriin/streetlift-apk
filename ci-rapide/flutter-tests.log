@@ -1,0 +1,18 @@
+00:00 +0: loading /home/runner/work/streetlift-apk/streetlift-apk/test/ci1g_paquets_test.dart
+00:00 +0: paquets 0.3.1 dans l’application
+00:00 +1: textes (aucun code brut) toutes les notes de coach de kalis_plan 0.3.1 sont rédigées
+00:00 +2: textes (aucun code brut) avis médical, épaule, genou : en tête avec le bouclier
+00:00 +3: textes (aucun code brut) pompe sur barre basse pour une gêne du poignet : consigne de CY
+00:00 +4: textes (aucun code brut) charge plafonnée (`cap`) : rédigée
+00:00 +5: avis médical avant la première séance (clearance_first) gêne déclarée à 6/10 : note du bloc, étape à confirmer une fois par bloc, gardée dans la sauvegarde
+00:01 +6: avis médical avant la première séance (clearance_first) sans gêne : aucune étape
+00:01 +7: avis médical avant la première séance (clearance_first) épaule à antécédent (musculation) : `shoulder_history` sous chaque développé au-dessus de la tête écrit, avec le bouclier
+CI1G 2/10 past_resolved : développés écrits 9, notés 9
+CI1G 3/10 over_12_months : développés écrits 18, notés 18
+CI1G 6/10 months_3_to_12 : développés écrits 18, notés 18
+00:01 +8: séance : étape bloquante (setUpAll)
+00:01 +8: séance : étape bloquante « Pas encore » puis rappel en tête ; « J’ai eu l’avis » : plus rien
+00:03 +9: séance : étape bloquante « J’ai eu l’avis » dans l’étape : gardé pour le bloc
+00:03 +10: séance : étape bloquante (tearDownAll)
+00:03 +10: C11 : programme de 40 semaines blocs du programme importé de six semaines au plus (`restructureImported` sans objet)
+00:03 +11: All tests passed!
