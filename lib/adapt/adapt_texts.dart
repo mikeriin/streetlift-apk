@@ -307,7 +307,8 @@ String? adaptReasonText(
         // CI1g (`kalis_adapt` 0.3.1) : hausse bornée (schéma changé depuis
         // la dernière séance du même emplacement, palier de hausse, part
         // du maximum) ; avant, texte par défaut.
-        'cap' => 'Charge plafonnée : la hausse reste mesurée, pour rester sûre.',
+        'cap' =>
+          'Charge plafonnée : la hausse reste mesurée, pour rester sûre.',
         _ => 'Charge gardée cette fois.',
       };
     case 'adapt.increment_coarse':

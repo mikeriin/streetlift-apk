@@ -281,18 +281,25 @@ extension SessionAdaptStore on AppStore {
   /// sinon. La note est réécrite à chaque bloc tant que sa condition tient
   /// (questionnaire « prudent », gêne déclarée à 5/10 ou plus) : la
   /// confirmation est demandée une fois par bloc.
-  ({String blockId, kc.Reason reason})? clearancePending(int week, int j) {
+  ///
+  /// Clé de la confirmation : identifiant du bloc et valeur de la note
+  /// (gêne déclarée, ou 0 pour le questionnaire) : un bloc réécrit le même
+  /// jour pour une gêne plus forte redemande l'avis.
+  ({String key, kc.Reason reason})? clearancePending(int week, int j) {
     final place = adaptPlaceOf(week, j);
     if (place == null) return null;
     final r = ct.coachClearanceReason(place.block);
     if (r == null) return null;
-    if (settings.medicalClearance.containsKey(place.blockId)) return null;
-    return (blockId: place.blockId, reason: r);
+    final v = r.params['value'];
+    final key = '${place.blockId}#${v is num ? v.round() : 0}';
+    if (settings.medicalClearance.containsKey(key)) return null;
+    return (key: key, reason: r);
   }
 
-  /// CI1g : avis médical confirmé pour le bloc [blockId] (date du jour).
-  void confirmClearance(String blockId) {
-    settings.medicalClearance[blockId] = civilDateString(storeClock());
+  /// CI1g : avis médical confirmé pour la clé [key] de [clearancePending]
+  /// (date du jour).
+  void confirmClearance(String key) {
+    settings.medicalClearance[key] = civilDateString(storeClock());
     saveSettings();
   }
 

@@ -346,8 +346,8 @@ class AppSettings {
   String accent; // couleur dominante (L5-C), voir kAccentIds
 
   /// CI1g (`kalis_plan` 0.3.1, note `clearance_first`) : blocs pour
-  /// lesquels l'avis d'un médecin ou d'un kiné est confirmé (identifiant du
-  /// bloc → date civile de la confirmation). Écrit seulement s'il n'est pas
+  /// lesquels l'avis d'un médecin ou d'un kiné est confirmé (« identifiant
+  /// du bloc#valeur de la note » → date civile de la confirmation). Écrit seulement s'il n'est pas
   /// vide (export identique à 6.11.0 sinon).
   Map<String, String> medicalClearance;
 

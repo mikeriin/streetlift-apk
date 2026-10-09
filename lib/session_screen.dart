@@ -1070,6 +1070,11 @@ class SessionExercisePageState extends State<SessionExercisePage> {
         !pain.contains(kWristBarPushUpCue)) {
       pain.add(kWristBarPushUpCue);
     }
+    // CI1g : avis médical pas encore confirmé (« Pas encore ») : rappel
+    // sous chaque exercice (une séance reprise saute la page du bilan).
+    if (store.clearancePending(widget.week.n, widget.day.j) != null) {
+      pain.add(kClearanceWaiting);
+    }
     final notes = [
       for (final n
           in block == null
