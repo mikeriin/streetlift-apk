@@ -13,6 +13,7 @@ import 'package:kalis_plan/report.dart' show OwnerProgram;
 
 import 'adapter.dart';
 import 'analysis.dart';
+import 'endurance_export.dart';
 import 'expectations.dart';
 import 'export.dart';
 import 'profile.dart';
@@ -521,9 +522,11 @@ Map<String, String> renderReport(
     }
     final t = r.trajectory;
     if (t != null) {
-      files['trajectoires/${r.profile.key}.md'] = t.coached
-          ? coachTrajectoryMarkdown(t, catalog, others: r.otherTruths)
-          : trajectoryMarkdown(t, catalog);
+      files['trajectoires/${r.profile.key}.md'] =
+          (t.coached
+              ? coachTrajectoryMarkdown(t, catalog, others: r.otherTruths)
+              : trajectoryMarkdown(t, catalog)) +
+          enduranceMarkdown(t.run, catalog);
     }
   }
   return files;

@@ -55,6 +55,11 @@ const List<String> propertyProfiles = <String>[
   'tres_grand_lourd',
   'petite_legere',
   'minimal_1x20',
+  // Course, cardio et hybrides (CA2, partie 1 : invariants E1 à E3).
+  'coureur_cardio_3x45',
+  'semi_marathon',
+  'homme_40_cardio_musculation_50_50',
+  'cardio_debutant_marche_3x30',
 ];
 
 /// Un journal aléatoire et ce qu'il faut pour interroger le moteur.
@@ -162,7 +167,10 @@ SetRecord _randomSet(
   double? distance;
   double? calories;
   double? load;
-  if (unit == MeasureUnit.seconds) {
+  if (unit == MeasureUnit.seconds && mode == null && _chance(r, 70)) {
+    // Course, cardio, conditionnement (CA2, partie 1) : durées de séance.
+    seconds = _between(r, 120, 5400);
+  } else if (unit == MeasureUnit.seconds) {
     seconds = _chance(r, 4) ? 0 : _between(r, 3, 150);
   } else if (unit == MeasureUnit.distance) {
     distance = _between(r, 50, 5000).toDouble();

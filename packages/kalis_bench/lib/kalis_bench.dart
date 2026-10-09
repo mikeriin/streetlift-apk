@@ -17,6 +17,7 @@ library;
 
 export 'src/adapter.dart';
 export 'src/analysis.dart';
+export 'src/endurance_export.dart';
 export 'src/campaign.dart';
 export 'src/expectations.dart';
 export 'src/export.dart';
