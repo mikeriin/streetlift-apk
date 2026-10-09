@@ -1125,8 +1125,7 @@ final class Prescriber {
     // (Musculation : le volume est le levier de l'hypertrophie ; la
     // tolérance du profil ne descend pas sous 0,85 — panel CP2, partie 1 :
     // deux séries partout et des séances à moitié vides.)
-    final scale =
-        skeleton.style == CoachStyle.hypertrophy && volumeScale < 0.85
+    final scale = skeleton.style == CoachStyle.hypertrophy && volumeScale < 0.85
         ? 0.85
         : volumeScale;
     var n = _round(sets * ws.volume * scale);
@@ -5589,9 +5588,7 @@ final class Prescriber {
           ..secondsHigh = kept
           // (La consigne d'allure dit la même durée que la case — panel
           // CP2, partie 1.)
-          ..reasons.removeWhere(
-            (r) => r.params['note'] == CoachNotes.easyPace,
-          )
+          ..reasons.removeWhere((r) => r.params['note'] == CoachNotes.easyPace)
           ..reasons.add(_note(CoachNotes.easyPace, kept ~/ 60));
       }
     }
