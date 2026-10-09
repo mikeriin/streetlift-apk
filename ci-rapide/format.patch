@@ -1,0 +1,18 @@
+diff --git a/integration_test/koach_ci1f_test.dart b/integration_test/koach_ci1f_test.dart
+index 8956db9..4bf20f2 100644
+--- a/integration_test/koach_ci1f_test.dart
++++ b/integration_test/koach_ci1f_test.dart
+@@ -199,12 +199,7 @@ void main() {
+     final add = keyStarts('miniset-add-');
+     // (La page est une liste construite à la demande : on cherche le titre
+     // de l'exercice, puis on fait défiler jusqu'à la bande.)
+-    releve['myo_page'] = await openTo(
+-      tester,
+-      w,
+-      j,
+-      find.text('CURL BARRE EZ'),
+-    );
++    releve['myo_page'] = await openTo(tester, w, j, find.text('CURL BARRE EZ'));
+     await scrollTo(tester, add);
+     final addKey = add.evaluate().isEmpty
+         ? null
