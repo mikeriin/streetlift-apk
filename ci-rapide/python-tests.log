@@ -1,0 +1,137 @@
+.............EE................s.....................................ssssssss........ss...s....................................F.........F
+======================================================================
+ERROR: test_g1_dev_build (unittest.loader._FailedTest.test_g1_dev_build)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_g1_dev_build
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/loader.py", line 394, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+    __import__(name)
+  File "/home/runner/work/streetlift-apk/streetlift-apk/tools/tests/test_g1_dev_build.py", line 24, in <module>
+    BUILD = (ROOT / '.github/workflows/build-apk.yml').read_text(encoding='utf-8')
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/pathlib.py", line 1029, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/pathlib.py", line 1015, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/runner/work/streetlift-apk/streetlift-apk/.github/workflows/build-apk.yml'
+
+
+======================================================================
+ERROR: test_g2_retrait (unittest.loader._FailedTest.test_g2_retrait)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_g2_retrait
+Traceback (most recent call last):
+  File "/usr/lib/python3.12/unittest/loader.py", line 394, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/unittest/loader.py", line 337, in _get_module_from_name
+    __import__(name)
+  File "/home/runner/work/streetlift-apk/streetlift-apk/tools/tests/test_g2_retrait.py", line 20, in <module>
+    BUILD = (ROOT / '.github/workflows/build-apk.yml').read_text(encoding='utf-8')
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/pathlib.py", line 1029, in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/pathlib.py", line 1015, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/home/runner/work/streetlift-apk/streetlift-apk/.github/workflows/build-apk.yml'
+
+
+======================================================================
+FAIL: test_repository_structure (test_repository_tree.RepositoryTests.test_repository_structure)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/runner/work/streetlift-apk/streetlift-apk/tools/tests/test_repository_tree.py", line 145, in test_repository_structure
+    self.assertGreater(verify_project.verify_repository(ROOT), 500)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/streetlift-apk/streetlift-apk/tools/verify_project.py", line 30, in verify_repository
+    assert (root / name).is_file(), f'{name} absent de la racine du dépôt'
+           ^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: .github/workflows/build-apk.yml absent de la racine du dépôt
+
+======================================================================
+FAIL: test_shipped_assets_and_android_identity (test_tools.ToolsTests.test_shipped_assets_and_android_identity)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/home/runner/work/streetlift-apk/streetlift-apk/tools/tests/test_tools.py", line 40, in test_shipped_assets_and_android_identity
+    self.assertEqual(verify(), (1812, 625))  # LC1b : 1 818 − 7 + 1
+                     ^^^^^^^^
+  File "/home/runner/work/streetlift-apk/streetlift-apk/tools/verify_project.py", line 120, in verify
+    verify_repository(root)
+  File "/home/runner/work/streetlift-apk/streetlift-apk/tools/verify_project.py", line 30, in verify_repository
+    assert (root / name).is_file(), f'{name} absent de la racine du dépôt'
+           ^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: .github/workflows/build-apk.yml absent de la racine du dépôt
+
+----------------------------------------------------------------------
+Ran 138 tests in 7.881s
+
+FAILED (failures=2, errors=2, skipped=12)
+OK : apk-absents, refus Gradle attendu observé.
+OK : aab-absents, refus Gradle attendu observé.
+OK : apk-sans-mot-de-passe, refus Gradle attendu observé.
+OK : aab-sans-conteneur, refus Gradle attendu observé.
+OK : apk-base64-invalide, refus Gradle attendu observé.
+# Banc hôte L6 — synthèse
+
+Mesure hôte (flutter_tester, JIT debug, sans GPU) : compare deux versions du code sur la même machine ; ce n'est pas une durée sur téléphone.
+
+Fichiers : base-r1.jsonl, base-r2.jsonl, cand-r1.jsonl, cand-r2.jsonl
+
+| Scénario | Profil | Unité | Base n | Base médiane [min–max] | Cand. n | Cand. médiane [min–max] | Ratio | Conclusion |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| s | p | ms | 18 | 10.4 [10.0–10.8] | 18 | 5.4 [5.0–5.8] | 0.519 | amélioration |
+# Banc hôte L6 — synthèse
+
+Mesure hôte (flutter_tester, JIT debug, sans GPU) : compare deux versions du code sur la même machine ; ce n'est pas une durée sur téléphone.
+
+Fichiers : base-r1.jsonl, cand-r1.jsonl
+
+| Scénario | Profil | Unité | Base n | Base médiane [min–max] | Cand. n | Cand. médiane [min–max] | Ratio | Conclusion |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| s | p | ms | 9 | 1.0 [1.0–1.0] | 0 | nan [nan–nan] |  | non mesuré |
+
+## Résultats métier (empreintes base / candidate)
+
+| Profil | Champ | Verdict (base / candidate) |
+| --- | --- | --- |
+| long | export | DIFFÉRENT (a / b) |
+
+## Mesures en échec
+
+- cand-r1.jsonl x/p : boom
+# Banc hôte L6 — synthèse
+
+Mesure hôte (flutter_tester, JIT debug, sans GPU) : compare deux versions du code sur la même machine ; ce n'est pas une durée sur téléphone.
+
+Fichiers : base-r1.jsonl, base-r2.jsonl, cand-r1.jsonl, cand-r2.jsonl
+
+| Scénario | Profil | Unité | Base n | Base médiane [min–max] | Cand. n | Cand. médiane [min–max] | Ratio | Conclusion |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| s | p | ms | 18 | 7.0 [4.0–10.0] | 18 | 4.75 [4.5–5.0] | 0.679 | gain non démontré |
+# Banc hôte L6 — synthèse
+
+Mesure hôte (flutter_tester, JIT debug, sans GPU) : compare deux versions du code sur la même machine ; ce n'est pas une durée sur téléphone.
+
+Fichiers : base-r1.jsonl, base-r2.jsonl, cand-r1.jsonl, cand-r2.jsonl
+
+| Scénario | Profil | Unité | Base n | Base médiane [min–max] | Cand. n | Cand. médiane [min–max] | Ratio | Conclusion |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| s | p | ms | 18 | 11.0 [10.0–12.0] | 18 | 11.0 [10.0–12.0] | 1.0 | gain non démontré |
+# Banc hôte L6 — synthèse
+
+Mesure hôte (flutter_tester, JIT debug, sans GPU) : compare deux versions du code sur la même machine ; ce n'est pas une durée sur téléphone.
+
+Fichiers : base-r1.jsonl, cand-r1.jsonl
+
+| Scénario | Profil | Unité | Base n | Base médiane [min–max] | Cand. n | Cand. médiane [min–max] | Ratio | Conclusion |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| s | p | ms | 2 | 10.5 [10.0–11.0] | 2 | 1.05 [1.0–1.1] | 0.1 | non concluant (n < 8) |
+programme_v33.json: 13 -> 33 octets
+programme_v33.json: 13 -> 33 octets
