@@ -632,6 +632,57 @@ void main() {
       );
     });
 
+    test('relevé : installation neuve, retour puis revue (mode assisté)',
+        () async {
+      await app.configureStart(DateTime(2026, 7, 15));
+      _saveProfile(app, kc.GuidanceMode.assisted);
+      final origin = (app.programOrigin!['backup'] as Map)
+          .cast<String, dynamic>();
+      final day = app.program.week(13).day(3)!;
+      app.adaptOpen(13, day);
+      app.evolutionRefresh(force: true);
+      final place = app.adaptPlaceOf(13, 3)!;
+      final item = place.day!.items.firstWhere((i) => i.setTargets == null);
+      app.evolutionReceive(place, [
+        kc.Proposal(
+          id: 'volume:${item.slotId}@${place.weekIndex}',
+          kind: kc.ProposalKind.volume,
+          scope: kc.ProposalScope.exercise,
+          createdOn: kc.CivilDate(2026, 10, 9),
+          confidence: .74,
+          unlockLevel: kc.UnlockLevel.volume,
+          autoApplicable: true,
+          exerciseId: item.exerciseId,
+          diff: kc.PlanDiff(
+            changes: [
+              kc.PlanChange(
+                kind: kc.ChangeKind.prescriptionChanged,
+                dayIndex: place.dayIndex,
+                weekIndex: place.weekIndex,
+                slotId: item.slotId,
+                fromPrescription: item,
+                toPrescription: item.copyWith(sets: item.sets + 1),
+                reasons: const [],
+              ),
+            ],
+          ),
+          reasons: const [],
+        ),
+      ]);
+      expect(ProgramOriginStore(app).programDiffersFromOrigin, isTrue);
+      expect(ProgramOriginStore(app).restoreProgramOrigin(), isTrue);
+      final d0 = ProgramOriginStore(app).programDiffersFromOrigin;
+      app.evolutionRefresh();
+      final d1 = ProgramOriginStore(app).programDiffersFromOrigin;
+      final now = jsonDecode(app.exportAll()) as Map<String, dynamic>;
+      // ignore: avoid_print
+      print(
+        'CI1E neuve : avant=$d0 apres=$d1 entrees='
+        '${[for (final e in app.planEvolution.entries) '${e.id}/${e.status}']} '
+        'sections=${[for (final k in ProgramOriginStore.kProgramOriginSections) if (jsonEncode(now[k]) != jsonEncode(origin[k])) '$k: ${jsonEncode(origin[k])} -> ${jsonEncode(now[k])}']}',
+      );
+    });
+
     test('retour au programme d’origine : sections du programme identiques '
         'à la sauvegarde, journal gardé', () async {
       await _ownerAt(app);
