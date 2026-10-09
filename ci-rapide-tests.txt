@@ -1,2 +1,1 @@
-ALL
-dev:test/g1_mode_dev_test.dart
+test/ci1e_programme_40s_test.dart

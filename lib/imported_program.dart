@@ -290,9 +290,8 @@ extension ImportedProgramStore on AppStore {
           return imp.slotOf(week, j, m[1]!) ?? old;
         }
 
-        Object? item(kc.ExercisePrescription? x) => x?.copyWith(
-          slotId: slot(x.slotId) ?? x.slotId,
-        ).toJson();
+        Object? item(kc.ExercisePrescription? x) =>
+            x?.copyWith(slotId: slot(x.slotId) ?? x.slotId).toJson();
         final m = c.toJson();
         m['weekIndex'] = week - seg.first;
         if (c.dayIndex != null) {
