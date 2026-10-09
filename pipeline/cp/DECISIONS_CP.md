@@ -141,6 +141,8 @@ Constats qui fondent ces choix : l'incertitude du panel est d'environ un point (
 - **C11.3 Lot d'application CI1e** (`LANCEMENTS.md`, section CI1e), lancé tout de suite, en parallèle de CY (deux sessions).
 - **C11.4 Textes à jour** : PIPELINE_CP.md §… (ligne D5.10) et la consigne de la tâche « application » sont mis à jour par le pilotage ; PIPELINE_GP.md garde son historique, C11 prime.
 
+- **C11.5 CI1e validé par le pilotage (09/10/2026, 09:05 UTC)** : dev6.10.0 (main 238078ee), build signé run 37903901420 et contrôle complet `claude/ci-3d` run 37901114754 verts. 63 exclusions du programme importé recensées et levées (ou justifiées comme sans objet) ; programme annoté au contrat 0.4.0 en 9 blocs (mode coach, saison, échéance S40, tests, douleur, propositions, bloc suivant) ; sauvegarde d'origine automatique et retour testés ; ajustements et séances de 6.9.2/6.9.3 ramenés ; CI1c intact. Paquets inchangés (0.2.3). Donné au propriétaire. Limites (LIVRAISON_CI1e.md partie 6) : myo-reps, EMOM, contrastes, échelles, HIIT servis tels qu'écrits.
+
 ## Sections des lots
 
 Chaque lot ajoute ici ses décisions techniques numérotées (`CR.1`, `CR.2`…), ses écarts, ses recommandations et, le cas échéant, la question posée au propriétaire.
