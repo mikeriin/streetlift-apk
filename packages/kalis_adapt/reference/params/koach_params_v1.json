@@ -70,10 +70,10 @@
       1.45
     ],
     "facteur_femme": 0.7,
-    "reps_base": 10.0,
-    "tenue_base_s": 25.0,
-    "pente_difficulte": 0.25,
-    "reps_sd": 0.6,
+    "reps_base": 12.0,
+    "tenue_base_s": 30.0,
+    "pente_difficulte": 0.3,
+    "reps_sd": 0.4,
     "cardio_minutes_par_niveau": [
       30.0,
       60.0,
@@ -101,6 +101,19 @@
     "k_musculaire_systemique": [
       0.00075,
       0.0003
+    ],
+    "part_tenue_exercice_sd": 0.2,
+    "marge_niveau": [
+      3.0,
+      2.0
+    ],
+    "reps_bornes": [
+      2.0,
+      60.0
+    ],
+    "tenue_bornes_s": [
+      5.0,
+      180.0
     ]
   },
   "mesure": {

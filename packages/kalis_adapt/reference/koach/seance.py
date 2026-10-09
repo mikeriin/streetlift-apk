@@ -209,7 +209,7 @@ class Seances(object):
         if t is None or t.type != 'tenue':
             return None
         mu, sd = self.m.capacite_du_jour(ex_id)
-        hh = clamp(self.m.m[HH], 0.03, 0.3)
+        hh = clamp(self.m.m[HH], 0.03, 0.3) * math.exp(clamp(self.m.m[t.idx + 1], -1.0, 1.0))
         f = 1.0 - hh * rir
         if f < 0.15:
             f = 0.15

@@ -188,9 +188,11 @@ class Modele(object):
             plancher = fiche.get('fraction', 0.0) * self.poids_kg * 1.1
             return math.log(max(total, plancher, 1.0))
         if typ in ('reps', 'tenue'):
-            marge = (2.0 + 2.0 * self.niveau) - fiche.get('difficulte', 3)
+            mn = ap['marge_niveau']
+            marge = (mn[0] + mn[1] * self.niveau) - fiche.get('difficulte', 3)
             base = ap['reps_base'] if typ == 'reps' else ap['tenue_base_s']
-            return math.log(base) + ap['pente_difficulte'] * marge
+            lo, hi = ap['reps_bornes'] if typ == 'reps' else ap['tenue_bornes_s']
+            return math.log(clamp(base * math.exp(ap['pente_difficulte'] * marge), lo, hi))
         if typ == 'cardio':
             return math.log(ap['cardio_minutes_par_niveau'][self.niveau])
         return 0.0
@@ -227,8 +229,14 @@ class Modele(object):
             for q in range(NQ):
                 vq += vecteur[q] * vecteur[q] * P[TH + q, TH + q]
             P[idx, idx] = max(sd * sd - vq, (0.5 * sd) ** 2)
-            m[idx + 1] = ap['courbe_bas_du_corps'] if t.bas else 0.0
-            P[idx + 1, idx + 1] = ap['courbe_echelle_exercice_sd'] ** 2
+            if typ == 'tenue':
+                # Écart (ln) de la part du temps maximal par répétition en
+                # réserve, propre à l'exercice.
+                m[idx + 1] = 0.0
+                P[idx + 1, idx + 1] = ap['part_tenue_exercice_sd'] ** 2
+            else:
+                m[idx + 1] = ap['courbe_bas_du_corps'] if t.bas else 0.0
+                P[idx + 1, idx + 1] = ap['courbe_echelle_exercice_sd'] ** 2
         self.pistes[ex_id] = t
         self.ordre.append(ex_id)
         d = (self.profil.get('declares') or {}).get(ex_id)
@@ -906,13 +914,41 @@ class Modele(object):
             v += t.vecteur[q] * m[TH + q]
         return v
 
+    def _lin_tenue(self, t, m, ln_s, percu):
+        """Réserve d'un maintien de durée s (ln_s = ln(s / garde)) : r =
+        (1 - s / T) / h_e, avec h_e = h × exp(écart de l'exercice) la part du
+        temps maximal par répétition en réserve ; perçue : p = (r - biais
+        personnel) / (1 + biais de population). Linéarisée autour de [m].
+        Renvoie (indices, coefficients, valeur prédite, r)."""
+        idx, co = self._h_capacite(t)
+        eta = t.base
+        for i, c in zip(idx, co):
+            eta += c * m[i]
+        hh = clamp(m[HH], 0.03, 0.30) * math.exp(clamp(m[t.idx + 1], -1.0, 1.0))
+        part = math.exp(ln_s - eta)
+        if part > 3.0:
+            part = 3.0
+        r = (1.0 - part) / hh
+        coefs = [c * part / hh for c in co]
+        indices = list(idx)
+        indices.append(t.idx + 1)
+        coefs.append(-r)
+        if not percu:
+            return indices, coefs, r, r
+        ba = clamp(m[BA], -2.5, 2.5)
+        bp = clamp(m[BP], -0.2, 1.0)
+        pr = (r - ba) / (1.0 + bp)
+        coefs = [c / (1.0 + bp) for c in coefs]
+        indices += [BA, BP]
+        coefs += [-1.0 / (1.0 + bp), -pr / (1.0 + bp)]
+        return indices, coefs, pr, r
+
     def _serie_tenue(self, t, s):
-        """Maintien : modèle de survie sur ln T (temps maximal du moment).
-        Tenue ratée = temps jusqu'à l'échec observé ; tenue réussie sans note
-        = temps censuré à droite ; avec une note, la réserve perçue
-        p = (r - biais personnel) / (1 + biais de population), r = (1 - s / T)
-        / h, donne un intervalle sur ln T : la carte est linéaire dans l'état,
-        sans linéarisation."""
+        """Maintien : modèle de survie. Tenue ratée = temps jusqu'à l'échec
+        observé (ln T) ; tenue réussie sans note = temps censuré à droite ;
+        avec une note, catégorie ordonnée de la réserve perçue, fonction de
+        la part du temps maximal tenue et de la part par répétition en
+        réserve propre à l'exercice (apprise avec le temps maximal)."""
         me = self.p['mesure']
         sec = s.get('seconds') or 0
         flammes = s.get('flames')
@@ -927,7 +963,6 @@ class Modele(object):
         if garde < 0.3:
             garde = 0.3
         ln_s = math.log((sec if sec > 0 else 0.5) / garde)
-        hh = clamp(self.m[HH], 0.03, 0.30)
         bt = me['bruit_tenue']
         extra = (me['dispersion_fatigue_intra'] * sj) ** 2
         if echec:
@@ -937,47 +972,42 @@ class Modele(object):
             resid = self._observer(idx, co, t.base - ln_s, 0.0, INF, bt ** 2 + extra)
             rir_c = 2.0
         else:
-            ba = clamp(self.m[BA], -2.5, 2.5)
-            bp = clamp(self.m[BP], -0.2, 1.0)
             if flammes >= 10:
                 a, b = -INF, 0.25
             else:
                 a, b, _ = self.bornes_flammes(flammes, me['rir_ouvert'])
+            ix, cx, pred, r0 = self._lin_tenue(t, self.m, ln_s, True)
+            const = pred
+            for i, c in zip(ix, cx):
+                const -= c * self.m[i]
+            ba = clamp(self.m[BA], -2.5, 2.5)
+            bp = clamp(self.m[BP], -0.2, 1.0)
+            hh0 = clamp(self.m[HH], 0.03, 0.30)
+            # Dispersion propre aux tenues (ln T) ramenée à l'échelle de la
+            # réserve : bt / h.
+            plus = (bt / hh0) ** 2 / (1.0 + bp) ** 2 + (me['dispersion_fatigue_intra'] * sj / hh0) ** 2
 
-            def borne(p):
-                """ln(T / s) quand la réserve perçue vaut p."""
-                r = p * (1.0 + bp) + ba
-                part = 1.0 - hh * r
-                if part < 0.15:
-                    part = 0.15
-                if part > 1.0:
-                    part = 1.0
-                return -math.log(part)
-            lo = 0.0 if a == -INF else borne(a)
-            hi = INF if b == INF else borne(b)
-
-            def bruit(u, hh=hh, bp=bp, ba=ba, bt=bt, extra=extra):
-                # u = ln(T / s) : bruit de la note (répétitions de réserve)
-                # ramené à ln T, plus la dispersion propre aux tenues.
-                part = math.exp(-u) if u > 0 else 1.0
-                r = (1.0 - part) / hh
+            def bruit(u, ba=ba, bp=bp, plus=plus):
+                r = u * (1.0 + bp) + ba
                 if r < 0.0:
                     r = 0.0
-                sd_p = self.bruit_rir_de(r if r < 8.0 else 8.0, 6)
-                sd_u = sd_p * (1.0 + bp) * hh / (part if part > 0.15 else 0.15)
-                return sd_u * sd_u + bt * bt + extra
+                if r > 8.0:
+                    r = 8.0
+                sd = self.bruit_rir_de(r, 6)
+                return sd * sd + plus
             f_cible = (s.get('target') or {}).get('flames')
             eps = me['note_aberrante']
             par = 0.0
             if f_cible is not None and flammes == f_cible:
                 par = clamp(self.paresse[0] / (self.paresse[0] + self.paresse[1]), 0.01, 0.9)
             melange = ((1.0 - eps) * (1.0 - par), eps * 0.1 + (1.0 - eps) * par)
-            resid = self._observer(idx, co, t.base - ln_s, lo, hi, bruit(0.5 * (lo + (hi if hi != INF else lo))),
-                                   melange=melange, bruit=bruit)
-            eta = t.base
-            for i, c in zip(idx, co):
-                eta += c * self.m[i]
-            r = (1.0 - math.exp(ln_s - eta)) / hh
+
+            def exacte(etat, t=t, ln_s=ln_s):
+                return self._lin_tenue(t, etat, ln_s, True)[2]
+            resid = self._observer(ix, cx, const, a, b, bruit(pred), melange=melange, bruit=bruit,
+                                   fonction=exacte)
+            self._projeter()
+            r = self._lin_tenue(t, self.m, ln_s, False)[3]
             rir_c = r if r > 0 else 0.0
         eff = self.effort(rir_c, echec)
         t.series_seance.append((self.effort_intra(rir_c), repos))
