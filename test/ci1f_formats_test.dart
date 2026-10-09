@@ -343,6 +343,35 @@ void main() {
       expect(tl.validate(), isEmpty);
     });
 
+    test('installation neuve en S20 (cible émulateur) : myo-reps servis '
+        'mini-série par mini-série', () async {
+      await app.configureStart(DateTime(2026, 10, 9 - 19 * 7));
+      _saveProfile(app, kc.GuidanceMode.assisted);
+      final w = app.program.weekFor(clock);
+      final j = app.program.offsetOf(clock)! % 7 + 1;
+      expect((w, j), (20, 1));
+      final base = app.program.week(w).day(j)!;
+      final a = app.adaptOpen(w, base)!;
+      final day = app.adaptDay(w, base, a);
+      for (final e in day.exercises) {
+        final it = app.adaptItemFor(w, j, e);
+        final b = app.adaptBlockItemFor(w, j, e);
+        // ignore: avoid_print
+        print(
+          'CI1F S20 ${e.id} ${e.name} engine=${e.engine} '
+          'servi=${it?.sets}/${it?.technique?.kind.code}/${it?.kind?.code} '
+          'bloc=${b?.sets}/${b?.technique?.kind.code} '
+          'raisons=${it?.reasons.map((r) => r.code).toList()} '
+          'plan=${app.miniSetPlanFor(w, j, e, 0)?.kind.code}',
+        );
+      }
+      final curl = day.exercises.firstWhere(
+        (e) =>
+            app.miniSetPlanFor(w, j, e, 0)?.kind == kc.SetTechniqueKind.myoReps,
+      );
+      expect(curl.engine, isTrue);
+    });
+
     test('groupe : résultat journalisé avec la séance', () async {
       await _ownerAt(app);
       final log = app.sessionLog(13, 5);
