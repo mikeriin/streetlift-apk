@@ -821,8 +821,10 @@ class SessionExercisePageState extends State<SessionExercisePage> {
     // avec la flamme visée déjà placée sur la ligne ouverte sous la série,
     // où elle se corrige.
     if (!s.done) {
-      // CI1f : série notée par mini-séries : le total fait foi.
+      // CI1f : série notée par mini-séries : le total fait foi ; durée
+      // notée en minutes (marquée pour le journal).
       if (s.partsTotal case final total?) s.reps = '$total';
+      s.minutes = sp.kind == 'duration';
       final pre = checkSet(sp, s, rpe: store.settings.rpe);
       if (!pre.ok) {
         setState(() => _issues[(k, i)] = pre);
@@ -1362,7 +1364,8 @@ class SessionExercisePageState extends State<SessionExercisePage> {
 
   /// CI1f : groupe d'exercices enchaînés de la page (tous ses exercices
   /// en font partie) ; null : page ordinaire.
-  late final kc.GroupSpec? _group = () {
+  kc.GroupSpec? get _group {
+    if (widget.week.n < 1) return null;
     kc.GroupSpec? g;
     for (final e in widget.exs) {
       final x = store.exerciseGroupOf(widget.week.n, widget.day.j, e);
@@ -1370,7 +1373,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
       g = x;
     }
     return g;
-  }();
+  }
 
   @override
   Widget build(BuildContext context) => ListView(
@@ -1422,6 +1425,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
     final interval = ex.interval;
     final noLoad =
         sp.kind == 'duration' ||
+        sp.kind == 'distance' ||
         sp.kind == 'interval' ||
         sp.kind == 'emom' ||
         sp.kind == 'amrap';
@@ -2011,6 +2015,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
       'hold': 'Tenue chronométrée',
       'holdMax': 'Max de temps',
       'duration': 'Durée',
+      'distance': 'Distance',
       'interval': 'Intervalles',
       'emom': 'EMOM',
       'amrap': 'AMRAP',
@@ -2085,6 +2090,8 @@ class _HeaderRow extends StatelessWidget {
         ? 'S'
         : k == 'duration'
         ? 'MIN'
+        : k == 'distance'
+        ? 'M'
         : k == 'repsMax'
         ? 'REPS MAX'
         : 'REPS';

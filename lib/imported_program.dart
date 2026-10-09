@@ -88,13 +88,14 @@ class ImportedProgram {
   /// par libellé de série : « 1×15 puis 4×(4) » → nombre.
   final Map<String, int> absent;
 
-  /// CI1f : emplacements servis tels qu'écrits (contrastes, échelles) :
-  /// dans le bloc et dans leur groupe, mais l'application garde la ligne
-  /// du programme (le moteur ne règle pas leurs répétitions).
+  /// CI1f : lignes servies telles qu'écrites (contrastes, échelles), par
+  /// « semaine|emplacement » : dans le bloc et dans leur groupe, mais
+  /// l'application garde la ligne du programme (le moteur ne règle pas
+  /// leurs répétitions).
   final Set<String> asWritten;
 
   /// CI1f : exercice du bloc quand il diffère du nom de la ligne
-  /// (contraste du squat : squat sauté), par emplacement.
+  /// (contraste du squat : squat sauté), par « semaine|emplacement ».
   final Map<String, String> exerciseOf;
 
   /// CI1f : références estimées pour « N × ? reps » : référence →
@@ -255,8 +256,23 @@ extension ImportedProgramStore on AppStore {
     final catalog = content.catalog;
     final book = _adaptBookForImport();
     if (catalog == null || book == null) return null;
+    // CI1f : références estimées (profil, journal), dans la clé.
+    // (Clé : révision des données, séances présentes, profil, références
+    // renseignées ; une sauvegarde importée remplace les séances.)
+    var logsDigest = logs.length;
+    for (final l in logs.values) {
+      logsDigest = (logsDigest * 31 + identityHashCode(l)) & 0x3fffffff;
+    }
+    final estimates = _g9Memo(
+      'imported-est|$_dataRevision|$logsDigest|'
+      '${identityHashCode(adaptProfile)}|'
+      '${[for (final r in program.pilotage.repMax) values.containsKey(r.ref)].join()}|'
+      '${identityHashCode(program)}',
+      () => _importEstimates(book),
+    );
     final sig = [
       'imported',
+      for (final e in estimates.entries) 'est:${e.key}=${e.value.$1}',
       identityHashCode(program),
       identityHashCode(planProgram),
       planProgram?.updatedAt ?? '-',
@@ -268,7 +284,7 @@ extension ImportedProgramStore on AppStore {
     ].join('|');
     return _g9Memo(sig, () {
       try {
-        return _buildImported(catalog, book);
+        return _buildImported(catalog, book, estimates);
       } catch (_) {
         return null;
       }
@@ -389,7 +405,11 @@ extension ImportedProgramStore on AppStore {
   ka.ExerciseBook? _adaptBookForImport() =>
       SessionAdaptStore(this)._adaptBook();
 
-  ImportedProgram? _buildImported(kc.Catalog catalog, ka.ExerciseBook book) {
+  ImportedProgram? _buildImported(
+    kc.Catalog catalog,
+    ka.ExerciseBook book,
+    Map<String, (double, String)> estimates,
+  ) {
     final lastWeek = math.min(importedLastWeek, program.weeks.length);
     if (lastWeek < 1) return null;
     final start = program.start;
@@ -403,7 +423,6 @@ extension ImportedProgramStore on AppStore {
     final slots = <String, String>{};
     final asWritten = <String>{};
     final exerciseOf = <String, String>{};
-    final estimates = _importEstimates(book);
     final eventDay = start == null
         ? null
         : civilOf(
@@ -596,9 +615,13 @@ extension ImportedProgramStore on AppStore {
         final items = <kc.ExercisePrescription>[];
         final groups = <kc.GroupSpec>[];
         final seen = <String, int>{};
+        // Groupe de la ligne précédente du programme (null : seule, ou pas
+        // portée).
+        String? lastGroup;
         for (final e in d.exercises) {
           final it = _importItem(e, d.j, catalog, book, estimates);
           if (it == null) {
+            lastGroup = null;
             final label = setsLabel(e).trim();
             if (label.isNotEmpty && label != '—') {
               final k = label.replaceAll(RegExp(r'\d+'), 'N');
@@ -616,7 +639,7 @@ extension ImportedProgramStore on AppStore {
           // groupe de même format de la ligne d'avant.
           final g = it.group;
           if (g != null) {
-            final prev = items.isEmpty ? null : items.last.groupId;
+            final prev = lastGroup;
             final joined =
                 normalizeText(e.name).contains('enchain') && prev != null
                 ? groups.where((x) => x.groupId == prev).firstOrNull
@@ -630,11 +653,14 @@ extension ImportedProgramStore on AppStore {
             }
           }
           items.add(item);
+          lastGroup = item.groupId;
           slots['$n|${e.id.split('~').first}'] = slot;
-          if (it.asWritten) asWritten.add(slot);
+          // Par semaine : l'emplacement est partagé d'une semaine à
+          // l'autre (même exercice, même journée).
+          if (it.asWritten) asWritten.add('$n|$slot');
           final named = content.idFor(e.name);
           if (named != null && named != item.exerciseId) {
-            exerciseOf[slot] = item.exerciseId;
+            exerciseOf['$n|$slot'] = item.exerciseId;
           }
           slotExercise.putIfAbsent(slot, () => item.exerciseId);
           if (it.role == kc.SlotRole.main || !slotRole.containsKey(slot)) {

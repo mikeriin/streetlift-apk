@@ -158,6 +158,7 @@ void main() {
         seconds: null,
         scale: 1,
         technique: withParts ? 'myo_reps' : null,
+        meters: false,
       ),
       myoOf: (w, j, key) => key == 'b' ? 10 : null,
     );
@@ -297,6 +298,13 @@ void main() {
       final e = day.exercises.firstWhere((x) => x.id.startsWith('B2-119'));
       expect(e.engine, isTrue);
       final plan = app.miniSetPlanFor(13, 5, e, 0);
+      final served = app.adaptItemFor(13, 5, e);
+      // ignore: avoid_print
+      print(
+        'CI1F myo servi ${jsonEncode(served?.toJson())} ; bloc '
+        '${jsonEncode(app.adaptBlockItemFor(13, 5, e)?.technique?.toJson())} ; '
+        'niveau ${app.adaptProfile?.experience}',
+      );
       expect(plan, isNotNull);
       expect(plan!.kind, kc.SetTechniqueKind.myoReps);
       expect(plan.next, 4);

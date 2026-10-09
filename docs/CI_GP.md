@@ -284,6 +284,28 @@ vide ou absent.
 - Tests Dart du lot : `test/ci1e_programme_40s_test.dart`. Mise au point sur
   `claude/ci-ci1e-rapide` (`rapide.yml` seul, comme CI1c).
 
+### CI1f (dev6.11.0, pipeline CP, voie App)
+
+- Paquets `kalis_core` 0.4.3, `kalis_plan` 0.3.0, `kalis_adapt` 0.3.0
+  (branches fixes `etiquettes/…`, copie octet pour octet), `pubspec.lock`
+  à jour ; `assets/catalog/parcours_v3.json` recopié (0.4.3).
+- Mini-séries (cluster, rest-pause, myo-reps) saisies une à une
+  (`SetEntry.parts`), groupes `GroupSpec` (en-tête, chrono, résultat
+  `SessionLog.groups` → `groupResults`), formats du programme de 40
+  semaines annotés (`lib/imported_program.dart`).
+- Cible émulateur `integration_test/koach_ci1f_test.dart` (a sombre,
+  rouge ; b clair, violet), jouée avant les cibles CI1e, CI1c et CI1
+  (gardées) : session personnelle, programme commencé il y a 19 semaines
+  (S20·J1), profil avancé, mode assisté → myo-reps notés mini-série par
+  mini-série puis série validée ; contraste de S20·J3 affiché comme un
+  groupe (3 tours, chrono, résultat). Relevés
+  `emulateur/ci1f_releve_<partie>.json`, captures
+  `emulateur/ci1f_*_<thème>.png`. APK de test précompilé sur la cible
+  CI1f ; délai du job émulateur porté à 70 min.
+- Tests Dart du lot : `test/ci1f_formats_test.dart`. Mise au point sur
+  `claude/ci-ci1f-rapide` et `claude/ci-ci1f-rapide2` (`rapide.yml` seul,
+  comme CI1c).
+
 ### Mode dev dans les tests d'intégration
 
 - Données de la session personnelle semées par un `AppStore()` séparé avant

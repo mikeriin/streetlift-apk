@@ -917,6 +917,7 @@ extension SessionAdaptStore on AppStore {
       }
       sig.write(
         '|${e.key}:${e.value.done}:${e.value.finishedAt}:$n:'
+        '${e.value.groups.isEmpty ? '' : jsonEncode(e.value.groups)}:'
         '${e.value.adapt == null ? '-' : identityHashCode(e.value.adapt)}',
       );
     }
@@ -1657,7 +1658,7 @@ extension SessionAdaptStore on AppStore {
     final plan = planProgram;
     if (plan != null && week >= plan.firstWeek) return false;
     if (week > importedLastWeek) return false;
-    return importedProgram?.asWritten.contains(slot) ?? false;
+    return importedProgram?.asWritten.contains('$week|$slot') ?? false;
   }
 
   /// CI1f : ligne du programme d'un exercice servi [e] (null : inconnue).
@@ -1681,14 +1682,20 @@ extension SessionAdaptStore on AppStore {
   /// bloc (quand il diffère du nom de la ligne), mesure (secondes,
   /// minutes) et technique des lignes qui ne sont pas une série d'une
   /// traite. Null : lecture habituelle.
-  ({String? exerciseId, bool? seconds, int scale, String? technique})
+  ({
+    String? exerciseId,
+    bool? seconds,
+    int scale,
+    String? technique,
+    bool meters,
+  })
   journalLineOf(int week, int j, String key, bool withParts) {
     final slot = adaptSlotOf(week, j, key);
     final a = sessionAdaptOf(sessionKey(week, j));
     final served = a == null ? null : _adaptItem(a, slot);
     String? exerciseId;
     if (slot != null && week <= importedLastWeek) {
-      exerciseId = importedProgram?.exerciseOf[slot];
+      exerciseId = importedProgram?.exerciseOf['$week|$slot'];
     }
     final written = adaptAsWritten(week, slot);
     if (served != null && !written) {
@@ -1696,10 +1703,15 @@ extension SessionAdaptStore on AppStore {
       return (
         exerciseId: exerciseId,
         seconds: prescriptionInSeconds(served) ? true : null,
-        scale: prescriptionInMinutes(served) ? 60 : 1,
-        technique: withParts && kind != null && isMiniSetTechnique(kind)
+        // Minutes : seulement les lignes marquées à la saisie (`unit`).
+        scale: 1,
+        technique:
+            kind != null &&
+                isMiniSetTechnique(kind) &&
+                (withParts || _relaunch(kind))
             ? kind.code
             : null,
+        meters: prescriptionInMeters(served),
       );
     }
     // Ligne du programme (servie telle qu'écrite, ou séance d'avant le
@@ -1725,8 +1737,14 @@ extension SessionAdaptStore on AppStore {
           : aggregate
           ? kc.SetTechniqueKind.density.code
           : null,
+      meters: false,
     );
   }
+
+  /// Myo-reps et rest-pause : relances après la série (sans elles, le
+  /// total n'est pas une série d'une traite).
+  static bool _relaunch(kc.SetTechniqueKind k) =>
+      k == kc.SetTechniqueKind.myoReps || k == kc.SetTechniqueKind.restPause;
 
   /// CI1f : technique dont les séries se saisissent mini-série par
   /// mini-série (cluster, rest-pause, myo-reps).
@@ -1895,6 +1913,10 @@ extension SessionAdaptStore on AppStore {
       );
       if (s.kg.isEmpty && t.kg.isNotEmpty) s.kg = t.kg;
       if (s.reps.isEmpty && t.value.isNotEmpty && !test) s.reps = t.value;
+      // CI1f : distance prévue, en mètres.
+      if (s.reps.isEmpty && prescriptionInMeters(it)) {
+        s.reps = '${it.distanceMeters!.round()}';
+      }
     }
   }
 
@@ -1976,7 +1998,7 @@ extension SessionAdaptStore on AppStore {
       final seconds = it != null && prescriptionInSeconds(it)
           ? true
           : content.byId[id]?.ex.unit.code == 'secondes';
-      final scale = it != null && prescriptionInMinutes(it) ? 60 : 1;
+      final meters = it != null && prescriptionInMeters(it);
       var setIndex = 0;
       var any = false;
       for (var i = 0; i < x.sets.length; i++) {
@@ -1988,12 +2010,19 @@ extension SessionAdaptStore on AppStore {
         final total = s.partsTotal;
         if (total != null) v = total;
         if (v == null) continue;
-        v *= scale;
+        // CI1f : durée notée en minutes (marquée à la validation).
+        if (total == null && s.minutes) v *= 60;
         final g = it == null
             ? null
             : adviceGoal(it, i, a.advice[e.id] ?? const []);
         final low = g?.low;
-        final kind = it == null || total == null ? null : miniSetKindOf(it, i);
+        // CI1f : technique à mini-séries ; un myo-rep ou un rest-pause
+        // validé sans ses mini-séries garde sa technique (le moteur ne lit
+        // pas son total comme une série d'une traite).
+        final mini = it == null ? null : miniSetKindOf(it, i);
+        final kind = total != null || mini == null || _relaunch(mini)
+            ? mini
+            : null;
         rows.add((
           s.completedAt ?? '',
           rows.length,
@@ -2011,8 +2040,9 @@ extension SessionAdaptStore on AppStore {
                 : kc.SetKind.work,
             role: g?.role,
             externalLoadKg: parseLoadKg(s.kg),
-            reps: seconds ? null : v,
-            seconds: seconds ? v : null,
+            reps: seconds || meters ? null : v,
+            seconds: seconds && !meters ? v : null,
+            distanceMeters: meters ? v.toDouble() : null,
             flames: s.flames,
             success: v > 0 && (low == null || v >= low),
             excluded: s.excluded,
@@ -2021,7 +2051,7 @@ extension SessionAdaptStore on AppStore {
             technique:
                 kind ??
                 (written && total == null ? kc.SetTechniqueKind.density : null),
-            parts: total == null
+            parts: total == null || kind == null
                 ? null
                 : [
                     for (final p in parts!)

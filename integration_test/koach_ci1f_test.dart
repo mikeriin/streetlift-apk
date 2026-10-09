@@ -246,7 +246,9 @@ void main() {
         keyStarts('group-title-').first,
       )).data;
       await shot('05_contraste_groupe');
-      final plus = tip((m) => m.startsWith('Tours') && m.endsWith('un de moins'));
+      final plus = tip(
+        (m) => m.startsWith('Tours') && m.endsWith('un de moins'),
+      );
       if (plus.evaluate().isNotEmpty) {
         await tapF(tester, plus, ms: 600);
       }
