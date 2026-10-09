@@ -128,7 +128,7 @@ class ProgramScreen extends StatelessWidget {
         children.add(SeasonCard(view: season));
       }
       // CI1e (C11.2) : programme d'origine sauvegardé, retour possible.
-      if (ProgramOriginStore(store).canRestoreProgramOrigin) {
+      if (store.canRestoreProgramOrigin) {
         children.add(const ProgramOriginCard());
       }
       // G10 (D5.6, D5.7) : évolution du programme — mode, déblocage,
@@ -456,9 +456,8 @@ class ProgramOriginCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final o = ProgramOriginStore(store);
-    final at = o.programOriginAt;
-    final differs = o.programDiffersFromOrigin;
+    final at = store.programOriginAt;
+    final differs = store.programDiffersFromOrigin;
     final dim = Theme.of(context).textTheme.bodySmall;
     return KCard(
       key: const ValueKey('program-origin'),
@@ -533,7 +532,7 @@ class ProgramOriginCard extends StatelessWidget {
       ),
     );
     if (ok != true || !context.mounted) return;
-    final done = ProgramOriginStore(store).restoreProgramOrigin();
+    final done = store.restoreProgramOrigin();
     showKoachToast(
       context,
       done
@@ -544,10 +543,10 @@ class ProgramOriginCard extends StatelessWidget {
   }
 
   Future<void> _export(BuildContext context) async {
-    final text = ProgramOriginStore(store).programOriginExport();
+    final text = store.programOriginExport();
     if (text == null) return;
     final messenger = ScaffoldMessenger.of(context);
-    final at = ProgramOriginStore(store).programOriginAt ?? store.storeClock();
+    final at = store.programOriginAt ?? store.storeClock();
     String two(int v) => v.toString().padLeft(2, '0');
     final r = await backupFiles.save(
       'kalis-track-programme-origine-${at.year}-${two(at.month)}-'

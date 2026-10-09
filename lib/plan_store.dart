@@ -147,8 +147,8 @@ extension PlanStore on AppStore {
   /// Valide le programme de [c] (passe 2 faite) : il devient l'instance
   /// active. Le programme précédent est gardé (semaines passées, retour
   /// pendant 7 jours) ; le profil apprend ce que la revue a dit.
-  void applyPlanCreation(PlanCreation c, {PlanStart? at}) {
-    final s = at ?? planStartFor();
+  void applyPlanCreation(PlanCreation c, {PlanStart? startAt}) {
+    final s = startAt ?? planStartFor();
     final at = _planAt;
     final hadProgram = s.replacing;
     final prefix = <Map<String, dynamic>>[];
@@ -525,7 +525,7 @@ extension PlanStore on AppStore {
       final first = _importedNextFirstWeek(seg);
       applyPlanCreation(
         c,
-        at: (
+        startAt: (
           start: civilOf(
             DateTime(start.year, start.month, start.day + (first - 1) * 7),
           ),

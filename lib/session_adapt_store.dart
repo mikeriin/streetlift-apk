@@ -586,10 +586,13 @@ extension SessionAdaptStore on AppStore {
       final m = RegExp(r'^k\d+\.\d+\.(.+)$').firstMatch(base);
       return m?.group(1);
     }
-    // CI1e : exercice ajouté par Koach (restructuration du bloc importé).
+    // CI1e : exercice ajouté par Koach (restructuration du bloc importé),
+    // ou test reporté d'un autre jour (« k<S>.<J>.<emplacement> »).
     if (base.startsWith(kKoachAddedPrefix)) {
       return base.substring(kKoachAddedPrefix.length);
     }
+    final moved = RegExp(r'^k\d+\.\d+\.(j\d-.+)$').firstMatch(base);
+    if (moved != null) return moved.group(1);
     return importedProgram?.slotOf(week, j, base) ?? importedSlot(j, base);
   }
 
@@ -779,7 +782,8 @@ extension SessionAdaptStore on AppStore {
     final dayIndex = seg?.dayOfJ[j];
     if (seg == null || dayIndex == null) return null;
     final ids = <String, String>{};
-    for (final e in program.week(w).day(j)?.original.exercises ?? <Exercise>[]) {
+    for (final e
+        in program.week(w).day(j)?.original.exercises ?? <Exercise>[]) {
       final s = imp.slotOf(w, j, e.id);
       if (s != null) ids[importedSlot(j, e.id)] = s;
     }

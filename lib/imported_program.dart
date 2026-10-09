@@ -250,7 +250,9 @@ extension ImportedProgramStore on AppStore {
     final slots = <String, String>{};
     final eventDay = start == null
         ? null
-        : civilOf(DateTime(start.year, start.month, start.day + lastWeek * 7 - 1));
+        : civilOf(
+            DateTime(start.year, start.month, start.day + lastWeek * 7 - 1),
+          );
     final event = eventDay == null
         ? null
         : kc.SeasonEvent(
@@ -455,7 +457,9 @@ extension ImportedProgramStore on AppStore {
     final start = program.start;
     final startDay = start == null
         ? civilOf(storeClock())
-        : civilOf(DateTime(start.year, start.month, start.day + (first - 1) * 7));
+        : civilOf(
+            DateTime(start.year, start.month, start.day + (first - 1) * 7),
+          );
     final blockId = importedBlockId(first);
     final slotList = slotExercise.keys.toList()..sort();
     int? weeksToEvent;
