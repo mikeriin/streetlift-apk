@@ -82,7 +82,12 @@ String setDoneText(SetEntry s, LogSpec sp, {bool units = true}) {
     if (amount.isNotEmpty) amount,
   ].join(' × ');
   final v = s.v.trim();
-  return v.isEmpty ? load : '$load · ${dec(v)} m/s';
+  // CI1f : détail des mini-séries (« 15+4+4+3 »).
+  final parts = s.parts;
+  final detail = parts == null || parts.length < 2
+      ? load
+      : '$load (${parts.map((p) => p.value).join('+')})';
+  return v.isEmpty ? detail : '$detail · ${dec(v)} m/s';
 }
 
 /// Ligne de notation sous une série validée.

@@ -13,5 +13,11 @@ Base : main 238078ee (dev6.10.0). Lot lancé 09/10 ~09:08 UTC.
 3. Annotation 40 semaines : myo -> myo_reps ; durées et HIIT -> prescriptions de cardio ; EMOM -> groupe emom ; contrastes / échelles -> groupes ; « N × ? reps » -> carte Koach (référence) ou estimation journal.
 4. Tests Dart, émulateur CI1f, version dev6.11.0, livraison.
 
+## Fait (suite, 09:30)
+- Mini-séries : SetPartEntry/SetEntry.parts (store.dart), _MiniSetStrip (session_screen), miniSetPlanFor/MiniSetPlan, journal parts+technique (journal_adapter lineOf, _adaptDone), regroupement myo (myoOf/_groupMyo).
+- Groupes : exerciseGroupOf, store.groups(d, week:), _GroupCard (en-tête, chrono, résultat), SessionLog.groups -> groupResults.
+- Annotation : _importFormat (myo, durées, HIIT, EMOM, contrastes, échelles, N × ? via estimations), asWritten / exerciseOf ; minutes (prescriptionInMinutes, LogSpec duration moteur).
+- Test : test/ci1f_formats_test.dart ; CI1e et CI1d ajustés.
+
 ## En cours
-Essai 1 de la CI rapide (compilation avec 0.3.0, suite complète).
+Compilation / tests sur claude/ci-ci1f-rapide.
