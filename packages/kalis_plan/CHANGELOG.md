@@ -19,6 +19,11 @@ additives). Constats de la relecture documentée de CP2 (manches 7 et 8) : `docs
   lieu de 8 à 15).
 - **Course** : lendemain d'une course d'épreuve sans footing écrit ; texte de la règle de durée aligné sur la
   règle appliquée (plus longue course des quatre dernières semaines + 10 %).
+- **Croisement (CY, boucle 1)** : le plafond de volume de répétitions ne compte plus les variantes plus faciles
+  que le mouvement (pompe mains surélevées, sur les genoux, assistée), qui gardent leur propre dose ; débutant
+  qui vise la première traction : deux séries assistées chaque jour (douze séries de tirage vertical par semaine
+  au plus avec descentes et tenue) ; plateau de traction sans lest à douze tractions et plus : archer et
+  typewriter d'abord (environ un tiers du maximum par côté).
 
 ## 0.3.0
 

@@ -73,7 +73,10 @@ void main() {
       if (!seasonScenarioApplies(j, SeasonScenario.discipline)) {
         continue;
       }
-      final p = adaptProfile(BenchProfile.fromJson(j), catalog: catalog).profile;
+      final p = adaptProfile(
+        BenchProfile.fromJson(j),
+        catalog: catalog,
+      ).profile;
       final moved = seasonChanges(j, SeasonScenario.discipline).single.apply(p);
       expect(moved.validate(), isEmpty, reason: '${j['key']}');
       expect(
@@ -84,9 +87,7 @@ void main() {
     }
     expect(
       change.week,
-      seasonDisciplineWeek(
-        seasonWeeksOf(json, SeasonScenario.discipline),
-      ),
+      seasonDisciplineWeek(seasonWeeksOf(json, SeasonScenario.discipline)),
     );
   });
 
