@@ -1,0 +1,335 @@
+diff --git a/test/ci1e_programme_40s_test.dart b/test/ci1e_programme_40s_test.dart
+index 52b6701..0013877 100644
+--- a/test/ci1e_programme_40s_test.dart
++++ b/test/ci1e_programme_40s_test.dart
+@@ -155,36 +155,43 @@ void main() {
+               : 'B5',
+       };
+       const deloads = {7, 11, 15, 19, 23, 30, 35};
+-      expect(
+-        importedRanges(1, 40, (n) => keys[n]!, deloads.contains),
+-        [
+-          (1, 3),
+-          (4, 7),
+-          (8, 11),
+-          (12, 15),
+-          (16, 19),
+-          (20, 25),
+-          (26, 31),
+-          (32, 35),
+-          (36, 40),
+-        ],
+-      );
++      expect(importedRanges(1, 40, (n) => keys[n]!, deloads.contains), [
++        (1, 3),
++        (4, 7),
++        (8, 11),
++        (12, 15),
++        (16, 19),
++        (20, 25),
++        (26, 31),
++        (32, 35),
++        (36, 40),
++      ]);
+       // Sans semaine allégée : parts égales de 6 semaines au plus.
+       expect(importedRanges(1, 14, (_) => 'X', (_) => false), [
+         (1, 5),
+         (6, 10),
+         (11, 14),
+       ]);
+-      expect(importedPhaseOf('Bloc 1 — Hypertrophie'),
+-          kc.SeasonPhaseKind.accumulation);
+-      expect(importedPhaseOf('Bloc 2 — Force'),
+-          kc.SeasonPhaseKind.intensification);
+-      expect(importedPhaseOf('Bloc 3 — Force max'),
+-          kc.SeasonPhaseKind.realization);
+-      expect(importedPhaseOf('Bloc 4 — Endurance'),
+-          kc.SeasonPhaseKind.accumulation);
+-      expect(importedPhaseOf('Bloc 5 — Peaking'),
+-          kc.SeasonPhaseKind.realization);
++      expect(
++        importedPhaseOf('Bloc 1 — Hypertrophie'),
++        kc.SeasonPhaseKind.accumulation,
++      );
++      expect(
++        importedPhaseOf('Bloc 2 — Force'),
++        kc.SeasonPhaseKind.intensification,
++      );
++      expect(
++        importedPhaseOf('Bloc 3 — Force max'),
++        kc.SeasonPhaseKind.realization,
++      );
++      expect(
++        importedPhaseOf('Bloc 4 — Endurance'),
++        kc.SeasonPhaseKind.accumulation,
++      );
++      expect(
++        importedPhaseOf('Bloc 5 — Peaking'),
++        kc.SeasonPhaseKind.realization,
++      );
+       expect(importedPhaseOf('Phase 0 — Tests'), kc.SeasonPhaseKind.test);
+     });
+ 
+@@ -194,17 +201,20 @@ void main() {
+       _saveProfile(app, kc.GuidanceMode.assisted);
+       final imp = app.importedProgram!;
+       expect(imp.segments.length, 9);
+-      expect([for (final s in imp.segments) (s.first, s.last)], [
+-        (1, 3),
+-        (4, 7),
+-        (8, 11),
+-        (12, 15),
+-        (16, 19),
+-        (20, 25),
+-        (26, 31),
+-        (32, 35),
+-        (36, 40),
+-      ]);
++      expect(
++        [for (final s in imp.segments) (s.first, s.last)],
++        [
++          (1, 3),
++          (4, 7),
++          (8, 11),
++          (12, 15),
++          (16, 19),
++          (20, 25),
++          (26, 31),
++          (32, 35),
++          (36, 40),
++        ],
++      );
+       for (final s in imp.segments) {
+         final b = s.block;
+         expect(b.validate(), isEmpty, reason: s.blockId);
+@@ -224,36 +234,41 @@ void main() {
+         }
+       }
+       // Phases : tests, hypertrophie, force, force max, endurance, peaking.
+-      expect([for (final s in imp.segments) s.phase.code], [
+-        'test',
+-        'accumulation',
+-        'accumulation',
+-        'intensification',
+-        'intensification',
+-        'realization',
+-        'accumulation',
+-        'intensification',
+-        'realization',
+-      ]);
++      expect(
++        [for (final s in imp.segments) s.phase.code],
++        [
++          'test',
++          'accumulation',
++          'accumulation',
++          'intensification',
++          'intensification',
++          'realization',
++          'accumulation',
++          'intensification',
++          'realization',
++        ],
++      );
+       // Semaines allégées et de test.
+       final b2 = imp.segmentOf(15)!.block;
+       expect(b2.pass2.weeks[3].intent, kc.WeekIntent.deload);
+-      expect(imp.segmentOf(39)!.block.pass2.weeks[3].intent,
+-          kc.WeekIntent.test);
++      expect(
++        imp.segmentOf(39)!.block.pass2.weeks[3].intent,
++        kc.WeekIntent.test,
++      );
+       // Saison : phases contiguës, échéance à la fin de S40 (18/04/2027).
+       final season = imp.season!;
+       expect(season.validate(), isEmpty);
+       expect(season.phases.first.startDate, kc.CivilDate(2026, 7, 13));
+-      expect(
+-        season.phases.fold<int>(0, (a, p) => a + p.weeks),
+-        40,
+-      );
++      expect(season.phases.fold<int>(0, (a, p) => a + p.weeks), 40);
+       expect(season.phases.last.eventId, kImportedEventId);
+       expect(imp.event!.date, kc.CivilDate(2027, 4, 18));
+       // Emplacements stables d'une semaine à l'autre : le muscle-up lesté
+       // de J1 a le même emplacement en S12, S13 et S14.
+-      String slotOfFirst(int w) =>
+-          app.adaptSlotOf(w, 1, app.program.week(w).day(1)!.exercises.first.id)!;
++      String slotOfFirst(int w) => app.adaptSlotOf(
++        w,
++        1,
++        app.program.week(w).day(1)!.exercises.first.id,
++      )!;
+       expect(slotOfFirst(12), slotOfFirst(13));
+       expect(slotOfFirst(13), slotOfFirst(14));
+       // Clusters (S14) et tests (1RM en S39, max en S40) annotés.
+@@ -282,77 +297,81 @@ void main() {
+       print('CI1E absent ${jsonEncode(imp.absent)}');
+       // ignore: avoid_print
+       print(
+-        'CI1E segments ${[for (final s in imp.segments) '${s.blockId}:${s.phase.code}:${[for (final w in s.block.pass2.weeks) w.intent?.code].join('/')}']}',
++        'CI1E segments ${[
++          for (final s in imp.segments) '${s.blockId}:${s.phase.code}:${[for (final w in s.block.pass2.weeks) w.intent?.code].join('/')}',
++        ]}',
+       );
+     });
+ 
+-    test('migration 6.9.3 → 6.10.0 : sauvegarde d’origine automatique, '
+-        'séances du moteur relues sur le bloc annoté, journal intact',
+-        () async {
+-      // Séances servies par le moteur en S13 (format 6.9.3) : prescrites
+-      // avec le code d'aujourd'hui puis réécrites à l'ancienne.
+-      await _ownerAt(app);
+-      _saveProfile(app, kc.GuidanceMode.assisted);
+-      final b = jsonDecode(app.exportAll()) as Map<String, dynamic>;
+-      final logs = (b['logs'] as Map).cast<String, dynamic>();
+-      final oldAdapts = <String, Map<String, dynamic>>{};
+-      for (var j = 1; j <= 4; j++) {
+-        final day = app.program.week(13).day(j)!;
+-        app.logs.remove('S13-J$j');
+-        final a = app.adaptOpen(13, day)!;
+-        final old = _as693(app, 13, j, a.toJson().cast<String, dynamic>());
+-        oldAdapts['S13-J$j'] = old;
+-        final l = (logs['S13-J$j'] as Map).cast<String, dynamic>();
+-        logs['S13-J$j'] = {...l, 'adapt': old};
+-      }
+-      b.remove('programOrigin');
+-      // Nouvelle installation : la sauvegarde 6.9.3 est le document local.
+-      await app.flush();
+-      app.dispose();
+-      SharedPreferences.setMockInitialValues({});
+-      app = AppStore()..storeClock = () => clock;
+-      await app.init();
+-      expect(app.programOrigin, isNull);
+-      expect(await app.importAll(jsonEncode(b)), isTrue);
+-      // Sauvegarde d'origine prise (dans le document et en local).
+-      expect(app.programOrigin, isNotNull);
+-      final origin = (app.programOrigin!['backup'] as Map)
+-          .cast<String, dynamic>();
+-      expect(jsonEncode(origin['logs']), jsonEncode(b['logs']));
+-      expect(
+-        (jsonDecode(app.exportAll()) as Map).containsKey('programOrigin'),
+-        isTrue,
+-      );
+-      // Séances du moteur de 6.9.3 relues sur le bloc annoté de S13.
+-      final seg = app.importedProgram!.segmentOf(13)!;
+-      for (var j = 1; j <= 4; j++) {
+-        final a = app.sessionAdapt(13, j)!;
+-        expect(a.blockId, seg.blockId);
+-        expect(a.weekIndex, 13 - seg.first);
+-        for (final it in a.plan.items) {
+-          expect(it.slotId.startsWith('j$j-'), isTrue);
++    test(
++      'migration 6.9.3 → 6.10.0 : sauvegarde d’origine automatique, '
++      'séances du moteur relues sur le bloc annoté, journal intact',
++      () async {
++        // Séances servies par le moteur en S13 (format 6.9.3) : prescrites
++        // avec le code d'aujourd'hui puis réécrites à l'ancienne.
++        await _ownerAt(app);
++        _saveProfile(app, kc.GuidanceMode.assisted);
++        final b = jsonDecode(app.exportAll()) as Map<String, dynamic>;
++        final logs = (b['logs'] as Map).cast<String, dynamic>();
++        final oldAdapts = <String, Map<String, dynamic>>{};
++        for (var j = 1; j <= 4; j++) {
++          final day = app.program.week(13).day(j)!;
++          app.logs.remove('S13-J$j');
++          final a = app.adaptOpen(13, day)!;
++          final old = _as693(app, 13, j, a.toJson().cast<String, dynamic>());
++          oldAdapts['S13-J$j'] = old;
++          final l = (logs['S13-J$j'] as Map).cast<String, dynamic>();
++          logs['S13-J$j'] = {...l, 'adapt': old};
++        }
++        b.remove('programOrigin');
++        // Nouvelle installation : la sauvegarde 6.9.3 est le document local.
++        await app.flush();
++        app.dispose();
++        SharedPreferences.setMockInitialValues({});
++        app = AppStore()..storeClock = () => clock;
++        await app.init();
++        expect(app.programOrigin, isNull);
++        expect(await app.importAll(jsonEncode(b)), isTrue);
++        // Sauvegarde d'origine prise (dans le document et en local).
++        expect(app.programOrigin, isNotNull);
++        final origin = (app.programOrigin!['backup'] as Map)
++            .cast<String, dynamic>();
++        expect(jsonEncode(origin['logs']), jsonEncode(b['logs']));
++        expect(
++          (jsonDecode(app.exportAll()) as Map).containsKey('programOrigin'),
++          isTrue,
++        );
++        // Séances du moteur de 6.9.3 relues sur le bloc annoté de S13.
++        final seg = app.importedProgram!.segmentOf(13)!;
++        for (var j = 1; j <= 4; j++) {
++          final a = app.sessionAdapt(13, j)!;
++          expect(a.blockId, seg.blockId);
++          expect(a.weekIndex, 13 - seg.first);
++          for (final it in a.plan.items) {
++            expect(it.slotId.startsWith('j$j-'), isTrue);
++            expect(
++              seg.block.pass1.days.any(
++                (d) => d.slots.any((s) => s.slotId == it.slotId),
++              ),
++              isTrue,
++              reason: '${it.slotId} relu sur le bloc annoté',
++            );
++          }
++          // Le journal enregistré n'est pas réécrit.
+           expect(
+-            seg.block.pass1.days.any(
+-              (d) => d.slots.any((s) => s.slotId == it.slotId),
+-            ),
+-            isTrue,
+-            reason: '${it.slotId} relu sur le bloc annoté',
++            jsonEncode(app.logs['S13-J$j']!.adapt),
++            jsonEncode(oldAdapts['S13-J$j']),
+           );
+         }
+-        // Le journal enregistré n'est pas réécrit.
+-        expect(
+-          jsonEncode(app.logs['S13-J$j']!.adapt),
+-          jsonEncode(oldAdapts['S13-J$j']),
++        // Journal présenté au moteur : séances de S13 rattachées au bloc
++        // annoté.
++        final log = app.adaptTrainingLog();
++        final s13 = log.sessions.where(
++          (s) => s.programRef?.blockId == seg.blockId,
+         );
+-      }
+-      // Journal présenté au moteur : séances de S13 rattachées au bloc
+-      // annoté.
+-      final log = app.adaptTrainingLog();
+-      final s13 = log.sessions.where(
+-        (s) => s.programRef?.blockId == seg.blockId,
+-      );
+-      expect(s13.length, greaterThanOrEqualTo(4));
+-    });
++        expect(s13.length, greaterThanOrEqualTo(4));
++      },
++    );
+ 
+     test('séance du jour servie en mode coach, saison et compte à rebours, '
+         'échéance donnée au moteur', () async {
+@@ -365,14 +384,19 @@ void main() {
+       final a = app.adaptOpen(13, day)!;
+       expect(a.plan.validate(), isEmpty);
+       expect(a.plan.weekIntent, isNotNull, reason: 'mode coach');
+-      expect(app.adaptProfile!.events!.any((e) => e.id == kImportedEventId),
+-          isTrue);
++      expect(
++        app.adaptProfile!.events!.any((e) => e.id == kImportedEventId),
++        isTrue,
++      );
+       // MA SAISON : phases, phase en cours, compte à rebours.
+       final view = storeSeasonOverview()!;
+       expect(view.phases.length, greaterThanOrEqualTo(5));
+       expect(view.currentPhase, isNotNull);
+-      expect(view.daysToEvent, kc.CivilDate(2027, 4, 18).dayNumber -
+-          kc.CivilDate(2026, 10, 9).dayNumber);
++      expect(
++        view.daysToEvent,
++        kc.CivilDate(2027, 4, 18).dayNumber -
++            kc.CivilDate(2026, 10, 9).dayNumber,
++      );
+       expect(view.blockWeeks.map((w) => w.n), [12, 13, 14, 15]);
+     });
+ 

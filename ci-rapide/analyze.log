@@ -1,0 +1,5 @@
+Analyzing streetlift-apk...                                     
+
+   info • The import of 'package:streetlift_tracker/persistence.dart' is unnecessary because all of the used elements are also provided by the import of 'package:streetlift_tracker/store.dart'. Try removing the import directive • test/ci1e_programme_40s_test.dart:19:8 • unnecessary_import
+
+1 issue found. (ran in 18.9s)
