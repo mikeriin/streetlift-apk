@@ -59,6 +59,7 @@ void _streetWithShoulder(
   AppStore app,
   int discomfort, {
   Set<String>? primaries,
+  String since = 'months_3_to_12',
 }) {
   final json = Map<String, Object?>.of(
     primaries == null ? _fixtureJson() : _fixtureJson(primaries),
@@ -69,7 +70,7 @@ void _streetWithShoulder(
       'side': 'right',
       'joint': 'epaule',
       'discomfort': discomfort,
-      'since': 'months_3_to_12',
+      'since': since,
     },
   ];
   final r = app.saveAthleteProfile(
@@ -281,38 +282,61 @@ void main() {
 
     test('épaule à antécédent (musculation) : `shoulder_history` sous '
         'chaque développé au-dessus de la tête écrit, avec le bouclier', () {
-      _streetWithShoulder(app, 6, primaries: {'musculation'});
       final catalog = app.content.catalog!;
       var overhead = 0;
-      for (final b in app.planProgram!.blocks) {
-        for (final w in b.block.pass2.weeks) {
-          for (final d in w.days) {
-            for (final it in d.items) {
-              final e = catalog.find(it.exerciseId);
-              final noted = it.reasons.any(
-                (r) =>
-                    r.code == kc.ReasonCodes.planCoachNote &&
-                    r.params['note'] == kp.CoachNotes.shoulderHistory,
-              );
-              if (noted) {
-                overhead++;
-                expect(
-                  e?.pattern,
-                  kc.MovementPattern.pousseeVerticaleHaute,
-                  reason: it.exerciseId,
+      // (Antécédent ancien et peu gênant : le développé reste écrit ; une
+      // gêne forte peut le retirer.)
+      var written = 0;
+      for (final (level, since) in const [
+        (2, 'past_resolved'),
+        (3, 'over_12_months'),
+        (6, 'months_3_to_12'),
+      ]) {
+        _streetWithShoulder(
+          app,
+          level,
+          primaries: {'musculation'},
+          since: since,
+        );
+        for (final b in app.planProgram!.blocks) {
+          for (final w in b.block.pass2.weeks) {
+            for (final d in w.days) {
+              for (final it in d.items) {
+                final e = catalog.find(it.exerciseId);
+                if (e?.pattern == kc.MovementPattern.pousseeVerticaleHaute) {
+                  written++;
+                }
+                final noted = it.reasons.any(
+                  (r) =>
+                      r.code == kc.ReasonCodes.planCoachNote &&
+                      r.params['note'] == kp.CoachNotes.shoulderHistory,
                 );
-                final pain = [
-                  for (final r in it.reasons)
-                    if (isPainReason(r)) coachText(r, catalog),
-                ];
-                expect(pain.any((t) => t!.startsWith('Épaule opérée')), isTrue);
+                if (noted) {
+                  overhead++;
+                  expect(
+                    e?.pattern,
+                    kc.MovementPattern.pousseeVerticaleHaute,
+                    reason: it.exerciseId,
+                  );
+                  final pain = [
+                    for (final r in it.reasons)
+                      if (isPainReason(r)) coachText(r, catalog),
+                  ];
+                  expect(
+                    pain.any((t) => t!.startsWith('Épaule opérée')),
+                    isTrue,
+                  );
+                }
               }
             }
           }
         }
+        // ignore: avoid_print
+        print(
+          'CI1G $level/10 $since : développés écrits $written, notés '
+          '$overhead',
+        );
       }
-      // ignore: avoid_print
-      print('CI1G développés notés shoulder_history : $overhead');
       expect(overhead, greaterThan(0));
     });
   });
@@ -419,9 +443,8 @@ void main() {
       };
       expect(await app.importAll(jsonEncode(filled)), isTrue);
       app.saveAthleteProfile(
-        ProfileDraft.of(
-          sampleAthleteProfile(on: civilOf(app.storeClock())),
-        )..consent = 'refused',
+        ProfileDraft.of(sampleAthleteProfile(on: civilOf(app.storeClock())))
+          ..consent = 'refused',
       );
       final segments = app.importedProgram!.segments;
       expect(segments, isNotEmpty);
