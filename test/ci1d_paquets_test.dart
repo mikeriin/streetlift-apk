@@ -95,8 +95,8 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   test('paquets 0.2.3 (CI1f : 0.3.0) dans l’application', () {
-    expect(kp.kalisPlanVersion, '0.3.0');
-    expect(ka.kalisAdaptVersion, '0.3.0');
+    expect(kp.kalisPlanVersion, '0.3.1');
+    expect(ka.kalisAdaptVersion, '0.3.1');
   });
 
   group('textes des nouvelles raisons (0.2.3)', () {

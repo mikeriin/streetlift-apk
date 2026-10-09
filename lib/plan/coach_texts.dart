@@ -402,7 +402,29 @@ const Set<String> _painNotes = <String>{
   // réduits de moitié).
   kp.CoachNotes.painReprise,
   kp.CoachNotes.wristSpare,
+  // CI1g (`kalis_plan` 0.3.0 / 0.3.1) : avis médical avant la première
+  // semaine, épaule opérée ou à antécédent sous un développé au-dessus de
+  // la tête, genou gêné (chaise haute) : avec le bouclier, en tête.
+  kp.CoachNotes.clearanceFirst,
+  kp.CoachNotes.shoulderHistory,
+  kp.CoachNotes.kneeShallow,
 };
+
+/// CI1g (`kalis_plan` 0.3.1, point imposé par CY) : note de bloc
+/// `clearance_first` (avis médical avant la première semaine :
+/// questionnaire de santé « prudent », ou gêne déclarée à 5/10 ou plus),
+/// ou null. L'application la montre avant la première séance du bloc
+/// comme une étape à confirmer.
+kc.Reason? coachClearanceReason(kc.ProgramBlock block) {
+  if (!isCoachBlock(block)) return null;
+  for (final r in [...block.pass2.reasons, ...block.pass1.reasons]) {
+    if (r.code == kc.ReasonCodes.planCoachNote &&
+        r.params['note'] == kp.CoachNotes.clearanceFirst) {
+      return r;
+    }
+  }
+  return null;
+}
 
 /// CI1b : notes du bloc sur une douleur qui dure (`pain_stop` : arrêt et
 /// consultation ; `pain_return` : reprise graduée), rédigées par

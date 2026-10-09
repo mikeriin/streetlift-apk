@@ -1458,7 +1458,15 @@ final class SessionRun {
     noteHeavy(track, run, day, p);
     final coach = run.spec.coach;
     if (coach != null) {
-      noteCoachSession(track, run, coach, day, p, bodyWeightKg);
+      noteCoachSession(
+        track,
+        run,
+        coach,
+        day,
+        p,
+        bodyWeightKg,
+        lowDay: health.level >= 1,
+      );
       if (run.measured || run.fails > 0) {
         noteForm(track, day, f.m[0] + f.m[3], p);
       }

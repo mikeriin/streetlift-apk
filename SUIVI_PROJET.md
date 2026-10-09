@@ -1,8 +1,15 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : CI1d (pipeline CP), version dev6.9.3 ; précédent : dev6.9.2 (CI1c)**  
-**Date : 9 octobre 2026, Europe/Paris — version : 6.9.3+111, affichée « dev6.9.3 » dans l'APK (versionCode réel fixé par la CI de build)**  
+**Passe actuelle : CI1g (pipeline CP), version dev6.11.1 ; précédent : dev6.11.0 (CI1f)**  
+**Date : 9 octobre 2026, Europe/Paris — version : 6.11.1+114, affichée « dev6.11.1 » dans l'APK (versionCode réel fixé par la CI de build)**  
 **Statut : contrôlé en CI (branche `claude/ci-3d`, rendu réel sur émulateur Android) ; à valider par le propriétaire.**
+
+## CI1g — Paquets 0.3.1 (version dev6.11.1, pipeline CP, DECISIONS_CP.md C11.7)
+
+- **Paquets** : `kalis_plan` 0.3.1 et `kalis_adapt` 0.3.1 (branches fixes `etiquettes/…`, copie octet pour octet) ; `kalis_core` 0.4.3, `kalis_koach` inchangés ; `kalis_bench` absent ; `pubspec.lock` à jour.
+- **Points de CY** : `clearance_first` avant la première séance (étape bloquante, confirmation par bloc et valeur de la note, gardée dans les réglages et la sauvegarde ; rappel dans la séance après « Pas encore ») ; consigne de la pompe sur barre basse (`adapt.pain_reported` poignet → `sw-pompe-inclinee`) ; `shoulder_history`, `clearance_first`, `knee_shallow` avec le bouclier ; cause `cap` de `adapt.load_held` rédigée.
+- **C11** : `KalisAdapt(restructureImported: true)` sans objet (blocs du programme de 40 semaines de six semaines au plus, vérifié par test).
+- Tests : `test/ci1g_paquets_test.dart` ; cible émulateur `integration_test/clearance_ci1g_test.dart`. Livraisons CI1e et CI1f : `pipeline/cp/livraisons/`.
 
 ## CI1d — Paquets 0.2.3 (version dev6.9.3, pipeline CP, DECISIONS_CP.md C10.6)
 

@@ -184,6 +184,8 @@ s'ajoutent ; aucune valeur existante ne change de sens.
 
 | Code | `value` | Émise quand | Texte rendu (résumé) |
 | --- | --- | --- | --- |
+| `clearance_first` | gêne déclarée la plus forte (0 : questionnaire de santé seul) | bloc d'un profil au questionnaire de santé « prudent » ou à une gêne déclarée de 5/10 ou plus (CY, partie 0) | Avis d'un médecin ou d'un kinésithérapeute avant la première semaine ; seuls les mouvements qui ne réveillent pas la douleur en attendant. L'application le montre avant la première séance. |
+| `shoulder_history` | 0 | développé au-dessus de la tête, épaule à antécédent ou opérée (CY, partie 0) | Sans douleur (2/10 au plus), amplitude tolérée, feu vert du chirurgien ou du kiné. |
 | `wod_pace` | effort visé sur 10 (8) | ligne d'une pièce de conditionnement | Allure tenable du premier au dernier passage, 2 à 3 répétitions en réserve, mise à l'échelle, charges de repère. |
 | `chair_squat` | 0 | squat d'un senior (65 ans et plus) en santé | Squat en assis-debout d'une chaise, mains en appui puis bras croisés, chaise plus basse ensuite. |
 | `knee_shallow` | gêne déclarée du genou | chaise contre le mur, genou gêné à 3/10 ou plus | Chaise haute à 45-60°, gêne à 3/10 au plus pendant et le lendemain ; avis médical ou kiné à 5/10 et plus. |

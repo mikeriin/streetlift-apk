@@ -1,4 +1,8 @@
-# Kalis Track dev6.9.3 — Calibrage des programmes (pipeline « Calibrage des programmes », voie App)
+# Kalis Track dev6.11.1 — Calibrage des programmes (pipeline « Calibrage des programmes », voie App)
+
+## dev6.11.1 — Moteurs 0.3.1 (lot CI1g)
+
+- **Paquets** `kalis_plan` 0.3.1 et `kalis_adapt` 0.3.1 (lot CY, `kalis_core` 0.4.3 inchangé) : sécurité d'abord — avis médical avant la première semaine quand le questionnaire de santé le demande ou qu'une gêne est déclarée à 5/10 ou plus (étape à confirmer avant la première séance du bloc : « J'ai eu l'avis d'un médecin ou d'un kiné » ou « Pas encore », rappel dans la séance tant que ce n'est pas confirmé) ; épaule opérée ou à antécédent sous chaque développé au-dessus de la tête ; première gêne du poignet : appui neutre tout de suite (pompe « mains serrées sur la barre basse, poignets droits ») ; pas de test maximal sur une articulation douloureuse ; course bornée et retirée sous une douleur du bas du corps qui dure ; « 2 pour 2 » plafonnée à 10 % ; couloir à 85 %. Tout est écrit en clair. Le programme de 40 semaines reste sous toutes les fonctionnalités (blocs de six semaines au plus). Versions intermédiaires dev6.10.0 (CI1e) et dev6.11.0 (CI1f) : voir `pipeline/cp/livraisons/` (branche `pipeline`).
 
 ## dev6.9.3 — Moteurs street 0.2.3 (lot CI1d)
 

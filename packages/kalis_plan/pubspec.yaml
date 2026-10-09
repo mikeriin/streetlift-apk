@@ -4,7 +4,7 @@ description: >-
   sous contraintes (passe 1 : exercices par séance ; passe 2 : séries,
   répétitions, flammes, repos, charges), revue, variantes, blocs glissants
   et restructuration. Dart pur, sans Flutter, sans stockage, sans horloge.
-version: 0.3.0
+version: 0.3.1
 publish_to: none
 
 environment:

@@ -2217,4 +2217,110 @@ void main() {
       }
     });
   });
+
+  group('CY partie 0', () {
+    Set<String> blockNotes(ProgramBlock b) => <String>{
+      for (final r in <Reason>[...b.pass1.reasons, ...b.pass2.reasons])
+        if (r.code == ReasonCodes.planCoachNote) '${r.params['note']}',
+    };
+
+    test('gêne déclarée à 5/10 : avis médical avant la première semaine '
+        '(autres_10) ; sans gêne : pas de note', () {
+      final knee = _profile(
+        experience: ExperienceLevel.beginner,
+        trainingAge: TrainingAge.under6Months,
+        primary: TrainingDiscipline.musculation,
+        equipment: _gym,
+        limitations: const <Limitation>[
+          Limitation(
+            zone: BodyZone.knee,
+            side: BodySide.right,
+            discomfort: 5,
+            since: ConstraintSince.months3To12,
+          ),
+        ],
+      );
+      final blocks = _program(catalog, knee, 1);
+      expect(blockNotes(blocks.first), contains(CoachNotes.clearanceFirst));
+      final free = _program(catalog, _beginner(), 1);
+      expect(
+        blockNotes(free.first),
+        isNot(contains(CoachNotes.clearanceFirst)),
+      );
+    });
+
+    test('jour de test de tirage : aucun travail de tirage vertical ni de '
+        'muscle-up après les tests (street_08)', () {
+      var checked = 0;
+      for (final blocks in <List<ProgramBlock>>[
+        _program(catalog, _lifter(weeksOut: 12), 12),
+        _program(catalog, _beginner(), 12),
+      ]) {
+        for (final b in blocks) {
+          for (final w in b.pass2.weeks) {
+            for (final d in w.days) {
+              bool pullish(ExercisePrescription i) {
+                final e = catalog.exercise(i.exerciseId);
+                return e.pattern == MovementPattern.tirageVertical ||
+                    e.rootId == Ids.muscleUp;
+              }
+
+              final tested = d.items.any(
+                (i) =>
+                    i.kind == SetKind.test &&
+                    i.exerciseId != 'cs-tenue-menton-barre-pronation' &&
+                    pullish(i),
+              );
+              if (!tested) {
+                continue;
+              }
+              checked++;
+              for (final i in d.items) {
+                if (i.kind == SetKind.work) {
+                  expect(pullish(i), isFalse, reason: i.exerciseId);
+                }
+              }
+            }
+          }
+        }
+      }
+      expect(checked, greaterThan(0));
+    });
+
+    test('poignet déclaré à 4/10 : aucun test maximal sur un exercice qui '
+        'charge le poignet, hors épreuve (street_10)', () {
+      final wrist = _profile(
+        experience: ExperienceLevel.beginner,
+        trainingAge: TrainingAge.under6Months,
+        minutes: 45,
+        benchmarks: <Benchmark>[_maxReps('sw-pompe', 6)],
+        limitations: const <Limitation>[
+          Limitation(
+            zone: BodyZone.wristHand,
+            side: BodySide.both,
+            discomfort: 4,
+            since: ConstraintSince.months3To12,
+          ),
+        ],
+      );
+      for (final b in _program(catalog, wrist, 12)) {
+        for (final w in b.pass2.weeks) {
+          for (final d in w.days) {
+            for (final i in d.items) {
+              if (i.kind != SetKind.test ||
+                  i.exerciseId == 'cs-tenue-menton-barre-pronation') {
+                continue;
+              }
+              final e = catalog.exercise(i.exerciseId);
+              expect(
+                e.stressOn(Joint.wrist),
+                JointStress.low,
+                reason: i.exerciseId,
+              );
+            }
+          }
+        }
+      }
+    });
+  });
 }

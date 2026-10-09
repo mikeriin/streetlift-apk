@@ -569,6 +569,20 @@ String? coachReasonText(Reason r, Catalog catalog) {
               'séries de volume) devient une séance de surcharge en séries '
               'courtes — variante plus dure ou lest léger, 2 répétitions en '
               "réserve. Tu n'ajoutes jamais de séries toi-même.",
+        CoachNotes.clearanceFirst =>
+          v is num && v >= 5
+              ? 'Gêne déclarée à ${_int(v)}/10 : avant la première semaine, '
+                    "prends l'avis d'un médecin ou d'un kinésithérapeute et "
+                    'montre-lui ce programme. En attendant, seuls les '
+                    'mouvements qui ne réveillent pas la douleur se font.'
+              : 'Ton questionnaire de santé demande un avis médical : avant '
+                    "la première semaine, prends l'avis d'un médecin et "
+                    'montre-lui ce programme.',
+        CoachNotes.shoulderHistory =>
+          'Épaule opérée ou déjà blessée : développé sans douleur (2/10 au '
+              "plus), dans l'amplitude que l'épaule tolère, bras légèrement "
+              "en avant du corps ; avec le feu vert du chirurgien ou du "
+              'kinésithérapeute qui la suit.',
         CoachNotes.kneeShallow =>
           'Genou gêné (${_int(v)}/10 au profil) : chaise haute, genoux '
               'pliés à 45-60° seulement (cuisses bien au-dessus de '
@@ -952,7 +966,12 @@ String? coachReasonText(Reason r, Catalog catalog) {
               'départs reste) ; hors de cette phase, les répétitions par '
               "départ ne montent qu'après un test.",
         CoachRules.durationStep =>
-          'Progression : durée +${_int(step)} % par semaine au plus.',
+          'Progression : la sortie longue dépasse de ${_int(step)} % au '
+              'plus la plus longue course des quatre dernières semaines '
+              '(après une semaine allégée ou de test, elle reprend sa '
+              'durée d\'avant, sans la dépasser de plus de ${_int(step)} %). '
+              "Après une course, elle repart à 70 % de la plus longue "
+              'sortie, puis monte de ${_int(step)} % au plus par semaine.',
         _ => null,
       };
     case ReasonCodes.planPainRule:

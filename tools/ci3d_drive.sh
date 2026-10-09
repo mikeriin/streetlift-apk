@@ -52,6 +52,27 @@ cible() {
     ${4:+--keep-app-running} \
     -d emulator-5554 > "$out/drive-$1${2:+-$2}.log" 2>&1
 }
+# CI1g (dev6.11.1) : avis médical avant la première séance (note
+# `clearance_first` de `kalis_plan` 0.3.1) : étape à confirmer, « Pas
+# encore » puis rappel, « J'ai eu l'avis ». Session personnelle sans étape ;
+# session de test supprimée, session personnelle intacte. Build de
+# développement, deux parties : a = sombre, rouge ; b = clair, violet.
+code_ci1g=0
+for part in a b; do
+  cible clearance_ci1g_test "$part" dev
+  c=$?
+  if [ "$c" -ne 0 ] && [ ! -f "$out/ci1g_releve_$part.json" ]; then
+    echo "CI1g $part sans relevé (code $c) : adb relancé, second essai."
+    cp "$out/drive-clearance_ci1g_test-$part.log" "$out/drive-ci1g-$part-essai1.log"
+    adb kill-server || true
+    adb start-server || true
+    timeout 60 adb wait-for-device || true
+    cible clearance_ci1g_test "$part" dev
+    c=$?
+  fi
+  [ "$c" -ne 0 ] && code_ci1g=$c
+  tail -n 30 "$out/drive-clearance_ci1g_test-$part.log"
+done
 # CI1f (dev6.11.0) : myo-reps saisis mini-série par mini-série (une série
 # avec ses parties) ; contraste du programme de 40 semaines affiché comme un
 # groupe (tours, chrono, résultat). Session personnelle, build de
@@ -373,7 +394,7 @@ kill "$logcat_pid" 2>/dev/null || true
 grep -o 'Impeller rendering backend ([^)]*)' "$out/logcat-complet.txt" | sort | uniq -c > "$out/impeller.txt" || true
 grep -iE 'flutter|impeller|vulkan|gles|AndroidRuntime|FATAL|swiftshader|angle|lowmemorykiller|DEBUG|libc|tombstone|ActivityManager' "$out/logcat-complet.txt" | tail -n 3000 > "$out/logcat.txt" || true
 rm -f "$out/logcat-complet.txt"
-echo "code_ci1f=$code_ci1f code_ci1e=$code_ci1e code_ci1c=$code_ci1c code_ci1=$code_ci1 code_cu=$code_cu code_g10=$code_g10 code_g9=$code_g9 code_g7=$code_g7 code_g6=$code_g6 code_g5=$code_g5 code_g3=$code_g3 code_g2=$code_g2 code_g1=$code_g1 code_m8=$code_m8 code_m7=$code_m7" > "$out/drive-code.txt"
+echo "code_ci1g=$code_ci1g code_ci1f=$code_ci1f code_ci1e=$code_ci1e code_ci1c=$code_ci1c code_ci1=$code_ci1 code_cu=$code_cu code_g10=$code_g10 code_g9=$code_g9 code_g7=$code_g7 code_g6=$code_g6 code_g5=$code_g5 code_g3=$code_g3 code_g2=$code_g2 code_g1=$code_g1 code_m8=$code_m8 code_m7=$code_m7" > "$out/drive-code.txt"
 echo "code=$code" >> "$out/drive-code.txt"
 echo "code_mesure=$code_mesure" >> "$out/drive-code.txt"
-[ "$code_ci1f" -eq 0 ] && [ "$code_ci1e" -eq 0 ] && [ "$code_ci1c" -eq 0 ] && [ "$code_ci1" -eq 0 ] && [ "$code_cu" -eq 0 ] && [ "$code_g10" -eq 0 ] && [ "$code_g9" -eq 0 ] && [ "$code_g7" -eq 0 ] && [ "$code_g6" -eq 0 ] && [ "$code_g5" -eq 0 ] && [ "$code_g3" -eq 0 ] && [ "$code_g2" -eq 0 ] && [ "$code_g1" -eq 0 ] && [ "$code_m8" -eq 0 ] && [ "$code_m7" -eq 0 ] && [ "$code" -eq 0 ] && [ "$code_mesure" -eq 0 ]
+[ "$code_ci1g" -eq 0 ] && [ "$code_ci1f" -eq 0 ] && [ "$code_ci1e" -eq 0 ] && [ "$code_ci1c" -eq 0 ] && [ "$code_ci1" -eq 0 ] && [ "$code_cu" -eq 0 ] && [ "$code_g10" -eq 0 ] && [ "$code_g9" -eq 0 ] && [ "$code_g7" -eq 0 ] && [ "$code_g6" -eq 0 ] && [ "$code_g5" -eq 0 ] && [ "$code_g3" -eq 0 ] && [ "$code_g2" -eq 0 ] && [ "$code_g1" -eq 0 ] && [ "$code_m8" -eq 0 ] && [ "$code_m7" -eq 0 ] && [ "$code" -eq 0 ] && [ "$code_mesure" -eq 0 ]

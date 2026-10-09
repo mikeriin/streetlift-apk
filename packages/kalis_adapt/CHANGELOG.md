@@ -1,5 +1,33 @@
 # Journal des versions de kalis_adapt
 
+## 0.3.1
+
+Lot CY, partie 0 (sécurité) du pipeline « Calibrage des programmes ». Contrat additif (cinq paramètres, un argument du constructeur).
+
+- **Première gêne du poignet** (3/10 ou plus dans les deux semaines, avant tout arrêt) : la poussée paume à plat
+  passe tout de suite sur un appui neutre faisable (parallettes, poignées, pompe mains serrées sur une barre
+  basse). Pendant un arrêt du poignet, seuls les parallettes et les poignées comptent (C10.8 (a)).
+- **Couloir de charge** : à 85 % du 1RM écrit ou plus, la charge servie ne dépasse plus l'écrit
+  (`coachCorridorHeavyShare`).
+- **Schéma changé d'une séance à l'autre du même emplacement** : charge totale bornée par la hausse à schéma
+  égal, corrigée de 2,5 % par répétition de moins (`coachRepLoadShare`, `coachRepGapMax`).
+- **Jour de bilan bas** : il ne devient plus le repère d'un jour bas suivant (sous-dosage qui se reconduisait).
+- **Double progression** (règle « 2 pour 2 » de la NSCA, `coachTwoForTwo`) : deux séances de suite au haut de
+  la plage, ou nettement plus faciles que visé, font monter la charge d'un cran (sous le garde-fou de réserve,
+  jamais à 85 % du 1RM écrit ou plus, jamais un jour sans hausse).
+- **Propositions de volume** : une série de plus n'est proposée que si chaque groupe musculaire de l'exercice
+  reste sous le plafond hebdomadaire du niveau (12, 20, 25, 30 séries).
+- **Programme importé** (C11) : `KalisAdapt(restructureImported: true)` permet les restructurations.
+- **Douleur qui dure au bas du corps** (mode coach) : la course est retirée tant que l'arrêt tient (cardio sans
+  impact gardé), puis revient par paliers (part de reprise bornée par `enduranceResumeLong`) ; un mouvement retiré
+  par un arrêt n'est plus compté comme sauté dans le résumé (il disparaissait du bloc suivant).
+- Relecture indépendante du code : la règle « 2 pour 2 » ne joue ni en bloc verrouillé, ni en semaine légère ou
+  proche d'une échéance, ni pendant un retour ou une douleur ; la charge repère à schéma changé prend la charge
+  lestée ; le plafond des propositions de volume est vérifié sur toutes les semaines modifiées.
+- Relecture documentée de CY : pendant un arrêt du poignet, la règle C10.8 (a) reste entière (parallettes et
+  poignées seulement) ; la règle « 2 pour 2 » ne prend pas un cran de plus de 10 % ; à schéma changé, aucune part
+  en plus pour une zone à antécédent.
+
 ## 0.3.0
 
 Lot CA2, partie 1 du pipeline « Calibrage des programmes » : course, cardio, conditionnement, mobilité et profils

@@ -1413,3 +1413,64 @@ ou de dos qui double en série de jours durs (choix raisonné d'après Feito et 
   −60 %, intensité et fréquence gardées) : le moteur ne l'allonge ni ne le raccourcit, il ne sert jamais plus.
 - Le rapport de charge aiguë / chronique (Soligard et al. 2016) n'est pas utilisé : Frandsen et al. 2025 le
   contredisent (relation dose-réponse négative) ; la borne de la plus longue course le remplace.
+
+## 13. Croisement final (0.3.1, lot CY, partie 0)
+
+Évolution additive (cinq paramètres, un argument du constructeur) ; aucun type ni code de raison nouveau.
+
+### 13.1 Règles
+
+1. **Première gêne du poignet** (`session.dart`, étape 1) : mode coach, poignet signalé à 3/10 ou plus dans les
+   quatorze jours, aucun arrêt en cours : une poussée de travail au poids du corps, paume à plat (contrainte
+   moyenne sur le poignet, sans prise neutre), passe sur un appui neutre faisable au lieu du jour — parallettes,
+   poignées, ou pompe mains surélevées faite mains serrées sur une barre basse (`coachBarPushUp` quand le matériel
+   compte `barre basse`). Raison `adapt.pain_reported` (zone poignet, gêne la plus forte des quatorze jours). Sans
+   appui neutre faisable, la poussée reste écrite, dose plafonnée (règle du poignet sensible, § 11.16).
+2. **Arrêt du poignet** : inchangé (DECISIONS_CP.md C10.8 (a)) — parallettes et poignées seulement ; la pompe mains
+   sur la barre basse ne vaut appui neutre qu'à la première gêne, avant l'arrêt (relecture documentée de CY : servie
+   à 4/10 pendant l'arrêt, elle retardait la reprise).
+2 bis. **Douleur qui dure au bas du corps** (hanche, cuisse, genou, jambe, cheville et pied ; mêmes seuils d'arrêt) :
+   la course (impact) est retirée de la séance tant que l'arrêt tient, raison `adapt.pain_persistent` ; le cardio sans
+   impact reste (relecture documentée de CY, `autres_06` : cheville à 4/10 neuf séances et course continuée).
+   Mode coach seulement. Au retour (reprise graduée de la zone), la course reprend à
+   `enduranceResumeLong` (50 %) de l'écrit au plus, cause `resume_14`. Un mouvement retiré par un arrêt (course
+   sous une douleur du bas du corps, mouvement qui provoque la zone) n'est pas compté comme « sauté » dans le
+   résumé (`avoidedExerciseIds`) : le bloc suivant le traite par la note d'arrêt et la reprise graduée (panel de
+   CY, `autres_06` : course absente des six semaines du bloc suivant, échéance comprise).
+3. **Couloir de charge** : part écrite du 1RM ≥ `coachCorridorHeavyShare` (85 %) → le couloir ne monte plus
+   au-dessus de l'écrit (il peut descendre).
+4. **Schéma changé au même emplacement** (série ouverte, répétitions recalées) : charge totale ≤ dernière charge
+   de l'emplacement × (1 + hausse à schéma égal) × (1 + `coachRepLoadShare` × répétitions de moins, au plus
+   `coachRepGapMax`) ; un cran au moins.
+5. **Repère d'un jour de bilan bas** : la marque de l'emplacement (`SlotMark.loadedTop`, `loadedLoadKg`) ignore
+   aussi les séances faites un jour de bilan bas, comme les semaines allégées.
+6. **Double progression** (règle « 2 pour 2 » de la NSCA) : même emplacement, même schéma, marque à
+   `reached` ≥ `coachTwoForTwo` (deux séances de suite au haut de la plage, ou première série dite au moins
+   deux répétitions plus facile que visé), aucun verrou du jour (échec, douleur, bilan bas, répétitions
+   manquées, bloc verrouillé, semaine légère ou proche d'une échéance, retour ou douleur sur l'exercice), part
+   écrite sous 85 % : la charge monte d'un cran au-dessus de la dernière (cran de `coachTwoForTwoMaxStep`, 10 %,
+   au plus), si le garde-fou de réserve du modèle le permet.
+7. **Propositions « volume ajusté »** (`review.dart`) : une série de plus seulement si chaque groupe majeur de
+   l'exercice reste sous `coachWeeklyCeilingSets` du niveau (12, 20, 25, 30 séries dures par semaine, R1-P1),
+   compté sur chaque semaine que la proposition modifie.
+8. **Programme importé** (C11) : `KalisAdapt(restructureImported: true)` laisse `review` proposer les
+   restructurations de `kalis_plan` sur un bloc de plus de six semaines ; par défaut, inchangé (jamais).
+
+### 13.2 Paramètres
+
+| Paramètre | Valeur | Source |
+| --- | --- | --- |
+| `coachCorridorHeavyShare` | 85 % du 1RM | choix raisonné ; erreur d'estimation du 1RM de quelques pour cent (Helms et al. 2018) ; relecture documentée de CP2, `street_07` |
+| `coachTwoForTwoMaxStep` | 10 % | choix raisonné (relecture documentée de CY : un cran de plus de 10 % n'est pas une double progression) |
+| `coachTwoForTwo` | 2 séances | règle « 2 pour 2 » (NSCA, Essentials of Strength Training and Conditioning, progression de la charge) |
+| `coachRepLoadShare`, `coachRepGapMax` | 2,5 % par répétition ; 4 | tables de pourcentage du 1RM (NSCA : environ 2,5 à 3 % par répétition), borne basse ; choix raisonné |
+
+### 13.3 Branches « bloc importé » restantes (C11)
+
+Un bloc sans champ du contrat 0.4.0 (le programme de 40 semaines importé) est servi par le moteur de 0.1
+(`blockCoached` faux, `replay.dart`) : pas de mode coach (couloir, marques d'emplacement, conduite sous douleur
+— arrêt, reprise graduée, poignet —, tests reportés, épreuve). Ce n'est pas une exclusion « importé » mais
+l'absence des champs que ces règles lisent (phase, intention, techniques, tests). Seule exclusion par la
+taille du bloc : `BlockView.imported` (plus de six semaines) — restructurations (réglable, ci-dessus) et niveau
+de déblocage (`blocksDone` compté par tranches de six semaines). Pour que tout s'applique au programme du
+propriétaire, l'application doit le convertir en blocs au contrat 0.4.0 (voir `docs/INTEGRATION_CI.md`).
