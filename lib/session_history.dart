@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'adapt/widgets/session_kit.dart' show showKChoice;
 import 'app_theme.dart';
 import 'models.dart';
 import 'session_screen.dart';
@@ -157,39 +158,62 @@ class _SessionHistoryScreenState extends State<SessionHistoryScreen> {
     }
   }
 
+  /// Contexte des feuilles : « Corps entier, S1, J2 » (maquette du menu).
+  String get _sheetContext =>
+      _week.n > 0 ? '${_day.title}, S${_week.n}, J${_day.j}' : _day.title;
+
+  /// Feuille de liste (cahier §4.5) : groupes d'exercices numérotés, page
+  /// courante en contour, « Bilan de séance » avec son icône.
   Future<void> _chooseExercise() async {
-    final selected = await showModalBottomSheet<int>(
-      context: context,
-      isScrollControlled: true,
-      useSafeArea: true,
-      builder: (context) => DraggableScrollableSheet(
-        expand: false,
-        initialChildSize: .65,
-        builder: (context, controller) => ListView(
-          controller: controller,
-          children: [
-            for (var i = 0; i < _groups.length; i++)
-              ListTile(
-                leading: Text('${i + 1}'),
-                title: Text(
-                  _groups[i]
-                      .map((ex) => store.splitName(ex.name).$1)
-                      .join(' + '),
-                ),
-                selected: i == _page,
-                onTap: () => Navigator.pop(context, i),
-              ),
-            ListTile(
-              leading: const Icon(Icons.flag_outlined),
-              title: const Text('Bilan de séance'),
-              selected: _page == _groups.length,
-              onTap: () => Navigator.pop(context, _groups.length),
-            ),
-          ],
+    final count = _groups.fold<int>(0, (n, g) => n + g.length);
+    final selected = await showKListSheet(
+      context,
+      title: 'Dans cette séance',
+      summary: count > 1 ? '$count exercices' : '$count exercice',
+      items: [
+        for (var i = 0; i < _groups.length; i++)
+          KListItem(
+            _groups[i].map((ex) => store.splitName(ex.name).$1).join(' + '),
+            detail: _groups[i].length > 1 ? 'Exercices enchaînés' : null,
+            state: i == _page ? KListState.current : KListState.todo,
+          ),
+        KListItem(
+          'Bilan de séance',
+          icon: Icons.flag_outlined,
+          state: _page == _groups.length ? KListState.current : KListState.todo,
         ),
-      ),
+      ],
     );
     if (selected != null && mounted) _go(selected);
+  }
+
+  /// Menu ⋮ (feuille d'actions, C10) : la suppression, destructrice, dans
+  /// le dernier groupe.
+  Future<void> _openMenu() async {
+    final value = await showKActionSheet<String>(
+      context,
+      title: 'Séance',
+      subtitle: _sheetContext,
+      groups: [
+        [
+          KAction(
+            icon: Icons.edit_outlined,
+            label: 'Corriger les saisies',
+            value: 'correct',
+            enabled: _correctable,
+          ),
+        ],
+        const [
+          KAction(
+            icon: Icons.delete_outline_rounded,
+            label: 'Supprimer de l’historique',
+            value: 'delete',
+            danger: true,
+          ),
+        ],
+      ],
+    );
+    if (value != null && mounted) _onMenu(value);
   }
 
   void _onMenu(String value) {
@@ -202,26 +226,16 @@ class _SessionHistoryScreenState extends State<SessionHistoryScreen> {
     final key = _key;
     final plan = key == null ? null : store.correctionPlan(key);
     if (key == null || plan == null) return;
-    final confirmed = await showDialog<bool>(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Text('Corriger cette séance ?'),
-        content: Text(
+    final confirmed = await showKChoice(
+      context,
+      title: 'Corriger cette séance ?',
+      message:
           '$_head repasse en cours avec toutes ses saisies. Son XP de séance est retiré le temps de la correction et revient quand tu la termines de nouveau. Sa date reste celle d’origine.',
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('Annuler'),
-          ),
-          FilledButton(
-            onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('Corriger'),
-          ),
-        ],
-      ),
+      confirmLabel: 'Corriger',
+      confirmKey: const ValueKey('confirm-ok'),
+      cancelKey: const ValueKey('confirm-cancel'),
     );
-    if (confirmed != true || !mounted) return;
+    if (!confirmed || !mounted) return;
     if (!store.reopenSession(key)) return;
     Navigator.of(context).pushReplacement(
       MaterialPageRoute<void>(
@@ -235,79 +249,68 @@ class _SessionHistoryScreenState extends State<SessionHistoryScreen> {
   Future<void> _delete() async {
     final key = _key;
     if (key == null) return;
-    final confirmed = await showDialog<bool>(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Text('Supprimer de l’historique ?'),
-        content: Text(
+    final confirmed = await showKChoice(
+      context,
+      title: 'Supprimer de l’historique ?',
+      message:
           '$_head — séries, notes et statut « fait » seront effacés. L’XP et les bonus de cette séance sont retirés.',
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('Annuler'),
-          ),
-          FilledButton(
-            style: FilledButton.styleFrom(
-              backgroundColor: SL.alert,
-              foregroundColor: KPalette.light,
-            ),
-            onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('Supprimer'),
-          ),
-        ],
-      ),
+      confirmLabel: 'Supprimer',
+      confirmKey: const ValueKey('confirm-ok'),
+      cancelKey: const ValueKey('confirm-cancel'),
+      destructive: true,
     );
-    if (confirmed != true || !mounted) return;
-    final messenger = ScaffoldMessenger.of(context);
+    if (!confirmed || !mounted) return;
     final removed = store.deleteLog(key);
-    Navigator.of(context).maybePop();
-    if (removed == null) return;
-    messenger.showSnackBar(
-      SnackBar(
-        content: const Text('Séance supprimée de l’historique.'),
-        action: SnackBarAction(
-          label: 'Annuler',
-          onPressed: () => store.restoreLog(key, removed),
-        ),
-      ),
+    if (removed == null) {
+      Navigator.of(context).maybePop();
+      return;
+    }
+    // Message court du kit, montré sur l'écran d'où l'on venait (messager
+    // de l'application, lu avant le retour).
+    final nav = Navigator.of(context);
+    showKSnack(
+      context,
+      message: 'Séance supprimée de l’historique.',
+      actionLabel: 'Annuler',
+      onAction: () => store.restoreLog(key, removed),
     );
+    nav.maybePop();
   }
 
   Widget _summary() {
+    final k = KTokens.of(context);
     final sets = _snapshot.ex.values.expand((ex) => ex.sets).toList();
     final date = DateTime.tryParse(_snapshot.finishedAt ?? '')?.toLocal();
     return KList(
       children: [
         KCard(
-          accent: SL.success,
+          accent: k.validation,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                _snapshot.done ? 'SÉANCE EFFECTUÉE' : 'SÉANCE ENREGISTRÉE',
-                style: TextStyle(
-                  color: SL.success,
-                  fontWeight: FontWeight.w700,
-                ),
+                _snapshot.done ? 'Séance effectuée' : 'Séance enregistrée',
+                style: KType.titreCarte.copyWith(color: k.validation),
               ),
-              const SizedBox(height: 12),
+              const SizedBox(height: KSpacing.s12),
               Text(
                 '${sets.where((s) => s.done).length} / ${sets.length}',
-                style: TextStyle(
-                  fontSize: 32,
-                  color: SL.success,
-                  fontWeight: FontWeight.w600,
-                ),
+                style: KType.chiffre.copyWith(color: k.validation),
               ),
-              const Text('séries validées'),
-              const SizedBox(height: 12),
-              Text('${_snapshot.ex.length} exercices enregistrés'),
+              Text(
+                'séries validées',
+                style: KType.corps.copyWith(color: k.texte2),
+              ),
+              const SizedBox(height: KSpacing.s12),
+              Text(
+                '${_snapshot.ex.length} exercices enregistrés',
+                style: KType.corps.copyWith(color: k.texte),
+              ),
               if (date != null) ...[
-                const SizedBox(height: 6),
+                const SizedBox(height: KSpacing.s4),
                 Text(
                   MaterialLocalizations.of(context).formatFullDate(date),
-                  style: TextStyle(color: SL.dim),
+                  style: KType.detail.copyWith(color: k.texte2),
                 ),
               ],
             ],
@@ -318,20 +321,20 @@ class _SessionHistoryScreenState extends State<SessionHistoryScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
+                Text(
                   'Validée par erreur ?',
-                  style: TextStyle(fontWeight: FontWeight.w700),
+                  style: KType.titreCarte.copyWith(color: k.texte),
                 ),
-                const SizedBox(height: 6),
+                const SizedBox(height: KSpacing.s4),
                 Text(
                   'Rouvre la séance avec toutes ses saisies pour corriger une valeur, puis termine-la de nouveau. Sa date est conservée.',
-                  style: TextStyle(color: SL.dim),
+                  style: KType.corps.copyWith(color: k.texte2),
                 ),
-                const SizedBox(height: 12),
-                OutlinedButton.icon(
+                const SizedBox(height: KSpacing.s12),
+                KTonalButton(
+                  icon: Icons.edit_outlined,
+                  label: 'Corriger les saisies',
                   onPressed: _correct,
-                  icon: const Icon(Icons.edit_outlined),
-                  label: const Text('Corriger les saisies'),
                 ),
               ],
             ),
@@ -341,106 +344,114 @@ class _SessionHistoryScreenState extends State<SessionHistoryScreen> {
   }
 
   @override
-  Widget build(BuildContext context) => KScreen(
-    appBar: AppBar(
-      title: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(_day.title, maxLines: 1, overflow: TextOverflow.ellipsis),
-          Text(
-            '${_week.n > 0 ? 'S${_week.n} · J${_day.j} · ' : ''}Lecture seule',
-            style: Theme.of(context).textTheme.bodySmall,
-          ),
-        ],
-      ),
-      actions: [
-        Padding(
-          padding: EdgeInsets.only(right: _editable ? 0 : 16),
-          child: Icon(Icons.lock_outline, size: 18, color: SL.dim),
-        ),
-        if (_editable)
-          PopupMenuButton<String>(
-            tooltip: 'Options de l’historique',
-            onSelected: _onMenu,
-            itemBuilder: (_) => [
-              PopupMenuItem(
-                value: 'correct',
-                enabled: _correctable,
-                child: const Text('Corriger les saisies'),
-              ),
-              const PopupMenuItem(
-                value: 'delete',
-                child: Text('Supprimer de l’historique'),
-              ),
-            ],
-          ),
-      ],
-    ),
-    body: _groups.isEmpty
-        ? const Padding(
-            padding: KSpace.content,
-            child: KEmpty(
-              icon: Icons.check_circle_outline,
-              title: 'Séance effectuée',
-              message: 'Aucune série enregistrée pour cette séance.',
-            ),
-          )
-        : Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(
-                  KSpace.page,
-                  0,
-                  KSpace.page,
-                  4,
-                ),
-                child: Column(
-                  children: [
-                    Row(
+  Widget build(BuildContext context) {
+    final k = KTokens.of(context);
+    // En-tête de sous-page (C1). « Lecture seule » seulement quand aucune
+    // action n'écrit (archive hors du journal) ; sinon la séance est dite
+    // enregistrée et son menu ⋮ propose la correction et la suppression.
+    final where = _week.n > 0 ? '${sessionPlace(_week, _day)}, ' : '';
+    // Même en-tête que la séance (C1) : retour, titre jamais coupé,
+    // repère et état, une seule action.
+    final header = SessionHeader(
+      title: _day.title,
+      subtitle: where.isEmpty
+          ? (_editable ? 'Séance enregistrée' : 'Lecture seule')
+          : '$where${_editable ? 'séance enregistrée' : 'lecture seule'}',
+      action: _editable
+          ? KIconButton(
+              icon: Icons.more_vert_rounded,
+              tooltip: 'Options de l’historique',
+              onPressed: _openMenu,
+            )
+          : null,
+    );
+    return KScreen(
+      body: SafeArea(
+        bottom: false,
+        child: Column(
+          children: [
+            header,
+            Expanded(
+              child: _groups.isEmpty
+                  ? const Padding(
+                      padding: KSpace.content,
+                      child: KEmpty(
+                        icon: Icons.check_circle_outline,
+                        title: 'Séance effectuée',
+                        message: 'Aucune série enregistrée pour cette séance.',
+                      ),
+                    )
+                  : Column(
                       children: [
-                        Expanded(
-                          child: Text(
-                            _page == _groups.length
-                                ? 'Bilan de séance'
-                                : '${_groups[_page].length > 1 ? 'Enchaînement' : 'Exercice'} ${_page + 1} / ${_groups.length}',
-                            style: Theme.of(context).textTheme.bodySmall,
+                        Padding(
+                          padding: const EdgeInsetsDirectional.only(
+                            start: KSpacing.page,
+                            end: KSpacing.s12,
+                            bottom: KSpacing.s4,
+                          ),
+                          child: Column(
+                            children: [
+                              // Même repère que la séance : « Exercice 3 sur 7 »
+                              // et le lien « Exercices » (passe à la ligne en
+                              // grand texte).
+                              SizedBox(
+                                width: double.infinity,
+                                child: Wrap(
+                                  alignment: WrapAlignment.spaceBetween,
+                                  crossAxisAlignment: WrapCrossAlignment.center,
+                                  spacing: KSpacing.s8,
+                                  children: [
+                                    Text(
+                                      _page == _groups.length
+                                          ? 'Bilan de séance'
+                                          : '${_groups[_page].length > 1 ? 'Enchaînement' : 'Exercice'} ${_page + 1} sur ${_groups.length}',
+                                      style: KType.section.copyWith(
+                                        color: k.texte2,
+                                      ),
+                                    ),
+                                    KTextButton(
+                                      icon: Icons.format_list_numbered_rounded,
+                                      label: 'Exercices',
+                                      onPressed: _chooseExercise,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              SessionProgressDots(
+                                count: _groups.length + 1,
+                                index: _page,
+                                color: k.encre,
+                              ),
+                            ],
                           ),
                         ),
-                        TextButton.icon(
-                          onPressed: _chooseExercise,
-                          icon: const Icon(Icons.list_alt, size: 18),
-                          label: const Text('Exercices'),
+                        Expanded(
+                          child: PageView.builder(
+                            controller: _pages,
+                            itemCount: _groups.length + 1,
+                            onPageChanged: (page) =>
+                                setState(() => _page = page),
+                            itemBuilder: (context, page) =>
+                                page == _groups.length
+                                ? _summary()
+                                : SessionExercisePage(
+                                    key: ValueKey('history-page-$page'),
+                                    week: _week,
+                                    day: _day,
+                                    exs: _groups[page],
+                                    timer: _unusedTimer,
+                                    history: _snapshot,
+                                    unresolvedIds: _unresolved,
+                                  ),
+                          ),
                         ),
                       ],
                     ),
-                    SessionProgressDots(
-                      count: _groups.length + 1,
-                      index: _page,
-                      color: SL.action,
-                    ),
-                  ],
-                ),
-              ),
-              Expanded(
-                child: PageView.builder(
-                  controller: _pages,
-                  itemCount: _groups.length + 1,
-                  onPageChanged: (page) => setState(() => _page = page),
-                  itemBuilder: (context, page) => page == _groups.length
-                      ? _summary()
-                      : SessionExercisePage(
-                          key: ValueKey('history-page-$page'),
-                          week: _week,
-                          day: _day,
-                          exs: _groups[page],
-                          timer: _unusedTimer,
-                          history: _snapshot,
-                          unresolvedIds: _unresolved,
-                        ),
-                ),
-              ),
-            ],
-          ),
-    // 5.5.2 : plus de boutons Précédent / Suivant (glissement).
-  );
+            ),
+          ],
+        ),
+      ),
+      // 5.5.2 : plus de boutons Précédent / Suivant (glissement).
+    );
+  }
 }

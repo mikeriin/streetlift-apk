@@ -25,6 +25,7 @@ import 'package:kalis_core/kalis_core.dart' as kc;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:streetlift_tracker/athlete_profile.dart';
 import 'package:streetlift_tracker/dev/dev_session.dart';
+import 'package:streetlift_tracker/kit/kit.dart' show KListSheet;
 import 'package:streetlift_tracker/main.dart';
 import 'package:streetlift_tracker/models.dart';
 import 'package:streetlift_tracker/plan/evolution_widgets.dart'
@@ -383,7 +384,7 @@ void main() {
         await tapF(tester, menu, ms: 900);
         releve['perso_liste_nom'] = find
             .descendant(
-              of: find.byType(ListTile),
+              of: find.byType(KListSheet),
               matching: find.textContaining(
                 store.splitName(store.adaptExerciseName(to)).$1,
               ),
@@ -391,7 +392,7 @@ void main() {
             .evaluate()
             .isNotEmpty;
         await shot('04_perso_liste');
-        Navigator.of(tester.element(find.byType(ListTile).first)).pop();
+        Navigator.of(tester.element(find.byType(KListSheet).first)).pop();
         await wait(tester, 600);
       }
       await home(tester);

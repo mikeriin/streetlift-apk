@@ -29,6 +29,7 @@ import 'package:streetlift_tracker/adapt/adapt_texts.dart' show painStopsOf;
 import 'package:streetlift_tracker/athlete_profile.dart';
 import 'package:streetlift_tracker/dev/dev_session.dart';
 import 'package:streetlift_tracker/kalis_clock.dart';
+import 'package:streetlift_tracker/kit/kit.dart' show KListSheet;
 import 'package:streetlift_tracker/main.dart';
 import 'package:streetlift_tracker/plan/season_view.dart';
 import 'package:streetlift_tracker/program_screens.dart';
@@ -374,13 +375,13 @@ void main() {
         if (card.evaluate().isEmpty && menu.evaluate().isNotEmpty) {
           await tapF(tester, menu, ms: 900);
           final tile = find.descendant(
-            of: find.byType(ListTile),
+            of: find.byType(KListSheet),
             matching: find.textContaining(title),
           );
           if (tile.evaluate().isNotEmpty) {
             await tapF(tester, tile, ms: 1500);
-          } else if (find.byType(ListTile).evaluate().isNotEmpty) {
-            Navigator.of(tester.element(find.byType(ListTile).first)).pop();
+          } else if (find.byType(KListSheet).evaluate().isNotEmpty) {
+            Navigator.of(tester.element(find.byType(KListSheet).first)).pop();
             await wait(tester, 600);
           }
         }

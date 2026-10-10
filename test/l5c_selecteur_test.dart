@@ -284,11 +284,19 @@ void main() {
         // Composant qui lit la palette sans dépendre du thème, dans une
         // route empilée : il est bien redessiné.
         final dots = find.byType(SessionProgressDots);
+        // UI2 : la page courante des points est en `encre` (rôle lisible
+        // sur le fond), lu dans les jetons au dessin.
         if (dots.evaluate().isNotEmpty) {
-          expect(
-            tester.widget<SessionProgressDots>(dots.first).color,
-            KPalette(true, spec).action,
-          );
+          final colors = [
+            for (final c in tester.widgetList<AnimatedContainer>(
+              find.descendant(
+                of: dots.first,
+                matching: find.byType(AnimatedContainer),
+              ),
+            ))
+              (c.decoration! as ShapeDecoration).color,
+          ];
+          expect(colors, contains(KRoles.of(spec.id, dark: true).encre));
         }
       }
       await store.flush();

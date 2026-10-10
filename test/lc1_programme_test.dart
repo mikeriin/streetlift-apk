@@ -819,11 +819,11 @@ void main() {
         expect(reps(), ['18', '18']);
         // Première série saisie à la main : jamais écrasée.
         store.exLog(12, 4, continuous).sets.first.reps = '17';
-        // Report du test (tractions : 33) dans la feuille Pilotage, depuis la
-        // séance : menu → Références.
+        // Report du test (tractions : 33) dans les références, depuis la
+        // séance : menu → Mes références (UI2, R9 : libellé interne retiré).
         await tester.tap(find.byTooltip('Options de séance'));
         await tester.pumpAndSettle();
-        await tester.tap(find.text('Références (feuille Pilotage)'));
+        await tester.tap(find.text('Mes références'));
         await tester.pumpAndSettle();
         expect(find.byType(PilotageScreen), findsOneWidget);
         store.setValue('B17', 33);

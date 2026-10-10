@@ -562,7 +562,7 @@ void main() {
         expect(store.inProgress(key), isTrue);
         await tester.pumpWidget(page(SessionScreen(week: w, day: d)));
         await tester.pumpAndSettle();
-        expect(find.textContaining('2 / ${groups.length}'), findsOneWidget);
+        expect(find.textContaining('2 sur ${groups.length}'), findsOneWidget);
         await tester.pumpWidget(const SizedBox());
         await tester.pumpWidget(page(const Scaffold(body: ResumeBanner())));
         await tester.pump();

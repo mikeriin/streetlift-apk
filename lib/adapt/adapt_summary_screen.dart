@@ -3,16 +3,20 @@
 // avant et après la séance) et ce qui changera la prochaine fois (première
 // série de la prochaine séance où l'exercice revient). Les propositions de
 // structure arrivent en G10.
+//
+// UI2 (refonte UI) : sous-page du kit (en-tête standard), cartes du kit
+// sans carte dans une carte (Koach parle sans bulle, « Pourquoi ? » déplié
+// en place), un seul bouton plein (« Terminer »).
 import 'package:flutter/material.dart';
 import 'package:kalis_koach/kalis_koach.dart' show KoachUsage;
 
-import '../app_theme.dart';
 import '../koach/koach_bubble.dart';
 import '../models.dart';
 import '../store.dart';
 import '../ui.dart';
 import 'adapt_texts.dart';
 import 'flame_track.dart';
+import 'health_check.dart' show KoachWhyHeader;
 
 String _goalText(SetGoal g) {
   final amount = adaptAmount(g.low, g.high, seconds: g.seconds);
@@ -81,93 +85,92 @@ class _AdaptSummaryScreenState extends State<AdaptSummaryScreen> {
             if (progressed.isEmpty && calibrating.isEmpty)
               'Tes charges sont calées, on continue.',
           ].join(' ');
-    return KScreen(
-      appBar: AppBar(title: const Text('Fin de séance')),
-      body: KList(
-        key: const ValueKey('adapt-summary'),
-        children: [
-          KCard(
-            child: KoachBubble(
-              pose: koachPose(KoachUsage.sessionEnd),
-              text: headline,
-              why:
-                  'J’estime ce que tu peux faire sur chaque exercice à partir '
-                  'de tes séries et de tes flammes. Une estimation bouge peu '
-                  'd’une séance à l’autre : c’est la tendance qui compte.',
-              koachHeight: 96,
-            ),
+    final k = KTokens.of(context);
+    return KPage.sub(
+      key: const ValueKey('adapt-summary'),
+      title: 'Fin de séance',
+      children: [
+        KCard(
+          child: KoachWhyHeader(
+            pose: koachPose(KoachUsage.sessionEnd),
+            text: headline,
+            why:
+                'J’estime ce que tu peux faire sur chaque exercice à partir '
+                'de tes séries et de tes flammes. Une estimation bouge peu '
+                'd’une séance à l’autre : c’est la tendance qui compte.',
+            koachHeight: 96,
           ),
-          if (calibrating.isNotEmpty)
-            _section('summary-calibration', 'Calibrage', [
-              for (final e in calibrating)
-                '${e.name} : je cale encore la charge sur ce que tu fais.',
-            ]),
-          if (s != null && s.exercises.isNotEmpty)
-            _section(
-              'summary-progress',
-              'Ce qui a progressé',
-              progressed.isEmpty
-                  ? [
-                      'Rien de net aujourd’hui : il faut quelques séances pour '
-                          'le voir.',
-                    ]
-                  : [
-                      for (final e in progressed)
-                        '${e.name} : ${capacityText(e.before!)} → '
-                            '${capacityText(e.after!)}.',
-                    ],
-            ),
-          if (next.isNotEmpty)
-            _section('summary-next', 'La prochaine fois', [
-              for (final e in next)
-                '${e.name} : ${_goalText(e.next!)}'
-                    '${_todayText(e)}.',
-            ]),
-          if (_sets() case final sets? when sets.isNotEmpty)
-            KCard(
-              key: const ValueKey('summary-sets'),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Tes séries',
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  for (final (i, (name, lines)) in sets.indexed) ...[
-                    Padding(
-                      padding: EdgeInsets.only(top: i == 0 ? 6 : 12, bottom: 2),
-                      child: Text(
-                        name,
-                        style: const TextStyle(fontWeight: FontWeight.w700),
-                      ),
-                    ),
-                    ...lines,
+        ),
+        if (calibrating.isNotEmpty)
+          _section(k, 'summary-calibration', 'Calibrage', [
+            for (final e in calibrating)
+              '${e.name} : je cale encore la charge sur ce que tu fais.',
+          ]),
+        if (s != null && s.exercises.isNotEmpty)
+          _section(
+            k,
+            'summary-progress',
+            'Ce qui a progressé',
+            progressed.isEmpty
+                ? [
+                    'Rien de net aujourd’hui : il faut quelques séances pour '
+                        'le voir.',
+                  ]
+                : [
+                    for (final e in progressed)
+                      '${e.name} : ${capacityText(e.before!)} → '
+                          '${capacityText(e.after!)}.',
                   ],
-                ],
-              ),
-            ),
-          if (s != null && s.painReferralZones.isNotEmpty)
-            KCard(
-              key: const ValueKey('summary-referral'),
-              accent: SL.accent,
-              child: KoachSays(
-                pose: koachPose(KoachUsage.care),
-                child: Text(
-                  '${s.painReferralZones.join(', ')} : $kPainReferral',
-                  style: const TextStyle(fontWeight: FontWeight.w600),
-                ),
-              ),
-            ),
-          FilledButton(
-            key: const ValueKey('summary-done'),
-            style: FilledButton.styleFrom(
-              minimumSize: const Size.fromHeight(KControl.buttonHeight),
-            ),
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Terminer'),
           ),
-        ],
-      ),
+        if (next.isNotEmpty)
+          _section(k, 'summary-next', 'La prochaine fois', [
+            for (final e in next)
+              '${e.name} : ${_goalText(e.next!)}'
+                  '${_todayText(e)}.',
+          ]),
+        if (_sets() case final sets? when sets.isNotEmpty)
+          KCard(
+            key: const ValueKey('summary-sets'),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _title(k, 'Tes séries'),
+                for (final (i, (name, lines)) in sets.indexed) ...[
+                  // Un écart de plus entre deux exercices.
+                  if (i > 0) const SizedBox(height: KSpacing.s4),
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      top: KSpacing.s8,
+                      bottom: KSpacing.s4,
+                    ),
+                    child: Text(
+                      name,
+                      style: KType.corpsFort.copyWith(color: k.texte),
+                    ),
+                  ),
+                  ...lines,
+                ],
+              ],
+            ),
+          ),
+        if (s != null && s.painReferralZones.isNotEmpty)
+          KCard(
+            key: const ValueKey('summary-referral'),
+            accent: k.avertissement,
+            child: KoachSays(
+              pose: koachPose(KoachUsage.care),
+              child: Text(
+                '${s.painReferralZones.join(', ')} : $kPainReferral',
+                style: KType.corpsFort.copyWith(color: k.texte),
+              ),
+            ),
+          ),
+        KPrimaryButton(
+          key: const ValueKey('summary-done'),
+          onPressed: () => Navigator.of(context).pop(),
+          label: 'Terminer',
+        ),
+      ],
     );
   }
 
@@ -198,16 +201,25 @@ class _AdaptSummaryScreenState extends State<AdaptSummaryScreen> {
     ];
   }
 
-  Widget _section(String key, String title, List<String> lines) => KCard(
-    key: ValueKey(key),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(title, style: Theme.of(context).textTheme.titleMedium),
-        const SizedBox(height: 6),
-        for (final l in lines)
-          Padding(padding: const EdgeInsets.only(bottom: 4), child: Text(l)),
-      ],
-    ),
+  Widget _title(KTokens k, String t) => Semantics(
+    header: true,
+    child: Text(t, style: KType.titreCarte.copyWith(color: k.texte)),
   );
+
+  Widget _section(KTokens k, String key, String title, List<String> lines) =>
+      KCard(
+        key: ValueKey(key),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _title(k, title),
+            const SizedBox(height: KSpacing.s8),
+            for (final l in lines)
+              Padding(
+                padding: const EdgeInsets.only(bottom: KSpacing.s4),
+                child: Text(l, style: KType.corps.copyWith(color: k.texte)),
+              ),
+          ],
+        ),
+      );
 }

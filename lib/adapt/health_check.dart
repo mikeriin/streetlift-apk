@@ -11,11 +11,18 @@
 //   « Garder ma séance »).
 // - Douleur : zones épargnées par le moteur ; règle L13 de renvoi vers un
 //   professionnel conservée (douleur > 3/10 plus de 2 séances de suite).
+//
+// UI2 (refonte UI, maquette « Bilan du jour ») : cartes du kit, plus de
+// carte dans une carte (C7 : la question et les cinq tuiles du ressenti
+// dans la même carte, Koach à côté du titre, « Pourquoi ? » déplié en
+// place) ; un seul bouton plein (C2) ; choix en puces neutres ; temps et
+// lieu en feuilles de liste ; « Douleur ou malaise ? » de la séance ouvre
+// le détail sur la section Douleur ([reportSessionPain]).
 import 'package:flutter/material.dart';
 import 'package:kalis_core/kalis_core.dart' as kc;
-import 'package:kalis_koach/kalis_koach.dart' show KoachPose, KoachUsage;
+import 'package:kalis_koach/kalis_koach.dart'
+    show KoachPose, KoachSide, KoachUsage;
 
-import '../app_theme.dart';
 import '../athlete_profile.dart'
     show kRegionZones, kSideLabels, kZoneLabels, regionsOfZone, limitationOf;
 import '../koach/koach_bubble.dart';
@@ -27,8 +34,10 @@ import '../plan/coach_texts.dart'
 import '../plan/evolution_widgets.dart' show EvolutionSessionCard;
 import '../store.dart';
 import '../ui.dart';
+import '../wellbeing_screens.dart' show SafetyScreen;
 import 'adapt_texts.dart';
 import 'clearance.dart';
+import 'widgets/session_kit.dart';
 
 /// Pose de Koach pour chaque réponse à « Comment tu te sens ? ».
 const kFeelPoses = <int, KoachPose>{
@@ -45,6 +54,169 @@ const kHealthWhy =
     'monte pas les charges, je garde un peu plus de marge sur chaque série, '
     'et parfois une série de moins. Une douleur : j’épargne la zone. Ce que '
     'tu n’as pas répondu ne compte pas.';
+
+/// Hauteur d'une tuile de ressenti (maquette « Bilan du jour »).
+const double _feelTileHeight = 96;
+
+/// Largeur minimale d'une tuile de ressenti pour les poser côte à côte.
+const double _feelTileMinWidth = 52;
+
+/// Éléments d'une colonne séparés de l'écart entre cartes.
+List<Widget> _spaced(List<Widget> items, [double gap = KSpacing.cardGap]) => [
+  for (var i = 0; i < items.length; i++) ...[
+    if (i > 0) SizedBox(height: gap),
+    items[i],
+  ],
+];
+
+/// « Douleur ou malaise ? » (menu ⋮ de la séance, cahier §4.1) : détail du
+/// bilan ouvert sur la section Douleur. Un bilan validé est appliqué à la
+/// séance (S[week], J[base]) ; vrai dans ce cas, faux si la page est
+/// quittée sans bilan ou par « Passer » (qui rend le bilan de départ tel
+/// quel : rien n'est recalculé, la question du jour reste posée).
+Future<bool> reportSessionPain(
+  BuildContext context,
+  WeekPlan week,
+  DayPlan base,
+) async {
+  final initial =
+      store.sessionAdapt(week.n, base.j)?.check ?? const kc.HealthCheck();
+  final detail = await Navigator.of(context).push<kc.HealthCheck>(
+    MaterialPageRoute(
+      builder: (_) => HealthDetailScreen(initial: initial, focusPain: true),
+    ),
+  );
+  if (detail == null || identical(detail, initial)) return false;
+  store.adaptAnswer(week.n, base, detail);
+  return true;
+}
+
+/// Koach et ce qu'il dit, sans bulle (C7 : une bulle posée dans une carte
+/// serait une carte dans une carte) : le texte, « Pourquoi ? » qui déplie
+/// l'explication en place (« Compris » la replie ; Koach prend alors la
+/// pose de l'explication, comme dans la bulle), Koach du côté conseillé
+/// par sa pose. Composant à promouvoir dans le kit (UI5).
+class KoachWhyHeader extends StatefulWidget {
+  final KoachPose pose;
+  final String text;
+  final String why;
+  final KoachPose whyPose;
+  final double koachHeight;
+
+  /// Texte en titre de carte (« Comment tu te sens ? ») ; sinon texte
+  /// courant.
+  final bool title;
+  const KoachWhyHeader({
+    super.key,
+    required this.pose,
+    required this.text,
+    required this.why,
+    this.whyPose = KoachPose.think,
+    this.koachHeight = 64,
+    this.title = false,
+  });
+
+  @override
+  State<KoachWhyHeader> createState() => _KoachWhyHeaderState();
+}
+
+class _KoachWhyHeaderState extends State<KoachWhyHeader> {
+  bool _why = false;
+
+  @override
+  Widget build(BuildContext context) {
+    final k = KTokens.of(context);
+    final koach = KoachView(
+      key: const ValueKey('koach-ask-view'),
+      pose: _why ? widget.whyPose : widget.pose,
+      height: widget.koachHeight,
+      // Largeur fixe : le texte ne bouge pas quand Koach change de pose.
+      width: widget.koachHeight * .9,
+    );
+    final koachLeft = widget.pose.info.bubbleSide == KoachSide.right;
+    final style = widget.title ? KType.titreSeance : KType.corps;
+    final text = Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Semantics(
+          header: widget.title,
+          child: Text(
+            widget.text,
+            key: const ValueKey('koach-bubble-text'),
+            style: style.copyWith(color: k.texte),
+          ),
+        ),
+        KTextButton(
+          key: const ValueKey('koach-why'),
+          label: _why ? 'Compris' : 'Pourquoi ?',
+          onPressed: () => setState(() => _why = !_why),
+          dense: true,
+          alignStart: true,
+        ),
+      ],
+    );
+    final motion = KMotion.standard;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Row(
+          children: koachLeft
+              ? [
+                  koach,
+                  const SizedBox(width: KSpacing.s12),
+                  Expanded(child: text),
+                ]
+              : [
+                  Expanded(child: text),
+                  const SizedBox(width: KSpacing.s12),
+                  koach,
+                ],
+        ),
+        AnimatedSize(
+          duration: motion.durationIn(context),
+          curve: motion.curve,
+          alignment: Alignment.topCenter,
+          child: _why
+              ? Padding(
+                  padding: const EdgeInsets.only(top: KSpacing.s4),
+                  child: Text(
+                    widget.why,
+                    key: const ValueKey('koach-why-text'),
+                    style: KType.corps.copyWith(color: k.texte2),
+                  ),
+                )
+              : const SizedBox(width: double.infinity),
+        ),
+      ],
+    );
+  }
+}
+
+/// Titre d'une carte d'état (arrêt pour douleur, avis médical) : bouclier
+/// en `avertissement`, titre en `corpsFort`.
+class _StateTitle extends StatelessWidget {
+  final String text;
+  const _StateTitle(this.text);
+
+  @override
+  Widget build(BuildContext context) {
+    final k = KTokens.of(context);
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Icon(
+          Icons.shield_outlined,
+          size: KSize.iconSmall,
+          color: k.avertissement,
+        ),
+        const SizedBox(width: KSpacing.s8),
+        Expanded(
+          child: Text(text, style: KType.corpsFort.copyWith(color: k.texte)),
+        ),
+      ],
+    );
+  }
+}
 
 /// Page « Bilan du jour » de la séance.
 class HealthCheckPage extends StatefulWidget {
@@ -137,16 +309,22 @@ class _HealthCheckPageState extends State<HealthCheckPage> {
       if (a == null) return const SizedBox.shrink();
       return ListView(
         key: const ValueKey('health-page'),
-        padding: const EdgeInsets.fromLTRB(KSpace.page, 2, KSpace.page, 16),
-        children: [
+        padding: const EdgeInsets.fromLTRB(
+          KSpacing.page,
+          KSpacing.s4,
+          KSpacing.page,
+          KSpacing.s16,
+        ),
+        children: _spaced([
           // G10 : ce qui change dans cette séance (propositions de Koach
           // appliquées ou acceptées), au début de la séance concernée.
-          EvolutionSessionCard(week: _w, j: widget.base.j),
+          if (store.evolutionForSession(_w, widget.base.j).isNotEmpty)
+            EvolutionSessionCard(week: _w, j: widget.base.j),
           // CI1g : avis médical demandé par le bloc, pas encore confirmé.
           ...clearanceCard(_w, widget.base.j),
           ..._painStopCard(a),
           ...(!a.asked || _redo ? _question(a) : _answered(a)),
-        ],
+        ]),
       );
     },
   );
@@ -186,164 +364,176 @@ class _HealthCheckPageState extends State<HealthCheckPage> {
     ];
     final stopTitle =
         stops.isNotEmpty || (block != null && coachBlockHasPainStop(block));
+    final k = KTokens.of(context);
     return [
       KCard(
         key: const ValueKey('health-pain-stop'),
-        accent: SL.accent,
+        accent: k.avertissement,
         child: KoachSays(
           pose: koachPose(KoachUsage.care),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                children: [
-                  Icon(Icons.shield_outlined, size: 18, color: SL.accent),
-                  const SizedBox(width: 6),
-                  Expanded(
-                    child: Text(
-                      stopTitle ? 'Arrêt pour douleur' : 'Reprise graduée',
-                      style: const TextStyle(fontWeight: FontWeight.w700),
-                    ),
-                  ),
-                ],
-              ),
+              _StateTitle(stopTitle ? 'Arrêt pour douleur' : 'Reprise graduée'),
               for (final l in lines)
-                Padding(padding: const EdgeInsets.only(top: 6), child: Text(l)),
+                Padding(
+                  padding: const EdgeInsets.only(top: KSpacing.s8),
+                  child: Text(l, style: KType.corps.copyWith(color: k.texte)),
+                ),
             ],
           ),
         ),
       ),
-      const SizedBox(height: 12),
     ];
   }
 
   List<Widget> _question(SessionAdapt a) => [
     KCard(
       key: const ValueKey('health-question'),
-      child: KoachBubble(
-        pose: koachPose(KoachUsage.healthCheck),
-        text: 'Comment tu te sens ?',
-        why:
-            'Ta réponse règle la séance d’aujourd’hui. Si ça ne va pas, je '
-            'te poserai quelques questions, toutes facultatives.',
-        koachHeight: 88,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          KoachWhyHeader(
+            pose: koachPose(KoachUsage.healthCheck),
+            text: 'Comment tu te sens ?',
+            why:
+                'Ta réponse règle la séance d’aujourd’hui. Si ça ne va pas, '
+                'je te poserai quelques questions, toutes facultatives.',
+            title: true,
+          ),
+          const SizedBox(height: KSpacing.s12),
+          LayoutBuilder(
+            builder: (context, c) {
+              // Cinq tuiles côte à côte ; écran étroit ou grand texte : une
+              // tuile par ligne, Koach à gauche du libellé.
+              final wide =
+                  (c.maxWidth - 4 * KSpacing.s4) / 5 >= _feelTileMinWidth &&
+                  MediaQuery.textScalerOf(context).scale(10) <= 13;
+              final tiles = [
+                for (var n = 1; n <= 5; n++)
+                  _FeelTile(
+                    key: ValueKey('feel-$n'),
+                    level: n,
+                    horizontal: !wide,
+                    onTap: _busy ? null : () => _answer(n),
+                  ),
+              ];
+              if (!wide) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: _spaced(tiles, KSpacing.s8),
+                );
+              }
+              return Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  for (var i = 0; i < tiles.length; i++) ...[
+                    if (i > 0) const SizedBox(width: KSpacing.s4),
+                    Expanded(child: tiles[i]),
+                  ],
+                ],
+              );
+            },
+          ),
+        ],
       ),
     ),
-    const SizedBox(height: 12),
-    LayoutBuilder(
-      builder: (context, c) {
-        // Cinq tuiles côte à côte ; écran étroit ou grand texte : une
-        // tuile par ligne, Koach à gauche du libellé.
-        final wide =
-            c.maxWidth / 5 >= 58 &&
-            MediaQuery.textScalerOf(context).scale(10) <= 13;
-        final tiles = [
-          for (var n = 1; n <= 5; n++)
-            _FeelTile(
-              key: ValueKey('feel-$n'),
-              level: n,
-              horizontal: !wide,
-              onTap: _busy ? null : () => _answer(n),
-            ),
-        ];
-        return wide
-            ? Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [for (final t in tiles) Expanded(child: t)],
-              )
-            : Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: tiles,
-              );
-      },
-    ),
-    const SizedBox(height: 8),
     Align(
-      child: TextButton(
+      child: KTextButton(
         key: const ValueKey('feel-skip'),
+        label: 'Passer',
         onPressed: _busy ? null : () => _apply(null, skipped: true),
-        child: const Text('Passer'),
       ),
     ),
   ];
 
   List<Widget> _answered(SessionAdapt a) {
+    final k = KTokens.of(context);
     final lines = a.check == null
         ? const <String>[]
         : healthCheckLines(a.check!);
     final zones = store.adaptPainReferralZones;
     return [
       // Ce qui change d'abord : la carte de Koach, puis le bilan.
-      if (a.base != null) ...[_adjustmentCard(a), const SizedBox(height: 12)],
-      if (zones.isNotEmpty) ...[
+      if (a.base != null) _adjustmentCard(a),
+      if (zones.isNotEmpty)
         KCard(
           key: const ValueKey('health-referral'),
-          accent: SL.accent,
+          accent: k.avertissement,
           child: KoachSays(
             pose: koachPose(KoachUsage.care),
             child: Text(
               '${zones.join(', ')} : $kPainReferral',
-              style: const TextStyle(fontWeight: FontWeight.w600),
+              style: KType.corpsFort.copyWith(color: k.texte),
             ),
           ),
         ),
-        const SizedBox(height: 12),
-      ],
       KCard(
         key: const ValueKey('health-summary'),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            KoachHeader(
-              'Bilan du jour',
-              pose: koachPose(KoachUsage.healthCheck),
+            Row(
+              children: [
+                KoachView(
+                  key: const ValueKey('koach-header-view'),
+                  pose: koachPose(KoachUsage.healthCheck),
+                  height: 40,
+                  width: 36,
+                ),
+                const SizedBox(width: KSpacing.s12),
+                Expanded(
+                  child: Semantics(
+                    header: true,
+                    child: Text(
+                      'Bilan du jour',
+                      style: KType.titreCarte.copyWith(color: k.texte),
+                    ),
+                  ),
+                ),
+              ],
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: KSpacing.s8),
             if (lines.isEmpty)
               Text(
                 'Bilan passé : séance prévue.',
-                style: TextStyle(color: SL.dim),
+                style: KType.corps.copyWith(color: k.texte2),
               )
             else
               for (final l in lines)
                 Padding(
-                  padding: const EdgeInsets.only(bottom: 2),
-                  child: Text(l),
+                  padding: const EdgeInsets.only(bottom: KSpacing.s4),
+                  child: Text(l, style: KType.corps.copyWith(color: k.texte)),
                 ),
-            const SizedBox(height: 8),
+            const SizedBox(height: KSpacing.s12),
             Wrap(
-              spacing: 8,
-              runSpacing: 4,
+              spacing: KSpacing.s8,
+              runSpacing: KSpacing.s8,
               children: [
-                TextButton.icon(
+                KTonalButton(
                   key: const ValueKey('bilan-redo'),
                   onPressed: () => setState(() => _redo = true),
-                  icon: const Icon(Icons.refresh, size: 18),
-                  label: const Text('Refaire le bilan'),
+                  icon: Icons.refresh_rounded,
+                  label: 'Refaire le bilan',
                 ),
-                TextButton.icon(
+                KTonalButton(
                   key: const ValueKey('bilan-detail'),
                   onPressed: () => _detail(a.check),
-                  icon: const Icon(Icons.edit_note, size: 18),
-                  label: const Text('Préciser (douleur, temps…)'),
+                  icon: Icons.edit_note_rounded,
+                  label: 'Préciser (douleur, temps…)',
                 ),
               ],
             ),
           ],
         ),
       ),
-      if (a.base == null) ...[
-        const SizedBox(height: 16),
-        FilledButton.icon(
+      if (a.base == null)
+        KPrimaryButton(
           key: const ValueKey('bilan-start'),
-          style: FilledButton.styleFrom(
-            minimumSize: const Size.fromHeight(KControl.buttonHeight),
-          ),
           onPressed: widget.onStart,
-          icon: const Icon(Icons.play_arrow),
-          label: const Text('Premier exercice'),
+          icon: Icons.play_arrow_rounded,
+          label: 'Premier exercice',
         ),
-      ],
     ];
   }
 
@@ -351,6 +541,7 @@ class _HealthCheckPageState extends State<HealthCheckPage> {
   /// plus), et les choix du mode (assisté : appliqué, « Annuler » ; libre :
   /// « Accepter » / « Garder ma séance »).
   Widget _adjustmentCard(SessionAdapt a) {
+    final k = KTokens.of(context);
     final all = sessionDiffLines(a.base!, a.plan, store.adaptExerciseName);
     final shown = all.isEmpty
         ? const ['Charges et cibles un peu plus prudentes.']
@@ -416,43 +607,56 @@ class _HealthCheckPageState extends State<HealthCheckPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(head, style: const TextStyle(fontWeight: FontWeight.w700)),
+            Text(head, style: KType.corpsFort.copyWith(color: k.texte)),
             if (list) ...[
-              const SizedBox(height: 4),
+              const SizedBox(height: KSpacing.s4),
               for (final l in shown)
                 Padding(
-                  padding: const EdgeInsets.only(top: 2),
-                  child: Text('• $l'),
+                  padding: const EdgeInsets.only(top: KSpacing.s4),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('•', style: KType.corps.copyWith(color: k.texte2)),
+                      const SizedBox(width: KSpacing.s8),
+                      Expanded(
+                        child: Text(
+                          l,
+                          style: KType.corps.copyWith(color: k.texte),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               if (more > 0)
                 Padding(
-                  padding: const EdgeInsets.only(top: 2),
+                  padding: const EdgeInsets.only(top: KSpacing.s4),
                   child: Text(
                     '… et $more autre${more > 1 ? 's' : ''} '
                     'changement${more > 1 ? 's' : ''}.',
-                    style: TextStyle(color: SL.dim),
+                    style: KType.detail.copyWith(color: k.texte2),
                   ),
                 ),
             ],
-            const SizedBox(height: 8),
+            const SizedBox(height: KSpacing.s12),
             Wrap(
-              spacing: 8,
-              runSpacing: 4,
+              spacing: KSpacing.s8,
+              runSpacing: KSpacing.s8,
               crossAxisAlignment: WrapCrossAlignment.center,
               children: [
                 for (var i = 0; i < actions.length; i++)
                   i == 0
-                      ? FilledButton(
+                      ? KPrimaryButton(
                           key: ValueKey(actions[i].$1),
                           onPressed: actions[i].$3,
-                          child: Text(actions[i].$2),
+                          label: actions[i].$2,
+                          expand: false,
                         )
-                      : TextButton(
+                      : KTonalButton(
                           key: ValueKey(actions[i].$1),
                           onPressed: actions[i].$3,
-                          child: Text(actions[i].$2),
+                          label: actions[i].$2,
                         ),
-                TextButton(
+                KTextButton(
                   key: const ValueKey('adjust-why'),
                   onPressed: () => showKoachSheet<void>(
                     context,
@@ -460,7 +664,7 @@ class _HealthCheckPageState extends State<HealthCheckPage> {
                     title: 'Pourquoi ?',
                     text: kHealthWhy,
                   ),
-                  child: const Text('Pourquoi ?'),
+                  label: 'Pourquoi ?',
                 ),
               ],
             ),
@@ -471,6 +675,8 @@ class _HealthCheckPageState extends State<HealthCheckPage> {
   }
 }
 
+/// Tuile de ressenti : Koach dans la pose du niveau et son libellé, sur
+/// `haute`, rayon des cartes (maquette « Bilan du jour »).
 class _FeelTile extends StatelessWidget {
   final int level;
   final VoidCallback? onTap;
@@ -486,70 +692,82 @@ class _FeelTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final k = KTokens.of(context);
     final label = kFeelLabels[level]!;
+    final shape = RoundedRectangleBorder(
+      borderRadius: KRadius.cardRadius,
+      side: k.controlSide,
+    );
     return Semantics(
       button: true,
       label: 'Je me sens : $label',
       excludeSemantics: true,
-      child: Padding(
-        padding: const EdgeInsets.all(3),
-        child: Material(
-          color: SL.card,
-          borderRadius: BorderRadius.circular(16),
-          child: InkWell(
-            borderRadius: BorderRadius.circular(16),
-            onTap: onTap,
-            child: KoachSurface(
-              color: SL.card,
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                  vertical: 10,
-                  horizontal: horizontal ? 12 : 2,
-                ),
-                child: horizontal
-                    ? Row(
-                        children: [
-                          KoachView(
-                            pose: kFeelPoses[level]!,
-                            height: 44,
-                            width: 40,
+      child: Material(
+        color: k.haute,
+        shape: shape,
+        clipBehavior: Clip.antiAlias,
+        child: InkWell(
+          customBorder: shape,
+          onTap: onTap,
+          // Koach posé sur la tuile prend sa couleur pour papier.
+          child: KoachSurface(
+            color: k.haute,
+            child: horizontal
+                ? Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: KSpacing.s12,
+                      vertical: KSpacing.s8,
+                    ),
+                    child: Row(
+                      children: [
+                        KoachView(
+                          pose: kFeelPoses[level]!,
+                          height: 44,
+                          width: 40,
+                        ),
+                        const SizedBox(width: KSpacing.s12),
+                        Expanded(
+                          child: Text(
+                            label,
+                            style: KType.libelle.copyWith(color: k.texte),
                           ),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            child: Text(
-                              label,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ),
-                        ],
-                      )
-                    : Column(
+                        ),
+                      ],
+                    ),
+                  )
+                : ConstrainedBox(
+                    constraints: const BoxConstraints(
+                      minHeight: _feelTileHeight,
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: KSpacing.s4,
+                        vertical: KSpacing.s8,
+                      ),
+                      child: Column(
                         mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           KoachView(
                             pose: kFeelPoses[level]!,
                             height: 48,
                             width: 44,
                           ),
-                          const SizedBox(height: 6),
-                          // Même taille pour les cinq libellés.
+                          const SizedBox(height: KSpacing.s4),
+                          // Même taille pour les cinq libellés ; un libellé
+                          // trop large se réduit, il n'est jamais coupé.
                           FittedBox(
                             fit: BoxFit.scaleDown,
                             child: Text(
                               label,
                               maxLines: 1,
-                              style: const TextStyle(
-                                fontSize: 11.5,
-                                fontWeight: FontWeight.w600,
-                              ),
+                              style: KType.micro.copyWith(color: k.texte),
                             ),
                           ),
                         ],
                       ),
-              ),
-            ),
+                    ),
+                  ),
           ),
         ),
       ),
@@ -563,7 +781,15 @@ class _FeelTile extends StatelessWidget {
 /// laissée vide n'est pas prise en compte.
 class HealthDetailScreen extends StatefulWidget {
   final kc.HealthCheck initial;
-  const HealthDetailScreen({super.key, required this.initial});
+
+  /// Ouvert depuis « Douleur ou malaise ? » (séance) : la page défile
+  /// jusqu'à la section Douleur à l'ouverture.
+  final bool focusPain;
+  const HealthDetailScreen({
+    super.key,
+    required this.initial,
+    this.focusPain = false,
+  });
 
   @override
   State<HealthDetailScreen> createState() => _HealthDetailScreenState();
@@ -573,6 +799,7 @@ class _HealthDetailScreenState extends State<HealthDetailScreen> {
   late final Map<String, int?> _v;
   List<kc.PainReport>? _pains;
   int? _minutes;
+  final GlobalKey _painKey = GlobalKey();
 
   static const _scale = ['Très bas', 'Bas', 'Moyen', 'Bon', 'Très bon'];
   static const _questions = <(String, String, List<String>)>[
@@ -598,6 +825,21 @@ class _HealthDetailScreenState extends State<HealthDetailScreen> {
     _v = {for (final q in _questions) q.$1: j[q.$1] as int?};
     _pains = widget.initial.pains == null ? null : [...widget.initial.pains!];
     _minutes = widget.initial.minutesAvailable;
+    if (widget.focusPain) {
+      WidgetsBinding.instance.addPostFrameCallback((_) => _showPain());
+    }
+  }
+
+  /// Fait défiler la page jusqu'à la section Douleur.
+  void _showPain() {
+    final target = _painKey.currentContext;
+    if (!mounted || target == null) return;
+    final motion = KMotion.slow;
+    Scrollable.ensureVisible(
+      target,
+      duration: motion.durationIn(context),
+      curve: motion.curve,
+    );
   }
 
   kc.HealthCheck _result() {
@@ -624,38 +866,36 @@ class _HealthDetailScreenState extends State<HealthDetailScreen> {
     }
     var side = existing?.side ?? kc.BodySide.both;
     var level = (existing?.intensity ?? 4).toDouble();
-    final ok = await showModalBottomSheet<bool>(
-      context: context,
-      isScrollControlled: true,
-      useSafeArea: true,
-      showDragHandle: true,
+    final ok = await showKContentSheet<bool>(
+      context,
+      title: kZoneLabels[zone]!,
+      subtitle: 'Douleur',
+      closeLabel: null,
+      contentKey: const ValueKey('pain-sheet'),
       builder: (ctx) => StatefulBuilder(
-        builder: (ctx, set) => SingleChildScrollView(
-          key: const ValueKey('pain-sheet'),
-          padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
-          child: Column(
+        builder: (ctx, set) {
+          final k = KTokens.of(ctx);
+          return Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
-                kZoneLabels[zone]!,
-                style: Theme.of(ctx).textTheme.titleLarge,
-              ),
-              const SizedBox(height: 12),
               Wrap(
-                spacing: 8,
-                runSpacing: 8,
+                spacing: KSpacing.s8,
                 children: [
                   for (final b in kc.BodySide.values)
-                    ChoiceChip(
+                    KChip(
+                      kSideLabels[b]!,
                       key: ValueKey('pain-side-${b.code}'),
-                      label: Text(kSideLabels[b]!),
                       selected: side == b,
-                      onSelected: (_) => set(() => side = b),
+                      onTap: () => set(() => side = b),
                     ),
                 ],
               ),
-              const SizedBox(height: 12),
-              Text('Douleur aujourd’hui : ${level.round()}/10'),
+              const SizedBox(height: KSpacing.s12),
+              Text(
+                'Douleur aujourd’hui : ${level.round()}/10',
+                style: KType.corpsFort.copyWith(color: k.texte),
+              ),
               Slider(
                 key: const ValueKey('pain-level'),
                 value: level,
@@ -668,17 +908,17 @@ class _HealthDetailScreenState extends State<HealthDetailScreen> {
                 '0 : aucune · 10 : la pire imaginable. Au-dessus de 3/10, '
                 'j’épargne la zone. Une douleur forte ou qui dure mérite '
                 'l’avis d’un professionnel de santé.',
-                style: Theme.of(ctx).textTheme.bodySmall,
+                style: KType.detail.copyWith(color: k.texte2),
               ),
-              const SizedBox(height: 12),
-              FilledButton(
+              const SizedBox(height: KSpacing.s16),
+              KPrimaryButton(
                 key: const ValueKey('pain-save'),
                 onPressed: () => Navigator.pop(ctx, true),
-                child: const Text('Enregistrer'),
+                label: 'Enregistrer',
               ),
             ],
-          ),
-        ),
+          );
+        },
       ),
     );
     if (ok != true || !mounted) return;
@@ -698,163 +938,254 @@ class _HealthDetailScreenState extends State<HealthDetailScreen> {
     });
   }
 
-  Widget _title(String t) =>
-      Text(t, style: Theme.of(context).textTheme.titleMedium);
+  /// « Aucune douleur » choisi.
+  bool get _noPain => _pains != null && _pains!.isEmpty;
 
-  @override
-  Widget build(BuildContext context) {
-    final lit = <String, double>{
-      for (final p in _pains ?? const <kc.PainReport>[])
-        for (final r in regionsOfZone(p.zone)) r: .35 + .065 * p.intensity,
-    };
-    return KScreen(
-      appBar: AppBar(title: const Text('Bilan du jour')),
-      body: KList(
-        key: const ValueKey('health-detail'),
-        children: [
-          KCard(
-            child: KoachSays(
-              pose: koachPose(KoachUsage.care),
-              koachHeight: 64,
-              child: const Text(
-                'Dis-moi ce qui ne va pas. Tout est facultatif : ce que tu '
-                'laisses vide ne compte pas.',
-              ),
+  void _removePain(kc.PainReport p) => setState(() {
+    final next = [...?_pains]..removeWhere((x) => x.zone == p.zone);
+    // Douleur déjà dite puis retirée : « aucune ».
+    _pains = next.isEmpty && widget.initial.pains == null ? null : next;
+  });
+
+  Widget _title(KTokens k, String t) => Semantics(
+    header: true,
+    child: Text(t, style: KType.titreCarte.copyWith(color: k.texte)),
+  );
+
+  /// Douleurs déclarées : une ligne par zone (zone · côté, n/10), qui
+  /// rouvre la feuille de la zone, et « Retirer ».
+  Widget _painRows(KTokens k, List<kc.PainReport> pains) => Material(
+    color: k.haute,
+    shape: KRadius.menuShape,
+    clipBehavior: Clip.antiAlias,
+    child: Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        for (var i = 0; i < pains.length; i++) ...[
+          if (i > 0)
+            Divider(
+              height: 1,
+              thickness: 1,
+              indent: KSpacing.s16,
+              endIndent: KSpacing.s16,
+              color: k.filet,
             ),
-          ),
-          for (final q in _questions)
-            KCard(
-              key: ValueKey('detail-${q.$1}'),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _title(q.$2),
-                  const SizedBox(height: 6),
-                  Wrap(
-                    spacing: 6,
-                    runSpacing: 6,
-                    children: [
-                      for (var i = 1; i <= 5; i++)
-                        ChoiceChip(
-                          key: ValueKey('detail-${q.$1}-$i'),
-                          label: Text(q.$3[i - 1]),
-                          selected: _v[q.$1] == i,
-                          onSelected: (on) =>
-                              setState(() => _v[q.$1] = on ? i : null),
-                        ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          KCard(
-            key: const ValueKey('detail-pains'),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _title('Douleur'),
-                const SizedBox(height: 4),
-                Text(
-                  'Touche la zone sur la carte, ou choisis-la dans la liste.',
-                  style: TextStyle(color: SL.dim, fontSize: 13),
+          InkWell(
+            key: ValueKey('pain-${pains[i].zone.code}'),
+            onTap: () => _editPain(pains[i].zone),
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(minHeight: KSize.primary),
+              child: Padding(
+                padding: const EdgeInsetsDirectional.only(
+                  start: KSpacing.s16,
+                  end: KSpacing.s4,
+                  top: KSpacing.s8,
+                  bottom: KSpacing.s8,
                 ),
-                const SizedBox(height: 8),
-                ChoiceChip(
-                  key: const ValueKey('detail-no-pain'),
-                  label: const Text('Aucune douleur'),
-                  selected: _pains != null && _pains!.isEmpty,
-                  onSelected: (on) => setState(() => _pains = on ? [] : null),
-                ),
-                const SizedBox(height: 8),
-                MuscleMap2D(
-                  key: const ValueKey('detail-body-map'),
-                  views: const [MapView.face, MapView.dos],
-                  height: 220,
-                  intensities: lit,
-                  semanticLabel: 'Carte du corps',
-                  onRegionTap: (r) {
-                    final z = r == null ? null : kRegionZones[r];
-                    if (z != null) _editPain(z);
-                  },
-                ),
-                const SizedBox(height: 8),
-                Wrap(
-                  spacing: 6,
-                  runSpacing: 6,
+                child: Row(
                   children: [
-                    for (final z in kc.BodyZone.values)
-                      ActionChip(
-                        key: ValueKey('pain-zone-${z.code}'),
-                        label: Text(kZoneLabels[z]!),
-                        onPressed: () => _editPain(z),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            '${kZoneLabels[pains[i].zone]} · '
+                            '${kSideLabels[pains[i].side]!.toLowerCase()}',
+                            style: KType.corpsMoyen.copyWith(color: k.texte),
+                          ),
+                          Text(
+                            '${pains[i].intensity}/10',
+                            style: KType.detail.copyWith(color: k.texte2),
+                          ),
+                        ],
                       ),
-                  ],
-                ),
-                for (final p in _pains ?? const <kc.PainReport>[])
-                  ListTile(
-                    key: ValueKey('pain-${p.zone.code}'),
-                    contentPadding: EdgeInsets.zero,
-                    title: Text(
-                      '${kZoneLabels[p.zone]} · ${kSideLabels[p.side]!.toLowerCase()}',
                     ),
-                    subtitle: Text('${p.intensity}/10'),
-                    onTap: () => _editPain(p.zone),
-                    trailing: IconButton(
+                    KIconButton(
+                      icon: Icons.close_rounded,
                       tooltip: 'Retirer',
-                      icon: const Icon(Icons.close),
-                      onPressed: () => setState(() {
-                        final next = [...?_pains]
-                          ..removeWhere((x) => x.zone == p.zone);
-                        // Douleur déjà dite puis retirée : « aucune ».
-                        _pains = next.isEmpty && widget.initial.pains == null
-                            ? null
-                            : next;
-                      }),
+                      onPressed: () => _removePain(pains[i]),
                     ),
-                  ),
-              ],
-            ),
-          ),
-          KCard(
-            key: const ValueKey('detail-minutes'),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _title('Temps disponible aujourd’hui'),
-                const SizedBox(height: 6),
-                Wrap(
-                  spacing: 6,
-                  runSpacing: 6,
-                  children: [
-                    for (final m in _minuteChoices)
-                      ChoiceChip(
-                        key: ValueKey('detail-minutes-$m'),
-                        label: Text('$m min'),
-                        selected: _minutes == m,
-                        onSelected: (on) =>
-                            setState(() => _minutes = on ? m : null),
-                      ),
                   ],
                 ),
-              ],
-            ),
-          ),
-          FilledButton(
-            key: const ValueKey('detail-save'),
-            style: FilledButton.styleFrom(
-              minimumSize: const Size.fromHeight(KControl.buttonHeight),
-            ),
-            onPressed: () => Navigator.pop(context, _result()),
-            child: const Text('Valider mon bilan'),
-          ),
-          Align(
-            child: TextButton(
-              key: const ValueKey('detail-skip'),
-              onPressed: () => Navigator.pop(context, widget.initial),
-              child: const Text('Passer'),
+              ),
             ),
           ),
         ],
+      ],
+    ),
+  );
+
+  @override
+  Widget build(BuildContext context) {
+    final k = KTokens.of(context);
+    final inset = KNavigationInset.of(context);
+    final pains = _pains ?? const <kc.PainReport>[];
+    final lit = <String, double>{
+      for (final p in pains)
+        for (final r in regionsOfZone(p.zone)) r: .35 + .065 * p.intensity,
+    };
+    final children = <Widget>[
+      KCard(
+        child: KoachSays(
+          pose: koachPose(KoachUsage.care),
+          koachHeight: 64,
+          child: Text(
+            'Dis-moi ce qui ne va pas. Tout est facultatif : ce que tu '
+            'laisses vide ne compte pas.',
+            style: KType.corps.copyWith(color: k.texte),
+          ),
+        ),
+      ),
+      for (final q in _questions)
+        KCard(
+          key: ValueKey('detail-${q.$1}'),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _title(k, q.$2),
+              const SizedBox(height: KSpacing.s4),
+              Wrap(
+                spacing: KSpacing.s8,
+                children: [
+                  for (var i = 1; i <= 5; i++)
+                    KChip(
+                      q.$3[i - 1],
+                      key: ValueKey('detail-${q.$1}-$i'),
+                      selected: _v[q.$1] == i,
+                      // Un appui sur le choix déjà fait le retire.
+                      onTap: () =>
+                          setState(() => _v[q.$1] = _v[q.$1] == i ? null : i),
+                    ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      KeyedSubtree(
+        key: _painKey,
+        child: KCard(
+          key: const ValueKey('detail-pains'),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _title(k, 'Douleur'),
+              const SizedBox(height: KSpacing.s4),
+              Text(
+                'Touche la zone sur la carte, ou choisis-la dans la liste.',
+                style: KType.detail.copyWith(color: k.texte2),
+              ),
+              const SizedBox(height: KSpacing.s4),
+              KChip(
+                'Aucune douleur',
+                key: const ValueKey('detail-no-pain'),
+                selected: _noPain,
+                onTap: () => setState(() => _pains = _noPain ? null : []),
+              ),
+              const SizedBox(height: KSpacing.s8),
+              MuscleMap2D(
+                key: const ValueKey('detail-body-map'),
+                views: const [MapView.face, MapView.dos],
+                height: 220,
+                intensities: lit,
+                semanticLabel: 'Carte du corps',
+                onRegionTap: (r) {
+                  final z = r == null ? null : kRegionZones[r];
+                  if (z != null) _editPain(z);
+                },
+              ),
+              const SizedBox(height: KSpacing.s8),
+              Wrap(
+                spacing: KSpacing.s8,
+                children: [
+                  for (final z in kc.BodyZone.values)
+                    KChip(
+                      kZoneLabels[z]!,
+                      key: ValueKey('pain-zone-${z.code}'),
+                      onTap: () => _editPain(z),
+                    ),
+                ],
+              ),
+              if (pains.isNotEmpty) ...[
+                const SizedBox(height: KSpacing.s8),
+                _painRows(k, pains),
+              ],
+              const SizedBox(height: KSpacing.s4),
+              KTextButton(
+                key: const ValueKey('detail-safety'),
+                label: 'Conseils de sécurité',
+                icon: Icons.health_and_safety_outlined,
+                alignStart: true,
+                onPressed: () => Navigator.of(context).push(
+                  MaterialPageRoute<void>(builder: (_) => const SafetyScreen()),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+      KCard(
+        key: const ValueKey('detail-minutes'),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _title(k, 'Temps disponible aujourd’hui'),
+            const SizedBox(height: KSpacing.s4),
+            Wrap(
+              spacing: KSpacing.s8,
+              children: [
+                for (final m in _minuteChoices)
+                  KChip(
+                    '$m min',
+                    key: ValueKey('detail-minutes-$m'),
+                    selected: _minutes == m,
+                    onTap: () =>
+                        setState(() => _minutes = _minutes == m ? null : m),
+                  ),
+              ],
+            ),
+          ],
+        ),
+      ),
+      KPrimaryButton(
+        key: const ValueKey('detail-save'),
+        onPressed: () => Navigator.pop(context, _result()),
+        label: 'Valider mon bilan',
+      ),
+      Align(
+        child: KTextButton(
+          key: const ValueKey('detail-skip'),
+          onPressed: () => Navigator.pop(context, widget.initial),
+          label: 'Passer',
+        ),
+      ),
+    ];
+    return Scaffold(
+      backgroundColor: k.fond,
+      appBar: const KTopBar.sub(title: 'Bilan du jour'),
+      body: SafeArea(
+        top: false,
+        bottom: inset == 0,
+        child: Align(
+          alignment: Alignment.topCenter,
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: KSpacing.maxWidth),
+            child: SingleChildScrollView(
+              key: const ValueKey('health-detail'),
+              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+              padding: EdgeInsets.fromLTRB(
+                KSpacing.page,
+                KSpacing.s8,
+                KSpacing.page,
+                KSpacing.s24 + inset,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: _spaced(children),
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -862,95 +1193,65 @@ class _HealthDetailScreenState extends State<HealthDetailScreen> {
 
 /// « J'ai seulement… minutes » (séance servie par le moteur) : temps
 /// disponible ajouté au bilan ; null : annulé ; 0 : temps prévu.
-Future<int?> showMinutesSheet(BuildContext context, int? current) =>
-    showModalBottomSheet<int>(
-      context: context,
-      showDragHandle: true,
-      useSafeArea: true,
-      builder: (ctx) => SingleChildScrollView(
-        key: const ValueKey('minutes-sheet'),
-        padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(
-              'Combien de temps as-tu ?',
-              style: Theme.of(ctx).textTheme.titleLarge,
-            ),
-            const SizedBox(height: 4),
-            const Text('Koach raccourcit la séance en gardant l’essentiel.'),
-            const SizedBox(height: 12),
-            Wrap(
-              spacing: 8,
-              runSpacing: 8,
-              children: [
-                for (final m in const [20, 30, 45, 60, 75, 90])
-                  ChoiceChip(
-                    key: ValueKey('minutes-$m'),
-                    label: Text('$m min'),
-                    selected: current == m,
-                    onSelected: (_) => Navigator.pop(ctx, m),
-                  ),
-                ChoiceChip(
-                  key: const ValueKey('minutes-planned'),
-                  label: const Text('Le temps prévu'),
-                  selected: current == null,
-                  onSelected: (_) => Navigator.pop(ctx, 0),
-                ),
-              ],
-            ),
-          ],
+Future<int?> showMinutesSheet(BuildContext context, int? current) async {
+  const choices = [20, 30, 45, 60, 75, 90];
+  final i = await showKListSheet(
+    context,
+    title: 'Combien de temps as-tu ?',
+    summary: 'Koach raccourcit la séance en gardant l’essentiel.',
+    items: [
+      for (final m in choices)
+        KListItem(
+          '$m min',
+          icon: Icons.schedule_rounded,
+          state: current == m ? KListState.current : KListState.todo,
         ),
+      KListItem(
+        'Le temps prévu',
+        icon: Icons.event_available_rounded,
+        state: current == null ? KListState.current : KListState.todo,
       ),
-    );
+    ],
+  );
+  if (i == null) return null;
+  return i < choices.length ? choices[i] : 0;
+}
 
 /// « Je m'entraîne ailleurs » (séance servie par le moteur) : lieu du
 /// jour ; null : annulé ; `''` : lieu prévu.
-Future<String?> showPlaceChoiceSheet(BuildContext context, kc.Place? current) =>
-    showModalBottomSheet<String>(
-      context: context,
-      showDragHandle: true,
-      useSafeArea: true,
-      builder: (ctx) => SingleChildScrollView(
-        key: const ValueKey('place-sheet'),
-        padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(
-              'Où t’entraînes-tu aujourd’hui ?',
-              style: Theme.of(ctx).textTheme.titleLarge,
-            ),
-            const SizedBox(height: 4),
-            const Text(
-              'Koach remplace ce qui n’est pas faisable sur place par un '
-              'équivalent.',
-            ),
-            const SizedBox(height: 12),
-            Wrap(
-              spacing: 8,
-              runSpacing: 8,
-              children: [
-                for (final p in kc.Place.values)
-                  ChoiceChip(
-                    key: ValueKey('place-${p.code}'),
-                    label: Text(switch (p) {
-                      kc.Place.gym => 'En salle',
-                      kc.Place.home => 'À la maison',
-                      kc.Place.outdoor => 'Dehors',
-                    }),
-                    selected: current == p,
-                    onSelected: (_) => Navigator.pop(ctx, p.code),
-                  ),
-                ChoiceChip(
-                  key: const ValueKey('place-planned'),
-                  label: const Text('Le lieu prévu'),
-                  selected: current == null,
-                  onSelected: (_) => Navigator.pop(ctx, ''),
-                ),
-              ],
-            ),
-          ],
+Future<String?> showPlaceChoiceSheet(
+  BuildContext context,
+  kc.Place? current,
+) async {
+  const places = kc.Place.values;
+  final i = await showKListSheet(
+    context,
+    title: 'Où t’entraînes-tu aujourd’hui ?',
+    summary:
+        'Koach remplace ce qui n’est pas faisable sur place par un '
+        'équivalent.',
+    items: [
+      for (final p in places)
+        KListItem(
+          switch (p) {
+            kc.Place.gym => 'En salle',
+            kc.Place.home => 'À la maison',
+            kc.Place.outdoor => 'Dehors',
+          },
+          icon: switch (p) {
+            kc.Place.gym => Icons.fitness_center_rounded,
+            kc.Place.home => Icons.home_rounded,
+            kc.Place.outdoor => Icons.park_rounded,
+          },
+          state: current == p ? KListState.current : KListState.todo,
         ),
+      KListItem(
+        'Le lieu prévu',
+        icon: Icons.event_available_rounded,
+        state: current == null ? KListState.current : KListState.todo,
       ),
-    );
+    ],
+  );
+  if (i == null) return null;
+  return i < places.length ? places[i].code : '';
+}

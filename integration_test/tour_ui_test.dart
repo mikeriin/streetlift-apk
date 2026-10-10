@@ -348,7 +348,161 @@ void main() {
         open: SessionScreen(week: week, day: day),
         check: find.byType(SessionScreen),
       );
+      // UI2 : premier exercice (« Passer » le bilan), menu ⋮, liste des
+      // exercices, consignes, page de fin. Mêmes noms dans les deux
+      // colonnes ; un écran absent de la base est relevé « false ».
+      Future<void> skipBilan() async {
+        final skip = find.byKey(const ValueKey('feel-skip'));
+        if (skip.hitTestable().evaluate().isNotEmpty) {
+          await tester.tap(skip.hitTestable().first);
+          await wait(tester, 1500);
+          return;
+        }
+        // Bilan déjà passé (séance rouverte) : la page du bilan montre son
+        // résumé ; « Premier exercice » mène à la page du premier exercice
+        // (appui non compté : les parcours partent de cette page).
+        final start = find.byKey(const ValueKey('bilan-start'));
+        if (start.evaluate().isEmpty) return;
+        await scrollTo(tester, start);
+        if (start.hitTestable().evaluate().isNotEmpty) {
+          await tester.tap(start.hitTestable().first);
+          await wait(tester, 1500);
+        }
+      }
+
+      // Ferme une feuille ouverte (appui sur le voile), sinon rien : un
+      // appui en haut à gauche sans feuille toucherait le retour.
+      Future<void> sheetClose() async {
+        final menus = find.byWidgetPredicate(
+          (w) =>
+              w is BottomSheet ||
+              w.runtimeType.toString().startsWith('_PopupMenu'),
+        );
+        if (menus.evaluate().isEmpty) return;
+        await tester.tapAt(const Offset(12, 60));
+        await wait(tester, 900);
+      }
+
+      await skipBilan();
+      final setCheck = find.byWidgetPredicate(
+        (w) =>
+            w is Tooltip &&
+            w.message != null &&
+            w.message!.startsWith('Valider la série'),
+      );
+      await screen(tester, 'seance_exercice', check: setCheck);
+      await scrollTo(tester, setCheck);
+      await screen(tester, 'seance_tableau', check: setCheck);
+      final menu = find.byTooltip('Options de séance');
+      if (menu.evaluate().isNotEmpty) await tester.tap(menu.first);
+      await wait(tester, 1200);
+      await screen(
+        tester,
+        'seance_menu',
+        check: find.text('Douleur ou malaise ?'),
+      );
+      await sheetClose();
+      final list = find.text('Exercices');
+      if (list.evaluate().isNotEmpty) await tester.tap(list.first);
+      await wait(tester, 1200);
+      await screen(
+        tester,
+        'seance_liste',
+        check: find.text('Dans cette séance'),
+      );
+      await sheetClose();
+      final info = find.byTooltip('Consignes de l’exercice');
+      await scrollTo(tester, info);
+      if (info.hitTestable().evaluate().isNotEmpty) {
+        await tester.tap(info.hitTestable().first);
+      }
+      await wait(tester, 1200);
+      await screen(
+        tester,
+        'seance_consignes',
+        check: find.text('Voir la fiche'),
+      );
+      await sheetClose();
+      if (list.evaluate().isNotEmpty) await tester.tap(list.first);
+      await wait(tester, 1200);
+      final end = find.text('Bilan de séance');
+      if (end.evaluate().isNotEmpty) await tester.tap(end.last);
+      await wait(tester, 1500);
+      await screen(
+        tester,
+        'seance_fin',
+        check: find.text('Terminer la séance'),
+      );
       await home(tester);
+
+      // Parcours de la séance (cahier §6.3), comptés depuis la page du
+      // premier exercice.
+      Future<void> sessionRoute(
+        String name,
+        List<List<Finder Function()>> paths,
+        Finder Function() reached,
+      ) async {
+        Object? result;
+        for (var p = 0; p < paths.length && result == null; p++) {
+          await home(tester);
+          await push(tester, SessionScreen(week: week, day: day));
+          await skipBilan();
+          var taps = 0;
+          var ok = true;
+          for (final step in paths[p]) {
+            final f = step();
+            // Cible absente (chemin inexistant sur la base) : abandon
+            // tout de suite, sans faire défiler.
+            if (!await until(tester, f, max: 15)) {
+              ok = false;
+              break;
+            }
+            await scrollTo(tester, f);
+            final hit = f.hitTestable();
+            if (hit.evaluate().isEmpty) {
+              ok = false;
+              break;
+            }
+            await tester.tap(hit.first);
+            taps++;
+            await wait(tester, 1500);
+          }
+          if (ok && await until(tester, reached(), max: 30)) {
+            result = {'appuis': taps, 'chemin': p};
+          }
+        }
+        (releve['parcours'] as Map<String, Object?>)[name] = result;
+        record();
+        await home(tester);
+      }
+
+      final options = find.byTooltip('Options de séance');
+      await sessionRoute('seance_fiche', [
+        [
+          () => find.byTooltip('Consignes de l’exercice'),
+          () => text('Voir la fiche'),
+        ],
+      ], () => find.byType(ExerciseSheetScreen));
+      final zone = kc.BodyZone.values.first.code;
+      await sessionRoute('seance_douleur', [
+        [
+          () => options,
+          () => text('Douleur ou malaise ?'),
+          () => find.byKey(ValueKey('pain-zone-$zone')),
+          () => find.byKey(const ValueKey('pain-save')),
+        ],
+        [
+          () => options,
+          () => text('Bilan du jour'),
+          () => find.byKey(const ValueKey('bilan-detail')),
+          () => find.byKey(ValueKey('pain-zone-$zone')),
+          () => find.byKey(const ValueKey('pain-save')),
+        ],
+      ], () => find.byKey(ValueKey('pain-$zone')));
+      await sessionRoute('seance_references', [
+        [() => options, () => text('Mes références')],
+        [() => options, () => text('Références (feuille Pilotage)')],
+      ], () => find.byType(PilotageScreen));
     }
 
     // Stats (UI3) : chaque rubrique, haut et bas de page ; la page Records ;
