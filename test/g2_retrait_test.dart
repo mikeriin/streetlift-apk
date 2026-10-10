@@ -240,7 +240,9 @@ void main() {
       // de couleur, relu vers sa palette (vert → forest) et réenregistré
       // ainsi ; l'état n'est jamais refusé pour ça.
       final settingsDisk = Map<String, dynamic>.from(disk['settings'] as Map);
-      final settingsSeed = Map<String, dynamic>.from(program['settings'] as Map);
+      final settingsSeed = Map<String, dynamic>.from(
+        program['settings'] as Map,
+      );
       expect(settingsSeed['accent'], 'vert');
       expect(settingsDisk['accent'], 'forest');
       settingsDisk.remove('accent');
