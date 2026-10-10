@@ -24,13 +24,13 @@ a{color:inherit}a:hover{color:inherit}
       <h1 style="margin: 0; font-family: 'Barlow Semi Condensed', sans-serif; font-weight: 600; font-size: 22px; line-height: 28px; text-transform: {{tt}}; letter-spacing: {{ls}}">Ma saison</h1>
     </header>
 
-    <section style="background: var(--surface); border-radius: 24px; padding: 18px; display: flex; flex-direction: column; gap: 4px">
+    <section style="background: var(--surface); border-radius: var(--r-carte); padding: 18px; display: flex; flex-direction: column; gap: 4px">
       <span style="color: var(--texte2); font-size: 14px">Championnat</span>
       <div style="display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap">
         <span style="font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 34px; line-height: 38px">24 décembre</span>
         <span style="color: var(--texte2); font-size: 14px">dans 12 semaines</span>
       </div>
-      <a href="#" style="display: grid; grid-template-columns: 22px 1fr 16px; gap: 10px; align-items: center; height: 48px; margin-top: 8px; padding: 0 14px; border-radius: 16px; background: var(--haute); text-decoration: none">
+      <a href="#" style="display: grid; grid-template-columns: 22px 1fr 16px; gap: 10px; align-items: center; height: 48px; margin-top: 8px; padding: 0 14px; border-radius: var(--r); background: var(--haute); text-decoration: none">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="{{a.accent}}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4zM7 6H4a3 3 0 0 0 3 4M17 6h3a3 3 0 0 1-3 4"/></svg>
         <span style="font-weight: 600">Jour J : tentatives</span>
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--texte2)" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
@@ -39,7 +39,7 @@ a{color:inherit}a:hover{color:inherit}
 
     <h2 style="margin: 8px 0 0; font-family: 'Barlow Semi Condensed', sans-serif; font-weight: 600; font-size: 18px; line-height: 24px">Phases</h2>
 
-    <section aria-label="Phases de la saison" style="background: var(--surface); border-radius: 24px; padding: 6px 18px">
+    <section aria-label="Phases de la saison" style="background: var(--surface); border-radius: var(--r-menu); padding: 6px 18px">
       <sc-for list="{{phases}}" as="p" hint-placeholder-count="8">
         <div style="display: grid; grid-template-columns: 20px 1fr auto; gap: 12px; min-height: 56px">
           <div style="position: relative; display: flex; justify-content: center">
@@ -57,7 +57,7 @@ a{color:inherit}a:hover{color:inherit}
   </div>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"palette":{"editor":"enum","options":["bordeaux","obsidian","arctic","neon","titanium","violet","forest","solar"],"default":"bordeaux"},"capitales":{"editor":"boolean","default":true},"$preview":{"width":390,"height":844}}'>
+<script type="text/x-dc" data-dc-script data-props='{"palette":{"editor":"enum","options":["bordeaux","obsidian","arctic","neon","titanium","violet","forest","solar"],"default":"bordeaux"},"capitales":{"editor":"boolean","default":true},"rayon_cartes":{"editor":"enum","options":["20 px","24 px","28 px","32 px"],"default":"24 px"},"rayon_menus":{"editor":"enum","options":["16 px","20 px","24 px"],"default":"20 px"},"$preview":{"width":390,"height":844}}'>
 class Component extends DCLogic {
   renderVals() {
     var T = {
@@ -72,7 +72,9 @@ class Component extends DCLogic {
     };
     var a = T[this.props.palette] || T.bordeaux;
     var caps = this.props.capitales !== false;
-    var vars = '--fond: ' + a.fond + '; --surface: ' + a.surface + '; --haute: ' + a.haute + '; --filet: ' + a.filet + '; --texte: ' + a.texte + '; --texte2: ' + a.texte2 + '; --texte3: ' + a.texte3 + ';';
+    var RAYC = {'20 px': 20, '24 px': 24, '28 px': 28, '32 px': 32}[this.props.rayon_cartes] || 24;
+    var RAYM = {'16 px': 16, '20 px': 20, '24 px': 24}[this.props.rayon_menus] || 20;
+    var vars = '--r: 999px; --r-carte: ' + RAYC + 'px; --r-menu: ' + RAYM + 'px; --fond: ' + a.fond + '; --surface: ' + a.surface + '; --haute: ' + a.haute + '; --filet: ' + a.filet + '; --texte: ' + a.texte + '; --texte2: ' + a.texte2 + '; --texte3: ' + a.texte3 + ';';
     var raw = [
       ['Construction', '1 → 21 oct.', '3 sem.'], ['Allègement', '22 → 28 oct.', '1 sem.'], ['Construction', '29 oct. → 18 nov.', '3 sem.'],
       ['Allègement', '19 → 25 nov.', '1 sem.'], ['Intensification', '26 nov. → 2 déc.', '1 sem.'], ['Réalisation', '3 → 16 déc.', '2 sem.'],
@@ -84,7 +86,7 @@ class Component extends DCLogic {
         name: cur ? r[0] + ', en cours' : r[0], dates: r[1], len: r[2],
         nameStyle: cur ? 'font-weight: 600; color: ' + a.encre : (last ? 'font-weight: 600' : ''),
         line: 'position: absolute; left: 9px; width: 2px; background: var(--filet); top: ' + (i === 0 ? '28px' : '0') + '; bottom: ' + (last ? '28px' : '0') + ';',
-        node: 'position: relative; margin-top: 21px; width: 14px; height: 14px; border-radius: 7px; box-sizing: border-box; ' + (cur ? 'background: ' + a.encre + '; box-shadow: 0 0 0 4px var(--surface), 0 0 0 5.5px ' + a.encre + ';' : (last ? 'background: ' + a.accent + ';' : 'background: var(--surface); border: 2px solid var(--texte3);'))
+        node: 'position: relative; margin-top: 21px; width: 14px; height: 14px; border-radius: var(--r); box-sizing: border-box; ' + (cur ? 'background: ' + a.encre + '; box-shadow: 0 0 0 4px var(--surface), 0 0 0 5.5px ' + a.encre + ';' : (last ? 'background: ' + a.accent + ';' : 'background: var(--surface); border: 2px solid var(--texte3);'))
       };
     });
     return { a: a, vars: vars, tt: caps ? 'uppercase' : 'none', ls: caps ? '.3px' : '0', phases: phases };

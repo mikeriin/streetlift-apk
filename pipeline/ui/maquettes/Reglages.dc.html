@@ -12,72 +12,15 @@
 <style>
 body{margin:0}
 a{color:inherit}a:hover{color:inherit}
+
 </style>
 </helmet>
 <div style="{{vars}} width: 390px; height: 844px; position: relative; overflow: hidden; background: var(--fond); color: var(--texte); font-family: 'Barlow', sans-serif; font-size: 15px; line-height: 22px; box-sizing: border-box">
-  <div style="padding: 40px 20px 120px; display: flex; flex-direction: column; gap: 10px">
-
-    <div style="display: flex; flex-direction: column; gap: 2px; padding: 0 4px 14px">
-      <h1 style="margin: 0; font-family: 'Barlow Semi Condensed', sans-serif; font-weight: 600; font-size: 30px; line-height: 36px; text-transform: {{tt}}; letter-spacing: {{ls}}">Réglages</h1>
-      <span style="color: var(--texte2)">L'application à ta façon.</span>
-    </div>
-
-    <h2 style="margin: 0; padding: 0 4px; color: var(--texte2); font-size: 14px; line-height: 20px; font-weight: 600">Apparence</h2>
-    <section style="background: var(--surface); border-radius: 24px; padding: 16px; display: flex; flex-direction: column; gap: 14px">
-      <div style="display: flex; flex-direction: column; gap: 8px">
-        <span style="font-weight: 600">Thème</span>
-        <div role="radiogroup" aria-label="Thème" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; padding: 4px; border-radius: 18px; background: var(--haute)">
-          <sc-for list="{{themes}}" as="t" hint-placeholder-count="3">
-            <button role="radio" aria-checked="{{t.on}}" onClick="{{t.pick}}" style="{{t.style}}">{{t.label}}</button>
-          </sc-for>
-        </div>
-      </div>
-      <div style="display: flex; flex-direction: column; gap: 8px">
-        <div style="display: flex; justify-content: space-between; align-items: baseline"><span style="font-weight: 600">Palette</span><span style="color: var(--texte2); font-size: 14px">{{palName}}</span></div>
-        <div role="radiogroup" aria-label="Palette" style="display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 6px">
-          <sc-for list="{{swatches}}" as="s" hint-placeholder-count="8">
-            <button role="radio" aria-checked="{{s.on}}" aria-label="{{s.name}}" onClick="{{s.pick}}" style="{{s.style}}"></button>
-          </sc-for>
-        </div>
-      </div>
-    </section>
-
-    <h2 style="margin: 14px 0 0; padding: 0 4px; color: var(--texte2); font-size: 14px; line-height: 20px; font-weight: 600">Préférences</h2>
-    <nav aria-label="Préférences" style="background: var(--surface); border-radius: 24px; padding: 4px 0">
-      <sc-for list="{{rows}}" as="r" hint-placeholder-count="7">
-        <a href="{{r.href}}" style="display: grid; grid-template-columns: 40px 1fr 16px; gap: 14px; align-items: center; min-height: 64px; padding: 0 16px; text-decoration: none">
-          <span style="width: 40px; height: 40px; border-radius: 12px; background: var(--haute); display: flex; align-items: center; justify-content: center">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--texte)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{r.icon}}"/></svg>
-          </span>
-          <span style="display: flex; flex-direction: column; padding: 10px 0; border-bottom: {{r.rule}}">
-            <span style="font-weight: 600; font-size: 16px">{{r.title}}</span>
-            <span style="color: var(--texte2); font-size: 13px; line-height: 18px">{{r.sub}}</span>
-          </span>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--texte2)" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
-        </a>
-      </sc-for>
-    </nav>
-  </div>
-
-  <nav aria-label="Navigation principale" style="position: absolute; left: 16px; right: 16px; bottom: 20px; height: 64px; border-radius: 32px; background: var(--haute); box-shadow: inset 0 0 0 1px var(--filet); display: flex; align-items: center; justify-content: space-between; padding: 0 8px">
-    <a href="Arsenal.dc.html" aria-label="Arsenal" style="width: 56px; height: 48px; display: flex; align-items: center; justify-content: center">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="var(--texte2)" aria-hidden="true"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="8" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/><rect x="13" y="13" width="8" height="8" rx="2"/></svg>
-    </a>
-    <a href="#" aria-label="Stats" style="width: 56px; height: 48px; display: flex; align-items: center; justify-content: center">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--texte2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l5-5 4 4 8-8"/><circle cx="20" cy="8" r="1.5"/></svg>
-    </a>
-    <a href="Main.dc.html" aria-label="Programme" style="width: 56px; height: 48px; display: flex; align-items: center; justify-content: center">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--texte2)" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 9v6M20 9v6M7 6v12M17 6v12M7 12h10"/></svg>
-    </a>
-    <a href="Reglages.dc.html" aria-current="page" style="height: 48px; padding: 0 18px; border-radius: 24px; background: {{a.pleine}}; color: {{a.surPleine}}; display: flex; align-items: center; gap: 8px; text-decoration: none; font-family: 'Barlow Semi Condensed', sans-serif; font-weight: 600; font-size: 14px; text-transform: {{tt}}; letter-spacing: {{ls}}">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/></svg>Réglages
-    </a>
-  </nav>
+<div style="padding: 24px 20px 120px; display: flex; flex-direction: column; gap: 10px"><div style="display: flex; flex-direction: column; gap: 2px; padding: 0 4px 4px"><h1 style="margin: 0; font-family: 'Barlow Semi Condensed', sans-serif; font-weight: 600; font-size: 30px; line-height: 36px; text-transform: {{tt}}; letter-spacing: {{ls}}">Réglages</h1><span style="color: var(--texte2)">L'application à ta façon.</span></div><a href="ReglagesRecherche.dc.html" style="text-decoration: none"><label style="display: grid; grid-template-columns: 22px 1fr; gap: 12px; align-items: center; height: 52px; padding: 0 16px; border-radius: var(--r); background: var(--surface); box-shadow: inset 0 0 0 1px var(--filet)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--texte2)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><span style="color: var(--texte2)">Rechercher un réglage</span></label></a><a href="#" style="display: grid; grid-template-columns: 48px 1fr 16px; gap: 14px; align-items: center; min-height: 76px; padding: 0 16px; border-radius: var(--r-menu); background: var(--surface); text-decoration: none"><span style="width: 48px; height: 48px; border-radius: var(--r); background: var(--pleine); color: var(--surPleine); display: flex; align-items: center; justify-content: center; font-family: 'Barlow Semi Condensed', sans-serif; font-weight: 600; font-size: 20px">G</span><span style="display: flex; flex-direction: column; min-width: 0"><span style="font-weight: 600; font-size: 17px">Gaël</span><span style="color: var(--texte2); font-size: 13px; line-height: 18px">Profil, mes références, tests guidés, santé</span></span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--texte2)" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a><h2 style="margin: 14px 0 0; padding: 0 4px; color: var(--texte2); font-size: 14px; line-height: 20px; font-weight: 600">Application</h2><nav aria-label="Application" style="background: var(--surface); border-radius: var(--r-menu); padding: 4px 0"><a href="ReglagesApparence.dc.html" style="display: grid; grid-template-columns: 40px 1fr 16px; gap: 14px; align-items: center; min-height: 64px; padding: 0 16px; text-decoration: none"><span style="width: 40px; height: 40px; border-radius: var(--r); background: var(--haute); display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--texte)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a9 9 0 1 0 0 18c1 0 1.5-.8 1.5-1.5 0-1.2-1-1.5-1-2.5s.8-2 2-2H17a4 4 0 0 0 4-4c0-4.4-4-8-9-8z"/><path d="M7.5 11.5h.01M10 7.5h.01M15 7.5h.01"/></svg></span><span style="display: flex; flex-direction: column; padding: 10px 0; border-bottom: 1px solid var(--filet); min-width: 0"><span style="font-weight: 600; font-size: 16px">Apparence</span><span style="color: var(--texte2); font-size: 13px; line-height: 18px">Thème, palette, contraste, anatomie 3D</span></span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--texte2)" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a><a href="ReglagesChrono.dc.html" style="display: grid; grid-template-columns: 40px 1fr 16px; gap: 14px; align-items: center; min-height: 64px; padding: 0 16px; text-decoration: none"><span style="width: 40px; height: 40px; border-radius: var(--r); background: var(--haute); display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--texte)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6M20 9v6M7 6v12M17 6v12M7 12h10"/></svg></span><span style="display: flex; flex-direction: column; padding: 10px 0; border-bottom: 1px solid var(--filet); min-width: 0"><span style="font-weight: 600; font-size: 16px">Séance</span><span style="color: var(--texte2); font-size: 13px; line-height: 18px">Saisie, chronomètres, écran et unités</span></span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--texte2)" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a><a href="#" style="display: grid; grid-template-columns: 40px 1fr 16px; gap: 14px; align-items: center; min-height: 64px; padding: 0 16px; text-decoration: none"><span style="width: 40px; height: 40px; border-radius: var(--r); background: var(--haute); display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--texte)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10 21h4"/></svg></span><span style="display: flex; flex-direction: column; padding: 10px 0; border-bottom: 1px solid var(--filet); min-width: 0"><span style="font-weight: 600; font-size: 16px">Notifications</span><span style="color: var(--texte2); font-size: 13px; line-height: 18px">Rappel de séance et son heure</span></span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--texte2)" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a><a href="#" style="display: grid; grid-template-columns: 40px 1fr 16px; gap: 14px; align-items: center; min-height: 64px; padding: 0 16px; text-decoration: none"><span style="width: 40px; height: 40px; border-radius: var(--r); background: var(--haute); display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--texte)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/></svg></span><span style="display: flex; flex-direction: column; padding: 10px 0; border-bottom: 0; min-width: 0"><span style="font-weight: 600; font-size: 16px">Progression et jeu</span><span style="color: var(--texte2); font-size: 13px; line-height: 18px">Célébrations, objectif de la semaine</span></span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--texte2)" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a></nav><h2 style="margin: 14px 0 0; padding: 0 4px; color: var(--texte2); font-size: 14px; line-height: 20px; font-weight: 600">Plus</h2><nav aria-label="Plus" style="background: var(--surface); border-radius: var(--r-menu); padding: 4px 0"><a href="#" style="display: grid; grid-template-columns: 40px 1fr 16px; gap: 14px; align-items: center; min-height: 64px; padding: 0 16px; text-decoration: none"><span style="width: 40px; height: 40px; border-radius: var(--r); background: var(--haute); display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--texte)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg></span><span style="display: flex; flex-direction: column; padding: 10px 0; border-bottom: 1px solid var(--filet); min-width: 0"><span style="font-weight: 600; font-size: 16px">Données et confidentialité</span><span style="color: var(--texte2); font-size: 13px; line-height: 18px">Sauvegardes, accords, suppression</span></span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--texte2)" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a><a href="#" style="display: grid; grid-template-columns: 40px 1fr 16px; gap: 14px; align-items: center; min-height: 64px; padding: 0 16px; text-decoration: none"><span style="width: 40px; height: 40px; border-radius: var(--r); background: var(--haute); display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--texte)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 11v6M12 7.5v.5M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z"/></svg></span><span style="display: flex; flex-direction: column; padding: 10px 0; border-bottom: 0; min-width: 0"><span style="font-weight: 600; font-size: 16px">Aide et à propos</span><span style="color: var(--texte2); font-size: 13px; line-height: 18px">Sécurité, guide, avis, version</span></span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--texte2)" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a></nav></div><nav aria-label="Navigation principale" style="position: absolute; left: 16px; right: 16px; bottom: 20px; height: 64px; border-radius: var(--r); background: var(--haute); box-shadow: inset 0 0 0 1px var(--filet); display: flex; align-items: center; justify-content: space-between; padding: 0 8px"><a href="Arsenal.dc.html" aria-label="Arsenal" style="width: 56px; height: 48px; display: flex; align-items: center; justify-content: center"><svg width="24" height="24" viewBox="0 0 24 24" fill="var(--texte2)" aria-hidden="true"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="8" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/><rect x="13" y="13" width="8" height="8" rx="2"/></svg></a><a href="#" aria-label="Stats" style="width: 56px; height: 48px; display: flex; align-items: center; justify-content: center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--texte2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l5-5 4 4 8-8"/><circle cx="20" cy="8" r="1.5"/></svg></a><a href="Main.dc.html" aria-label="Programme" style="width: 56px; height: 48px; display: flex; align-items: center; justify-content: center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--texte2)" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 9v6M20 9v6M7 6v12M17 6v12M7 12h10"/></svg></a><a href="Reglages.dc.html" aria-current="page" style="height: 48px; padding: 0 18px; border-radius: var(--r); background: var(--pleine); color: var(--surPleine); display: flex; align-items: center; gap: 8px; text-decoration: none; font-family: 'Barlow Semi Condensed', sans-serif; font-weight: 600; font-size: 14px; text-transform: {{tt}}; letter-spacing: {{ls}}"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/></svg>Réglages</a></nav>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"palette":{"editor":"enum","options":["bordeaux","obsidian","arctic","neon","titanium","violet","forest","solar"],"default":"bordeaux"},"capitales":{"editor":"boolean","default":true},"$preview":{"width":390,"height":844}}'>
+<script type="text/x-dc" data-dc-script data-props='{"palette":{"editor":"enum","options":["bordeaux","obsidian","arctic","neon","titanium","violet","forest","solar"],"default":"bordeaux"},"capitales":{"editor":"boolean","default":true},"rayon_cartes":{"editor":"enum","options":["20 px","24 px","28 px","32 px"],"default":"24 px"},"rayon_menus":{"editor":"enum","options":["16 px","20 px","24 px"],"default":"20 px"},"$preview":{"width":390,"height":844}}'>
 class Component extends DCLogic {
-  constructor(props) { super(props); this.state = { theme: 'Système', pal: null }; }
   renderVals() {
     var T = {
       bordeaux: {fond: '#181819', surface: '#222223', haute: '#2D2C2E', filet: '#383738', texte: '#F3F0F1', texte2: '#ABABAF', texte3: '#77777A', pleine: '#551515', surPleine: '#FFFFFF', encre: '#CA6F6A', second: '#B24B49', accent: '#D9A66C'},
@@ -89,39 +32,12 @@ class Component extends DCLogic {
       forest: {fond: '#17251D', surface: '#213027', haute: '#2C3B32', filet: '#37463D', texte: '#F2F0EE', texte2: '#A9ACA8', texte3: '#757874', pleine: '#236B50', surPleine: '#FFFFFF', encre: '#5CA283', second: '#7BAC81', accent: '#D7B374'},
       solar: {fond: '#211B1A', surface: '#2C2524', haute: '#37302F', filet: '#423B39', texte: '#F7EFED', texte2: '#B4A9A7', texte3: '#7F7573', pleine: '#D95A27', surPleine: '#111111', encre: '#E86531', second: '#FF9760', accent: '#E8BC49'}
     };
-    var NAMES = { bordeaux: 'Bordeaux Performance', obsidian: 'Obsidian Energy', arctic: 'Arctic Motion', neon: 'Neon Athlete', titanium: 'Titanium Pro', violet: 'Violet Momentum', forest: 'Forest Endurance', solar: 'Solar Sprint' };
-    var self = this;
-    var key = this.state.pal || this.props.palette || 'bordeaux';
-    var a = T[key] || T.bordeaux;
+    var a = T[this.props.palette] || T.bordeaux;
     var caps = this.props.capitales !== false;
-    var vars = '--fond: ' + a.fond + '; --surface: ' + a.surface + '; --haute: ' + a.haute + '; --filet: ' + a.filet + '; --texte: ' + a.texte + '; --texte2: ' + a.texte2 + '; --texte3: ' + a.texte3 + ';';
-    var seg = 'all: unset; cursor: pointer; box-sizing: border-box; height: 40px; text-align: center; font-weight: 600; font-size: 14px; ';
-    var themes = ['Système', 'Sombre', 'Clair'].map(function (l) {
-      var on = self.state.theme === l;
-      return { label: l, on: on ? 'true' : 'false', pick: function () { self.setState({ theme: l }); },
-        style: seg + (on ? 'border-radius: 20px; background: ' + a.pleine + '; color: ' + a.surPleine + ';' : 'border-radius: 14px; color: var(--texte2);') };
-    });
-    var swatches = Object.keys(T).map(function (k) {
-      var on = k === key, p = T[k];
-      return { name: NAMES[k], on: on ? 'true' : 'false', pick: function () { self.setState({ pal: k }); },
-        style: 'all: unset; cursor: pointer; box-sizing: border-box; aspect-ratio: 1; border-radius: ' + (on ? '50%' : '12px') + '; background: linear-gradient(135deg, ' + p.pleine + ' 0 50%, ' + p.accent + ' 50% 100%); box-shadow: ' + (on ? '0 0 0 2px var(--surface), 0 0 0 4px ' + a.texte : 'inset 0 0 0 1px var(--filet)') + ';' };
-    });
-    var R = [
-      ['Saisie des séries', 'Colonnes, effort et pré-remplissage', 'M4 6h16M4 12h10M4 18h7M17 15l3 3-3 3'],
-      ['Chronomètres', 'Repos, décompte et signaux', 'M12 8v5l3 2M9 2h6M12 4a9 9 0 1 0 0 18 9 9 0 0 0 0-18z', 'ReglagesChrono.dc.html'],
-      ['Progression et jeu', 'Célébrations et objectif de la semaine', 'M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z'],
-      ['Pendant la séance', 'Écran et unités de charge', 'M4 9v6M20 9v6M7 6v12M17 6v12M7 12h10'],
-      ['Notifications', 'Rappels et alertes', 'M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10 21h4'],
-      ['Sauvegardes', 'Exporter, restaurer ou supprimer tes données', 'M7 18a5 5 0 0 1-.5-10A7 7 0 0 1 20 10a4 4 0 0 1-1 8zM12 11v6M9 14l3 3 3-3'],
-      ['Programme', 'Date de départ et références', 'M5 21V4M5 4h11l-2 4 2 4H5'],
-      ['Koach', 'Estimations et propositions de charge', 'M12 3c1 3.5 5 5.5 5 10a5 5 0 0 1-10 0c0-2.2 1-3.6 2.2-4.6.2 1.8 1 2.8 2 3.2C11 9 10.8 6 12 3z'],
-      ['À propos', 'Version, sécurité, confidentialité, avis', 'M12 11v6M12 7.5v.5M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z'],
-      ['Affichage 3D', 'Mannequin 3D : nom au toucher, os, halo', 'M12 2l9 5v10l-9 5-9-5V7zM12 12l9-5M12 12v10M12 12L3 7']
-    ];
-    var rows = R.map(function (r, i) {
-      return { title: r[0], sub: r[1], icon: r[2], href: r[3] || '#', rule: i < R.length - 1 ? '1px solid var(--filet)' : '0' };
-    });
-    return { a: a, vars: vars, tt: caps ? 'uppercase' : 'none', ls: caps ? '.3px' : '0', themes: themes, swatches: swatches, rows: rows, palName: NAMES[key] };
+    var RAYC = {'20 px': 20, '24 px': 24, '28 px': 28, '32 px': 32}[this.props.rayon_cartes] || 24;
+    var RAYM = {'16 px': 16, '20 px': 20, '24 px': 24}[this.props.rayon_menus] || 20;
+    var vars = '--r: 999px; --r-carte: ' + RAYC + 'px; --r-menu: ' + RAYM + 'px; --fond: ' + a.fond + '; --surface: ' + a.surface + '; --haute: ' + a.haute + '; --filet: ' + a.filet + '; --texte: ' + a.texte + '; --texte2: ' + a.texte2 + '; --texte3: ' + a.texte3 + '; --encre: ' + a.encre + '; --pleine: ' + a.pleine + '; --surPleine: ' + a.surPleine + ';';
+    return { a: a, vars: vars, tt: caps ? 'uppercase' : 'none', ls: caps ? '.3px' : '0' };
   }
 }
 </script>

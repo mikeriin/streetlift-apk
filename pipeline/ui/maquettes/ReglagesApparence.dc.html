@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Réglages › Apparence, après</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&amp;family=Barlow+Semi+Condensed:wght@500;600&amp;family=Barlow+Condensed:wght@500;600&amp;display=swap">
+<style>
+body{margin:0}
+a{color:inherit}a:hover{color:inherit}
+
+</style>
+</helmet>
+<div style="{{vars}} width: 390px; height: 844px; position: relative; overflow: hidden; background: var(--fond); color: var(--texte); font-family: 'Barlow', sans-serif; font-size: 15px; line-height: 22px; box-sizing: border-box">
+<div style="padding: 8px 20px 24px; display: flex; flex-direction: column; gap: 10px"><header style="display: grid; grid-template-columns: 44px 1fr; align-items: center; min-height: 64px"><a href="Reglages.dc.html" aria-label="Retour" style="width: 44px; height: 44px; display: flex; align-items: center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--texte)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></a><h1 style="margin: 0; font-family: 'Barlow Semi Condensed', sans-serif; font-weight: 600; font-size: 22px; line-height: 28px; text-transform: {{tt}}; letter-spacing: {{ls}}">Apparence</h1></header><p style="margin: 0 0 4px; padding: 0 4px; color: var(--texte2)">Thème, palette, contraste, anatomie 3D.</p><section style="background: var(--surface); border-radius: var(--r-carte); padding: 16px; display: flex; flex-direction: column; gap: 14px"><div style="display: flex; flex-direction: column; gap: 8px"><span style="font-weight: 600">Thème</span><div role="radiogroup" aria-label="Thème" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; padding: 4px; border-radius: var(--r); background: var(--haute)"><sc-for list="{{themes}}" as="t" hint-placeholder-count="3"><button role="radio" aria-checked="{{t.on}}" onClick="{{t.pick}}" style="{{t.style}}">{{t.label}}</button></sc-for></div></div><div style="display: flex; flex-direction: column; gap: 8px"><div style="display: flex; justify-content: space-between; align-items: baseline"><span style="font-weight: 600">Palette</span><span style="color: var(--texte2); font-size: 14px">{{palName}}</span></div><div role="radiogroup" aria-label="Palette" style="display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 6px"><sc-for list="{{swatches}}" as="s" hint-placeholder-count="8"><button role="radio" aria-checked="{{s.on}}" aria-label="{{s.name}}" onClick="{{s.pick}}" style="{{s.style}}"></button></sc-for></div></div></section><section style="background: var(--surface); border-radius: var(--r-menu); padding: 4px 0"><div style="display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center; min-height: 72px; padding: 0 16px; "><span style="display: flex; flex-direction: column; min-width: 0"><span style="font-weight: 600; font-size: 16px">Contraste renforcé</span><span style="color: var(--texte2); font-size: 13px; line-height: 18px">Textes et repères plus marqués</span></span><span role="switch" aria-checked="false" style="box-sizing: border-box; width: 52px; height: 32px; border-radius: var(--r); padding: 4px; display: flex; justify-content: flex-start; background: var(--haute); box-shadow: inset 0 0 0 2px var(--texte3);"><span style="display: block; border-radius: var(--r); width: 16px; height: 16px; margin: 4px; background: var(--texte3);"></span></span></div></section><h2 style="margin: 14px 0 0; padding: 0 4px; color: var(--texte2); font-size: 14px; line-height: 20px; font-weight: 600">Anatomie et 3D</h2><section style="background: var(--surface); border-radius: var(--r-menu); padding: 4px 0"><div style="display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center; min-height: 72px; padding: 0 16px; box-shadow: inset 0 -1px 0 var(--filet);"><span style="display: flex; flex-direction: column; min-width: 0"><span style="font-weight: 600; font-size: 16px">Nom du muscle au toucher</span><span style="color: var(--texte2); font-size: 13px; line-height: 18px">Carte des muscles et mannequin 3D</span></span><span role="switch" aria-checked="true" style="box-sizing: border-box; width: 52px; height: 32px; border-radius: var(--r); padding: 4px; display: flex; justify-content: flex-end; background: var(--pleine);"><span style="display: block; border-radius: var(--r); width: 24px; height: 24px; margin: 0; background: var(--surPleine);"></span></span></div><div style="display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center; min-height: 72px; padding: 0 16px; "><span style="display: flex; flex-direction: column; min-width: 0"><span style="font-weight: 600; font-size: 16px">Halo</span><span style="color: var(--texte2); font-size: 13px; line-height: 18px">Contour lumineux du mannequin 3D</span></span><span role="switch" aria-checked="true" style="box-sizing: border-box; width: 52px; height: 32px; border-radius: var(--r); padding: 4px; display: flex; justify-content: flex-end; background: var(--pleine);"><span style="display: block; border-radius: var(--r); width: 24px; height: 24px; margin: 0; background: var(--surPleine);"></span></span></div></section></div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"palette":{"editor":"enum","options":["bordeaux","obsidian","arctic","neon","titanium","violet","forest","solar"],"default":"bordeaux"},"capitales":{"editor":"boolean","default":true},"rayon_cartes":{"editor":"enum","options":["20 px","24 px","28 px","32 px"],"default":"24 px"},"rayon_menus":{"editor":"enum","options":["16 px","20 px","24 px"],"default":"20 px"},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { theme: 'Système', pal: null }; }
+  renderVals() {
+    var T = {
+      bordeaux: {fond: '#181819', surface: '#222223', haute: '#2D2C2E', filet: '#383738', texte: '#F3F0F1', texte2: '#ABABAF', texte3: '#77777A', pleine: '#551515', surPleine: '#FFFFFF', encre: '#CA6F6A', second: '#B24B49', accent: '#D9A66C'},
+      obsidian: {fond: '#121316', surface: '#1C1D20', haute: '#27272B', filet: '#313235', texte: '#F3F0F1', texte2: '#ABABAF', texte3: '#77777A', pleine: '#E5484D', surPleine: '#111111', encre: '#EA4C50', second: '#FF8566', accent: '#FFC857'},
+      arctic: {fond: '#152238', surface: '#242D3D', haute: '#2F3748', filet: '#3A4354', texte: '#F3F0F1', texte2: '#ABABAF', texte3: '#77777A', pleine: '#2563EB', surPleine: '#FFFFFF', encre: '#668EFF', second: '#4F9CF9', accent: '#14B8A6'},
+      neon: {fond: '#101510', surface: '#1A1F1A', haute: '#242A24', filet: '#2F342E', texte: '#F2F0ED', texte2: '#AAACA7', texte3: '#757873', pleine: '#B4F044', surPleine: '#111111', encre: '#B4F044', second: '#67D8C0', accent: '#8C72FF'},
+      titanium: {fond: '#171E24', surface: '#21282F', haute: '#2C3339', filet: '#373E45', texte: '#F2F0F1', texte2: '#AAABAE', texte3: '#76777A', pleine: '#4C6474', surPleine: '#FFFFFF', encre: '#7992A3', second: '#8A9DA8', accent: '#D5A24C'},
+      violet: {fond: '#181427', surface: '#221E31', haute: '#2D293C', filet: '#383347', texte: '#F4EFF1', texte2: '#AEAAAF', texte3: '#79767A', pleine: '#7546DB', surPleine: '#FFFFFF', encre: '#986CFF', second: '#AC8CFA', accent: '#29BFB0'},
+      forest: {fond: '#17251D', surface: '#213027', haute: '#2C3B32', filet: '#37463D', texte: '#F2F0EE', texte2: '#A9ACA8', texte3: '#757874', pleine: '#236B50', surPleine: '#FFFFFF', encre: '#5CA283', second: '#7BAC81', accent: '#D7B374'},
+      solar: {fond: '#211B1A', surface: '#2C2524', haute: '#37302F', filet: '#423B39', texte: '#F7EFED', texte2: '#B4A9A7', texte3: '#7F7573', pleine: '#D95A27', surPleine: '#111111', encre: '#E86531', second: '#FF9760', accent: '#E8BC49'}
+    };
+    var a = T[this.props.palette] || T.bordeaux;
+    var caps = this.props.capitales !== false;
+    var RAYC = {'20 px': 20, '24 px': 24, '28 px': 28, '32 px': 32}[this.props.rayon_cartes] || 24;
+    var RAYM = {'16 px': 16, '20 px': 20, '24 px': 24}[this.props.rayon_menus] || 20;
+    var vars = '--r: 999px; --r-carte: ' + RAYC + 'px; --r-menu: ' + RAYM + 'px; --fond: ' + a.fond + '; --surface: ' + a.surface + '; --haute: ' + a.haute + '; --filet: ' + a.filet + '; --texte: ' + a.texte + '; --texte2: ' + a.texte2 + '; --texte3: ' + a.texte3 + '; --encre: ' + a.encre + '; --pleine: ' + a.pleine + '; --surPleine: ' + a.surPleine + ';';
+    var NAMES = { bordeaux: 'Bordeaux Performance', obsidian: 'Obsidian Energy', arctic: 'Arctic Motion', neon: 'Neon Athlete', titanium: 'Titanium Pro', violet: 'Violet Momentum', forest: 'Forest Endurance', solar: 'Solar Sprint' };
+    var self = this;
+    var key = this.state.pal || this.props.palette || 'bordeaux';
+    a = T[key] || T.bordeaux;
+    vars = '--r: 999px; --r-carte: ' + RAYC + 'px; --r-menu: ' + RAYM + 'px; --fond: ' + a.fond + '; --surface: ' + a.surface + '; --haute: ' + a.haute + '; --filet: ' + a.filet + '; --texte: ' + a.texte + '; --texte2: ' + a.texte2 + '; --texte3: ' + a.texte3 + '; --encre: ' + a.encre + '; --pleine: ' + a.pleine + '; --surPleine: ' + a.surPleine + ';';
+    var seg = 'all: unset; cursor: pointer; box-sizing: border-box; height: 40px; border-radius: var(--r); text-align: center; font-weight: 600; font-size: 14px; ';
+    var themes = ['Système', 'Sombre', 'Clair'].map(function (l) {
+      var on = self.state.theme === l;
+      return { label: l, on: on ? 'true' : 'false', pick: function () { self.setState({ theme: l }); },
+        style: seg + (on ? 'background: ' + a.pleine + '; color: ' + a.surPleine + ';' : 'color: var(--texte2);') };
+    });
+    var swatches = Object.keys(T).map(function (k) {
+      var on = k === key, p = T[k];
+      return { name: NAMES[k], on: on ? 'true' : 'false', pick: function () { self.setState({ pal: k }); },
+        style: 'all: unset; cursor: pointer; box-sizing: border-box; aspect-ratio: 1; border-radius: var(--r); background: linear-gradient(135deg, ' + p.pleine + ' 0 50%, ' + p.accent + ' 50% 100%); box-shadow: ' + (on ? '0 0 0 2px var(--surface), 0 0 0 4px ' + a.texte : 'inset 0 0 0 1px var(--filet)') + ';' };
+    });
+    return { a: a, vars: vars, tt: caps ? 'uppercase' : 'none', ls: caps ? '.3px' : '0', themes: themes, swatches: swatches, palName: NAMES[key] };
+  }
+}
+</script>
+</body>
+</html>

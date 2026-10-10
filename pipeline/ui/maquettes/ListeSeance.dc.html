@@ -21,12 +21,12 @@ a{color:inherit}a:hover{color:inherit}
       <span style="font-family: 'Barlow Semi Condensed', sans-serif; font-weight: 600; font-size: 20px; text-transform: {{tt}}">Test max tractions</span>
       <span></span>
     </div>
-    <div style="height: 200px; border-radius: 24px; background: var(--surface)"></div>
+    <div style="height: 200px; border-radius: var(--r-carte); background: var(--surface)"></div>
   </div>
   <div style="position: absolute; inset: 0; background: rgba(0,0,0,.55)"></div>
 
-  <section role="dialog" aria-label="Dans cette séance" style="position: absolute; left: 0; right: 0; bottom: 0; top: 150px; background: var(--surface); border-radius: 28px 28px 0 0; padding: 10px 16px 20px; display: flex; flex-direction: column; gap: 12px">
-    <div style="align-self: center; width: 36px; height: 4px; border-radius: 2px; background: var(--texte3)"></div>
+  <section role="dialog" aria-label="Dans cette séance" style="position: absolute; left: 0; right: 0; bottom: 0; top: 150px; background: var(--surface); border-radius: var(--r-carte) var(--r-carte) 0 0; padding: 10px 16px 20px; display: flex; flex-direction: column; gap: 12px">
+    <div style="align-self: center; width: 36px; height: 4px; border-radius: var(--r); background: var(--texte3)"></div>
     <div style="display: flex; justify-content: space-between; align-items: baseline; padding: 6px 4px 0">
       <h2 style="margin: 0; font-family: 'Barlow Semi Condensed', sans-serif; font-weight: 600; font-size: 20px; line-height: 24px">Dans cette séance</h2>
       <span style="color: var(--texte2); font-size: 13px">7 exercices, 22 min</span>
@@ -50,7 +50,7 @@ a{color:inherit}a:hover{color:inherit}
   </section>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"palette":{"editor":"enum","options":["bordeaux","obsidian","arctic","neon","titanium","violet","forest","solar"],"default":"bordeaux"},"capitales":{"editor":"boolean","default":true},"$preview":{"width":390,"height":844}}'>
+<script type="text/x-dc" data-dc-script data-props='{"palette":{"editor":"enum","options":["bordeaux","obsidian","arctic","neon","titanium","violet","forest","solar"],"default":"bordeaux"},"capitales":{"editor":"boolean","default":true},"rayon_cartes":{"editor":"enum","options":["20 px","24 px","28 px","32 px"],"default":"24 px"},"rayon_menus":{"editor":"enum","options":["16 px","20 px","24 px"],"default":"20 px"},"$preview":{"width":390,"height":844}}'>
 class Component extends DCLogic {
   renderVals() {
     var T = {
@@ -65,7 +65,9 @@ class Component extends DCLogic {
     };
     var a = T[this.props.palette] || T.bordeaux;
     var caps = this.props.capitales !== false;
-    var vars = '--fond: ' + a.fond + '; --surface: ' + a.surface + '; --haute: ' + a.haute + '; --filet: ' + a.filet + '; --texte: ' + a.texte + '; --texte2: ' + a.texte2 + '; --texte3: ' + a.texte3 + ';';
+    var RAYC = {'20 px': 20, '24 px': 24, '28 px': 28, '32 px': 32}[this.props.rayon_cartes] || 24;
+    var RAYM = {'16 px': 16, '20 px': 20, '24 px': 24}[this.props.rayon_menus] || 20;
+    var vars = '--r: 999px; --r-carte: ' + RAYC + 'px; --r-menu: ' + RAYM + 'px; --fond: ' + a.fond + '; --surface: ' + a.surface + '; --haute: ' + a.haute + '; --filet: ' + a.filet + '; --texte: ' + a.texte + '; --texte2: ' + a.texte2 + '; --texte3: ' + a.texte3 + ';';
     var R = [
       ['bilan', 'Bilan du jour', 'Ressenti et changements de Koach'],
       ['cur', 'Test max tractions au poids de corps', '1 série au maximum'],
@@ -82,8 +84,8 @@ class Component extends DCLogic {
       if (!bilan) n++;
       return {
         t: r[1], p: r[2], n: String(n), isBilan: bilan, isNum: !bilan, isDone: false,
-        row: 'all: unset; cursor: pointer; box-sizing: border-box; display: flex; align-items: center; gap: 14px; min-height: 60px; padding: 8px 14px; border-radius: 16px; ' + (cur ? 'background: var(--haute); box-shadow: inset 0 0 0 1.5px ' + a.encre + ';' : (bilan ? 'background: var(--haute);' : '')),
-        badge: 'flex: none; width: 32px; height: 32px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-family: Barlow Condensed, sans-serif; font-weight: 600; font-size: 16px; ' + (cur ? 'background: ' + a.pleine + '; color: ' + a.surPleine + ';' : (bilan ? 'color: ' + a.encre + ';' : 'background: var(--haute); color: var(--texte2);')),
+        row: 'all: unset; cursor: pointer; box-sizing: border-box; display: flex; align-items: center; gap: 14px; min-height: 60px; padding: 8px 14px; border-radius: var(--r-menu); ' + (cur ? 'background: var(--haute); box-shadow: inset 0 0 0 1.5px ' + a.encre + ';' : (bilan ? 'background: var(--haute);' : '')),
+        badge: 'flex: none; width: 32px; height: 32px; border-radius: var(--r); display: flex; align-items: center; justify-content: center; font-family: Barlow Condensed, sans-serif; font-weight: 600; font-size: 16px; ' + (cur ? 'background: ' + a.pleine + '; color: ' + a.surPleine + ';' : (bilan ? 'color: ' + a.encre + ';' : 'background: var(--haute); color: var(--texte2);')),
         title: 'font-weight: ' + (cur ? 600 : 500) + '; font-size: 16px; line-height: 22px;'
       };
     });

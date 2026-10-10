@@ -46,12 +46,12 @@ a{color:inherit}a:hover{color:inherit}
         </a>
       </div>
       <div style="display: flex; gap: 6px; justify-content: center" role="img" aria-label="Page 1 sur 7">
-        <div style="width: 20px; height: 6px; border-radius: 3px; background: {{a.encre}}"></div>
-        <sc-for list="{{dots}}" as="d" hint-placeholder-count="6"><div style="width: 6px; height: 6px; border-radius: 3px; background: var(--texte3)"></div></sc-for>
+        <div style="width: 20px; height: 6px; border-radius: var(--r); background: {{a.encre}}"></div>
+        <sc-for list="{{dots}}" as="d" hint-placeholder-count="6"><div style="width: 6px; height: 6px; border-radius: var(--r); background: var(--texte3)"></div></sc-for>
       </div>
     </div>
 
-    <section aria-label="Ce qui change dans cette séance" style="background: var(--surface); border-radius: 24px; padding: 18px; display: grid; grid-template-columns: 64px 1fr; gap: 14px; align-items: start">
+    <section aria-label="Ce qui change dans cette séance" style="background: var(--surface); border-radius: var(--r-carte); padding: 18px; display: grid; grid-template-columns: 64px 1fr; gap: 14px; align-items: start">
       <span class="kx k-board" aria-hidden="true" style="width: 64px; height: 52px; color: var(--texte)"></span>
       <div style="display: flex; flex-direction: column; gap: 4px">
         <span style="color: var(--texte2); font-size: 13px; line-height: 18px">Ce qui change dans cette séance</span>
@@ -62,7 +62,7 @@ a{color:inherit}a:hover{color:inherit}
       </div>
     </section>
 
-    <section aria-label="Comment tu te sens" style="background: var(--surface); border-radius: 24px; padding: 18px; display: flex; flex-direction: column; gap: 14px">
+    <section aria-label="Comment tu te sens" style="background: var(--surface); border-radius: var(--r-carte); padding: 18px; display: flex; flex-direction: column; gap: 14px">
       <div style="display: grid; grid-template-columns: 1fr 60px; gap: 12px; align-items: center">
         <div style="display: flex; flex-direction: column; gap: 2px">
           <h2 style="margin: 0; font-family: 'Barlow Semi Condensed', sans-serif; font-weight: 600; font-size: 20px; line-height: 24px">Comment tu te sens ?</h2>
@@ -84,7 +84,7 @@ a{color:inherit}a:hover{color:inherit}
   </div>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"palette":{"editor":"enum","options":["bordeaux","obsidian","arctic","neon","titanium","violet","forest","solar"],"default":"bordeaux"},"capitales":{"editor":"boolean","default":true},"$preview":{"width":390,"height":844}}'>
+<script type="text/x-dc" data-dc-script data-props='{"palette":{"editor":"enum","options":["bordeaux","obsidian","arctic","neon","titanium","violet","forest","solar"],"default":"bordeaux"},"capitales":{"editor":"boolean","default":true},"rayon_cartes":{"editor":"enum","options":["20 px","24 px","28 px","32 px"],"default":"24 px"},"rayon_menus":{"editor":"enum","options":["16 px","20 px","24 px"],"default":"20 px"},"$preview":{"width":390,"height":844}}'>
 class Component extends DCLogic {
   constructor(props) { super(props); this.state = { picked: '' }; }
   renderVals() {
@@ -100,9 +100,11 @@ class Component extends DCLogic {
     };
     var a = T[this.props.palette] || T.bordeaux;
     var caps = this.props.capitales !== false;
-    var vars = '--fond: ' + a.fond + '; --surface: ' + a.surface + '; --haute: ' + a.haute + '; --filet: ' + a.filet + '; --texte: ' + a.texte + '; --texte2: ' + a.texte2 + '; --texte3: ' + a.texte3 + ';';
+    var RAYC = {'20 px': 20, '24 px': 24, '28 px': 28, '32 px': 32}[this.props.rayon_cartes] || 24;
+    var RAYM = {'16 px': 16, '20 px': 20, '24 px': 24}[this.props.rayon_menus] || 20;
+    var vars = '--r: 999px; --r-carte: ' + RAYC + 'px; --r-menu: ' + RAYM + 'px; --fond: ' + a.fond + '; --surface: ' + a.surface + '; --haute: ' + a.haute + '; --filet: ' + a.filet + '; --texte: ' + a.texte + '; --texte2: ' + a.texte2 + '; --texte3: ' + a.texte3 + ';';
     var self = this;
-    var base = 'all: unset; cursor: pointer; box-sizing: border-box; height: 96px; border-radius: 16px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; ';
+    var base = 'all: unset; cursor: pointer; box-sizing: border-box; height: 96px; border-radius: var(--r-carte); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; ';
     var poses = { 'Pas bien': 'k-oops', 'Bof': 'k-shrug', 'Correct': 'k-ponder', 'Bien': 'k-thumbs', 'En forme': 'k-cheer' };
     var moods = ['Pas bien', 'Bof', 'Correct', 'Bien', 'En forme'].map(function (l) {
       var on = self.state.picked === l;

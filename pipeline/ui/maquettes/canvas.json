@@ -1,0 +1,263 @@
+{
+  "v": 3,
+  "createdOnFiles": {
+    "v": 1,
+    "at": "2026-10-10T07:40:00Z"
+  },
+  "title": "Kalis Track — nouvelle UI",
+  "launch": {
+    "view": "canvas"
+  },
+  "pages": [],
+  "boards": {
+    "Main.dc.html": {
+      "x": 440,
+      "y": 0,
+      "w": 390,
+      "h": 960,
+      "title": "Accueil, après",
+      "is_interactive": true
+    },
+    "AvantAccueil.dc.html": {
+      "x": 0,
+      "y": 0,
+      "w": 360,
+      "h": 640,
+      "title": "Accueil, avant"
+    },
+    "BilanJour.dc.html": {
+      "x": 1390,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "title": "Bilan du jour, après",
+      "is_interactive": true
+    },
+    "AvantBilan.dc.html": {
+      "x": 950,
+      "y": 0,
+      "w": 360,
+      "h": 640,
+      "title": "Bilan du jour, avant"
+    },
+    "Seance.dc.html": {
+      "x": 2340,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "title": "Séance, après",
+      "is_interactive": true
+    },
+    "AvantSeance.dc.html": {
+      "x": 1900,
+      "y": 0,
+      "w": 360,
+      "h": 640,
+      "title": "Séance, avant"
+    },
+    "Chrono.dc.html": {
+      "x": 3290,
+      "y": 0,
+      "w": 390,
+      "h": 844,
+      "title": "Série validée et repos, après",
+      "is_interactive": true
+    },
+    "AvantChrono.dc.html": {
+      "x": 2850,
+      "y": 0,
+      "w": 360,
+      "h": 640,
+      "title": "Série validée et repos, avant"
+    },
+    "Programme.dc.html": {
+      "x": 440,
+      "y": 1300,
+      "w": 390,
+      "h": 1130,
+      "title": "Mon programme, après",
+      "is_interactive": true
+    },
+    "AvantProgramme.dc.html": {
+      "x": 0,
+      "y": 1300,
+      "w": 360,
+      "h": 640,
+      "title": "Mon programme, avant"
+    },
+    "Saison.dc.html": {
+      "x": 1390,
+      "y": 1300,
+      "w": 390,
+      "h": 844,
+      "title": "Ma saison, après",
+      "is_interactive": true
+    },
+    "AvantSaison.dc.html": {
+      "x": 950,
+      "y": 1300,
+      "w": 360,
+      "h": 640,
+      "title": "Ma saison, avant"
+    },
+    "Evolution.dc.html": {
+      "x": 2340,
+      "y": 1300,
+      "w": 390,
+      "h": 844,
+      "title": "Évolution, après",
+      "is_interactive": true
+    },
+    "AvantEvolution.dc.html": {
+      "x": 1900,
+      "y": 1300,
+      "w": 360,
+      "h": 640,
+      "title": "Évolution, avant"
+    },
+    "Clair.dc.html": {
+      "x": 3290,
+      "y": 1300,
+      "w": 390,
+      "h": 844,
+      "title": "Accueil clair, après",
+      "is_interactive": true
+    },
+    "AvantClair.dc.html": {
+      "x": 2850,
+      "y": 1300,
+      "w": 360,
+      "h": 640,
+      "title": "Accueil clair, avant"
+    },
+    "AvantListe.dc.html": {
+      "x": 0,
+      "y": 2780,
+      "w": 360,
+      "h": 640,
+      "title": "Exercices de la séance, avant"
+    },
+    "ListeSeance.dc.html": {
+      "x": 440,
+      "y": 2780,
+      "w": 390,
+      "h": 844,
+      "title": "Exercices de la séance, après",
+      "is_interactive": true
+    },
+    "MenuSeance.dc.html": {
+      "x": 950,
+      "y": 2780,
+      "w": 390,
+      "h": 844,
+      "title": "Menu ⋮ de la séance, après",
+      "is_interactive": true
+    },
+    "Arsenal.dc.html": {
+      "x": 1420,
+      "y": 2780,
+      "w": 390,
+      "h": 844,
+      "title": "Arsenal, après",
+      "is_interactive": true
+    },
+    "Reglages.dc.html": {
+      "x": 1890,
+      "y": 2780,
+      "w": 390,
+      "h": 844,
+      "title": "Réglages, après",
+      "is_interactive": true
+    },
+    "ReglagesChrono.dc.html": {
+      "x": 3300,
+      "y": 2780,
+      "w": 390,
+      "h": 844,
+      "title": "Réglages › Séance, après",
+      "is_interactive": true
+    },
+    "ReglagesRecherche.dc.html": {
+      "w": 390,
+      "h": 844,
+      "is_interactive": true,
+      "x": 2360,
+      "y": 2780,
+      "title": "Réglages › recherche « repos », après"
+    },
+    "ReglagesApparence.dc.html": {
+      "w": 390,
+      "h": 844,
+      "is_interactive": true,
+      "x": 2830,
+      "y": 2780,
+      "title": "Réglages › Apparence, après"
+    },
+    "Arbo.dc.html": {
+      "x": 0,
+      "y": 4180,
+      "w": 1560,
+      "h": 1190,
+      "title": "Où trouver quoi, après",
+      "is_interactive": true
+    }
+  },
+  "order": [
+    "AvantAccueil.dc.html",
+    "Main.dc.html",
+    "AvantBilan.dc.html",
+    "BilanJour.dc.html",
+    "AvantSeance.dc.html",
+    "Seance.dc.html",
+    "AvantChrono.dc.html",
+    "Chrono.dc.html",
+    "AvantProgramme.dc.html",
+    "Programme.dc.html",
+    "AvantSaison.dc.html",
+    "Saison.dc.html",
+    "AvantEvolution.dc.html",
+    "Evolution.dc.html",
+    "AvantClair.dc.html",
+    "Clair.dc.html",
+    "AvantListe.dc.html",
+    "ListeSeance.dc.html",
+    "MenuSeance.dc.html",
+    "Arsenal.dc.html",
+    "Reglages.dc.html",
+    "ReglagesRecherche.dc.html",
+    "ReglagesApparence.dc.html",
+    "ReglagesChrono.dc.html",
+    "Arbo.dc.html"
+  ],
+  "notes": {
+    "t1": {
+      "x": 0,
+      "y": -300,
+      "text": "Même app, finie : l'accueil et la séance",
+      "kind": "title1",
+      "maxW": 3680
+    },
+    "t2": {
+      "x": 0,
+      "y": 1000,
+      "text": "Même app, finie : le programme",
+      "kind": "title1",
+      "maxW": 3680
+    },
+    "t3": {
+      "x": 0,
+      "y": 2480,
+      "text": "Les menus, un seul modèle",
+      "kind": "title1",
+      "maxW": 3680
+    },
+    "t4": {
+      "x": 0,
+      "y": 3880,
+      "text": "Où trouver quoi : une place par chose",
+      "kind": "title1",
+      "maxW": 3680
+    }
+  },
+  "designSystems": []
+}

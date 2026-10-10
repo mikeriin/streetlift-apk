@@ -1,8 +1,8 @@
 Lot UI1 — Programme (finition UI et UX de Kalis Track). Effort élevé, exactitude avant vitesse. Tourne en parallèle de UI2, UI3, UI4.
 
-Lis en entier : pipeline/ui/PIPELINE_UI.md, pipeline/ui/CAHIER_UI.md (version 2), pipeline/ui/DECISIONS_UI.md, ta section de pipeline/ui/LANCEMENTS.md, pipeline/ui/livraisons/LIVRAISON_UI0.md (mode d'emploi du kit), les maquettes Main (accueil), Clair, Programme, Saison, Evolution et leurs « Avant… » (pipeline/ui/maquettes/).
+Lis en entier : pipeline/ui/PIPELINE_UI.md, pipeline/ui/CAHIER_UI.md (version 3), pipeline/ui/DECISIONS_UI.md, ta section de pipeline/ui/LANCEMENTS.md, pipeline/ui/livraisons/LIVRAISON_UI0.md (mode d'emploi du kit), les maquettes Main (accueil), Clair, Programme (Mon programme), Saison, Evolution et leurs « Avant… », la planche Arbo (« Où trouver quoi ») ; ta zone de pipeline/ui/inputs/inventaire_navigation.md (partie 2) (pipeline/ui/maquettes/).
 
 Branche `ui/UI1` depuis `refonte-ui` ; contrôle sur `claude/ci-ui-ui1`. Fichiers : ceux de UI1 au cahier §7.2, et seulement eux.
-Contenu : cahier §7.3 « UI1 », règles C1 à C13, menus et feuilles de ta zone au gabarit du §4. Mêmes écrans, mêmes parcours, mêmes contenus ; Koach, logo et anatomie inchangés (seulement leur conteneur). Zéro littéral de style et zéro menu hors gabarit dans ta zone, aucune information perdue (tableau avant → après), écrans du tour ajoutés.
+Contenu : cahier §7.3 « UI1 », règles C1 à C13 et R1 à R9 (§4.2), arborescence §4.1 pour l'onglet Programme (ligne « Mon programme », Mon programme au gabarit de menu racine), déplacements de ta zone (§4.3), défaut des récompenses (§4.6), menus et feuilles de ta zone au gabarit du §4. Mêmes écrans, mêmes contenus ; Koach, logo et anatomie inchangés (seulement leur conteneur). Zéro littéral de style et zéro menu hors gabarit dans ta zone, aucune information perdue (tableau avant → après), écrans du tour ajoutés.
 
 Fin de lot : PIPELINE_UI.md §4.

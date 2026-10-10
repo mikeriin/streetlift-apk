@@ -39,12 +39,12 @@ a{color:inherit}a:hover{color:inherit}
       </a>
     </div>
 
-    <section aria-label="Tenue en L" style="background: var(--surface); border-radius: 24px; padding: 18px; display: flex; flex-direction: column; gap: 14px">
+    <section aria-label="Tenue en L" style="background: var(--surface); border-radius: var(--r-carte); padding: 18px; display: flex; flex-direction: column; gap: 14px">
       <h2 style="margin: 0; font-family: 'Barlow Semi Condensed', sans-serif; font-weight: 600; font-size: 20px; line-height: 24px; text-transform: {{tt}}; letter-spacing: {{ls}}">Tenue en L au sol</h2>
       <div style="display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap">
         <span style="font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 36px; line-height: 38px; color: {{a.encre}}">3 × 3 à 10 s</span>
-        <span style="height: 28px; padding: 0 10px; border-radius: 8px; background: var(--haute); color: var(--texte2); font-size: 13px; line-height: 28px">RIR 2</span>
-        <span style="height: 28px; padding: 0 10px; border-radius: 8px; background: var(--haute); color: var(--texte2); font-size: 13px; line-height: 28px">Repos 2 min 30 s</span>
+        <span style="height: 28px; padding: 0 10px; border-radius: var(--r); background: var(--haute); color: var(--texte2); font-size: 13px; line-height: 28px">RIR 2</span>
+        <span style="height: 28px; padding: 0 10px; border-radius: var(--r); background: var(--haute); color: var(--texte2); font-size: 13px; line-height: 28px">Repos 2 min 30 s</span>
       </div>
       <span style="color: var(--texte2); font-size: 14px; line-height: 20px">Lance le chrono à chaque tenue ; arrête avant de perdre la position.</span>
 
@@ -52,7 +52,7 @@ a{color:inherit}a:hover{color:inherit}
         <div style="display: grid; grid-template-columns: 44px 1fr 44px 44px; gap: 8px; color: var(--texte2); font-size: 13px; line-height: 18px"><span>N°</span><span style="text-align: center">Tenues de 10 s</span><span></span><span></span></div>
         <div style="display: grid; grid-template-columns: 44px 1fr 44px 44px; gap: 8px; align-items: center">
           <span style="color: var(--texte2); font-family: 'Barlow Condensed', sans-serif; font-size: 16px">1</span>
-          <span style="height: 48px; border-radius: 14px; background: var(--haute); text-align: center; font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 20px; line-height: 48px">3</span>
+          <span style="height: 48px; border-radius: var(--r); background: var(--haute); text-align: center; font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 20px; line-height: 48px">3</span>
           <span></span>
           <svg width="44" height="44" viewBox="0 0 44 44" role="img" aria-label="Série 1 validée"><circle cx="22" cy="22" r="18" fill="#5CB860"/><path d="M14.5 22.5l5 5 10-11" fill="none" stroke="var(--fond)" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
@@ -60,10 +60,10 @@ a{color:inherit}a:hover{color:inherit}
           <span style="font-size: 14px"><span style="font-weight: 600">Dur</span><span style="color: var(--texte2)">, RIR 2</span></span>
           <a href="#" style="color: {{a.encre}}; font-size: 14px; font-weight: 600; text-decoration: none; height: 36px; display: flex; align-items: center">Modifier</a>
         </div>
-        <div style="display: grid; grid-template-columns: 44px 1fr 44px 44px; gap: 8px; align-items: center; padding: 6px 0 6px 10px; margin: 0 -10px; border-radius: 16px; background: var(--haute); box-shadow: inset 0 0 0 1.5px {{a.encre}}">
+        <div style="display: grid; grid-template-columns: 44px 1fr 44px 44px; gap: 8px; align-items: center; padding: 6px 0 6px 10px; margin: 0 -10px; border-radius: var(--r-menu); background: var(--haute); box-shadow: inset 0 0 0 1.5px {{a.encre}}">
           <span style="font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 16px">2</span>
-          <span style="height: 48px; border-radius: 14px; background: var(--surface); text-align: center; font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 20px; line-height: 48px">3</span>
-          <button aria-label="Lancer le chrono de tenue" style="all: unset; cursor: pointer; width: 44px; height: 44px; border-radius: 14px; background: var(--surface); display: flex; align-items: center; justify-content: center">
+          <span style="height: 48px; border-radius: var(--r); background: var(--surface); text-align: center; font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 20px; line-height: 48px">3</span>
+          <button aria-label="Lancer le chrono de tenue" style="all: unset; cursor: pointer; width: 44px; height: 44px; border-radius: var(--r); background: var(--surface); display: flex; align-items: center; justify-content: center">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="{{a.encre}}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12M6 21h12M7 3c0 5 5 6 5 9s-5 4-5 9M17 3c0 5-5 6-5 9s5 4 5 9"/></svg>
           </button>
           <button aria-label="Valider la série 2" style="all: unset; cursor: pointer; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center">
@@ -72,19 +72,19 @@ a{color:inherit}a:hover{color:inherit}
         </div>
         <div style="display: grid; grid-template-columns: 44px 1fr 44px 44px; gap: 8px; align-items: center; color: var(--texte3)">
           <span style="font-family: 'Barlow Condensed', sans-serif; font-size: 16px">3</span>
-          <span style="height: 48px; border-radius: 14px; background: var(--haute); text-align: center; font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 20px; line-height: 48px">3</span>
+          <span style="height: 48px; border-radius: var(--r); background: var(--haute); text-align: center; font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 20px; line-height: 48px">3</span>
           <span></span><span></span>
         </div>
       </div>
     </section>
   </div>
 
-  <div role="status" style="position: absolute; left: 16px; right: 16px; bottom: 112px; height: 52px; border-radius: 16px; background: var(--texte); color: var(--fond); display: flex; align-items: center; justify-content: space-between; padding: 0 8px 0 16px">
+  <div role="status" style="position: absolute; left: 16px; right: 16px; bottom: 112px; height: 52px; border-radius: var(--r); background: var(--texte); color: var(--fond); display: flex; align-items: center; justify-content: space-between; padding: 0 8px 0 16px">
     <span style="display: flex; align-items: center; gap: 10px; font-size: 14px"><span class="kx k-thumbs" aria-hidden="true" style="width: 28px; height: 36px"></span>Koach : série suivante dans 2 s</span>
     <button style="all: unset; cursor: pointer; height: 44px; padding: 0 12px; font-weight: 700; font-size: 14px; color: var(--fond); text-decoration: underline; text-underline-offset: 3px">Annuler</button>
   </div>
 
-  <section aria-label="Repos" style="position: absolute; left: 16px; right: 16px; bottom: 20px; border-radius: 24px; background: var(--haute); box-shadow: inset 0 0 0 1px var(--filet); overflow: hidden">
+  <section aria-label="Repos" style="position: absolute; left: 16px; right: 16px; bottom: 20px; border-radius: var(--r-carte); background: var(--haute); box-shadow: inset 0 0 0 1px var(--filet); overflow: hidden">
     <div style="height: 4px; background: var(--filet)" role="progressbar" aria-valuemin="0" aria-valuemax="150" aria-valuenow="147" aria-label="Repos restant"><div style="width: 98%; height: 4px; background: {{a.encre}}"></div></div>
     <div style="display: flex; align-items: center; justify-content: space-between; height: 76px; padding: 0 10px 0 18px">
       <div style="display: flex; flex-direction: column">
@@ -92,11 +92,11 @@ a{color:inherit}a:hover{color:inherit}
         <span style="font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 34px; line-height: 36px; font-variant-numeric: tabular-nums">2:27</span>
       </div>
       <div style="display: flex; align-items: center; gap: 6px">
-        <div style="display: flex; gap: 2px">
-          <button style="all: unset; cursor: pointer; height: 44px; padding: 0 12px; border-radius: 14px 4px 4px 14px; background: var(--surface); font-weight: 600; font-size: 14px">−15 s</button>
-          <button style="all: unset; cursor: pointer; height: 44px; padding: 0 12px; border-radius: 4px 14px 14px 4px; background: var(--surface); font-weight: 600; font-size: 14px">+15 s</button>
+        <div style="display: flex; gap: 4px">
+          <button style="all: unset; cursor: pointer; height: 44px; padding: 0 12px; border-radius: var(--r); background: var(--surface); font-weight: 600; font-size: 14px">−15 s</button>
+          <button style="all: unset; cursor: pointer; height: 44px; padding: 0 12px; border-radius: var(--r); background: var(--surface); font-weight: 600; font-size: 14px">+15 s</button>
         </div>
-        <button aria-label="Arrêter le repos" style="all: unset; cursor: pointer; width: 44px; height: 44px; border-radius: 22px; background: {{a.pleine}}; display: flex; align-items: center; justify-content: center">
+        <button aria-label="Arrêter le repos" style="all: unset; cursor: pointer; width: 44px; height: 44px; border-radius: var(--r); background: {{a.pleine}}; display: flex; align-items: center; justify-content: center">
           <svg width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><rect x="3" y="3" width="10" height="10" rx="2" fill="{{a.on}}"/></svg>
         </button>
       </div>
@@ -104,7 +104,7 @@ a{color:inherit}a:hover{color:inherit}
   </section>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"palette":{"editor":"enum","options":["bordeaux","obsidian","arctic","neon","titanium","violet","forest","solar"],"default":"bordeaux"},"capitales":{"editor":"boolean","default":true},"$preview":{"width":390,"height":844}}'>
+<script type="text/x-dc" data-dc-script data-props='{"palette":{"editor":"enum","options":["bordeaux","obsidian","arctic","neon","titanium","violet","forest","solar"],"default":"bordeaux"},"capitales":{"editor":"boolean","default":true},"rayon_cartes":{"editor":"enum","options":["20 px","24 px","28 px","32 px"],"default":"24 px"},"rayon_menus":{"editor":"enum","options":["16 px","20 px","24 px"],"default":"20 px"},"$preview":{"width":390,"height":844}}'>
 class Component extends DCLogic {
   renderVals() {
     var T = {
@@ -120,7 +120,9 @@ class Component extends DCLogic {
     var a = T[this.props.palette] || T.bordeaux;
     a.on = a.surPleine;
     var caps = this.props.capitales !== false;
-    var vars = '--fond: ' + a.fond + '; --surface: ' + a.surface + '; --haute: ' + a.haute + '; --filet: ' + a.filet + '; --texte: ' + a.texte + '; --texte2: ' + a.texte2 + '; --texte3: ' + a.texte3 + ';';
+    var RAYC = {'20 px': 20, '24 px': 24, '28 px': 28, '32 px': 32}[this.props.rayon_cartes] || 24;
+    var RAYM = {'16 px': 16, '20 px': 20, '24 px': 24}[this.props.rayon_menus] || 20;
+    var vars = '--r: 999px; --r-carte: ' + RAYC + 'px; --r-menu: ' + RAYM + 'px; --fond: ' + a.fond + '; --surface: ' + a.surface + '; --haute: ' + a.haute + '; --filet: ' + a.filet + '; --texte: ' + a.texte + '; --texte2: ' + a.texte2 + '; --texte3: ' + a.texte3 + ';';
     return { a: a, vars: vars, tt: caps ? 'uppercase' : 'none', ls: caps ? '.3px' : '0' };
   }
 }

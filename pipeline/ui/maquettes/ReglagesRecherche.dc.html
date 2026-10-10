@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Recherche dans les réglages, après</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&amp;family=Barlow+Semi+Condensed:wght@500;600&amp;family=Barlow+Condensed:wght@500;600&amp;display=swap">
+<style>
+body{margin:0}
+a{color:inherit}a:hover{color:inherit}
+
+</style>
+</helmet>
+<div style="{{vars}} width: 390px; height: 844px; position: relative; overflow: hidden; background: var(--fond); color: var(--texte); font-family: 'Barlow', sans-serif; font-size: 15px; line-height: 22px; box-sizing: border-box">
+<div style="padding: 24px 20px 24px; display: flex; flex-direction: column; gap: 10px"><div style="display: grid; grid-template-columns: 44px 1fr; align-items: center; gap: 4px"><a href="Reglages.dc.html" aria-label="Fermer la recherche" style="width: 44px; height: 44px; display: flex; align-items: center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--texte)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></a><label style="display: grid; grid-template-columns: 22px 1fr; gap: 12px; align-items: center; height: 52px; padding: 0 16px; border-radius: var(--r); background: var(--surface); box-shadow: inset 0 0 0 1px var(--filet)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--texte2)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><span style="color: var(--texte)">repos<span style="display: inline-block; width: 1.5px; height: 18px; margin-left: 1px; vertical-align: -3px; background: var(--encre)"></span></span></label></div><p style="margin: 4px 4px 0; color: var(--texte2); font-size: 13px; line-height: 18px">4 résultats. Toucher un résultat ouvre sa page et met le réglage en évidence.</p><h2 style="margin: 10px 0 0; padding: 0 4px; color: var(--texte2); font-size: 14px; line-height: 20px; font-weight: 600">Réglages</h2><nav aria-label="Réglages trouvés" style="background: var(--surface); border-radius: var(--r-menu); padding: 4px 0"><a href="#" style="display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center; min-height: 64px; padding: 0 16px; text-decoration: none; box-shadow: inset 0 -1px 0 var(--filet);"><span style="display: flex; flex-direction: column; padding: 10px 0; min-width: 0"><span style="font-weight: 500; font-size: 16px"><mark style="background: none; color: var(--encre); font-weight: 600">Repos</mark> par défaut</span><span style="color: var(--texte2); font-size: 13px; line-height: 18px">Séance › Chronomètres</span></span><span style="color: var(--texte2); font-size: 14px; white-space: nowrap">2:30</span></a><a href="#" style="display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center; min-height: 64px; padding: 0 16px; text-decoration: none; box-shadow: inset 0 -1px 0 var(--filet);"><span style="display: flex; flex-direction: column; padding: 10px 0; min-width: 0"><span style="font-weight: 500; font-size: 16px">Lancer le <mark style="background: none; color: var(--encre); font-weight: 600">repos</mark> à la validation d'une série</span><span style="color: var(--texte2); font-size: 13px; line-height: 18px">Séance › Chronomètres</span></span><span style="color: var(--texte2); font-size: 14px; white-space: nowrap">Activé</span></a><a href="#" style="display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center; min-height: 64px; padding: 0 16px; text-decoration: none; "><span style="display: flex; flex-direction: column; padding: 10px 0; min-width: 0"><span style="font-weight: 500; font-size: 16px">Son en fin de chrono</span><span style="color: var(--texte2); font-size: 13px; line-height: 18px">Séance › Chronomètres · aussi « fin du repos »</span></span><span style="color: var(--texte2); font-size: 14px; white-space: nowrap">Désactivé</span></a></nav><h2 style="margin: 10px 0 0; padding: 0 4px; color: var(--texte2); font-size: 14px; line-height: 20px; font-weight: 600">Aide</h2><nav aria-label="Pages d'aide trouvées" style="background: var(--surface); border-radius: var(--r-menu); padding: 4px 0"><a href="#" style="display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center; min-height: 64px; padding: 0 16px; text-decoration: none; "><span style="display: flex; flex-direction: column; padding: 10px 0; min-width: 0"><span style="font-weight: 500; font-size: 16px">Récupération</span><span style="color: var(--texte2); font-size: 13px; line-height: 18px">Aide et à propos › Santé et sécurité · aussi « repos »</span></span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--texte2)" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></a></nav><p style="margin: 12px 4px 0; color: var(--texte2); font-size: 13px; line-height: 18px">La recherche lit le nom de chaque réglage, sa description et des mots proches (« repos », « récup », « pause » ; « kg », « livres », « unité »). Sans accents ni majuscules, comme la recherche d'exercices.</p></div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"palette":{"editor":"enum","options":["bordeaux","obsidian","arctic","neon","titanium","violet","forest","solar"],"default":"bordeaux"},"capitales":{"editor":"boolean","default":true},"rayon_cartes":{"editor":"enum","options":["20 px","24 px","28 px","32 px"],"default":"24 px"},"rayon_menus":{"editor":"enum","options":["16 px","20 px","24 px"],"default":"20 px"},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var T = {
+      bordeaux: {fond: '#181819', surface: '#222223', haute: '#2D2C2E', filet: '#383738', texte: '#F3F0F1', texte2: '#ABABAF', texte3: '#77777A', pleine: '#551515', surPleine: '#FFFFFF', encre: '#CA6F6A', second: '#B24B49', accent: '#D9A66C'},
+      obsidian: {fond: '#121316', surface: '#1C1D20', haute: '#27272B', filet: '#313235', texte: '#F3F0F1', texte2: '#ABABAF', texte3: '#77777A', pleine: '#E5484D', surPleine: '#111111', encre: '#EA4C50', second: '#FF8566', accent: '#FFC857'},
+      arctic: {fond: '#152238', surface: '#242D3D', haute: '#2F3748', filet: '#3A4354', texte: '#F3F0F1', texte2: '#ABABAF', texte3: '#77777A', pleine: '#2563EB', surPleine: '#FFFFFF', encre: '#668EFF', second: '#4F9CF9', accent: '#14B8A6'},
+      neon: {fond: '#101510', surface: '#1A1F1A', haute: '#242A24', filet: '#2F342E', texte: '#F2F0ED', texte2: '#AAACA7', texte3: '#757873', pleine: '#B4F044', surPleine: '#111111', encre: '#B4F044', second: '#67D8C0', accent: '#8C72FF'},
+      titanium: {fond: '#171E24', surface: '#21282F', haute: '#2C3339', filet: '#373E45', texte: '#F2F0F1', texte2: '#AAABAE', texte3: '#76777A', pleine: '#4C6474', surPleine: '#FFFFFF', encre: '#7992A3', second: '#8A9DA8', accent: '#D5A24C'},
+      violet: {fond: '#181427', surface: '#221E31', haute: '#2D293C', filet: '#383347', texte: '#F4EFF1', texte2: '#AEAAAF', texte3: '#79767A', pleine: '#7546DB', surPleine: '#FFFFFF', encre: '#986CFF', second: '#AC8CFA', accent: '#29BFB0'},
+      forest: {fond: '#17251D', surface: '#213027', haute: '#2C3B32', filet: '#37463D', texte: '#F2F0EE', texte2: '#A9ACA8', texte3: '#757874', pleine: '#236B50', surPleine: '#FFFFFF', encre: '#5CA283', second: '#7BAC81', accent: '#D7B374'},
+      solar: {fond: '#211B1A', surface: '#2C2524', haute: '#37302F', filet: '#423B39', texte: '#F7EFED', texte2: '#B4A9A7', texte3: '#7F7573', pleine: '#D95A27', surPleine: '#111111', encre: '#E86531', second: '#FF9760', accent: '#E8BC49'}
+    };
+    var a = T[this.props.palette] || T.bordeaux;
+    var caps = this.props.capitales !== false;
+    var RAYC = {'20 px': 20, '24 px': 24, '28 px': 28, '32 px': 32}[this.props.rayon_cartes] || 24;
+    var RAYM = {'16 px': 16, '20 px': 20, '24 px': 24}[this.props.rayon_menus] || 20;
+    var vars = '--r: 999px; --r-carte: ' + RAYC + 'px; --r-menu: ' + RAYM + 'px; --fond: ' + a.fond + '; --surface: ' + a.surface + '; --haute: ' + a.haute + '; --filet: ' + a.filet + '; --texte: ' + a.texte + '; --texte2: ' + a.texte2 + '; --texte3: ' + a.texte3 + '; --encre: ' + a.encre + '; --pleine: ' + a.pleine + '; --surPleine: ' + a.surPleine + ';';
+    return { a: a, vars: vars, tt: caps ? 'uppercase' : 'none', ls: caps ? '.3px' : '0' };
+  }
+}
+</script>
+</body>
+</html>

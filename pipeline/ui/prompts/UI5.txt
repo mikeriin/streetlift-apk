@@ -1,9 +1,9 @@
 Lot UI5 — Intégration et publication de la refonte UI et UX de Kalis Track (dev6.12.0). Effort élevé, exactitude avant vitesse.
 
-Lis en entier : pipeline/ui/PIPELINE_UI.md, pipeline/ui/CAHIER_UI.md (version 2), pipeline/ui/DECISIONS_UI.md, ta section de pipeline/ui/LANCEMENTS.md, les livraisons UI0 à UI4 (pipeline/ui/livraisons/) et les maquettes.
+Lis en entier : pipeline/ui/PIPELINE_UI.md, pipeline/ui/CAHIER_UI.md (version 3), pipeline/ui/DECISIONS_UI.md, ta section de pipeline/ui/LANCEMENTS.md, les livraisons UI0 à UI4 (pipeline/ui/livraisons/) et les maquettes.
 
 Travail sur `refonte-ui` (UI1 à UI4 déjà fusionnés par la conversation de pilotage) ; contrôle sur `claude/ci-ui-ui5`.
-Contenu : cahier §7.3 « UI5 » — promotion des composants signalés par au moins deux lots ; suppression des adaptateurs ; fichiers non attribués aux jetons ou en liste blanche justifiée ; contrôles du §6 bloquants sur tout `lib/` (jetons, menus, illustrations intactes) ; tour de captures complet et relevés avant / après ; cohérence entre zones (marges, en-têtes, sections, menus, voix de Koach) ; relecture indépendante (sous-agent Opus : cahier, maquettes, captures) ; corrections ; installation par-dessus dev6.11.1 vérifiée (sauvegarde relue à l'identique, préférences et ancien identifiant de couleur relus).
+Contenu : cahier §7.3 « UI5 » — promotion des composants signalés par au moins deux lots ; suppression des adaptateurs ; fichiers non attribués aux jetons ou en liste blanche justifiée ; contrôles du §6 bloquants sur tout `lib/` (jetons, menus, illustrations intactes) ; tour de captures complet et relevés avant / après ; cohérence entre zones (marges, en-têtes, sections, menus, voix de Koach) ; arborescence de §4 vérifiée de bout en bout (chaque fonction à une seule place, raccourcis R2 seulement, titres R3, aucun chemin écrit R5, aucun cul-de-sac R6), cibles de parcours de §6.3 relevées ; relecture indépendante (sous-agent Opus : cahier, maquettes, captures) ; corrections ; installation par-dessus dev6.11.1 vérifiée (sauvegarde relue à l'identique, préférences et ancien identifiant de couleur relus).
 Publication : `refonte-ui` → `main` en avance rapide, **dev6.12.0**, build signé réussi, run vérifié (PIPELINE_UI.md §4) ; `REFONTE_UI.md` réécrit (l'ancien dans `docs/`).
 
 Fin de lot : PIPELINE_UI.md §4.

@@ -38,17 +38,17 @@ a{color:inherit}a:hover{color:inherit}
         </a>
       </div>
       <div style="display: flex; gap: 6px; justify-content: center" role="img" aria-label="Exercice 3 sur 7">
-        <div style="width: 6px; height: 6px; border-radius: 3px; background: var(--texte2)"></div>
-        <div style="width: 6px; height: 6px; border-radius: 3px; background: var(--texte2)"></div>
-        <div style="width: 20px; height: 6px; border-radius: 3px; background: {{a.encre}}"></div>
-        <div style="width: 6px; height: 6px; border-radius: 3px; background: var(--texte3)"></div>
-        <div style="width: 6px; height: 6px; border-radius: 3px; background: var(--texte3)"></div>
-        <div style="width: 6px; height: 6px; border-radius: 3px; background: var(--texte3)"></div>
-        <div style="width: 6px; height: 6px; border-radius: 3px; background: var(--texte3)"></div>
+        <div style="width: 6px; height: 6px; border-radius: var(--r); background: var(--texte2)"></div>
+        <div style="width: 6px; height: 6px; border-radius: var(--r); background: var(--texte2)"></div>
+        <div style="width: 20px; height: 6px; border-radius: var(--r); background: {{a.encre}}"></div>
+        <div style="width: 6px; height: 6px; border-radius: var(--r); background: var(--texte3)"></div>
+        <div style="width: 6px; height: 6px; border-radius: var(--r); background: var(--texte3)"></div>
+        <div style="width: 6px; height: 6px; border-radius: var(--r); background: var(--texte3)"></div>
+        <div style="width: 6px; height: 6px; border-radius: var(--r); background: var(--texte3)"></div>
       </div>
     </div>
 
-    <section aria-label="Dips lesté de compétition" style="background: var(--surface); border-radius: 24px; padding: 18px; display: flex; flex-direction: column; gap: 14px">
+    <section aria-label="Dips lesté de compétition" style="background: var(--surface); border-radius: var(--r-carte); padding: 18px; display: flex; flex-direction: column; gap: 14px">
       <div style="display: grid; grid-template-columns: 1fr 32px; gap: 8px; align-items: start">
         <h2 style="margin: 0; font-family: 'Barlow Semi Condensed', sans-serif; font-weight: 600; font-size: 20px; line-height: 24px; text-transform: {{tt}}; letter-spacing: {{ls}}">Dips lesté de compétition</h2>
         <button aria-label="Fiche de l'exercice" style="all: unset; cursor: pointer; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center">
@@ -59,9 +59,9 @@ a{color:inherit}a:hover{color:inherit}
       <div style="display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap">
         <span style="font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 36px; line-height: 38px; color: {{a.encre}}">4 × 5</span>
         <div style="display: flex; gap: 6px; flex-wrap: wrap">
-          <span style="height: 28px; padding: 0 10px; border-radius: 8px; background: var(--haute); color: var(--texte2); font-size: 13px; line-height: 28px">RIR 4</span>
-          <span style="height: 28px; padding: 0 10px; border-radius: 8px; background: var(--haute); color: var(--texte2); font-size: 13px; line-height: 28px">Difficulté 3/10</span>
-          <span style="height: 28px; padding: 0 10px; border-radius: 8px; background: var(--haute); color: var(--texte2); font-size: 13px; line-height: 28px">Repos 4 min</span>
+          <span style="height: 28px; padding: 0 10px; border-radius: var(--r); background: var(--haute); color: var(--texte2); font-size: 13px; line-height: 28px">RIR 4</span>
+          <span style="height: 28px; padding: 0 10px; border-radius: var(--r); background: var(--haute); color: var(--texte2); font-size: 13px; line-height: 28px">Difficulté 3/10</span>
+          <span style="height: 28px; padding: 0 10px; border-radius: var(--r); background: var(--haute); color: var(--texte2); font-size: 13px; line-height: 28px">Repos 4 min</span>
         </div>
       </div>
 
@@ -71,7 +71,7 @@ a{color:inherit}a:hover{color:inherit}
         <span style="color: var(--texte2); font-size: 14px; line-height: 20px">Les séries allégées se recalculent sur ta série de tête.</span>
       </div>
 
-      <div style="border-radius: 16px; background: var(--haute); display: flex; flex-direction: column">
+      <div style="border-radius: var(--r-menu); background: var(--haute); display: flex; flex-direction: column">
         <a href="#" style="display: grid; grid-template-columns: 24px 1fr 16px; gap: 12px; align-items: center; height: 48px; padding: 0 14px; text-decoration: none">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--texte2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5a2 2 0 0 1 2-2h12v16H6a2 2 0 0 0-2 2z"/><path d="M4 21V5M8 7h6"/></svg>
           <span>2 notes du coach</span>
@@ -114,7 +114,7 @@ a{color:inherit}a:hover{color:inherit}
   </div>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"palette":{"editor":"enum","options":["bordeaux","obsidian","arctic","neon","titanium","violet","forest","solar"],"default":"bordeaux"},"capitales":{"editor":"boolean","default":true},"$preview":{"width":390,"height":844}}'>
+<script type="text/x-dc" data-dc-script data-props='{"palette":{"editor":"enum","options":["bordeaux","obsidian","arctic","neon","titanium","violet","forest","solar"],"default":"bordeaux"},"capitales":{"editor":"boolean","default":true},"rayon_cartes":{"editor":"enum","options":["20 px","24 px","28 px","32 px"],"default":"24 px"},"rayon_menus":{"editor":"enum","options":["16 px","20 px","24 px"],"default":"20 px"},"$preview":{"width":390,"height":844}}'>
 class Component extends DCLogic {
   renderVals() {
     var T = {
@@ -129,9 +129,11 @@ class Component extends DCLogic {
     };
     var a = T[this.props.palette] || T.bordeaux;
     var caps = this.props.capitales !== false;
-    var vars = '--fond: ' + a.fond + '; --surface: ' + a.surface + '; --haute: ' + a.haute + '; --filet: ' + a.filet + '; --texte: ' + a.texte + '; --texte2: ' + a.texte2 + '; --texte3: ' + a.texte3 + ';';
-    var row = 'display: grid; grid-template-columns: 44px 1fr 1fr 44px; gap: 8px; align-items: center; border-radius: 16px; ';
-    var field = 'display: block; height: 48px; border-radius: 14px; text-align: center; font-family: Barlow Condensed, sans-serif; font-weight: 600; font-size: 20px; line-height: 48px; ';
+    var RAYC = {'20 px': 20, '24 px': 24, '28 px': 28, '32 px': 32}[this.props.rayon_cartes] || 24;
+    var RAYM = {'16 px': 16, '20 px': 20, '24 px': 24}[this.props.rayon_menus] || 20;
+    var vars = '--r: 999px; --r-carte: ' + RAYC + 'px; --r-menu: ' + RAYM + 'px; --fond: ' + a.fond + '; --surface: ' + a.surface + '; --haute: ' + a.haute + '; --filet: ' + a.filet + '; --texte: ' + a.texte + '; --texte2: ' + a.texte2 + '; --texte3: ' + a.texte3 + ';';
+    var row = 'display: grid; grid-template-columns: 44px 1fr 1fr 44px; gap: 8px; align-items: center; border-radius: var(--r-menu); ';
+    var field = 'display: block; height: 48px; border-radius: var(--r); text-align: center; font-family: Barlow Condensed, sans-serif; font-weight: 600; font-size: 20px; line-height: 48px; ';
     var sets = ['Tête', 'A1', 'A2', 'A3'].map(function (n, i) {
       var cur = i === 0;
       return {

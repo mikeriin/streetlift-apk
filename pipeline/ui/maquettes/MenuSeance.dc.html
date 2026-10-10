@@ -21,19 +21,19 @@ a{color:inherit}a:hover{color:inherit}
       <span style="font-family: 'Barlow Semi Condensed', sans-serif; font-weight: 600; font-size: 20px; text-transform: {{tt}}">Corps entier</span>
       <span></span>
     </div>
-    <div style="height: 300px; border-radius: 24px; background: var(--surface)"></div>
+    <div style="height: 300px; border-radius: var(--r-carte); background: var(--surface)"></div>
   </div>
   <div style="position: absolute; inset: 0; background: rgba(0,0,0,.55)"></div>
 
-  <section role="dialog" aria-label="Actions de la séance" style="position: absolute; left: 0; right: 0; bottom: 0; background: var(--surface); border-radius: 28px 28px 0 0; padding: 10px 16px 20px; display: flex; flex-direction: column; gap: 10px">
-    <div style="align-self: center; width: 36px; height: 4px; border-radius: 2px; background: var(--texte3)"></div>
+  <section role="dialog" aria-label="Actions de la séance" style="position: absolute; left: 0; right: 0; bottom: 0; background: var(--surface); border-radius: var(--r-carte) var(--r-carte) 0 0; padding: 10px 16px 20px; display: flex; flex-direction: column; gap: 10px">
+    <div style="align-self: center; width: 36px; height: 4px; border-radius: var(--r); background: var(--texte3)"></div>
     <div style="display: flex; flex-direction: column; padding: 6px 4px 4px">
       <h2 style="margin: 0; font-family: 'Barlow Semi Condensed', sans-serif; font-weight: 600; font-size: 20px; line-height: 24px">Séance</h2>
       <span style="color: var(--texte2); font-size: 13px">Corps entier, S1, J2</span>
     </div>
 
     <sc-for list="{{groups}}" as="g" hint-placeholder-count="3">
-      <div style="border-radius: 20px; background: var(--haute); padding: 2px 0">
+      <div style="border-radius: var(--r-menu); background: var(--haute); padding: 2px 0">
         <sc-for list="{{g.rows}}" as="r" hint-placeholder-count="2">
           <button style="{{r.row}}">
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="{{r.ink}}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{r.icon}}"/></svg>
@@ -43,11 +43,11 @@ a{color:inherit}a:hover{color:inherit}
       </div>
     </sc-for>
 
-    <button style="all: unset; cursor: pointer; box-sizing: border-box; height: 52px; border-radius: 16px; text-align: center; font-weight: 600; color: var(--texte2)">Fermer</button>
+    <button style="all: unset; cursor: pointer; box-sizing: border-box; height: 52px; border-radius: var(--r); text-align: center; font-weight: 600; color: var(--texte2)">Fermer</button>
   </section>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"palette":{"editor":"enum","options":["bordeaux","obsidian","arctic","neon","titanium","violet","forest","solar"],"default":"bordeaux"},"capitales":{"editor":"boolean","default":true},"$preview":{"width":390,"height":844}}'>
+<script type="text/x-dc" data-dc-script data-props='{"palette":{"editor":"enum","options":["bordeaux","obsidian","arctic","neon","titanium","violet","forest","solar"],"default":"bordeaux"},"capitales":{"editor":"boolean","default":true},"rayon_cartes":{"editor":"enum","options":["20 px","24 px","28 px","32 px"],"default":"24 px"},"rayon_menus":{"editor":"enum","options":["16 px","20 px","24 px"],"default":"20 px"},"$preview":{"width":390,"height":844}}'>
 class Component extends DCLogic {
   renderVals() {
     var T = {
@@ -62,7 +62,9 @@ class Component extends DCLogic {
     };
     var a = T[this.props.palette] || T.bordeaux;
     var caps = this.props.capitales !== false;
-    var vars = '--fond: ' + a.fond + '; --surface: ' + a.surface + '; --haute: ' + a.haute + '; --filet: ' + a.filet + '; --texte: ' + a.texte + '; --texte2: ' + a.texte2 + '; --texte3: ' + a.texte3 + ';';
+    var RAYC = {'20 px': 20, '24 px': 24, '28 px': 28, '32 px': 32}[this.props.rayon_cartes] || 24;
+    var RAYM = {'16 px': 16, '20 px': 20, '24 px': 24}[this.props.rayon_menus] || 20;
+    var vars = '--r: 999px; --r-carte: ' + RAYC + 'px; --r-menu: ' + RAYM + 'px; --fond: ' + a.fond + '; --surface: ' + a.surface + '; --haute: ' + a.haute + '; --filet: ' + a.filet + '; --texte: ' + a.texte + '; --texte2: ' + a.texte2 + '; --texte3: ' + a.texte3 + ';';
     var DANGER = '#EF6B6B', WARN = '#E6A23C';
     var G = [
       [
@@ -73,10 +75,10 @@ class Component extends DCLogic {
       ],
       [
         ['Douleur ou malaise ?', 'M12 9v4M12 16.5v.5M10.3 3.9L2.4 18a2 2 0 0 0 1.7 3h15.8a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z', WARN],
-        ['Références (feuille Pilotage)', 'M4 7h10M18 7h2M4 17h4M12 17h8M16 5v4M10 15v4']
+        ['Mes références', 'M4 7h10M18 7h2M4 17h4M12 17h8M16 5v4M10 15v4']
       ],
       [
-        ['Effacer l’historique de cette séance', 'M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v6M14 11v6', DANGER]
+        ['Supprimer l’historique de cette séance', 'M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v6M14 11v6', DANGER]
       ]
     ];
     var groups = G.map(function (g) {

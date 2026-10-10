@@ -1,13 +1,13 @@
 Lot UI0 — Fondations de la refonte UI et UX de Kalis Track (finition, cohérence, menus). Effort élevé, exactitude avant vitesse.
 
-Lis en entier : pipeline/ui/PIPELINE_UI.md, pipeline/ui/CAHIER_UI.md (version 2), pipeline/ui/DECISIONS_UI.md, ta section de pipeline/ui/LANCEMENTS.md, les maquettes (pipeline/ui/maquettes/, une source HTML par écran ; les fichiers « Avant… » montrent l'état actuel) et pipeline/ui/inputs/.
+Lis en entier : pipeline/ui/PIPELINE_UI.md, pipeline/ui/CAHIER_UI.md (version 3), pipeline/ui/DECISIONS_UI.md, ta section de pipeline/ui/LANCEMENTS.md, les maquettes (pipeline/ui/maquettes/, une source HTML par écran ; les fichiers « Avant… » montrent l'état actuel) et pipeline/ui/inputs/.
 
-Rappels qui priment sur tout : navigation, écrans, parcours et contenus inchangés ; illustrations de Koach, logo et anatomie intouchables (cahier §1) ; aucun changement de logique ni de format de données.
+Rappels qui priment sur tout : dock, onglets, écrans, parcours et contenus inchangés (seules les entrées des menus bougent, cahier §4) ; illustrations de Koach, logo et anatomie intouchables (cahier §1) ; aucun changement de logique ni de format de données.
 
 Fais exactement « UI0 — Fondations » (cahier §7.3), dans les fichiers de UI0 (§7.2), avec le système du §5 :
 1. Branche `refonte-ui` depuis `main` b7996b3f ; workflow `.github/workflows/ci-ui.yml` (copie de `ci-3d.yml`, déclenché par `claude/ci-ui-*`, concurrence par branche, `ci-out/` recommité sur la branche du lot, rendus « avant » sur `main` b7996b3f) ; tant qu'il n'existe pas sur la branche poussée, contrôle sur `claude/ci-3d`.
 2. Polices Barlow (trois largeurs) embarquées avec licence OFL et empreintes.
-3. `lib/kit/` : jetons en trois couches, `palette.dart` (dérivation §5.1, `material_color_utilities`, test qui retrouve `inputs/palettes_roles.json` à l'identique), contraste renforcé, jeton `capsTitles` (U3), `ThemeExtension`, `buildTheme` réécrit ; tous les composants du §5.4, dont les gabarits de menus du §4 (`KMenuPage`, `KMenuGroup`, `KMenuRow`, `KSwitch`, `KStepper`, `KSegmented`, `KActionSheet`, `KListSheet`, `KConfirm`), chacun avec test de widget et captures ; ressorts du §5.5 ; catalogue des composants en mode dev.
+3. `lib/kit/` : jetons en trois couches, `palette.dart` (dérivation §5.1, `material_color_utilities`, test qui retrouve `inputs/palettes_roles.json` à l'identique), contraste renforcé, jeton `capsTitles` (U3), `ThemeExtension`, `buildTheme` réécrit ; tous les composants du §5.4, dont les gabarits de menus du §4 (`KMenuPage`, `KMenuGroup`, `KMenuRow`, `KSwitch`, `KStepper`, `KSegmented`, `KActionSheet`, `KListSheet`, `KConfirm`, `KSearchField`), rayons des trois familles du §5.3, chacun avec test de widget et captures ; ressorts du §5.5 ; catalogue des composants en mode dev.
 4. Préférence `accent` : 8 palettes, relecture des anciens identifiants, import ancien accepté ; sélecteur de palette avec aperçu et interrupteur « Contraste renforcé » dans Apparence.
 5. Dock fini (C8) : mêmes 4 onglets, même ordre, même ouverture sur Programme ; réserve basse pour que rien ne passe dessous ; poignée DEV dans la marge (builds de dev).
 6. Adaptateurs dans `ui.dart` et `app_theme.dart` : tous les écrans existants compilent et prennent déjà palettes et polices ; aucun écran de zone n'est refait ici.

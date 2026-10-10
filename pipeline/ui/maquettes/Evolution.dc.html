@@ -26,9 +26,9 @@ a{color:inherit}a:hover{color:inherit}
       <h1 style="margin: 0; font-family: 'Barlow Semi Condensed', sans-serif; font-weight: 600; font-size: 22px; line-height: 28px; text-transform: {{tt}}; letter-spacing: {{ls}}">Évolution</h1>
     </header>
 
-    <section style="background: var(--surface); border-radius: 24px; padding: 18px; display: flex; flex-direction: column; gap: 14px">
+    <section style="background: var(--surface); border-radius: var(--r-carte); padding: 18px; display: flex; flex-direction: column; gap: 14px">
       <h2 style="margin: 0; font-family: 'Barlow Semi Condensed', sans-serif; font-weight: 600; font-size: 18px; line-height: 24px">Quand je vois qu'un changement t'aiderait</h2>
-      <div role="radiogroup" aria-label="Mode d'évolution" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px; padding: 4px; border-radius: 18px; background: var(--haute)">
+      <div role="radiogroup" aria-label="Mode d'évolution" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px; padding: 4px; border-radius: var(--r); background: var(--haute)">
         <sc-for list="{{modes}}" as="m" hint-placeholder-count="2">
           <button role="radio" aria-checked="{{m.on}}" onClick="{{m.pick}}" style="{{m.style}}">{{m.label}}</button>
         </sc-for>
@@ -36,7 +36,7 @@ a{color:inherit}a:hover{color:inherit}
       <p style="margin: 0">{{explain}}</p>
     </section>
 
-    <section style="background: var(--surface); border-radius: 24px; padding: 18px; display: flex; flex-direction: column; gap: 14px">
+    <section style="background: var(--surface); border-radius: var(--r-carte); padding: 18px; display: flex; flex-direction: column; gap: 14px">
       <div style="display: grid; grid-template-columns: 64px 1fr; gap: 14px; align-items: center">
         <span class="kx k-chart" aria-hidden="true" style="width: 64px; height: 54px; color: var(--texte)"></span>
         <p style="margin: 0">Dans 2 semaines de séances, je pourrai ajuster ton volume et alléger une semaine.</p>
@@ -61,7 +61,7 @@ a{color:inherit}a:hover{color:inherit}
   </div>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"palette":{"editor":"enum","options":["bordeaux","obsidian","arctic","neon","titanium","violet","forest","solar"],"default":"bordeaux"},"capitales":{"editor":"boolean","default":true},"$preview":{"width":390,"height":844}}'>
+<script type="text/x-dc" data-dc-script data-props='{"palette":{"editor":"enum","options":["bordeaux","obsidian","arctic","neon","titanium","violet","forest","solar"],"default":"bordeaux"},"capitales":{"editor":"boolean","default":true},"rayon_cartes":{"editor":"enum","options":["20 px","24 px","28 px","32 px"],"default":"24 px"},"rayon_menus":{"editor":"enum","options":["16 px","20 px","24 px"],"default":"20 px"},"$preview":{"width":390,"height":844}}'>
 class Component extends DCLogic {
   constructor(props) { super(props); this.state = { mode: 'Libre' }; }
   renderVals() {
@@ -77,14 +77,16 @@ class Component extends DCLogic {
     };
     var a = T[this.props.palette] || T.bordeaux;
     var caps = this.props.capitales !== false;
-    var vars = '--fond: ' + a.fond + '; --surface: ' + a.surface + '; --haute: ' + a.haute + '; --filet: ' + a.filet + '; --texte: ' + a.texte + '; --texte2: ' + a.texte2 + '; --texte3: ' + a.texte3 + ';';
+    var RAYC = {'20 px': 20, '24 px': 24, '28 px': 28, '32 px': 32}[this.props.rayon_cartes] || 24;
+    var RAYM = {'16 px': 16, '20 px': 20, '24 px': 24}[this.props.rayon_menus] || 20;
+    var vars = '--r: 999px; --r-carte: ' + RAYC + 'px; --r-menu: ' + RAYM + 'px; --fond: ' + a.fond + '; --surface: ' + a.surface + '; --haute: ' + a.haute + '; --filet: ' + a.filet + '; --texte: ' + a.texte + '; --texte2: ' + a.texte2 + '; --texte3: ' + a.texte3 + ';';
     var self = this;
     var base = 'all: unset; cursor: pointer; box-sizing: border-box; height: 44px; text-align: center; font-weight: 600; ';
     var modes = ['Assisté', 'Libre'].map(function (l) {
       var on = self.state.mode === l;
       return {
         label: l, on: on ? 'true' : 'false',
-        style: base + (on ? 'border-radius: 22px; background: ' + a.pleine + '; color: ' + a.surPleine + ';' : 'border-radius: 14px; color: var(--texte2);'),
+        style: base + (on ? 'border-radius: var(--r); background: ' + a.pleine + '; color: ' + a.surPleine + ';' : 'border-radius: var(--r); color: var(--texte2);'),
         pick: function () { self.setState({ mode: l }); }
       };
     });

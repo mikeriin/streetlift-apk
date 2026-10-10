@@ -22,15 +22,15 @@ a{color:inherit}a:hover{color:inherit}
       <span style="color: var(--texte2)">Tes exercices. Tes muscles. Ta technique.</span>
     </div>
 
-    <label style="display: grid; grid-template-columns: 22px 1fr; gap: 12px; align-items: center; height: 52px; padding: 0 16px; border-radius: 26px; background: var(--surface); box-shadow: inset 0 0 0 1px var(--filet)">
+    <label style="display: grid; grid-template-columns: 22px 1fr; gap: 12px; align-items: center; height: 52px; padding: 0 16px; border-radius: var(--r); background: var(--surface); box-shadow: inset 0 0 0 1px var(--filet)">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--texte2)" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
-      <input placeholder="Nom, muscle, matériel, discipline…" aria-label="Rechercher un exercice" style="all: unset; color: var(--texte); font-size: 15px">
+      <input placeholder="Exercice ou muscle" aria-label="Rechercher un exercice ou un muscle" style="all: unset; color: var(--texte); font-size: 15px">
     </label>
 
     <h2 style="margin: 14px 0 0; padding: 0 4px; color: var(--texte2); font-size: 14px; line-height: 20px; font-weight: 600">Consulter</h2>
-    <nav aria-label="Arsenal" style="background: var(--surface); border-radius: 24px; padding: 4px 0">
+    <nav aria-label="Arsenal" style="background: var(--surface); border-radius: var(--r-menu); padding: 4px 0">
       <a href="#" style="display: grid; grid-template-columns: 40px 1fr 16px; gap: 14px; align-items: center; min-height: 64px; padding: 0 16px; text-decoration: none">
-        <span style="width: 40px; height: 40px; border-radius: 12px; background: var(--haute); display: flex; align-items: center; justify-content: center">
+        <span style="width: 40px; height: 40px; border-radius: var(--r); background: var(--haute); display: flex; align-items: center; justify-content: center">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--texte)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5a2 2 0 0 1 2-2h12v16H6a2 2 0 0 0-2 2zM4 21V5M8 7h6"/></svg>
         </span>
         <span style="display: flex; flex-direction: column; padding: 10px 0; border-bottom: 1px solid var(--filet)">
@@ -40,20 +40,20 @@ a{color:inherit}a:hover{color:inherit}
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--texte2)" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
       </a>
       <a href="#" style="display: grid; grid-template-columns: 40px 1fr 16px; gap: 14px; align-items: center; min-height: 64px; padding: 0 16px; text-decoration: none">
-        <span style="width: 40px; height: 40px; border-radius: 12px; background: var(--haute); display: flex; align-items: center; justify-content: center">
+        <span style="width: 40px; height: 40px; border-radius: var(--r); background: var(--haute); display: flex; align-items: center; justify-content: center">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--texte)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="4.5" r="2"/><path d="M5 8h14M12 8v6M9 21l3-7 3 7"/></svg>
         </span>
         <span style="display: flex; flex-direction: column; padding: 10px 0">
           <span style="font-weight: 600; font-size: 16px">Anatomie</span>
-          <span style="color: var(--texte2); font-size: 13px; line-height: 18px">Muscles, groupes et vues</span>
+          <span style="color: var(--texte2); font-size: 13px; line-height: 18px">Muscles, groupes, vues et leurs exercices</span>
         </span>
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--texte2)" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
       </a>
     </nav>
   </div>
 
-  <nav aria-label="Navigation principale" style="position: absolute; left: 16px; right: 16px; bottom: 20px; height: 64px; border-radius: 32px; background: var(--haute); box-shadow: inset 0 0 0 1px var(--filet); display: flex; align-items: center; justify-content: space-between; padding: 0 8px">
-    <a href="Arsenal.dc.html" aria-current="page" style="height: 48px; padding: 0 18px; border-radius: 24px; background: {{a.pleine}}; color: {{a.surPleine}}; display: flex; align-items: center; gap: 8px; text-decoration: none; font-family: 'Barlow Semi Condensed', sans-serif; font-weight: 600; font-size: 14px; text-transform: {{tt}}; letter-spacing: {{ls}}">
+  <nav aria-label="Navigation principale" style="position: absolute; left: 16px; right: 16px; bottom: 20px; height: 64px; border-radius: var(--r); background: var(--haute); box-shadow: inset 0 0 0 1px var(--filet); display: flex; align-items: center; justify-content: space-between; padding: 0 8px">
+    <a href="Arsenal.dc.html" aria-current="page" style="height: 48px; padding: 0 18px; border-radius: var(--r); background: {{a.pleine}}; color: {{a.surPleine}}; display: flex; align-items: center; gap: 8px; text-decoration: none; font-family: 'Barlow Semi Condensed', sans-serif; font-weight: 600; font-size: 14px; text-transform: {{tt}}; letter-spacing: {{ls}}">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="8" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/><rect x="13" y="13" width="8" height="8" rx="2"/></svg>Arsenal
     </a>
     <a href="#" aria-label="Stats" style="width: 56px; height: 48px; display: flex; align-items: center; justify-content: center">
@@ -68,7 +68,7 @@ a{color:inherit}a:hover{color:inherit}
   </nav>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"palette":{"editor":"enum","options":["bordeaux","obsidian","arctic","neon","titanium","violet","forest","solar"],"default":"bordeaux"},"capitales":{"editor":"boolean","default":true},"$preview":{"width":390,"height":844}}'>
+<script type="text/x-dc" data-dc-script data-props='{"palette":{"editor":"enum","options":["bordeaux","obsidian","arctic","neon","titanium","violet","forest","solar"],"default":"bordeaux"},"capitales":{"editor":"boolean","default":true},"rayon_cartes":{"editor":"enum","options":["20 px","24 px","28 px","32 px"],"default":"24 px"},"rayon_menus":{"editor":"enum","options":["16 px","20 px","24 px"],"default":"20 px"},"$preview":{"width":390,"height":844}}'>
 class Component extends DCLogic {
   renderVals() {
     var T = {
@@ -83,7 +83,9 @@ class Component extends DCLogic {
     };
     var a = T[this.props.palette] || T.bordeaux;
     var caps = this.props.capitales !== false;
-    var vars = '--fond: ' + a.fond + '; --surface: ' + a.surface + '; --haute: ' + a.haute + '; --filet: ' + a.filet + '; --texte: ' + a.texte + '; --texte2: ' + a.texte2 + '; --texte3: ' + a.texte3 + ';';
+    var RAYC = {'20 px': 20, '24 px': 24, '28 px': 28, '32 px': 32}[this.props.rayon_cartes] || 24;
+    var RAYM = {'16 px': 16, '20 px': 20, '24 px': 24}[this.props.rayon_menus] || 20;
+    var vars = '--r: 999px; --r-carte: ' + RAYC + 'px; --r-menu: ' + RAYM + 'px; --fond: ' + a.fond + '; --surface: ' + a.surface + '; --haute: ' + a.haute + '; --filet: ' + a.filet + '; --texte: ' + a.texte + '; --texte2: ' + a.texte2 + '; --texte3: ' + a.texte3 + ';';
     return { a: a, vars: vars, tt: caps ? 'uppercase' : 'none', ls: caps ? '.3px' : '0' };
   }
 }
