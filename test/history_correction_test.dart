@@ -227,10 +227,12 @@ void main() {
     await open(tester, log, sessionKey: 'S8-J4@old');
     await tester.tap(find.byTooltip('Options de l’historique'));
     await tester.pumpAndSettle();
-    final item = tester.widget<PopupMenuItem<String>>(
-      find.widgetWithText(PopupMenuItem<String>, 'Corriger les saisies'),
+    // UI2 : menu ⋮ en feuille d'actions (C10) ; l'action indisponible y
+    // reste affichée, sans effet.
+    final item = tester.widget<InkWell>(
+      find.byKey(const ValueKey('action-correct')),
     );
-    expect(item.enabled, isFalse);
+    expect(item.onTap, isNull);
     expect(find.text('Supprimer de l’historique'), findsOneWidget);
     await close(tester);
   });

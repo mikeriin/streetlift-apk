@@ -156,7 +156,7 @@ void main() {
     await scrollToAction(tester, find.byKey(const ValueKey('flame-menu')));
     await tester.tap(find.byKey(const ValueKey('flame-menu')));
     await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const ValueKey('flame-exclude')));
+    await tester.tap(find.byKey(const ValueKey('action-exclude')));
     await tester.pumpAndSettle();
     expect(log.sets[0].excluded, isTrue);
     expect(log.sets[0].done, isTrue);

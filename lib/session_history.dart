@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'adapt/widgets/session_kit.dart' show showKChoice;
 import 'app_theme.dart';
 import 'models.dart';
 import 'session_screen.dart';
@@ -225,12 +226,14 @@ class _SessionHistoryScreenState extends State<SessionHistoryScreen> {
     final key = _key;
     final plan = key == null ? null : store.correctionPlan(key);
     if (key == null || plan == null) return;
-    final confirmed = await showKConfirm(
+    final confirmed = await showKChoice(
       context,
       title: 'Corriger cette séance ?',
       message:
           '$_head repasse en cours avec toutes ses saisies. Son XP de séance est retiré le temps de la correction et revient quand tu la termines de nouveau. Sa date reste celle d’origine.',
       confirmLabel: 'Corriger',
+      confirmKey: const ValueKey('confirm-ok'),
+      cancelKey: const ValueKey('confirm-cancel'),
     );
     if (!confirmed || !mounted) return;
     if (!store.reopenSession(key)) return;
@@ -246,26 +249,32 @@ class _SessionHistoryScreenState extends State<SessionHistoryScreen> {
   Future<void> _delete() async {
     final key = _key;
     if (key == null) return;
-    final confirmed = await showKConfirm(
+    final confirmed = await showKChoice(
       context,
       title: 'Supprimer de l’historique ?',
       message:
           '$_head — séries, notes et statut « fait » seront effacés. L’XP et les bonus de cette séance sont retirés.',
       confirmLabel: 'Supprimer',
+      confirmKey: const ValueKey('confirm-ok'),
+      cancelKey: const ValueKey('confirm-cancel'),
       destructive: true,
     );
     if (!confirmed || !mounted) return;
     final removed = store.deleteLog(key);
-    Navigator.of(context).maybePop();
-    if (removed == null) return;
-    // Message court du kit, montré sur l'écran d'où l'on venait (même
-    // ordre qu'avant : retrait, retour, message).
+    if (removed == null) {
+      Navigator.of(context).maybePop();
+      return;
+    }
+    // Message court du kit, montré sur l'écran d'où l'on venait (messager
+    // de l'application, lu avant le retour).
+    final nav = Navigator.of(context);
     showKSnack(
       context,
       message: 'Séance supprimée de l’historique.',
       actionLabel: 'Annuler',
       onAction: () => store.restoreLog(key, removed),
     );
+    nav.maybePop();
   }
 
   Widget _summary() {

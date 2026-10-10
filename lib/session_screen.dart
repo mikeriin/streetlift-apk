@@ -642,7 +642,9 @@ class _SessionScreenState extends State<SessionScreen> {
         children: [
           // Texte agrandi (200 %) sur 320 dp : le lien passe sous le repère
           // au lieu de faire déborder la ligne.
-          Wrap(
+          SizedBox(
+            width: double.infinity,
+            child: Wrap(
             alignment: WrapAlignment.spaceBetween,
             crossAxisAlignment: WrapCrossAlignment.center,
             spacing: KSpacing.s8,
@@ -654,6 +656,7 @@ class _SessionScreenState extends State<SessionScreen> {
                 onPressed: _chooseExercise,
               ),
             ],
+          ),
           ),
           Padding(
             padding: const EdgeInsets.only(right: KSpacing.s8),
@@ -1762,7 +1765,7 @@ class SessionExercisePageState extends State<SessionExercisePage> {
                   children: [
                     Expanded(
                       child: Padding(
-                        padding: const EdgeInsets.only(top: KSpacing.s8),
+                        padding: const EdgeInsets.only(top: KSpacing.s12),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -2461,11 +2464,13 @@ bool _splitColumns(
       2 * KSpacing.page -
       KSpacing.s16 -
       KSpacing.s12 -
-      KSize.target -
+      KSpacing.s12 -
+      (KSize.target - KSpacing.s4) -
       KSize.target * (hasTimer ? 2 : 1) -
       count * KSpacing.s8;
   return count > 2 &&
-      available / count < MediaQuery.textScalerOf(context).scale(64);
+      available / count <
+          MediaQuery.textScalerOf(context).scale(KSize.target + KSpacing.s4);
 }
 
 class _SetRow extends StatefulWidget {
@@ -2701,13 +2706,20 @@ class _SetRowState extends State<_SetRow> {
         ),
       ],
     );
+    // Ligne courante : fond et contour, avec un peu d'air ; les autres
+    // lignes restent serrées (cinq séries visibles sans défilement).
     return Container(
-      padding: const EdgeInsetsDirectional.fromSTEB(
-        KSpacing.s8,
-        KSpacing.s4,
-        KSpacing.s4,
-        KSpacing.s4,
-      ),
+      padding: widget.current
+          ? const EdgeInsetsDirectional.fromSTEB(
+              KSpacing.s8,
+              KSpacing.s4,
+              KSpacing.s4,
+              KSpacing.s4,
+            )
+          : const EdgeInsetsDirectional.only(
+              start: KSpacing.s8,
+              end: KSpacing.s4,
+            ),
       decoration: widget.current
           ? ShapeDecoration(
               color: k.haute,
@@ -3643,14 +3655,16 @@ class _FinishPageState extends State<_FinishPage> {
     final title = week.n == 0 ? week.block : 'S${week.n} · J${day.j}';
     final goal = store.game.sessionGoal;
     final reached = totalSets > 0 && doneSets / totalSets >= goal - 1e-9;
-    return ListView(
+    return SingleChildScrollView(
       padding: const EdgeInsets.fromLTRB(
         KSpacing.page,
         KSpacing.s8,
         KSpacing.page,
         KSpacing.s24,
       ),
-      children: [
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
         KCard(
           padding: const EdgeInsets.all(KSpacing.s20),
           child: Column(
@@ -3750,7 +3764,8 @@ class _FinishPageState extends State<_FinishPage> {
             label: _saving ? 'Enregistrement…' : 'Terminer la séance',
             onPressed: _saving ? null : () => _finish(title),
           ),
-      ],
+        ],
+      ),
     );
   }
 }
@@ -3769,14 +3784,16 @@ class _RestDay extends StatelessWidget {
   Widget _build(BuildContext context) {
     final k = KTokens.of(context);
     final done = store.isDone(week.n, day.j);
-    return ListView(
+    return SingleChildScrollView(
       padding: const EdgeInsets.fromLTRB(
         KSpacing.page,
         KSpacing.s8,
         KSpacing.page,
         KSpacing.s24,
       ),
-      children: [
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
         KCard(
           padding: const EdgeInsets.all(KSpacing.s20),
           child: Column(
@@ -3822,7 +3839,8 @@ class _RestDay extends StatelessWidget {
               title: 'S${week.n} · J${day.j}',
             ),
           ),
-      ],
+        ],
+      ),
     );
   }
 }
