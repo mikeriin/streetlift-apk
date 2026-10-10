@@ -1,0 +1,230 @@
+== kalis_bench
+Resolving dependencies...
+Downloading packages...
+  lints 4.0.0 (6.1.0 available)
+Got dependencies!
+1 package has newer versions incompatible with dependency constraints.
+Try `dart pub outdated` for more information.
+Formatted 30 files (0 changed) in 0.18 seconds.
+Analyzing kalis_bench...
+
+   info - lib/src/km/criteres_moteur.dart:640:3 - Parameters ''params', 'fiches', 'validateur', and 'options'' could be super parameters. Trying converting ''params', 'fiches', 'validateur', and 'options'' to super parameters. - use_super_parameters
+   info - lib/src/km/meneur.dart:345:14 - Use the '??' operator rather than '?:' when testing for 'null'. Try rewriting the code to use '??'. - prefer_if_null_operators
+
+2 issues found.
+analyse : échec
+00:00 +0: loading test/km2_banc_test.dart
+00:00 +0: test/km2_banc_test.dart: fixtures du lot KM2 présentes
+00:00 +1: test/km2_banc_test.dart: autres_06_semi_marathon_intermediaire__reference__c__0 (setUpAll)
+00:00 +2: test/km2_banc_test.dart: autres_06_semi_marathon_intermediaire__reference__c__0 (setUpAll)
+00:00 +3: test/km2_banc_test.dart: autres_06_semi_marathon_intermediaire__reference__c__0 (setUpAll)
+00:00 +4: test/km2_banc_test.dart: autres_06_semi_marathon_intermediaire__reference__c__0 (setUpAll)
+00:00 +5: test/km2_banc_test.dart: autres_06_semi_marathon_intermediaire__reference__c__0 (setUpAll)
+00:00 +6: test/km2_banc_test.dart: autres_06_semi_marathon_intermediaire__reference__c__0 (setUpAll)
+00:00 +7: test/km2_banc_test.dart: autres_06_semi_marathon_intermediaire__reference__c__0 (setUpAll)
+00:01 +7: test/km2_banc_test.dart: autres_06_semi_marathon_intermediaire__reference__c__0 kmReferenceSeason redonne la saison lue par Python
+00:01 +8: test/km2_banc_test.dart: autres_06_semi_marathon_intermediaire__reference__c__0 tour.sets : clés, valeurs et types (hors traces)
+00:01 +9: test/km2_banc_test.dart: autres_06_semi_marathon_intermediaire__reference__c__0 tour.sets : traces des cibles
+00:01 +10: test/km2_banc_test.dart: autres_06_semi_marathon_intermediaire__reference__c__0 tour.estimates : clés, valeurs et types
+00:01 +11: test/km2_banc_test.dart: autres_06_semi_marathon_intermediaire__reference__c__0 séances servies
+00:01 +12: test/km2_banc_test.dart: autres_06_semi_marathon_intermediaire__reference__c__0 compteurs, gains et capacités
+00:01 +13: test/km2_banc_test.dart: autres_06_semi_marathon_intermediaire__reference__c__0 prévisions de la planification
+00:01 +14: test/km2_banc_test.dart: autres_06_semi_marathon_intermediaire__reference__c__0 journal du moteur : longueur et types
+00:01 +15: test/km2_banc_test.dart: autres_06_semi_marathon_intermediaire__reference__c__0 posterior final
+00:01 +16: test/km2_banc_test.dart: autres_06_semi_marathon_intermediaire__reference__c__0 journaux des extensions du banc
+00:01 +17: test/km2_banc_test.dart: autres_06_semi_marathon_intermediaire__reference__c__0 états des extensions
+00:01 +18: test/km2_banc_test.dart: autres_06_semi_marathon_intermediaire__reference__c__0 (tearDownAll)
+00:01 +18: test/km2_banc_test.dart: street_01_debutant_complet__maladie__b__1 (setUpAll)
+00:02 +18: test/km2_banc_test.dart: street_01_debutant_complet__maladie__b__1 kmReferenceSeason redonne la saison lue par Python
+00:02 +19: test/km2_banc_test.dart: street_01_debutant_complet__maladie__b__1 tour.sets : clés, valeurs et types (hors traces)
+00:02 +20: test/km2_banc_test.dart: street_01_debutant_complet__maladie__b__1 tour.sets : traces des cibles
+00:02 +21: test/km2_banc_test.dart: street_01_debutant_complet__maladie__b__1 tour.estimates : clés, valeurs et types
+00:02 +22: test/km2_banc_test.dart: street_01_debutant_complet__maladie__b__1 séances servies
+00:02 +23: test/km2_banc_test.dart: street_01_debutant_complet__maladie__b__1 compteurs, gains et capacités
+00:02 +24: test/km2_banc_test.dart: street_01_debutant_complet__maladie__b__1 prévisions de la planification
+00:02 +25: test/km2_banc_test.dart: street_01_debutant_complet__maladie__b__1 journal du moteur : longueur et types
+00:02 +26: test/km2_banc_test.dart: street_01_debutant_complet__maladie__b__1 posterior final
+00:02 +27: test/km2_banc_test.dart: street_01_debutant_complet__maladie__b__1 journaux des extensions du banc
+00:02 +28: test/km2_banc_test.dart: street_01_debutant_complet__maladie__b__1 états des extensions
+00:02 +29: test/km2_banc_test.dart: street_01_debutant_complet__maladie__b__1 (tearDownAll)
+00:02 +29: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__changement_discipline__c__1 (setUpAll)
+00:03 +29: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__changement_discipline__c__1 kmReferenceSeason redonne la saison lue par Python
+00:03 +30: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__changement_discipline__c__1 tour.sets : clés, valeurs et types (hors traces)
+00:03 +31: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__changement_discipline__c__1 tour.sets : traces des cibles
+00:03 +31 -1: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__changement_discipline__c__1 tour.sets : traces des cibles [E]
+  Expected: empty
+    Actual: [
+              '$[96][0] : "vrai test 51.2" attendu, "vrai test 51.3" obtenu',
+              '$[127][0] : "repere 7.5 (modele 7.4, plafond 8.2)" attendu, "repere 7.5 (modele 7.4, plafond 8.3)" obtenu',
+              '$[246][0] : "vrai test 41.2" attendu, "vrai test 41.3" obtenu',
+              '$[355][0] : "vrai test 51.2" attendu, "vrai test 51.3" obtenu',
+              '$[357][0] : "vrai test 56.2" attendu, "vrai test 56.3" obtenu',
+              '$[361][0] : "vrai test 66.2" attendu, "vrai test 66.3" obtenu',
+              '$[425][0] : "repere 7.5 (modele 6.9, plafond 8.2)" attendu, "repere 7.5 (modele 6.9, plafond 8.3)" obtenu',
+              '$[543][0] : "vrai test 56.2" attendu, "vrai test 56.3" obtenu',
+              '$[544][0] : "vrai test, confirmation 56.2" attendu, "vrai test, confirmation 56.3" obtenu',
+              '$[547][0] : "vrai test 66.2" attendu, "vrai test 66.3" obtenu',
+              '$[548][0] : "vrai test, confirmation 66.2" attendu, "vrai test, confirmation 66.3" obtenu',
+              '$[818][0] : "repere 7.5 (modele 8.2, plafond 8.2)" attendu, "repere 7.5 (modele 8.2, plafond 8.3)" obtenu',
+              '$[828][0] : "vrai test 56.2" attendu, "vrai test 56.3" obtenu',
+              '$[1048][0] : "vrai test 66.2" attendu, "vrai test 66.3" obtenu',
+              '$[1049][0] : "vrai test, confirmation 66.2" attendu, "vrai test, confirmation 66.3" obtenu',
+              '$[1054][0] : "repere 60.0 (modele 60.1, plafond 74.2)" attendu, "repere 60.0 (modele 60.1, plafond 74.3)" obtenu',
+              '$[1062][0] : "repere 102.5 (modele 103.5, plafond 129.2)" attendu, "repere 102.5 (modele 103.5, plafond 129.3)" obtenu',
+              '$[1075][0] : "repere 7.5 (modele 8.1, plafond 8.2)" attendu, "repere 7.5 (modele 8.1, plafond 8.3)" obtenu',
+              '$[1082][0] : "vrai test 51.2" attendu, "vrai test 51.3" obtenu'
+            ]
+  tour.sets[].trace : premiers écarts (attendu = Python, obtenu = Dart)
+  $[96][0] : "vrai test 51.2" attendu, "vrai test 51.3" obtenu
+  $[127][0] : "repere 7.5 (modele 7.4, plafond 8.2)" attendu, "repere 7.5 (modele 7.4, plafond 8.3)" obtenu
+  $[246][0] : "vrai test 41.2" attendu, "vrai test 41.3" obtenu
+  $[355][0] : "vrai test 51.2" attendu, "vrai test 51.3" obtenu
+  $[357][0] : "vrai test 56.2" attendu, "vrai test 56.3" obtenu
+  $[361][0] : "vrai test 66.2" attendu, "vrai test 66.3" obtenu
+  $[425][0] : "repere 7.5 (modele 6.9, plafond 8.2)" attendu, "repere 7.5 (modele 6.9, plafond 8.3)" obtenu
+  $[543][0] : "vrai test 56.2" attendu, "vrai test 56.3" obtenu
+  $[544][0] : "vrai test, confirmation 56.2" attendu, "vrai test, confirmation 56.3" obtenu
+  $[547][0] : "vrai test 66.2" attendu, "vrai test 66.3" obtenu
+  $[548][0] : "vrai test, confirmation 66.2" attendu, "vrai test, confirmation 66.3" obtenu
+  $[818][0] : "repere 7.5 (modele 8.2, plafond 8.2)" attendu, "repere 7.5 (modele 8.2, plafond 8.3)" obtenu
+  $[828][0] : "vrai test 56.2" attendu, "vrai test 56.3" obtenu
+  $[1048][0] : "vrai test 66.2" attendu, "vrai test 66.3" obtenu
+  $[1049][0] : "vrai test, confirmation 66.2" attendu, "vrai test, confirmation 66.3" obtenu
+  $[1054][0] : "repere 60.0 (modele 60.1, plafond 74.2)" attendu, "repere 60.0 (modele 60.1, plafond 74.3)" obtenu
+  $[1062][0] : "repere 102.5 (modele 103.5, plafond 129.2)" attendu, "repere 102.5 (modele 103.5, plafond 129.3)" obtenu
+  $[1075][0] : "repere 7.5 (modele 8.1, plafond 8.2)" attendu, "repere 7.5 (modele 8.1, plafond 8.3)" obtenu
+  $[1082][0] : "vrai test 51.2" attendu, "vrai test 51.3" obtenu
+  
+  package:matcher                expect
+  test/km2_banc_test.dart 182:3  _pareil
+  test/km2_banc_test.dart 361:9  main.<fn>.<fn>
+  
+00:03 +31 -1: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__changement_discipline__c__1 tour.estimates : clés, valeurs et types
+00:03 +32 -1: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__changement_discipline__c__1 séances servies
+00:03 +33 -1: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__changement_discipline__c__1 compteurs, gains et capacités
+00:03 +34 -1: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__changement_discipline__c__1 prévisions de la planification
+00:03 +35 -1: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__changement_discipline__c__1 journal du moteur : longueur et types
+00:03 +36 -1: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__changement_discipline__c__1 posterior final
+00:03 +37 -1: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__changement_discipline__c__1 journaux des extensions du banc
+00:03 +38 -1: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__changement_discipline__c__1 états des extensions
+00:03 +39 -1: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__changement_discipline__c__1 (tearDownAll)
+00:03 +39 -1: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__reference__a__0 (setUpAll)
+00:04 +39 -1: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__reference__a__0 kmReferenceSeason redonne la saison lue par Python
+00:04 +40 -1: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__reference__a__0 tour.sets : clés, valeurs et types (hors traces)
+00:04 +41 -1: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__reference__a__0 tour.sets : traces des cibles
+00:04 +41 -2: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__reference__a__0 tour.sets : traces des cibles [E]
+  Expected: empty
+    Actual: [
+              '$[95][0] : "vrai test 41.2" attendu, "vrai test 41.3" obtenu',
+              '$[182][0] : "vrai test 11.2" attendu, "vrai test 11.3" obtenu',
+              '$[183][0] : "vrai test, confirmation 11.2" attendu, "vrai test, confirmation 11.3" obtenu',
+              '$[233][0] : "repere 7.5 (modele 7.8, plafond 8.2)" attendu, "repere 7.5 (modele 7.8, plafond 8.3)" obtenu',
+              '$[385][1] : "allegee 128.2" attendu, "allegee 128.3" obtenu',
+              '$[388][0] : "repere 107.5 (modele 109.9, plafond 129.2)" attendu, "repere 107.5 (modele 109.9, plafond 129.3)" obtenu',
+              '$[393][0] : "repere 7.5 (modele 8.1, plafond 8.2)" attendu, "repere 7.5 (modele 8.1, plafond 8.3)" obtenu',
+              '$[542][0] : "vrai test 11.2" attendu, "vrai test 11.3" obtenu',
+              '$[586][0] : "repere 110.0 (modele 108.4, plafond 129.2)" attendu, "repere 110.0 (modele 108.4, plafond 129.3)" obtenu',
+              '$[591][0] : "repere 7.5 (modele 8.0, plafond 8.2)" attendu, "repere 7.5 (modele 8.0, plafond 8.3)" obtenu',
+              '$[744][0] : "repere 112.5 (modele 113.4, plafond 129.2)" attendu, "repere 112.5 (modele 113.4, plafond 129.3)" obtenu',
+              '$[749][0] : "repere 7.5 (modele 7.9, plafond 8.2)" attendu, "repere 7.5 (modele 7.9, plafond 8.3)" obtenu',
+              '$[890][0] : "vrai test 11.2" attendu, "vrai test 11.3" obtenu',
+              '$[891][0] : "vrai test, confirmation 11.2" attendu, "vrai test, confirmation 11.3" obtenu',
+              '$[962][1] : "allegee 110.2" attendu, "allegee 110.3" obtenu',
+              '$[963][1] : "allegee 110.2" attendu, "allegee 110.3" obtenu',
+              '$[964][1] : "allegee 110.2" attendu, "allegee 110.3" obtenu',
+              '$[1121][0] : "repere 7.5 (modele 8.5, plafond 8.2)" attendu, "repere 7.5 (modele 8.5, plafond 8.3)" obtenu',
+              '$[1160][0] : "vrai test 11.2" attendu, "vrai test 11.3" obtenu'
+            ]
+  tour.sets[].trace : premiers écarts (attendu = Python, obtenu = Dart)
+  $[95][0] : "vrai test 41.2" attendu, "vrai test 41.3" obtenu
+  $[182][0] : "vrai test 11.2" attendu, "vrai test 11.3" obtenu
+  $[183][0] : "vrai test, confirmation 11.2" attendu, "vrai test, confirmation 11.3" obtenu
+  $[233][0] : "repere 7.5 (modele 7.8, plafond 8.2)" attendu, "repere 7.5 (modele 7.8, plafond 8.3)" obtenu
+  $[385][1] : "allegee 128.2" attendu, "allegee 128.3" obtenu
+  $[388][0] : "repere 107.5 (modele 109.9, plafond 129.2)" attendu, "repere 107.5 (modele 109.9, plafond 129.3)" obtenu
+  $[393][0] : "repere 7.5 (modele 8.1, plafond 8.2)" attendu, "repere 7.5 (modele 8.1, plafond 8.3)" obtenu
+  $[542][0] : "vrai test 11.2" attendu, "vrai test 11.3" obtenu
+  $[586][0] : "repere 110.0 (modele 108.4, plafond 129.2)" attendu, "repere 110.0 (modele 108.4, plafond 129.3)" obtenu
+  $[591][0] : "repere 7.5 (modele 8.0, plafond 8.2)" attendu, "repere 7.5 (modele 8.0, plafond 8.3)" obtenu
+  $[744][0] : "repere 112.5 (modele 113.4, plafond 129.2)" attendu, "repere 112.5 (modele 113.4, plafond 129.3)" obtenu
+  $[749][0] : "repere 7.5 (modele 7.9, plafond 8.2)" attendu, "repere 7.5 (modele 7.9, plafond 8.3)" obtenu
+  $[890][0] : "vrai test 11.2" attendu, "vrai test 11.3" obtenu
+  $[891][0] : "vrai test, confirmation 11.2" attendu, "vrai test, confirmation 11.3" obtenu
+  $[962][1] : "allegee 110.2" attendu, "allegee 110.3" obtenu
+  $[963][1] : "allegee 110.2" attendu, "allegee 110.3" obtenu
+  $[964][1] : "allegee 110.2" attendu, "allegee 110.3" obtenu
+  $[1121][0] : "repere 7.5 (modele 8.5, plafond 8.2)" attendu, "repere 7.5 (modele 8.5, plafond 8.3)" obtenu
+  $[1160][0] : "vrai test 11.2" attendu, "vrai test 11.3" obtenu
+  
+  package:matcher                expect
+  test/km2_banc_test.dart 182:3  _pareil
+  test/km2_banc_test.dart 361:9  main.<fn>.<fn>
+  
+00:04 +41 -2: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__reference__a__0 tour.estimates : clés, valeurs et types
+00:04 +42 -2: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__reference__a__0 séances servies
+00:04 +43 -2: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__reference__a__0 compteurs, gains et capacités
+00:04 +44 -2: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__reference__a__0 prévisions de la planification
+00:04 +45 -2: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__reference__a__0 journal du moteur : longueur et types
+00:04 +46 -2: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__reference__a__0 posterior final
+00:04 +47 -2: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__reference__a__0 journaux des extensions du banc
+00:04 +48 -2: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__reference__a__0 états des extensions
+00:04 +49 -2: test/km2_banc_test.dart: street_07_avance_streetlifting_competition__reference__a__0 (tearDownAll)
+00:04 +49 -2: test/km2_banc_test.dart: street_16_specialisation_traction_lestee__reference__a__1 (setUpAll)
+00:05 +49 -2: test/km2_banc_test.dart: street_16_specialisation_traction_lestee__reference__a__1 kmReferenceSeason redonne la saison lue par Python
+00:05 +50 -2: test/km2_banc_test.dart: street_16_specialisation_traction_lestee__reference__a__1 tour.sets : clés, valeurs et types (hors traces)
+00:05 +51 -2: test/km2_banc_test.dart: street_16_specialisation_traction_lestee__reference__a__1 tour.sets : traces des cibles
+00:05 +51 -3: test/km2_banc_test.dart: street_16_specialisation_traction_lestee__reference__a__1 tour.sets : traces des cibles [E]
+  Expected: empty
+    Actual: [
+              '$[62][0] : "vrai test 36.2" attendu, "vrai test 36.3" obtenu',
+              '$[63][0] : "vrai test 41.2" attendu, "vrai test 41.3" obtenu',
+              '$[70][0] : "vrai test 66.2" attendu, "vrai test 66.3" obtenu',
+              '$[71][0] : "vrai test 76.2" attendu, "vrai test 76.3" obtenu',
+              '$[226][0] : "vrai test 46.2" attendu, "vrai test 46.3" obtenu',
+              '$[227][0] : "vrai test 51.2" attendu, "vrai test 51.3" obtenu',
+              '$[228][0] : "vrai test, confirmation 51.2" attendu, "vrai test, confirmation 51.3" obtenu',
+              '$[252][0] : "repere 7.5 (modele 5.9, plafond 8.2)" attendu, "repere 7.5 (modele 5.9, plafond 8.3)" obtenu',
+              '$[376][0] : "repere 7.5 (modele 7.2, plafond 8.2)" attendu, "repere 7.5 (modele 7.2, plafond 8.3)" obtenu',
+              '$[631][0] : "repere 7.5 (modele 6.9, plafond 8.2)" attendu, "repere 7.5 (modele 6.9, plafond 8.3)" obtenu',
+              '$[709][0] : "repere 7.5 (modele 7.9, plafond 8.2)" attendu, "repere 7.5 (modele 7.9, plafond 8.3)" obtenu',
+              '$[776][0] : "vrai test 61.2" attendu, "vrai test 61.3" obtenu'
+            ]
+  tour.sets[].trace : premiers écarts (attendu = Python, obtenu = Dart)
+  $[62][0] : "vrai test 36.2" attendu, "vrai test 36.3" obtenu
+  $[63][0] : "vrai test 41.2" attendu, "vrai test 41.3" obtenu
+  $[70][0] : "vrai test 66.2" attendu, "vrai test 66.3" obtenu
+  $[71][0] : "vrai test 76.2" attendu, "vrai test 76.3" obtenu
+  $[226][0] : "vrai test 46.2" attendu, "vrai test 46.3" obtenu
+  $[227][0] : "vrai test 51.2" attendu, "vrai test 51.3" obtenu
+  $[228][0] : "vrai test, confirmation 51.2" attendu, "vrai test, confirmation 51.3" obtenu
+  $[252][0] : "repere 7.5 (modele 5.9, plafond 8.2)" attendu, "repere 7.5 (modele 5.9, plafond 8.3)" obtenu
+  $[376][0] : "repere 7.5 (modele 7.2, plafond 8.2)" attendu, "repere 7.5 (modele 7.2, plafond 8.3)" obtenu
+  $[631][0] : "repere 7.5 (modele 6.9, plafond 8.2)" attendu, "repere 7.5 (modele 6.9, plafond 8.3)" obtenu
+  $[709][0] : "repere 7.5 (modele 7.9, plafond 8.2)" attendu, "repere 7.5 (modele 7.9, plafond 8.3)" obtenu
+  $[776][0] : "vrai test 61.2" attendu, "vrai test 61.3" obtenu
+  
+  package:matcher                expect
+  test/km2_banc_test.dart 182:3  _pareil
+  test/km2_banc_test.dart 361:9  main.<fn>.<fn>
+  
+00:05 +51 -3: test/km2_banc_test.dart: street_16_specialisation_traction_lestee__reference__a__1 tour.estimates : clés, valeurs et types
+00:05 +52 -3: test/km2_banc_test.dart: street_16_specialisation_traction_lestee__reference__a__1 séances servies
+00:05 +53 -3: test/km2_banc_test.dart: street_16_specialisation_traction_lestee__reference__a__1 compteurs, gains et capacités
+00:05 +54 -3: test/km2_banc_test.dart: street_16_specialisation_traction_lestee__reference__a__1 prévisions de la planification
+00:05 +55 -3: test/km2_banc_test.dart: street_16_specialisation_traction_lestee__reference__a__1 journal du moteur : longueur et types
+00:05 +56 -3: test/km2_banc_test.dart: street_16_specialisation_traction_lestee__reference__a__1 posterior final
+00:05 +57 -3: test/km2_banc_test.dart: street_16_specialisation_traction_lestee__reference__a__1 journaux des extensions du banc
+00:05 +58 -3: test/km2_banc_test.dart: street_16_specialisation_traction_lestee__reference__a__1 états des extensions
+00:05 +59 -3: test/km2_banc_test.dart: street_16_specialisation_traction_lestee__reference__a__1 (tearDownAll)
+00:05 +59 -3: test/km2_banc_test.dart: comparateur : chemins, tolérance et types
+00:05 +60 -3: Some tests failed.
+
+Failing tests:
+  test/km2_banc_test.dart: street_07_avance_streetlifting_competition__changement_discipline__c__1 tour.sets : traces des cibles
+  test/km2_banc_test.dart: street_07_avance_streetlifting_competition__reference__a__0 tour.sets : traces des cibles
+  test/km2_banc_test.dart: street_16_specialisation_traction_lestee__reference__a__1 tour.sets : traces des cibles
+
+Consider enabling the flag chain-stack-traces to receive more detailed exceptions.
+For example, 'dart test --chain-stack-traces'.
+tests : échec
+durée : 12 s

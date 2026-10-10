@@ -1,0 +1,96 @@
+........................................................................ [ 83%]
+FF......F..F..                                                           [100%]
+=================================== FAILURES ===================================
+__________________________ test_types_generes_a_jour ___________________________
+
+    def test_types_generes_a_jour():
+        r = _run("gen_contracts.py")
+>       assert r.returncode == 0, r.stdout + r.stderr
+E       AssertionError: pas à jour : test/fixtures/variants.json
+E         relancer tool/gen_contracts.py
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/opt/hostedtoolcache/Python/3.11.17/x64/bin/python3', '/home/runner/work/streetlift-apk/street...-check'], returncode=1, stdout='pas à jour : test/fixtures/variants.json\nrelancer tool/gen_contracts.py\n', stderr='').returncode
+
+tools/catalog/tests/test_contracts.py:25: AssertionError
+_________________________ test_jeux_de_donnees_a_jour __________________________
+
+    def test_jeux_de_donnees_a_jour():
+        r = _run("gen_fixtures.py")
+>       assert r.returncode == 0, r.stdout + r.stderr
+E       AssertionError: pas à jour : profiles.json
+E         pas à jour : journals.json.gz
+E         pas à jour : owner_program_v33.json.gz
+E         pas à jour : legacy_journal.json
+E         relancer tool/gen_fixtures.py
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/opt/hostedtoolcache/Python/3.11.17/x64/bin/python3', '/home/runner/work/streetlift-apk/street...npas à jour : owner_program_v33.json.gz\npas à jour : legacy_journal.json\nrelancer tool/gen_fixtures.py\n', stderr='').returncode
+
+tools/catalog/tests/test_contracts.py:30: AssertionError
+_____________________________ test_parcours_a_jour _____________________________
+
+    def test_parcours_a_jour():
+        r = _run("gen_parcours.py")
+>       assert r.returncode == 0, r.stdout + r.stderr
+E       AssertionError: pas à jour : test/fixtures/profiles_v3.json
+E         relancer tool/gen_parcours.py
+E         
+E       assert 1 == 0
+E        +  where 1 = CompletedProcess(args=['/opt/hostedtoolcache/Python/3.11.17/x64/bin/python3', '/home/runner/work/streetlift-apk/street...heck'], returncode=1, stdout='pas à jour : test/fixtures/profiles_v3.json\nrelancer tool/gen_parcours.py\n', stderr='').returncode
+
+tools/catalog/tests/test_contracts.py:106: AssertionError
+________________ test_validateur_structurel_variantes_et_schema ________________
+
+    def test_validateur_structurel_variantes_et_schema():
+        ok = {"exerciseId": "sl-dips-leste", "kind": "load_reps", "source": "declared", "externalLoadKg": 40.0, "reps": 3}
+        assert spec_validate.validate("Benchmark", ok) == []
+        assert spec_validate.validate("Benchmark", {k: v for k, v in ok.items() if k != "reps"})
+        assert spec_validate.validate("Benchmark", {**ok, "seconds": 10})
+>       profils = json.loads((RACINE / "packages/kalis_core/test/fixtures/profiles.json").read_text(encoding="utf-8"))["profiles"]
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+tools/catalog/tests/test_contracts.py:163: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/pathlib.py:1058: in read_text
+    with self.open(mode='r', encoding=encoding, errors=errors) as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = PosixPath('/home/runner/work/streetlift-apk/streetlift-apk/packages/kalis_core/test/fixtures/profiles.json')
+mode = 'r', buffering = -1, encoding = 'utf-8', errors = None, newline = None
+
+    def open(self, mode='r', buffering=-1, encoding=None,
+             errors=None, newline=None):
+        """
+        Open the file pointed by this path and return a file object, as
+        the built-in open() function does.
+        """
+        if "b" not in mode:
+            encoding = io.text_encoding(encoding)
+>       return io.open(self, mode, buffering, encoding, errors, newline)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       FileNotFoundError: [Errno 2] No such file or directory: '/home/runner/work/streetlift-apk/streetlift-apk/packages/kalis_core/test/fixtures/profiles.json'
+
+/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/pathlib.py:1044: FileNotFoundError
+=========================== short test summary info ============================
+FAILED tools/catalog/tests/test_contracts.py::test_types_generes_a_jour - AssertionError: pas à jour : test/fixtures/variants.json
+  relancer tool/gen_contracts.py
+  
+assert 1 == 0
+ +  where 1 = CompletedProcess(args=['/opt/hostedtoolcache/Python/3.11.17/x64/bin/python3', '/home/runner/work/streetlift-apk/street...-check'], returncode=1, stdout='pas à jour : test/fixtures/variants.json\nrelancer tool/gen_contracts.py\n', stderr='').returncode
+FAILED tools/catalog/tests/test_contracts.py::test_jeux_de_donnees_a_jour - AssertionError: pas à jour : profiles.json
+  pas à jour : journals.json.gz
+  pas à jour : owner_program_v33.json.gz
+  pas à jour : legacy_journal.json
+  relancer tool/gen_fixtures.py
+  
+assert 1 == 0
+ +  where 1 = CompletedProcess(args=['/opt/hostedtoolcache/Python/3.11.17/x64/bin/python3', '/home/runner/work/streetlift-apk/street...npas à jour : owner_program_v33.json.gz\npas à jour : legacy_journal.json\nrelancer tool/gen_fixtures.py\n', stderr='').returncode
+FAILED tools/catalog/tests/test_contracts.py::test_parcours_a_jour - AssertionError: pas à jour : test/fixtures/profiles_v3.json
+  relancer tool/gen_parcours.py
+  
+assert 1 == 0
+ +  where 1 = CompletedProcess(args=['/opt/hostedtoolcache/Python/3.11.17/x64/bin/python3', '/home/runner/work/streetlift-apk/street...heck'], returncode=1, stdout='pas à jour : test/fixtures/profiles_v3.json\nrelancer tool/gen_parcours.py\n', stderr='').returncode
+FAILED tools/catalog/tests/test_contracts.py::test_validateur_structurel_variantes_et_schema - FileNotFoundError: [Errno 2] No such file or directory: '/home/runner/work/streetlift-apk/streetlift-apk/packages/kalis_core/test/fixtures/profiles.json'
+4 failed, 82 passed in 1.79s
