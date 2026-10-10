@@ -525,7 +525,7 @@ Ces constantes ne sont pas dans le fichier de paramètres. Elles sont citées pa
 | Montée : réserve atteinte si dite ≤ rir + 0,75 (`_rampe`) | 0,75 | choix raisonné | — |
 | Montée : borne haute μ + 2,5σ (`_rampe`) | 2,5 | choix raisonné | — |
 | Montée : départ à réserve + 2 (`_rampe`) | 2 | choix raisonné | — |
-| Montée : plafond de la 1re barre (`_rampe`) | max sur les barres réussies de 42 j de (c + bw)(1 + `repere_hausse`)(1 + `schema_change_part`·min(max(r − n, 0), `schema_change_reps_max`)) − bw | repris de 0.3.1 | 1.0.1 : règle du premier passage à un schéma (inventaire A7.2), déjà celle de l'ouverture des tentatives ; fenêtre de 42 j codée en dur. En 1.0 : (plus lourde barre récente + bw)·1,10 − bw. |
+| Montée : plafond de la 1re barre (`_rampe`) | max( (plus lourde barre récente + bw)(1 + `repere_hausse`) − bw ; max sur les barres réussies des `barre_recente_j` (42) derniers jours de (c + bw)(1 + `hausse_par_niveau[niveau]`)(1 + `schema_change_part`·min(max(r − n, 0), `schema_change_reps_max`)) − bw ) | repris de 0.3.1 | 1.0.1 : règle du premier passage à un schéma (inventaire A7.2), avec la hausse du niveau (10 % débutant, 5 % ensuite, comme A7.2.4), déjà celle de l'ouverture des tentatives ; le premier terme, plafond de 1.0, reste un plancher du plafond (relecture indépendante, M1). Hors débutant, le second terme vaut au plus ×1,155 sur la charge totale. Aucune constante nouvelle : toutes les grandeurs viennent du fichier. En 1.0 : (plus lourde barre récente + bw)·1,10 − bw. |
 | Montée : séries comptées dans la durée (`_duree_permet_test`) | min(`rampe_series_max` (+2 si 1 rép.) ; max(1, séries − 1) + 1) | choix raisonné | 1.0.1 : séries dures permises plus une série encore facile (en 1.0 : toujours `rampe_series_max` (+2)). |
 | Tentatives : gain d'affûtage à l'ouverture (`_tentative`) | semaine du jour ou précédente `taper` ou `competition` | repris de 0.3.1 | 1.0.1 : `coachTaperGain` (inventaire A8.2), à l'ouverture seulement, avec la valeur mesurée `planification.gain_affutage`. |
 | Tentatives : flammes 7, 9, 10 (`_tentative`) | — | repris de 0.3.1 | Inventaire A8.2. |
@@ -615,7 +615,8 @@ Toutes ces constantes ont été écrites lors de la génération par règles, pu
 | Constante | Valeur | Catégorie | Raison |
 | --- | --- | --- | --- |
 | `SD_DECLARE_ACCESSOIRE` | 0,12 (ln) | choix raisonné | Écart-type d'une valeur déclarée indirecte (charge de travail initiale d'un accessoire convertie en 1RM), plus large que `delta_sd_declare`. |
-| `COURBE_LAMBDA` | 0,3 | choix raisonné | Forme de population de la courbe (`a_priori.courbe_forme[0]`), recopiée de 1.0 ; sans l'échelle `courbe_echelle` (CONTRAT, annexe A.3). Depuis 1.0.1, le convertisseur garde 0,3 et l'ancienne famille (constantes 0,0265 et 0,0892), alors que le moteur utilise 0,2 et la famille de Box-Cox. |
+| `COURBE_LAMBDA` | 0,2 | choix raisonné | Forme de population de la courbe, recopiée de `a_priori.courbe_forme[0]` (1.0.1). Le convertisseur appelle `Modele._g` : même famille de Box-Cox que le moteur (relecture indépendante ; avant : 0,3 et l'ancienne famille). |
+| `COURBE_ECHELLE` | 0,10 | choix raisonné | Échelle de population de la courbe, recopiée de `a_priori.courbe_echelle[0]` ; passée à `Modele._g` comme le moteur l'applique à g₀ (CONTRAT, annexe A.3, n° 30). |
 
 ---
 
