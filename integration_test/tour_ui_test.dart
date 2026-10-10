@@ -432,9 +432,12 @@ void main() {
     await wait(tester, 800);
     releve['carte_du_moment'] = ProgramHomeCard.visible;
     record();
+    // Chemin de la base (dev6.11.1) : Réglages › Programme › Mon programme.
+    Finder settingsProgram() => text('Programme');
     await route(tester, 'mon_programme', [
       [() => text('Mon programme')],
       [settingsTab, () => text('Mon programme')],
+      [settingsTab, settingsProgram, () => text('Mon programme')],
     ], () => find.byType(ProgramScreen));
     await route(tester, 'ma_saison', [
       [
@@ -443,6 +446,12 @@ void main() {
       ],
       [
         settingsTab,
+        () => text('Mon programme'),
+        () => find.byKey(const ValueKey('program-season')),
+      ],
+      [
+        settingsTab,
+        settingsProgram,
         () => text('Mon programme'),
         () => find.byKey(const ValueKey('program-season')),
       ],
@@ -457,6 +466,12 @@ void main() {
         () => text('Mon programme'),
         () => find.byKey(const ValueKey('program-evolution-open')),
       ],
+      [
+        settingsTab,
+        settingsProgram,
+        () => text('Mon programme'),
+        () => find.byKey(const ValueKey('program-evolution-open')),
+      ],
     ], () => find.byType(EvolutionScreen));
     await route(tester, 'jour_j', [
       [
@@ -466,6 +481,13 @@ void main() {
       ],
       [
         settingsTab,
+        () => text('Mon programme'),
+        () => find.byKey(const ValueKey('program-season')),
+        () => find.textContaining('Jour J'),
+      ],
+      [
+        settingsTab,
+        settingsProgram,
         () => text('Mon programme'),
         () => find.byKey(const ValueKey('program-season')),
         () => find.textContaining('Jour J'),

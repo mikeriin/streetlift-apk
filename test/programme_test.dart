@@ -142,9 +142,10 @@ void main() {
         );
         expect(rect.top, greaterThanOrEqualTo(previousBottom));
         expect(rect.bottom, lessThan(dockTop));
-        // UI1 : ligne de jour de la maquette « Accueil » (52 dp, cible de
-        // 48 dp comprise) ; la semaine entière reste visible (L5).
-        if (day != 4) expect(rect.height, lessThanOrEqualTo(52));
+        // UI1 : ligne de jour de la maquette « Accueil » (52 dp ; 56 pour un
+        // titre sur deux lignes, jamais coupé, C3) ; la semaine entière
+        // reste visible (L5).
+        if (day != 4) expect(rect.height, lessThanOrEqualTo(56));
         final expected = day <= 2
             ? Icons.check_circle_rounded
             : Icons.radio_button_unchecked_rounded;
@@ -169,10 +170,11 @@ void main() {
     await tester.longPress(find.byKey(const ValueKey('selected-week')));
     await tester.pumpAndSettle();
     expect(find.text('Choisir une semaine'), findsOneWidget);
-    // UI1 : feuille de liste du kit (« Semaine 3 », dates et bloc dessous).
-    await tester.tap(find.text('Semaine 3'));
+    // UI1 : feuille de liste du kit, ouverte sur la semaine affichée (S8) ;
+    // « Semaine 9 », dates et bloc dessous.
+    await tester.tap(find.text('Semaine 9'));
     await tester.pumpAndSettle();
-    expect(find.text('S3'), findsOneWidget);
+    expect(find.text('S9'), findsOneWidget);
     expect(find.byType(DraggableScrollableSheet), findsNothing);
     expect(find.byType(SessionScreen), findsNothing);
     expect(tester.takeException(), null);
@@ -292,14 +294,14 @@ void main() {
       );
       await tester.tap(find.text('Choisir une semaine'));
       await tester.pumpAndSettle();
-      await tester.tap(find.text('Semaine 2'));
+      await tester.tap(find.text('Semaine 7'));
       await tester.pumpAndSettle();
-      expect(find.text('S2'), findsOneWidget);
+      expect(find.text('S7'), findsOneWidget);
       expect(find.byType(MuscleMap2D), findsNothing);
       await revealCard(tester, 2);
       await tester.longPress(find.byKey(const ValueKey('programme-day-2')));
       await tester.pumpAndSettle();
-      expect(find.text('Résumé · S2 · J2'), findsOneWidget);
+      expect(find.text('Résumé · S7 · J2'), findsOneWidget);
       expect(tester.takeException(), null);
     },
   );

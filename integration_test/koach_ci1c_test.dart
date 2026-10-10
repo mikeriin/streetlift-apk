@@ -414,6 +414,9 @@ void main() {
 
     // 3. Session de test : programme street créé (mode libre), séance de
     // demain ouverte à l'avance, proposition acceptée, séance rouverte.
+    // UI1 : le logo est dans l'en-tête de l'accueil, qui défile avec la
+    // liste (maquette « Accueil ») : retour en haut avant les 5 appuis.
+    await scrollTo(tester, find.byKey(const ValueKey('header-logo')));
     final logo = find.byKey(const ValueKey('header-logo')).hitTestable();
     for (var i = 0; i < 5; i++) {
       await tester.tap(logo.first);
