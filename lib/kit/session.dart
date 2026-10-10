@@ -43,11 +43,17 @@ class KSetField extends StatelessWidget {
             child: Center(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: KSpacing.s8),
-                child: Text(
-                  value,
-                  textAlign: TextAlign.center,
-                  style: KType.chiffreMoyen.copyWith(
-                    color: dimmed ? k.texte3 : k.texte,
+                // Un nombre reste entier : il se réduit plutôt que de passer
+                // à la ligne (cahier §5.2).
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(
+                    value,
+                    maxLines: 1,
+                    textAlign: TextAlign.center,
+                    style: KType.chiffreMoyen.copyWith(
+                      color: dimmed ? k.texte3 : k.texte,
+                    ),
                   ),
                 ),
               ),
