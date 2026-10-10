@@ -46,6 +46,27 @@ for part in $parts; do
       -d emulator-5554 > "$out/drive-tour-$part.log" 2>&1
     c=$?
   fi
+  if [ "$c" -ne 0 ] && [ ! -f "$out/tour_releve_$part.json" ]; then
+    # Émulateur instable (« device offline », « Service has disappeared ») :
+    # attendre qu'il soit de nouveau prêt, puis un troisième essai.
+    echo "Tour $part sans relevé (code $c) : attente de l'émulateur, troisième essai."
+    cp "$out/drive-tour-$part.log" "$out/drive-tour-$part-essai2.log"
+    adb kill-server || true
+    adb start-server || true
+    timeout 120 adb wait-for-device || true
+    for _ in $(seq 1 60); do
+      [ "$(adb shell getprop sys.boot_completed 2>/dev/null | tr -d '\r')" = 1 ] && break
+      sleep 2
+    done
+    adb shell input keyevent 82 || true
+    timeout 900 flutter drive --no-pub \
+      --driver=test_driver/integration_test.dart \
+      --target=integration_test/tour_ui_test.dart \
+      --dart-define=UI_TOUR_PART=$part \
+      --dart-define=KALIS_DEV=true \
+      -d emulator-5554 > "$out/drive-tour-$part.log" 2>&1
+    c=$?
+  fi
   echo "tour_$part=$c" >> "$bilan"
   [ "$c" -ne 0 ] && code=$c
   tail -n 20 "$out/drive-tour-$part.log"
