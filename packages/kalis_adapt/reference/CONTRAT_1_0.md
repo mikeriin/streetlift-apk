@@ -1,7 +1,22 @@
 # Contrat de Koach 1.0 (`kalis_adapt` 1.0.0)
 
 Rédigé le 09/10/2026, remis en accord avec le code le 10/10/2026 (référence Python `packages/kalis_adapt/reference/`, branche `moteurs`, arbre de travail du lot KM1).
-Fichier de paramètres lu : `params/koach_params_v1.json`, SHA-256 `6df91d36c13fc2fba4ac85ecaa90e0bd8db9cfced02b54090661fccf421c63b2`, 306 clés (6 à la racine, 299 dans les onze sections). L'empreinte sera recalculée à la livraison du lot si le fichier change d'ici là.
+Fichier de paramètres lu : `params/koach_params_v1.json` version `1.0.1-ref.1`, SHA-256 `c8aa09ebc7fb337bf93500b2fda695e95df611d4e5181fa615886faf6092157f`, 317 clés (6 à la racine, 311 dans les onze sections). Contrat gelé 1.0 : version `1.0.0-ref.1`, SHA-256 `6df91d36c13fc2fba4ac85ecaa90e0bd8db9cfced02b54090661fccf421c63b2`, 306 clés (6 à la racine, 300 dans les sections ; l'en-tête de 1.0 écrivait 299 par erreur).
+
+**Note datée du 10/10/2026 — version 1.0.1 (KM1 correction 1, DECISIONS_CP.md C13.10).** Le contrat 1.0 ne change qu'avec une note datée et justifiée ; ce qui change par rapport au contrat gelé 1.0 (liste exacte : `CHANGEMENTS_1_0_1.md`) :
+
+1. **Courbe répétitions-charge** (§ 5.1, 5.4, 4.6) : famille de Box-Cox en répétitions, toutes formes croisées à 8 répétitions, inverse en forme fermée (plus de Newton), λ borné à [−0,8 ; 1,3], a priori `courbe_forme` 0,2 ± 0,45. Pourquoi : l'erreur d'e1RM manquait sa cible sur le modèle de vérité B, à courbe très linéaire (LIVRAISON_KM1.md, C13.10.3) ; la nouvelle famille couvre les formes convexes publiées et reproduit sept équations publiées à 1,8 % de charge au plus entre 2 et 20 répétitions (SOURCES.md).
+2. **Vrai test** (§ 2.2, 5.8, 6.4, 6.5) : trois horloges de plus (`dernier_vrai_test_jour`, `derniere_rampe_jour`, `dernier_echec_jour`) ; une série repère ne bloque plus un vrai test, une montée arrêtée loin de l'échec ne bloque la suivante que `jours_min_entre_rampes` jours ; pas de vrai test après un échec non prévu à la dernière séance de l'exercice, ni dans les `jours_min_entre_tests` jours qui suivent une série ratée ; le rôle d'une série est lu à la racine, sinon dans `target.role`. Pourquoi : des montées qui n'avaient rien mesuré retardaient le test suivant de 14 jours ; en les libérant, un vrai test pouvait suivre de près un échec (A8.3, A7.2.3 de 0.3.1).
+3. **Montée** (§ 6.4, 6.5) : première barre bornée par la règle A7.2 de 0.3.1 (comme l'ouverture des tentatives), avec la hausse du niveau, et jamais sous l'ancien plafond ; durée comptée sur les séries réellement permises ; cran entier permis jusqu'à 15 % sur grille grossière, après une série dite très facile et avec P(réussite) ≥ `rampe_proba_min`. Test du débutant : 3 répétitions au lieu de 5 (réserve 2), aligné sur le test 3RM à 85 % de kalis_plan.
+4. **Tentatives** (§ 6.5, 8.1) : gain d'affûtage (`gain_affutage`, mesuré) ajouté au maximum estimé à l'ouverture en semaine d'affûtage ou de compétition (règle A8.2 de 0.3.1).
+5. **P(réussite) du jour J** (§ 3.7.1, 9.1) : échelle des tentatives simulée, effet de séance commun aux cibles, erreur d'estimation et manque de l'échelle ; trois tirages de plus, après tous les autres ; `prevu_jour` dans la ligne d'historique. Pourquoi : P(réussite) par cible était trop haute ; il manquait la corrélation entre cibles et l'effet de l'affûtage (LIVRAISON_KM1.md, C13.10.3), et l'ancien seuil unique ignorait l'échelle des tentatives réellement servie. Paramètres mesurés sur le banc (SOURCES.md).
+6. **Branche « mauvais jour »** (§ 4.5, 5.4) : la capacité de l'exercice observé n'y est plus déplacée (`mauvais_jour_fige_capacite`), sauf pour une série de rôle `attempt` (tentative maximale : elle mesure la capacité). Pourquoi : un mauvais jour isolé baissait la capacité (mesure appariée : 1,15 % → 0,93 %).
+7. **Surveillance** (§ 3.7.2) : la cause « rupture » se lève aussi après `mauvais_jours_suite` séances de suite tenues pour de mauvais jours ; compteur `mj_suite` sérialisé. Pourquoi : contrepartie du point 6, une baisse réelle et durable doit mener au diagnostic.
+8. **Paramètres** (§ 7.3, 7.4, 7.5) : 11 clés nouvelles, 5 valeurs changées (`courbe_forme`, `test_reps_debutant`, `gain_affutage`, `marge_cible`, `rendement_test_sd`) ; `gain_affutage`, `erreur_estimation_echeance_sd` et `tentative_manque` remesurés après la correction de `elargir` (point 10) ; trois clés figées de plus à l'import ; `gain_affutage` est désormais lue. Les fixtures de parité (§ 9.6) doivent être régénérées avec le moteur 1.0.1 (C13.10.3, point 4). La constante `koach.VERSION` du code vaut `1.0.1-ref.1`.
+9. **Filtre** (§ 5.4) : dans les chemins à composantes « considérées », la variance a posteriori passée à `_covariance_partielle` est bornée à la variance prévue v. **Planification** (§ 3.7.1) : `prevu_jour` est remis à `None` au début de chaque `replanifier`. **Rejeu** (§ 2.5, annexe A.3) : `rejeu/journal_app.py` convertit les accessoires déclarés avec la courbe du moteur (`Modele._g`, `COURBE_LAMBDA` 0,2).
+10. **Élargissement** (§ 4.4, 3.7.2 ; CHANGEMENTS_1_0_1.md § G) : `elargir`, appelée par la réponse « rien de spécial » au diagnostic, fait `P ← D P D` avec `D = √elargissement_rien_de_special` sur les composantes de capacité (lignes et colonnes) ; la variance de toute capacité est multipliée exactement par le facteur. Pourquoi : bogue de 1.0, qui ne multipliait que les diagonales ; les covariances négatives entre qualités et écarts d'exercice n'étant pas mises à l'échelle, l'écart-type d'une capacité était multiplié par bien plus que 2 (mesuré : × 7), et l'ouverture des tentatives tombait à presque rien. Effet mesuré (72 saisons × 3 scénarios, graines 0 et 1) : meilleure barre / maximum du jour 0,924 → 0,938 ; écart-type du jour moyen au premier essai 0,094 → 0,050. Avec cette correction et l'exception des tentatives (point 6), `gain_affutage` (0,012), `erreur_estimation_echeance_sd` (0,03) et `tentative_manque` (0,018) ont été remesurés (graines 2 à 5, 1 188 unités chargées) ; `mauvais_jours_suite` reste à 2.
+
+Relecture indépendante : 1 bloquant et 3 majeurs traités (10/10/2026, CHANGEMENTS_1_0_1.md § F : vrai test après un échec, première barre de la montée et rôle de la série corrigés ; détail du critère 5 du banc complété) ; les limites déclarées non corrigées sont à l'annexe A.2.
 
 Ce contrat décrit le code tel qu'il est. Quand le code, un commentaire ou le cahier divergent, le contrat suit le code et signale l'écart dans l'annexe A. Le lot KM2 porte ce contrat en Dart ; la parité visée est de 1e-9 (cahier, « Contraintes »).
 
@@ -138,9 +153,9 @@ Lu par `Modele.observer_serie`, `Seances.serie_faite` et `Seances.fermer`.
 | `externalLoadKg` | nombre ≥ 0 ou `None` | modele, seance | charge externe (sans le poids du corps) |
 | `flames` | 1 à 10 ou `None` | modele, seance | note ; `None` = série sans note |
 | `failed` | booléen | modele, seance | série ratée |
-| `target` | objet `{repsLow, repsHigh, secondsLow, secondsHigh, flames, role}` | modele (`flames`), seance (`repsHigh`, `flames`, `role`) | cible servie ; `target.flames` = note préremplie ; `target.role` ∈ `None`, `test`, `attempt` |
+| `target` | objet `{repsLow, repsHigh, secondsLow, secondsHigh, flames, role}` | modele (`flames`, `role`), seance (`repsHigh`, `flames`, `role`) | cible servie ; `target.flames` = note préremplie ; `target.role` ∈ `None`, `test`, `attempt` (le modèle le lit quand `role` manque à la racine, voir `role`) |
 | `restSeconds` | s | modele | repos avant la série ; 90 s seulement si le champ est absent ou `None` (un repos de 0 s est gardé) |
-| `role` | texte | modele | `test` ou `attempt` marque une mesure (`dernier_test_jour`) |
+| `role` | texte | modele | `test` ou `attempt` marque une mesure (`dernier_test_jour`, et depuis 1.0.1 `derniere_rampe_jour`, `dernier_vrai_test_jour`, § 5.8). Pour ces deux horloges de 1.0.1, le rôle est lu à la racine (`role`), sinon dans `target.role` ; `dernier_test_jour` ne lit que la racine |
 | `repere` | booléen | modele | série repère (marque une mesure) |
 | `demand` | nombre > 0 | modele (cardio, wod) | demande relative écrite (cardio : durée écrite × poids de qualité, en minutes) ; sans elle, la série d'endurance est ignorée par le modèle |
 | `doneShare` | 0 à 1 (défaut 1) | modele (cardio, wod) | part faite ; < 0,999 = séance écourtée |
@@ -173,7 +188,7 @@ Ces entrées sont nécessaires au calcul mais ne sont pas des événements :
 - `params` : le fichier de paramètres **initial** (§ 7). Les imports suivants sont journalisés (événement `parametres`).
 - `fiches` : `vecteurs_qualites_v1.json`, champ `exercices`. Champs lus par le moteur : `type`, `vecteur`, `ratio`, `fraction`, `difficulte`, `bas`, `tendon`, `zone_tendon`, `systemique`, `locale`, `groupes`, `schema`, `type_charge`, `materiel`, `lieux`, `contraintes` (`contraintes.poignet`), `renforcement`, `lateralite`, `bras_tendus` (retour gradué et durée de séance, § 8.3 ; règle R9 de `qualites/regles.py`).
 - `profil` : `niveau` 0–3 (borné ; défaut 1), `sexe` (`female` réduit l'a priori de charge), `poids_kg`, `declares`, `zones_fragiles`, `allure_course` (facultatif, m/s : meilleure allure chronométrée × 0,9 ; sert à borner la durée d'une séance, § 8.3).
-  - `declares` : `{exerciseId: (mesure, valeur[, écart-type])}`. Les mesures sont `one_rm_kg`, `max_reps` ou `max_hold_seconds`. Le troisième élément, s'il est présent et non nul, remplace `delta_sd_declare` comme écart-type (ln) de l'observation. Le convertisseur du journal de l'application (`rejeu/journal_app.declares_initiaux`) déclare ainsi les accessoires depuis leur charge de travail initiale, convertie en 1RM par la courbe de population à la réserve cible de la ligne, avec l'écart-type 0,12.
+  - `declares` : `{exerciseId: (mesure, valeur[, écart-type])}`. Les mesures sont `one_rm_kg`, `max_reps` ou `max_hold_seconds`. Le troisième élément, s'il est présent et non nul, remplace `delta_sd_declare` comme écart-type (ln) de l'observation. Le convertisseur du journal de l'application (`rejeu/journal_app.declares_initiaux`) déclare ainsi les accessoires depuis leur charge de travail initiale, convertie en 1RM par la courbe de population du moteur (`Modele._g`, avec les constantes du module `COURBE_LAMBDA` = 0,2 et `COURBE_ECHELLE` = 0,10, moyennes de `courbe_forme` et `courbe_echelle`) à la réserve cible de la ligne, avec l'écart-type 0,12.
   - `zones_fragiles` : liste d'objets `{zone, since, discomfort}` ou de codes de zone. Un objet compte si `since` ∈ `fragile_anciennetes` ou si `discomfort ≥ fragile_gene_min` ; un code seul compte toujours (`Gardefous._zones_fragiles`, § 8.1).
 - La **référence** de la planification (`Planification.charger_reference`) et la replanification initiale demandée par l'appelant (annexe A, constat de relecture M7).
 - La liste des extensions et leur ordre (`rejouer(…, extensions)`).
@@ -384,7 +399,7 @@ Une semaine est **verrouillée** si `intention or genre` ∈ {intro, deload, tap
 2. Construit `H` : une ligne par exercice suivi (fonctionnelle de capacité à frais `h_frais`, moyenne `base + h·m`, sans `defaut_modele_sd`), puis une ligne pour ρ et une par EPS_c.
 3. `S = H P Hᵀ`, puis `S = ½(S + Sᵀ)`.
 4. `L = numerique.cholesky_semi(S)` (§ 9.3) : Cholesky en boucles explicites ; un pivot ≤ 1e-12 × la plus grande diagonale annule sa colonne.
-5. Générateur mulberry32 de graine `fnv1a32('koach-plan:<graine>:<semaine>')`. Ordre des tirages : `z[a, b]` gaussien pour a < n, b < k (ligne par ligne) ; puis n uniformes pour l'hypothèse de chaque trajectoire (inversion de la fonction de répartition des `poids_hyp`, dernier indice par défaut) ; puis, pour chaque a et chaque b < max(E, 1), `bruit_jour[a, b]` et `bruit_proc[a, b]` en alternance.
+5. Générateur mulberry32 de graine `fnv1a32('koach-plan:<graine>:<semaine>')`. Ordre des tirages : `z[a, b]` gaussien pour a < n, b < k (ligne par ligne) ; puis n uniformes pour l'hypothèse de chaque trajectoire (inversion de la fonction de répartition des `poids_hyp`, dernier indice par défaut) ; puis, pour chaque a et chaque b < max(E, 1), `bruit_jour[a, b]` et `bruit_proc[a, b]` en alternance ; enfin (1.0.1, tirés **après** tous les autres : les nombres aléatoires communs précédents ne changent pas), pour chaque a : `bruit_seance[a]` (gaussien), puis pour chaque b < max(E, 1) `bruit_est[a, b]` (gaussien) et `manque[a, b] = −ln(1 − u)` (u uniforme ; `1e-12` à la place de `1 − u` si `u ≥ 1 − 1e-12`), en alternance.
 6. **Tirage de Thompson.** Avant les n uniformes, chaque extension qui expose `hypothese_pour_la_semaine` est appelée avec `(koach, semaine, graine)`. Si la dernière réponse n'est pas `None` (contrôle dual calibré, § 3.7.4), **toutes** les trajectoires prennent l'hypothèse tirée. Les n uniformes sont consommés dans les deux cas : les tirages suivants restent alignés.
 7. `x = moyennes + z·Lᵀ`.
 
@@ -407,7 +422,19 @@ Une semaine est **verrouillée** si `intention or genre` ∈ {intro, deload, tap
   - `taux = ρ + EPS_classe`.
   - `proc = √(q_delta_semaine·s + sigma_prevision_semaine²·s)`, avec `s = max(1, fin + 1 − depuis)`.
   - `μ_fin = μ + gains[hyp]·taux + proc·bruit_proc`.
-  - Avec cibles **et** échéance : `jour = μ_fin − KG·f_ech + √(sigma_seance² + sigma_exercice² + rendement_test_sd²)·bruit_jour`. Le jour J compte la barre réussie et non la capacité : `marge_cible` (0,065) est l'opposé du rendement moyen d'un test, ln(meilleure barre réussie / maximum vrai du jour), et `rendement_test_sd` (0,07) sa dispersion, mesurés sur le banc (267 tests chargés du jour J, 720 saisons : moyenne −0,065, écart-type 0,073). Une cible est atteinte si `jour ≥ ln(cible) + marge_cible`. `J` = part des trajectoires qui atteignent toutes les cibles (P par cible renvoyée à part).
+  - Avec cibles **et** échéance (1.0.1) :
+    - capacité à frais du jour J : `frais = μ_fin − KG·f_ech + gain_affutage` (`f_ech` = F sans échéance dans la semaine) ; sa moyenne et son écart-type sur les trajectoires du premier candidat évalué sont gardés pour la ligne d'historique (`prevu_jour`, ci-dessous) ;
+    - capacité du jour : `jour = frais + sigma_seance·bruit_seance + sigma_exercice·bruit_jour`. L'effet de séance est commun à toutes les cibles d'une trajectoire : elles réussissent ou échouent ensemble ;
+    - **cible chargée** (fiche de type `charge`) : le jour J compte la barre réussie. Avec `sj = tentative_sd_jour`, `z(p) = Φ⁻¹(p)` et les clés `tentative_*` de `securite` :
+      - estimation que Koach aura ce jour-là : `est = frais + erreur_estimation_echeance_sd·bruit_est` ;
+      - `a1 = est + min(ln tentative_ouverture_part ; −z(tentative_ouverture_proba)·sj)` ;
+      - `a2 = min(est − z(tentative_deuxieme_proba)·sj ; a1 + ln(1 + tentative_saut_2) ; ln(e^a1 + tentative_saut_kg))` ;
+      - `a3 = min(a2 + ln(1 + tentative_saut_3) ; ln(e^a2 + tentative_saut_kg))` ;
+      - visée si `ln cible ≤ a3` et `ln cible ≤ est − z(tentative_cible_proba)·sj` ; `haut = a3` si visée, sinon `min(a3 ; est − z(tentative_troisieme_proba)·sj)` ; puis `haut −= tentative_manque·manque` ;
+      - réussite si `haut ≥ ln cible − 1e-12` **et** `jour ≥ ln cible`.
+    - **cible en répétitions ou en tenue** : réussite si `jour + rendement_test_sd·bruit_est ≥ ln cible + marge_cible`.
+    - `J` = part des trajectoires qui atteignent toutes les cibles ; P par cible renvoyée à part.
+    - Valeurs mesurées sur le banc (SOURCES.md) : `marge_cible`, `rendement_test_sd` et `tentative_sd_jour` sur 45 saisons à cibles × 3 vérités × graines 0 à 5 (1 758 unités chargées dont 405 en répétitions) ; `gain_affutage`, `erreur_estimation_echeance_sd` et `tentative_manque` remesurés sur les graines 2 à 5 après la correction de `elargir` (1 188 unités chargées). Avant 1.0.1 : `jour = μ_fin − KG·f_ech + √(sigma_seance² + sigma_exercice² + rendement_test_sd²)·bruit_jour`, bruits indépendants par cible, et toute cible atteinte si `jour ≥ ln cible + marge_cible` (0,065 ; `rendement_test_sd` 0,07).
   - Sinon : `J = moyenne(μ_fin − μ) × exp(−abandon_hebdo·(s + abandon_surcharge·surcharge))`, divisé par `echelle` (la valeur J du plan de référence) si elle existe.
 - **Valeur.** `J − lambda_transport·distance − pénalité`.
 
@@ -418,7 +445,7 @@ Une semaine est **verrouillée** si `intention or genre` ∈ {intro, deload, tap
 3. Moyenne de départ : le plan en cours, à la première semaine du bloc qui en a un. Écart de départ : ½ plafond.
 4. Pour chaque itération : `X[0] = 0` (référence), `X[1] = moy`, `X[2…]` = `moy + écart·gauss`, tirés ligne par ligne puis bornés. Les candidats sont triés par `(−valeur, indice)`. Mise à jour : `moy = lissage·moy_élite + (1 − lissage)·moy` et `écart = max(lissage·sd_élite + (1 − lissage)·écart ; 1e-4)`, où `sd_élite` est l'écart-type de population (numpy `std`, ddof 0). Les 4 meilleurs candidats de l'itération sont ajoutés en tête de `candidats_finaux`, qui garde aussi les 4 premiers de la liste précédente.
 5. Choix. Les essais sont le meilleur candidat, puis `candidats_finaux`. Un essai est écarté si sa valeur ≤ valeur de référence + `gain_min`. Sinon il est soumis au validateur (`_sur`) jusqu'à 3 fois ; s'il échoue, il est divisé par 2 et resoumis. Le premier essai validé dont la valeur dépasse celle de la référence + `gain_min` est retenu. **Repli quand aucun essai n'est retenu** (`plan_garde` dans la ligne d'historique) : (a) si toutes les semaines à venir ont déjà une modulation, le plan en cours est gardé tel quel (il a été validé le lundi précédent avec le même passé ; revenir d'un coup à la référence ferait un saut de charge ou de volume) ; (b) sinon la référence, si le validateur l'accepte avec le passé servi ; (c) sinon la dernière modulation servie est prolongée sur les semaines sans modulation (bornée en semaine verrouillée ; non revalidée : aucun saut par construction). Dans le cas (a) et (c), `p_cibles` de la ligne d'historique décrit la référence et non le plan gardé (limite connue).
-6. Le plan retenu est écrit pour toutes les semaines écrites ≥ `semaine`, avec le verrou appliqué : `plan[w] = {volume: [10], intensite}`. La ligne d'historique arrondit volumes et intensités par `numerique.arrondi(x, 4)`.
+6. Le plan retenu est écrit pour toutes les semaines écrites ≥ `semaine`, avec le verrou appliqué : `plan[w] = {volume: [10], intensite}`. La ligne d'historique arrondit volumes et intensités par `numerique.arrondi(x, 4)`. Elle porte aussi (1.0.1) `prevu_jour` : `{exercice : [moyenne, écart-type]}` de `frais` (ln de la capacité à frais du jour J) du plan retenu, évalué une dernière fois, pour les exercices qui ont une cible ; `{}` si aucune évaluation avec cibles et échéance n'a eu lieu pendant ce `replanifier` (`_prevu_jour` est remis à `None` au début de chaque `replanifier`, 1.0.1 ; avant la relecture indépendante, la valeur d'un appel précédent pouvait rester). Ces deux nombres ne sont pas arrondis.
 
 **Application.** `items_modules(w)` calcule, pour chaque item écrit de la semaine (jours puis items, dans l'ordre écrit), le nombre de séries servies :
 
@@ -452,7 +479,7 @@ Crochets :
 
 | Cause | Condition |
 | --- | --- |
-| `rupture` | P > `alerte` |
+| `rupture` | P > `alerte`, **ou** (1.0.1) `mj_suite ≥ mauvais_jours_suite` (si `mauvais_jours_suite ≥ 1`) : `mj_suite` compte les séances de suite dont le poids du mauvais jour `resume[4]` est ≥ `mauvais_jour_poids` ; il revient à 0 sur une séance dont le poids est plus bas, et à chaque réponse au diagnostic (`repondre`). Une séance sans résumé, ou au poids `None`, ne le change pas. |
 | `residu` | sur les `residu_secours_semaines` dernières semaines, chaque \|moyenne des résidus d'e1RM de la semaine\| > `residu_secours`. Le résidu d'e1RM d'une séance est `resume[5]` du modèle : écart ln entre la capacité du jour vue après la dernière série et celle prévue avant la première, sur les mouvements chargés suivis depuis au moins 3 séances. Une séance sans cette valeur (`None`) ne compte pas. La conversion de l'innovation de la note (`_residu_e1rm`) n'est utilisée que si le résumé a moins de 6 éléments, ce que le modèle ne produit jamais (annexe A, M8). |
 | `assiduite` | séances faites < `assiduite_secours` × prévues, cumulées sur `assiduite_secours_semaines` semaines (prévues = faites + manquées) |
 | `douleur` | une zone dont le **dernier** signalement > `douleur_secours` et date de ≤ `douleur_recente_j` jours |
@@ -472,9 +499,11 @@ Une cause hors silence lève l'alerte. Quand l'alerte passe de rien à au moins 
 | `douleur` | signalement versé à `garde.noter_seance(posee=False)` ; action `conduite_douleur` avec `renvoi_professionnel` |
 | `moins_de_temps` | action `replanifier` avec les disponibilités (aucune replanification n'est faite par le moteur) |
 | `fatigue` | `allegement = [jour, jour + 7, semaine_allegee_series, semaine_allegee_rir]` |
-| `rien` | `modele.elargir(elargissement_rien_de_special)` (variances des δ_e et des θ_q multipliées), BOCPD remise à zéro |
+| `rien` | `modele.elargir(elargissement_rien_de_special)` (variance de toute capacité multipliée par le facteur, § 4.4), BOCPD remise à zéro |
 
-Chaque cause levée se tait ensuite `silence_semaines` semaines ; on garde les 10 dernières réponses.
+Chaque cause levée se tait ensuite `silence_semaines` semaines ; on garde les 10 dernières réponses. Toute réponse remet aussi `mj_suite` à 0 (1.0.1).
+
+**État sérialisé** (`etat_complet`, `depuis_etat`) : `bocpd`, `semaine`, `faites`, `manquees`, `somme_rel`, `n_rel`, `semaines`, `alertes`, `silence`, `p`, `mj_suite` (1.0.1 ; lu avec le défaut 0 quand il manque, pour les états écrits par 1.0), `douleur_zones`, `reponses`, `allegement`.
 
 `appliquer_allegement(items, jour)` est appelé par l'appelant, pas par le moteur (M6). Sur les items de travail ayant au moins une série : `sets = max(1, floor(sets·f + 0,5))`, et les flammes (y compris celles de `setTargets`) baissent de `floor(2·rir + 0,5)`, au moins 1, sauf à 10.
 
@@ -576,7 +605,7 @@ Le niveau population est fixé par le fichier de paramètres ; le niveau utilisa
 - θ_q : moyenne 0, variance `theta_sd²`.
 - ρ : moyenne `r = rho_moyenne_par_niveau[niveau]`, variance `(r·rho_sd_rel)²`.
 - EPS_c : moyenne `eps_classe_moyenne[c]·r/rho₁`, variance `(eps_classe_sd·r/rho₁)²`, avec `rho₁ = rho_moyenne_par_niveau[1]`.
-- KN, KM, KL, KG, BA, BP, λ, KU, FI, HH : moyenne et variance tirées de la paire `[moyenne, sd]` du fichier (`k_nerveux`, `k_musculaire`, `k_nerveux_local`, `k_musculaire_systemique`, `biais_rir_additif`, `biais_rir_proportionnel`, `courbe_forme`, `courbe_echelle`, `fatigue_intra`, `part_tenue`). Une `sd` nulle fige la composante. Avec le fichier v1, sont figés : KN, KM, BA, KU, FI et HH ; sont appris : KL, KG, BP (0,25 ± 0,15) et λ (0,3 ± 0,3). Le biais additif BA reste figé à 0 : il n'est pas identifiable séparément de BP sur le banc (annexe A).
+- KN, KM, KL, KG, BA, BP, λ, KU, FI, HH : moyenne et variance tirées de la paire `[moyenne, sd]` du fichier (`k_nerveux`, `k_musculaire`, `k_nerveux_local`, `k_musculaire_systemique`, `biais_rir_additif`, `biais_rir_proportionnel`, `courbe_forme`, `courbe_echelle`, `fatigue_intra`, `part_tenue`). Une `sd` nulle fige la composante. Avec le fichier v1, sont figés : KN, KM, BA, KU, FI et HH ; sont appris : KL, KG, BP (0,25 ± 0,15) et λ (0,2 ± 0,45 depuis 1.0.1 ; 0,3 ± 0,3 en 1.0). Le biais additif BA reste figé à 0 : il n'est pas identifiable séparément de BP sur le banc (annexe A).
 
 **Constante de population d'un exercice** (`base_de`, ln de capacité) :
 
@@ -646,7 +675,7 @@ Les poids valent 1/9, sauf s'ils sont écrits par le contrôle dual.
 - `P[θ_q, θ_q] += q_theta_semaine` ; `P[ρ, ρ] += q_reponse_semaine` ; `f_tendon_aigu = 0` ; `semaines += 1`.
 - La ligne `{semaine, doses, mu (base + μ_e après croissance), fatigue_lente, fatigue_rapide, facteur}` est ajoutée à `journal_semaines`.
 
-**Élargissement** (`elargir(f)`) : `P[δ_e, δ_e] ×= f` pour toute piste et `P[θ_q, θ_q] ×= f` (branche principale).
+**Élargissement** (`elargir(f)`, branche principale) : `P ← D P D`, où `D` est diagonale, de valeur `√f` sur les composantes de capacité (les dix θ_q et le δ_e de toute piste, dans l'ordre des pistes) et 1 ailleurs ; en pratique, les lignes puis les colonnes de ces composantes sont multipliées par `√f`. La variance de toute capacité (combinaison des θ_q et d'un δ_e) est ainsi multipliée exactement par `f`, et son écart-type par `√f` ; les covariances avec les autres composantes sont multipliées par `√f`. Le compteur `elargi` augmente de 1. En 1.0, seules les diagonales étaient multipliées (`P[δ_e, δ_e] ×= f`, `P[θ_q, θ_q] ×= f`) : bogue corrigé en 1.0.1 (note datée, point 10).
 
 ### 4.5 Effets de jour et branche « mauvais jour »
 
@@ -665,6 +694,8 @@ Les poids valent 1/9, sauf s'ils sont écrits par le contrôle dual.
 
 **Toute observation** en séance met à jour les deux branches ; chaque log-poids reçoit le `logZ` de sa branche. Le poids du mauvais jour est `w = softmax(logw_principale, logw_alt)`, calculé avec soustraction du maximum.
 
+**Capacité figée dans la branche « mauvais jour »** (1.0.1, `jour.mauvais_jour_fige_capacite` = true). Dans la branche alternative (indice 1), les composantes de capacité de l'exercice observé, `_fige_mauvais_jour(t, s)` = indices de `_h_capacite(t, jour=False)` (qualités sollicitées TH+q et écart de l'exercice), sont « considérées » (filtre de Schmidt, § 5.4 étape 6) : elles pèsent dans la variance prévue, mais l'observation ne les déplace pas ; la séance s'y explique par l'effet de jour. Cela vaut pour les séries de force (barre manquée, série notée, série sans note versée) et pour les tenues (échec, sans note versée, notée) ; pas pour les observations hors séance (`_observer_hors`). À la fusion, la capacité ne bouge donc que par la part `(1 − w)` de la branche normale. Exception : si la série `s` a le rôle `attempt` (lu à la racine, sinon dans `target.role`), `_fige_mauvais_jour` renvoie `None` et rien n'est figé : une tentative maximale (jour d'épreuve, test 1RM) mesure la capacité, et la branche « mauvais jour » la lit comme la branche normale. Le rôle `test` n'est pas concerné. Avec la clé à false, le comportement de 1.0 revient (les deux branches déplacent la capacité).
+
 **`fin_seance()`** :
 
 1. Résidu d'e1RM de la séance : moyenne des `jour_vu − jour_prevu` des pistes concernées, sinon `None`.
@@ -676,7 +707,7 @@ Les poids valent 1/9, sauf s'ils sont écrits par le contrôle dual.
 
 Les bruits de processus sont ceux du § 4.4.
 
-Après chaque série, `_projeter` agit sur les deux branches : KN, KM, KL et KG sont ramenés à 0 s'ils sont négatifs, et λ est borné dans [−0,3 ; 1,2]. Seules les moyennes changent.
+Après chaque série, `_projeter` agit sur les deux branches : KN, KM, KL et KG sont ramenés à 0 s'ils sont négatifs, et λ est borné dans [LAM_MIN ; LAM_MAX] = [−0,8 ; 1,3] (1.0.1 ; [−0,3 ; 1,2] en 1.0). Seules les moyennes changent.
 
 ---
 
@@ -684,23 +715,35 @@ Après chaque série, `_projeter` agit sur les deux branches : KN, KM, KL et KG 
 
 ### 5.1 Courbe répétitions-charge
 
+Famille de Box-Cox en répétitions (1.0.1 ; avant : mélange `(1 − λ)·C_LIN·(R − 1) + λ·C_LOG·ln R`, voir la note du 10/10/2026 en tête) :
+
 ```
-C_LIN = 0,0265   C_LOG = 0,0892   (égales à 8 répétitions : C_LOG·ln 8 = C_LIN·7)
-g(λ, k, R)  = e^k·[(1 − λ)·C_LIN·(R − 1) + λ·C_LOG·ln R]      (R < 1 → 1)
-g'(λ, k, R) = max(0,004 ; e^k·[(1 − λ)·C_LIN + λ·C_LOG/R])
+C_LIN = 0,0265   C_LOG = 0,0892   G8 = 7·C_LIN = 0,1855   LN8 = ln 8
+γ = 1 − λ
+φ(x) = (e^x − 1)/x            (série à 7 termes pour |x| < 0,01 : 1 + x/2 + x²/6 + … + x⁶/5040)
+φ'(x) = (e^x·(x − 1) + 1)/x²  (série pour |x| < 0,01 : 1/2 + x/3 + x²/8 + … + x⁶/5760)
+B(R, γ) = (R^γ − 1)/γ = ln R·φ(γ·ln R)
+g(λ, k, R)  = e^k·G8·B(R, γ)/B(8, γ) = e^k·G8·ln R·φ(γ ln R)/(LN8·φ(γ·LN8))     (R < 1 → 1)
+g'(λ, k, R) = max(0,004 ; e^k·G8·R^(γ − 1)/(LN8·φ(γ·LN8)))
 ```
 
-`g` vaut −ln de la part de la capacité soulevable R fois.
+`g` vaut −ln de la part de la capacité soulevable R fois. Toutes les formes se croisent à 8 répétitions (`g(λ, 0, 8) = G8`). λ = 0 donne `C_LIN·(R − 1)` (log-linéaire) et λ = 1 donne `C_LOG·ln R` (logarithmique), comme avant ; λ < 0 donne une courbe convexe (part du 1RM presque linéaire en répétitions, type Brzycki ou Lander).
 
-- Courbe d'un exercice suivi : `λ = clamp(m[LAM], −0,3 ; 1,2)` et `k = clamp(m[KU] + m[κ_e], −1 ; 1)`.
+**Dérivée par rapport à la forme** (`_dg_forme`, utilisée par la linéarisation, § 5.4) : avec `a = ln R`, `num = a·φ(γa)` et `den = LN8·φ(γ·LN8)`,
+
+```
+∂g/∂γ = e^k·G8·(a²·φ'(γa)·den − num·LN8²·φ'(γ·LN8))/den²      ∂g/∂λ = −∂g/∂γ
+```
+
+- Courbe d'un exercice suivi : `λ = clamp(m[LAM], LAM_MIN, LAM_MAX)` avec `LAM_MIN = −0,8` et `LAM_MAX = 1,3`, et `k = clamp(m[KU] + m[κ_e], −1 ; 1)`. Le garde-fou `_projeter` borne `m[LAM]` aux mêmes valeurs.
 - Courbe de population g₀ : `λ₀ = courbe_forme[0]` et `k₀ = courbe_echelle[0] + (courbe_bas_du_corps si bas)`.
 
 **Inverse** (`reps_a(x)`, avec `x = ln(capacité/charge)`) :
 
 - si `x ≤ 0` : `1 + 20x` pour `x > −0,05`, sinon 0 ;
-- sinon `R₀ = 1 + x/g'(1)`, puis **12** pas de Newton `R ← R − (g(R) − x)/g'(R)`, en bornant R à [1 ; 200] après chaque pas.
+- sinon forme fermée (`_reps_de`) : `y = x·LN8·φ(γ·LN8)/(e^k·G8)` (c'est B(R, γ)), `u = γ·y` ; si `u ≤ −1 + 1e-12`, R = 200 (forme concave, charge sous l'asymptote) ; sinon `ln R = ln(1 + u)/γ`, remplacé pour |u| < 0,01 par la série `y·(1 − u/2 + u²/3 − u³/4 + u⁴/5 − u⁵/6 + u⁶/7)` ; R = 200 si `ln R > ln 200`, et R est borné en bas à 1. Il n'y a plus d'itération de Newton.
 
-`charge_de_part` utilise la même inversion, sur la courbe de population.
+`charge_de_part` (`seance`) utilise la même inverse `_reps_de`, sur la courbe de population. `planification._g` et `planification._dg` appellent la même famille, sans le plancher 0,004 pour `_dg`.
 
 ### 5.2 Bruit de la note
 
@@ -759,7 +802,7 @@ La linéarisation se fait à la moyenne **a priori** de la branche principale (`
 **Jacobien de `v`** (`_lin_force`) :
 
 - Composantes de `h_jour` : `c·dR·garde`.
-- Charge : `[LAM : dλ·garde, KU : dk·garde, κ_e : dk·garde]`. Si `x ≤ 0`, `dR = 20` et `dλ = dk = 0` ; sinon `d = g'(R)`, `dR = 1/d`, `dλ = −e^k·(C_LOG·ln r₁ − C_LIN·(r₁ − 1))/d` avec `r₁ = max(R, 1)`, et `dk = −g(R)/d`.
+- Charge : `[LAM : dλ·garde, KU : dk·garde, κ_e : dk·garde]`. Si `x ≤ 0`, `dR = 20` et `dλ = dk = 0` ; sinon `d = g'(R)`, `dR = 1/d`, `dλ = −(∂g/∂λ)(λ, k, r₁)/d` (`_dg_forme`, § 5.1) avec `r₁ = max(R, 1)`, et `dk = −g(R)/d`.
 - Poids du corps : `dR = R` (dérivée de `e^η`), sans terme de courbe.
 - Si `sj > 0` et `garde > 0,3` : `[φ_e : −R·sj·FI_e]`.
 
@@ -767,7 +810,7 @@ La linéarisation se fait à la moyenne **a priori** de la branche principale (`
 
 **Constante** : `const = prédiction − Σ c_i·lin_i`. L'observation porte sur `u = Σ c_i x_i + const`.
 
-**Mise à jour** (`_observer(idx, co, const, a, b, s², point, melange, bruit, fonction, fige)`), pour chaque branche, dans l'ordre principale puis alternative :
+**Mise à jour** (`_observer(idx, co, const, a, b, s², point, melange, bruit, fonction, fige, fige_alt)`), pour chaque branche, dans l'ordre principale puis alternative :
 
 1. `μ = Σ c_i m_i + const`, `ph = P·c` (somme des colonnes `c_i·P[:, i]` dans l'ordre des indices) et `v = Σ c_i ph_i`.
 2. Moments a posteriori `(logZ, μ₂, v₂)` :
@@ -785,14 +828,14 @@ La linéarisation se fait à la moyenne **a priori** de la branche principale (`
    - `dehors` = intervalle ouvert et prévision hors de la borne ;
    - si informatif ou dehors : `resid = ((centre − μ)/√(v + s²), centre − μ, informatif et non ponctuel)`. Le centre est le point, la borne finie, ou le milieu de l'intervalle.
 5. Si `v ≤ 0`, la branche n'est pas mise à jour.
-6. **Composantes considérées** (filtre de Schmidt). Si `fige` est donné, le gain `pg` est `ph` dont les composantes de `fige` sont mises à 0 : elles pèsent dans la variance prévue `v`, mais l'observation ne les déplace pas. Sinon `pg = ph`.
+6. **Composantes considérées** (filtre de Schmidt). Dans la branche « mauvais jour » (indice 1), si `fige_alt` est donné (1.0.1, § 4.5), `fige` devient `fige + fige_alt` pour cette branche seulement. Si `fige` est donné, le gain `pg` est `ph` dont les composantes de `fige` sont mises à 0 : elles pèsent dans la variance prévue `v`, mais l'observation ne les déplace pas. Sinon `pg = ph`.
 7. **Grande surprise** (`|μ₂ − μ| > 1` et carte exacte `fonction` fournie) :
    - `pas = pg·(μ₂ − μ)/v` ;
    - si `|f(m + pas) − μ| > |μ₂ − μ|`, **12** dichotomies sur α ∈ [0 ; 1] : on garde la borne basse, avec le même test à `m + α·pas` ;
    - `m += α·pas` ;
-   - covariance par la forme de Joseph du gain réduit α·K : `v₂α = v − (2α − α²)·(v − v₂)` ; puis `P −= ph·phᵀ·(v − v₂α)/v²`, ou la mise à jour partielle ci-dessous avec `v₂α` si `fige` est donné (la formule vaut la mise à jour ordinaire pour α = 1) ;
+   - covariance par la forme de Joseph du gain réduit α·K : `v₂α = v − (2α − α²)·(v − v₂)` ; puis `P −= ph·phᵀ·(v − v₂α)/v²`, ou la mise à jour partielle ci-dessous avec `min(v₂α, v)` si `fige` est donné (la formule vaut la mise à jour ordinaire pour α = 1) ;
    - `f` recalcule la prévision exacte (`_lin_force` ou `_lin_tenue`) en un état donné. Dans la branche alternative, `μ` est la prévision linéaire de cette branche, alors que `f` est évaluée exactement sur son état (deuxième partie du constat de relecture m1, non corrigée).
-8. Sinon, si `fige` est donné : `m += pg·(μ₂ − μ)/v` et `P −= w·(pg·phᵀ + ph·pgᵀ − pg·pgᵀ)` avec `w = (v − v₂)/v²` (`_covariance_partielle`). Le bloc des composantes considérées reste intact ; P reste semi-définie positive si v₂ ≥ 0.
+8. Sinon, si `fige` est donné : `m += pg·(μ₂ − μ)/v` et `P −= w·(pg·phᵀ + ph·pgᵀ − pg·pgᵀ)` avec `w = (v − v₂)/v²` (`_covariance_partielle`), où v₂ est d'abord borné à v (1.0.1 : `v₂ si v₂ < v, sinon v`, dans ce chemin comme dans celui de l'étape 7). Le bloc des composantes considérées reste intact ; P reste semi-définie positive si 0 ≤ v₂ ≤ v (la forme de Joseph à gain partiel ne l'est pas pour v₂ > v, d'où la borne).
 9. Sinon, report de rang 1 : `m += ph·(μ₂ − μ)/v` ; `P −= ph·phᵀ·(v − v₂)/v²`.
 10. Log-poids de la branche : `+= logZ`.
 
@@ -878,6 +921,8 @@ Pour une note perçue, `s² = bruit_rir_de(clamp(v ; 0 ; 8), R)² + extra` ; ce 
 - compartiments, puis `series_seance.append((e^(−rir_c/intra_rir), repos))`, puis stimulus ;
 - `mesures += 1` ;
 - `dernier_test_jour = jour` si échec, `repere`, ou `role` ∈ {test, attempt} ;
+- (1.0.1) `dernier_echec_jour = jour` si la série est un échec (barre manquée ou série ratée), quel que soit son rôle ;
+- (1.0.1) si le rôle (`role` à la racine, sinon `target.role`) ∈ {test, attempt} : `derniere_rampe_jour = jour` ; et `dernier_vrai_test_jour = jour` si la série est un échec, une note 10, ou une note dont la réserve dite `(11 − flammes)/2` est ≤ `vrai_test_rir_informatif` (2,5). Ces trois horloges de la piste sont recalculées au rejeu comme `dernier_test_jour`. Seules les séries de force les posent (ni les tenues ni l'endurance) ;
 - `meilleur` mis à jour si la série est réussie et chargée.
 
 ### 5.9 Tenues (survie)
@@ -1032,7 +1077,7 @@ flammes affichées = flammes_de_rir(rir)
 4. **Écart de planification.** Si `koachIntensite` est non nul hors verrou : `voulu = (voulu + bw)·(1 + clamp(écart, ±plafond_intensite)) − bw`.
 5. **Surcharge sur zone fragile du profil.** Si une part écrite dépasse `surcharge_fragile_max` sur une zone fragile : la part est ramenée à `surcharge_fragile_max` (`koach.zone_fragile`, cause `surcharge`).
 6. **Part écrite** (`percentOfOneRm`, sauf séries allégées) :
-   - `charge_de_part(part)` lit la part comme un **niveau d'effort**. Si part ≥ 1, la charge vaut `e^μ·part`. Sinon : `R` = inverse de g₀ en `−ln part` (Newton, 12 pas, R ∈ [1 ; 200]), puis la charge vaut `exp(μ − g(λ, k, R))`. μ est la capacité à frais (du jour si demandé) ;
+   - `charge_de_part(part)` lit la part comme un **niveau d'effort**. Si part ≥ 1, la charge vaut `e^μ·part`. Sinon : `R` = inverse de g₀ en `−ln part` (`_reps_de`, forme fermée, R ∈ [1 ; 200], § 5.1), puis la charge vaut `exp(μ − g(λ, k, R))`. μ est la capacité à frais (du jour si demandé) ;
    - le plafond vaut `charge_de_part(part) − bw` en semaine verrouillée, pour un débutant, ou si part ≥ `couloir_part_lourde` ; sinon `charge_de_part(part·(1 + couloir_haut_max)) − bw`.
 7. **Plafond de la conduite** : `charge_de_part(part_max) − bw`.
 8. **Simple d'entraînement** (`repsLow = repsHigh = 1`, hors test) : au plus `charge_de_part(simple_part_max ou simple_part_max_bilan_bas si palier ≥ 1, du jour) − bw`.
@@ -1098,7 +1143,9 @@ flammes affichées = flammes_de_rir(rir)
 - pas de `jours_avant_echeance ≤ 14` ; pas de `dayStress = light` ;
 - la technique est absente, `standard`, `top_set_backoff` ou `isometric_hold` ;
 - `1,6448536269514722·σ > intervalle_declenchement`, avec σ de `capacite` (défaut de modèle compris) ;
-- dernière mesure il y a au moins `jours_min_entre_tests` jours ;
+- espacement (1.0.1, argument `vrai`) :
+  - pour une série repère (`vrai` faux) : dernière mesure (`dernier_test_jour` : échec, repère, test, tentative) il y a au moins `jours_min_entre_tests` jours ;
+  - pour un vrai test (`vrai` vrai), dans l'ordre : pas d'échec non prévu à la dernière séance de l'exercice (`mem.echec` : série ratée, hors échauffement, dont la cible n'a ni note 10 ni rôle `test` ou `attempt`) ; dernière série ratée de la piste (`dernier_echec_jour`, § 5.8, tout rôle) il y a au moins `jours_min_entre_tests` jours ; dernier test arrivé près de l'échec (`dernier_vrai_test_jour`) il y a au moins `jours_min_entre_tests` jours ; dernière série de montée ou de tentative (`derniere_rampe_jour`) il y a au moins `jours_min_entre_rampes` jours. Une série repère ne bloque donc plus un vrai test, et une montée arrêtée loin de l'échec ne bloque la suivante que `jours_min_entre_rampes` jours ; mais toute série ratée, montée ou tentative comprise, le bloque 14 jours (A8.3, A7.2.3 de 0.3.1 ; constat B1 de la relecture indépendante) ;
 - pas un débutant avec moins de 3 séances.
 
 **Série repère** : la dernière série de l'item (`index = sets − 1`) quand `_mesure_utile` est vrai. Réserve 2 pour un débutant, 1,5 sinon (constantes du code). Une série repère chargée qui est aussi la première série (ligne d'une seule série) passe par les bornes de hausse d'une séance à l'autre (`_bornes_hausse`) sur le schéma ouvert (`repsHigh + reps_ouvertes`), comme une première série ordinaire (critère « hausse de charge > 10 % sur plusieurs crans » du banc).
@@ -1106,14 +1153,16 @@ flammes affichées = flammes_de_rir(rir)
 **Vrai test** (`_vrai_test`), si toutes ces conditions tiennent :
 
 - rôle `main` ou `secondary`, type `charge`, au moins 2 séries ;
-- piste vue au moins une fois ; `_mesure_utile` ;
+- piste vue au moins une fois ; `_mesure_utile(…, vrai=True)` ;
 - grille et `charge_max` connus ;
 - au moins une barre réussie depuis `barre_recente_j` jours ;
-- `suivant(ref) + bw ≤ (ref + bw)·(1 + rampe_pas)` : la grille n'est pas trop grossière.
+- `suivant(ref) + bw ≤ (ref + bw)·(1 + rampe_pas_cran)` : la grille n'est pas trop grossière (1.0.1 : `rampe_pas_cran` = 15 % ; 1.0 : `rampe_pas` = 10 %). Entre 10 et 15 %, la montée ne franchit un cran entier qu'aux conditions de l'étape 7 de la rampe (§ 6.5).
 
-Il renvoie `(n, rir)` : `(test_reps_debutant, test_rir_debutant)` au niveau 0, `(test_reps_avance, test_rir_avance)` au niveau ≥ 2, `(test_reps, test_rir)` sinon.
+Il renvoie `(n, rir)` : `(test_reps_debutant, test_rir_debutant)` au niveau 0 (3 répétitions, réserve 2, depuis 1.0.1 ; 5 répétitions en 1.0), `(test_reps_avance, test_rir_avance)` au niveau ≥ 2, `(test_reps, test_rir)` sinon.
 
 Séries de la ligne pour la montée : `lignes = min(séries écrites, séries servies)` (servies après douleur, bilan, surmenage et retour gradué). Séries dures de la montée au plus `max(1, lignes − 1)` ; montée + séries de travail ≤ `lignes` (arrêt `volume_test` de `cible`).
+
+**Durée** (`_duree_permet_test`, appelé par `prescrire` avant d'insérer le test) : sans `budget`, un seul vrai test par séance. Avec un budget, la séance avec la ou les montées doit tenir dans `budget·seance_tolerance + seance_tolerance_min` minutes : `300 + ajout·(déjà + 1) + Σ durées des items` secondes, avec `ajout = 45 + n·reps·3 + (n − 1)·max(restSeconds, repos_test_s)`, moins `min(rampe_series_travail, séries − 1)` séries de travail retirées (`repsHigh·3 + restSeconds` ou 60 s chacune). La montée est comptée pour `n = min(rampe_series_max (+2 si 1 répétition) ; max(1, séries écrites − 1) + 1)` séries (1.0.1 : au plus les séries dures permises plus une série encore facile ; en 1.0, toujours `rampe_series_max` (+2)).
 
 ### 6.5 Tests servis (`_cible_test`)
 
@@ -1123,6 +1172,7 @@ Séries de la ligne pour la montée : `lignes = min(séries écrites, séries se
 - `plus_lourde(p, plafond) = plancher(max(min(e^(μ − Φ⁻¹(p)·σ), plafond) − bw ; minimum))`.
 - Flammes affichées : 7, 9, 10 selon l'index.
 - **Ouverture** (index 0 ou aucune charge dans la séance) :
+  0. (1.0.1) **gain d'affûtage** : si l'intention ou le genre de la semaine du jour, ou de la semaine précédente, est `taper` ou `competition` (`Seances.genres`, rempli par `ouvrir` avec `contexte.intention` ou à défaut `contexte.genre`), `μ += planification.gain_affutage`. Ce relèvement ne vaut que pour l'ouverture (règle A8.2 de 0.3.1, `coachTaperGain`) ;
   1. `plus_lourde(tentative_ouverture_proba, tentative_ouverture_part·e^μ)` ;
   2. remplacée par la plus lourde barre réussie de moins de `barre_recente_j` jours si elle est plus légère et que `récente + bw ≥ tentative_recente_part·e^μ` ;
   2 bis. **plancher** : si la plus lourde barre réussie de moins de `barre_recente_j` jours est plus lourde que l'ouverture calculée, l'ouverture devient `plancher(max(min(récente, tentative_ouverture_part·e^μ − bw), ouverture))`. Conditions : ni bilan bas ni zone de conduite (facteur de baisse = 1), ligne sans `sans_hausse`, pas de coupure en cours (`coupure = 0`), pas d'échec à la dernière séance de l'exercice. Sert quand l'incertitude a été élargie (diagnostic « rien de spécial ») : le quantile prudent tomberait très bas ;
@@ -1138,13 +1188,15 @@ Séries de la ligne pour la montée : `lignes = min(séries écrites, séries se
 
 **Vrai test** (rampe), dans l'ordre :
 
-1. **Index 0** : sans barre réussie depuis `barre_recente_j` jours, le test s'arrête (`None`). Sinon `charge_pour(n, rir + 2, 0,5)`, plafonné à `(récente + bw)(1 + repere_hausse) − bw`.
+1. **Index 0** : sans barre réussie depuis `barre_recente_j` jours, le test s'arrête (`None`). Sinon `charge_pour(n, rir + 2, 0,5)`, plafonné (1.0.1) par
+   `plafond = max( (récente + bw)(1 + repere_hausse) − bw ; max sur les barres réussies (c, r) des barre_recente_j derniers jours de (c + bw)(1 + hausse_par_niveau[niveau])(1 + schema_change_part·min(max(r − n, 0), schema_change_reps_max)) − bw )`,
+   où `récente` est la plus lourde de ces barres et `n` les répétitions du test. Le second terme est la règle A7.2 de 0.3.1 du premier passage à un schéma, avec la hausse du niveau (10 % débutant, 5 % ensuite, comme A7.2.4) ; le premier est le plafond de 1.0, gardé comme plancher du plafond. Hors débutant, le second terme vaut au plus ×1,155 sur la charge totale (1,05 × 1,10). En 1.0 : `(récente + bw)(1 + repere_hausse) − bw` seul ; partir de +10 % sur une barre de 10 répétitions faisait commencer une montée de 3 répétitions trop loin de l'échec.
 2. **Index ≥ 1, fin du test** : le test s'arrête (`None`) sans charge précédente, après un échec, sans note, avec moins de n répétitions, ou sur une note 10.
 3. **Confirmation** : si la réserve dite ≤ rir + 0,75, la même barre est refaite pour confirmation ; arrêt après `rampe_confirmations` notes basses.
 4. **Pas de montée** : premier pas de `rampe_pas_par_rir` dont `réserve ≥ seuil − rir + 1 − 1e-9`, sinon le dernier pas. `voulu = (dernière + bw)(1 + pas) − bw`, au plus `exp(μ + 2,5·max(σ, rampe_sd_min) − g(λ, k, n)) − bw`.
 5. **Grille** : `charge = plancher(voulu)`.
 6. **Probabilité** : si `P(réussir) < rampe_proba_min`, essai du plus petit pas ; arrêt s'il n'est pas faisable.
-7. **Hausse minimale** : si la charge ne monte pas, `suivant(dernière)` à condition que ce cran soit ≤ `rampe_pas`, sinon arrêt.
+7. **Hausse minimale** : si la charge ne monte pas, `suivant(dernière)` si ce cran est ≤ `rampe_pas` (en charge totale) ; sinon (1.0.1, grille grossière) `suivant(dernière)` si ce cran est ≤ `rampe_pas_cran`, que la réserve dite est ≥ rir + `rampe_cran_rir_marge` (− 1e-9) et que `P(réussir suivant) ≥ rampe_proba_min` (arrêt si P est inconnue ou plus basse) ; sinon arrêt.
 8. Effort affiché : 2 en réserve. `repere: True`.
 
 **Test xRM chargé** :
@@ -1225,7 +1277,7 @@ Il y a ensuite onze sections d'objets : `a_priori`, `mesure`, `jour`, `fatigue`,
 
 ### 7.2 Version
 
-Version actuelle : `1.0.0-ref.1`. Un import doit porter la même majeure (`1`) et le même `schema`.
+Version actuelle du fichier : `1.0.1-ref.1` (depuis le 10/10/2026 ; `1.0.0-ref.1` pour le contrat gelé 1.0). Un import doit porter la même majeure (`1`) et le même `schema`. La constante `koach.VERSION` du code vaut `1.0.1-ref.1` (`koach/__init__.py`), comme le fichier.
 
 ### 7.3 Import (`rupture.importer_parametres(koach, fichier)`)
 
@@ -1242,7 +1294,7 @@ Le fichier est un texte JSON ou un dictionnaire. L'import passe deux étapes.
 | `securite` | doit être **identique** à l'actuelle : la sécurité ne peut pas être modifiée par un import |
 | types | même type que la valeur actuelle (nombre fini, booléen, texte, liste de même longueur, objet), contrôle récursif |
 | clés inconnues | refusées, sauf dans `rupture` et `adherence`, où une clé connue des défauts est admise |
-| clés figées (`rupture.FIGEES`) | toute valeur différente de l'actuelle est refusée : `planification.plafond_volume`, `planification.plafond_intensite`, `controle_dual.amplitude_volume`, `controle_dual.amplitude_intensite`, `controle_dual.plafond_volume`, `controle_dual.plafond_intensite` (clés absentes du fichier : sans effet), `controle_dual.semaines_min`, `controle_dual.intervalle_max`, `controle_dual.synthetique_semaines_min`, `controle_dual.bras_semaines`, `test_adaptatif.intervalle_declenchement`, `test_adaptatif.jours_min_entre_tests`, `rupture.douleur_secours` |
+| clés figées (`rupture.FIGEES`) | toute valeur différente de l'actuelle est refusée : `planification.plafond_volume`, `planification.plafond_intensite`, `controle_dual.amplitude_volume`, `controle_dual.amplitude_intensite`, `controle_dual.plafond_volume`, `controle_dual.plafond_intensite` (clés absentes du fichier : sans effet), `controle_dual.semaines_min`, `controle_dual.intervalle_max`, `controle_dual.synthetique_semaines_min`, `controle_dual.bras_semaines`, `test_adaptatif.intervalle_declenchement`, `test_adaptatif.jours_min_entre_tests`, `test_adaptatif.jours_min_entre_rampes`, `test_adaptatif.rampe_pas_cran`, `test_adaptatif.rampe_cran_rir_marge` (ces trois depuis 1.0.1), `rupture.douleur_secours` |
 | bornes (`rupture.BORNES`), vérifiées seulement sans autre erreur | `jour.mauvais_jour_proba` et `mauvais_jour_proba_bilan_bas` ∈ [1e-6 ; 0,999] ; `mesure.note_aberrante` ∈ [1e-6 ; 0,5] ; `mesure.porte_note_ouverte` ∈ [0 ; 100] ; `dynamique.recuperation_seuil` ∈ [1e-6 ; 1e6] ; `rupture.hasard` ∈ [1e-6 ; 0,5] ; `rupture.alerte` ∈ [0,05 ; 0,999] ; `rupture.residu_secours` et `assiduite_secours` ∈ [0 ; 1] ; `rupture.douleur_secours` ∈ [0 ; 10] ; `rupture.elargissement_rien_de_special` ∈ [1 ; 100] ; `rupture.semaine_allegee_series` ∈ [0,1 ; 1] ; `rupture.semaine_allegee_rir` ∈ [0 ; 5] ; `rupture.course_max` ∈ [10 ; 1000] ; `rupture.fenetre_seances` et `min_observations` ∈ [1 ; 100] ; `rupture.a_priori_alpha` et `a_priori_alpha_nouvelle` ∈ [0,5 ; 1000] ; `rupture.a_priori_beta` ∈ [1e-6 ; 1000] ; `rupture.douleur_recente_j` ∈ [0 ; 60] ; `rupture.residu_reps_reference` ∈ [1 ; 30] ; `adherence.proba_cible` ∈ [0,05 ; 0,99] ; `adherence.a_priori_poids_sd` ∈ [1e-3 ; 100] ; `adherence.biais_initial` ∈ [−5 ; 5] ; `adherence.pas_min` ∈ [1e-6 ; 1e6] ; `adherence.paliers_max` ∈ [1 ; 20] |
 | positivité | toute clé numérique qui finit par `_sd` ou commence par `sigma`, `tau` ou `bruit` doit être > 0 |
 
@@ -1270,13 +1322,13 @@ Ces écarts sont repris dans l'annexe A.
 
 ### 7.4 Tableau de toutes les clés
 
-Le tableau est généré depuis le JSON (306 clés, dans l'ordre du fichier) et contrôlé par script : toute clé du JSON absente du tableau, ou l'inverse, est une erreur. « Lu par » donne le module lecteur ; une clé « Non lue » n'est lue par aucun module de `koach/` (recherche de la chaîne de la clé dans le code, hors entrées des dictionnaires de défauts).
+Le tableau est généré depuis le JSON (317 clés depuis 1.0.1, 306 en 1.0, dans l'ordre du fichier) et contrôlé par script : toute clé du JSON absente du tableau, ou l'inverse, est une erreur. « Lu par » donne le module lecteur ; une clé « Non lue » n'est lue par aucun module de `koach/` (recherche de la chaîne de la clé dans le code, hors entrées des dictionnaires de défauts).
 
 | Section | Clé | Valeur | Unité | Rôle | Lu par |
 | --- | --- | --- | --- | --- | --- |
 | — | `schema` | 1 | — | Version du schéma ; un import doit porter la même valeur | rupture.valider_parametres |
-| — | `version` | "1.0.0-ref.1" | — | Version des paramètres ; un import doit garder la même majeure | rupture.valider_parametres, dossier |
-| — | `date` | "2026-10-09" | — | Date du fichier (texte) | rupture.valider_parametres (type seul) |
+| — | `version` | "1.0.1-ref.1" | — | Version des paramètres ; un import doit garder la même majeure | rupture.valider_parametres, dossier |
+| — | `date` | "2026-10-10" | — | Date du fichier (texte) | rupture.valider_parametres (type seul) |
 | — | `note` | (texte) | — | Commentaire libre (texte) | rupture.valider_parametres (type seul) |
 | — | `qualites` | ["pousser", "tirer", "jambes", "tronc", "figures", "endurance_force", "explosivite", "aerobie", "anaerobie", "mobilite"] | — | Noms des 10 qualités latentes, dans l'ordre des indices 0 à 9 | Non lue par le moteur (contrôle de type à l'import ; lue par le banc) |
 | — | `classes_reponse` | ["charge", "reps", "tenue", "cardio", "wod"] | — | Noms des 5 classes de réponse (ordre des écarts EPS ; `modele.CLASSES` fait foi) | Non lue par le moteur (contrôle de type à l'import) |
@@ -1303,7 +1355,7 @@ Le tableau est généré depuis le JSON (306 clés, dans l'ordre du fichier) et 
 | a_priori | `cardio_minutes_par_niveau` | [30.0, 60.0, 90.0, 120.0] | min | Capacité a priori d'un exercice cardio, par niveau | modele.base_de |
 | a_priori | `cardio_sd` | 0.4 | ln | Écart-type a priori total d'un exercice cardio | modele.piste |
 | a_priori | `wod_sd` | 0.25 | ln | Écart-type a priori total d'un exercice wod | modele.piste |
-| a_priori | `courbe_forme` | [0.3, 0.3] | [moy., sd] | λ : forme de la courbe (0 linéaire, 1 logarithmique) | modele, seance, planification |
+| a_priori | `courbe_forme` | [0.2, 0.45] | [moy., sd] | λ : forme de la courbe de Box-Cox (0 log-linéaire, 1 logarithmique, < 0 convexe ; § 5.1) | modele, seance, planification |
 | a_priori | `courbe_echelle` | [0.1, 0.0] | [moy., sd] | KU : échelle ln de la courbe de l'utilisateur ; figée | modele, seance, planification |
 | a_priori | `biais_rir_proportionnel` | [0.25, 0.15] | [moy., sd] | BP : biais proportionnel de la note, appris | modele |
 | a_priori | `k_nerveux_local` | [0.0047, 0.0019] | [moy., sd] | KL : sensibilité au compartiment rapide, part locale | modele |
@@ -1353,6 +1405,7 @@ Le tableau est généré depuis le JSON (306 clés, dans l'ordre du fichier) et 
 | jour | `mauvais_jour_proba_bilan_bas` | 0.45 | proba | Idem si le bilan général ≤ 2 | modele.debut_seance |
 | jour | `mauvais_jour_moyenne` | -0.06 | ln | Décalage de DS dans la branche « mauvais jour » | modele.debut_seance |
 | jour | `mauvais_jour_sigma` | 0.045 | ln | Écart-type de DS dans la branche « mauvais jour » | modele.debut_seance |
+| jour | `mauvais_jour_fige_capacite` | true | booléen | Capacités de l'exercice observé « considérées » (non déplacées) dans la branche « mauvais jour » (§ 4.5) | modele._fige_mauvais_jour |
 | fatigue | `tau_nerveux_j` | 2.5 | j | Constante du compartiment rapide | modele |
 | fatigue | `tau_musculaire_j` | 7.0 | j | Constante du compartiment lent | modele, planification |
 | fatigue | `tau_tendineux_j` | 28.0 | j | Constante du compartiment tendineux | modele |
@@ -1381,15 +1434,15 @@ Le tableau est généré depuis le JSON (306 clés, dans l'ordre du fichier) et 
 | test_adaptatif | `intervalle_declenchement` | 0.06 | part | Demi-largeur relative (1,645 sd) au-delà de laquelle une mesure est utile | seance._mesure_utile |
 | test_adaptatif | `poids_information` | 0.5 | — | Non lue | — |
 | test_adaptatif | `ecart_rir_tolere` | 0.5 | rép. | Écart de réserve toléré pour une charge voisine plus informative | seance._cible_charge |
-| test_adaptatif | `jours_min_entre_tests` | 14 | j | Délai minimal depuis la dernière mesure (test, repère, échec) | seance._mesure_utile |
+| test_adaptatif | `jours_min_entre_tests` | 14 | j | Délai minimal depuis la dernière mesure (test, repère, échec) avant une série repère ; depuis le dernier vrai test arrivé près de l'échec, et depuis la dernière série ratée (1.0.1), avant un vrai test ; figée | seance._mesure_utile |
 | test_adaptatif | `reps_ouvertes` | 6 | rép. | Répétitions ouvertes d'une série repère chargée | seance._cible_charge |
-| test_adaptatif | `repere_hausse` | 0.1 | part | Plafond de hausse d'une barre repère ou de la 1re barre de montée sur la barre récente | seance |
+| test_adaptatif | `repere_hausse` | 0.1 | part | Plafond de hausse d'une barre repère sur la barre récente ; plancher du plafond de la 1re barre de montée (+`repere_hausse` sur la plus lourde barre récente, § 6.5) | seance |
 | test_adaptatif | `test_reps` | 3 | rép. | Répétitions du vrai test (intermédiaire) | seance._vrai_test |
-| test_adaptatif | `test_reps_debutant` | 5 | rép. | Idem débutant | seance._vrai_test |
+| test_adaptatif | `test_reps_debutant` | 3 | rép. | Idem débutant | seance._vrai_test |
 | test_adaptatif | `test_rir` | 1.0 | rép. | Réserve visée du vrai test (intermédiaire) | seance._vrai_test |
 | test_adaptatif | `test_rir_debutant` | 2.0 | rép. | Idem débutant | seance._vrai_test |
 | test_adaptatif | `test_reps_ouvertes` | 0 | rép. | Non lue | — |
-| test_adaptatif | `rampe_pas` | 0.1 | part | Cran maximal pour qu'une montée soit possible ; hausse minimale d'une barre à l'autre | seance |
+| test_adaptatif | `rampe_pas` | 0.1 | part | Cran que la montée franchit sans autre condition quand le pas voulu ne monte pas (1.0 : aussi cran maximal pour qu'une montée soit possible) | seance._rampe |
 | test_adaptatif | `rampe_series_max` | 7 | séries | Séries de montée (+2 si 1 rép.) ; tentatives annoncées | seance.prescrire |
 | test_adaptatif | `repos_test_s` | 180 | s | Repos minimal de l'item de test inséré | seance.prescrire |
 | test_adaptatif | `rampe_pas_par_rir` | [[4.0, 0.075], [3.0, 0.05], [2.5, 0.035], [2.0, 0.025]] | [[rép., part]] | Pas de montée selon la réserve dite | seance._rampe |
@@ -1399,6 +1452,10 @@ Le tableau est généré depuis le JSON (306 clés, dans l'ordre du fichier) et 
 | test_adaptatif | `rampe_confirmations` | 2 | séries | Notes basses successives qui arrêtent la montée | seance._rampe |
 | test_adaptatif | `rampe_proba_min` | 0.75 | proba | P(réussite) minimale de la barre suivante | seance._rampe |
 | test_adaptatif | `rampe_series_travail` | 1 | séries | Séries de travail retirées de la ligne quand une montée de vrai test est servie | seance.prescrire, seance._duree_permet_test |
+| test_adaptatif | `vrai_test_rir_informatif` | 2.5 | rép. | Réserve dite au plus laquelle une série de test ou de tentative compte comme vrai test (`dernier_vrai_test_jour`) | modele.observer_serie |
+| test_adaptatif | `jours_min_entre_rampes` | 5 | j | Délai minimal entre deux montées (toute série de test ou de tentative) avant un vrai test ; figée | seance._mesure_utile |
+| test_adaptatif | `rampe_pas_cran` | 0.15 | part | Cran maximal de la grille pour qu'une montée soit possible ; cran entier permis au-delà de `rampe_pas` jusqu'à cette part ; figée | seance._vrai_test, seance._rampe |
+| test_adaptatif | `rampe_cran_rir_marge` | 3.0 | rép. | Réserve dite au-dessus de la réserve du test exigée pour franchir un cran entre `rampe_pas` et `rampe_pas_cran` ; figée | seance._rampe |
 | planification | `trajectoires` | 1000 | — | Trajectoires du jumeau numérique | planification |
 | planification | `plans_max` | 256 | — | Budget de plans de la recherche (population = plans_max // iterations) | planification |
 | planification | `iterations` | 4 | — | Itérations de l'entropie croisée | planification |
@@ -1411,16 +1468,20 @@ Le tableau est généré depuis le JSON (306 clés, dans l'ordre du fichier) et 
 | planification | `risque_tendon_plancher` | 4.0 | effort | Charge de référence minimale pour appliquer le rapport | planification |
 | planification | `horizon_sans_echeance_sem` | 12 | sem. | Horizon sans échéance ni cible | planification |
 | planification | `sigma_prevision_semaine` | 0.004 | ln/sem. | Bruit de prévision ajouté par semaine | planification |
-| planification | `gain_affutage` | 0.015 | part | Non lue | — |
+| planification | `gain_affutage` | 0.012 | ln | Gain moyen de l'affûtage : ajouté à la capacité à frais du jour J ; relève le maximum à l'ouverture des tentatives en semaine d'affûtage ou de compétition (ou la suivante) | planification.evaluer, seance._tentative |
 | planification | `graine` | 20261009 | — | Graine des tirages de planification | planification |
 | planification | `prudence_charge` | [0.6, 0.25] | écarts-types | Quantile prudent de la charge (≤ 3 séances, après) | seance._cible_charge |
 | planification | `transport_creation` | 0.25 | /série | Coût de transport d'une série créée ou retirée | planification |
-| planification | `marge_cible` | 0.065 | ln | Marge ajoutée au seuil de cible | planification |
+| planification | `marge_cible` | 0.045 | ln | Marge ajoutée au seuil d'une cible en répétitions ou en tenue (rendement moyen du test) | planification.evaluer |
 | planification | `abandon_hebdo` | 0.01 | /sem. | Hasard d'abandon hebdomadaire (sans échéance) | planification |
 | planification | `abandon_surcharge` | 3.0 | — | Poids de la surcharge dans le hasard d'abandon | planification |
 | planification | `gain_min` | 0.002 | valeur | Gain minimal sur la référence pour retenir un plan | planification |
-| planification | `rendement_test_sd` | 0.07 | ln | Dispersion du rendement d'un test le jour J dans la prévision de P(réussite) | planification |
-| securite | `hausse_par_niveau` | [0.1, 0.05, 0.05, 0.05] | part | Hausse de charge maximale à schéma égal, par niveau | securite.hausse_max |
+| planification | `rendement_test_sd` | 0.055 | ln | Dispersion, hors prévision, d'un test en répétitions ou en tenue le jour J | planification.evaluer |
+| planification | `erreur_estimation_echeance_sd` | 0.03 | ln | Écart-type de l'erreur de l'estimation de Koach le jour J (point de départ de l'échelle des tentatives simulée) | planification.evaluer |
+| planification | `tentative_sd_jour` | 0.046 | ln | Écart-type du jour utilisé par l'échelle des tentatives simulée | planification.evaluer |
+| planification | `tentative_manque` | 0.018 | ln | Manque moyen de l'échelle à sa barre la plus haute possible (exponentielle) | planification.evaluer |
+| planification | `tentative_cible_proba` | 0.35 | proba | P(réussite) minimale pour viser la cible au dernier essai simulé | planification.evaluer |
+| securite | `hausse_par_niveau` | [0.1, 0.05, 0.05, 0.05] | part | Hausse de charge maximale à schéma égal, par niveau ; hausse du plafond de la 1re barre de montée (1.0.1, § 6.5) | securite.hausse_max, seance._rampe |
 | securite | `hausse_fragile_facteur` | 0.5 | × | Facteur de la hausse sur zone fragile (conduite, `koachFragile` ou profil) | securite.hausse_max, seance._bornes_hausse |
 | securite | `douleur_seuil` | 3 | /10 | Seuil de douleur (zone active au-dessus) | securite |
 | securite | `douleur_jours_actifs` | 14 | j | Durée d'activité d'un signalement ; fenêtre de la douleur du bas du corps | securite |
@@ -1552,7 +1613,7 @@ Le tableau est généré depuis le JSON (306 clés, dans l'ordre du fichier) et 
 | rupture | `assiduite_secours` | 0.7 | part | Seuil d'assiduité | rupture |
 | rupture | `assiduite_secours_semaines` | 2 | sem. | Semaines cumulées | rupture |
 | rupture | `douleur_secours` | 2 | /10 | Douleur au-dessus de laquelle l'alerte se lève | rupture |
-| rupture | `elargissement_rien_de_special` | 4.0 | × | Facteur sur les variances des capacités et qualités | rupture |
+| rupture | `elargissement_rien_de_special` | 4.0 | × | Facteur sur la variance de toute capacité (`modele.elargir`, § 4.4) | rupture |
 | rupture | `semaine_allegee_series` | 0.6 | × | Séries de la semaine allégée | rupture |
 | rupture | `semaine_allegee_rir` | 2.0 | rép. | Réserve ajoutée en semaine allégée | rupture |
 | rupture | `a_priori_alpha` | 2.0 | — | α0 de la course initiale | rupture |
@@ -1565,6 +1626,8 @@ Le tableau est généré depuis le JSON (306 clés, dans l'ordre du fichier) et 
 | rupture | `journal_dossier` | 60 | événements | Événements du journal dans le dossier | rupture.dossier |
 | rupture | `douleur_recente_j` | 7 | j | Âge maximal d'un signalement pour l'alerte douleur | rupture |
 | rupture | `residu_reps_reference` | 8.0 | rép. | R de conversion réserve → e1RM (g'(R)) | rupture._residu_e1rm (chemin pris seulement si le résumé de séance a moins de 6 éléments : jamais avec le modèle) |
+| rupture | `mauvais_jours_suite` | 2 | séances | Séances de suite tenues pour de mauvais jours qui lèvent la cause « rupture » (0 : jamais) | rupture.Surveillance |
+| rupture | `mauvais_jour_poids` | 0.5 | proba | Poids du mauvais jour (`resume[4]`) à partir duquel une séance compte comme mauvais jour | rupture.Surveillance |
 | controle_dual | `semaines_min` | 8 | sem. | Semaines de journal pour être calibré | dual.calibre |
 | controle_dual | `intervalle_max` | 0.06 | part | Demi-largeur maximale des lifts principaux | dual.calibre |
 | controle_dual | `bras_semaines` | 3 | sem. | Durée d'un bras N-of-1 | dual |
@@ -1583,14 +1646,13 @@ Le tableau est généré depuis le JSON (306 clés, dans l'ordre du fichier) et 
 
 ### 7.5 Clés non lues
 
-**Clés du JSON lues par aucun module de `koach/`** (18, vérifiées par script sur le code du 10/10/2026) :
+**Clés du JSON lues par aucun module de `koach/`** (17 depuis 1.0.1, vérifiées par script sur le code du 10/10/2026 ; 18 en 1.0, `planification.gain_affutage` est lue depuis 1.0.1) :
 
 - racine : `qualites` (lue par le banc), `classes_reponse` ; toutes deux seulement contrôlées en type à l'import ;
 - `mesure.bruit_serie`, `mesure.bruit_echec`, `mesure.bruit_continu` ;
 - `mesure.cardio_poids_qualite` (lue par le banc seulement, `banc/politique_koach.py`) ;
 - `fatigue.grille_tau_nerveux`, `fatigue.grille_tau_musculaire`, `fatigue.grille_tau_tendineux` ;
 - `test_adaptatif.poids_information`, `test_adaptatif.test_reps_ouvertes` ;
-- `planification.gain_affutage` ;
 - `securite.douleur_remplacant_part` ;
 - `securite.plafond_hebdo_par_niveau`, `securite.decharge_max_semaines`, `securite.affutage_baisse` : règles de volume de 0.3.1 portées par le validateur injecté (`banc/securite_banc.py`, en constantes du banc) ;
 - `adherence.refus_silence_j` (présente dans `DEFAUTS_ADHERENCE`, jamais lue) ;
@@ -1649,7 +1711,7 @@ Statuts : **déjà** (reprise avant le 10/10/2026) ; **ajoutée** (reprise le 10
 | A7.3 sans charge (couloir, garde de réserve directe) | non reprise | `_cible_reps` (règles propres) | Modèle propre (prévision au quantile e^(−σ/2), verrous échec, douleur, bilan, zone récente +10 %). Voir § 8.5. |
 | A7.4 conseil : −15 %/+5 %, −7,5 % gardé, arrêt après 2 échecs | déjà | `cible`, `_cible_charge` | Arrêt à une réserve donnée, propreté, chute de répétitions : non lus (voir § 8.5). |
 | A8.1 conditions d'un test | déjà | `_item`, `conduite` | Report à 48 h : sans objet (re-service, pas une borne). Test de course plus long que la borne : ajouté (A10.3). |
-| A8.2 échelle des tentatives | déjà | `_tentative` | Bonification d'affûtage : sans objet (hausse). |
+| A8.2 échelle des tentatives | déjà | `_tentative` | Bonification d'affûtage (`coachTaperGain` 0,02 en 0.3.1) : reprise en 1.0.1 à l'ouverture seulement, avec le gain mesuré sur le banc `planification.gain_affutage` (0,012) ; en 1.0 : sans objet (hausse). |
 | A8.3 séries repères | déjà | `_mesure_utile`, `_repere` | Ajouté : jamais sur une ligne à dose plafonnée. |
 | A9.1 tendons, hausse par tenue | déjà | `_cible_tenue` | — |
 | A9.1 temps total de l'emplacement | **ajoutée** | `seance._cible_tenue`, `Memoire.sec_slot` → `koach.tendon` cause `total` | Sans le plancher de 55 % du meilleur maintien (plus prudent). |
@@ -1715,7 +1777,7 @@ Statuts : **déjà** (reprise avant le 10/10/2026) ; **ajoutée** (reprise le 10
 - **Jamais plus lourd que le dernier passage** de l'exercice (et non que la dernière séance de l'emplacement) sur zone douloureuse ou en reprise, un jour de bilan bas, ou pendant la semaine du retour d'une coupure.
 - **Pas de vrai test ni de série repère après une coupure** : ni pendant la semaine du retour, ni avant `retour_seances_avant_mesure` séances de l'exercice depuis le retour ; aucune rampe sans barre réussie depuis `barre_recente_j` jours (constat de relecture B2).
 - **Ouverture des tentatives** bornée par les barres réussies des `barre_recente_j` derniers jours (+`premiere_hausse`, +`schema_change_part` par répétition au-delà de la première, `schema_change_reps_max` au plus).
-- **Montée du vrai test** : 1re barre ≤ +`repere_hausse` sur la barre récente ; barre suivante seulement si P(réussite) ≥ `rampe_proba_min` ; borne haute à μ + 2,5σ.
+- **Montée du vrai test** : 1re barre ≤ le plus grand de +`repere_hausse` sur la plus lourde barre récente et du max, sur les barres réussies des `barre_recente_j` derniers jours, de +`hausse_par_niveau[niveau]` et +`schema_change_part` par répétition faite au-delà de celles du test (`schema_change_reps_max` au plus) (1.0.1, formule au § 6.5 ; en 1.0 : +`repere_hausse` sur la plus lourde barre récente seulement) ; pas de vrai test après un échec non prévu à la dernière séance de l'exercice ni dans les `jours_min_entre_tests` jours qui suivent une série ratée (1.0.1, § 6.4) ; barre suivante seulement si P(réussite) ≥ `rampe_proba_min` ; un cran entier au-delà de `rampe_pas` seulement jusqu'à `rampe_pas_cran` et après une série dite à au moins rir + `rampe_cran_rir_marge` (1.0.1) ; borne haute à μ + 2,5σ.
 - **Série repère chargée** ≤ +`repere_hausse` sur la barre récente.
 - **Plafond des tenues** sur la valeur centrale `tenue_part_max·e^μ`, jamais sur un quantile haut.
 - **Bras d'essai N-of-1 sous les garde-fous** (appliqués par l'appelant, § 3.7.4) : bras B par `Seances.borne_externe` (aucune hausse un jour sans hausse, verrouillé, à `part_max`, dose plafonnée, zone douloureuse ou fragile, après un échec ; sinon bornes de hausse et +5 % entre séries) ; bras A borné par `dual.facteur_borne` par rapport aux séries de la référence.
@@ -1771,7 +1833,7 @@ En Dart, toutes les multiplications doivent être faites modulo 2³² (par exemp
 | `'koach-dual:%d:%d' % (graine, semaine)` | tirage de Thompson (`hypothese_pour_la_semaine`, appelé par `tirer` avec `planification.graine`) |
 | `'koach-adherence-poids:' + clé` et `'koach-adherence-decisions:' + clé` | banc seulement, utilisateur simulé (clé = `saison:scenario:graine`) |
 
-Ordre des tirages de `tirer` : les `n·k` gaussiennes de `z`, puis `n` uniformes d'hypothèse (consommés même quand le tirage de Thompson fixe l'hypothèse), puis les paires `bruit_jour`, `bruit_proc` (§ 3.7.1).
+Ordre des tirages de `tirer` : les `n·k` gaussiennes de `z`, puis `n` uniformes d'hypothèse (consommés même quand le tirage de Thompson fixe l'hypothèse), puis les paires `bruit_jour`, `bruit_proc`, puis (1.0.1) pour chaque trajectoire `bruit_seance` et les paires `bruit_est`, `manque` (§ 3.7.1).
 
 ### 9.2 Ordres qui comptent
 
@@ -1793,6 +1855,7 @@ Ordre des tirages de `tirer` : les `n·k` gaussiennes de `z`, puis `n` uniformes
 - **`erfc`.** Si `|x| < 2` : série de 80 termes, `term ← term·2z²/(2n + 1)`, puis `erf = 2/√π·e^(−z²)·Σ` et `erfc = 1 − erf`. Sinon : fraction continue de Laplace sur 200 étages, évaluée à rebours, `f = (k/2)/(z + f)`, puis `e^(−z²)/√π/(z + f)`. Symétrie : `2 − erfc(|x|)` pour `x < 0`.
 - **`norm_cdf(a)`** = `½·erfc(−a/√2)` ; **`norm_sf(a)`** = `½·erfc(a/√2)`.
 - **`norm_ppf`** : Acklam (coefficients du code, seuil 0,02425), puis un pas de Halley avec `norm_cdf`.
+- **Courbe** (1.0.1) : `_phi`, `_phi1` (séries à 7 termes pour |x| < 0,01, sans `expm1`), `_g`, `_dg`, `_dg_forme` et `_reps_de` (série en u pour |u| < 0,01, sans `log1p` ; seuils `u ≤ −1 + 1e-12` et `ln R > ln 200 = 5,298317366548036`), § 5.1. `planification.evaluer` appelle aussi `norm_ppf` pour les quantiles de l'échelle des tentatives simulée.
 - **`interval_moments`**, **`point_moments`** : § 5.12.
 - **`category_moments`** : § 5.6 (fenêtre `[a − 8T ; b + 8T]`, pas choisi sur la vraisemblance, 104 à 1 200 intervalles). **`_category_mass`** : la référence Python appelle `math.erfc` ; le portage Dart appelle `erfc` du module. L'écart est au plus 2e-13 sur la masse : les fixtures de parité en tiennent compte (tolérance 1e-9 sur les sorties).
 - **`cholesky_semi(S, tol = 1e-12)`** : `seuil = tol·max_j S[j][j]` ; pour j croissant : `d = S[j][j] − Σ_{q<j} L[j][q]²` ; si `d ≤ seuil`, colonne j laissée à 0 ; sinon `L[j][j] = √d` et, pour i > j, `L[i][j] = (S[i][j] − Σ_{q<j} L[i][q]·L[j][q])/L[j][j]`. Remplace la décomposition propre de numpy (non portable).
@@ -1897,7 +1960,7 @@ Ces constats sont reportés tels quels ; ils ne sont pas corrigés dans le code 
 
 | N° | Constat | Conséquence |
 | --- | --- | --- |
-| M5 | **La demi-largeur de l'intervalle à 90 % ne passe presque jamais sous 6 %, et elle grandit** (`modele.capacite`, `dual.calibre`, `seance._mesure_utile`). Relecture : avec un 1RM déclaré et 2 séances par semaine de 4 séries notées, demi-largeur 6,3 % à la semaine 1 puis 8,5 % à la semaine 20 (niveau 1) ; chaque séance ne retire qu'environ 0,001 d'écart-type de ln capacité ; `q_delta_jour_inactif` est ajouté à toutes les pistes chaque jour. Depuis, `defaut_modele_sd` (0,015) ajoute un plancher de 2,5 %. | Le contrôle dual (cahier § 7) ne se déclenche pratiquement jamais : le tirage de Thompson et les essais N-of-1 restent inactifs. Le vrai test (§ 5) reste éligible presque en permanence : il revient tous les `jours_min_entre_tests` = 14 jours sur chaque mouvement principal et secondaire chargé (simple à RIR 1 pour un avancé), sauf contre-indication (coupure, douleur, verrou, bilan bas…). |
+| M5 | **La demi-largeur de l'intervalle à 90 % ne passe presque jamais sous 6 %, et elle grandit** (`modele.capacite`, `dual.calibre`, `seance._mesure_utile`). Relecture : avec un 1RM déclaré et 2 séances par semaine de 4 séries notées, demi-largeur 6,3 % à la semaine 1 puis 8,5 % à la semaine 20 (niveau 1) ; chaque séance ne retire qu'environ 0,001 d'écart-type de ln capacité ; `q_delta_jour_inactif` est ajouté à toutes les pistes chaque jour. Depuis, `defaut_modele_sd` (0,015) ajoute un plancher de 2,5 %. | Le contrôle dual (cahier § 7) ne se déclenche pratiquement jamais : le tirage de Thompson et les essais N-of-1 restent inactifs. Le vrai test (§ 5) reste éligible presque en permanence : il revient tous les `jours_min_entre_tests` = 14 jours sur chaque mouvement principal et secondaire chargé (simple à RIR 1 pour un avancé), sauf contre-indication (coupure, douleur, verrou, bilan bas…). Depuis 1.0.1, une montée arrêtée loin de l'échec ne compte pas : le test suivant peut revenir dès `jours_min_entre_rampes` = 5 jours, sauf après une série ratée de l'exercice (`jours_min_entre_tests` jours, § 6.4). |
 | M6 | **Des actions du cahier ne passent pas par la façade** : `plan({'horizon': 'seance'})` sert les items reçus. La semaine allégée (`Surveillance.appliquer_allegement`, cahier § 9), la modulation hebdomadaire (`Planification.appliquer`), le bras N-of-1 (`ControleDual.modulation`, `facteur_borne`, `Seances.borne_externe`) et la forme d'adhérence (`Adherence.forme`, § 8) doivent être appliqués par l'appelant. Seul le banc le fait (`banc/extensions_koach.py`, `banc/politique_koach.py`). | Un intégrateur KM3 qui appelle `plan()` comme le décrit ce contrat, sans ces crochets, ne servira jamais la semaine allégée, la modulation de la planification, les bras d'essai ni la forme d'adhérence. Les garde-fous de ces modulations reposent aussi sur l'appelant. |
 | M7 | **L'état de la planification ne se recalcule pas depuis le journal** : `charger_reference` (blocs, cibles, échéance, poids) et la replanification initiale ne sont pas des événements du journal. | `rejouer` ne reconstruit pas `Planification.plan` si l'appelant ne répète pas ces appels dans le même ordre. |
 | M8 | **Le « résidu d'e1RM » du secours n'est pas un résidu** : c'est le déplacement a posteriori de la capacité du jour pendant la séance (`jour_vu − jour_prevu`, `modele.fin_seance`), rétréci par le gain du filtre et absorbé en partie par DS et DE, puis moyenné en valeur signée sur la semaine (`Surveillance.fin_seance`, `fin_semaine`). La conversion de l'innovation de la note (`_residu_e1rm`) n'est jamais prise avec le modèle. | Le seuil du cahier (« résidu d'e1RM > 5 % deux semaines de suite ») est beaucoup moins sensible que prévu : le déplacement vaut 0,002 à 0,003 par séance quand l'écart observé contre prévu vaut plusieurs pourcents. |
@@ -1915,6 +1978,25 @@ Autres limites connues :
 - **Garde partielle (m5).** `Planification.evaluer` prend `ln(cible)` sans contrôler une cible ≤ 0.
 - **Essai N-of-1.** `peut_demarrer` estime la durée par défaut d'un essai non planifié avec `DEFAUTS_DUAL['n_bras']` au lieu du paramètre ; toute liste `douleurs` non vide en fin de séance interrompt l'essai, même une gêne sous le seuil.
 
+**Limites déclarées par la relecture indépendante** (10/10/2026, CHANGEMENTS_1_0_1.md § F ; non corrigées ; numéros de cette relecture, distincts de ceux du tableau ci-dessus) :
+
+- **m3** : le jumeau de la planification ajoute `gain_affutage` à la capacité du jour J sans condition de semaine et à toutes les barres, alors que la séance ne l'ajoute qu'à l'ouverture des tentatives, en semaine `taper` ou `competition` (§ 3.7.1, 6.5).
+- **m4** : le jumeau retire le manque de l'échelle des tentatives même quand la cible est visée (§ 3.7.1).
+- **m5** : la durée de la montée (`_duree_permet_test`) peut être sous-estimée quand des séries sont dites très faciles (§ 6.4).
+- **m6** : une montée qui n'arrive jamais près de l'échec n'avance pas `dernier_vrai_test_jour` et peut revenir tous les `jours_min_entre_rampes` = 5 jours (§ 6.4).
+- **m8** : la courbe sature à 200 répétitions pour λ > 1 (§ 5.1, 9.3).
+- **m9** : portage Dart : la variable `dit` de `_rampe` doit être déclarée avant le `if` (en Python, elle est posée avant le test `f ≥ 10`).
+- **m10** : la branche « mauvais jour » ne fige que la capacité de l'exercice observé : ni la forme ni l'échelle de courbe, ni les sensibilités à la fatigue (§ 4.5).
+- **m11** : le test de rejeu exact ne couvre pas `Surveillance.mj_suite`, `Seances.genres` ni les horloges de la piste (§ 5.8, 9.5).
+
+**Changements de 1.0.1 (note du 10/10/2026)** :
+
+- **Test du débutant à 3 répétitions** (`test_reps_debutant` 5 → 3, réserve `test_rir_debutant` = 2 gardée) : aligné sur le test 3RM à 85 % que `kalis_plan` écrit pour un débutant. Le test de 5 répétitions de 1.0 disparaît.
+- **Grille grossière** : un cran entier est permis jusqu'à `rampe_pas_cran` = 15 % de la charge totale (10 % en 1.0, `rampe_pas`), seulement après une série dite à au moins `rampe_cran_rir_marge` = 3 répétitions au-dessus de la réserve du test et si P(réussite) ≥ `rampe_proba_min`. Entre 10 et 15 %, la montée saute donc un cran plus grand que le pas voulu ; au-delà de 15 %, pas de vrai test (série repère seulement), comme au-delà de 10 % en 1.0.
+- **Branche « mauvais jour » sans déplacement de la capacité** (`jour.mauvais_jour_fige_capacite`, § 4.5 ; pas pour une série de rôle `attempt`) : un mauvais jour isolé ne déplace plus la capacité que par la part `(1 − w)` de la branche normale (mesure appariée de 1,15 % à 0,93 %). Conséquence : une baisse réelle et durable n'est suivie, séance après séance, que par cette part de la branche normale, donc plus lentement. D'où l'alerte « mauvais jours de suite » (`rupture.mauvais_jours_suite` = 2 séances au poids ≥ `mauvais_jour_poids` = 0,5), qui lève la cause « rupture » et mène au diagnostic (§ 3.7.2). Mesure (CHANGEMENTS_1_0_1.md § D, avant la correction de `elargir` ; 162 saisons de référence, 162 de maladie, moteur sans extension) : 0,41 alerte pour 100 séances en référence ; maladie détectée dans 67 saisons sur 162 (BOCPD seule en KM1 : 19,8 %).
+- **Modèle de réussite du jour J** (§ 3.7.1) : `gain_affutage`, `marge_cible`, `rendement_test_sd`, `erreur_estimation_echeance_sd`, `tentative_sd_jour` et `tentative_manque` sont des mesures du banc, pas des références publiées : `marge_cible`, `rendement_test_sd` et `tentative_sd_jour` sur six graines (0 à 5 ; 45 saisons à cibles × 3 vérités, 1 758 unités chargées dont 405 en répétitions), `gain_affutage`, `erreur_estimation_echeance_sd` et `tentative_manque` remesurés sur les graines 2 à 5 après la correction de `elargir` (1 188 unités chargées) ; `tentative_cible_proba` = 0,35 est repris de 0.3.1. Elles dépendent des modèles de vérité du banc et sont à revoir sur le journal réel.
+- **Courbe** : les bornes de λ passent de [−0,3 ; 1,2] à [−0,8 ; 1,3] ; l'inverse n'a plus de Newton (§ 5.1), ce qui supprime une source d'écart de parité (nombre de pas fixe) mais introduit deux séries tronquées (φ, ln(1 + u)) à porter ligne pour ligne (§ 9.3).
+
 ### A.3 Code mort, commentaires contraires, comportements à signaler
 
 | # | Fichier, fonction | Constat |
@@ -1931,11 +2013,11 @@ Autres limites connues :
 | 10 | `koach/seance.py`, `cible` ; `koach/moteur.py`, `_plan` | Paramètre `faites` non lu. |
 | 11 | `koach/numerique.py`, `dart_round` | Inutilisée. |
 | 12 | `qualites/regles.py`, `SCHEMA` | Entrées `compression` et `transition_muscle_up` jamais lues (remplacées dans `parts_fixes`) ; leurs valeurs diffèrent de celles réellement utilisées. |
-| 13 | `params/koach_params_v1.json` | 18 clés non lues par le moteur (§ 7.5), dont `rupture.fenetre` et `adherence.refus_silence_j`, présentes dans les dictionnaires de défauts. |
+| 13 | `params/koach_params_v1.json` | 17 clés non lues par le moteur (§ 7.5 ; 18 en 1.0), dont `rupture.fenetre` et `adherence.refus_silence_j`, présentes dans les dictionnaires de défauts. |
 | 14 | `koach/modele.py`, docstring du module | Annonce une « réussite binaire (2PL en ogive normale) » : aucun modèle binaire n'existe. |
 | 15 | `koach/modele.py`, `observer_serie` | La docstring cite `manual`, `parts`, `assistKg` : non lus. |
 | 16 | `koach/moteur.py`, `observe` | La docstring cite le type `profil` (non traité) et omet `charge_manuelle`, `plan` et `parametres`. |
-| 17 | `koach/modele.py`, `C_LIN` | Commentaire « Epley, Brzycki » : 0,0265 est plus plat que ces formules (≈ 0,028 à 0,032 ln/rép. entre 2 et 10 rép., calcul) ; l'écart est compensé par `courbe_echelle` = 0,10 (e^0,1·0,0265 = 0,0293). |
+| 17 | `koach/modele.py`, `C_LIN` | 1.0 : commentaire « Epley, Brzycki » alors que 0,0265 est plus plat que ces formules (≈ 0,028 à 0,032 ln/rép. entre 2 et 10 rép., calcul), écart compensé par `courbe_echelle` = 0,10 (e^0,1·0,0265 = 0,0293). Depuis 1.0.1, le commentaire ne cite plus ces formules : C_LIN fixe seulement `G8 = 7·C_LIN`, le point commun de toutes les formes à 8 répétitions (§ 5.1). |
 | 18 | `koach/rupture.py`, `koach/adherence.py`, `koach/dual.py` | Commentaires « Clés nouvelles (absentes de koach_params_v1.json) » périmés : elles y sont toutes. Renvois à « LIVRAISON » pour justifier des défauts : le document de livraison n'existe pas encore. |
 | 19 | `koach/securite.py`, docstring du module | « Les valeurs viennent de `params['securite']` » : `palier_bilan` code en dur 0,015, 4, 6, 0,01, 3, 0,5, −0,08 ; `_arrets` l'épisode « réel » ≥ 4 ; `_semaines_de_charge` ≥ 4 jours. Valeurs égales à 0.3.1, mais hors fichier. |
 | 20 | `koach/seance.py`, `_repere`, `_cible_charge` | Réserve des séries repères (1,5 ; 2 débutant) et fenêtre de 42 jours de la barre récente du repère en dur, alors que `barre_recente_j` existe. ±15 %/+5 % entre séries, 0,35, 0,2, 0,12, 2,5, 0,08 sont aussi codés en dur. |
@@ -1948,7 +2030,7 @@ Autres limites connues :
 | 27 | `koach/rupture.py`, `valider_parametres` | L'import admet un renommage des `qualites` et `classes_reponse` (contrôle de type seul), alors que la liste est « figée » (cahier, Méthodes § 2). `FIGEES` cite `controle_dual.plafond_volume` et `plafond_intensite`, absentes du fichier. |
 | 28 | `koach/seance.py`, `_mesure_utile` | `jours_avant_echeance` n'est fourni par aucun appelant du banc (qui passe `jour_evenement`) : le blocage des mesures à l'approche de l'échéance (A6.5) est inactif sur le banc. |
 | 29 | `banc/politique_koach.py` | Le facteur de cran (0,75) est fourni par le banc, pas par le fichier de paramètres. |
-| 30 | `rejeu/journal_app.py`, `declares_initiaux` | La conversion de la charge de travail initiale d'un accessoire en 1RM utilise la courbe de population sans l'échelle `courbe_echelle` (e^0,1) que le moteur applique à g₀ : le 1RM déclaré est un peu plus bas que ce que le moteur déduirait de la même charge. |
+| 30 | `rejeu/journal_app.py`, `declares_initiaux` | Résolu en 1.0.1 (relecture indépendante) : la conversion de la charge de travail initiale d'un accessoire en 1RM appelle `Modele._g(COURBE_LAMBDA, COURBE_ECHELLE, reps)`, même famille et même échelle que le moteur (§ 5.1), avec `COURBE_LAMBDA` = 0,2 = `courbe_forme[0]` et `COURBE_ECHELLE` = 0,10 = `courbe_echelle[0]`. Reste que ces deux valeurs sont recopiées en dur dans le module, non lues du fichier de paramètres. |
 
 ### A.4 Points ouverts pour KM2
 
@@ -1958,7 +2040,7 @@ Autres limites connues :
 4. M7 : ajouter un événement `reference` (blocs ou empreinte, cibles, échéance, poids) traité par `observe`.
 5. M8 : mesurer le résidu par l'innovation de la note convertie en ln capacité, ou diviser le déplacement par le gain.
 6. Porter le retour gradué au volume et la durée bornée (§ 8.3) dans le moteur Dart, et les règles de volume de 0.3.1 encore portées par le validateur seul (`securite.plafond_hebdo_par_niveau`, `decharge_max_semaines`, `affutage_baisse`), ou fournir un validateur équivalent obligatoire.
-7. Décider du sort des 18 clés non lues : supprimer ou brancher.
+7. Décider du sort des 17 clés non lues : supprimer ou brancher.
 8. Adapter `fixtures/generer.py` et régénérer les fixtures de parité (§ 9.6) ; écrire en boucles ordonnées les produits de `tirer` et `evaluer` ; remplacer `round` dans `_surmenage`.
 9. Import : réappliquer hypothèses, BOCPD, `Planification.p` et `ControleDual.params`, ou figer ces sections ; borner `porte_note_ouverte` (par exemple à 3 au plus).
 10. Étendre la porte de la note ouverte aux tenues ; chercher l'origine de la dérive résiduelle sur un plateau.

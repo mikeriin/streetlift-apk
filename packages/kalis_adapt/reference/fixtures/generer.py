@@ -586,7 +586,7 @@ def fixture_planification(pc):
             'suivis': list(pl.suivis),
             'grille_intensite': list(GRILLE_INTENSITE),
             'hypothese_thompson': pl.hypothese_thompson,
-            'tirage': {c: tirage[c] for c in ('mu', 'rho', 'eps', 'hyp', 'bruit_jour', 'bruit_proc',
+            'tirage': {c: tirage[c] for c in ('mu', 'rho', 'eps', 'hyp', 'bruit_jour', 'bruit_proc', 'bruit_seance', 'bruit_est', 'manque',
                                                'classes', 'fatigue', 'kg', 'semaines', 'hypotheses')},
             'tirage_intermediaire': {c: inter[c] for c in ('moyennes', 'S', 'L', 'z')},
             'dimensions': {'blocs': blocs_d, 'qualites': qualites},

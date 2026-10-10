@@ -1,8 +1,8 @@
 {
   "schema": 1,
-  "version": "1.0.0-ref.1",
-  "date": "2026-10-09",
-  "note": "Paramètres initiaux de Koach 1.0 (CONTRAT_1_0.md § 7). Chaque valeur est sourcée dans SOURCES.md (référence, mesure du banc ou choix raisonné). Fichier importable depuis le mode dev ; réestimé par utilisateur.",
+  "version": "1.0.1-ref.1",
+  "date": "2026-10-10",
+  "note": "Paramètres initiaux de Koach 1.0 (CONTRAT_1_0.md § 7). Chaque valeur est sourcée dans SOURCES.md (référence, mesure du banc ou choix raisonné). Fichier importable depuis le mode dev ; réestimé par utilisateur. 1.0.1 (KM1 correction 1, DECISIONS_CP.md C13.10) : famille de courbe de Box-Cox, vrai test, modèle de réussite du jour J, branche mauvais jour.",
   "qualites": [
     "pousser",
     "tirer",
@@ -83,8 +83,8 @@
     "cardio_sd": 0.4,
     "wod_sd": 0.25,
     "courbe_forme": [
-      0.3,
-      0.3
+      0.2,
+      0.45
     ],
     "courbe_echelle": [
       0.1,
@@ -173,7 +173,8 @@
     "mauvais_jour_proba": 0.1,
     "mauvais_jour_proba_bilan_bas": 0.45,
     "mauvais_jour_moyenne": -0.06,
-    "mauvais_jour_sigma": 0.045
+    "mauvais_jour_sigma": 0.045,
+    "mauvais_jour_fige_capacite": true
   },
   "fatigue": {
     "tau_nerveux_j": 2.5,
@@ -232,7 +233,7 @@
     "reps_ouvertes": 6,
     "repere_hausse": 0.1,
     "test_reps": 3,
-    "test_reps_debutant": 5,
+    "test_reps_debutant": 3,
     "test_rir": 1.0,
     "test_rir_debutant": 2.0,
     "test_reps_ouvertes": 0,
@@ -262,7 +263,11 @@
     "rampe_sd_min": 0.05,
     "rampe_confirmations": 2,
     "rampe_proba_min": 0.75,
-    "rampe_series_travail": 1
+    "rampe_series_travail": 1,
+    "vrai_test_rir_informatif": 2.5,
+    "jours_min_entre_rampes": 5,
+    "rampe_pas_cran": 0.15,
+    "rampe_cran_rir_marge": 3.0
   },
   "planification": {
     "trajectoires": 1000,
@@ -277,18 +282,22 @@
     "risque_tendon_plancher": 4.0,
     "horizon_sans_echeance_sem": 12,
     "sigma_prevision_semaine": 0.004,
-    "gain_affutage": 0.015,
+    "gain_affutage": 0.012,
     "graine": 20261009,
     "prudence_charge": [
       0.6,
       0.25
     ],
     "transport_creation": 0.25,
-    "marge_cible": 0.065,
+    "marge_cible": 0.045,
     "abandon_hebdo": 0.01,
     "abandon_surcharge": 3.0,
     "gain_min": 0.002,
-    "rendement_test_sd": 0.07
+    "rendement_test_sd": 0.055,
+    "erreur_estimation_echeance_sd": 0.03,
+    "tentative_sd_jour": 0.046,
+    "tentative_manque": 0.018,
+    "tentative_cible_proba": 0.35
   },
   "securite": {
     "hausse_par_niveau": [
@@ -540,7 +549,9 @@
     "silence_semaines": 2,
     "journal_dossier": 60,
     "douleur_recente_j": 7,
-    "residu_reps_reference": 8.0
+    "residu_reps_reference": 8.0,
+    "mauvais_jours_suite": 2,
+    "mauvais_jour_poids": 0.5
   },
   "controle_dual": {
     "semaines_min": 8,

@@ -42,8 +42,28 @@ DE = 25         # effet de jour de l'exercice en cours
 KL = 26         # sensibilité au compartiment rapide, part locale (qualités sollicitées)
 KG = 27         # sensibilité au compartiment lent, part systémique
 NG = 28
-C_LIN = 0.0265  # pente de la branche linéaire : -ln(part du 1RM) par répétition
-C_LOG = 0.0892  # branche logarithmique, égale à la linéaire à 8 répétitions
+C_LIN = 0.0265  # pente de la courbe log-linéaire (forme 0) : -ln(part du 1RM) par répétition
+C_LOG = 0.0892  # courbe logarithmique (forme 1), égale à la log-linéaire à 8 répétitions
+G8 = C_LIN * 7.0            # -ln(part du 1RM) à 8 répétitions, échelle e^0, toutes formes
+LN8 = math.log(8.0)
+LAM_MIN = -0.8              # forme la plus convexe admise (au-delà de Brzycki, -0,30)
+LAM_MAX = 1.3               # forme la plus concave admise (au-delà de Lombardi, 1)
+
+
+def _phi(x):
+    """(e^x - 1) / x, série près de 0 (portable : ni expm1 ni log1p)."""
+    if -1e-2 < x < 1e-2:
+        return 1.0 + x * (0.5 + x * (1.0 / 6.0 + x * (1.0 / 24.0 + x * (1.0 / 120.0 + x * (
+            1.0 / 720.0 + x / 5040.0)))))
+    return (math.exp(x) - 1.0) / x
+
+
+def _phi1(x):
+    """Dérivée de `_phi` : (e^x (x - 1) + 1) / x², série près de 0."""
+    if -1e-2 < x < 1e-2:
+        return 0.5 + x * (1.0 / 3.0 + x * (0.125 + x * (1.0 / 30.0 + x * (1.0 / 144.0 + x * (
+            1.0 / 840.0 + x / 5760.0)))))
+    return (math.exp(x) * (x - 1.0) + 1.0) / (x * x)
 CLASSES = ['charge', 'reps', 'tenue', 'cardio', 'wod']
 ZONES_TENDON = ['epaule', 'coude', 'poignet', 'lombaires', 'genou', 'hanche', 'cheville']
 
@@ -54,7 +74,8 @@ class Piste(object):
     __slots__ = ('id', 'type', 'classe', 'vecteur', 'base', 'idx', 'fraction', 'bas',
                  'tendon', 'zone_tendon', 'systemique', 'locale', 'seances', 'dernier_jour',
                  'premier_jour', 'stim_semaine', 'series_seance', 'jour_seance', 'declare',
-                 'dernier_test_jour', 'residus', 'cran', 'meilleur', 'mesures', 'groupes', 'groupes_total',
+                 'dernier_test_jour', 'dernier_vrai_test_jour', 'derniere_rampe_jour', 'dernier_echec_jour',
+                 'residus', 'cran', 'meilleur', 'mesures', 'groupes', 'groupes_total',
                  'jour_prevu', 'jour_vu')
 
     def __init__(self, ex_id, typ, vecteur, base, idx, fraction=0.0, bas=False,
@@ -80,6 +101,9 @@ class Piste(object):
         self.jour_seance = None
         self.declare = declare
         self.dernier_test_jour = None
+        self.dernier_vrai_test_jour = None   # dernier test (montée, tentative) arrivé près de l'échec
+        self.derniere_rampe_jour = None      # dernière série de test, informative ou non
+        self.dernier_echec_jour = None       # dernière série ratée, quel que soit son rôle
         self.residus = []
         self.cran = None
         self.meilleur = None
@@ -269,7 +293,7 @@ class Modele(object):
         return out
 
     # ------------------------------------------------------------------
-    # Courbe répétitions ↔ charge : g(R) = e^k (c1 ln R + c2 (R - 1))
+    # Courbe répétitions ↔ charge : famille de Box-Cox, g(R) = e^k G8 B(R, γ) / B(8, γ)
     # ------------------------------------------------------------------
     def _courbe_moyenne(self, reps, bas):
         ap = self.p['a_priori']
@@ -278,39 +302,69 @@ class Modele(object):
 
     @staticmethod
     def _g(lam, k, reps):
-        """-ln(part du 1RM soulevable [reps] fois) : mélange d'une branche
-        linéaire (Epley, Brzycki) et d'une branche logarithmique (Lombardi),
-        égales à 8 répétitions ; [lam] choisit la forme, e^[k] l'échelle."""
+        """-ln(part du 1RM soulevable [reps] fois). Famille de Box-Cox en
+        répétitions : g = e^k · G8 · B(R, γ) / B(8, γ), B(R, γ) = (R^γ - 1) / γ
+        et γ = 1 - [lam]. Toutes les formes se croisent à 8 répétitions ;
+        [lam] = 1 : logarithmique (Lombardi) ; 0 : log-linéaire ; négatif :
+        convexe (part du 1RM linéaire en répétitions : Brzycki, Lander ≈ -0,3) ;
+        e^[k] : échelle. La famille reproduit sept équations publiées à moins
+        de 1,8 % de charge entre 2 et 20 répétitions (SOURCES.md § Courbe)."""
         r = 1.0 if reps < 1 else reps
-        return math.exp(k) * ((1.0 - lam) * C_LIN * (r - 1.0) + lam * C_LOG * math.log(r))
+        gam = 1.0 - lam
+        a = math.log(r)
+        return math.exp(k) * G8 * a * _phi(gam * a) / (LN8 * _phi(gam * LN8))
 
     @staticmethod
     def _dg(lam, k, reps):
+        """Dérivée de g par rapport aux répétitions (plancher 0,004)."""
         r = 1.0 if reps < 1 else reps
-        d = math.exp(k) * ((1.0 - lam) * C_LIN + lam * C_LOG / r)
+        gam = 1.0 - lam
+        d = math.exp(k) * G8 * math.exp((gam - 1.0) * math.log(r)) / (LN8 * _phi(gam * LN8))
         return d if d > 0.004 else 0.004
+
+    @staticmethod
+    def _dg_forme(lam, k, reps):
+        """Dérivée de g par rapport à la forme [lam]."""
+        r = 1.0 if reps < 1 else reps
+        gam = 1.0 - lam
+        a = math.log(r)
+        den = LN8 * _phi(gam * LN8)
+        num = a * _phi(gam * a)
+        d_gam = math.exp(k) * G8 * (a * a * _phi1(gam * a) * den - num * LN8 * LN8 * _phi1(gam * LN8)) / (den * den)
+        return -d_gam
 
     def courbe(self, t, m=None):
         """(forme, échelle) de la courbe de l'exercice : forme et échelle
         de l'utilisateur, échelle propre à l'exercice."""
         m = self.m if m is None else m
-        return clamp(m[LAM], -0.3, 1.2), clamp(m[KU] + m[t.idx + 1], -1.0, 1.0)
+        return clamp(m[LAM], LAM_MIN, LAM_MAX), clamp(m[KU] + m[t.idx + 1], -1.0, 1.0)
+
+    @staticmethod
+    def _reps_de(lam, k, log_ratio):
+        """Inverse de g (forme fermée) : répétitions R telles que
+        g(lam, k, R) = [log_ratio] > 0, bornées à 200."""
+        gam = 1.0 - lam
+        y = log_ratio * LN8 * _phi(gam * LN8) / (math.exp(k) * G8)   # B(R, γ)
+        u = gam * y
+        if u <= -1.0 + 1e-12:
+            return 200.0          # forme concave : charge sous l'asymptote
+        if -1e-2 < u < 1e-2:
+            ln_r = y * (1.0 + u * (-0.5 + u * (1.0 / 3.0 + u * (-0.25 + u * (0.2 + u * (
+                -1.0 / 6.0 + u / 7.0))))))
+        else:
+            ln_r = math.log(1.0 + u) / gam
+        if ln_r > 5.298317366548036:      # ln 200
+            return 200.0
+        r = math.exp(ln_r)
+        return r if r > 1.0 else 1.0
 
     def reps_a(self, t, log_ratio, m=None):
         """Répétitions possibles quand ln(capacité / charge) = log_ratio
-        (inverse de g, Newton à nombre de pas fixe)."""
+        (inverse de g)."""
         lam, k = self.courbe(t, m)
         if log_ratio <= 0:
             return 1.0 + log_ratio * 20.0 if log_ratio > -0.05 else 0.0
-        r = 1.0 + log_ratio / self._dg(lam, k, 1.0)
-        for _ in range(12):
-            f = self._g(lam, k, r) - log_ratio
-            r -= f / self._dg(lam, k, r)
-            if r < 1.0:
-                r = 1.0
-            if r > 200.0:
-                r = 200.0
-        return r
+        return self._reps_de(lam, k, log_ratio)
 
     # ------------------------------------------------------------------
     # Compartiments de fatigue
@@ -521,6 +575,18 @@ class Modele(object):
             co += [1.0, 1.0, -gn, -ln_, -gm, -lm]
         return idx, co
 
+    def _fige_mauvais_jour(self, t, s=None):
+        """Composantes de capacité de la piste (qualités sollicitées, écart
+        de l'exercice) : considérées dans la branche « mauvais jour » quand
+        `jour.mauvais_jour_fige_capacite` est vrai."""
+        if not self.p['jour'].get('mauvais_jour_fige_capacite'):
+            return None
+        if s is not None and (s.get('role') or (s.get('target') or {}).get('role')) == 'attempt':
+            # Tentative maximale (jour d'épreuve, test 1RM) : elle mesure la
+            # capacité, la branche « mauvais jour » la lit comme la normale.
+            return None
+        return tuple(self._h_capacite(t, jour=False)[0])
+
     @staticmethod
     def _stats(m, P, idx, co):
         """Moyenne et variance de h·x, et le vecteur P h."""
@@ -552,7 +618,7 @@ class Modele(object):
         P -= w * (np.outer(pg, ph) + np.outer(ph, pg) - np.outer(pg, pg))
 
     def _observer(self, idx, co, const, a, b, s2, point=None, melange=None, bruit=None, fonction=None,
-                  fige=None):
+                  fige=None, fige_alt=None):
         """Applique une observation aux deux branches. [a, b] : intervalle sur
         u = h·x + const ; [point] : valeur observée ; [melange] = (poids de
         la note sincère, poids d'une note sans information) ajoute une
@@ -604,6 +670,12 @@ class Modele(object):
             if v <= 0.0:
                 continue
             pg = ph
+            if bi == 1 and fige_alt:
+                # Branche « mauvais jour » : la séance s'explique par l'effet
+                # de jour ; les capacités ([fige_alt]) y sont « considérées »,
+                # non déplacées. Un mauvais jour isolé ne déplace alors la
+                # capacité que par la part de la branche normale.
+                fige = tuple(fige or ()) + tuple(fige_alt)
             if fige:
                 # Composantes « considérées » : elles pèsent dans la variance
                 # prévue mais l'observation ne les déplace pas.
@@ -632,12 +704,15 @@ class Modele(object):
                 # de Joseph avec le gain alpha·K : facteur 2·alpha − alpha²).
                 v2a = v - (2.0 * alpha - alpha * alpha) * (v - v2)
                 if fige:
-                    self._covariance_partielle(P, ph, pg, v, v2a)
+                    self._covariance_partielle(P, ph, pg, v, v2a if v2a < v else v)
                 else:
                     P -= np.outer(ph, ph) * ((v - v2a) / (v * v))
             elif fige:
                 m += pg * ((mu2 - mu) / v)
-                self._covariance_partielle(P, ph, pg, v, v2)
+                # La forme de Joseph à gain partiel ne reste semi-définie
+                # positive que si la variance ne croît pas (un mélange avec
+                # une note sans information peut l'élargir) : bornée à v.
+                self._covariance_partielle(P, ph, pg, v, v2 if v2 < v else v)
             else:
                 self._appliquer(m, P, ph, mu - const, v, mu2 - const, v2)
             if bi == 0:
@@ -758,10 +833,10 @@ class Modele(object):
             for i in (KN, KM, KL, KG):
                 if m[i] < 0.0:
                     m[i] = 0.0
-            if m[LAM] < -0.3:
-                m[LAM] = -0.3
-            if m[LAM] > 1.2:
-                m[LAM] = 1.2
+            if m[LAM] < LAM_MIN:
+                m[LAM] = LAM_MIN
+            if m[LAM] > LAM_MAX:
+                m[LAM] = LAM_MAX
 
     def _lin_force(self, t, m, lnL, reps, sj, sans_charge, percu):
         """Linéarise, autour de la moyenne [m], la réserve de la série :
@@ -791,7 +866,7 @@ class Modele(object):
                 d = self._dg(lam, k, R)
                 r1 = R if R > 1 else 1.0
                 dR = 1.0 / d
-                dlam = -math.exp(k) * (C_LOG * math.log(r1) - C_LIN * (r1 - 1.0)) / d
+                dlam = -self._dg_forme(lam, k, r1) / d
                 dk = -self._g(lam, k, R) / d
         v = R * garde - reps
         coefs = [c * dR * garde for c in co]
@@ -837,7 +912,8 @@ class Modele(object):
             # Barre manquée : la capacité du moment est sous la charge.
             if not sans_charge:
                 idx, co = self._h_capacite(t)
-                resid = self._observer(idx, co, t.base - lnL, -INF, 0.0, me['bruit_test'] ** 2)
+                resid = self._observer(idx, co, t.base - lnL, -INF, 0.0, me['bruit_test'] ** 2,
+                                       fige_alt=self._fige_mauvais_jour(t, s))
             rir_c = 0.0
         else:
             percu = not (echec or flammes is None)
@@ -918,7 +994,7 @@ class Modele(object):
                 if flammes is None and not echec:
                     fige = (LAM,) if sans_charge else (LAM, t.idx + 1)
                 resid = self._observer(idx, co, const, a, b, s2, melange=melange, bruit=bruit,
-                                       fonction=exacte, fige=fige)
+                                       fonction=exacte, fige=fige, fige_alt=self._fige_mauvais_jour(t, s))
             if percu and f_cible is not None and resid is not None and abs(resid[1]) > 1.0:
                 # Notes paresseuses : part des notes égales à la note
                 # préremplie quand l'attendu en est à plus d'une répétition.
@@ -939,6 +1015,19 @@ class Modele(object):
         t.mesures += 1
         if echec or s.get('repere') or s.get('role') in ('test', 'attempt'):
             t.dernier_test_jour = self.jour
+        if echec:
+            t.dernier_echec_jour = self.jour
+        # Rôle de la série : à la racine, sinon dans sa cible.
+        role = s.get('role') or (s.get('target') or {}).get('role')
+        if role in ('test', 'attempt'):
+            # Horloges du vrai test : toute série de test, et celles qui sont
+            # arrivées près de l'échec (échec, ou réserve dite d'au plus
+            # `vrai_test_rir_informatif`) : seules ces dernières mesurent
+            # vraiment le maximum et espacent le test suivant de 14 jours.
+            t.derniere_rampe_jour = self.jour
+            ri = self.p['test_adaptatif']['vrai_test_rir_informatif']
+            if echec or (flammes is not None and (flammes >= 10 or (11 - flammes) / 2.0 <= ri + 1e-9)):
+                t.dernier_vrai_test_jour = self.jour
         if reps > 0 and not echec and not sans_charge:
             if t.meilleur is None or charge > t.meilleur[0]:
                 t.meilleur = (charge, self.jour)
@@ -1032,7 +1121,8 @@ class Modele(object):
         bt = me['bruit_tenue']
         extra = (me['dispersion_fatigue_intra'] * sj) ** 2
         if echec:
-            resid = self._observer(idx, co, t.base - ln_s, None, None, (bt / 2) ** 2 + extra, point=0.0)
+            resid = self._observer(idx, co, t.base - ln_s, None, None, (bt / 2) ** 2 + extra, point=0.0,
+                                   fige_alt=self._fige_mauvais_jour(t, s))
             rir_c = 0.0
         elif flammes is None:
             # Tenue faite sans note : versée seulement si la prévision la
@@ -1040,7 +1130,8 @@ class Modele(object):
             mu0, _, _ = self._stats(self.m, self.P, idx, co)
             resid = None
             if mu0 + t.base - ln_s < 0.0:
-                resid = self._observer(idx, co, t.base - ln_s, 0.0, INF, bt ** 2 + extra)
+                resid = self._observer(idx, co, t.base - ln_s, 0.0, INF, bt ** 2 + extra,
+                                       fige_alt=self._fige_mauvais_jour(t, s))
             rir_c = 2.0
         else:
             if flammes >= 10:
@@ -1076,7 +1167,7 @@ class Modele(object):
             def exacte(etat, t=t, ln_s=ln_s):
                 return self._lin_tenue(t, etat, ln_s, True)[2]
             resid = self._observer(ix, cx, const, a, b, bruit(pred), melange=melange, bruit=bruit,
-                                   fonction=exacte)
+                                   fonction=exacte, fige_alt=self._fige_mauvais_jour(t, s))
             self._projeter()
             r = self._lin_tenue(t, self.m, ln_s, False)[3]
             rir_c = r if r > 0 else 0.0
@@ -1261,12 +1352,18 @@ class Modele(object):
 
     def elargir(self, facteur):
         """« Rien de spécial » au diagnostic : incertitude élargie sur les
-        capacités, réapprentissage rapide (cahier § 9)."""
-        for ex_id in self.ordre:
-            t = self.pistes[ex_id]
-            self.P[t.idx, t.idx] *= facteur
-        for q in range(NQ):
-            self.P[TH + q, TH + q] *= facteur
+        capacités, réapprentissage rapide (cahier § 9). La variance de toute
+        capacité (combinaison des qualités et de l'écart de l'exercice) est
+        multipliée par [facteur] : lignes et colonnes des composantes de
+        capacité multipliées par √facteur (P ← D P D). Multiplier les seules
+        diagonales défaisait les covariances négatives entre qualités et
+        écarts d'exercice et multipliait l'écart-type d'une capacité par
+        bien plus que √facteur (mesuré : × 7 au lieu de × 2)."""
+        r = math.sqrt(facteur)
+        idx = [TH + q for q in range(NQ)] + [self.pistes[ex_id].idx for ex_id in self.ordre]
+        for i in idx:
+            self.P[i, :] *= r
+            self.P[:, i] *= r
         self.elargi += 1
 
     # ------------------------------------------------------------------
