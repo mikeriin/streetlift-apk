@@ -1,0 +1,24 @@
+name: kalis_bench
+description: >-
+  Banc d'essai du calibrage des programmes de Kalis Track : profils types,
+  critères calculables (sécurité, qualité, trajectoires), export lisible des
+  programmes et des trajectoires simulées, rapports. Il lit et appelle
+  kalis_core, kalis_plan et kalis_adapt sans les modifier. Dart pur, sans
+  Flutter, sans stockage, sans horloge.
+version: 0.3.1
+publish_to: none
+
+environment:
+  sdk: '>=3.10.0 <4.0.0'
+
+dependencies:
+  kalis_adapt:
+    path: ../kalis_adapt
+  kalis_core:
+    path: ../kalis_core
+  kalis_plan:
+    path: ../kalis_plan
+
+dev_dependencies:
+  lints: ^4.0.0
+  test: ^1.25.0
