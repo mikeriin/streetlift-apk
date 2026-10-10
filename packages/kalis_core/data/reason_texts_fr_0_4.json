@@ -1,0 +1,398 @@
+{
+ "schema": 1,
+ "version": "0.4.3",
+ "texts": [
+  {
+   "code": "plan.season_phase",
+   "fr": "On est en phase « {phase} », à {weeksToEvent} semaines de ton échéance.",
+   "params": [
+    "phase",
+    "weeksToEvent"
+   ],
+   "meaning": "Le bloc réalise une phase du plan de saison, à tant de semaines de l'échéance."
+  },
+  {
+   "code": "plan.taper",
+   "fr": "Affûtage : moins de volume, mêmes charges. Tu arrives frais dans {daysToEvent} jours.",
+   "params": [
+    "volumeFactor",
+    "daysToEvent"
+   ],
+   "meaning": "Affûtage : volume réduit, intensité gardée, avant une échéance."
+  },
+  {
+   "code": "plan.peak_event",
+   "fr": "Toute ta saison est construite pour être en forme ce jour-là.",
+   "params": [
+    "eventId"
+   ],
+   "meaning": "La saison est construite pour arriver en forme à cette échéance."
+  },
+  {
+   "code": "plan.undulation",
+   "fr": "Aujourd'hui, c'est un jour {stress} : on alterne lourd, moyen et léger dans la semaine.",
+   "params": [
+    "stress"
+   ],
+   "meaning": "Ondulation : jour lourd, moyen ou léger."
+  },
+  {
+   "code": "plan.technique",
+   "fr": "Technique du jour : {technique}.",
+   "params": [
+    "technique"
+   ],
+   "meaning": "Technique de série choisie pour cet exercice."
+  },
+  {
+   "code": "plan.technique_withheld",
+   "fr": "Je garde la technique « {technique} » pour plus tard : pas encore le bon moment ({cause}).",
+   "params": [
+    "technique",
+    "cause"
+   ],
+   "meaning": "Technique avancée non servie : un prérequis manque (ancienneté, niveau, test, récupération, gêne)."
+  },
+  {
+   "code": "plan.specialization",
+   "fr": "Priorité à ta cible pendant {weeks} semaines ; le reste est entretenu.",
+   "params": [
+    "target",
+    "weeks"
+   ],
+   "meaning": "Spécialisation : priorité donnée à une cible pendant tant de semaines."
+  },
+  {
+   "code": "plan.maintenance_volume",
+   "fr": "Volume d'entretien pour ce groupe : juste ce qu'il faut pour ne rien perdre.",
+   "params": [
+    "muscle",
+    "weeklySets"
+   ],
+   "meaning": "Volume d'entretien du reste pendant une spécialisation ou un affûtage."
+  },
+  {
+   "code": "plan.skill_step",
+   "fr": "C'est ton étape actuelle sur cette figure.",
+   "params": [
+    "exerciseId",
+    "stepIndex"
+   ],
+   "meaning": "Étape de la progression d'une figure."
+  },
+  {
+   "code": "plan.skill_plateau",
+   "fr": "Tu es à cette étape depuis longtemps : je change d'approche sur cette figure.",
+   "params": [
+    "exerciseId"
+   ],
+   "meaning": "Figure bloquée à la même étape depuis longtemps : la méthode change (autre variante, autre dosage)."
+  },
+  {
+   "code": "plan.recent_load",
+   "fr": "Premier bloc calé sur ce que tu fais en ce moment : ni trop facile, ni marche trop haute.",
+   "params": [
+    "exerciseId",
+    "sessions"
+   ],
+   "meaning": "Premier bloc calé sur la charge d'entraînement actuelle déclarée."
+  },
+  {
+   "code": "plan.test_scheduled",
+   "fr": "Un test est prévu : il me dira où tu en es vraiment.",
+   "params": [
+    "testKind"
+   ],
+   "meaning": "Test programmé (série d'estimation, maximum, maintien, course)."
+  },
+  {
+   "code": "plan.benchmark_used",
+   "fr": "Charge calculée d'après ton test ou ton record.",
+   "params": [
+    "exerciseId",
+    "source"
+   ],
+   "meaning": "Charge ou durée calculée d'après un test ou un record du profil."
+  },
+  {
+   "code": "plan.percent_based",
+   "fr": "Charge réglée sur une part de ton maximum.",
+   "params": [
+    "pct"
+   ],
+   "meaning": "Charge donnée en part du maximum."
+  },
+  {
+   "code": "plan.recovery_profile",
+   "fr": "Je tiens compte de ta récupération ({factor}).",
+   "params": [
+    "factor",
+    "level"
+   ],
+   "meaning": "Tient compte d'une réponse de récupération et de vie (sommeil, stress, métier physique, déficit énergétique)."
+  },
+  {
+   "code": "plan.constraint_history",
+   "fr": "Zone à ménager : j'avance plus doucement sur les mouvements qui la chargent.",
+   "params": [
+    "zone",
+    "since"
+   ],
+   "meaning": "Zone à antécédent : progression plus prudente des mouvements qui la chargent."
+  },
+  {
+   "code": "plan.concurrent_sport",
+   "fr": "Tu fais aussi un autre sport : je place tes séances lourdes à distance.",
+   "params": [
+    "sport",
+    "sessions"
+   ],
+   "meaning": "Tient compte d'un autre sport : séances lourdes placées à distance."
+  },
+  {
+   "code": "plan.training_age",
+   "fr": "Volume et rythme réglés sur ton ancienneté d'entraînement.",
+   "params": [
+    "band"
+   ],
+   "meaning": "Volume, intensité ou techniques réglés sur l'ancienneté d'entraînement."
+  },
+  {
+   "code": "plan.return_from_gap",
+   "fr": "Tu reprends après une coupure : on repart progressivement.",
+   "params": [
+    "gap"
+   ],
+   "meaning": "Reprise après une interruption : redémarrage progressif."
+  },
+  {
+   "code": "plan.weak_point",
+   "fr": "Exercice choisi pour travailler là où tu bloques.",
+   "params": [
+    "exerciseId",
+    "kind"
+   ],
+   "meaning": "Exercice d'assistance choisi pour un point faible déclaré."
+  },
+  {
+   "code": "plan.event_specific",
+   "fr": "Travail spécifique de ton épreuve.",
+   "params": [
+    "eventId"
+   ],
+   "meaning": "Travail spécifique d'une épreuve (mouvements, enchaînements, durées de la compétition)."
+  },
+  {
+   "code": "adapt.backoff_from_top_set",
+   "fr": "Séries allégées calculées sur ta série de tête d'aujourd'hui.",
+   "params": [
+    "topLoadKg",
+    "pct"
+   ],
+   "meaning": "Séries allégées calculées sur la série de tête réalisée."
+  },
+  {
+   "code": "adapt.rir_cap",
+   "fr": "Je baisse un peu la charge pour que tu gardes de la réserve.",
+   "params": [
+    "rir"
+   ],
+   "meaning": "Plafond d'effort atteint : charge abaissée pour garder la réserve prévue."
+  },
+  {
+   "code": "adapt.test_result",
+   "fr": "Test enregistré : ton estimation est à jour.",
+   "params": [
+    "exerciseId",
+    "value",
+    "standardError"
+   ],
+   "meaning": "Résultat d'un test et son incertitude."
+  },
+  {
+   "code": "adapt.skill_step_up",
+   "fr": "Critère tenu : tu passes à l'étape suivante.",
+   "params": [
+    "exerciseId"
+   ],
+   "meaning": "Critère de passage tenu : étape suivante de la figure."
+  },
+  {
+   "code": "adapt.skill_step_down",
+   "fr": "Aujourd'hui, on revient une étape en dessous pour rester propre.",
+   "params": [
+    "exerciseId"
+   ],
+   "meaning": "Mauvais jour ou critère perdu : étape plus facile."
+  },
+  {
+   "code": "adapt.skill_hold",
+   "fr": "On reste à cette étape : tes tendons ont besoin de temps.",
+   "params": [
+    "exerciseId",
+    "weeksAtStep"
+   ],
+   "meaning": "Étape gardée : critère non tenu, ou durée minimale à l'étape non atteinte (tendons)."
+  },
+  {
+   "code": "adapt.phase_respected",
+   "fr": "Je respecte l'intention de la phase en cours.",
+   "params": [
+    "phase"
+   ],
+   "meaning": "Ajustement limité par l'intention de la phase."
+  },
+  {
+   "code": "adapt.taper_no_volume",
+   "fr": "Affûtage : je n'ajoute rien, on garde les charges.",
+   "params": [],
+   "meaning": "Affûtage : aucun volume ajouté, intensité gardée."
+  },
+  {
+   "code": "adapt.event_near",
+   "fr": "Ton échéance est dans {days} jours : je reste prudent.",
+   "params": [
+    "days"
+   ],
+   "meaning": "Échéance proche : décisions prudentes."
+  },
+  {
+   "code": "adapt.attempt_opener",
+   "fr": "Ouverture : une barre sûre, pour entrer dans la compétition.",
+   "params": [
+    "pct"
+   ],
+   "meaning": "Ouverture choisie comme une part du maximum estimé : une barre sûre."
+  },
+  {
+   "code": "adapt.attempt_next",
+   "fr": "Tentative suivante choisie d'après la précédente.",
+   "params": [
+    "successProbability"
+   ],
+   "meaning": "Tentative suivante choisie d'après la précédente et l'incertitude du maximum."
+  },
+  {
+   "code": "adapt.attempt_conservative",
+   "fr": "Je propose une barre prudente ({cause}).",
+   "params": [
+    "cause"
+   ],
+   "meaning": "Tentative prudente (incertitude élevée, échec précédent, bilan bas, pesée)."
+  },
+  {
+   "code": "adapt.pacing",
+   "fr": "Rythme conseillé pour viser {targetReps} répétitions.",
+   "params": [
+    "targetReps"
+   ],
+   "meaning": "Stratégie de rythme d'une épreuve de répétitions."
+  },
+  {
+   "code": "adapt.recovery_profile",
+   "fr": "Je tiens compte de ta récupération ({factor}).",
+   "params": [
+    "factor",
+    "level"
+   ],
+   "meaning": "Tolérance réglée sur une réponse de récupération et de vie du profil."
+  },
+  {
+   "code": "adapt.tendon_load",
+   "fr": "Je surveille la charge de tes tendons : progression ralentie sur ces appuis.",
+   "params": [
+    "zone",
+    "weeks"
+   ],
+   "meaning": "Charge des tendons surveillée : progression en bras tendus ou en appui ralentie."
+  },
+  {
+   "code": "adapt.technique_executed",
+   "fr": "Technique « {technique} » faite comme prévu.",
+   "params": [
+    "technique"
+   ],
+   "meaning": "Technique de série exécutée telle que prescrite."
+  },
+  {
+   "code": "adapt.mini_set_stop",
+   "fr": "On arrête les mini-séries ici ({cause}).",
+   "params": [
+    "cause"
+   ],
+   "meaning": "Mini-séries arrêtées (répétitions manquées, plafond atteint, qualité)."
+  },
+  {
+   "code": "plan.coach_note",
+   "fr": "Note de coach : {note}.",
+   "params": [
+    "note",
+    "value"
+   ],
+   "meaning": "Note de coach du bloc, de la semaine ou de la séance : un code de note (vocabulaire de `kalis_plan`) et sa valeur."
+  },
+  {
+   "code": "plan.progression_rule",
+   "fr": "Règle de progression : {rule}.",
+   "params": [
+    "rule",
+    "step",
+    "unit"
+   ],
+   "meaning": "Règle de progression d'un exercice d'une séance à l'autre (code de règle, pas, unité)."
+  },
+  {
+   "code": "plan.pain_rule",
+   "fr": "Gêne sous {continueBelow}/10 : continue. À {regressAt} : allège. À {stopAt} ou plus : arrête.",
+   "params": [
+    "zone",
+    "continueBelow",
+    "regressAt",
+    "stopAt"
+   ],
+   "meaning": "Conduite à tenir selon la gêne ressentie (échelle de 0 à 10) : continuer en dessous d'un seuil, alléger, arrêter."
+  },
+  {
+   "code": "adapt.run_capped",
+   "fr": "Sortie raccourcie : pas plus de {percent} % au-dessus de ta plus longue sortie du mois.",
+   "params": [
+    "percent"
+   ],
+   "meaning": "Course du jour raccourcie : pas plus de `percent` % au-dessus de la plus longue course des 30 derniers jours."
+  },
+  {
+   "code": "adapt.easy_instead",
+   "fr": "Aujourd'hui, endurance facile à la place de la séance de qualité ({cause}).",
+   "params": [
+    "cause"
+   ],
+   "meaning": "Séance de qualité (allure, fractionné, test de course) servie en endurance facile un jour sans."
+  },
+  {
+   "code": "adapt.endurance_shortened",
+   "fr": "On raccourcit : {percent} % de ce qui était prévu ({cause}).",
+   "params": [
+    "cause",
+    "percent"
+   ],
+   "meaning": "Durée, distance ou nombre de répétitions d'une ligne d'endurance ramenés à `percent` % de l'écrit (bilan bas, reprise après une coupure)."
+  },
+  {
+   "code": "adapt.wod_scaled",
+   "fr": "WOD mis à l'échelle : {percent} % de ce qui était prévu ({cause}).",
+   "params": [
+    "cause",
+    "percent"
+   ],
+   "meaning": "Pièce de conditionnement mise à l'échelle : `percent` % des répétitions ou de la durée écrites (jour sans, jours durs de suite)."
+  },
+  {
+   "code": "adapt.cross_fatigue",
+   "fr": "Un peu plus de marge sur les jambes : ta course d'hier était dure.",
+   "params": [
+    "cause"
+   ],
+   "meaning": "Fatigue croisée : effort visé abaissé sur le bas du corps après une course dure la veille."
+  }
+ ]
+}

@@ -1,0 +1,125 @@
+00:00 +0: loading /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/screens_test.dart
+00:00 +0: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/screens_test.dart: (setUpAll)
+00:00 +0: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/persistence_screen_test.dart: (setUpAll)
+00:00 +1: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/persistence_screen_test.dart: (setUpAll)
+00:00 +1: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/screens_test.dart: tous les groupes musculaires utilisent seulement les masques existants
+00:00 +2: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/screens_test.dart: tous les groupes musculaires utilisent seulement les masques existants
+00:00 +3: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/screens_test.dart: tous les groupes musculaires utilisent seulement les masques existants
+00:00 +4: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/screens_test.dart: tous les groupes musculaires utilisent seulement les masques existants
+00:00 +5: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/screens_test.dart: tous les groupes musculaires utilisent seulement les masques existants
+00:00 +6: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/screens_test.dart: tous les groupes musculaires utilisent seulement les masques existants
+00:00 +7: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/screens_test.dart: tous les groupes musculaires utilisent seulement les masques existants
+00:00 +8: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/screens_test.dart: tous les groupes musculaires utilisent seulement les masques existants
+00:00 +9: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/screens_test.dart: tous les groupes musculaires utilisent seulement les masques existants
+00:00 +10: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/screens_test.dart: tous les groupes musculaires utilisent seulement les masques existants
+00:00 +11: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/screens_test.dart: tous les groupes musculaires utilisent seulement les masques existants
+00:00 +12: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/screens_test.dart: tous les groupes musculaires utilisent seulement les masques existants
+00:00 +13: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/screens_test.dart: tous les groupes musculaires utilisent seulement les masques existants
+00:00 +14: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/screens_test.dart: tous les groupes musculaires utilisent seulement les masques existants
+00:00 +15: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/screens_test.dart: tous les groupes musculaires utilisent seulement les masques existants
+00:00 +16: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/screens_test.dart: tous les groupes musculaires utilisent seulement les masques existants
+00:00 +17: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/screens_test.dart: tous les groupes musculaires utilisent seulement les masques existants
+00:00 +18: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/screens_test.dart: tous les groupes musculaires utilisent seulement les masques existants
+00:00 +19: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/screens_test.dart: tous les groupes musculaires utilisent seulement les masques existants
+00:00 +20: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/screens_test.dart: tous les groupes musculaires utilisent seulement les masques existants
+00:00 +21: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/screens_test.dart: tous les groupes musculaires utilisent seulement les masques existants
+00:00 +22: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/screens_test.dart: tous les groupes musculaires utilisent seulement les masques existants
+00:00 +23: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/screens_test.dart: tous les groupes musculaires utilisent seulement les masques existants
+00:01 +24: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/persistence_screen_test.dart: saisie et notes sont enregistrées sans changer de page
+00:01 +25: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/persistence_screen_test.dart: saisie et notes sont enregistrées sans changer de page
+00:01 +26: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/persistence_screen_test.dart: saisie et notes sont enregistrées sans changer de page
+00:01 +27: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/persistence_screen_test.dart: saisie et notes sont enregistrées sans changer de page
+00:01 +28: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/persistence_screen_test.dart: saisie et notes sont enregistrées sans changer de page
+00:02 +29: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/programme_test.dart: les cartes restent compactes et seule la journée choisie est développée
+00:02 +30: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/programme_test.dart: les cartes restent compactes et seule la journée choisie est développée
+00:02 +31: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/programme_test.dart: les cartes restent compactes et seule la journée choisie est développée
+00:02 +32: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/programme_test.dart: les cartes restent compactes et seule la journée choisie est développée
+00:02 +33: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/programme_test.dart: les cartes restent compactes et seule la journée choisie est développée
+00:02 +34: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/programme_test.dart: les cartes restent compactes et seule la journée choisie est développée
+00:02 +35: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/programme_test.dart: les cartes restent compactes et seule la journée choisie est développée
+00:02 +36: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/programme_test.dart: les cartes restent compactes et seule la journée choisie est développée
+00:02 +37: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/programme_test.dart: les cartes restent compactes et seule la journée choisie est développée
+00:02 +38: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/programme_test.dart: les cartes restent compactes et seule la journée choisie est développée
+00:02 +39: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/programme_test.dart: les cartes restent compactes et seule la journée choisie est développée
+00:02 +40: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/programme_test.dart: les cartes restent compactes et seule la journée choisie est développée
+00:02 +41: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/programme_test.dart: les cartes restent compactes et seule la journée choisie est développée
+00:02 +42: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/programme_test.dart: les cartes restent compactes et seule la journée choisie est développée
+00:02 +43: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/programme_test.dart: les cartes restent compactes et seule la journée choisie est développée
+00:02 +44: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/programme_test.dart: les cartes restent compactes et seule la journée choisie est développée
+00:03 +45: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/programme_test.dart: les cartes restent compactes et seule la journée choisie est développée
+00:03 +46: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/screens_test.dart: écrans principaux à 320 px, thème clair
+00:03 +47: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/progression_test.dart: les seuils de niveaux conservent exactement la courbe existante
+00:03 +48: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/programme_test.dart: le numéro ouvre la semaine et le curseur atteint les deux bornes
+00:03 +49: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/programme_test.dart: le numéro ouvre la semaine et le curseur atteint les deux bornes
+00:03 +50: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/programme_test.dart: le numéro ouvre la semaine et le curseur atteint les deux bornes
+00:04 +51: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/programme_test.dart: le numéro ouvre la semaine et le curseur atteint les deux bornes
+00:04 +52: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/ui_refactor_test.dart: (setUpAll)
+00:04 +53: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/ui_refactor_test.dart: (setUpAll)
+00:04 +54: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/ui_refactor_test.dart: (setUpAll)
+00:04 +54: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/programme_test.dart: détails des estimations utilisables à 320 px, texte 130 %, thème true
+00:04 +55: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/programme_test.dart: détails des estimations utilisables à 320 px, texte 130 %, thème true
+00:04 +56: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/ui_refactor_test.dart: les onglets et le changement de thème conservent la semaine choisie
+00:04 +57: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/ui_refactor_test.dart: les onglets et le changement de thème conservent la semaine choisie
+00:04 +58: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/ui_refactor_test.dart: les onglets et le changement de thème conservent la semaine choisie
+00:04 +59: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/ui_refactor_test.dart: les onglets et le changement de thème conservent la semaine choisie
+00:04 +60: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/ui_refactor_test.dart: les onglets et le changement de thème conservent la semaine choisie
+00:04 +61: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/ui_refactor_test.dart: les onglets et le changement de thème conservent la semaine choisie
+00:04 +62: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/ui_refactor_test.dart: les onglets et le changement de thème conservent la semaine choisie
+00:04 +63: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/ui_refactor_test.dart: les onglets et le changement de thème conservent la semaine choisie
+00:04 +64: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/ui_refactor_test.dart: les onglets et le changement de thème conservent la semaine choisie
+00:04 +65: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/ui_refactor_test.dart: les onglets et le changement de thème conservent la semaine choisie
+00:04 +66: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/ui_refactor_test.dart: les onglets et le changement de thème conservent la semaine choisie
+00:05 +67: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/ui_refactor_test.dart: les onglets et le changement de thème conservent la semaine choisie
+00:06 +68: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/ui_refactor_test.dart: les onglets et le changement de thème conservent la semaine choisie
+00:06 +69: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/ui_refactor_test.dart: les onglets et le changement de thème conservent la semaine choisie
+00:06 +70: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/progression_screens_test.dart: la pastille ouvre la progression depuis l’accueil
+00:06 +71: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/progression_screens_test.dart: la pastille ouvre la progression depuis l’accueil
+00:06 +72: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/progression_screens_test.dart: la pastille ouvre la progression depuis l’accueil
+00:06 +73: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/progression_screens_test.dart: la pastille ouvre la progression depuis l’accueil
+00:06 +74: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/progression_screens_test.dart: la pastille ouvre la progression depuis l’accueil
+00:06 +75: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/progression_screens_test.dart: la pastille ouvre la progression depuis l’accueil
+00:06 +76: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/progression_screens_test.dart: la pastille ouvre la progression depuis l’accueil
+00:06 +77: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/progression_screens_test.dart: la pastille ouvre la progression depuis l’accueil
+00:07 +78: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/ui_refactor_test.dart: cartes, notes et saisies survivent aux boutons et au sélecteur d’exercices
+00:07 +79: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/ui_refactor_test.dart: cartes, notes et saisies survivent aux boutons et au sélecteur d’exercices
+00:07 +80: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/ui_refactor_test.dart: cartes, notes et saisies survivent aux boutons et au sélecteur d’exercices
+00:07 +81: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/ui_refactor_test.dart: cartes, notes et saisies survivent aux boutons et au sélecteur d’exercices
+00:07 +82: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/ui_refactor_test.dart: cartes, notes et saisies survivent aux boutons et au sélecteur d’exercices
+00:07 +83: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/ui_refactor_test.dart: cartes, notes et saisies survivent aux boutons et au sélecteur d’exercices
+00:07 +84: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/ui_refactor_test.dart: cartes, notes et saisies survivent aux boutons et au sélecteur d’exercices
+00:07 +84: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/notifications_test.dart: les erreurs restent lisibles et une nouvelle tentative répare le service
+Kalis notifications: Bad state: init_native_error
+Kalis notifications: Bad state: schedule_native_error
+00:07 +85: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/ui_refactor_test.dart: cartes, notes et saisies survivent aux boutons et au sélecteur d’exercices
+00:07 +86: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/ui_refactor_test.dart: cartes, notes et saisies survivent aux boutons et au sélecteur d’exercices
+00:07 +87: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/progression_screens_test.dart: parcours, missions et badges tiennent à 320 px avec texte agrandi, thème true
+00:07 +88: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/progression_screens_test.dart: parcours, missions et badges tiennent à 320 px avec texte agrandi, thème true
+00:07 +89: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/progression_screens_test.dart: parcours, missions et badges tiennent à 320 px avec texte agrandi, thème true
+00:07 +90: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/progression_screens_test.dart: parcours, missions et badges tiennent à 320 px avec texte agrandi, thème true
+00:07 +91: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/progression_screens_test.dart: parcours, missions et badges tiennent à 320 px avec texte agrandi, thème true
+00:07 +92: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/progression_screens_test.dart: parcours, missions et badges tiennent à 320 px avec texte agrandi, thème true
+00:07 +93: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/progression_screens_test.dart: parcours, missions et badges tiennent à 320 px avec texte agrandi, thème true
+00:07 +94: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/progression_screens_test.dart: parcours, missions et badges tiennent à 320 px avec texte agrandi, thème true
+00:07 +95: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/progression_screens_test.dart: parcours, missions et badges tiennent à 320 px avec texte agrandi, thème true
+00:07 +96: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/progression_screens_test.dart: parcours, missions et badges tiennent à 320 px avec texte agrandi, thème true
+00:07 +97: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/progression_screens_test.dart: parcours, missions et badges tiennent à 320 px avec texte agrandi, thème true
+00:07 +98: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/progression_screens_test.dart: parcours, missions et badges tiennent à 320 px avec texte agrandi, thème true
+00:07 +99: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/ui_refactor_test.dart: les exercices enchaînés ont chacun leur carte et leur note
+00:07 +100: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/ui_refactor_test.dart: les exercices enchaînés ont chacun leur carte et leur note
+00:07 +101: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/notifications_test.dart: une séance terminée en cours d’utilisation annule automatiquement son rappel
+00:07 +102: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/progression_screens_test.dart: parcours, missions et badges tiennent à 320 px avec texte agrandi, thème false
+00:07 +103: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/progression_screens_test.dart: parcours, missions et badges tiennent à 320 px avec texte agrandi, thème false
+00:08 +104: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/progression_screens_test.dart: parcours, missions et badges tiennent à 320 px avec texte agrandi, thème false
+00:08 +105: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/progression_screens_test.dart: parcours, missions et badges tiennent à 320 px avec texte agrandi, thème false
+00:08 +106: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/ui_refactor_test.dart: les séances et éditeurs suivent une rotation et une grande largeur
+00:08 +107: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/progression_screens_test.dart: un canal désactivé est visible et propose le bon réglage Android
+00:08 +108: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/ui_refactor_test.dart: un WOD verrouillé garde ses mouvements visibles au-dessus du message de crédits
+00:08 +109: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/progression_screens_test.dart: les rappels restent configurables sans boutons de test
+00:08 +110: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/ui_refactor_test.dart: écrans et formulaires à 320 px, texte 130 %, thème true
+Kalis notifications: LateInitializationError: Field '_instance@950271368' has not been initialized.
+00:10 +111: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/ui_refactor_test.dart: écrans et formulaires à 320 px, texte 130 %, thème false
+00:11 +112: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/ui_refactor_test.dart: cinq séries, charge et effort restent visibles sans défilement
+00:12 +113: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/ui_refactor_test.dart: les actions de sauvegarde ouvrent l’export et l’import
+00:12 +114: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/ui_refactor_test.dart: recherche et paramètres restent utilisables avec le clavier
+00:12 +115: /workspace/scratch/f68fd92c2a3e/work/streetlift_tracker/test/ui_refactor_test.dart: (tearDownAll)
+00:12 +115: All tests passed!
