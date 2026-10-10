@@ -4,7 +4,7 @@ Contexte écrit par la conversation de pilotage, une section par lot. Une sectio
 
 ## UI0
 
-Lancé le 10/10/2026 par la conversation de pilotage, aussitôt le cahier écrit (U0.2). Le propriétaire a vu les maquettes en même temps : s'il corrige la direction (police, palettes, navigation) pendant que UI0 tourne, la correction est ajoutée ici sous « Corrections du propriétaire » ; relis cette section avant de livrer.
+**Pas encore lancé** : le propriétaire valide les maquettes et le cahier avant tout lancement (10/10/2026, 09:32). Ses corrections seront ajoutées ici sous « Corrections du propriétaire » avant le lancement.
 - Palettes : les 8 du propriétaire (`inputs/palettes_kalis_track.txt`) ; tableau de référence `inputs/palettes_roles.json`.
 - KM1 tourne en parallèle sur `moteurs` : ne touche ni `packages/` ni `moteurs`.
 - Aucun autre lot de la voie application ne tourne : `claude/ci-3d` est libre pour UI0.
