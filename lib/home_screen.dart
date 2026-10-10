@@ -804,9 +804,7 @@ class _TodayCard extends StatelessWidget {
               WidgetSpan(
                 alignment: PlaceholderAlignment.middle,
                 child: Padding(
-                  padding: const EdgeInsetsDirectional.only(
-                    start: KSpacing.s8,
-                  ),
+                  padding: const EdgeInsetsDirectional.only(start: KSpacing.s8),
                   child: Text(
                     written,
                     key: ValueKey(
