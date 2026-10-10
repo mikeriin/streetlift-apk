@@ -197,16 +197,16 @@ class _StatsTabs extends StatelessWidget {
     final k = KTokens.of(context);
     return Padding(
       padding: const EdgeInsets.only(
-        left: KSpacing.page - KSpacing.s4,
+        left: KSpacing.s12,
         top: KSpacing.s4,
-        right: KSpacing.page - KSpacing.s4,
+        right: KSpacing.s12,
       ),
       child: TabBar(
         controller: controller,
         isScrollable: true,
         tabAlignment: TabAlignment.start,
         padding: EdgeInsets.zero,
-        labelPadding: const EdgeInsets.symmetric(horizontal: KSpacing.s4),
+        labelPadding: EdgeInsets.zero,
         indicator: ShapeDecoration(color: k.pleine, shape: KRadius.pill),
         indicatorSize: TabBarIndicatorSize.tab,
         indicatorPadding: const EdgeInsets.symmetric(vertical: KSpacing.s4),

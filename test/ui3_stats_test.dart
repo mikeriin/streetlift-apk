@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:streetlift_tracker/kit/kit.dart';
 import 'package:streetlift_tracker/main.dart';
 import 'package:streetlift_tracker/pilotage_screen.dart';
 import 'package:streetlift_tracker/records_screen.dart';
@@ -20,10 +21,7 @@ SessionLog _log(String title, DateTime at, Map<String, List<SetEntry>> sets) =>
       done: true,
       title: title,
       finishedAt: at.toIso8601String(),
-      ex: {
-        for (final e in sets.entries)
-          e.key: ExerciseLog(sets: e.value),
-      },
+      ex: {for (final e in sets.entries) e.key: ExerciseLog(sets: e.value)},
       exerciseNames: {for (final e in sets.keys) e: e},
     );
 
@@ -96,34 +94,40 @@ void main() {
   int section(WidgetTester tester) =>
       tester.widget<TabBar>(find.byType(TabBar)).controller!.index;
 
-  testWidgets('Aperçu : les cartes de jeu ouvrent Parcours, jamais une feuille', (
-    tester,
-  ) async {
-    await open(tester, const StatsScreen());
-    expect(section(tester), StatsSection.overview.index);
-    // Carte du personnage : onglet Parcours, pas la feuille.
-    await tester.tap(find.text('Ton personnage'));
-    await tester.pumpAndSettle();
-    expect(section(tester), StatsSection.journey.index);
-    expect(find.byType(KInfoSheet), findsNothing);
-    expect(find.text('Ton arbre de progression'), findsOneWidget);
-    // Défi, campagne : même chose.
-    for (final target in [
-      find.textContaining('Défis de la semaine ·'),
-      find.byKey(const ValueKey('game-campaign')),
-    ]) {
-      tester
-          .state<StatsScreenState>(find.byType(StatsScreen))
-          .selectSection(StatsSection.overview);
+  testWidgets(
+    'Aperçu : les cartes de jeu ouvrent Parcours, jamais une feuille',
+    (tester) async {
+      await open(tester, const StatsScreen());
+      expect(section(tester), StatsSection.overview.index);
+      // Carte du personnage : onglet Parcours, pas la feuille.
+      await tester.tap(find.text('Ton personnage'));
       await tester.pumpAndSettle();
-      await reveal(tester, target);
-      await tester.tap(target.first);
-      await tester.pumpAndSettle();
-      expect(section(tester), StatsSection.journey.index, reason: '$target');
+      expect(section(tester), StatsSection.journey.index);
       expect(find.byType(KInfoSheet), findsNothing);
-    }
-    expect(tester.takeException(), isNull);
-  });
+      expect(find.text('Ton arbre de progression'), findsOneWidget);
+      // Défi, campagne : même chose.
+      for (final target in [
+        find.textContaining('Défis de la semaine ·'),
+        find
+            .descendant(
+              of: find.byKey(const ValueKey('game-campaign')),
+              matching: find.byType(KCard),
+            )
+            .first,
+      ]) {
+        tester
+            .state<StatsScreenState>(find.byType(StatsScreen))
+            .selectSection(StatsSection.overview);
+        await tester.pumpAndSettle();
+        await reveal(tester, target);
+        await tester.tap(target.first);
+        await tester.pumpAndSettle();
+        expect(section(tester), StatsSection.journey.index, reason: '$target');
+        expect(find.byType(KInfoSheet), findsNothing);
+      }
+      expect(tester.takeException(), isNull);
+    },
+  );
 
   testWidgets('Aperçu : « Aller plus loin » ouvre les trois autres onglets', (
     tester,
@@ -191,10 +195,7 @@ void main() {
 
   testWidgets('Parcours : seule entrée de chaque feuille de jeu, sans feuille '
       'empilée', (tester) async {
-    await open(
-      tester,
-      const StatsScreen(initialSection: StatsSection.journey),
-    );
+    await open(tester, const StatsScreen(initialSection: StatsSection.journey));
     final sheets = {
       'stats-character': 'Ta feuille de personnage',
       'stats-missions': 'Défis de la semaine',
@@ -243,10 +244,7 @@ void main() {
     tester,
   ) async {
     store.settings.title = 'inconnu';
-    await open(
-      tester,
-      const StatsScreen(initialSection: StatsSection.journey),
-    );
+    await open(tester, const StatsScreen(initialSection: StatsSection.journey));
     final row = find.byKey(const ValueKey('stats-titles'));
     await reveal(tester, row);
     await tester.tap(row);

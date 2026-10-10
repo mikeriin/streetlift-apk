@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'kit/kit.dart';
-import 'muscle_body.dart';
+import 'content_pack.dart' show capitalized;
+import 'muscle_body.dart' show MuscleLegend;
+import 'muscle_map_2d.dart' show mapHeat;
 import 'pilotage_screen.dart';
 import 'records_screen.dart';
 import 'store.dart';
@@ -31,7 +33,8 @@ class StatsPerformance extends StatelessWidget {
     final unknownLifts = defaults.mainLifts.any((l) => !store.refKnown(l.ref));
     final unknownReps = defaults.repMax.any((r) => !store.refKnown(r.ref));
     Widget fillIn() => KNotice(
-      message: 'Renseigne-les quand tu les connais : les jauges partent de ces valeurs.',
+      message:
+          'Renseigne-les quand tu les connais : les jauges partent de ces valeurs.',
       actionLabel: 'Mes références',
       onAction: () => openReferences(context),
     );
@@ -97,9 +100,12 @@ class StatsPerformance extends StatelessWidget {
               start: lift.oneRm,
               target: lift.target,
               current: store.values[lift.ref]!,
-            )
-          else
-            _Unknown(lift.name),
+            ),
+        if (unknownLifts)
+          _Unknown([
+            for (final l in defaults.mainLifts)
+              if (!store.refKnown(l.ref)) l.name,
+          ]),
         if (unknownLifts) fillIn(),
         const KSectionTitle(
           'Endurance, maximum de répétitions au poids de corps',
@@ -112,11 +118,16 @@ class StatsPerformance extends StatelessWidget {
               start: rep.max,
               target: rep.target,
               current: store.values[rep.ref]!,
-            )
-          else
-            _Unknown(rep.name),
+            ),
+        if (unknownReps)
+          _Unknown([
+            for (final r in defaults.repMax)
+              if (!store.refKnown(r.ref)) r.name,
+          ]),
         if (unknownReps) fillIn(),
-        const KSectionTitle('Muscles sollicités, séries validées cette semaine'),
+        const KSectionTitle(
+          'Muscles sollicités, séries validées cette semaine',
+        ),
         KCard(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -137,7 +148,7 @@ class StatsPerformance extends StatelessWidget {
                   style: KType.detail.copyWith(color: k.texte2),
                 )
               else ...[
-                MuscleLegend(data: muscles, values: true),
+                _MuscleLegend(muscles),
                 const SizedBox(height: KSpacing.s8),
                 Text(
                   'Séries validées cette semaine, pondérées : 1 pour le '
@@ -154,28 +165,20 @@ class StatsPerformance extends StatelessWidget {
   }
 }
 
-/// Référence non renseignée (KT-007) : pas de jauge calculée sur une valeur
-/// inventée ; le bandeau de la section mène à Mes références (R5).
+/// Références non renseignées (KT-007) : pas de jauge calculée sur une
+/// valeur inventée ; regroupées en un seul groupe, suivi du bandeau qui mène
+/// à Mes références (R5).
 class _Unknown extends StatelessWidget {
-  final String name;
-  const _Unknown(this.name);
+  final List<String> names;
+  const _Unknown(this.names);
   @override
-  Widget build(BuildContext context) {
-    final k = KTokens.of(context);
-    return KCard(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(name, style: KType.titreCarte.copyWith(color: k.texte)),
-          const SizedBox(height: KSpacing.s4),
-          Text(
-            'Non renseigné',
-            style: KType.detail.copyWith(color: k.texte2),
-          ),
-        ],
-      ),
-    );
-  }
+  Widget build(BuildContext context) => KMenuGroup(
+    dividerIndent: KSpacing.s16,
+    children: [
+      for (final name in names)
+        KMenuRow(title: name, subtitle: 'Non renseigné', chevron: false),
+    ],
+  );
 }
 
 class _Target extends StatelessWidget {
@@ -248,6 +251,59 @@ class _Target extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+/// Légende chiffrée de la carte (« Dos · 12,6 ») : même contenu que
+/// `MuscleLegend` (muscle_body.dart, intouchable), en pilules du kit dont le
+/// texte passe à la ligne en grand texte (contournement local, signalé).
+class _MuscleLegend extends StatelessWidget {
+  final Map<String, double> data;
+  const _MuscleLegend(this.data);
+
+  @override
+  Widget build(BuildContext context) {
+    final k = KTokens.of(context);
+    final ranked = data.entries.where((e) => e.value > 0).toList()
+      ..sort((a, b) => b.value.compareTo(a.value));
+    if (ranked.isEmpty) return const SizedBox.shrink();
+    final max = ranked.first.value;
+    return Wrap(
+      spacing: KSpacing.s8,
+      runSpacing: KSpacing.s8,
+      children: [
+        for (final e in ranked)
+          Container(
+            key: ValueKey('muscle-legend-${e.key}'),
+            padding: const EdgeInsets.symmetric(
+              horizontal: KSpacing.s12,
+              vertical: KSpacing.s4,
+            ),
+            decoration: ShapeDecoration(color: k.haute, shape: k.controlPill),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                  width: KSpacing.s8,
+                  height: KSpacing.s8,
+                  decoration: ShapeDecoration(
+                    // Couleurs de la carte 2D des groupes (M8).
+                    color: mapHeat(e.value / max, k.dark),
+                    shape: KRadius.pill,
+                  ),
+                ),
+                const SizedBox(width: KSpacing.s8),
+                Flexible(
+                  child: Text(
+                    '${capitalized(e.key)} · ${MuscleLegend.format(e.value)}',
+                    style: KType.detail.copyWith(color: k.texte),
+                  ),
+                ),
+              ],
+            ),
+          ),
+      ],
     );
   }
 }

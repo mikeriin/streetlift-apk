@@ -479,10 +479,18 @@ void main() {
     Finder statsTab() => find.byKey(const ValueKey('nav-1'));
     Finder statsPart(int i) => find.byKey(ValueKey('stats-section-$i'));
     await route(tester, 'records', [
-      [statsTab, () => statsPart(2), () => find.byKey(const ValueKey('stats-records'))],
+      [
+        statsTab,
+        () => statsPart(2),
+        () => find.byKey(const ValueKey('stats-records')),
+      ],
     ], () => find.byType(RecordsScreen));
     await route(tester, 'mes_references_stats', [
-      [statsTab, () => statsPart(2), () => find.byKey(const ValueKey('stats-references'))],
+      [
+        statsTab,
+        () => statsPart(2),
+        () => find.byKey(const ValueKey('stats-references')),
+      ],
       [statsTab, () => statsPart(2), () => text('Modifier mes références')],
     ], () => find.byType(PilotageScreen));
     await route(
@@ -490,12 +498,18 @@ void main() {
       'objectif_semaine',
       [
         [statsTab, () => statsPart(0)],
-        [statsTab, () => statsPart(0), () => find.byKey(const ValueKey('game-weekly-goal'))],
+        [
+          statsTab,
+          () => statsPart(0),
+          () => find.byKey(const ValueKey('game-weekly-goal')),
+        ],
       ],
       () => find.byWidgetPredicate(
         (w) =>
             w.key == const ValueKey('segment-3') ||
-            (w is ChoiceChip && w.label is Text && (w.label as Text).data == '3 jours'),
+            (w is ChoiceChip &&
+                w.label is Text &&
+                (w.label as Text).data == '3 jours'),
       ),
     );
     releve['captures'] = shots;

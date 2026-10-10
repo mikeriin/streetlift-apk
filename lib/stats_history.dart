@@ -64,7 +64,7 @@ class _StatsHistoryState extends State<StatsHistory> {
         KSearchField(
           key: const ValueKey('stats-history-search'),
           controller: _search,
-          hint: 'Rechercher dans l’historique (séance ou note)',
+          hint: 'Rechercher une séance ou une note',
           onChanged: (_) => setState(() {}),
         ),
         Padding(

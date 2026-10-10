@@ -60,10 +60,7 @@ class StatsIntro extends StatelessWidget {
           if (lead != null)
             Padding(
               padding: const EdgeInsets.only(top: KSpacing.s4),
-              child: Text(
-                lead!,
-                style: KType.corps.copyWith(color: k.texte2),
-              ),
+              child: Text(lead!, style: KType.corps.copyWith(color: k.texte2)),
             ),
         ],
       ),

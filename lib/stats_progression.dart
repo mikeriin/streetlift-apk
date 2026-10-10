@@ -31,7 +31,10 @@ class StatsLevelCard extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Ton niveau', style: KType.micro.copyWith(color: soft)),
+                    Text(
+                      'Ton niveau',
+                      style: KType.micro.copyWith(color: soft),
+                    ),
                     const SizedBox(height: KSpacing.s4),
                     Text(
                       progress.rank.title,
@@ -310,10 +313,7 @@ class _StatsProgressionState extends State<StatsProgression> {
             const SizedBox(height: KSpacing.s16),
             KSegmented<int>(
               semanticLabel: 'Branche de l’arbre',
-              segments: const [
-                KSegment(0, 'Pratique'),
-                KSegment(1, 'Rythme'),
-              ],
+              segments: const [KSegment(0, 'Pratique'), KSegment(1, 'Rythme')],
               selected: _branch,
               onChanged: (b) => setState(() => _branch = b),
             ),
@@ -333,7 +333,8 @@ class _StatsProgressionState extends State<StatsProgression> {
                   children: [
                     for (final group in groups.entries)
                       SizedBox(
-                        width: (bounds.maxWidth - gap * (columns - 1)) / columns,
+                        width:
+                            (bounds.maxWidth - gap * (columns - 1)) / columns,
                         child: _BadgeChain(
                           title: group.value,
                           badges: p.badges
@@ -483,7 +484,10 @@ class _BadgeNode extends StatelessWidget {
                 ),
                 const SizedBox(width: KSpacing.s8),
                 Expanded(
-                  child: Text(status, style: KType.micro.copyWith(color: color)),
+                  child: Text(
+                    status,
+                    style: KType.micro.copyWith(color: color),
+                  ),
                 ),
               ],
             ),

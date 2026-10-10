@@ -70,9 +70,8 @@ List<StatsRecord> statsRecords(AppStore source) {
   return out;
 }
 
-String _on(DateTime? at) => at == null
-    ? ''
-    : ' · le ${statsDate(at)}/${at.year}';
+String _on(DateTime? at) =>
+    at == null ? '' : '\nLe ${statsDate(at)}/${at.year}';
 
 class RecordsScreen extends StatelessWidget {
   const RecordsScreen({super.key});
@@ -84,8 +83,7 @@ class RecordsScreen extends StatelessWidget {
       final records = statsRecords(store);
       final weighted = records.where((r) => r.weighted).toList();
       final bodyweight = records.where((r) => r.bodyweight).toList();
-      Widget icon() =>
-          KIconTile(Icons.emoji_events_outlined, color: k.accent);
+      Widget icon() => KIconTile(Icons.emoji_events_outlined, color: k.accent);
       return KPage.sub(
         title: 'Records',
         lead:
