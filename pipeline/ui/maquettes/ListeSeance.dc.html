@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Exercices de la séance, après</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&amp;family=Barlow+Semi+Condensed:wght@500;600&amp;family=Barlow+Condensed:wght@500;600&amp;display=swap">
+<style>
+body{margin:0}
+a{color:inherit}a:hover{color:inherit}
+</style>
+</helmet>
+<div style="{{vars}} width: 390px; height: 844px; position: relative; overflow: hidden; background: var(--fond); color: var(--texte); font-family: 'Barlow', sans-serif; font-size: 15px; line-height: 22px; box-sizing: border-box">
+  <div aria-hidden="true" style="padding: 18px 20px; display: flex; flex-direction: column; gap: 16px; opacity: .4">
+    <div style="display: grid; grid-template-columns: 44px 1fr 44px; align-items: center; min-height: 56px">
+      <span></span>
+      <span style="font-family: 'Barlow Semi Condensed', sans-serif; font-weight: 600; font-size: 20px; text-transform: {{tt}}">Test max tractions</span>
+      <span></span>
+    </div>
+    <div style="height: 200px; border-radius: 24px; background: var(--surface)"></div>
+  </div>
+  <div style="position: absolute; inset: 0; background: rgba(0,0,0,.55)"></div>
+
+  <section role="dialog" aria-label="Dans cette séance" style="position: absolute; left: 0; right: 0; bottom: 0; top: 150px; background: var(--surface); border-radius: 28px 28px 0 0; padding: 10px 16px 20px; display: flex; flex-direction: column; gap: 12px">
+    <div style="align-self: center; width: 36px; height: 4px; border-radius: 2px; background: var(--texte3)"></div>
+    <div style="display: flex; justify-content: space-between; align-items: baseline; padding: 6px 4px 0">
+      <h2 style="margin: 0; font-family: 'Barlow Semi Condensed', sans-serif; font-weight: 600; font-size: 20px; line-height: 24px">Dans cette séance</h2>
+      <span style="color: var(--texte2); font-size: 13px">7 exercices, 22 min</span>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 6px">
+      <sc-for list="{{rows}}" as="r" hint-placeholder-count="8">
+        <button style="{{r.row}}">
+          <span style="{{r.badge}}">
+            <sc-if value="{{r.isBilan}}" hint-placeholder-val="{{false}}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg></sc-if>
+            <sc-if value="{{r.isDone}}" hint-placeholder-val="{{false}}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></sc-if>
+            <sc-if value="{{r.isNum}}" hint-placeholder-val="{{true}}">{{r.n}}</sc-if>
+          </span>
+          <span style="flex: 1; display: flex; flex-direction: column; text-align: left; min-width: 0">
+            <span style="{{r.title}}">{{r.t}}</span>
+            <span style="color: var(--texte2); font-size: 13px; line-height: 18px">{{r.p}}</span>
+          </span>
+        </button>
+      </sc-for>
+    </div>
+  </section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"palette":{"editor":"enum","options":["bordeaux","obsidian","arctic","neon","titanium","violet","forest","solar"],"default":"bordeaux"},"capitales":{"editor":"boolean","default":true},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var T = {
+      bordeaux: {fond: '#181819', surface: '#222223', haute: '#2D2C2E', filet: '#383738', texte: '#F3F0F1', texte2: '#ABABAF', texte3: '#77777A', pleine: '#873B38', surPleine: '#FFFFFF', encre: '#CA6F6A', second: '#B24B49', accent: '#D9A66C'},
+      obsidian: {fond: '#121316', surface: '#1C1D20', haute: '#27272B', filet: '#313235', texte: '#F3F0F1', texte2: '#ABABAF', texte3: '#77777A', pleine: '#D73E44', surPleine: '#FFFFFF', encre: '#EA4C50', second: '#FF8566', accent: '#FFC857'},
+      arctic: {fond: '#152238', surface: '#242D3D', haute: '#2F3748', filet: '#3A4354', texte: '#F3F0F1', texte2: '#ABABAF', texte3: '#77777A', pleine: '#2563EB', surPleine: '#FFFFFF', encre: '#668EFF', second: '#4F9CF9', accent: '#14B8A6'},
+      neon: {fond: '#101510', surface: '#1A1F1A', haute: '#242A24', filet: '#2F342E', texte: '#F2F0ED', texte2: '#AAACA7', texte3: '#757873', pleine: '#B4F044', surPleine: '#111111', encre: '#B4F044', second: '#67D8C0', accent: '#8C72FF'},
+      titanium: {fond: '#171E24', surface: '#21282F', haute: '#2C3339', filet: '#373E45', texte: '#F2F0F1', texte2: '#AAABAE', texte3: '#76777A', pleine: '#4C6474', surPleine: '#FFFFFF', encre: '#7992A3', second: '#8A9DA8', accent: '#D5A24C'},
+      violet: {fond: '#181427', surface: '#221E31', haute: '#2D293C', filet: '#383347', texte: '#F4EFF1', texte2: '#AEAAAF', texte3: '#79767A', pleine: '#7546DB', surPleine: '#FFFFFF', encre: '#986CFF', second: '#AC8CFA', accent: '#29BFB0'},
+      forest: {fond: '#17251D', surface: '#213027', haute: '#2C3B32', filet: '#37463D', texte: '#F2F0EE', texte2: '#A9ACA8', texte3: '#757874', pleine: '#236B50', surPleine: '#FFFFFF', encre: '#5CA283', second: '#7BAC81', accent: '#D7B374'},
+      solar: {fond: '#211B1A', surface: '#2C2524', haute: '#37302F', filet: '#423B39', texte: '#F7EFED', texte2: '#B4A9A7', texte3: '#7F7573', pleine: '#CA4F1C', surPleine: '#FFFFFF', encre: '#E86531', second: '#FF9760', accent: '#E8BC49'}
+    };
+    var a = T[this.props.palette] || T.bordeaux;
+    var caps = this.props.capitales !== false;
+    var vars = '--fond: ' + a.fond + '; --surface: ' + a.surface + '; --haute: ' + a.haute + '; --filet: ' + a.filet + '; --texte: ' + a.texte + '; --texte2: ' + a.texte2 + '; --texte3: ' + a.texte3 + ';';
+    var R = [
+      ['bilan', 'Bilan du jour', 'Ressenti et changements de Koach'],
+      ['cur', 'Test max tractions au poids de corps', '1 série au maximum'],
+      ['', 'Traction pronation', '3 × 6, RIR 2'],
+      ['', 'Rotations externes à l’haltère', '2 × 12, RIR 3'],
+      ['', 'Mobilité épaules et poignets', '6 min'],
+      ['', 'Gainage creux', '3 × 30 s'],
+      ['', 'Suspension active', '3 × 20 s'],
+      ['', 'Retour au calme', '5 min']
+    ];
+    var n = 0;
+    var rows = R.map(function (r) {
+      var bilan = r[0] === 'bilan', cur = r[0] === 'cur';
+      if (!bilan) n++;
+      return {
+        t: r[1], p: r[2], n: String(n), isBilan: bilan, isNum: !bilan, isDone: false,
+        row: 'all: unset; cursor: pointer; box-sizing: border-box; display: flex; align-items: center; gap: 14px; min-height: 60px; padding: 8px 14px; border-radius: 16px; ' + (cur ? 'background: var(--haute); box-shadow: inset 0 0 0 1.5px ' + a.encre + ';' : (bilan ? 'background: var(--haute);' : '')),
+        badge: 'flex: none; width: 32px; height: 32px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-family: Barlow Condensed, sans-serif; font-weight: 600; font-size: 16px; ' + (cur ? 'background: ' + a.pleine + '; color: ' + a.surPleine + ';' : (bilan ? 'color: ' + a.encre + ';' : 'background: var(--haute); color: var(--texte2);')),
+        title: 'font-weight: ' + (cur ? 600 : 500) + '; font-size: 16px; line-height: 22px;'
+      };
+    });
+    return { a: a, vars: vars, tt: caps ? 'uppercase' : 'none', ls: caps ? '.3px' : '0', rows: rows };
+  }
+}
+</script>
+</body>
+</html>

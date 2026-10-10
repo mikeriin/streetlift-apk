@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Ma saison, après</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&amp;family=Barlow+Semi+Condensed:wght@500;600&amp;family=Barlow+Condensed:wght@500;600&amp;display=swap">
+<style>
+body{margin:0}
+a{color:inherit}a:hover{color:inherit}
+</style>
+</helmet>
+<div style="{{vars}} width: 390px; height: 844px; position: relative; overflow: hidden; background: var(--fond); color: var(--texte); font-family: 'Barlow', sans-serif; font-size: 15px; line-height: 22px; box-sizing: border-box">
+  <div style="padding: 8px 20px 24px; display: flex; flex-direction: column; gap: 14px">
+
+    <header style="display: grid; grid-template-columns: 44px 1fr; align-items: center; min-height: 64px">
+      <a href="Programme.dc.html" aria-label="Retour" style="width: 44px; height: 44px; display: flex; align-items: center">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--texte)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+      </a>
+      <h1 style="margin: 0; font-family: 'Barlow Semi Condensed', sans-serif; font-weight: 600; font-size: 22px; line-height: 28px; text-transform: {{tt}}; letter-spacing: {{ls}}">Ma saison</h1>
+    </header>
+
+    <section style="background: var(--surface); border-radius: 24px; padding: 18px; display: flex; flex-direction: column; gap: 4px">
+      <span style="color: var(--texte2); font-size: 14px">Championnat</span>
+      <div style="display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap">
+        <span style="font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 34px; line-height: 38px">24 décembre</span>
+        <span style="color: var(--texte2); font-size: 14px">dans 12 semaines</span>
+      </div>
+      <a href="#" style="display: grid; grid-template-columns: 22px 1fr 16px; gap: 10px; align-items: center; height: 48px; margin-top: 8px; padding: 0 14px; border-radius: 16px; background: var(--haute); text-decoration: none">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="{{a.accent}}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4zM7 6H4a3 3 0 0 0 3 4M17 6h3a3 3 0 0 1-3 4"/></svg>
+        <span style="font-weight: 600">Jour J : tentatives</span>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--texte2)" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+      </a>
+    </section>
+
+    <h2 style="margin: 8px 0 0; font-family: 'Barlow Semi Condensed', sans-serif; font-weight: 600; font-size: 18px; line-height: 24px">Phases</h2>
+
+    <section aria-label="Phases de la saison" style="background: var(--surface); border-radius: 24px; padding: 6px 18px">
+      <sc-for list="{{phases}}" as="p" hint-placeholder-count="8">
+        <div style="display: grid; grid-template-columns: 20px 1fr auto; gap: 12px; min-height: 56px">
+          <div style="position: relative; display: flex; justify-content: center">
+            <div style="{{p.line}}"></div>
+            <div style="{{p.node}}"></div>
+          </div>
+          <div style="display: flex; flex-direction: column; justify-content: center; padding: 8px 0">
+            <span style="{{p.nameStyle}}">{{p.name}}</span>
+            <span style="color: var(--texte2); font-size: 13px; line-height: 18px">{{p.dates}}</span>
+          </div>
+          <span style="align-self: center; color: var(--texte2); font-size: 13px">{{p.len}}</span>
+        </div>
+      </sc-for>
+    </section>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"palette":{"editor":"enum","options":["bordeaux","obsidian","arctic","neon","titanium","violet","forest","solar"],"default":"bordeaux"},"capitales":{"editor":"boolean","default":true},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var T = {
+      bordeaux: {fond: '#181819', surface: '#222223', haute: '#2D2C2E', filet: '#383738', texte: '#F3F0F1', texte2: '#ABABAF', texte3: '#77777A', pleine: '#873B38', surPleine: '#FFFFFF', encre: '#CA6F6A', second: '#B24B49', accent: '#D9A66C'},
+      obsidian: {fond: '#121316', surface: '#1C1D20', haute: '#27272B', filet: '#313235', texte: '#F3F0F1', texte2: '#ABABAF', texte3: '#77777A', pleine: '#D73E44', surPleine: '#FFFFFF', encre: '#EA4C50', second: '#FF8566', accent: '#FFC857'},
+      arctic: {fond: '#152238', surface: '#242D3D', haute: '#2F3748', filet: '#3A4354', texte: '#F3F0F1', texte2: '#ABABAF', texte3: '#77777A', pleine: '#2563EB', surPleine: '#FFFFFF', encre: '#668EFF', second: '#4F9CF9', accent: '#14B8A6'},
+      neon: {fond: '#101510', surface: '#1A1F1A', haute: '#242A24', filet: '#2F342E', texte: '#F2F0ED', texte2: '#AAACA7', texte3: '#757873', pleine: '#B4F044', surPleine: '#111111', encre: '#B4F044', second: '#67D8C0', accent: '#8C72FF'},
+      titanium: {fond: '#171E24', surface: '#21282F', haute: '#2C3339', filet: '#373E45', texte: '#F2F0F1', texte2: '#AAABAE', texte3: '#76777A', pleine: '#4C6474', surPleine: '#FFFFFF', encre: '#7992A3', second: '#8A9DA8', accent: '#D5A24C'},
+      violet: {fond: '#181427', surface: '#221E31', haute: '#2D293C', filet: '#383347', texte: '#F4EFF1', texte2: '#AEAAAF', texte3: '#79767A', pleine: '#7546DB', surPleine: '#FFFFFF', encre: '#986CFF', second: '#AC8CFA', accent: '#29BFB0'},
+      forest: {fond: '#17251D', surface: '#213027', haute: '#2C3B32', filet: '#37463D', texte: '#F2F0EE', texte2: '#A9ACA8', texte3: '#757874', pleine: '#236B50', surPleine: '#FFFFFF', encre: '#5CA283', second: '#7BAC81', accent: '#D7B374'},
+      solar: {fond: '#211B1A', surface: '#2C2524', haute: '#37302F', filet: '#423B39', texte: '#F7EFED', texte2: '#B4A9A7', texte3: '#7F7573', pleine: '#CA4F1C', surPleine: '#FFFFFF', encre: '#E86531', second: '#FF9760', accent: '#E8BC49'}
+    };
+    var a = T[this.props.palette] || T.bordeaux;
+    var caps = this.props.capitales !== false;
+    var vars = '--fond: ' + a.fond + '; --surface: ' + a.surface + '; --haute: ' + a.haute + '; --filet: ' + a.filet + '; --texte: ' + a.texte + '; --texte2: ' + a.texte2 + '; --texte3: ' + a.texte3 + ';';
+    var raw = [
+      ['Construction', '1 → 21 oct.', '3 sem.'], ['Allègement', '22 → 28 oct.', '1 sem.'], ['Construction', '29 oct. → 18 nov.', '3 sem.'],
+      ['Allègement', '19 → 25 nov.', '1 sem.'], ['Intensification', '26 nov. → 2 déc.', '1 sem.'], ['Réalisation', '3 → 16 déc.', '2 sem.'],
+      ['Affûtage', '17 → 23 déc.', '1 sem.'], ['Jour J', '24 déc.', '']
+    ];
+    var phases = raw.map(function (r, i) {
+      var cur = i === 0, last = i === raw.length - 1;
+      return {
+        name: cur ? r[0] + ', en cours' : r[0], dates: r[1], len: r[2],
+        nameStyle: cur ? 'font-weight: 600; color: ' + a.encre : (last ? 'font-weight: 600' : ''),
+        line: 'position: absolute; left: 9px; width: 2px; background: var(--filet); top: ' + (i === 0 ? '28px' : '0') + '; bottom: ' + (last ? '28px' : '0') + ';',
+        node: 'position: relative; margin-top: 21px; width: 14px; height: 14px; border-radius: 7px; box-sizing: border-box; ' + (cur ? 'background: ' + a.encre + '; box-shadow: 0 0 0 4px var(--surface), 0 0 0 5.5px ' + a.encre + ';' : (last ? 'background: ' + a.accent + ';' : 'background: var(--surface); border: 2px solid var(--texte3);'))
+      };
+    });
+    return { a: a, vars: vars, tt: caps ? 'uppercase' : 'none', ls: caps ? '.3px' : '0', phases: phases };
+  }
+}
+</script>
+</body>
+</html>

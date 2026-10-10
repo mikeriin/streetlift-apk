@@ -1,121 +1,109 @@
-# Cahier des charges — Refonte UI et UX de Kalis Track (lots UI0 à UI5)
+# Cahier des charges — Refonte UI et UX de Kalis Track : finition, cohérence et menus (lots UI0 à UI5)
 
-10/10/2026 · propriétaire : Gaël · rédigé par la conversation de pilotage à la demande du propriétaire (« faire une refonte de l'UI pour avoir quelque chose de propre qui ne fait pas brouillon », « l'UI et l'UX »).
-Maquettes de référence (canevas, 8 écrans, les 8 palettes réglables par l'onglet de réglages de chaque écran) : https://claude.ai/artifact/2YmgbXjKpPzX75sPccDN3J — en cas d'écart entre une maquette et ce cahier, ce cahier tranche ; `DECISIONS_UI.md` tranche sur les deux.
+10/10/2026 · propriétaire : Gaël · rédigé par la conversation de pilotage · **version 2** (remplace la version 1 du même jour, qui changeait la navigation : écartée par le propriétaire).
+Maquettes de référence (canevas : chaque écran actuel à côté de sa version finie, palettes et capitales réglables) : https://claude.ai/artifact/2YmgbXjKpPzX75sPccDN3J — sources dans `pipeline/ui/maquettes/`. En cas d'écart entre une maquette et ce cahier, ce cahier tranche ; `DECISIONS_UI.md` tranche sur les deux.
 
-## 1. Constat
+## 0. Demande du propriétaire
+
+| Heure (10/10/2026) | Demande |
+| --- | --- |
+| 09:08 | « Une refonte de l'UI pour avoir quelque chose de propre qui ne fait pas brouillon » ; cahier des charges puis refonte en parallèle |
+| 09:17 | « L'UI et l'UX » |
+| 09:19 | « Inspire-toi de ce que font Samsung, Google et Microsoft » |
+| 09:20 | Fichier de 8 palettes (`inputs/palettes_kalis_track.txt`) |
+| 09:32 | « Lance pas tout de suite, il faut que je valide avant » |
+| 09:36 | « Garder le même principe de l'UI/UX présente mais que ça soit fini et pas brouillon » |
+| 09:50 | « Ne change pas les illustrations de Koach, du logo et de l'anatomie musculaire. Termine correctement ce qui est déjà fait, corrige les incohérences entre l'UX et l'UI, refonds tous les menus pour une cohérence UI/UX avec une expérience utilisateur plaisante » |
+
+Ce cahier décrit donc **une finition**, pas une nouvelle application : mêmes écrans, même navigation, mêmes parcours, mêmes contenus, mêmes illustrations ; un seul système visuel appliqué partout, des incohérences corrigées, et un modèle unique pour tous les menus.
+
+## 1. Ce qui ne change pas
+
+- **Navigation** : dock flottant à 4 onglets (Arsenal, Stats, Programme, Réglages), ouverture sur Programme, ordre et noms inchangés.
+- **Écrans et parcours** : accueil (niveau, semaine, liste des jours, carte du jour), Mon programme, Ma saison, Jour J, Évolution, programme d'origine, bloc suivant ; séance (Bilan du jour, pages d'exercices, chronos, fin de séance, récompenses) ; Stats (onglets) ; Arsenal ; Réglages ; parcours de création du profil et départ du programme. Même ordre des étapes, mêmes actions, mêmes textes sur le fond (seules la forme et la clarté changent).
+- **Illustrations intouchables** :
+  - **Koach** : les 36 poses de `kalis_koach` (dessins, calques encre / papier / yeux, couleurs `KoachColors`), leurs placements actuels (carte du jour, Bilan du jour avec les 5 poses du ressenti, cartes Saison et Évolution, messages, bulles), les répliques et l'animation.
+  - **Logo** : `assets/icon/logo_mark.png` (K à la silhouette en ATR) teinté par `KalisLogo`, icône Android, écran de démarrage.
+  - **Anatomie musculaire** : `assets/muscles/*`, `assets/muscles2d/*`, `MuscleBody`, la carte 2D et le mannequin 3D, leur rampe d'intensité (qui suit la couleur choisie, décision du 29/09/2026).
+  - Un lot peut seulement changer **le conteneur** d'une illustration (marge, alignement, taille dans une grille) ; jamais le dessin, ses couleurs internes ni son placement dans le parcours.
+- **Moteurs, données, sauvegarde** : aucun changement de format, de logique, de calcul ni de migration.
+
+## 2. Constat
 
 Relevé sur `main` b7996b3f (dev6.11.1) : 72 captures émulateur de `claude/ci-3d` (run 37946602412) et mesure du code de `lib/`.
 
-| Symptôme | Mesure ou exemple |
+| Mesure | Valeur |
 | --- | --- |
-| Pas d'échelle typographique | 27 tailles de police littérales différentes (177 occurrences), 5 graisses, 9 valeurs d'interlettrage |
-| Pas d'échelle de formes ni d'espacement | 12 rayons d'angle différents, 231 `EdgeInsets` littéraux |
-| Couleurs hors thème | 83 `Color(0x…)` littéraux hors `app_theme.dart` |
-| Composants contournés | 98 `Card(` bruts à côté de 175 `KCard(` ; 34 `BoxDecoration` faites main |
-| Murs de texte | « Mon programme » : 3 cartes de 4 à 6 lignes chacune avant toute action ; séance : 5 types d'information au-dessus de la saisie (puces, titre rouge en capitales, consigne, notes du coach, ligne de calibrage) |
-| Capitales et troncatures | titres en capitales (`MON PROGRAMME`, `CORPS ENTIER`), 28 `toUpperCase()` ; titres coupés (`TEST MAX TRACTIONS A…`, `PUISSANCE MU + SQUAT ENDURAN`, `Bloc …`) |
-| Hiérarchie plate | tout a le même poids : liens rouges, puces cerclées, cartes dans des cartes (page « Bilan du jour ») |
-| Navigation | l'écran principal est le 3e onglet sur 4 ; « Arsenal » ne contient que deux tuiles ; « Réglages » occupe un onglet entier ; « Mon programme », « Ma saison », « Évolution » et « Ton programme d'origine » sont rangés dans Réglages |
-| Recouvrements | dock flottant posé sur le contenu (bandeau « Nouveau : 11 questions pour… » coupé derrière lui) ; poignée « DEV » sur le bord droit de chaque écran |
-| Bruit visuel | frise de 40 points de semaines sur l'accueil ; mascotte de Koach répétée en décoration dans plusieurs cartes d'un même écran |
+| Tailles de police littérales | 27 valeurs différentes, 177 occurrences ; 5 graisses ; 9 interlettrages |
+| Rayons d'angle | 12 valeurs différentes |
+| `EdgeInsets` littéraux | 231 |
+| `Color(0x…)` hors `app_theme.dart` | 83 |
+| `Card(` bruts / `KCard(` | 98 / 175 ; 34 `BoxDecoration` faites main |
+| `toUpperCase()` | 28 |
+| Menus, feuilles et dialogues | 49 appels (`PopupMenuButton`, `showModalBottomSheet`, `showDialog`) dans 23 fichiers, sans modèle commun |
 
-Ce qui marche et reste : le thème clair/sombre/système, le choix de couleur par l'utilisateur (L5, désormais sur les 8 palettes du propriétaire, §4.1), le tableau des séries, les chronos de mode, les contrôles de taille de texte (L5 : 320 px, 200 %).
+## 3. Incohérences à corriger (UI ↔ UX)
 
-## 2. Objectifs
+Chaque ligne est une règle que tous les lots appliquent.
 
-1. **Propre** : un seul système de design appliqué partout, aucun style écrit à la main dans un écran.
-2. **Lisible à bout de bras, entre deux séries** : chiffres grands, une information par ligne, les explications derrière un appui.
-3. **Rapide** : moins d'appuis pour faire une séance (§5.4).
-4. **Une seule voix pour Koach** : une phrase à la fois, au bon endroit.
-5. **Grand public** : un débutant comprend chaque écran sans connaître le vocabulaire du street ; l'expert garde toute l'information, un appui plus loin.
-
-Hors périmètre : les moteurs (`packages/`), les données (`store.dart`, sauvegarde, migrations — aucun changement de format), le contenu des programmes, la base d'exercices v1.1 (lot à part, qui s'appuiera sur ce système), le mannequin 3D et les animations (chantiers suspendus), le système XP/niveau/Krédits (G11-G15 suspendus : on garde ce qui s'affiche aujourd'hui, restylé).
-
-## 3. Architecture de l'application (UX)
-
-### 3.1 Navigation
-
-Barre du bas fixe (plus de dock flottant), quatre onglets, l'application s'ouvre sur **Aujourd'hui** :
-
-| Onglet | Contenu | Vient de |
+| N° | Incohérence relevée | Règle |
 | --- | --- | --- |
-| **Aujourd'hui** | séance du jour, semaine en cours, mot de Koach, suite de la semaine | onglet Programme actuel (`home_screen.dart`) |
-| **Programme** | saison et blocs, semaines, échéance, évolution (propositions de Koach et historique), programme d'origine, bloc suivant | `program_screens.dart`, `plan/*`, Réglages › Mon programme |
-| **Progrès** | objectifs et e1RM, records, endurance, historique des séances, charge | onglet Stats, `records_screen.dart`, `session_history.dart` |
-| **Exercices** | bibliothèque d'exercices, anatomie | onglet Arsenal |
+| C1 | Trois en-têtes différents : `KTopBar` avec titre en capitales, `AppBar` avec surtitre « RÉGLAGES » en 12 px, `AppBar` « EXERCICES » / « FICHE EXERCICE » | Un seul en-tête de sous-page : retour, titre, au plus une action (⋮). Les pages racines (onglets) ont un grand titre et une phrase. |
+| C2 | Même importance, trois formes : liens colorés (« Voir le changement », « Pourquoi ? », « Passer », « Voir la saison »), boutons pleins, boutons à contour | Hiérarchie unique : un bouton plein au plus par écran (l'action principale) ; actions secondaires = bouton tonal ou ligne avec chevron ; lien texte seulement pour « Pourquoi ? », « Modifier », « Passer ». |
+| C3 | Titres coupés par « … » (« TEST MAX TRACTIONS A… », « PUISSANCE MU + SQUAT ENDURAN », « Bloc … ») | Jamais de troncature d'un titre ou d'une information : retour à la ligne (2 lignes, 3 au-delà de 150 % de texte). |
+| C4 | Capitales appliquées au hasard (titres d'écran, de séance, de jours, surtitres, libellé du dock, mais pas les sous-pages) | Les capitales restent le style des titres (écran, séance, jour, onglet actif) — option de style unique (`KTokens.capsTitles`, décision U3) ; jamais dans le texte courant, les puces, les boutons, les sections. |
+| C5 | Couleur sans signification (puce « Reps » en rouge, surtitres rouges « SÉRIE DE TÊTE… », liens rouges) | La couleur porte un état ou l'action principale (§5.1) ; puces neutres ; consignes en texte normal, leur titre en `encre` sans capitales. |
+| C6 | Titres de section de trois sortes (surtitre « PHASES », titre de carte, `KSection`) | Un seul titre de section (14, graisse 600, `texte2`, sans capitales) au-dessus des groupes. |
+| C7 | Cartes dans des cartes (page Bilan du jour) | Interdit : une carte contient des lignes, des champs, des puces, jamais une autre carte. |
+| C8 | Recouvrements : bandeau « Nouveau : 11 questions… » sous le dock, message de Koach sur la barre de chrono, poignée « DEV » sur le contenu | Zones réservées : le contenu défile au-dessus du dock (marge basse = hauteur du dock + 16) ; un seul élément flottant en bas à la fois (barre de chrono, au-dessus le message de Koach) ; poignée DEV (builds de dev) dans la marge, jamais sur un texte ou un bouton. |
+| C9 | Formats différents pour la même chose (« 34–49 min », « ≥ 22 min », « ≈ 162 rép. · 600 s d'effort + non chiffré ») | Un format par grandeur : durée estimée « 34–49 min » ; volume « 6 exercices, 19 séries, 136 rép. » ; secondes au-delà de 90 s écrites en minutes ; nombres français (virgule, espace fine avant l'unité). |
+| C10 | Menus contextuels de trois sortes (menu déroulant, feuille, dialogue) ; action destructrice « Effacer l'historique » mêlée aux autres | Feuille d'actions unique (§4) ; actions destructrices dans le dernier groupe, en `danger`, avec confirmation. |
+| C11 | Réglages : « Apparence » réglée sur la racine, les autres rubriques en sous-pages ; sous-pages sans titre en page | Modèle de menu unique (§4) : la racine liste toutes les rubriques ; « Apparence » reste en tête de la racine (réglage le plus fréquent), dans un groupe comme les autres. |
+| C12 | Valeurs simples réglées par dialogue | Réglage en place : interrupteur, pas à pas, segments ; dialogue seulement pour confirmer une action destructrice ou irréversible. |
+| C13 | Cibles tactiles sous 48 dp (icônes de la barre d'outils de série, puces) | ≥ 48 dp partout. |
+| C14 | Placement de la mascotte | Rien à corriger (§1) : placements et poses conservés. |
 
-**Profil et réglages** : bouton rond en haut à droite d'Aujourd'hui (avatar), écran poussé. Contient : profil athlète, références, apparence (thème, palette, contraste renforcé), séance (repos par défaut, décompte), notifications, données (export, import, suppression), santé et sécurité, confidentialité, avis, licences, à propos, **mode dev** (builds de dev seulement : la poignée « DEV » disparaît des écrans et devient une entrée ici, plus un appui long sur le numéro de version).
+## 4. Refonte des menus : un seul modèle
 
-Indicateur de niveau (« NIV. 1 ») : retiré de l'en-tête d'Aujourd'hui, montré dans Progrès (G11-G15 décideront de sa place définitive).
+Toutes les surfaces de choix ou d'action suivent l'un de ces cinq gabarits (maquettes « Réglages », « Réglages › Chronomètres », « Arsenal », « Menu ⋮ de la séance », « Exercices de la séance »).
 
-### 3.2 Aujourd'hui
-
-Ordre fixe (maquette « Aujourd'hui ») :
-1. Date du jour, « Semaine N » (appui : choisir une semaine), bloc et position (« Bloc force, semaine 2 sur 8 »), bouton Profil.
-2. Bande des 7 jours de la semaine du programme : jour, date, état (faite ✓, prévue ○, repos —, aujourd'hui en couleur pleine). Appui sur un jour : sa séance.
-3. Carte du jour : titre de la séance, 3 chiffres (exercices, séries, durée estimée en minutes entières), les 3 premiers exercices avec leur prescription, « et N autres exercices », bouton **Commencer la séance** (ou **Reprendre la séance** si elle est en cours, ou carte de repos les jours sans séance).
-4. Une ligne de Koach au plus (la plus importante : proposition en attente, changement appliqué, alerte de douleur), qui ouvre son détail.
-5. « Ensuite » : les séances restantes de la semaine.
-
-Disparaissent de l'accueil : frise des 40 semaines (→ Programme), bandeaux empilés (une seule bannière à la fois, dans le flux, jamais sous la barre).
-
-### 3.3 Séance
-
-Parcours : **Avant** → **Exercice** ⇄ **Repos** → … → **Fin**.
-
-- **Avant** (une page, plus de carte dans une carte) : « Comment tu te sens ? » en 5 choix d'un appui + « Passer » ; « Une gêne ? » ouvre les questions de douleur existantes ; changements de Koach pour cette séance en une ligne qui ouvre la feuille Koach. L'étape bloquante `clearance_first` (CI1g) reste bloquante et passe avant.
-- **Exercice** (maquette « Séance ») : barre haute (quitter, « Exercice 3 sur 7 », liste des exercices) ; segments de progression ; nom de l'exercice ; trois chiffres (séries × reps, effort, repos) ; **bloc de charge** (chiffre géant, masse totale pour les exercices lestés, disques à charger) ; une ligne « Pourquoi cette charge ? » / « Consignes » qui ouvre une feuille (notes du coach, calibrage, technique, tempo, règle de douleur : tout le texte actuel, rien de perdu) ; tableau des séries (faites, en cours en surbrillance avec champs, à venir en gris) ; bouton bas **Valider la série N**.
-- **Repos** (maquette « Repos ») : plein écran, compte à rebours géant, barre qui se vide, heure de fin, −15 s / +15 s / Passer ; **la saisie du RIR se fait ici** (6 boutons 0 à 5+, un appui, pré-sélection = RIR visé) ; « Ensuite : série 3, 5 reps à +32,5 kg ». Fin du repos : vibration et retour à l'exercice. Les exercices au temps, EMOM, intervalles, groupes et mini-séries (CI1f) gardent leurs chronos, dans le même style plein écran.
-- **Koach propose** (maquette « Koach propose ») : feuille du bas, avant → après en grands chiffres, raison en une phrase, « Comment Koach a calculé » repliable, **Appliquer 115 kg** / **Garder 112,5 kg** ; au refus, raison facultative en un appui (trop lourd, trop léger, matériel, temps, autre — prévu par CAHIER_KM, codée ici, transmise seulement si le moteur la lit).
-- **Fin** (maquette « Fin de séance ») : record éventuel en tête, 4 chiffres (durée, séries faites, tonnage, RIR moyen et cible), ressenti en 5 choix, séance suivante, Krédits gagnés si affichés aujourd'hui, **Terminer**.
-
-### 3.4 Programme
-
-Maquette « Programme » : titre, nom du programme ; position « S13 / 40 » et semaines avant l'échéance ; **barre de saison** (blocs proportionnels à leur durée, bloc en cours en couleur, repère de la semaine) ; liste des blocs (nom, semaines, état) ; semaine en cours jour par jour ; puis entrées vers : Évolution (Koach), Échéance et jour J, Programme d'origine, Bloc suivant, Changer de programme. Chaque bloc et chaque semaine s'ouvrent.
-
-### 3.5 Progrès
-
-Maquette « Progrès » : objectifs avec e1RM actuel, objectif, barre de progression depuis le point de départ et écart en kg ; endurance au poids de corps (actuel / objectif) ; puis records, historique des séances (liste par semaine, ouverture d'une séance), courbes par exercice, carte musculaire. Graphiques en couleurs fixes de données (§4.1).
-
-### 3.6 Exercices
-
-Bibliothèque en liste directe (recherche en haut, filtres en puces), fiche d'exercice restylée, anatomie en entrée secondaire. Le lot de la base v1.1 refera le contenu : ici, seulement le passage au système de design.
-
-### 3.7 Profil, parcours d'entrée, réglages
-
-Parcours de création du profil v3 et départ du programme : une question par écran, bouton bas « Continuer », progression en segments, « Passer » quand la question est facultative. Réglages : listes groupées, une ligne = un titre + au plus une ligne de valeur, aucun paragraphe hors des écrans d'aide.
-
-## 4. Système de design
-
-Le système vit dans `lib/kit/` (nouveau dossier, remplace `ui.dart` et la partie présentation de `app_theme.dart` ; `ui.dart` reste comme ré-export le temps de la migration et disparaît à UI5).
-
-### 4.0 Références : Samsung, Google, Microsoft
-
-Demande du propriétaire (10/10/2026) : s'inspirer de Samsung, Google et Microsoft. Ce que chacun apporte ici, et où il s'applique :
-
-| Source | Principe repris | Application dans Kalis Track |
+| Gabarit | Anatomie | Remplace |
 | --- | --- | --- |
-| **Samsung One UI** | L'écran se partage entre une zone de lecture en haut et une zone d'interaction en bas, pour que les commandes restent à portée du pouce même sur grand écran ; parcours aussi courts que possible ; mode sombre et tailles de texte variables pour le confort | Grands titres en haut, bouton principal et choix d'un appui dans le bas de l'écran (`KBottomAction`, `KChoice`) ; **grand titre qui se replie au défilement** (`KPage` étendue) sur Programme, Progrès, Profil ; réglages groupés dans des conteneurs arrondis ; une tâche par écran |
-| **Google Material 3 (Expressive)** | Rôles de couleur avec paires « couleur / texte sur la couleur » au contraste garanti, calculés dans l'espace HCT ; couleur, forme, taille, mouvement et contenant pour hiérarchiser ; mouvement à ressorts. Google annonce 46 études et plus de 18 000 participants, des éléments clés repérés jusqu'à 4 fois plus vite, et des 45 ans et plus aussi rapides que les plus jeunes | Dérivation des palettes (§4.1) avec `material_color_utilities` (déjà dépendance de Flutter) ; rôle `surPleine` toujours calculé ; une forme différente pour l'élément courant (§4.3) ; groupe de boutons reliés (−15 s / +15 s / Passer) ; ressorts M3 (§4.5) ; chiffres « mis en avant » en Condensed 600 |
-| **Microsoft Fluent 2** | Jetons en couches : jetons globaux (valeurs brutes) puis jetons d'alias nommés par leur fonction, qui couvrent clair, sombre, contraste élevé et variantes de marque | Trois couches : **globaux** (hex des palettes, échelles), **alias** (`fond`, `surface`, `encre`…), **composants** (`kit.bouton.fond` → alias) ; aucun écran n'utilise un global ; **mode « Contraste renforcé »** (Apparence) qui recalcule tous les alias pour 7:1 |
+| **Menu racine** (`KMenuPage`) | grand titre (capitales selon U3) et une phrase ; recherche quand le contenu s'y prête (Arsenal) ; titres de section ; groupes arrondis (rayon 24) ; lignes `KMenuRow` : pastille d'icône 40 × 40 (rayon 12, `haute`), titre (16, 600), une ligne de description (13, `texte2`, retour à la ligne permis), valeur ou chevron ; séparateurs entre lignes, en retrait de la pastille | racine des Réglages, Arsenal, menus d'entrée de Stats et du programme |
+| **Sous-page de menu** | en-tête standard (C1), une phrase, groupes ; réglages en place : interrupteur (`KSwitch`), pas à pas relié (−, valeur, +), segments | sous-pages des Réglages, Profil, Notifications, Données |
+| **Feuille d'actions** (`KActionSheet`) | poignée, titre et contexte (« Séance — Corps entier, S1, J2 »), groupes d'actions (icône + verbe), dernier groupe = actions destructrices en `danger`, bouton « Fermer » | tous les menus ⋮ et `PopupMenuButton` |
+| **Feuille de liste** (`KListSheet`) | poignée, titre et résumé (« 7 exercices, 22 min »), lignes numérotées, élément courant en contour `encre`, éléments faits cochés en `validation` | liste des exercices de la séance, choix de semaine, choix d'exercice de remplacement |
+| **Confirmation** (`KConfirm`) | titre = question, une phrase de conséquence, « Annuler » et le verbe exact (« Effacer », « Remplacer ») ; verbe en `danger` si destructeur | dialogues de suppression, import, remplacement de programme |
 
-Sources : [Samsung One UI, vue d'ensemble](https://developer.samsung.com/one-ui/overview.html) ; [Fluent 2, design tokens](https://fluent2.microsoft.design/design-tokens) ; [Android Authority, détails de Material 3 Expressive](https://www.androidauthority.com/google-material-3-expressive-details-3554486/) ; [Material 3 Expressive, Android Developers](https://developer.android.com/design/ui/wear/guides/get-started/apply).
+Inventaire à convertir (49 appels, 23 fichiers) : chaque lot convertit ceux de ses fichiers (§7.2) avec les composants de UI0 et les liste dans sa livraison ; UI5 vérifie qu'il n'en reste aucun hors gabarit (`tools/check_ui_tokens.py --menus`).
 
-### 4.1 Couleurs
+Règles de parcours des menus : tout réglage à 3 appuis au plus depuis son onglet ; toute action ⋮ à 2 appuis au plus ; « Retour » ramène toujours à l'écran d'où l'on vient, à la même position de défilement ; un changement de réglage s'applique tout de suite, sans bouton « Enregistrer ».
 
-**Palettes du propriétaire** (fichier `palettes_kalis_track.txt`, 10/10/2026) : elles **remplacent** les six couleurs de L5. Chaque palette fournit cinq valeurs (dominante, secondaire, accent, fond sombre, fond clair) ; les thèmes clair, sombre et système restent indépendants du choix de palette.
+## 5. Système de design
 
-**Dérivation des rôles** (à coder dans `lib/kit/palette.dart`, avec test qui recalcule le tableau ci-dessous à l'identique) : la valeur du propriétaire est gardée **telle quelle** quand elle passe le contraste exigé par son rôle ; sinon on garde sa teinte et sa chroma (HCT) et on ne déplace que sa tonalité, du plus petit pas (0,5) qui satisfait le contraste.
-- `fond` = fond du propriétaire. Sombre : `surface`, `haute`, `filet` = même teinte, chroma ≤ 16, tonalité du fond + 5, + 10, + 15. Clair : `surface` = blanc, `haute` = fond, `filet` = tonalité du fond − 10.
-- `texte` (tonalité 95 en sombre, 10 en clair), `texte2` (70 / 40), `texte3` (50 / 60, inactif seulement), teinte du fond, chroma ≤ 6.
-- `pleine` (bouton principal, jour courant, sélection pleine) = dominante ; en sombre, tonalité relevée à 35 au moins pour rester visible. `surPleine` = blanc ou `#121212`, celui qui contraste le plus, ≥ 4,5:1 ; si c'est `#121212` mais qu'un assombrissement de 6 points de tonalité au plus permet le blanc, on assombrit (texte blanc sur les boutons partout où c'est possible).
-- `encre` (icône active, repère, chiffre mis en avant, contour de l'élément courant) = dominante ajustée à ≥ 4,5:1 sur `surface` (et sur `fond` en clair).
-- `second` (graphiques, séries de données, barres secondaires) = secondaire ajustée à ≥ 3:1 sur `surface`.
-- `accent` (records, Koach, Krédits, réussites) = accent ajusté à ≥ 4,5:1 sur `surface`.
-- **Contraste renforcé** : mêmes règles avec 7:1 au lieu de 4,5:1 et 4,5:1 au lieu de 3:1.
+Le système vit dans `lib/kit/` (nouveau dossier ; `ui.dart` et la présentation de `app_theme.dart` deviennent des adaptateurs pendant la migration et disparaissent à UI5).
 
-Résultat (calculé le 10/10/2026, tous les contrastes vérifiés) :
+### 5.0 Références : Samsung, Google, Microsoft
+
+| Source | Principe repris | Application |
+| --- | --- | --- |
+| **Samsung One UI** | Zone de lecture en haut, zone d'interaction en bas, à portée du pouce ; parcours courts ; confort (sombre, tailles de texte) | Grands titres des pages racines ; actions principales et choix en bas ; menus groupés dans des conteneurs arrondis ; grand titre qui se replie au défilement sur les pages racines |
+| **Google Material 3 (Expressive)** | Rôles de couleur avec paires « couleur / texte sur la couleur » au contraste garanti (HCT) ; forme, taille et couleur pour hiérarchiser ; mouvement à ressorts. Google annonce 46 études, plus de 18 000 participants, des éléments clés repérés jusqu'à 4 fois plus vite, et des 45 ans et plus aussi rapides que les plus jeunes | Dérivation des palettes (§5.1) avec `material_color_utilities` ; forme pilule pour l'élément sélectionné ; groupes de boutons reliés (−15 s / +15 s, pas à pas) ; ressorts (§5.5) |
+| **Microsoft Fluent 2** | Jetons en couches (globaux, puis alias nommés par leur fonction) qui couvrent clair, sombre, contraste élevé et variantes de marque | Trois couches : globaux (hex des palettes, échelles), alias (`fond`, `surface`, `encre`…), composants ; aucun écran n'utilise un global ; mode « Contraste renforcé » |
+
+Sources : [Samsung One UI](https://developer.samsung.com/one-ui/overview.html) ; [Fluent 2, design tokens](https://fluent2.microsoft.design/design-tokens) ; [Android Authority, Material 3 Expressive](https://www.androidauthority.com/google-material-3-expressive-details-3554486/) ; [Material 3 Expressive, Android Developers](https://developer.android.com/design/ui/wear/guides/get-started/apply).
+
+### 5.1 Couleurs
+
+**Les 8 palettes du propriétaire remplacent les 6 couleurs de L5.** Chaque palette : dominante, secondaire, accent, fond sombre, fond clair. Thème clair / sombre / système indépendant de la palette.
+
+**Dérivation** (`lib/kit/palette.dart`, test qui retrouve `inputs/palettes_roles.json` à l'identique) : la valeur du propriétaire est gardée telle quelle quand elle passe le contraste de son rôle ; sinon on garde sa teinte et sa chroma (HCT) et on ne déplace que sa tonalité, du plus petit pas (0,5) suffisant.
+- `fond` = fond du propriétaire. Sombre : `surface`, `haute`, `filet` = même teinte, chroma ≤ 16, tonalité + 5, + 10, + 15. Clair : `surface` blanc, `haute` = fond, `filet` = tonalité − 10.
+- `texte` (tonalité 95 / 10), `texte2` (70 / 40), `texte3` (50 / 60, inactif seulement), teinte du fond, chroma ≤ 6.
+- `pleine` (bouton principal, jour courant, onglet actif, carte du jour) = dominante ; en sombre, tonalité relevée à 35 au moins. `surPleine` = blanc ou `#121212`, le plus contrasté (≥ 4,5:1) ; texte blanc retenu si 6 points de tonalité au plus suffisent.
+- `encre` (élément courant, repère, chiffre mis en avant, lien) = dominante ajustée à ≥ 4,5:1 sur `surface` (et sur `fond` en clair).
+- `second` (données, barres secondaires) = secondaire ajustée à ≥ 3:1. `accent` (records, réussites, Jour J) = accent ajusté à ≥ 4,5:1.
+- **Contraste renforcé** : mêmes règles à 7:1 (et 4,5:1 au lieu de 3:1).
 
 | Palette (identifiant) | Source : dominante / secondaire / accent / fond sombre / fond clair | Sombre : pleine / texte sur pleine / encre / second / accent / surface | Clair : pleine / texte sur pleine / encre / second / accent |
 | --- | --- | --- | --- |
@@ -128,208 +116,139 @@ Résultat (calculé le 10/10/2026, tous les contrastes vérifiés) :
 | Forest Endurance (`forest`) | `#236B50` / `#7BAC81` / `#D7B374` / `#17251D` / `#F4F5EE` | `#236B50` / `#FFFFFF` / `#5CA283` / `#7BAC81` / `#D7B374` / `#213027` | `#236B50` / `#FFFFFF` / `#236B50` / `#6FA076` / `#886B32` |
 | Solar Sprint (`solar`) | `#D95A27` / `#FF9760` / `#E8BC49` / `#211B1A` / `#FFF6ED` | `#CA4F1C` / `#FFFFFF` / `#E86531` / `#FF9760` / `#E8BC49` / `#2C2524` | `#CA4F1C` / `#FFFFFF` / `#C34A17` / `#DC7B46` / `#8F6D00` |
 
-Préférence enregistrée `accent` : identifiants nouveaux ci-dessus ; un ancien identifiant est relu ainsi (sans refuser l'import) : `rouge` → `bordeaux`, `jaune` → `neon`, `vert` → `forest`, `violet` → `violet`, `orange` → `solar`, `turquoise` → `arctic` ; absent ou inconnu → `bordeaux`.
+Préférence `accent` : anciens identifiants relus `rouge` → `bordeaux`, `jaune` → `neon`, `vert` → `forest`, `violet` → `violet`, `orange` → `solar`, `turquoise` → `arctic` ; absent ou inconnu → `bordeaux` ; import d'une ancienne sauvegarde jamais refusé pour ça.
 
-Couleurs d'état, communes à toutes les palettes : `validation` `#5CB860` (sombre) / `#2E7D32` (clair), `danger` `#EF6B6B` / `#B3261E`, `avertissement` `#E6A23C` / `#8A5300` ; contrôlées à ≥ 4,5:1 sur la `surface` de chaque palette (ajustées par la même règle sinon).
+États communs : `validation` `#5CB860` / `#2E7D32`, `danger` `#EF6B6B` / `#B3261E`, `avertissement` `#E6A23C` / `#8A5300` (sombre / clair), contrôlés à ≥ 4,5:1 sur chaque `surface`.
 
-Règles d'usage :
-- `pleine` sert à **une** action par écran (le bouton principal) et au jour courant ; `encre` à l'élément courant ; `accent` à ce qui se fête (record, objectif atteint) et à la voix de Koach ; `second` aux données. Jamais de texte courant, de lien de paragraphe ou de décor dans ces couleurs.
-- Plus de liens colorés dans le texte : une action est un bouton, une ligne avec chevron ou une ligne d'action de feuille.
-- Couleurs fixes conservées (liste L5) : phases de chrono, rareté, marque K, icône Android ; les graphiques passent à `second` / `encre` / `accent` de la palette.
-- Disques à charger : gris neutres (`#E8E8E8`, `#BDBDBD`, `#8F8F8F`, du plus lourd au plus léger), hauteur proportionnelle au poids, jamais les couleurs de compétition (elles se battraient avec la palette).
-- Contraste : vérifié par test pour les 32 combinaisons (8 palettes × clair/sombre × normal/renforcé).
+Illustrations (§1) : Koach garde `KoachColors` (encre claire et papier = support en sombre, encre `#141414` et papier blanc en clair, `onColor` sur la carte du jour) ; le logo garde sa teinte actuelle (texte en sombre, `pleine` en clair) ; la rampe de l'anatomie va de `pleine` à `encre` de la palette, comme aujourd'hui avec la couleur dominante.
 
-### 4.2 Typographie
+### 5.2 Typographie
 
-Famille **Barlow** (SIL Open Font License 1.1), embarquée dans `assets/fonts/` avec sa licence (aucune permission INTERNET, aucun téléchargement à l'exécution ; source : dépôt GitHub `google/fonts`, dossiers `ofl/barlow`, `ofl/barlowsemicondensed`, `ofl/barlowcondensed`, empreintes SHA-256 consignées) :
-- **Barlow** 400, 500, 600 : texte.
-- **Barlow Semi Condensed** 600 : titres.
-- **Barlow Condensed** 500, 600 : chiffres (charges, chronos, statistiques), toujours en chiffres tabulaires.
+**Barlow** (SIL OFL 1.1), embarquée dans `assets/fonts/` avec sa licence et ses empreintes (source : `google/fonts`, `ofl/barlow`, `ofl/barlowsemicondensed`, `ofl/barlowcondensed` ; aucune permission INTERNET) : Barlow 400 / 500 / 600 (texte), Barlow Semi Condensed 600 (titres), Barlow Condensed 500 / 600 (chiffres, en chiffres tabulaires).
 
-Échelle (taille / interligne, en dp) — **seules valeurs autorisées** :
-
-| Style | Police | Taille / interligne | Usage |
+| Style | Police | Taille / interligne (dp) | Usage |
 | --- | --- | --- | --- |
-| `titreEcran` | Semi Condensed 600 | 30 / 36 | un par écran |
-| `titreSection` | Semi Condensed 600 | 22 / 28 | sections, feuilles |
-| `corpsFort` | Barlow 500 | 17 / 24 | boutons, lignes importantes |
-| `corps` | Barlow 400 | 15 / 22 | texte courant, lignes de liste |
-| `detail` | Barlow 400 | 13 / 18 | valeurs secondaires, légendes |
-| `micro` | Barlow 500 | 12 / 16 | barre de navigation, jours de la bande |
-| `chiffre` | Condensed 600 | 30 / 34 | statistiques, prescriptions |
-| `chiffreGrand` | Condensed 600 | 44 / 48 | records, avant → après |
-| `chiffreGeant` | Condensed 600 | 64 / 64 | charge de l'exercice |
-| `chrono` | Condensed 600 | 120 / 116 | repos et chronos |
+| `titreRacine` | Semi Condensed 600 | 30 / 36 | titre d'un onglet (Arsenal, Réglages, Stats) |
+| `titreEcran` | Semi Condensed 600 | 22 / 28 | titre d'une sous-page ; semaine de l'accueil |
+| `titreSeance` | Semi Condensed 600 | 20 / 24 | séance, exercice, feuille |
+| `titreCarte` | Semi Condensed 600 | 18 / 24 | titre de carte ; ligne de jour (15 / 20) |
+| `corpsFort` | Barlow 600 | 16 / 22 | titre de ligne de menu, boutons |
+| `corps` | Barlow 400 | 15 / 22 | texte courant |
+| `detail` | Barlow 400 | 13 / 18 | description, valeur secondaire |
+| `section` | Barlow 600 | 14 / 20 | titre de section (`texte2`) |
+| `micro` | Barlow 600 | 12 / 16 | surtitre de la carte du jour, légende |
+| `chiffre` | Condensed 600 | 36 / 38 | prescription (« 4 × 5 »), durée estimée |
+| `chiffreMoyen` | Condensed 600 | 20 / 24 | champs de saisie, pas à pas |
+| `chrono` | Condensed 600 | 34 / 36 | barre de repos |
 
-Règles : phrases en minuscule (majuscule initiale seulement) partout, titres compris ; aucune capitale de mise en forme ; un titre ne se coupe jamais par des points de suspension : il passe à la ligne (2 lignes, 3 au-delà de 150 % de texte) ; nombres au format français (virgule décimale, espace fine insécable avant l'unité et entre les milliers : « 6 840 kg », « 112,5 kg ») ; durées en `m:ss` pour les chronos, « 45 min » ailleurs ; les grands chiffres restent entiers à 200 % de texte (`FittedBox` conservé).
+Capitales : appliquées par le style (`textTransform`) aux titres `titreRacine`, `titreEcran`, `titreSeance`, lignes de jour et onglet actif, quand `KTokens.capsTitles` est vrai (U3) ; jamais par `toUpperCase()` dans le code. Nombres au format français ; les grands chiffres restent entiers à 200 % de texte.
 
-### 4.3 Espacements, formes, élévation
+### 5.3 Espacements, formes, élévation
 
-- Espacements : 4, 8, 12, 16, 20, 24, 32, 48 — **seules valeurs** ; marge d'écran 20 ; écart entre sections 24 ; entre cartes 10.
-- Rayons : 8 (puces, petits éléments), 14 (champs, lignes actives, choix), 16 (boutons, cartes secondaires), 28 (carte principale de l'écran, feuilles) — **seules valeurs**.
-- Aucune ombre portée ; profondeur par la couleur de surface (`fond` < `surface` < `haute`). Contour seulement pour l'élément courant (1,5 dp, `encre`).
-- Forme qui porte l'état (Material 3 Expressive) : un choix sélectionné (`KChoice`, jour courant, onglet actif) passe du rayon 14 à la forme pilule, avec un ressort ; un choix non sélectionné garde 14. L'état ne repose jamais sur la seule couleur.
-- Une carte ne contient jamais une carte. Listes = lignes séparées par un `filet`, pas des cartes empilées.
-- Cibles tactiles ≥ 48 dp ; bouton principal 56 dp de haut, pleine largeur, ancré en bas d'écran (zone du pouce).
+- Espacements : 4, 8, 12, 14, 16, 20, 24, 32 — seules valeurs ; marge d'écran 20 ; écart entre cartes 12.
+- Rayons : 8 (puces), 14 (champs, segments, ligne courante), 16 (lignes de jour, boutons, groupes de feuille), 24 (cartes, groupes de menu), 28 (feuilles), pilule (dock, onglet actif, choix sélectionné) — seules valeurs.
+- Aucune ombre ; profondeur par la surface (`fond` < `surface` < `haute`) ; contour 1,5 dp `encre` pour l'élément courant.
+- Cibles ≥ 48 dp ; bouton principal 56 dp.
 
-### 4.4 Composants (`lib/kit/`)
+### 5.4 Composants (`lib/kit/`)
 
-| Composant | Rôle |
-| --- | --- |
-| `KTokens` | couleurs par rôle, styles de texte, espacements, rayons (une seule source ; `Theme.of` les expose par une extension `ThemeExtension`) |
-| `KPage` | page : marge 20, titre d'écran, sous-titre, défilement, réserve de la barre basse |
-| `KTopBar` | barre haute : retour ou fermer, titre court centré ou absent, une action |
-| `KNavBar` | barre de navigation fixe à 4 onglets |
-| `KPrimaryButton`, `KSecondaryButton`, `KTextButton` | boutons (56 / 48 dp) |
-| `KBottomAction` | zone basse fixe avec le bouton principal |
-| `KCard` (2 niveaux : `principale` rayon 28, `secondaire` rayon 16) | conteneur de surface |
-| `KListRow` | ligne : titre, détail, valeur à droite, chevron ou interrupteur |
-| `KSectionHeader` | titre de section + action facultative |
-| `KStat` / `KStatRow` | chiffre + légende ; rangée de 2 à 4 |
-| `KLoad` | bloc de charge : chiffre géant, masse totale, disques (`KPlates`) |
-| `KSetTable` | tableau des séries (états fait, en cours, à venir) |
-| `KChoice` | choix d'un appui (RIR, ressenti, segments) |
-| `KWeekStrip` | bande des 7 jours |
-| `KSeasonBar` | barre de saison proportionnelle |
-| `KProgressLine` | barre de progression (objectif, repos) |
-| `KSheet` | feuille du bas (poignée, titre, contenu, actions) |
-| `KKoachLine`, `KKoachSheet` | la voix de Koach : une ligne, une feuille |
-| `KNotice` | message dans le flux (info, avertissement, danger) |
-| `KEmpty` | état vide : une phrase, une action |
-| `KChip` | puce de filtre |
+`KTokens` (jetons, `ThemeExtension`), `KPage` (racine à grand titre ou sous-page), `KTopBar` (C1), `KDock` (dock flottant actuel, fini : hauteur 64, pilule de l'onglet actif en `pleine`, libellé de l'onglet actif seulement), `KCard` (principale rayon 24, carte du jour pleine), `KDayRow` (ligne de jour : numéro, titre, état), `KSeasonBar` (barre de saison par blocs, repère de la semaine), `KMenuGroup` / `KMenuRow`, `KSwitch`, `KStepper`, `KSegmented`, `KActionSheet`, `KListSheet`, `KConfirm`, `KChip` (neutre), `KPrimaryButton` / `KTonalButton` / `KTextButton`, `KSetTable` (tableau des séries : en-tête, ligne courante, champs, validation), `KRestBar` (barre de repos flottante, groupe −15 s / +15 s, arrêt), `KSnack` (message court, Koach compris), `KNotice` (bandeau dans le flux), `KTimeline` (frise des phases), `KEmpty`. Les widgets d'illustration (`KalisLogo`, `KoachView`, `MuscleBody`, carte 2D, mannequin) sont **utilisés tels quels**.
 
-Mascotte de Koach (2D) : seulement dans `KKoachSheet`, les états vides et la cérémonie de fin ; ailleurs, l'icône flamme dans `KKoachLine`.
+### 5.5 Mouvement
 
-### 4.5 Mouvement
+Ressorts de Material 3 Expressive (amortissement / raideur) : spatial rapide 0,9 / 1 400 (choix, boutons), par défaut 0,9 / 700 (feuilles), lent 0,9 / 300 (pages) ; effets 1,0 / 3 800, 1 600, 800. Animations de Koach inchangées. Réglage système « réduire les animations » respecté.
 
-Ressorts de Material 3 Expressive (`SpringDescription` de Flutter, amortissement / raideur) : spatial rapide 0,9 / 1 400 (choix, boutons), spatial par défaut 0,9 / 700 (feuilles, cartes), spatial lent 0,9 / 300 (pages) ; effets (opacité, couleur) 1,0 / 3 800, 1 600, 800. Transitions de page par glissement horizontal dans la séance, fondu ailleurs. Réglage système « réduire les animations » respecté. Un seul moment orchestré : le record en fin de séance. Retour haptique : validation de série, fin de repos.
+### 5.6 Textes de l'interface
 
-### 4.6 Textes de l'interface
+Mêmes textes sur le fond ; corrections de forme seulement : tutoiement, verbe exact sur les boutons, une action garde son nom de bout en bout, plus de mot en capitales dans une phrase, formats de C9. Les répliques de Koach ne changent pas.
 
-Tutoiement, phrases courtes, verbes d'action sur les boutons (« Valider la série 2 », « Appliquer 115 kg ») ; une action garde son nom de bout en bout ; un écran principal n'a aucun paragraphe de plus de 2 lignes : le reste va dans une feuille « Pourquoi ? » ou « Consignes » ; textes de Koach : une phrase, le chiffre d'abord ; erreurs : ce qui s'est passé et quoi faire, sans excuse.
+## 6. Exigences mesurables
 
-## 5. Exigences mesurables (critères d'acceptation)
-
-### 5.1 Code
+### 6.1 Code
 
 | Critère | Seuil | Vérifié par |
 | --- | --- | --- |
-| `fontSize`, `fontWeight`, `letterSpacing`, `Color(0x…)`, `BorderRadius.circular(n)`, `EdgeInsets` littéraux hors `lib/kit/` et hors liste blanche (peintres de données, mannequin, outils dev) | 0 | `tools/check_ui_tokens.py`, en CI |
+| `fontSize`, `fontWeight`, `letterSpacing`, `Color(0x…)`, `BorderRadius.circular(n)`, `EdgeInsets` littéraux hors `lib/kit/` et hors liste blanche (illustrations, peintres de données, mannequin, outils dev) | 0 | `tools/check_ui_tokens.py`, en CI |
 | `Card(`, `BoxDecoration(` bruts hors `lib/kit/` et liste blanche | 0 | idem |
 | `toUpperCase()` sur un texte affiché | 0 | idem |
-| Tests de comportement (`store`, moteurs, journal, sauvegarde, migrations) modifiés | 0 | revue du diff de `test/` |
-| Assertion de test retirée sans remplacement équivalent | 0 | revue du diff, justification par test dans la livraison |
+| Menus hors gabarit (`PopupMenuButton`, `showModalBottomSheet`, `showDialog` directs hors `lib/kit/`) | 0 | `check_ui_tokens.py --menus` |
+| Fichiers d'illustration modifiés (`brand.dart`, `koach/**` sauf placement, `muscle_body.dart`, `muscle_map_2d.dart`, `assets/icon/`, `assets/muscles*/`, `packages/kalis_koach/`) | 0 ligne de dessin modifiée | revue du diff |
+| Tests de comportement modifiés ; assertion retirée sans remplacement | 0 ; 0 | revue du diff de `test/` |
 | Format de sauvegarde, schémas, clés de préférences | inchangés (sauvegarde d'avant UI0 relue à l'identique) | test de relecture |
 
-### 5.2 Rendu
+### 6.2 Rendu
 
-| Critère | Seuil | Vérifié par |
-| --- | --- | --- |
-| Contraste texte / fond | ≥ 4,5:1 (≥ 3:1 au-delà de 24 dp ; 7:1 en contraste renforcé), 32 combinaisons | test calculé |
-| Titres coupés par « … » | 0 à 360 et 320 dp, texte 100 %, 130 %, 200 % | tour de captures + test de débordement |
-| Débordements (bandes jaunes et noires, `RenderFlex overflowed`) | 0 | tour de captures |
-| Cibles tactiles | ≥ 48 dp | `meetsGuideline(androidTapTargetGuideline)` sur chaque écran du tour |
-| Libellés TalkBack | chaque bouton-icône nommé | `meetsGuideline(labeledTapTargetGuideline)` |
-| Contenu sous la barre de navigation | 0 | tour de captures |
+Contraste ≥ 4,5:1 (≥ 3:1 au-delà de 24 dp ; 7:1 en contraste renforcé) sur les 32 combinaisons, par test ; 0 titre tronqué et 0 débordement à 360 et 320 dp, texte 100 %, 130 %, 200 % ; cibles ≥ 48 dp et boutons-icônes nommés (`androidTapTargetGuideline`, `labeledTapTargetGuideline`) ; 0 contenu sous le dock, la barre de repos ou un message (tour de captures).
 
-### 5.3 Performance
+### 6.3 Parcours
 
-Temps d'image de la séance et d'Aujourd'hui ≤ ceux de dev6.11.1 (relevé `docs/PERFORMANCE.md`, même émulateur) ; taille de l'APK : +600 Ko au plus (polices comprises).
+Aucun parcours ne gagne d'appui (relevé avant / après par le tour de captures) ; menus : tout réglage à 3 appuis au plus de son onglet, toute action ⋮ à 2 appuis au plus.
 
-### 5.4 Parcours (comptés sur l'émulateur, journal de test)
+### 6.4 Performance
 
-| Parcours | dev6.11.1 | Cible |
-| --- | --- | --- |
-| Ouvrir l'app → première série saisissable | à mesurer par UI0 | ≤ 3 appuis (Commencer, ressenti ou Passer, et c'est tout) |
-| Série faite comme prescrite → enregistrée avec son RIR | à mesurer | 2 appuis (Valider, RIR) |
-| Accepter une proposition de Koach | à mesurer | 2 appuis depuis l'écran où elle apparaît |
-| Voir la saison | à mesurer | 1 appui depuis n'importe quel onglet |
-| Changer de palette | à mesurer | ≤ 3 appuis |
+Temps d'image de la séance et de l'accueil ≤ ceux de dev6.11.1 (`docs/PERFORMANCE.md`) ; APK : + 600 Ko au plus (polices comprises).
 
-## 6. Organisation des lots
+## 7. Organisation des lots
 
-### 6.1 Principe
+### 7.1 Principe
 
-Un lot de fondations, quatre lots d'écrans **en parallèle** sur des fichiers disjoints, un lot d'intégration. Tout se fait sur la branche d'intégration `refonte-ui` (créée depuis `main` b7996b3f) ; `main` ne reçoit la refonte qu'à UI5. Chaque lot travaille sur sa branche `ui/<LOT>` et sa branche de contrôle `claude/ci-ui-<lot>` (workflow ajouté par UI0, une concurrence par branche, pour que les contrôles parallèles ne s'annulent pas).
+Un lot de fondations, quatre lots d'écrans **en parallèle** sur des fichiers disjoints, un lot d'intégration. Branche d'intégration `refonte-ui` (depuis `main` b7996b3f) ; chaque lot sur `ui/<LOT>` ; contrôle sur `claude/ci-ui-<lot>` (workflow ajouté par UI0, une concurrence par branche).
 
-### 6.2 Propriété des fichiers
+### 7.2 Propriété des fichiers
 
-Un fichier n'appartient qu'à un lot. Un lot ne modifie aucun fichier d'un autre lot. Les fichiers partagés (`lib/kit/`, `app_theme.dart`, `ui.dart`, `main.dart`, `nav_bar.dart`, `pubspec.yaml`, workflows, outils de contrôle) n'appartiennent qu'à UI0 puis UI5. Un composant qui manque à un lot d'écrans est créé dans son dossier `lib/<zone>/widgets/` et signalé dans sa livraison ; UI5 le promeut dans `lib/kit/` si deux zones en ont besoin. Fichiers de logique (`store.dart`, `*_store.dart`, `models.dart`, `persistence.dart`, `packages/`) : interdits à tous les lots UI, sauf ajout d'accesseur de lecture justifié dans la livraison.
+Un fichier n'appartient qu'à un lot ; les fichiers partagés n'appartiennent qu'à UI0 puis UI5 ; un composant manquant est créé dans `lib/<zone>/widgets/` et signalé, UI5 le promeut ; logique (`store.dart`, `*_store.dart`, `models.dart`, `persistence.dart`, `packages/`) et illustrations (§1) interdites à tous.
 
-| Lot | Fichiers (et leurs tests `test/` et `integration_test/` dédiés) |
+| Lot | Fichiers (et leurs tests dédiés) |
 | --- | --- |
-| UI0 | `lib/kit/**` (nouveau), `app_theme.dart`, `ui.dart`, `main.dart`, `nav_bar.dart`, `brand.dart`, `motion.dart`, `filter_menu.dart`, `search.dart`, `alerts.dart`, `store_widget.dart`, `pubspec.yaml`, `assets/fonts/`, `.github/workflows/`, `tools/check_ui_tokens.py`, `integration_test/tour_ui_test.dart` (squelette) |
-| UI1 Aujourd'hui et Programme | `home_screen.dart`, `program_screens.dart`, `program_explainer.dart`, `program_origin.dart` (présentation), `resume_banner.dart`, `levelup.dart`, `plan/season_view.dart`, `plan/event_day_screen.dart`, `plan/evolution_widgets.dart`, `plan/plan_sheets.dart`, `plan/program_position.dart`, `koach/**` |
-| UI2 Séance | `session_screen.dart`, `session_host.dart`, `session_history.dart` (écran d'une séance passée), `set_validation.dart` (présentation), `estimate_view.dart`, `rewards.dart`, `adapt/**` |
-| UI3 Progrès | `stats_*.dart`, `progression_screen.dart`, `records_screen.dart`, `game_widgets.dart`, `muscle_map_2d.dart`, `muscle_body.dart` |
-| UI4 Profil, parcours, Exercices | `settings_screen.dart`, `athlete_profile*.dart`, `profile_completion.dart`, `guided_tests.dart`, `data_control.dart`, `notification_settings.dart`, `pilotage_screen.dart`, `retired_notice_screen.dart`, `startup.dart`, `program_start.dart`, `plan/plan_screens.dart`, `plan/plan_creation.dart`, `wellbeing_screens.dart`, `arsenal_screen.dart`, `exercise_screens.dart`, `atlas.dart`, `anatomy_screen.dart` |
+| UI0 | `lib/kit/**` (nouveau), `app_theme.dart`, `ui.dart`, `main.dart` (thème, polices, réserve du dock), `nav_bar.dart` (finition du dock, sans changer les onglets), `motion.dart`, `filter_menu.dart`, `search.dart`, `alerts.dart`, `store_widget.dart`, `pubspec.yaml`, `assets/fonts/`, `.github/workflows/`, `tools/check_ui_tokens.py`, `integration_test/tour_ui_test.dart` (squelette) |
+| UI1 Programme | `home_screen.dart`, `program_screens.dart`, `program_explainer.dart`, `program_origin.dart` (présentation), `resume_banner.dart`, `levelup.dart`, `plan/season_view.dart`, `plan/event_day_screen.dart`, `plan/evolution_widgets.dart`, `plan/plan_sheets.dart`, `plan/program_position.dart`, `koach/koach_home_card.dart`, `koach/koach_bubble.dart` (conteneurs seulement) |
+| UI2 Séance | `session_screen.dart`, `session_host.dart`, `session_history.dart`, `set_validation.dart` (présentation), `estimate_view.dart`, `rewards.dart`, `adapt/**` (y compris le Bilan du jour) |
+| UI3 Stats | `stats_*.dart`, `progression_screen.dart`, `records_screen.dart`, `game_widgets.dart` (conteneurs et graphiques ; `muscle_body.dart` et `muscle_map_2d.dart` intouchables) |
+| UI4 Menus | `settings_screen.dart`, `notification_settings.dart`, `data_control.dart`, `pilotage_screen.dart`, `wellbeing_screens.dart`, `retired_notice_screen.dart`, `startup.dart`, `arsenal_screen.dart`, `exercise_screens.dart`, `atlas.dart`, `anatomy_screen.dart` (conteneur), `athlete_profile*.dart`, `profile_completion.dart`, `guided_tests.dart`, `program_start.dart`, `plan/plan_screens.dart`, `plan/plan_creation.dart`, `koach/koach_gallery_screen.dart` (conteneur) |
 | UI5 Intégration | tout, en fin de parcours |
 
-Fichiers non listés (`dev/**`, `plan/plan_inspector.dart`, `animation_test_screen.dart`, `mannequin_*.dart`, `exercise_mannequin.dart`, `engine3d.dart`, `pose_painter.dart` : outils dev, mannequin, moteur 3D, peintres de pose) : passage aux jetons par UI5 seulement là où le contrôle l'exige, sinon liste blanche.
+Non listés (`dev/**`, `plan/plan_inspector.dart`, `animation_test_screen.dart`, mannequin, moteur 3D, peintres de pose, `koach/koach_view.dart`, `koach/flame_icon.dart`) : intouchables ou liste blanche ; UI5 traite ce qui reste.
 
-### 6.3 Contenu des lots
+### 7.3 Contenu des lots
 
-**UI0 — Fondations** (séquentiel, prérequis des quatre suivants)
-- Branche `refonte-ui` ; workflow de contrôle parallèle `claude/ci-ui-*` (copie de `ci-3d.yml` : concurrence par branche, `ci-out/` recommité sur la branche de contrôle du lot, rendus « avant » pris sur `main` b7996b3f).
-- Polices Barlow embarquées (§4.2) ; jetons en trois couches (§4.0) : `KTokens` et `ThemeExtension` ; `lib/kit/palette.dart` (dérivation de §4.1, `material_color_utilities`) ; `buildTheme(dark, palette, contrasteRenforcé)` réécrit sur les jetons ; sélecteur de palette dans Apparence (8 palettes, aperçu de chacune en clair et sombre) et interrupteur « Contraste renforcé » ; relecture des anciens identifiants ; tests de contraste des 32 combinaisons et test qui retrouve le tableau de §4.1 à l'identique.
-- Tous les composants de §4.4, chacun avec un test de widget et une capture de référence (sombre et clair, palettes `bordeaux` et `neon` : la plus sombre et la seule à texte foncé sur bouton) ; page de catalogue des composants en mode dev (Profil › Mode dev › Composants).
-- Nouvelle navigation (§3.1) : `KNavBar` fixe, ordre des onglets, ouverture sur Aujourd'hui, Profil en écran poussé depuis Aujourd'hui, mode dev déplacé ; les écrans existants sont branchés tels quels dans les nouveaux onglets (Programme : écran actuel de Mon programme ; Progrès : Stats ; Exercices : Arsenal), pour que chaque lot parte d'une app qui fonctionne.
-- `tools/check_ui_tokens.py` (§5.1) avec le relevé de départ par fichier, mode « zone » (`--zone UI2` échoue si un fichier de la zone contient un littéral) ; branché en CI, non bloquant pour les zones non encore passées.
-- Tour de captures `integration_test/tour_ui_test.dart` : squelette qui ouvre chaque écran principal (sombre et clair) et chaque lot complète pour sa zone ; mesure des parcours de §5.4 sur dev6.11.1 (colonne « dev6.11.1 » du tableau).
-- Livrable : `refonte-ui` à jour, `LIVRAISON_UI0.md`, catalogue des composants en captures.
+**UI0 — Fondations** (seul, prérequis des quatre suivants) : branche et workflow de contrôle parallèle ; polices ; jetons trois couches, palettes (§5.1) et contraste renforcé, sélecteur de palette et interrupteur dans Apparence, relecture des anciens identifiants ; tous les composants de §5.4 avec test et captures (sombre, clair, `bordeaux`, `neon`), catalogue en mode dev ; dock fini (C8, sans changer les onglets) ; adaptateurs pour que tous les écrans compilent et prennent déjà palettes et polices ; `check_ui_tokens.py` (`--zone`, `--menus`, relevé de départ) ; tour de captures (squelette, tous les écrans principaux) et relevé des parcours sur dev6.11.1 ; mode d'emploi du kit dans la livraison.
 
-**UI1 — Aujourd'hui et Programme** (parallèle) : §3.2, §3.4, Koach sur l'accueil (§3.2 point 4), écrans Saison, Jour J, Évolution, Programme d'origine, Bloc suivant (présentation) ; déplacement de « Mon programme » de Réglages vers l'onglet Programme (l'entrée de Réglages devient un renvoi, retirée par UI5).
+**UI1 — Programme** (parallèle) : accueil (maquette « Accueil ») : en-tête niveau / semaine / logo sans troncature, barre de saison par blocs à la place de la frise de points, lignes de jour, carte du jour (Koach et anatomie inchangés), bandeaux dans le flux ; Mon programme, Ma saison (frise des phases), Jour J, Évolution (segments), programme d'origine, bloc suivant, position dans le programme ; leurs feuilles et menus au gabarit de §4.
 
-**UI2 — Séance** (parallèle) : §3.3 en entier (Avant, Exercice, Repos avec saisie du RIR, Koach propose, Fin), chronos de mode, groupes et mini-séries, historique d'une séance passée, cérémonie de récompense, cartes de douleur et d'avis médical (CI1b à CI1g : même logique, même ordre, même blocage).
+**UI2 — Séance** (parallèle) : Bilan du jour (plus de carte dans une carte, Koach et les 5 poses du ressenti inchangés), pages d'exercices (en-tête, puces neutres, consigne, notes et calibrage en deux lignes ouvrables, tableau des séries, barre d'outils de série ≥ 48 dp), série validée et barre de repos, message de Koach au-dessus, chronos de mode (EMOM, intervalles, tenues, groupes, mini-séries), fin de séance et récompenses, historique d'une séance passée, cartes de douleur et d'avis médical (même logique, même blocage) ; menu ⋮ de la séance en feuille d'actions, liste des exercices en feuille de liste.
 
-**UI3 — Progrès** (parallèle) : §3.5, graphiques et carte musculaire restylés (couleurs fixes de données), records, historique.
+**UI3 — Stats** (parallèle) : onglets, cartes et graphiques au système (données en `second` / `encre` / `accent`), records, historique, carte musculaire dans son conteneur ; menus et feuilles au gabarit.
 
-**UI4 — Profil, parcours, Exercices** (parallèle) : §3.1 (écran Profil et réglages), §3.6, §3.7, démarrage et erreurs de lancement, écrans d'aide (santé, récupération, confidentialité, licences).
+**UI4 — Menus** (parallèle) : Réglages (racine au gabarit « Menu racine », Apparence en tête, 10 rubriques, sous-pages au gabarit « Sous-page de menu », réglages en place), Arsenal (recherche directe, Exercices, Anatomie), bibliothèque et fiche d'exercice, profil et parcours de création (une question par écran, « Continuer » en bas, segments de progression, « Passer »), départ du programme, données (export, import, suppression : confirmations au gabarit), écrans d'aide, démarrage et erreurs de lancement, galerie de Koach (conteneur).
 
-**UI5 — Intégration** (séquentiel, après les quatre)
-- Fusion des quatre branches dans `refonte-ui` (aucun conflit attendu, fichiers disjoints) ; promotion des composants communs ; suppression de `ui.dart`, de l'ancien dock et des renvois provisoires.
-- Contrôle de jetons bloquant sur tout `lib/` (§5.1) ; tour de captures complet : chaque écran × sombre/clair × `bordeaux` et `neon`, plus 320 dp × 200 % de texte, plus les 8 palettes et le contraste renforcé sur Aujourd'hui et Séance ; mesures de §5.2 à §5.4.
-- Relecture indépendante (sous-agent Opus qui ne voit que le cahier, les maquettes et les captures) ; corrections.
-- Publication : `refonte-ui` → `main` en avance rapide, **dev6.12.0**, build signé, run vérifié, installation par-dessus dev6.11.1 sans perte (clé inchangée).
-- `LIVRAISON_UI5.md` avec avant/après par écran, mesures, limites.
+**UI5 — Intégration** (seul, après les quatre) : fusion ; promotion des composants ; suppression des adaptateurs ; contrôles de §6 bloquants sur tout `lib/` ; tour de captures complet (chaque écran × sombre / clair × `bordeaux` / `neon`, 320 dp × 200 %, les 8 palettes et le contraste renforcé sur l'accueil et la séance) ; relecture indépendante (sous-agent Opus : cahier, maquettes, captures) ; installation par-dessus dev6.11.1 sans perte ; publication **dev6.12.0** sur `main`, build signé, run vérifié ; `REFONTE_UI.md` réécrit.
 
-### 6.4 Exigences communes à tous les lots
+### 7.4 Exigences communes
 
-- Maquettes et ce cahier comme cible ; tout écart est écrit dans la livraison avec sa raison.
-- Aucune information perdue : chaque texte, chiffre ou action d'aujourd'hui existe encore, au même endroit ou un appui plus loin (tableau de correspondance « avant → après » dans la livraison).
-- Tests : la suite complète passe ; tests d'écran mis à jour avec les nouveaux textes (chaque changement justifié) ; contrôle de jetons à 0 sur la zone ; tour de captures de la zone vert, relu image par image par le lot (sombre et clair, sessions perso et dev).
-- Sauvegardes toutes les 30 minutes sur `ui-sauvegardes/<LOT>` (arbre sans `.github/`, `SAUVEGARDE.md`) ; sous-agents sur Opus.
-- Version interne `dev6.12.0-<lot>` sur les branches ; seul UI5 publie sur `main`.
+Maquettes et cahier comme cible, écarts écrits ; aucune information perdue (tableau avant → après par écran dans la livraison) ; suite de tests complète verte, tests d'écran mis à jour et justifiés ; contrôle de jetons et de menus à 0 sur la zone ; tour de captures de la zone relu image par image (sombre et clair, sessions perso et dev) ; sauvegardes toutes les 30 minutes sur `ui-sauvegardes/<LOT>` ; sous-agents sur Opus ; version interne `dev6.12.0-<lot>`, seul UI5 publie sur `main`.
 
-## 7. Ordre avec le reste du projet
+## 8. Ordre avec le reste du projet et calendrier
 
-- **KM1** (voie moteurs, `packages/` sur `moteurs`) continue en parallèle : aucun fichier commun.
-- **Lot CI final et intégration de la base v1.1** : repoussés après UI5, et faits sur le nouveau système (la bibliothèque d'exercices de la base v1.1 sera directement construite avec `lib/kit/`). KM3 garde son jalon (APK le 16/11/2026).
-- **CI1g** (dev6.11.1, « à valider ») : base de départ de la refonte.
+KM1 continue en parallèle (voie moteurs, aucun fichier commun). Le lot CI final et l'intégration de la base v1.1 passent après UI5 et utilisent `lib/kit/`. KM3 garde son jalon (APK le 16/11/2026). Base de départ : CI1g (dev6.11.1).
 
-## 8. Calendrier
-
-| Étape | Dates |
+| Étape | Dates (après validation du propriétaire) |
 | --- | --- |
-| UI0 Fondations | 10/10 → 11/10/2026 |
-| UI1 à UI4 en parallèle | 11/10 → 13/10/2026 |
-| UI5 Intégration et publication (dev6.12.0) | 14/10 → 15/10/2026 |
-| Lot CI final, puis base v1.1 | à partir du 16/10/2026 |
+| UI0 | J à J + 1 |
+| UI1 à UI4 en parallèle | J + 1 à J + 3 |
+| UI5 et publication dev6.12.0 | J + 4 à J + 5 |
 
-Budget : quatre sessions Opus en parallèle pendant que KM1 tourne sur Fable consomment vite la limite hebdomadaire du plan Max ; si la limite approche, le pilotage passe UI1 à UI4 en deux vagues de deux (UI2 et UI1 d'abord : ce sont les écrans de tous les jours).
+Si la limite hebdomadaire du plan Max approche (KM1 tourne sur Fable), UI1 à UI4 passent en deux vagues : UI2 et UI1, puis UI4 et UI3.
 
-## 9. Décisions prises par le pilotage (à confirmer ou corriger par le propriétaire)
+## 9. Décisions (pilotage, à confirmer ou corriger par le propriétaire avant lancement)
 
 | N° | Décision |
 | --- | --- |
-| U1 | Quatre onglets : Aujourd'hui, Programme, Progrès, Exercices ; Profil et réglages derrière l'avatar d'Aujourd'hui. |
-| U2 | Police Barlow (trois largeurs), embarquée. |
-| U3 | Charge affichée en grand avec les disques à charger, en gris neutres. |
-| U4 | Saisie du RIR sur l'écran de repos, pré-sélectionnée sur le RIR visé. |
-| U5 | Plus de capitales de mise en forme, plus de titres tronqués. |
-| U6 | Niveau retiré de l'en-tête d'Aujourd'hui, montré dans Progrès. |
-| U7 | Refonte avant le lot CI final et la base v1.1. |
-| U8 | Version publiée : dev6.12.0. |
-| U9 | Les 8 palettes du propriétaire remplacent les 6 couleurs de L5 ; Bordeaux Performance par défaut ; anciens choix relus (§4.1). |
-| U10 | Valeurs du propriétaire gardées telles quelles quand le contraste passe, tonalité HCT ajustée sinon (cas ajustés : Bordeaux en sombre, Obsidian et Solar d'une nuance pour le texte blanc, accents et encres sur fond clair). |
-| U11 | Références One UI, Material 3 Expressive, Fluent 2 (§4.0) ; mode « Contraste renforcé » ajouté. |
+| U1 | Navigation, écrans, parcours et contenus inchangés ; finition seulement. |
+| U2 | Illustrations de Koach, logo et anatomie intouchables (§1). |
+| U3 | Capitales conservées pour les titres (style actuel), appliquées uniformément par le style ; réglable en un jeton si le propriétaire préfère les minuscules (interrupteur « capitales » des maquettes). |
+| U4 | Police Barlow, embarquée. |
+| U5 | Les 8 palettes du propriétaire remplacent les 6 couleurs ; Bordeaux Performance par défaut ; valeurs gardées sauf contraste insuffisant (tonalité HCT ajustée : Bordeaux en sombre, Obsidian et Solar d'une nuance pour le texte blanc, accents et encres en clair). |
+| U6 | Mode « Contraste renforcé » ajouté dans Apparence. |
+| U7 | Frise de 40 points de l'accueil remplacée par une barre de saison par blocs (même information). |
+| U8 | Un seul modèle pour tous les menus (§4) ; menus ⋮ en feuilles d'actions. |
+| U9 | Refonte avant le lot CI final et la base v1.1 ; version publiée dev6.12.0. |

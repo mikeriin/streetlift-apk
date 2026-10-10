@@ -1,9 +1,9 @@
-Lot UI5 — Intégration et publication de la refonte UI et UX (Kalis Track, dev6.12.0). Effort élevé, exactitude avant vitesse.
+Lot UI5 — Intégration et publication de la refonte UI et UX de Kalis Track (dev6.12.0). Effort élevé, exactitude avant vitesse.
 
-Lis en entier : pipeline/ui/PIPELINE_UI.md, pipeline/ui/CAHIER_UI.md, pipeline/ui/DECISIONS_UI.md, ta section de pipeline/ui/LANCEMENTS.md, les livraisons UI0 à UI4 (pipeline/ui/livraisons/) et les maquettes.
+Lis en entier : pipeline/ui/PIPELINE_UI.md, pipeline/ui/CAHIER_UI.md (version 2), pipeline/ui/DECISIONS_UI.md, ta section de pipeline/ui/LANCEMENTS.md, les livraisons UI0 à UI4 (pipeline/ui/livraisons/) et les maquettes.
 
-Travail sur `refonte-ui` (UI1 à UI4 y sont déjà fusionnés par la conversation de pilotage) ; contrôle sur `claude/ci-ui-ui5`.
-Contenu : cahier §6.3 « UI5 » — promotion dans `lib/kit/` des composants signalés par au moins deux lots ; suppression de `ui.dart`, de l'ancien dock, des renvois provisoires ; fichiers non attribués passés aux jetons ou en liste blanche justifiée ; contrôle de jetons **bloquant** sur tout `lib/` ; tour de captures complet et mesures de §5.2 à §5.4 (tableau avant / après) ; cohérence entre zones (mêmes marges, mêmes titres, même voix de Koach) ; relecture indépendante par un sous-agent Opus qui ne voit que le cahier, les maquettes et les captures ; corrections ; installation par-dessus dev6.11.1 vérifiée (sauvegarde d'avant relue à l'identique, préférences et ancien identifiant de couleur relus).
-Publication : `refonte-ui` → `main` en avance rapide, version **dev6.12.0**, build signé réussi, run vérifié (PIPELINE_UI.md §4) ; `REFONTE_UI.md` à la racine réécrit pour 6.12.0 (l'ancien gardé dans `docs/`).
+Travail sur `refonte-ui` (UI1 à UI4 déjà fusionnés par la conversation de pilotage) ; contrôle sur `claude/ci-ui-ui5`.
+Contenu : cahier §7.3 « UI5 » — promotion des composants signalés par au moins deux lots ; suppression des adaptateurs ; fichiers non attribués aux jetons ou en liste blanche justifiée ; contrôles du §6 bloquants sur tout `lib/` (jetons, menus, illustrations intactes) ; tour de captures complet et relevés avant / après ; cohérence entre zones (marges, en-têtes, sections, menus, voix de Koach) ; relecture indépendante (sous-agent Opus : cahier, maquettes, captures) ; corrections ; installation par-dessus dev6.11.1 vérifiée (sauvegarde relue à l'identique, préférences et ancien identifiant de couleur relus).
+Publication : `refonte-ui` → `main` en avance rapide, **dev6.12.0**, build signé réussi, run vérifié (PIPELINE_UI.md §4) ; `REFONTE_UI.md` réécrit (l'ancien dans `docs/`).
 
 Fin de lot : PIPELINE_UI.md §4.

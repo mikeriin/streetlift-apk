@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Réglages, chronomètres, après</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&amp;family=Barlow+Semi+Condensed:wght@500;600&amp;family=Barlow+Condensed:wght@500;600&amp;display=swap">
+<style>
+body{margin:0}
+a{color:inherit}a:hover{color:inherit}
+</style>
+</helmet>
+<div style="{{vars}} width: 390px; height: 844px; position: relative; overflow: hidden; background: var(--fond); color: var(--texte); font-family: 'Barlow', sans-serif; font-size: 15px; line-height: 22px; box-sizing: border-box">
+  <div style="padding: 8px 20px 24px; display: flex; flex-direction: column; gap: 10px">
+
+    <header style="display: grid; grid-template-columns: 44px 1fr; align-items: center; min-height: 64px">
+      <a href="Reglages.dc.html" aria-label="Retour aux réglages" style="width: 44px; height: 44px; display: flex; align-items: center">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--texte)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+      </a>
+      <h1 style="margin: 0; font-family: 'Barlow Semi Condensed', sans-serif; font-weight: 600; font-size: 22px; line-height: 28px; text-transform: {{tt}}; letter-spacing: {{ls}}">Chronomètres</h1>
+    </header>
+    <p style="margin: 0 0 8px; padding: 0 4px; color: var(--texte2)">Repos, décompte et signaux.</p>
+
+    <section style="background: var(--surface); border-radius: 24px; padding: 4px 16px">
+      <sc-for list="{{steppers}}" as="s" hint-placeholder-count="2">
+        <div style="{{s.row}}">
+          <div style="display: flex; flex-direction: column; min-width: 0">
+            <span style="font-weight: 600; font-size: 16px">{{s.title}}</span>
+            <span style="color: var(--texte2); font-size: 13px; line-height: 18px">{{s.sub}}</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 2px">
+            <button aria-label="{{s.less}}" onClick="{{s.dec}}" style="all: unset; cursor: pointer; width: 44px; height: 44px; border-radius: 14px 4px 4px 14px; background: var(--haute); display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--texte)" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14"/></svg></button>
+            <span style="min-width: 76px; height: 44px; background: var(--haute); text-align: center; font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 20px; line-height: 44px; font-variant-numeric: tabular-nums">{{s.value}}</span>
+            <button aria-label="{{s.more}}" onClick="{{s.inc}}" style="all: unset; cursor: pointer; width: 44px; height: 44px; border-radius: 4px 14px 14px 4px; background: var(--haute); display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--texte)" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M5 12h14M12 5v14"/></svg></button>
+          </div>
+        </div>
+      </sc-for>
+    </section>
+
+    <h2 style="margin: 14px 0 0; padding: 0 4px; color: var(--texte2); font-size: 14px; line-height: 20px; font-weight: 600">Signaux</h2>
+    <section style="background: var(--surface); border-radius: 24px; padding: 4px 16px">
+      <sc-for list="{{toggles}}" as="t" hint-placeholder-count="2">
+        <label style="{{t.row}}">
+          <span style="display: flex; flex-direction: column; min-width: 0">
+            <span style="font-weight: 600; font-size: 16px">{{t.title}}</span>
+            <span style="color: var(--texte2); font-size: 13px; line-height: 18px">{{t.sub}}</span>
+          </span>
+          <button role="switch" aria-checked="{{t.on}}" aria-label="{{t.title}}" onClick="{{t.flip}}" style="{{t.track}}"><span style="{{t.thumb}}"></span></button>
+        </label>
+      </sc-for>
+    </section>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"palette":{"editor":"enum","options":["bordeaux","obsidian","arctic","neon","titanium","violet","forest","solar"],"default":"bordeaux"},"capitales":{"editor":"boolean","default":true},"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { rest: 150, prep: 5, vib: true, son: false }; }
+  renderVals() {
+    var T = {
+      bordeaux: {fond: '#181819', surface: '#222223', haute: '#2D2C2E', filet: '#383738', texte: '#F3F0F1', texte2: '#ABABAF', texte3: '#77777A', pleine: '#873B38', surPleine: '#FFFFFF', encre: '#CA6F6A', second: '#B24B49', accent: '#D9A66C'},
+      obsidian: {fond: '#121316', surface: '#1C1D20', haute: '#27272B', filet: '#313235', texte: '#F3F0F1', texte2: '#ABABAF', texte3: '#77777A', pleine: '#D73E44', surPleine: '#FFFFFF', encre: '#EA4C50', second: '#FF8566', accent: '#FFC857'},
+      arctic: {fond: '#152238', surface: '#242D3D', haute: '#2F3748', filet: '#3A4354', texte: '#F3F0F1', texte2: '#ABABAF', texte3: '#77777A', pleine: '#2563EB', surPleine: '#FFFFFF', encre: '#668EFF', second: '#4F9CF9', accent: '#14B8A6'},
+      neon: {fond: '#101510', surface: '#1A1F1A', haute: '#242A24', filet: '#2F342E', texte: '#F2F0ED', texte2: '#AAACA7', texte3: '#757873', pleine: '#B4F044', surPleine: '#111111', encre: '#B4F044', second: '#67D8C0', accent: '#8C72FF'},
+      titanium: {fond: '#171E24', surface: '#21282F', haute: '#2C3339', filet: '#373E45', texte: '#F2F0F1', texte2: '#AAABAE', texte3: '#76777A', pleine: '#4C6474', surPleine: '#FFFFFF', encre: '#7992A3', second: '#8A9DA8', accent: '#D5A24C'},
+      violet: {fond: '#181427', surface: '#221E31', haute: '#2D293C', filet: '#383347', texte: '#F4EFF1', texte2: '#AEAAAF', texte3: '#79767A', pleine: '#7546DB', surPleine: '#FFFFFF', encre: '#986CFF', second: '#AC8CFA', accent: '#29BFB0'},
+      forest: {fond: '#17251D', surface: '#213027', haute: '#2C3B32', filet: '#37463D', texte: '#F2F0EE', texte2: '#A9ACA8', texte3: '#757874', pleine: '#236B50', surPleine: '#FFFFFF', encre: '#5CA283', second: '#7BAC81', accent: '#D7B374'},
+      solar: {fond: '#211B1A', surface: '#2C2524', haute: '#37302F', filet: '#423B39', texte: '#F7EFED', texte2: '#B4A9A7', texte3: '#7F7573', pleine: '#CA4F1C', surPleine: '#FFFFFF', encre: '#E86531', second: '#FF9760', accent: '#E8BC49'}
+    };
+    var a = T[this.props.palette] || T.bordeaux;
+    var caps = this.props.capitales !== false;
+    var vars = '--fond: ' + a.fond + '; --surface: ' + a.surface + '; --haute: ' + a.haute + '; --filet: ' + a.filet + '; --texte: ' + a.texte + '; --texte2: ' + a.texte2 + '; --texte3: ' + a.texte3 + ';';
+    var self = this, s = this.state;
+    function mmss(x) { var m = Math.floor(x / 60), r = x % 60; return m + ':' + (r < 10 ? '0' : '') + r; }
+    var row = 'display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center; min-height: 76px; ';
+    var steppers = [
+      { title: 'Repos par défaut', sub: 'Quand l’exercice n’en précise pas', value: mmss(s.rest), less: 'Moins 15 secondes', more: 'Plus 15 secondes',
+        dec: function () { self.setState({ rest: Math.max(15, s.rest - 15) }); }, inc: function () { self.setState({ rest: s.rest + 15 }); }, row: row + 'border-bottom: 1px solid var(--filet);' },
+      { title: 'Décompte « Prêt »', sub: 'Avant intervalles, EMOM, AMRAP et tenues', value: s.prep + ' s', less: 'Moins 1 seconde', more: 'Plus 1 seconde',
+        dec: function () { self.setState({ prep: Math.max(0, s.prep - 1) }); }, inc: function () { self.setState({ prep: s.prep + 1 }); }, row: row }
+    ];
+    function sw(key, title, sub, last) {
+      var on = s[key];
+      var o = {}; o[key] = !on;
+      return { title: title, sub: sub, on: on ? 'true' : 'false', flip: function () { self.setState(o); },
+        row: 'display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center; min-height: 72px; cursor: pointer; ' + (last ? '' : 'border-bottom: 1px solid var(--filet);'),
+        track: 'all: unset; cursor: pointer; box-sizing: border-box; width: 52px; height: 32px; border-radius: 16px; padding: 4px; display: flex; ' + (on ? 'justify-content: flex-end; background: ' + a.pleine + ';' : 'justify-content: flex-start; background: var(--haute); box-shadow: inset 0 0 0 2px var(--texte3);'),
+        thumb: 'display: block; width: ' + (on ? 24 : 16) + 'px; height: ' + (on ? 24 : 16) + 'px; margin: ' + (on ? 0 : 4) + 'px; border-radius: 50%; background: ' + (on ? a.surPleine : 'var(--texte3)') + ';' };
+    }
+    var toggles = [sw('son', 'Son en fin de chrono', 'Repos, intervalles et tenues', false), sw('vib', 'Vibration en fin de chrono', 'Repos, intervalles et tenues', true)];
+    return { a: a, vars: vars, tt: caps ? 'uppercase' : 'none', ls: caps ? '.3px' : '0', steppers: steppers, toggles: toggles };
+  }
+}
+</script>
+</body>
+</html>

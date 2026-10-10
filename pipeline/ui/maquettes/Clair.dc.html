@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8">
-<title>Aujourd'hui, thème clair</title>
+<title>Accueil clair, après</title>
 <script src="./support.js"></script>
 </head>
 <body>
@@ -11,85 +11,95 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&amp;family=Barlow+Semi+Condensed:wght@500;600&amp;family=Barlow+Condensed:wght@500;600&amp;display=swap">
 <style>
 body{margin:0}
-a{color:var(--texte)}a:hover{color:#000000}
+a{color:inherit}a:hover{color:inherit}
+.kx{display:block;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-position:center;mask-position:center;-webkit-mask-size:contain;mask-size:contain}
+.logo{-webkit-mask-image:url(/_blob/a48b6b879f0471ddbd7e89bfa43f16bf);mask-image:url(/_blob/a48b6b879f0471ddbd7e89bfa43f16bf)}
+.k-you{-webkit-mask-image:url(/_blob/48fb28cd3d21c9b577a08cc26915a822);mask-image:url(/_blob/48fb28cd3d21c9b577a08cc26915a822)}
 </style>
 </helmet>
 <div style="{{vars}} width: 390px; height: 844px; position: relative; overflow: hidden; background: var(--fond); color: var(--texte); font-family: 'Barlow', sans-serif; font-size: 15px; line-height: 22px; box-sizing: border-box">
-  <div style="padding: 28px 20px 96px; display: flex; flex-direction: column; gap: 24px">
+  <div style="padding: 24px 20px 120px; display: flex; flex-direction: column; gap: 16px">
 
-    <div style="display: flex; justify-content: space-between; align-items: flex-start">
-      <div style="display: flex; flex-direction: column; gap: 2px">
-        <div style="color: var(--texte2); font-size: 14px">Samedi 10 octobre</div>
-        <button style="all: unset; cursor: pointer; display: flex; align-items: center; gap: 6px; font-family: 'Barlow Semi Condensed', sans-serif; font-weight: 600; font-size: 30px; line-height: 36px">Semaine 13
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--texte2)" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
-        </button>
-        <div style="color: var(--texte2)">Bloc force, semaine 2 sur 8</div>
+    <header style="display: grid; grid-template-columns: 64px 1fr 40px; align-items: start; gap: 12px">
+      <div style="display: flex; flex-direction: column; gap: 6px; padding-top: 2px">
+        <div style="display: flex; align-items: baseline; gap: 6px"><span style="color: var(--texte2); font-size: 12px; line-height: 16px">Niv.</span><span style="font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 30px; line-height: 30px">1</span></div>
+        <div style="height: 3px; border-radius: 2px; background: var(--filet)" role="img" aria-label="Niveau 1, 30 % vers le niveau 2"><div style="width: 30%; height: 3px; border-radius: 2px; background: {{a.encre}}"></div></div>
       </div>
-      <button aria-label="Profil et réglages" style="all: unset; cursor: pointer; width: 44px; height: 44px; border-radius: 22px; background: var(--surface); display: flex; align-items: center; justify-content: center">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--texte)" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></svg>
-      </button>
+      <div style="display: flex; flex-direction: column; gap: 2px; min-width: 0">
+        <button style="all: unset; cursor: pointer; display: flex; align-items: center; gap: 4px; font-family: 'Barlow Semi Condensed', sans-serif; font-weight: 600; font-size: 22px; line-height: 28px; text-transform: {{tt}}; letter-spacing: {{ls}}">Semaine 13
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="{{a.encre}}" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div style="color: var(--texte2); font-size: 13px; line-height: 18px">07/10 – 13/10/2026</div>
+        <div style="color: var(--texte2); font-size: 13px; line-height: 18px">Bloc force, semaine 2 sur 8</div>
+      </div>
+      <span class="kx logo" role="img" aria-label="Kalis Track" style="width: 40px; height: 48px; background: {{a.pleine}}"></span>
+    </header>
+
+    <div style="position: relative; padding-top: 22px" role="img" aria-label="Semaine 13 sur 40">
+      <div style="position: absolute; top: 0; left: 31%; transform: translateX(-50%); padding: 0 8px; height: 18px; border-radius: 9px; background: {{a.pleine}}; color: {{a.on}}; font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 13px; line-height: 18px">S13</div>
+      <div style="display: flex; gap: 3px; height: 6px">
+        <div style="flex: 3 1 0; border-radius: 3px; background: var(--texte3)"></div>
+        <div style="flex: 8 1 0; border-radius: 3px; background: var(--texte3)"></div>
+        <div style="flex: 8 1 0; border-radius: 3px; background: var(--filet); overflow: hidden"><div style="width: 19%; height: 6px; background: {{a.encre}}"></div></div>
+        <div style="flex: 6 1 0; border-radius: 3px; background: var(--filet)"></div>
+        <div style="flex: 6 1 0; border-radius: 3px; background: var(--filet)"></div>
+        <div style="flex: 9 1 0; border-radius: 3px; background: var(--filet)"></div>
+      </div>
     </div>
 
-    <div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px">
-      <sc-for list="{{days}}" as="d" hint-placeholder-count="7">
-        <div style="{{d.cell}}">
-          <div style="font-size: 12px; line-height: 16px; opacity: .8">{{d.dow}}</div>
-          <div style="font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 22px; line-height: 26px; font-variant-numeric: tabular-nums">{{d.n}}</div>
-          <div style="height: 14px; display: flex; align-items: center; justify-content: center">
-            <sc-if value="{{d.done}}" hint-placeholder-val="{{false}}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#2E7D32" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-label="Faite" role="img"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></sc-if>
-            <sc-if value="{{d.planned}}" hint-placeholder-val="{{false}}"><div style="{{d.ring}}"></div></sc-if>
-            <sc-if value="{{d.rest}}" hint-placeholder-val="{{false}}"><div style="width: 8px; height: 2px; background: var(--texte3)"></div></sc-if>
+    <div style="display: flex; flex-direction: column; gap: 8px">
+      <sc-for list="{{before}}" as="d" hint-placeholder-count="2">
+        <div style="display: grid; grid-template-columns: 32px 1fr 28px; align-items: center; min-height: 52px; padding: 0 14px; border-radius: 16px; background: var(--surface)">
+          <span style="color: var(--texte2); font-family: 'Barlow Condensed', sans-serif; font-weight: 500; font-size: 15px">{{d.j}}</span>
+          <span style="font-family: 'Barlow Semi Condensed', sans-serif; font-weight: 600; font-size: 15px; line-height: 20px; text-transform: {{tt}}; letter-spacing: {{ls}}; color: var(--texte2)">{{d.t}}</span>
+          <svg width="22" height="22" viewBox="0 0 24 24" role="img" aria-label="Faite"><circle cx="12" cy="12" r="10" fill="#2E7D32"/><path d="M7.5 12.5l3 3 6-6.5" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </sc-for>
+
+      <a href="BilanJour.dc.html" style="display: grid; grid-template-columns: 1fr 96px; gap: 8px; padding: 18px; border-radius: 24px; background: {{a.pleine}}; color: {{a.on}}; text-decoration: none">
+        <div style="display: flex; flex-direction: column; gap: 4px; min-width: 0">
+          <div style="display: flex; align-items: center; gap: 8px; font-size: 12px; line-height: 16px; font-weight: 600; letter-spacing: .6px; text-transform: {{tt}}"><span style="opacity: .85">J3, aujourd'hui</span><svg width="18" height="18" viewBox="0 0 24 24" role="img" aria-label="À faire"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2" stroke-opacity=".8"/></svg></div>
+          <div style="font-family: 'Barlow Semi Condensed', sans-serif; font-weight: 600; font-size: 24px; line-height: 28px; text-transform: {{tt}}; letter-spacing: {{ls}}">Squat + gainage</div>
+          <div style="font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 36px; line-height: 40px; margin-top: 6px">34–49 min</div>
+          <div style="font-size: 13px; line-height: 18px; opacity: .85">Estimé, repos inclus</div>
+          <div style="font-size: 13px; line-height: 18px; opacity: .85; margin-top: 6px">6 exercices, 19 séries, 136 rép.</div>
+        </div>
+        <div style="display: flex; flex-direction: column; align-items: flex-end; justify-content: space-between; gap: 6px">
+          <span class="kx k-you" aria-hidden="true" style="width: 40px; height: 56px; background: {{kInk}}"></span>
+          <div style="display: flex; gap: 4px" role="img" aria-label="Muscles travaillés : quadriceps, fessiers, ischios, gainage">
+            <img src="{{anatFront}}" alt="" style="width: 44px; height: 120px; display: block">
+            <img src="{{anatBack}}" alt="" style="width: 44px; height: 120px; display: block">
           </div>
+        </div>
+      </a>
+
+      <sc-for list="{{after}}" as="d" hint-placeholder-count="4">
+        <div style="display: grid; grid-template-columns: 32px 1fr 28px; align-items: center; min-height: 52px; padding: 0 14px; border-radius: 16px; background: var(--surface)">
+          <span style="color: var(--texte2); font-family: 'Barlow Condensed', sans-serif; font-weight: 500; font-size: 15px">{{d.j}}</span>
+          <span style="font-family: 'Barlow Semi Condensed', sans-serif; font-weight: 600; font-size: 15px; line-height: 20px; text-transform: {{tt}}; letter-spacing: {{ls}}">{{d.t}}</span>
+          <svg width="22" height="22" viewBox="0 0 24 24" aria-label="À faire" role="img"><circle cx="12" cy="12" r="9" fill="none" stroke="var(--texte3)" stroke-width="2"/></svg>
         </div>
       </sc-for>
     </div>
-
-    <section style="background: var(--surface); border-radius: 28px; padding: 20px; display: flex; flex-direction: column; gap: 20px">
-      <div style="display: flex; flex-direction: column; gap: 4px">
-        <div style="display: flex; justify-content: space-between; color: var(--texte2); font-size: 14px"><span>Aujourd'hui</span><span>Séance 3 sur 6</span></div>
-        <h1 style="margin: 0; font-family: 'Barlow Semi Condensed', sans-serif; font-weight: 600; font-size: 30px; line-height: 36px">Squat et gainage</h1>
-      </div>
-      <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px">
-        <div><div style="font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 36px; line-height: 40px">6</div><div style="color: var(--texte2); font-size: 13px">exercices</div></div>
-        <div><div style="font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 36px; line-height: 40px">19</div><div style="color: var(--texte2); font-size: 13px">séries</div></div>
-        <div><div style="font-family: 'Barlow Condensed', sans-serif; font-weight: 600; font-size: 36px; line-height: 40px">45<span style="font-size: 20px; margin-left: 2px">min</span></div><div style="color: var(--texte2); font-size: 13px">estimées</div></div>
-      </div>
-      <div style="display: flex; flex-direction: column">
-        <div style="display: flex; justify-content: space-between; padding: 10px 0; border-top: 1px solid var(--filet)"><span>Back squat</span><span style="color: var(--texte2); font-variant-numeric: tabular-nums">5 × 3 à 117,5 kg</span></div>
-        <div style="display: flex; justify-content: space-between; padding: 10px 0; border-top: 1px solid var(--filet)"><span>Squat pause</span><span style="color: var(--texte2); font-variant-numeric: tabular-nums">3 × 4 à 95 kg</span></div>
-        <div style="display: flex; justify-content: space-between; padding: 10px 0; border-top: 1px solid var(--filet)"><span>Planche lestée</span><span style="color: var(--texte2); font-variant-numeric: tabular-nums">3 × 45 s</span></div>
-        <div style="padding: 10px 0 0; border-top: 1px solid var(--filet); color: var(--texte2)">et 3 autres exercices</div>
-      </div>
-      <a href="Seance.dc.html" style="display: flex; align-items: center; justify-content: center; height: 56px; border-radius: 16px; background: {{a.vive}}; color: {{a.surPleine}}; font-weight: 600; font-size: 17px; text-decoration: none">Commencer la séance</a>
-    </section>
-
-    <a href="Koach.dc.html" style="display: flex; align-items: center; gap: 14px; padding: 14px 16px; background: var(--surface); border-radius: 16px; text-decoration: none; color: var(--texte)">
-      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="{{a.accent}}" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M12 3c1 3.5 5 5.5 5 10a5 5 0 0 1-10 0c0-2.2 1-3.6 2.2-4.6.2 1.8 1 2.8 2 3.2C11 9 10.8 6 12 3z"/></svg>
-      <span style="flex: 1">Koach a relevé ton squat de 2,5 kg après la séance de jeudi.</span>
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--texte2)" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
-    </a>
-
-    <section style="display: flex; flex-direction: column; gap: 4px">
-      <h2 style="margin: 0 0 4px; font-family: 'Barlow Semi Condensed', sans-serif; font-weight: 600; font-size: 22px; line-height: 28px">Ensuite</h2>
-      <div style="display: grid; grid-template-columns: 64px 1fr auto; align-items: center; padding: 12px 0; border-top: 1px solid var(--filet)"><span style="color: var(--texte2)">Dim. 11</span><span>Tirage, volume et endurance</span><span style="color: var(--texte2)">50 min</span></div>
-      <div style="display: grid; grid-template-columns: 64px 1fr auto; align-items: center; padding: 12px 0; border-top: 1px solid var(--filet)"><span style="color: var(--texte2)">Lun. 12</span><span>Poussée, volume et endurance</span><span style="color: var(--texte2)">55 min</span></div>
-    </section>
   </div>
 
-  <nav aria-label="Navigation principale" style="position: absolute; left: 0; right: 0; bottom: 0; height: 72px; background: var(--surface); border-top: 1px solid var(--filet); display: grid; grid-template-columns: repeat(4, minmax(0, 1fr))">
-    <a href="Clair.dc.html" aria-current="page" style="position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; text-decoration: none; color: var(--texte); font-size: 12px; font-weight: 600">
-      <div style="position: absolute; top: 0; width: 28px; height: 3px; border-radius: 0 0 3px 3px; background: {{a.ink}}"></div>
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="{{a.ink}}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg>Aujourd'hui</a>
-    <a href="Programme.dc.html" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; text-decoration: none; color: var(--texte2); font-size: 12px">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--texte2)" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Programme</a>
-    <a href="Progres.dc.html" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; text-decoration: none; color: var(--texte2); font-size: 12px">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--texte2)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19l5-6 4 3 7-9"/><path d="M15 7h5v5"/></svg>Progrès</a>
-    <a href="#" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; text-decoration: none; color: var(--texte2); font-size: 12px">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--texte2)" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M3 9v6M21 9v6M6 6v12M18 6v12M6 12h12"/></svg>Exercices</a>
+  <nav aria-label="Navigation principale" style="position: absolute; left: 16px; right: 16px; bottom: 20px; height: 64px; border-radius: 32px; background: var(--surface); box-shadow: inset 0 0 0 1px var(--filet); display: flex; align-items: center; justify-content: space-between; padding: 0 8px">
+    <a href="#" aria-label="Arsenal" style="width: 56px; height: 48px; display: flex; align-items: center; justify-content: center">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="var(--texte2)" aria-hidden="true"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="8" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/><rect x="13" y="13" width="8" height="8" rx="2"/></svg>
+    </a>
+    <a href="#" aria-label="Stats" style="width: 56px; height: 48px; display: flex; align-items: center; justify-content: center">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--texte2)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l5-5 4 4 8-8"/><circle cx="20" cy="8" r="1.5"/></svg>
+    </a>
+    <a href="Programme.dc.html" aria-current="page" style="height: 48px; padding: 0 18px; border-radius: 24px; background: {{a.pleine}}; color: {{a.on}}; display: flex; align-items: center; gap: 8px; text-decoration: none; font-family: 'Barlow Semi Condensed', sans-serif; font-weight: 600; font-size: 14px; text-transform: {{tt}}; letter-spacing: {{ls}}">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 9v6M20 9v6M7 6v12M17 6v12M7 12h10"/></svg>Programme
+    </a>
+    <a href="#" aria-label="Réglages" style="width: 56px; height: 48px; display: flex; align-items: center; justify-content: center">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--texte2)" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1L7 17M17 7l2.1-2.1"/></svg>
+    </a>
   </nav>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props='{"accent":{"editor":"enum","options":["bordeaux","obsidian","arctic","neon","titanium","violet","forest","solar"],"default":"violet"},"$preview":{"width":390,"height":844}}'>
+<script type="text/x-dc" data-dc-script data-props='{"palette":{"editor":"enum","options":["bordeaux","obsidian","arctic","neon","titanium","violet","forest","solar"],"default":"violet"},"capitales":{"editor":"boolean","default":true},"$preview":{"width":390,"height":844}}'>
 class Component extends DCLogic {
   renderVals() {
     var T = {
@@ -102,24 +112,30 @@ class Component extends DCLogic {
       forest: {fond: '#F4F5EE', surface: '#FFFFFF', haute: '#F4F5EE', filet: '#D7D9D2', texte: '#1A1C19', texte2: '#5C6058', texte3: '#8E928A', pleine: '#236B50', surPleine: '#FFFFFF', encre: '#236B50', second: '#6FA076', accent: '#886B32'},
       solar: {fond: '#FFF6ED', surface: '#FFFFFF', haute: '#FFF6ED', filet: '#E2DAD1', texte: '#1F1B16', texte2: '#655D53', texte3: '#988F84', pleine: '#CA4F1C', surPleine: '#FFFFFF', encre: '#C34A17', second: '#DC7B46', accent: '#8F6D00'}
     };
-    var a = T[this.props.accent] || T.violet;
-    a.vive = a.pleine; a.ink = a.encre;
+    var a = T[this.props.palette] || T.violet;
+    a.on = a.surPleine;
+    var caps = this.props.capitales !== false;
     var vars = '--fond: ' + a.fond + '; --surface: ' + a.surface + '; --haute: ' + a.haute + '; --filet: ' + a.filet + '; --texte: ' + a.texte + '; --texte2: ' + a.texte2 + '; --texte3: ' + a.texte3 + ';';
-    var base = 'display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 8px 0 6px; border-radius: 14px; ';
-    var raw = [
-      ['mer.', '7', 'done'], ['jeu.', '8', 'done'], ['ven.', '9', 'rest'], ['sam.', '10', 'today'],
-      ['dim.', '11', 'planned'], ['lun.', '12', 'planned'], ['mar.', '13', 'planned']
-    ];
-    var days = raw.map(function (r) {
-      var today = r[2] === 'today';
-      return {
-        dow: r[0], n: r[1],
-        done: r[2] === 'done', rest: r[2] === 'rest', planned: r[2] === 'planned' || today,
-        ring: 'width: 6px; height: 6px; border-radius: 3px; border: 1.5px solid ' + (today ? a.surPleine : 'var(--texte2)') + ';',
-        cell: base + (today ? 'background: ' + a.vive + '; color: ' + a.surPleine + ';' : 'background: var(--surface); color: var(--texte);')
-      };
-    });
-    return { a: a, days: days, vars: vars };
+    var ANAT = {
+      bordeaux: ['/_blob/df0193c127aef4346188a2afe5906851', '/_blob/83d216670632efba64271b4b7f0e3c6d'],
+      obsidian: ['/_blob/654adbc19fc1900fbb62f34f4dfb3e83', '/_blob/532ca7f02409386bdcf3339cd64796e8'],
+      arctic: ['/_blob/a6d26baf65a7103e815b7f59e7bfd1ca', '/_blob/e76678686ddc8320bf9633c81f3bac0e'],
+      neon: ['/_blob/4e1c6407538d6b1667646a1054ccb243', '/_blob/5254153de02e561b3f2b02e0faf0652e'],
+      titanium: ['/_blob/30fca93a977435e05ae927daabe096fb', '/_blob/9d2889d40d0aa8d8f46225ba24d6dbfa'],
+      violet: ['/_blob/ecbe7654fbbc4e7de49c501334b3ec92', '/_blob/5b71765e181c8d51221962bb2c9bc418'],
+      forest: ['/_blob/6fdb8fcf24a3f3b417f8ee357ba0370b', '/_blob/11d8a87e4b00d742308ce07ac2c01201'],
+      solar: ['/_blob/e00fe718289018b41bd1d9f413badd49', '/_blob/9d0035abc0431c1ffc51293a6e5aec80']
+    };
+    var an = ANAT[this.props.palette] || ANAT.violet;
+    var hex = a.pleine.replace('#', '');
+    var lin = [0, 2, 4].map(function (i) { var c = parseInt(hex.substr(i, 2), 16) / 255; return c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4); });
+    var lum = 0.2126 * lin[0] + 0.7152 * lin[1] + 0.0722 * lin[2];
+    return {
+      anatFront: an[0], anatBack: an[1], kInk: lum < 0.4 ? '#F4F4F4' : '#141414',
+      a: a, vars: vars, tt: caps ? 'uppercase' : 'none', ls: caps ? '.3px' : '0',
+      before: [{ j: 'J1', t: 'Muscle-up + tirage lourd' }, { j: 'J2', t: 'Dip lourd + poussée' }],
+      after: [{ j: 'J4', t: 'Tirage volume / endurance' }, { j: 'J5', t: 'Poussée volume / endurance' }, { j: 'J6', t: 'Puissance MU + squat endurance' }, { j: 'J7', t: 'Repos complet' }]
+    };
   }
 }
 </script>
