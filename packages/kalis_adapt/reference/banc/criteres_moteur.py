@@ -387,7 +387,8 @@ def mesurer_mauvais_jour(jobs=None, coeurs=2, baisse=MAUVAIS_JOUR, apparie=False
         'ecart_abs': ecart_abs,
         'ecart_signe_moyen': signe,
         'critere': SEUIL_MAUVAIS_JOUR,
-        'respecte': bool(moyennes) and all(m < SEUIL_MAUVAIS_JOUR for m in moyennes),
+        'respecte': (bool(moyennes) and all(m < SEUIL_MAUVAIS_JOUR for m in moyennes) and not plantages
+                     and not any(x.get('erreur') for x in lignes)),
         'mesures': lignes,
         'plantages': plantages,
         'note': ('écart relatif e1RM (mauvais jour / sans) − 1 par mouvement principal chargé entraîné le '

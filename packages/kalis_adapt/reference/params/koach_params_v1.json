@@ -1,8 +1,8 @@
 {
   "schema": 1,
-  "version": "1.0.0-ref.1",
-  "date": "2026-10-09",
-  "note": "Paramètres initiaux de Koach 1.0 (CONTRAT_1_0.md § 7). Chaque valeur est sourcée dans SOURCES.md (référence, mesure du banc ou choix raisonné). Fichier importable depuis le mode dev ; réestimé par utilisateur.",
+  "version": "1.0.1-ref.1",
+  "date": "2026-10-10",
+  "note": "Paramètres initiaux de Koach 1.0 (CONTRAT_1_0.md § 7). Chaque valeur est sourcée dans SOURCES.md (référence, mesure du banc ou choix raisonné). Fichier importable depuis le mode dev ; réestimé par utilisateur. 1.0.1 (KM1 correction 1, DECISIONS_CP.md C13.10) : famille de courbe de Box-Cox, vrai test, modèle de réussite du jour J, branche mauvais jour.",
   "qualites": [
     "pousser",
     "tirer",
@@ -549,7 +549,9 @@
     "silence_semaines": 2,
     "journal_dossier": 60,
     "douleur_recente_j": 7,
-    "residu_reps_reference": 8.0
+    "residu_reps_reference": 8.0,
+    "mauvais_jours_suite": 2,
+    "mauvais_jour_poids": 0.5
   },
   "controle_dual": {
     "semaines_min": 8,

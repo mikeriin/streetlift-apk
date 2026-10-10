@@ -574,6 +574,7 @@ class Planification(Extension):
         """Replanifie de la semaine [semaine] à l'échéance. Renvoie la ligne
         d'historique écrite."""
         pl = self.p
+        self._prevu_jour = None
         blocs, qualites = self._dimensions(semaine)
         ligne = {'semaine': semaine, 'jour': koach.modele.jour, 'plans': 0}
         if not blocs or not self.suivis:

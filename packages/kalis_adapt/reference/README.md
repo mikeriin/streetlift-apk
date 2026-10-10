@@ -1,6 +1,6 @@
-# Koach 1.0 — référence Python (lot KM1)
+# Koach 1.0.1 — référence Python (lot KM1, correction 1)
 
-Référence exécutable de la méthode Koach (`pipeline/cp/CAHIER_KM.md`). Elle sert de modèle au portage Dart du lot KM2
+Référence exécutable de la méthode Koach (`pipeline/cp/CAHIER_KM.md`), version 1.0.1 : contrat 1.0 avec la passe « KM1 correction 1 » (DECISIONS_CP.md C13.10 ; paramètres `1.0.1-ref.1`). Ce qui change par rapport à 1.0 est dans la note datée du 10/10/2026 en tête de `CONTRAT_1_0.md`. Elle sert de modèle au portage Dart du lot KM2
 (`kalis_adapt` 1.0.0) : mêmes entrées, mêmes sorties à 1e-9 sur les fixtures. Elle n'est pas embarquée dans l'application.
 
 Python 3 et numpy seulement. Aucune donnée personnelle : le rejeu du journal réel ne publie que des agrégats.
@@ -9,9 +9,9 @@ Python 3 et numpy seulement. Aucune donnée personnelle : le rejeu du journal r�
 
 | Dossier ou fichier | Rôle |
 | --- | --- |
-| `CONTRAT_1_0.md` | Contrat gelé : API `observe` / `posterior` / `plan` / `explain`, schéma du journal, modèles, règles de sécurité, paramètres, portage, écarts connus (annexe A). |
+| `CONTRAT_1_0.md` | Contrat gelé 1.0, modifié pour 1.0.1 par une note datée (10/10/2026) : API `observe` / `posterior` / `plan` / `explain`, schéma du journal, modèles, règles de sécurité, paramètres, portage, écarts connus (annexe A). |
 | `SOURCES.md` | Origine de chaque paramètre de `params/koach_params_v1.json` (une ligne par clé). |
-| `params/koach_params_v1.json` | Fichier de paramètres versionné. |
+| `params/koach_params_v1.json` | Fichier de paramètres versionné (`1.0.1-ref.1`, 317 clés). |
 | `qualites/` | Vecteurs de qualités des 1 039 exercices (`regles.py` → `vecteurs_qualites_v1.json`). |
 | `koach/` | Le moteur : `modele.py` (estimation), `seance.py` et `securite.py` (séance, garde-fous), `planification.py`, `rupture.py`, `adherence.py`, `dual.py`, `moteur.py` (façade), `numerique.py`. |
 | `banc/` | Port Python des modèles de vérité et des critères de sécurité de `kalis_bench`, meneur de saison, banc adversarial, campagne de mesure des critères. |
@@ -38,10 +38,11 @@ Le témoin (`donnees/temoin/`, `donnees/adversaires_temoin.json.gz`) vient de `p
 
 ## Résultats publiés
 
-- `donnees/criteres_km1.json` : critères chiffrés du cahier sur la matrice du banc (Koach complet contre 0.3.1).
-- `donnees/comparaison_adversaires.json` : pire cas adversarial.
-- `donnees/rejeu_journal_agregats.json` : rejeu du journal réel, agrégats.
-- `donnees/criteres_moteur.json` : temps, mauvais jour isolé, déterminisme (moteur final).
+- `donnees/criteres_km1.json` : critères chiffrés du cahier sur la matrice du banc (Koach complet contre 0.3.1), campagne de la correction 1 (Koach 1.0.1). Les mesures de quatre critères y changent de méthode (C13.10.2) : erreur d'e1RM en moyenne des trois vérités, mauvais jour en contrefactuel apparié, calibration de P(réussite) par cible, rejeu réel seulement rapporté.
+- `donnees/criteres_km1_avant_correction1.json` : la même campagne pour KM1 (Koach 1.0), gardée pour la comparaison avant / après.
+- `donnees/comparaison_adversaires.json` : pire cas adversarial (mesuré avec Koach 1.0, KM1).
+- `donnees/rejeu_journal_agregats.json` : rejeu du journal réel, agrégats (mesuré avec Koach 1.0, KM1).
+- `donnees/criteres_moteur.json` : temps, mauvais jour isolé, déterminisme (mesuré avec Koach 1.0, KM1 ; non refait pour 1.0.1 à la date de ce document).
 - `donnees/validation_briques_6_7.json` : rupture, adhérence, contrôle dual ; **mesuré le 09/10/2026 sur un état antérieur du moteur** (avant les dernières règles de sécurité), non refait ; les tests `tests/test_briques_6_7_banc.py` vérifient le moteur final sur des cas réduits.
 
-Le détail par critère, les limites et ce qui reste sont dans `pipeline/cp/livraisons/LIVRAISON_KM1.md` (branche `pipeline`).
+Le détail par critère, les limites et ce qui reste sont dans `pipeline/cp/livraisons/LIVRAISON_KM1.md` (branche `pipeline`) pour 1.0 ; ceux de 1.0.1 iront dans la livraison de la correction 1, une fois la campagne finie. La liste exacte des changements de la correction 1 est dans `km1-outils/c1/CHANGEMENTS_C1.md`.

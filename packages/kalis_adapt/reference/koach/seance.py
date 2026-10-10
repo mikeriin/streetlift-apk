@@ -1560,6 +1560,14 @@ class Seances(object):
         if 1.6448536269514722 * cap[1] <= ta['intervalle_declenchement']:
             return False
         if vrai:
+            # Jamais de vrai test après un échec non prévu à la dernière
+            # séance de l'exercice, ni dans les 14 jours qui suivent une
+            # série ratée (A8.3, A7.2.3 de 0.3.1).
+            if self.mem(item['exerciseId']).echec:
+                return False
+            if t.dernier_echec_jour is not None and \
+                    self.jour - t.dernier_echec_jour < ta['jours_min_entre_tests']:
+                return False
             # Vrai test : espacé de 14 jours du dernier test arrivé près de
             # l'échec, et de `jours_min_entre_rampes` de toute montée (une
             # montée arrêtée loin de l'échec n'a rien mesuré : elle ne bloque
@@ -2129,12 +2137,15 @@ class Seances(object):
             # Première barre de la montée : jamais plus que ce que les barres
             # réussies des 42 derniers jours justifient, avec la règle du
             # premier passage à un schéma de 0.3.1 (A7.2, déjà celle de
-            # l'ouverture d'une tentative) : +10 %, et +2,5 % par répétition
-            # faite au-delà de celles de la montée (4 au plus). Partir de
+            # l'ouverture d'une tentative) : hausse du niveau, et +2,5 % par
+            # répétition faite au-delà de celles de la montée (4 au plus). Partir de
             # +10 % sur une barre de 10 répétitions faisait commencer une
             # montée de 3 répétitions à 7 répétitions de l'échec : la montée
             # s'arrêtait, faute de séries, avant d'avoir rien mesuré.
-            plafond = None
+            # (hausse du niveau, 10 % débutant et 5 % ensuite, comme A7.2.4 ;
+            # jamais moins que l'ancien plafond : +10 % sur la plus lourde.)
+            plafond = (recente + bw) * (1 + ta['repere_hausse']) - bw
+            hausse = self.s['hausse_par_niveau'][self.g.niveau]
             for (j, c, r) in mem.charges_reussies:
                 if self.jour - j > self.s['barre_recente_j']:
                     continue
@@ -2143,8 +2154,8 @@ class Seances(object):
                     plus = 0
                 if plus > self.s['schema_change_reps_max']:
                     plus = self.s['schema_change_reps_max']
-                b = (c + bw) * (1 + ta['repere_hausse']) * (1 + self.s['schema_change_part'] * plus) - bw
-                if plafond is None or b > plafond:
+                b = (c + bw) * (1 + hausse) * (1 + self.s['schema_change_part'] * plus) - bw
+                if b > plafond:
                     plafond = b
             if voulu > plafond:
                 voulu = plafond

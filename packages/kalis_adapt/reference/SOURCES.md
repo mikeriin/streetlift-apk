@@ -1,6 +1,6 @@
 # Sources des paramètres de Koach 1.0
 
-Rédigé le 09/10/2026, remis en accord avec le code et le fichier le 10/10/2026. Fichier décrit : `params/koach_params_v1.json`, SHA-256 `6df91d36c13fc2fba4ac85ecaa90e0bd8db9cfced02b54090661fccf421c63b2`, 306 clés (6 à la racine, 299 dans les onze sections). L'empreinte sera recalculée à la livraison du lot si le fichier change d'ici là.
+Rédigé le 09/10/2026, remis en accord avec le code et le fichier le 10/10/2026, puis mis à jour le 10/10/2026 pour la version 1.0.1 (KM1 correction 1, DECISIONS_CP.md C13.10 ; liste des changements : `km1-outils/c1/CHANGEMENTS_C1.md`). Fichier décrit : `params/koach_params_v1.json` version `1.0.1-ref.1`, SHA-256 `48fbfdfd2e18f53f0e14ee49f9773c8b592f4794e1ddaaad74abc75d5b51d16b`, 317 clés (6 à la racine, 311 dans les onze sections). Version 1.0 : `1.0.0-ref.1`, SHA-256 `6df91d36c13fc2fba4ac85ecaa90e0bd8db9cfced02b54090661fccf421c63b2`, 306 clés (6 à la racine, 300 dans les sections ; 299 écrit par erreur en 1.0).
 Compagnon de `CONTRAT_1_0.md` (§ 7 : rôle de chaque clé et module lecteur).
 
 ## Comment lire ce document
@@ -56,8 +56,8 @@ Les références de Beck & Teboulle 2009 (FISTA), Held, Wolfe & Crowder 1974 et 
 | Clé | Valeur | Catégorie | Source, mesure ou raison |
 | --- | --- | --- | --- |
 | `schema` | 1 | choix raisonné | Métadonnée de format ; aucune source requise. |
-| `version` | "1.0.0-ref.1" | choix raisonné | Métadonnée ; « 1.0.0-ref.1 » = référence Python du lot KM1. |
-| `date` | "2026-10-09" | choix raisonné | Métadonnée. |
+| `version` | "1.0.1-ref.1" | choix raisonné | Métadonnée ; « 1.0.1-ref.1 » = référence Python après la correction 1 de KM1 (« 1.0.0-ref.1 » en 1.0). |
+| `date` | "2026-10-10" | choix raisonné | Métadonnée. |
 | `note` | (texte) | choix raisonné | Métadonnée. |
 | `qualites` | ["pousser", "tirer", "jambes", "tronc", "figures", "endurance_force", "explosivite", "aerobie", "anaerobie", "mobilite"] | choix raisonné | **Non lue par le moteur.** Cahier, Méthodes § 2 : « 10 qualités latentes, liste figée dans le contrat de KM1 ». Le choix des dix noms est une décision du lot (SAUVEGARDE, « Architecture décidée »). Lue par le banc ; contrôlée en type seulement à l'import. |
 | `classes_reponse` | ["charge", "reps", "tenue", "cardio", "wod"] | choix raisonné | **Non lue par le moteur.** Cahier, Méthodes § 2 (table des types d'exercice). Écart : « Mobilité (2PL) » n'a pas de classe ; « répétitions au poids du corps » en a une (choix du lot). `modele.CLASSES` fait foi ; contrôlée en type seulement à l'import. |
@@ -89,7 +89,7 @@ Les références de Beck & Teboulle 2009 (FISTA), Held, Wolfe & Crowder 1974 et 
 | `cardio_minutes_par_niveau` | [30.0, 60.0, 90.0, 120.0] | choix raisonné | Ordres de grandeur ; aucune source. |
 | `cardio_sd` | 0.4 | choix raisonné | Large ; aucune source. |
 | `wod_sd` | 0.25 | choix raisonné | Aucune source. |
-| `courbe_forme` | [0.3, 0.3] | mesure sur le banc | Banc synthétique `synth2.py` (SAUVEGARDE, point 4) : λ appris retrouve A ≈ 0,4, B ≈ 0, C ≈ 1 ; a priori 0,3 ± 0,3 couvre les trois vérités. |
+| `courbe_forme` | [0.2, 0.45] | choix raisonné | Calcul de ce lot (KM1 correction 1, `km1-outils/c1/fam.py`) : ajustement de la famille de Box-Cox (CONTRAT § 5.1) à sept équations publiées, normalisées à 1 répétition, de 2 à 20 répétitions (écart max 1,8 % de charge) : Brzycki 1993 λ = −0,30 ; Lander 1985 −0,29 ; O'Conner et al. 1989 0,14 ; Mayhew et al. 1992 0,25 ; Wathen 1994 0,32 ; Epley 1985 0,33 ; Lombardi 1989 1,00 → moyenne 0,21, écart-type 0,42 ; retenu 0,2 ± 0,45. Classée « choix raisonné » et non « référence publiée vérifiée », selon la convention de ce document : les équations y sont lues en seconde main (`SOURCES_RECHERCHE.md` ; Lander 1985 n'y figure pas), et la valeur est un calcul sur elles, arrondi, comme `C_LOG` (§ 2.1). En 1.0 : [0.3, 0.3], mesure sur le banc (`synth2.py`, λ appris A ≈ 0,4, B ≈ 0, C ≈ 1, avec l'ancienne famille). |
 | `courbe_echelle` | [0.1, 0.0] | mesure sur le banc | Courbe a priori trop plate d'environ 12 % par rapport aux vérités → +0,10 (SAUVEGARDE 09/10 ~19:00, point 3) ; figé. Avec C_LIN, pente effective 0,0265·e^0,1 = 0,0293 ln/rép. (calcul). |
 | `biais_rir_proportionnel` | [0.25, 0.15] | mesure sur le banc | Moyenne : biais multiplicatif β du modèle de vérité A, 0,25 ± 0,18 (SAUVEGARDE). Sens (sous-estimation de la réserve, croissante avec la longueur de série) cohérent avec Halperin et al. 2022 (biais moyen 0,95 rép., vérifié résumé). Écart-type 0,15 : choix ; BP est appris par utilisateur depuis le 10/10/2026 (relecture B3 : figé, il ne suivait pas un biais personnel). |
 | `k_nerveux_local` | [0.0047, 0.0019] | mesure sur le banc | Régression `diag_fatigue.py` : rapide local (par groupe musculaire) 0,0047 (SAUVEGARDE, point 3). Écart-type 0,0019 : choix (≈ 40 %). |
@@ -149,6 +149,7 @@ Les références de Beck & Teboulle 2009 (FISTA), Held, Wolfe & Crowder 1974 et 
 | `mauvais_jour_proba_bilan_bas` | 0.45 | choix raisonné | Aucune source. |
 | `mauvais_jour_moyenne` | -0.06 | choix raisonné | −6 % ; vérité C : −4 % (SAUVEGARDE). Non calé. |
 | `mauvais_jour_sigma` | 0.045 | choix raisonné | Aucune source. |
+| `mauvais_jour_fige_capacite` | true | choix raisonné | 1.0.1. Dans la branche « mauvais jour », la séance s'explique par l'effet de jour : la capacité n'y est pas déplacée (CONTRAT § 4.5). Mesure de contrôle (contrefactuel apparié, 36 saisons) : effet d'un mauvais jour isolé 1,15 % → 0,93 % (CHANGEMENTS_C1.md § D). |
 
 ### Section `fatigue`
 
@@ -196,11 +197,11 @@ Les références de Beck & Teboulle 2009 (FISTA), Held, Wolfe & Crowder 1974 et 
 | `reps_ouvertes` | 6 | repris de 0.3.1 | `benchmarkExtraReps` = 6 (inventaire A8.3). |
 | `repere_hausse` | 0.1 | repris de 0.3.1 | Même borne que la règle du premier passage à un schéma, `maxUpMain` = 0,10 (inventaire A7.2 règle 5). |
 | `test_reps` | 3 | choix raisonné | SAUVEGARDE 18:30 (« 3 intermédiaire »). |
-| `test_reps_debutant` | 5 | choix raisonné | SAUVEGARDE 18:30 (« 5 débutant »). |
+| `test_reps_debutant` | 3 | choix raisonné | 1.0.1 : aligné sur le test 3RM à 85 % que `kalis_plan` écrit pour un débutant ; réserve `test_rir_debutant` = 2 gardée. En 1.0 : 5 (SAUVEGARDE 18:30, « 5 débutant »). |
 | `test_rir` | 1.0 | choix raisonné | Aucune source. |
 | `test_rir_debutant` | 2.0 | choix raisonné | Aucune source (0.3.1 sert les séries repères des débutants à 2 RIR, A8.3, règle voisine). |
 | `test_reps_ouvertes` | 0 | choix raisonné | **Non lue par le moteur.** Aucune source. |
-| `rampe_pas` | 0.1 | choix raisonné | Cran > 10 % : pas de montée (SAUVEGARDE, point 5). |
+| `rampe_pas` | 0.1 | choix raisonné | Cran franchi sans autre condition quand le pas voulu ne monte pas (SAUVEGARDE, point 5). En 1.0, aussi « cran > 10 % : pas de montée » ; depuis 1.0.1, cette borne est `rampe_pas_cran`. |
 | `rampe_series_max` | 7 | choix raisonné | Aucune source. |
 | `repos_test_s` | 180 | choix raisonné | Aucune source. |
 | `rampe_pas_par_rir` | [[4.0, 0.075], [3.0, 0.05], [2.5, 0.035], [2.0, 0.025]] | choix raisonné | 7,5/5/3,5/2,5 % (SAUVEGARDE, point 5) ; résultat contrôlé sur le banc (`diag_rampes.py` : réserve vraie finale 1,2–1,9, débutants 2–3), pas ajusté par une mesure. |
@@ -210,6 +211,10 @@ Les références de Beck & Teboulle 2009 (FISTA), Held, Wolfe & Crowder 1974 et 
 | `rampe_confirmations` | 2 | choix raisonné | SAUVEGARDE, point 5 (« 2 notes basses »). |
 | `rampe_proba_min` | 0.75 | choix raisonné | SAUVEGARDE 19:50 (« garde de probabilité sur la montée (0,75) »). |
 | `rampe_series_travail` | 1 | choix raisonné | Ligne ajoutée le 10/10/2026 (clé présente dans le fichier sans ligne de source). Séries de travail retirées de la ligne quand une montée de vrai test est servie (la barre finale et sa confirmation remplacent des séries de travail : le volume dur du jour ne monte pas) ; aucune source chiffrée. |
+| `vrai_test_rir_informatif` | 2.5 | choix raisonné | 1.0.1. Une série de test ou de tentative ratée ou dite à au plus 2,5 de réserve est arrivée assez près de l'échec pour mesurer le maximum et espacer le test suivant de 14 jours ; au-delà, la montée n'a rien mesuré. Aucune source chiffrée. |
+| `jours_min_entre_rampes` | 5 | choix raisonné | 1.0.1. Délai entre deux montées quand la précédente s'est arrêtée loin de l'échec (une montée qui n'a rien mesuré ne bloque plus la suivante 14 jours) ; aucune source chiffrée. |
+| `rampe_pas_cran` | 0.15 | choix raisonné | 1.0.1. Borne du « un cran toujours permis » de 0.3.1 (inventaire A7.2) pour une montée de vrai test : sur une grille grossière, un cran entier jusqu'à 15 % de la charge totale ; au-delà, série repère seulement. |
+| `rampe_cran_rir_marge` | 3.0 | choix raisonné | 1.0.1. Un cran entre `rampe_pas` et `rampe_pas_cran` n'est franchi qu'après une série dite à au moins 3 répétitions au-dessus de la réserve du test (série très facile), et si P(réussite) ≥ `rampe_proba_min`. Aucune source chiffrée. |
 
 ### Section `planification`
 
@@ -227,15 +232,19 @@ Les références de Beck & Teboulle 2009 (FISTA), Held, Wolfe & Crowder 1974 et 
 | `risque_tendon_plancher` | 4.0 | choix raisonné | Aucune source. |
 | `horizon_sans_echeance_sem` | 12 | choix raisonné | Cahier, Méthodes § 1 : « P(continuer sur 12 semaines) ». |
 | `sigma_prevision_semaine` | 0.004 | choix raisonné | Aucune source. |
-| `gain_affutage` | 0.015 | choix raisonné | **Non lue par le moteur.** Travis et al. 2020 donne +1,8 à +6,4 % selon le mouvement, vérifié texte, non utilisé.  |
+| `gain_affutage` | 0.007 | mesure sur le banc | 1.0.1, désormais lue (`planification.evaluer`, `seance._tentative`). Écart moyen ln max du jour − prévision à frais : +0,7 % sur le banc (45 saisons à cibles × 3 vérités × graines 0 à 5, 1 758 unités chargées ; `km1-outils/c1/calib.py`, `ana_cal.py`). Reprend la règle `coachTaperGain` de 0.3.1 (0,02, inventaire A8.2) avec le gain mesuré. Travis et al. 2020 (+1,8 à +6,4 % selon le mouvement, vérifié texte) reste un contexte, non utilisé. En 1.0 : 0.015, non lue. |
 | `graine` | 20261009 | choix raisonné | Date du lot ; arbitraire. |
 | `prudence_charge` | [0.6, 0.25] | choix raisonné | Quantile prudent 0,6 sd puis 0,25 sd après 3 séances ; aucune source. |
 | `transport_creation` | 0.25 | choix raisonné | Aucune source. |
-| `marge_cible` | 0.065 | mesure sur le banc | Opposé du rendement moyen d'un test le jour J : ln(meilleure barre réussie / maximum vrai du jour) = −0,065 en moyenne (médiane −0,047) sur 267 tests chargés, 720 saisons (campagne `banc/campagne.py`, 10/10/2026). |
+| `marge_cible` | 0.045 | mesure sur le banc | 1.0.1 : ne sert plus qu'aux cibles en répétitions ou en tenue. Rendement d'un test en répétitions −2,85 % et biais de prévision −1,6 % (405 unités en répétitions, mêmes saisons que `gain_affutage` ; `calib.py`, `ana_cal.py`). En 1.0 : 0.065, opposé du rendement moyen d'un test chargé le jour J (267 tests, 720 saisons). |
 | `abandon_hebdo` | 0.01 | choix raisonné | 1 %/sem. Littérature lue (Sperandei 2016 : < 5 % actifs à 12 mois en salle) seulement en seconde main et sur une autre population : non cité. |
 | `abandon_surcharge` | 3.0 | choix raisonné | Aucune source (Perri 2002 : adhérence meilleure à intensité modérée, sens seulement). |
 | `gain_min` | 0.002 | choix raisonné | Aucune source. |
-| `rendement_test_sd` | 0.07 | mesure sur le banc | Écart-type de ln(meilleure barre réussie / maximum vrai du jour) : 0,073 sur les mêmes 267 tests du jour J (campagne `banc/campagne.py`, 10/10/2026) ; ajouté à l'écart-type du jour dans P(cible). |
+| `rendement_test_sd` | 0.055 | mesure sur le banc | 1.0.1 : dispersion hors prévision d'un test en répétitions le jour J, 5,5 % (405 unités en répétitions ; `calib.py`, `ana_cal.py`). En 1.0 : 0.07, écart-type du rendement d'un test chargé (0,073 sur 267 tests). |
+| `erreur_estimation_echeance_sd` | 0.04 | mesure sur le banc | 1.0.1. sd(estimation du jour − ln max du jour) = 4,9 %, dont effet de jour 2,8 % : √(4,9² − 2,8²) ≈ 4,0 % (1 758 unités chargées, 45 saisons à cibles × 3 vérités × graines 0 à 5 ; `calib.py`, `ana_cal.py`). |
+| `tentative_sd_jour` | 0.046 | mesure sur le banc | 1.0.1. Écart-type du jour médian au premier essai de l'échelle des tentatives : 4,6 % (mêmes unités ; `calib.py`, `ana_cal.py`). |
+| `tentative_manque` | 0.028 | mesure sur le banc | 1.0.1. Manque moyen de l'échelle des tentatives à sa barre la plus haute possible : 2,8 % (mêmes unités ; `calib.py`, `ana_cal.py`). |
+| `tentative_cible_proba` | 0.35 | repris de 0.3.1 | `attemptRecordProbability` = 0,35 (inventaire A8.2), la règle de `seance._tentative` pour tenter la cible, portée dans l'échelle simulée de la planification. |
 
 ### Section `securite`
 
@@ -395,7 +404,9 @@ Les références de Beck & Teboulle 2009 (FISTA), Held, Wolfe & Crowder 1974 et 
 | `silence_semaines` | 2 | choix raisonné | Aucune source. |
 | `journal_dossier` | 60 | choix raisonné | Taille du dossier. |
 | `douleur_recente_j` | 7 | choix raisonné | Même fenêtre de 7 jours que la règle A1.6 de 0.3.1. |
-| `residu_reps_reference` | 8.0 | choix raisonné | 8 répétitions = point où les deux branches de la courbe sont égales (C_LOG). Sert à `_residu_e1rm`, chemin jamais pris avec le modèle (CONTRAT, annexe A.2, M8). |
+| `residu_reps_reference` | 8.0 | choix raisonné | 8 répétitions = point commun de toutes les formes de la courbe (`G8`, CONTRAT § 5.1 ; en 1.0 : point où les deux branches `C_LIN` et `C_LOG` sont égales). Sert à `_residu_e1rm`, chemin jamais pris avec le modèle (CONTRAT, annexe A.2, M8). |
+| `mauvais_jours_suite` | 2 | mesure sur le banc | 1.0.1. Mesure (162 saisons de référence, 162 de maladie, moteur sans extension ; CHANGEMENTS_C1.md § D) : à 2 séances de suite, 0,41 alerte pour 100 séances en référence et maladie détectée dans 67 saisons sur 162 ; à 3, 0,04 et 23 sur 162. BOCPD seule en KM1 : 19,8 %. |
+| `mauvais_jour_poids` | 0.5 | choix raisonné | 1.0.1. Une séance compte comme mauvais jour quand la branche « mauvais jour » y est la plus probable (poids ≥ 0,5). Aucune source chiffrée. |
 
 ### Section `controle_dual`
 
@@ -427,16 +438,19 @@ Ces constantes ne sont pas dans le fichier de paramètres. Elles sont citées pa
 
 | Constante | Valeur | Catégorie | Source ou raison |
 | --- | --- | --- | --- |
-| `C_LIN` | 0,0265 ln/rép. | choix raisonné | Pente de la branche linéaire. Cohérente avec Nuzzo et al. 2024 (90 % ≈ 5 rép. : −ln 0,9/4 = 0,0263 ; 70 % ≈ 15 rép. : −ln 0,7/14 = 0,0255, calculs) ; l'origine exacte de 0,0265 n'est pas documentée. Plus plate que Brzycki (≈ 0,028 à 0,032) et Epley (≈ 0,028), calculs ; ramenée à 0,0293 par `courbe_echelle`. |
-| `C_LOG` | 0,0892 | choix raisonné | Définie par l'égalité des branches à 8 rép. : 0,0265·7/ln 8 = 0,08921 (calcul). Avec e^0,1 : 0,0986 ≈ exposant 0,10 de Lombardi (formule lue en seconde main, `SOURCES_RECHERCHE` § 2). |
+| `C_LIN` | 0,0265 ln/rép. | choix raisonné | Pente de la branche linéaire. Cohérente avec Nuzzo et al. 2024 (90 % ≈ 5 rép. : −ln 0,9/4 = 0,0263 ; 70 % ≈ 15 rép. : −ln 0,7/14 = 0,0255, calculs) ; l'origine exacte de 0,0265 n'est pas documentée. Plus plate que Brzycki (≈ 0,028 à 0,032) et Epley (≈ 0,028), calculs ; ramenée à 0,0293 par `courbe_echelle`. Depuis 1.0.1, C_LIN ne fixe plus qu'un point : `G8` (ci-dessous) ; λ = 0 redonne toujours la pente C_LIN. |
+| `C_LOG` | 0,0892 | choix raisonné | Définie par l'égalité des branches à 8 rép. : 0,0265·7/ln 8 = 0,08921 (calcul). Avec e^0,1 : 0,0986 ≈ exposant 0,10 de Lombardi (formule lue en seconde main, `SOURCES_RECHERCHE` § 2). Depuis 1.0.1, C_LOG n'est plus lue par le code : λ = 1 de la famille de Box-Cox redonne C_LOG·ln R. |
+| `G8`, `LN8` | 7·C_LIN = 0,1855 ; ln 8 | choix raisonné | 1.0.1. Point commun de toutes les formes de la courbe à 8 répétitions (g = G8 à échelle e^0), choisi pour garder les deux formes de 1.0 en λ = 0 et λ = 1 (CONTRAT § 5.1). |
+| Famille de la courbe (`_g`, `_dg`, `_dg_forme`, `_reps_de`) | Box-Cox en répétitions, γ = 1 − λ | choix raisonné | 1.0.1. Famille à un paramètre qui reproduit sept équations publiées à 1,8 % de charge au plus entre 2 et 20 répétitions (calcul, `km1-outils/c1/fam.py` ; voir `a_priori.courbe_forme`). |
+| Séries de `_phi`, `_phi1`, `_reps_de` | 7 termes pour \|x\| < 0,01 (et \|u\| < 0,01) | choix raisonné | 1.0.1. Numérique : évite `expm1` et `log1p` pour la portabilité Dart. |
 | `NGR` | 17 groupes | repris de 0.3.1 | Les 17 groupes musculaires de `kalis_plan`, repris par `regles.GROUPES`. Hors inventaire A. |
 | `ZONES_TENDON` | 7 zones | choix raisonné | Articulations des contraintes du catalogue `kalis_core`. |
 | Taille initiale de l'état (`Modele.__init__`) | 28 + 3·48 = 172 | choix raisonné | Allocation ; sans effet sur les valeurs. |
 | Poids par défaut (`Modele.__init__`) | 72 kg | choix raisonné | Même défaut que le banc ; pris sans signalement (relecture m14). |
 | Plancher de capacité d'une charge (`base_de`) | `fraction·poids·1,1` | choix raisonné | Le 1RM total dépasse au moins le poids porté. |
 | Plancher de variance de δ_e (`piste`) | (0,5·sd)² | choix raisonné | Garde une part propre à l'exercice. |
-| Bornes de la courbe : λ ∈ [−0,3 ; 1,2], k ∈ [−1 ; 1] (`courbe`, `_projeter`) | — | choix raisonné | Bornes de sûreté numérique. |
-| `reps_a` : `1 + 20x` si −0,05 < x ≤ 0, 12 pas de Newton, R ∈ [1 ; 200] | — | choix raisonné | Prolongement sous la charge maximale ; nombre de pas fixe pour la portabilité. |
+| Bornes de la courbe : λ ∈ [LAM_MIN ; LAM_MAX] = [−0,8 ; 1,3], k ∈ [−1 ; 1] (`courbe`, `_projeter`) | — | choix raisonné | Bornes de sûreté : au-delà de Brzycki (−0,30) et de Lombardi (1) dans la famille de 1.0.1. En 1.0 : λ ∈ [−0,3 ; 1,2]. |
+| `reps_a` : `1 + 20x` si −0,05 < x ≤ 0, sinon inverse en forme fermée (`_reps_de`), R ∈ [1 ; 200] | — | choix raisonné | Prolongement sous la charge maximale. Depuis 1.0.1, plus de pas de Newton (12 en 1.0) : l'inverse de la famille de Box-Cox est explicite. |
 | Plancher de `_dg` | 0,004 | choix raisonné | Évite une pente nulle. |
 | FI ∈ [0 ; 1,5], φ_e ∈ [−1,5 ; 1,5], garde ≥ 0,3 (`fatigue_intra_de`, `garde_de`) | — | choix raisonné | Bornes de sûreté. |
 | BA ∈ [−2,5 ; 2,5], BP ∈ [−0,2 ; 1] (`_lin_force`, `_lin_tenue`, `rir_vrai`) | — | choix raisonné | Bornes de sûreté. |
@@ -511,6 +525,9 @@ Ces constantes ne sont pas dans le fichier de paramètres. Elles sont citées pa
 | Montée : réserve atteinte si dite ≤ rir + 0,75 (`_rampe`) | 0,75 | choix raisonné | — |
 | Montée : borne haute μ + 2,5σ (`_rampe`) | 2,5 | choix raisonné | — |
 | Montée : départ à réserve + 2 (`_rampe`) | 2 | choix raisonné | — |
+| Montée : plafond de la 1re barre (`_rampe`) | max sur les barres réussies de 42 j de (c + bw)(1 + `repere_hausse`)(1 + `schema_change_part`·min(max(r − n, 0), `schema_change_reps_max`)) − bw | repris de 0.3.1 | 1.0.1 : règle du premier passage à un schéma (inventaire A7.2), déjà celle de l'ouverture des tentatives ; fenêtre de 42 j codée en dur. En 1.0 : (plus lourde barre récente + bw)·1,10 − bw. |
+| Montée : séries comptées dans la durée (`_duree_permet_test`) | min(`rampe_series_max` (+2 si 1 rép.) ; max(1, séries − 1) + 1) | choix raisonné | 1.0.1 : séries dures permises plus une série encore facile (en 1.0 : toujours `rampe_series_max` (+2)). |
+| Tentatives : gain d'affûtage à l'ouverture (`_tentative`) | semaine du jour ou précédente `taper` ou `competition` | repris de 0.3.1 | 1.0.1 : `coachTaperGain` (inventaire A8.2), à l'ouverture seulement, avec la valeur mesurée `planification.gain_affutage`. |
 | Tentatives : flammes 7, 9, 10 (`_tentative`) | — | repris de 0.3.1 | Inventaire A8.2. |
 | Tentatives : σ ≥ 0,01 (`_tentative`) | — | repris de 0.3.1 | `max(relSd, 0,01)` (inventaire A8.2). |
 | Tentatives : cible tentée si P ≥ 0,35 (`_tentative`) | 0,35 | repris de 0.3.1 | `attemptRecordProbability` (inventaire A8.2). |
@@ -536,6 +553,8 @@ Ces constantes ne sont pas dans le fichier de paramètres. Elles sont citées pa
 | Population minimale 4, élite minimale 2, écart de départ 0,5·plafond, plancher 1e-4 (`replanifier`) | — | choix raisonné | — |
 | Candidats finaux : 4 + 4 ; 3 essais ramenés × 0,5 (`replanifier`) | — | choix raisonné | — |
 | `risque` : marge 1e-9 (`evaluer`) | — | choix raisonné | Numérique. |
+| Manque de l'échelle des tentatives (`tirer`) | exponentielle de moyenne 1, −ln(1 − u), 1 − u ≥ 1e-12 | choix raisonné | 1.0.1. Forme de la loi du manque ; sa moyenne est `tentative_manque`. |
+| Réussite d'une cible chargée : marge 1e-12 (`evaluer`) | — | choix raisonné | 1.0.1. Numérique. |
 
 ### 2.6 `koach/rupture.py`, `koach/adherence.py`, `koach/dual.py`
 
@@ -596,23 +615,23 @@ Toutes ces constantes ont été écrites lors de la génération par règles, pu
 | Constante | Valeur | Catégorie | Raison |
 | --- | --- | --- | --- |
 | `SD_DECLARE_ACCESSOIRE` | 0,12 (ln) | choix raisonné | Écart-type d'une valeur déclarée indirecte (charge de travail initiale d'un accessoire convertie en 1RM), plus large que `delta_sd_declare`. |
-| `COURBE_LAMBDA` | 0,3 | choix raisonné | Forme de population de la courbe (`a_priori.courbe_forme[0]`), recopiée ; sans l'échelle `courbe_echelle` (CONTRAT, annexe A.3). |
+| `COURBE_LAMBDA` | 0,3 | choix raisonné | Forme de population de la courbe (`a_priori.courbe_forme[0]`), recopiée de 1.0 ; sans l'échelle `courbe_echelle` (CONTRAT, annexe A.3). Depuis 1.0.1, le convertisseur garde 0,3 et l'ancienne famille (constantes 0,0265 et 0,0892), alors que le moteur utilise 0,2 et la famille de Box-Cox. |
 
 ---
 
 ## 3. Synthèse
 
-**Clés du fichier de paramètres** (section 1, 306 clés, une ligne chacune) :
+**Clés du fichier de paramètres** (section 1, 317 clés depuis 1.0.1, une ligne chacune ; 306 en 1.0) :
 
 | Catégorie | Clés |
 | --- | --- |
 | référence publiée vérifiée | 1 |
-| mesure sur le banc | 27 |
-| repris de 0.3.1 | 116 |
-| choix raisonné | 162 (dont 23 valeurs fixées par le cahier) |
-| **Total** | **306** |
+| mesure sur le banc | 31 (27 en 1.0) |
+| repris de 0.3.1 | 117 (116 en 1.0) |
+| choix raisonné | 168 (dont 23 valeurs fixées par le cahier ; 162 en 1.0) |
+| **Total** | **317** |
 
-Clés non lues par le moteur : 18 (liste dans `CONTRAT_1_0.md` § 7.5), dont 3 règles de volume de 0.3.1 portées par le validateur injecté et 2 clés lues par le banc seulement (`qualites`, `mesure.cardio_poids_qualite`).
+Clés non lues par le moteur : 17 depuis 1.0.1 (18 en 1.0 ; `planification.gain_affutage` est désormais lue ; liste dans `CONTRAT_1_0.md` § 7.5), dont 3 règles de volume de 0.3.1 portées par le validateur injecté et 2 clés lues par le banc seulement (`qualites`, `mesure.cardio_poids_qualite`).
 
 La catégorie « repris de 0.3.1 » regroupe les paramètres de `kalis_adapt` 0.3.1 et de `kalis_plan` (inventaire A), et les critères du banc `kalis_bench` (inventaire B).
 
@@ -629,6 +648,8 @@ Ces clés sont classées, mais leur classement doit être confirmé par l'auteur
 | `dynamique.recuperation_seuil` et `dynamique.recuperation_pente` | Le meilleur ajustement de la classe « charge » donne 6 et 0,25 ; les valeurs retenues (8 et 0,5) correspondent aux classes répétitions et tenues. Le choix entre les classes n'est pas documenté. |
 | `test_adaptatif.*` (rampe) | Réglés par essais successifs sur le banc ; SAUVEGARDE donne le résultat, pas la mesure qui fixe chaque valeur. |
 | `jour.mauvais_jour_proba` | Classée « mesure sur le banc » : la valeur reprend la fréquence d'un modèle de vérité (C), pas un ajustement sur l'ensemble des vérités. |
+| `a_priori.courbe_forme` (1.0.1) | Classée « choix raisonné » : calcul sur sept équations publiées lues en seconde main (`SOURCES_RECHERCHE.md`), et non « référence publiée vérifiée ». Elle deviendrait « référence publiée vérifiée » si les sept équations étaient vérifiées dans leur source primaire et ajoutées à la liste des références. |
+| `planification.gain_affutage`, `marge_cible`, `rendement_test_sd`, `erreur_estimation_echeance_sd`, `tentative_sd_jour`, `tentative_manque` ; `rupture.mauvais_jours_suite` (1.0.1) | Mesures du banc sur six graines (0 à 5) et sur les modèles de vérité du banc : à revoir sur le journal réel. |
 
 ### 3.2 Clés non classées
 

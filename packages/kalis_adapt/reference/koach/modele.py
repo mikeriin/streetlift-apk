@@ -74,7 +74,8 @@ class Piste(object):
     __slots__ = ('id', 'type', 'classe', 'vecteur', 'base', 'idx', 'fraction', 'bas',
                  'tendon', 'zone_tendon', 'systemique', 'locale', 'seances', 'dernier_jour',
                  'premier_jour', 'stim_semaine', 'series_seance', 'jour_seance', 'declare',
-                 'dernier_test_jour', 'dernier_vrai_test_jour', 'derniere_rampe_jour', 'residus', 'cran', 'meilleur', 'mesures', 'groupes', 'groupes_total',
+                 'dernier_test_jour', 'dernier_vrai_test_jour', 'derniere_rampe_jour', 'dernier_echec_jour',
+                 'residus', 'cran', 'meilleur', 'mesures', 'groupes', 'groupes_total',
                  'jour_prevu', 'jour_vu')
 
     def __init__(self, ex_id, typ, vecteur, base, idx, fraction=0.0, bas=False,
@@ -102,6 +103,7 @@ class Piste(object):
         self.dernier_test_jour = None
         self.dernier_vrai_test_jour = None   # dernier test (montée, tentative) arrivé près de l'échec
         self.derniere_rampe_jour = None      # dernière série de test, informative ou non
+        self.dernier_echec_jour = None       # dernière série ratée, quel que soit son rôle
         self.residus = []
         self.cran = None
         self.meilleur = None
@@ -698,12 +700,15 @@ class Modele(object):
                 # de Joseph avec le gain alpha·K : facteur 2·alpha − alpha²).
                 v2a = v - (2.0 * alpha - alpha * alpha) * (v - v2)
                 if fige:
-                    self._covariance_partielle(P, ph, pg, v, v2a)
+                    self._covariance_partielle(P, ph, pg, v, v2a if v2a < v else v)
                 else:
                     P -= np.outer(ph, ph) * ((v - v2a) / (v * v))
             elif fige:
                 m += pg * ((mu2 - mu) / v)
-                self._covariance_partielle(P, ph, pg, v, v2)
+                # La forme de Joseph à gain partiel ne reste semi-définie
+                # positive que si la variance ne croît pas (un mélange avec
+                # une note sans information peut l'élargir) : bornée à v.
+                self._covariance_partielle(P, ph, pg, v, v2 if v2 < v else v)
             else:
                 self._appliquer(m, P, ph, mu - const, v, mu2 - const, v2)
             if bi == 0:
@@ -1006,7 +1011,11 @@ class Modele(object):
         t.mesures += 1
         if echec or s.get('repere') or s.get('role') in ('test', 'attempt'):
             t.dernier_test_jour = self.jour
-        if s.get('role') in ('test', 'attempt'):
+        if echec:
+            t.dernier_echec_jour = self.jour
+        # Rôle de la série : à la racine, sinon dans sa cible.
+        role = s.get('role') or (s.get('target') or {}).get('role')
+        if role in ('test', 'attempt'):
             # Horloges du vrai test : toute série de test, et celles qui sont
             # arrivées près de l'échec (échec, ou réserve dite d'au plus
             # `vrai_test_rir_informatif`) : seules ces dernières mesurent

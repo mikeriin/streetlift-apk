@@ -1,0 +1,1119 @@
+diff --git a/packages/kalis_adapt/reference/banc/campagne.py b/packages/kalis_adapt/reference/banc/campagne.py
+index a959172..2c7ecb0 100644
+--- a/packages/kalis_adapt/reference/banc/campagne.py
++++ b/packages/kalis_adapt/reference/banc/campagne.py
+@@ -75,7 +75,8 @@ JAMAIS = mesures.K_MAX + 1          # premier passage censuré (« jamais » sou
+ SEUIL_E1RM = 0.03
+ SEUIL_COUVERTURE = (0.88, 0.92)
+ SEUIL_CALIBRATION = 0.05
+-N_MIN_DECILE = 20
++N_MIN_DECILE = 20                  # P(toutes les cibles), rapporté
++N_MIN_DECILE_CIBLE = 30            # calibration par cible (critère, C13.10.2.c)
+ DECILES_MIN = 2                    # déciles de n >= 20 exigés par date pour juger
+ SEMAINES_AVANT = 4
+ VUES_SECURITE = ('plan_module', 'servi', 'servi_tests_faits')
+@@ -695,14 +696,20 @@ def agreger_estimations(ok, temoin):
+ def critere_e1rm(K, KV, KN, T, TV, TN):
+     k = _ligne(K['loadedMain'], RANG)
+     t = _ligne(T['loadedMain'], RANG)
+-    mesure = k['mae'] if k else None
++    # C13.10.2.a : moyenne sur les modèles de vérité du banc (égale à la
++    # moyenne de toutes les estimations quand chaque vérité en compte autant).
++    par_v = [(_ligne(KV[v], RANG) or {}).get('mae') for v in sorted(KV)]
++    par_v = [x for x in par_v if x is not None]
++    mesure = sum(par_v) / len(par_v) if par_v else None
+     return {
+         'mesure': mesure, 'seuil': SEUIL_E1RM, 'n': k['n'] if k else 0,
+         'respecte': bool(mesure is not None and mesure < SEUIL_E1RM),
+         'methode': ("MAE relative |e1RM estimé / e1RM vrai − 1| au rang 6 (6e jour d'entraînement de "
+                     "l'exercice, dernière estimation du jour, `mesures.Estimations`) sur les mouvements "
+-                    "principaux chargés ; témoin : export 0.3.1 (16 graines) sur les mêmes saisons."),
++                    "principaux chargés, moyenne des modèles de vérité du banc (C13.10.2.a) ; témoin : "
++                    "export 0.3.1 (16 graines) sur les mêmes saisons."),
+         'detail': {
++            'toutes_estimations': k['mae'] if k else None,
+             'koach': k, 'temoin': t,
+             'par_verite': {v: {'koach': _ligne(KV[v], RANG), 'temoin': _ligne(TV[v], RANG) if v in TV else None}
+                            for v in sorted(KV)},
+@@ -768,7 +775,8 @@ def _tous_modes(K):
+     return {'n': int(n), 'couverture': cov / n if n else None}
+ 
+ 
+-def _deciles(paires):
++def _deciles(paires, n_min=None):
++    n_min = N_MIN_DECILE if n_min is None else n_min
+     out = []
+     pire = None
+     for d in range(10):
+@@ -781,8 +789,8 @@ def _deciles(paires):
+         om = sum(1.0 for _, o in sel if o) / n
+         e = abs(pm - om)
+         ligne = {'decile': d, 'n': n, 'p_prevue': pm, 'observee': om, 'ecart': e}
+-        if n < N_MIN_DECILE:
+-            ligne['signal'] = 'n < %d' % N_MIN_DECILE
++        if n < n_min:
++            ligne['signal'] = 'n < %d' % n_min
+         elif pire is None or e > pire:
+             pire = e
+         out.append(ligne)
+@@ -840,28 +848,32 @@ def critere_calibration(ok, sans_planificateur):
+                     marg.append((float(pe), u['reussite_par_cible'][ex]))
+                 if ex in (u.get('capacite_par_cible') or {}):
+                     marg_cap.append((float(pe), u['capacite_par_cible'][ex]))
+-    dec_m, pire_m = _deciles(marg)
+-    dec_mc, pire_mc = _deciles(marg_cap)
+-    mesurable = all(x is not None for x in pires) and not insuffisant
+-    mesure = max(x for x in pires if x is not None) if any(x is not None for x in pires) else None
++    dec_m, pire_m = _deciles(marg, N_MIN_DECILE_CIBLE)
++    dec_mc, pire_mc = _deciles(marg_cap, N_MIN_DECILE_CIBLE)
++    peuples = sum(1 for x in dec_m if x['n'] >= N_MIN_DECILE_CIBLE)
++    mesurable = pire_m is not None and peuples >= DECILES_MIN
++    pires_tout = [x for x in pires if x is not None]
+     return {
+-        'mesure': mesure, 'seuil': SEUIL_CALIBRATION, 'n': len(unites),
+-        'respecte': bool(mesurable and mesure <= SEUIL_CALIBRATION + EPS),
+-        'methode': ("P(toutes les cibles atteintes à l'échéance) prévue par la planification (`objectif` de la "
+-                    "replanification, journal `previsions` de PlanificationBanc) au début, à mi-chemin et 4 "
+-                    "semaines avant l'échéance, contre la réussite observée (meilleure barre réussie au test "
+-                    "du jour J >= cible, toutes cibles) ; déciles de probabilité prévue, écart |prévu − observé| "
+-                    "max sur les déciles de n >= %d, pire des trois dates ; mesurable seulement si chaque "
+-                    "date a au moins %d déciles de n >= %d." % (N_MIN_DECILE, DECILES_MIN, N_MIN_DECILE)),
++        'mesure': pire_m, 'seuil': SEUIL_CALIBRATION, 'n': len(marg),
++        'respecte': bool(mesurable and pire_m <= SEUIL_CALIBRATION + EPS),
++        'methode': ("Calibration PAR CIBLE (C13.10.2.c) : P(cible atteinte à l'échéance) prévue par la "
++                    "planification (`p_cibles` de la replanification, journal `previsions` de PlanificationBanc) "
++                    "au début, à mi-chemin et 4 semaines avant l'échéance, contre la réussite observée de la "
++                    "cible (meilleure barre réussie, ou valeur faite, au test du jour J >= cible) ; déciles de "
++                    "probabilité prévue, écart |prévu − observé| max sur les déciles d'au moins %d cas ; "
++                    "mesurable avec au moins %d déciles peuplés. P(toutes les cibles) est rapportée par date "
++                    "dans `detail.toutes_les_cibles` (trop rarement atteinte sur le banc pour peupler les "
++                    "déciles)." % (N_MIN_DECILE_CIBLE, DECILES_MIN)),
+         'detail': {
+-            'par_date': par_date,
++            'par_cible': {'n': len(marg), 'unites': len(unites), 'deciles': dec_m, 'deciles_peuples': peuples,
++                          'ecart_max': pire_m,
++                          'variante_capacite_du_jour': {'n': len(marg_cap), 'deciles': dec_mc,
++                                                        'ecart_max': pire_mc}},
++            'toutes_les_cibles': {'par_date': par_date, 'dates_insuffisantes': insuffisant,
++                                  'ecart_max_deciles_n20': max(pires_tout) if pires_tout else None},
+             'exclusions': dict(sorted(exclus.items())),
+             'unites_sans_prevision_a_la_date': manque,
+-            'marginale_par_cible': {'n': len(marg), 'deciles': dec_m, 'ecart_max_deciles_n20': pire_m,
+-                                    'variante_capacite_du_jour': {'n': len(marg_cap), 'deciles': dec_mc,
+-                                                                  'ecart_max_deciles_n20': pire_mc}},
+             'mesurable': mesurable,
+-            'dates_insuffisantes': insuffisant,
+         },
+     }
+ 
+@@ -1024,19 +1036,35 @@ def critere_securite(ok, temoin, sans_planificateur):
+     }
+ 
+ 
+-def critere_mauvais_jour(mj):
+-    h = {k: {'moyenne_abs': mj['ecart_abs'][k]['moyenne'], 'mediane_abs': mj['ecart_abs'][k]['mediane'],
+-             'p95_abs': mj['ecart_abs'][k]['p95'], 'max_abs': mj['ecart_abs'][k]['max'],
+-             'n': mj['ecart_abs'][k]['n'], 'signe_moyen': mj['ecart_signe_moyen'][k]} for k in cm.HORIZONS}
++def _horizons_mj(mj):
++    return {k: {'moyenne_abs': mj['ecart_abs'][k]['moyenne'], 'mediane_abs': mj['ecart_abs'][k]['mediane'],
++                'p95_abs': mj['ecart_abs'][k]['p95'], 'max_abs': mj['ecart_abs'][k]['max'],
++                'n': mj['ecart_abs'][k]['n'], 'signe_moyen': mj['ecart_signe_moyen'][k]} for k in cm.HORIZONS}
++
++
++def critere_mauvais_jour(mj, divergent=None):
++    """[mj] : mesure en contrefactuel apparié (critère, C13.10.2.b) ;
++    [divergent] : mesure de KM1 (deux saisons simulées séparément),
++    rapportée."""
++    h = _horizons_mj(mj)
+     moy = [x['moyenne_abs'] for x in h.values() if x['moyenne_abs'] is not None]
++    detail = {'horizons': h, 'saisons': mj['saisons'], 'plantages': len(mj['plantages']),
++              'jobs': mj.get('jobs'), 'erreurs': mj.get('erreurs', 0)}
++    if divergent is not None:
++        hd = _horizons_mj(divergent)
++        md = [x['moyenne_abs'] for x in hd.values() if x['moyenne_abs'] is not None]
++        detail['saisons_divergentes'] = {'horizons': hd, 'mesure': max(md) if md else None,
++                                         'note': 'mesure de KM1 : les deux saisons divergent après le mauvais jour'}
+     return {
+         'mesure': max(moy) if moy else None, 'seuil': cm.SEUIL_MAUVAIS_JOUR,
+         'n': mj['saisons_mesurees'], 'respecte': bool(mj['respecte']),
+-        'methode': ("`criteres_moteur.mesurer_mauvais_jour` : même saison rejouée avec une séance à −6 % de "
+-                    "capacité (2e moitié, après 6 séances), écart relatif des e1RM des principaux chargés juste "
+-                    "après, +1 et +2 séances ; mesure = pire moyenne absolue des trois horizons."),
+-        'detail': {'horizons': h, 'saisons': mj['saisons'], 'plantages': len(mj['plantages']),
+-                   'jobs': mj.get('jobs')},
++        'methode': ("`criteres_moteur.mesurer_mauvais_jour(apparie=True)` : contrefactuel apparié (C13.10.2.b). "
++                    "Le journal de la saison est rejoué deux fois dans un moteur neuf : tel quel, puis avec la "
++                    "séance du mauvais jour (−6 % de capacité, 2e moitié, après 6 séances) à la place de la "
++                    "séance du même jour, les séances suivantes restant celles de la saison telle quelle ; "
++                    "écart relatif des e1RM des principaux chargés juste après, +1 et +2 séances ; "
++                    "mesure = pire moyenne absolue des trois horizons."),
++        'detail': detail,
+     }
+ 
+ 
+@@ -1077,8 +1105,10 @@ def critere_rappels():
+     respecte = {}
+     if d is not None and 'respecte' in (d.get('critere') or {}):
+         respecte['pire_cas_adversarial'] = bool(d['critere']['respecte'])
+-    if j is not None and j.get('objectif_brique_8'):
+-        respecte['rejeu_journal'] = bool(all(j['objectif_brique_8'].values()))
++    # C13.10.2.d : le rejeu du journal réel est un critère de BASCULE (au
++    # moins 100 séries notées depuis S12, biais moyen sous 2 %) ; ici il est
++    # seulement rapporté.
++    out['rapporte_seulement'] = ['rejeu_journal']
+     out['respecte'] = respecte
+     return out
+ 
+@@ -1114,12 +1144,13 @@ def jobs_mj(profils, verites, graines, rapide):
+     return [(c, v, g) for c in cles for v in verites for g in range(max(1, min(graines, 2)))]
+ 
+ 
+-def mesure_mauvais_jour(opts, dossier, jobs):
+-    chemin = os.path.join(dossier, 'mauvais_jour__%s.json'
+-                          % hashlib.sha256(json.dumps(jobs).encode('utf-8')).hexdigest()[:12])
++def mesure_mauvais_jour(opts, dossier, jobs, apparie=True):
++    chemin = os.path.join(dossier, 'mauvais_jour%s__%s.json'
++                          % ('_apparie' if apparie else '',
++                             hashlib.sha256(json.dumps(jobs).encode('utf-8')).hexdigest()[:12]))
+     r = _lire_json(chemin)
+     if r is None:
+-        r = cm.mesurer_mauvais_jour(jobs=[tuple(j) for j in jobs], coeurs=opts['coeurs'])
++        r = cm.mesurer_mauvais_jour(jobs=[tuple(j) for j in jobs], coeurs=opts['coeurs'], apparie=apparie)
+         r.pop('mesures', None)
+         r['jobs'] = len(jobs)
+         r['plantages'] = [p.get('trace', '')[-300:] for p in r['plantages']]
+@@ -1154,13 +1185,14 @@ def campagne(opts, journal=print):
+     temoin = charger_temoin(jobs)
+     K, KV, KN, T, TV, TN = agreger_estimations(ok, temoin)
+     journal('critère 2 (mauvais jour) ...')
+-    mj = mesure_mauvais_jour(opts, info['dossier'], jobs_mj(profils, opts['verites'], opts['graines'],
+-                                                             opts['rapide']))
++    jmj = jobs_mj(profils, opts['verites'], opts['graines'], opts['rapide'])
++    mj = mesure_mauvais_jour(opts, info['dossier'], jmj, apparie=True)
++    mj_div = mesure_mauvais_jour(opts, info['dossier'], jmj, apparie=False)
+     journal('critère 8 (temps) ...')
+     tps, source = mesure_temps(opts, info['dossier'])
+     criteres = {
+         '1_erreur_e1rm_rang_6': critere_e1rm(K, KV, KN, T, TV, TN),
+-        '2_mauvais_jour_isole': critere_mauvais_jour(mj),
++        '2_mauvais_jour_isole': critere_mauvais_jour(mj, mj_div),
+         '3_convergence_sous_3': critere_convergence(K, KV, T, TV),
+         '4_couverture_90': critere_couverture(K, KV, opts),
+         '5_calibration_p_reussite': critere_calibration(ok, opts['sans_planificateur']),
+@@ -1280,11 +1312,15 @@ def resume(s):
+                                for r, x in sorted(d['detail']['par_rang'].items(), key=lambda y: int(y[0])))))
+     d = c['5_calibration_p_reussite']
+     if d['detail']:
+-        pd = d['detail']['par_date']
+-        lignes.append('[%s] 5 calibration P(réussite) : écart max %s ; unités %d ; ' % (
+-            ok('5_calibration_p_reussite'), f(d['mesure'], True), d['n'])
+-            + ', '.join('%s n=%d p=%s obs=%s' % (k, x['n'], f(x['p_moyenne'], True), f(x['reussite_observee'], True))
+-                        for k, x in pd.items()))
++        pc = d['detail']['par_cible']
++        lignes.append('[%s] 5 calibration P(réussite) par cible : écart max %s (déciles de n >= %d) ; n=%d ; ' % (
++            ok('5_calibration_p_reussite'), f(d['mesure'], True), N_MIN_DECILE_CIBLE, d['n'])
++            + ', '.join('d%d n=%d p=%s obs=%s' % (x['decile'], x['n'], f(x['p_prevue'], True), f(x['observee'], True))
++                        for x in pc['deciles'] if x['n'] > 0))
++        pd = d['detail']['toutes_les_cibles']['par_date']
++        lignes.append('      toutes les cibles : ' + ', '.join(
++            '%s n=%d p=%s obs=%s' % (k, x['n'], f(x['p_moyenne'], True), f(x['reussite_observee'], True))
++            for k, x in pd.items()))
+         lignes.append('      exclusions : %s' % d['detail']['exclusions'])
+     else:
+         lignes.append('[%s] 5 calibration : %s' % (ok('5_calibration_p_reussite'), d['methode']))
+diff --git a/packages/kalis_adapt/reference/banc/criteres_moteur.py b/packages/kalis_adapt/reference/banc/criteres_moteur.py
+index 449659d..9507901 100644
+--- a/packages/kalis_adapt/reference/banc/criteres_moteur.py
++++ b/packages/kalis_adapt/reference/banc/criteres_moteur.py
+@@ -268,13 +268,106 @@ def mauvais_jour_saison(cle, verite, graine, scenario='reference', baisse=MAUVAI
+     return ligne
+ 
+ 
++# ----------------------------------------------------------------------
++# 2 bis. Mauvais jour isolé, contrefactuel apparié (DECISIONS_CP.md C13.10.2.b)
++# ----------------------------------------------------------------------
++def _saison_et_journal(saison, verite, graine, classe=None):
++    """Simule la saison avec `PolitiqueKoach` (sans extension : l'état se
++    recalcule exactement depuis le journal, `tests/test_rejeu_exact.py`) ;
++    renvoie (tour, moteur)."""
++    pol = PolitiqueKoach()
++    ancienne = meneur.SimAthlete
++    if classe is not None:
++        meneur.SimAthlete = classe
++    try:
++        tour = meneur.simuler(saison, vk.infos(), pol, verite, graine)
++    finally:
++        meneur.SimAthlete = ancienne
++    return tour, pol.koach
++
++
++def _seance_du_jour(journal, jour):
++    """(i0, i1) : indices du `seance_debut` et du `seance_fin` de la séance
++    du jour [jour] dans le journal, ou None."""
++    i0 = None
++    for i, e in enumerate(journal):
++        if e['type'] == 'seance_debut' and e['jour'] == jour:
++            i0 = i
++        elif e['type'] == 'seance_fin' and e['jour'] == jour and i0 is not None:
++            return i0, i
++    return None
++
++
++def _rejouer_en_suivant(koach, journal, exercices):
++    """Rejoue [journal] dans un moteur neuf (mêmes paramètres, fiches et
++    profil que [koach]) ; renvoie exercice -> [(jour, e1RM estimé à frais)]
++    relevé à chaque fin de séance où l'exercice a été entraîné."""
++    k = Koach(koach.params, koach.fiches, koach.profil)
++    out = {ex: [] for ex in exercices}
++    for e in journal:
++        k.observe(e)
++        if e['type'] == 'seance_fin':
++            for ex in exercices:
++                t = k.modele.pistes.get(ex)
++                if t is not None and t.jour_seance == e['jour']:
++                    out[ex].append((e['jour'], math.exp(k.modele.capacite(ex)[0])))
++    return out
++
++
++def mauvais_jour_apparie_saison(cle, verite, graine, scenario='reference', baisse=MAUVAIS_JOUR):
++    """Contrefactuel apparié : la saison telle quelle donne un journal J.
++    Le journal contrefactuel est J jusqu'à la veille du mauvais jour, puis
++    la séance du mauvais jour telle que Koach l'a servie à l'athlète à
++    (1 − [baisse]) de sa capacité (mêmes tirages), puis les séances
++    SUIVANTES DE J, à l'identique (mêmes charges servies, mêmes répétitions,
++    mêmes notes). Les deux journaux sont rejoués dans deux moteurs neufs :
++    l'écart des e1RM mesure l'effet de l'observation du mauvais jour, et lui
++    seul (la saison ne diverge pas ensuite). Écarts relatifs juste après,
++    puis 1 et 2 séances de l'exercice plus tard."""
++    s = _saison(cle, scenario)
++    base, k_base = _saison_et_journal(s, verite, graine)
++    choix = choisir_jour(s, base)
++    ligne = {'profil': cle, 'scenario': scenario, 'verite': verite, 'graine': graine}
++    if choix is None:
++        ligne['jour'] = None
++        return ligne
++    jour, exercice = choix
++    _, k_mauvais = _saison_et_journal(s, verite, graine, classe_mauvais_jour(jour, baisse))
++    jb = json.loads(json.dumps(k_base.journal, default=_defaut))
++    jm = json.loads(json.dumps(k_mauvais.journal, default=_defaut))
++    sb = _seance_du_jour(jb, jour)
++    sm = _seance_du_jour(jm, jour)
++    if sb is None or sm is None or sb[0] != sm[0] or \
++            json.dumps(jb[:sb[0]], sort_keys=True) != json.dumps(jm[:sm[0]], sort_keys=True):
++        ligne.update({'jour': jour, 'erreur': 'journaux différents avant le mauvais jour'})
++        return ligne
++    contrefactuel = jb[:sb[0]] + jm[sm[0]:sm[1] + 1] + jb[sb[1] + 1:]
++    exercices = sorted(ex for ex, lst in _par_jour(base).items() if any(j == jour for (j, _) in lst))
++    eb = _rejouer_en_suivant(k_base, jb, exercices)
++    ec = _rejouer_en_suivant(k_base, contrefactuel, exercices)
++    ecarts = {}
++    jours_suivants = {}
++    n = len(HORIZONS)
++    for ex in exercices:
++        paires, jours = _suite(eb[ex], ec[ex], jour, n)
++        ecarts[ex] = [None if (x is None or y is None) else y / x - 1.0 for x, y in paires]
++        jours_suivants[ex] = jours
++    ligne.update({'jour': jour, 'semaine': jour // 7, 'exercice_declencheur': exercice, 'ecarts': ecarts,
++                  'jours': jours_suivants, 'series_du_jour': [sb[1] - sb[0], sm[1] - sm[0]]})
++    return ligne
++
++
+ def jobs_mauvais_jour(cles=PROFILS_CHARGES, verites='abc', graines=(0, 1)):
+     return [(cle, v, g) for cle in cles for v in verites for g in graines]
+ 
+ 
+-def mesurer_mauvais_jour(jobs=None, coeurs=2, baisse=MAUVAIS_JOUR):
++def mesurer_mauvais_jour(jobs=None, coeurs=2, baisse=MAUVAIS_JOUR, apparie=False):
++    """[apparie] : contrefactuel apparié (`mauvais_jour_apparie_saison`,
++    mesure du critère depuis C13.10.2.b) ; sinon les deux saisons simulées
++    séparément, qui divergent après le mauvais jour (mesure de KM1)."""
+     jobs = jobs_mauvais_jour() if jobs is None else jobs
+-    lignes, plantages = vk.paralleles(mauvais_jour_saison, jobs, coeurs=coeurs, kw={'baisse': baisse})
++    lignes, plantages = vk.paralleles(mauvais_jour_apparie_saison if apparie else mauvais_jour_saison, jobs,
++                                      coeurs=coeurs, kw={'baisse': baisse})
+     par = {h: [] for h in HORIZONS}
+     for ligne in lignes:
+         for vals in (ligne.get('ecarts') or {}).values():
+@@ -288,7 +381,9 @@ def mesurer_mauvais_jour(jobs=None, coeurs=2, baisse=MAUVAIS_JOUR):
+         'baisse': baisse,
+         'seances_avant': SEANCES_AVANT,
+         'saisons': len(jobs),
+-        'saisons_mesurees': sum(1 for x in lignes if x.get('jour') is not None),
++        'saisons_mesurees': sum(1 for x in lignes if x.get('jour') is not None and not x.get('erreur')),
++        'apparie': bool(apparie),
++        'erreurs': sum(1 for x in lignes if x.get('erreur')),
+         'ecart_abs': ecart_abs,
+         'ecart_signe_moyen': signe,
+         'critere': SEUIL_MAUVAIS_JOUR,
+diff --git a/packages/kalis_adapt/reference/koach/modele.py b/packages/kalis_adapt/reference/koach/modele.py
+index 7668845..84fc08e 100644
+--- a/packages/kalis_adapt/reference/koach/modele.py
++++ b/packages/kalis_adapt/reference/koach/modele.py
+@@ -42,8 +42,28 @@ DE = 25         # effet de jour de l'exercice en cours
+ KL = 26         # sensibilité au compartiment rapide, part locale (qualités sollicitées)
+ KG = 27         # sensibilité au compartiment lent, part systémique
+ NG = 28
+-C_LIN = 0.0265  # pente de la branche linéaire : -ln(part du 1RM) par répétition
+-C_LOG = 0.0892  # branche logarithmique, égale à la linéaire à 8 répétitions
++C_LIN = 0.0265  # pente de la courbe log-linéaire (forme 0) : -ln(part du 1RM) par répétition
++C_LOG = 0.0892  # courbe logarithmique (forme 1), égale à la log-linéaire à 8 répétitions
++G8 = C_LIN * 7.0            # -ln(part du 1RM) à 8 répétitions, échelle e^0, toutes formes
++LN8 = math.log(8.0)
++LAM_MIN = -0.8              # forme la plus convexe admise (au-delà de Brzycki, -0,30)
++LAM_MAX = 1.3               # forme la plus concave admise (au-delà de Lombardi, 1)
++
++
++def _phi(x):
++    """(e^x - 1) / x, série près de 0 (portable : ni expm1 ni log1p)."""
++    if -1e-2 < x < 1e-2:
++        return 1.0 + x * (0.5 + x * (1.0 / 6.0 + x * (1.0 / 24.0 + x * (1.0 / 120.0 + x * (
++            1.0 / 720.0 + x / 5040.0)))))
++    return (math.exp(x) - 1.0) / x
++
++
++def _phi1(x):
++    """Dérivée de `_phi` : (e^x (x - 1) + 1) / x², série près de 0."""
++    if -1e-2 < x < 1e-2:
++        return 0.5 + x * (1.0 / 3.0 + x * (0.125 + x * (1.0 / 30.0 + x * (1.0 / 144.0 + x * (
++            1.0 / 840.0 + x / 5760.0)))))
++    return (math.exp(x) * (x - 1.0) + 1.0) / (x * x)
+ CLASSES = ['charge', 'reps', 'tenue', 'cardio', 'wod']
+ ZONES_TENDON = ['epaule', 'coude', 'poignet', 'lombaires', 'genou', 'hanche', 'cheville']
+ 
+@@ -54,7 +74,7 @@ class Piste(object):
+     __slots__ = ('id', 'type', 'classe', 'vecteur', 'base', 'idx', 'fraction', 'bas',
+                  'tendon', 'zone_tendon', 'systemique', 'locale', 'seances', 'dernier_jour',
+                  'premier_jour', 'stim_semaine', 'series_seance', 'jour_seance', 'declare',
+-                 'dernier_test_jour', 'residus', 'cran', 'meilleur', 'mesures', 'groupes', 'groupes_total',
++                 'dernier_test_jour', 'dernier_vrai_test_jour', 'derniere_rampe_jour', 'residus', 'cran', 'meilleur', 'mesures', 'groupes', 'groupes_total',
+                  'jour_prevu', 'jour_vu')
+ 
+     def __init__(self, ex_id, typ, vecteur, base, idx, fraction=0.0, bas=False,
+@@ -80,6 +100,8 @@ class Piste(object):
+         self.jour_seance = None
+         self.declare = declare
+         self.dernier_test_jour = None
++        self.dernier_vrai_test_jour = None   # dernier test (montée, tentative) arrivé près de l'échec
++        self.derniere_rampe_jour = None      # dernière série de test, informative ou non
+         self.residus = []
+         self.cran = None
+         self.meilleur = None
+@@ -269,7 +291,7 @@ class Modele(object):
+         return out
+ 
+     # ------------------------------------------------------------------
+-    # Courbe répétitions ↔ charge : g(R) = e^k (c1 ln R + c2 (R - 1))
++    # Courbe répétitions ↔ charge : famille de Box-Cox, g(R) = e^k G8 B(R, γ) / B(8, γ)
+     # ------------------------------------------------------------------
+     def _courbe_moyenne(self, reps, bas):
+         ap = self.p['a_priori']
+@@ -278,39 +300,69 @@ class Modele(object):
+ 
+     @staticmethod
+     def _g(lam, k, reps):
+-        """-ln(part du 1RM soulevable [reps] fois) : mélange d'une branche
+-        linéaire (Epley, Brzycki) et d'une branche logarithmique (Lombardi),
+-        égales à 8 répétitions ; [lam] choisit la forme, e^[k] l'échelle."""
++        """-ln(part du 1RM soulevable [reps] fois). Famille de Box-Cox en
++        répétitions : g = e^k · G8 · B(R, γ) / B(8, γ), B(R, γ) = (R^γ - 1) / γ
++        et γ = 1 - [lam]. Toutes les formes se croisent à 8 répétitions ;
++        [lam] = 1 : logarithmique (Lombardi) ; 0 : log-linéaire ; négatif :
++        convexe (part du 1RM linéaire en répétitions : Brzycki, Lander ≈ -0,3) ;
++        e^[k] : échelle. La famille reproduit sept équations publiées à moins
++        de 1,8 % de charge entre 2 et 20 répétitions (SOURCES.md § Courbe)."""
+         r = 1.0 if reps < 1 else reps
+-        return math.exp(k) * ((1.0 - lam) * C_LIN * (r - 1.0) + lam * C_LOG * math.log(r))
++        gam = 1.0 - lam
++        a = math.log(r)
++        return math.exp(k) * G8 * a * _phi(gam * a) / (LN8 * _phi(gam * LN8))
+ 
+     @staticmethod
+     def _dg(lam, k, reps):
++        """Dérivée de g par rapport aux répétitions (plancher 0,004)."""
+         r = 1.0 if reps < 1 else reps
+-        d = math.exp(k) * ((1.0 - lam) * C_LIN + lam * C_LOG / r)
++        gam = 1.0 - lam
++        d = math.exp(k) * G8 * math.exp((gam - 1.0) * math.log(r)) / (LN8 * _phi(gam * LN8))
+         return d if d > 0.004 else 0.004
+ 
++    @staticmethod
++    def _dg_forme(lam, k, reps):
++        """Dérivée de g par rapport à la forme [lam]."""
++        r = 1.0 if reps < 1 else reps
++        gam = 1.0 - lam
++        a = math.log(r)
++        den = LN8 * _phi(gam * LN8)
++        num = a * _phi(gam * a)
++        d_gam = math.exp(k) * G8 * (a * a * _phi1(gam * a) * den - num * LN8 * LN8 * _phi1(gam * LN8)) / (den * den)
++        return -d_gam
++
+     def courbe(self, t, m=None):
+         """(forme, échelle) de la courbe de l'exercice : forme et échelle
+         de l'utilisateur, échelle propre à l'exercice."""
+         m = self.m if m is None else m
+-        return clamp(m[LAM], -0.3, 1.2), clamp(m[KU] + m[t.idx + 1], -1.0, 1.0)
++        return clamp(m[LAM], LAM_MIN, LAM_MAX), clamp(m[KU] + m[t.idx + 1], -1.0, 1.0)
++
++    @staticmethod
++    def _reps_de(lam, k, log_ratio):
++        """Inverse de g (forme fermée) : répétitions R telles que
++        g(lam, k, R) = [log_ratio] > 0, bornées à 200."""
++        gam = 1.0 - lam
++        y = log_ratio * LN8 * _phi(gam * LN8) / (math.exp(k) * G8)   # B(R, γ)
++        u = gam * y
++        if u <= -1.0 + 1e-12:
++            return 200.0          # forme concave : charge sous l'asymptote
++        if -1e-2 < u < 1e-2:
++            ln_r = y * (1.0 + u * (-0.5 + u * (1.0 / 3.0 + u * (-0.25 + u * (0.2 + u * (
++                -1.0 / 6.0 + u / 7.0))))))
++        else:
++            ln_r = math.log(1.0 + u) / gam
++        if ln_r > 5.298317366548036:      # ln 200
++            return 200.0
++        r = math.exp(ln_r)
++        return r if r > 1.0 else 1.0
+ 
+     def reps_a(self, t, log_ratio, m=None):
+         """Répétitions possibles quand ln(capacité / charge) = log_ratio
+-        (inverse de g, Newton à nombre de pas fixe)."""
++        (inverse de g)."""
+         lam, k = self.courbe(t, m)
+         if log_ratio <= 0:
+             return 1.0 + log_ratio * 20.0 if log_ratio > -0.05 else 0.0
+-        r = 1.0 + log_ratio / self._dg(lam, k, 1.0)
+-        for _ in range(12):
+-            f = self._g(lam, k, r) - log_ratio
+-            r -= f / self._dg(lam, k, r)
+-            if r < 1.0:
+-                r = 1.0
+-            if r > 200.0:
+-                r = 200.0
+-        return r
++        return self._reps_de(lam, k, log_ratio)
+ 
+     # ------------------------------------------------------------------
+     # Compartiments de fatigue
+@@ -521,6 +573,14 @@ class Modele(object):
+             co += [1.0, 1.0, -gn, -ln_, -gm, -lm]
+         return idx, co
+ 
++    def _fige_mauvais_jour(self, t):
++        """Composantes de capacité de la piste (qualités sollicitées, écart
++        de l'exercice) : considérées dans la branche « mauvais jour » quand
++        `jour.mauvais_jour_fige_capacite` est vrai."""
++        if not self.p['jour'].get('mauvais_jour_fige_capacite'):
++            return None
++        return tuple(self._h_capacite(t, jour=False)[0])
++
+     @staticmethod
+     def _stats(m, P, idx, co):
+         """Moyenne et variance de h·x, et le vecteur P h."""
+@@ -552,7 +612,7 @@ class Modele(object):
+         P -= w * (np.outer(pg, ph) + np.outer(ph, pg) - np.outer(pg, pg))
+ 
+     def _observer(self, idx, co, const, a, b, s2, point=None, melange=None, bruit=None, fonction=None,
+-                  fige=None):
++                  fige=None, fige_alt=None):
+         """Applique une observation aux deux branches. [a, b] : intervalle sur
+         u = h·x + const ; [point] : valeur observée ; [melange] = (poids de
+         la note sincère, poids d'une note sans information) ajoute une
+@@ -604,6 +664,12 @@ class Modele(object):
+             if v <= 0.0:
+                 continue
+             pg = ph
++            if bi == 1 and fige_alt:
++                # Branche « mauvais jour » : la séance s'explique par l'effet
++                # de jour ; les capacités ([fige_alt]) y sont « considérées »,
++                # non déplacées. Un mauvais jour isolé ne déplace alors la
++                # capacité que par la part de la branche normale.
++                fige = tuple(fige or ()) + tuple(fige_alt)
+             if fige:
+                 # Composantes « considérées » : elles pèsent dans la variance
+                 # prévue mais l'observation ne les déplace pas.
+@@ -758,10 +824,10 @@ class Modele(object):
+             for i in (KN, KM, KL, KG):
+                 if m[i] < 0.0:
+                     m[i] = 0.0
+-            if m[LAM] < -0.3:
+-                m[LAM] = -0.3
+-            if m[LAM] > 1.2:
+-                m[LAM] = 1.2
++            if m[LAM] < LAM_MIN:
++                m[LAM] = LAM_MIN
++            if m[LAM] > LAM_MAX:
++                m[LAM] = LAM_MAX
+ 
+     def _lin_force(self, t, m, lnL, reps, sj, sans_charge, percu):
+         """Linéarise, autour de la moyenne [m], la réserve de la série :
+@@ -791,7 +857,7 @@ class Modele(object):
+                 d = self._dg(lam, k, R)
+                 r1 = R if R > 1 else 1.0
+                 dR = 1.0 / d
+-                dlam = -math.exp(k) * (C_LOG * math.log(r1) - C_LIN * (r1 - 1.0)) / d
++                dlam = -self._dg_forme(lam, k, r1) / d
+                 dk = -self._g(lam, k, R) / d
+         v = R * garde - reps
+         coefs = [c * dR * garde for c in co]
+@@ -837,7 +903,8 @@ class Modele(object):
+             # Barre manquée : la capacité du moment est sous la charge.
+             if not sans_charge:
+                 idx, co = self._h_capacite(t)
+-                resid = self._observer(idx, co, t.base - lnL, -INF, 0.0, me['bruit_test'] ** 2)
++                resid = self._observer(idx, co, t.base - lnL, -INF, 0.0, me['bruit_test'] ** 2,
++                                       fige_alt=self._fige_mauvais_jour(t))
+             rir_c = 0.0
+         else:
+             percu = not (echec or flammes is None)
+@@ -918,7 +985,7 @@ class Modele(object):
+                 if flammes is None and not echec:
+                     fige = (LAM,) if sans_charge else (LAM, t.idx + 1)
+                 resid = self._observer(idx, co, const, a, b, s2, melange=melange, bruit=bruit,
+-                                       fonction=exacte, fige=fige)
++                                       fonction=exacte, fige=fige, fige_alt=self._fige_mauvais_jour(t))
+             if percu and f_cible is not None and resid is not None and abs(resid[1]) > 1.0:
+                 # Notes paresseuses : part des notes égales à la note
+                 # préremplie quand l'attendu en est à plus d'une répétition.
+@@ -939,6 +1006,15 @@ class Modele(object):
+         t.mesures += 1
+         if echec or s.get('repere') or s.get('role') in ('test', 'attempt'):
+             t.dernier_test_jour = self.jour
++        if s.get('role') in ('test', 'attempt'):
++            # Horloges du vrai test : toute série de test, et celles qui sont
++            # arrivées près de l'échec (échec, ou réserve dite d'au plus
++            # `vrai_test_rir_informatif`) : seules ces dernières mesurent
++            # vraiment le maximum et espacent le test suivant de 14 jours.
++            t.derniere_rampe_jour = self.jour
++            ri = self.p['test_adaptatif']['vrai_test_rir_informatif']
++            if echec or (flammes is not None and (flammes >= 10 or (11 - flammes) / 2.0 <= ri + 1e-9)):
++                t.dernier_vrai_test_jour = self.jour
+         if reps > 0 and not echec and not sans_charge:
+             if t.meilleur is None or charge > t.meilleur[0]:
+                 t.meilleur = (charge, self.jour)
+@@ -1032,7 +1108,8 @@ class Modele(object):
+         bt = me['bruit_tenue']
+         extra = (me['dispersion_fatigue_intra'] * sj) ** 2
+         if echec:
+-            resid = self._observer(idx, co, t.base - ln_s, None, None, (bt / 2) ** 2 + extra, point=0.0)
++            resid = self._observer(idx, co, t.base - ln_s, None, None, (bt / 2) ** 2 + extra, point=0.0,
++                                   fige_alt=self._fige_mauvais_jour(t))
+             rir_c = 0.0
+         elif flammes is None:
+             # Tenue faite sans note : versée seulement si la prévision la
+@@ -1040,7 +1117,8 @@ class Modele(object):
+             mu0, _, _ = self._stats(self.m, self.P, idx, co)
+             resid = None
+             if mu0 + t.base - ln_s < 0.0:
+-                resid = self._observer(idx, co, t.base - ln_s, 0.0, INF, bt ** 2 + extra)
++                resid = self._observer(idx, co, t.base - ln_s, 0.0, INF, bt ** 2 + extra,
++                                       fige_alt=self._fige_mauvais_jour(t))
+             rir_c = 2.0
+         else:
+             if flammes >= 10:
+@@ -1076,7 +1154,7 @@ class Modele(object):
+             def exacte(etat, t=t, ln_s=ln_s):
+                 return self._lin_tenue(t, etat, ln_s, True)[2]
+             resid = self._observer(ix, cx, const, a, b, bruit(pred), melange=melange, bruit=bruit,
+-                                   fonction=exacte)
++                                   fonction=exacte, fige_alt=self._fige_mauvais_jour(t))
+             self._projeter()
+             r = self._lin_tenue(t, self.m, ln_s, False)[3]
+             rir_c = r if r > 0 else 0.0
+diff --git a/packages/kalis_adapt/reference/koach/planification.py b/packages/kalis_adapt/reference/koach/planification.py
+index 23920e3..4a67d52 100644
+--- a/packages/kalis_adapt/reference/koach/planification.py
++++ b/packages/kalis_adapt/reference/koach/planification.py
+@@ -32,9 +32,9 @@ import math
+ 
+ import numpy as np
+ 
+-from .modele import NQ, RHO, EPS, KG, CLASSES, C_LIN, C_LOG
++from .modele import NQ, RHO, EPS, KG, CLASSES, Modele, G8, LN8, _phi
+ from .moteur import Extension
+-from .numerique import Mulberry32, fnv1a32, clamp, cholesky_semi, arrondi
++from .numerique import Mulberry32, fnv1a32, clamp, cholesky_semi, arrondi, norm_ppf
+ 
+ SEMAINES_VERROUILLEES = ('intro', 'deload', 'taper', 'test', 'competition', 'transition')
+ GRILLE_INTENSITE = (-0.05, -0.025, 0.0, 0.025, 0.05)
+@@ -109,6 +109,7 @@ class Planification(Extension):
+         self.historique = []      # une ligne par replanification
+         self.constats_reference = None
+         self.poids_corps = 72.0
++        self._prevu_jour = None   # (moyenne, écart-type) de ln capacité du jour J prévue, par exercice suivi
+ 
+     # ------------------------------------------------------------------
+     # Référence
+@@ -145,12 +146,13 @@ class Planification(Extension):
+         return lam, k
+ 
+     def _g(self, lam, k, r):
+-        r = 1.0 if r < 1 else r
+-        return math.exp(k) * ((1.0 - lam) * C_LIN * (r - 1.0) + lam * C_LOG * math.log(r))
++        return Modele._g(lam, k, r)
+ 
+     def _dg(self, lam, k, r):
++        """Pente de la courbe, sans le plancher de `Modele._dg`."""
+         r = 1.0 if r < 1 else r
+-        return math.exp(k) * ((1.0 - lam) * C_LIN + lam * C_LOG / r)
++        gam = 1.0 - lam
++        return math.exp(k) * G8 * math.exp((gam - 1.0) * math.log(r)) / (LN8 * _phi(gam * LN8))
+ 
+     def lignes_item(self, item, ecart=0.0):
+         """Séries d'une prescription sous un écart d'intensité : liste de
+@@ -341,8 +343,24 @@ class Planification(Extension):
+         for ex in self.suivis:
+             t = m.piste(ex)
+             classes.append(t.classe if (t is not None and t.classe is not None) else 0)
++        # Jour de l'échéance (tirés après tous les autres : les nombres
++        # aléatoires communs des tirages précédents ne bougent pas) : effet
++        # de jour de la SÉANCE, commun à toutes les cibles testées ce
++        # jour-là ; erreur de l'estimation que Koach aura lui-même le jour J
++        # (c'est elle qui fixe les barres tentées) ; manque de l'échelle des
++        # tentatives par rapport à sa barre la plus haute possible.
++        bruit_seance = np.empty(n)
++        bruit_est = np.empty((n, max(E, 1)))
++        manque = np.empty((n, max(E, 1)))
++        for a in range(n):
++            bruit_seance[a] = rng.gauss()
++            for b in range(max(E, 1)):
++                bruit_est[a, b] = rng.gauss()
++                u = rng.next()
++                manque[a, b] = -math.log(1.0 - u if u < 1.0 - 1e-12 else 1e-12)
+         return {'mu': x[:, :E], 'rho': x[:, E], 'eps': x[:, E + 1:], 'hyp': hyp,
+                 'bruit_jour': bruit_jour, 'bruit_proc': bruit_proc, 'classes': classes,
++                'bruit_seance': bruit_seance, 'bruit_est': bruit_est, 'manque': manque,
+                 'fatigue': float(m.f_g[1]), 'kg': float(m.m[KG]), 'semaines': m.semaines,
+                 'hypotheses': list(m.hypotheses)}
+ 
+@@ -483,20 +501,52 @@ class Planification(Extension):
+             mu_fin = tirage['mu'].T[None, :, :] + g_n * taux.T[None, :, :] + proc * tirage['bruit_proc'].T[None, :, :]
+             if self.cibles and jour_ech is not None:
+                 j = self.params['jour']
+-                # Le jour J compte la barre RÉUSSIE, pas la capacité : le
+-                # rendement d'un test (meilleure barre / maximum vrai du
+-                # jour) a une moyenne (`marge_cible`) et une dispersion
+-                # (`rendement_test_sd`) mesurées sur le banc.
+-                sd_jour = math.sqrt(j['sigma_seance'] ** 2 + j['sigma_exercice'] ** 2
+-                                    + pl['rendement_test_sd'] ** 2)
++                sec = self.params['securite']
+                 fe = f_ech if f_ech is not None else F
+-                jour = mu_fin - tirage['kg'] * fe[:, None, None] + sd_jour * tirage['bruit_jour'].T[None, :, :]
++                # Capacité à frais le jour J (fatigue lente comprise), puis
++                # capacité du jour : effet de jour de la séance (commun aux
++                # cibles : elles réussissent ou échouent ensemble) et de
++                # l'exercice ; gain moyen de l'affûtage mesuré sur le banc.
++                frais = mu_fin - tirage['kg'] * fe[:, None, None] + pl['gain_affutage']
++                self._prevu_jour = (frais[0].mean(axis=1), frais[0].std(axis=1))
++                jour = frais + j['sigma_seance'] * tirage['bruit_seance'][None, None, :] \
++                    + j['sigma_exercice'] * tirage['bruit_jour'].T[None, :, :]
+                 tout = np.ones((C, N), dtype=bool)
++                z1 = norm_ppf(sec['tentative_ouverture_proba'])
++                z2 = norm_ppf(sec['tentative_deuxieme_proba'])
++                z3 = norm_ppf(sec['tentative_troisieme_proba'])
++                zc = norm_ppf(pl['tentative_cible_proba'])
++                sj = pl['tentative_sd_jour']
+                 for e, ex in enumerate(self.suivis):
+                     if ex not in self.cibles:
+                         continue
+-                    seuil = math.log(self.cibles[ex]) + pl['marge_cible']
+-                    ok = jour[:, e, :] >= seuil
++                    ln_t = math.log(self.cibles[ex])
++                    if self.fiches[ex]['type'] == 'charge':
++                        # Cible chargée : le jour J compte la barre RÉUSSIE.
++                        # Elle est atteinte si l'échelle des tentatives
++                        # (règles A8.2 de 0.3.1, `seance._tentative`) va
++                        # jusqu'à la cible ET si l'athlète la soulève.
++                        # L'échelle part de l'estimation que Koach aura ce
++                        # jour-là : capacité vraie + erreur d'estimation.
++                        est = frais[:, e, :] + pl['erreur_estimation_echeance_sd'] * tirage['bruit_est'][:, e][None, :]
++                        a1 = est + min(math.log(sec['tentative_ouverture_part']), -z1 * sj)
++                        a2 = np.minimum(np.minimum(est - z2 * sj, a1 + math.log(1.0 + sec['tentative_saut_2'])),
++                                        np.log(np.exp(a1) + sec['tentative_saut_kg']))
++                        a3 = np.minimum(a2 + math.log(1.0 + sec['tentative_saut_3']),
++                                        np.log(np.exp(a2) + sec['tentative_saut_kg']))
++                        # Dernier essai : la barre visée est tentée si elle
++                        # est à portée de saut et tenue pour assez probable ;
++                        # sinon la barre du quantile de la 3e tentative.
++                        vise = (ln_t <= a3) & (ln_t <= est - zc * sj)
++                        haut = np.where(vise, a3, np.minimum(a3, est - z3 * sj))
++                        haut = haut - pl['tentative_manque'] * tirage['manque'][:, e][None, :]
++                        ok = (haut >= ln_t - 1e-12) & (jour[:, e, :] >= ln_t)
++                    else:
++                        # Répétitions ou tenue maximales : rendement du test
++                        # (valeur faite / maximum du jour) et dispersion de
++                        # la prévision mesurés sur le banc.
++                        ok = jour[:, e, :] + pl['rendement_test_sd'] * tirage['bruit_est'][:, e][None, :] \
++                            >= ln_t + pl['marge_cible']
+                     P_cible[:, e] = ok.mean(axis=1)
+                     tout &= ok
+                 J = tout.mean(axis=1)
+@@ -657,6 +707,9 @@ class Planification(Extension):
+                       'objectif': float(det['J'][0]), 'transport': float(dist[0]),
+                       'p_cibles': {ex: float(pc[0, e]) for e, ex in enumerate(self.suivis) if ex in self.cibles},
+                       'p_cibles_reference': {ex: float(p_ref[0, e]) for e, ex in enumerate(self.suivis) if ex in self.cibles},
++                      'prevu_jour': ({ex: [float(self._prevu_jour[0][e]), float(self._prevu_jour[1][e])]
++                                      for e, ex in enumerate(self.suivis) if ex in self.cibles}
++                                     if getattr(self, '_prevu_jour', None) is not None else {}),
+                       'volume': {str(b): [arrondi(float(x), 4) for x in vol[b]] for b in blocs},
+                       'intensite': {str(b): arrondi(float(inten[b]), 4) for b in blocs},
+                       'qualites': list(qualites)})
+diff --git a/packages/kalis_adapt/reference/koach/rupture.py b/packages/kalis_adapt/reference/koach/rupture.py
+index 8278dec..5960cbf 100644
+--- a/packages/kalis_adapt/reference/koach/rupture.py
++++ b/packages/kalis_adapt/reference/koach/rupture.py
+@@ -50,6 +50,12 @@ DEFAUTS_RUPTURE = {
+     'journal_dossier': 60,          # événements du journal dans le dossier
+     'douleur_recente_j': 7,         # une douleur compte si signalée depuis 7 jours au plus
+     'residu_reps_reference': 8.0,   # répétitions de référence de la conversion réserve -> e1RM
++    # Mauvais jours répétés : la branche « mauvais jour » du modèle garde la
++    # capacité à l'abri d'UN mauvais jour ; `mauvais_jours_suite` séances de
++    # suite tenues pour de mauvais jours (poids >= `mauvais_jour_poids`) ne
++    # sont plus un mauvais jour isolé : la cause « rupture » se lève.
++    'mauvais_jours_suite': 2,
++    'mauvais_jour_poids': 0.5,
+ }
+ 
+ CAUSES = ('rupture', 'residu', 'assiduite', 'douleur')
+@@ -380,6 +386,7 @@ class Surveillance(Extension):
+         self.alertes = [False, False, False, False]   # par cause, ordre CAUSES
+         self.silence = [-1, -1, -1, -1]               # semaine de fin de silence
+         self.p = 0.0
++        self.mj_suite = 0                             # séances de suite tenues pour de mauvais jours
+         self.douleur_zones = []                       # zones > seuil (triées)
+         self.reponses = []
+         # Semaine allégée en cours : [jour de début, jour de fin (exclu),
+@@ -397,6 +404,8 @@ class Surveillance(Extension):
+         self.silence_semaines = int(_param(params, 'silence_semaines'))
+         self.douleur_recente_j = int(_param(params, 'douleur_recente_j'))
+         self.residu_reps = float(_param(params, 'residu_reps_reference'))
++        self.mj_suite_max = int(_param(params, 'mauvais_jours_suite'))
++        self.mj_poids = float(_param(params, 'mauvais_jour_poids'))
+ 
+     # ------------------------------------------------------------------
+     # Événements
+@@ -405,6 +414,8 @@ class Surveillance(Extension):
+         self.faites += 1
+         if resume is not None:
+             self.p = self.bocpd.ajouter(resume[1])
++            if len(resume) > 4 and resume[4] is not None:
++                self.mj_suite = self.mj_suite + 1 if resume[4] >= self.mj_poids else 0
+             if len(resume) > 5:
+                 # Résidu d'e1RM de la séance calculé par le modèle : écart
+                 # (ln) entre la capacité du jour après la séance et la
+@@ -540,7 +551,8 @@ class Surveillance(Extension):
+         prévenues (contrôle dual : l'essai N-of-1 en cours est interrompu)."""
+         avant = self.etat()['hors_modele']
+         self.douleur_zones = self._douleur(koach)
+-        actives = [self.p > self.alerte, self._residu_actif(), self._assiduite_active(),
++        repetes = self.mj_suite_max >= 1 and self.mj_suite >= self.mj_suite_max
++        actives = [self.p > self.alerte or repetes, self._residu_actif(), self._assiduite_active(),
+                    len(self.douleur_zones) > 0]
+         for c in range(4):
+             if actives[c] and self.semaine >= self.silence[c]:
+@@ -649,6 +661,7 @@ class Surveillance(Extension):
+             self.bocpd.reinitialiser()
+             self.p = 0.0
+             action = {'action': 'elargir', 'facteur': facteur}
++        self.mj_suite = 0
+         # Acquittement : chaque cause levée se tait `silence_semaines` semaines.
+         for c in range(4):
+             if self.alertes[c]:
+@@ -668,7 +681,8 @@ class Surveillance(Extension):
+             'bocpd': self.bocpd.etat(), 'semaine': self.semaine, 'faites': self.faites,
+             'manquees': self.manquees, 'somme_rel': self.somme_rel, 'n_rel': self.n_rel,
+             'semaines': [list(s) for s in self.semaines], 'alertes': list(self.alertes),
+-            'silence': list(self.silence), 'p': self.p, 'douleur_zones': list(self.douleur_zones),
++            'silence': list(self.silence), 'p': self.p, 'mj_suite': self.mj_suite,
++            'douleur_zones': list(self.douleur_zones),
+             'reponses': _copie(self.reponses),
+             'allegement': None if self.allegement is None else list(self.allegement),
+         }
+@@ -687,6 +701,7 @@ class Surveillance(Extension):
+         s.alertes = [bool(a) for a in etat['alertes']]
+         s.silence = [int(v) for v in etat['silence']]
+         s.p = float(etat['p'])
++        s.mj_suite = int(etat.get('mj_suite', 0))
+         s.douleur_zones = list(etat['douleur_zones'])
+         s.reponses = _copie(etat['reponses'])
+         a = etat.get('allegement')
+@@ -782,6 +797,8 @@ FIGEES = (
+     ('controle_dual', 'semaines_min'), ('controle_dual', 'intervalle_max'),
+     ('controle_dual', 'synthetique_semaines_min'), ('controle_dual', 'bras_semaines'),
+     ('test_adaptatif', 'intervalle_declenchement'), ('test_adaptatif', 'jours_min_entre_tests'),
++    ('test_adaptatif', 'jours_min_entre_rampes'), ('test_adaptatif', 'rampe_pas_cran'),
++    ('test_adaptatif', 'rampe_cran_rir_marge'),
+     ('rupture', 'douleur_secours'),
+ )
+ 
+diff --git a/packages/kalis_adapt/reference/koach/seance.py b/packages/kalis_adapt/reference/koach/seance.py
+index 6ce49ec..9e355ce 100644
+--- a/packages/kalis_adapt/reference/koach/seance.py
++++ b/packages/kalis_adapt/reference/koach/seance.py
+@@ -287,6 +287,7 @@ class Seances(object):
+         self.dures_semaines = {}  # semaine -> séries dures servies, tous groupes (allègements)
+         self.ecrit_semaines = {}  # semaine -> séries dures écrites des séances vues (allègements)
+         self.allegees = {}       # semaine -> semaine allégée par nature (`semaines_allegees`)
++        self.genres = {}         # semaine -> intention ou genre de la semaine (affûtage, compétition…)
+         self.servis = None       # items servis de la séance en cours (comptés à la fin de séance)
+         self.retour_vol = None   # budgets de la séance en cours (`_budgets_retour`)
+ 
+@@ -330,14 +331,8 @@ class Seances(object):
+         lam0 = ap['courbe_forme'][0]
+         k0 = ap['courbe_echelle'][0] + (ap['courbe_bas_du_corps'] if t.bas else 0.0)
+         x = -math.log(part)
+-        # Inverse de g sur la courbe de population (Newton, pas fixes).
+-        r = 1.0 + x / m._dg(lam0, k0, 1.0)
+-        for _ in range(12):
+-            r -= (m._g(lam0, k0, r) - x) / m._dg(lam0, k0, r)
+-            if r < 1.0:
+-                r = 1.0
+-            if r > 200.0:
+-                r = 200.0
++        # Inverse de g sur la courbe de population (forme fermée).
++        r = m._reps_de(lam0, k0, x) if x > 0 else 1.0
+         lam, k = m.courbe(t)
+         return math.exp(mu - m._g(lam, k, r))
+ 
+@@ -409,6 +404,7 @@ class Seances(object):
+         self.contexte = contexte
+         if contexte and contexte.get('semaine') is not None:
+             self.g.noter_semaine(contexte['semaine'], contexte.get('genre'), contexte.get('intention'))
++            self.genres[contexte['semaine']] = contexte.get('intention') or contexte.get('genre')
+         self.palier, self.decalage = self.g.palier_bilan(bilan)
+         self.coupure = self._coupure(jour)
+         self.retour = self._retour(jour)
+@@ -1531,7 +1527,7 @@ class Seances(object):
+             hi = lo
+         return lo, hi
+ 
+-    def _mesure_utile(self, item, plan, t):
++    def _mesure_utile(self, item, plan, t, vrai=False):
+         """Vrai si une mesure près de l'échec est utile et permise : intervalle
+         à 90 % de la capacité au-delà de ± 6 % (cahier § 5), rien de mesuré
+         depuis 14 jours, et aucune des contre-indications de 0.3.1 (A8.3) :
+@@ -1563,7 +1559,19 @@ class Seances(object):
+         cap = self.m.capacite(item['exerciseId'])
+         if 1.6448536269514722 * cap[1] <= ta['intervalle_declenchement']:
+             return False
+-        if t.dernier_test_jour is not None and self.jour - t.dernier_test_jour < ta['jours_min_entre_tests']:
++        if vrai:
++            # Vrai test : espacé de 14 jours du dernier test arrivé près de
++            # l'échec, et de `jours_min_entre_rampes` de toute montée (une
++            # montée arrêtée loin de l'échec n'a rien mesuré : elle ne bloque
++            # pas la suivante pendant 14 jours). Une série repère, loin du
++            # maximum, ne remplace pas un vrai test.
++            if t.dernier_vrai_test_jour is not None and \
++                    self.jour - t.dernier_vrai_test_jour < ta['jours_min_entre_tests']:
++                return False
++            if t.derniere_rampe_jour is not None and \
++                    self.jour - t.derniere_rampe_jour < ta['jours_min_entre_rampes']:
++                return False
++        elif t.dernier_test_jour is not None and self.jour - t.dernier_test_jour < ta['jours_min_entre_tests']:
+             return False
+         if self.g.niveau == 0 and t.seances < 3:
+             return False
+@@ -1607,7 +1615,9 @@ class Seances(object):
+         budget = (self.contexte or {}).get('budget')
+         if budget is None:
+             return deja == 0
+-        n = ta['rampe_series_max'] + (2 if vt[0] == 1 else 0)
++        # Séries de la montée : au plus les séries dures permises (séries
++        # écrites de la ligne moins une), plus une série encore facile.
++        n = min(ta['rampe_series_max'] + (2 if vt[0] == 1 else 0), max(1, int(item.get('sets') or 0) - 1) + 1)
+         repos = max(item.get('restSeconds') or 0, ta['repos_test_s'])
+         ajout = 45.0 + n * vt[0] * 3.0 + (n - 1) * repos
+         retire = min(int(ta['rampe_series_travail']), int(item.get('sets') or 0) - 1)
+@@ -1629,7 +1639,7 @@ class Seances(object):
+             return None
+         if item.get('sets', 0) < 2:
+             return None
+-        if t is None or t.seances < 1 or not self._mesure_utile(item, plan, t):
++        if t is None or t.seances < 1 or not self._mesure_utile(item, plan, t, vrai=True):
+             return None
+         # Grille trop grossière pour une montée (cran de plus de 10 % de la
+         # charge totale) : la mesure se fait en répétitions (série repère).
+@@ -1643,7 +1653,11 @@ class Seances(object):
+             # rampe (le maximum connu est trop ancien pour borner la montée).
+             return None
+         bw = t.fraction * self.m.poids_kg
+-        if grille.suivant(ref) + bw > (ref + bw) * (1 + ta['rampe_pas']) + 1e-9:
++        if grille.suivant(ref) + bw > (ref + bw) * (1 + ta['rampe_pas_cran']) + 1e-9:
++            # Cran de la grille au-delà de `rampe_pas_cran` de la charge
++            # totale : pas de montée. Jusque-là, un cran reste permis (« un
++            # cran toujours permis », A7.2 de 0.3.1), seulement après une
++            # série dite très facile (`_rampe`).
+             return None
+         if self.g.niveau == 0:
+             return ta['test_reps_debutant'], ta['test_rir_debutant']
+@@ -2112,7 +2126,26 @@ class Seances(object):
+                     recente = c
+             if recente is None:
+                 return None   # pas de barre récente : pas de rampe
+-            plafond = (recente + bw) * (1 + ta['repere_hausse']) - bw
++            # Première barre de la montée : jamais plus que ce que les barres
++            # réussies des 42 derniers jours justifient, avec la règle du
++            # premier passage à un schéma de 0.3.1 (A7.2, déjà celle de
++            # l'ouverture d'une tentative) : +10 %, et +2,5 % par répétition
++            # faite au-delà de celles de la montée (4 au plus). Partir de
++            # +10 % sur une barre de 10 répétitions faisait commencer une
++            # montée de 3 répétitions à 7 répétitions de l'échec : la montée
++            # s'arrêtait, faute de séries, avant d'avoir rien mesuré.
++            plafond = None
++            for (j, c, r) in mem.charges_reussies:
++                if self.jour - j > self.s['barre_recente_j']:
++                    continue
++                plus = r - n_t
++                if plus < 0:
++                    plus = 0
++                if plus > self.s['schema_change_reps_max']:
++                    plus = self.s['schema_change_reps_max']
++                b = (c + bw) * (1 + ta['repere_hausse']) * (1 + self.s['schema_change_part'] * plus) - bw
++                if plafond is None or b > plafond:
++                    plafond = b
+             if voulu > plafond:
+                 voulu = plafond
+         else:
+@@ -2169,6 +2202,14 @@ class Seances(object):
+             suivant = grille.suivant(plan['charge_item'])
+             if (suivant + bw) <= (plan['charge_item'] + bw) * (1 + ta['rampe_pas']) + 1e-9:
+                 charge = suivant
++            elif (suivant + bw) <= (plan['charge_item'] + bw) * (1 + ta['rampe_pas_cran']) + 1e-9 \
++                    and dit >= rir_t + ta['rampe_cran_rir_marge'] - 1e-9:
++                # Grille grossière : un cran entier, seulement après une série
++                # dite très facile et si le modèle tient la barre pour faisable.
++                pr = self.proba_reussite(ex_id, suivant, n_t)
++                if pr is None or pr < ta['rampe_proba_min']:
++                    return None
++                charge = suivant
+             else:
+                 return None
+         # L'effort affiché d'une série de montée est « deux en réserve » :
+@@ -2202,6 +2243,15 @@ class Seances(object):
+             return grille.plancher(max(total - bw, grille.minimum))
+ 
+         if index == 0 or mem.charge_seance is None:
++            # A8.2 de 0.3.1 : avant la première barre seulement, le maximum
++            # estimé du jour est relevé du gain de l'affûtage quand la
++            # semaine du jour (ou la précédente) est d'affûtage ou de
++            # compétition (`coachTaperGain` 0,02 en 0.3.1 ; ici le gain
++            # mesuré sur le banc, plus petit).
++            sem = (self.contexte or {}).get('semaine')
++            if sem is not None and (self.genres.get(sem) in ('taper', 'competition')
++                                    or self.genres.get(sem - 1) in ('taper', 'competition')):
++                mu += self.p['planification']['gain_affutage']
+             charge = plus_lourde(s['tentative_ouverture_proba'], s['tentative_ouverture_part'] * math.exp(mu))
+             # Règle A8.2 de 0.3.1 : une barre réussie dans les 42 derniers
+             # jours, plus légère que l'ouverture calculée et à 85 % au moins
+diff --git a/packages/kalis_adapt/reference/params/koach_params_v1.json b/packages/kalis_adapt/reference/params/koach_params_v1.json
+index ecf1ad2..0a99057 100644
+--- a/packages/kalis_adapt/reference/params/koach_params_v1.json
++++ b/packages/kalis_adapt/reference/params/koach_params_v1.json
+@@ -1,8 +1,8 @@
+ {
+   "schema": 1,
+-  "version": "1.0.0-ref.1",
+-  "date": "2026-10-09",
+-  "note": "Paramètres initiaux de Koach 1.0 (CONTRAT_1_0.md § 7). Chaque valeur est sourcée dans SOURCES.md (référence, mesure du banc ou choix raisonné). Fichier importable depuis le mode dev ; réestimé par utilisateur.",
++  "version": "1.0.1-ref.1",
++  "date": "2026-10-10",
++  "note": "Paramètres initiaux de Koach 1.0 (CONTRAT_1_0.md § 7). Chaque valeur est sourcée dans SOURCES.md (référence, mesure du banc ou choix raisonné). Fichier importable depuis le mode dev ; réestimé par utilisateur. 1.0.1 (KM1 correction 1, DECISIONS_CP.md C13.10) : famille de courbe de Box-Cox, vrai test, modèle de réussite du jour J, branche mauvais jour.",
+   "qualites": [
+     "pousser",
+     "tirer",
+@@ -83,8 +83,8 @@
+     "cardio_sd": 0.4,
+     "wod_sd": 0.25,
+     "courbe_forme": [
+-      0.3,
+-      0.3
++      0.2,
++      0.45
+     ],
+     "courbe_echelle": [
+       0.1,
+@@ -173,7 +173,8 @@
+     "mauvais_jour_proba": 0.1,
+     "mauvais_jour_proba_bilan_bas": 0.45,
+     "mauvais_jour_moyenne": -0.06,
+-    "mauvais_jour_sigma": 0.045
++    "mauvais_jour_sigma": 0.045,
++    "mauvais_jour_fige_capacite": true
+   },
+   "fatigue": {
+     "tau_nerveux_j": 2.5,
+@@ -232,7 +233,7 @@
+     "reps_ouvertes": 6,
+     "repere_hausse": 0.1,
+     "test_reps": 3,
+-    "test_reps_debutant": 5,
++    "test_reps_debutant": 3,
+     "test_rir": 1.0,
+     "test_rir_debutant": 2.0,
+     "test_reps_ouvertes": 0,
+@@ -262,7 +263,11 @@
+     "rampe_sd_min": 0.05,
+     "rampe_confirmations": 2,
+     "rampe_proba_min": 0.75,
+-    "rampe_series_travail": 1
++    "rampe_series_travail": 1,
++    "vrai_test_rir_informatif": 2.5,
++    "jours_min_entre_rampes": 5,
++    "rampe_pas_cran": 0.15,
++    "rampe_cran_rir_marge": 3.0
+   },
+   "planification": {
+     "trajectoires": 1000,
+@@ -277,18 +282,22 @@
+     "risque_tendon_plancher": 4.0,
+     "horizon_sans_echeance_sem": 12,
+     "sigma_prevision_semaine": 0.004,
+-    "gain_affutage": 0.015,
++    "gain_affutage": 0.007,
+     "graine": 20261009,
+     "prudence_charge": [
+       0.6,
+       0.25
+     ],
+     "transport_creation": 0.25,
+-    "marge_cible": 0.065,
++    "marge_cible": 0.045,
+     "abandon_hebdo": 0.01,
+     "abandon_surcharge": 3.0,
+     "gain_min": 0.002,
+-    "rendement_test_sd": 0.07
++    "rendement_test_sd": 0.055,
++    "erreur_estimation_echeance_sd": 0.04,
++    "tentative_sd_jour": 0.046,
++    "tentative_manque": 0.028,
++    "tentative_cible_proba": 0.35
+   },
+   "securite": {
+     "hausse_par_niveau": [
+@@ -540,7 +549,9 @@
+     "silence_semaines": 2,
+     "journal_dossier": 60,
+     "douleur_recente_j": 7,
+-    "residu_reps_reference": 8.0
++    "residu_reps_reference": 8.0,
++    "mauvais_jours_suite": 2,
++    "mauvais_jour_poids": 0.5
+   },
+   "controle_dual": {
+     "semaines_min": 8,
+diff --git a/packages/kalis_adapt/reference/tests/test_campagne.py b/packages/kalis_adapt/reference/tests/test_campagne.py
+index de61352..130b424 100644
+--- a/packages/kalis_adapt/reference/tests/test_campagne.py
++++ b/packages/kalis_adapt/reference/tests/test_campagne.py
+@@ -63,8 +63,11 @@ def test_campagne_rapide_structure_et_determinisme(tmp_path):
+     e = d['criteres']['1_erreur_e1rm_rang_6']['detail']
+     assert e['koach']['n'] > 0 and e['temoin']['n'] > 0 and 'sd' not in e['temoin']
+     cal = d['criteres']['5_calibration_p_reussite']['detail']
+-    assert set(cal['par_date']) == {'debut', 'mi_saison', 'moins_4_semaines'}
+-    assert len(cal['par_date']['debut']['deciles']) == 10
++    assert set(cal['toutes_les_cibles']['par_date']) == {'debut', 'mi_saison', 'moins_4_semaines'}
++    assert len(cal['toutes_les_cibles']['par_date']['debut']['deciles']) == 10
++    assert len(cal['par_cible']['deciles']) == 10
++    mj = d['criteres']['2_mauvais_jour_isole']
++    assert 'apparie' in mj['methode'] and 'saisons_divergentes' in mj['detail']
+     sec = d['criteres']['7_securite']['detail']['b_validateur']['vues']
+     assert set(sec) == set(ca.VUES_SECURITE)
+     assert {'koach', 'temoin'} <= set(d['secondaires']['ecart_effort'])

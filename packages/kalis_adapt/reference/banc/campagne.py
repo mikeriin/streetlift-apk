@@ -851,6 +851,21 @@ def critere_calibration(ok, sans_planificateur):
     dec_m, pire_m = _deciles(marg, N_MIN_DECILE_CIBLE)
     dec_mc, pire_mc = _deciles(marg_cap, N_MIN_DECILE_CIBLE)
     peuples = sum(1 for x in dec_m if x['n'] >= N_MIN_DECILE_CIBLE)
+    # Compléments rapportés (le critère ne les lit pas) : part des cas dans
+    # les déciles jugés, erreur de calibration pondérée sur TOUS les cas, et
+    # la même mesure avec une seule prévision par cible (4 semaines avant) :
+    # les trois dates d'une même cible sont corrélées.
+    n_juges = sum(x['n'] for x in dec_m if x['n'] >= N_MIN_DECILE_CIBLE)
+    ece = (sum(x['n'] * x['ecart'] for x in dec_m if x['n'] > 0) / len(marg)) if marg else None
+    une = []
+    for (_, u) in unites:
+        p = u['previsions'].get('moins_4_semaines')
+        if p is None or not p.get('p'):
+            continue
+        for ex, pe in sorted(p['p'].items()):
+            if ex in u['reussite_par_cible']:
+                une.append((float(pe), u['reussite_par_cible'][ex]))
+    dec_u, pire_u = _deciles(une, N_MIN_DECILE_CIBLE)
     mesurable = pire_m is not None and peuples >= DECILES_MIN
     pires_tout = [x for x in pires if x is not None]
     return {
@@ -867,6 +882,9 @@ def critere_calibration(ok, sans_planificateur):
         'detail': {
             'par_cible': {'n': len(marg), 'unites': len(unites), 'deciles': dec_m, 'deciles_peuples': peuples,
                           'ecart_max': pire_m,
+                          'part_des_cas_juges': (n_juges / len(marg)) if marg else None,
+                          'erreur_ponderee_tous_cas': ece,
+                          'une_prevision_par_cible': {'n': len(une), 'deciles': dec_u, 'ecart_max': pire_u},
                           'variante_capacite_du_jour': {'n': len(marg_cap), 'deciles': dec_mc,
                                                         'ecart_max': pire_mc}},
             'toutes_les_cibles': {'par_date': par_date, 'dates_insuffisantes': insuffisant,
