@@ -1,5 +1,24 @@
 # Journal
 
+## 0.3.1 — 09/10/2026 (lot KM1)
+
+Ajouts additifs pour la référence Python de `kalis_adapt` 1.0 (méthode Koach). Couple `kalis_plan` 0.3.1 ×
+`kalis_adapt` 0.3.1 inchangé ; **aucun changement des critères, des profils types, des attentes de coach ni des
+grilles du panel** ; le rapport du banc (`bin/kalis_bench_cli.dart`, `bin/run.dart`) n'importe aucun de ces ajouts :
+seule sa ligne de version change.
+
+- **Exports KM1** (`lib/src/km/km_export.dart`, `dart run bin/km1.dart --sortie <dossier>`) : fiches du catalogue
+  vues par le modèle de vérité (complétées de ce que lisent les critères de sécurité), tirages de départ des
+  athlètes simulés, saisons de référence de `kalis_plan` (blocs, calendrier, échéances), traces des modèles de
+  vérité de force et d'endurance, mesures du témoin `kalis_adapt` 0.3.1 par saison.
+- **Outils** (`bin/km_common.dart`, dossier d'entrée `km1_entree/`) : constats de sécurité de blocs écrits
+  ailleurs (`securite/*.json.gz` → `securite_dart.json.gz`, `kmSafetyOfBlocks`, même lecture que
+  `safetyFindings`) et saisons du témoin sur des athlètes adversariaux (`adversaires.json` →
+  `adversaires_temoin.json.gz`, `kmAdversaryRun` : fiche d'athlète recouverte, multiplicateurs de vérité à la
+  création de chaque exercice).
+- Test `test/km_export_test.dart` : saison de référence déterministe et complète, sécurité de blocs identique à
+  `safetyFindings` sur la même vue, athlète adversarial déterministe dont la fiche recouverte agit.
+
 ## 0.3.0 — 09/10/2026 (lot CY)
 
 Couple `kalis_plan` 0.3.1 × `kalis_adapt` 0.3.1. Grilles, profils types et critères inchangés.

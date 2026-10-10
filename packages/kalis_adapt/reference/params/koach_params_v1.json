@@ -1,0 +1,562 @@
+{
+  "schema": 1,
+  "version": "1.0.0-ref.1",
+  "date": "2026-10-09",
+  "note": "Paramètres initiaux de Koach 1.0 (CONTRAT_1_0.md § 7). Chaque valeur est sourcée dans SOURCES.md (référence, mesure du banc ou choix raisonné). Fichier importable depuis le mode dev ; réestimé par utilisateur.",
+  "qualites": [
+    "pousser",
+    "tirer",
+    "jambes",
+    "tronc",
+    "figures",
+    "endurance_force",
+    "explosivite",
+    "aerobie",
+    "anaerobie",
+    "mobilite"
+  ],
+  "classes_reponse": [
+    "charge",
+    "reps",
+    "tenue",
+    "cardio",
+    "wod"
+  ],
+  "a_priori": {
+    "theta_sd": 0.2,
+    "delta_sd": 0.3,
+    "delta_sd_declare": 0.07,
+    "rho_moyenne_par_niveau": [
+      0.0095,
+      0.003,
+      0.0012,
+      0.0006
+    ],
+    "rho_sd_rel": 0.6,
+    "eps_classe_moyenne": [
+      0.0,
+      0.0029,
+      0.0029,
+      0.002,
+      0.001
+    ],
+    "eps_classe_sd": 0.003,
+    "k_nerveux": [
+      0.0,
+      0.0
+    ],
+    "k_musculaire": [
+      0.0,
+      0.0
+    ],
+    "biais_rir_additif": [
+      0.0,
+      0.0
+    ],
+    "courbe_echelle_exercice_sd": 0.22,
+    "courbe_bas_du_corps": -0.2,
+    "fatigue_intra": [
+      0.85,
+      0.0
+    ],
+    "part_tenue": [
+      0.1,
+      0.0
+    ],
+    "niveau_echelle_charge": [
+      0.65,
+      1.0,
+      1.25,
+      1.45
+    ],
+    "facteur_femme": 0.7,
+    "reps_base": 12.0,
+    "tenue_base_s": 30.0,
+    "pente_difficulte": 0.3,
+    "reps_sd": 0.4,
+    "cardio_minutes_par_niveau": [
+      30.0,
+      60.0,
+      90.0,
+      120.0
+    ],
+    "cardio_sd": 0.4,
+    "wod_sd": 0.25,
+    "courbe_forme": [
+      0.3,
+      0.3
+    ],
+    "courbe_echelle": [
+      0.1,
+      0.0
+    ],
+    "biais_rir_proportionnel": [
+      0.25,
+      0.15
+    ],
+    "k_nerveux_local": [
+      0.0047,
+      0.0019
+    ],
+    "k_musculaire_systemique": [
+      0.00075,
+      0.0003
+    ],
+    "part_tenue_exercice_sd": 0.2,
+    "marge_niveau": [
+      3.0,
+      2.0
+    ],
+    "reps_bornes": [
+      2.0,
+      60.0
+    ],
+    "tenue_bornes_s": [
+      5.0,
+      180.0
+    ],
+    "fatigue_intra_exercice_sd": 0.35
+  },
+  "mesure": {
+    "bruit_rir_par_niveau": [
+      2.0,
+      1.5,
+      1.0,
+      1.0
+    ],
+    "bruit_rir_pente": 0.25,
+    "bruit_rir_plancher": 0.5,
+    "bruit_rir_longue_serie_de": 12,
+    "bruit_rir_longue_serie_pente": 0.08,
+    "bruit_serie": 0.012,
+    "bruit_echec": 0.01,
+    "bruit_test": 0.008,
+    "bruit_charge_manuelle": 0.03,
+    "bruit_raison_refus": 0.12,
+    "bruit_tenue": 0.08,
+    "bruit_cardio": 0.15,
+    "bruit_wod": 0.1,
+    "bruit_continu": 0.08,
+    "note_paresseuse_a_priori": [
+      1.0,
+      9.0
+    ],
+    "apprentissage_bruit_oubli": 0.97,
+    "apprentissage_bruit_bornes": [
+      0.4,
+      2.5
+    ],
+    "rir_ouvert": 4.0,
+    "cardio_pente_rir": 4.0,
+    "cardio_charge_neutre": 0.8,
+    "cardio_poids_qualite": 1.25,
+    "wod_pente_rir": 4.0,
+    "bruit_rir_endurance": 0.8,
+    "bruit_rir_reference": 5.0,
+    "dispersion_fatigue_intra": 0.3,
+    "note_aberrante": 0.05,
+    "porte_note_ouverte": 1.0,
+    "note_erreur_grossiere": [
+      0.08,
+      2.0
+    ],
+    "noteur_entier_notes_min": 20,
+    "noteur_entier_part_max": 0.05,
+    "defaut_modele_sd": 0.015
+  },
+  "jour": {
+    "sigma_seance": 0.022,
+    "sigma_exercice": 0.018,
+    "bilan_par_point": 0.012,
+    "bilan_neutre": 4,
+    "sigma_seance_avec_bilan": 0.018,
+    "mauvais_jour_proba": 0.1,
+    "mauvais_jour_proba_bilan_bas": 0.45,
+    "mauvais_jour_moyenne": -0.06,
+    "mauvais_jour_sigma": 0.045
+  },
+  "fatigue": {
+    "tau_nerveux_j": 2.5,
+    "tau_musculaire_j": 7.0,
+    "tau_tendineux_j": 28.0,
+    "grille_tau_nerveux": [
+      1.5,
+      2.5,
+      4.0
+    ],
+    "grille_tau_musculaire": [
+      4.0,
+      7.0,
+      10.0
+    ],
+    "grille_tau_tendineux": [
+      21.0,
+      28.0,
+      42.0
+    ],
+    "effort_demi_rir": 2.0,
+    "echec_supplement": 0.5,
+    "intra_report": 0.7,
+    "intra_repos_s": 180.0,
+    "intra_rir": 1.5
+  },
+  "dynamique": {
+    "q_theta_semaine": 2e-05,
+    "q_delta_semaine": 0.0001,
+    "q_delta_jour_inactif": 2e-05,
+    "desentrainement_grace_j": 14,
+    "desentrainement_par_semaine": 0.01,
+    "dose_reference": 6.0,
+    "hypotheses_s0": [
+      1.5,
+      2.5,
+      5.0
+    ],
+    "hypotheses_stimulus": [
+      "volume",
+      "effort",
+      "intensite"
+    ],
+    "q_reponse_semaine": 1e-08,
+    "changement_cran_elastique_sd": 0.25,
+    "recuperation_seuil": 8.0,
+    "recuperation_pente": 0.5,
+    "recuperation_plancher": 0.2,
+    "accoutumance_semaines": 40.0
+  },
+  "test_adaptatif": {
+    "intervalle_declenchement": 0.06,
+    "poids_information": 0.5,
+    "ecart_rir_tolere": 0.5,
+    "jours_min_entre_tests": 14,
+    "reps_ouvertes": 6,
+    "repere_hausse": 0.1,
+    "test_reps": 3,
+    "test_reps_debutant": 5,
+    "test_rir": 1.0,
+    "test_rir_debutant": 2.0,
+    "test_reps_ouvertes": 0,
+    "rampe_pas": 0.1,
+    "rampe_series_max": 7,
+    "repos_test_s": 180,
+    "rampe_pas_par_rir": [
+      [
+        4.0,
+        0.075
+      ],
+      [
+        3.0,
+        0.05
+      ],
+      [
+        2.5,
+        0.035
+      ],
+      [
+        2.0,
+        0.025
+      ]
+    ],
+    "test_reps_avance": 1,
+    "test_rir_avance": 1.0,
+    "rampe_sd_min": 0.05,
+    "rampe_confirmations": 2,
+    "rampe_proba_min": 0.75,
+    "rampe_series_travail": 1
+  },
+  "planification": {
+    "trajectoires": 1000,
+    "plans_max": 256,
+    "iterations": 4,
+    "elite": 0.25,
+    "lissage": 0.7,
+    "plafond_volume": 0.15,
+    "plafond_intensite": 0.05,
+    "lambda_transport": 0.5,
+    "risque_tendon_ratio_max": 1.3,
+    "risque_tendon_plancher": 4.0,
+    "horizon_sans_echeance_sem": 12,
+    "sigma_prevision_semaine": 0.004,
+    "gain_affutage": 0.015,
+    "graine": 20261009,
+    "prudence_charge": [
+      0.6,
+      0.25
+    ],
+    "transport_creation": 0.25,
+    "marge_cible": 0.065,
+    "abandon_hebdo": 0.01,
+    "abandon_surcharge": 3.0,
+    "gain_min": 0.002,
+    "rendement_test_sd": 0.07
+  },
+  "securite": {
+    "hausse_par_niveau": [
+      0.1,
+      0.05,
+      0.05,
+      0.05
+    ],
+    "hausse_fragile_facteur": 0.5,
+    "douleur_seuil": 3,
+    "douleur_jours_actifs": 14,
+    "douleur_forte_contrainte": 4,
+    "douleur_moyenne_contrainte": 5,
+    "douleur_allegement": 4,
+    "douleur_allegement_series": 0.6,
+    "douleur_rir_bonus": 1.0,
+    "douleur_remplacant_part": 0.7,
+    "arret_persistance_min": 3,
+    "arret_persistance_j": 14,
+    "arret_forte_min": 5,
+    "arret_forte_j": 7,
+    "arret_retour_j": 84,
+    "arret_seances_de_suite": 3,
+    "arret_levee_j": 14,
+    "arret_escalade_j": 14,
+    "reprise_depart": 0.5,
+    "reprise_pas": 0.1,
+    "reprise_plancher": 0.4,
+    "reprise_rir": 3.0,
+    "reprise_douleur_max": 2,
+    "reprise_surveillance_j": 84,
+    "reprise_charge_base": 0.675,
+    "reprise_charge_pente": 0.25,
+    "reprise_hausse_quantite": 0.1,
+    "bilan_palier1": -0.02,
+    "bilan_palier2": -0.04,
+    "bilan_rir_bonus": 0.5,
+    "bilan_bas_rir_min": 3.0,
+    "coupure_j": 14,
+    "coupure_series": 0.8,
+    "tenue_hausse_par_niveau": [
+      0.2,
+      0.15,
+      0.1,
+      0.1
+    ],
+    "tenue_part_max": 0.75,
+    "simple_part_max": 0.92,
+    "simple_part_max_bilan_bas": 0.85,
+    "tentative_ouverture_part": 0.91,
+    "tentative_ouverture_proba": 0.95,
+    "tentative_deuxieme_proba": 0.8,
+    "tentative_troisieme_proba": 0.5,
+    "tentative_saut_2": 0.05,
+    "tentative_saut_3": 0.03,
+    "tentative_saut_kg": 5.0,
+    "tentative_bilan_bas_part": 0.02,
+    "echec_baisse": 0.075,
+    "echecs_arret": 2,
+    "endurance_pic": 0.1,
+    "endurance_pic_jours": 30,
+    "endurance_pic_courses_min": 3,
+    "endurance_reprise": [
+      [
+        7,
+        0.7
+      ],
+      [
+        14,
+        0.5
+      ]
+    ],
+    "endurance_mauvais_jour": 0.7,
+    "wod_jours_durs": 2,
+    "wod_echelle": 0.75,
+    "plafond_hebdo_par_niveau": [
+      12,
+      20,
+      25,
+      30
+    ],
+    "volume_hausse": 0.2,
+    "volume_hausse_series": 2,
+    "volume_hausse_2sem": 0.3,
+    "volume_hausse_2sem_series": 4,
+    "volume_reprise_part": 0.5,
+    "volume_groupes_majeurs": [
+      "chest",
+      "delt_anterior",
+      "delt_middle",
+      "delt_posterior",
+      "lats",
+      "upper_back",
+      "biceps",
+      "triceps",
+      "abs",
+      "lower_back",
+      "glutes",
+      "quads",
+      "hamstrings",
+      "calves"
+    ],
+    "serie_dure_rir_max": 4.0,
+    "semaines_allegees": [
+      "intro",
+      "deload",
+      "test"
+    ],
+    "tenue_hausse_hebdo_s": 5.0,
+    "decharge_part": 0.7,
+    "decharge_max_semaines": [
+      12,
+      7,
+      6,
+      6
+    ],
+    "affutage_baisse": [
+      0.3,
+      0.3,
+      0.4,
+      0.4
+    ],
+    "seance_tolerance": 1.15,
+    "seance_tolerance_min": 3.0,
+    "couloir_haut_max": 0.15,
+    "couloir_part_lourde": 0.85,
+    "schema_change_part": 0.025,
+    "schema_change_reps_max": 4,
+    "barre_recente_j": 42,
+    "premiere_hausse": 0.1,
+    "reprise_dose_depart": 0.6,
+    "reprise_dose_hausse": 0.2,
+    "tentative_recente_part": 0.85,
+    "fragile_anciennetes": [
+      "under_6_weeks",
+      "weeks_6_to_12",
+      "months_3_to_12"
+    ],
+    "fragile_gene_min": 2,
+    "fragile_niveau_min": 0.5,
+    "surcharge_fragile_max": 1.0,
+    "poignet_gene_j": 14,
+    "poignet_chaud_j": 7,
+    "poignet_sensible_min": 1,
+    "poignet_sensible_j": 14,
+    "poignet_appui_neutre_materiel": [
+      "parallettes",
+      "poignées"
+    ],
+    "technique_niveau_acces": {
+      "top_set_backoff": 1,
+      "drop_set": 1,
+      "amrap": 1,
+      "pyramid": 1,
+      "ladder": 1,
+      "density": 1,
+      "for_time": 1,
+      "cluster": 2,
+      "rest_pause": 2,
+      "myo_reps": 2,
+      "accentuated_eccentric": 2,
+      "contrast": 2,
+      "wave": 2
+    },
+    "techniques_intensives": [
+      "rest_pause",
+      "myo_reps",
+      "drop_set",
+      "accentuated_eccentric",
+      "amrap",
+      "cluster",
+      "wave",
+      "contrast"
+    ],
+    "excentrique_echeance_j": 10,
+    "tenue_hausse_marge_s": 1,
+    "coupure_fenetre_j": 7,
+    "renvoi_periode_j": 7,
+    "surmenage_baisse": 0.05,
+    "surmenage_jours": 7,
+    "surmenage_fenetre_j": 21,
+    "surmenage_coupe": 0.4,
+    "endurance_materiel_course": [
+      "piste ou terrain extérieur",
+      "tapis de course",
+      "côte ou escaliers"
+    ],
+    "endurance_qualite_ids": [
+      "fractionne",
+      "seuil",
+      "tempo",
+      "30-30",
+      "sprint",
+      "cotes",
+      "fartlek",
+      "intervalles",
+      "navettes",
+      "accelerations"
+    ],
+    "endurance_qualite_rir": 3.0,
+    "endurance_facile_rir": 5.0,
+    "endurance_vitesse": 2.6,
+    "endurance_douleur_jambe": 3,
+    "endurance_dure_flammes": 8,
+    "endurance_dure_marge": 2,
+    "endurance_dure_jours": 3,
+    "endurance_course_facile": {
+      "tapis": "ca-course-tapis-endurance",
+      "defaut": "ca-footing-endurance-fondamentale"
+    },
+    "endurance_facile_min_s": 60,
+    "endurance_bornee_reduction": 0.9,
+    "wod_fenetre_j": 7,
+    "retour_seances_avant_mesure": 2,
+    "surmenage_seances_min": 6,
+    "duree_vitesse_defaut": 2.5
+  },
+  "adherence": {
+    "a_priori_poids_sd": 1.5,
+    "biais_initial": 1.0,
+    "pas_min": 0.5,
+    "proba_cible": 0.7,
+    "refus_silence_j": 0,
+    "paliers_max": 4,
+    "ampleur_echelle": 4.0,
+    "ampleur_borne": 3.0,
+    "refus_recents_j": 14,
+    "refus_recents_echelle": 5.0
+  },
+  "rupture": {
+    "hasard": 0.02,
+    "alerte": 0.6,
+    "fenetre": 3,
+    "a_priori_moyenne_sd": 2.0,
+    "residu_secours": 0.05,
+    "residu_secours_semaines": 2,
+    "assiduite_secours": 0.7,
+    "assiduite_secours_semaines": 2,
+    "douleur_secours": 2,
+    "elargissement_rien_de_special": 4.0,
+    "semaine_allegee_series": 0.6,
+    "semaine_allegee_rir": 2.0,
+    "a_priori_alpha": 2.0,
+    "a_priori_beta": 1.0,
+    "a_priori_alpha_nouvelle": 5.0,
+    "course_max": 200,
+    "min_observations": 6,
+    "fenetre_seances": 10,
+    "silence_semaines": 2,
+    "journal_dossier": 60,
+    "douleur_recente_j": 7,
+    "residu_reps_reference": 8.0
+  },
+  "controle_dual": {
+    "semaines_min": 8,
+    "intervalle_max": 0.06,
+    "bras_semaines": 3,
+    "synthetique_semaines_min": 6,
+    "synthetique_iterations": 200,
+    "amplitude_volume": 0.1,
+    "amplitude_intensite": 0.03,
+    "sigma_progres": 0.01,
+    "plancher_poids": 1e-06,
+    "a_priori_effet_sd": 0.005,
+    "marge_echeance_semaines": 6,
+    "seuil_decision": 0.8,
+    "n_bras": 4,
+    "sigma_innovation": 0.003,
+    "semaines_gardees": 26
+  }
+}
