@@ -1,5 +1,0 @@
-Analyzing streetlift-apk...                                     
-
-   info • Use 'const' for final variables initialized to a constant value. Try replacing 'final' with 'const' • lib/kit/controls.dart:169:5 • prefer_const_declarations
-
-1 issue found. (ran in 18.8s)
