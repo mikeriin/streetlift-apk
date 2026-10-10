@@ -562,25 +562,18 @@ class _EvolutionScreenState extends State<EvolutionScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: Text(
-                          evolutionKindTitle(e.proposal.kind),
-                          style: KType.corpsFort.copyWith(color: k.texte),
-                        ),
-                      ),
-                      const SizedBox(width: KSpacing.s8),
-                      KChip(
-                        evolutionStatusLabel(e.status),
-                        icon: switch (e.status) {
-                          EvoStatus.refused => Icons.block_rounded,
-                          EvoStatus.undone => Icons.undo_rounded,
-                          _ => Icons.check_rounded,
-                        },
-                      ),
-                    ],
+                  Text(
+                    evolutionKindTitle(e.proposal.kind),
+                    style: KType.corpsFort.copyWith(color: k.texte),
+                  ),
+                  const SizedBox(height: KSpacing.s4),
+                  KChip(
+                    evolutionStatusLabel(e.status),
+                    icon: switch (e.status) {
+                      EvoStatus.refused => Icons.block_rounded,
+                      EvoStatus.undone => Icons.undo_rounded,
+                      _ => Icons.check_rounded,
+                    },
                   ),
                   const SizedBox(height: KSpacing.s4),
                   Text(
