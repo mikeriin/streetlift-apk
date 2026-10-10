@@ -293,10 +293,16 @@ void main() {
       await open(tester);
       await tester.tap(find.byKey(const ValueKey('selected-week')));
       await tester.pumpAndSettle();
+      // UI1 : feuille de contenu de la semaine (clé `week-sheet`).
       await tester.scrollUntilVisible(
         find.text('Choisir une semaine'),
         200,
-        scrollable: find.byType(Scrollable).last,
+        scrollable: find
+            .descendant(
+              of: find.byKey(const ValueKey('week-sheet')),
+              matching: find.byType(Scrollable),
+            )
+            .first,
       );
       await tester.tap(find.text('Choisir une semaine'));
       await tester.pumpAndSettle();
