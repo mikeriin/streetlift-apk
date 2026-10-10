@@ -115,7 +115,6 @@ class ProgramScreen extends StatelessWidget {
     builder: (context, _) {
       final plan = store.planProgram;
       final start = store.program.start;
-      final plans = PlanStore(store);
       final children = <Widget>[
         KeyedSubtree(
           key: const ValueKey('program-model'),
@@ -131,7 +130,7 @@ class ProgramScreen extends StatelessWidget {
       // historique des changements.
       if (store.athlete != null) children.add(const _EvolutionCard());
 
-      final position = plans.programPosition;
+      final position = PlanStore(store).programPosition;
       children.add(
         KMenuGroup(
           title: 'Calendrier',
@@ -163,7 +162,7 @@ class ProgramScreen extends StatelessWidget {
         ),
       );
 
-      final canUndo = plans.planCanUndo;
+      final canUndo = PlanStore(store).planCanUndo;
       final canOrigin = store.canRestoreProgramOrigin;
       final blocked = planCreateBlockedReason();
       final originAt = store.programOriginAt;
@@ -171,12 +170,12 @@ class ProgramScreen extends StatelessWidget {
         KMenuGroup(
           title: 'Changer de programme',
           children: [
-            if (plans.planBlockEnding || plans.planImportedNextBlockOffered)
+            if (PlanStore(store).planBlockEnding || PlanStore(store).planImportedNextBlockOffered)
               KMenuRow(
                 key: const ValueKey('program-next-block'),
                 icon: Icons.skip_next_outlined,
                 title: 'Préparer le bloc suivant',
-                subtitle: plans.planBlockEnding
+                subtitle: PlanStore(store).planBlockEnding
                     ? 'Ton bloc arrive à son terme : Koach prépare le '
                           'suivant avec toi'
                     : 'Fin d’un bloc de ton programme : Koach peut écrire '

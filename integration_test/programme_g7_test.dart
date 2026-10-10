@@ -351,8 +351,13 @@ void main() {
     await shot('09_passe2');
     final item = state.c!.pass2!.weeks.first.days.first.items.first;
     await tap(tester, 'plan-p2-${item.slotId}', ms: 1200);
-    await tap(tester, 'adjust-sets-plus');
-    await tap(tester, 'adjust-sets-plus');
+    // UI1 : pas à pas du kit, bouton nommé « Séries : plus ».
+    for (var i = 0; i < 2; i++) {
+      final plus = find.byTooltip('Séries : plus');
+      await scrollTo(tester, plus);
+      await tester.tap(plus.hitTestable().last);
+      await wait(tester, 700);
+    }
     releve['ajustement_refuse'] = find
         .byKey(const ValueKey('adjust-refused'))
         .evaluate()

@@ -182,7 +182,9 @@ void main() {
         .evaluate()
         .isNotEmpty;
     await shot('02_mon_programme');
-    final origin = find.byKey(const ValueKey('program-origin'));
+    // UI1 (cahier §4.3) : le programme d'origine se rejoint par la ligne
+    // « Revenir à un programme précédent » de Mon programme.
+    final origin = find.byKey(const ValueKey('program-revert'));
     await scrollTo(tester, origin);
     releve['carte_origine'] = origin.evaluate().isNotEmpty;
     await shot('03_origine');
@@ -270,11 +272,16 @@ void main() {
       await wait(tester, 800);
       releve['programme_change'] = store.programDiffersFromOrigin;
       await push(tester, const ProgramScreen(), 2000);
-      final restore = find.byKey(const ValueKey('program-origin-restore'));
-      await scrollTo(tester, restore);
+      // UI1 : feuille d'actions « Revenir à un programme précédent », puis
+      // confirmation au gabarit (KConfirm).
+      final revert = find.byKey(const ValueKey('program-revert'));
+      await scrollTo(tester, revert);
+      await tapF(tester, revert, ms: 1200);
+      final restore = find.byKey(const ValueKey('action-origin'));
+      await until(tester, restore, max: 30);
       await shot('06_origine_change');
       await tapF(tester, restore, ms: 1200);
-      final confirm = find.byKey(const ValueKey('program-origin-confirm'));
+      final confirm = find.byKey(const ValueKey('confirm-ok'));
       releve['confirmation'] = await until(tester, confirm, max: 30);
       await shot('07_confirmation');
       if (confirm.evaluate().isNotEmpty) {
@@ -282,7 +289,9 @@ void main() {
         await wait(tester, 1500);
       }
       releve['origine_rendue'] = !store.programDiffersFromOrigin;
-      await scrollTo(tester, find.byKey(const ValueKey('program-origin')));
+      // État relu dans la feuille, rouverte.
+      await scrollTo(tester, revert);
+      await tapF(tester, revert, ms: 1200);
       await shot('08_origine_rendue');
       // Relevé : ce qui diffère encore de la sauvegarde d'origine.
       final b = (store.programOrigin?['backup'] as Map?) ?? const {};
@@ -292,6 +301,8 @@ void main() {
           .textContaining('encore celui d’origine')
           .evaluate()
           .isNotEmpty;
+      final close = find.byKey(const ValueKey('sheet-close'));
+      if (close.evaluate().isNotEmpty) await tapF(tester, close, ms: 800);
       releve['sections_differentes'] = [
         for (final k in const [
           'programStart',

@@ -381,7 +381,7 @@ class _HomeScreenState extends State<HomeScreen> {
           dates: _dates(store.program.weekDates(w.n)),
           onChoose: _pickWeek,
         ),
-        const SizedBox(height: KSpacing.s12),
+        const SizedBox(height: KSpacing.s4),
         _WeekSlider(
           week: week,
           count: store.program.weeks.length,
@@ -390,7 +390,7 @@ class _HomeScreenState extends State<HomeScreen> {
           onDetails: () => _weekDetails(w),
           onChoose: _pickWeek,
         ),
-        const SizedBox(height: KSpacing.s12),
+        const SizedBox(height: KSpacing.s8),
         // Départ à choisir, à venir ou terminé ; séances à reprendre.
         if (ProgramStartBanner.visible(store.program, now)) ...[
           ProgramStartBanner(now: now, padding: EdgeInsets.zero),
@@ -546,10 +546,7 @@ class _HomeHeader extends StatelessWidget {
           child: ConstrainedBox(
             constraints: const BoxConstraints(minHeight: KSize.target),
             child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: KSpacing.s4,
-                vertical: KSpacing.s4,
-              ),
+              padding: const EdgeInsets.symmetric(horizontal: KSpacing.s4),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.min,
@@ -832,7 +829,7 @@ class _TodayCard extends StatelessWidget {
       const SizedBox(height: KSpacing.s4),
       Text(
         k.title(day.title),
-        style: k.titleStyle(KType.titreEcran.copyWith(color: ink)),
+        style: k.titleStyle(KType.titreSeance.copyWith(color: ink)),
       ),
       if (recovery) ...[
         const SizedBox(height: KSpacing.s12),
@@ -918,7 +915,7 @@ class _TodayCard extends StatelessWidget {
       onLongPressHint: 'Afficher le résumé',
       child: ExcludeSemantics(
         child: KCard.day(
-          padding: EdgeInsets.all(compact ? KSpacing.s16 : KSpacing.s20),
+          padding: const EdgeInsets.all(KSpacing.s16),
           onTap: onOpen,
           onLongPress: onSummary,
           child: Row(

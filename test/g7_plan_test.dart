@@ -620,8 +620,13 @@ void main() {
       final item = state.c!.pass2!.weeks.first.days.first.items.first;
       await tap(tester, 'plan-p2-${item.slotId}');
       expect(find.byKey(const ValueKey('adjust-sheet')), findsOneWidget);
-      await tap(tester, 'adjust-sets-plus');
-      await tap(tester, 'adjust-sets-plus');
+      // UI1 : pas à pas du kit (KStepperRow), bouton nommé « Séries : plus ».
+      for (var i = 0; i < 2; i++) {
+        final plus = find.byTooltip('Séries : plus');
+        await scrollToAction(tester, plus);
+        await tester.tap(plus.hitTestable().last);
+        await tester.pumpAndSettle();
+      }
       expect(find.byKey(const ValueKey('adjust-refused')), findsOneWidget);
       await tap(tester, 'adjust-done');
       await tap(tester, 'plan-validate');
