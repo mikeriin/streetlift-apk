@@ -45,6 +45,20 @@ Choix du lot (10/10/2026, session `session_01DfhZd3fMyMGSUKefFeRLGk`), détail d
 
 ## UI3
 
+Choix du lot (10/10/2026, session `session_01JVF5cveTZDzybGVBq9M1XE`), détail dans `livraisons/LIVRAISON_UI3.md`. La conversation de pilotage valide ou corrige.
+
+- **UI3.1 En-tête de l'onglet** : grand titre « Stats » et une phrase (C1), l'aide « Comprendre les XP » à droite ; rubriques en rangée défilante, rubrique active en pilule `pleine` (mêmes clés `stats-section-0` à `3`). Pas de logo dans l'en-tête (comme `KPage.root`) ; ouvert depuis une autre page (raccourcis de progression), Stats prend l'en-tête de sous-page.
+- **UI3.2 Aperçu (§4.1)** : la carte du personnage, le défi, la campagne, le boss et la saison ouvrent l'onglet Parcours, plus aucune feuille. Les tuiles « Défis de la semaine », « Arbre de progression », « Performances et références », « Tout ton historique » deviennent un groupe « Aller plus loin » (Parcours, Performances, Historique : le nom de la destination, R1/R3). La feuille de la série et celle de l'activité restent sur leur carte (une seule entrée).
+- **UI3.3 Parcours** : seule entrée des feuilles de jeu ; « Campagne, boss et saisons » devient trois lignes (Campagne, Boss, Saisons) ; les détails d'un chapitre ou d'un boss sont dans leur feuille, plus aucune feuille empilée. Branches Pratique / Rythme en `KSegmented` (la fourche dessinée disparaît, l'arbre des paliers reste).
+- **UI3.4 Objectif de la semaine (R2, §4.3)** : réglé sur place dans sa carte de l'Aperçu, segments « Adaptatif, 2, 3, 4, 5, 6 » (valeurs 0, 2 à 6), application immédiate ; une valeur 1 déjà enregistrée reste affichée (« Fixé par toi : 1 jour par semaine », aucun segment allumé), sans migration. L'explication de la feuille passe sous les segments ; la feuille disparaît.
+- **UI3.5 Records (U12)** : `records_screen.dart` n'affichait que Stats (aucune donnée de records) ; page refaite dans la zone, qui lit `exerciseBests` (game.dart, calcul des records de fin de séance) sans le modifier : par exercice, meilleure charge (× répétitions, 1RM estimé) et meilleure série au poids de corps, date du premier passage. Branchée dans Performances, à côté de « Mes références » (raccourci R2, ex « Modifier mes références ») ; groupes « Meilleure charge » et « Meilleures répétitions au poids de corps ».
+- **UI3.6 Composant nouveau** : `lib/stats/widgets/k_info_sheet.dart` (`KInfoSheet`, `showKInfoSheet`) : feuille d'information au gabarit des feuilles du kit (poignée, titre et contexte, contenu, « Fermer »). À promouvoir dans `lib/kit/` par UI5.
+- **UI3.7 Couleurs du jeu** : insigne de rang et radar aux couleurs de la palette (`pleine`, `encre`, `surPleine`) au lieu du rouge fixe ; rareté des badges en puce neutre avec icône (C5) ; données en `encre` / `second`, réussites en `validation` / `accent`.
+- **UI3.8 Contournement local** : légende de la carte musculaire refaite dans `stats_performance.dart` (même texte « Dos · 12,6 », pilules qui passent à la ligne) : `MuscleLegend` (muscle_body.dart, intouchable) débordait à 320 dp × 200 %.
+- **UI3.9 Références non renseignées** : regroupées en un groupe par section, suivi d'un bandeau « Mes références » (R5 : plus de « à compléter dans Références » sans lien).
+- **UI3.10 Logo** : gardé dans l'en-tête de Stats (cahier §1), bien que `KPage.root` n'en ait pas.
+- **UI3.11 R9 à l'affichage** : « références Pilotage » / « (Références) » des aides d'attributs (game.dart, hors zone) affichés « Mes références » ; texte source à corriger par UI5.
+
 ## UI4
 
 Choix du lot (10/10/2026, session `session_01EcZvt7jo2rPQi194ZGu9FQ`), détail dans `livraisons/LIVRAISON_UI4.md`. La conversation de pilotage valide ou corrige.
