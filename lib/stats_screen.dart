@@ -248,7 +248,7 @@ class _StatsTabs extends StatelessWidget {
                 key: ValueKey('stats-section-${entry.key}'),
                 height: KSize.target,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: KSpacing.s12),
+                  padding: const EdgeInsets.symmetric(horizontal: KSpacing.s8),
                   child: Text(entry.value),
                 ),
               ),
