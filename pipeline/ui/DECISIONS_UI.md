@@ -47,4 +47,13 @@ Choix du lot (10/10/2026, session `session_01DfhZd3fMyMGSUKefFeRLGk`), détail d
 
 ## UI4
 
+Choix du lot (10/10/2026, session `session_01EcZvt7jo2rPQi194ZGu9FQ`), détail dans `livraisons/LIVRAISON_UI4.md`. La conversation de pilotage valide ou corrige.
+
+- **UI4.1 Ouverture des Réglages** : `SettingsScreen({page, highlight})` et `enum SettingsPage { appearance, session, notifications, progression, data, about }` remplacent `section: int` ; une ligne s'ouvre par `SettingsScreen(page: …, highlight: '<id>')` (index : `lib/settings_search.dart`).
+- **UI4.2 « Compatibilité 3D »** au lieu de « Diagnostic 3D » (R9) : le contrôle L13 interdit le mot « diagnostic » dans l'application.
+- **UI4.3 « Passer »** du parcours du profil : sur une étape que `stepError` accepte vide ou dont toutes les questions sont du schéma 3 ; jamais sur l'accueil, le récapitulatif ni en modification d'une rubrique.
+- **UI4.4 Formulaires** des feuilles et dialogues (profil, import, suppression) : sous-pages `KPage.sub` avec bouton en bas ; feuilles réservées aux actions et aux listes.
+- **UI4.5 « Comment marche ton programme ? »** quitte le Profil (R1) : Mon programme et Aide et à propos.
+- **UI4.6 Défaut du kit signalé** (bloquant pour UI5) : titres de `KTopBar.sub` tronqués par une ellipse ; correction proposée dans la livraison §7.
+
 ## UI5
