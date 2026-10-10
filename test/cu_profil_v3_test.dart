@@ -875,6 +875,11 @@ void main() {
       await tap(tester, 'flow-next-secondary');
       expect(flow(tester).step, 'experience');
       await tap(tester, 'flow-experience-intermediate');
+      // UI4 : liste paresseuse, la question est atteinte par défilement.
+      await scrollToAction(
+        tester,
+        find.byKey(const ValueKey('q-training_age')),
+      );
       expect(
         find.byKey(const ValueKey('q-training_age')),
         findsOneWidget,

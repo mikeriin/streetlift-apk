@@ -135,8 +135,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
     super.initState();
     // Notifications : le panneau met lui-même ses lignes en évidence ; elles
     // sont en haut de la page.
-    if (widget.highlight != null &&
-        widget.page != SettingsPage.notifications) {
+    if (widget.highlight != null && widget.page != SettingsPage.notifications) {
       WidgetsBinding.instance.addPostFrameCallback((_) => _reveal(0));
     }
   }
