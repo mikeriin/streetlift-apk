@@ -94,12 +94,7 @@ class KStepper extends StatelessWidget {
         ),
       ),
     );
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        button(Icons.remove_rounded, decrementLabel, onDecrement),
-        const SizedBox(width: KSpacing.s4),
-        Semantics(
+    final valueBox = Semantics(
           label: semanticLabel,
           value: value,
           liveRegion: true,
@@ -118,10 +113,19 @@ class KStepper extends StatelessWidget {
               style: KType.chiffreMoyen.copyWith(color: k.texte),
             ),
           ),
-        ),
+        );
+    // Place bornée : la valeur passe à la ligne plutôt que de déborder.
+    return LayoutBuilder(
+      builder: (context, c) => Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        button(Icons.remove_rounded, decrementLabel, onDecrement),
+        const SizedBox(width: KSpacing.s4),
+        if (c.maxWidth.isFinite) Flexible(child: valueBox) else valueBox,
         const SizedBox(width: KSpacing.s4),
         button(Icons.add_rounded, incrementLabel, onIncrement),
       ],
+      ),
     );
   }
 }
@@ -169,7 +173,10 @@ class KSegmented<T> extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 for (final s in segments)
+                  // Largeur selon le libellé (« Adaptatif » face à « 2 ») :
+                  // aucun mot coupé.
                   Expanded(
+                    flex: s.label.length + 2,
                     child: Semantics(
                       inMutuallyExclusiveGroup: true,
                       selected: s.value == selected,

@@ -49,7 +49,13 @@
   "zone": "UI4"
  },
  "app_theme.dart": {
-  "total": 0,
+  "EdgeInsets": 11,
+  "couleur": 44,
+  "fontSize": 22,
+  "fontWeight": 15,
+  "letterSpacing": 5,
+  "rayon": 10,
+  "total": 107,
   "zone": "UI0"
  },
  "arsenal_screen.dart": {
@@ -140,7 +146,10 @@
   "zone": "UI4"
  },
  "filter_menu.dart": {
-  "total": 0,
+  "EdgeInsets": 5,
+  "fontSize": 1,
+  "fontWeight": 2,
+  "total": 8,
   "zone": "UI0"
  },
  "game.dart": {
@@ -170,9 +179,10 @@
   "EdgeInsets": 7,
   "fontSize": 17,
   "fontWeight": 11,
+  "letterSpacing": 4,
   "rayon": 2,
   "showModalBottomSheet": 3,
-  "total": 42,
+  "total": 46,
   "zone": "UI1"
  },
  "imported_program.dart": {
@@ -231,13 +241,15 @@
  "levelup.dart": {
   "fontSize": 2,
   "fontWeight": 2,
-  "letterSpacing": 1,
+  "letterSpacing": 2,
   "rayon": 1,
-  "total": 6,
+  "total": 7,
   "zone": "UI1"
  },
  "main.dart": {
-  "total": 0,
+  "EdgeInsets": 1,
+  "fontSize": 1,
+  "total": 2,
   "zone": "UI0"
  },
  "models.dart": {
@@ -249,7 +261,13 @@
   "zone": "UI0"
  },
  "nav_bar.dart": {
-  "total": 0,
+  "BoxDecoration": 2,
+  "EdgeInsets": 2,
+  "fontSize": 1,
+  "fontWeight": 1,
+  "letterSpacing": 1,
+  "toUpperCase": 1,
+  "total": 8,
   "zone": "UI0"
  },
  "notification_settings.dart": {
@@ -418,10 +436,10 @@
   "EdgeInsets": 3,
   "fontSize": 8,
   "fontWeight": 9,
-  "letterSpacing": 2,
+  "letterSpacing": 3,
   "showDialog": 1,
   "toUpperCase": 1,
-  "total": 24,
+  "total": 25,
   "zone": "UI2"
  },
  "safety_store.dart": {
@@ -473,12 +491,14 @@
   "zone": "UI2"
  },
  "settings_screen.dart": {
-  "EdgeInsets": 1,
-  "fontSize": 2,
+  "BoxDecoration": 1,
+  "EdgeInsets": 3,
+  "fontSize": 4,
   "fontWeight": 1,
   "letterSpacing": 2,
+  "rayon": 1,
   "showDialog": 2,
-  "total": 8,
+  "total": 14,
   "zone": "UI4"
  },
  "startup.dart": {
@@ -521,17 +541,18 @@
   "EdgeInsets": 8,
   "fontSize": 12,
   "fontWeight": 8,
-  "letterSpacing": 1,
+  "letterSpacing": 2,
   "showModalBottomSheet": 1,
   "toUpperCase": 1,
-  "total": 31,
+  "total": 32,
   "zone": "UI3"
  },
  "stats_screen.dart": {
   "EdgeInsets": 2,
   "fontSize": 1,
   "fontWeight": 1,
-  "total": 4,
+  "letterSpacing": 1,
+  "total": 5,
   "zone": "UI3"
  },
  "stats_widgets.dart": {
@@ -559,7 +580,14 @@
   "zone": "UI5"
  },
  "ui.dart": {
-  "total": 0,
+  "BoxDecoration": 5,
+  "EdgeInsets": 9,
+  "fontSize": 5,
+  "fontWeight": 4,
+  "letterSpacing": 2,
+  "rayon": 3,
+  "toUpperCase": 2,
+  "total": 30,
   "zone": "UI0"
  },
  "wellbeing.dart": {

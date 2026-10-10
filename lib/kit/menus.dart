@@ -49,7 +49,11 @@ class KMenuGroup extends StatelessWidget {
       clipBehavior: Clip.antiAlias,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: KSpacing.s4),
-        child: Column(mainAxisSize: MainAxisSize.min, children: rows),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: rows,
+        ),
       ),
     );
     if (title == null) return group;

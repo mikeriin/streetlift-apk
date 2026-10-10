@@ -1,8 +1,0 @@
-Changed lib/kit/session.dart
-Changed lib/main.dart
-Changed test/l5c_couleur_test.dart
-Changed test/l5c_selecteur_test.dart
-Changed test/support/ui_capture.dart
-Changed test/ui0_kit_capture_test.dart
-Changed test/ui0_kit_test.dart
-Formatted 258 files (7 changed) in 1.71 seconds.

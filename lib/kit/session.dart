@@ -237,6 +237,7 @@ class KRestBar extends StatelessWidget {
       clipBehavior: Clip.antiAlias,
       child: Column(
         mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Semantics(
             label: '$label restant',
@@ -331,7 +332,10 @@ class KRestBar extends StatelessWidget {
                   );
                 }
                 return Row(
-                  children: [Expanded(child: time), buttons],
+                  children: [
+                    Expanded(child: time),
+                    buttons,
+                  ],
                 );
               },
             ),

@@ -20,6 +20,8 @@ Usage :
   python3 tools/check_ui_tokens.py --zone UI1 --menus
   python3 tools/check_ui_tokens.py --baseline tools/ui_tokens_depart.json
   python3 tools/check_ui_tokens.py --json          # relevé lisible par une machine
+  python3 tools/check_ui_tokens.py --compare tools/ui_tokens_depart.json
+                                                   # écart au relevé de départ (main b7996b3f)
 
 Zones : cahier UI §7.2 (propriété des fichiers). Un fichier hors zone et hors
 liste blanche revient à UI5. Les commentaires sont ignorés ; les chaînes
@@ -91,7 +93,7 @@ CRITERIA = [
 ]
 MENU_CRITERIA = ['PopupMenuButton', 'showModalBottomSheet', 'showDialog']
 
-_NUM = r'-?\d+(?:\.\d+)?'
+_NUM = r'-?(?:\d+(?:\.\d+)?|\.\d+)'
 SIMPLE = {
     'fontSize': re.compile(r'\bfontSize\s*:\s*' + _NUM + r'\b'),
     'fontWeight': re.compile(r'\bfontWeight\s*:\s*(?:const\s+)?FontWeight\.(?:w\d00|bold|normal)\b'),
@@ -227,6 +229,7 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument('--menus', action='store_true', help='compter aussi les menus hors gabarit')
     ap.add_argument('--baseline', type=Path, help='écrire le relevé par fichier (JSON) dans ce fichier')
     ap.add_argument('--json', action='store_true', help='relevé JSON sur la sortie standard')
+    ap.add_argument('--compare', type=Path, help='relevé de départ (JSON de --baseline) : écart par fichier')
     ap.add_argument('--lib', type=Path, default=LIB, help=argparse.SUPPRESS)
     args = ap.parse_args(argv)
 
@@ -244,6 +247,21 @@ def main(argv: list[str] | None = None) -> int:
         for z in sorted(by_zone):
             print(f'  {z} : {by_zone[z]}')
         print(f'  total : {sum(by_zone.values())}')
+
+    if args.compare:
+        start = json.loads(args.compare.read_text(encoding='utf-8'))
+        rows = []
+        for rel in sorted(set(start) | set(report)):
+            before = start.get(rel, {}).get('total', 0)
+            after = report.get(rel, {}).get('total', 0)
+            if before != after:
+                zone = report.get(rel, {}).get('zone') or start.get(rel, {}).get('zone', '?')
+                rows.append((zone, rel, before, after))
+        print('\nÉcart au relevé de départ (fichier : départ → maintenant)')
+        for zone, rel, before, after in rows:
+            print(f'  [{zone}] lib/{rel} : {before} → {after}')
+        if not rows:
+            print('  aucun')
 
     if not args.zone:
         return 0
