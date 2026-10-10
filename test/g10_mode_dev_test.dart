@@ -120,6 +120,13 @@ void main() {
       // Simulateur : écran et choix.
       await tester.pumpWidget(_page(const DevSimulatorScreen()));
       await tester.pumpAndSettle();
+      // UI0 (refonte UI) : titres de section et puces aux métriques du kit,
+      // le bouton peut se trouver sous le bas de l'écran de test.
+      await tester.scrollUntilVisible(
+        find.byKey(const ValueKey('sim-run')),
+        200,
+        scrollable: find.byType(Scrollable).first,
+      );
       expect(find.byKey(const ValueKey('sim-run')), findsOneWidget);
       await tester.tap(find.byKey(const ValueKey('sim-weeks-2')));
       await tester.pumpAndSettle();

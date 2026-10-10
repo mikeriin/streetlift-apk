@@ -401,6 +401,12 @@ void main() {
             scrollable: find.byType(Scrollable).first,
           );
           expect(find.text('Copie complète vérifiée'), findsOneWidget);
+          // UI0 : bouton entièrement visible avant l'appui (titres de
+          // section aux métriques du kit, C6).
+          await tester.ensureVisible(
+            find.byKey(const ValueKey('retired-notice-share')),
+          );
+          await tester.pumpAndSettle();
           await tester.tap(find.byKey(const ValueKey('retired-notice-share')));
           await tester.pumpAndSettle();
           expect(shared.length, 1);
@@ -411,6 +417,10 @@ void main() {
             200,
             scrollable: find.byType(Scrollable).first,
           );
+          await tester.ensureVisible(
+            find.byKey(const ValueKey('retired-notice-close')),
+          );
+          await tester.pumpAndSettle();
           await tester.tap(find.byKey(const ValueKey('retired-notice-close')));
           await tester.pumpAndSettle();
           expect(store.retiredNotice!.seen, isTrue);
