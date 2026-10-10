@@ -127,10 +127,13 @@ class _EventDayScreenState extends State<EventDayScreen> {
               onChanged: (v) => setState(() => _objective = v),
             ),
             const SizedBox(height: KSpacing.s8),
-            Text(
-              _objectives[_objective]!.$2,
-              key: const ValueKey('event-objective-text'),
-              style: KType.corps.copyWith(color: k.texte2),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: KSpacing.s4),
+              child: Text(
+                _objectives[_objective]!.$2,
+                key: const ValueKey('event-objective-text'),
+                style: KType.corps.copyWith(color: k.texte2),
+              ),
             ),
           ],
         ),
