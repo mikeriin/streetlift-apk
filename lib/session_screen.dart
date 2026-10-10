@@ -2424,6 +2424,10 @@ class _SetFieldState extends State<_SetField> {
               textAlignVertical: TextAlignVertical.center,
               style: style,
               cursorColor: k.encre,
+              // Pas de sélection au glissé : un glissement horizontal parti
+              // d'un champ change de page comme ailleurs (l'appui
+              // sélectionne déjà tout le nombre).
+              enableInteractiveSelection: false,
               decoration: InputDecoration(
                 isDense: true,
                 filled: false,

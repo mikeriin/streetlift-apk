@@ -315,6 +315,13 @@ void main() {
       scale: 2,
     );
     await shot(tester, 'bilan', true, 'bordeaux', suffix: '_320');
+    await tester.dragUntilVisible(
+      find.byKey(const ValueKey('feel-skip')),
+      find.byKey(const ValueKey('health-page')),
+      const Offset(0, -200),
+    );
+    await settle(tester);
+    await shot(tester, 'bilan_bas', true, 'bordeaux', suffix: '_320');
     await tester.tap(find.byKey(const ValueKey('feel-skip')));
     await settle(tester);
     await shot(tester, 'exercice', true, 'bordeaux', suffix: '_320');
