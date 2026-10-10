@@ -12,13 +12,14 @@ import 'package:flutter/material.dart';
 import 'package:kalis_core/kalis_core.dart' as kc;
 import 'package:kalis_koach/kalis_koach.dart' show KoachPose;
 
-import '../app_theme.dart';
+import '../athlete_profile_screen.dart' show ProfileScreen;
 import '../koach/koach_bubble.dart' show KoachSays;
 import '../store.dart';
 import '../ui.dart';
 import 'coach_texts.dart';
 import 'event_day_screen.dart';
 import 'plan_program.dart';
+import 'plan_screens.dart' show openPlanCreation;
 import 'plan_texts.dart' show kWeekKindLabels;
 
 /// Phase de la saison, datée.
@@ -311,57 +312,95 @@ SeasonOverview? storeSeasonOverview() {
   );
 }
 
-/// Carte « Ta saison » de Réglages › Mon programme.
+/// Carte « Ma saison » de Mon programme (maquette « Mon programme ») :
+/// compte à rebours de l'échéance, phase en cours, prochaine semaine
+/// particulière ; toute la carte ouvre Ma saison.
 class SeasonCard extends StatelessWidget {
   final SeasonOverview view;
   const SeasonCard({super.key, required this.view});
 
   @override
   Widget build(BuildContext context) {
-    final dim = Theme.of(context).textTheme.bodySmall;
+    final k = KTokens.of(context);
     final cur = view.currentPhase;
     final next = view.nextSpecial;
-    return KCard(
+    final today = _today();
+    final count = view.eventName != null && view.daysToEvent != null
+        ? countdownParts(
+            view.daysToEvent!,
+            view.eventName!,
+            view.eventDate!,
+            today,
+          )
+        : null;
+    final detail = KType.detail.copyWith(color: k.texte2);
+    final competition =
+        view.event?.kind == kc.EventKind.strengthCompetition ||
+        view.event?.kind == kc.EventKind.repsCompetition;
+    return KeyedSubtree(
       key: const ValueKey('program-season'),
-      onTap: () => Navigator.of(
-        context,
-      ).push(MaterialPageRoute<void>(builder: (_) => const SeasonScreen())),
-      child: KoachSays(
-        pose: KoachPose.direction,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+      child: KCard(
+        key: const ValueKey('season-open'),
+        semanticsLabel: 'Ma saison',
+        onTap: () => Navigator.of(
+          context,
+        ).push(MaterialPageRoute<void>(builder: (_) => const SeasonScreen())),
+        child: Row(
           children: [
-            Text('Ta saison', style: Theme.of(context).textTheme.titleMedium),
-            const SizedBox(height: 4),
-            if (view.eventName != null && view.daysToEvent != null)
-              Text(
-                '${view.eventName} ${countdownText(view.daysToEvent!)}'
-                ' (${_short(view.eventDate!)}).',
-                key: const ValueKey('season-countdown'),
-              ),
-            if (cur != null)
-              Text(
-                _sentence(
-                  'Phase en cours : ${phaseLabel(cur.code)}, jusqu’au '
-                  '${_short(cur.end)}',
+            Expanded(
+              child: KoachSays(
+                pose: KoachPose.direction,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Ma saison',
+                      style: KType.titreCarte.copyWith(color: k.texte),
+                    ),
+                    if (count != null) ...[
+                      const SizedBox(height: KSpacing.s4),
+                      Text(
+                        count.$1,
+                        style: KType.chiffre.copyWith(color: k.encre),
+                      ),
+                      Text(
+                        count.$2,
+                        key: const ValueKey('season-countdown'),
+                        style: detail,
+                      ),
+                    ],
+                    if (cur != null) ...[
+                      const SizedBox(height: KSpacing.s4),
+                      Text(
+                        _sentence(
+                          'Phase en cours : ${phaseLabel(cur.code)}, '
+                          'jusqu’au ${_short(cur.end)}',
+                        ),
+                        style: KType.corps.copyWith(color: k.texte),
+                      ),
+                    ],
+                    if (next != null)
+                      Text(
+                        next.current
+                            ? 'Cette semaine : ${next.label.toLowerCase()}.'
+                            : 'Semaine ${next.n} : ${next.label.toLowerCase()}.',
+                        style: detail,
+                      ),
+                    Text(
+                      competition
+                          ? 'Phases, blocs, Jour J.'
+                          : 'Phases et blocs, semaine par semaine.',
+                      style: detail,
+                    ),
+                  ],
                 ),
               ),
-            if (next != null)
-              Text(
-                next.current
-                    ? 'Cette semaine : ${next.label.toLowerCase()}.'
-                    : 'Semaine ${next.n} : ${next.label.toLowerCase()}.',
-                style: dim,
-              ),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: TextButton(
-                key: const ValueKey('season-open'),
-                onPressed: () => Navigator.of(context).push(
-                  MaterialPageRoute<void>(builder: (_) => const SeasonScreen()),
-                ),
-                child: const Text('Voir la saison'),
-              ),
+            ),
+            const SizedBox(width: KSpacing.s8),
+            Icon(
+              Icons.chevron_right_rounded,
+              size: KSize.icon,
+              color: k.texte2,
             ),
           ],
         ),
@@ -370,8 +409,8 @@ class SeasonCard extends StatelessWidget {
   }
 }
 
-/// Écran de la saison : phases, compte à rebours, semaines du bloc,
-/// règles du programme, figures.
+/// Ma saison : échéance et Jour J, frise des phases, semaines du bloc,
+/// figures, règles du programme. Vide : l'action qui donne une saison (R6).
 class SeasonScreen extends StatelessWidget {
   const SeasonScreen({super.key});
 
@@ -380,186 +419,210 @@ class SeasonScreen extends StatelessWidget {
     listenable: store,
     builder: (context, _) {
       final view = storeSeasonOverview();
-      final t = Theme.of(context).textTheme;
-      return KScreen(
-        appBar: AppBar(title: const Text('MA SAISON')),
-        body: view == null
-            ? const KList(
+      if (view == null) return _empty(context);
+      final k = KTokens.of(context);
+      final today = _today();
+      final children = <Widget>[];
+      if (view.eventName != null && view.daysToEvent != null) {
+        final count = countdownParts(
+          view.daysToEvent!,
+          view.eventName!,
+          view.eventDate!,
+          today,
+        );
+        final e = view.event;
+        final jourJ =
+            e != null &&
+            (e.kind == kc.EventKind.strengthCompetition ||
+                e.kind == kc.EventKind.repsCompetition);
+        children.add(
+          KCard(
+            key: const ValueKey('season-event'),
+            padding: const EdgeInsets.all(KSpacing.s20),
+            child: Semantics(
+              container: true,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Text(
-                    'Ton programme n’a pas de saison planifiée : il est '
-                    'écrit bloc par bloc.',
+                    view.eventName!,
+                    style: KType.section.copyWith(color: k.texte2),
                   ),
-                ],
-              )
-            : KList(
-                key: const ValueKey('season-screen'),
-                children: [
-                  if (view.eventName != null && view.daysToEvent != null)
-                    KCard(
-                      accent: SL.accent,
-                      child: Semantics(
-                        container: true,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            Text(view.eventName!, style: t.titleMedium),
-                            const SizedBox(height: 2),
-                            Text(
-                              '${_short(view.eventDate!)} · '
-                              '${countdownText(view.daysToEvent!)}',
-                              style: t.titleSmall?.copyWith(color: SL.accent),
-                            ),
-                            if (view.event case final e?
-                                when e.kind ==
-                                        kc.EventKind.strengthCompetition ||
-                                    e.kind == kc.EventKind.repsCompetition)
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: TextButton.icon(
-                                  key: const ValueKey('season-event-day'),
-                                  icon: const Icon(Icons.emoji_events_outlined),
-                                  label: Text(
-                                    e.kind == kc.EventKind.strengthCompetition
-                                        ? 'Jour J : tentatives'
-                                        : 'Jour J : rythme',
-                                  ),
-                                  onPressed: () => Navigator.of(context).push(
-                                    MaterialPageRoute<void>(
-                                      builder: (_) => EventDayScreen(event: e),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                          ],
+                  Text(
+                    _long(view.eventDate!, today),
+                    style: KType.chiffre.copyWith(color: k.texte),
+                  ),
+                  Text(
+                    count.$1 == 'Aujourd’hui' || count.$1 == 'Demain'
+                        ? count.$1
+                        : 'dans ${count.$1}'
+                              '${view.daysToEvent! >= 14 ? ' (${view.daysToEvent} jours)' : ''}',
+                    style: KType.corps.copyWith(color: k.texte2),
+                  ),
+                  if (jourJ && e != null) ...[
+                    const SizedBox(height: KSpacing.s16),
+                    KTonalButton(
+                      key: const ValueKey('season-event-day'),
+                      expand: true,
+                      icon: Icons.emoji_events_outlined,
+                      label: e.kind == kc.EventKind.strengthCompetition
+                          ? 'Jour J : tentatives'
+                          : 'Jour J : rythme',
+                      onPressed: () => Navigator.of(context).push(
+                        MaterialPageRoute<void>(
+                          builder: (_) => EventDayScreen(event: e),
                         ),
                       ),
                     ),
-                  if (view.phases.isNotEmpty) ...[
-                    const KSection('Phases', topPadding: 0),
-                    KCard(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 12,
-                        vertical: 8,
-                      ),
-                      child: Column(
-                        children: [for (final p in view.phases) _PhaseRow(p)],
-                      ),
-                    ),
-                  ],
-                  KSection('Bloc ${view.blockIndex + 1}, semaine par semaine'),
-                  KCard(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                      vertical: 8,
-                    ),
-                    child: Column(
-                      children: [for (final w in view.blockWeeks) _WeekRow(w)],
-                    ),
-                  ),
-                  if (view.ladders.isNotEmpty) ...[
-                    const KSection('Figures'),
-                    for (final l in view.ladders)
-                      KCard(child: Text(l, style: t.bodyMedium)),
-                  ],
-                  if (view.rules.isNotEmpty) ...[
-                    const KSection('Règles de ton programme'),
-                    for (final r in view.rules)
-                      KCard(child: Text(r, style: t.bodyMedium)),
                   ],
                 ],
               ),
+            ),
+          ),
+        );
+      }
+      if (view.phases.isNotEmpty) {
+        children.add(
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const KSectionTitle('Phases', top: 0),
+              KTimeline(
+                phases: [
+                  for (final p in view.phases)
+                    KPhase(
+                      phaseTitle(p.code),
+                      dates:
+                          '${_short(p.start)} – ${_short(p.end)}'
+                          '${p.eventName == null ? '' : ', ${p.eventName}'}',
+                      length: '${p.weeks} semaine${p.weeks > 1 ? 's' : ''}',
+                      state: p.current
+                          ? KPhaseState.current
+                          : p.past
+                          ? KPhaseState.past
+                          : KPhaseState.upcoming,
+                    ),
+                ],
+              ),
+            ],
+          ),
+        );
+      }
+      children.add(
+        KMenuGroup(
+          title: 'Bloc ${view.blockIndex + 1}, semaine par semaine',
+          dividerIndent: KSpacing.s16,
+          children: [for (final w in view.blockWeeks) _WeekRow(w)],
+        ),
+      );
+      Widget lines(String title, List<String> items) => KMenuGroup(
+        title: title,
+        dividerIndent: KSpacing.s16,
+        children: [
+          for (final l in items)
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: KSpacing.s16,
+                vertical: KSpacing.s12,
+              ),
+              child: Text(l, style: KType.corps.copyWith(color: k.texte)),
+            ),
+        ],
+      );
+      if (view.ladders.isNotEmpty) children.add(lines('Figures', view.ladders));
+      if (view.rules.isNotEmpty) {
+        children.add(lines('Règles de ton programme', view.rules));
+      }
+      return KPage.sub(
+        key: const ValueKey('season-screen'),
+        title: 'Ma saison',
+        children: children,
       );
     },
   );
-}
 
-class _PhaseRow extends StatelessWidget {
-  final SeasonPhaseView p;
-  const _PhaseRow(this.p);
-
-  @override
-  Widget build(BuildContext context) {
-    final t = Theme.of(context).textTheme;
-    final color = p.current ? SL.accent : (p.past ? SL.dim : SL.text);
-    return Semantics(
-      label: p.current ? 'Phase en cours' : null,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 6),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Icon(
-              p.current
-                  ? Icons.play_circle_fill
-                  : p.past
-                  ? Icons.check_circle_outline
-                  : Icons.circle_outlined,
-              size: 18,
-              color: color,
+  Widget _empty(BuildContext context) {
+    final canCreate = PlanStore(store).planCanCreate;
+    final (String? action, VoidCallback? onAction) = store.athlete == null
+        ? (
+            'Créer mon profil',
+            () => Navigator.of(context).push(
+              MaterialPageRoute<void>(builder: (_) => const ProfileScreen()),
             ),
-            const SizedBox(width: 10),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    '${phaseTitle(p.code)}${p.current ? ' · en cours' : ''}',
-                    style: t.titleSmall?.copyWith(color: color),
-                  ),
-                  Text(
-                    '${_short(p.start)} → ${_short(p.end)} · ${p.weeks} '
-                    'semaine${p.weeks > 1 ? 's' : ''}'
-                    '${p.eventName == null ? '' : ' · ${p.eventName}'}',
-                    style: t.bodySmall,
-                  ),
-                ],
-              ),
-            ),
-          ],
+          )
+        : canCreate
+        ? ('Créer un nouveau programme', () => openPlanCreation(context))
+        : ('Revenir à Mon programme', () => Navigator.of(context).maybePop());
+    return KPage.sub(
+      title: 'Ma saison',
+      children: [
+        KEmpty(
+          key: const ValueKey('season-empty'),
+          icon: Icons.flag_outlined,
+          title: 'Pas de saison planifiée',
+          message:
+              'Ton programme n’a pas de saison planifiée : il est écrit bloc '
+              'par bloc. Un programme créé avec Koach la calcule d’après tes '
+              'échéances.',
+          action: action,
+          onAction: onAction,
         ),
-      ),
+      ],
     );
   }
 }
 
+/// Une semaine du bloc : numéro, nature (cette semaine en `encre`),
+/// drapeau des semaines particulières.
 class _WeekRow extends StatelessWidget {
   final SeasonWeekView w;
   const _WeekRow(this.w);
 
   @override
   Widget build(BuildContext context) {
-    final t = Theme.of(context).textTheme;
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5),
-      child: Row(
-        children: [
-          SizedBox(
-            width: 44,
-            child: Text(
-              'S${w.n}',
-              style: t.titleSmall?.copyWith(
-                color: w.current ? SL.accent : SL.dim,
-                fontWeight: w.current ? FontWeight.w700 : null,
-              ),
-            ),
+    final k = KTokens.of(context);
+    return Semantics(
+      label:
+          'Semaine ${w.n}, ${w.label}'
+          '${w.current ? ', cette semaine' : ''}'
+          '${w.special ? ', semaine particulière' : ''}',
+      excludeSemantics: true,
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(minHeight: KSize.target),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: KSpacing.s16,
+            vertical: KSpacing.s8,
           ),
-          Expanded(
-            child: Text(
-              '${w.label}${w.current ? ' · cette semaine' : ''}',
-              style: t.bodyMedium?.copyWith(
-                fontWeight: w.special || w.current ? FontWeight.w600 : null,
+          child: Row(
+            children: [
+              SizedBox(
+                width: KSize.target,
+                child: Text(
+                  'S${w.n}',
+                  style: KType.chiffrePetit.copyWith(
+                    color: w.current ? k.encre : k.texte2,
+                  ),
+                ),
               ),
-            ),
+              Expanded(
+                child: Text(
+                  '${w.label}${w.current ? ' · cette semaine' : ''}',
+                  style: (w.special || w.current
+                          ? KType.corpsFort
+                          : KType.corps)
+                      .copyWith(color: w.current ? k.encre : k.texte),
+                ),
+              ),
+              if (w.special)
+                Icon(
+                  Icons.flag_outlined,
+                  size: KSize.iconSmall,
+                  color: k.texte2,
+                ),
+            ],
           ),
-          if (w.special)
-            Icon(
-              Icons.flag_outlined,
-              size: 18,
-              color: SL.dim,
-              semanticLabel: 'semaine particulière',
-            ),
-        ],
+        ),
       ),
     );
   }
