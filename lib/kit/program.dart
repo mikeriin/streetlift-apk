@@ -129,7 +129,7 @@ class KDayRow extends StatelessWidget {
                   else
                     SizedBox(
                       width: KSize.target,
-                      height: KSize.target,
+                      height: KSize.icon,
                       child: Icon(
                         icon,
                         size: KSize.iconSmall,

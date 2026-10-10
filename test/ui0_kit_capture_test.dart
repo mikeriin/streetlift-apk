@@ -32,7 +32,9 @@ void main() {
         theme: kitTheme(dark: dark, paletteId: palette, contrast: contrast),
         home: Builder(
           builder: (context) => MediaQuery(
-            data: MediaQuery.of(context).copyWith(textScaler: TextScaler.linear(scale)),
+            data: MediaQuery.of(
+              context,
+            ).copyWith(textScaler: TextScaler.linear(scale)),
             child: Scaffold(
               body: Align(
                 alignment: Alignment.topCenter,
@@ -53,7 +55,9 @@ void main() {
 
   setUpAll(loadUiFonts);
 
-  testWidgets('kit : sections × sombre, clair × bordeaux, neon', (tester) async {
+  testWidgets('kit : sections × sombre, clair × bordeaux, neon', (
+    tester,
+  ) async {
     addTearDown(tester.view.reset);
     for (final s in kitSamples) {
       for (final palette in ['bordeaux', 'neon']) {
@@ -70,28 +74,42 @@ void main() {
     }
   }, skip: !uiCaptureEnabled);
 
-  testWidgets('kit : jetons et palette dans les 8 palettes, contraste renforcé', (
-    tester,
-  ) async {
-    addTearDown(tester.view.reset);
-    final tokens = kitSamples.firstWhere((s) => s.id == 'jetons');
-    final picker = kitSamples.firstWhere((s) => s.id == 'palettes');
-    for (final p in kPaletteSources) {
-      for (final dark in [true, false]) {
-        final mode = dark ? 'sombre' : 'clair';
-        await capture(tester, tokens, 'ui0_8p_jetons_${p.id}_$mode', dark: dark, palette: p.id);
-        await capture(tester, picker, 'ui0_8p_palette_${p.id}_$mode', dark: dark, palette: p.id);
-        await capture(
-          tester,
-          tokens,
-          'ui0_8p_jetons_${p.id}_${mode}_renforce',
-          dark: dark,
-          palette: p.id,
-          contrast: true,
-        );
+  testWidgets(
+    'kit : jetons et palette dans les 8 palettes, contraste renforcé',
+    (tester) async {
+      addTearDown(tester.view.reset);
+      final tokens = kitSamples.firstWhere((s) => s.id == 'jetons');
+      final picker = kitSamples.firstWhere((s) => s.id == 'palettes');
+      for (final p in kPaletteSources) {
+        for (final dark in [true, false]) {
+          final mode = dark ? 'sombre' : 'clair';
+          await capture(
+            tester,
+            tokens,
+            'ui0_8p_jetons_${p.id}_$mode',
+            dark: dark,
+            palette: p.id,
+          );
+          await capture(
+            tester,
+            picker,
+            'ui0_8p_palette_${p.id}_$mode',
+            dark: dark,
+            palette: p.id,
+          );
+          await capture(
+            tester,
+            tokens,
+            'ui0_8p_jetons_${p.id}_${mode}_renforce',
+            dark: dark,
+            palette: p.id,
+            contrast: true,
+          );
+        }
       }
-    }
-  }, skip: !uiCaptureEnabled);
+    },
+    skip: !uiCaptureEnabled,
+  );
 
   testWidgets('kit : 320 dp et 200 % de texte', (tester) async {
     addTearDown(tester.view.reset);

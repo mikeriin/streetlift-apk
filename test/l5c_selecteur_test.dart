@@ -152,7 +152,9 @@ void main() {
       expect(store.settings.accent, 'neon');
       expect(store.accentMode.value, 'neon');
       expect(store.settings.theme, 'dark');
-      await tester.pumpWidget(settingsPage(dark: true, accent: KAccentSpec.neon));
+      await tester.pumpWidget(
+        settingsPage(dark: true, accent: KAccentSpec.neon),
+      );
       await tester.pumpAndSettle();
       expect(find.byKey(const ValueKey('accent-check-neon')), findsOneWidget);
       expect(find.byKey(const ValueKey('accent-check-bordeaux')), findsNothing);

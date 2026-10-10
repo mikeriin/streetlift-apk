@@ -73,7 +73,7 @@ abstract final class KSize {
 
   /// Largeur sous laquelle les commandes de la barre de repos passent sous
   /// le temps restant (à 100 % de texte).
-  static const double restBarMin = 300;
+  static const double restBarMin = 260;
 
   /// Champ de recherche.
   static const double search = 52;
