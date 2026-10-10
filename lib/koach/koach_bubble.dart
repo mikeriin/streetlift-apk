@@ -146,7 +146,11 @@ class KoachBubbleState extends State<KoachBubble> {
       crossAxisAlignment: CrossAxisAlignment.end,
       children: koachLeft
           ? [koach, const SizedBox(width: KSpacing.s8), Expanded(child: bubble)]
-          : [Expanded(child: bubble), const SizedBox(width: KSpacing.s8), koach],
+          : [
+              Expanded(child: bubble),
+              const SizedBox(width: KSpacing.s8),
+              koach,
+            ],
     );
   }
 

@@ -196,7 +196,10 @@ List<Widget> _evolutionSheet(BuildContext context, EvolutionEntry e) {
   return [
     KoachBubble(
       key: const ValueKey('evo-sheet-koach'),
-      pose: evolutionPose(e.proposal.kind, pending: e.status == EvoStatus.pending),
+      pose: evolutionPose(
+        e.proposal.kind,
+        pending: e.status == EvoStatus.pending,
+      ),
       koachHeight: KSize.primary * 2,
       text: evolutionHeadlineOf(e),
       why: evolutionWhy(e),
@@ -389,9 +392,7 @@ class EvolutionUnlockCard extends StatelessWidget {
                           ? Icons.check_circle_rounded
                           : Icons.lock_outline_rounded,
                       size: KSize.iconSmall,
-                      color: l.index <= u.level.index
-                          ? k.validation
-                          : k.texte2,
+                      color: l.index <= u.level.index ? k.validation : k.texte2,
                     ),
                     const SizedBox(width: KSpacing.s12),
                     Expanded(

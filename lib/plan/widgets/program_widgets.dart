@@ -366,7 +366,10 @@ class _WhyTileState extends State<WhyTile> {
                 for (final r in widget.reasons)
                   Padding(
                     padding: const EdgeInsets.only(bottom: KSpacing.s4),
-                    child: Text(r, style: KType.corps.copyWith(color: k.texte2)),
+                    child: Text(
+                      r,
+                      style: KType.corps.copyWith(color: k.texte2),
+                    ),
                   ),
               ],
             ),

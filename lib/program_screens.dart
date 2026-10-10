@@ -170,7 +170,8 @@ class ProgramScreen extends StatelessWidget {
         KMenuGroup(
           title: 'Changer de programme',
           children: [
-            if (PlanStore(store).planBlockEnding || PlanStore(store).planImportedNextBlockOffered)
+            if (PlanStore(store).planBlockEnding ||
+                PlanStore(store).planImportedNextBlockOffered)
               KMenuRow(
                 key: const ValueKey('program-next-block'),
                 icon: Icons.skip_next_outlined,

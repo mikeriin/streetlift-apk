@@ -286,10 +286,7 @@ String _long(DateTime d, DateTime today) =>
   if (days == 0) return ('Aujourd’hui', '$event, le $when');
   if (days == 1) return ('Demain', '$event, le $when');
   if (days < 14) return ('$days jours', 'avant $event, le $when');
-  return (
-    '${days ~/ 7} semaines',
-    'avant $event, le $when ($days jours)',
-  );
+  return ('${days ~/ 7} semaines', 'avant $event, le $when ($days jours)');
 }
 
 DateTime _today() {

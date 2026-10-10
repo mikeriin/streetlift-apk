@@ -157,10 +157,13 @@ void main() {
       ProfileDraft.of(sampleStreetProfile(on: civilOf(store.storeClock())))
         ..consent = 'refused',
     );
-    final c = PlanStore(store).newPlanCreation(journal: false)!;
-    c.start();
-    c.createPass2();
-    PlanStore(store).applyPlanCreation(c);
+    // Deux programmes créés : le retour à l'ancien est possible (7 jours).
+    for (var i = 0; i < 2; i++) {
+      final c = PlanStore(store).newPlanCreation(journal: false)!;
+      c.start();
+      c.createPass2();
+      PlanStore(store).applyPlanCreation(c);
+    }
     final event = store.athlete!.profile.events!.first;
     for (final palette in ['bordeaux', 'neon']) {
       for (final dark in [true, false]) {
@@ -173,9 +176,13 @@ void main() {
         await page('mon_programme', const ProgramScreen());
         await toEnd(tester);
         await shot(tester, 'ui1_mon_programme_bas_$tag');
-        await tester.tap(
-          find.byKey(const ValueKey('program-revert')).hitTestable(),
+        await tester.scrollUntilVisible(
+          find.byKey(const ValueKey('program-revert')),
+          200,
+          scrollable: find.byType(Scrollable).first,
         );
+        await tester.pumpAndSettle();
+        await tester.tap(find.byKey(const ValueKey('program-revert')));
         await tester.pumpAndSettle();
         await shot(tester, 'ui1_revenir_$tag');
         await tester.tap(find.byKey(const ValueKey('action-undo')));
@@ -183,9 +190,13 @@ void main() {
         await shot(tester, 'ui1_revenir_confirmation_$tag');
         await tester.tap(find.byKey(const ValueKey('confirm-cancel')));
         await tester.pumpAndSettle();
-        await tester.tap(
-          find.byKey(const ValueKey('program-explainer-open')).hitTestable(),
+        await tester.scrollUntilVisible(
+          find.byKey(const ValueKey('program-explainer-open')),
+          200,
+          scrollable: find.byType(Scrollable).first,
         );
+        await tester.pumpAndSettle();
+        await tester.tap(find.byKey(const ValueKey('program-explainer-open')));
         await tester.pumpAndSettle();
         await shot(tester, 'ui1_explication_$tag');
         await page('ma_saison', const SeasonScreen());

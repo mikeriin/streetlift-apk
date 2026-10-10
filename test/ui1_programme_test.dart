@@ -42,9 +42,7 @@ Widget page(
   supportedLocales: const [Locale('fr')],
   localizationsDelegates: GlobalMaterialLocalizations.delegates,
   builder: (context, child) => MediaQuery(
-    data: MediaQuery.of(
-      context,
-    ).copyWith(textScaler: TextScaler.linear(scale)),
+    data: MediaQuery.of(context).copyWith(textScaler: TextScaler.linear(scale)),
     child: child!,
   ),
   home: child,
@@ -120,11 +118,15 @@ void main() {
       await tester.tap(row);
       await tester.pumpAndSettle();
       expect(find.byType(ProgramScreen), findsOneWidget);
-      for (final t in ['Calendrier', 'Changer de programme', 'Aide']) {
-        expect(find.text(t), findsOneWidget, reason: t);
+      for (final t in [
+        'Calendrier',
+        'Départ du programme',
+        'Changer de programme',
+        'Aide',
+        'Comment marche ton programme ?',
+      ]) {
+        await scrollToAction(tester, find.text(t));
       }
-      expect(find.text('Départ du programme'), findsOneWidget);
-      expect(find.text('Comment marche ton programme ?'), findsOneWidget);
       // Retour : l'accueil, à la même semaine.
       await tester.tap(find.byTooltip('Retour'));
       await tester.pumpAndSettle();
@@ -175,8 +177,11 @@ void main() {
           await tester.drag(list, const Offset(0, -600));
           await tester.pumpAndSettle();
         }
+        // Dernier élément de la liste : la carte du moment, sinon la ligne.
+        final card = find.byKey(const ValueKey('program-home-card'));
+        final last = card.evaluate().isNotEmpty ? card : row;
         expect(
-          tester.getRect(row).bottom,
+          tester.getRect(last).bottom,
           lessThanOrEqualTo(tester.getRect(find.byType(HeroNavBar)).top),
         );
       });
@@ -216,8 +221,7 @@ void main() {
     // `_finish`) : séance enregistrée (récompense en attente), séance
     // refermée, puis « Fin de séance » ouverte à la fin de la fermeture.
     store.markSessionDone(week.n, day.j, true, title: 'S${week.n} · J${day.j}');
-    final session =
-        ModalRoute.of(tester.element(find.byType(SessionScreen)))!;
+    final session = ModalRoute.of(tester.element(find.byType(SessionScreen)))!;
     final closing = session.completed;
     nav.pop();
     unawaited(
@@ -257,9 +261,9 @@ void main() {
     await tester.pumpWidget(
       page(const Scaffold(body: Text('Accueil')), navigator: navigator),
     );
-    // Une autre journée que le test précédent : la récompense d'une
-    // journée n'est donnée qu'une fois.
-    final week = store.program.weeks[1];
+    final week = store.program.weeks.firstWhere(
+      (w) => w.days.any((d) => d.exercises.isNotEmpty),
+    );
     final day = week.days.firstWhere((d) => d.exercises.isNotEmpty);
     final nav = navigator.currentState!;
     unawaited(openProgramDay(nav, week, day));
@@ -268,8 +272,22 @@ void main() {
     store.markSessionDone(week.n, day.j, true, title: 'S${week.n} · J${day.j}');
     nav.pop();
     await tester.pumpAndSettle();
-    expect(find.byType(RewardScreen, skipOffstage: false), findsOneWidget);
-    expect(store.consumeReward(), isNull);
+    for (var i = 0; i < 10; i++) {
+      await tester.pump(const Duration(milliseconds: 100));
+    }
+    expect(find.byType(SessionScreen), findsNothing, reason: 'séance fermée');
+    final shown = find
+        .byType(RewardScreen, skipOffstage: false)
+        .evaluate()
+        .isNotEmpty;
+    final pending = store.consumeReward();
+    expect(
+      shown,
+      isTrue,
+      reason:
+          'récompense ${pending == null ? 'consommée ou absente' : 'encore en attente'}',
+    );
+    expect(pending, isNull);
     await tester.pumpWidget(const SizedBox());
     await tester.pumpAndSettle();
   });
@@ -287,9 +305,7 @@ void main() {
       tester,
     ) async {
       phone(tester);
-      await tester.pumpWidget(
-        page(RootNav(referenceDate: store.storeClock())),
-      );
+      await tester.pumpWidget(page(RootNav(referenceDate: store.storeClock())));
       await tester.pumpAndSettle();
       await tapKey(tester, 'home-my-program');
       expect(find.byType(ProgramScreen), findsOneWidget);
@@ -306,9 +322,7 @@ void main() {
       tester,
     ) async {
       phone(tester);
-      await tester.pumpWidget(
-        page(RootNav(referenceDate: store.storeClock())),
-      );
+      await tester.pumpWidget(page(RootNav(referenceDate: store.storeClock())));
       await tester.pumpAndSettle();
       await tapKey(tester, 'home-my-program');
       await tapKey(tester, 'program-evolution-open');
@@ -396,9 +410,7 @@ void main() {
       await store.eraseAllData();
     });
 
-    testWidgets('Évolution sans profil : « Créer mon profil »', (
-      tester,
-    ) async {
+    testWidgets('Évolution sans profil : « Créer mon profil »', (tester) async {
       phone(tester);
       expect(store.athlete, isNull);
       await tester.pumpWidget(page(const EvolutionScreen()));
@@ -434,14 +446,14 @@ void main() {
 
   test('compte à rebours en deux parties (C9)', () {
     final today = DateTime(2026, 10, 1);
+    expect(countdownParts(84, 'Championnat', DateTime(2026, 12, 24), today), (
+      '12\u00a0semaines',
+      'avant Championnat, le 24\u00a0décembre (84\u00a0jours)',
+    ));
     expect(
-      countdownParts(84, 'Championnat', DateTime(2026, 12, 24), today),
-      (
-        '12\u00a0semaines',
-        'avant Championnat, le 24\u00a0décembre (84\u00a0jours)',
-      ),
+      countdownParts(1, 'Test', DateTime(2026, 10, 2), today).$1,
+      'Demain',
     );
-    expect(countdownParts(1, 'Test', DateTime(2026, 10, 2), today).$1, 'Demain');
     expect(
       countdownParts(5, 'Course', DateTime(2027, 1, 1), today).$2,
       'avant Course, le 1er\u00a0janvier\u00a02027',

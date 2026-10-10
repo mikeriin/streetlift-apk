@@ -101,8 +101,7 @@ class _EventDayScreenState extends State<EventDayScreen> {
               key: const ValueKey('event-objective'),
               semanticLabel: 'Objectif du jour',
               segments: [
-                for (final e in _objectives.entries)
-                  KSegment(e.key, e.value),
+                for (final e in _objectives.entries) KSegment(e.key, e.value),
               ],
               selected: _objective,
               onChanged: (v) => setState(() => _objective = v),
