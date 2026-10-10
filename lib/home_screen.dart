@@ -150,10 +150,11 @@ class _HomeScreenState extends State<HomeScreen> {
   /// Choix d'une semaine : feuille de liste (§4.5).
   Future<void> _pickWeek() async {
     final weeks = store.program.weeks;
-    final selected = await showKListSheet(
+    final selected = await showProgramListSheet(
       context,
       title: 'Choisir une semaine',
       summary: '${weeks.length} semaines',
+      initial: weeks.indexWhere((w) => w.n == week),
       items: [
         for (final w in weeks)
           KListItem(

@@ -16,7 +16,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:streetlift_tracker/app_theme.dart';
 import 'package:streetlift_tracker/athlete_profile.dart';
 import 'package:streetlift_tracker/home_screen.dart';
 import 'package:streetlift_tracker/main.dart';
@@ -112,13 +111,12 @@ void main() {
     ) async {
       await openHome(tester);
       final row = find.byKey(const ValueKey('home-my-program'));
-      expect(row, findsOneWidget);
+      await scrollToAction(tester, row);
       expect(find.text('Mon programme'), findsOneWidget);
       expect(
         find.text('Saison, évolution, calendrier, changer de programme'),
         findsOneWidget,
       );
-      await scrollToAction(tester, row);
       await tester.tap(row);
       await tester.pumpAndSettle();
       expect(find.byType(ProgramScreen), findsOneWidget);
@@ -171,7 +169,12 @@ void main() {
         final row = find.byKey(const ValueKey('home-my-program'));
         await scrollToAction(tester, row);
         expect(tester.takeException(), isNull);
-        // Rien sous le dock : la ligne s'arrête au-dessus (C8).
+        // Fin de la liste : rien sous le dock (C8), la ligne au-dessus.
+        final list = find.byKey(const PageStorageKey('programme-scroll'));
+        for (var i = 0; i < 10; i++) {
+          await tester.drag(list, const Offset(0, -600));
+          await tester.pumpAndSettle();
+        }
         expect(
           tester.getRect(row).bottom,
           lessThanOrEqualTo(tester.getRect(find.byType(HeroNavBar)).top),
@@ -254,9 +257,9 @@ void main() {
     await tester.pumpWidget(
       page(const Scaffold(body: Text('Accueil')), navigator: navigator),
     );
-    final week = store.program.weeks.firstWhere(
-      (w) => w.days.any((d) => d.exercises.isNotEmpty),
-    );
+    // Une autre journée que le test précédent : la récompense d'une
+    // journée n'est donnée qu'une fois.
+    final week = store.program.weeks[1];
     final day = week.days.firstWhere((d) => d.exercises.isNotEmpty);
     final nav = navigator.currentState!;
     unawaited(openProgramDay(nav, week, day));
@@ -321,6 +324,11 @@ void main() {
     testWidgets('« Revenir à un programme précédent » : feuille d\'actions, '
         'confirmation, « Annuler » ne change rien (R8)', (tester) async {
       phone(tester);
+      // Un second programme créé : l'ancien peut être rétabli 7 jours.
+      final c = PlanStore(store).newPlanCreation(journal: false)!;
+      c.start();
+      c.createPass2();
+      PlanStore(store).applyPlanCreation(c);
       expect(PlanStore(store).planCanUndo, isTrue);
       await tester.pumpWidget(page(const ProgramScreen()));
       await tester.pumpAndSettle();
@@ -335,9 +343,10 @@ void main() {
       await tapKey(tester, 'program-revert');
       await tester.tap(find.byKey(const ValueKey('action-undo')));
       await tester.pumpAndSettle();
+      final before = store.planProgram!.createdAt;
       await tester.tap(find.byKey(const ValueKey('confirm-ok')));
       await tester.pumpAndSettle();
-      expect(store.planProgram, isNull);
+      expect(store.planProgram?.createdAt, isNot(before));
       expect(tester.takeException(), isNull);
     });
 
