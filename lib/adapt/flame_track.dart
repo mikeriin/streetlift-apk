@@ -6,11 +6,16 @@
 // ligne reste ouverte pour corriger. « Je ne sais pas », discret : série
 // sans note. Les séries plus anciennes que la dernière validée sont
 // résumées en une ligne ([SetSummaryLine]).
+//
+// UI2 (refonte UI) : jetons du kit ; le menu ⋯ de la ligne devient une
+// feuille d'actions (C10, une action réversible, donc pas en `danger`) ;
+// « Je ne sais pas » en lien texte discret de 48 dp (C13) ; ligne résumée
+// sans troncature (C3). Le dessin de la flamme ([FlameIcon]) est inchangé.
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kalis_core/kalis_core.dart' show Flames;
 
-import '../app_theme.dart';
+import '../kit/kit.dart';
 import '../koach/flame_icon.dart';
 import '../store.dart' show LogSpec, SetEntry;
 
@@ -149,9 +154,30 @@ class _FlameTrackState extends State<FlameTrack> {
     }
   }
 
+  /// Menu de la série (feuille d'actions) : écarter ou réintégrer.
+  Future<void> _openMenu() async {
+    final value = await showKActionSheet<String>(
+      context,
+      title: 'Série ${widget.setLabel}',
+      groups: [
+        [
+          KAction(
+            icon: widget.excluded ? Icons.undo_rounded : Icons.block_rounded,
+            label: widget.excluded
+                ? 'Réintégrer la série'
+                : 'Écarter la série (incident)',
+            value: 'exclude',
+          ),
+        ],
+      ],
+    );
+    if (value != null && mounted) widget.onToggleExcluded();
+  }
+
   @override
   Widget build(BuildContext context) {
     final v = _shown;
+    final k = KTokens.of(context);
     final dark = Theme.of(context).brightness == Brightness.dark;
     final reduce = MediaQuery.maybeDisableAnimationsOf(context) ?? false;
     final motion = reduce ? Duration.zero : FlameTrack.motion;
@@ -160,10 +186,14 @@ class _FlameTrackState extends State<FlameTrack> {
         : v == null
         ? 'Note ta série'
         : flameTrackText(v);
-    final text = Theme.of(context).textTheme;
+    final legend = KType.detail.copyWith(color: k.texte2);
     return Padding(
       key: ValueKey('flame-track-${widget.setLabel}'),
-      padding: const EdgeInsets.fromLTRB(4, 0, 4, 6),
+      padding: const EdgeInsetsDirectional.only(
+        start: KSpacing.s4,
+        end: KSpacing.s4,
+        bottom: KSpacing.s4,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisSize: MainAxisSize.min,
@@ -180,9 +210,8 @@ class _FlameTrackState extends State<FlameTrack> {
                   child: Text(
                     label,
                     key: ValueKey('flame-track-value-$label'),
-                    style: text.bodyMedium?.copyWith(
-                      fontWeight: FontWeight.w700,
-                      color: v == null ? SL.accent : SL.text,
+                    style: KType.corpsFort.copyWith(
+                      color: v == null ? k.texte2 : k.texte,
                       decoration: widget.excluded
                           ? TextDecoration.lineThrough
                           : null,
@@ -190,22 +219,12 @@ class _FlameTrackState extends State<FlameTrack> {
                   ),
                 ),
               ),
-              PopupMenuButton<String>(
+              KIconButton(
                 key: const ValueKey('flame-menu'),
+                icon: Icons.more_horiz,
                 tooltip: 'Plus d’options pour la série ${widget.setLabel}',
-                icon: Icon(Icons.more_horiz, size: 20, color: SL.dim),
-                onSelected: (_) => widget.onToggleExcluded(),
-                itemBuilder: (context) => [
-                  PopupMenuItem(
-                    key: const ValueKey('flame-exclude'),
-                    value: 'exclude',
-                    child: Text(
-                      widget.excluded
-                          ? 'Réintégrer la série'
-                          : 'Écarter la série (incident)',
-                    ),
-                  ),
-                ],
+                color: k.texte2,
+                onPressed: _openMenu,
               ),
             ],
           ),
@@ -235,7 +254,7 @@ class _FlameTrackState extends State<FlameTrack> {
                 double x(int i) => cell * (i - .5);
                 const h = 48.0, flame = 34.0, dot = 7.0;
                 final fill = v == null
-                    ? SL.line
+                    ? k.filet
                     : flameColor(v, dark: dark).withValues(alpha: .55);
                 return GestureDetector(
                   behavior: HitTestBehavior.opaque,
@@ -262,7 +281,7 @@ class _FlameTrackState extends State<FlameTrack> {
                           right: cell / 2,
                           top: h / 2 - 1,
                           height: 2,
-                          child: ColoredBox(color: SL.line),
+                          child: ColoredBox(color: k.filet),
                         ),
                         // Partie parcourue jusqu'à la flamme.
                         AnimatedPositioned(
@@ -273,9 +292,9 @@ class _FlameTrackState extends State<FlameTrack> {
                           top: h / 2 - 1.5,
                           height: 3,
                           child: DecoratedBox(
-                            decoration: BoxDecoration(
+                            decoration: ShapeDecoration(
                               color: fill,
-                              borderRadius: BorderRadius.circular(2),
+                              shape: KRadius.pill,
                             ),
                           ),
                         ),
@@ -295,11 +314,11 @@ class _FlameTrackState extends State<FlameTrack> {
                                   duration: motion,
                                   width: dot,
                                   height: dot,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
+                                  decoration: ShapeDecoration(
+                                    shape: const CircleBorder(),
                                     color: v != null && i < v
                                         ? flameColor(i, dark: dark)
-                                        : SL.dot,
+                                        : k.texte3,
                                   ),
                                 ),
                               ),
@@ -347,59 +366,44 @@ class _FlameTrackState extends State<FlameTrack> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 6),
+            padding: const EdgeInsets.symmetric(horizontal: KSpacing.s4),
             child: Row(
               children: [
                 Expanded(
                   child: Text(
                     '1 · ${flameWord(1).toLowerCase()}',
-                    style: TextStyle(color: SL.dim, fontSize: 11.5),
+                    style: legend,
                   ),
                 ),
-                // « Je ne sais pas », discret, au centre sous la ligne ; texte
-                // agrandi sur écran étroit : sur deux lignes au lieu de
-                // déborder.
+                // « Je ne sais pas », discret (lien texte `texte2`, 48 dp),
+                // au centre sous la ligne ; texte agrandi sur écran étroit :
+                // à la ligne au lieu de déborder.
                 Flexible(
                   flex: 2,
-                  child: TextButton(
+                  child: KTextButton(
                     key: const ValueKey('flame-unknown'),
-                    style: TextButton.styleFrom(
-                      minimumSize: const Size(44, 36),
-                      padding: const EdgeInsets.symmetric(horizontal: 8),
-                      visualDensity: VisualDensity.compact,
-                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    ),
+                    label: 'Je ne sais pas',
+                    dense: true,
+                    color: k.texte2,
                     onPressed: widget.unknown ? null : widget.onUnknown,
-                    child: Text(
-                      'Je ne sais pas',
-                      textAlign: TextAlign.center,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        color: widget.unknown ? SL.faint : SL.dim,
-                        fontSize: 12.5,
-                        decoration: TextDecoration.underline,
-                        decorationColor: SL.faint,
-                      ),
-                    ),
                   ),
                 ),
                 Expanded(
                   child: Text(
                     '${flameWord(10).toLowerCase()} · 10',
                     textAlign: TextAlign.end,
-                    style: TextStyle(color: SL.dim, fontSize: 11.5),
+                    style: legend,
                   ),
                 ),
               ],
             ),
           ),
           if (widget.intro) ...[
-            const SizedBox(height: 6),
+            const SizedBox(height: KSpacing.s4),
             Text(
               kFlamesIntro,
               key: const ValueKey('flame-intro'),
-              style: TextStyle(color: SL.dim, fontSize: 12.5, height: 1.35),
+              style: legend,
             ),
           ],
         ],
@@ -427,8 +431,13 @@ class SetSummaryLine extends StatelessWidget {
     this.onTap,
   });
 
+  /// Colonne du mot de la flamme : alignée d'une ligne à l'autre, élargie
+  /// plutôt que coupée (C3).
+  static const double _wordWidth = 80;
+
   @override
   Widget build(BuildContext context) {
+    final k = KTokens.of(context);
     final f = flames;
     final spoken = [
       if (done.isNotEmpty) done,
@@ -438,12 +447,10 @@ class SetSummaryLine extends StatelessWidget {
         'sans note',
       if (excluded) 'série écartée',
     ].join(', ');
-    final style = TextStyle(
-      color: excluded ? SL.dim : SL.text,
-      fontSize: 14,
-      height: 1.2,
+    final style = KType.corps.copyWith(
+      color: excluded ? k.texte2 : k.texte,
       decoration: excluded ? TextDecoration.lineThrough : null,
-      fontFeatures: const [FontFeature.tabularFigures()],
+      fontFeatures: KFont.tabular,
     );
     return Semantics(
       container: true,
@@ -453,74 +460,66 @@ class SetSummaryLine extends StatelessWidget {
       onTap: onTap,
       child: InkWell(
         key: ValueKey('set-summary-$setLabel'),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: KRadius.menuRadius,
         onTap: onTap,
         child: ConstrainedBox(
-          constraints: BoxConstraints(minHeight: onTap == null ? 32 : 44),
+          // C13 : 48 dp quand la ligne se rouvre d'un appui.
+          constraints: BoxConstraints(
+            minHeight: onTap == null ? KSpacing.s32 : KSize.target,
+          ),
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 4),
+            padding: const EdgeInsets.symmetric(horizontal: KSpacing.s4),
             child: Row(
               children: [
                 SizedBox(
-                  width: 28,
+                  width: KSpacing.s32,
                   child: Text(
                     setLabel,
-                    style: TextStyle(
-                      color: SL.success,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 14,
-                    ),
+                    style: KType.chiffrePetit.copyWith(color: k.texte2),
                   ),
                 ),
-                Expanded(
-                  child: Text(
-                    done.isEmpty ? '—' : done,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: style,
-                  ),
-                ),
+                Expanded(child: Text(done.isEmpty ? '—' : done, style: style)),
                 if (excluded) ...[
                   Flexible(
                     child: Text(
                       'écartée',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(color: SL.dim, fontSize: 12.5),
+                      style: KType.detail.copyWith(color: k.texte2),
                     ),
                   ),
-                  const SizedBox(width: 6),
+                  const SizedBox(width: KSpacing.s8),
                 ],
                 // Colonne fixe : la flamme et sa note, alignées d'une ligne
                 // à l'autre et centrées sur le texte.
                 SizedBox(
-                  width: 22,
-                  height: 22,
+                  width: KSize.icon,
+                  height: KSize.icon,
                   child: f != null
-                      ? FlameIcon(f, size: 22, semantics: false, centered: true)
+                      ? FlameIcon(
+                          f,
+                          size: KSize.icon,
+                          semantics: false,
+                          centered: true,
+                        )
                       : unknown
-                      ? Icon(Icons.help_outline, size: 16, color: SL.dim)
+                      ? Icon(
+                          Icons.help_outline,
+                          size: KSize.chevron,
+                          color: k.texte2,
+                        )
                       : null,
                 ),
-                const SizedBox(width: 4),
-                SizedBox(
-                  width: 80,
+                const SizedBox(width: KSpacing.s4),
+                ConstrainedBox(
+                  constraints: const BoxConstraints(minWidth: _wordWidth),
                   child: Text(
                     f != null ? flameWord(f) : '',
                     key: ValueKey('set-summary-flames-$setLabel'),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      color: SL.text,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 14,
-                      height: 1.2,
-                    ),
+                    style: KType.libelle.copyWith(color: k.texte),
                   ),
                 ),
                 if (onTap != null) ...[
-                  const SizedBox(width: 4),
-                  Icon(Icons.expand_more, size: 18, color: SL.dim),
+                  const SizedBox(width: KSpacing.s4),
+                  Icon(Icons.expand_more, size: KSize.chevron, color: k.texte2),
                 ],
               ],
             ),
