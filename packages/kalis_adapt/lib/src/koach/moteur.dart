@@ -178,14 +178,18 @@ class Koach {
     } else if (typ == 'reference') {
       // Plan de référence de la planification (KM2, constat M7) : versé au
       // journal, le rejeu reconstruit la planification.
-      ciblesTentatives = Map<String, Object?>.of(dictOuVide(e['cibles_tentatives']));
+      ciblesTentatives = Map<String, Object?>.of(
+        dictOuVide(e['cibles_tentatives']),
+      );
       for (final x in extensions) {
         if (x is Planification) {
           x.surReference(this, e);
         }
       }
     } else if (typ == 'cibles') {
-      ciblesTentatives = Map<String, Object?>.of(dictOuVide(e['cibles_tentatives']));
+      ciblesTentatives = Map<String, Object?>.of(
+        dictOuVide(e['cibles_tentatives']),
+      );
       for (final x in extensions) {
         if (x is Planification) {
           x.surCibles(e);

@@ -1,4 +1,0 @@
-Formatted lib/src/koach/dual.dart
-Formatted lib/src/koach/moteur.dart
-Formatted lib/src/koach/planification.dart
-Formatted 54 files (3 changed) in 0.59 seconds.

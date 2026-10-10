@@ -1338,8 +1338,9 @@ class ControleDual extends Extension
     final reference = <String, int>{};
     for (final it in ctx.ecrit) {
       if (it['exerciseId'] == ex && (it['kind'] ?? 'work') == 'work') {
-        reference[it['slotId'] as String] =
-            vrai(it['sets']) ? ent(it['sets']) : 0;
+        reference[it['slotId'] as String] = vrai(it['sets'])
+            ? ent(it['sets'])
+            : 0;
       }
     }
     final out = <Json>[];
@@ -1357,7 +1358,11 @@ class ControleDual extends Extension
       double borne;
       if (ref > 0) {
         borne =
-            facteurBorne(planifiees / ref.toDouble(), dbl(mod['volume']), plafondV) *
+            facteurBorne(
+              planifiees / ref.toDouble(),
+              dbl(mod['volume']),
+              plafondV,
+            ) *
             ref;
       } else {
         borne = servies.toDouble();

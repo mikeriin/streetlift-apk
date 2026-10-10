@@ -1785,7 +1785,11 @@ class Planification extends Extension implements AvecItemsDuJour {
 
   /// Prochain jour d'épreuve connu à la semaine [semaine], au jour [jour]
   /// ou après (`planification_banc.echeance_de`).
-  static int? echeanceDe(List<List<int>> parSemaine, int semaine, [int jour = 0]) {
+  static int? echeanceDe(
+    List<List<int>> parSemaine,
+    int semaine, [
+    int jour = 0,
+  ]) {
     if (semaine >= parSemaine.length) {
       return null;
     }

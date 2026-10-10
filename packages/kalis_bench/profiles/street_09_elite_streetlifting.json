@@ -1,0 +1,311 @@
+{
+ "schemaVersion": 1,
+ "key": "street_09_elite_streetlifting",
+ "group": "street",
+ "title": "Élite streetlifting, niveau national",
+ "summary": "Homme de 30 ans, 78 kg, huit ans de pratique, podiums nationaux. 1RM : traction +85 kg, dips +125 kg, muscle-up +35 kg, squat 190 kg. Championnat dans 12 semaines. Cinq séances de deux heures, en salle.",
+ "level": "elite",
+ "trainingAgeMonths": 96,
+ "core": {
+  "sex": "male",
+  "birthYear": 1996,
+  "heightCm": 174,
+  "bodyWeightKg": 78.0,
+  "streetMode": {
+   "primary": "streetlifting",
+   "streetliftingPct": 90,
+   "setsRepsPct": 5,
+   "calisthenicsPct": 5
+  },
+  "disciplines": {
+   "primary": "streetlifting",
+   "primaryPct": 90,
+   "secondaries": [
+    {
+     "discipline": "street_workout",
+     "pct": 5
+    },
+    {
+     "discipline": "calisthenics",
+     "pct": 5
+    }
+   ]
+  },
+  "availability": [
+   {
+    "weekday": 1,
+    "minutes": 120
+   },
+   {
+    "weekday": 2,
+    "minutes": 120
+   },
+   {
+    "weekday": 4,
+    "minutes": 120
+   },
+   {
+    "weekday": 5,
+    "minutes": 90
+   },
+   {
+    "weekday": 6,
+    "minutes": 120
+   }
+  ],
+  "places": [
+   "salle"
+  ],
+  "equipment": [
+   "barre fixe",
+   "barres parallèles",
+   "barre basse",
+   "élastique",
+   "ceinture de lest",
+   "disques",
+   "barre olympique",
+   "cage / rack",
+   "magnésie",
+   "banc plat",
+   "haltères",
+   "poulie",
+   "anneaux",
+   "tapis",
+   "box / plinth",
+   "chaînes"
+  ],
+  "loadIncrements": [
+   {
+    "loadType": "barre",
+    "stepKg": 2.5,
+    "minKg": 20.0
+   },
+   {
+    "loadType": "halteres",
+    "stepKg": 2.0,
+    "minKg": 2.0
+   },
+   {
+    "loadType": "machine",
+    "stepKg": 5.0,
+    "minKg": 5.0
+   },
+   {
+    "loadType": "poulie",
+    "stepKg": 2.5,
+    "minKg": 2.5
+   },
+   {
+    "loadType": "kettlebell",
+    "stepKg": 4.0,
+    "minKg": 4.0
+   },
+   {
+    "loadType": "lest",
+    "stepKg": 1.25
+   }
+  ],
+  "likedExerciseIds": [],
+  "dislikedExerciseIds": [],
+  "experience": "elite",
+  "guidanceMode": "free",
+  "healthScreening": {
+   "questionnaireId": "kalis-sante-l13-v1",
+   "answeredOn": "2026-10-01",
+   "outcome": "standard"
+  },
+  "knownExerciseIds": [
+   "cd-muscle-up-barre-strict"
+  ]
+ },
+ "records": [
+  {
+   "exerciseId": "sl-traction-lestee",
+   "measure": "one_rm_kg",
+   "value": 85,
+   "testedWeeksAgo": 5
+  },
+  {
+   "exerciseId": "sl-dips-leste",
+   "measure": "one_rm_kg",
+   "value": 125,
+   "testedWeeksAgo": 5
+  },
+  {
+   "exerciseId": "sl-muscle-up-leste",
+   "measure": "one_rm_kg",
+   "value": 35,
+   "testedWeeksAgo": 5
+  },
+  {
+   "exerciseId": "sl-squat-competition",
+   "measure": "one_rm_kg",
+   "value": 190,
+   "testedWeeksAgo": 5
+  },
+  {
+   "exerciseId": "sw-traction-pronation",
+   "measure": "max_reps",
+   "value": 34
+  },
+  {
+   "exerciseId": "sw-dips-barres-paralleles",
+   "measure": "max_reps",
+   "value": 80
+  }
+ ],
+ "events": [
+  {
+   "id": "e1",
+   "kind": "competition",
+   "label": "championnat de streetlifting",
+   "weeksOut": 12,
+   "priority": "A",
+   "format": "streetlifting",
+   "targets": [
+    {
+     "exerciseId": "sl-traction-lestee",
+     "metric": "one_rm_kg",
+     "targetValue": 90
+    },
+    {
+     "exerciseId": "sl-dips-leste",
+     "metric": "one_rm_kg",
+     "targetValue": 130
+    },
+    {
+     "exerciseId": "sl-muscle-up-leste",
+     "metric": "one_rm_kg",
+     "targetValue": 37.5
+    },
+    {
+     "exerciseId": "sl-squat-competition",
+     "metric": "one_rm_kg",
+     "targetValue": 200
+    }
+   ]
+  }
+ ],
+ "weakPoints": [
+  {
+   "kind": "movement",
+   "exerciseId": "sl-dips-leste",
+   "note": "verrouillage en haut du dips lourd"
+  },
+  {
+   "kind": "movement",
+   "exerciseId": "sl-muscle-up-leste",
+   "note": "transition du muscle-up lesté"
+  }
+ ],
+ "injuries": [
+  {
+   "zone": "elbow",
+   "side": "both",
+   "discomfort": 1,
+   "status": "history",
+   "monthsAgo": 14,
+   "label": "coudes sensibles en fin de gros cycle de traction"
+  }
+ ],
+ "expectations": {
+  "text": [
+   "Blocs de 2 à 4 semaines avec ondulation interne ; un gain de 1 à 2 % par cycle est un bon résultat à ce niveau (R3-P4, R5-P13).",
+   "8 à 15 séries directes par mouvement et par semaine, sur 3 à 5 séances, dont 3 à 6 à 85 % et plus ; alternance de séances lourdes et légères (R1-P5, R2-P7, R2-P8).",
+   "Série haute de 1 à 3 répétitions puis séries allégées à 80-90 % ; clusters, pauses, variantes ciblées sur les points faibles ; excentrique surchargé seulement loin de l'échéance (R2-P6, P12, P16, P17).",
+   "Semaine de surcharge possible à S-3, puis deux semaines d'affûtage : volume en baisse exponentielle de 40 à 60 %, accessoires supprimés la dernière semaine, dernier lourd de J-10 à J-7 (R3-P12 à P15).",
+   "Fréquence plafonnée par les coudes et les épaules, pas par le muscle (R2-P7) ; décharge toutes les 3 à 5 semaines (R3-P9)."
+  ],
+  "checks": [
+   {
+    "id": "c1",
+    "type": "has_taper",
+    "label": "Volume réduit de 40 à 70 % la semaine du championnat",
+    "minDrop": 0.4,
+    "maxDrop": 0.7
+   },
+   {
+    "id": "c2",
+    "type": "min_frequency",
+    "label": "Traction lestée au moins trois fois par semaine",
+    "exerciseIds": [
+     "sl-traction-lestee"
+    ],
+    "perWeek": 3
+   },
+   {
+    "id": "c3",
+    "type": "min_frequency",
+    "label": "Dips lesté au moins trois fois par semaine",
+    "exerciseIds": [
+     "sl-dips-leste"
+    ],
+    "perWeek": 3
+   },
+   {
+    "id": "c4",
+    "type": "min_frequency",
+    "label": "Squat au moins deux fois par semaine",
+    "exerciseIds": [
+     "sl-squat-competition"
+    ],
+    "perWeek": 2
+   },
+   {
+    "id": "c5",
+    "type": "heavy_exposure",
+    "label": "Une exposition lourde par semaine au moins sur chaque mouvement de compétition",
+    "exerciseIds": [
+     "sl-traction-lestee",
+     "sl-dips-leste",
+     "sl-squat-competition"
+    ],
+    "minPercent": 0.85,
+    "maxReps": 5,
+    "perWeek": 2
+   },
+   {
+    "id": "c6",
+    "type": "load_prescribed",
+    "label": "Charges chiffrées sur les quatre mouvements de compétition",
+    "exerciseIds": [
+     "sl-traction-lestee",
+     "sl-dips-leste",
+     "sl-muscle-up-leste",
+     "sl-squat-competition"
+    ]
+   },
+   {
+    "id": "c7",
+    "type": "relief_every",
+    "label": "Pas plus de 5 semaines de charge sans allègement",
+    "weeks": 5
+   },
+   {
+    "id": "c8",
+    "type": "format_present",
+    "label": "Série haute puis séries allégées, clusters ou vagues",
+    "formats": [
+     "top_set_backoff",
+     "cluster",
+     "wave"
+    ]
+   },
+   {
+    "id": "c9",
+    "type": "weekly_sets_between",
+    "label": "8 à 18 séries dures par semaine en traction lestée et ses variantes",
+    "exerciseIds": [
+     "sl-traction-lestee"
+    ],
+    "min": 8,
+    "max": 18
+   },
+   {
+    "id": "c10",
+    "type": "test_at_event",
+    "label": "Épreuve sur les mouvements de compétition la semaine du championnat"
+   }
+  ]
+ }
+}
