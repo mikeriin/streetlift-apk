@@ -683,6 +683,16 @@ Map<String, Object?> kmMesurerTemps(
 }) {
   final (cle, scenario, verite, graine) = saison;
   final s = banc.saison(cle, scenario, semaines: semaines);
+  // Chauffe (KM2) : la VM Dart compile à la volée (JIT) ; l'application
+  // est compilée d'avance (AOT). Une première saison identique est
+  // simulée et chronométrée à part (`premiere_saison`, rapportée), puis
+  // la mesure du critère est faite sur la seconde.
+  final froid = PolitiqueChrono(banc.politique(), chrono);
+  kmSimuler(banc.catalog, s, froid, verite, graine);
+  final msFroid = <String, Map<String, Object?>>{
+    for (final e in froid.koach.temps.entries)
+      e.key: kmStats(<double>[for (final x in e.value) 1000.0 * x]),
+  };
   final pol = PolitiqueChrono(banc.politique(), chrono);
   kmSimuler(banc.catalog, s, pol, verite, graine);
   final t = pol.koach.temps;
@@ -707,6 +717,19 @@ Map<String, Object?> kmMesurerTemps(
     options,
     chrono,
   );
+  // Chauffe des replanifications : un premier rejeu, rapporté à part.
+  final pcFroid = PlanificationChrono(
+    k2.params,
+    k2.fiches,
+    cs.validateur,
+    options,
+    chrono,
+  );
+  final krFroid = kc.Koach(k2.params, k2.fiches, k2.profil);
+  krFroid.extensions.add(pcFroid);
+  for (final e in k2.journal) {
+    krFroid.observe(kc.copieJson(e));
+  }
   final kr = kc.Koach(k2.params, k2.fiches, k2.profil);
   kr.extensions.add(pc);
   for (final e in k2.journal) {
@@ -753,8 +776,16 @@ Map<String, Object?> kmMesurerTemps(
         majMax <= kmSeuilSerieMs &&
         rsMax != null &&
         rsMax <= kmSeuilReplanificationS,
+    'premiere_saison': <String, Object?>{
+      'observe_serie_ms': msFroid['observe_serie'],
+      'mise_a_jour_serie_ms': msFroid['mise_a_jour_serie'],
+      'replanification_s': kmStats(<double>[
+        for (final x in pcFroid.temps) x.$1,
+      ]),
+    },
     'note':
-        'VM Dart : mise à jour après une série = observe de la série + plan '
+        'VM Dart, après une saison de chauffe (JIT ; la première saison est '
+        'rapportée dans premiere_saison) : mise à jour après une série = observe de la série + plan '
         'de la série suivante (critère) ; observe seul rapporté comme en KM1',
   };
 }

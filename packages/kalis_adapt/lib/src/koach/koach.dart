@@ -2,7 +2,8 @@
 /// validée par KM1 (`reference/koach/`, contrat `reference/CONTRAT_1_0.md`,
 /// version 1.0.1). Mêmes entrées, mêmes sorties à 1e-9 sur les fixtures de
 /// parité (`reference/fixtures/`). Dart pur : aucun accès disque, aucune
-/// horloge, hasard seedé (mulberry32).
+/// horloge, hasard seedé (mulberry32). Paramètres et fiches livrés en assets
+/// JSON versionnés (`assets/koach/`, `parametres.dart`).
 library;
 
 import 'dart:convert';
@@ -19,3 +20,4 @@ part 'planification.dart';
 part 'rupture.dart';
 part 'adherence.dart';
 part 'dual.dart';
+part 'parametres.dart';
