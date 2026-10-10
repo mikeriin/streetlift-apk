@@ -1,0 +1,129 @@
+
+::group::✅ Passing tests
+✅ kit : sections × sombre, clair × bordeaux, neon
+✅ kit : jetons et palette dans les 8 palettes, contraste renforcé
+::endgroup::
+::group::❌ kit : 320 dp et 200 % de texte (failed)
+══╡ EXCEPTION CAUGHT BY RENDERING LIBRARY ╞═════════════════════════════════════════════════════════
+The following assertion was thrown during layout:
+A RenderFlex overflowed by 3.0 pixels on the right.
+
+The relevant error-causing widget was:
+  Row Row:file:///home/runner/work/streetlift-apk/streetlift-apk/lib/kit/dock.dart:173:30
+
+The overflowing RenderFlex has an orientation of Axis.horizontal.
+The edge of the RenderFlex that is overflowing has been marked in the rendering with a yellow and
+black striped pattern. This is usually caused by the contents being too big for the RenderFlex.
+Consider applying a flex factor (e.g. using an Expanded widget) to force the children of the
+RenderFlex to fit within the available space instead of being sized to their natural size.
+This is considered an error condition because it indicates that there is content that cannot be
+seen. If the content is legitimately bigger than the available space, consider clipping it with a
+ClipRect widget before putting it in the flex, or using a scrollable container rather than a Flex,
+like a ListView.
+The specific RenderFlex in question is: RenderFlex#35832 relayoutBoundary=up23 OVERFLOWING:
+  creator: Row ← Padding ← DecoratedBox ← Listener ← RawGestureDetector ← GestureDetector ← Semantics
+    ← DefaultSelectionStyle ← Builder ← MouseRegion ← Semantics ← _FocusInheritedScope ← ⋯
+  parentData: offset=Offset(12.0, 0.0) (can use size)
+  constraints: BoxConstraints(w=19.0, 0.0<=h<=48.0)
+  size: Size(19.0, 48.0)
+  direction: horizontal
+  mainAxisAlignment: center
+  mainAxisSize: min
+  crossAxisAlignment: center
+  textDirection: ltr
+  verticalDirection: down
+  spacing: 0.0
+◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤
+════════════════════════════════════════════════════════════════════════════════════════════════════
+══╡ EXCEPTION CAUGHT BY RENDERING LIBRARY ╞═════════════════════════════════════════════════════════
+The following assertion was thrown during layout:
+A RenderFlex overflowed by 3.0 pixels on the right.
+
+The relevant error-causing widget was:
+  Row Row:file:///home/runner/work/streetlift-apk/streetlift-apk/lib/kit/dock.dart:173:30
+
+The overflowing RenderFlex has an orientation of Axis.horizontal.
+The edge of the RenderFlex that is overflowing has been marked in the rendering with a yellow and
+black striped pattern. This is usually caused by the contents being too big for the RenderFlex.
+Consider applying a flex factor (e.g. using an Expanded widget) to force the children of the
+RenderFlex to fit within the available space instead of being sized to their natural size.
+This is considered an error condition because it indicates that there is content that cannot be
+seen. If the content is legitimately bigger than the available space, consider clipping it with a
+ClipRect widget before putting it in the flex, or using a scrollable container rather than a Flex,
+like a ListView.
+The specific RenderFlex in question is: RenderFlex#44750 relayoutBoundary=up23 OVERFLOWING:
+  creator: Row ← Padding ← DecoratedBox ← Listener ← RawGestureDetector ← GestureDetector ← Semantics
+    ← DefaultSelectionStyle ← Builder ← MouseRegion ← Semantics ← _FocusInheritedScope ← ⋯
+  parentData: offset=Offset(12.0, 0.0) (can use size)
+  constraints: BoxConstraints(w=19.0, 0.0<=h<=48.0)
+  size: Size(19.0, 48.0)
+  direction: horizontal
+  mainAxisAlignment: center
+  mainAxisSize: min
+  crossAxisAlignment: center
+  textDirection: ltr
+  verticalDirection: down
+  spacing: 0.0
+◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤
+════════════════════════════════════════════════════════════════════════════════════════════════════
+══╡ EXCEPTION CAUGHT BY RENDERING LIBRARY ╞═════════════════════════════════════════════════════════
+The following assertion was thrown during layout:
+A RenderFlex overflowed by 3.0 pixels on the right.
+
+The relevant error-causing widget was:
+  Row Row:file:///home/runner/work/streetlift-apk/streetlift-apk/lib/kit/dock.dart:173:30
+
+The overflowing RenderFlex has an orientation of Axis.horizontal.
+The edge of the RenderFlex that is overflowing has been marked in the rendering with a yellow and
+black striped pattern. This is usually caused by the contents being too big for the RenderFlex.
+Consider applying a flex factor (e.g. using an Expanded widget) to force the children of the
+RenderFlex to fit within the available space instead of being sized to their natural size.
+This is considered an error condition because it indicates that there is content that cannot be
+seen. If the content is legitimately bigger than the available space, consider clipping it with a
+ClipRect widget before putting it in the flex, or using a scrollable container rather than a Flex,
+like a ListView.
+The specific RenderFlex in question is: RenderFlex#03d6c relayoutBoundary=up23 OVERFLOWING:
+  creator: Row ← Padding ← DecoratedBox ← Listener ← RawGestureDetector ← GestureDetector ← Semantics
+    ← DefaultSelectionStyle ← Builder ← MouseRegion ← Semantics ← _FocusInheritedScope ← ⋯
+  parentData: offset=Offset(12.0, 0.0) (can use size)
+  constraints: BoxConstraints(w=19.0, 0.0<=h<=48.0)
+  size: Size(19.0, 48.0)
+  direction: horizontal
+  mainAxisAlignment: center
+  mainAxisSize: min
+  crossAxisAlignment: center
+  textDirection: ltr
+  verticalDirection: down
+  spacing: 0.0
+◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤◢◤
+════════════════════════════════════════════════════════════════════════════════════════════════════
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following TestFailure was thrown running a test:
+Expected: null
+  Actual: 'Multiple exceptions (3) were detected during the running of the current test, and at
+least one was unexpected.'
+ui0_320_dock_bordeaux_sombre
+
+When the exception was thrown, this was the stack:
+#4      main.capture (file:///home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_capture_test.dart:52:5)
+<asynchronous suspension>
+#5      main.<anonymous closure> (file:///home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_capture_test.dart:118:7)
+<asynchronous suspension>
+#6      testWidgets.<anonymous closure>.<anonymous closure> (package:flutter_test/src/widget_tester.dart:192:15)
+<asynchronous suspension>
+#7      TestWidgetsFlutterBinding._runTestBody (package:flutter_test/src/binding.dart:1953:5)
+<asynchronous suspension>
+<asynchronous suspension>
+(elided one frame from package:stack_trace)
+
+This was caught by the test expectation on the following line:
+  file:///home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_capture_test.dart line 52
+The test description was:
+  kit : 320 dp et 200 % de texte
+════════════════════════════════════════════════════════════════════════════════════════════════════
+Test failed. See exception logs above.
+The test description was: kit : 320 dp et 200 % de texte
+
+::endgroup::
+
+::error::2 tests passed, 1 failed.
