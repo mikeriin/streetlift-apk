@@ -36,6 +36,47 @@ abstract interface class AvecHypothese {
   int? hypothesePourLaSemaine(Koach koach, int semaine, int graine);
 }
 
+/// Ce que les crochets de séance savent du jour (contexte de la dernière
+/// séance ouverte).
+class ContexteSeance {
+  ContexteSeance({
+    this.semaine,
+    this.jourIndex,
+    this.jour = 0,
+    this.genre,
+    this.ecrit = const <Json>[],
+  });
+
+  /// Semaine globale (`contexte.semaine`).
+  final int? semaine;
+
+  /// Indice du jour d'entraînement dans la semaine (`contexte.jour_index`).
+  final int? jourIndex;
+
+  /// Jour depuis le début.
+  final int jour;
+
+  /// Nature de la semaine (`contexte.genre`).
+  final Object? genre;
+
+  /// Items écrits du jour, avant toute modulation (ceux de l'appel de
+  /// `plan`).
+  final List<Json> ecrit;
+}
+
+/// Extension qui module les items écrits du jour avant la prescription
+/// (planification, semaine allégée, bras de volume d'un essai). Appelée par
+/// la façade, dans l'ordre de [Koach.extensions] (KM2, constat M6).
+abstract interface class AvecItemsDuJour {
+  List<Json> itemsDuJour(Koach koach, ContexteSeance ctx, List<Json> items);
+}
+
+/// Extension qui retouche la cible d'une série (bras d'intensité d'un
+/// essai), sous les bornes de la séance.
+abstract interface class AvecCibleSerie {
+  Json? cibleSerie(Koach koach, Json item, int index, Json? cible);
+}
+
 /// Le moteur Koach : estimation, prescription, garde-fous.
 class Koach {
   Koach(this.params, this.fiches, this.profil)
@@ -55,6 +96,20 @@ class Koach {
   int jour = 0;
   final List<Extension> extensions = [];
 
+  /// Contexte de la dernière séance ouverte (crochets de la façade).
+  ContexteSeance contexteSeance = ContexteSeance();
+
+  /// Grilles de charge de la dernière séance prescrite (bras d'intensité).
+  Map<String, Grille> grillesSeance = {};
+
+  /// Charges externes visées par exercice (événements `reference` et
+  /// `cibles`) : posées en `koachCible` sur les items de test (tentatives).
+  Map<String, Object?> ciblesTentatives = {};
+
+  /// Charge externe de la première série servie, par exercice (forme des
+  /// propositions de l'adhérence).
+  final Map<String, double> _derniereCharge = {};
+
   /// Verse un événement du journal (§ 2.1).
   void observe(Json e) {
     journal.add(e);
@@ -68,7 +123,14 @@ class Koach {
         garde.noterSeance(jour, jl(bilan['pains']), posee: true);
       }
       m.debutSeance(jour, bilan, e['poids_kg']);
-      seances.ouvrir(jour, bilan, dictOuVide(e['contexte']));
+      final ctx = dictOuVide(e['contexte']);
+      seances.ouvrir(jour, bilan, ctx);
+      contexteSeance = ContexteSeance(
+        semaine: ctx['semaine'] == null ? null : ent(ctx['semaine']),
+        jourIndex: ctx['jour_index'] == null ? null : ent(ctx['jour_index']),
+        jour: jour,
+        genre: ctx['genre'],
+      );
     } else if (typ == 'serie') {
       m.observerSerie(jm(e['serie']));
       seances.serieFaite(jm(e['serie']));
@@ -113,6 +175,26 @@ class Koach {
       appliquerParametres(this, jm(e['fichier']));
     } else if (typ == 'plan') {
       _plan(jm(e['contraintes']));
+    } else if (typ == 'reference') {
+      // Plan de référence de la planification (KM2, constat M7) : versé au
+      // journal, le rejeu reconstruit la planification.
+      ciblesTentatives = Map<String, Object?>.of(
+        dictOuVide(e['cibles_tentatives']),
+      );
+      for (final x in extensions) {
+        if (x is Planification) {
+          x.surReference(this, e);
+        }
+      }
+    } else if (typ == 'cibles') {
+      ciblesTentatives = Map<String, Object?>.of(
+        dictOuVide(e['cibles_tentatives']),
+      );
+      for (final x in extensions) {
+        if (x is Planification) {
+          x.surCibles(e);
+        }
+      }
     }
   }
 
@@ -259,8 +341,34 @@ class Koach {
             {for (final z in jl(jl(e.value)[1])) z as String},
           ),
       };
+      final ecrit = [for (final it in jl(c['items'])) jm(it)];
+      final ctx = ContexteSeance(
+        semaine: contexteSeance.semaine,
+        jourIndex: contexteSeance.jourIndex,
+        jour: contexteSeance.jour,
+        genre: contexteSeance.genre,
+        ecrit: ecrit,
+      );
+      var modules = ecrit;
+      for (final Object x in extensions) {
+        if (x is AvecItemsDuJour) {
+          modules = x.itemsDuJour(this, ctx, modules);
+        }
+      }
+      if (ciblesTentatives.isNotEmpty) {
+        modules = [
+          for (final it in modules)
+            if (ciblesTentatives.containsKey(it['exerciseId']) &&
+                it['kind'] == 'test')
+              (Map<String, Object?>.of(it)
+                ..['koachCible'] = ciblesTentatives[it['exerciseId']])
+            else
+              it,
+        ];
+      }
+      grillesSeance = grilles;
       final items = seances.prescrire(
-        [for (final it in jl(c['items'])) jm(it)],
+        modules,
         grilles,
         zones,
         dictOuVide(c['roles']),
@@ -269,13 +377,16 @@ class Koach {
       return <String, Object?>{'items': items, 'raisons': raisons};
     }
     if (h == 'serie') {
-      final cible = seances.cible(
-        jm(c['item']),
-        ent(c['index']),
-        listeOuVide(c['faites']),
-      );
+      final item = jm(c['item']);
+      final index = ent(c['index']);
+      var cible = seances.cible(item, index, listeOuVide(c['faites']));
       raisons = List<Json>.of(seances.raisons);
-      return cible;
+      for (final Object x in extensions) {
+        if (x is AvecCibleSerie) {
+          cible = x.cibleSerie(this, item, index, cible);
+        }
+      }
+      return _proposition(item, index, cible);
     }
     if (h == 'semaine') {
       Object? out;
@@ -288,6 +399,49 @@ class Koach {
       return out;
     }
     throw ArgumentError('horizon inconnu : $h');
+  }
+
+  /// Forme d'adhérence (KM2, constat M6) : quand la charge de la première
+  /// série d'un exercice chargé change, la cible porte `proposition`
+  /// (paliers et moment choisis par [Adherence.forme]) ; la charge servie
+  /// ne change pas (garde-fou anti-complaisance : la forme agit sur la
+  /// présentation, jamais sur la cible).
+  Json? _proposition(Json item, int index, Json? cible) {
+    if (cible == null || index != 0 || cible['loadKg'] == null) {
+      return cible;
+    }
+    final exId = item['exerciseId'] as String;
+    final charge = dbl(cible['loadKg']);
+    final avant = _derniereCharge[exId];
+    _derniereCharge[exId] = charge;
+    if (avant == null || (charge - avant).abs() < 1e-9) {
+      return cible;
+    }
+    Adherence? ad;
+    for (final Object x in extensions) {
+      if (x is Adherence) {
+        ad = x;
+      }
+    }
+    if (ad == null || item['kind'] == 'test') {
+      return cible;
+    }
+    final g = grillesSeance[exId];
+    final pas = (g != null && g.pas > 0) ? g.pas : 2.5;
+    final typ = charge > avant ? 'charge_plus' : 'charge_moins';
+    final forme = ad.forme(charge, avant, pas, typ, <String, Object?>{
+      'bilan_bas': false,
+      'semaine_allegement': contexteSeance.genre == 'deload',
+      'refus_recents': ad.refusRecents(jour),
+    });
+    final out = Map<String, Object?>.of(cible);
+    out['proposition'] = <String, Object?>{
+      'type': typ,
+      'depart': avant,
+      'cible': charge,
+      ...forme,
+    };
+    return out;
   }
 
   /// Les raisons des dernières décisions (§ 3.5).

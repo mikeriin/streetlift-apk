@@ -558,7 +558,8 @@ final Json questionDuree = <String, Object?>{
 /// cause déclenchée reste levée tant que l'utilisateur n'a pas répondu au
 /// diagnostic ; après une réponse, chaque cause levée est mise en silence
 /// `silence_semaines` semaines.
-class Surveillance extends Extension implements AvecParametres {
+class Surveillance extends Extension
+    implements AvecParametres, AvecItemsDuJour {
   Surveillance(Json params) {
     appliquerParametres(params);
     bocpd = Bocpd.depuisParams(params);
@@ -816,6 +817,12 @@ class Surveillance extends Extension implements AvecParametres {
 
   /// Items écrits du jour transformés par la semaine allégée en cours.
   /// Renvoie une nouvelle liste ; les items reçus ne sont pas modifiés.
+  /// Crochet de séance de la façade (KM2) : la semaine allégée en cours
+  /// est appliquée aux items écrits du jour (`SurveillanceBanc`).
+  @override
+  List<Json> itemsDuJour(Koach koach, ContexteSeance ctx, List<Json> items) =>
+      appliquerAllegement(items, ctx.jour);
+
   List<Json> appliquerAllegement(List<Json> items, int jour) {
     final a = allegement;
     if (a == null || !(a.$1 <= jour && jour < a.$2)) {

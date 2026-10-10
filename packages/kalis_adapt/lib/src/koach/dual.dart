@@ -907,7 +907,11 @@ Json effetEssai(
 /// plan pendant un bras. Source unique des poids des hypothèses :
 /// `reponse.poids`, recopiés dans `koach.modele.poidsHyp`.
 class ControleDual extends Extension
-    implements AvecAlerteHorsModele, AvecHypothese {
+    implements
+        AvecAlerteHorsModele,
+        AvecHypothese,
+        AvecItemsDuJour,
+        AvecCibleSerie {
   ControleDual(this.params, List<String> liftsPrincipaux)
     : lifts = List<String>.of(liftsPrincipaux)..sort(),
       reponse = Reponse.depuisParams(params);
@@ -1295,6 +1299,156 @@ class ControleDual extends Extension
       'intensite': f['intensite'],
       'bras': lettre,
     };
+  }
+
+  // --- façade 1.0.0 (KM2) : bras de l'essai appliqués aux séances --------
+  /// Nature de la dernière semaine servie (affûtage : pas d'essai).
+  Object? genre;
+
+  /// [semaine, séries de référence, séries planifiées, séries servies] de
+  /// l'exercice traité par le bras A dans la semaine en cours.
+  List<num>? semaineVol;
+
+  /// Journal des modulations servies (banc et mode dev).
+  final List<Json> journal = [];
+
+  /// Bras A (volume) : séries ajoutées à l'exercice traité, le produit
+  /// (facteur de la planification × facteur du bras) borné par le plafond
+  /// de volume par rapport à la RÉFÉRENCE ([ContexteSeance.ecrit]), cumulé
+  /// sur la semaine (`ControleDualBanc.items_du_jour` de la référence).
+  @override
+  List<Json> itemsDuJour(Koach koach, ContexteSeance ctx, List<Json> items) {
+    genre = ctx.genre;
+    final semaine = ctx.semaine;
+    if (semaine == null) {
+      return items;
+    }
+    final mod = modulation(semaine);
+    if (!mod.containsKey('bras') || dbl(mod['volume']) <= 1.0) {
+      return items;
+    }
+    final ex = mod['exerciseId'];
+    if (semaineVol == null || semaineVol![0] != semaine) {
+      semaineVol = <num>[semaine, 0, 0, 0];
+    }
+    final sv = semaineVol!;
+    final plafondV = dbl(
+      dictOuVide(params['planification'])['plafond_volume'] ?? 0.15,
+    );
+    final reference = <String, int>{};
+    for (final it in ctx.ecrit) {
+      if (it['exerciseId'] == ex && (it['kind'] ?? 'work') == 'work') {
+        reference[it['slotId'] as String] = vrai(it['sets'])
+            ? ent(it['sets'])
+            : 0;
+      }
+    }
+    final out = <Json>[];
+    for (final it0 in items) {
+      if (it0['exerciseId'] != ex ||
+          (it0['kind'] ?? 'work') != 'work' ||
+          (vrai(it0['sets']) ? dbl(it0['sets']) : 0) < 1) {
+        out.add(it0);
+        continue;
+      }
+      final n = ent(it0['sets']);
+      final ref = sv[1] + (reference[it0['slotId']] ?? n);
+      final planifiees = sv[2] + n;
+      final servies = sv[3] + n;
+      double borne;
+      if (ref > 0) {
+        borne =
+            facteurBorne(
+              planifiees / ref.toDouble(),
+              dbl(mod['volume']),
+              plafondV,
+            ) *
+            ref;
+      } else {
+        borne = servies.toDouble();
+      }
+      var plus = (borne - servies + 0.5).floor();
+      while (plus > 0 && servies + plus > (1.0 + plafondV) * ref + 1e-9) {
+        plus -= 1;
+      }
+      plus = plus > 0 ? plus : 0;
+      final it = Map<String, Object?>.of(it0);
+      it['sets'] = n + plus;
+      sv[1] = ref;
+      sv[2] = planifiees;
+      sv[3] = servies + plus;
+      journal.add(<String, Object?>{
+        'type': 'volume',
+        'jour': ctx.jour,
+        'semaine': semaine,
+        'exerciseId': ex,
+        'ecrites': n,
+        'servies': n + plus,
+        'ratio_semaine': ref != 0 ? arrondi(sv[3] / ref.toDouble(), 6) : 1.0,
+      });
+      out.add(it);
+    }
+    return out;
+  }
+
+  /// Bras B (intensité) : charge de travail montée de l'amplitude du bras,
+  /// jamais un jour où Koach interdit la hausse et jamais au-dessus des
+  /// bornes de hausse de la séance (`Seances.borneExterne`) ;
+  /// `ControleDualBanc.cible_serie` de la référence.
+  @override
+  Json? cibleSerie(Koach koach, Json item, int index, Json? cible) {
+    if (cible == null || cible['loadKg'] == null) {
+      return cible;
+    }
+    final semaine = koach.contexteSeance.semaine;
+    if (semaine == null) {
+      return cible;
+    }
+    final mod = modulation(semaine);
+    if (mod['bras'] != 'B' || item['exerciseId'] != mod['exerciseId']) {
+      return cible;
+    }
+    if (cible['role'] == 'test' ||
+        cible['role'] == 'attempt' ||
+        item['kind'] == 'test' ||
+        vrai(cible['repere'])) {
+      return cible;
+    }
+    final m = koach.modele;
+    final exId = item['exerciseId'] as String;
+    final t = m.pistes[exId];
+    final grille = koach.grillesSeance[exId];
+    if (t == null || grille == null) {
+      return cible;
+    }
+    final kg = dbl(cible['loadKg']);
+    final total = m.masse(t, kg);
+    if (total <= 0) {
+      return cible;
+    }
+    final voulu = total * dbl(mod['intensite']) - (total - kg);
+    var nouveau = grille.plancher(voulu);
+    if (nouveau <= kg + 1e-9) {
+      return cible;
+    }
+    final borne = koach.seances.borneExterne(item, index, nouveau);
+    if (borne == null || borne <= kg + 1e-9) {
+      return cible;
+    }
+    if (nouveau > borne) {
+      nouveau = borne.toDouble();
+    }
+    final c = Map<String, Object?>.of(cible);
+    c['loadKg'] = nouveau;
+    journal.add(<String, Object?>{
+      'type': 'intensite',
+      'jour': koach.jour,
+      'semaine': semaine,
+      'exerciseId': exId,
+      'index': index,
+      'ratio': arrondi(m.masse(t, nouveau) / total, 6),
+    });
+    return c;
   }
 
   // --- état -------------------------------------------------------------------
