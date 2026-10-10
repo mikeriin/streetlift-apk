@@ -159,13 +159,10 @@ class _HomeScreenState extends State<HomeScreen> {
         for (final w in weeks)
           KListItem(
             'Semaine ${w.n}',
-            detail: [
-              _dates(store.program.weekDates(w.n)),
-              w.block,
-              if (_isCurrentWeek(w.n)) 'Semaine actuelle',
-              '${w.days.where((d) => store.isDone(w.n, d.j)).length}\u00a0/\u00a0'
-                  '${w.days.length}\u00a0faites',
-            ].join(' · '),
+            detail:
+                '${[_dates(store.program.weekDates(w.n)), w.block, if (_isCurrentWeek(w.n)) 'semaine actuelle'].join(', ')}. '
+                '${w.days.where((d) => store.isDone(w.n, d.j)).length}\u00a0/\u00a0'
+                '${w.days.length}\u00a0journées validées',
             state: w.n == week
                 ? KListState.current
                 : w.days.every((d) => store.isDone(w.n, d.j))
@@ -792,38 +789,45 @@ class _TodayCard extends StatelessWidget {
       color: ink,
     );
     final texts = <Widget>[
-      // Surtitre et état : passent à la ligne entre les mots (C3).
-      Wrap(
-        spacing: KSpacing.s8,
-        runSpacing: KSpacing.s4,
-        crossAxisAlignment: WrapCrossAlignment.center,
-        children: [
-          Text(
-            k.title('J${day.j}, aujourd’hui'),
-            style: KType.micro.copyWith(
-              color: ink,
-              letterSpacing: KType.capsSpacing * 2,
-            ),
+      // Surtitre et état sur une ligne de texte : l'état suit le dernier
+      // mot et ne se retrouve jamais seul à la ligne (C3).
+      Text.rich(
+        TextSpan(
+          style: KType.micro.copyWith(
+            color: ink,
+            letterSpacing: KType.capsSpacing * 2,
           ),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              if (written != null) ...[
-                Text(
-                  written,
-                  key: ValueKey(
-                    inProgress
-                        ? 'day-in-progress-${day.j}'
-                        : 'day-resume-${day.j}',
+          children: [
+            // Gluon de mots (U+2060) : pas de coupure avant l'état.
+            TextSpan(text: '${k.title('J${day.j}, aujourd’hui')}\u2060'),
+            if (written != null)
+              WidgetSpan(
+                alignment: PlaceholderAlignment.middle,
+                child: Padding(
+                  padding: const EdgeInsetsDirectional.only(
+                    start: KSpacing.s8,
                   ),
-                  style: KType.micro.copyWith(color: ink),
+                  child: Text(
+                    written,
+                    key: ValueKey(
+                      inProgress
+                          ? 'day-in-progress-${day.j}'
+                          : 'day-resume-${day.j}',
+                    ),
+                    style: KType.micro.copyWith(color: ink),
+                  ),
                 ),
-                const SizedBox(width: KSpacing.s4),
-              ],
-              icon,
-            ],
-          ),
-        ],
+              ),
+            if (written != null) const TextSpan(text: '\u2060'),
+            WidgetSpan(
+              alignment: PlaceholderAlignment.middle,
+              child: Padding(
+                padding: const EdgeInsetsDirectional.only(start: KSpacing.s8),
+                child: icon,
+              ),
+            ),
+          ],
+        ),
       ),
       const SizedBox(height: KSpacing.s4),
       Text(
@@ -851,12 +855,13 @@ class _TodayCard extends StatelessWidget {
         ),
         Text('Estimé, repos inclus', style: KType.detail.copyWith(color: ink)),
         const SizedBox(height: KSpacing.s8),
+        // Volume au format de C9 (« 6 exercices, 19 séries, 136 rép. »).
         Text(
           '${day.exercises.length} exercices, '
-          '${estimate.sets.round()} séries',
+          '${estimate.sets.round()} séries, '
+          '${estimate.volumeLabel.replaceAll(' · ', ', ')}',
           style: KType.detail.copyWith(color: ink),
         ),
-        Text(estimate.volumeLabel, style: KType.detail.copyWith(color: ink)),
       ],
     ];
     // G5 (D6.4) : Koach sur la carte du jour, sa pose dit la journée

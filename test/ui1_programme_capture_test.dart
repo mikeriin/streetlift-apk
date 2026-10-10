@@ -142,6 +142,18 @@ void main() {
     await shot(tester, 'ui1_320_accueil_bordeaux_sombre');
     await toEnd(tester);
     await shot(tester, 'ui1_320_accueil_bas_bordeaux_sombre');
+    await show(
+      tester,
+      RootNav(referenceDate: ref),
+      dark: false,
+      palette: 'neon',
+      width: 320,
+      height: 640,
+      scale: 2,
+    );
+    await tester.tap(find.byKey(const ValueKey('week-slider')));
+    await tester.pumpAndSettle();
+    await shot(tester, 'ui1_320_semaine_neon_clair');
     await tester.pumpWidget(const SizedBox());
   }, skip: !uiCaptureEnabled);
 
@@ -227,6 +239,22 @@ void main() {
       scale: 2,
     );
     await shot(tester, 'ui1_320_ma_saison_neon_clair');
+    for (final (name, w) in <(String, Widget)>[
+      ('jour_j', EventDayScreen(event: event)),
+      ('evolution', const EvolutionScreen()),
+      ('ou_j_en_suis', const ProgramPositionScreen()),
+    ]) {
+      await show(
+        tester,
+        w,
+        dark: true,
+        palette: 'bordeaux',
+        width: 320,
+        height: 640,
+        scale: 2,
+      );
+      await shot(tester, 'ui1_320_${name}_bordeaux_sombre');
+    }
     await tester.pumpWidget(const SizedBox());
   }, skip: !uiCaptureEnabled);
 }

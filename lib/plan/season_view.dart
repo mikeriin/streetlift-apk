@@ -172,7 +172,9 @@ SeasonOverview seasonOverviewOf(
   final phases = <SeasonPhaseView>[];
   for (final p in season?.phases ?? const <kc.SeasonPhase>[]) {
     final start = _day(p.startDate);
-    final end = start.add(Duration(days: p.weeks * 7 - 1));
+    // Jour civil (pas de durée ajoutée : un passage à l'heure d'hiver
+    // décalerait la fin d'un jour).
+    final end = DateTime(start.year, start.month, start.day + p.weeks * 7 - 1);
     phases.add(
       SeasonPhaseView(
         code: p.kind.code,
@@ -418,7 +420,7 @@ class SeasonCard extends StatelessWidget {
                           'Phase en cours : ${phaseLabel(cur.code)}, '
                           'jusqu’au ${_short(cur.end)}',
                         ),
-                        style: KType.corps.copyWith(color: k.texte),
+                        style: detail,
                       ),
                     ],
                     if (next != null)
@@ -537,7 +539,9 @@ class SeasonScreen extends StatelessWidget {
                       dates:
                           '${_short(p.start)} – ${_short(p.end)}'
                           '${p.eventName == null || p.eventName == view.eventName ? '' : ', ${p.eventName}'}',
-                      length: '${p.weeks} semaine${p.weeks > 1 ? 's' : ''}',
+                      length:
+                          '${p.weeks}\u00a0semaine${p.weeks > 1 ? 's' : ''}'
+                          '${p.current ? ', en cours' : ''}',
                       state: p.current
                           ? KPhaseState.current
                           : p.past
