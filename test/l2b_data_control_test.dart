@@ -699,7 +699,7 @@ void main() {
     ) async {
       phone(tester);
       await tester.pumpWidget(
-        page(const SettingsScreen(section: 6), scale: 1.3),
+        page(const SettingsScreen(page: SettingsPage.data), scale: 1.3),
       );
       await tester.pumpAndSettle();
       for (final label in [

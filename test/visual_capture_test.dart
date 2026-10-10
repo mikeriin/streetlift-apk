@@ -204,7 +204,7 @@ void main() {
             sessionKey: '11-1',
           ),
           'progression': const ProgressionScreen(),
-          'chronometres': const SettingsScreen(section: 2),
+          'chronometres': const SettingsScreen(page: SettingsPage.session),
           'references': const PilotageScreen(),
         };
         for (final page in pages.entries) {

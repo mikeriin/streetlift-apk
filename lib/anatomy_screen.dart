@@ -59,16 +59,22 @@
 // G5 (dev6.3.0, D1.5) : les animations 3D de Koach sont retirées ; l'entrée
 // devient « Galerie de Koach » (36 poses 2D animées, 10 flammes,
 // koach/koach_gallery_screen.dart).
+//
+// UI4 (refonte UI, cahier §4.1, §4.3) : sous-page « Anatomie » du kit ;
+// [AnatomyScreen.initialGroup] (fiche › Muscles, recherche d'Arsenal) coche
+// le groupe et fait défiler l'écran jusqu'à lui ; chaque groupe affiché
+// propose « Exercices pour ce muscle » (bibliothèque filtrée) ; le réglage
+// du nom au toucher s'ouvre par un bouton (R5) ; la galerie de Koach part
+// dans Réglages › Aide et à propos.
 import 'package:flutter/material.dart';
-import 'package:kalis_koach/kalis_koach.dart' show KoachPose;
 
 import 'atlas_data.dart';
+import 'exercise_screens.dart' show ExerciseLibraryScreen;
 import 'filter_menu.dart';
-import 'koach/koach_gallery_screen.dart';
-import 'koach/koach_view.dart';
+import 'kit/kit.dart';
 import 'mannequin_3d.dart' show Display3DSettings;
 import 'muscle_map_2d.dart';
-import 'ui.dart';
+import 'settings_screen.dart' show SettingsPage, SettingsScreen;
 
 /// Filtres de l'écran Anatomie : groupes de la carte allumés (union).
 @immutable
@@ -145,6 +151,10 @@ class AnatomyScreen extends StatefulWidget {
 
 class AnatomyScreenState extends State<AnatomyScreen> {
   late AnatomyFilters _filters;
+  final _scroll = ScrollController();
+
+  /// Groupe demandé à l'ouverture : son bloc dans la liste (défilement).
+  final _initialKey = GlobalKey();
 
   /// Dernière région touchée sur la carte (nom du muscle affiché).
   String? touched;
@@ -161,6 +171,39 @@ class AnatomyScreenState extends State<AnatomyScreen> {
     final initial = widget.initialGroup;
     _filters = initial == null ? session : AnatomyFilters(groups: {initial});
     AnatomyScreen.session = _filters;
+    if (initial != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) => _reveal(4));
+    }
+  }
+
+  @override
+  void dispose() {
+    _scroll.dispose();
+    super.dispose();
+  }
+
+  /// UI4 : fait défiler jusqu'au groupe demandé (le bas de son bloc devient
+  /// visible) ; la liste est paresseuse : tant que le bloc n'est pas
+  /// construit, on avance d'un écran et on réessaie.
+  void _reveal(int attempts) {
+    if (!mounted) return;
+    final target = _initialKey.currentContext;
+    if (target != null) {
+      Scrollable.ensureVisible(
+        target,
+        duration: KMotion.slow.durationIn(context),
+        curve: KMotion.slow.curve,
+        alignmentPolicy: ScrollPositionAlignmentPolicy.keepVisibleAtEnd,
+      );
+      return;
+    }
+    if (attempts <= 0 || !_scroll.hasClients) return;
+    final p = _scroll.position;
+    if (p.pixels >= p.maxScrollExtent) return;
+    _scroll.jumpTo(
+      (p.pixels + p.viewportDimension).clamp(0.0, p.maxScrollExtent),
+    );
+    WidgetsBinding.instance.addPostFrameCallback((_) => _reveal(attempts - 1));
   }
 
   void _set(AnatomyFilters f) => setState(() {
@@ -187,6 +230,7 @@ class AnatomyScreenState extends State<AnatomyScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final k = KTokens.of(context);
     final f = _filters;
     final mq = MediaQuery.of(context);
     // Le plus d'écran possible : hauteur visible moins la barre, la ligne
@@ -200,98 +244,98 @@ class AnatomyScreenState extends State<AnatomyScreen> {
                 KNavigationInset.of(context) -
                 220)
             .clamp(260.0, 640.0);
-    final tt = Theme.of(context).textTheme;
     final labels = [for (final g in f.orderedGroups) mapGroupLabel(g)];
-    return KScreen(
-      appBar: AppBar(title: const Text('ANATOMIE')),
-      body: KList(
-        key: const ValueKey('anatomy-list'),
-        gap: 10,
-        children: [
-          // Bouton « Filtres » et filtres actifs en puces (M4c).
-          FilterMenu(
-            key: const ValueKey('anatomy-filter-menu'),
-            keyPrefix: 'anatomy',
-            categories: AnatomyFilters.categories,
-            value: f.selection,
-            initial: defaults.selection,
-            chipCategories: const {'groupes'},
-            onChanged: (s) => _set(AnatomyFilters.fromSelection(s)),
-          ),
-          MuscleMap2D(
-            key: const ValueKey('anatomy-map'),
-            intensities: intensities,
-            height: height,
-            selected: touched,
-            onRegionTap: touch,
-            semanticLabel: labels.isEmpty
-                ? 'Carte des muscles'
-                : 'Carte des muscles, '
-                      '${labels.length == 1 ? 'groupe' : 'groupes'} '
-                      '${labels.join(', ')} en couleur',
-          ),
-          ValueListenableBuilder<bool>(
-            valueListenable: Display3DSettings.instance.touchNames,
-            builder: (context, names, _) {
-              final t = touched;
-              if (names && t != null) {
-                final r = mapRegion(t)!;
-                return Text(
-                  r.group == null
-                      ? r.label
-                      : '${r.label} · ${mapGroupLabel(r.group!)}',
-                  key: const ValueKey('anatomy-touched'),
-                  textAlign: TextAlign.center,
-                  style: tt.titleMedium,
-                );
-              }
+    return KPage.sub(
+      key: const ValueKey('anatomy-list'),
+      title: 'Anatomie',
+      controller: _scroll,
+      children: [
+        // Bouton « Filtres » et filtres actifs en puces (M4c).
+        FilterMenu(
+          key: const ValueKey('anatomy-filter-menu'),
+          keyPrefix: 'anatomy',
+          categories: AnatomyFilters.categories,
+          value: f.selection,
+          initial: defaults.selection,
+          chipCategories: const {'groupes'},
+          onChanged: (s) => _set(AnatomyFilters.fromSelection(s)),
+        ),
+        MuscleMap2D(
+          key: const ValueKey('anatomy-map'),
+          intensities: intensities,
+          height: height,
+          selected: touched,
+          onRegionTap: touch,
+          semanticLabel: labels.isEmpty
+              ? 'Carte des muscles'
+              : 'Carte des muscles, '
+                    '${labels.length == 1 ? 'groupe' : 'groupes'} '
+                    '${labels.join(', ')} en couleur',
+        ),
+        ValueListenableBuilder<bool>(
+          valueListenable: Display3DSettings.instance.touchNames,
+          builder: (context, names, _) {
+            final t = touched;
+            if (names && t != null) {
+              final r = mapRegion(t)!;
               return Text(
-                names
-                    ? 'Touche un muscle pour afficher son nom. Groupes '
-                          'cochés en couleur, les autres en gris ; muscles '
-                          'profonds (non dessinés) listés en texte sur les '
-                          'fiches.'
-                    : 'Nom du muscle au toucher désactivé '
-                          '(Réglages › Affichage 3D).',
-                style: tt.bodySmall,
+                r.group == null
+                    ? r.label
+                    : '${r.label} · ${mapGroupLabel(r.group!)}',
+                key: const ValueKey('anatomy-touched'),
+                textAlign: TextAlign.center,
+                style: KType.corpsFort.copyWith(color: k.texte),
               );
-            },
-          ),
-          _summary(context),
-          // G5 : Galerie de Koach (poses 2D, flammes).
-          KCard(
-            key: const ValueKey('anatomy-koach-gallery'),
-            padding: EdgeInsets.zero,
-            child: ListTile(
-              leading: const KoachView(
-                pose: KoachPose.wave,
-                height: 44,
-                width: 40,
-              ),
-              title: const Text('Galerie de Koach'),
-              subtitle: const Text(
-                '36 poses animées et 10 flammes de difficulté',
-              ),
-              trailing: const Icon(Icons.chevron_right),
-              onTap: () => Navigator.of(context).push(
-                MaterialPageRoute(builder: (_) => const KoachGalleryScreen()),
-              ),
-            ),
-          ),
-          Text(
-            'Carte des muscles redessinée pour l’application, muscle par '
-            'muscle. '
-            'Repères d’entraînement, pas un avis médical.',
-            style: tt.bodySmall,
-          ),
-        ],
-      ),
+            }
+            if (names) {
+              return Text(
+                'Touche un muscle pour afficher son nom. Groupes cochés en '
+                'couleur, les autres en gris ; muscles profonds (non '
+                'dessinés) listés en texte sur les fiches.',
+                style: KType.detail.copyWith(color: k.texte2),
+              );
+            }
+            // R5 : plus de chemin écrit, un bouton ouvre le réglage.
+            return Column(
+              key: const ValueKey('anatomy-names-off'),
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Nom du muscle au toucher désactivé.',
+                  style: KType.detail.copyWith(color: k.texte2),
+                ),
+                const SizedBox(height: KSpacing.s8),
+                KTonalButton(
+                  key: const ValueKey('anatomy-open-appearance'),
+                  label: 'Activer le nom au toucher',
+                  icon: Icons.tune_rounded,
+                  onPressed: () => Navigator.of(context).push(
+                    MaterialPageRoute<void>(
+                      builder: (_) => const SettingsScreen(
+                        page: SettingsPage.appearance,
+                        highlight: 'muscle-names',
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            );
+          },
+        ),
+        _summary(context),
+        Text(
+          'Carte des muscles redessinée pour l’application, muscle par '
+          'muscle. '
+          'Repères d’entraînement, pas un avis médical.',
+          style: KType.detail.copyWith(color: k.texte2),
+        ),
+      ],
     );
   }
 
-  /// Résumé texte : chaque groupe coché et ses muscles.
+  /// Résumé texte : chaque groupe coché, ses muscles et ses exercices.
   Widget _summary(BuildContext context) {
-    final tt = Theme.of(context).textTheme;
+    final k = KTokens.of(context);
     final dark = Theme.of(context).brightness == Brightness.dark;
     final f = _filters;
     if (f.groups.isEmpty) {
@@ -299,38 +343,64 @@ class AnatomyScreenState extends State<AnatomyScreen> {
         'Aucun groupe coché : ouvre « Filtres » pour allumer un ou plusieurs '
         'groupes.',
         key: const ValueKey('anatomy-summary-empty'),
-        style: tt.bodyMedium,
+        style: KType.corps.copyWith(color: k.texte),
       );
     }
+    final ordered = f.orderedGroups;
     return KCard(
       key: const ValueKey('anatomy-group-list'),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          for (final g in f.orderedGroups) ...[
-            Row(
+          for (final (i, g) in ordered.indexed) ...[
+            if (i > 0) const SizedBox(height: KSpacing.s16),
+            Column(
+              key: g == widget.initialGroup ? _initialKey : null,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  width: 10,
-                  height: 10,
-                  decoration: BoxDecoration(
-                    color: mapHeat(kMapPrimary, dark),
-                    shape: BoxShape.circle,
+                Row(
+                  children: [
+                    // Pastille dans la couleur des groupes cochés de la
+                    // carte (couleur de dessin, inchangée).
+                    Container(
+                      width: 10,
+                      height: 10,
+                      decoration: ShapeDecoration(
+                        color: mapHeat(kMapPrimary, dark),
+                        shape: const CircleBorder(),
+                      ),
+                    ),
+                    const SizedBox(width: KSpacing.s8),
+                    Expanded(
+                      child: Text(
+                        mapGroupLabel(g),
+                        style: KType.corpsFort.copyWith(color: k.texte),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: KSpacing.s4),
+                Text(
+                  [
+                    for (final m in mapGroupMuscles(g))
+                      atlasMuscles[m]?.nom ?? m,
+                  ].join(', '),
+                  key: ValueKey('anatomy-group-muscles-$g'),
+                  style: KType.corps.copyWith(color: k.texte),
+                ),
+                const SizedBox(height: KSpacing.s8),
+                KTonalButton(
+                  key: ValueKey('anatomy-exercises-$g'),
+                  label: 'Exercices pour ce muscle',
+                  icon: Icons.menu_book_outlined,
+                  onPressed: () => Navigator.of(context).push(
+                    MaterialPageRoute<void>(
+                      builder: (_) => ExerciseLibraryScreen(muscleGroup: g),
+                    ),
                   ),
                 ),
-                const SizedBox(width: 8),
-                Expanded(child: Text(mapGroupLabel(g), style: tt.titleMedium)),
               ],
             ),
-            const SizedBox(height: 4),
-            Text(
-              [
-                for (final m in mapGroupMuscles(g)) atlasMuscles[m]?.nom ?? m,
-              ].join(', '),
-              key: ValueKey('anatomy-group-muscles-$g'),
-              style: tt.bodyMedium,
-            ),
-            const SizedBox(height: 12),
           ],
         ],
       ),

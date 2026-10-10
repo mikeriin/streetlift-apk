@@ -14,12 +14,13 @@ import 'package:kalis_core/kalis_core.dart' as kc;
 import 'package:kalis_koach/kalis_koach.dart' show KoachPose;
 import 'package:kalis_plan/kalis_plan.dart' show PlanInspector, PlanMetrics;
 
-import '../app_theme.dart';
+import '../athlete_profile_flow.dart' show AthleteFlowMode, AthleteProfileFlow;
 import '../dev/dev_flags.dart';
 import '../exercise_screens.dart' show openExerciseSheet;
 import '../koach/koach_bubble.dart';
 import '../koach/koach_view.dart' show KoachSurface;
 import '../muscle_map_2d.dart';
+import '../program_screens.dart' show ProgramScreen;
 import '../session_prefs.dart' show SessionSpace;
 import '../store.dart';
 import '../ui.dart';
@@ -35,27 +36,33 @@ Future<bool> openNextBlock(BuildContext context) async {
   // CI1e (C11) : fin d'un bloc du programme importé (programme de 40
   // semaines) : le moteur calibré peut écrire le bloc suivant à la place de
   // la suite du programme ; jamais imposé.
+  // UI4 (R9) : « moteur calibré » n'est plus écrit à l'écran.
   final seg = PlanStore(store).planImportedSegment;
   if (seg != null) {
+    final ends = seg.last >= store.importedLastWeek;
+    final offer = ends
+        ? 'Ton programme se termine en semaine ${seg.last}. Je peux écrire '
+              'ton prochain bloc d’après ton profil et tes séances.'
+        : 'Ton programme continue tel qu’il est écrit après la semaine '
+              '${seg.last}. Je peux aussi écrire ton prochain bloc d’après '
+              'ton profil et tes séances : il remplace alors la suite de ton '
+              'programme.';
     final choice = await showKoachSheet<String>(
       context,
       pose: KoachPose.choice,
       title: 'Ton prochain bloc',
       text:
-          '${seg.last >= store.importedLastWeek ? 'Ton programme se termine en semaine ${seg.last}. Je peux écrire ton prochain bloc avec le moteur calibré.' : 'Ton programme continue tel qu’il est écrit après la semaine ${seg.last}. Je peux aussi écrire ton prochain bloc avec le moteur calibré : il remplace alors la suite de ton programme.'} '
-          'Ton programme d’origine reste sauvegardé : Réglages › Mon '
-          'programme › « Revenir à mon programme d’origine ».',
+          '$offer Ton programme d’origine reste sauvegardé : tu pourras y '
+          'revenir depuis Mon programme.',
       actions: [
         KoachBubbleAction(
-          'Voir le bloc du moteur calibré',
+          'Voir mon prochain bloc',
           () => Navigator.of(context).pop('calibrated'),
           primary: true,
           key: const ValueKey('next-block-calibrated'),
         ),
         KoachBubbleAction(
-          seg.last >= store.importedLastWeek
-              ? 'Plus tard'
-              : 'Garder mon programme',
+          ends ? 'Plus tard' : 'Garder mon programme',
           () => Navigator.of(context).pop('keep'),
           key: const ValueKey('next-block-keep'),
         ),
@@ -72,20 +79,20 @@ Future<bool> openNextBlock(BuildContext context) async {
       pose: KoachPose.choice,
       title: 'Ton prochain bloc',
       text:
-          'Nouveau : je peux écrire ton prochain bloc avec le moteur '
-          'calibré pour le street — saison calée sur ton échéance, séries '
+          'Nouveau : je peux écrire ton prochain bloc avec ma nouvelle '
+          'méthode pour le street — saison calée sur ton échéance, séries '
           'de tête et séries allégées, maintiens chronométrés, tests. Ou je '
           'garde la même façon de faire que ton bloc actuel. Tu pourras '
           'changer d’avis au bloc suivant.',
       actions: [
         KoachBubbleAction(
-          'Passer au moteur calibré',
+          'Passer à la nouvelle méthode',
           () => Navigator.of(context).pop('calibrated'),
           primary: true,
           key: const ValueKey('next-block-calibrated'),
         ),
         KoachBubbleAction(
-          'Garder le moteur actuel',
+          'Garder la méthode actuelle',
           () => Navigator.of(context).pop('legacy'),
           key: const ValueKey('next-block-legacy'),
         ),
@@ -95,11 +102,14 @@ Future<bool> openNextBlock(BuildContext context) async {
     PlanStore(store).setPlanKeepLegacyEngine(choice == 'legacy');
     if (!context.mounted) return false;
   }
+  // UI4 (R6) : ouvert depuis Mon programme, « Revenir à Mon programme »
+  // referme la page ; ouvert depuis l'accueil, il ouvre Mon programme.
+  final inProgram = context.findAncestorWidgetOfExactType<ProgramScreen>();
   final c = PlanStore(store).newNextBlockCreation();
   final ok = await Navigator.of(context).push<bool>(
     MaterialPageRoute<bool>(
       builder: (_) => c == null
-          ? const NextBlockUnavailable()
+          ? NextBlockUnavailable(openProgram: inProgram == null)
           : PlanCreationScreen(creation: c),
     ),
   );
@@ -107,17 +117,21 @@ Future<bool> openNextBlock(BuildContext context) async {
 }
 
 /// Bloc suivant impossible à préparer (profil ou base absents, erreur du
-/// moteur).
+/// moteur) ; UI4 (R6) : jamais un cul-de-sac, « Revenir à Mon programme ».
 class NextBlockUnavailable extends StatelessWidget {
-  const NextBlockUnavailable({super.key});
+  /// Vrai : la page remplace par Mon programme (ouverte hors de Mon
+  /// programme) ; faux : elle se referme sur Mon programme.
+  final bool openProgram;
+  const NextBlockUnavailable({super.key, this.openProgram = false});
 
   @override
-  Widget build(BuildContext context) => KScreen(
-    appBar: AppBar(title: const Text('BLOC SUIVANT')),
-    body: KList(
+  Widget build(BuildContext context) {
+    final k = KTokens.of(context);
+    return KPage.sub(
+      title: 'Bloc suivant',
       children: [
         KoachSurface(
-          color: SL.bg,
+          color: k.fond,
           child: const KoachBubble(
             key: ValueKey('next-block-unavailable'),
             pose: KoachPose.oops,
@@ -125,9 +139,25 @@ class NextBlockUnavailable extends StatelessWidget {
             text: 'Je n’arrive pas à préparer le bloc suivant pour l’instant.',
           ),
         ),
+        KTonalButton(
+          key: const ValueKey('next-block-unavailable-back'),
+          label: 'Revenir à Mon programme',
+          icon: Icons.event_note_outlined,
+          expand: true,
+          onPressed: () {
+            final nav = Navigator.of(context);
+            if (openProgram) {
+              nav.pushReplacement(
+                MaterialPageRoute<void>(builder: (_) => const ProgramScreen()),
+              );
+            } else {
+              nav.pop(false);
+            }
+          },
+        ),
       ],
-    ),
-  );
+    );
+  }
 }
 
 /// Ouvre la création du programme ; vrai si un programme a été validé.
@@ -167,8 +197,9 @@ class PlanCreationScreen extends StatefulWidget {
 }
 
 class PlanCreationScreenState extends State<PlanCreationScreen> {
-  late final PlanCreation? c =
-      widget.creation ?? PlanStore(store).newPlanCreation();
+  /// Création en cours ; null sans profil (UI4, R6 : recalculée au retour
+  /// de « Créer mon profil »).
+  late PlanCreation? c = widget.creation ?? PlanStore(store).newPlanCreation();
   _Stage _stage = _Stage.pass1;
   bool _busy = false;
   String? _error;
@@ -240,31 +271,48 @@ class PlanCreationScreenState extends State<PlanCreationScreen> {
     }
   }
 
+  /// UI4 (§4.5) : confirmation au gabarit, titrée (elle n'avait pas de
+  /// titre).
   Future<void> _confirmLeave() async {
     final nav = Navigator.of(context);
-    final leave = await showKoachSheet<bool>(
+    final leave = await showKConfirm(
       context,
-      pose: KoachPose.please,
-      text: _isNext
-          ? 'Tu quittes ? Ton bloc suivant n’est pas encore validé : rien '
-                'n’est enregistré, je te le reproposerai.'
-          : 'Tu quittes la création ? Ton programme n’est pas encore créé : '
-                'rien n’est enregistré.',
-      actions: [
-        KoachBubbleAction(
-          'Continuer la création',
-          () => Navigator.of(context).pop(false),
-          primary: true,
-          key: const ValueKey('plan-leave-stay'),
-        ),
-        KoachBubbleAction(
-          'Quitter',
-          () => Navigator.of(context).pop(true),
-          key: const ValueKey('plan-leave-go'),
-        ),
-      ],
+      title: 'Quitter la création ?',
+      message: _isNext
+          ? 'Ton bloc suivant n’est pas encore validé : rien n’est '
+                'enregistré, je te le reproposerai.'
+          : 'Ton programme n’est pas encore créé : rien n’est enregistré.',
+      confirmLabel: 'Quitter',
+      cancelLabel: 'Continuer la création',
     );
-    if (leave == true) nav.pop(false);
+    if (leave) nav.pop(false);
+  }
+
+  /// UI4 (R6) : création sans profil → « Créer mon profil » ouvre le
+  /// parcours de création du profil (même entrée que la page Profil) ; au
+  /// retour, la création démarre si le profil existe.
+  Future<void> _createProfile() async {
+    final nav = Navigator.of(context);
+    final before = store.planProgram;
+    await nav.push<void>(
+      MaterialPageRoute<void>(
+        builder: (ctx) => AthleteProfileFlow(
+          mode: AthleteFlowMode.redo,
+          onDone: () => Navigator.pop(ctx),
+          onCancel: () => Navigator.pop(ctx),
+        ),
+      ),
+    );
+    if (!mounted) return;
+    // Programme créé depuis la fin du parcours : rien à refaire ici.
+    if (!identical(store.planProgram, before)) {
+      nav.pop(true);
+      return;
+    }
+    final next = PlanStore(store).newPlanCreation();
+    if (next == null) return;
+    setState(() => c = next);
+    _run(next.start);
   }
 
   // ----------------------------------------------------------------- revue
@@ -408,29 +456,17 @@ class PlanCreationScreenState extends State<PlanCreationScreen> {
                 '(semaine ${start.firstWeek}) ; tes semaines passées restent '
                 'telles quelles'
           : 'dès aujourd’hui';
-      final ok = await showKoachSheet<bool>(
+      // UI4 (§4.5, R8) : confirmation au gabarit, verbe exact.
+      final ok = await showKConfirm(
         context,
-        pose: KoachPose.choice,
         title: 'Remplacer ton programme ?',
-        text:
+        message:
             'Ton nouveau programme remplace l’actuel $when. Ton '
             'historique ne change pas. Tu pourras revenir à l’ancien pendant '
             '7 jours, tant que tu n’as saisi aucune séance du nouveau.',
-        actions: [
-          KoachBubbleAction(
-            'Remplacer mon programme',
-            () => Navigator.of(context).pop(true),
-            primary: true,
-            key: const ValueKey('plan-replace-confirm'),
-          ),
-          KoachBubbleAction(
-            'Garder mon programme actuel',
-            () => Navigator.of(context).pop(false),
-            key: const ValueKey('plan-replace-cancel'),
-          ),
-        ],
+        confirmLabel: 'Remplacer',
       );
-      if (ok != true) return;
+      if (!ok) return;
     }
     PlanStore(store).applyPlanCreation(c!);
     messenger.showSnackBar(
@@ -445,26 +481,48 @@ class PlanCreationScreenState extends State<PlanCreationScreen> {
 
   // ------------------------------------------------------------------ rendu
 
+  /// Titre de l'étape (UI4, R3 : la page ouverte par « Créer mon
+  /// programme » porte ce titre ; l'étape est dite dessous).
+  String get _stageLabel => switch (_stage) {
+    _Stage.pass1 => 'Étape 1 sur 4 · Exercices',
+    _Stage.review => 'Étape 2 sur 4 · Revue des exercices',
+    _Stage.recap => 'Étape 3 sur 4 · Récapitulatif',
+    _Stage.pass2 => 'Étape 4 sur 4 · Séries et charges',
+  };
+
   @override
   Widget build(BuildContext context) {
+    final k = KTokens.of(context);
     final creation = c;
     if (creation == null) {
-      return KScreen(
-        appBar: AppBar(title: const Text('TON PROGRAMME')),
-        body: KList(
-          children: [
-            KoachSurface(
-              color: SL.bg,
-              child: const KoachBubble(
-                pose: KoachPose.oops,
-                koachHeight: 110,
-                text:
-                    'Il me faut d’abord ton profil (Réglages › Profil) pour '
-                    'créer ton programme.',
-              ),
+      final noProfile = store.athlete == null;
+      return KPage.sub(
+        title: 'Créer mon programme',
+        children: [
+          KoachSurface(
+            color: k.fond,
+            child: KoachBubble(
+              key: const ValueKey('plan-no-profile'),
+              pose: KoachPose.oops,
+              koachHeight: 110,
+              text: noProfile
+                  ? 'Il me faut d’abord ton profil pour créer ton programme : '
+                        'disciplines, niveau, objectifs, disponibilités, '
+                        'matériel.'
+                  : 'Je n’arrive pas à préparer ton programme pour '
+                        'l’instant.',
             ),
-          ],
-        ),
+          ),
+          if (noProfile)
+            KPrimaryButton(
+              key: const ValueKey('plan-no-profile-create'),
+              label: store.profile == null
+                  ? 'Créer mon profil'
+                  : 'Refaire mon profil',
+              icon: Icons.person_add_alt_1_outlined,
+              onPressed: _createProfile,
+            ),
+        ],
       );
     }
     return ListenableBuilder(
@@ -474,60 +532,81 @@ class PlanCreationScreenState extends State<PlanCreationScreen> {
         onPopInvokedWithResult: (didPop, _) {
           if (!didPop) _back();
         },
-        child: KScreen(
-          appBar: AppBar(
-            leading: BackButton(onPressed: _back),
-            title: Text(switch (_stage) {
-              _Stage.pass1 => _isNext ? 'BLOC SUIVANT' : 'TES EXERCICES',
-              _Stage.review => 'REVUE',
-              _Stage.recap => 'RÉCAPITULATIF',
-              _Stage.pass2 => 'SÉRIES ET CHARGES',
-            }),
-            actions: [
-              if (_dev && creation.started)
-                IconButton(
-                  key: const ValueKey('plan-inspector'),
-                  tooltip: 'Inspecteur du moteur',
-                  icon: const Icon(Icons.manage_search),
-                  onPressed: () => Navigator.of(context).push(
-                    MaterialPageRoute<void>(
-                      builder: (_) => PlanInspectorScreen(creation: creation),
+        child: Scaffold(
+          backgroundColor: k.fond,
+          appBar: KTopBar.sub(
+            title: _isNext ? 'Bloc suivant' : 'Créer mon programme',
+            subtitle: _stageLabel,
+            onBack: _back,
+            action: _dev && creation.started
+                ? KIconButton(
+                    key: const ValueKey('plan-inspector'),
+                    tooltip: 'Inspecteur du moteur',
+                    icon: Icons.manage_search,
+                    onPressed: () => Navigator.of(context).push(
+                      MaterialPageRoute<void>(
+                        builder: (_) => PlanInspectorScreen(creation: creation),
+                      ),
                     ),
-                  ),
-                ),
-            ],
+                  )
+                : null,
           ),
-          body: Stack(
-            children: [
-              if (creation.started) _body(context, creation),
-              if (_busy || !creation.started)
-                Positioned.fill(
-                  child: ColoredBox(
-                    color: Theme.of(
-                      context,
-                    ).scaffoldBackgroundColor.withValues(alpha: .85),
-                    child: Center(
-                      child: KoachSurface(
-                        color: SL.bg,
-                        child: const Padding(
-                          padding: EdgeInsets.all(24),
-                          child: KoachBubble(
-                            key: ValueKey('plan-busy'),
-                            pose: KoachPose.think,
-                            koachHeight: 110,
-                            text: 'Je réfléchis à ton programme…',
+          body: SafeArea(
+            top: false,
+            bottom: false,
+            child: Align(
+              alignment: Alignment.topCenter,
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: KSpacing.maxWidth),
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    if (creation.started) _body(context, creation),
+                    if (_busy || !creation.started)
+                      Positioned.fill(
+                        child: ColoredBox(
+                          color: k.fond.withValues(alpha: .85),
+                          child: Center(
+                            child: KoachSurface(
+                              color: k.fond,
+                              child: const Padding(
+                                padding: EdgeInsets.all(KSpacing.s24),
+                                child: KoachBubble(
+                                  key: ValueKey('plan-busy'),
+                                  pose: KoachPose.think,
+                                  koachHeight: 110,
+                                  text: 'Je réfléchis à ton programme…',
+                                ),
+                              ),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ),
+                  ],
                 ),
-            ],
+              ),
+            ),
           ),
         ),
       ),
     );
   }
+
+  /// Liste d'une étape : marges de page, écart entre cartes, réserve basse
+  /// du téléphone.
+  Widget _list(String key, List<Widget> children) => ListView.separated(
+    key: ValueKey(key),
+    padding: EdgeInsets.fromLTRB(
+      KSpacing.page,
+      KSpacing.s8,
+      KSpacing.page,
+      KSpacing.s24 + MediaQuery.paddingOf(context).bottom,
+    ),
+    keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+    itemCount: children.length,
+    separatorBuilder: (_, __) => const SizedBox(height: KSpacing.cardGap),
+    itemBuilder: (_, i) => children[i],
+  );
 
   Widget _body(BuildContext context, PlanCreation creation) => switch (_stage) {
     _Stage.pass1 => _pass1(context, creation),
@@ -546,7 +625,8 @@ class PlanCreationScreenState extends State<PlanCreationScreen> {
   // ----------------------------------------------------------- passe 1
 
   Widget _dayCard(BuildContext context, kc.PlanDay d, {bool compact = false}) {
-    final dim = Theme.of(context).textTheme.bodySmall;
+    final k = KTokens.of(context);
+    final dim = KType.detail.copyWith(color: k.texte2);
     return KCard(
       key: ValueKey('plan-day-${d.dayIndex}'),
       child: Column(
@@ -554,26 +634,36 @@ class PlanCreationScreenState extends State<PlanCreationScreen> {
         children: [
           Text(
             '${weekdayLabel(d.weekday)} · ${d.minutesBudget} min',
-            style: Theme.of(context).textTheme.titleMedium,
+            style: KType.titreCarte.copyWith(color: k.texte),
           ),
-          Text(focusLabel(d.focus), style: TextStyle(color: SL.accent)),
-          const SizedBox(height: 8),
+          Text(
+            focusLabel(d.focus),
+            style: KType.detail.copyWith(color: k.texte2),
+          ),
+          const SizedBox(height: KSpacing.s8),
           for (final s in d.slots)
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 2),
+              padding: const EdgeInsets.only(bottom: KSpacing.s4),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text('›  ', style: dim),
-                  Expanded(child: Text(planName(s.exerciseId))),
+                  Expanded(
+                    child: Text(
+                      planName(s.exerciseId),
+                      style: KType.corps.copyWith(color: k.texte),
+                    ),
+                  ),
                   if (!compact) Text(kRoleLabels[s.role] ?? '', style: dim),
                   if (s.locked)
                     Padding(
-                      padding: const EdgeInsets.only(left: 6),
+                      padding: const EdgeInsetsDirectional.only(
+                        start: KSpacing.s4,
+                      ),
                       child: Icon(
                         Icons.lock_outline,
-                        size: 16,
-                        color: SL.dim,
+                        size: KSize.chevron,
+                        color: k.texte2,
                         semanticLabel: 'validé',
                       ),
                     ),
@@ -586,6 +676,7 @@ class PlanCreationScreenState extends State<PlanCreationScreen> {
   }
 
   Widget _weekOverview(BuildContext context, PlanCreation creation) {
+    final k = KTokens.of(context);
     final plan = creation.plan;
     final m = _metricsOf(plan);
     final intensities = planMuscleIntensities([
@@ -602,8 +693,8 @@ class PlanCreationScreenState extends State<PlanCreationScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text('Ta semaine', style: Theme.of(context).textTheme.titleMedium),
-          const SizedBox(height: 8),
+          Text('Ta semaine', style: KType.titreCarte.copyWith(color: k.texte)),
+          const SizedBox(height: KSpacing.s8),
           Center(
             child: MuscleMap2D(
               key: const ValueKey('plan-week-muscles'),
@@ -613,23 +704,23 @@ class PlanCreationScreenState extends State<PlanCreationScreen> {
               semanticLabel: 'Carte des muscles de la semaine',
             ),
           ),
-          const SizedBox(height: 6),
+          const SizedBox(height: KSpacing.s8),
           Text(
             mapWorkedSummary(intensities),
-            style: Theme.of(context).textTheme.bodySmall,
+            style: KType.detail.copyWith(color: k.texte2),
           ),
           if (shares.isNotEmpty) ...[
-            const SizedBox(height: 12),
+            const SizedBox(height: KSpacing.s12),
             Text(
               'Répartition par discipline',
-              style: Theme.of(context).textTheme.titleSmall,
+              style: KType.section.copyWith(color: k.texte2),
             ),
-            const SizedBox(height: 6),
+            const SizedBox(height: KSpacing.s8),
             for (final e in shares)
               if (e.value > 0 || (share[e.key] ?? 0) > 0)
                 Padding(
                   key: ValueKey('plan-share-${e.key}'),
-                  padding: const EdgeInsets.symmetric(vertical: 4),
+                  padding: const EdgeInsets.symmetric(vertical: KSpacing.s4),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
@@ -637,15 +728,15 @@ class PlanCreationScreenState extends State<PlanCreationScreen> {
                         '${disciplineClassLabel(e.key)} : '
                         '${((share[e.key] ?? 0) * 100).round()} % du '
                         'temps (visé ${(e.value * 100).round()} %)',
+                        style: KType.corps.copyWith(color: k.texte),
                       ),
-                      const SizedBox(height: 4),
+                      const SizedBox(height: KSpacing.s4),
                       ExcludeSemantics(
-                        child: LinearProgressIndicator(
+                        child: KProgressBar(
                           value: (share[e.key] ?? 0).clamp(0.0, 1.0),
-                          minHeight: 6,
-                          borderRadius: BorderRadius.circular(3),
-                          color: SL.accent,
-                          backgroundColor: SL.progressTrack,
+                          height: KSpacing.s8,
+                          color: k.second,
+                          track: k.filet,
                         ),
                       ),
                     ],
@@ -660,6 +751,7 @@ class PlanCreationScreenState extends State<PlanCreationScreen> {
   /// G10 : présentation du bloc suivant par Koach (résumé d'adaptation et
   /// ce qui change).
   List<Widget> _nextIntro(BuildContext context, PlanCreation creation) {
+    final k = KTokens.of(context);
     final plan = creation.plan;
     final a = creation.adaptation;
     final changes = creation.blockDiff?.changes ?? const <kc.PlanChange>[];
@@ -698,23 +790,29 @@ class PlanCreationScreenState extends State<PlanCreationScreen> {
             children: [
               Text(
                 'Ce qui change (${changes.length})',
-                style: Theme.of(context).textTheme.titleSmall,
+                style: KType.titreCarte.copyWith(color: k.texte),
               ),
               for (final c in changes)
                 ExpansionTile(
                   tilePadding: EdgeInsets.zero,
-                  title: Text(changeLine(c, before, plan)),
+                  title: Text(
+                    changeLine(c, before, plan),
+                    style: KType.corps.copyWith(color: k.texte),
+                  ),
                   subtitle: Text(
                     'Pourquoi ?',
-                    style: Theme.of(context).textTheme.bodySmall,
+                    style: KType.detail.copyWith(color: k.encre),
                   ),
                   children: [
                     for (final r in c.reasons)
                       Align(
-                        alignment: Alignment.centerLeft,
+                        alignment: AlignmentDirectional.centerStart,
                         child: Padding(
-                          padding: const EdgeInsets.only(bottom: 6),
-                          child: Text(planReason(r)),
+                          padding: const EdgeInsets.only(bottom: KSpacing.s8),
+                          child: Text(
+                            planReason(r),
+                            style: KType.corps.copyWith(color: k.texte2),
+                          ),
                         ),
                       ),
                   ],
@@ -730,99 +828,93 @@ class PlanCreationScreenState extends State<PlanCreationScreen> {
     final n = creation.proposals.length;
     if (_isNext) {
       final fresh = _slots.length;
-      return KList(
-        key: const ValueKey('plan-pass1'),
-        children: [
-          ..._nextIntro(context, creation),
-          if (_error != null) _errorBubble(),
-          for (final d in plan.days) _dayCard(context, d),
-          _weekOverview(context, creation),
-          FilledButton.icon(
-            key: const ValueKey('plan-review'),
-            icon: const Icon(Icons.fact_check_outlined),
-            label: Text(
-              fresh == 0
-                  ? 'Voir le récapitulatif'
-                  : 'Passer les nouveaux exercices en revue ($fresh)',
-            ),
-            onPressed: () => setState(
-              () => _stage = fresh == 0 ? _Stage.recap : _Stage.review,
-            ),
-          ),
-        ],
-      );
-    }
-    return KList(
-      key: const ValueKey('plan-pass1'),
-      children: [
-        KoachBubble(
-          key: const ValueKey('plan-pass1-koach'),
-          pose: KoachPose.checklist,
-          koachHeight: 110,
-          text:
-              'Voici ton bloc de ${plan.weeks} semaines : '
-              '${plan.days.length} séance${plan.days.length > 1 ? 's' : ''} '
-              'par semaine. Pour l’instant, juste les exercices : on règle les '
-              'séries ensuite.',
-          why:
-              'Je choisis chaque exercice selon tes disciplines, ton niveau, '
-              'ton matériel et ton temps, en laissant au moins 48 h entre '
-              'deux séances lourdes des mêmes muscles. « Autre proposition » '
-              'te montre un autre programme presque aussi bien noté.',
-        ),
-        if (plan.reasons.any((r) => r.code == 'plan.cautious_health'))
-          KBanner(
-            child: Text(
-              'Programme prudent, d’après ton questionnaire santé : pas '
-              'd’impact, pas de course, une marche plus bas.',
-              style: TextStyle(color: SL.onBrand),
-            ),
-          ),
+      return _list('plan-pass1', [
+        ..._nextIntro(context, creation),
         if (_error != null) _errorBubble(),
         for (final d in plan.days) _dayCard(context, d),
         _weekOverview(context, creation),
-        if (!creation.reviewed) ...[
-          OutlinedButton.icon(
-            key: const ValueKey('plan-other'),
-            icon: const Icon(Icons.autorenew),
-            label: Text(
-              creation.index + 1 < n
-                  ? 'Proposition suivante (${creation.index + 2}/$n)'
-                  : 'Autre proposition',
-            ),
-            onPressed: () => _run(creation.otherProposal),
-          ),
-          if (creation.index > 0)
-            TextButton.icon(
-              key: const ValueKey('plan-previous'),
-              icon: const Icon(Icons.undo),
-              label: Text('Proposition précédente (${creation.index}/$n)'),
-              onPressed: creation.previousProposal,
-            ),
-        ],
-        FilledButton.icon(
+        KPrimaryButton(
           key: const ValueKey('plan-review'),
-          icon: const Icon(Icons.fact_check_outlined),
-          label: Text(
-            creation.reviewed
-                ? 'Reprendre la revue'
-                : 'Passer les exercices en revue',
+          icon: Icons.fact_check_outlined,
+          label: fresh == 0
+              ? 'Voir le récapitulatif'
+              : 'Passer les nouveaux exercices en revue ($fresh)',
+          onPressed: () => setState(
+            () => _stage = fresh == 0 ? _Stage.recap : _Stage.review,
           ),
-          onPressed: () => setState(() => _stage = _Stage.review),
         ),
+      ]);
+    }
+    return _list('plan-pass1', [
+      KoachBubble(
+        key: const ValueKey('plan-pass1-koach'),
+        pose: KoachPose.checklist,
+        koachHeight: 110,
+        text:
+            'Voici ton bloc de ${plan.weeks} semaines : '
+            '${plan.days.length} séance${plan.days.length > 1 ? 's' : ''} '
+            'par semaine. Pour l’instant, juste les exercices : on règle les '
+            'séries ensuite.',
+        why:
+            'Je choisis chaque exercice selon tes disciplines, ton niveau, '
+            'ton matériel et ton temps, en laissant au moins 48 h entre '
+            'deux séances lourdes des mêmes muscles. « Autre proposition » '
+            'te montre un autre programme presque aussi bien noté.',
+      ),
+      if (plan.reasons.any((r) => r.code == 'plan.cautious_health'))
+        const KNotice(
+          icon: Icons.health_and_safety_outlined,
+          message:
+              'Programme prudent, d’après ton questionnaire santé : pas '
+              'd’impact, pas de course, une marche plus bas.',
+        ),
+      if (_error != null) _errorBubble(),
+      for (final d in plan.days) _dayCard(context, d),
+      _weekOverview(context, creation),
+      if (!creation.reviewed) ...[
+        KTonalButton(
+          key: const ValueKey('plan-other'),
+          icon: Icons.autorenew,
+          expand: true,
+          label: creation.index + 1 < n
+              ? 'Proposition suivante (${creation.index + 2}/$n)'
+              : 'Autre proposition',
+          onPressed: () => _run(creation.otherProposal),
+        ),
+        if (creation.index > 0)
+          KTonalButton(
+            key: const ValueKey('plan-previous'),
+            icon: Icons.undo,
+            expand: true,
+            label: 'Proposition précédente (${creation.index}/$n)',
+            onPressed: creation.previousProposal,
+          ),
       ],
-    );
+      KPrimaryButton(
+        key: const ValueKey('plan-review'),
+        icon: Icons.fact_check_outlined,
+        label: creation.reviewed
+            ? 'Reprendre la revue'
+            : 'Passer les exercices en revue',
+        onPressed: () => setState(() => _stage = _Stage.review),
+      ),
+    ]);
   }
 
   // ------------------------------------------------------------- revue
 
   Widget _review(BuildContext context, PlanCreation creation) {
+    final k = KTokens.of(context);
     final slots = _slots;
     if (_page >= slots.length) _page = slots.isEmpty ? 0 : slots.length - 1;
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+          padding: const EdgeInsets.only(
+            left: KSpacing.page,
+            right: KSpacing.page,
+            top: KSpacing.s8,
+          ),
           child: Row(
             children: [
               Expanded(
@@ -830,20 +922,21 @@ class PlanCreationScreenState extends State<PlanCreationScreen> {
                   'Exercice ${_page + 1} / ${slots.length} · '
                   '${creation.decided.length} vu${creation.decided.length > 1 ? 's' : ''}',
                   key: const ValueKey('plan-review-progress'),
-                  style: TextStyle(color: SL.dim),
+                  style: KType.detail.copyWith(color: k.texte2),
                 ),
               ),
-              TextButton(
+              const SizedBox(width: KSpacing.s8),
+              KTonalButton(
                 key: const ValueKey('plan-review-recap'),
+                label: 'Récapitulatif',
                 onPressed: () => setState(() => _stage = _Stage.recap),
-                child: const Text('Récapitulatif'),
               ),
             ],
           ),
         ),
         if (_error != null)
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+            padding: const EdgeInsets.symmetric(horizontal: KSpacing.page),
             child: _errorBubble(),
           ),
         Expanded(
@@ -856,34 +949,50 @@ class PlanCreationScreenState extends State<PlanCreationScreen> {
                 _reviewCard(context, creation, slots[i].day, slots[i].slot),
           ),
         ),
-        KBottomActions(
-          child: Row(
-            children: [
-              Expanded(
-                child: OutlinedButton.icon(
-                  key: const ValueKey('plan-add'),
-                  icon: const Icon(Icons.add),
-                  label: const Text('Ajouter'),
-                  onPressed: () => _add(
-                    dayIndex: slots.isEmpty ? null : slots[_page].day.dayIndex,
+        SafeArea(
+          top: false,
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(
+              KSpacing.page,
+              KSpacing.s8,
+              KSpacing.page,
+              KSpacing.s16,
+            ),
+            child: Row(
+              children: [
+                Expanded(
+                  child: KTonalButton(
+                    key: const ValueKey('plan-add'),
+                    icon: Icons.add,
+                    label: 'Ajouter',
+                    expand: true,
+                    onPressed: () => _add(
+                      dayIndex: slots.isEmpty
+                          ? null
+                          : slots[_page].day.dayIndex,
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(width: 8),
-              Expanded(
-                child: OutlinedButton.icon(
-                  key: const ValueKey('plan-undo'),
-                  icon: const Icon(Icons.undo),
-                  label: const Text('Annuler'),
-                  onPressed: creation.steps.isEmpty
-                      ? null
-                      : () {
-                          creation.undo();
-                          showKoachToast(context, 'Dernier changement annulé.');
-                        },
+                const SizedBox(width: KSpacing.s8),
+                Expanded(
+                  child: KTonalButton(
+                    key: const ValueKey('plan-undo'),
+                    icon: Icons.undo,
+                    label: 'Annuler',
+                    expand: true,
+                    onPressed: creation.steps.isEmpty
+                        ? null
+                        : () {
+                            creation.undo();
+                            showKoachToast(
+                              context,
+                              'Dernier changement annulé.',
+                            );
+                          },
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ],
@@ -896,12 +1005,18 @@ class PlanCreationScreenState extends State<PlanCreationScreen> {
     kc.PlanDay day,
     kc.PlanSlot slot,
   ) {
+    final k = KTokens.of(context);
     final d = store.content.detail(slot.exerciseId);
     final points = d?.pointsCles.take(3).toList() ?? const <String>[];
     final why = mainReason(slot.reasons);
     return ListView(
       key: ValueKey('plan-card-${slot.slotId}'),
-      padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+      padding: const EdgeInsets.fromLTRB(
+        KSpacing.page,
+        KSpacing.s8,
+        KSpacing.page,
+        KSpacing.s16,
+      ),
       children: [
         KCard(
           child: Column(
@@ -910,19 +1025,22 @@ class PlanCreationScreenState extends State<PlanCreationScreen> {
               Text(
                 '${weekdayLabel(day.weekday)} · ${focusLabel(day.focus)} · '
                 '${kRoleLabels[slot.role] ?? ''}',
-                style: TextStyle(color: SL.accent),
+                style: KType.detail.copyWith(color: k.texte2),
               ),
-              const SizedBox(height: 4),
+              const SizedBox(height: KSpacing.s4),
               Text(
                 planName(slot.exerciseId),
                 key: const ValueKey('plan-card-name'),
-                style: Theme.of(context).textTheme.headlineSmall,
+                style: KType.titreSeance.copyWith(color: k.texte),
               ),
               if (why != null) ...[
-                const SizedBox(height: 4),
-                Text(planReason(why), style: TextStyle(color: SL.dim)),
+                const SizedBox(height: KSpacing.s4),
+                Text(
+                  planReason(why),
+                  style: KType.corps.copyWith(color: k.texte2),
+                ),
               ],
-              const SizedBox(height: 10),
+              const SizedBox(height: KSpacing.s12),
               if (d != null)
                 Center(
                   child: MuscleMap2D(
@@ -938,28 +1056,37 @@ class PlanCreationScreenState extends State<PlanCreationScreen> {
                 ),
               for (final p in points)
                 Padding(
-                  padding: const EdgeInsets.only(top: 4),
-                  child: Text('• $p'),
+                  padding: const EdgeInsets.only(top: KSpacing.s4),
+                  child: Text(
+                    '• $p',
+                    style: KType.corps.copyWith(color: k.texte),
+                  ),
                 ),
+              const SizedBox(height: KSpacing.s8),
               Align(
-                alignment: Alignment.centerLeft,
-                child: TextButton.icon(
+                alignment: AlignmentDirectional.centerStart,
+                child: KTonalButton(
                   key: const ValueKey('plan-card-sheet'),
-                  icon: const Icon(Icons.menu_book_outlined),
-                  label: const Text('Fiche et démonstration'),
+                  icon: Icons.menu_book_outlined,
+                  label: 'Fiche et démonstration',
                   onPressed: () => openExerciseSheet(context, slot.exerciseId),
                 ),
               ),
-              if (slot.locked)
-                KBadge('Validé', icon: Icons.lock_outline, color: SL.success),
+              if (slot.locked) ...[
+                const SizedBox(height: KSpacing.s8),
+                const Align(
+                  alignment: AlignmentDirectional.centerStart,
+                  child: KChip('Validé', icon: Icons.lock_outline),
+                ),
+              ],
             ],
           ),
         ),
-        const SizedBox(height: 10),
-        FilledButton.icon(
+        const SizedBox(height: KSpacing.s12),
+        KPrimaryButton(
           key: const ValueKey('plan-can-do'),
-          icon: const Icon(Icons.check),
-          label: const Text('Je sais faire'),
+          icon: Icons.check,
+          label: 'Je sais faire',
           onPressed: () async {
             final step = await _run(() {
               creation.canDo(slot.slotId);
@@ -968,37 +1095,42 @@ class PlanCreationScreenState extends State<PlanCreationScreen> {
             await _afterStep(step);
           },
         ),
-        const SizedBox(height: 8),
-        OutlinedButton.icon(
+        const SizedBox(height: KSpacing.s8),
+        KTonalButton(
           key: const ValueKey('plan-cannot-do'),
-          icon: const Icon(Icons.help_outline),
-          label: const Text('Je ne sais pas faire'),
+          icon: Icons.help_outline,
+          label: 'Je ne sais pas faire',
+          expand: true,
           onPressed: () => _replace(slot, cannotDo: true),
         ),
-        const SizedBox(height: 8),
-        OutlinedButton.icon(
+        const SizedBox(height: KSpacing.s8),
+        KTonalButton(
           key: const ValueKey('plan-dislike'),
-          icon: const Icon(Icons.thumb_down_outlined),
-          label: const Text('Je n’aime pas'),
+          icon: Icons.thumb_down_outlined,
+          label: 'Je n’aime pas',
+          expand: true,
           onPressed: () => _replace(slot, cannotDo: false),
         ),
-        const SizedBox(height: 4),
-        Row(
+        const SizedBox(height: KSpacing.s8),
+        Wrap(
+          alignment: WrapAlignment.spaceBetween,
+          spacing: KSpacing.s8,
+          runSpacing: KSpacing.s8,
           children: [
-            TextButton.icon(
+            KTonalButton(
               key: const ValueKey('plan-remove'),
-              icon: const Icon(Icons.remove_circle_outline),
-              label: const Text('Retirer'),
+              icon: Icons.remove_circle_outline,
+              label: 'Retirer',
               onPressed: () => _remove(slot),
             ),
-            const Spacer(),
-            TextButton(
+            KTonalButton(
               key: const ValueKey('plan-next'),
+              icon: Icons.arrow_forward,
+              label: 'Suivant',
               onPressed: () {
                 creation.keep(slot.slotId);
                 _next();
               },
-              child: const Text('Suivant'),
             ),
           ],
         ),
@@ -1012,33 +1144,31 @@ class PlanCreationScreenState extends State<PlanCreationScreen> {
     final plan = creation.plan;
     final total = plan.days.fold<int>(0, (a, d) => a + d.slots.length);
     final changes = creation.steps.where((s) => s.changes.isNotEmpty).length;
-    return KList(
-      key: const ValueKey('plan-recap'),
-      children: [
-        KoachBubble(
-          key: const ValueKey('plan-recap-koach'),
-          pose: KoachPose.thumbsUp,
-          koachHeight: 110,
-          text:
-              'Récapitulatif : $total exercices sur ${plan.days.length} '
-              'séances${changes == 0 ? '' : ', $changes changement${changes > 1 ? 's' : ''} de ta part'}. '
-              'Si tout te va, je règle les séries et les charges.',
-        ),
-        if (_error != null) _errorBubble(),
-        for (final d in plan.days) _dayCard(context, d, compact: true),
-        FilledButton.icon(
-          key: const ValueKey('plan-validate-exercises'),
-          icon: const Icon(Icons.check),
-          label: const Text('Valider les exercices'),
-          onPressed: _toPass2,
-        ),
-        TextButton(
-          key: const ValueKey('plan-back-review'),
-          onPressed: () => setState(() => _stage = _Stage.review),
-          child: const Text('Revenir à la revue'),
-        ),
-      ],
-    );
+    return _list('plan-recap', [
+      KoachBubble(
+        key: const ValueKey('plan-recap-koach'),
+        pose: KoachPose.thumbsUp,
+        koachHeight: 110,
+        text:
+            'Récapitulatif : $total exercices sur ${plan.days.length} '
+            'séances${changes == 0 ? '' : ', $changes changement${changes > 1 ? 's' : ''} de ta part'}. '
+            'Si tout te va, je règle les séries et les charges.',
+      ),
+      if (_error != null) _errorBubble(),
+      for (final d in plan.days) _dayCard(context, d, compact: true),
+      KPrimaryButton(
+        key: const ValueKey('plan-validate-exercises'),
+        icon: Icons.check,
+        label: 'Valider les exercices',
+        onPressed: _toPass2,
+      ),
+      KTonalButton(
+        key: const ValueKey('plan-back-review'),
+        label: 'Revenir à la revue',
+        expand: true,
+        onPressed: () => setState(() => _stage = _Stage.review),
+      ),
+    ]);
   }
 
   // ----------------------------------------------------------- passe 2
@@ -1057,6 +1187,7 @@ class PlanCreationScreenState extends State<PlanCreationScreen> {
   }
 
   Widget _pass2(BuildContext context, PlanCreation creation) {
+    final k = KTokens.of(context);
     final p2 = creation.pass2!;
     final plan = creation.plan;
     final entry = PlanBlockEntry(
@@ -1069,76 +1200,82 @@ class PlanCreationScreenState extends State<PlanCreationScreen> {
     final week = p2.weeks[_week.clamp(0, p2.weeks.length - 1)];
     final days = adjustedDays(entry, week.weekIndex);
     final cautious = plan.reasons.any((r) => r.code == 'plan.cautious_health');
-    final dim = Theme.of(context).textTheme.bodySmall;
+    final dim = KType.detail.copyWith(color: k.texte2);
     final calibrate = days.any((d) => d.items.any((i) => i.toCalibrate));
-    return KList(
-      key: const ValueKey('plan-pass2'),
-      children: [
-        KoachBubble(
-          key: const ValueKey('plan-pass2-koach'),
-          pose: KoachPose.explainBoard,
-          koachHeight: 120,
-          text: _blockLogic(p2),
-          why:
-              'Première semaine plus légère pour apprendre les gestes, '
-              'puis les séries montent doucement. Les charges de départ sont '
-              'prudentes ; tu peux régler séries, répétitions et repos en '
-              'touchant un exercice, dans les limites que je garde pour toi.',
-        ),
-        Wrap(
-          spacing: 8,
-          runSpacing: 8,
-          children: [
-            for (final w in p2.weeks)
-              ChoiceChip(
-                key: ValueKey('plan-week-${w.weekIndex}'),
-                label: Text('S${w.weekIndex + 1} · ${kWeekKindLabels[w.kind]}'),
-                selected: w.weekIndex == week.weekIndex,
-                onSelected: (_) => setState(() => _week = w.weekIndex),
-              ),
-          ],
-        ),
-        Text(kWeekKindHints[week.kind]!, style: dim),
-        if (calibrate)
-          const KoachSays(
-            pose: KoachPose.analyze,
-            child: Text(
-              '« À calibrer » : je n’invente pas de charge. Les 2-3 premières '
-              'séances, je cale tes charges avec tes flammes.',
+    return _list('plan-pass2', [
+      KoachBubble(
+        key: const ValueKey('plan-pass2-koach'),
+        pose: KoachPose.explainBoard,
+        koachHeight: 120,
+        text: _blockLogic(p2),
+        why:
+            'Première semaine plus légère pour apprendre les gestes, '
+            'puis les séries montent doucement. Les charges de départ sont '
+            'prudentes ; tu peux régler séries, répétitions et repos en '
+            'touchant un exercice, dans les limites que je garde pour toi.',
+      ),
+      Wrap(
+        spacing: KSpacing.s8,
+        runSpacing: KSpacing.s8,
+        children: [
+          for (final w in p2.weeks)
+            KChip(
+              'Semaine ${w.weekIndex + 1} · ${kWeekKindLabels[w.kind]}',
+              key: ValueKey('plan-week-${w.weekIndex}'),
+              selected: w.weekIndex == week.weekIndex,
+              onTap: () => setState(() => _week = w.weekIndex),
             ),
+        ],
+      ),
+      Text(kWeekKindHints[week.kind]!, style: dim),
+      if (calibrate)
+        KoachSays(
+          pose: KoachPose.analyze,
+          child: Text(
+            '« À calibrer » : je n’invente pas de charge. Les 2-3 premières '
+            'séances, je cale tes charges avec tes flammes.',
+            style: KType.corps.copyWith(color: k.texte),
           ),
-        for (final d in days)
-          if (d.items.isNotEmpty)
-            KCard(
-              key: ValueKey('plan-p2-day-${d.dayIndex}'),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Text(
-                    planDayLabel(plan, d.dayIndex),
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  const Divider(),
-                  for (final it in d.items)
-                    InkWell(
-                      key: ValueKey('plan-p2-${it.slotId}'),
-                      onTap: () => showAdjustSheet(
-                        context,
-                        creation: creation,
-                        item: p2.weeks
-                            .expand((w) => w.days)
-                            .expand((x) => x.items)
-                            .firstWhere(
-                              (x) =>
-                                  x.slotId == it.slotId &&
-                                  x.kind != kc.SetKind.test &&
-                                  x.kind != kc.SetKind.calibration,
-                              orElse: () => it,
-                            ),
-                        cautious: cautious,
+        ),
+      for (final d in days)
+        if (d.items.isNotEmpty)
+          KCard(
+            key: ValueKey('plan-p2-day-${d.dayIndex}'),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  planDayLabel(plan, d.dayIndex),
+                  style: KType.titreCarte.copyWith(color: k.texte),
+                ),
+                Divider(color: k.filet),
+                for (final it in d.items)
+                  InkWell(
+                    key: ValueKey('plan-p2-${it.slotId}'),
+                    customBorder: KRadius.menuShape,
+                    onTap: () => showAdjustSheet(
+                      context,
+                      creation: creation,
+                      item: p2.weeks
+                          .expand((w) => w.days)
+                          .expand((x) => x.items)
+                          .firstWhere(
+                            (x) =>
+                                x.slotId == it.slotId &&
+                                x.kind != kc.SetKind.test &&
+                                x.kind != kc.SetKind.calibration,
+                            orElse: () => it,
+                          ),
+                      cautious: cautious,
+                    ),
+                    child: ConstrainedBox(
+                      constraints: const BoxConstraints(
+                        minHeight: KSize.target,
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 6),
+                        padding: const EdgeInsets.symmetric(
+                          vertical: KSpacing.s8,
+                        ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -1147,27 +1284,33 @@ class PlanCreationScreenState extends State<PlanCreationScreen> {
                                 Expanded(
                                   child: Text(
                                     planName(it.exerciseId),
-                                    style: const TextStyle(
-                                      fontWeight: FontWeight.w600,
+                                    style: KType.corpsFort.copyWith(
+                                      color: k.texte,
                                     ),
                                   ),
                                 ),
                                 if (creation.adjust[it.slotId]?.isEmpty ==
-                                    false)
-                                  KBadge(
-                                    'Ajusté',
-                                    icon: Icons.tune,
-                                    color: SL.accent,
-                                  ),
-                                const Icon(Icons.tune, size: 18),
+                                    false) ...[
+                                  const KChip('Ajusté', icon: Icons.tune),
+                                  const SizedBox(width: KSpacing.s8),
+                                ],
+                                Icon(
+                                  Icons.tune,
+                                  size: KSize.chevron,
+                                  color: k.texte2,
+                                ),
                               ],
                             ),
+                            const SizedBox(height: KSpacing.s4),
                             Wrap(
-                              spacing: 10,
-                              runSpacing: 4,
+                              spacing: KSpacing.s12,
+                              runSpacing: KSpacing.s4,
                               crossAxisAlignment: WrapCrossAlignment.center,
                               children: [
-                                Text(prescriptionLabel(it)),
+                                Text(
+                                  prescriptionLabel(it),
+                                  style: KType.corps.copyWith(color: k.texte),
+                                ),
                                 if (it.targetFlames != null)
                                   TargetFlames(it.targetFlames!),
                                 Text(
@@ -1177,16 +1320,11 @@ class PlanCreationScreenState extends State<PlanCreationScreen> {
                                 if (loadLabel(it) != null)
                                   Text(loadLabel(it)!, style: dim),
                                 if (it.toCalibrate)
-                                  KBadge(
-                                    'À calibrer',
-                                    icon: Icons.tune,
-                                    color: SL.dim,
-                                  ),
+                                  const KChip('À calibrer', icon: Icons.tune),
                                 if (it.kind == kc.SetKind.test)
-                                  KBadge(
+                                  const KChip(
                                     'Test',
                                     icon: Icons.flag_outlined,
-                                    color: SL.accent,
                                   ),
                               ],
                             ),
@@ -1194,23 +1332,26 @@ class PlanCreationScreenState extends State<PlanCreationScreen> {
                         ),
                       ),
                     ),
-                ],
-              ),
+                  ),
+              ],
             ),
-        if (_error != null) _errorBubble(),
-        FilledButton.icon(
-          key: const ValueKey('plan-validate'),
-          icon: const Icon(Icons.check_circle_outline),
-          label: const Text('Valider mon programme'),
-          onPressed: _validate,
-        ),
-        TextButton(
-          key: const ValueKey('plan-back-recap'),
-          onPressed: () => setState(() => _stage = _Stage.recap),
-          child: const Text('Revenir aux exercices'),
-        ),
-      ],
-    );
+          ),
+      if (_error != null) _errorBubble(),
+      KPrimaryButton(
+        key: const ValueKey('plan-validate'),
+        icon: Icons.check_circle_outline,
+        label: 'Valider mon programme',
+        onPressed: _validate,
+      ),
+      // UI4 (inventaire, partie 2) : le bouton mène au récapitulatif ; son
+      // libellé le dit.
+      KTonalButton(
+        key: const ValueKey('plan-back-recap'),
+        label: 'Revenir au récapitulatif',
+        expand: true,
+        onPressed: () => setState(() => _stage = _Stage.recap),
+      ),
+    ]);
   }
 }
 

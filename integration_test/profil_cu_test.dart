@@ -308,7 +308,8 @@ void main() {
     await tap(tester, 'flow-place-maison', ms: 300);
     await tap(tester, 'flow-next-places');
     mark(tester);
-    await tap(tester, 'flow-consent-refused', ms: 300);
+    // UI4 : accord santé en segments du kit (clé `segment-<valeur>`).
+    await tap(tester, 'segment-refused', ms: 300);
     await tap(tester, 'flow-next-health');
     mark(tester);
     await tap(tester, 'flow-mode-assisted', ms: 300);

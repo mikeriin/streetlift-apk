@@ -405,12 +405,12 @@ void main() {
           final entry = store.content.byId[e.value]!;
           expect(entry.discipline, e.key);
           expect(find.text(entry.nom.toUpperCase()), findsOneWidget);
-          // Badge de la discipline.
+          // Puce de la discipline (UI4 : puces neutres `KChip`).
           final badges = [
-            for (final b in tester.widgetList<KBadge>(
-              find.byType(KBadge, skipOffstage: false),
+            for (final b in tester.widgetList<KChip>(
+              find.byType(KChip, skipOffstage: false),
             ))
-              b.text,
+              b.label,
           ];
           expect(badges, contains(e.key), reason: '$badges');
           final d = store.content.detail(e.value)!;

@@ -1025,9 +1025,18 @@ const kWeekdayNames = [
   'dimanche',
 ];
 
+const _kWeekdayTitles = [
+  'Lundi',
+  'Mardi',
+  'Mercredi',
+  'Jeudi',
+  'Vendredi',
+  'Samedi',
+  'Dimanche',
+];
+
 String weekdayName(int d) => kWeekdayNames[d - 1];
-String weekdayTitle(int d) =>
-    kWeekdayNames[d - 1][0].toUpperCase() + kWeekdayNames[d - 1].substring(1);
+String weekdayTitle(int d) => _kWeekdayTitles[d - 1];
 
 // ================================================================== brouillon
 

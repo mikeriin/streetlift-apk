@@ -1,7 +1,7 @@
 // M1 (mannequin 3D) — écran « Moteur 3D » : calcul de la mesure de
 // fluidité, repli sans Flutter GPU (le moteur de test n'en a pas : c'est
 // exactement le cas d'un téléphone incompatible), accès depuis
-// Réglages › À propos, lisibilité 390 / 320 px et texte 100 / 200 %.
+// Réglages › Aide et à propos, lisibilité 390 / 320 px et texte 100 / 200 %.
 // Le rendu réel (Flutter GPU) est vérifié sur émulateur Android par
 // integration_test/moteur_3d_test.dart (voir docs/CI_3D.md).
 
@@ -150,13 +150,18 @@ void main() {
     });
   }
 
-  testWidgets('Réglages › À propos › Moteur 3D ouvre l’écran', (tester) async {
+  // UI4 (R9) : la ligne s'appelle « Diagnostic 3D », dans Aide et à propos.
+  testWidgets('Réglages › Aide et à propos › Diagnostic 3D ouvre l’écran', (
+    tester,
+  ) async {
     phone(tester);
-    await tester.pumpWidget(page(const SettingsScreen(section: 9)));
+    await tester.pumpWidget(
+      page(const SettingsScreen(page: SettingsPage.about)),
+    );
     await tester.pumpAndSettle();
     final tile = find.byKey(const ValueKey('about-engine3d'));
     await scrollToAction(tester, tile);
-    expect(find.text('Moteur 3D'), findsOneWidget);
+    expect(find.text('Diagnostic 3D'), findsOneWidget);
     await tester.tap(tile);
     await _settle(tester, find.text('Non compatible'));
     expect(find.text('MOTEUR 3D'), findsOneWidget);

@@ -1,20 +1,25 @@
-// G6 (D1.6, D6.5) : Réglages › Profil. Chaque rubrique du profil
-// d'athlète v2 se modifie à part (même écran que la création) ; un
-// changement qui touche le programme est signalé par Koach (la
-// régénération arrive en G7). Santé : mode prudent, consentement, accord
-// du médecin (règles L8/L13 inchangées).
+// G6 (D1.6, D6.5) : page Profil (carte Profil des Réglages). Chaque rubrique
+// du profil d'athlète v2 se modifie à part (même écran que la création) ;
+// un changement qui touche le programme est signalé (la régénération arrive
+// en G7). Santé : mode prudent, consentement, accord du médecin (règles
+// L8/L13 inchangées).
+// UI4 (refonte UI, cahier §4.1, §4.5, R3, R5, R8) : sous-page au gabarit
+// menu ; « Mes références » (page `PilotageScreen`) ; plus de rubrique
+// « Mode assisté ou libre » (le mode vit dans Évolution) ; retraits et
+// suppressions confirmés.
 import 'package:flutter/material.dart';
 import 'package:kalis_koach/kalis_koach.dart' show KoachPose;
 
-import 'app_theme.dart';
 import 'athlete_profile.dart';
 import 'athlete_profile_flow.dart';
 import 'guided_tests.dart';
 import 'koach/koach_bubble.dart';
 import 'koach/koach_view.dart';
+import 'pilotage_screen.dart' show PilotageScreen;
 import 'plan/plan_screens.dart' show openPlanCreation;
 import 'profile_completion.dart';
 import 'program_explainer.dart';
+import 'program_screens.dart' show ProgramScreen;
 import 'program_start.dart' show longCivilDate;
 import 'store.dart';
 import 'ui.dart';
@@ -26,7 +31,7 @@ const kHealthInfo =
     'entraînement (mode prudent, exercices qui épargnent une zone). Elles '
     'restent sur ce téléphone, figurent dans l’export de sauvegarde et sont '
     'effacées avec les données de l’application. Tu peux retirer ton accord '
-    'à tout moment (Réglages › Profil) : elles sont alors effacées. Sans '
+    'à tout moment depuis ton profil : elles sont alors effacées. Sans '
     'accord, l’application fonctionne en mode prudent.';
 
 const kCautionAdvice =
@@ -42,10 +47,11 @@ class CautionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final k = KTokens.of(context);
     final on = status.active;
     return KCard(
       key: const ValueKey('caution-card'),
-      accent: on ? SL.action : null,
+      accent: on ? k.avertissement : null,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -53,9 +59,9 @@ class CautionCard extends StatelessWidget {
             children: [
               Icon(
                 on ? Icons.shield_outlined : Icons.check_circle_outline,
-                color: on ? SL.accent : SL.success,
+                color: on ? k.avertissement : k.validation,
               ),
-              const SizedBox(width: 8),
+              const SizedBox(width: KSpacing.s8),
               Expanded(
                 child: Text(
                   on
@@ -64,19 +70,22 @@ class CautionCard extends StatelessWidget {
                       ? 'Mode prudent levé (accord du médecin déclaré)'
                       : 'Mode prudent non nécessaire',
                   key: const ValueKey('caution-state'),
-                  style: Theme.of(context).textTheme.titleMedium,
+                  style: KType.titreCarte.copyWith(color: k.texte),
                 ),
               ),
             ],
           ),
           if (status.reasons.isNotEmpty) ...[
-            const SizedBox(height: 6),
+            const SizedBox(height: KSpacing.s8),
             for (final r in status.reasons)
-              Text('• ${kCautionReasonLabels[r] ?? r}'),
+              Text(
+                '• ${kCautionReasonLabels[r] ?? r}',
+                style: KType.corps.copyWith(color: k.texte),
+              ),
           ],
           if (on) ...[
-            const SizedBox(height: 6),
-            Text(kCautionAdvice, style: Theme.of(context).textTheme.bodySmall),
+            const SizedBox(height: KSpacing.s8),
+            Text(kCautionAdvice, style: KType.detail.copyWith(color: k.texte2)),
           ],
           ...actions,
         ],
@@ -85,7 +94,29 @@ class CautionCard extends StatelessWidget {
   }
 }
 
-/// Réglages › Profil : rubriques du profil v2, santé et mode prudent.
+/// Icône de chaque rubrique du profil dans la liste du Profil.
+const _rubricIcons = <String, IconData>{
+  'identity': Icons.person_outline_rounded,
+  'discipline': Icons.sports_gymnastics_rounded,
+  'secondary': Icons.category_outlined,
+  'experience': Icons.timeline_rounded,
+  'levels': Icons.fitness_center_rounded,
+  'goals': Icons.flag_outlined,
+  'availability': Icons.event_available_outlined,
+  'places': Icons.place_outlined,
+  'recovery': Icons.bedtime_outlined,
+  'health': Icons.health_and_safety_outlined,
+  'preferences': Icons.thumbs_up_down_outlined,
+};
+
+/// Rubriques montrées dans le Profil : toutes celles du parcours, sauf
+/// « Mode assisté ou libre », qui se règle dans Évolution (cahier §4.3) ;
+/// le parcours de création garde sa question.
+Iterable<String> get profileRubrics =>
+    kRubricTitles.keys.where((r) => r != 'mode');
+
+/// Profil (carte Profil des Réglages) : rubriques du profil v2, références,
+/// tests guidés, santé et mode prudent.
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
@@ -93,18 +124,22 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) => ListenableBuilder(
     listenable: store,
     builder: (context, _) {
+      final k = KTokens.of(context);
       final a = store.athlete;
       final legacy = store.profile;
-      final dim = Theme.of(context).textTheme.bodySmall;
+      final dim = KType.detail.copyWith(color: k.texte2);
       final draft = a == null ? null : store.athleteEditDraft();
       String name(String id) => store.content.byId[id]?.nom ?? id;
-      return KScreen(
-        appBar: AppBar(title: const Text('PROFIL')),
-        body: KList(
-          key: const ValueKey('profile-screen'),
-          children: [
-            if (a == null)
-              KCard(
+      final pending = store.profilePendingQuestions.length;
+      return KMenuPage(
+        key: const ValueKey('profile-screen'),
+        root: false,
+        title: 'Profil',
+        lead:
+            'Ce que Koach sait de toi : tes rubriques, tes références, tes '
+            'tests et tes données de santé.',
+        header: a == null
+            ? KCard(
                 key: const ValueKey('profile-missing'),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -118,11 +153,15 @@ class ProfileScreen extends StatelessWidget {
                             : 'Ton profil date de l’ancienne version. On le '
                                   'refait ensemble ? Ton programme, ton '
                                   'historique et tes réglages ne changent pas.',
+                        style: KType.corps.copyWith(color: k.texte),
                       ),
                     ),
-                    const SizedBox(height: 10),
-                    FilledButton(
+                    const SizedBox(height: KSpacing.s12),
+                    KPrimaryButton(
                       key: const ValueKey('profile-create'),
+                      label: legacy == null
+                          ? 'Créer mon profil'
+                          : 'Refaire mon profil',
                       onPressed: () => Navigator.push(
                         context,
                         MaterialPageRoute<void>(
@@ -133,148 +172,157 @@ class ProfileScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      child: Text(
-                        legacy == null
-                            ? 'Créer mon profil'
-                            : 'Refaire mon profil',
-                      ),
                     ),
                   ],
                 ),
               )
-            else ...[
-              KoachSurface(
-                color: SL.bg,
-                child: KoachBubble(
-                  key: const ValueKey('profile-koach'),
-                  pose: a.programChangePending
-                      ? KoachPose.settings
-                      : KoachPose.present,
-                  text: a.programChangePending
-                      ? 'Tu as changé des choses qui touchent ton programme. '
-                            'On peut le refaire ensemble dans Réglages › Mon '
-                            'programme ; en attendant, il ne change pas.'
-                      : 'Touche une rubrique pour la modifier. Si un '
-                            'changement touche ton programme, je te le dirai.',
-                ),
-              ),
-              const ProgramExplainerButton(),
-              // CU : questions du profil v3 encore sans réponse.
-              if (store.profilePendingQuestions.isNotEmpty)
-                KCard(
-                  key: const ValueKey('profile-complete'),
-                  accent: SL.accent,
-                  onTap: () => openProfileCompletion(context),
-                  child: Row(
-                    children: [
-                      Icon(Icons.playlist_add_check, color: SL.accent),
-                      const SizedBox(width: 10),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Compléter mon profil',
-                              style: Theme.of(context).textTheme.titleMedium,
-                            ),
-                            Text(
-                              '${store.profilePendingQuestions.length} '
-                              'question${store.profilePendingQuestions.length > 1 ? 's' : ''} '
-                              'facultative${store.profilePendingQuestions.length > 1 ? 's' : ''}',
-                              style: dim,
-                            ),
-                          ],
+            : Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  KoachSurface(
+                    color: k.fond,
+                    child: KoachBubble(
+                      key: const ValueKey('profile-koach'),
+                      pose: a.programChangePending
+                          ? KoachPose.settings
+                          : KoachPose.present,
+                      text: a.programChangePending
+                          ? 'Tu as changé des choses qui touchent ton '
+                                'programme. On peut le refaire ensemble dans '
+                                'Mon programme ; en attendant, il ne change '
+                                'pas.'
+                          : 'Touche une rubrique pour la modifier. Si un '
+                                'changement touche ton programme, je te le '
+                                'dirai.',
+                    ),
+                  ),
+                  // R5 : la destination est un bouton, pas un chemin écrit.
+                  if (a.programChangePending)
+                    Align(
+                      alignment: AlignmentDirectional.centerStart,
+                      child: KTonalButton(
+                        key: const ValueKey('profile-open-program'),
+                        label: 'Ouvrir Mon programme',
+                        icon: Icons.calendar_month_outlined,
+                        onPressed: () => Navigator.push(
+                          context,
+                          MaterialPageRoute<void>(
+                            builder: (_) => const ProgramScreen(),
+                          ),
                         ),
                       ),
-                      const Icon(Icons.chevron_right),
-                    ],
-                  ),
+                    ),
+                ],
+              ),
+        groups: [
+          KMenuGroup(
+            children: [
+              // CU : questions du profil v3 encore sans réponse.
+              if (a != null && pending > 0)
+                KMenuRow(
+                  key: const ValueKey('profile-complete'),
+                  icon: Icons.playlist_add_check_rounded,
+                  title: 'Compléter mon profil',
+                  subtitle:
+                      '$pending question${pending > 1 ? 's' : ''} '
+                      'facultative${pending > 1 ? 's' : ''}',
+                  onTap: () => openProfileCompletion(context),
                 ),
-              KCard(
-                key: const ValueKey('profile-tests'),
+              KMenuRow(
+                key: const ValueKey('profile-references'),
+                icon: Icons.straighten_rounded,
+                title: 'Mes références',
+                subtitle: 'Poids du corps, 1RM, maxima et accessoires',
                 onTap: () => Navigator.push(
                   context,
                   MaterialPageRoute<void>(
-                    builder: (_) => const GuidedTestsScreen(),
+                    builder: (_) => const PilotageScreen(),
                   ),
                 ),
-                child: Row(
-                  children: [
-                    Icon(Icons.timer_outlined, color: SL.accent),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: Text(
-                        'Tests guidés',
-                        style: Theme.of(context).textTheme.titleMedium,
-                      ),
-                    ),
-                    const Icon(Icons.chevron_right),
-                  ],
-                ),
               ),
-              for (final r in kRubricTitles.keys)
-                KCard(
-                  key: ValueKey('profile-rubric-$r'),
-                  onTap: () => _edit(context, r),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(kRubricTitles[r]!, style: dim),
-                            const SizedBox(height: 2),
-                            Text(rubricSummary(r, draft!, name)),
-                          ],
-                        ),
-                      ),
-                      IconButton(
-                        key: ValueKey('profile-edit-$r'),
-                        tooltip: 'Modifier : ${kRubricTitles[r]}',
-                        icon: const Icon(Icons.edit_outlined),
-                        onPressed: () => _edit(context, r),
-                      ),
-                    ],
+              if (a != null)
+                KMenuRow(
+                  key: const ValueKey('profile-tests'),
+                  icon: Icons.timer_outlined,
+                  title: 'Tests guidés',
+                  subtitle: 'Mesurer tes niveaux pas à pas',
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute<void>(
+                      builder: (_) => const GuidedTestsScreen(),
+                    ),
                   ),
                 ),
             ],
-            if (store.hasAnyProfile) ...[
-              CautionCard(
-                status: store.caution,
-                actions: [
-                  if (store.caution.active && store.caution.clearable) ...[
-                    const SizedBox(height: 8),
-                    OutlinedButton(
-                      key: const ValueKey('profile-clearance'),
-                      onPressed: () => _confirmClearance(context),
-                      child: const Text('J’ai l’accord de mon médecin'),
+          ),
+          if (a != null)
+            KMenuGroup(
+              title: 'Rubriques du profil',
+              children: [
+                for (final r in profileRubrics)
+                  // Deux clés historiques : la rubrique et son « Modifier ».
+                  KeyedSubtree(
+                    key: ValueKey('profile-rubric-$r'),
+                    child: KMenuRow(
+                      key: ValueKey('profile-edit-$r'),
+                      icon: _rubricIcons[r] ?? Icons.tune_rounded,
+                      title: kRubricTitles[r]!,
+                      subtitle: rubricSummary(r, draft!, name),
+                      onTap: () => _edit(context, r),
                     ),
-                  ],
-                  if (store.caution.cleared &&
-                      legacy?.health.clearanceAt != null) ...[
-                    const SizedBox(height: 4),
-                    Text(
-                      'Accord déclaré le ${_day(legacy!.health.clearanceAt!)}',
-                      style: dim,
-                    ),
-                    TextButton(
-                      key: const ValueKey('profile-clearance-remove'),
-                      onPressed: store.removeDoctorClearance,
-                      child: const Text('Retirer l’accord déclaré'),
-                    ),
-                  ],
+                  ),
+              ],
+            ),
+          if (store.hasAnyProfile) ...[
+            const KSectionTitle('Santé et accords'),
+            CautionCard(
+              status: store.caution,
+              actions: [
+                if (store.caution.active && store.caution.clearable) ...[
+                  const SizedBox(height: KSpacing.s12),
+                  KTonalButton(
+                    key: const ValueKey('profile-clearance'),
+                    label: 'J’ai l’accord de mon médecin',
+                    onPressed: () => _confirmClearance(context),
+                  ),
                 ],
-              ),
-              _healthCard(context, legacy, a),
-            ],
+                if (store.caution.cleared &&
+                    legacy?.health.clearanceAt != null) ...[
+                  const SizedBox(height: KSpacing.s8),
+                  Text(
+                    'Accord déclaré le ${_day(legacy!.health.clearanceAt!)}',
+                    style: dim,
+                  ),
+                  const SizedBox(height: KSpacing.s8),
+                  KTonalButton(
+                    key: const ValueKey('profile-clearance-remove'),
+                    label: 'Retirer l’accord déclaré',
+                    onPressed: () => _confirmClearanceRemoval(context),
+                  ),
+                ],
+              ],
+            ),
+            _healthCard(context, legacy, a),
           ],
-        ),
+          if (a != null)
+            KMenuGroup(
+              title: 'Aide',
+              children: [
+                KMenuRow(
+                  key: const ValueKey('program-explainer-open'),
+                  icon: Icons.help_outline_rounded,
+                  title: 'Comment marche ton programme ?',
+                  onTap: () => showProgramExplainer(context),
+                ),
+              ],
+            ),
+        ],
       );
     },
   );
 
   Widget _healthCard(BuildContext context, UserProfile? p, AthleteRecord? a) {
-    final dim = Theme.of(context).textTheme.bodySmall;
+    final k = KTokens.of(context);
     final given = p?.health.consentGiven ?? false;
     final content =
         (p?.health.hasHealthContent ?? false) ||
@@ -287,30 +335,35 @@ class ProfileScreen extends StatelessWidget {
         children: [
           Text(
             'Données de santé',
-            style: Theme.of(context).textTheme.titleMedium,
+            style: KType.titreCarte.copyWith(color: k.texte),
           ),
-          const SizedBox(height: 6),
-          Text(kHealthInfo, style: dim),
-          const SizedBox(height: 8),
+          const SizedBox(height: KSpacing.s8),
+          Text(kHealthInfo, style: KType.detail.copyWith(color: k.texte2)),
+          const SizedBox(height: KSpacing.s12),
           if (given) ...[
-            Text('Accord donné le ${_day(p!.health.consentAt!)}'),
-            const SizedBox(height: 8),
-            OutlinedButton(
-              key: const ValueKey('profile-consent-withdraw'),
-              onPressed: () => _confirmWithdraw(context),
-              child: const Text('Retirer mon accord'),
+            Text(
+              'Accord donné le ${_day(p!.health.consentAt!)}',
+              style: KType.corps.copyWith(color: k.texte),
             ),
-            if (content)
-              TextButton(
+            const SizedBox(height: KSpacing.s8),
+            KTonalButton(
+              key: const ValueKey('profile-consent-withdraw'),
+              label: 'Retirer mon accord',
+              onPressed: () => _confirmWithdraw(context),
+            ),
+            if (content) ...[
+              const SizedBox(height: KSpacing.s8),
+              KTonalButton(
                 key: const ValueKey('profile-health-delete'),
-                onPressed: store.deleteHealthData,
-                child: const Text('Supprimer mes réponses de santé'),
+                label: 'Supprimer mes réponses de santé',
+                onPressed: () => _confirmHealthDelete(context),
               ),
+            ],
           ] else
-            FilledButton(
+            KTonalButton(
               key: const ValueKey('profile-consent-give'),
+              label: 'Donner mon accord',
               onPressed: () => store.setHealthConsent(true),
-              child: const Text('Donner mon accord'),
             ),
         ],
       ),
@@ -332,83 +385,71 @@ class ProfileScreen extends StatelessWidget {
     );
     if (res == null || !context.mounted) return;
     if (res.program) {
-      final redo = await showKoachSheet<bool>(
+      final redo = await showKConfirm(
         context,
-        pose: KoachPose.settings,
-        title: 'Ton programme',
-        text:
+        title: 'Refaire ton programme ?',
+        message:
             'Ce changement touche ton programme. On le refait ensemble ? Ton '
             'programme actuel ne change pas tant que tu n’as pas validé le '
             'nouveau.',
-        actions: [
-          KoachBubbleAction(
-            'Créer un nouveau programme',
-            () => Navigator.of(context).pop(true),
-            primary: true,
-            key: const ValueKey('profile-program-redo'),
-          ),
-          KoachBubbleAction(
-            'Plus tard',
-            () => Navigator.of(context).pop(false),
-            key: const ValueKey('profile-program-later'),
-          ),
-        ],
+        confirmLabel: 'Créer un nouveau programme',
+        cancelLabel: 'Plus tard',
       );
-      if (redo == true && context.mounted) await openPlanCreation(context);
+      if (redo && context.mounted) await openPlanCreation(context);
     } else if (res.rubrics.isNotEmpty) {
       showKoachToast(context, 'Profil enregistré.');
     }
   }
 
   Future<void> _confirmClearance(BuildContext context) async {
-    final ok = await showDialog<bool>(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Text('Accord du médecin'),
-        content: const Text(
+    final ok = await showKConfirm(
+      context,
+      title: 'Accord du médecin',
+      message:
           'Confirme qu’un médecin t’a donné son accord pour t’entraîner '
           'intensément, en connaissant tes réponses. Cette déclaration '
           'est datée ; une nouvelle réponse « oui » ou une nouvelle gêne '
           'remet le mode prudent.',
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('Annuler'),
-          ),
-          FilledButton(
-            key: const ValueKey('clearance-confirm'),
-            onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('Je confirme'),
-          ),
-        ],
-      ),
+      confirmLabel: 'Je confirme',
     );
-    if (ok == true) store.declareDoctorClearance();
+    if (ok) store.declareDoctorClearance();
+  }
+
+  Future<void> _confirmClearanceRemoval(BuildContext context) async {
+    final ok = await showKConfirm(
+      context,
+      title: 'Retirer l’accord déclaré ?',
+      message:
+          'L’accord du médecin ne sera plus pris en compte : le mode prudent '
+          's’appliquera de nouveau. Tu pourras le déclarer encore plus tard.',
+      confirmLabel: 'Retirer',
+    );
+    if (ok) store.removeDoctorClearance();
   }
 
   Future<void> _confirmWithdraw(BuildContext context) async {
-    final ok = await showDialog<bool>(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Text('Retirer ton accord ?'),
-        content: const Text(
+    final ok = await showKConfirm(
+      context,
+      title: 'Retirer ton accord ?',
+      message:
           'Tes réponses de santé et tes blessures ou gênes seront effacées '
           'de ce téléphone. Le mode prudent s’appliquera.',
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(ctx, false),
-            child: const Text('Annuler'),
-          ),
-          FilledButton(
-            key: const ValueKey('withdraw-confirm'),
-            onPressed: () => Navigator.pop(ctx, true),
-            child: const Text('Retirer et effacer'),
-          ),
-        ],
-      ),
+      confirmLabel: 'Retirer et effacer',
+      destructive: true,
     );
-    if (ok == true) store.setHealthConsent(false);
+    if (ok) store.setHealthConsent(false);
+  }
+
+  Future<void> _confirmHealthDelete(BuildContext context) async {
+    final ok = await showKConfirm(
+      context,
+      title: 'Supprimer tes réponses de santé ?',
+      message:
+          'Tes réponses de santé et tes blessures ou gênes seront effacées '
+          'de ce téléphone. Ton accord reste enregistré.',
+      confirmLabel: 'Supprimer',
+      destructive: true,
+    );
+    if (ok) store.deleteHealthData();
   }
 }

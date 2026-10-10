@@ -1,106 +1,128 @@
+// UI4 (refonte UI) : page « Mes références » (cahier §4.1, R3, R9 : plus de
+// « Pilotage » visible), ouverte depuis Profil › « Mes références » et les
+// raccourcis R2. Sous-page de menu : champs groupés par section ; l'action
+// destructrice « Effacer toutes mes références » est une ligne visible du
+// dernier groupe, confirmée (C10, R8).
 import 'package:flutter/material.dart';
 
 import 'app_theme.dart';
-import 'ui.dart';
 import 'store.dart';
+import 'ui.dart';
 
 class PilotageScreen extends StatelessWidget {
   const PilotageScreen({super.key});
 
+  Future<void> _confirmReset(BuildContext context) async {
+    final ok = await showKConfirm(
+      context,
+      title: 'Effacer tes références ?',
+      message:
+          'Toutes tes références repassent à « non renseigné » : les charges '
+          'et volumes qui en dépendent afficheront « à renseigner ». Tes '
+          'séances, ton historique et tes récompenses sont conservés.',
+      confirmLabel: 'Effacer',
+      destructive: true,
+    );
+    if (ok) store.resetPilotage();
+  }
+
   @override
   Widget build(BuildContext context) {
     final p = store.program.pilotage;
-    return KScreen(
-      appBar: AppBar(
-        title: const Text('RÉFÉRENCES'),
-        actions: [
-          IconButton(
-            tooltip: 'Effacer toutes mes références',
-            icon: const Icon(Icons.restore),
-            onPressed: () => showDialog(
-              context: context,
-              builder: (ctx) => AlertDialog(
-                backgroundColor: SL.surface,
-                title: const Text('Effacer tes références ?'),
-                content: const Text(
-                  'Toutes tes références repassent à « non renseigné » : les charges et volumes qui en dépendent afficheront « à renseigner ». Tes séances, ton historique et tes récompenses sont conservés.',
-                ),
-                actions: [
-                  TextButton(
-                    onPressed: () => Navigator.pop(ctx),
-                    child: const Text('Annuler'),
-                  ),
-                  FilledButton(
-                    onPressed: () {
-                      store.resetPilotage();
-                      Navigator.pop(ctx);
-                    },
-                    child: const Text('Effacer'),
-                  ),
-                ],
-              ),
+    return ListenableBuilder(
+      listenable: store,
+      builder: (context, _) => KPage.sub(
+        key: const ValueKey('references-screen'),
+        title: 'Mes références',
+        lead:
+            'Tes références ajustent le programme. Enregistrement '
+            'automatique. Laisse une valeur « non renseignée » si tu ne la '
+            'connais pas : les charges et volumes liés l’indiqueront, sans '
+            'rien inventer. Lest = charge ajoutée au poids du corps ; back '
+            'squat = barre totale.',
+        children: [
+          if (store.referenceRefs.any(
+            (r) => store.refProvenance(r) == 'historic',
+          ))
+            const KNotice(
+              key: ValueKey('references-historic'),
+              icon: Icons.history_rounded,
+              tone: KTone.warning,
+              message:
+                  'Valeurs marquées « à vérifier » : elles viennent d’une '
+                  'version précédente et restent utilisées telles quelles. '
+                  'Confirme-les ou corrige-les quand tu veux.',
             ),
+          const KMenuGroup(
+            title: 'Poids du corps',
+            dividerIndent: KSpacing.s16,
+            children: [
+              _NumTile(
+                label: 'Poids de corps',
+                refCell: 'B4',
+                unit: 'kg',
+                subtitle: 'Utilisé avec ton lest pour calculer les charges',
+              ),
+            ],
+          ),
+          KMenuGroup(
+            title: 'Force · 1RM de travail',
+            dividerIndent: KSpacing.s16,
+            children: [
+              for (final l in p.mainLifts)
+                _NumTile(
+                  label: l.name,
+                  refCell: l.ref,
+                  unit: l.unit,
+                  subtitle: 'Cible 12 mois : ${_n(l.target)} ${l.unit}',
+                ),
+            ],
+          ),
+          KMenuGroup(
+            title: 'Endurance · répétitions',
+            dividerIndent: KSpacing.s16,
+            children: [
+              for (final m in p.repMax)
+                _NumTile(
+                  label: m.name,
+                  refCell: m.ref,
+                  unit: 'reps',
+                  subtitle:
+                      'Cible 12 mois : ${_n(m.target)} reps · ajuste les '
+                      'jours 4 à 6',
+                ),
+            ],
+          ),
+          KMenuGroup(
+            title: 'Charges des accessoires',
+            dividerIndent: KSpacing.s16,
+            children: [
+              for (final a in p.accessories)
+                _NumTile(
+                  label: a.name,
+                  refCell: a.ref,
+                  unit: 'kg',
+                  subtitle:
+                      'Réf. ${a.refReps} reps · '
+                      '${a.note.isEmpty ? 'double progression' : a.note}',
+                ),
+            ],
+          ),
+          // C10 : action destructrice dans le dernier groupe, confirmée.
+          KMenuGroup(
+            children: [
+              KMenuRow(
+                key: const ValueKey('references-reset'),
+                icon: Icons.restore_rounded,
+                title: 'Effacer toutes mes références',
+                subtitle: 'Elles repassent à « non renseigné »',
+                danger: true,
+                chevron: false,
+                onTap: () => _confirmReset(context),
+              ),
+            ],
           ),
         ],
-      ),
-      body: ListenableBuilder(
-        listenable: store,
-        builder: (context, _) => KList(
-          children: [
-            KCard(
-              child: Text(
-                'Tes références ajustent le programme. Enregistrement automatique. '
-                'Laisse une valeur « non renseignée » si tu ne la connais pas : '
-                'les charges et volumes liés l’indiqueront, sans rien inventer. '
-                'Lest = charge ajoutée au poids du corps ; back squat = barre totale.',
-                style: Theme.of(context).textTheme.bodySmall,
-              ),
-            ),
-            if (store.referenceRefs.any(
-              (r) => store.refProvenance(r) == 'historic',
-            ))
-              KCard(
-                key: const ValueKey('references-historic'),
-                child: Text(
-                  'Valeurs marquées « à vérifier » : elles viennent d’une version précédente '
-                  'et restent utilisées telles quelles. Confirme-les ou corrige-les quand tu veux.',
-                  style: Theme.of(context).textTheme.bodySmall,
-                ),
-              ),
-            const _NumTile(
-              label: 'Poids de corps',
-              refCell: 'B4',
-              unit: 'kg',
-              subtitle: 'Utilisé avec ton lest pour calculer les charges',
-            ),
-            const _SectionTitle('Force · 1RM de travail'),
-            for (final l in p.mainLifts)
-              _NumTile(
-                label: l.name,
-                refCell: l.ref,
-                unit: l.unit,
-                subtitle: 'Cible 12 mois : ${_n(l.target)} ${l.unit}',
-              ),
-            const _SectionTitle('Endurance · répétitions'),
-            for (final m in p.repMax)
-              _NumTile(
-                label: m.name,
-                refCell: m.ref,
-                unit: 'reps',
-                subtitle:
-                    'Cible 12 mois : ${_n(m.target)} reps · ajuste les jours 4 à 6',
-              ),
-            const _SectionTitle('Charges des accessoires'),
-            for (final a in p.accessories)
-              _NumTile(
-                label: a.name,
-                refCell: a.ref,
-                unit: 'kg',
-                subtitle:
-                    'Réf. ${a.refReps} reps · ${a.note.isEmpty ? 'double progression' : a.note}',
-              ),
-          ],
-        ),
       ),
     );
   }
@@ -123,13 +145,7 @@ double? parseReference(String? text, String ref) {
   return v;
 }
 
-class _SectionTitle extends StatelessWidget {
-  final String t;
-  const _SectionTitle(this.t);
-  @override
-  Widget build(BuildContext context) => KSection(t);
-}
-
+/// Une référence : nom, description, provenance, actions, champ.
 class _NumTile extends StatelessWidget {
   final String label;
   final String refCell;
@@ -142,44 +158,42 @@ class _NumTile extends StatelessWidget {
     required this.subtitle,
   });
 
+  /// Largeur du champ à côté du libellé.
+  static const _fieldWidth = 2 * KSize.target + KSpacing.s14;
+
   @override
   Widget build(BuildContext context) {
+    final k = KTokens.of(context);
     final provenance = store.refProvenance(refCell);
     final v = store.values[refCell];
     final labelContent = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(label, style: Theme.of(context).textTheme.titleMedium),
-        const SizedBox(height: 2),
-        Text(subtitle, style: Theme.of(context).textTheme.bodySmall),
+        KRowLabel(label, subtitle: subtitle),
         if (provenance != 'set') ...[
-          const SizedBox(height: 4),
+          const SizedBox(height: KSpacing.s4),
           Text(
             provenance == 'unknown'
                 ? 'Non renseigné'
                 : 'À vérifier · valeur d’une version précédente',
             key: ValueKey('$refCell-provenance'),
-            style: TextStyle(
-              color: SL.danger,
-              fontWeight: FontWeight.w600,
-              fontSize: 12,
-            ),
+            style: KType.micro.copyWith(color: k.danger),
           ),
         ],
         Wrap(
-          spacing: 4,
+          spacing: KSpacing.s4,
           children: [
             if (provenance == 'historic')
-              TextButton(
+              KTonalButton(
                 key: ValueKey('$refCell-confirm'),
+                label: 'C’est bien ma valeur',
                 onPressed: () => store.confirmReference(refCell),
-                child: const Text('C’est bien ma valeur'),
               ),
             if (provenance != 'unknown')
-              TextButton(
+              KTonalButton(
                 key: ValueKey('$refCell-unknown'),
+                label: 'Je ne sais pas',
                 onPressed: () => store.clearReference(refCell),
-                child: const Text('Je ne sais pas'),
               ),
           ],
         ),
@@ -212,18 +226,25 @@ class _NumTile extends StatelessWidget {
       },
     );
     final labelledField = Semantics(label: label, child: field);
-    return KCard(
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: KSpacing.s16,
+        vertical: KSpacing.s12,
+      ),
       child: LayoutBuilder(
         builder: (context, constraints) {
           final stacked =
-              constraints.maxWidth < 280 ||
-              MediaQuery.textScalerOf(context).scale(14) > 16;
+              constraints.maxWidth < KSize.stepperRowMin ||
+              MediaQuery.textScalerOf(
+                    context,
+                  ).scale(KType.libelle.fontSize!) >
+                  KType.corpsFort.fontSize!;
           if (stacked) {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 labelContent,
-                const SizedBox(height: 6),
+                const SizedBox(height: KSpacing.s8),
                 labelledField,
               ],
             );
@@ -231,8 +252,8 @@ class _NumTile extends StatelessWidget {
           return Row(
             children: [
               Expanded(child: labelContent),
-              const SizedBox(width: 12),
-              SizedBox(width: 110, child: labelledField),
+              const SizedBox(width: KSpacing.s12),
+              SizedBox(width: _fieldWidth, child: labelledField),
             ],
           );
         },

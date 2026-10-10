@@ -398,7 +398,8 @@ void main() {
             ),
           )
           .last;
-      return (box.decoration! as BoxDecoration).color!;
+      // UI4 : pastilles en `ShapeDecoration` (jetons), mêmes couleurs.
+      return (box.decoration! as ShapeDecoration).color!;
     }
 
     expect(swatch('l2d'), heat(.25));

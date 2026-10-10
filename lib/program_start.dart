@@ -6,10 +6,10 @@
 // existante garde son calendrier, modifiable sans remise à zéro.
 import 'package:flutter/material.dart';
 
-import 'app_theme.dart';
 import 'data_control.dart';
 import 'models.dart';
 import 'pilotage_screen.dart';
+import 'plan/plan_screens.dart' show openPlanCreation;
 import 'store.dart';
 import 'ui.dart';
 
@@ -122,7 +122,7 @@ class _ProgramStartScreenState extends State<ProgramStartScreen> {
       initialDate: _date,
       firstDate: today.subtract(const Duration(days: AppStore.startPastDays)),
       lastDate: today.add(const Duration(days: AppStore.startFutureDays)),
-      helpText: 'DATE DE S1 · J1',
+      helpText: 'Date de départ (semaine 1, jour 1)',
       cancelText: 'Annuler',
       confirmText: 'Choisir',
     );
@@ -167,7 +167,8 @@ class _ProgramStartScreenState extends State<ProgramStartScreen> {
       messenger.showSnackBar(
         SnackBar(
           content: Text(
-            'Départ enregistré : S1 · J1 le ${longCivilDate(_date)}.',
+            'Départ enregistré : semaine 1, jour 1 le '
+            '${longCivilDate(_date)}.',
           ),
         ),
       );
@@ -190,6 +191,7 @@ class _ProgramStartScreenState extends State<ProgramStartScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final k = KTokens.of(context);
     final program = store.program;
     final weeks = program.weeks.length;
     final today = _civil(store.storeClock());
@@ -198,165 +200,172 @@ class _ProgramStartScreenState extends State<ProgramStartScreen> {
     final changed =
         current == null ||
         Program.civilIndex(current) != Program.civilIndex(_date);
-    final dim = Theme.of(context).textTheme.bodySmall;
+    final dim = KType.detail.copyWith(color: k.texte2);
+    final body = KType.corps.copyWith(color: k.texte);
+    final cardTitle = KType.titreCarte.copyWith(color: k.texte);
     final positionNow = programPosition(_date, today, weeks);
-    return KScreen(
-      appBar: AppBar(title: const Text('DÉPART DU PROGRAMME')),
-      body: Form(
-        key: _form,
-        child: KList(
-          children: [
-            KCard(
-              child: Text(
-                'La date choisie est ta première séance (S1 · J1), quel que soit '
-                'le jour de la semaine. Les $weeks semaines s’enchaînent ensuite '
-                'sans décalage automatique ; aucun nouveau cycle n’est lancé à la fin.',
-                style: dim,
-              ),
+    return Form(
+      key: _form,
+      child: KPage.sub(
+        title: 'Départ du programme',
+        lead:
+            'La date choisie est ta première séance (semaine 1, jour 1), '
+            'quel que soit le jour de la semaine. Les $weeks semaines '
+            's’enchaînent ensuite sans décalage automatique ; aucun nouveau '
+            'cycle n’est lancé à la fin.',
+        bottom: SafeArea(
+          top: false,
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(
+              KSpacing.page,
+              KSpacing.s8,
+              KSpacing.page,
+              KSpacing.s16,
             ),
-            if (current != null)
-              KCard(
-                key: const ValueKey('start-current'),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Départ actuel',
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                    const SizedBox(height: 4),
-                    Text('S1 · J1 le ${longCivilDate(current)}'),
-                    if (store.startOrigin == 'migration') ...[
-                      const SizedBox(height: 4),
-                      Text(
-                        'Calendrier d’origine de ton installation, conservé à la mise à jour.',
-                        style: dim,
-                      ),
-                    ],
-                  ],
+            child: KActionRow(
+              children: [
+                KTonalButton(
+                  key: const ValueKey('start-later'),
+                  expand: true,
+                  onPressed: _saving ? null : () => Navigator.of(context).pop(),
+                  label: _pending ? 'Plus tard' : 'Annuler',
                 ),
-              ),
+                KPrimaryButton(
+                  key: const ValueKey('start-confirm'),
+                  onPressed: _saving || !changed && !_pending ? null : _confirm,
+                  label: _saving
+                      ? 'Enregistrement…'
+                      : current == null
+                      ? 'Confirmer le départ'
+                      : 'Changer la date',
+                ),
+              ],
+            ),
+          ),
+        ),
+        children: [
+          if (current != null)
             KCard(
+              key: const ValueKey('start-current'),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Text('Départ actuel', style: cardTitle),
+                  const SizedBox(height: KSpacing.s4),
                   Text(
-                    current == null
-                        ? 'Date de S1 · J1'
-                        : 'Nouvelle date de S1 · J1',
-                    style: Theme.of(context).textTheme.titleMedium,
+                    'Semaine 1, jour 1 le ${longCivilDate(current)}',
+                    style: body,
                   ),
-                  const SizedBox(height: 6),
-                  Text(
-                    longCivilDate(_date),
-                    key: const ValueKey('start-date'),
-                    style: Theme.of(context).textTheme.titleLarge,
-                  ),
-                  const SizedBox(height: 8),
-                  OutlinedButton.icon(
-                    key: const ValueKey('start-pick'),
-                    onPressed: _saving ? null : _pick,
-                    icon: const Icon(Icons.event_rounded),
-                    label: const Text('Choisir une autre date'),
-                  ),
-                  const SizedBox(height: 10),
-                  Semantics(
-                    container: true,
-                    liveRegion: true,
-                    child: Column(
-                      key: const ValueKey('start-preview'),
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Fin prévue (S$weeks · J7) : ${longCivilDate(end)}',
-                        ),
-                        const SizedBox(height: 4),
-                        Text(switch (positionNow) {
-                          'avant le départ' =>
-                            'Avant le départ, l’accueil l’indique ; aucun rappel avant S1 · J1.',
-                          'programme terminé' =>
-                            'Avec cette date, le programme est déjà terminé aujourd’hui.',
-                          _ => 'Aujourd’hui : $positionNow.',
-                        }, style: dim),
-                      ],
+                  if (store.startOrigin == 'migration') ...[
+                    const SizedBox(height: KSpacing.s4),
+                    Text(
+                      'Calendrier d’origine de ton installation, conservé à '
+                      'la mise à jour.',
+                      style: dim,
                     ),
+                  ],
+                ],
+              ),
+            ),
+          KCard(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  current == null
+                      ? 'Date de la semaine 1, jour 1'
+                      : 'Nouvelle date de la semaine 1, jour 1',
+                  style: cardTitle,
+                ),
+                const SizedBox(height: KSpacing.s8),
+                Text(
+                  longCivilDate(_date),
+                  key: const ValueKey('start-date'),
+                  style: KType.titreSeance.copyWith(color: k.encre),
+                ),
+                const SizedBox(height: KSpacing.s8),
+                KTonalButton(
+                  key: const ValueKey('start-pick'),
+                  onPressed: _saving ? null : _pick,
+                  icon: Icons.event_rounded,
+                  label: 'Choisir une autre date',
+                ),
+                const SizedBox(height: KSpacing.s12),
+                Semantics(
+                  container: true,
+                  liveRegion: true,
+                  child: Column(
+                    key: const ValueKey('start-preview'),
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Fin prévue (S$weeks · J7) : ${longCivilDate(end)}',
+                        style: body,
+                      ),
+                      const SizedBox(height: KSpacing.s4),
+                      Text(switch (positionNow) {
+                        'avant le départ' =>
+                          'Avant le départ, l’accueil l’indique ; aucun '
+                              'rappel avant la semaine 1, jour 1.',
+                        'programme terminé' =>
+                          'Avec cette date, le programme est déjà terminé '
+                              'aujourd’hui.',
+                        _ => 'Aujourd’hui : $positionNow.',
+                      }, style: dim),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          if (current != null && changed)
+            KCard(
+              key: const ValueKey('start-impact'),
+              outline: k.encre,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('Effet du changement', style: cardTitle),
+                  const SizedBox(height: KSpacing.s8),
+                  Text(
+                    'Aujourd’hui : ${programPosition(current, today, weeks)} '
+                    '→ $positionNow.',
+                    style: body,
+                  ),
+                  const SizedBox(height: KSpacing.s4),
+                  Text(
+                    'Tes séances faites gardent leur semaine, leur jour et '
+                    'leur date réelle. Tes références ne changent pas. Les '
+                    'rappels sont replanifiés sur les nouvelles dates.',
+                    style: dim,
                   ),
                 ],
               ),
             ),
-            if (current != null && changed)
-              KCard(
-                key: const ValueKey('start-impact'),
-                accent: SL.action,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Effet du changement',
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                    const SizedBox(height: 6),
-                    Text(
-                      'Aujourd’hui : ${programPosition(current, today, weeks)} → $positionNow.',
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      'Tes séances faites gardent leur semaine, leur jour et leur date réelle. '
-                      'Tes références ne changent pas. '
-                      'Les rappels sont replanifiés sur les nouvelles dates.',
-                      style: dim,
-                    ),
-                  ],
-                ),
-              ),
-            if (_pending) ...[
-              const KSection('Tes références (facultatif)'),
-              KCard(
-                child: Text(
-                  'Laisse vide si tu ne sais pas : aucune valeur n’est inventée, les '
-                  'charges et volumes concernés afficheront « à renseigner ». Aucun '
-                  'test maximal n’est exigé. Tu pourras compléter plus tard dans '
-                  'Références, avec les accessoires. Valeurs en kg.',
-                  style: dim,
-                ),
-              ),
-              for (final f in _startFields())
-                _ReferenceField(
-                  ref: f.$1,
-                  label: f.$2,
-                  unit: f.$3,
-                  hint: f.$4,
-                  controller: _fields[f.$1]!,
-                  enabled: !_saving,
-                ),
-            ],
-          ],
-        ),
-      ),
-      bottomNavigationBar: KBottomActions(
-        child: Wrap(
-          alignment: WrapAlignment.end,
-          spacing: 8,
-          runSpacing: 8,
-          children: [
-            TextButton(
-              key: const ValueKey('start-later'),
-              onPressed: _saving ? null : () => Navigator.of(context).pop(),
-              child: Text(_pending ? 'Plus tard' : 'Annuler'),
-            ),
-            FilledButton(
-              key: const ValueKey('start-confirm'),
-              onPressed: _saving || !changed && !_pending ? null : _confirm,
+          if (_pending) ...[
+            // UI4 (R1, R2) : même nom que la page des références.
+            const KSectionTitle('Mes références (facultatif)'),
+            KCard(
               child: Text(
-                _saving
-                    ? 'Enregistrement…'
-                    : current == null
-                    ? 'Confirmer le départ'
-                    : 'Changer la date',
+                'Laisse vide si tu ne sais pas : aucune valeur n’est '
+                'inventée, les charges et volumes concernés afficheront « à '
+                'renseigner ». Aucun test maximal n’est exigé. Tu pourras '
+                'les compléter plus tard, avec les accessoires, dans Mes '
+                'références. Valeurs en kg.',
+                style: dim,
               ),
             ),
+            for (final f in _startFields())
+              _ReferenceField(
+                ref: f.$1,
+                label: f.$2,
+                unit: f.$3,
+                hint: f.$4,
+                controller: _fields[f.$1]!,
+                enabled: !_saving,
+              ),
           ],
-        ),
+        ],
       ),
     );
   }
@@ -377,7 +386,10 @@ class _ReferenceField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => KCard(
-    padding: const EdgeInsets.fromLTRB(16, 12, 16, 12),
+    padding: const EdgeInsets.symmetric(
+      horizontal: KSpacing.s16,
+      vertical: KSpacing.s12,
+    ),
     child: TextFormField(
       key: ValueKey('start-ref-$ref'),
       controller: controller,
@@ -400,15 +412,21 @@ class _ReferenceField extends StatelessWidget {
   );
 }
 
-/// Bandeau de l'accueil : départ à choisir, compte à rebours avant S1 · J1,
-/// programme terminé. Rien pendant le programme.
+/// Bandeau de l'accueil : départ à choisir, compte à rebours avant la
+/// semaine 1, jour 1, programme terminé. Rien pendant le programme.
+/// UI4 : bandeau du kit dans le flux (`KNotice`), avec son action (R6 :
+/// « Créer un nouveau programme » quand le programme est terminé).
 class ProgramStartBanner extends StatelessWidget {
   final DateTime now;
   final EdgeInsetsGeometry padding;
   const ProgramStartBanner({
     super.key,
     required this.now,
-    this.padding = const EdgeInsets.fromLTRB(KSpace.page, 0, KSpace.page, 8),
+    this.padding = const EdgeInsets.only(
+      left: KSpacing.page,
+      right: KSpacing.page,
+      bottom: KSpacing.s8,
+    ),
   });
 
   /// Le bandeau a quelque chose à dire : départ à choisir, à venir ou
@@ -420,54 +438,47 @@ class ProgramStartBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     final p = store.program;
     final start = p.start;
-    final String title, body;
-    String? action;
+    final String title, body, action;
+    final VoidCallback onAction;
+    void open() => Navigator.of(
+      context,
+    ).push(MaterialPageRoute<bool>(builder: (_) => const ProgramStartScreen()));
     if (start == null) {
       title = 'Programme non démarré';
       body =
-          'Choisis la date de ta première séance (S1 · J1). En attendant, tu peux parcourir les semaines.';
+          'Choisis la date de ta première séance (semaine 1, jour 1). En '
+          'attendant, tu peux parcourir les semaines.';
       action = 'Choisir mon départ';
+      onAction = open;
     } else if (p.beforeStart(now)) {
       final days = Program.civilIndex(start) - Program.civilIndex(_civil(now));
       title = 'Départ le ${longCivilDate(start)}';
       body =
-          'S1 · J1 dans $days jour${days > 1 ? 's' : ''}. Aucun rappel avant cette date.';
+          'Semaine 1, jour 1 dans $days jour${days > 1 ? 's' : ''}. Aucun '
+          'rappel avant cette date.';
       action = 'Modifier';
+      onAction = open;
     } else if (p.afterEnd(now)) {
       title = 'Programme terminé le ${longCivilDate(p.endDate!)}';
       body =
-          'Les ${p.weeks.length} semaines sont passées. Ton historique reste consultable ; aucun nouveau cycle n’est lancé.';
+          'Les ${p.weeks.length} semaines sont passées. Ton historique reste '
+          'consultable ; aucun nouveau cycle n’est lancé.';
+      action = 'Créer un nouveau programme';
+      onAction = () => openPlanCreation(context);
     } else {
       return const SizedBox.shrink();
     }
-    void open() => Navigator.of(
-      context,
-    ).push(MaterialPageRoute<bool>(builder: (_) => const ProgramStartScreen()));
     return Padding(
       padding: padding,
       child: Semantics(
         container: true,
-        child: KCard(
+        child: KNotice(
           key: const ValueKey('program-start-banner'),
-          accent: SL.action,
-          padding: const EdgeInsets.fromLTRB(16, 12, 12, 8),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(title, style: Theme.of(context).textTheme.titleMedium),
-              const SizedBox(height: 4),
-              Text(body, style: Theme.of(context).textTheme.bodySmall),
-              if (action != null)
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: TextButton(
-                    key: const ValueKey('program-start-open'),
-                    onPressed: open,
-                    child: Text(action),
-                  ),
-                ),
-            ],
-          ),
+          icon: Icons.event_rounded,
+          title: title,
+          message: body,
+          actionLabel: action,
+          onAction: onAction,
         ),
       ),
     );

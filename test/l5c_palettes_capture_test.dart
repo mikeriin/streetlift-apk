@@ -83,7 +83,12 @@ void main() {
         if (captureEnabled) {
           await savePng(tester, boundary, 'palette_${spec.id}_programme_$mode');
         }
-        await show(const SettingsScreen(), spec, dark);
+        // UI4 : la palette se règle dans Réglages › Apparence.
+        await show(
+          const SettingsScreen(page: SettingsPage.appearance),
+          spec,
+          dark,
+        );
         if (captureEnabled) {
           await savePng(tester, boundary, 'palette_${spec.id}_reglages_$mode');
         }
@@ -92,7 +97,7 @@ void main() {
     for (final dark in [true, false]) {
       final mode = dark ? 'sombre' : 'clair';
       await show(
-        const SettingsScreen(),
+        const SettingsScreen(page: SettingsPage.appearance),
         KAccentSpec.neon,
         dark,
         size: const Size(320, 720),

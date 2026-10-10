@@ -8,7 +8,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'app_theme.dart';
 import 'backup_files.dart';
 import 'retired_data.dart';
 import 'session_prefs.dart';
@@ -127,7 +126,8 @@ class RetiredNoticeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final notice = store.retiredNotice;
-    final text = Theme.of(context).textTheme;
+    final k = KTokens.of(context);
+    final body = KType.corps.copyWith(color: k.texte);
     void close() {
       if (!fromSettings) store.markRetiredNoticeSeen();
       Navigator.of(context).maybePop();
@@ -137,109 +137,112 @@ class RetiredNoticeScreen extends StatelessWidget {
       onPopInvokedWithResult: (didPop, _) {
         if (didPop && !fromSettings) store.markRetiredNoticeSeen();
       },
-      child: KScreen(
-        appBar: AppBar(
-          title: Text(fromSettings ? 'Copie de sécurité' : 'Mise à jour'),
-        ),
-        body: KList(
-          key: const ValueKey('retired-notice'),
-          children: [
-            Text('WOD et séances perso retirés', style: text.headlineSmall),
-            const Text(
-              'Kalis Track se recentre sur ton programme. L’onglet WOD, le '
-              'créateur de séances et « Mes progrès » ont été retirés.',
+      // UI4 (R3) : depuis les Réglages, le titre reprend le libellé de
+      // l'entrée ; au premier lancement, l'annonce garde son titre.
+      child: KPage.sub(
+        key: const ValueKey('retired-notice'),
+        title: fromSettings
+            ? 'Copie d’avant la suppression des WOD'
+            : 'Mise à jour',
+        children: [
+          Text(
+            'WOD et séances perso retirés',
+            style: KType.titreCarte.copyWith(color: k.texte),
+          ),
+          Text(
+            'Kalis Track se recentre sur ton programme. L’onglet WOD, le '
+            'créateur de séances et « Mes progrès » ont été retirés.',
+            style: body,
+          ),
+          if (notice == null)
+            KCard(
+              child: Text(
+                'Aucune copie dans cette session : il n’y avait ni WOD, ni '
+                'séance perso, ni crédit à supprimer.',
+                style: body,
+              ),
+            )
+          else ...[
+            const KSectionTitle('Supprimé de l’application', top: KSpacing.s4),
+            KCard(
+              key: const ValueKey('retired-notice-deleted'),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  for (final line in notice.summary.lines)
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: KSpacing.s4),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text('•  ', style: body),
+                          Expanded(child: Text(line, style: body)),
+                        ],
+                      ),
+                    ),
+                ],
+              ),
             ),
-            if (notice == null)
-              const KCard(
-                child: Text(
-                  'Aucune copie dans cette session : il n’y avait ni WOD, ni '
-                  'séance perso, ni crédit à supprimer.',
-                ),
-              )
-            else ...[
-              const KSection('Supprimé de l’application', topPadding: 4),
-              KCard(
-                key: const ValueKey('retired-notice-deleted'),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    for (final line in notice.summary.lines)
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 2),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text('•  '),
-                            Expanded(child: Text(line)),
-                          ],
+            Text(
+              'Ne change pas : ton programme, l’historique de ses séances, '
+              'tes records, tes références, tes réglages et ton profil. Ton '
+              'niveau peut baisser : les WOD et les séances perso ne '
+              'rapportent plus d’XP.',
+              style: body,
+            ),
+            const KSectionTitle('Ta copie de sécurité', top: KSpacing.s4),
+            KCard(
+              key: const ValueKey('retired-notice-copy'),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Icon(Icons.verified_rounded, color: k.validation),
+                      const SizedBox(width: KSpacing.s8),
+                      Expanded(
+                        child: Text(
+                          'Copie complète vérifiée',
+                          style: KType.titreCarte.copyWith(color: k.texte),
                         ),
                       ),
-                  ],
-                ),
-              ),
-              const Text(
-                'Ne change pas : ton programme, l’historique de ses séances, '
-                'tes records, tes références, tes réglages et ton profil. Ton '
-                'niveau peut baisser : les WOD et les séances perso ne '
-                'rapportent plus d’XP.',
-              ),
-              const KSection('Ta copie de sécurité', topPadding: 4),
-              KCard(
-                key: const ValueKey('retired-notice-copy'),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Icon(Icons.verified_rounded, color: SL.success),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: Text(
-                            'Copie complète vérifiée',
-                            style: text.titleMedium,
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 6),
-                    Text(
-                      'Faite le ${_date(notice.at)} (${_size(notice.bytes)}), '
-                      'avant toute suppression. Elle est gardée dans '
-                      'l’application et se retrouve dans Réglages › '
-                      'Sauvegardes. Elle contient toutes tes données d’avant '
-                      'la mise à jour et s’importe dans la version '
-                      'précédente.',
-                    ),
-                  ],
-                ),
-              ),
-              KActionRow(
-                children: [
-                  FilledButton.icon(
-                    key: const ValueKey('retired-notice-share'),
-                    onPressed: () => _share(context, notice),
-                    icon: const Icon(Icons.ios_share_rounded),
-                    label: const Text('Partager la copie'),
+                    ],
                   ),
-                  OutlinedButton.icon(
-                    key: const ValueKey('retired-notice-save'),
-                    onPressed: () => _save(context, notice),
-                    icon: const Icon(Icons.save_alt_rounded),
-                    label: const Text('Enregistrer dans un fichier'),
+                  const SizedBox(height: KSpacing.s8),
+                  // UI4 (R5) : plus de chemin « Réglages › Sauvegardes ».
+                  Text(
+                    'Faite le ${_date(notice.at)} (${_size(notice.bytes)}), '
+                    'avant toute suppression. Elle est gardée dans '
+                    'l’application et reste accessible depuis les Réglages, '
+                    'rubrique « Données et confidentialité ». Elle contient '
+                    'toutes tes données d’avant la mise à jour et s’importe '
+                    'dans la version précédente.',
+                    style: body,
                   ),
                 ],
               ),
-            ],
-            Align(
-              alignment: Alignment.centerRight,
-              child: TextButton(
-                key: const ValueKey('retired-notice-close'),
-                onPressed: close,
-                child: Text(fromSettings ? 'Fermer' : 'Compris'),
-              ),
+            ),
+            KPrimaryButton(
+              key: const ValueKey('retired-notice-share'),
+              onPressed: () => _share(context, notice),
+              icon: Icons.ios_share_rounded,
+              label: 'Partager la copie',
+            ),
+            KTonalButton(
+              key: const ValueKey('retired-notice-save'),
+              onPressed: () => _save(context, notice),
+              icon: Icons.save_alt_rounded,
+              label: 'Enregistrer dans un fichier',
+              expand: true,
             ),
           ],
-        ),
+          KTonalButton(
+            key: const ValueKey('retired-notice-close'),
+            onPressed: close,
+            label: fromSettings ? 'Fermer' : 'Compris',
+            expand: true,
+          ),
+        ],
       ),
     );
   }

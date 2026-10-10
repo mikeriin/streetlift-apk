@@ -256,7 +256,8 @@ void main() {
     await tap(tester, 'flow-next-places');
     // CU : écran Récupération (intermédiaire), questions passées.
     await tap(tester, 'flow-next-recovery');
-    await tap(tester, 'flow-consent-given');
+    // UI4 : accord santé en segments du kit (clé `segment-<valeur>`).
+    await tap(tester, 'segment-given');
     for (final q in kHealthQuestions) {
       await tap(tester, 'flow-q-${q.id}-false', ms: 300);
     }

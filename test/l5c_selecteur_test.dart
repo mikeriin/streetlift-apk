@@ -33,7 +33,8 @@ Widget settingsPage({
     ).copyWith(textScaler: TextScaler.linear(textScale)),
     child: child!,
   ),
-  home: const SettingsScreen(),
+  // UI4 : la palette se règle dans Réglages › Apparence.
+  home: const SettingsScreen(page: SettingsPage.appearance),
 );
 
 void screen(WidgetTester tester, Size size) {
@@ -363,11 +364,18 @@ void main() {
           expect(SL.accentSpec, same(spec));
           await tester.tap(find.byKey(const ValueKey('nav-3')));
           await tester.pumpAndSettle();
+          // UI4 : Réglages › Apparence.
+          await tester.tap(
+            find.byKey(const ValueKey('settings-page-appearance')),
+          );
+          await tester.pumpAndSettle();
           expect(
             find.byKey(ValueKey('accent-check-${spec.id}')),
             findsOneWidget,
           );
           expect(tester.takeException(), isNull, reason: '${spec.id} $theme');
+          await tester.tap(find.byTooltip('Retour').last);
+          await tester.pumpAndSettle();
         }
       }
       await tester.pumpWidget(const SizedBox());
@@ -382,6 +390,9 @@ void main() {
     await tester.pumpWidget(const SLApp());
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('nav-3')));
+    await tester.pumpAndSettle();
+    // UI4 : Réglages › Apparence.
+    await tester.tap(find.byKey(const ValueKey('settings-page-appearance')));
     await tester.pumpAndSettle();
     final row = find.text('Contraste renforcé');
     await tester.scrollUntilVisible(

@@ -66,6 +66,12 @@ void main() {
       );
       await settle(tester, find.byType(MuscleMap2D));
       expect(find.text('Filtres · 1'), findsOneWidget);
+      // UI4 : l'écran s'ouvre défilé jusqu'au groupe demandé.
+      await scrollToAction(
+        tester,
+        find.byKey(const ValueKey('anatomy-filters')),
+        up: true,
+      );
       await tester.tap(find.byKey(const ValueKey('anatomy-filters')));
       await tester.pumpAndSettle();
       expect(find.text('Muscles profonds'), findsNothing);
@@ -114,33 +120,34 @@ void main() {
         ),
       ),
     );
-    List<BoxDecoration> swatches(String key) => [
+    // UI4 : pastilles en `ShapeDecoration` (jetons), mêmes couleurs et halo.
+    List<ShapeDecoration> swatches(String key) => [
       for (final c in tester.widgetList<Container>(
         find.descendant(
           of: find.byKey(ValueKey(key)),
           matching: find.byType(Container),
         ),
       ))
-        c.decoration! as BoxDecoration,
+        c.decoration! as ShapeDecoration,
     ];
     final plain = swatches('plein');
     expect(plain.first.color, heat(1));
-    expect(plain.first.boxShadow, isNull);
+    expect(plain.first.shadows, isNull);
     final halo = swatches('halo');
     expect(halo, hasLength(4));
     // Principal : halo de la couleur dominante à l'opacité du mannequin,
     // posé sur le gris des muscles, avec un flou autour.
     final glow = heat(1).withValues(alpha: MannequinHaloPainter.alphaFor(1));
     expect(halo.first.color, Color.alphaBlend(glow, kMuscleGray));
-    expect(halo.first.boxShadow!.single.color, glow);
+    expect(halo.first.shadows!.single.color, glow);
     // Plus l'intensité baisse, plus le halo est discret.
     expect(
-      halo[1].boxShadow!.single.color.a,
-      lessThan(halo[0].boxShadow!.single.color.a),
+      halo[1].shadows!.single.color.a,
+      lessThan(halo[0].shadows!.single.color.a),
     );
     // Étiré : teinte froide.
     expect(
-      halo.last.boxShadow!.single.color,
+      halo.last.shadows!.single.color,
       const Color(
         0xFF5B8DB0,
       ).withValues(alpha: MannequinHaloPainter.alphaFor(kIntensityStretched)),

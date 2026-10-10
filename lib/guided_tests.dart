@@ -14,11 +14,14 @@ import 'package:flutter/material.dart';
 import 'package:kalis_core/kalis_core.dart';
 import 'package:kalis_koach/kalis_koach.dart' show KoachPose;
 
-import 'app_theme.dart';
 import 'athlete_profile.dart';
+import 'athlete_profile_screen.dart' show ProfileScreen;
 import 'koach/koach_bubble.dart';
 import 'koach/koach_view.dart';
+import 'pilotage_screen.dart' show PilotageScreen;
+import 'profile_completion.dart' show openProfileCompletion;
 import 'profile_v3.dart';
+import 'program_start.dart' show ProgramStartScreen;
 import 'store.dart';
 import 'ui.dart';
 
@@ -430,10 +433,51 @@ List<TestProposal> currentTestProposals() {
 class GuidedTestsScreen extends StatelessWidget {
   const GuidedTestsScreen({super.key});
 
+  /// UI4 (R6) : sans proposition, l'action qui fait avancer — créer le
+  /// profil, choisir le départ, compléter le profil ou revoir ses
+  /// références.
+  Widget _emptyAction(BuildContext context) {
+    final nav = Navigator.of(context);
+    String label;
+    IconData icon;
+    VoidCallback onTap;
+    if (store.athlete == null) {
+      label = 'Créer mon profil';
+      icon = Icons.person_add_alt_1_outlined;
+      onTap = () => nav.push<void>(
+        MaterialPageRoute<void>(builder: (_) => const ProfileScreen()),
+      );
+    } else if (store.program.start == null) {
+      label = 'Choisir mon départ';
+      icon = Icons.event_rounded;
+      onTap = () => nav.push<bool>(
+        MaterialPageRoute<bool>(builder: (_) => const ProgramStartScreen()),
+      );
+    } else if (store.profilePendingQuestions.isNotEmpty) {
+      label = 'Compléter mon profil';
+      icon = Icons.playlist_add_check_rounded;
+      onTap = () => openProfileCompletion(context);
+    } else {
+      label = 'Mes références';
+      icon = Icons.tune_rounded;
+      onTap = () => nav.push<void>(
+        MaterialPageRoute<void>(builder: (_) => const PilotageScreen()),
+      );
+    }
+    return KTonalButton(
+      key: const ValueKey('guided-tests-empty-action'),
+      label: label,
+      icon: icon,
+      expand: true,
+      onPressed: onTap,
+    );
+  }
+
   @override
   Widget build(BuildContext context) => ListenableBuilder(
     listenable: store,
     builder: (context, _) {
+      final k = KTokens.of(context);
       final proposals = currentTestProposals();
       final p = store.athleteProfileForEngines;
       final parcours = store.content.questionnaire;
@@ -444,61 +488,49 @@ class GuidedTestsScreen extends StatelessWidget {
               todayYear: store.storeClock().year,
             );
       final onlyNoTest = allowed.every((t) => t.id == 't8_sans_test');
-      return KScreen(
-        appBar: AppBar(title: const Text('TESTS GUIDÉS')),
-        body: KList(
-          key: const ValueKey('guided-tests'),
-          children: [
-            KoachSurface(
-              color: SL.bg,
-              child: KoachBubble(
-                key: const ValueKey('guided-tests-koach'),
-                pose: onlyNoTest ? KoachPose.thumbsUp : KoachPose.checklist,
-                koachHeight: 90,
-                text: onlyNoTest
-                    ? 'Pas de test pour toi : je cale tes charges au fil de '
-                          'tes 2 ou 3 premières séances, sans effort maximal.'
-                    : proposals.isEmpty
-                    ? 'Rien à tester pour l’instant : je connais ce qu’il me '
-                          'faut, ou ton programme n’a pas encore commencé.'
-                    : 'Un test court pour caler tes charges sur ce que tu '
-                          'fais vraiment. Échauffe-toi, et arrête-toi dès que '
-                          'la technique se dégrade.',
-                why:
-                    'Les valeurs des 2 ou 3 premières séances restent '
-                    'provisoires : le geste s’apprend, et le maximum mesuré '
-                    'monte un peu sans que la force change.',
-              ),
+      return KPage.sub(
+        key: const ValueKey('guided-tests'),
+        title: 'Tests guidés',
+        children: [
+          KoachSurface(
+            color: k.fond,
+            child: KoachBubble(
+              key: const ValueKey('guided-tests-koach'),
+              pose: onlyNoTest ? KoachPose.thumbsUp : KoachPose.checklist,
+              koachHeight: 90,
+              text: onlyNoTest
+                  ? 'Pas de test pour toi : je cale tes charges au fil de '
+                        'tes 2 ou 3 premières séances, sans effort maximal.'
+                  : proposals.isEmpty
+                  ? 'Rien à tester pour l’instant : je connais ce qu’il me '
+                        'faut, ou ton programme n’a pas encore commencé.'
+                  : 'Un test court pour caler tes charges sur ce que tu '
+                        'fais vraiment. Échauffe-toi, et arrête-toi dès que '
+                        'la technique se dégrade.',
+              why:
+                  'Les valeurs des 2 ou 3 premières séances restent '
+                  'provisoires : le geste s’apprend, et le maximum mesuré '
+                  'monte un peu sans que la force change.',
             ),
-            for (final pr in proposals)
-              KCard(
-                key: ValueKey('guided-test-${pr.key}'),
-                onTap: () => openGuidedTest(context, pr),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            store.content.byId[pr.exerciseId]?.nom ??
-                                pr.exerciseId,
-                            style: Theme.of(context).textTheme.titleMedium,
-                          ),
-                          const SizedBox(height: 2),
-                          Text(
-                            pr.test.title,
-                            style: Theme.of(context).textTheme.bodySmall,
-                          ),
-                        ],
-                      ),
-                    ),
-                    const Icon(Icons.chevron_right),
-                  ],
-                ),
-              ),
-          ],
-        ),
+          ),
+          if (proposals.isEmpty)
+            _emptyAction(context)
+          else
+            KMenuGroup(
+              children: [
+                for (final pr in proposals)
+                  KMenuRow(
+                    key: ValueKey('guided-test-${pr.key}'),
+                    icon: Icons.flag_outlined,
+                    title:
+                        store.content.byId[pr.exerciseId]?.nom ??
+                        pr.exerciseId,
+                    subtitle: pr.test.title,
+                    onTap: () => openGuidedTest(context, pr),
+                  ),
+              ],
+            ),
+        ],
       );
     },
   );
@@ -596,10 +628,12 @@ class _GuidedTestPageState extends State<GuidedTestPage> {
 
   @override
   Widget build(BuildContext context) {
+    final k = KTokens.of(context);
     final t = _t;
     final e = store.content.byId[widget.proposal.exerciseId]?.ex;
-    final dim = Theme.of(context).textTheme.bodySmall;
-    final title = Theme.of(context).textTheme.titleMedium;
+    final dim = KType.detail.copyWith(color: k.texte2);
+    final body = KType.corps.copyWith(color: k.texte);
+    final title = KType.titreCarte.copyWith(color: k.texte);
     final loadTest =
         t.id == 't1_serie_lourde' ||
         t.id == 't2_leste' ||
@@ -624,161 +658,172 @@ class _GuidedTestPageState extends State<GuidedTestPage> {
       TextEditingController c,
       String label, {
       String? hint,
+      TextInputType keyboard = const TextInputType.numberWithOptions(
+        decimal: true,
+      ),
     }) => Padding(
-      padding: const EdgeInsets.only(top: 8),
+      padding: const EdgeInsets.only(top: KSpacing.s8),
       child: TextField(
         key: ValueKey(key),
         controller: c,
-        keyboardType: const TextInputType.numberWithOptions(decimal: true),
+        keyboardType: keyboard,
         decoration: InputDecoration(labelText: label, helperText: hint),
         onChanged: (_) => setState(() {}),
       ),
     );
-    return KScreen(
-      appBar: AppBar(title: const Text('TEST GUIDÉ')),
-      body: KList(
-        key: ValueKey('guided-test-page-${t.id}'),
-        children: [
-          KCard(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(e?.name ?? widget.proposal.exerciseId, style: title),
-                const SizedBox(height: 2),
-                Text(t.title, style: dim),
-                const SizedBox(height: 8),
-                if (t.json['forWhom'] is String)
-                  Text(t.json['forWhom']! as String),
-              ],
-            ),
+    return KPage.sub(
+      key: ValueKey('guided-test-page-${t.id}'),
+      title: 'Test guidé',
+      bottom: SafeArea(
+        top: false,
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(
+            KSpacing.page,
+            KSpacing.s8,
+            KSpacing.page,
+            KSpacing.s16,
           ),
-          KCard(
-            key: const ValueKey('guided-test-safety'),
-            accent: SL.action,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Icon(Icons.health_and_safety_outlined, color: SL.accent),
-                    const SizedBox(width: 8),
-                    Expanded(child: Text('Sécurité', style: title)),
-                  ],
-                ),
-                const SizedBox(height: 6),
-                for (final l in _lines('safety')) Text('• $l'),
-                const SizedBox(height: 6),
-                Text(
-                  'Une douleur, un vertige ou une gêne inhabituelle : arrête '
-                  'le test. Si ça persiste, demande l’avis d’un professionnel '
-                  'de santé.',
-                  style: dim,
-                ),
-              ],
-            ),
+          child: KPrimaryButton(
+            key: const ValueKey('test-save'),
+            onPressed: _save,
+            label: 'Enregistrer le résultat',
           ),
-          KCard(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text('Déroulé', style: title),
-                const SizedBox(height: 6),
-                for (final (i, l) in _lines('steps').indexed)
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 4),
-                    child: Text('${i + 1}. $l'),
-                  ),
-                const SizedBox(height: 6),
-                Text('Quand t’arrêter', style: title),
-                const SizedBox(height: 4),
-                for (final l in _lines('stop')) Text('• $l'),
-              ],
-            ),
-          ),
-          KCard(
-            key: const ValueKey('guided-test-result'),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Text('Ton résultat', style: title),
-                if (loadTest)
-                  field(
-                    'test-load',
-                    _load,
-                    t.id == 't2_leste'
-                        ? 'Lest (kg)'
-                        : t.id == 't3_max_direct'
-                        ? 'Meilleure charge réussie (kg)'
-                        : 'Charge (kg)',
-                  ),
-                if (repsTest) field('test-reps', _reps, 'Répétitions'),
-                if (t.id == 't1_serie_lourde' || t.id == 't2_leste') ...[
-                  const SizedBox(height: 8),
-                  Text('Il t’en restait combien sous le pied ?', style: dim),
-                  const SizedBox(height: 4),
-                  Wrap(
-                    spacing: 8,
-                    runSpacing: 8,
-                    children: [
-                      for (final r in const [0.0, 1.0, 2.0, 3.0])
-                        ChoiceChip(
-                          key: ValueKey('test-rir-${r.round()}'),
-                          label: Text(r == 0 ? 'Aucune' : '${r.round()}'),
-                          selected: _rir == r,
-                          onSelected: (_) =>
-                              setState(() => _rir = _rir == r ? null : r),
-                        ),
-                    ],
-                  ),
-                ],
-                if (t.id == 't2_leste' || t.id == 't3_max_direct')
-                  field(
-                    'test-bw',
-                    _bw,
-                    'Ton poids du jour (kg)',
-                    hint: 'Pesée du jour',
-                  ),
-                if (t.id == 't5_maintien_max' || t.id == 't7_course_chrono')
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8),
-                    child: TextField(
-                      key: const ValueKey('test-seconds'),
-                      controller: _seconds,
-                      keyboardType: TextInputType.datetime,
-                      decoration: const InputDecoration(
-                        labelText: 'Temps',
-                        helperText: 'En secondes, ou min:s',
-                      ),
-                      onChanged: (_) => setState(() {}),
-                    ),
-                  ),
-                if (t.id == 't6_course_6min')
-                  field('test-meters', _meters, 'Distance parcourue (m)'),
-                if (t.id == 't7_course_chrono')
-                  field('test-meters', _meters, 'Distance (km)'),
-                if (estimate != null) ...[
-                  const SizedBox(height: 10),
-                  Text(estimate, key: const ValueKey('test-estimate')),
-                ],
-                if (t.json['uncertainty'] is String) ...[
-                  const SizedBox(height: 6),
-                  Text('Précision : ${t.json['uncertainty']}', style: dim),
-                ],
-                if (_error != null) ...[
-                  const SizedBox(height: 8),
-                  Text(_error!, style: TextStyle(color: SL.danger)),
-                ],
-                const SizedBox(height: 12),
-                FilledButton(
-                  key: const ValueKey('test-save'),
-                  onPressed: _save,
-                  child: const Text('Enregistrer le résultat'),
-                ),
-              ],
-            ),
-          ),
-        ],
+        ),
       ),
+      children: [
+        KCard(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(e?.name ?? widget.proposal.exerciseId, style: title),
+              const SizedBox(height: KSpacing.s4),
+              Text(t.title, style: dim),
+              if (t.json['forWhom'] is String) ...[
+                const SizedBox(height: KSpacing.s8),
+                Text(t.json['forWhom']! as String, style: body),
+              ],
+            ],
+          ),
+        ),
+        KCard(
+          key: const ValueKey('guided-test-safety'),
+          accent: k.avertissement,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Icon(
+                    Icons.health_and_safety_outlined,
+                    color: k.avertissement,
+                  ),
+                  const SizedBox(width: KSpacing.s8),
+                  Expanded(child: Text('Sécurité', style: title)),
+                ],
+              ),
+              const SizedBox(height: KSpacing.s8),
+              for (final l in _lines('safety')) Text('• $l', style: body),
+              const SizedBox(height: KSpacing.s8),
+              Text(
+                'Une douleur, un vertige ou une gêne inhabituelle : arrête '
+                'le test. Si ça persiste, demande l’avis d’un professionnel '
+                'de santé.',
+                style: dim,
+              ),
+            ],
+          ),
+        ),
+        KCard(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('Déroulé', style: title),
+              const SizedBox(height: KSpacing.s8),
+              for (final (i, l) in _lines('steps').indexed)
+                Padding(
+                  padding: const EdgeInsets.only(bottom: KSpacing.s4),
+                  child: Text('${i + 1}. $l', style: body),
+                ),
+              const SizedBox(height: KSpacing.s8),
+              Text('Quand t’arrêter', style: title),
+              const SizedBox(height: KSpacing.s4),
+              for (final l in _lines('stop')) Text('• $l', style: body),
+            ],
+          ),
+        ),
+        KCard(
+          key: const ValueKey('guided-test-result'),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Text('Ton résultat', style: title),
+              if (loadTest)
+                field(
+                  'test-load',
+                  _load,
+                  t.id == 't2_leste'
+                      ? 'Lest (kg)'
+                      : t.id == 't3_max_direct'
+                      ? 'Meilleure charge réussie (kg)'
+                      : 'Charge (kg)',
+                ),
+              if (repsTest) field('test-reps', _reps, 'Répétitions'),
+              if (t.id == 't1_serie_lourde' || t.id == 't2_leste') ...[
+                const SizedBox(height: KSpacing.s12),
+                Text('Il t’en restait combien sous le pied ?', style: dim),
+                const SizedBox(height: KSpacing.s8),
+                KSegmented<double>(
+                  key: const ValueKey('test-rir'),
+                  semanticLabel: 'Répétitions qu’il te restait',
+                  segments: const [
+                    KSegment(0.0, 'Aucune'),
+                    KSegment(1.0, '1'),
+                    KSegment(2.0, '2'),
+                    KSegment(3.0, '3'),
+                  ],
+                  selected: _rir,
+                  onChanged: (r) => setState(() => _rir = r),
+                ),
+              ],
+              if (t.id == 't2_leste' || t.id == 't3_max_direct')
+                field(
+                  'test-bw',
+                  _bw,
+                  'Ton poids du jour (kg)',
+                  hint: 'Pesée du jour',
+                ),
+              if (t.id == 't5_maintien_max' || t.id == 't7_course_chrono')
+                field(
+                  'test-seconds',
+                  _seconds,
+                  'Temps',
+                  hint: 'En secondes, ou min:s',
+                  keyboard: TextInputType.datetime,
+                ),
+              if (t.id == 't6_course_6min')
+                field('test-meters', _meters, 'Distance parcourue (m)'),
+              if (t.id == 't7_course_chrono')
+                field('test-meters', _meters, 'Distance (km)'),
+              if (estimate != null) ...[
+                const SizedBox(height: KSpacing.s12),
+                Text(
+                  estimate,
+                  key: const ValueKey('test-estimate'),
+                  style: body,
+                ),
+              ],
+              if (t.json['uncertainty'] is String) ...[
+                const SizedBox(height: KSpacing.s8),
+                Text('Précision : ${t.json['uncertainty']}', style: dim),
+              ],
+              if (_error != null) ...[
+                const SizedBox(height: KSpacing.s8),
+                Text(_error!, style: KType.corps.copyWith(color: k.danger)),
+              ],
+            ],
+          ),
+        ),
+      ],
     );
   }
 }
@@ -805,7 +850,7 @@ class GuidedTestHomeCard extends StatelessWidget {
     final first = props.isEmpty ? null : props.first;
     return KoachSurface(
       key: const ValueKey('guided-test-card'),
-      color: SL.bg,
+      color: KTokens.of(context).fond,
       child: KoachBubble(
         pose: KoachPose.checklist,
         koachHeight: 76,

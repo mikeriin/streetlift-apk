@@ -8,15 +8,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
-import 'app_theme.dart';
+import 'anatomy_screen.dart';
+import 'atlas.dart' show mapGroupsOfAtlasMuscles;
 import 'content_pack.dart';
 import 'exercise_mannequin.dart';
+import 'filter_menu.dart';
+import 'kit/kit.dart';
 import 'mannequin_clip.dart';
 import 'muscle_map_2d.dart';
-import 'filter_menu.dart';
 import 'search.dart';
 import 'store.dart';
-import 'ui.dart';
+import 'ui.dart' show kPageColor;
 
 /// Ouvre la fiche d'un exercice de la base v1.1.
 Future<void> openExerciseSheet(BuildContext context, String id) => Navigator.of(
@@ -167,8 +169,54 @@ List<ExerciseEntry> searchExercises(
   return [for (final s in scored) s.$1];
 }
 
+/// UI4 : l'exercice sollicite un groupe de la carte 2D (filtre de
+/// l'Anatomie) par ses muscles principaux ou secondaires dessinés.
+bool exerciseWorksMapGroup(ExerciseEntry e, String group) =>
+    mapGroupsOfAtlasMuscles([
+      for (final m in [...e.ex.primaryMuscles, ...e.ex.secondaryMuscles])
+        ...atlasOfBaseMuscle(m),
+    ]).contains(group);
+
+/// Marges d'une liste de sous-page : marge d'écran, réserve basse du dock
+/// ou de la zone système (comme `KPage`).
+EdgeInsets _listPadding(BuildContext context) {
+  final inset = KNavigationInset.of(context);
+  final bottom = inset > 0 ? inset : MediaQuery.paddingOf(context).bottom;
+  return EdgeInsets.fromLTRB(
+    KSpacing.page,
+    KSpacing.s8,
+    KSpacing.page,
+    KSpacing.s24 + bottom,
+  );
+}
+
+/// Corps d'une sous-page : largeur de lecture maximale, centré.
+Widget _framed(Widget child) => SafeArea(
+  top: false,
+  bottom: false,
+  child: Align(
+    alignment: Alignment.topCenter,
+    child: ConstrainedBox(
+      constraints: const BoxConstraints(maxWidth: KSpacing.maxWidth),
+      child: child,
+    ),
+  ),
+);
+
+/// Bibliothèque « Exercices » (Arsenal › Exercices).
+///
+/// UI4 : [initialQuery] ouvre la liste sur une recherche (recherche de la
+/// racine d'Arsenal, « Voir les n exercices ») ; [muscleGroup] la filtre
+/// sur un groupe de la carte (Anatomie › « Exercices pour ce muscle »),
+/// filtre retirable par sa puce. Même moteur : [searchExercises].
 class ExerciseLibraryScreen extends StatefulWidget {
-  const ExerciseLibraryScreen({super.key});
+  final String initialQuery;
+  final String? muscleGroup;
+  const ExerciseLibraryScreen({
+    super.key,
+    this.initialQuery = '',
+    this.muscleGroup,
+  });
 
   /// M4c : filtres gardés pendant la session (rien n'était mémorisé).
   static FilterSelection session = const FilterSelection();
@@ -181,6 +229,23 @@ class _ExerciseLibraryScreenState extends State<ExerciseLibraryScreen> {
   final _search = TextEditingController();
   String _q = '';
   FilterSelection _sel = ExerciseLibraryScreen.session;
+  String? _group;
+
+  /// Exercices du groupe [_group] (calculés une fois par écran).
+  Set<String>? _groupIds;
+
+  Set<String> _idsOf(String group) => _groupIds ??= {
+    for (final e in store.content.entries)
+      if (exerciseWorksMapGroup(e, group)) e.id,
+  };
+
+  @override
+  void initState() {
+    super.initState();
+    _q = widget.initialQuery;
+    _search.text = widget.initialQuery;
+    _group = widget.muscleGroup;
+  }
 
   @override
   void dispose() {
@@ -188,26 +253,45 @@ class _ExerciseLibraryScreenState extends State<ExerciseLibraryScreen> {
     super.dispose();
   }
 
+  void _clearSearch() => setState(() {
+    _search.clear();
+    _q = '';
+  });
+
+  void _resetFilters() => setState(() {
+    _sel = const FilterSelection();
+    ExerciseLibraryScreen.session = _sel;
+    _group = null;
+  });
+
   @override
   Widget build(BuildContext context) {
+    final k = KTokens.of(context);
     final index = store.content;
-    final list = searchExercises(
+    final group = _group;
+    final found = searchExercises(
       index,
       _q,
       ExerciseFilters.fromSelection(_sel),
     );
+    final ids = group == null ? null : _idsOf(group);
+    final list = ids == null
+        ? found
+        : [
+            for (final e in found)
+              if (ids.contains(e.id)) e,
+          ];
     final header = <Widget>[
-      const KPageIntro(
-        'Exercices',
+      const KLead(
         'Base d’exercices : 8 disciplines, fiches et progressions. '
-            'Repères d’entraînement.',
+        'Repères d’entraînement.',
       ),
-      KSearch(
+      KSearchField(
         controller: _search,
-        hint: 'Nom, muscle, matériel, discipline…',
+        hint: 'Rechercher un exercice',
         onChanged: (v) => setState(() => _q = v),
       ),
-      const SizedBox(height: KSpace.gap),
+      const SizedBox(height: KSpacing.s12),
       FilterMenu(
         key: const ValueKey('library-filter-menu'),
         keyPrefix: 'library',
@@ -218,53 +302,69 @@ class _ExerciseLibraryScreenState extends State<ExerciseLibraryScreen> {
           ExerciseLibraryScreen.session = v;
         }),
       ),
+      if (group != null)
+        Padding(
+          padding: const EdgeInsets.only(top: KSpacing.s8),
+          child: Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: KChip(
+              'Groupe musculaire : ${mapGroupLabel(group)}',
+              key: const ValueKey('library-muscle-chip'),
+              selected: true,
+              deleteLabel: 'Retirer le filtre',
+              onDeleted: () => setState(() => _group = null),
+            ),
+          ),
+        ),
       Padding(
-        padding: const EdgeInsets.only(top: 10, bottom: 4),
+        padding: const EdgeInsets.only(top: KSpacing.s12, bottom: KSpacing.s4),
         child: Text(
           '${list.length} exercice${list.length > 1 ? 's' : ''}',
           key: const ValueKey('library-count'),
-          style: Theme.of(context).textTheme.bodySmall,
+          style: KType.detail.copyWith(color: k.texte2),
         ),
       ),
     ];
-    return KScreen(
-      appBar: AppBar(title: const Text('EXERCICES')),
-      body: ListView.builder(
-        padding: KSpace.content,
-        itemCount: header.length + (list.isEmpty ? 1 : list.length),
-        itemBuilder: (context, i) {
-          if (i < header.length) return header[i];
-          if (list.isEmpty) {
-            return const KEmpty(
-              icon: Icons.search_off,
-              title: 'Aucun exercice',
-              message: 'Élargis la recherche ou retire un filtre.',
+    return Scaffold(
+      appBar: KTopBar.sub(
+        title: 'Exercices',
+        subtitle: group == null ? null : mapGroupLabel(group),
+      ),
+      body: _framed(
+        ListView.builder(
+          padding: _listPadding(context),
+          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+          itemCount: header.length + (list.isEmpty ? 1 : list.length),
+          itemBuilder: (context, i) {
+            if (i < header.length) return header[i];
+            if (list.isEmpty) {
+              // R6 : l'état vide propose l'action qui le résout.
+              final searching = _q.trim().isNotEmpty;
+              return KEmpty(
+                key: const ValueKey('library-empty'),
+                icon: Icons.search_off,
+                title: 'Aucun exercice',
+                message: 'Élargis la recherche ou retire un filtre.',
+                action: searching
+                    ? 'Effacer la recherche'
+                    : 'Réinitialiser les filtres',
+                onAction: searching ? _clearSearch : _resetFilters,
+              );
+            }
+            final e = list[i - header.length];
+            return KMenuRow(
+              key: ValueKey('library-ex-${e.id}'),
+              title: e.nom,
+              subtitle:
+                  '${e.discipline} · ${e.niveau} · '
+                  'difficulté ${e.difficulte}/10',
+              onTap: () => openExerciseSheet(context, e.id),
             );
-          }
-          final e = list[i - header.length];
-          return _ExerciseTile(key: ValueKey('library-ex-${e.id}'), entry: e);
-        },
+          },
+        ),
       ),
     );
   }
-}
-
-class _ExerciseTile extends StatelessWidget {
-  final ExerciseEntry entry;
-  const _ExerciseTile({super.key, required this.entry});
-
-  @override
-  Widget build(BuildContext context) => ListTile(
-    contentPadding: EdgeInsets.zero,
-    title: Text(entry.nom, style: const TextStyle(fontWeight: FontWeight.w600)),
-    subtitle: Text(
-      '${entry.discipline} · ${entry.niveau} · '
-      'difficulté ${entry.difficulte}/10',
-      style: TextStyle(fontSize: 12, color: SL.dim),
-    ),
-    trailing: Icon(Icons.chevron_right, color: SL.dim),
-    onTap: () => openExerciseSheet(context, entry.id),
-  );
 }
 
 // --------------------------------- fiche -----------------------------------
@@ -286,25 +386,27 @@ class ExerciseSheetScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final d = store.content.detail(id);
     final entry = store.content.byId[id];
-    return KScreen(
-      appBar: AppBar(title: const Text('FICHE EXERCICE')),
-      body: d == null || entry == null
-          ? const Padding(
-              padding: KSpace.content,
-              child: KEmpty(
-                icon: Icons.help_outline,
-                title: 'Exercice inconnu',
-                message: 'Cet exercice ne figure pas dans la base.',
-              ),
-            )
-          // M8 : la fiche s'affiche tout de suite ; la tête (démonstration,
-          // si l'exercice a une animation) apparaît dès le registre lu
-          // (déjà lu au lancement par le préchargement).
-          : FutureBuilder<ClipRegistry?>(
-              future: _load(),
-              initialData: ClipRegistry.loaded,
-              builder: (context, _) => _Sheet(entry: entry, detail: d),
-            ),
+    if (d == null || entry == null) {
+      return KPage.sub(
+        title: 'Exercice',
+        children: [
+          KEmpty(
+            icon: Icons.help_outline,
+            title: 'Exercice inconnu',
+            message: 'Cet exercice ne figure pas dans la base.',
+            action: 'Retour',
+            onAction: () => Navigator.maybePop(context),
+          ),
+        ],
+      );
+    }
+    // M8 : la fiche s'affiche tout de suite ; la tête (démonstration, si
+    // l'exercice a une animation) apparaît dès le registre lu (déjà lu au
+    // lancement par le préchargement).
+    return FutureBuilder<ClipRegistry?>(
+      future: _load(),
+      initialData: ClipRegistry.loaded,
+      builder: (context, _) => _Sheet(entry: entry, detail: d),
     );
   }
 }
@@ -316,48 +418,47 @@ class _Sheet extends StatelessWidget {
 
   String _name(String id) => store.content.byId[id]?.nom ?? id;
 
-  Widget _bullets(List<String> items) => Column(
+  Widget _bullets(KTokens k, List<String> items) => Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       for (final t in items)
         Padding(
-          padding: const EdgeInsets.only(bottom: 6),
+          padding: const EdgeInsets.only(bottom: KSpacing.s8),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('•  ', style: TextStyle(color: SL.accent)),
-              Expanded(child: Text(t)),
+              Text('•  ', style: KType.corps.copyWith(color: k.texte2)),
+              Expanded(
+                child: Text(t, style: KType.corps.copyWith(color: k.texte)),
+              ),
             ],
           ),
         ),
     ],
   );
 
-  Widget _links(BuildContext context, String key, List<String> ids) => Column(
-    key: ValueKey('fiche-$key'),
-    crossAxisAlignment: CrossAxisAlignment.stretch,
-    children: [
-      for (final id in ids)
-        ListTile(
-          contentPadding: EdgeInsets.zero,
-          title: Text(_name(id)),
-          subtitle: store.content.byId[id] == null
-              ? null
-              : Text(
-                  '${store.content.byId[id]!.niveau} · difficulté '
-                  '${store.content.byId[id]!.difficulte}/10',
-                  style: TextStyle(fontSize: 12, color: SL.dim),
-                ),
-          trailing: Icon(Icons.chevron_right, color: SL.dim),
-          onTap: store.content.byId.containsKey(id)
-              ? () => openExerciseSheet(context, id)
-              : null,
-        ),
-    ],
-  );
+  Widget _links(BuildContext context, String key, List<String> ids) =>
+      KMenuGroup(
+        key: ValueKey('fiche-$key'),
+        children: [
+          for (final id in ids)
+            KMenuRow(
+              title: _name(id),
+              subtitle: store.content.byId[id] == null
+                  ? null
+                  : '${store.content.byId[id]!.niveau} · difficulté '
+                        '${store.content.byId[id]!.difficulte}/10',
+              onTap: store.content.byId.containsKey(id)
+                  ? () => openExerciseSheet(context, id)
+                  : null,
+            ),
+        ],
+      );
 
   @override
   Widget build(BuildContext context) {
+    final k = KTokens.of(context);
+    final body = KType.corps.copyWith(color: k.texte);
     final muscles = <(String, List<String>)>[
       ('Principaux', detail.musclesPrincipaux),
       ('Secondaires', detail.musclesSecondaires),
@@ -373,143 +474,186 @@ class _Sheet extends StatelessWidget {
       })
         if (!atlasOfBaseMuscle(m).any(mapDrawsMuscle)) m,
     ];
+    // UI4 : groupes de la carte sollicités, chacun ouvre l'Anatomie.
+    final groups = mapGroupsOfAtlasMuscles([
+      ...detail.primaires,
+      ...detail.secondaires,
+      ...detail.stabilisateurs,
+    ]);
     final variantOf = detail.varianteDe;
     final variants = detail.variantes;
-    return KList(
-      children: [
+    final children = <Widget>[
+      if (entry.alias.isNotEmpty)
         Text(
-          entry.nom.toUpperCase(),
-          key: const ValueKey('fiche-titre'),
-          style: Theme.of(context).textTheme.headlineSmall,
+          'Aussi : ${entry.alias.join(' · ')}',
+          style: KType.detail.copyWith(color: k.texte2),
         ),
-        if (entry.alias.isNotEmpty)
-          Text(
-            'Aussi : ${entry.alias.join(' · ')}',
-            style: TextStyle(fontSize: 12.5, color: SL.dim),
-          ),
-        Wrap(
-          spacing: 6,
-          runSpacing: 6,
-          children: [
-            KBadge(entry.discipline),
-            KBadge(entry.niveau),
-            KBadge('Difficulté ${entry.difficulte}/10'),
-            KBadge(kLoadTypeLabels[detail.typeCharge] ?? detail.typeCharge),
-          ],
-        ),
-        // M8 (propriétaire, 30/09/2026) : la 3D ne sert qu'à la
-        // démonstration ; en tête de fiche seulement si l'exercice a une
-        // animation (G3 : anciennes démonstrations reliées par la
-        // correspondance), rien sinon.
-        if (ClipRegistry.loaded?.forExercise(entry.id) != null)
-          KeyedSubtree(
-            key: const ValueKey('fiche-mannequin-support'),
-            child: ExerciseMannequin(
-              key: ValueKey('fiche-muscles-${entry.id}'),
-              background: kPageColor(context),
-              exerciseId: entry.id,
-              height: (MediaQuery.sizeOf(context).height * .45).clamp(
-                380.0,
-                600.0,
-              ),
-              primaires: detail.primaires,
-              secondaires: detail.secondaires,
-              stabilisateurs: detail.stabilisateurs,
-              etires: detail.etires,
+      Wrap(
+        spacing: KSpacing.s8,
+        runSpacing: KSpacing.s8,
+        children: [
+          KChip(entry.discipline),
+          KChip(entry.niveau),
+          KChip('Difficulté ${entry.difficulte}/10'),
+          KChip(kLoadTypeLabels[detail.typeCharge] ?? detail.typeCharge),
+        ],
+      ),
+      // M8 (propriétaire, 30/09/2026) : la 3D ne sert qu'à la
+      // démonstration ; en tête de fiche seulement si l'exercice a une
+      // animation (G3 : anciennes démonstrations reliées par la
+      // correspondance), rien sinon.
+      if (ClipRegistry.loaded?.forExercise(entry.id) != null)
+        KeyedSubtree(
+          key: const ValueKey('fiche-mannequin-support'),
+          child: ExerciseMannequin(
+            key: ValueKey('fiche-muscles-${entry.id}'),
+            background: kPageColor(context),
+            exerciseId: entry.id,
+            height: (MediaQuery.sizeOf(context).height * .45).clamp(
+              380.0,
+              600.0,
             ),
+            primaires: detail.primaires,
+            secondaires: detail.secondaires,
+            stabilisateurs: detail.stabilisateurs,
+            etires: detail.etires,
           ),
-        const KSection('Points clés'),
-        KeyedSubtree(
-          key: const ValueKey('fiche-points-cles'),
-          child: _bullets(detail.pointsCles),
         ),
-        const KSection('Erreurs fréquentes'),
-        KeyedSubtree(
-          key: const ValueKey('fiche-erreurs'),
-          child: _bullets(detail.erreurs),
-        ),
-        const KSection('Respiration'),
-        Text(detail.respiration, key: const ValueKey('fiche-respiration')),
-        const KSection('Muscles'),
-        KCard(
-          key: const ValueKey('fiche-muscles'),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              // M8 : carte 2D par rôle (principal vif, secondaire atténué,
-              // stabilisateur pâle, autres en gris), muscle par muscle.
-              MuscleMap2D(
-                key: ValueKey('fiche-muscle-map-${entry.id}'),
-                intensities: mapIntensitiesFromRoles(
-                  primaires: detail.primaires,
-                  secondaires: detail.secondaires,
-                  stabilisateurs: detail.stabilisateurs,
-                ),
-                height: 250,
-                semanticLabel: 'Carte des muscles de l’exercice',
+      const KSectionTitle('Points clés'),
+      KeyedSubtree(
+        key: const ValueKey('fiche-points-cles'),
+        child: _bullets(k, detail.pointsCles),
+      ),
+      const KSectionTitle('Erreurs fréquentes'),
+      KeyedSubtree(
+        key: const ValueKey('fiche-erreurs'),
+        child: _bullets(k, detail.erreurs),
+      ),
+      const KSectionTitle('Respiration'),
+      Text(
+        detail.respiration,
+        key: const ValueKey('fiche-respiration'),
+        style: body,
+      ),
+      const KSectionTitle('Muscles'),
+      KCard(
+        key: const ValueKey('fiche-muscles'),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            // M8 : carte 2D par rôle (principal vif, secondaire atténué,
+            // stabilisateur pâle, autres en gris), muscle par muscle.
+            MuscleMap2D(
+              key: ValueKey('fiche-muscle-map-${entry.id}'),
+              intensities: mapIntensitiesFromRoles(
+                primaires: detail.primaires,
+                secondaires: detail.secondaires,
+                stabilisateurs: detail.stabilisateurs,
               ),
-              const SizedBox(height: 10),
-              MapRoleLegend(stabilizers: detail.stabilisateurs.isNotEmpty),
-              if (deep.isNotEmpty)
+              height: 250,
+              semanticLabel: 'Carte des muscles de l’exercice',
+            ),
+            const SizedBox(height: KSpacing.s12),
+            MapRoleLegend(stabilizers: detail.stabilisateurs.isNotEmpty),
+            if (deep.isNotEmpty)
+              Padding(
+                padding: const EdgeInsets.only(top: KSpacing.s8),
+                child: Text(
+                  'Non dessinés sur la carte : '
+                  '${deep.map(baseMuscleLabel).join(', ')}.',
+                  key: const ValueKey('fiche-muscles-profonds'),
+                  textAlign: TextAlign.center,
+                  style: KType.detail.copyWith(color: k.texte2),
+                ),
+              ),
+            const SizedBox(height: KSpacing.s14),
+            for (final (title, names) in muscles)
+              if (names.isNotEmpty)
                 Padding(
-                  padding: const EdgeInsets.only(top: 8),
-                  child: Text(
-                    'Non dessinés sur la carte : '
-                    '${deep.map(baseMuscleLabel).join(', ')}.',
-                    key: const ValueKey('fiche-muscles-profonds'),
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 12, color: SL.dim),
+                  padding: const EdgeInsets.only(bottom: KSpacing.s8),
+                  child: Text.rich(
+                    TextSpan(
+                      children: [
+                        TextSpan(
+                          text: '$title : ',
+                          style: KType.corpsFort.copyWith(color: k.texte),
+                        ),
+                        TextSpan(text: names.map(baseMuscleLabel).join(', ')),
+                      ],
+                    ),
+                    style: body,
                   ),
                 ),
-              const SizedBox(height: 14),
-              for (final (title, names) in muscles)
-                if (names.isNotEmpty)
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8),
-                    child: Text.rich(
-                      TextSpan(
-                        children: [
-                          TextSpan(
-                            text: '$title : ',
-                            style: const TextStyle(fontWeight: FontWeight.w700),
-                          ),
-                          TextSpan(text: names.map(baseMuscleLabel).join(', ')),
-                        ],
+            if (groups.isNotEmpty) ...[
+              const SizedBox(height: KSpacing.s4),
+              Text(
+                'Voir un groupe dans l’Anatomie :',
+                style: KType.detail.copyWith(color: k.texte2),
+              ),
+              Wrap(
+                key: const ValueKey('fiche-groupes'),
+                spacing: KSpacing.s8,
+                children: [
+                  for (final g in groups)
+                    KChip(
+                      mapGroupLabel(g),
+                      key: ValueKey('fiche-groupe-$g'),
+                      icon: Icons.accessibility_new_rounded,
+                      onTap: () => Navigator.of(context).push(
+                        MaterialPageRoute<void>(
+                          builder: (_) => AnatomyScreen(initialGroup: g),
+                        ),
                       ),
                     ),
-                  ),
+                ],
+              ),
             ],
-          ),
+          ],
         ),
-        const KSection('Matériel et lieux'),
-        Text(
-          entry.materiel.isEmpty
-              ? 'Aucun matériel'
-              : entry.materiel.map(capitalized).join(', '),
-          key: const ValueKey('fiche-materiel'),
-        ),
-        Text(
-          [for (final l in entry.lieux) kPlaceLabels[l] ?? l].join(' · '),
-          style: TextStyle(color: SL.dim, fontSize: 12.5),
-        ),
-        if (detail.prerequis.isNotEmpty) ...[
-          const KSection('Paliers conseillés avant'),
-          _links(context, 'prerequis', detail.prerequis),
-        ],
-        if (variantOf != null && store.content.byId.containsKey(variantOf)) ...[
-          const KSection('Variante de'),
-          _links(context, 'variante-de', [variantOf]),
-        ],
-        if (variants.isNotEmpty) ...[
-          const KSection('Variantes'),
-          _links(context, 'variantes', variants),
-        ],
-        Text(
-          'Repères d’entraînement, sans valeur médicale. Contenu non relu par '
-          'un professionnel diplômé : en cas de gêne, arrête l’exercice.',
-          style: TextStyle(fontSize: 12, color: SL.dim),
-        ),
+      ),
+      const KSectionTitle('Matériel et lieux'),
+      Text(
+        entry.materiel.isEmpty
+            ? 'Aucun matériel'
+            : entry.materiel.map(capitalized).join(', '),
+        key: const ValueKey('fiche-materiel'),
+        style: body,
+      ),
+      Text(
+        [for (final l in entry.lieux) kPlaceLabels[l] ?? l].join(' · '),
+        style: KType.detail.copyWith(color: k.texte2),
+      ),
+      if (detail.prerequis.isNotEmpty) ...[
+        const KSectionTitle('Paliers conseillés avant'),
+        _links(context, 'prerequis', detail.prerequis),
       ],
+      if (variantOf != null && store.content.byId.containsKey(variantOf)) ...[
+        const KSectionTitle('Variante de'),
+        _links(context, 'variante-de', [variantOf]),
+      ],
+      if (variants.isNotEmpty) ...[
+        const KSectionTitle('Variantes'),
+        _links(context, 'variantes', variants),
+      ],
+      Text(
+        'Repères d’entraînement, sans valeur médicale. Contenu non relu par '
+        'un professionnel diplômé : en cas de gêne, arrête l’exercice.',
+        style: KType.detail.copyWith(color: k.texte2),
+      ),
+    ];
+    return Scaffold(
+      // R3, C1 : le titre de la fiche est le nom de l'exercice (capitales
+      // par le style, U3).
+      appBar: KTopBar.sub(key: const ValueKey('fiche-titre'), title: entry.nom),
+      body: _framed(
+        ListView.separated(
+          padding: _listPadding(context),
+          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+          itemCount: children.length,
+          separatorBuilder: (_, __) => const SizedBox(height: KSpacing.s8),
+          itemBuilder: (_, i) => children[i],
+        ),
+      ),
     );
   }
 }
@@ -535,15 +679,23 @@ class MentionsScreen extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) => KScreen(
-    appBar: AppBar(title: const Text('SOURCES ET LICENCES')),
+  Widget build(BuildContext context) => Scaffold(
+    appBar: const KTopBar.sub(title: 'Sources et licences'),
     body: FutureBuilder<String>(
       future: _load(),
       builder: (context, snap) {
         if (!snap.hasData) {
           return const Center(child: CircularProgressIndicator());
         }
-        return KList(children: markdownBlocks(context, snap.data!));
+        final blocks = markdownBlocks(context, snap.data!);
+        return _framed(
+          ListView.separated(
+            padding: _listPadding(context),
+            itemCount: blocks.length,
+            separatorBuilder: (_, __) => const SizedBox(height: KSpacing.s12),
+            itemBuilder: (_, i) => blocks[i],
+          ),
+        );
       },
     ),
   );
@@ -555,6 +707,8 @@ String _plain(String s) =>
 /// Rendu simple du Markdown des mentions : titres, paragraphes, listes et
 /// tableaux (une carte par ligne, « colonne : valeur »), lisible à 320 px.
 List<Widget> markdownBlocks(BuildContext context, String md) {
+  final k = KTokens.of(context);
+  final body = KType.corps.copyWith(color: k.texte);
   final out = <Widget>[];
   final lines = md.split('\n');
   var i = 0;
@@ -569,11 +723,17 @@ List<Widget> markdownBlocks(BuildContext context, String md) {
       final text = _plain(line.substring(level + 1));
       out.add(
         level <= 1
-            ? Text(
-                text.toUpperCase(),
-                style: Theme.of(context).textTheme.titleLarge,
+            // Titre du document : capitales par le style (U3).
+            ? Semantics(
+                header: true,
+                child: Text(
+                  k.title(text),
+                  style: k.titleStyle(
+                    KType.titreCarte.copyWith(color: k.texte),
+                  ),
+                ),
               )
-            : KSection(text),
+            : KSectionTitle(text),
       );
       i++;
       continue;
@@ -595,20 +755,19 @@ List<Widget> markdownBlocks(BuildContext context, String md) {
               children: [
                 for (var c = 0; c < row.length; c++)
                   Padding(
-                    padding: const EdgeInsets.only(bottom: 4),
+                    padding: const EdgeInsets.only(bottom: KSpacing.s4),
                     child: Text.rich(
                       TextSpan(
                         children: [
                           if (c < head.length)
                             TextSpan(
                               text: '${head[c]} : ',
-                              style: const TextStyle(
-                                fontWeight: FontWeight.w700,
-                              ),
+                              style: KType.corpsFort.copyWith(color: k.texte),
                             ),
                           TextSpan(text: row[c]),
                         ],
                       ),
+                      style: body,
                     ),
                   ),
               ],
@@ -624,15 +783,15 @@ List<Widget> markdownBlocks(BuildContext context, String md) {
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('•  ', style: TextStyle(color: SL.accent)),
-            Expanded(child: Text(_plain(line.substring(2)))),
+            Text('•  ', style: KType.corps.copyWith(color: k.texte2)),
+            Expanded(child: Text(_plain(line.substring(2)), style: body)),
           ],
         ),
       );
       i++;
       continue;
     }
-    out.add(Text(_plain(line)));
+    out.add(Text(_plain(line), style: body));
     i++;
   }
   return out;

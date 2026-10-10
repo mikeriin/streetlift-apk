@@ -197,8 +197,9 @@ void main() {
           );
           await tester.tap(find.text('Importer'));
           await tester.pumpAndSettle();
+          // UI4 : avertissement au gabarit de confirmation (KConfirm).
           expect(
-            find.byKey(const ValueKey('test-session-import-warning')),
+            find.text('Importer une sauvegarde de test ?'),
             findsOneWidget,
           );
           expect(find.byType(ImportPreviewDialog), findsNothing);
@@ -211,9 +212,7 @@ void main() {
           // importé).
           await tester.tap(find.text('Importer'));
           await tester.pumpAndSettle();
-          await tester.tap(
-            find.byKey(const ValueKey('test-session-import-continue')),
-          );
+          await tester.tap(find.byKey(const ValueKey('confirm-ok')));
           await tester.pumpAndSettle();
           expect(find.byType(ImportPreviewDialog), findsOneWidget);
           Navigator.of(tester.element(find.byType(ImportPreviewDialog))).pop();
@@ -240,7 +239,7 @@ void main() {
           await tester.tap(find.text('Importer normal'));
           await tester.pumpAndSettle();
           expect(
-            find.byKey(const ValueKey('test-session-import-warning')),
+            find.text('Importer une sauvegarde de test ?'),
             findsNothing,
           );
           expect(find.byType(ImportPreviewDialog), findsOneWidget);

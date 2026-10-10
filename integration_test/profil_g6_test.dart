@@ -293,7 +293,8 @@ void main() {
     await tap(tester, 'flow-next-recovery');
 
     // 9. Santé : accord, questionnaire, une gêne au genou.
-    await tap(tester, 'flow-consent-given');
+    // UI4 : accord santé en segments du kit (clé `segment-<valeur>`).
+    await tap(tester, 'segment-given');
     for (final q in kHealthQuestions) {
       await tap(tester, 'flow-q-${q.id}-false', ms: 300);
     }

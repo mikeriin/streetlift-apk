@@ -9,11 +9,12 @@
 import 'package:flutter/material.dart';
 import 'package:kalis_koach/kalis_koach.dart' show KoachPose;
 
-import 'app_theme.dart';
 import 'athlete_profile_flow.dart';
+import 'athlete_profile_screen.dart' show ProfileScreen;
 import 'koach/koach_bubble.dart';
 import 'koach/koach_view.dart';
 import 'store.dart';
+import 'ui.dart';
 
 /// Ouvre « Compléter mon profil » ([deferredOnly] : seulement les
 /// questions reportées).
@@ -52,7 +53,7 @@ class ProfileCompletionCard extends StatelessWidget {
         : store.profilePendingQuestions.length;
     return KoachSurface(
       key: const ValueKey('profile-invite'),
-      color: SL.bg,
+      color: KTokens.of(context).fond,
       child: KoachBubble(
         pose: deferred ? KoachPose.think : KoachPose.idea,
         koachHeight: 76,
@@ -63,9 +64,11 @@ class ProfileCompletionCard extends StatelessWidget {
             : 'Nouveau : $n question${n > 1 ? 's' : ''} pour mieux régler '
                   'ton entraînement (expérience, records, récupération…). '
                   'Tout est facultatif.',
+        // UI4 (R5) : plus de chemin écrit ; « Mon profil » ouvre la page
+        // Profil, où ces questions restent dans « Compléter mon profil ».
         why:
             'Ton programme actuel ne change pas. Tu retrouves ces questions '
-            'dans Réglages › Profil › Compléter mon profil.',
+            'dans ton profil, rubrique « Compléter mon profil ».',
         actions: [
           KoachBubbleAction(
             'Compléter mon profil',
@@ -75,6 +78,13 @@ class ProfileCompletionCard extends StatelessWidget {
             },
             primary: true,
             key: const ValueKey('profile-invite-open'),
+          ),
+          KoachBubbleAction(
+            'Mon profil',
+            () => Navigator.of(context).push<void>(
+              MaterialPageRoute<void>(builder: (_) => const ProfileScreen()),
+            ),
+            key: const ValueKey('profile-invite-profile'),
           ),
           KoachBubbleAction(
             'Plus tard',

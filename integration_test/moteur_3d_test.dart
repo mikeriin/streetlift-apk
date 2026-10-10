@@ -136,10 +136,14 @@ void main() {
     expect(stats['couleurs'] as int, greaterThan(12), reason: label);
   }
 
-  testWidgets('Réglages › À propos › Moteur 3D, thème sombre', (tester) async {
+  testWidgets('Réglages › Aide et à propos › Diagnostic 3D, thème sombre', (
+    tester,
+  ) async {
     await openApp(tester, 'dark');
     appNavigator.currentState!.push(
-      MaterialPageRoute<void>(builder: (_) => const SettingsScreen(section: 9)),
+      MaterialPageRoute<void>(
+        builder: (_) => const SettingsScreen(page: SettingsPage.about),
+      ),
     );
     await tester.pumpAndSettle();
     final tile = find.byKey(const ValueKey('about-engine3d'));
