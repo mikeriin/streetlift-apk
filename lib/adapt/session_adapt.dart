@@ -14,6 +14,7 @@
 import 'package:kalis_core/kalis_core.dart' as kc;
 
 import '../plan/coach_texts.dart' show prescriptionRow;
+import '../retired_data.dart' show jsonDeepEquals;
 
 const kSessionAdaptVersion = 1;
 
@@ -487,4 +488,211 @@ int plannedWorkSetsOf(kc.SessionPlan plan) {
     }
   }
   return n;
+}
+
+// ------------------------------------------------- CI1h : charge fixe
+
+/// CI1h (C15.2) : cause de `adapt.load_held` d'une charge fixée par le
+/// programme (charge écrite, puis 0 kg de lest d'une ligne au poids du
+/// corps).
+const kFixedLoadCause = 'program';
+const kFixedBodyweightCause = 'program_bodyweight';
+
+bool _isPainReason(kc.Reason r) =>
+    r.code == 'adapt.pain_reported' ||
+    r.code == 'adapt.pain_persistent' ||
+    // Reprise graduée, zone à l'arrêt : charge plafonnée par le moteur.
+    (r.code == 'adapt.load_held' && '${r.params['cause']}'.startsWith('pain'));
+
+/// La charge de la prescription [it] est une charge externe (barre, lest).
+bool fixedLoadApplies(kc.ExercisePrescription it, double kg) =>
+    it.loadBasis == kc.LoadBasis.bodyweightPlusExternal ||
+    (it.loadBasis == kc.LoadBasis.external && kg > 0);
+
+/// Raison « charge fixée par ton programme » de la prescription [it] ;
+/// null pour un exercice sans charge (mobilité, cardio).
+kc.Reason? fixedLoadReason(kc.ExercisePrescription it, double kg) {
+  if (it.loadBasis == kc.LoadBasis.unloaded) return null;
+  final bodyweight =
+      kg == 0 &&
+      (it.loadBasis == kc.LoadBasis.bodyweight ||
+          it.loadBasis == kc.LoadBasis.bodyweightPlusExternal);
+  return kc.Reason(
+    code: 'adapt.load_held',
+    params: {'cause': bodyweight ? kFixedBodyweightCause : kFixedLoadCause},
+  );
+}
+
+/// CI1h (C15.2) : prescription [it] du moteur pour une ligne du programme
+/// à charge écrite fixe [kg] (0 : sans lest) : charge écrite à chaque
+/// série, répétitions (ou secondes) jamais au-delà de la ligne écrite
+/// [written] ; seule une douleur signalée peut alléger la charge
+/// (conduite sous douleur). Le reste (séries, repos, rôle, technique) reste
+/// celui du moteur. Renvoie [it] s'il n'y a rien à changer.
+kc.ExercisePrescription fixedLoadItem(
+  kc.ExercisePrescription it,
+  double kg,
+  kc.ExercisePrescription? written,
+) {
+  final loaded = fixedLoadApplies(it, kg);
+  final pain = it.reasons.any(_isPainReason);
+  double? load(double? v) {
+    if (!loaded) return v;
+    // Sans lest : la prescription sans charge reste sans charge.
+    if (kg == 0 && v == null) return null;
+    // Allègement de la conduite sous douleur : gardé.
+    if (pain && v != null && v < kg) return v;
+    return kg;
+  }
+
+  int? cap(int? v, int? max) => v == null || max == null || v <= max ? v : max;
+  int? under(int? low, int? high) =>
+      low == null || high == null || low <= high ? low : high;
+  final rh = cap(it.repsHigh, written?.repsHigh);
+  final rl = under(cap(it.repsLow, written?.repsHigh), rh);
+  final sh = cap(it.secondsHigh, written?.secondsHigh);
+  final sl = under(cap(it.secondsLow, written?.secondsHigh), sh);
+  final targets = it.setTargets == null
+      ? null
+      : [
+          for (final t in it.setTargets!)
+            () {
+              final h = cap(t.repsHigh, written?.repsHigh);
+              final s = cap(t.secondsHigh, written?.secondsHigh);
+              final v = t.loadKg;
+              // Montée d'échauffement : jamais au-dessus de la charge écrite.
+              final warm = t.role == kc.SetRole.warmup;
+              return t.copyWith(
+                loadKg: !loaded
+                    ? v
+                    : warm
+                    ? (v == null || v <= kg ? v : kg)
+                    : load(v),
+                repsHigh: h,
+                repsLow: under(cap(t.repsLow, written?.repsHigh), h),
+                secondsHigh: s,
+                secondsLow: under(cap(t.secondsLow, written?.secondsHigh), s),
+              );
+            }(),
+        ];
+  final start = loaded ? load(it.startLoadKg) : it.startLoadKg;
+  var next = it.copyWith(
+    startLoadKg: start,
+    repsLow: rl,
+    repsHigh: rh,
+    secondsLow: sl,
+    secondsHigh: sh,
+    setTargets: targets,
+  );
+  if (jsonDeepEquals(next.toJson(), it.toJson())) return it;
+  // Charge tenue : plus de hausse, de baisse ni de calibrage de la charge
+  // à annoncer ; la raison dit que le programme fixe la charge.
+  final held = !(pain && start != null && start < kg);
+  if (held) {
+    const drop = {
+      'adapt.load_up',
+      'adapt.load_down',
+      'adapt.increment_coarse',
+      'adapt.calibration',
+      'adapt.low_confidence',
+    };
+    // Une charge gardée pour une douleur ou un bilan bas garde sa raison.
+    bool dropped(kc.Reason r) =>
+        drop.contains(r.code) ||
+        (r.code == 'adapt.load_held' &&
+            !'${r.params['cause']}'.startsWith('pain') &&
+            !'${r.params['cause']}'.startsWith('health'));
+    next = next.copyWith(
+      toCalibrate: false,
+      reasons: [
+        for (final r in it.reasons)
+          if (!dropped(r)) r,
+        ?fixedLoadReason(it, kg),
+      ],
+    );
+  }
+  return next;
+}
+
+/// CI1h (C15.2) : conseil entre séries [a] du moteur pour une ligne à
+/// charge écrite fixe [kg] :
+///
+/// - jamais de changement de charge (sauf allègement d'une douleur
+///   signalée, gardé tel quel ; arrêt de l'exercice : inchangé ; repos en
+///   plus : gardé, avec la baisse des répétitions s'il y a lieu) ;
+/// - série trop dure (répétitions manquées, ou au moins une répétition en
+///   réserve de moins que la cible de flammes) : répétitions de la série
+///   suivante abaissées, jamais sous la moitié de la cible ;
+/// - série facile ou dans la cible : rien.
+///
+/// [goal] : cible de la série faite ; [done] : répétitions (ou secondes)
+/// faites ; [flames] : sa note ; [next] : cible actuelle de la série
+/// suivante ; [planned] : sa cible avant tout conseil (base de la moitié).
+kc.IntraSessionAdvice fixedLoadAdvice(
+  kc.IntraSessionAdvice a, {
+  required kc.ExercisePrescription item,
+  required double kg,
+  required SetGoal goal,
+  required int? done,
+  required int? flames,
+  required SetGoal? next,
+  required SetGoal? planned,
+}) {
+  if (a.action == kc.IntraSessionAction.stopExercise) return a;
+  final loaded = fixedLoadApplies(item, kg);
+  if (a.reasons.any(_isPainReason)) {
+    final l = a.nextLoadKg;
+    return loaded && l != null && l > kg ? a.copyWith(nextLoadKg: kg) : a;
+  }
+  final reason = fixedLoadReason(item, kg);
+  final keep = a.copyWith(
+    action: kc.IntraSessionAction.keep,
+    nextLoadKg: null,
+    nextRepsLow: null,
+    nextRepsHigh: null,
+    nextSeconds: null,
+    reasons: [?reason],
+  );
+  final low = goal.low;
+  final missed = done != null && low != null && done < low;
+  final target = goal.flames;
+  var gap = 0.0;
+  if (flames != null &&
+      target != null &&
+      kc.Flames.isValid(flames) &&
+      kc.Flames.isValid(target) &&
+      flames > target) {
+    gap = kc.Flames.toRir(target) - kc.Flames.toRir(flames);
+  }
+  // Repos en plus du moteur : gardé quand les répétitions ne bougent pas.
+  final rest = a.action == kc.IntraSessionAction.restMore ? a : keep;
+  if (!missed && gap < 1) return rest;
+  final base = next?.low ?? next?.high;
+  final ref = planned?.low ?? planned?.high ?? base;
+  if (base == null || ref == null) return rest;
+  final floor = (ref / 2).ceil();
+  var n = missed ? done : base - gap.ceil();
+  if (n > base - 1) n = base - 1;
+  if (n < floor) n = floor;
+  if (n >= base || n < 1) return rest;
+  final seconds = goal.seconds;
+  return a.copyWith(
+    action: kc.IntraSessionAction.repsDown,
+    nextLoadKg: loaded && kg > 0 ? kg : null,
+    nextRepsLow: seconds ? null : n,
+    nextRepsHigh: seconds ? null : n,
+    nextSeconds: seconds ? n : null,
+    reasons: [
+      missed
+          ? kc.Reason(
+              code: 'adapt.set_failed',
+              params: {'missingReps': low - done},
+            )
+          : kc.Reason(
+              code: 'adapt.flames_above_target',
+              params: {'delta': gap, 'sets': 1},
+            ),
+      ?reason,
+    ],
+  );
 }
