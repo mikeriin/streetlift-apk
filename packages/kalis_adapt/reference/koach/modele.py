@@ -74,7 +74,7 @@ class Piste(object):
     __slots__ = ('id', 'type', 'classe', 'vecteur', 'base', 'idx', 'fraction', 'bas',
                  'tendon', 'zone_tendon', 'systemique', 'locale', 'seances', 'dernier_jour',
                  'premier_jour', 'stim_semaine', 'series_seance', 'jour_seance', 'declare',
-                 'dernier_test_jour', 'residus', 'cran', 'meilleur', 'mesures', 'groupes', 'groupes_total',
+                 'dernier_test_jour', 'dernier_vrai_test_jour', 'derniere_rampe_jour', 'residus', 'cran', 'meilleur', 'mesures', 'groupes', 'groupes_total',
                  'jour_prevu', 'jour_vu')
 
     def __init__(self, ex_id, typ, vecteur, base, idx, fraction=0.0, bas=False,
@@ -100,6 +100,8 @@ class Piste(object):
         self.jour_seance = None
         self.declare = declare
         self.dernier_test_jour = None
+        self.dernier_vrai_test_jour = None   # dernier test (montée, tentative) arrivé près de l'échec
+        self.derniere_rampe_jour = None      # dernière série de test, informative ou non
         self.residus = []
         self.cran = None
         self.meilleur = None
@@ -989,6 +991,15 @@ class Modele(object):
         t.mesures += 1
         if echec or s.get('repere') or s.get('role') in ('test', 'attempt'):
             t.dernier_test_jour = self.jour
+        if s.get('role') in ('test', 'attempt'):
+            # Horloges du vrai test : toute série de test, et celles qui sont
+            # arrivées près de l'échec (échec, ou réserve dite d'au plus
+            # `vrai_test_rir_informatif`) : seules ces dernières mesurent
+            # vraiment le maximum et espacent le test suivant de 14 jours.
+            t.derniere_rampe_jour = self.jour
+            ri = self.p['test_adaptatif']['vrai_test_rir_informatif']
+            if echec or (flammes is not None and (flammes >= 10 or (11 - flammes) / 2.0 <= ri + 1e-9)):
+                t.dernier_vrai_test_jour = self.jour
         if reps > 0 and not echec and not sans_charge:
             if t.meilleur is None or charge > t.meilleur[0]:
                 t.meilleur = (charge, self.jour)

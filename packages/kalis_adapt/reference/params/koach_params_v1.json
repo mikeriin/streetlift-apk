@@ -83,8 +83,8 @@
     "cardio_sd": 0.4,
     "wod_sd": 0.25,
     "courbe_forme": [
-      0.3,
-      0.3
+      0.2,
+      0.45
     ],
     "courbe_echelle": [
       0.1,
@@ -232,7 +232,7 @@
     "reps_ouvertes": 6,
     "repere_hausse": 0.1,
     "test_reps": 3,
-    "test_reps_debutant": 5,
+    "test_reps_debutant": 3,
     "test_rir": 1.0,
     "test_rir_debutant": 2.0,
     "test_reps_ouvertes": 0,
@@ -262,7 +262,11 @@
     "rampe_sd_min": 0.05,
     "rampe_confirmations": 2,
     "rampe_proba_min": 0.75,
-    "rampe_series_travail": 1
+    "rampe_series_travail": 1,
+    "vrai_test_rir_informatif": 2.5,
+    "jours_min_entre_rampes": 5,
+    "rampe_pas_cran": 0.15,
+    "rampe_cran_rir_marge": 3.0
   },
   "planification": {
     "trajectoires": 1000,

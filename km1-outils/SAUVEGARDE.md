@@ -132,3 +132,16 @@ Lancement sans ligne « Lot : » ; ETAT_CP : KM1 « à faire (correction 1, C13.
 - Famille seule + a priori large : pas de gain net (4,17 %) : la forme est apprise dans le bon sens (A 0,1-0,2 ; B −0,3 à −0,6 ; C 0,7-0,9) mais pas assez vite, B dépasse.
 - Valeur aberrante du banc : `mu-presse-cuisses-45`, graine 0, vérité B : pente tirée à +3,5 σ (0,044/rép.) → −32 à −43 % d'erreur ; répétée dans 2 profils × tous les scénarios, elle coûte ≈ 1,1 point à B (≈ 0,37 au critère).
 - En cours : oracles biais de note / effet de jour (`c1/oracle_*.py`) pour le budget d'erreur.
+
+## 12:15 UTC — critère 1 : budget d'erreur établi, itération 1 codée (LIRE)
+Mesures (27 profils, saison de référence, 2 graines, rang 6, moyenne A/B/C) :
+- base KM1 4,05-4,17 % ; **oracle « courbe vraie par exercice » 2,28 %** (A 1,76 ; B 2,94 ; C 2,15) ; + oracle biais de note 2,42 ; + oracle effet de jour 1,94 ; **oracle de FORME seule (forme par athlète connue, échelle par exercice à apprendre) 4,09 %** → ce qui coûte, c'est l'ÉCHELLE de courbe par exercice (sd 18-20 % dans les trois vérités), pas la forme.
+- Par mesure la plus basse en répétitions (réserve vraie ≤ 3) vue avant le rang 6 (`c1/diag7.py`) : mesuré sous 8 rép. possibles → 2,0 à 3,1 % ; jamais mesuré sous 8 (débutants, lignes sans test) → 5,8 à 6,5 % (40 % des cas). Les débutants (5 puis 3 rép. à 2 en réserve dite, 1 à 2 séries de montée dans le budget de la ligne) restent à 8-9 rép. possibles.
+- Vérité C, mesurée à 1 rép. : biais −3 % qui reste même forme connue (échelle de l'exercice aux basses répétitions : g(3) = 0,11 ± 20 %).
+- **Conclusion : < 3 % en moyenne A/B/C n'est pas atteignable sur ce banc avec des tests à réserve gardée** (plancher ≈ 3,6-3,8 %) ; gain réel de l'itération 1 ≈ 0,2 point.
+Itération 1 (codée, dans `moteurs` non poussé) :
+1. Famille de Box-Cox (modele.py) + a priori de forme N(0,2 ; 0,45) tiré de 7 équations publiées.
+2. Vrai test : trois horloges (`dernier_test_jour` repère/tout, `dernier_vrai_test_jour` test arrivé près de l'échec → 14 j, `derniere_rampe_jour` → `jours_min_entre_rampes` 5 j) ; une série repère ne bloque plus un vrai test ; première barre de la montée bornée par la règle A7.2 du premier passage à un schéma (+10 %, +2,5 %/rép. de moins, 4 au plus) ; durée de la montée estimée sur les séries qu'elle peut vraiment faire ; grille grossière : un cran entier permis jusqu'à 15 % après une série dite très facile (`rampe_pas_cran`, `rampe_cran_rir_marge`) ; test du débutant à 3 rép. (comme le 3RM que kalis_plan écrit pour un débutant), réserve 2 inchangée.
+3. Essayé sans gain, NON retenu : fatigue intra-séance recalée sur la moyenne des trois vérités (FI 0,75, intra_rir 2,0).
+Sous-ensemble après itération 1 : 3,91 % (A 2,49 ; B 5,50 ; C 3,74). À confirmer par la campagne.
+Reste : critère 5 (calibration par cible : simuler l'échelle des tentatives dans le jumeau, bruit de jour commun, affûtage), critère 2 (contrefactuel apparié par rejeu du journal : base[0..j) + séance du mauvais jour + base(j..)), fixtures, campagne, tests, contrat/sources, livraison.

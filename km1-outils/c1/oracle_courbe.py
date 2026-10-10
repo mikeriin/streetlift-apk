@@ -29,3 +29,14 @@ def dg(lam,k,reps):
         return d if d>0.004 else 0.004
     return odg(lam,k,reps)
 M.Modele.courbe=courbe; M.Modele._g=staticmethod(g); M.Modele._dg=staticmethod(dg)
+orr=M.Modele._reps_de
+def reps_de(lam,k,x):
+    if isinstance(lam,Tr):
+        r=lam.tr.reps_at_share(math.exp(-x))
+        return 200.0 if r>200 else (1.0 if r<1 else r)
+    return orr(lam,k,x)
+odf=M.Modele._dg_forme
+def dgf(lam,k,reps):
+    if isinstance(lam,Tr): return 0.0
+    return odf(lam,k,reps)
+M.Modele._reps_de=staticmethod(reps_de); M.Modele._dg_forme=staticmethod(dgf)

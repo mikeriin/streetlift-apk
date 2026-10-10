@@ -1525,7 +1525,7 @@ class Seances(object):
             hi = lo
         return lo, hi
 
-    def _mesure_utile(self, item, plan, t):
+    def _mesure_utile(self, item, plan, t, vrai=False):
         """Vrai si une mesure près de l'échec est utile et permise : intervalle
         à 90 % de la capacité au-delà de ± 6 % (cahier § 5), rien de mesuré
         depuis 14 jours, et aucune des contre-indications de 0.3.1 (A8.3) :
@@ -1557,7 +1557,19 @@ class Seances(object):
         cap = self.m.capacite(item['exerciseId'])
         if 1.6448536269514722 * cap[1] <= ta['intervalle_declenchement']:
             return False
-        if t.dernier_test_jour is not None and self.jour - t.dernier_test_jour < ta['jours_min_entre_tests']:
+        if vrai:
+            # Vrai test : espacé de 14 jours du dernier test arrivé près de
+            # l'échec, et de `jours_min_entre_rampes` de toute montée (une
+            # montée arrêtée loin de l'échec n'a rien mesuré : elle ne bloque
+            # pas la suivante pendant 14 jours). Une série repère, loin du
+            # maximum, ne remplace pas un vrai test.
+            if t.dernier_vrai_test_jour is not None and \
+                    self.jour - t.dernier_vrai_test_jour < ta['jours_min_entre_tests']:
+                return False
+            if t.derniere_rampe_jour is not None and \
+                    self.jour - t.derniere_rampe_jour < ta['jours_min_entre_rampes']:
+                return False
+        elif t.dernier_test_jour is not None and self.jour - t.dernier_test_jour < ta['jours_min_entre_tests']:
             return False
         if self.g.niveau == 0 and t.seances < 3:
             return False
@@ -1601,7 +1613,9 @@ class Seances(object):
         budget = (self.contexte or {}).get('budget')
         if budget is None:
             return deja == 0
-        n = ta['rampe_series_max'] + (2 if vt[0] == 1 else 0)
+        # Séries de la montée : au plus les séries dures permises (séries
+        # écrites de la ligne moins une), plus une série encore facile.
+        n = min(ta['rampe_series_max'] + (2 if vt[0] == 1 else 0), max(1, int(item.get('sets') or 0) - 1) + 1)
         repos = max(item.get('restSeconds') or 0, ta['repos_test_s'])
         ajout = 45.0 + n * vt[0] * 3.0 + (n - 1) * repos
         retire = min(int(ta['rampe_series_travail']), int(item.get('sets') or 0) - 1)
@@ -1623,7 +1637,7 @@ class Seances(object):
             return None
         if item.get('sets', 0) < 2:
             return None
-        if t is None or t.seances < 1 or not self._mesure_utile(item, plan, t):
+        if t is None or t.seances < 1 or not self._mesure_utile(item, plan, t, vrai=True):
             return None
         # Grille trop grossière pour une montée (cran de plus de 10 % de la
         # charge totale) : la mesure se fait en répétitions (série repère).
@@ -1637,7 +1651,11 @@ class Seances(object):
             # rampe (le maximum connu est trop ancien pour borner la montée).
             return None
         bw = t.fraction * self.m.poids_kg
-        if grille.suivant(ref) + bw > (ref + bw) * (1 + ta['rampe_pas']) + 1e-9:
+        if grille.suivant(ref) + bw > (ref + bw) * (1 + ta['rampe_pas_cran']) + 1e-9:
+            # Cran de la grille au-delà de `rampe_pas_cran` de la charge
+            # totale : pas de montée. Jusque-là, un cran reste permis (« un
+            # cran toujours permis », A7.2 de 0.3.1), seulement après une
+            # série dite très facile (`_rampe`).
             return None
         if self.g.niveau == 0:
             return ta['test_reps_debutant'], ta['test_rir_debutant']
@@ -2106,7 +2124,26 @@ class Seances(object):
                     recente = c
             if recente is None:
                 return None   # pas de barre récente : pas de rampe
-            plafond = (recente + bw) * (1 + ta['repere_hausse']) - bw
+            # Première barre de la montée : jamais plus que ce que les barres
+            # réussies des 42 derniers jours justifient, avec la règle du
+            # premier passage à un schéma de 0.3.1 (A7.2, déjà celle de
+            # l'ouverture d'une tentative) : +10 %, et +2,5 % par répétition
+            # faite au-delà de celles de la montée (4 au plus). Partir de
+            # +10 % sur une barre de 10 répétitions faisait commencer une
+            # montée de 3 répétitions à 7 répétitions de l'échec : la montée
+            # s'arrêtait, faute de séries, avant d'avoir rien mesuré.
+            plafond = None
+            for (j, c, r) in mem.charges_reussies:
+                if self.jour - j > self.s['barre_recente_j']:
+                    continue
+                plus = r - n_t
+                if plus < 0:
+                    plus = 0
+                if plus > self.s['schema_change_reps_max']:
+                    plus = self.s['schema_change_reps_max']
+                b = (c + bw) * (1 + ta['repere_hausse']) * (1 + self.s['schema_change_part'] * plus) - bw
+                if plafond is None or b > plafond:
+                    plafond = b
             if voulu > plafond:
                 voulu = plafond
         else:
@@ -2162,6 +2199,14 @@ class Seances(object):
         if index >= 1 and charge <= plan['charge_item'] + 1e-9:
             suivant = grille.suivant(plan['charge_item'])
             if (suivant + bw) <= (plan['charge_item'] + bw) * (1 + ta['rampe_pas']) + 1e-9:
+                charge = suivant
+            elif (suivant + bw) <= (plan['charge_item'] + bw) * (1 + ta['rampe_pas_cran']) + 1e-9 \
+                    and dit >= rir_t + ta['rampe_cran_rir_marge'] - 1e-9:
+                # Grille grossière : un cran entier, seulement après une série
+                # dite très facile et si le modèle tient la barre pour faisable.
+                pr = self.proba_reussite(ex_id, suivant, n_t)
+                if pr is None or pr < ta['rampe_proba_min']:
+                    return None
                 charge = suivant
             else:
                 return None
