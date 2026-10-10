@@ -244,7 +244,7 @@ class ProgramScreen extends StatelessWidget {
               key: const ValueKey('program-explainer-open'),
               icon: Icons.help_outline_rounded,
               title: 'Comment marche ton programme ?',
-              subtitle: 'Création, séances et évolution, en 8 étapes',
+              subtitle: 'Création, séances et évolution, en 8\u00a0étapes',
               onTap: () => showProgramExplainer(context),
             ),
           ],

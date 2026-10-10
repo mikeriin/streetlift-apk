@@ -145,7 +145,11 @@ class _EventDayScreenState extends State<EventDayScreen> {
                   ),
                 if ((lift.warmup ?? const <kc.WarmupStep>[]).isNotEmpty &&
                     done.isEmpty) ...[
-                  const KSectionTitle('Échauffement', top: KSpacing.s12),
+                  const SizedBox(height: KSpacing.s12),
+                  Text(
+                    'Échauffement',
+                    style: KType.section.copyWith(color: k.texte2),
+                  ),
                   for (final w in lift.warmup!)
                     Text(
                       '${adaptKg(w.loadKg)} × ${w.reps}'

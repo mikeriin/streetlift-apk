@@ -131,7 +131,8 @@ void main() {
       await tester.tap(find.byTooltip('Retour'));
       await tester.pumpAndSettle();
       expect(find.byType(ProgramScreen), findsNothing);
-      expect(find.text('S8'), findsOneWidget);
+      // Même position de défilement au retour (§4.5).
+      expect(row.hitTestable(), findsOneWidget);
       expect(tester.takeException(), isNull);
     });
 
@@ -261,15 +262,17 @@ void main() {
     await tester.pumpWidget(
       page(const Scaffold(body: Text('Accueil')), navigator: navigator),
     );
-    final week = store.program.weeks.firstWhere(
-      (w) => w.days.any((d) => d.exercises.isNotEmpty),
-    );
+    // Une journée qu'aucun autre test n'a validée (la récompense d'une
+    // journée n'est donnée qu'une fois).
+    final week = store.program.weeks[3];
     final day = week.days.firstWhere((d) => d.exercises.isNotEmpty);
     final nav = navigator.currentState!;
     unawaited(openProgramDay(nav, week, day));
     await tester.pumpAndSettle();
     // Récompense gagnée hors bilan pendant que la séance est ouverte.
+    final xp = store.progression.totalXp;
     store.markSessionDone(week.n, day.j, true, title: 'S${week.n} · J${day.j}');
+    final gained = store.progression.totalXp - xp;
     nav.pop();
     await tester.pumpAndSettle();
     for (var i = 0; i < 10; i++) {
@@ -285,7 +288,8 @@ void main() {
       shown,
       isTrue,
       reason:
-          'récompense ${pending == null ? 'consommée ou absente' : 'encore en attente'}',
+          'récompense ${pending == null ? 'consommée ou absente' : 'encore en attente'}, '
+          '$gained XP gagnés',
     );
     expect(pending, isNull);
     await tester.pumpWidget(const SizedBox());

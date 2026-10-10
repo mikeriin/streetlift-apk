@@ -260,19 +260,30 @@ class KoachSays extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) => Row(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      KoachView(
-        key: const ValueKey('koach-says-view'),
-        pose: pose,
-        height: koachHeight,
-        width: koachHeight * .9,
-      ),
-      const SizedBox(width: KSpacing.s12),
-      Expanded(child: child),
-    ],
-  );
+  Widget build(BuildContext context) {
+    final koach = KoachView(
+      key: const ValueKey('koach-says-view'),
+      pose: pose,
+      height: koachHeight,
+      width: koachHeight * .9,
+    );
+    // Grand texte (150 % et plus) : Koach au-dessus du contenu, qui garde
+    // toute la largeur (aucun mot coupé, C3) ; même pose, même taille.
+    if (MediaQuery.textScalerOf(context).scale(1) >= 1.5) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [koach, const SizedBox(height: KSpacing.s8), child],
+      );
+    }
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        koach,
+        const SizedBox(width: KSpacing.s12),
+        Expanded(child: child),
+      ],
+    );
+  }
 }
 
 /// En-tête « KOACH · … » d'une carte, avec Koach en petit.

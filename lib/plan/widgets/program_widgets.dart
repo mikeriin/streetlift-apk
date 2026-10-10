@@ -56,8 +56,6 @@ class ProgramSheetHeader extends StatelessWidget {
               style: KType.detail.copyWith(color: k.texte2),
             ),
           ),
-        if (title != null || subtitle != null)
-          const SizedBox(height: KSpacing.s12),
       ],
     );
   }

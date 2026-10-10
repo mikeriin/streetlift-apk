@@ -844,7 +844,11 @@ class _TodayCard extends StatelessWidget {
       ],
       if (estimate != null) ...[
         const SizedBox(height: KSpacing.s8),
-        Text(estimate.durationLabel, style: KType.chiffre.copyWith(color: ink)),
+        // Un chiffre ne se coupe jamais : sa taille baisse s'il le faut.
+        KFitTitle(
+          estimate.durationLabel,
+          style: KType.chiffre.copyWith(color: ink),
+        ),
         Text('Estimé, repos inclus', style: KType.detail.copyWith(color: ink)),
         const SizedBox(height: KSpacing.s8),
         Text(
@@ -907,10 +911,7 @@ class _TodayCard extends StatelessWidget {
                 ],
               ),
               ...texts.skip(3),
-              if (map != null) ...[
-                const SizedBox(height: KSpacing.s12),
-                map,
-              ],
+              if (map != null) ...[const SizedBox(height: KSpacing.s12), map],
             ],
           )
         : Row(
