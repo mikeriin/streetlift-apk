@@ -7,13 +7,13 @@
    "kind": "a",
    "koach": {
     "aggravations": 0,
-    "e1rm6": 0.038028,
-    "echecs": 0.012639,
-    "perf_a": 0.788516,
-    "perf_a_min": 0.772397,
+    "e1rm6": 0.035001,
+    "echecs": 0.014372,
+    "perf_a": 0.798913,
+    "perf_a_min": 0.79097,
     "plantages": [],
     "poussees": 0,
-    "violations": 3
+    "violations": 8
    },
    "role": "pire",
    "scenario": "reference",
@@ -39,10 +39,10 @@
    "kind": "b",
    "koach": {
     "aggravations": 0,
-    "e1rm6": 0.075226,
-    "echecs": 0.002712,
-    "perf_a": 0.865743,
-    "perf_a_min": 0.790904,
+    "e1rm6": 0.066891,
+    "echecs": 0.00324,
+    "perf_a": 0.880732,
+    "perf_a_min": 0.83192,
     "plantages": [],
     "poussees": 0,
     "violations": 0
@@ -71,10 +71,10 @@
    "kind": "c",
    "koach": {
     "aggravations": 0,
-    "e1rm6": 0.038713,
-    "echecs": 0.021128,
-    "perf_a": 0.899696,
-    "perf_a_min": 0.881107,
+    "e1rm6": 0.062853,
+    "echecs": 0.027099,
+    "perf_a": 0.912519,
+    "perf_a_min": 0.880973,
     "plantages": [],
     "poussees": 0,
     "violations": 6
@@ -103,13 +103,13 @@
    "kind": "a",
    "koach": {
     "aggravations": 0,
-    "e1rm6": 0.041759,
-    "echecs": 0.011633,
-    "perf_a": 0.874673,
-    "perf_a_min": 0.834988,
+    "e1rm6": 0.038259,
+    "echecs": 0.012538,
+    "perf_a": 0.875758,
+    "perf_a_min": 0.853467,
     "plantages": [],
     "poussees": 0,
-    "violations": 4
+    "violations": 3
    },
    "role": "pire",
    "scenario": "reference",
@@ -135,10 +135,10 @@
    "kind": "b",
    "koach": {
     "aggravations": 0,
-    "e1rm6": 0.073455,
-    "echecs": 0.003161,
-    "perf_a": 0.818935,
-    "perf_a_min": 0.786383,
+    "e1rm6": 0.054785,
+    "echecs": 0.004341,
+    "perf_a": 0.840731,
+    "perf_a_min": 0.799642,
     "plantages": [],
     "poussees": 0,
     "violations": 0
@@ -167,13 +167,13 @@
    "kind": "c",
    "koach": {
     "aggravations": 0,
-    "e1rm6": 0.086287,
-    "echecs": 0.027798,
-    "perf_a": 0.811835,
-    "perf_a_min": 0.775716,
+    "e1rm6": 0.076485,
+    "echecs": 0.045021,
+    "perf_a": 0.827765,
+    "perf_a_min": 0.788364,
     "plantages": [],
     "poussees": 0,
-    "violations": 2
+    "violations": 8
    },
    "role": "pire",
    "scenario": "reference",
@@ -199,8 +199,8 @@
    "kind": "a",
    "koach": {
     "aggravations": 0,
-    "e1rm6": 0.141503,
-    "echecs": 0.006187,
+    "e1rm6": 0.151186,
+    "echecs": 0.00574,
     "perf_a": null,
     "perf_a_min": null,
     "plantages": [],
@@ -231,8 +231,8 @@
    "kind": "b",
    "koach": {
     "aggravations": 0,
-    "e1rm6": 0.146215,
-    "echecs": 0.003869,
+    "e1rm6": 0.141056,
+    "echecs": 0.002966,
     "perf_a": null,
     "perf_a_min": null,
     "plantages": [],
@@ -262,7 +262,7 @@
    "kind": "c",
    "koach": {
     "aggravations": 0,
-    "e1rm6": 0.130092,
+    "e1rm6": 0.138476,
     "echecs": 0.005005,
     "perf_a": null,
     "perf_a_min": null,
@@ -293,13 +293,13 @@
    "kind": "a",
    "koach": {
     "aggravations": 0,
-    "e1rm6": 0.080752,
-    "echecs": 0.010219,
+    "e1rm6": 0.076639,
+    "echecs": 0.008537,
     "perf_a": null,
     "perf_a_min": null,
     "plantages": [],
     "poussees": 0,
-    "violations": 29
+    "violations": 37
    },
    "role": "pire",
    "scenario": "reference",
@@ -325,8 +325,8 @@
    "kind": "b",
    "koach": {
     "aggravations": 0,
-    "e1rm6": 0.236824,
-    "echecs": 0.016417,
+    "e1rm6": 0.171956,
+    "echecs": 0.014293,
     "perf_a": null,
     "perf_a_min": null,
     "plantages": [],
@@ -357,13 +357,13 @@
    "kind": "c",
    "koach": {
     "aggravations": 0,
-    "e1rm6": 0.08848,
-    "echecs": 0.080747,
+    "e1rm6": 0.054271,
+    "echecs": 0.082596,
     "perf_a": null,
     "perf_a_min": null,
     "plantages": [],
     "poussees": 0,
-    "violations": 7
+    "violations": 9
    },
    "role": "pire",
    "scenario": "reference",
@@ -388,10 +388,10 @@
    "kind": "a",
    "koach": {
     "aggravations": 0,
-    "e1rm6": 0.013272,
-    "echecs": 0.009626,
-    "perf_a": 0.824402,
-    "perf_a_min": 0.790024,
+    "e1rm6": 0.01588,
+    "echecs": 0.009974,
+    "perf_a": 0.826281,
+    "perf_a_min": 0.77845,
     "plantages": [],
     "poussees": 0,
     "violations": 0
@@ -420,10 +420,10 @@
    "kind": "b",
    "koach": {
     "aggravations": 0,
-    "e1rm6": 0.093094,
-    "echecs": 0.002208,
-    "perf_a": 0.87908,
-    "perf_a_min": 0.761933,
+    "e1rm6": 0.062419,
+    "echecs": 0.00613,
+    "perf_a": 0.911582,
+    "perf_a_min": 0.896894,
     "plantages": [],
     "poussees": 0,
     "violations": 0
@@ -451,10 +451,10 @@
    "kind": "c",
    "koach": {
     "aggravations": 0,
-    "e1rm6": 0.060263,
-    "echecs": 0.028559,
-    "perf_a": 0.913583,
-    "perf_a_min": 0.902635,
+    "e1rm6": 0.056336,
+    "echecs": 0.025039,
+    "perf_a": 0.92246,
+    "perf_a_min": 0.920209,
     "plantages": [],
     "poussees": 0,
     "violations": 2
@@ -482,10 +482,10 @@
    "kind": "a",
    "koach": {
     "aggravations": 0,
-    "e1rm6": 0.034714,
-    "echecs": 0.012876,
-    "perf_a": 0.888844,
-    "perf_a_min": 0.851165,
+    "e1rm6": 0.038582,
+    "echecs": 0.012061,
+    "perf_a": 0.89374,
+    "perf_a_min": 0.859134,
     "plantages": [],
     "poussees": 0,
     "violations": 7
@@ -514,10 +514,10 @@
    "kind": "b",
    "koach": {
     "aggravations": 0,
-    "e1rm6": 0.070077,
-    "echecs": 0.002658,
-    "perf_a": 0.825195,
-    "perf_a_min": 0.767637,
+    "e1rm6": 0.05589,
+    "echecs": 0.001879,
+    "perf_a": 0.854426,
+    "perf_a_min": 0.783335,
     "plantages": [],
     "poussees": 0,
     "violations": 0
@@ -545,10 +545,10 @@
    "kind": "c",
    "koach": {
     "aggravations": 0,
-    "e1rm6": 0.084416,
-    "echecs": 0.045619,
-    "perf_a": 0.813406,
-    "perf_a_min": 0.779045,
+    "e1rm6": 0.089065,
+    "echecs": 0.047472,
+    "perf_a": 0.820804,
+    "perf_a_min": 0.795046,
     "plantages": [],
     "poussees": 0,
     "violations": 1
@@ -576,8 +576,8 @@
    "kind": "a",
    "koach": {
     "aggravations": 0,
-    "e1rm6": 0.133441,
-    "echecs": 0.002436,
+    "e1rm6": 0.139254,
+    "echecs": 0.002437,
     "perf_a": null,
     "perf_a_min": null,
     "plantages": [],
@@ -607,8 +607,8 @@
    "kind": "b",
    "koach": {
     "aggravations": 0,
-    "e1rm6": 0.142568,
-    "echecs": 0.004183,
+    "e1rm6": 0.14327,
+    "echecs": 0.004981,
     "perf_a": null,
     "perf_a_min": null,
     "plantages": [],
@@ -639,8 +639,8 @@
    "kind": "c",
    "koach": {
     "aggravations": 0,
-    "e1rm6": 0.1264,
-    "echecs": 0.006105,
+    "e1rm6": 0.124249,
+    "echecs": 0.007607,
     "perf_a": null,
     "perf_a_min": null,
     "plantages": [],
@@ -670,13 +670,13 @@
    "kind": "a",
    "koach": {
     "aggravations": 0,
-    "e1rm6": 0.079659,
-    "echecs": 0.044384,
+    "e1rm6": 0.083401,
+    "echecs": 0.03423,
     "perf_a": null,
     "perf_a_min": null,
     "plantages": [],
     "poussees": 0,
-    "violations": 17
+    "violations": 24
    },
    "role": "pire",
    "scenario": "reference",
@@ -701,13 +701,13 @@
    "kind": "b",
    "koach": {
     "aggravations": 0,
-    "e1rm6": 0.223444,
-    "echecs": 0.03203,
+    "e1rm6": 0.194152,
+    "echecs": 0.026978,
     "perf_a": null,
     "perf_a_min": null,
     "plantages": [],
     "poussees": 0,
-    "violations": 1
+    "violations": 2
    },
    "role": "pire",
    "scenario": "reference",
@@ -732,13 +732,13 @@
    "kind": "c",
    "koach": {
     "aggravations": 0,
-    "e1rm6": 0.084719,
-    "echecs": 0.066578,
+    "e1rm6": 0.102439,
+    "echecs": 0.067036,
     "perf_a": null,
     "perf_a_min": null,
     "plantages": [],
     "poussees": 0,
-    "violations": 3
+    "violations": 7
    },
    "role": "pire",
    "scenario": "reference",
@@ -764,10 +764,10 @@
    "kind": "a",
    "koach": {
     "aggravations": 0,
-    "e1rm6": 0.061673,
-    "echecs": 0.006621,
-    "perf_a": 0.87269,
-    "perf_a_min": 0.81423,
+    "e1rm6": 0.037922,
+    "echecs": 0.009889,
+    "perf_a": 0.89512,
+    "perf_a_min": 0.830031,
     "plantages": [],
     "poussees": 0,
     "violations": 9
@@ -795,10 +795,10 @@
    "kind": "b",
    "koach": {
     "aggravations": 0,
-    "e1rm6": 0.073728,
-    "echecs": 0.002134,
-    "perf_a": 0.881061,
-    "perf_a_min": 0.868429,
+    "e1rm6": 0.073576,
+    "echecs": 0.002179,
+    "perf_a": 0.904862,
+    "perf_a_min": 0.892806,
     "plantages": [],
     "poussees": 0,
     "violations": 0
@@ -826,10 +826,10 @@
    "kind": "c",
    "koach": {
     "aggravations": 0,
-    "e1rm6": 0.049733,
-    "echecs": 0.039731,
-    "perf_a": 0.917182,
-    "perf_a_min": 0.872908,
+    "e1rm6": 0.049409,
+    "echecs": 0.039876,
+    "perf_a": 0.934939,
+    "perf_a_min": 0.886719,
     "plantages": [],
     "poussees": 0,
     "violations": 0
@@ -858,13 +858,13 @@
    "kind": "a",
    "koach": {
     "aggravations": 0,
-    "e1rm6": 0.02554,
-    "echecs": 0.004425,
-    "perf_a": 0.892467,
-    "perf_a_min": 0.885249,
+    "e1rm6": 0.022283,
+    "echecs": 0.004464,
+    "perf_a": 0.920417,
+    "perf_a_min": 0.89124,
     "plantages": [],
     "poussees": 0,
-    "violations": 1
+    "violations": 0
    },
    "role": "pire",
    "scenario": "reference",
@@ -889,10 +889,10 @@
    "kind": "b",
    "koach": {
     "aggravations": 0,
-    "e1rm6": 0.064192,
-    "echecs": 0.001965,
-    "perf_a": 0.834801,
-    "perf_a_min": 0.785572,
+    "e1rm6": 0.051497,
+    "echecs": 0.002,
+    "perf_a": 0.857062,
+    "perf_a_min": 0.789669,
     "plantages": [],
     "poussees": 0,
     "violations": 0
@@ -920,10 +920,10 @@
    "kind": "c",
    "koach": {
     "aggravations": 0,
-    "e1rm6": 0.075214,
-    "echecs": 0.03255,
-    "perf_a": 0.825724,
-    "perf_a_min": 0.732583,
+    "e1rm6": 0.099176,
+    "echecs": 0.043915,
+    "perf_a": 0.822209,
+    "perf_a_min": 0.730866,
     "plantages": [],
     "poussees": 0,
     "violations": 5
@@ -952,8 +952,8 @@
    "kind": "a",
    "koach": {
     "aggravations": 0,
-    "e1rm6": 0.129865,
-    "echecs": 0.001015,
+    "e1rm6": 0.124947,
+    "echecs": 0.0005,
     "perf_a": null,
     "perf_a_min": null,
     "plantages": [],
@@ -983,7 +983,7 @@
    "kind": "b",
    "koach": {
     "aggravations": 0,
-    "e1rm6": 0.140661,
+    "e1rm6": 0.138199,
     "echecs": 0.008743,
     "perf_a": null,
     "perf_a_min": null,
@@ -1014,10 +1014,10 @@
    "kind": "a",
    "koach": {
     "aggravations": 0,
-    "e1rm6": 0.067353,
-    "echecs": 0.003669,
-    "perf_a": 0.921198,
-    "perf_a_min": 0.878592,
+    "e1rm6": 0.067922,
+    "echecs": 0.007344,
+    "perf_a": 0.921809,
+    "perf_a_min": 0.879448,
     "plantages": [],
     "poussees": 0,
     "violations": 8
@@ -1045,10 +1045,10 @@
    "kind": "b",
    "koach": {
     "aggravations": 0,
-    "e1rm6": 0.084579,
-    "echecs": 0.001689,
-    "perf_a": 0.90614,
-    "perf_a_min": 0.893534,
+    "e1rm6": 0.086063,
+    "echecs": 0.001718,
+    "perf_a": 0.922691,
+    "perf_a_min": 0.913571,
     "plantages": [],
     "poussees": 0,
     "violations": 2
@@ -1076,10 +1076,10 @@
    "kind": "c",
    "koach": {
     "aggravations": 0,
-    "e1rm6": 0.056959,
-    "echecs": 0.010646,
-    "perf_a": 0.92041,
-    "perf_a_min": 0.895775,
+    "e1rm6": 0.042203,
+    "echecs": 0.013495,
+    "perf_a": 0.928253,
+    "perf_a_min": 0.895754,
     "plantages": [],
     "poussees": 0,
     "violations": 0
@@ -1107,10 +1107,10 @@
    "kind": "a",
    "koach": {
     "aggravations": 0,
-    "e1rm6": 0.040038,
-    "echecs": 0.017406,
-    "perf_a": 0.918104,
-    "perf_a_min": 0.904149,
+    "e1rm6": 0.033423,
+    "echecs": 0.018531,
+    "perf_a": 0.935831,
+    "perf_a_min": 0.922188,
     "plantages": [],
     "poussees": 0,
     "violations": 4
@@ -1138,10 +1138,10 @@
    "kind": "b",
    "koach": {
     "aggravations": 0,
-    "e1rm6": 0.024495,
-    "echecs": 0.003792,
-    "perf_a": 0.918708,
-    "perf_a_min": 0.889951,
+    "e1rm6": 0.029803,
+    "echecs": 0.006865,
+    "perf_a": 0.928771,
+    "perf_a_min": 0.89791,
     "plantages": [],
     "poussees": 0,
     "violations": 0
@@ -1169,13 +1169,13 @@
    "kind": "c",
    "koach": {
     "aggravations": 0,
-    "e1rm6": 0.054228,
-    "echecs": 0.031677,
-    "perf_a": 0.924937,
-    "perf_a_min": 0.912862,
+    "e1rm6": 0.033476,
+    "echecs": 0.037794,
+    "perf_a": 0.934151,
+    "perf_a_min": 0.918675,
     "plantages": [],
     "poussees": 0,
-    "violations": 3
+    "violations": 2
    },
    "role": "temoin",
    "scenario": "reference",
@@ -1200,7 +1200,7 @@
    "kind": "a",
    "koach": {
     "aggravations": 0,
-    "e1rm6": 0.118513,
+    "e1rm6": 0.111494,
     "echecs": 0.001585,
     "perf_a": null,
     "perf_a_min": null,
@@ -1231,7 +1231,7 @@
    "kind": "b",
    "koach": {
     "aggravations": 0,
-    "e1rm6": 0.100508,
+    "e1rm6": 0.094827,
     "echecs": 0.001115,
     "perf_a": null,
     "perf_a_min": null,
@@ -1258,7 +1258,7 @@
  ],
  "critere": {
   "libelle": "pire cas de Koach >= pire cas du témoin (performance le jour J, moyenne par adversaire)",
-  "pire_koach": 0.788516,
+  "pire_koach": 0.798913,
   "pire_temoin": 0.0,
   "respecte": true,
   "saisons_temoin_manquantes": 0
@@ -1267,9 +1267,9 @@
   "pires": {
    "e1rm6": {
     "koach": {
-     "moyenne": 0.092,
+     "moyenne": 0.086556,
      "n": 32,
-     "pire": 0.236824
+     "pire": 0.194152
     },
     "temoin": {
      "moyenne": 0.119649,
@@ -1280,9 +1280,9 @@
    "n": 32,
    "perf_a": {
     "koach": {
-     "moyenne": 0.857102,
+     "moyenne": 0.87224,
      "n": 18,
-     "pire": 0.788516
+     "pire": 0.798913
     },
     "temoin": {
      "moyenne": 0.603271,
@@ -1292,9 +1292,9 @@
    },
    "perf_a_par_saison": {
     "koach": {
-     "moyenne": 0.81405,
+     "moyenne": 0.833319,
      "n": 18,
-     "pire": 0.732583
+     "pire": 0.730866
     },
     "temoin": {
      "moyenne": 0.541558,
@@ -1307,7 +1307,7 @@
      "aggravations": 0,
      "plantages": 0,
      "poussees": 0,
-     "violations_indicatives": 139
+     "violations_indicatives": 170
     },
     "temoin": {
      "aggravations": 0,
@@ -1319,9 +1319,9 @@
   "temoins": {
    "e1rm6": {
     "koach": {
-     "moyenne": 0.068334,
+     "moyenne": 0.062401,
      "n": 8,
-     "pire": 0.118513
+     "pire": 0.111494
     },
     "temoin": {
      "moyenne": 0.096764,
@@ -1332,9 +1332,9 @@
    "n": 8,
    "perf_a": {
     "koach": {
-     "moyenne": 0.918249,
+     "moyenne": 0.928584,
      "n": 6,
-     "pire": 0.90614
+     "pire": 0.921809
     },
     "temoin": {
      "moyenne": 0.587577,
@@ -1344,9 +1344,9 @@
    },
    "perf_a_par_saison": {
     "koach": {
-     "moyenne": 0.895811,
+     "moyenne": 0.904591,
      "n": 6,
-     "pire": 0.878592
+     "pire": 0.879448
     },
     "temoin": {
      "moyenne": 0.573007,
@@ -1359,7 +1359,7 @@
      "aggravations": 0,
      "plantages": 0,
      "poussees": 0,
-     "violations_indicatives": 18
+     "violations_indicatives": 17
     },
     "temoin": {
      "aggravations": 0,
@@ -1371,9 +1371,9 @@
   "tous": {
    "e1rm6": {
     "koach": {
-     "moyenne": 0.087267,
+     "moyenne": 0.081725,
      "n": 40,
-     "pire": 0.236824
+     "pire": 0.194152
     },
     "temoin": {
      "moyenne": 0.115072,
@@ -1384,9 +1384,9 @@
    "n": 40,
    "perf_a": {
     "koach": {
-     "moyenne": 0.872389,
+     "moyenne": 0.886326,
      "n": 24,
-     "pire": 0.788516
+     "pire": 0.798913
     },
     "temoin": {
      "moyenne": 0.599347,
@@ -1396,9 +1396,9 @@
    },
    "perf_a_par_saison": {
     "koach": {
-     "moyenne": 0.83449,
+     "moyenne": 0.851137,
      "n": 24,
-     "pire": 0.732583
+     "pire": 0.730866
     },
     "temoin": {
      "moyenne": 0.54942,
@@ -1411,7 +1411,7 @@
      "aggravations": 0,
      "plantages": 0,
      "poussees": 0,
-     "violations_indicatives": 157
+     "violations_indicatives": 187
     },
     "temoin": {
      "aggravations": 0,

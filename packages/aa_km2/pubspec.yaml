@@ -1,0 +1,7 @@
+name: aa_km2
+description: Outil de mise au point du lot KM2 (jamais sur moteurs) - formate kalis_adapt en CI et lance des commandes de diagnostic.
+version: 0.0.1
+publish_to: none
+
+environment:
+  sdk: ">=3.10.0 <4.0.0"

@@ -63,8 +63,11 @@ def test_campagne_rapide_structure_et_determinisme(tmp_path):
     e = d['criteres']['1_erreur_e1rm_rang_6']['detail']
     assert e['koach']['n'] > 0 and e['temoin']['n'] > 0 and 'sd' not in e['temoin']
     cal = d['criteres']['5_calibration_p_reussite']['detail']
-    assert set(cal['par_date']) == {'debut', 'mi_saison', 'moins_4_semaines'}
-    assert len(cal['par_date']['debut']['deciles']) == 10
+    assert set(cal['toutes_les_cibles']['par_date']) == {'debut', 'mi_saison', 'moins_4_semaines'}
+    assert len(cal['toutes_les_cibles']['par_date']['debut']['deciles']) == 10
+    assert len(cal['par_cible']['deciles']) == 10
+    mj = d['criteres']['2_mauvais_jour_isole']
+    assert 'apparie' in mj['methode'] and 'saisons_divergentes' in mj['detail']
     sec = d['criteres']['7_securite']['detail']['b_validateur']['vues']
     assert set(sec) == set(ca.VUES_SECURITE)
     assert {'koach', 'temoin'} <= set(d['secondaires']['ecart_effort'])

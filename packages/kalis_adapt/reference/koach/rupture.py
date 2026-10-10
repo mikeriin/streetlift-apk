@@ -50,6 +50,12 @@ DEFAUTS_RUPTURE = {
     'journal_dossier': 60,          # événements du journal dans le dossier
     'douleur_recente_j': 7,         # une douleur compte si signalée depuis 7 jours au plus
     'residu_reps_reference': 8.0,   # répétitions de référence de la conversion réserve -> e1RM
+    # Mauvais jours répétés : la branche « mauvais jour » du modèle garde la
+    # capacité à l'abri d'UN mauvais jour ; `mauvais_jours_suite` séances de
+    # suite tenues pour de mauvais jours (poids >= `mauvais_jour_poids`) ne
+    # sont plus un mauvais jour isolé : la cause « rupture » se lève.
+    'mauvais_jours_suite': 2,
+    'mauvais_jour_poids': 0.5,
 }
 
 CAUSES = ('rupture', 'residu', 'assiduite', 'douleur')
@@ -380,6 +386,7 @@ class Surveillance(Extension):
         self.alertes = [False, False, False, False]   # par cause, ordre CAUSES
         self.silence = [-1, -1, -1, -1]               # semaine de fin de silence
         self.p = 0.0
+        self.mj_suite = 0                             # séances de suite tenues pour de mauvais jours
         self.douleur_zones = []                       # zones > seuil (triées)
         self.reponses = []
         # Semaine allégée en cours : [jour de début, jour de fin (exclu),
@@ -397,6 +404,8 @@ class Surveillance(Extension):
         self.silence_semaines = int(_param(params, 'silence_semaines'))
         self.douleur_recente_j = int(_param(params, 'douleur_recente_j'))
         self.residu_reps = float(_param(params, 'residu_reps_reference'))
+        self.mj_suite_max = int(_param(params, 'mauvais_jours_suite'))
+        self.mj_poids = float(_param(params, 'mauvais_jour_poids'))
 
     # ------------------------------------------------------------------
     # Événements
@@ -405,6 +414,8 @@ class Surveillance(Extension):
         self.faites += 1
         if resume is not None:
             self.p = self.bocpd.ajouter(resume[1])
+            if len(resume) > 4 and resume[4] is not None:
+                self.mj_suite = self.mj_suite + 1 if resume[4] >= self.mj_poids else 0
             if len(resume) > 5:
                 # Résidu d'e1RM de la séance calculé par le modèle : écart
                 # (ln) entre la capacité du jour après la séance et la
@@ -540,7 +551,8 @@ class Surveillance(Extension):
         prévenues (contrôle dual : l'essai N-of-1 en cours est interrompu)."""
         avant = self.etat()['hors_modele']
         self.douleur_zones = self._douleur(koach)
-        actives = [self.p > self.alerte, self._residu_actif(), self._assiduite_active(),
+        repetes = self.mj_suite_max >= 1 and self.mj_suite >= self.mj_suite_max
+        actives = [self.p > self.alerte or repetes, self._residu_actif(), self._assiduite_active(),
                    len(self.douleur_zones) > 0]
         for c in range(4):
             if actives[c] and self.semaine >= self.silence[c]:
@@ -649,6 +661,7 @@ class Surveillance(Extension):
             self.bocpd.reinitialiser()
             self.p = 0.0
             action = {'action': 'elargir', 'facteur': facteur}
+        self.mj_suite = 0
         # Acquittement : chaque cause levée se tait `silence_semaines` semaines.
         for c in range(4):
             if self.alertes[c]:
@@ -668,7 +681,8 @@ class Surveillance(Extension):
             'bocpd': self.bocpd.etat(), 'semaine': self.semaine, 'faites': self.faites,
             'manquees': self.manquees, 'somme_rel': self.somme_rel, 'n_rel': self.n_rel,
             'semaines': [list(s) for s in self.semaines], 'alertes': list(self.alertes),
-            'silence': list(self.silence), 'p': self.p, 'douleur_zones': list(self.douleur_zones),
+            'silence': list(self.silence), 'p': self.p, 'mj_suite': self.mj_suite,
+            'douleur_zones': list(self.douleur_zones),
             'reponses': _copie(self.reponses),
             'allegement': None if self.allegement is None else list(self.allegement),
         }
@@ -687,6 +701,7 @@ class Surveillance(Extension):
         s.alertes = [bool(a) for a in etat['alertes']]
         s.silence = [int(v) for v in etat['silence']]
         s.p = float(etat['p'])
+        s.mj_suite = int(etat.get('mj_suite', 0))
         s.douleur_zones = list(etat['douleur_zones'])
         s.reponses = _copie(etat['reponses'])
         a = etat.get('allegement')
@@ -782,6 +797,8 @@ FIGEES = (
     ('controle_dual', 'semaines_min'), ('controle_dual', 'intervalle_max'),
     ('controle_dual', 'synthetique_semaines_min'), ('controle_dual', 'bras_semaines'),
     ('test_adaptatif', 'intervalle_declenchement'), ('test_adaptatif', 'jours_min_entre_tests'),
+    ('test_adaptatif', 'jours_min_entre_rampes'), ('test_adaptatif', 'rampe_pas_cran'),
+    ('test_adaptatif', 'rampe_cran_rir_marge'),
     ('rupture', 'douleur_secours'),
 )
 
