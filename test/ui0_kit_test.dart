@@ -3,7 +3,6 @@
 // (pilule, rayons des trois familles), aucun débordement à 320 dp et 200 %
 // de texte. Rendus de test dans le moteur Flutter (pas un téléphone).
 import 'package:flutter/material.dart';
-import 'package:flutter/semantics.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:streetlift_tracker/kit/catalog.dart';
 import 'package:streetlift_tracker/kit/kit.dart';

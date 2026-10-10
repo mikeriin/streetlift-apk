@@ -126,7 +126,9 @@ class KTextButton extends StatelessWidget {
       // Aligné au texte (lien sous un message) : sans marge à gauche.
       padding: alignStart
           ? const EdgeInsetsDirectional.only(end: KSpacing.s8)
-          : EdgeInsets.symmetric(horizontal: dense ? KSpacing.s8 : KSpacing.s12),
+          : EdgeInsets.symmetric(
+              horizontal: dense ? KSpacing.s8 : KSpacing.s12,
+            ),
       alignment: alignStart ? AlignmentDirectional.centerStart : null,
       shape: KRadius.pill,
       textStyle: KType.libelle,

@@ -167,8 +167,10 @@ class KDock extends StatelessWidget {
                       shape: KRadius.pill,
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: KSpacing.s12,
+                      // Marge de la pilule active ; un onglet replié garde
+                      // juste de quoi centrer son icône.
+                      padding: EdgeInsets.symmetric(
+                        horizontal: KSpacing.s4 + KSpacing.s8 * t,
                       ),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,

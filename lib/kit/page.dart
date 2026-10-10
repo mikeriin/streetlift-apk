@@ -396,8 +396,9 @@ class _Collapse extends StatelessWidget {
   Widget build(BuildContext context) {
     final s = context
         .dependOnInheritedWidgetOfExactType<FlexibleSpaceBarSettings>();
-    if (s == null)
+    if (s == null) {
       return visibleWhenCollapsed ? const SizedBox.shrink() : child;
+    }
     final range = s.maxExtent - s.minExtent;
     final t = range <= 0
         ? 1.0

@@ -95,36 +95,36 @@ class KStepper extends StatelessWidget {
       ),
     );
     final valueBox = Semantics(
-          label: semanticLabel,
-          value: value,
-          liveRegion: true,
-          excludeSemantics: true,
-          child: Container(
-            constraints: const BoxConstraints(
-              minWidth: KSize.target + KSpacing.s24 + KSpacing.s4,
-              minHeight: KSize.target,
-            ),
-            padding: const EdgeInsets.symmetric(horizontal: KSpacing.s12),
-            decoration: ShapeDecoration(color: k.haute, shape: KRadius.pill),
-            alignment: Alignment.center,
-            child: Text(
-              value,
-              textAlign: TextAlign.center,
-              style: KType.chiffreMoyen.copyWith(color: k.texte),
-            ),
-          ),
-        );
+      label: semanticLabel,
+      value: value,
+      liveRegion: true,
+      excludeSemantics: true,
+      child: Container(
+        constraints: const BoxConstraints(
+          minWidth: KSize.target + KSpacing.s24 + KSpacing.s4,
+          minHeight: KSize.target,
+        ),
+        padding: const EdgeInsets.symmetric(horizontal: KSpacing.s12),
+        decoration: ShapeDecoration(color: k.haute, shape: KRadius.pill),
+        alignment: Alignment.center,
+        child: Text(
+          value,
+          textAlign: TextAlign.center,
+          style: KType.chiffreMoyen.copyWith(color: k.texte),
+        ),
+      ),
+    );
     // Place bornée : la valeur passe à la ligne plutôt que de déborder.
     return LayoutBuilder(
       builder: (context, c) => Row(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        button(Icons.remove_rounded, decrementLabel, onDecrement),
-        const SizedBox(width: KSpacing.s4),
-        if (c.maxWidth.isFinite) Flexible(child: valueBox) else valueBox,
-        const SizedBox(width: KSpacing.s4),
-        button(Icons.add_rounded, incrementLabel, onIncrement),
-      ],
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          button(Icons.remove_rounded, decrementLabel, onDecrement),
+          const SizedBox(width: KSpacing.s4),
+          if (c.maxWidth.isFinite) Flexible(child: valueBox) else valueBox,
+          const SizedBox(width: KSpacing.s4),
+          button(Icons.add_rounded, incrementLabel, onIncrement),
+        ],
       ),
     );
   }
