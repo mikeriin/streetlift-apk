@@ -38,3 +38,11 @@ Un lot d'écrans ne touche **que** les fichiers que le cahier (§6.2) lui attrib
 4. Ligne d'`ETAT_UI.md` (« livré » + liens) ; notification `Kalis Track <LOT> livré (<résumé>). À voir : <captures>` ; **arrête-toi** (aucun `fire_trigger`, aucune tâche planifiée créée, modifiée ou supprimée).
 
 Interdits : modifier `packages/`, les moteurs, le format de sauvegarde, les migrations, la signature ; retirer une assertion de test sans remplacement équivalent ; publier sur `main` avant UI5 ; lancer un lot.
+
+## 5. Pause budget (DECISIONS_UI.md U0.13)
+
+Le propriétaire met en pause toute la refonte UI quand son utilisation atteint **80 %** (page « Utilisation » de claude.ai ; aucun outil de session ne lit ce pourcentage, c'est lui qui le signale). La pause est marquée par le fichier **`pipeline/ui/PAUSE`** sur la branche `pipeline` (date, heure, raison).
+1. **Au démarrage** d'une session (avant la prise du lot, §1) et **à chaque sauvegarde** (§9 de PIPELINE_CP.md) : `git fetch origin pipeline` puis `git cat-file -e origin/pipeline:pipeline/ui/PAUSE`. S'il existe : sauvegarde complète sur `ui-sauvegardes/<LOT>` (SAUVEGARDE.md à jour : fait, en cours, reste à faire), ligne d'`ETAT_UI.md` → « en pause depuis AAAA-MM-JJ HH:MM UTC (sauvegarde <commit>) », notification `Kalis Track <LOT> en pause (budget)`, puis **arrête-toi** sans livrer ni lancer de contrôle CI.
+2. Pendant la pause, la conversation de pilotage ne lance, ne relance et ne fusionne rien ; la tâche planifiée de la refonte UI est désactivée.
+3. **Reprise** sur demande du propriétaire seulement : le pilotage supprime `PAUSE`, réactive la tâche, passe chaque lot « en pause » à « à faire (reprise) » et le relance ; la session repart de `ui-sauvegardes/<LOT>`.
+
