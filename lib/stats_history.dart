@@ -60,11 +60,14 @@ class _StatsHistoryState extends State<StatsHistory> {
     return StatsList(
       key: const PageStorageKey('stats-history-scroll'),
       children: [
-        const StatsIntro('Ton journal d’entraînement'),
+        const StatsIntro(
+          'Ton journal d’entraînement',
+          lead: 'Tes séances terminées, avec leurs notes.',
+        ),
         KSearchField(
           key: const ValueKey('stats-history-search'),
           controller: _search,
-          hint: 'Rechercher une séance ou une note',
+          hint: 'Séance ou note',
           onChanged: (_) => setState(() {}),
         ),
         Padding(
@@ -106,17 +109,18 @@ class StatsHistoryTile extends StatelessWidget {
     final date = entry.at;
     final when = date == null
         ? 'Date non renseignée'
-        : '${statsDate(date)}/${date.year} · ${date.hour.toString().padLeft(2, '0')}:${date.minute.toString().padLeft(2, '0')}';
+        : '${statsDate(date)}/${date.year}\u00A0· ${date.hour.toString().padLeft(2, '0')}:${date.minute.toString().padLeft(2, '0')}';
     final noteCount = entry.session.ex.values
         .where((e) => e.note.trim().isNotEmpty)
         .length;
-    final detail =
-        'Séance terminée${noteCount == 0 ? '' : ' · $noteCount note${noteCount > 1 ? 's' : ''}'}';
+    final notes = noteCount == 0
+        ? null
+        : '$noteCount note${noteCount > 1 ? 's' : ''}';
     return KMenuRow(
       key: ValueKey('stats-log-${entry.id}'),
       leading: KIconTile(Icons.task_alt_rounded, color: k.validation),
       title: entry.title,
-      subtitle: '$when\n$detail',
+      subtitle: notes == null ? when : '$when\n$notes',
       onTap: () => Navigator.push(
         context,
         MaterialPageRoute(

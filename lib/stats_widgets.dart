@@ -188,15 +188,28 @@ class StatsGrid extends StatelessWidget {
       final large = MediaQuery.textScalerOf(context).scale(1) >= 1.5;
       final count = large || bounds.maxWidth < 240 ? 1 : 2;
       const gap = KSpacing.cardGap;
-      return Wrap(
-        spacing: gap,
-        runSpacing: gap,
+      // Tuiles d'une même rangée à la même hauteur.
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          for (final child in children)
-            SizedBox(
-              width: (bounds.maxWidth - gap * (count - 1)) / count,
-              child: child,
+          for (var r = 0; r < children.length; r += count) ...[
+            if (r > 0) const SizedBox(height: gap),
+            IntrinsicHeight(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  for (var c = r; c < r + count; c++) ...[
+                    if (c > r) const SizedBox(width: gap),
+                    Expanded(
+                      child: c < children.length
+                          ? children[c]
+                          : const SizedBox.shrink(),
+                    ),
+                  ],
+                ],
+              ),
             ),
+          ],
         ],
       );
     },

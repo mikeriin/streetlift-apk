@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dev/dev_widgets.dart' show HeaderLogo;
 import 'kit/kit.dart';
 import 'store_widget.dart';
 import 'stats_navigation.dart';
@@ -180,6 +181,14 @@ class _RootHeader extends StatelessWidget {
           ),
           const SizedBox(width: KSpacing.s8),
           action,
+          // Logo à sa place historique (cahier §1 ; gestes du mode dev).
+          const Padding(
+            padding: EdgeInsetsDirectional.only(
+              start: KSpacing.s4,
+              end: KSpacing.s8,
+            ),
+            child: HeaderLogo(),
+          ),
         ],
       ),
     );
@@ -196,16 +205,29 @@ class _StatsTabs extends StatelessWidget {
   Widget build(BuildContext context) {
     final k = KTokens.of(context);
     return Padding(
-      padding: const EdgeInsets.only(
-        left: KSpacing.s12,
-        top: KSpacing.s4,
-        right: KSpacing.s12,
-      ),
-      child: TabBar(
+      padding: const EdgeInsets.only(top: KSpacing.s4),
+      // Fondu sur les bords : on devine que la rangée défile (grand texte).
+      child: ShaderMask(
+        blendMode: BlendMode.dstIn,
+        shaderCallback: (rect) => LinearGradient(
+          colors: [
+            k.fond.withValues(alpha: 0),
+            k.fond,
+            k.fond,
+            k.fond.withValues(alpha: 0),
+          ],
+          stops: [
+            0,
+            KSpacing.s12 / rect.width,
+            1 - KSpacing.s12 / rect.width,
+            1,
+          ],
+        ).createShader(rect),
+        child: TabBar(
         controller: controller,
         isScrollable: true,
         tabAlignment: TabAlignment.start,
-        padding: EdgeInsets.zero,
+        padding: const EdgeInsets.symmetric(horizontal: KSpacing.s12),
         labelPadding: EdgeInsets.zero,
         indicator: ShapeDecoration(color: k.pleine, shape: KRadius.pill),
         indicatorSize: TabBarIndicatorSize.tab,
@@ -229,6 +251,7 @@ class _StatsTabs extends StatelessWidget {
               ),
             ),
         ],
+      ),
       ),
     );
   }
