@@ -1,4 +1,9 @@
-# Kalis Track dev6.11.1 — Calibrage des programmes (pipeline « Calibrage des programmes », voie App)
+# Kalis Track dev6.11.2 — Calibrage des programmes (pipeline « Calibrage des programmes », voie App)
+
+## dev6.11.2 — Charge fixe et prévision de fin de séance (lot CI1h)
+
+- **Charge fixe** : une ligne du programme à charge écrite fixe (« Squat endurance @ 70 kg », lignes au poids du corps sans lest) est servie à cette charge à chaque série, dans les conseils et la prévision ; Koach ne règle que les répétitions (« Charge fixée par ton programme : je règle seulement les répétitions. »). La conduite sous douleur s'applique toujours.
+- **« La prochaine fois »** : même calcul que l'ouverture de la séance visée, qui est nommée avec sa date ; une prévision, recalculée le jour venu avec le bilan.
 
 ## dev6.11.1 — Moteurs 0.3.1 (lot CI1g)
 

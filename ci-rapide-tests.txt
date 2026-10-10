@@ -6,3 +6,6 @@ test/ci1f_formats_test.dart
 test/ci1g_paquets_test.dart
 test/ci1b_pain_test.dart
 test/g9_seance_test.dart
+test/g2_retrait_test.dart
+dev:test/g2_mode_dev_test.dart
+dev:test/g3_mode_dev_test.dart
