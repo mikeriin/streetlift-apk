@@ -1,0 +1,24 @@
+
+::group::✅ Passing tests
+✅ /home/runner/work/streetlift-apk/streetlift-apk/test/ui2_densite_capture_test.dart: densité de la page d’exercice
+✅ /home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_capture_test.dart: kit : sections × sombre, clair × bordeaux, neon
+✅ /home/runner/work/streetlift-apk/streetlift-apk/test/ui2_seance_capture_test.dart: séance : bilan, exercice, série, menus (bordeaux sombre)
+✅ /home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_capture_test.dart: kit : jetons et palette dans les 8 palettes, contraste renforcé
+✅ /home/runner/work/streetlift-apk/streetlift-apk/test/ui2_seance_capture_test.dart: bilan détaillé : douleur, feuille de zone (bordeaux sombre)
+✅ /home/runner/work/streetlift-apk/streetlift-apk/test/ui2_seance_capture_test.dart: résumé de Koach, historique, récompenses (bordeaux sombre)
+✅ /home/runner/work/streetlift-apk/streetlift-apk/test/ui0_kit_capture_test.dart: kit : 320 dp et 200 % de texte
+✅ /home/runner/work/streetlift-apk/streetlift-apk/test/ui2_seance_capture_test.dart: séance : bilan, exercice, série, menus (bordeaux clair)
+✅ /home/runner/work/streetlift-apk/streetlift-apk/test/ui2_seance_capture_test.dart: bilan détaillé : douleur, feuille de zone (bordeaux clair)
+✅ /home/runner/work/streetlift-apk/streetlift-apk/test/ui2_seance_capture_test.dart: résumé de Koach, historique, récompenses (bordeaux clair)
+✅ /home/runner/work/streetlift-apk/streetlift-apk/test/ui2_seance_capture_test.dart: séance : bilan, exercice, série, menus (neon sombre)
+✅ /home/runner/work/streetlift-apk/streetlift-apk/test/ui2_seance_capture_test.dart: bilan détaillé : douleur, feuille de zone (neon sombre)
+✅ /home/runner/work/streetlift-apk/streetlift-apk/test/ui2_seance_capture_test.dart: résumé de Koach, historique, récompenses (neon sombre)
+✅ /home/runner/work/streetlift-apk/streetlift-apk/test/ui2_seance_capture_test.dart: séance : bilan, exercice, série, menus (neon clair)
+✅ /home/runner/work/streetlift-apk/streetlift-apk/test/ui2_seance_capture_test.dart: bilan détaillé : douleur, feuille de zone (neon clair)
+✅ /home/runner/work/streetlift-apk/streetlift-apk/test/ui2_seance_capture_test.dart: résumé de Koach, historique, récompenses (neon clair)
+✅ /home/runner/work/streetlift-apk/streetlift-apk/test/ui2_seance_capture_test.dart: 320 dp à 200 % de texte : bilan, exercice, menu, fin
+✅ /home/runner/work/streetlift-apk/streetlift-apk/test/ui2_seance_capture_test.dart: 360 × 760 : cinq séries visibles sans défilement
+✅ /home/runner/work/streetlift-apk/streetlift-apk/test/ui2_seance_capture_test.dart: chrono de mode : bouton et barre lancée
+::endgroup::
+
+🎉 19 tests passed.

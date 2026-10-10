@@ -1,0 +1,38 @@
+00:00 +0: loading /home/runner/work/streetlift-apk/streetlift-apk/test/ui2_seance_test.dart
+00:00 +0: /home/runner/work/streetlift-apk/streetlift-apk/test/ui2_seance_test.dart: (setUpAll)
+00:00 +1: /home/runner/work/streetlift-apk/streetlift-apk/test/ui2_seance_test.dart: (setUpAll)
+00:00 +1: /home/runner/work/streetlift-apk/streetlift-apk/test/ui2_tmp_g9_seance_test.dart: magasin programme du propriétaire (C11) : bloc annoté, séance servie par kalis_adapt, structure intacte
+00:02 +2: /home/runner/work/streetlift-apk/streetlift-apk/test/ui2_seance_test.dart: menu ⋮ : feuille d’actions au contenu du §4.1, suppression dans le dernier groupe, confirmée
+00:02 +3: /home/runner/work/streetlift-apk/streetlift-apk/test/ui2_seance_test.dart: menu ⋮ : feuille d’actions au contenu du §4.1, suppression dans le dernier groupe, confirmée
+00:02 +4: /home/runner/work/streetlift-apk/streetlift-apk/test/ui2_seance_test.dart: menu ⋮ : feuille d’actions au contenu du §4.1, suppression dans le dernier groupe, confirmée
+00:02 +5: /home/runner/work/streetlift-apk/streetlift-apk/test/ui2_seance_test.dart: menu ⋮ : feuille d’actions au contenu du §4.1, suppression dans le dernier groupe, confirmée
+00:03 +6: /home/runner/work/streetlift-apk/streetlift-apk/test/ui2_seance_test.dart: menu ⋮ : feuille d’actions au contenu du §4.1, suppression dans le dernier groupe, confirmée
+00:03 +7: /home/runner/work/streetlift-apk/streetlift-apk/test/ui2_tmp_g9_seance_test.dart: magasin prescription d’un autre jour, séance pas commencée : nouvelle prescription, bilan reposé ; temps et douleurs gardés quand l’ajustement est annulé
+00:03 +8: /home/runner/work/streetlift-apk/streetlift-apk/test/ui2_seance_test.dart: Mes références depuis la séance : 2 appuis, même page
+00:03 +9: /home/runner/work/streetlift-apk/streetlift-apk/test/ui2_seance_test.dart: Mes références depuis la séance : 2 appuis, même page
+00:04 +10: /home/runner/work/streetlift-apk/streetlift-apk/test/ui2_seance_test.dart: Mes références depuis la séance : 2 appuis, même page
+00:04 +11: /home/runner/work/streetlift-apk/streetlift-apk/test/ui2_tmp_g9_seance_test.dart: magasin conseil après chaque série, mode assisté : appliqué aux séries suivantes non modifiées, annulable
+00:04 +12: /home/runner/work/streetlift-apk/streetlift-apk/test/ui2_seance_test.dart: fiche d’exercice pendant la séance : ⓘ › Voir la fiche (2)
+00:04 +13: /home/runner/work/streetlift-apk/streetlift-apk/test/ui2_seance_test.dart: fiche d’exercice pendant la séance : ⓘ › Voir la fiche (2)
+00:05 +14: /home/runner/work/streetlift-apk/streetlift-apk/test/ui2_tmp_g9_seance_test.dart: magasin sauvegarde : séance du moteur et flammes exportées, relues ; import strict d’une séance du moteur invalide refusé
+00:05 +15: /home/runner/work/streetlift-apk/streetlift-apk/test/ui2_seance_test.dart: douleur pendant la séance : ⋮ › Douleur ou malaise ? › zone › Enregistrer (4 appuis), sur la section Douleur
+00:05 +16: /home/runner/work/streetlift-apk/streetlift-apk/test/ui2_seance_test.dart: douleur pendant la séance : ⋮ › Douleur ou malaise ? › zone › Enregistrer (4 appuis), sur la section Douleur
+00:06 +17: /home/runner/work/streetlift-apk/streetlift-apk/test/ui2_seance_test.dart: douleur pendant la séance : ⋮ › Douleur ou malaise ? › zone › Enregistrer (4 appuis), sur la section Douleur
+00:06 +18: /home/runner/work/streetlift-apk/streetlift-apk/test/ui2_seance_test.dart: douleur pendant la séance : ⋮ › Douleur ou malaise ? › zone › Enregistrer (4 appuis), sur la section Douleur
+00:06 +19: /home/runner/work/streetlift-apk/streetlift-apk/test/ui2_tmp_g9_seance_test.dart: écrans (setUpAll)
+00:06 +19: /home/runner/work/streetlift-apk/streetlift-apk/test/ui2_seance_test.dart: liste des exercices : feuille de liste, page courante cernée ; « J’ai seulement… minutes » garde l’exercice en cours
+00:07 +20: /home/runner/work/streetlift-apk/streetlift-apk/test/ui2_tmp_g9_seance_test.dart: écrans bilan : « Comment tu te sens ? », réponse basse → détail sur un seul écran, « Passer » partout ; flammes obligatoires ; fin de séance
+00:09 +21: /home/runner/work/streetlift-apk/streetlift-apk/test/ui2_tmp_ui_refactor_test.dart: les onglets et le changement de thème conservent la semaine choisie
+00:10 +22: /home/runner/work/streetlift-apk/streetlift-apk/test/ui2_tmp_ui_refactor_test.dart: les onglets et le changement de thème conservent la semaine choisie
+00:10 +23: /home/runner/work/streetlift-apk/streetlift-apk/test/ui2_tmp_ui_refactor_test.dart: les onglets et le changement de thème conservent la semaine choisie
+00:10 +24: /home/runner/work/streetlift-apk/streetlift-apk/test/ui2_tmp_ui_refactor_test.dart: les onglets et le changement de thème conservent la semaine choisie
+00:10 +25: /home/runner/work/streetlift-apk/streetlift-apk/test/ui2_tmp_ui_refactor_test.dart: les onglets et le changement de thème conservent la semaine choisie
+00:11 +26: /home/runner/work/streetlift-apk/streetlift-apk/test/ui2_tmp_ui_refactor_test.dart: cartes, notes et saisies survivent aux boutons et au sélecteur d’exercices
+00:12 +27: /home/runner/work/streetlift-apk/streetlift-apk/test/ui2_tmp_ui_refactor_test.dart: les exercices enchaînés ont chacun leur carte et leur note
+00:12 +28: /home/runner/work/streetlift-apk/streetlift-apk/test/ui2_tmp_ui_refactor_test.dart: les séances suivent une rotation et une grande largeur
+00:12 +29: /home/runner/work/streetlift-apk/streetlift-apk/test/ui2_tmp_ui_refactor_test.dart: écrans et formulaires à 320 px, texte 130 %, thème true
+00:13 +30: /home/runner/work/streetlift-apk/streetlift-apk/test/ui2_tmp_ui_refactor_test.dart: écrans et formulaires à 320 px, texte 130 %, thème false
+00:14 +31: /home/runner/work/streetlift-apk/streetlift-apk/test/ui2_tmp_ui_refactor_test.dart: cinq séries, charge et effort restent visibles sans défilement
+00:15 +32: /home/runner/work/streetlift-apk/streetlift-apk/test/ui2_tmp_ui_refactor_test.dart: les actions de sauvegarde ouvrent l’export et l’import
+00:15 +33: /home/runner/work/streetlift-apk/streetlift-apk/test/ui2_tmp_ui_refactor_test.dart: (tearDownAll)
+00:15 +33: All tests passed!

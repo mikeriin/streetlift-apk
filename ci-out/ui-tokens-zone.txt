@@ -1,0 +1,10 @@
+Relevé des valeurs écrites en dur (cahier UI §6.1) et des menus hors gabarit
+  UI0 : 0
+  UI1 : 92
+  UI2 : 0
+  UI3 : 101
+  UI4 : 131
+  UI5 : 4
+  total : 328
+
+Zone UI2 : 0 valeur(s) à remplacer
