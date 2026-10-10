@@ -657,7 +657,7 @@ kc.IntraSessionAdvice fixedLoadAdvice(
   final ref = planned?.low ?? planned?.high ?? base;
   if (base == null || ref == null) return rest;
   final floor = (ref / 2).ceil();
-  var n = missed ? done! : base - gap.ceil();
+  var n = missed ? done : base - gap.ceil();
   if (n > base - 1) n = base - 1;
   if (n < floor) n = floor;
   if (n >= base || n < 1) return rest;
@@ -672,7 +672,7 @@ kc.IntraSessionAdvice fixedLoadAdvice(
       missed
           ? kc.Reason(
               code: 'adapt.set_failed',
-              params: {'missingReps': low! - done!},
+              params: {'missingReps': low - done},
             )
           : kc.Reason(
               code: 'adapt.flames_above_target',

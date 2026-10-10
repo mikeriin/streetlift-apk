@@ -1,8 +1,14 @@
 # Kalis Track — Suivi du projet
 
-**Passe actuelle : CI1g (pipeline CP), version dev6.11.1 ; précédent : dev6.11.0 (CI1f)**  
-**Date : 9 octobre 2026, Europe/Paris — version : 6.11.1+114, affichée « dev6.11.1 » dans l'APK (versionCode réel fixé par la CI de build)**  
+**Passe actuelle : CI1h (pipeline CP), version dev6.11.2 ; précédent : dev6.11.1 (CI1g)**  
+**Date : 10 octobre 2026, Europe/Paris — version : 6.11.2+115, affichée « dev6.11.2 » dans l'APK (versionCode réel fixé par la CI de build)**  
 **Statut : contrôlé en CI (branche `claude/ci-3d`, rendu réel sur émulateur Android) ; à valider par le propriétaire.**
+
+## CI1h — Charge fixe et prévision de fin de séance (version dev6.11.2, pipeline CP, DECISIONS_CP.md C15)
+
+- **Charge fixe (C15.2)** : une ligne du programme de 40 semaines à charge écrite fixe (« Squat endurance @ 70 kg », 0 kg de lest d'une ligne au poids du corps) est servie à sa charge écrite à chaque série, dans les conseils entre séries et dans la prévision ; seules les répétitions bougent (jamais au-delà de la ligne ; série trop dure : baisse, jamais sous la moitié) ; la conduite sous douleur s'applique ; « Dead-hang lesté ou PdC » reste libre.
+- **Prévision (C15.4)** : « La prochaine fois » et l'ouverture d'une séance non commencée passent par le même calcul ; une séance future ouverte en avance est prescrite à sa date prévue ; chaque ligne nomme la séance visée et sa date, sous « Prévision : je recalcule chaque séance le jour venu, avec ton bilan. »
+- Paquets inchangés. Tests : `test/ci1h_charge_fixe_test.dart`.
 
 ## CI1g — Paquets 0.3.1 (version dev6.11.1, pipeline CP, DECISIONS_CP.md C11.7)
 

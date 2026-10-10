@@ -80,8 +80,8 @@ class DevNamingTest(unittest.TestCase):
 
     def test_app_label_follows_pubspec_and_dev_flag(self):
         version, build = _pubspec_version()
-        # CI1g : 6.11.1 (dev6.11.1).
-        self.assertEqual(version, '6.11.1')
+        # CI1h : 6.11.2 (dev6.11.2).
+        self.assertEqual(version, '6.11.2')
         self.assertGreaterEqual(int(build), 98)
         self.assertIn(f"const kVersion = '{version}';", SETTINGS)
         self.assertIn("const kAppVersion = kDevBuild ? 'dev$kVersion' : kVersion;", SETTINGS)

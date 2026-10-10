@@ -21,7 +21,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:streetlift_tracker/adapt/adapt_summary_screen.dart'
     show summaryTargetText;
 import 'package:streetlift_tracker/adapt/adapt_texts.dart';
-import 'package:streetlift_tracker/adapt/session_adapt.dart';
 import 'package:streetlift_tracker/athlete_profile.dart';
 import 'package:streetlift_tracker/models.dart';
 import 'package:streetlift_tracker/store.dart';
@@ -33,7 +32,11 @@ bool _isSquat(String name) => name.startsWith('Squat endurance @ 70');
 /// Sauvegarde du propriétaire (programme commencé le 13/07/2026), journal
 /// jusqu'à S[lastWeek]·J[lastJ], séries « faciles » : 4 répétitions en
 /// réserve partout ; squat endurance à 70 kg × 15.
-Future<void> _ownerEasy(AppStore app, {int lastWeek = 13, int lastJ = 4}) async {
+Future<void> _ownerEasy(
+  AppStore app, {
+  int lastWeek = 13,
+  int lastJ = 4,
+}) async {
   final b = filledBackup(app);
   final logs = (b['logs'] as Map).cast<String, dynamic>();
   logs.removeWhere((k, _) {
@@ -57,6 +60,25 @@ Future<void> _ownerEasy(AppStore app, {int lastWeek = 13, int lastJ = 4}) async 
       }
     }
   }
+  // Références du Pilotage du propriétaire (maximums de répétitions,
+  // 1RM) : lignes « N × (coef × réf.) reps » portées au moteur.
+  final pilot = (b['pilotage'] as Map).cast<String, dynamic>();
+  const refs = {
+    'B4': 71.5,
+    'B8': 55.0,
+    'B9': 75.0,
+    'B10': 15.0,
+    'B11': 120.0,
+    'B16': 10.0,
+    'B17': 30.0,
+    'B18': 70.0,
+    'B19': 65.0,
+    'B20': 35.0,
+  };
+  for (final e in refs.entries) {
+    pilot.putIfAbsent(e.key, () => e.value);
+  }
+  b['pilotage'] = pilot;
   b['programStart'] = {
     'status': 'set',
     'date': '2026-07-13',
@@ -148,7 +170,8 @@ void main() {
               continue;
             }
             final slot = imp.slotOf(w.n, d.j, e.id);
-            final locked = slot != null && imp.fixedLoad['${w.n}|$slot'] != null;
+            final locked =
+                slot != null && imp.fixedLoad['${w.n}|$slot'] != null;
             final x = byName[e.name] ?? (0, kg, 0);
             byName[e.name] = (x.$1 + 1, kg, x.$3 + (locked ? 1 : 0));
           }
@@ -316,7 +339,7 @@ void main() {
       // Allègement d'une douleur : gardé.
       final hurt = fixedLoadItem(
         it.copyWith(
-          startLoadKg: 50,
+          startLoadKg: 50.0,
           reasons: const [
             kc.Reason(code: 'adapt.pain_reported', params: {'zone': 'knee'}),
           ],
@@ -359,49 +382,52 @@ void main() {
       print('CI1H|pdc|S14J4|${[for (final x in pdc) x.name]}');
     });
 
-    test('douleur au-dessus du seuil : conduite sous douleur appliquée', () async {
-      await _ownerEasy(app, lastJ: 6);
-      clock = DateTime(2026, 10, 17, 9);
-      final base = app.program.week(14).day(6)!;
-      app.adaptOpen(14, base);
-      final e = _served(app, 14, 6, 'Squat endurance');
-      final slot = e.slotId!;
-      final squatId = app.adaptItemFor(14, 6, e)!.exerciseId;
-      final a = app.adaptAnswer(
-        14,
-        base,
-        const kc.HealthCheck(
-          pains: [
-            kc.PainReport(
-              zone: kc.BodyZone.knee,
-              side: kc.BodySide.both,
-              intensity: 7,
-              phase: kc.PainPhase.before,
-            ),
-          ],
-        ),
-      )!;
-      final items = a.active.items.where((x) => x.slotId == slot).toList();
-      bool painReason(kc.Reason r) =>
-          r.code.startsWith('adapt.pain') ||
-          (r.code == 'adapt.load_held' &&
-              '${r.params['cause']}'.startsWith('pain'));
-      // ignore: avoid_print
-      print(
-        'CI1H|douleur|S14J6|${[for (final it in items) '${it.exerciseId}:${_loads(it)}:${it.reasons.map((r) => r.code).toList()}']}',
-      );
-      final applied =
-          items.isEmpty ||
-          items.first.exerciseId != squatId ||
-          items.first.reasons.any(painReason) ||
-          a.active.reasons.any(painReason);
-      expect(applied, isTrue);
-      for (final it in items) {
-        for (final kg in _loads(it)) {
-          expect(kg == null || kg <= 70, isTrue);
+    test(
+      'douleur au-dessus du seuil : conduite sous douleur appliquée',
+      () async {
+        await _ownerEasy(app, lastJ: 6);
+        clock = DateTime(2026, 10, 17, 9);
+        final base = app.program.week(14).day(6)!;
+        app.adaptOpen(14, base);
+        final e = _served(app, 14, 6, 'Squat endurance');
+        final slot = e.slotId!;
+        final squatId = app.adaptItemFor(14, 6, e)!.exerciseId;
+        final a = app.adaptAnswer(
+          14,
+          base,
+          const kc.HealthCheck(
+            pains: [
+              kc.PainReport(
+                zone: kc.BodyZone.knee,
+                side: kc.BodySide.both,
+                intensity: 7,
+                phase: kc.PainPhase.before,
+              ),
+            ],
+          ),
+        )!;
+        final items = a.active.items.where((x) => x.slotId == slot).toList();
+        bool painReason(kc.Reason r) =>
+            r.code.startsWith('adapt.pain') ||
+            (r.code == 'adapt.load_held' &&
+                '${r.params['cause']}'.startsWith('pain'));
+        // ignore: avoid_print
+        print(
+          'CI1H|douleur|S14J6|${[for (final it in items) '${it.exerciseId}:${_loads(it)}:${it.reasons.map((r) => r.code).toList()}']}',
+        );
+        final applied =
+            items.isEmpty ||
+            items.first.exerciseId != squatId ||
+            items.first.reasons.any(painReason) ||
+            a.active.reasons.any(painReason);
+        expect(applied, isTrue);
+        for (final it in items) {
+          for (final kg in _loads(it)) {
+            expect(kg == null || kg <= 70, isTrue);
+          }
         }
-      }
-    });
+      },
+    );
 
     test('« Dead-hang lesté ou PdC » : non verrouillée', () async {
       await _ownerEasy(app);
@@ -460,7 +486,6 @@ void main() {
         expect(off, 0);
       });
     }
-
   });
 
   group('défaut 2 — prévision de fin de séance', () {
@@ -511,7 +536,8 @@ void main() {
         // ignore: avoid_print
         print('CI1H|prevision|S${w}J$j|$compared');
         if (w == 13 && j == 6) {
-          final squat = next.firstWhere((x) => _isSquat(x.name));
+          final squatId = _served(app, 13, 6, 'Squat endurance').catalogId;
+          final squat = next.firstWhere((x) => x.exerciseId == squatId);
           expect((squat.nextWeek, squat.nextJ), (14, 6));
           expect(squat.next!.kg, 70);
         }
@@ -526,10 +552,7 @@ void main() {
       final eve = app.adaptOpen(14, base)!;
       expect(eve.date, '2026-10-16');
       expect(app.adaptPlanDay(14, 6).iso, '2026-10-17');
-      expect(
-        eve.plan.toJson(),
-        app.adaptPlannedSession(14, 6)!.toJson(),
-      );
+      expect(eve.plan.toJson(), app.adaptPlannedSession(14, 6)!.toJson());
       clock = DateTime(2026, 10, 17, 9); // le jour même
       final day = app.adaptOpen(14, base)!;
       expect(day.date, '2026-10-17');

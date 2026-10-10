@@ -328,6 +328,23 @@ vide ou absent.
 - Tests Dart du lot : `test/ci1g_paquets_test.dart`. Mise au point sur
   `claude/ci-ci1g-rapide` (`rapide.yml` seul, comme CI1c).
 
+### CI1h (dev6.11.2, pipeline CP, voie App)
+
+- Paquets inchangés (`kalis_core` 0.4.3, `kalis_plan` / `kalis_adapt`
+  0.3.1) ; logique de l'application seulement (DECISIONS_CP.md C15).
+- Charge fixe (C15.2) : `ImportedProgram.fixedLoad` (« semaine|emplacement »
+  → exercice écrit, charge écrite ; recalculé au chargement, jamais
+  sauvegardé) ; `fixedLoadItem` et `fixedLoadAdvice`
+  (`lib/adapt/session_adapt.dart`) appliqués à toute prescription
+  (`_adaptPrescribe`) et aux conseils entre séries (`adaptAfterSet`).
+- Prévision (C15.4) : `adaptPlannedSession` est le seul calcul d'une
+  séance non commencée (ouverture et « La prochaine fois »), au jour
+  `adaptPlanDay` (date prévue si elle est à venir).
+- Pas de cible émulateur nouvelle (C15.7) : le contrôle complet joue les
+  cibles existantes. Tests Dart du lot : `test/ci1h_charge_fixe_test.dart`
+  (relevés `CI1H|…` dans le journal des tests). Mise au point sur
+  `claude/ci-ci1h-rapide` (`rapide.yml` seul, comme CI1c).
+
 ### Mode dev dans les tests d'intégration
 
 - Données de la session personnelle semées par un `AppStore()` séparé avant
