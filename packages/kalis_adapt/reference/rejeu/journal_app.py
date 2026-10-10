@@ -67,7 +67,8 @@ NIVEAU_DEFAUT = 2
 CATEGORIES_TEST = ('test1rm', 'enduranceTest')
 UNITES_EXTERNES = ('kg de lest', 'kg barre', 'kg')
 MESURE_DU_TYPE = {'charge': 'one_rm_kg', 'reps': 'max_reps', 'tenue': 'max_hold_seconds'}
-COURBE_LAMBDA = 0.3              # forme de population de la courbe (params a_priori)
+COURBE_LAMBDA = 0.3              # forme de population de la courbe (params a_priori.courbe_forme)
+COURBE_ECHELLE = 0.10            # échelle de population (params a_priori.courbe_echelle)
 SD_DECLARE_ACCESSOIRE = 0.12      # écart-type (ln) d'une valeur déclarée indirecte
 _CLE = re.compile(r'^S(\d+)-J(\d+)$')
 _ECRIT = re.compile(r'^\s*(\d+)\s*[×xX]\s*(\d+)(?:\s*[-–]\s*(\d+))?\s*(s)?\s*(?:/\s*\w+)?\s*$')
@@ -227,7 +228,7 @@ def profil_de(export, programme, fiches, rapport):
     exp = ap.get('experience')
     if exp in NIVEAUX:
         niveau = NIVEAUX.index(exp)
-        rapport['profil_niveau_lu'] = 1
+        pass   # (niveau lu : non rapporté, attribut individuel)
     else:
         niveau = NIVEAU_DEFAUT
         rapport['profil_niveau_par_defaut'] = 1
@@ -287,7 +288,8 @@ def declares_initiaux(export, programme, fiches, rapport, poids=None):
                 rir = 2.0 if rir is None else float(rir)
                 reps = float(programme.accessoires[ref]) + rir
                 frac = float(fiche.get('fraction') or 0.0) * float(poids or 0.0)
-                g = (1.0 - COURBE_LAMBDA) * 0.0265 * (reps - 1.0) + COURBE_LAMBDA * 0.0892 * math.log(reps)
+                g = math.exp(COURBE_ECHELLE) * ((1.0 - COURBE_LAMBDA) * 0.0265 * (reps - 1.0)
+                                               + COURBE_LAMBDA * 0.0892 * math.log(reps))
                 un_rm = (v + frac) * math.exp(g) - frac
                 if un_rm <= 0:
                     continue

@@ -1,6 +1,6 @@
 # Sources des paramètres de Koach 1.0
 
-Rédigé le 09/10/2026, remis en accord avec le code et le fichier le 10/10/2026. Fichier décrit : `params/koach_params_v1.json`, SHA-256 `f48984a40f3bd3a23e0d7c00890faaf72f7a99549415446d03392084b7b7c0cf`, 297 clés (6 à la racine, 291 dans les onze sections). L'empreinte sera recalculée à la livraison du lot si le fichier change d'ici là.
+Rédigé le 09/10/2026, remis en accord avec le code et le fichier le 10/10/2026. Fichier décrit : `params/koach_params_v1.json`, SHA-256 `e9e315289def5ea0c5c0f5207005002e6b3d317d4786dc3d595e25359d72c47e`, 305 clés (6 à la racine, 299 dans les onze sections). L'empreinte sera recalculée à la livraison du lot si le fichier change d'ici là.
 Compagnon de `CONTRAT_1_0.md` (§ 7 : rôle de chaque clé et module lecteur).
 
 ## Comment lire ce document
@@ -21,7 +21,7 @@ Règles suivies :
 - Une clé qu'aucun module de `koach/` ne lit est marquée **Non lue par le moteur** (vérifié par script sur le code du 10/10/2026 : recherche de la chaîne de la clé, hors entrées des dictionnaires de défauts).
 - Aucune référence n'est ajoutée à la liste ci-dessous ; aucun résultat du rejeu d'un journal réel n'est cité.
 
-Les scripts cités sont dans `/home/claude/km1-outils/`. `fit_reponse.py` (sur `/tmp/reponse.json`) et `diag_prior.py` ont été réexécutés le 09/10/2026 ; les chiffres donnés en sont tirés.
+Les scripts cités (`fit_reponse.py`, `diag_prior.py`, `essai2.py`…) sont des outils de travail du lot KM1, conservés sur la branche de sauvegarde `cp-sauvegardes/KM1` (dossier `km1-outils/`). `fit_reponse.py` et `diag_prior.py` ont été réexécutés le 09/10/2026 ; les chiffres donnés en sont tirés.
 
 ## Références de la littérature citées
 
@@ -209,6 +209,7 @@ Les références de Beck & Teboulle 2009 (FISTA), Held, Wolfe & Crowder 1974 et 
 | `rampe_sd_min` | 0.05 | choix raisonné | Aucune source. |
 | `rampe_confirmations` | 2 | choix raisonné | SAUVEGARDE, point 5 (« 2 notes basses »). |
 | `rampe_proba_min` | 0.75 | choix raisonné | SAUVEGARDE 19:50 (« garde de probabilité sur la montée (0,75) »). |
+| `rampe_series_travail` | 1 | choix raisonné | Ligne ajoutée le 10/10/2026 (clé présente dans le fichier sans ligne de source). Séries de travail retirées de la ligne quand une montée de vrai test est servie (la barre finale et sa confirmation remplacent des séries de travail : le volume dur du jour ne monte pas) ; aucune source chiffrée. |
 
 ### Section `planification`
 
@@ -230,10 +231,11 @@ Les références de Beck & Teboulle 2009 (FISTA), Held, Wolfe & Crowder 1974 et 
 | `graine` | 20261009 | choix raisonné | Date du lot ; arbitraire. |
 | `prudence_charge` | [0.6, 0.25] | choix raisonné | Quantile prudent 0,6 sd puis 0,25 sd après 3 séances ; aucune source. |
 | `transport_creation` | 0.25 | choix raisonné | Aucune source. |
-| `marge_cible` | 0.0 | choix raisonné | Aucune source. |
+| `marge_cible` | 0.065 | mesure sur le banc | Opposé du rendement moyen d'un test le jour J : ln(meilleure barre réussie / maximum vrai du jour) = −0,065 en moyenne (médiane −0,047) sur 267 tests chargés, 720 saisons (campagne `banc/campagne.py`, 10/10/2026). |
 | `abandon_hebdo` | 0.01 | choix raisonné | 1 %/sem. Littérature lue (Sperandei 2016 : < 5 % actifs à 12 mois en salle) seulement en seconde main et sur une autre population : non cité. |
 | `abandon_surcharge` | 3.0 | choix raisonné | Aucune source (Perri 2002 : adhérence meilleure à intensité modérée, sens seulement). |
 | `gain_min` | 0.002 | choix raisonné | Aucune source. |
+| `rendement_test_sd` | 0.07 | mesure sur le banc | Écart-type de ln(meilleure barre réussie / maximum vrai du jour) : 0,073 sur les mêmes 267 tests du jour J (campagne `banc/campagne.py`, 10/10/2026) ; ajouté à l'écart-type du jour dans P(cible). |
 
 ### Section `securite`
 
@@ -272,7 +274,7 @@ Les références de Beck & Teboulle 2009 (FISTA), Held, Wolfe & Crowder 1974 et 
 | `bilan_bas_rir_min` | 3.0 | repris de 0.3.1 | `coachLowDayRir` (inventaire A5.2). |
 | `coupure_j` | 14 | repris de 0.3.1 | `coachBreakDays` (inventaire A6.1). |
 | `coupure_series` | 0.8 | repris de 0.3.1 | `coachBreakSets` (inventaire A6.1). |
-| `tenue_hausse_par_niveau` | [0.2, 0.15, 0.1, 0.1] | repris de 0.3.1 | `coachHoldRise` (inventaire A9.1). |
+| `tenue_hausse_par_niveau` | [0.2, 0.15, 0.1, 0.1] | repris de 0.3.1 | `coachHoldRise` (inventaire A9.1). Mêmes valeurs que `SafetyLimits.straightArmRise` du banc (kalis_bench/lib/src/safety.dart:122 ; inventaire B6), lu aussi pour la hausse hebdomadaire des secondes bras tendus (retour gradué, `seance._limite_tenue`). |
 | `tenue_part_max` | 0.75 | repris de 0.3.1 | `coachHoldMaxShare` (inventaire A9.1). |
 | `simple_part_max` | 0.92 | repris de 0.3.1 | Constante 0,92 (A/coach.dart:1276) (inventaire A7.2 règle 7). |
 | `simple_part_max_bilan_bas` | 0.85 | repris de 0.3.1 | Constante 0,85 (A/coach.dart:1276) (inventaire A5.2, A7.2 règle 7). |
@@ -294,15 +296,20 @@ Les références de Beck & Teboulle 2009 (FISTA), Held, Wolfe & Crowder 1974 et 
 | `wod_jours_durs` | 2 | repris de 0.3.1 | `wodHardStreak` (inventaire A10.4). |
 | `wod_echelle` | 0.75 | repris de 0.3.1 | `wodScaleShare` (inventaire A10.4). |
 | `plafond_hebdo_par_niveau` | [12, 20, 25, 30] | repris de 0.3.1 | **Non lue par le moteur.** coachWeeklyCeilingSets (inventaire A11 ; critère du banc B3). Critère de sécurité de `kalis_bench` (partie B de l'inventaire), couple validé avec 0.3.1 ; le validateur injecté l'applique, en constantes du banc. |
-| `volume_hausse` | 0.2 | repris de 0.3.1 | **Non lue par le moteur.** volumeRise du banc (inventaire B2). Critère de sécurité de `kalis_bench` (partie B de l'inventaire), couple validé avec 0.3.1 ; le validateur injecté l'applique, en constantes du banc. |
-| `volume_hausse_series` | 2 | repris de 0.3.1 | **Non lue par le moteur.** volumeRiseSets du banc (inventaire B2). Critère de sécurité de `kalis_bench` (partie B de l'inventaire), couple validé avec 0.3.1 ; le validateur injecté l'applique, en constantes du banc. |
-| `volume_hausse_2sem` | 0.3 | repris de 0.3.1 | **Non lue par le moteur.** volumeRiseTwoWeeks du banc (inventaire B2). Critère de sécurité de `kalis_bench` (partie B de l'inventaire), couple validé avec 0.3.1 ; le validateur injecté l'applique, en constantes du banc. |
-| `volume_hausse_2sem_series` | 4 | repris de 0.3.1 | **Non lue par le moteur.** volumeRiseTwoWeeksSets du banc (inventaire B2). Critère de sécurité de `kalis_bench` (partie B de l'inventaire), couple validé avec 0.3.1 ; le validateur injecté l'applique, en constantes du banc. |
-| `decharge_part` | 0.7 | repris de 0.3.1 | **Non lue par le moteur.** seuil 0,70 du banc (inventaire B11). Critère de sécurité de `kalis_bench` (partie B de l'inventaire), couple validé avec 0.3.1 ; le validateur injecté l'applique, en constantes du banc. |
+| `volume_hausse` | 0.2 | repris de 0.3.1 | `SafetyLimits.volumeRise` (kalis_bench/lib/src/safety.dart:90 ; inventaire B2). Critère de sécurité de `kalis_bench` (partie B de l'inventaire), couple validé avec 0.3.1 ; lu par le retour gradué au volume (`seance._limite_volume`). |
+| `volume_hausse_series` | 2 | repris de 0.3.1 | `SafetyLimits.volumeRiseSets` (kalis_bench/lib/src/safety.dart:93 ; inventaire B2). Critère de sécurité de `kalis_bench` (partie B de l'inventaire), couple validé avec 0.3.1 ; lu par le retour gradué au volume (`seance._limite_volume`). |
+| `volume_hausse_2sem` | 0.3 | repris de 0.3.1 | `SafetyLimits.volumeRiseTwoWeeks` (kalis_bench/lib/src/safety.dart:97 ; inventaire B2). Critère de sécurité de `kalis_bench` (partie B de l'inventaire), couple validé avec 0.3.1 ; lu par le retour gradué au volume (`seance._limite_volume`). |
+| `volume_hausse_2sem_series` | 4 | repris de 0.3.1 | `SafetyLimits.volumeRiseTwoWeeksSets` (kalis_bench/lib/src/safety.dart:101 ; inventaire B2). Critère de sécurité de `kalis_bench` (partie B de l'inventaire), couple validé avec 0.3.1 ; lu par le retour gradué au volume (`seance._limite_volume`). |
+| `volume_reprise_part` | 0.5 | repris de 0.3.1 | `SafetyLimits.rampShare` (kalis_bench/lib/src/safety.dart:105, `rampLimit` l. 266-301 ; inventaire B2). Critère de sécurité de `kalis_bench` (partie B de l'inventaire), couple validé avec 0.3.1 ; lu par le retour gradué au volume (`seance._limite_rampe`). |
+| `volume_groupes_majeurs` | ["chest", "delt_anterior", "delt_middle", "delt_posterior", "lats", "upper_back", "biceps", "triceps", "abs", "lower_back", "glutes", "quads", "hamstrings", "calves"] | repris de 0.3.1 | Groupes `MuscleGroup` de `kalis_plan` dont `major` est vrai (kalis_plan/lib/src/traits.dart:15-71), seuls contrôlés par `volume_trop_vite` (kalis_bench/lib/src/safety.dart:361-404 ; inventaire B2). Lu par le retour gradué au volume (`seance._credits`). |
+| `serie_dure_rir_max` | 4.0 | repris de 0.3.1 | `hardSetMaxRir` (kalis_bench/lib/src/analysis.dart:48, `ItemView.hardSets` l. 199-208 ; inventaire B2). Critère de sécurité de `kalis_bench` (partie B de l'inventaire), couple validé avec 0.3.1 ; lu par le retour gradué au volume (`seance._series_dures`). |
+| `semaines_allegees` | ["intro", "deload", "test"] | repris de 0.3.1 | `WeekView.isLight` (kalis_bench/lib/src/analysis.dart:460-463 ; inventaire B2, B6). Critère de sécurité de `kalis_bench` (partie B de l'inventaire), couple validé avec 0.3.1 ; lu par le retour gradué au volume (`seance.ouvrir`). |
+| `tenue_hausse_hebdo_s` | 5.0 | repris de 0.3.1 | `SafetyLimits.straightArmRiseSeconds` (kalis_bench/lib/src/safety.dart:125, l. 646-647 ; inventaire B6). Critère de sécurité de `kalis_bench` (partie B de l'inventaire), couple validé avec 0.3.1 ; lu par le retour gradué au volume (`seance._limite_tenue`). |
+| `decharge_part` | 0.7 | repris de 0.3.1 | `SafetyLimits.reliefShare` (kalis_bench/lib/src/safety.dart:139, l. 817-822 ; inventaire B11). Critère de sécurité de `kalis_bench` (partie B de l'inventaire), couple validé avec 0.3.1 ; lu par le retour gradué au volume (`seance._budgets_retour` : une semaine d'allègement écrite reste un allègement servie). |
 | `decharge_max_semaines` | [12, 7, 6, 6] | repris de 0.3.1 | **Non lue par le moteur.** seuils [12 ; 7 ; 6 ; 6] du banc (inventaire B11). Critère de sécurité de `kalis_bench` (partie B de l'inventaire), couple validé avec 0.3.1 ; le validateur injecté l'applique, en constantes du banc. |
 | `affutage_baisse` | [0.3, 0.3, 0.4, 0.4] | repris de 0.3.1 | **Non lue par le moteur.** seuils [0,30 ; 0,30 ; 0,40 ; 0,40] du banc (inventaire B12). Critère de sécurité de `kalis_bench` (partie B de l'inventaire), couple validé avec 0.3.1 ; le validateur injecté l'applique, en constantes du banc. |
-| `seance_tolerance` | 1.15 | repris de 0.3.1 | **Non lue par le moteur.** × 1,15 du banc (inventaire B10). Critère de sécurité de `kalis_bench` (partie B de l'inventaire), couple validé avec 0.3.1 ; le validateur injecté l'applique, en constantes du banc. |
-| `seance_tolerance_min` | 3.0 | repris de 0.3.1 | **Non lue par le moteur.** +3 min du banc (inventaire B10). Critère de sécurité de `kalis_bench` (partie B de l'inventaire), couple validé avec 0.3.1 ; le validateur injecté l'applique, en constantes du banc. |
+| `seance_tolerance` | 1.15 | repris de 0.3.1 | 1 + `SafetyLimits.sessionTolerance` (kalis_bench/lib/src/safety.dart:148, l. 776 ; inventaire B10). Critère de sécurité de `kalis_bench` (partie B de l'inventaire), couple validé avec 0.3.1 ; lu par `seance._duree_permet_test` et `seance._duree_bornee`. |
+| `seance_tolerance_min` | 3.0 | repris de 0.3.1 | + 3 min de `seance_trop_longue` (kalis_bench/lib/src/safety.dart:776 ; inventaire B10). Critère de sécurité de `kalis_bench` (partie B de l'inventaire), couple validé avec 0.3.1 ; lu par `seance._duree_permet_test` et `seance._duree_bornee`. |
 | `couloir_haut_max` | 0.15 | repris de 0.3.1 | `coachCorridorUpMax` (inventaire A7.2). |
 | `couloir_part_lourde` | 0.85 | repris de 0.3.1 | `coachCorridorHeavyShare` (inventaire A7.2). |
 | `schema_change_part` | 0.025 | repris de 0.3.1 | `coachRepLoadShare` (inventaire A7.2 règle 4). |
@@ -310,7 +317,7 @@ Les références de Beck & Teboulle 2009 (FISTA), Held, Wolfe & Crowder 1974 et 
 | `barre_recente_j` | 42 | repris de 0.3.1 | `attemptRecentDays` (inventaire A7.2 règle 5, A8.2). |
 | `premiere_hausse` | 0.1 | repris de 0.3.1 | `maxUpMain` (inventaire A7.1, A7.2 règle 5). |
 | `reprise_dose_depart` | 0.6 | mesure sur le banc | Règle propre à Koach, plus prudente que 0.3.1 : budget hebdomadaire de séries par zone en reprise (départ 0,6 × habitude). Banc, scénarios douleur_coude/epaule (162 saisons) : poussées 69 → 0 (SAUVEGARDE 19:50). |
-| `reprise_dose_hausse` | 0.25 | mesure sur le banc | Même règle : +25 % ou +1 série par semaine de charge. Même mesure (poussées 69 → 0). |
+| `reprise_dose_hausse` | 0.2 | mesure sur le banc | Même règle : +20 % ou +1 série par semaine de charge, aligné sur la rampe hebdomadaire du banc (`volume_hausse`). Première mesure à 0,25 (poussées 69 → 0, SAUVEGARDE 19:50) ; à 0,20, avec le retour gradué au volume (banc, 72 saisons dont 36 de douleur_coude/epaule, sans planificateur) : 0 aggravation, 0 poussée, constats et performances identiques à 0,25 (gain hebdomadaire 0,001801 contre 0,001802). |
 | `tentative_recente_part` | 0.85 | repris de 0.3.1 | Constante 0,85 (A/coach.dart:2329) (inventaire A8.2). |
 | `fragile_anciennetes` | ["under_6_weeks", "weeks_6_to_12", "months_3_to_12"] | repris de 0.3.1 | `ConstraintSince.under6Weeks`, `weeks6To12`, `months3To12` (A/replay.dart:42-51) (inventaire A7.2). |
 | `fragile_gene_min` | 2 | repris de 0.3.1 | `l.discomfort >= 2` (A/replay.dart:48) (inventaire A7.2). |
@@ -345,6 +352,7 @@ Les références de Beck & Teboulle 2009 (FISTA), Held, Wolfe & Crowder 1974 et 
 | `endurance_bornee_reduction` | 0.9 | repris de 0.3.1 | `scaled(longestDraft.item, 1, 0.9)` (A/session.dart:2800) (inventaire A10.3). |
 | `wod_fenetre_j` | 7 | repris de 0.3.1 | `while (d >= day - 7)` de `conditioningStreak` (A/endurance.dart:262) (inventaire A10.4). |
 | `retour_seances_avant_mesure` | 2 | choix raisonné | Règle propre à Koach, plus prudente que 0.3.1 (relecture B2) : après une coupure ≥ `coupure_j`, ni vrai test ni série repère pendant la semaine du retour ni avant 2 séances de l'exercice depuis le retour ; aucune source chiffrée. |
+| `surmenage_seances_min` | 6 | choix raisonné | Ligne ajoutée le 10/10/2026 (clé présente dans le fichier sans ligne de source). Séances mesurées d'un mouvement principal avant que l'alerte de surmenage (A6.2) soit suivie : une baisse de la capacité estimée pendant les premières séances est de l'apprentissage (a priori trop haut), pas du surmenage ; aucune source chiffrée. |
 
 ### Section `adherence`
 
@@ -593,17 +601,17 @@ Toutes ces constantes ont été écrites lors de la génération par règles, pu
 
 ## 3. Synthèse
 
-**Clés du fichier de paramètres** (section 1, 297 clés, une ligne chacune) :
+**Clés du fichier de paramètres** (section 1, 305 clés, une ligne chacune) :
 
 | Catégorie | Clés |
 | --- | --- |
 | référence publiée vérifiée | 1 |
-| mesure sur le banc | 25 |
-| repris de 0.3.1 | 110 |
-| choix raisonné | 161 (dont 23 valeurs fixées par le cahier) |
-| **Total** | **297** |
+| mesure sur le banc | 26 |
+| repris de 0.3.1 | 115 |
+| choix raisonné | 163 (dont 23 valeurs fixées par le cahier) |
+| **Total** | **305** |
 
-Clés non lues par le moteur : 25 (liste dans `CONTRAT_1_0.md` § 7.5), dont 10 règles de volume de 0.3.1 portées par le validateur injecté et 2 clés lues par le banc seulement (`qualites`, `mesure.cardio_poids_qualite`).
+Clés non lues par le moteur : 18 (liste dans `CONTRAT_1_0.md` § 7.5), dont 3 règles de volume de 0.3.1 portées par le validateur injecté et 2 clés lues par le banc seulement (`qualites`, `mesure.cardio_poids_qualite`).
 
 La catégorie « repris de 0.3.1 » regroupe les paramètres de `kalis_adapt` 0.3.1 et de `kalis_plan` (inventaire A), et les critères du banc `kalis_bench` (inventaire B).
 

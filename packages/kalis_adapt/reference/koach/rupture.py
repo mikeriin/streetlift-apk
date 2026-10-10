@@ -790,7 +790,7 @@ BORNES = {
     ('jour', 'mauvais_jour_proba'): (1e-6, 0.999),
     ('jour', 'mauvais_jour_proba_bilan_bas'): (1e-6, 0.999),
     ('mesure', 'note_aberrante'): (1e-6, 0.5),
-    ('mesure', 'porte_note_ouverte'): (0.0, 100.0),
+    ('mesure', 'porte_note_ouverte'): (0.0, 3.0),
     ('dynamique', 'recuperation_seuil'): (1e-6, 1e6),
     ('rupture', 'hasard'): (1e-6, 0.5),
     ('rupture', 'alerte'): (0.05, 0.999),

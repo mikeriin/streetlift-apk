@@ -270,6 +270,42 @@ def groupes_de(e):
     return [[i, parts[g]] for i, g in enumerate(GROUPES) if g in parts]
 
 
+# R9 — Ce que le validateur de sécurité du banc lit d'une fiche (critères
+# `volume_trop_vite`, `tendon_figures`, `seance_trop_longue`, portés dans
+# `koach/seance.py`, règle « retour gradué au volume ») :
+# - `renforcement` : `SlotKind.isResistance` de `kalis_plan`
+#   (`slotKindOf`, kalis_plan/lib/src/traits.dart:545-600) : tout exercice
+#   hors mobilité, cardio et conditionnement CrossFit (l'haltérophilie
+#   CrossFit est de la puissance, donc du renforcement) ;
+# - `lateralite` : latéralité du catalogue (`calc.lateralite`) ; une
+#   séance compte deux côtés pour tout ce qui n'est pas bilatéral
+#   (`ItemView.estimatedSeconds`, kalis_bench/lib/src/analysis.dart) ;
+# - `bras_tendus` : famille des tenues bras tendus (`ItemView.straightArm`,
+#   même fichier) : back lever en poussée, tenue menton exclue, sinon le
+#   schéma de figure statique.
+DISCIPLINES_SANS_RENFORCEMENT = ('Mobilité', 'Cardio')
+DISCIPLINE_CONDITIONNEMENT = 'CrossFit / WOD'
+FAMILLE_BRAS_TENDUS = {'figure_statique_poussee': 'push', 'figure_statique_tirage': 'pull',
+                       'figure_statique_mixte': 'mixed'}
+
+
+def renforcement_de(e):
+    if e['discipline'] in DISCIPLINES_SANS_RENFORCEMENT:
+        return False
+    if e['discipline'] == DISCIPLINE_CONDITIONNEMENT:
+        return e['calc']['schema'] == 'halterophilie'
+    return True
+
+
+def bras_tendus_de(e):
+    racine = e['calc']['racine'] or e['id']
+    if racine.startswith('cs-back-lever') or e['id'].startswith('cs-back-lever'):
+        return 'push'
+    if racine.startswith('cs-tenue-menton') or e['id'].startswith('cs-tenue-menton'):
+        return None
+    return FAMILLE_BRAS_TENDUS.get(e['calc']['schema'])
+
+
 def type_de(e):
     c = e['calc']
     if c['famille'] in FAMILLES_ENDURANCE:
@@ -430,6 +466,9 @@ def generer(catalogue):
             'type_charge': c['type_charge'],
             'contraintes': c['contraintes'],
             'groupes': groupes_de(e),
+            'renforcement': renforcement_de(e),
+            'lateralite': c['lateralite'],
+            'bras_tendus': bras_tendus_de(e),
         }
     return {
         'schema': 1,

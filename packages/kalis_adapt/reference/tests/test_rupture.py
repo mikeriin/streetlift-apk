@@ -312,7 +312,7 @@ def test_silence_apres_reponse():
 # ----------------------------------------------------------------------
 def test_dossier_json_et_anonyme():
     k, s = koach_minimal()
-    k.observe({'type': 'profil', 'nom': 'Gaël', 'email': 'x@y.z'})
+    k.observe({'type': 'profil', 'nom': 'Prenom', 'email': 'x@y.z'})
     k.observe({'type': 'seance_debut', 'jour': 1, 'bilan': None, 'note': 'texte libre ici',
                'date': '2026-10-09'})
     k.observe({'type': 'serie', 'serie': {'exerciseId': EX, 'externalLoadKg': 80.0, 'reps': 5,
@@ -323,7 +323,7 @@ def test_dossier_json_et_anonyme():
         k.observe({'type': 'seance_manquee', 'jour': 2 + j})
     d = s.dossier(k)
     txt = json.dumps(d, sort_keys=True)
-    assert 'Gaël' not in txt and 'x@y.z' not in txt and 'texte libre' not in txt
+    assert 'Prenom' not in txt and 'x@y.z' not in txt and 'texte libre' not in txt
     assert '2026-10-09' not in json.dumps(d['journal'])
     assert len(d['journal']) <= 60
     assert d['version_dossier'] == 1

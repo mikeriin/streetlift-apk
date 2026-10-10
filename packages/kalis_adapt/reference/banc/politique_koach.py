@@ -50,6 +50,17 @@ def profil_koach(saison, profil):
             'declares': declares, 'zones_fragiles': fragiles}
 
 
+#: Champs d'un item écrit que Koach lit pour compter le volume d'une séance
+#: manquée ou restante (séries dures créditées, tenues bras tendus).
+CHAMPS_VOLUME = ('slotId', 'exerciseId', 'kind', 'sets', 'targetFlames', 'secondsLow', 'secondsHigh')
+
+
+def items_volume(items):
+    """Items réduits aux champs de `CHAMPS_VOLUME` (contexte de séance plus
+    léger dans le journal)."""
+    return [{k: it.get(k) for k in CHAMPS_VOLUME} for it in items]
+
+
 class PolitiqueKoach(Politique):
     nom = 'koach_1_0'
 
@@ -78,6 +89,19 @@ class PolitiqueKoach(Politique):
             if g.get('metric') == 'one_rm_kg' and g.get('targetValue'):
                 self.cibles[g['exerciseId']] = g['targetValue']
         self.courses = []
+        # Écrit de chaque séance de la saison (`sessions`) : volume des
+        # séances manquées et des séances restantes de la semaine, transmis
+        # à Koach dans le contexte (retour gradué au volume).
+        self.ecrits = {}
+        self.par_semaine = {}
+        for (g, bi, wb, di, sim_day) in saison.get('sessions') or []:
+            for w in saison['blocks'][bi]['pass2']['weeks']:
+                if w['weekIndex'] == wb:
+                    for d in w['days']:
+                        if d['dayIndex'] == di:
+                            self.ecrits[sim_day] = (g, w.get('kind'), items_volume(d['items']))
+            self.par_semaine.setdefault(g, []).append(sim_day)
+        self.manquees = []
 
     def changement_profil(self, semaine, profil):
         self.cibles = {}
@@ -90,6 +114,9 @@ class PolitiqueKoach(Politique):
 
     def seance_manquee(self, semaine, sim_day):
         self.koach.observe({'type': 'seance_manquee', 'jour': sim_day, 'semaine': semaine})
+        e = self.ecrits.get(sim_day)
+        if e is not None:
+            self.manquees.append({'semaine': e[0], 'genre': e[1], 'items': copy.deepcopy(e[2])})
 
     def items_du_jour(self, ctx):
         """Items du plan de Koach pour le jour (les extensions de
@@ -103,9 +130,12 @@ class PolitiqueKoach(Politique):
     def planifier(self, ctx):
         self.ctx = ctx
         self.vus = 0
+        reste = [copy.deepcopy(self.ecrits[j][2]) for j in sorted(self.par_semaine.get(ctx.semaine, []))
+                 if j > ctx.sim_day and j in self.ecrits]
         contexte = {'genre': ctx.genre_semaine, 'intention': ctx.intention,
                     'jour_evenement': ctx.jour_evenement, 'budget': ctx.budget, 'lieu': ctx.lieu,
-                    'semaine': ctx.semaine}
+                    'semaine': ctx.semaine, 'manquees': self.manquees, 'reste_semaine': reste}
+        self.manquees = []
         self.koach.observe({'type': 'seance_debut', 'jour': ctx.sim_day, 'bilan': ctx.bilan,
                             'poids_kg': None, 'contexte': contexte})
         items = []
