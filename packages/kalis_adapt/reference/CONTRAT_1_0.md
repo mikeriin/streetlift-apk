@@ -1,7 +1,7 @@
 # Contrat de Koach 1.0 (`kalis_adapt` 1.0.0)
 
 Rédigé le 09/10/2026, remis en accord avec le code le 10/10/2026 (référence Python `packages/kalis_adapt/reference/`, branche `moteurs`, arbre de travail du lot KM1).
-Fichier de paramètres lu : `params/koach_params_v1.json`, SHA-256 `e9e315289def5ea0c5c0f5207005002e6b3d317d4786dc3d595e25359d72c47e`, 305 clés (6 à la racine, 299 dans les onze sections). L'empreinte sera recalculée à la livraison du lot si le fichier change d'ici là.
+Fichier de paramètres lu : `params/koach_params_v1.json`, SHA-256 `6df91d36c13fc2fba4ac85ecaa90e0bd8db9cfced02b54090661fccf421c63b2`, 306 clés (6 à la racine, 299 dans les onze sections). L'empreinte sera recalculée à la livraison du lot si le fichier change d'ici là.
 
 Ce contrat décrit le code tel qu'il est. Quand le code, un commentaire ou le cahier divergent, le contrat suit le code et signale l'écart dans l'annexe A. Le lot KM2 porte ce contrat en Dart ; la parité visée est de 1e-9 (cahier, « Contraintes »).
 
@@ -172,7 +172,7 @@ Ces entrées sont nécessaires au calcul mais ne sont pas des événements :
 
 - `params` : le fichier de paramètres **initial** (§ 7). Les imports suivants sont journalisés (événement `parametres`).
 - `fiches` : `vecteurs_qualites_v1.json`, champ `exercices`. Champs lus par le moteur : `type`, `vecteur`, `ratio`, `fraction`, `difficulte`, `bas`, `tendon`, `zone_tendon`, `systemique`, `locale`, `groupes`, `schema`, `type_charge`, `materiel`, `lieux`, `contraintes` (`contraintes.poignet`), `renforcement`, `lateralite`, `bras_tendus` (retour gradué et durée de séance, § 8.3 ; règle R9 de `qualites/regles.py`).
-- `profil` : `niveau` 0–3 (borné ; défaut 1), `sexe` (`female` réduit l'a priori de charge), `poids_kg`, `declares`, `zones_fragiles`.
+- `profil` : `niveau` 0–3 (borné ; défaut 1), `sexe` (`female` réduit l'a priori de charge), `poids_kg`, `declares`, `zones_fragiles`, `allure_course` (facultatif, m/s : meilleure allure chronométrée × 0,9 ; sert à borner la durée d'une séance, § 8.3).
   - `declares` : `{exerciseId: (mesure, valeur[, écart-type])}`. Les mesures sont `one_rm_kg`, `max_reps` ou `max_hold_seconds`. Le troisième élément, s'il est présent et non nul, remplace `delta_sd_declare` comme écart-type (ln) de l'observation. Le convertisseur du journal de l'application (`rejeu/journal_app.declares_initiaux`) déclare ainsi les accessoires depuis leur charge de travail initiale, convertie en 1RM par la courbe de population à la réserve cible de la ligne, avec l'écart-type 0,12.
   - `zones_fragiles` : liste d'objets `{zone, since, discomfort}` ou de codes de zone. Un objet compte si `since` ∈ `fragile_anciennetes` ou si `discomfort ≥ fragile_gene_min` ; un code seul compte toujours (`Gardefous._zones_fragiles`, § 8.1).
 - La **référence** de la planification (`Planification.charger_reference`) et la replanification initiale demandée par l'appelant (annexe A, constat de relecture M7).
@@ -1270,7 +1270,7 @@ Ces écarts sont repris dans l'annexe A.
 
 ### 7.4 Tableau de toutes les clés
 
-Le tableau est généré depuis le JSON (305 clés, dans l'ordre du fichier) et contrôlé par script : toute clé du JSON absente du tableau, ou l'inverse, est une erreur. « Lu par » donne le module lecteur ; une clé « Non lue » n'est lue par aucun module de `koach/` (recherche de la chaîne de la clé dans le code, hors entrées des dictionnaires de défauts).
+Le tableau est généré depuis le JSON (306 clés, dans l'ordre du fichier) et contrôlé par script : toute clé du JSON absente du tableau, ou l'inverse, est une erreur. « Lu par » donne le module lecteur ; une clé « Non lue » n'est lue par aucun module de `koach/` (recherche de la chaîne de la clé dans le code, hors entrées des dictionnaires de défauts).
 
 | Section | Clé | Valeur | Unité | Rôle | Lu par |
 | --- | --- | --- | --- | --- | --- |
@@ -1489,6 +1489,7 @@ Le tableau est généré depuis le JSON (305 clés, dans l'ordre du fichier) et 
 | securite | `affutage_baisse` | [0.3, 0.3, 0.4, 0.4] | part | Non lue (règle portée par le validateur injecté) | — |
 | securite | `seance_tolerance` | 1.15 | × | Durée admise d'une séance : budget × cette valeur + `seance_tolerance_min` | seance._duree_permet_test, seance._duree_bornee |
 | securite | `seance_tolerance_min` | 3.0 | min | Minutes ajoutées à la durée admise | seance._duree_permet_test, seance._duree_bornee |
+| securite | `duree_vitesse_defaut` | 2.5 | m/s | Vitesse de course prise pour estimer la durée d'une séance quand le profil n'a pas d'allure chronométrée (`allure_course`) | séance |
 | securite | `couloir_haut_max` | 0.15 | part | Couloir au-dessus de la part écrite (< 85 %, hors débutant et verrou) | seance._cible_charge |
 | securite | `couloir_part_lourde` | 0.85 | part | Part écrite au-dessus de laquelle la charge écrite plafonne | seance._cible_charge |
 | securite | `schema_change_part` | 0.025 | part/rép. | Hausse permise par répétition de moins (schéma nouveau) | seance |

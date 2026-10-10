@@ -41,6 +41,7 @@ Le témoin (`donnees/temoin/`, `donnees/adversaires_temoin.json.gz`) vient de `p
 - `donnees/criteres_km1.json` : critères chiffrés du cahier sur la matrice du banc (Koach complet contre 0.3.1).
 - `donnees/comparaison_adversaires.json` : pire cas adversarial.
 - `donnees/rejeu_journal_agregats.json` : rejeu du journal réel, agrégats.
-- `donnees/validation_briques_6_7.json`, `donnees/criteres_moteur.json` : rupture, adhérence, contrôle dual, temps, déterminisme.
+- `donnees/criteres_moteur.json` : temps, mauvais jour isolé, déterminisme (moteur final).
+- `donnees/validation_briques_6_7.json` : rupture, adhérence, contrôle dual ; **mesuré le 09/10/2026 sur un état antérieur du moteur** (avant les dernières règles de sécurité), non refait ; les tests `tests/test_briques_6_7_banc.py` vérifient le moteur final sur des cas réduits.
 
 Le détail par critère, les limites et ce qui reste sont dans `pipeline/cp/livraisons/LIVRAISON_KM1.md` (branche `pipeline`).

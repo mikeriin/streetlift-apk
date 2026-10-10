@@ -1165,7 +1165,14 @@ class Seances(object):
         budget = (self.contexte or {}).get('budget')
         if budget is None or not out or self._jour_epreuve(out):
             return out
+        # Durée d'une course : la plus lente des deux vitesses, celle du
+        # journal et celle du profil (`allure_course` : meilleure allure
+        # chronométrée × 0,9, règle `runSpeedOf` du banc ; 2,5 m/s sans
+        # chrono), pour ne jamais sous-estimer la durée.
         vitesse = self._vitesse()
+        lente = self.m.profil.get('allure_course') or self.s['duree_vitesse_defaut']
+        if lente < vitesse:
+            vitesse = lente
         admis = float(budget) * self.s['seance_tolerance'] + self.s['seance_tolerance_min']
         ecrit = self._duree_seance(items, vitesse)
         if ecrit <= admis or self._jour_epreuve(items):

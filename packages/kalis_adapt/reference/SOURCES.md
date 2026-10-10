@@ -1,6 +1,6 @@
 # Sources des paramètres de Koach 1.0
 
-Rédigé le 09/10/2026, remis en accord avec le code et le fichier le 10/10/2026. Fichier décrit : `params/koach_params_v1.json`, SHA-256 `e9e315289def5ea0c5c0f5207005002e6b3d317d4786dc3d595e25359d72c47e`, 305 clés (6 à la racine, 299 dans les onze sections). L'empreinte sera recalculée à la livraison du lot si le fichier change d'ici là.
+Rédigé le 09/10/2026, remis en accord avec le code et le fichier le 10/10/2026. Fichier décrit : `params/koach_params_v1.json`, SHA-256 `6df91d36c13fc2fba4ac85ecaa90e0bd8db9cfced02b54090661fccf421c63b2`, 306 clés (6 à la racine, 299 dans les onze sections). L'empreinte sera recalculée à la livraison du lot si le fichier change d'ici là.
 Compagnon de `CONTRAT_1_0.md` (§ 7 : rôle de chaque clé et module lecteur).
 
 ## Comment lire ce document
@@ -310,6 +310,7 @@ Les références de Beck & Teboulle 2009 (FISTA), Held, Wolfe & Crowder 1974 et 
 | `affutage_baisse` | [0.3, 0.3, 0.4, 0.4] | repris de 0.3.1 | **Non lue par le moteur.** seuils [0,30 ; 0,30 ; 0,40 ; 0,40] du banc (inventaire B12). Critère de sécurité de `kalis_bench` (partie B de l'inventaire), couple validé avec 0.3.1 ; le validateur injecté l'applique, en constantes du banc. |
 | `seance_tolerance` | 1.15 | repris de 0.3.1 | 1 + `SafetyLimits.sessionTolerance` (kalis_bench/lib/src/safety.dart:148, l. 776 ; inventaire B10). Critère de sécurité de `kalis_bench` (partie B de l'inventaire), couple validé avec 0.3.1 ; lu par `seance._duree_permet_test` et `seance._duree_bornee`. |
 | `seance_tolerance_min` | 3.0 | repris de 0.3.1 | + 3 min de `seance_trop_longue` (kalis_bench/lib/src/safety.dart:776 ; inventaire B10). Critère de sécurité de `kalis_bench` (partie B de l'inventaire), couple validé avec 0.3.1 ; lu par `seance._duree_permet_test` et `seance._duree_bornee`. |
+| `duree_vitesse_defaut` | 2.5 | repris de 0.3.1 | `runSpeedOf` du banc (`kalis_bench/lib/src/analysis.dart`) : 2,5 m/s sans chrono ; avec chrono, le profil fournit `allure_course` = meilleure allure × 0,9. La durée d'une course est estimée à la plus lente des vitesses (journal, profil). |
 | `couloir_haut_max` | 0.15 | repris de 0.3.1 | `coachCorridorUpMax` (inventaire A7.2). |
 | `couloir_part_lourde` | 0.85 | repris de 0.3.1 | `coachCorridorHeavyShare` (inventaire A7.2). |
 | `schema_change_part` | 0.025 | repris de 0.3.1 | `coachRepLoadShare` (inventaire A7.2 règle 4). |
@@ -601,15 +602,15 @@ Toutes ces constantes ont été écrites lors de la génération par règles, pu
 
 ## 3. Synthèse
 
-**Clés du fichier de paramètres** (section 1, 305 clés, une ligne chacune) :
+**Clés du fichier de paramètres** (section 1, 306 clés, une ligne chacune) :
 
 | Catégorie | Clés |
 | --- | --- |
 | référence publiée vérifiée | 1 |
-| mesure sur le banc | 26 |
-| repris de 0.3.1 | 115 |
-| choix raisonné | 163 (dont 23 valeurs fixées par le cahier) |
-| **Total** | **305** |
+| mesure sur le banc | 27 |
+| repris de 0.3.1 | 116 |
+| choix raisonné | 162 (dont 23 valeurs fixées par le cahier) |
+| **Total** | **306** |
 
 Clés non lues par le moteur : 18 (liste dans `CONTRAT_1_0.md` § 7.5), dont 3 règles de volume de 0.3.1 portées par le validateur injecté et 2 clés lues par le banc seulement (`qualites`, `mesure.cardio_poids_qualite`).
 

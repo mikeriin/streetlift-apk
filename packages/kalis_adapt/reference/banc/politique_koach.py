@@ -46,8 +46,10 @@ def profil_koach(saison, profil):
             # Ancienneté et gêne transmises : Koach retient la zone comme
             # fragile selon la règle de 0.3.1 (A7.2, A/replay.dart:42-51).
             fragiles.append({'zone': z, 'since': lim.get('since'), 'discomfort': lim.get('discomfort')})
+    from banc import securite_banc
     return {'niveau': saison['level'], 'sexe': profil.get('sex'), 'poids_kg': profil.get('bodyWeightKg'),
-            'declares': declares, 'zones_fragiles': fragiles}
+            'declares': declares, 'zones_fragiles': fragiles,
+            'allure_course': securite_banc.allure_course(saison.get('benchJson') or {})}
 
 
 #: Champs d'un item écrit que Koach lit pour compter le volume d'une séance
