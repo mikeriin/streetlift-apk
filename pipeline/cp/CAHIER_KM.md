@@ -170,6 +170,12 @@ La bascule n'a lieu que si tous les critères passent, vérifiés automatiquemen
 | Rejeu walk-forward du journal de Gaël depuis S12 | erreur d'e1RM sous 3 %, couverture 88 à 92 % | journal réel |
 | Temps de calcul | replanification 10 s au plus, série 50 ms au plus | VM Dart de la CI, puis émulateur |
 
+**Mesures précisées (DECISIONS_CP.md C13.10.2, 10/10/2026)** — les seuils ne changent pas :
+- Erreur d'e1RM : moyenne sur les trois modèles de vérité du banc, au rang 6.
+- Mauvais jour : contrefactuel apparié (même saison, mêmes séances servies ensuite, avec ou sans le mauvais jour).
+- Calibration de P(réussite) : par cible, déciles d'au moins 30 cas.
+- Rejeu du journal réel : critère de **bascule**, vérifié juste avant la bascule sur au moins 100 séries notées depuis S12, avec un biais moyen sous 2 % en valeur absolue ; dans KM1, seulement rapporté.
+
 ## Lots à lancer
 
 Trois lots, un seul APK. Toute l'itération se fait dans KM1, sur le banc, sans toucher à l'app. KM2 et KM3 ne traversent la boucle coûteuse qu'une fois. Conventions des pipelines : celles de `PIPELINE_CP.md` (état, décisions, lancements, livraisons, sauvegardes), avec les écarts de C13.

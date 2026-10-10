@@ -192,3 +192,15 @@ Les deux sessions du 05/10 se sont arrêtées sur la limite hebdomadaire du plan
 - **Journal du propriétaire (brique 8, C13.6)** : pas encore déposé au lancement ; il arrivera chiffré sur `cp-references` (`journal_proprietaire.tar.gpg`). S'il manque quand tu arrives à la brique 8 : sauvegarde, « en attente de l'export du journal (C13.6) » dans ta ligne, notification, arrêt.
 - **Ajout du pilotage (09/10/2026, 19:02 UTC) : journal déposé.** `cp-references` commit 81b3be4, `journal_proprietaire.tar.gpg` (même clé que les références) : export complet de l'application du 09/10/2026 20:58 (heure de Paris), `journal_proprietaire_2026-10-09.json` + `LISEZMOI.md`. 39 séances terminées du 31/08 au 09/10 ; depuis S12 : 200 séries validées, dont 101 avec une note d'effort (flammes) — le RIR n'est pas dans le champ `rir` (vide) mais dans `flames` / `effort`. La brique 8 peut se faire sans arrêt.
 - Budget : sous-agents sur Opus, sauvegarde à chaque brique et toutes les 30 minutes (SAUVEGARDE.md à jour), pas de surveillance en boucle de la CI.
+
+## KM1 correction 1 — méthode (lancée le 10/10/2026 vers 09:10 UTC, tâche « Fable 5.1, effort maximal, moteurs »)
+
+- Lot : **KM1** (ligne de l'état « à faire (correction 1, C13.10) »), prompt `prompts/KM1.txt`, cahier `CAHIER_KM.md` (section « Validation », mesures précisées par C13.10.2). Décision : `DECISIONS_CP.md` **C13.10**. Délégation totale (C8) ; validation par le pilotage.
+- Base : `moteurs` f3801e36 (référence KM1) ; sauvegardes `cp-sauvegardes/KM1` (reprends `SAUVEGARDE.md`, `km1-outils/`, `banc/campagne.py`, cache de campagne à refaire). Livraison KM1 : `livraisons/LIVRAISON_KM1.md`.
+- **Périmètre, dans l'ordre** (deux itérations de méthode au plus par point ; aucun recul sur la sécurité ni sur les critères atteints 3, 4, 6, 7, 8, 11) :
+  1. **Erreur d'e1RM (critère 1, < 3 % en moyenne sur A, B, C)** : forme de courbe charge-répétitions par famille d'exercices (au lieu d'une seule par athlète) ; a priori du débutant ; vérité B (courbe très linéaire, biais de notation fort). Mesure comme en KM1.
+  2. **Calibration de P(réussite) (critère 5, par cible, déciles d'au moins 30 cas, écart ≤ 5 points)** : corrélation entre cibles, effet de l'affûtage, rendement du test.
+  3. **Mauvais jour (critère 2, < 1 %)** : mesure en contrefactuel apparié (même saison, mêmes séances servies ensuite, avec ou sans le mauvais jour) ; corriger seulement s'il dépasse encore 1 %.
+  4. **Fixtures** : régénérer les 13 fixtures sur la référence corrigée (KM2 les portera).
+- **Rejeu du journal réel** : n'est plus un critère de KM1 (C13.10.2.d) ; refais-le et rapporte-le seulement (même archive chiffrée sur `cp-references`, agrégats seulement).
+- **Fin de passe** : commit « Kalis Track moteurs (KM1 correction 1) : référence Koach 1.0.1 » sur `moteurs` (rebase avant), contrôle `claude/ci-cp-a` vert si le banc Dart change ; `LIVRAISON_KM1_correction1.md` (pipeline et projet claude.ai) avec le tableau des 11 critères avant / après ; ligne KM1 « livré (correction 1) » ; notification ; arrête-toi.
