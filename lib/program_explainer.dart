@@ -6,10 +6,13 @@
 import 'package:flutter/material.dart';
 import 'package:kalis_koach/kalis_koach.dart' show KoachPose;
 
-import 'app_theme.dart';
+import 'athlete_profile_screen.dart' show ProfileScreen;
+import 'dev/dev_widgets.dart' show HeaderLogo;
 import 'koach/koach_bubble.dart';
-import 'koach/koach_view.dart';
+import 'plan/evolution_widgets.dart' show EvolutionScreen;
 import 'plan/plan_screens.dart' show openPlanCreation;
+import 'plan/widgets/program_widgets.dart';
+import 'program_screens.dart' show planCreateBlockedReason;
 import 'store.dart';
 import 'ui.dart';
 
@@ -76,64 +79,75 @@ const List<ExplainerStep> kProgramExplainer = [
         'En mode assisté, j’applique moi-même ce que je propose, je te dis '
         'pourquoi et tu peux toujours annuler. En mode libre, je propose et '
         'tu décides : rien ne change sans ton accord. Tu changes de mode '
-        'dans Réglages › Profil.',
+        'dans Évolution.',
   ),
   (
     title: '8. Ton profil',
     text:
-        'Tu modifies ton profil à tout moment dans Réglages › Profil, '
-        'rubrique par rubrique. Si un changement touche ton programme, je te '
-        'le dis et je le refais avec toi.',
+        'Tu modifies ton profil à tout moment, rubrique par rubrique. Si un '
+        'changement touche ton programme, je te le dis et je le refais avec '
+        'toi.',
   ),
 ];
 
+/// Destination d'une étape de l'explication (R5 : un bouton, jamais un
+/// chemin écrit) : 7 → Évolution, 8 → Mon profil.
+({String label, Widget Function() page})? _stepLink(int i) => switch (i) {
+  6 => (label: 'Ouvrir Évolution', page: () => const EvolutionScreen()),
+  7 => (label: 'Ouvrir mon profil', page: () => const ProfileScreen()),
+  _ => null,
+};
+
 /// Feuille « Comment marche ton programme ? ».
 Future<void> showProgramExplainer(BuildContext context) =>
-    showModalBottomSheet<void>(
-      context: context,
-      isScrollControlled: true,
-      useSafeArea: true,
-      showDragHandle: true,
-      builder: (ctx) {
-        final tt = Theme.of(ctx).textTheme;
-        return KoachSurface(
-          color:
-              Theme.of(ctx).bottomSheetTheme.backgroundColor ??
-              Theme.of(ctx).colorScheme.surfaceContainerLow,
-          child: DraggableScrollableSheet(
-            expand: false,
-            initialChildSize: .85,
-            maxChildSize: .95,
-            builder: (ctx, scroll) => ListView(
-              key: const ValueKey('program-explainer'),
-              controller: scroll,
-              padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
+    showProgramSheet<void>(
+      context,
+      draggable: true,
+      listKey: const ValueKey('program-explainer'),
+      title: 'Comment marche ton programme ?',
+      children: (ctx) {
+        final k = KTokens.of(ctx);
+        return [
+          const KoachBubble(
+            pose: KoachPose.explainBoard,
+            koachHeight: KSize.primary * 2,
+            text:
+                'Je crée ton programme avec toi, en deux temps, puis je '
+                'le fais évoluer séance après séance.',
+          ),
+          for (var i = 0; i < kProgramExplainer.length; i++)
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Comment marche ton programme', style: tt.titleLarge),
-                const SizedBox(height: 12),
-                const KoachBubble(
-                  pose: KoachPose.explainBoard,
-                  koachHeight: 96,
-                  text:
-                      'Je crée ton programme avec toi, en deux temps, puis je '
-                      'le fais évoluer séance après séance.',
+                Text(
+                  kProgramExplainer[i].title,
+                  style: KType.titreCarte.copyWith(color: k.texte),
                 ),
-                for (final s in kProgramExplainer) ...[
-                  const SizedBox(height: 14),
-                  Text(s.title, style: tt.titleMedium),
-                  const SizedBox(height: 4),
-                  Text(s.text),
-                ],
-                const SizedBox(height: 18),
-                FilledButton(
-                  key: const ValueKey('program-explainer-ok'),
-                  onPressed: () => Navigator.pop(ctx),
-                  child: const Text('Compris'),
+                const SizedBox(height: KSpacing.s4),
+                Text(
+                  kProgramExplainer[i].text,
+                  style: KType.corps.copyWith(color: k.texte),
                 ),
+                if (_stepLink(i) case final link?)
+                  KTextButton(
+                    key: ValueKey('program-explainer-link-$i'),
+                    label: link.label,
+                    icon: Icons.chevron_right_rounded,
+                    alignStart: true,
+                    onPressed: () {
+                      Navigator.of(ctx).push(
+                        MaterialPageRoute<void>(builder: (_) => link.page()),
+                      );
+                    },
+                  ),
               ],
             ),
+          KPrimaryButton(
+            key: const ValueKey('program-explainer-ok'),
+            onPressed: () => Navigator.pop(ctx),
+            label: 'Compris',
           ),
-        );
+        ];
       },
     );
 
@@ -142,10 +156,11 @@ class ProgramExplainerButton extends StatelessWidget {
   const ProgramExplainerButton({super.key});
 
   @override
-  Widget build(BuildContext context) => OutlinedButton.icon(
+  Widget build(BuildContext context) => KTonalButton(
     key: const ValueKey('program-explainer-open'),
-    icon: const Icon(Icons.help_outline),
-    label: const Text('Comment marche ton programme ?'),
+    icon: Icons.help_outline_rounded,
+    label: 'Comment marche ton programme ?',
+    expand: true,
     onPressed: () => showProgramExplainer(context),
   );
 }
@@ -159,43 +174,79 @@ bool programPendingFor(AppStore s) =>
     s.planProgram == null;
 
 /// Onglet Programme d'un nouveau profil, en attendant son programme : Koach
-/// propose de le créer (G7).
+/// propose de le créer (G7). Bouton indisponible : la raison est écrite
+/// dessous (R6).
 class ProgramPendingView extends StatelessWidget {
   const ProgramPendingView({super.key});
 
   @override
-  Widget build(BuildContext context) => KScreen(
-    // En-tête de l'accueil : logo (et gestes du mode dev) gardés.
-    appBar: KTopBar(
-      leading: Text(
-        'TON PROGRAMME',
-        style: Theme.of(context).textTheme.titleLarge,
-      ),
-    ),
-    body: KList(
-      key: const ValueKey('program-pending'),
-      children: [
-        KoachSurface(
-          color: SL.bg,
-          child: const KoachBubble(
-            pose: KoachPose.checklist,
-            koachHeight: 120,
-            text:
-                'Ton profil est prêt. On crée ton programme ensemble : '
-                'd’abord les exercices de chaque séance, puis les séries et '
-                'les charges.',
+  Widget build(BuildContext context) {
+    final k = KTokens.of(context);
+    final blocked = planCreateBlockedReason();
+    return Scaffold(
+      backgroundColor: k.fond,
+      body: SafeArea(
+        bottom: false,
+        child: ListView(
+          key: const ValueKey('program-pending'),
+          padding: EdgeInsets.fromLTRB(
+            KSpacing.page,
+            KSpacing.s8,
+            KSpacing.page,
+            KSpacing.s16 + KNavigationInset.of(context),
           ),
+          children: [
+            // En-tête de l'accueil : logo (et gestes du mode dev) gardés.
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Semantics(
+                    header: true,
+                    child: Text(
+                      k.title('Ton programme'),
+                      style: k.titleStyle(
+                        KType.titreRacine.copyWith(color: k.texte),
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: KSpacing.s12),
+                const HeaderLogo(),
+              ],
+            ),
+            const SizedBox(height: KSpacing.s16),
+            const KoachBubble(
+              pose: KoachPose.checklist,
+              koachHeight: KSize.primary * 2,
+              text:
+                  'Ton profil est prêt. On crée ton programme ensemble : '
+                  'd’abord les exercices de chaque séance, puis les séries et '
+                  'les charges.',
+            ),
+            const SizedBox(height: KSpacing.s24),
+            KPrimaryButton(
+              key: const ValueKey('program-pending-create'),
+              icon: Icons.auto_awesome_outlined,
+              label: 'Créer mon programme',
+              onPressed: blocked == null
+                  ? () => openPlanCreation(context)
+                  : null,
+            ),
+            if (blocked != null)
+              Padding(
+                padding: const EdgeInsets.only(top: KSpacing.s8),
+                child: Text(
+                  blocked,
+                  key: const ValueKey('program-pending-blocked'),
+                  style: KType.detail.copyWith(color: k.texte2),
+                ),
+              ),
+            const SizedBox(height: KSpacing.s12),
+            const ProgramExplainerButton(),
+          ],
         ),
-        FilledButton.icon(
-          key: const ValueKey('program-pending-create'),
-          icon: const Icon(Icons.auto_awesome_outlined),
-          label: const Text('Créer mon programme'),
-          onPressed: PlanStore(store).planCanCreate
-              ? () => openPlanCreation(context)
-              : null,
-        ),
-        const ProgramExplainerButton(),
-      ],
-    ),
-  );
+      ),
+    );
+  }
 }

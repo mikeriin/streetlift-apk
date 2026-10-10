@@ -217,7 +217,12 @@ void main() {
       );
       await tester.pumpAndSettle();
       final week = tester
-          .widget<Text>(find.byKey(const ValueKey('selected-week')))
+          .widget<Text>(
+            find.descendant(
+              of: find.byKey(const ValueKey('selected-week')),
+              matching: find.byType(Text),
+            ),
+          )
           .data;
       // Séance construite à la main (semaine 0) : les séances manuelles ont
       // disparu en G2, le runner reste le même.

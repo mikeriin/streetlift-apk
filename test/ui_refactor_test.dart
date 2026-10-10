@@ -90,7 +90,12 @@ void main() {
       );
       await tester.pumpAndSettle();
       final week = tester
-          .widget<Text>(find.byKey(const ValueKey('selected-week')))
+          .widget<Text>(
+            find.descendant(
+              of: find.byKey(const ValueKey('selected-week')),
+              matching: find.byType(Text),
+            ),
+          )
           .data;
       await tester.tap(find.byKey(const ValueKey('nav-0')));
       await tester.pumpAndSettle();

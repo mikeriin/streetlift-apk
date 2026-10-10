@@ -4,7 +4,6 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
-import 'app_theme.dart';
 import 'store.dart';
 import 'store_widget.dart';
 import 'ui.dart';
@@ -14,7 +13,7 @@ export 'rewards.dart' show checkLevelUp;
 
 /// Niveau et avancement vers le prochain, accessibles depuis tous les onglets.
 /// Abonnée au store : elle suit un passage de niveau même instanciée en
-/// `const` (barre d'en-tête de l'accueil), sans redémarrer l'application.
+/// `const` (en-tête de l'accueil), sans redémarrer l'application.
 class LevelPill extends StoreWidget {
   const LevelPill({super.key});
   @override
@@ -28,18 +27,28 @@ class LevelPill extends StoreWidget {
       excludeSemantics: true,
       child: Tooltip(
         message: 'Ouvrir ma progression',
-        child: InkWell(
-          onTap: () => openProgression(context),
-          borderRadius: BorderRadius.circular(20),
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(minWidth: 48, minHeight: 56),
-            child: Align(
-              widthFactor: 1,
-              heightFactor: 1,
-              alignment: Alignment.centerLeft,
-              child: LevelProgressNumber(
-                level: store.level,
-                progress: p.need == 0 ? 0 : p.inLevel / p.need,
+        child: Material(
+          type: MaterialType.transparency,
+          shape: KRadius.menuShape,
+          clipBehavior: Clip.antiAlias,
+          child: InkWell(
+            onTap: () => openProgression(context),
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(
+                minWidth: KSize.target,
+                minHeight: KSize.primary,
+              ),
+              child: Align(
+                widthFactor: 1,
+                heightFactor: 1,
+                alignment: Alignment.topLeft,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: KSpacing.s4),
+                  child: LevelProgressNumber(
+                    level: store.level,
+                    progress: p.need == 0 ? 0 : p.inLevel / p.need,
+                  ),
+                ),
               ),
             ),
           ),
@@ -49,6 +58,10 @@ class LevelPill extends StoreWidget {
   }
 }
 
+/// Niveau (maquette « Accueil ») : « Niv. » puis le chiffre, la barre
+/// d'avancement dessous (`encre`). Largeur : celle du texte à la taille
+/// choisie (L5 : le niveau suit la taille de texte du téléphone), 64 au
+/// minimum.
 class LevelProgressNumber extends StatelessWidget {
   final int level;
   final double progress;
@@ -58,31 +71,11 @@ class LevelProgressNumber extends StatelessWidget {
     required this.progress,
   });
 
-  /// Hauteur de barre d'en-tête nécessaire à ce bloc pour une taille de
-  /// texte donnée (L5 : le niveau suit la taille de texte du téléphone).
-  static double headerHeight(BuildContext context) =>
-      math.max(70, MediaQuery.textScalerOf(context).scale(30) + 35);
-
   @override
   Widget build(BuildContext context) {
-    final colors = ProgrammeColors.of(context);
-    final label = TextStyle(
-      color: colors.muted,
-      fontSize: 12,
-      fontWeight: FontWeight.w600,
-      letterSpacing: .8,
-    );
-    final number = TextStyle(
-      color: SL.text,
-      fontSize: 30,
-      height: 1,
-      fontWeight: FontWeight.w700,
-      letterSpacing: -1,
-      fontFeatures: const [FontFeature.tabularFigures()],
-    );
-    // L5 : plus de réduction forcée (FittedBox, taille de texte figée) ;
-    // « NIV. » reste avant le chiffre, la barre dessous, en couleur unie.
-    // Largeur : celle du texte à la taille choisie, 88 au minimum.
+    final k = KTokens.of(context);
+    final label = KType.micro.copyWith(color: k.texte2);
+    final number = KType.chiffre.copyWith(color: k.texte);
     final scaler = MediaQuery.textScalerOf(context);
     double measure(String text, TextStyle style) {
       final painter = TextPainter(
@@ -97,8 +90,8 @@ class LevelProgressNumber extends StatelessWidget {
     }
 
     final width = math.max(
-      88.0,
-      measure('NIV.', label) + 7 + measure('$level', number) + 2,
+      KSize.menuRow,
+      measure('Niv.', label) + KSpacing.s4 + measure('$level', number),
     );
     return SizedBox(
       width: width,
@@ -111,17 +104,17 @@ class LevelProgressNumber extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.baseline,
             textBaseline: TextBaseline.alphabetic,
             children: [
-              Text('NIV.', style: label),
-              const SizedBox(width: 7),
+              Text('Niv.', style: label),
+              const SizedBox(width: KSpacing.s4),
               Text('$level', style: number),
             ],
           ),
-          const SizedBox(height: 7),
-          // Couleur unie de la dominante, bord net avec la piste.
+          const SizedBox(height: KSpacing.s4),
           KProgressBar(
             value: progress,
-            height: 4,
-            color: colors.p.action,
+            height: KSpacing.s4,
+            color: k.encre,
+            track: k.filet,
             semanticsLabel: 'Progression vers le niveau suivant',
           ),
         ],

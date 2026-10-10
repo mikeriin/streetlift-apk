@@ -5,7 +5,7 @@ import 'package:streetlift_tracker/levelup.dart';
 import 'package:streetlift_tracker/ui.dart';
 
 void main() {
-  testWidgets('NIV. précède le niveau et la barre représente son avancement', (
+  testWidgets('Niv. précède le niveau et la barre représente son avancement', (
     tester,
   ) async {
     for (final progress in [0.0, .6, 1.0]) {
@@ -25,10 +25,10 @@ void main() {
           ),
         ),
       );
-      expect(find.text('NIV.'), findsOneWidget);
+      expect(find.text('Niv.'), findsOneWidget);
       expect(find.text('10'), findsOneWidget);
       expect(
-        tester.getRect(find.text('NIV.')).right,
+        tester.getRect(find.text('Niv.')).right,
         lessThan(tester.getRect(find.text('10')).left),
       );
       final bar = find.byType(KProgressBar);

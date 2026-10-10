@@ -7,15 +7,15 @@ import 'package:flutter/material.dart';
 import 'package:kalis_core/kalis_core.dart' as kc;
 import 'package:kalis_koach/kalis_koach.dart' show KoachPose;
 
-import '../app_theme.dart';
+import '../athlete_profile_screen.dart' show ProfileScreen;
 import '../koach/koach_bubble.dart';
-import '../koach/koach_view.dart' show KoachSurface;
 import '../store.dart';
 import '../ui.dart';
 import 'evolution_texts.dart';
 import 'plan_program.dart' show PlanBlockEntry;
 import 'plan_sheets.dart' show changeLine, planName, planReason;
 import 'plan_texts.dart';
+import 'widgets/program_widgets.dart';
 
 // ------------------------------------------------------------------ outils
 
@@ -183,76 +183,49 @@ List<KoachBubbleAction> evolutionActions(
 
 /// Feuille « ce qui change » d'une proposition (diff expliqué par Koach).
 Future<void> showEvolutionSheet(BuildContext context, EvolutionEntry e) =>
-    showModalBottomSheet<void>(
-      context: context,
-      isScrollControlled: true,
-      useSafeArea: true,
-      showDragHandle: true,
-      builder: (context) => KoachSurface(
-        color:
-            Theme.of(context).bottomSheetTheme.backgroundColor ??
-            Theme.of(context).colorScheme.surfaceContainerLow,
-        child: _EvolutionSheet(entry: e),
-      ),
+    showProgramSheet<void>(
+      context,
+      listKey: const ValueKey('evo-sheet'),
+      title: evolutionKindTitle(e.proposal.kind),
+      children: (context) => _evolutionSheet(context, e),
     );
 
-class _EvolutionSheet extends StatelessWidget {
-  final EvolutionEntry entry;
-  const _EvolutionSheet({required this.entry});
-
-  @override
-  Widget build(BuildContext context) {
-    final e = entry;
-    final lines = evolutionDiffLines(e);
-    final dim = Theme.of(context).textTheme.bodySmall;
-    return ListView(
-      key: const ValueKey('evo-sheet'),
-      padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
-      shrinkWrap: true,
-      children: [
-        Text(
-          evolutionKindTitle(e.proposal.kind),
-          style: Theme.of(context).textTheme.titleLarge,
-        ),
-        const SizedBox(height: 8),
-        KoachBubble(
-          key: const ValueKey('evo-sheet-koach'),
-          pose: evolutionPose(
-            e.proposal.kind,
-            pending: e.status == EvoStatus.pending,
-          ),
-          koachHeight: 96,
-          text: evolutionHeadlineOf(e),
-          why: evolutionWhy(e),
-          actions: evolutionActions(context, e, details: false, pop: true),
-        ),
-        if (lines.isNotEmpty) ...[
-          const SizedBox(height: 12),
-          KSection('Ce qui change (${lines.length})'),
+List<Widget> _evolutionSheet(BuildContext context, EvolutionEntry e) {
+  final k = KTokens.of(context);
+  final lines = evolutionDiffLines(e);
+  return [
+    KoachBubble(
+      key: const ValueKey('evo-sheet-koach'),
+      pose: evolutionPose(
+        e.proposal.kind,
+        pending: e.status == EvoStatus.pending,
+      ),
+      koachHeight: KSize.primary * 2,
+      text: evolutionHeadlineOf(e),
+      why: evolutionWhy(e),
+      actions: evolutionActions(context, e, details: false, pop: true),
+    ),
+    if (lines.isNotEmpty)
+      KMenuGroup(
+        title: 'Ce qui change (${lines.length})',
+        color: k.haute,
+        dividerIndent: KSpacing.s16,
+        children: [
           for (final (c, line) in lines)
-            ExpansionTile(
+            WhyTile(
               key: ValueKey('evo-change-${c.slotId ?? line}-${c.weekIndex}'),
-              tilePadding: EdgeInsets.zero,
-              title: Text(line),
-              subtitle: Text('Pourquoi ?', style: dim),
-              children: [
+              title: line,
+              reasons: [
                 for (final r in c.reasons)
                   if (evolutionReasonText(r, exerciseName: planName) ??
                           (r.code.startsWith('plan.') ? planReason(r) : null)
                       case final t?)
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Padding(
-                        padding: const EdgeInsets.only(bottom: 6),
-                        child: Text(t),
-                      ),
-                    ),
+                    t,
               ],
             ),
         ],
-      ],
-    );
-  }
+      ),
+  ];
 }
 
 // -------------------------------------------------------- carte de l'accueil
@@ -271,44 +244,47 @@ class EvolutionHomeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final k = KTokens.of(context);
     final items = _items;
     if (items.isEmpty) return const SizedBox.shrink();
     final e = items.first;
     final more = items.length - 1;
     return KCard(
       key: const ValueKey('evo-home-card'),
-      accent: SL.accent,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
             'Koach · ${evolutionKindTitle(e.proposal.kind)}',
-            style: TextStyle(color: SL.accent, fontWeight: FontWeight.w600),
+            style: KType.section.copyWith(color: k.texte2),
           ),
-          const SizedBox(height: 6),
+          const SizedBox(height: KSpacing.s8),
           KoachBubble(
             key: ValueKey('evo-home-${evoKey(e)}'),
             pose: evolutionPose(
               e.proposal.kind,
               pending: e.status == EvoStatus.pending,
             ),
-            koachHeight: 88,
+            koachHeight: KSize.primary + KSpacing.s32,
             text: evolutionHeadlineOf(e),
             why: evolutionWhy(e),
             actions: evolutionActions(context, e),
           ),
-          if (more > 0)
+          if (more > 0) ...[
+            const SizedBox(height: KSpacing.s4),
             Align(
-              alignment: Alignment.centerLeft,
-              child: TextButton(
+              alignment: AlignmentDirectional.centerStart,
+              child: KTextButton(
                 key: const ValueKey('evo-home-more'),
+                icon: Icons.chevron_right_rounded,
+                alignStart: true,
                 onPressed: () => openEvolutionScreen(context),
-                child: Text(
-                  'Et $more autre${more > 1 ? 's' : ''} changement'
-                  '${more > 1 ? 's' : ''} : tout voir',
-                ),
+                label:
+                    'Et $more autre${more > 1 ? 's' : ''} changement'
+                    '${more > 1 ? 's' : ''} : tout voir',
               ),
             ),
+          ],
         ],
       ),
     );
@@ -324,6 +300,7 @@ class EvolutionSessionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final k = KTokens.of(context);
     final items = store.evolutionForSession(week, j);
     if (items.isEmpty) return const SizedBox.shrink();
     final e = items.first;
@@ -339,21 +316,20 @@ class EvolutionSessionCard extends StatelessWidget {
                   ? 'Ce qui change dans cette séance : '
                         '${evolutionAction(e, exerciseName: planName, dayName: (d) => _dayName(e.blockId, d))}.'
                   : 'Cette séance change (${items.length} changements).',
+              style: KType.corps.copyWith(color: k.texte),
             ),
-            const SizedBox(height: 6),
+            const SizedBox(height: KSpacing.s8),
             Wrap(
-              spacing: 8,
-              runSpacing: 4,
+              spacing: KSpacing.s8,
+              runSpacing: KSpacing.s8,
               children: [
                 for (final x in items)
-                  TextButton(
+                  KTonalButton(
                     key: ValueKey('evo-session-see-${evoKey(x)}'),
                     onPressed: () => showEvolutionSheet(context, x),
-                    child: Text(
-                      items.length == 1
-                          ? 'Voir le changement'
-                          : evolutionKindTitle(x.proposal.kind),
-                    ),
+                    label: items.length == 1
+                        ? 'Voir le changement'
+                        : evolutionKindTitle(x.proposal.kind),
                   ),
               ],
             ),
@@ -376,13 +352,13 @@ class EvolutionUnlockCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final k = KTokens.of(context);
     final u = store.evolutionUnlock;
     final next = unlockNextText(
       next: u.next,
       weeks: u.weeksToNext,
       blocks: u.blocksToNext,
     );
-    final dim = Theme.of(context).textTheme.bodySmall;
     return KCard(
       key: const ValueKey('evo-unlock'),
       child: Column(
@@ -395,9 +371,10 @@ class EvolutionUnlockCard extends StatelessWidget {
                   'Je peux maintenant tout ajuster, jusqu’à réorganiser ton '
                       'bloc, quand je suis assez sûr de moi.',
               key: const ValueKey('evo-unlock-next'),
+              style: KType.corps.copyWith(color: k.texte),
             ),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: KSpacing.s12),
           for (final l in kc.UnlockLevel.values)
             Semantics(
               label:
@@ -406,35 +383,47 @@ class EvolutionUnlockCard extends StatelessWidget {
               excludeSemantics: true,
               child: Padding(
                 key: ValueKey('evo-unlock-${l.code}'),
-                padding: const EdgeInsets.symmetric(vertical: 3),
+                padding: const EdgeInsets.symmetric(vertical: KSpacing.s4),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Icon(
                       l.index <= u.level.index
-                          ? Icons.check_circle
-                          : Icons.lock_outline,
-                      size: 18,
-                      color: l.index <= u.level.index ? SL.success : SL.dim,
+                          ? Icons.check_circle_rounded
+                          : Icons.lock_outline_rounded,
+                      size: KSize.iconSmall,
+                      color: l.index <= u.level.index ? k.validation : k.texte2,
                     ),
-                    const SizedBox(width: 8),
+                    const SizedBox(width: KSpacing.s12),
                     Expanded(
-                      child: Text(
-                        '${kUnlockCan[l]![0].toUpperCase()}'
-                        '${kUnlockCan[l]!.substring(1)} · ${kUnlockWhen[l]}'
-                        '${l.index <= u.level.index ? '' : ' (pas encore)'}',
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            capitalized(kUnlockCan[l]!),
+                            style: KType.corps.copyWith(
+                              color: l.index <= u.level.index
+                                  ? k.texte
+                                  : k.texte2,
+                            ),
+                          ),
+                          Text(
+                            '${kUnlockWhen[l]}'
+                            '${l.index <= u.level.index ? '' : ' (pas encore)'}',
+                            style: KType.detail.copyWith(color: k.texte2),
+                          ),
+                        ],
                       ),
                     ),
                   ],
                 ),
               ),
             ),
-          const SizedBox(height: 6),
+          const SizedBox(height: KSpacing.s8),
           Text(
-            '${u.weeksObserved} semaine${u.weeksObserved > 1 ? 's' : ''} de '
-            'séances suivies. Même débloqué, je ne propose un changement que '
-            'si je suis assez sûr de moi.',
-            style: dim,
+            '${_observed(u.weeksObserved)}. Même débloqué, je ne propose '
+            'un changement que si je suis assez sûr de moi.',
+            style: KType.detail.copyWith(color: k.texte2),
           ),
         ],
       ),
@@ -442,8 +431,8 @@ class EvolutionUnlockCard extends StatelessWidget {
   }
 }
 
-/// Mon programme › Évolution : mode, déblocage, propositions en attente,
-/// historique des changements.
+/// Mon programme › Évolution : mode (seul réglage du mode, §4.3),
+/// déblocage, propositions en attente, historique des changements.
 class EvolutionScreen extends StatefulWidget {
   const EvolutionScreen({super.key});
 
@@ -465,175 +454,176 @@ class _EvolutionScreenState extends State<EvolutionScreen> {
   Widget build(BuildContext context) => ListenableBuilder(
     listenable: store,
     builder: (context, _) {
+      final k = KTokens.of(context);
       final mode = store.adaptMode;
       final pending = store.evolutionPending;
       final history = store.evolutionHistory;
-      final dim = Theme.of(context).textTheme.bodySmall;
-      return KScreen(
-        appBar: AppBar(title: const Text('ÉVOLUTION')),
-        body: KList(
-          key: const ValueKey('evo-list'),
-          children: [
-            if (store.athlete == null)
-              const KCard(
-                child: KoachSays(
-                  pose: KoachPose.you,
-                  child: Text(
-                    'Il me faut ton profil pour suivre tes séances et faire '
-                    'évoluer ton programme.',
-                  ),
-                ),
-              )
-            else
-              KCard(
-                key: const ValueKey('evo-mode'),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Text(
-                      'Quand je vois qu’un changement t’aiderait',
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                    const SizedBox(height: 8),
-                    SegmentedButton<String>(
-                      key: const ValueKey('evo-mode-switch'),
-                      expandedInsets: EdgeInsets.zero,
-                      showSelectedIcon: false,
-                      segments: const [
-                        ButtonSegment(
-                          value: 'assisted',
-                          label: Text('Assisté'),
-                        ),
-                        ButtonSegment(value: 'free', label: Text('Libre')),
-                      ],
-                      selected: {mode},
-                      onSelectionChanged: (s) =>
-                          store.setGuidanceMode(s.single),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      mode == 'assisted'
-                          ? 'Assisté : je l’applique moi-même et je te dis '
-                                'pourquoi. Tu peux annuler jusqu’à la séance '
-                                'concernée.'
-                          : 'Libre : je te propose, tu décides (accepter, '
-                                'refuser ou plus tard). Rien ne change sans '
-                                'ton accord.',
-                      key: const ValueKey('evo-mode-text'),
-                    ),
-                  ],
-                ),
+      final body = KType.corps.copyWith(color: k.texte);
+      final detail = KType.detail.copyWith(color: k.texte2);
+      return KPage.sub(
+        key: const ValueKey('evo-list'),
+        title: 'Évolution',
+        children: [
+          if (store.athlete == null)
+            KEmpty(
+              key: const ValueKey('evo-no-profile'),
+              icon: Icons.person_outline_rounded,
+              title: 'Il me faut ton profil',
+              message:
+                  'Il me faut ton profil pour suivre tes séances et faire '
+                  'évoluer ton programme.',
+              action: 'Créer mon profil',
+              onAction: () => Navigator.of(context).push(
+                MaterialPageRoute<void>(builder: (_) => const ProfileScreen()),
               ),
-            const EvolutionUnlockCard(),
-            if (pending.isNotEmpty) ...[
-              const KSection('Propositions en attente'),
-              for (final e in pending)
-                KCard(
-                  key: ValueKey('evo-pending-${evoKey(e)}'),
-                  child: KoachBubble(
-                    pose: evolutionPose(e.proposal.kind, pending: true),
-                    koachHeight: 72,
-                    text: evolutionHeadlineOf(e),
-                    why: evolutionWhy(e),
-                    actions: evolutionActions(context, e),
+            )
+          else
+            KCard(
+              key: const ValueKey('evo-mode'),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(
+                    'Quand je vois qu’un changement t’aiderait',
+                    style: KType.titreCarte.copyWith(color: k.texte),
                   ),
-                ),
-            ],
-            // CI1c : ce que Koach a repéré sans pouvoir l'appliquer au
-            // programme importé, en clair (pas de bouton « Accepter »).
-            for (final p in store.evolutionNotApplicable)
-              KCard(
-                key: ValueKey('evo-not-applicable-${p.id}'),
-                child: KoachSays(
-                  pose: KoachPose.you,
-                  child: Text(
-                    'J’ai repéré un changement possible '
-                    '(${evolutionKindTitle(p.kind).toLowerCase()}), mais il '
-                    'ne peut pas s’appliquer à ton programme importé jour '
-                    'pour jour : ton programme reste tel quel.',
+                  const SizedBox(height: KSpacing.s12),
+                  KSegmented<String>(
+                    key: const ValueKey('evo-mode-switch'),
+                    semanticLabel: 'Mode d’évolution',
+                    segments: const [
+                      KSegment('assisted', 'Assisté'),
+                      KSegment('free', 'Libre'),
+                    ],
+                    selected: mode,
+                    onChanged: store.setGuidanceMode,
                   ),
-                ),
+                  const SizedBox(height: KSpacing.s12),
+                  Text(
+                    mode == 'assisted'
+                        ? 'Assisté : je l’applique moi-même et je te dis '
+                              'pourquoi. Tu peux annuler jusqu’à la séance '
+                              'concernée.'
+                        : 'Libre : je te propose, tu décides (accepter, '
+                              'refuser ou plus tard). Rien ne change sans '
+                              'ton accord.',
+                    key: const ValueKey('evo-mode-text'),
+                    style: body,
+                  ),
+                ],
               ),
-            const KSection('Historique des changements'),
-            if (history.isEmpty)
-              Text(
-                'Aucun changement pour l’instant : je commence par régler tes '
-                'charges et tes répétitions, séance après séance.',
-                key: const ValueKey('evo-history-empty'),
-                style: dim,
-              ),
-            for (final e in history)
+            ),
+          const EvolutionUnlockCard(),
+          if (pending.isNotEmpty) ...[
+            const KSectionTitle('Propositions en attente'),
+            for (final e in pending)
               KCard(
-                key: ValueKey('evo-history-${evoKey(e)}'),
-                onTap: () => showEvolutionSheet(context, e),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            evolutionKindTitle(e.proposal.kind),
-                            style: Theme.of(context).textTheme.titleSmall,
-                          ),
-                        ),
-                        KBadge(
-                          evolutionStatusLabel(e.status),
-                          icon: switch (e.status) {
-                            EvoStatus.refused => Icons.block,
-                            EvoStatus.undone => Icons.undo,
-                            _ => Icons.check,
-                          },
-                          color: e.inEffect ? SL.accent : SL.dim,
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      capitalized(
-                        evolutionAction(
-                          e,
-                          exerciseName: planName,
-                          dayName: (d) => _dayName(e.blockId, d),
-                        ),
-                      ),
-                    ),
-                    for (final r in evolutionReasons(
-                      e.proposal,
-                      exerciseName: planName,
-                    ))
-                      Text(r, style: dim),
-                    Text(
-                      '${_date(e.decidedOn)} · ${e.mode == 'assisted' ? 'mode assisté' : 'mode libre'}',
-                      style: dim,
-                    ),
-                    if (store.evolutionCanUndo(e))
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: TextButton(
-                          key: ValueKey('evo-history-undo-${evoKey(e)}'),
-                          onPressed: () {
-                            final ok = store.evolutionUndo(e);
-                            showKoachToast(
-                              context,
-                              ok
-                                  ? 'Changement annulé.'
-                                  : 'Trop tard pour annuler.',
-                              pose: ok ? KoachPose.thumbsUp : KoachPose.oops,
-                            );
-                          },
-                          child: const Text('Annuler ce changement'),
-                        ),
-                      ),
-                  ],
+                key: ValueKey('evo-pending-${evoKey(e)}'),
+                child: KoachBubble(
+                  pose: evolutionPose(e.proposal.kind, pending: true),
+                  koachHeight: KSize.primary + KSpacing.s16,
+                  text: evolutionHeadlineOf(e),
+                  why: evolutionWhy(e),
+                  actions: evolutionActions(context, e),
                 ),
               ),
           ],
-        ),
+          // CI1c : ce que Koach a repéré sans pouvoir l'appliquer au
+          // programme importé, en clair (pas de bouton « Accepter »).
+          for (final p in store.evolutionNotApplicable)
+            KCard(
+              key: ValueKey('evo-not-applicable-${p.id}'),
+              child: KoachSays(
+                pose: KoachPose.you,
+                child: Text(
+                  'J’ai repéré un changement possible '
+                  '(${evolutionKindTitle(p.kind).toLowerCase()}), mais il '
+                  'ne peut pas s’appliquer à ton programme importé jour '
+                  'pour jour : ton programme reste tel quel.',
+                  style: body,
+                ),
+              ),
+            ),
+          const KSectionTitle('Historique des changements'),
+          if (history.isEmpty)
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: KSpacing.s4),
+              child: Text(
+                'Aucun changement pour l’instant : je commence par régler tes '
+                'charges et tes répétitions, séance après séance.',
+                key: const ValueKey('evo-history-empty'),
+                style: detail,
+              ),
+            ),
+          for (final e in history)
+            KCard(
+              key: ValueKey('evo-history-${evoKey(e)}'),
+              onTap: () => showEvolutionSheet(context, e),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    evolutionKindTitle(e.proposal.kind),
+                    style: KType.corpsFort.copyWith(color: k.texte),
+                  ),
+                  const SizedBox(height: KSpacing.s4),
+                  KChip(
+                    evolutionStatusLabel(e.status),
+                    icon: switch (e.status) {
+                      EvoStatus.refused => Icons.block_rounded,
+                      EvoStatus.undone => Icons.undo_rounded,
+                      _ => Icons.check_rounded,
+                    },
+                  ),
+                  const SizedBox(height: KSpacing.s4),
+                  Text(
+                    capitalized(
+                      evolutionAction(
+                        e,
+                        exerciseName: planName,
+                        dayName: (d) => _dayName(e.blockId, d),
+                      ),
+                    ),
+                    style: body,
+                  ),
+                  for (final r in evolutionReasons(
+                    e.proposal,
+                    exerciseName: planName,
+                  ))
+                    Text(r, style: detail),
+                  Text(
+                    '${_date(e.decidedOn)}, '
+                    '${e.mode == 'assisted' ? 'mode assisté' : 'mode libre'}',
+                    style: detail,
+                  ),
+                  if (store.evolutionCanUndo(e)) ...[
+                    const SizedBox(height: KSpacing.s8),
+                    KTonalButton(
+                      key: ValueKey('evo-history-undo-${evoKey(e)}'),
+                      label: 'Annuler ce changement',
+                      onPressed: () {
+                        final ok = store.evolutionUndo(e);
+                        showKoachToast(
+                          context,
+                          ok ? 'Changement annulé.' : 'Trop tard pour annuler.',
+                          pose: ok ? KoachPose.thumbsUp : KoachPose.oops,
+                        );
+                      },
+                    ),
+                  ],
+                ],
+              ),
+            ),
+        ],
       );
     },
   );
 }
+
+/// Semaines de séances suivies, en clair (« Aucune… » à zéro).
+String _observed(int n) => n == 0
+    ? 'Aucune semaine de séances suivie pour l’instant'
+    : '$n semaine${n > 1 ? 's' : ''} de séances suivie${n > 1 ? 's' : ''}';
 
 String _date(String? iso) {
   if (iso == null || iso.length < 10) return '';

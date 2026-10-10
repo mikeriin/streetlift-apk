@@ -4,7 +4,6 @@
 // quitter un écran n'est pas abandonner.
 import 'package:flutter/material.dart';
 
-import 'app_theme.dart';
 import 'home_screen.dart' show openProgramDay;
 import 'store.dart';
 import 'ui.dart';
@@ -17,48 +16,78 @@ class ResumeBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final k = KTokens.of(context);
     final sessions = store.sessionsInProgress;
-    final small = Theme.of(context).textTheme.bodySmall;
-    Widget line(String text, String action, VoidCallback onTap, Key key) =>
-        Padding(
-          padding: const EdgeInsets.only(top: 4),
-          child: Row(
-            children: [
-              Expanded(child: Text(text)),
-              const SizedBox(width: 8),
-              TextButton(key: key, onPressed: onTap, child: Text(action)),
-            ],
-          ),
-        );
+    final detail = KType.detail.copyWith(color: k.texte2);
+    final large = MediaQuery.textScalerOf(context).scale(1) > 1.3;
     return Semantics(
       container: true,
       child: KCard(
         key: const ValueKey('resume-banner'),
-        accent: SL.action,
-        padding: const EdgeInsets.fromLTRB(16, 12, 8, 8),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text('À reprendre', style: Theme.of(context).textTheme.titleMedium),
+            Row(
+              children: [
+                Icon(Icons.timelapse_rounded, size: KSize.icon, color: k.encre),
+                const SizedBox(width: KSpacing.s8),
+                Expanded(
+                  child: Text(
+                    'À reprendre',
+                    style: KType.titreCarte.copyWith(color: k.texte),
+                  ),
+                ),
+              ],
+            ),
             for (final s in sessions.take(3))
-              line(
-                '${s.title} · ${s.done}/${s.total} séries validées',
-                'Reprendre',
-                () => openProgramDay(Navigator.of(context), s.week, s.day),
-                ValueKey('resume-${s.key}'),
+              Padding(
+                padding: const EdgeInsets.only(top: KSpacing.s8),
+                child: Builder(
+                  builder: (context) {
+                    final text = Text(
+                      '${s.title}, ${s.done}/${s.total} séries validées',
+                      style: KType.corps.copyWith(color: k.texte),
+                    );
+                    final button = KTonalButton(
+                      key: ValueKey('resume-${s.key}'),
+                      label: 'Reprendre',
+                      onPressed: () =>
+                          openProgramDay(Navigator.of(context), s.week, s.day),
+                    );
+                    // Grand texte : le bouton passe sous la séance.
+                    return large
+                        ? Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              text,
+                              const SizedBox(height: KSpacing.s8),
+                              button,
+                            ],
+                          )
+                        : Row(
+                            children: [
+                              Expanded(child: text),
+                              const SizedBox(width: KSpacing.s8),
+                              button,
+                            ],
+                          );
+                  },
+                ),
               ),
             if (sessions.length > 3)
               Padding(
-                padding: const EdgeInsets.only(top: 4),
+                padding: const EdgeInsets.only(top: KSpacing.s8),
                 child: Text(
                   '+ ${sessions.length - 3} autre${sessions.length > 4 ? 's' : ''} '
-                  'séance${sessions.length > 4 ? 's' : ''} en cours (badge sur la journée).',
-                  style: small,
+                  'séance${sessions.length > 4 ? 's' : ''} en cours (« En cours » '
+                  'sur la journée).',
+                  style: detail,
                 ),
               ),
+            const SizedBox(height: KSpacing.s8),
             Text(
               'Tes séries validées sont enregistrées ; le repos n’est pas relancé.',
-              style: small,
+              style: detail,
             ),
           ],
         ),

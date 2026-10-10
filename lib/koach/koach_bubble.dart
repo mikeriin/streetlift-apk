@@ -8,7 +8,8 @@
 import 'package:flutter/material.dart';
 import 'package:kalis_koach/kalis_koach.dart';
 
-import '../app_theme.dart';
+import '../plan/widgets/program_widgets.dart' show showProgramSheet;
+import '../ui.dart';
 import 'koach_view.dart';
 
 /// Directeur et textes partagés de l'application.
@@ -41,11 +42,12 @@ class KoachBubbleAction {
   });
 }
 
-/// Couleur de la bulle sur le support courant.
-Color koachBubbleColor(BuildContext context) =>
-    Theme.of(context).brightness == Brightness.dark
-    ? const Color(0xFF2B2B2B)
-    : Colors.white;
+/// Couleur de la bulle sur le support courant (UI1 : `haute` en sombre,
+/// `surface` bordée d'un `filet` en clair).
+Color koachBubbleColor(BuildContext context) {
+  final k = KTokens.of(context);
+  return k.dark ? k.haute : k.surface;
+}
 
 /// Koach et sa bulle : texte, actions, « Pourquoi ? » dépliable.
 class KoachBubble extends StatefulWidget {
@@ -140,35 +142,61 @@ class KoachBubbleState extends State<KoachBubble> {
     );
     final koachLeft = side == KoachSide.right;
     final bubble = _bubble(context, koachLeft);
+    // Grand texte (150 % et plus) : Koach au-dessus de sa bulle, du côté
+    // de son regard ; la bulle garde toute la largeur (aucun mot coupé,
+    // C3). Même pose, même taille.
+    if (MediaQuery.textScalerOf(context).scale(1) >= 1.5) {
+      return Column(
+        crossAxisAlignment: koachLeft
+            ? CrossAxisAlignment.start
+            : CrossAxisAlignment.end,
+        children: [
+          koach,
+          const SizedBox(height: KSpacing.s4),
+          bubble,
+        ],
+      );
+    }
     return Row(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: koachLeft
-          ? [koach, const SizedBox(width: 8), Expanded(child: bubble)]
-          : [Expanded(child: bubble), const SizedBox(width: 8), koach],
+          ? [koach, const SizedBox(width: KSpacing.s8), Expanded(child: bubble)]
+          : [
+              Expanded(child: bubble),
+              const SizedBox(width: KSpacing.s8),
+              koach,
+            ],
     );
   }
 
   Widget _bubble(BuildContext context, bool koachLeft) {
-    final tt = Theme.of(context).textTheme;
-    final dark = Theme.of(context).brightness == Brightness.dark;
-    const r = Radius.circular(16), tip = Radius.circular(4);
+    final k = KTokens.of(context);
+    // Rayon des menus ; coin pointu vers Koach : la bulle « sort » de sa
+    // bouche (forme de la bulle conservée, §1).
+    const r = Radius.circular(KRadius.menu), tip = Radius.circular(KSpacing.s4);
     final why = widget.why;
     return Semantics(
       container: true,
       label: 'Koach',
       child: Container(
         key: const ValueKey('koach-bubble'),
-        padding: const EdgeInsets.fromLTRB(14, 10, 14, 10),
-        decoration: BoxDecoration(
+        padding: const EdgeInsets.fromLTRB(
+          KSpacing.s14,
+          KSpacing.s12,
+          KSpacing.s14,
+          KSpacing.s12,
+        ),
+        decoration: ShapeDecoration(
           color: koachBubbleColor(context),
-          // Coin pointu vers Koach : la bulle « sort » de sa bouche.
-          borderRadius: BorderRadius.only(
-            topLeft: r,
-            topRight: r,
-            bottomLeft: koachLeft ? tip : r,
-            bottomRight: koachLeft ? r : tip,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              topLeft: r,
+              topRight: r,
+              bottomLeft: koachLeft ? tip : r,
+              bottomRight: koachLeft ? r : tip,
+            ),
+            side: k.dark ? BorderSide.none : BorderSide(color: k.filet),
           ),
-          border: dark ? null : Border.all(color: SL.line),
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -177,53 +205,51 @@ class KoachBubbleState extends State<KoachBubble> {
             Text(
               widget.text,
               key: const ValueKey('koach-bubble-text'),
-              style: tt.bodyMedium?.copyWith(color: SL.text, height: 1.3),
+              style: KType.corps.copyWith(color: k.texte),
             ),
             if (why != null)
               AnimatedSize(
-                duration: MediaQuery.disableAnimationsOf(context)
-                    ? Duration.zero
-                    : const Duration(milliseconds: 180),
+                duration: KMotion.standard.durationIn(context),
+                curve: KMotion.standard.curve,
                 alignment: Alignment.topCenter,
                 child: _why
                     ? Padding(
-                        padding: const EdgeInsets.only(top: 8),
+                        padding: const EdgeInsets.only(top: KSpacing.s8),
                         child: Text(
                           why,
                           key: const ValueKey('koach-why-text'),
-                          style: tt.bodySmall?.copyWith(
-                            color: SL.dim,
-                            height: 1.35,
-                          ),
+                          style: KType.detail.copyWith(color: k.texte2),
                         ),
                       )
                     : const SizedBox(width: double.infinity),
               ),
             if (why != null || widget.actions.isNotEmpty)
               Padding(
-                padding: const EdgeInsets.only(top: 6),
+                padding: const EdgeInsets.only(top: KSpacing.s8),
                 child: Wrap(
-                  spacing: 8,
-                  runSpacing: 4,
+                  spacing: KSpacing.s8,
+                  runSpacing: KSpacing.s8,
                   alignment: WrapAlignment.end,
+                  crossAxisAlignment: WrapCrossAlignment.center,
                   children: [
                     if (why != null)
-                      TextButton(
+                      KTextButton(
                         key: const ValueKey('koach-why'),
                         onPressed: toggleWhy,
-                        child: Text(_why ? 'Compris' : 'Pourquoi ?'),
+                        label: _why ? 'Compris' : 'Pourquoi ?',
                       ),
                     for (final a in widget.actions)
                       a.primary
-                          ? FilledButton(
+                          ? KPrimaryButton(
                               key: a.key,
+                              expand: false,
                               onPressed: a.onPressed,
-                              child: Text(a.label),
+                              label: a.label,
                             )
-                          : OutlinedButton(
+                          : KTonalButton(
                               key: a.key,
                               onPressed: a.onPressed,
-                              child: Text(a.label),
+                              label: a.label,
                             ),
                   ],
                 ),
@@ -245,26 +271,38 @@ class KoachSays extends StatelessWidget {
     super.key,
     required this.pose,
     required this.child,
-    this.koachHeight = 56,
+    this.koachHeight = KSize.primary,
   });
 
   @override
-  Widget build(BuildContext context) => Row(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Padding(
-        padding: const EdgeInsets.only(top: 2),
-        child: KoachView(
-          key: const ValueKey('koach-says-view'),
-          pose: pose,
-          height: koachHeight,
-          width: koachHeight * .9,
-        ),
-      ),
-      const SizedBox(width: 10),
-      Expanded(child: child),
-    ],
-  );
+  Widget build(BuildContext context) {
+    final koach = KoachView(
+      key: const ValueKey('koach-says-view'),
+      pose: pose,
+      height: koachHeight,
+      width: koachHeight * .9,
+    );
+    // Grand texte (150 % et plus) : Koach au-dessus du contenu, qui garde
+    // toute la largeur (aucun mot coupé, C3) ; même pose, même taille.
+    if (MediaQuery.textScalerOf(context).scale(1) >= 1.5) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          koach,
+          const SizedBox(height: KSpacing.s8),
+          child,
+        ],
+      );
+    }
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        koach,
+        const SizedBox(width: KSpacing.s12),
+        Expanded(child: child),
+      ],
+    );
+  }
 }
 
 /// En-tête « KOACH · … » d'une carte, avec Koach en petit.
@@ -280,18 +318,15 @@ class KoachHeader extends StatelessWidget {
       KoachView(
         key: const ValueKey('koach-header-view'),
         pose: pose,
-        height: 40,
-        width: 36,
+        height: KSize.menuIcon,
+        width: KSize.menuIcon * .9,
       ),
-      const SizedBox(width: 8),
+      const SizedBox(width: KSpacing.s8),
       Expanded(
         child: Text(
-          text.toUpperCase(),
-          style: TextStyle(
-            color: color ?? SL.dim,
-            fontSize: 11.5,
-            fontWeight: FontWeight.w800,
-            letterSpacing: 1,
+          text,
+          style: KType.section.copyWith(
+            color: color ?? KTokens.of(context).texte2,
           ),
         ),
       ),
@@ -299,7 +334,8 @@ class KoachHeader extends StatelessWidget {
   );
 }
 
-/// Feuille du bas où Koach parle (explication, demande).
+/// Feuille du bas où Koach parle (explication, demande) : feuille de
+/// contenu de la zone, titre facultatif.
 Future<T?> showKoachSheet<T>(
   BuildContext context, {
   required KoachPose pose,
@@ -307,47 +343,28 @@ Future<T?> showKoachSheet<T>(
   String? title,
   String? why,
   List<KoachBubbleAction> actions = const [],
-}) => showModalBottomSheet<T>(
-  context: context,
-  isScrollControlled: true,
-  useSafeArea: true,
-  showDragHandle: true,
-  builder: (context) => KoachSurface(
-    color:
-        Theme.of(context).bottomSheetTheme.backgroundColor ??
-        Theme.of(context).colorScheme.surfaceContainerLow,
-    child: SingleChildScrollView(
-      key: const ValueKey('koach-sheet'),
-      padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          if (title != null)
-            Padding(
-              padding: const EdgeInsets.only(bottom: 12),
-              child: Text(title, style: Theme.of(context).textTheme.titleLarge),
-            ),
-          KoachBubble(
-            pose: pose,
-            text: text,
-            why: why,
-            koachHeight: 120,
-            actions: actions.isEmpty
-                ? [
-                    KoachBubbleAction(
-                      'OK',
-                      () => Navigator.of(context).pop(),
-                      primary: true,
-                      key: const ValueKey('koach-sheet-ok'),
-                    ),
-                  ]
-                : actions,
-          ),
-        ],
-      ),
+}) => showProgramSheet<T>(
+  context,
+  listKey: const ValueKey('koach-sheet'),
+  title: title,
+  children: (context) => [
+    KoachBubble(
+      pose: pose,
+      text: text,
+      why: why,
+      koachHeight: KSize.primary * 2,
+      actions: actions.isEmpty
+          ? [
+              KoachBubbleAction(
+                'OK',
+                () => Navigator.of(context).pop(),
+                primary: true,
+                key: const ValueKey('koach-sheet-ok'),
+              ),
+            ]
+          : actions,
     ),
-  ),
+  ],
 );
 
 /// Couleurs d'un message court (lues avant une attente asynchrone).
@@ -384,7 +401,7 @@ SnackBar koachSnackBar(
           width: 30,
           colors: KoachColors.onColor(colors.background),
         ),
-        const SizedBox(width: 10),
+        const SizedBox(width: KSpacing.s12),
       ],
       Expanded(
         child: Text(text, style: TextStyle(color: colors.text)),

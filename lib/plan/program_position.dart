@@ -12,9 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:kalis_core/kalis_core.dart' as kc;
 import 'package:kalis_koach/kalis_koach.dart' show KoachPose;
 
-import '../app_theme.dart';
 import '../koach/koach_bubble.dart';
-import '../koach/koach_view.dart' show KoachSurface;
 import '../models.dart' show WeekPlan;
 import '../store.dart';
 import '../ui.dart';
@@ -96,112 +94,130 @@ class _ProgramPositionScreenState extends State<ProgramPositionScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final k = KTokens.of(context);
     final w = store.program.week(_week);
     final count = _resumeCount;
-    final dim = Theme.of(context).textTheme.bodySmall;
-    return KScreen(
-      appBar: AppBar(title: const Text('OÙ J’EN SUIS')),
-      body: KList(
-        key: const ValueKey('position-list'),
-        children: [
-          KoachSurface(
-            color: SL.bg,
-            child: const KoachBubble(
-              key: ValueKey('position-koach'),
-              pose: KoachPose.direction,
-              koachHeight: 110,
-              text:
-                  'Dis-moi où tu en es dans ton programme : la séance '
-                  'choisie devient celle d’aujourd’hui.',
-              why:
-                  'Utile après un changement de téléphone ou une sauvegarde '
-                  'restaurée. Les séances d’avant que tu n’as pas saisies '
-                  'sont marquées « reprise » : elles ne comptent ni en XP, ni '
-                  'dans tes statistiques, ni dans ta série, ni pour tes '
-                  'records. Ton niveau ne bouge pas. Ce que tu as déjà saisi '
-                  'reste tel quel.',
-            ),
+    return KPage.sub(
+      key: const ValueKey('position-list'),
+      title: 'Où j’en suis',
+      bottom: SafeArea(
+        top: false,
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(
+            KSpacing.page,
+            KSpacing.s8,
+            KSpacing.page,
+            KSpacing.s16,
           ),
-          KCard(
-            child: Row(
-              children: [
-                IconButton.outlined(
-                  key: const ValueKey('position-week-minus'),
-                  tooltip: 'Semaine précédente',
-                  onPressed: _week > 1 ? () => _setWeek(_week - 1) : null,
-                  icon: const Icon(Icons.chevron_left),
-                ),
-                Expanded(
-                  child: Column(
-                    children: [
-                      Text(
-                        'Semaine $_week',
-                        key: const ValueKey('position-week'),
-                        style: Theme.of(context).textTheme.titleLarge,
-                      ),
-                      Text(w.block, style: dim, textAlign: TextAlign.center),
-                    ],
-                  ),
-                ),
-                IconButton.outlined(
-                  key: const ValueKey('position-week-plus'),
-                  tooltip: 'Semaine suivante',
-                  onPressed: _week < store.program.weeks.length
-                      ? () => _setWeek(_week + 1)
-                      : null,
-                  icon: const Icon(Icons.chevron_right),
-                ),
-              ],
-            ),
+          child: KPrimaryButton(
+            key: const ValueKey('position-confirm'),
+            onPressed: _day == null ? null : _confirm,
+            label: 'C’est là que j’en suis',
           ),
-          const KSection('Ta séance d’aujourd’hui'),
-          for (final d in w.days)
-            if (d.exercises.isNotEmpty)
-              KCard(
-                key: ValueKey('position-day-${d.j}'),
-                outline: _day == d.j ? SL.accent : null,
-                onTap: () => setState(() => _day = d.j),
-                child: Row(
+        ),
+      ),
+      children: [
+        const KoachBubble(
+          key: ValueKey('position-koach'),
+          pose: KoachPose.direction,
+          koachHeight: KSize.primary * 2,
+          text:
+              'Dis-moi où tu en es dans ton programme : la séance '
+              'choisie devient celle d’aujourd’hui.',
+          why:
+              'Utile après un changement de téléphone ou une sauvegarde '
+              'restaurée. Les séances d’avant que tu n’as pas saisies '
+              'sont marquées « reprise » : elles ne comptent ni en XP, ni '
+              'dans tes statistiques, ni dans ta série, ni pour tes '
+              'records. Ton niveau ne bouge pas. Ce que tu as déjà saisi '
+              'reste tel quel.',
+        ),
+        KCard(
+          padding: const EdgeInsets.all(KSpacing.s8),
+          child: Row(
+            children: [
+              KIconButton(
+                key: const ValueKey('position-week-minus'),
+                tooltip: 'Semaine précédente',
+                filled: true,
+                icon: Icons.chevron_left_rounded,
+                onPressed: _week > 1 ? () => _setWeek(_week - 1) : null,
+              ),
+              Expanded(
+                child: Column(
                   children: [
-                    Icon(
-                      _day == d.j
-                          ? Icons.radio_button_checked
-                          : Icons.radio_button_unchecked,
-                      color: _day == d.j ? SL.accent : SL.dim,
-                    ),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('J${d.j} · ${d.title}'),
-                          Text(
-                            '${d.exercises.length} exercices'
-                            '${store.isDone(_week, d.j) ? ' · déjà faite' : ''}',
-                            style: dim,
-                          ),
-                        ],
+                    Text(
+                      k.title('Semaine $_week'),
+                      key: const ValueKey('position-week'),
+                      textAlign: TextAlign.center,
+                      style: k.titleStyle(
+                        KType.titreEcran.copyWith(color: k.texte),
                       ),
+                    ),
+                    Text(
+                      w.block,
+                      textAlign: TextAlign.center,
+                      style: KType.detail.copyWith(color: k.texte2),
                     ),
                   ],
                 ),
               ),
-          if (_day != null)
-            Text(
+              KIconButton(
+                key: const ValueKey('position-week-plus'),
+                tooltip: 'Semaine suivante',
+                filled: true,
+                icon: Icons.chevron_right_rounded,
+                onPressed: _week < store.program.weeks.length
+                    ? () => _setWeek(_week + 1)
+                    : null,
+              ),
+            ],
+          ),
+        ),
+        KMenuGroup(
+          title: 'Ta séance d’aujourd’hui',
+          children: [
+            for (final d in w.days)
+              if (d.exercises.isNotEmpty)
+                Semantics(
+                  selected: _day == d.j,
+                  inMutuallyExclusiveGroup: true,
+                  child: KMenuRow(
+                    key: ValueKey('position-day-${d.j}'),
+                    leading: SizedBox(
+                      width: KSize.menuIcon,
+                      child: Icon(
+                        _day == d.j
+                            ? Icons.radio_button_checked_rounded
+                            : Icons.radio_button_unchecked_rounded,
+                        size: KSize.icon,
+                        color: _day == d.j ? k.encre : k.texte3,
+                      ),
+                    ),
+                    title: 'J${d.j} · ${d.title}',
+                    subtitle:
+                        '${d.exercises.length} exercices'
+                        '${store.isDone(_week, d.j) ? ', déjà faite' : ''}',
+                    chevron: false,
+                    onTap: () => setState(() => _day = d.j),
+                  ),
+                ),
+          ],
+        ),
+        if (_day != null)
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: KSpacing.s4),
+            child: Text(
               count == 0
                   ? 'Aucune séance ne sera marquée « reprise ».'
                   : '$count séance${count > 1 ? 's' : ''} d’avant '
                         '${count > 1 ? 'seront marquées' : 'sera marquée'} '
                         '« reprise » (neutre).',
               key: const ValueKey('position-count'),
+              style: KType.corps.copyWith(color: k.texte2),
             ),
-          FilledButton(
-            key: const ValueKey('position-confirm'),
-            onPressed: _day == null ? null : _confirm,
-            child: const Text('C’est là que j’en suis'),
           ),
-        ],
-      ),
+      ],
     );
   }
 }

@@ -6,16 +6,15 @@ import 'package:flutter/material.dart';
 import 'package:kalis_core/kalis_core.dart' as kc;
 import 'package:kalis_koach/kalis_koach.dart' show KoachPose;
 
-import '../app_theme.dart';
 import '../exercise_screens.dart' show ExerciseFilters, searchExercises;
 import '../koach/flame_icon.dart';
 import '../koach/koach_bubble.dart';
-import '../koach/koach_view.dart' show KoachSurface;
 import '../store.dart';
 import '../ui.dart';
 import 'plan_creation.dart';
 import 'plan_program.dart';
 import 'plan_texts.dart';
+import 'widgets/program_widgets.dart';
 
 String planName(String id) => store.content.byId[id]?.nom ?? id;
 
@@ -32,20 +31,18 @@ String planDayLabel(kc.Pass1Plan plan, int dayIndex) {
   return 'Jour ${dayIndex + 1}';
 }
 
-/// Fond des feuilles (papier de Koach).
-Color _sheetColor(BuildContext context) =>
-    Theme.of(context).bottomSheetTheme.backgroundColor ??
-    Theme.of(context).colorScheme.surfaceContainerLow;
-
-Future<T?> _sheet<T>(BuildContext context, WidgetBuilder builder) =>
-    showModalBottomSheet<T>(
-      context: context,
-      isScrollControlled: true,
-      useSafeArea: true,
-      showDragHandle: true,
-      builder: (context) =>
-          KoachSurface(color: _sheetColor(context), child: builder(context)),
-    );
+/// Feuille de la création (gabarit de feuille de contenu de la zone).
+Future<T?> _sheet<T>(
+  BuildContext context,
+  WidgetBuilder builder, {
+  String? title,
+  String? subtitle,
+}) => showProgramSheet<T>(
+  context,
+  title: title,
+  subtitle: subtitle,
+  children: (context) => [builder(context)],
+);
 
 // ------------------------------------------------------------- variantes
 
@@ -67,6 +64,8 @@ Future<String?> showVariantsSheet(
   context,
   (context) =>
       _VariantsSheet(set: set, exerciseName: exerciseName, cannotDo: cannotDo),
+  title: 'Choisir une variante',
+  subtitle: 'À la place de $exerciseName',
 );
 
 class _VariantsSheet extends StatefulWidget {
@@ -89,50 +88,32 @@ class _VariantsSheetState extends State<_VariantsSheet> {
 
   Widget _tile(kc.Variant v, {bool targeted = false}) {
     final why = v.reasons.isEmpty ? null : planReason(v.reasons.first);
-    return KCard(
+    return KMenuRow(
       key: ValueKey('variant-${v.exerciseId}'),
-      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+      title: planName(v.exerciseId),
+      subtitle: [
+        if (targeted) _variantKindLabels[v.kind]!,
+        if (why != null) why,
+      ].join(' · '),
       onTap: () => Navigator.of(context).pop(v.exerciseId),
-      child: Row(
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                if (targeted) ...[
-                  KBadge(_variantKindLabels[v.kind]!, color: SL.accent),
-                  const SizedBox(height: 6),
-                ],
-                Text(
-                  planName(v.exerciseId),
-                  style: Theme.of(context).textTheme.titleSmall,
-                ),
-                if (why != null)
-                  Text(why, style: Theme.of(context).textTheme.bodySmall),
-              ],
-            ),
-          ),
-          const Icon(Icons.chevron_right),
-        ],
-      ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    final k = KTokens.of(context);
     final s = widget.set;
     final rest = [
       for (final v in s.all)
         if (!s.targeted.any((t) => t.exerciseId == v.exerciseId)) v,
     ];
-    return ListView(
+    return Column(
       key: const ValueKey('variants-sheet'),
-      padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
-      shrinkWrap: true,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         KoachBubble(
           pose: widget.cannotDo ? KoachPose.choice : KoachPose.direction,
-          koachHeight: 88,
+          koachHeight: KSize.primary + KSpacing.s32,
           text: widget.cannotDo
               ? 'Pas de souci. Que veux-tu à la place de ${widget.exerciseName} ?'
               : 'D’accord, on le retire. Que veux-tu à la place de '
@@ -142,39 +123,44 @@ class _VariantsSheetState extends State<_VariantsSheet> {
               'avec un autre matériel. Après ton choix, je réajuste le reste '
               'de la semaine et je te montre ce qui a bougé.',
         ),
-        const SizedBox(height: 12),
+        const SizedBox(height: KSpacing.s12),
         if (s.targeted.isEmpty)
           Text(
             'Aucune variante ciblée ne tient dans cette séance.',
-            style: TextStyle(color: SL.dim),
+            style: KType.corps.copyWith(color: k.texte2),
+          )
+        else
+          KMenuGroup(
+            color: k.haute,
+            dividerIndent: KSpacing.s16,
+            children: [for (final v in s.targeted) _tile(v, targeted: true)],
           ),
-        for (final v in s.targeted) ...[
-          _tile(v, targeted: true),
-          const SizedBox(height: 8),
-        ],
-        OutlinedButton.icon(
+        const SizedBox(height: KSpacing.s12),
+        KTonalButton(
           key: const ValueKey('variants-koach'),
-          icon: const Icon(Icons.auto_awesome_outlined),
-          label: const Text('Laisse Koach choisir'),
+          icon: Icons.auto_awesome_outlined,
+          label: 'Laisse Koach choisir',
+          expand: true,
           onPressed: () => Navigator.of(context).pop(''),
         ),
         if (rest.isNotEmpty && !_all)
-          TextButton(
+          KTextButton(
             key: const ValueKey('variants-all'),
             onPressed: () => setState(() => _all = true),
-            child: Text('Voir tout (${rest.length})'),
+            label: 'Voir tout (${rest.length})',
           ),
         if (_all) ...[
-          const SizedBox(height: 8),
-          KSection('Toutes les variantes (${rest.length})'),
-          for (final v in rest.take(_shown)) ...[
-            _tile(v),
-            const SizedBox(height: 8),
-          ],
+          const SizedBox(height: KSpacing.s8),
+          KMenuGroup(
+            title: 'Toutes les variantes (${rest.length})',
+            color: k.haute,
+            dividerIndent: KSpacing.s16,
+            children: [for (final v in rest.take(_shown)) _tile(v)],
+          ),
           if (rest.length > _shown)
-            TextButton(
+            KTextButton(
               onPressed: () => setState(() => _shown += 40),
-              child: Text('Afficher plus (${rest.length - _shown} restants)'),
+              label: 'Afficher plus (${rest.length - _shown} restants)',
             ),
         ],
       ],
@@ -189,7 +175,11 @@ Future<({int dayIndex, String exerciseId})?> showAddExerciseSheet(
   BuildContext context, {
   required kc.Pass1Plan plan,
   int? dayIndex,
-}) => _sheet(context, (context) => _AddSheet(plan: plan, day: dayIndex));
+}) => _sheet(
+  context,
+  (context) => _AddSheet(plan: plan, day: dayIndex),
+  title: 'Ajouter un exercice que tu aimes',
+);
 
 class _AddSheet extends StatefulWidget {
   final kc.Pass1Plan plan;
@@ -220,62 +210,66 @@ class _AddSheetState extends State<_AddSheet> {
       ))
         if (!present.contains(e.id)) e,
     ];
-    return ListView(
+    final k = KTokens.of(context);
+    return Column(
       key: const ValueKey('add-sheet'),
-      padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
-      shrinkWrap: true,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(
-          'Ajouter un exercice que tu aimes',
-          style: Theme.of(context).textTheme.titleLarge,
-        ),
-        const SizedBox(height: 8),
-        Text('Quel jour ?', style: TextStyle(color: SL.dim)),
-        const SizedBox(height: 6),
+        Text('Quel jour ?', style: KType.section.copyWith(color: k.texte2)),
+        const SizedBox(height: KSpacing.s4),
         Wrap(
-          spacing: 8,
-          runSpacing: 8,
+          spacing: KSpacing.s8,
           children: [
             for (final d in widget.plan.days)
-              ChoiceChip(
+              KChip(
+                weekdayLabel(d.weekday),
                 key: ValueKey('add-day-${d.dayIndex}'),
-                label: Text(weekdayLabel(d.weekday)),
                 selected: _day == d.dayIndex,
-                onSelected: (_) => setState(() => _day = d.dayIndex),
+                onTap: () => setState(() => _day = d.dayIndex),
               ),
           ],
         ),
-        const SizedBox(height: 12),
-        TextField(
+        const SizedBox(height: KSpacing.s12),
+        KSearchField(
           key: const ValueKey('add-search'),
-          decoration: const InputDecoration(
-            prefixIcon: Icon(Icons.search),
-            hintText: 'Rechercher dans la base (1 039 exercices)',
-          ),
+          hint: 'Rechercher un exercice',
           onChanged: (v) => setState(() {
             _q = v;
             _shown = 20;
           }),
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: KSpacing.s8),
         Text(
           '${all.length} exercice${all.length > 1 ? 's' : ''}',
-          style: TextStyle(color: SL.dim),
+          style: KType.detail.copyWith(color: k.texte2),
         ),
-        for (final e in all.take(_shown))
-          ListTile(
-            key: ValueKey('add-${e.id}'),
-            contentPadding: EdgeInsets.zero,
-            title: Text(e.nom),
-            subtitle: Text('${e.discipline} · difficulté ${e.difficulte}/10'),
-            trailing: const Icon(Icons.add_circle_outline),
-            onTap: () =>
-                Navigator.of(context).pop((dayIndex: _day, exerciseId: e.id)),
+        const SizedBox(height: KSpacing.s4),
+        if (all.isNotEmpty)
+          KMenuGroup(
+            color: k.haute,
+            dividerIndent: KSpacing.s16,
+            children: [
+              for (final e in all.take(_shown))
+                KMenuRow(
+                  key: ValueKey('add-${e.id}'),
+                  title: e.nom,
+                  subtitle: '${e.discipline}, difficulté ${e.difficulte}/10',
+                  chevron: false,
+                  trailing: Icon(
+                    Icons.add_circle_outline_rounded,
+                    size: KSize.icon,
+                    color: k.texte2,
+                  ),
+                  onTap: () => Navigator.of(
+                    context,
+                  ).pop((dayIndex: _day, exerciseId: e.id)),
+                ),
+            ],
           ),
         if (all.length > _shown)
-          TextButton(
+          KTextButton(
             onPressed: () => setState(() => _shown += 40),
-            child: Text('Afficher plus (${all.length - _shown} restants)'),
+            label: 'Afficher plus (${all.length - _shown} restants)',
           ),
       ],
     );
@@ -340,7 +334,11 @@ String stepHeadline(PlanStep s) {
 
 /// Feuille du diff : vrai si l'utilisateur annule le changement.
 Future<bool> showStepSheet(BuildContext context, PlanStep step) async {
-  final r = await _sheet<bool>(context, (context) => _StepSheet(step: step));
+  final r = await _sheet<bool>(
+    context,
+    (context) => _StepSheet(step: step),
+    title: 'Ce que j’ai changé',
+  );
   return r == true;
 }
 
@@ -354,18 +352,17 @@ class _StepSheet extends StatelessWidget {
     final lines = [
       for (final c in step.changes) (c, changeLine(c, step.before, step.after)),
     ];
-    final dim = Theme.of(context).textTheme.bodySmall;
-    return ListView(
+    final k = KTokens.of(context);
+    return Column(
       key: const ValueKey('step-sheet'),
-      padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
-      shrinkWrap: true,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         KoachBubble(
           key: const ValueKey('step-koach'),
           pose: step.sideEffects.isEmpty
               ? KoachPose.thumbsUp
               : KoachPose.explainBoard,
-          koachHeight: 96,
+          koachHeight: KSize.primary * 2,
           text: stepHeadline(step),
           why: why == null
               ? 'Ce que tu as validé reste en place ; le reste est '
@@ -387,25 +384,20 @@ class _StepSheet extends StatelessWidget {
           ],
         ),
         if (lines.isNotEmpty) ...[
-          const SizedBox(height: 12),
-          KSection('Ce qui a bougé (${lines.length})'),
-          for (final (c, line) in lines)
-            ExpansionTile(
-              key: ValueKey('step-change-${c.slotId ?? line}'),
-              tilePadding: EdgeInsets.zero,
-              title: Text(line),
-              subtitle: Text('Pourquoi ?', style: dim),
-              children: [
-                for (final r in c.reasons)
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Padding(
-                      padding: const EdgeInsets.only(bottom: 6),
-                      child: Text(planReason(r)),
-                    ),
-                  ),
-              ],
-            ),
+          const SizedBox(height: KSpacing.s12),
+          KMenuGroup(
+            title: 'Ce qui a bougé (${lines.length})',
+            color: k.haute,
+            dividerIndent: KSpacing.s16,
+            children: [
+              for (final (c, line) in lines)
+                WhyTile(
+                  key: ValueKey('step-change-${c.slotId ?? line}'),
+                  title: line,
+                  reasons: [for (final r in c.reasons) planReason(r)],
+                ),
+            ],
+          ),
         ],
       ],
     );
@@ -423,6 +415,9 @@ Future<void> showAdjustSheet(
 }) => _sheet<void>(
   context,
   (context) => _AdjustSheet(c: creation, item: item, cautious: cautious),
+  title: planName(item.exerciseId),
+  subtitle:
+      'Réglage pour tout le bloc (les semaines de test gardent leur épreuve).',
 );
 
 class _AdjustSheet extends StatefulWidget {
@@ -460,31 +455,14 @@ class _AdjustSheetState extends State<_AdjustSheet> {
     String key,
     VoidCallback minus,
     VoidCallback plus,
-  ) => Row(
-    children: [
-      Expanded(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(label, style: TextStyle(color: SL.dim)),
-            Text(value, style: Theme.of(context).textTheme.titleMedium),
-          ],
-        ),
-      ),
-      IconButton.outlined(
-        key: ValueKey('adjust-$key-minus'),
-        tooltip: '$label : moins',
-        onPressed: minus,
-        icon: const Icon(Icons.remove),
-      ),
-      const SizedBox(width: 8),
-      IconButton.outlined(
-        key: ValueKey('adjust-$key-plus'),
-        tooltip: '$label : plus',
-        onPressed: plus,
-        icon: const Icon(Icons.add),
-      ),
-    ],
+  ) => KStepperRow(
+    key: ValueKey('adjust-$key'),
+    title: label,
+    value: value,
+    decrementLabel: '$label : moins',
+    incrementLabel: '$label : plus',
+    onDecrement: minus,
+    onIncrement: plus,
   );
 
   @override
@@ -518,39 +496,37 @@ class _AdjustSheetState extends State<_AdjustSheet> {
           () => _try(a.copyWith(restDelta: a.restDelta + 15)),
         ),
     ];
-    return ListView(
+    return Column(
       key: const ValueKey('adjust-sheet'),
-      padding: const EdgeInsets.fromLTRB(16, 0, 16, 24),
-      shrinkWrap: true,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(
-          planName(widget.item.exerciseId),
-          style: Theme.of(context).textTheme.titleLarge,
+        KMenuGroup(
+          color: KTokens.of(context).haute,
+          dividerIndent: KSpacing.s16,
+          children: rows,
         ),
-        const SizedBox(height: 4),
-        Text(
-          'Réglage pour tout le bloc (les semaines de test gardent leur épreuve).',
-          style: TextStyle(color: SL.dim),
-        ),
-        const SizedBox(height: 12),
-        for (final r in rows) ...[r, const SizedBox(height: 10)],
-        if (_refusal != null)
+        if (_refusal != null) ...[
+          const SizedBox(height: KSpacing.s12),
           KoachBubble(
             key: const ValueKey('adjust-refused'),
             pose: KoachPose.oops,
-            koachHeight: 72,
+            koachHeight: KSize.primary + KSpacing.s16,
             text: _refusal!,
           ),
+        ],
+        const SizedBox(height: KSpacing.s12),
         if (!a.isEmpty)
-          TextButton(
+          KTonalButton(
             key: const ValueKey('adjust-reset'),
+            expand: true,
             onPressed: () => _try(const PlanAdjust()),
-            child: const Text('Revenir à ma proposition'),
+            label: 'Revenir à ma proposition',
           ),
-        FilledButton(
+        const SizedBox(height: KSpacing.s8),
+        KPrimaryButton(
           key: const ValueKey('adjust-done'),
           onPressed: () => Navigator.of(context).pop(),
-          child: const Text('OK'),
+          label: 'OK',
         ),
       ],
     );
@@ -566,12 +542,12 @@ class TargetFlames extends StatelessWidget {
   Widget build(BuildContext context) => Row(
     mainAxisSize: MainAxisSize.min,
     children: [
-      FlameIcon(flames, size: 20, semantics: false),
-      const SizedBox(width: 4),
+      FlameIcon(flames, size: KSize.iconSmall, semantics: false),
+      const SizedBox(width: KSpacing.s4),
       Text(
         '$flames/10 · RIR ${flameRirText(flames)}',
         semanticsLabel: flameSemanticLabel(flames),
-        style: Theme.of(context).textTheme.bodySmall,
+        style: KType.detail.copyWith(color: KTokens.of(context).texte2),
       ),
     ],
   );

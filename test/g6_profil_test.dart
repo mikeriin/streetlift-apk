@@ -905,6 +905,18 @@ void main() {
       await tester.pumpAndSettle();
       await tap(tester, 'program-explainer-open');
       expect(find.byKey(const ValueKey('program-explainer')), findsOneWidget);
+      // UI1 : feuille de contenu (liste paresseuse) : l'étape 2 par
+      // défilement.
+      await tester.scrollUntilVisible(
+        find.text('2. Tu passes en revue'),
+        200,
+        scrollable: find
+            .descendant(
+              of: find.byKey(const ValueKey('program-explainer')),
+              matching: find.byType(Scrollable),
+            )
+            .first,
+      );
       expect(find.text('2. Tu passes en revue'), findsOneWidget);
       await store.configureStart(DateTime(2026, 10, 5));
       expect(programPendingFor(store), isFalse);
