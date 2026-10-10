@@ -142,7 +142,9 @@ void main() {
         );
         expect(rect.top, greaterThanOrEqualTo(previousBottom));
         expect(rect.bottom, lessThan(dockTop));
-        if (day != 4) expect(rect.height, lessThanOrEqualTo(48));
+        // UI1 : ligne de jour de la maquette « Accueil » (52 dp, cible de
+        // 48 dp comprise) ; la semaine entière reste visible (L5).
+        if (day != 4) expect(rect.height, lessThanOrEqualTo(52));
         final expected = day <= 2
             ? Icons.check_circle_rounded
             : Icons.radio_button_unchecked_rounded;
@@ -152,7 +154,7 @@ void main() {
         );
         previousBottom = rect.bottom;
       }
-      expect(find.text('NIV.'), findsOneWidget);
+      expect(find.text('Niv.'), findsOneWidget);
       expect(find.text('Ouvrir la séance'), findsNothing);
       expect(find.byTooltip('Semaine précédente'), findsNothing);
       expect(find.byTooltip('Semaine suivante'), findsNothing);
@@ -167,7 +169,8 @@ void main() {
     await tester.longPress(find.byKey(const ValueKey('selected-week')));
     await tester.pumpAndSettle();
     expect(find.text('Choisir une semaine'), findsOneWidget);
-    await tester.tap(find.textContaining('Semaine 3 ·'));
+    // UI1 : feuille de liste du kit (« Semaine 3 », dates et bloc dessous).
+    await tester.tap(find.text('Semaine 3'));
     await tester.pumpAndSettle();
     expect(find.text('S3'), findsOneWidget);
     expect(find.byType(DraggableScrollableSheet), findsNothing);
@@ -289,7 +292,7 @@ void main() {
       );
       await tester.tap(find.text('Choisir une semaine'));
       await tester.pumpAndSettle();
-      await tester.tap(find.textContaining('Semaine 2 ·'));
+      await tester.tap(find.text('Semaine 2'));
       await tester.pumpAndSettle();
       expect(find.text('S2'), findsOneWidget);
       expect(find.byType(MuscleMap2D), findsNothing);

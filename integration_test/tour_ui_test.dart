@@ -34,6 +34,7 @@ import 'package:streetlift_tracker/dev/dev_session.dart';
 import 'package:streetlift_tracker/main.dart';
 import 'package:streetlift_tracker/pilotage_screen.dart';
 import 'package:streetlift_tracker/plan/evolution_widgets.dart';
+import 'package:streetlift_tracker/plan/program_position.dart';
 import 'package:streetlift_tracker/plan/event_day_screen.dart';
 import 'package:streetlift_tracker/plan/season_view.dart';
 import 'package:streetlift_tracker/program_screens.dart';
@@ -261,11 +262,30 @@ void main() {
     seed.saveSettings();
     final real = DateTime.now();
     await seed.configureStart(DateTime(real.year, real.month, real.day - 86));
+    // UI1 : profil d'exemple avec une compétition dans 12 semaines (Ma
+    // saison, Jour J mesuré, cahier §6.3).
     seed.saveAthleteProfile(
       ProfileDraft.of(
         sampleAthleteProfile(
           on: civilOf(real.subtract(const Duration(days: 90))),
           guidance: kc.GuidanceMode.assisted,
+        ).copyWith(
+          events: <kc.SeasonEvent>[
+            kc.SeasonEvent(
+              id: 'tour-competition',
+              kind: kc.EventKind.strengthCompetition,
+              priority: kc.EventPriority.main,
+              date: civilOf(real).addDays(84),
+              name: 'Championnat',
+              lifts: const <kc.CompetitionLift>[
+                kc.CompetitionLift(
+                  exerciseId: 'sl-traction-lestee',
+                  attempts: 3,
+                  minIncrementKg: 1.25,
+                ),
+              ],
+            ),
+          ],
         ),
       )..consent = 'refused',
     );
@@ -303,6 +323,8 @@ void main() {
       open: const ProgramScreen(),
       check: find.byType(ProgramScreen),
     );
+    await toEnd(tester);
+    await screen(tester, 'mon_programme_bas');
     await home(tester);
     await screen(
       tester,
@@ -318,6 +340,24 @@ void main() {
       check: find.byType(EvolutionScreen),
     );
     await home(tester);
+    // UI1 : Où j'en suis et Jour J (compétition du profil d'exemple).
+    await screen(
+      tester,
+      'ou_j_en_suis',
+      open: const ProgramPositionScreen(),
+      check: find.byType(ProgramPositionScreen),
+    );
+    await home(tester);
+    final competition = store.athlete?.profile.events?.firstOrNull;
+    if (competition != null) {
+      await screen(
+        tester,
+        'jour_j',
+        open: EventDayScreen(event: competition),
+        check: find.byType(EventDayScreen),
+      );
+      await home(tester);
+    }
 
     // Séance (UI2) : séance du jour, ou la prochaine.
     final now = store.storeClock();
@@ -385,6 +425,13 @@ void main() {
     // Parcours (cahier §6.3) : chemins de la base d'abord présents dans les
     // deux colonnes ; les lots ajoutent leurs chemins courts en tête.
     Finder settingsTab() => find.byKey(const ValueKey('nav-3'));
+    // UI1 (LANCEMENTS.md) : « Mon programme » mesuré sans carte du moment
+    // (la proposition « Où j'en suis » remise à demain) : la ligne
+    // permanente de l'accueil, pas le bouton conditionnel de la carte.
+    await PlanStore(store).snoozePlanPosition();
+    await wait(tester, 800);
+    releve['carte_du_moment'] = ProgramHomeCard.visible;
+    record();
     await route(tester, 'mon_programme', [
       [() => text('Mon programme')],
       [settingsTab, () => text('Mon programme')],

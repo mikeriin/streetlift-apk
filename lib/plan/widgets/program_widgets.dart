@@ -182,7 +182,7 @@ class ProgramDayRow extends StatelessWidget {
       size: KSize.icon,
       color: ink,
     );
-    return Semantics(
+    final main = Semantics(
       button: true,
       label: 'Jour $day · $title. $statusLabel',
       value: detail,
@@ -194,94 +194,91 @@ class ProgramDayRow extends StatelessWidget {
           ? 'Reprendre la séance'
           : 'Ouvrir la séance',
       onLongPressHint: onLongPress == null ? null : 'Afficher le résumé',
-      child: Material(
-        color: color ?? k.surface,
-        shape: KRadius.menuShape,
-        clipBehavior: Clip.antiAlias,
-        child: InkWell(
-          onTap: onTap,
-          onLongPress: onLongPress,
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(minHeight: KSize.search),
-            child: Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(
-                KSpacing.s14,
-                KSpacing.s8,
-                onInfo == null ? KSpacing.s14 : KSpacing.s4,
-                KSpacing.s8,
-              ),
-              child: Row(
-                children: [
-                  ExcludeSemantics(
-                    child: SizedBox(
-                      width: KSpacing.s32,
-                      child: Text(
-                        'J$day',
-                        style: KType.chiffrePetit.copyWith(color: k.texte2),
-                      ),
-                    ),
+      excludeSemantics: true,
+      child: InkWell(
+        onTap: onTap,
+        onLongPress: onLongPress,
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(minHeight: KSize.search),
+          child: Padding(
+            padding: EdgeInsetsDirectional.fromSTEB(
+              KSpacing.s14,
+              KSpacing.s8,
+              onInfo == null ? KSpacing.s14 : KSpacing.s4,
+              KSpacing.s8,
+            ),
+            child: Row(
+              children: [
+                SizedBox(
+                  width: KSpacing.s32,
+                  child: Text(
+                    'J$day',
+                    style: KType.chiffrePetit.copyWith(color: k.texte2),
                   ),
-                  Expanded(
-                    child: ExcludeSemantics(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            k.title(title),
-                            style: k.titleStyle(
-                              KType.ligneJour.copyWith(
-                                color: done ? k.texte2 : k.texte,
-                              ),
-                            ),
+                ),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        k.title(title),
+                        style: k.titleStyle(
+                          KType.ligneJour.copyWith(
+                            color: done ? k.texte2 : k.texte,
                           ),
-                          if (detail != null)
-                            Text(
-                              detail!,
-                              style: KType.detail.copyWith(color: k.texte2),
-                            ),
-                        ],
+                        ),
                       ),
-                    ),
+                      if (detail != null)
+                        Text(
+                          detail!,
+                          style: KType.detail.copyWith(color: k.texte2),
+                        ),
+                    ],
                   ),
-                  const SizedBox(width: KSpacing.s8),
-                  ExcludeSemantics(
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        if (written != null) ...[
-                          Text(
-                            written,
-                            key: ValueKey(
-                              status == ProgramDayStatus.inProgress
-                                  ? 'day-in-progress-$day'
-                                  : 'day-resume-$day',
-                            ),
-                            style: KType.micro.copyWith(color: ink),
-                          ),
-                          const SizedBox(width: KSpacing.s4),
-                        ],
-                        statusIcon,
-                      ],
+                ),
+                const SizedBox(width: KSpacing.s8),
+                if (written != null) ...[
+                  Text(
+                    written,
+                    key: ValueKey(
+                      status == ProgramDayStatus.inProgress
+                          ? 'day-in-progress-$day'
+                          : 'day-resume-$day',
                     ),
+                    style: KType.micro.copyWith(color: ink),
                   ),
-                  if (onInfo != null)
-                    IconButton(
-                      key: ValueKey('day-info-$day'),
-                      tooltip: 'Résumé du jour $day',
-                      onPressed: onInfo,
-                      icon: Icon(
-                        Icons.info_outline_rounded,
-                        size: KSize.iconSmall,
-                        color: k.texte2,
-                      ),
-                    ),
+                  const SizedBox(width: KSpacing.s4),
                 ],
-              ),
+                statusIcon,
+              ],
             ),
           ),
         ),
       ),
+    );
+    return Material(
+      color: color ?? k.surface,
+      shape: KRadius.menuShape,
+      clipBehavior: Clip.antiAlias,
+      child: onInfo == null
+          ? main
+          : Row(
+              children: [
+                Expanded(child: main),
+                IconButton(
+                  key: ValueKey('day-info-$day'),
+                  tooltip: 'Résumé du jour $day',
+                  onPressed: onInfo,
+                  icon: Icon(
+                    Icons.info_outline_rounded,
+                    size: KSize.iconSmall,
+                    color: k.texte2,
+                  ),
+                ),
+                const SizedBox(width: KSpacing.s4),
+              ],
+            ),
     );
   }
 }
@@ -377,4 +374,41 @@ class _WhyTileState extends State<WhyTile> {
       ],
     );
   }
+}
+
+/// Feuille de liste du kit (`KListSheet`) ouverte sur l'élément [initial]
+/// (choix parmi 40 semaines : la semaine affichée est visible d'emblée ;
+/// `showKListSheet` s'ouvre toujours en haut de la liste). Rend l'index
+/// choisi, null sans choix.
+Future<int?> showProgramListSheet(
+  BuildContext context, {
+  required String title,
+  String? summary,
+  required List<KListItem> items,
+  int initial = 0,
+}) {
+  // Hauteur d'une ligne d'une ligne de détail : 56 dp et 4 d'écart ; on
+  // ouvre deux lignes au-dessus de l'élément pour le montrer avec son
+  // voisinage.
+  final controller = ScrollController(
+    initialScrollOffset:
+        (KSize.primary + KSpacing.s4) * (initial > 2 ? initial - 2 : 0),
+  );
+  return showModalBottomSheet<int>(
+    context: context,
+    isScrollControlled: true,
+    useSafeArea: true,
+    showDragHandle: false,
+    sheetAnimationStyle: _sheetMotion(context),
+    constraints: BoxConstraints(
+      maxHeight: MediaQuery.sizeOf(context).height * .85,
+    ),
+    builder: (ctx) => KListSheet(
+      title: title,
+      summary: summary,
+      items: items,
+      controller: controller,
+      onSelected: (i) => Navigator.pop(ctx, i),
+    ),
+  ).whenComplete(controller.dispose);
 }

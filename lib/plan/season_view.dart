@@ -254,6 +254,49 @@ String _sentence(String s) => s.endsWith('.') ? s : '$s.';
 
 String _short(DateTime d) => '${d.day} ${_months[d.month - 1]}';
 
+const _longMonths = [
+  'janvier',
+  'février',
+  'mars',
+  'avril',
+  'mai',
+  'juin',
+  'juillet',
+  'août',
+  'septembre',
+  'octobre',
+  'novembre',
+  'décembre',
+];
+
+/// « 24 décembre » (l'année s'ajoute hors de l'année en cours).
+String _long(DateTime d, DateTime today) =>
+    '${d.day == 1 ? '1er' : d.day} ${_longMonths[d.month - 1]}'
+    '${d.year == today.year ? '' : ' ${d.year}'}';
+
+/// Compte à rebours en deux parties : le grand chiffre (« 12 semaines »)
+/// et la suite (« avant Championnat, le 24 décembre (84 jours) »).
+(String, String) countdownParts(
+  int days,
+  String event,
+  DateTime date,
+  DateTime today,
+) {
+  final when = _long(date, today);
+  if (days == 0) return ('Aujourd’hui', '$event, le $when');
+  if (days == 1) return ('Demain', '$event, le $when');
+  if (days < 14) return ('$days jours', 'avant $event, le $when');
+  return (
+    '${days ~/ 7} semaines',
+    'avant $event, le $when ($days jours)',
+  );
+}
+
+DateTime _today() {
+  final n = store.storeClock();
+  return DateTime(n.year, n.month, n.day);
+}
+
 /// Compte à rebours en clair.
 String countdownText(int days) => days == 0
     ? 'aujourd’hui'
@@ -456,10 +499,10 @@ class SeasonScreen extends StatelessWidget {
                     count.$1 == 'Aujourd’hui' || count.$1 == 'Demain'
                         ? count.$1
                         : 'dans ${count.$1}'
-                              '${view.daysToEvent! >= 14 ? ' (${view.daysToEvent} jours)' : ''}',
+                              '${view.daysToEvent! >= 14 ? ' (${view.daysToEvent}\u00a0jours)' : ''}',
                     style: KType.corps.copyWith(color: k.texte2),
                   ),
-                  if (jourJ && e != null) ...[
+                  if (jourJ) ...[
                     const SizedBox(height: KSpacing.s16),
                     KTonalButton(
                       key: const ValueKey('season-event-day'),
@@ -543,7 +586,7 @@ class SeasonScreen extends StatelessWidget {
 
   Widget _empty(BuildContext context) {
     final canCreate = PlanStore(store).planCanCreate;
-    final (String? action, VoidCallback? onAction) = store.athlete == null
+    final (String action, VoidCallback onAction) = store.athlete == null
         ? (
             'Créer mon profil',
             () => Navigator.of(context).push(
@@ -608,10 +651,9 @@ class _WeekRow extends StatelessWidget {
               Expanded(
                 child: Text(
                   '${w.label}${w.current ? ' · cette semaine' : ''}',
-                  style: (w.special || w.current
-                          ? KType.corpsFort
-                          : KType.corps)
-                      .copyWith(color: w.current ? k.encre : k.texte),
+                  style:
+                      (w.special || w.current ? KType.corpsFort : KType.corps)
+                          .copyWith(color: w.current ? k.encre : k.texte),
                 ),
               ),
               if (w.special)
