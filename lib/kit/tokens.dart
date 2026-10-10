@@ -67,6 +67,14 @@ abstract final class KSize {
   /// Ligne de menu (une ligne de description), ligne de réglage.
   static const double menuRow = 64, settingRow = 72;
 
+  /// Largeur maximale de la valeur d'une ligne de menu ; largeur sous
+  /// laquelle le pas à pas passe sous son libellé (à 100 % de texte).
+  static const double valueWidth = 140, stepperRowMin = 300;
+
+  /// Largeur sous laquelle les commandes de la barre de repos passent sous
+  /// le temps restant (à 100 % de texte).
+  static const double restBarMin = 300;
+
   /// Champ de recherche.
   static const double search = 52;
 
@@ -323,9 +331,8 @@ class KTokens extends ThemeExtension<KTokens> {
   String title(String text) => capsTitles ? text.toUpperCase() : text;
 
   /// Style d'un titre en capitales : interlettrage léger (U3).
-  TextStyle titleStyle(TextStyle style) => capsTitles
-      ? style.copyWith(letterSpacing: KType.capsSpacing)
-      : style;
+  TextStyle titleStyle(TextStyle style) =>
+      capsTitles ? style.copyWith(letterSpacing: KType.capsSpacing) : style;
 
   @override
   KTokens copyWith({KRoles? roles, bool? capsTitles}) => KTokens(

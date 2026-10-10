@@ -1,4 +1,8 @@
 // L5-C — Couleur dominante : palettes, rôles, thème et préférence.
+// UI0 (refonte UI) : les 8 palettes du propriétaire remplacent les six
+// couleurs ; mêmes comportements de la préférence (choix gardé, import,
+// échec d'écriture, suppression), anciens identifiants relus (rouge →
+// bordeaux…). Valeurs des rôles : test/ui0_palette_test.dart.
 // Stockage simulé (SharedPreferences en mémoire) ; les erreurs d'écriture
 // sont injectées par `debugWriteHook`. « Relance » = nouvelle instance qui
 // relit ce stockage simulé : ni un arrêt brutal ni un appareil réel.
@@ -23,47 +27,56 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   group('palettes', () {
-    test('six familles, rouge par défaut, identifiants stables', () {
+    test('huit palettes, Bordeaux par défaut, identifiants stables', () {
       expect(KAccentSpec.all.map((a) => a.id).toList(), kAccentIds);
       expect(KAccentSpec.all.map((a) => a.label).toList(), [
-        'Rouge Kalis',
-        'Jaune',
-        'Vert',
-        'Violet',
-        'Orange',
-        'Turquoise',
+        'Bordeaux Performance',
+        'Obsidian Energy',
+        'Arctic Motion',
+        'Neon Athlete',
+        'Titanium Pro',
+        'Violet Momentum',
+        'Forest Endurance',
+        'Solar Sprint',
       ]);
-      expect(KAccentSpec.defaultId, 'rouge');
+      expect(KAccentSpec.defaultId, 'bordeaux');
       for (final value in <Object?>[null, '', 'bleu', 'ROUGE', 42, true, []]) {
-        expect(KAccentSpec.byId(value), same(KAccentSpec.rouge));
-        expect(normalizeAccent(value), 'rouge');
+        expect(KAccentSpec.byId(value), same(KAccentSpec.bordeaux));
+        expect(normalizeAccent(value), 'bordeaux');
       }
       for (final a in KAccentSpec.all) {
         expect(KAccentSpec.byId(a.id), same(a));
         expect(normalizeAccent(a.id), a.id);
       }
+      // Anciens identifiants (L5-C) relus vers la palette la plus proche.
+      for (final (old, now) in const [
+        ('rouge', 'bordeaux'),
+        ('jaune', 'neon'),
+        ('vert', 'forest'),
+        ('violet', 'violet'),
+        ('orange', 'solar'),
+        ('turquoise', 'arctic'),
+      ]) {
+        expect(normalizeAccent(old), now);
+        expect(KAccentSpec.byId(old).id, now);
+      }
     });
 
-    test('le Rouge Kalis a la couleur du logo (5.10.0)', () {
+    test('Bordeaux : dominante exacte du propriétaire (#551515)', () {
       for (final dark in _modes) {
-        final p = KPalette(dark, KAccentSpec.rouge);
-        expect(p.bordeaux, const Color(0xFF5E1615));
-        expect(p.action, const Color(0xFF9E2A28));
+        final p = KPalette(dark, KAccentSpec.bordeaux);
+        expect(p.bordeaux, const Color(0xFF551515));
         expect(
           p.accent,
-          dark ? const Color(0xFFD96968) : const Color(0xFF5E1615),
+          dark ? const Color(0xFFCA6F6A) : const Color(0xFF551515),
         );
         expect(p.onBrand, Colors.white);
-        expect(p.onBrandSoft, KPalette.light);
-        expect(p.onAction, Colors.white);
-        expect(p.onActionSoft, KPalette.light);
-        expect(p.gauge, KPalette.redGradient);
-        expect(p.decor, KPalette.lightRed);
+        expect(p.onBrandSoft, Colors.white);
         expect(p.accentTint, KPalette(dark).accentTint);
       }
     });
 
-    test('12 combinaisons : textes, fonds pleins et éléments lisibles', () {
+    test('16 combinaisons : textes, fonds pleins et éléments lisibles', () {
       for (final a in KAccentSpec.all) {
         for (final dark in _modes) {
           final p = KPalette(dark, a);
@@ -105,45 +118,35 @@ void main() {
           // Jauges et sélection : visibles sur leur piste et sur le fond.
           expect(contrast(p.action, p.progressTrack), greaterThan(1.5));
           expect(contrast(p.gauge.last, p.progressTrack), greaterThan(1.5));
-          // Composant d'interface (critère 1.4.11, 3:1) ; le rouge historique
-          // en sombre reste l'exception documentée (2,51:1, identité gardée).
+          // Composant d'interface (critère 1.4.11, 3:1).
           expect(
             contrast(p.action, p.bg),
-            a.id == 'rouge' && dark
-                ? greaterThan(2.4)
-                : greaterThanOrEqualTo(3.0),
+            greaterThanOrEqualTo(3.0),
             reason: '$id : vive sur le fond',
           );
         }
       }
     });
 
-    test('rôles fixes et neutres identiques dans toutes les palettes', () {
+    test('rôles fixes identiques dans toutes les palettes', () {
       for (final dark in _modes) {
-        final ref = KPalette(dark);
         for (final a in KAccentSpec.all) {
           final p = KPalette(dark, a);
           expect(p.alert, KPalette.actionRed);
-          expect(p.redAccent, ref.accent);
-          for (final pair in [
-            (p.success, ref.success),
-            (p.danger, ref.danger),
-            (p.logo, ref.logo),
-            (p.bg, ref.bg),
-            (p.surface, ref.surface),
-            (p.card, ref.card),
-            (p.text, ref.text),
-            (p.dim, ref.dim),
-            (p.line, ref.line),
-            (p.progressTrack, ref.progressTrack),
-          ]) {
-            expect(pair.$1, pair.$2, reason: '${a.id} $dark');
-          }
+          expect(p.redAccent, dark ? KPalette.lightRed : KPalette.burgundy);
+          // UI0 : fonds, textes et états suivent la palette (fonds du
+          // propriétaire) ; ils viennent tous de ses rôles.
+          final r = KRoles.of(a.id, dark: dark);
+          expect(p.bg, r.fond);
+          expect(p.surface, r.surface);
+          expect(p.text, r.texte);
+          expect(p.success, r.validation);
+          expect(p.danger, r.danger);
         }
       }
     });
 
-    test('thème Material : dominante et luminosité indépendantes', () {
+    test('thème Material : palette et luminosité indépendantes', () {
       for (final a in KAccentSpec.all) {
         for (final dark in _modes) {
           final t = buildTheme(dark, a);
@@ -159,25 +162,23 @@ void main() {
             t.filledButtonTheme.style!.foregroundColor!.resolve({}),
             p.onBrandSoft,
           );
+          // Choix d'un segment : aplat de la dominante (même forme).
           expect(
             t.segmentedButtonTheme.style!.backgroundColor!.resolve({
               WidgetState.selected,
             }),
-            p.action,
+            p.bordeaux,
           );
           expect(
             t.segmentedButtonTheme.style!.foregroundColor!.resolve({
               WidgetState.selected,
             }),
-            p.onAction,
+            p.onBrand,
           );
-          expect(
-            t.chipTheme.secondaryLabelStyle!.color,
-            dark ? p.text : p.accent,
-          );
+          expect(t.chipTheme.secondaryLabelStyle!.color, p.onBrand);
           expect(
             t.checkboxTheme.fillColor!.resolve({WidgetState.selected}),
-            KPalette.green,
+            p.success,
           );
           expect(
             contrast(
@@ -191,16 +192,17 @@ void main() {
         }
       }
       buildTheme(true);
-      expect(SL.accentSpec, same(KAccentSpec.rouge));
+      expect(SL.accentSpec, same(KAccentSpec.bordeaux));
     });
   });
 
   group('préférence', () {
-    test('AppSettings : absent, inconnu ou mauvais type → rouge', () {
-      expect(AppSettings().accent, 'rouge');
-      expect(AppSettings.fromJson({}).accent, 'rouge');
-      expect(AppSettings.fromJson({'accent': 'bleu'}).accent, 'rouge');
-      expect(AppSettings.fromJson({'accent': 7}).accent, 'rouge');
+    test('AppSettings : absent, inconnu ou mauvais type → bordeaux', () {
+      expect(AppSettings().accent, 'bordeaux');
+      expect(AppSettings.fromJson({}).accent, 'bordeaux');
+      expect(AppSettings.fromJson({'accent': 'bleu'}).accent, 'bordeaux');
+      expect(AppSettings.fromJson({'accent': 7}).accent, 'bordeaux');
+      expect(AppSettings.fromJson({'accent': 'rouge'}).accent, 'bordeaux');
       for (final id in kAccentIds) {
         final settings = AppSettings()..accent = id;
         final back = AppSettings.fromJson(
@@ -234,9 +236,9 @@ void main() {
       return next;
     }
 
-    test('installation neuve : rouge', () async {
-      expect(app.settings.accent, 'rouge');
-      expect(app.accentMode.value, 'rouge');
+    test('installation neuve : bordeaux', () async {
+      expect(app.settings.accent, 'bordeaux');
+      expect(app.accentMode.value, 'bordeaux');
     });
 
     test('choix retrouvé à la réouverture, thème indépendant', () async {
@@ -262,46 +264,46 @@ void main() {
     });
 
     test('choix rapides : le dernier est retrouvé', () async {
-      for (final id in [...kAccentIds.reversed, 'orange', 'vert', 'jaune']) {
+      for (final id in [...kAccentIds.reversed, 'solar', 'forest', 'neon']) {
         app.settings.accent = id;
         app.saveSettings();
       }
-      expect(app.accentMode.value, 'jaune');
+      expect(app.accentMode.value, 'neon');
       await app.flush();
-      expect((await relaunch()).settings.accent, 'jaune');
+      expect((await relaunch()).settings.accent, 'neon');
     });
 
     test(
       'échec d’écriture : choix affiché, erreur visible, disque intact',
       () async {
-        app.settings.accent = 'vert';
+        app.settings.accent = 'forest';
         app.saveSettings();
         await app.flush();
         app.debugWriteHook = (_) async => false;
-        app.settings.accent = 'turquoise';
+        app.settings.accent = 'arctic';
         app.saveSettings();
         await app.flush();
-        expect(app.accentMode.value, 'turquoise');
+        expect(app.accentMode.value, 'arctic');
         expect(app.persistenceError.value, isNotNull);
         expect(app.hasUnsavedChanges, isTrue);
-        expect((await relaunch()).settings.accent, 'vert');
+        expect((await relaunch()).settings.accent, 'forest');
         app.debugWriteHook = null;
         app.saveSettings();
         expect(await app.retrySave(), isTrue);
         expect(app.persistenceError.value, isNull);
-        expect((await relaunch()).settings.accent, 'turquoise');
+        expect((await relaunch()).settings.accent, 'arctic');
       },
     );
 
     test('export : la préférence est incluse', () async {
-      app.settings.accent = 'orange';
+      app.settings.accent = 'solar';
       app.saveSettings();
       final data = jsonDecode(app.exportAll()) as Map<String, dynamic>;
-      expect((data['settings'] as Map)['accent'], 'orange');
+      expect((data['settings'] as Map)['accent'], 'solar');
     });
 
     test(
-      'import d’une sauvegarde sans préférence : rouge, reste conservé',
+      'import d’une sauvegarde sans préférence : bordeaux, reste conservé',
       () async {
         app.settings
           ..theme = 'light'
@@ -311,47 +313,77 @@ void main() {
         final data = jsonDecode(app.exportAll()) as Map<String, dynamic>;
         (data['settings'] as Map).remove('accent');
         final other = await relaunch();
-        other.settings.accent = 'jaune';
+        other.settings.accent = 'neon';
         other.saveSettings();
         expect(
           await other.importBackup(jsonEncode(data)),
           ImportStatus.success,
         );
-        expect(other.settings.accent, 'rouge');
-        expect(other.accentMode.value, 'rouge');
+        expect(other.settings.accent, 'bordeaux');
+        expect(other.accentMode.value, 'bordeaux');
         expect(other.settings.theme, 'light');
         expect(other.settings.defaultRest, 150);
       },
     );
 
     test(
-      'import d’une valeur inconnue : rouge, sans refuser la sauvegarde',
+      'import d’une valeur inconnue : bordeaux, sans refuser la sauvegarde',
       () async {
         final data = jsonDecode(app.exportAll()) as Map<String, dynamic>;
         (data['settings'] as Map)['accent'] = 'magenta';
         (data['settings'] as Map)['defaultRest'] = 120;
         expect(await app.importBackup(jsonEncode(data)), ImportStatus.success);
-        expect(app.settings.accent, 'rouge');
+        expect(app.settings.accent, 'bordeaux');
         expect(app.settings.defaultRest, 120);
         // Aller-retour d'une valeur connue.
-        (data['settings'] as Map)['accent'] = 'turquoise';
+        (data['settings'] as Map)['accent'] = 'arctic';
         expect(await app.importBackup(jsonEncode(data)), ImportStatus.success);
-        expect(app.settings.accent, 'turquoise');
-        expect(app.accentMode.value, 'turquoise');
+        expect(app.settings.accent, 'arctic');
+        expect(app.accentMode.value, 'arctic');
         await app.flush();
-        expect((await relaunch()).settings.accent, 'turquoise');
+        expect((await relaunch()).settings.accent, 'arctic');
       },
     );
 
-    test('suppression locale : retour au rouge', () async {
-      app.settings.accent = 'vert';
+    test(
+      'import d’une ancienne sauvegarde (L5-C) : identifiant relu, jamais refusé',
+      () async {
+        final data = jsonDecode(app.exportAll()) as Map<String, dynamic>;
+        (data['settings'] as Map)['accent'] = 'turquoise';
+        expect(await app.importBackup(jsonEncode(data)), ImportStatus.success);
+        expect(app.settings.accent, 'arctic');
+        expect(app.accentMode.value, 'arctic');
+        await app.flush();
+        expect((await relaunch()).settings.accent, 'arctic');
+      },
+    );
+
+    test('contraste renforcé : retrouvé à la réouverture, indépendant', () async {
+      app.settings.contrast = true;
+      app.saveSettings();
+      expect(app.contrastMode.value, isTrue);
+      expect(app.accentMode.value, 'bordeaux');
+      await app.flush();
+      final next = await relaunch();
+      expect(next.settings.contrast, isTrue);
+      expect(next.contrastMode.value, isTrue);
+      final data = jsonDecode(next.exportAll()) as Map<String, dynamic>;
+      expect((data['settings'] as Map)['contrast'], true);
+      next.settings.contrast = false;
+      next.saveSettings();
+      final off = jsonDecode(next.exportAll()) as Map<String, dynamic>;
+      expect((off['settings'] as Map).containsKey('contrast'), isFalse);
+    });
+
+    test('suppression locale : retour à Bordeaux', () async {
+      app.settings.accent = 'forest';
       app.saveSettings();
       await app.flush();
       final result = await app.eraseAllData();
       expect(result.status, EraseStatus.success);
-      expect(app.settings.accent, 'rouge');
-      expect(app.accentMode.value, 'rouge');
-      expect((await relaunch()).settings.accent, 'rouge');
+      expect(app.settings.accent, 'bordeaux');
+      expect(app.accentMode.value, 'bordeaux');
+      expect((await relaunch()).settings.accent, 'bordeaux');
     });
 
     test('changer de couleur ne touche ni XP, ni niveau, ni dates', () async {

@@ -1,33 +1,27 @@
-import 'dart:math' as math;
-
+// Adaptateur de la refonte UI (UI0, cahier §5) : les composants historiques
+// partagés par les écrans gardent leur API mais sont rendus par le kit
+// (`lib/kit/`, réexporté ici) : jetons de couleur des 8 palettes, polices
+// Barlow, rayons des trois familles, titres de section sans capitales (C6).
+// Les lots d'écrans remplacent ces composants par ceux du kit ; ce fichier
+// disparaît à UI5.
 import 'package:flutter/material.dart';
+
 import 'app_theme.dart';
-import 'dev/dev_widgets.dart' show HeaderLogo;
-import 'koach/koach_view.dart' show KoachSurface;
+import 'kit/kit.dart';
+
+// Les transitions restent importées par `motion.dart` (écrans existants).
+export 'kit/kit.dart' hide KContentTransition, KPageTransitionsBuilder;
 
 /// Règles partagées par tous les écrans : espacements, surfaces et actions.
 class KSpace {
-  static const double page = 20, gap = 12, radius = 32, maxWidth = 840;
-  static const content = EdgeInsets.fromLTRB(page, 8, page, 24);
-}
-
-/// Réserve de défilement pour les quatre onglets sous la navigation flottante.
-/// Les routes ouvertes au-dessus des onglets gardent leur SafeArea habituelle.
-class KNavigationInset extends InheritedWidget {
-  final double bottom;
-  const KNavigationInset({
-    super.key,
-    required this.bottom,
-    required super.child,
-  });
-
-  static double of(BuildContext context) =>
-      context.dependOnInheritedWidgetOfExactType<KNavigationInset>()?.bottom ??
-      0;
-
-  @override
-  bool updateShouldNotify(KNavigationInset oldWidget) =>
-      bottom != oldWidget.bottom;
+  static const double page = KSpacing.page, gap = KSpacing.cardGap;
+  static const double radius = KRadius.card, maxWidth = KSpacing.maxWidth;
+  static const content = EdgeInsets.fromLTRB(
+    page,
+    KSpacing.s8,
+    page,
+    KSpacing.s24,
+  );
 }
 
 class KContent extends StatelessWidget {
@@ -98,67 +92,14 @@ class KList extends StatelessWidget {
 /// Couleur d'une carte [KCard] sans couleur imposée : fond d'une vue 3D
 /// posée dans une carte (règle du propriétaire, 30/09/2026 : fond de tout
 /// affichage 3D = couleur de son support).
-Color kCardColor(BuildContext context) =>
-    Theme.of(context).colorScheme.surfaceContainerLow;
+Color kCardColor(BuildContext context) => KTokens.of(context).surface;
 
 /// Couleur de la page : fond d'une vue 3D posée directement sur la page.
 Color kPageColor(BuildContext context) =>
     Theme.of(context).scaffoldBackgroundColor;
 
-class KCard extends StatelessWidget {
-  final Widget child;
-  final EdgeInsetsGeometry padding;
-  final Color? accent, color, outline;
-  final double? radius;
-  final VoidCallback? onTap, onLongPress;
-  const KCard({
-    super.key,
-    required this.child,
-    this.padding = const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-    this.accent,
-    this.color,
-    this.outline,
-    this.radius,
-    this.onTap,
-    this.onLongPress,
-  });
-  @override
-  Widget build(BuildContext context) {
-    final c = Theme.of(context).colorScheme;
-    final dark = Theme.of(context).brightness == Brightness.dark;
-    final highlighted = accent != null || color != null;
-    final fill =
-        color ??
-        (accent == null
-            ? c.surfaceContainerLow
-            : Color.alphaBlend(
-                accent!.withValues(alpha: .05),
-                c.surfaceContainerLow,
-              ));
-    return Material(
-      color: fill,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(radius ?? KSpace.radius),
-        side: outline != null
-            ? BorderSide(color: outline!)
-            : dark || highlighted
-            ? BorderSide.none
-            : BorderSide(color: c.outlineVariant),
-      ),
-      clipBehavior: Clip.antiAlias,
-      child: InkWell(
-        onTap: onTap,
-        onLongPress: onLongPress,
-        // G5 : Koach posé sur la carte prend sa couleur pour papier.
-        child: KoachSurface(
-          color: fill,
-          child: Padding(padding: padding, child: child),
-        ),
-      ),
-    );
-  }
-}
-
+/// Titre de section (C6 depuis UI0 : 14, graisse 600, `texte2`, sans
+/// capitales), sous-titre et action facultatifs.
 class KSection extends StatelessWidget {
   final String title;
   final String? subtitle, actionLabel;
@@ -172,48 +113,52 @@ class KSection extends StatelessWidget {
     this.actionLabel,
     this.onAction,
     this.actionIcon = Icons.chevron_right,
-    this.topPadding = 12,
+    this.topPadding = KSpacing.s12,
   });
   @override
-  Widget build(BuildContext context) => Padding(
-    padding: EdgeInsets.only(top: topPadding),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            Expanded(
-              child: Text(
-                title.toUpperCase(),
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.onSurfaceVariant,
-                  fontSize: 11.5,
-                  fontWeight: FontWeight.w600,
-                  letterSpacing: .7,
+  Widget build(BuildContext context) {
+    final k = KTokens.of(context);
+    return Padding(
+      padding: EdgeInsets.only(top: topPadding),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: Semantics(
+                  header: true,
+                  child: Text(
+                    title,
+                    style: KType.section.copyWith(color: k.texte2),
+                  ),
                 ),
               ),
-            ),
-            if (actionLabel != null) ...[
-              const SizedBox(width: 8),
-              Flexible(
-                child: TextButton.icon(
-                  onPressed: onAction,
-                  icon: Icon(actionIcon, size: 18),
-                  label: Text(actionLabel!),
+              if (actionLabel != null) ...[
+                const SizedBox(width: KSpacing.s8),
+                Flexible(
+                  child: KTextButton(
+                    label: actionLabel!,
+                    icon: actionIcon,
+                    onPressed: onAction,
+                    dense: true,
+                  ),
                 ),
-              ),
+              ],
             ],
+          ),
+          if (subtitle != null) ...[
+            const SizedBox(height: KSpacing.s4),
+            Text(subtitle!, style: KType.detail.copyWith(color: k.texte2)),
           ],
-        ),
-        if (subtitle != null) ...[
-          const SizedBox(height: 4),
-          Text(subtitle!, style: Theme.of(context).textTheme.bodySmall),
         ],
-      ],
-    ),
-  );
+      ),
+    );
+  }
 }
 
+/// Pastille d'état historique : texte et icône de la couleur d'état sur sa
+/// teinte, en pilule.
 class KBadge extends StatelessWidget {
   final String text;
   final Color? color;
@@ -221,29 +166,26 @@ class KBadge extends StatelessWidget {
   const KBadge(this.text, {super.key, this.color, this.icon});
   @override
   Widget build(BuildContext context) {
-    final c = color ?? Theme.of(context).colorScheme.onSurfaceVariant;
+    final k = KTokens.of(context);
+    final c = color ?? k.texte2;
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-      decoration: BoxDecoration(
-        color: c.withValues(alpha: 0.16),
-        borderRadius: BorderRadius.circular(20),
+      padding: const EdgeInsets.symmetric(
+        horizontal: KSpacing.s8,
+        vertical: KSpacing.s4,
+      ),
+      decoration: ShapeDecoration(
+        color: color == null ? k.haute : c.withValues(alpha: .16),
+        shape: KRadius.pill,
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
           if (icon != null) ...[
-            Icon(icon, size: 15, color: c),
-            const SizedBox(width: 6),
+            Icon(icon, size: KSize.chevron - KSpacing.s4 / 2, color: c),
+            const SizedBox(width: KSpacing.s4),
           ],
           Flexible(
-            child: Text(
-              text,
-              style: TextStyle(
-                color: c,
-                fontSize: 11,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
+            child: Text(text, style: KType.micro.copyWith(color: c)),
           ),
         ],
       ),
@@ -251,72 +193,7 @@ class KBadge extends StatelessWidget {
   }
 }
 
-class KEmpty extends StatelessWidget {
-  final IconData icon;
-  final String title, message;
-  final String? action;
-  final VoidCallback? onAction;
-  const KEmpty({
-    super.key,
-    required this.icon,
-    required this.title,
-    required this.message,
-    this.action,
-    this.onAction,
-  });
-  @override
-  Widget build(BuildContext context) {
-    final c = Theme.of(context).colorScheme;
-    return Material(
-      color: c.surfaceContainerLow,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(KSpace.radius),
-        side: BorderSide.none,
-      ),
-      clipBehavior: Clip.antiAlias,
-      child: InkWell(
-        onTap: onAction,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Icon(icon, color: c.onSurfaceVariant, size: 22),
-              const SizedBox(width: 10),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(title, style: Theme.of(context).textTheme.titleMedium),
-                    const SizedBox(height: 2),
-                    Text(message, style: Theme.of(context).textTheme.bodySmall),
-                    if (action != null) ...[
-                      const SizedBox(height: 4),
-                      Text(
-                        action!,
-                        style: TextStyle(
-                          color: c.primary,
-                          fontSize: 12,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ],
-                  ],
-                ),
-              ),
-              if (onAction != null)
-                Padding(
-                  padding: const EdgeInsets.only(left: 6),
-                  child: Icon(Icons.chevron_right, color: c.primary, size: 20),
-                ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
-
+/// Champ de recherche historique : [KSearchField] du kit.
 class KSearch extends StatelessWidget {
   final TextEditingController controller;
   final String hint;
@@ -329,30 +206,7 @@ class KSearch extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) =>
-      ValueListenableBuilder<TextEditingValue>(
-        valueListenable: controller,
-        builder: (context, value, _) => TextField(
-          controller: controller,
-          textInputAction: TextInputAction.search,
-          autocorrect: false,
-          enableSuggestions: false,
-          onChanged: onChanged,
-          decoration: InputDecoration(
-            hintText: hint,
-            prefixIcon: const Icon(Icons.search),
-            suffixIcon: value.text.isEmpty
-                ? null
-                : IconButton(
-                    tooltip: 'Effacer la recherche',
-                    icon: const Icon(Icons.close),
-                    onPressed: () {
-                      controller.clear();
-                      onChanged('');
-                    },
-                  ),
-          ),
-        ),
-      );
+      KSearchField(controller: controller, hint: hint, onChanged: onChanged);
 }
 
 /// Les actions voisines partagent largeur et axe central. Elles passent en colonne
@@ -363,16 +217,15 @@ class KActionRow extends StatelessWidget {
   const KActionRow({
     super.key,
     required this.children,
-    this.minButtonWidth = 140,
+    this.minButtonWidth = KSize.valueWidth,
   });
 
   @override
   Widget build(BuildContext context) => LayoutBuilder(
     builder: (context, constraints) {
-      final scale = (MediaQuery.textScalerOf(context).scale(13) / 13).clamp(
-        1.0,
-        double.infinity,
-      );
+      final scale = MediaQuery.textScalerOf(
+        context,
+      ).scale(1).clamp(1.0, double.infinity);
       final stacked =
           constraints.maxWidth <
           children.length * minButtonWidth * scale +
@@ -409,13 +262,13 @@ class KFieldGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) => LayoutBuilder(
     builder: (context, constraints) {
-      final scale = (MediaQuery.textScalerOf(context).scale(15) / 15).clamp(
-        1.0,
-        double.infinity,
-      );
+      final scale = MediaQuery.textScalerOf(
+        context,
+      ).scale(1).clamp(1.0, double.infinity);
       final paired =
           children.length > 1 &&
-          constraints.maxWidth >= 296 * scale + KControl.gap;
+          constraints.maxWidth >=
+              2 * KSize.valueWidth * scale + KSpacing.s16 + KControl.gap;
       final width = paired
           ? (constraints.maxWidth - KControl.gap) / 2
           : constraints.maxWidth;
@@ -430,10 +283,9 @@ class KFieldGrid extends StatelessWidget {
   );
 }
 
-/// Jauge de la charte : remplissage principale → vive de la couleur
-/// dominante (L5-C), piste neutre, extrémités arrondies. `color` impose un
-/// remplissage uni (validation en vert, blanc sur bordeaux) ; `gradient`
-/// impose un dégradé fixe (chronos : rouge historique).
+/// Jauge : remplissage de la palette, piste `filet`, extrémités en pilule.
+/// `color` impose un remplissage uni (validation, texte sur aplat) ;
+/// `gradient` un dégradé fixe (chronos : rouge historique).
 class KProgressBar extends StatelessWidget {
   final double value;
   final double height;
@@ -443,7 +295,7 @@ class KProgressBar extends StatelessWidget {
   const KProgressBar({
     super.key,
     required this.value,
-    this.height = 5,
+    this.height = KSpacing.s4,
     this.color,
     this.track,
     this.gradient,
@@ -454,30 +306,29 @@ class KProgressBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final v = value.isNaN ? 0.0 : value.clamp(0.0, 1.0);
-    final radius = BorderRadius.circular(height);
     return Semantics(
       label: semanticsLabel,
       value: semanticsValue ?? '${(v * 100).round()} %',
       child: SizedBox(
         height: height,
         width: double.infinity,
-        child: DecoratedBox(
-          decoration: BoxDecoration(
+        child: ClipPath(
+          clipper: const ShapeBorderClipper(shape: KRadius.pill),
+          child: ColoredBox(
             color: track ?? SL.progressTrack,
-            borderRadius: radius,
-          ),
-          child: Align(
-            alignment: AlignmentDirectional.centerStart,
-            child: FractionallySizedBox(
-              widthFactor: v,
-              heightFactor: 1,
-              child: DecoratedBox(
-                decoration: BoxDecoration(
-                  color: color,
-                  gradient: color == null
-                      ? LinearGradient(colors: gradient ?? SL.gradient)
-                      : null,
-                  borderRadius: radius,
+            child: Align(
+              alignment: AlignmentDirectional.centerStart,
+              child: FractionallySizedBox(
+                widthFactor: v,
+                heightFactor: 1,
+                child: DecoratedBox(
+                  decoration: ShapeDecoration(
+                    color: color,
+                    gradient: color == null
+                        ? LinearGradient(colors: gradient ?? SL.gradient)
+                        : null,
+                    shape: KRadius.pill,
+                  ),
                 ),
               ),
             ),
@@ -493,7 +344,7 @@ class KBottomActions extends StatelessWidget {
   const KBottomActions({super.key, required this.child});
   @override
   Widget build(BuildContext context) => Material(
-    color: Theme.of(context).colorScheme.surface,
+    color: KTokens.of(context).fond,
     child: SafeArea(
       top: false,
       child: Center(
@@ -503,9 +354,9 @@ class KBottomActions extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.fromLTRB(
               KSpace.page,
-              10,
+              KSpacing.s12,
               KSpace.page,
-              12,
+              KSpacing.s12,
             ),
             child: ConstrainedBox(
               constraints: const BoxConstraints(minHeight: KControl.height),
@@ -521,7 +372,7 @@ class KBottomActions extends StatelessWidget {
   );
 }
 
-/// Surface de marque en bordeaux soutenu, identique dans les deux thèmes.
+/// Surface de marque : aplat `pleine` (dominante exacte), texte posé dessus.
 class KBanner extends StatelessWidget {
   final Color? color;
   final Widget child;
@@ -532,109 +383,67 @@ class KBanner extends StatelessWidget {
     this.color,
     required this.child,
     this.onTap,
-    this.padding = const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+    this.padding = const EdgeInsets.all(KSpacing.s16),
   });
   @override
   Widget build(BuildContext context) {
-    final c = Theme.of(context).colorScheme;
     final base = color == null
-        ? SL.bordeaux
+        ? KTokens.of(context).pleine
         : Color.lerp(color!, Colors.black, .5)!;
     return Material(
-      color: c.surfaceContainerLow,
-      borderRadius: BorderRadius.circular(32),
+      color: base,
+      shape: KRadius.cardShape,
       clipBehavior: Clip.antiAlias,
-      child: Ink(
-        decoration: BoxDecoration(color: base),
-        child: InkWell(
-          onTap: onTap,
-          child: Padding(padding: padding, child: child),
-        ),
+      child: InkWell(
+        onTap: onTap,
+        child: Padding(padding: padding, child: child),
       ),
     );
   }
 }
 
-/// En-tête de marque, identique dans les quatre destinations principales.
-class KTopBar extends StatelessWidget implements PreferredSizeWidget {
-  final Widget? leading;
-  final List<Widget> actions;
-
-  /// Hauteur de la barre : 70 par défaut ; l'appelant l'agrandit quand son
-  /// contenu suit la taille de texte du téléphone (niveau de PROGRAMME).
-  final double height;
-  const KTopBar({
-    super.key,
-    this.leading,
-    this.actions = const [],
-    this.height = 70,
-  });
-  @override
-  Size get preferredSize => Size.fromHeight(height);
-  @override
-  Widget build(BuildContext context) => AppBar(
-    automaticallyImplyLeading: false,
-    toolbarHeight: height,
-    titleSpacing: KSpace.page,
-    title:
-        leading ??
-        Text(
-          'KALIS TRACK',
-          style: TextStyle(
-            fontSize: 12,
-            letterSpacing: 2.2,
-            fontWeight: FontWeight.w700,
-            color: SL.dim,
-          ),
-        ),
-    actions: [
-      ...actions,
-      const Padding(
-        padding: EdgeInsets.only(right: 20),
-        // G1 : gestes du mode dev (build de développement seulement).
-        child: HeaderLogo(),
-      ),
-    ],
-  );
-}
-
+/// Grand titre d'un onglet (capitales selon U3) et sa phrase.
 class KPageIntro extends StatelessWidget {
   final String title, subtitle;
   final Widget? trailing;
   const KPageIntro(this.title, this.subtitle, {super.key, this.trailing});
   @override
-  Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsets.only(top: 8, bottom: 14),
-    child: Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              KWordFitText(
-                title.toUpperCase(),
-                style: Theme.of(context).textTheme.headlineLarge,
-              ),
-              const SizedBox(height: 8),
-              Text(
-                subtitle,
-                style: TextStyle(color: SL.dim, fontSize: 14, height: 1.4),
-              ),
-            ],
+  Widget build(BuildContext context) {
+    final k = KTokens.of(context);
+    return Padding(
+      padding: const EdgeInsets.only(top: KSpacing.s8, bottom: KSpacing.s14),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Semantics(
+                  header: true,
+                  child: KFitTitle(
+                    k.title(title),
+                    style: k.titleStyle(
+                      KType.titreRacine.copyWith(color: k.texte),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: KSpacing.s4),
+                Text(subtitle, style: KType.corps.copyWith(color: k.texte2)),
+              ],
+            ),
           ),
-        ),
-        if (trailing != null) ...[const SizedBox(width: 12), trailing!],
-      ],
-    ),
-  );
+          if (trailing != null) ...[
+            const SizedBox(width: KSpacing.s12),
+            trailing!,
+          ],
+        ],
+      ),
+    );
+  }
 }
 
-/// Titre qui garde ses mots entiers (L5). Sur écran étroit avec un grand
-/// texte, si le mot le plus large ne tient pas sur une ligne, la taille de
-/// ce titre baisse juste assez pour le loger, sans descendre sous celle du
-/// texte courant à l'échelle choisie (15 px × échelle). Le titre reste sur
-/// plusieurs lignes : rien n'est coupé ni masqué.
+/// Titre qui garde ses mots entiers (L5, C3) : [KFitTitle] du kit.
 class KWordFitText extends StatelessWidget {
   final String text;
   final TextStyle? style;
@@ -642,39 +451,14 @@ class KWordFitText extends StatelessWidget {
   const KWordFitText(this.text, {super.key, this.style, this.textAlign});
 
   @override
-  Widget build(BuildContext context) => LayoutBuilder(
-    builder: (context, constraints) {
-      final base = DefaultTextStyle.of(context).style.merge(style);
-      final size = base.fontSize ?? 14;
-      final scaler = MediaQuery.textScalerOf(context);
-      var fitted = base;
-      if (constraints.maxWidth.isFinite && size > 15) {
-        var widest = 0.0;
-        for (final word in text.split(RegExp(r'\s+'))) {
-          if (word.isEmpty) continue;
-          final painter = TextPainter(
-            text: TextSpan(text: word, style: base),
-            textDirection: Directionality.of(context),
-            textScaler: scaler,
-            maxLines: 1,
-          )..layout();
-          widest = math.max(widest, painter.width);
-          painter.dispose();
-        }
-        if (widest > constraints.maxWidth) {
-          final factor = math.max(
-            15 / size,
-            constraints.maxWidth / widest * .98,
-          );
-          fitted = base.copyWith(fontSize: size * factor);
-        }
-      }
-      return Text(text, style: fitted, textAlign: textAlign);
-    },
+  Widget build(BuildContext context) => KFitTitle(
+    text,
+    style: DefaultTextStyle.of(context).style.merge(style),
+    textAlign: textAlign,
   );
 }
 
-/// Ligne de menu avec repère visuel et destination explicite.
+/// Ligne de menu isolée historique : une [KMenuRow] dans son groupe.
 class KMenuTile extends StatelessWidget {
   final IconData icon;
   final String title, subtitle;
@@ -687,27 +471,9 @@ class KMenuTile extends StatelessWidget {
     required this.onTap,
   });
   @override
-  Widget build(BuildContext context) => KCard(
-    padding: EdgeInsets.zero,
-    child: ListTile(
-      minVerticalPadding: 14,
-      onTap: onTap,
-      // L5 : repère décoratif retiré au-delà de 150 % de texte, pour que le
-      // titre ne soit pas coupé au milieu d'un mot sur écran étroit.
-      leading: MediaQuery.textScalerOf(context).scale(10) > 15
-          ? null
-          : Container(
-              width: 42,
-              height: 42,
-              decoration: BoxDecoration(
-                color: SL.accentTint,
-                borderRadius: BorderRadius.circular(22),
-              ),
-              child: Icon(icon, color: SL.accent, size: 22),
-            ),
-      title: Text(title),
-      subtitle: Text(subtitle),
-      trailing: Icon(Icons.chevron_right_rounded, color: SL.dim),
-    ),
+  Widget build(BuildContext context) => KMenuGroup(
+    children: [
+      KMenuRow(icon: icon, title: title, subtitle: subtitle, onTap: onTap),
+    ],
   );
 }

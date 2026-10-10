@@ -12,6 +12,7 @@
 import 'package:flutter/material.dart';
 
 import 'app_theme.dart';
+import 'kit/tokens.dart';
 
 /// Option d'une catégorie (clé unique dans tout le menu).
 @immutable
@@ -225,18 +226,18 @@ class FilterMenuState extends State<FilterMenu> {
           button
         else
           Wrap(
-            spacing: 12,
-            runSpacing: 6,
+            spacing: KSpacing.s12,
+            runSpacing: KSpacing.s8,
             crossAxisAlignment: WrapCrossAlignment.center,
             children: [button, widget.trailing!],
           ),
         if (widget.chips && active.isNotEmpty)
           Padding(
-            padding: const EdgeInsets.only(top: 6),
+            padding: const EdgeInsets.only(top: KSpacing.s8),
             child: Wrap(
               key: ValueKey(_k('chips')),
-              spacing: 6,
-              runSpacing: 2,
+              spacing: KSpacing.s8,
+              runSpacing: KSpacing.s4,
               crossAxisAlignment: WrapCrossAlignment.center,
               children: [
                 for (final (c, o) in active.take(FilterMenu.maxChips))
@@ -244,15 +245,14 @@ class FilterMenuState extends State<FilterMenu> {
                     key: ValueKey(_k('chip-${o.key}')),
                     label: Text(o.label),
                     tooltip: c.label,
-                    labelStyle: TextStyle(
-                      fontSize: 12.5,
-                      fontWeight: FontWeight.w700,
-                      color: SL.accent,
-                    ),
-                    backgroundColor: SL.accent.withValues(alpha: 0.14),
-                    side: BorderSide(color: SL.accent.withValues(alpha: 0.5)),
-                    deleteIcon: const Icon(Icons.cancel, size: 18),
-                    deleteIconColor: SL.accent,
+                    // UI0 : puce de filtre active, aux jetons (C5 : la
+                    // couleur porte l'état choisi).
+                    labelStyle: KType.micro.copyWith(color: SL.roles.texte),
+                    backgroundColor: SL.roles.haute,
+                    side: BorderSide(color: SL.roles.encre),
+                    shape: KRadius.pill,
+                    deleteIcon: const Icon(Icons.cancel, size: KSize.chevron),
+                    deleteIconColor: SL.roles.encre,
                     deleteButtonTooltipMessage: 'Retirer le filtre ${o.label}',
                     onDeleted: () =>
                         widget.onChanged(value.toggle(c.id, o.key)),
@@ -287,11 +287,16 @@ class FilterMenuState extends State<FilterMenu> {
     final width = (MediaQuery.sizeOf(context).width - 32).clamp(200.0, 380.0);
     final rows = <Widget>[
       Padding(
-        padding: const EdgeInsets.fromLTRB(16, 4, 4, 4),
+        padding: const EdgeInsets.fromLTRB(
+          KSpacing.s16,
+          KSpacing.s4,
+          KSpacing.s4,
+          KSpacing.s4,
+        ),
         child: Wrap(
           alignment: WrapAlignment.spaceBetween,
           crossAxisAlignment: WrapCrossAlignment.center,
-          spacing: 8,
+          spacing: KSpacing.s8,
           children: [
             Text('Filtres', style: tt.titleSmall),
             TextButton(
@@ -325,13 +330,13 @@ class FilterMenuState extends State<FilterMenu> {
             child: ConstrainedBox(
               constraints: const BoxConstraints(minHeight: 48),
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
+                padding: const EdgeInsets.symmetric(horizontal: KSpacing.s16),
                 child: Row(
                   children: [
                     Expanded(
                       child: Text(
                         n == 0 ? c.label : '${c.label} · $n',
-                        style: const TextStyle(fontWeight: FontWeight.w700),
+                        style: KType.corpsFort.copyWith(color: SL.roles.texte),
                       ),
                     ),
                     Icon(open ? Icons.expand_less : Icons.expand_more),
@@ -345,7 +350,7 @@ class FilterMenuState extends State<FilterMenu> {
       if (!open) continue;
       rows.add(
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 4),
+          padding: const EdgeInsets.symmetric(horizontal: KSpacing.s4),
           child: Wrap(
             children: [
               TextButton.icon(
@@ -388,7 +393,7 @@ class FilterMenuState extends State<FilterMenu> {
             key: ValueKey(_k('filter-${o.key}')),
             value: selected.contains(o.key),
             controlAffinity: ListTileControlAffinity.leading,
-            contentPadding: const EdgeInsets.symmetric(horizontal: 8),
+            contentPadding: const EdgeInsets.symmetric(horizontal: KSpacing.s8),
             visualDensity: VisualDensity.standard,
             onChanged: (_) => widget.onChanged(value.toggle(c.id, o.key)),
             title: Semantics(

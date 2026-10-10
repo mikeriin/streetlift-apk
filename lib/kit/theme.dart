@@ -48,7 +48,20 @@ ThemeData kitTheme({
         onError: r.surDanger,
         inverseSurface: r.texte,
         onInverseSurface: r.fond,
-        inversePrimary: KRoles.of(paletteId, dark: !dark, contrast: contrast).encre,
+        // Lien posé sur la surface inversée (texte) : encre de l'autre
+        // thème, ajustée au besoin (≥ 4,5:1).
+        inversePrimary: Color(
+          kAdjustTone(
+            KRoles.of(
+              paletteId,
+              dark: !dark,
+              contrast: contrast,
+            ).encre.toARGB32(),
+            r.texte.toARGB32(),
+            contrast ? 7 : 4.5,
+            dark ? -1 : 1,
+          ),
+        ),
         surfaceTint: Colors.transparent,
         shadow: Colors.transparent,
       );
@@ -57,7 +70,7 @@ ThemeData kitTheme({
     borderRadius: const BorderRadius.all(Radius.circular(KSize.target / 2)),
     borderSide: BorderSide(color: r.filet),
   );
-  final pill = WidgetStatePropertyAll<OutlinedBorder>(KRadius.pill);
+  const pill = WidgetStatePropertyAll<OutlinedBorder>(KRadius.pill);
   return ThemeData(
     useMaterial3: true,
     brightness: dark ? Brightness.dark : Brightness.light,
@@ -297,13 +310,13 @@ ThemeData kitTheme({
             ? r.texte3
             : s.contains(WidgetState.selected)
             ? r.surPleine
-            : r.texte3,
+            : r.texte2,
       ),
       trackColor: WidgetStateProperty.resolveWith(
         (s) => s.contains(WidgetState.selected) ? r.pleine : r.haute,
       ),
       trackOutlineColor: WidgetStateProperty.resolveWith(
-        (s) => s.contains(WidgetState.selected) ? Colors.transparent : r.texte3,
+        (s) => s.contains(WidgetState.selected) ? Colors.transparent : r.texte2,
       ),
       trackOutlineWidth: const WidgetStatePropertyAll(2),
     ),

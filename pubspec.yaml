@@ -23,6 +23,9 @@ dependencies:
   flutter_gpu:
     sdk: flutter
   vector_math: ^2.1.4
+  # UI0 (refonte UI, cahier §5.1) : HCT pour la dérivation des palettes
+  # (même version que celle que Flutter embarque déjà).
+  material_color_utilities: ^0.13.0
   # M2 : build hook (hook/build.dart) qui convertit le mannequin
   # assets/anatomy/mannequin.glb en .fsceneb (flutter_scene_generated/).
   hooks: ^2.2.0
@@ -106,3 +109,27 @@ flutter:
     - assets/muscles2d/face/
     - assets/muscles2d/dos/
     - assets/muscles2d/profil/
+    # UI0 (refonte UI) : licence des polices Barlow (page des licences).
+    - assets/fonts/OFL.txt
+
+  # UI0 (refonte UI, cahier §5.2) : Barlow (SIL OFL 1.1), embarquée ; source,
+  # version et empreintes dans assets/fonts/EMPREINTES.sha256.
+  fonts:
+    - family: Barlow
+      fonts:
+        - asset: assets/fonts/Barlow-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Barlow-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Barlow-SemiBold.ttf
+          weight: 600
+    - family: BarlowSemiCondensed
+      fonts:
+        - asset: assets/fonts/BarlowSemiCondensed-SemiBold.ttf
+          weight: 600
+    - family: BarlowCondensed
+      fonts:
+        - asset: assets/fonts/BarlowCondensed-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/BarlowCondensed-SemiBold.ttf
+          weight: 600

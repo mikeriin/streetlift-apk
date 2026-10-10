@@ -235,7 +235,9 @@ void main() {
       ]) {
         expect(jsonDeepEquals(disk[k], program[k]), isTrue, reason: k);
       }
-      expect(app.settings.accent, 'vert');
+      // UI0 (refonte UI) : ancien identifiant de couleur relu vers sa
+      // palette (vert → forest), sans refuser l'état.
+      expect(app.settings.accent, 'forest');
       expect(app.profile?.intValue('sessionMinutes'), 45);
 
       // La copie se réimporte (aperçu : données retirées signalées).
