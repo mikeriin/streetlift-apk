@@ -30,6 +30,8 @@ import 'store.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // UI0 : licence des polices Barlow embarquées (Sources et licences).
+  registerFontLicences();
   // Une première image Flutter immédiate permet d'animer l'ouverture pendant
   // l'initialisation, au lieu de figer l'écran natif deux secondes.
   // G1 : la session active est lue avant (quelques millisecondes) : le logo
@@ -39,6 +41,15 @@ Future<void> main() async {
   try {
     await enableHighRefreshRate();
   } catch (_) {}
+}
+
+/// UI0 (refonte UI) : licence SIL OFL 1.1 des polices Barlow, affichée par
+/// la page des licences de l'application.
+void registerFontLicences() {
+  LicenseRegistry.addLicense(() async* {
+    final text = await rootBundle.loadString('assets/fonts/OFL.txt');
+    yield LicenseEntryWithLineBreaks(const ['Barlow'], text);
+  });
 }
 
 /// Démarrage : session active (G1 : personnelle, ou session de test d'un
@@ -122,14 +133,14 @@ class _InitErrorApp extends StatelessWidget {
             padding: EdgeInsets.zero,
             child: ExpansionTile(
               title: const Text('Détails du problème'),
-              childrenPadding: const EdgeInsets.all(16),
+              childrenPadding: const EdgeInsets.all(KSpacing.s16),
               children: [
                 SelectableText(
                   stack,
-                  style: TextStyle(
+                  style: KType.micro.copyWith(
                     color: SL.dim,
-                    fontSize: 12,
                     fontFamily: 'monospace',
+                    fontWeight: KType.detail.fontWeight,
                   ),
                 ),
               ],
@@ -156,20 +167,25 @@ class _InitErrorApp extends StatelessWidget {
   );
 }
 
-// Thèmes construits une seule fois par couleur dominante et luminosité
-// (ThemeData est coûteux à recréer) : 12 combinaisons au plus.
+// Thèmes construits une seule fois par palette, luminosité et contraste
+// (ThemeData est coûteux à recréer) : 32 combinaisons au plus.
 final Map<String, ThemeData> _themes = {};
 
 /// Thème d'une combinaison, sans modifier la palette courante de [SL]
 /// ([buildTheme] la positionne pour les usages directs et les tests).
-ThemeData themeFor(bool dark, KAccentSpec accent) =>
-    _themes.putIfAbsent('${accent.id}-$dark', () {
-      final previousDark = SL.dark, previousAccent = SL.accentSpec;
-      final theme = buildTheme(dark, accent);
-      SL.dark = previousDark;
-      SL.accentSpec = previousAccent;
-      return theme;
-    });
+ThemeData themeFor(bool dark, KAccentSpec accent, [bool? contrast]) {
+  final strong = contrast ?? SL.contrast;
+  return _themes.putIfAbsent('${accent.id}-$dark-$strong', () {
+    final previousDark = SL.dark,
+        previousAccent = SL.accentSpec,
+        previousContrast = SL.contrast;
+    final theme = buildTheme(dark, accent, strong);
+    SL.dark = previousDark;
+    SL.accentSpec = previousAccent;
+    SL.contrast = previousContrast;
+    return theme;
+  });
+}
 
 /// Luminosité effective : réglage de l'application, ou téléphone en mode
 /// « Système ». Indépendante de la couleur dominante.
@@ -201,6 +217,7 @@ class _SLAppState extends State<SLApp> with WidgetsBindingObserver {
   late final Listenable _appearance = Listenable.merge([
     store.themeMode,
     store.accentMode,
+    store.contrastMode,
   ]);
 
   @override
@@ -219,6 +236,7 @@ class _SLAppState extends State<SLApp> with WidgetsBindingObserver {
 
   void _sync() {
     SL.accentSpec = KAccentSpec.byId(store.accentMode.value);
+    SL.contrast = store.contrastMode.value;
     SL.dark = effectiveDark(store.themeMode.value);
   }
 
@@ -251,6 +269,7 @@ class _SLAppState extends State<SLApp> with WidgetsBindingObserver {
     _sync();
     final t = store.themeMode.value;
     final accent = SL.accentSpec;
+    final contrast = SL.contrast;
     final mode = t == 'dark'
         ? ThemeMode.dark
         : t == 'light'
@@ -264,11 +283,12 @@ class _SLAppState extends State<SLApp> with WidgetsBindingObserver {
       localizationsDelegates: GlobalMaterialLocalizations.delegates,
       debugShowCheckedModeBanner: false,
       themeMode: mode,
-      theme: themeFor(false, accent),
-      darkTheme: themeFor(true, accent),
+      theme: themeFor(false, accent, contrast),
+      darkTheme: themeFor(true, accent, contrast),
       builder: (context, child) {
         SL.dark = Theme.of(context).brightness == Brightness.dark;
         SL.accentSpec = accent;
+        SL.contrast = contrast;
         return child ?? const SizedBox.shrink();
       },
       home: widget.profileGate
@@ -296,6 +316,7 @@ class _RootNavState extends State<RootNav> with WidgetsBindingObserver {
     WidgetsBinding.instance.addObserver(this);
     store.themeMode.addListener(_onTheme);
     store.accentMode.addListener(_onTheme);
+    store.contrastMode.addListener(_onTheme);
     store.persistenceError.addListener(_onPersistenceError);
     // G2 (D1.1) : annonce de la suppression des WOD et des séances perso,
     // une fois, dès que l'accueil est affiché.
@@ -313,6 +334,7 @@ class _RootNavState extends State<RootNav> with WidgetsBindingObserver {
     WidgetsBinding.instance.removeObserver(this);
     store.themeMode.removeListener(_onTheme);
     store.accentMode.removeListener(_onTheme);
+    store.contrastMode.removeListener(_onTheme);
     store.persistenceError.removeListener(_onPersistenceError);
     super.dispose();
   }
@@ -372,6 +394,7 @@ class _RootNavState extends State<RootNav> with WidgetsBindingObserver {
         MediaQuery.platformBrightnessOf(context) == Brightness.dark;
     SL.dark = t == 'dark' || (t == 'system' && platformDark);
     SL.accentSpec = KAccentSpec.byId(store.settings.accent);
+    SL.contrast = store.settings.contrast;
     // Reconstruit aussi les composants historiques qui lisent la palette SL.
     final pages = [
       // ignore: prefer_const_constructors

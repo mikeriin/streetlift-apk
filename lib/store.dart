@@ -313,15 +313,40 @@ class SessionLog {
 
 // ===================== RÉGLAGES =====================
 
-/// Couleurs dominantes enregistrables (L5-C), dans l'ordre du sélecteur.
-/// Mêmes identifiants que `KAccentSpec.all` (vérifié par les tests).
-const kAccentIds = ['rouge', 'jaune', 'vert', 'violet', 'orange', 'turquoise'];
+/// Palettes enregistrables (UI0, refonte UI : les 8 palettes du
+/// propriétaire remplacent les six couleurs de L5-C), dans l'ordre du
+/// sélecteur. Mêmes identifiants que `KAccentSpec.all` (vérifié par les
+/// tests).
+const kAccentIds = [
+  'bordeaux',
+  'obsidian',
+  'arctic',
+  'neon',
+  'titanium',
+  'violet',
+  'forest',
+  'solar',
+];
 
-/// Repli explicite vers le rouge : champ absent (état antérieur à L5-C),
-/// valeur inconnue ou d'un autre type. Ne rend jamais une sauvegarde
-/// invalide à lui seul.
-String normalizeAccent(Object? value) =>
-    value is String && kAccentIds.contains(value) ? value : 'rouge';
+/// Anciens identifiants (L5-C) relus vers la palette la plus proche.
+const kLegacyAccentIds = {
+  'rouge': 'bordeaux',
+  'jaune': 'neon',
+  'vert': 'forest',
+  'violet': 'violet',
+  'orange': 'solar',
+  'turquoise': 'arctic',
+};
+
+/// Identifiant de palette enregistrable : identifiant actuel gardé, ancien
+/// identifiant relu ; champ absent (état antérieur à L5-C), valeur inconnue
+/// ou d'un autre type : Bordeaux. Ne rend jamais une sauvegarde invalide à
+/// lui seul.
+String normalizeAccent(Object? value) {
+  if (value is! String) return 'bordeaux';
+  if (kAccentIds.contains(value)) return value;
+  return kLegacyAccentIds[value] ?? 'bordeaux';
+}
 
 class AppSettings {
   int defaultRest; // s, appliqué quand l'exercice n'a pas de repos
@@ -343,7 +368,11 @@ class AppSettings {
   bool celebrations; // écran de récompenses et cérémonie de niveau
   int weeklyGoal; // objectif de jours actifs par semaine ; 0 = adaptatif
   String title; // titre affiché sur la feuille de personnage ; '' = rang
-  String accent; // couleur dominante (L5-C), voir kAccentIds
+  String accent; // palette (L5-C, UI0), voir kAccentIds
+
+  /// UI0 (refonte UI, U6) : contraste renforcé. Écrit seulement s'il est
+  /// activé (export identique à 6.11.1 sinon).
+  bool contrast;
 
   /// CI1g (`kalis_plan` 0.3.1, note `clearance_first`) : blocs pour
   /// lesquels l'avis d'un médecin ou d'un kiné est confirmé (« identifiant
@@ -371,7 +400,8 @@ class AppSettings {
     this.celebrations = true,
     this.weeklyGoal = 0,
     this.title = '',
-    this.accent = 'rouge',
+    this.accent = 'bordeaux',
+    this.contrast = false,
     Map<String, String>? medicalClearance,
   }) : medicalClearance = medicalClearance ?? <String, String>{};
 
@@ -396,6 +426,7 @@ class AppSettings {
     'weeklyGoal': weeklyGoal,
     'title': title,
     'accent': accent,
+    if (contrast) 'contrast': true,
     if (medicalClearance.isNotEmpty) 'medicalClearance': medicalClearance,
   };
   AppSettings.fromJson(Map<String, dynamic> j)
@@ -421,6 +452,7 @@ class AppSettings {
       weeklyGoal = j['weeklyGoal'] as int? ?? 0,
       title = j['title'] as String? ?? '',
       accent = normalizeAccent(j['accent']),
+      contrast = j['contrast'] == true,
       medicalClearance = <String, String>{
         if (j['medicalClearance'] case final Map<String, dynamic> m)
           for (final e in m.entries)
@@ -622,8 +654,11 @@ class AppStore extends ChangeNotifier {
   /// à chaque notification du store.
   final ValueNotifier<String> themeMode = ValueNotifier<String>('system');
 
-  /// Couleur dominante (L5-C) : même principe que [themeMode], indépendante.
-  final ValueNotifier<String> accentMode = ValueNotifier<String>('rouge');
+  /// Palette (L5-C, UI0) : même principe que [themeMode], indépendante.
+  final ValueNotifier<String> accentMode = ValueNotifier<String>('bordeaux');
+
+  /// UI0 (U6) : contraste renforcé, même principe.
+  final ValueNotifier<bool> contrastMode = ValueNotifier<bool>(false);
   final List<Map<String, dynamic>> dbExercises = []; // base embarquée
   final List<Map<String, dynamic>> userExercises =
       []; // ajoutés par l'utilisateur
@@ -861,6 +896,7 @@ class AppStore extends ChangeNotifier {
     }
     themeMode.value = settings.theme;
     accentMode.value = settings.accent;
+    contrastMode.value = settings.contrast;
     // G2 : séances manuelles et WOD de ces anciennes clés ignorés ; les clés
     // restent en place, intactes (aucune donnée effacée).
     logs.removeWhere((k, _) => isManualSessionKey(k));
@@ -1026,6 +1062,9 @@ class AppStore extends ChangeNotifier {
     if (themeMode.value != settings.theme) themeMode.value = settings.theme;
     if (accentMode.value != settings.accent) {
       accentMode.value = settings.accent;
+    }
+    if (contrastMode.value != settings.contrast) {
+      contrastMode.value = settings.contrast;
     }
     notifyListeners();
   }
@@ -1699,6 +1738,7 @@ class AppStore extends ChangeNotifier {
     pilotageEpoch++;
     themeMode.value = settings.theme;
     accentMode.value = settings.accent;
+    contrastMode.value = settings.contrast;
     _lastLevel = data.lastLevel ?? level;
     // G2 : un état remplacé (import, effacement) n'a plus de données
     // retirées en attente ; l'ancien reste dans la copie de récupération.
@@ -3367,6 +3407,7 @@ class AppStore extends ChangeNotifier {
     _saveT?.cancel();
     themeMode.dispose();
     accentMode.dispose();
+    contrastMode.dispose();
     persistenceError.dispose();
     super.dispose();
   }

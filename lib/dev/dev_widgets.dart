@@ -20,6 +20,7 @@ import '../app_theme.dart';
 import '../backup_files.dart' show backupFileName;
 import '../brand.dart';
 import '../kalis_clock.dart';
+import '../kit/catalog.dart' show KitCatalogScreen;
 import '../koach/koach_view.dart';
 import '../main.dart' show appNavigator;
 import '../program_start.dart' show longCivilDate;
@@ -282,7 +283,8 @@ class _DevLogoGestureState extends State<DevLogoGesture>
 }
 
 /// Étiquette « DEV » au bord droit de l'écran pendant la session de test.
-/// Appui long : outils de test.
+/// Appui long : outils de test. UI0 (refonte UI, C8) : 16 dp de large, dans
+/// la marge d'écran de 20 dp, jamais sur un texte ou un bouton.
 class DevBadge extends StatelessWidget {
   const DevBadge({super.key});
 
@@ -304,7 +306,7 @@ class DevBadge extends StatelessWidget {
             behavior: HitTestBehavior.opaque,
             onLongPress: openDevTools,
             child: Container(
-              width: 24,
+              width: 16,
               height: 56,
               alignment: Alignment.center,
               decoration: const BoxDecoration(
@@ -325,9 +327,9 @@ class DevBadge extends StatelessWidget {
                   textScaler: TextScaler.noScaling,
                   style: TextStyle(
                     color: Color(0xFFFFFFFF),
-                    fontSize: 11,
+                    fontSize: 10,
                     fontWeight: FontWeight.w800,
-                    letterSpacing: 1.6,
+                    letterSpacing: 1.4,
                     decoration: TextDecoration.none,
                     fontFamily: 'Roboto',
                   ),
@@ -661,6 +663,26 @@ class DevToolsSheet extends StatelessWidget {
               leading: const Icon(Icons.ios_share),
               title: const Text('Exporter le journal du moteur (JSON)'),
               onTap: () => shareEngineJournal(context),
+            ),
+            // UI0 (refonte UI) : catalogue des composants du kit.
+            ListTile(
+              key: const ValueKey('dev-kit-catalog'),
+              contentPadding: EdgeInsets.zero,
+              leading: const Icon(Icons.widgets_outlined),
+              title: const Text('Catalogue du kit'),
+              subtitle: const Text(
+                'Composants de la refonte UI dans les 8 palettes, clair, '
+                'sombre et contraste renforcé',
+              ),
+              onTap: () {
+                final nav = Navigator.of(context);
+                nav.pop();
+                nav.push(
+                  MaterialPageRoute<void>(
+                    builder: (_) => const KitCatalogScreen(),
+                  ),
+                );
+              },
             ),
             const SizedBox(height: 8),
             TextButton.icon(
