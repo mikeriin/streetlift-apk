@@ -25,7 +25,7 @@ Chaque lot ne modifie que sa ligne (PIPELINE_UI.md §1).
 | --- | --- | --- | --- | --- |
 | UI0 | — | `refonte-ui` 0e5342df ; contrôle `claude/ci-ui-ui0` run 38050589366 (vert) ; [livraison](livraisons/LIVRAISON_UI0.md) | 2026-10-10 | validé (pilotage, C8, 10/10/2026 14:55) |
 | UI1 | UI0 livré | — | — | en cours depuis 2026-10-10 13:42 UTC (session session_018ETAYadGCNKByTAfVnsshL) |
-| UI2 | UI0 livré | — | — | à faire |
+| UI2 | UI0 livré | — | — | en cours depuis 2026-10-10 13:43 UTC (session session_01UBKNgcL6KGVgMUfEL3Fzdo) |
 | UI3 | UI0 livré | — | — | à faire |
 | UI4 | UI0 livré | — | — | à faire |
 | UI5 | UI1, UI2, UI3, UI4 livrés et fusionnés dans `refonte-ui` | — | — | en attente de UI1 à UI4 |
