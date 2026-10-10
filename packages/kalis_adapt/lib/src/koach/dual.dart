@@ -35,7 +35,10 @@ const Json defautsDual = <String, Object?>{
   'sigma_innovation': 0.003,
   'semaines_gardees': 26,
 };
-const Json defautsPlafonds = <String, Object?>{'plafond_volume': 0.15, 'plafond_intensite': 0.05};
+const Json defautsPlafonds = <String, Object?>{
+  'plafond_volume': 0.15,
+  'plafond_intensite': 0.05,
+};
 const List<String> dualLettres = ['A', 'B'];
 
 Object? _duParam(Json params, String cle) =>
@@ -64,12 +67,18 @@ typedef ObservationReponse = (List<double>, double, double);
 
 /// Poids a posteriori des hypothèses h = (s0, k).
 class Reponse {
-  Reponse(List<(double, int)> hypotheses, num ref, [num plancher = 1e-6, List<Object?>? poids])
-    : hypotheses = List<(double, int)>.of(hypotheses),
-      ref = ref.toDouble(),
-      plancher = plancher.toDouble() {
+  Reponse(
+    List<(double, int)> hypotheses,
+    num ref, [
+    num plancher = 1e-6,
+    List<Object?>? poids,
+  ]) : hypotheses = List<(double, int)>.of(hypotheses),
+       ref = ref.toDouble(),
+       plancher = plancher.toDouble() {
     final n = this.hypotheses.length;
-    this.poids = poids == null ? List<double>.filled(n, 1.0 / n) : [for (final w in poids) dbl(w)];
+    this.poids = poids == null
+        ? List<double>.filled(n, 1.0 / n)
+        : [for (final w in poids) dbl(w)];
   }
 
   static Reponse depuisParams(Json params) {
@@ -80,7 +89,11 @@ class Reponse {
       for (var k = 0; k < stims.length; k++)
         for (final s in s0s) (dbl(s), k),
     ];
-    return Reponse(hyps, dbl(dyn['dose_reference']), dbl(_duParam(params, 'plancher_poids')));
+    return Reponse(
+      hyps,
+      dbl(dyn['dose_reference']),
+      dbl(_duParam(params, 'plancher_poids')),
+    );
   }
 
   final List<(double, int)> hypotheses;
@@ -127,7 +140,11 @@ class Reponse {
         final stim = jl(bDoses[ex]);
         final r = rho is Map<String, Object?> ? dbl(rho[ex]) : dbl(rho);
         final attendus = [for (var i = 0; i < n; i++) r * dose(stim, i)];
-        obs.add((attendus, dbl(bMu[ex]) - dbl(aMu[ex]), (sigma * sigma).toDouble()));
+        obs.add((
+          attendus,
+          dbl(bMu[ex]) - dbl(aMu[ex]),
+          (sigma * sigma).toDouble(),
+        ));
       }
       dern = b['semaine'] as num;
     }
@@ -245,7 +262,12 @@ class Reponse {
     final hyps = <(double, int)>[
       for (final h in jl(etat['hypotheses'])) (dbl(jl(h)[0]), ent(jl(h)[1])),
     ];
-    final r = Reponse(hyps, dbl(etat['ref']), dbl(etat['plancher']), jl(etat['poids']));
+    final r = Reponse(
+      hyps,
+      dbl(etat['ref']),
+      dbl(etat['plancher']),
+      jl(etat['poids']),
+    );
     r.derniere = etat['derniere'] == null ? null : ent(etat['derniere']);
     r.nObs = ent(etat['n_obs']);
     return r;
@@ -259,7 +281,11 @@ class Reponse {
 /// (bool, raisons) : au moins `semaines_min` semaines de journal ET, pour
 /// chaque lift principal, demi-largeur relative de l'intervalle à 90 % de
 /// l'e1RM sous `intervalle_max`.
-(bool, List<String>) calibre(Koach koach, List<String> liftsPrincipaux, [int? semaines]) {
+(bool, List<String>) calibre(
+  Koach koach,
+  List<String> liftsPrincipaux, [
+  int? semaines,
+]) {
   final p = koach.params;
   final raisons = <String>[];
   final n = semaines ?? koach.modele.journalSemaines.length;
@@ -297,7 +323,12 @@ typedef MesureEssai = (int, int, String, double);
 /// `bras_semaines` semaines.
 class EssaiN1 {
   /// [cible] : {'qualite': q} ou {'exerciseId': id}.
-  EssaiN1(Json params, Json cible, [List<Object?>? exercicesTraites, List<Object?>? exercicesTemoins]) {
+  EssaiN1(
+    Json params,
+    Json cible, [
+    List<Object?>? exercicesTraites,
+    List<Object?>? exercicesTemoins,
+  ]) {
     if (cible.containsKey('qualite')) {
       cle = 'qualite';
     } else if (cible.containsKey('exerciseId')) {
@@ -310,7 +341,8 @@ class EssaiN1 {
         ? exercicesTraites!
         : (cle == 'qualite' ? <Object?>[] : <Object?>[valeur]);
     traites = [for (final x in tr) x as String]..sort();
-    temoins = [for (final x in listeOuVide(exercicesTemoins)) x as String]..sort();
+    temoins = [for (final x in listeOuVide(exercicesTemoins)) x as String]
+      ..sort();
     brasSemaines = ent(_duParam(params, 'bras_semaines'));
     ampV = dbl(_duParam(params, 'amplitude_volume'));
     ampI = dbl(_duParam(params, 'amplitude_intensite'));
@@ -401,7 +433,9 @@ class EssaiN1 {
     final ech = contexte['semaines_avant_echeance'];
     if (ech != null) {
       final e = ech as num;
-      final d = sequence.isNotEmpty ? duree() : brasSemaines * ent(defautsDual['n_bras']);
+      final d = sequence.isNotEmpty
+          ? duree()
+          : brasSemaines * ent(defautsDual['n_bras']);
       if (e < marge || e - d < marge) {
         raisons.add('echeance_proche');
       }
@@ -413,7 +447,13 @@ class EssaiN1 {
     final pre = contexte['semaines_temoin'];
     if (pre != null &&
         (pre as num) <
-            ent(_ruGet(contexte, 'semaines_temoin_min', defautsDual['synthetique_semaines_min']))) {
+            ent(
+              _ruGet(
+                contexte,
+                'semaines_temoin_min',
+                defautsDual['synthetique_semaines_min'],
+              ),
+            )) {
       raisons.add('temoin_trop_court:${ent(pre)}');
     }
     return (raisons.isEmpty, raisons);
@@ -455,7 +495,11 @@ class EssaiN1 {
 
   bool fini(int semaine) => debut != null && semaine >= debut! + duree() - 1;
 
-  bool enregistrer(int semaine, double progresTraite, double progresTemoinSynthetique) {
+  bool enregistrer(
+    int semaine,
+    double progresTraite,
+    double progresTemoinSynthetique,
+  ) {
     final i = brasDe(semaine);
     if (i == null) {
       return false;
@@ -465,7 +509,12 @@ class EssaiN1 {
         return false;
       }
     }
-    mesures.add((semaine, i, sequence[i], progresTraite - progresTemoinSynthetique));
+    mesures.add((
+      semaine,
+      i,
+      sequence[i],
+      progresTraite - progresTemoinSynthetique,
+    ));
     if (fini(semaine) && statut == 'en_cours') {
       statut = 'termine';
     }
@@ -841,7 +890,11 @@ Json effetEssai(
     pt.add(serieTraitee[t] - serieTraitee[t - 1]);
     pc.add(c[t] - c[t - 1]);
   }
-  return <String, Object?>{'progres_traite': pt, 'progres_temoin_synthetique': pc, 'synthetique': sc};
+  return <String, Object?>{
+    'progres_traite': pt,
+    'progres_temoin_synthetique': pc,
+    'synthetique': sc,
+  };
 }
 
 // ----------------------------------------------------------------------
@@ -853,7 +906,8 @@ Json effetEssai(
 /// cours et expose le tirage de Thompson de la semaine et la modulation du
 /// plan pendant un bras. Source unique des poids des hypothèses :
 /// `reponse.poids`, recopiés dans `koach.modele.poidsHyp`.
-class ControleDual extends Extension implements AvecAlerteHorsModele, AvecHypothese {
+class ControleDual extends Extension
+    implements AvecAlerteHorsModele, AvecHypothese {
   ControleDual(this.params, List<String> liftsPrincipaux)
     : lifts = List<String>.of(liftsPrincipaux)..sort(),
       reponse = Reponse.depuisParams(params);
@@ -964,7 +1018,9 @@ class ControleDual extends Extension implements AvecAlerteHorsModele, AvecHypoth
       }
     }
     if (!memes) {
-      throw ArgumentError('hypothèses de réponse différentes entre le modèle et le contrôle dual');
+      throw ArgumentError(
+        'hypothèses de réponse différentes entre le modèle et le contrôle dual',
+      );
     }
     final n = reponse.hypotheses.length;
     final ids = <String>[];
@@ -1018,7 +1074,11 @@ class ControleDual extends Extension implements AvecAlerteHorsModele, AvecHypoth
       } else {
         deltas = List<double>.filled(n, 0.0);
       }
-      nSuivi[ex] = (muPost, vPost, [for (var i = 0; i < n; i++) deltas[i] + g[i] - gu]);
+      nSuivi[ex] = (
+        muPost,
+        vPost,
+        [for (var i = 0; i < n; i++) deltas[i] + g[i] - gu],
+      );
       preEx[ex] = muPre;
     }
     suivi = nSuivi;
@@ -1123,7 +1183,9 @@ class ControleDual extends Extension implements AvecAlerteHorsModele, AvecHypoth
         ent(d['graine']),
         d['n_bras'],
       );
-      _raison('essai_${ok ? 'demarre' : 'refuse'}:${ent(d['semaine'])}:${rs.join(',')}');
+      _raison(
+        'essai_${ok ? 'demarre' : 'refuse'}:${ent(d['semaine'])}:${rs.join(',')}',
+      );
     }
     if (essai != null && vrai(e['alerte_hors_modele'])) {
       interrompre('alerte_hors_modele');
@@ -1174,7 +1236,9 @@ class ControleDual extends Extension implements AvecAlerteHorsModele, AvecHypoth
       }
     }
     ctx['semaines_temoin'] = nTemoin;
-    ctx['semaines_temoin_min'] = ent(_duParam(params, 'synthetique_semaines_min'));
+    ctx['semaines_temoin_min'] = ent(
+      _duParam(params, 'synthetique_semaines_min'),
+    );
     final (ok, rs) = es.peutDemarrer(ctx);
     if (!ok) {
       return (false, [...rs, ...rCal]);
@@ -1195,7 +1259,10 @@ class ControleDual extends Extension implements AvecAlerteHorsModele, AvecHypoth
 
   void _clore() {
     final es = essai!;
-    essaisPasses.add(<String, Object?>{'essai': es.etat(), 'analyse': es.analyse()});
+    essaisPasses.add(<String, Object?>{
+      'essai': es.etat(),
+      'analyse': es.analyse(),
+    });
     essai = null;
   }
 
@@ -1239,21 +1306,30 @@ class ControleDual extends Extension implements AvecAlerteHorsModele, AvecHypoth
       'reponse': reponse.etat(),
       'essai': essai?.etat(),
       'essais_passes': <Object?>[
-        for (final x in essaisPasses) <String, Object?>{'essai': x['essai'], 'analyse': x['analyse']},
+        for (final x in essaisPasses)
+          <String, Object?>{'essai': x['essai'], 'analyse': x['analyse']},
       ],
       'raisons': List<String>.of(raisons),
       'cap_seance': <Object?>[
-        for (final ex in ex1) <Object?>[ex, capSeance[ex]!.$1, capSeance[ex]!.$2],
+        for (final ex in ex1)
+          <Object?>[ex, capSeance[ex]!.$1, capSeance[ex]!.$2],
       ],
       'suivi': <Object?>[
-        for (final ex in ex2) <Object?>[ex, suivi[ex]!.$1, suivi[ex]!.$2, List<double>.of(suivi[ex]!.$3)],
+        for (final ex in ex2)
+          <Object?>[
+            ex,
+            suivi[ex]!.$1,
+            suivi[ex]!.$2,
+            List<double>.of(suivi[ex]!.$3),
+          ],
       ],
       'pre': <Object?>[
         for (final x in pre)
           <String, Object?>{
             'semaine': x['semaine'],
             'mu': <Object?>[
-              for (final ex in jm(x['mu']).keys.toList()..sort()) <Object?>[ex, jm(x['mu'])[ex]],
+              for (final ex in jm(x['mu']).keys.toList()..sort())
+                <Object?>[ex, jm(x['mu'])[ex]],
             ],
           },
       ],
@@ -1261,12 +1337,19 @@ class ControleDual extends Extension implements AvecAlerteHorsModele, AvecHypoth
   }
 
   static ControleDual depuisEtat(Json params, Json etat) {
-    final c = ControleDual(params, [for (final x in jl(etat['lifts'])) x as String]);
+    final c = ControleDual(params, [
+      for (final x in jl(etat['lifts'])) x as String,
+    ]);
     c.reponse = Reponse.depuisEtat(jm(etat['reponse']));
-    c.essai = etat['essai'] == null ? null : EssaiN1.depuisEtat(params, jm(etat['essai']));
+    c.essai = etat['essai'] == null
+        ? null
+        : EssaiN1.depuisEtat(params, jm(etat['essai']));
     c.essaisPasses = [
       for (final x0 in jl(etat['essais_passes']))
-        <String, Object?>{'essai': jm(x0)['essai'], 'analyse': jm(x0)['analyse']},
+        <String, Object?>{
+          'essai': jm(x0)['essai'],
+          'analyse': jm(x0)['analyse'],
+        },
     ];
     c.raisons = [for (final r in jl(etat['raisons'])) r as String];
     c.capSeance = {
@@ -1282,7 +1365,8 @@ class ControleDual extends Extension implements AvecAlerteHorsModele, AvecHypoth
         <String, Object?>{
           'semaine': ent(jm(x0)['semaine']),
           'mu': <String, Object?>{
-            for (final p0 in jl(jm(x0)['mu'])) jl(p0)[0] as String: dbl(jl(p0)[1]),
+            for (final p0 in jl(jm(x0)['mu']))
+              jl(p0)[0] as String: dbl(jl(p0)[1]),
           },
         },
     ];

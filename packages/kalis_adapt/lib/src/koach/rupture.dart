@@ -46,10 +46,20 @@ const Json defautsRupture = <String, Object?>{
 };
 
 /// Causes d'alerte, dans l'ordre (`CAUSES`).
-const List<String> ruptureCauses = ['rupture', 'residu', 'assiduite', 'douleur'];
+const List<String> ruptureCauses = [
+  'rupture',
+  'residu',
+  'assiduite',
+  'douleur',
+];
 
 /// Réponses admises à la première question du diagnostic (`REPONSES`).
-const List<String> ruptureReponses = ['douleur', 'moins_de_temps', 'fatigue', 'rien'];
+const List<String> ruptureReponses = [
+  'douleur',
+  'moins_de_temps',
+  'fatigue',
+  'rien',
+];
 
 const int versionDossier = 1;
 
@@ -110,7 +120,9 @@ String _ruReprDouble(double x) {
     }
     return '$signe${chiffres.substring(0, pointPos)}.${chiffres.substring(pointPos)}';
   }
-  final m = chiffres.length == 1 ? chiffres : '${chiffres[0]}.${chiffres.substring(1)}';
+  final m = chiffres.length == 1
+      ? chiffres
+      : '${chiffres[0]}.${chiffres.substring(1)}';
   final es = e < 0 ? '-' : '+';
   final ea = e.abs();
   return '$signe${m}e$es${ea < 10 ? '0$ea' : '$ea'}';
@@ -123,7 +135,9 @@ String _ruStr(Object? v) {
   if (v is double) return _ruReprDouble(v);
   if (v is int) return v.toString();
   if (v is String) return v;
-  if (v is List<Object?>) return '[${[for (final x in v) _ruRepr(x)].join(', ')}]';
+  if (v is List<Object?>) {
+    return '[${[for (final x in v) _ruRepr(x)].join(', ')}]';
+  }
   if (v is Map<Object?, Object?>) {
     return '{${[for (final e in v.entries) '${_ruRepr(e.key)}: ${_ruRepr(e.value)}'].join(', ')}}';
   }
@@ -269,7 +283,13 @@ class Bocpd {
 
   /// Log-densité prédictive : Student à 2α degrés de liberté, centre μ,
   /// échelle² β(κ+1)/(ακ).
-  static double logStudent(double x, double mu, double kappa, double alpha, double beta) {
+  static double logStudent(
+    double x,
+    double mu,
+    double kappa,
+    double alpha,
+    double beta,
+  ) {
     final nu = 2.0 * alpha;
     final s2 = beta * (kappa + 1.0) / (alpha * kappa);
     final d = x - mu;
@@ -414,7 +434,8 @@ class Bocpd {
 
   /// [(longueur, probabilité)] de la longueur de course.
   List<(int, double)> distribution() => [
-    for (var i = 0; i < longueurs.length; i++) (longueurs[i], math.exp(logP[i])),
+    for (var i = 0; i < longueurs.length; i++)
+      (longueurs[i], math.exp(logP[i])),
   ];
 
   Json etat() => <String, Object?>{
@@ -498,7 +519,8 @@ final Json questionZone = <String, Object?>{
   'code': 'zone',
   'texte': 'Où as-tu mal ?',
   'choix': <Object?>[
-    for (final (c, t) in libellesZones) <String, Object?>{'code': c, 'texte': t},
+    for (final (c, t) in libellesZones)
+      <String, Object?>{'code': c, 'texte': t},
   ],
 };
 
@@ -522,7 +544,8 @@ final Json questionDuree = <String, Object?>{
   'code': 'duree_max_min',
   'texte': 'Combien de temps par séance ?',
   'choix': <Object?>[
-    for (final d in const [20, 30, 45, 60, 75, 90]) <String, Object?>{'code': d, 'texte': '$d min'},
+    for (final d in const [20, 30, 45, 60, 75, 90])
+      <String, Object?>{'code': d, 'texte': '$d min'},
   ],
 };
 
@@ -803,7 +826,8 @@ class Surveillance extends Extension implements AvecParametres {
     final cran = (2.0 * rir + 0.5).floor();
     final out = <Json>[];
     for (final it0 in items) {
-      if (_ruGet(it0, 'kind', 'work') != 'work' || (ou(it0['sets'], 0) as num) < 1) {
+      if (_ruGet(it0, 'kind', 'work') != 'work' ||
+          (ou(it0['sets'], 0) as num) < 1) {
         out.add(it0);
         continue;
       }
@@ -912,7 +936,11 @@ class Surveillance extends Extension implements AvecParametres {
     } else if (cause == 'fatigue') {
       final series = dbl(_ruParam(pr, 'semaine_allegee_series'));
       final rir = dbl(_ruParam(pr, 'semaine_allegee_rir'));
-      action = <String, Object?>{'action': 'semaine_allegee', 'series': series, 'rir': rir};
+      action = <String, Object?>{
+        'action': 'semaine_allegee',
+        'series': series,
+        'rir': rir,
+      };
       final j = koach.jour;
       allegement = (j, j + 7, series, rir);
     } else {
@@ -937,7 +965,9 @@ class Surveillance extends Extension implements AvecParametres {
       'action': action['action'],
     });
     if (this.reponses.length > reponsesGardees) {
-      this.reponses = this.reponses.sublist(this.reponses.length - reponsesGardees);
+      this.reponses = this.reponses.sublist(
+        this.reponses.length - reponsesGardees,
+      );
     }
     return action;
   }
@@ -1004,7 +1034,9 @@ class Surveillance extends Extension implements AvecParametres {
     final n = ent(_ruParam(params, 'journal_dossier'));
     final debut = koach.journal.length - n;
     final journal = koach.journal.length > n
-        ? (debut > koach.journal.length ? <Json>[] : koach.journal.sublist(debut))
+        ? (debut > koach.journal.length
+              ? <Json>[]
+              : koach.journal.sublist(debut))
         : koach.journal;
     final evenements = <Object?>[];
     for (final e in journal) {
@@ -1021,7 +1053,8 @@ class Surveillance extends Extension implements AvecParametres {
         'parametres': koach.params,
         'posterior': koach.posterior(),
         'histoire_residus': <Object?>[
-          for (final r in koach.modele.histoireResidus) <Object?>[r.$1, r.$2, r.$3, r.$4, r.$5, r.$6],
+          for (final r in koach.modele.histoireResidus)
+            <Object?>[r.$1, r.$2, r.$3, r.$4, r.$5, r.$6],
         ],
         'bocpd': bocpd.etat(),
         'surveillance': etatComplet(),
@@ -1066,11 +1099,19 @@ Json importerParametres(Koach koach, Object? fichierJson) {
   final actuel = koach.params;
   erreurs.addAll(validerParametres(actuel, nouveau));
   if (erreurs.isNotEmpty) {
-    return <String, Object?>{'ok': false, 'erreurs': erreurs, 'version': nouveau['version']};
+    return <String, Object?>{
+      'ok': false,
+      'erreurs': erreurs,
+      'version': nouveau['version'],
+    };
   }
   // L'import est un événement du journal : `rejouer` le réapplique.
   koach.observe(<String, Object?>{'type': 'parametres', 'fichier': nouveau});
-  return <String, Object?>{'ok': true, 'erreurs': <Object?>[], 'version': koach.params['version']};
+  return <String, Object?>{
+    'ok': true,
+    'erreurs': <Object?>[],
+    'version': koach.params['version'],
+  };
 }
 
 /// Applique un fichier de paramètres déjà validé (événement `parametres`
@@ -1098,7 +1139,11 @@ void appliquerParametres(Koach koach, Json nouveau) {
   koach.seances.p = fusion;
   koach.seances.s = jm(fusion['securite']);
   final f = jm(fusion['fatigue']);
-  koach.modele.tau = [dbl(f['tau_nerveux_j']), dbl(f['tau_musculaire_j']), dbl(f['tau_tendineux_j'])];
+  koach.modele.tau = [
+    dbl(f['tau_nerveux_j']),
+    dbl(f['tau_musculaire_j']),
+    dbl(f['tau_tendineux_j']),
+  ];
   for (final x in koach.extensions) {
     if (x is AvecParametres) {
       (x as AvecParametres).appliquerParametres(fusion);
@@ -1167,7 +1212,12 @@ bool _ruNombre(Object? v) => v is num;
 /// échec comme la comparaison Python).
 num _ruNum(Object? v) => v is bool ? (v ? 1 : 0) : v as num;
 
-void _ruVerifierValeur(String chemin, Object? ancien, Object? v, List<String> erreurs) {
+void _ruVerifierValeur(
+  String chemin,
+  Object? ancien,
+  Object? v,
+  List<String> erreurs,
+) {
   if (_ruNombre(ancien)) {
     if (!_ruNombre(v)) {
       erreurs.add('type: $chemin');
@@ -1218,7 +1268,10 @@ List<String> validerParametres(Json actuel, Json nouveau) {
   if (version is! String || version.split('.')[0] != va.split('.')[0]) {
     erreurs.add('version: majeure attendue ${_ruRepr(va.split('.')[0])}');
   }
-  final defauts = <String, Json>{'rupture': defautsRupture, 'adherence': defautsAdherence};
+  final defauts = <String, Json>{
+    'rupture': defautsRupture,
+    'adherence': defautsAdherence,
+  };
   final cles = nouveau.keys.toList()..sort();
   for (final cle in cles) {
     final v = nouveau[cle];
@@ -1239,7 +1292,9 @@ List<String> validerParametres(Json actuel, Json nouveau) {
       continue;
     }
     final ancien = actuel[cle];
-    if (ancien is Map<String, Object?> && v is Map<String, Object?> && defauts.containsKey(cle)) {
+    if (ancien is Map<String, Object?> &&
+        v is Map<String, Object?> &&
+        defauts.containsKey(cle)) {
       // Les clés nouvelles connues des modules sont admises.
       final ks = v.keys.toList()..sort();
       for (final k in ks) {
@@ -1292,7 +1347,10 @@ List<String> validerParametres(Json actuel, Json nouveau) {
       for (final k in ks) {
         final x = sv[k];
         if (x is num &&
-            (k.endsWith('_sd') || k.startsWith('sigma') || k.startsWith('tau') || k.startsWith('bruit')) &&
+            (k.endsWith('_sd') ||
+                k.startsWith('sigma') ||
+                k.startsWith('tau') ||
+                k.startsWith('bruit')) &&
             !(x > 0)) {
           erreurs.add('borne: $sec.$k doit être > 0');
         }
@@ -1310,11 +1368,18 @@ const List<String> clesInterdites = [
   'nom', 'name', 'prenom', 'firstName', 'lastName', 'email', 'mail', //
   'telephone', 'phone', 'adresse', 'address', 'note', 'notes', 'commentaire',
   'comment', 'texte', 'text', 'userId', 'user_id', 'user', 'utilisateur', 'uid',
-  'deviceId', 'appareil', 'device', 'date', 'dateIso', 'timestamp', 'horodatage',
+  'deviceId',
+  'appareil',
+  'device',
+  'date',
+  'dateIso',
+  'timestamp',
+  'horodatage',
   'naissance', 'birthDate', 'age', 'sexe', 'sex', 'profil', 'profile', 'photo',
   'localisation', 'location', 'gps', 'id_utilisateur', 'createdAt', 'updatedAt',
 ];
-const String caracteresCode = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_.-';
+const String caracteresCode =
+    'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_.-';
 
 bool _ruChiffres(String t) {
   if (t.isEmpty) return false;
@@ -1504,7 +1569,9 @@ List<Json> calibrerAlerte(
       'seuil': seuil,
       'fausses_alertes_100': total > 0 ? 100.0 * alertes / total : null,
       'delai_median': _ruMediane(delais),
-      'taux_detection': tracesRupture.isNotEmpty ? detectees / tracesRupture.length : null,
+      'taux_detection': tracesRupture.isNotEmpty
+          ? detectees / tracesRupture.length
+          : null,
     });
   }
   return sortie;

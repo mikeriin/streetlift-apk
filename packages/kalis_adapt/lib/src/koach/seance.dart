@@ -1710,7 +1710,8 @@ class Seances {
     var renfo = false;
     for (final it in items) {
       t += _dureeItem(it, vitesse);
-      renfo = renfo || vrai(dictOuVide(fiches[it['exerciseId']])['renforcement']);
+      renfo =
+          renfo || vrai(dictOuVide(fiches[it['exerciseId']])['renforcement']);
     }
     return (t + (renfo ? 300 : 0)) / 60.0;
   }
@@ -1721,9 +1722,9 @@ class Seances {
     for (final it in items) {
       if (it['kind'] == 'test' &&
           dictOuVide(it['test'])['kind'] == 'time_trial' &&
-          listeOuVide(it['reasons']).any(
-            (r) => dictOuVide(jm(r)['params'])['note'] == 'event_day',
-          )) {
+          listeOuVide(
+            it['reasons'],
+          ).any((r) => dictOuVide(jm(r)['params'])['note'] == 'event_day')) {
         return true;
       }
     }
@@ -1817,8 +1818,8 @@ class Seances {
         if (sec < 5) {
           _seRetirer(out, it);
         } else {
-          final secLo = (it['secondsLow'] == null ||
-                  (it['secondsLow'] as num) > sec)
+          final secLo =
+              (it['secondsLow'] == null || (it['secondsLow'] as num) > sec)
               ? sec
               : it['secondsLow'];
           it.addAll(<String, Object?>{
@@ -1854,9 +1855,9 @@ class Seances {
     if (typ == 'cardio') {
       if (!exId.startsWith('ca-marche') &&
           !exId.startsWith('ca-educatif') &&
-          listeOuVide(fiche['materiel']).any(
-            (mt) => dans(mt, jl(s['endurance_materiel_course'])),
-          )) {
+          listeOuVide(
+            fiche['materiel'],
+          ).any((mt) => dans(mt, jl(s['endurance_materiel_course'])))) {
         return 'course';
       }
       return 'cardio';
@@ -1890,9 +1891,7 @@ class Seances {
       return true;
     }
     final id = item['exerciseId'] as String;
-    return jl(
-      s['endurance_qualite_ids'],
-    ).any((q) => id.contains(q as String));
+    return jl(s['endurance_qualite_ids']).any((q) => id.contains(q as String));
   }
 
   /// Une course des `endurance_dure_jours` jours d'avant notée trop dure
@@ -1958,10 +1957,7 @@ class Seances {
 
     void retirer(Json it, String code, Json raison) {
       retires.add(it);
-      _raison(code, <String, Object?>{
-        'exercice': it['exerciseId'],
-        ...raison,
-      });
+      _raison(code, <String, Object?>{'exercice': it['exerciseId'], ...raison});
     }
 
     // 0. A2.3 : douleur qui dure au bas du corps, la course est retirée
@@ -1986,10 +1982,9 @@ class Seances {
     final longP = dbl(jl(er[1])[1]);
     final actif = joursActifs.isNotEmpty ? joursActifs.last : null;
     final ecart = actif == null ? 0 : jour - actif;
-    final reprise = ecart >= longJ
-        ? longP
-        : (ecart >= courtJ ? courtP : 1.0);
-    final causeReprise = 'reprise_${(ecart >= longJ ? longJ : courtJ).truncate()}';
+    final reprise = ecart >= longJ ? longP : (ecart >= courtJ ? courtP : 1.0);
+    final causeReprise =
+        'reprise_${(ecart >= longJ ? longJ : courtJ).truncate()}';
     // 2. A10.2 : jour sans.
     String? sans;
     if (palier >= 2) {
@@ -2016,7 +2011,9 @@ class Seances {
       if (part < 1 && reduire(it, part)) {
         _raison('koach.endurance_raccourcie', {
           'exercice': it['exerciseId'],
-          'cause': part < reprise ? 'reprise_${longJ.truncate()}' : causeReprise,
+          'cause': part < reprise
+              ? 'reprise_${longJ.truncate()}'
+              : causeReprise,
           'part': _seArrondi(part * 100),
         });
       }
@@ -2132,7 +2129,9 @@ class Seances {
               'test': null,
               'intensity': null,
               'setTargets': null,
-              'targetFlames': f == null ? null : _seMin<num>(f as num, facileF + 1),
+              'targetFlames': f == null
+                  ? null
+                  : _seMin<num>(f as num, facileF + 1),
             });
             change = true;
           }
@@ -2433,12 +2432,7 @@ class Seances {
 
   /// Vrai si la montée de test tient dans le budget de la séance ; sans
   /// budget connu : un seul vrai test par séance.
-  bool _dureePermetTest(
-    List<Json> items,
-    Json item,
-    (num, num) vt,
-    int deja,
-  ) {
+  bool _dureePermetTest(List<Json> items, Json item, (num, num) vt, int deja) {
     final ta = jm(p['test_adaptatif']);
     final budget = dictOuVide(contexte)['budget'];
     if (budget == null) {
@@ -2461,9 +2455,7 @@ class Seances {
     );
     if (retire > 0) {
       final rh = item['repsHigh'] ?? ou(item['repsLow'], 0);
-      ajout -=
-          retire *
-          ((rh as num) * 3.0 + dbl(item['restSeconds'] ?? 60));
+      ajout -= retire * ((rh as num) * 3.0 + dbl(item['restSeconds'] ?? 60));
     }
     var total = 300.0 + ajout * (deja + 1);
     for (final it in items) {
@@ -2545,9 +2537,7 @@ class Seances {
     }
     // `lo` non nul implique `hi` non nul (`_plages`).
     final hiN = hi!;
-    final double reps = egalJson(hiN, lo)
-        ? hiN.toDouble()
-        : (lo + hiN) / 2.0;
+    final double reps = egalJson(hiN, lo) ? hiN.toDouble() : (lo + hiN) / 2.0;
     final pr = jld(jm(p['planification'])['prudence_charge']);
     final prudence = t.seances > 3 ? pr[1] : pr[0];
     var voulu = chargePour(exId, reps, rir, prudence)!;
@@ -2593,8 +2583,7 @@ class Seances {
           part >= _n('couloir_part_lourde')) {
         haut = chargeDePart(exId, part.toDouble()) - bw;
       } else {
-        haut =
-            chargeDePart(exId, part * (1 + dbl(s['couloir_haut_max']))) - bw;
+        haut = chargeDePart(exId, part * (1 + dbl(s['couloir_haut_max']))) - bw;
       }
       if (voulu > haut) {
         voulu = haut;
@@ -2721,8 +2710,7 @@ class Seances {
           recente = c;
         }
       }
-      final plafondR =
-          (recente + bw) * (1 + dbl(ta['repere_hausse'])) - bw;
+      final plafondR = (recente + bw) * (1 + dbl(ta['repere_hausse'])) - bw;
       num chargeR = grille.plancher(
         _seMax(_seMin(vouluR, plafondR), grille.minimum),
       );
@@ -3293,7 +3281,9 @@ class Seances {
           plus = _n('schema_change_reps_max');
         }
         final b =
-            (c + bw) * (1 + hausse) * (1 + dbl(s['schema_change_part']) * plus) -
+            (c + bw) *
+                (1 + hausse) *
+                (1 + dbl(s['schema_change_part']) * plus) -
             bw;
         if (b > plafondR) {
           plafondR = b;
@@ -3374,9 +3364,7 @@ class Seances {
         final ci = plan['charge_item'] as num;
         var petit = grille.plancher(
           _seMax(
-            (ci + bw) *
-                    (1 + dbl(jl(jl(ta['rampe_pas_par_rir']).last)[1])) -
-                bw,
+            (ci + bw) * (1 + dbl(jl(jl(ta['rampe_pas_par_rir']).last)[1])) - bw,
             grille.minimum,
           ),
         );
@@ -3488,8 +3476,7 @@ class Seances {
           !vrai(plan['sans_hausse']) &&
           coupure == 0 &&
           !mem.echec) {
-        final plafondT =
-            dbl(s['tentative_ouverture_part']) * math.exp(mu) - bw;
+        final plafondT = dbl(s['tentative_ouverture_part']) * math.exp(mu) - bw;
         ouverture = grille!.plancher(
           _seMax<num>(_seMin<num>(recente, plafondT), ouverture).toDouble(),
         );
@@ -3641,10 +3628,10 @@ class Seances {
     for (final x0 in sets) {
       final x = jm(x0);
       parEx
-          .putIfAbsent(
-            (x['exerciseId'] as String, x['slotId'] as String?),
-            () => <Json>[],
-          )
+          .putIfAbsent((
+            x['exerciseId'] as String,
+            x['slotId'] as String?,
+          ), () => <Json>[])
           .add(x);
       if ((ou(x['reps'], 0) as num) > 0 || (ou(x['seconds'], 0) as num) > 0) {
         final zz = zonesEx[x['exerciseId']];
@@ -3748,9 +3735,10 @@ class Seances {
         num tot = 0;
         for (final x in series) {
           if (x['kind'] != 'warmup' &&
-              !const ['test', 'attempt'].contains(
-                dictOuVide(x['target'])['role'],
-              )) {
+              !const [
+                'test',
+                'attempt',
+              ].contains(dictOuVide(x['target'])['role'])) {
             tot += ou(x['seconds'], 0) as num;
           }
         }
@@ -3785,8 +3773,7 @@ class Seances {
         if (echouee == null || c < echouee) {
           echouee = c;
         }
-      } else if ((ou(x['reps'], 0) as num) > 0 &&
-          (held == null || c > held)) {
+      } else if ((ou(x['reps'], 0) as num) > 0 && (held == null || c > held)) {
         held = c;
       }
     }
@@ -3857,9 +3844,9 @@ class Seances {
       while (suite.length > 3) {
         suite.removeAt(0);
       }
-      if (suite.length == 3 && jour - suite[0].$1 <= _n('surmenage_fenetre_j')) {
-        final limite =
-            suite[0].$2 + math.log(1 - dbl(s['surmenage_baisse']));
+      if (suite.length == 3 &&
+          jour - suite[0].$1 <= _n('surmenage_fenetre_j')) {
+        final limite = suite[0].$2 + math.log(1 - dbl(s['surmenage_baisse']));
         if (suite[1].$2 <= limite && suite[2].$2 <= limite) {
           final meilleure = suite[1].$2 > suite[2].$2
               ? suite[1].$2
@@ -3884,7 +3871,8 @@ class Seances {
     ];
     for (final x0 in sets) {
       final x = jm(x0);
-      if (vrai(x['excluded']) || _nature(x['exerciseId'] as String) != 'course') {
+      if (vrai(x['excluded']) ||
+          _nature(x['exerciseId'] as String) != 'course') {
         continue;
       }
       final mv = x['distanceMeters'] as num?;

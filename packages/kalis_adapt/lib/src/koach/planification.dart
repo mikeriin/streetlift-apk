@@ -113,14 +113,9 @@ List<SemaineReference?> semainesDeReference(
     }
     final jours = <(int, List<Json>)>[
       for (final d in jl(ecrite['days']))
-        (
-          ent(jm(d)['dayIndex']),
-          [for (final it in jl(jm(d)['items'])) jm(it)],
-        ),
+        (ent(jm(d)['dayIndex']), [for (final it in jl(jm(d)['items'])) jm(it)]),
     ];
-    out.add(
-      SemaineReference(k, wb, ecrite['kind'], ecrite['intent'], jours),
-    );
+    out.add(SemaineReference(k, wb, ecrite['kind'], ecrite['intent'], jours));
   }
   return out;
 }
@@ -456,7 +451,10 @@ class Planification extends Extension {
           }
           if (gi == 2 && te > 0 && vrai(fiche['zone_tendon'])) {
             final z = fiche['zone_tendon'] as String;
-            final tz = tendon.putIfAbsent(z, () => List<double>.filled(nq, 0.0));
+            final tz = tendon.putIfAbsent(
+              z,
+              () => List<double>.filled(nq, 0.0),
+            );
             for (var q = 0; q < nq; q++) {
               tz[q] += te * v[q];
             }
@@ -725,7 +723,10 @@ class Planification extends Extension {
     final pi = dbl(pl['plafond_intensite']);
     final aa = <List<List<double>>>[
       for (var c = 0; c < cc; c++)
-        [for (var j = 0; j < blocsIdx.length; j++) List<double>.filled(nq, 1.0)],
+        [
+          for (var j = 0; j < blocsIdx.length; j++)
+            List<double>.filled(nq, 1.0),
+        ],
     ];
     final ii = <List<double>>[
       for (var c = 0; c < cc; c++) List<double>.filled(blocsIdx.length, 0.0),
@@ -753,10 +754,7 @@ class Planification extends Extension {
     if (jourEch != null) {
       fin = math.min(fin, divEnt(jourEch, 7));
     } else if (cibles.isEmpty) {
-      fin = math.min(
-        fin,
-        depuis + ent(pl['horizon_sans_echeance_sem']) - 1,
-      );
+      fin = math.min(fin, depuis + ent(pl['horizon_sans_echeance_sem']) - 1);
     }
     var ff = List<double>.filled(cc, dbl(tirage['fatigue']));
     final gains = <List<List<double>>>[
@@ -913,8 +911,7 @@ class Planification extends Extension {
         final terme2 = <double>[
           for (var q = 0; q < nq; q++) (mp[q] - mr[q]).abs(),
         ];
-        transport[c] +=
-            _plSommePaires(terme1) + tc * _plSommePaires(terme2);
+        transport[c] += _plSommePaires(terme1) + tc * _plSommePaires(terme2);
       }
       // numpy : `mr.sum()` (10 éléments contigus) → sommation par paires.
       masseRef += _plSommePaires(mr);
@@ -964,8 +961,9 @@ class Planification extends Extension {
             final rr = rw / moyR;
             final limite = rr > ratioMax ? rr : ratioMax;
             for (var c = 0; c < cc; c++) {
-              penal[c] +=
-                  (cw[c] / _plMaximum(moyC[c], 1e-9) > limite + 1e-9) ? 1.0 : 0.0;
+              penal[c] += (cw[c] / _plMaximum(moyC[c], 1e-9) > limite + 1e-9)
+                  ? 1.0
+                  : 0.0;
             }
           }
         }
@@ -1123,8 +1121,7 @@ class Planification extends Extension {
             for (var c = 0; c < cc; c++) {
               var nOk = 0;
               for (var n = 0; n < nn; n++) {
-                final ok =
-                    jourC[c][e][n] + rendSd * bEst[n][e] >= lnT + marge;
+                final ok = jourC[c][e][n] + rendSd * bEst[n][e] >= lnT + marge;
                 if (ok) {
                   nOk++;
                 }
@@ -1134,9 +1131,7 @@ class Planification extends Extension {
             }
           }
         }
-        jj = <double>[
-          for (var c = 0; c < cc; c++) _plCompte(tout[c]) / nn,
-        ];
+        jj = <double>[for (var c = 0; c < cc; c++) _plCompte(tout[c]) / nn];
       } else {
         // Sans échéance : progression attendue (relative à celle du
         // plan de référence nul) × P(continuer).
@@ -1371,7 +1366,12 @@ class Planification extends Extension {
       ];
       if (aVenir.every(plan.containsKey)) {
         garde = true;
-      } else if (_sur(List<double>.filled(d, 0.0), semaine, blocsIdx, qualites)) {
+      } else if (_sur(
+        List<double>.filled(d, 0.0),
+        semaine,
+        blocsIdx,
+        qualites,
+      )) {
         choisi = List<double>.filled(d, 0.0);
       } else {
         garde = true;
@@ -1521,10 +1521,7 @@ class Planification extends Extension {
           servi = 1;
         }
         reste[ex] = voulu - servi;
-        out[(jour, item['slotId'] as String)] = (
-          servi,
-          dbl(mod['intensite']),
-        );
+        out[(jour, item['slotId'] as String)] = (servi, dbl(mod['intensite']));
       }
     }
     if (mod == null) {
@@ -1972,8 +1969,8 @@ List<double> _plEcartTypeAxe0(List<List<double>> lignes, int d) {
     for (var b = 0; b < d; b++)
       math.sqrt(
         _plSommeAxe0([
-          for (final l in lignes) (l[b] - moy[b]) * (l[b] - moy[b]),
-        ], d) /
+              for (final l in lignes) (l[b] - moy[b]) * (l[b] - moy[b]),
+            ], d) /
             r,
       ),
   ];

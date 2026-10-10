@@ -98,6 +98,10 @@ void comparer(
   if (o is Map<String, Object?> && a is Map<String, Object?>) {
     final cles = {...o.keys, ...a.keys}.toList()..sort();
     for (final k in cles) {
+      if (k == 'trace') {
+        // Texte de diagnostic hors contrat (§ 3.3) : non comparé.
+        continue;
+      }
       if (!o.containsKey(k)) {
         ecarts.add('$chemin.$k : absent (attendu ${_court(a[k])})');
       } else if (!a.containsKey(k)) {
@@ -259,8 +263,7 @@ void testerPlanification(String nom) {
       copieJson(jm(pc['options'])),
     );
     final cibles = <String, num>{
-      for (final c in dictOuVide(ref['cibles']).entries)
-        c.key: c.value! as num,
+      for (final c in dictOuVide(ref['cibles']).entries) c.key: c.value! as num,
     };
     pl.chargerReference(
       [for (final b in jl(ref['blocs'])) jm(b)],
@@ -444,7 +447,12 @@ void main() {
         final r2 = Mulberry32(ent(m['graine']));
         final gs = [for (var i = 0; i < 40; i++) r2.gauss()];
         comparer(gs, m['gauss'], 'gauss ${m['graine']}', ecarts);
-        comparer(r2.state, m['etat_apres_gauss'], 'etat g ${m['graine']}', ecarts);
+        comparer(
+          r2.state,
+          m['etat_apres_gauss'],
+          'etat g ${m['graine']}',
+          ecarts,
+        );
       }
       echouerSi(ecarts, 'mulberry32');
     });

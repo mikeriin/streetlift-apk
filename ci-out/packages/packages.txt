@@ -1,4 +1,0 @@
-aa_km2=failure
-kalis_adapt=failure
-kalis_core=failure
-kalis_plan=failure
