@@ -1387,19 +1387,19 @@ extension SessionAdaptStore on AppStore {
     if (place == null || place.blockId != a.blockId) return null;
     try {
       final useCheck = _answered(check) ? check : null;
-      // CI1h (C15.4) : sans bilan ni lieu du jour, une séance pas commencée
-      // se prescrit comme à l'ouverture (date prévue si elle est à venir) ;
-      // avec un bilan, au jour réel.
+      // CI1h (C15.4) : sans bilan du jour, une séance pas commencée se
+      // prescrit comme à l'ouverture (date prévue si elle est à venir) ;
+      // avec un bilan, au jour réel. La séance sans l'effet du bilan reste
+      // celle de l'ouverture.
       final log = logs[key];
       final started =
           log != null &&
           (log.done || log.ex.values.any((x) => x.sets.any((s) => s.done)));
+      final planned = started ? null : adaptPlanDay(week, base.j);
       final input = _adaptInput(
         place,
         key,
-        day: useCheck == null && where == null && !started
-            ? adaptPlanDay(week, base.j)
-            : null,
+        day: useCheck == null ? planned : null,
       );
       if (input == null) return null;
       final plan = _adaptPrescribe(place, input, useCheck, where);
@@ -1408,7 +1408,10 @@ extension SessionAdaptStore on AppStore {
         // « Garder ma séance » / « Annuler » retire l'effet de la forme du
         // jour, pas les faits donnés : temps disponible et douleurs restent.
         final facts = factsOf(useCheck);
-        final b = _adaptPrescribe(place, input, facts, where);
+        final quietInput = planned == null
+            ? input
+            : _adaptInput(place, key, day: planned) ?? input;
+        final b = _adaptPrescribe(place, quietInput, facts, where);
         if (!jsonDeepEquals(b.toJson(), plan.toJson())) without = b;
       }
       final mode = adaptMode;
@@ -2304,8 +2307,15 @@ extension SessionAdaptStore on AppStore {
       final fixed = _fixedLoadAt(placeOf, it.slotId, it.exerciseId);
       if (fixed != null &&
           !debugDisableFixedLoad &&
-          log != null &&
-          index < log.sets.length) {
+          (log == null || index >= log.sets.length)) {
+        advice = advice.copyWith(
+          action: kc.IntraSessionAction.keep,
+          nextLoadKg: null,
+          nextRepsLow: null,
+          nextRepsHigh: null,
+          nextSeconds: null,
+        );
+      } else if (fixed != null && !debugDisableFixedLoad && log != null) {
         final s = log.sets[index];
         final steps = a.advice[e.id] ?? const <AdviceStep>[];
         advice = fixedLoadAdvice(
@@ -2457,7 +2467,7 @@ extension SessionAdaptStore on AppStore {
         if (!(log?.ex[e.id]?.sets.any((s) => s.done) ?? false)) continue;
         if (!seen.add(id)) continue;
         final it = _adaptItem(a, e.slotId);
-        final next = _adaptNextGoal(week, base.j, id, nextPlans);
+        final next = _adaptNextGoal(week, base.j, id, e.slotId, nextPlans);
         out.add(
           AdaptExerciseSummary(
             exerciseId: id,
@@ -2493,6 +2503,23 @@ extension SessionAdaptStore on AppStore {
     int week,
     int j,
     String id,
+    String? slot,
+    Map<String, kc.SessionPlan?> cache,
+  ) {
+    // Même ligne du programme d'abord (même emplacement : « Squat endurance »
+    // de J6 → J6 de la semaine suivante), sinon le même exercice.
+    if (slot != null) {
+      final r = _adaptNextGoalOf(week, j, id, slot, cache);
+      if (r != null) return r;
+    }
+    return _adaptNextGoalOf(week, j, id, null, cache);
+  }
+
+  ({SetGoal goal, int week, int j, DateTime? date})? _adaptNextGoalOf(
+    int week,
+    int j,
+    String id,
+    String? slot,
     Map<String, kc.SessionPlan?> cache,
   ) {
     for (var n = week; n <= math.min(week + 6, program.weeks.length); n++) {
@@ -2507,7 +2534,9 @@ extension SessionAdaptStore on AppStore {
         final place = adaptPlaceOf(n, d.j);
         if (place == null) continue;
         final dayItems = place.day?.items ?? const <kc.ExercisePrescription>[];
-        if (!dayItems.any((it) => it.exerciseId == id)) continue;
+        bool hit(kc.ExercisePrescription it) =>
+            it.exerciseId == id && (slot == null || it.slotId == slot);
+        if (!dayItems.any(hit)) continue;
         final plan = cache.putIfAbsent('$n|${d.j}', () {
           try {
             return adaptPlannedSession(n, d.j, place: place);
@@ -2517,7 +2546,7 @@ extension SessionAdaptStore on AppStore {
         });
         if (plan == null) return null;
         for (final it in plan.items) {
-          if (it.exerciseId == id) {
+          if (hit(it)) {
             return (
               goal: planGoal(it, 0),
               week: n,

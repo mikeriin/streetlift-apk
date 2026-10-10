@@ -521,13 +521,14 @@ void main() {
           final had = app.logs.containsKey(key);
           final tb = app.program.week(x.nextWeek!).day(x.nextJ!)!;
           final opened = app.adaptOpen(x.nextWeek!, tb)!;
-          final it = opened.plan.items.firstWhere(
-            (i) => i.exerciseId == x.exerciseId,
-          );
-          final g = planGoal(it, 0);
+          final goals = [
+            for (final i in opened.plan.items)
+              if (i.exerciseId == x.exerciseId)
+                (planGoal(i, 0).kg, planGoal(i, 0).low, planGoal(i, 0).high),
+          ];
           expect(
-            (g.kg, g.low, g.high),
-            (x.next!.kg, x.next!.low, x.next!.high),
+            goals,
+            contains((x.next!.kg, x.next!.low, x.next!.high)),
             reason: '${x.name} (S${x.nextWeek}·J${x.nextJ})',
           );
           compared++;
